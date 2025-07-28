@@ -1,154 +1,168 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C634343147
-	for <git@vger.kernel.org>; Mon, 28 Jul 2025 13:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FAC2222A1
+	for <git@vger.kernel.org>; Mon, 28 Jul 2025 14:43:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753710202; cv=none; b=Z1ZJHFO8GPAzYjGzUciI18etHY/3J6bKtzncQMSwgpb/2FmieE9DG7XJ4w9E4EVXGIwIqKqEpIjQIWHKJoF1mxQhiAQWel/gZiLJz/xkH4YGsXAveDUNLH+2HY+3zbRW5uapS38bsEfijYq8Q+lD7dAfS1/o732FtW1BVGPiFM8=
+	t=1753713808; cv=none; b=tXf6j54Sypx9NuiCxpxl1uLHbDwW36YiC9QwA4O/+sFOAxaDw14bfbCWCWxKP/cBtorvyiH5FYWtzmKdiVsab2/2kUc2x379+aRq/zqb8xo0Fv7vgT7Nw4GzAdgUtdipgpVQQmxKj/Fnl6t4lHfuB0F+s3UBbqknL2IykmyJarI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753710202; c=relaxed/simple;
-	bh=GDd0uzuQQbd9JHExj+TNJ+f31qXZeAGiYs5bZOidkVs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WqUa6hAj1alSDaT5P9Io28olE+trRnMo8Xzyt9mb5tTjYdcUn1g6KlxOOFOBcT1JQoEJ0f+La1SNWeDbLRnl3g3uqp88Ga1Tngms0s5fjcFCk/ZElAv9jwEfpYVU+64caMcJdmAm/ijGT6ZY86FYkJbCTjPo5ogzT5gUiEsRVd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G7XDVhTv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W7F9sC4V; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753713808; c=relaxed/simple;
+	bh=3KC8xrku7TXL3GsE+WtefE8B+v80codpsPtWYMNgFGE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MotXZ4iQQ7wuPsE6orfduaegn2/zlUL5C9RIoEJNgqwvUw//g0K8QuC4dSG/EnyW5Yt8VtnUTdIB5qFps4CKLu5v4pibyxN4C8ZkkxOcGGvOQa3UE46wg505dHSs4PC3yjjAuj5PsTrKEVENoNvEZph/hOStS4b1MjrJ7iAqm1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KmM8FJvS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cGX4HM4O; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G7XDVhTv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W7F9sC4V"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BD4A314000E7;
-	Mon, 28 Jul 2025 09:43:18 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Mon, 28 Jul 2025 09:43:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KmM8FJvS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cGX4HM4O"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B2D87140009D;
+	Mon, 28 Jul 2025 10:43:25 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 28 Jul 2025 10:43:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753710198; x=1753796598; bh=cwqUtUeosO
-	2v+p+xD1dJBJb5chDXnJktYf+fX7OEdZY=; b=G7XDVhTvmiik32BFwrw7R8RsjD
-	zCZsv+2hHUrw6dryS6+l9vk23bAMInOUETDqlw9xqL6xrz8fOFRFb7N3YtYyZa04
-	vd+EakGJsnIZTfd/HYzjlx0e8v2eJQNYRtJmd3feLx26AqpQXloDBhhJdl1L2Ppr
-	bKZdq4cpcpfitYuRfXZZ+8TJbVWzbz+tOv/ttMQMndb4VS9GkTWNqhlVbnq1NHOQ
-	knpBP3/llhki7CrANNx2LUaN8TmqfVXCqQM1b3dyVzJB3uNBmAHSdKwSP0AgqIVU
-	D9PIy7YEBSzYtQGsbGRe3kdgcls3Qs+tyeUjzEXLv36h/NCp2BEPgICpuepA==
+	:subject:to:to; s=fm3; t=1753713805; x=1753800205; bh=QyqCiza8va
+	dXk1hWnMa76Lon3uhCfSB15/cPLBsDbns=; b=KmM8FJvSpdiofIj0ACMXzsTVHC
+	zR7rNzA+ek6B/luru78XzpZH4HdGfByDUIGVWzVb6Sdw5RJHkbnxwuFhYzakmRVG
+	O6jbDMn6Mn2p5d9DmJVDAbM7DDIiiCFDz+yOoWmvKWDqxPSxl7f5jXI8UO7kK25I
+	SwqjSN3x2kshz4NrpFzgl703BYwetAd90KEeqpI2ls1x5J2nuY619esaNg+IwSUt
+	WCEtIdH5kB41pMQ8ziZU/n1rtDJsHBdY93Wk/TIF/2s9edlvpjNWZe/RRCUxar5X
+	N2mqk+dQEwwW30CYWEIPDULetyFEzj0iS1qvGE91CJwIlxyT6/iQmkwXMoEw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753710198; x=1753796598; bh=cwqUtUeosO2v+p+xD1dJBJb5chDXnJktYf+
-	fX7OEdZY=; b=W7F9sC4VgnQE4KPZ+ivzxRh6uZHQN+WYZN9ghREWe7V4XqbYCFM
-	auBk7fUnzxknyRAT60oR/91StBU7q6ZnGsNOKhh644T31qJpXhcIBrL1coLPS8oH
-	kqPLgumbBgjRiQYlU/9Sayjblhz/x7umTOPiwMXwvSgvqtV+E9OYlHHAbkWo04kg
-	8YROEvu9Qs4OSpLtn85VLlYYxy0K7jLjTNKHSrGpH43Qkjnt4EMpAe/tsx6ElSjf
-	A6wNfX+V8/tafIJc5vdZuE3LJnQQ+IaRCsA1FfQJwtO6HsPZBnTuS81PkvldvItI
-	0knmNltE9w1JksL0sozJqwG97nvS/i+MmkA==
-X-ME-Sender: <xms:dn6HaMd9i7YJdrED1cI8GQuHz9qelX7HecEmPud2wJukooQBJMZZGQ>
-    <xme:dn6HaGqynNoe0Tas2xPuDeMHvCMrTgbH1R73VWbezMF8WTzRC6pYS3fqbABudkfgZ
-    OupwkBsjG3KjweL-A>
-X-ME-Received: <xmr:dn6HaN-iqCYUaKw5XgOQNnLgUX7usDZaYfPbP4p8UQrE6NGYoesHZ5wxDaf-mU3sKCueH2darH6e5ggkJQWnWBDXyN51jhwnle6rZfI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelvdefvdcutefuodetggdotefrod
+	1753713805; x=1753800205; bh=QyqCiza8vadXk1hWnMa76Lon3uhCfSB15/c
+	PLBsDbns=; b=cGX4HM4OJVNNKYP33Hp3UUHyhJEQz46usfcWD+YUtAz/bcIJfnT
+	3v0DpTa38gV419GvdKaKXc22b1UWfeLleSt1gkfi2o9mBtdtrxW4sYj1B/11Q7Jo
+	qw/6RySHH1JI9a8Q8nJk633W9GypG9Gz7pJFAuh/GqpiDEaqLPWzJE+fhtHD0mlT
+	UGo4c/68VXkZ1MlXqkhhrspQ5O8gPw0fvUDASYvIkA/pPmWmP2qC8lCJ2N7ONW+z
+	sX54Q+kUsKQzv7Z8tOVguMc0QmIS0TP9p/BqBWGLM5LhAv4hC9tYctzcwp6wvj89
+	R7daIVYegocF9mFDiXEFxrSui2fZyTeaIDg==
+X-ME-Sender: <xms:jYyHaAbAmaZtIfmKpfRtXLfwr0DIl53Qcbe7o4JqmC5w0tXhFV3SLQ>
+    <xme:jYyHaI8CyDaIBsmgUpds6Pjy10MKfB-cJOabMcy4qJZ_h5okbHr272v2tNagTN-Xe
+    0WLvIbiJiuRKcDKiA>
+X-ME-Received: <xmr:jYyHaBb_-PG44yFth0nLrWm3FbY-MmIiVSvizJj1bC6_d_CtoTzWntcgm3X7QVhn5oxvvAgPjDbnxr48oz1o7FEqL1bvRalbhxb6ZWMD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelvdeggecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheplh
-    drshdrrhesfigvsgdruggvpdhrtghpthhtohepkhgvvhhinhdrsghrohgushhkhiesrghr
-    mhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtoheprhgrvhhisehprhgvvhgrshdrughkpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:dn6HaCeCK-ZgFiAaFWpHDj3Mtbmf0WHH0oP8R7r4_4FyTYoCC3Sk2Q>
-    <xmx:dn6HaHKTmXQG1QuhBfbfP60eOpk9VG-1vn5bADEQ91ZfiAGuDp6k1g>
-    <xmx:dn6HaCiq_HZFi3dr10g44B3zBcEWB84pxeet4ap6ETXOc2e12T8qxQ>
-    <xmx:dn6HaFRnIjaxsV-yZRc6eJiVIkYmDsnKKF-khQt_7wZWh3CLAlo7uw>
-    <xmx:dn6HaCi2fuxdvdf_yNuqd1aC8gkqZhx9OVlBV0T9cYjohXTCy0jhgo8A>
-Feedback-ID: if26b431b:Fastmail
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshiivgguvghrrd
+    guvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtth
+    hopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgt
+    ohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:jYyHaMM0L0DZZvE_vfl9_u0m3JI58B14EOamiE8zhROmBIgmyfuBaw>
+    <xmx:jYyHaNAIks26O-a3rQfGugRhLp2uFDzRa6-4Kx6MNnCKKKVVK33-3Q>
+    <xmx:jYyHaDL8sq77IqKCxrU3CLOSvDa3I0kZNFeXCe0VFwOqHaIPOFNJUA>
+    <xmx:jYyHaGNIS5kjOChv_ZpT8EfqseL3S4Nds8JMpQkmCREe27enDbB1Vg>
+    <xmx:jYyHaJMXlJSAxCxqqhKhYEhTlzEAOnZo3mSGbS9scXz4sApkC2L6ZA3Z>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Jul 2025 09:43:17 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+ 28 Jul 2025 10:43:23 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 94a26f1d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 28 Jul 2025 14:43:22 +0000 (UTC)
+Date: Mon, 28 Jul 2025 16:43:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Kevin Brodsky
- <kevin.brodsky@arm.com>,
-  git@vger.kernel.org,  Rasmus Villemoes <ravi@prevas.dk>
-Subject: Re: [PATCH] git: show alias info only with lone -h
-In-Reply-To: <20250726081254.GA3042329@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 26 Jul 2025 04:12:54 -0400")
-References: <1c3a0463-36ee-4a2d-92e0-fac9c0bf77da@arm.com>
-	<a35dc2bf-015c-472d-9528-6763f7aac180@web.de>
-	<xmqqqzy33k1j.fsf@gitster.g>
-	<20250726081254.GA3042329@coredump.intra.peff.net>
-Date: Mon, 28 Jul 2025 06:43:16 -0700
-Message-ID: <xmqqfregzb0r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v2 7/8] refs: stop unsetting REF_HAVE_OLD for log-only
+ updates
+Message-ID: <aIeMgE-11UnAJINI@pks.im>
+References: <20250725-pks-reflog-append-v2-0-e4e7cbe3f578@pks.im>
+ <20250725-pks-reflog-append-v2-7-e4e7cbe3f578@pks.im>
+ <20250725113610.GA3015361@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250725113610.GA3015361@coredump.intra.peff.net>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Jul 25, 2025 at 07:36:10AM -0400, Jeff King wrote:
+> On Fri, Jul 25, 2025 at 08:58:29AM +0200, Patrick Steinhardt wrote:
+> 
+> > The `REF_HAVE_OLD` flag indicates whether a given ref update has its old
+> > object ID set. If so, the value of that field is used to verify whether
+> > the current state of the reference matches this expected state. It is
+> > thus an important part of mitigating races with a concurrent process
+> > that updates the same set of references.
+> > 
+> > When writing reflogs though we explicitly unset that flag. This is a
+> > sensible thing to do: the old state of reflog entry updates may not
+> > necessarily match the current on-disk state of its accompanying ref, but
+> > it's only intended to signal what old object ID we want to write into
+> > the new reflog entry. For example when migrating refs we end up writing
+> > many reflog entries for a single reference, and most likely those reflog
+> > entries will have many different old object IDs.
+> > 
+> > But unsetting this flag also removes a useful signal, namely that the
+> > caller _did_ provide an old object ID for a given reflog entry. This
+> > signal will become useful in a subsequent commit, where we add a new
+> > flag that tells the transaction to use the provided old and new object
+> > IDs to write a reflog entry. The `REF_HAVE_OLD` flag is then used as a
+> > signal to verify that the caller really did provide an old object ID.
+> > 
+> > Stop unsetting the flag so that we can use it as this described signal
+> > in a subsequent commit. Skip checking the old object ID for log-only
+> > updates so that we don't expect it to match the current on-disk state.
+> 
+> I like this direction, but I happened to be working in this area
+> yesterday[1] and noticed something interesting. You're effectively
+> replacing this removal of the HAVE_OLD flag when split a symref update:
+> 
+> > diff --git a/refs/files-backend.c b/refs/files-backend.c
+> > index bf6f89b1d19..8b42fe18901 100644
+> > --- a/refs/files-backend.c
+> > +++ b/refs/files-backend.c
+> > @@ -2493,7 +2493,6 @@ static enum ref_transaction_error split_symref_update(struct ref_update *update,
+> >  	 * done when new_update is processed.
+> >  	 */
+> >  	update->flags |= REF_LOG_ONLY | REF_NO_DEREF;
+> > -	update->flags &= ~REF_HAVE_OLD;
+> >  
+> >  	return 0;
+> >  }
+> 
+> and then later we get the same logic by checking for LOG_ONLY:
+> 
+> > @@ -2508,8 +2507,9 @@ static enum ref_transaction_error check_old_oid(struct ref_update *update,
+> >  						struct object_id *oid,
+> >  						struct strbuf *err)
+> >  {
+> > -	if (!(update->flags & REF_HAVE_OLD) ||
+> > -		   oideq(oid, &update->old_oid))
+> > +	if (update->flags & REF_LOG_ONLY ||
+> > +	    !(update->flags & REF_HAVE_OLD) ||
+> > +	    oideq(oid, &update->old_oid))
+> >  		return 0;
+> >  
+> >  	if (is_null_oid(&update->old_oid)) {
+> 
+> Which make sense to me. But the weird thing I noticed is that when we do
+> something similar for split_head_update(), we don't strip REF_HAVE_OLD!
 
-> Another interesting case: even for our own commands, the alias itself
-> may add extra arguments, which confuses things further. So:
->
->   $ git -c alias.gi='grep --cached' gi -h
->   'gi' is aliased to 'grep --cached'
->   fatal: no pattern given
->
-> runs git-grep, but even though the user said only "-h" the alias added
-> another option which prevents the help-mode from activating.
->
-> In this case it is not too harmful, but you can come up with
-> pathological cases where it actually runs a real command:
->
->   git -c alias.grep-for-foo='grep -e foo' grep-for-foo -h
->
-> which runs a real grep.
+And we shouldn't do that, as in the next commit we actually build on
+always having `REF_HAVE_OLD` set for reflog-only updates. So I'd argue
+that the problem is actually the other way round: when splitting off the
+HEAD update we must resolve the old object ID if `REF_HAVE_OLD` is not
+set.
 
-Yes, that is an excellent point to further argue that we should fix
-the help-alias case to stop there after describing the alias.  The
-user can choose to do "git grep -h" and look for "--cached" after
-learning that their 'git gi' is a shorthand for 'git grep --cached",
-but we shouldn't be doing so.
-
-> I guess one way to deal with it would be if the user runs "foo -h", and
-> alias.foo is "bar --other arguments", then we run just "bar -h",
-> dropping the extra arguments provided by the alias.
-
-It is much simpler and saner to just stop after giving the alias
-expansion, isn't it?  Nobody can get hurt if we did so; doing
-anything else would be driving us into further corner cases that
-would either confuse or harm the users.
-
-> So IMHO the patch under discussion is a strict improvement, even though
-> it leaves many other questionable cases unsolved.
-
-That part I 100% agree with.  Let's accept the change, and then give
-further fixes in related areas.
-
-> I'd also be happy if on top we did:
->
->   1. When alias.foo="bar --options", turn "git foo -h" into "git bar
->      -h", dropping "--options".
-
-This smells like piling more voodoo magic on top, which I am not
-enthused.
-
->   2. When alias.foo="!bar", report only the alias and do not run "bar"
->      at all. The collateral damage here would be:
->
->         !git bar $(some_shell_magic_we_need)
->
->      but IMHO that is not all that bad. If we report the alias content,
->      the user can probably figure out which "git help" to run next.
-
-This I very much like, and further, I would prefer to do this for
-all aliases.
-
-Thanks.
+> (For those not familiar with that
