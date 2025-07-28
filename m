@@ -1,139 +1,169 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4631D130E
-	for <git@vger.kernel.org>; Mon, 28 Jul 2025 09:06:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118E7265CA7
+	for <git@vger.kernel.org>; Mon, 28 Jul 2025 13:08:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753693619; cv=none; b=Jl+dQSAuOH2gJiEvGFELFFOaahjFbmPBq0Vp1KD1R9x/GTnIom2fBxVCdFES0DQLJS9CWAbhyDRBN2n1wbi3MlE+0gc4kmJNlH+H96r7k6MFGSEg3mXiwF7CLkyjOSh/0+ZWe8V1Ja4GxWrnDVaDOjNRFoKHiqGeZL86nd0n/3Q=
+	t=1753708142; cv=none; b=mvE97DgKCwNFhAd4y+V32hT+I8ZVtRz4EaS/Ms8+P21od1uIMl/PxBfsBNjFujDKbE9L9Pe+RiDc3kcS/e2jbFrOL6DTx6WUyL2fXI9v9ZovPzvyJlKbp/rPHD5DGHp+UHXxl/aWq5SiLuY0FVt0nkC0LQ8qPS32fC7aU9jtQh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753693619; c=relaxed/simple;
-	bh=eij0PyCIEvEjeH93hl7X2IV6+BCpPBQhVZ+V6OS7zYs=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=KkYVsvGl/JA0Dzhyw6kMbUeZ4z3Ixt9dNW8L7F6k/3vsMXBCCMuex4UnyuOg++pekoTvxzH7kJjwQI6jv70D40imVh1kxh4DIkMMhzDqEvy6t4EiSyiRQwVr8+PhojIUYBjTgcXoAd+oUgPA7ZL0X8zatKCDGc4ciW0eh2gbuJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embecosm.com; spf=pass smtp.mailfrom=embecosm.com; dkim=pass (2048-bit key) header.d=embecosm.com header.i=@embecosm.com header.b=QYPC8jXx; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embecosm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=embecosm.com
+	s=arc-20240116; t=1753708142; c=relaxed/simple;
+	bh=LJ3lyfORakHaAgogZ1Q4MP1ppsYBMTLMQL4RLzFIKCU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NXm1KFZT6K5N7vzen9OyP5pe7pc1MgV3JSl2QE3Cl3qQ5qdZbTi4lYlunkyVfg0k6SqpXT1pj+iHHLpV7nBBtY1aFACbDPYk3Sc0DErI3Mn1lfdWj3Wq89NDqgKuSyVjTXRETkcuGjW0ozbKkTcOKkZU8GKaZC1X4hWcgQ8Y4Ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H1Zdbao6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dOoXJt8/; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=embecosm.com header.i=@embecosm.com header.b="QYPC8jXx"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4561a4a8bf2so47051415e9.1
-        for <git@vger.kernel.org>; Mon, 28 Jul 2025 02:06:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=embecosm.com; s=google; t=1753693615; x=1754298415; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :reply-to:content-language:subject:references:cc:to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YNT2bIhlvNxq59OSH4zKCmF72xzdpRnJblaahLDilhQ=;
-        b=QYPC8jXxlrgpLyz5nLSPEpwU3be2gHviyMvrxqVzVrKgvDca2N5NTSeDaVIE9kInXO
-         0jAZF96nstwxmdOLEC1r/SWRo83NShKRmoNZQZ//uOxV6HY5EVPE4iIuQP/bP/PY+GKw
-         UWT+hBycKQTavITPE7kvbYDP4CGFXzgxVhFnTMqTYIHl/g9mCm8yy9j98TyQzLO7NwGm
-         1ISq38vk36R5xKdsNgqYwxFuj/MHT7M/MUouOSyBrNn3nX3BHunvQlg8x98M7U2gdmp4
-         zPatWWPZ65nmNqJJeginWRFhCRYt/jdPVZIhRRTqcOt2grDMSXj64lEtf3LwDHyNjNzM
-         1owg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753693615; x=1754298415;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :reply-to:content-language:subject:references:cc:to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=YNT2bIhlvNxq59OSH4zKCmF72xzdpRnJblaahLDilhQ=;
-        b=qxF7tJxrGw9zm3pZLjfKub/vLKBPR0XIu0kuk5SjU4dghMCRrhZllZptQVRTpeggWr
-         8/PgqUbfQf/MIizRZmudpBFOGrdR+/4zazsU4jZLsqTqSI8Ygl4qnWTy0QvyEIriMMdh
-         Jc7ajL4VhQjXEVPBlzn0CqxjK03bL4V2OOjEob7dfEfkJzy3sbdB0DzGSuAS69nWp3aj
-         NKdQmmCb7cls8Dim1+L8iRwz4rMkSeKkd2smKCoae3ARNAf5PTooNiql6FgfrOqT/CgQ
-         YY11rMALZad0YP2d9pJ5Q9JyjZ1nNe/0QOdhVq6byi8Dnrr4zS5iaenGLa7eZHXnYzm8
-         H04Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWZzukV5ZfPirtatkqxmI15nNYksExcRN00sFmhFEuDp35Nbv6KbYA0oIDMwfDavSoPdFI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyEfFcMVByu/ndzN01uTBrVzGFoqb4Zj5dTKsPkytGyD523jrQ9
-	3qZcopUklSGL4XhHH2gNCal6NJaTKKbT73Nh7oXoTs0c8jGgX6NmCKY+PkVzizqWWK8=
-X-Gm-Gg: ASbGnct08zTDefQZs6A1cKZSBP0QaYb3/M67tZ99THdQukNYCO9Vo2Akwz+pBIA6bhg
-	DYSxXVBM3GjwF8B9PGUz1ISmTEPXzwkKZ16HKJ+jFf3OqpJCzfMvOf49hD7FmzsGSZfJwi6cJyE
-	v0oCuF/9azR8/v7uggclyiDU9TcNczvGGFgrGGSeTt8R3nKF0VkoYrALF/l8PhH2IuhJcBXxk6H
-	a57QQg2qgHcUJ47DtLHXGx4u/tZ4WDDf6AxZBa/Z7pJZHXPoGXRoJcR7iEdJuiojRS/AapOhuA5
-	rGJ3+vTq+OvfDhhb0pvSdoldo6PzWGeHxw5xXZjw/cOiGujakeS3u+XsifteMa4K1SonP6qEjSg
-	LcLzmqmaGIq2vp0hEpCygapedPqj/1zXEyTwDSouvBSG5jI8EbcFG/FbW1Os4snZ8v73tDIjvf0
-	hFwTypelNI5o8=
-X-Google-Smtp-Source: AGHT+IEtK08YQo+E6lvU5C9sWL7X1Te3N3ayJezJbWyL6IC4Dr9gL29lNmkK9RDnYtuTXNeIJDMgfw==
-X-Received: by 2002:a05:600c:45d4:b0:456:26d1:445d with SMTP id 5b1f17b1804b1-4587666b032mr81185845e9.31.1753693615094;
-        Mon, 28 Jul 2025 02:06:55 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:1f0:96b0:2863:44c4:9edc:7fe6? ([2a01:e0a:1f0:96b0:2863:44c4:9edc:7fe6])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b788f5f27esm2283673f8f.14.2025.07.28.02.06.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Jul 2025 02:06:54 -0700 (PDT)
-Message-ID: <d452bb67-569a-4772-a943-950e3edb4e16@embecosm.com>
-Date: Mon, 28 Jul 2025 11:06:52 +0200
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H1Zdbao6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dOoXJt8/"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0D46EEC12D9;
+	Mon, 28 Jul 2025 09:08:58 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 28 Jul 2025 09:08:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1753708138; x=1753794538; bh=zJg8mPISLu
+	uSTnqpNP57E0blFmhBaldag3zuIW/FHGc=; b=H1Zdbao69cI2DoSGI/De4sk2AD
+	1DTlmwup7nr8BozX6zbF136rZj4XGkEoYc8MRp2uLsxVWTDLRS7b7wU3YNN/taBr
+	T3mq0tQ38lNbMq/DHNrFp1v8eUxjgc5IBLl2F8HjmH4UwX9zv1o1bBQH/WYmJEt5
+	UqMXQcY7qNvU124SThNwZBZXE8VOCjFKUDX65cvv26R4x6pSiP+LATpaFlgPbeu3
+	Sfow3EhwSz7OOFaV8jcRUqgZ0SKnCBYHOVtPioTyuGB69e+FmRGjoAm4sVjeDsVK
+	ICTei52K3FmyQvYF3odsyXdXEYA/fN3T8FmT0YUINZJ+h/JJ4ygUuLwp+zDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1753708138; x=1753794538; bh=zJg8mPISLuuSTnqpNP57E0blFmhB
+	aldag3zuIW/FHGc=; b=dOoXJt8/7PhinwA5G1jXC0CneDTIAATGTsGBUwVk4I4C
+	CkBfjWfHt4gjtjA2kwpEp1lH+ndimQwF9RR+b3He+pRhkMprPM0le5TbIsUr2Hw9
+	XwCSLRXDklkGAJw5f8AMwfWPdi0XtRdm6hLEwLqniMxnBvHI8N5LPjVfkhOycplx
+	IMxbFOfG4hcunzmnP2HUl9mr+B40x1CIjOuZJp+cAWahr3qVgr9UVjEiu1eDI36y
+	oSW51VsF5SEuKRQWHoFwWiNTIjsIn5z76T2S7bV+C1zmpVzKmXQx1DFuW65MSSSU
+	l5gEapymXCnNrnK0l31rstib5JwE4NoHWRXqgJcSbw==
+X-ME-Sender: <xms:aXaHaHdbOdH5YVdikbapwWGA6hpGyg_W5BbkK2qy7pLJXwl5ggr4qg>
+    <xme:aXaHaHzpNo-DV9MbQXBJvmLpxTk2yzb9aDeBK-fgj-FEfsKBaFFYKsjmiDhDvEsfS
+    RJpZnYaXGEcwwd84A>
+X-ME-Received: <xmr:aXaHaNHflu_hFDAwolZehuhOUue0XM2t_ZhBSm9Fn1g4zxlPaLucGClzCgHjiB9IKXDIS5UKxR0rjTuzxefOqu83Zj8Pp2e50ili21GW>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelvddvhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffufffkgggtgffvvefosehtkeertdertd
+    ejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
+    ihhmqeenucggtffrrghtthgvrhhnpeffleeghfejfeejtdeufeffgfekkeejhfeiffduge
+    dtgfeuvdegtdelhfejueegjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehjhhgtrghrlhdtkedugeesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhf
+    rdhnvght
+X-ME-Proxy: <xmx:aXaHaLxHQNANciEMqa2B9RrpB1opQm-rNkYgVmbllhNtgfjhITOBOg>
+    <xmx:aXaHaOvAt-NJuJO9BS1RwmycySLFkHwSzGlqhYwWH8OaW7gtlGCrAQ>
+    <xmx:aXaHaI1ZHzf6vpB3NryigyNdS4KUCwHsKRDgVSCLjGlkzE8SN4F4oA>
+    <xmx:aXaHaJ-19pGm7tygcK1SClemc-_JtQtJXmVEqCptBfvDoinKir3kQg>
+    <xmx:anaHaNNBKe30ON0ubjt9CEOQWZ9xc7Mw2o2vaNP3phPhB2jiIGoTFIny>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Jul 2025 09:08:56 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 07be500a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 28 Jul 2025 13:08:55 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/4] builtin/remote: rework how remote refs get renamed
+Date: Mon, 28 Jul 2025 15:08:44 +0200
+Message-Id: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: ps@pks.im
-Cc: eschwartz@gentoo.org, ethomson@edwardthomson.com,
- ezekielnewren@gmail.com, git@vger.kernel.org, gitgitgadget@gmail.com,
- me@ttaylorr.com, newren@gmail.com, phillip.wood123@gmail.com,
- pierre-emmanuel.patry@embecosm.com, sam@gentoo.org,
- sandals@crustytoothpaste.net
-References: <aIIETOdK4Nrsy5Jb@pks.im>
-Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
-Content-Language: en-US
-Reply-To: aIIETOdK4Nrsy5Jb@pks.im
-From: Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>
-Autocrypt: addr=pierre-emmanuel.patry@embecosm.com; keydata=
- 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
-Organization: Embecosm
-In-Reply-To: <aIIETOdK4Nrsy5Jb@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAFx2h2gC/x2NSwqDQBAFryK9zsDYZEzIVUIWoi9JE+ZDt4gg3
+ j2Nq6KgeG8ngwqMHt1OilVManHpLx1N37F8EGR2J46c4o1TaD8LilwXOMqYPchN64qMsli4pwk
+ 8cH8dEMlHmuIt23nwfB3HH7xE24RwAAAA
+X-Change-ID: 20250725-pks-remote-rename-improvements-85ce262146e0
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+ Han Jiang <jhcarl0814@gmail.com>
+X-Mailer: b4 0.14.2
 
+Hi,
 
-> And I expect that 1.78 will be another significant effort that won't
-> land before the year after?
+this patch series is the result from the discussion at [1]. On the one
+hand this series fixes the reported bug where dangling symrefs are not
+renamed via `git remote rename`.
 
-Yes, even though it will be easier once the foundations are laid off, I 
-wouldn't expect 1.78 before at least a year after that.
+On the other hand this series reworks the logic used to rename remotes
+so that we use two transactions instead of one transaction per ref. This
+fixes quadratic runtime behaviour, where renaming 10k refs takes ~4
+minutes, 100k takes hours. This results in a significant speedup with
+both the "files" backend (benchmarked with a smaller number of refs to
+retain sanity):
 
-> For my own understanding: is this something that the Git project would
-> have to support or something that the distributor needs to set up?
+    Benchmark 1: rename remote (refformat = files, revision = HEAD~)
+      Time (mean ± σ):     238.770 s ± 13.857 s    [User: 91.473 s, System: 143.793 s]
+      Range (min … max):   204.863 s … 247.699 s    10 runs
 
-I would say it is something the distributor needs to set up. From what I 
-remember rustc requires a flag with the path to the rustc_codegen_gcc 
-backend. This means that has long as the distributor has the alternative 
-backend and a way to inject a flag to rustc through an environment 
-variable it should be mostly fine for them.
+    Benchmark 2: rename remote (refformat = files, revision = HEAD)
+      Time (mean ± σ):      2.103 s ±  0.036 s    [User: 0.360 s, System: 1.313 s]
+      Range (min … max):    2.011 s …  2.141 s    10 runs
 
-Pierre-Emmanuel
+    Summary
+      rename remote (refformat = files, revision = HEAD) ran
+      113.53 ± 6.87 times faster than rename remote (refformat = files, revision = HEAD~)
+
+For the "reftable" backend we see a significant speedup, as well, but
+not as extreme as with the "files" backend:
+
+    Benchmark 1: rename remote (refformat = reftable, revision = HEAD~)
+      Time (mean ± σ):      8.604 s ±  0.539 s    [User: 4.985 s, System: 2.368 s]
+      Range (min … max):    7.880 s …  9.556 s    10 runs
+
+    Benchmark 2: rename remote (refformat = reftable, revision = HEAD)
+      Time (mean ± σ):      1.177 s ±  0.103 s    [User: 0.446 s, System: 0.270 s]
+      Range (min … max):    1.023 s …  1.410 s    10 runs
+
+    Summary
+      rename remote (refformat = reftable, revision = HEAD) ran
+        7.31 ± 0.79 times faster than rename remote (refformat = reftable, revision = HEAD~)
+
+But in any case, it's one more case where the "reftable" backend
+outperforms the "files" backend.
+
+The series is built on top of e4ef0485fd7 (The fourteenth batch,
+2025-07-24) with ps/reflog-migrate-fixes at de7cc0782a7 (refs: fix
+invalid old object IDs when migrating reflogs, 2025-07-25) merged into
+it.
+
+I'd normally have withheld sending until that series was merged to
+"next", but given that I promised to send something on Friday already I
+decided to just get it out. In any case, if that causes problems I'm
+happy to wait a bit before this series here gets merged into "seen".
+
+Thanks!
+
+Patrick
+
+[1]: <CANrWfmQWa=RJnm7d3C7ogRX6Tth2eeuGwvwrNmzS2gr+eP0OpA@mail.gmail.com>
+
+---
+Patrick Steinhardt (4):
+      refs: pass refname when invoking reflog entry callback
+      refs: simplify logic when migrating reflog entries
+      builtin/remote: rework how remote refs get renamed
+      builtin/remote: only iterate through refs that are to be renamed
+
+ builtin/fsck.c            |   9 +-
+ builtin/gc.c              |   3 +-
+ builtin/remote.c          | 275 ++++++++++++++++++++++++++++++----------------
+ builtin/stash.c           |   6 +-
+ commit.c                  |   3 +-
+ object-name.c             |   3 +-
+ reflog-walk.c             |   7 +-
+ reflog.c                  |   3 +-
+ reflog.h                  |   3 +-
+ refs.c                    |  63 +++++------
+ refs.h                    |   3 +
