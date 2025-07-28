@@ -1,109 +1,116 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602DD635
-	for <git@vger.kernel.org>; Mon, 28 Jul 2025 16:14:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF92270540
+	for <git@vger.kernel.org>; Mon, 28 Jul 2025 16:21:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753719247; cv=none; b=phMYtyfJTg/LX/pIExInT76YIp24abF62VJ6yefmtzXpEf9Ui4RTTUbW7M+AVm4QIJzk1sJzsebSZuAAN9p0rMRFmUvPIrH5phVTYWNnda3jDtttSI2Gy2fW2H8e7lMwGaFv/TBxWHvpMfw8GWsEbsOqzTb2sqVpQQ/65Jy5spg=
+	t=1753719689; cv=none; b=b0W8ltz/QUIRSL+VKX+CQXc6cre5G8RgaehmtWKQM04esmMa3Q0gi4bQeHSrbtNSVMVLgn69Xpbu+6coDCwUMk1RXHJ03X0WCYR3FzdCpLFUpVrsS+86DpriYhkKpD/NIJmvVVC8rSf7snTt6OrrgLjMUf8/3Be8t0dsIlpyvE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753719247; c=relaxed/simple;
-	bh=OEGI8jGjmxG1Oe+8B4sPcwNdnTkBm3tgg29Z/DI1mUg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EJaSEGbHvRbUGwLlZ1796VykTVaSED56wSb1TcrwutfDdN3CQf7AIad7PqN5zqPggYHCsnA5THKX8WiGfziCEpqvytrJRQfaaazPDdNUfP0+Pn581ZcPbp9veIOn6ybv2sFAzEfJ3zyRnn9WIMfiiDQrJJ+cnmBaSgJOEfEQ6SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b5sCtc+R; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753719689; c=relaxed/simple;
+	bh=CRJoNqJtvWyOAGZSbkHvr/6BkgUAELh+oBq87KnoZPI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uue82U24hSbyTgHrOs272zpdE8Sx8XznuHsUeS0aQcaSwk8i9WYAN6YDNxMuA7ZabM5xrJEHTAr96sC7ltyYgsclXcMGzwIo4WF1TUhf6fODcXPq+mFudwMCgCJF+TGqamYEKdfqJ3j6Lt604GE8qv8qP9EKUHB0oTNLk/2vb0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LW1+0pN8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z18CNCK+; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b5sCtc+R"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-73e810dc01aso2513071a34.0
-        for <git@vger.kernel.org>; Mon, 28 Jul 2025 09:14:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753719245; x=1754324045; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XIUuyLe/AfXa9/Hvo25C/8nhKrnG342iP5s/EnJweGU=;
-        b=b5sCtc+R0zPmus+PkyqO4VPZvHYSRsM69l20Io/AytD+SZJHk67oqi37NIQTXp6t+s
-         qlNZWSjLu3iMoXZMaTX3SdE/8ri2wTZjgTIRATYez1N4HpbWRqffYARqbbPaNYiDkikq
-         uHVn3iKabvtBviSFhMa8UMhDp2RWgRr1gDCkYhmASxbiY91lQfWg6wXOLiC/fKLpgwvT
-         22HN7C7BvO/AIZT5V8P+lh1kEIk3L1cKL65RjScY8bR/ySrvzesUhFPgBLE8LKFQUUmW
-         Ujvy/nozT6kqUH82UStMHYKBmFikLcP65Kbv38UCEzIfeaDtms8c+Crl92NRGOQB1WlN
-         foqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753719245; x=1754324045;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XIUuyLe/AfXa9/Hvo25C/8nhKrnG342iP5s/EnJweGU=;
-        b=o2v+G0RZJjdy2+98ZG64Iy77r3qnTGyZdLf5n+VlRw7u/NUlb1xBT1sTrjbNPwzho6
-         HrHWbNrCrryPPBkMrHaHyeyHesMIzBhUl1MnEaN4r+sHlryMxdPR0Q4anFJ5GSpnnGbb
-         hMVJCFGdT9ouiA5h0GRYMUWl6aTSz8l1ItZXKULIt0MC8Ae460SSighxhbVvgMXQffcC
-         PX0rNJ68uw1cTFvxRivcZLzzzLhf9spTTFmwTvM52L4eXvH/biEZdJAumXA2xImseiPy
-         KeIhnICTYV1GLdWgw6B5gk4mRl9ax9/TVq3CfBMjwR5EySz6GZJlGERlWBcIcembWy+y
-         NcQw==
-X-Gm-Message-State: AOJu0YyQz7pDVHlM8dSSwhRJ5Q3Aa4u6NUMJoRLJmBXiI6q2cdBPHYGz
-	rshOXRsgxmTaIE+/ii17mfm8SjBWbuD/whE21s/MSkBaFTUWtIoi1zTc
-X-Gm-Gg: ASbGncvxchJItEhCjA78FpfFZ+0ly4xQqcLSlqVoR1qzrxvaDdncIPl5t0w4Lx+F4Ib
-	0YdSX2JX2er5VNiFTc3mwzJNr4orYMcCeZ6fO++X/vv60Y2/gUF8QVth4G9Rf23c8949+0fmFv7
-	KW3SgjPz72h7ZeHXKzaKxRr2MK2yWvDvpBX4bPCZlW1wGo+qpAZgabUGqay7tH7WUAuv59Pkzc7
-	td2Gw5Ybjz7/YK2wltpUJhE3XUTV7E/lRJQlcEF6Sk6kfv5B+NOO9RhbpF5HQ66Mpqf9lgCY0hc
-	zPrwgBsIpgnUHS7V2MBVz158E5WsPe0MDhuoU2rcVcbEDaQDnHyU/CHMFgmqoFWZrWPEnOzvdlo
-	tOqP2G5dMqcO0ZY4=
-X-Google-Smtp-Source: AGHT+IEFkuUzNUeQjFGHJBP/Taa/l9tcuDP+IfWkFOR5pFG+AzqVY2eUMdd95gLfEK5YX7h2+CpQdQ==
-X-Received: by 2002:a05:6830:dc7:b0:73e:96e6:2525 with SMTP id 46e09a7af769-7413dcf2bddmr8455480a34.24.1753719245203;
-        Mon, 28 Jul 2025 09:14:05 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-74147fc0479sm1126468a34.25.2025.07.28.09.14.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jul 2025 09:14:04 -0700 (PDT)
-Date: Mon, 28 Jul 2025 11:08:10 -0500
-From: Justin Tobler <jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LW1+0pN8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z18CNCK+"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6BE51EC007A;
+	Mon, 28 Jul 2025 12:21:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 28 Jul 2025 12:21:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1753719685; x=1753806085; bh=WAOoo8djLV
+	ggcNNePmyF0drJkivqhvOfusnjWbfjrxw=; b=LW1+0pN87sbzZUyc04R8LiFKg7
+	Zttu6Ym0w3V5bGuhXU/+eqisE25+2fMHbiz8xvwUPsFBc3FRL69GmDyZvVofz1sw
+	AkkexS+cF/8riUaCl9l1pKExTwNd1j9x1LDXtpL9grLp7J0RN5q7kcHBQRGVb82z
+	CuTjvNZBD4R0//5b+aJRhHQyIChNPDZ+JVTEkyugfU3ZpmD+IW2B//O/LGBcCRSG
+	D1pVxzYWymBJwi5N8N+2hodzEV5n6mcCRLaTZePEQaGXJAzce2S98mtax1an0Y0t
+	FMLXprYyjV6M05xfYHqcMMTrXlNJ9Lg8goq7c1Mh+g6a53XUu8AcmWY9yjYQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753719685; x=1753806085; bh=WAOoo8djLVggcNNePmyF0drJkivqhvOfusn
+	jWbfjrxw=; b=Z18CNCK+1JiITpefb+I4jP4NVrmgbB8uZN2DIbg9WkqzzF7eaYS
+	3kVsNDG/6bNpyhswk7btfmFoBAPUNZ0O08y7dlzeGVPpY82jS8A8J4akFrb1L3m7
+	PB5xytng5JWkIQmgy2NQaeRsUXC/q44LqPoLhfpTz57bUPbt4jUbQalT2eesTLT8
+	xjUHhLLNIw1D4XrQ++LeK10j8tQDtjM+pdK1IVF+5ymKPuuV8vYtmgiChIJCHz+M
+	mf6zgxRD61YGC30P4xPzfwxzNj7Xoxy0qzd/Z7biByGuujQ7UlW2JwYKYluKk90u
+	QWlVWtZVI6aBkCBj6sEFImpgeSZNNfSFgjQ==
+X-ME-Sender: <xms:haOHaMBAv2STfjhlp-Pp-_PLNOzstEpVXujagTxzW9YShR828Dwa3g>
+    <xme:haOHaKCkrY2VvotBsxHqB5HiLn29AlZFVYfzrD8En2qJ4aB9vdokPhu5EIzs5Cj-X
+    M4KqnYs49mb4sNOMA>
+X-ME-Received: <xmr:haOHaGAC-F3x8J3ER3zqnw763AF6-n_S_M5GJsEd9fbZSpgFrPwxS2jrSi3FSqUdYcBP8DP8zRGrr9DTpHF4vwJ9-sGmK4wCxpmIUXo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelvdeigecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+    pdhrtghpthhtohepjhhhtggrrhhltdekudegsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:haOHaNr_UHqZceaDg5XmYMTSZcv-TqyR9V_1eh26Cfntqr8Vqqfywg>
+    <xmx:haOHaIklT8c7CskeHwM6TNTBPPg2p15kmn9Kl5AvS0qVth58OWbjCA>
+    <xmx:haOHaFxZ8bZzP9gSNHt_PCMi5zLZnT4pNSDY4CLzfp8eNQQv4dbnpQ>
+    <xmx:haOHaI_1TNtfSprETRZXtUeexjn3xfja112jKPCeQyH8DHpQyCc_SA>
+    <xmx:haOHaIdOr9-fF4uuVazwMpGnDAEwcOF3n59i3c2kp2JoAkT-q0NkaLyv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Jul 2025 12:21:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Jeff King <peff@peff.net>, Han Jiang <jhcarl0814@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Han Jiang
+ <jhcarl0814@gmail.com>
 Subject: Re: [PATCH 2/4] refs: simplify logic when migrating reflog entries
-Message-ID: <b4mvddzjkdv3htup4htigdifp3zydrknhheza4vn3dqkecgx55@vyhj57qanllk>
+In-Reply-To: <20250728-pks-remote-rename-improvements-v1-2-f654f2b5c5ae@pks.im>
+	(Patrick Steinhardt's message of "Mon, 28 Jul 2025 15:08:46 +0200")
 References: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
- <20250728-pks-remote-rename-improvements-v1-2-f654f2b5c5ae@pks.im>
+	<20250728-pks-remote-rename-improvements-v1-2-f654f2b5c5ae@pks.im>
+Date: Mon, 28 Jul 2025 09:21:23 -0700
+Message-ID: <xmqqqzy0wakc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250728-pks-remote-rename-improvements-v1-2-f654f2b5c5ae@pks.im>
+Content-Type: text/plain
 
-On 25/07/28 03:08PM, Patrick Steinhardt wrote:
-> diff --git a/refs.c b/refs.c
-> index fd9a5f36b20..b820c3908bd 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2942,6 +2942,7 @@ struct migration_data {
->  	struct ref_transaction *transaction;
->  	struct strbuf *errbuf;
->  	struct strbuf sb, name, mail;
-> +	uint64_t index;
->  };
->  
->  static int migrate_one_ref(const char *refname, const char *referent UNUSED, const struct object_id *oid,
-> @@ -2974,14 +2975,6 @@ static int migrate_one_ref(const char *refname, const char *referent UNUSED, con
->  	return ret;
+Patrick Steinhardt <ps@pks.im> writes:
+
+> Move the index into `struct migration_data` and drop the now-unused
+> `struct reflog_migration_data` to simplify the code a bit.
+
+Nice.
+
+> @@ -3015,17 +3008,8 @@ static int migrate_one_reflog_entry(const char *refname,
+>  static int migrate_one_reflog(const char *refname, void *cb_data)
+>  {
+>  	struct migration_data *migration_data = cb_data;
+> -	struct reflog_migration_data data = {
+> -		.old_refs = migration_data->old_refs,
+> -		.transaction = migration_data->transaction,
+> -		.errbuf = migration_data->errbuf,
+> -		.sb = &migration_data->sb,
+> -		.name = &migration_data->name,
+> -		.mail = &migration_data->mail,
+> -	};
+
+We no longer make this copy, which makes sense.
+
+>  	return refs_for_each_reflog_ent(migration_data->old_refs, refname,
+> -					migrate_one_reflog_entry, &data);
+> +					migrate_one_reflog_entry, migration_data);
 >  }
->  
-> -struct reflog_migration_data {
-> -	uint64_t index;
-> -	struct ref_store *old_refs;
-> -	struct ref_transaction *transaction;
-> -	struct strbuf *errbuf;
-> -	struct strbuf *sb, *name, *mail;
-> -};
-
-When I recently was looking at this in [1], I remember finding this
-rather awkward/confusing. Very happy to see it go now in favor of
-something much simpler :)
-
--Justin
-
-[1]: <tg72v5vgu56b6akawy7sfapi2qtrmy7q3uruhersy4dtzkpvju@wamlylndp3xv>
