@@ -1,65 +1,65 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9856D213E85
-	for <git@vger.kernel.org>; Mon, 28 Jul 2025 20:20:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EDA217F23
+	for <git@vger.kernel.org>; Mon, 28 Jul 2025 20:20:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753734057; cv=none; b=oIQUHz02vSKU8nw9HrocuyWs2G5KU95CxEiPnTDQte5Nf84DUndA2NhZgzOTl/IyCuqxs8BlIDQgRlzY/rJSKj97IfWQ2yZzMiR4OmBb4mtK7DJokKED1CSgY4n341yYh+sfm6wFZSd1HtlDbSYQU+Dtd4L7lgRnLNTtXv6shLw=
+	t=1753734057; cv=none; b=BniEpt8p97dwYPPAGi7RxTbU321ArwogpIicVV0niTlT+uStcy7ZZR2espsZdiE0Tl0gLvP6fCpNaJTk+QF9TZIxc2RFaRdWc3fAY5kSyFcnepfsBlyBtizBBpI0Vs8Elm4a4fGb3ePCSPiZi47lYGzRMxb2r5hrIdnMcveu2/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1753734057; c=relaxed/simple;
-	bh=Je33pJnXZ3Z6jKsRqmsojgxb7QjQXWZ7irL+9Cys3mk=;
+	bh=LGiGeIcC4yALE9lAVEAHnUamtwyZxR0G0UeisPBOSew=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=p4L112HUOTcaUcMOrIwZT1zis9GxtELUkcBcgXJPhKNBJhTWa+jmLp2GbuFFpAmIXap8dpZz4gaUvDZD+4I09D5x+PkRpy/IhoUDPCqaGgQNJ1fYv2p7PAEpnxBuR3jIxs9331yni+FAgPkckqMvDpwezX1Jd0XSGV3HC2PM2Ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bjy9XcQE; arc=none smtp.client-ip=209.85.208.47
+	 In-Reply-To:To:Cc; b=qfueQJ3gVP+6MhEZG5nruwMhDZegGb71vajglLAniAwKvxnHbVzLdhwkIJPJrZth5NmUs+IXPRh2QAkHbOR1MUOlPbuXVRHdvIX4hb8KloQkDsBP7dcsu3ZBU+Gx9fp01NjeEOsr3sGsG/bpyxZ1slU8d5LVGWaeCS2Kso2/SiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UAZWlJmL; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bjy9XcQE"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6152faff57eso2708743a12.1
-        for <git@vger.kernel.org>; Mon, 28 Jul 2025 13:20:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UAZWlJmL"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ae35f36da9dso997914766b.0
+        for <git@vger.kernel.org>; Mon, 28 Jul 2025 13:20:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753734054; x=1754338854; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753734053; x=1754338853; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uVwb4/gQ3MRXzq/X9HC+YmRv683vK4qBhyFxCM6QNZs=;
-        b=bjy9XcQEC73u8McO5voAvPwMpZz/1QwHwBh+PfHmn8xHFfohnS962NWai2sYIj8igc
-         ltL8dDeoi6zFnDb5D+PfhqEgkAK07gbPeSN0GbVLTdYkaKQbnr4SS764IvepFkbOmb1E
-         v/AkhPvENV3h5obLFa0S37l6flRG1n59InWE277ufbTN6nwhQinLoLAKuG1dM0g+6RTt
-         Oj4oRMXujvhAqIBvcvsdqCgJPUQdvKBy1+TWlc/hvUk0eao55WGHFwShVlXhenb/3IHo
-         /rTpkInzTgb0/F9krxh5mgI8yrSro4gLnRoWtMA8cgkPDQRYHrTxxeE4ORqRhJKn+jfC
-         aAog==
+        bh=yTlxiUqRP+1tZtd5jZ2CiUmgjUNFUSE8ZIDkL6anHkE=;
+        b=UAZWlJmLdN+QySykvxKp6XjmQEXuDGsQY82TUU2Cqc2UMCt+WWpmpptAas1oU3F35t
+         R+3gtDcCfpejcZMI9l2meEOkF1nC9eeWEP2UyI+1cCfVLwHsogF5KaQvXamYNyDN9W8J
+         HfslRz4+QOrVXfkZgYcTB2DiBv8l1JGCpkTwLwf0w60I6RbzSM6EPphUptF6s7Z6/HGy
+         05TxooL9rdCrUcN5zUCs0MAOTbpl9ujgev2Deg8nX273tfB3Xqh5jKpb7FmYNxlVNLte
+         mtvuqpk6tBWtJKqXa7zLAi5c0GKDgT1v1kHxo00MZlDiOeb2xGbbDTqbSV156x4GiClw
+         g7Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753734054; x=1754338854;
+        d=1e100.net; s=20230601; t=1753734053; x=1754338853;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uVwb4/gQ3MRXzq/X9HC+YmRv683vK4qBhyFxCM6QNZs=;
-        b=pwKpYGxNKLeMwNx9a+QLbiMBaVwrKGlhpye3h5SPqAV/IFOe7b7nLr42I1Q1ByWpBO
-         YrCImHpNxWLWj/W0RAxA9S0PltM9foOB3jL6BGE2AqJdl8MC0blrb1iOv2T61z8E/S2O
-         B3sBtahF7aHIulJ+RhMuJXBAXtAjuq81NeN8rN4AdDEV+6m595E4AAd0dM9sEQZHkFoT
-         Dx21TBJx7CqY3fx8AEmQEBRdYLoudJVYMP9/Ui/yfODzIXRMRaIxFsEqpWtz/+P1uG87
-         l0cp0VUFEA3iVWZnPRW+t+4B8tzkPTODad1T5V5jZ00PZtJDsAtP1hQjyCOO6N26FNBW
-         UfnA==
-X-Gm-Message-State: AOJu0YzqUHnmpJ6rMPn4okl8nMfXd5Zn5IZmCYGitgc1OFA4k7YK8nWw
-	XNYtrK6K00bC1x1rWFWvVHwrMFlZ8capAuLz3vmSSlQHjyLou1osxg7d/c8Moge6
-X-Gm-Gg: ASbGnctPNubq1Uzh0gcetdGouwt0EmifB45Idyhj6YsQ/R7f0qhIoO33dS2GD1fXgrL
-	s+0EevL0k+rFOns8WBRk8h5HGcK8jOZBWoLCfJtOef0M55RVff8qV9axJHk+NUq/vg399FJCA75
-	VD45UKHjMGZjHgZoLPvR0vFVNC0+GSJ2rH+FfyEsBktnj2K/gaHGT0ppxFEqj4LiOk2k5N/Zqzk
-	kQhH8KJqY2mo+U1aaxTaVIp8d2bSGtDe1bm4lfGW27YjHHJDvLpbpK1AV1flnplvi9GBrlBsreu
-	rPuevBSQSGeTYb4N97bDfolWu8wGaeFuArMjZAnjl8IYgOdG8mlUIpIoMG2mlMROGZgFvw3Ub9q
-	ucy4guORm20Gk2Yd129JZDyrw2luP
-X-Google-Smtp-Source: AGHT+IGGFn5hMs6PyV8as10iqdnX+lYbAvCFFxrhcRUEaC9qPyc1imSIH7XOZIe0FAxCmd1TpDTkRQ==
-X-Received: by 2002:a17:907:7283:b0:ae0:a483:7b29 with SMTP id a640c23a62f3a-af619c0d81emr1567472266b.49.1753734053360;
-        Mon, 28 Jul 2025 13:20:53 -0700 (PDT)
+        bh=yTlxiUqRP+1tZtd5jZ2CiUmgjUNFUSE8ZIDkL6anHkE=;
+        b=KB3H1hOnK3bjjJWPD2oDKTKmG/vmqGr9NAUlk7+bl2bWHY2kWd2XuRjMZOFZq2yI4B
+         +NLwKhfc6ok84x8b5jgjEMAdYDRZMSJ5IHOwZEGbUXAT8d0Smo6thN+IdvDSNjqiHSY/
+         dR6fDOGQtOQVstsHnKf1VpGZH/rkKOSXjlPCwmyrhLNlqAnYxf/dLmbCZ4E5nymhBWv2
+         Sh2Y+VjlhrOOzsa8CQxYGjbaDkluCVm2EhQIvp3Iwm3GzbtHWzAUZXpxOTNPkqHpX07t
+         o02Og10byS2yw/p40SEtf0hHWQHZjXsaCDjr1Ob0L1Si0wROF92UWKs7lLuVO9dW/g9w
+         kGTw==
+X-Gm-Message-State: AOJu0Yzf921f+Xw+gJdNQi1yAfr2n8yUqMlJqFhwVP/KK/YrvPGL7Ezj
+	euDLH6bjUnHl+Ahpf6j9a7RRkQg0koSvVliIK+wfxp9FInGkcpHKt0FZffrdg5Il
+X-Gm-Gg: ASbGncsxCwvSxjNW1boXZiOW7W5qzim02Joy1bl1UPnEwNxFPe8AfL4zhdYuHj0Udq3
+	3CoVnsyG+Fv5JA4Su3nkhSEw1seLw5yJs8Fewsj3sGnwX0arBy1N2AbgKouUQCnEyF5OsNYW4g2
+	qMJslwHSkglHXDgBgywUlSGcETnaJo3mMntV5Pl5JuYrdtigPqofwX0+nR3rHSc/HHvHs4APK02
+	npwSoZkFBv8oBq/2FWglbo1VY4W9a9KCy++EnYIN0bCvg/DR45Iiy7qFoke3agQvNbrZr4wrV5K
+	VweNWR4tRe5jpCsHe+CFkTT9O1NPhk4C+SW23q5t/+RXcYZnGRR9/tDvT6O94YlYDtALEdzOSp3
+	8mhvRMqb/m8h/GOPxSQxgRveHzCEZRwOhepEA6do=
+X-Google-Smtp-Source: AGHT+IHJ8l0w1Mj+tp2CV1FmEB55HKAA26lM2FsfBspw81wuzQ82/M4+y5qUbiJNLb0QKUAmXCFAfQ==
+X-Received: by 2002:a17:907:7205:b0:ae8:fd2d:44b8 with SMTP id a640c23a62f3a-af618bd8210mr1444988966b.29.1753734052611;
+        Mon, 28 Jul 2025 13:20:52 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:2455:8268:bc00:9706:c2d9:b21a:2042])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af635a62ab9sm475376266b.86.2025.07.28.13.20.52
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af635a62ab9sm475376266b.86.2025.07.28.13.20.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jul 2025 13:20:53 -0700 (PDT)
+        Mon, 28 Jul 2025 13:20:52 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 28 Jul 2025 22:20:47 +0200
-Subject: [PATCH v2 2/5] for-each-ref: fix documentation argument ordering
+Date: Mon, 28 Jul 2025 22:20:46 +0200
+Subject: [PATCH v2 1/5] ref-cache: use 'size_t' instead of int for length
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,68 +68,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250728-kn-small-cleanups-v2-2-d3021c8bf471@gmail.com>
+Message-Id: <20250728-kn-small-cleanups-v2-1-d3021c8bf471@gmail.com>
 References: <20250728-kn-small-cleanups-v2-0-d3021c8bf471@gmail.com>
 In-Reply-To: <20250728-kn-small-cleanups-v2-0-d3021c8bf471@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, gitster@pobox.com, ps@pks.im
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1612; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=Je33pJnXZ3Z6jKsRqmsojgxb7QjQXWZ7irL+9Cys3mk=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGiH26Jgcm6CuooHnfiMT7WL8vPzKcHENE1QK
- c5lPnQjHC8WEYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoh9uiAAoJED7VnySO
- Rox/HlIMAJ9G2VRlhiehO5IXCZvNM6LZvDbEIHd4I4fUAlBx8ozEs1Oyp5LvSHNiq+J1He+nt9u
- U2WcRy/GGbd3nleDFp8xk16hRh1WXwzaz/nq7tqr9qOuOO1hHaTjYSVrMSaY8x6QGVf/Gt48knp
- e/nwfXtTCeE2vdnf+eXUOu/hXCEGE74CThotWAbZd2YIgjAoxRfWIl+LV+FNcl3aeexdQP9DD7M
- uDVG/HTOmzpu5s8TPzGR5EXbswFymdJRreg/EkGdkhW4KhvwCfjDEt73fVjTeWWA5AQFVnsvYj8
- 80bxsXASHr6CgjqhQijMYStcOR4z8gJV2tG3FI28UQtwNvy9KsI4wmfEvxcW5PHtWNWPJdvQz6d
- 2QJMlv9kyv3cxUY5n7RDF7tpUy1dZrP2A2+8MqgUwNosjvwjOrSnj+LabW98YEP/KfRJkDsMzdN
- /MWGgSZFh8Ncaa7Oec4LZbTMxp9CG7rIPUmUpgytiJqPf2DbZIXBzXSfXmgYVlChuIyz02c5yz8
- ls=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1630; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=LGiGeIcC4yALE9lAVEAHnUamtwyZxR0G0UeisPBOSew=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGiH26LOeZ8PiQGIi3abVVgCM1wo8QpGQdk3z
+ b1Av9x5N3ErX4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoh9uiAAoJED7VnySO
+ Rox/ze4MAIAKinQc67EA+/lbK/BpM5lSnxTux/68d56B6e7F37i7neJ5ncOseFKQq2UHvGdkvp6
+ Oh8InaOFrflu9n35pA9KRMXFaw8WPmiLnN4S2jOHNIe1p5KMsc/kKc7alFbaHnGJKypDWMig0Jf
+ px8av4gRQWmlEEW+7RYfD4kOMCX8CT1dghY7wIqCjvLDKK9cUa9RHjMBCO6hxolAC7/tdlX5LDH
+ HA2vnlG0eZ5Bg3LihGFBq7essp2+yu0b4NjL/C8OiAeDjrSRpCDIiky6c41CV4SNDUwu4rHF/ye
+ 0mmb7lbdQM8AvUB8sjXxvmzSl7ulc0ZgVVN4wLlQuMX6bX7c6K/qXNf/exJUHBOrgYbBt35w3g1
+ rI07If73Nr/wm5lLSIy+z9iPnVYeQ7yTyGezYGNb5yegkHrZhf9txCoLo+bI3eYUQxMSKOuEvtl
+ TZciy/uiABca+kkFWWShBFU2XLvqz1Gm6cQ10PY+ncKGmnXv71a1DH1uQJsAft+4Y0DpQRxsGp8
+ Vo=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Improve the 'git-for-each-ref(1)' documentation with two corrections:
+The commit 090eb5336c (refs: selectively set prefix in the seek
+functions, 2025-07-15) modified the ref-cache iterator to support
+seeking to a specified marker without setting the prefix.
 
-1. Add parentheses around `--exclude=<pattern>` to indicate this option
-   can be repeated as a complete unit.
+The commit adds and uses an integer 'len' to capture the length of the
+seek marker to compare with the entries of a given directory. Since the
+type of the variable is 'int', this is met with a typecast of converting
+a `strlen` to 'int' so it can be assigned to the 'len' variable.
 
-2. Move `--stdin | <pattern> ...` to the end, after all flags, since
-   `<pattern>` is a positional argument that should appear last in the
-   argument list.
+This is whole operation is a bit wrong:
+1. Since the 'len' variable is eventually used in a 'strncmp', it should
+have been of type 'size_t'.
+2. This also truncates the value provided from 'strlen' to an int, which
+could cause a large refname to produce a negative number.
 
-While here, change to using the synopsis block which will automatically
-format placeholders in italics and keywords in monospace.
+Let's do the correct thing here and simply use 'size_t' for `len`.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.adoc | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ refs/ref-cache.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.adoc b/Documentation/git-for-each-ref.adoc
-index ae61ba642a..ec3b10e14a 100644
---- a/Documentation/git-for-each-ref.adoc
-+++ b/Documentation/git-for-each-ref.adoc
-@@ -7,14 +7,14 @@ git-for-each-ref - Output information on each ref
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 1d95b56d40..8df7ae43e5 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -498,13 +498,14 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
+ 		 * indexing to each level as needed.
+ 		 */
+ 		do {
+-			int len, idx;
++			int idx;
++			size_t len;
+ 			int cmp = 0;
  
- SYNOPSIS
- --------
--[verse]
--'git for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
-+[synopsis]
-+git for-each-ref [--count=<count>] [--shell|--perl|--python|--tcl]
- 		   [(--sort=<key>)...] [--format=<format>]
--		   [--include-root-refs] [ --stdin | <pattern>... ]
--		   [--points-at=<object>]
-+		   [--include-root-refs] [--points-at=<object>]
- 		   [--merged[=<object>]] [--no-merged[=<object>]]
- 		   [--contains[=<object>]] [--no-contains[=<object>]]
--		   [--exclude=<pattern> ...] [--start-after=<marker>]
-+		   [(--exclude=<pattern>)...] [--start-after=<marker>]
-+		   [ --stdin | <pattern>... ]
+ 			sort_ref_dir(dir);
  
- DESCRIPTION
- -----------
+ 			slash = strchr(slash, '/');
+-			len = slash ? slash - refname : (int)strlen(refname);
++			len = slash ? (size_t)(slash - refname) : strlen(refname);
+ 
+ 			for (idx = 0; idx < dir->nr; idx++) {
+ 				cmp = strncmp(refname, dir->entries[idx]->name, len);
 
 -- 
 2.50.0
