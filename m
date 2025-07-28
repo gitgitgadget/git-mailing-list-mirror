@@ -1,142 +1,102 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24C21EA7C4
-	for <git@vger.kernel.org>; Mon, 28 Jul 2025 03:55:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B7310E3
+	for <git@vger.kernel.org>; Mon, 28 Jul 2025 06:02:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753674958; cv=none; b=EkEBcXOk+9SuSMebWvZ9Ngordl3jxEGdNIXdMJnWBJmQrGpXfqMNJ1mKPyj3LVj0NpeeiITx8lqyW2dxikOUokvVfvbt89SG+vs6dBgzHeo/gau3JyR0Ak/ua178frMT2wa4qLXkMKT23MjFqjt1cFJotIAsFqW4cTtUA3LO+4E=
+	t=1753682548; cv=none; b=KKiDGGJfpvycL5VkrRtsX9TwOcEl7+HL5oOCcvw2Ney8JJc16BfAuXqeDdNfV8Vu8eBm5iM7QDMLbLYzY2XcpvALiTFrf5JGzaX6VNZqxcp1THGAG9muSwk/FEtxrS/KZgVydXYEzCeqU5VfVSEgAAcd3drjnuK18JY+gt83fZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753674958; c=relaxed/simple;
-	bh=CSJU5AmxadcTPinSFGkowaqUpIzec8Szicj7ItF7fqo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UviLjl8ByXt7xKrZPm0RbYdySEKaTa5LP6Fnc5JuBTi91kgc6FMa0PSZu9L9zjNcI5ynipqvEB4yM2orziARkQdbcT4OvXHeoKxqOZt7vq201io+3ehuAynylewxKAOnREh6/Rc/s5W3ONSp/ZnsUxpWdeXvUjGj1zeuC3RTZ6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=eUsRid5W; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1753682548; c=relaxed/simple;
+	bh=6LQWCQ99XySpqbhr5tZGpCNn+GQkyXMo63OKmDSsbWU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NIxFFWeCzrSAYrNN/9/JDXPFDdOVQfsfL5kwXAckBnyZDIZjJbdVhY3G5IPhB5jTID1M5zdxDvele6PDv4TX8LBYHIms/ioGIMVQ1M3wkW3CC421W9yrNXnp2cmDrK+Eme0+SdQuAYf3WomwFKoX/mFq3dCb+K3Of+VI4rksZ0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=acprJoZ1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FBJvmqeP; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="eUsRid5W"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-74af4af04fdso3600875b3a.1
-        for <git@vger.kernel.org>; Sun, 27 Jul 2025 20:55:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1753674955; x=1754279755; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vtoerjetN+E9agNOBbuM2wVnLsERSyf0trXfAn29kbM=;
-        b=eUsRid5WXFozOcDIW+zI/xHCrcMxG8jwCyg/kqcslIPvnMGkGH5ktBSN29J8mzGXsQ
-         YxNqJq7nfG8GLvHIeYrCcRiW/XVHa9VHIJTyJGlYoIgaV+Iv5zEAdIXNceW7j8hZP2eg
-         qFbwlUZbhzqaB3hsY1f5D+7b65SK6iiYcq/tVsX5OUEUX5Nd8q8//7UEvEc+rEMC6+kY
-         xqSPRCQ9HTMn6ycxYIRiFxfpGJk7dLHZxzNkD/OlFn8pB2zHCVz9Bw4wK+N1oRRAYxAj
-         o2bPmz6PlENSdUnNAm1mMUWccbfmHnRuPGL6QLTNIq0BKKDTWwezYBa01SP/ul99Oknz
-         yOAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753674955; x=1754279755;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vtoerjetN+E9agNOBbuM2wVnLsERSyf0trXfAn29kbM=;
-        b=F0PWsCLGCovodJRbyh5gNHeoowfrnhnxjw8+AOVp8wGcQPZNCyenr5y5BVPXnwSPfl
-         aRaXnMvvvzSEVZJxciVHYfBiCSl09H961g24VdHkAtlwbUNkmiG/g7hyGuh1nVyaq37c
-         BueWN2cKzQLgwQ0E3/eQokbMAVP5NWiMbcnZBNIxkwtPL+evPAn+ydB27GwAHOt+9TmC
-         +MjDA9Nx1+c1Agtg+Dg6AO6VCTOJyqAcGF0cHquA7c0/mBRFXKWmzccfLKeg7uLrHho7
-         jshxOknvFC/E1tNrjBata9HYO6vT8e4dM0iCwTDKGfiDcUo1L42FHqcGyoBHUgqh2l1j
-         lGUg==
-X-Gm-Message-State: AOJu0YxrhOnS8tahhdGgl6ZlCGneP/1NMrcmiZAR97doaaJnvD4Nhkb+
-	PCbBONbrV30/NXJOkOV7PZsBr7EjEkaPZ/3J1pdIfALW2af0uUCrQEQJTQJl1waA30DdOPGTR4R
-	AJxvR
-X-Gm-Gg: ASbGnctV/sCD88cLAk9k9PUooMg2vZQakRoVzpXrK0rQG0rmEjlpuHm0mHXY7Sf4pkM
-	3qX+gpx+rcqkMYWxIpCRIvwwOUJZ6h+TtTPKZ2xUUzQRGQ6AszNCehno/efHv7SiHm7NHeF1p/H
-	10U58wFeDBaN55seJhZRzyRt4z7aWGdZCRn7qeDIR0YXPUxnggHtFyAM/Yrw5EjtKyGUwkEXEl/
-	mN9XBx2yN5eHKN0tyk98aeFjW3dFrsj+Ayl984ymf0pA38JOUzhUkZP6gNQSJAWTNz+euqxdWea
-	A6HiJWC2LCkcV/V3186d2fQAq5IaOQNPf3k8ht1VcxLe4gpiq47RTkB/AingzG//rF48SOw2m1y
-	2XF8sTd/9lDWQgBT2behb//7oHqxpu5EycP++/NxAHtTtJTTCFZciBgnalXXo
-X-Google-Smtp-Source: AGHT+IGceku70iVsqcBMzz9LUPDKvMnLNKqZGe0eZk5NDfD0i21cBJ0TaojDGZlarXLCZvwMVO5f5A==
-X-Received: by 2002:a05:6a20:7d9f:b0:238:abe:6363 with SMTP id adf61e73a8af0-23d5b705b80mr25812996637.14.1753674955479;
-        Sun, 27 Jul 2025 20:55:55 -0700 (PDT)
-Received: from LTY2K703JV.bytedance.net ([203.208.167.149])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f7f6af84fsm3792195a12.50.2025.07.27.20.55.53
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 27 Jul 2025 20:55:54 -0700 (PDT)
-From: Han Young <hanyang.tony@bytedance.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	Han Young <hanyang.tony@bytedance.com>
-Subject: [PATCH] blame: remove parameter detailed in get_commit_info()
-Date: Mon, 28 Jul 2025 11:55:48 +0800
-Message-ID: <20250728035548.94277-1-hanyang.tony@bytedance.com>
-X-Mailer: git-send-email 2.50.0
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="acprJoZ1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FBJvmqeP"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1F9207A00D7;
+	Mon, 28 Jul 2025 02:02:24 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Mon, 28 Jul 2025 02:02:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1753682543; x=1753768943; bh=6LQWCQ99Xy
+	Spqbhr5tZGpCNn+GQkyXMo63OKmDSsbWU=; b=acprJoZ17g7m8koOTZ2VVvRc3i
+	Sxx5tXkSet0lQLbgpIPftgFeXOm+abWehzsCdOIHN3vZwV5BxLPwI67ylPR2KpiC
+	+Daht2xC7Hn49iINW9Mw1Z7P2DZ+ldzL8u+cdpGw+2xqF93M1Pky3Gubp0uOejEB
+	zLYlJCEoh6Uj+SWv0/P7hJ4n8ruDpUxbuIEt26eyz9n09cT83AGbo6oyvk9s+qn4
+	lwsoUZToXbqoOnX41P6fQXSEHUFcyHoxz+7aUkQVFPhThEcrGbbdHDtYPYg9tA8C
+	FLvGf3WfvNqDKwCGhZPJDNL63Y8gqjnT6oRquKqyCbzjpVH6nHITIohKvtSg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753682543; x=1753768943; bh=6LQWCQ99XySpqbhr5tZGpCNn+GQkyXMo63O
+	KmDSsbWU=; b=FBJvmqePM/oPjtsCLw3uiH8kEOrjVehObscRn9AYe3PKGDQZkVR
+	TJkNV9XVsLZH6zzUKxudr7ljwvISUZmohukr78KBN2gTKz7z9Ny9Wh3L+a5ozcLX
+	rTbDfdlP/deaDNCni1FILdmYfLXg+rc9mER7gjPaXkGiyjNpF2eb0HpYthz9hsNY
+	jqw+IXafu2T1HllmPtNbuX8iarRd9cDDkdxeb+GlpPCmZQ4gWXJtyCLxAdXFLg5r
+	+BFK7osx1GjYk6o3PzI5RbO9bAf9cSWWpQUy7hDHFCRzS+D7Uf2yj48NZmI4jIKd
+	MJjGExLw74KFmF9ut8QolnkKg5i/IlEAxdg==
+X-ME-Sender: <xms:bxKHaLFMpIMaGQsB4QJYk2-8ZWZGHoilte4myNRcOhBw_-StwjBLqw>
+    <xme:bxKHaLm1hQ_9S52LON4baD8XNCDZiUpH033ljYffQhooOkSV2PiOUVAqO0U0jK9Hh
+    p1U1VxefrghSMiVrA>
+X-ME-Received: <xmr:bxKHaGkZiZrYg0urFIYeLJWfkE6SPb_E1Gz5KiAcUrZUUcG_SN6APzP8-ZsOmCbyafLG85pRNhs3RZVJ371IMF26pOR38_X8NRdRL5zX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeludegtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
+    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephh
+    grnhihrghnghdrthhonhihsegshihtvggurghntggvrdgtohhm
+X-ME-Proxy: <xmx:bxKHaEujYd47RZTPqUQiCgQ1FTJL0DbgB_bCf4XHLfJzvWMV3S4CRA>
+    <xmx:bxKHaBlq_QVLuHr-x0cKFIDUNqfmC0yWWKuOM0Bf-v_V8NQzmWfXQg>
+    <xmx:bxKHaHusFyX3RH-i8S0niZHnlTIJdW5xH-4AsazgoynmZ7c45vpOTg>
+    <xmx:bxKHaPeynR6vSJIBQXvmBHvpzvZtQfuG-1qOMln7LeJN-c0TYyysxg>
+    <xmx:bxKHaIvygzb6ZEBQQA6EqJT5bD_KJiVPpd7kQbcWkhOwJyZ98F74KY6U>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Jul 2025 02:02:22 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 151cf2cb (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 28 Jul 2025 06:02:20 +0000 (UTC)
+Date: Mon, 28 Jul 2025 08:02:10 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Han Young <hanyang.tony@bytedance.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] blame: remove parameter detailed in get_commit_info()
+Message-ID: <aIcSYs7LxkJeRA-9@pks.im>
+References: <20250728035548.94277-1-hanyang.tony@bytedance.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250728035548.94277-1-hanyang.tony@bytedance.com>
 
-The get_commit_info() function accepts a parameter that can be used to
-stop the commit parsing early.
-However, none of the callers use this feature, and testing proved that
-the performance gain of stopping parsing early is negligible.
+On Mon, Jul 28, 2025 at 11:55:48AM +0800, Han Young wrote:
+> The get_commit_info() function accepts a parameter that can be used to
+> stop the commit parsing early.
+> However, none of the callers use this feature, and testing proved that
+> the performance gain of stopping parsing early is negligible.
 
-Signed-off-by: Han Young <hanyang.tony@bytedance.com>
----
- builtin/blame.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+Funny enough it doesn't seem like the `detailed` field was ever used.
+`get_commit_info()` was introduced all the way back in cee7f245dca
+(git-pickaxe: blame rewritten., 2006-10-19), and even back then all
+callers passed `1` as the `detailed` parameter.
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 91586e685..dc934abef 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -197,9 +197,7 @@ static void commit_info_destroy(struct commit_info *ci)
- 	strbuf_release(&ci->summary);
- }
- 
--static void get_commit_info(struct commit *commit,
--			    struct commit_info *ret,
--			    int detailed)
-+static void get_commit_info(struct commit *commit, struct commit_info *ret)
- {
- 	int len;
- 	const char *subject, *encoding;
-@@ -211,11 +209,6 @@ static void get_commit_info(struct commit *commit,
- 		    &ret->author, &ret->author_mail,
- 		    &ret->author_time, &ret->author_tz);
- 
--	if (!detailed) {
--		repo_unuse_commit_buffer(the_repository, commit, message);
--		return;
--	}
--
- 	get_ac_line(message, "\ncommitter ",
- 		    &ret->committer, &ret->committer_mail,
- 		    &ret->committer_time, &ret->committer_tz);
-@@ -263,7 +256,7 @@ static int emit_one_suspect_detail(struct blame_origin *suspect, int repeat)
- 		return 0;
- 
- 	suspect->commit->object.flags |= METAINFO_SHOWN;
--	get_commit_info(suspect->commit, &ci, 1);
-+	get_commit_info(suspect->commit, &ci);
- 	printf("author %s\n", ci.author.buf);
- 	printf("author-mail %s\n", ci.author_mail.buf);
- 	printf("author-time %"PRItime"\n", ci.author_time);
-@@ -471,7 +464,7 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 	int show_raw_time = !!(opt & OUTPUT_RAW_TIMESTAMP);
- 	const char *default_color = NULL, *color = NULL, *reset = NULL;
- 
--	get_commit_info(suspect->commit, &ci, 1);
-+	get_commit_info(suspect->commit, &ci);
- 	oid_to_hex_r(hex, &suspect->commit->object.oid);
- 
- 	cp = blame_nth_line(sb, ent->lno);
-@@ -665,7 +658,7 @@ static void find_alignment(struct blame_scoreboard *sb, int *option)
- 		if (!(suspect->commit->object.flags & METAINFO_SHOWN)) {
- 			struct commit_info ci = COMMIT_INFO_INIT;
- 			suspect->commit->object.flags |= METAINFO_SHOWN;
--			get_commit_info(suspect->commit, &ci, 1);
-+			get_commit_info(suspect->commit, &ci);
- 			if (*option & OUTPUT_SHOW_EMAIL)
- 				num = utf8_strwidth(ci.author_mail.buf);
- 			else
--- 
-2.50.0
+So this patch looks obviously correct to me, thanks!
 
+Patrick
