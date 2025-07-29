@@ -1,132 +1,171 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A356287247
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 09:35:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F122882B0
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 09:35:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753781745; cv=none; b=jjhg9LJLu6NHsCzYZq3DjZzGD1ioPQJa/3aWnRm+SkylSJe9acPMNWbdtBCZbjMXHA2RMH8+rI97CBPAKv7tXf8efPnsGdZlPYpkve2hN0f4/kJeKbAWHobkzqDjsVkr4arZIEVsqPxZEeNodeQJ0kkoU9uSZ5eJweP4cKDyNaM=
+	t=1753781750; cv=none; b=Tb/q6CrSeKnr/X1M2yAN9+hFI38iIt8lND6S8I5+IPzzD52fpceRFLiRvUxdPbzX7xFwEzm4A3sLBmcFVtHVTQBnIKL1WzV2QRAi5lGvJEdptJ/Ez9cr9cK2PO+vyFuy/YW+uQ46sEyH1ksnC6OXOXiPF0lI+AtKBx9qKBawCmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753781745; c=relaxed/simple;
-	bh=Eugxh9Ph1paPy9MLhMSAuVvYM96gHXyQLEDAZtRwTy0=;
+	s=arc-20240116; t=1753781750; c=relaxed/simple;
+	bh=9sxp/gQW58ZRSKAgcyAPhQu8c8YzeCOz87lY9n/V9p8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mfB1W5hg1OXgAMU2+YmEGRiYNgCay88RX/y4eakHQU8mhAIDYYpZTWoTD04hHJvZmXLgYhK5RvsAG1Ue26iB4snHIAQBoV9bAYcR2JXRS0gSaNbLxe51MDskwCZIf5XictGXm/GYADUaNtG7R5ikTgdHFsiETWcz3TLt4fUaHY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XVk5/QYY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FyzeYILv; arc=none smtp.client-ip=202.12.124.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=nF2L9j0IlHzbKL1+A1ai7Lx9yWj6mueBonmcuPzvitrK1osiloUDkmEaPpXXyqqkBpg5OuR5GlpUXjBxE5g5fq+D5ZP4C2uPGAWKcqmcC1n6cMvC6cV5BxZfw8VrdtRaLtYsfo3agH2ohk9RSSaYlvX6+x0rwr5VOgjioeOCIvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jL5srAAN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fJl4Eo6K; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XVk5/QYY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FyzeYILv"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4AEBA1D0086D;
-	Tue, 29 Jul 2025 05:35:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jL5srAAN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fJl4Eo6K"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A60257A0CE6;
+	Tue, 29 Jul 2025 05:35:47 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 29 Jul 2025 05:35:42 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 29 Jul 2025 05:35:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1753781742;
-	 x=1753868142; bh=UWs7B5CG59ZVpyy+WkSTUSfeAJT1QWG/qC46sW8rrdI=; b=
-	XVk5/QYYdWk20zng+ANn7251Su5vaoTRSuta9P2JnMNUTrU+tSxdixkNEv3BBpMB
-	0YsWrj8tR6wL56WwYIlmuklietx9qjZkHtxiSeiJbJuSDw/ljCThNl9wWhm9UGbI
-	AXDtZRir4z2vCYfnYjuYtMKoOWr8Y+8bLDy3rVAj4Qq3JmR9a4cZUUQgmHF+yc4L
-	3bdM4a2SjZ9E5v9szyMy7WiOSDysvGmI+u4DlM6TypRxsEhtbMpqGQImn3rLWR2a
-	J+KZ+JxzZal6OVwlwYpkrDoC6mrFzwvE6rGXnZiKojseJxfuBzjTLHPaJdDXmuvH
-	oqZXGQhreWAdx5GiTvbi7A==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1753781747; x=1753868147; bh=1vWJzLpYs/
+	+R3326xXZPn3LV6+wKwjm4D9p0Q06fczE=; b=jL5srAANAelgGdSxqaHDyIYbVk
+	Ub1bmQpEq71zGBc+1LLURh7RbTewOQZpyczpBg9+1c/zCOn9RYOHkqem09k8Gz2M
+	xS4R849SATdpMZPEDIrlag5hzHHnpC6zMetMImSB2XHrMf7vdVyEu+H/PzeYUycI
+	g+8iMGxdku2NoTaSf8JYFynEPqoaWZy4f3VGtnf1blhOyVj3q4K7DuQy7NBS9hvp
+	jL75/zy2Q9S1VMgZkmHMFkYcuRN2R6HmZEhz8spBlWgGCSXr7nRksGE8IoheL67W
+	FZXZ5zNiBAFPQUlW8j0Na6WbyviW/4hPHoh5lDmrtVOURdei9A9jyqIHUCLw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753781742; x=
-	1753868142; bh=UWs7B5CG59ZVpyy+WkSTUSfeAJT1QWG/qC46sW8rrdI=; b=F
-	yzeYILvxfGxFvy6L3QUWs1LVT+V1qSeRIXHgEzd+BC9acIjEiqk8XfSnCIeBtR5a
-	qfg/iw4w3mZskwMoqCfKTeKRLz0m0c0N6MkkxC+jLFRqhcKd+1EZr6rrR0eYSEqW
-	xe3FAI9AKWaww2F3XCzzjN7PFl+HUj9okr6RTAI4lOnQ2qjfcTJpb999/FRlyc0u
-	N6/SAuoDcdBPmSqOltjITbmsXy8Pwerjag9QA4nr57oK8lc5O/tgQ4ZJvZBsuYN7
-	l5elDMM053+J0aSbV5CnYrtzhzjZpxlAC0UaJx1UjRp71AYqEV5WmU4CoFKKl/RO
-	afl5IntgCj/DLLbGSac+A==
-X-ME-Sender: <xms:7ZWIaFxXlYp6Qwji8UpPQfgPEAkujmCNbvxb1w9EWkvx88SznxEPaQ>
-    <xme:7ZWIaCqyANvLQSZ6VKFMYhnqOj4RpnT4BUa0OW1AgpVClcsdejZIIN2Brr_F_KRh5
-    ygr7plPcrh2po2lPg>
-X-ME-Received: <xmr:7ZWIaGoPGGNorz35IKDhVLG2MxhbTTSxYFAnKe6wwndc9jZdTU6c0TlmTT7OSj-vnspdVgbPth0m7ZR_OFiUea8hc1olVw5rL1Q_OwDFbww>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelgeejudcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753781747; x=1753868147; bh=1vWJzLpYs/+R3326xXZPn3LV6+wKwjm4D9p
+	0Q06fczE=; b=fJl4Eo6KuA1u17D+08aTD1jiQxPrIPTsjmNRP989QsegohuPGn6
+	HCxCckoPntCtXZp3XaAAVjpwBIgiylpgI10h1lOtqo+AW745r7z6jS1PE6FWK/F6
+	01YTVgAm8/2rvSKXx3t7kTK9KMkUmakcAk2YK6vvEB2Btcyfrt97ZcKF5jC/b0qL
+	HOkPHk40zSkBnKVBywvXD1vd5tAv0Qxk7/zyFJuCBSuQoaOxmdS+84+15YJRhGat
+	58mtHkqdjGLWL/hexmQwM0ostMJUHXwJX8DOg/gbNcDYMsTh/BjTGiwvj8Z5XwmO
+	1BkCasM+RfDsScC5zBLH+TC0UnWTzuipsUA==
+X-ME-Sender: <xms:85WIaCLH_ugbvU5oCrC3QJjYVcjb3OaCMkrF4zj7RPt8Bbfk2W_2-A>
+    <xme:85WIaEyFO6yEkTZo9fp4YHBuXxOf3TgzmPOWCualblwZVBZpfFBfOxBa_absBxAsc
+    Afcq3_GXQq-_5F7dQ>
+X-ME-Received: <xmr:85WIaIu_y6pDn3McuW7Ih_bS5iS37AByajHd9L1JsGuOQhlLKtezxn6AdGtsp5uP8nN5rUS5snQZnBCHiMpNyyVOxwh-gibxgGR5ZQbxvhs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelgeejtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepoh
-    hsfigrlhgurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvgdprhgtphhtthhopehjlhht
-    ohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhm
-    rdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghr
-    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrse
-    hfrhgvvgdrfhhr
-X-ME-Proxy: <xmx:7ZWIaCA1kITI0emmiBbLcVPbjfoG7WYAqfDdkiiwkRfdXDkZms4jLQ>
-    <xmx:7ZWIaEtvE32synxP3c4A2AgBhSNcVWuMdYR4_bTBvlFbLq43FpozSA>
-    <xmx:7ZWIaBKH4uNPaw_xvcuxY0VX6YPB7H_YTIFZMFA2nYdU2qWl0_AP3w>
-    <xmx:7ZWIaLY03g9TsSjmrBhMkT37MNbRgnEVwf9fhC4XMC3J3CBp7vOzYQ>
-    <xmx:7pWIaHCkUUiym8t7M0JXQwvc1npglnwEqr4YlQUcwNDPXtd6aJzajHPD>
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhope
+    hjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopegsvghnrdhknhhosghlvges
+    ghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehoshifrghlugdrsg
+    huugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohepphhhihhllhhiphdrfiho
+    ohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:85WIaHBsAq5iC5z3521_D1WYErRluJajUn8c8Iy80_lW5iuQc0xIuA>
+    <xmx:85WIaKGygNM6i-Wwm7aM0BimNzHQzt6P9GE34JaC0g82ouB7ALtm5Q>
+    <xmx:85WIaHDtWmwFd_ZG2jzkOumVWll8YrEQu8d6TcMC_KqIiT--E1S2sA>
+    <xmx:85WIaAm6vgdosVtU1DgKsG0uRSaI-PDpjoDKwS4saNeyakV21NPBeg>
+    <xmx:85WIaNpWVxbXNSGQ81gj0icXiYH-oLb694QHixfU0dbS0Yj8Jqz7nHSU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Jul 2025 05:35:39 -0400 (EDT)
+ 29 Jul 2025 05:35:45 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e87519d2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 29 Jul 2025 09:35:37 +0000 (UTC)
-Date: Tue, 29 Jul 2025 11:35:30 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 39fd3f06 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 29 Jul 2025 09:35:44 +0000 (UTC)
+Date: Tue, 29 Jul 2025 11:35:41 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org,
-	oswald.buddenhagen@gmx.de, karthik.188@gmail.com,
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, oswald.buddenhagen@gmx.de, karthik.188@gmail.com,
 	ben.knoble@gmail.com, gitster@pobox.com, phillip.wood@dunelm.org.uk,
 	jltobler@gmail.com, jn.avila@free.fr
-Subject: Re: [GSoC PATCH v5 0/5] repo: add new command for retrieving
- repository info
-Message-ID: <aIiV4tuKg953QGGE@pks.im>
+Subject: Re: [GSoC PATCH v5 2/5] repo: add the field references.format
+Message-ID: <aIiV7cz2Tx50JZUv@pks.im>
 References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
  <20250727175110.84770-1-lucasseikioshiro@gmail.com>
- <CAPig+cSBj+kSmzKUarNPQt4qk5p9vjHFGFrJVYmT6TrWHACcEg@mail.gmail.com>
+ <20250727175110.84770-3-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cSBj+kSmzKUarNPQt4qk5p9vjHFGFrJVYmT6TrWHACcEg@mail.gmail.com>
+In-Reply-To: <20250727175110.84770-3-lucasseikioshiro@gmail.com>
 
-On Sun, Jul 27, 2025 at 04:11:57PM -0400, Eric Sunshine wrote:
-> On Sun, Jul 27, 2025 at 1:51 PM Lucas Seiki Oshiro
-> <lucasseikioshiro@gmail.com> wrote:
-> > This v6 contains small fixes pointed in v5.
-> >
-> > In v5, Patrick and Junio were discussing about quoting the values in the
-> > key=value format using `quote_c_style` [1]. Given that it wouldn't affect
-> > this patchset and it's a simple change that can be done later, I didn't
-> > change it and I'll leave for further discussion when I start to deal
-> > with paths.
-> 
-> The counterargument to this stance is that if you employ
-> `quote_c_style` from the onset and document it, then if a future
-> version of Git does start outputting values containing "funny"
-> characters for properties which previously did not emit such values
-> (this isn't limited to paths), then consumers who heeded the
-> documentation won't find their tooling breaking suddenly. Tooling may
-> break for consumers who did not heed the documentation, but that will
-> be due to their own shortsightedness, not due to the Git project
-> failing to care about compatibility between versions. For this reason,
-> I'm of the opinion that `quote_c_style` should be used and documented
-> even at this very early stage.
+On Sun, Jul 27, 2025 at 02:51:07PM -0300, Lucas Seiki Oshiro wrote:
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> index d4f01e35e2..02d5821c77 100644
+> --- a/builtin/repo.c
+> +++ b/builtin/repo.c
+> @@ -1,12 +1,90 @@
+>  #include "builtin.h"
+>  #include "parse-options.h"
+> +#include "refs.h"
+> +#include "strbuf.h"
+>  
+> -static int repo_info(int argc UNUSED, const char **argv UNUSED,
+> -		     const char *prefix UNUSED, struct repository *repo UNUSED)
+> +typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
 
-Likewise, I think we should do it now already. In general I don't think
-it should matter much given that tooling should use NUL-terminated modes
-anyway. But it's a rather simple change, so I don't see a strong reason
-to push it into the future.
+Nice, this now uses a strbuf as recommended.
+
+> +struct field {
+> +	const char *key;
+> +	get_value_fn *get_value;
+> +};
+> +
+> +static int get_references_format(struct repository *repo, struct strbuf *buf)
+> +{
+> +	strbuf_addstr(buf,
+> +		      ref_storage_format_to_name(repo->ref_storage_format));
+> +	return 0;
+> +}
+
+And this prints into the buffer diretcly. Makes sense.
+
+[snip]
+> +static int print_fields(int argc, const char **argv, struct repository *repo)
+> +{
+> +	const char *last = "";
+> +
+> +	QSORT(argv, argc, qsort_strcmp);
+> +
+> +	for (int i = 0; i < argc; i++) {
+> +		get_value_fn *get_value;
+> +		const char *key = argv[i];
+> +		struct strbuf value;
+
+Let's declare the strbuf outside of the loop and `strbuf_reset()` it on
+every iteration.
+
+> +
+> +		if (!strcmp(key, last))
+> +			continue;
+> +
+> +		strbuf_init(&value, 64);
+
+I don't think we should explicitly initialize it with a specific
+capacity. Let's just use `STRBUF_INIT`.
+
+> +		get_value = get_value_fn_for_key(key);
+> +
+> +		if (!get_value) {
+> +			strbuf_release(&value);
+> +			return error(_("key '%s' not found"), key);
+> +		}
+> +
+> +		get_value(repo, &value);
+> +		printf("%s=%s\n", key, value.buf);
+> +		last = key;
+> +		strbuf_release(&value);
+
+And the call to `strbuf_release()` should be moved to the end of this
+function so that we know to reuse the buffer. The above early return
+would then be converted into a `goto out` so that we have a common exit
+path where we know to clean up all resources.
 
 Patrick
