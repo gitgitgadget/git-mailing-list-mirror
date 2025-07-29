@@ -1,115 +1,120 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC49026A1B8
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 08:04:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39C027F00F
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 08:17:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753776279; cv=none; b=Nc4yEhqa/kV6Glq9dOxTGnh9DKiogTuOTI+oewKWN6JIIHeKRxQjYb+2LzAHYNki0HTuLFecuOTeDvs8JpMIuvaQQSmIu7GQQ3zw6LbjVC/20Rjq5CPlZVBxrJTLmumI+DE8gxqPLNWVlxUhMmQPNDKJY4BJcIuGdy2QR+4Ecug=
+	t=1753777022; cv=none; b=VGaHr49LTqBaOVZS0cjVHzU4DpVbxaXueF5+r4XE763+pJJtRLT9ljjyvg7TbBKgnbNYgtAkxtjlD6gk7raeqzUh34XN7j70Ypkp37KrXsTqAmbjQQypU9Ph8dv3B9YZtyqxPsAyQpDMKdsUsAbcryCXEWCjW+caAmsFlyk0iCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753776279; c=relaxed/simple;
-	bh=esRad3RwDtdHAyxnjFk+REpnuApM7JE75n8h2oYStzY=;
+	s=arc-20240116; t=1753777022; c=relaxed/simple;
+	bh=7z+EUKGY6R63H8v9CyEpCQMjYGKPzqhjWHacYd2q620=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tYaHgXb3smyF/AtZM4WcN/BFdyP3sgfVk3qasYhkn9ab5MDiOL9VzFKV/YsDDfkbm5OWmTxgIUSa8cqNN5XQz9SsYSQ5ctQBTBez5B0ADmlvNXRx+XovaP/RjGT035JGmVPawcOWWrsw3pjeAw9c22T+fRFE6unGajcnjyOXwRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gDiaN/Iy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=anYskRD7; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=oSoCFZe2+C4po9kOSrk3hO2ybmMM9nM2jMkqPZsOqiMHjqgmR6ZterzEg11gVCR0ISThztNzxGtYLSSsVlxuvkeSio+DmivpAFZesp8tlWb47SXRkU6z/yuVtwea/TFFVSMq/njeg3C33A/3+UBiLwEC+LT49u634e+KHE4hMbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=UOdnbvxX; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gDiaN/Iy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="anYskRD7"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id DFCB51D0009E;
-	Tue, 29 Jul 2025 04:04:36 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 29 Jul 2025 04:04:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1753776276; x=1753862676; bh=cjQvVJsTXk
-	6bQ7SSS7Dag914ubGrneFDcRfpSbP1/a0=; b=gDiaN/Iy3g4SHH3SjluLzVcgSg
-	H1wkl/PwARDDNrwncokTeTq1oeYycxzNW5APvO15CZCknUiUX8XOexODPpS2FJ9T
-	Yc9cdlw6HzMjslun5rFk3CE7RapGpCSlztg7Y7GdvzjxbiPqO5Aec2yBguf9DUl6
-	/CEAq14dueYhHTRHkCXs8/Ms0JgWNHGJbbwcZ412UYfgqHziyaizI4i9TugoeZfW
-	JmRIzcjR0dxNFpyXi7W46L9eBcopzTLEySx92uaT17e24LC3aVHl3Bktxl8RlYsL
-	sMAAemiHRAdaUqkLG2ZyxYKrgBM3iMPWOtHo2935Oa63Muq0DBuJxMQPGP2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753776276; x=1753862676; bh=cjQvVJsTXk6bQ7SSS7Dag914ubGrneFDcRf
-	pSbP1/a0=; b=anYskRD7DvA8w5wGtHVJ4AG7A0yHDgh5g2NkeSGQvt1D6n/DgYw
-	EqKg+gYK+hL49vDS1Zd3ccvkbM74M9KcUBzWEeiT6Yl3+3jnzTYjWrcM+pL3s+AD
-	7jpan8ojr/15I7zKOnTRTJ/OG+BAlh7w1Wb1pJS/MxccvlTKpVic11HHzE69kCr/
-	RUMZmU+e8LI601y3EdPnyoPj0Q5Wgc3hKiNC7tPPR+Usxa6z2Hv7XljDfSOH1F9C
-	p9ZjRV3ENyvpPRTLvRjGLBkzOIdqOCcK9xOOP9pfEm8J+0+CTz8p550QCEb6gcke
-	iuL3kPuw1gxhUMctdF+N1YUqmVA+c68Tm7g==
-X-ME-Sender: <xms:lICIaLkee1z_lxrrpzx2EhWNRCZwDTS8Qg1SeAw4i9r577ligwAkTw>
-    <xme:lICIaCFTEPMLl8sjAaUOB6TI6MH3kzTcvVmS6mT2zwXoAkPSs1JUV-ktrp8WIskXI
-    D0HhaBDb9KjedsGRQ>
-X-ME-Received: <xmr:lICIaLGO2VHDcthcALvDO0XDt_oGuEvOtIR-UTppsTBpT0v69xY3H6nztacJZWpkj9t0wX1b-LbNRmEfSa2Pv2pciecTTrOPLXznZWHZoes>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelgeehvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    ejvedugefgffffieegtefhgfeikeevfeefheevvdegieetgeeujeeliefhiedtueenucff
-    ohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:lICIaPNCYsOBs7UYqDVTzg3fwsEBjz3la2vaPPssY7xdOUxEtWLuEg>
-    <xmx:lICIaKFUkvUaRGF321pqXgZ30kdKB7XjbFvfeU49QHxGzOp3HbfBzA>
-    <xmx:lICIaGO4lRceGw8bq2aTKmjpcoAEOI0YeOEmqiPsQO_EIlHD2qqMqw>
-    <xmx:lICIaL8028aAq88rmp5JMEqDThTiw73Vn7HUS0Eg5oLsCjd718b3-Q>
-    <xmx:lICIaOuafnJImaVkkUSDPL7YCwLW0czuhR7eMcxOEeZm5kUxIUN0ozwi>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Jul 2025 04:04:35 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7260193c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 29 Jul 2025 08:04:34 +0000 (UTC)
-Date: Tue, 29 Jul 2025 10:04:31 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2 0/5] ref-filter: small cleanups and fixes
-Message-ID: <aIiAj8COJOAXv-xe@pks.im>
-References: <20250724-kn-small-cleanups-v1-0-0c70f591de3e@gmail.com>
- <20250728-kn-small-cleanups-v2-0-d3021c8bf471@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="UOdnbvxX"
+Received: (qmail 2825 invoked by uid 109); 29 Jul 2025 08:16:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=7z+EUKGY6R63H8v9CyEpCQMjYGKPzqhjWHacYd2q620=; b=UOdnbvxXLeXBdGDhr905E83psqoHXinbRUKGCdAfnuggaGFwZXxH76EimW+8ounxWcrIdjgaeaGB5+31ZB8EN89WDk1acXs5RGVmatEY2P/Q+ZQlSUveLl0GaT3jSkYjbbko8ZAxoOZsUbqwKlDS55LilRod3aU/XexMQH1P+r8Qim3f2Rc91n2YXsXKrprJq3CyzG1KPtx66Jrq6+ffDbdEpj4rIG1eQvBe5W0YhU/bwmvEKshhfetQ9pgJv1FygzLXbB4stqSsEPhofIKLB0gKrDy5ufiiD5Bxd4Er6oJ5quTUJW3wnPvB7T5KqKWKZaJ48qAZ+EuGK3BvV4fdBA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Jul 2025 08:16:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31274 invoked by uid 111); 29 Jul 2025 08:17:03 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Jul 2025 04:17:03 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 29 Jul 2025 04:16:58 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Han Jiang <jhcarl0814@gmail.com>
+Subject: Re: [PATCH 3/4] builtin/remote: rework how remote refs get renamed
+Message-ID: <20250729081658.GA1842689@coredump.intra.peff.net>
+References: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
+ <20250728-pks-remote-rename-improvements-v1-3-f654f2b5c5ae@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250728-kn-small-cleanups-v2-0-d3021c8bf471@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250728-pks-remote-rename-improvements-v1-3-f654f2b5c5ae@pks.im>
 
-On Mon, Jul 28, 2025 at 10:20:45PM +0200, Karthik Nayak wrote:
-> This series contains a few of the small fixes and comments which I've
-> gathered from reviews of my earlier series [1] to add the
-> '--start-after' flag to 'git-for-each-ref(1)'.
-> 
-> Individually each patch doesn't hold too much weight on its own, but
-> together these small improvements add up. That said, if these patches
-> are too small for the noise generated, we could simply drop it or
-> combine some commits together.
-> 
-> This is based on top of 3f2a94875d (The twelfth batch, 2025-07-21) with
-> 'kn/for-each-ref-skip' merged in.
-> 
-> [1]: https://lore.kernel.org/r/20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com
-> 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> Changes in v2:
-> - In Patch 2/5, fix a whitespace issue and convert 'git-for-each-ref(1)'
->   documentation to use the new synopsis block.
-> - Link to v1: https://lore.kernel.org/r/20250724-kn-small-cleanups-v1-0-0c70f591de3e@gmail.com
+On Mon, Jul 28, 2025 at 03:08:47PM +0200, Patrick Steinhardt wrote:
 
-Thanks, this version looks good to me.
+> The next-best thing is to do it in two transactions: one to delete all
+> the references, and one to recreate the references and their reflogs.
+> This signicantly speeds up the operation with the "files" backend. The
+> following benchmark renames a remote with 10000 references:
 
-Patrick
+Hmm. I was surprised to see so much reflog code here. It looks like
+you're replaying the old reflog entry by entry. But the old code was
+leaning on refs_rename_ref() to do the individual renames, which just
+asks the backend to handle that for us (so e.g., the files backend just
+copies/moves the log files).
+
+So it feels like ideally we'd be able to create a transaction element
+for renaming, and then the backends could similarly do what makes sense
+for them (and we wouldn't need a bunch of reflog code here).
+
+I guess that does not work with the two delete/create transactions you
+end up with here, though. And you need those to worry about D/F
+conflicts. But then...how did the original handle D/F conflicts? It kind
+of looks like it didn't, as it is doing a mass ref-by-ref rename in the
+middle.
+
+If the refs code learned how to order things to handle the D/F conflicts
+within a transaction, then we could do a single transaction. And it
+could learn about rename primitives.
+
+I dunno. I think that would be nicer, but it's probably not worth
+holding up this topic. Your perf numbers are very nice. I guess the
+possible flip-side is that the existing code could be faster when
+renaming a single ref (so no quadratic behavior) with a pathological
+reflog (so moving the file is faster than re-writing all of those logs).
+
+Hmm, yeah. Something like this:
+
+	cat >setup <<-\EOF
+	#!/bin/sh
+
+	rm -rf repo
+	git init repo
+	cd repo
+
+	git init server
+	git -C server commit --allow-empty -m foo
+
+	git remote add origin server
+	git fetch
+
+	# make the reflog gigantic
+	perl -i -ne 'for my $i (1..10**5) { print }' .git/logs/refs/remotes/origin/main
+	EOF
+
+	hyperfine -p ./setup -L v old,new './git.{v} -C repo remote rename origin foo'
+
+results in:
+  
+  Benchmark 1: ./git.old -C repo remote rename origin foo
+    Time (mean ± σ):       5.5 ms ±   1.1 ms    [User: 1.5 ms, System: 1.3 ms]
+    Range (min … max):     3.6 ms …   9.7 ms    58 runs
+  
+  Benchmark 2: ./git.new -C repo remote rename origin foo
+    Time (mean ± σ):     476.3 ms ±   9.8 ms    [User: 203.6 ms, System: 268.0 ms]
+    Range (min … max):   467.8 ms … 498.7 ms    10 runs
+  
+  Summary
+    ./git.old -C repo remote rename origin foo ran
+     86.43 ± 16.61 times faster than ./git.new -C repo remote rename origin foo
+
+It's hard to bring myself to care, though. This is a stupidly
+pathological reflog, and the absolute time change is peanuts compared to
+the per-ref cost you're fixing here.
+
+-Peff
