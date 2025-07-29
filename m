@@ -1,41 +1,45 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBDA1FDA8E
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 07:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9B22367BA
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 07:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753773179; cv=none; b=sinI+cV19eMaw3MC9/qV6h0KDON7HJEmSo7MlwFknIRdBWNw0paW7PzDg6rJIFrYQcnj/X8R2M+dbzkEpc3CUCspjnNo32cKiblF/vUpOxhPhgbTL5E3j3BYBp/O/9k9so9jISfEZz4joWkUrSfEnbgf3FqGMDFLYOc8erIQE9w=
+	t=1753773299; cv=none; b=U4fwI2YY+FCNJ27ztCxCCkIHjTwIEmc01jcfAZvfO5IfruuZ3h0jo2iJOyGJ9rEX5Sv+JaYYf6YVQPUJmuZeIq211/GDxr6Z0313y/TnBCoxTSG67lFB1zjiOIAxmxWISt95HiYhjabx6cf0V41v0DXIotdrXmeKQpYkWTKr9a8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753773179; c=relaxed/simple;
-	bh=emnlLjaXzkHSRy7hD7nnuUA3DYp1AM6bB2a2o/tjWjw=;
+	s=arc-20240116; t=1753773299; c=relaxed/simple;
+	bh=nN3ZeRwYAVVdGncqoru0s/Hi9XkPH/P/Dsz6o5s4hbA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L3hXwIOF9Rwwws+o1XZ5sCYZWhVGz93HQlbrNGmV9sA++Uf/nuWun4O7hhDja0tIi1R+76BEO5iXasl8hIyDNIy8mRnwjr5EzdTOtVQCCCLWRfjQrZvNmH4NaxYDx4Y6ZFY3egI2Lhr+udF06sn3GHoP0tfK8AgvvejYdoRWYFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fZZLWk/B; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=HhArnpEM5bxqXAxi4zJ0l4ZgSZFrCjehtbv9I7EWBU+8iD15BOpgMRL7TUJRuu4VxwUPauLadUwWAYsO7Y+wJppicDQPmD4g60K1bbuJiQySjICzlmjSNNaeBA/RVWU4uabZhWuSNrnZ0rQrG7bV69WUj7pkv28h4pTI12Tbxf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=O3dcbEvx; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fZZLWk/B"
-Received: (qmail 1992 invoked by uid 109); 29 Jul 2025 07:12:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=emnlLjaXzkHSRy7hD7nnuUA3DYp1AM6bB2a2o/tjWjw=; b=fZZLWk/BputkyDlSTYZpr2PNsDwj+lFjAfpVCcqGzMM4G+B2xciQt9cKSiKmJujwofp5D7U7LY0Cq79k2fcOyFDRHkAnnP4qPlX+Uh0hnM9KIzTA08P2t8xbOs02qjf7LeKqYN3DvrWz6+/ZE4RFpi+p1IL70ORLusihY6jdIcTz2RAah9S9XCI43E2PHx0OSy5DfXU+s7u03ipmFLx2syKkFHc505E1a8eYpRWTW2YuTobwdub4L+rVTCNI4sF92bLUWDv9lnQcMFtvGRskPh5e5os4pyGGq8nersldav5wKF2kTjVcYNj+gLEy4xAPHEU+sN+d1mtndpJY18TS2g==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="O3dcbEvx"
+Received: (qmail 2066 invoked by uid 109); 29 Jul 2025 07:14:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=nN3ZeRwYAVVdGncqoru0s/Hi9XkPH/P/Dsz6o5s4hbA=; b=O3dcbEvxyt2KgegGIk0e3xZYl9oRrcOBXBd7f9FG4ic3Ezm/p5aHSVGZdQFyIu69KcJoxKIhe68ad1yCq1BNyFSp4MFE4j/wCdt7Yr8M5KnTtThwNKO98xmLEVuNNDH/ZgaIz3Yg7IOBa9vzGMYeU92MR+G4/jw2I2pcx5f3RdgaJZ4Y4OZiR9bzQTObrAZ1K3cw6SXey6wDrNZFBgwLZLqwdigX8KKaouxsTn+4e1koEZBazWCkWOf723pfoQTP5BmM339iI10bxOcAxGCevKq7D7JLL0OvcP8V8hjsXlWH2dd1Xju0WFtJsgAmvvjFoIyWdnyjQPAj+Pk4CwkO8w==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Jul 2025 07:12:49 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Jul 2025 07:14:56 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30409 invoked by uid 111); 29 Jul 2025 07:12:52 -0000
+Received: (qmail 30416 invoked by uid 111); 29 Jul 2025 07:15:00 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Jul 2025 03:12:52 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Jul 2025 03:15:00 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 29 Jul 2025 03:12:47 -0400
+Date: Tue, 29 Jul 2025 03:14:55 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jonas =?utf-8?Q?Brandst=C3=B6tter?= <jonas.brandstoetter@gmx.at>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] t7510: add test cases for non-absolute gpg program
-Message-ID: <20250729071247.GA1426859@coredump.intra.peff.net>
-References: <20250711232348.460804-1-jonas.brandstoetter@gmx.at>
- <20250722190922.51183-3-jonas.brandstoetter@gmx.at>
- <20250725043043.GA3002998@coredump.intra.peff.net>
- <xmqq5xfbuahx.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v2 7/8] refs: stop unsetting REF_HAVE_OLD for log-only
+ updates
+Message-ID: <20250729071455.GB1426859@coredump.intra.peff.net>
+References: <20250725-pks-reflog-append-v2-0-e4e7cbe3f578@pks.im>
+ <20250725-pks-reflog-append-v2-7-e4e7cbe3f578@pks.im>
+ <20250725113610.GA3015361@coredump.intra.peff.net>
+ <aIeMgE-11UnAJINI@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,27 +48,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5xfbuahx.fsf@gitster.g>
+In-Reply-To: <aIeMgE-11UnAJINI@pks.im>
 
-On Mon, Jul 28, 2025 at 05:05:46PM -0700, Junio C Hamano wrote:
+On Mon, Jul 28, 2025 at 04:43:12PM +0200, Patrick Steinhardt wrote:
 
-> > Should it be "/d/a/git/git/..." instead of "D:/a/git/git/..."? Which we
-> > could get by using $PWD, I think.
-> >
-> > The earlier one using $HOME uses D:/, but this one is different because
-> > colons are meaningful separators in $PATH.
+> > > @@ -2508,8 +2507,9 @@ static enum ref_transaction_error check_old_oid(struct ref_update *update,
+> > >  						struct object_id *oid,
+> > >  						struct strbuf *err)
+> > >  {
+> > > -	if (!(update->flags & REF_HAVE_OLD) ||
+> > > -		   oideq(oid, &update->old_oid))
+> > > +	if (update->flags & REF_LOG_ONLY ||
+> > > +	    !(update->flags & REF_HAVE_OLD) ||
+> > > +	    oideq(oid, &update->old_oid))
+> > >  		return 0;
+> > >  
+> > >  	if (is_null_oid(&update->old_oid)) {
+> > 
+> > Which make sense to me. But the weird thing I noticed is that when we do
+> > something similar for split_head_update(), we don't strip REF_HAVE_OLD!
 > 
-> Here is what I have on top of the posted patches.  If today's
-> integration goes well, I plan to merge it to 'next'; the rest of the
-> series is already in 'next'.
+> And we shouldn't do that, as in the next commit we actually build on
+> always having `REF_HAVE_OLD` set for reflog-only updates. So I'd argue
+> that the problem is actually the other way round: when splitting off the
+> HEAD update we must resolve the old object ID if `REF_HAVE_OLD` is not
+> set.
 
-Looks good. Not sure if you saw the patch I posted in this thread. It's
-roughly the same as yours, though I didn't drop the useless "env" (which
-I agree is useless).
+Yeah, I agree that after your patches, split_head_update() should
+definitely not be clearing that flag. What I more meant was: this patch
+is introducing a behavior change for those split HEAD updates, which
+used to do the extra old-oid check but now won't (whereas for other
+symref log-only updates, you are preserving the behavior).
 
-I did reference 71dd50472d (t0021, t5615: use $PWD instead of $(pwd) in
-PATH-like shell variables, 2016-11-11) to try to give more explanation
-of the two different sources. But re-reading it, it actually doesn't
-really clarify much. ;) So maybe not worth worrying about.
+I _think_ that's a reasonable thing, but I wanted to make sure.
+
+However...
+
+> > (For those not familiar with that
+
+...did you mean to write more? I know you've been running into weird
+email truncation issues lately.
 
 -Peff
