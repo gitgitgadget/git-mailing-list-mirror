@@ -1,85 +1,85 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82BD2749E0
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 08:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08CD28724F
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 08:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753779356; cv=none; b=PxiE3kmHZrerzQiorFXgaHHZAQC+1ZT3DVkGKkB+73hh2OJO6VdTtYAaM3ncp7N//Ag3XdV8vfgSynNAer3tk1jNT9HV0wc13XOIZpmslMZrO3F9NCZheqX9SPpnshV6ABPlViNPxZ9JL8Kzri/5YCYapZEXJxhz1JkWda1rFpQ=
+	t=1753779359; cv=none; b=EVUwD4PBKi+c7Xync8buGzLanIu6uMTYJ9FZQ0sXToDGvPwF1z3sZVQ9Hg2kvvV31o6iGFHSBm1syuZQY4K0AdtTKY2c2aoLNDCErnC8CGCNccd5nFYoV/m0ajz3yabeE7ym8YLIsaf29X4XN17UJa+4zAwo3MqLQYPygBfLySE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753779356; c=relaxed/simple;
-	bh=cK9Gp+R6vAhWyznTDn/+INIv4iae9+cogcT2H/Rtj6A=;
+	s=arc-20240116; t=1753779359; c=relaxed/simple;
+	bh=8Z8AH62XsjCftMy/wK+Ai7ycKWr7X685X1ylmkIebqI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=j2dBzFbCG0EaLM8tHbcRZkBN7/mQOWqRlIEKwfjj9b+b8j81tUCydaG7EEQ1bOfCZ+0vtm5MUEJxu90J/QTHZqVEK1APaMwV3rNuxAISQNM6n+XXQCJ6McgVYG3it0z3iq8KutK3FoEaVm3YLyFEsVcH+b4iavimwomXkKw9SJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cyp7JrpU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QuL6H/uJ; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=AGgpmqJ0IrhgHdpPVFUmjaYuHZhAwThuCx1USShgk6nsxYdhiZPMBLt0JDcvjKA2mSYKmYwPoSr55DqHMiDEKwQ0YYuEM5ySlC7iGuE6NCp06frMoelby/4RMs7UeKAvgc64MxpdUK9ob88EMqSZdEB9tBMWu0vxSvGI0jwqZ6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=avPoRgzi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cdYP3Dib; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cyp7JrpU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QuL6H/uJ"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="avPoRgzi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cdYP3Dib"
 Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id DB9D71D002EC;
-	Tue, 29 Jul 2025 04:55:53 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id F00601D005AF;
+	Tue, 29 Jul 2025 04:55:56 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Tue, 29 Jul 2025 04:55:54 -0400
+  by phl-compute-10.internal (MEProxy); Tue, 29 Jul 2025 04:55:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1753779353;
-	 x=1753865753; bh=Tr1uyUbSWPOQciWwKYh8L2gi9cnMUXyK8gReTPsXBnY=; b=
-	cyp7JrpUuLkJOImBae9bw2xXTnWACUPXjHWdV7L5/k7DOu3MaQaEjcHgSdEjqvc8
-	wsgguwNVQE+vTUwyBJgdqtSjX70/1+QxpOnl26jLTjQRkpb1wXIyU/uj7wgHfdPt
-	9/uaG+fjyCFpa9tlfXce2XqjNik/6Mdq9fTPoO9R01IdH2obNhGdoNoKTGWr5Zay
-	cqw0nQhkOFrcbfHWsH+tYzdqWZkaEHFDVGqbLEU5coJOa9lR6aSP0wAJlP86hSOG
-	VNDxB5Hx247MLI4Sxh7A+c0OTLGxxlJWLYzeqiw24UFOeMBykKuG9I4lRNn4OTDq
-	6a1Sho6XDL0swy9EB3RWig==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1753779356;
+	 x=1753865756; bh=8QVbC6hTmgALBQlnUZ21MHeymu9fGN4LNK1xwIVsgoY=; b=
+	avPoRgzi+hvKo381m2nji0xeF1zPbh9M3ezVV7Q3FIqVxrI82c1y/L/DlnFXAFVG
+	JzyCvCj30jw16ArC1w1rbHtIV/G/mw8pEyKnAeTUDSkAoa5cwmM85xxgLo9JD9+9
+	2PSjUMbAoWDoRX8FTRA7AJ7YSITHt76V8iHGjtnb3irOyAsCGcDRdWozXfqbEHPh
+	vVoZkH0hX/gM2jViHwO+I9Yr1/IA9ZrI706vZ3RpiHtJ+/UNj4TCUj9MYHfPS7pb
+	G+dkzkvN5I8GOSFJwsO+BImsDeywDZlN3KzQx1xmryk0ckjPk4nIeCWoWgZ74bR1
+	CJC5FABEB17cWtBN5dMqKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753779353; x=
-	1753865753; bh=Tr1uyUbSWPOQciWwKYh8L2gi9cnMUXyK8gReTPsXBnY=; b=Q
-	uL6H/uJ6S06HuG366VsxxZGm9PmE1AXSCrg88za6l4jq5bqLjUfnOoIEiMwbvQV+
-	gsDRG9cjClu7CdXcdRjUkXjRgDWlER1qPPckUHe7ePPtd0W4kxwp7HcnXE+/uUkb
-	RQTOTvXI8kUYJzc3YLIrs9VAfmSSEx79JgRZPuq7wN7vgmlFzE9U915Ioq9TKYoi
-	4gGoeC9mc/AGsXM+zSI+YH0yruY8X481WBGNeHVf4LrZVH2cTGYlnzcioA4Le88E
-	98x5Lk/QxpsVYSYkDpPWjmrPVjkg7nXjrRR1vO/ndLln5MK9BaXJ0JUTAC7O3VAJ
-	uY2VhJyXWodcyLHqlGCRQ==
-X-ME-Sender: <xms:mYyIaDqbylu4op8ORcyGZwiowz7ZVePZd-15stu6XyfN0NO7Yc3tRg>
-    <xme:mYyIaKgIUAmqf3ojnTooRV0dZ11d9d3uZaHz2PqX1Gth9HILgIWVoNyFCQhQtXeLF
-    OAUdA1Kh5WOhPmgEg>
-X-ME-Received: <xmr:mYyIaP9UR5c7YQVo2aOHkeg1OmxMCdhhvyIID6-Uneot4cgtIL5m_Qq6aAU9daHPnOnPFCbEufauOLDn93mBTlrxFlAkbYmYTAM31gv7ctM>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753779356; x=
+	1753865756; bh=8QVbC6hTmgALBQlnUZ21MHeymu9fGN4LNK1xwIVsgoY=; b=c
+	dYP3DibIzRPV81meFdqL9FqqA0m3nXP/ObmwzvisP0jSZDIMtcQj2Rq5OBCmoDmS
+	Kff7VKJ4muzIeJjx86DIOk4CgVFOkwp5YaCU+BJAxgfwpTQPo6owXcsHW99Bt7Rf
+	gCFnDQgZoBOIV03k7edIxaV5MGau/fYVr8Uk5XDEy6sNircToy3eI8xNnLLZvbLT
+	+mloqmqDVIcdPC8NgrmodxywWhSLQHc3FWf1y+1XsaQ29XUZyFILMaQkKOkIJ1gO
+	d4gn1Cyx4EN+iM5EG24ffIT64uK5QeMpUyl7MFja9tvWQwd9wUHXrCy9+oZb5/EQ
+	1esugK1iIskWu3/STncSQ==
+X-ME-Sender: <xms:nIyIaHR-p5tGhSAaNtQxJVHXBnrr_BpwNAGZftV7f2I2MmFpWjwRcQ>
+    <xme:nIyIaFrk-nN0lHkOmSlBJZaXPjP758DXN-qzMwDZsdv3_VhITIlww5RugLWQ7T3dG
+    JfNl9OjdKDrV0_r9g>
+X-ME-Received: <xmr:nIyIaMnLgGf6IFqcKFhRKDFekoV-BNWhR4Z7lB71xljTi_NkZ22bZ-r2kjlDIFuGc6se1v23CCVamy6F1EOMrX1ylTh95FGIOSHEX5Q3jPU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelgeeivdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsiigvuggvrh
-    druggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtgho
-    mhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhgrrhhthh
-    hikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhh
-    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslh
-    gvrhesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:mYyIaGV6UH7BjjXNaKBj-kYT7ijaVl7A3mepWtZ-3s5Mo0zmSuO7-A>
-    <xmx:mYyIaDCR-JJnLOgii8W9jEiQfEZycaTu39xipxIQ74vQ4J3t8BwAJQ>
-    <xmx:mYyIaLHtjSdD74i0erS9gQ9_S3Kr8FD2A2uePZ_83nVTo119D_SWxQ>
-    <xmx:mYyIaE4h828mvVOziLefVRllrdumMQNDBVmjnnO364t3tle9kQi4Zg>
-    <xmx:mYyIaJcrChep77oeXfvtIUJWfJkZi4MGmflLZOcpqLjI08RiKA6bWHjV>
+    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
+    hrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsggvnh
+    drkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghl
+    rdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:nIyIaGeKuXVBhDKQU5idFyak7YyYqD9XqMIUMivXDty69p13jDc9tw>
+    <xmx:nIyIaAou7szn34Rqrl_DjtYwT8MROY_G57vnQExBiMOcKnG-ZE5eIw>
+    <xmx:nIyIaIOSBSUiXuYIAdpHno1wr_L82BF9Ep-3uexurpZ_q5MdlMNp1A>
+    <xmx:nIyIaLj6kOdkTM0x1d6d6KWTMTbRJvtCVat_LCuICRfHYUuZ53SJMA>
+    <xmx:nIyIaNnUtD_384tiIiWdceOchdkgvzn_5IVfEIaBj_J5SBpCd1L1pes2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Jul 2025 04:55:52 -0400 (EDT)
+ 29 Jul 2025 04:55:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8eddc674 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 29 Jul 2025 08:55:51 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 7e529cb5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 29 Jul 2025 08:55:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 29 Jul 2025 10:55:26 +0200
-Subject: [PATCH v3 8/9] refs: stop unsetting REF_HAVE_OLD for log-only
- updates
+Date: Tue, 29 Jul 2025 10:55:27 +0200
+Subject: [PATCH v3 9/9] refs: fix invalid old object IDs when migrating
+ reflogs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250729-pks-reflog-append-v3-8-9614d310f073@pks.im>
+Message-Id: <20250729-pks-reflog-append-v3-9-9614d310f073@pks.im>
 References: <20250729-pks-reflog-append-v3-0-9614d310f073@pks.im>
 In-Reply-To: <20250729-pks-reflog-append-v3-0-9614d310f073@pks.im>
 To: git@vger.kernel.org
@@ -100,151 +100,214 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Ben Knoble <ben.knoble@gmail.com>
 X-Mailer: b4 0.14.2
 
-The `REF_HAVE_OLD` flag indicates whether a given ref update has its old
-object ID set. If so, the value of that field is used to verify whether
-the current state of the reference matches this expected state. It is
-thus an important part of mitigating races with a concurrent process
-that updates the same set of references.
+When migrating reflog entries between different storage formats we end
+up with invalid old object IDs for the migrated entries: instead of
+writing the old object ID of the to-be-migrated entry, we end up with
+the all-zeroes object ID.
 
-When writing reflogs though we explicitly unset that flag. This is a
-sensible thing to do: the old state of reflog entry updates may not
-necessarily match the current on-disk state of its accompanying ref, but
-it's only intended to signal what old object ID we want to write into
-the new reflog entry. For example when migrating refs we end up writing
-many reflog entries for a single reference, and most likely those reflog
-entries will have many different old object IDs.
+The root cause of this issue is that we don't know to use the old object
+ID provided by the caller. Instead, we manually resolve the old object
+ID by resolving the current value of its matching reference. But as that
+reference does not yet exist in the target ref storage we always end up
+resolving it to all-zeroes.
 
-But unsetting this flag also removes a useful signal, namely that the
-caller _did_ provide an old object ID for a given reflog entry. This
-signal will become useful in a subsequent commit, where we add a new
-flag that tells the transaction to use the provided old and new object
-IDs to write a reflog entry. The `REF_HAVE_OLD` flag is then used as a
-signal to verify that the caller really did provide an old object ID.
+This issue got unnoticed as there is no user-facing command that would
+even show the old object ID. While `git log -g` knows to show the new
+object ID, we don't have any formatting directive to show the old object
+ID.
 
-Stop unsetting the flag so that we can use it as this described signal
-in a subsequent commit. Skip checking the old object ID for log-only
-updates so that we don't expect it to match the current on-disk state.
+Fix the bug by introducing a new flag `REF_LOG_USE_PROVIDED_OIDS`. If
+set, backends are instructed to use the old and new object IDs provided
+by the caller, without doing any manual resolving. Set this flag in
+`ref_transaction_update_reflog()`.
+
+Amend our tests in t1460-refs-migrate to use our test tool to read
+reflog entries. This test tool prints out both old and new object ID of
+each reflog entry, which fixes the test gap. Furthermore it also prints
+the full identity used to write the reflog, which provides test coverage
+for the previous commit in this patch series that fixed the identity for
+migrated reflogs.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c                  |  8 +++-----
- refs/files-backend.c    |  9 +++++----
- refs/refs-internal.h    |  3 ++-
- refs/reftable-backend.c | 12 +++---------
- 4 files changed, 13 insertions(+), 19 deletions(-)
+ refs.c                  |  3 ++-
+ refs.h                  |  9 ++++++++-
+ refs/files-backend.c    | 16 +++++++++++++++-
+ refs/reftable-backend.c | 14 ++++++++++++++
+ t/t1421-reflog-write.sh |  4 +---
+ t/t1460-refs-migrate.sh | 22 +++++++++++++++-------
+ 6 files changed, 55 insertions(+), 13 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index a5f9ffaa45d..f88928de746 100644
+index f88928de746..946eb48941b 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1393,11 +1393,6 @@ int ref_transaction_update_reflog(struct ref_transaction *transaction,
- 	update = ref_transaction_add_update(transaction, refname, flags,
- 					    new_oid, old_oid, NULL, NULL,
- 					    committer_info, msg);
--	/*
--	 * While we do set the old_oid value, we unset the flag to skip
--	 * old_oid verification which only makes sense for refs.
--	 */
--	update->flags &= ~REF_HAVE_OLD;
- 	update->index = index;
+@@ -1385,7 +1385,8 @@ int ref_transaction_update_reflog(struct ref_transaction *transaction,
  
- 	/*
-@@ -3318,6 +3313,9 @@ int repo_migrate_ref_storage_format(struct repository *repo,
+ 	assert(err);
  
- int ref_update_expects_existing_old_ref(struct ref_update *update)
- {
-+	if (update->flags & REF_LOG_ONLY)
-+		return 0;
+-	flags = REF_HAVE_OLD | REF_HAVE_NEW | REF_LOG_ONLY | REF_FORCE_CREATE_REFLOG | REF_NO_DEREF;
++	flags = REF_HAVE_OLD | REF_HAVE_NEW | REF_LOG_ONLY | REF_FORCE_CREATE_REFLOG | REF_NO_DEREF |
++		REF_LOG_USE_PROVIDED_OIDS;
+ 
+ 	if (!transaction_refname_valid(refname, new_oid, flags, err))
+ 		return -1;
+diff --git a/refs.h b/refs.h
+index 253dd8f4d5d..090b4fdff4f 100644
+--- a/refs.h
++++ b/refs.h
+@@ -760,13 +760,20 @@ struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
+  */
+ #define REF_SKIP_CREATE_REFLOG (1 << 12)
+ 
++/*
++ * When writing a REF_LOG_ONLY record, use the old and new object IDs provided
++ * in the update instead of resolving the old object ID. The caller must also
++ * set both REF_HAVE_OLD and REF_HAVE_NEW.
++ */
++#define REF_LOG_USE_PROVIDED_OIDS (1 << 13)
 +
- 	return (update->flags & REF_HAVE_OLD) &&
- 		(!is_null_oid(&update->old_oid) || update->old_target);
- }
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index ba018b0984a..85ab2ef2b94 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2500,7 +2500,6 @@ static enum ref_transaction_error split_symref_update(struct ref_update *update,
- 	 * done when new_update is processed.
- 	 */
- 	update->flags |= REF_LOG_ONLY | REF_NO_DEREF;
--	update->flags &= ~REF_HAVE_OLD;
- 
- 	return 0;
- }
-@@ -2515,8 +2514,9 @@ static enum ref_transaction_error check_old_oid(struct ref_update *update,
- 						struct object_id *oid,
- 						struct strbuf *err)
- {
--	if (!(update->flags & REF_HAVE_OLD) ||
--		   oideq(oid, &update->old_oid))
-+	if (update->flags & REF_LOG_ONLY ||
-+	    !(update->flags & REF_HAVE_OLD) ||
-+	    oideq(oid, &update->old_oid))
- 		return 0;
- 
- 	if (is_null_oid(&update->old_oid)) {
-@@ -3095,7 +3095,8 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
- 
--		if ((update->flags & REF_HAVE_OLD) &&
-+		if (!(update->flags & REF_LOG_ONLY) &&
-+		    (update->flags & REF_HAVE_OLD) &&
- 		    !is_null_oid(&update->old_oid))
- 			BUG("initial ref transaction with old_sha1 set");
- 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index f8688708519..95a4dc3902f 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -802,7 +802,8 @@ enum ref_transaction_error ref_update_check_old_target(const char *referent,
+ /*
+  * Bitmask of all of the flags that are allowed to be passed in to
+  * ref_transaction_update() and friends:
+  */
+ #define REF_TRANSACTION_UPDATE_ALLOWED_FLAGS                                  \
+ 	(REF_NO_DEREF | REF_FORCE_CREATE_REFLOG | REF_SKIP_OID_VERIFICATION | \
+-	 REF_SKIP_REFNAME_VERIFICATION | REF_SKIP_CREATE_REFLOG)
++	 REF_SKIP_REFNAME_VERIFICATION | REF_SKIP_CREATE_REFLOG | REF_LOG_USE_PROVIDED_OIDS)
  
  /*
-  * Check if the ref must exist, this means that the old_oid or
-- * old_target is non NULL.
-+ * old_target is non NULL. Log-only updates never require the old state to
-+ * match.
-  */
- int ref_update_expects_existing_old_ref(struct ref_update *update);
- 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 4c3817f4ec1..44af58ac50b 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1180,8 +1180,6 @@ static enum ref_transaction_error prepare_single_update(struct reftable_ref_stor
- 	if (ret > 0) {
- 		/* The reference does not exist, but we expected it to. */
- 		strbuf_addf(err, _("cannot lock ref '%s': "
--
--
- 				   "unable to resolve reference '%s'"),
- 			    ref_update_original_update_refname(u), u->refname);
- 		return REF_TRANSACTION_ERROR_NONEXISTENT_REF;
-@@ -1235,13 +1233,8 @@ static enum ref_transaction_error prepare_single_update(struct reftable_ref_stor
- 
- 			new_update->parent_update = u;
- 
--			/*
--			 * Change the symbolic ref update to log only. Also, it
--			 * doesn't need to check its old OID value, as that will be
--			 * done when new_update is processed.
--			 */
-+			/* Change the symbolic ref update to log only. */
- 			u->flags |= REF_LOG_ONLY | REF_NO_DEREF;
--			u->flags &= ~REF_HAVE_OLD;
+  * Add a reference update to transaction. `new_oid` is the value that
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 85ab2ef2b94..905555365b8 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3010,6 +3010,20 @@ static int parse_and_write_reflog(struct files_ref_store *refs,
+ 				  struct ref_lock *lock,
+ 				  struct strbuf *err)
+ {
++	struct object_id *old_oid = &lock->old_oid;
++
++	if (update->flags & REF_LOG_USE_PROVIDED_OIDS) {
++		if (!(update->flags & REF_HAVE_OLD) ||
++		    !(update->flags & REF_HAVE_NEW) ||
++		    !(update->flags & REF_LOG_ONLY)) {
++			strbuf_addf(err, _("trying to write reflog for '%s'"
++					   "with incomplete values"), update->refname);
++			return REF_TRANSACTION_ERROR_GENERIC;
++		}
++
++		old_oid = &update->old_oid;
++	}
++
+ 	if (update->new_target) {
+ 		/*
+ 		 * We want to get the resolved OID for the target, to ensure
+@@ -3027,7 +3041,7 @@ static int parse_and_write_reflog(struct files_ref_store *refs,
  		}
  	}
  
-@@ -1265,7 +1258,8 @@ static enum ref_transaction_error prepare_single_update(struct reftable_ref_stor
- 		ret = ref_update_check_old_target(referent->buf, u, err);
- 		if (ret)
- 			return ret;
--	} else if ((u->flags & REF_HAVE_OLD) && !oideq(&current_oid, &u->old_oid)) {
-+	} else if ((u->flags & (REF_LOG_ONLY | REF_HAVE_OLD)) == REF_HAVE_OLD &&
-+		   !oideq(&current_oid, &u->old_oid)) {
- 		if (is_null_oid(&u->old_oid)) {
- 			strbuf_addf(err, _("cannot lock ref '%s': "
- 					   "reference already exists"),
+-	if (files_log_ref_write(refs, lock->ref_name, &lock->old_oid,
++	if (files_log_ref_write(refs, lock->ref_name, old_oid,
+ 				&update->new_oid, update->committer_info,
+ 				update->msg, update->flags, err)) {
+ 		char *old_msg = strbuf_detach(err, NULL);
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 44af58ac50b..99fafd75ebe 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1096,6 +1096,20 @@ static enum ref_transaction_error prepare_single_update(struct reftable_ref_stor
+ 	if (ret)
+ 		return REF_TRANSACTION_ERROR_GENERIC;
+ 
++	if (u->flags & REF_LOG_USE_PROVIDED_OIDS) {
++		if (!(u->flags & REF_HAVE_OLD) ||
++		    !(u->flags & REF_HAVE_NEW) ||
++		    !(u->flags & REF_LOG_ONLY)) {
++			strbuf_addf(err, _("trying to write reflog for '%s'"
++					   "with incomplete values"), u->refname);
++			return REF_TRANSACTION_ERROR_GENERIC;
++		}
++
++		if (queue_transaction_update(refs, tx_data, u, &u->old_oid, err))
++			return REF_TRANSACTION_ERROR_GENERIC;
++		return 0;
++	}
++
+ 	/* Verify that the new object ID is valid. */
+ 	if ((u->flags & REF_HAVE_NEW) && !is_null_oid(&u->new_oid) &&
+ 	    !(u->flags & REF_SKIP_OID_VERIFICATION) &&
+diff --git a/t/t1421-reflog-write.sh b/t/t1421-reflog-write.sh
+index 6cad64f40ab..d4e41838f8f 100755
+--- a/t/t1421-reflog-write.sh
++++ b/t/t1421-reflog-write.sh
+@@ -99,11 +99,9 @@ test_expect_success 'simple writes' '
+ 		EOF
+ 
+ 		git reflog write refs/heads/something $COMMIT_OID $COMMIT_OID second &&
+-		# Note: the old object ID of the second reflog entry is broken.
+-		# This will be fixed in subsequent commits.
+ 		test_reflog_matches . refs/heads/something <<-EOF
+ 		$ZERO_OID $COMMIT_OID $SIGNATURE	first
+-		$ZERO_OID $COMMIT_OID $SIGNATURE	second
++		$COMMIT_OID $COMMIT_OID $SIGNATURE	second
+ 		EOF
+ 	)
+ '
+diff --git a/t/t1460-refs-migrate.sh b/t/t1460-refs-migrate.sh
+index 2ab97e1b7df..0e1116a319d 100755
+--- a/t/t1460-refs-migrate.sh
++++ b/t/t1460-refs-migrate.sh
+@@ -7,6 +7,17 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+ 
++print_all_reflog_entries () {
++	repo=$1 &&
++	test-tool -C "$repo" ref-store main for-each-reflog >reflogs &&
++	while read reflog
++	do
++		echo "REFLOG: $reflog" &&
++		test-tool -C "$repo" ref-store main for-each-reflog-ent "$reflog" ||
++		return 1
++	done <reflogs
++}
++
+ # Migrate the provided repository from one format to the other and
+ # verify that the references and logs are migrated over correctly.
+ # Usage: test_migration <repo> <format> [<skip_reflog_verify> [<options...>]]
+@@ -28,8 +39,7 @@ test_migration () {
+ 		--format='%(refname) %(objectname) %(symref)' >expect &&
+ 	if ! $skip_reflog_verify
+ 	then
+-	   git -C "$repo" reflog --all >expect_logs &&
+-	   git -C "$repo" reflog list >expect_log_list
++		print_all_reflog_entries "$repo" >expect_logs
+ 	fi &&
+ 
+ 	git -C "$repo" refs migrate --ref-format="$format" "$@" &&
+@@ -39,10 +49,8 @@ test_migration () {
+ 	test_cmp expect actual &&
+ 	if ! $skip_reflog_verify
+ 	then
+-		git -C "$repo" reflog --all >actual_logs &&
+-		git -C "$repo" reflog list >actual_log_list &&
+-		test_cmp expect_logs actual_logs &&
+-		test_cmp expect_log_list actual_log_list
++		print_all_reflog_entries "$repo" >actual_logs &&
++		test_cmp expect_logs actual_logs
+ 	fi &&
+ 
+ 	git -C "$repo" rev-parse --show-ref-format >actual &&
+@@ -273,7 +281,7 @@ test_expect_success 'multiple reftable blocks with multiple entries' '
+ 	test_commit -C repo second &&
+ 	printf "update refs/heads/ref-%d HEAD\n" $(test_seq 3000) >stdin &&
+ 	git -C repo update-ref --stdin <stdin &&
+-	test_migration repo reftable
++	test_migration repo reftable true
+ '
+ 
+ test_expect_success 'migrating from files format deletes backend files' '
 
 -- 
 2.50.1.619.g074bbf1d35.dirty
