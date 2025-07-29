@@ -1,54 +1,54 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADC222127B
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 16:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A813209
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 16:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753805281; cv=none; b=ihq1UhTvsw6eOmyUukO9FseynTKywbXfJoL2QsV+ADqjkTv33YvJBvjzs4ko8Eh4yeXuAS+tPv4Dg7rJ83D8W5O7rn6xkwdSv8dVMrEvJk36I75MY6qmZ6pr0QTtsS+05/YKOluNELYjb0ITSTS5vlvmrlCfxpUyttQSnML1wC0=
+	t=1753805816; cv=none; b=tQxHk9kGyXeqBRcehVeoRn2/38OKbejz0m0V9NLmAqvPw/9YUv4k44uL3RJBiCyZ3QB6+RIK6rtg8cV5QqTl6D7mztROD5ICbSlsDV4514s/ARA+hcaEvzosPrfk3alRuFzeGszOr54/BenSnz0zjPbx3HmMKsDhxeHJ82ZWZ2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753805281; c=relaxed/simple;
-	bh=6/u97YqMBQMej8o6G34o5uE3fkWRha0EDbXYBW915Sw=;
+	s=arc-20240116; t=1753805816; c=relaxed/simple;
+	bh=7dQNjuI4KeKa7WfbEEtb7ZBsQOzsPsQIvXtGCYBbE7w=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sT+rd80IL6DGA6lYY1vVqZ0WEstptzALvw4PiOALwAnvCdKsjTorlACgDBDT04zphTkRP+7txemI0CrweiWh2rSNRkDfbySBu2BaFtruFHYaM8HbsEjq54SULFd5pn+KRlTjqRG6W3UYQUId/8eam19PzZzUk0p2BZZKPvPRIDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mBaxNdG9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KgJ0Smhv; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=BlqUZjCwU70p9q/IO7mhoRcCX6/ESzezBObsmnHme+sLNfkyieHCOM4y+ND6l9SqNGLCCp4O5ktcSnNeUZkKwRTYxfVv/8mFDUhZNot1HI7o6uFCpqTD4VGJ1p/X78nDvzi7C1Ymobp8bBnw6xRPq4Q4ZkV7nvyxzr3NkJXNpoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P9cCFEhm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FmC3hcNb; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mBaxNdG9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KgJ0Smhv"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CCDDB7A0023;
-	Tue, 29 Jul 2025 12:07:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P9cCFEhm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FmC3hcNb"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 658027A085C;
+	Tue, 29 Jul 2025 12:16:53 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Tue, 29 Jul 2025 12:07:58 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 29 Jul 2025 12:16:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753805277; x=1753891677; bh=hMUOZOdPG1
-	itnPDgsMsLoFvYNIxf340mnXZLiiREOmU=; b=mBaxNdG9K7ewcPat4MO21iGi+a
-	Canhvqm/yHeYj2ZQGbHpejI5cx4PtRl0CtFcifvPvIg4GBSdTgqYftR6lpYxzD07
-	3A+l2RSwAISPKLCn0qRCLCW8bTZaToU0gNodPaLNBHSL74bHkZ3MrmiK3S6Vd9Eh
-	Qy6KkwPXZKLYgQXxvT8Ka5sQb58TerV5TRUmRq3mtz8yLMXLUq1j+uFyXvpL8Kpc
-	31Sw5o6GnTgK5PcwTJTl0MnSorRQD/abLVPwFgtvyleKtsgBRCxYwtjyMIVz0Rtx
-	8SYS9zLNysC20ck1DPudCvvi/0U9aGoj04LwoQYzqFqTob4u0zA7qsaRgvzA==
+	:subject:to:to; s=fm2; t=1753805813; x=1753892213; bh=WenCbtX+dO
+	YgY192E0ruCv7Il57ydDc6xGE1ij8BJdU=; b=P9cCFEhm0d5Nart1vf60zJk9RS
+	FnUtS3E7r+9YMBEfH+s08JhMM/VW1HkoKnnU3+ih75LRTMaN6ODuPW2NsfhA994N
+	FIMXsiZUaH9EAD7TsCsNcoOJdl1yfuzp1uYXAnUUmvwqqfer1iEg2/0/ZppYz6tY
+	a7bkXLPG+HCZGG+VXm9zetNvQPudaHnVt6MVzEfL2oh8ZukOb61l+utzvHYRwJq0
+	Lj5jOENrcGOFDeT3QqmgKfekX1CH4DlIsT40BbPM2nMcJX/vZNu1U1T+BV8JpCJk
+	Ty2pnjWvEDIH8ekMabCEUniOxrjc+XKk0mLXutsXGygW9zm2nysXMRjCH0jQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753805277; x=1753891677; bh=hMUOZOdPG1itnPDgsMsLoFvYNIxf340mnXZ
-	LiiREOmU=; b=KgJ0SmhvAUYn/IkXMrvV6sKmKuGN1NXoQDX3xjX4YNIb1kw4vsH
-	r2jU6lM1FSwlkRlaHr74JXwTDuQ/R3TRX57Hj+K2vVMROTmsRkThww015LbtJHUl
-	zA3Klmtn6XqMEOgwJqdpqVhavgWyZV3gHRMptubyNEzPCZR+9H7k3kuR/4qz1zTu
-	NhOVWjbGThoErjK4YjPk95i55qKOP7dCZMRmAIWWsggpz67G/yTnh8PO6ilcB5hF
-	Y8RJ1L/P4xWFXc24hyI2F7ZP0uJ6ijjl9Zf4TXdzUo8Vu4TULHm8fdc4mteQftIi
-	wgFggde+7XYnxs8qk6hBi/W4OAQyillSJRQ==
-X-ME-Sender: <xms:3fGIaCIabAyaZ3Nda6eX-KUu7pxpR_Il77hQSHILVHSAWDoCDQsZ8Q>
-    <xme:3fGIaF3lf3ALKu5LM76_g-6vgaOnjEZlpQN4IvK3RlwzDmyhHHs6AZ-ei7xQ_dkFs
-    WUfaWbqVDpENIZVxg>
-X-ME-Received: <xmr:3fGIaPI3txaNRlOoyu0c1sZ7naBnZAxUG11b414q26HZVYYNmi_k2ger0T8ofwD75-EtVPMKcyPER3BgQIg1MG-xUEQl8DNtB-QDpfQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelheeglecutefuodetggdotefrod
+	1753805813; x=1753892213; bh=WenCbtX+dOYgY192E0ruCv7Il57ydDc6xGE
+	1ij8BJdU=; b=FmC3hcNbjtEF4kA+r6a/c/jPfA36xHeB0BaGagG/r/TWZKmhYdv
+	1vchQvvQyg7dC7QBqdbq4dR1zZfW2kifsKu3xLzdnB7xu0yjO2k1xSYX6eK4L7P8
+	VVmqX8qctSKJ4EfMuylAzbhDyV8IWnLL/bmvZFpg6mzQGRX7YrWKvMQtMTIqbRpj
+	nS20jhHthwB1Te1b2tpkJJvTHlTw43UK9yRlYbJT8V685AJad7Xc5ZzbCdqkQx1K
+	dsKwWTTOtwyoxNDeJDR8SlJ1fGK35m51NQCmG3n8IH89O59vdrF+ij6hd3n7uRVe
+	u2elLOPLfP30ITZMRtG5FRDCiUvicvVdWww==
+X-ME-Sender: <xms:9fOIaFkRny94WJsUIw5kw4KOu8Jyx-FCfEywaD_FbSCLZt4UatFbLw>
+    <xme:9fOIaMiRAtCjLf7fyQWluZSJO9zLJikUEOOReLPqvhvC5UjnP_fhOtj9nUhJ6lRq9
+    -TfMfXZmz0fI0QuVQ>
+X-ME-Received: <xmr:9fOIaIHD5uQ6bQVWM5LiyZccUnd8_XBuLjSYLPJPGO968-m6N5z6xqeG3AXbQySQ7K3zJVx9Gs0gVv9UGYp-tbIzerRbgHh7lg-rE8o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelheehudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
@@ -63,14 +63,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelheeglecutefuodetgg
     pehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvg
     htpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
     ihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:3fGIaAgWfBOvmGpPdY57WrabiuaBpP50QmzIoOab9FJYcRccXdJeyg>
-    <xmx:3fGIaPAIA-DBjodZ8ZwQ9-Oqh1YtITVv227D5SYhAqL_1Lzyh4ZpLQ>
-    <xmx:3fGIaC7XUgzN6nprvg612pOP5QNtgY7xzGJH9JFpXqOy-u8XwKMdEA>
-    <xmx:3fGIaEEDc7EYVEz10-8IC0TcVuFm3RFhRknbCAAYxETwGpkKpVlOvg>
-    <xmx:3fGIaOtlnDVqQ_wKRIP4EgPQ4H5lf7JhiK13QKAppOjbWE6jjzT4fdXD>
+X-ME-Proxy: <xmx:9fOIaOv78D4EdvkLmhTmnJtjlHdLUSBsXsbjgQ7L1lJcyfYnV8n3xA>
+    <xmx:9fOIaJfcli5RaFdHzKgnZV-ukEQA-zWIIJCLzGNZekOMXwOwDrpP7g>
+    <xmx:9fOIaEn_X0H3rcAw9OEzK4cG4rO8xIf-KlI-Zzn8LMXoy5Tn3xRKoQ>
+    <xmx:9fOIaMBY-Xx7RzWuyC8hZHRCLqCHKONVSSRrGS0RQpkERXvZTmEI4g>
+    <xmx:9fOIaPKVCskOPxzAcc662ehqcPnGI4cAe4cwd3KVWEp1t1WWN7qtVpPl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Jul 2025 12:07:56 -0400 (EDT)
+ 29 Jul 2025 12:16:52 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
@@ -78,14 +78,14 @@ Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
  <szeder.dev@gmail.com>,  Toon
  Claes <toon@iotcl.com>,  Jeff King <peff@peff.net>,  Kristoffer Haugsbakk
  <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [PATCH v3 4/9] builtin/reflog: implement subcommand to write
- new entries
-In-Reply-To: <20250729-pks-reflog-append-v3-4-9614d310f073@pks.im> (Patrick
-	Steinhardt's message of "Tue, 29 Jul 2025 10:55:22 +0200")
+Subject: Re: [PATCH v3 7/9] refs/files: detect race when generating reflog
+ entry for HEAD
+In-Reply-To: <20250729-pks-reflog-append-v3-7-9614d310f073@pks.im> (Patrick
+	Steinhardt's message of "Tue, 29 Jul 2025 10:55:25 +0200")
 References: <20250729-pks-reflog-append-v3-0-9614d310f073@pks.im>
-	<20250729-pks-reflog-append-v3-4-9614d310f073@pks.im>
-Date: Tue, 29 Jul 2025 09:07:55 -0700
-Message-ID: <xmqqtt2vou90.fsf@gitster.g>
+	<20250729-pks-reflog-append-v3-7-9614d310f073@pks.im>
+Date: Tue, 29 Jul 2025 09:16:51 -0700
+Message-ID: <xmqqpldjotu4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,13 +97,121 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> +	ref = argv[0];
-> +	if (!is_root_ref(ref) && check_refname_format(ref, 0))
-> +		die(_("invalid reference name: %s"), ref);
+> When updating a reference that is being pointed to HEAD we don't only
+> write a reflog message for that particular reference, but also generate
+> one for HEAD. This logic is handled by `split_head_update()`, where we:
+>
+>   1. Verify that the condition actually triggered. This is done by
+>      reading HEAD at the start of the transaction so that we can then
+>      check whether a given reference update refers to its target.
+>
+>   2. Queue a new log-only update for HEAD in case it did.
+>
+> But the logic is unfortunately not free of races, as we do not lock the
+> HEAD reference after we have read its target. This can lead to the
+> following two scenarios:
+>
+>   - HEAD gets concurrently updated to point to one of the references we
+>     have already processed. This causes us not writing a reflog message
+>     even though we should have done so.
+>
+>   - HEAD gets concurrently updated to point to not point to a reference
+>     anymore that we have already processed. This causes us to write a
+>     reflog message even though we should _not_ have done so.
+>
+> Improve the situation by introducing a new `REF_LOG_VIA_SPLIT` flag that
+> is specific to the "files" backend. If set, we will double check that
+> the HEAD reference still points to the reference that we are creating
+> the reflog entry for after we have locked HEAD. Furthermore, instead of
+> manually resolving the old object ID of that entry, we now use the same
+> old state as for the parent update.
+>
+> Unfortunately, this change only helps with the second race. We cannot
+> reliably plug the first race without locking the HEAD reference at the
+> start of the transaction. Locking HEAD unconditionally would effectively
+> serialize all writes though, and that doesn't seem like an option. Also,
+> double checking its value at the end of the transaction is not an option
+> either, as its target may have flip-flopped during the transaction.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  refs/files-backend.c | 40 ++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 38 insertions(+), 2 deletions(-)
 
-The "root ref" check is new in this iteration, and it makes perfect
-sense.
+This is a step new in this iteration.  I sometimes wonder if the
+world were in a much better shape if I didn't record the updates to
+underlying branch in the reflog of HEAD (and limited only to record
+switching branches), as this is a fallout from the (mis)design.
 
-We are not passing REFNAME_ALLOW_ONELEVEL flag, so we explicitly
-allow things like HEAD (but exclude things like FETCH_HEAD).
+Anyway, I agree that the change in this patch matches the above
+description and takes us in a better place ;-)
 
+Thanks.
+
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index bf6f89b1d19..ba018b0984a 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -68,6 +68,12 @@
+>   */
+>  #define REF_DELETED_RMDIR (1 << 9)
+>  
+> +/*
+> + * Used to indicate that the reflog-only update has been created via
+> + * `split_head_update()`.
+> + */
+> +#define REF_LOG_VIA_SPLIT (1 << 14)
+> +
+>  struct ref_lock {
+>  	char *ref_name;
+>  	struct lock_file lk;
+> @@ -2420,9 +2426,10 @@ static enum ref_transaction_error split_head_update(struct ref_update *update,
+>  
+>  	new_update = ref_transaction_add_update(
+>  			transaction, "HEAD",
+> -			update->flags | REF_LOG_ONLY | REF_NO_DEREF,
+> +			update->flags | REF_LOG_ONLY | REF_NO_DEREF | REF_LOG_VIA_SPLIT,
+>  			&update->new_oid, &update->old_oid,
+>  			NULL, NULL, update->committer_info, update->msg);
+> +	new_update->parent_update = update;
+>  
+>  	/*
+>  	 * Add "HEAD". This insertion is O(N) in the transaction
+> @@ -2600,7 +2607,36 @@ static enum ref_transaction_error lock_ref_for_update(struct files_ref_store *re
+>  
+>  	update->backend_data = lock;
+>  
+> -	if (update->type & REF_ISSYMREF) {
+> +	if (update->flags & REF_LOG_VIA_SPLIT) {
+> +		struct ref_lock *parent_lock;
+> +
+> +		if (!update->parent_update)
+> +			BUG("split update without a parent");
+> +
+> +		parent_lock = update->parent_update->backend_data;
+> +
+> +		/*
+> +		 * Check that "HEAD" didn't racily change since we have looked
+> +		 * it up. If it did we must refuse to write the reflog entry.
+> +		 *
+> +		 * Note that this does not catch all races: if "HEAD" was
+> +		 * racily changed to point to one of the refs part of the
+> +		 * transaction then we would miss writing the split reflog
+> +		 * entry for "HEAD".
+> +		 */
+> +		if (!(update->type & REF_ISSYMREF) ||
+> +		    strcmp(update->parent_update->refname, referent.buf)) {
+> +			strbuf_addstr(err, "HEAD has been racily updated");
+> +			ret = REF_TRANSACTION_ERROR_GENERIC;
+> +			goto out;
+> +		}
+> +
+> +		if (update->flags & REF_HAVE_OLD) {
+> +			oidcpy(&lock->old_oid, &update->old_oid);
+> +		} else {
+> +			oidcpy(&lock->old_oid, &parent_lock->old_oid);
+> +		}
+> +	} else if (update->type & REF_ISSYMREF) {
+>  		if (update->flags & REF_NO_DEREF) {
+>  			/*
+>  			 * We won't be reading the referent as part of
