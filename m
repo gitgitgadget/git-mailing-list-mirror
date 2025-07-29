@@ -1,55 +1,55 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B9D1DED40
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 14:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242511CDFD5
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 14:12:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753798377; cv=none; b=O41NOOLXw62FNzbkCeWTTQySb+j7R4equZwn1L8VQqzp7VtLWMYflcs0m9RqzHYgkv4eF5tbKT9EoudDMFQzlFHyr93YIgYJci/23Tis/2MpocUuezITjuE3o5mRjyjZgjHX0i2a56tXvgDj62eS1yUBCstZL6VOzHxPBjBzhPM=
+	t=1753798380; cv=none; b=lhC3iVjsnuwze7lug5RKbj3xdkQVEvPJfUgAWOz/VqchfAYxOujhPmbDis7SJu7ln0UxAwAzBk2WyDgrzWVLhc+zmvGLZKaKYUHYYxpy0dnw5yH0+0S4XHnkE3fn6fb7X4hbHzFhhl7ZOodGbPyPQPPooXCZgB0Vc+F5PFcPvbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753798377; c=relaxed/simple;
-	bh=QRwCqqxbg0JTC4gjQF0fzaAKoBVJDDbmtxi+5KPkOTo=;
+	s=arc-20240116; t=1753798380; c=relaxed/simple;
+	bh=IDxJCit+q/sLEke+RHEKJ61hl4i+DJ2+EMWe412QweA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hqs9/aOpDzfW4isgCAhzIYO1EjPD4utHBDbmM3whqa/fTlF1NJutdgeYU7C6VvUHXOGrpiNIT4RyqPBdJRJ9FKsSlZ5dlzwJ3hN1pDsgeq6bNK5nlcUIAjou4Ff/fbZZpEk6TfznGvYP0mGLB8Tqj89mHIzh1rCfY1/a1PHASRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E1ENmi85; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e2eexlZg; arc=none smtp.client-ip=202.12.124.149
+	 In-Reply-To:To:Cc; b=hZkXEOH0bd6BHJHTJBAJDVkPLJv5PaZgF50PV57YM8YSJf+xlc6Ne1cXrbf4kQh/dmXrqAeajQn3C3Jzm7Yo6wDuNmrgrP1GsCm9kUQEI1husVG1xuz3lErwPzZajvKBHFdHUDDhRc8D5XK7UqbE+RzO19Ml/tQOLF3CR0sbv0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c2SUES11; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NIiinrYE; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E1ENmi85";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e2eexlZg"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 26EE21D0011A;
-	Tue, 29 Jul 2025 10:12:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c2SUES11";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NIiinrYE"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5634A7A0792;
+	Tue, 29 Jul 2025 10:12:57 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 29 Jul 2025 10:12:55 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 29 Jul 2025 10:12:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1753798375;
-	 x=1753884775; bh=sZO+oFfCG/5QWsHm+pUyOV2wU6cyv2+L6ouMk0z/llM=; b=
-	E1ENmi85ZtM0P7iocpCmHGIl9c2mspAwVPjjvKMdvoqyB7DsjdkWIQeQjpsjcY6T
-	7wZYdELcn0mj6/OtypVSGcr04Hia4Iu3XdR/P+5DElsdUFnJq1KUa8zjOQqXL2Sf
-	T16oa2eWCevXPIkHPrsZaN0SSSo9LZVEsWV+3L9ngdCiqnMT+vPJLJdZvc6MZAlP
-	QZrIW1dX6krkDcn86NgL0CKftmLEOeMrXuvs1DEhPuDxnv4JzZe50kNyeWy0W108
-	HypRdjQgFP30MhmaCQzyzdZ2JvOWX4M4gSiS3LgewlR/N5fA4QvjLwkBfLZ0Uhwt
-	X904oUq91h61DNCXLpmNBw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1753798377;
+	 x=1753884777; bh=GiGotdO48V0Qxe9tc+yr0JuFPRo5dOniMOWWRcm+td4=; b=
+	c2SUES113j/gJmV18LjdD3eYuUux1fW92sUgdo+8juGRNvmJ4ezr8dIZEu+bWms6
+	PN7mf9M79idVZRPUQNPdd6dzaZOg1IstTerF/N1Njy9AJDb16gnyYautf2pPO8yl
+	y3BJ8nUItdhCAYgrnCRWQIuzakoRyTY/YzkU14AjrT3G7t+yEDdY74FhFf/O9blp
+	BENiNLfB2eSuSFwfDO0HAVeGFj+nZp/w0DBrEYNntiI9TrPLsBo67GfUPyw5JfbT
+	QoJKX/jSU1wPrRFPKadblvoL3adhhDD4+hRVoVutloLMUSwLvTWSAIrDSI8xrDiA
+	YAqXv8jbJZE/DCPn0KCJFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753798375; x=
-	1753884775; bh=sZO+oFfCG/5QWsHm+pUyOV2wU6cyv2+L6ouMk0z/llM=; b=e
-	2eexlZg3vp3s8vboCLGs+YBwyw1r8juahoPnyUOi2pdS1xcZEySFEO4htXsnaKUy
-	xnAXXr/HDXZ8g5b6rzgmEU+D089Lqk/0+Gvr0uqYJL2FiUbbVVRkZnWUNBa1r4S7
-	nO55LiJ4IU7I7JayupLbMLGtiR5wyV5CckA3TuSXn8soh9cIbM3yjQ4G03z0CYVp
-	BE7r+Z6aPaMJnusVQlpcPl/vvEJIVL7PVpPlgzNydvd0/pGbUbPs2f3wv30SBD28
-	wKxpMKsr9lW7TCAhJ0nWJAvQxVn6vzsXWXL5R9ZNkskcTNXtbD203iVD3iT2z6uO
-	t8SZ+qd2EE7cbzXfqmSNg==
-X-ME-Sender: <xms:5taIaELt7-COcy9_GngQSeYuPnfEVf_iej0zGwTB1TkbCETIZ68n3Q>
-    <xme:5taIaEVHcn4mL5V6aY5aXMMVT6CcSwtInF7LEMuVz54UspDl4xu4Ow4JISQ8uA7G6
-    2RIuRQ55e9TZ9O3WA>
-X-ME-Received: <xmr:5taIaGifJjQVcdKpdBTRcMgRtcYEBPJhWTkObmdabwBRcxmAcOxFObMcLFTphbIfUoikGXg1DUYNpBeKNtIlfvdutfwIxtCg5rPGwaZ1OVU>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753798377; x=
+	1753884777; bh=GiGotdO48V0Qxe9tc+yr0JuFPRo5dOniMOWWRcm+td4=; b=N
+	IiinrYE07D2+A+SqGq5Ym0utViOAeLx6wyRZFitDfhEy0JP0F4JBHwQ1GXvH1Jjc
+	AExhF9B6TAbRiUHdq9i2xEV1qrjGX9l0YptieAI0UEe7241m+oiZbvl4q+SsgRCJ
+	VHzCnR5arz+xhbTACLI0YJPbVB9vGdhltb5oZvVSNrVNHJ5GbupSDlovvT5fbd9P
+	UTAPGXeGnRRFONnoWLcdmsadGC8invBlKqsh77ORxxDMUhPg7QVCxFBHrEbE2h3d
+	8QMWC9fA34rzzEV/Ff4CSXSGVJp/dgquRcAwMfaiHele5ku8N0d7OtG6kdndXTA3
+	WZ+xS6sq8j+pMdnLVzuNQ==
+X-ME-Sender: <xms:6daIaGfwgrpCLB8Ij9pzbwBBjkeSmWQlq5Tucu6uMhtY3Sh3xT7Pug>
+    <xme:6daIaAbc-TIAOh8Ppe0UhJglp8EMBo81WOJR5ilpuyrGwDRK4_w7k_pT5gjL-xC8A
+    SBIrRW297HZwBNXEg>
+X-ME-Received: <xmr:6daIaJVbcmGddIfnQA6MOEK4VGYa5AtKu0O7rl5msI-H9X6jmsoRsodOm5QE7rrRftVBNbVZcid63H80ColA8b1lT-7_fmwpnZdcpn-lggw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelhedviecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
@@ -57,22 +57,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelhedviecutefuodetgg
     shdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelte
     ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:5taIaP_MT_V8DiO1-ESBK_493HlnLK_9fy9w1W56jSnjLlNyWNBRGw>
-    <xmx:5taIaABO099hONQKlqKEdxxc0E37sTAlsskANYVm-lujbEtrMtCTeg>
-    <xmx:5taIaMLooOha9H_-ta0cwNYLl5JVPLOmKRFl1ktl9lwWI_ZhIuivww>
-    <xmx:5taIaDleSx5fU-f5UC66nxI9BFKs9mojyBhJ7_Wh6l033HObtORPRA>
-    <xmx:5taIaEmHDQc41Ye78KgpOQuHpr34oisd-0J5aq0blEpG_8Wd40zyRJK8>
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:6daIaChaG8kyIWXhZwjeijEoS62e-VciIWEHgjTpj_mizfZLEq7Pbw>
+    <xmx:6daIaHU-HZ7j5tyXsc1Rd-oF6QW7qcfrutSSe_Z02ADUC_WRYueUpg>
+    <xmx:6daIaJNoAX7E3MLqUB1ZGCMOWUjdG5jIW7uUrSPTU6tJd_SLMvSxMg>
+    <xmx:6daIaDaQ433RIx3HV4HPfoI9PsPvASCAyXY70CL-nBT6nO-KXW0S5A>
+    <xmx:6daIaDQ9bFl5QprNrZ5NPF1DqogGPiuZKT2_Sj4X22JWeD5CWQfUrGpR>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Jul 2025 10:12:54 -0400 (EDT)
+ 29 Jul 2025 10:12:56 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 339c82b8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 29 Jul 2025 14:12:53 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 3d946224 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 29 Jul 2025 14:12:56 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 29 Jul 2025 16:12:42 +0200
-Subject: [PATCH 3/8] odb: return newly created in-memory sources
+Date: Tue, 29 Jul 2025 16:12:43 +0200
+Subject: [PATCH 4/8] midx: drop redundant `struct repository` parameter
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,127 +81,278 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250729-b4-pks-midx-deduplicate-source-info-v1-3-748db2eda3b5@pks.im>
+Message-Id: <20250729-b4-pks-midx-deduplicate-source-info-v1-4-748db2eda3b5@pks.im>
 References: <20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im>
 In-Reply-To: <20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>
 X-Mailer: b4 0.14.2
 
-Callers have no trivial way to obtain the newly created object database
-source when adding it to the in-memory list of alternates. While not yet
-needed anywhere, a subsequent commit will want to obtain that pointer.
+There are a couple of functions that take both a `struct repository` and
+a `struct multi_pack_index`. This provides redundant information though
+without much benefit given that the multi-pack index already has a
+pointer to its owning repository.
 
-Refactor the function to return the source to make it easily accessible.
+Drop the `struct repository` parameter from such functions. While at it,
+reorder the list of parameters of `fill_midx_entry()` so that the MIDX
+comes first to better align with our coding guidelines.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb.c | 37 +++++++++++++++++++++----------------
- odb.h |  4 ++--
- 2 files changed, 23 insertions(+), 18 deletions(-)
+ builtin/pack-objects.c    |  2 +-
+ midx-write.c              | 16 +++++++---------
+ midx.c                    | 18 +++++++++---------
+ midx.h                    |  6 +++---
+ pack-bitmap.c             |  4 ++--
+ packfile.c                |  4 ++--
+ t/helper/test-read-midx.c |  4 ++--
+ 7 files changed, 26 insertions(+), 28 deletions(-)
 
-diff --git a/odb.c b/odb.c
-index 61104b7cb8..7793816f81 100644
---- a/odb.c
-+++ b/odb.c
-@@ -139,23 +139,22 @@ static void read_info_alternates(struct object_database *odb,
- 				 const char *relative_base,
- 				 int depth);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 3dd84495b8..b9fd685b8f 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1733,7 +1733,7 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
+ 		struct multi_pack_index *m = get_multi_pack_index(source);
+ 		struct pack_entry e;
  
--static int link_alt_odb_entry(struct object_database *odb,
--			      const struct strbuf *entry,
--			      const char *relative_base,
--			      int depth,
--			      const char *normalized_objdir)
-+static struct odb_source *link_alt_odb_entry(struct object_database *odb,
-+					     const char *entry,
-+					     const char *relative_base,
-+					     int depth,
-+					     const char *normalized_objdir)
- {
--	struct odb_source *alternate;
-+	struct odb_source *alternate = NULL;
- 	struct strbuf pathbuf = STRBUF_INIT;
- 	struct strbuf tmp = STRBUF_INIT;
- 	khiter_t pos;
--	int ret = -1;
- 
--	if (!is_absolute_path(entry->buf) && relative_base) {
-+	if (!is_absolute_path(entry) && relative_base) {
- 		strbuf_realpath(&pathbuf, relative_base, 1);
- 		strbuf_addch(&pathbuf, '/');
- 	}
--	strbuf_addbuf(&pathbuf, entry);
-+	strbuf_addstr(&pathbuf, entry);
- 
- 	if (!strbuf_realpath(&tmp, pathbuf.buf, 0)) {
- 		error(_("unable to normalize alternate object path: %s"),
-@@ -189,11 +188,11 @@ static int link_alt_odb_entry(struct object_database *odb,
- 
- 	/* recursively add alternates */
- 	read_info_alternates(odb, alternate->path, depth + 1);
--	ret = 0;
-+
-  error:
- 	strbuf_release(&tmp);
- 	strbuf_release(&pathbuf);
--	return ret;
-+	return alternate;
- }
- 
- static const char *parse_alt_odb_entry(const char *string,
-@@ -246,7 +245,7 @@ static void link_alt_odb_entries(struct object_database *odb, const char *alt,
- 		alt = parse_alt_odb_entry(alt, sep, &entry);
- 		if (!entry.len)
+-		if (m && fill_midx_entry(the_repository, oid, &e, m)) {
++		if (m && fill_midx_entry(m, oid, &e)) {
+ 			want = want_object_in_pack_one(e.p, oid, exclude, found_pack, found_offset, found_mtime);
+ 			if (want != -1)
+ 				return want;
+diff --git a/midx-write.c b/midx-write.c
+index 40580d8c73..37a0b1682f 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -944,8 +944,7 @@ static int fill_packs_from_midx(struct write_midx_context *ctx,
+ 			 */
+ 			if (flags & MIDX_WRITE_REV_INDEX ||
+ 			    preferred_pack_name) {
+-				if (prepare_midx_pack(ctx->repo, m,
+-						      m->num_packs_in_base + i)) {
++				if (prepare_midx_pack(m, m->num_packs_in_base + i)) {
+ 					error(_("could not load pack"));
+ 					return 1;
+ 				}
+@@ -1568,7 +1567,7 @@ int expire_midx_packs(struct repository *r, const char *object_dir, unsigned fla
+ 		if (count[i])
  			continue;
--		link_alt_odb_entry(odb, &entry,
-+		link_alt_odb_entry(odb, entry.buf,
- 				   relative_base, depth, objdirbuf.buf);
- 	}
- 	strbuf_release(&entry);
-@@ -316,17 +315,23 @@ void odb_add_to_alternates_file(struct object_database *odb,
- 	free(alts);
+ 
+-		if (prepare_midx_pack(r, m, i))
++		if (prepare_midx_pack(m, i))
+ 			continue;
+ 
+ 		if (m->packs[i]->pack_keep || m->packs[i]->is_cruft)
+@@ -1614,13 +1613,12 @@ static int compare_by_mtime(const void *a_, const void *b_)
+ 	return 0;
  }
  
--void odb_add_to_alternates_memory(struct object_database *odb,
--				  const char *reference)
-+struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
-+						const char *reference)
+-static int want_included_pack(struct repository *r,
+-			      struct multi_pack_index *m,
++static int want_included_pack(struct multi_pack_index *m,
+ 			      int pack_kept_objects,
+ 			      uint32_t pack_int_id)
  {
-+	struct odb_source *alternate;
-+	char *objdir;
-+
- 	/*
- 	 * Make sure alternates are initialized, or else our entry may be
- 	 * overwritten when they are.
- 	 */
- 	odb_prepare_alternates(odb);
+ 	struct packed_git *p;
+-	if (prepare_midx_pack(r, m, pack_int_id))
++	if (prepare_midx_pack(m, pack_int_id))
+ 		return 0;
+ 	p = m->packs[pack_int_id];
+ 	if (!pack_kept_objects && p->pack_keep)
+@@ -1642,7 +1640,7 @@ static void fill_included_packs_all(struct repository *r,
+ 	repo_config_get_bool(r, "repack.packkeptobjects", &pack_kept_objects);
  
--	link_alt_odb_entries(odb, reference,
--			     '\n', NULL, 0);
-+	objdir = real_pathdup(odb->sources->path, 1);
-+	alternate = link_alt_odb_entry(odb, reference, NULL, 0, objdir);
-+
-+	free(objdir);
-+	return alternate;
+ 	for (i = 0; i < m->num_packs; i++) {
+-		if (!want_included_pack(r, m, pack_kept_objects, i))
++		if (!want_included_pack(m, pack_kept_objects, i))
+ 			continue;
+ 
+ 		include_pack[i] = 1;
+@@ -1666,7 +1664,7 @@ static void fill_included_packs_batch(struct repository *r,
+ 	for (i = 0; i < m->num_packs; i++) {
+ 		pack_info[i].pack_int_id = i;
+ 
+-		if (prepare_midx_pack(r, m, i))
++		if (prepare_midx_pack(m, i))
+ 			continue;
+ 
+ 		pack_info[i].mtime = m->packs[i]->mtime;
+@@ -1685,7 +1683,7 @@ static void fill_included_packs_batch(struct repository *r,
+ 		struct packed_git *p = m->packs[pack_int_id];
+ 		uint64_t expected_size;
+ 
+-		if (!want_included_pack(r, m, pack_kept_objects, pack_int_id))
++		if (!want_included_pack(m, pack_kept_objects, pack_int_id))
+ 			continue;
+ 
+ 		/*
+diff --git a/midx.c b/midx.c
+index b9ca0915a6..8459dda8c9 100644
+--- a/midx.c
++++ b/midx.c
+@@ -450,9 +450,10 @@ static uint32_t midx_for_pack(struct multi_pack_index **_m,
+ 	return pack_int_id - m->num_packs_in_base;
  }
  
- struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
-diff --git a/odb.h b/odb.h
-index 387b117c87..ac7ee05188 100644
---- a/odb.h
-+++ b/odb.h
-@@ -265,8 +265,8 @@ void odb_add_to_alternates_file(struct object_database *odb,
-  * recursive alternates it points to), but do not modify the on-disk alternates
-  * file.
-  */
--void odb_add_to_alternates_memory(struct object_database *odb,
--				  const char *dir);
-+struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
-+						const char *dir);
+-int prepare_midx_pack(struct repository *r, struct multi_pack_index *m,
++int prepare_midx_pack(struct multi_pack_index *m,
+ 		      uint32_t pack_int_id)
+ {
++	struct repository *r = m->repo;
+ 	struct strbuf pack_name = STRBUF_INIT;
+ 	struct strbuf key = STRBUF_INIT;
+ 	struct packed_git *p;
+@@ -507,7 +508,7 @@ struct packed_git *nth_midxed_pack(struct multi_pack_index *m,
  
- /*
-  * Read an object from the database. Returns the object data and assigns object
+ #define MIDX_CHUNK_BITMAPPED_PACKS_WIDTH (2 * sizeof(uint32_t))
+ 
+-int nth_bitmapped_pack(struct repository *r, struct multi_pack_index *m,
++int nth_bitmapped_pack(struct multi_pack_index *m,
+ 		       struct bitmapped_pack *bp, uint32_t pack_int_id)
+ {
+ 	uint32_t local_pack_int_id = midx_for_pack(&m, pack_int_id);
+@@ -515,7 +516,7 @@ int nth_bitmapped_pack(struct repository *r, struct multi_pack_index *m,
+ 	if (!m->chunk_bitmapped_packs)
+ 		return error(_("MIDX does not contain the BTMP chunk"));
+ 
+-	if (prepare_midx_pack(r, m, pack_int_id))
++	if (prepare_midx_pack(m, pack_int_id))
+ 		return error(_("could not load bitmapped pack %"PRIu32), pack_int_id);
+ 
+ 	bp->p = m->packs[local_pack_int_id];
+@@ -600,10 +601,9 @@ uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos)
+ 					       (off_t)pos * MIDX_CHUNK_OFFSET_WIDTH);
+ }
+ 
+-int fill_midx_entry(struct repository *r,
++int fill_midx_entry(struct multi_pack_index *m,
+ 		    const struct object_id *oid,
+-		    struct pack_entry *e,
+-		    struct multi_pack_index *m)
++		    struct pack_entry *e)
+ {
+ 	uint32_t pos;
+ 	uint32_t pack_int_id;
+@@ -615,7 +615,7 @@ int fill_midx_entry(struct repository *r,
+ 	midx_for_object(&m, pos);
+ 	pack_int_id = nth_midxed_pack_int_id(m, pos);
+ 
+-	if (prepare_midx_pack(r, m, pack_int_id))
++	if (prepare_midx_pack(m, pack_int_id))
+ 		return 0;
+ 	p = m->packs[pack_int_id - m->num_packs_in_base];
+ 
+@@ -912,7 +912,7 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
+ 						  _("Looking for referenced packfiles"),
+ 						  m->num_packs + m->num_packs_in_base);
+ 	for (i = 0; i < m->num_packs + m->num_packs_in_base; i++) {
+-		if (prepare_midx_pack(r, m, i))
++		if (prepare_midx_pack(m, i))
+ 			midx_report("failed to load pack in position %d", i);
+ 
+ 		display_progress(progress, i + 1);
+@@ -989,7 +989,7 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
+ 
+ 		nth_midxed_object_oid(&oid, m, pairs[i].pos);
+ 
+-		if (!fill_midx_entry(r, &oid, &e, m)) {
++		if (!fill_midx_entry(m, &oid, &e)) {
+ 			midx_report(_("failed to load pack entry for oid[%d] = %s"),
+ 				    pairs[i].pos, oid_to_hex(&oid));
+ 			continue;
+diff --git a/midx.h b/midx.h
+index 28c426a823..f7e07083e1 100644
+--- a/midx.h
++++ b/midx.h
+@@ -103,10 +103,10 @@ void get_split_midx_filename_ext(const struct git_hash_algo *hash_algo,
+ struct multi_pack_index *load_multi_pack_index(struct repository *r,
+ 					       const char *object_dir,
+ 					       int local);
+-int prepare_midx_pack(struct repository *r, struct multi_pack_index *m, uint32_t pack_int_id);
++int prepare_midx_pack(struct multi_pack_index *m, uint32_t pack_int_id);
+ struct packed_git *nth_midxed_pack(struct multi_pack_index *m,
+ 				   uint32_t pack_int_id);
+-int nth_bitmapped_pack(struct repository *r, struct multi_pack_index *m,
++int nth_bitmapped_pack(struct multi_pack_index *m,
+ 		       struct bitmapped_pack *bp, uint32_t pack_int_id);
+ int bsearch_one_midx(const struct object_id *oid, struct multi_pack_index *m,
+ 		     uint32_t *result);
+@@ -118,7 +118,7 @@ uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos);
+ struct object_id *nth_midxed_object_oid(struct object_id *oid,
+ 					struct multi_pack_index *m,
+ 					uint32_t n);
+-int fill_midx_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e, struct multi_pack_index *m);
++int fill_midx_entry(struct multi_pack_index *m, const struct object_id *oid, struct pack_entry *e);
+ int midx_contains_pack(struct multi_pack_index *m,
+ 		       const char *idx_or_pack_name);
+ int midx_preferred_pack(struct multi_pack_index *m, uint32_t *pack_int_id);
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index d14421ee20..fb0b11ca07 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -493,7 +493,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+ 	}
+ 
+ 	for (i = 0; i < bitmap_git->midx->num_packs + bitmap_git->midx->num_packs_in_base; i++) {
+-		if (prepare_midx_pack(bitmap_repo(bitmap_git), bitmap_git->midx, i)) {
++		if (prepare_midx_pack(bitmap_git->midx, i)) {
+ 			warning(_("could not open pack %s"),
+ 				bitmap_git->midx->pack_names[i]);
+ 			goto cleanup;
+@@ -2466,7 +2466,7 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 		struct multi_pack_index *m = bitmap_git->midx;
+ 		for (i = 0; i < m->num_packs + m->num_packs_in_base; i++) {
+ 			struct bitmapped_pack pack;
+-			if (nth_bitmapped_pack(r, bitmap_git->midx, &pack, i) < 0) {
++			if (nth_bitmapped_pack(bitmap_git->midx, &pack, i) < 0) {
+ 				warning(_("unable to load pack: '%s', disabling pack-reuse"),
+ 					bitmap_git->midx->pack_names[i]);
+ 				free(packs);
+diff --git a/packfile.c b/packfile.c
+index a38544b87b..acb680966d 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1091,7 +1091,7 @@ struct packed_git *get_all_packs(struct repository *r)
+ 		if (!m)
+ 			continue;
+ 		for (uint32_t i = 0; i < m->num_packs + m->num_packs_in_base; i++)
+-			prepare_midx_pack(r, m, i);
++			prepare_midx_pack(m, i);
+ 	}
+ 
+ 	return r->objects->packed_git;
+@@ -2077,7 +2077,7 @@ int find_pack_entry(struct repository *r, const struct object_id *oid, struct pa
+ 	prepare_packed_git(r);
+ 
+ 	for (struct odb_source *source = r->objects->sources; source; source = source->next)
+-		if (source->midx && fill_midx_entry(r, oid, e, source->midx))
++		if (source->midx && fill_midx_entry(source->midx, oid, e))
+ 			return 1;
+ 
+ 	if (!r->objects->packed_git)
+diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
+index da2aa036b5..e430aa247c 100644
+--- a/t/helper/test-read-midx.c
++++ b/t/helper/test-read-midx.c
+@@ -65,7 +65,7 @@ static int read_midx_file(const char *object_dir, const char *checksum,
+ 		for (i = 0; i < m->num_objects; i++) {
+ 			nth_midxed_object_oid(&oid, m,
+ 					      i + m->num_objects_in_base);
+-			fill_midx_entry(the_repository, &oid, &e, m);
++			fill_midx_entry(m, &oid, &e);
+ 
+ 			printf("%s %"PRIu64"\t%s\n",
+ 			       oid_to_hex(&oid), e.offset, e.p->pack_name);
+@@ -126,7 +126,7 @@ static int read_midx_bitmapped_packs(const char *object_dir)
+ 		return 1;
+ 
+ 	for (i = 0; i < midx->num_packs + midx->num_packs_in_base; i++) {
+-		if (nth_bitmapped_pack(the_repository, midx, &pack, i) < 0) {
++		if (nth_bitmapped_pack(midx, &pack, i) < 0) {
+ 			close_midx(midx);
+ 			return 1;
+ 		}
 
 -- 
 2.50.1.619.g074bbf1d35.dirty
