@@ -1,150 +1,149 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A65819F13F
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 21:03:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE5C1990B7
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 21:17:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753823013; cv=none; b=rMH+hpU250Ch2P5ZwDdFoQawhCigWISMQVY7S9sdKBo0b5e06DMz50LZHR5Ja/xMj1GPcDmeSeFeEHzXTNrUDqToVv+CSz58zO1k0UX2+PYbgxysQ6HHK5LLfdJN2CIoillOyWM29vMsLP2LTsU42sgsD5QupxiEcKa7gbjhBRM=
+	t=1753823830; cv=none; b=aBDUWGBPVNYR67KyvhmrPvi0taFwVgmlMnXaiPO87cQ3nej1RctIaWZRX6zMEYhcUvmKVaHjgDmEr2UE+hF76ieDi1Ti2z8eftAITj3185IuUUB2wujuhu5lvJ5cr+a2CXfF67tRhijElwQb6DcUxMFjh6TDnjzPgIlEJTC5C/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753823013; c=relaxed/simple;
-	bh=/8OS9RN8NrlonOtSODIf2pUhn3LZ/mkLWKOkseN861Q=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=rj6DWXWGTT50wCuPeftCayotBoOBcssphfSmXfRWSzTbY9kw9uYO7e0brcHNgdEhFhCAc9pORxG6Y1083tLQyb2hRKLuVccriIhpuT5TL8qQHBG0I2YZpBHV6lQLZ9+UeWd54I7ZXZmCd3Uxbn5kh56ZN7XX57wTFJAdSiuaEOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XA5opBmX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BnYzwFXq; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753823830; c=relaxed/simple;
+	bh=itL+VcsVrSOcKfzkTi1NmCwTgYrxxvqQCXQV2KxRnAA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F1NIIVxa7OE4dqVlq5NeuJF79A8s/y1lfutXHUTHhOVxbvQbfWug3IUJKBKap6zpNc6ccbBlE3kaI7IZFlP/kIfXxzo6aA9HQ5X5EhbrZ+GoY1oydFPj2iH0sQj6TKO60oXfRZcr9a8kA2L4/xihzIDytrq6HcpMFLGV1BSXa8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CY1zmTKC; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XA5opBmX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BnYzwFXq"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3F1DC1D000A2;
-	Tue, 29 Jul 2025 17:03:30 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 29 Jul 2025 17:03:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1753823010; x=1753909410; bh=BNh3VXNjc5/OjzN6jnteaRatjZVgd7EK
-	rR1odT5V5J8=; b=XA5opBmX/I23+obmsKD6oEOxbke8Y8dS3pZTXwa+cto/yIpZ
-	9+3YtM8QFjeiNf2ikI8NkFa6EySTX3vQnIFB8N67FbG1N6H8q0Q6fBrBECKMvhsU
-	TRtY2X3hzd/Kn70+34BT7V9Ycy0I1HkiZ6ZBDyW4OBxOcA1O2SiiA194dDOVQTJz
-	F57fzpHt0sxUKj7RY63rhn4btBuIhojS6Qk5tlcYZh1AxbiNScVLI5obmcX1vjg7
-	c0NoV2YglVlQkJR7yi4/baYMO5JrCHfFLmLZ8gRAnFkmGQHTy6KSefztpHqrdDG8
-	65bJx0TcyBviToTB4XfdxMTaYQShi/gp9EMtgw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753823010; x=
-	1753909410; bh=BNh3VXNjc5/OjzN6jnteaRatjZVgd7EKrR1odT5V5J8=; b=B
-	nYzwFXqLPe/dLCPn/TE0sZ1lhTQGnaJAX2KDxgSmurhAlwvcf7gFatRQV2qn7fnB
-	WLQxh2RCvWNiuv+ptZ5m7RsvYwuySjR0CbZyiVjcnslvf6HjvjNt92nhznVknCFO
-	Xq+Ym7qyr/lqHYB3owBiTVA7GmzOsRKx0uKF2gdoXCkntrkU0Ee4r9B86HIm9fnG
-	GjHy0RLV1qrQmMBM50vtIjhwqFUOafQBmrv7wYa6Y51YveuY0DDIWCejjyg6h4tP
-	IBTY6l+dqk0XmiUWZ+GDGwQThQMb5JrdselkF2aMMoK0prjZbNOfH7JPajK0aRjT
-	B+q4JXFKoFtF5hLBZ7r6w==
-X-ME-Sender: <xms:ITeJaLNkhN6nvHuAI3E_PjXISYD4Yg99iGhTivQIeL2wDiD5pvPLEQ>
-    <xme:ITeJaGKoJPTC63AIXW-sbfapVF8ruIWpJbPMQ-yMQ4-KAXnW9o3S0KFbF33ROQ2qq
-    xy_xYFe8NH0gZu75w>
-X-ME-Received: <xmr:ITeJaMEGFkE0ye6GjFbnVTt93qaUJrX7E4M47n1STZDaY6AcMX6bbF-yqv_p3PAWKIrnRZgcFFpFBrKjd_sU1eXkWbNCZsTf12eu2uE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeliedtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvufffkfgfgggtsehttdfotddtredtne
-    cuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohig
-    rdgtohhmqeenucggtffrrghtthgvrhhnpeekhedvieeutdekveelieeuvedtheevfeehvd
-    eiveeukeefieeukeehvdfhffejffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtph
-    htthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ITeJaOTDJALj67-g36HsL9ETZEgVkdVv5obPfsfUp1fmdkBI7ZxvdQ>
-    <xmx:ITeJaIErbt1LKDQwAuqwkp6d1KtH-kDkE02NlnEy-YNhKcNJ55C-YA>
-    <xmx:ITeJaK8efxdNVT2ePc0zgEibgwNVe0Q3m8UElxzaQaj56AnA-dINvw>
-    <xmx:ITeJaCJC1_PTFR_bRNhJpvAUItws9NJF0S-ZEe3Lps2I2rnwoX7fyw>
-    <xmx:IjeJaNy1_P2AYcEvTYaeF3sEtWNiXoZLMoCbSCa5HrSnXy1yGuP-SfV0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Jul 2025 17:03:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] clean: do not pass strbuf by value
-Date: Tue, 29 Jul 2025 14:03:27 -0700
-Message-ID: <xmqqseieogkg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CY1zmTKC"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-31e41cfa631so6324984a91.2
+        for <git@vger.kernel.org>; Tue, 29 Jul 2025 14:17:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753823828; x=1754428628; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RfKnXT0ZodBYr+fuD2ZAubpqFFkDYtM0s6CWNauUowM=;
+        b=CY1zmTKCjJJXX5v4spmWC8u/b2xuwmS/n0e7TfntQMV2AxF4Utb/1Y6fQOJZ0VGiGK
+         CZnNyhqa177/CR78p0AKQJFY2YN4LiOhg3LUfmoL9oVv2pvFvSLWtpno7dHwqTyg9dX8
+         nOH+B0dO6czYdk4pe+d7eE5EY0GOX1sWFKYuo5BiIPCGh9IThUcDuu0ctzEZ+oTHWX+M
+         Fwdg9ZhDPEV8l0Dj681hjtWYUZvSm6XfOWhpCOXp1svcNXtZT6jvyeXhhtI7bd+aBVYS
+         4y6dwYpIU8p/PvVlKfPkWQ5WSeRj5RhXCf6BXcpapdVeqrAyTpzGie6Ac2zCHadAlxQt
+         hB2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753823828; x=1754428628;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RfKnXT0ZodBYr+fuD2ZAubpqFFkDYtM0s6CWNauUowM=;
+        b=XtX4LxPsq3xRfafeJ5iohf6m1HkIjg+gC9FOp2rzbLiOaCHvUxzhEy8GyM6AZJ3UOt
+         tb4sN0yMf2DWjDS8ePNot76Q0ol44ebRlllpfGxNORkbBdNNq6H2vCERQKmhHoFutho/
+         4dvmkKB+lOrJSM9mgqmVvi8mTgwnL7sMKWuu44a88dBRJBDGFbDwtbXOQa3vbr9Tdsm5
+         8lCcUNfQf57nWZ0pmVUbE7n3Y1lbMbI9uCKyrGAa1M68jhNHBYjt0cZq2MLdph0UqUdH
+         ZB9BPZfBchml305NnPkY7mhEOpgNpzE7BfiE7wZs3JQGgy166Wkn8OZ3tVi/4fgU8d6+
+         6YOA==
+X-Gm-Message-State: AOJu0Yxh/0Va013ibXCV+/qmTShsNQarWzGF767J4EATQpVB32UG5Ec5
+	5LJmH17YciNxedF0xrwHNTBFnzv6Es8SkQ4FjOt7m8Lsyogr0QYOXci+QjFnlo+HhFVFCf37MlV
+	67gJc5cVXJBXofdky75XhgaHNb/CoJJA=
+X-Gm-Gg: ASbGncs9B0lRK6n1rFKDbeiE2yU15N4wjCLRgsqAxu0U7Z3QsfntTDWYv4/gniY1xh2
+	tiL/kSCW/UONW3lKnzbN+8rYmgvZcHQSoIZdb60rTrTu8mXy7sG7iFw7zG4ofuUx70Yp7jUN6HM
+	YGYJbPkDLkq+RpFllLH8QllBjc7HiT7mUYyBUhts097rQ34RyLOBJoack0zOfZHiW+StweHNuhg
+	1PxqgXl
+X-Google-Smtp-Source: AGHT+IHIr6a1RlCG185LMADN3727Uu87JdUQIBbYBueQRacqc2JprbHkNjmtGGehPC+ARhO7kasuP9aNrDlHHPLhlFA=
+X-Received: by 2002:a17:90a:d450:b0:31e:d2a8:5165 with SMTP id
+ 98e67ed59e1d1-31f5de7bc0cmr1122130a91.35.1753823828220; Tue, 29 Jul 2025
+ 14:17:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1753804956.git.ayu.chandekar@gmail.com> <c82620a1f54ea6760bff204fd2b5fe5c2df1896c.1753804956.git.ayu.chandekar@gmail.com>
+ <23428022-ab13-4a3e-90ed-ff91ef93f051@gmail.com>
+In-Reply-To: <23428022-ab13-4a3e-90ed-ff91ef93f051@gmail.com>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Wed, 30 Jul 2025 02:46:56 +0530
+X-Gm-Features: Ac12FXwk3jWXUBitD7Zor9G19-aGmq0zFV05j6qA9AOWn4Y7X7N_smMxb9Sf1r4
+Message-ID: <CAE7as+Y_S=J8D4xrV75w2KJCKzpHamYt4Ug_iGD068i3Kdq5JA@mail.gmail.com>
+Subject: Re: [GSOC PATCH 1/2] environment: remove the global variable 'merge_log_config'
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, christian.couder@gmail.com, shyamthakkar001@gmail.com, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When you pass a structure by value, the callee can modify the
-contents of the structure that was passed in without having to worry
-about changing the structure the caller has.  Passing structure by
-value sometimes (but not very often) can be a valid way to give
-callee a temporary variable it can freely modify.
+Hi Phillip,
 
-But not a structure with members that are pointers, like a strbuf.
+On Wed, Jul 30, 2025 at 12:37=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
+l.com> wrote:
+>
+> Hi Ayush
+>
+> On 29/07/2025 17:19, Ayush Chandekar wrote:
+> >
+> > @@ -26,14 +26,7 @@ static struct string_list suppress_dest_patterns =3D=
+ STRING_LIST_INIT_DUP;
+> >   int fmt_merge_msg_config(const char *key, const char *value,
+> >                        const struct config_context *ctx, void *cb)
+> >   {
+> > -     if (!strcmp(key, "merge.log") || !strcmp(key, "merge.summary")) {
+> > -             int is_bool;
+> > -             merge_log_config =3D git_config_bool_or_int(key, value, c=
+tx->kvi, &is_bool);
+> > -             if (!is_bool && merge_log_config < 0)
+> > -                     return error("%s: negative length %s", key, value=
+);
+> > -             if (is_bool && merge_log_config)
+> > -                     merge_log_config =3D DEFAULT_MERGE_LOG_LEN;
+> > -     } else if (!strcmp(key, "merge.branchdesc")) {
+>
+> In the old code if both "merge.log" and "merge.summary" are set in the
+> config file the last one wins
+>
+> > +void adjust_shortlog_len(struct repository *r, int *shortlog_len)
+> > +{
+> > +     const char *keys[] =3D { "merge.log", "merge.summary", NULL};
+> > +
+> > +     if (*shortlog_len >=3D 0)
+> > +             return;
+> > +
+> > +     for (const char **key =3D keys; *key; ++key) {
+> > +             int is_bool, value;
+> > +             if (!repo_config_get_bool_or_int(r, *key, &is_bool, &valu=
+e)) {
+> > +                     if (!is_bool && value < 0) {
+> > +                             error("%s: negative length %d", *key, val=
+ue);
+> > +                             return;
+> > +                     }
+> > +                     *shortlog_len =3D (is_bool && value) ? DEFAULT_ME=
+RGE_LOG_LEN : value;
+> > +                     return;
+>
+> In the new code "merge.log" is always used in preference to
+> "merge.summary" even if "merge.summary" appears later in the config
+> file. When you have two keys setting the same variable I think the only
+> way to preserve the last one wins behavior is to keep using a callback
+> that updates the value as the config files are parsed.
+>
 
-builtin/clean.c:list_and_choose() reads a line interactively from
-the user, and passes the line (in a strbuf) to parse_choice() by
-value, which then munges by replacing ',' with ' ' (to accept both
-comma and space separated list of choices).  But because the strbuf
-passed by value still shares the underlying character array buf[],
-this ends up munging the caller's strbuf contents.
+Sorry for not mentioning this in the commit message.
 
-This is a catastrophe waiting to happen.  If the callee causes the
-strbuf to be reallocated, the buf[] the caller has will become
-dangling, and when the caller does strbuf_release(), it would result
-in double-free.
+I had looked at the documentation which says:
 
-Stop calling the function with misleading call-by-value with strbuf.
+Documentation/git-fmt-merge-msg.adoc
+merge.summary::
+Synonym to `merge.log`; this is deprecated and will be removed in
+the future.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/clean.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+So I thought that I should give precedence to "merge.log" as
+"merge.summary" is deprecated.
 
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 053c94fc6b..224551537e 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -477,7 +477,7 @@ static int find_unique(const char *choice, struct menu_stuff *menu_stuff)
-  */
- static int parse_choice(struct menu_stuff *menu_stuff,
- 			int is_single,
--			struct strbuf input,
-+			struct strbuf *input,
- 			int **chosen)
- {
- 	struct strbuf **choice_list, **ptr;
-@@ -485,14 +485,14 @@ static int parse_choice(struct menu_stuff *menu_stuff,
- 	int i;
- 
- 	if (is_single) {
--		choice_list = strbuf_split_max(&input, '\n', 0);
-+		choice_list = strbuf_split_max(input, '\n', 0);
- 	} else {
--		char *p = input.buf;
-+		char *p = input->buf;
- 		do {
- 			if (*p == ',')
- 				*p = ' ';
- 		} while (*p++);
--		choice_list = strbuf_split_max(&input, ' ', 0);
-+		choice_list = strbuf_split_max(input, ' ', 0);
- 	}
- 
- 	for (ptr = choice_list; *ptr; ptr++) {
-@@ -630,7 +630,7 @@ static int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff)
- 
- 		nr = parse_choice(stuff,
- 				  opts->flags & MENU_OPTS_SINGLETON,
--				  choice,
-+				  &choice,
- 				  &chosen);
- 
- 		if (opts->flags & MENU_OPTS_SINGLETON) {
--- 
-2.50.1-612-g4756c59422
+> Thanks
+>
+> Phillip
+>
 
+Thanks
+Ayush
