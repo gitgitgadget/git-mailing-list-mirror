@@ -1,130 +1,216 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52B5287507
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 12:19:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E5F2A1CF
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 12:25:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753791587; cv=none; b=qhw5RviJGwCCZ+1dFkb+MYe0u6wmbM0AUb3loh4LQuVRLFt/60nHOgAL6FNRaevaORImTgaIE1ip9XoE/hg5oE1pRYi6al6MAvtJYv6OpkTBupauHS08v19LLxbs7AaBuae8J/gJHTRjUtmQJvpyaDmmWVdRGZWMe7LOkRhsG28=
+	t=1753791907; cv=none; b=A1oPwDbQs6+pvWoKTRr0Lax0diYGdejisWPHt0sMo3XhXshH2uplbwIm22grLyG/4hI+PTNqLEmHJbmr4zv8ftBMBQRVKrNq/o6WatO16qRLEmI3BAbGWOtGndXFteCvLsSPCOYLYV7wq/ibh+ONW+YwEALs9AB9vKWDcd568ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753791587; c=relaxed/simple;
-	bh=zHbPXAizDqrhjGVIoqXbP6VNTkGNMe+MucQO9ki/RNE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=boDIsbcnkdv4Y+zKqkAGTo2w8+KGcVHpMfQUsKux74JFAvWD7DIHt21iMptBQEtCwBzS2NdrH+wj6O833nCSIMQmThDlE0vIy7rWHgAl/qMKoDFPyDQkFjbQvazF38jYDJY24/5BueqbYsZ6sUlaRS0+Ci2nHzvcWdDwkJrq1a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eD8OA5nx; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753791907; c=relaxed/simple;
+	bh=KxNrvLCB+MFGujVppbwvalQjHd2VizSJVJNq63QH/JA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UDuwFhbyu+nRuMhCZ01K8GLSNa5HAA+BdetMqqOFdCVKRGwji7GT+lLzxbB8DXuqm+mTYWkZAbybTkdvRb9lvzzIUtwQTi0zH/YS2J2dmOMYoT4M3S+BVeLFW7x73XJaoddAVzV5A52E61n9z6Gs+YRZpStoufOojewiGmIgGgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A7l3+Z19; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T0FbF1za; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eD8OA5nx"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7e33d36491dso752975185a.3
-        for <git@vger.kernel.org>; Tue, 29 Jul 2025 05:19:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753791585; x=1754396385; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rt6qnEIrGwA/BxvQM/fHeVHdrN54G7aljtTgyTjYI/Y=;
-        b=eD8OA5nxcIDsb8o6qw5Yj0FSqfwlIJW2SPnL764kCP9vYKEROgl3kI3hKJgStX5R+L
-         n4mxPAoEZN7B79pl3dJZDIdpJhPtbkfz/HHaqEUOfhidyH7JbbEkXi39GN7F660KD+t/
-         WI7R1UvNUnFx7YJmODuvwYl5X3OjRXdMe8RN1kjCvSO79anq8gUBuejJgswpQzXVHY2M
-         4Jm9ESEphCP2qv11lAc5Pu4/yc6yNhEEfKcszxKvCr015Czu86dEtvirEH9EZsPAHnZQ
-         k7o6Zf1XN3IX59deROPb0721pffn/vpRgjfgCDlkVF1eaH7qPbeZOxSLv8lB6eyvsPK9
-         viCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753791585; x=1754396385;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rt6qnEIrGwA/BxvQM/fHeVHdrN54G7aljtTgyTjYI/Y=;
-        b=B4HOqeCwQYWjlSMCTK9y34EmNT60YNjpxsb/oTxcAtwEkZ5F0d2u/WU0iaYYscVLCX
-         k4U7yovLmKp5kFbPwLGtP5idFSuBMZoeACcTLTW/iLbAPhLRcvvKWL/7mfBLz6INm3TA
-         NX0nJheZIad3mEBRAuxqJ7Hrq5EdE64KKhSwWMaI0kq0RL9lZj+DHJJ0TBHgQTsOyGJc
-         75kbtWZRVO2ZFOUjy3jY55S1Cs2hIySH1eUJ+HoBYokNIfkEPz7ns81IWj8/21q+gEwz
-         +JlbTWDkv7n04UHqV+L21Sf3gsQ1amiaE50/d5KyHfBDYiWqShvj0s3abOM3j5UF96Nn
-         Ot6g==
-X-Forwarded-Encrypted: i=1; AJvYcCWpiqM6YS1KPI1lb7Ej+9A7GAWM6X9re+TN64BCtqPNktuCyyHeRHr70wxNhOlYVB619y4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyW9nUdaKDEkcvfcdDL61fHxG+WInm81ux9wDJ9HG3/mGbYckkt
-	DZ0wAuG8JwrQHvZhiFVmq4LtGphjebNWuytLCkQpdioJq0x8//ALyg4K
-X-Gm-Gg: ASbGncs6TfTmDEoMXlRlMtSD7utyBFthqPW20LhJgy0MVR8zTv6LOCRl82PXcqbXtxo
-	N9CxwvsIusxIrAU/xJ7O0YxmDBN1zuDCA4GV27w6M8FgihkJXyZYCmBNXkQ2Q4qTMvfTB5ZW7bT
-	fG3LcJXzHEUrAYyIesjKSwOcVGnj8JRL8WzUCoMvDekZ240a+mw5ws0nDEcuXS+3PbX1xKtpO22
-	lWzju2OPILx6UUm4kviQvYarXkst5ej7qcQyg1Hegf401qrF76cB6YfsnkqXeA+0vX6btzigBba
-	aK7l6R8zu6ad9chqXdbdgPMUlvI38zvbIgXpT1OJjGGz+vo+WYHntf8KwAMB2QRA5ZI5RVuqgy4
-	gTu3uI8+WVGsCUqHbuhz5GCmWrOe2L7s0CG4lF+BuNlKnJds8k0Sews6oqLOdXjr6RFB/P+w5Em
-	SQblsJ33CKAw==
-X-Google-Smtp-Source: AGHT+IFRqcgw6PPOIEdZXR0jeCXtIYR6GgUT5vE5QYPJthAfNM1aN2fM9xddO71CvP78nTkQdir1/Q==
-X-Received: by 2002:a05:620a:4495:b0:7e1:9769:97cb with SMTP id af79cd13be357-7e63bf64f1dmr1877152685a.19.1753791584473;
-        Tue, 29 Jul 2025 05:19:44 -0700 (PDT)
-Received: from ?IPV6:2605:a601:a6de:d300:ac0a:82b6:9e90:e62e? ([2605:a601:a6de:d300:ac0a:82b6:9e90:e62e])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ae9963c2cesm48929321cf.41.2025.07.29.05.19.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Jul 2025 05:19:43 -0700 (PDT)
-Message-ID: <a78f4d66-f48c-4ec8-a9e2-cc8443b1d247@gmail.com>
-Date: Tue, 29 Jul 2025 08:19:43 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A7l3+Z19";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T0FbF1za"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 785551D0086D;
+	Tue, 29 Jul 2025 08:25:03 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 29 Jul 2025 08:25:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1753791903;
+	 x=1753878303; bh=7frebGX3rl1W5ed6Z0kuGJSJrKQbmV8WyYciySyVQ18=; b=
+	A7l3+Z19In4ClqP04DmEGvy+Li68tHjjwKEgV+LsdwCRBbp6hFBftyqyYGWFO2O+
+	6qIEkBqBRyegRWcFokKNl3Us031WS/9GjJ6k9Jih1ZpRnA0PABZxO7SU03y7zaCd
+	kFW+dYKEG4CNTfp6xzLsye7E3HIxMSh4HEPChuuy3F67kp39O0mpQ8OzaNQO5jit
+	gDhRkT9xQrVhGvks5YdyK5hg/pu/RhcSXm0tBQ1Kxoo1F1vUDy+ef3IWhjTz7dtB
+	O73PRR0auJva0jCuW5sPnMDvojllqMseHMHENFBbP2FfFQ9mUj0rZYliMRoWhZs2
+	GMnXkC7Xzo+3ChnhWrv2WA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753791903; x=
+	1753878303; bh=7frebGX3rl1W5ed6Z0kuGJSJrKQbmV8WyYciySyVQ18=; b=T
+	0FbF1zabyrylUtgp3ZmC61o7wIgqsgHxSvBt4Z9jhPYsqGONb6uMpune2iqQCXto
+	evUysxRueV+t/Pfzw3tKqp9Z0hWClZ8Gqz255+gQKdLFYZpe5Ku7XW88KiB7/I1a
+	pyPEbbrRh+CF/tLHSSxXqQvvA58VY8tT/WkHVRhJO5xBDj4DY9K9JDcYkWXOS3Zs
+	ycEFTI2cu/rAvidTTnRZGJKszblR86iCjVjZSILJkpgY9lAjW/XlfGCPFc25aAwK
+	cSAD7Vgp87V7Up7SOx7+e8NfBoKBIhZSgNuf90VGbdIW8t8kgZkuYwDPG5Tpu78q
+	KJbYuIN63D5C8YbbKx60w==
+X-ME-Sender: <xms:n72IaHFmMmjsBHlVdnPozkRwWLKKWbK1Vj-H0fZqEhgLW3f09Os5nQ>
+    <xme:n72IaO4xlYFQ6WEiXew3OoW6OLHhHqHo1nL85IjX81_ppfT9x4SFVhqESweL29tKK
+    4WhI2gvj_SP0hJc4Q>
+X-ME-Received: <xmr:n72IaFsk6nuhZQ3GJDMpEvGJhOQ-9x8Q4UrGSaU5UvnO0WIfeNpGEtfJS5aUs2InFTQqd1JKnly5zpDtewqMIv4dLZLNLEJl1Pk-xvWXdKg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelhedthecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertd
+    dttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehke
+    dvveetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepjhhhtggrrhhltdekudegsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:n72IaH5ygDqJajdRkhtcNAMijMf8-gPvWmNYYqI6S-hRaam-n4g_zA>
+    <xmx:n72IaIVBTG46-cmE_JfaBhaxkxrkyAjN4Qv2eCPyrHoW0s7jLzjL6w>
+    <xmx:n72IaB933L316K7xr-jY7w8I7WMfQs6KwUW9iSMzEJ3x562uztApbw>
+    <xmx:n72IaMl4pbfnjZiqajtxnNunV5HtNfPI9qTNNzuSgC_awdNl99_dbw>
+    <xmx:n72IaB2u1xGtqvZYCcwUnA1NKv9z6VraS0vTdgBuqbhnXhhlwnBaQLOv>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Jul 2025 08:25:02 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a6710c6a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 29 Jul 2025 12:25:00 +0000 (UTC)
+Date: Tue, 29 Jul 2025 14:24:56 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Han Jiang <jhcarl0814@gmail.com>
+Subject: Re: [PATCH 3/4] builtin/remote: rework how remote refs get renamed
+Message-ID: <aIi9mAoAb1v9igQ6@pks.im>
+References: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
+ <20250728-pks-remote-rename-improvements-v1-3-f654f2b5c5ae@pks.im>
+ <20250729081658.GA1842689@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GSOC PATCH v6 0/3] environment: remove sparse-checkout related
- global variables
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, christian.couder@gmail.com,
- git@vger.kernel.org, shyamthakkar001@gmail.com, phillip.wood123@gmail.com,
- ps@pks.im, ben.knoble@gmail.com
-References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
- <cover.1752882401.git.ayu.chandekar@gmail.com> <xmqqcy9qlfm8.fsf@gitster.g>
- <43aaec10-2696-44c9-8728-2045b83dc5d3@gmail.com>
- <CAE7as+bnG6KgA8X_n36pqP15bmyM6re+xEb1MOXKvZSUdJ8Arg@mail.gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CAE7as+bnG6KgA8X_n36pqP15bmyM6re+xEb1MOXKvZSUdJ8Arg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250729081658.GA1842689@coredump.intra.peff.net>
 
-On 7/29/25 7:36 AM, Ayush Chandekar wrote:
-> Hey Derrick,
+On Tue, Jul 29, 2025 at 04:16:58AM -0400, Jeff King wrote:
+> On Mon, Jul 28, 2025 at 03:08:47PM +0200, Patrick Steinhardt wrote:
 > 
-> On Thu, Jul 24, 2025 at 6:55 PM Derrick Stolee <stolee@gmail.com> wrote:
->>
->> There are two ways to change the approach here to fix the problem
->> of needing prepare_repo_settings() everyhwere:
->>
->>    1. With the idea that these sparse-checkout variables are
->>       critical to the functionality of the repo, they should move
->>       into the repository struct itself and be initialized along
->>       with all other values there. This changes the patches (and my
->>       follow-up series) significantly, but mechanically.
->>
->>    2. If we are going to change the intention of the repo settings
->>       struct to move from "optional one-off feature flags" to
->>       "important information about the core behavior of a repo"
->>       then we should prepare_repo_settings() when initializing the
->>       repository struct.
->>
->> My preference is (1). The only argument for (2) that I can think
->> of is that it is sometimes helpful to share only the settings for
->> a repo without sharing the whole repo. But that seems like a weak
->> reason right now.
->>
+> > The next-best thing is to do it in two transactions: one to delete all
+> > the references, and one to recreate the references and their reflogs.
+> > This signicantly speeds up the operation with the "files" backend. The
+> > following benchmark renames a remote with 10000 references:
 > 
-> Okay, I agree with your points. I can maybe send a new version to address this.
+> Hmm. I was surprised to see so much reflog code here. It looks like
+> you're replaying the old reflog entry by entry. But the old code was
+> leaning on refs_rename_ref() to do the individual renames, which just
+> asks the backend to handle that for us (so e.g., the files backend just
+> copies/moves the log files).
 > 
-> Do we also shift settings like index.sparse to the repository then?
+> So it feels like ideally we'd be able to create a transaction element
+> for renaming, and then the backends could similarly do what makes sense
+> for them (and we wouldn't need a bunch of reflog code here).
 
-For now, it's important to focus this series on the globals being
-converted. We can come back around to the ideas around removing
-the settings struct and the prepare_repo_settings() method as a
-separate series.
+I think overall the ref transaction code is in for a bit of a redesign.
+The current one-size-fits-all `struct ref_update` doesn't make a lot of
+sense anymore. The requirements have shifted because of the reftable
+backend, where we want to redesign interfaces so that we batch updates
+together to the best extent possible.
 
-The index.sparse setting is something that is colocated in the
-settings partly because of its interaction with feature.experimental
-being handled in prepare_repo_settings() but also its very isolated
-use. The sparse checkout globals are much more spread out across the
-codebase.
+And this patch series here demonstrates that not only the "reftable"
+backend benefits.
 
-Thanks,
--Stolee
+In any case, the current infrastructure is extremely brittle and every
+change one does is a bit like threading a needle. More likely than not
+you missed this one edge case where changing a flag for one of the
+updates has a consequence in a completely unrelated place.
 
+I think we should start splitting this up more and introduce different
+update types:
+
+  - Forced updates where we don't very the old state.
+
+  - Raceless updates where we do.
+
+  - Reflog updates that only write a message as well as an old/new
+    state.
+
+If we had such an infrastructure it would also be feasible to introduce
+more types, like deletes or renames.
+
+> I guess that does not work with the two delete/create transactions you
+> end up with here, though. And you need those to worry about D/F
+> conflicts. But then...how did the original handle D/F conflicts? It kind
+> of looks like it didn't, as it is doing a mass ref-by-ref rename in the
+> middle.
+> 
+> If the refs code learned how to order things to handle the D/F conflicts
+> within a transaction, then we could do a single transaction. And it
+> could learn about rename primitives.
+
+True. But as I already mentioned to Junio I don't really know how to
+backfill D/F conflict handling in the "files" backend. The problem is
+that with preexisting "refs/heads/parent" and "refs/heads/parent/child"
+you cannot create the latter ".lock" file. Sure, we can hack our way
+around that in some manner. But is that backwards compatible if another
+Git client were to operate in the same repository? I dunno.
+
+> I dunno. I think that would be nicer, but it's probably not worth
+> holding up this topic. Your perf numbers are very nice. I guess the
+> possible flip-side is that the existing code could be faster when
+> renaming a single ref (so no quadratic behavior) with a pathological
+> reflog (so moving the file is faster than re-writing all of those logs).
+> 
+> Hmm, yeah. Something like this:
+> 
+> 	cat >setup <<-\EOF
+> 	#!/bin/sh
+> 
+> 	rm -rf repo
+> 	git init repo
+> 	cd repo
+> 
+> 	git init server
+> 	git -C server commit --allow-empty -m foo
+> 
+> 	git remote add origin server
+> 	git fetch
+> 
+> 	# make the reflog gigantic
+> 	perl -i -ne 'for my $i (1..10**5) { print }' .git/logs/refs/remotes/origin/main
+> 	EOF
+> 
+> 	hyperfine -p ./setup -L v old,new './git.{v} -C repo remote rename origin foo'
+> 
+> results in:
+>   
+>   Benchmark 1: ./git.old -C repo remote rename origin foo
+>     Time (mean ± σ):       5.5 ms ±   1.1 ms    [User: 1.5 ms, System: 1.3 ms]
+>     Range (min … max):     3.6 ms …   9.7 ms    58 runs
+>   
+>   Benchmark 2: ./git.new -C repo remote rename origin foo
+>     Time (mean ± σ):     476.3 ms ±   9.8 ms    [User: 203.6 ms, System: 268.0 ms]
+>     Range (min … max):   467.8 ms … 498.7 ms    10 runs
+>   
+>   Summary
+>     ./git.old -C repo remote rename origin foo ran
+>      86.43 ± 16.61 times faster than ./git.new -C repo remote rename origin foo
+> 
+> It's hard to bring myself to care, though. This is a stupidly
+> pathological reflog, and the absolute time change is peanuts compared to
+> the per-ref cost you're fixing here.
+
+For the "files" backend performance is worse, for the "reftable" backend
+I'd expect that this might even be faster. Mostly because there is no
+way to trivially rename a reflog -- we basically do the same on a rename
+as we are doing with this patch series now.
+
+Overall I don't care too much about this edge case. By default we never
+write reflogs for remote references anyway, and I doubt that you'll ever
+end up with a remote reflog that has thousands of entries. So I'd rather
+make the general case fast even if the esoteric case becomes slower.
+
+But ideally we're able to lift such limitations in the future if we were
+to do the above rework.
+
+Patrick
