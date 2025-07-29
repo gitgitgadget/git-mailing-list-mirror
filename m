@@ -1,154 +1,123 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB1E10E9
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 00:05:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7612382
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 00:15:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753747551; cv=none; b=ZPf5+WIk3QeWB5d7BE0CTRF6oYDYciYrXhr7O9NrzudgdYkiRImMsJNhxvaJfpR09Q04RMD5x+RUvUjHUYD8dkGflBu0qkdd8ItQrkNhcQcQK8tgrxuYQRcyxPRA+R0DK8c0jTCyBzIIjVwo4zj6oFkOrftbXg1AGZ7jhIz5gBs=
+	t=1753748128; cv=none; b=bR7Vt+47rSiFojsH8fSQDEpUaADpaagQ2syGglGXGjPOBsG2hZLMeauzGLrBu9eQ7MHxPcJMu8eJDEIFKjzAsFPJ0mMXUNoeVscPQLeKVGCq1bRLoQZd5tD68SBUlCfYPhloecRTTh6clfuDtmAjtmWqPsZWi8W6FtY+hG1ykAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753747551; c=relaxed/simple;
-	bh=aMGZikMz7HS0OZz5NSXj7QA9XAYQIadWoYNba4TD6Xc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FILFPr36n38NTKu3vX8oM7C1Z6/LIvhIJXm4m6r604690E33evbF9WE4CHs5qWcFgGtS35If7uJRm5lNwOmB6Jwr2DM7ZHgmmTVf2qvCzQKHs0elTIrkgZquvnx4lzNBNsHU5dgpPmoOtsTcq32KPnxy/QF31N8MSUqrdPzqTMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IsEqZKA6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bXt4tRVp; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753748128; c=relaxed/simple;
+	bh=g/JpymSkyXphqYZgDLpHo3+sIvI+AaLeOYSBWXbgToU=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=VqV6VZUWYXrlnCUNmFcib/woEWJZQu3EtCJwsZoX5FX5uOsLssQOQChpJYKvY7dIQ/chj4kYZiaGSR+InVU+ZA63KTGlo350/HE7Le9EgPAa81X7XMcDjlVok2GkAxbhvB9DqltA2UwKWyBCuGn5fAKfw14XNy0aOgnfJa95Qns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FkIkQdoM; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IsEqZKA6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bXt4tRVp"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 41001EC1523;
-	Mon, 28 Jul 2025 20:05:48 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 28 Jul 2025 20:05:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753747548; x=1753833948; bh=m51vhbuP+l
-	izDdkzX4zNnEU6dHnXq8XEKY8Z5Z4DXKc=; b=IsEqZKA631LkoiPaWNpuaznpiD
-	kpS4Xgj98WtAU/v3gaMM/0xuu2gA6pgbDFazTIgvLhsXpMkGiLH9fouIorEKVK55
-	oQ+KE8JwOPuVtoAKytjv/H49atVHlxiZcyITC20Fn6cf5FuaL3pIlyXBF2ueUgtB
-	uWBmzQ3Gi+VjjiRumrcvgVzS+mlbda+Gf53FCJfjZUmDriznZa49KlGrGr1ozcHY
-	sAtdxiSVxjvcIeg80SFFTh2UcJL5V+BYMzp69W2aW0MZLSAKp+Sx5fVGPOXrEVq1
-	7Jmktz3qW/CAVzYFeV9V0ke7B9xbeCIktxBOzg1ueQozBxj+a0l8sxxueLhg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753747548; x=1753833948; bh=m51vhbuP+lizDdkzX4zNnEU6dHnXq8XEKY8
-	Z5Z4DXKc=; b=bXt4tRVph52VYAuOjnWVsfoh/ER8+d0XYPfPMCntGONcwda127R
-	KS1QwNdK/lnZPB8Qoo45hCYv4/xItrshVM6a9XByWljsZSKBxNS14/Gfgfmsdwog
-	vAKOFM58+XVctDLstJiuQTHMvbUehAVPjjv7yCC2RM45d2conUHlbYkp6uGxOA78
-	2YUM30vBiSnzmVAmG+FfTPhHn4aYGJAfY6eBIgOehDEsCPVY+LTmDXTTrS3ja6l0
-	jQCE/F+jOZ39JW5slMc4tmlQpkZ8CM4QS7MHeBE2NoTJWkC7x5WQfTTUgAgm5W6+
-	y5HudE2cOFJxQmUgyFoAdTQ0ZpRohCX/QbQ==
-X-ME-Sender: <xms:WxCIaKLDLOlmDUU2QsTa_E2FJYI-QBxgmz0ttItR7MGr68-v3ODGqA>
-    <xme:WxCIaMvlFMM2H23aypX6XqqfyhP0dbF1zL0LNvtrjEroBqD4Yo4D1Cyjs6rCS7JoI
-    m3dROCJTXhbdVMZFw>
-X-ME-Received: <xmr:WxCIaHRHnpAm15IXJ8xVydkgH3_iY-YEC8e-ylW5OzLYIwA-a1Q3MBWbV4jEi_vmck7lBh154kX0grEjl5L0ZvShC1OStYLTXul3X3k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelfeehjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeije
-    egfefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtgho
-    mhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjh
-    honhgrshdrsghrrghnughsthhovghtthgvrhesghhmgidrrghtpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:XBCIaCPax-u4BwJMv5luS3x2IX0b-x3eSqarLFgvyUD5l1JBvmHmog>
-    <xmx:XBCIaMag7bJPVAGvDxKVi2edy5cRMUarEauA8mv_Y9tFDUjm2Ho6yg>
-    <xmx:XBCIaMxrEiAUY6mebLvHt7uViyaxZZg9C9QgHHGcacUHGgCw7H4STg>
-    <xmx:XBCIaHIU7pcee_hpAbltb7YLL5e2Hx9HeEs-NZPyWamj8cYAeXraQg>
-    <xmx:XBCIaOmJIfTkrfhqJ8Dq0cDUb_tfmsMwIA5JgUB1RBjTtYzhWSx1sMgA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Jul 2025 20:05:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Jonas =?utf-8?Q?Brandst=C3=B6tter?= <jonas.brandstoetter@gmx.at>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] t7510: add test cases for non-absolute gpg program
-In-Reply-To: <20250725043043.GA3002998@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 25 Jul 2025 00:30:43 -0400")
-References: <20250711232348.460804-1-jonas.brandstoetter@gmx.at>
-	<20250722190922.51183-3-jonas.brandstoetter@gmx.at>
-	<20250725043043.GA3002998@coredump.intra.peff.net>
-Date: Mon, 28 Jul 2025 17:05:46 -0700
-Message-ID: <xmqq5xfbuahx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FkIkQdoM"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-71a39f93879so413397b3.0
+        for <git@vger.kernel.org>; Mon, 28 Jul 2025 17:15:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753748125; x=1754352925; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZdATPp5rePmODaTET2dsxWflw8CBhge8H9G7FPI03GU=;
+        b=FkIkQdoMdngBjNeiYLjDZo2FZZjnGDIu1vUgj/SndOfwV+PPbDfwwKKbsoNkXzSSi3
+         iy7H8Idn7iYFPY39lunuqCmo5g1VPohYIcnyDHOjI5vJnD0UvRCs+EU/ZPfFwwGkIWsC
+         1Ze6TsfzKrJhLvq5v7C1vU+h8oW7lzSZy2ktNxxwWykQqPAHO3DN/vJrsg33XPqsdn8V
+         sgVWQKQMNPdavUNHx7NqK00ML5hoOrHVLiV8pPSZqTbM7BjDFjsS0eTXXGf/0OsRNlYE
+         pwEhY+qE6N3xnZmXyeukWoTtQ6IgBo2CkQ3qJA1pVbhxyal9K0f14Ngnm8FulF9ASVLP
+         7i9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753748125; x=1754352925;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZdATPp5rePmODaTET2dsxWflw8CBhge8H9G7FPI03GU=;
+        b=wXi0lvRfRiIOQeyeoIH4zQep2+H1Pwdu2JcKBHdMDmCdmxaAR7jGG3kAFBYXZ/akK6
+         vUCuHQNRy+RNl2LKcpi2bV380FwVU5QJFEgs2R4/JbxT4CZgDayn0SVOylY1FUdCBR+u
+         mxZqpIIZ5tI43cNkJ9tIlJXvWp3W5N9p7XlGbH/gM50G1HWnlcLibBrk/Fa7l1B9yczX
+         EOQPrdoFkgkO0UKkFssbscHuBQgkVHXPI/vn8R7Cn/bybtJT/wW06Xml1MLIE/yM9qAa
+         gQBjl0Nlh+u1iqzNgWEpn7P9ReU/YE7Gml19+fGQE5/KV3dYvKF35cCzahT1iHZVz69+
+         lbzg==
+X-Forwarded-Encrypted: i=1; AJvYcCUh2Dc2GkS9LnFyE5PIa+EEw0sFIG37rlq+iEPcSPPpaazUAMG4T0d3SbsiwpwuFUtteUs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyrcON7ccz9bXoTeuEWWb4WotJ9wA7kkuzy8/lGgfntCAkU9B7c
+	bT/n2jrps/E3FwFIsTFAkIGAGYWqNMmeqU0JjB+ndN7PV3Znzrg2SKaI
+X-Gm-Gg: ASbGncuzBwm4O7OAX1XLZzo/B9XgY7cnE+9diHUMA383n2G82tQsQ0bwe5xwHATb1xu
+	Na0FX9TIlDyxrWfs3sLcWLlsG2NSR+KnHQHkqB3ArfUNKgZDDVszGpuxXtEi2QCJRVNc4BGwKNI
+	S5hMckBtqpp9LbJRDgwg43qPv+LLMZODmqlYXyu7FHgmfH26qiS+j/GSH8mo1CbJBjvVIGgTroV
+	55bKnWsxllOmgStT9qTE6oc5/gvcH66gc0t1tzszFstWfY/s00F0ncWgXKIWHWwCVDFmkogvOEd
+	/ymzHuwYeJ5EMQF/eqFjxgVO19tm6IxgID7riodVg+IXdMgOOsTe/F3XKB8+NuPGl2n8qpjkQ5n
+	3WaULlhINb2+0NKuZDOL5IddW6umLVush0pVlrYCa6xaKSy+QEb4=
+X-Google-Smtp-Source: AGHT+IEa/HY/aRLH7ATuaxvxqlAFx8OcRayUAspleBgePop0YTziVh0H3u2YiFU8TPhfBMTDoGDAyg==
+X-Received: by 2002:a05:690c:660a:b0:71a:231b:d046 with SMTP id 00721157ae682-71a3485a0d9mr20187817b3.2.1753748125497;
+        Mon, 28 Jul 2025 17:15:25 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:59fa:4cd3:495a:22ea])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e8df85befb8sm2325688276.12.2025.07.28.17.15.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Jul 2025 17:15:25 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [GSoC PATCH v5 5/5] repo: add the --format flag
+Date: Mon, 28 Jul 2025 20:15:14 -0400
+Message-Id: <CF7744F0-394B-415D-BECC-9D7CD477B78C@gmail.com>
+References: <CAPig+cQn7c5+k06yHOD2jxYTGnny7is=fbo4tOw26eD+4zX-Jw@mail.gmail.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org,
+ oswald.buddenhagen@gmx.de, ps@pks.im, karthik.188@gmail.com, gitster@pobox.com,
+ phillip.wood@dunelm.org.uk, jltobler@gmail.com, jn.avila@free.fr
+In-Reply-To: <CAPig+cQn7c5+k06yHOD2jxYTGnny7is=fbo4tOw26eD+4zX-Jw@mail.gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-Mailer: iPhone Mail (21F90)
 
-Jeff King <peff@peff.net> writes:
 
-> This second test seems to fail on Windows. E.g., in this CI job:
->
->   https://github.com/git/git/actions/runs/16509422831/job/46688307091
->
-> Right before the failure, the trace shows that we are setting PATH like
-> this:
->
->   ++env 'PATH=D:/a/git/git/t/trash directory.t7510-signed-commit:/d/a/git/git:/d/a/git/git/t/helper:/c/Users/runneradmin/path:/mingw64/bin:/usr/bin/:/usr/bin/core_perl:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem'
->
-> Should it be "/d/a/git/git/..." instead of "D:/a/git/git/..."? Which we
-> could get by using $PWD, I think.
->
-> The earlier one using $HOME uses D:/, but this one is different because
-> colons are meaningful separators in $PATH.
+> Le 27 juil. 2025 =C3=A0 18:02, Eric Sunshine <sunshine@sunshineco.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BFOn Sun, Jul 27, 2025 at 2:02=E2=80=AFPM Lucas Seiki Oshiro
+> <lucasseikioshiro@gmail.com> wrote:
+>=20
+>> diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
+>> @@ -20,11 +20,20 @@ test_repo_info () {
+>> +       test_expect_success "null-terminated: $label" '
+>> +               test_when_finished "rm -rf repo" &&
+>> +               eval "$init_command" &&
+>> +               echo "$expected_value" | lf_to_nul >expected &&
+>=20
+> Simpler:
+>=20
+>    printf "$expected_value\0" >expected &&
 
-Here is what I have on top of the posted patches.  If today's
-integration goes well, I plan to merge it to 'next'; the rest of the
-series is already in 'next'.
+(Below as well): the shell linter I use does prefer to see
 
----- >8 ----
-Subject: [PATCH] t7510: Windows fix
+    printf %s\\0 "$var"
 
-$PATH and $(pwd) does not mix very well, because PATH is a colon
-separated list of directories, but on Windows port of the shell
-Git-for-Windows uses, $(pwd) looks like "D:/path/to/a/directory".
+to avoid issues with the variable containing format specifiers.=20
 
-With $PWD, we would get /d/path/to/a/directory instead, which would
-fit better on $PATH.  This broke Windows CI job.
+(Backslash has to be quoted in double-quotes, too, I think? So I left out th=
+e quotes here.)
 
-While at it, drop unnecessary use of "env VAR=VAL" before "git
-commit"; one-shot export "VAR=VAL git commit" is sufficient.
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t7510-signed-commit.sh | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 95d2ebe277..c51e2e2589 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -453,13 +453,11 @@ test_expect_success 'custom `gpg.program`' '
- 
- 	# `gpg.program` starts with `~`, the path should be interpreted to be relative to `$HOME`
- 	test_config gpg.program "~/fake-gpg" &&
--	env HOME="$(pwd)" \
--	git commit -S --allow-empty -m signed-commit &&
-+	HOME="$(pwd)" git commit -S --allow-empty -m signed-commit &&
- 
- 	# `gpg.program` does not specify an absolute path, it should find a program in `$PATH`
- 	test_config gpg.program "fake-gpg" &&
--	env PATH="$(pwd):$PATH" \
--	git commit -S --allow-empty -m signed-commit
-+	PATH="$PWD:$PATH" git commit -S --allow-empty -m signed-commit
- '
- 
- test_done
--- 
-2.50.1-589-gf1cdebda82
-
+>=20
+>> +               git -C repo repo info --format=3Dnul "$key" >output &&
+>> +               tail -n 1 output >actual &&
+>> +               test_cmp expected actual
+>> +       '
+>=20
+> How confident are we that `tail -n 1 output >actual` is going to
+> perform as expected across platforms and versions of those platforms?
+> It feels awfully fragile to me. Why slice and dice the output anyhow
+> rather than merely crafting the correct expected output in the first
+> place and comparing that directly against the actual output? In other
+> words, something like this:
+>=20
+>    printf "$key\n$expected_value\0" >expect &&
+>    git -C repo repo info --format=3Dnul "$key" >actual &&
+>    test_cmp_bin expect actual
