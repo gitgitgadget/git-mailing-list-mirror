@@ -1,69 +1,69 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1962257AF8
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 07:01:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18BE25FA06
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 07:01:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753772520; cv=none; b=uK8HLADf5Aaf8HtL65OTmgJ0X2VLSqtuyFoq/35RmYwllrIyFlMR2ILUV5ITuxVuRoJQwCFkvn1IWxsUHahNEAxbtbAI1QwSG+BBClQRieKPCZrnZlyXYFdBHYTMjnHZprq2fhQcrIVbv9whSUtGQpjHx3fx38QE/xuJbfob+74=
+	t=1753772522; cv=none; b=VsHWfOSTgCuGkntwCElQalsyD6FYCkKxd+RAZDu9zhRXd+LeggTsxTP+RVMO564wQZgNwivU/UILOtXM6GK3RosYQgDmEfwHZBMGXhCieaMYeJmiUeTa36wf8oo1fgYm4t5T8OQlaYsBwxdCjdxzDs6R0AXQMbQnuE8EOCPMWvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753772520; c=relaxed/simple;
-	bh=Z60OfPM9em5e8Ij2reOQeZedqFU+OWyuhnRk/vYfJDg=;
+	s=arc-20240116; t=1753772522; c=relaxed/simple;
+	bh=EBySGd7x/O7UR0Zl9EL2IqE8kLHdy59X5CsKp6ak7aA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=sU4S2LiZw9cWmwkEX2mVTyexr0rY+LrZlbIZOgnKsmmpxU2vijuk79PToaw9+O1GgZjvYvhilHw5U4HACu296DhxADiNs0CKBO+tU3qGxsH9F9kJGH+OrpXVvX2QKDymqs1hFXm71M25p/PndFBmECMqmDJ9pGunzCWvWLjvOUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WAd0Wo2H; arc=none smtp.client-ip=209.85.128.54
+	 MIME-Version:To:Cc; b=pYGTZpy8bMDhd8B6RoIMoT695YKmbnoQo5YCTEl+nz8QJbv2NiOhH/8UfCTuo3VzfJoA2EOJ7KRxFUF6Zkh6CUE57liH8Di60D9uNZ+L7FbleSDFAjS1NLqU6pgcw29Z9Hto1pRE3tjmvBzYL30AP7VnGzmQW0DuQWBpXg7hm3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bTPgn0Z9; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WAd0Wo2H"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-451d3f72391so48042635e9.3
-        for <git@vger.kernel.org>; Tue, 29 Jul 2025 00:01:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bTPgn0Z9"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4550709f2c1so40674445e9.3
+        for <git@vger.kernel.org>; Tue, 29 Jul 2025 00:01:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753772516; x=1754377316; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753772518; x=1754377318; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NTq4/KMaMX+XFLvZIcbb012jl178PexolS5j8q5Yh64=;
-        b=WAd0Wo2HCu/DxLRmZhBmRxWkzBKChTF/EmaCOCCXxZAeDxyrVzTzIR7iS7gy2L8jgM
-         ywS4o8lN6wF6uFUo0vZTFGlgW5nZs8BycuIgz7XcoOtxg9lP+9NRKE8kwVlvzHKftDWG
-         1qlrUVjCpAj3dm401R4L5nLauV30qxg/1JpEj7Nb9GEURTo6L3ofb5KVbjG+bLJVpmD7
-         SbKFXXMBjj6wLYe1SfNbbUAQSPtckCjEzWbNiFZXJl4cDm63eTK19kpZ3nElQBnFfYYF
-         ig0GxqpVPHEYgFew04ZZhm11Y337mvSK+TUVknl6obpLioXDoHVKA2uOaknPRjq8W5L0
-         Sj9w==
+        bh=fp3Eei44y5iwURI5PuL9EQ83pyyG8heCdALjM1HNRnI=;
+        b=bTPgn0Z9BwzqGJQOdt362UWroHZcxwkCFKvGzgldmJAsMAbByxsrlfyIX4sI914dm1
+         g2T/OIj9jzz0p/OPA4bfTLXl+MkPmvIuQLZ0i110Zd4Ts7f9FG2f6Q3hVNh7Z9CzL84k
+         8jjQW/DVGvmbyMshjvY4z7Im/YNLeteHZ9bs0avv995kT1bu6HMfYuhGr4XhJzihH0ec
+         pbsej1SSJl2gfMiI5KRnwtGfeAgZOuGKdcw4J1NkGHUJvtgzVgvzlG6rXYIenHzaX0Ef
+         MQf+owL78QvCAEY/M3UG2Ppheuc8gm/MiTrHcXESb56BUv9zFbwxUzSXm2zYy87LGL2W
+         VBkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753772516; x=1754377316;
+        d=1e100.net; s=20230601; t=1753772518; x=1754377318;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NTq4/KMaMX+XFLvZIcbb012jl178PexolS5j8q5Yh64=;
-        b=wtjizM9dVU5vy71sK+ISnjhrm1wLxKwvhw/S5a9GzytH2zKN5RN+6tuj86oQMcbtei
-         W3IMAjoZSi7lypWWBBIMHNClnH7KSh3VDHIdy+7eAGT/h3Or6BUgwORYrb1ODep9L2oP
-         WQr70yH0C0W7gyLdaxGwsQOeJJRbFyVcrsPdNBQlhOkdJogaHlO+WjZ8TbsMLiaRaOxz
-         biFWxQ9912BKliN4eTksvsmpeh3Y42jfaO0C6DAm72EksNe8R0usy2OHSNQQYlb80XB4
-         CeNqeIJWWmcWE//IcIaoJakhwq8C7kHFmplDUHIuO76WfALt4Uz5LyTPEAfrF3V5kyi9
-         4fzw==
-X-Gm-Message-State: AOJu0YwqjET8hO3hPLYynFpgojQ56Vser9/SPFlM08dZgEGWtcu/C4qb
-	fu3GJjdUlglva6D/t+3EasbsGvRFfHnrBvZXP5dd9c5uyuRIrfR67cCEAS5M3A==
-X-Gm-Gg: ASbGnctCAGPt7PAtilGhCH9L0PqVe+SOCf4m+a4Z/Siq37fvJo90u2PMLGkF7MK8QUj
-	2JWMYqC5ot10w0kauNPPmpvd2FAksiEKXNArb3frdjkUtETo9MHQboiYUOEUf8z5pq4ZQcF3N3s
-	c7rJqmuMAaYm2RhRE2XN+DTQL/DdbUFA5wp51Bnq+xV/elbH28fp2OKGqjg6jDt/nJ86XvCrb2v
-	Q1efL3YVx74aEZ+0im7tHG8yyl7cwRA03Jl/feqbe3+NxYkTsynJv+clLCWYCymE1PE0GdWmGKp
-	r9C8uLEROi4K/Cij+VvRWZ2wsoaHYq1iJMIc8zi70piCkKBoszki+QYnCernmemGeGVzmnspxOM
-	gdLft/AKn9pN8hieJ6YoUqOD8qAX39aUFpA==
-X-Google-Smtp-Source: AGHT+IGtx387f0p+KHBxMYEPrcsjdA1dt0pTtx4vmvtvvA/AYrbEjjT00BGiAyZktsbOHkGnn2PsXA==
-X-Received: by 2002:a05:600c:4f81:b0:453:2066:4a26 with SMTP id 5b1f17b1804b1-4587643e9b0mr132092265e9.16.1753772514190;
-        Tue, 29 Jul 2025 00:01:54 -0700 (PDT)
+        bh=fp3Eei44y5iwURI5PuL9EQ83pyyG8heCdALjM1HNRnI=;
+        b=HGAd8NwUx0fHiQOnFYglGBkCOO5Z2aWmRCZY7qopjFeEEHSQ+SLECHPg9zpIR1071i
+         HP1NElwUxO/t8Nk87JcjK94btOW506MKk7gFpolKMHYqkhi5nBm1aU2l3X6dbOvSRB/X
+         PwPxJOiFQLVnVqCGsz0VaEEi2Is9blTr5UVJQMXsQeqc0uaF7Va4WFAcefEeMZTn3+69
+         jqu9wfGP+wRLFDnsGcKG0ZtwiT/eytZMdciICrfFZ4w+HfQunsiWdQa3h4cJAzjTDQEH
+         qSTW9k8s+HUjFmvz7XeIRk62qclKcrS5j0V5yH3XUXypxtmP1cWkE1lInckgyhAlV/Kv
+         xIYQ==
+X-Gm-Message-State: AOJu0YwsUqJ/XMeBiBZ5cZoTcsx+jehIkcN/RzqsoOR3JaJpihc7D9h1
+	AVz/GEnNjQtynxIPfwUqFK5Tjg/azwTj8IWRBFaWwUdA8Fm3zW9nCNcGGWTz1A==
+X-Gm-Gg: ASbGncsp7EZIHpywbH9/hGfBxQlAfGo2ah9rGkW+wrhMxXFb8xoTFoh8RSgQ2ZWORFj
+	prYtfi95Vexy//fn88KCA2u5ky6NtnjT4BcERXyqmYOVH4hkaUXRjOupGkWGdutPrt8cxgSV6Gx
+	M7RNCs25DejpkTQHicKgMXSeTWu4px2udESTm0ocivEVkApcL+zTLXO8SfxvMnHd9fEFmnqXAWH
+	WBFnMjUw5e7QR9Tsh0oxsQ3ZKaxE/RjgsPvnR4lQ59MG1qSDyyGZzzJ8Jzb33A/FN4iMMHz6uQh
+	GqR6X6AtZkreQE6wEIAdEqyoyXg9g9fem+XUi3AVuM5yOf46lMvEA4ABMukkVc6acc1+uuqdsKB
+	Ecoy1b7WST0cRnd+mD/FZ5Rg=
+X-Google-Smtp-Source: AGHT+IEvWzdJV1xnCRlQ2y4cRhpM9Ew6yU9tHs/+so4EPIP1XqOmyHrnpJGtqJ8jKANt315vbZ2pbg==
+X-Received: by 2002:a05:600c:821a:b0:455:f380:32e2 with SMTP id 5b1f17b1804b1-45876449d73mr130636545e9.18.1753772517719;
+        Tue, 29 Jul 2025 00:01:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4588e5e4aeasm11869035e9.29.2025.07.29.00.01.53
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4588ddb7e45sm10345965e9.3.2025.07.29.00.01.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Jul 2025 00:01:53 -0700 (PDT)
-Message-Id: <bbb2bc7082baaa11fd428efb375c5d142f82e7fd.1753772511.git.gitgitgadget@gmail.com>
+        Tue, 29 Jul 2025 00:01:56 -0700 (PDT)
+Message-Id: <9731e5b76fb4f8ffb76a90914dc97b9562c2f850.1753772511.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1915.v5.git.1753772511.gitgitgadget@gmail.com>
 References: <pull.1915.v4.git.1752928113.gitgitgadget@gmail.com>
 	<pull.1915.v5.git.1753772511.gitgitgadget@gmail.com>
 From: "Leon Michalak via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 29 Jul 2025 07:01:48 +0000
-Subject: [PATCH v5 1/4] t: use test_grep in t3701 and t4055
+Date: Tue, 29 Jul 2025 07:01:51 +0000
+Subject: [PATCH v5 4/4] add-patch: add diff.context command line overrides
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,284 +83,805 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Leon Michalak <leonmichalak6@gmail.com>
 
-As a preparatory clean-up, use the "test_grep" test utility instead of
-regular "grep" which provides better debug information if tests fail.
+This patch compliments the previous commit, where builtins that use
+add-patch infrastructure now respect diff.context and
+diff.interHunkContext file configurations.
+
+In particular, this patch helps users who don't want to set persistent
+context configurations or just want a way to override them on a one-time
+basis, by allowing the relevant builtins to accept corresponding command
+line options that override the file configurations.
+
+This mimics commands such as diff and log, which allow for both context
+file configuration and command line overrides.
 
 Signed-off-by: Leon Michalak <leonmichalak6@gmail.com>
 ---
- t/t3701-add-interactive.sh | 48 +++++++++++++++++++-------------------
- t/t4055-diff-context.sh    | 28 +++++++++++-----------
- 2 files changed, 38 insertions(+), 38 deletions(-)
+ Documentation/diff-context-options.adoc | 10 +++++
+ Documentation/git-add.adoc              |  2 +
+ Documentation/git-checkout.adoc         |  2 +
+ Documentation/git-commit.adoc           |  2 +
+ Documentation/git-reset.adoc            |  2 +
+ Documentation/git-restore.adoc          |  2 +
+ Documentation/git-stash.adoc            |  2 +
+ add-interactive.c                       | 36 ++++++++++++----
+ add-interactive.h                       | 16 +++++--
+ add-patch.c                             |  5 ++-
+ builtin/add.c                           | 21 ++++++++--
+ builtin/checkout.c                      | 31 ++++++++++++--
+ builtin/commit.c                        | 16 ++++++-
+ builtin/reset.c                         | 17 +++++++-
+ builtin/stash.c                         | 56 ++++++++++++++++++++-----
+ commit.h                                |  3 +-
+ parse-options.h                         |  2 +
+ t/t3701-add-interactive.sh              | 49 ++++++++++++++++++++++
+ t/t9902-completion.sh                   |  2 +
+ 19 files changed, 241 insertions(+), 35 deletions(-)
+ create mode 100644 Documentation/diff-context-options.adoc
 
+diff --git a/Documentation/diff-context-options.adoc b/Documentation/diff-context-options.adoc
+new file mode 100644
+index 000000000000..e161260358ff
+--- /dev/null
++++ b/Documentation/diff-context-options.adoc
+@@ -0,0 +1,10 @@
++`-U<n>`::
++`--unified=<n>`::
++	Generate diffs with _<n>_ lines of context. Defaults to `diff.context`
++	or 3 if the config option is unset.
++
++`--inter-hunk-context=<n>`::
++	Show the context between diff hunks, up to the specified _<number>_
++	of lines, thereby fusing hunks that are close to each other.
++	Defaults to `diff.interHunkContext` or 0 if the config option
++	is unset.
+diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+index eba0b419ce50..b7a735824d6c 100644
+--- a/Documentation/git-add.adoc
++++ b/Documentation/git-add.adoc
+@@ -104,6 +104,8 @@ This effectively runs `add --interactive`, but bypasses the
+ initial command menu and directly jumps to the `patch` subcommand.
+ See ``Interactive mode'' for details.
+ 
++include::diff-context-options.adoc[]
++
+ `-e`::
+ `--edit`::
+ 	Open the diff vs. the index in an editor and let the user
+diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
+index ee83b6d9ba9a..40e02cfd6562 100644
+--- a/Documentation/git-checkout.adoc
++++ b/Documentation/git-checkout.adoc
+@@ -289,6 +289,8 @@ section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
+ Note that this option uses the no overlay mode by default (see also
+ `--overlay`), and currently doesn't support overlay mode.
+ 
++include::diff-context-options.adoc[]
++
+ `--ignore-other-worktrees`::
+ 	`git checkout` refuses when the wanted branch is already checked
+ 	out or otherwise in use by another worktree. This option makes
+diff --git a/Documentation/git-commit.adoc b/Documentation/git-commit.adoc
+index dc219025f1eb..ae988a883b5b 100644
+--- a/Documentation/git-commit.adoc
++++ b/Documentation/git-commit.adoc
+@@ -76,6 +76,8 @@ OPTIONS
+ 	which changes to commit. See linkgit:git-add[1] for
+ 	details.
+ 
++include::diff-context-options.adoc[]
++
+ `-C <commit>`::
+ `--reuse-message=<commit>`::
+ 	Take an existing _<commit>_ object, and reuse the log message
+diff --git a/Documentation/git-reset.adoc b/Documentation/git-reset.adoc
+index 53ab88c5451c..50e8a0ba6f66 100644
+--- a/Documentation/git-reset.adoc
++++ b/Documentation/git-reset.adoc
+@@ -125,6 +125,8 @@ OPTIONS
+ 	separated with _NUL_ character and all other characters are taken
+ 	literally (including newlines and quotes).
+ 
++include::diff-context-options.adoc[]
++
+ `--`::
+ 	Do not interpret any more arguments as options.
+ 
+diff --git a/Documentation/git-restore.adoc b/Documentation/git-restore.adoc
+index 877b7772e667..1dcc2bb7aea3 100644
+--- a/Documentation/git-restore.adoc
++++ b/Documentation/git-restore.adoc
+@@ -52,6 +52,8 @@ leave out at most one of _<rev-A>__ and _<rev-B>_, in which case it defaults to
+ 	Mode" section of linkgit:git-add[1] to learn how to operate
+ 	the `--patch` mode.
+ 
++include::diff-context-options.adoc[]
++
+ `-W`::
+ `--worktree`::
+ `-S`::
+diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
+index 1a5177f4986c..0578c619c410 100644
+--- a/Documentation/git-stash.adoc
++++ b/Documentation/git-stash.adoc
+@@ -208,6 +208,8 @@ to learn how to operate the `--patch` mode.
+ The `--patch` option implies `--keep-index`.  You can use
+ `--no-keep-index` to override this.
+ 
++include::diff-context-options.adoc[]
++
+ -S::
+ --staged::
+ 	This option is only valid for `push` and `save` commands.
+diff --git a/add-interactive.c b/add-interactive.c
+index eb3d0d3ada84..3e692b47eca0 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -36,7 +36,8 @@ static void init_color(struct repository *r, struct add_i_state *s,
+ 	free(key);
+ }
+ 
+-void init_add_i_state(struct add_i_state *s, struct repository *r)
++void init_add_i_state(struct add_i_state *s, struct repository *r,
++		      struct add_p_opt *add_p_opt)
+ {
+ 	const char *value;
+ 
+@@ -90,6 +91,17 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
+ 	repo_config_get_bool(r, "interactive.singlekey", &s->use_single_key);
+ 	if (s->use_single_key)
+ 		setbuf(stdin, NULL);
++
++	if (add_p_opt->context != -1) {
++		if (add_p_opt->context < 0)
++			die(_("%s cannot be negative"), "--unified");
++		s->context = add_p_opt->context;
++	}
++	if (add_p_opt->interhunkcontext != -1) {
++		if (add_p_opt->interhunkcontext < 0)
++			die(_("%s cannot be negative"), "--inter-hunk-context");
++		s->interhunkcontext = add_p_opt->interhunkcontext;
++	}
+ }
+ 
+ void clear_add_i_state(struct add_i_state *s)
+@@ -978,6 +990,10 @@ static int run_patch(struct add_i_state *s, const struct pathspec *ps,
+ 	opts->prompt = N_("Patch update");
+ 	count = list_and_choose(s, files, opts);
+ 	if (count > 0) {
++		struct add_p_opt add_p_opt = {
++			.context = s->context,
++			.interhunkcontext = s->interhunkcontext,
++		};
+ 		struct strvec args = STRVEC_INIT;
+ 		struct pathspec ps_selected = { 0 };
+ 
+@@ -988,7 +1004,7 @@ static int run_patch(struct add_i_state *s, const struct pathspec *ps,
+ 		parse_pathspec(&ps_selected,
+ 			       PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITERAL,
+ 			       PATHSPEC_LITERAL_PATH, "", args.v);
+-		res = run_add_p(s->r, ADD_P_ADD, NULL, &ps_selected);
++		res = run_add_p(s->r, ADD_P_ADD, &add_p_opt, NULL, &ps_selected);
+ 		strvec_clear(&args);
+ 		clear_pathspec(&ps_selected);
+ 	}
+@@ -1023,10 +1039,13 @@ static int run_diff(struct add_i_state *s, const struct pathspec *ps,
+ 	if (count > 0) {
+ 		struct child_process cmd = CHILD_PROCESS_INIT;
+ 
+-		strvec_pushl(&cmd.args, "git", "diff", "-p", "--cached",
+-			     oid_to_hex(!is_initial ? &oid :
+-					s->r->hash_algo->empty_tree),
+-			     "--", NULL);
++		strvec_pushl(&cmd.args, "git", "diff", "-p", "--cached", NULL);
++		if (s->context != -1)
++			strvec_pushf(&cmd.args, "--unified=%i", s->context);
++		if (s->interhunkcontext != -1)
++			strvec_pushf(&cmd.args, "--inter-hunk-context=%i", s->interhunkcontext);
++		strvec_pushl(&cmd.args, oid_to_hex(!is_initial ? &oid :
++			     s->r->hash_algo->empty_tree), "--", NULL);
+ 		for (i = 0; i < files->items.nr; i++)
+ 			if (files->selected[i])
+ 				strvec_push(&cmd.args,
+@@ -1119,7 +1138,8 @@ static void command_prompt_help(struct add_i_state *s)
+ 			 _("(empty) select nothing"));
+ }
+ 
+-int run_add_i(struct repository *r, const struct pathspec *ps)
++int run_add_i(struct repository *r, const struct pathspec *ps,
++	      struct add_p_opt *add_p_opt)
+ {
+ 	struct add_i_state s = { NULL };
+ 	struct print_command_item_data data = { "[", "]" };
+@@ -1162,7 +1182,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 			->util = util;
+ 	}
+ 
+-	init_add_i_state(&s, r);
++	init_add_i_state(&s, r, add_p_opt);
+ 
+ 	/*
+ 	 * When color was asked for, use the prompt color for
+diff --git a/add-interactive.h b/add-interactive.h
+index c63f35b14be8..4213dcd67b9a 100644
+--- a/add-interactive.h
++++ b/add-interactive.h
+@@ -3,6 +3,13 @@
+ 
+ #include "color.h"
+ 
++struct add_p_opt {
++	int context;
++	int interhunkcontext;
++};
++
++#define ADD_P_OPT_INIT { .context = -1, .interhunkcontext = -1 }
++
+ struct add_i_state {
+ 	struct repository *r;
+ 	int use_color;
+@@ -21,12 +28,14 @@ struct add_i_state {
+ 	int context, interhunkcontext;
+ };
+ 
+-void init_add_i_state(struct add_i_state *s, struct repository *r);
++void init_add_i_state(struct add_i_state *s, struct repository *r,
++		      struct add_p_opt *add_p_opt);
+ void clear_add_i_state(struct add_i_state *s);
+ 
+ struct repository;
+ struct pathspec;
+-int run_add_i(struct repository *r, const struct pathspec *ps);
++int run_add_i(struct repository *r, const struct pathspec *ps,
++	      struct add_p_opt *add_p_opt);
+ 
+ enum add_p_mode {
+ 	ADD_P_ADD,
+@@ -37,6 +46,7 @@ enum add_p_mode {
+ };
+ 
+ int run_add_p(struct repository *r, enum add_p_mode mode,
+-	      const char *revision, const struct pathspec *ps);
++	      struct add_p_opt *o, const char *revision,
++	      const struct pathspec *ps);
+ 
+ #endif
+diff --git a/add-patch.c b/add-patch.c
+index b0125b51ba45..302e6ba7d9a3 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1763,14 +1763,15 @@ soft_increment:
+ }
+ 
+ int run_add_p(struct repository *r, enum add_p_mode mode,
+-	      const char *revision, const struct pathspec *ps)
++	      struct add_p_opt *o, const char *revision,
++	      const struct pathspec *ps)
+ {
+ 	struct add_p_state s = {
+ 		{ r }, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
+ 	};
+ 	size_t i, binary_count = 0;
+ 
+-	init_add_i_state(&s.s, r);
++	init_add_i_state(&s.s, r, o);
+ 
+ 	if (mode == ADD_P_STASH)
+ 		s.mode = &patch_mode_stash;
+diff --git a/builtin/add.c b/builtin/add.c
+index 7c292ffdc6c2..a00dab9b8fa0 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -29,6 +29,7 @@ static const char * const builtin_add_usage[] = {
+ 	NULL
+ };
+ static int patch_interactive, add_interactive, edit_interactive;
++static struct add_p_opt add_p_opt = ADD_P_OPT_INIT;
+ static int take_worktree_changes;
+ static int add_renormalize;
+ static int pathspec_file_nul;
+@@ -157,7 +158,7 @@ static int refresh(struct repository *repo, int verbose, const struct pathspec *
+ int interactive_add(struct repository *repo,
+ 		    const char **argv,
+ 		    const char *prefix,
+-		    int patch)
++		    int patch, struct add_p_opt *add_p_opt)
+ {
+ 	struct pathspec pathspec;
+ 	int ret;
+@@ -169,9 +170,9 @@ int interactive_add(struct repository *repo,
+ 		       prefix, argv);
+ 
+ 	if (patch)
+-		ret = !!run_add_p(repo, ADD_P_ADD, NULL, &pathspec);
++		ret = !!run_add_p(repo, ADD_P_ADD, add_p_opt, NULL, &pathspec);
+ 	else
+-		ret = !!run_add_i(repo, &pathspec);
++		ret = !!run_add_i(repo, &pathspec, add_p_opt);
+ 
+ 	clear_pathspec(&pathspec);
+ 	return ret;
+@@ -253,6 +254,8 @@ static struct option builtin_add_options[] = {
+ 	OPT_GROUP(""),
+ 	OPT_BOOL('i', "interactive", &add_interactive, N_("interactive picking")),
+ 	OPT_BOOL('p', "patch", &patch_interactive, N_("select hunks interactively")),
++	OPT_DIFF_UNIFIED(&add_p_opt.context),
++	OPT_DIFF_INTERHUNK_CONTEXT(&add_p_opt.interhunkcontext),
+ 	OPT_BOOL('e', "edit", &edit_interactive, N_("edit current diff and apply")),
+ 	OPT__FORCE(&ignored_too, N_("allow adding otherwise ignored files"), 0),
+ 	OPT_BOOL('u', "update", &take_worktree_changes, N_("update tracked files")),
+@@ -394,6 +397,11 @@ int cmd_add(int argc,
+ 	prepare_repo_settings(repo);
+ 	repo->settings.command_requires_full_index = 0;
+ 
++	if (add_p_opt.context < -1)
++		die(_("'%s' cannot be negative"), "--unified");
++	if (add_p_opt.interhunkcontext < -1)
++		die(_("'%s' cannot be negative"), "--inter-hunk-context");
++
+ 	if (patch_interactive)
+ 		add_interactive = 1;
+ 	if (add_interactive) {
+@@ -401,7 +409,12 @@ int cmd_add(int argc,
+ 			die(_("options '%s' and '%s' cannot be used together"), "--dry-run", "--interactive/--patch");
+ 		if (pathspec_from_file)
+ 			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--interactive/--patch");
+-		exit(interactive_add(repo, argv + 1, prefix, patch_interactive));
++		exit(interactive_add(repo, argv + 1, prefix, patch_interactive, &add_p_opt));
++	} else {
++		if (add_p_opt.context != -1)
++			die(_("the option '%s' requires '%s'"), "--unified", "--interactive/--patch");
++		if (add_p_opt.interhunkcontext != -1)
++			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--interactive/--patch");
+ 	}
+ 
+ 	if (edit_interactive) {
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 536192d3456c..3737ba4c3920 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -61,6 +61,8 @@ static const char * const restore_usage[] = {
+ 
+ struct checkout_opts {
+ 	int patch_mode;
++	int patch_context;
++	int patch_interhunk_context;
+ 	int quiet;
+ 	int merge;
+ 	int force;
+@@ -104,7 +106,12 @@ struct checkout_opts {
+ 	struct tree *source_tree;
+ };
+ 
+-#define CHECKOUT_OPTS_INIT { .conflict_style = -1, .merge = -1 }
++#define CHECKOUT_OPTS_INIT { \
++	.conflict_style = -1, \
++	.merge = -1, \
++	.patch_context = -1, \
++	.patch_interhunk_context = -1, \
++}
+ 
+ struct branch_info {
+ 	char *name; /* The short name used */
+@@ -539,6 +546,10 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 
+ 	if (opts->patch_mode) {
+ 		enum add_p_mode patch_mode;
++		struct add_p_opt add_p_opt = {
++			.context = opts->patch_context,
++			.interhunkcontext = opts->patch_interhunk_context,
++		};
+ 		const char *rev = new_branch_info->name;
+ 		char rev_oid[GIT_MAX_HEXSZ + 1];
+ 
+@@ -564,8 +575,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 		else
+ 			BUG("either flag must have been set, worktree=%d, index=%d",
+ 			    opts->checkout_worktree, opts->checkout_index);
+-		return !!run_add_p(the_repository, patch_mode, rev,
+-				   &opts->pathspec);
++		return !!run_add_p(the_repository, patch_mode, &add_p_opt,
++				   rev, &opts->pathspec);
+ 	}
+ 
+ 	repo_hold_locked_index(the_repository, &lock_file, LOCK_DIE_ON_ERROR);
+@@ -1738,6 +1749,8 @@ static struct option *add_checkout_path_options(struct checkout_opts *opts,
+ 			      N_("checkout their version for unmerged files"),
+ 			      3, PARSE_OPT_NONEG),
+ 		OPT_BOOL('p', "patch", &opts->patch_mode, N_("select hunks interactively")),
++		OPT_DIFF_UNIFIED(&opts->patch_context),
++		OPT_DIFF_INTERHUNK_CONTEXT(&opts->patch_interhunk_context),
+ 		OPT_BOOL(0, "ignore-skip-worktree-bits", &opts->ignore_skipworktree,
+ 			 N_("do not limit pathspecs to sparse entries only")),
+ 		OPT_PATHSPEC_FROM_FILE(&opts->pathspec_from_file),
+@@ -1780,6 +1793,18 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 	argc = parse_options(argc, argv, prefix, options,
+ 			     usagestr, parseopt_flags);
+ 
++	if (opts->patch_context < -1)
++		die(_("'%s' cannot be negative"), "--unified");
++	if (opts->patch_interhunk_context < -1)
++		die(_("'%s' cannot be negative"), "--inter-hunk-context");
++
++	if (!opts->patch_mode) {
++		if (opts->patch_context != -1)
++			die(_("the option '%s' requires '%s'"), "--unified", "--patch");
++		if (opts->patch_interhunk_context != -1)
++			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--patch");
++	}
++
+ 	if (opts->show_progress < 0) {
+ 		if (opts->quiet)
+ 			opts->show_progress = 0;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index fba0dded64a7..73673bc7db9f 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -19,6 +19,7 @@
+ #include "environment.h"
+ #include "diff.h"
+ #include "commit.h"
++#include "add-interactive.h"
+ #include "gettext.h"
+ #include "revision.h"
+ #include "wt-status.h"
+@@ -122,6 +123,7 @@ static const char *edit_message, *use_message;
+ static char *fixup_message, *fixup_commit, *squash_message;
+ static const char *fixup_prefix;
+ static int all, also, interactive, patch_interactive, only, amend, signoff;
++static struct add_p_opt add_p_opt = ADD_P_OPT_INIT;
+ static int edit_flag = -1; /* unspecified */
+ static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
+ static int config_commit_verbose = -1; /* unspecified */
+@@ -354,6 +356,11 @@ static const char *prepare_index(const char **argv, const char *prefix,
+ 	const char *ret;
+ 	char *path = NULL;
+ 
++	if (add_p_opt.context < -1)
++		die(_("'%s' cannot be negative"), "--unified");
++	if (add_p_opt.interhunkcontext < -1)
++		die(_("'%s' cannot be negative"), "--inter-hunk-context");
++
+ 	if (is_status)
+ 		refresh_flags |= REFRESH_UNMERGED;
+ 	parse_pathspec(&pathspec, 0,
+@@ -400,7 +407,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
+ 		old_index_env = xstrdup_or_null(getenv(INDEX_ENVIRONMENT));
+ 		setenv(INDEX_ENVIRONMENT, the_repository->index_file, 1);
+ 
+-		if (interactive_add(the_repository, argv, prefix, patch_interactive) != 0)
++		if (interactive_add(the_repository, argv, prefix, patch_interactive, &add_p_opt) != 0)
+ 			die(_("interactive add failed"));
+ 
+ 		the_repository->index_file = old_repo_index_file;
+@@ -424,6 +431,11 @@ static const char *prepare_index(const char **argv, const char *prefix,
+ 		commit_style = COMMIT_NORMAL;
+ 		ret = get_lock_file_path(&index_lock);
+ 		goto out;
++	} else {
++		if (add_p_opt.context != -1)
++			die(_("the option '%s' requires '%s'"), "--unified", "--interactive/--patch");
++		if (add_p_opt.interhunkcontext != -1)
++			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--interactive/--patch");
+ 	}
+ 
+ 	/*
+@@ -1722,6 +1734,8 @@ int cmd_commit(int argc,
+ 		OPT_BOOL('i', "include", &also, N_("add specified files to index for commit")),
+ 		OPT_BOOL(0, "interactive", &interactive, N_("interactively add files")),
+ 		OPT_BOOL('p', "patch", &patch_interactive, N_("interactively add changes")),
++		OPT_DIFF_UNIFIED(&add_p_opt.context),
++		OPT_DIFF_INTERHUNK_CONTEXT(&add_p_opt.interhunkcontext),
+ 		OPT_BOOL('o', "only", &only, N_("commit only specified files")),
+ 		OPT_BOOL('n', "no-verify", &no_verify, N_("bypass pre-commit and commit-msg hooks")),
+ 		OPT_BOOL(0, "dry-run", &dry_run, N_("show what would be committed")),
+diff --git a/builtin/reset.c b/builtin/reset.c
+index dc50ffc1ac59..9fb32795c9c5 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -346,6 +346,7 @@ int cmd_reset(int argc,
+ 	struct object_id oid;
+ 	struct pathspec pathspec;
+ 	int intent_to_add = 0;
++	struct add_p_opt add_p_opt = ADD_P_OPT_INIT;
+ 	const struct option options[] = {
+ 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
+ 		OPT_BOOL(0, "no-refresh", &no_refresh,
+@@ -370,6 +371,8 @@ int cmd_reset(int argc,
+ 			       PARSE_OPT_OPTARG,
+ 			       option_parse_recurse_submodules_worktree_updater),
+ 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
++		OPT_DIFF_UNIFIED(&add_p_opt.context),
++		OPT_DIFF_INTERHUNK_CONTEXT(&add_p_opt.interhunkcontext),
+ 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
+ 				N_("record only the fact that removed paths will be added later")),
+ 		OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
+@@ -420,6 +423,11 @@ int cmd_reset(int argc,
+ 		oidcpy(&oid, &tree->object.oid);
+ 	}
+ 
++	if (add_p_opt.context < -1)
++		die(_("'%s' cannot be negative"), "--unified");
++	if (add_p_opt.interhunkcontext < -1)
++		die(_("'%s' cannot be negative"), "--inter-hunk-context");
++
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
+ 
+@@ -427,9 +435,14 @@ int cmd_reset(int argc,
+ 		if (reset_type != NONE)
+ 			die(_("options '%s' and '%s' cannot be used together"), "--patch", "--{hard,mixed,soft}");
+ 		trace2_cmd_mode("patch-interactive");
+-		update_ref_status = !!run_add_p(the_repository, ADD_P_RESET, rev,
+-				   &pathspec);
++		update_ref_status = !!run_add_p(the_repository, ADD_P_RESET,
++						&add_p_opt, rev, &pathspec);
+ 		goto cleanup;
++	} else {
++		if (add_p_opt.context != -1)
++			die(_("the option '%s' requires '%s'"), "--unified", "--patch");
++		if (add_p_opt.interhunkcontext != -1)
++			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--patch");
+ 	}
+ 
+ 	/* git reset tree [--] paths... can be used to
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 7cd3ad8aa48e..6da162e5e69a 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1242,7 +1242,8 @@ done:
+ }
+ 
+ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+-		       struct strbuf *out_patch, int quiet)
++		       struct strbuf *out_patch, int quiet,
++		       struct add_p_opt *add_p_opt)
+ {
+ 	int ret = 0;
+ 	struct child_process cp_read_tree = CHILD_PROCESS_INIT;
+@@ -1267,7 +1268,7 @@ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+ 	old_index_env = xstrdup_or_null(getenv(INDEX_ENVIRONMENT));
+ 	setenv(INDEX_ENVIRONMENT, the_repository->index_file, 1);
+ 
+-	ret = !!run_add_p(the_repository, ADD_P_STASH, NULL, ps);
++	ret = !!run_add_p(the_repository, ADD_P_STASH, add_p_opt, NULL, ps);
+ 
+ 	the_repository->index_file = old_repo_index_file;
+ 	if (old_index_env && *old_index_env)
+@@ -1362,8 +1363,8 @@ done:
+ }
+ 
+ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_buf,
+-			   int include_untracked, int patch_mode, int only_staged,
+-			   struct stash_info *info, struct strbuf *patch,
++			   int include_untracked, int patch_mode, struct add_p_opt *add_p_opt,
++			   int only_staged, struct stash_info *info, struct strbuf *patch,
+ 			   int quiet)
+ {
+ 	int ret = 0;
+@@ -1444,7 +1445,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 		untracked_commit_option = 1;
+ 	}
+ 	if (patch_mode) {
+-		ret = stash_patch(info, ps, patch, quiet);
++		ret = stash_patch(info, ps, patch, quiet, add_p_opt);
+ 		if (ret < 0) {
+ 			if (!quiet)
+ 				fprintf_ln(stderr, _("Cannot save the current "
+@@ -1519,7 +1520,7 @@ static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
+ 	if (!check_changes_tracked_files(&ps))
+ 		return 0;
+ 
+-	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, 0, &info,
++	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
+ 			      NULL, 0);
+ 	if (!ret)
+ 		printf_ln("%s", oid_to_hex(&info.w_commit));
+@@ -1530,7 +1531,8 @@ static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
+ }
+ 
+ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int quiet,
+-			 int keep_index, int patch_mode, int include_untracked, int only_staged)
++			 int keep_index, int patch_mode, struct add_p_opt *add_p_opt,
++			 int include_untracked, int only_staged)
+ {
+ 	int ret = 0;
+ 	struct stash_info info = STASH_INFO_INIT;
+@@ -1600,8 +1602,8 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 
+ 	if (stash_msg)
+ 		strbuf_addstr(&stash_msg_buf, stash_msg);
+-	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode, only_staged,
+-			    &info, &patch, quiet)) {
++	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode,
++			    add_p_opt, only_staged, &info, &patch, quiet)) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+@@ -1774,6 +1776,7 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 	const char *stash_msg = NULL;
+ 	char *pathspec_from_file = NULL;
+ 	struct pathspec ps;
++	struct add_p_opt add_p_opt = ADD_P_OPT_INIT;
+ 	struct option options[] = {
+ 		OPT_BOOL('k', "keep-index", &keep_index,
+ 			 N_("keep index")),
+@@ -1781,6 +1784,8 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 			 N_("stash staged changes only")),
+ 		OPT_BOOL('p', "patch", &patch_mode,
+ 			 N_("stash in patch mode")),
++		OPT_DIFF_UNIFIED(&add_p_opt.context),
++		OPT_DIFF_INTERHUNK_CONTEXT(&add_p_opt.interhunkcontext),
+ 		OPT__QUIET(&quiet, N_("quiet mode")),
+ 		OPT_BOOL('u', "include-untracked", &include_untracked,
+ 			 N_("include untracked files in stash")),
+@@ -1836,8 +1841,20 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 		die(_("the option '%s' requires '%s'"), "--pathspec-file-nul", "--pathspec-from-file");
+ 	}
+ 
++	if (!patch_mode) {
++		if (add_p_opt.context != -1)
++			die(_("the option '%s' requires '%s'"), "--unified", "--patch");
++		if (add_p_opt.interhunkcontext != -1)
++			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--patch");
++	}
++
++	if (add_p_opt.context < -1)
++		die(_("'%s' cannot be negative"), "--unified");
++	if (add_p_opt.interhunkcontext < -1)
++		die(_("'%s' cannot be negative"), "--inter-hunk-context");
++
+ 	ret = do_push_stash(&ps, stash_msg, quiet, keep_index, patch_mode,
+-			    include_untracked, only_staged);
++			    &add_p_opt, include_untracked, only_staged);
+ 
+ 	clear_pathspec(&ps);
+ 	free(pathspec_from_file);
+@@ -1862,6 +1879,7 @@ static int save_stash(int argc, const char **argv, const char *prefix,
+ 	const char *stash_msg = NULL;
+ 	struct pathspec ps;
+ 	struct strbuf stash_msg_buf = STRBUF_INIT;
++	struct add_p_opt add_p_opt = ADD_P_OPT_INIT;
+ 	struct option options[] = {
+ 		OPT_BOOL('k', "keep-index", &keep_index,
+ 			 N_("keep index")),
+@@ -1869,6 +1887,8 @@ static int save_stash(int argc, const char **argv, const char *prefix,
+ 			 N_("stash staged changes only")),
+ 		OPT_BOOL('p', "patch", &patch_mode,
+ 			 N_("stash in patch mode")),
++		OPT_DIFF_UNIFIED(&add_p_opt.context),
++		OPT_DIFF_INTERHUNK_CONTEXT(&add_p_opt.interhunkcontext),
+ 		OPT__QUIET(&quiet, N_("quiet mode")),
+ 		OPT_BOOL('u', "include-untracked", &include_untracked,
+ 			 N_("include untracked files in stash")),
+@@ -1887,8 +1907,22 @@ static int save_stash(int argc, const char **argv, const char *prefix,
+ 		stash_msg = strbuf_join_argv(&stash_msg_buf, argc, argv, ' ');
+ 
+ 	memset(&ps, 0, sizeof(ps));
++
++	if (add_p_opt.context < -1)
++		die(_("'%s' cannot be negative"), "--unified");
++	if (add_p_opt.interhunkcontext < -1)
++		die(_("'%s' cannot be negative"), "--inter-hunk-context");
++
++	if (!patch_mode) {
++		if (add_p_opt.context != -1)
++			die(_("the option '%s' requires '%s'"), "--unified", "--patch");
++		if (add_p_opt.interhunkcontext != -1)
++			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--patch");
++	}
++
+ 	ret = do_push_stash(&ps, stash_msg, quiet, keep_index,
+-			    patch_mode, include_untracked, only_staged);
++			    patch_mode, &add_p_opt, include_untracked,
++			    only_staged);
+ 
+ 	strbuf_release(&stash_msg_buf);
+ 	return ret;
+diff --git a/commit.h b/commit.h
+index 70c870dae4d4..7a7fedbc2f14 100644
+--- a/commit.h
++++ b/commit.h
+@@ -2,6 +2,7 @@
+ #define COMMIT_H
+ 
+ #include "object.h"
++#include "add-interactive.h"
+ 
+ struct signature_check;
+ struct strbuf;
+@@ -257,7 +258,7 @@ int for_each_commit_graft(each_commit_graft_fn, void *);
+ int interactive_add(struct repository *repo,
+ 		    const char **argv,
+ 		    const char *prefix,
+-		    int patch);
++		    int patch, struct add_p_opt *add_p_opt);
+ 
+ struct commit_extra_header {
+ 	struct commit_extra_header *next;
+diff --git a/parse-options.h b/parse-options.h
+index 91c3e3c29b3d..bdae8f116198 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -616,6 +616,8 @@ int parse_opt_tracking_mode(const struct option *, const char *, int);
+ #define OPT_PATHSPEC_FROM_FILE(v) OPT_FILENAME(0, "pathspec-from-file", v, N_("read pathspec from file"))
+ #define OPT_PATHSPEC_FILE_NUL(v)  OPT_BOOL(0, "pathspec-file-nul", v, N_("with --pathspec-from-file, pathspec elements are separated with NUL character"))
+ #define OPT_AUTOSTASH(v) OPT_BOOL(0, "autostash", v, N_("automatically stash/stash pop before and after"))
++#define OPT_DIFF_UNIFIED(v) OPT_INTEGER_F('U', "unified", v, N_("generate diffs with <n> lines context"), PARSE_OPT_NONEG)
++#define OPT_DIFF_INTERHUNK_CONTEXT(v) OPT_INTEGER_F(0, "inter-hunk-context", v, N_("show context between diff hunks up to the specified number of lines"), PARSE_OPT_NONEG)
+ 
+ #define OPT_IPVERSION(v) \
+ 	OPT_SET_INT_F('4', "ipv4", (v), N_("use IPv4 addresses only"), \
 diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index b8a05d95f3f1..b088ee141ff4 100755
+index 18dc329ea1f6..04d2a1983525 100755
 --- a/t/t3701-add-interactive.sh
 +++ b/t/t3701-add-interactive.sh
-@@ -63,7 +63,7 @@ test_expect_success 'setup (initial)' '
- '
- test_expect_success 'status works (initial)' '
- 	git add -i </dev/null >output &&
--	grep "+1/-0 *+2/-0 file" output
-+	test_grep "+1/-0 *+2/-0 file" output
+@@ -1252,4 +1252,53 @@ test_expect_success 'add -p rejects negative diff.context' '
+ 	test_grep "diff.context cannot be negative" output
  '
  
- test_expect_success 'setup expected' '
-@@ -86,7 +86,7 @@ test_expect_success 'revert works (initial)' '
- 	git add file &&
- 	test_write_lines r 1 | git add -i &&
- 	git ls-files >output &&
--	! grep . output
-+	test_grep ! . output
- '
- 
- test_expect_success 'add untracked (multiple)' '
-@@ -109,7 +109,7 @@ test_expect_success 'setup (commit)' '
- '
- test_expect_success 'status works (commit)' '
- 	git add -i </dev/null >output &&
--	grep "+1/-0 *+2/-0 file" output
-+	test_grep "+1/-0 *+2/-0 file" output
- '
- 
- test_expect_success 'update can stage deletions' '
-@@ -141,7 +141,7 @@ test_expect_success 'revert works (commit)' '
- 	git add file &&
- 	test_write_lines r 1 | git add -i &&
- 	git add -i </dev/null >output &&
--	grep "unchanged *+3/-0 file" output
-+	test_grep "unchanged *+3/-0 file" output
- '
- 
- test_expect_success 'reject multi-key input' '
-@@ -185,7 +185,7 @@ test_expect_success 'setup fake editor' '
- test_expect_success 'bad edit rejected' '
- 	git reset &&
- 	test_write_lines e n d | git add -p >output &&
--	grep "hunk does not apply" output
-+	test_grep "hunk does not apply" output
- '
- 
- test_expect_success 'setup patch' '
-@@ -198,7 +198,7 @@ test_expect_success 'setup patch' '
- test_expect_success 'garbage edit rejected' '
- 	git reset &&
- 	test_write_lines e n d | git add -p >output &&
--	grep "hunk does not apply" output
-+	test_grep "hunk does not apply" output
- '
- 
- test_expect_success 'setup patch' '
-@@ -313,8 +313,8 @@ test_expect_success FILEMODE 'stage mode and hunk' '
- 	chmod +x file &&
- 	printf "y\\ny\\n" | git add -p &&
- 	git diff --cached file >out &&
--	grep "new mode" out &&
--	grep "+content" out &&
-+	test_grep "new mode" out &&
-+	test_grep "+content" out &&
- 	git diff file >out &&
- 	test_must_be_empty out
- '
-@@ -636,7 +636,7 @@ test_expect_success 'split hunk "add -p (edit)"' '
- 	printf "%s\n" s e     q n q q |
- 	EDITOR=: git add -p &&
- 	git diff >actual &&
--	! grep "^+15" actual
-+	test_grep ! "^+15" actual
- '
- 
- test_expect_success 'split hunk "add -p (no, yes, edit)"' '
-@@ -648,7 +648,7 @@ test_expect_success 'split hunk "add -p (no, yes, edit)"' '
- 	EDITOR=: git add -p 2>error &&
- 	test_must_be_empty error &&
- 	git diff >actual &&
--	! grep "^+31" actual
-+	test_grep ! "^+31" actual
- '
- 
- test_expect_success 'split hunk with incomplete line at end' '
-@@ -682,7 +682,7 @@ test_expect_success 'edit, adding lines to the first hunk' '
- 	EDITOR=./fake_editor.sh git add -p 2>error &&
- 	test_must_be_empty error &&
- 	git diff --cached >actual &&
--	grep "^+22" actual
-+	test_grep "^+22" actual
- '
- 
- test_expect_success 'patch mode ignores unmerged entries' '
-@@ -696,7 +696,7 @@ test_expect_success 'patch mode ignores unmerged entries' '
- 	test_must_fail git merge side &&
- 	echo changed >non-conflict.t &&
- 	echo y | git add -p >output &&
--	! grep a/conflict.t output &&
-+	test_grep ! a/conflict.t output &&
- 	cat >expected <<-\EOF &&
- 	* Unmerged path conflict.t
- 	diff --git a/non-conflict.t b/non-conflict.t
-@@ -728,7 +728,7 @@ test_expect_success 'diffs can be colorized' '
- 
- 	# We do not want to depend on the exact coloring scheme
- 	# git uses for diffs, so just check that we saw some kind of color.
--	grep "$(printf "\\033")" output
-+	test_grep "$(printf "\\033")" output
- '
- 
- test_expect_success 'colors can be overridden' '
-@@ -743,7 +743,7 @@ test_expect_success 'colors can be overridden' '
- 		-c color.interactive.error=blue \
- 		add -i 2>err.raw <input &&
- 	test_decode_color <err.raw >err &&
--	grep "<BLUE>Huh (trigger)?<RESET>" err &&
-+	test_grep "<BLUE>Huh (trigger)?<RESET>" err &&
- 
- 	test_write_lines help quit >input &&
- 	force_color git \
-@@ -863,7 +863,7 @@ test_expect_success 'colorized diffs respect diff.wsErrorHighlight' '
- 	printf y >y &&
- 	force_color git -c diff.wsErrorHighlight=all add -p >output.raw 2>&1 <y &&
- 	test_decode_color <output.raw >output &&
--	grep "old<" output
-+	test_grep "old<" output
- '
- 
- test_expect_success 'diffFilter filters diff' '
-@@ -876,7 +876,7 @@ test_expect_success 'diffFilter filters diff' '
- 
- 	# avoid depending on the exact coloring or content of the prompts,
- 	# and just make sure we saw our diff prefixed
--	grep foo:.*content output
-+	test_grep foo:.*content output
- '
- 
- test_expect_success 'detect bogus diffFilter output' '
-@@ -886,7 +886,7 @@ test_expect_success 'detect bogus diffFilter output' '
- 	test_config interactive.diffFilter "sed 6d" &&
- 	printf y >y &&
- 	force_color test_must_fail git add -p <y >output 2>&1 &&
--	grep "mismatched output" output
-+	test_grep "mismatched output" output
- '
- 
- test_expect_success 'handle iffy colored hunk headers' '
-@@ -896,7 +896,7 @@ test_expect_success 'handle iffy colored hunk headers' '
- 	printf n >n &&
- 	force_color git -c interactive.diffFilter="sed s/.*@@.*/XX/" \
- 		add -p >output 2>&1 <n &&
--	grep "^XX$" output
-+	test_grep "^XX$" output
- '
- 
- test_expect_success 'handle very large filtered diff' '
-@@ -1002,7 +1002,7 @@ test_expect_success 'add -p does not expand argument lists' '
- 	# update it, but we want to be sure that our "." pathspec
- 	# was not expanded into the argument list of any command.
- 	# So look only for "not-changed".
--	! grep -E "^trace: (built-in|exec|run_command): .*not-changed" trace.out
-+	test_grep ! -E "^trace: (built-in|exec|run_command): .*not-changed" trace.out
- '
- 
- test_expect_success 'hunk-editing handles custom comment char' '
-@@ -1072,21 +1072,21 @@ test_expect_success 'setup different kinds of dirty submodules' '
- 
- test_expect_success 'status ignores dirty submodules (except HEAD)' '
- 	git -C for-submodules add -i </dev/null >output &&
--	grep dirty-head output &&
--	grep dirty-both-ways output &&
--	! grep dirty-otherwise output
-+	test_grep dirty-head output &&
-+	test_grep dirty-both-ways output &&
-+	test_grep ! dirty-otherwise output
- '
- 
- test_expect_success 'handle submodules' '
- 	echo 123 >>for-submodules/dirty-otherwise/initial.t &&
- 
- 	force_color git -C for-submodules add -p dirty-otherwise >output 2>&1 &&
--	grep "No changes" output &&
-+	test_grep "No changes" output &&
- 
- 	force_color git -C for-submodules add -p dirty-head >output 2>&1 <y &&
- 	git -C for-submodules ls-files --stage dirty-head >actual &&
- 	rev="$(git -C for-submodules/dirty-head rev-parse HEAD)" &&
--	grep "$rev" actual
-+	test_grep "$rev" actual
- '
- 
- test_expect_success 'set up pathological context' '
-diff --git a/t/t4055-diff-context.sh b/t/t4055-diff-context.sh
-index ec2804eea67c..c66f966a3ab3 100755
---- a/t/t4055-diff-context.sh
-+++ b/t/t4055-diff-context.sh
-@@ -38,36 +38,36 @@ test_expect_success 'setup' '
- 
- test_expect_success 'the default number of context lines is 3' '
- 	git diff >output &&
--	! grep "^ d" output &&
--	grep "^ e" output &&
--	grep "^ j" output &&
--	! grep "^ k" output
-+	test_grep ! "^ d" output &&
-+	test_grep "^ e" output &&
-+	test_grep "^ j" output &&
-+	test_grep ! "^ k" output
- '
- 
- test_expect_success 'diff.context honored by "log"' '
- 	git log -1 -p >output &&
--	! grep firstline output &&
-+	test_grep ! firstline output &&
- 	git config diff.context 8 &&
- 	git log -1 -p >output &&
--	grep "^ firstline" output
-+	test_grep "^ firstline" output
- '
- 
- test_expect_success 'The -U option overrides diff.context' '
- 	git config diff.context 8 &&
- 	git log -U4 -1 >output &&
--	! grep "^ firstline" output
-+	test_grep ! "^ firstline" output
- '
- 
- test_expect_success 'diff.context honored by "diff"' '
- 	git config diff.context 8 &&
- 	git diff >output &&
--	grep "^ firstline" output
-+	test_grep "^ firstline" output
- '
- 
- test_expect_success 'plumbing not affected' '
- 	git config diff.context 8 &&
- 	git diff-files -p >output &&
--	! grep "^ firstline" output
-+	test_grep ! "^ firstline" output
- '
- 
- test_expect_success 'non-integer config parsing' '
-@@ -85,8 +85,8 @@ test_expect_success 'negative integer config parsing' '
- test_expect_success '-U0 is valid, so is diff.context=0' '
- 	git config diff.context 0 &&
- 	git diff >output &&
--	grep "^-ADDED" output &&
--	grep "^+MODIFIED" output
-+	test_grep "^-ADDED" output &&
-+	test_grep "^+MODIFIED" output
- '
- 
- test_expect_success '-U2147483647 works' '
-@@ -94,9 +94,9 @@ test_expect_success '-U2147483647 works' '
- 	test_line_count = 16 x &&
- 	git diff -U2147483647 >output &&
- 	test_line_count = 22 output &&
--	grep "^-ADDED" output &&
--	grep "^+MODIFIED" output &&
--	grep "^+APPENDED" output
-+	test_grep "^-ADDED" output &&
-+	test_grep "^+MODIFIED" output &&
-+	test_grep "^+APPENDED" output
- '
- 
++for cmd in add checkout restore 'commit -m file'
++do
++	test_expect_success "${cmd%% *} accepts -U and --inter-hunk-context" '
++		test_write_lines a b c d e f g h i j k l m n o p q r s t u v >file &&
++		git add file &&
++		test_write_lines a b c d e F g h i j k l m n o p Q r s t u v >file &&
++		echo y | git -c diff.context=5 -c diff.interhunkcontext=1 \
++			$cmd -p -U 4 --inter-hunk-context 2 >actual &&
++		test_grep "@@ -2,20 +2,20 @@" actual
++	'
++done
++
++test_expect_success 'reset accepts -U and --inter-hunk-context' '
++	test_write_lines a b c d e f g h i j k l m n o p q r s t u v >file &&
++	git commit -m file file &&
++	test_write_lines a b c d e F g h i j k l m n o p Q r s t u v >file &&
++	git add file &&
++	echo y | git -c diff.context=5 -c diff.interhunkcontext=1 \
++		reset -p -U 4 --inter-hunk-context 2 >actual &&
++	test_grep "@@ -2,20 +2,20 @@" actual
++'
++
++test_expect_success 'stash accepts -U and --inter-hunk-context' '
++	test_write_lines a b c d e F g h i j k l m n o p Q r s t u v >file &&
++	git commit -m file file &&
++	test_write_lines a b c d e f g h i j k l m n o p q r s t u v >file &&
++	echo y | git -c diff.context=5 -c diff.interhunkcontext=1 \
++		stash -p -U 4 --inter-hunk-context 2 >actual &&
++	test_grep "@@ -2,20 +2,20 @@" actual
++'
++
++for cmd in add checkout commit reset restore "stash save" "stash push"
++do
++	test_expect_success "$cmd rejects invalid context options" '
++		test_must_fail git $cmd -p -U -3 2>actual &&
++		cat actual | echo &&
++		test_grep -e ".--unified. cannot be negative" actual &&
++
++		test_must_fail git $cmd -p --inter-hunk-context -3 2>actual &&
++		test_grep -e ".--inter-hunk-context. cannot be negative" actual &&
++
++		test_must_fail git $cmd -U 7 2>actual &&
++		test_grep -E ".--unified. requires .(--interactive/)?--patch." actual &&
++
++		test_must_fail git $cmd --inter-hunk-context 2 2>actual &&
++		test_grep -E ".--inter-hunk-context. requires .(--interactive/)?--patch." actual
++	'
++done
++
  test_done
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 343b8cd1912b..6650d33fba69 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -2596,6 +2596,8 @@ test_expect_success 'double dash "git checkout"' '
+ 	--merge Z
+ 	--conflict=Z
+ 	--patch Z
++	--unified=Z
++	--inter-hunk-context=Z
+ 	--ignore-skip-worktree-bits Z
+ 	--ignore-other-worktrees Z
+ 	--recurse-submodules Z
 -- 
 gitgitgadget
-
