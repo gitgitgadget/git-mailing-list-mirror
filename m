@@ -1,171 +1,177 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F122882B0
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 09:35:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74118254841
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 11:36:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753781750; cv=none; b=Tb/q6CrSeKnr/X1M2yAN9+hFI38iIt8lND6S8I5+IPzzD52fpceRFLiRvUxdPbzX7xFwEzm4A3sLBmcFVtHVTQBnIKL1WzV2QRAi5lGvJEdptJ/Ez9cr9cK2PO+vyFuy/YW+uQ46sEyH1ksnC6OXOXiPF0lI+AtKBx9qKBawCmg=
+	t=1753789015; cv=none; b=XSgRUtybDUjNGqVuaRfc9Fd6m4C0W0peJfcT5yV4z1ZcbSoDSwwz5XNMTuD6wl2FVU3nPXyfdxsdePVdT357sI5sZh7nopYXPYoRvc73TCH+ocej4uKMdXQHMUR+2XpaF2o13FMp6GnQua98/gRfTUvmttUMVhHDA9lxPrmQp9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753781750; c=relaxed/simple;
-	bh=9sxp/gQW58ZRSKAgcyAPhQu8c8YzeCOz87lY9n/V9p8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nF2L9j0IlHzbKL1+A1ai7Lx9yWj6mueBonmcuPzvitrK1osiloUDkmEaPpXXyqqkBpg5OuR5GlpUXjBxE5g5fq+D5ZP4C2uPGAWKcqmcC1n6cMvC6cV5BxZfw8VrdtRaLtYsfo3agH2ohk9RSSaYlvX6+x0rwr5VOgjioeOCIvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jL5srAAN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fJl4Eo6K; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1753789015; c=relaxed/simple;
+	bh=uaXr09hqLrV1Q7nDlx7yeRShxultmC3A0zRPs1HG4hw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tmpPvndVj4ooMPoH3gDtQbUlNaehZhcgVRP8LN3LsdnIJ1N0Q/jKOsD9kamRPjUk+gmx+6O/RPDIflfUpJgqOMS5tzlytr4CKI0o//qEVr2LwMPcPbscFugctSNazwfkfL8R+OnW1oUZUO1oVXDhzSaTNUciJZp4F3w8bW1TQGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A11LfLto; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jL5srAAN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fJl4Eo6K"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A60257A0CE6;
-	Tue, 29 Jul 2025 05:35:47 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Tue, 29 Jul 2025 05:35:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1753781747; x=1753868147; bh=1vWJzLpYs/
-	+R3326xXZPn3LV6+wKwjm4D9p0Q06fczE=; b=jL5srAANAelgGdSxqaHDyIYbVk
-	Ub1bmQpEq71zGBc+1LLURh7RbTewOQZpyczpBg9+1c/zCOn9RYOHkqem09k8Gz2M
-	xS4R849SATdpMZPEDIrlag5hzHHnpC6zMetMImSB2XHrMf7vdVyEu+H/PzeYUycI
-	g+8iMGxdku2NoTaSf8JYFynEPqoaWZy4f3VGtnf1blhOyVj3q4K7DuQy7NBS9hvp
-	jL75/zy2Q9S1VMgZkmHMFkYcuRN2R6HmZEhz8spBlWgGCSXr7nRksGE8IoheL67W
-	FZXZ5zNiBAFPQUlW8j0Na6WbyviW/4hPHoh5lDmrtVOURdei9A9jyqIHUCLw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753781747; x=1753868147; bh=1vWJzLpYs/+R3326xXZPn3LV6+wKwjm4D9p
-	0Q06fczE=; b=fJl4Eo6KuA1u17D+08aTD1jiQxPrIPTsjmNRP989QsegohuPGn6
-	HCxCckoPntCtXZp3XaAAVjpwBIgiylpgI10h1lOtqo+AW745r7z6jS1PE6FWK/F6
-	01YTVgAm8/2rvSKXx3t7kTK9KMkUmakcAk2YK6vvEB2Btcyfrt97ZcKF5jC/b0qL
-	HOkPHk40zSkBnKVBywvXD1vd5tAv0Qxk7/zyFJuCBSuQoaOxmdS+84+15YJRhGat
-	58mtHkqdjGLWL/hexmQwM0ostMJUHXwJX8DOg/gbNcDYMsTh/BjTGiwvj8Z5XwmO
-	1BkCasM+RfDsScC5zBLH+TC0UnWTzuipsUA==
-X-ME-Sender: <xms:85WIaCLH_ugbvU5oCrC3QJjYVcjb3OaCMkrF4zj7RPt8Bbfk2W_2-A>
-    <xme:85WIaEyFO6yEkTZo9fp4YHBuXxOf3TgzmPOWCualblwZVBZpfFBfOxBa_absBxAsc
-    Afcq3_GXQq-_5F7dQ>
-X-ME-Received: <xmr:85WIaIu_y6pDn3McuW7Ih_bS5iS37AByajHd9L1JsGuOQhlLKtezxn6AdGtsp5uP8nN5rUS5snQZnBCHiMpNyyVOxwh-gibxgGR5ZQbxvhs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelgeejtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhope
-    hjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopegsvghnrdhknhhosghlvges
-    ghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehoshifrghlugdrsg
-    huugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohepphhhihhllhhiphdrfiho
-    ohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:85WIaHBsAq5iC5z3521_D1WYErRluJajUn8c8Iy80_lW5iuQc0xIuA>
-    <xmx:85WIaKGygNM6i-Wwm7aM0BimNzHQzt6P9GE34JaC0g82ouB7ALtm5Q>
-    <xmx:85WIaHDtWmwFd_ZG2jzkOumVWll8YrEQu8d6TcMC_KqIiT--E1S2sA>
-    <xmx:85WIaAm6vgdosVtU1DgKsG0uRSaI-PDpjoDKwS4saNeyakV21NPBeg>
-    <xmx:85WIaNpWVxbXNSGQ81gj0icXiYH-oLb694QHixfU0dbS0Yj8Jqz7nHSU>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Jul 2025 05:35:45 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 39fd3f06 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 29 Jul 2025 09:35:44 +0000 (UTC)
-Date: Tue, 29 Jul 2025 11:35:41 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, oswald.buddenhagen@gmx.de, karthik.188@gmail.com,
-	ben.knoble@gmail.com, gitster@pobox.com, phillip.wood@dunelm.org.uk,
-	jltobler@gmail.com, jn.avila@free.fr
-Subject: Re: [GSoC PATCH v5 2/5] repo: add the field references.format
-Message-ID: <aIiV7cz2Tx50JZUv@pks.im>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250727175110.84770-1-lucasseikioshiro@gmail.com>
- <20250727175110.84770-3-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A11LfLto"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-313a188174fso716827a91.1
+        for <git@vger.kernel.org>; Tue, 29 Jul 2025 04:36:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753789014; x=1754393814; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hxeJwbbvlUW7B6TRh0Bmx+u1iu1QUJxggaqXmL37lgo=;
+        b=A11LfLtoyjr5I/s1JTIXSPuKnBnSIPOcr3/ZV7OYi3YAACZ6EhJYDPYk4RcQ8u5zx0
+         A6WYEGfWxnIVp3d9DP2Plx+gy7N486xcVR8Dmw/Jt0A/fzaBqEvZIHkfPku6szmozvQC
+         RYD6XVW0EYwFp4v1C9lh5j1YW8wTZ7DCUZy/zW9ZovWsznzAQ1pv5f1oPbnCDmEZstX8
+         RjHH+G0J3+MYs5d5Q4er9luwrETu+hNk56k00ALUVwKn9ekTmJ/gRyuPrpSvlPSSoraA
+         +1m0JFWgf/nqKDPLkdqjQDWPG8RtwI2nr6i84ufqXfACOQDt9j7JFUK60GATXaM1t+rO
+         Vosw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753789014; x=1754393814;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hxeJwbbvlUW7B6TRh0Bmx+u1iu1QUJxggaqXmL37lgo=;
+        b=tTLeQ+u+CrGAywQuscw9ShCJmBLBpZl4RAZrE4jx1HQ3TDHo/zVLzVG3wIYWR7wnNk
+         oM5OVvdLqahTWONDeoImZun5q4NpWGdENWIlgWnvfPE65Huk/pvROYBqqBFFV5J5Xd6H
+         SG2CWKCQh3jChvvC8gTnpSdEzIjnUHB1gKosDa8q8pKicf1ic/rosW1O8jFbrexS+++H
+         c36p7olM69KoJ81/xuWmD2VNDKj1p09gJ/2rul/ji5wqZOWRpOxPIAF9H7wLUbgGYUsM
+         XxIk4QpBJtpF5uHKOeoX+bXjoUwbUVE3guDyZ4s5JgCqN6qOk9uoDt4XPfvGAUIB9A4l
+         R/bw==
+X-Forwarded-Encrypted: i=1; AJvYcCWRkxma0X+i41lllZ+lmXC5iWPkYbK2Ufut67J6HDQqUZVmAoC83UArLW3vUmyKlTFq8RM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxvc/ouGNeUj4fw3OaPPiTqH9Dc54uFjmU8wNBKI18DIPMl/inJ
+	lDNVCJXYn8rNrsoaNmkKTLexB3/RyxQc8fQ+BKNjlcDn9tUXSiwvCxXniIqZwz989taWPbhdYzk
+	7x3sPlldfFAHVKAjDwtgPQuvRaM9/o0g=
+X-Gm-Gg: ASbGncvW8WH61RESkAVIoryyovcz6t495TR4jUMsK3trt9aiqvFMooAW0thXdxzmvL3
+	Y0NnvlxpUsPx10icvosoR3YKJggwDReTi4+pOGt9LmD7a881vOmEkVt6l1BQd1sEfiZW788YnZb
+	Y4cXpozEVswZwg9BjUiJJyhVodqc8ppRtIoril+CCtC3qaOCLZin574+2k2lw6Wpw7n2QaS5jPS
+	7YvWEvTkwSacEz5qSg=
+X-Google-Smtp-Source: AGHT+IHzRtuDCA45QXyBMID2VYZAFCDNHAHD9VxGhHyfx6vJojfR54R7sNQAwXgCMO81G6e3lFbW0wG1IyVLB0MIml4=
+X-Received: by 2002:a17:90b:3b8b:b0:312:dbcd:b93d with SMTP id
+ 98e67ed59e1d1-31f28ceb59emr3920818a91.14.1753789013437; Tue, 29 Jul 2025
+ 04:36:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250727175110.84770-3-lucasseikioshiro@gmail.com>
+References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
+ <cover.1752882401.git.ayu.chandekar@gmail.com> <xmqqcy9qlfm8.fsf@gitster.g> <43aaec10-2696-44c9-8728-2045b83dc5d3@gmail.com>
+In-Reply-To: <43aaec10-2696-44c9-8728-2045b83dc5d3@gmail.com>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Tue, 29 Jul 2025 17:06:39 +0530
+X-Gm-Features: Ac12FXxwmEGnWAzewekBlRRbdEzNt1-X4sIZ6MaMNRzv3GiuY5cWsnH4J_AEie4
+Message-ID: <CAE7as+bnG6KgA8X_n36pqP15bmyM6re+xEb1MOXKvZSUdJ8Arg@mail.gmail.com>
+Subject: Re: [GSOC PATCH v6 0/3] environment: remove sparse-checkout related
+ global variables
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, christian.couder@gmail.com, git@vger.kernel.org, 
+	shyamthakkar001@gmail.com, phillip.wood123@gmail.com, ps@pks.im, 
+	ben.knoble@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jul 27, 2025 at 02:51:07PM -0300, Lucas Seiki Oshiro wrote:
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index d4f01e35e2..02d5821c77 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -1,12 +1,90 @@
->  #include "builtin.h"
->  #include "parse-options.h"
-> +#include "refs.h"
-> +#include "strbuf.h"
->  
-> -static int repo_info(int argc UNUSED, const char **argv UNUSED,
-> -		     const char *prefix UNUSED, struct repository *repo UNUSED)
-> +typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
+Hey Derrick,
 
-Nice, this now uses a strbuf as recommended.
+On Thu, Jul 24, 2025 at 6:55=E2=80=AFPM Derrick Stolee <stolee@gmail.com> w=
+rote:
+>
+> On 7/23/25 6:14 PM, Junio C Hamano wrote:
+> > Ayush Chandekar <ayu.chandekar@gmail.com> writes:
+> >
+> >> This patch series aims to remove global variables related to
+> >> sparse-checkout from the global scope and to remove the definition
+> >> '#define USE_THE_REPOSITORY_VARIABLE' from a few files.
+>
+> Sorry that I missed early versions of this thread. It's an
+> interesting topic to me, but I've been distracted.
+>
 
-> +struct field {
-> +	const char *key;
-> +	get_value_fn *get_value;
-> +};
-> +
-> +static int get_references_format(struct repository *repo, struct strbuf *buf)
-> +{
-> +	strbuf_addstr(buf,
-> +		      ref_storage_format_to_name(repo->ref_storage_format));
-> +	return 0;
-> +}
+Thanks for joining the discussion!
 
-And this prints into the buffer diretcly. Makes sense.
+> >> Discussions since v5:
+> >>
+> >> * For 1/3 and 2/3, Junio told me that it was concerning to put so
+> >>    many calls to `prepare_repo_settings()` so I tried to minimize the
+> >>    calls and made sure that there's no useless calling.
+> >
+> > I didn't mean that the number of places is the problem.  What I
+> > found troubling was that this is not done in any central place, so
+> > it is hard to notice even if some random cmd_foo() failed to call
+> > the function before doing its real work.  For example, shouldn't we
+> > be able to, at least for built-in commands that have RUN_SETUP bit
+> > set, centrally call prepare_repo_settings() somewhere late in
+> > git.c:run_builtin() after we figure out what should be in
+> > the_repository?  Now historically, setting up a repository may never
+> > have involved opening and parsing tons of configuration files, so
+> > such a change may be incurring extra overhead we did not have to
+> > pay, so it needs a lot more thought than just trying to minimize the
+> > number of calls, but some performance measurement.
+>
+> I think that the core issue here (and probably causing the issues
+> that were seen in the user-facing issues) is that the repo settings
+> struct was intended as a place to fill config for some one-off
+> "feature flags" and not to replace core functionality for a repo.
+>
 
-[snip]
-> +static int print_fields(int argc, const char **argv, struct repository *repo)
-> +{
-> +	const char *last = "";
-> +
-> +	QSORT(argv, argc, qsort_strcmp);
-> +
-> +	for (int i = 0; i < argc; i++) {
-> +		get_value_fn *get_value;
-> +		const char *key = argv[i];
-> +		struct strbuf value;
+Oh, that is the complete opposite of what I had understood. I assumed
+that repo_settings is used to hold some core repository-related config
+settings, especially since there are already quite a few stored there,
+and shifting these to the struct repository would probably clutter it.
+Given that the existing configs in the struct repository are mostly
+'repository_format_*' and having Patrick address that we embed the
+repository_format in the repository as they were increasing[1], it let
+me to think that we should try not to use the repository to store
+these configs.
 
-Let's declare the strbuf outside of the loop and `strbuf_reset()` it on
-every iteration.
+> There are two ways to change the approach here to fix the problem
+> of needing prepare_repo_settings() everyhwere:
+>
+>   1. With the idea that these sparse-checkout variables are
+>      critical to the functionality of the repo, they should move
+>      into the repository struct itself and be initialized along
+>      with all other values there. This changes the patches (and my
+>      follow-up series) significantly, but mechanically.
+>
+>   2. If we are going to change the intention of the repo settings
+>      struct to move from "optional one-off feature flags" to
+>      "important information about the core behavior of a repo"
+>      then we should prepare_repo_settings() when initializing the
+>      repository struct.
+>
+> My preference is (1). The only argument for (2) that I can think
+> of is that it is sometimes helpful to share only the settings for
+> a repo without sharing the whole repo. But that seems like a weak
+> reason right now.
+>
 
-> +
-> +		if (!strcmp(key, last))
-> +			continue;
-> +
-> +		strbuf_init(&value, 64);
+Okay, I agree with your points. I can maybe send a new version to address t=
+his.
 
-I don't think we should explicitly initialize it with a specific
-capacity. Let's just use `STRBUF_INIT`.
+Do we also shift settings like index.sparse to the repository then?
 
-> +		get_value = get_value_fn_for_key(key);
-> +
-> +		if (!get_value) {
-> +			strbuf_release(&value);
-> +			return error(_("key '%s' not found"), key);
-> +		}
-> +
-> +		get_value(repo, &value);
-> +		printf("%s=%s\n", key, value.buf);
-> +		last = key;
-> +		strbuf_release(&value);
+> >> * For 3/3, Phillip told me that it broke user-facing as it will be
+> >>    parsed quite late in the callchain and might throw an error mid
+> >>    operation which we do not want.
+> >
+> > So has the behaviour change caused by 3/3 been resolved?
+>
+> >   * This throws everything in repo_settings, but these settings are
+> >     inherently per repository and they are meaningful only when you
+> >     are working with a repository.  What makes us choose to make them
+> >     new members in the repo_settings structure, not direct members in
+> >     the repository structure?
+>
+> (This is the same thought I expressed earlier in this message.)
+>
+> Thanks,
+> -Stolee
+>
 
-And the call to `strbuf_release()` should be moved to the end of this
-function so that we know to reuse the buffer. The above early return
-would then be converted into a `goto out` so that we have a common exit
-path where we know to clean up all resources.
-
-Patrick
+Thanks
+Ayush
