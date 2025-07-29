@@ -1,112 +1,165 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9039C10F1
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 06:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC724186A
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 06:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753769724; cv=none; b=sTuf8xtFQDkmCMS3SW09Tu9J5wEgR/IPMV3uAnecoknXcVCS9aszcf2ahD8PcEfKVMgA2mM6/MgUdalpjqW+wGztEOTSGAOoQRm27qRscKnESjpE0Hj5DDVu7+r6+NhBfJru1UhtWsEnJ2Zvp63SWLYIslsEc7pX+dFp0ckf0PQ=
+	t=1753769736; cv=none; b=Xg2VA1GZgyC6xOBQ58TzQPJl1fBznurKXYOsaYh7H5473O/jLqsStmHa1Tb2w+WSzz3oMDaRbcxMAXkLpMVtsA2N0gLo0AodzzFYf3VyNWlBoKr2qUsKXy2wpVwD0+edO3/Tej/0MxztJ6gAA4Dj+mkzGAqQNeuA2UUnpbHqLDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753769724; c=relaxed/simple;
-	bh=kJeqvy0xPzqdmlLo8fPDmAwbauC9NkzDnmknLImQMMs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Lp3pSwmLcJWGIm9pxqR9f49eksxWLjl+jcytrevuswVBuxk/suVZZJZ/KhkE/ohT7+VxUkU4dy84bxja3wuqi2UZSONCKqAudwmSmr/hObC2MhjzqcIwC5cP2dd/c04IhPNSa6e9BLdAp/HHRb/O8UYLclcLKjB+/BQhJNgQ3ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=dhOsLSa6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EVwZ/YxS; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1753769736; c=relaxed/simple;
+	bh=0cpeFnYAY0LX8lBLlKaFUra2LVQc+vrYTYW9vA1DLdc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BIxOzUwKeH4upbLSBWRZpJvfuVQjPr4CUCWWkHMQ58+7hr/vAwa+BJ1DnoJ4Sp/1P789vAOss+02pbLxOviPkTEXnCIagk2zaR7OC6hotHr05uO5D99rs1nnZAHllJJv1xdLUvUOTrOQyDkQ6m02xsJ4HqNmbqOyZNeEPpJ99mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DtxDYijT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jthy0Fte; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="dhOsLSa6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EVwZ/YxS"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 630D37A0A40;
-	Tue, 29 Jul 2025 02:15:20 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 29 Jul 2025 02:15:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1753769720;
-	 x=1753856120; bh=DObUwuYvZncJlMm9ODcIrRP8O7/Rk38Jv9YGnPCUVKg=; b=
-	dhOsLSa6VoF0RpGaOacapioWQKDjhYfHVXPLkkd1jO0pMUsFQ/p5jWbrpdxVcGQu
-	R4p23oa3XevqPutkAcY6n3uqoIzFG3UsGGKmR05ehi2m7w2UtWYNqpmJd6OdzB/b
-	7iumup9L/uUA42JvONSVaoqxsEFiM86XQ55Xj9JHRcwART9cl81eE0ADvTdg3CW4
-	cgPsuScct9WB6OTCaH+n9MfUTdPXMbdbN1JhYakDrns+EM1ISXZwl8AHsLShP4wC
-	5vVLTTKVmCsG8HBoV4u6MV3ZPX4Mni6OxCnfoT5kTrnwQFebcv8wsU06UYwQMPqA
-	8AZqH+FtBG4yRg17wokzng==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DtxDYijT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jthy0Fte"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6CBBE7A0A40;
+	Tue, 29 Jul 2025 02:15:32 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Tue, 29 Jul 2025 02:15:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1753769732; x=1753856132; bh=IcoyXuTUfJ
+	dmlyz384mO7Z9U8+iXOFM0r3aImeJmX6Q=; b=DtxDYijTMFk4iLj6bQK4dMj6MJ
+	T/e2rSV0ZnjvG858jMcVMqDurUxl6V0ydJR4J/MNiYAodb4Ee9C9z3aOXp51DdBU
+	hF0UxIwt8b0xVsgIkjJyS+Kz0avDxSHCHvTF0eG8q899LykFTxNshrnFVhzcGV+B
+	BTwhXOKrmlens3OUvDgSEeF7gKxe2LX00uK9mm68QzyM3uVMcq+5Ranxaf4e6lOp
+	IzhZgBM8Y6wCTnKAs7H5iIWGi+7CxSFbKKXqSh4HJNfJbQksGJgIiCpzLG6bNmu7
+	BkXVa9mnT0nqXK/FELSp5vssLB1pYC1xjdJxBJRxv3BDJ2FjaExwQRK99CvQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753769720; x=
-	1753856120; bh=DObUwuYvZncJlMm9ODcIrRP8O7/Rk38Jv9YGnPCUVKg=; b=E
-	VwZ/YxSZ47MCFHm28/EmWKEbxOWp25oa53+sCGJiKpRhDWg/tVkQ2P2QRRIuKIqG
-	d7iFZd5/d1gg3agvLnJfLx8BrvvOuqj4lTd6o9xRu2BTVxGeqzLVeCbEIPCfAmP9
-	KlFCm/wsxRYjI4ZTsttLEMsvgQQI9T5QTo6iN6BVhCUd/UFh1LEEXTkL6gnh1W6Q
-	J2h6jqefs6IFx5LgZ2qoiU8K73JUQsNkzxTb5uw0RZ1/ZEc2c53oyeWzk5H0q5Z+
-	y+3g3DMFAeFXiFWDpqbnl2ZgweUnvmGRWKUhV92G2a9GXN6K0UqaZJVCLI+GnFPP
-	5BFPJ0QZs3alPvg3aE/YA==
-X-ME-Sender: <xms:92aIaLzl6cSy_R7PSR7guNAVwj3LNVVkt4RHVOXU33kp-b79k69auYc>
-    <xme:92aIaDTVQxVCvbIcTSY4StTOjSNG55P5mIV7St2FdDTW5RXkANIsg3neeWZ7KRszp
-    mhnypGOBsiwqU3FVg>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753769732; x=1753856132; bh=IcoyXuTUfJdmlyz384mO7Z9U8+iXOFM0r3a
+	ImeJmX6Q=; b=Jthy0FtecpztKizAkO0CUkxPlvzum34O084a78f68HXYooTVCea
+	8B/cGVUJJgl+sVSYxyvOq2HKo5CSHBRSX6ABerR/8tx8/j0ID2YpyFBLkAPYH0n/
+	AEjC2sNudG4OBsRUnB4rcMdLjZ/vvmHKNZzwqnkizfzRKqjsS4/ij0y7VzsPgnC7
+	QzqxOC7cC/AV1heO7mFckC8wGq+CNJPRKIFoLIae2SFGsotrAyNMFlNdXJpErgjO
+	ix4H3TnmRZ4XWYbpA9PkGUvHUM68KxMr8SgjpsX03fyKFKyfHYykU2vtp0jExOns
+	w8wC1k7TGnBz+qRXcCocjyWDB8wPOuH62rg==
+X-ME-Sender: <xms:A2eIaNGkBBxHCX-PlGJaAWQow7vZoSiP60EpCaIl0sOdLzpF5TC4nw>
+    <xme:A2eIaCjpAn3wKSzu0HJxRQTHxFBEMUcETDrPRoyN3-8OhvZsgaSIn4ietPjG_Q_0K
+    fuEPiF5rE7dM7S7ng>
+X-ME-Received: <xmr:A2eIaA9_caAcZWsomN5EtXkb_B2WWrdkX-i_xu2GLasWL1v_F85KPO6wHJBRIyxPcM97RGWZU4zXJiT7TzgC3tqvdLPhfMKgNkZHYo-22Tc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelgeeftdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepkedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehsiigvuggv
-    rhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtg
-    homhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hg
-X-ME-Proxy: <xmx:92aIaCC65Rj4ZSBGHjQxQ0NOQ_Kzk3QkVbPAByqc5g9IqbKrTOnWjw>
-    <xmx:92aIaBuOx3xZScLLfuWMcWGRP8WjpPl5i2vKUjAzNTnyeMEJuSiJkg>
-    <xmx:92aIaGfBP7YSr_tePMLAQuxWlsOp8_yEwhSObQv5rOp9koiBbf9oSQ>
-    <xmx:92aIaG8znwBJeRCwggjcbQLPX53Tt978CebjNq2gdfBFWx5qwazcyw>
-    <xmx:-GaIaO0qn_UGLcfG3eSc6xJZy0JmGtxeoABvLtbDzaIjr9HCMNuQttFQ>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id CDEC91EA0066; Tue, 29 Jul 2025 02:15:19 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
+    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:A2eIaBoRFVbbQLRgyrFMvfYWP236uOyVKQf0PZzITz2uKdQbW6zHow>
+    <xmx:A2eIaH-P5YEwcu8ejOY1zisIhB4WtHwzD3f28Vp_JUos-wj_MaUFmQ>
+    <xmx:A2eIaNXlUtQSzWSMRJbwJfYTpbPzgLSoujeJYIcB46O3M6TCwcUyyA>
+    <xmx:A2eIaFAx9ykL6A_rTmdH_keuBEcbZikFcqGP6Y7c_-XFLLQ94bfH-A>
+    <xmx:BGeIaPpcZQh4QWg_IlR3YelqAzot03pltUN4jhLWbCcp_CV-AMJ15Z5X>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Jul 2025 02:15:31 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3f876874 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 29 Jul 2025 06:15:29 +0000 (UTC)
+Date: Tue, 29 Jul 2025 08:15:26 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2025, #08; Mon, 28)
+Message-ID: <aIhm_nqiH8Sci12i@pks.im>
+References: <xmqqo6t3sqrc.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T8ba4ad04096afbd9
-Date: Tue, 29 Jul 2025 08:14:59 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org,
- "Karthik Nayak" <karthik.188@gmail.com>,
- "Justin Tobler" <jltobler@gmail.com>, "Junio C Hamano" <gitster@pobox.com>,
- =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
- "Toon Claes" <toon@iotcl.com>
-Message-Id: <6cb4522b-43f0-4b0b-9dbf-4f10c8c94487@app.fastmail.com>
-In-Reply-To: <6E84D571-CC02-45E6-9E58-DD918B45998E@gmail.com>
-References: <6414dbfd-6f34-48d1-aa3f-3fe7998f80af@app.fastmail.com>
- <6E84D571-CC02-45E6-9E58-DD918B45998E@gmail.com>
-Subject: Re: [PATCH v2 4/8] builtin/reflog: implement subcommand to write new entries
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo6t3sqrc.fsf@gitster.g>
 
-On Tue, Jul 29, 2025, at 02:25, Ben Knoble wrote:
->> ...
->> Will show one entry since `branch` is the one-level ref `branch`, not
->> `refs/heads/branch`.  Now it looks like `write` truncated the reflog =
-and
->> wrote a new reflog message (if you mistakenly think that `branch` is a
->> branch).
->
-> This quirk of update-ref bit me the first few times I used it, too. I
-> think it=E2=80=99s at least documented there though.
+On Mon, Jul 28, 2025 at 06:57:27PM -0700, Junio C Hamano wrote:
+> * ps/remote-rename-fix (2025-07-28) 5 commits
+>  - builtin/remote: only iterate through refs that are to be renamed
+>  - builtin/remote: rework how remote refs get renamed
+>  - refs: simplify logic when migrating reflog entries
+>  - refs: pass refname when invoking reflog entry callback
+>  - Merge branch 'ps/reflog-migrate-fixes' into ps/remote-rename-fix
+>  (this branch uses ps/reflog-migrate-fixes.)
+> 
+>  "git remote rename origin upstream" failed to move origin/HEAD to
+>  upstream/HEAD when origin/HEAD is unborn and performed other
+>  renames extremely inefficiently, which has been corrected.
+> 
+>  Will merge to 'next'?
+>  source: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
 
-I do that with update-ref more than I care to commit^W admit.  But
-that=E2=80=99s consistent with the command and well-documented.
+Let's wait a bit with this one. It's a non-trivial refactoring, so I'd
+like to have a couple eyes on it.
+
+> * ps/reflog-migrate-fixes (2025-07-24) 8 commits
+>  - refs: fix invalid old object IDs when migrating reflogs
+>  - refs: stop unsetting REF_HAVE_OLD for log-only updates
+>  - refs: fix identity for migrated reflogs
+>  - ident: fix type of string length parameter
+>  - builtin/reflog: implement subcommand to write new entries
+>  - refs: export `ref_transaction_update_reflog()`
+>  - builtin/reflog: improve grouping of subcommands
+>  - Documentation/git-reflog: convert to use synopsis type
+>  (this branch is used by ps/remote-rename-fix.)
+> 
+>  "git refs migrate" to migrate the reflog entries from a refs
+>  backend to another had a handful of bugs squashed.
+> 
+>  Will merge to 'next'.
+>  source: <20250725-pks-reflog-append-v2-0-e4e7cbe3f578@pks.im>
+
+There's been some discussion with Peff at [1] around one of the commits.
+I plan to send another revision later today that makes this area a bit
+more robust. So please hold off merging this series for now.
+
+> * ps/config-wo-the-repository (2025-07-23) 22 commits
+>  - config: fix sign comparison warnings
+>  - config: move Git config parsing into "environment.c"
+>  - config: remove unused `the_repository` wrappers
+>  - config: drop `git_config_set_multivar()` wrapper
+>  - config: drop `git_config_get_multivar_gently()` wrapper
+>  - config: drop `git_config_set_multivar_in_file_gently()` wrapper
+>  - config: drop `git_config_set_in_file_gently()` wrapper
+>  - config: drop `git_config_set()` wrapper
+>  - config: drop `git_config_set_gently()` wrapper
+>  - config: drop `git_config_set_in_file()` wrapper
+>  - config: drop `git_config_get_bool()` wrapper
+>  - config: drop `git_config_get_ulong()` wrapper
+>  - config: drop `git_config_get_int()` wrapper
+>  - config: drop `git_config_get_string()` wrapper
+>  - config: drop `git_config_get_string()` wrapper
+>  - config: drop `git_config_get_string_multi()` wrapper
+>  - config: drop `git_config_get_value()` wrapper
+>  - config: drop `git_config_get_value()` wrapper
+>  - config: drop `git_config_get()` wrapper
+>  - config: drop `git_config_clear()` wrapper
+>  - config: drop `git_config()` wrapper
+>  - Merge branch 'bc/use-sha256-by-default-in-3.0' into ps/config-wo-the-repository
+> 
+>  The config API had a set of convenience wrapper functions that
+>  implicitly use the_repository instance; they have been removed and
+>  inlined at the calling sites.
+> 
+>  Will merge to 'next'?
+>  source: <20250723-pks-config-wo-the-repository-v2-0-1502d60d3867@pks.im>
+
+Yup, this one is ready from my perspective.
+
+Thanks!
+
+Patrick
+
+[1]: <20250725113610.GA3015361@coredump.intra.peff.net>
