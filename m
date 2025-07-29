@@ -1,100 +1,106 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028CE242928
-	for <git@vger.kernel.org>; Tue, 29 Jul 2025 18:33:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266981F4CB6
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 18:58:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753814039; cv=none; b=u3bMzlt3jeeDOKcE8RF5QOPAXyGQ5k66GqGg8EDd+QoBYEoeyjqddgNwr3tf9eXJXDRf0LNplmG1VbdcOY7B6VWYnc3j9GFGY0VnUDjc5hk+LdLXe48i1ID+RgBo1rEuHN6S3fhCggHZCr5Ke29wL9cyTJcyVvbsxAXkgyGXaLI=
+	t=1753815493; cv=none; b=iqgyIx7fPmpuXqXVj+YcHV/bFm1MXYB5XVatJhVldQ56rRpRvqovB+uCYueF5jHhAazHHELmpiPS+2W/JUvGrq8RUqlWkgqUETDK+b0g4cHY0tQw9xbgYuWUtN1QCca57r8Rk5W/zkmKy1Nb1GNnM7Om//ytdXvYsL/1bC8lGxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753814039; c=relaxed/simple;
-	bh=zgK/MvxoZQUsMUe9JWe2UGhrCeDe6RGJlUcCEHkxLw4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=reFYtQXZzJwBMsAXBEeMdMJcunuRHQU+VwBWXMoI6lOP5MDATEcDjiG+2KB97MH6ZoInOIWN++n2Lk+pjtnhNdvyFsJyJWb4SKEmJCs9SUWnwrUAn3YeJ+oJKTOnSPyAaqizIOEaDt1V0YXRIN4YvL+6bm+TmQoBGKYV54xwGL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Clx3Ghym; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G/33cqbx; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753815493; c=relaxed/simple;
+	bh=wk1+paiZ34fzvvM7SWbsQtbfS/7VLOgMjF0T4M9PnQA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=on3J5I90U9XwkZTZyePs1/IkMFUrgbSQ7ArSYRnLwBR84aN75PF3afodXyprKifaPjErrYUwE2BlRJmMdz43sBXXE5Mp3kPVWrulSQrd+Y06FjDiIEDeeJzoObSqLF7jZOEQo4rPosXsC25HGPzONlXE0EExOHn2jB+Sv5m7kgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=keMLnwEi; arc=none smtp.client-ip=95.215.58.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Clx3Ghym";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G/33cqbx"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D8A837A00BD;
-	Tue, 29 Jul 2025 14:33:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Tue, 29 Jul 2025 14:33:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753814035; x=1753900435; bh=8cor5duKpR
-	9ERPX/qXrAczYEiYr4z2P9SgmwqiSwo/A=; b=Clx3GhymUYAwhBDttwEwf/OesA
-	4kGAor7sAXuqJ5YFrsBbH2/0A3amFZDOA7bXV9TgjNBfnaEimig3dlKB0ozZyvcq
-	6OQA+qM749F0a0HQrjDDBRGNzS22rfXiVb4Wi3rXjh5lOuoz7DaYktdttbXSVmwg
-	zG4Jk/UM9V1axm+64tmlYCGiUqMXRRQE/53B8PDtMgt3OTOYJDFhRoxNRqGPrrhY
-	AKhbfTXkBqfUo2RrLExjLvYCsM634da9ca4i0qWkS35QTyrqF3w3FGJf95ouQ1Oa
-	1UMgb0oVWPFC/Hh4TIsfYL5gPo9dZTzYQeXMLxjRsR6dNKA4TLi1OitK70Zw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753814035; x=1753900435; bh=8cor5duKpR9ERPX/qXrAczYEiYr4z2P9Sgm
-	wqiSwo/A=; b=G/33cqbxUlTaYhMeJlxoDuuWE+hBq54tOnITBNmh4LUj6ahcPUm
-	BJUfMED4UGe5Hr0RiQ9r8Hcd97pIkAW6kldF10cR4AQCOEkMr7f6mq0Kl6eT9bw5
-	Ovcj0XP6hAGI/3qlJPqGgJg9Rk2IpxVMORKz1tc/+nIpmbLZdRKonc+nO7bXVTeA
-	fr3rIl1aUXFIIF9hx3W41H3gsyIlSkgfgkwuxy1iFbxKb3cVa+BOM74qqxwoDX3x
-	NUNXaFnnt8TN1PxpGuYMy7GlSuY7bBgyRyO3yK5hLrga8aLcqJwPlWyedFy1agas
-	ws5uVT6Ycnz4Vj1kYFkKnm9bmMfKDPuLRIA==
-X-ME-Sender: <xms:ExSJaGadkImGUVAHs2znAKMSAvCgJZtSZZW35r8gknucBvdzCPWY6Q>
-    <xme:ExSJaD-27nvPk6QKLMl7FbCBqGNoZzzv7VOCv_e99zDSFaj0SgQ2BvVGiARjWP4e3
-    ts_yiIVwVQQh-MVjA>
-X-ME-Received: <xmr:ExSJaNhAlLkgnJoWZDeeflq0OZprDrlVv1TmhWessM_HV4rTnBIaLGXGOuywwB-fyZ2sZso41AtXr9HT1f_EGRQuWDSj4OEDmBh05Nw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelheejkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ExSJaLfhwvpfa5aRRRtNk5K_sVYXukgdJlAoe8U_z7M2bsRr70YTTg>
-    <xmx:ExSJaMrSDvEb8bFtojng2GfYH4nCNIxzqug7C6VFS59klmJYoclWfA>
-    <xmx:ExSJaIBP1Prkg1rWdYDEOSTkpaBCmp6OAfvu1XQsjLeBf-I9nxyk0A>
-    <xmx:ExSJaBbA__D7AbY_iIadachr2Qf5DWRn_Iu3aIVCymGRCwNGzLLBuA>
-    <xmx:ExSJaJikDIMTo4OZIWqwxSfKNxgenYesnAzetuyuODjdhgumExOJz4zO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Jul 2025 14:33:54 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 0/8] midx: stop deduplicating info redundant with their
- sources
-In-Reply-To: <20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im>
-	(Patrick Steinhardt's message of "Tue, 29 Jul 2025 16:12:39 +0200")
-References: <20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im>
-Date: Tue, 29 Jul 2025 11:33:53 -0700
-Message-ID: <xmqqwm7qonhq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="keMLnwEi"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1753815484;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=JlHj61ghDYzmx+E7ZrbMspOpQTH0tj6cd9gzVJ6AtYI=;
+	b=keMLnwEiA7H5qtf9zeoS9fBgUDLpbZLeoSqS0O5W3It1mV4yqFMckjba2WLoJcTBPy/UTW
+	NbW1ei9jYTRhq8gBjIjYTnIROpCQXXYIB7fswUCX5XlSgcP34UNaRd8GL5iVf9GW9IhCJA
+	30GBVM2QBawyLBJB9P8yiWBAD/h3wKk=
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH 0/3] Teach git-diff-tree(1) option --max-depth
+Date: Tue, 29 Jul 2025 20:57:41 +0200
+Message-Id: <20250729-toon-max-depth-v1-0-c177e39c40fb@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKUZiWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDcyMT3ZL8/Dzd3MQK3ZTUgpIMXSPTFONkQ8tUIzMDcyWgpoKi1LTMCrC
+ B0bG1tQB56ozIYAAAAA==
+X-Change-ID: 20250724-toon-max-depth-25d3c19e2607
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Justin Tobler <jltobler@gmail.com>, 
+ Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-Patrick Steinhardt <ps@pks.im> writes:
+Please consider these patches authored by Peff. They add option
+`--max-depth` to the diff machinery.
 
-> Hi,
->
-> this patch series is a follow up to the recent patch series that started
-> to move the MIDX into its object source. It refactors the MIDX subsystem
-> so that we always read and write them via an ODB source. This ultimately
-> allows us to store a pointer to  the owning ODB source in the MIDX and
-> thus dedup some redundant information.
+During the process to upstream the git-blame-tree(1), later named
+git-last-modified(1), various times[1][2][3] the topic was raised to add
+option `--max-depth` to the diff machinery. In this patch series this
+change is added as a separate patch series.
 
-"Stop deduplicating info" in the series title is probably a typo of
-"stop duplicating" (which is the title of the 7th step)?
+The patches were originally written by Peff[4] and I'm crediting him as
+the author. I've taken the patches almost verbatim from his fork on
+GitHub, with some minor tweaks in the commit messages. Because only tiny
+changes were made, I've kept his Signed-off-by trailers, but I can
+remove if disagreed on.
+
+The goal of the option `--max-depth` is to stop recursively traversing
+the tree if the given depth is reached from the pathspec.
+
+These patches add `max_depth` and `max_depth_valid` to `struct
+diff_options`. This is different from what git-grep(1) does, which uses
+`max_depth` on `struct pathspec` instead. At the moment I'm on the fence
+whether this is an issue: while it probably makes sense to consolidate
+them into the same structs, it does not really make sense to reuse these
+the struct fields if they are used in two separate code paths.
+
+[1]: https://lore.kernel.org/git/20130318121243.GC14789@sigill.intra.peff.net/
+[2]: https://lore.kernel.org/git/20160831054201.ldlwptlmcndjmfwu@sigill.intra.peff.net/
+[3]: https://lore.kernel.org/git/Y+%2FmnnJUz75yfWCN@coredump.intra.peff.net/
+[4]: https://github.com/peff/git/tree/jk/diff-max-depth
+
+---
+Jeff King (3):
+      combine-diff: zero memory used for callback filepairs
+      within_depth: fix return for empty path
+      diff: teach tree-diff a max-depth parameter
+
+ Documentation/diff-options.adoc |  28 +++++++++++
+ combine-diff.c                  |   2 +-
+ diff-lib.c                      |   5 ++
+ diff.c                          |  19 +++++++
+ diff.h                          |   9 ++++
+ dir.c                           |   2 +-
+ t/meson.build                   |   1 +
+ t/t4072-diff-max-depth.sh       | 109 ++++++++++++++++++++++++++++++++++++++++
+ tree-diff.c                     |  78 ++++++++++++++++++++++++++--
+ 9 files changed, 248 insertions(+), 5 deletions(-)
+---
+
+
+
+---
+
+base-commit: e813a0200a7121b97fec535f0d0b460b0a33356c
+change-id: 20250724-toon-max-depth-25d3c19e2607
+
+Thanks
+--
+Toon
+
