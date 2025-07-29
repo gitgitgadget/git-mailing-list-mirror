@@ -1,162 +1,154 @@
-Received: from mail4.tt-solutions.com (mail4.tt-solutions.com [83.229.82.191])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C39645
-	for <git@vger.kernel.org>; Mon, 28 Jul 2025 23:17:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.229.82.191
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB1E10E9
+	for <git@vger.kernel.org>; Tue, 29 Jul 2025 00:05:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753744672; cv=none; b=OhYB4F+2Mx/I4zBaWWaLpTPltygreFo8gRZYdMoXyHTsHvVORaTsOjJMFGjQuBBCL0pgwmWdWWz+5zS0rwUqJ21pvtJjz9ioiHeSBRZixNvwNGHiHv7XmO8ypSrIU68YZnOE7eAe4Fw8PyHNxAVWxiKnUQS5vYgi27P2Hvclnh8=
+	t=1753747551; cv=none; b=ZPf5+WIk3QeWB5d7BE0CTRF6oYDYciYrXhr7O9NrzudgdYkiRImMsJNhxvaJfpR09Q04RMD5x+RUvUjHUYD8dkGflBu0qkdd8ItQrkNhcQcQK8tgrxuYQRcyxPRA+R0DK8c0jTCyBzIIjVwo4zj6oFkOrftbXg1AGZ7jhIz5gBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753744672; c=relaxed/simple;
-	bh=yeWu4Z6ZTjXJhTMhKMF7nsHrrU+fmLaOJzmYnebBRQk=;
-	h=Date:From:Subject:To:cc:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:References:In-Reply-To; b=hIoMsxExBSlY0Mzp4xkPy8DVK+K+h/QR+rCJEbzBAvbO9qNehBYe6Fk2EWZiAQmbUcNZGJgT5utI1foebXMB/JYND5T2W9GukoSPuoArq+JeBFQy2zWAUTVCJLwWJjX0bxdQbMk109Zp/1JFJGtngq7IK+tKhfdP4q8s27hImAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zeitlins.org; spf=pass smtp.mailfrom=zeitlins.org; dkim=pass (2048-bit key) header.d=zeitlins.org header.i=@zeitlins.org header.b=HuRF9hZq; arc=none smtp.client-ip=83.229.82.191
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zeitlins.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zeitlins.org
+	s=arc-20240116; t=1753747551; c=relaxed/simple;
+	bh=aMGZikMz7HS0OZz5NSXj7QA9XAYQIadWoYNba4TD6Xc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FILFPr36n38NTKu3vX8oM7C1Z6/LIvhIJXm4m6r604690E33evbF9WE4CHs5qWcFgGtS35If7uJRm5lNwOmB6Jwr2DM7ZHgmmTVf2qvCzQKHs0elTIrkgZquvnx4lzNBNsHU5dgpPmoOtsTcq32KPnxy/QF31N8MSUqrdPzqTMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IsEqZKA6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bXt4tRVp; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zeitlins.org header.i=@zeitlins.org header.b="HuRF9hZq"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=zeitlins.org; s=mlr; h=In-Reply-To:References:Content-Type:MIME-Version:
-	Message-ID:cc:To:Subject:From:Date:Sender:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=39ZSCA5HHtXISEcvSJj3SBjN3t9HUFHT0wxqxoxMJWc=; b=HuRF9hZqfjh4vfs18FASHSe3xY
-	Y5PJVxngJrpdco5TBsJKVAVNIKJ170LkAGRKR7iTo37Ivu4IgtZPOsrpiUUPtBN276BjwP7XJwO2l
-	Bq4h4DQbBbD8o5IBiNA6PRl4U2QT60vBehNGXB2WIZPfpcVoSbFQGjRO+3IRbmau+1rzua9BHedvm
-	2x6WXCoBjVy+7L3eDaTwo/s+70vE50pj20Ymn0SpMKHQtVQZyavOUO/pJaGBdOp8SyfvHLfChUN+Q
-	FnEOfC70wlLrFFvQclF04zKwZtmCidlVl9BY4g94yv/ut8ZOobG489wIgpQbZAbeWr7RehWuWqsJe
-	+lz4Qumg==;
-Received: from [192.168.17.23] (helo=dark)
-	by smtp.tt-solutions.com with esmtp (Exim 4.96)
-	(envelope-from <vadim@zeitlins.org>)
-	id 1ugX1Y-001v0T-2e;
-	Tue, 29 Jul 2025 01:12:52 +0200
-Date: Tue, 29 Jul 2025 01:12:52 +0200
-From: Vadim Zeitlin <vadim@zeitlins.org>
-Subject: [PATCH] submodule: Add a config option to skip path validation
-To: git@vger.kernel.org
-cc: Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>
-Message-ID: <Mahogany-0.68.0-3185915-20250729-011252.01@dark.tt-solutions.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IsEqZKA6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bXt4tRVp"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 41001EC1523;
+	Mon, 28 Jul 2025 20:05:48 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 28 Jul 2025 20:05:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1753747548; x=1753833948; bh=m51vhbuP+l
+	izDdkzX4zNnEU6dHnXq8XEKY8Z5Z4DXKc=; b=IsEqZKA631LkoiPaWNpuaznpiD
+	kpS4Xgj98WtAU/v3gaMM/0xuu2gA6pgbDFazTIgvLhsXpMkGiLH9fouIorEKVK55
+	oQ+KE8JwOPuVtoAKytjv/H49atVHlxiZcyITC20Fn6cf5FuaL3pIlyXBF2ueUgtB
+	uWBmzQ3Gi+VjjiRumrcvgVzS+mlbda+Gf53FCJfjZUmDriznZa49KlGrGr1ozcHY
+	sAtdxiSVxjvcIeg80SFFTh2UcJL5V+BYMzp69W2aW0MZLSAKp+Sx5fVGPOXrEVq1
+	7Jmktz3qW/CAVzYFeV9V0ke7B9xbeCIktxBOzg1ueQozBxj+a0l8sxxueLhg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753747548; x=1753833948; bh=m51vhbuP+lizDdkzX4zNnEU6dHnXq8XEKY8
+	Z5Z4DXKc=; b=bXt4tRVph52VYAuOjnWVsfoh/ER8+d0XYPfPMCntGONcwda127R
+	KS1QwNdK/lnZPB8Qoo45hCYv4/xItrshVM6a9XByWljsZSKBxNS14/Gfgfmsdwog
+	vAKOFM58+XVctDLstJiuQTHMvbUehAVPjjv7yCC2RM45d2conUHlbYkp6uGxOA78
+	2YUM30vBiSnzmVAmG+FfTPhHn4aYGJAfY6eBIgOehDEsCPVY+LTmDXTTrS3ja6l0
+	jQCE/F+jOZ39JW5slMc4tmlQpkZ8CM4QS7MHeBE2NoTJWkC7x5WQfTTUgAgm5W6+
+	y5HudE2cOFJxQmUgyFoAdTQ0ZpRohCX/QbQ==
+X-ME-Sender: <xms:WxCIaKLDLOlmDUU2QsTa_E2FJYI-QBxgmz0ttItR7MGr68-v3ODGqA>
+    <xme:WxCIaMvlFMM2H23aypX6XqqfyhP0dbF1zL0LNvtrjEroBqD4Yo4D1Cyjs6rCS7JoI
+    m3dROCJTXhbdVMZFw>
+X-ME-Received: <xmr:WxCIaHRHnpAm15IXJ8xVydkgH3_iY-YEC8e-ylW5OzLYIwA-a1Q3MBWbV4jEi_vmck7lBh154kX0grEjl5L0ZvShC1OStYLTXul3X3k>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelfeehjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
+    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeije
+    egfefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtgho
+    mhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjh
+    honhgrshdrsghrrghnughsthhovghtthgvrhesghhmgidrrghtpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:XBCIaCPax-u4BwJMv5luS3x2IX0b-x3eSqarLFgvyUD5l1JBvmHmog>
+    <xmx:XBCIaMag7bJPVAGvDxKVi2edy5cRMUarEauA8mv_Y9tFDUjm2Ho6yg>
+    <xmx:XBCIaMxrEiAUY6mebLvHt7uViyaxZZg9C9QgHHGcacUHGgCw7H4STg>
+    <xmx:XBCIaHIU7pcee_hpAbltb7YLL5e2Hx9HeEs-NZPyWamj8cYAeXraQg>
+    <xmx:XBCIaOmJIfTkrfhqJ8Dq0cDUb_tfmsMwIA5JgUB1RBjTtYzhWSx1sMgA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Jul 2025 20:05:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Jonas =?utf-8?Q?Brandst=C3=B6tter?= <jonas.brandstoetter@gmx.at>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] t7510: add test cases for non-absolute gpg program
+In-Reply-To: <20250725043043.GA3002998@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 25 Jul 2025 00:30:43 -0400")
+References: <20250711232348.460804-1-jonas.brandstoetter@gmx.at>
+	<20250722190922.51183-3-jonas.brandstoetter@gmx.at>
+	<20250725043043.GA3002998@coredump.intra.peff.net>
+Date: Mon, 28 Jul 2025 17:05:46 -0700
+Message-ID: <xmqq5xfbuahx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Disposition: INLINE
-References: <Mahogany-0.68.0-2854301-20250107-230058.01@dark.tt-solutions.com>
-    <Z320RGb0tqNyvvxt@tapette.crustytoothpaste.net>
-    <xmqq5xmqqk9j.fsf@gitster.g>
-    <Mahogany-0.68.0-2854301-20250108-005035.01@dark.tt-solutions.com>
-    <xmqqjzb5nvhd.fsf@gitster.g>
-    <Mahogany-0.68.0-2854301-20250108-203000.01@dark.tt-solutions.com>
-In-Reply-To: <Mahogany-0.68.0-2854301-20250108-203000.01@dark.tt-solutions.com>
-X-Mailer: Mahogany 0.68.0 'Cynthia', compiled for Linux 6.12.20-amd64 x86_64
+Content-Type: text/plain
 
-On Wed, 8 Jan 2025 20:30:00 +0100 I wrote:
+Jeff King <peff@peff.net> writes:
 
-Me> On Wed, 08 Jan 2025 08:03:42 -0800 Junio C Hamano <gitster@pobox.com> wrote:
-[...]
-Me> JCH> If the answers are no and/or yes, "submodule.validate=no" sounds like
-Me> JCH> a reasonable choice, but I am not good at naming, so we may want to
-Me> JCH> hear ideas from others.
-Me> 
-Me>  I'll wait for some time to hear if anybody else has any better suggestions.
+> This second test seems to fail on Windows. E.g., in this CI job:
+>
+>   https://github.com/git/git/actions/runs/16509422831/job/46688307091
+>
+> Right before the failure, the trace shows that we are setting PATH like
+> this:
+>
+>   ++env 'PATH=D:/a/git/git/t/trash directory.t7510-signed-commit:/d/a/git/git:/d/a/git/git/t/helper:/c/Users/runneradmin/path:/mingw64/bin:/usr/bin/:/usr/bin/core_perl:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem'
+>
+> Should it be "/d/a/git/git/..." instead of "D:/a/git/git/..."? Which we
+> could get by using $PWD, I think.
+>
+> The earlier one using $HOME uses D:/, but this one is different because
+> colons are meaningful separators in $PATH.
 
- Hello again,
+Here is what I have on top of the posted patches.  If today's
+integration goes well, I plan to merge it to 'next'; the rest of the
+series is already in 'next'.
 
- I guess more than half a year can be considered "some time" but, anyhow,
-better late than never, so here is a minimal patch implementing what I
-suggested. I'm not sure if using submodule_from_path() with the global
-the_repository is the right thing to do, it looks like there is an attempt
-to move away from it, but I couldn't find another reasonable way to get the
-config option -- using open_submodule() doesn't seem right and I don't know
-what else to do. If you can propose a better way to do this, please do.
+---- >8 ----
+Subject: [PATCH] t7510: Windows fix
 
- I also couldn't find a simple way to add a test for it, I hoped to find an
-existing test checking that using symlinks for submodules failed and amend
-it, but either no such test exists or I've failed to find it. Again, if I
-missed it, please point me to it. But for now I've just tested this
-manually, with and without the option in gitconfig file.
+$PATH and $(pwd) does not mix very well, because PATH is a colon
+separated list of directories, but on Windows port of the shell
+Git-for-Windows uses, $(pwd) looks like "D:/path/to/a/directory".
 
- Please let me know if you have any other comments, thanks in advance!
-VZ
+With $PWD, we would get /d/path/to/a/directory instead, which would
+fit better on $PATH.  This broke Windows CI job.
 
---------------------------------- >8 --------------------------------------
-From 071e8f1b47dfa22cbe99052810ab5123489731b0 Mon Sep 17 00:00:00 2001
-From: Vadim Zeitlin <vadim@zeitlins.org>
-Date: Tue, 29 Jul 2025 01:02:10 +0200
-Subject: [PATCH] submodule: Add a config option to skip path validation
+While at it, drop unnecessary use of "env VAR=VAL" before "git
+commit"; one-shot export "VAR=VAL git commit" is sufficient.
 
-The changes of e8d0608944 (submodule: require the submodule path to
-contain directories only, 2024-03-26) as part of "defense in depth"
-strategy made it impossible to intentionally use symlinks instead of
-actual submodule directories, which can be desirable when the same big
-submodule is used by multiple projects.
-
-Reintroduce the possibility to do it by adding a new
-submodule.<name>.validate option which defaults to 1, but can be
-explicitly set to 0 to disable the submodule path validation.
-
-Signed-off-by: Vadim Zeitlin <vadim@zeitlins.org>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config/submodule.adoc |  8 ++++++++
- submodule.c                         | 19 ++++++++++++++++++-
- 2 files changed, 26 insertions(+), 1 deletion(-)
+ t/t7510-signed-commit.sh | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config/submodule.adoc b/Documentation/config/submodule.adoc
-index 0672d99117..92243458c2 100644
---- a/Documentation/config/submodule.adoc
-+++ b/Documentation/config/submodule.adoc
-@@ -106,3 +106,11 @@ submodule.alternateErrorStrategy::
- 	`ignore`, `info`, `die`. Default is `die`. Note that if set to `ignore`
- 	or `info`, and if there is an error with the computed alternate, the
- 	clone proceeds as if no alternate was specified.
-+
-+submodule.validate::
-+    A boolean value which can be set to false to disable validation of
-+    submodule paths and notably checking that they don't contain any symlink
-+    components. This can be useful when working with a trusted repository and
-+    intentionally using symlinks to avoid checking out another copy of the same
-+    submodule which already exists elsewhere on the same machine.
-+    Defaults to true.
-diff --git a/submodule.c b/submodule.c
-index f8373a9ea7..01b852c673 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2299,11 +2299,28 @@ int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 95d2ebe277..c51e2e2589 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -453,13 +453,11 @@ test_expect_success 'custom `gpg.program`' '
  
- int validate_submodule_path(const char *path)
- {
--	char *p = xstrdup(path);
-+	char *key = NULL;
-+	int validate = 1;
-+
-+	char *p = NULL;
- 	struct stat st;
- 	int i, ret = 0;
- 	char sep;
+ 	# `gpg.program` starts with `~`, the path should be interpreted to be relative to `$HOME`
+ 	test_config gpg.program "~/fake-gpg" &&
+-	env HOME="$(pwd)" \
+-	git commit -S --allow-empty -m signed-commit &&
++	HOME="$(pwd)" git commit -S --allow-empty -m signed-commit &&
  
-+	const struct submodule *submodule;
-+
-+	submodule = submodule_from_path(the_repository, null_oid(the_hash_algo), path);
-+	if (!submodule)
-+		BUG("could not get submodule information for '%s'", path);
-+
-+	/* Check if submodule.<name>.validate is set to false to skip the check. */
-+	key = xstrfmt("submodule.%s.validate", submodule->name);
-+	repo_config_get_bool(the_repository, key, &validate);
-+	free(key);
-+	if (!validate)
-+		return 0;
-+
-+	p = xstrdup(path);
- 	for (i = 0; !ret && p[i]; i++) {
- 		if (!is_dir_sep(p[i]))
- 			continue;
+ 	# `gpg.program` does not specify an absolute path, it should find a program in `$PATH`
+ 	test_config gpg.program "fake-gpg" &&
+-	env PATH="$(pwd):$PATH" \
+-	git commit -S --allow-empty -m signed-commit
++	PATH="$PWD:$PATH" git commit -S --allow-empty -m signed-commit
+ '
+ 
+ test_done
 -- 
-2.47.2
+2.50.1-589-gf1cdebda82
 
