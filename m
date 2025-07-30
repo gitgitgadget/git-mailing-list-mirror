@@ -1,113 +1,108 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A08E22126A
-	for <git@vger.kernel.org>; Wed, 30 Jul 2025 21:15:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948492905
+	for <git@vger.kernel.org>; Wed, 30 Jul 2025 21:19:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753910147; cv=none; b=HdYD9C6PPKQ5IP8H4+A3cIyqoPNtPhzwXeLCAULHs3sBgtDFAJ6xxjDxSTMuHvbyicqm/abt/KrjteHEPEQvNkLw1+Nca42x1qUYHg9CvF6lig1Fk/C4UN2PRjOMD+sSiaBPpgfu0o4I62ETw3UtTFJdnAVb2hS30qIKFch+W2A=
+	t=1753910365; cv=none; b=MqdvdrlOkF87ydNtS1TIfq23nqxRxsB6iBIFRhq47fr0Pnq7wbbJeJCZS2BgpOrb+RQjjQfc631O9kjLJwSQFqevQprEpcedMVLP3EtdGrbSylCLGklZ2QVw+r7JIaybzUevURRbo6fUDteCW0hgpfyrPY/7FCQXuhqXuc45Vec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753910147; c=relaxed/simple;
-	bh=1M/nEQ4+TCi2eTFldLVo5TNMGaQ5DsWCHs4l6AaQBWk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eHmaOyjA5bY2Ey2mtmXkNZqRjOOqvubu4jkX219pgXZpYz1hzv/pWG9wNaRrnjbDraMrnuYF6a0ZEXIxzirlgAHHPmQhd0Qj/f4jvEb7LriAcxkjE8Y2FqCJDB24xHwZsYnnMDpxtZ1Xkix1FG5eMXeU66cAx6a0wNQSgQZJ3Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B6H9VAYG; arc=none smtp.client-ip=209.85.208.47
+	s=arc-20240116; t=1753910365; c=relaxed/simple;
+	bh=rhIHzvzKu8LNPcy96iWCIfI4vB170vI1T8o7tktW9+o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dnhdaDDAdet6gyio/lz4ExoaNitNVOmI1z9QtCizzht07M8j7uZRAIZ69gD/RCJZ06eq11a2VOkJdrWXoWX6IJk6s7CGrAaSq977TkmE2c6fFPyqJ4b5Ki9fuVP5Zijos8lh2zQtT9YrhyRn2nDErUxPrFlB3x0FmS0Mt60ZhLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=db4wHwk6; arc=none smtp.client-ip=209.85.219.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B6H9VAYG"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6157c81ff9eso298540a12.3
-        for <git@vger.kernel.org>; Wed, 30 Jul 2025 14:15:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="db4wHwk6"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6fada2dd785so2670956d6.2
+        for <git@vger.kernel.org>; Wed, 30 Jul 2025 14:19:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753910143; x=1754514943; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rqOyBRdFv3LXfuIbcYFjQKvotIEBDOKaIQ3YrVmeApI=;
-        b=B6H9VAYG/rX/XYYJv2xMepDcR/hvdc6Uuzl/2tCyfcJsfn+l85Zbn4y2yATFZoJPu+
-         OYKW5uYgObVwkGkAAUp6M6n3syNsAnAnIjQxVyKVAYfjdvIVkKWBhl/o9pP0jf1yeLO3
-         OyPquIe7idVjAFchMgfz6yQwvpvGwbbOK/QMfdBioTpLEotB/oZMAQIsvfEiTq/h04/H
-         A2C/Z1zSXdm7vihPEcWBjKP1bhTlFZ7EDvB8NwYIMWozLL7RpBrzhCSKuhBJRCQhuxaj
-         sZWhS+asnznJoDdEtBSsvjpX+C5plJ95OxGGdsbvyPXLP1G2jSV3aGG2u1IkwtXqycly
-         QhwQ==
+        d=gmail.com; s=20230601; t=1753910361; x=1754515161; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rhIHzvzKu8LNPcy96iWCIfI4vB170vI1T8o7tktW9+o=;
+        b=db4wHwk6dPAGwulFXR+/vaSyf0eHRuybWEotiEbjIkUZ7QwkEQrQBkCin/+gtPWcOX
+         l1LR/PxNUbdXB82a5pdXCZTwxTNMUmzerc+4K7CxltTRJKktBnTYdggxQZXjG06C+tlI
+         ZpTe8hywi4T9XZBOiH0f1ey9pfvmNxnYG52L8YSNkU1lH5infDRLZkpDlA/MhLOPAw1Y
+         1Kn+M68elAyIk1qqwziuV4XhRUYHeAeWch7YGV9O1onXb1RAMxvPOVpQxEEsG9sk3FHA
+         LW1UffXqVfDmXqlG5Z+sAis7U4XK230+2CuR6Ojl5Rx57jnEd3xlFnLlqvJxtkoFfCAX
+         wnmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753910143; x=1754514943;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rqOyBRdFv3LXfuIbcYFjQKvotIEBDOKaIQ3YrVmeApI=;
-        b=mpX4Vq8vwmT0QeWbF+OsF7xlpzo+Q9w2Om28r9+R3aXxTHIHOVOz5YBS70VDTbCDVx
-         a2gIZDeaXbYxBrVMLCPINF3AlhAhRXEjXAlmF7MiwfZluVuRdHS2j++5zmt4umuX7FqN
-         P4QtxECvRFBLDnJ6Gb0LL3PkHL/g9+LuM2OtmmpJxqGZre1ioXuVVWz+KDd1EKNxV1HT
-         EBJz8x6pjaD+eqzeOg9evb9anZafOIaUpqz1zW8zNAFhZ9pAsRgP683ujeUacXLvtVSp
-         GPtSBcpQzcb+ipD+AKahMGIfA/z7/uFr6b8iNzarZZ0/xtdtb7xUeF11FdMyEIL7LmUz
-         M16Q==
-X-Gm-Message-State: AOJu0YzpMbOC600PKGtzxIdO3/Dd898QSOhVp3zmFZ2YE97RtmiC5Mfw
-	qSXCtyU9+dbtUVftGNPtUTRbXYJ/ltA2GmHXnY1KzwOzhq8EkuJgNRpeHANL0h3p9V6mV975+LZ
-	z598QEY81me5o8Xg2Zccu3XGjdJohoHl8Tewy
-X-Gm-Gg: ASbGnctUur4j4WaUou8KrEQlSOtbKfx4BNf+NoOu9KXFDs3m0bDhSOX10XHJVabnE7W
-	ihzX8Ht7ko32EB8BAzy6Sgm0TCkxqK1qwSizvP5efbPub6kKCcOXChbXTtT6dIhpPzKs5NJ3T7+
-	YcUpShDMVkYi+RQ3Wad1bxkz+cVPsbhEan9MZRu9mnVAIVuG6nB72zYbGuFeG7X5EnQs5RqpLMU
-	t0igpkmxH4pIqGzOpeLPCRKf/xwooIkpiMiVxUwUg==
-X-Google-Smtp-Source: AGHT+IEageXGfYzVyYK7N6twfuIXeEs+MCb8aXtKC1uPRT6csDyRzT4GXkWKyVxl8P3Ib0Ozrzv6AIg8bBbU3YNdSnw=
-X-Received: by 2002:a17:907:3f1b:b0:af1:8be4:768 with SMTP id
- a640c23a62f3a-af8fd680fd2mr571147866b.5.1753910143363; Wed, 30 Jul 2025
- 14:15:43 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753910361; x=1754515161;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rhIHzvzKu8LNPcy96iWCIfI4vB170vI1T8o7tktW9+o=;
+        b=CrD2vJ3k5bWZePELznl9hiN3eGmFXemIS0LoeB29jnDWbq9+OmIJHEH+WvL9B1RVLe
+         KxXnu59gcxe0xkEeWCzMO4BB7Ha1VjMmSw58F+EnfJw2NOSfCLrDJy0T6FcoUF3dvfN7
+         N1jAlR3CuK/U/0HKM0xIIZuOSoMa2E5ILPThYFZmVC/sTQlJ23WC3r8yHuG4fVpJY0zx
+         abokH385fsaeN4DVwp4vtpzRxTeaL6CH0EE9yNdiO78eT/mNxnh3G4ivDK+mdxhpYfiP
+         +PFUz7QoEmLygvQL2re0dzLfALTK2QJabOSUdBkpzov7jP9L/36GTp66b7KEqND1Ydrc
+         Qnjg==
+X-Forwarded-Encrypted: i=1; AJvYcCU3jkK31gqbkpzKO6ipP11tKY70Pjcmpfr5Q8piYv27AqzbDERWO1DgJKLXX8b4dYPLDzc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGxO81gAA1q0t+zaDsVMo99OgYsc5toBUCKjyUmrrk2c2zeIL2
+	46Vc49vVcJB0zVG/WPRVxHJnakmJF0u81Y3t+vn+a8vV5xHURQjZ2L4J
+X-Gm-Gg: ASbGncttgMBhj7ni2YsvGw00OePNVCLXUWzBn9MNmBom1jIoRegqBrKmKR3El+/uTC/
+	+BbylV6955Ruq/3P7nG0PbJ5foIvhEZPQIdn1meDbgZzfs4uhtVreaudxvbp45gThY5Nx2hkcjX
+	EFf5y58+NY9V6XAUyLhyQwPxBjsgfFKUTYaQg8PwwLE8sKBXgCW9dzGfY105Y3LOYTlfU5/JHAw
+	wvwuymZFL9FJaSpY7ZEmuWhWHmJLJ3GqNqRgOgf75QWwbpxmZ+81LTd/XJ6LLEwadA3jtuls6oR
+	Fl6awjKzZt+fCdtjFmk5ymkCK7IEsFbWi9Qu58HtIh+x0YKotiURWZq3XWa4OW4XQtwAgmTu+2K
+	vf7R1yogAEcO+j5UijifrK3mpvVZgGlZxkP+AB1YsjfeJN0MjVEDDq1FYCkjPvqXDqh8xYpbf8w
+	==
+X-Google-Smtp-Source: AGHT+IFR5skuYffBdrdMZak79r3OYYt34HmQpyS1o7Tsp/wboXj9FK1cU6ZgeMt8ZD1idVeYVqH9pQ==
+X-Received: by 2002:ad4:5aa4:0:b0:707:4958:ec29 with SMTP id 6a1803df08f44-70766d5506bmr60224906d6.6.1753910361293;
+        Wed, 30 Jul 2025 14:19:21 -0700 (PDT)
+Received: from [192.168.8.183] (pool-173-73-185-17.washdc.fios.verizon.net. [173.73.185.17])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70729c157cdsm66593786d6.66.2025.07.30.14.19.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Jul 2025 14:19:20 -0700 (PDT)
+Message-ID: <cf81b5f5-06a5-404c-9edd-e94b902aa455@gmail.com>
+Date: Wed, 30 Jul 2025 17:19:20 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqcya63cqx.fsf@gitster.g> <20250721115519.140361-1-usmanakinyemi202@gmail.com>
- <20250721115519.140361-2-usmanakinyemi202@gmail.com> <CALnO6CCFXfPDZKzx1SBufwzkBJchZr0XYigo_8AQ_U=MuJa7xg@mail.gmail.com>
- <CAPSxiM_sP7MG5SDLe-_-FULhqmW10M=8Ssu3PMoZD8=rS6CkAA@mail.gmail.com>
-In-Reply-To: <CAPSxiM_sP7MG5SDLe-_-FULhqmW10M=8Ssu3PMoZD8=rS6CkAA@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 30 Jul 2025 17:15:32 -0400
-X-Gm-Features: Ac12FXyO4DgmFy9x-G4K7FoEsQtMC5ZkQI8ZGuydGvKO7MEq1Bi60KC873cScWk
-Message-ID: <CALnO6CBB6AR+PKVveyB0oo0Ax3cFqZ-AAs7o0oo+n9doyJL8KA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] t/t1517: automate `git subcmd -h` tests outside a repository
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, chriscool@tuxfamily.org, 
-	christian.couder@gmail.com, me@ttaylorr.com, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] git-gui: ensure own version of git-gui--askpass is
+ used
+To: Johannes Sixt <j6t@kdbg.org>,
+ =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+ Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20250730164052.15371-1-carenas@gmail.com>
+ <20250730164052.15371-6-carenas@gmail.com>
+ <ce964e5a-fe30-42da-bf8d-969893e3907f@kdbg.org>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Content-Language: en-US
+In-Reply-To: <ce964e5a-fe30-42da-bf8d-969893e3907f@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sat, Jul 26, 2025 at 5:51=E2=80=AFPM Usman Akinyemi
-<usmanakinyemi202@gmail.com> wrote:
+
+
+On 7/30/25 3:04 PM, Johannes Sixt wrote:
+> Am 30.07.25 um 18:40 schrieb Carlo Marcelo Arenas Belón:
+>> Propagate the `git --exec-path` that is defined at build time
+>> and use it when defining which askpass helper to use by default.
+>>
+>> This is specially useful in macOS where a broken version of that
+>> helper is provided by the system git.
+>>
+>> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+>> ---
 >
-> > > +for cmd in $(git --list-cmds=3Dmain)
-> > > +do
-> > > +       cmd=3D${cmd%.*} # strip .sh, .perl, etc.
-> > > +       case "$cmd" in
-> > > +       archimport | cvsexportcommit | cvsimport | cvsserver | daemon=
- | \
-> > > +       difftool--helper | filter-branch | fsck-objects | get-tar-com=
-mit-id | \
-> > > +       http-backend | http-fetch | http-push | init-db | instaweb.sh=
- | \
-> > > +       merge-octopus | merge-one-file | merge-resolve | mergetool | =
-\
-> > > +       mktag | p4 | p4.py | pickaxe | quiltimport | remote-ftp | rem=
-ote-ftps | \
-> > > +       remote-http | remote-https | replay | request-pull | send-ema=
-il | \
-> > > +       sh-i18n--envsubst | shell | show | stage | submodule | svn | =
-\
-> > > +       upload-archive--writer | upload-pack | web--browse | whatchan=
-ged)
-> >
-> > Sorry, one more thing: I spot-checked a few of these, and it seems the
-> > main issue that causes failures is the exit code; they seem to work
-> > with "-h" outside a repo. Out of scope for this series, but something
-> > worth tidying up as #leftoverbits ?
-> >
-> You meant the exit code of 129 right ?
 
-Yep: some of our commands (often the ones implemented as scripts?)
-don't exit 129. Fixing that is certainly out-of-scope for this
-otherwise-tightly focused series.
+The expectation is that git-gui--askpass is colocated with git-gui, and not with git. This
+directory is found at runtime as
 
---=20
-D. Ben Knoble
+   [file dirname [file normalize $::argv0]]]
+
+It seems to me we could just put this into git-gui.sh instead of [git --exec-path], and
+the patch is much simpler.
+
+Mark
