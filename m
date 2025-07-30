@@ -1,377 +1,159 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E15E269AFB
-	for <git@vger.kernel.org>; Wed, 30 Jul 2025 10:08:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B003426B74E
+	for <git@vger.kernel.org>; Wed, 30 Jul 2025 10:34:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753870133; cv=none; b=mH8yCRkIsqE0lcMRNIh73g9su3UkKngRDwsQWJQA3YI1n0tzHuESY/IKPceRVB6RbsBb//G0X2/zOXBu1zAVnFEcKK1yshE7BafKGkoV+qKwfg4zy9NQX7MLER9vxXfg3smEvQNuxM+8fnfFOMXI1695tKNt+2luP70RuVbSqq8=
+	t=1753871646; cv=none; b=kCI1g8YBY5coGHjr3pOPC9bQb4N7ADSrBm8TSDbFrEvxePtrMkjz/VLBPcIUW7cbpcCBqNQOBd3vG1QQfvLVbK7G0mqeEDyEy3nXOw8fG6Gs437/WR146H6ynWMmIfqVBNFPlneEDZQj9HgF3bCHNrD4XbzvtuCO7GJijMAZm2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753870133; c=relaxed/simple;
-	bh=cKDt8kB7Z/eVlvIiYKKoF3+I8Y8WUgERCXcXM1bnqMc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=BQehoyrps5WdxUf3eaulDxp8PKEfRn+VYGAyoO1TTDLEE4jzayD16KrXM3Eg3iN7QXIssfU9CiH4BVQiAxiPfQ9igvptV1C1bgR5C78v31OHliYJZrjV/XEIcZ6Aj0daHDgaquWMCt10UmKBZsnJvWHDoG5PpOPJsKePNA3tvpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FtejdjBT; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753871646; c=relaxed/simple;
+	bh=8SPjwrwSbZoDLnaQ3DVF5Xb6qdBfdvBw3JtJniGD0E0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b110qqmtjnXW1jAksdZM63fLBJHoN90MsZ4aXVPXAmJTcy60zal+qGcde6fLy9losVokjNhS4qMSdr/awCP8yrWaAJKqLGH50O02rlJULluQr1xafO4biMd0/mQ79BVNPnhPZvpBOpEWSyfeOV2iyeBjUCnoTgE+ANDyiVbMXYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FUOoTN7I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dzkQhHeV; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FtejdjBT"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45892deb1dcso3698935e9.1
-        for <git@vger.kernel.org>; Wed, 30 Jul 2025 03:08:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753870130; x=1754474930; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=b9D9OjyEdwJ/TGY0nz8xi7oWqgly6K+8zAxsMNz9J1c=;
-        b=FtejdjBTJm61glBqcMQ1ZSEw6Tur55tuD3GPvwV7h8IOCdUrGMInBSZNIjbF7XhTSj
-         qQ+OG8vSiQvhFr2RQy31ljcNyz/3WM10y4uWYH753c8xf+RXFXkyextGWoCRjIxk8vaq
-         3uuyw9CASNlsLaDzI3D3nlJDim7dseUjefcM9tqI57sW3CbV1jjc/Sh28PNIlLul0eIw
-         wDOkuzbuti7o5eyhoS4/22J1yOjRA44OtM+3SUhFe24GoGEKns+q7tA/y55gCcLsQyJQ
-         JjakDDyd1wTqoDNSRktRyP0H9mKPuvHLT0B5Q6dYAtrkdc5Ha9cVsFwmBAbM9JvgoOEA
-         yMsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753870130; x=1754474930;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b9D9OjyEdwJ/TGY0nz8xi7oWqgly6K+8zAxsMNz9J1c=;
-        b=th10ob5ahqg7EHwP1JOyS/OSClQMlJ7qepJl6nT+jhQRM4a0QztJIwj3XrM9a2P1lb
-         0XWEiZKZ8cMGR2jlFes/Kf4l90ikYbwEvnaRzFAw9py2c9M8KQpYo5DwO4SE17qCNKWu
-         FED8c6AV3/OzkbxyQkurzA0JkN1SyR8VQNe5c8D6B5f7oUPI8xFqyG8XpQ7Dh9DSfXfe
-         WiUl3QsF9g0IZH4SV68Mj8f1J71N1GVReGPCM+3WXk/yO/yXD8VbPgvSyP6UzJwW4K6B
-         EqYR4IU/9fD7MEF9CstodZt3/Zd0fBbjC7I+ikIdYxKrC2d4jAIMAUvrztptNy5hkWXw
-         UNIg==
-X-Forwarded-Encrypted: i=1; AJvYcCUpmtCojjo6PGVR4ZS8jcpwGLvlGCxozsOxGqq8K52GDz6hFUEC176HMLsC3aszvlUgb/o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyB6j2S3yM7EWQ+6flhLyx//Ccl0DvzOwy75bGHDN+5Ds0dcwcT
-	vhV+To2VXGQpPJPhst6t2j/NtTxI+ilyU9/cgaoR7jDlUPepLK85wsr/
-X-Gm-Gg: ASbGncs3aj+sErt7GphZ7ExQOHa1StnOhoJcH30uhHxlXzIXuWDOoub0+ewqyerQvMl
-	N0x3LA1qSeCGbeyk+HMlyDJ1Yy/iJNuXwfbE5BhErrZH0vliVVachw3gxspvg1Kzv7bPbDChbVz
-	woTeaSD5yrYPjfJRk8eJHyRTV5ruoT5ZxBCo44hcQcdndvRQy9xaPTpkpzJS2ge5NuByurn8/6p
-	/QobvzXv/qa7DRtluKjjNoA3MFx4Go0ArDwSPnqCcAMrw64rZMcSBLa3XY5z/DKln3TN6yMD9Ej
-	iUPYEGOQ0veRKrkGjJwD6U12zZ044lJB373mmXvgCSpjsRdLYDW+7XSaEL75uN4JUUo9dp7ledZ
-	qp2lT6nenJYjQu2VOUtrPooYjXEBo6tD7hkUAwWETkrikhR/mmh+KfDx6Vn6X+sHBSVTv26YtJX
-	X0gdPvqGD4DaI=
-X-Google-Smtp-Source: AGHT+IFfHzoxHtZEzEFwq3jn9TC0elXQZ6H3rMcax+tgj0333RH7QxUlmebqjrO6fFhL9i37KNDlGg==
-X-Received: by 2002:a05:600c:8114:b0:456:23aa:8c8 with SMTP id 5b1f17b1804b1-45892b9e4bcmr25136095e9.13.1753870129588;
-        Wed, 30 Jul 2025 03:08:49 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b778eba147sm15283089f8f.27.2025.07.30.03.08.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Jul 2025 03:08:49 -0700 (PDT)
-Message-ID: <2da722a3-2ed0-4f2b-a623-df0dc4aaad77@gmail.com>
-Date: Wed, 30 Jul 2025 11:08:43 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FUOoTN7I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dzkQhHeV"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6029A1D02367;
+	Wed, 30 Jul 2025 06:34:02 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Wed, 30 Jul 2025 06:34:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1753871642; x=1753958042; bh=fG8FsVnPIg
+	iL10+vTfoKRLoGH3A7FSJnIwGAfY5WMJQ=; b=FUOoTN7I9IMrbKvah1l5uS5SLn
+	7pEZIAwAhAbii9xOxaW25BnvrSdHMngqAO0QWV7hEvDDsWUogSxaoE9bIf3h6xSM
+	DqCF6hebPQacWMpuMOhXxl4QdV1DV4+Amrx7o1nXL91R+n2sEVDacxUlntRJcAaZ
+	A239Q5qr1mG/WoxGO3JAbvC7h5JoS7zQ5Qv5UDe1425wEdDIVfB2a7LFJMaoht5V
+	P1ZBM8TPFB8f4RmAAGfJhUQ/8B1PF7bYdlGH8LaxDdPBOIVbv/3rVeqWYrdI1XlP
+	/qulKLyrjBEKNV259zayCsCosegLY1T61DuZAUvV+LYHvolEzkb94vd1CGAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753871642; x=1753958042; bh=fG8FsVnPIgiL10+vTfoKRLoGH3A7FSJnIwG
+	AfY5WMJQ=; b=dzkQhHeVCSusO9UquF0cL+nReawCT0v/pc0+/k72qgM4FM0qtk0
+	vdX4Q07YBMXnX04fMTaPB/uWF3O6XH7uImp1bMePlyvqRBLjHjrM4r93kARessIO
+	VgR8lYHzMmgcmmEzv9FDqFmjMsS0SDpNZhHgEYoXlJMAweGqJWd3liNqm3v+0Htt
+	j3DpV0/ljLiQo0wOgG/Wn1pNZ6+/ai+tOiaIgfw98HP/P/XW+iQUhBMPEmE/oCs4
+	iHYjw0T9Zc/m2QPCyfBUnn2QZwuP8hMA0RSe1jOOtyh6QtDCClvadTDJW79haIIV
+	rLQQdUyDbv201PyiwLIJW5hEOiKAoo7wpSA==
+X-ME-Sender: <xms:GfWJaJWnb8hXLwCAAfDMOb-uEQNo4fl4WGu6KJw6Hm0Kn0Uv7Xa10g>
+    <xme:GfWJaGj2Au_FQ0gAkL1Cdh9sGn7nfIcu_mrxhUe_yeAxTvco4WOvZK-Jh1a095H1c
+    QNvthRo5m42_rT7pA>
+X-ME-Received: <xmr:GfWJaBB4bTpF0sSSgJ-nLXjT1N7O-WGMvcuaUBlhxewZrEmU0tGlB0RPTy89Nk5J6nmWAHlPsCmpgkLNlA08h8VEOzp6p9k1SDcNrVip>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeljeejtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesih
+    hothgtlhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsg
+    gvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdr
+    udekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:GfWJaEsNefGSbNshJcE_IXtTuchcAORghxfZhh7D9CSX8ZW7V4Ic8Q>
+    <xmx:GfWJaNcIWL4pf0ZIDiQ41-PdCaUjRBkwpuRuPnKqOeBKK9UBMiIHBA>
+    <xmx:GfWJaB8-ZD5ntrNL7vE4bvj91co5ciJ16dBR_0YP9mbjLiPRq4Roig>
+    <xmx:GfWJaIQtxvnvZxSBiHSC7re1phkwB5i_oZuBLUirvypkeYxFIxPHoA>
+    <xmx:GvWJaN0QjN7kGosg-U9J02N8mZgA-U90Lm72LKQ95Gl6YLosw5HxGpUb>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 30 Jul 2025 06:34:00 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 20f39582 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 30 Jul 2025 10:33:58 +0000 (UTC)
+Date: Wed, 30 Jul 2025 12:33:54 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ben Knoble <ben.knoble@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v2 4/8] builtin/reflog: implement subcommand to write new
+ entries
+Message-ID: <aIn1EqDARgpWMN5h@pks.im>
+References: <6414dbfd-6f34-48d1-aa3f-3fe7998f80af@app.fastmail.com>
+ <6E84D571-CC02-45E6-9E58-DD918B45998E@gmail.com>
+ <aIhvcSHrRLG6wcMD@pks.im>
+ <xmqqseifqbym.fsf@gitster.g>
+ <aImup_QlY0tdBtJq@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] status: add --json output format to git status
-To: Tachera W sasi <tacherasasi@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: Tach via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.1937.git.1753856826464.gitgitgadget@gmail.com>
- <c4658ae9-007d-4645-9561-febe03dc612d@gmail.com>
- <CA+m0rScismG8VVf8mYS=+_AjwgrgX8GNZrFD+8-0EaeCDYPgbg@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CA+m0rScismG8VVf8mYS=+_AjwgrgX8GNZrFD+8-0EaeCDYPgbg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aImup_QlY0tdBtJq@pks.im>
 
-Hi Tachera
+On Wed, Jul 30, 2025 at 07:33:30AM +0200, Patrick Steinhardt wrote:
+> On Tue, Jul 29, 2025 at 08:00:01AM -0700, Junio C Hamano wrote:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> > 
+> > > There's a big difference though: `git reflog drop` won't ever do
+> > > anything for a reflog that doesn't exist. Consequently, we know that our
+> > > DWIM mechanism can kick in and resolve the reference properly if such a
+> > > reflog exists.
+> > >
+> > > But for `git reflog write` that's not the case, as you can write a
+> > > reflog message for a yet-nonexistent reflog. The DWIM mechanism cannot
+> > > kick in here as there is no reflog. So what do we do in that case? We
+> > > could of course just pick the first DWIM rule, which would be that we
+> > > decide to write the reflog for "refs/heads/$REFNAME". But... I dunno,
+> > > that feels too magicky to m
+> 
+> Gah, another cut-off mail. This is driving me crazy. I have an idea what
+> the root cause could be that I've implemented yesterday an hour after
+> this mail. So fingers crossed this that this will stop now.
 
-On 30/07/2025 10:15, Tachera W sasi wrote:
-> 
-> For v2, I will:
->    * Rework the patch to use `json-writer.h` so escaping and JSON 
-> compliance are handled
->      properly.
+Yup, I was finally able to reproduce the issue. I'm using msmtp to send
+mail and have a `passwordeval` script that I use to yield the password.
+Recently I've switched to a different password manager though, so I had
+to adapt the script a bit. Basically, what the script does is to check
+whether I'm already signed in -- if not, it spawns rofi to ask me for my
+password.
 
-That will handle the escaping problems but we still have the problem 
-that filenames and refnames are not guaranteed to be utf-8 encoded. I 
-think the only way to handle that is to base64 encode them so that the 
-caller can retrieve the raw bytes. See 
-https://lore.kernel.org/git/ZvXMSKaUWWA-MG9J@tapette.crustytoothpaste.net/ 
-for a previous discussion about this.
+But: rofi actually reads from stdin, and the `passwordeval` command in
+msmtp explicitly must _not_ munge stdin, as stdin is where the mail gets
+read from. So this is what caused the mail to get truncated.
 
->    * Add tests covering filenames with quotes, newlines, and non-UTF-8 
-> cases.
->    * Include tests under `t/` to prevent future regressions.
+So why wasn't I able to reproduce the issue? Well, because it only
+happens in case the password store in locked and I need to input my
+password. But when reproducing it I already had the password store
+unlocked.
 
-That's great, you should update Documentation/git-status.adoc as well to 
-document the new option and output format
+The fix is thus quite easy:
 
-Thanks
+diff --git a/home-manager/profiles/graphical/workstation/gitlab/default.nix b/home-manager/profiles/graphical/workstation/gitlab/default.nix
+index d47e95a83..3460a29fb 100644
+--- a/home-manager/profiles/graphical/workstation/gitlab/default.nix
++++ b/home-manager/profiles/graphical/workstation/gitlab/default.nix
+@@ -42,6 +42,8 @@ in
+         pkgs.writeShellScript "op-mail-password" ''
+           set -eo pipefail
+ 
++          exec 0<&-
++
+           export OP_SESSION=$(systemctl --user show-environment | grep '^OP_SESSION=' | cut -d= -f2)
+           if test -z "$OP_SESSION" || ! op vault list &>/dev/null
+           then
 
-Phillip
+Finally, another mystery solved. This really has been stressing me out
+over the last two weeks.
 
-> Thanks again for your review and for pointing me towards the proper helpers.
-> 
-> Best regards,
-> Tachera Sasi
-> 
-> On Wed, Jul 30, 2025 at 12:01 PM Phillip Wood <phillip.wood123@gmail.com 
-> <mailto:phillip.wood123@gmail.com>> wrote:
-> 
->     On 30/07/2025 07:27, Tach via GitGitGadget wrote:
->      > From: tacherasasi <tacherasasi@gmail.com
->     <mailto:tacherasasi@gmail.com>>
->      >
->      > Add a new --json flag to 'git status' that outputs repository state
->      > in a structured JSON format. This enables reliable machine parsing
->      > of status information for tools and automation.
->      >
->      > The JSON output includes:
->      > - Branch information (name, detached state, ahead/behind counts)
->      > - Staged files array
->      > - Unstaged files array
->      > - Untracked files array
->      > - Ignored files array (with --ignored flag)
->      >
->      > Implementation details:
->      > - Add STATUS_FORMAT_JSON to wt_status_format enum
->      > - Add JSON output option to git status and git commit
->      > - Implement JSON formatting helpers for arrays and branch info
->      > - Structure output for easy parsing and future extensibility
->      >
->      > Example:
->      >    $ git status --json
->      >    {
->      >      "branch": {
->      >        "current": "main",
->      >        "detached": false
->      >      },
->      >      "staged": ["file1.txt"],
->      >      "unstaged": ["file2.txt"],
->      >      "untracked": ["file3.txt"]
->      >    }
->      >
->      > This provides a robust alternative to parsing traditional output
->      > formats, making it easier to build reliable tools and automation
->      > around Git status information.
-> 
->     What problem are you having paring the current output? You say this
->     patch provides a robust alternative but I'm afraid it does not seem to
->     handle filenames containing newlines or double quotes and it assumes
->     they are utf-8 encoded. It also seems to print a trailing comma if an
->     array has more than one item which is not allowed by the json spec. We
->     already have support for generating json output as documented
->     json-writer.h which will help with most of that but not the filename
->     encoding problem. New features should also be accompanied by tests to
->     prevent future regressions. I'm not opposed to adding json output if it
->     is robust and handles non utf-8 filenames but it would be helpful to
->     understand what problems you are having parsing the output of "git
->     status --porcelain[=v2]".
-> 
->     Thanks
-> 
->     Phillip
-> 
->      > Signed-off-by: Tachera Sasi <tachera@ekilie.com
->     <mailto:tachera@ekilie.com>>
->      > Signed-off-by: tacherasasi <tacherasasi@gmail.com
->     <mailto:tacherasasi@gmail.com>>
->      > ---
->      >      status: add --json output format to git status
->      >
->      > Published-As: https://github.com/gitgitgadget/git/releases/tag/
->     pr-1937%2FtacheraSasi%2Ffeature%2Fjson-status-output-v1 <https://
->     github.com/gitgitgadget/git/releases/tag/
->     pr-1937%2FtacheraSasi%2Ffeature%2Fjson-status-output-v1>
->      > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git
->     <https://github.com/gitgitgadget/git> pr-1937/tacheraSasi/feature/
->     json-status-output-v1
->      > Pull-Request: https://github.com/gitgitgadget/git/pull/1937
->     <https://github.com/gitgitgadget/git/pull/1937>
->      >
->      >   builtin/commit.c |  9 ++++-
->      >   wt-status.c      | 98 +++++++++++++++++++++++++++++++++++++++++
->     +++++++
->      >   wt-status.h      |  1 +
->      >   3 files changed, 107 insertions(+), 1 deletion(-)
->      >
->      > diff --git a/builtin/commit.c b/builtin/commit.c
->      > index fba0dded64a..f1db4fdfd9a 100644
->      > --- a/builtin/commit.c
->      > +++ b/builtin/commit.c
->      > @@ -1540,6 +1540,9 @@ struct repository *repo UNUSED)
->      >               OPT_SET_INT(0, "long", &status_format,
->      >                           N_("show status in long format (default)"),
->      >                           STATUS_FORMAT_LONG),
->      > +             OPT_SET_INT(0, "json", &status_format,
->      > +                 N_("show status in JSON format"),
->      > +                 STATUS_FORMAT_JSON),
->      >               OPT_BOOL('z', "null", &s.null_termination,
->      >                        N_("terminate entries with NUL")),
->      >               {
->      > @@ -1603,7 +1606,8 @@ struct repository *repo UNUSED)
->      >                      prefix, argv);
->      >
->      >       if (status_format != STATUS_FORMAT_PORCELAIN &&
->      > -         status_format != STATUS_FORMAT_PORCELAIN_V2)
->      > +         status_format != STATUS_FORMAT_PORCELAIN_V2 &&
->      > +         status_format != STATUS_FORMAT_JSON)
->      >               progress_flag = REFRESH_PROGRESS;
->      >       repo_read_index(the_repository);
->      >       refresh_index(the_repository->index,
->      > @@ -1735,6 +1739,9 @@ int cmd_commit(int argc,
->      >               OPT_SET_INT(0, "long", &status_format,
->      >                           N_("show status in long format (default)"),
->      >                           STATUS_FORMAT_LONG),
->      > +             OPT_SET_INT(0, "json", &status_format,
->      > +                 N_("show status in JSON format"),
->      > +                 STATUS_FORMAT_JSON),
->      >               OPT_BOOL('z', "null", &s.null_termination,
->      >                        N_("terminate entries with NUL")),
->      >               OPT_BOOL(0, "amend", &amend, N_("amend previous
->     commit")),
->      > diff --git a/wt-status.c b/wt-status.c
->      > index 454601afa15..7192fb4d057 100644
->      > --- a/wt-status.c
->      > +++ b/wt-status.c
->      > @@ -2564,6 +2564,101 @@ static void wt_porcelain_v2_print(struct
->     wt_status *s)
->      >       }
->      >   }
->      >
->      > +
->      > +static void wt_json_print_string_array(struct wt_status *s,
->     const char *name, struct string_list *list)
->      > +{
->      > +     int i;
->      > +     fprintf(s->fp, "  \"%s\": [", name);
->      > +     for (i = 0; i < list->nr; i++) {
->      > +             if (i > 0)
->      > +                     fprintf(s->fp, ", ");
->      > +             fprintf(s->fp, "\"%s\"", list->items[i].string);
->      > +     }
->      > +     fprintf(s->fp, "]");
->      > +}
->      > +
->      > +static void wt_json_print_change_array(struct wt_status *s,
->     const char *name, int change_type)
->      > +{
->      > +     int i;
->      > +     struct string_list files = STRING_LIST_INIT_DUP;
->      > +
->      > +     for (i = 0; i < s->change.nr <http://change.nr>; i++) {
->      > +             struct wt_status_change_data *d;
->      > +             struct string_list_item *it;
->      > +             it = &(s->change.items[i]);
->      > +             d = it->util;
->      > +
->      > +             if ((change_type == WT_STATUS_UPDATED && d-
->      >index_status &&
->      > +                  d->index_status != DIFF_STATUS_UNMERGED) ||
->      > +                 (change_type == WT_STATUS_CHANGED && d-
->      >worktree_status &&
->      > +                  d->worktree_status != DIFF_STATUS_UNMERGED)) {
->      > +                     string_list_append(&files, it->string);
->      > +             }
->      > +     }
->      > +
->      > +     wt_json_print_string_array(s, name, &files);
->      > +     string_list_clear(&files, 0);
->      > +}
->      > +
->      > +static void wt_json_print_branch_info(struct wt_status *s)
->      > +{
->      > +     struct branch *branch;
->      > +     const char *branch_name;
->      > +     int ahead = 0, behind = 0;
->      > +
->      > +     fprintf(s->fp, "  \"branch\": {\n");
->      > +
->      > +     if (s->branch && !s->is_initial) {
->      > +             if (!strcmp(s->branch, "HEAD")) {
->      > +                     fprintf(s->fp, "    \"current\": \"HEAD\",\n");
->      > +                     fprintf(s->fp, "    \"detached\": true");
->      > +             } else {
->      > +                     if (skip_prefix(s->branch, "refs/heads/",
->     &branch_name)) {
->      > +                             fprintf(s->fp, "    \"current\":
->     \"%s\",\n", branch_name);
->      > +                             fprintf(s->fp, "    \"detached\":
->     false");
->      > +
->      > +                             branch = branch_get(branch_name);
->      > +                             if (branch && branch->merge &&
->     branch->merge[0] && branch->merge[0]->dst) {
->      > +                                     if (!
->     stat_tracking_info(branch, &ahead, &behind, NULL, 0, 0)) {
->      > +                                             fprintf(s->fp, ",
->     \n    \"ahead\": %d,\n    \"behind\": %d", ahead, behind);
->      > +                                     }
->      > +                             }
->      > +                     } else {
->      > +                             fprintf(s->fp, "    \"current\":
->     \"%s\",\n", s->branch);
->      > +                             fprintf(s->fp, "    \"detached\":
->     false");
->      > +                     }
->      > +             }
->      > +     } else {
->      > +             fprintf(s->fp, "    \"current\": null,\n");
->      > +             fprintf(s->fp, "    \"detached\": false");
->      > +     }
->      > +
->      > +     fprintf(s->fp, "\n  }");
->      > +}
->      > +
->      > +static void wt_json_status_print(struct wt_status *s)
->      > +{
->      > +     fprintf(s->fp, "{\n");
->      > +
->      > +     wt_json_print_branch_info(s);
->      > +     fprintf(s->fp, ",\n");
->      > +
->      > +     wt_json_print_change_array(s, "staged", WT_STATUS_UPDATED);
->      > +     fprintf(s->fp, ",\n");
->      > +
->      > +     wt_json_print_change_array(s, "unstaged", WT_STATUS_CHANGED);
->      > +     fprintf(s->fp, ",\n");
->      > +
->      > +     wt_json_print_string_array(s, "untracked", &s->untracked);
->      > +
->      > +     if (s->ignored.nr <http://ignored.nr> > 0) {
->      > +             fprintf(s->fp, ",\n");
->      > +             wt_json_print_string_array(s, "ignored", &s->ignored);
->      > +     }
->      > +
->      > +     fprintf(s->fp, "\n}\n");
->      > +}
->      > +
->      >   void wt_status_print(struct wt_status *s)
->      >   {
->      >       trace2_data_intmax("status", s->repo, "count/changed", s-
->      >change.nr <http://change.nr>);
->      > @@ -2583,6 +2678,9 @@ void wt_status_print(struct wt_status *s)
->      >       case STATUS_FORMAT_PORCELAIN_V2:
->      >               wt_porcelain_v2_print(s);
->      >               break;
->      > +     case STATUS_FORMAT_JSON:
->      > +             wt_json_status_print(s);
->      > +             break;
->      >       case STATUS_FORMAT_UNSPECIFIED:
->      >               BUG("finalize_deferred_config() should have been
->     called");
->      >               break;
->      > diff --git a/wt-status.h b/wt-status.h
->      > index 4e377ce62b8..e929af832b2 100644
->      > --- a/wt-status.h
->      > +++ b/wt-status.h
->      > @@ -74,6 +74,7 @@ enum wt_status_format {
->      >       STATUS_FORMAT_SHORT,
->      >       STATUS_FORMAT_PORCELAIN,
->      >       STATUS_FORMAT_PORCELAIN_V2,
->      > +     STATUS_FORMAT_JSON,
->      >
->      >       STATUS_FORMAT_UNSPECIFIED
->      >   };
->      >
->      > base-commit: cb3b40381e1d5ee32dde96521ad7cfd68eb308a6
-> 
-
+Patrick
