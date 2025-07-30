@@ -1,157 +1,151 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C89B18A93F
-	for <git@vger.kernel.org>; Wed, 30 Jul 2025 07:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE032AD02
+	for <git@vger.kernel.org>; Wed, 30 Jul 2025 08:53:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753862131; cv=none; b=O1/g64Rdu1oJlsRNn7cHmCNDlv3/EzxTaA2sjK4MqtM9rttOaJcNOV3TmihNdq2mUV49+tmKh/Ra6mZYk4FB3ndEuZmNwETOu0meJIiXM/2W83Z3LkVpBmRZD8aD06P1MyYxZQ3A3KczSmavnPBOtOzYurFo1TYqTUWbFkKb81E=
+	t=1753865611; cv=none; b=uPZitfxUcnY56vW5w5jLws32SDHiBrP9B5empxpovCXv5fRz+p43+IluHSe1naT1mhafnLWI9naTFQoeypwyI+iX+zHX5DJrqudeM/QLCLlwK35v+eYys9eV+Fs2nhZ/i6wFEJ5WdNImvSIGpnoA51pmWhIjmCEZH/EGeEAxRls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753862131; c=relaxed/simple;
-	bh=HLBgo8WoHmQBGtygxwgLoDXUsBZhkFCtmjRYBBp3Yb4=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qp1oLtMvFhug/0tFGgC5kLEvNwAGi//zUAybO5wE3OaYdzT31qO6YXB3rVP6UKWQcr9dTQ7esz7WteWFltdSIhNsZ/3wJBbHduc+d1kr/RXlCpSgpwUoIfD3ZmGHxgDJDhkZNScux6sLNDEmuRqrHBlZvHiPdhhw9Llbl5S3a1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y6Drn5k9; arc=none smtp.client-ip=209.85.221.170
+	s=arc-20240116; t=1753865611; c=relaxed/simple;
+	bh=VgQxMOGndjo4MJqbuibCvllcuDCa3QKHlzgKxVq33iE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a+DY724wGaZlOeLGw/EcqwH4oBrB5DFzkOpvL/nSmTFX4GyJoDj1v942T/CDdUEdawaKXC6IoFgOA3iqsJMSoqZNoCY9WZL+6mHEYByuosr/xBkzCJz5WLT0WrJSvQI7MQOeUiF2SHnd0QGDXqPTqTeIh4iUW3wfDxMagzhh9yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Is8N6+gn; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y6Drn5k9"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-53924027b19so117538e0c.1
-        for <git@vger.kernel.org>; Wed, 30 Jul 2025 00:55:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Is8N6+gn"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3b78315ff04so2701370f8f.0
+        for <git@vger.kernel.org>; Wed, 30 Jul 2025 01:53:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753862129; x=1754466929; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cMek4dYdkiostyfp/JddFt2g0wJEkO8/61GiE//s5mk=;
-        b=Y6Drn5k9cnO6yspVVkWIv6RhhJqpsY6qKHi78Dr4xHNrN1K3xMbkeJbo+J2oMPhil2
-         NdruS0uXYFv5KcIlhJwQ35DoT/aODwhZr1ARWly3c6Oe+8S0dQJ6bReh1YsW/tvZkq4I
-         3fZz0Zq/UD8ZtHGI6nUWWLR7xID6FaTpUaVXsfxgh23pGBKIeL2+gX03LRfh9sl59/o+
-         /pTDZ4SHUGVopRmR1icQKXD62spvHuBzlDQ2EeN7KpUU7ybgdET6htnVzZ14Z05hofyo
-         kVLvEYHS5dmvnXAUIZzjoQxsGx0t2zDBNVhr2KQrbyG7GDPKbDlkkGi3M6GjY/FH8IF2
-         CpSA==
+        d=gmail.com; s=20230601; t=1753865608; x=1754470408; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=bPCYtgpJAwxVT8AhHF2T5Ep1xUhvbwlehO0mCuuDJ+I=;
+        b=Is8N6+gnSofq4I9E/4C2To9/S2tR9ABr2hwiXUQox8qHJ8UFXQxfaW8aiwTASGU5A8
+         KqblE76lsA4rBf8i1QI+jDUtoeCpZ4bF4/sy4YpvlsJ1+g0ISrZT5jV9OfC/MVq6gJWe
+         j57vScYGco0Ny4pwN0KWHxBzVTI32GhnRC5U2qMqV0OpY/msI0x+nhxh86HA3aEAozft
+         wP5yTgfxwBGv+dAlBNSUMBQbxHnqoeoMmNyIR69E+E0OnsJtwM1Ksk0Pl1AjycW+ZAOb
+         c/O/ElPWdW3d+wuVeXsoizYF0HTlveVjlb/Km3E7BZ+zIOD0KWPXlbrAeXDNqJBpVN9S
+         VJNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753862129; x=1754466929;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cMek4dYdkiostyfp/JddFt2g0wJEkO8/61GiE//s5mk=;
-        b=mvyzzGP+5oHM5tpwHjH5reXfB1arJsHoe68kxJ+EmheNbqc0t4aBAE5YxZfl9/CQRv
-         LquRu4n9rd0e+ZS2X6pwnElkDIqbiwlB8v86bziOdOydJK0tEmLyTXqrCj+R+QyVDmn+
-         RuLfWsVnr8i+5Id+qJ4Izc4h01uSBTL+OUY55sP1Gke5SKGYvaWw+Fr00SgpxBvM49E3
-         kwVeaTD/CjjhwcGqPTNdCn0V0iifQ9LhODv+QnIHuVLNiarBfpXB5XMh/8xguO/Bc3Ai
-         O8FH9hoOAOrFB0CD3n5vT6hviP/BGdcMf7+p7TKJhfNZOYPM7k/U684qk0KP1ZuXp6p/
-         442Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXA3BaeYLkCpob7gHVgyFrx81YkUOLse7nuRkFHB27RTIbxgq+QklYf0vHl24tB6p2qh3U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzrMvf/moA65FoyLJBE9UQW9VAwW+qapz9epCeanYykJs5cBvKu
-	4y7x975tFtibkS0f48S1f5dnqbCDf/3NV7y8C0tBO4OckvYpTqck8ImkHE0CAcyv3+vpsSCtvVU
-	dbuCwSVtgJXrqPg/WzSSs5NkxSIbnZVkfzcG8
-X-Gm-Gg: ASbGncv6JUFK5tjA2fIU+Sm7+rdKEViPrNEnXhwrD5661Tk1BWoou2YHWkwfQ6SNNv2
-	IIFdClfVKmfABixXs/jOy651mSMErad/aioV4NulgV+e1cvCa6HDrSBVKoNC+KJ3GtNzvBxgyFX
-	T/8KJ509vNaEqwBA3w13YbiIEBGbVEyz7VN3Y+KHZgcLfpRDTxGQQiWxCu0xjk0fbQLv7AA4gYh
-	YhhmNu2kdTA1AWhAJRoFH6taJLqnyKBJ9e7bxEGzw==
-X-Google-Smtp-Source: AGHT+IFvJWMH6SWcy5TXHf6YWV+nmFG1By/Kwm5lG7wBGj2wjMsoW7KPWRWwyaOUA1lLb+T/HJ2c6V1D6jsRuiEad98=
-X-Received: by 2002:a05:6122:130f:b0:531:3981:fdb9 with SMTP id
- 71dfb90a1353d-5391ceefcbamr1544645e0c.4.1753862129058; Wed, 30 Jul 2025
- 00:55:29 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 30 Jul 2025 07:55:28 +0000
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 30 Jul 2025 07:55:28 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqms8ot4jh.fsf@gitster.g>
-References: <20250725-pks-reflog-append-v2-0-e4e7cbe3f578@pks.im>
- <20250725-pks-reflog-append-v2-4-e4e7cbe3f578@pks.im> <6414dbfd-6f34-48d1-aa3f-3fe7998f80af@app.fastmail.com>
- <xmqqo6t4up5f.fsf@gitster.g> <CAOLa=ZS6e9dv-c+tajooZa5qFZT2T+jqaJahd3BzVuE7H=5PwA@mail.gmail.com>
- <xmqqms8ot4jh.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1753865608; x=1754470408;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bPCYtgpJAwxVT8AhHF2T5Ep1xUhvbwlehO0mCuuDJ+I=;
+        b=pVejEAjTlgcdbxLXSM1OOmGSIitoiCNciIWabOZokGSwaHMdN69ArVRtx6xlI5MhQp
+         yFvu9NamORCBiNA2zVZc5LyFBqXMNbTPUWq/79yXh8ns6JC6wsoUvrUm6zqV7bTX/Mga
+         uWXX6G13H/THTv3OAoG2V7BuRNvK/ddmBNd1D1viswn9drhz8hI+NP0Xob8898RoTb6D
+         UKo7n25Ry9ry6bUY9lJK11avuTk0pe/0HXJt8DCvzafXqFApXkoucuMJPDyLNSvJq799
+         eDfP8lbhdPukjbbTzbFDacWkCdUdinVawaVK6BpKbEnLRgQjuuC7HL2CTaJ8DDrn28HX
+         O4oA==
+X-Forwarded-Encrypted: i=1; AJvYcCWdisbFDhjzEQdHMyNxZS/Mi/FWkNpOyH9OhReruwWFpgiZGTSd0O09R1NGBORrMmqukzo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywli6gxydT+322ibT4VTql78a8B6SeX6VNnDPq18q9OGMOp60mS
+	jA6Jbzp1X/hlyA1jVYGeuwpF+wPAng04heoaPnlocDiET1ffB5OhfKUg
+X-Gm-Gg: ASbGnctGqS+bvy76UO6/lNVoolhXC1EVvGGuB5oLVrykLleDErvQjXiTvsUHvXIXUeL
+	vSZv26X2LtdnPVafXU/zpPFUhmx90nhB60B2W7L15lg9X9AeoXlZEY/jMQNujjrRaJTCczlbOdR
+	7AC+a8q5LjUAaE7FIM6El1t5hoI7NAfGJuQT0dDhJ4rrbKWgnnknP+y1OefAiFC93+GElPI1V6P
+	jvm1hH7dKg2PAR5vHciI68NJbRgKjY6RH6LNZNt6wPDpIK2VadlGFp/VMnsc+1Id4aHh1o3H7Zx
+	Z/3Rl1rIAgcQA3WV64HUUsunCFKlQqF8yR9MZMg9QpDfNuEtxj+Zg9TpQcU0WF1m3mRMDNWH+vw
+	naOewsqdO17Bmsb5aAqg2m1fjbe8mP+dIlCTTzltoUkJxBCKwxw0ImfzKz4MZnrtU39ykU5lknq
+	ym
+X-Google-Smtp-Source: AGHT+IHtZDgZDJ4XNP1IYAae/FJoEHNRfhy6VX22GtyHB0Hes/YcUH4Ch2KfC10fGIJR6RL0UHLlnQ==
+X-Received: by 2002:a5d:584c:0:b0:3b7:94c3:277d with SMTP id ffacd0b85a97d-3b794ff38a1mr2040648f8f.20.1753865607951;
+        Wed, 30 Jul 2025 01:53:27 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b782b2bca5sm12684321f8f.70.2025.07.30.01.53.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Jul 2025 01:53:27 -0700 (PDT)
+Message-ID: <d61c966b-61ae-4ba9-b983-c8dab6e2c292@gmail.com>
+Date: Wed, 30 Jul 2025 09:53:21 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 30 Jul 2025 07:55:28 +0000
-X-Gm-Features: Ac12FXwZ4yGmy_2PwFsoDU7Il0lZ3HdiF7o_-dXHgwSokByTpAXwHs2xdSdcFVQ
-Message-ID: <CAOLa=ZQfkM2PydwPFKfEqiYiCeyqmd_Wpoarr6HkbVMJnrOd6A@mail.gmail.com>
-Subject: Re: [PATCH v2 4/8] builtin/reflog: implement subcommand to write new entries
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	Justin Tobler <jltobler@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
-	Toon Claes <toon@iotcl.com>
-Content-Type: multipart/mixed; boundary="00000000000030210e063b20d9f7"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSOC PATCH v6 0/3] environment: remove sparse-checkout related
+ global variables
+To: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>
+Cc: christian.couder@gmail.com, git@vger.kernel.org,
+ shyamthakkar001@gmail.com, ps@pks.im, ben.knoble@gmail.com
+References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
+ <cover.1752882401.git.ayu.chandekar@gmail.com> <xmqqcy9qlfm8.fsf@gitster.g>
+ <43aaec10-2696-44c9-8728-2045b83dc5d3@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <43aaec10-2696-44c9-8728-2045b83dc5d3@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---00000000000030210e063b20d9f7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 24/07/2025 14:25, Derrick Stolee wrote:
+> 
+> I think that the core issue here (and probably causing the issues
+> that were seen in the user-facing issues) is that the repo settings
+> struct was intended as a place to fill config for some one-off
+> "feature flags" and not to replace core functionality for a repo.
+> 
+> There are two ways to change the approach here to fix the problem
+> of needing prepare_repo_settings() everyhwere:
+> 
+>   1. With the idea that these sparse-checkout variables are
+>      critical to the functionality of the repo, they should move
+>      into the repository struct itself and be initialized along
+>      with all other values there. This changes the patches (and my
+>      follow-up series) significantly, but mechanically.
 
-Junio C Hamano <gitster@pobox.com> writes:
+Patrick and I had a discussion about calling prepare_repo_settings() 
+from repo_read_config() recently [1]. It turned out that does not work 
+but I wonder if instead we could change git_default_config() to expect a 
+repository pointer as the callback data and use that to initialize 
+things. That would mean that we would not need to move code out of 
+git_default_config() to remove global variables and we would retain the 
+"last one wins" behavior when two or more config keys such are 
+"merge.log" and "merge.summary" set the same variable. It would be 
+fairly invasive though as we'd need to pass the repository pointer down 
+through all the other callbacks that end up calling git_default_config().
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
+Thanks
+
+Phillip
+
+[1] 
+https://lore.kernel.org/git/f6479d6a-32a4-4a49-a75c-589978cb9a57@gmail.com/
+
+>   2. If we are going to change the intention of the repo settings
+>      struct to move from "optional one-off feature flags" to
+>      "important information about the core behavior of a repo"
+>      then we should prepare_repo_settings() when initializing the
+>      repository struct.
+> 
+> My preference is (1). The only argument for (2) that I can think
+> of is that it is sometimes helpful to share only the settings for
+> a repo without sharing the whole repo. But that seems like a weak
+> reason right now.
+> 
+>>> * For 3/3, Phillip told me that it broke user-facing as it will be
+>>>    parsed quite late in the callchain and might throw an error mid
+>>>    operation which we do not want.
 >>
->>> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
->>>
->>>> I tried `git reflog drop`[1] and it can deal with a branch like
->>>> `branch`.  It doesn=E2=80=99t need to be told `refs/heads/branch`.
->>>
->>> That sounds like a bug to me.
->>
->> So `git reflog drop` `git reflog delete` and `git reflog expire` use
->> `repo_dwim_log()` to resolve the provided reference.
->>
->> And `repo_dwim_log()` uses the following `ref_rev_parse_rules` to
->> resolve the reference.
->>
->>   static const char *ref_rev_parse_rules[] =3D {
->>   	"%.*s",
->>   	"refs/%.*s",
->>   	"refs/tags/%.*s",
->>   	"refs/heads/%.*s",
->>   	"refs/remotes/%.*s",
->>   	"refs/remotes/%.*s/HEAD",
->>   	NULL
->>   };
->>
->> Which means we do a best case resolution of a given reference, but the
->> function also checks for ambiguity and warns for it.
->
-> True.  But as I considered "git reflog" to be a lot closer to the
-> plumbing than to Porcelain, using the dwim thing smelled like a bug.
->
+>> So has the behaviour change caused by 3/3 been resolved?
+> 
+>>   * This throws everything in repo_settings, but these settings are
+>>     inherently per repository and they are meaningful only when you
+>>     are working with a repository.  What makes us choose to make them
+>>     new members in the repo_settings structure, not direct members in
+>>     the repository structure?
+> 
+> (This is the same thought I expressed earlier in this message.)
+> 
+> Thanks,
+> -Stolee
+> 
+> 
 
-I agree that 'git reflog' is more of a plumbing command. I'm trying to
-see what subcommands of reflog act this way, so we can take a decision
-on how to move forward.
-
-> It also is OK to update the commands that do not use dwim-log to
-> also use it.  That way, the result would be consistent across
-> subcommands of "git reflog".  As long as the users are aware of the
-> fact that the command uses dwim-log, they can always spell their ref
-> in full like "refs/heads/branch" to avoid ambiguity check getting in
-> the way.
->
-> Thanks.
-
-Yeah consistency and documentation around it would be great here.
-
-- Karthik
-
---00000000000030210e063b20d9f7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 4bce0f72bcdb9c2c_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pSnorNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meWloQy85WnBuR3M1UVhIUmZBOVdzZUQ4SUFZTDRyVgpZb1JKRWIzVDFh
-RjExeElscTk3d3Z2dzhjZWRIeUxMTXVSR2ZSS0ZyakVPUzVjS1BGUHZUeTcyY2Uyei82cjhDCjEx
-SFpTMmdTVm1PbytBN0FBa0RTYjU1SUpDY1RXZlZHaDJ2OUhNMS9Hd2hmUTY5ZSsrdTVndmE5ZXVW
-MVdoNzkKT0xTVXh6d3FMRnNHaEZHcVVPV0svVjdZZHRzN2htc1p4T0I1aVFmbVozTDU2NHBSZ0Jj
-S1BSYTNOd210a1VtQwpoUnhuc1I3M0R5Um5MVEtPK2NvOXNrMmkzTFlRL0JUM2hCbG5XaUl4K3Rz
-eHhheEo4VDR4OTcxVTNBaE5oY0ZLCldZSEVNUm96VnVVY284SkgxamVnamRMY2g2aXF0U2pEWVdD
-ZlJHcWYzOTcwWlFSSjlwS3pFOU5NUzZVeVZNUmoKRnloMHhFUm5EcGlTRmhRamhkVGUwV2NOR3R1
-VnBzRStsbXhPQ3V0blBVeXVKeUlTdGNwVHR6bThuNFRnSnM5aQppaFpkNTdwTzlrUVFnS05tTFlz
-K0Era2t3OENoL2RhMjJ4WmFjZXhkYTIrUy9zdER5QXNjbHE1RnRJYzRWWXVnCm4vY0FhUyt6Ynhq
-TkdNaXJEVTZTYWxaZDJUenFZR0ZjWlcrazNQVT0KPWdSczgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000030210e063b20d9f7--
