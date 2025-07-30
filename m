@@ -1,173 +1,108 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C960E19C556
-	for <git@vger.kernel.org>; Wed, 30 Jul 2025 22:05:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBCF139B
+	for <git@vger.kernel.org>; Wed, 30 Jul 2025 23:18:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753913155; cv=none; b=JRak64R7LiEpjsmICryrvqYYmh+niseXalieijHTu3pSsHQFoMNwOutbtT9BfMrA6xkNqc53Ii+RNpmTbHPqFmEjJKNlEQ/A+WF12IzPxeULl0DyU4QdNNXyiZnHtpoSjS6zpO3EzQNTrXQ/WM2e/zyevY/m78nUaGPR9rscR7k=
+	t=1753917503; cv=none; b=aCu077/UdSMZS3V7uMTrmqD5qr+pV7/RcI/r+lU7fUvpj4H1uBoxVhwhukSEDImIHvtapADZfLbrFzBAuc8VkUD1ERqA5NrzyeZaFl9owx+AZ/x2g0Rm3CwfDFao3tc8vy9nUCrjezjuqyKIvfbi4QLPFNE7fJ18bSOZPSNCTHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753913155; c=relaxed/simple;
-	bh=Yp6i9qLTViyDIbp972KaGTigBA/eVoDeKabxSaVrn8A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PvVJV3vpaeP0IZIiJ4B+uiqX9YG4TgGCjr+Q07/DRWDr2ixfz8LKUcdMVz6p5z+QHFRnrqJYcBlnQg16hS+MZE2vIZRVLUWEZXVf9X+tTxnMPBA3txD3f6pwixIc8C6Rz1aVsljm98oO7NnMVS9HFlHsf3BWKzO5ToC9su0d3fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EFjBnuHk; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753917503; c=relaxed/simple;
+	bh=vI6G7mZQHS/c6noR5I8no7iYJlEEbV8JLz8J24n8eTc=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Yk5mXF9Zdw2Lnx4b58YI+YP5EQN3eucF15rSExIgDkDxISeOmCSkaIc9moRaGJIGiEBV6x3zE5zyU5NQ3kDsOHwisIKiRF/3gCTchVcdHxp1COTTjXFVI73Won6W3SWqcUE1itQdKIVzXqzhnWIG1GospcZ/iX2byEvbS6sGInk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d/fnqlrH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z+vbBwG1; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EFjBnuHk"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ae36dc91dc7so43359866b.2
-        for <git@vger.kernel.org>; Wed, 30 Jul 2025 15:05:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753913151; x=1754517951; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3R4/A5N2AHlLcknDPi3ezS4YROAfUrK9X6h83glDJeU=;
-        b=EFjBnuHkq7Tl1dfQNCiii6Dus5hLFtSUPUs8PXEx/0XnDcZyqZ8jdrlVtT4wDMH8X7
-         SV2SsqKTCpWI8hHlNRDhN3d0mgkD3UxalFmq8bPQH7p3nIYic5QUdTDKIaxVz8ZdY/Ox
-         y7Na7o154Xgh0KBQ2/2p+riPQW4371fbdfDnmrdUAzt1z1A2HYR9OWLl6Hd0Gr1YaICE
-         OYqPOmyBFnARQKZ0lBBlEbanB32oVPwK9v5/1Z+dH3AxADXUbRimPPeJLffHwHUa64e3
-         xxozk93UjrpJ+1VXD/S3WWcdChLNgqif3cCs0rYbqqkR3tG6U/MQrzte/8pQezruBAB2
-         Eq2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753913151; x=1754517951;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3R4/A5N2AHlLcknDPi3ezS4YROAfUrK9X6h83glDJeU=;
-        b=o3fbH6mwEXXc5JWxjxvcvcw+g61GUyvexf9/AY76iLId85cTHsnIUr2+1UWdtEj40I
-         S8np1E5KGn3sUARB/Sk1eIwTJVuJyBM5vppyzvo9Rn4XFc1o9CEpMR4lvXjDw81ia45z
-         sCLZWQZX7Po0CgT75f3kbEaN6XOigCDIF/GCnkclD2L8IRnStOG3NNDSOWEPIJV6D2mG
-         333QqDd1uktKuNjcaV5l9gcqE/R8MUccKSqPoymDzw+4c2BhQiOvFvgcKw5Y6nz5Csku
-         mMysOxvvG8+PL0LfGCPswDSCnwvNX6Zj9Ih0166lpAfapLoC0mv5Su8LkwZO2xxIxyp/
-         di8w==
-X-Gm-Message-State: AOJu0Ywa+8IWtorOXYcoOMh/QMAki47ohPCQcPzIYUFllYdtkMt1vtwD
-	j4g1FRLKHYtuOFsVSe+kb6dhia+1nvYPHhZ96fojhXVVji5AWm8ZEVn/uTdXMHIy1k/bcJNCISR
-	jmhC3OwfraPpW5c8xZfjh0mWX+F1GRXA=
-X-Gm-Gg: ASbGncvUfvvhaTgpoSvP+cyJ9cPHuULWAVvbIHlYEp1RN+6vnLfFAqE+ht/nFl5x5f3
-	gREucHsweWmtoTqWKXLVwUTQ4ZfyFpFXKEGvNNSsSeNm9EuLcnEw3L7z4QXT52j8fYUUJxZe/Lr
-	/6J7k551VXe4rEqV0GcV504Kal0qxU2PANvphK8qusPkC77Y1WiPmZsnCrFhcF4i40f+cIiKLWh
-	KKWBt3O8yrtrlv2YCv/mFHY20nW2A7uuSUJ1HMKIg==
-X-Google-Smtp-Source: AGHT+IHCiwByshZtMBJg6n34s2J45GERA2sOuRwXMg8Sd/XNAVbjJupdMd2l5nqLNglm362Jd2YehEi4QT3HoBxH7N0=
-X-Received: by 2002:a17:907:d28:b0:ae0:ba0f:85af with SMTP id
- a640c23a62f3a-af8fda42fefmr566207166b.51.1753913150874; Wed, 30 Jul 2025
- 15:05:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d/fnqlrH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z+vbBwG1"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id A49B8EC16FB;
+	Wed, 30 Jul 2025 19:18:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 30 Jul 2025 19:18:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1753917498; x=1754003898; bh=SidvuKrV5oraPLiZa+mXL7K/Kc7gMjb1
+	jm+tyUt2FD8=; b=d/fnqlrHLzv8nbV2jfbX9uJafGhuZ4BQ5U/QMc71k+NZAFuD
+	wsVWXKMY+niaQTElMxdXJHfV41YSHIJTU+N1v9UwZfTBVG8tExB5km9YLdXbw27J
+	lQVGWaOiWPr9BBTUAGX5C/gw0/c2RCTacI6tOSgiZZAiMfpLIhnDSIYmbaFlh/tC
+	KtaHIrSDX/4osGCJ3vlOuY6dLcPjPYkeiqQBdhPtkoLBRhwGe/BTVhEbabi+W36+
+	22FeOUYNicij55a1vQWObt1+UraQRJo/kNqtjwjab39PQY0Yw/82HQPJYWovv9km
+	PaMhG957bDWFmEii8o8PQ/b1PNYf1f4n8CaeLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753917498; x=
+	1754003898; bh=SidvuKrV5oraPLiZa+mXL7K/Kc7gMjb1jm+tyUt2FD8=; b=Z
+	+vbBwG18PS1/cHtgnFmItCEGMO9sRKWZMAz8vOiUPUhHVA7XrZDYt7Zz4XaHgGLG
+	z7oY5K5MEBHR0bQsg/p4Fz88x+3LEt1GfzMgmoXfQY5KB2jAl8VrMzubEaZTnkdr
+	zFwMoDrraDN8vw246Y2QzvYG5G5S6WlLRFXvckA8WSPw0Q6NOaTpQPXdsvuFSnfb
+	gY+Zmx1YRHNqN0BtbOfSG0fuzCcAsEX8QHY4Pgf9cr5kbs3Q5jJHXnQw4QP38fxt
+	pmZoyJyLJr9eUpGJM4sdJDGOKf0kmB93PnRxiK44ItkR0hWIR+iNwIG3mCWyMuUA
+	YNAhFKXcVrazHIPvEwRAA==
+X-ME-Sender: <xms:OqiKaAv-AsI24bPkJNd-liG5vo9il96aLRh_D9AQGbh6GxGuFAn7jw>
+    <xme:OqiKaNoC8TsMvUisL9S_ZvU8h9HCuQJMtBhP3d-FYBbpcZHB82tRL2m94p5NEh0lb
+    PGW5iagqzHwG-q5yw>
+X-ME-Received: <xmr:OqiKaNlbAOOMYvH1P2fS-k4hVP5G8td-8UddvoruMpqXDpeq8oGG8Osr7ln978x9chnX1ZFWAfN_uTcU0mke6k3pGGxVENfJcPtJYzc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelledvfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvufffkfgfgggtsehttdertddtredtne
+    cuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohig
+    rdgtohhmqeenucggtffrrghtthgvrhhnpeduieetkeeijeeuueekffekfeekheeiudetgf
+    ekvdfghfetgfffteffuddvveeiudenucffohhmrghinhepthgvshhtqdhhrghshhhmrghp
+    rdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:OqiKaByPfr3CyR6ylEvi-pQk1nxLclRGSM5tUujkyMILfC03ZmeLbg>
+    <xmx:OqiKaFkC3jYiVFfuj0NNhMZrApsWVPSw4qqypmjxyVFNe-jDoUROCw>
+    <xmx:OqiKaKeoQwZiIxD_J2C5CB-RpElP3atXwFQwcQIVpzGk2cRdAk66Ig>
+    <xmx:OqiKaLrQGnLOWQsYtrG00KmWv4P3CoUor1UFMVaHujN-n805S1GPBA>
+    <xmx:OqiKaDTbOuvYyH1JQGJ_5vD-br86yPZIRZIvRxc5-gflYw59yzMUkct0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 30 Jul 2025 19:18:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] test-hashmap: document why it is no longer used but still
+ there
+Date: Wed, 30 Jul 2025 16:18:16 -0700
+Message-ID: <xmqqwm7ptghz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250726165320.4039-1-ben.knoble+github@gmail.com>
- <20250726165320.4039-3-ben.knoble+github@gmail.com> <xmqqjz3sxro3.fsf@gitster.g>
-In-Reply-To: <xmqqjz3sxro3.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Wed, 30 Jul 2025 18:05:39 -0400
-X-Gm-Features: Ac12FXxxnyq_ZbLrLb9_-AprASoupGk4ztKDDWMnFVfOsLIfyvWY3YrpLUNKZ-0
-Message-ID: <CALnO6CDg5tJXNG2V1qXb_Qds+3tDM6cUgbiDO7i3Fy_wc0=FPw@mail.gmail.com>
-Subject: Re: [PATCH 2/4] parse-options: name flags passed to usage_with_options_internal
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Andrzej Hunt <ajrhunt@google.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Jul 28, 2025 at 11:26=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
->
-> > When reading or editing calls to usage_with_options_internal, it is
-> > difficult to tell what trailing "0, 0", "0, 1", "1, 0" arguments mean
-> > (NB there is never a "1, 1" case).
-> >
-> > Give the flags readable names to improve call-sites.
->
-> It is a good idea to explicitly say that this step introduces no
-> change in behaviour, and only changes the way how these 0/1 are
-> spelled.
+As I ended up wasting a few dozen minutes looking for the reason why
+this is still here, help future developers by saving them from
+wasting their time by documenting why this code that apparently is
+not used by anybody is still here.
 
-Woops; definitely meant for that to be clearer. Will touch up.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/helper/test-hashmap.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
->
-> > Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> > ---
-> >  parse-options.c | 32 ++++++++++++++++++++++----------
-> >  1 file changed, 22 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/parse-options.c b/parse-options.c
-> > index 5224203ffe..c3222cc9bb 100644
-> > --- a/parse-options.c
-> > +++ b/parse-options.c
-> > @@ -953,10 +953,21 @@ static void free_preprocessed_options(struct opti=
-on *options)
-> >       free(options);
-> >  }
-> >
-> > +enum usage_style {
-> > +     style_normal =3D 0,
-> > +     style_full =3D 1,
-> > +};
-> > +
-> > +enum usage_output {
-> > +     to_out =3D 0,
-> > +     to_err =3D 1,
-> > +};
->
-> These are very much internal implementation detail, so I am not sure
-> if this churn is a good thing, though.
->
-> For example, it ought to be sufficient, for the purpose of improved
-> readability, to instead doing this
->
-> >  static enum parse_opt_result usage_with_options_internal(struct parse_=
-opt_ctx_t *,
-> >                                                        const char * con=
-st *,
-> >                                                        const struct opt=
-ion *,
-> > -                                                      int, int);
-> > +                                                      enum usage_style=
-,
-> > +                                                      enum usage_outpu=
-t);
->
-> just do
->
->                 int full_usage,
->                 int usage_to_stderr);
->
-> here.  Dropping the parameter names in the function prototype is
-> allowed, and we encourage to do so in our codebase but _only_ when
-> the meaning of each parameter is obvious from their type.  The first
-> 3 parameters we see above are of distinct types and except for the
-> second one being the usage string given to the users, they should be
-> obvious.  But the last two unnamed integers are not obvious and they
-> should have been spelled out---otherwise a developer who is adding
-> a new callsite cannot work from the prototype alone and has to go to
-> the implementation to figure out what to pass.
-
-Yeah, but that relies on folks reading the prototype, no? I wanted it
-to be easier to read at the call sites (_without_ special tooling,
-preferably).
-
-I'll snip the rest, though, due to your downthread suggestion to use
-#define's instead, which I think gives the result I want without extra
-churn in other places.
-
-
-> > @@ -1088,7 +1099,7 @@ enum parse_opt_result parse_options_step(struct p=
-arse_opt_ctx_t *ctx,
-> >               }
-> >
-> >               if (internal_help && !strcmp(arg + 2, "help-all"))
-> > -                     return usage_with_options_internal(ctx, usagestr,=
- options, 1, 0);
-> > +                     return usage_with_options_internal(ctx, usagestr,=
- options, style_full, to_out);
->
-> But this is not an improvement as-is.  Wrap long lines or the result
-> is even harder to read.
-
-Ah, indeed: I wasn't sure where to draw the line there.
+diff --git c/t/helper/test-hashmap.c w/t/helper/test-hashmap.c
+index 7782ae585e..16a3145c3a 100644
+--- c/t/helper/test-hashmap.c
++++ w/t/helper/test-hashmap.c
+@@ -137,6 +137,11 @@ static void perf_hashmap(unsigned int method, unsigned int rounds)
+  * Read stdin line by line and print result of commands to stdout:
+  *
+  * perfhashmap method rounds -> test hashmap.[ch] performance
++ *
++ * NOTE: this is not used by any of our mechanized build & test
++ * procedure, after 3469a236 (t: port helper/test-hashmap.c to
++ * unit-tests/t-hashmap.c, 2024-08-03).  See the log message of that
++ * commit for the reason why this is still here.
+  */
+ int cmd__hashmap(int argc UNUSED, const char **argv UNUSED)
+ {
