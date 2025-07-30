@@ -1,319 +1,289 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A936D1EB5DB
-	for <git@vger.kernel.org>; Wed, 30 Jul 2025 06:21:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD011EF09B
+	for <git@vger.kernel.org>; Wed, 30 Jul 2025 06:27:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753856465; cv=none; b=Fmtu+6ZjL507Rw56bp6yUZAeradzM2MU1RLHkSpH7b2qxciy1iesbHe/Ib9z5VrM86+RWJLkLgELkF7WAtYzsW4l6h2yoegDFiCUmGMhocIaTmTZP5rKaVOx50kupEEMkFcK+TBxSPCaXrbTZYukj3dbWmmUdBSdxWkOVNtTdDI=
+	t=1753856832; cv=none; b=X8tdws3dez/p1vyeVLzid9MwNojDsL2ltt+1l2V9scm/C0BN3lAlirY6YZzRUpITUvR6EUEJRPoA3ioC066y0KwI/aRYYbYaJCNX/m/7w/Y+xNsYKccy3gJxpp/RD+OZuPEhFyc4RkWfD2q6L2rZhr9RNuVfQvsPLJuxHE9+ik4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753856465; c=relaxed/simple;
-	bh=g/oRpgQSHEQ4xT4kT/dVuzDzMEIUwZrGtwj6Oyt5qvw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SP8p+jpzK3ugYQN4e5gTKF+LvUMvDj70B/mZkRMmXxw90ze1RiexpUd9NkDgySgmh/oGLfA/ioCXpLNILeilJHdSC7sdI69Fnm6IlX94lAhw/yH+f5+wveHC4T6T8DddznZa7+RFR9ly/FUr2QXnn5GJuz821NmcEDGxPNmUIAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fgpEptmA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a3DG43nX; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1753856832; c=relaxed/simple;
+	bh=7ju7DzbudbF3FEMMrdZ8X7p6b2HJlQc5rlG79V86HxE=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Lz9NCbXUDjvYJMHs+IsrA+cKOnGxSaRlgih0UFuRFMRa9DRwJowHWQsz4u7AgQNlk+R+6esEwDURNBXGEAQ0TiswoxQz+hBLQQIfCikfgGREKQvQ0y1EXngehOf07CugRQdyXiVTYj+MGJ9yoPcgtqU/RC9kGmLeKdzxHbGDk+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FHjK97yr; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fgpEptmA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a3DG43nX"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B06437A237D;
-	Wed, 30 Jul 2025 02:21:00 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 30 Jul 2025 02:21:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1753856460; x=1753942860; bh=u5MjwDHNkq
-	Lt9ESl+aMxCoQKQMhcdEHpNnjQ4yE5pGI=; b=fgpEptmAG8HNNuA+JvTFwg7rdm
-	Rcoi7CE2C0u5sTSI8WPkKDnDXNTFlgkCvG43OEsEeC6CQzQNJGCvTCAOSOyl+c3t
-	t6/SbWCc4N4hGLvv06MndP6nwH5nZnFgd9TU8yDMvoe97sTJGJ1cDdl0W+qJ5B4g
-	/Vbnab6+/ZRsMmSKAKirkFB0PY/mAHRLDn620/011uDTNPjleGOA5135jDHuPGc5
-	WE9P2dYXNMoPsyVv8B+1uKq5Ab1qUJpxTYS4PaLn8Po5V5OfFmeZKrfIgLnm5TOF
-	pTIN96jiCrroMEhWKXjOkupoaG91exAMJ/aFngrpblc8+EWCYCgOYDcRKwdQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753856460; x=1753942860; bh=u5MjwDHNkqLt9ESl+aMxCoQKQMhcdEHpNnj
-	Q4yE5pGI=; b=a3DG43nXVLOCZcue5HLef36uh7giRXb6kqMAUq5z5Pq62/elYDt
-	g6Tz+ohm26dbDjBfaUT+hyU6DgG3lNBHKrN5wKe6tjZdGITw5ICOt3neoaVEfSpW
-	6pPH6yxh7YZzJVwIwKF5YF4UoVnrfLPiGSoIRwe4sZR/zCAZDcMNTAu3rJsK7jot
-	VNiEqcknHa06hJ+dajEnepVfYw8fbXUgzyLph0PKOGEHo1kmvbCHBPPO28EUMb+E
-	40JHvpWP9Tc4KMtFuah2BgG47bxJUwXtcN+Ctleilx/0IqVURTBAdNwUggOTZiQc
-	UusKqJP0o+j9B9ONEUzKfV2qXp04LdwnbOQ==
-X-ME-Sender: <xms:zLmJaHXCBKGnTCkgXEmDHF3vkgTxLpS-U9tJFtqgVvsCjpaFgYizbg>
-    <xme:zLmJaKL3gf0P3-HXKDNzKmIQTW27QPUfpyaiKvFT7Ox4AT8m1grmIlM0Lgd_qoRQH
-    xrV7PqSuvDySvsZTw>
-X-ME-Received: <xmr:zLmJaP8JSlNOT_vQ3XojsJJjC566Md_unm1SgEw2gJTET6BVSQy1kdidnetFytIbsmLDm-1g8r6ajV1QyJ1W-gykfI13mfga5PLy2VWy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeljedulecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehtohhonhesihhothgtlhdrtghomh
-X-ME-Proxy: <xmx:zLmJaFKR1gGlOzVT19V2qvzj-pS619MF9aVyCzwKFDOzoT1lN1VKNA>
-    <xmx:zLmJaMnZGfEqv_YF0W9rLA76Q3OWMClticm4lht46Q5ZRzDSArC-Cw>
-    <xmx:zLmJaBNk43z3R8y-5GX1-jOcpVCcIQ2xjMsMIB4VtekcyPq7rWgvtA>
-    <xmx:zLmJaK2Ua08YUVUdo9JyZxC11Q0cQldJ0-u7pUTXwAE_5EWkyXgBnA>
-    <xmx:zLmJaEG5CF0Rf3Z1TLIPp3mjvNx7jKtRo-2g3bUbJSz9QpOTItV86d2j>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Jul 2025 02:20:59 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 97adba1d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 30 Jul 2025 06:20:58 +0000 (UTC)
-Date: Wed, 30 Jul 2025 08:20:55 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 3/3] diff: teach tree-diff a max-depth parameter
-Message-ID: <aIm5x4kah8608Ba5@pks.im>
-References: <20250729-toon-max-depth-v1-0-c177e39c40fb@iotcl.com>
- <20250729-toon-max-depth-v1-3-c177e39c40fb@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FHjK97yr"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3b78127c5d1so2287908f8f.3
+        for <git@vger.kernel.org>; Tue, 29 Jul 2025 23:27:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753856828; x=1754461628; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=lQpnE7wMx6HoitNZpVDK3m4ZjgWbJ6QqrOu8d5nokfo=;
+        b=FHjK97yryCyNCktVvM03U5X12leiN8GQ07WpyYEmGeBeOCaYud9fI+TlXecqsBcqdK
+         c7GyFTAkmhQLaEkgjXWoIMWwLZ0F0PkEtr+rMr1Gb80Ro3AJRopNFBY3eAU4K8BrltJI
+         baZACwkUNersSYpIfXoMMsV8fb8XjlDg6wPcz3sc9Cu602LfwTs8YT++HH20+DmWaLnC
+         TWhgOe5GFP5gyIcW4J7j+Moi2wxzTAYw97/w1Wtcxg22/63MJG9hYufNvWXoc+fKD+cc
+         LYuKuL43OiuwoFi75zFlYWGHjxVEi6oiGaLdNiQmETfFSrAVun4GqIlnzZuRN+Zb+RZ0
+         xCPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753856828; x=1754461628;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lQpnE7wMx6HoitNZpVDK3m4ZjgWbJ6QqrOu8d5nokfo=;
+        b=Gn+YfxYfKgTG0DRM/8Oln9ICoMLQtWE4QXSiMrTyeNINZxjImqTvb6K5LPa+FWkEJ+
+         t478RUFGRO81Xi7EOS+JVm5N9dbl7JwPap7CfBh7brpBrMTnkjvfEFiu9H4O/7AMJSy8
+         UjiWsEm5hMK4lcMiHsKvlcOVA0Ia+x7v6ZWp+TA2QVkIyHRmSw2LK/3xlS06NJKaTKh7
+         a6cSUeJBfQh2gdmMRHeq867K8Naz12fMZQyTBE0s9uTKGl458DewF0qKsSJnIY/XOgOH
+         IZIXbZmts9orTAksnjRQQm1o9H7HOmFB57UEcWkLCQK/mJiRM/ndYNk6A9aKEkh7FWi0
+         RsSg==
+X-Gm-Message-State: AOJu0Yx/FFdAldckm6SQ+uIUta0UohpEbw4h5OCNs9jKuRwFzZlp9pzn
+	phnNAPe3aJ3wxhlrTPn64/FfvirC4fIcrC7nenH3m7OZalPEsx62u3wYmOHbUQ==
+X-Gm-Gg: ASbGncvnKKkDZOcH9xXz3HIh8S2bmbja0XCM/3kYbyaFuSfUY5Ug7CxIJcb8VLpvj7J
+	u3Q0WGHsLsfN0ILUIlUXURgA9NvEu1Sbuhq4beAoQiLru4Y0dMhe0maKyf/nHsqcj9w7g6KFi6n
+	NKlxci8tozXuBOOQU1kerc1D66TSmwU83YAlDuCwsx0kqtgVBjBaQuylfftbx7ReiTSfJzvCY6t
+	GGFaSujlaoxB+saZv2PHRYNoif36nZpxzhhPlx2+IfygIV7lpEZTt131PZ/niE5X+8D0FNJt3bB
+	GFCS7B0LV645/mCxFDvxfCyuFgUgS4fkNeSieZLNQSKntO6MZil3Mq20fzpaXpL3I6FL+s394fQ
+	/CtEsmpQ+fSvxibsj3G/W2jU=
+X-Google-Smtp-Source: AGHT+IFxb5PGnjh+D6aIpa1hEbILcrzqQgk2SbveKugU40i+9OKlg43sWOhHKTgWBxUOME50CgaSfw==
+X-Received: by 2002:a05:6000:4011:b0:3b7:899c:e87d with SMTP id ffacd0b85a97d-3b794ff16f9mr1291406f8f.30.1753856827840;
+        Tue, 29 Jul 2025 23:27:07 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b788f5f27esm8632097f8f.14.2025.07.29.23.27.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Jul 2025 23:27:07 -0700 (PDT)
+Message-Id: <pull.1937.git.1753856826464.gitgitgadget@gmail.com>
+From: "Tach via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 30 Jul 2025 06:27:06 +0000
+Subject: [PATCH] status: add --json output format to git status
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250729-toon-max-depth-v1-3-c177e39c40fb@iotcl.com>
+To: git@vger.kernel.org
+Cc: Tach <tacherasasi@gmail.com>,
+    tacherasasi <tacherasasi@gmail.com>
 
-On Tue, Jul 29, 2025 at 08:57:44PM +0200, Toon Claes wrote:
-> From: Jeff King <peff@peff.net>
-> 
-> When you are doing a tree-diff, there are basically two options: do not
-> recurse into subtrees at all, or recurse indefinitely. While most
-> callers would want to always recurse and see full pathnames, some may
-> want the efficiency of looking only at a particular level of the tree.
-> This is currently easy to do for the top-level (just turn off
-> recursion), but you cannot say "show me what changed in subdir/, but do
-> not recurse".
-> 
-> This patch adds a max-depth parameter which is measured from the closest
-> pathspec match, so that you can do:
-> 
->   git log --raw --max-depth=1 -- a/b/c
-> 
-> and see the raw output for a/b/c/, but not those of a/b/c/d/
-> (instead of the raw output you would see for a/b/c/d).
+From: tacherasasi <tacherasasi@gmail.com>
 
-Hm, okay. So what happens if I pass both "a/b" and "a/b/c"? Would I see
-the contents of both trees?
+Add a new --json flag to 'git status' that outputs repository state
+in a structured JSON format. This enables reliable machine parsing
+of status information for tools and automation.
 
-> diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-> index f3a35d8141..46e6ed2d67 100644
-> --- a/Documentation/diff-options.adoc
-> +++ b/Documentation/diff-options.adoc
-> @@ -893,5 +893,33 @@ endif::git-format-patch[]
->  	reverted with `--ita-visible-in-index`. Both options are
->  	experimental and could be removed in future.
->  
-> +--max-depth=<n>::
-> +
-> +	Limit diff recursion to `<n>` levels (implies `-r`). The depth
-> +	is measured from the closest pathspec. Given a tree containing
-> +	`foo/bar/baz`, the following list shows the matches generated by
-> +	each set of options:
-> ++
-> +--
-> + - `--max-depth=0 -- foo`: `foo`
-> +
-> + - `--max-depth=1 -- foo`: `foo/bar`
-> +
-> + - `--max-depth=1 -- foo/bar`: `foo/bar/baz`
-> +
-> + - `--max-depth=1 -- foo foo/bar`: `foo/bar/baz`
+The JSON output includes:
+- Branch information (name, detached state, ahead/behind counts)
+- Staged files array
+- Unstaged files array
+- Untracked files array
+- Ignored files array (with --ignored flag)
 
-This partially answers my question, as we talk about the scenario where
-we have "foo/bar/baz", but no "foo/qux". If we had the latter, would
-that also be displayed here because it's 1 level deep from the closest
-matching pathspec ("foo")?
+Implementation details:
+- Add STATUS_FORMAT_JSON to wt_status_format enum
+- Add JSON output option to git status and git commit
+- Implement JSON formatting helpers for arrays and branch info
+- Structure output for easy parsing and future extensibility
 
-> + - `--max-depth=2 -- foo`: `foo/bar/baz`
-> +--
-> ++
-> +If no pathspec is given, the depth is measured as if all
-> +top-level entries were specified. Note that this is different
-> +than measuring from the root, in that `--max-depth=0` would
-> +still return `foo`. This allows you to still limit depth while
-> +asking for a subset of the top-level entries.
-> ++
-> +Note that this option is only supported for diffs between tree objects,
-> +not against the index or working tree.
+Example:
+  $ git status --json
+  {
+    "branch": {
+      "current": "main",
+      "detached": false
+    },
+    "staged": ["file1.txt"],
+    "unstaged": ["file2.txt"],
+    "untracked": ["file3.txt"]
+  }
 
-Let's also note that wildcard pathspecs aren't supported.
+This provides a robust alternative to parsing traditional output
+formats, making it easier to build reliable tools and automation
+around Git status information.
 
->  For more detailed explanation on these common options, see also
->  linkgit:gitdiffcore[7].
-> diff --git a/diff-lib.c b/diff-lib.c
-> index 244468dd1a..fa7c24c267 100644
-> --- a/diff-lib.c
-> +++ b/diff-lib.c
-> @@ -115,6 +115,9 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
->  	uint64_t start = getnanotime();
->  	struct index_state *istate = revs->diffopt.repo->index;
->  
-> +	if (revs->diffopt.max_depth_valid)
-> +		die("max-depth is not supported for worktree diffs");
+Signed-off-by: Tachera Sasi <tachera@ekilie.com>
+Signed-off-by: tacherasasi <tacherasasi@gmail.com>
+---
+    status: add --json output format to git status
 
-This and the following error messages should be made translatable.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1937%2FtacheraSasi%2Ffeature%2Fjson-status-output-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1937/tacheraSasi/feature/json-status-output-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1937
 
-> diff --git a/diff.c b/diff.c
-> index dca87e164f..c03a59ac3b 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -5622,6 +5625,18 @@ static int diff_opt_rotate_to(const struct option *opt, const char *arg, int uns
->  	return 0;
->  }
->  
-> +static int diff_opt_max_depth(const struct option *opt,
-> +			      const char *arg, int unset)
-> +{
-> +	struct diff_options *options = opt->value;
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +	options->flags.recursive = 1;
-> +	options->max_depth = strtol(arg, NULL, 10);
+ builtin/commit.c |  9 ++++-
+ wt-status.c      | 98 ++++++++++++++++++++++++++++++++++++++++++++++++
+ wt-status.h      |  1 +
+ 3 files changed, 107 insertions(+), 1 deletion(-)
 
-We're missing error handling in case the argument is not an integer. We
-should probably use `git_parse_unsigned()` instead.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index fba0dded64a..f1db4fdfd9a 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1540,6 +1540,9 @@ struct repository *repo UNUSED)
+ 		OPT_SET_INT(0, "long", &status_format,
+ 			    N_("show status in long format (default)"),
+ 			    STATUS_FORMAT_LONG),
++		OPT_SET_INT(0, "json", &status_format,
++		    N_("show status in JSON format"),
++		    STATUS_FORMAT_JSON),
+ 		OPT_BOOL('z', "null", &s.null_termination,
+ 			 N_("terminate entries with NUL")),
+ 		{
+@@ -1603,7 +1606,8 @@ struct repository *repo UNUSED)
+ 		       prefix, argv);
+ 
+ 	if (status_format != STATUS_FORMAT_PORCELAIN &&
+-	    status_format != STATUS_FORMAT_PORCELAIN_V2)
++	    status_format != STATUS_FORMAT_PORCELAIN_V2 &&
++	    status_format != STATUS_FORMAT_JSON)
+ 		progress_flag = REFRESH_PROGRESS;
+ 	repo_read_index(the_repository);
+ 	refresh_index(the_repository->index,
+@@ -1735,6 +1739,9 @@ int cmd_commit(int argc,
+ 		OPT_SET_INT(0, "long", &status_format,
+ 			    N_("show status in long format (default)"),
+ 			    STATUS_FORMAT_LONG),
++		OPT_SET_INT(0, "json", &status_format,
++		    N_("show status in JSON format"),
++		    STATUS_FORMAT_JSON),
+ 		OPT_BOOL('z', "null", &s.null_termination,
+ 			 N_("terminate entries with NUL")),
+ 		OPT_BOOL(0, "amend", &amend, N_("amend previous commit")),
+diff --git a/wt-status.c b/wt-status.c
+index 454601afa15..7192fb4d057 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -2564,6 +2564,101 @@ static void wt_porcelain_v2_print(struct wt_status *s)
+ 	}
+ }
+ 
++
++static void wt_json_print_string_array(struct wt_status *s, const char *name, struct string_list *list)
++{
++	int i;
++	fprintf(s->fp, "  \"%s\": [", name);
++	for (i = 0; i < list->nr; i++) {
++		if (i > 0)
++			fprintf(s->fp, ", ");
++		fprintf(s->fp, "\"%s\"", list->items[i].string);
++	}
++	fprintf(s->fp, "]");
++}
++
++static void wt_json_print_change_array(struct wt_status *s, const char *name, int change_type)
++{
++	int i;
++	struct string_list files = STRING_LIST_INIT_DUP;
++
++	for (i = 0; i < s->change.nr; i++) {
++		struct wt_status_change_data *d;
++		struct string_list_item *it;
++		it = &(s->change.items[i]);
++		d = it->util;
++
++		if ((change_type == WT_STATUS_UPDATED && d->index_status &&
++		     d->index_status != DIFF_STATUS_UNMERGED) ||
++		    (change_type == WT_STATUS_CHANGED && d->worktree_status &&
++		     d->worktree_status != DIFF_STATUS_UNMERGED)) {
++			string_list_append(&files, it->string);
++		}
++	}
++
++	wt_json_print_string_array(s, name, &files);
++	string_list_clear(&files, 0);
++}
++
++static void wt_json_print_branch_info(struct wt_status *s)
++{
++	struct branch *branch;
++	const char *branch_name;
++	int ahead = 0, behind = 0;
++
++	fprintf(s->fp, "  \"branch\": {\n");
++
++	if (s->branch && !s->is_initial) {
++		if (!strcmp(s->branch, "HEAD")) {
++			fprintf(s->fp, "    \"current\": \"HEAD\",\n");
++			fprintf(s->fp, "    \"detached\": true");
++		} else {
++			if (skip_prefix(s->branch, "refs/heads/", &branch_name)) {
++				fprintf(s->fp, "    \"current\": \"%s\",\n", branch_name);
++				fprintf(s->fp, "    \"detached\": false");
++
++				branch = branch_get(branch_name);
++				if (branch && branch->merge && branch->merge[0] && branch->merge[0]->dst) {
++					if (!stat_tracking_info(branch, &ahead, &behind, NULL, 0, 0)) {
++						fprintf(s->fp, ",\n    \"ahead\": %d,\n    \"behind\": %d", ahead, behind);
++					}
++				}
++			} else {
++				fprintf(s->fp, "    \"current\": \"%s\",\n", s->branch);
++				fprintf(s->fp, "    \"detached\": false");
++			}
++		}
++	} else {
++		fprintf(s->fp, "    \"current\": null,\n");
++		fprintf(s->fp, "    \"detached\": false");
++	}
++
++	fprintf(s->fp, "\n  }");
++}
++
++static void wt_json_status_print(struct wt_status *s)
++{
++	fprintf(s->fp, "{\n");
++
++	wt_json_print_branch_info(s);
++	fprintf(s->fp, ",\n");
++
++	wt_json_print_change_array(s, "staged", WT_STATUS_UPDATED);
++	fprintf(s->fp, ",\n");
++
++	wt_json_print_change_array(s, "unstaged", WT_STATUS_CHANGED);
++	fprintf(s->fp, ",\n");
++
++	wt_json_print_string_array(s, "untracked", &s->untracked);
++
++	if (s->ignored.nr > 0) {
++		fprintf(s->fp, ",\n");
++		wt_json_print_string_array(s, "ignored", &s->ignored);
++	}
++
++	fprintf(s->fp, "\n}\n");
++}
++
+ void wt_status_print(struct wt_status *s)
+ {
+ 	trace2_data_intmax("status", s->repo, "count/changed", s->change.nr);
+@@ -2583,6 +2678,9 @@ void wt_status_print(struct wt_status *s)
+ 	case STATUS_FORMAT_PORCELAIN_V2:
+ 		wt_porcelain_v2_print(s);
+ 		break;
++	case STATUS_FORMAT_JSON:
++		wt_json_status_print(s);
++		break;
+ 	case STATUS_FORMAT_UNSPECIFIED:
+ 		BUG("finalize_deferred_config() should have been called");
+ 		break;
+diff --git a/wt-status.h b/wt-status.h
+index 4e377ce62b8..e929af832b2 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -74,6 +74,7 @@ enum wt_status_format {
+ 	STATUS_FORMAT_SHORT,
+ 	STATUS_FORMAT_PORCELAIN,
+ 	STATUS_FORMAT_PORCELAIN_V2,
++	STATUS_FORMAT_JSON,
+ 
+ 	STATUS_FORMAT_UNSPECIFIED
+ };
 
-> @@ -5894,6 +5909,10 @@ struct option *add_diff_options(const struct option *opts,
->  		OPT_CALLBACK_F(0, "diff-filter", options, N_("[(A|C|D|M|R|T|U|X|B)...[*]]"),
->  			       N_("select files by diff type"),
->  			       PARSE_OPT_NONEG, diff_opt_diff_filter),
-> +		OPT_CALLBACK_F(0, "max-depth", options, N_("<depth>"),
-> +			       N_("maximum tree depth to recurse"),
-> +			       PARSE_OPT_NONEG, diff_opt_max_depth),
-> +
->  		{
->  			.type = OPTION_CALLBACK,
->  			.long_name = "output",
-
-Okay. We don't use `OPT_UNSIGNED()` because we also want to impliy the
-`recursive` flag. Wouldn't it be simpler though to use `OPT_UNSIGNED()`
-and then set the flag in `diff_setup_done()` like we already do for a
-couple of other options?
-
-> diff --git a/diff.h b/diff.h
-> index 62e5768a9a..e3767df237 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -404,6 +404,15 @@ struct diff_options {
->  	struct strmap *additional_path_headers;
->  
->  	int no_free;
-> +
-> +	/*
-> +	 * The extra "valid" flag is a slight hack. The value "0" is perfectly
-> +	 * valid for max-depth. We would normally use -1 to indicate "not set",
-> +	 * but there are many code paths which assume that assume that just
-
-Double "assume that".
-
-> +	 * zero-ing out a diff_options is enough to initialize it.
-> +	 */
-> +	int max_depth;
-> +	int max_depth_valid;
-
-So in that case, shouldn't we convert `max_depth` to be unsigned and
-`max_depth_valid` to be a boolean?
-
-> diff --git a/tree-diff.c b/tree-diff.c
-> index e00fc2f450..acd302500f 100644
-> --- a/tree-diff.c
-> +++ b/tree-diff.c
-> @@ -48,6 +49,73 @@
->  		free((x)); \
->  } while(0)
->  
-> +/* Returns true if and only if "dir" is a leading directory of "path" */
-> +static int is_dir_prefix(const char *path, const char *dir, int dirlen)
-> +{
-> +	return !strncmp(path, dir, dirlen) &&
-> +		(!path[dirlen] || path[dirlen] == '/');
-> +}
-> +
-> +static int check_recursion_depth(struct strbuf *name,
-
-Let's mark the `name` parameter as `const` both here and in
-`should_recurse()` so that it becomes clear that it shouldn't be
-modified.
-
-> +				 const struct pathspec *ps,
-> +				 int max_depth)
-> +{
-> +	int i;
-> +
-> +	if (!ps->nr)
-> +		return within_depth(name->buf, name->len, 1, max_depth);
-> +
-> +	/*
-> +	 * We look through the pathspecs in reverse-sorted order, because we
-> +	 * want to find the longest match first (e.g., "a/b" is better for
-> +	 * checking depth than "a/b/c").
-> +	 */
-> +	for (i = ps->nr - 1; i >= 0; i--) {
-
-`nr` is of type `int` indeed, so the loop index is correct even though
-it feels wrong. But that's nothing we have to fix as part of this patch
-series. We could inline the declaration though and make it loop-local.
-
-> +		const struct pathspec_item *item = ps->items+i;
-> +
-> +		/*
-> +		 * If the name to match is longer than the pathspec, then we
-> +		 * are only interested if the pathspec matches and we are
-> +		 * within the allowed depth.
-> +		 */
-> +		if (name->len >= item->len) {
-> +			if (!is_dir_prefix(name->buf, item->match, item->len))
-> +				continue;
-> +			return within_depth(name->buf + item->len,
-> +					    name->len - item->len,
-> +					    1, max_depth);
-> +		}
-> +
-> +		/*
-> +		 * Otherwise, our name is shorter than the pathspec. We need to
-> +		 * check if it is a prefix of the pathspec; if so, we must
-> +		 * always recurse in order to process further (the resulting
-> +		 * paths we find might or might not match our pathspec, but we
-> +		 * cannot know until we recurse).
-> +		 */
-> +		if (is_dir_prefix(item->match, name->buf, name->len))
-> +			return 1;
-> +	}
-> +	return 0;
-> +}
-> +
-> +static int should_recurse(struct strbuf *name, struct diff_options *opt)
-> +{
-> +	if (!opt->flags.recursive)
-> +		return 0;
-> +	if (!opt->max_depth_valid)
-> +		return 1;
-> +
-> +	/*
-> +	 * We catch this during diff_setup_done, but let's double-check
-> +	 * against any internal munging.
-> +	 */
-> +	if (opt->pathspec.has_wildcard)
-> +		die("BUG: wildcard pathspecs are incompatible with max-depth");
-
-Let's use `BUG()` instead. This patch series must be old, the function
-has been introduced 8 years ago in d8193743e0 (usage.c: add BUG()
-function, 2017-05-12).
-
-Patrick
+base-commit: cb3b40381e1d5ee32dde96521ad7cfd68eb308a6
+-- 
+gitgitgadget
