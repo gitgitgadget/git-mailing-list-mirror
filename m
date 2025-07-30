@@ -1,145 +1,157 @@
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC96F1F1537
-	for <git@vger.kernel.org>; Wed, 30 Jul 2025 07:53:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C89B18A93F
+	for <git@vger.kernel.org>; Wed, 30 Jul 2025 07:55:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753861997; cv=none; b=A+wISIpKSE46krf3e3f5k6KrusVc5CyWBsZdRdaAjWQapBdbF3vAF3RRD7fAnH2nAtBSh169jqr11YK4tco1GAThW1gJL28+n+4wRnlyjWUY0/Sjzi6LIIXDoI+YswD5t56lHifTkh4SNho5V89IGj6K1zCOw0SUvtdYUSvX3ow=
+	t=1753862131; cv=none; b=O1/g64Rdu1oJlsRNn7cHmCNDlv3/EzxTaA2sjK4MqtM9rttOaJcNOV3TmihNdq2mUV49+tmKh/Ra6mZYk4FB3ndEuZmNwETOu0meJIiXM/2W83Z3LkVpBmRZD8aD06P1MyYxZQ3A3KczSmavnPBOtOzYurFo1TYqTUWbFkKb81E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753861997; c=relaxed/simple;
-	bh=/mmS7+i0SdVzWrlHITQPAbEPc5hAibcIyCJgHwASfa8=;
+	s=arc-20240116; t=1753862131; c=relaxed/simple;
+	bh=HLBgo8WoHmQBGtygxwgLoDXUsBZhkFCtmjRYBBp3Yb4=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pOqBJrcmHF+PIa5BB6rCLVyhW7kRXRMoJlwYNbmBAEYXRcMLDB4ztHq0vAuhSnrH/RGZ7AmKqDT/Po9rmGyt+h/UFfpGFSAj1zlYcIsR53tnvFX40BEs+MvXEjjziXD5x1vQ4c+42clwvHraVNjwOTuMjp9359GOaKzMW7RgSb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nimghOpv; arc=none smtp.client-ip=209.85.221.171
+	 To:Cc:Content-Type; b=qp1oLtMvFhug/0tFGgC5kLEvNwAGi//zUAybO5wE3OaYdzT31qO6YXB3rVP6UKWQcr9dTQ7esz7WteWFltdSIhNsZ/3wJBbHduc+d1kr/RXlCpSgpwUoIfD3ZmGHxgDJDhkZNScux6sLNDEmuRqrHBlZvHiPdhhw9Llbl5S3a1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y6Drn5k9; arc=none smtp.client-ip=209.85.221.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nimghOpv"
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-539207d70daso226010e0c.2
-        for <git@vger.kernel.org>; Wed, 30 Jul 2025 00:53:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y6Drn5k9"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-53924027b19so117538e0c.1
+        for <git@vger.kernel.org>; Wed, 30 Jul 2025 00:55:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753861994; x=1754466794; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753862129; x=1754466929; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JnJ/6c2wZwCbEd1sQ3Uocx/aCZmPbMqu6u5JxccuxpM=;
-        b=nimghOpv1dM/s5p/D6EKQU64J1A5vsBoU9uqaAZ9Ccw5QNzRmXXr26FSJmiPUN+O/y
-         wYhd2IfWx9bwU6XlIINn5T2mnpWT9Q9ZDjzQpi4t/oFoD6W0gUMYchL9rnFUE+SmFKCI
-         YfomXJBxc6tWWQu2YMyjbxajxwBhnFyEbl5mFjDSN14Yf2706eL2jBhYozsbTK//5Qjs
-         7MLkkT7o4v8rsRZQVcGGPTA39xaHD1sGoIeJWZJjmWjgvEjEXMHEPO/2LjKFj7tNJ0jr
-         kFHwwntfg3vIKW2e4NggdhwABW7aohz7XDECN0FFrmisuWBdE1TvL1p4e3yhUtxhIpMv
-         Wvew==
+        bh=cMek4dYdkiostyfp/JddFt2g0wJEkO8/61GiE//s5mk=;
+        b=Y6Drn5k9cnO6yspVVkWIv6RhhJqpsY6qKHi78Dr4xHNrN1K3xMbkeJbo+J2oMPhil2
+         NdruS0uXYFv5KcIlhJwQ35DoT/aODwhZr1ARWly3c6Oe+8S0dQJ6bReh1YsW/tvZkq4I
+         3fZz0Zq/UD8ZtHGI6nUWWLR7xID6FaTpUaVXsfxgh23pGBKIeL2+gX03LRfh9sl59/o+
+         /pTDZ4SHUGVopRmR1icQKXD62spvHuBzlDQ2EeN7KpUU7ybgdET6htnVzZ14Z05hofyo
+         kVLvEYHS5dmvnXAUIZzjoQxsGx0t2zDBNVhr2KQrbyG7GDPKbDlkkGi3M6GjY/FH8IF2
+         CpSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753861994; x=1754466794;
+        d=1e100.net; s=20230601; t=1753862129; x=1754466929;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JnJ/6c2wZwCbEd1sQ3Uocx/aCZmPbMqu6u5JxccuxpM=;
-        b=wxEEo7TYEEbpZgaq7zyyVXUDcv/px5h8N1g7zsoQH1K/qm9LLrc8GLqBUScWkBCF3O
-         I+KbwZwy29wjDiEKEAetY1dDEbzsmqsYMwrQG1c11mSOlP4TimS4Frw0o1fRDcB/uqTG
-         JEWQZQRaXN+z9frDwi+n5Sq/NThK4l6Ijgzv0Pp13GIqWd2BYyDGn2a0hhnXH8AXn4wc
-         HtCzF0xX+70Dpv88fLuMJSYeGSC9XqVCcnk/TwriqGdm2H8vnn813qOO9gla/GMvQze3
-         rNGGI14lM6iGQvzrce//rCgBJYABcaZQZ8hnFXHMDhWSD3Fmi4L6eY03iYLF/R1vvH1U
-         M4Lw==
-X-Forwarded-Encrypted: i=1; AJvYcCVFDMwQFiM2L/YaoTStTdWuVdEuU8T31/R5OkKeuPtfrH+MR1pyfl78r2sPiA5g56M8L/Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJ2c088JxqzY0smnHrUqZTkD5XHmNwPuAcBFfj/lmVpyp2hzjY
-	kLlxlgEVc8KJm6wMGKKrLq19VvSY2uW9n6dGyVTg+uhFmpTwk+TJKtoFYhagjrGbevZ/OGNExcC
-	VC54EilXWGyqpPz+KPMWBEju+0J8O8AU=
-X-Gm-Gg: ASbGncsOLHbbitNMN1t36l7+Z1livzc8FOwGR2FTdRGp5D89+j3jYYCmwqpCvsYDwCu
-	Q0V6gDEneg18kb9GSMQSME3oADAhZJsdZvrhc4KipCX8H8ur24VhEvFQpYkSTbbZwXJDDJiNsOI
-	LPTtvT4a5TR6Cfm8a/rxGW6rxjkG6ahxJh6o8zDIe0b3X/AVaEJTD+lo4v8K0qUH9Ktdm5N1eqp
-	4TlR2flR/N1KDJ0TmKr7uzOaN3i74nSSslDE1FdoQ==
-X-Google-Smtp-Source: AGHT+IGPjJkOzs4XD+LhCpQLVfuwoqNH97gZYlwvc0EyEazdz552g4jpUFpXd4W5jXM9ZNu+3+2NUDElgxCas6h7oZE=
-X-Received: by 2002:a05:6102:38d4:b0:4e7:b728:e34b with SMTP id
- ada2fe7eead31-4fbe7f27173mr1440391137.3.1753861994388; Wed, 30 Jul 2025
- 00:53:14 -0700 (PDT)
+        bh=cMek4dYdkiostyfp/JddFt2g0wJEkO8/61GiE//s5mk=;
+        b=mvyzzGP+5oHM5tpwHjH5reXfB1arJsHoe68kxJ+EmheNbqc0t4aBAE5YxZfl9/CQRv
+         LquRu4n9rd0e+ZS2X6pwnElkDIqbiwlB8v86bziOdOydJK0tEmLyTXqrCj+R+QyVDmn+
+         RuLfWsVnr8i+5Id+qJ4Izc4h01uSBTL+OUY55sP1Gke5SKGYvaWw+Fr00SgpxBvM49E3
+         kwVeaTD/CjjhwcGqPTNdCn0V0iifQ9LhODv+QnIHuVLNiarBfpXB5XMh/8xguO/Bc3Ai
+         O8FH9hoOAOrFB0CD3n5vT6hviP/BGdcMf7+p7TKJhfNZOYPM7k/U684qk0KP1ZuXp6p/
+         442Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXA3BaeYLkCpob7gHVgyFrx81YkUOLse7nuRkFHB27RTIbxgq+QklYf0vHl24tB6p2qh3U=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrMvf/moA65FoyLJBE9UQW9VAwW+qapz9epCeanYykJs5cBvKu
+	4y7x975tFtibkS0f48S1f5dnqbCDf/3NV7y8C0tBO4OckvYpTqck8ImkHE0CAcyv3+vpsSCtvVU
+	dbuCwSVtgJXrqPg/WzSSs5NkxSIbnZVkfzcG8
+X-Gm-Gg: ASbGncv6JUFK5tjA2fIU+Sm7+rdKEViPrNEnXhwrD5661Tk1BWoou2YHWkwfQ6SNNv2
+	IIFdClfVKmfABixXs/jOy651mSMErad/aioV4NulgV+e1cvCa6HDrSBVKoNC+KJ3GtNzvBxgyFX
+	T/8KJ509vNaEqwBA3w13YbiIEBGbVEyz7VN3Y+KHZgcLfpRDTxGQQiWxCu0xjk0fbQLv7AA4gYh
+	YhhmNu2kdTA1AWhAJRoFH6taJLqnyKBJ9e7bxEGzw==
+X-Google-Smtp-Source: AGHT+IFvJWMH6SWcy5TXHf6YWV+nmFG1By/Kwm5lG7wBGj2wjMsoW7KPWRWwyaOUA1lLb+T/HJ2c6V1D6jsRuiEad98=
+X-Received: by 2002:a05:6122:130f:b0:531:3981:fdb9 with SMTP id
+ 71dfb90a1353d-5391ceefcbamr1544645e0c.4.1753862129058; Wed, 30 Jul 2025
+ 00:55:29 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 30 Jul 2025 09:53:13 +0200
+ HTTPREST; Wed, 30 Jul 2025 07:55:28 +0000
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 30 Jul 2025 09:53:13 +0200
+ HTTPREST; Wed, 30 Jul 2025 07:55:28 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250728-pks-remote-rename-improvements-v1-4-f654f2b5c5ae@pks.im>
-References: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im> <20250728-pks-remote-rename-improvements-v1-4-f654f2b5c5ae@pks.im>
+In-Reply-To: <xmqqms8ot4jh.fsf@gitster.g>
+References: <20250725-pks-reflog-append-v2-0-e4e7cbe3f578@pks.im>
+ <20250725-pks-reflog-append-v2-4-e4e7cbe3f578@pks.im> <6414dbfd-6f34-48d1-aa3f-3fe7998f80af@app.fastmail.com>
+ <xmqqo6t4up5f.fsf@gitster.g> <CAOLa=ZS6e9dv-c+tajooZa5qFZT2T+jqaJahd3BzVuE7H=5PwA@mail.gmail.com>
+ <xmqqms8ot4jh.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 30 Jul 2025 09:53:13 +0200
-X-Gm-Features: Ac12FXwv2d98zGQEAQ3vqjP1cG8cQyxrTyPTFJYgsSWiw0TAHfHe_uHgfeoHkFk
-Message-ID: <CAOLa=ZR=pQ58GSKh-M1fg5Ym5U6THmmvgTSNGUGCmdhhuVHFCg@mail.gmail.com>
-Subject: Re: [PATCH 4/4] builtin/remote: only iterate through refs that are to
- be renamed
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, Han Jiang <jhcarl0814@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000293a97063b20d11d"
+Date: Wed, 30 Jul 2025 07:55:28 +0000
+X-Gm-Features: Ac12FXwZ4yGmy_2PwFsoDU7Il0lZ3HdiF7o_-dXHgwSokByTpAXwHs2xdSdcFVQ
+Message-ID: <CAOLa=ZQfkM2PydwPFKfEqiYiCeyqmd_Wpoarr6HkbVMJnrOd6A@mail.gmail.com>
+Subject: Re: [PATCH v2 4/8] builtin/reflog: implement subcommand to write new entries
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Justin Tobler <jltobler@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+	Toon Claes <toon@iotcl.com>
+Content-Type: multipart/mixed; boundary="00000000000030210e063b20d9f7"
 
---000000000000293a97063b20d11d
+--00000000000030210e063b20d9f7
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-[snip]
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+>>>
+>>>> I tried `git reflog drop`[1] and it can deal with a branch like
+>>>> `branch`.  It doesn=E2=80=99t need to be told `refs/heads/branch`.
+>>>
+>>> That sounds like a bug to me.
+>>
+>> So `git reflog drop` `git reflog delete` and `git reflog expire` use
+>> `repo_dwim_log()` to resolve the provided reference.
+>>
+>> And `repo_dwim_log()` uses the following `ref_rev_parse_rules` to
+>> resolve the reference.
+>>
+>>   static const char *ref_rev_parse_rules[] =3D {
+>>   	"%.*s",
+>>   	"refs/%.*s",
+>>   	"refs/tags/%.*s",
+>>   	"refs/heads/%.*s",
+>>   	"refs/remotes/%.*s",
+>>   	"refs/remotes/%.*s/HEAD",
+>>   	NULL
+>>   };
+>>
+>> Which means we do a best case resolution of a given reference, but the
+>> function also checks for ambiguity and warns for it.
+>
+> True.  But as I considered "git reflog" to be a lot closer to the
+> plumbing than to Porcelain, using the dwim thing smelled like a bug.
+>
 
-> diff --git a/refs.c b/refs.c
-> index b820c3908bd..861a0deb924 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1840,7 +1840,13 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
->
->  int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
->  {
-> -	return do_for_each_ref(refs, "", NULL, fn, 0,
-> +	return refs_for_each_rawref_in(refs, "", fn, cb_data);
-> +}
-> +
-> +int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
-> +			    each_ref_fn fn, void *cb_data)
-> +{
-> +	return do_for_each_ref(refs, prefix, NULL, fn, 0,
->  			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
->  }
->
-> diff --git a/refs.h b/refs.h
-> index a39f873b1fe..9decd3126e3 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -428,6 +428,8 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
->
->  /* can be used to learn about broken ref and symref */
->  int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data);
-> +int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
-> +			    each_ref_fn fn, void *cb_data);
->
->  /*
->   * Iterates over all refs including root refs, i.e. pseudorefs and HEAD.
->
-> --
-> 2.50.1.565.gc32cd1483b.dirty
+I agree that 'git reflog' is more of a plumbing command. I'm trying to
+see what subcommands of reflog act this way, so we can take a decision
+on how to move forward.
 
-Nit: we do expose the reference iterators now with
-'kn/for-each-ref-skip' (merged to next). We could directly use the
-iterator instead of introducting a specific function like this.
+> It also is OK to update the commands that do not use dwim-log to
+> also use it.  That way, the result would be consistent across
+> subcommands of "git reflog".  As long as the users are aware of the
+> fact that the command uses dwim-log, they can always spell their ref
+> in full like "refs/heads/branch" to avoid ambiguity check getting in
+> the way.
+>
+> Thanks.
+
+Yeah consistency and documentation around it would be great here.
 
 - Karthik
 
---000000000000293a97063b20d11d
+--00000000000030210e063b20d9f7
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 66ec7654f0de0cfe_0.1
+X-Attachment-Id: 4bce0f72bcdb9c2c_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pSnoyY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meTIwREFDQXhmNFJ6akFCeEFjZ3VkdnhodjBST21xNQpIUHkvL1p4VkV5
-Wmtrbi9teEpHNFIvUWhoZld6T1dSNDUvN0tydnFGbitGY0VFdGZScnZwY2p2ZENXYmhhQW9yCmN0
-ZStTTTZSTW9rQmRMbVpuUzNSdjRWa1V5RTkrVVNPS1lEbnlFemd1aVhqb0JZRmcrSWtjWWpqb3ZW
-VDFSWFoKWk53K0xpRkcxSkdKUzJiKzlUR1Nza1RHblZFZXo2QUErS0t2ckpEMGhBQ2VkZVRWVHF0
-amZOdmZ0Y0RnSlovOAphZ1QrVTlQWWl6TnlWN0NzNHVuZmpWd2JjMHVrN3ZVUnRJdHBYbUkwT3Vr
-bXJucGZPd3J2SjlCQjh0blhjQlpQCmh1ZjBmZGFOTHdpcDZQUUNjUGhoZzdOUkdReUcvYlczbVpD
-cFlmZVlwRWtWSzVLcU1HdHVzNEdFUktPOWlXa1UKc0RLWXdUK0J2T0N6YUdWZERKdWlKM1Vxd3hP
-cGlFRzVmL2VPT3I0Skt0OU1BenpDTUg3dktsSG9obTZUT21VWAo3ZmtSNERFL2ZUT0VqQ0FselVY
-NTNvTnJHbXNldWsrMHRQRmpPcmdoT3ZxSk9zdUlMZ0xtcWx0dUNhQ1V0K1pZCk9kVmp0ZlNwYzA2
-cWJCY0F1YkY0K2dBMXgzMm9EdWRZN2ZuRFliUT0KPUZheFAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pSnorNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meWloQy85WnBuR3M1UVhIUmZBOVdzZUQ4SUFZTDRyVgpZb1JKRWIzVDFh
+RjExeElscTk3d3Z2dzhjZWRIeUxMTXVSR2ZSS0ZyakVPUzVjS1BGUHZUeTcyY2Uyei82cjhDCjEx
+SFpTMmdTVm1PbytBN0FBa0RTYjU1SUpDY1RXZlZHaDJ2OUhNMS9Hd2hmUTY5ZSsrdTVndmE5ZXVW
+MVdoNzkKT0xTVXh6d3FMRnNHaEZHcVVPV0svVjdZZHRzN2htc1p4T0I1aVFmbVozTDU2NHBSZ0Jj
+S1BSYTNOd210a1VtQwpoUnhuc1I3M0R5Um5MVEtPK2NvOXNrMmkzTFlRL0JUM2hCbG5XaUl4K3Rz
+eHhheEo4VDR4OTcxVTNBaE5oY0ZLCldZSEVNUm96VnVVY284SkgxamVnamRMY2g2aXF0U2pEWVdD
+ZlJHcWYzOTcwWlFSSjlwS3pFOU5NUzZVeVZNUmoKRnloMHhFUm5EcGlTRmhRamhkVGUwV2NOR3R1
+VnBzRStsbXhPQ3V0blBVeXVKeUlTdGNwVHR6bThuNFRnSnM5aQppaFpkNTdwTzlrUVFnS05tTFlz
+K0Era2t3OENoL2RhMjJ4WmFjZXhkYTIrUy9zdER5QXNjbHE1RnRJYzRWWXVnCm4vY0FhUyt6Ynhq
+TkdNaXJEVTZTYWxaZDJUenFZR0ZjWlcrazNQVT0KPWdSczgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000293a97063b20d11d--
+--00000000000030210e063b20d9f7--
