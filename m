@@ -1,159 +1,139 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B003426B74E
-	for <git@vger.kernel.org>; Wed, 30 Jul 2025 10:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2455A22A817
+	for <git@vger.kernel.org>; Wed, 30 Jul 2025 14:15:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753871646; cv=none; b=kCI1g8YBY5coGHjr3pOPC9bQb4N7ADSrBm8TSDbFrEvxePtrMkjz/VLBPcIUW7cbpcCBqNQOBd3vG1QQfvLVbK7G0mqeEDyEy3nXOw8fG6Gs437/WR146H6ynWMmIfqVBNFPlneEDZQj9HgF3bCHNrD4XbzvtuCO7GJijMAZm2k=
+	t=1753884933; cv=none; b=J+2XWlNDeA4bH+mmcbWl6hPjcnA1orWbGSKp28wzbvpWEhVc4nJAaHgJap5Yz+6gF71jJGPEsDYWi9TuPi3zdUzhbJ5PL6nkZzUFEieeB++46mrKUwJ+XSGoMYoUnIxqmCVQswWalWl/TAv6H6Yt6NzNnYElqJ4postwEha2oQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753871646; c=relaxed/simple;
-	bh=8SPjwrwSbZoDLnaQ3DVF5Xb6qdBfdvBw3JtJniGD0E0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b110qqmtjnXW1jAksdZM63fLBJHoN90MsZ4aXVPXAmJTcy60zal+qGcde6fLy9losVokjNhS4qMSdr/awCP8yrWaAJKqLGH50O02rlJULluQr1xafO4biMd0/mQ79BVNPnhPZvpBOpEWSyfeOV2iyeBjUCnoTgE+ANDyiVbMXYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FUOoTN7I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dzkQhHeV; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1753884933; c=relaxed/simple;
+	bh=JISQMmMRoJLP2ikVaHlYPqG0KVHQzjy5zGNVm4xfVJU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PIoFAC+KdilJnLASjyFFZQwizI2kT8khED2V8ZYgLEoR6euZJnBm02PqPPk2Ej9eR65RoUb8JM32cBPoYVCHhVa49PpNVEDvUkSHMST4BWOn7uCNjEnSjLjM9r7Yg62wWWjW4TgLVdYcWTfOqiNVle2bBDxBbqMeal2Hsmfci+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TqFP8tRA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qfmz1fvh; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FUOoTN7I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dzkQhHeV"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6029A1D02367;
-	Wed, 30 Jul 2025 06:34:02 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 30 Jul 2025 06:34:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TqFP8tRA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qfmz1fvh"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2D497EC01AD;
+	Wed, 30 Jul 2025 10:15:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Wed, 30 Jul 2025 10:15:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1753871642; x=1753958042; bh=fG8FsVnPIg
-	iL10+vTfoKRLoGH3A7FSJnIwGAfY5WMJQ=; b=FUOoTN7I9IMrbKvah1l5uS5SLn
-	7pEZIAwAhAbii9xOxaW25BnvrSdHMngqAO0QWV7hEvDDsWUogSxaoE9bIf3h6xSM
-	DqCF6hebPQacWMpuMOhXxl4QdV1DV4+Amrx7o1nXL91R+n2sEVDacxUlntRJcAaZ
-	A239Q5qr1mG/WoxGO3JAbvC7h5JoS7zQ5Qv5UDe1425wEdDIVfB2a7LFJMaoht5V
-	P1ZBM8TPFB8f4RmAAGfJhUQ/8B1PF7bYdlGH8LaxDdPBOIVbv/3rVeqWYrdI1XlP
-	/qulKLyrjBEKNV259zayCsCosegLY1T61DuZAUvV+LYHvolEzkb94vd1CGAg==
+	:subject:to:to; s=fm2; t=1753884930; x=1753971330; bh=uEOTksqshC
+	yJzevW5zZoq4hq88uxYUgyUfmoeCzn4e8=; b=TqFP8tRAB0cjtReZFOaXqUu3Qu
+	Q5DbcfVD3uH57awdo1VfPSe9NsFPxZUQmqq1uPeBLdMjuvjnf/Bguih4j4RAIn8e
+	5j+gSIX3zPIaOcCWk8NhQ/gZzimJW0AiFvSKcI5whKmIOaS8NUMVa7MsKzkbxHfe
+	9Ii7PklnYFgCqJDOoQowCx6iV4UIf2hSUWGf68Gs4QKnIq0gIgUdAHH/wHMCt1K1
+	Ky2Q4Pl365Q6D0k6nPWNhzuXdANPCMt0UMkrSH1mcpEouhwANXCjHQhlr6W6iOfL
+	LUXVA+jbf3YaniFok1OBgEvP61DiTJLmYfrgtxemHxrFSr7NEMIm7qHj3ODQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753871642; x=1753958042; bh=fG8FsVnPIgiL10+vTfoKRLoGH3A7FSJnIwG
-	AfY5WMJQ=; b=dzkQhHeVCSusO9UquF0cL+nReawCT0v/pc0+/k72qgM4FM0qtk0
-	vdX4Q07YBMXnX04fMTaPB/uWF3O6XH7uImp1bMePlyvqRBLjHjrM4r93kARessIO
-	VgR8lYHzMmgcmmEzv9FDqFmjMsS0SDpNZhHgEYoXlJMAweGqJWd3liNqm3v+0Htt
-	j3DpV0/ljLiQo0wOgG/Wn1pNZ6+/ai+tOiaIgfw98HP/P/XW+iQUhBMPEmE/oCs4
-	iHYjw0T9Zc/m2QPCyfBUnn2QZwuP8hMA0RSe1jOOtyh6QtDCClvadTDJW79haIIV
-	rLQQdUyDbv201PyiwLIJW5hEOiKAoo7wpSA==
-X-ME-Sender: <xms:GfWJaJWnb8hXLwCAAfDMOb-uEQNo4fl4WGu6KJw6Hm0Kn0Uv7Xa10g>
-    <xme:GfWJaGj2Au_FQ0gAkL1Cdh9sGn7nfIcu_mrxhUe_yeAxTvco4WOvZK-Jh1a095H1c
-    QNvthRo5m42_rT7pA>
-X-ME-Received: <xmr:GfWJaBB4bTpF0sSSgJ-nLXjT1N7O-WGMvcuaUBlhxewZrEmU0tGlB0RPTy89Nk5J6nmWAHlPsCmpgkLNlA08h8VEOzp6p9k1SDcNrVip>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeljeejtdcutefuodetggdotefrod
+	1753884930; x=1753971330; bh=uEOTksqshCyJzevW5zZoq4hq88uxYUgyUfm
+	oeCzn4e8=; b=Qfmz1fvhMYbGbSXGdzTVuNr2Kgn7wAe1zpPzzQBFDcpB8EZZxcn
+	4lL2vA+AAsibQv4tBlhmBuQeTwP5ONr5oASk1grQjvBpAwP2WaeQwed/KUY/WNJy
+	IArziN60J/WXXG2XrsUATCV65EqYcfEV3EnleonTsn0NXa10YbiI+k4TGmGAHlHz
+	HlhVB6F+yyPK9QIj5t4daHGIgXbvNT0htStJduJqD/Px/FJFJGyI422fhyoQUMqZ
+	R7qmfAjnQ4U7gW1fqmZ7FNva4RSBLMvWUtO3A/194duxW9/rXnFs5DNiwO54oEPj
+	j9H6uzStmoX/tMMZnVws1NR1uKiXZwEDoOQ==
+X-ME-Sender: <xms:ASmKaJTh3CKWthCQ976tuFRBQucDJzdG8Lx6swRSJADkDxBBslPNag>
+    <xme:ASmKaGAMpcsKFisaOtDVae6KP39RsH9Ri-fRkN_smrI6JvLyfIHUkKAPdSy_VN4Mt
+    d0dmoBcATTgwOohug>
+X-ME-Received: <xmr:ASmKaIQIr4_s1ij4nFCY7o8eT7ve_3hT6Dvg1yrEDpfnghwRwQOMXNrmZ52vVU4kHXNLmHZFeT9fRYgAIZt2xI_zBK78u7KVljCqY98>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelkedugecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesih
-    hothgtlhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsg
-    gvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdr
-    udekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:GfWJaEsNefGSbNshJcE_IXtTuchcAORghxfZhh7D9CSX8ZW7V4Ic8Q>
-    <xmx:GfWJaNcIWL4pf0ZIDiQ41-PdCaUjRBkwpuRuPnKqOeBKK9UBMiIHBA>
-    <xmx:GfWJaB8-ZD5ntrNL7vE4bvj91co5ciJ16dBR_0YP9mbjLiPRq4Roig>
-    <xmx:GfWJaIQtxvnvZxSBiHSC7re1phkwB5i_oZuBLUirvypkeYxFIxPHoA>
-    <xmx:GvWJaN0QjN7kGosg-U9J02N8mZgA-U90Lm72LKQ95Gl6YLosw5HxGpUb>
-Feedback-ID: i197146af:Fastmail
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:ASmKaMqzPitBm-SCgcxUfJA2ai3PEbas9jwlY_lXKohmu-kU-UtmVQ>
+    <xmx:ASmKaCyKA7SF1zwLGJVj8e4mgBeMumJg2O5wFl5rYEq0_C4feHhrcw>
+    <xmx:ASmKaJJmCMoHmkzInDlGRjo8Ul7M-o-POxLMGcBpNkYXUd2TKwXHdg>
+    <xmx:ASmKaMKYgR8NoUHVYkMDido2UPATVSeqCNJeVQ38h7HSlNoAgV4YHA>
+    <xmx:AimKaFmH57bfuibIbrpfPBpUrkPVOwcEwfARw-u83KMkYlkzsa9iH4pT>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Jul 2025 06:34:00 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 20f39582 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 30 Jul 2025 10:33:58 +0000 (UTC)
-Date: Wed, 30 Jul 2025 12:33:54 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ben Knoble <ben.knoble@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v2 4/8] builtin/reflog: implement subcommand to write new
- entries
-Message-ID: <aIn1EqDARgpWMN5h@pks.im>
-References: <6414dbfd-6f34-48d1-aa3f-3fe7998f80af@app.fastmail.com>
- <6E84D571-CC02-45E6-9E58-DD918B45998E@gmail.com>
- <aIhvcSHrRLG6wcMD@pks.im>
- <xmqqseifqbym.fsf@gitster.g>
- <aImup_QlY0tdBtJq@pks.im>
+ 30 Jul 2025 10:15:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] clean: do not pass strbuf by value
+In-Reply-To: <aImv4kZJS4CUqmZ3@pks.im> (Patrick Steinhardt's message of "Wed,
+	30 Jul 2025 07:38:42 +0200")
+References: <xmqqseieogkg.fsf@gitster.g> <aImv4kZJS4CUqmZ3@pks.im>
+Date: Wed, 30 Jul 2025 07:15:28 -0700
+Message-ID: <xmqq8qk5ojcv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aImup_QlY0tdBtJq@pks.im>
+Content-Type: text/plain
 
-On Wed, Jul 30, 2025 at 07:33:30AM +0200, Patrick Steinhardt wrote:
-> On Tue, Jul 29, 2025 at 08:00:01AM -0700, Junio C Hamano wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> > 
-> > > There's a big difference though: `git reflog drop` won't ever do
-> > > anything for a reflog that doesn't exist. Consequently, we know that our
-> > > DWIM mechanism can kick in and resolve the reference properly if such a
-> > > reflog exists.
-> > >
-> > > But for `git reflog write` that's not the case, as you can write a
-> > > reflog message for a yet-nonexistent reflog. The DWIM mechanism cannot
-> > > kick in here as there is no reflog. So what do we do in that case? We
-> > > could of course just pick the first DWIM rule, which would be that we
-> > > decide to write the reflog for "refs/heads/$REFNAME". But... I dunno,
-> > > that feels too magicky to m
-> 
-> Gah, another cut-off mail. This is driving me crazy. I have an idea what
-> the root cause could be that I've implemented yesterday an hour after
-> this mail. So fingers crossed this that this will stop now.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Yup, I was finally able to reproduce the issue. I'm using msmtp to send
-mail and have a `passwordeval` script that I use to yield the password.
-Recently I've switched to a different password manager though, so I had
-to adapt the script a bit. Basically, what the script does is to check
-whether I'm already signed in -- if not, it spawns rofi to ask me for my
-password.
+> On Tue, Jul 29, 2025 at 02:03:27PM -0700, Junio C Hamano wrote:
+>> When you pass a structure by value, the callee can modify the
+>> contents of the structure that was passed in without having to worry
+>> about changing the structure the caller has.  Passing structure by
+>
+> s/structure/structures/
+>
+>> value sometimes (but not very often) can be a valid way to give
+>> callee a temporary variable it can freely modify.
+>> 
+>> But not a structure with members that are pointers, like a strbuf.
+>> 
+>> builtin/clean.c:list_and_choose() reads a line interactively from
+>> the user, and passes the line (in a strbuf) to parse_choice() by
+>> value, which then munges by replacing ',' with ' ' (to accept both
+>> comma and space separated list of choices).  But because the strbuf
+>> passed by value still shares the underlying character array buf[],
+>> this ends up munging the caller's strbuf contents.
+>> 
+>> This is a catastrophe waiting to happen.  If the callee causes the
+>> strbuf to be reallocated, the buf[] the caller has will become
+>> dangling, and when the caller does strbuf_release(), it would result
+>> in double-free.
+>> 
+>> Stop calling the function with misleading call-by-value with strbuf.
+>
+> I think the second "with" should be dropped?
+>
+>> 
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  builtin/clean.c | 10 +++++-----
+>>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> Good finding with an obvious fix. Thanks!
+>
+> Patrick
 
-But: rofi actually reads from stdin, and the `passwordeval` command in
-msmtp explicitly must _not_ munge stdin, as stdin is where the mail gets
-read from. So this is what caused the mail to get truncated.
+"Fix" is a word that is bit stronger than what is actually
+happening, as the code is not yet broken ;-)
 
-So why wasn't I able to reproduce the issue? Well, because it only
-happens in case the password store in locked and I need to input my
-password. But when reproducing it I already had the password store
-unlocked.
+I notice that there are a few structures passed by value in reftable
+(e.g. merged_iter_pqueue in pq.h and string_view in record.h), but I
+only looked at the output of
 
-The fix is thus quite easy:
+  $ git grep '[(,]struct [a-z_]* [^*]*[,)]' \*.h
 
-diff --git a/home-manager/profiles/graphical/workstation/gitlab/default.nix b/home-manager/profiles/graphical/workstation/gitlab/default.nix
-index d47e95a83..3460a29fb 100644
---- a/home-manager/profiles/graphical/workstation/gitlab/default.nix
-+++ b/home-manager/profiles/graphical/workstation/gitlab/default.nix
-@@ -42,6 +42,8 @@ in
-         pkgs.writeShellScript "op-mail-password" ''
-           set -eo pipefail
- 
-+          exec 0<&-
-+
-           export OP_SESSION=$(systemctl --user show-environment | grep '^OP_SESSION=' | cut -d= -f2)
-           if test -z "$OP_SESSION" || ! op vault list &>/dev/null
-           then
+and do not know if they are something to worry about.
 
-Finally, another mystery solved. This really has been stressing me out
-over the last two weeks.
-
-Patrick
+Thanks.
