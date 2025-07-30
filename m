@@ -1,110 +1,193 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110BF1E3772
-	for <git@vger.kernel.org>; Wed, 30 Jul 2025 18:14:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787AE111A8
+	for <git@vger.kernel.org>; Wed, 30 Jul 2025 19:03:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753899253; cv=none; b=HmWxejr1kWm9F3WX25o/TBSCdmVdBNpW97vSVcyenyMplB2G70z1BXxot0kBRGRf/gDuojqkA/3fCcN56jmiFD9+vM9DOQtGwc/yMdd//1LkcOr8to+3DcKD6MbZdaz/9Pv1Aj27jdlIT+bIxrFZAZc/sM1R1vfrf+v0+I4NOgc=
+	t=1753902192; cv=none; b=B7JxxBZW/FkBb0dNbe+j74QrpHpkXYsuzJx2+DatHy8FNp75yt57Xit6qXrIWKTn5ZRK8w4NlfVTuDDEs02YBX7KYi2EWsl9si2JxuurgFzKv07P4yjTyb7E91Gh9E3B/MIX2c2l+SsY6pyv3JI25af+4FXmLOgEPu63EK/yj10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753899253; c=relaxed/simple;
-	bh=Ub8XjQEj5f/o++X/cNp73SVI570prlPQlpmYeYkm2f8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WGZIKPSznxN0bZt0tIUOzZeQrRsx+ob+vT2G63nr4SszNyiTc6fI9lpkMWn2e6HAjAc8S3NetILc2ORm/Vn4PCnxxeVhWTwMOcsP5EIqneZYsrU9nEjUH8Zr9C9u2cyzNdqptrsq1zmmqv8FKQFqxg7Ccs3jwXekRFQokvt7Q04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fVH2D7P3; arc=none smtp.client-ip=209.85.160.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fVH2D7P3"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2ff8d43619cso137185fac.1
-        for <git@vger.kernel.org>; Wed, 30 Jul 2025 11:14:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753899251; x=1754504051; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vzs9U5UyWtldtbFyifJXvCjel3myqH9NQdl5liy5JHI=;
-        b=fVH2D7P3LyoKp/DIskX0aWU217vVUUJb7/Na0nmkM8OAHo6alyacutPEP27pviONXv
-         Pv7jgQOrUw0HmtucuvfRvvyFUEy/6Kg6ih6y58tZQU4lubTkEBtnhdJgLYpkwKAGdt3O
-         mW05ARyrHRKtDItykxn3IE5g/kyN6OZIPWF5ohRaCArAGqToU5s5N7cnlHLpO4pkNI7c
-         WjS3a4CP4vXuq8feapFkc9jNAPs6gk+FZKGjCz50FBXAcj9un42vU3LTfAa87YoqsZNE
-         +jNXzeXbNHgo8mGCzHRPX8WcsvM48gbJvZZrMefRTfnM7gL1OMBKN2/Ru7sWv9/wTf2T
-         9iKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753899251; x=1754504051;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vzs9U5UyWtldtbFyifJXvCjel3myqH9NQdl5liy5JHI=;
-        b=NXXQpySOAw0n+ITly5dLPhtCuTFLQbR8ARpTaok5YJZF9xsO0eIaxvlJLvzo1uzcxR
-         xlOFMVZ0JsUuxB3Xu8DpYO3Ttp5MX+PqmEGNjR876cQoBDkD/7hpVquDAF/NC+xLtneI
-         gYtVxaWAo4BRGYy4I0qu9TfJpPiYk4iHZ7YHh+8bC2htcJUdluqQMA0GUq4EAz2J4Dc3
-         El9VjDAzYO6nOLSO9QfYZQDDLVaBbGYU9e+jQfyeHPM9la5LHd5N7DgR5eGs+n/1Nu/F
-         qBVeA7iHqYuR0ebhtRDfZtSaMIL4seDkHqBAL9CDyIe+ZIQz7EzxzPta20c+A/Q+ueeb
-         Y2wA==
-X-Forwarded-Encrypted: i=1; AJvYcCUyMjoUvVhaHJPWIQ40Twz35LipEgma5tfonobzwbIs3CDWzPl/LAybvdQR1MgYFf420O8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0PFmBuRPXTNfGeQrkXCTTeqw4hS6YGAruKeDRvt34zFx51Grg
-	1BMdPoLlgzxDZggmfS2+elesP+taBoemVboU4Ck0da8Qh5iPqb0R33sd
-X-Gm-Gg: ASbGnctV7kDpMLfkWTvLoCIOpc/Mhwhi7wmesAQFsd+JcxkNtmAYdtF1YA5GVuBLiNG
-	vsGHTtEgacBaCX2dZu2M2WmsVmul1WUtdLxNYo5lFE3Gesq0YAzlBPbcliPp3Rg7R8A6ius6Lci
-	urOE6PXgh6TMQtxr/kVd+GVCi/sl3SZTUsIeDavp6jst7Wk1S2JitXVCvP8QzhKUQm5YOAXb3Mc
-	k++Vth2ppe4hydDskQl+1L+tJZ7ho+4x/33+aMHz2M4WxIeHlOxtRyuH+TnfXB91x+8K2qT16yt
-	lsLl3Y6PD6ssIP9pTyScOT4Mf2QC++T1UHmwc1KrajzXhrs8zuD+gICJ3EZfkIL556gHVoICPxg
-	jj2zlQK+ynSmNNNE=
-X-Google-Smtp-Source: AGHT+IE1CJbGqllIQIyepXCVY65fg7Nn2ow+nCdaRwXqCR0IyOFAX9xi/o1Sgnw6/clTDFXDGn0owg==
-X-Received: by 2002:a05:6871:4309:b0:2bd:455e:c22e with SMTP id 586e51a60fabf-30785c5c20bmr2624187fac.19.1753899250937;
-        Wed, 30 Jul 2025 11:14:10 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-3071316d7ffsm3036370fac.5.2025.07.30.11.14.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Jul 2025 11:14:10 -0700 (PDT)
-Date: Wed, 30 Jul 2025 13:08:13 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?B?6ZmI5bu66JmO?= via GitGitGadget <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org, =?utf-8?B?6ZmI5bu66JmO?= <18230222379@163.com>, 
-	=?utf-8?B?6ZmI5bu66JmO?= <chenjianhu@kylinos.cn>
-Subject: Re: [PATCH] modify the =?utf-8?B?4oCcZm9v?= =?utf-8?Q?=22?= file
- path to "$PWD/bad-clone/sub/foo".
-Message-ID: <r3q4uyx6725ryuxnvnpidyaglptytro25pw4l53tg4vypkdruh@fmsgo5c6r4qd>
-References: <pull.2022.git.git.1753860300588.gitgitgadget@gmail.com>
- <xmqq5xf9n0jf.fsf@gitster.g>
+	s=arc-20240116; t=1753902192; c=relaxed/simple;
+	bh=j1C5rm20lW0rgTjDHn/srzhAJhkquLjOQ1ZZ3nulgNw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aSTwGVSgjwrggEvziGQTIF+nG1O+4HAT1WCCiP/GMMa+ehAsDNF23jBdPL0iUKjSN/0Zxtp4gWkABwt6Q7hmKMTzrPqaJssnNZYzNXWt0PtYS74+dVaynstFrvXvz9n6W9woMu8QJ1x5g3Mi06OmdAwDVwmIL4WRB080/p5tOVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp.bon.at (unknown [192.168.181.102])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4bshS516Gxz7QVWd
+	for <git@vger.kernel.org>; Wed, 30 Jul 2025 21:03:01 +0200 (CEST)
+Received: from [192.168.0.104] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4bshRv1h4WzRpKg;
+	Wed, 30 Jul 2025 21:02:51 +0200 (CEST)
+Message-ID: <cb63b63b-4a74-4649-bebb-002d1e6e66f7@kdbg.org>
+Date: Wed, 30 Jul 2025 21:02:50 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] git-gui: honor TCLTK_PATH in git-gui--askpass
+To: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Cc: Mark Levedahl <mlevedahl@gmail.com>,
+ Johannes Schindelin <johannes.schindelin@gmx.de>,
+ Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20250730164052.15371-1-carenas@gmail.com>
+ <20250730164052.15371-5-carenas@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <20250730164052.15371-5-carenas@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq5xf9n0jf.fsf@gitster.g>
 
-On 25/07/30 08:47AM, Junio C Hamano wrote:
-> "陈建虎 via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > From: =?UTF-8?q?=E9=99=88=E5=BB=BA=E8=99=8E?= <chenjianhu@kylinos.cn>
+Am 30.07.25 um 18:40 schrieb Carlo Marcelo Arenas Belón:
+> Since its introduction in 8c76212 (git-gui: Add a simple implementation
+> of SSH_ASKPASS., 2008-10-15), git-gui--askpass has been calling whatever
+> wish interpreter is in the path, unlike git-gui.
 > 
-> Justin, who wrote the test originally, Cc'ed for comments.
+> Correct that by turning it into a script that would be processed at build
+> time.
 > 
-> > diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
-> > index 14b5743b962..f512eed278c 100755
-> > --- a/t/t7450-bad-git-dotfiles.sh
-> > +++ b/t/t7450-bad-git-dotfiles.sh
-> > @@ -401,7 +401,7 @@ test_expect_success SYMLINKS,!WINDOWS,!MINGW 'submodule must not checkout into d
-> >  	git -C repo commit -m submodule &&
-> >  
-> >  	git -c protocol.file.allow=always clone --recurse-submodules repo bad-clone &&
-> > -	! test -f "$PWD/foo" &&
-> > +	! test -f "$PWD/bad-clone/sub/foo" &&
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+>  .gitignore                              |  1 +
+>  Makefile                                |  9 ++++++---
+>  generate-script.sh                      | 22 ++++++++++++++++++++++
+>  git-gui--askpass => git-gui--askpass.sh |  0
+>  meson.build                             | 22 ++++++++++++++--------
+>  5 files changed, 43 insertions(+), 11 deletions(-)
+>  create mode 100755 generate-script.sh
+>  rename git-gui--askpass => git-gui--askpass.sh (100%)
+> 
+> diff --git a/.gitignore b/.gitignore
+> index ba845f3..5130b4f 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -4,4 +4,5 @@ git-gui.tcl
+>  GIT-GUI-BUILD-OPTIONS
+>  GIT-VERSION-FILE
+>  git-gui
+> +git-gui--askpass
+>  lib/tclIndex
+> diff --git a/Makefile b/Makefile
+> index 2ac5f44..b2d7ffb 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -173,10 +173,13 @@ GIT-GUI-BUILD-OPTIONS: FORCE
+>  	@if grep -q '^[A-Z][A-Z_]*=@.*@$$' $@+; then echo "Unsubstituted build options in $@" >&2 && exit 1; fi
+>  	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+>  
+> +git-gui--askpass: git-gui--askpass.sh GIT-GUI-BUILD-OPTIONS generate-script.sh
+> +	$(QUIET_GEN)$(SHELL_PATH) generate-script.sh $@ $< GIT-GUI-BUILD-OPTIONS
+> +
+>  ifdef GITGUI_WINDOWS_WRAPPER
+> -all:: git-gui
+> +all:: git-gui git-gui--askpass
+>  endif
+> -all:: $(GITGUI_MAIN) lib/tclIndex $(ALL_MSGFILES)
+> +all:: $(GITGUI_MAIN) git-gui--askpass lib/tclIndex $(ALL_MSGFILES)
 
-This assertion is supposed to validate that the post-checkout hook did
-not execute. The path here is incorrect indeed. I've tested the fix here
-and it works as expected. Thanks
+I'm not a Makefile expert concerning double-colon targets. Therefore, I
+wonder why do we need git-gui--ask-pass twice on Windows.
 
-> >  	test -f $(printf "bad-clone/sub\r/post-checkout")
+>  
+>  install: all
+>  	$(QUIET)$(INSTALL_D0)'$(DESTDIR_SQ)$(gitexecdir_SQ)' $(INSTALL_D1)
+> @@ -215,7 +218,7 @@ dist-version: GIT-VERSION-FILE
+>  	@sed 's|^GITGUI_VERSION=||' <GIT-VERSION-FILE  >$(TARDIR)/version
+>  
+>  clean::
+> -	$(RM_RF) $(GITGUI_MAIN) lib/tclIndex po/*.msg $(PO_TEMPLATE)
+> +	$(RM_RF) $(GITGUI_MAIN) git-gui--askpass lib/tclIndex po/*.msg $(PO_TEMPLATE)
+>  	$(RM_RF) GIT-VERSION-FILE GIT-GUI-BUILD-OPTIONS
+>  ifdef GITGUI_WINDOWS_WRAPPER
+>  	$(RM_RF) git-gui
 
-The second assertion here still demonstrates that a file was not checked
-out into an arbitrary location, which is the root of the problem, and
-likely why I missed this. Apologies. 
+Some dependency must be missing here, since my build fails with
 
--Justin
+git-gui@cb/no-tcl86-on-macos:1015> make
+GITGUI_VERSION=0.21.0.221.g8045a
+    GEN git-gui
+    GEN git-gui--askpass
+generate-script.sh: line 15: .: GIT-GUI-BUILD-OPTIONS: file not found
+make: *** [Makefile:177: git-gui--askpass] Error 1
+
+> diff --git a/generate-script.sh b/generate-script.sh
+> new file mode 100755
+> index 0000000..0dd2da9
+> --- /dev/null
+> +++ b/generate-script.sh
+> @@ -0,0 +1,22 @@
+> +#!/bin/sh
+> +
+> +set -e
+> +
+> +if test $# -ne 3
+> +then
+> +	echo >&2 "USAGE: $0 <OUTPUT> <INPUT> <GIT-GUI-BUILD-OPTIONS>"
+> +	exit 1
+> +fi
+> +
+> +OUTPUT="$1"
+> +INPUT="$2"
+> +BUILD_OPTIONS="$3"
+> +
+> +. "$BUILD_OPTIONS"
+> +
+> +sed \
+> +	-e "1s|#!.*/sh|#!$SHELL_PATH|" \
+> +	-e "1,3s|^exec wish|exec '$TCLTK_PATH'|" \
+> +	"$INPUT" >"$OUTPUT"
+> +
+> +chmod a+x "$OUTPUT"
+> diff --git a/git-gui--askpass b/git-gui--askpass.sh
+> similarity index 100%
+> rename from git-gui--askpass
+> rename to git-gui--askpass.sh
+> diff --git a/meson.build b/meson.build
+> index 1cedc82..320ba09 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -38,14 +38,6 @@ version_file = custom_target(
+>    build_always_stale: true,
+>  )
+>  
+> -configure_file(
+> -  input: 'git-gui--askpass',
+> -  output: 'git-gui--askpass',
+> -  copy: true,
+> -  install: true,
+> -  install_dir: get_option('libexecdir') / 'git-core',
+> -)
+> -
+>  gitgui_main = 'git-gui'
+>  gitgui_main_install_dir = get_option('libexecdir') / 'git-core'
+>  
+> @@ -61,6 +53,20 @@ if target_machine.system() == 'windows'
+>    )
+>  endif
+>  
+> +custom_target(
+> +  output: 'git-gui--askpass',
+> +  input: 'git-gui--askpass.sh',
+> +  command: [
+> +    shell,
+> +    meson.current_source_dir() / 'generate-script.sh',
+> +    '@OUTPUT@',
+> +    '@INPUT@',
+> +    meson.current_build_dir() / 'GIT-GUI-BUILD-OPTIONS',
+> +  ],
+> +  install: true,
+> +  install_dir: get_option('libexecdir') / 'git-core',
+> +)
+> +
+>  custom_target(
+>    input: 'git-gui.sh',
+>    output: gitgui_main,
+
+I can't comment on the meson part at all.
+
+-- Hannes
+
