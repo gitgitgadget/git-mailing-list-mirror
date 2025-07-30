@@ -1,116 +1,124 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BF92D9EEA
-	for <git@vger.kernel.org>; Wed, 30 Jul 2025 15:52:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B949A4C62
+	for <git@vger.kernel.org>; Wed, 30 Jul 2025 16:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753890759; cv=none; b=peTGIv92ithAfIoKGfp5qaGvvzcCL+B4i6izKrP9lz0wWVJHMVtUv1SRB6ypk9/BWUgZKarD3RndL/nRz/pYNelISuNVExLORjIyGqqX087+bPwDlqoOt/TZs+lwh0st8sdf+UwHZ7cPFTo4ldFyOvAvuMvyhsBZopxSvV4t5Y4=
+	t=1753893841; cv=none; b=LVU0zHKHAZtr6O0SI73/W4+dQKyk3Rqp65IL4TjUVNY/NYwMH9siN1ifQB+AcUf5td016RnMeErfRzRptWfDdlW+eCxym1vp4stwYJdJ4hLRHQ/0kViKxNRZyhvbZIKibpX+GoObh8b4GrJZ1S0JhnKCXKY+PcEfdW89i4Wi9qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753890759; c=relaxed/simple;
-	bh=VaZ5poiI7cN6ERgMUzVWMFNl/cjUZGt5KQ8W4gpHZHU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cjMr1owKu4QpRvHG4aaJpN+Bc86mL2K8iU8U4f9/ILHmpjC1yFKAsGv5Usaent4lRRwwgBSB8XqLGi9dMijvFTrj46m+2qE/K9ANVctPLQ992DxoBbxbeD69P6i9l/xpLPJ3CXpIRq8jge3BZuUEcv9htmRyjzw5+saXX25Jba0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TDWWkxTi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ev9m221X; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753893841; c=relaxed/simple;
+	bh=W+yKA5WCyfv/lkp4jpyrOgBQQbTqrC+b2n0qDxO3GIk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=TD1fobu3470ZtYY76kb1zO/htMP0H43oPzLMMzhWOeTdA1b79TH3xCkE7gIhC8WY+6ka92c4qD3a6eo60T0lEixr0x2GSiSfMDxiyz4U0KKojfORr3AiqBAMU2AC8cjVT5N+Li+MzYYqJoVnHgmvO5IzcHyke2CZMoseF4cVsLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F1NQVzd3; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TDWWkxTi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ev9m221X"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C81171401002;
-	Wed, 30 Jul 2025 11:52:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 30 Jul 2025 11:52:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753890756; x=1753977156; bh=VaZ5poiI7c
-	N6ERgMUzVWMFNl/cjUZGt5KQ8W4gpHZHU=; b=TDWWkxTiHunkUv4rcsfypc2IgV
-	lgMv54ocfT73X6U34BWhEEuTAGj+n9jRKXnFMq/qw5GEzNk47eC8LrMqG89Rtg7o
-	OXsKq5vqf8bS8vxUbDcKBeLYoFdy6dYR0FAtugLaZIws1YoBfJG5dKA6AEJKyu+K
-	JE6orKfkPvi5eQw203T0T6fzCIEM574QsBHjnEvgroq9iAfrLLp1jl0uYJgN813X
-	gVKaaL1iaXXreQy9EyopJc+L6pRL/Ww2xZhrAs4fPf7e8SxMqe9P28Vd9k4l6Uhw
-	wkqysJzG4o4ncK+8g/ri65Q+ozf6WfN3HwTsghA7tyGQSFmZEOrgrIcwrBBg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753890756; x=1753977156; bh=VaZ5poiI7cN6ERgMUzVWMFNl/cjUZGt5KQ8
-	W4gpHZHU=; b=Ev9m221XFtLljYFo383TovthvSpS2KOoocYnQKupU5ldCIejR63
-	8+PmAUn8hb5on8QQ3Jpgg15JJ0/+A0JwGVWwLy+KB0ug7jnLr03UXZNLLyJ15Gz2
-	A6ib5wKNn5YgOcGKRqxcVBuWrzNCavbP22J+d1x6V7vCD+H7r9ZYRWtkecLbkl/X
-	1iPS9gr6kksCFmXVVdGETPOtoEB0PvV/Xka4TzML3HT2TfMdkqO88kDSB+lHd6GF
-	xhZMcfgXAze/L2/25BUJTo4T2AaTrTm1wm3fEo8L3CakXz8p+iWqxxGwhTsATKeF
-	wE2ILu9ZsjMFqd6zxJ6vooWZoqzRq5m7Obw==
-X-ME-Sender: <xms:xD-KaAs3TRgEyNBrM2rN1h1NmJgh-66onLaJgABaM2wgHR15PgAbcQ>
-    <xme:xD-KaKUmlocXyuzNBhNBRGwOijVs1kmoudyl_DeEA1Nx9FNM7sdYgKR7mzVZy-PUd
-    kxIOfJE6sLagq0Mog>
-X-ME-Received: <xmr:xD-KaLhnT2XL6vg7M6tEIRJLvnxWM0LS7NxCLoSm8X1_48WgDlCcQMGg3Gj_6dpNWrr8ckSZd07qlgpu_jbpT6zhyP3YJ9dk5LnQwEo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelkeefgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    rgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrih
-    hsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhhigrmhhthhgrkhhkrghrtd
-    dtudesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthht
-    ohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:xD-KaCqpHik_dT18Bsmvq2jIX96WTKzid1rie9-ei6jHqmTvzBfCAg>
-    <xmx:xD-KaBF5Y34W9CURMcL1dCvlUDp04MVE8jxcoyeSiMLFAGfsYr3ccw>
-    <xmx:xD-KaH7O0lGWnizr19BhAhVk0BR5Zk4eg3-CidA6JuK43dXBs8LVmA>
-    <xmx:xD-KaJcGO1S_Qn68f_jGVpGldGTG87aKvCwqjMLIiYefbl9EH9RbxA>
-    <xmx:xD-KaMMAUVcaLjphGBdXu-T0obcm9Nehfde9XDW8-afsD2jugoPOjB05>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Jul 2025 11:52:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Derrick Stolee <stolee@gmail.com>,  Ayush Chandekar
- <ayu.chandekar@gmail.com>,  christian.couder@gmail.com,
-  git@vger.kernel.org,  shyamthakkar001@gmail.com,  ps@pks.im,
-  ben.knoble@gmail.com
-Subject: Re: [GSOC PATCH v6 0/3] environment: remove sparse-checkout related
- global variables
-In-Reply-To: <d61c966b-61ae-4ba9-b983-c8dab6e2c292@gmail.com> (Phillip Wood's
-	message of "Wed, 30 Jul 2025 09:53:21 +0100")
-References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
-	<cover.1752882401.git.ayu.chandekar@gmail.com>
-	<xmqqcy9qlfm8.fsf@gitster.g>
-	<43aaec10-2696-44c9-8728-2045b83dc5d3@gmail.com>
-	<d61c966b-61ae-4ba9-b983-c8dab6e2c292@gmail.com>
-Date: Wed, 30 Jul 2025 08:52:34 -0700
-Message-ID: <xmqq1ppxn0al.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F1NQVzd3"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-7426c44e014so2839b3a.3
+        for <git@vger.kernel.org>; Wed, 30 Jul 2025 09:43:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753893839; x=1754498639; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=A+8YJLEjcvpzo5HUZsbsSay6GcBFC4MbWArUcb/2Sfk=;
+        b=F1NQVzd3xUav5oDv1ZDNgTh+pxIaFZhOIOeJmX2Ve4T3dIbDXENuDpgOU4rke68tgG
+         QZLveI/ONLcIHtRGIAU5w/217CD6OUz7bdnhJ0pxEXWoDejDZE9Z2r1bFyVKsPFmiBtd
+         CjN07nWzcnI6m8aeHteY9RisES6D07BLcXN/BqkxD1BWaqo/XaC0j/qozQMLbBbKCKio
+         k22iHjPdn2vN7MsSj99n1wYdE/mJTXn9QexbSZM4wWnJiuaUj9OZjI2LnRNhkzw4q7S4
+         zjAxRVLAf6lHk8zxQGjD0RtAV3nxz+pv+LesbcoVl8/31autJ8b3R+cfcvONkmnhPakD
+         +dLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753893839; x=1754498639;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A+8YJLEjcvpzo5HUZsbsSay6GcBFC4MbWArUcb/2Sfk=;
+        b=d7KzdRBpVA5xH4b6msSzFUKY8GTrrkk6ThwEY7mGNVUjB4QxwcwFnfrsyuGO5iaZLg
+         u/s/qE4qMTzJ124Ask3siH4YtuADdnfp1y0cw5S5aKv70c5QzljChDUsCvYD+COA+/0/
+         5DBYUL7qpKYfKZGelMKFyzSqJpE040w36NDn36wk0sb4Y/C1HTjlA4NWD5g+VamRzLhD
+         dzZe8LLTj1zY8Eq7Jct5/YQkAszfzRnUwoFLl2f4n08vPcba5HOFF+XCift9cqSTskxs
+         4DQpI+DQEN+VigEpzweuGKa1SslIowmLIVcdBewhpAmAXqiJZzD/FtL/w7kjeeIkZgmK
+         hlkw==
+X-Gm-Message-State: AOJu0YxBbGnSmqbgUjpjkvrpp/LJVRRkWLfk/oCoTn1c56veGyS8xrO1
+	z/ZirK8F96/O9+0JzOPdM1nNd9ZB0LXGOcau9YUdDirp815QbwdVFHtsN6EXkg==
+X-Gm-Gg: ASbGncsi7vmKlU3H3nSD7GoXYD7WJ2a19hNzy73pH8Q5v9pC59i1ME7/suR2jdNhymX
+	XWzN22RlNgB9PeqDof7DCiaEaA7AaeZHyJubNH2H+GiqegtE7uF03+clh9lBSc0cYQF4YK768ps
+	UmMrlkAm57Ad8N/H1OP/WVxFauT3laCVZ+xS4+FPkXwDfgQoGPwZIxHQlfkVCGqWQBZAKWrnplw
+	dnmARzbyIL1w7xM0X3akWB31ChBCQPWmjcptPfyYAiGpCj8CEmP5mJMnLbWi7+Ff8QNuIhLWSsn
+	zgn9OvKaygDDI5riShOjqNHMV4SBO+MCXTh2qnP1As+5tvrq1cTySDi4BHHzUJZmWkxNOMIQa5t
+	00f4wUz3JJQVDOypwF2J8htole6vEQ1zKzKqp/PE+el/KCDFwzlgLYl1x9s6SgNhCbpSdIUAu
+X-Google-Smtp-Source: AGHT+IE/UoEbfyJmafAVcIMUquuBTChNG1uI/sdz3JXA6BuqlKCyLF3Uq0RT0bSSfbGebMvGNNw2rw==
+X-Received: by 2002:a05:6a20:7290:b0:23d:54bd:92e6 with SMTP id adf61e73a8af0-23dc0e1cdeamr6877090637.29.1753893838573;
+        Wed, 30 Jul 2025 09:43:58 -0700 (PDT)
+Received: from localhost.localdomain (c-73-70-17-6.hsd1.ca.comcast.net. [73.70.17.6])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f7f58b95esm9671536a12.16.2025.07.30.09.43.57
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 30 Jul 2025 09:43:58 -0700 (PDT)
+From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Patrick Steinhardt <ps@pks.im>,
+	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+Subject: [PATCH 0/5] git-gui: workaround deprecation of Tcl/TK 8.5 in macOS
+Date: Wed, 30 Jul 2025 09:40:47 -0700
+Message-ID: <20250730164052.15371-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.50.1.475.g795bb014d8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+This series, add improvements to allow running `git-gui` in macOS, which is
+stuck in an ancient version of Tcl/TK that is no longer supported by git.
 
-> ... I wonder if instead we could change git_default_config() to expect
-> a repository pointer as the callback data and use that to initialize
-> things. That would mean that we would not need to move code out of
-> git_default_config() to remove global variables and we would retain
-> the "last one wins" behavior when two or more config keys such are
-> "merge.log" and "merge.summary" set the same variable. It would be
-> fairly invasive though as we'd need to pass the repository pointer
-> down through all the other callbacks that end up calling
-> git_default_config().
+Patches 1 and 2 are minor fixes that could also apply to maint, but the main
+change is in Patch 3, which removes the long obsoleted "Git Gui" app that was
+tied to the system provided Tcl/TK framework and that has been broken for a
+while.
 
-Sounds very painful, but it does sound like something worthwhile to
-do.
+Patches 4 and 5 are needed to avoid the system framework and facilitate using
+a third party provided package of Tcl/TK 8.6 instead, but the last patch also
+protects against a conflict with the Xcode provided git that for some reason
+includes a copy pf `git-gui--askpass` even if `git-gui` is missing.
 
-Thanks.
+Carlo Marcelo Arenas Belón (5):
+  git-gui: remove uname_O in Makefile
+  git-gui: fix dependency of GITGUI_MAIN on generator
+  git-gui: retire Git Gui.app
+  git-gui: honor TCLTK_PATH in git-gui--askpass
+  git-gui: ensure own version of git-gui--askpass is used
+
+ .gitignore                              |   2 +-
+ GIT-GUI-BUILD-OPTIONS.in                |   1 -
+ Makefile                                |  63 +++----------------
+ generate-git-gui.sh                     |   1 +
+ generate-macos-app.sh                   |  30 ---------
+ generate-macos-wrapper.sh               |  35 -----------
+ generate-script.sh                      |  22 +++++++
+ git-gui--askpass => git-gui--askpass.sh |   0
+ git-gui.sh                              |  10 ++-
+ lib/about.tcl                           |   4 +-
+ macosx/AppMain.tcl                      |  29 ---------
+ macosx/Info.plist                       |  30 ---------
+ macosx/git-gui.icns                     | Bin 28866 -> 0 bytes
+ meson.build                             |  79 +++++-------------------
+ 14 files changed, 56 insertions(+), 250 deletions(-)
+ delete mode 100755 generate-macos-app.sh
+ delete mode 100755 generate-macos-wrapper.sh
+ create mode 100755 generate-script.sh
+ rename git-gui--askpass => git-gui--askpass.sh (100%)
+ delete mode 100644 macosx/AppMain.tcl
+ delete mode 100644 macosx/Info.plist
+ delete mode 100644 macosx/git-gui.icns
+
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+-- 
+2.50.1.475.g795bb014d8
+
