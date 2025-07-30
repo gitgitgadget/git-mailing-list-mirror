@@ -1,91 +1,94 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1011C2C9
-	for <git@vger.kernel.org>; Wed, 30 Jul 2025 15:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BF92D9EEA
+	for <git@vger.kernel.org>; Wed, 30 Jul 2025 15:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753890442; cv=none; b=B7Ch+GXsCKPNt+hpz9pD3HuKF12BGKHnHeXJSH0SSPSHHSNxeiZFjMSxeXW9X4i8QjjGFJOs7AG6705qcggcwRmHt2qoNNB4r2cDutvbYL7r97fzQacS6X76mviIf+6DV6oKAw8p/8wFZZcPomJcatMzK3J/0fvOYqgMQvegSdg=
+	t=1753890759; cv=none; b=peTGIv92ithAfIoKGfp5qaGvvzcCL+B4i6izKrP9lz0wWVJHMVtUv1SRB6ypk9/BWUgZKarD3RndL/nRz/pYNelISuNVExLORjIyGqqX087+bPwDlqoOt/TZs+lwh0st8sdf+UwHZ7cPFTo4ldFyOvAvuMvyhsBZopxSvV4t5Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753890442; c=relaxed/simple;
-	bh=Ow8YLIWun4LH0qMn8JHvPV9HCzAjU9047pt2ehly4XM=;
+	s=arc-20240116; t=1753890759; c=relaxed/simple;
+	bh=VaZ5poiI7cN6ERgMUzVWMFNl/cjUZGt5KQ8W4gpHZHU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KBum0JCCVdNfI7WNIA1ZPIqmXoCTrun9IekMeRQM9dsP4irJkbwYL9VKMsNWLHaGZKV4e0X6nL2fhFZTfaNAId1vzit1fv9R6LwPH9lnPR4lI3ygAf63UUKyvuVjF0/4ivzzWJjpSSbClXnGOWlU+youiRIiGoevBTmslkwySmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cRol5H9y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F43yculv; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=cjMr1owKu4QpRvHG4aaJpN+Bc86mL2K8iU8U4f9/ILHmpjC1yFKAsGv5Usaent4lRRwwgBSB8XqLGi9dMijvFTrj46m+2qE/K9ANVctPLQ992DxoBbxbeD69P6i9l/xpLPJ3CXpIRq8jge3BZuUEcv9htmRyjzw5+saXX25Jba0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TDWWkxTi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ev9m221X; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cRol5H9y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F43yculv"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EC3C21401D9B;
-	Wed, 30 Jul 2025 11:47:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TDWWkxTi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ev9m221X"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C81171401002;
+	Wed, 30 Jul 2025 11:52:36 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 30 Jul 2025 11:47:18 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 30 Jul 2025 11:52:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1753890438;
-	 x=1753976838; bh=iSN3K6t2d8jW/uFiLiE8J3o0z0vksI11LMX3alaJ6zA=; b=
-	cRol5H9yoFISAETySmDz2O3ERWnNJ7PTFDZEc/svqoGR0p1jb1vHrrxFYvNM41/q
-	0Oo/0G0eBAJQoNtnA2UUG+VvFz6s0k0P+uJf1a8ulBVtGtNW7EW8Z9orP9AtFQUR
-	vqejldnEM9lTBOrMDOowqFKG2+6eLE6L6O7twf4R5RDiuAShpFJ4yHubx0IlKzbv
-	68R1rYivBdvRtuNLczQru7QvCxKctZBKkzBJPMqVB7JFGBGx3f4hVHgbPwji3Mxx
-	yFqE/zIjgv2I9wK10r/l7Ai7Ftjcu+Wb12KBDUzPYcwJRqo5fSAltjzttzCNQgBx
-	yaXgOspVoyhZ239dpKiHVw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1753890756; x=1753977156; bh=VaZ5poiI7c
+	N6ERgMUzVWMFNl/cjUZGt5KQ8W4gpHZHU=; b=TDWWkxTiHunkUv4rcsfypc2IgV
+	lgMv54ocfT73X6U34BWhEEuTAGj+n9jRKXnFMq/qw5GEzNk47eC8LrMqG89Rtg7o
+	OXsKq5vqf8bS8vxUbDcKBeLYoFdy6dYR0FAtugLaZIws1YoBfJG5dKA6AEJKyu+K
+	JE6orKfkPvi5eQw203T0T6fzCIEM574QsBHjnEvgroq9iAfrLLp1jl0uYJgN813X
+	gVKaaL1iaXXreQy9EyopJc+L6pRL/Ww2xZhrAs4fPf7e8SxMqe9P28Vd9k4l6Uhw
+	wkqysJzG4o4ncK+8g/ri65Q+ozf6WfN3HwTsghA7tyGQSFmZEOrgrIcwrBBg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753890438; x=
-	1753976838; bh=iSN3K6t2d8jW/uFiLiE8J3o0z0vksI11LMX3alaJ6zA=; b=F
-	43yculvvM/9uxfDjX+g2H7VM3alWiz0866tNhp0752v/jx5RNvkBfb8DeNIfHbgu
-	scumKEKBqUIkPqztGakuYKKTihkEWeQIyKNu0eC0NN3HGy0rQamR/sqxGRgfGcV2
-	Sey1W2QThTSzb8K0Kw0gF60MyNZltvQv70NlxoYwOLMEC709v+9SoFujiPscHdSB
-	J2arXv7TGDDG3O0z7FoDDa295hFXWTRXABucWIytDbTXYNTcWUvF95UJmAhNcjhO
-	v362pjo2+y0OaaN/J7XQEXdUll9EQAiUIjYnzjphYwiKkJ82JpnhsYzvM0TelJWu
-	5NPVj2EKskdk7uCRRBfxg==
-X-ME-Sender: <xms:hj6KaCelNfWsUqa78cPNfkdxravmd0S545NRRZLt8wM_0Iz7e0Is0Q>
-    <xme:hj6KaEq27_RLd-194ISO356a4lG6PfZAL2FvX8Y2JzfQE0Wp90Z20VPGQImiyAYjz
-    n69LXDYutRf7Bhb5A>
-X-ME-Received: <xmr:hj6KaD-J_MMHNQpk1QkDlr5jl83ZYW028iMmv3A04Zc3tS09rKD9weug06N_MbX9oec5gl7ZGw1NFgUAFFNEnsE9djLvL--inYKSyC4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelkeeffecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753890756; x=1753977156; bh=VaZ5poiI7cN6ERgMUzVWMFNl/cjUZGt5KQ8
+	W4gpHZHU=; b=Ev9m221XFtLljYFo383TovthvSpS2KOoocYnQKupU5ldCIejR63
+	8+PmAUn8hb5on8QQ3Jpgg15JJ0/+A0JwGVWwLy+KB0ug7jnLr03UXZNLLyJ15Gz2
+	A6ib5wKNn5YgOcGKRqxcVBuWrzNCavbP22J+d1x6V7vCD+H7r9ZYRWtkecLbkl/X
+	1iPS9gr6kksCFmXVVdGETPOtoEB0PvV/Xka4TzML3HT2TfMdkqO88kDSB+lHd6GF
+	xhZMcfgXAze/L2/25BUJTo4T2AaTrTm1wm3fEo8L3CakXz8p+iWqxxGwhTsATKeF
+	wE2ILu9ZsjMFqd6zxJ6vooWZoqzRq5m7Obw==
+X-ME-Sender: <xms:xD-KaAs3TRgEyNBrM2rN1h1NmJgh-66onLaJgABaM2wgHR15PgAbcQ>
+    <xme:xD-KaKUmlocXyuzNBhNBRGwOijVs1kmoudyl_DeEA1Nx9FNM7sdYgKR7mzVZy-PUd
+    kxIOfJE6sLagq0Mog>
+X-ME-Received: <xmr:xD-KaLhnT2XL6vg7M6tEIRJLvnxWM0LS7NxCLoSm8X1_48WgDlCcQMGg3Gj_6dpNWrr8ckSZd07qlgpu_jbpT6zhyP3YJ9dk5LnQwEo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelkeefgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopedukedvfedtvddvvd
-    efjeelseduieefrdgtohhmpdhrtghpthhtoheptghhvghnjhhirghnhhhusehkhihlihhn
-    ohhsrdgtnhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:hj6KaAfZXuRYAOOUx4yF8dElW5uJoT0AhV8Fjp8f9jue5zBloHrEig>
-    <xmx:hj6KaNLQAicj0uQTdeBN-LI7BsiywcPAiyASMFUMkE7Pn9vJpi7G7g>
-    <xmx:hj6KaAgMcM-HVEGdNxGkeiZqzx3LPi35y6jEJATjE6_l736YPrtCMQ>
-    <xmx:hj6KaLRTsgN4j4oatYeVS6xCaqkVHfJIHdliXDmsdD4C4kv3pJ4Yiw>
-    <xmx:hj6KaIJWqLNCa7q_HM_G9CMrrkVSQiMdNUg60wmzIdEme8APrXo9RHZy>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    rgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrih
+    hsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhhigrmhhthhgrkhhkrghrtd
+    dtudesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthht
+    ohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xD-KaCqpHik_dT18Bsmvq2jIX96WTKzid1rie9-ei6jHqmTvzBfCAg>
+    <xmx:xD-KaBF5Y34W9CURMcL1dCvlUDp04MVE8jxcoyeSiMLFAGfsYr3ccw>
+    <xmx:xD-KaH7O0lGWnizr19BhAhVk0BR5Zk4eg3-CidA6JuK43dXBs8LVmA>
+    <xmx:xD-KaJcGO1S_Qn68f_jGVpGldGTG87aKvCwqjMLIiYefbl9EH9RbxA>
+    <xmx:xD-KaMMAUVcaLjphGBdXu-T0obcm9Nehfde9XDW8-afsD2jugoPOjB05>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Jul 2025 11:47:17 -0400 (EDT)
+ 30 Jul 2025 11:52:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?=E9=99=88=E5=BB=BA=E8=99=8E_via_GitGitGadget?=
- <gitgitgadget@gmail.com>, Justin Tobler
- <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?B?6ZmI5bu66JmO?= <18230222379@163.com>,
-  =?utf-8?B?6ZmI5bu66JmO?=
- <chenjianhu@kylinos.cn>
-Subject: Re: [PATCH] modify the =?utf-8?Q?=E2=80=9Cfoo=22?= file path to
- "$PWD/bad-clone/sub/foo".
-In-Reply-To: <pull.2022.git.git.1753860300588.gitgitgadget@gmail.com>
- (=?utf-8?B?IumZiOW7uuiZjg==?=
-	via GitGitGadget"'s message of "Wed, 30 Jul 2025 07:25:00 +0000")
-References: <pull.2022.git.git.1753860300588.gitgitgadget@gmail.com>
-Date: Wed, 30 Jul 2025 08:47:16 -0700
-Message-ID: <xmqq5xf9n0jf.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Derrick Stolee <stolee@gmail.com>,  Ayush Chandekar
+ <ayu.chandekar@gmail.com>,  christian.couder@gmail.com,
+  git@vger.kernel.org,  shyamthakkar001@gmail.com,  ps@pks.im,
+  ben.knoble@gmail.com
+Subject: Re: [GSOC PATCH v6 0/3] environment: remove sparse-checkout related
+ global variables
+In-Reply-To: <d61c966b-61ae-4ba9-b983-c8dab6e2c292@gmail.com> (Phillip Wood's
+	message of "Wed, 30 Jul 2025 09:53:21 +0100")
+References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
+	<cover.1752882401.git.ayu.chandekar@gmail.com>
+	<xmqqcy9qlfm8.fsf@gitster.g>
+	<43aaec10-2696-44c9-8728-2045b83dc5d3@gmail.com>
+	<d61c966b-61ae-4ba9-b983-c8dab6e2c292@gmail.com>
+Date: Wed, 30 Jul 2025 08:52:34 -0700
+Message-ID: <xmqq1ppxn0al.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,60 +96,21 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"陈建虎 via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> From: =?UTF-8?q?=E9=99=88=E5=BB=BA=E8=99=8E?= <chenjianhu@kylinos.cn>
->
-> In the t7450-bad-git-dotfiles.sh, when post-checkout
-> is executed, the actual path where the foo file
-> is created should be "$PWD/bad-clone/sub/foo".
+> ... I wonder if instead we could change git_default_config() to expect
+> a repository pointer as the callback data and use that to initialize
+> things. That would mean that we would not need to move code out of
+> git_default_config() to remove global variables and we would retain
+> the "last one wins" behavior when two or more config keys such are
+> "merge.log" and "merge.summary" set the same variable. It would be
+> fairly invasive though as we'd need to pass the repository pointer
+> down through all the other callbacks that end up calling
+> git_default_config().
 
-"is created" is a bit iffy thing to say, as the test actually
-expects the path _not_ to exist.
-
-Also, pay special attention to what you say on your Subject: line.
-
-    Can I tell what area the change touches by only looking at the
-    Subject: line, especially when it is mixed with dozens of other
-    patch e-mails?
-
-is the question any author of a patch e-mail should be asking.
-
-    $ git log --no-merges --format=%s -100 | sort
-
-may give us some inspirations.  For this one, perhaps I would have
-written
-
-    Subject: t7450: inspect the correct path a broken code would write to
-
-    Prior to 05e9cd64 (config: quote values containing CR character,
-    2025-05-19), a repository can trick "clone --recurse-submodules"
-    into running a post-checkout hook shipped with the project.  The
-    test was written to make sure the trick would no longer run the
-    hook with the fix in the commit.
-
-    However, the test did not check for the path the hook would
-    create; correct the path to the expected one if the bug were
-    still with us.
-
-or something like that.
-
-Justin, who wrote the test originally, Cc'ed for comments.
+Sounds very painful, but it does sound like something worthwhile to
+do.
 
 Thanks.
-
-> diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
-> index 14b5743b962..f512eed278c 100755
-> --- a/t/t7450-bad-git-dotfiles.sh
-> +++ b/t/t7450-bad-git-dotfiles.sh
-> @@ -401,7 +401,7 @@ test_expect_success SYMLINKS,!WINDOWS,!MINGW 'submodule must not checkout into d
->  	git -C repo commit -m submodule &&
->  
->  	git -c protocol.file.allow=always clone --recurse-submodules repo bad-clone &&
-> -	! test -f "$PWD/foo" &&
-> +	! test -f "$PWD/bad-clone/sub/foo" &&
->  	test -f $(printf "bad-clone/sub\r/post-checkout")
->  '
