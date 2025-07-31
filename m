@@ -1,148 +1,136 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E70A47
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 05:32:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB001E567
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 06:39:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753939930; cv=none; b=EUC89A8lSrnbsat/pckkU7MS/86dNhdi2SjqzW6pwavfPD7OWPp2aQZpDuyJjinhCZJC/k8yStlHsuPZZyePwhyDTPAZA5gPdc5Y7y2fq9yA07zrlBp+lnAA4gy7Ot1WjMrCQXtcmpGb4Ndv2qgYCTfpqCD4MgIry0n/mTx7XkE=
+	t=1753943995; cv=none; b=jiXvWWH/my0nltNehNPEltxc1VIF4SDe4vyMyMV0GeS2b49U88W1UfZ6QiqPg0+oXNMtXD253DsjNglJIUsZaCDK7gtcIAdTlcVOpW1YsdZV8xpO6U+PCnsILBUJSRJObD16FDPIr4/HjJCdGzxDnvEB3Uu9J5cOg4qJRd7M+jY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753939930; c=relaxed/simple;
-	bh=x+QiETV5GjsI57GTZVH0ocnzLwmPFiMGePCzf4FoF2g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bpkX8hrjaHZevVGEj6qw9rWw8zGxp+t/hBmseXaAOL3eZRTPsbYkK3boMlheQMyYu3QDiJZMLUDJn+Y1MUikfbpF0oV74/jijFH+Buq+YwxECBdu3Leb7ekFOG0TdHHYtUlHSIB8l4vHpIUeTvrhqs/1Z7Bruq52jkFEVrJS/Pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QFJeU0Yl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CyQedNvN; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1753943995; c=relaxed/simple;
+	bh=2pJSJHG3BHUcRbW/FheH42b8iZVA8WyHcQJAlIAZKc8=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=ipd7+5IYq8fJtq5v0uyQcdtaxpA3PyTUCgE4+xhsq7Gq2l/Dx3kRjXZEL33Nuj1Dpdcgg+eopkSX0xxqiONxKzHRoSXXgZIATaGihESVrx/PJvY+WjbglFWJ/Cv7WWmElOJt6yLYdNHeWuTpX4xDGZexDyamEIThp15YmfTH0HM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=l2TvJ8p7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=joFG57TV; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QFJeU0Yl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CyQedNvN"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id C7A001D006A0;
-	Thu, 31 Jul 2025 01:32:06 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 31 Jul 2025 01:32:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1753939926; x=1754026326; bh=OJxXhf6L1C
-	je00ML01GrdDz1AOBrs9to+f+8qliMQx8=; b=QFJeU0YlpMXgbXHG1ZZZJqPi+C
-	xoOZI0REdB17/TKTWE7Vve752PKPqfqXvRWxlCSZKhSZHvMqRmukmUb0ri7+JeKi
-	+NrWevge4ucqg6NNdPDylCc257eu9R7LLk2BOud7b4c4cfQKCs56tq0jGbVIBXIY
-	iYAi4Vmu+pe7zXsyE4dr8o5cP9C4vbM+NHnOuB6DTXMGRze5NdpmRsn+w1Dge0ry
-	mCroiOaI9B99q0AGRupE4FrPgSnEO4NPuamTo4+T0QDp1WiAwoJ8MXtah9lNKuAv
-	XW2PMvEPS7bv0KsboKTJM314jSuyTPn1I/X91TH78Tb7tNK4XN8CERFbA/UA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="l2TvJ8p7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="joFG57TV"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CF0A47A097E;
+	Thu, 31 Jul 2025 02:39:51 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 31 Jul 2025 02:39:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm2; t=1753943991; x=1754030391; bh=AuJpzep4Uno90LOhPnATb
+	lN/uLIfkqY17X3QQ/ZATAY=; b=l2TvJ8p73/D6c8ivqeyrXTp4/8u81JwI6/d+a
+	DU4wIp/6ZMMbiae4HTcGcLTxkiCGuCl2giKP2k5txzujlsGO4YteMDAhPic5wjuU
+	0RzGlZnu5mw7zm3rfxf3CGpq1Rp5GHmzUQZ815IIdAVgzxYlEk0da/WFkEb5Vanc
+	MKDjVyyOED3EQX7fC0eSfXt//A9mqDmZnE5sDjitfedjtLsY1OnBkvqnPDHIKcQz
+	K9qNHQSfa/rfqgkUi2pMl0beBeaACgLzF7Ju9CbLClUHITedP9kVaMz+YCkrtB9+
+	9kVOs/l1nFKtqaoZtZHUPo4TYosPEA2uMC7EnG8uyLecejIVg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753939926; x=1754026326; bh=OJxXhf6L1Cje00ML01GrdDz1AOBrs9to+f+
-	8qliMQx8=; b=CyQedNvNPvqS/bKhmQpOZ95EDCHHJdVRkx8rzu0KYXcjr+4kCln
-	tkK6Nd7ODUj+STixC5w0smacSBN9DRrZz4OonEfPLEtVi45krqFAr+FuWrnBLdbZ
-	qpUSpU52tN0mL/pbgIQzGMS2oRnc8wMghH2zTlVRod2pZVvcSpbPRuqk8dJSU2ym
-	lp5PwHAx0s/95Jnh4jzILMdz113ZHe3CCtmM1T0bvCV5HqY1ksztpM1gpH0h4J+K
-	dieZSxXqSCpou6iutc827VhlYmGfXKpA4pWc0CEJKb0aufUtF0qqfcm3/Hvf2xOP
-	xt3+RPq6eAoqXc6+Me3KQb/b5CnfYwwuiOg==
-X-ME-Sender: <xms:1v-KaOsAtBM7KqkBaH3ZajeJ6DdTCASdU7lTZqgFlDCoAipY7nFdjw>
-    <xme:1v-KaBbP9eZ_QStI8RrJL7cw6ldkh1GMjQosjoL6fk3iXjNf7ZIU3QWg4tqjW3asb
-    7Oo8SyaqqIv0-Tfig>
-X-ME-Received: <xmr:1v-KaBVuxRRfCIL7-nihIYCcyqhjUlniAs_9m1WhA371DCll9jOfVxgn_4cTflMz5ZweaTdEP-SJ6-M4k82BA8NiUF_ZoD6cEaCoamk4AQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelleelkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:1v-KaF6o6odfvaf9WxdR1hsd7FOpMy8urdGOEOIIr8GNNIn4Vr3Ngg>
-    <xmx:1v-KaMjWakiPobcJvb_Va6ghlDF6OJy3dkHSYRS0m0VwT2rZjHGggA>
-    <xmx:1v-KaMcap_RN6kgY-0azwYtLWsNKKo4OBx5sLH8PwCo6oqhLOcxbLg>
-    <xmx:1v-KaBc5J8OA0g3WGqPOVekHdayOsT4v5qFHggbrKwBG9xw0eznvwA>
-    <xmx:1v-KaBo8fREFCPhkcWX7AdsxSKKPvqswwgOPezeivuzi0VT45xs2q_ld>
-Feedback-ID: i197146af:Fastmail
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753943991; x=1754030391; bh=AuJpzep4Uno90LOhPnATblN/uLIfkqY17X3
+	QQ/ZATAY=; b=joFG57TV3eZy4nHq189qyFEhzvHg4moje0whYEJ4byOu4KHS7Gg
+	c3Gbdc6MErPGBerkrHXo+WU6IG2z528HDecKI+o3wyAC5MoW6A32LOauIIHqqbB5
+	oS7bpjyetbdJexrzSpfWvq+Tb1+silmg6aFXoIKdPbZ5BQf5j4Vi9AHxHBXS3R2I
+	VDKleWqn7y/93Gl02RUOVN/hjXJre/4oNTd9AeCQf/AB9MR/Jbwix6WsdDCkVsss
+	DYQbRgUh0sD9hk2HDcilADAiZxY5idjs/PQTCjqPZr7VuqGMJMFIhMjfEidUG4EW
+	Mo6fKazS7Ju3x3Qrm9lx7ESTX3vC6ZrCtgw==
+X-ME-Sender: <xms:tw-LaO692vWxhHmmcwgPNp_kZ4AZZ1SafSje4eZOnXTdKnsXG1ombg>
+    <xme:tw-LaIGod-TdCQhLNMAZG84QmGgkl52dLdQHJZ_ZwCMUCwtfSfelT7LY3a7z2fmBw
+    YDbuHPEKtuVbBOV8w>
+X-ME-Received: <xmr:tw-LaPTtHCXzois5UvVDxMZiBuZSUYr9do7vKLgfuBX1E2a2JH50mZEY_Uk484oO3MAl2NbQmqRdLQkwFxn69Ugz6ZAuKC5mlKLC-Fs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddtuddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtredttd
+    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
+    gidrtghomheqnecuggftrfgrthhtvghrnhepfeelveduffeltdejgfdvueevgefgveelud
+    ehtddujeetgeffieeljeeuieethffhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
+    hpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:tw-LaJsG0akK5MUjUapblYZhPE6CGKfL9-VGBEsyItXgRe3jNe-WJA>
+    <xmx:tw-LaGz9ajiTvm5iW_NGpGOxJcdhhsQvg0dA8qN9Qz4M5xqTBs2cQQ>
+    <xmx:tw-LaL6hYUhCCzKXEj6QsbPBD-1myDD6m8x4IU5fbVi_6prX5udwmQ>
+    <xmx:tw-LaIWJ3Bm2A48-WBtdHYlLqKCpUcO8967p-cLXdnxKypWftNYx0g>
+    <xmx:tw-LaJdIF6nxoJD9Mxa8sDxjzJ0-qHYKvGWPaUCY6Zovl4oJqp0XiZtA>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 01:32:05 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id eca57d7d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 31 Jul 2025 05:32:03 +0000 (UTC)
-Date: Thu, 31 Jul 2025 07:31:55 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] clean: do not pass strbuf by value
-Message-ID: <aIr_y3DM3kS09kKq@pks.im>
-References: <xmqqseieogkg.fsf@gitster.g>
- <aImv4kZJS4CUqmZ3@pks.im>
- <xmqq8qk5ojcv.fsf@gitster.g>
+ 31 Jul 2025 02:39:51 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH 0/5] string_list_split*() updates
+Date: Wed, 30 Jul 2025 23:39:44 -0700
+Message-ID: <20250731063949.1601669-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.50.1-612-g4756c59422
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8qk5ojcv.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 30, 2025 at 07:15:28AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > On Tue, Jul 29, 2025 at 02:03:27PM -0700, Junio C Hamano wrote:
-> >> When you pass a structure by value, the callee can modify the
-> >> contents of the structure that was passed in without having to worry
-> >> about changing the structure the caller has.  Passing structure by
-> >
-> > s/structure/structures/
-> >
-> >> value sometimes (but not very often) can be a valid way to give
-> >> callee a temporary variable it can freely modify.
-> >> 
-> >> But not a structure with members that are pointers, like a strbuf.
-> >> 
-> >> builtin/clean.c:list_and_choose() reads a line interactively from
-> >> the user, and passes the line (in a strbuf) to parse_choice() by
-> >> value, which then munges by replacing ',' with ' ' (to accept both
-> >> comma and space separated list of choices).  But because the strbuf
-> >> passed by value still shares the underlying character array buf[],
-> >> this ends up munging the caller's strbuf contents.
-> >> 
-> >> This is a catastrophe waiting to happen.  If the callee causes the
-> >> strbuf to be reallocated, the buf[] the caller has will become
-> >> dangling, and when the caller does strbuf_release(), it would result
-> >> in double-free.
-> >> 
-> >> Stop calling the function with misleading call-by-value with strbuf.
-> >
-> > I think the second "with" should be dropped?
-> >
-> >> 
-> >> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> >> ---
-> >>  builtin/clean.c | 10 +++++-----
-> >>  1 file changed, 5 insertions(+), 5 deletions(-)
-> >
-> > Good finding with an obvious fix. Thanks!
-> >
-> > Patrick
-> 
-> "Fix" is a word that is bit stronger than what is actually
-> happening, as the code is not yet broken ;-)
-> 
-> I notice that there are a few structures passed by value in reftable
-> (e.g. merged_iter_pqueue in pq.h and string_view in record.h), but I
-> only looked at the output of
-> 
->   $ git grep '[(,]struct [a-z_]* [^*]*[,)]' \*.h
-> 
-> and do not know if they are something to worry about.
+Two related string-list API functions, string_list_split() and
+string_list_split_in_place(), more or less duplicates their
+implementations.  They both take a single string, and split the
+string at the delimiter and stuff the result into a string list.
 
-We originally had a whole lot more, where we passed `struct
-reftable_buf` around by value just like we did here. I already got rid
-of a bunch of them over time, but we still have calling patterns where
-we pass a lot of `struct string_view`s around. Those are all benign,
-even though I don't particularly like the calling patterns.
+However, there is one subtle and unnecessary difference.  The non
+"in-place" variant only allows a single byte value as delimiter,
+while the "in-place" variant can take multiple delimiters (e.g.,
+"split at either a comma or a space").
 
-Patrick
+This series first updates the string_list_split() to allow multiple
+delimiters like string_list_split_in_place() does, unifies their
+implementations into one.  This refactoring allows us to give new
+feature to these two functions with a single chnage.
+
+Then these functions learn to optionally trim the split string
+pieces before placing them in the resulting string list.
+
+An existing caller of string_list_split() in diff.c trims the
+elements in the resulting string list before it uses them, which is
+simplified by taking advantage of this new feature.
+
+Junio C Hamano (5):
+  string-list: report programming error with BUG
+  string-list: align string_list_split() with its _in_place()
+    counterpart
+  string-list: unify string_list_split* functions
+  string-list: optionally trim string pieces split by
+    string_list_split()
+  diff: simplify parsing of diff.colormovedws
+
+ builtin/blame.c              |   2 +-
+ builtin/merge.c              |   2 +-
+ builtin/var.c                |   2 +-
+ connect.c                    |   2 +-
+ diff.c                       |  20 +++----
+ fetch-pack.c                 |   2 +-
+ notes.c                      |   2 +-
+ parse-options.c              |   2 +-
+ pathspec.c                   |   2 +-
+ protocol.c                   |   2 +-
+ ref-filter.c                 |   4 +-
+ setup.c                      |   3 +-
+ string-list.c                | 113 +++++++++++++++++++++++------------
+ string-list.h                |  26 +++++---
+ t/helper/test-path-utils.c   |   3 +-
+ t/helper/test-ref-store.c    |   2 +-
+ t/unit-tests/u-string-list.c |  80 ++++++++++++++++++++++---
+ transport.c                  |   2 +-
+ upload-pack.c                |   2 +-
+ 19 files changed, 190 insertions(+), 83 deletions(-)
+
+-- 
+2.50.1-612-g4756c59422
+
