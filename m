@@ -1,124 +1,115 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E7F19AD89
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 14:30:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06D12905
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 14:46:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753972208; cv=none; b=LKyrprRn4B5ZkiMpiXJqPT04WXolmvvyfkjnO/N0HTAe1QEe7/BlAT7QnYt2QROeS37fXrFJAckp+52SK7V+F/MQ02UgkPVj21Nw5+Bdak2onpE3PsGwv7rzBitYrtolc5hyPyzIdD4Vqo9P9F1twgvtwkiB/hYsuDzfXtyOzjc=
+	t=1753973184; cv=none; b=VPvZp0eDs6FsSj+/g1gnVW3aoBIN5lStAcngicmVSPzVUXOL+eqO0uLm+nlM6we+hqg40XXWc+hiee1P6fCM5hMgCTvvA2AkzMS/vPFDGKYbKHr7jmNVVO2yL+wfe7KOTCbbceLwkp6lxrGy9hcptSlH8d7Dp0grnF0Ukzdf/+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753972208; c=relaxed/simple;
-	bh=y+oEADY82I1jrG3BLeSmoXtl6xRSY6FxOep1Bw/mLyI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fEaxOI6YgI6f1kj+fhjmfZAQa7o1WefjPX/s+abN5HJ8HWh4upE/JILkKtehcyzQ+3lxWjfzsQqPZX/hKfzQ/puqLiFoF3gQpRj0uLH3NxIWgwVBE3QZZE8cgrFxFMHylqVF4g8hdd6rHV8PCLCYjz/rKTmR3U/KVjUDWAiBq00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fw+Dl25A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fFShy49J; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753973184; c=relaxed/simple;
+	bh=TOj7CzJtB1NQqk23+kl/pR9+6tAI4ITyD5ynWsxT+Xw=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=lfI+xTTLv+eE2Sm/9Md1ZztdX3IS/ALPfSyr/2r67cgapfhxmyg7Od7heuLlKyWak++dLPE3ic8puEAahaqgTLrxvT577A30q1kqimg968C3cDezid3/TDxRgjnzrVLFUKj0uI8Gz7FyIx/v85CMnAHnvOoqIzmTErtgVl2MBYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XNMCc1lm; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fw+Dl25A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fFShy49J"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7A04B7A23B0;
-	Thu, 31 Jul 2025 10:30:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Thu, 31 Jul 2025 10:30:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1753972204;
-	 x=1754058604; bh=y8ocCYV/1LdrkDjcsyPmrUfoy5jEaoafUiU6cjTf4c4=; b=
-	Fw+Dl25ADSenyjely/Psgg9mD2bhob7hC9IfDEsjn1cQSCTtz3Y/SXEOpCSsWKbG
-	C2NL4HBH/T75pbArxsLD11CuNXHpanjOHtARW/OlKxdMTCiL3h0p8oBmTPeMUfWM
-	uh+f1Wt+NQW0a0p/6np7ED5JlmvkljgG38xMICLT++0vlWQPHTXPKoQ7pvKsoDcw
-	dgPdgTeFM7dVNJ9IWdOw1grIuAfGKVLYRv96Alf3e4QRbj1bbtEZtsBNnE7NB2dM
-	sSP/WT0+FQznBTjlcREXfiCXCbpV5tuzJJ6ILDwm3oUzn4Z+XEVo24QHNXdg4SKU
-	BYY4HXgEhF/BlVl8gy7UrQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753972204; x=
-	1754058604; bh=y8ocCYV/1LdrkDjcsyPmrUfoy5jEaoafUiU6cjTf4c4=; b=f
-	FShy49Jn+ENGUQE/9QZUlioBqxVL0UQkJHEIQ6ztY5rTIyQdG8NP1zDPuqfAROiQ
-	Y5kUx2RPzMCQ/SJGjbH+mnNCjjuU6dEjVVmoluxjF/14K9OUJhjCVwF33z5GFkn/
-	gG5N0KkAvdkfAy1LWJ3lUsKBAd4iEg3oyYTefqoAZCG+M6+GzmU2voVKxnIM2f/O
-	Ewv7MJ60P214JJz0YwlmO88KWRJ8O5UATSZOe4lq2/3uKJjTOygu05Z4N1iHqqo+
-	yfFdFZjhGREWCRKY1AcbGo003718m2w1B4FJUxdlX8jrqnSZPt/PogvFNtxXksAv
-	9JQhogsEAHq8QMhfSRuCA==
-X-ME-Sender: <xms:7H2LaMRTwqZ_VbDqjPMIOR_xEtRm3c1LNGb6k_62gcWQzQTCpMtwXQ>
-    <xme:7H2LaNDKLf0fc8dzlyYB2pnKj0XRCcSkiBZ51aEIU3bRpM-fhrd_SulkTjMz98YIX
-    TMicEP-3-LyQGmVaw>
-X-ME-Received: <xmr:7H2LaDS-QDHg6HfsYEGTeTTIey4PsoRQ-XYsGgDkNH55Mc5eSXvEPRfGDVCURmipfYE-hLtZOTUDS8C9barp_B_Iryida4JFYhE3aMc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddutdehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:7H2LaLovxf3CdDlqfO1VLWBg7qUa6mgvrs1JcuhFBOtl6jNDiw6ogQ>
-    <xmx:7H2LaFzv34tTxkFrytfOLlm2F7Bi60y8tv9TiH2oPgbO6d7DdOU3ZA>
-    <xmx:7H2LaAKcCJ6DN0cPB1ouKyDfAJHBMIp2lqnFCxYj29kr--TKZPIbwA>
-    <xmx:7H2LaHL52vZOyHnJ6d3avSWZ7KYfLw2r6fEn-2AF_T8yE3-YhCMKKQ>
-    <xmx:7H2LaFrjLfilwHcUe95nYLyXWJMidvBOxm1CHevK3fq1HO51778kGWSl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 10:30:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 9/9] sub-process: do not use strbuf_split*()
-In-Reply-To: <CAP8UFD2qAOhRN=b9PB_eXQS1PntZKX95ZK=V4G=10n3iU2xtbw@mail.gmail.com>
-	(Christian Couder's message of "Thu, 31 Jul 2025 10:50:50 +0200")
-References: <20250731074154.2835370-1-gitster@pobox.com>
-	<20250731074154.2835370-10-gitster@pobox.com>
-	<CAP8UFD2qAOhRN=b9PB_eXQS1PntZKX95ZK=V4G=10n3iU2xtbw@mail.gmail.com>
-Date: Thu, 31 Jul 2025 07:30:01 -0700
-Message-ID: <xmqqikj8touu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XNMCc1lm"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-af90fd52147so186634866b.3
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 07:46:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753973180; x=1754577980; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=AXoMGyZN0J03ZpCRPKooPCIETOwKfcAVhtU8iaDUW8s=;
+        b=XNMCc1lmBZT7uezSv2SzrBpnZYDuZWg9sl2tUmCD0Q8FvTSCv7CkUNtCHbtdYlvdFu
+         fSotNPFBHKDgmR+ItAY0TiRc/ONzNJJ9LegsRt6Oue2wA6w+AaJ2jpLyHw38LzWPh2ZA
+         Cstst8mKZLejl6+Ci4NRxb7bKJvDZfgmmo1ESAoYVx/yJAdAjj/PzVwyzfCPqRP7jE7C
+         JRGCOFCidkl0tloHEwxHPj44N+8l0Y+QBMr+ODTn1ZhNpLlZr1DUe0gS1YQ8Hz+uJye1
+         fglyo67y1ehfOGVNxbHO+8hUjFb6816WQLBYAx9qDyjSn5PPvSPQXzvAgU6zDpz21qKs
+         qqIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753973180; x=1754577980;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AXoMGyZN0J03ZpCRPKooPCIETOwKfcAVhtU8iaDUW8s=;
+        b=H+6oBPp+e/hdbWxYtzWxH5zmGDeDtSaP3pXFyHsqB3pYkSodVG9j7h/L6lvFmuwl9B
+         h/iciILReiTw4y3yqxvNBqHUUeOY/UMT3zgJ6/vEcTgKxeaeQU9NkHzhSj4pwbCrxKLb
+         FGhhK67ujXHn3l1SFz8hRXR6+p8sj3a4IrW2C0IJmuMzg7ulJjTfFhCjeMRAm3KAiDZo
+         gtV84ugP2vA4bEVUYzrZGD2FNlkbblqekymk65AGSjZLIdw+fRDulBvbgOqFJObaYJ/l
+         AkRSIs9ThgTyjh9X9wotfNA4SptriLjnsjOLZ1LrXgaiqF15SljUlXWySZK+SGyKe8h2
+         GgFw==
+X-Gm-Message-State: AOJu0YyXe2MFj7XtqMKl3HRgrZ5llJa0opvxoKUN5U+D6tBNys2eVQCd
+	PSxynP90c7FiJbMh87u6xNiY4OWx1nH25clEIa56KO99O1N+EpqeNwMqg02ybw==
+X-Gm-Gg: ASbGncuVyMw+4ITIM+auhP9W8YGSoFlgoRCY19SHlDy1t1nX9Sgcf/GMxUBxNzGkzAw
+	AuTE5tP6mPvhVbKLLqMBP9KwGWo+iD4Zccf3ImGfdeVz0sts7OGzmNpij4++EH/gVnCmCxxqR8I
+	okN+QfjSmgpwz3vStnV5qNdjMaHZ2duooiHZ0OZLjqDxLWOImK1vgvB0+DE2XI5yJ9MNd+5AJOs
+	yC5E3hRXj2KXfzlLKGqtVvGlNIIWn3u5lSp+94F2EZGkVPCbmWxKfofk65RJc5oaF/d2uxuvtG/
+	Xy+oBlEo1u+nYxWN2Q5m7CsrEwlAIwC9hitwpUcZAgh5SUUpRF48HmtzFf286Z0PKoQI8zUNocp
+	e32ZP17AQtVghWnnsfvpzWJqsJ9E4w7G3/A==
+X-Google-Smtp-Source: AGHT+IHQXDeXFEX0Q44w+MTGTikLrtlCDzj+KdrJIsdqBLDx+y+1mK8PHmWYdOmuoGMC5bcb0jeY5g==
+X-Received: by 2002:a17:907:9448:b0:ade:79c5:21dc with SMTP id a640c23a62f3a-af8fd75354fmr984032866b.25.1753973179499;
+        Thu, 31 Jul 2025 07:46:19 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a0766e2sm120085966b.27.2025.07.31.07.46.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Jul 2025 07:46:18 -0700 (PDT)
+Message-Id: <pull.2023.git.git.1753973177262.gitgitgadget@gmail.com>
+From: "Knut Harald Ryager via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 31 Jul 2025 14:46:17 +0000
+Subject: [PATCH] docs: remove stray bracket from git-clone synopsis
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Knut Harald Ryager <e-k-nut@hotmail.com>,
+    E-K-n <e-k-nut@hotmail.com>
 
-Christian Couder <christian.couder@gmail.com> writes:
+From: E-K-n <e-k-nut@hotmail.com>
 
-> On Thu, Jul 31, 2025 at 9:44 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> The code to read status from subprocess reads one packet line and
->> tries to find "status=<foo>".  It is way overkill to split the line
->> into an array of two strbufs to extract <foo>.
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  sub-process.c | 16 +++++++---------
->>  1 file changed, 7 insertions(+), 9 deletions(-)
->>
->> diff --git a/sub-process.c b/sub-process.c
->> index 1daf5a9752..de3235c15a 100644
->> --- a/sub-process.c
->> +++ b/sub-process.c
->> @@ -5,6 +5,7 @@
->>  #include "sub-process.h"
->>  #include "sigchain.h"
->>  #include "pkt-line.h"
->> +#include "string-list.h"
->
-> Is this needed? It looks like skip_prefix() (not any string_list
-> function) is used instead of strbuf_split_str().
+The git-clone documentation contained an extra ‘]’ after
+`--also-filter-submodules]`.
 
-Yes, as you suspected, I initially rewrote strbuf_split*() with
-string_list_split*(), but then realized there is no need to split
-the string into tokens in the first place.
+This patch removes the duplicate ‘]’ so that the line reads:
 
-Will remove the unused include.
-Thanks for carefully reading.
+    [--also-filter-submodules] [--] <repository>
+
+instead of:
+
+    [--also-filter-submodules]] [--] <repository>
+
+Signed-off-by: Knut Harald Ryager <e-k-nut@hotmail.com>
+---
+    Remove excess right bracket from git-clone docs
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2023%2FKnutRyager%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2023/KnutRyager/master-v1
+Pull-Request: https://github.com/git/git/pull/2023
+
+ Documentation/git-clone.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/git-clone.adoc b/Documentation/git-clone.adoc
+index 222d558290e..851502552f2 100644
+--- a/Documentation/git-clone.adoc
++++ b/Documentation/git-clone.adoc
+@@ -16,7 +16,7 @@ git clone [--template=<template-directory>]
+ 	  [--depth <depth>] [--[no-]single-branch] [--[no-]tags]
+ 	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
+ 	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reject-shallow]
+-	  [--filter=<filter-spec>] [--also-filter-submodules]] [--] <repository>
++	  [--filter=<filter-spec>] [--also-filter-submodules] [--] <repository>
+ 	  [<directory>]
+ 
+ DESCRIPTION
+
+base-commit: e813a0200a7121b97fec535f0d0b460b0a33356c
+-- 
+gitgitgadget
