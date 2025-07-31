@@ -1,144 +1,99 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1279B25A2C7
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 08:28:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FF31E7C19
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 08:51:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753950526; cv=none; b=QGNPFIxYZ/BVkg0NAdf3a9aZemC/QUcxthemZzFbuJLFmsnFXKbLiG10J4t/Yl/r3B/K21d0jEX1YG7W5nP0Z8uZGKLU7CkZmENOuJljlFMUaFb1giAPlY9/s/9D4q61KYFtRNVuyAyigfUzICJU1u9gSFl+jDnD4Ko4RetsV3Q=
+	t=1753951866; cv=none; b=JwX51Wo4iiRbFaqOyBzeV+WK1pYs9GEs5ogMpxXFqIBdE+/LfWvKRDfhd0bUk+aFyV4cmVUTXs7ZlZeNo8/oq6rnDP17csX23hA8ZkELnlqWvw/8m7e5FZiN6QfzDbQdxntqCLV2vhPhj+e7B/yiXCmcIpRDyS5gwjflu+jcsqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753950526; c=relaxed/simple;
-	bh=fD07nOUSRrSve/YBjksSR3/QEN1k5N3D09hLsRAmSuQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nm2/GcwhG/0slLtmwy4eVImHjLxA+oGyYvqO9P6fDOMiUFHjQHtUta9eW6xoJMszDcYbnlA8AhViyxr8ko42p5w2FpPR7klCz4nTCu4HAfxg72NLvucAq8olGUOjC847E1trk8oJCJBm1wa6DkrnNM0DO+k+zahYhKObqkujyCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O6I9zGo+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TPCxp7q/; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1753951866; c=relaxed/simple;
+	bh=ijlGyZJGttm3RTBfwiLRzkDLddcBtSRRDh1XZbVUN3Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BP2GCN2SqzIIB4FX8wLttbcFbGrS7iaz5mLyAoCn78Dq9eDpqw4yyfxMt1s8LimvUwaXO+ts7hn8e4EjCmzEac/3976w1bwGtejJPRuJA6RlqS2r3RksoZvt4NJ06qb3xa1E/0oOEmAQc0AiEVeIgqCLkppjZfmbU2WR38bFDd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lsBwgGYl; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O6I9zGo+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TPCxp7q/"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1C0F71D00B78;
-	Thu, 31 Jul 2025 04:28:44 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Thu, 31 Jul 2025 04:28:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1753950523; x=1754036923; bh=6l3LSTKuUC
-	HqSYMARtwWrgYmqNhEfSnjG2TS1ZSbAAQ=; b=O6I9zGo+jxRb5BnZC5A0XdRzYY
-	xKIvuVFHWTjr1CgOPs0DhCTtigV/5VX9ceO2lghos9r07FCOH3m4N7isoAju+242
-	icZUQwPmbi+L1D5sNZP+smfiIA4BaQp96ieogyaSi+q7XfRdCiVn7Jntoj0viMsI
-	PEMh5AdTNO7GQsm7GY3Be0R7yCcHIJRDYplTaWWlTzapzIB6cmFltGhJ0kfVO0Oi
-	6hqAfbWHrMaCB85wZjher17znMz9TuF2/vE35Q1jwwpNlNhXXYcNAKL+td3q425R
-	B+AXdQlWAiujWU6SW55hheiexEEA5LaQRvDgS5pEex1V0ILowArYsLz3kJ6A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753950523; x=1754036923; bh=6l3LSTKuUCHqSYMARtwWrgYmqNhEfSnjG2T
-	S1ZSbAAQ=; b=TPCxp7q/epRRAOCef1Nj3gCU5U07F1JcMPWGG8i2QYlUxLb0Wog
-	QWKBuFzrgRKqgAsGhOhZ3Cd4efT7InVqvI8KswBPKDNBPz48UP29AUOtbEOPzoH1
-	eU9tt1/Er+BBpCH0uxINkhGgmvaGYGxOTPgzC59othQ+sRRR+DfYjpblxSrepOJp
-	89LMariAvDBsu8fFCKTTPo8cF2Q6L9Tg5Q0OzhY5mP0epzQNKe7oq3ilZ5snkVHn
-	6cMdU+tYc/1fUo2AxRnLTuiMqK5TMZahhQlpOpkdLYPUqId4o/XkeM5STz5wS/Ov
-	/uKTtpqxd/LE5FhydoqsA3u99EaEiQ6d+RQ==
-X-ME-Sender: <xms:OymLaKSArrdyZypz3hkuOnyO8A952cC3fEiuKzB4-_-QvTOVv6PHrQ>
-    <xme:OymLaLSwIm9i3JE3iulK5TOAJRGSaIglwO5NDNXcPKrfIeAP0i4kSDXyJuhGuCF1H
-    Ucot8IDbMA87U3iKg>
-X-ME-Received: <xmr:OymLaOQeGADurg5rVsCf54V-GrCMFEbgU9BMtMqk5jFAxFyGVj5vrkSJSzTlDNbSH9Vi98JT7mvYHrV6Uze3Sq7n_p-sDKgOrjWqtysoIg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddtfeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesph
-    gvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
-    phhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjh
-    hhtggrrhhltdekudegsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:OymLaA68Sx3-c6RvkMr7cMlzSst5BlyVdG83HLPn1hVLOt6sUQu_hA>
-    <xmx:OymLaK3_FwnzA9H8caAzY74DLAgiC1Lr27pWP1gdLWUWcPw3PZZ7aw>
-    <xmx:OymLaLCSon43maDl-vOPtCZh7mv2YbhtagIfNCdKUZbBrYlN18A_vQ>
-    <xmx:OymLaFPWs8yq0dH7EJ7J_yNZtjM896oSLCvsXqjW7SafbCy_UHlH_Q>
-    <xmx:OymLaDvGd7JX_NaAfIA7mIOZSsfNozGW3Sbhd5uFltvYuZlnqWQ-MEQH>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 04:28:42 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2911f879 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 31 Jul 2025 08:28:42 +0000 (UTC)
-Date: Thu, 31 Jul 2025 10:28:39 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Han Jiang <jhcarl0814@gmail.com>
-Subject: Re: [PATCH 4/4] builtin/remote: only iterate through refs that are
- to be renamed
-Message-ID: <aIspNyUCbf0_dQbh@pks.im>
-References: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
- <20250728-pks-remote-rename-improvements-v1-4-f654f2b5c5ae@pks.im>
- <CAOLa=ZR=pQ58GSKh-M1fg5Ym5U6THmmvgTSNGUGCmdhhuVHFCg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lsBwgGYl"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ae36dc91dc7so104082866b.2
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 01:51:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753951863; x=1754556663; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1985ESzOSvwyiDLWE0SrMSq8TRgs5GwuGbt8WuaJ6a0=;
+        b=lsBwgGYlxOQQJwGWrx2DKkMD/lztFxJgKX6VZ07Fz1fyjNcNl9EyNZuq1Xe35ZEhcW
+         PubYRNqBP7W52yfUsJC3gYbGKRU9xsRYuoSKNhx1ecJE5gT9ZOIMh7hSi3oi1fLCEmF4
+         sYJreSahlTJ2xCzcpVZyNv4tYmPNmcwbnhEBX5PF3awctZIsJjE0J/1hCsXC4Jc4gG1l
+         nYDOYa7/JppaCcMBVeYiwmx4AyUzbmXk9ZbzlsZ/+ZEdaWUVey22xRuZcGq8qSyEpr+6
+         LTDDC5Da4KzG/joRCDBM7maPOXKkziu1kpjxprg0aiHDpnoN4Tq02DSFY+lyXAdshI7c
+         uThw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753951863; x=1754556663;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1985ESzOSvwyiDLWE0SrMSq8TRgs5GwuGbt8WuaJ6a0=;
+        b=blWnM5QK0jKMnIMeZigttKWmCC2GXK8TkOwmY3TLDnNFN7GjSdBk5tZVxJriYR6B8B
+         aIE2CTWAdtkreJbXzb2WB3UH+IIJ7Lh7VulVF3y6uEY1Rg7yJX06Aos7YUlU5N775hEy
+         N8QquHK9vh8V+6IbTggbJaibc3Q6GWPrc/UQtr1zE7rxLAmqp5OrLxOO3uLeFCHBAV2G
+         mRb16WtbA0de1r7HbLWcuwi1sOx99R3II0m9dz5KE+dYE1qYa3g2EmzSCOwyDkJBbFlx
+         qydPiB3FWkUDTzynSItZDQpyMx206KOVOBrqQ5zk+4GvP6XIP4dQLpz0mVldQFRe2rHh
+         DO2Q==
+X-Gm-Message-State: AOJu0YwvnS+nTqEDv55sjI7qvmx886Gja4fq7ncUWHMf3jVoGEJpz1Bl
+	Rg9Wb2hP68fPKef/mjyaQWnbIvKPLrlsLWbA/9tAJM2VJ0MsTGfniOdgAan3A2qON51W9zGdTau
+	ptOsW+CbYnDCZcPtVwtZhNJvUVCJIIc3Xbc4u
+X-Gm-Gg: ASbGncvyQ7uFYDCxxTRjFgC54PMiT0JZZvmckQN9St5dIMi1La+ib99uPRlsyumhvfn
+	RcC8y5MJCkbATzIZouC6k+FRYfVuxS5l4eoWeGn6OTE7HGD645rUNELQLxI9PLvlmOFeHy7MjH5
+	at1rgxCFDuV3ETLUQlYm3UxoPTe52gIrBQp8sL0sAwO+2ddq03B9kenhyGixPLo6eoN3iR2Pclr
+	8eDiL4FoA==
+X-Google-Smtp-Source: AGHT+IGUK6PKsryKGK/xHF9cxGGJeg+IUN6hBFT8z1j44kJbph0tApdFzJF2D+wnD0Fu3kqXJWbgbAbgNtlbrKt7HC8=
+X-Received: by 2002:a17:906:fd86:b0:ae3:6744:3680 with SMTP id
+ a640c23a62f3a-af8fd9c20e8mr754205266b.42.1753951862658; Thu, 31 Jul 2025
+ 01:51:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZR=pQ58GSKh-M1fg5Ym5U6THmmvgTSNGUGCmdhhuVHFCg@mail.gmail.com>
+References: <20250731074154.2835370-1-gitster@pobox.com> <20250731074154.2835370-10-gitster@pobox.com>
+In-Reply-To: <20250731074154.2835370-10-gitster@pobox.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 31 Jul 2025 10:50:50 +0200
+X-Gm-Features: Ac12FXzb2Mk7XbzGk-HOJKwcGE5-_P7T3WEHGfx3eOg5t3LqBjnlNRPvolzVRqE
+Message-ID: <CAP8UFD2qAOhRN=b9PB_eXQS1PntZKX95ZK=V4G=10n3iU2xtbw@mail.gmail.com>
+Subject: Re: [PATCH 9/9] sub-process: do not use strbuf_split*()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 30, 2025 at 09:53:13AM +0200, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> [snip]
-> 
-> > diff --git a/refs.c b/refs.c
-> > index b820c3908bd..861a0deb924 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -1840,7 +1840,13 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
-> >
-> >  int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
-> >  {
-> > -	return do_for_each_ref(refs, "", NULL, fn, 0,
-> > +	return refs_for_each_rawref_in(refs, "", fn, cb_data);
-> > +}
-> > +
-> > +int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
-> > +			    each_ref_fn fn, void *cb_data)
-> > +{
-> > +	return do_for_each_ref(refs, prefix, NULL, fn, 0,
-> >  			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
-> >  }
-> >
-> > diff --git a/refs.h b/refs.h
-> > index a39f873b1fe..9decd3126e3 100644
-> > --- a/refs.h
-> > +++ b/refs.h
-> > @@ -428,6 +428,8 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
-> >
-> >  /* can be used to learn about broken ref and symref */
-> >  int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data);
-> > +int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
-> > +			    each_ref_fn fn, void *cb_data);
-> >
-> >  /*
-> >   * Iterates over all refs including root refs, i.e. pseudorefs and HEAD.
-> >
-> > --
-> > 2.50.1.565.gc32cd1483b.dirty
-> 
-> Nit: we do expose the reference iterators now with
-> 'kn/for-each-ref-skip' (merged to next). We could directly use the
-> iterator instead of introducting a specific function like this.
+On Thu, Jul 31, 2025 at 9:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> The code to read status from subprocess reads one packet line and
+> tries to find "status=3D<foo>".  It is way overkill to split the line
+> into an array of two strbufs to extract <foo>.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  sub-process.c | 16 +++++++---------
+>  1 file changed, 7 insertions(+), 9 deletions(-)
+>
+> diff --git a/sub-process.c b/sub-process.c
+> index 1daf5a9752..de3235c15a 100644
+> --- a/sub-process.c
+> +++ b/sub-process.c
+> @@ -5,6 +5,7 @@
+>  #include "sub-process.h"
+>  #include "sigchain.h"
+>  #include "pkt-line.h"
+> +#include "string-list.h"
 
-I'll leave this as-is for now. The additional wrapper isn't all that
-bad, and I'd rather want to avoid adding another dependency to this
-patch series.
+Is this needed? It looks like skip_prefix() (not any string_list
+function) is used instead of strbuf_split_str().
 
-Patrick
+Thanks.
