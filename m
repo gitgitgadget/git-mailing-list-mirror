@@ -1,256 +1,70 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AF827E1D0
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 22:54:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BB627F000
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 22:54:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754002493; cv=none; b=j3gAc7fu5QrETtO+N8K5Qo0MuVzHPyaHqpg9ZLzqlt4IoufyVkGDYFoe7wX/4vpLH5Koxa0RRCQYx2lmUAtR3T3zX56nMWMAtQ88vNbva1iJbdj/IaYoNy0uXwSut+hwDOydmQikGsGVyaL7r4JS5KmepA0eJI0o5Nanot6EBxc=
+	t=1754002501; cv=none; b=V161xmJipj00D1caypbsnyYe7fWmmNMpH1G+Bj36wXJ0OhpAib4uqqq+1xB2JqoCCRQQj933usZV1DfRPS+Ma8YgKXG1Rg5SHhgnV7uNTq05iALLC25BdkeNUTzzVa2ZoqfFILuLzm92IU2R3ZZ9ujtlHFo2BOySrTb9fwnQZoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754002493; c=relaxed/simple;
-	bh=xv/Mdn2ELrQckteqLxm980IJkNtsHotCL8xW4HBQUTc=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dd00f9r2g0cZ1g0SYbOBKiuCR7jw8o6sdTRITyDnykGWyA2/93Bmtq8yaTyE24TDzqFCYUxpt2d5rCRNtenwaVz+kexK+nfCAK9Jg/G7cYTv9PFzw+dDnr2hCwgMHBJ66DptX958CEI6+DhkRcUNaEUjlItJN0he4gd6dfT97cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L5an33h+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j2o4iFSV; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L5an33h+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j2o4iFSV"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DB812140030F;
-	Thu, 31 Jul 2025 18:54:50 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 31 Jul 2025 18:54:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1754002490; x=
-	1754088890; bh=t7FyoMPaW96EYWwr0SZCoxCBxGSpPTKI1XnrVg+Wjmk=; b=L
-	5an33h+VKpBdmRSkJr6gPv29J6Vr/WPwJmeAnBpAym94Ndp1Lmy3t+rc+LLeXvur
-	oiuYtAHo8nHdcjZGhgAAfo6I9ABAKVcENQb46BdvFaGMMsQxjV/FBmUm3X6YN+M4
-	3P9VYbsBgg3wqOaNqFdWlbPUoLLAnrBb+4781Uys/CCzfZearL7CAxNMfS4eIKGe
-	dKfmIToRkeY5rnyW/Jm8N0R44d5WzDekJO5ifK3ZPHp1x5sQd7GvWLhvQejzHwiz
-	gpRN9RbItlHlvVY2qMwVPWmxLaudChvyBHruoJV2xOLsiJIn5vtOwh88brFOjzLv
-	2FxLjHlC32IK2ZhyJ3ihg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1754002490; x=1754088890; bh=t7FyoMPaW96EYWwr0SZCoxCBxGSp
-	PTKI1XnrVg+Wjmk=; b=j2o4iFSVynEia72LPq+xxvz9jqEDhbXMEwFtUiv6K/cG
-	j8M8LVnyo7zshS2Ye9oNhCHUUzubbAxlNIAomvor+n20v+nSh8tFoiv/CSDo7sg1
-	YnlFNbHur2hhZ2Q/3o5esU7H3HbMebDSIBRa+qoAxWBPO+r4EBwSPoBio875RhLN
-	ZbBZttE069VJyInO+B8TLuyClDQ4GUHk/V7DADUCCBFx/6H9nQg5S1bQfFLzmYBU
-	nDOeT81v1OBGfiEX4MWIVnjrueviKIbRPf3vk8sPECsgqMgSkdECuQRJu6w70LAO
-	psQEsTlPayH5+rkAmv/r3i/acD7wV2AbVlZWNVxphA==
-X-ME-Sender: <xms:OvSLaEGRbc1lFAMGhYKwn4y_ZT88oA_97iXsjBZ7isFavJAQJj8NAA>
-    <xme:OvSLaNg0XGLEIGD6scRsHQHwKLOhIgJVfi5VfRHPt-G8MW9NSUdnemobSrjgIVUhE
-    tRxvc0tLdOdwqOXPw>
-X-ME-Received: <xmr:OvSLaP_YtucKoGK4WnCi2gO-0IpKjwWlLmpKsGbWlyb49FHhcQc_vcPxgzdvN2MCy_D4Tfa81JQ9sj7nASsSBGEFEq3NiOANaC4WcLc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvtdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
-    dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:OvSLaEr8qQYcDByQmKexVIX6m3WrEl24BGVmceZzbHeJSHacODNMhA>
-    <xmx:OvSLaO_S2uzWQb3B_TdnxiislDg5SZtKbkKguf5hrykMRwRNino1BQ>
-    <xmx:OvSLaIU8lwQsOMv8xZTYSppWWqsWumxGW1wThIr42OqdzAFB8EM1Ug>
-    <xmx:OvSLaEA6MqeaLruF11brTkKES6SJRaC_ZfkYzHgqU0GHWOq0uLOKiQ>
-    <xmx:OvSLaGpBbeTM73J_ZM6VlaNeMWn2oLwBqaN_hCFc18uHiEuf7OcENxz0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 18:54:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v2 11/11] trace2: do not use strbuf_split*()
-Date: Thu, 31 Jul 2025 15:54:33 -0700
-Message-ID: <20250731225433.4028872-12-gitster@pobox.com>
-X-Mailer: git-send-email 2.50.1-618-g45d530d26b
-In-Reply-To: <20250731225433.4028872-1-gitster@pobox.com>
-References: <20250731074154.2835370-1-gitster@pobox.com>
- <20250731225433.4028872-1-gitster@pobox.com>
+	s=arc-20240116; t=1754002501; c=relaxed/simple;
+	bh=mwiHf2ew2n0mO+eNfd/SAiSqkZaqdr8rDCCKayVrfno=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hgFTGfAMCk+uecHs0OPhDlBXcxXuqKzo+s7Vcc9K0R4xpFztck3UoniZlIxJ85o+3Ib4PuFDBn8iBT+QBuSuA+FvR+qMF2O4MCc+6sOzNYGDGHA0OdIXLN61iRmRbRXOYdzSUv/llCMeeVTF4b3sTBrsiTIOdAMT22/sCMQHnPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4ab40633517so2315671cf.0
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 15:54:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754002498; x=1754607298;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mwiHf2ew2n0mO+eNfd/SAiSqkZaqdr8rDCCKayVrfno=;
+        b=Nrinu3JIEUoZk1Bw6RNHqvbmAnDr2cNesc0pdej8rgawVXirN9Kdvz7wcPlS/gRLOj
+         Cf86H96KjdZ9l2ni/geRJpIbeC4Jtc1j65FlH0FWzLlrPqX2Y6bpgp4+87jJ1Bhz2eDo
+         D9MyfXV4Kx8ApaVjW02LgmZGfKaP+3dO6Db7R6Ezmt37URNvvmI4e0MbGeKrKnl/AZVq
+         CeFnJ/po0AOubowcutiNUyO6BmmBsQgsBZK3t+rS+rzxrC3I0Zl8v4YWqKp0Lb/6osYY
+         HDL7lxuuILZ2OI7XHIE6Mb7uau2RhPNLQYW4L1L4QJ+M7cDj/viidIFmVhcp6H/GMDHC
+         jRFA==
+X-Gm-Message-State: AOJu0YwMywxrowStOV4ae4j0ujw3iDhou6RcZu8VWGdVla5XfUVVQoSa
+	M/NHBSe4vwDc4l91HRPfFOqsmvviLtTz0S5l9DJPrLJXdK/Rf4Bv4l0EIRyQdRE5GfYR+vzLHOD
+	imcmNZJ2xciwy64vJExVL+lgKF58pjgc=
+X-Gm-Gg: ASbGncvx3wRGdw+IbUbMTWdIMLlBVTTAoe11PTN6EEPIHplftG88YVp2j7k8G7dvVIA
+	Gx+/DsWYd/vdmfJHxb0l2YgsUKtykUA5QLMFqGbgyWv/ngOPKXDm4LOBh5lnVK9ChUI9Y1EiS0g
+	zy2V3FLz9d2c1TAUSlP+Fy8RUdVZpa5lIACa8ugYs9z4pFacUfJlsujXpLdTZfo+fKhtjE49S+N
+	p7KwmswEC0bJ2qnqHU+ei601XZUtHweRAsdO81p
+X-Google-Smtp-Source: AGHT+IFNJyHdSnMqQLiI6XMzodKjMA7L4Jk8Rc8BBhBlFnqlVwAi0zGSTNFH73QLMM/9UtwRrb8TrnOCyU0I7Zq/6YQ=
+X-Received: by 2002:a05:6214:c62:b0:707:1654:ced4 with SMTP id
+ 6a1803df08f44-707669a4637mr59300446d6.0.1754002498270; Thu, 31 Jul 2025
+ 15:54:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250731063949.1601669-1-gitster@pobox.com> <20250731224607.3942417-1-gitster@pobox.com>
+ <20250731224607.3942417-7-gitster@pobox.com>
+In-Reply-To: <20250731224607.3942417-7-gitster@pobox.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 31 Jul 2025 18:54:47 -0400
+X-Gm-Features: Ac12FXzGAZwZcBHcXN04hf047XJkMfJhvgncV4NgBRYryRTFv87ktmcua_8CO9w
+Message-ID: <CAPig+cQs=fCd8DYsuGyrK=e6xGpZE8zdyE5BTTCX1jpN-TpcgA@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] string-list: optionally omit empty string pieces
+ in string_list_split*()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-tr2_cfg_load_patterns() and tr2_load_env_vars() functions are
-functions with very similar structure that each reads an environment
-variable, splits its value at the ',' boundaries, and trims the
-resulting string pieces into an array of strbufs.
+On Thu, Jul 31, 2025 at 6:46=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Teach the unified split_string() machinery a new flag bit,
+> STRING_LIST_SPLIT_NONEMPTY, to cause empty split pieces omitted from
+> the resulting string list.
 
-But the code paths that later use these strbufs take no advantage of
-the strbuf-ness of the result (they do not benefit from <ptr,len>
-representation to avoid having to run strlen(<ptr>), for example).
+s/pieces/& to be/
 
-Simplify the code by teaching these functions to split into a string
-list instead; even the trimming comes for free ;-).
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- trace2/tr2_cfg.c | 78 +++++++++++++++++-------------------------------
- 1 file changed, 27 insertions(+), 51 deletions(-)
-
-diff --git a/trace2/tr2_cfg.c b/trace2/tr2_cfg.c
-index 2b7cfcd10c..bbcfeda60a 100644
---- a/trace2/tr2_cfg.c
-+++ b/trace2/tr2_cfg.c
-@@ -8,87 +8,65 @@
- #include "trace2/tr2_sysenv.h"
- #include "wildmatch.h"
- 
--static struct strbuf **tr2_cfg_patterns;
--static int tr2_cfg_count_patterns;
-+static struct string_list tr2_cfg_patterns = STRING_LIST_INIT_DUP;
- static int tr2_cfg_loaded;
- 
--static struct strbuf **tr2_cfg_env_vars;
--static int tr2_cfg_env_vars_count;
-+static struct string_list tr2_cfg_env_vars = STRING_LIST_INIT_DUP;
- static int tr2_cfg_env_vars_loaded;
- 
- /*
-  * Parse a string containing a comma-delimited list of config keys
-- * or wildcard patterns into a list of strbufs.
-+ * or wildcard patterns into a string list.
-  */
--static int tr2_cfg_load_patterns(void)
-+static size_t tr2_cfg_load_patterns(void)
- {
--	struct strbuf **s;
- 	const char *envvar;
- 
- 	if (tr2_cfg_loaded)
--		return tr2_cfg_count_patterns;
-+		return tr2_cfg_patterns.nr;
- 	tr2_cfg_loaded = 1;
- 
- 	envvar = tr2_sysenv_get(TR2_SYSENV_CFG_PARAM);
- 	if (!envvar || !*envvar)
--		return tr2_cfg_count_patterns;
-+		return tr2_cfg_patterns.nr;
- 
--	tr2_cfg_patterns = strbuf_split_buf(envvar, strlen(envvar), ',', -1);
--	for (s = tr2_cfg_patterns; *s; s++) {
--		struct strbuf *buf = *s;
--
--		if (buf->len && buf->buf[buf->len - 1] == ',')
--			strbuf_setlen(buf, buf->len - 1);
--		strbuf_trim(*s);
--	}
--
--	tr2_cfg_count_patterns = s - tr2_cfg_patterns;
--	return tr2_cfg_count_patterns;
-+	string_list_split_f(&tr2_cfg_patterns, envvar, ",", -1,
-+			    STRING_LIST_SPLIT_TRIM);
-+	return tr2_cfg_patterns.nr;
- }
- 
- void tr2_cfg_free_patterns(void)
- {
--	if (tr2_cfg_patterns)
--		strbuf_list_free(tr2_cfg_patterns);
--	tr2_cfg_count_patterns = 0;
-+	if (tr2_cfg_patterns.nr)
-+		string_list_clear(&tr2_cfg_patterns, 0);
- 	tr2_cfg_loaded = 0;
- }
- 
- /*
-  * Parse a string containing a comma-delimited list of environment variable
-- * names into a list of strbufs.
-+ * names into a string list.
-  */
--static int tr2_load_env_vars(void)
-+static size_t tr2_load_env_vars(void)
- {
--	struct strbuf **s;
- 	const char *varlist;
- 
- 	if (tr2_cfg_env_vars_loaded)
--		return tr2_cfg_env_vars_count;
-+		return tr2_cfg_env_vars.nr;
- 	tr2_cfg_env_vars_loaded = 1;
- 
- 	varlist = tr2_sysenv_get(TR2_SYSENV_ENV_VARS);
- 	if (!varlist || !*varlist)
--		return tr2_cfg_env_vars_count;
--
--	tr2_cfg_env_vars = strbuf_split_buf(varlist, strlen(varlist), ',', -1);
--	for (s = tr2_cfg_env_vars; *s; s++) {
--		struct strbuf *buf = *s;
--
--		if (buf->len && buf->buf[buf->len - 1] == ',')
--			strbuf_setlen(buf, buf->len - 1);
--		strbuf_trim(*s);
--	}
-+		return tr2_cfg_env_vars.nr;
- 
--	tr2_cfg_env_vars_count = s - tr2_cfg_env_vars;
--	return tr2_cfg_env_vars_count;
-+	string_list_split_f(&tr2_cfg_env_vars, varlist, ",", -1,
-+			    STRING_LIST_SPLIT_TRIM);
-+	return tr2_cfg_env_vars.nr;
- }
- 
- void tr2_cfg_free_env_vars(void)
- {
--	if (tr2_cfg_env_vars)
--		strbuf_list_free(tr2_cfg_env_vars);
--	tr2_cfg_env_vars_count = 0;
-+	if (tr2_cfg_env_vars.nr)
-+		string_list_clear(&tr2_cfg_env_vars, 0);
- 	tr2_cfg_env_vars_loaded = 0;
- }
- 
-@@ -103,12 +81,11 @@ struct tr2_cfg_data {
- static int tr2_cfg_cb(const char *key, const char *value,
- 		      const struct config_context *ctx, void *d)
- {
--	struct strbuf **s;
-+	struct string_list_item *item;
- 	struct tr2_cfg_data *data = (struct tr2_cfg_data *)d;
- 
--	for (s = tr2_cfg_patterns; *s; s++) {
--		struct strbuf *buf = *s;
--		int wm = wildmatch(buf->buf, key, WM_CASEFOLD);
-+	for_each_string_list_item(item, &tr2_cfg_patterns) {
-+		int wm = wildmatch(item->string, key, WM_CASEFOLD);
- 		if (wm == WM_MATCH) {
- 			trace2_def_param_fl(data->file, data->line, key, value,
- 					    ctx->kvi);
-@@ -130,17 +107,16 @@ void tr2_cfg_list_config_fl(const char *file, int line)
- void tr2_list_env_vars_fl(const char *file, int line)
- {
- 	struct key_value_info kvi = KVI_INIT;
--	struct strbuf **s;
-+	struct string_list_item *item;
- 
- 	kvi_from_param(&kvi);
- 	if (tr2_load_env_vars() <= 0)
- 		return;
- 
--	for (s = tr2_cfg_env_vars; *s; s++) {
--		struct strbuf *buf = *s;
--		const char *val = getenv(buf->buf);
-+	for_each_string_list_item(item, &tr2_cfg_env_vars) {
-+		const char *val = getenv(item->string);
- 		if (val && *val)
--			trace2_def_param_fl(file, line, buf->buf, val, &kvi);
-+			trace2_def_param_fl(file, line, item->string, val, &kvi);
- 	}
- }
- 
--- 
-2.50.1-618-g45d530d26b
-
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
