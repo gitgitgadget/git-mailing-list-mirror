@@ -1,216 +1,155 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD4D1DE4D2
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 14:57:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4188C15A8
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 15:22:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753973841; cv=none; b=V+I71BxyUzNRZfRn/L87lEXYOdK/A5ih7sIIv19RtmSNn+MJBjn/1yOzK5xsrDl+Ubz2f//AcK56Z079h3/ll0a64FhROXt4gfE9DMlKUJfzigwVapKUkqaYz+BOKNk58WMt17ZTVT6Y9NOjS0kN1nBNrLnsg9TS8vFKE26wI84=
+	t=1753975348; cv=none; b=pofXEDNLaVkLvEdDcTZKBaOhCT3t5Qz5Ez6SA+QF1/2bBnNe3/JTnT1mfC0yXtQVOhGVX3DbP3qXQIFzIRZtJVqrbVYxXEDohyuFQsSszS6pto6yGL+z1Ifo/gaG0lLJqhSle1OZcYNlXod6ATCoR2e0/peSdiWN3IAbH0htZsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753973841; c=relaxed/simple;
-	bh=Dntj7ItgjStFXoOCSTEF42cHW0BfIoD/7lrN1jRzyvI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=M549+B9qaVQ7oXf/m8bNtf3lgaoRpgkom4QNiR1pmEKKnS1i9HXFgJgtDlW6Dxb0KnXg/gyC78oMylu0daO981fxGdVLcdC34CJYHfSyv/+AkLEt1pbgNGMMx4sJcLHWUoGcDDm7ehpwzSgRhdi5LHGx+Ls6tDK//Bal1bTLXPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gmJKwuZv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EWfYtJry; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1753975348; c=relaxed/simple;
+	bh=r/Duk4rVlXdfTfgAdtz9UF6vSVzV6ZfHG41P4aloCG4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=g8GxmhkesTo6Pe5T6eqcCTZByGWLDhptRf2j2yc365CeGAMHx3xjyFW/2HsuGDY1XstMVT8TuKVoXXB1hprenTkTFf1/i6i1KxnA1rdKvB2rjY4A6yzK13C8JWOfKG0p9I23HSXXPXR1XEH4T1TsQL9U6IiBkGt0+/jVTVAQ1/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mJTrPaUK; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gmJKwuZv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EWfYtJry"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ADAAB14002E4;
-	Thu, 31 Jul 2025 10:57:18 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Thu, 31 Jul 2025 10:57:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1753973838;
-	 x=1754060238; bh=bGKskvZ/TIrgtuYXp16YoX2DxZs41AHOQT2EZqGhB/g=; b=
-	gmJKwuZvn3gI+ERyng3dASbCyFiLxa9tv141OhbIIetZpL6aiMpja12cxhFAeUGK
-	jtgTTEXpo4yDpZl1xFXMA1Rx3aGS2C2K/cXff32z31ku8XbGY15RNaMVgFVNueIW
-	NHLKnEUH6hoyh53hxOD5P/R12+8Gk6KVK/EEWwy0jiV8M21ReYkhndSRHYYt2CzD
-	ytJWW4v3014/982pJPQvI1+lUj6CFIIw4QuCcBiFFfjVLeg2TwluyGW4zcjuZR5g
-	GRsxJEfNcXR+XAs509oAK0UMMcQTo0i/NdQaumkVg9N8w1IhqDk/wnz2bNOD3jH/
-	vnPQYj1lQDGY+XEdFX1c7A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753973838; x=
-	1754060238; bh=bGKskvZ/TIrgtuYXp16YoX2DxZs41AHOQT2EZqGhB/g=; b=E
-	WfYtJry8A5JkxI0RM1QhLo4cFN1VBNrl9QbxqWeGvIUxE+rn90NHYoTRkYpZBU9Y
-	XTy06WRe0TEfX4w3T4PdeSw7gxq5Ri5RLWCmVmxVe/b92xbvzGTJklYJAzCP56r2
-	lmGwOZ2TmaeMKTXpbzV8hPIgSl7RvNF3kwVRtmVx7+W7m4UPUEsaq7ztq7U6XQxd
-	UTvcCNR4gSDmbVLsXvrAyqeKp3m/xmDeZ1VhTrGTj1282yqQZXGnkeGYrw/CIu93
-	ihLO2pxIBWKjPMjzsj8SZdNtZQG5g9vAtSk9bwlTKMKIBIRY//fI8zg3uUCQPgtK
-	wMENI4iX47twfxe51DozA==
-X-ME-Sender: <xms:ToSLaAVWV18bS-lPd1iZyFiJjPu90jBIf9JOxlmPS_M5eTN0kCXaPw>
-    <xme:ToSLaNB41_rY0Q53soPixgXVytU9WFEyUW0lE43U6EWFBmQmFFsMyOfGJ2T9odARk
-    J2yBWZFD9hN1Rhjpw>
-X-ME-Received: <xmr:ToSLaE3A9gez9rMBVtQl1Htp76s4sJQgf2kmEoWZvLIGoMT8BAF9OEqPVi_lNTlfXVR9DikY_aNv7paWK4RuG25bz6qkSkYsnb9BXr4MdA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdduudduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeefhfeugeelheefjeektdffhedvhfdvteefgfdtudffudevveetgeeuuedtkefhgeen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdr
-    tghomhdprhgtphhtthhopehjhhgtrghrlhdtkedugeesghhmrghilhdrtghomhdprhgtph
-    htthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhgrrhhthhhikhdrudek
-    keesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:ToSLaP3dRohQ_pOF-Hn9ePVfE89njzynNpckKh8mgyRehq_YvDMxBw>
-    <xmx:ToSLaJDxCUztAtvmaHiepR93rsYw5pX--oKapQLUH8lrhka5Kcr4Xw>
-    <xmx:ToSLaO6wC-5iLrLwPE3HxCqQHrKAwLm3pXVlt_biIYdgKFlNhQVxHA>
-    <xmx:ToSLaKItJlo0tuIIOYKn8eqPB5ovzHW1Cwl3QqzfpMJ_w3F_qsgZKw>
-    <xmx:ToSLaNwqnn0X7xDv3n0qmGYM6jqyYoH3gijby6Uo2t7i76bK43qYXWX7>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 10:57:17 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 937e2e78 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 31 Jul 2025 14:57:16 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 31 Jul 2025 16:56:54 +0200
-Subject: [PATCH v2 6/6] builtin/remote: only iterate through refs that are
- to be renamed
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mJTrPaUK"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4560add6cd2so7634935e9.0
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 08:22:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753975344; x=1754580144; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=0pQXsQlbfxghJuQ4jUtr9epY0YiyK9zAg+EMCFqCgn4=;
+        b=mJTrPaUKOeiRA6aWtgxxIapQtMyg2HLuj6DdAMj76zrJ4kGV8gXkDeY4uSY8fmXKbj
+         6lqZX1PHjLk9gjfbZo1iZu66a9aj7L8T36Bj3nGz0Hbd9XfXq2bO91WFAo2VwDEIPOHa
+         Lmtp4MglHKjy1HRWfpXvS9H7byAkvvz5uLowe1PIs5CjR4E698a3MkkawLxYLVbjrAsr
+         5QaK6xPHO8ewBKOQfjva2ke21HbrjG/FtNEYNXI9ru+q+xsYjb/q98HlMLYzWOUALjB+
+         vVUTQXHSueXluv6++Q4N0+cpHpdmyrbthWs3Tqp6yqBN9DSOB7P4cY9938uA+eaodCPm
+         3Q9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753975344; x=1754580144;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0pQXsQlbfxghJuQ4jUtr9epY0YiyK9zAg+EMCFqCgn4=;
+        b=D+Oo5BZdcoWveXdxcfTHfiW/0kUIAdRYpcRpdIEwovoV+AoctCk2OrAkJr6oNb3S2C
+         67Oc6xkJi4/LGD8VC1xDNJO/+YElP72a/QRr1rQ25WTolmbsSaG7ySKZ1AkOhCrEbvQ+
+         PUYMX5AmTCm1mCfebV2cYxZBSYh8orvDMoKnWmWk3nSg70rwbDYZLvAG0Ia3N/NvMJOn
+         f2a/iSYHo6csjX8sQUtpDOydzOcBg9qKxswWtj/gmQ4vu59/0LP+utX3+kPzzswuTbEJ
+         Hkc6iXKAkL4eaWu3X1eVZT1S8qlb4MMWV8YPJT3usawZiqLhBl0uXvRGHh1+6vyz4Hth
+         yk2A==
+X-Gm-Message-State: AOJu0Ywr4bdaqns0f+tsxgkclSjq2hSjb7f0+CwZt4RI7lDcHwS2MNE7
+	CGMycWoI1qIm2k2UXiyaVvQM3kbi1vuI7Pvy6ilrzZG2Wt6pEagXxcSotsnM1Q==
+X-Gm-Gg: ASbGncsy23J0I0jinftPsMDIGoaJPg612PfrXtTsWO76QXQ8+bvTPTcYUdeEBVkTB7L
+	4W0nm4vyssJ6jL4PxJhRAihR1wkYWDCRlzycFPUNyP0RDXmLzx71Jv++tlLas5KD2/+RUlwLUvZ
+	C4Y2mHRAf5Aa96+DG6QjG3P4HxGr54ZU6GxM7CarDgZO4NMpltUVsdrjwSxPDVx2PdoP2+Vp2kF
+	zeeN2vHapnd8C0BJpFy8j3DOP6ZdtXjlDzkYMVjaV1Onj3KD8kIMOpMJnZ5qH6UJo0Yy+8FNxtx
+	TOtdoBQyiXb4R5krYKzApbPPz5UHzV7lCvkOIiH6jkPocb3S+pA8apj0ZifFN0zL5GS7xjFQ/Io
+	1XCbYE7PrcnUEacqjwm14a2Y+uDSBOLs/5QjqX1jq5thc
+X-Google-Smtp-Source: AGHT+IHIJkqYJI9yNebTQHyUAJH6BNbQ6EnEXW8hioZHQBwuYkF+rnmlsL2uInaVd8ssEGviz/02Kw==
+X-Received: by 2002:a05:600c:3495:b0:456:18b3:df2a with SMTP id 5b1f17b1804b1-458a2013110mr26752125e9.7.1753975344107;
+        Thu, 31 Jul 2025 08:22:24 -0700 (PDT)
+Received: from localhost.localdomain ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c4533e6sm2842426f8f.35.2025.07.31.08.22.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Jul 2025 08:22:23 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Taylor Blau <me@ttaylorr.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: [PATCH v2 0/3] breaking-changes: deprecate support for core.commentChar=auto
+Date: Thu, 31 Jul 2025 16:21:52 +0100
+Message-ID: <cover.1753975294.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
+In-Reply-To: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
+References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250731-pks-remote-rename-improvements-v2-6-dda6f083674d@pks.im>
-References: <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
-In-Reply-To: <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
- Han Jiang <jhcarl0814@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
- Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.14.2
 
-When renaming a remote we also need to rename all references
-accordingly. But while we only need to rename references that are
-contained in the "refs/remotes/$OLDNAME/" namespace, we end up using
-`refs_for_each_rawref()` that iterates through _all_ references. We know
-to exit early in the callback in case we see an irrelevant reference,
-but ultimately this is still a waste of compute as we knowingly iterate
-through references that we won't ever care about.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Improve this by using `refs_for_each_rawref_in()`, which knows to only
-iterate through (potentially broken) references in a given prefix.
+Thanks to Ayush, Junio and Oswald for their comments on V1.
+This series implements the plan to deprecate and remove support for
+core.commentChar=auto outlined in [1]. This feature has been the
+source of a couple of bug reports recently [2,3] and it is hard to
+see how the design can be fixed as it is incompatible with preparing
+a commit message template containing comments. When git sees the
+deprecated config setting it will print advice based on the user's
+config setting to help the user either remove the setting or set a
+custom comment string. In the example below core.commentString is set
+multiple times in $XDG_CONFIG_HOME/git/config and core.commentChar
+is set in ~/.gitconfig and $XDG_CONFIG_HOME/git/config.
 
-The following benchmark renames a remote with a single reference in a
-repository that has 100k unrelated references. This shows a sizeable
-improvement with the "files" backend:
+warning: Support for 'core.commentChar=auto' is deprecated and will be removed in Git 3.0
+hint:
+hint: To use the default comment string (#) please run
+hint:
+hint:     git config unset --file ~/.config/git/config --all core.commentString
+hint:     git config unset --file ~/.config/git/config core.commentChar
+hint:     git config unset --global core.commentChar
+hint:
+hint: To set a custom comment string please run
+hint:
+hint:     git config set --global core.commentChar <comment string>
+hint:
+hint: where '<comment string>' is the string you wish to use.
 
-    Benchmark 1: rename remote (refformat = files, revision = HEAD~)
-      Time (mean ± σ):      42.6 ms ±   0.9 ms    [User: 29.1 ms, System: 8.4 ms]
-      Range (min … max):    40.1 ms …  43.3 ms    10 runs
+[1] https://lore.kernel.org/git/6a3154e0-e7bc-45ae-b554-67ccab18727a@gmail.com
+[2] https://lore.kernel.org/git/20250315140913.577404-1-oswald.buddenhagen@gmx.de
+[3] https://lore.kernel.org/git/20250626132233.414789-1-ayu.chandekar@gmail.com
 
-    Benchmark 2: rename remote (refformat = files, revision = HEAD)
-      Time (mean ± σ):      31.7 ms ±   4.0 ms    [User: 19.6 ms, System: 6.9 ms]
-      Range (min … max):    27.1 ms …  36.0 ms    10 runs
+Changes since V1:
+ - Rebased onto a merge of 'ps/config-wo-the-repository' and 'master'
+ - Reworded commit messages
+ - What was patch 2 has been split into two separate patches and
+   reworked to die when core.commentChar=auto and WITH_BREAKING_CHANGES
+   is enabled.
 
-    Summary
-      rename remote (refformat = files, revision = HEAD) ran
-        1.35 ± 0.17 times faster than rename remote (refformat = files, revision = HEAD~)
+Base-Commit: 1ae5bd276bdf101e37c1a8f2904a2eae05fbb744
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fremove-auto-comment-char%2Fv2
+View-Changes-At: https://github.com/phillipwood/git/compare/1ae5bd276...0e7c08b15
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/remove-auto-comment-char/v2
 
-The "reftable" backend shows roughly the same absolute improvement, but
-given that it's already significantly faster than the "files" backend
-this translates to a much larger relative improvement:
 
-    Benchmark 1: rename remote (refformat = reftable, revision = HEAD~)
-      Time (mean ± σ):      18.2 ms ±   0.5 ms    [User: 12.7 ms, System: 3.0 ms]
-      Range (min … max):    17.3 ms …  21.4 ms    110 runs
+Phillip Wood (3):
+  breaking-changes: deprecate support for core.commentString=auto
+  config: warn on core.commentString=auto
+  commit: print advice when core.commentString=auto
 
-    Benchmark 2: rename remote (refformat = reftable, revision = HEAD)
-      Time (mean ± σ):       8.8 ms ±   0.5 ms    [User: 3.8 ms, System: 2.9 ms]
-      Range (min … max):     7.5 ms …   9.9 ms    167 runs
+ Documentation/BreakingChanges.adoc |   5 +
+ Documentation/config/core.adoc     |  20 +-
+ builtin/commit.c                   |   7 +
+ builtin/merge.c                    |   3 +
+ builtin/rebase.c                   |   3 +
+ builtin/revert.c                   |   7 +
+ config.c                           | 297 ++++++++++++++++++++++++++++-
+ environment.c                      |  11 +-
+ environment.h                      |   3 +
+ repository.c                       |   1 +
+ repository.h                       |   3 +
+ t/t3404-rebase-interactive.sh      |  19 +-
+ t/t3418-rebase-continue.sh         |   2 +-
+ t/t7502-commit-porcelain.sh        |  52 ++++-
+ 14 files changed, 421 insertions(+), 12 deletions(-)
 
-    Summary
-      rename remote (refformat = reftable, revision = HEAD) ran
-        2.07 ± 0.12 times faster than rename remote (refformat = reftable, revision = HEAD~)
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/remote.c | 13 ++++---------
- refs.c           |  8 +++++++-
- refs.h           |  2 ++
- 3 files changed, 13 insertions(+), 10 deletions(-)
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index db481f39bc..60e67f1b74 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -720,16 +720,8 @@ static int rename_one_ref(const char *old_refname, const char *referent,
- 	struct strbuf new_referent = STRBUF_INIT;
- 	struct strbuf new_refname = STRBUF_INIT;
- 	struct rename_info *rename = cb_data;
--	const char *ptr = old_refname;
- 	int error;
- 
--	if (!skip_prefix(ptr, "refs/remotes/", &ptr) ||
--	    !skip_prefix(ptr, rename->old_name, &ptr) ||
--	    !skip_prefix(ptr, "/", &ptr)) {
--		error = 0;
--		goto out;
--	}
--
- 	compute_renamed_ref(rename, old_refname, &new_refname);
- 
- 	if (flags & REF_ISSYMREF) {
-@@ -932,7 +924,10 @@ static int mv(int argc, const char **argv, const char *prefix,
- 			rename.progress = start_delayed_progress(the_repository,
- 								 _("Renaming remote references"), 0);
- 
--		result = refs_for_each_rawref(get_main_ref_store(the_repository),
-+		strbuf_reset(&buf);
-+		strbuf_addf(&buf, "refs/remotes/%s/", rename.old_name);
-+
-+		result = refs_for_each_rawref_in(get_main_ref_store(the_repository), buf.buf,
- 				rename_one_ref, &rename);
- 		if (result < 0)
- 			die(_("queueing remote ref renames failed: %s"), rename.err->buf);
-diff --git a/refs.c b/refs.c
-index 04c9ace793..7e2f02dddf 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1839,7 +1839,13 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
- 
- int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref(refs, "", NULL, fn, 0,
-+	return refs_for_each_rawref_in(refs, "", fn, cb_data);
-+}
-+
-+int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
-+			    each_ref_fn fn, void *cb_data)
-+{
-+	return do_for_each_ref(refs, prefix, NULL, fn, 0,
- 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
- }
- 
-diff --git a/refs.h b/refs.h
-index 0bf50ce25c..19fb1d924a 100644
---- a/refs.h
-+++ b/refs.h
-@@ -428,6 +428,8 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
- 
- /* can be used to learn about broken ref and symref */
- int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data);
-+int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
-+			    each_ref_fn fn, void *cb_data);
- 
- /*
-  * Iterates over all refs including root refs, i.e. pseudorefs and HEAD.
-
+Range-diff against v1:
+1:  3747a1f77f0 < -:  ----------- breaking-changes: deprecate support for core.commentString=auto
+2:  83d0d3ece86 < -:  ----------- commit: print advice when core.commentString=auto
+-:  ----------- > 1:  a6355451d4b breaking-changes: deprecate support for core.commentString=auto
+-:  ----------- > 2:  8b575980426 config: warn on core.commentString=auto
+-:  ----------- > 3:  0e7c08b15e5 commit: print advice when core.commentString=auto
 -- 
-2.50.1.619.g074bbf1d35.dirty
+2.49.0.897.gfad3eb7d210
 
