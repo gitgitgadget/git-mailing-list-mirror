@@ -1,140 +1,221 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569CE2571D8
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 21:13:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0EC202962
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 21:17:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753996427; cv=none; b=fM4TXFLP4XisuoGMI7A14wC6+mIn9VDH199bV5qYMYNx7fRqrFK4lvoo5LvXOwsesrANIWQACOyi9m8svRQh+h2qDia4HxGdDceyRgr09wr94h/e9IkktatX4EHVtfCb/RzS8QnS8bbX0/OENdfktVLFSDxtoAh+TGNM0k7zqCk=
+	t=1753996630; cv=none; b=nTsE+jGAabnT56W3/fpp+M2OJUQlUTXu4kiSN1qiLhDbSHBRX9wU+kHnP6nuLBM6DoiNm3/JyJ+iEzr1IerzbAHngbMxgLTa1FkKqlQNoCAXxY7Jw+iZBfLZ5JVT6FeQnFxb1zxdR/5vMSdCOiMfLpYlbC+FeoAZV5WCSVYRtCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753996427; c=relaxed/simple;
-	bh=5GCHCN+nGnZlDg7euHGbyOwpaCdEod3Is1nIYAfs+Ec=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Lk6r005m2jpF1aKJ7pfaM0pp3DpBKHIcphuEjpj0v279ljhKkUArBit/pTYSKR+kD1R5Ah5V5UPJ5Wcz9lsWOvUyhgcXByMTM8mA6RKxF9EtDrRlMWatH8hxOvxMMIrQ6VZjOgx9TrNjouA1YmcRe0dtlVmAnxNmPAQRgPUHJZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nTJNXLwK; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753996630; c=relaxed/simple;
+	bh=YWgXS/2E+ZZRbKDZBvh+wG+dsWosEQXlb191XbC2/zs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VfMuChIrAaIvAHt+PQbnnysR2nSHUNAlqknCREQtxN8WOZYofd/2v9TJVefw6iTMvl5VFqLrJGUlOLvdNUm3PkjjS1nCf4iR5wayC4X94syEHRTYsK9ElD0S3yZIc0+nWqvGYu5D6nzu0vyl3fPfrRVFtlNm16vi7JTvl8cMpAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WW7O4UU0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NcNd90Pa; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nTJNXLwK"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-33216091f46so1718891fa.3
-        for <git@vger.kernel.org>; Thu, 31 Jul 2025 14:13:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753996424; x=1754601224; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dL49pke4EKsVstI1XlJh5xUTDpj54eA4tDHWv1fNtnY=;
-        b=nTJNXLwKFW6bz9tOQ8DmsxYIW60FMpthxGdnwYtPNsihzDGR6rWJ4VuG89uAEkNU0g
-         qOgN4wJNzMbHA8Il/jA4Eh2IhZpFLytKfVUDsPliQRKPWroplHSwnG23nQ6WMc20voZg
-         K0Dz0ejcm6z8U4KWE8Pz5Y0iyYkGj87iZ/1muqNbOo9S8cMQkpIDuYkA8gThp0S2LnI9
-         R2lX/q5akP7wWEOvLNnzHhaPVXaQDlxuv1MyZcNXo0PkyY1tlPePxiOn9bWL5RZGdNdF
-         jINUQd3imncZLol2m+UYPUCQ/ksF/oFKlwZkOSnqscUG3WHuH88ulXZMP7z0uli6paMJ
-         VryQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753996424; x=1754601224;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dL49pke4EKsVstI1XlJh5xUTDpj54eA4tDHWv1fNtnY=;
-        b=N5G6fDqmvAlmyACok89Erav0VpDkcY1L0vioWsl0OgLnoHqoq7vEGcPEVyciRD7QXU
-         k7Ag9ufK6FdYfKgYVlb8TIjwfuQeR1zcp5OYLF5xwh6f2WMMZeTYqGSGvZ9rnPkmxCW9
-         aDH9VwA43IHc/HliSh0o40gDDNkXkFPDrnb4jRwL1I/DkJlGEBVNgtOC+f1t07ZOt49e
-         I0d8rwe7AzKfoK533X/qnjqyonuW3XD2ZopNoNBlaGiZxnd+2DYglDep9HOzYK+ebA8N
-         amvV0yXoAghA2jyXnSgTXmdkZEWiKs2VVC9WYAF6ClRwBjbHHR5jUHrjaqK5kTawOWz2
-         hhFg==
-X-Forwarded-Encrypted: i=1; AJvYcCUbnTKgcsvycUpkxjUUhf858clAWe3fXUw42IrLeuaF16t/KzKa7As3/usrlaUahdUG02I=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6qx3pSCPBbrXqXXB1suOWM6hQDs9pX4p0XQ8wG8PpYxCyHyte
-	ppqwZMlUSI54FMi+BzUySMtmCHtTHxgfRkvXVt7TR+SaEqaUriLwnE+aLKb38ZxXvxaOY3y6F3n
-	UXJsox4GYtVI5rfmSd+hjPOldMFaNNFQ=
-X-Gm-Gg: ASbGncs5PYoYB3atpO0AGw5wtnRMtVPihL6dcbY0FTpXsOEHMp+GRsPhAZx5kUobUBg
-	1gMl3neFvdLQSRByeMq7COg0GiX1cmQu5jPwmgO9u9SPfr1UtsarsFG5o1FNigQt5InAROh6meZ
-	dNTTfLNu1Gen1fMJfhiZjW7MZjP1Xz7MPDWJB7+xbNmmD0M17VPar6dNnQzX6j9Li5nZpNKYGUZ
-	9wl7bTC
-X-Google-Smtp-Source: AGHT+IE2i9iaLaDTqyI8icrbVQiFrA0MMy11D8jU9ARqrZreTQ6rOcr9xIF4ZPq4pzwSrsVGAdu5/szFOxXY58vVMnU=
-X-Received: by 2002:a2e:a71e:0:b0:32a:8035:3f65 with SMTP id
- 38308e7fff4ca-33224c086e4mr19592261fa.36.1753996424305; Thu, 31 Jul 2025
- 14:13:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WW7O4UU0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NcNd90Pa"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0C7DEEC14BB;
+	Thu, 31 Jul 2025 17:17:08 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 31 Jul 2025 17:17:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1753996628; x=1754083028; bh=FyNG14gfNp
+	haXuELH2lz71xDcUwcdOTVnys+aAC38Ms=; b=WW7O4UU0pM7w72TFBQJ42hKjSe
+	Sdo/xL8SabSkJIt7zzkZxbfOjjy+rj6Xt+UEYeECSySldl+xVZsgOgULVH60XH7F
+	x9/mEIoZzYvEY2UunjdKBDmbHBc1NOOFEEHNtQ11qCah2exYMPMt9qwVdi2DJ+5y
+	ZJzmGpsdm4FJHx4s6q8C0NyRKVRv4dhqbOxqDnVrd6l0L2wGUo/h3aX8dqgU4Amu
+	Q3m65kUzygjYUc3gomSAJfE+dnAUi6P/z+x5x+6wosA31EM9Kje0h0DD5OhMy24Q
+	Kcw6nvl/IEaKp0NA4p/RgfH4BeIkgqHtaopla32eyet85WI7hEzGnlHopR1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753996628; x=1754083028; bh=FyNG14gfNphaXuELH2lz71xDcUwcdOTVnys
+	+aAC38Ms=; b=NcNd90Pa12hILXKP8AsuhcK0KdFmBwHeFesFmptdx9asKlfRlV5
+	VRLxVPVZR3tFua+rqLu1xFmfpq8Ez6JqueOrjLDorCYLR4dQbOQCEyvuLWV3VUS1
+	R8g82ZwyFidHOHHsWOR9hX0XxwuiOikk06ukoMAheoMGx+GSLwfC0EOFODfFsGH+
+	U3c89Gx3BCn1F7s3R6MKe9S2m0u2S45/DrqD5X0iTjwUdEZeoUbugScJOM+rvikJ
+	bZA3HnJPtfjMusB3uEbuz8lOm7L+tONwasaGXMITwgVqclPP9Bnzrqyo7IeC46Ae
+	OB16RSke5ziTTOCeb/kyc5Kip7VEgHa+ITA==
+X-ME-Sender: <xms:U92LaB84Jfych1cC1mmINOFibwo7C3ZJ2RwGkBscbwx6SakW8JmEGQ>
+    <xme:U92LaDSbHFbGUcIcMhOqEVV1D5ba42HHEAxyfuohbX3BQHRpSJ2vz98C9_wM3ywfD
+    vo0Nr5WCCYfUFt4_g>
+X-ME-Received: <xmr:U92LaFc7Phi6H_zJ-1jBtKGqcwRghf8ntDHIMulac8REryTt0Q81npP56LyX6Bn5UzzCtb1pN62nR031s4T1nh__pY3BXzYPBE8CvDw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddukeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtoheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hoshifrghlugdrsghuugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohepmhgv
+    sehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghugh
+    hssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:U92LaHBCuKk_EzcCHhcdS2MA_phfhNnrnSunRR9Ko14rEeK1DWritQ>
+    <xmx:U92LaHlJsoCv3rJQWXRauQez_G-bYvSqlb4aEalQ6ZluecOKRYsUGw>
+    <xmx:U92LaCdaUhcLMCxQSgXvXtyQlAPDSReg3l5iyp1J7cl9GvIVJjf5og>
+    <xmx:U92LaLRnbGeU1--usEPdxfgI-zDG2AD-4HMSI8V4GmOGxNgRLAl0BQ>
+    <xmx:VN2LaNaLgCAfvgNSU59Z8wAHAoPPZONNM2mY9q54lKjM-AF65kNTkf5S>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 31 Jul 2025 17:17:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Ayush Chandekar <ayu.chandekar@gmail.com>,  Oswald
+ Buddenhagen <oswald.buddenhagen@gmx.de>,  Taylor Blau <me@ttaylorr.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v2 2/3] config: warn on core.commentString=auto
+In-Reply-To: <8b57598042642dd0c56e39be03c1c45a62accfb0.1753975294.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Thu, 31 Jul 2025 16:21:54 +0100")
+References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
+	<cover.1753975294.git.phillip.wood@dunelm.org.uk>
+	<8b57598042642dd0c56e39be03c1c45a62accfb0.1753975294.git.phillip.wood@dunelm.org.uk>
+Date: Thu, 31 Jul 2025 14:17:05 -0700
+Message-ID: <xmqqa54koyb2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <5a959c9bdad79cf972b95dcf4324135dd7c94dac.1752784344.git.gitgitgadget@gmail.com>
- <xmqqzfd12ujv.fsf@gitster.g>
-In-Reply-To: <xmqqzfd12ujv.fsf@gitster.g>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Thu, 31 Jul 2025 15:13:33 -0600
-X-Gm-Features: Ac12FXzAM3db7mlSkEWt4R5iYXErSPweF_82Q2zGwUSxIz8UIFrw7MnS_cG6qWA
-Message-ID: <CAH=ZcbA-OWxbLJoqf1EtDetnXwAieXQjBr5Jmf+G4GiQsTv-hA@mail.gmail.com>
-Subject: Re: [PATCH 6/7] xdiff: conditionally use Rust's implementation of xxhash
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Jul 18, 2025 at 1:00=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +extern u64 xxh3_64(u8 const* ptr, usize size);
-> > +
-> > +
-> >  static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec=
-, xpparam_t const *xpp,
-> >                          xdlclassifier_t *cf, xdfile_t *xdf) {
-> >       unsigned long *ha;
-> > @@ -175,14 +178,26 @@ static int xdl_prepare_ctx(unsigned int pass, mmf=
-ile_t *mf, long narec, xpparam_
-> >
-> >       xdl_parse_lines(mf, narec, xdf);
-> >
-> > +     if ((xpp->flags & XDF_WHITESPACE_FLAGS) =3D=3D 0) {
-> > +             for (usize i =3D 0; i < (usize) xdf->nrec; i++) {
-> > +                     xrecord_t *rec =3D xdf->recs[i];
-> > +                     rec->ha =3D xxh3_64(rec->ptr, rec->size);
-> > +             }
-> > +     } else {
-> > +             for (usize i =3D 0; i < (usize) xdf->nrec; i++) {
-> > +                     xrecord_t *rec =3D xdf->recs[i];
-> > +                     char const* dump =3D (char const*) rec->ptr;
-> > +                     rec->ha =3D xdl_hash_record(&dump, (char const*) =
-(rec->ptr + rec->size), xpp->flags);
-> > +             }
-> > +     }
->
-> As a technology demonstration and proof of concept patch, this is
-> very nice, but to be upstreamed for real, we'd want a variant of
-> xxhash that can work with the contents with whitespace squashed to
-> be usable with various whitespace ignoring modes of operation.  When
-> that happens, and when the result turns out to be more performant,
-> we can lose the xdl_hash_record() and require only the xxhash, which
-> would be great.
->
-> And that variant of xxhash that understands whitespace squashing can
-> of course be written in Rust as a part of this effort when the
-> series loses its RFC status.  At the same time, those who want to
-> use our xdiff code in third-party software (like libgit2 and vim)
-> may want to reimplement it in C in their copy.
->
-> Thanks.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-What is the git precedent for replacement code that is easier to read
-and maintain while also being more secure, but is slower? I think
-hashing with whitespace handling in Rust might fall in that category.
+> diff --git a/config.c b/config.c
+> index 97ffef42700..c36ead76005 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -8,9 +8,11 @@
+>  
+>  #include "git-compat-util.h"
+>  #include "abspath.h"
+> +#include "advice.h"
 
-As far as I can tell the Rust code for dealing with whitespace is
-going to be slower than the C code because xdiff used a hash algorithm
-(DJB2a) that can operate 1 byte at a time and combined hashing with
-determining the length. Xxhash requires that the length be known
-beforehand and the memory to be contiguous or to hash it in chunks.
-Hashing 1 byte at a time with Xxhash is VERY slow since it's just
-copying to an internal buffer until a full block is ready.
+Hmph.  Do you still need this?
 
-On a broader note. How do I show the mailing list the changes that
-I've made to this branch/patch series? I'm not sure what the proper
-procedure is or even how to do it. What commands would I run, or web
-browser steps would I take to show my newest commits?
+I do not think a separate advice_if variable is warranted in this
+case.  They see a warning that says that their "auto" will not do
+anything useful in the future.  They will keep seeing it until they
+decide what to use, and once they decide and set a value that is
+different from "auto" to core.commentchar, they will stop seeing
+the warning.
+
+> +static const char* comment_key_name(unsigned id)
+
+The asterisk sticks to the identifier, not type.
+
+> +static void comment_char_callback(const char *key, const char *value,
+> +				  const struct config_context *ctx UNUSED,
+> +				  void *data)
+> +{
+> +	struct comment_char_config *config = data;
+> +	unsigned key_id;
+> +
+> +	if (!strcmp(key, "core.commentchar"))
+> +		key_id = 0;
+> +	else if (!strcmp(key, "core.commentstring"))
+> +		key_id = 1;
+> +	else
+> +		return;
+
+Yuck.  We cannot help the joy of last-one-wins here X-<.
+
+> +
+> +	config->last_key_id = key_id;
+> +	config->auto_set = value && !strcmp(value, "auto");
+> +}
+
+It probably becomes simpler (and easier to debug) if you made the
+type of .last_key_id member "const char *" to point at the variable
+name.  You are not switching on the .last_key_id member.  The only
+use of that member is to be fed to die().  And by doing so, you can
+drop comment_key_name().
+
+> +struct repo_config {
+> +	struct repository *repo;
+> +	struct comment_char_config comment_char_config;
+> +};
+> +
+> +#define REPO_CONFIG_INIT(repo_) {				\
+> +		.comment_char_config = COMMENT_CHAR_CFG_INIT,	\
+> +		.repo = repo_,					\
+> +	};
+> +
+> +#ifdef WITH_BREAKING_CHANGES
+> +static void check_auto_comment_char_config(struct comment_char_config *config)
+> +{
+> +	if (!config->auto_set)
+> +		return;
+> +
+> +	die_message(_("Support for '%s=auto' has been removed in Git 3.0"),
+> +		    comment_key_name(config->last_key_id));
+> +	die(NULL);
+> +}
+> +#else
+> +static void check_auto_comment_char_config(struct comment_char_config *config)
+> +{
+> +	extern bool warn_on_auto_comment_char;
+> +	const char *DEPRECATED_CONFIG_ENV =
+> +				"GIT_AUTO_COMMENT_CHAR_CONFIG_WARNING_GIVEN";
+> +
+> +	if (!config->auto_set || !warn_on_auto_comment_char)
+> +		return;
+> +
+> +	/*
+> +	 * Use an environment variable to ensure that subprocesses do not repeat
+> +	 * the warning.
+> +	 */
+> +	if (git_env_bool(DEPRECATED_CONFIG_ENV, false))
+> +		return;
+> +
+> +	setenv(DEPRECATED_CONFIG_ENV, "true", true);
+
+I know this means well, but it might give users a better experience
+if we went a much simpler route.  In your top-level project with two
+submodules, you may have core.commentchar set to auto in the top-level
+and only one of the submodules, and then you let "git" go recursive.
+Wouldn't it be simpler for the user to diagnose which one(s) among
+the three repositories need fixing, if the stderr said something
+like:
+
+    doing X
+    warning core.commentChar is set to auto
+    going into submodule A
+      doing X
+    going into submodule B
+      doing X
+      warning core.commentString is set to auto
+
+I dunno.
+
+> +	warning(_("Support for '%s=auto' is deprecated and will be removed in "
+> +		  "Git 3.0"), comment_key_name(config->last_key_id));
+> +}
+> +#endif /* WITH_BREAKING_CHANGES */
+> +
+> +static void check_deprecated_config(struct repo_config *config)
+> +{
+> +	if (!config->repo->check_deprecated_config)
+> +			return;
+> +
+> +	check_auto_comment_char_config(&config->comment_char_config);
+
+The handling of .check_deprecated_config flag is a bit tricky, and
+it is great that this design allows us to write a similar
+check_foo_config() helper and make a call to it here, without 
+having to worry about it again.
+
