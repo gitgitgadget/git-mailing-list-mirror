@@ -1,104 +1,151 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D79A2D
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 00:04:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8660A4CE08
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 03:49:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753920267; cv=none; b=Juoaf8yM/0SArkRLn3tgYh2gUTHvCi3D9P3oBFaGeiejZAcAKyWeQNheFv2z7wfLly1t/Mk7ysm4eOob5dZ8yocBVsShRC1sVQKO8DjgX5wOP2MEzP/hcMsxgqrjThHWyxd9Fby5BuoyIcsEj7T4lk+t4nilgnMtQkPsP7TrfSI=
+	t=1753933786; cv=none; b=K/SZyfdDeFbwFH+AWc5kV7JdOrnwHfaJ2LIir6SbKXbz3n2sXzo29QK5Hz/dWRd7fIgBTIehcsv9FFkFG2NIULtSp1es44C3iilYwqi02vTozMQbVMi5UB4Q9Oo2rteKAKWz3A9iHm9zKWx0p1HJwmomGuivcOrVBVGY3DJ/gJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753920267; c=relaxed/simple;
-	bh=R/JM21zUOxofU6J3laOO6Ml/1u1vJY18GG9izHAlAXo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=V/7qaza6utUQyJHmueZn/YXksBV6Mr2tRtXgBRfDsMNE+fyZMBHrwusC8a05W7IY8R1NZ1UinH9znmfTpOTktidSL1pBgg7Oo0RbLIHQIgfd91N8UNDYB2hieegryJH2b6IBw89y0HIihte2EmUw4df26lCViFcM5uJF2bWaLG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Vs2R7Db2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bez/Jpka; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753933786; c=relaxed/simple;
+	bh=eDwGNOu6bBMkIWJBwLf6RuS4pCDCrD24hsyADFbIjwM=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=QMI426Uyd76lBdPAq68B/CUSe+NCpaER49aIGHWEHhFoPonnWehRoxG0cpttVRatTlfOK7FshefZvCpKehY3oR4ITnEStv8iNSgm2gK7hthuVmdfMfjIT+/CdsR91xgsrpwsiHNdtUJdQe/yzQL7w18Amh5jWWwyiWyKvqYQwCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9Gat/uA; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vs2R7Db2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bez/Jpka"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id B67F5EC11E1;
-	Wed, 30 Jul 2025 20:04:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 30 Jul 2025 20:04:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753920263; x=1754006663; bh=AnMJDmG+Tf
-	hqrUzTAAzQbjPUii3ugN/d+5ofhE9rnk4=; b=Vs2R7Db2lBL6e4/NQGY9c8JSzT
-	pBBCcwq+k3+1mvJQRu7YF0yqy/ccbcDlgxUwWzSFEWW6l3E+fhaelByrvqgmeDAu
-	K+N9SDMDbUuzfQdW0KRk792K6F/pbVEnEDLWajt3miN3/RinUOQjovqI0C6BNVLM
-	cqxuwa+PUsUO31wm1ZhGeGExd7sD69KRgYQDYiu0Bc9Fq8YBec0xrBsp5z/5Fjpw
-	0AbZezqzufqQKouszMuLS9c1dEbHvCOUUKQ+IJ98pypzNlJzagkTtZDHpPPAohck
-	xgod+KKUq3RVubdaWFemvnxlJJzafakV0/T5xzMKCe4OZ9DTbMplDFQPYE6g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753920263; x=1754006663; bh=AnMJDmG+TfhqrUzTAAzQbjPUii3ugN/d+5o
-	fhE9rnk4=; b=bez/JpkaimIfdmE71juPZmDNq+VYkmZkkAT6R+L98ZweRXKciZ9
-	qjpEy/gXUL4j/hMLcN3H/nM4MBOZGQopp6UDxTQHN3PnQ2T9nWO4eDKQSfCFXMso
-	119EGCN5ePnc0wlMaYJiOLUb10Yv25sv6t1mr5oUTFxny+D9waRtiSq2b+AI5KO4
-	MCU+K7MYkxdIQQpI+7X9waOBi+SZ4J8EbZdC8/EyAy/QTO3KoB3n1sALu8yqnryH
-	D7SZQFAh5u1aRmWDxQW30XdyJppuc8i437BJvZe0XAKltxMpKb5o4U+r9udV0M5e
-	fjn7elIIDgei5v3WUvQs2TvVFTlTv1aj/Zg==
-X-ME-Sender: <xms:B7OKaNsU2F4oD48SJC_pzQN717neMTCVF7KPwRT9xR0K8HUfvypEFQ>
-    <xme:B7OKaEB_5ZNSxsIcLho_I3JSBZwtRQrzEM78ByFitns-MDcwMw41v3O44dXFBylV2
-    9rvQjyl0n0dnxd7Og>
-X-ME-Received: <xmr:B7OKaHMcuoZM_AhZiAyebK8iuhfOwwIupwWk1Ll3BhWUNTNzIZ46Ekmk6K2RKrPZ6SfZGkVkaXKy7T2FYI9DcjfY4x3pIQcqgy5wnAQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelleefvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjiehtsehk
-    uggsghdrohhrghdprhgtphhtthhopehmlhgvvhgvuggrhhhlsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhr
-    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:B7OKaFxDhs7_0HWszk0y6HMpM7ephXPww1yFEinzb0bnFKgC3WmhLw>
-    <xmx:B7OKaPW1zML2xJGv-q2Rx91ZrsAsjEtzNwoiQ3SabgXcMOBKPwjJpg>
-    <xmx:B7OKaPPyWYRw8MblQocYU-PqiSeFaZkMTZqzuzH3UZMcrkT8Ofjs_Q>
-    <xmx:B7OKaJC-_2ryNCzkTNeElSVoRpISmRfAhrNzRHP_WfYqEqFeAFLaHg>
-    <xmx:B7OKaGhSw4lbDeMgqKfCMC6wukYiRVL9vgjGwCpvyLGNZ1TRBnvPjL5R>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Jul 2025 20:04:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Arenas <carenas@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Sixt <j6t@kdbg.org>,  Mark Levedahl
- <mlevedahl@gmail.com>,  Johannes Schindelin <johannes.schindelin@gmx.de>,
-  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/5] git-gui: workaround deprecation of Tcl/TK 8.5 in macOS
-In-Reply-To: <CAPUEspiP+Xoz_W-X4QrStAFS1BqSF4pws7d6dxaf6m0OeLtM_w@mail.gmail.com>
-	(Carlo Arenas's message of "Wed, 30 Jul 2025 13:51:49 -0700")
-References: <20250730164052.15371-1-carenas@gmail.com>
-	<xmqqtt2tl9yw.fsf@gitster.g>
-	<CAPUEspiP+Xoz_W-X4QrStAFS1BqSF4pws7d6dxaf6m0OeLtM_w@mail.gmail.com>
-Date: Wed, 30 Jul 2025 17:04:21 -0700
-Message-ID: <xmqqseidted6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X9Gat/uA"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3b794a013bcso559598f8f.2
+        for <git@vger.kernel.org>; Wed, 30 Jul 2025 20:49:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753933783; x=1754538583; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e1I5l9JtN2XKfcSQVgr0NZBS6FBj0g2cp27kvj3ISyo=;
+        b=X9Gat/uApW/fadgBmNA9nGKGu/hqvz/ElKA0Vc2XmM4StcDBiBEuTnFh8X6n0Avc0K
+         aY1W4QdUkl7HSJLw5KmOvrzqngrDfiRLp3WyoyFXXPIZtALpfIe21PB2vMXXIIJx4Scv
+         Fd7ctH+WOPMcDn9gX7b/Z9o80RjbEVTIKazCurhcyB7Po7KzpfOUe5zsTfhHL843XHoZ
+         A3gLLSxE5vGWEk9qxB3JvZkGZ6nFJk5vBUX+8/Muqmzyfi7VuuVDY/u1Ql4PkiCtmp8e
+         HM0pyLLGz7RPEXoftOCKe4gW0nZtvcOW4H+ruFip+VMFyCMuBLIHb44SlNtAdefbcw8E
+         YaZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753933783; x=1754538583;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=e1I5l9JtN2XKfcSQVgr0NZBS6FBj0g2cp27kvj3ISyo=;
+        b=R9aQ54BXQ5AkRMxa7tuH3plAFP2RBQnT6F+YG5E8ooFOUXxzEVvxH6xUJ8abaCIeoE
+         YVQlY9FlcKJdfAJEHUECLkRoCT7zS76OVh57B73Z3Ko/F1RAwSihChs3EqYzvpn8ES8E
+         6IuZFDikch5Ul3odMVag4lnqaYlneA6fNrlzoIIHvYeEPNH6l75C7U63CDsc8A7DtRgS
+         HKk5iCXViVX8lnzSDuN5WiD2sWw96HTuK/pqNN044Z6M6rJh+Xm5pCdnqSM1bjDg9TkO
+         tQkRGWzkeXYKuR8IAQxh8IKS/1kOi0vkC9LYgY+a/TU0UYFHDbd3tGAvLnvzqbkMQj2j
+         k9Ow==
+X-Gm-Message-State: AOJu0YwNlesJJxNqPQhlqm1DQZgVb7Af7DJ+1izxqpMAKF/DJwpDihOI
+	G4Vq9y7E/ordYZa5fSDyy8WltJmj+xuT0JksnaHlYDT3ByaJs/eS98hgMIUENw==
+X-Gm-Gg: ASbGncvvFk+4rWl+Gy5m9FCGwMbnMgAWXlByE41uf5Mdtu+erLsJsH2RTZLulNeEknm
+	Qx9XrbNJcNNfCPRHGV6QwbP1Cubprltwcqd/oZ/Ks7OsrrNAw/gKMyMOoFKzYzKlcjJc8/kO/km
+	oi/oNH5f39+kHgHh+HjPFQQKL+ieP0B/iNzcYaKyOpUxRPLQPHOJeMdXVnEjAQPguSpSaHgeWIo
+	thQXrDLbFfdGF8w5RrTxqaA+U7ba8kQjpvbMNeE/orn07TEuKnUMVYu8UUTppI2VqGo9XqCsG33
+	rwUgkCnY+MmBmEIU/L7NmG9tIJ9Vyr2iPnn6FRsTH5riudjtK4pnD53gcph268vD7gdlfxKFhZe
+	CaL0srXyKrSy7jBesrc6NSmg=
+X-Google-Smtp-Source: AGHT+IEGbKtTMBkqr5rAxw8lPiL+K2XUmQ1fy/k2oujGwDSG2hVVyVdZsxI5+u5wSSY35+CKlFc9jA==
+X-Received: by 2002:a5d:64e5:0:b0:3b7:76e8:b9f7 with SMTP id ffacd0b85a97d-3b794fc18f9mr4740119f8f.10.1753933782448;
+        Wed, 30 Jul 2025 20:49:42 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c47908esm885686f8f.59.2025.07.30.20.49.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Jul 2025 20:49:41 -0700 (PDT)
+Message-Id: <pull.2022.v2.git.git.1753933780883.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2022.git.git.1753860300588.gitgitgadget@gmail.com>
+References: <pull.2022.git.git.1753860300588.gitgitgadget@gmail.com>
+From: "chenjianhu via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 31 Jul 2025 03:49:40 +0000
+Subject: [PATCH v2] t7450: inspect the correct path a broken code would write
+ to
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: chenjianhu <18230222379@163.com>,
+    chenjianhu <chenjianh@kylinos.cn>
 
-Carlo Arenas <carenas@gmail.com> writes:
+From: chenjianhu <chenjianh@kylinos.cn>
 
-> Not sure I understand the question, but "upgrading" is not the problem.
+Prior to 05e9cd64 (config: quote values containing CR character,
+2025-05-19), a repository can trick "clone --recurse-submodules"
+into running a post-checkout hook shipped with the project.  The
+test was written to make sure the trick would no longer run the
+hook with the fix in the commit.
 
-What I read from your description tells us that "upgrading" Tcl/Tk
-beyond the version that is given as part of "Framework" *is* a huge
-problem for end-users.  That was exactly what I was trying to find
-out.
+However, the test did not check for the path the hook would
+create; correct the path to the expected one if the bug were
+still with us.
 
-Thanks.
+Signed-off-by: chenjianhu <chenjianhu@kylinos.cn>
+---
+    modify the “foo" file path to "$PWD/bad-clone/sub/foo".
+    
+    cc: "Kristoffer Haugsbakk" kristofferhaugsbakk@fastmail.com cc: Justin
+    Tobler jltobler@gmail.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2022%2Fcjhxmx%2Fcjhxmx-git-test-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2022/cjhxmx/cjhxmx-git-test-v2
+Pull-Request: https://github.com/git/git/pull/2022
+
+Range-diff vs v1:
+
+ 1:  c2d1d8fe884 ! 1:  6434587a075 modify the “foo" file path to "$PWD/bad-clone/sub/foo".
+     @@
+       ## Metadata ##
+     -Author: 陈建虎 <chenjianhu@kylinos.cn>
+     +Author: chenjianhu <chenjianh@kylinos.cn>
+      
+       ## Commit message ##
+     -    modify the “foo" file path to "$PWD/bad-clone/sub/foo".
+     +    t7450: inspect the correct path a broken code would write to
+      
+     -    In the t7450-bad-git-dotfiles.sh, when post-checkout
+     -    is executed, the actual path where the foo file
+     -    is created should be "$PWD/bad-clone/sub/foo".
+     +    Prior to 05e9cd64 (config: quote values containing CR character,
+     +    2025-05-19), a repository can trick "clone --recurse-submodules"
+     +    into running a post-checkout hook shipped with the project.  The
+     +    test was written to make sure the trick would no longer run the
+     +    hook with the fix in the commit.
+     +
+     +    However, the test did not check for the path the hook would
+     +    create; correct the path to the expected one if the bug were
+     +    still with us.
+      
+          Signed-off-by: chenjianhu <chenjianhu@kylinos.cn>
+      
+
+
+ t/t7450-bad-git-dotfiles.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
+index 14b5743b962..f512eed278c 100755
+--- a/t/t7450-bad-git-dotfiles.sh
++++ b/t/t7450-bad-git-dotfiles.sh
+@@ -401,7 +401,7 @@ test_expect_success SYMLINKS,!WINDOWS,!MINGW 'submodule must not checkout into d
+ 	git -C repo commit -m submodule &&
+ 
+ 	git -c protocol.file.allow=always clone --recurse-submodules repo bad-clone &&
+-	! test -f "$PWD/foo" &&
++	! test -f "$PWD/bad-clone/sub/foo" &&
+ 	test -f $(printf "bad-clone/sub\r/post-checkout")
+ '
+ 
+
+base-commit: e813a0200a7121b97fec535f0d0b460b0a33356c
+-- 
+gitgitgadget
