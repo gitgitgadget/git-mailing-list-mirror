@@ -1,109 +1,131 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EFEC120
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 12:15:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5F286347
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 14:20:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753964144; cv=none; b=rwT5FNd7qwrOexyuJs8ULq9h9oaHcS6wW4nE8FVlQkRHUnGjHJG1tpDyQ2LpnIDWe+ChPr9TB/bDGFBQHExhtTQiMLh/xg7Nzjawuqbv/5NIZqiceBBz+QLd1WBT5+upd5I7+nLa81Y9Cb/ttqNsgRMRriaNfim4HTfUtSMOVgg=
+	t=1753971655; cv=none; b=KTsrgku3SQ7AThi9+m9pIWLTB7mzJDa4HIvC2njcy9gvV9n06IubYjr3lxIyVPg8LCP0OvsWGRw5OapvmO3eWUeKWEr6cK2juULmngwbeOGPzWpndO6riymGVj7zopfh65II+sUZg9VBLLCYD/C7UeC72IfkQwH/PP04Faeyemo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753964144; c=relaxed/simple;
-	bh=7GwZvgDreLZqTKsRFUSgaxgMcUgvvdqMVLWoO2wW+vk=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OHxQkwmVMOUrOnEKmMROMq+lUljFMX0EczYbQBJDZg65BIMwegHlOrpFa3qHfgu3gwX4QKrhtFe3ywvTTwICergYwJKnzeqjjuttzPQilMXdQYSsF9BqXa8xWfuLUbLcj4ifVTLqlmiUFe6FIA9y7yoDo/3I+HU20iclfogCT2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=martin.st; spf=pass smtp.mailfrom=martin.st; dkim=pass (2048-bit key) header.d=martin-st.20230601.gappssmtp.com header.i=@martin-st.20230601.gappssmtp.com header.b=MQrcky8W; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=martin.st
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=martin.st
+	s=arc-20240116; t=1753971655; c=relaxed/simple;
+	bh=2UFQQzE1dNlWFAr9WZvJg0+SjQw6DOY6KUrsBtaVZ8w=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Sp4MQIfnqwxvQOsAYqAvH3HyzyFrizOpJgcTJpBVusmYnlqRXN5zZukJByYN+jNi/WCWL27th/i4bGcvOYm2FUHjfXss54NgmLajK4jcjfXl3onf1/ivvpFzE3mfTgeAIfU5JMBhtNs6QyVK6HFrUy/zn/BakNW/8MtkLaelorQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vz0lTmHN; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=martin-st.20230601.gappssmtp.com header.i=@martin-st.20230601.gappssmtp.com header.b="MQrcky8W"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-55b8a0f36fcso352204e87.1
-        for <git@vger.kernel.org>; Thu, 31 Jul 2025 05:15:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vz0lTmHN"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3b7862bd22bso1264311f8f.1
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 07:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=martin-st.20230601.gappssmtp.com; s=20230601; t=1753964136; x=1754568936; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LevVRfV0K1No6rUf4JQxFLi80Iqr/mmBDv76hczDJgQ=;
-        b=MQrcky8Wa4QHOm3jRygiKF7pXjTpEx78rd7d3JdgOA7RWvI1MKP4K5CpE2q/nfn1fs
-         L4kRk8BtXFYMey2QPWJJkkSHNimeUyJD7GzcsCH5sP4V9M7rvkaDXFAKAwlSwEDzQCeA
-         Jn64u1e8r2hGQs0y4OZj6OgH5OXBp54Nc6X7rRdER0RLoorhDZrNuka/41LiYuKXSyOQ
-         8C1dno3fmRu5AvVsb7DhPkkztcpPr3ZgeOBsRBAsuv0YwEUCT8VRZLIISejA7iQuP2tq
-         bwJVF+8WErmjiGQkHDIncpI/j+hMV7Xll9lPmYbRCVixpg4Wf3NjIYc6aUsVK9f1kfYN
-         I8rw==
+        d=gmail.com; s=20230601; t=1753971652; x=1754576452; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6f8qegzW21fA+Ecm4OUYYk10SaHCGMjLtY/S/bCSQwc=;
+        b=Vz0lTmHNyEeo7S3jka+e8UeiWxkODv6hWf+OtI07asOzfIBeCkdgj+scnyA45ewwap
+         k4vi9gqVT0WAYQ0fUf/3o5PuY4OOr+ud9cxWZTo5yx9wzpKx4/RhJAo9xsxk2ahuX5xt
+         equbeVfST6RzAZ0m89KNsaMJAjUB/yAD49cF7hcG4s+7GrdonGb73fXYK8yi/5u5Kwzj
+         E9QEIC0TFPCMxO1T2RP4ygvQq7nyEIWhfRYLtdtaq/cywGlDzgNxKDHGhcIOE8q5t1x/
+         ++WoWYgVpMa/f1cxtPSsVE2ETT/ixIxpnOlusnaKBsetkfBL/8xkY7Cp5EdBt8hmjige
+         Vs6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753964136; x=1754568936;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LevVRfV0K1No6rUf4JQxFLi80Iqr/mmBDv76hczDJgQ=;
-        b=Kgrj8nU1Z5tzKB8FyyQ9/7r2DAqv3CuGa5bdV9FJSbBrMUm75gsZRJ7hAubcMxT6+t
-         6tnB0eYBxmNbdXlWRApl/zOk6hJzDZKh+Sl1orSLIJTVTcldDigz02vGiIki0n8SYC5q
-         A4OrenGxO6koOlnIA+gdvTMcAm5t5UxnS6TBrL2122Xq4UGhn3WH31AeaLZQ22HIwfBa
-         HZp/P4Cb1qb/Ty/oebHrUdnQ7Vzbi8aiv/aM6GQHOb/Cd+xafMDszCdK5PYR1eYP6opI
-         d95OnOtsw3pFWbDRffCrVjNp8+BeHeZV8jI8T27m2VHcyCFzYmBEOWVrGcVvXiLAqlPs
-         bGjg==
-X-Gm-Message-State: AOJu0Yzw5kVbcrutKfOcuouzuWFaj0yNwCx53i3kiwjRQGq39auyh5Yw
-	YcytLa2QagMSDhKtRG5NRze0w5lQ795Dxm+T/McgaBqeL7COqM1ln+KObQ3LoTaWw8VSHfySVBS
-	9nHvWnn6+
-X-Gm-Gg: ASbGncts/UaE7mi5UZGRSnImszETHOQ5b2jEcvCwWp4RhXjq4UB9L+Pxm9rYXOfDDvV
-	LcsP4k5K7MlTuILfKmN1pD4a4KTd0iZSeuHn1Xzwhz4r6n8XrJr4V2P73WDgq6btaKq+wFheYGX
-	8s/xoqXXyHbGfC4kwr3p8u8xNUMmU1T1CcqYd73ke1P/aO4BKFqMcNGpeD+FY2GD1ZX01b420Ha
-	vePjcojnTqZ1W/Mp78kRZEQLFufhGcu7+gP2ZiRm+QhSM8MUlhhEl1dBdXdRhBtxLnCnqKAWUav
-	gKsbk7G+h25PkgvDzC/7Si5NYN8xVQ90kgNS00wXdgSyIpFzU3Jjrye8Z3PqxI25bz1g9MgCJxX
-	3SN+VfsKnO2VXTAFhSo3VTQNsT5218RT4GeplrlB2VqFUqRY2se9ADQ==
-X-Google-Smtp-Source: AGHT+IH/0rlaqrn2lE6aHfwd4paHvoO4gePjRhgTlC06+1wg8C2Vg5AP8034Wg+iGpCWwY8fRqn6pw==
-X-Received: by 2002:ac2:4e05:0:b0:55b:8186:8cb8 with SMTP id 2adb3069b0e04-55b81868d7amr1811284e87.54.1753964135595;
-        Thu, 31 Jul 2025 05:15:35 -0700 (PDT)
-Received: from localhost (dsl-tkubng21-50de30-198.dhcp.inet.fi. [80.222.48.198])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b88caff99sm209786e87.163.2025.07.31.05.15.34
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Jul 2025 05:15:35 -0700 (PDT)
-From: =?UTF-8?q?Martin=20Storsj=C3=B6?= <martin@martin.st>
-To: git@vger.kernel.org
-Subject: [PATCH] meson: Check whether git is new enough to support ls-files --deduplicate
-Date: Thu, 31 Jul 2025 15:15:30 +0300
-Message-ID: <20250731121533.178747-1-martin@martin.st>
-X-Mailer: git-send-email 2.43.0
+        d=1e100.net; s=20230601; t=1753971652; x=1754576452;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6f8qegzW21fA+Ecm4OUYYk10SaHCGMjLtY/S/bCSQwc=;
+        b=fqoGKtXte8+YOkFL3LmzYKfdu5FaSiEvbB+rphUFm+HPbKhsQ/Ys5ybhHldt8xoZ1B
+         YORGkgqnu7rGX8hKHY3VyJB/ig6Kr77TAVudCzv/7+FLThArPi1lYLJ3ljRFkvAm120J
+         3D/PC0pel+StJzsyUQu6PrjSV1MiuO0cLYeVXQjIszpLCKYcot//POdgM5ABMbs+xXCZ
+         aoh0zlcxItZFdn5HeuB5fuFnZMwXKuy6VmYhmyWG194RLhk3JvF5NLX3537S/ojedPe5
+         oi66yYq8zFK4F73byjbqzWnRZXIiBkdBO8cDxdny61TOC5IdZ51nN22Uo64omM2aE8yo
+         Hffg==
+X-Forwarded-Encrypted: i=1; AJvYcCXRtm6lM2+3Gdhq0xMwxoTLNUYW2ekhVnr1Odj8QVJ6gkAlpPdUKduB/EAxjJyAljodwn0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx9coY+Y1qGLpgzZIgd3vo39wH+los+QcSAi7Jt5oC0eAa3RXbf
+	8jX3ly/tbdkoF92/b173sJYtCFKO/qQ+g6t8wokuwkoSHRClzI6CSVdU
+X-Gm-Gg: ASbGncujO6FqXDlRxowpbFGzw8zWySIbcof83ULDOx4METqpTpyXQoQ0gbJEASwEXhO
+	VMMmBPPVNOZPXWA2aHPG6na5rKRWIBGdMdR0BpgAQTn30UiUvHnQEVZvwsjQiTb9dQhWLBuRuni
+	SllqRPzr6vAKFnt0WcY+PduXVh8RUCRvPUs8om42L7HC17nuvg1Ow9rV0MV8KAH6cGlTiE8/y/d
+	KduAN1hgR0fKPDVfqWMHLjPo3hiN33bLRQidhlorXz+TU1Ie1UicyLTEcKkSvwaRW/gucgW05Sf
+	6mTwsljh3HclbbqzrrBw5iIXHmtrBuRWQmiUIKtL1sF0AhC8P3Hj8YVPITnMzWDaGSrpl/R5VtW
+	HD2FF62YxN/dJnFXgwr8MOu9QZ94EOpEu9iHqZb+7hrCgeQJxcCGo7ZDhUtdBxhZy7ESJr8PKqY
+	mR/rZP5HF5R4I=
+X-Google-Smtp-Source: AGHT+IGeCsGbIYkXLvUZ62h8/K9nVnYemMtwCdWbM05Nb1Ixy49H7NcMJPMiKom9/aeDPM3BT/Rk2g==
+X-Received: by 2002:a05:6000:1acd:b0:3b7:8735:9453 with SMTP id ffacd0b85a97d-3b79d41f9d5mr1999625f8f.3.1753971652136;
+        Thu, 31 Jul 2025 07:20:52 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3abf33sm2552634f8f.7.2025.07.31.07.20.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Jul 2025 07:20:51 -0700 (PDT)
+Message-ID: <ad453eee-23cd-42fe-97bd-1ff0fc2f3edf@gmail.com>
+Date: Thu, 31 Jul 2025 15:20:44 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 4/7] xdiff: make fields of xrecord_t Rust friendly
+To: Ezekiel Newren <ezekielnewren@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Taylor Blau <me@ttaylorr.com>
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <6df9f50a8f4ca29b2c3ba1e39982b6d516146bb3.1752784344.git.gitgitgadget@gmail.com>
+ <91f6352f-abc4-4e99-938b-6a56aba2faed@gmail.com>
+ <CAH=ZcbCnEpBokM9rxmmkeM9GT948n7+RipXODHLfPssuwJuVCw@mail.gmail.com>
+ <a765cde9-0fad-414a-996f-2ec162d1e4f3@gmail.com>
+ <CAH=ZcbALsQqTrvNJ4ZKmVWc6PHtTA+8k8p6_D=x=BfMXxnayfA@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAH=ZcbALsQqTrvNJ4ZKmVWc6PHtTA+8k8p6_D=x=BfMXxnayfA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-This fixes Meson errors like this:
+On 28/07/2025 21:14, Ezekiel Newren wrote:
+> On Mon, Jul 28, 2025 at 1:52 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> 
+> Ah, I misunderstood the scope of your question. I could not fit an
+> example of why this design pattern made sense into this patch series,
+> so I'll explain with an example here:
+> 
+> If C defines a struct like below then it's obvious how to translate
+> that into rust for ffi purposes. It also makes it clear that this C
+> struct is expressly for the purpose of C <-> Rust interoperability.
+> struct some_struct {
+>      u8* ptr;
+>      usize length;
+>      u64 counter;
+> };
+> 
+> This is how that C struct needs to be defined in Rust so that it can
+> interoperate with C, and making C use the Rust types reduces the
+> chance of copy paste, and primitive type definition mismatch errors.
+> #[repr(C)]
+> pub struct some_struct {
+>      ptr: *mut u8,
+>      length: usize,
+>      counter: u64,
+> };
 
-    ../meson.build:697:19: ERROR: Command `/usr/bin/git -C /home/martin/code/git ls-files --deduplicate '*.h' ':!contrib' ':!compat/inet_ntop.c' ':!compat/inet_pton.c' ':!compat/nedmalloc' ':!compat/obstack.*' ':!compat/poll' ':!compat/regex' ':!sha1collisiondetection' ':!sha1dc' ':!t/unit-tests/clar' ':!t/t[0-9][0-9][0-9][0-9]*' ':!xdiff'` failed with status 129.
+How is the pointer, length pair used in rust? Normally one would use a 
+slice so do we have to construct a slice every time we want to use the 
+data in this struct, or do we copy the data in this struct into to a an 
+idiomatic struct with a slice member? If we end up copying there doesn't 
+seem much point in changing all the types in the C struct as we can 
+define a rust struct using *c_char, c_long etc. to interface with the C 
+code and covert them to an appropriate rust type when we copy the data 
+to the idiomatic version that is then used by the rust of the rust code. 
+I can see the value of the typedefs for documenting C<->rust interop if 
+the same struct is used by both but if we end up copying data on the 
+rust side I'm not so sure.
 
-Unfortunately, Meson only supports the external_program.version()
-method since Meson 0.62. So with older versions of Meson, we have
-to just assume that it exists (or maybe assume that it doesn't).
+Thanks
 
-Signed-off-by: Martin Storsjö <martin@martin.st>
----
- meson.build | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/meson.build b/meson.build
-index 9bc1826cb6..717365baec 100644
---- a/meson.build
-+++ b/meson.build
-@@ -693,7 +693,14 @@ third_party_excludes = [
- ]
- 
- headers_to_check = []
--if git.found() and fs.exists(meson.project_source_root() / '.git')
-+if meson.version().version_compare('>=0.62')
-+  new_enough_git = git.found() and git.version().version_compare('>=2.31')
-+else
-+  # On Meson 0.61, we can't check git.version(), so we just have to
-+  # assume that the found git is new enough.
-+  new_enough_git = git.found()
-+endif
-+if new_enough_git and fs.exists(meson.project_source_root() / '.git')
-   foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_excludes, check: true).stdout().split()
-     headers_to_check += header
-   endforeach
--- 
-2.43.0
+Phillip
 
