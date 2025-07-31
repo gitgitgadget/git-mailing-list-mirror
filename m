@@ -1,89 +1,87 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677292550CF
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 19:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03509635
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 19:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753988838; cv=none; b=a0cg5DgOzRG4JxVpMgS3mbqe2XATrBQsVpNlOq2rudb820Axu0DeMpIisibule3LLQGdGqhSdB+UxDdaKH0MBDcBJqMQgN4xqrzQ917Mn5TS8x7C2e/bpvWlNvGy/rbXEER3mnhSJzOMGu+CsL5/iXbWanjT8q80rb+uuwPBJ7U=
+	t=1753989347; cv=none; b=PkENOPfRcd4wZ/Ckw9U9blQEdDXe9Ye5shZhVi5zPl+rDdKm0O/bpaoEkrZtDnr2aVWF0gUAwDVD/ZRIedknx8UPcYIxmY1VRqIDM2rqeCR838Qzlq/N+ORkJuX7RiYRVlRSBp4JlLSghaxBOrNIR6Stfs9OsagSlevdCWM57nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753988838; c=relaxed/simple;
-	bh=jta7OPTG4ZNa967uE0dBa1lndaCH40zwComTD9Kw068=;
+	s=arc-20240116; t=1753989347; c=relaxed/simple;
+	bh=PL2QBufTdeC7Lv6AdEeIpDoXM8gORIGnE5lip93sjDU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iE3gVVMrt3KjM3+WzHGPJW++pjG+lXzbotfkUVsVwyFjPLGTDmwI9Bw3N73ZZW5pg4ARgdvawL1I7D+5T0gogKnXIlfhyYxnqoZaG1s2gVS02F7Dw8WAg31wMjXN5/Q4j3SYdyQep4xdRVrXuXT+aq3MEPZqcuvUThr8zrhzy8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NB+QOhm7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F/lMqsYF; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=kGk1tgDuGr8a/7aZaCWM4aF//FufD58avZZWNMI9pKv28+U1wkz+e2b9eMo8Iw1fq/GNVUiO6FWvBVilDA9najlInwVZg5H472CKLGWCF3l3i8keb6wCAAuoqWwnLmqJJwMtKPts1ZEHatXFVR10gNHHPPAAr02EBebWFv11PCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VXb37WMU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U/ceb+6Y; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NB+QOhm7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F/lMqsYF"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VXb37WMU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U/ceb+6Y"
 Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 79FB81400265;
-	Thu, 31 Jul 2025 15:07:15 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 31 Jul 2025 15:07:15 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1A3E414001B6;
+	Thu, 31 Jul 2025 15:15:45 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 31 Jul 2025 15:15:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1753988835;
-	 x=1754075235; bh=Is9/1l36r0Mgez+PJzpqw4RRc8M8B1mr5dcnDiOUZ0k=; b=
-	NB+QOhm7kDYdzqwlrsyVSKGpqSdT5OIsXa9q3du6vB3HSs0hWMvceZDh4wIeT39g
-	H4Gr9aQU9rZHLLZJE4zJqLhsxfSENGZVIhLsKLxYH3GMIEW84nrgOfLH/ePKH0CY
-	IxZPDg2wd0LW+1zxcC9OFyIFbW0G/LE1MI0Mg21I2ndmnE1UvdzWCJeoEAru5P+h
-	wtx7JFAIY9I1WyVZnND3J7wI+5u6NlUBC2kDV1bTgXOD0BQ+quiDWBElJdqDf7GK
-	j8nqV2wEzVm04SCVw71DzQRRg0OGI1evckJ1KG1XNGtqhK9beUFafLQikMUnnEus
-	6nwY9NVyPswRskLt4DxTyw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1753989345; x=1754075745; bh=PL2QBufTde
+	C7Lv6AdEeIpDoXM8gORIGnE5lip93sjDU=; b=VXb37WMU4iBPzX1tWCIJoDl9Z2
+	AjFYrcSeNONzuzwMJfmsahxpsToEIA8iiQy6z7Et6ml7GR+yxN26YbiaU6Mg3BjM
+	xuhmcgYm0mXcH9kBCbzjDNJWkelqs9sJYVt/ioL8ejaYktp+gx1MtikI023JAE28
+	PH65fSKQ0+QoUsZ4uCu/QU5QGYEKdknrdRVQdWn9pq/5hGlo8pQbnssAet2mwr1k
+	ZwDmFYieCKBd1NiMgBWb5FL+C7xFVZhxysV/FxAADsvCIQUeokPekJ3ZMigP9k3+
+	Viig9GGTyq7dDxkihevW/vPid8ChjTJlNwFPrGFl1tHotjlWZwwESuuFhEkw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753988835; x=
-	1754075235; bh=Is9/1l36r0Mgez+PJzpqw4RRc8M8B1mr5dcnDiOUZ0k=; b=F
-	/lMqsYFTpYPFcth4BUlS+LUSmwZ57uHMfgG0NeLyMTkhTuC1t4oKcOg5Ob0ptF77
-	5T9T7nYhaMVUVCoi3MBhXv3pxBRXaGM3f6iF+kJxInC7b/Tfp7+UPe4NLU6BnuJc
-	qYnkjOsuJLc+mCCKcxLQZ6RJBFHoaaxsaulM1BzBK23UE6vYjfO67cab8yL20Xsl
-	3YNq+5RjKEUkcl/Xf8A6CYTrcyEjy8nOBpkDGxzige3fJXyq1YqMItjBf+fHN+0S
-	FhRAfvRJ54PIHiW52IqEPA1IK67kODHq1Nafp+2RqEdYCuGmkCMXpO5ogqgYfis8
-	TAwOwQah5jUqXUxdfHoCA==
-X-ME-Sender: <xms:476LaC4fwG6us_TmlUrZo2uymG7B5nqQcVeuAlmWNRAywX-bPa7IzA>
-    <xme:476LaEX1-66Qrfg90xDSPN0LHab08PBXq3R0Gi5PhvIU1QWcgBscSnjRZlFzgn3n2
-    0iOL8zelWtlUECJEg>
-X-ME-Received: <xmr:476LaB7cLLVRrobfMGzBb7RuegS0RFXjyynrMOid_o0QBVdgKWQVC2tSkTO_rH4iVzwBt4MUL3xxa1Pu8LZB78gVe-MGEKtNp41ph2E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdduieduucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753989345; x=1754075745; bh=PL2QBufTdeC7Lv6AdEeIpDoXM8gORIGnE5l
+	ip93sjDU=; b=U/ceb+6Yjxr6RGekvEs949DkZ3yRxlTmwUtCd11X2+Nsz2hdyc2
+	xmcrM4eQwp50kH7k2ekmDCvs2G+67LL/ErXv1uMm3JePzbIlGyeywSBNjL76WZuM
+	hz0isswWiMeJjBA5ya7BlTRnc7PQp45oaQRpQl6q00HxZbocMkIL4D76J3zHIahI
+	24bsY1e6MydjTVV0otV3M+CCnJFPawz70Xyhe8iALycVqWSS4dPTdegioweYiLvg
+	H88uiG0wH9AVjVRwiYJXVoyNbuc7DbAwS+hfzYXD5tOyfV3rWR4nGF0e76yL7ATD
+	ELfCFNnvr4ebWeoHG+3Rf9sAI72yAp6BzpA==
+X-ME-Sender: <xms:4MCLaC5ys2fmMHaduG5nKd_bNRdECtKTPDMp9MuZ5v7YftidLGJJSQ>
+    <xme:4MCLaJfNqHET6R1vNsaKIobKwd2EisFZUIFvQdkW51G0kevDzITPN-GNXQtS-5WPn
+    iVXXOCFcfasu_nEXQ>
+X-ME-Received: <xmr:4MCLaH6heBVHJT5jMJFIgCsqtp5VIivEW91VNhryNStJMviluZ8yVZWt8cppQtfHc4VfO_DumHAzMw_jPr-hzW1-2mToVYZvy5CGsp0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdduieefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeeggefhudefkeegueeigfejhfejvdejvedtheeguedukefgieelfeeuteej
-    ieeuleenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvqdhkqdhnuhhtsehhohhtmhgrih
-    hlrdgtohhmpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgt
-    phhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:476LaPp7-seNZLBXkinEimnOKNCpEWDTkErrbb8HPbk9bCwq2IAdlA>
-    <xmx:476LaEmEsdZROn_uJ5P108_FzajXsoJxWQRkzhiyrZ3wOwih6r3ItQ>
-    <xmx:476LaLNfwzU3BV48qq_CoxnqH2K3nVApjQsGKP0zNtJmXccHY5Xoag>
-    <xmx:476LaIOV_N12rOy05YI9Wp0yFYTg6-BipZtNfqwo-xBKvc-mIRIXuA>
-    <xmx:476LaN_EUA7P4bNXTx9EvShXVjd3ebtg4jCT-y-zC47-I7t1S7GMMEqB>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgv
+    thdprhgtphhtthhopehjhhgtrghrlhdtkedugeesghhmrghilhdrtghomhdprhgtphhtth
+    hopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhk
+    rddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:4MCLaAvLUPFZHEuPVoaL-5J_tjW4qaR9MnhoDFhMTzEjeZhFfsRy0Q>
+    <xmx:4MCLaHi1Q2CYqp9nZ2Ob50uVqHIX_pN1x4z6HmEOJdeguh2LDQM8dw>
+    <xmx:4MCLaLpvWKDTB4Gi8sCRYVPp4ohb07pPtA-fHiY8KUcO_Vq0TRlzxQ>
+    <xmx:4MCLaEup6ZPlcTBwfB6JH4bxBfOzkTNNI8q_i8o2HwAe0zJFc3zf7g>
+    <xmx:4cCLaE1IpNCzxYO5WJtInmj9WNz0Ajgy3JBq5FtBr3mFlCzyG-O-pVA5>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 15:07:14 -0400 (EDT)
+ 31 Jul 2025 15:15:44 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Knut Harald Ryager via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Knut Harald Ryager <e-k-nut@hotmail.com>,
-    Josh Steadmon <steadmon@google.com>,
-    =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH] docs: remove stray bracket from git-clone synopsis
-In-Reply-To: <pull.2023.git.git.1753973177262.gitgitgadget@gmail.com> (Knut
-	Harald Ryager via GitGitGadget's message of "Thu, 31 Jul 2025 14:46:17
-	+0000")
-References: <pull.2023.git.git.1753973177262.gitgitgadget@gmail.com>
-Date: Thu, 31 Jul 2025 12:07:13 -0700
-Message-ID: <xmqqh5ysqivy.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Han Jiang
+ <jhcarl0814@gmail.com>,  Justin Tobler <jltobler@gmail.com>,  Karthik
+ Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 0/6] builtin/remote: rework how remote refs get renamed
+In-Reply-To: <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
+	(Patrick Steinhardt's message of "Thu, 31 Jul 2025 16:56:48 +0200")
+References: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
+	<20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
+Date: Thu, 31 Jul 2025 12:15:42 -0700
+Message-ID: <xmqqcy9gqiht.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,89 +89,22 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Knut Harald Ryager via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> From: E-K-n <e-k-nut@hotmail.com>
+> The series is built on top of e4ef0485fd7 (The fourteenth batch,
+> 2025-07-24) with ps/reflog-migrate-fixes at de7cc0782a7 (refs: fix
+> invalid old object IDs when migrating reflogs, 2025-07-25) merged into
+> it.
 
-This should be updated to match the name you use on your sign-off
-below.
+I'll use the newer iteration of the other topic that ends at
+f0fde561 (refs: fix invalid old object IDs when migrating reflogs,
+2025-07-29) instead; that was what was used in the version in 'seen'.
 
-> The git-clone documentation contained an extra ‘]’ after
-> `--also-filter-submodules]`.
+> I'd normally have withheld sending until that series was merged to
+> "next", but given that I promised to send something on Friday already I
+> decided to just get it out. In any case, if that causes problems I'm
+> happy to wait a bit before this series here gets merged into "seen".
 
-It is correct to point out that the brackets are not matching, but I
-think the one that you are removing a wrong one.
-
-When f05da2b4 (clone, submodule: pass partial clone filters to
-submodules, 2022-02-04) added an option --also-filter-submodules to
-the command, it wanted to express that the option is only valid when
-the "--filter=<filter-spec>" option is also given.  And it did its
-update correctly:
-
--         [--filter=<filter>] [--] <repository>
-+         [--filter=<filter> [--also-filter-submodules]] [--] <repository>
- 
-Later, 76880f05 (doc: git-clone: apply new documentation formatting
-guidelines, 2024-03-29) introduced the extra closing bracket after
-"--filter=<filter>" to make these two look as if they are unrelated
-and independent, i.e.
-
-    [--filter=<filter>] [--also-filter-submodules]]
-
-So, I think the one immediately after "--filter=<filter>" is what
-you want to remove, not the one after "--also-filter-submodules".
-
-> This patch removes the duplicate ‘]’ so that the line reads:
->
->     [--also-filter-submodules] [--] <repository>
->
-> instead of:
->
->     [--also-filter-submodules]] [--] <repository>
-
-We do not say "this patch does X" in our proposed log message.
-Instead, you tell somebody sitting on the keyboard to "Do X".
-
-IOW, something like
-
-    Remove the extra and incorrect closing bracket, so that the line
-    reads:
-
-        [--filter=<filter> [--also-filter-submodules]]
-
-    instead of
-
-        [--filter=<filter>] [--also-filter-submodules]]
-
-is how we write this.
-
-> Signed-off-by: Knut Harald Ryager <e-k-nut@hotmail.com>
-> ---
->     Remove excess right bracket from git-clone docs
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2023%2FKnutRyager%2Fmaster-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2023/KnutRyager/master-v1
-> Pull-Request: https://github.com/git/git/pull/2023
->
->  Documentation/git-clone.adoc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-clone.adoc b/Documentation/git-clone.adoc
-> index 222d558290e..851502552f2 100644
-> --- a/Documentation/git-clone.adoc
-> +++ b/Documentation/git-clone.adoc
-> @@ -16,7 +16,7 @@ git clone [--template=<template-directory>]
->  	  [--depth <depth>] [--[no-]single-branch] [--[no-]tags]
->  	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
->  	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reject-shallow]
-> -	  [--filter=<filter-spec>] [--also-filter-submodules]] [--] <repository>
-> +	  [--filter=<filter-spec>] [--also-filter-submodules] [--] <repository>
->  	  [<directory>]
->  
->  DESCRIPTION
->
-> base-commit: e813a0200a7121b97fec535f0d0b460b0a33356c
+Thanks, will try to include this in the batch of this evening.
