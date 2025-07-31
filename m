@@ -1,104 +1,102 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240B227E040
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 22:30:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D3921CFF6
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 22:38:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754001025; cv=none; b=RcFWe8NcIeU0+enYCP/zPI7x/K6kaqgy6myU96FGtpMbIkUAjAjje0RI8GVZjqVsRhtiR9il+mna+QcZMs7WWekjn8A1NF8eTDaYM9y+i5ksYbGm16ePP1TCsP6FegZLdNRL35eEB5rTPxsCS1RH8BLTkVfA/HNogPsiod3fv54=
+	t=1754001487; cv=none; b=XCxzVBoJTfut1BHEcnrTn9hGyJeZfSexX3WPiKtwgKNuKIAmSF7oynZgz96hw3FTSwdy/URw2lPsubWLY8saN0LXmL199GTfPrW1X9fw5hcIouxUrAKWqaYwtNDELfZtreKJdanNYaWAfsol/1GdWU900AWwL4P/80fqERIzeAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754001025; c=relaxed/simple;
-	bh=oU1mCOXxJshWIlaaRzKDcwXgHqzYaDNUJ/tvICv2XQ0=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=RnPaR+4HkoMCyxnRAs0cwn3L0fYqb0i0sgcsfFvSb7pfgNhItVcQyBdSzrPVra8zbJcHy95AuAa557IXLeLBXzGM9tpwamr/TyIWz2XVs16x1EO9dU6qcbzXE0pTbSocuqJsWqgXOU7rlDQCcxPORaR8yN/R/HDYP8K+psPYlmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FJby2bNj; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754001487; c=relaxed/simple;
+	bh=FEptdWRmBziSSpmcnfJFcf4njV0PJnGDe1yE4DRmdaQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=H7881FTPvwxPfN/BlEPSYDFkZUcTedJ4f05cRiW4Qn5w/Quii0zh/Ag1xAOhgAGFuzbZtlW4YI4nIZqtR0wK3Umdqj3SSycxBgkExeVfrjBPIy9jg05LJK28p+aG4d7HYsqyqRnoSnMp/r0C5nGpPoEmYdjI24Pj2UPdSodenQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=EUOO6dKJ; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FJby2bNj"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6152faff57eso2164522a12.1
-        for <git@vger.kernel.org>; Thu, 31 Jul 2025 15:30:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754001021; x=1754605821; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jgUZq1o5a0CYNP9yUPB7vbVqu2T95G2kpudtwia8KX4=;
-        b=FJby2bNjUDnE3rQy6d1OKb4pEvx0dYnCbLkcjiBFUfCsyXzTbeeC3YZIUvrnfEq1hO
-         iZRusugwILR0aTAP21oJVq4auV8yoiCigGkzqPAi+s0zOeDdG0+eB874MUBq0lgfA/76
-         ccoaizImXHvGTFJJxF9hElZafRJi/N9ee5Ia1XtoGvGMeQW8Iti/w1TCtc574smm6VjY
-         DQy3seee9PFDZS7dgb9l4uIP6QIljnqdGDag9v00AZ/viF2RqxgpZ4p4MvD6xbW5Y4Mt
-         +mWX+7eH+dLOzcJavy6Fp2IvfW22mjvsZL8fC8loAd4flndenRp5/Ch4vVevnCF2Nz6x
-         jyyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754001021; x=1754605821;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jgUZq1o5a0CYNP9yUPB7vbVqu2T95G2kpudtwia8KX4=;
-        b=WGaIuDjCNC59fBZkwb57E7qFTwZShq78WVeEcGbzn/NhGWFk/xT9ej8Ib7I2BJHf/H
-         bSK6Fn/agqYIL7SA91wDYOWBmaFQ4X0ZqDW9kGPtMKM28AOuLJZtY57YR7OESUtoPiYm
-         WcnS6dtZOXFELc9Zxefn3SjLoNGgauasL59flK/r7YTPx+D7aidOsNzJpX8u3txhS6rF
-         5Oa7ey31lk1YykckUtMkaVPXiV3xxW9KNTvnSKFLYk01pdX3W5jCGOTbnX7ozUpVr9b+
-         i9TJo0TlqVqoK3sdyJmhg5FNpjBIQ5UaK2E4/rvOgpOjTNH8fV/ZL6qSqrpuClhHD/jA
-         FqMA==
-X-Gm-Message-State: AOJu0YzOHJ1UDdLMCkxxECZv8TeEFlLC/dQ9c/9YYBpQ12ilckER6N7y
-	XRrghXT4sCtELO90Z6f+jcHTz9yvq5RvFxwPGaaRUYPjCMYZCLyEInzyOHtDDg9MACv6IwS30j8
-	PPbHQMbPci3tH/JDdnf/Tj38IEOYlMU9Y7w7s
-X-Gm-Gg: ASbGnctYlX+6iAZRFxJp+ENLNFv7lW0A8sPQHUE3HIjv6Uyt9vcMtoUfsCbKbZ9IRUM
-	WBuXWFX8K5k5yrm7bGfQrww+viJlkPd9ftorzCtwvP5RuP4OUM3Qx3nkoYwBz7LJFvuuoyvtGKr
-	Gw9Q3V9lvIvZMfd7Dc6iOo3w0kREGEa/YJKRnAd15ZXWb5TmbVxtAL5QOQLhUY/eUBjzmqZtK6U
-	UNQsZ2V+A==
-X-Google-Smtp-Source: AGHT+IE9ta0WonprcBEyyolLUcrysk6GeXNaApyA5efPavIDX3mDH/8rktPykMxsuDCFw2Ndx9zkXxQl85ensaUtD3Q=
-X-Received: by 2002:a17:907:f509:b0:ae3:7b53:31b9 with SMTP id
- a640c23a62f3a-af8fd9bbc9emr1133794466b.35.1754001021121; Thu, 31 Jul 2025
- 15:30:21 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="EUOO6dKJ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1754001478;
+	bh=FEptdWRmBziSSpmcnfJFcf4njV0PJnGDe1yE4DRmdaQ=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=EUOO6dKJc6wHgo33mWr7w4qHDTKuwLiUO0pI3Vv9gOFaGBrr4ZWPrqtLPzuu5jqbK
+	 7+68DeYWY9LUiuSrJOuOOuFs+gOZMHKRowlfUyy+4S7oEF/S86JrSC8bGzpVTVOEGx
+	 eEuJ5pa+I+KaJ+U73eyd+Gd6sC/JUcEI+x6Gt4iqvE+6V0pQyok3ZTMQg31ns+29Z0
+	 BzX+xDsDw0pm9qTtSEodU/sZXCuKaGY/hA+0zRta0KvZgp58MTsz26qER5cFEaLM0t
+	 3PgDUDyiI5B951Gszh+BTEVyoovLAQmgmbi4kN8CuVbhaVZKu+dYoZwjeYctQVE8iD
+	 ZrzK89K58OzOxCsmzuwxW/SXpmlMK3ctUI4lc+YaM9293uyp0NgtziK9pmys2VjwtJ
+	 Tq9TrON1+CNqTC3w2GOcWZtj1vGYikwV74BQ8wtbGBDq+7EteqdRMfL0yDkURRtCra
+	 0c+m/6O1LEM65uwAK0p3Jscy0dLGuCM88vpo8azmJhXwx+RljIW
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2600:1700:f991:38c0::34])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id EA3AC20007;
+	Thu, 31 Jul 2025 22:37:57 +0000 (UTC)
+Date: Thu, 31 Jul 2025 22:37:54 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/7] xdiff: introduce rust
+Message-ID: <aIvwQtLCSNHo7D_3@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <2a1f4be13dfbdee21811b7a4907f99042c791c2d.1752784344.git.gitgitgadget@gmail.com>
+ <aHlrg7pbFqi2qNWH@fruit.crustytoothpaste.net>
+ <CAH=ZcbBebM6CememqOUFY2YPOXpk_mC=zE0OnLOKDqcJQTdMuA@mail.gmail.com>
+ <aIFauT8M0wRfaZV8@fruit.crustytoothpaste.net>
+ <CAH=ZcbBNg0Ku0VKvF0HUyksrcZdbT=8Xmk6_kQV0178ROATf8Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 1 Aug 2025 00:30:09 +0200
-X-Gm-Features: Ac12FXxEj1dd-8Lbm2aeuYmX_ATw7b-a_rFQ3tI3uel2WR4hml5zeE4Dk7OP8xA
-Message-ID: <CAP8UFD1gp0mT42e+UtbXLy=HCmVThNd_g4WbWBNTShgzCPtqJA@mail.gmail.com>
-Subject: Draft of Git Rev News edition 125
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Bruno Brito <bruno@git-tower.com>, Aditya Garg <gargaditya08@live.com>, 
-	Julian Swagemakers <julian@swagemakers.org>, M Hickford <mirth.hickford@gmail.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, Erik Huelsmann <ehuels@gmail.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Yao Zi <ziyao@disroot.org>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Patrick Steinhardt <ps@pks.im>, 
-	Linus Torvalds <torvalds@linux-foundation.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="2J1j5tuD6lzpt5YL"
+Content-Disposition: inline
+In-Reply-To: <CAH=ZcbBNg0Ku0VKvF0HUyksrcZdbT=8Xmk6_kQV0178ROATf8Q@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Hi everyone,
 
-A draft of a new Git Rev News edition is available here:
+--2J1j5tuD6lzpt5YL
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-125.md
+On 2025-07-28 at 19:11:34, Ezekiel Newren wrote:
+> I like having the Cargo.lock file to figure out why a build worked on
+> one system, but not another. After talking with Elijah I've decided
+> that a good solution would be to add Cargo.lock to .gitignore and
+> change the github workflows to ensure that Cargo.lock is preserved for
+> all builds. We should also add a comment to Cargo.toml stating that
+> any build or test issues should include the Cargo.lock that was
+> generated when asking for help. What does the community think of this
+> solution?
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+That sounds like a good solution.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-  https://github.com/git/git.github.io/issues/786
+--2J1j5tuD6lzpt5YL
+Content-Type: application/pgp-signature; name="signature.asc"
 
-You can also reply to this email.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
 
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaIvwQgAKCRB8DEliiIei
+gfPKAQCFq7ccfeQgPPWhMHZbLkVIZ/CAQS+RBNPWDFhu+JA2dAD9GKegJcUExd9M
+Ai77Rpu5h2T40kqZ+e/2h30D+I5ZGwo=
+=WYFV
+-----END PGP SIGNATURE-----
 
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Kaartic and I plan to publish this edition on Saturday
-August 2nd, 2025.
-
-Thanks,
-Christian.
+--2J1j5tuD6lzpt5YL--
