@@ -1,144 +1,374 @@
 Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0931C286438
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 06:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1B0E567
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 06:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753944002; cv=none; b=NfglH8Pzqi6nHWjU+nzGK1qzT2vLubRYWWYEWgl31B62+ndtwCpXRVBU9gB+NcC2xyrHguduKtDFxZOkeCh5tSkdGoBa3kv4E7tLx5zqK5qMWu/E6YMUpg+FCRt0dH2ta1e3ctlSU4RAkea4s3pOUBfGFs94dAuZUJRvjLQrgU8=
+	t=1753944170; cv=none; b=krWw7wZEFD0deRkO9BdxUDva0mGUmnPQiACCgODYcrc6y2pcYQkuGYGQYSw5r/LuhOMnTRQyPK6ikd1t08qBawa1/Q590yt6tLzWHJ3df9Po5do4qdn+gWQz4xMm1Jq2knvwlIyOS24g116Qd9uzaL3qTOxGJ5XnIoplxwbdxcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753944002; c=relaxed/simple;
-	bh=IiQPvoBsX2segOgXWwZBBv3MwY3CHdA3/GVzp3kBhwQ=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jLKrBlEeV9K5FrH00lGzCWxEEF+AM9vprlphAeN7XPT1aMF+amBnMq3nbCz0WkslcSZNoBWhrH1zSTN7wlV6okOqALFJU05ng+5gT6zB294JtTQE0tZXzVapSBC6YmSbjOMmIA6g04+dNR23h9icuwIHlBmx632R92dHQaOLo6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q2XsDYd5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fsjv39ln; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753944170; c=relaxed/simple;
+	bh=zilOsymQ7b1vQtPl96CJnMPoFBCu6L6fw9ok2E3yKKw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=vAlUM6xTy7Mwewo7n6DtgWPetIhA+ffUNn1WwSrXqcBbBauxM5IiUqegQTFXNzstgRU527ZisnhxqpHrbDI9Ov9G0zii4vwiNpzh+k6nxY0wt456DBL97NB7J5bfoSXk/G4vuhSZgi9+5EaimgUwxm3+ejCXMIKL7+7smN3Ve7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cBRJuM95; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iTGhpZF3; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q2XsDYd5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fsjv39ln"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1026D1D00C0D;
-	Thu, 31 Jul 2025 02:40:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 31 Jul 2025 02:40:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1753943999; x=
-	1754030399; bh=ogxpMhRCiMilZJpEwQ7ruKeLkI3aM3PmkLXHCuGz/L0=; b=Q
-	2XsDYd5OwK5t9Ymp0KcNkEJ8FBYsEWaKouKRf0SmIvzCTnjt/VYb1E0Aq9EwUvhT
-	JgoP0TmpbAzW1fYllCR+k1hR0mctHCXH56c+ekqECd8s8C/H2Li8ooCZVwn6Uxtk
-	3oHmCbDU6n8hU2gSGZGVK9EMvI5uhOHfjMjPBNa+8PfQiaOnIo5vXtAP2Xh6vjqz
-	c1AOlOHV190XXv8CVEDIew/aSuMsFtmpswYKg3c8QH7iACVy3USC8UKny7lG8BQP
-	VCRGzLQiMDEMJvYsHU8kRmlaDOllRoMVkIfIthEddg/jo2E1VQL7tNP5fGbKTjQw
-	+1ZZkBlIr0dZw857AjiJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cBRJuM95";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iTGhpZF3"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7AFEA1D00932;
+	Thu, 31 Jul 2025 02:42:46 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Thu, 31 Jul 2025 02:42:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1753943999; x=1754030399; bh=ogxpMhRCiMilZJpEwQ7ruKeLkI3a
-	M3PmkLXHCuGz/L0=; b=Fsjv39ln1lb/vgG+G4fO2KnFMp9e2dWc2wfWF/lrGjbL
-	pgP/evx92FM9dkN6dPw2zl7n3dodyPsWwCAnSsVaqD5TWcOtzoxwWli8wT5HAqzv
-	6duMdXOLUWnYAgbn+vzJaxFSHzK67IkTYt+9s+XM+2Nc2rbepS2SMx801sGJb56y
-	AQyW1s6OyjjuLtwVRrzQt4mEGroiCtGsPiP5xTcMkeJk12kOHW/a9N+qdzvl5aC8
-	aXEPaK9DL/fqdit3C2Jck1y4Bw1vfrkA85JVdQ0KMnjvsrAi+4BZ8eBbI1HRDOiT
-	mdbewCyTnlyPgTGnKF0zNZOpagrAoFQFV98g5IQ2Aw==
-X-ME-Sender: <xms:vw-LaLHaERcxTlJP7RKKWAsI_I-fBiItvNtY2iD1Nj8DoxXDKaGFOA>
-    <xme:vw-LaIgZiipyL75EfV9OP5-hzbVe7u067t8boXtQpaIBHz-Pq3sLADJetnzWrxdnw
-    MIWWKCdCGyZ18LNxA>
-X-ME-Received: <xmr:vw-LaO9X99BKbjOj7ajvBuvcLPYdsw7NyGYPXDq3vxv9jcfAZmi7_1hZv1iUAp8tUyCRAOyX2iiqfq6X_ggPBP4VjA87nNQC0gBvqZg>
+	:subject:to:to; s=fm3; t=1753944166; x=1754030566; bh=Pg3Ndhe5PG
+	+d3f6wHGfA1L+1x+JgK8OsyAar8dw2Z6Q=; b=cBRJuM95bb45ruy1dTxfl1qOjf
+	miQWfcDRbOBwm8l0kp6QJw45mGhlGj7bpDBkevsvc+q60DOo/6N9MnmL+xKvP7QC
+	aPJsCGTOLUyx4aB3DOm4e/P3UyCHqLKot9uylw8R0/343aHedZONUHaH1kwSdMiQ
+	97U4F8c9QDFIB65DmTYdLs9h0zJN+W4gPMlng7DINu/mRR048RSywipx/uHTS7DH
+	g/WULLsbdbMUT7nBZq2sNJB8gWJ0+zmobfxbMCpFVZiKkoF9Tgl9SH3pI+xHszv/
+	TyO6TeAILPldx/Vd9ZM5JV0bwGblZK9/VhajrZUkALZKJtYaSjGaH8NOfQsQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753944166; x=1754030566; bh=Pg3Ndhe5PG+d3f6wHGfA1L+1x+JgK8OsyAa
+	r8dw2Z6Q=; b=iTGhpZF3S+VMRRFThihCwXuRrwVRO1nNAgeOHApHu8zf+vbAkDY
+	VGXgZW/wLw2MabtXU2EPOfJnYcDHSttsuqB3/3Vi+vFRx/RzDyU+nA8XLGHX53TI
+	X7dL0gtkGHfp8BomFS9DixohBo9+plr7crv2r/qHvLWAJ+C/5xo0I4QgntNMdROx
+	491v9aRa4kSDho5xWihGV7fl1+coOWLc1ndYgfjaQIEGv4yaAY42QlAqMHa25LGc
+	h30X/ex7h087Sow4OmHF1qXmlFfM9Kjcs1U6gLLohPk4MLMhpTy/1DZi76wWSgJR
+	cI8pAbyQrAJo9HaYOWz3AU5a4vw0FslxWzg==
+X-ME-Sender: <xms:ZRCLaD1s-C346KsXcrEkBFO74SEuwmJqoYgxVuDzdZl3t17n6L9KLg>
+    <xme:ZRCLaO-4Xvk4yoPHRHhHDsJQap74dDp6K9P_k9f5f8WSpyYt6TtkXU_Fxtf5QK31j
+    vq1g4QAdjY0Gq241g>
+X-ME-Received: <xmr:ZRCLaDotXBPcMON_gsy-JIPidCrTR8jSVCfW1AjrN1STlZ8hVMgqmOph3MlhXtsNIXtLRyzYZWBFo6Upfn_4glU-U2y7iHDbmncOKrVMdA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddtuddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
-    dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:vw-LaHqoa242_PcSQ6Ba62lugoHtzAz7sxWwh07B6LOIIAXB2UtJFA>
-    <xmx:vw-LaF9DRHdzi11q-yeRYnyHPhcs9ZvzPpwqQific6qLiksXKtLH8Q>
-    <xmx:vw-LaDW8wHVTs2TUv7qGxzoJ0svqkcjiLgSuW3DaRcSD30g153K1iA>
-    <xmx:vw-LaDC41XRMRl13ksjiCaPXj3p6_Ol98kQB6h3Sc_yrE8cV5rpdKg>
-    <xmx:vw-LaNoCozK70rq-RsiaLPgz2pXx75Bs_U6YGwgL5QQVFD5ak3sl6lnS>
-Feedback-ID: if26b431b:Fastmail
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveelgffgkeekhfdtvdelgedtfeeuteehtddvueejueehleduvdevgeelhefhgeefnecu
+    ffhomhgrihhnpehpvghnughinhhgrdhnrhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeel
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
+    hrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvseht
+    thgrhihlohhrrhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgt
+    phhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegrvhgrrhgrsgesgh
+    hmrghilhdrtghomh
+X-ME-Proxy: <xmx:ZRCLaISN2Y3ARBClMnKKEhJyIC3N3PIMtg92HBUJq0tou6qXoJKDgA>
+    <xmx:ZRCLaGOPF9obw95dWvSF6Yn_tynliZkrZHjM-Mk81wQt5W7Oz4ButQ>
+    <xmx:ZRCLaGj7JdmvjA-PlIH37YB_ECVMqvCC1wILBbXGADe4BvuXaB07fA>
+    <xmx:ZRCLaDlitwCEUdk1qNybKeWL7ssBQvN-SOtwKknUfN9GmLEStJr2Eg>
+    <xmx:ZhCLaAWXTuxkeHU8EjIu7DJmSHcJsXxGPjWyShbc8wgVdwXTO5cUqMAH>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 02:39:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH 5/5] diff: simplify parsing of diff.colormovedws
-Date: Wed, 30 Jul 2025 23:39:49 -0700
-Message-ID: <20250731063949.1601669-6-gitster@pobox.com>
-X-Mailer: git-send-email 2.50.1-612-g4756c59422
-In-Reply-To: <20250731063949.1601669-1-gitster@pobox.com>
-References: <20250731063949.1601669-1-gitster@pobox.com>
+ 31 Jul 2025 02:42:44 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id fda440df (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 31 Jul 2025 06:42:42 +0000 (UTC)
+Date: Thu, 31 Jul 2025 08:42:33 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v6 1/4] last-modified: new subcommand to show when files
+ were last modified
+Message-ID: <aIsQWcHf82ipHoWf@pks.im>
+References: <20250716133206.1787549-1-toon@iotcl.com>
+ <20250730175510.987383-2-toon@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250730175510.987383-2-toon@iotcl.com>
 
-The code to parse this configuration variable, whose value is a
-comma separated known tokens like "ignore-space-change" and
-"ignore-all-space", uses string_list_split() to split the value int
-pieces, and then places each piece of string in a strbuf to trim,
-before comparing the result with the list of known tokens.
+On Wed, Jul 30, 2025 at 07:55:07PM +0200, Toon Claes wrote:
+> diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
+> new file mode 100644
+> index 0000000000..89138ebeb7
+> --- /dev/null
+> +++ b/Documentation/git-last-modified.adoc
+> @@ -0,0 +1,49 @@
+> +git-last-modified(1)
+> +====================
+> +
+> +NAME
+> +----
+> +git-last-modified - EXPERIMENTAL: Show when files were last modified
+> +
+> +
+> +SYNOPSIS
+> +--------
+> +[synopsis]
+> +git last-modified [-r] [-t] [<revision-range>] [[--] <path>...]
 
-Thanks to the previous steps, now string_list_split() knows to trim
-the resulting pieces in the string list.  Use it to simplify the
-code.
+I think we typically list long options here, not the short single-letter
+ones.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+> +
+> +DESCRIPTION
+> +-----------
+> +
+> +Shows which commit last modified each of the relevant files and subdirectories.
+> +
+> +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+> +
+> +OPTIONS
+> +-------
+> +
+> +-r::
 
-diff --git a/diff.c b/diff.c
-index a81949a422..70666ad2cd 100644
---- a/diff.c
-+++ b/diff.c
-@@ -327,29 +327,23 @@ static unsigned parse_color_moved_ws(const char *arg)
- 	struct string_list l = STRING_LIST_INIT_DUP;
- 	struct string_list_item *i;
- 
--	string_list_split(&l, arg, ",", -1);
-+	string_list_split_f(&l, arg, ",", -1, STRING_LIST_SPLIT_TRIM);
- 
- 	for_each_string_list_item(i, &l) {
--		struct strbuf sb = STRBUF_INIT;
--		strbuf_addstr(&sb, i->string);
--		strbuf_trim(&sb);
--
--		if (!strcmp(sb.buf, "no"))
-+		if (!strcmp(i->string, "no"))
- 			ret = 0;
--		else if (!strcmp(sb.buf, "ignore-space-change"))
-+		else if (!strcmp(i->string, "ignore-space-change"))
- 			ret |= XDF_IGNORE_WHITESPACE_CHANGE;
--		else if (!strcmp(sb.buf, "ignore-space-at-eol"))
-+		else if (!strcmp(i->string, "ignore-space-at-eol"))
- 			ret |= XDF_IGNORE_WHITESPACE_AT_EOL;
--		else if (!strcmp(sb.buf, "ignore-all-space"))
-+		else if (!strcmp(i->string, "ignore-all-space"))
- 			ret |= XDF_IGNORE_WHITESPACE;
--		else if (!strcmp(sb.buf, "allow-indentation-change"))
-+		else if (!strcmp(i->string, "allow-indentation-change"))
- 			ret |= COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE;
- 		else {
- 			ret |= COLOR_MOVED_WS_ERROR;
--			error(_("unknown color-moved-ws mode '%s', possible values are 'ignore-space-change', 'ignore-space-at-eol', 'ignore-all-space', 'allow-indentation-change'"), sb.buf);
-+			error(_("unknown color-moved-ws mode '%s', possible values are 'ignore-space-change', 'ignore-space-at-eol', 'ignore-all-space', 'allow-indentation-change'"), i->string);
- 		}
--
--		strbuf_release(&sb);
- 	}
- 
- 	if ((ret & COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) &&
--- 
-2.50.1-612-g4756c59422
+-r, --recursive::
 
+> +	Recurse into subtrees.
+> +
+> +-t::
+
+-t, --tree-in-recursive::
+
+> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+> new file mode 100644
+> index 0000000000..e4c73464c7
+> --- /dev/null
+> +++ b/builtin/last-modified.c
+[snip]
+> +static int populate_paths_from_revs(struct last_modified *lm)
+> +{
+> +	int num_interesting = 0;
+> +	struct diff_options diffopt;
+> +
+> +	memcpy(&diffopt, &lm->rev.diffopt, sizeof(diffopt));
+> +	copy_pathspec(&diffopt.pathspec, &lm->rev.diffopt.pathspec);
+> +	/*
+> +	 * Use a callback to populate the paths from revs
+> +	 */
+> +	diffopt.output_format = DIFF_FORMAT_CALLBACK;
+> +	diffopt.format_callback = add_path_from_diff;
+> +	diffopt.format_callback_data = lm;
+
+I feel like this whole block could use a comment that explains what
+we're doing. Why do we copy `diffopt` around? Why is it fine to free
+the struct at the end without unsetting `lm->rev.diffopt`? Couldn't that
+cause a double free?
+
+> +	for (size_t i = 0; i < lm->rev.pending.nr; i++) {
+> +		struct object_array_entry *obj = lm->rev.pending.objects + i;
+> +
+> +		if (obj->item->flags & UNINTERESTING)
+> +			continue;
+> +
+> +		if (num_interesting++)
+> +			return error(_("last-modified can only operate on one tree at a time"));
+> +
+> +		diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
+> +			      &obj->item->oid, "", &diffopt);
+> +		diff_flush(&diffopt);
+> +	}
+> +	diff_free(&diffopt);
+> +
+> +	return 0;
+> +}
+> +
+> +static void last_modified_emit(struct last_modified *lm,
+> +			       const char *path, const struct commit *commit)
+> +
+> +{
+> +	if (commit->object.flags & BOUNDARY)
+> +		putchar('^');
+> +	printf("%s\t", oid_to_hex(&commit->object.oid));
+> +
+> +	if (lm->rev.diffopt.line_termination)
+> +		write_name_quoted(path, stdout, '\n');
+> +	else
+> +		printf("%s%c", path, '\0');
+> +
+> +	fflush(stdout);
+
+Is there a reason why we have to explicitly flush output? This command
+doesn't have any interactivity with the caller.
+
+> +static void last_modified_diff(struct diff_queue_struct *q,
+> +			       struct diff_options *opt UNUSED, void *cbdata)
+> +{
+> +	struct last_modified_callback_data *data = cbdata;
+> +
+> +	for (int i = 0; i < q->nr; i++) {
+> +		struct diff_filepair *p = q->queue[i];
+> +		switch (p->status) {
+> +		case DIFF_STATUS_DELETED:
+> +			/*
+> +			 * There's no point in feeding a deletion, as it could
+> +			 * not have resulted in our current state, which
+> +			 * actually has the file.
+> +			 */
+> +			break;
+> +
+> +		default:
+> +			/*
+> +			 * Otherwise, we care only that we somehow arrived at
+> +			 * a final oid state. Note that this covers some
+> +			 * potentially controversial areas, including:
+> +			 *
+> +			 *  1. A rename or copy will be found, as it is the
+> +			 *     first time the content has arrived at the given
+> +			 *     path.
+
+Makes sense that we don't handle renames (yet). I think I didn't spot
+this in the manual, so maybe this is something we should document there.
+
+> +			 *  2. Even a non-content modification like a mode or
+> +			 *     type change will trigger it.
+
+Seems sensible as a default, as well. And likewise, we can add
+`--ignore-mode-changes` at a later point if we ever have a use case for
+it.
+
+> +			 * We take the inclusive approach for now, and find
+> +			 * anything which impacts the path. Options to tweak
+> +			 * the behavior (e.g., to "--follow" the content across
+> +			 * renames) can come later.
+> +			 */
+> +			mark_path(p->two->path, &p->two->oid, data);
+> +			break;
+> +		}
+> +	}
+> +}
+> +
+> +static int last_modified_run(struct last_modified *lm)
+> +{
+> +	struct last_modified_callback_data data = { .lm = lm };
+> +
+> +	lm->rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+> +	lm->rev.diffopt.format_callback = last_modified_diff;
+> +	lm->rev.diffopt.format_callback_data = &data;
+> +
+> +	prepare_revision_walk(&lm->rev);
+> +
+> +	while (hashmap_get_size(&lm->paths)) {
+> +		data.commit = get_revision(&lm->rev);
+> +		if (!data.commit)
+> +			break;
+
+So in this case we have reached the end of our commit range. I assume we
+simply print the oldest commit of that range in this case?
+
+> +		if (data.commit->object.flags & BOUNDARY) {
+> +			diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
+> +				      &data.commit->object.oid, "",
+> +				      &lm->rev.diffopt);
+> +			diff_flush(&lm->rev.diffopt);
+> +		} else {
+> +			log_tree_commit(&lm->rev, data.commit);
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int last_modified_init(struct last_modified *lm, struct repository *r,
+> +			      const char *prefix, int argc, const char **argv)
+> +{
+> +	hashmap_init(&lm->paths, last_modified_entry_hashcmp, NULL, 0);
+> +
+> +	repo_init_revisions(r, &lm->rev, prefix);
+> +	lm->rev.def = "HEAD";
+> +	lm->rev.combine_merges = 1;
+> +	lm->rev.show_root_diff = 1;
+> +	lm->rev.boundary = 1;
+> +	lm->rev.no_commit_id = 1;
+> +	lm->rev.diff = 1;
+> +	lm->rev.diffopt.flags.recursive = lm->recursive || lm->tree_in_recursive;
+> +	lm->rev.diffopt.flags.tree_in_recursive = lm->tree_in_recursive;
+> +
+> +	if ((argc = setup_revisions(argc, argv, &lm->rev, NULL)) > 1) {
+
+Tiny nit: it's rather unusual in our codebase to assign values in
+conditionals. I personally don't mind this usage at all -- I think it
+can make error handling way less verbose. But I'm not sure whether we
+deem this style acceptable.
+
+        argc = setup_revisions(argc, argv, &lm->rev, NULL)
+        if (argc) {
+            ...
+        }
+
+I've seen this style several times in this patch. I think we should keep
+our typical style for now, but I wouldn't mind if you sent a patch for
+our coding style document so that we can discuss this.
+
+> +		error(_("unknown last-modified argument: %s"), argv[1]);
+> +		return argc;
+> +	}
+> +
+> +	if (populate_paths_from_revs(lm) < 0)
+> +		return error(_("unable to setup last-modified"));
+> +
+> +	return 0;
+> +}
+> +
+> +int cmd_last_modified(int argc, const char **argv, const char *prefix,
+> +		      struct repository *repo)
+> +{
+> +	int ret;
+> +	struct last_modified lm;
+> +
+> +	const char * const last_modified_usage[] = {
+> +		N_("git last-modified [-r] [-t] "
+> +		   "[<revision-range>] [[--] <path>...]"),
+> +		NULL
+> +	};
+> +
+> +	struct option last_modified_options[] = {
+> +		OPT_BOOL('r', "recursive", &lm.recursive,
+> +			 N_("recurse into subtrees")),
+> +		OPT_BOOL('t', "tree-in-recursive", &lm.tree_in_recursive,
+> +			 N_("recurse into subtrees and include the tree entries too")),
+
+Should this maybe be called something like "--recursive-with-trees"?
+"--tree-in-recursive" reads somewhat strange to me.
+
+> +		OPT_END()
+> +	};
+> +
+> +	memset(&lm, 0, sizeof(lm));
+
+You can avoid the `memset()` and directly zero-initialize the struct
+when it's declared. Alternatively, you can move this function call into
+`last_modified_init()` itself, where it would be more reasonable.
+
+> +	argc = parse_options(argc, argv, prefix, last_modified_options,
+> +			     last_modified_usage,
+> +			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
+> +
+> +	repo_config(repo, git_default_config, NULL);
+> +
+> +	if ((ret = last_modified_init(&lm, repo, prefix, argc, argv))) {
+> +		if (ret > 0)
+> +			usage_with_options(last_modified_usage,
+> +					   last_modified_options);
+> +		goto out;
+> +	}
+> +
+> +	if ((ret = last_modified_run(&lm)))
+> +		goto out;
+
+Two more cases where we assign `if ((ret = ...))`.
+
+Patrick
