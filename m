@@ -1,174 +1,148 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7543218ADC
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 20:49:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DC920B22
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 20:58:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753994983; cv=none; b=PEIiI7KChn+SUAdLp9FXhGM8g3d/B5U8mXbNZHDMl73SVZJQ/Ky5VwAc5tMkEIpo51Vxa+g5GVXDlZawlll6Q3HCWvP3sABnUKw0X/ETa7bEuhpKMAGkq3U2VWrOn9uEDM1BTys0Er9hxsDIHaIZv9lTzTy2Q2jJ0sCt/I5oF2M=
+	t=1753995503; cv=none; b=H5Vnx78PwvpvZV+61zUPyuea/Fpad7XpvCXVwtw+aq06HdJIY2z9KvX6lrcAMKcIJVspXad5yE994MmOg/+xi+QyUMBANROpLNbzKCj+mXDZqPLOemRCBbfL7FZB3/809XXHN4XJOpSw1w9Fk+ib3ZB7wRSeJaefOc3eBGYIo7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753994983; c=relaxed/simple;
-	bh=SsTs0mCRh4vtZ3XKq2kPoOmbBTr/PhDKuD4C/cPMwhw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TtiksHr1hdOuJS0xmfrd58F538zOEz1ahjX7tMZ517wBU3tB6T7gqv/j1ixhd9Td61MeVVo5xiCuPpWQUldibdyN9gPUpuIvVp0MzgQj8N+6rk29UDi+R4lY5i2djavD1r75fH2dca8MIkFklagFVuuxAyPxqg7H4bAIVDjGOzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gORAuGLf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CM9bMtsZ; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753995503; c=relaxed/simple;
+	bh=eBziyvspiAg8pcMJMvK8jHe6f9/5mW4wJCjI7hXROts=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lhuOndjVaPap1naKLCtxs0A/f7E1XTVKJ+DxlduHhfUdhfSv8owm7I0iSO92eswV9cMVZbWlKp6J8DIuArDU5ZUEdyesK3GzETz0DtPEZNBsd7FSZxTTw8OWnNQKAOge+24fT+ec2cevK18azfpduWy4oZoYW/LrXIjKb0/sMjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N1NNI8cf; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gORAuGLf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CM9bMtsZ"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id B874BEC1516;
-	Thu, 31 Jul 2025 16:49:39 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 31 Jul 2025 16:49:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753994979; x=1754081379; bh=s9PUfBDyce
-	Dycrq3VaebZVntdeFKjO2AUJDSXfvSkMo=; b=gORAuGLf4JzEVuSnjMZf687xhg
-	Bul2vo99+IQKhW1N3cuIhZiUumTCH39ChoJwX+wODnKS+e8em7QgHxot3r90DKqA
-	m0qXMFd1+VutzY7UOhaiSaH8nXUFszAUKuLrMwX9RKzNirqLUYewbbuTWAODRXSx
-	YgxGFSzm63NuA4drunx4o2Sj10Rvklc1DwOrT7gf4DiW2W+x3wVVc8eaYSvAYAtg
-	GItHdfDgLPb2Mnw6PF8IfecNmOHXCwYZw+2l6lh3NNAgYZ1lWiDhnUfbYSTVxNmf
-	+zcCVj1acafEExB3sAR93MUFrNhYVJ94fcyKstMMDaCOp1cdC5IxSb0Gt4Fg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753994979; x=1754081379; bh=s9PUfBDyceDycrq3VaebZVntdeFKjO2AUJD
-	SXfvSkMo=; b=CM9bMtsZIDad1phfDP1RMJq3MxZ1evOENiyaNqoPdZhpsCzZ69V
-	tvoSFitqKf77jf7xuip6YhM7r9Q5s0Prk6FZlwbp+KAYFmXspItSpaD+Wbp61tnV
-	PdG/NGW1JsOmw5wFMeh0xW3bzvHRrCZZ2MvmNfwjlVzZqImnOGCh37jEgYbWSgI1
-	XgjrB10OYuLA7ua9sFNp+jWojWpXsIkrkYflIdYPxnDeYjOiJsTUL387QD3OMS5L
-	KMeJOvzzVBmWdvm+iIZYiYQ/6N1WKiF1JBrVhtguVUzOKXnr5KT+k0aBarIg4HCe
-	WuXllXdUzRhsNFAESLjIW5pHg/l2hxMSaTg==
-X-ME-Sender: <xms:49aLaNaObM7a62iGBLHVIxamdv3NR-8e73HZIQeO5Um8C0vDIv9QlQ>
-    <xme:49aLaB_xGJm2nHQOqVzNqaGvnJyuDC27VBBkJu4frYZjKTismzhsmgltSDX5QiZwz
-    VUw5dpjw8J4bzWc7w>
-X-ME-Received: <xmr:49aLaGbyg1H0N9d-sloTU0RdscjCvoWd5KoJB4HHpcZJdVxarZ3zmscyhFYVfMyoCltxBxQbnNPJZz4wY0_uGB1xjZTnkPy94rf8t1Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddukeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtoheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhope
-    hoshifrghlugdrsghuugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohepmhgv
-    sehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghugh
-    hssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:49aLaNOtsnKreTSaahzdYANnaDPEa2WgPBwhL3sFyZ1Esl58886UpQ>
-    <xmx:49aLaKD0EOlXojUbvqtafzRp9gXdDa1HACEmOJe-LuWbPzcBJYmUQw>
-    <xmx:49aLaMJDWi8JFGBpQh-sJINucqBdehObBPMtt7bP5Vq-IE0Z0IX_HA>
-    <xmx:49aLaLMgkIPsHztydQyHm8XWrk0-KLC03kiVAQTQVIkBKWltVCFCCw>
-    <xmx:49aLaNHTIsyGBW_KAB-SRAaBuBOn3IEg-euSrvN6HQlgO36T6wiKU7No>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 16:49:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Ayush Chandekar <ayu.chandekar@gmail.com>,  Oswald
- Buddenhagen <oswald.buddenhagen@gmx.de>,  Taylor Blau <me@ttaylorr.com>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 1/3] breaking-changes: deprecate support for
- core.commentString=auto
-In-Reply-To: <a6355451d4b22730ffd20eb5ea5e820582d20b03.1753975294.git.phillip.wood@dunelm.org.uk>
-	(Phillip Wood's message of "Thu, 31 Jul 2025 16:21:53 +0100")
-References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
-	<cover.1753975294.git.phillip.wood@dunelm.org.uk>
-	<a6355451d4b22730ffd20eb5ea5e820582d20b03.1753975294.git.phillip.wood@dunelm.org.uk>
-Date: Thu, 31 Jul 2025 13:49:37 -0700
-Message-ID: <xmqqwm7oozku.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N1NNI8cf"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-32f1aaf0d60so14150341fa.1
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 13:58:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753995500; x=1754600300; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xyy9ucTuk7hYqHndT0P5pMcKYjM/GT5bZkM4lo2nUXE=;
+        b=N1NNI8cfPW1XboQLTc08qhVqbQjczsJV7z2ecPCns7ZeTXz463kxxxrFxsYpwCrwcy
+         fX7DbqKFI5iDKrd3xAepuS6AGAnFq+9oK3YInsFUxPFd99Q+CEcw6buzLk24+pQ5lNjp
+         rxmb3l1d4WkAAbo4cjLTli5ELxUhICC6aLews3nDu+CBIBzrCiG/kJ5FCnYrHC2VVNfd
+         YiI5QOghDhSDB33mQlJCnBJSkJTSbJbbezzaLF/10fEnpS3QoFMba6hJuCzSgbC7skCl
+         dYqZ9NweOslCq93EDBjWbB4kFSPhm0irR0I2iY83lHxOYf/eB+yl6AQ7E/0LEmEwyHpy
+         zP3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753995500; x=1754600300;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xyy9ucTuk7hYqHndT0P5pMcKYjM/GT5bZkM4lo2nUXE=;
+        b=F/ng7hDZlllW0YLqojgm6QYL3xyzrLdHD38Ve/ZeeUjAxKmJcKd2LPXY0d144JAHHR
+         bZPKFY9EajAHahB1TbH4u1VbD+p+ppoXCuhcoopQS5hPVzIuXCscaAtsFLyi364/CL0r
+         UnffHygxNBkt7GnlfO0RdcejTXxiZALTOJEbHf/NrW+TiYaBXQS1F6dcmd0QxZxDQdji
+         8MaI8kWvCLQPLqj/mvdKsdNpGsBkZ9Rgj8H32ronE0niwskrSIld9DYnwnOLvqRTSiDe
+         EM9MC5NWml3U7fnKyNxdubidqLVEQhLwhGjkVCsYtxPWZehWXXASYSKWrZf1weE5/fik
+         zBRw==
+X-Forwarded-Encrypted: i=1; AJvYcCWddqZ9CR9V/JV5nY+NZcaP/MQUbj0coMpBbJrRQ43oPIAnPlz4UcDQlBcGN49g9xkQ0es=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywl+fXZtsf8xV6sPF9CfXx7c8VTTJrdN3piK/fkSWaQ6UgpzmKT
+	Lr9aawbckatlMSljcSGsU/VYthYlbhMLK7yWxf0offQqZQw/hxNNdLRelMOu1LqNF2iYpW5d0Os
+	qla8hBHxSVtmEvZCHJk756MMMpP/UQgf72DT5
+X-Gm-Gg: ASbGnctC0HJJovfsquYwhiWoJmZGOEHkr+dbUhFIQdwCIRJYHGwZ+4kDh0XZK2YmOf0
+	fGuZNKkCJg5BcR0FXxO60uI0hw5kgnCxJPSnojLadeYb76LN06KiEAmzVb/IQpRDw8NoCULNBLN
+	I5FMu21rL7AH+weiqeVeY67BDN0xYzuP6gr7w9BaMPiqRjhn/ABbfO0lV3z6DzhbtNsihYgyKq/
+	m3mMqlg
+X-Google-Smtp-Source: AGHT+IFamtnMKl3kymSUSNSwKLnZjl5TAS6DLDFa5PorwmLOivLXTWm24Vkbte3m+AvxzMgpGPIlkbFxorPIPaScAyo=
+X-Received: by 2002:a05:651c:4101:b0:32b:755e:6cc7 with SMTP id
+ 38308e7fff4ca-33224bd2283mr24441911fa.28.1753995499640; Thu, 31 Jul 2025
+ 13:58:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <6df9f50a8f4ca29b2c3ba1e39982b6d516146bb3.1752784344.git.gitgitgadget@gmail.com>
+ <91f6352f-abc4-4e99-938b-6a56aba2faed@gmail.com> <CAH=ZcbCnEpBokM9rxmmkeM9GT948n7+RipXODHLfPssuwJuVCw@mail.gmail.com>
+ <a765cde9-0fad-414a-996f-2ec162d1e4f3@gmail.com> <CAH=ZcbALsQqTrvNJ4ZKmVWc6PHtTA+8k8p6_D=x=BfMXxnayfA@mail.gmail.com>
+ <ad453eee-23cd-42fe-97bd-1ff0fc2f3edf@gmail.com>
+In-Reply-To: <ad453eee-23cd-42fe-97bd-1ff0fc2f3edf@gmail.com>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Thu, 31 Jul 2025 14:58:08 -0600
+X-Gm-Features: Ac12FXyaHfqMyI6UEV_LbHUbRI3ZKm8Qw_LQejlVoy3RyiXp74XouLkkFJXBk_Y
+Message-ID: <CAH=ZcbBa=1iUTcxaBOvG_kcuWsF_nJQiWGkL+BUzsNYLpzFG5w@mail.gmail.com>
+Subject: Re: [PATCH 4/7] xdiff: make fields of xrecord_t Rust friendly
+To: phillip.wood@dunelm.org.uk
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Thu, Jul 31, 2025 at 8:20=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+>
+> On 28/07/2025 21:14, Ezekiel Newren wrote:
+> > On Mon, Jul 28, 2025 at 1:52=E2=80=AFPM Phillip Wood <phillip.wood123@g=
+mail.com> wrote:
+> >
+> > Ah, I misunderstood the scope of your question. I could not fit an
+> > example of why this design pattern made sense into this patch series,
+> > so I'll explain with an example here:
+> >
+> > If C defines a struct like below then it's obvious how to translate
+> > that into rust for ffi purposes. It also makes it clear that this C
+> > struct is expressly for the purpose of C <-> Rust interoperability.
+> > struct some_struct {
+> >      u8* ptr;
+> >      usize length;
+> >      u64 counter;
+> > };
+> >
+> > This is how that C struct needs to be defined in Rust so that it can
+> > interoperate with C, and making C use the Rust types reduces the
+> > chance of copy paste, and primitive type definition mismatch errors.
+> > #[repr(C)]
+> > pub struct some_struct {
+> >      ptr: *mut u8,
+> >      length: usize,
+> >      counter: u64,
+> > };
+>
+> How is the pointer, length pair used in rust? Normally one would use a
+> slice so do we have to construct a slice every time we want to use the
+> data in this struct, or do we copy the data in this struct into to a an
+> idiomatic struct with a slice member? If we end up copying there doesn't
+> seem much point in changing all the types in the C struct as we can
+> define a rust struct using *c_char, c_long etc. to interface with the C
+> code and covert them to an appropriate rust type when we copy the data
+> to the idiomatic version that is then used by the rust of the rust code.
+> I can see the value of the typedefs for documenting C<->rust interop if
+> the same struct is used by both but if we end up copying data on the
+> rust side I'm not so sure.
+>
+> Thanks
+>
+> Phillip
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> When "core.commentString" is set to "auto" then "git commit" will
-> automatically select the comment character ensuring that it is not the
-> first character on any of the lines in the commit message. This was
-> introduced by commit 84c9dc2c5a2 (commit: allow core.commentChar=auto
-> for character auto selection, 2014-05-17) The motivation seems to be
+Passing pointer + length from c to Rust does not incur a memory copy
+overhead. Take a look at rust/xdiff/src/lib.rs wich has the following
+rust function defined:
 
-"5-17) The" -> "5-17). The".
+#[no_mangle]
+unsafe extern "C" fn xxh3_64(ptr: *const u8, size: usize) -> u64 {
+    let slice =3D std::slice::from_raw_parts(ptr, size);
+    xxhash_rust::xxh3::xxh3_64(slice)
+}
 
-> to avoid commenting out lines from the existing message when amending
-> a commit that was created with a message from a file.
->
-> Unfortunately this feature does not work with:
->
->  * commit message templates that contain comments.
->
->  * prepare-commit-msg hooks that introduce comments.
->
->  * "git commit --cleanup=strip --edit -F <file>" which means that it
->    is incompatible with
->
->    - the "fixup" and "squash" commands of "git rebase -i" as the
->      comments added by those commands are then treated as part of
->      the commit message.
->
->    - the conflict comments added to the commit message by "git
->      cherry-pick", "git rebase" etc. as these comments are then
->      treated as part of the commit message.
->
-> It is also ignored by "git notes" when amending a note.
->
-> The issues with comments coming from a template, hook or file are a
-> consequence of the design of this feature and are therefore hard to
-> fix.
->
-> As the costs of this feature outweigh the benefits deprecate it and
+Creating a slice tells the compiler what assumptions it can make about
+that memory. On the C side in xdiff/xprepare.c:
 
-"the benefits deprecate" -> "the benefits, deprecate".
+extern u64 xxh3_64(u8 const* ptr, usize size);
 
-> remove it in Git 3.0. If someone comes up with some patches that fix
-> all the issues in a maintainable way then I'd be happy to see this
-> change reverted.
->
-> The next commits will add a warning and some advice for users on how
-> they can update their config settings.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  +
-> -If set to "auto", `git-commit` would select a character that is not
-> +ifndef::with-breaking-changes[]
-> +If set to "auto", `git-commit` will select a character that is not
->  the beginning character of any line in existing commit messages.
-> -+
-> +Support for this value is deprecated and will be removed in Git 3.0
-> +due to the following limitations:
-> ++
-> +--
-> +* It is incompatible with adding comments in a commit message
-> +  template. This includes the conflicts comments added to
-> +  the commit message by `cherry-pick`, `merge`, `rebase` and
-> +  `revert`.
-> +* It is incompatible with adding comments to the commit message
-> +  in the `prepare-commit-msg` hook.
-> +* It is incompatible with the `fixup` and `squash` commands when
-> +  rebasing,
-> +* It is not respected by `git notes`
-> +--
-> ++
-> +endif::with-breaking-changes[]
+and then it's called like this in that same file:
 
-The above is shown to everybody before the 3.0 happens (and if you
-opt into 3.0 early, you will stop seeing it earlier than others).
+rec->ha =3D xxh3_64(rec->ptr, rec->size);
 
-The rest of the patch looks good to me.
+I really wanted to show my ivec type that made passing an
+interoperable vector type between C and Rust easy and fast, but this
+patch series is already getting very long.
