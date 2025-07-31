@@ -1,107 +1,146 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDE61F8690
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 09:36:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E0E18D643
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 10:42:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753954601; cv=none; b=XqbavHrnx4FMHkjhNKfytBRubazI+dNNcr2VGwquhATZDdLLYtqkep7PWHj5JzRkdInqjUKXHphA2dMlRsYKvDZo4vl6v6VASumcy0g3LTk7oJOvJbW8qkTbTFNy/8jO6AN4fJd+yDA3uimD9WGdluMv58SyNfFvWXROOzVTD8A=
+	t=1753958556; cv=none; b=YQ7GAM6bUKPusfcF1TgnxLXfRNDRtR2Et8vA/u39McjwG5tkCrBEA1lc88NBMv4JdowY663/wCus5yXbSV0CqfiITipAW/il34q4OLK22f6mU36ZdLFn4hNLmDKvXU+A52CpZviYnb1nZlJieJtvaUbSdAE3yajbIzoOEiJqZUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753954601; c=relaxed/simple;
-	bh=HLOamjvcfoZ5QM+Zl0hmmAja8TErcad2g3QWMWMNwrU=;
-	h=Content-Disposition:Content-Type:MIME-Version:Date:From:To:
-	 Subject:Message-Id; b=OQVCuzTXZij1I70A5Ek5Aqoy0VxcBnq3iWIEmzFpOewkFORu+gFR2WXCYlWsjXGjUVYYlQVOBCsUEEAwOusmgo2K7Vwj3unDb6pG5ckuZ63F65nPUQyNxZXb4OzT5/vDhT1ceVvQawp4KHjbKMDwnKf63SJYAgMLsroJ9dFs/yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VVwLhL+E; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753958556; c=relaxed/simple;
+	bh=ZWL3UDLwVTrekTCyZPSMgemS8BMCkBWGhzuRAQmOXXo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KyHzinpwwIxc3krB4lqTIU8A74hLMjwMtArMeH3OYRT1m9lU8cUafCitE6jpIldHq8z9+Iu2LUYD5HYo6A9UN1PETU4+O/K0Z/SmxnEROCanER4CY+nARrTTCfDerd2iXquwJHUza+RrJ6mMYwcuCzEYCuhxOIxz70/pt7ANAbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KPy5qVF0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pp3jGQzW; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VVwLhL+E"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3b783ea502eso445857f8f.1
-        for <git@vger.kernel.org>; Thu, 31 Jul 2025 02:36:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753954595; x=1754559395; darn=vger.kernel.org;
-        h=message-id:subject:to:from:date:mime-version
-         :content-transfer-encoding:content-disposition:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=HLOamjvcfoZ5QM+Zl0hmmAja8TErcad2g3QWMWMNwrU=;
-        b=VVwLhL+Eq2hZrNLUcepfFOHaIfUlu8+91Fxegzj3eXhQhspYbNJDCUtOvhQlnIctkL
-         mtI2xWWgVKrEq32m/S681v8aj5lwVIXS+hXQNteGE8w6VZNxTpwFo+0vDJqiiC+Xu/Fr
-         PAzTe1pSpGWKMjHR8OkikwZl3kjHX1ABCh8bNRGUUwrU+sMq4DwUgOHhsDD43vnC2JWd
-         0nDZlJ1jjD9NTR4QlJsbzloPndhw3a8kzdOZYyF8AkrRN2WW4X2GC3o+42G1leXTstCY
-         +FTCMg4Dx/oVR9GKtH6ju2SMj5Z9rjv09H8IO2QlJizqbJQzFvA8NOxa+UxIfdYtUBge
-         x8nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753954595; x=1754559395;
-        h=message-id:subject:to:from:date:mime-version
-         :content-transfer-encoding:content-disposition:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HLOamjvcfoZ5QM+Zl0hmmAja8TErcad2g3QWMWMNwrU=;
-        b=AlQ3ajKa9GYaKvTSYyHTAXOZ8qnBwbmucAZSnZNRqcfwoDQDNvRUOVEnepCY1/czYn
-         ZmGTdJeDU5xoJ/FqA5uhhJIIeLlY1/pdhT+O+FEAuU3LwVom27t4Jt2AlhubG4rRXs46
-         hj2sHH0C9iUWi3mRnz3AYUtoY4Cswlr8lPaEdLhm6YotO3ZlTEFdlUGwt/TJT6/kOrgc
-         n7h2x4s4U8T2OawqUlpWryzod+6sc0Fo4AFGCYZedsOePl1U3dThh+6S0b70BDc2n6YR
-         tVmxWZ/u9KI22k3bcQw2MwJAa4apQ4/zCHdVau4OZ4dmF1Zq9o7NlKCT+GqIA0RY8PWb
-         e5UA==
-X-Gm-Message-State: AOJu0Yw5zmFuzV6FYccvrEkNR/YXyf6pyZbQt+LTZGFfBkTPfz9+SCaP
-	GFoskj9IUkiMGJpnrQCYOj5UuIM9zKTq/KhYlOCo7WEYBB+NITDArLmeUvx8+g==
-X-Gm-Gg: ASbGncs8yWgF7IsDIv5q/m3vsN4CScPVRdTdFsvUt9RfZS0NsndcyDXrkRftpxGuARA
-	aU8zyGClRhmfBC3x204VAuQGSeuIzaBqp2UeG5KmwoOtoqfi8yO+jLvrvYL1GpRZFbksdj1UbTv
-	B98EiX5xcL0h+8wxFHKLbx2aCz1HarIR6KSRazhOreZq5YQG/fl5gMO+/oNYJl5xTUv+x5Qxd12
-	mfRMOtKesokmKu8ZtjDjSllAtgWoonb1SboSoB9+wyA7GhVzO2BNqdcMY6Ifw2q+taSQ6YYOkar
-	xLGBb9f0FaT64D3TRE6ici8gsDVqQcRJHg/fGiXRd6atUZUtHCso/H/dHSXp9MK6cVBLwO2uu9l
-	9pA6zujEdKOxqfIuJqQR42cT5ss6ylaGcPHKRD6dg2CotH8e2V+jNmhXsBLQxiRk3ka7gWsXBW+
-	o=
-X-Google-Smtp-Source: AGHT+IFLK4c+ONXUXVLvc9nBT0YCLP3XXQFdmYXL5mlid3VhH0i9lfxXpx7X6AEx5OWP4zaoOgriWA==
-X-Received: by 2002:adf:a11e:0:b0:3b7:9d87:9808 with SMTP id ffacd0b85a97d-3b79d879e93mr867685f8f.15.1753954594618;
-        Thu, 31 Jul 2025 02:36:34 -0700 (PDT)
-Received: from localhost (92-184-105-156.mobile.fr.orangecustomers.net. [92.184.105.156])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4589ee4f16fsm19527565e9.19.2025.07.31.02.36.33
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Jul 2025 02:36:34 -0700 (PDT)
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KPy5qVF0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pp3jGQzW"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 066EA7A0B36;
+	Thu, 31 Jul 2025 06:42:33 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Thu, 31 Jul 2025 06:42:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1753958552;
+	 x=1754044952; bh=3Wu0/mq142FB85kX/mhtZu4hRDo6HXWFbbfMZsC3Yes=; b=
+	KPy5qVF0TTGd1Hp92pYnphwWC8oL8PZA/9bkJkH+TrHf58pm/xY+b1B/an2BW+/1
+	MNeU3XnWG0YpTpbtG2jDP8FptGPfneaQ/T4XkgCNiszUC3DIi00XJB+AZgZ4+mdg
+	GTlC0wRfDsmW0YIChtRV6KZSc8mZI1VVqpJDb1S+goOz2STw87VyEGb2evrTnodH
+	8B2G7Glo7t0SlJa2Q4mANjINL3oHu11jhoQV1gpPy5UPe0JTBvJmOvv+MgsHVaW9
+	QDWLt2uL2pCMnXBE4jgRdacxQ6B8FlhGgtdo67eAcHRbtNUCdRrpN0Vjj8rZ/mFg
+	EwbwFvsncKfnVAk+9fLQKg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753958552; x=
+	1754044952; bh=3Wu0/mq142FB85kX/mhtZu4hRDo6HXWFbbfMZsC3Yes=; b=P
+	p3jGQzWTXNFtGyOHKFGll8gle6yHTk/Kxjx/ZTAuC6iPOWsuJcXUSfVNHtObqGPb
+	57z/E+Cblyaxk6VhwmtgxJ//9Glqr+XJ+iwnNf8AenNIusXqZIrun1lHb9ahJ44X
+	mFnokMEyaV1LWSAt2mQ90in9QHu/5y0eBVtYfZRsNCa7LIxv9tn7HZfSLKViHbFv
+	hAyOa7h7R9jCNeJRrEOVi64gT1aPrmvFB4x+iQ75t6Gs2yfNttzMNoga5Q6aze+o
+	o61qsAfLCSiJsxRAPzk00fDHZHPUVTRoLQZ2wY4M2WNUuxy/UE1Zl40px8Mj5FJA
+	yGLmGYa0PuBaQptai2zKw==
+X-ME-Sender: <xms:mEiLaNENc6OzookZc8igbZ0BEzS4NwKTAdLA7hmgqRHgQ8xYLmXMuQ>
+    <xme:mEiLaN06JZRSp50rwTmeLujdqoxQh2yK3yhAEci9J_tiAUXT_xj-J7FuwElM9gGQY
+    hBO3Vxa5piVyltVOw>
+X-ME-Received: <xmr:mEiLaFnIGfbUDqyF7jd4XxHAUyxQZhCFXJYzrso0iZ_hXNR6evUMbLhV7BWj0hIjqBDLC2iE8-GyDdMbGylgjK9_QRn-DE-8FUFIaCi46A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddtiedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjheitheskh
+    gusghgrdhorhhgpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgt
+    phhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtph
+    htthhopehmlhgvvhgvuggrhhhlsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:mEiLaN8AHAiDGHGrqpsm0bI3Pp1_Tcwe02lolMWQyWlEzIIHDK_QYQ>
+    <xmx:mEiLaKoSRdDdS3S7o6QnVlFUzVn2X5cvmsdiLqGMxL28yLhNdGntsQ>
+    <xmx:mEiLaGn2HrPByc2puV0PDxPfPlhBACEVJwDWGTxxxzC4btPwuwzz2w>
+    <xmx:mEiLaBiCzkN04QxLw-XA7e2P7EJfkYa09UiYezLUwy_VKQrZZSfAmQ>
+    <xmx:mEiLaLLHfNYAj2Om_QL7pD18WBqF82W9zbaGedu3LFvlwF3pPcCw5yaw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 31 Jul 2025 06:42:31 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3116fe20 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 31 Jul 2025 10:42:29 +0000 (UTC)
+Date: Thu, 31 Jul 2025 12:42:26 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 4/5] git-gui: honor TCLTK_PATH in git-gui--askpass
+Message-ID: <aItIkhAPMuq6tlNS@pks.im>
+References: <20250730164052.15371-1-carenas@gmail.com>
+ <20250730164052.15371-5-carenas@gmail.com>
+ <cb63b63b-4a74-4649-bebb-002d1e6e66f7@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 31 Jul 2025 11:36:28 +0200
-From: Victor Duprez <duprezvictor4@gmail.com>
-To: git@vger.kernel.org
-Subject: [RFC v2] git-secure: extend interactive authentication to more Git operations
-X-Mailer: smtp-cli 3.10, see http://smtp-cli.logix.cz
-Message-Id: <1753954588-934281@smtp-cli>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cb63b63b-4a74-4649-bebb-002d1e6e66f7@kdbg.org>
 
-Subject: [RFC v2] git-secure: extend interactive authentication to more Git=
- operations
-To: git@vger.kernel.org
-From: Victor Duprez <duprezvictor4@gmail.com>
+On Wed, Jul 30, 2025 at 09:02:50PM +0200, Johannes Sixt wrote:
+> Am 30.07.25 um 18:40 schrieb Carlo Marcelo Arenas Belón:
+> > diff --git a/meson.build b/meson.build
+> > index 1cedc82..320ba09 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -38,14 +38,6 @@ version_file = custom_target(
+> >    build_always_stale: true,
+> >  )
+> >  
+> > -configure_file(
+> > -  input: 'git-gui--askpass',
+> > -  output: 'git-gui--askpass',
+> > -  copy: true,
+> > -  install: true,
+> > -  install_dir: get_option('libexecdir') / 'git-core',
+> > -)
+> > -
+> >  gitgui_main = 'git-gui'
+> >  gitgui_main_install_dir = get_option('libexecdir') / 'git-core'
+> >  
+> > @@ -61,6 +53,20 @@ if target_machine.system() == 'windows'
+> >    )
+> >  endif
+> >  
+> > +custom_target(
+> > +  output: 'git-gui--askpass',
+> > +  input: 'git-gui--askpass.sh',
+> > +  command: [
+> > +    shell,
+> > +    meson.current_source_dir() / 'generate-script.sh',
+> > +    '@OUTPUT@',
+> > +    '@INPUT@',
+> > +    meson.current_build_dir() / 'GIT-GUI-BUILD-OPTIONS',
+> > +  ],
+> > +  install: true,
+> > +  install_dir: get_option('libexecdir') / 'git-core',
+> > +)
+> > +
+> >  custom_target(
+> >    input: 'git-gui.sh',
+> >    output: gitgui_main,
+> 
+> I can't comment on the meson part at all.
 
-Hello Git community,
+The Meson part looks reasonable to me.
 
-Following up on my initial RFC [1], I would like to submit a v2 of the git-=
-secure concept =E2=80=94 a secure wrapper for sensitive Git operations.
-
-=F0=9F=86=95 What=E2=80=99s changed:
-- Support for more operations: now also covers pull, fetch, and submodule u=
-pdates.
-- Verifies token validity before proceeding.
-- Shows explicit error messages on authentication failure.
-- English & French READMEs added, with usage examples.
-- Working script and repo here: https://github.com/VictorNafs/git-secure-hub
-
-=F0=9F=92=AC I would greatly appreciate feedback on:
-- Making this concept native (via optional plumbing commands or flags),
-- Security model consistency with Git=E2=80=99s philosophy,
-- Integration possibilities or risks.
-
-Thanks again for your attention and guidance.
-
-Best regards,=20=20
-Victor Duprez
-
-[1] https://lore.kernel.org/git/1753544769-115114@smtp-cli
-
+Patrick
