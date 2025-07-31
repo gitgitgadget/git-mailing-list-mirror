@@ -1,170 +1,223 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03978285C98
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 06:43:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB0C14885D
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 07:21:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753944201; cv=none; b=l6A41dmy8jWjwufwS1g+bgFi/t5BihYs9zZtGwiMXYmfDT+huQtL0fs1qsKFDCxs8xhixcBaK3q7YRTcVBcj8aleZ1vIcbutSuPDn9L6iWT0fQKQwVZ10bSjsQLzbAewjvu64iGM3ChDhqAgxQ4iBLYcJIHVQnf70BDU8aywk/k=
+	t=1753946471; cv=none; b=CtAkv9eAHJ8vs7g57/2krpe2lH/vdyZuX9nrczz1O1C5KQDlF1RVXSzfgBz5z+hoxUNZhsVhKKDy1zS/y0IUIgQxZ2+TstIEKlpNOrtyJD0VNETIB3hvTIoI+LXwywkqkBIWr+jseatkk0nSnh1UDmEEK55LAQ/I1n8e5lUe2bE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753944201; c=relaxed/simple;
-	bh=AuQTl0zxlgmDgdjvyO60mY4GxMjiyAfubsiimSjLtQ4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mGy4IkEiuJQKxfJFUYRbehccjTXto/guIlAhXlfvy/XhcQU8zQeOf+CGh5bOBSMdk61PV18OAiY1iafshjW6wJN0NksJIsSCN3NrDJ8/1C2kxGuFXL6MNSDSeNfg16v3cTIc7lxgJQODdp+HuFpcrBN5YDwRxc3/jpfE0cYsK1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Xb4RJeBC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H9+Tonn1; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1753946471; c=relaxed/simple;
+	bh=lQvKYaQMpJjgvu0+Bz5J4g2Hsd97Pj4O3Z5pctIFbTU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZDuVSTjb9iK1a19RnvZKaw5MCzuCmj872XTR0vW7qnnwfdI2dvI5c3z/GdZjpHBVE5UhpMEXPGRH9Weaw7eTFYDGe1BRu5WtvRniXU+4Ur1aEDRkCuGcza6HTS7TVbjbh4IiXcOwQIEfS2SRf2KO30BZdkBNG/kN7usI1HTnjnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QKOmjYiZ; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Xb4RJeBC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H9+Tonn1"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1C00A1D0086D;
-	Thu, 31 Jul 2025 02:43:15 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Thu, 31 Jul 2025 02:43:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1753944194; x=1754030594; bh=KD/zMWkrj0
-	eIPosXqm9HLhfRM2ytdmpwRus0ITVn438=; b=Xb4RJeBCPZ8xHhqfQHytxBfSms
-	YmWqjfJjzvnuIsoLXMOUCUBn2cUBq8pwVvj7Dqcfz1tmezyi3JLaUSpUE0X/Yp3j
-	teC/E6WKI5Qp9dG+CuYeUqKtZs+yKjvXxF8ax57T8hcXm1Yqx8otY56TwtBHBRF3
-	N8raF6rfLYvbkfTrONadsgmp7Q14oWlDGJXoLckJRieHHuDwb9vKA1gS2Z9rBYIR
-	XVEq11KJwVo6sZPf2lw2a9xPrxZsb8EXviBVEUgpkZ3MrYuEslMzIctVkaZNHDJR
-	RQZO2aC6D81R59ZnbdMci7ax5L/ccvXm3TC3b6pckABEWx/5Me3K9X5CKcSg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753944194; x=1754030594; bh=KD/zMWkrj0eIPosXqm9HLhfRM2ytdmpwRus
-	0ITVn438=; b=H9+Tonn1QlUn+GjtjjacVHA4VU7UY9tN2YRkNbHiSV2uNlM4CP1
-	IbYuWASJ8X1gb738RhK14Dcqsk189L7jXA9/7sk2YBz5rQSu41mwY236Nm5hEhoQ
-	5A6CWfrkEA6uiakqtj4GlTiqytCwRWsJ62CBUCj3Ign5t2MSF5NaqhW5nW7uApM6
-	FHVm3udZ2hwKyVPm5wcfaO63EThSAB8G2Z8YpelyUFVogR1RWIKjkK0Pd0iwdoRT
-	OLHdVYyBh493batl8wXsig2z6/dN0tiUm59rXy8uqBDZSm1aUFmgnfa4aaENvpMM
-	0pnv/koS4JEkaFWOidNuhAq+EjzLkC6OJ9Q==
-X-ME-Sender: <xms:ghCLaGCALFrKPts4w9GrixoAyFTGZk33uC2HR_KuUep0vIxACqg9CQ>
-    <xme:ghCLaOHEDOSUn2I3z7RXCq-ldJSu39lKiBUsmzVc_3rxJd6iAGjjLrGeWf9sV82L3
-    9GfLAdyGHFDr6mh9Q>
-X-ME-Received: <xmr:ghCLaABobb7QvHDuVps1F9Ne3dc8U4bc2jjcIdtN1eaE34mBPibHM4pIlWzgO_f5Bw6LHz3vSfLXo2aH_d7Wrz3iz0Vfds-rF8kpLCIz-Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddtuddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
-    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ghCLaGUcuoeINA_1Z7Vai0CtQQ7zNgerOwEibfBPuKjBlCMTIXgUUw>
-    <xmx:ghCLaMo0KhXZFNM8IqeojWO0foadbz7oOhMquf3DDj50Yy2GBbe4yQ>
-    <xmx:ghCLaKRReDjUjg5L4RiCbT9aVQ68NWNhynPtQgJnNT53L2yrjgkOXA>
-    <xmx:ghCLaO0VLS79PNjyuKxITh71qSlxOSmjpXIFgUOryotjywa_x4O2-g>
-    <xmx:ghCLaB0sF3Va9h5mKbt039-8yvLPsSB9e_pUQXS-wnvxEIh9IPkYwFyA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 02:43:13 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ddb8ef5f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 31 Jul 2025 06:43:12 +0000 (UTC)
-Date: Thu, 31 Jul 2025 08:43:09 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v6 4/4] last-modified: use Bloom filters when available
-Message-ID: <aIsQfZyMq0ltbMtz@pks.im>
-References: <20250716133206.1787549-1-toon@iotcl.com>
- <20250730175510.987383-5-toon@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QKOmjYiZ"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-605b9488c28so114130a12.2
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 00:21:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753946468; x=1754551268; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/7j4CDWOqFwnJmDfdQa1Gf+iDkR+xmBHjFklZPzmyLk=;
+        b=QKOmjYiZwFo9x9StVFKy3abjKO1YX97a/h7x2vPn9kEfXPSqzXQRiUI/K1TuHXVIWX
+         OWdbBjGn00pNdg7W80ka4PccmkEBO4zxwWuvVcHtvg7ZX9yRnd+f37UOSn06fcQr7Pbu
+         aNgj2f5iP3CtmEJwqIZEFfKBfSFUuCQwaLgauQBPKT06iLO7nnb57ztoKZSIPkUJoNWh
+         16ZXuAKLNbWDKtV/G3AxmjqY14q1VoXs4HkJJaTKx6WlqnXI6dF81jNALCEjbcdRPJDT
+         7YUSCXSp2GtXFVU7LmnjHhSzjFiTALKT02y8p1b9r2YXg4FT2IJHyDgbRPyzT5QT2Ye+
+         3Lfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753946468; x=1754551268;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/7j4CDWOqFwnJmDfdQa1Gf+iDkR+xmBHjFklZPzmyLk=;
+        b=iHm1SROSF2Vbp8W4l8NyPXdSb5M7bvpgB7FY+xmqbJQKqLStikRxe9H7PJbKNvAWup
+         +5Vd9yHECyONrRnvJx+EoAbmX/P6zrzW3caSQSryfMmmGYyw7EOICLWOx/m+waTal+wX
+         gpecVXUZ0QZKHhILj89m4KBnCQoH4qsttSGFxzpreokCiCVSopRy5Y9z+DIxmkmgMi7D
+         KY2WwmXqmqtmVYPumnIGp4lp9k4ckCJMNzirve+mG9sg6ADLaicnq8pUnYmsaXJm7W+x
+         mbwb9vfISHGWaWY7Fg374S7VxNhywBaLk7nmLLHqJ1Nb9hYbGh8/0Vr11VKCZD1ev90c
+         cKCQ==
+X-Gm-Message-State: AOJu0YwN0BEBP8uSRy0aM7sqdoHxtnKLlmlFd3I9GHpro1+l/MT2VKaB
+	5pb4mk9CGO+g+CfV3AGQL6jl0GlfFGL7nWsxLHHw/h1Uu2Y+sv140eUAokbt5sitSW/lEm1tOYO
+	qIzkCdDWmJSJlVk9pzGdr2CzgJfIz92ZChg==
+X-Gm-Gg: ASbGncusyxBnyRRsayWG90p/5u0HcUJcZujbdjggZtD91ud6+2Vu8Gikh8xskzISmz9
+	ZKWcki0f5F0Pz/PQn8Gaf1vqXUGwpOtGnY+RVskKkhOkcx6+dMjalCfl+MafImP2VtQexbegyyB
+	XpD8nHUH5Leb0gHphkb25UTj9xb1STZ6zFyIAHVRXgWAAXRHjYisvkC+YdE0mx16HMYpI2lotxJ
+	p1Mk605ZA==
+X-Google-Smtp-Source: AGHT+IG5NFIL6bQkRPxjNS3CGNrl/pu+fTYL2xEtDPYHGjwfVMY6s85OfmV0fsBUT8OwWXm+hYIMGLB1megeNWb0/sQ=
+X-Received: by 2002:a17:906:eecc:b0:ae9:c494:1ade with SMTP id
+ a640c23a62f3a-af8fda4f577mr659617066b.53.1753946467478; Thu, 31 Jul 2025
+ 00:21:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250730175510.987383-5-toon@iotcl.com>
+References: <20250611134506.2975856-1-christian.couder@gmail.com>
+ <20250625125055.1375596-1-christian.couder@gmail.com> <20250625125055.1375596-3-christian.couder@gmail.com>
+ <xmqqbjqbsbe0.fsf@gitster.g> <CAP8UFD1wYXrEC2VYBHTL7NS1ksSa0oiBgB3Ua=6V1SnP=+RMsQ@mail.gmail.com>
+ <xmqqtt35xtng.fsf@gitster.g>
+In-Reply-To: <xmqqtt35xtng.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 31 Jul 2025 09:20:55 +0200
+X-Gm-Features: Ac12FXwjkajUwCglpMz-lSoQyMF2L1EZigHGDWlC1_1skmrKdphR6f9L4c7GaGs
+Message-ID: <CAP8UFD0scEUQ1X6gX+ZTKE_z05RESyJi2pq8Qa0MhS0CxjMQVg@mail.gmail.com>
+Subject: Re: [PATCH v5 2/5] promisor-remote: allow a server to advertise more fields
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
+	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 30, 2025 at 07:55:10PM +0200, Toon Claes wrote:
-> Our 'git last-modified' performs a revision walk, and computes a diff at
-> each point in the walk to figure out whether a given revision changed
-> any of the paths it considers interesting.
-> 
-> When changed-path Bloom filters are available, we can avoid computing
-> many such diffs. Before computing a diff, we first check if any of the
-> remaining paths of interest were possibly changed at a given commit by
-> consulting its Bloom filter. If any of them are, we are resigned to
-> compute the diff.
-> 
-> If none of those queries returned "maybe", we know that the given commit
-> doesn't contain any changed paths which are interesting to us. So, we
-> can avoid computing it in this case.
-> 
-> Comparing the perf test results on git.git:
-> 
->     Test                                        HEAD~             HEAD
->     ------------------------------------------------------------------------------------
->     8020.1: top-level last-modified             4.49(4.34+0.11)   2.22(2.05+0.09) -50.6%
->     8020.2: top-level recursive last-modified   5.64(5.45+0.11)   5.62(5.30+0.11) -0.4%
->     8020.3: subdir last-modified                0.11(0.06+0.04)   0.07(0.03+0.04) -36.4%
+On Mon, Jul 21, 2025 at 8:53=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > Ok, I have changed it to the following in v6:
+> >
+> >    To allow clients to make more informed decisions about which promiso=
+r
+> >    remotes they accept, let's make it possible to pass more information
+> >    by introducing a new "promisor.sendFields" configuration variable.
+>
+> A meta observation, as I haven't even thought if the above proposal
+> makes sense or not, but a reponse for v5 like the above that comes
+> nearly at the same minite as v6 highly discourages any response to
+> this message that may want to say "oh, that is not a good idea
+> because ...".
 
-Nice results.
+I am not sure why it discourages reponses. People can still reply to
+the v6 patch or to the discussion that started from the v5 patch or
+both. The discussion from the v5 patch is not obsolete if some
+comments have not been properly addressed.
 
-> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-> index e4c73464c7..19bf25f8a5 100644
-> --- a/builtin/last-modified.c
-> +++ b/builtin/last-modified.c
-> @@ -179,6 +192,27 @@ static void last_modified_diff(struct diff_queue_struct *q,
->  	}
->  }
->  
-> +static int maybe_changed_path(struct last_modified *lm, struct commit *origin)
-> +{
-> +	struct bloom_filter *filter;
-> +	struct last_modified_entry *ent;
-> +	struct hashmap_iter iter;
-> +
-> +	if (!lm->rev.bloom_filter_settings)
-> +		return 1;
-> +
-> +	filter = get_bloom_filter(lm->rev.repo, origin);
-> +	if (!filter)
-> +		return 1;
-> +
-> +	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
-> +		if (bloom_filter_contains(filter, &ent->key,
-> +					  lm->rev.bloom_filter_settings))
-> +			return 1;
-> +	}
-> +	return 0;
-> +}
+Also the fact that the replies come at the same time as a new version,
+means that reviewers don't need to context switch as much as if there
+were for example some replies at one time, then a few days later
+replies to the rest of the reviews, then a few days later a new
+version. So for reviewers who don't like to context switch much it
+should be better if everything is sent at once.
 
-This function is basically the same as `maybe_changed_paths()` in
-"blame.c", but that isn't a huge issue from my point of view. What makes
-me wonder though is why we have an additional check over there for
-whether or not the commit has a valid generation number.
+> >> By making it easier for casual humans who manually write the
+> >> configuration variable (presumably while testing) and allowing both
+> >> comma and space as separator, this design decision is forcing one
+> >> more rule to worry about for those who are writing the parser for
+> >> the value.  There may be some existing configuration variables with
+> >> such a "leninent" syntax, but I'd rather see us not make the mess
+> >> even worse.
+> >
+> > We indeed have a number of configuration variables accepting lists of
+> > items separated by both comma and space. As we cannot fix those easily
+> > for backward compatibility and they still make things a bit simpler
+> > for users, my opinion is that we'd better bite the bullet and make
+> > sure we have a simple and hard-to-misuse standard way to parse such
+> > lists.
+>
+> The position is understandable (I am not saying agreeable), but if
+> one takes such a position, this series will get even longer, by
+> requiring such a refactoring and new set of helper functions in the
+> front of the series, to avoid making things even worse than they
+> currently are.  If you want to punt on that "simple standard way"
+> and leave it outside the series, then please do not add such syntax
+> to the variables in this series.
 
-> @@ -227,6 +264,9 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
->  		return argc;
->  	}
->  
-> +	prepare_commit_graph(lm->rev.repo);
-> +	lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
-> +
+I'd like it if there was a consensus on doing such a refactoring
+before starting to work on it. So if you are fine with that
+refactoring, I am willing to either add it as part of this series, or
+work on it after this series is merged (like for the recent
+cc/t9350-cleanup patch), as you prefer.
 
-So this here is why we export `prepare_commit_graph()`. How about we
-instead expose `bloom_filters_enabled()` that mirrors what we do in
-`generation_numbers_enabled()` and `corrected_commit_dates_enabled()`?
-That would both be on a higher level and do exactly what we want to
-achieve.
+I couldn't know your and others' opinion on it (and I am still not
+sure about it) before we started discussing it. Sometimes for example
+you are also fine with just leaving over those kinds of bits. So for
+now in v7, I haven't changed this, but let me know and I will make the
+necessary changes in v8 or later in separate patches.
 
-Patrick
+> > Yeah, it seems to me that there was previously a sentence about what
+> > fields are, but it looks like I removed it by mistake. Anyway, before
+> > the paragraph about what the "promisor.sendFields" configuration
+> > variable contains, I have added the following in v6:
+> >
+> >    On the server side, information about a remote `foo` is stored in
+> >    configuration variables named `remote.foo.<variable-name>`. To make
+> >    it clearer and simpler, we use `field` and `field name` like this:
+> >
+> >      * `field name` refers to the <variable-name> part of such a
+> >        configuration variable, and
+> >
+> >      * `field` refers to both the `field name` and the value of such a
+> >        configuration variable.
+> >
+> >> What do we call the third-level of a variable name in the
+> >> configuration file?  The description on the "--regexp" option in
+> >> "git config --help" hints one:
+> >>
+> >>     With `get`, interpret the name as a regular expression. Regular
+> >>     expression matching is currently case-sensitive and done against
+> >>     a canonicalized version of the key in which section and variable
+> >>     names are lowercased, but subsection names are not.
+> >>
+> >> So a for remote.origin.partialCloneFilter, "remote" is the section
+> >> name, "origin" is the subsection name, and "partialCloneFilter" is
+> >> the variable name.
+> >
+> > Yeah, I thought that "variable name" could be confusing, so I prefered
+> > to use another word, "field", to talk about this.
+> > ...
+> > I'd rather avoid talking about "variable name" other than to explain
+> > what "field name" and "field" are. I think it would be too confusing,
+> > especially if the name of the new config options are still
+> > "promisor.sendFields" and "promisor.checkFields".
+>
+> Sorry, the argument does not make much sense to me.
+>
+> After all, the end-users who follow the documentation needs to know
+> which *VARIABLES* (in remotes.<name><VARIABLE>) to set to affect the
+> value that this mechanism lets them send out.  And the configuration
+> variable to control which of remotes.<name>.<VARIABLE> are sent out
+> is a new thing, and it itself calls it a FIELD.  Whatever name that
+> new thing chooses to call itself, the fact is that it is about what
+> the users have long known as configuration variables.
+>
+> So, what makes this whole thing more confusing than necessary, to
+> me, looks like your use of the word "field" in the first place.  The
+> use of word "field" in "sendFields" and "checkFields" are much much
+> more recent than the concept of "configuration variables" that has
+> long been established in users' minds (as far as I know, these
+> "fields" are not even in any released versions), so I do not see why
+> we want to keep it and force users learn yet another word.  Just fix
+> the name of these new configuration variables,
+
+You mean using "promisor.sendVariables" and "promisor.checkVariables"
+instead of "promisor.sendFields" and "promisor.checkFields", and using
+"variable" instead of "field" everywhere in the documentation and the
+code?
+
+> explain that they are
+> used to name other configuration variables, and be done it without
+> uttering "field" even once, and we would be good and less confusing,
+> wouldn't we?  Or am I being too naive and forgetting some already
+> established use of sendFields and checkFields?
+
+I just think it will be confusing because after being sent over
+through the protocol, they are no longer variable in the sense that
+the client can't (and shouldn't) change them. They could also be
+confused with environment variables, so perhaps
+"promisor.sendConfigVariables" and "promisor.checkConfigVariables",
+but the names will start to be long especially if we have to say that
+they are from the server when processed on the client side.
+
+Also I think it's better to use a different name because they are used
+differently, serve different purposes and have different rules applied
+to them in the context of the promisor-remote protocol capability.
+
+Anyway if that's what is prefered, I will make the change. For now in
+the v7, I haven't changed this.
