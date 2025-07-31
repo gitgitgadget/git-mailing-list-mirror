@@ -1,54 +1,54 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BA72BD016
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 07:42:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728512BD5A3
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 07:42:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753947732; cv=none; b=QGF1fo9X/kaG3CIrlOXxJnHH5dXGKQKyr40sqvyeLMo4fj+O+5HENDdMRnA2BWQtPQibSah6X2cQHyS03gD1RzsKNdWKF5LoSpkkK8P3CA+K2ITMUVX/sQg1OLdqcg6ENxxTAZDEkJ2wH/27gX1qj6snWcJUhgCpRe7DUBqjLr0=
+	t=1753947734; cv=none; b=WRtmr33b5lOXGZBSF/emMtwOpFqJ0STYu0kiWEaUXYCwiQAUJvtBdxyaNH4fsPTXPNmNmD4LqglNiGzEj/sQrwW5t2gXUu2tfDafgWQkmlEaN0To6+D3ZBKv+xLYbJHYOmQKbZTVrIJwYisYoiMDSLmh0+j7n6rFEHjJfu0BMLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753947732; c=relaxed/simple;
-	bh=Gw1GLa4yEKENFvmfCKyQBNG9bC8wVl0QRJ74WNrWhN8=;
+	s=arc-20240116; t=1753947734; c=relaxed/simple;
+	bh=fksNhb6pMG0LuEvpXY2uf7SZTl5J9fMVxO3mUlh/xBA=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Etc45vKtvIh1R5rep8CLSmE6pemGtyzw+a5DRZme+CpkTCAsSbBsH/KXvBPoqPkX91m4iPyqStD6niLYjzRVgefSJq8rdEG+MNeMdSMKSpHr4PPr/bWgg5XQGgS1aRuwvzQ0bD7lhaM5IOTaUDjkc+r0ynsMOqxWpU3uDuuUETk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HOClWmjw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m/ZGqrSz; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version; b=u08q14YNExSA44IMISbh5haMMymr9uUbfzDRs9CpmLGAzx6pAGpWnwM1ssWd3lGmAY3abJhr9QHz9PUVf18V6wp2XFabOnsuI0w+37oO3F9Zxf1yAzNsZ9wl6FFW4lQur+MozpkhFboasdBBf8YCVn59OPLaBp12ey/xQdOeLws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hZVp3XXg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F2Hmpqgs; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HOClWmjw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m/ZGqrSz"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0E84C7A0B88;
-	Thu, 31 Jul 2025 03:42:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 31 Jul 2025 03:42:10 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hZVp3XXg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F2Hmpqgs"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id B73731D00DFD;
+	Thu, 31 Jul 2025 03:42:11 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 31 Jul 2025 03:42:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1753947729; x=
-	1754034129; bh=m+Fu7w13I0i3+cg5B3HnT+avJCAdzYOIpR2oVwC4tNc=; b=H
-	OClWmjwj1Fsk7nSiNNij/34wNF86yLBodVd1H9ebb+J4aGtXbsiIP49A8CHF36Cc
-	XOBQSDFu1y6B2Aq+Q0SjdASnhKQUu76GNnH/F8U6HdJpMQGAQd6BE2q9OOkU0kSU
-	BOGuafU3dE6wGo63g9PPtKyGlCIVDULRB9bFa0ujvBCko87CE+DFZlvYqDjU+xqZ
-	i0JAArTiEs42Ugz1Ot13Zz4tKxmwgsk1CkyiQdp50mkOVxr1XehLnWscFRD6gdSj
-	35RZYIy+Za+bcJDE8XcnhkUTOL1bBAdaDAiqyQmIthtlfL1JmtnVMqAR4d9eTBwV
-	BEeHmPSjuzkbpyQQwxvog==
+	:reply-to:subject:subject:to:to; s=fm2; t=1753947731; x=
+	1754034131; bh=RyJ8BlXFGuOzSY8VtBAGeifRWG43+PG3ohvw9ywWbow=; b=h
+	ZVp3XXgcWQgfudeW3tsM9cBAiFWPEkh5Zy1GVMqhLtuK+enUKIfFseBwUEZiI+Uu
+	T+1u8MFSu78QHtRsz3GgS4wt3CaLtf68TWWgzT83LP+A3ccQbPt37tMl+XBzzUTx
+	A9i9ZEaUbkeRa9agoWEGkGebH7sCJnKSOKuMIwHoZ/DMSjpufj+GVL6U6yo2uXYw
+	1iKbhpKMl5t8+O6AMKJWfwMSrYppA3YsBixszPKboYMKGWUjmGz12xE/kEws2szi
+	bYK4ih2zLspXo283g+cWrow735/zru5bV2M1yppbI9ONlLsj96ChFHRKdzXZbPzv
+	DB2Nt/FrgrEq/zrV6kOLA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1753947729; x=1754034129; bh=m+Fu7w13I0i3+cg5B3HnT+avJCAd
-	zYOIpR2oVwC4tNc=; b=m/ZGqrSzbTmQwDOgml4XqhfQ3BQGvAZ4aIba7ikaCyab
-	1NP/LSR1Nt7VRAx0MBPJpkiGkNsPyhSlpI01qBvvPyKkaDfdEaHwkhYoqV4hnfns
-	GpkKfTJY6PvPcqAlHfkWIVm1Zgjkm6p4/UQ/OQbbmQvPdPXIBomNMrDJRKF8/OP3
-	ixRsaoz2i7/eGWtJcHSdun4A3ytps21i1tPueZ4ztwdgmFh/hzZn4cQXKrGDMawt
-	c9IemhPhGmKsEb9vZyS+Zi9dS/yk1aa8YfoGYS3wOoMK+FG1tqAXEXYQUeA0XzDR
-	s/n2e7R3CFu1m7C5N7eizMoCwiqidPYqWRlXvob4Zg==
-X-ME-Sender: <xms:UR6LaJkgHY3qjR5qX3_Qkaos2pBlDYJUTBdebVSHg23UGrg5ehtP9g>
-    <xme:UR6LaFBNBTB7_ib3acdeqeKQQ1m4TEfPGa1p4ZL8E0hRHgMdp8QKQFhB_sY7YEUfE
-    n6Of4svOKm2LxLH_g>
-X-ME-Received: <xmr:UR6LaBcUUgPJSaSiqUyFaubfDyWWwBqfHY9j3ktoSC-EGB1l66fgfGMgLuZOrgBZVo1AJRd6pnTVySG4dSaniRtswzBKqRaQK9YmsvQ>
+	fm3; t=1753947731; x=1754034131; bh=RyJ8BlXFGuOzSY8VtBAGeifRWG43
+	+PG3ohvw9ywWbow=; b=F2HmpqgsrkogEG4x+1dh3XlskjodG8+nLzN/5xCeYZU5
+	AINAzZHdmTa3uiQQUz5zme5ryScVAmvKuh0k3IQ+4yowKiFLquRWwyA11kpnTMWL
+	lfBHUu7LJMTXAWdi/yujdX2+4mRFCZjigd64J2qpadYc2prEeLxhvagyHLrsJ7EL
+	/xTPE0Wtt0vBL28yWhlCxxVhXsB2L0L9UKrW0ol3VhnzXoWr0JzDFz8JnfwlzRw3
+	g3ikzrcJPm5K5hr4srxV2jP0WkqxJh8exJophguYlpR2V3NAOwPq/FLwFXLS5mpT
+	1F7n1VBiNsV8wFe5RkFn9qMK9P/LSoqZog092vOLhw==
+X-ME-Sender: <xms:Ux6LaMyfAYJqpOOZC9ZKA7rxBTGGMv0_JCu7OH-vE1D7C8ukAN3mSA>
+    <xme:Ux6LaAdImzzyxzBkPhX5FxoriicEhMd3sKKCaOYDVlA5QvhQiF73874rO6oXXZNas
+    3s5EJFshesw89mV8A>
+X-ME-Received: <xmr:Ux6LaAI-IvHCpPYjD3YvRV-bZXT7bDnAC_clZhWZpaJHJO8VFcedWOXMERbDA9FyHmjHWauC_so734lqstQ6yD0O3ANs95XgTfbQmqs>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddtvdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddtvdegucetufdote
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:UR6LaIK1-YgyQ3tlkvFuyiEy7sf8r5Uoj0b7EnoEkWmmiO3iEJjlzw>
-    <xmx:UR6LaMf_1FhduIcB1-XwMuvmU4wNP3MNfXI_4k98EUB0X8Qc6VNV4w>
-    <xmx:UR6LaH1khmmQ6swLR9tSfD2Ld4Hqh80qsrCTI6CHhITmJRKBg-NcvA>
-    <xmx:UR6LaNgOj2eZOA4XLh2C7s8AGNiE1V0AxPZIvuG7bA5h1Dr7oxfgIA>
-    <xmx:UR6LaMJcj1cOFW8oGdGg90Hu4qzLCrRKAuY04kBnxP7WkypA6UYFL5fP>
+X-ME-Proxy: <xmx:Ux6LaJGw6D6fe4VelareZcTS1hgvxheeTfvcO9nRDaL-7BdzyIcpTw>
+    <xmx:Ux6LaCpf-fgg-TnJtY27Bze7asyvwaxHCjXwCrORgTH6z8-xau_boA>
+    <xmx:Ux6LaKTz-Q_Ql6ibWaVlJXkwAEHq_U_vGDE1xezriIHwdzQMo92iwg>
+    <xmx:Ux6LaHMMVOPxF1JwvXPFAlh_O4Hh7A_IhdQHlPHbTATgeuf24Ak_3w>
+    <xmx:Ux6LaHVx2pi9CGcVf2T3WSbiLBaPXPY51ptXAkZFVi0-wsl95cSuKSnO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 03:42:09 -0400 (EDT)
+ 31 Jul 2025 03:42:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 8/9] environment: do not use strbuf_split*()
-Date: Thu, 31 Jul 2025 00:41:53 -0700
-Message-ID: <20250731074154.2835370-9-gitster@pobox.com>
+Subject: [PATCH 9/9] sub-process: do not use strbuf_split*()
+Date: Thu, 31 Jul 2025 00:41:54 -0700
+Message-ID: <20250731074154.2835370-10-gitster@pobox.com>
 X-Mailer: git-send-email 2.50.1-612-g4756c59422
 In-Reply-To: <20250731074154.2835370-1-gitster@pobox.com>
 References: <20250731074154.2835370-1-gitster@pobox.com>
@@ -83,60 +83,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-environment.c:get_git_namespace() learns the raw namespace from an
-environment variable, splits it at "/", and appends them after
-"refs/namespaces/"; the reason why it splits first is so that an
-empty string resulting from double slashes can be omitted.
-
-The split pieces do not need to be edited in any way, so an array of
-strbufs is a wrong data structure to use.  Instead split into a
-string list and use the pieces from there.
+The code to read status from subprocess reads one packet line and
+tries to find "status=<foo>".  It is way overkill to split the line
+into an array of two strbufs to extract <foo>.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- environment.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ sub-process.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/environment.c b/environment.c
-index 7c2480b22e..ab3ed08433 100644
---- a/environment.c
-+++ b/environment.c
-@@ -163,10 +163,10 @@ int have_git_dir(void)
- const char *get_git_namespace(void)
- {
- 	static const char *namespace;
--
- 	struct strbuf buf = STRBUF_INIT;
--	struct strbuf **components, **c;
- 	const char *raw_namespace;
-+	struct string_list components = STRING_LIST_INIT_DUP;
-+	struct string_list_item *item;
+diff --git a/sub-process.c b/sub-process.c
+index 1daf5a9752..de3235c15a 100644
+--- a/sub-process.c
++++ b/sub-process.c
+@@ -5,6 +5,7 @@
+ #include "sub-process.h"
+ #include "sigchain.h"
+ #include "pkt-line.h"
++#include "string-list.h"
  
- 	if (namespace)
- 		return namespace;
-@@ -178,12 +178,17 @@ const char *get_git_namespace(void)
+ int cmd2process_cmp(const void *cmp_data UNUSED,
+ 		    const struct hashmap_entry *eptr,
+@@ -30,23 +31,20 @@ struct subprocess_entry *subprocess_find_entry(struct hashmap *hashmap, const ch
+ 
+ int subprocess_read_status(int fd, struct strbuf *status)
+ {
+-	struct strbuf **pair;
+-	char *line;
+ 	int len;
+ 
+ 	for (;;) {
++		char *line;
++		const char *value;
++
+ 		len = packet_read_line_gently(fd, NULL, &line);
+ 		if ((len < 0) || !line)
+ 			break;
+-		pair = strbuf_split_str(line, '=', 2);
+-		if (pair[0] && pair[0]->len && pair[1]) {
++		if (skip_prefix(line, "status=", &value)) {
+ 			/* the last "status=<foo>" line wins */
+-			if (!strcmp(pair[0]->buf, "status=")) {
+-				strbuf_reset(status);
+-				strbuf_addbuf(status, pair[1]);
+-			}
++			strbuf_reset(status);
++			strbuf_addstr(status, value);
+ 		}
+-		strbuf_list_free(pair);
  	}
  
- 	strbuf_addstr(&buf, raw_namespace);
--	components = strbuf_split(&buf, '/');
-+
-+	string_list_split(&components, buf.buf, "/", -1);
- 	strbuf_reset(&buf);
--	for (c = components; *c; c++)
--		if (strcmp((*c)->buf, "/") != 0)
--			strbuf_addf(&buf, "refs/namespaces/%s", (*c)->buf);
--	strbuf_list_free(components);
-+
-+	for_each_string_list_item(item, &components) {
-+		if (item->string[0])
-+			strbuf_addf(&buf, "refs/namespaces/%s/", item->string);
-+	}
-+	string_list_clear(&components, 0);
-+
-+	strbuf_trim_trailing_dir_sep(&buf);
- 	if (check_refname_format(buf.buf, 0))
- 		die(_("bad git namespace path \"%s\""), raw_namespace);
- 	strbuf_addch(&buf, '/');
+ 	return (len < 0) ? len : 0;
 -- 
 2.50.1-612-g4756c59422
 
