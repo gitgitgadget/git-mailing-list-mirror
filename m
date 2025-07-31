@@ -1,177 +1,302 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EA529AAFD
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 07:23:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953241E2858
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 07:24:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753946584; cv=none; b=nejSmv6kU4/jphTnYvzfNw9jdWP+4N/Cd8sGc/DGDW3q4nVJZRI+AJrAyb81BKFw35qFf9DSXlWi2vocXZ1pEWLYlF/CTtB3SGgmerl+0mBKQNo7fbUn2/FRL/R9MGzSmdoZN+3LcVkwdlIDcX1yuCnVGRcV3I4fq5Y1m2FKduQ=
+	t=1753946663; cv=none; b=AToQAYW98/kOqmTFf28ATMvOIy7cTaBX9IKiiD32IE3Nx/QfoWPm8VAdp4A1l/CG8mnEm1GmmhfGfAF1aSMzNu57iDT41qraeVlHqWG6+sSNuBUpLXzT3b+CQ1cCa+zsBA2aZAmHXMiYB1f0dqfbVpWVFDKQQ4Fb/YiPTddpnqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753946584; c=relaxed/simple;
-	bh=3MkktxBFF6oXFaGoR8p3YN3YwPkmB6iMDMaWBr6YJCM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VwOzx8AasxMzKuGj2DK3yPuNzIRxWtTd9dqLXbE2/FCop5+t2Ii8wvpDnmehFUdoXXxNRWNq3Vdd6/g69ZcnxatNGS+tCwfSNs3VcOVZx/OZZsWe0eQXuFRMHeqgBodNSPehQoydfvTcjKA4nduLHP5h9gu8nnrCZJkMV1Jqh3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lGcTPcod; arc=none smtp.client-ip=209.85.208.41
+	s=arc-20240116; t=1753946663; c=relaxed/simple;
+	bh=dnP63PvQdJ2AclT8cwDj22rQh+SrPIik/XlWU1G5OxY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=RdV+OLLpkxxj8kiHtulm4i4M7Qu5Iz9pHt/FFDr0Fl1h8EgpjK9Zwz8R8b8FnAYC+GA5u5LBRNOu99Wr2z9dbuomjYa5u41CMhxlNbbz2od09209uxkrZJGMu24RHIvxmkcv0EmNl06LMvE5REzSuBWoXXtqbBQkzZn3WUHboSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VNSi5wFM; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lGcTPcod"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-61592ff5df8so96216a12.1
-        for <git@vger.kernel.org>; Thu, 31 Jul 2025 00:23:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VNSi5wFM"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4538bc52a8dso718855e9.2
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 00:24:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753946581; x=1754551381; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1753946658; x=1754551458; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iLiG+glWMn95Fj6ksqAxDbw9sb6xaGeQS3ZKEDzrGjs=;
-        b=lGcTPcodgmEAGI63fwWOMxpVHCVxXFY+R6d3P1RhpbGPJtO31nk7f9pniNNyxQwX9Y
-         z+WVnNff0YxMJSL3hj9yPxqSq9c7FWAjohCd4H8+khYrAVXO6ti0mXpNfEe+HchnBksV
-         hAEGQXmsTBQ9epeZbd+KMumgT2JRMaxOUjSfL7CRM+sYvb5BTjLqCNkzghrQTSjmP5Kr
-         93UpSIHjiN2DXb0ch7Jk68kHEi/acu8rIf5iRqgG6JRzLiPy6rqtiklMeYzxW7nWMXbm
-         mVc37QH5nCL9f512nCk1LKS1Fjs0OFsoH7bJabUQ5IvsKrYR8I9s4i8r4OT11enExfao
-         xKpQ==
+        bh=4JywvroCj7Xt3MIFNxS+1c6FOpwATv3tQCHIY7O3owY=;
+        b=VNSi5wFMwu0qQtNI5/XbevD54pwJKyQ8/MF6FqFrWCmouIlq2nQviA0pKntS137HnT
+         t3hI+GZNtMcMfFm8iT7XrmGw59f9arflUCDTFeyMHCIKQmpjoUe8BQRNKPKIDkdpiaMf
+         f3ub4VnxWB+VwArDpwh0k8MVzGJDb89xlD9bJNWYfd7hnGy6xnob5VRuxXP87kaEz62q
+         aDtwFehVfWi34aC1GY5/t8eLm9li9TD5X/g3W1s4VT8qraE5B38QdQFl8z+alaHx6l92
+         sJr7Nb24zJw44qIJbq+2JvTyD1XVtN03OS65tG6uqFLM8+ympr7/GGASOOtMRjAo5fY7
+         XIeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753946581; x=1754551381;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1753946658; x=1754551458;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iLiG+glWMn95Fj6ksqAxDbw9sb6xaGeQS3ZKEDzrGjs=;
-        b=cx40qDXgnFIg3TB4zCdKso+8mhS8RLg6Ekf+zWVELxJbHbxBaPVP3mt7bQe3bFXgn3
-         enuSZ6Cg8rZIXZrHJwrKruRq8zz12Y2oweSwSBu5SU/Zev69uyUA8hDVwwOs9qk41WVM
-         /ootAtcAGUXeVDaw3X06mbKkVoCk84VIO5YXjTAk8TYv5OCvkEn6691IK4cZsq8p8Y8Y
-         xopdTZ23fGzgcha+CC0pRkl+29zSRrB44w8ZOk5AxgWq8VoE1sZM+Xt3JcCNDRorHyuI
-         J8mwfTTPNk3dhYSM1Zuw/IfdIDJcdujmQxteVcSjgSa51AD5Kygn8M7ISbn+IxK7gWL6
-         zocw==
-X-Gm-Message-State: AOJu0Yyqtcr/1Gd9rXX53/TQcWVirxzJ9IkynA6b5Ksj1gZatFTjT4/5
-	TZMibTfMu0/JJ2SRCdPrZ+GReSYiyiUkR0qV5TaARVc7w/XI5EauNRjzWXT69RFEoCu4s4AiZMu
-	TkP172wD2dJqEcnoDnsbHFINfOUrk1llqyA==
-X-Gm-Gg: ASbGnctKzERAJCPc9nrsRIDuSmoh9bDM1TKsDi2c5waP3tgaQemDrXgbgeYDa4uPwbc
-	25qP2UMQcHByNkhwzgp1UMblboN67kbN4BTDp/9EZnfXaBxjky4JPsFQz9uPUaO9MYi0zbCKuCT
-	c/DkZ9mtFdq8kX3N581gaaWAZBRZDuXrPE8e6K+aO9sjtia2q9B9ZjsaYYXbjdluEejTl/s80fk
-	jBV2RQnfw==
-X-Google-Smtp-Source: AGHT+IG3WnTAGihh2xwaoaO7AyQla81g/IV/sUvtpCacP+W4Fbfz35UgdZ8+yJSDbm75pb60NnETxXoZmpgYudtn7QI=
-X-Received: by 2002:a17:907:1c95:b0:ae2:9291:9226 with SMTP id
- a640c23a62f3a-af8fda80bdemr767747166b.59.1753946580688; Thu, 31 Jul 2025
- 00:23:00 -0700 (PDT)
+        bh=4JywvroCj7Xt3MIFNxS+1c6FOpwATv3tQCHIY7O3owY=;
+        b=QA+xkb++jt57fG/q6O5MQ1jFfTc+PUB5C2q5aJb7aMHZgvfbELQpnA8PtEko1Wyl6d
+         N8RnNLMYXijdIBJ6fC4qpXN8S8JeXvfy9UaxxSIXBwhajULzfxH3IkYiC7becoxulH8C
+         UIPwhtRNpIFAoUviVz7ZlJLDik2N2U3kJlVZxtLRxz/xwR+ymOwE5wh0cECK7ovHFKgU
+         RgG5VFanUBnGOG5X6ZVTn2nOSMpz8Q3F/TNc6QNxnGCRp+r/tHQz3Tyf0v4iZkgaiSIW
+         3cI7O6kZN5db17b8IaKbHWQOaZdyMwcuIYX3RyktMH6RE2mHJtZzN2OKmzjajbNo1LeH
+         UfHA==
+X-Gm-Message-State: AOJu0YwSHRi2vxg3Df/mOOGkVce8IefbKhgtl1t9LYtigIu/1Z+jWwp6
+	82qzSKCydju8kZQ2R/vLvOg22KzkBsYKlaeety/mUJprb0AfhBy+qhFNWsQxkA==
+X-Gm-Gg: ASbGncso7lRH6tsgTXPZtGUwi8pOqUL+2GBZC/Kt9HGhSsbQpx+7t2itBp+VA5Ux8/5
+	mm+wrFz/MqnwtAtDPSWUKrQZqm0O2FBeFRhLJOlgcTofuBOLvz2TqWNxL/l131uUFvy/mi5L9jS
+	fZnUzRCbVlMHNcAUiz82za25oxA0R+mknhD9MHcUvo7/KCcG3aqn7qK/T1drYrsZ7Kt+5TvsHpK
+	B53yMppT/PsevVZNtmpCI2F0tGEwO/FqqbEZeXH3Roff75Gw7okoUnc5zr59C/FueSfVcIbAWLA
+	kONQeLuSi4nzzkRltKW7UtBeqWq9y+3hDTnZSYk29j9qo1za4AZZ3yi98acMeQS1lIwh3ozLpVm
+	5DcGd0zW6WI+WNmvw5IEaCG4MbTknYzRi/oE8cH5jn2M2aXhjxLb48wd4KRzdXtxyzUFugMZtrb
+	iaxIhLezPKDw5730Q=
+X-Google-Smtp-Source: AGHT+IH0IfBhCAzQ4b+n5xmlYSCZLxAvczR3inaFKV5E8bkkWkOyRSLWTmYm7z9mjl+v4xpeuP0V+Q==
+X-Received: by 2002:a05:6000:40ce:b0:3b7:78c8:937f with SMTP id ffacd0b85a97d-3b794fc30e4mr4425902f8f.20.1753946658017;
+        Thu, 31 Jul 2025 00:24:18 -0700 (PDT)
+Received: from christian--20230123--2G7D3 (176-138-135-207.abo.bbox.fr. [176.138.135.207])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-458953f8e02sm52495175e9.32.2025.07.31.00.24.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Jul 2025 00:24:17 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Taylor Blau <me@ttaylorr.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Jean-Noel Avila <jn.avila@free.fr>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v7 0/5] Make the "promisor-remote" capability support more fields
+Date: Thu, 31 Jul 2025 09:23:52 +0200
+Message-ID: <20250731072401.3817074-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.50.1.323.g4e0625aa69.dirty
+In-Reply-To: <20250721141056.2283349-1-christian.couder@gmail.com>
+References: <20250721141056.2283349-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250625125055.1375596-1-christian.couder@gmail.com>
- <20250721141056.2283349-1-christian.couder@gmail.com> <20250721141056.2283349-4-christian.couder@gmail.com>
- <xmqq1pq9xoqe.fsf@gitster.g>
-In-Reply-To: <xmqq1pq9xoqe.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 31 Jul 2025 09:22:47 +0200
-X-Gm-Features: Ac12FXym3JFpy7TUYOhvAHcK78LHtfkQ3kofw6E3haFCawdpFRa3qZ6dkAoLNL4
-Message-ID: <CAP8UFD0urQ_0dbHjyF16w9HeTVxwo_r3Yi62hbwcC49m=aPZHw@mail.gmail.com>
-Subject: Re: [PATCH v6 3/5] promisor-remote: refactor how we parse advertised fields
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
-	Jean-Noel Avila <jn.avila@free.fr>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 21, 2025 at 10:39=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > +static struct promisor_info *parse_one_advertised_remote(struct strbuf=
- *remote_info)
-> > +{
-> > +     struct promisor_info *info =3D xcalloc(1, sizeof(*info));
-> > +     struct strbuf **elems =3D strbuf_split(remote_info, ',');
->
-> Unless the primary use of an array is about passing it around as a
-> whole "set", name such a variable singular, so that element[4] can
-> be naturally read as "fourth element"---"fourth elements" is not as
-> natural.
->
-> Also, can't we do this without strbuf_split(), which is a wrong API
-> to use in general [*]?  strbuf is a very good data structure to work
-> with when editing string data, but an array of strbuf is not---you
-> would not be editing many pieces of string data in parallel.
->
->     [*] often string_list_split_in_place() is a better alternative,
->     especially when you do not have to heavily edit the substrings.
+The "promisor-remote" capability can only be used to pass the names
+and URLs of the promisor remotes from the server to the client. After
+that the client can use this information to decide if it accepts the
+remotes or not.
 
-Yeah, string_list_split_in_place() is used in v7 and it looks better.
+It would be nice if the server could pass more fields about its
+remotes and if the client could use that additional information to
+decide about the remotes by comparing it with its local information
+about the remotes.
 
-> > +     for (size_t i =3D 0; elems[i]; i++) {
-> > +             char *elem =3D elems[i]->buf;
-> > +             char *value;
-> > +             char *p =3D strchr(elem, '=3D');
->
->         The pointer elem points at the name, and the pointer p
->         points at the beginning of value, which could contain '=3D'.
->
-> > +             strbuf_strip_suffix(elems[i], ",");
->
-> This does not even count as "editing"; split_in_place() would have
-> removed the trailing comma (and replaced it with NUL to terminate
-> the string).
+This patch series implements this by adding the "promisor.sendFields"
+on the server side and the "promisor.checkFields" on the client side.
 
-Yeah, right. This is fixed in v7.
+For example, if "promisor.sendFields" is set to "partialCloneFilter",
+and the server has the remote "foo" configured like this:
 
-> > +             if (!p) {
-> > +                     warning(_("invalid element '%s' from remote info"=
-), elem);
-> > +                     continue;
-> > +             }
->
->         elem pointed at "foo" or "foo,"; we may have stripped the
->         trailing comma, but we didn't see the equal sign to start
->         the value at all.  Bad input.
->
-> > +             *p =3D '\0';
->
->         Terminate the name by replacing '=3D' with NUL.
->
-> > +             value =3D url_percent_decode(p + 1);
->
->         Can this helper function fail and signal that it saw a
->         malformed data?  If not already, shouldn't it be taught to
->         do so?
->
-> We are inventing the syntax for this data in this series, so if this
-> helper takes garbage data silently, and if we are not willing to fix
-> it, then we can even consider changing the syntax to something with
-> a helper we can use that already has a good error checking.
+[remote "foo"]
+        url = file:///tmp/foo.git
+	partialCloneFilter = blob:none
 
-I am not sure what the interface would look like. Should a version of
-url_percent_decode() that returns NULL in case of error would be
-enough, or should it use `return error("...");`in case of error?
+then "name=foo,url=file:///tmp/foo.git,partialCloneFilter=blob:none"
+will be sent by the server for this remote.
 
-And it seems to me that an error can only happen when the string
-passed to url_percent_decode() contains a '%' which is not followed by
-2 hexadecimal characters, or do you see other possible errors?
+All the information passed through the "promisor-remote" capability is
+still only used to decide if the remotes are accepted or not. The
+client doesn't store it and doesn't use it for any other purpose.
 
-For now I haven't changed this in v7, but I am open to suggestions
-about the best way to implement it in a v8 or maybe a separate series.
+Note that the filter mechanism already exists for a long time and this
+series doesn't change how it works. For example, it has already been
+possible for a long time to have different repos using the same
+promisor remote with different filters. See the existing partial clone
+documentation (like "Documentation/technical/partial-clone.adoc") for
+more information on partial clone.
 
-> > +             if (!strcmp(elem, "name"))
-> > +                     info->name =3D value;
-> > +             else if (!strcmp(elem, "url"))
-> > +                     info->url =3D value;
-> > +             else
-> > +                     free(value);
->
-> As url_percent_decode() always allocate a new copy of string even
-> when there is nothing to decode, value will always be an allocated
-> string, and if we are not storing it away, it will leak.  The copies
-> we kept in info->{name,url} are ours to own.  Makes sense.
->
-> > +     strbuf_list_free(elems);
->
-> And because [elem..p] (name) we only peeked, we can safely release
-> the whole thing.  If you used string_list_split_in_place(), you
-> would only free the string_list shell without having to free the
-> underlying string.
+The fields that can be passed are limited to "partialCloneFilter" and
+"token".
 
-Yeah, it's better with string_list_split_in_place().
+On the technical side, we get rid of 'struct strvec' and we use
+'struct promisor_info' to store the data and 'struct string_list' to
+store the 'struct promisor_info' instances instead.
 
-Thanks.
+This work is part of the "LOP" effort documented in:
+
+  Documentation/technical/large-object-promisors.adoc
+
+See that doc for more information on the broader context.
+
+Changes since v6
+----------------
+
+Thanks to Patrick, Junio, Karthik, Jean-Noël and Justin for their
+comments on the previous versions.
+
+Here are the changes compared to v6:
+
+- In patch 2/5 ("promisor-remote: allow a server to advertise more
+  fields") in "Documentation/gitprotocol-v2.adoc" we now clarify that
+  field names in the protocol are case-sensitive and MUST be
+  transmitted exactly as specified.
+
+- In patch 2/5 and 4/5 we don't initialize the `static int
+  initialized` to `0`, we just let the BSS do it.
+
+- In patch 3/5 ("promisor-remote: refactor how we parse advertised
+  fields"), we now use string_list_split_in_place() instead of
+  strbuf_split() and `struct string_list elem_list` instead of `struct
+  strbuf **elems`. The useless call to strbuf_strip_suffix() has also
+  been removed.
+
+- In patch 4/5 ("promisor-remote: allow a client to check fields") in
+  "Documentation/config/promisor.adoc" we removed "Field names are
+  compared case-insensitively." as it's not true when field names are
+  part of the protocol.
+
+- Also in patch 4/5:
+
+  - in all_fields_match((), we use `struct string_list *fields`
+    instead of `struct string_list* fields` according to our style,
+    and
+
+  - in parse_one_advertised_remote() we use strcmp() instead of
+    strcasecmp() as we decided that field names in the protocol are
+    case-sensitive.
+
+CI tests
+--------
+
+They have all passed, see:
+
+https://github.com/chriscool/git/actions/runs/16632158419
+
+Range diff compared to v6
+-------------------------
+
+1:  87a6ba5c48 = 1:  87a6ba5c48 promisor-remote: refactor to get rid of 'struct strvec'
+2:  0543a42858 ! 2:  c729c110d0 promisor-remote: allow a server to advertise more fields
+    @@ Documentation/gitprotocol-v2.adoc: retrieving the header from a bundle at the in
+     +connecting to the remote. It corresponds to the "remote.<name>.token"
+     +config setting.
+     +
+    -+No other fields are defined by the protocol at this time. Clients MUST
+    -+ignore fields they don't recognize to allow for future protocol
+    -+extensions.
+    ++No other fields are defined by the protocol at this time. Field names
+    ++are case-sensitive and MUST be transmitted exactly as specified
+    ++above. Clients MUST ignore fields they don't recognize to allow for
+    ++future protocol extensions.
+     +
+     +For now, the client can only use information transmitted through these
+     +fields to decide if it accepts the advertised promisor remote. In the
+    @@ promisor-remote.c: static int allow_unsanitized(char ch)
+     +static struct string_list *fields_sent(void)
+     +{
+     +  static struct string_list fields_list = STRING_LIST_INIT_NODUP;
+    -+  static int initialized = 0;
+    ++  static int initialized;
+     +
+     +  if (!initialized) {
+     +          fields_list.cmp = strcasecmp;
+3:  d566719807 ! 3:  9e0eccae21 promisor-remote: refactor how we parse advertised fields
+    @@ promisor-remote.c: static int should_accept_remote(enum accept_promisor accept,
+     +static struct promisor_info *parse_one_advertised_remote(struct strbuf *remote_info)
+     +{
+     +  struct promisor_info *info = xcalloc(1, sizeof(*info));
+    -+  struct strbuf **elems = strbuf_split(remote_info, ',');
+    ++  struct string_list elem_list = STRING_LIST_INIT_NODUP;
+    ++  struct string_list_item *item;
+     +
+    -+  for (size_t i = 0; elems[i]; i++) {
+    -+          char *elem = elems[i]->buf;
+    ++  string_list_split_in_place(&elem_list, remote_info->buf, ",", -1);
+    ++
+    ++  for_each_string_list_item(item, &elem_list) {
+    ++          char *elem = item->string;
+     +          char *value;
+     +          char *p = strchr(elem, '=');
+     +
+    -+          strbuf_strip_suffix(elems[i], ",");
+    -+
+     +          if (!p) {
+     +                  warning(_("invalid element '%s' from remote info"), elem);
+     +                  continue;
+    @@ promisor-remote.c: static int should_accept_remote(enum accept_promisor accept,
+     +                  free(value);
+     +  }
+     +
+    -+  strbuf_list_free(elems);
+    ++  string_list_clear(&elem_list, 0);
+     +
+     +  if (!info->name || !info->url) {
+     +          warning(_("server advertised a promisor remote without a name or URL: %s"),
+4:  d2a13eabc0 ! 4:  b1a3384ddc promisor-remote: allow a client to check fields
+    @@ Documentation/config/promisor.adoc: promisor.acceptFromServer::
+     +be used to verify that authentication credentials match expected
+     +values.
+     ++
+    -+Field names are compared case-insensitively. Field values are compared
+    -+case-sensitively.
+    ++Field values are compared case-sensitively.
+     ++
+     +The "name" and "url" fields are always checked according to the
+     +`promisor.acceptFromServer` policy, independently of this setting.
+    @@ promisor-remote.c: static struct string_list *fields_sent(void)
+     +static struct string_list *fields_checked(void)
+     +{
+     +  static struct string_list fields_list = STRING_LIST_INIT_NODUP;
+    -+  static int initialized = 0;
+    ++  static int initialized;
+     +
+     +  if (!initialized) {
+     +          fields_list.cmp = strcasecmp;
+    @@ promisor-remote.c: enum accept_promisor {
+     +                      struct string_list *config_info,
+     +                      int in_list)
+     +{
+    -+  struct string_list* fields = fields_checked();
+    ++  struct string_list *fields = fields_checked();
+     +  struct string_list_item *item_checked;
+     +
+     +  for_each_string_list_item(item_checked, fields) {
+    @@ promisor-remote.c: static struct promisor_info *parse_one_advertised_remote(stru
+                        info->name = value;
+                else if (!strcmp(elem, "url"))
+                        info->url = value;
+    -+          else if (!strcasecmp(elem, promisor_field_filter))
+    ++          else if (!strcmp(elem, promisor_field_filter))
+     +                  info->filter = value;
+    -+          else if (!strcasecmp(elem, promisor_field_token))
+    ++          else if (!strcmp(elem, promisor_field_token))
+     +                  info->token = value;
+                else
+                        free(value);
+5:  c7d7c83534 ! 5:  d0f7fda912 promisor-remote: use string constants for 'name' and 'url' too
+    @@ promisor-remote.c: static struct promisor_info *parse_one_advertised_remote(stru
+     -          else if (!strcmp(elem, "url"))
+     +          else if (!strcmp(elem, promisor_field_url))
+                        info->url = value;
+    -           else if (!strcasecmp(elem, promisor_field_filter))
+    +           else if (!strcmp(elem, promisor_field_filter))
+                        info->filter = value;
+
+
+Christian Couder (5):
+  promisor-remote: refactor to get rid of 'struct strvec'
+  promisor-remote: allow a server to advertise more fields
+  promisor-remote: refactor how we parse advertised fields
+  promisor-remote: allow a client to check fields
+  promisor-remote: use string constants for 'name' and 'url' too
+
+ Documentation/config/promisor.adoc    |  61 ++++
+ Documentation/gitprotocol-v2.adoc     |  64 +++--
+ promisor-remote.c                     | 398 +++++++++++++++++++++-----
+ t/t5710-promisor-remote-capability.sh |  65 +++++
+ 4 files changed, 500 insertions(+), 88 deletions(-)
+
+-- 
+2.50.1.323.g4e0625aa69.dirty
+
