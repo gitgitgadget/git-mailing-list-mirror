@@ -1,62 +1,62 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28E535971
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 09:00:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DAB290BC4
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 09:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753952449; cv=none; b=gn81TmBiSFBRgbKFh7sB/CZMRDFrnIseZYvlQM6uj1KaoSdfZATSIsgDdwwLzmpqiNM3zsT4nsukUAkkxHDXOcTyvsy87wxJNIfU1tIXf8Swf3bp6E0FxiicwiTEM1vdxTMC3kLxfxegLetRhaUxMJwn+CpoXoVGNBAq5bMyJL8=
+	t=1753952454; cv=none; b=tYpTR9/EMnpadasIX/c1jg1ywylImFj+5ns5LbP0XwCNJfvI3EXs3GXtBfpWFtbPPJYOf5Tl1U4TzZjdUOjeEzYYzxxpWQHGpLLKRQ4kxFyx1Y0uw2l2m8PAqRs8dNE6ndvdB6SpYzmSWAjcyUP7YXkCga3S76nCU7cXRTIq1ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753952449; c=relaxed/simple;
-	bh=5gyLvzXBHWaUkemWubKAVK90oy5QIrZdgQXB+pi26Bk=;
+	s=arc-20240116; t=1753952454; c=relaxed/simple;
+	bh=G31/ZiMin1weTE4bFUtvX162FUEp4rxiHl/9S5fpl0s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZZr1L7l37sFjWqc0/QPUDR6ihC4tvvkNuPJzvupkFwhEeV2GJg5J/LeTDuGYVAl9N5rqx4MYtCMCWqUGa05kYErw663CYM3zvsBu/U3ObCKRHi5obV0n1Nv6eNNU7PNwpYfqajLDMyR/wxcE4oZeP7T9uZz0u7oQcLUstUeDIcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G/YpHuEJ; arc=none smtp.client-ip=209.85.210.177
+	 MIME-Version; b=C9Zzsm1ZycSPAitRTUlmLpWN/Qi/ikapqG2o+y+3w1zwW4hqPpAAFsfav92O1Ol8mkZfWcIVvZWi0mhCGQlGDzPpGEYKgCwCggVV6VPJ75J2Ew1BPjttsDB0Dq9AmcGAztKCC/Dl5nyYh+QGgRczSYx8gfultmnoK1YR6WYuDm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eEF+0WVb; arc=none smtp.client-ip=209.85.210.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G/YpHuEJ"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-76bc68cc9e4so195313b3a.2
-        for <git@vger.kernel.org>; Thu, 31 Jul 2025 02:00:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eEF+0WVb"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-76b0724d64bso627670b3a.1
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 02:00:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753952447; x=1754557247; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753952452; x=1754557252; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5I+uc0lYhXDbC/jtgMT0YGIaR57YBVfOJqaRjYfjFbE=;
-        b=G/YpHuEJvaXwF/ummTv1/0HmPz/JW5Y44Vkh862lYfuxMrfmMX25Zav4YZx4F7dJkG
-         zC1hLZvY/7JhM5PJGmVJKTCsMbRtI1xUiU1Ft2no/BUdR9H6ZDs/EeX/J/emm/ANYAXl
-         H0gSj7InKVh39XTXluGnyTHJCaOFzO0fVT9pvBlO5yLeTJwcTiRPBKnrXwAtVUoxGH/+
-         Bu6WKygaeXbaQufR9BAwCDU7W/HnFVpweYvj8OmVOSAd+wkc37yUYLLCx17hdbCPlpyi
-         wW8tRveOCzbXf3nFIBATEkcrNx9KK/pf0FTwcioGy1IiFB7dz6iFeW747TH3GlwvqNgm
-         449Q==
+        bh=i8F093nCyJn+sF6FeIQbNSbpTuhmCKBxQ7dTwq7w9II=;
+        b=eEF+0WVb5IaUZZeucJTxya6qG/1GC7KsATEUdrhdkDCQYbbaY1yVo9kJm80PPn+anw
+         63DCnD3YppgMssK8eF4cRkzB4b2mleSJYgB4HtxKS2RNpmGQIJrwj8ktT/5cDyGNET/F
+         m/Zl0zwHWyl0dzAM1eIvTudjYe62HHYNLjejFL69eYFQWbmRi2zJ4pvEC9fq/K2cxnnO
+         53+C/3KKfJfHfuYoMITOR7E7PfQHiPl5vsGFD9wj1FS57TzuvizIpaLLgcbZyKyriyEl
+         kjIli8bHFmtr0gd/bGr+PZByqRFVKYidi/OZVWuxcvic9uxY0clyfMWc13QaJbu1BDmu
+         iHBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753952447; x=1754557247;
+        d=1e100.net; s=20230601; t=1753952452; x=1754557252;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5I+uc0lYhXDbC/jtgMT0YGIaR57YBVfOJqaRjYfjFbE=;
-        b=OFvirn9kzWwt4OCm3P+cr6qa8jMxsZUoDKAf8kvHKNsvw4dWEm5uqH9elEZvx+X/N4
-         LIqJo0FTawcVqW5Ci18apXFDQnbad0GF2oJ7Oe0I+TaMLLb6pPeLKnSGhwTEd0c/M4WK
-         LghJzluGM3bV1hfYnX2N4eICSIW77YedOdkDaN0a+nQ0D+0mKDy3KN1GZOGp/j65VSHW
-         J3F9SI1M1jtdip3XxbDOmzg896caq6qfNxa7xjFgGmMWlLGSGaY01zqbK1MIEb/Q2rzE
-         c5i5zH1S/OV156vPFJxgL+TCJme6L/nJVG5+ajtLwLFbpW9tyYeVXJ2RuZ9GwRLWN8jA
-         ejBw==
-X-Gm-Message-State: AOJu0YycYP9QYMAxoZiiNOr2BH+HK4/haiLK0YwpqBSHFg+u7XOUHJDR
-	ZXPwZs1HYZWdnUQscr6j/GSi4zTeR1tId/pIPfyihXgWkWrVUCtGDL9rqEJrPQ==
-X-Gm-Gg: ASbGncvupLT/U8E8PIm0z6QQ0Yp3daG2wdOY62ALuI/PdyqyqTl8ROXdO+K+unB0njp
-	HtC776H038jks517P1LjaZvJiO/q6g0DAalLvn6pzlTESh9i5tS/k5Ickg+GTuokgSKpphXVqEn
-	/iriN2mvbPo2vuRMlMinTMuhbx0D7LGlA5ENZCn54OpvADVa41yL6f2esSQOavZMYQS23vexn9z
-	AFCsL1DRcsw91XM5xSdAnrkCw3QldbxA3gO3DsAmRvD78JMrOZ39krbi8W2UpLsTUcw4U2nYHHW
-	xZfX/cIzMd8ScaBw8eewwHchvfAEB+5t2+tt3twEvmTmt94MjlquAVjVrXcM6BlyXHu37l30tc/
-	0gMoaNlZrrv5LcD1s38yoLIiS+QX3FQ==
-X-Google-Smtp-Source: AGHT+IHIZqaFJZrc+7zuVHl6YGc5FhA/3cznk1RFLyG+DxgREEAu9473IYi8XcT0o8GkfFuTWHh3Ug==
-X-Received: by 2002:a05:6a00:754f:b0:769:9f87:1dfa with SMTP id d2e1a72fcca58-76ab30dadcdmr7723816b3a.23.1753952446837;
-        Thu, 31 Jul 2025 02:00:46 -0700 (PDT)
+        bh=i8F093nCyJn+sF6FeIQbNSbpTuhmCKBxQ7dTwq7w9II=;
+        b=ZpXEwgKHqi0k70y4epJ766hETY4Uj1Z5ztef58SEobfKzrA0arPhfxgMjPhF340zOC
+         LMyMnjGMHZC1oHqf9TaALLw5/rq4XWnrp+WvOS7GDWXru1fjOUFJU4yEglXtlFKPpZG8
+         KX4Fcw3x9G+ZD0P+AnyzP8uwA2GLaQXnWFrsM6zG6lnuwLxkbhNveBNGszQQ95YlYR3z
+         Fln6D7AoNIqNO09TSusOYnnM/NzJnrAeTHJlpJhN7Cb02HZc++Q2IQUSk0/lB1wseqN/
+         HDaABHsgcaI1EfkSnjL37KohA5QNL+03ZVw3NcGQrFWB5pyXZnppdplqjHX6o6c7S+va
+         rrVA==
+X-Gm-Message-State: AOJu0Ywbo7SNz8O3e6rvt02pIXhJXiLFnk+QRGihtsJIGBwrjW8e9tVS
+	DmSsbqPF6IO4WFDOEWwNRSxL6uPyGCztvLQSzPwp5RlB00hojqpF080KFokkkg==
+X-Gm-Gg: ASbGnctWzumWquh8sl3sf3XCYr1QiUWUvMgFtR0eXe56dGwuwaJE0u/FQLlkWfLUe+K
+	PnitbfA75hmG0Td9FLggW05FZGNbyhlnPbKmG3x4S2G+1B5b/ev80xczpUsd27fFBq9rAmrQZHo
+	Bm6d1SV83dI7Dd242NLkSsAWXVsLnXpFuZT5/0A7qUF1+EDCtapmYjgHMWiacVKVQHdVBqImYNr
+	hcF7k0JpuJSo3nFwHfdyQWQFjCG3/QyecwIPWE/f5nrL/nZWmY0t8oCKULkFOm9Ip1ylGYogmPF
+	cvhPAnXrRpzCZVRNs57+aXCOtZRfnodeum/fIMNWRDRm08kxGIpSUGImfjxzA1UTurOCkc7NFog
+	LrsRkD99FJ7AB8z0G9e0=
+X-Google-Smtp-Source: AGHT+IEcszqo1xRF7j+I/usNut4OMiqWgPL3VvNsc98iwqBHdZwkd0PYv6Y73VRReVFRvsdPuTLHeQ==
+X-Received: by 2002:a05:6a00:2e28:b0:736:a8db:93bb with SMTP id d2e1a72fcca58-76ab0827c94mr10090880b3a.5.1753952451534;
+        Thu, 31 Jul 2025 02:00:51 -0700 (PDT)
 Received: from meet.. ([103.176.11.198])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bccfbd22csm1057745b3a.65.2025.07.31.02.00.43
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bccfbd22csm1057745b3a.65.2025.07.31.02.00.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Jul 2025 02:00:46 -0700 (PDT)
+        Thu, 31 Jul 2025 02:00:51 -0700 (PDT)
 From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -64,13 +64,20 @@ Cc: ps@pks.im,
 	karthik.188@gmail.com,
 	gitster@pobox.com,
 	sunshine@sunshineco.com,
-	Meet Soni <meetsoni3017@gmail.com>
-Subject: [GSoC][RFC PATCH v4 0/5] Add refs list subcommand
-Date: Thu, 31 Jul 2025 14:30:35 +0530
-Message-Id: <20250731090040.1625303-1-meetsoni3017@gmail.com>
+	Meet Soni <meetsoni3017@gmail.com>,
+	Aaron Lipman <alipman88@gmail.com>,
+	=?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Victoria Dye <vdye@github.com>,
+	Derrick Stolee <stolee@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: [GSoC][RFC PATCH v4 1/5] doc: factor out common option
+Date: Thu, 31 Jul 2025 14:30:36 +0530
+Message-Id: <20250731090040.1625303-2-meetsoni3017@gmail.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250723064313.29866-1-meetsoni3017@gmail.com>
+In-Reply-To: <20250731090040.1625303-1-meetsoni3017@gmail.com>
 References: <20250723064313.29866-1-meetsoni3017@gmail.com>
+ <20250731090040.1625303-1-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,122 +86,200 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello everyone,
+In preparation for adding documentation for `git refs list`, factor out
+the common options from the `git-for-each-ref` man page into a
+shareable file `for-each-ref-options.adoc` and update
+`git-for-each-ref.adoc` to use an `include::` macro.
 
-This is the fourth version of the patch series that introduces the git
-refs list subcommand.
+This change is a pure refactoring and results in no change to the
+final rendered documentation for `for-each-ref`.
 
-Changes in v4:
-
-  - Implemented architectural refactoring. The core logic of
-    for-each-ref now resides in a shared helper function, and both
-    for-each-ref and refs list have been simplified to thin wrappers
-    around it.
-
-  - The usage strings have also been refactored. The common options
-    are now defined in a shared macro in a new for-each-ref.h header.
-
-  - The patch series has been further split to cleanly separate the
-    preparatory refactoring commits (for both the C code and the
-    AsciiDoc documentation) from the commit that introduces the new
-    feature.
-
-  - As a beneficial side-effect of unifying the usage strings, this
-    series now fixes a pre-existing inconsistency between the --help
-    output and the man page for for-each-ref. This allows a known
-    breakage for it in the t0450 documentation test to be removed.
-
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: shejialuo <shejialuo@gmail.com>
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
 ---
-
-(v1 cover-letter text)
-
-This patch series introduces `git refs list` as a modern replacement for
-`git for-each-ref`, as part of an effort to consolidate ref-related
-functionality under a unified `git refs` command.
-
-Git's ref-related operations are currently handled by several distinct
-commands, such as `git show-ref`, `git for-each-ref`, `git update-ref`,
-`git pack-refs`, etc. This distribution has a few practical drawbacks:
-
-- Users need to rely on multiple commands for related tasks involving
-  refs.
-
-- The commands may differ slightly in behavior and option syntax,
-  leading to inconsistency.
-
-We propose a long-term consolidation effort to bring ref-related
-subcommands under the umbrella of a single command: `git refs`.
-
-The implementation of `git refs list` is functionally identical to `git
-for-each-ref`. It reuses the same internal logic (cmd_for_each_ref) to
-ensure complete backward compatibility. The purpose of this patch is not
-to introduce new behavior but to provide an alternate entry point under
-the consolidated `git refs` namespace.
-
-The motivation behind this change is twofold:
-
-- Consolidation: Centralizing ref-related operations makes them easier
-  to discover, use, and maintain.
-
-- Evolution: While the initial goal is parity with existing commands,
-  this consolidation allows for careful reconsideration of which
-  features are essential. Over time, we can:
-
-  - Remove legacy or obscure options that are no longer needed.
-  - Add improvements that wouldn't make sense to bolt onto legacy
-    commands.
-  - Offering a more consistent and user-friendly surface.
-
-To verify backward compatibility, this patch also includes a test
-`t/t1461-refs-list.sh`, which runs the full `t6300-for-each-ref.sh` test
-using `git refs list`. The test uses ${GIT_REFS_LIST_CMD:-for-each-ref}
-to allow substitution without duplicating tests.
-
-This patch is deliberately conservative: it introduces no behavioral
-changes and leaves `for-each-ref` untouched. The goal is to lay
-groundwork and demonstrate viability of ref consolidation within `git
-refs`.
-
-Going forward, I'd like to initiate a discussion on what the ideal
-surface of `git refs list` should look like. Which options and features
-from `for-each-ref` should be carried over? Are there any that are
-obsolete or overly niche? What improvements might be worth considering
-now that we have a new, consolidated interface?
-
-Feedback on this, especially from those who rely on `for-each-ref` in
-scripts or tooling would be very helpful.
-
-Meet Soni (5):
-  doc: factor out common option
-  builtin/for-each-ref: factor out core logic into a helper
-  builtin/refs: add list subcommand
-  t6300: refactor tests to be shareable
-  t: add test for git refs list subcommand
-
- Documentation/for-each-ref-options.adoc |   79 +
- Documentation/git-for-each-ref.adoc     |   80 +-
- Documentation/git-refs.adoc             |   16 +
- builtin/for-each-ref.c                  |   35 +-
- builtin/refs.c                          |   14 +
- for-each-ref.h                          |   24 +
- t/for-each-ref-tests.sh                 | 2141 +++++++++++++++++++++++
- t/meson.build                           |    1 +
- t/t0450/adoc-help-mismatches            |    1 -
- t/t1461-refs-list.sh                    |    8 +
- t/t6300-for-each-ref.sh                 | 2140 +---------------------
- 11 files changed, 2305 insertions(+), 2234 deletions(-)
+ Documentation/for-each-ref-options.adoc | 79 ++++++++++++++++++++++++
+ Documentation/git-for-each-ref.adoc     | 80 +------------------------
+ 2 files changed, 80 insertions(+), 79 deletions(-)
  create mode 100644 Documentation/for-each-ref-options.adoc
- create mode 100644 for-each-ref.h
- create mode 100644 t/for-each-ref-tests.sh
- create mode 100755 t/t1461-refs-list.sh
 
-Range-diff against v3:
-1:  547b0bbf8f < -:  ---------- builtin/refs: add list subcommand
--:  ---------- > 1:  d2fa47a2b9 doc: factor out common option
--:  ---------- > 2:  5084db4d14 builtin/for-each-ref: factor out core logic into a helper
--:  ---------- > 3:  1a15cd454b builtin/refs: add list subcommand
-2:  5d5057ff98 = 4:  29c41d682b t6300: refactor tests to be shareable
-3:  b9cb9cdf48 = 5:  0fd1f714c9 t: add test for git refs list subcommand
+diff --git a/Documentation/for-each-ref-options.adoc b/Documentation/for-each-ref-options.adoc
+new file mode 100644
+index 0000000000..5f3a85bf64
+--- /dev/null
++++ b/Documentation/for-each-ref-options.adoc
+@@ -0,0 +1,79 @@
++<pattern>...::
++	If one or more patterns are given, only refs are shown that
++	match against at least one pattern, either using fnmatch(3) or
++	literally, in the latter case matching completely or from the
++	beginning up to a slash.
++
++--stdin::
++	If `--stdin` is supplied, then the list of patterns is read from
++	standard input instead of from the argument list.
++
++--count=<count>::
++	By default the command shows all refs that match
++	`<pattern>`.  This option makes it stop after showing
++	that many refs.
++
++--sort=<key>::
++	A field name to sort on.  Prefix `-` to sort in
++	descending order of the value.  When unspecified,
++	`refname` is used.  You may use the --sort=<key> option
++	multiple times, in which case the last key becomes the primary
++	key.
++
++--format=<format>::
++	A string that interpolates `%(fieldname)` from a ref being shown and
++	the object it points at. In addition, the string literal `%%`
++	renders as `%` and `%xx` - where `xx` are hex digits - renders as
++	the character with hex code `xx`. For example, `%00` interpolates to
++	`\0` (NUL), `%09` to `\t` (TAB), and `%0a` to `\n` (LF).
+++
++When unspecified, `<format>` defaults to `%(objectname) SPC %(objecttype)
++TAB %(refname)`.
++
++--color[=<when>]::
++	Respect any colors specified in the `--format` option. The
++	`<when>` field must be one of `always`, `never`, or `auto` (if
++	`<when>` is absent, behave as if `always` was given).
++
++--shell::
++--perl::
++--python::
++--tcl::
++	If given, strings that substitute `%(fieldname)`
++	placeholders are quoted as string literals suitable for
++	the specified host language.  This is meant to produce
++	a scriptlet that can directly be `eval`ed.
++
++--points-at=<object>::
++	Only list refs which points at the given object.
++
++--merged[=<object>]::
++	Only list refs whose tips are reachable from the
++	specified commit (HEAD if not specified).
++
++--no-merged[=<object>]::
++	Only list refs whose tips are not reachable from the
++	specified commit (HEAD if not specified).
++
++--contains[=<object>]::
++	Only list refs which contain the specified commit (HEAD if not
++	specified).
++
++--no-contains[=<object>]::
++	Only list refs which don't contain the specified commit (HEAD
++	if not specified).
++
++--ignore-case::
++	Sorting and filtering refs are case insensitive.
++
++--omit-empty::
++	Do not print a newline after formatted refs where the format expands
++	to the empty string.
++
++--exclude=<pattern>::
++	If one or more patterns are given, only refs which do not match
++	any excluded pattern(s) are shown. Matching is done using the
++	same rules as `<pattern>` above.
++
++--include-root-refs::
++	List root refs (HEAD and pseudorefs) apart from regular refs.
+diff --git a/Documentation/git-for-each-ref.adoc b/Documentation/git-for-each-ref.adoc
+index 5ef89fc0fe..c3cf1752e3 100644
+--- a/Documentation/git-for-each-ref.adoc
++++ b/Documentation/git-for-each-ref.adoc
+@@ -28,85 +28,7 @@ host language allowing their direct evaluation in that language.
+ 
+ OPTIONS
+ -------
+-<pattern>...::
+-	If one or more patterns are given, only refs are shown that
+-	match against at least one pattern, either using fnmatch(3) or
+-	literally, in the latter case matching completely or from the
+-	beginning up to a slash.
+-
+---stdin::
+-	If `--stdin` is supplied, then the list of patterns is read from
+-	standard input instead of from the argument list.
+-
+---count=<count>::
+-	By default the command shows all refs that match
+-	`<pattern>`.  This option makes it stop after showing
+-	that many refs.
+-
+---sort=<key>::
+-	A field name to sort on.  Prefix `-` to sort in
+-	descending order of the value.  When unspecified,
+-	`refname` is used.  You may use the --sort=<key> option
+-	multiple times, in which case the last key becomes the primary
+-	key.
+-
+---format=<format>::
+-	A string that interpolates `%(fieldname)` from a ref being shown and
+-	the object it points at. In addition, the string literal `%%`
+-	renders as `%` and `%xx` - where `xx` are hex digits - renders as
+-	the character with hex code `xx`. For example, `%00` interpolates to
+-	`\0` (NUL), `%09` to `\t` (TAB), and `%0a` to `\n` (LF).
+-+
+-When unspecified, `<format>` defaults to `%(objectname) SPC %(objecttype)
+-TAB %(refname)`.
+-
+---color[=<when>]::
+-	Respect any colors specified in the `--format` option. The
+-	`<when>` field must be one of `always`, `never`, or `auto` (if
+-	`<when>` is absent, behave as if `always` was given).
+-
+---shell::
+---perl::
+---python::
+---tcl::
+-	If given, strings that substitute `%(fieldname)`
+-	placeholders are quoted as string literals suitable for
+-	the specified host language.  This is meant to produce
+-	a scriptlet that can directly be `eval`ed.
+-
+---points-at=<object>::
+-	Only list refs which points at the given object.
+-
+---merged[=<object>]::
+-	Only list refs whose tips are reachable from the
+-	specified commit (HEAD if not specified).
+-
+---no-merged[=<object>]::
+-	Only list refs whose tips are not reachable from the
+-	specified commit (HEAD if not specified).
+-
+---contains[=<object>]::
+-	Only list refs which contain the specified commit (HEAD if not
+-	specified).
+-
+---no-contains[=<object>]::
+-	Only list refs which don't contain the specified commit (HEAD
+-	if not specified).
+-
+---ignore-case::
+-	Sorting and filtering refs are case insensitive.
+-
+---omit-empty::
+-	Do not print a newline after formatted refs where the format expands
+-	to the empty string.
+-
+---exclude=<pattern>::
+-	If one or more patterns are given, only refs which do not match
+-	any excluded pattern(s) are shown. Matching is done using the
+-	same rules as `<pattern>` above.
+-
+---include-root-refs::
+-	List root refs (HEAD and pseudorefs) apart from regular refs.
++include::for-each-ref-options.adoc[]
+ 
+ FIELD NAMES
+ -----------
 -- 
 2.34.1
 
