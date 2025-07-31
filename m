@@ -1,131 +1,124 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5F286347
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 14:20:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E7F19AD89
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 14:30:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753971655; cv=none; b=KTsrgku3SQ7AThi9+m9pIWLTB7mzJDa4HIvC2njcy9gvV9n06IubYjr3lxIyVPg8LCP0OvsWGRw5OapvmO3eWUeKWEr6cK2juULmngwbeOGPzWpndO6riymGVj7zopfh65II+sUZg9VBLLCYD/C7UeC72IfkQwH/PP04Faeyemo=
+	t=1753972208; cv=none; b=LKyrprRn4B5ZkiMpiXJqPT04WXolmvvyfkjnO/N0HTAe1QEe7/BlAT7QnYt2QROeS37fXrFJAckp+52SK7V+F/MQ02UgkPVj21Nw5+Bdak2onpE3PsGwv7rzBitYrtolc5hyPyzIdD4Vqo9P9F1twgvtwkiB/hYsuDzfXtyOzjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753971655; c=relaxed/simple;
-	bh=2UFQQzE1dNlWFAr9WZvJg0+SjQw6DOY6KUrsBtaVZ8w=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Sp4MQIfnqwxvQOsAYqAvH3HyzyFrizOpJgcTJpBVusmYnlqRXN5zZukJByYN+jNi/WCWL27th/i4bGcvOYm2FUHjfXss54NgmLajK4jcjfXl3onf1/ivvpFzE3mfTgeAIfU5JMBhtNs6QyVK6HFrUy/zn/BakNW/8MtkLaelorQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vz0lTmHN; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753972208; c=relaxed/simple;
+	bh=y+oEADY82I1jrG3BLeSmoXtl6xRSY6FxOep1Bw/mLyI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fEaxOI6YgI6f1kj+fhjmfZAQa7o1WefjPX/s+abN5HJ8HWh4upE/JILkKtehcyzQ+3lxWjfzsQqPZX/hKfzQ/puqLiFoF3gQpRj0uLH3NxIWgwVBE3QZZE8cgrFxFMHylqVF4g8hdd6rHV8PCLCYjz/rKTmR3U/KVjUDWAiBq00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fw+Dl25A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fFShy49J; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vz0lTmHN"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3b7862bd22bso1264311f8f.1
-        for <git@vger.kernel.org>; Thu, 31 Jul 2025 07:20:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753971652; x=1754576452; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6f8qegzW21fA+Ecm4OUYYk10SaHCGMjLtY/S/bCSQwc=;
-        b=Vz0lTmHNyEeo7S3jka+e8UeiWxkODv6hWf+OtI07asOzfIBeCkdgj+scnyA45ewwap
-         k4vi9gqVT0WAYQ0fUf/3o5PuY4OOr+ud9cxWZTo5yx9wzpKx4/RhJAo9xsxk2ahuX5xt
-         equbeVfST6RzAZ0m89KNsaMJAjUB/yAD49cF7hcG4s+7GrdonGb73fXYK8yi/5u5Kwzj
-         E9QEIC0TFPCMxO1T2RP4ygvQq7nyEIWhfRYLtdtaq/cywGlDzgNxKDHGhcIOE8q5t1x/
-         ++WoWYgVpMa/f1cxtPSsVE2ETT/ixIxpnOlusnaKBsetkfBL/8xkY7Cp5EdBt8hmjige
-         Vs6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753971652; x=1754576452;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6f8qegzW21fA+Ecm4OUYYk10SaHCGMjLtY/S/bCSQwc=;
-        b=fqoGKtXte8+YOkFL3LmzYKfdu5FaSiEvbB+rphUFm+HPbKhsQ/Ys5ybhHldt8xoZ1B
-         YORGkgqnu7rGX8hKHY3VyJB/ig6Kr77TAVudCzv/7+FLThArPi1lYLJ3ljRFkvAm120J
-         3D/PC0pel+StJzsyUQu6PrjSV1MiuO0cLYeVXQjIszpLCKYcot//POdgM5ABMbs+xXCZ
-         aoh0zlcxItZFdn5HeuB5fuFnZMwXKuy6VmYhmyWG194RLhk3JvF5NLX3537S/ojedPe5
-         oi66yYq8zFK4F73byjbqzWnRZXIiBkdBO8cDxdny61TOC5IdZ51nN22Uo64omM2aE8yo
-         Hffg==
-X-Forwarded-Encrypted: i=1; AJvYcCXRtm6lM2+3Gdhq0xMwxoTLNUYW2ekhVnr1Odj8QVJ6gkAlpPdUKduB/EAxjJyAljodwn0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx9coY+Y1qGLpgzZIgd3vo39wH+los+QcSAi7Jt5oC0eAa3RXbf
-	8jX3ly/tbdkoF92/b173sJYtCFKO/qQ+g6t8wokuwkoSHRClzI6CSVdU
-X-Gm-Gg: ASbGncujO6FqXDlRxowpbFGzw8zWySIbcof83ULDOx4METqpTpyXQoQ0gbJEASwEXhO
-	VMMmBPPVNOZPXWA2aHPG6na5rKRWIBGdMdR0BpgAQTn30UiUvHnQEVZvwsjQiTb9dQhWLBuRuni
-	SllqRPzr6vAKFnt0WcY+PduXVh8RUCRvPUs8om42L7HC17nuvg1Ow9rV0MV8KAH6cGlTiE8/y/d
-	KduAN1hgR0fKPDVfqWMHLjPo3hiN33bLRQidhlorXz+TU1Ie1UicyLTEcKkSvwaRW/gucgW05Sf
-	6mTwsljh3HclbbqzrrBw5iIXHmtrBuRWQmiUIKtL1sF0AhC8P3Hj8YVPITnMzWDaGSrpl/R5VtW
-	HD2FF62YxN/dJnFXgwr8MOu9QZ94EOpEu9iHqZb+7hrCgeQJxcCGo7ZDhUtdBxhZy7ESJr8PKqY
-	mR/rZP5HF5R4I=
-X-Google-Smtp-Source: AGHT+IGeCsGbIYkXLvUZ62h8/K9nVnYemMtwCdWbM05Nb1Ixy49H7NcMJPMiKom9/aeDPM3BT/Rk2g==
-X-Received: by 2002:a05:6000:1acd:b0:3b7:8735:9453 with SMTP id ffacd0b85a97d-3b79d41f9d5mr1999625f8f.3.1753971652136;
-        Thu, 31 Jul 2025 07:20:52 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3abf33sm2552634f8f.7.2025.07.31.07.20.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Jul 2025 07:20:51 -0700 (PDT)
-Message-ID: <ad453eee-23cd-42fe-97bd-1ff0fc2f3edf@gmail.com>
-Date: Thu, 31 Jul 2025 15:20:44 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fw+Dl25A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fFShy49J"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7A04B7A23B0;
+	Thu, 31 Jul 2025 10:30:04 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Thu, 31 Jul 2025 10:30:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1753972204;
+	 x=1754058604; bh=y8ocCYV/1LdrkDjcsyPmrUfoy5jEaoafUiU6cjTf4c4=; b=
+	Fw+Dl25ADSenyjely/Psgg9mD2bhob7hC9IfDEsjn1cQSCTtz3Y/SXEOpCSsWKbG
+	C2NL4HBH/T75pbArxsLD11CuNXHpanjOHtARW/OlKxdMTCiL3h0p8oBmTPeMUfWM
+	uh+f1Wt+NQW0a0p/6np7ED5JlmvkljgG38xMICLT++0vlWQPHTXPKoQ7pvKsoDcw
+	dgPdgTeFM7dVNJ9IWdOw1grIuAfGKVLYRv96Alf3e4QRbj1bbtEZtsBNnE7NB2dM
+	sSP/WT0+FQznBTjlcREXfiCXCbpV5tuzJJ6ILDwm3oUzn4Z+XEVo24QHNXdg4SKU
+	BYY4HXgEhF/BlVl8gy7UrQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753972204; x=
+	1754058604; bh=y8ocCYV/1LdrkDjcsyPmrUfoy5jEaoafUiU6cjTf4c4=; b=f
+	FShy49Jn+ENGUQE/9QZUlioBqxVL0UQkJHEIQ6ztY5rTIyQdG8NP1zDPuqfAROiQ
+	Y5kUx2RPzMCQ/SJGjbH+mnNCjjuU6dEjVVmoluxjF/14K9OUJhjCVwF33z5GFkn/
+	gG5N0KkAvdkfAy1LWJ3lUsKBAd4iEg3oyYTefqoAZCG+M6+GzmU2voVKxnIM2f/O
+	Ewv7MJ60P214JJz0YwlmO88KWRJ8O5UATSZOe4lq2/3uKJjTOygu05Z4N1iHqqo+
+	yfFdFZjhGREWCRKY1AcbGo003718m2w1B4FJUxdlX8jrqnSZPt/PogvFNtxXksAv
+	9JQhogsEAHq8QMhfSRuCA==
+X-ME-Sender: <xms:7H2LaMRTwqZ_VbDqjPMIOR_xEtRm3c1LNGb6k_62gcWQzQTCpMtwXQ>
+    <xme:7H2LaNDKLf0fc8dzlyYB2pnKj0XRCcSkiBZ51aEIU3bRpM-fhrd_SulkTjMz98YIX
+    TMicEP-3-LyQGmVaw>
+X-ME-Received: <xmr:7H2LaDS-QDHg6HfsYEGTeTTIey4PsoRQ-XYsGgDkNH55Mc5eSXvEPRfGDVCURmipfYE-hLtZOTUDS8C9barp_B_Iryida4JFYhE3aMc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddutdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:7H2LaLovxf3CdDlqfO1VLWBg7qUa6mgvrs1JcuhFBOtl6jNDiw6ogQ>
+    <xmx:7H2LaFzv34tTxkFrytfOLlm2F7Bi60y8tv9TiH2oPgbO6d7DdOU3ZA>
+    <xmx:7H2LaAKcCJ6DN0cPB1ouKyDfAJHBMIp2lqnFCxYj29kr--TKZPIbwA>
+    <xmx:7H2LaHL52vZOyHnJ6d3avSWZ7KYfLw2r6fEn-2AF_T8yE3-YhCMKKQ>
+    <xmx:7H2LaFrjLfilwHcUe95nYLyXWJMidvBOxm1CHevK3fq1HO51778kGWSl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 31 Jul 2025 10:30:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 9/9] sub-process: do not use strbuf_split*()
+In-Reply-To: <CAP8UFD2qAOhRN=b9PB_eXQS1PntZKX95ZK=V4G=10n3iU2xtbw@mail.gmail.com>
+	(Christian Couder's message of "Thu, 31 Jul 2025 10:50:50 +0200")
+References: <20250731074154.2835370-1-gitster@pobox.com>
+	<20250731074154.2835370-10-gitster@pobox.com>
+	<CAP8UFD2qAOhRN=b9PB_eXQS1PntZKX95ZK=V4G=10n3iU2xtbw@mail.gmail.com>
+Date: Thu, 31 Jul 2025 07:30:01 -0700
+Message-ID: <xmqqikj8touu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 4/7] xdiff: make fields of xrecord_t Rust friendly
-To: Ezekiel Newren <ezekielnewren@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Taylor Blau <me@ttaylorr.com>
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <6df9f50a8f4ca29b2c3ba1e39982b6d516146bb3.1752784344.git.gitgitgadget@gmail.com>
- <91f6352f-abc4-4e99-938b-6a56aba2faed@gmail.com>
- <CAH=ZcbCnEpBokM9rxmmkeM9GT948n7+RipXODHLfPssuwJuVCw@mail.gmail.com>
- <a765cde9-0fad-414a-996f-2ec162d1e4f3@gmail.com>
- <CAH=ZcbALsQqTrvNJ4ZKmVWc6PHtTA+8k8p6_D=x=BfMXxnayfA@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAH=ZcbALsQqTrvNJ4ZKmVWc6PHtTA+8k8p6_D=x=BfMXxnayfA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-On 28/07/2025 21:14, Ezekiel Newren wrote:
-> On Mon, Jul 28, 2025 at 1:52 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> 
-> Ah, I misunderstood the scope of your question. I could not fit an
-> example of why this design pattern made sense into this patch series,
-> so I'll explain with an example here:
-> 
-> If C defines a struct like below then it's obvious how to translate
-> that into rust for ffi purposes. It also makes it clear that this C
-> struct is expressly for the purpose of C <-> Rust interoperability.
-> struct some_struct {
->      u8* ptr;
->      usize length;
->      u64 counter;
-> };
-> 
-> This is how that C struct needs to be defined in Rust so that it can
-> interoperate with C, and making C use the Rust types reduces the
-> chance of copy paste, and primitive type definition mismatch errors.
-> #[repr(C)]
-> pub struct some_struct {
->      ptr: *mut u8,
->      length: usize,
->      counter: u64,
-> };
+Christian Couder <christian.couder@gmail.com> writes:
 
-How is the pointer, length pair used in rust? Normally one would use a 
-slice so do we have to construct a slice every time we want to use the 
-data in this struct, or do we copy the data in this struct into to a an 
-idiomatic struct with a slice member? If we end up copying there doesn't 
-seem much point in changing all the types in the C struct as we can 
-define a rust struct using *c_char, c_long etc. to interface with the C 
-code and covert them to an appropriate rust type when we copy the data 
-to the idiomatic version that is then used by the rust of the rust code. 
-I can see the value of the typedefs for documenting C<->rust interop if 
-the same struct is used by both but if we end up copying data on the 
-rust side I'm not so sure.
+> On Thu, Jul 31, 2025 at 9:44 AM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> The code to read status from subprocess reads one packet line and
+>> tries to find "status=<foo>".  It is way overkill to split the line
+>> into an array of two strbufs to extract <foo>.
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  sub-process.c | 16 +++++++---------
+>>  1 file changed, 7 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/sub-process.c b/sub-process.c
+>> index 1daf5a9752..de3235c15a 100644
+>> --- a/sub-process.c
+>> +++ b/sub-process.c
+>> @@ -5,6 +5,7 @@
+>>  #include "sub-process.h"
+>>  #include "sigchain.h"
+>>  #include "pkt-line.h"
+>> +#include "string-list.h"
+>
+> Is this needed? It looks like skip_prefix() (not any string_list
+> function) is used instead of strbuf_split_str().
 
-Thanks
+Yes, as you suspected, I initially rewrote strbuf_split*() with
+string_list_split*(), but then realized there is no need to split
+the string into tokens in the first place.
 
-Phillip
-
+Will remove the unused include.
+Thanks for carefully reading.
