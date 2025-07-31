@@ -1,215 +1,116 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E893B1632DF
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 19:40:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAD81F7569
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 19:45:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753990815; cv=none; b=XZvwn6Er+8xFJD8r74QFg0Sni7JQX5jQ5lyHxQJO8VQ4Aj30wh30LahdMeYtxcxeEOh4wjsiVdrE+0JtNHqVKT1G6YfKTUbOHjQJIv3bEc9H7dA4A6Z3S4aoOrB23KxbUu7ga5Ft2HjpqEX0G4lS9L2PtFqAimLs9eqPLQP0EKw=
+	t=1753991135; cv=none; b=gSpb53f6LNiCC9sFi103wAfCav0W76NalfZgBiMhDah032rO3wmr5gAjjlaRdcc85MLzURBRWhoLB/XNdtLcy7Xw4+QhvGtcZFgQWA2ByJQ7fcWmcVQy6DjG4UL/TAAeBZ+n9HDK5xHwIXKJm0keuwS7U2szznXzf0HzAsF/L6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753990815; c=relaxed/simple;
-	bh=eQgpWDmEpLZxH2X9bkXZCTF0Y5z8+F2p7tN1/2xY7bY=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=ID/0cjY6st3qUhnjHpe1s4jZBQJINyHOnjviPsHFaRodpYNOJdfEVmhxB4vjT8etKdZElWUKctuRssqywnJmfoS/sDFqcX8TFymjI5rA8999DkavZKoJWA2MWI2F3Qpe5qP7liPpuj4jsxzNimomcEWkZT/tircGCnKpAcpxfzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a8nuw8tt; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1753991135; c=relaxed/simple;
+	bh=G9lf2tFu6FK/vFeIMVq2U5A/LDIFJede6cU9AuiUksg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ro4mFdxEd3t+KH2jyRLxtxYHrLbvpClZ0JOcx54unIvEmfSRY0oo9OFrWAqYXGbHOoywAbyo9t9oXLRSckIbFo9oRDydEyKEHcg+6h+k9utnyWfSY3KI9EfFB+4i9rf5AyY1JEWpPH00KNdaXiDmXvHmk2nDwsBGkYA1mVGnAyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a8nuw8tt"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-748e63d4b05so98595b3a.2
-        for <git@vger.kernel.org>; Thu, 31 Jul 2025 12:40:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753990813; x=1754595613; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eXk4E7v8CzcyVZERASgrHo6HU7ugX/DrYmvXRKMRP2I=;
-        b=a8nuw8ttgfCeVbu1Bx7Pk3fYWaMBYZLy1tGv3fAyRUEYZjDqsGS1MX3pqXQ7Af9NHU
-         SrR6G6FfFPSHOW6NN7adXqrMlTkx7xfR4fO58m7mnRT3Cb+DgXLKovWFoS4iMD040Avg
-         DF8/hCg1+kzZqK5o3f8CjgE4yZAhIy7AFfGscYo8l1X2R5vga6kBwIXe79dLYIEvotzP
-         YN/WBI+wxCi0FVYym5D54zNpTw6R4q+It98FrWVWeo0ZjBoaywcELE5BCuQgocdo2CGT
-         zDaHQf0NNfhEKaKdViZ/xsVYLfTNW6MrWLBxxKlbdYdGf2GACvb0dU361MmCpbZwE1Kg
-         020w==
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-70736940fccso504326d6.1
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 12:45:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753990813; x=1754595613;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1753991132; x=1754595932;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eXk4E7v8CzcyVZERASgrHo6HU7ugX/DrYmvXRKMRP2I=;
-        b=c+t2SD6n8WwVN/jODN0A2ZYSJJ1cV2mctq2aPhzbsQI5b2pyMk+1InT32leUSquwug
-         HqKwxhmNNyoPclPZTuwvRjrhHP+jVv7m9hL0pDTA3Erbr7s0wq52v83lam72SGwNrZFi
-         NitVGYXoLDuOI3eDthuyd+rkl3PPZEPbRNwENXlvxDfras3TF9zvdIQSpvyDQJ5a8Z8E
-         fTmee08pw+tE1/K4FHWZLyzpjNdK9SU0KCViliGFQ7tI8GJrudbvlzRCmeRn3b7tWYAM
-         clD5PwN1gFa03ZKzJQ9j57wjG8+z/jO8ZegcQr20Kx6zQwWCG94HgRhxP345ekZ+CjAz
-         H6PQ==
-X-Gm-Message-State: AOJu0YzCrJf8RsQOiu6V4aeG/z8geuQ6GpwrkKVkMTXBmxpydFkyRyyg
-	KWsqc37OG47lkAq2XkwGEigngIJCthZH+LxLwOYb+AxZgzyDGAbv0P1BjXGM1w==
-X-Gm-Gg: ASbGncuTFDTvIT9VSyESCeYv6NW9VbtO4mWJxovZi/8E1Gkk/WndMJQWluUCzhvTbmb
-	PXTuAD4vv8i75/KcoE0JzxaXZqrK+37ELN29b3VxGNhNW+pDdo7VsZWs1zBn6aLrendqoSHejGT
-	8+meWbkagKBCXdxCL0sREAhyWrYINhqyHFG0+Qg34zjgI2SCZmzXvyhi/tH1mpF+En/yF+Do6+p
-	V9DjgC32V+iU9Yc3HeDyt5DeTQ9d2hQLd48vycLOo4JIijMIfKC5cNJQcrJxa/eKXzw89H5hJUI
-	Ix+0Fu7uPQa4pSHYhEm2RQEa5/xfwng5mpN4p0WRT6iT8/MJo+AHDVd1mTJCxDJGMifLlQ7oAhr
-	waixVfWJyQp90lDIaLuxfGXvfsCRd8nJ0UIjvQhAgtZZ1LTcadSnNJH0=
-X-Google-Smtp-Source: AGHT+IGlq0B3aFaCXakYhISksFjXvlWCGUhsh+vtCiFwIVi/7w439RqniWYF3cTC8szNLBAbxBMPbg==
-X-Received: by 2002:a05:6a20:939f:b0:232:6809:d41a with SMTP id adf61e73a8af0-23dc0d457ecmr13586687637.14.1753990813031;
-        Thu, 31 Jul 2025 12:40:13 -0700 (PDT)
-Received: from smtpclient.apple ([2804:14c:32:8c1d:9856:3844:bdd1:13d4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bccfbce4bsm2247387b3a.77.2025.07.31.12.40.09
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 Jul 2025 12:40:12 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        bh=JMv5zACpf9BaTT+GT/2U34kiOHwLi/wR0vFa4OBHGOg=;
+        b=WWvLIfDXEdN0v2AJzdwAeq+0GZ57ELqqoMD6LSCfouCx+diWTVkCtxuABjrBLiGJrJ
+         s8ceHIHHKdzOonGiwB1glSpr/Vy99iJZVVAcQ0MqM/Zb+jcxgC6lLZgVupqD+1B3c8OE
+         wQAhvDxHkRR9SNl66rsNdBCNtjn78Cz/N3kBJ8zOSsJLYjQdH8lwwg2N3JYtCwKNn1GJ
+         gRgMcA5lD8IX/9hWkjZLXTRo6g50BgMWYrLoiOtRSmQ6UL7Ao8BQ6bxEmvxHTHCiiIwU
+         gZfhDfHC9BwMpctZwmtW34tRmTJN4XP2V+MfAmY/YzS/EO98HkoC6TBDOEhPOuHntJ8O
+         JNew==
+X-Gm-Message-State: AOJu0YwODxfUnWdCRLeIHeXfCtxgjnojwG7yRvggj4VM/s+/u6F8yPV9
+	baGQgGUvfJgr6mdPBK0cEU6kAiYBd7mTDczhViceqS+7PzmSwoqVXu4k50YippFg2z4mNNr+cY+
+	RGFXeNISDHdy/KjA2eyFeS7Md/zdD8twHKw==
+X-Gm-Gg: ASbGncsPxcg/HywdiHdiNt2GqiSmA59wLY9XGiVrusQez3bj6JRiFmCbKk9O89K3INJ
+	7MjPhjnFLLglcgGGCCpXXeKUfSVqwRCyBvrpd/7rpzQk2yNdDS85VnXGR1qr4oO7AppXwEjp1qG
+	LIqODuCNUSa8/n68q+QfRnJTWIzHOGuNUsCLagbpTeiPNj6GvsJaJDB0LMN4O5WtIwIPs16PU65
+	fV/XaSljbt+/OHyLDGGFGOBbSxrMUop1X2mV+U+XI3xhP68yVdd1cs5Clq69A==
+X-Google-Smtp-Source: AGHT+IGZz0R6OodNZcONqdomtKIf4P4PJyMJWxa6MeCjFFWUD17JGtH+/3mPEQbhWf8XLrfWd6NZuG1SBLzJ8GPxGvE=
+X-Received: by 2002:a05:6214:2aaf:b0:707:40d4:44e1 with SMTP id
+ 6a1803df08f44-70766a38db5mr55028666d6.0.1753991131949; Thu, 31 Jul 2025
+ 12:45:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [GSoC PATCH v5 2/5] repo: add the field references.format
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <CAPig+cTuiUy=+2Jf1Lrp1gaM03_zPf8EFMVSKmShqU05t-3aWQ@mail.gmail.com>
-Date: Thu, 31 Jul 2025 16:39:57 -0300
-Cc: git@vger.kernel.org,
- oswald.buddenhagen@gmx.de,
- ps@pks.im,
- karthik.188@gmail.com,
- ben.knoble@gmail.com,
- gitster@pobox.com,
- phillip.wood@dunelm.org.uk,
- jltobler@gmail.com,
- jn.avila@free.fr
-Content-Transfer-Encoding: 7bit
-Message-Id: <ACFA8EB5-2392-45AE-9C18-8AA3D0D4BC02@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250727175110.84770-1-lucasseikioshiro@gmail.com>
- <20250727175110.84770-3-lucasseikioshiro@gmail.com>
- <CAPig+cTuiUy=+2Jf1Lrp1gaM03_zPf8EFMVSKmShqU05t-3aWQ@mail.gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+MIME-Version: 1.0
+References: <20250731063949.1601669-1-gitster@pobox.com> <20250731063949.1601669-6-gitster@pobox.com>
+In-Reply-To: <20250731063949.1601669-6-gitster@pobox.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 31 Jul 2025 15:45:21 -0400
+X-Gm-Features: Ac12FXwj_lGu-KHhZCNKxs6xwVuqhNUQQFTtviQDiMKYbAiLuEsKEXLFkXDjOkw
+Message-ID: <CAPig+cSed8ZOfLxDGYVeWhA_46FQ8LZ4E0+1KQu=V7NQZmLZxw@mail.gmail.com>
+Subject: Re: [PATCH 5/5] diff: simplify parsing of diff.colormovedws
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Jul 31, 2025 at 2:40=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> The code to parse this configuration variable, whose value is a
+> comma separated known tokens like "ignore-space-change" and
+> "ignore-all-space", uses string_list_split() to split the value int
+> pieces, and then places each piece of string in a strbuf to trim,
+> before comparing the result with the list of known tokens.
 
-> Based upon the implementation, I can see that the user must type the
-> key in "dotted" form:
-> 
->    git repo info references.format
+s/int/into/
 
-Agreed, that's an important information that was missing in this
-documentation.
+> Thanks to the previous steps, now string_list_split() knows to trim
+> the resulting pieces in the string list.  Use it to simplify the
+> code.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> diff --git a/diff.c b/diff.c
+> @@ -327,29 +327,23 @@ static unsigned parse_color_moved_ws(const char *ar=
+g)
+> -       string_list_split(&l, arg, ",", -1);
+> +       string_list_split_f(&l, arg, ",", -1, STRING_LIST_SPLIT_TRIM);
+>
+>         for_each_string_list_item(i, &l) {
+> -               struct strbuf sb =3D STRBUF_INIT;
+> -               strbuf_addstr(&sb, i->string);
+> -               strbuf_trim(&sb);
+> -
+> -               if (!strcmp(sb.buf, "no"))
+> +               if (!strcmp(i->string, "no"))
+>                         ret =3D 0;
+> -               else if (!strcmp(sb.buf, "ignore-space-change"))
+> +               else if (!strcmp(i->string, "ignore-space-change"))
+>                         ret |=3D XDF_IGNORE_WHITESPACE_CHANGE;
+> -               else if (!strcmp(sb.buf, "ignore-space-at-eol"))
+> +               else if (!strcmp(i->string, "ignore-space-at-eol"))
+>                         ret |=3D XDF_IGNORE_WHITESPACE_AT_EOL;
+> -               else if (!strcmp(sb.buf, "ignore-all-space"))
+> +               else if (!strcmp(i->string, "ignore-all-space"))
+>                         ret |=3D XDF_IGNORE_WHITESPACE;
+> -               else if (!strcmp(sb.buf, "allow-indentation-change"))
+> +               else if (!strcmp(i->string, "allow-indentation-change"))
+>                         ret |=3D COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE;
+>                 else {
+>                         ret |=3D COLOR_MOVED_WS_ERROR;
+> -                       error(_("unknown color-moved-ws mode '%s', possib=
+le values are 'ignore-space-change', 'ignore-space-at-eol', 'ignore-all-spa=
+ce', 'allow-indentation-change'"), sb.buf);
+> +                       error(_("unknown color-moved-ws mode '%s', possib=
+le values are 'ignore-space-change', 'ignore-space-at-eol', 'ignore-all-spa=
+ce', 'allow-indentation-change'"), i->string);
+>                 }
+> -
+> -               strbuf_release(&sb);
+>         }
 
-> I don't think I would figure it out easily. Perhaps hand-holding the
-> user by giving an example would help.
-
-Looks like a good idea. I'll add it in the 4th path of this patchset,
-so we'll have an example with more than one field.
-
-> How can we ensure that the lexicographical-order requirement won't
-> break?
-
-Good point. We don't ensure it through tests. I plan to add an --all
-flag to retrieve all the fields. With that --all flag I can iterate
-and check whether the keys are in the correct order.
-
-> Also, this requirement does feel like a premature optimization. Do
-> you expect this list to become so huge and the corresponding lookup
-> function to be called so frequently that a simple brute-force linear
-> search would be too slow?
-
-It won't bebig. My plans for this GSoC is to add the object format
-and 9 path-related values, but of course, someone may add more stuff
-to this command in the future.
-
-About algorithm complexity, it isn't something that I'm really worried
-about, but I also don't want to leave some nested loops with strcmps.
-If I'm not mistaken, this is the complexity of the operations here:
-
-- Sorting the requested keys: O(n*s*log(n))
-- Searching the keys: O(s*log(m))
-- Searching all the requested keys: O(n*s*log(m))
-- The current solution: O(n*s*(log(m) + log(n))
-- The complexity of brute-forcing would be O(n*m*s)
-
-where:
-
-- n is the number of the requested fields
-- m is the number of available fields
-- s is the length of the largest requested key
-
-which I don't expect to be too big.
-
-Other thing that I should point here is that I also have plans to
-add a feature for requesting the name of a group of keys and then
-return all its internal values. For example:
-
-  $ git repo info layout
-  layout.bare=true
-  layout.shallow=false
-
-Having everything sorted will make this easier.
-
-> I can see from the implementation that you are sorting the incoming
-> arguments in order to detect and fold out duplicates.
-
-Yes, that's the main idea. In the previous versions (where we also
-had a JSON version), this was done in a more hacky way. Actually,
-sorting the values was a suggestion to make it simpler.
-
-> However, that raises a couple questions. First, is it really a good
-> idea to do something other than what the user asked for?
-
-In this case, the user isn't asking too much, so we're free here. For
-example, in git-rev-parse the data is returned in the correct order.
-
-> Second, if this is a good idea, then should the behavior be documented?
-
-Of course, I'll do that!
-
->    struct strbuf value = STRBUF_INIT;
->    for (...) {
->        strbuf_reset(&value);
->        ...
->        if (error_condition) {
->            strbuf_release(...);
->            return error(...);
->        }
->       ...
->    }
->    strbuf_release(...);
-
-Much better, thanks!
-
-> Would the user-experience be
-> improved by instead continuing the loop even after reporting an error,
-> and then adjusting the final `return 0` to conditionally return
-> success or error depending upon whether any keys were unrecognized?
-
-It seems ok to me, since we're printing some values even if there is an
-invalid key.
-
-> This is talking about null-terminated format, but the implementation
-> doesn't seem to emit NUL-terminated output at all.
-
-Oops. I forgot to change it when rebasing...
-
-> In this case, if you call this function with a distinct repository
-> name each time, then you don't have to remove the repository at all.
-> Moreover, giving each repository a distinct and _meaningful_ name,
-> rather than reusing the same name, could also be helpful when
-> diagnosing failures.
-
-Nice solution! I'll do that.
-
-> With only two callers, it's not clear at this point whether the
-> `test_repo_info` function is providing any added value, especially
-> since the additional abstraction increases cognitive load, but perhaps
-> later patches in this series add more callers?
-
-Yes. In the next patches of this patchset I'm adding other values (and
-there are others that will be added in future patchesets). The tests will
-look very similar, only changing the repository creation, the key and
-the expected value. Then this will decrease the repetition (and
-copy-paste typos).
-
-In the last patch of this series I also add the null-terminated format.
-Having two formats doubles the number of tests, and this function will
-avoid even more code repetition.
-
+An unfortunately noisy diff, but it can't be helped. The end result is
+a pleasant improvement.
