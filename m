@@ -1,151 +1,148 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8660A4CE08
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 03:49:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E70A47
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 05:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753933786; cv=none; b=K/SZyfdDeFbwFH+AWc5kV7JdOrnwHfaJ2LIir6SbKXbz3n2sXzo29QK5Hz/dWRd7fIgBTIehcsv9FFkFG2NIULtSp1es44C3iilYwqi02vTozMQbVMi5UB4Q9Oo2rteKAKWz3A9iHm9zKWx0p1HJwmomGuivcOrVBVGY3DJ/gJw=
+	t=1753939930; cv=none; b=EUC89A8lSrnbsat/pckkU7MS/86dNhdi2SjqzW6pwavfPD7OWPp2aQZpDuyJjinhCZJC/k8yStlHsuPZZyePwhyDTPAZA5gPdc5Y7y2fq9yA07zrlBp+lnAA4gy7Ot1WjMrCQXtcmpGb4Ndv2qgYCTfpqCD4MgIry0n/mTx7XkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753933786; c=relaxed/simple;
-	bh=eDwGNOu6bBMkIWJBwLf6RuS4pCDCrD24hsyADFbIjwM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=QMI426Uyd76lBdPAq68B/CUSe+NCpaER49aIGHWEHhFoPonnWehRoxG0cpttVRatTlfOK7FshefZvCpKehY3oR4ITnEStv8iNSgm2gK7hthuVmdfMfjIT+/CdsR91xgsrpwsiHNdtUJdQe/yzQL7w18Amh5jWWwyiWyKvqYQwCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9Gat/uA; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753939930; c=relaxed/simple;
+	bh=x+QiETV5GjsI57GTZVH0ocnzLwmPFiMGePCzf4FoF2g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bpkX8hrjaHZevVGEj6qw9rWw8zGxp+t/hBmseXaAOL3eZRTPsbYkK3boMlheQMyYu3QDiJZMLUDJn+Y1MUikfbpF0oV74/jijFH+Buq+YwxECBdu3Leb7ekFOG0TdHHYtUlHSIB8l4vHpIUeTvrhqs/1Z7Bruq52jkFEVrJS/Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QFJeU0Yl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CyQedNvN; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X9Gat/uA"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3b794a013bcso559598f8f.2
-        for <git@vger.kernel.org>; Wed, 30 Jul 2025 20:49:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753933783; x=1754538583; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e1I5l9JtN2XKfcSQVgr0NZBS6FBj0g2cp27kvj3ISyo=;
-        b=X9Gat/uApW/fadgBmNA9nGKGu/hqvz/ElKA0Vc2XmM4StcDBiBEuTnFh8X6n0Avc0K
-         aY1W4QdUkl7HSJLw5KmOvrzqngrDfiRLp3WyoyFXXPIZtALpfIe21PB2vMXXIIJx4Scv
-         Fd7ctH+WOPMcDn9gX7b/Z9o80RjbEVTIKazCurhcyB7Po7KzpfOUe5zsTfhHL843XHoZ
-         A3gLLSxE5vGWEk9qxB3JvZkGZ6nFJk5vBUX+8/Muqmzyfi7VuuVDY/u1Ql4PkiCtmp8e
-         HM0pyLLGz7RPEXoftOCKe4gW0nZtvcOW4H+ruFip+VMFyCMuBLIHb44SlNtAdefbcw8E
-         YaZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753933783; x=1754538583;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e1I5l9JtN2XKfcSQVgr0NZBS6FBj0g2cp27kvj3ISyo=;
-        b=R9aQ54BXQ5AkRMxa7tuH3plAFP2RBQnT6F+YG5E8ooFOUXxzEVvxH6xUJ8abaCIeoE
-         YVQlY9FlcKJdfAJEHUECLkRoCT7zS76OVh57B73Z3Ko/F1RAwSihChs3EqYzvpn8ES8E
-         6IuZFDikch5Ul3odMVag4lnqaYlneA6fNrlzoIIHvYeEPNH6l75C7U63CDsc8A7DtRgS
-         HKk5iCXViVX8lnzSDuN5WiD2sWw96HTuK/pqNN044Z6M6rJh+Xm5pCdnqSM1bjDg9TkO
-         tQkRGWzkeXYKuR8IAQxh8IKS/1kOi0vkC9LYgY+a/TU0UYFHDbd3tGAvLnvzqbkMQj2j
-         k9Ow==
-X-Gm-Message-State: AOJu0YwNlesJJxNqPQhlqm1DQZgVb7Af7DJ+1izxqpMAKF/DJwpDihOI
-	G4Vq9y7E/ordYZa5fSDyy8WltJmj+xuT0JksnaHlYDT3ByaJs/eS98hgMIUENw==
-X-Gm-Gg: ASbGncvvFk+4rWl+Gy5m9FCGwMbnMgAWXlByE41uf5Mdtu+erLsJsH2RTZLulNeEknm
-	Qx9XrbNJcNNfCPRHGV6QwbP1Cubprltwcqd/oZ/Ks7OsrrNAw/gKMyMOoFKzYzKlcjJc8/kO/km
-	oi/oNH5f39+kHgHh+HjPFQQKL+ieP0B/iNzcYaKyOpUxRPLQPHOJeMdXVnEjAQPguSpSaHgeWIo
-	thQXrDLbFfdGF8w5RrTxqaA+U7ba8kQjpvbMNeE/orn07TEuKnUMVYu8UUTppI2VqGo9XqCsG33
-	rwUgkCnY+MmBmEIU/L7NmG9tIJ9Vyr2iPnn6FRsTH5riudjtK4pnD53gcph268vD7gdlfxKFhZe
-	CaL0srXyKrSy7jBesrc6NSmg=
-X-Google-Smtp-Source: AGHT+IEGbKtTMBkqr5rAxw8lPiL+K2XUmQ1fy/k2oujGwDSG2hVVyVdZsxI5+u5wSSY35+CKlFc9jA==
-X-Received: by 2002:a5d:64e5:0:b0:3b7:76e8:b9f7 with SMTP id ffacd0b85a97d-3b794fc18f9mr4740119f8f.10.1753933782448;
-        Wed, 30 Jul 2025 20:49:42 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c47908esm885686f8f.59.2025.07.30.20.49.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Jul 2025 20:49:41 -0700 (PDT)
-Message-Id: <pull.2022.v2.git.git.1753933780883.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2022.git.git.1753860300588.gitgitgadget@gmail.com>
-References: <pull.2022.git.git.1753860300588.gitgitgadget@gmail.com>
-From: "chenjianhu via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 31 Jul 2025 03:49:40 +0000
-Subject: [PATCH v2] t7450: inspect the correct path a broken code would write
- to
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QFJeU0Yl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CyQedNvN"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id C7A001D006A0;
+	Thu, 31 Jul 2025 01:32:06 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Thu, 31 Jul 2025 01:32:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1753939926; x=1754026326; bh=OJxXhf6L1C
+	je00ML01GrdDz1AOBrs9to+f+8qliMQx8=; b=QFJeU0YlpMXgbXHG1ZZZJqPi+C
+	xoOZI0REdB17/TKTWE7Vve752PKPqfqXvRWxlCSZKhSZHvMqRmukmUb0ri7+JeKi
+	+NrWevge4ucqg6NNdPDylCc257eu9R7LLk2BOud7b4c4cfQKCs56tq0jGbVIBXIY
+	iYAi4Vmu+pe7zXsyE4dr8o5cP9C4vbM+NHnOuB6DTXMGRze5NdpmRsn+w1Dge0ry
+	mCroiOaI9B99q0AGRupE4FrPgSnEO4NPuamTo4+T0QDp1WiAwoJ8MXtah9lNKuAv
+	XW2PMvEPS7bv0KsboKTJM314jSuyTPn1I/X91TH78Tb7tNK4XN8CERFbA/UA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753939926; x=1754026326; bh=OJxXhf6L1Cje00ML01GrdDz1AOBrs9to+f+
+	8qliMQx8=; b=CyQedNvNPvqS/bKhmQpOZ95EDCHHJdVRkx8rzu0KYXcjr+4kCln
+	tkK6Nd7ODUj+STixC5w0smacSBN9DRrZz4OonEfPLEtVi45krqFAr+FuWrnBLdbZ
+	qpUSpU52tN0mL/pbgIQzGMS2oRnc8wMghH2zTlVRod2pZVvcSpbPRuqk8dJSU2ym
+	lp5PwHAx0s/95Jnh4jzILMdz113ZHe3CCtmM1T0bvCV5HqY1ksztpM1gpH0h4J+K
+	dieZSxXqSCpou6iutc827VhlYmGfXKpA4pWc0CEJKb0aufUtF0qqfcm3/Hvf2xOP
+	xt3+RPq6eAoqXc6+Me3KQb/b5CnfYwwuiOg==
+X-ME-Sender: <xms:1v-KaOsAtBM7KqkBaH3ZajeJ6DdTCASdU7lTZqgFlDCoAipY7nFdjw>
+    <xme:1v-KaBbP9eZ_QStI8RrJL7cw6ldkh1GMjQosjoL6fk3iXjNf7ZIU3QWg4tqjW3asb
+    7Oo8SyaqqIv0-Tfig>
+X-ME-Received: <xmr:1v-KaBVuxRRfCIL7-nihIYCcyqhjUlniAs_9m1WhA371DCll9jOfVxgn_4cTflMz5ZweaTdEP-SJ6-M4k82BA8NiUF_ZoD6cEaCoamk4AQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelleelkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
+    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:1v-KaF6o6odfvaf9WxdR1hsd7FOpMy8urdGOEOIIr8GNNIn4Vr3Ngg>
+    <xmx:1v-KaMjWakiPobcJvb_Va6ghlDF6OJy3dkHSYRS0m0VwT2rZjHGggA>
+    <xmx:1v-KaMcap_RN6kgY-0azwYtLWsNKKo4OBx5sLH8PwCo6oqhLOcxbLg>
+    <xmx:1v-KaBc5J8OA0g3WGqPOVekHdayOsT4v5qFHggbrKwBG9xw0eznvwA>
+    <xmx:1v-KaBo8fREFCPhkcWX7AdsxSKKPvqswwgOPezeivuzi0VT45xs2q_ld>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 31 Jul 2025 01:32:05 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id eca57d7d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 31 Jul 2025 05:32:03 +0000 (UTC)
+Date: Thu, 31 Jul 2025 07:31:55 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] clean: do not pass strbuf by value
+Message-ID: <aIr_y3DM3kS09kKq@pks.im>
+References: <xmqqseieogkg.fsf@gitster.g>
+ <aImv4kZJS4CUqmZ3@pks.im>
+ <xmqq8qk5ojcv.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: chenjianhu <18230222379@163.com>,
-    chenjianhu <chenjianh@kylinos.cn>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8qk5ojcv.fsf@gitster.g>
 
-From: chenjianhu <chenjianh@kylinos.cn>
+On Wed, Jul 30, 2025 at 07:15:28AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > On Tue, Jul 29, 2025 at 02:03:27PM -0700, Junio C Hamano wrote:
+> >> When you pass a structure by value, the callee can modify the
+> >> contents of the structure that was passed in without having to worry
+> >> about changing the structure the caller has.  Passing structure by
+> >
+> > s/structure/structures/
+> >
+> >> value sometimes (but not very often) can be a valid way to give
+> >> callee a temporary variable it can freely modify.
+> >> 
+> >> But not a structure with members that are pointers, like a strbuf.
+> >> 
+> >> builtin/clean.c:list_and_choose() reads a line interactively from
+> >> the user, and passes the line (in a strbuf) to parse_choice() by
+> >> value, which then munges by replacing ',' with ' ' (to accept both
+> >> comma and space separated list of choices).  But because the strbuf
+> >> passed by value still shares the underlying character array buf[],
+> >> this ends up munging the caller's strbuf contents.
+> >> 
+> >> This is a catastrophe waiting to happen.  If the callee causes the
+> >> strbuf to be reallocated, the buf[] the caller has will become
+> >> dangling, and when the caller does strbuf_release(), it would result
+> >> in double-free.
+> >> 
+> >> Stop calling the function with misleading call-by-value with strbuf.
+> >
+> > I think the second "with" should be dropped?
+> >
+> >> 
+> >> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> >> ---
+> >>  builtin/clean.c | 10 +++++-----
+> >>  1 file changed, 5 insertions(+), 5 deletions(-)
+> >
+> > Good finding with an obvious fix. Thanks!
+> >
+> > Patrick
+> 
+> "Fix" is a word that is bit stronger than what is actually
+> happening, as the code is not yet broken ;-)
+> 
+> I notice that there are a few structures passed by value in reftable
+> (e.g. merged_iter_pqueue in pq.h and string_view in record.h), but I
+> only looked at the output of
+> 
+>   $ git grep '[(,]struct [a-z_]* [^*]*[,)]' \*.h
+> 
+> and do not know if they are something to worry about.
 
-Prior to 05e9cd64 (config: quote values containing CR character,
-2025-05-19), a repository can trick "clone --recurse-submodules"
-into running a post-checkout hook shipped with the project.  The
-test was written to make sure the trick would no longer run the
-hook with the fix in the commit.
+We originally had a whole lot more, where we passed `struct
+reftable_buf` around by value just like we did here. I already got rid
+of a bunch of them over time, but we still have calling patterns where
+we pass a lot of `struct string_view`s around. Those are all benign,
+even though I don't particularly like the calling patterns.
 
-However, the test did not check for the path the hook would
-create; correct the path to the expected one if the bug were
-still with us.
-
-Signed-off-by: chenjianhu <chenjianhu@kylinos.cn>
----
-    modify the “foo" file path to "$PWD/bad-clone/sub/foo".
-    
-    cc: "Kristoffer Haugsbakk" kristofferhaugsbakk@fastmail.com cc: Justin
-    Tobler jltobler@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2022%2Fcjhxmx%2Fcjhxmx-git-test-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2022/cjhxmx/cjhxmx-git-test-v2
-Pull-Request: https://github.com/git/git/pull/2022
-
-Range-diff vs v1:
-
- 1:  c2d1d8fe884 ! 1:  6434587a075 modify the “foo" file path to "$PWD/bad-clone/sub/foo".
-     @@
-       ## Metadata ##
-     -Author: 陈建虎 <chenjianhu@kylinos.cn>
-     +Author: chenjianhu <chenjianh@kylinos.cn>
-      
-       ## Commit message ##
-     -    modify the “foo" file path to "$PWD/bad-clone/sub/foo".
-     +    t7450: inspect the correct path a broken code would write to
-      
-     -    In the t7450-bad-git-dotfiles.sh, when post-checkout
-     -    is executed, the actual path where the foo file
-     -    is created should be "$PWD/bad-clone/sub/foo".
-     +    Prior to 05e9cd64 (config: quote values containing CR character,
-     +    2025-05-19), a repository can trick "clone --recurse-submodules"
-     +    into running a post-checkout hook shipped with the project.  The
-     +    test was written to make sure the trick would no longer run the
-     +    hook with the fix in the commit.
-     +
-     +    However, the test did not check for the path the hook would
-     +    create; correct the path to the expected one if the bug were
-     +    still with us.
-      
-          Signed-off-by: chenjianhu <chenjianhu@kylinos.cn>
-      
-
-
- t/t7450-bad-git-dotfiles.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
-index 14b5743b962..f512eed278c 100755
---- a/t/t7450-bad-git-dotfiles.sh
-+++ b/t/t7450-bad-git-dotfiles.sh
-@@ -401,7 +401,7 @@ test_expect_success SYMLINKS,!WINDOWS,!MINGW 'submodule must not checkout into d
- 	git -C repo commit -m submodule &&
- 
- 	git -c protocol.file.allow=always clone --recurse-submodules repo bad-clone &&
--	! test -f "$PWD/foo" &&
-+	! test -f "$PWD/bad-clone/sub/foo" &&
- 	test -f $(printf "bad-clone/sub\r/post-checkout")
- '
- 
-
-base-commit: e813a0200a7121b97fec535f0d0b460b0a33356c
--- 
-gitgitgadget
+Patrick
