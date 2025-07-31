@@ -1,105 +1,104 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CE51E9B0B
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 22:16:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240B227E040
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 22:30:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754000175; cv=none; b=BQnXvi7k2n4kCPEkeUjhY2+YXdf/E/9bjbypZAEdmCGCNjnqoEx5Bu0wAxZf/NoPhUbDsWMCIAkB7geBpf48Ar6/LlX6NFbKqG5+36rVvsJDPS9bdDAQ87WdKvtFJMnyD+wGz6gG3RpUdgejMpU119Zc0gvwpsJAvHIG3tBnmvU=
+	t=1754001025; cv=none; b=RcFWe8NcIeU0+enYCP/zPI7x/K6kaqgy6myU96FGtpMbIkUAjAjje0RI8GVZjqVsRhtiR9il+mna+QcZMs7WWekjn8A1NF8eTDaYM9y+i5ksYbGm16ePP1TCsP6FegZLdNRL35eEB5rTPxsCS1RH8BLTkVfA/HNogPsiod3fv54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754000175; c=relaxed/simple;
-	bh=8/iic4YlY/yYvooP/029yBos/Nz5aNVLNS4DezOr/Rc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fTFQMODQU+9Uy9z+bVGduNnXxMq5GijJL97sXfylZ+KyuxlotFJUAhH/zyhnciuyOX3zx9eae4KYFGyABIDsIib0QW4m4FNEYQZ2emVMlY/sHXZ58jDuPTaKBkj6Rhk3zO2KGclk8tVjgcWjT5nINx10jmAM0qHwv8WVuS4DZVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jwnj0hnW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C8E+jQmE; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754001025; c=relaxed/simple;
+	bh=oU1mCOXxJshWIlaaRzKDcwXgHqzYaDNUJ/tvICv2XQ0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=RnPaR+4HkoMCyxnRAs0cwn3L0fYqb0i0sgcsfFvSb7pfgNhItVcQyBdSzrPVra8zbJcHy95AuAa557IXLeLBXzGM9tpwamr/TyIWz2XVs16x1EO9dU6qcbzXE0pTbSocuqJsWqgXOU7rlDQCcxPORaR8yN/R/HDYP8K+psPYlmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FJby2bNj; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jwnj0hnW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C8E+jQmE"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1246E1400276;
-	Thu, 31 Jul 2025 18:16:09 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 31 Jul 2025 18:16:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1754000169;
-	 x=1754086569; bh=UaLDWSjpIe3dW4WM54wNsPiYo/lY9BCcBkkvW6vrk3Y=; b=
-	Jwnj0hnWY+1sx7Xn7O8cFNQwZVIxezfWjmpN4Q6Jw9aC4Wk9+aZs4SxlL9ZEjQYy
-	qYxWV7rxqqQih2ppCAjxfZXQyUBZTtezCbMXEEKJsfa94oCmL+yb9f5v+fP41+Ht
-	N9uloUYhPz4dTtn8FY0jOtj9nIyR7eschKGAeOlcTxfldXrbfCWjRIPT37968Fwa
-	zyEAz1ZJwdfrCNL+ZcrAtozGpGGOmPvYi0gAc2GygEkmG6txBwiv7ugy1cwgRLmm
-	Hd50s8G50pjBmX3vIz6Qja2z+LCzR1sKgD5C9eA8Bd6+TXSSo35DUcflvHx1CFed
-	5zJvWIQhk20LLnF4YwBD9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754000169; x=
-	1754086569; bh=UaLDWSjpIe3dW4WM54wNsPiYo/lY9BCcBkkvW6vrk3Y=; b=C
-	8E+jQmELLjb2ti7q6mzlVIMGA6k8beuC9zJUTpK+9hoRlAC3TmSa6aKWpK9fTF9D
-	1Y0HzO01ucsfuxEFSLlVbR94cJpU2OcMrJxWw4KMvMPsVOYzoJ4XW8jFkW8yNUnw
-	bVpjPFq446nVDWaQxbYijKf+w0NhdVjkuMxOZ2dsUct4zKtHRzw2cKeFT7im+sX9
-	f8pjjo2b9k9s2vQ1hB4i4bMeY7JJE7ohO5nGXZZANQFNfwOWw70uH36footSOrGf
-	3+ZsxhJ67yUUftWQH69n9cgGuSXS5n6UPHdhdglOCA6fU0sqJxH6uPAJmnMghL+k
-	j79F+F4oWPyzQIVH6LtqQ==
-X-ME-Sender: <xms:KOuLaCqJdIXNGkhkfSWSVH7hH7LUjb3AbLgzUUm-DqOpis0SOQkOCQ>
-    <xme:KOuLaD4rEJmQxRAgEWqNv9_6hFmZukI-LbXZLfFWAKDPkOTpY2rvxW40fm2qJ1Wqb
-    fzixSqUGeLULm_tDw>
-X-ME-Received: <xmr:KOuLaAqhrjzlBIDnxWAY-fRrE2wBzpxxB1lZPLWY5b1BAQgukwWhsAhKq4JYlU63T0NKyPdyBBESq9Sj8I3DfLl9GBa9eXXqQGmuaUk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdduleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:KOuLaNgIo0YT08429sKU1KXH8gxfFmRzkVekBgGDapiolwzh0lChig>
-    <xmx:KOuLaCJVDg-WOfWzscypUTpv_x4aPFVMFQyWLQBfEH-NkTMCNhOsSQ>
-    <xmx:KOuLaFDVwa6IUuMUv_1nGiaDIz4zR1CgbJPR9f_elR0-ZF-AI9f1KA>
-    <xmx:KOuLaKhzHPev6YfbRQ6K5GjHBGPUq0Ph7UQiKMQWIs7qwoSKS4wHfA>
-    <xmx:KeuLaBIoVgOMkiRGpcNjynobpsjNC6FOqokZvcO29DD5GGR5IlanFSJO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 18:16:08 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/5] string-list: report programming error with BUG
-In-Reply-To: <CAPig+cT9tBSo1od8iuCf+88rvDO9GEikKm38WLcXHemM-emhOw@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 31 Jul 2025 15:33:27 -0400")
-References: <20250731063949.1601669-1-gitster@pobox.com>
-	<20250731063949.1601669-2-gitster@pobox.com>
-	<CAPig+cT9tBSo1od8iuCf+88rvDO9GEikKm38WLcXHemM-emhOw@mail.gmail.com>
-Date: Thu, 31 Jul 2025 15:16:07 -0700
-Message-ID: <xmqq5xf8ovko.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FJby2bNj"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6152faff57eso2164522a12.1
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 15:30:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754001021; x=1754605821; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=jgUZq1o5a0CYNP9yUPB7vbVqu2T95G2kpudtwia8KX4=;
+        b=FJby2bNjUDnE3rQy6d1OKb4pEvx0dYnCbLkcjiBFUfCsyXzTbeeC3YZIUvrnfEq1hO
+         iZRusugwILR0aTAP21oJVq4auV8yoiCigGkzqPAi+s0zOeDdG0+eB874MUBq0lgfA/76
+         ccoaizImXHvGTFJJxF9hElZafRJi/N9ee5Ia1XtoGvGMeQW8Iti/w1TCtc574smm6VjY
+         DQy3seee9PFDZS7dgb9l4uIP6QIljnqdGDag9v00AZ/viF2RqxgpZ4p4MvD6xbW5Y4Mt
+         +mWX+7eH+dLOzcJavy6Fp2IvfW22mjvsZL8fC8loAd4flndenRp5/Ch4vVevnCF2Nz6x
+         jyyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754001021; x=1754605821;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jgUZq1o5a0CYNP9yUPB7vbVqu2T95G2kpudtwia8KX4=;
+        b=WGaIuDjCNC59fBZkwb57E7qFTwZShq78WVeEcGbzn/NhGWFk/xT9ej8Ib7I2BJHf/H
+         bSK6Fn/agqYIL7SA91wDYOWBmaFQ4X0ZqDW9kGPtMKM28AOuLJZtY57YR7OESUtoPiYm
+         WcnS6dtZOXFELc9Zxefn3SjLoNGgauasL59flK/r7YTPx+D7aidOsNzJpX8u3txhS6rF
+         5Oa7ey31lk1YykckUtMkaVPXiV3xxW9KNTvnSKFLYk01pdX3W5jCGOTbnX7ozUpVr9b+
+         i9TJo0TlqVqoK3sdyJmhg5FNpjBIQ5UaK2E4/rvOgpOjTNH8fV/ZL6qSqrpuClhHD/jA
+         FqMA==
+X-Gm-Message-State: AOJu0YzOHJ1UDdLMCkxxECZv8TeEFlLC/dQ9c/9YYBpQ12ilckER6N7y
+	XRrghXT4sCtELO90Z6f+jcHTz9yvq5RvFxwPGaaRUYPjCMYZCLyEInzyOHtDDg9MACv6IwS30j8
+	PPbHQMbPci3tH/JDdnf/Tj38IEOYlMU9Y7w7s
+X-Gm-Gg: ASbGnctYlX+6iAZRFxJp+ENLNFv7lW0A8sPQHUE3HIjv6Uyt9vcMtoUfsCbKbZ9IRUM
+	WBuXWFX8K5k5yrm7bGfQrww+viJlkPd9ftorzCtwvP5RuP4OUM3Qx3nkoYwBz7LJFvuuoyvtGKr
+	Gw9Q3V9lvIvZMfd7Dc6iOo3w0kREGEa/YJKRnAd15ZXWb5TmbVxtAL5QOQLhUY/eUBjzmqZtK6U
+	UNQsZ2V+A==
+X-Google-Smtp-Source: AGHT+IE9ta0WonprcBEyyolLUcrysk6GeXNaApyA5efPavIDX3mDH/8rktPykMxsuDCFw2Ndx9zkXxQl85ensaUtD3Q=
+X-Received: by 2002:a17:907:f509:b0:ae3:7b53:31b9 with SMTP id
+ a640c23a62f3a-af8fd9bbc9emr1133794466b.35.1754001021121; Thu, 31 Jul 2025
+ 15:30:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 1 Aug 2025 00:30:09 +0200
+X-Gm-Features: Ac12FXxEj1dd-8Lbm2aeuYmX_ATw7b-a_rFQ3tI3uel2WR4hml5zeE4Dk7OP8xA
+Message-ID: <CAP8UFD1gp0mT42e+UtbXLy=HCmVThNd_g4WbWBNTShgzCPtqJA@mail.gmail.com>
+Subject: Draft of Git Rev News edition 125
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Bruno Brito <bruno@git-tower.com>, Aditya Garg <gargaditya08@live.com>, 
+	Julian Swagemakers <julian@swagemakers.org>, M Hickford <mirth.hickford@gmail.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Erik Huelsmann <ehuels@gmail.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Yao Zi <ziyao@disroot.org>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Patrick Steinhardt <ps@pks.im>, 
+	Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi everyone,
 
-> On Thu, Jul 31, 2025 at 2:40 AM Junio C Hamano <gitster@pobox.com> wrote:
->> Passing a string list that has .strdup_strings bit unset to
->> string_list_split(), orone that has .strdup_strings bit set to
->> string_list_split_in_place(), is a programmer error.  Do not use
->> die() to abort the execution.  Use BUG() instead.
->
-> s/orone/or one/
+A draft of a new Git Rev News edition is available here:
 
-Thanks, as always, for typofixes.  Not just this step but for other
-steps in the series.  Will use them when I update them.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-125.md
 
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
+
+  https://github.com/git/git.github.io/issues/786
+
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition on Saturday
+August 2nd, 2025.
+
+Thanks,
+Christian.
