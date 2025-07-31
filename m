@@ -1,83 +1,84 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECD915573F
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 14:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2E218E25
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 14:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753973826; cv=none; b=TPwXvnszdLASIs+rNZjnkaBeQ8c772dk7G25Kd2aTu6pmyE/XY0txpZZ5N4mmgGhwd2cOjxHoWNNWP0N/RwJ9hHcisa95969p5obZ3w1qHRaNzAVtrn2TZzw7rcNaJPlMz8JE2DmzF6wu6MiRHLqU8ZugDd/RTvxhL72xZl2vmU=
+	t=1753973827; cv=none; b=VPxQgpRlspWI4BITKFAqPguSbg026MaKtArxM6ifE88Yj2ZV0mRSCHQkBZg1oPKA/zWzfuGUv7Ryqgll/99KoT4JxUj3lxagZ6pyASc1T4R7xOzgx3KlyxwRwpfxKrGpNIiLaIUTwaH3pzP3ZoiTt9W/zhN4x7ZMYFP1lOzTBWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753973826; c=relaxed/simple;
-	bh=z4ED9cj8nHDmpmEdmOm8Z6WGb1GBlcGQs4+3uDBUs34=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=Nt+yn90g9zqHfLpq3hgXeMz3o/hDrJJw0ZcobH8kBitt/VWIJt9Vu6QD5lU6cnW+jhZ2cW6HH6vzupPiOXZSbbbGRgirRGHFnhi1Gc/UZV3+DEF6U4dJLgaAIQ7k+Eci/QOwV8FSuGHFsMvmVYAwhj56lwWA3I3fIXdZOy4sric=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Dou3Gcn9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IS2Sbo9U; arc=none smtp.client-ip=103.168.172.145
+	s=arc-20240116; t=1753973827; c=relaxed/simple;
+	bh=5C6ThCA3kOBZTe0s/RgFoSnYPEL0zHT+xSuf5PcVBFY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=PggPI1lmAPv3iYS5L1trCdxcXOi84Kc6QZtnNaGCAhPKVilRjvnougdt5ES1Mlkg4PqH6TmGT3GuvrYUAZQlRQtFVoR1nXhNkNI3ZABeziKPuW7+4jNotDLOFXi4h00FhA4CgTSVwKTCpO0SZ8AyQyCqYGIYlm3YKMUsmfaUcZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U7WIt0Cw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QRR3PFG7; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Dou3Gcn9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IS2Sbo9U"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4D465EC173B;
-	Thu, 31 Jul 2025 10:57:02 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U7WIt0Cw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QRR3PFG7"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id A9A81EC19A5;
+	Thu, 31 Jul 2025 10:57:03 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Thu, 31 Jul 2025 10:57:02 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 31 Jul 2025 10:57:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1753973822;
-	 x=1754060222; bh=YWfY9BQKa61Fzm0C+SRmT7KxdMdxIEUSa6BOVWVzKvI=; b=
-	Dou3Gcn9B5amDRW14pZaoike3Rd/urU9p5U4QAO/dcrHGc6yfiPaZZuTzMi3n/n/
-	HXlq/uNK8rOAtwO/sYm3IKgfjn/MEhHajK4CnBB8SpmYxJ/Tg9vO+JIyWZdxaknq
-	xW/2HJBe8sszyui29+YLyqycX7thKnI/ZeZZIWBbr0rUYVB74QIvRfs2xb5QB3Go
-	oMtK4PA/SJzojEsDsvYI0XI7gP+WF+RK/yumfPpF8RM6lVA4+cQL5z7NsVChcmjr
-	hj6BO0K64OaqxaFO3qI5gMdSS7uTBfC4HtF2Ckl0BBZ6pfstVSfA5OtLhRH9Wv8r
-	KZQ8DUf+jFS648W/YKlJyA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1753973823;
+	 x=1754060223; bh=pVPa/XEEKO2NGCS7XngEe7Mun6hJgYbHa9TBYdY0CxI=; b=
+	U7WIt0Cwuqwk71XBc0p2FNysa18BXQ94eQnTetuLk9A5IsDXuaQ3Tua5hyYfwaYB
+	yYwAyh1llE4FhxR5AP+IemN9f0UihXk22SRPeQv0qvQt9HO9qhBm6gEZtx3io7m4
+	QswYKqIFxa9F0N3fCUVV6POmAQcWAhOlLEOl3UO6a6A671qINabqmTTYXEo68K/d
+	/4jUbpDx2lDWNITw2Ydra0RoFhN9eqs6JJ4z34aqSUGdG0SK6NZ4P0IC4rYxsDwC
+	lNa1oYTrvBghXaGk8/A8UAYBN/RyRBSjvbCrUo6j3VJOYY4TwkJmPuiuenwHnc5m
+	Min71VphQOSJy3crxMhKow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753973822; x=
-	1754060222; bh=YWfY9BQKa61Fzm0C+SRmT7KxdMdxIEUSa6BOVWVzKvI=; b=I
-	S2Sbo9UIUZ7mQO1eLDkZsRR5vJA9DH1HdKnAen5lICQNnmvd/kbdpkBPZuFOokzI
-	KSm5JDpDag+eib2bQAQGo+7fRRcF7yFe6ZNBogjQEfB5QJIhA0jN3s1DDYBoNnY/
-	aChrmAbzPw0XrG+VaRFJLxEZue6R6+9vjNfcPGb3VGxctaJozUxcpx7HnEd9gl7D
-	/59aMNWoGXI6/BHUlNXbNHRSlJ7ukR9Tw1xXbGrEcZW58mDyi+y7CewChE568MhK
-	hXcQKtFs0Rk7kr5SQGXTp5kFI2TuHT+fL/Y7y8VsEVn3CprsB3pL9a5JiFgZkl7w
-	Hl9N7WQQSVVkP+W7Y2t0A==
-X-ME-Sender: <xms:PYSLaO-HKEiZmPCQ79HpXksdq0Qw1AvyIHWth6-thUE2q3kik4RxAg>
-    <xme:PYSLaHL1ef5Ubap9tKw8VMJL5C0I6fJ964_y7VL-DH4rxuHCWKaoApUYXmfdoJN42
-    gpvX0BbwNhy3PWVcg>
-X-ME-Received: <xmr:PYSLaEddd_FgvRws8l_BA82JY8VZd6bj6afBY2byoFrzHL1jKwcQxoilNNbznxG9kzwsB-HOYS3J4XxzEXmH2ebzR83jzxWomXYCtzGdwQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753973823; x=
+	1754060223; bh=pVPa/XEEKO2NGCS7XngEe7Mun6hJgYbHa9TBYdY0CxI=; b=Q
+	RR3PFG7KKNJrZKowfzqNUjqD+ZFkgkF6xMN1WUvT/2kLQPQhxGjHvQLl4y3OEavj
+	j9v1jW7HFRtW/RTnIXDoiImu4EXO50F2jDYIb2ZkQH/epMAuOrQFz06tqj3xrZCR
+	jBA+PLIOV7rdrrjJsVAZaTv5t350IOYwH41Yv7dhqmR6a5Ctjk+JHQbAZSfEsJ41
+	/yrubrW8h1dq2B24p7nRfT+d2bfLRqI+SJF67SL0jxTPHgMTW4AFfDGzOWZ9Sbkg
+	guXYdM42iFRKgW8wFecEfEIWVEnnXtCeMB5AYOTaQG7Gz4z6qC0WT7qgqILg4ixD
+	RcFG6A5jXMJoiEy76SoPg==
+X-ME-Sender: <xms:P4SLaCoKLJUbSCHcbCqBs1_2cRbC4txwL7IZjpBSz6cwVPhusjjrcQ>
+    <xme:P4SLaJFqXShfwp_3DUXre_-Ias2xA54VbthgtGOXZCDbUNGCPhhRUmqr4x_n-jCR8
+    4YyLtAAbM1cvBHMbQ>
+X-ME-Received: <xmr:P4SLaHoVHv2dlfOrqOFYbbFIRuz3yQlOXTQLrhSzOBESvkOuUoziBxqSV-nAWDHUhhft4zqSP0T-zLNU7thxW_BwJ-9lTP2tdP0-4GDj5g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdduudduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgfgjfhfvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeduudevjeffffegjeegheeiteeuffdtvdehleegfeefvedtgeetlefhkeevtedtheen
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
-    iedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepjhhhtggrrhhltdekudegsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhope
-    hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:PYSLaG9QigMLtVXDjRSd5f8XkfqKMsrhJOD93vv_CPF65WCP1r0XZA>
-    <xmx:PYSLaBoYrL1Fy6l_wori3iRDUv3n-PBEKTviW4635_FG3rXd0Dt5Bg>
-    <xmx:PYSLaLAV7jH0VJbxlLZDNxO1u9tNbCDzIhdnSZ7gV84G1k5hMNUrsQ>
-    <xmx:PYSLaDxg6cb7ZCrpsCtgsS4bweL1EMO1nF9bYgxZ_fRDc0J1to6DLQ>
-    <xmx:PoSLaCY51NHHkye0t24AfR2HoF0YpXhF8H9e5GK5c8_RYORmo5W3m7pf>
+    hnpeeiteekheevhfejieffudduheekieeuudfgheelvddtkeffgfeiudelkeehhffgfeen
+    ucffohhmrghinhepuhhpuggrthgvrdhnrghmvgdpuhhpuggrthgvrdgvmhgrihhlpdhuph
+    gurghtvgdrthiinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
+    rhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepjhhhtggrrhhltdekudegsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjlhhtohgslhgvrhesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:P4SLaCaQCMw-74NXr0KSfkIIJFwEzALYAUpWI63K98mu23dXx_hcVw>
+    <xmx:P4SLaAWjX_cDWyziwLRatfWPgQ0roaCeIbHIq933Dvx3TagPpPU_aw>
+    <xmx:P4SLaL9d0-xiKYie8Q9mWwpuB_nn1RQnG60ZdNq0scWlANoIpZ4wLg>
+    <xmx:P4SLaJ-IGsnhRhfTmwFxn--vEJ2ySm2WHjiJUXsHPOfwhK9nR1d4pA>
+    <xmx:P4SLaDGCitx9D4kW5lfGZsutous3Nac9HxwxVcwyT_Ihg0ndmrAYbTLD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 10:57:00 -0400 (EDT)
+ 31 Jul 2025 10:57:02 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4ec0797e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 31 Jul 2025 14:56:58 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 22fdaea3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 31 Jul 2025 14:57:01 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/6] builtin/remote: rework how remote refs get renamed
-Date: Thu, 31 Jul 2025 16:56:48 +0200
-Message-Id: <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
+Date: Thu, 31 Jul 2025 16:56:49 +0200
+Subject: [PATCH v2 1/6] refs: pass refname when invoking reflog entry
+ callback
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,712 +86,484 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIADCEi2gC/4WNQQrCMBBFr1JmbSQdmlhceQ/posapHSRJSUJQS
- u/uWHDt6vM+M++vkCkxZTg3KySqnDkGATw04OYxPEjxXRhQo9EnNGp5ZpXIx0ISYfRy4JcUK3k
- KJaveOEKLbWdJg0iWRBO/9oHrIDxzLjG9973aftufuv+nrq3SarKmm/BmnBnpIg9H9jBs2/YBO
- JZGMskAAAA=
-X-Change-ID: 20250725-pks-remote-rename-improvements-85ce262146e0
-In-Reply-To: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
-References: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250731-pks-remote-rename-improvements-v2-1-dda6f083674d@pks.im>
+References: <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
+In-Reply-To: <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
  Han Jiang <jhcarl0814@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
  Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+With `refs_for_each_reflog_ent()` callers can iterate through all the
+reflog entries for a given reference. The callback that is being invoked
+for each such entry does not receive the name of the reference that we
+are currently iterating through. This isn't really a limiting factor, as
+callers can simply pass the name via the callback data.
 
-this patch series is the result from the discussion at [1]. On the one
-hand this series fixes the reported bug where dangling symrefs are not
-renamed via `git remote rename`.
+But this layout sometimes does make for a bit of an awkward calling
+pattern. One example: when iterating through all reflogs, and for each
+reflog we iterate through all refnames, we have to do some extra book
+keeping to track which reference name we are currently yielding reflog
+entries for.
 
-On the other hand this series reworks the logic used to rename remotes
-so that we use two transactions instead of one transaction per ref. This
-fixes quadratic runtime behaviour, where renaming 10k refs takes ~4
-minutes, 100k takes hours. This results in a significant speedup with
-both the "files" backend (benchmarked with a smaller number of refs to
-retain sanity):
+Change the signature of the callback function so that the reference name
+of the reflog gets passed through to it. Adapt callers accordingly and
+start using the new parameter in trivial cases. The next commit will
+refactor the reference migration logic to make use of this parameter so
+that we can simplify its logic a bit.
 
-    Benchmark 1: rename remote (refformat = files, revision = HEAD~)
-      Time (mean ± σ):     238.770 s ± 13.857 s    [User: 91.473 s, System: 143.793 s]
-      Range (min … max):   204.863 s … 247.699 s    10 runs
-
-    Benchmark 2: rename remote (refformat = files, revision = HEAD)
-      Time (mean ± σ):      2.103 s ±  0.036 s    [User: 0.360 s, System: 1.313 s]
-      Range (min … max):    2.011 s …  2.141 s    10 runs
-
-    Summary
-      rename remote (refformat = files, revision = HEAD) ran
-      113.53 ± 6.87 times faster than rename remote (refformat = files, revision = HEAD~)
-
-For the "reftable" backend we see a significant speedup, as well, but
-not as extreme as with the "files" backend:
-
-    Benchmark 1: rename remote (refformat = reftable, revision = HEAD~)
-      Time (mean ± σ):      8.604 s ±  0.539 s    [User: 4.985 s, System: 2.368 s]
-      Range (min … max):    7.880 s …  9.556 s    10 runs
-
-    Benchmark 2: rename remote (refformat = reftable, revision = HEAD)
-      Time (mean ± σ):      1.177 s ±  0.103 s    [User: 0.446 s, System: 0.270 s]
-      Range (min … max):    1.023 s …  1.410 s    10 runs
-
-    Summary
-      rename remote (refformat = reftable, revision = HEAD) ran
-        7.31 ± 0.79 times faster than rename remote (refformat = reftable, revision = HEAD~)
-
-But in any case, it's one more case where the "reftable" backend
-outperforms the "files" backend.
-
-The series is built on top of e4ef0485fd7 (The fourteenth batch,
-2025-07-24) with ps/reflog-migrate-fixes at de7cc0782a7 (refs: fix
-invalid old object IDs when migrating reflogs, 2025-07-25) merged into
-it.
-
-I'd normally have withheld sending until that series was merged to
-"next", but given that I promised to send something on Friday already I
-decided to just get it out. In any case, if that causes problems I'm
-happy to wait a bit before this series here gets merged into "seen".
-
-Changes in v2:
-  - Insert another commit to fix sign-comparison warnings.
-  - Some code formatting fixes.
-  - Drop the infrastructure to reuse buffers. It didn't really help much
-    with performance anyway.
-  - I'm now using a single transaction to rename references so that we
-    have proper atomicity. Conflicts are detected early before any
-    changes are performed in the repository and an advice is printed
-    indicating what has happened.
-  - Link to v1: https://lore.kernel.org/r/20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im
-
-Thanks!
-
-Patrick
-
-[1]: <CANrWfmQWa=RJnm7d3C7ogRX6Tth2eeuGwvwrNmzS2gr+eP0OpA@mail.gmail.com>
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (6):
-      refs: pass refname when invoking reflog entry callback
-      refs: simplify logic when migrating reflog entries
-      builtin/remote: fix sign comparison warnings
-      builtin/remote: determine whether refs need renaming early on
-      builtin/remote: rework how remote refs get renamed
-      builtin/remote: only iterate through refs that are to be renamed
+ builtin/fsck.c            |  9 ++++-----
+ builtin/gc.c              |  3 ++-
+ builtin/stash.c           |  6 ++++--
+ commit.c                  |  3 ++-
+ object-name.c             |  3 ++-
+ reflog-walk.c             |  7 ++++---
+ reflog.c                  |  3 ++-
+ reflog.h                  |  3 ++-
+ refs.c                    | 20 +++++++++-----------
+ refs.h                    | 11 +++++++----
+ refs/debug.c              |  5 +++--
+ refs/files-backend.c      | 15 +++++++++------
+ refs/reftable-backend.c   |  2 +-
+ remote.c                  |  6 ++++--
+ revision.c                |  3 ++-
+ t/helper/test-ref-store.c |  3 ++-
+ wt-status.c               |  6 ++++--
+ 17 files changed, 63 insertions(+), 45 deletions(-)
 
- builtin/fsck.c            |   9 +-
- builtin/gc.c              |   3 +-
- builtin/remote.c          | 345 +++++++++++++++++++++++++++++-----------------
- builtin/stash.c           |   6 +-
- commit.c                  |   3 +-
- object-name.c             |   3 +-
- reflog-walk.c             |   7 +-
- reflog.c                  |   3 +-
- reflog.h                  |   3 +-
- refs.c                    |  64 ++++-----
- refs.h                    |  13 +-
- refs/debug.c              |   5 +-
- refs/files-backend.c      |  15 +-
- refs/reftable-backend.c   |   2 +-
- remote.c                  |   6 +-
- revision.c                |   3 +-
- t/helper/test-ref-store.c |   3 +-
- t/t5505-remote.sh         |  73 ++++++++++
- wt-status.c               |   6 +-
- 19 files changed, 372 insertions(+), 200 deletions(-)
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 0084cf7400b..67eb5e4fa0f 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -502,13 +502,12 @@ static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
+ 	}
+ }
+ 
+-static int fsck_handle_reflog_ent(struct object_id *ooid, struct object_id *noid,
++static int fsck_handle_reflog_ent(const char *refname,
++				  struct object_id *ooid, struct object_id *noid,
+ 				  const char *email UNUSED,
+ 				  timestamp_t timestamp, int tz UNUSED,
+-				  const char *message UNUSED, void *cb_data)
++				  const char *message UNUSED, void *cb_data UNUSED)
+ {
+-	const char *refname = cb_data;
+-
+ 	if (verbose)
+ 		fprintf_ln(stderr, _("Checking reflog %s->%s"),
+ 			   oid_to_hex(ooid), oid_to_hex(noid));
+@@ -525,7 +524,7 @@ static int fsck_handle_reflog(const char *logname, void *cb_data)
+ 	strbuf_worktree_ref(cb_data, &refname, logname);
+ 	refs_for_each_reflog_ent(get_main_ref_store(the_repository),
+ 				 refname.buf, fsck_handle_reflog_ent,
+-				 refname.buf);
++				 NULL);
+ 	strbuf_release(&refname);
+ 	return 0;
+ }
+diff --git a/builtin/gc.c b/builtin/gc.c
+index fab8f4dd4f7..9ae87065d35 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -312,7 +312,8 @@ struct count_reflog_entries_data {
+ 	size_t limit;
+ };
+ 
+-static int count_reflog_entries(struct object_id *old_oid, struct object_id *new_oid,
++static int count_reflog_entries(const char *refname UNUSED,
++				struct object_id *old_oid, struct object_id *new_oid,
+ 				const char *committer, timestamp_t timestamp,
+ 				int tz, const char *msg, void *cb_data)
+ {
+diff --git a/builtin/stash.c b/builtin/stash.c
+index e2f95cc2ebc..a1ed67661e3 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -738,7 +738,8 @@ static int apply_stash(int argc, const char **argv, const char *prefix,
+ 	return ret;
+ }
+ 
+-static int reject_reflog_ent(struct object_id *ooid UNUSED,
++static int reject_reflog_ent(const char *refname UNUSED,
++			     struct object_id *ooid UNUSED,
+ 			     struct object_id *noid UNUSED,
+ 			     const char *email UNUSED,
+ 			     timestamp_t timestamp UNUSED,
+@@ -2173,7 +2174,8 @@ struct stash_entry_data {
+ 	size_t count;
+ };
+ 
+-static int collect_stash_entries(struct object_id *old_oid UNUSED,
++static int collect_stash_entries(const char *refname UNUSED,
++				 struct object_id *old_oid UNUSED,
+ 				 struct object_id *new_oid,
+ 				 const char *committer UNUSED,
+ 				 timestamp_t timestamp UNUSED,
+diff --git a/commit.c b/commit.c
+index 15115125c36..7ebd05f3527 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1031,7 +1031,8 @@ static void add_one_commit(struct object_id *oid, struct rev_collect *revs)
+ 	commit->object.flags |= TMP_MARK;
+ }
+ 
+-static int collect_one_reflog_ent(struct object_id *ooid, struct object_id *noid,
++static int collect_one_reflog_ent(const char *refname UNUSED,
++				  struct object_id *ooid, struct object_id *noid,
+ 				  const char *ident UNUSED,
+ 				  timestamp_t timestamp UNUSED, int tz UNUSED,
+ 				  const char *message UNUSED, void *cbdata)
+diff --git a/object-name.c b/object-name.c
+index ddafe7f9b13..9ec192c3731 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -1516,7 +1516,8 @@ struct grab_nth_branch_switch_cbdata {
+ 	struct strbuf *sb;
+ };
+ 
+-static int grab_nth_branch_switch(struct object_id *ooid UNUSED,
++static int grab_nth_branch_switch(const char *refname UNUSED,
++				  struct object_id *ooid UNUSED,
+ 				  struct object_id *noid UNUSED,
+ 				  const char *email UNUSED,
+ 				  timestamp_t timestamp UNUSED,
+diff --git a/reflog-walk.c b/reflog-walk.c
+index c7070b13b00..4f1ce047498 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -22,9 +22,10 @@ struct complete_reflogs {
+ 	int nr, alloc;
+ };
+ 
+-static int read_one_reflog(struct object_id *ooid, struct object_id *noid,
+-		const char *email, timestamp_t timestamp, int tz,
+-		const char *message, void *cb_data)
++static int read_one_reflog(const char *refname UNUSED,
++			   struct object_id *ooid, struct object_id *noid,
++			   const char *email, timestamp_t timestamp, int tz,
++			   const char *message, void *cb_data)
+ {
+ 	struct complete_reflogs *array = cb_data;
+ 	struct reflog_info *item;
+diff --git a/reflog.c b/reflog.c
+index 39c205fd26e..2264b3bd605 100644
+--- a/reflog.c
++++ b/reflog.c
+@@ -492,7 +492,8 @@ void reflog_expiry_cleanup(void *cb_data)
+ 	free_commit_list(cb->mark_list);
+ }
+ 
+-int count_reflog_ent(struct object_id *ooid UNUSED,
++int count_reflog_ent(const char *refname UNUSED,
++		     struct object_id *ooid UNUSED,
+ 		     struct object_id *noid UNUSED,
+ 		     const char *email UNUSED,
+ 		     timestamp_t timestamp, int tz UNUSED,
+diff --git a/reflog.h b/reflog.h
+index 63bb56280f4..44b306c08ae 100644
+--- a/reflog.h
++++ b/reflog.h
+@@ -63,7 +63,8 @@ void reflog_expiry_prepare(const char *refname, const struct object_id *oid,
+ int should_expire_reflog_ent(struct object_id *ooid, struct object_id *noid,
+ 			     const char *email, timestamp_t timestamp, int tz,
+ 			     const char *message, void *cb_data);
+-int count_reflog_ent(struct object_id *ooid, struct object_id *noid,
++int count_reflog_ent(const char *refname,
++		     struct object_id *ooid, struct object_id *noid,
+ 		     const char *email, timestamp_t timestamp, int tz,
+ 		     const char *message, void *cb_data);
+ int should_expire_reflog_ent_verbose(struct object_id *ooid,
+diff --git a/refs.c b/refs.c
+index 4bd80287054..6ed0cd6ddca 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1022,7 +1022,6 @@ int is_branch(const char *refname)
+ }
+ 
+ struct read_ref_at_cb {
+-	const char *refname;
+ 	timestamp_t at_time;
+ 	int cnt;
+ 	int reccnt;
+@@ -1052,7 +1051,8 @@ static void set_read_ref_cutoffs(struct read_ref_at_cb *cb,
+ 		*cb->cutoff_cnt = cb->reccnt;
+ }
+ 
+-static int read_ref_at_ent(struct object_id *ooid, struct object_id *noid,
++static int read_ref_at_ent(const char *refname,
++			   struct object_id *ooid, struct object_id *noid,
+ 			   const char *email UNUSED,
+ 			   timestamp_t timestamp, int tz,
+ 			   const char *message, void *cb_data)
+@@ -1072,14 +1072,13 @@ static int read_ref_at_ent(struct object_id *ooid, struct object_id *noid,
+ 			oidcpy(cb->oid, noid);
+ 			if (!oideq(&cb->ooid, noid))
+ 				warning(_("log for ref %s has gap after %s"),
+-					cb->refname, show_date(cb->date, cb->tz, DATE_MODE(RFC2822)));
++					refname, show_date(cb->date, cb->tz, DATE_MODE(RFC2822)));
+ 		}
+ 		else if (cb->date == cb->at_time)
+ 			oidcpy(cb->oid, noid);
+ 		else if (!oideq(noid, cb->oid))
+ 			warning(_("log for ref %s unexpectedly ended on %s"),
+-				cb->refname, show_date(cb->date, cb->tz,
+-						       DATE_MODE(RFC2822)));
++				refname, show_date(cb->date, cb->tz, DATE_MODE(RFC2822)));
+ 		cb->reccnt++;
+ 		oidcpy(&cb->ooid, ooid);
+ 		oidcpy(&cb->noid, noid);
+@@ -1094,7 +1093,8 @@ static int read_ref_at_ent(struct object_id *ooid, struct object_id *noid,
+ 	return 0;
+ }
+ 
+-static int read_ref_at_ent_oldest(struct object_id *ooid, struct object_id *noid,
++static int read_ref_at_ent_oldest(const char *refname UNUSED,
++				  struct object_id *ooid, struct object_id *noid,
+ 				  const char *email UNUSED,
+ 				  timestamp_t timestamp, int tz,
+ 				  const char *message, void *cb_data)
+@@ -1117,7 +1117,6 @@ int read_ref_at(struct ref_store *refs, const char *refname,
+ 	struct read_ref_at_cb cb;
+ 
+ 	memset(&cb, 0, sizeof(cb));
+-	cb.refname = refname;
+ 	cb.at_time = at_time;
+ 	cb.cnt = cnt;
+ 	cb.msg = msg;
+@@ -2976,14 +2975,14 @@ static int migrate_one_ref(const char *refname, const char *referent UNUSED, con
+ 
+ struct reflog_migration_data {
+ 	uint64_t index;
+-	const char *refname;
+ 	struct ref_store *old_refs;
+ 	struct ref_transaction *transaction;
+ 	struct strbuf *errbuf;
+ 	struct strbuf *sb, *name, *mail;
+ };
+ 
+-static int migrate_one_reflog_entry(struct object_id *old_oid,
++static int migrate_one_reflog_entry(const char *refname,
++				    struct object_id *old_oid,
+ 				    struct object_id *new_oid,
+ 				    const char *committer,
+ 				    timestamp_t timestamp, int tz,
+@@ -3006,7 +3005,7 @@ static int migrate_one_reflog_entry(struct object_id *old_oid,
+ 	strbuf_reset(data->sb);
+ 	strbuf_addstr(data->sb, fmt_ident(data->name->buf, data->mail->buf, WANT_BLANK_IDENT, date, 0));
+ 
+-	ret = ref_transaction_update_reflog(data->transaction, data->refname,
++	ret = ref_transaction_update_reflog(data->transaction, refname,
+ 					    new_oid, old_oid, data->sb->buf,
+ 					    msg, data->index++, data->errbuf);
+ 	return ret;
+@@ -3016,7 +3015,6 @@ static int migrate_one_reflog(const char *refname, void *cb_data)
+ {
+ 	struct migration_data *migration_data = cb_data;
+ 	struct reflog_migration_data data = {
+-		.refname = refname,
+ 		.old_refs = migration_data->old_refs,
+ 		.transaction = migration_data->transaction,
+ 		.errbuf = migration_data->errbuf,
+diff --git a/refs.h b/refs.h
+index 99b58d0b73c..0bf50ce25cc 100644
+--- a/refs.h
++++ b/refs.h
+@@ -558,10 +558,13 @@ int refs_delete_reflog(struct ref_store *refs, const char *refname);
+  * The cb_data is a caller-supplied pointer given to the iterator
+  * functions.
+  */
+-typedef int each_reflog_ent_fn(
+-		struct object_id *old_oid, struct object_id *new_oid,
+-		const char *committer, timestamp_t timestamp,
+-		int tz, const char *msg, void *cb_data);
++typedef int each_reflog_ent_fn(const char *refname,
++			       struct object_id *old_oid,
++			       struct object_id *new_oid,
++			       const char *committer,
++			       timestamp_t timestamp,
++			       int tz, const char *msg,
++			       void *cb_data);
+ 
+ /* Iterate over reflog entries in the log for `refname`. */
+ 
+diff --git a/refs/debug.c b/refs/debug.c
+index 485e3079d7a..5e113db307a 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -276,7 +276,8 @@ struct debug_reflog {
+ 	void *cb_data;
+ };
+ 
+-static int debug_print_reflog_ent(struct object_id *old_oid,
++static int debug_print_reflog_ent(const char *refname,
++				  struct object_id *old_oid,
+ 				  struct object_id *new_oid,
+ 				  const char *committer, timestamp_t timestamp,
+ 				  int tz, const char *msg, void *cb_data)
+@@ -291,7 +292,7 @@ static int debug_print_reflog_ent(struct object_id *old_oid,
+ 	if (new_oid)
+ 		oid_to_hex_r(n, new_oid);
+ 
+-	ret = dbg->fn(old_oid, new_oid, committer, timestamp, tz, msg,
++	ret = dbg->fn(refname, old_oid, new_oid, committer, timestamp, tz, msg,
+ 		      dbg->cb_data);
+ 	trace_printf_key(&trace_refs,
+ 			 "reflog_ent %s (ret %d): %s -> %s, %s %ld \"%.*s\"\n",
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 3ebe0323d4e..24d0a8ebde0 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2109,7 +2109,9 @@ static int files_delete_reflog(struct ref_store *ref_store,
+ 	return ret;
+ }
+ 
+-static int show_one_reflog_ent(struct files_ref_store *refs, struct strbuf *sb,
++static int show_one_reflog_ent(struct files_ref_store *refs,
++			       const char *refname,
++			       struct strbuf *sb,
+ 			       each_reflog_ent_fn fn, void *cb_data)
+ {
+ 	struct object_id ooid, noid;
+@@ -2136,7 +2138,7 @@ static int show_one_reflog_ent(struct files_ref_store *refs, struct strbuf *sb,
+ 		message += 6;
+ 	else
+ 		message += 7;
+-	return fn(&ooid, &noid, p, timestamp, tz, message, cb_data);
++	return fn(refname, &ooid, &noid, p, timestamp, tz, message, cb_data);
+ }
+ 
+ static char *find_beginning_of_line(char *bob, char *scan)
+@@ -2220,7 +2222,7 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
+ 				strbuf_splice(&sb, 0, 0, bp + 1, endp - (bp + 1));
+ 				scanp = bp;
+ 				endp = bp + 1;
+-				ret = show_one_reflog_ent(refs, &sb, fn, cb_data);
++				ret = show_one_reflog_ent(refs, refname, &sb, fn, cb_data);
+ 				strbuf_reset(&sb);
+ 				if (ret)
+ 					break;
+@@ -2232,7 +2234,7 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
+ 				 * Process it, and we can end the loop.
+ 				 */
+ 				strbuf_splice(&sb, 0, 0, buf, endp - buf);
+-				ret = show_one_reflog_ent(refs, &sb, fn, cb_data);
++				ret = show_one_reflog_ent(refs, refname, &sb, fn, cb_data);
+ 				strbuf_reset(&sb);
+ 				break;
+ 			}
+@@ -2282,7 +2284,7 @@ static int files_for_each_reflog_ent(struct ref_store *ref_store,
+ 		return -1;
+ 
+ 	while (!ret && !strbuf_getwholeline(&sb, logfp, '\n'))
+-		ret = show_one_reflog_ent(refs, &sb, fn, cb_data);
++		ret = show_one_reflog_ent(refs, refname, &sb, fn, cb_data);
+ 	fclose(logfp);
+ 	strbuf_release(&sb);
+ 	return ret;
+@@ -3323,7 +3325,8 @@ struct expire_reflog_cb {
+ 		     dry_run:1;
+ };
+ 
+-static int expire_reflog_ent(struct object_id *ooid, struct object_id *noid,
++static int expire_reflog_ent(const char *refname UNUSED,
++			     struct object_id *ooid, struct object_id *noid,
+ 			     const char *email, timestamp_t timestamp, int tz,
+ 			     const char *message, void *cb_data)
+ {
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 99fafd75ebe..25a1d516184 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -2148,7 +2148,7 @@ static int yield_log_record(struct reftable_ref_store *refs,
+ 
+ 	full_committer = fmt_ident(log->value.update.name, log->value.update.email,
+ 				   WANT_COMMITTER_IDENT, NULL, IDENT_NO_DATE);
+-	return fn(&old_oid, &new_oid, full_committer,
++	return fn(log->refname, &old_oid, &new_oid, full_committer,
+ 		  log->value.update.time, log->value.update.tz_offset,
+ 		  log->value.update.message, cb_data);
+ }
+diff --git a/remote.c b/remote.c
+index e965f022f12..db9eea4fa45 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2578,7 +2578,8 @@ struct check_and_collect_until_cb_data {
+ };
+ 
+ /* Get the timestamp of the latest entry. */
+-static int peek_reflog(struct object_id *o_oid UNUSED,
++static int peek_reflog(const char *refname UNUSED,
++		       struct object_id *o_oid UNUSED,
+ 		       struct object_id *n_oid UNUSED,
+ 		       const char *ident UNUSED,
+ 		       timestamp_t timestamp, int tz UNUSED,
+@@ -2589,7 +2590,8 @@ static int peek_reflog(struct object_id *o_oid UNUSED,
+ 	return 1;
+ }
+ 
+-static int check_and_collect_until(struct object_id *o_oid UNUSED,
++static int check_and_collect_until(const char *refname UNUSED,
++				   struct object_id *o_oid UNUSED,
+ 				   struct object_id *n_oid,
+ 				   const char *ident UNUSED,
+ 				   timestamp_t timestamp, int tz UNUSED,
+diff --git a/revision.c b/revision.c
+index 212ca0de276..0fc1a167a10 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1699,7 +1699,8 @@ static void handle_one_reflog_commit(struct object_id *oid, void *cb_data)
+ 	}
+ }
+ 
+-static int handle_one_reflog_ent(struct object_id *ooid, struct object_id *noid,
++static int handle_one_reflog_ent(const char *refname UNUSED,
++				 struct object_id *ooid, struct object_id *noid,
+ 				 const char *email UNUSED,
+ 				 timestamp_t timestamp UNUSED,
+ 				 int tz UNUSED,
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index 8d9a271845c..b2380d57ba3 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -215,7 +215,8 @@ static int cmd_for_each_reflog(struct ref_store *refs,
+ 	return refs_for_each_reflog(refs, each_reflog, NULL);
+ }
+ 
+-static int each_reflog_ent(struct object_id *old_oid, struct object_id *new_oid,
++static int each_reflog_ent(const char *refname UNUSED,
++			   struct object_id *old_oid, struct object_id *new_oid,
+ 			   const char *committer, timestamp_t timestamp,
+ 			   int tz, const char *msg, void *cb_data UNUSED)
+ {
+diff --git a/wt-status.c b/wt-status.c
+index 454601afa15..71bd17b610a 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -972,7 +972,8 @@ static void wt_longstatus_print_changed(struct wt_status *s)
+ 	wt_longstatus_print_trailer(s);
+ }
+ 
+-static int stash_count_refs(struct object_id *ooid UNUSED,
++static int stash_count_refs(const char *refname UNUSED,
++			    struct object_id *ooid UNUSED,
+ 			    struct object_id *noid UNUSED,
+ 			    const char *email UNUSED,
+ 			    timestamp_t timestamp UNUSED, int tz UNUSED,
+@@ -1664,7 +1665,8 @@ struct grab_1st_switch_cbdata {
+ 	struct object_id noid;
+ };
+ 
+-static int grab_1st_switch(struct object_id *ooid UNUSED,
++static int grab_1st_switch(const char *refname UNUSED,
++			   struct object_id *ooid UNUSED,
+ 			   struct object_id *noid,
+ 			   const char *email UNUSED,
+ 			   timestamp_t timestamp UNUSED, int tz UNUSED,
 
-Range-diff versus v1:
-
-1:  ca658850cf ! 1:  67b46a7afe refs: pass refname when invoking reflog entry callback
-    @@ refs.c: static int read_ref_at_ent(struct object_id *ooid, struct object_id *noi
-      		else if (!oideq(noid, cb->oid))
-      			warning(_("log for ref %s unexpectedly ended on %s"),
-     -				cb->refname, show_date(cb->date, cb->tz,
-    -+				refname, show_date(cb->date, cb->tz,
-    - 						       DATE_MODE(RFC2822)));
-    +-						       DATE_MODE(RFC2822)));
-    ++				refname, show_date(cb->date, cb->tz, DATE_MODE(RFC2822)));
-      		cb->reccnt++;
-      		oidcpy(&cb->ooid, ooid);
-    + 		oidcpy(&cb->noid, noid);
-     @@ refs.c: static int read_ref_at_ent(struct object_id *ooid, struct object_id *noid,
-      	return 0;
-      }
-    @@ refs.c: static int migrate_one_reflog(const char *refname, void *cb_data)
-     
-      ## refs.h ##
-     @@ refs.h: int refs_delete_reflog(struct ref_store *refs, const char *refname);
-    +  * The cb_data is a caller-supplied pointer given to the iterator
-       * functions.
-       */
-    - typedef int each_reflog_ent_fn(
-    -+		const char *refname,
-    - 		struct object_id *old_oid, struct object_id *new_oid,
-    - 		const char *committer, timestamp_t timestamp,
-    - 		int tz, const char *msg, void *cb_data);
-    +-typedef int each_reflog_ent_fn(
-    +-		struct object_id *old_oid, struct object_id *new_oid,
-    +-		const char *committer, timestamp_t timestamp,
-    +-		int tz, const char *msg, void *cb_data);
-    ++typedef int each_reflog_ent_fn(const char *refname,
-    ++			       struct object_id *old_oid,
-    ++			       struct object_id *new_oid,
-    ++			       const char *committer,
-    ++			       timestamp_t timestamp,
-    ++			       int tz, const char *msg,
-    ++			       void *cb_data);
-    + 
-    + /* Iterate over reflog entries in the log for `refname`. */
-    + 
-     
-      ## refs/debug.c ##
-     @@ refs/debug.c: struct debug_reflog {
-2:  b119cdfd48 = 2:  239f7acd1d refs: simplify logic when migrating reflog entries
--:  ---------- > 3:  e421091721 builtin/remote: fix sign comparison warnings
--:  ---------- > 4:  0d88ed6365 builtin/remote: determine whether refs need renaming early on
-3:  8d2678f27c ! 5:  8aed1ce7f5 builtin/remote: rework how remote refs get renamed
-    @@ Commit message
-         symrefs. On the one hand this isn't even remotely an atomic operation,
-         so if we hit any error we'll already have deleted all references.
-     
-    -    But more importantly it is also extremely inperformant. The number of
-    +    But more importantly it is also extremely inefficient. The number of
-         transactions for symrefs doesn't really bother us too much, as there
-         should generally only be a single symref anyway ("HEAD"). But the
-         renames are very expensive:
-    @@ Commit message
-             The consequence here is quadratic runtime performance. Renaming a
-             100k references takes hours to complete.
-     
-    -    Ideally we'd refactor the code to use a single transaction to perform
-    -    all the reference updates atomically. But unfortunately that does not
-    -    work in the case where you rename a remote so that it becomes nested
-    -    into itself, as that can lead to conflicting reference updates.
-    -
-    -    The next-best thing is to do it in two transactions: one to delete all
-    -    the references, and one to recreate the references and their reflogs.
-    -    This signicantly speeds up the operation with the "files" backend. The
-    -    following benchmark renames a remote with 10000 references:
-    +    Refactor the code to use a single transaction to perform all the
-    +    reference updates atomically, which speeds up the transaction quite
-    +    significantly:
-     
-             Benchmark 1: rename remote (refformat = files, revision = HEAD~)
-               Time (mean ± σ):     238.770 s ± 13.857 s    [User: 91.473 s, System: 143.793 s]
-    @@ Commit message
-               rename remote (refformat = reftable, revision = HEAD) ran
-                 7.31 ± 0.79 times faster than rename remote (refformat = reftable, revision = HEAD~)
-     
-    +    There is one issue though with using atomic transactions: when nesting a
-    +    remote into itself it can happen that renamed references conflict with
-    +    the old referencse. For example, when we have a reference
-    +    "refs/remotes/origin/foo" and we rename "origin" to "origin/foo", then
-    +    we'll end up with an F/D conflict when we try to create the renamed
-    +    reference "refs/remotes/origin/foo/foo".
-    +
-    +    This situation is overall quite unlikely to happen: people tend to not
-    +    use nested remotes, and if they do they must at the same time also have
-    +    a conflicting refname. But the end result would be that the old remote
-    +    references stay intact whereas all the other parts of the repository
-    +    have been adjusted for the new remote name.
-    +
-    +    Address this by queueing and preparing the reference update before we
-    +    touch any other part of the repository. Like this we can make sure that
-    +    the reference update will go through before rewriting the configuration.
-    +    Otherwise, if the transaction fails to prepare we can gracefully abort
-    +    the whole operation without any changes having been performed in the
-    +    repository yet. Furthermore, we can detect the conflict and print some
-    +    helpful advice for how the user can resolve this situation. So overall,
-    +    the tradeoff is that:
-    +
-    +      - Reference transactions are now all-or-nothing. This is a significant
-    +        improvement over the previous state where we may have ended up with
-    +        partially-renamed references.
-    +
-    +      - Rewriting references is now significantly faster.
-    +
-    +      - We only rewrite the configuration in case we know that all
-    +        references can be updated.
-    +
-    +      - But we may refuse to rename a remote in case references conflict.
-    +
-    +    Overall this seems like an acceptable tradeoff.
-    +
-         While at it, fix the handling of symbolic/broken references by using
-         `refs_for_each_rawref()`. Add tests that cover both this reported issue
-    -    and tests that verify that nesting remotes into itself continues to work
-    -    with conflicting references.
-    +    and tests that exercise nesting of remotes.
-     
-         One thing to note: with this change we cannot provide a proper progress
-         monitor anymore as we queue the references into the transactions as we
-    @@ Commit message
-     
-      ## builtin/remote.c ##
-     @@
-    + #define USE_THE_REPOSITORY_VARIABLE
-      
-      #include "builtin.h"
-    ++#include "advice.h"
-      #include "config.h"
-     +#include "date.h"
-      #include "gettext.h"
-    @@ builtin/remote.c: static int add_branch_for_removal(const char *refname,
-      	const char *new_name;
-     -	struct string_list *remote_branches;
-     -	uint32_t symrefs_nr;
-    -+	struct ref_transaction *tx_create;
-    -+	struct ref_transaction *tx_delete;
-    ++	struct ref_transaction *transaction;
-     +	struct progress *progress;
-    ++	struct strbuf *err;
-     +	uint32_t progress_nr;
-    -+	struct strbuf *buf1, *buf2, *buf3, *err;
-    -+	struct strbuf *new_refname;
-     +	uint64_t index;
-      };
-      
-     -static int read_remote_branches(const char *refname, const char *referent UNUSED,
-     -				const struct object_id *oid UNUSED,
-     -				int flags UNUSED, void *cb_data)
-    -+static void renamed_refname(struct rename_info *rename,
-    -+			    const char *refname,
-    -+			    struct strbuf *out)
-    ++static void compute_renamed_ref(struct rename_info *rename,
-    ++				const char *refname,
-    ++				struct strbuf *out)
-     +{
-     +	strbuf_reset(out);
-     +	strbuf_addstr(out, refname);
-    @@ builtin/remote.c: static int add_branch_for_removal(const char *refname,
-     +		      rename->new_name, strlen(rename->new_name));
-     +}
-     +
-    -+static int rename_one_reflog_entry(const char *old_refname UNUSED,
-    ++static int rename_one_reflog_entry(const char *old_refname,
-     +				   struct object_id *old_oid,
-     +				   struct object_id *new_oid,
-     +				   const char *committer,
-    @@ builtin/remote.c: static int add_branch_for_removal(const char *refname,
-     -		} else {
-     -			item->util = NULL;
-     -		}
-    -+	struct strbuf *identity = rename->buf1;
-    -+	struct strbuf *name = rename->buf2;
-    -+	struct strbuf *mail = rename->buf3;
-    ++	struct strbuf new_refname = STRBUF_INIT;
-    ++	struct strbuf identity = STRBUF_INIT;
-    ++	struct strbuf name = STRBUF_INIT;
-    ++	struct strbuf mail = STRBUF_INIT;
-     +	struct ident_split ident;
-     +	const char *date;
-     +	int error;
-     +
-    -+	if (split_ident_line(&ident, committer, strlen(committer)) < 0)
-    -+		return -1;
-    ++	compute_renamed_ref(rename, old_refname, &new_refname);
-     +
-    -+	strbuf_reset(name);
-    -+	strbuf_add(name, ident.name_begin, ident.name_end - ident.name_begin);
-    -+	strbuf_reset(mail);
-    -+	strbuf_add(mail, ident.mail_begin, ident.mail_end - ident.mail_begin);
-    ++	if (split_ident_line(&ident, committer, strlen(committer)) < 0) {
-    ++		error = -1;
-    ++		goto out;
-    + 	}
-    +-	strbuf_release(&buf);
-    + 
-    +-	return 0;
-    ++	strbuf_add(&name, ident.name_begin, ident.name_end - ident.name_begin);
-    ++	strbuf_add(&mail, ident.mail_begin, ident.mail_end - ident.mail_begin);
-     +
-     +	date = show_date(timestamp, tz, DATE_MODE(NORMAL));
-    -+	strbuf_reset(identity);
-    -+	strbuf_addstr(identity, fmt_ident(name->buf, mail->buf,
-    ++	strbuf_addstr(&identity, fmt_ident(name.buf, mail.buf,
-     +					  WANT_BLANK_IDENT, date, 0));
-     +
-    -+	error = ref_transaction_update_reflog(rename->tx_create, rename->new_refname->buf,
-    -+					      new_oid, old_oid, identity->buf, msg,
-    ++	error = ref_transaction_update_reflog(rename->transaction, new_refname.buf,
-    ++					      new_oid, old_oid, identity.buf, msg,
-     +					      rename->index++, rename->err);
-     +
-    ++out:
-    ++	strbuf_release(&new_refname);
-    ++	strbuf_release(&identity);
-    ++	strbuf_release(&name);
-    ++	strbuf_release(&mail);
-     +	return error;
-     +}
-     +
-    @@ builtin/remote.c: static int add_branch_for_removal(const char *refname,
-     +			     const struct object_id *old_oid,
-     +			     struct rename_info *rename)
-     +{
-    -+	struct strbuf *message = rename->buf1;
-    ++	struct strbuf new_refname = STRBUF_INIT;
-    ++	struct strbuf message = STRBUF_INIT;
-     +	int error;
-     +
-     +	if (!refs_reflog_exists(get_main_ref_store(the_repository), old_refname))
-    @@ builtin/remote.c: static int add_branch_for_removal(const char *refname,
-     +	error = refs_for_each_reflog_ent(get_main_ref_store(the_repository),
-     +					 old_refname, rename_one_reflog_entry, rename);
-     +	if (error < 0)
-    -+		return error;
-    ++		goto out;
-    ++
-    ++	compute_renamed_ref(rename, old_refname, &new_refname);
-     +
-     +	/*
-     +	 * Manually write the reflog entry for the now-renamed ref. We cannot
-    @@ builtin/remote.c: static int add_branch_for_removal(const char *refname,
-     +	 * Furthermore, we only append the entry in case the reference
-     +	 * resolves. Missing references shouldn't have reflogs anyway.
-     +	 */
-    -+	strbuf_reset(message);
-    -+	strbuf_addf(message, "remote: renamed %s to %s", old_refname,
-    -+		    rename->new_refname->buf);
-    ++	strbuf_addf(&message, "remote: renamed %s to %s", old_refname,
-    ++		    new_refname.buf);
-     +
-    -+	error = ref_transaction_update_reflog(rename->tx_create, rename->new_refname->buf,
-    ++	error = ref_transaction_update_reflog(rename->transaction, new_refname.buf,
-     +					      old_oid, old_oid, git_committer_info(0),
-    -+					      message->buf, rename->index++, rename->err);
-    ++					      message.buf, rename->index++, rename->err);
-     +	if (error < 0)
-     +		return error;
-     +
-    ++out:
-    ++	strbuf_release(&new_refname);
-    ++	strbuf_release(&message);
-     +	return error;
-     +}
-     +
-    @@ builtin/remote.c: static int add_branch_for_removal(const char *refname,
-     +			  const struct object_id *oid,
-     +			  int flags, void *cb_data)
-     +{
-    ++	struct strbuf new_referent = STRBUF_INIT;
-    ++	struct strbuf new_refname = STRBUF_INIT;
-     +	struct rename_info *rename = cb_data;
-    -+	struct strbuf *new_referent = rename->buf1;
-     +	const char *ptr = old_refname;
-     +	int error;
-     +
-    @@ builtin/remote.c: static int add_branch_for_removal(const char *refname,
-     +	    !skip_prefix(ptr, "/", &ptr)) {
-     +		error = 0;
-     +		goto out;
-    - 	}
-    --	strbuf_release(&buf);
-    - 
-    --	return 0;
-    -+	renamed_refname(rename, old_refname, rename->new_refname);
-    ++	}
-    ++
-    ++	compute_renamed_ref(rename, old_refname, &new_refname);
-     +
-     +	if (flags & REF_ISSYMREF) {
-     +		/*
-    @@ builtin/remote.c: static int add_branch_for_removal(const char *refname,
-     +		referent = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
-     +						   old_refname, RESOLVE_REF_NO_RECURSE,
-     +						   NULL, NULL);
-    -+		renamed_refname(rename, referent, new_referent);
-    ++		compute_renamed_ref(rename, referent, &new_referent);
-     +		oid = NULL;
-     +	}
-     +
-    -+	error = ref_transaction_delete(rename->tx_delete, old_refname,
-    ++	error = ref_transaction_delete(rename->transaction, old_refname,
-     +				       oid, referent, REF_NO_DEREF, NULL, rename->err);
-     +	if (error < 0)
-     +		goto out;
-     +
-    -+	error = ref_transaction_update(rename->tx_create, rename->new_refname->buf, oid, null_oid(the_hash_algo),
-    -+				       (flags & REF_ISSYMREF) ? new_referent->buf : NULL, NULL,
-    ++	error = ref_transaction_update(rename->transaction, new_refname.buf, oid, null_oid(the_hash_algo),
-    ++				       (flags & REF_ISSYMREF) ? new_referent.buf : NULL, NULL,
-     +				       REF_SKIP_CREATE_REFLOG | REF_NO_DEREF | REF_SKIP_OID_VERIFICATION,
-     +				       NULL, rename->err);
-     +	if (error < 0)
-    @@ builtin/remote.c: static int add_branch_for_removal(const char *refname,
-     +	display_progress(rename->progress, ++rename->progress_nr);
-     +
-     +out:
-    ++	strbuf_release(&new_referent);
-    ++	strbuf_release(&new_refname);
-     +	return error;
-      }
-      
-    @@ builtin/remote.c: static void handle_push_default(const char* old_name, const ch
-      	strbuf_release(&push_default.origin);
-      }
-      
-    --
-    ++static const char conflicting_remote_refs_advice[] = N_(
-    ++	"The remote you are trying to rename has conflicting references in the\n"
-    ++	"new target refspec. This is most likely caused by you trying to nest\n"
-    ++	"a remote into itself, e.g. by renaming 'parent' into 'parent/child'\n"
-    ++	"or by unnesting a remote, e.g. the other way round.\n"
-    ++	"\n"
-    ++	"If that is the case, you can address this by first renaming the\n"
-    ++	"remote to a different name.\n");
-    + 
-      static int mv(int argc, const char **argv, const char *prefix,
-      	      struct repository *repo UNUSED)
-    - {
-     @@ builtin/remote.c: static int mv(int argc, const char **argv, const char *prefix,
-      	};
-      	struct remote *oldremote, *newremote;
-    @@ builtin/remote.c: static int mv(int argc, const char **argv, const char *prefix,
-     -		old_remote_context = STRBUF_INIT;
-     -	struct string_list remote_branches = STRING_LIST_INIT_DUP;
-     -	struct rename_info rename;
-    --	int i, refs_renamed_nr = 0, refspec_updated = 0;
-    +-	int refs_renamed_nr = 0, refspecs_need_update = 0;
-     -	struct progress *progress = NULL;
-     +		old_remote_context = STRBUF_INIT, err = STRBUF_INIT;
-     +	struct rename_info rename = {
-    -+		.buf1 = &buf,
-    -+		.buf2 = &buf2,
-    -+		.buf3 = &buf3,
-    -+		.new_refname = &old_remote_context,
-     +		.err = &err,
-     +	};
-    -+	int i, refspec_updated = 0;
-    ++	int refspecs_need_update = 0;
-      	int result = 0;
-      
-      	argc = parse_options(argc, argv, prefix, options,
-    @@ builtin/remote.c: static int mv(int argc, const char **argv, const char *prefix,
-      	oldremote = remote_get(rename.old_name);
-      	if (!remote_is_configured(oldremote, 1)) {
-     @@ builtin/remote.c: static int mv(int argc, const char **argv, const char *prefix,
-    - 		goto out;
-    + 		refspecs_need_update = !!strstr(oldremote->fetch.items[i].raw,
-    + 						old_remote_context.buf);
-      
-    - 	/*
-    ++	if (refspecs_need_update) {
-    ++		rename.transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
-    ++							       0, &err);
-    ++		if (!rename.transaction)
-    ++			goto out;
-    ++
-    ++		if (show_progress)
-    ++			rename.progress = start_delayed_progress(the_repository,
-    ++								 _("Renaming remote references"), 0);
-    ++
-    ++		result = refs_for_each_rawref(get_main_ref_store(the_repository),
-    ++				rename_one_ref, &rename);
-    ++		if (result < 0)
-    ++			die(_("queueing remote ref renames failed: %s"), rename.err->buf);
-    ++
-    ++		result = ref_transaction_prepare(rename.transaction, &err);
-    ++		if (result < 0) {
-    ++			error("renaming remote references failed: %s", err.buf);
-    ++			if (result == REF_TRANSACTION_ERROR_NAME_CONFLICT)
-    ++				advise(conflicting_remote_refs_advice);
-    ++			die(NULL);
-    ++		}
-    ++	}
-    ++
-    + 	if (oldremote->fetch.nr) {
-    + 		strbuf_reset(&buf);
-    + 		strbuf_addf(&buf, "remote.%s.fetch", rename.new_name);
-    +@@ builtin/remote.c: static int mv(int argc, const char **argv, const char *prefix,
-    + 		}
-    + 	}
-    + 
-    +-	if (!refspecs_need_update)
-    +-		goto out;
-    +-
-    +-	/*
-     -	 * First remove symrefs, then rename the rest, finally create
-     -	 * the new symrefs.
-    -+	 * Note that we're using two transactions to rename the references:
-    -+	 *
-    -+	 *   - One transaction contains all deletions for references part of
-    -+	 *     the old remote.
-    -+	 *   - One transaction contains all creations of references and reflogs
-    -+	 *     part of the new remote.
-    -+	 *
-    -+	 * This split is required to avoid conflicting ref updates when a
-    -+	 * remote is being nested into itself or converted into its parent
-    -+	 * directory.
-    -+	 *
-    -+	 * Unfortunately this means that the operation isn't atomic. But we
-    -+	 * cannot avoid that, unless transactions learn to handle such
-    -+	 * conflicts one day.
-    - 	 */
-    +-	 */
-     -	refs_for_each_ref(get_main_ref_store(the_repository),
-     -			  read_remote_branches, &rename);
-     -	if (show_progress) {
-    @@ builtin/remote.c: static int mv(int argc, const char **argv, const char *prefix,
-     -					  _("Renaming remote references"),
-     -					  rename.remote_branches->nr + rename.symrefs_nr);
-     -	}
-    --	for (i = 0; i < remote_branches.nr; i++) {
-    +-	for (size_t i = 0; i < remote_branches.nr; i++) {
-     -		struct string_list_item *item = remote_branches.items + i;
-     -		struct strbuf referent = STRBUF_INIT;
-    -+	rename.tx_delete = ref_store_transaction_begin(get_main_ref_store(the_repository),
-    -+						       0, &err);
-    -+	if (!rename.tx_delete)
-    -+		goto out;
-    - 
-    +-
-     -		if (refs_read_symbolic_ref(get_main_ref_store(the_repository), item->string,
-     -					   &referent))
-     -			continue;
-     -		if (refs_delete_ref(get_main_ref_store(the_repository), NULL, item->string, NULL, REF_NO_DEREF))
-     -			die(_("deleting '%s' failed"), item->string);
-    -+	rename.tx_create = ref_store_transaction_begin(get_main_ref_store(the_repository),
-    -+						       0, &err);
-    -+	if (!rename.tx_create)
-    -+		goto out;
-    - 
-    +-
-     -		strbuf_release(&referent);
-     -		display_progress(progress, ++refs_renamed_nr);
-     -	}
-    --	for (i = 0; i < remote_branches.nr; i++) {
-    +-	for (size_t i = 0; i < remote_branches.nr; i++) {
-     -		struct string_list_item *item = remote_branches.items + i;
-    -+	if (show_progress)
-    -+		rename.progress = start_delayed_progress(the_repository,
-    -+							 _("Renaming remote references"), 0);
-    ++	if (refspecs_need_update) {
-    ++		result = ref_transaction_commit(rename.transaction, &err);
-    ++		if (result < 0)
-    ++			die(_("renaming remote refs failed: %s"), rename.err->buf);
-      
-     -		if (item->util)
-     -			continue;
-    @@ builtin/remote.c: static int mv(int argc, const char **argv, const char *prefix,
-     -			die(_("renaming '%s' failed"), item->string);
-     -		display_progress(progress, ++refs_renamed_nr);
-     -	}
-    --	for (i = 0; i < remote_branches.nr; i++) {
-    +-	for (size_t i = 0; i < remote_branches.nr; i++) {
-     -		struct string_list_item *item = remote_branches.items + i;
-    -+	result = refs_for_each_rawref(get_main_ref_store(the_repository),
-    -+				      rename_one_ref, &rename);
-    -+	if (result < 0)
-    -+		die(_("renaming references failed: %s"), rename.err->buf);
-    ++		stop_progress(&rename.progress);
-      
-     -		if (!item->util)
-     -			continue;
-    @@ builtin/remote.c: static int mv(int argc, const char **argv, const char *prefix,
-     -		if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, buf3.buf))
-     -			die(_("creating '%s' failed"), buf.buf);
-     -		display_progress(progress, ++refs_renamed_nr);
-    --	}
-    ++		handle_push_default(rename.old_name, rename.new_name);
-    + 	}
-     -	stop_progress(&progress);
-    -+	result = ref_transaction_commit(rename.tx_delete, &err);
-    -+	if (result < 0)
-    -+		die(_("deleting old remote refs failed: %s"), rename.err->buf);
-    -+
-    -+	result = ref_transaction_commit(rename.tx_create, &err);
-    -+	if (result < 0)
-    -+		die(_("committing new remote refs failed: %s"), rename.err->buf);
-    -+
-    -+	stop_progress(&rename.progress);
-    - 
-    - 	handle_push_default(rename.old_name, rename.new_name);
-    +-
-    +-	handle_push_default(rename.old_name, rename.new_name);
-      
-      out:
-     -	string_list_clear(&remote_branches, 1);
-    -+	ref_transaction_free(rename.tx_create);
-    -+	ref_transaction_free(rename.tx_delete);
-    ++	ref_transaction_free(rename.transaction);
-      	strbuf_release(&old_remote_context);
-      	strbuf_release(&buf);
-      	strbuf_release(&buf2);
-    @@ t/t5505-remote.sh: test_expect_success 'forbid adding superset of existing remot
-     +	git remote add parent url &&
-     +	git update-ref refs/remotes/parent/child $COMMIT_ID &&
-     +	test_when_finished "git remote remove parent/child" &&
-    -+	git remote rename parent parent/child &&
-    ++	test_must_fail git remote rename parent parent/child 2>err &&
-    ++	test_grep "renaming remote references failed" err &&
-    ++	test_grep "The remote you are trying to rename has conflicting references" err &&
-     +	git for-each-ref refs/remotes/ >actual &&
-    -+	printf "$COMMIT_ID commit\trefs/remotes/parent/child/child\n" >expected &&
-    ++	printf "$COMMIT_ID commit\trefs/remotes/parent/child\n" >expected &&
-     +	test_cmp expected actual
-     +'
-     +
-4:  6a68671b8f ! 6:  2fc020e25f builtin/remote: only iterate through refs that are to be renamed
-    @@ Commit message
-         but ultimately this is still a waste of compute as we knowingly iterate
-         through references that we won't ever care about.
-     
-    -    Improve this by introducing `refs_for_each_rawref_in()`, which knows to
-    -    only iterate through (potentially broken) references in a given prefix.
-    +    Improve this by using `refs_for_each_rawref_in()`, which knows to only
-    +    iterate through (potentially broken) references in a given prefix.
-     
-         The following benchmark renames a remote with a single reference in a
-         repository that has 100k unrelated references. This shows a sizeable
-    @@ Commit message
-     
-      ## builtin/remote.c ##
-     @@ builtin/remote.c: static int rename_one_ref(const char *old_refname, const char *referent,
-    - {
-    + 	struct strbuf new_referent = STRBUF_INIT;
-    + 	struct strbuf new_refname = STRBUF_INIT;
-      	struct rename_info *rename = cb_data;
-    - 	struct strbuf *new_referent = rename->buf1;
-     -	const char *ptr = old_refname;
-      	int error;
-      
-    @@ builtin/remote.c: static int rename_one_ref(const char *old_refname, const char
-     -		goto out;
-     -	}
-     -
-    - 	renamed_refname(rename, old_refname, rename->new_refname);
-    + 	compute_renamed_ref(rename, old_refname, &new_refname);
-      
-      	if (flags & REF_ISSYMREF) {
-     @@ builtin/remote.c: static int mv(int argc, const char **argv, const char *prefix,
-    - 		rename.progress = start_delayed_progress(the_repository,
-    - 							 _("Renaming remote references"), 0);
-    + 			rename.progress = start_delayed_progress(the_repository,
-    + 								 _("Renaming remote references"), 0);
-      
-    --	result = refs_for_each_rawref(get_main_ref_store(the_repository),
-    --				      rename_one_ref, &rename);
-    -+	strbuf_reset(&buf);
-    -+	strbuf_addf(&buf, "refs/remotes/%s/", rename.old_name);
-    +-		result = refs_for_each_rawref(get_main_ref_store(the_repository),
-    ++		strbuf_reset(&buf);
-    ++		strbuf_addf(&buf, "refs/remotes/%s/", rename.old_name);
-     +
-    -+	result = refs_for_each_rawref_in(get_main_ref_store(the_repository), buf.buf,
-    -+					 rename_one_ref, &rename);
-    - 	if (result < 0)
-    - 		die(_("renaming references failed: %s"), rename.err->buf);
-    - 
-    ++		result = refs_for_each_rawref_in(get_main_ref_store(the_repository), buf.buf,
-    + 				rename_one_ref, &rename);
-    + 		if (result < 0)
-    + 			die(_("queueing remote ref renames failed: %s"), rename.err->buf);
-     
-      ## refs.c ##
-     @@ refs.c: int refs_for_each_namespaced_ref(struct ref_store *refs,
-
----
-base-commit: 49e86c58e5687de1089b97288ec5d9582ee6ebd6
-change-id: 20250725-pks-remote-rename-improvements-85ce262146e0
+-- 
+2.50.1.619.g074bbf1d35.dirty
 
