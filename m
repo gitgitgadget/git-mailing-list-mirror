@@ -1,54 +1,54 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D24327F006
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 22:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8FE218E99
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 22:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754001978; cv=none; b=BVvIUVHCIWObh0SSvAgWMTLe57Bu8l1k4CE5tSiavsyUB2M2NweEuRwApqaQIRhfLV0Hd8nHoQLb41RoabFmIMbSWKEsUWvZTbyJIZzXPv/3NTWeus8HfCpqgo3w99sr8Pl0z8lL5qG3UegZypb0ycLhiaKHIZ5Z8A2qjYCDKbs=
+	t=1754001978; cv=none; b=EwtLOlOclGrwUvb/PctL79Bh4I53S8pULbj18bkdgPvIm8qwazaqpHwmjEhXxZH0ieilQA86mrvm6AsN1275CUg7cecYJ1gWE1BFCMFtfevyvN1iqJBxdxyq3BZ71e1SGz9ITPKK0lFzHzJdJtMBacwZil+90wDChCwR9PKkEJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1754001978; c=relaxed/simple;
-	bh=iAtvtro7QERZvydeKAfu8pD77qffB1J1hJgJz0/Z3yw=;
+	bh=tEHkEm1SjugisAQLTvpXln2SuG19ZTPlQyg4QmnauvY=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B6Ln/JXgvC1JfXEFMaQFTpQPeo87FU+Jkm2VoAUQov/r86Gzf6UYSXLEMVbtKyjwJBGHuHO7l8o5C6qjjromQ35Xea9IXrNaUvmqL+qusqps/0UjLEOwRyVu9OQCqFtz+hE47o6BQGosmZrgCn0n6m5cu7rNWv84aRTcO+UPBi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QdVZk2rk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MheGz9+g; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version; b=obZyqfSR3bZtzahdxgttt1vwmsoj2aSM7jZ0kWMBf6BetQEowmgNUWoxAgzlzOcm9To5BGRjPq6XLw31ZwNtdthiEeWIc2duxkjS4LsfgXCW+l1HulFw0f1GIbDFdumnlJe51s5pf3tZbMOZeObYXXZYy0POW2fpD6RdBHTQT+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QbJFG8HK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DyMgkYQG; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QdVZk2rk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MheGz9+g"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5F9A2EC134A;
-	Thu, 31 Jul 2025 18:46:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QbJFG8HK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DyMgkYQG"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 37773EC1292;
+	Thu, 31 Jul 2025 18:46:16 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 31 Jul 2025 18:46:13 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 31 Jul 2025 18:46:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1754001973; x=
-	1754088373; bh=rSaKJGxkJ0IOkvKObDHhwn9zcEOxU+/xfbhV6e0VcRI=; b=Q
-	dVZk2rksyZ9ExRLoVMRXsiBrU1BW705anGo+Fry3m6CollruZ/Qv2OeWghtclF8S
-	t3+XEf4LSSQGlA3tXBWhn5uXBiJox5WVMhKLdL37Ot2OBK1l/QM06BD/tMH0xQjo
-	OtPOAke3Glmi6lHw65cCwMbiEdgW5jYQVYFMAxdOGEsEHZzqmsMPVxLChxqc8SSQ
-	SykH2Qf0OtPrkRyapewIJAUi0p3ktKd0p2mzdC3a2IZtXbyLhAUs0X6VTsL3mAtF
-	17q5XU5cHdYcrYzFglmS1ajh7z8cPPDzdJTXRv/iISnEVbZFvNk3Wn8TyTwhCGK7
-	C63axnyiEXRfadA25LTQA==
+	:reply-to:subject:subject:to:to; s=fm2; t=1754001976; x=
+	1754088376; bh=FicbRMQcXu4tWUrupXRf1h4RXWFc0PCY8skUcQyG1nA=; b=Q
+	bJFG8HKhsbzlKIVtY+Ii1TSkXSPQvP6GeM5XEw7VBprCM6n2d6fwruSGxKiUGsEV
+	3n0UuMqtBT7bkw2TukGFQrmGWtqvgwdI5OHDfHFOB9XRjbg5Bg8MSxtoQ0s8whRe
+	7Vw8iC68zb5uAkFSx2k5Y65mGgOxxQvs6h8uiKnxgBnQUtdbmCet5LuGhww1i8Vo
+	19nJch4893zXO0RuqAv+yVkVDiAop5JQUQkgzX5ZUoRKacJxGIU2veCiYwv7jcxS
+	vU6uRxhLmnRjwEe/qJVcRYqGrwdCRBqhvVYQGFyyEprZE9hT2dAn1rzm7EfQz71V
+	xgmN8HZ4I4s7izxABXtgA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1754001973; x=1754088373; bh=rSaKJGxkJ0IOkvKObDHhwn9zcEOx
-	U+/xfbhV6e0VcRI=; b=MheGz9+g0KiGV+7P09KJK1whrr7+Gu5F0vXxLorzAwwk
-	/Mi2XVe6iZ430m3737rqp/A0F7AuNGln8TGDc0DgkpIAQTXgn4PbHisScr43sTF4
-	uH9br/y+Y8P3/EU3+T9cpMwaNrlIEihpPEC/Vn/SjOsQpF+r8sEg81LovuJ0t4nT
-	njWX64ApEj60In1J9/S7l+n5m53zARG+KOouMTZ6KtGaNqqz0gLKkpdWXamx2Nj5
-	7JATPGxe46OluVOsCJxGM3EQgnfWbsnPDieRkfT+8RgVpQVwfbLMTptwmY6JeAZV
-	7WW2OLn9l/NpYrASxCfYzRxbJfD1P+rb1PrIGtD0YA==
-X-ME-Sender: <xms:NfKLaKSTd1asKBmNKnzrZ7tU2Qrjnk75lrJZPseuVXpYR0bM6-56IQ>
-    <xme:NfKLaP8qCMe1vVi1w8GNX5JJ39doh86LGDkjOC5LLIhE5Og2XxcQqi9Kp8aOBeK8-
-    uh_og3IYv-BF4IuiA>
-X-ME-Received: <xmr:NfKLaJqxCQLQltv2o0yW-6oBj0O4nAThydoQ5g8Mj6-XelbJACiIJFV0vGH3CnksmdYGEQNOa2Sfq2GTBOYhRJ04MrJWHr7FGSSk8CM>
+	fm3; t=1754001976; x=1754088376; bh=FicbRMQcXu4tWUrupXRf1h4RXWFc
+	0PCY8skUcQyG1nA=; b=DyMgkYQGkYAjhOMBn8XaeVM+RsNEElyrRbdGh2tjqh7J
+	Fb6us3k1U6XBfTY8AWXSVs0bOHYsj77i5/lADZLlzaaLi6hPch6clJo4OFZFpogj
+	FJFSLt71Dpp30yluYor61ix+IL2+GmFzK15GuXoP9u7v7YYJqnOohRhauOG/VKQH
+	r4eWR1hs4e1pGxL5OyE1/vwyiEGU5uZTwYwtx+0RWpJ2zCndJqJ3Kd50kqDAzzxh
+	iNsUqLcgjhI8wOkmveLy5nqtA5jmfPbih3CI9cZe7bi2wsCxDW6wTRzOqNYvwuBm
+	mLpo4ZsU3w99i42+/oTTQuE8TQCXMEiL6eSgwsOhJA==
+X-ME-Sender: <xms:OPKLaK6sPJ3xjo6IUaM3Jsu2XdNykzqiwXtaFFLhnu_CYfrThCsiqw>
+    <xme:OPKLaEHQqr62Vwu58r6_IOUq1UNn1C1RC5xj4Q4DGV3MMEBAvXjifIkPrMAMFRpWL
+    iVNwKfDYbxdcjSYCA>
+X-ME-Received: <xmr:OPKLaLRamydTL5MX6-U2bT_1mseSlL5lDrmR3o_9OJzMiCIyswVE4b5k-rZN1zWyTrHPEYl9pkwT59T6fl6YigsZukJF-9sEwnqILWQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvtdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvtdehucetufdote
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:NfKLaEl4b8PawWdcTx4Pv37TafVaK0yyvsioCrcIKAPP1OV1J1K_4Q>
-    <xmx:NfKLaIK4ayseHTnCe8VfFmt3B-oiZecx8ySXsjGHe9JrYrXeFr04lA>
-    <xmx:NfKLaBwOD_QqbSAXBkUFKUusVxbTcdBBEanRWTFkNVSzi3e1RztbwQ>
-    <xmx:NfKLaIshuGzCg0gl2vL8FEYLmM9Lsc-R8rlEFsuUvBKpNZGIDOJkyw>
-    <xmx:NfKLaE0xTw41WgImuqRZz-mWfkn3rWsyxokNYPhzuuAQh5xJqPrqGZdi>
+X-ME-Proxy: <xmx:OPKLaFvUWRCw2XiZ7ElI819WdeBvPmOziaGGmkqnaoWn8-hDVZOmTg>
+    <xmx:OPKLaCwYhfYTi_POEW7uJ63WDLFTisxjM4SWZHaW-gGv93tkHywQHA>
+    <xmx:OPKLaH6Fh9bTZRGyQuXTqBa0I0g7GnL2wWFvbjBYghL619L2oQA3wg>
+    <xmx:OPKLaEUCnR-lERtgSBLGK-4Te4eA0i0vH81PVLAoJXt9Cei8PnigQA>
+    <xmx:OPKLaFeX1y_NE45rekIJgTJWncTmSaPhxp2kFOAtEIofSh2LRWTU8iha>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 18:46:12 -0400 (EDT)
+ 31 Jul 2025 18:46:15 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 3/7] string-list: unify string_list_split* functions
-Date: Thu, 31 Jul 2025 15:46:02 -0700
-Message-ID: <20250731224607.3942417-4-gitster@pobox.com>
+Subject: [PATCH v2 5/7] diff: simplify parsing of diff.colormovedws
+Date: Thu, 31 Jul 2025 15:46:04 -0700
+Message-ID: <20250731224607.3942417-6-gitster@pobox.com>
 X-Mailer: git-send-email 2.50.1-618-g45d530d26b
 In-Reply-To: <20250731224607.3942417-1-gitster@pobox.com>
 References: <20250731063949.1601669-1-gitster@pobox.com>
@@ -84,139 +84,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Thanks to the previous step, the only difference between these two
-related functions is that string_list_split() works on a string
-without modifying its contents (i.e. taking "const char *") and the
-resulting pieces of strings are their own copies in a string list,
-while string_list_split_in_place() works on a mutable string and the
-resulting pieces of strings come from the original string.
+The code to parse this configuration variable, whose value is a
+comma separated known tokens like "ignore-space-change" and
+"ignore-all-space", uses string_list_split() to split the value into
+pieces, and then places each piece of string in a strbuf to trim,
+before comparing the result with the list of known tokens.
 
-Consolidate their implementations into a single helper function, and
-make them a thin wrapper around it.  We can later add an extra flags
-parameter to extend both of these functions by updating only the
-internal helper function.
+Thanks to the previous steps, now string_list_split() can trim the
+resulting pieces before it places them in the string list.  Use it
+to simplify the code.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- string-list.c | 96 ++++++++++++++++++++++++++++++---------------------
- 1 file changed, 56 insertions(+), 40 deletions(-)
+ diff.c | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/string-list.c b/string-list.c
-index 2284a009cb..65b6ceb259 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -276,55 +276,71 @@ void unsorted_string_list_delete_item(struct string_list *list, int i, int free_
- 	list->nr--;
- }
+diff --git a/diff.c b/diff.c
+index a81949a422..70666ad2cd 100644
+--- a/diff.c
++++ b/diff.c
+@@ -327,29 +327,23 @@ static unsigned parse_color_moved_ws(const char *arg)
+ 	struct string_list l = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *i;
  
--int string_list_split(struct string_list *list, const char *string,
--		      const char *delim, int maxsplit)
-+/*
-+ * append a substring [p..end] to list; return number of things it
-+ * appended to the list.
-+ */
-+static int append_one(struct string_list *list,
-+		      const char *p, const char *end,
-+		      int in_place)
-+{
-+	if (!end)
-+		end = p + strlen(p);
-+
-+	if (in_place) {
-+		*((char *)end) = '\0';
-+		string_list_append(list, p);
-+	} else {
-+		string_list_append_nodup(list, xmemdupz(p, end - p));
-+	}
-+	return 1;
-+}
-+
-+/*
-+ * Unfortunately this cannot become a public interface, as _in_place()
-+ * wants to have "const char *string" while the other variant wants to
-+ * have "char *string" for type safety.
-+ *
-+ * This accepts "const char *string" to allow both wrappers to use it;
-+ * it internally casts away the constness when in_place is true by
-+ * taking advantage of strpbrk() that takes a "const char *" arg and
-+ * returns "char *" pointer into that const string.  Yucky but works ;-).
-+ */
-+static int split_string(struct string_list *list, const char *string, const char *delim,
-+			int maxsplit, int in_place)
- {
- 	int count = 0;
--	const char *p = string, *end;
-+	const char *p = string;
-+
-+	if (in_place && list->strdup_strings)
-+		BUG("string_list_split_in_place() called with strdup_strings");
-+	else if (!in_place && !list->strdup_strings)
-+		BUG("string_list_split() called without strdup_strings");
+-	string_list_split(&l, arg, ",", -1);
++	string_list_split_f(&l, arg, ",", -1, STRING_LIST_SPLIT_TRIM);
  
--	if (!list->strdup_strings)
--		BUG("internal error in string_list_split(): "
--		    "list->strdup_strings must be set");
- 	for (;;) {
--		count++;
--		if (maxsplit >= 0 && count > maxsplit) {
--			string_list_append(list, p);
--			return count;
--		}
--		end = strpbrk(p, delim);
--		if (end) {
--			string_list_append_nodup(list, xmemdupz(p, end - p));
--			p = end + 1;
--		} else {
--			string_list_append(list, p);
-+		char *end;
-+
-+		if (0 <= maxsplit && maxsplit <= count)
-+			end = NULL;
-+		else
-+			end = strpbrk(p, delim);
-+
-+		count += append_one(list, p, end, in_place);
-+
-+		if (!end)
- 			return count;
--		}
-+		p = end + 1;
- 	}
- }
- 
-+int string_list_split(struct string_list *list, const char *string,
-+		      const char *delim, int maxsplit)
-+{
-+	return split_string(list, string, delim, maxsplit, 0);
-+}
-+
- int string_list_split_in_place(struct string_list *list, char *string,
- 			       const char *delim, int maxsplit)
- {
--	int count = 0;
--	char *p = string, *end;
+ 	for_each_string_list_item(i, &l) {
+-		struct strbuf sb = STRBUF_INIT;
+-		strbuf_addstr(&sb, i->string);
+-		strbuf_trim(&sb);
 -
--	if (list->strdup_strings)
--		BUG("internal error in string_list_split_in_place(): "
--		    "list->strdup_strings must not be set");
--	for (;;) {
--		count++;
--		if (maxsplit >= 0 && count > maxsplit) {
--			string_list_append(list, p);
--			return count;
--		}
--		end = strpbrk(p, delim);
--		if (end) {
--			*end = '\0';
--			string_list_append(list, p);
--			p = end + 1;
--		} else {
--			string_list_append(list, p);
--			return count;
--		}
--	}
-+	return split_string(list, string, delim, maxsplit, 1);
- }
+-		if (!strcmp(sb.buf, "no"))
++		if (!strcmp(i->string, "no"))
+ 			ret = 0;
+-		else if (!strcmp(sb.buf, "ignore-space-change"))
++		else if (!strcmp(i->string, "ignore-space-change"))
+ 			ret |= XDF_IGNORE_WHITESPACE_CHANGE;
+-		else if (!strcmp(sb.buf, "ignore-space-at-eol"))
++		else if (!strcmp(i->string, "ignore-space-at-eol"))
+ 			ret |= XDF_IGNORE_WHITESPACE_AT_EOL;
+-		else if (!strcmp(sb.buf, "ignore-all-space"))
++		else if (!strcmp(i->string, "ignore-all-space"))
+ 			ret |= XDF_IGNORE_WHITESPACE;
+-		else if (!strcmp(sb.buf, "allow-indentation-change"))
++		else if (!strcmp(i->string, "allow-indentation-change"))
+ 			ret |= COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE;
+ 		else {
+ 			ret |= COLOR_MOVED_WS_ERROR;
+-			error(_("unknown color-moved-ws mode '%s', possible values are 'ignore-space-change', 'ignore-space-at-eol', 'ignore-all-space', 'allow-indentation-change'"), sb.buf);
++			error(_("unknown color-moved-ws mode '%s', possible values are 'ignore-space-change', 'ignore-space-at-eol', 'ignore-all-space', 'allow-indentation-change'"), i->string);
+ 		}
+-
+-		strbuf_release(&sb);
+ 	}
+ 
+ 	if ((ret & COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) &&
 -- 
 2.50.1-618-g45d530d26b
 
