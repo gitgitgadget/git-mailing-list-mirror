@@ -1,56 +1,56 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527D719BBA
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 18:45:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677292550CF
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 19:07:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753987535; cv=none; b=bSPYaehiXilogJvwPFE4viAVmH9haQ0favKYwcIAmuVnP1VqfDc78ar6wLHJi1Mtdy2BCOdsmLk0EMcplp1kCtFPX/cgsjoxZFGO8cJeqZE5Hr7vjdx5Zq/0AY0bkHXx/yQq+TyywRPnSz5aQqA8rTYk6obIzZY93hN1Przmbs0=
+	t=1753988838; cv=none; b=a0cg5DgOzRG4JxVpMgS3mbqe2XATrBQsVpNlOq2rudb820Axu0DeMpIisibule3LLQGdGqhSdB+UxDdaKH0MBDcBJqMQgN4xqrzQ917Mn5TS8x7C2e/bpvWlNvGy/rbXEER3mnhSJzOMGu+CsL5/iXbWanjT8q80rb+uuwPBJ7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753987535; c=relaxed/simple;
-	bh=fyWbQDUEZ0m6qX9F03QJxdG//0ygHggkrPmOdfOsPkY=;
+	s=arc-20240116; t=1753988838; c=relaxed/simple;
+	bh=jta7OPTG4ZNa967uE0dBa1lndaCH40zwComTD9Kw068=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=d3cAdJlBteWI4BTkDYb5iiLxt2FBlMRJKr2vPX73tU7ZZXOaZS61l1uCEgHlW+WYgW1hTQr4qC/wwmEqEu16Rj79tcMaeW1Ch8A8c/NcwGwHkcTsNBpP/h8hjSq9c9ayQ7Pia23y9eMlUpM1emuYD5OJpfQFV1KDA/QUXYZ+Wtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fbWxRD2F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kvw4PjSU; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=iE3gVVMrt3KjM3+WzHGPJW++pjG+lXzbotfkUVsVwyFjPLGTDmwI9Bw3N73ZZW5pg4ARgdvawL1I7D+5T0gogKnXIlfhyYxnqoZaG1s2gVS02F7Dw8WAg31wMjXN5/Q4j3SYdyQep4xdRVrXuXT+aq3MEPZqcuvUThr8zrhzy8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NB+QOhm7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F/lMqsYF; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fbWxRD2F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kvw4PjSU"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 89AFAEC1208;
-	Thu, 31 Jul 2025 14:45:32 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 31 Jul 2025 14:45:32 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NB+QOhm7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F/lMqsYF"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 79FB81400265;
+	Thu, 31 Jul 2025 15:07:15 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 31 Jul 2025 15:07:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1753987532;
-	 x=1754073932; bh=CE5cIz1yJcagpJQohkAn0J1SDMSmM4Ln12RsAg2MCok=; b=
-	fbWxRD2FxmC9N61oo6sJNjXnrMA4n7hD9ZaQD91o/Kb+q3uWbqLBkttWRUkUtB5x
-	GdenIrxt/BblOEolnyk1O9xabD4HVdbo+jjc28yFw2/p85zGVHEe5huAXvORCKai
-	QIvT9KWfQuDkyxNmv2cBxQ23l8mglSXP8VljWR5FUdAN3R8xcJq/8xxyLTWeAQK6
-	YTBUN8odHEoHMF2AkYkxTmA5gnOwQrWQZgHVEpicc+PVFuuJvnLRCGKT5b1BAldl
-	UhkePC8peuZ5rSqQ5huFiKq9SzjCoFNLk2J/jjvgqqWQEFzUr0FfGltdtkZtaiYj
-	/kaRTwyWY5MI3KmXPVKXMQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1753988835;
+	 x=1754075235; bh=Is9/1l36r0Mgez+PJzpqw4RRc8M8B1mr5dcnDiOUZ0k=; b=
+	NB+QOhm7kDYdzqwlrsyVSKGpqSdT5OIsXa9q3du6vB3HSs0hWMvceZDh4wIeT39g
+	H4Gr9aQU9rZHLLZJE4zJqLhsxfSENGZVIhLsKLxYH3GMIEW84nrgOfLH/ePKH0CY
+	IxZPDg2wd0LW+1zxcC9OFyIFbW0G/LE1MI0Mg21I2ndmnE1UvdzWCJeoEAru5P+h
+	wtx7JFAIY9I1WyVZnND3J7wI+5u6NlUBC2kDV1bTgXOD0BQ+quiDWBElJdqDf7GK
+	j8nqV2wEzVm04SCVw71DzQRRg0OGI1evckJ1KG1XNGtqhK9beUFafLQikMUnnEus
+	6nwY9NVyPswRskLt4DxTyw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753987532; x=
-	1754073932; bh=CE5cIz1yJcagpJQohkAn0J1SDMSmM4Ln12RsAg2MCok=; b=k
-	vw4PjSU84RYKSy90regmoYlT1IFzNL8cQRSeqaCLlj7k1gRmrQ5Ut5N1KUHpmlcO
-	7VOnoEiUeGnNySTZwLaV0uL63ConrzSP4Wzc8kmb3Bk7qJ0D5qPjHAiLHh/1lYBN
-	tzbvVSN/9k+8rGlJ+AYpt7Uj81PHvhhRQVcmMVU/LLa+CpU/l0OkKr6DQ8sFQ/m+
-	FtAwm02+n2VfkrR0hrUvzUOFdlACv/anisk5E8GOOrOopCwvS/GF/vtGHxz/vxT/
-	lnNjhK7VmBYW1NTiYuJD8xJBvMyVEPUNm1XtWrcMiNBQSizQsDoWCpj97WGq+t2L
-	flUKpWKAv/7/pnBHGahBA==
-X-ME-Sender: <xms:y7mLaKMWSi1UisT369-iS8hi5EsbUCHLspr61BchBcZZ5oAM9fg-GQ>
-    <xme:y7mLaGjxafyXgm4aI5TfZsIREuEhxMbleuLHLxId86GsTXIItJDy9QTJztlAzvUAw
-    eByfSpvf7O9tYq0Zw>
-X-ME-Received: <xmr:y7mLaHunjvJuYxXr1CwWfuTvGSAJzb74lVXyCKmtKlc-qnEDHtDMqHxjtxWThgrpyLCPneWCN8_aYbyhhJnHBap9yAc6SqToI6qBKTk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdduheejucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753988835; x=
+	1754075235; bh=Is9/1l36r0Mgez+PJzpqw4RRc8M8B1mr5dcnDiOUZ0k=; b=F
+	/lMqsYFTpYPFcth4BUlS+LUSmwZ57uHMfgG0NeLyMTkhTuC1t4oKcOg5Ob0ptF77
+	5T9T7nYhaMVUVCoi3MBhXv3pxBRXaGM3f6iF+kJxInC7b/Tfp7+UPe4NLU6BnuJc
+	qYnkjOsuJLc+mCCKcxLQZ6RJBFHoaaxsaulM1BzBK23UE6vYjfO67cab8yL20Xsl
+	3YNq+5RjKEUkcl/Xf8A6CYTrcyEjy8nOBpkDGxzige3fJXyq1YqMItjBf+fHN+0S
+	FhRAfvRJ54PIHiW52IqEPA1IK67kODHq1Nafp+2RqEdYCuGmkCMXpO5ogqgYfis8
+	TAwOwQah5jUqXUxdfHoCA==
+X-ME-Sender: <xms:476LaC4fwG6us_TmlUrZo2uymG7B5nqQcVeuAlmWNRAywX-bPa7IzA>
+    <xme:476LaEX1-66Qrfg90xDSPN0LHab08PBXq3R0Gi5PhvIU1QWcgBscSnjRZlFzgn3n2
+    0iOL8zelWtlUECJEg>
+X-ME-Received: <xmr:476LaB7cLLVRrobfMGzBb7RuegS0RFXjyynrMOid_o0QBVdgKWQVC2tSkTO_rH4iVzwBt4MUL3xxa1Pu8LZB78gVe-MGEKtNp41ph2E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdduieduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
@@ -58,36 +58,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdduheejucetufdote
     htthgvrhhnpeeggefhudefkeegueeigfejhfejvdejvedtheeguedukefgieelfeeuteej
     ieeuleenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivg
     eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghl
-    vghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkh
-    drnhgrmhgvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopedukedvfedtvddvvdefjeelseduieefrdgtohhmpdhrtghpthhtoheptghhvg
-    hnjhhirghnhheskhihlhhinhhoshdrtghnpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:y7mLaMSlTshwVlPGW4wgknfgyo-P9EqpFF8yqscgPFr4RwONIPV_6Q>
-    <xmx:y7mLaD0MaA0o_CwN8Tf2zLEZiVj96dpAPD5Sylig-JuwXVXbWDMbDA>
-    <xmx:y7mLaJtfYtKAKNZVhmIe6KdsLpkCJSY8PgPn-VvVU-R3q_IM7kPZNw>
-    <xmx:y7mLaBjyFBHaPlMCzHefQ908Bd8f0SN0E9xeSEtLIcl2tG6t2fEGvA>
-    <xmx:zLmLaFaI-yW2PnTRwQR5eezlBTsonQLo-ePhTlUtspz2FpiKx8EWzCC6>
+    mhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
+    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvqdhkqdhnuhhtsehhohhtmhgrih
+    hlrdgtohhmpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgt
+    phhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:476LaPp7-seNZLBXkinEimnOKNCpEWDTkErrbb8HPbk9bCwq2IAdlA>
+    <xmx:476LaEmEsdZROn_uJ5P108_FzajXsoJxWQRkzhiyrZ3wOwih6r3ItQ>
+    <xmx:476LaLNfwzU3BV48qq_CoxnqH2K3nVApjQsGKP0zNtJmXccHY5Xoag>
+    <xmx:476LaIOV_N12rOy05YI9Wp0yFYTg6-BipZtNfqwo-xBKvc-mIRIXuA>
+    <xmx:476LaN_EUA7P4bNXTx9EvShXVjd3ebtg4jCT-y-zC47-I7t1S7GMMEqB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 14:45:31 -0400 (EDT)
+ 31 Jul 2025 15:07:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "chenjianhu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: Justin Tobler <jltobler@gmail.com>,
-    Kristoffer Haugsbakk <code@khaugsbakk.name>,
-    git@vger.kernel.org,  chenjianhu <18230222379@163.com>,  chenjianhu
- <chenjianh@kylinos.cn>
-Subject: Re: [PATCH v2] t7450: inspect the correct path a broken code would
- write to
-In-Reply-To: <pull.2022.v2.git.git.1753933780883.gitgitgadget@gmail.com>
-	(chenjianhu via GitGitGadget's message of "Thu, 31 Jul 2025 03:49:40
+To: "Knut Harald Ryager via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Knut Harald Ryager <e-k-nut@hotmail.com>,
+    Josh Steadmon <steadmon@google.com>,
+    =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] docs: remove stray bracket from git-clone synopsis
+In-Reply-To: <pull.2023.git.git.1753973177262.gitgitgadget@gmail.com> (Knut
+	Harald Ryager via GitGitGadget's message of "Thu, 31 Jul 2025 14:46:17
 	+0000")
-References: <pull.2022.git.git.1753860300588.gitgitgadget@gmail.com>
-	<pull.2022.v2.git.git.1753933780883.gitgitgadget@gmail.com>
-Date: Thu, 31 Jul 2025 11:45:29 -0700
-Message-ID: <xmqqtt2sqjw6.fsf@gitster.g>
+References: <pull.2023.git.git.1753973177262.gitgitgadget@gmail.com>
+Date: Thu, 31 Jul 2025 12:07:13 -0700
+Message-ID: <xmqqh5ysqivy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,77 +94,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-"chenjianhu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Knut Harald Ryager via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Somehow Justin and Kristoffer are missing from the Cc list.
+> From: E-K-n <e-k-nut@hotmail.com>
 
-> From: chenjianhu <chenjianh@kylinos.cn>
+This should be updated to match the name you use on your sign-off
+below.
+
+> The git-clone documentation contained an extra ‘]’ after
+> `--also-filter-submodules]`.
+
+It is correct to point out that the brackets are not matching, but I
+think the one that you are removing a wrong one.
+
+When f05da2b4 (clone, submodule: pass partial clone filters to
+submodules, 2022-02-04) added an option --also-filter-submodules to
+the command, it wanted to express that the option is only valid when
+the "--filter=<filter-spec>" option is also given.  And it did its
+update correctly:
+
+-         [--filter=<filter>] [--] <repository>
++         [--filter=<filter> [--also-filter-submodules]] [--] <repository>
+ 
+Later, 76880f05 (doc: git-clone: apply new documentation formatting
+guidelines, 2024-03-29) introduced the extra closing bracket after
+"--filter=<filter>" to make these two look as if they are unrelated
+and independent, i.e.
+
+    [--filter=<filter>] [--also-filter-submodules]]
+
+So, I think the one immediately after "--filter=<filter>" is what
+you want to remove, not the one after "--also-filter-submodules".
+
+> This patch removes the duplicate ‘]’ so that the line reads:
 >
-> Prior to 05e9cd64 (config: quote values containing CR character,
-> 2025-05-19), a repository can trick "clone --recurse-submodules"
-> into running a post-checkout hook shipped with the project.  The
-> test was written to make sure the trick would no longer run the
-> hook with the fix in the commit.
+>     [--also-filter-submodules] [--] <repository>
 >
-> However, the test did not check for the path the hook would
-> create; correct the path to the expected one if the bug were
-> still with us.
+> instead of:
 >
-> Signed-off-by: chenjianhu <chenjianhu@kylinos.cn>
+>     [--also-filter-submodules]] [--] <repository>
+
+We do not say "this patch does X" in our proposed log message.
+Instead, you tell somebody sitting on the keyboard to "Do X".
+
+IOW, something like
+
+    Remove the extra and incorrect closing bracket, so that the line
+    reads:
+
+        [--filter=<filter> [--also-filter-submodules]]
+
+    instead of
+
+        [--filter=<filter>] [--also-filter-submodules]]
+
+is how we write this.
+
+> Signed-off-by: Knut Harald Ryager <e-k-nut@hotmail.com>
 > ---
->     modify the “foo" file path to "$PWD/bad-clone/sub/foo".
->     
->     cc: "Kristoffer Haugsbakk" kristofferhaugsbakk@fastmail.com cc: Justin
->     Tobler jltobler@gmail.com
+>     Remove excess right bracket from git-clone docs
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2022%2Fcjhxmx%2Fcjhxmx-git-test-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2022/cjhxmx/cjhxmx-git-test-v2
-> Pull-Request: https://github.com/git/git/pull/2022
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2023%2FKnutRyager%2Fmaster-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2023/KnutRyager/master-v1
+> Pull-Request: https://github.com/git/git/pull/2023
 >
-> Range-diff vs v1:
->
->  1:  c2d1d8fe884 ! 1:  6434587a075 modify the “foo" file path to "$PWD/bad-clone/sub/foo".
->      @@
->        ## Metadata ##
->      -Author: 陈建虎 <chenjianhu@kylinos.cn>
->      +Author: chenjianhu <chenjianh@kylinos.cn>
->       
->        ## Commit message ##
->      -    modify the “foo" file path to "$PWD/bad-clone/sub/foo".
->      +    t7450: inspect the correct path a broken code would write to
->       
->      -    In the t7450-bad-git-dotfiles.sh, when post-checkout
->      -    is executed, the actual path where the foo file
->      -    is created should be "$PWD/bad-clone/sub/foo".
->      +    Prior to 05e9cd64 (config: quote values containing CR character,
->      +    2025-05-19), a repository can trick "clone --recurse-submodules"
->      +    into running a post-checkout hook shipped with the project.  The
->      +    test was written to make sure the trick would no longer run the
->      +    hook with the fix in the commit.
->      +
->      +    However, the test did not check for the path the hook would
->      +    create; correct the path to the expected one if the bug were
->      +    still with us.
->       
->           Signed-off-by: chenjianhu <chenjianhu@kylinos.cn>
->       
->
->
->  t/t7450-bad-git-dotfiles.sh | 2 +-
+>  Documentation/git-clone.adoc | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
-> index 14b5743b962..f512eed278c 100755
-> --- a/t/t7450-bad-git-dotfiles.sh
-> +++ b/t/t7450-bad-git-dotfiles.sh
-> @@ -401,7 +401,7 @@ test_expect_success SYMLINKS,!WINDOWS,!MINGW 'submodule must not checkout into d
->  	git -C repo commit -m submodule &&
+> diff --git a/Documentation/git-clone.adoc b/Documentation/git-clone.adoc
+> index 222d558290e..851502552f2 100644
+> --- a/Documentation/git-clone.adoc
+> +++ b/Documentation/git-clone.adoc
+> @@ -16,7 +16,7 @@ git clone [--template=<template-directory>]
+>  	  [--depth <depth>] [--[no-]single-branch] [--[no-]tags]
+>  	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
+>  	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reject-shallow]
+> -	  [--filter=<filter-spec>] [--also-filter-submodules]] [--] <repository>
+> +	  [--filter=<filter-spec>] [--also-filter-submodules] [--] <repository>
+>  	  [<directory>]
 >  
->  	git -c protocol.file.allow=always clone --recurse-submodules repo bad-clone &&
-> -	! test -f "$PWD/foo" &&
-> +	! test -f "$PWD/bad-clone/sub/foo" &&
->  	test -f $(printf "bad-clone/sub\r/post-checkout")
->  '
->  
+>  DESCRIPTION
 >
 > base-commit: e813a0200a7121b97fec535f0d0b460b0a33356c
