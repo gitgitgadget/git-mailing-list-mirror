@@ -1,94 +1,89 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1B0E567
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 06:42:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6940D286888
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 06:42:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753944170; cv=none; b=krWw7wZEFD0deRkO9BdxUDva0mGUmnPQiACCgODYcrc6y2pcYQkuGYGQYSw5r/LuhOMnTRQyPK6ikd1t08qBawa1/Q590yt6tLzWHJ3df9Po5do4qdn+gWQz4xMm1Jq2knvwlIyOS24g116Qd9uzaL3qTOxGJ5XnIoplxwbdxcQ=
+	t=1753944176; cv=none; b=QF7MELX/Fxf2ttN6hmyvDxFdaLiRpRzcuedLUYtLsmvrL1JzeUoh+/xztkkJG0LuRkZZ5c9AFgqfSMmi197tE96LxbRc9XGr+O3kTWo5ScvXt3Isomjm4BvkTmy51N6TbUCDRpaTsLueg0Aa3nasmzijDCB562BmELBiQuoraTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753944170; c=relaxed/simple;
-	bh=zilOsymQ7b1vQtPl96CJnMPoFBCu6L6fw9ok2E3yKKw=;
+	s=arc-20240116; t=1753944176; c=relaxed/simple;
+	bh=BiR3MNta+8AK7Z5T3ZVmDZztkD/WtltfLUC2HNCvINE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vAlUM6xTy7Mwewo7n6DtgWPetIhA+ffUNn1WwSrXqcBbBauxM5IiUqegQTFXNzstgRU527ZisnhxqpHrbDI9Ov9G0zii4vwiNpzh+k6nxY0wt456DBL97NB7J5bfoSXk/G4vuhSZgi9+5EaimgUwxm3+ejCXMIKL7+7smN3Ve7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cBRJuM95; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iTGhpZF3; arc=none smtp.client-ip=202.12.124.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=HBVIEtU+zpv0n6hq6Ja1naJuGWtQq7ljwKDCukgOtF22KIhgWH4BAOae8mJNesjjFM2LSxKlhytR3+x45x+V/YCQJxnuqNY8iN168R5xilSIxWNlhHi8/UCKipdCBkiK8v6td2L3uh+20KMGznIyZbuXGglg4tOagGDkD2D2PIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Di+P9LdP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lhDsdm9B; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cBRJuM95";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iTGhpZF3"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7AFEA1D00932;
-	Thu, 31 Jul 2025 02:42:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Di+P9LdP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lhDsdm9B"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 745037A07C2;
+	Thu, 31 Jul 2025 02:42:50 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 31 Jul 2025 02:42:46 -0400
+  by phl-compute-10.internal (MEProxy); Thu, 31 Jul 2025 02:42:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1753944166; x=1754030566; bh=Pg3Ndhe5PG
-	+d3f6wHGfA1L+1x+JgK8OsyAar8dw2Z6Q=; b=cBRJuM95bb45ruy1dTxfl1qOjf
-	miQWfcDRbOBwm8l0kp6QJw45mGhlGj7bpDBkevsvc+q60DOo/6N9MnmL+xKvP7QC
-	aPJsCGTOLUyx4aB3DOm4e/P3UyCHqLKot9uylw8R0/343aHedZONUHaH1kwSdMiQ
-	97U4F8c9QDFIB65DmTYdLs9h0zJN+W4gPMlng7DINu/mRR048RSywipx/uHTS7DH
-	g/WULLsbdbMUT7nBZq2sNJB8gWJ0+zmobfxbMCpFVZiKkoF9Tgl9SH3pI+xHszv/
-	TyO6TeAILPldx/Vd9ZM5JV0bwGblZK9/VhajrZUkALZKJtYaSjGaH8NOfQsQ==
+	:subject:to:to; s=fm3; t=1753944170; x=1754030570; bh=VxaDlH21g/
+	BIw6C0KUq1WfLlwZF4Ad+07C70Ir/1xe0=; b=Di+P9LdPIGkvS/DJJnu+QN3PDv
+	KUfFG+dkX1LwlAeY1YDdHTuQgu4UT6B5K/LIlbPDub8MQ9Rwz06J0KHccCcgJjy6
+	4sfnTK8zfITq8rqPfImxRSvPMoo5deLhy5TiHfgVfEpiyb3wDeMY+QA+fmO/dB9s
+	pekitLtbP0lAlUVARecIYvqRduS5lJx4yby+P8m/iAtheabe02J0xTi1hz+QLyj9
+	+anUJ2b5Vq3MRLI+v0Z7tawFvBbEM3Gp889MtD+iNQ3tfUns5GPhfVMoa+K8V8lq
+	LtzxP4Av0UH31CjZ3VR3d8xBDsLodpT0QiNzfpMnw9MJTHDkV9Ft3nQfc2ow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753944166; x=1754030566; bh=Pg3Ndhe5PG+d3f6wHGfA1L+1x+JgK8OsyAa
-	r8dw2Z6Q=; b=iTGhpZF3S+VMRRFThihCwXuRrwVRO1nNAgeOHApHu8zf+vbAkDY
-	VGXgZW/wLw2MabtXU2EPOfJnYcDHSttsuqB3/3Vi+vFRx/RzDyU+nA8XLGHX53TI
-	X7dL0gtkGHfp8BomFS9DixohBo9+plr7crv2r/qHvLWAJ+C/5xo0I4QgntNMdROx
-	491v9aRa4kSDho5xWihGV7fl1+coOWLc1ndYgfjaQIEGv4yaAY42QlAqMHa25LGc
-	h30X/ex7h087Sow4OmHF1qXmlFfM9Kjcs1U6gLLohPk4MLMhpTy/1DZi76wWSgJR
-	cI8pAbyQrAJo9HaYOWz3AU5a4vw0FslxWzg==
-X-ME-Sender: <xms:ZRCLaD1s-C346KsXcrEkBFO74SEuwmJqoYgxVuDzdZl3t17n6L9KLg>
-    <xme:ZRCLaO-4Xvk4yoPHRHhHDsJQap74dDp6K9P_k9f5f8WSpyYt6TtkXU_Fxtf5QK31j
-    vq1g4QAdjY0Gq241g>
-X-ME-Received: <xmr:ZRCLaDotXBPcMON_gsy-JIPidCrTR8jSVCfW1AjrN1STlZ8hVMgqmOph3MlhXtsNIXtLRyzYZWBFo6Upfn_4glU-U2y7iHDbmncOKrVMdA>
+	1753944170; x=1754030570; bh=VxaDlH21g/BIw6C0KUq1WfLlwZF4Ad+07C7
+	0Ir/1xe0=; b=lhDsdm9BQNx7E5DaNOOurdUUwrT58TSEKv/0ay4MLxMVMJmn4eD
+	MUvDmwpf+9N2XYG+C4CjPtz6kCR87mhHmv2pEUZAWm4GQ3P/RfRGcEB54dZIp40i
+	UjkyGhumyTAvzz8RTu/LHbEVy3vM+GVRVp4CopwfZurUUNUaWrwyNl/Fc5pWfDZ/
+	oZRvq//5Km0WDK0T1Wn5FtNnL7StDXlDqmNd2g/FCgu0I024k+/zdrUdz475Hz9J
+	K7m3WqFrpOK9BFZA0L79Cb/YOYJzJO1GmxiM/Xra4kypmzoYbc7aKxvVmE7xW+XX
+	yt/7LMSOtdF+m72v6QV51yP2PP0AJRh6GHw==
+X-ME-Sender: <xms:ahCLaP9lQ3MIANYqbnM76rZddEB4JdL_4I89JoEMmNXSlnBFBfZaJA>
+    <xme:ahCLaJRjrbWuUDxruUWkPOe84A29w4HaK8tv_GpjHDhlYoaTdKHF0073NXxvgLA71
+    _uNNz23om2zVPlrGg>
+X-ME-Received: <xmr:ahCLaDfMadUd53B9EmAhMrMWVrcNLVcEGaj7dRu0ahRlKlbV7sAQ3J_oMmvJwKiluTKBWrknujlnIuQLqleL5Py8NSsVHajZOJPK0iBMIg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddtuddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveelgffgkeekhfdtvdelgedtfeeuteehtddvueejueehleduvdevgeelhefhgeefnecu
-    ffhomhgrihhnpehpvghnughinhhgrdhnrhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeel
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
-    hrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgt
-    phhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegrvhgrrhgrsgesgh
-    hmrghilhdrtghomh
-X-ME-Proxy: <xmx:ZRCLaISN2Y3ARBClMnKKEhJyIC3N3PIMtg92HBUJq0tou6qXoJKDgA>
-    <xmx:ZRCLaGOPF9obw95dWvSF6Yn_tynliZkrZHjM-Mk81wQt5W7Oz4ButQ>
-    <xmx:ZRCLaGj7JdmvjA-PlIH37YB_ECVMqvCC1wILBbXGADe4BvuXaB07fA>
-    <xmx:ZRCLaDlitwCEUdk1qNybKeWL7ssBQvN-SOtwKknUfN9GmLEStJr2Eg>
-    <xmx:ZhCLaAWXTuxkeHU8EjIu7DJmSHcJsXxGPjWyShbc8wgVdwXTO5cUqMAH>
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    oheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehkrhhishhtohhf
+    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehsth
+    holhgvvgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:ahCLaNAx7ifplwVOA4ELnfMOiUUk6SIBYskBZ05JhpuoErfL1VHimw>
+    <xmx:ahCLaFl1OZ-vaLMIAs83w0xPqn_VlFB_BiOyGQ2jQgxqZStB7CFwuw>
+    <xmx:ahCLaIdIyzp-8xbb021hd4gPlHAdipl-8YuYB8qri4Inl4L4QHU2mA>
+    <xmx:ahCLaJQmlCguJZ5HmxplDFCLrM9VObdyeBx-NWjbpudwAEiNP6Y4NA>
+    <xmx:ahCLaDJM52AZCZjQXMNMuSrnY5DljVJyh877i3nlenpaoTGr3X5ZItXg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 02:42:44 -0400 (EDT)
+ 31 Jul 2025 02:42:48 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fda440df (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 31 Jul 2025 06:42:42 +0000 (UTC)
-Date: Thu, 31 Jul 2025 08:42:33 +0200
+	by mail (OpenSMTPD) with ESMTPSA id bf157532 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 31 Jul 2025 06:42:48 +0000 (UTC)
+Date: Thu, 31 Jul 2025 08:42:44 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Toon Claes <toon@iotcl.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v6 1/4] last-modified: new subcommand to show when files
- were last modified
-Message-ID: <aIsQWcHf82ipHoWf@pks.im>
+	Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v6 3/4] commit-graph: export prepare_commit_graph()
+Message-ID: <aIsQZCLbpQVQmFF_@pks.im>
 References: <20250716133206.1787549-1-toon@iotcl.com>
- <20250730175510.987383-2-toon@iotcl.com>
+ <20250730175510.987383-4-toon@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -97,278 +92,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250730175510.987383-2-toon@iotcl.com>
+In-Reply-To: <20250730175510.987383-4-toon@iotcl.com>
 
-On Wed, Jul 30, 2025 at 07:55:07PM +0200, Toon Claes wrote:
-> diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
-> new file mode 100644
-> index 0000000000..89138ebeb7
-> --- /dev/null
-> +++ b/Documentation/git-last-modified.adoc
-> @@ -0,0 +1,49 @@
-> +git-last-modified(1)
-> +====================
-> +
-> +NAME
-> +----
-> +git-last-modified - EXPERIMENTAL: Show when files were last modified
-> +
-> +
-> +SYNOPSIS
-> +--------
-> +[synopsis]
-> +git last-modified [-r] [-t] [<revision-range>] [[--] <path>...]
+On Wed, Jul 30, 2025 at 07:55:09PM +0200, Toon Claes wrote:
+> Allow users of the commit-graph to explicitly prepare the commit-graph.
+> This can be useful when users want to start using bloom keys before
+> calling functions like prepare_revision_walk(). We'll use this exported
+> function in a subsequent commit.
 
-I think we typically list long options here, not the short single-letter
-ones.
+Hm. Ideally we wouldn't have to expose this low-level function and the
+commit-graph subsystem would know to handle this. We typically have
+patterns like this in our codebase:
 
-> +
-> +DESCRIPTION
-> +-----------
-> +
-> +Shows which commit last modified each of the relevant files and subdirectories.
-> +
-> +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-> +
-> +OPTIONS
-> +-------
-> +
-> +-r::
+		if (repo_find_commit_pos_in_graph(r, c, &graph_pos))
+			load_bloom_filter_from_graph(r->objects->commit_graph,
+						     filter, graph_pos);
 
--r, --recursive::
+The call to `repo_find_commit_pos_in_graph()` knows to call
+`prepare_commit_graph()`, so no manual call to that function would be
+required.
 
-> +	Recurse into subtrees.
-> +
-> +-t::
+I haven't yet read the next commit though that adds the callsite. So
+let's read on.
 
--t, --tree-in-recursive::
+> diff --git a/commit-graph.h b/commit-graph.h
+> index 78ab7b875b..0f76681333 100644
+> --- a/commit-graph.h
+> +++ b/commit-graph.h
+> @@ -131,6 +131,14 @@ struct repo_settings;
+>  struct commit_graph *parse_commit_graph(struct repo_settings *s,
+>  					void *graph_map, size_t graph_size);
+>  
+> +/*
+> + * Return 1 if commit_graph is non-NULL, and 0 otherwise.
+> + *
+> + * On the first invocation, this function attempts to load the commit
+> + * graph if the_repository is configured to have one.
+> + */
+> +int prepare_commit_graph(struct repository *r);
 
-> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-> new file mode 100644
-> index 0000000000..e4c73464c7
-> --- /dev/null
-> +++ b/builtin/last-modified.c
-[snip]
-> +static int populate_paths_from_revs(struct last_modified *lm)
-> +{
-> +	int num_interesting = 0;
-> +	struct diff_options diffopt;
-> +
-> +	memcpy(&diffopt, &lm->rev.diffopt, sizeof(diffopt));
-> +	copy_pathspec(&diffopt.pathspec, &lm->rev.diffopt.pathspec);
-> +	/*
-> +	 * Use a callback to populate the paths from revs
-> +	 */
-> +	diffopt.output_format = DIFF_FORMAT_CALLBACK;
-> +	diffopt.format_callback = add_path_from_diff;
-> +	diffopt.format_callback_data = lm;
-
-I feel like this whole block could use a comment that explains what
-we're doing. Why do we copy `diffopt` around? Why is it fine to free
-the struct at the end without unsetting `lm->rev.diffopt`? Couldn't that
-cause a double free?
-
-> +	for (size_t i = 0; i < lm->rev.pending.nr; i++) {
-> +		struct object_array_entry *obj = lm->rev.pending.objects + i;
-> +
-> +		if (obj->item->flags & UNINTERESTING)
-> +			continue;
-> +
-> +		if (num_interesting++)
-> +			return error(_("last-modified can only operate on one tree at a time"));
-> +
-> +		diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
-> +			      &obj->item->oid, "", &diffopt);
-> +		diff_flush(&diffopt);
-> +	}
-> +	diff_free(&diffopt);
-> +
-> +	return 0;
-> +}
-> +
-> +static void last_modified_emit(struct last_modified *lm,
-> +			       const char *path, const struct commit *commit)
-> +
-> +{
-> +	if (commit->object.flags & BOUNDARY)
-> +		putchar('^');
-> +	printf("%s\t", oid_to_hex(&commit->object.oid));
-> +
-> +	if (lm->rev.diffopt.line_termination)
-> +		write_name_quoted(path, stdout, '\n');
-> +	else
-> +		printf("%s%c", path, '\0');
-> +
-> +	fflush(stdout);
-
-Is there a reason why we have to explicitly flush output? This command
-doesn't have any interactivity with the caller.
-
-> +static void last_modified_diff(struct diff_queue_struct *q,
-> +			       struct diff_options *opt UNUSED, void *cbdata)
-> +{
-> +	struct last_modified_callback_data *data = cbdata;
-> +
-> +	for (int i = 0; i < q->nr; i++) {
-> +		struct diff_filepair *p = q->queue[i];
-> +		switch (p->status) {
-> +		case DIFF_STATUS_DELETED:
-> +			/*
-> +			 * There's no point in feeding a deletion, as it could
-> +			 * not have resulted in our current state, which
-> +			 * actually has the file.
-> +			 */
-> +			break;
-> +
-> +		default:
-> +			/*
-> +			 * Otherwise, we care only that we somehow arrived at
-> +			 * a final oid state. Note that this covers some
-> +			 * potentially controversial areas, including:
-> +			 *
-> +			 *  1. A rename or copy will be found, as it is the
-> +			 *     first time the content has arrived at the given
-> +			 *     path.
-
-Makes sense that we don't handle renames (yet). I think I didn't spot
-this in the manual, so maybe this is something we should document there.
-
-> +			 *  2. Even a non-content modification like a mode or
-> +			 *     type change will trigger it.
-
-Seems sensible as a default, as well. And likewise, we can add
-`--ignore-mode-changes` at a later point if we ever have a use case for
-it.
-
-> +			 * We take the inclusive approach for now, and find
-> +			 * anything which impacts the path. Options to tweak
-> +			 * the behavior (e.g., to "--follow" the content across
-> +			 * renames) can come later.
-> +			 */
-> +			mark_path(p->two->path, &p->two->oid, data);
-> +			break;
-> +		}
-> +	}
-> +}
-> +
-> +static int last_modified_run(struct last_modified *lm)
-> +{
-> +	struct last_modified_callback_data data = { .lm = lm };
-> +
-> +	lm->rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-> +	lm->rev.diffopt.format_callback = last_modified_diff;
-> +	lm->rev.diffopt.format_callback_data = &data;
-> +
-> +	prepare_revision_walk(&lm->rev);
-> +
-> +	while (hashmap_get_size(&lm->paths)) {
-> +		data.commit = get_revision(&lm->rev);
-> +		if (!data.commit)
-> +			break;
-
-So in this case we have reached the end of our commit range. I assume we
-simply print the oldest commit of that range in this case?
-
-> +		if (data.commit->object.flags & BOUNDARY) {
-> +			diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
-> +				      &data.commit->object.oid, "",
-> +				      &lm->rev.diffopt);
-> +			diff_flush(&lm->rev.diffopt);
-> +		} else {
-> +			log_tree_commit(&lm->rev, data.commit);
-> +		}
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int last_modified_init(struct last_modified *lm, struct repository *r,
-> +			      const char *prefix, int argc, const char **argv)
-> +{
-> +	hashmap_init(&lm->paths, last_modified_entry_hashcmp, NULL, 0);
-> +
-> +	repo_init_revisions(r, &lm->rev, prefix);
-> +	lm->rev.def = "HEAD";
-> +	lm->rev.combine_merges = 1;
-> +	lm->rev.show_root_diff = 1;
-> +	lm->rev.boundary = 1;
-> +	lm->rev.no_commit_id = 1;
-> +	lm->rev.diff = 1;
-> +	lm->rev.diffopt.flags.recursive = lm->recursive || lm->tree_in_recursive;
-> +	lm->rev.diffopt.flags.tree_in_recursive = lm->tree_in_recursive;
-> +
-> +	if ((argc = setup_revisions(argc, argv, &lm->rev, NULL)) > 1) {
-
-Tiny nit: it's rather unusual in our codebase to assign values in
-conditionals. I personally don't mind this usage at all -- I think it
-can make error handling way less verbose. But I'm not sure whether we
-deem this style acceptable.
-
-        argc = setup_revisions(argc, argv, &lm->rev, NULL)
-        if (argc) {
-            ...
-        }
-
-I've seen this style several times in this patch. I think we should keep
-our typical style for now, but I wouldn't mind if you sent a patch for
-our coding style document so that we can discuss this.
-
-> +		error(_("unknown last-modified argument: %s"), argv[1]);
-> +		return argc;
-> +	}
-> +
-> +	if (populate_paths_from_revs(lm) < 0)
-> +		return error(_("unable to setup last-modified"));
-> +
-> +	return 0;
-> +}
-> +
-> +int cmd_last_modified(int argc, const char **argv, const char *prefix,
-> +		      struct repository *repo)
-> +{
-> +	int ret;
-> +	struct last_modified lm;
-> +
-> +	const char * const last_modified_usage[] = {
-> +		N_("git last-modified [-r] [-t] "
-> +		   "[<revision-range>] [[--] <path>...]"),
-> +		NULL
-> +	};
-> +
-> +	struct option last_modified_options[] = {
-> +		OPT_BOOL('r', "recursive", &lm.recursive,
-> +			 N_("recurse into subtrees")),
-> +		OPT_BOOL('t', "tree-in-recursive", &lm.tree_in_recursive,
-> +			 N_("recurse into subtrees and include the tree entries too")),
-
-Should this maybe be called something like "--recursive-with-trees"?
-"--tree-in-recursive" reads somewhat strange to me.
-
-> +		OPT_END()
-> +	};
-> +
-> +	memset(&lm, 0, sizeof(lm));
-
-You can avoid the `memset()` and directly zero-initialize the struct
-when it's declared. Alternatively, you can move this function call into
-`last_modified_init()` itself, where it would be more reasonable.
-
-> +	argc = parse_options(argc, argv, prefix, last_modified_options,
-> +			     last_modified_usage,
-> +			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
-> +
-> +	repo_config(repo, git_default_config, NULL);
-> +
-> +	if ((ret = last_modified_init(&lm, repo, prefix, argc, argv))) {
-> +		if (ret > 0)
-> +			usage_with_options(last_modified_usage,
-> +					   last_modified_options);
-> +		goto out;
-> +	}
-> +
-> +	if ((ret = last_modified_run(&lm)))
-> +		goto out;
-
-Two more cases where we assign `if ((ret = ...))`.
+Let's fix the reference to `the_repository` while at it.
 
 Patrick
