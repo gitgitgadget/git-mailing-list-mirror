@@ -1,55 +1,55 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F7C26772D
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 22:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251EE2253FD
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 22:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754001983; cv=none; b=HeFdgonWaMhRU8JsCu/wpo1RyE3pGukV9FjPJ/+PUvN0eZweOvglBUULuwO1xuGcAGwYIFoTsmPYsxHMYSYPBZVA9TMz4fhVyhy+SzjMDZFAytKpexV6AFnzUwr6Zql68u2Uy7wlwMBxiL6Qt9qFxkm2mUTURsq3wztiE6JzS6k=
+	t=1754002479; cv=none; b=n8ZLxMRNZwq3ePHgoHs2vegoY+fS0L5G5MSgcNmRRigOFPRGVriVBmobJqH5fM8IB4rv1mXj267FENGrREFan3JyW0xjk9dxsFKolLILrZbQdLyJLSkyRBLs/qajB6fvT0Uev8uY+pfUSlcOJhEwmPgw7Bpw5IwGioo2JlKowuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754001983; c=relaxed/simple;
-	bh=TrJmQIKmFORWnp+kVHVaUmNmOBCHHxhiqOVyx3HMmQY=;
+	s=arc-20240116; t=1754002479; c=relaxed/simple;
+	bh=9A4lK9FBTwvjoyDzsxpbLftk53+IkZm5y9W0eEXHdgM=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCbxDnBb+UIYPqpdXRMas5p/9bdQAHOoiBy/vEqz6WDBEuMp3VemnekcpIreImtsWHwW92WtARak1tC2+tfC7rFObYtDP+ffENH1Py/SvRj/PeHVoW6iTkLpo+fd3ulb0F7aRNWeCtzfiPG8gnPSkSK5Gn5jUZ3zGluGaDXiyKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EXHzTOgd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NFsuMpQI; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version; b=eK9pxFbDEesuL/QkmCITiXyVpzkGGQBUgaSWs7Y/zwMSVsA+1wi0UWswY6BvdQJX9xV+xTYu+OfwfZw/QYAKM8wW0rj3uRwyj/6+TRaDJQyhY5g1OcmZu4wU/Cjs0Owsyj5Sx/7vG1eescQSkLQfLB91yMTVi9M8iFkwCZl/5WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EdGpUsz5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S2H7GMLq; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EXHzTOgd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NFsuMpQI"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 00DB7EC14E0;
-	Thu, 31 Jul 2025 18:46:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EdGpUsz5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S2H7GMLq"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5B6B5EC1522;
+	Thu, 31 Jul 2025 18:54:37 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Thu, 31 Jul 2025 18:46:19 -0400
+  by phl-compute-07.internal (MEProxy); Thu, 31 Jul 2025 18:54:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1754001978; x=
-	1754088378; bh=+ZSh2gji3Qa++N6idFB40vhcar+E6too/Tdf0tzwUWc=; b=E
-	XHzTOgdiaOSPh3rrnv/cZ22kG6pxqhRNj1ze/klyw68KBKfaXmf+eZdqNCHT9Ug6
-	Hur1EpnFxvE2m7RVWcu71gn1+b/c9FuKoyDuWK6N5i6ozpbgZQoobcTiaMRfSXDA
-	aMBS3jhKJmi7dGuiUlcho/TxJN99oymYw3orhtkUg5cwLXRRu9YgaZulEcMLjoC6
-	GfzhfOwFTFqhTDYjyH5kQzJgj+Nk8NJ9Y4BTOQBmPx+rw6qYWW29eZ7Y4w0qfj4u
-	KLYNIxH6aYNCXx+OUL2hK9szfOYejZvQRdM5CtyUygrU+c1ixIjIuecoDJMGpv+p
-	IF/RGwoB6umLNG3oYaNmw==
+	:reply-to:subject:subject:to:to; s=fm2; t=1754002477; x=
+	1754088877; bh=qjANqv8MgNCk+GZcex1/hBWDJ8qOFjXlmvySWoz0DD4=; b=E
+	dGpUsz5GU0GWrBrcFU+0fyGRViZvyEK3otPi1u7utHDLWHB6YqXulrG6YJRXad6p
+	oTxrbtcY1I01b02Uj8B5d5ULguc12Zy2IJYUjR9P7iFIzIakXfheX/nK2p9TjaEF
+	RZ3Qb5C12XeqyXBKcolA7vOZkTXvZO4SpkF9Y3UzT78R0WVJogpfsKV10jE6TjcT
+	AOeGSsUbKjrzHmNwlUGdvvALnDjE5zatpXYqMAvBh7Q3PTrQ3GLegSbev3BiwcF8
+	WrBzjeFC3BDkNAd1/gwxPDZCKzAWQrxCKWEEcfjabvtYT6a9jkK+tL9ZOD4lIa1V
+	jgIgad+QbEc4hQ5C+8Obw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1754001978; x=1754088378; bh=+ZSh2gji3Qa++N6idFB40vhcar+E
-	6too/Tdf0tzwUWc=; b=NFsuMpQI5twh5PU0N8zHJvQWxluMquVEbZ7yc1kNqc1i
-	jtNfJdapsP1X3StF+bme2oHn9EwnpihgOwv4boI++dZMqeUFKd8+KGrlbKk3Q/t3
-	ZjBKSxE9bdmDcKpctQU3B50Tg4uII4f191cWH3Stc/Iz+B2x7btmfTCwoXIANIBb
-	Pt9CbbReOGehlszgVCpDHWV7fyKtqbOyPwxazZ+ykvF9o+uRPtFsj4ClgImKV0au
-	DIBx4Vb5zJDVQ1rIeIf877COVpsZNFNwHv2Tffa00tpfsgNV8HTfAz0sN03YghUS
-	/16znoRme3sSVgQiJkCTOJ8KmLbR3Q5iLa9ohXGesQ==
-X-ME-Sender: <xms:OvKLaJuqkEh_nvE7K9v58U8LdaBWlnOnAm4sRSTVpd2rGCmpdOyXIw>
-    <xme:OvKLaCrcDMSOxD8xHNp99k7U_UNyIBUhKtjhTbN-TI1hHnKEER1AYQO9csGyOd60B
-    SXCUoh0TO7JNsT3Wg>
-X-ME-Received: <xmr:OvKLaOnC2ZHpWPvGfe4CgPNRpgs4oneJcOJJXNDgdzYYbuhVPJluBelYh8pmEF5tR4ZLEfG1dUUVKo6pOk4Unfz5d1gyrkEPvr44hjk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvtdegucetufdoteggodetrf
+	fm3; t=1754002477; x=1754088877; bh=qjANqv8MgNCk+GZcex1/hBWDJ8qO
+	FjXlmvySWoz0DD4=; b=S2H7GMLqUAOsvLtb9QaqJcKFyZiHBG4JO/Kjw9y6pQOe
+	ZyiQPVqjMFNuvV61WZEYWofR9bZAoy9Bi0ebldGIl66DtpIsFktCNG5dl8LSZqrQ
+	rKIOZH0X4IJntBBIi7iFNmyV7zcgMaL1F4gGZ6tqmiQq8thEYEhFZg9iqW9c5/0W
+	6/d0nXw3JSEwvOEvKVlmQlFyqBMUD90Nw9HV88lhL3xsrsqBpZSNcSoT+b3k0CG+
+	j/x4WtPK+hR8WNthnhIddzgmHGKCAAFzKkcuQ+gVzLBSt4QyvazJxhImeY6u+/G6
+	O3WLEtfgnp/65xlOPXFDGXZzgEIffsOOTgl4kTuv8w==
+X-ME-Sender: <xms:LfSLaMCik2hcl5QHeTW6oDUhq6yIihH0rHjWZqd_SIhM1WQgbik_Lw>
+    <xme:LfSLaMcU79t4tt9cBHeHdBUvrb107SSjIrM_jNlPfZwx5xUAWoQQ6HpwnsIhhP6dQ
+    4kv9Knuh9IxCe4kEg>
+X-ME-Received: <xmr:LfSLaHIgsRR-6MU2fgC38T1J9y6EM7fn2wNptX1QbDg7T5etiuWnXo1u9Y1LMa6JeMos95YFIkaZ-8hvoY3Cce8_pB5Pky7ivPI8Rws>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvtdeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
     dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
@@ -59,23 +59,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvtdegucetufdote
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:OvKLaOzQZ2X1ckXpnudx0kInguYkOV2nQQo9J_SV_0E4-9Rjvf9wJw>
-    <xmx:OvKLaOnnD1Ihn0cCNHfEPDlhl4nrOlCQi7ihCPNlDkbQUE0zrZ1Q_w>
-    <xmx:OvKLaPfGge9qfBHT7qIW2r2dtPNADvRC-HzgLfS6jKbDZf2m00B0HA>
-    <xmx:OvKLaMqYieIQFL5xFQUa9uBDn1t6DSm24Q6dnJwrRSq844Uf1YVAZw>
-    <xmx:OvKLaMQPaitkY4lPlNOM6TdIofZZp99D0Tpa6GfwqStii6COK0f7fGBx>
+X-ME-Proxy: <xmx:LfSLaPcnQVWX9C3Jcdt4MhrhshS1BjwLQo9Mon34V869tBADbhrTJA>
+    <xmx:LfSLaO2g7rs3WhGRZBmF5_mrogLTTA3PkUAi0Tjvh0vuXu_2aI6jFg>
+    <xmx:LfSLaIhqffvT01Tegi41xWHKY8EFIzO88TW1rhk96Vdh7jF5IBuChg>
+    <xmx:LfSLaESU-htcoCt0DqxQQqwTUDuHCX4LcBncsfFUVNkOAkBAp4yxDQ>
+    <xmx:LfSLaG9sAzMn3zR5dCWPTEbUwZQ1i4Jd5PgY-oFDHecH5vk8spYBWv8u>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 18:46:18 -0400 (EDT)
+ 31 Jul 2025 18:54:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 7/7] string-list: split-then-remove-empty can be done while splitting
-Date: Thu, 31 Jul 2025 15:46:06 -0700
-Message-ID: <20250731224607.3942417-8-gitster@pobox.com>
+Subject: [PATCH v2 01/11] wt-status: avoid strbuf_split*()
+Date: Thu, 31 Jul 2025 15:54:23 -0700
+Message-ID: <20250731225433.4028872-2-gitster@pobox.com>
 X-Mailer: git-send-email 2.50.1-618-g45d530d26b
-In-Reply-To: <20250731224607.3942417-1-gitster@pobox.com>
-References: <20250731063949.1601669-1-gitster@pobox.com>
- <20250731224607.3942417-1-gitster@pobox.com>
+In-Reply-To: <20250731225433.4028872-1-gitster@pobox.com>
+References: <20250731074154.2835370-1-gitster@pobox.com>
+ <20250731225433.4028872-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,78 +84,82 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Thanks to the new STRING_LIST_SPLIT_NONEMPTY flag, a common pattern
-to split a string into a string list and then remove empty items in
-the resulting list is no longer needed.  Instead, just tell the
-string_list_split*() to omit empty ones while splitting.
+strbuf is a very good data structure to work with string data
+without having to worry about running past the end of the string,
+but strbuf_split() is a wrong API and an array of strbuf that the
+function produces is a wrong thing to use in general.  You do not
+edit these N strings split out of a single strbuf simultaneously.
+Often it is much better off to split a string into string_list and
+work with the resulting strings.
+
+wt-status.c:abbrev_oid_in_line() takes one line of rebase todo list
+(like "pick e813a0200a7121b97fec535f0d0b460b0a33356c title"), and
+for instructions that has an object name as the second token on the
+line, replace the object name with its unique abbreviation.  After
+splitting these tokens out of a single line, no simultaneous edit on
+any of these pieces of string that takes advantage of strbuf API
+takes place.  The final string is composed with strbuf API, but
+these split pieces are merely used as pieces of strings and there is
+no need for them to be stored in individual strbuf.
+
+Instead, split the line into a string_list, and compose the final
+string using these pieces.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- notes.c                     | 4 ++--
- pathspec.c                  | 3 +--
- t/helper/test-hashmap.c     | 4 ++--
- t/helper/test-json-writer.c | 4 ++--
- 4 files changed, 7 insertions(+), 8 deletions(-)
+ wt-status.c | 31 ++++++++++---------------------
+ 1 file changed, 10 insertions(+), 21 deletions(-)
 
-diff --git a/notes.c b/notes.c
-index 6afcf088b9..3603c4a42b 100644
---- a/notes.c
-+++ b/notes.c
-@@ -970,8 +970,8 @@ void string_list_add_refs_from_colon_sep(struct string_list *list,
- 	char *globs_copy = xstrdup(globs);
- 	int i;
+diff --git a/wt-status.c b/wt-status.c
+index 454601afa1..a34dc144ee 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1351,8 +1351,8 @@ static int split_commit_in_progress(struct wt_status *s)
+  */
+ static void abbrev_oid_in_line(struct strbuf *line)
+ {
+-	struct strbuf **split;
+-	int i;
++	struct string_list split = STRING_LIST_INIT_DUP;
++	struct object_id oid;
  
--	string_list_split_in_place(&split, globs_copy, ":", -1);
--	string_list_remove_empty_items(&split, 0);
-+	string_list_split_in_place_f(&split, globs_copy, ":", -1,
-+				     STRING_LIST_SPLIT_NONEMPTY);
+ 	if (starts_with(line->buf, "exec ") ||
+ 	    starts_with(line->buf, "x ") ||
+@@ -1360,26 +1360,15 @@ static void abbrev_oid_in_line(struct strbuf *line)
+ 	    starts_with(line->buf, "l "))
+ 		return;
  
- 	for (i = 0; i < split.nr; i++)
- 		string_list_add_refs_by_glob(list, split.items[i].string);
-diff --git a/pathspec.c b/pathspec.c
-index de325f7ef9..5993c4afa0 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -201,8 +201,7 @@ static void parse_pathspec_attr_match(struct pathspec_item *item, const char *va
- 	if (!value || !*value)
- 		die(_("attr spec must not be empty"));
+-	split = strbuf_split_max(line, ' ', 3);
+-	if (split[0] && split[1]) {
+-		struct object_id oid;
+-
+-		/*
+-		 * strbuf_split_max left a space. Trim it and re-add
+-		 * it after abbreviation.
+-		 */
+-		strbuf_trim(split[1]);
+-		if (!repo_get_oid(the_repository, split[1]->buf, &oid)) {
+-			strbuf_reset(split[1]);
+-			strbuf_add_unique_abbrev(split[1], &oid,
+-						 DEFAULT_ABBREV);
+-			strbuf_addch(split[1], ' ');
+-			strbuf_reset(line);
+-			for (i = 0; split[i]; i++)
+-				strbuf_addbuf(line, split[i]);
+-		}
++	if ((2 <= string_list_split(&split, line->buf, " ", 2)) &&
++	    !repo_get_oid(the_repository, split.items[1].string, &oid)) {
++		strbuf_reset(line);
++		strbuf_addf(line, "%s ", split.items[0].string);
++		strbuf_add_unique_abbrev(line, &oid, DEFAULT_ABBREV);
++		for (size_t i = 2; i < split.nr; i++)
++			strbuf_addf(line, " %s", split.items[i].string);
+ 	}
+-	strbuf_list_free(split);
++	string_list_clear(&split, 0);
+ }
  
--	string_list_split(&list, value, " ", -1);
--	string_list_remove_empty_items(&list, 0);
-+	string_list_split_f(&list, value, " ", -1, STRING_LIST_SPLIT_NONEMPTY);
- 
- 	item->attr_check = attr_check_alloc();
- 	CALLOC_ARRAY(item->attr_match, list.nr);
-diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
-index 7782ae585e..e4dc02bd7a 100644
---- a/t/helper/test-hashmap.c
-+++ b/t/helper/test-hashmap.c
-@@ -149,8 +149,8 @@ int cmd__hashmap(int argc UNUSED, const char **argv UNUSED)
- 
- 		/* break line into command and up to two parameters */
- 		string_list_setlen(&parts, 0);
--		string_list_split_in_place(&parts, line.buf, DELIM, 2);
--		string_list_remove_empty_items(&parts, 0);
-+		string_list_split_in_place_f(&parts, line.buf, DELIM, 2,
-+					     STRING_LIST_SPLIT_NONEMPTY);
- 
- 		/* ignore empty lines */
- 		if (!parts.nr)
-diff --git a/t/helper/test-json-writer.c b/t/helper/test-json-writer.c
-index a288069b04..f8316a7d29 100644
---- a/t/helper/test-json-writer.c
-+++ b/t/helper/test-json-writer.c
-@@ -492,8 +492,8 @@ static int scripted(void)
- 
- 		/* break line into command and zero or more tokens */
- 		string_list_setlen(&parts, 0);
--		string_list_split_in_place(&parts, line, " ", -1);
--		string_list_remove_empty_items(&parts, 0);
-+		string_list_split_in_place_f(&parts, line, " ", -1,
-+					     STRING_LIST_SPLIT_NONEMPTY);
- 
- 		/* ignore empty lines */
- 		if (!parts.nr || !*parts.items[0].string)
+ static int read_rebase_todolist(const char *fname, struct string_list *lines)
 -- 
 2.50.1-618-g45d530d26b
 
