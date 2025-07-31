@@ -1,58 +1,58 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BCF29826A
-	for <git@vger.kernel.org>; Thu, 31 Jul 2025 07:22:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EA529AAFD
+	for <git@vger.kernel.org>; Thu, 31 Jul 2025 07:23:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753946523; cv=none; b=li9z+KE/oPmSGobbocfxMJxmZHtRvE7/TifzImy/jxDmaGpqa7+T5YG2hHCYU/VeIa+4gC2ZfpMQB84shH6dVIQ65i+mcjoksNmOofrGNb/k7RFkr/ZPdb2QZY2boUNS7AsZqOTAxYza/mqEKuDDdyavI7pYTATDVpirGvsbZ6c=
+	t=1753946584; cv=none; b=nejSmv6kU4/jphTnYvzfNw9jdWP+4N/Cd8sGc/DGDW3q4nVJZRI+AJrAyb81BKFw35qFf9DSXlWi2vocXZ1pEWLYlF/CTtB3SGgmerl+0mBKQNo7fbUn2/FRL/R9MGzSmdoZN+3LcVkwdlIDcX1yuCnVGRcV3I4fq5Y1m2FKduQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753946523; c=relaxed/simple;
-	bh=xTAP0n2EHhzsXEmcYzfehzRGJHDCP8esP/qXBFJXpNI=;
+	s=arc-20240116; t=1753946584; c=relaxed/simple;
+	bh=3MkktxBFF6oXFaGoR8p3YN3YwPkmB6iMDMaWBr6YJCM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=M7T6b7VS3Z5YE0A3iGKrX2X7pjIQTMO++GEvlU9OmftZXiywz+aI8tlPnGXbSuYGttJna52zFCYqBVSs9A+14vfLigPiahEIaaQflW9eARLQT6TiYoUHqJsqoJ3fjtrk00WQ2twVtV2/VayMcFG9SN+uEe/n9N1aGobrs15G4eE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dJULf/kF; arc=none smtp.client-ip=209.85.218.46
+	 To:Cc:Content-Type; b=VwOzx8AasxMzKuGj2DK3yPuNzIRxWtTd9dqLXbE2/FCop5+t2Ii8wvpDnmehFUdoXXxNRWNq3Vdd6/g69ZcnxatNGS+tCwfSNs3VcOVZx/OZZsWe0eQXuFRMHeqgBodNSPehQoydfvTcjKA4nduLHP5h9gu8nnrCZJkMV1Jqh3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lGcTPcod; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dJULf/kF"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ae3b336e936so120158866b.3
-        for <git@vger.kernel.org>; Thu, 31 Jul 2025 00:22:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lGcTPcod"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-61592ff5df8so96216a12.1
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 00:23:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753946520; x=1754551320; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753946581; x=1754551381; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dWJJOZsbSqC9VM0hDDdFLal4t9HVlOQ3MhXb1cb0uNc=;
-        b=dJULf/kFX32g+IEZHvcOsMyh96oZRXHmcSiKaoOnHNL1As4GL8cjPUA6+qAYhwj20t
-         xE3r9Yu6Qvm/qQ8W+L5OcFV/raTrPtaIgkz/nn+VFDxkoCWySOkWFQiM7hJxI6yTgxTT
-         SE3pCmsZzaOwfotPglN1+P+BbtqbqStj7HUR53jm0wPfMlIaDleyepqb8iZKlFR5vTPN
-         KOh6FV5f7+XlGENWE/vxullHINFYFhCvlwUrmlWsOrWvfkvSR7j/Om9VdXBem+WKg00/
-         hFNB4Yq5sRurF8exeDIJu6GUHSdLPuGzz4XuJEE3cqSS79yVrF4EW5kP9plBTQOv+CM3
-         oScA==
+        bh=iLiG+glWMn95Fj6ksqAxDbw9sb6xaGeQS3ZKEDzrGjs=;
+        b=lGcTPcodgmEAGI63fwWOMxpVHCVxXFY+R6d3P1RhpbGPJtO31nk7f9pniNNyxQwX9Y
+         z+WVnNff0YxMJSL3hj9yPxqSq9c7FWAjohCd4H8+khYrAVXO6ti0mXpNfEe+HchnBksV
+         hAEGQXmsTBQ9epeZbd+KMumgT2JRMaxOUjSfL7CRM+sYvb5BTjLqCNkzghrQTSjmP5Kr
+         93UpSIHjiN2DXb0ch7Jk68kHEi/acu8rIf5iRqgG6JRzLiPy6rqtiklMeYzxW7nWMXbm
+         mVc37QH5nCL9f512nCk1LKS1Fjs0OFsoH7bJabUQ5IvsKrYR8I9s4i8r4OT11enExfao
+         xKpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753946520; x=1754551320;
+        d=1e100.net; s=20230601; t=1753946581; x=1754551381;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dWJJOZsbSqC9VM0hDDdFLal4t9HVlOQ3MhXb1cb0uNc=;
-        b=KL1vitH9Pqh8kPJgQBBUJyBMepJ+1XV2PnUwJVL8b1EW4r7zOXgqXAITuyOFDrNMa0
-         FrswRw20ylCVDsEP9lWeiWGfoWeQ4W/+pDiejXnmXTiCIyIuaoPDBbyizIoEhJIgKIc+
-         YGlnlCcBZA156PsOsayGVgejVFI9i7S/NHBRS9GjZmMGuZTn84jmvAo2jmNTxHdBxZXI
-         FaF6evoUiB1uaHb4txj+W5t6o/w86IES71O54Onad090q1M/cqUZ4R1q6tROBGCytfXd
-         FMR+/k8nPius5pT+QCBUcmKMNv7HF45tke2Gz/V2nmEj9fiWAxFOep3HU773zDXb6di7
-         nHsw==
-X-Gm-Message-State: AOJu0YxBn4jbAgHWNrJNSaChNZ9dYJuVDsWFq9S5mF5S7mGn29i9TchO
-	iOy2spUG4RXfXBhl5hUuJP1rpYxW7Opn9CkLP2X1j5dsGIeFbXnYiM3B3aLGpVoD6wGhLEKoH6h
-	yTfO6DPZaVJsCGHFxh+io1X0dXyV/xes=
-X-Gm-Gg: ASbGncv2v5nR3Ow+u2nkTBdaHukvCzUfAb4XIeW1F1couHPUgQodeX6eQ+Ag+gWNjqY
-	TvtTXtfGbt3WRimcBBDc8kgur2OLNjIRH8msa2X50ilx0HOiXfEmVpJX/6Tw3lMf95uJIfoUcM7
-	SVJlvkV2dcl48JSAxejVRbgY/sF2Ygt6JCbqqv19AyzNrf8tFU40jE7gznb36c2qyrkngL0BzJL
-	AJ3IfRcNYXj4eHyBoNc
-X-Google-Smtp-Source: AGHT+IFwBExyalEVTAxr1vExU+QcB3NNFSM4LsbtgX3WLmV6C4kaO6HBz9/dRWkPJF/E219xkOQEX9YJsRbdq+OGnik=
-X-Received: by 2002:a17:907:f816:b0:ae6:abe9:4daa with SMTP id
- a640c23a62f3a-af8fd79320dmr866656766b.27.1753946519495; Thu, 31 Jul 2025
- 00:21:59 -0700 (PDT)
+        bh=iLiG+glWMn95Fj6ksqAxDbw9sb6xaGeQS3ZKEDzrGjs=;
+        b=cx40qDXgnFIg3TB4zCdKso+8mhS8RLg6Ekf+zWVELxJbHbxBaPVP3mt7bQe3bFXgn3
+         enuSZ6Cg8rZIXZrHJwrKruRq8zz12Y2oweSwSBu5SU/Zev69uyUA8hDVwwOs9qk41WVM
+         /ootAtcAGUXeVDaw3X06mbKkVoCk84VIO5YXjTAk8TYv5OCvkEn6691IK4cZsq8p8Y8Y
+         xopdTZ23fGzgcha+CC0pRkl+29zSRrB44w8ZOk5AxgWq8VoE1sZM+Xt3JcCNDRorHyuI
+         J8mwfTTPNk3dhYSM1Zuw/IfdIDJcdujmQxteVcSjgSa51AD5Kygn8M7ISbn+IxK7gWL6
+         zocw==
+X-Gm-Message-State: AOJu0Yyqtcr/1Gd9rXX53/TQcWVirxzJ9IkynA6b5Ksj1gZatFTjT4/5
+	TZMibTfMu0/JJ2SRCdPrZ+GReSYiyiUkR0qV5TaARVc7w/XI5EauNRjzWXT69RFEoCu4s4AiZMu
+	TkP172wD2dJqEcnoDnsbHFINfOUrk1llqyA==
+X-Gm-Gg: ASbGnctKzERAJCPc9nrsRIDuSmoh9bDM1TKsDi2c5waP3tgaQemDrXgbgeYDa4uPwbc
+	25qP2UMQcHByNkhwzgp1UMblboN67kbN4BTDp/9EZnfXaBxjky4JPsFQz9uPUaO9MYi0zbCKuCT
+	c/DkZ9mtFdq8kX3N581gaaWAZBRZDuXrPE8e6K+aO9sjtia2q9B9ZjsaYYXbjdluEejTl/s80fk
+	jBV2RQnfw==
+X-Google-Smtp-Source: AGHT+IG3WnTAGihh2xwaoaO7AyQla81g/IV/sUvtpCacP+W4Fbfz35UgdZ8+yJSDbm75pb60NnETxXoZmpgYudtn7QI=
+X-Received: by 2002:a17:907:1c95:b0:ae2:9291:9226 with SMTP id
+ a640c23a62f3a-af8fda80bdemr767747166b.59.1753946580688; Thu, 31 Jul 2025
+ 00:23:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,14 +60,14 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250625125055.1375596-1-christian.couder@gmail.com>
- <20250721141056.2283349-1-christian.couder@gmail.com> <20250721141056.2283349-5-christian.couder@gmail.com>
- <xmqqo6tdw996.fsf@gitster.g>
-In-Reply-To: <xmqqo6tdw996.fsf@gitster.g>
+ <20250721141056.2283349-1-christian.couder@gmail.com> <20250721141056.2283349-4-christian.couder@gmail.com>
+ <xmqq1pq9xoqe.fsf@gitster.g>
+In-Reply-To: <xmqq1pq9xoqe.fsf@gitster.g>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 31 Jul 2025 09:21:46 +0200
-X-Gm-Features: Ac12FXwo_T_xKyHEKEn_1pt8wGxhv7Yw3DtQDLEsm4ASZZxPeGwSqi7wUaew8vg
-Message-ID: <CAP8UFD0a5xJuSm4683J_wrZQic9Lzj3imjf7MgGHmwudbDhbtA@mail.gmail.com>
-Subject: Re: [PATCH v6 4/5] promisor-remote: allow a client to check fields
+Date: Thu, 31 Jul 2025 09:22:47 +0200
+X-Gm-Features: Ac12FXym3JFpy7TUYOhvAHcK78LHtfkQ3kofw6E3haFCawdpFRa3qZ6dkAoLNL4
+Message-ID: <CAP8UFD0urQ_0dbHjyF16w9HeTVxwo_r3Yi62hbwcC49m=aPZHw@mail.gmail.com>
+Subject: Re: [PATCH v6 3/5] promisor-remote: refactor how we parse advertised fields
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
 	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
@@ -75,152 +75,103 @@ Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylor
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jul 21, 2025 at 10:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+On Mon, Jul 21, 2025 at 10:39=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
  wrote:
 >
 > Christian Couder <christian.couder@gmail.com> writes:
 >
-> > diff --git a/promisor-remote.c b/promisor-remote.c
-> > index ae2c49a0a0..501cb92391 100644
-> > --- a/promisor-remote.c
-> > +++ b/promisor-remote.c
-> > @@ -388,6 +388,20 @@ static struct string_list *fields_sent(void)
-> >       return &fields_list;
-> >  }
-> >
-> > +static struct string_list *fields_checked(void)
+> > +static struct promisor_info *parse_one_advertised_remote(struct strbuf=
+ *remote_info)
 > > +{
-> > +     static struct string_list fields_list =3D STRING_LIST_INIT_NODUP;
-> > +     static int initialized =3D 0;
+> > +     struct promisor_info *info =3D xcalloc(1, sizeof(*info));
+> > +     struct strbuf **elems =3D strbuf_split(remote_info, ',');
 >
-> No need to explicitly 0 initialize "static int"; let BSS take care
-> of it.  Perhaps we should add an entry to CodingGuidelines if we do
-> not have one (#leftoverbits).
-
-Yeah, right. This is fixed in v7 in both fields_checked() and fields_sent()=
-.
-
-> > @@ -533,6 +547,61 @@ enum accept_promisor {
-> >       ACCEPT_ALL
-> >  };
-> >
-> > +static int match_field_against_config(const char *field, const char *v=
-alue,
-> > +                                   struct promisor_info *config_info)
-> > +{
-> > +     if (config_info->filter && !strcasecmp(field, promisor_field_filt=
-er))
-> > +             return !strcmp(config_info->filter, value);
-> > +     else if (config_info->token && !strcasecmp(field, promisor_field_=
-token))
-> > +             return !strcmp(config_info->token, value);
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static int all_fields_match(struct promisor_info *advertised,
-> > +                         struct string_list *config_info,
-> > +                         int in_list)
-> > +{
-> > +     struct string_list* fields =3D fields_checked();
+> Unless the primary use of an array is about passing it around as a
+> whole "set", name such a variable singular, so that element[4] can
+> be naturally read as "fourth element"---"fourth elements" is not as
+> natural.
 >
-> Asterisk sticks to a variable, not type.  I.e.
+> Also, can't we do this without strbuf_split(), which is a wrong API
+> to use in general [*]?  strbuf is a very good data structure to work
+> with when editing string data, but an array of strbuf is not---you
+> would not be editing many pieces of string data in parallel.
 >
->         struct string_list *fields =3D ...;
+>     [*] often string_list_split_in_place() is a better alternative,
+>     especially when you do not have to heavily edit the substrings.
 
-Right, fixed in v7.
+Yeah, string_list_split_in_place() is used in v7 and it looks better.
 
-> > +     struct string_list_item *item_checked;
-> > +
-> > +     for_each_string_list_item(item_checked, fields) {
-> > +             int match =3D 0;
-> > +             const char *field =3D item_checked->string;
-> > +             const char *value =3D NULL;
-> > +             struct string_list_item *item;
-> > +
-> > +             if (!strcasecmp(field, promisor_field_filter))
-> > +                     value =3D advertised->filter;
-> > +             else if (!strcasecmp(field, promisor_field_token))
-> > +                     value =3D advertised->token;
+> > +     for (size_t i =3D 0; elems[i]; i++) {
+> > +             char *elem =3D elems[i]->buf;
+> > +             char *value;
+> > +             char *p =3D strchr(elem, '=3D');
 >
-> Hmph, together with match_field_against_config(), do we really need
-> to have this case insensitive to begin with?
+>         The pointer elem points at the name, and the pointer p
+>         points at the beginning of value, which could contain '=3D'.
+>
+> > +             strbuf_strip_suffix(elems[i], ",");
+>
+> This does not even count as "editing"; split_in_place() would have
+> removed the trailing comma (and replaced it with NUL to terminate
+> the string).
 
-I think so. When comparing config option keys, we use case insensitive
-comparisons, so I think it makes sense to use that when comparing
-field names too.
+Yeah, right. This is fixed in v7.
 
-When we call fields_checked(), we get a list of field names as they
-have been configured in the "promisor.checkFields" config variable. It
-is very likely that for "partialCloneFilter" some users may not
-camelcase it properly. So if we use strcmp() to check if `field` is
-"partialCloneFilter", it might result in things not working as they
-expect because of subtle camelcase issues.
+> > +             if (!p) {
+> > +                     warning(_("invalid element '%s' from remote info"=
+), elem);
+> > +                     continue;
+> > +             }
+>
+>         elem pointed at "foo" or "foo,"; we may have stripped the
+>         trailing comma, but we didn't see the equal sign to start
+>         the value at all.  Bad input.
+>
+> > +             *p =3D '\0';
+>
+>         Terminate the name by replacing '=3D' with NUL.
+>
+> > +             value =3D url_percent_decode(p + 1);
+>
+>         Can this helper function fail and signal that it saw a
+>         malformed data?  If not already, shouldn't it be taught to
+>         do so?
+>
+> We are inventing the syntax for this data in this series, so if this
+> helper takes garbage data silently, and if we are not willing to fix
+> it, then we can even consider changing the syntax to something with
+> a helper we can use that already has a good error checking.
 
-> I would suggest making
-> it a habit to design the interface minimally, and not making case
-> insensitive comparison as default counts one of them.
+I am not sure what the interface would look like. Should a version of
+url_percent_decode() that returns NULL in case of error would be
+enough, or should it use `return error("...");`in case of error?
 
-There is a reason. They are not used by default here.
+And it seems to me that an error can only happen when the string
+passed to url_percent_decode() contains a '%' which is not followed by
+2 hexadecimal characters, or do you see other possible errors?
 
-> If the
-> comparison were not case insensitive, we do not even need to have
-> this loop; rather we can just look up from the list of the fields
-> for an exact string (i.e. promisor_field_filter).  I do not know
-> offhand what other code will become easier to read and simpler by
-> such a change.
+For now I haven't changed this in v7, but I am open to suggestions
+about the best way to implement it in a v8 or maybe a separate series.
 
-I checked other places in the code and I think it's right that in the
-"promisor-remote" protocol the field names ("partialCloneFilter" and
-"token") should be checked case-sensitively, so in v7 I have made this
-change in parse_one_advertised_remote():
+> > +             if (!strcmp(elem, "name"))
+> > +                     info->name =3D value;
+> > +             else if (!strcmp(elem, "url"))
+> > +                     info->url =3D value;
+> > +             else
+> > +                     free(value);
+>
+> As url_percent_decode() always allocate a new copy of string even
+> when there is nothing to decode, value will always be an allocated
+> string, and if we are not storing it away, it will leak.  The copies
+> we kept in info->{name,url} are ours to own.  Makes sense.
+>
+> > +     strbuf_list_free(elems);
+>
+> And because [elem..p] (name) we only peeked, we can safely release
+> the whole thing.  If you used string_list_split_in_place(), you
+> would only free the string_list shell without having to free the
+> underlying string.
 
-   @@ promisor-remote.c: static struct promisor_info
-*parse_one_advertised_remote(stru
-                       info->name =3D value;
-               else if (!strcmp(elem, "url"))
-                       info->url =3D value;
-   -+          else if (!strcasecmp(elem, promisor_field_filter))
-   ++          else if (!strcmp(elem, promisor_field_filter))
-    +                  info->filter =3D value;
-   -+          else if (!strcasecmp(elem, promisor_field_token))
-   ++          else if (!strcmp(elem, promisor_field_token))
-    +                  info->token =3D value;
-               else
-                       free(value);
-
-and I have clarified that in the doc too:
-
-   @@ Documentation/gitprotocol-v2.adoc: retrieving the header from a
-bundle at the in
-    +connecting to the remote. It corresponds to the "remote.<name>.token"
-    +config setting.
-    +
-   -+No other fields are defined by the protocol at this time. Clients MUST
-   -+ignore fields they don't recognize to allow for future protocol
-   -+extensions.
-   ++No other fields are defined by the protocol at this time. Field names
-   ++are case-sensitive and MUST be transmitted exactly as specified
-   ++above. Clients MUST ignore fields they don't recognize to allow for
-   ++future protocol extensions.
-    +
-    +For now, the client can only use information transmitted through these
-    +fields to decide if it accepts the advertised promisor remote. In the
-
-But when we deal with field names from the config, I think it's much
-more user friendly to use case insensitive comparisons.
-
-An alternative implementation might be to canonize the field names in
-fields_checked() and fields_sent(), so that for example
-"partialclonefilter" would be changed to "partialCloneFilter" there.
-We could also use for example an `enum field_id` instead of field
-names and convert the field names to those field IDs in
-fields_checked(), fields_sent() and perhaps other places. Then yeah we
-might use case sensitive comparisons in some places like here and
-perhaps simplify other parts of the code. I am open to going in this
-direction if that's what you prefer. I am not sure overall the code
-will be much simpler though. We might just move complexity around.
-Also for now I think using strcasecmp() is not likely to be a
-performance issue.
+Yeah, it's better with string_list_split_in_place().
 
 Thanks.
