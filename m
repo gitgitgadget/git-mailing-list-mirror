@@ -1,126 +1,132 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDAC1F3B8A
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 05:54:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A671FA272
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 07:55:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754027688; cv=none; b=sbrV0rGwTbJMf9s6810Xy6X70t98SXFbJdDjCSZGpio9pl3VZCWlsmUuUG8LkslE4c2+LeZf2Crefk8XwIgYX5/fXCZ0mHE1MrREZI3/9MU+N2zOQkV74OibZNEKo0GPFtq4s5cKoOukjqnLB1Ug85CwyKmA+gGiz82rPhMpyj0=
+	t=1754034953; cv=none; b=G4wp/X5hw6QUykw/wZiV+GfoAOiy28e7EONPkYOQK6pdHWVU1GFKlk4zR4Hb2+slxxVw0wwfsczV0e+B6cIKAeYbhrAoeaBerEth4n1+7QUWeLYQyIoTf3D8N9hM0f+/lnUfA4VfoxS9Meo9ffKnmRdCRGxC+WjbVdtiAFEjcEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754027688; c=relaxed/simple;
-	bh=FXBVWKWj7CGArrK7QqYu65UGkF2lSnuufBCJMg6Bbfs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pOGjh1b3sxXK9jKLUXSX+Hk5pkQK2vDiRxY1janIJt6Ej2PvzZUJ0vpE3S5deSkaoW7YI5UANgzMZvuBkQHmho5JGkvkwJGXRABeYcQWKZCM5HROzeBMJOzbgJe4T1Rwix/2LMM8oJ/pzqvhzOIMVGDDudTSUBSjugHoLfmeSPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JPdHswDO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ec+k20b7; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1754034953; c=relaxed/simple;
+	bh=VDNChLs4bq59EPwsgQcXyvs9rJLGtrjSIM3H8Ypjo/k=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=A80Kn0mjVxd3vVpiEdBrqQ56i300dglILlt+7wlrKLGqSBpQjWepwl7AzoN/Iq3Cltaq30v9E1kuNaYP5osX9iw8Vk4pUyts6YF9g6sU0KtEGBO2baw9ezDNrQ2tmSRPYBG8jHkhdZzGUGN4vbkICFCQnwysbxXzx7fATj8D5b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=martin.st; spf=pass smtp.mailfrom=martin.st; dkim=pass (2048-bit key) header.d=martin-st.20230601.gappssmtp.com header.i=@martin-st.20230601.gappssmtp.com header.b=3Uxe8TwL; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=martin.st
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=martin.st
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JPdHswDO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ec+k20b7"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 33BBD1D00B10;
-	Fri,  1 Aug 2025 01:54:46 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Fri, 01 Aug 2025 01:54:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1754027686; x=1754114086; bh=2uxJPo8bRe
-	ebFcev1OrydZL/f9jTv+H76GKxs5jrc6Q=; b=JPdHswDOA7Eu7nSNtEnNI4S0gb
-	uJLkGFRRVJSianZIUlZTyn5AeNx++MkSixWK4gnBnKL4gT9aqpAnhhl2rkR3if6q
-	rztIN4mMas8yVfYRGcDVDzqi0pMqPxGWv4QGOIKNMrRdlqjvDPD1FkE6Ez9fgOJA
-	HDcTFlXeCkpUFTvdzJhVTJCpll8N1bUV0y3prFYXih38QaX1442l3y+mI7Ju6Bm6
-	T/eKOGfQTG/82BwkR3oTTc1R5Q/0OKsHnK8v5TDb32YcMkbGFSeRJhZOekzI5J3E
-	9GIzKve1Tu+CFNAY8IRh6QY5PayAnMdOLUk7/qYNmxfFajkMztgcVVDF5Abg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754027686; x=1754114086; bh=2uxJPo8bReebFcev1OrydZL/f9jTv+H76GK
-	xs5jrc6Q=; b=Ec+k20b7pcnE/6NrG+k4QKwBP0u3/0v2xpvs3T39Agftds3uDiT
-	BjmoBEvUfspAkU3w4DCUXXRXFbKH/s1RMF27JFNZ9wbCwP1Hxhuxk09KK6DVCm8L
-	rxONjDsPoYeWQLvXK8P3HW5l/abci0Kt5m3pTHiyH7+JANyfyA6lGm5aAGUjLGIH
-	nnTCpWbckQyIHQ8ZdgbHHqAiGnGGo8BAkmgud5YuzMfO4u0EY+c4pyj+uhj0rSk0
-	c3UO+ErITYmRxmVkW1C1RfmLyhE2dDHwGO3evPnTY5rf41RNX/+PkGRXLGxEdWR0
-	8dp6GK7A3zWkTxXRPFB08RqkF/kYXaqsz4w==
-X-ME-Sender: <xms:pVaMaJC6p0P-61ZhzJz-TRLkbh5qqFqv06CfIrMma3kdKr17bQJSOQ>
-    <xme:pVaMaP8pi6XUIcfcA3GUhN_7TdrZltcz0y-D43eXXt258JvjNphm6hzRB1HUfpYqL
-    dh-EzlcyfWDqYW-1g>
-X-ME-Received: <xmr:pVaMaFBr_UC3GncXZdpFhTy_nEjqrJuyncIzHrSbj74Uq8DehmzOnktR56uHkbeeCVK2OHt74LeKlKKCLiBej5z2Hv1X9oVVv-vONcBuMnZH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvledtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehmvggvthhsoh
-    hniheftddujeesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhu
-    nhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:pVaMaERghg7ZkyqychAQq66KwkpWyaZjBbXnb17puAFXNyj32jdhTg>
-    <xmx:pVaMaMszlC9B34ZRdEp97CT4F5Ik-nxiw6KEtTtLikH-IXK63hSb5Q>
-    <xmx:pVaMaA3mzj9tN3K4sfGOr1CjgbzmEgTX7YmXgQINm7MUQaqt4AR9BQ>
-    <xmx:pVaMaNWlkWYyk9DdSJkbMcJuEpAR1cSG8Yo0zrLKKfnkR3fYo6HRmA>
-    <xmx:plaMaJjXgxh4db9O5nc5yoDF4JZx9cf1MJPtNiLh50zTitvoZA63SAVo>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Aug 2025 01:54:44 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6cfc19ec (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 1 Aug 2025 05:54:44 +0000 (UTC)
-Date: Fri, 1 Aug 2025 07:54:41 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org, shejialuo@gmail.com, karthik.188@gmail.com,
-	gitster@pobox.com, sunshine@sunshineco.com
-Subject: Re: [GSoC][RFC PATCH v4 0/5] Add refs list subcommand
-Message-ID: <aIxWocMpvHJ7bL0V@pks.im>
-References: <20250723064313.29866-1-meetsoni3017@gmail.com>
- <20250731090040.1625303-1-meetsoni3017@gmail.com>
+	dkim=pass (2048-bit key) header.d=martin-st.20230601.gappssmtp.com header.i=@martin-st.20230601.gappssmtp.com header.b="3Uxe8TwL"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-33230f1347fso9471971fa.3
+        for <git@vger.kernel.org>; Fri, 01 Aug 2025 00:55:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=martin-st.20230601.gappssmtp.com; s=20230601; t=1754034945; x=1754639745; darn=vger.kernel.org;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=FAM/YlOy6PoNY/pBbzRhUsKH6DcVSA/0001kALP88Yk=;
+        b=3Uxe8TwLvm7zrCuIonY4+m3cXYWfkmVTEMwAVQ6CBMb0pUkyrUohdeXQGmHxnNfwOf
+         /bUneqjG35znBBeEDbQJLDWIONRMz43TVvy6aEizqUr0OqVe+olZcwJN0R5ipe77CFh5
+         PKzvDWWXI9Hqon+NZfBXZubO3SM9iTzmDpb1tpMNJ4DQ1fyIa1sOvGw3cyEoe++9qVhR
+         askH7mwa6FWCpHMap3kfX98YwNGMPZZk91LMX3StLH2dgWt157e7s8r55YhsNe47Y2e1
+         kusEe4u1iZao43GAkdowhMW9gSfChHY35TbYhwoJq2ZSgugI+mbNh5chkgMMXYVoERhi
+         UkOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754034945; x=1754639745;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FAM/YlOy6PoNY/pBbzRhUsKH6DcVSA/0001kALP88Yk=;
+        b=KZiz5zHnxFw5ZdkP0MKQkKX8owF5VwSI/zfcmmYbuP8DgSrR4d56Rw2vDM5dTqamOC
+         Rn+1Y725TJ1V9dHO4yHGQ/cPw+5J9Huuxekvt6LNL/MDvVEtIBP5l+fCkpeRhF+bmYo+
+         naHwLh+NyMI5fe4oggx3vHiDQ4qOTTSxtcGsnv5/KFsm7l62QBPGEjnubB/nkskgTHEa
+         BfH55EQmDJL5OrunRPwTv75eety9Ejjy87U73e5fW7wcDKLVZkx5AlEIQudTOV4E/HTe
+         rHyw4y429voD7noBt6xYh0KAVNv+BqkpQbjS2TjoUdn2/Q98xVlbcmWZ7Lw0++Ra6XHW
+         tXpQ==
+X-Gm-Message-State: AOJu0YzdO25Yz94x20xyu34Rs66Ej+5pRM7h3p4eZ0k3a9ovfGu4Jwi/
+	Bi3LdXLQXkISMHZjg77KkWqEyfnnousw4P7rRJ/tyP9qewlyu0GDJKXg5EeW7r/JYA==
+X-Gm-Gg: ASbGncsMb9PTw7O7w6hdvRxyHlnlvxXLM6KQhRRH1FLUYCUUlqL1rXvql6B5wYTzI57
+	4Y+WVF+ae3C8UdlqjmK/L1HXBkju7IYjo6et9RFep/+sRXCRtvGHJFvBwnTDKB5O92Nr2a6nAhF
+	mHwW+lkAbBHBrgWBk9qRu20wryX2h7Lw8vefLqJO1BXhPdgeaUbpqbXyUNKtu84Vq7uzs55qsfM
+	HVtQE3+Tmw0m7OrWcKtV7ioD3UCWS7LGUfPc8E+p8g3vjosz91HlgMXRKF1H0B9l7cWoqYxp6YI
+	eZ0qyB+4pi9WWFkijJDJEq0TYGaiktdQu2iPQEwSdTxYQq3oEoYj0eEzGY5+KFMmkCVyVud58Xe
+	JoahmU1/x2VP6ictFF2k66X1aSR1rft9DeLbf9bDQslxXyIPMJ1fRoNeJR7yRwRBawS4xcz1qST
+	8YMGrlFN6NZJXYoIIfm8pTX7TBoH2v
+X-Google-Smtp-Source: AGHT+IGQh+VS7GnEeH5acLjapY/buvPv1YDUgp8IRdRp5b8CHNiqRc3a402l77UobffywEeG1NwqVw==
+X-Received: by 2002:a05:651c:4104:20b0:32b:8e39:b0c7 with SMTP id 38308e7fff4ca-33248480a61mr2669561fa.40.1754034945283;
+        Fri, 01 Aug 2025 00:55:45 -0700 (PDT)
+Received: from tunnel335574-pt.tunnel.tserv24.sto1.ipv6.he.net (tunnel335574-pt.tunnel.tserv24.sto1.ipv6.he.net. [2001:470:27:11::2])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-332388fefe7sm5037991fa.69.2025.08.01.00.55.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Aug 2025 00:55:44 -0700 (PDT)
+Date: Fri, 1 Aug 2025 10:55:42 +0300 (EEST)
+From: =?ISO-8859-15?Q?Martin_Storsj=F6?= <martin@martin.st>
+To: Patrick Steinhardt <ps@pks.im>
+cc: git@vger.kernel.org
+Subject: Re: [PATCH] meson: Check whether git is new enough to support ls-files
+ --deduplicate
+In-Reply-To: <aIxQWSrnMOuEmfHo@pks.im>
+Message-ID: <69faab5-43d4-812c-90f-c518ff7f618@martin.st>
+References: <20250731121533.178747-1-martin@martin.st> <aIxQWSrnMOuEmfHo@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250731090040.1625303-1-meetsoni3017@gmail.com>
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 
-On Thu, Jul 31, 2025 at 02:30:35PM +0530, Meet Soni wrote:
-> Hello everyone,
-> 
-> This is the fourth version of the patch series that introduces the git
-> refs list subcommand.
-> 
-> Changes in v4:
-> 
->   - Implemented architectural refactoring. The core logic of
->     for-each-ref now resides in a shared helper function, and both
->     for-each-ref and refs list have been simplified to thin wrappers
->     around it.
-> 
->   - The usage strings have also been refactored. The common options
->     are now defined in a shared macro in a new for-each-ref.h header.
-> 
->   - The patch series has been further split to cleanly separate the
->     preparatory refactoring commits (for both the C code and the
->     AsciiDoc documentation) from the commit that introduces the new
->     feature.
-> 
->   - As a beneficial side-effect of unifying the usage strings, this
->     series now fixes a pre-existing inconsistency between the --help
->     output and the man page for for-each-ref. This allows a known
->     breakage for it in the t0450 documentation test to be removed.
+Hi Patrick,
 
-I've only got some minor nits that should be quick to address,
-everything else looks quite sensible to me. So I think this is almost
-ready to be merged.
+On Fri, 1 Aug 2025, Patrick Steinhardt wrote:
 
-Thanks!
+> Our commit messages are described so that we first describe the error
+> and then we describe how this is fixed, and typically they are written
+> in such a way that they can be read without requiring you to also read
+> the subject line.
 
-Patrick
+Thanks for the commit message rewrite!
+
+> So something like:
+>
+>    When using the Meson build system with an old-enough Git version
+>    that does not yet know the `git ls-files --deduplicate` option one
+>    can observe the following error:
+>
+>        ../meson.build:697:19: ERROR: Command `/usr/bin/git -C /home/martin/code/git ls-files --deduplicate '*.h' ':!contrib' ':!compat/inet_ntop.c' ':!compat/inet_pton.c' ':!compat/nedmalloc' ':!compat/obstack.*' ':!compat/poll' ':!compat/regex' ':!sha1collisiondetection' ':!sha1dc' ':!t/unit-tests/clar' ':!t/t[0-9][0-9][0-9][0-9]*' ':!xdiff'` failed with status 129.
+>
+>    The failing command is used to find all header files in our code
+>    base, which is required for static analysis.
+>
+>    Static analysis is an entirely optional feature that distributors
+>    typically don't care, and about we already know to skip running the
+
+I presume this is a typo, and this should be "typically don't care 
+about, and we already know to ..." - I've amended your suggestion in this 
+way locally.
+
+>>  headers_to_check = []
+>> -if git.found() and fs.exists(meson.project_source_root() / '.git')
+>> +if meson.version().version_compare('>=0.62')
+>> +  new_enough_git = git.found() and git.version().version_compare('>=2.31')
+>> +else
+>> +  # On Meson 0.61, we can't check git.version(), so we just have to
+>> +  # assume that the found git is new enough.
+>> +  new_enough_git = git.found()
+>
+> I'd rather call this `git_supports_file_deduplication`. It's a bit of a
+> mouthful, but `new_enough_git` raises the question of what it is new
+> enough for.
+
+Fair enough, good suggestion. Although based on your other suggestion 
+below, we don't end up needing this part at all.
+
+>> +endif
+>> +if new_enough_git and fs.exists(meson.project_source_root() / '.git')
+>>    foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_excludes, check: true).stdout().split()
+>
+> I wonder whether we could avoid the whole version check machinery and
+> just change this command to `check: false`. If so we accept in case the
+> command fails, which we can check by calling `.returncode()`.
+
+Thanks, this sounds like a much neater way of avoiding the whole issue!
+
+// Martin
+
