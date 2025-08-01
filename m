@@ -1,114 +1,123 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EB926E6E3
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 14:44:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0201F4181
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 14:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754059466; cv=none; b=qybsACsa/RImpONsXdFp7PzCFaQrY1jlTSNAzAwIhv04E66PGiVfobVZ5Vug+v6MdEEHDqnGkB1fO3a49gF/v+HwZFlhgIfTwCJepvlQ1MV4cwAzQWBwRvv/tklFDHj4Q00fsvXscpL0yDWOTmFWcjNRrkCM8+GQHcClRvQlqVc=
+	t=1754059680; cv=none; b=qTK/h3qCchfuNwnTUB7SheRwQ4hzMxVkGadOpZ9sLiNgFDkr1z65zLdTOF8B58lvuoGd8L97Qk8hhiUiRFzr8gv4xdGx4cx1+KE08sgnmjN+qyDkwAknjVCXCMmAhnDIf+hWkP7vg13XmmXSEinjrEmRUEWNsJkOhfzLDZBio8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754059466; c=relaxed/simple;
-	bh=Tl0fvQitXsP3+sntMl4v2jZ0d083ccvC0rf1z77v/YU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q3pkAoNNpkewCTl+exeUAfyBONu2VT9v5ay5vDrBxuS/PEF7FNJmHpq5ZTPWpucesa3FAKSdHbFTMUSSaeGS8f3CIfAYD/WNT9N00ui3X19sADfkBBaU9AEFXmNE8S9+kfXcc1EhG+BK+Blxb5cla5/b1drHAw/9/CxZMgWlzso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LrdJYQo6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EjUbHfCW; arc=none smtp.client-ip=202.12.124.158
+	s=arc-20240116; t=1754059680; c=relaxed/simple;
+	bh=HJMZZ9MTLfvoI8DMWgGpCOhTNFyvEZ33Km/wu9WqQQ0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=PGWBppDvQye2nRgZGswOIM3L6fYn2VUAyeFxEV8jDwFfG4SJR4u8IFzERIxy7eA/GI+4hwsIp8Ij+kYUAMyzasq/ocyjFno1CYObJ5P1LjNmvZTqAk1ZfwM3Va0ycCblHHpunHcrnn3Po7+f25iqKUdJ85X4PPkmxaur3VwKT7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MFKHsFGS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VAkm4Nfm; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LrdJYQo6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EjUbHfCW"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0968F7A01AB;
-	Fri,  1 Aug 2025 10:44:23 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 01 Aug 2025 10:44:23 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MFKHsFGS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VAkm4Nfm"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 38B081D0086D
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 10:47:58 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Fri, 01 Aug 2025 10:47:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754059462;
-	 x=1754145862; bh=Lg3LUKBUQ5/2Hzsr+Zl3S/c4qaqWKH67RAvjAYoiznE=; b=
-	LrdJYQo6aNWcnYfLYm4zgu1wC6QWoOk5e6QP81gV1XUUF6kuA422/4Hdm0PXqTLR
-	sqIzabd+00nFT6mZ9iFZMi5hZI1jemo4xuHrMjc0USR7vohX1G16UclAehMEcvCo
-	CSeypFTe9Qeik1MyeEkaxfEf8U9MJWELGIdyH/VCB9ipyNVJixWV93EIhKP5VJIl
-	3arWyYti7Wn4v/TmQmVCJMkJcdybdrLKyicAduddWrL252rZFPpp0O7gECYFuW9/
-	s8KvcWFdyWi1JPORo1QiRDI6enQk3bL2EU+j4WWydFEBwai62EEHS/Q7e5P+LFnP
-	DZSVY8VP1U6T1GAmMN6KsA==
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1754059678; x=1754146078; bh=JKPb3ZB6Rv
+	KXtFp7GILQt5ChMS6OyRgSbn0CZI2ns9E=; b=MFKHsFGSBJoZvrZzcCvssjK1Xd
+	mPTLFFfMN2ZFGO681YmcUTg4tM3vDvQn+CXeW3dk0YSGuXK997L0B+4mDWQRPKPI
+	ys7WJSFxDugwN4wDeNtk1t/u/abwAlaqgI7G6RmuFT5xACawQZDTFBUTsOteINxD
+	qKZH9Aq8M/f6101mgHNLVmtQvyKxoTbRmEkY97qgUx3bhX86foczlF5mEmhZICBe
+	BOvBlF6lupL4b1V3d63e4DYAAWZ7oWg67FmchyTv39lVNKzOWrErPOa4PRG/zdCt
+	SV0TcX2rTVNUDPRrINjAh6IinkblYPJE14KuBSrsjMyMgTIUhQj8K/WnOgMQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754059462; x=
-	1754145862; bh=Lg3LUKBUQ5/2Hzsr+Zl3S/c4qaqWKH67RAvjAYoiznE=; b=E
-	jUbHfCWOLqiUWuXsbpsPdPeGfcFOb1Cg1l/+VXm93swddCQqnIySc9DK4m8mVJWq
-	4ZHCMk65WEMDA6D6W3D5XMhRuGeIsUc+6yj+Fu+KuYlz8TJpeqfH27zXpcWAatZm
-	Lqn14YeYPB5PpNPj9i0VU/cG39U1+MjSF1y1IzRnpbUxsHhLsfsv4nalFli6Db7P
-	OP1WCd4w5C/2ejpjd+3P4P9nVWNqn3o9vgd1MYfpNgl6sqW50f0++0Wqk+EYfNBj
-	A9SZ1qvCCVVVb0WRUbogTPqG/NPXHFqz4MEJmq9fkMNR58j9XSY1XpW8ptlDiZmF
-	ytw7zQItWCd13/p+hnXxA==
-X-ME-Sender: <xms:xtKMaNJmSbcGRCGeVd6p3I6lOuJgHCDCbu26H7_3IRXdpporWmCi3w>
-    <xme:xtKMaJVpghaMW-RLTEL9X2DanV15dyxFnuEr9xzvDik5tjwRL7pw7Nrj6aeGMcphg
-    5pSmTdIUHPHhsRucQ>
-X-ME-Received: <xmr:xtKMaHgbmXNXJm_U-GINIhwQtNxrHTPc-QkXfwcrJX-av9L31nWbxvhKn6I_bsc5-B4PVadYfRuwDh8bDnX8OgOUuc9AbqtR49SGNqtztGfR>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdefleeiucetufdoteggodetrf
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1754059678; x=1754146078; bh=JKPb3ZB6RvKXtFp7GILQt5ChMS6O
+	yRgSbn0CZI2ns9E=; b=VAkm4Nfm+KIIKfW+PviQWHy4Td5PEePDXwzpW3cTek/r
+	b8EUNurusNZyfsAftbKHT7jYmveMehjlqSSQip8tBtyF1GrI0GSK5K5leQiM8ZgT
+	zFLPLocu5KxOgM8ZqXjTpidM406wE1vgU/XpA+P4DhgJHzGcHZU9L51Q+tVjkrnG
+	ovwUpGdfyOek4hY0I8l0DscX26j9JGa20n4YEB5w4HkYQufCWwXklX3lLSZ+YTea
+	fCtuJdHYp4QZYA6BByRnxaO8gETypZVzQ55KgW8F+JNcWEsI4AZ0HQmfFX9vGDlA
+	T2TAJnkq/xo0rcMaCfKE+qmWBh/JXic1QlCv4BsL0Q==
+X-ME-Sender: <xms:ndOMaEqJqACr-whHvpFnn4T3-6-vdNYHRXE69YMQAduXnwnyh6xljA>
+    <xme:ndOMaMpbdevbXk6XbGOCWQpOgilJj271op_4f2gVvSdHY65m1iF_6gJbNryiF5Nr1
+    SepJd7AwbQwrfdmeA>
+X-ME-Received: <xmr:ndOMaCkSHeTsMlW9l4Q2KeaLnpv7twHXIm5Ipge_UWb37GsUFpJQ29nLhwdBr68SuHFguAzDvQ-OLF6nP6WiHtzHPUtOPCUNs7c1v1J82UDy>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdefleejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrhhtih
-    hnsehmrghrthhinhdrshht
-X-ME-Proxy: <xmx:xtKMaM__RBPXRgMaRwuLGmyMiJWX1BAJfKxERDpBH5GRMkzVWYd7Pw>
-    <xmx:xtKMaJDQoCS0mCiuVUAFP3VLwPbeDmvEOacKw6Hz6W5e9sa6DFwagw>
-    <xmx:xtKMaBLgLhSpUuAJ0nsJCw-VQ9XczpLrNI-5S1TRfg63amT6TiXO9Q>
-    <xmx:xtKMaEmLr5MZhhldxmOtCtzfsVzfechH0wliSeRaDNBA16f1_7glbg>
-    <xmx:xtKMaFHauuevhjjNpPMIqBlIFDO7gm2hbthOq17sp0fVKWq_4muPIlgb>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhufffkfggtgfgvfevofesthejredtre
+    dtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetieegjeeuheeuudfgveelfeevhe
+    euhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    gh
+X-ME-Proxy: <xmx:ndOMaOGGoislNZsYWplllzPn880LKer701U1iJvLBQzgPd51CniKnQ>
+    <xmx:ndOMaLqAeNC-neTgb1DmPrOmWNnETlbU4rWHu7spzvcBTx_10-ytuw>
+    <xmx:ndOMaK70bA17N2E8d6h2Tv9Bh3OwmSbrgZG8TdUX2cJJ423KT_mXEg>
+    <xmx:ndOMaJ4hNOhpBzcWfiDmZmRpiOhh2fPJMDQ6I_5RyDuysjLIdmfN4Q>
+    <xmx:ntOMaBAmcalhbNX8z1S-e--oplf-ju-kiwRJPLLjbt9jjA7mYHkZzuZl>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Aug 2025 10:44:21 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 1 Aug 2025 10:47:57 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 19027786 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 1 Aug 2025 14:44:19 +0000 (UTC)
-Date: Fri, 1 Aug 2025 16:44:10 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 5c9b70cc (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	for <git@vger.kernel.org>;
+	Fri, 1 Aug 2025 14:47:55 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Martin =?utf-8?Q?Storsj=C3=B6?= <martin@martin.st>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3] meson: Tolerate errors from git ls-files --deduplicate
-Message-ID: <aIzSun25-RhmAfOd@pks.im>
-References: <dff715f2-9d26-148-5046-6b7190b9414f@martin.st>
- <20250801102554.1904715-1-martin@martin.st>
+Subject: [PATCH 0/5] reftable: a couple of improvements for libgit2
+Date: Fri, 01 Aug 2025 16:47:46 +0200
+Message-Id: <20250801-pks-reftable-fixes-for-libgit2-v1-0-f446e1c33cb9@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250801102554.1904715-1-martin@martin.st>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJLTjGgC/xXM0QpAQBBA0V/RPJtaqxV+RR52mWUitCMp+Xfj8
+ dbpPiCUmATa7IFEFwvvm0aRZzDMfpsIedQGa6wztSnwWAQTxdOHlTDyTYJxT7hymPi06CobGtd
+ 4V5kSdHKo/ZE+uv59P4zxi2hwAAAA
+X-Change-ID: 20250801-pks-reftable-fixes-for-libgit2-562b959a5603
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.14.2
 
-On Fri, Aug 01, 2025 at 01:25:41PM +0300, Martin Storsjö wrote:
-> When using the Meson build system with an old-enough Git version
-> that does not yet know the `git ls-files --deduplicate` option one
-> can observe the following error:
-> 
->     ../meson.build:697:19: ERROR: Command `/usr/bin/git -C /home/martin/code/git ls-files --deduplicate '*.h' ':!contrib' ':!compat/inet_ntop.c' ':!compat/inet_pton.c' ':!compat/nedmalloc' ':!compat/obstack.*' ':!compat/poll' ':!compat/regex' ':!sha1collisiondetection' ':!sha1dc' ':!t/unit-tests/clar' ':!t/t[0-9][0-9][0-9][0-9]*' ':!xdiff'` failed with status 129.
-> 
-> The failing command is used to find all header files in our code
-> base, which is required for static analysis.
-> 
-> Static analysis is an entirely optional feature that distributors
-> typically don't care about, and we already know to skip running the
-> command when we are not in a Git repository. But we do not handle
-> the above failure gracefully, even though we could.
-> 
-> Fix this by passing `check: false` to `run_command`, which makes it
-> tolerate failures. Then check `returncode()` manually to decide
-> whether to inspect the output.
+Hi,
 
-Thanks, this version looks good to me!
+this small patch series contains a couple of improvements I required for
+libgit2. With those changes libgit2 is now able to run its full test
+suite with reftable-enabled repositories. I still need to invest a bit
+of work to make it memory-leak free and compile on Windows, but overall
+I think that support for reftables is almost ready.
+
+Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (5):
+      reftable/writer: fix type used for number of records
+      reftable/writer: drop Git-specific `QSORT()` macro
+      reftable/stack: fix compiler warning due to missing braces
+      reftable/stack: reorder code to avoid forward declarations
+      reftable/stack: allow passing flags to `reftable_stack_add()`
+
+ refs/reftable-backend.c         |   8 +-
+ reftable/reftable-stack.h       |   9 +-
+ reftable/reftable-writer.h      |   4 +-
+ reftable/stack.c                | 366 +++++++++++++++++++---------------------
+ reftable/writer.c               |  23 +--
+ t/unit-tests/t-reftable-stack.c |  50 +++---
+ 6 files changed, 227 insertions(+), 233 deletions(-)
+
+
+---
+base-commit: e813a0200a7121b97fec535f0d0b460b0a33356c
+change-id: 20250801-pks-reftable-fixes-for-libgit2-562b959a5603
+
