@@ -1,124 +1,132 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D866F1D5CE5
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 16:54:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C2B1D63E6
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 16:59:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754067264; cv=none; b=ajz3WoJyiVXeTPjmyEn7fAl0LlMLhBtdELpXj9ZYpFo4UQNTAGA6Y6yKU6rSelqeshDl2TCckFj/hpfqpU5YaUS4LP/yreuysM1b/NLsd2Y0enAt7lq00tugadgcplj0+EnRQs0MYzd9Fh2b3Fa1DQVnUq0eQtpZkN9a2VdA8yc=
+	t=1754067598; cv=none; b=tlY2wLK/T5lVEemOLar0FHCrpmRXWdqHweKiI2klHaz9KWSDfVFqZatZIwVS5WFTI17I5csb1Pd7NSUoFfHudhlQDmbpBJv6X7S3Qpe2Rpiz+GEq9lfXlZmPkQEusbebhA42HG3sDHRwmuUzRbzZ6WzU1Wb093PrNxtQ8rVjros=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754067264; c=relaxed/simple;
-	bh=nhF/riTZc+r88mn7BGQ9bu7ugyfmBuLCO9NkMPMaAJ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KvhKO6ATDcLx222F3jBWLqozQUhxHL6rCm/nMHH9QztHteQ7w9IPmxUhYZHF5mjcoDoNd+9rh7povjs/dQahCr25l21w0ezfORIoXCGcZQz3B/52aUThErHRuWzy0Ub8EFky56GqaD41Q90fNlPBlITXnG6vSvbJNr9k1zvoLo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N2RulQAs; arc=none smtp.client-ip=209.85.160.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754067598; c=relaxed/simple;
+	bh=wkmyzuuIBG+pA4U/8trQF6+yyiFLh94fYRMKInKYZcU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cthaV/pmDXFsi91Sn78vJwj4qhs3X61hMOZQGtJgwLA2Q4MlyPCwXiATkPqiF6A07qZD83V9TVxQz9YJ37A85zj6UxS6O7gbYHD3ou7W0dwy5URPv5MehHzOQ2fTD3DhZgcnjlWctzkuJ40/G2XPKdHXU9pxEeQo2s2+mip09ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JHMnVCbP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Crjo3VCq; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N2RulQAs"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-302fdd379faso548833fac.1
-        for <git@vger.kernel.org>; Fri, 01 Aug 2025 09:54:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754067262; x=1754672062; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IXRJimVC+LiLW5xSIw11jhY4xjVHUvahv8fpPk6PzmY=;
-        b=N2RulQAsrpZ+iPt82Ocu1WvWiLE9e4vMFNKI0FSLJVhhEwnjHfhZJcSMjkl+bzTyoX
-         P6GVS7rmKK6HJCsusYvZO/o7je8v4fOrk5Eus0LSbvhBTQqm5MgK2iM0fpVZLWHy8HrN
-         /hTUrjCj0V1o8pSyF6qEy1O1HScx6A3r+APQ0j5qq7gAGGgpw3kVqASipS25+qL0RAUw
-         Kg/y9ZBSiEmmwk3GxVSVzrLJ7V38Aucu9CuefMOnLU5vVsRU1hm2NdHETcQn17DXKTqi
-         AKGXUj5CBnM9fcVtHBkJZY2LVcCqXIQNFHduiL2+aIb+3gIw+a5MNt7yE86s4YFFrnX+
-         evHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754067262; x=1754672062;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IXRJimVC+LiLW5xSIw11jhY4xjVHUvahv8fpPk6PzmY=;
-        b=wXRQah0dcil1+lQucnUT4+I9eQf+jURty0bAFSGPiyF2lv61SQ+OFRVnT67+NwTgLy
-         gBgY8ODFs40c4S5Cnnai2fjDSVmizfYZsGw0mgY15X8CZUdtA3xn/61AX51hgQ4AyrUb
-         CGXTzMefw6Pbn5jO50XjlyfU/Nah0Wk+chb9VrZz0sjFY2g0QcsSFF3whEUYdxQX8km2
-         4bCDzuLU7R74yOiR+Yov+6+dP2Jo02flY1jLuF1wOj6bOlGjgKMqX58VRcoxYu41FrKq
-         Y+HFfXil1FyA/tjgatFWsfqPepYqsDCtHzFNCxob+ho/jmhEVSYjGmgOR9liPCVQNX8l
-         MkIw==
-X-Gm-Message-State: AOJu0YxnUUFb873FpI+UnLw76euFI/IJNR5DmQnW1eNQvOxGn7S833eT
-	TgukgzlccsABYCya2c4I8WfxdddN6maTvs4ctgoW3ISKsEDlrIr2WBs9
-X-Gm-Gg: ASbGnctm8ZxxHFprCdSbue6HxUMFh3v0JjQn2CCTl1I/VpCsUrldQpj3au0QNaM0x0N
-	4ezKuJLMLc4a+6/BuFbvLsOYKJvmMpSRCuSKfYNBE9B1ruT7ylfceJu7aqj2qsn0nBGX0R+6t3G
-	opt//BgZbaUfzPV2EHA/gjS3Jc105ybp+9f5c2ioaxPwZ81T4+ZhI9OxutK/qLb32uB18KvZG51
-	C9lJNgv9FVgvLjyoY30ZRaIAi7jTN3/JtQe31+LRXT/TugyEUSIgGhuWsQ4w4M0Hs0KcUXUml3M
-	LZp9O+BsaQGG+NrIC8B8aus/vuNdEoW/A3Pi+DYNMvOAya1Z7T9IIzaDIoICd44plXMlD1sG/gP
-	7X4gM7q8W5WYAsEI=
-X-Google-Smtp-Source: AGHT+IG0qJiwJaQU2x1u29zzN6imKZLXeOj4JknNXbn5eFOt2ZmVOWPdFmtSNCVWX+wr9YpS6gtGNQ==
-X-Received: by 2002:a05:6870:7195:b0:2ff:9e3f:dc8f with SMTP id 586e51a60fabf-30b6780daebmr180971fac.18.1754067261881;
-        Fri, 01 Aug 2025 09:54:21 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-307a7122e02sm1013279fac.8.2025.08.01.09.54.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Aug 2025 09:54:21 -0700 (PDT)
-Date: Fri, 1 Aug 2025 11:48:22 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: chenjianhu via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, chenjianhu <18230222379@163.com>, 
-	chenjianhu <chenjianh@kylinos.cn>
-Subject: Re: [PATCH v2] t7450: inspect the correct path a broken code would
- write to
-Message-ID: <5hdj64ha2b5ewydtrra2rbzofgzaqnu2rt5enlarqs6u4grjsg@pkdsa6plxsuw>
-References: <pull.2022.git.git.1753860300588.gitgitgadget@gmail.com>
- <pull.2022.v2.git.git.1753933780883.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JHMnVCbP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Crjo3VCq"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id EA48A1D00B75;
+	Fri,  1 Aug 2025 12:59:55 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 01 Aug 2025 12:59:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1754067595;
+	 x=1754153995; bh=K9Dcc7cwAq3Wu5DJA8u+BW7rY+80TKAOzSl9lOPnvXw=; b=
+	JHMnVCbPQHVd+pmKIyxUXBF27Swv2B2Jjbcab1bL8L/MypViqp4FzPMgi+6zzEx2
+	GynGWmUx50vUKYsnLdrKPe51ara9tBi42s63Cyc5oMrp2nc561r6sC8kEpIC4+gO
+	7VxBZl+LU1KG0G2WIhvortDFksdgaPAuta4qY4OZf8FCw/Nexw6oNO9L76X6Z99I
+	C3kAaiMYu24xQzv+x5zHGHwPOEWFxEl2TsRcFWDOWOzuVBksxPSQ5LYounVacL7h
+	LHMc0kqE3LCf+HthLLlTOk+dHGGPUt+hMmgHRstq8kSYYxLMxWUStbKRmCZEfn8k
+	sn/uoYIrZBQ0wYMBdeazRw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754067595; x=
+	1754153995; bh=K9Dcc7cwAq3Wu5DJA8u+BW7rY+80TKAOzSl9lOPnvXw=; b=C
+	rjo3VCq/lfIruZUpbK0+u8hgSZEOk49JUqA+4HkW0UaJu4PAnGvCqLpBwQNGm8TT
+	So6wUzhWl7HUQr/c6Z61pE9IRd2G58a0OB6uj2Rp1WBupFkfZy9EhKhZjDjQw1/N
+	MVTGKr7wQeFzHUx6yU1rWoAoQbTh80XAXv8wfBVWaibvH6ol70AFQLp7U31nndCp
+	/BfNr4hbGPplT3Kzu5sSjTl+UXuWT5V/momf8cdG9o6Zg8f2mij42WIsMhAL8Cpp
+	tgcoiTLHYmozspJw/bkARXm2iFzVynV3OCXCaC+KVvc4rRdxoSkYgQ37BvIJp7D4
+	typhs0xdO0WA/mkIgLeUA==
+X-ME-Sender: <xms:i_KMaMxW8Mtl_GsOpT9C4IQ0uYRjDMoV1jl4Ahq1B_X0NDyyC8okoQ>
+    <xme:i_KMaNIRfjYufc8wXZj7YkeYuJTshMwiQPm6s6mWv85eL80u854nz0hFwiSCxwYmi
+    IG2u4bKuAqsgc9EUA>
+X-ME-Received: <xmr:i_KMaOH31A64qByjbhrPiRhMhmJNnkT1sCmJaQojMUL_-SsUfvDWFSbVtleHVuRy364lAcScRR9bqmMF7buzruxWQXhX6A4EnBHlX_A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdegvdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthht
+    ohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
+    sehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtg
+    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheprghvrghr
+    rggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:i_KMaJ_gTcqmU3a91r61adTs9relNpc8_PgAXL546mN3pXfmXvgxnQ>
+    <xmx:i_KMaOIzLSHCvSaESE0XzjJ6iKNjCcUppbkRS1qsDZXe2w0DziZq3A>
+    <xmx:i_KMaHsfO1asW60gHasa4sa8QJk22wL2ErW3_Q4RcwfX_IRRmX-odg>
+    <xmx:i_KMaFDQpPx5bu6MuHPNLcQEqYV0JJ5nC7traxMlCZkQbqkLN5Y8xQ>
+    <xmx:i_KMaOCMWuw6jkxyaJjM-VnIhCEPx6Iro9c1OTdFPTFqApPpNFJLD-2N>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 1 Aug 2025 12:59:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>,  Toon Claes <toon@iotcl.com>,
+  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Derrick Stolee <stolee@gmail.com>,
+  Jeff King <peff@peff.net>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH v5 1/6] last-modified: new subcommand to show when files
+ were last modified
+In-Reply-To: <CAP8UFD18Ds4zME_ZHRdTA0W7KXk57zo9664xaU2TbH7YsHbFUg@mail.gmail.com>
+	(Christian Couder's message of "Fri, 1 Aug 2025 11:09:24 +0200")
+References: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
+	<20250716133518.1788126-1-toon@iotcl.com>
+	<aHmPHcNQYlhGo8JB@nand.local>
+	<CAP8UFD18Ds4zME_ZHRdTA0W7KXk57zo9664xaU2TbH7YsHbFUg@mail.gmail.com>
+Date: Fri, 01 Aug 2025 09:59:54 -0700
+Message-ID: <xmqqh5yrm0z9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2022.v2.git.git.1753933780883.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 25/07/31 03:49AM, chenjianhu via GitGitGadget wrote:
-> From: chenjianhu <chenjianh@kylinos.cn>
-> 
-> Prior to 05e9cd64 (config: quote values containing CR character,
-> 2025-05-19), a repository can trick "clone --recurse-submodules"
-> into running a post-checkout hook shipped with the project.  The
-> test was written to make sure the trick would no longer run the
-> hook with the fix in the commit.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Yep the first assertion in the test exists to ensure that the
-post-checkout hook in the submodule is not executed. The test also
-validates via its second assertion that the sumodule cannot be tricked
-into being checked-out into a symlinked directory.
+> On Fri, Jul 18, 2025 at 2:02 AM Taylor Blau <me@ttaylorr.com> wrote:
+>
+>> > +struct last_modified {
+>> > +     struct hashmap paths;
+>> > +     struct rev_info rev;
+>> > +     int recursive, tree_in_recursive;
+>>
+>> Can we either make these two part of a bitfield, or at least declare
+>> them separately?
+>
+> I wonder if we could/should use the `bool` type from <stdbool.h> as
+> Documentation/CodingGuidelines says that it's now allowed.
 
-> However, the test did not check for the path the hook would
-> create; correct the path to the expected one if the bug were
-> still with us.
-> 
-> Signed-off-by: chenjianhu <chenjianhu@kylinos.cn>
-> ---
-[snip]
-> diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
-> index 14b5743b962..f512eed278c 100755
-> --- a/t/t7450-bad-git-dotfiles.sh
-> +++ b/t/t7450-bad-git-dotfiles.sh
-> @@ -401,7 +401,7 @@ test_expect_success SYMLINKS,!WINDOWS,!MINGW 'submodule must not checkout into d
->  	git -C repo commit -m submodule &&
->  
->  	git -c protocol.file.allow=always clone --recurse-submodules repo bad-clone &&
-> -	! test -f "$PWD/foo" &&
-> +	! test -f "$PWD/bad-clone/sub/foo" &&
+Even though "allowed" is different from "encouraged", I would say
+it is a good idea to declare them separately, i.e.
 
-Yep, this is the correct path now. 
+	bool recursive;
+	bool show_trees_in_recursive;
 
-This patch looks good to me. Thanks for fixing :)
+I am guessing 'tree-in-recursive' is one similar to 'git ls-tree -t'
+feature but the name given in the patch requires such guessing, as
+the name is a bit inadequate (it does not say what you want to do to
+trees when recursive).
 
--Justin
-
->  	test -f $(printf "bad-clone/sub\r/post-checkout")
->  '
->  
-> 
-> base-commit: e813a0200a7121b97fec535f0d0b460b0a33356c
-> -- 
-> gitgitgadget
-> 
+Renaming to show_trees_in_recursive eliminates the need for such
+guessing.  The implementation of ls-tree calls the corresponding but
+as LS_SHOW_TREES which is a bit inadequate.
