@@ -1,83 +1,89 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13CE2C9A
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 03:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8971C2C9A
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 03:50:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754020034; cv=none; b=SafvPItesDvF1t3LQIJy51F1eHbs8DeFK5wCsP9rwmgs5TIIKKcc7/2PYDHx91t5SQGqbDHJKsvI69sNXNEyhahnwJuIlGRbLzqjtaPTUgobib0N35pm6QuTh3gbgKpSxcp+SVkoCBhdEHwS+0VImfnAW39MTOs/hkGhWWVYB0o=
+	t=1754020260; cv=none; b=ILGoVX+Mi8Vqk4N/ow97nuekEWR8pqOR1Ko213NNTDT9RCl0LUQnhSkqew2CJsGSnPGJIj3YxDDVz00RfbcBhjLTY4Zk2O9zg9ojnNmlSrAo5IWL4sBrO4anCIHIShIifDldzZDYWkKFVzM0L8XsYpfJN+TW03pavSBMlbdhQBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754020034; c=relaxed/simple;
-	bh=8JIXUWAQBzZuCS4LBMnDtpd/EgnfDFxj1Y5vMN3Uk/c=;
+	s=arc-20240116; t=1754020260; c=relaxed/simple;
+	bh=YBGmtCpd+rqCq7WrwqdDXO2jMelLrhGvwuR6ZAugzCw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QqDhwSsQhI0Qlc2hfFxKmFy5nbi/58fWcJEKumVi9gPg9/ylBnnyjKGvtbFp1JUiPPiRTuWKpgNialEc0Xg0iQ1+UdIFW4KmhduFk5Eib7M44mY9dykoSYiRJO4RG0+jVz7AZUKxRD15kt7TVEUnceC24ipl1Ejt7tZPKLXQwUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AXs9UaI1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TQhAO+hO; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=tH9MdkQHmsV5q7QjLp3WywPQP2gmNby98jfvBE0XF4rqDlnSKWARscSLz1tphKod6fsA2fsEFT1N0Y1oCwOLDdon1ZOtOq3ToBp+EIgYJeRDXklQC4qUGiaqNxgKiVBwALoOHeX3shxO4HBnSB+FB58qNChnXeGp3dp7lJAw86w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NwWgQL54; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UINe1MLa; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AXs9UaI1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TQhAO+hO"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 320491D0012D;
-	Thu, 31 Jul 2025 23:47:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 31 Jul 2025 23:47:12 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NwWgQL54";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UINe1MLa"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6C5427A0AE8;
+	Thu, 31 Jul 2025 23:50:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 31 Jul 2025 23:50:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754020032; x=1754106432; bh=rzqOexuaV/
-	ZJ0cIMbQ+ITEka8mrzsTVJJBgKgm8kePg=; b=AXs9UaI1bnHuM+QNufMjlbvqxm
-	h81J1R3YZsKfVa2/Ofq1xgnK7xHuZzNVr+G7Em9VO+ZOl0l/lv87r+jOHytUAP1Q
-	GbM3hNwWZECDlCeh2+WWbammeDvaGtXR1p2fmD7/bPmAsFeCUVgaA5/aw2F71rMe
-	taW0b1aJyOfjzdClzrUBPZSASBQY2OFA+BlKDr0hdyDSA4MeOsUuav7RJteG/TF0
-	ImX6g0Dg13IkV/XvyEzUqy3y36yRL17FezFp1g8Wf1pYVUtUe/Tb04iD0SRlRHG/
-	yQvN6MNzE5bt141CkOh2LAIv1xjBqEGsjGesLLmLyJVL80VqYm/aqi1idYnA==
+	:subject:to:to; s=fm2; t=1754020257; x=1754106657; bh=SanF/dUPJj
+	6KAG5BRY9/UjLacCkGuDf1apFsQtV/eYk=; b=NwWgQL54xKZrqYoOJ1TItR4Ykh
+	v+HLDCFPemRXZT1UZgeMh3DxlxHIzqPbOeNEIwIZogz6bzAIxfrXjcgAPtlNcnfV
+	d8ZlFw7XoW7gSXbU9Ec45I+Sj1em01vksp1fjpHBZx/dlHa7w6tI0gUtkBXu9IvV
+	FDE20/Y6Ee66zEoQkyb/m0vGYS36SpBTd2C4Jtj24y3RjIq8xeUA5gD7NqU5FWeV
+	Z2yczmZA36B6dARQ1eNizO2IvX2pzw2rpF0P2n1uj9C7UrY3kjziiwEiQQw2C3UN
+	fUqOv0+kqXYAP6is+Rvbuk37psTXO+1rr+c2YrWTnLyp3IOTmaI7XtUGWOqQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754020032; x=1754106432; bh=rzqOexuaV/ZJ0cIMbQ+ITEka8mrzsTVJJBg
-	Kgm8kePg=; b=TQhAO+hO98vBMJ/1TVGvrZH+8kGRInoLVu3LURZjy7P+iRb1TDd
-	NbFAsmXGO0Vfy+hiqnqfqWWj9HjlTdb59wHpYluZJKqr1J/e04UIq7PFFP64Mcrd
-	cixr0IVsFJ5BeGhUURwEy8FO5A9X2VKmUGp5A385c+12Cw9Fkcatzm4KVzvp2UPR
-	DC7GCgFt+sNley2gjDPnMQpzLenbQNIpd9doWcfVGgV3u3WCfhGerP3SM7ybnWC7
-	ARRXYlA1INCMEmvbAn8sv54Lw0VsD5QqS0Sn+gHkjk6va/rnzljFDRoViH61nPE4
-	No6kFoO2kX5Vi2UXNBkQEjUXg7EJiaC5PHg==
-X-ME-Sender: <xms:vziMaOQrdN9Yaj-RYOtU6RHfwA8zXcllHbXHSmTH2744zJC4GW5f7g>
-    <xme:vziMaHCQk-YTn0hzVYs0KTln1DYBKQsbCab0Poc-7PCiLAv-uw2MaD-Hh1XwCoF2N
-    F55D4bdOzCKT8dyLQ>
-X-ME-Received: <xmr:vziMaFSjo_DJPTACIR6S7LTwM677rQjmV6e5zr0NdEMtCl24jXFoZ6c5XoZtlG_ma1ronMR840lT2QReUpEez72wTCJiNw0nMo5UwBQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvieehucetufdoteggodetrf
+	1754020257; x=1754106657; bh=SanF/dUPJj6KAG5BRY9/UjLacCkGuDf1apF
+	sQtV/eYk=; b=UINe1MLa0FfRjgaC925W/lRD5aKKHlPpbN/GhiQFHWLBcds8Znv
+	VPoqB2Vs05ILnminFSc+jRz3YXEx3vOIVCZkVN4U7+uXKESF8jZTVwf6E+Q2SfY4
+	7DsQAx0X17qrorgGjbq/6S1rJcIit+SbeTNu84xqswp32m+tcMkIZ92KdcHUiRHM
+	Kwwe7zIfarO1EEoEoPdVLB5sdt2QTBToRUvDuXnGVqSXYQqYgua2Le7ZkT//9ZMR
+	4SIbWlkAngLmdSWc6256ZAWONhLdv2omPDLhvoZFVK/0f548F6vjuAlKBUzalfjq
+	KcI0P/G3hhark3AQtrnJh4yyc0WW7Si4zNQ==
+X-ME-Sender: <xms:oTmMaHpcXvW-SExQhOGT_T3X1XO1w_z2IIo3GvgLRdg6VoYNdMwuDQ>
+    <xme:oTmMaPPX_jczC4Zzl0QJz-uL0mQPqnw92CMoBGUFEAjbq2UvJigRmOEa-VzI6uC6P
+    vc6UFwucGivaNZqRQ>
+X-ME-Received: <xmr:oTmMaKqyOSown2TjWcqmCNXSYWfqFNtOuNq7FG_H6sr1p1onN41a5dAdc5LvKNyGJRYCKfTWs6NZAdnGEs4VC5B1WWqJfHSLulmnlQ4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvieeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhi
-    rghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:vziMaFp-O06fPateX-uewXuVjY93cs-ftmgEF1m8n9IGeMtakDX7eA>
-    <xmx:vziMaHwpY1TWJ1Tk_pCpEZT2XT0NIJaFK_t1nMNSrAFBCDRSynIrBg>
-    <xmx:vziMaKIboTk6JJ2lRKrT_qirnZrMYPjewixRdYz-N7AaEd9-H4WzSg>
-    <xmx:vziMaJIQ86CW8uSKliwI4uz_gNT4hNC1om-E8xkLMcpEDHWopXfKJA>
-    <xmx:wDiMaPrwxuZ0ilDRmBaVplVTRoIcOE6FQsIcva5eE3KqcEkEvFdRzdBi>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhephefgjedtffejkeekueelveduuedvheeiudffkeejtdekfeeivdegtedvgefg
+    hfeinecuffhomhgrihhnpegvnhhvihhrohhnmhgvnhhtrdgttgenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohig
+    rdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtth
+    hopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrhihurdgthhgrnh
+    guvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepohhsfigrlhgurdgsuhguuggv
+    nhhhrghgvghnsehgmhigrdguvgdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
+    hmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:oTmMaMeigjkcG8ZBY7UVZ-0FnDGZEmdsUO1MG18jfem3XSrQaNVz9A>
+    <xmx:oTmMaIR4n87ZlKyeMbMIQNWDonn-IQDS8JDfK5EQ-sf2bqaYYFpcGA>
+    <xmx:oTmMaNZDt0VpayzgrTpHJ6sacPNDoufPISyeMMHUrvQT45PeaULByQ>
+    <xmx:oTmMaDchqwGs80fPIpa6_MoTvvPgZNya4miw59n_Sp_fciyfKr4czg>
+    <xmx:oTmMaGWqScIAUrLHb9y_FL3qDdZ5SvdPVFL-vOdWBIEpHGRrbTIA5vQa>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 23:47:11 -0400 (EDT)
+ 31 Jul 2025 23:50:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 4/7] string-list: optionally trim string pieces split
- by string_list_split*()
-In-Reply-To: <aIwyIJqEIdSdKINz@mbp> (shejialuo@gmail.com's message of "Fri, 1
-	Aug 2025 11:18:56 +0800")
-References: <20250731063949.1601669-1-gitster@pobox.com>
-	<20250731224607.3942417-1-gitster@pobox.com>
-	<20250731224607.3942417-5-gitster@pobox.com> <aIwyIJqEIdSdKINz@mbp>
-Date: Thu, 31 Jul 2025 20:47:10 -0700
-Message-ID: <xmqqcy9fog8x.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Ayush Chandekar <ayu.chandekar@gmail.com>,  Oswald
+ Buddenhagen <oswald.buddenhagen@gmx.de>,  Taylor Blau <me@ttaylorr.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v2 0/3] breaking-changes: deprecate support for
+ core.commentChar=auto
+In-Reply-To: <cover.1753975294.git.phillip.wood@dunelm.org.uk> (Phillip Wood's
+	message of "Thu, 31 Jul 2025 16:21:52 +0100")
+References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
+	<cover.1753975294.git.phillip.wood@dunelm.org.uk>
+Date: Thu, 31 Jul 2025 20:50:55 -0700
+Message-ID: <xmqq7bznog2o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,50 +93,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-shejialuo <shejialuo@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On Thu, Jul 31, 2025 at 03:46:03PM -0700, Junio C Hamano wrote:
->>  static int split_string(struct string_list *list, const char *string, const char *delim,
->> -			int maxsplit, int in_place)
->> +			int maxsplit, int in_place, unsigned flags)
->>  {
->>  	int count = 0;
->>  	const char *p = string;
->> @@ -320,12 +327,18 @@ static int split_string(struct string_list *list, const char *string, const char
->>  	for (;;) {
->>  		char *end;
->>  
->> +		if (flags & STRING_LIST_SPLIT_TRIM) {
->> +			/* ltrim */
->> +			while (*p && isspace(*p))
->> +				p++;
->> +		}
->> +
->>  		if (0 <= maxsplit && maxsplit <= count)
->>  			end = NULL;
->>  		else
->>  			end = strpbrk(p, delim);
->>  
->
-> In `append_one`, we would tell whether `end` is NULL. I somehow feel
-> strange why we need to do that in `append_one`. Should we just set `end`
-> to be `p + strlen(p)` when `end` is NULL. And then we could do rtrim
-> inside this function instead of `append_one` to avoid passing "flags" to
-> `append_one`.
+> Changes since V1:
+>  - Rebased onto a merge of 'ps/config-wo-the-repository' and 'master'
 
-Sorry, but I do not see why such an alternative design is a better
-idea.  The helper function's purpose is to stuff the substring at
-[p..end), possibly after rtrimming, to the list.  You could compute
-rtrim in the caller, but that would make the logic here more complex
-(at least, you'd need to introduce yet another variable similar to
-"end" that points at the real tail of the string, and you cannot
-reuse "end" for it, because of the exit condition you see below).
+OK.  I needed the following merge-fix to make this merge work.
 
->> -		count += append_one(list, p, end, in_place);
->> +		count += append_one(list, p, end, in_place, flags);
->>  
->>  		if (!end)
->>  			return count;
->
-> Thanks,
-> Jialuo
+diff --git w/environment.c c/environment.c
+index ae1427bb9e..a0ac5934b3 100644
+--- w/environment.c
++++ c/environment.c
+@@ -461,9 +461,11 @@ static int git_default_core_config(const char *var, const char *value,
+ 	    !strcmp(var, "core.commentstring")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		else if (!strcasecmp(value, "auto"))
++		else if (!strcasecmp(value, "auto")) {
+ 			auto_comment_line_char = 1;
+-		else if (value[0]) {
++			FREE_AND_NULL(comment_line_str_to_free);
++			comment_line_str = "#";
++		} else if (value[0]) {
+ 			if (strchr(value, '\n'))
+ 				return error(_("%s cannot contain newline"), var);
+ 			comment_line_str = value;
+
+I guess I used to carry an equivalent as a recurrent merge-fix for
+your topic branch, but rolling it into the base of the series is
+certainly safer (i.e. we have to do a merge and resolve conflicts
+just once, and after that we won't even touch it---as opposed to
+keep recreating the same conflict and resolving every time we merge
+your topic via rerere & merge-fix mechanism).
+
+Thanks.
