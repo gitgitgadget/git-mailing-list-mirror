@@ -1,184 +1,174 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazolkn19013080.outbound.protection.outlook.com [52.103.35.80])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0451AAA1B
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 17:58:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.35.80
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754071130; cv=fail; b=Tjh2DLgMzssoqy+RMD79JStye/CmzzUmdAKQZincSwb67b9Edor9N5bmlOgmciUmSamIKIfVeAv5lC3t/BwvUS0GaR40tnHwpH8dYUKDjSFPb8IMvJxJSkFxtgH5DD1j5T/pVNT8ArJlR1K6jAF2L7EsJTFti+3GJorxiTsKqZQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754071130; c=relaxed/simple;
-	bh=c9UMW7QBH8DiJRx/i7vrMTLY1mWxw1zgF5UUhazDLUs=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=JaDJMlnrkVcd4fjNQn/YqW8G5pm6fecZOWzU97b9pY81mUayzWg942h5aU9KUxcBzvOROjaciE0Swb3QVaJabQhESwxW5BvS0S2ABMy0zbyZlH0jtBtfrHYBwuPD7HbfV/52kGZNfJO1S6vq9kWQUohQfxIXn6hOdNk4TfKJh5Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=I13e8uKD; arc=fail smtp.client-ip=52.103.35.80
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D26D13A3ED
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 19:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754074824; cv=none; b=QsgVwrxvriLiQPx5zVfMq+UDI4QEUgeXFsEdNo1Zj45aBZJnE/dQrjuTcWj1kgRTxU+JMl+vYB95Jah/mpi+C0luqTChHlubarJ7PjEnyQdhxlsC2HYHH3eX19AGVWiWuU53VM3Q/wtPHTCFPacCyATqb00wGrZeGWfauEdkmiE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754074824; c=relaxed/simple;
+	bh=zjs1X+SrZh7vsflBHKge8T2pG1hUbbM5XCdBzoXGeqU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tR5Zyrc18+D60qlbwqclGfE/j3JHoHCu3S6NirtsX1491RM+jkFGrKV2hKGeFuLb7pn0O31+M7jMo5EEdshzdcz5qc3/eDC68sXW2i9y+RIgS1kme3LFtaRXZITM/x2M9auppnwMEWAEI2x2s+ssNpIdBJuehVTBpqUJpPumaVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T3rvC6a0; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="I13e8uKD"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HhZqJtRPS8QsIOH/5sIoU57IMm4IGaq0utvCP4jHs7BMFaR2ulmrY8cEpaXF11f5650kV4IbmxTWhUBjJXg8rPIrz8Rn4jI2eJCVk3Avg3vpe3Kav8komQA2TjU4wamUMcLZDughrxMPcmgMtdHARD20hxb2/0sh3wzUWccTiX0BeLlQfdV0VB7D6PQFTLYkkzTaa4PuyZNCelj3uZCAU78q9c0tfExkOp01CsMHrlzfh0y6ArmTPIg44ryUA3FGLsQ21GVuUuBMcUspxQ3VC/eezmxjd5iSyJg/V6DKLogNgr8Zk4NRglUTWz01ZwrlL3e3XK2zgrGKfFihNo5EFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=c9UMW7QBH8DiJRx/i7vrMTLY1mWxw1zgF5UUhazDLUs=;
- b=UekOpPB9sLgIo8pCKE+7p7ev8g+mtgkU8/Z5rPReEc3/XTORV3fkBhU8gnse2uQ8U1WeuLb7HUmy9SQYY7QNU3f+s+lGYrC+nyUp4YSrGWeBWM7O15FKQ9d2z7xRdpFmWEDfw134KkVKW3dAr/XuKeT7GMPD2dfYLP/moQkkWx0ZB5y3ecWspWvedY3RDK0D28ee31KOckifSetTCAPYt22phEZaKVqjnjU5KNvPeUip6AICTJXklly29OoP5PX3p/PA2Hblu4Df1U9ncTdx6YiicyC4WpmoFuP9lStiCzR2W259agrGq/JWnaTeRkE6D9YNj5Q0DIUw8niAYcfxKw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=c9UMW7QBH8DiJRx/i7vrMTLY1mWxw1zgF5UUhazDLUs=;
- b=I13e8uKD6iH0mt5UXpFx1l1u+9s6KegIN9AxjaWMZQfne5xhrms5acai2/D4+tIm6n+0OSIVRHUbSuVsmy3VDBKjm42mPzm2ICzfekQVYSqoOGAncHrlnYrHynLO4NQ/G6yt5YPmcrAIkUxgmFn9Zv2FUUyVk7SZJrYuuY6QePAZGRTgwHDyNIkV25wkI1u7Ynt0tn8YOy1mtyWFl10ETG/zJjmNDQ7nxMtRPSbt7ztSeCSrceWUJ2q7jEappuRRdj+ESNSIkGvSkhpQ9qGZEIfAMlNdJ/n8rY41CZvyAHq5IKPXlEgGrw+thZZIHXPQpshSKFA1DihhDknVhJGB2A==
-Received: from DB7PR02MB4265.eurprd02.prod.outlook.com (2603:10a6:10:43::19)
- by DB4PR02MB8774.eurprd02.prod.outlook.com (2603:10a6:10:382::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.12; Fri, 1 Aug
- 2025 17:58:46 +0000
-Received: from DB7PR02MB4265.eurprd02.prod.outlook.com
- ([fe80::1f5b:401:f731:6dcf]) by DB7PR02MB4265.eurprd02.prod.outlook.com
- ([fe80::1f5b:401:f731:6dcf%6]) with mapi id 15.20.8880.029; Fri, 1 Aug 2025
- 17:58:45 +0000
-From: Skybuck Flying <skybuck2000@hotmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Minor issue: "git remote rename origin skybuck_repository" removes
- comments behind refspecs in .git/config
-Thread-Topic: Minor issue: "git remote rename origin skybuck_repository"
- removes comments behind refspecs in .git/config
-Thread-Index: AQHcAwxW/d496VSvyE+ZTLwfGU5QZw==
-Date: Fri, 1 Aug 2025 17:58:45 +0000
-Message-ID:
- <DB7PR02MB4265AB8791FADBBC5968C74BB326A@DB7PR02MB4265.eurprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DB7PR02MB4265:EE_|DB4PR02MB8774:EE_
-x-ms-office365-filtering-correlation-id: fa140269-e7f6-4f74-9fb4-08ddd1250f65
-x-microsoft-antispam:
- BCL:0;ARA:14566002|8062599012|461199028|19110799012|8060799015|41001999006|31061999003|15030799006|15080799012|40105399003|440099028|4302099013|3412199025|26104999006|10035399007|102099032|1602099012;
-x-microsoft-antispam-message-info:
- =?utf-8?B?ckNyQyttcDNaK0l6ck9SUUxOZXNTVEpJKzF5eUdSWDFwTFZTWVhpOWR3ZWhF?=
- =?utf-8?B?SzNjaG5zeFFnRWcxeDdXZGdQMWQwcWROdE9lMzFjNm1XVllOSzV6M2VVSU9R?=
- =?utf-8?B?R0JJSHFpNEtnOU1nZ04yTUMyWHBzMUdMcm9tbzVEKzhRVmJrUitxNXFESUJS?=
- =?utf-8?B?YVdSSVNva2NVT3UxNUx4M3JkUDkrNHBWbXlLQkJONXY4NEl5eVo4WVN5Rzln?=
- =?utf-8?B?UmprWEYvSm4vb0MwNnhVY2ozM2lFeDZ0bmxxWFg5Q3dGbVZjZE1YRmxucDhL?=
- =?utf-8?B?cU1kR1B2U3RZYWZ1b1M2dm1aVnAwR2t1U0ZRcmtabmp3c0ZIdWJIUVU3Sktv?=
- =?utf-8?B?L0ZTRUxvUFFIbnRxbFBVM1RjRTZMTGFlcWtFY0RLRDdSc1lsVFVaZFVlT21t?=
- =?utf-8?B?RTg1ZkFQTnhWSVBRb2R1ek5wNlB2NUJTaVZXYld0cjBZSCtOdHVxL01ZeE5n?=
- =?utf-8?B?Mkg3b0JXb2VjRTlSdEZ5Sk5aMTg0UllkVWJTT0VnYkpnckpuN0JkTkVCUjV2?=
- =?utf-8?B?WitxSmtSeS9FQW4yM0VEalU5WXB4MHREbHc4amVDaSt5bVptTE93UTRDTzJ5?=
- =?utf-8?B?cDRHK21MYjJwMERScURxNEE1WEd4VHNTUUZJaERmajZXUmdWUk1xRldvbTIy?=
- =?utf-8?B?REcrUmtJcEtTK09mUGJ6eVFjNXJxYVFvVVY1Y2d6YVJwMUNNaTlTWkVWM3ZO?=
- =?utf-8?B?NmpYSkE1cjJ2eE91dzBITkdRYlRhV1lyMkVkL2JBSGlnNDArMDZDNlloQzRo?=
- =?utf-8?B?L3lrdEgxOEdTMUQ5eXhmaVpTOVFrd2NtVjVDZ1BiRXVjSFhCMDV6a1VGT0wr?=
- =?utf-8?B?L2FsY20ydFE4UG1DTXlocVNuTlc1MnBaUFdPR28zTlN0K0ZuUHMyaURTZGh1?=
- =?utf-8?B?RllBNnRERkVUa1NEdWNIbkVHOGd2SkxxdUgrN3Y2Z2cyR242blVidW11aW1q?=
- =?utf-8?B?TExxc1FLY0I3ZWg2eko0UXk1OGtsVStZWmkrbDZ3Y1hEcVJHc0x1aHI3Zklx?=
- =?utf-8?B?bmpmbERjRW1sRnJOYVJVcktnTnB0TGk0UzlxcUtNKzdHVmVLbXdnbU9pM2hU?=
- =?utf-8?B?WEpTUER1Z09DM0Nub3VMR0lLNGJEL2dVeEw1SjJOOStxVzJ4UHNRS0lEMm4w?=
- =?utf-8?B?L2UybHVqWVpac3FXeEE0Z2tFcU5oS3RZbmRDMkpMTGEwOTFDMEt4WllQZlZX?=
- =?utf-8?B?UnYzd1ZDL3JseTNpek9DWVMrQVZVM0w3NEt6OG5GclcrRm5ZZ3lPYTBYbzVw?=
- =?utf-8?B?TkdpRUlxTXEwTk9kaFVQdlF4bU1oYTNTclJPNm5UbGJoM3NmNjNUNmZ0L3o3?=
- =?utf-8?B?akQ3VFh2Si94eWpiOWkvbFpuU3ZvaXFkNGg4UkNLS2tVTTZjblM2RDNhY1Jv?=
- =?utf-8?B?TjFjYkkvMEtJS3ljWW1vK25iSnROSmdUeXBsS0pGRU5BaDh5Q0dRdnFrV1po?=
- =?utf-8?B?eW93M0p5MFlET050R3dWb3IxYTJPcm8rU0VqeFpYT09MRkRsejREaUs4QlN3?=
- =?utf-8?B?UjY2cmd3ZVIvQUQySTlYbmdSTjd3V1M1ZExqbm0xMndrcnRHdlhTWEVMaVNY?=
- =?utf-8?B?S0RCcWlCRXFJc2JZQU9TbVdIa1kwb2s4dnQyNk9wTFFSVWVkaXNOT0ZEbGNI?=
- =?utf-8?B?WHFLOWRDc0Rkeld3WEMyLzl5SWZQc0d6VmRIT3VNNjNzQWZRRWRmZWJqcUpD?=
- =?utf-8?B?Q2IzQWZOd2kwM3YxWE5tWlNYdnk0c0ZYVU5RTWpjRkY0cmpjUnp2R0xmQU9X?=
- =?utf-8?Q?sGmY77rBzgjfaLxvH/CW6v9i7xhRiTFPI+znNbV?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?dUVsY1lHZ0l6RURvNUZGZ1lpRWgrdGNGaEY4ZmxLdFhQRDBjMVM1Q0Q1cmUw?=
- =?utf-8?B?eDkzc0lXU1BTWEtqMFl1aUFOSVIzem1sT3BMRnJjQ3Q5K3hkMHRnSEdhamNh?=
- =?utf-8?B?d0J1MUxGVjkyUXRjcnBSeTZBQmVWdXRESzVFNlJlVVpQalltaXkzTmUxdnpH?=
- =?utf-8?B?cCtTOWR5cDJKZ0FKaVZmYmFaNTcwVVl2R1doL1E2Q2F5WTZKL0hqZUhxMElG?=
- =?utf-8?B?bEkwWXU3eU95Z1hJVFFPM29PRmRRQitHVHhnQllGRXAxUlRpSUtwc0dCaWdE?=
- =?utf-8?B?R2s2TmJJK2tIZVZIYThSK1JCelFkQzVRZThGYkV0ZzFLRjlCZXVVaFJ1RWV4?=
- =?utf-8?B?T2FGYnZtNllJSHdvY1ZoODNkMU81WmJtK3o3Y1pjYnRPNmtlOEV4elpDMVRj?=
- =?utf-8?B?ZVN2RlR0Q05CZlhsUnFzU1FOeEhjS0tjakdzaHo4Y0RkMjR0RlJUcEp5SjFO?=
- =?utf-8?B?MFNJaUh0eTBUdGpoOTRjblRreXpGblkvbTllNzlDVlpQYjJYY2JielF5Y2FY?=
- =?utf-8?B?S3BoS1doOGkvVlp4dFJSUjU2SDREZUlkOHQ3aStGSzJ0R1hiNUpTbjZDZG8y?=
- =?utf-8?B?MFQzZ2Y2dzBjT0cwd1Q0SGRKOGk0VXZ4THdQemhibEpDeDdHZHlMMml6cjNh?=
- =?utf-8?B?ZG9NbHJsWU1sQytFOVJvWExkQVViTlhvN3ErTkp5MTdGYzhyNmVCL2JuNVVP?=
- =?utf-8?B?VUt6bWc3WENFbGEzUFp6c29Rek40Z2dlM3hZaVhQaVNzRUFOcFhFNXZIQzMy?=
- =?utf-8?B?MkxVdC9hUGJjYk0wUjFIc1J1VmVqSWxKaEhYdG9iYytZZ1g0cmRvNHNQUzVP?=
- =?utf-8?B?UXkrcnRDVXFiZ0k4VWUvcjVBUUUzaGJNMUQzc1ZQcnE2dXl6TW1HS0dmUHlx?=
- =?utf-8?B?aHRmYlA5dWlGWFlaT1BxR2Fack80ZFlmSSttMGN3MXBTTXY0L2tZbVFBYnRw?=
- =?utf-8?B?TDFxQ1lvWnRBc2hBajBiSlczSWtUTUp4emNXS1p6SU1NSGxLd3pFREdnSjIy?=
- =?utf-8?B?THRyUFRUbjBvMFV3SWEvMmRNMy9ReE45b2k5Q2UxOFRMUkNvdWloREhCZ2pj?=
- =?utf-8?B?bW1RWXE4L1ZQdnhFc3c1NENxRHRITndCN3QvK1Z3b2ovaENoMTJINlF4blBj?=
- =?utf-8?B?S2VrOG8ycW1sNVphVndnL0UzUktPZ1pWMmlHWTJUcFA2VTB5VnJ4WlgzRm5n?=
- =?utf-8?B?N0hoTXordnJLQ1hob1oveFRpL3JONXRFSVlFYkZiK21GNXE2SDU4SG51alA3?=
- =?utf-8?B?c2NISmwyRjYrd1QzSVZRVHFSajZocW5ETmYwNTFGRitVWWFvajd2ZEg1VzFV?=
- =?utf-8?B?N0tpUTdGb3ZldzdBbXVTT1NkNzdOM3JQc1IrcUtIL0pENHF4eEFqeEF0S3V0?=
- =?utf-8?B?aXNvOW9jVmdycVoyRG1VZ2tFcTJKVlJyT0JIQXNDV2tOejIrUVdFaEE4S21K?=
- =?utf-8?B?T01adFlETWZyc1dvNUFZdUNaeGIyaC9lNlpsUzAxbGJTb1M0OThOemQzelRF?=
- =?utf-8?B?dFRvSEIzRUY1VU9BQ0loZldWWjBWSUt6ZFVzSStuRVN5cGxPbW56SW9sSEhi?=
- =?utf-8?B?d2g0akpHWDBCSEJSSWkxbjhVUmJlbTFTWkJhdTdJcWJ5aWpKc2JwZDg4eTF2?=
- =?utf-8?B?UHVEYmFQTzVEK2FhbEZ3bzNjQ2RseXBqc252K1cwd0hXVFY4UC85VkpMdHo5?=
- =?utf-8?B?TExpdHBlQ0ExSnBEaXpQUTBLWENUb3kvYmpqRDJaZEVacjZ4SENYOExBMTlK?=
- =?utf-8?Q?qvW4Z+7+eKmEzCHg8Q=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T3rvC6a0"
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-3322e4ac195so22329761fa.0
+        for <git@vger.kernel.org>; Fri, 01 Aug 2025 12:00:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754074820; x=1754679620; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=MfNPjj7XvbuqAr6nRuVfXPSRzpJs25SibPL44J8ECl8=;
+        b=T3rvC6a0w9ziARBRabjcr/JYr4BG4qZtPPYbX7tXdtG+rRjDKb6Jco2QZhK+sXtnO4
+         rhi7BI64qytT6UQqCiDGYOblzghz88Y1TEVcUILtbHlm6DH4WzJ9kyJckb17tTbbOnaY
+         ZXrCIw6FVsoVUXPKLNacDhYNB33psID/rIx/GSnNfLzNQGBCFF3MDj9kTKJg+a27KZzv
+         TiHw9ZZORDO5VG638xbd2xNyshXIxTzCDuXqVDBhpkKYKC2Mn8+fWiPhbjwxcYH77FrT
+         AJDY910+LLkLq/giZjCft9gSL84HH7ETrby0GGEZPYSZIWVlEnHeBek6khoCHPoJwItD
+         qN0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754074820; x=1754679620;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MfNPjj7XvbuqAr6nRuVfXPSRzpJs25SibPL44J8ECl8=;
+        b=G+VHsL4vRSV6qqxGhXH/3ibP5YK2iZlYBQYHLA53f2MzyCuXQW3rcU/8RiiuaOhNM2
+         Njxk/oDHPmqbvqGtHzSwAv4MJjHOT4pWWD31bcZjGdd8OcS3x4H4wyEAHsvqyLQFjrXm
+         mrbaxPFGtKxdDiyNzC9aUaixPWvSWz7iybiJ0o8e3oCdEGqEHAEV5zyo2hmN7s32CCd7
+         hj1NDuYuBtw17wwq9n9vgr+pNVI0gP8mMuESJhICqLjtco42PZ/RDPzL52MZT3ZUmLRg
+         5G8rD7R5+BsEKD+PuufEuoJ27Tm7uIWVBbKmkJZ4ry0t8OTQT/TcYFVGSz0jsCOeFTXE
+         yk/g==
+X-Gm-Message-State: AOJu0YwHFX5mrof52L6W9HblqjvrfjLJ4+33FikyohhCkanudl5k3oGH
+	HGYgO5OVHX65NKtiUFv+P8UHWZWkbWyXAKo8yY5mhjE69LP5aQBvSTBAg8as7HiOBvvlTd8QUX3
+	e6s7JRggq/rhvrkYRQORtymKdeRhlgkghJVr4NjCHww==
+X-Gm-Gg: ASbGnctzHymGytLSy3iYBpdUOaN60O/UP932bJIYSLcbha08aEkiQ6uqFLnZoOBlhwI
+	YOCufZ6uidc31xQ2xT31JVAAy7icd2omSBTPIqiqd5dYEKPnvHcdmSkQyXL8G2AmgNZ1fShpjnp
+	4XjyZJXA+i52gJm4tUtw98Hc4uHBIqFsiVioMRh+/dnO48teL6JEvrmLJ+WFb1RLZhfIVxzY9d8
+	LOc5U5HZE4ARztYcwhX2qv4MJYUTH6bXwLwPIjd6qMhc6UMTd4=
+X-Google-Smtp-Source: AGHT+IH75F7Eh6cslzFT2tM+VAouzHDad+79IcrDOmbMcGoLsQaGGlDmgP007Um1d4l6UVDDLmRwSR4ygrA/xKC5+iY=
+X-Received: by 2002:a2e:870d:0:b0:32a:7d76:2642 with SMTP id
+ 38308e7fff4ca-332566cb0b9mr1110841fa.2.1754074820089; Fri, 01 Aug 2025
+ 12:00:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-8534-20-msonline-outlook-5faa0.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DB7PR02MB4265.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: fa140269-e7f6-4f74-9fb4-08ddd1250f65
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Aug 2025 17:58:45.8394
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB4PR02MB8774
+References: <CAOazyz08vf65ezNMuUyOCYYHBGmDSeCtzXn=WdZAWGO9ZjCkAQ@mail.gmail.com>
+In-Reply-To: <CAOazyz08vf65ezNMuUyOCYYHBGmDSeCtzXn=WdZAWGO9ZjCkAQ@mail.gmail.com>
+From: Alon Bar-Lev <alon.barlev@gmail.com>
+Date: Fri, 1 Aug 2025 22:00:02 +0300
+X-Gm-Features: Ac12FXwjk0ewupSlYYeddy5dlYkTCGpBEJFwXHaUHGdPGnHKnc2CNVTnDH_QL4I
+Message-ID: <CAOazyz32EAhqXmSTG7BVW2gLkgJort5ghR4+e2PjSn_b5pcBYg@mail.gmail.com>
+Subject: Re: [feature] git clean ignored files in nested repositories support
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-KEJlZm9yZSByZW5hbWUgY29tbWFuZCk6IFRoZSAuZ2l0L2NvbmZpZyBmaWxlOgoKPHNuaXA+Clty
-ZW1vdGUgIm9yaWdpbiJdCuKAguKAguKAguKAguKAguKAgnVybCA9IGh0dHBzOi8vZ2l0aHViLmNv
-bS9Ta3lidWNrRmx5aW5nL1JhbURpc2tTdXBwb3J0VXRpbGl0eS5naXQK4oCC4oCC4oCC4oCC4oCC
-4oCCZmV0Y2ggPSArcmVmcy9oZWFkcy8qOnJlZnMvcmVtb3Rlcy9vcmlnaW4vKiDigILigILigILi
-gILigILigILigILigILigILigILigILigILigILigILigILigILigILigILigILigILigILigII7
-IEFsbCByZW1vdGUgYnJhbmNoZXMK4oCC4oCC4oCC4oCC4oCC4oCCZmV0Y2ggPSArcmVmcy90YWdz
-Lyo6cmVmcy90YWdzLyog4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC
-4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCCOyBBbGwgcmVtb3RlIHRhZ3MK
-4oCC4oCC4oCC4oCC4oCC4oCCZmV0Y2ggPSArcmVmcy9ub3Rlcy8qOnJlZnMvcmVtb3Rlcy9vcmln
-aW4vbm90ZXMvKiDigILigILigILigILigILigILigILigILigILigILigILigILigILigILigILi
-gII7IEFsbCByZW1vdGUgbm90ZXMgKG1hcCB0byByZW1vdGUtdHJhY2tpbmcgbm90ZXMpCuKAguKA
-guKAguKAguKAguKAgmZldGNoID0gK3JlZnMvcHVsbC8qL2hlYWQ6cmVmcy9yZW1vdGVzL29yaWdp
-bi9wdWxsLyovaGVhZCDigILigILigILigILigILigILigILigII7IEdpdEh1Yi9HaXRMYWIgUFIg
-aGVhZHMK4oCC4oCC4oCC4oCC4oCC4oCCOyBmZXRjaCA9ICtyZWZzL2NoYW5nZXMvKjpyZWZzL3Jl
-bW90ZXMvb3JpZ2luL2NoYW5nZXMvKiDigILigILigILigILigILigILigILigILigILigII7IEdl
-cnJpdCBjaGFuZ2VzIChjb21tZW50ZWQgb3V0IGFzIHBlciB5b3VyIHJlcXVlc3QpCuKAguKAguKA
-guKAguKAguKAgjsgZmV0Y2ggPSArcmVmcy9tZXRhL2NvbmZpZzpyZWZzL3JlbW90ZXMvb3JpZ2lu
-L21ldGEvY29uZmlnIOKAguKAguKAguKAguKAguKAguKAguKAguKAguKAguKAguKAgjsgVmVyc2lv
-bmVkIHJlbW90ZSBjb25maWcgKGlmIGFwcGxpY2FibGUp4oCCCjxzbmlwPgoKKFRoZW4gcmVuYW1l
-IGNvbW1hbmQpOgoKZ2l0IHJlbW90ZSByZW5hbWUgb3JpZ2luIHNreWJ1Y2tfcmVwb3NpdG9yeQoK
-KEFmdGVyIHJlbmFtZSBjb21tYW5kKToKClRoZSAuZ2l0L2NvbmZpZyBmaWxlOgoKPHNuaXA+Clty
-ZW1vdGUgInNreWJ1Y2tfcmVwb3NpdG9yeSJdCuKAguKAguKAguKAguKAguKAgnVybCA9IGh0dHBz
-Oi8vZ2l0aHViLmNvbS9Ta3lidWNrRmx5aW5nL1JhbURpc2tTdXBwb3J0VXRpbGl0eS5naXQK4oCC
-4oCC4oCC4oCC4oCC4oCCZmV0Y2ggPSArcmVmcy9oZWFkcy8qOnJlZnMvcmVtb3Rlcy9za3lidWNr
-X3JlcG9zaXRvcnkvKgrigILigILigILigILigILigIJmZXRjaCA9ICtyZWZzL3RhZ3MvKjpyZWZz
-L3RhZ3MvKgrigILigILigILigILigILigIJmZXRjaCA9ICtyZWZzL25vdGVzLyo6cmVmcy9yZW1v
-dGVzL3NreWJ1Y2tfcmVwb3NpdG9yeS9ub3Rlcy8qCuKAguKAguKAguKAguKAguKAgmZldGNoID0g
-K3JlZnMvcHVsbC8qL2hlYWQ6cmVmcy9yZW1vdGVzL3NreWJ1Y2tfcmVwb3NpdG9yeS9wdWxsLyov
-aGVhZArigILigILigILigILigILigII7IGZldGNoID0gK3JlZnMvY2hhbmdlcy8qOnJlZnMvcmVt
-b3Rlcy9vcmlnaW4vY2hhbmdlcy8qIOKAguKAguKAguKAguKAguKAguKAguKAguKAguKAgjsgR2Vy
-cml0IGNoYW5nZXMgKGNvbW1lbnRlZCBvdXQgYXMgcGVyIHlvdXIgcmVxdWVzdCkK4oCC4oCC4oCC
-4oCC4oCC4oCCOyBmZXRjaCA9ICtyZWZzL21ldGEvY29uZmlnOnJlZnMvcmVtb3Rlcy9vcmlnaW4v
-bWV0YS9jb25maWcg4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCCOyBWZXJzaW9u
-ZWQgcmVtb3RlIGNvbmZpZyAoaWYgYXBwbGljYWJsZSnigIIKPHNuaXA+CgpOb3RpY2UgaG93IHRo
-ZSBnaXQgcmVuYW1lIGNvbW1hbmQgcmVtb3ZlZCB0aGUgY29tbWVudHMsIHRoaXMgaXMgc29tZXdo
-YXQgdW5mb3J0dW5hdGVseS4KRm9ydHVuYXRlbHkgYSBjb3B5IG9mIHRoZSBvcmlnaW5hbCBpcyBz
-dGlsbCBhdmFpbGFibGUuCgpGdXJ0aGVyIHRpbnkgbGl0dGxlIGlzc3VlLCB0aGUgY29tbWFuZCBp
-biBjb21tZW50cyBub3QgY2hhbmdlZCwgYnV0IEkgY2FuIGRvIHRoYXQgbWFudWFsbHksIGxlYXZl
-IGFzIGlzLCBzaW5jZSBpdCBtaWdodCBjb250YWluIGluZm8gaW4gY2FzZSBzb21lYm9keSB3YW50
-cyB0byByZXZlcnQgdGhpbmdzIDspCgpCeWUgZm9yIG5vdywKwqAgU2t5YnVjayBGbHlpbmcgIQ==
+Hello,
+
+I tried to trace the code and it seems like there is a bug or
+different behavior than the documented behavior, the recursive
+implementation in `dir.h` is quite complex, this is not a trivial fix.
+
+"""
+man git-clean
+       -f, --force
+           If the Git configuration variable clean.requireForce is not
+set to false, git clean will refuse to delete files or directories
+unless given -f or -i. Git will refuse to
+           modify untracked nested git repositories (directories with
+a .git subdirectory) unless a second -f is given.
+"""
+
+I expect untracked files to be removed from the nested git directory
+when `git clean -dxff` is executed, previously I thought that the
+ignored files were the issue.
+
+Reproduction:
+
+```
+mkdir test
+cd test
+git init .
+git commit -a -m "root" --allow-empty
+git submodule add https://github.com/git/htmldocs module1
+git commit -a -m "init"
+touch module1/junk.txt
+git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+modified:   module1 (untracked content)
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Now, clean recursive and allow nested (double `-f`):
+
+```
+git clean -dxff
+git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+modified:   module1 (untracked content)
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Expected behavior: the `module1/junk.txt` removed.
+Actual behavior: the `module1/junk.txt` remains.
+
+For some reason I remember that a few years ago this worked as
+expected, at least in removing untracked files recursively and in
+nested repositories.
+
+Thanks,
+Alon
+
+
+On Sat, 26 Jul 2025 at 15:00, Alon Bar-Lev <alon.barlev@gmail.com> wrote:
+>
+> Hi,
+>
+> I am sure this was discussed in the past, I could not find any
+> explicit discussion.
+>
+> The `git clean` is a handy command, it can clean directories,
+> including ignore files and also handle nested git repositories if a
+> second -f is given.
+>
+>     git clean -dxff
+>
+> However, as far as I understand, it is not possible to clean ignored
+> files in nested repositories, the `x` is applied only to the local
+> repository.
+>
+> As workaround following command may be used:
+>
+>     git clean -dxff && git submodule foreach git clean -dxff
+>
+> However, I expect the double `f` to take into account the `x` and also
+> clean ignored files from the nested repository.
+>
+> I am unsure if this is a bug or intentional.
+>
+> If this is intentional, maybe a patch to have a second -x would be
+> acceptable? so that we could have something like:
+>
+>    git clean -dxxff
+>
+> Any other suggestions? It would be nice to be able to clean the entire
+> tree with a simple git clean command consistently in all scenarios.
+>
+> Regards,
+> Alon
