@@ -1,73 +1,89 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD872199920
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 04:04:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3325A18DB1C
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 04:59:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754021101; cv=none; b=tbLavWAXW8w6GghhUELAvhblSlVthKm7r7KEX6AHRNpc7+gro/LUnPk+2B8Wa11l3HGkyxI5oKYRyfAdhQVMrZd32KFhwd/VnIWb3sPcUI3N3rw4n7/jZx8Zulm2PyqOA4U/IfO5ZvpMwKMu0rNLlixGdY/FwppS1e/j98AMDKI=
+	t=1754024377; cv=none; b=a4+JBZBzkl2/lJWe/NwbG4OPzm6A7rZYc6bTYDgwBR4vyv5gr5827i1h0q3m4X5DlofUY6EyruGwCKqO69S5zHlAIEF8u2WeJxQ2jYps0DEGYt82Wy6ORWgl3ivcHbOq0lSsXuKvpZNEMo7EAlBNeUQulQIgGdVfY//0cM6BJck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754021101; c=relaxed/simple;
-	bh=EiCdZm0nPEqAGl0wJakUAJz4bpcNl7i15RYPEfFOWww=;
+	s=arc-20240116; t=1754024377; c=relaxed/simple;
+	bh=1nS9tCGEzmiw6Ney0xCTQLTRy/Q7gDrau5vGCj20Svo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RbWlG1DuZUf/H8MwbKTEgdPcjbeGBk3aBEPThxwNMCI7nax4exLRmXDxiyOgCCiB1/FWIiVQXcPCAl2u3X9stN0bOFuqL9B6lnppJR01LD+kZwFRSeV9uIOjMjtbExVkmJ63QfBH3VU+DmljU56sUHl4rXlSfNTq0EeUrXS+lg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NjusbWxf; arc=none smtp.client-ip=209.85.215.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=kXVC3p+NusC0M1ZsR88wPwWRigBX1ZUohS0QWsNUldRv42QwRdqKFuJEmZjLWtZZyngXCi4pYwwayxes5TGsCK9xAWJZhymSTJdxdVM4vgqQi647YJrh5fgs7jtd/Orf8qO0AKX9KgDqlDyvlIlvY80eWkwz8ANl5HYG2bak5r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kmEmjZn6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jrAtWaUa; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NjusbWxf"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-b422b31b1c0so818864a12.0
-        for <git@vger.kernel.org>; Thu, 31 Jul 2025 21:04:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754021099; x=1754625899; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dFujVh/N6UoZojkajEE3OWgYP4jmAIHFt93QYLRnO/g=;
-        b=NjusbWxfpPFyFFFcsvLW7xYspjxmhg6Uyl9ax5R6bZ2qkhzmu4rpcwHeqnodn6nfca
-         pBL2MLHsKJsd1UClzb6QHCPXmv1RzWyhFl8QFlMysg2gfVk7PU99Au158r96rHct7Ntu
-         hakUitqwPngMmfifSWs3uwXxLjSedeSA/91WMI7XsTAFAWqh1QI2TAT9pMPe/wFcQDFq
-         8aALndTHiJugaEbpjJvz1xsHLYKogHOiyS0kzJDhLPHHktRGXBtjIuBRm1LL3IlttPDR
-         LymFpGbZZ7kI7ogMmdGTHsfypbFLRqba8F8UtejeAin9/bFT3GaDf1e2TEE/OxlO6mWM
-         Qf1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754021099; x=1754625899;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dFujVh/N6UoZojkajEE3OWgYP4jmAIHFt93QYLRnO/g=;
-        b=ZK1s41Ps4QGZftAYsks5QqaJ10EOfk63yzMXgV7wgZk6M7Fu4eJCiCtny5YSx7IjrM
-         hSTmPSr4zN8mBtftnSFY4DPPe3NU6tTaz1JNSHgfmKeEdrMMePxxuv4mYhXXxKZISWcz
-         dkdPuamiwTMMyPkTxHIP0DSmiU4jkC9BnX4XHwBxS2A4HPHodMFhzFt2DXcpFJMb3qwp
-         oaPeDGp7PrpJgxrdNmk2TFGsnn+9YNptfzLYW7KEK4VZ17m0CTeqL/10wEIDelKxay5n
-         vBtFPXByp53mM+2WG0FctChcyq2v2Qu+AWRD9TLJOFjyXf4mTaBDrF73FJmeTI1EjwpQ
-         q3aA==
-X-Gm-Message-State: AOJu0Yzqeg7OBlYew/awJa13wpIPY1pUfjsslqE1gSm8bQ4EdGaz7053
-	fNx8fVUo/rW5pkwaPfZlPhG/GbVWbhQFtKHPaGkfeL/+5/BgiMD7qM2yGz+oXCjs
-X-Gm-Gg: ASbGncsCaueEITB++TdtWHENbcY/pT07Cazer5YAYqWzvLOwhWY8I6ZMbdFczz5EjDC
-	JZ7OXSHfg21TGPhRmkgtsamIX3d5V4GfwX30g3DQYoMWPsWSiBKYPTJkwOXhM6g21snvweaxEb+
-	T4sFoG+32mmoDiVJqFOFUdbWoU60VbV45otUKk72cNdL/Gc6OIrKbCEOA+A6kHO6s4iLVz9a+is
-	akR86O87VMNMCAprXqP0B8VLOwuhPExE8h+6iNtqFjGgDtvP/YwoOSyayNLXMxg/5MXoSLR6FQ2
-	LzBZXeIBC+cEmSOaEkW6FO9ob5JKytKo5okVQEjxtUjwswgMREtgwEArnDKrmo/GudDtMaBx2WD
-	piJ8xmq4ZcCLmszJiow==
-X-Google-Smtp-Source: AGHT+IFXMTEAHFzM0op/7MAcDN6GqF2f/uglrUgWSOofYlR9Jk2g7f38nAA2BjcqcWaOYcN3wyghsw==
-X-Received: by 2002:a17:903:1ca:b0:240:2145:e526 with SMTP id d9443c01a7336-24096a64289mr144519145ad.6.1754021098586;
-        Thu, 31 Jul 2025 21:04:58 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-241e8ac8ed4sm30782815ad.189.2025.07.31.21.04.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Jul 2025 21:04:57 -0700 (PDT)
-Date: Fri, 1 Aug 2025 12:04:54 +0800
-From: shejialuo <shejialuo@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kmEmjZn6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jrAtWaUa"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DD49C7A0868;
+	Fri,  1 Aug 2025 00:59:32 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 01 Aug 2025 00:59:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1754024372; x=1754110772; bh=jX91arpTE1
+	JurcnVmMhw1PNth14ZjYC1Zm1vu41mwkQ=; b=kmEmjZn6y8N93dcIUP3rt2v5zX
+	zc82UakLDsDJiGN04nNsFBWlL5D9X3CCQo8HvNmOdqAGRt98rr82Uif9U/Vmq6oW
+	L+awW5IO95bMihwkAY0op82GLOri47G29EquU6mrtDt7bJFMmpOphi6hkGGc3g+P
+	QzzSq2pmJOHv/1EBVvYR/MejLxl5GcAopGQlnJSjrsiXyXDRlORJuUN6Be54nNt4
+	+ULLQOHaR1KXIlJcT9jrrFRht5JO3uwRRckFIbwrbsHGLFTo664WOmAV98K59aB/
+	z3qaI9LZNoZ7ksEAZvZRmputc06ekuYWgKPG+yd12p+OvnWDkfUtsXxs+OoA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754024372; x=1754110772; bh=jX91arpTE1JurcnVmMhw1PNth14ZjYC1Zm1
+	vu41mwkQ=; b=jrAtWaUa6/WnF33Hpb1l1xgmC/KBR3/7av2SIbe1TE+Q397CJ90
+	DseSXBzEaIOIUGLviT75b1mnS99vUof83o6MvAnMUUMizjFY/5vJysc5D/8rRuxY
+	Uvp+tljPMtO9vfxdyU5vgRZSpk96JAs9Q00VGa7G9bYjr8HaYy7vMRbmTC14dHV8
+	QRkJKAm3Nk6tC7o3KeSuNc7oQbuDtWWYs53KDJI9hqzZTiLZBbia1+RgaB2/+OAs
+	8ipajYeCUAntE8fNxwoc+csgjqlBUDFP1EaPvcCYqkiIIXTc6J96be9lUBxECao2
+	n4U9NieAkVPAP+2LSN+348/6aR278DaFTrA==
+X-ME-Sender: <xms:tEmMaOdIDUF7zeVQAyvpGsbrjxfZUk-b_claJ-LD5imLlT7aWKTS3A>
+    <xme:tEmMaArv3nHiNLmWv2SPDmxMcaIoZwxtOwDd3UkuI2yvUNUkxY7Ck8eA9lyLyQEJI
+    wSxoT__Z-KIdeoLPg>
+X-ME-Received: <xmr:tEmMaP8y1LODxK0CKcfoX5p6lhpfpeJVybLiNq8Wsefm4LynM_JMlbYh88ZijtHih7h4DsTplnolpI9SZYHKkZOALlRrZFh6oQitckjaEWD2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvjeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhhtggrrhhltdekudegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosg
+    hlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeek
+    sehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:tEmMaMeftMLwJFM2X9YIpdxr912KF0UlKAF-rsUVAXsSQgQst8N8lQ>
+    <xmx:tEmMaJLwGJsFYem-gxWQLfBHBIIoC7_m7orysztf0HgJUWTf5G2eCw>
+    <xmx:tEmMaMgQYuJjXLvTx_uf8INXafWEhYAXSPX3CbdBuu45GQVnlKGIYg>
+    <xmx:tEmMaHTZAmZM9dEqwm-LFVT_9jCFO9yJ2w9jdVxD3APdj68-QIeXfg>
+    <xmx:tEmMaJ6ux5OpFiIm_lajB6B6QsQOnqqYX2To0qedTuYXnxpWmOllEydL>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 1 Aug 2025 00:59:31 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 6f903b4b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 1 Aug 2025 04:59:30 +0000 (UTC)
+Date: Fri, 1 Aug 2025 06:59:26 +0200
+From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 4/7] string-list: optionally trim string pieces split
- by string_list_split*()
-Message-ID: <aIw85gIurfEhvuPC@mbp>
-References: <20250731063949.1601669-1-gitster@pobox.com>
- <20250731224607.3942417-1-gitster@pobox.com>
- <20250731224607.3942417-5-gitster@pobox.com>
- <aIwyIJqEIdSdKINz@mbp>
- <xmqqcy9fog8x.fsf@gitster.g>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Han Jiang <jhcarl0814@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 0/6] builtin/remote: rework how remote refs get renamed
+Message-ID: <aIxJrvqLvEl8qM7V@pks.im>
+References: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
+ <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
+ <xmqqcy9gqiht.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,54 +92,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqcy9fog8x.fsf@gitster.g>
+In-Reply-To: <xmqqcy9gqiht.fsf@gitster.g>
 
-On Thu, Jul 31, 2025 at 08:47:10PM -0700, Junio C Hamano wrote:
-> shejialuo <shejialuo@gmail.com> writes:
+On Thu, Jul 31, 2025 at 12:15:42PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > On Thu, Jul 31, 2025 at 03:46:03PM -0700, Junio C Hamano wrote:
-> >>  static int split_string(struct string_list *list, const char *string, const char *delim,
-> >> -			int maxsplit, int in_place)
-> >> +			int maxsplit, int in_place, unsigned flags)
-> >>  {
-> >>  	int count = 0;
-> >>  	const char *p = string;
-> >> @@ -320,12 +327,18 @@ static int split_string(struct string_list *list, const char *string, const char
-> >>  	for (;;) {
-> >>  		char *end;
-> >>  
-> >> +		if (flags & STRING_LIST_SPLIT_TRIM) {
-> >> +			/* ltrim */
-> >> +			while (*p && isspace(*p))
-> >> +				p++;
-> >> +		}
-> >> +
-> >>  		if (0 <= maxsplit && maxsplit <= count)
-> >>  			end = NULL;
-> >>  		else
-> >>  			end = strpbrk(p, delim);
-> >>  
-> >
-> > In `append_one`, we would tell whether `end` is NULL. I somehow feel
-> > strange why we need to do that in `append_one`. Should we just set `end`
-> > to be `p + strlen(p)` when `end` is NULL. And then we could do rtrim
-> > inside this function instead of `append_one` to avoid passing "flags" to
-> > `append_one`.
+> > The series is built on top of e4ef0485fd7 (The fourteenth batch,
+> > 2025-07-24) with ps/reflog-migrate-fixes at de7cc0782a7 (refs: fix
+> > invalid old object IDs when migrating reflogs, 2025-07-25) merged into
+> > it.
 > 
-> Sorry, but I do not see why such an alternative design is a better
-> idea.  The helper function's purpose is to stuff the substring at
-> [p..end), possibly after rtrimming, to the list.  You could compute
-> rtrim in the caller, but that would make the logic here more complex
-> (at least, you'd need to introduce yet another variable similar to
-> "end" that points at the real tail of the string, and you cannot
-> reuse "end" for it, because of the exit condition you see below).
-> 
+> I'll use the newer iteration of the other topic that ends at
+> f0fde561 (refs: fix invalid old object IDs when migrating reflogs,
+> 2025-07-29) instead; that was what was used in the version in 'seen'.
 
-I agree with you that we would introduce another variable. However, the
-thing I quite dislike is that we do ltrim inside the current function
-and we do rtrim inside `append_one`.
+Okay, makes sense. I'll adapt my local base to match then.
 
-My thinking is that we should handle the [p, end) string in the same
-place. We could either decide to drop the string or change the string in
-the same place. However, at now, the logic happens at two different
-places, which is my concern.
+> > I'd normally have withheld sending until that series was merged to
+> > "next", but given that I promised to send something on Friday already I
+> > decided to just get it out. In any case, if that causes problems I'm
+> > happy to wait a bit before this series here gets merged into "seen".
+> 
+> Thanks, will try to include this in the batch of this evening.
+
+Thanks!
+
+Patrick
