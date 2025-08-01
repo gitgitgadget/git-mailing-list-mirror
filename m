@@ -1,43 +1,85 @@
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3485B676
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 16:23:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221C426E70C
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 16:26:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754065405; cv=none; b=azF3gmesIo6owVGrqki+kmdJ21zsus6fY2wXPs7bUvKTW3wm0r/ne1RKuJAuqVOHl0aWIYdnUnp7Vfj2TJSvLHa1ID5Us7JjjeWWq4u3jIFB3NNaPJsu6O5zZhs24wX7ZHVr0RzK6SvBlOn747Qel/qxrs8M47Heq9a5uGg4fN4=
+	t=1754065601; cv=none; b=EqharVUAYfbFPoIaLkvym7d4dK1tE0WK5xhlhFIlBKr03oV3766jN2DE1YJ137hB4pHkx2ndsBFB58Q3cUocUW/I2VVmf4boQrhl1V3ilzPLjPzXYlrGz+LlENfb4T8QISRg+QjqwuraWXN2nPdCBUQzI+0pytxOoY3sHsUfWzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754065405; c=relaxed/simple;
-	bh=apfV1e9gGM3s9oro/fcm60fhn9XyQjyMqob5aVMqk10=;
+	s=arc-20240116; t=1754065601; c=relaxed/simple;
+	bh=z1HXbK3WfauDQPRsYHQ/r7+UITsbw6/gK/fnKpDJImY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OlVvCFr4naIPZRgIS+UWgdImKUofgw0qBSF0BeuA/BKAb5suL3xRK36X+SXYjfpaj3H3Fk5bofhYhezFn29T+/tACok9+yOEhCyxBhFc6HAJzFnO3w45QTylbX7vrvb1uO+L1NoUl4xUiD+TGNB7JvH5WN0+Impl8GS+0ZQD1P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=FKN3KU9Y; arc=none smtp.client-ip=91.218.175.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=R4iG/bBFnHTT/a4IG4C6kRkXdP3q5dIm+vNxF81msG+GpEoX7MO3PK1+oVzv+WCuM+rhBY7r4THhcsGsxfmoKhaEm0mNmDF25IyUoA3Rlxz0u/J+yhOMcBYWQTxdxWKt5NtcaVqyMHKbbmYXdiuUVFk8jZgyKFSktIiCSmb18FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kFr9+C/r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NDElKhTf; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="FKN3KU9Y"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1754065400;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=nlzYUl2XGRK2xWB8rOXD5+iihISiZK31G5Y3AXBlAAo=;
-	b=FKN3KU9Y1z/ArYgRmijw1JwBis0p/uDk7RjtcCYuYYxdmKQbS7WZu2CKQ6/RcBs7pT2P8b
-	Wr9wQQb5Ej34IaAprHxhuiX/EaZHQ9gR03pXQyaByPkwFIktjT6kWmPGPprgiW12OHiqS4
-	RCdC/bZEWKdtA+U4ktASFAuxj+zWOCA=
-From: Toon Claes <toon@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kFr9+C/r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NDElKhTf"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 126927A0112;
+	Fri,  1 Aug 2025 12:26:39 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Fri, 01 Aug 2025 12:26:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754065598; x=1754151998; bh=dO4pYL29r1
+	wmBdv75ZZezzkl3ae3lIFFSmyhDFAz3fQ=; b=kFr9+C/ro1AIDZDWcAdbBGlfQl
+	Q4Sw+9qd9vln2jzbU8WfdcW3C/+hceYCpIfm33H0ncdF7qaYeZWtMO7HWBnw7NGq
+	h4vWgxT7U0UogfLiXo/RRiGhsg8Q+kAFiVk6l43+w/FpLaOoLANcIj1qwHmCCTcr
+	G3YlAtcdEQrp5jm39hmhpz9Q+ht8g4yDht5n9+CcNXFYjrryRmRnxd9neeD0gUpL
+	Mog0c/iYKYFUOVvK+YwziPl3tM/LmxUAmPiTsMfc1Pt/jLFq27wVHMplAm8H6adn
+	zA1LRXl1HTQPA06mKQHew1ERtDzQUWMFaKBwSMajwtU7k8fmY34Yj1Biwe3g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754065598; x=1754151998; bh=dO4pYL29r1wmBdv75ZZezzkl3ae3lIFFSmy
+	hDFAz3fQ=; b=NDElKhTfgbQf6KZwY1L0asHDux1jwRUZWeo8t0YhqgiIh1CeRg6
+	BEG7mXc4gw1v9bvoBSMLmDMzbjOw2zDC3hmI8IcAh0goVZB5EmzXU4DKGIZ9dpm0
+	W7a98gTovVgk5PicYpzewaC0TT8WurgT6Dn45HVfHGGSlQ4I2y/D+IzCFCTb51LF
+	gis1yNMey3afm3XSYuekSS7eFpJtrofcyeckftSilkcJqVCO1w8kvAEQ/uZdv6BJ
+	RRd4ktu3KeJbCoUZGJ5yvLLKU9/dXBm0p9jaRVbwvUTblQ8fMu5QGMKtiDIs4oE3
+	2q6aaCfrCAda7LL6TQgpGaBCjkBO8VmK2dA==
+X-ME-Sender: <xms:vuqMaPhiWkkeinE9TkKPXCMdVjzE2pecV4LPpd5nQjDo9xbPhARwlQ>
+    <xme:vuqMaPT7hPFOe6dbe460X1G--XRqWn6ZmVevHgB_hHliEuOq9XXShalP_0qQ3S1ML
+    yo2WrsI8_mOZwKj7A>
+X-ME-Received: <xmr:vuqMaIgCtxWpOzSCHuyHszYu7ZqZeRAZ81dX6VbTVMrHlUpmERUfdweTjAUxdSLB_jrTbAzsQtX3u38kbvcZriEy9-x1NEAEW57UTEs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdegudejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:vuqMaH6_81paGolty36gS0KOYwGuVDV4oqfBM137H6xANkdzeWvZhQ>
+    <xmx:vuqMaNA9jY6VWHvdQcxBHoPe76brFyJ5IPyQud4-FND1MwRsPTCOew>
+    <xmx:vuqMaGY7P2ElxoBqBD9J2wrDLmr6VvxanXWD8jba0xH9lmPsVxNoEQ>
+    <xmx:vuqMaAavgNBoNfkHpA7RDG4RfpKEEfq8A6pYoz2BTGTalIOU8-BGhQ>
+    <xmx:vuqMaO3Qet_gNawTHVkbIf89uydBWNTLpNLdVUrjigA7CodMWq_bfayN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 1 Aug 2025 12:26:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>, Taylor Blau
- <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>, Christian Couder
- <christian.couder@gmail.com>
-Subject: Re: [PATCH v6 4/4] last-modified: use Bloom filters when available
-In-Reply-To: <aIsQfZyMq0ltbMtz@pks.im>
-References: <20250716133206.1787549-1-toon@iotcl.com>
- <20250730175510.987383-5-toon@iotcl.com> <aIsQfZyMq0ltbMtz@pks.im>
-Date: Fri, 01 Aug 2025 18:23:08 +0200
-Message-ID: <87ldo3ui37.fsf@iotcl.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 4/7] string-list: optionally trim string pieces split
+ by string_list_split*()
+In-Reply-To: <aIx_HIjWEDx9pNW2@pks.im> (Patrick Steinhardt's message of "Fri,
+	1 Aug 2025 10:47:24 +0200")
+References: <20250731063949.1601669-1-gitster@pobox.com>
+	<20250731224607.3942417-1-gitster@pobox.com>
+	<20250731224607.3942417-5-gitster@pobox.com> <aIx_HIjWEDx9pNW2@pks.im>
+Date: Fri, 01 Aug 2025 09:26:37 -0700
+Message-ID: <xmqq4iurnh36.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,94 +87,39 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Wed, Jul 30, 2025 at 07:55:10PM +0200, Toon Claes wrote:
->> Our 'git last-modified' performs a revision walk, and computes a diff at
->> each point in the walk to figure out whether a given revision changed
->> any of the paths it considers interesting.
->> 
->> When changed-path Bloom filters are available, we can avoid computing
->> many such diffs. Before computing a diff, we first check if any of the
->> remaining paths of interest were possibly changed at a given commit by
->> consulting its Bloom filter. If any of them are, we are resigned to
->> compute the diff.
->> 
->> If none of those queries returned "maybe", we know that the given commit
->> doesn't contain any changed paths which are interesting to us. So, we
->> can avoid computing it in this case.
->> 
->> Comparing the perf test results on git.git:
->> 
->>     Test                                        HEAD~             HEAD
->>     ------------------------------------------------------------------------------------
->>     8020.1: top-level last-modified             4.49(4.34+0.11)   2.22(2.05+0.09) -50.6%
->>     8020.2: top-level recursive last-modified   5.64(5.45+0.11)   5.62(5.30+0.11) -0.4%
->>     8020.3: subdir last-modified                0.11(0.06+0.04)   0.07(0.03+0.04) -36.4%
->
-> Nice results.
->
->> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
->> index e4c73464c7..19bf25f8a5 100644
->> --- a/builtin/last-modified.c
->> +++ b/builtin/last-modified.c
->> @@ -179,6 +192,27 @@ static void last_modified_diff(struct diff_queue_struct *q,
->>  	}
->>  }
->>  
->> +static int maybe_changed_path(struct last_modified *lm, struct commit *origin)
->> +{
->> +	struct bloom_filter *filter;
->> +	struct last_modified_entry *ent;
->> +	struct hashmap_iter iter;
->> +
->> +	if (!lm->rev.bloom_filter_settings)
->> +		return 1;
->> +
->> +	filter = get_bloom_filter(lm->rev.repo, origin);
->> +	if (!filter)
->> +		return 1;
->> +
->> +	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
->> +		if (bloom_filter_contains(filter, &ent->key,
->> +					  lm->rev.bloom_filter_settings))
->> +			return 1;
->> +	}
->> +	return 0;
->> +}
->
-> This function is basically the same as `maybe_changed_paths()` in
-> "blame.c", but that isn't a huge issue from my point of view. What makes
-> me wonder though is why we have an additional check over there for
-> whether or not the commit has a valid generation number.
+> One issue I have with the `_f` suffix is that I immediately jumped
+> to "formatting string". I think in other places we use `_ext` as a
+> suffix.
 
-I've been asking me the same question. And I couldn't find a good reason
-(neither from the commit history, or from my reasoning). This check was
-in the version shared by Taylor, but because we were ignoring the return
-value from generation_numbers_enabled() in that version, it didn't make
-sense to me to do this check. That's why I removed it.
+It stands for "with flags".  I've seen _with_options and _extended
+also used.  This is like oid_object_info_extended() that has a
+variant oid_object_info() that is a simpler and less capable wrapper
+for common use cases.  None of these overly long names are my
+favourites X-<.
 
->> @@ -227,6 +264,9 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
->>  		return argc;
->>  	}
->>  
->> +	prepare_commit_graph(lm->rev.repo);
->> +	lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
+With brief inspection, many _ext() in midx.c are more like helpers
+that deal with a class of files with .$ext for various extensions;
+they are not the primary interface to external callers, and many are
+extern only because the code is spread across midx. and midx-write.c
+instead of being in a single compilation unit.
+
+>> diff --git a/string-list.h b/string-list.h
+>> index 6c8650efde..ee9922af67 100644
+>> --- a/string-list.h
+>> +++ b/string-list.h
+>> @@ -281,4 +281,14 @@ int string_list_split(struct string_list *list, const char *string,
+>>   */
+>>  int string_list_split_in_place(struct string_list *list, char *string,
+>>  			       const char *delim, int maxsplit);
 >> +
+>> +/* trim() resulting string piece before adding it to the list */
+>> +#define STRING_LIST_SPLIT_TRIM 01
 >
-> So this here is why we export `prepare_commit_graph()`. How about we
-> instead expose `bloom_filters_enabled()` that mirrors what we do in
-> `generation_numbers_enabled()` and `corrected_commit_dates_enabled()`?
-> That would both be on a higher level and do exactly what we want to
-> achieve.
+> Another nit: I think nowadays we more often use enums to introduce such
+> flags, where the benefit is improved grouping. Also, I think having
+> `(1 << 0)` as value is slightly more readable.
 
-I've got another proposal, what if we let get_bloom_filter_settings()
-call prepare_commit_graph()? Functions like
-repo_find_commit_pos_in_graph() and lookup_commit_in_graph() do this
-too. 
-
--- 
-Cheers,
-Toon
+OK, let's update that.  Thanks.
