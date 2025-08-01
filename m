@@ -1,54 +1,54 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE7E33F9
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 03:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13CE2C9A
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 03:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754019809; cv=none; b=LW2Rzp9OzIPdIe1Q7N/FKuudR+Ub9dp2enAwCFyriNW/mqFkF9SND8WTQvQuhL+zv55aDgRrvfyOjKht7WtHcRaVD5/acKqsJJFaAqUO6AlkI4/I23v49oujUswmhXncykBZGy10ld3VK5I+hpX0KMb3XH74UhmtXDd9aKoRVH0=
+	t=1754020034; cv=none; b=SafvPItesDvF1t3LQIJy51F1eHbs8DeFK5wCsP9rwmgs5TIIKKcc7/2PYDHx91t5SQGqbDHJKsvI69sNXNEyhahnwJuIlGRbLzqjtaPTUgobib0N35pm6QuTh3gbgKpSxcp+SVkoCBhdEHwS+0VImfnAW39MTOs/hkGhWWVYB0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754019809; c=relaxed/simple;
-	bh=14a3chu0mki7+VnquoAAxzSDwX0mseCO1iqz62SjH5E=;
+	s=arc-20240116; t=1754020034; c=relaxed/simple;
+	bh=8JIXUWAQBzZuCS4LBMnDtpd/EgnfDFxj1Y5vMN3Uk/c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M4qyL4WApngqy7GLHOiVQBRX/FF1MP0gMkhc67TR6J8U8PJPACMSMfst+wZSUrZkYHYpVQ2CGp/oQtVuzj0EuDMqoBwhK6ljU9YUIBc0NfCa0voyYDqdMpJwuSqkSTPvuORS1n8vcLOsuWNcLfH4/yalzKBLFw5gkF2+aRW/pWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=adW/XRi7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nOrGdL4R; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=QqDhwSsQhI0Qlc2hfFxKmFy5nbi/58fWcJEKumVi9gPg9/ylBnnyjKGvtbFp1JUiPPiRTuWKpgNialEc0Xg0iQ1+UdIFW4KmhduFk5Eib7M44mY9dykoSYiRJO4RG0+jVz7AZUKxRD15kt7TVEUnceC24ipl1Ejt7tZPKLXQwUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AXs9UaI1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TQhAO+hO; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="adW/XRi7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nOrGdL4R"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 26DCD1D0043E;
-	Thu, 31 Jul 2025 23:43:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AXs9UaI1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TQhAO+hO"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 320491D0012D;
+	Thu, 31 Jul 2025 23:47:12 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Thu, 31 Jul 2025 23:43:26 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 31 Jul 2025 23:47:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754019806; x=1754106206; bh=fAtJul9ZQV
-	0dz080V4HEJY2suqKRU7r+AV4+xz3u8FE=; b=adW/XRi7UnBQkWGvxgBFLXE/sO
-	cFE/Z9y8rBp6uYDxcMUdlbgb0gV7OWsB5HgKng9ageQ4mymkYQ9eOfW+JQljYCkB
-	Rbqa6lp7Skz0lUn8K94mP0l96/15AbxU0e7prrn30ncTHCRVY26YedGZcKGETo3o
-	YDOd0lxRk3wg+MQ8pTfabgJeBN0gWl07JMxoPVlS4X40rjQ3tL6aJMMkEBZCNu9G
-	mGm49a2K6gr1MI+j1fXD0lXzWdeLwFCL2tRQ/WSXf2eV4PSBr6bSQbRJFbKZ3t6v
-	Gy2q8V+2jXk1qwSyJ+0QMvVJQHMFKc1syoJYrsT/3rjlgo6+RBqMoXuw/5dg==
+	:subject:to:to; s=fm2; t=1754020032; x=1754106432; bh=rzqOexuaV/
+	ZJ0cIMbQ+ITEka8mrzsTVJJBgKgm8kePg=; b=AXs9UaI1bnHuM+QNufMjlbvqxm
+	h81J1R3YZsKfVa2/Ofq1xgnK7xHuZzNVr+G7Em9VO+ZOl0l/lv87r+jOHytUAP1Q
+	GbM3hNwWZECDlCeh2+WWbammeDvaGtXR1p2fmD7/bPmAsFeCUVgaA5/aw2F71rMe
+	taW0b1aJyOfjzdClzrUBPZSASBQY2OFA+BlKDr0hdyDSA4MeOsUuav7RJteG/TF0
+	ImX6g0Dg13IkV/XvyEzUqy3y36yRL17FezFp1g8Wf1pYVUtUe/Tb04iD0SRlRHG/
+	yQvN6MNzE5bt141CkOh2LAIv1xjBqEGsjGesLLmLyJVL80VqYm/aqi1idYnA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754019806; x=1754106206; bh=fAtJul9ZQV0dz080V4HEJY2suqKRU7r+AV4
-	+xz3u8FE=; b=nOrGdL4R/CBapu+C0s/Ufl8kYKVDHzDO43Yo6AA3aHeBKI7zken
-	DKGoC85RRr5/Gsb50GuErgc/InZgDya/WhMIchNq/My0NDydPlqJHow+T0pTtvDN
-	OGnZ8TQ0g7CwSodirU1yssJXvDJuWwiHa6CgTLdSiOz+GsQv4iS+iluOKLqXRWhy
-	VtP4XgvhD2qbZXVe1XHpLUGuGUAdAwzdHzKwI3tWR8imStUQBD1dSjqAsNGTojcx
-	gLwt+7lwe2vlbLriatM4hG8A7diK8wpYKj4gSkwLFOdLCO5O/EEcanliQbNx+hoH
-	dxEi9WfoxfF6EkHnmig9+lXEFAW8mU+bJ8w==
-X-ME-Sender: <xms:3TeMaDt2jGf5GBuda0ugjbwDpjNIh76sy7bQt21lxkJWzQwz0l1mhQ>
-    <xme:3TeMaHth6aUrmTFYsfO-BfPrFn8v-KDYUE2KCNT852CtHOTcrmEV33cOXOnLz9WqN
-    6bCLV6b2PZs9K-kUQ>
-X-ME-Received: <xmr:3TeMaAOHIcKB1za2gKp4c_77BVz8h17v3UXh10HGq9qpwv8F-MCTy12fCLnBofcUVHFD3Ma8kygU-xKbxoqiZxTtrTuEbx5YcleWVb8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvieegucetufdoteggodetrf
+	1754020032; x=1754106432; bh=rzqOexuaV/ZJ0cIMbQ+ITEka8mrzsTVJJBg
+	Kgm8kePg=; b=TQhAO+hO98vBMJ/1TVGvrZH+8kGRInoLVu3LURZjy7P+iRb1TDd
+	NbFAsmXGO0Vfy+hiqnqfqWWj9HjlTdb59wHpYluZJKqr1J/e04UIq7PFFP64Mcrd
+	cixr0IVsFJ5BeGhUURwEy8FO5A9X2VKmUGp5A385c+12Cw9Fkcatzm4KVzvp2UPR
+	DC7GCgFt+sNley2gjDPnMQpzLenbQNIpd9doWcfVGgV3u3WCfhGerP3SM7ybnWC7
+	ARRXYlA1INCMEmvbAn8sv54Lw0VsD5QqS0Sn+gHkjk6va/rnzljFDRoViH61nPE4
+	No6kFoO2kX5Vi2UXNBkQEjUXg7EJiaC5PHg==
+X-ME-Sender: <xms:vziMaOQrdN9Yaj-RYOtU6RHfwA8zXcllHbXHSmTH2744zJC4GW5f7g>
+    <xme:vziMaHCQk-YTn0hzVYs0KTln1DYBKQsbCab0Poc-7PCiLAv-uw2MaD-Hh1XwCoF2N
+    F55D4bdOzCKT8dyLQ>
+X-ME-Received: <xmr:vziMaFSjo_DJPTACIR6S7LTwM677rQjmV6e5zr0NdEMtCl24jXFoZ6c5XoZtlG_ma1ronMR840lT2QReUpEez72wTCJiNw0nMo5UwBQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvieehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
     dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
@@ -58,26 +58,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvieegucetufdote
     gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhi
     rghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
     gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:3TeMaN2puEJtczFdKWfLt7Uvoj7l5qV3WcWUU4qVq4OkK8PuCLzMbA>
-    <xmx:3TeMaENiipkR5AP_it-V_r0FMzgrxaGjs0YlkmdAmUPFW5en1X4uoQ>
-    <xmx:3TeMaF0Sy9Ft_ucjVotmjNpV6vO-LCAP6HkKzayTIxlBGtBQeN-3zA>
-    <xmx:3TeMaDEg4bytYCcCfLdHVYzFMhQABLNPRNU3_LK5fvKaOx5WqFCEjg>
-    <xmx:3TeMaMVdPU9BNopx4YyYQTte4XBwUZd2BXnj2NCrLVmCLExdoz0T4Ir_>
+X-ME-Proxy: <xmx:vziMaFp-O06fPateX-uewXuVjY93cs-ftmgEF1m8n9IGeMtakDX7eA>
+    <xmx:vziMaHwpY1TWJ1Tk_pCpEZT2XT0NIJaFK_t1nMNSrAFBCDRSynIrBg>
+    <xmx:vziMaKIboTk6JJ2lRKrT_qirnZrMYPjewixRdYz-N7AaEd9-H4WzSg>
+    <xmx:vziMaJIQ86CW8uSKliwI4uz_gNT4hNC1om-E8xkLMcpEDHWopXfKJA>
+    <xmx:wDiMaPrwxuZ0ilDRmBaVplVTRoIcOE6FQsIcva5eE3KqcEkEvFdRzdBi>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Jul 2025 23:43:25 -0400 (EDT)
+ 31 Jul 2025 23:47:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/7] string-list: align string_list_split() with its
- _in_place() counterpart
-In-Reply-To: <aIwndQtEoKNXRG5z@mbp> (shejialuo@gmail.com's message of "Fri, 1
-	Aug 2025 10:33:25 +0800")
+Subject: Re: [PATCH v2 4/7] string-list: optionally trim string pieces split
+ by string_list_split*()
+In-Reply-To: <aIwyIJqEIdSdKINz@mbp> (shejialuo@gmail.com's message of "Fri, 1
+	Aug 2025 11:18:56 +0800")
 References: <20250731063949.1601669-1-gitster@pobox.com>
 	<20250731224607.3942417-1-gitster@pobox.com>
-	<20250731224607.3942417-3-gitster@pobox.com> <aIwndQtEoKNXRG5z@mbp>
-Date: Thu, 31 Jul 2025 20:43:24 -0700
-Message-ID: <xmqqikj7ogf7.fsf@gitster.g>
+	<20250731224607.3942417-5-gitster@pobox.com> <aIwyIJqEIdSdKINz@mbp>
+Date: Thu, 31 Jul 2025 20:47:10 -0700
+Message-ID: <xmqqcy9fog8x.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,45 +89,48 @@ Content-Type: text/plain
 
 shejialuo <shejialuo@gmail.com> writes:
 
-> On Thu, Jul 31, 2025 at 03:46:01PM -0700, Junio C Hamano wrote:
->> diff --git a/setup.c b/setup.c
->> index 6f52dab64c..b9f5eb8b51 100644
->> --- a/setup.c
->> +++ b/setup.c
->> @@ -1460,8 +1460,9 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+> On Thu, Jul 31, 2025 at 03:46:03PM -0700, Junio C Hamano wrote:
+>>  static int split_string(struct string_list *list, const char *string, const char *delim,
+>> -			int maxsplit, int in_place)
+>> +			int maxsplit, int in_place, unsigned flags)
+>>  {
+>>  	int count = 0;
+>>  	const char *p = string;
+>> @@ -320,12 +327,18 @@ static int split_string(struct string_list *list, const char *string, const char
+>>  	for (;;) {
+>>  		char *end;
 >>  
->>  	if (env_ceiling_dirs) {
->>  		int empty_entry_found = 0;
->> +		static const char path_sep[] = { PATH_SEP, '\0' };
+>> +		if (flags & STRING_LIST_SPLIT_TRIM) {
+>> +			/* ltrim */
+>> +			while (*p && isspace(*p))
+>> +				p++;
+>> +		}
+>> +
+>>  		if (0 <= maxsplit && maxsplit <= count)
+>>  			end = NULL;
+>>  		else
+>>  			end = strpbrk(p, delim);
 >>  
 >
-> I am a little confused why we need to use `static`? Would this function
-> be called many times?
+> In `append_one`, we would tell whether `end` is NULL. I somehow feel
+> strange why we need to do that in `append_one`. Should we just set `end`
+> to be `p + strlen(p)` when `end` is NULL. And then we could do rtrim
+> inside this function instead of `append_one` to avoid passing "flags" to
+> `append_one`.
 
-I actually am confused why you would want anything other than static
-here.  Writing this way would allow the compiler to realize that the
-array can be prepared at compile time, without need to do anything
-at runtime.  If you made it non static, the runtime code would
-allocate two bytes worth of memory on stack, and stuff these two
-byte values there, each time this block is entered, which would be
-at least once.
+Sorry, but I do not see why such an alternative design is a better
+idea.  The helper function's purpose is to stuff the substring at
+[p..end), possibly after rtrimming, to the list.  You could compute
+rtrim in the caller, but that would make the logic here more complex
+(at least, you'd need to introduce yet another variable similar to
+"end" that points at the real tail of the string, and you cannot
+reuse "end" for it, because of the exit condition you see below).
 
-> And I have a design question: by using "PATH_SEP", we need to convert
-> this character to be string. Should we create a new variable named
-> "PATH_SEP_STR" or whatever to do that?
-
-Sorry, but I do not understand the question.  You want to see
-something like
-
-	#define PATH_SEP_STR "/"
-
-you mean?  I do not offhand see why anybody would want to do so.
-
->> -		string_list_split(&ceiling_dirs, env_ceiling_dirs, PATH_SEP, -1);
->> +		string_list_split(&ceiling_dirs, env_ceiling_dirs, path_sep, -1);
->>  		filter_string_list(&ceiling_dirs, 0,
->>  				   canonicalize_ceiling_entry, &empty_entry_found);
->>  		ceil_offset = longest_ancestor_length(dir->buf, &ceiling_dirs);
+>> -		count += append_one(list, p, end, in_place);
+>> +		count += append_one(list, p, end, in_place, flags);
+>>  
+>>  		if (!end)
+>>  			return count;
 >
 > Thanks,
 > Jialuo
