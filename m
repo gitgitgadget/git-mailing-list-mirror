@@ -1,125 +1,102 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221C426E70C
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 16:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62441F2C45
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 16:28:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754065601; cv=none; b=EqharVUAYfbFPoIaLkvym7d4dK1tE0WK5xhlhFIlBKr03oV3766jN2DE1YJ137hB4pHkx2ndsBFB58Q3cUocUW/I2VVmf4boQrhl1V3ilzPLjPzXYlrGz+LlENfb4T8QISRg+QjqwuraWXN2nPdCBUQzI+0pytxOoY3sHsUfWzs=
+	t=1754065691; cv=none; b=Fmefe3jvfKjEOfjjt74edXbk3g5KZL7itF9ScK1tVISVcoAz4aKwAEMdtBjVpGJ+8Z51ZIdOZIgufQ+mHb1SEDDynTNDoO3+DxW3QNAH46Z2n6encOtN/YxCxF4gSoB0ns9GVfiW8fHelpV6Nssa4nygsmqOzif9xNbi4o4pTEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754065601; c=relaxed/simple;
-	bh=z1HXbK3WfauDQPRsYHQ/r7+UITsbw6/gK/fnKpDJImY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R4iG/bBFnHTT/a4IG4C6kRkXdP3q5dIm+vNxF81msG+GpEoX7MO3PK1+oVzv+WCuM+rhBY7r4THhcsGsxfmoKhaEm0mNmDF25IyUoA3Rlxz0u/J+yhOMcBYWQTxdxWKt5NtcaVqyMHKbbmYXdiuUVFk8jZgyKFSktIiCSmb18FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kFr9+C/r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NDElKhTf; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754065691; c=relaxed/simple;
+	bh=HaWlpj/dxprQqDecyyhNCNbLaADl/0cGv8mm6kEcsTY=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=Bp8lDU+xdtrPJAbzxLmvR19ps39o1mqIUfahJbH/5UAgXKi/VxtBa/kJmGoTlGD3suvQ9DAFS1+J8+nJfgLjh2dWjQlIMtEvjb62rQS8y7BKoKhGGlLb6UW46FdVb/dduAO2WAda1r4nK2uOkoUDWo+i43k8h9oVIH/EKcwHZFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=martin.st; spf=pass smtp.mailfrom=martin.st; dkim=pass (2048-bit key) header.d=martin-st.20230601.gappssmtp.com header.i=@martin-st.20230601.gappssmtp.com header.b=UjYaeYgn; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=martin.st
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=martin.st
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kFr9+C/r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NDElKhTf"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 126927A0112;
-	Fri,  1 Aug 2025 12:26:39 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 01 Aug 2025 12:26:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754065598; x=1754151998; bh=dO4pYL29r1
-	wmBdv75ZZezzkl3ae3lIFFSmyhDFAz3fQ=; b=kFr9+C/ro1AIDZDWcAdbBGlfQl
-	Q4Sw+9qd9vln2jzbU8WfdcW3C/+hceYCpIfm33H0ncdF7qaYeZWtMO7HWBnw7NGq
-	h4vWgxT7U0UogfLiXo/RRiGhsg8Q+kAFiVk6l43+w/FpLaOoLANcIj1qwHmCCTcr
-	G3YlAtcdEQrp5jm39hmhpz9Q+ht8g4yDht5n9+CcNXFYjrryRmRnxd9neeD0gUpL
-	Mog0c/iYKYFUOVvK+YwziPl3tM/LmxUAmPiTsMfc1Pt/jLFq27wVHMplAm8H6adn
-	zA1LRXl1HTQPA06mKQHew1ERtDzQUWMFaKBwSMajwtU7k8fmY34Yj1Biwe3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754065598; x=1754151998; bh=dO4pYL29r1wmBdv75ZZezzkl3ae3lIFFSmy
-	hDFAz3fQ=; b=NDElKhTfgbQf6KZwY1L0asHDux1jwRUZWeo8t0YhqgiIh1CeRg6
-	BEG7mXc4gw1v9bvoBSMLmDMzbjOw2zDC3hmI8IcAh0goVZB5EmzXU4DKGIZ9dpm0
-	W7a98gTovVgk5PicYpzewaC0TT8WurgT6Dn45HVfHGGSlQ4I2y/D+IzCFCTb51LF
-	gis1yNMey3afm3XSYuekSS7eFpJtrofcyeckftSilkcJqVCO1w8kvAEQ/uZdv6BJ
-	RRd4ktu3KeJbCoUZGJ5yvLLKU9/dXBm0p9jaRVbwvUTblQ8fMu5QGMKtiDIs4oE3
-	2q6aaCfrCAda7LL6TQgpGaBCjkBO8VmK2dA==
-X-ME-Sender: <xms:vuqMaPhiWkkeinE9TkKPXCMdVjzE2pecV4LPpd5nQjDo9xbPhARwlQ>
-    <xme:vuqMaPT7hPFOe6dbe460X1G--XRqWn6ZmVevHgB_hHliEuOq9XXShalP_0qQ3S1ML
-    yo2WrsI8_mOZwKj7A>
-X-ME-Received: <xmr:vuqMaIgCtxWpOzSCHuyHszYu7ZqZeRAZ81dX6VbTVMrHlUpmERUfdweTjAUxdSLB_jrTbAzsQtX3u38kbvcZriEy9-x1NEAEW57UTEs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdegudejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:vuqMaH6_81paGolty36gS0KOYwGuVDV4oqfBM137H6xANkdzeWvZhQ>
-    <xmx:vuqMaNA9jY6VWHvdQcxBHoPe76brFyJ5IPyQud4-FND1MwRsPTCOew>
-    <xmx:vuqMaGY7P2ElxoBqBD9J2wrDLmr6VvxanXWD8jba0xH9lmPsVxNoEQ>
-    <xmx:vuqMaAavgNBoNfkHpA7RDG4RfpKEEfq8A6pYoz2BTGTalIOU8-BGhQ>
-    <xmx:vuqMaO3Qet_gNawTHVkbIf89uydBWNTLpNLdVUrjigA7CodMWq_bfayN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Aug 2025 12:26:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 4/7] string-list: optionally trim string pieces split
- by string_list_split*()
-In-Reply-To: <aIx_HIjWEDx9pNW2@pks.im> (Patrick Steinhardt's message of "Fri,
-	1 Aug 2025 10:47:24 +0200")
-References: <20250731063949.1601669-1-gitster@pobox.com>
-	<20250731224607.3942417-1-gitster@pobox.com>
-	<20250731224607.3942417-5-gitster@pobox.com> <aIx_HIjWEDx9pNW2@pks.im>
-Date: Fri, 01 Aug 2025 09:26:37 -0700
-Message-ID: <xmqq4iurnh36.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=martin-st.20230601.gappssmtp.com header.i=@martin-st.20230601.gappssmtp.com header.b="UjYaeYgn"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-32f1df58f21so17507861fa.3
+        for <git@vger.kernel.org>; Fri, 01 Aug 2025 09:28:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=martin-st.20230601.gappssmtp.com; s=20230601; t=1754065685; x=1754670485; darn=vger.kernel.org;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=f92Qg5fenO3eyZikIbio7ufI9oWp1BoYfcMlWIV9y6A=;
+        b=UjYaeYgn2Oddmdc8534L2J0YlTmg0qeWjnNo4n20FuqRjsFRKdu2cTlcVvpED0HV/p
+         K5QI9NoUWjIQQ35YCW5F59XWMed4WJeyWobqkE9WYhSIcZA+7qU4czRGXfIh2nhkTVcs
+         tDLYAdiDTyKkE4wWObLtK4KHGhzQZZoLFaR9LEEzmtLXz7huP5byvcb63Tdhp9Aw/XV9
+         gx8ZDrrUAB/jvf2tPR4cmNWeZio6IiXYQLPcwkvzhezjLTxTv30e/TArR7uHrxHhilJY
+         mPWWyqXoJCzN+3JyAFbS9wUKs080wlA65GZhvV1T1nRaGCw9VBFVywh6B0iAifn3/c2X
+         P22w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754065685; x=1754670485;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=f92Qg5fenO3eyZikIbio7ufI9oWp1BoYfcMlWIV9y6A=;
+        b=mKJ53euw6/myM6LhnsiVM1Kg26KTGleMlgZvPBAEQnIBxW1mOzBX+i+SE11yZt5StA
+         EsiBm2bZyGv/VBlcPxNbpkeRRvswpyoCzdJ3A7L3sclAJsUDjIePoHy0rUvFxaqcvw7u
+         BcIkDfgKW7zyNyw83K8RNSwVYdFImAYux/4m0p+zdfsy0+D1mlpXDOLQi4oI2UB+224L
+         ZV3NBKzHMPIcSTHG2BvGLyRHFfN7PmiCOUev0vi5p6jtxwiuh06mKFuEG1TVrz0FSAvq
+         /gIwFc7PNjl2mvPBSpfewNUN5krqv1BmKrb+YnhsZySnvHVsWMYCnuIgpqBzIEv3bVPz
+         vN8g==
+X-Gm-Message-State: AOJu0YwCRK8XNU2d09Csj/zH2DXCsrguk+eUpPdz0lcLUhlYa5Q4iRMG
+	zIPdRr0miAbpZAQtiIVO9goVSmvRjThyvnTjdXAo2+O8KcepX46FDzo5ap/lqBy3IyKvJfYNtCL
+	x6wgDQnbj
+X-Gm-Gg: ASbGnct6iQeXfKCGdeNpE3G/TgkNt/83U4SBbjYPn5L+rysqio/K1vW+4dyy7MFikyx
+	xDA4aYCJk+1SnJ78xQ3c/uluEQJP1o3fkzezbHFHZkYakSOQ4xxyjTxf269Rx5sippv6gGAvIcX
+	1AANmoIWsAizhiyRm7nPq8BX61OMnLmmJDvGo0qqOuKQAjDVNqDzWw5mp1IKS51nxhp7CRh5nzd
+	J+Yzkw+lmZXStcPYFd4bYJ8f5i7CddNjCr+QsMIRMASLzaJ4vINmBX0bMjWFHDf6i2znRdi6NNe
+	dEHeXGMwE8QeCakB+x7QeL7Ae9H7HBqIAVUkbzZmVnba5pgjCYrPzbLHqKlim9QW5UoXri+K/Lc
+	8oWB+syBB+o+3KIPOK4Su4lIHxVEP/XMeFe6EqNbEN1csVJyIUbEZVWzaRj3nktsGxBY0AJb3vv
+	baJBLBl0akM29UgB0fzQ==
+X-Google-Smtp-Source: AGHT+IGqHI1YOB9VT/DaMzRrxo5Bx0ivyoCqIMgCv5GZvmldEc6raUgsxgAaDYWpl2fN18c4UYi5Jw==
+X-Received: by 2002:a05:651c:2220:b0:32b:82bf:cc55 with SMTP id 38308e7fff4ca-332567e84damr68411fa.31.1754065684586;
+        Fri, 01 Aug 2025 09:28:04 -0700 (PDT)
+Received: from tunnel335574-pt.tunnel.tserv24.sto1.ipv6.he.net (tunnel335574-pt.tunnel.tserv24.sto1.ipv6.he.net. [2001:470:27:11::2])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-332389807eesm6293831fa.88.2025.08.01.09.28.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Aug 2025 09:28:03 -0700 (PDT)
+Date: Fri, 1 Aug 2025 19:27:59 +0300 (EEST)
+From: =?ISO-8859-15?Q?Martin_Storsj=F6?= <martin@martin.st>
+To: Junio C Hamano <gitster@pobox.com>
+cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH v2] meson: Tolerate errors from git ls-files
+ --deduplicate
+In-Reply-To: <xmqq34abm3sc.fsf@gitster.g>
+Message-ID: <8d86fb70-abd6-1a9d-f5cd-ad4ad7aa8e46@martin.st>
+References: <69faab5-43d4-812c-90f-c518ff7f618@martin.st> <20250801075649.1796238-1-martin@martin.st> <xmqq34abm3sc.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323329-1443719927-1754065683=:2936788"
 
-Patrick Steinhardt <ps@pks.im> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> One issue I have with the `_f` suffix is that I immediately jumped
-> to "formatting string". I think in other places we use `_ext` as a
-> suffix.
+--8323329-1443719927-1754065683=:2936788
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-It stands for "with flags".  I've seen _with_options and _extended
-also used.  This is like oid_object_info_extended() that has a
-variant oid_object_info() that is a simpler and less capable wrapper
-for common use cases.  None of these overly long names are my
-favourites X-<.
+On Fri, 1 Aug 2025, Junio C Hamano wrote:
 
-With brief inspection, many _ext() in midx.c are more like helpers
-that deal with a class of files with .$ext for various extensions;
-they are not the primary interface to external callers, and many are
-extern only because the code is spread across midx. and midx-write.c
-instead of being in a single compilation unit.
-
->> diff --git a/string-list.h b/string-list.h
->> index 6c8650efde..ee9922af67 100644
->> --- a/string-list.h
->> +++ b/string-list.h
->> @@ -281,4 +281,14 @@ int string_list_split(struct string_list *list, const char *string,
->>   */
->>  int string_list_split_in_place(struct string_list *list, char *string,
->>  			       const char *delim, int maxsplit);
->> +
->> +/* trim() resulting string piece before adding it to the list */
->> +#define STRING_LIST_SPLIT_TRIM 01
+> Martin Storsjö <martin@martin.st> writes:
 >
-> Another nit: I think nowadays we more often use enums to introduce such
-> flags, where the benefit is improved grouping. Also, I think having
-> `(1 << 0)` as value is slightly more readable.
+>> When using the Meson build system with an old-enough Git version
+>
+> It would be good to be more specific what you mean by old-enough.
+> 93a7d983 (ls-files.c: add --deduplicate option, 2021-01-23) appeared
+> in 2.31-rc0, so
+>
+>    with versions of Git before 2.31
+>
+> perhaps.
 
-OK, let's update that.  Thanks.
+Right, that's even clearer - will resend with amended commit message.
+
+// Martin
+
+--8323329-1443719927-1754065683=:2936788--
