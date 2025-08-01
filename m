@@ -1,96 +1,93 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C2B1D63E6
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 16:59:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D1127AC35
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 17:06:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754067598; cv=none; b=tlY2wLK/T5lVEemOLar0FHCrpmRXWdqHweKiI2klHaz9KWSDfVFqZatZIwVS5WFTI17I5csb1Pd7NSUoFfHudhlQDmbpBJv6X7S3Qpe2Rpiz+GEq9lfXlZmPkQEusbebhA42HG3sDHRwmuUzRbzZ6WzU1Wb093PrNxtQ8rVjros=
+	t=1754068020; cv=none; b=TsPrsVvsY77R+TfGIuBpdbsK+tONcMPSOi54gAWWtIE8Lly/k7u2XK6q2K4ncnbqeKj3PNTHidbr1uyKYR8puQZeMqH+VuMHnOn3XwmsK71t+F/wgL91oNOmNKqXhe2ITOd/r8mb+sXV27IjmhIyjdpYNCM2P2pY9ktjKrZRoHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754067598; c=relaxed/simple;
-	bh=wkmyzuuIBG+pA4U/8trQF6+yyiFLh94fYRMKInKYZcU=;
+	s=arc-20240116; t=1754068020; c=relaxed/simple;
+	bh=mUJe1qxWSGEzR1YOP34xr033KfnnX5tbdVBiIzgcEdQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cthaV/pmDXFsi91Sn78vJwj4qhs3X61hMOZQGtJgwLA2Q4MlyPCwXiATkPqiF6A07qZD83V9TVxQz9YJ37A85zj6UxS6O7gbYHD3ou7W0dwy5URPv5MehHzOQ2fTD3DhZgcnjlWctzkuJ40/G2XPKdHXU9pxEeQo2s2+mip09ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JHMnVCbP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Crjo3VCq; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=cD351WVkxuoIymgqpIrMhTIA1Leok1GI72d5kAQtZW4/XeFtIyy72ejPv+kIzbg/u7d5r1Qhyfw8Pbhp+pr04A6/Q+AbnQ/QLpVw5It6oL9o3RxgbWhu5T7Nkojk6uCZypetNSpIVV4fvGXGJ6oGwTMeicr1kOhLM5IuMnkFliI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=adaWpFdX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QWGYpcVm; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JHMnVCbP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Crjo3VCq"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id EA48A1D00B75;
-	Fri,  1 Aug 2025 12:59:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 01 Aug 2025 12:59:56 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="adaWpFdX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QWGYpcVm"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7C3B27A0181;
+	Fri,  1 Aug 2025 13:06:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Fri, 01 Aug 2025 13:06:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1754067595;
-	 x=1754153995; bh=K9Dcc7cwAq3Wu5DJA8u+BW7rY+80TKAOzSl9lOPnvXw=; b=
-	JHMnVCbPQHVd+pmKIyxUXBF27Swv2B2Jjbcab1bL8L/MypViqp4FzPMgi+6zzEx2
-	GynGWmUx50vUKYsnLdrKPe51ara9tBi42s63Cyc5oMrp2nc561r6sC8kEpIC4+gO
-	7VxBZl+LU1KG0G2WIhvortDFksdgaPAuta4qY4OZf8FCw/Nexw6oNO9L76X6Z99I
-	C3kAaiMYu24xQzv+x5zHGHwPOEWFxEl2TsRcFWDOWOzuVBksxPSQ5LYounVacL7h
-	LHMc0kqE3LCf+HthLLlTOk+dHGGPUt+hMmgHRstq8kSYYxLMxWUStbKRmCZEfn8k
-	sn/uoYIrZBQ0wYMBdeazRw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754068017; x=1754154417; bh=TBuP/g+a+N
+	QE9FCYpv8+RQB5nyHj5xfNBvC4b7e7siY=; b=adaWpFdXRVrPXICvch2MJioCxD
+	zxgbOu9jR7ez/+bCSv/kvkNCjHWP0VL5CO1MAfYqYml3osZ/xw6Vx7Ye1b7Z5DVK
+	OlkAhOG1zneCji2d1ce8XI7lXTXvPLhurWe1yK0U7BnN2FTBIiUkb1tC/6j5MPxd
+	9us/NLubNO3GfBX/SStvRoHhpS0DUhEbo1HzWrg30odJnHHbUzZflIkHmJsi7tiv
+	GVnxwaq6cq/mGdTIizAMKJDYzYsf6YwPZbhCdif+hfHRVmxcZyvKKqBo8/Mnw+j4
+	ECfyjgYmYBqAYXEhRfFpaxTTu7zUT0rCwwkwcWJLn/LqeHj8sFwVRxpVIWog==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754067595; x=
-	1754153995; bh=K9Dcc7cwAq3Wu5DJA8u+BW7rY+80TKAOzSl9lOPnvXw=; b=C
-	rjo3VCq/lfIruZUpbK0+u8hgSZEOk49JUqA+4HkW0UaJu4PAnGvCqLpBwQNGm8TT
-	So6wUzhWl7HUQr/c6Z61pE9IRd2G58a0OB6uj2Rp1WBupFkfZy9EhKhZjDjQw1/N
-	MVTGKr7wQeFzHUx6yU1rWoAoQbTh80XAXv8wfBVWaibvH6ol70AFQLp7U31nndCp
-	/BfNr4hbGPplT3Kzu5sSjTl+UXuWT5V/momf8cdG9o6Zg8f2mij42WIsMhAL8Cpp
-	tgcoiTLHYmozspJw/bkARXm2iFzVynV3OCXCaC+KVvc4rRdxoSkYgQ37BvIJp7D4
-	typhs0xdO0WA/mkIgLeUA==
-X-ME-Sender: <xms:i_KMaMxW8Mtl_GsOpT9C4IQ0uYRjDMoV1jl4Ahq1B_X0NDyyC8okoQ>
-    <xme:i_KMaNIRfjYufc8wXZj7YkeYuJTshMwiQPm6s6mWv85eL80u854nz0hFwiSCxwYmi
-    IG2u4bKuAqsgc9EUA>
-X-ME-Received: <xmr:i_KMaOH31A64qByjbhrPiRhMhmJNnkT1sCmJaQojMUL_-SsUfvDWFSbVtleHVuRy364lAcScRR9bqmMF7buzruxWQXhX6A4EnBHlX_A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdegvdegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754068017; x=1754154417; bh=TBuP/g+a+NQE9FCYpv8+RQB5nyHj5xfNBvC
+	4b7e7siY=; b=QWGYpcVmpK5fhI21YqPvYKjbAoRmZTK3XRz1rMD6qoUgxUg+Q75
+	pr8sCPTuzG6n0u14GKcYivp+m9Q8VE4DnH6lZ1M++l/z+UTVbHwYHNi7t+oHJxf7
+	kQnqdup2YRseu2zzC63AA0o3joL3tANC8jKROCzNQ/F/+ZhDYC8KqL+/y4SVsNbQ
+	j+u2ezF5iTK0JyMWYSqhz8FBhjyWSKqvr4T05TIU0QC1fi2SVdtwD5VNoDnDOOjA
+	Yk8+j5Yp2zg8tT0ZY6wNcgSxu/xw6jIZTRGZ/mCorYVwyPYUfI1+jPf1bhxBrv5N
+	lEAaizZWRDTc9TDcXbVQVTBP4dwlppc5dHQ==
+X-ME-Sender: <xms:MfSMaJEHoOVWmZbOBbaNGXK_vPE7erSyJ6VGmdQWevv0zivB50RmCQ>
+    <xme:MfSMaKC3Qbf2lbMk7QOlOo1Gpxh6P7_26I6lpSPH6dEh9qr2DQScG6y117KytcU0x
+    4gM1ppQlz38FVkt6Q>
+X-ME-Received: <xmr:MfSMaHnw6UmXvDGBTJ3qFN3j4W-gVBqlsX78kyIwgQ28mhXz9woQ_6zvUgVLLqKP-fGPy6N70FKUPCb0ODEPnZlizeMuTlnbqywG1uQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdegvdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthht
-    ohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
-    sehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtg
-    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheprghvrghr
-    rggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:i_KMaJ_gTcqmU3a91r61adTs9relNpc8_PgAXL546mN3pXfmXvgxnQ>
-    <xmx:i_KMaOIzLSHCvSaESE0XzjJ6iKNjCcUppbkRS1qsDZXe2w0DziZq3A>
-    <xmx:i_KMaHsfO1asW60gHasa4sa8QJk22wL2ErW3_Q4RcwfX_IRRmX-odg>
-    <xmx:i_KMaFDQpPx5bu6MuHPNLcQEqYV0JJ5nC7traxMlCZkQbqkLN5Y8xQ>
-    <xmx:i_KMaOCMWuw6jkxyaJjM-VnIhCEPx6Iro9c1OTdFPTFqApPpNFJLD-2N>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptghhrh
+    hishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhn
+    sehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
+    rghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
+    htohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghf
+    fhdrnhgvthdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:MfSMaIPxUaA7xMV8-nyQO5IGkaB6rh5U4DThtEhZo_g3ewmRrgcu1A>
+    <xmx:MfSMaE_-pflN74589phcuPVPxKBPQQaBtDS6tCvEYNs9gNT2AUEvfw>
+    <xmx:MfSMaKGqvPTOH9dWnDnor-U91UBGgW_wmFIfE0tGFSdXLa1q2MBS-Q>
+    <xmx:MfSMaDhdf2JK3Cp3n6CJCDCmDh9LLmcQMPh-naiNpS4m-o8K_jT76g>
+    <xmx:MfSMaLcfE3gbd1PZA-vYAotA8saUJxbodErEEGFyuJHJMqZoh5YEc-vS>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Aug 2025 12:59:55 -0400 (EDT)
+ 1 Aug 2025 13:06:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Taylor Blau <me@ttaylorr.com>,  Toon Claes <toon@iotcl.com>,
-  git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Derrick Stolee <stolee@gmail.com>,
-  Jeff King <peff@peff.net>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH v5 1/6] last-modified: new subcommand to show when files
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Christian Couder <christian.couder@gmail.com>,  Toon Claes
+ <toon@iotcl.com>,  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Taylor Blau <me@ttaylorr.com>,
+  Derrick Stolee <stolee@gmail.com>,  Jeff King <peff@peff.net>,
+  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v6 1/4] last-modified: new subcommand to show when files
  were last modified
-In-Reply-To: <CAP8UFD18Ds4zME_ZHRdTA0W7KXk57zo9664xaU2TbH7YsHbFUg@mail.gmail.com>
-	(Christian Couder's message of "Fri, 1 Aug 2025 11:09:24 +0200")
-References: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
-	<20250716133518.1788126-1-toon@iotcl.com>
-	<aHmPHcNQYlhGo8JB@nand.local>
-	<CAP8UFD18Ds4zME_ZHRdTA0W7KXk57zo9664xaU2TbH7YsHbFUg@mail.gmail.com>
-Date: Fri, 01 Aug 2025 09:59:54 -0700
-Message-ID: <xmqqh5yrm0z9.fsf@gitster.g>
+In-Reply-To: <aIyVft9PdlorttzZ@pks.im> (Patrick Steinhardt's message of "Fri,
+	1 Aug 2025 12:22:54 +0200")
+References: <20250716133206.1787549-1-toon@iotcl.com>
+	<20250730175510.987383-2-toon@iotcl.com>
+	<CAP8UFD0AEKDmvQJTanL+ZS+U66WAZz=FKSJ3LPE1QHSEyH-zNw@mail.gmail.com>
+	<aIyVft9PdlorttzZ@pks.im>
+Date: Fri, 01 Aug 2025 10:06:55 -0700
+Message-ID: <xmqq7bznm0nk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,35 +95,55 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On Fri, Jul 18, 2025 at 2:02 AM Taylor Blau <me@ttaylorr.com> wrote:
+>> > +static void last_modified_release(struct last_modified *lm)
+>> 
+>> I think these days we tend to name those functions using "clear"
+>> instead of "release"
 >
->> > +struct last_modified {
->> > +     struct hashmap paths;
->> > +     struct rev_info rev;
->> > +     int recursive, tree_in_recursive;
->>
->> Can we either make these two part of a bitfield, or at least declare
->> them separately?
+> It actually depends: if the structure can be immediately reused
+> afterwards without requiring another reinit it would be caller "clear"
+> indeed. On the other hand, if we only release memory it's "release".
 >
-> I wonder if we could/should use the `bool` type from <stdbool.h> as
-> Documentation/CodingGuidelines says that it's now allowed.
+> I think this function here falls into the latter category, so it's
+> correctly named.
 
-Even though "allowed" is different from "encouraged", I would say
-it is a good idea to declare them separately, i.e.
+Given that even a long-time contributor gets confused (including me,
+who needed to see where we documented this for our developers),
+perhaps a clarification patch is in order?
 
-	bool recursive;
-	bool show_trees_in_recursive;
+--- >8 ---
+Subject: CodingGuidelines: clarify that S_release() does not reinitialize
 
-I am guessing 'tree-in-recursive' is one similar to 'git ls-tree -t'
-feature but the name given in the patch requires such guessing, as
-the name is a bit inadequate (it does not say what you want to do to
-trees when recursive).
+In the section for naming various API functions, the fact that
+S_release() only releases the resources without preparing the
+structure for immediate reuse becomes only apparent when you
+readentries for S_release() and S_clear().
 
-Renaming to show_trees_in_recursive eliminates the need for such
-guessing.  The implementation of ls-tree calls the corresponding but
-as LS_SHOW_TREES which is a bit inadequate.
+Clarify the description of S_release() a bit to make the entry self
+sufficient.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/CodingGuidelines | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuidelines
+index c1046abfb7..76ec6268f2 100644
+--- c/Documentation/CodingGuidelines
++++ w/Documentation/CodingGuidelines
+@@ -610,8 +610,9 @@ For C programs:
+     - `S_init()` initializes a structure without allocating the
+       structure itself.
+ 
+-    - `S_release()` releases a structure's contents without freeing the
+-      structure.
++    - `S_release()` releases a structure's contents without reinitializing
++      the structure for immediate reuse, and without freeing the structure
++      itself.
+ 
+     - `S_clear()` is equivalent to `S_release()` followed by `S_init()`
+       such that the structure is directly usable after clearing it. When
