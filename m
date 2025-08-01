@@ -1,141 +1,97 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B541F429C
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 09:45:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C1B2CAB
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 10:18:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754041539; cv=none; b=UanL+tkDtqu4Y8aug5bCgf2V0qYdYIyf+tDmBbuoYI9yjYMlYa5C5OlWcI1MeJwvbqtqgPe2Pg8QOFKwF7Z3wOZ6E8bCu0nqrTg8D7ix/eb14Hn3zepn9ZKIcvmDkFa9f3a3RNFfJcX3lwhkHXfZU7Mpv2ULAFy41xkGJTrIRYI=
+	t=1754043535; cv=none; b=ZX3fgvsa1KBWCSXAZlidQ/anaxcuM+r6LZ64bxBxPyLOmEN43ACcRS0KWlRIpNTZB6ccrUm67SA7CtSs4kGihPTLX7nnNpvsXHqZ+93VeuEX41gb00+9XqWgM+VA3NvzKx7kcR9TFLd2dZ0yYT7XUcEYpuBY7Jyji1XbNLhDW9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754041539; c=relaxed/simple;
-	bh=oblUx0hkhWRCFmybKrACQjb68/TXbeFSIUKRruzZ0ng=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MdQaUbwb0uMziwFd8b2z2bSU/iYrFuUbEkUmY3lYQO6DgAQSY6zsD5Fy6v5hbwocFyaHL1hGU4BCBwJGtA5KFkZwNzaB+VG+ueH7hxgdiG0sv43hfUbU/JgHZzQRg/kyNU3cy3UeQKhRqcNfj3d0qt5C/QlWc2DcN/z6JDZgheU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AAS5gtNn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LBUJg8L5; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1754043535; c=relaxed/simple;
+	bh=DX0EOM6GDSYRIDUODIs/Dl7eaYRY9bQoDaGaKOx7cPQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cJWtadpcEDNAtP7Y5Tetiv0IlHM7cvGyIK00+Bnq9RuCfVLNV8GKNW6l2vWu9Mpm3TPFeA8fXkStZDNvj+V1WP56ww7xonhK59BO41md5q+RVgIJwIvSpyJzMhXxW2Xsq2q29qX2hMT7eCux0oX/8SjQsY9LtjRgZFhwy0Tb9oU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=czMTYz7X; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AAS5gtNn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LBUJg8L5"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7CE0F1400162;
-	Fri,  1 Aug 2025 05:45:35 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Fri, 01 Aug 2025 05:45:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754041535;
-	 x=1754127935; bh=XYXEQikxMswy8pOmlJgdLa5p5OW4yPM5wpHUkIPmoMI=; b=
-	AAS5gtNnOpmtb+W6gN782FQDitinIny7roNQLCenR+UUKan9g0QyjZ9HoJ89JTm2
-	SMghHG5xKNwn6Y2Qll4s0qt+ik10d8if/x5+DXtDaKfgNTtr7NO9C1sw1zbZtZ9o
-	BJLAxbJ4do0gKyrSNIWhrMHgTpnN3RrBg4dya9TZpp/ZplPTIMRqyjXHiFhWGXsD
-	XdJHf9x839GOfb5ikPrK6BAgtwm1FMdpuE2rhTK1KGb5cTDKhR+QfpgSrW/j8axX
-	ItAYN94oRaUbr0x7FiwII/R/Q7kcmaxpP2Sa6FLCgMHkFz/g/C50d3/WxqIpDeh2
-	1COe/74jKj3UjgGxbk/vXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754041535; x=
-	1754127935; bh=XYXEQikxMswy8pOmlJgdLa5p5OW4yPM5wpHUkIPmoMI=; b=L
-	BUJg8L51/Prz1Goas347fK1762QT3i9Lu6TMKS3cAkYff0Xj1YcjFIATD/rP/Ex1
-	V2lwqARCZYSArAnqd3Cs/okzmsmzvxRBvpgBDAXqOiYhEUn/sxFhz2HnY4KKEWdN
-	0uSBQ8O/FQCYlu4kvlkXzkJlpAh5j83/7JbaSvgqoxS2DPTt9wNzQ6hnpLrRkWxZ
-	68bNiugBuXDfY4Y9qoFj/qQUnmtjhidfKRKaJTICq8o/P+rKv4JUpoHQ38dyU7FM
-	Rl7AAurJLvU8o5FRKGsfwW9Wy71xFjG1kmG+kdbKMD77O5reiOL2IulqE3pwxinb
-	7s6fSvgFmXonYXoe/WR2Q==
-X-ME-Sender: <xms:v4yMaOWrKQEpvaDU0p_yMCe2qPmS3KO1QqzEjv2G7HTL2xXyGHcBOw>
-    <xme:v4yMaKzkkjDXeN3YxJourdWbPrPYjzanvscz1OsoBkIRyCO8sVHheAccTplNEbVbF
-    NTkcS2dpQAyF2hu-A>
-X-ME-Received: <xmr:v4yMaEMuaMYm8_r26AD0WiVTnavQidiZDH-fZS31pKLy6bKdhaTLUyEyQklHXSarQkTOf7Y3tHAaaN1aWgTA2kabU5TuVUmkYwXr4iOhmDBb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdeffeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeortddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeduteehffeguedtfeevgfethefhgeevfffftdevieffjeelueetkeetueejgeekveen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehmrghrthhinhesmhgrrhhtihhnrdhsthdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:v4yMaD5idr0PaFz81dPw08Jn7AS5dII01SchWJIMK2ulQlPHEgdPIQ>
-    <xmx:v4yMaNNza_rPBud0pKyIvUeTRyVDgXkEm92RbXBBVAUZnVrXBXYwXg>
-    <xmx:v4yMaJmV6MUnPc3bjwQ-LDKx-9alpFjKrs-Yb6E8gEIeP7BZ5qBWQA>
-    <xmx:v4yMaMQfTYMfOsb3-fKoCxOrXFUyPL6r-xEXVArjnMEbzwtHlHVpsw>
-    <xmx:v4yMaMS55r3dC01SJWSHeoRibpjJ6Eg3T3XUYuV3-rhQkN1qa7ule-hs>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Aug 2025 05:45:34 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 87065b6d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 1 Aug 2025 09:45:32 +0000 (UTC)
-Date: Fri, 1 Aug 2025 11:45:29 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Martin =?utf-8?Q?Storsj=C3=B6?= <martin@martin.st>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] meson: Tolerate errors from git ls-files --deduplicate
-Message-ID: <aIyMuUZaARaTpmOh@pks.im>
-References: <69faab5-43d4-812c-90f-c518ff7f618@martin.st>
- <20250801075649.1796238-1-martin@martin.st>
- <aIyHoF70z0jV-sj8@pks.im>
- <226b2a31-6220-4a4e-d0bf-3ad80c3be9a@martin.st>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="czMTYz7X"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6157ed5dc51so3107499a12.1
+        for <git@vger.kernel.org>; Fri, 01 Aug 2025 03:18:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754043531; x=1754648331; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gW27xq6Jc1mPntzdnuN6p/uTwRh7VhgLQH5YbiAtKxs=;
+        b=czMTYz7X5Fkkl/cfChCXHw4dkMqIZbjyy8vNT7q3AvxYlPdhbj3P/QFVPUGh4nP2L+
+         5brJXSWJSVNiLUkZ3U8IIJkhQj84hjK19Kqu8kr3Kb0gJNN3gdVX/HZ6eChzG0y+2Jz4
+         QE+XkPDdaxliC2iM5RE+LqkJR9WNVyjSklNmdXScFDqTdsUhNtKSIuZiOmXjARHFffR4
+         k+GPQDf4lFBT6VbcW8s4ryVs6LZJWU15Pnfnq3meo8mVUTAdJINl9anPh+h6dqxPdbHN
+         4Df0s8VjdElbCdD109l0Rm6sVz3IJvYWu5JGdfpfGfkcjE2eGbGHym31HiUgl9NO34XZ
+         RAkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754043531; x=1754648331;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gW27xq6Jc1mPntzdnuN6p/uTwRh7VhgLQH5YbiAtKxs=;
+        b=MZSV03ac7bGKI6aWZ8uXC6bbgVcSPEDHt8anGOtAznxi3iWeomEzux7zP7TrIWh5aY
+         hGAB1eKmGVLwmEuQPE9j1EQs7JNgncRyReUq8D3O/JzRg/TaFsPgz3zyvVIuHgIV9aZD
+         68d9FR4WPKDESLq90/d6soErWmob98NlOgnXxP4Gp6A1IHOVpEAk0pyjAae+197az0by
+         TzOucRM6Fcw4O13RVYjD7W8QjCBM35cS9dHugp8tgaXEIy3YNeNNpt3JQ2jCQRRmwPhY
+         obbkH7VA3YA433Cjwgdyx1FcQVomZ60ihJK15PJAMWYvmxPRzLmN/T5butc28NZIclvV
+         nE0w==
+X-Gm-Message-State: AOJu0Yzqy96Ujf5qch6McevWnmbTCj19d+7RXpTnKDPUSt3sgMv+c+Xn
+	KEiJgldZiZ0W2UkJvkl+OIIzEjWOiNPquc3CC32egAB0UDkrJJmNZAjYgiAy4fmPjDqv9zc3uJ+
+	ICUYT3ITF2Mq6S5HFxTmCH0F/OF4MPXg=
+X-Gm-Gg: ASbGncsLftKuYxV5TTHwZFpzhkXhjC8Q1ijeNrsTdx16ZBJlAFg/iydaOurGN0O3a96
+	EVHEI/jdOLTMM3Ay5i05A0aDH5zMovEv0Vg0+l2jaRI7S587Ry/YIiiOqOlDx9a4SetqFcIa0jt
+	izqTudyiRvUpy7JX1O98+BGvTg4CbhYgazcV4IeV9NdGQB796Ml7CZd/IgRMWNdN0RSkxPWazx5
+	lgDi3m10g==
+X-Google-Smtp-Source: AGHT+IEjNskBncNTp7G2vadaShomZdBo1NQqlI+UQE/nBYcAAClKBdH2s8g/SjCjayq1BP/jm16r22ruAvoR+7SsP3E=
+X-Received: by 2002:a17:907:1c95:b0:af2:3c43:b104 with SMTP id
+ a640c23a62f3a-af8fda8328cmr1290557466b.54.1754043530975; Fri, 01 Aug 2025
+ 03:18:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <226b2a31-6220-4a4e-d0bf-3ad80c3be9a@martin.st>
+References: <20250716133206.1787549-1-toon@iotcl.com> <20250730175510.987383-2-toon@iotcl.com>
+In-Reply-To: <20250730175510.987383-2-toon@iotcl.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 1 Aug 2025 12:18:39 +0200
+X-Gm-Features: Ac12FXwSNPBxV8gGCmIKxr6G18caj3O6G_whipoRvtTa2_TxI7oibWA5FBlTItY
+Message-ID: <CAP8UFD0AEKDmvQJTanL+ZS+U66WAZz=FKSJ3LPE1QHSEyH-zNw@mail.gmail.com>
+Subject: Re: [PATCH v6 1/4] last-modified: new subcommand to show when files
+ were last modified
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Taylor Blau <me@ttaylorr.com>, 
+	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 01, 2025 at 12:42:52PM +0300, Martin Storsjö wrote:
-> On Fri, 1 Aug 2025, Patrick Steinhardt wrote:
-> 
-> > On Fri, Aug 01, 2025 at 10:56:22AM +0300, Martin Storsjö wrote:
-> > > index 9bc1826cb6..9b519e6eed 100644
-> > > --- a/meson.build
-> > > +++ b/meson.build
-> > > @@ -694,9 +694,12 @@ third_party_excludes = [
-> > > 
-> > >  headers_to_check = []
-> > >  if git.found() and fs.exists(meson.project_source_root() / '.git')
-> > > -  foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_excludes, check: true).stdout().split()
-> > > -    headers_to_check += header
-> > > -  endforeach
-> > > +  ls_headers = run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_excludes, check: false)
-> > > +  if ls_headers.returncode() == 0
-> > > +    foreach header : ls_headers.stdout().split()
-> > > +      headers_to_check += header
-> > > +    endforeach
-> > > +  endif
-> > >  endif
-> > 
-> > Yup, this looks reasonable to me. We could have an `else` branch that
-> > warns about the command failing, for example like this:
-> > 
-> >    warning("could not find headers: " + ls_headers.stderr())
-> 
-> This would work - however the output from ls_headers.stderr() is fairly long
-> (if you try running e.g. "git ls-files --foobar", you'll get a 37 line
-> listing of potential options); it's rather distracting for what's otherwise
-> a fairly minor build configuration issue.
-> 
-> Using ls_headers.stderr().split('\n')[0] works and just gets us this:
-> 
->     ../meson.build:703: WARNING: could not find headers: error: unknown option `deduplicate'
-> 
-> However I wonder if it's worth it, or if it just makes the meson file
-> potentially more brittle? (E.g. what if split() returns an array of 0
-> elements? Not sure if that's possible though...)
+On Wed, Jul 30, 2025 at 7:55=E2=80=AFPM Toon Claes <toon@iotcl.com> wrote:
 
-True. Maybe we can just not include stderr at all but say:
+> +[--] <path>...::
+> +       For each _<path>_ given, the commit which last modified it is ret=
+urned.
+> +       Without an optional path parameter, all files and subdirectories
+> +       in path traversal the are included in the output.
 
-    could not list headers, disabling static analysis targets
+s/the are included/are included/
 
-That's probably sufficient.
+> +static void last_modified_release(struct last_modified *lm)
 
-Patrick
+I think these days we tend to name those functions using "clear"
+instead of "release"
+
+> +{
+> +       hashmap_clear_and_free(&lm->paths, struct last_modified_entry, ha=
+shent);
+> +       release_revisions(&lm->rev);
+> +}
