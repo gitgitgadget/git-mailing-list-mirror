@@ -1,86 +1,84 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD1426CE37
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 14:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EB926E6E3
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 14:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754059462; cv=none; b=RnDGvqbJgIHO+nNUtMju/sjUU366Nz8ob+XzWXIic4p0Y+0IxBf8TTozUXZS45GJZ5WGe0B4GBVPe15BTm3cLjl2cF4iihXkMTKRGHA43MFCc08zI0/IGKcHT/Nd7ZQitOjzeD3KIfb+5A9HD/bnh7FsfeumhwnxFjxLcbS/ozU=
+	t=1754059466; cv=none; b=qybsACsa/RImpONsXdFp7PzCFaQrY1jlTSNAzAwIhv04E66PGiVfobVZ5Vug+v6MdEEHDqnGkB1fO3a49gF/v+HwZFlhgIfTwCJepvlQ1MV4cwAzQWBwRvv/tklFDHj4Q00fsvXscpL0yDWOTmFWcjNRrkCM8+GQHcClRvQlqVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754059462; c=relaxed/simple;
-	bh=uVe6TSiI8rbma+vBErdqv4E+WHQ5ulr4nsyoO4oHV98=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ipyFvSVr4YYcVvOOFS8022p6k/G0LIqccCoaxgafAUceI3Pr9NC+meD3wb1oF/b5FBra41DiX+xWDjDHP9Fht2jJLSTYQqfwCzhbcT89Y9Vt+3KsZ0vNw65bKbMNGOmQs3IdjZmfyHaQ+//UWyywCI0PUb/ktlEASfYS4BifG3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=atLe/MjD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hgd1AmGT; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754059466; c=relaxed/simple;
+	bh=Tl0fvQitXsP3+sntMl4v2jZ0d083ccvC0rf1z77v/YU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q3pkAoNNpkewCTl+exeUAfyBONu2VT9v5ay5vDrBxuS/PEF7FNJmHpq5ZTPWpucesa3FAKSdHbFTMUSSaeGS8f3CIfAYD/WNT9N00ui3X19sADfkBBaU9AEFXmNE8S9+kfXcc1EhG+BK+Blxb5cla5/b1drHAw/9/CxZMgWlzso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LrdJYQo6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EjUbHfCW; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="atLe/MjD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hgd1AmGT"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0E28C7A01AB;
-	Fri,  1 Aug 2025 10:44:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 01 Aug 2025 10:44:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1754059459;
-	 x=1754145859; bh=iTtoUE+/cV/KF8S7jCVYB890PHW5jmx1zbQqQgdln1U=; b=
-	atLe/MjDe2DSdr5y204jf+KUfyaDMvabibvIAfwecW4/wIyoNzITNcjHRxGVJDwB
-	x7zGANhVUR+P68/qakwaQz63x4vn4X+noDMUyxVvZsVb2MKRAFPy5Py9m2HGZjer
-	NtvmE6PQTK3Y0qUVT7b04EtLhskzPqY1epAml2d0R1WzHgutBp4/CH7Z75eYMIGs
-	L5lLKg5iZz2cS/r19abz+7ZciIpTqkJxg4LBZ0aFo3iQ0ItTu/zFEm5okLjmR5LB
-	DF9Je46DVXRmJ41/NVlJgLATpvsTd2Cam4bwfinNJSGCcyIgEcDjOywBD4TZTSoB
-	EQSoG8mxDjrtV9NAtq6kMg==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LrdJYQo6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EjUbHfCW"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0968F7A01AB;
+	Fri,  1 Aug 2025 10:44:23 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 01 Aug 2025 10:44:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754059462;
+	 x=1754145862; bh=Lg3LUKBUQ5/2Hzsr+Zl3S/c4qaqWKH67RAvjAYoiznE=; b=
+	LrdJYQo6aNWcnYfLYm4zgu1wC6QWoOk5e6QP81gV1XUUF6kuA422/4Hdm0PXqTLR
+	sqIzabd+00nFT6mZ9iFZMi5hZI1jemo4xuHrMjc0USR7vohX1G16UclAehMEcvCo
+	CSeypFTe9Qeik1MyeEkaxfEf8U9MJWELGIdyH/VCB9ipyNVJixWV93EIhKP5VJIl
+	3arWyYti7Wn4v/TmQmVCJMkJcdybdrLKyicAduddWrL252rZFPpp0O7gECYFuW9/
+	s8KvcWFdyWi1JPORo1QiRDI6enQk3bL2EU+j4WWydFEBwai62EEHS/Q7e5P+LFnP
+	DZSVY8VP1U6T1GAmMN6KsA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754059459; x=
-	1754145859; bh=iTtoUE+/cV/KF8S7jCVYB890PHW5jmx1zbQqQgdln1U=; b=H
-	gd1AmGT2904d1HUnLiuUI5aB8zBICmdjeVwGutzvhOKC6Lc6o237tvwP7UHB105S
-	Q8aZlN94NdmmTWFcdteb5c5LyvCS5bNlbk0jyQoqVyPtV1jiN9R+l7F80szBB05d
-	KJJHpT1Qbn3aQwELA2rBEyYt8AWX+knn9YqwS+rFnAKvIZq+5ycRrNCFlmtT6e+E
-	ueywuSJuKeyGx4c1foouWoXBPceSGGeKrFYhdKa5pzskcu9VS41B37oxS9xgBCEr
-	Hb52qGGE02ac9URD471Wrg4mQNVZIIExE2Z9BS36ysTNy3V93eEHw097nhQL3hCC
-	XCzKrDvRxXVXq9IawIX6A==
-X-ME-Sender: <xms:w9KMaM-iUicxL--B6mves6p11gGTvOwV-_jj7FzURMHPCnFQIk5ndw>
-    <xme:w9KMaPRZMwPQuNnWYZWqnBsDJyZFAVhgQAu2J5dDxHawZSfgRaEuj50AGb1PFMwQE
-    LQqUMl67XTDcweKHA>
-X-ME-Received: <xmr:w9KMaOmSvt1J_qc_sS1HtvgvJjL1tbjSBtKbIrmXjz8Qpd7vP3uNLjVzZDu7c7VQqkdsMMRmxXfJauAl_lKTEGh1KUBd0mGt71BYSgQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754059462; x=
+	1754145862; bh=Lg3LUKBUQ5/2Hzsr+Zl3S/c4qaqWKH67RAvjAYoiznE=; b=E
+	jUbHfCWOLqiUWuXsbpsPdPeGfcFOb1Cg1l/+VXm93swddCQqnIySc9DK4m8mVJWq
+	4ZHCMk65WEMDA6D6W3D5XMhRuGeIsUc+6yj+Fu+KuYlz8TJpeqfH27zXpcWAatZm
+	Lqn14YeYPB5PpNPj9i0VU/cG39U1+MjSF1y1IzRnpbUxsHhLsfsv4nalFli6Db7P
+	OP1WCd4w5C/2ejpjd+3P4P9nVWNqn3o9vgd1MYfpNgl6sqW50f0++0Wqk+EYfNBj
+	A9SZ1qvCCVVVb0WRUbogTPqG/NPXHFqz4MEJmq9fkMNR58j9XSY1XpW8ptlDiZmF
+	ytw7zQItWCd13/p+hnXxA==
+X-ME-Sender: <xms:xtKMaNJmSbcGRCGeVd6p3I6lOuJgHCDCbu26H7_3IRXdpporWmCi3w>
+    <xme:xtKMaJVpghaMW-RLTEL9X2DanV15dyxFnuEr9xzvDik5tjwRL7pw7Nrj6aeGMcphg
+    5pSmTdIUHPHhsRucQ>
+X-ME-Received: <xmr:xtKMaHgbmXNXJm_U-GINIhwQtNxrHTPc-QkXfwcrJX-av9L31nWbxvhKn6I_bsc5-B4PVadYfRuwDh8bDnX8OgOUuc9AbqtR49SGNqtztGfR>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdefleeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
-    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
-    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
-    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhs
-    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhh
-    rghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:w9KMaPQYL8yCGU1Pcj8RNcehmkFQyHhKuXKXBhm-WfCf08iAAmqMOw>
-    <xmx:w9KMaMMl_yc0MJetSkuSZEZcQHvA-hQ5zqK3MI2a-XCTQ6ZMzGEAsQ>
-    <xmx:w9KMaIVZP7UhjKVXReZ4BN7GT6dS-91U7OPwYlj5Fx0gg95yNfNF_Q>
-    <xmx:w9KMaDeCLw5996MimOUGLyq_q6rKjjpCUBpO-4bcwFfbomou9onmZA>
-    <xmx:w9KMaDVKkiKYoneX1jPBWZznnqyez9mXt7mVvGarIcJg42sUuKhXG0o7>
-Feedback-ID: if26b431b:Fastmail
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrhhtih
+    hnsehmrghrthhinhdrshht
+X-ME-Proxy: <xmx:xtKMaM__RBPXRgMaRwuLGmyMiJWX1BAJfKxERDpBH5GRMkzVWYd7Pw>
+    <xmx:xtKMaJDQoCS0mCiuVUAFP3VLwPbeDmvEOacKw6Hz6W5e9sa6DFwagw>
+    <xmx:xtKMaBLgLhSpUuAJ0nsJCw-VQ9XczpLrNI-5S1TRfg63amT6TiXO9Q>
+    <xmx:xtKMaEmLr5MZhhldxmOtCtzfsVzfechH0wliSeRaDNBA16f1_7glbg>
+    <xmx:xtKMaFHauuevhjjNpPMIqBlIFDO7gm2hbthOq17sp0fVKWq_4muPIlgb>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Aug 2025 10:44:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH] doc: fast-import: contextualize the hardware cost
-In-Reply-To: <a9bc7547a27aab8bc2404caeb821b7f5c4c10d14.1754055658.git.code@khaugsbakk.name>
-	(kristofferhaugsbakk@fastmail.com's message of "Fri, 1 Aug 2025
-	15:42:25 +0200")
-References: <a9bc7547a27aab8bc2404caeb821b7f5c4c10d14.1754055658.git.code@khaugsbakk.name>
-Date: Fri, 01 Aug 2025 07:44:18 -0700
-Message-ID: <xmqqo6szm799.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 1 Aug 2025 10:44:21 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 19027786 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 1 Aug 2025 14:44:19 +0000 (UTC)
+Date: Fri, 1 Aug 2025 16:44:10 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Martin =?utf-8?Q?Storsj=C3=B6?= <martin@martin.st>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3] meson: Tolerate errors from git ls-files --deduplicate
+Message-ID: <aIzSun25-RhmAfOd@pks.im>
+References: <dff715f2-9d26-148-5046-6b7190b9414f@martin.st>
+ <20250801102554.1904715-1-martin@martin.st>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,33 +86,29 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250801102554.1904715-1-martin@martin.st>
 
-kristofferhaugsbakk@fastmail.com writes:
+On Fri, Aug 01, 2025 at 01:25:41PM +0300, Martin Storsjö wrote:
+> When using the Meson build system with an old-enough Git version
+> that does not yet know the `git ls-files --deduplicate` option one
+> can observe the following error:
+> 
+>     ../meson.build:697:19: ERROR: Command `/usr/bin/git -C /home/martin/code/git ls-files --deduplicate '*.h' ':!contrib' ':!compat/inet_ntop.c' ':!compat/inet_pton.c' ':!compat/nedmalloc' ':!compat/obstack.*' ':!compat/poll' ':!compat/regex' ':!sha1collisiondetection' ':!sha1dc' ':!t/unit-tests/clar' ':!t/t[0-9][0-9][0-9][0-9]*' ':!xdiff'` failed with status 129.
+> 
+> The failing command is used to find all header files in our code
+> base, which is required for static analysis.
+> 
+> Static analysis is an entirely optional feature that distributors
+> typically don't care about, and we already know to skip running the
+> command when we are not in a Git repository. But we do not handle
+> the above failure gracefully, even though we could.
+> 
+> Fix this by passing `check: false` to `run_command`, which makes it
+> tolerate failures. Then check `returncode()` manually to decide
+> whether to inspect the output.
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> 6e411d20440 (Initial draft of fast-import documentation., 2007-02-05)
-> pointed out how much time a fast-import took on some hardware with a
-> specific cost.  Let’s further point out that this experiment was done
-> in 2007.  So modern hardware should have no issues with such a repo.
->
-> Also move the parenthetical to the end now that it contains four words.
->
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->  Documentation/git-fast-import.adoc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
-> index d2327842003..6f9763c11b3 100644
-> --- a/Documentation/git-fast-import.adoc
-> +++ b/Documentation/git-fast-import.adoc
-> @@ -182,7 +182,7 @@ amount of memory usage and processing time.  Assuming the frontend
->  is able to keep up with fast-import and feed it a constant stream of data,
->  import times for projects holding 10+ years of history and containing
->  100,000+ individual commits are generally completed in just 1-2
-> -hours on quite modest (~$2,000 USD) hardware.
-> +hours on quite modest hardware (~$2,000 USD in 2007).
+Thanks, this version looks good to me!
 
-That is a definite improvement.  Thanks.
+Patrick
