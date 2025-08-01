@@ -1,73 +1,73 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27482C9A
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 03:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD872199920
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 04:04:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754020520; cv=none; b=inc0MhC2xiCvVwzljhFKPmTpXbZ24D49KdQw7zIHLybc65+Je/mJ7fhhkrzPkw69Z1b2+HGviwiz0f9OEz2EQwBiu0v4jkOjSGpQ02V+IGgB3S4gnEWTnIT3x9f3fqvD77y39F+ST4YctDmSndHHZil2DaGVu5DbblSnULXn/Qg=
+	t=1754021101; cv=none; b=tbLavWAXW8w6GghhUELAvhblSlVthKm7r7KEX6AHRNpc7+gro/LUnPk+2B8Wa11l3HGkyxI5oKYRyfAdhQVMrZd32KFhwd/VnIWb3sPcUI3N3rw4n7/jZx8Zulm2PyqOA4U/IfO5ZvpMwKMu0rNLlixGdY/FwppS1e/j98AMDKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754020520; c=relaxed/simple;
-	bh=z7IUMVQMS51sR7o9NuHrDXJEcnXUiWCCN057CHMR9rc=;
+	s=arc-20240116; t=1754021101; c=relaxed/simple;
+	bh=EiCdZm0nPEqAGl0wJakUAJz4bpcNl7i15RYPEfFOWww=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a5spEcl7LCS8wjxCoi9RrZ8RWdi7MJ5csF0hG6ru3olEPChpcRgjhYd6vrwfXhCqZWLXJz8f1i2c0b5af8Ikax/WPGF0QcMaCF9fMS2WHvne3bDhZODnBnFArLatdxAaBAT+ow33g9CrcgFT6Rtb9AKJKxfRMQb7IBXPGNn1fUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=haUbrrru; arc=none smtp.client-ip=209.85.214.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=RbWlG1DuZUf/H8MwbKTEgdPcjbeGBk3aBEPThxwNMCI7nax4exLRmXDxiyOgCCiB1/FWIiVQXcPCAl2u3X9stN0bOFuqL9B6lnppJR01LD+kZwFRSeV9uIOjMjtbExVkmJ63QfBH3VU+DmljU56sUHl4rXlSfNTq0EeUrXS+lg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NjusbWxf; arc=none smtp.client-ip=209.85.215.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="haUbrrru"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-23fd91f2f8bso13701815ad.3
-        for <git@vger.kernel.org>; Thu, 31 Jul 2025 20:55:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NjusbWxf"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-b422b31b1c0so818864a12.0
+        for <git@vger.kernel.org>; Thu, 31 Jul 2025 21:04:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754020518; x=1754625318; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754021099; x=1754625899; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IGAEJPyF5surbDY16jQ57AE47vvA4WM+Mxhjq1bTGsk=;
-        b=haUbrrrusPZtMyfvlivnPz+U/nKG0/jcxaY0bijQzulkKW3z5LaZ249tRaZtkiqAkc
-         n3Xe+O85/771qWcLo8CfO1+77c6LdxpaGBW6wAS29sl2FMfCIFVCVCfBN86VoFQLT4c1
-         yf0SpqEhgT/7MsgcXjLEbPQRFhdPvv7/BhCzxvkMfPnuLijWSn2YPHmAeLAITMYAfblu
-         uShjftLbnyDQCaUslCX6YxFiEzYGCpNKhQcIxI4b40xslAPNeWb4ekYAcsh6i/NMZfPe
-         YhEW/derbspudaTXAfht9hP+kdcL7hs3LW3SZYQ2s6qL54jsSnDpvlMFsv4D0P0/sdWy
-         xYmg==
+        bh=dFujVh/N6UoZojkajEE3OWgYP4jmAIHFt93QYLRnO/g=;
+        b=NjusbWxfpPFyFFFcsvLW7xYspjxmhg6Uyl9ax5R6bZ2qkhzmu4rpcwHeqnodn6nfca
+         pBL2MLHsKJsd1UClzb6QHCPXmv1RzWyhFl8QFlMysg2gfVk7PU99Au158r96rHct7Ntu
+         hakUitqwPngMmfifSWs3uwXxLjSedeSA/91WMI7XsTAFAWqh1QI2TAT9pMPe/wFcQDFq
+         8aALndTHiJugaEbpjJvz1xsHLYKogHOiyS0kzJDhLPHHktRGXBtjIuBRm1LL3IlttPDR
+         LymFpGbZZ7kI7ogMmdGTHsfypbFLRqba8F8UtejeAin9/bFT3GaDf1e2TEE/OxlO6mWM
+         Qf1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754020518; x=1754625318;
+        d=1e100.net; s=20230601; t=1754021099; x=1754625899;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IGAEJPyF5surbDY16jQ57AE47vvA4WM+Mxhjq1bTGsk=;
-        b=K02czgFkIhNPJXangxKe/QZi64yQ3pim0aaEJ7R/faUR5t+JDtBg/YCBKj76h2nwXg
-         i/CjvOZD+xLBc7Y7f/PoRNgu+74ICE6Lo4b76YI7ErCo6nl8DCgB3Hg/uy0s2n8dcJ8Z
-         4t+LQzppt/EAxdUPxcthU1hqu5PjxYCZ5r/SjhhnddcHj4/uooZZUuMAhmn3jKCcZIUA
-         CeKb4RWqeipJ8pILxA+kZFl3747F13/XQkebLOZtdPsm0fU/q4+kkzZpUxaKH3NFR/om
-         bzJARTlJvBy3Fe7Y2wsLhtD90ircK8g+791r7XeCe8tCcpXKQcaGOHAoco657tVNPsqw
-         KxYw==
-X-Gm-Message-State: AOJu0YwgNFiGOOd/eOJoBGXIRxFF7VlOB/6+Z0uUzP3NVd8ZOyqJZpqQ
-	TvTAJiqi55Cg/tKb/oG49VFDHVuG8apxXINtWbXuSMMqq4H5RlxJ1ZNh
-X-Gm-Gg: ASbGncsGGUPJAR9arMIjsPyz+0EY1WM+A4SXAhOJoNYiQtX/keK8AiqtnIF+yZzcaau
-	4qeX2RIEeNtfmTWsAaZ+Ab8E9sFve2nanPDJ8BgqZZJX+nzW8t6OfZOhuIC3TVkOKgshQyk6pLn
-	4+ZjjS3LTzdNXh8ETdYw209beoS6b0oL3IH6LHXrOFFBAZcyXCwIB4EFvMliNLFmPVVBpgLMLLe
-	QaUkgZypQcTctv+Rt1gUgNtokbG1vbnx4T1vFihEC/+PK4xfZwxzKXYBLSXOhpuX+AyW5cLv1Vf
-	/sjb+ftgJVympG71FvaDQcBTFSvYx9Z2rmRIQzvIJb1D6t3TCNoWtlxCIB2wD9x1604uH7Feppf
-	sATdIEA4Q2EFEZrIIhA==
-X-Google-Smtp-Source: AGHT+IGy1YKSeQurw7ULkbhhI9lItVHZR/lnz/RuwJfNrnzSiucTnUnvk12IbmuJ8D9LP2n02D1o1Q==
-X-Received: by 2002:a17:902:d48e:b0:240:eea:35f2 with SMTP id d9443c01a7336-24096ae696emr171357675ad.24.1754020517992;
-        Thu, 31 Jul 2025 20:55:17 -0700 (PDT)
+        bh=dFujVh/N6UoZojkajEE3OWgYP4jmAIHFt93QYLRnO/g=;
+        b=ZK1s41Ps4QGZftAYsks5QqaJ10EOfk63yzMXgV7wgZk6M7Fu4eJCiCtny5YSx7IjrM
+         hSTmPSr4zN8mBtftnSFY4DPPe3NU6tTaz1JNSHgfmKeEdrMMePxxuv4mYhXXxKZISWcz
+         dkdPuamiwTMMyPkTxHIP0DSmiU4jkC9BnX4XHwBxS2A4HPHodMFhzFt2DXcpFJMb3qwp
+         oaPeDGp7PrpJgxrdNmk2TFGsnn+9YNptfzLYW7KEK4VZ17m0CTeqL/10wEIDelKxay5n
+         vBtFPXByp53mM+2WG0FctChcyq2v2Qu+AWRD9TLJOFjyXf4mTaBDrF73FJmeTI1EjwpQ
+         q3aA==
+X-Gm-Message-State: AOJu0Yzqeg7OBlYew/awJa13wpIPY1pUfjsslqE1gSm8bQ4EdGaz7053
+	fNx8fVUo/rW5pkwaPfZlPhG/GbVWbhQFtKHPaGkfeL/+5/BgiMD7qM2yGz+oXCjs
+X-Gm-Gg: ASbGncsCaueEITB++TdtWHENbcY/pT07Cazer5YAYqWzvLOwhWY8I6ZMbdFczz5EjDC
+	JZ7OXSHfg21TGPhRmkgtsamIX3d5V4GfwX30g3DQYoMWPsWSiBKYPTJkwOXhM6g21snvweaxEb+
+	T4sFoG+32mmoDiVJqFOFUdbWoU60VbV45otUKk72cNdL/Gc6OIrKbCEOA+A6kHO6s4iLVz9a+is
+	akR86O87VMNMCAprXqP0B8VLOwuhPExE8h+6iNtqFjGgDtvP/YwoOSyayNLXMxg/5MXoSLR6FQ2
+	LzBZXeIBC+cEmSOaEkW6FO9ob5JKytKo5okVQEjxtUjwswgMREtgwEArnDKrmo/GudDtMaBx2WD
+	piJ8xmq4ZcCLmszJiow==
+X-Google-Smtp-Source: AGHT+IFXMTEAHFzM0op/7MAcDN6GqF2f/uglrUgWSOofYlR9Jk2g7f38nAA2BjcqcWaOYcN3wyghsw==
+X-Received: by 2002:a17:903:1ca:b0:240:2145:e526 with SMTP id d9443c01a7336-24096a64289mr144519145ad.6.1754021098586;
+        Thu, 31 Jul 2025 21:04:58 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-241e8aafb34sm30855825ad.173.2025.07.31.20.55.16
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-241e8ac8ed4sm30782815ad.189.2025.07.31.21.04.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Jul 2025 20:55:17 -0700 (PDT)
-Date: Fri, 1 Aug 2025 11:55:14 +0800
+        Thu, 31 Jul 2025 21:04:57 -0700 (PDT)
+Date: Fri, 1 Aug 2025 12:04:54 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/7] string-list: align string_list_split() with its
- _in_place() counterpart
-Message-ID: <aIw6ojvvDWLPllG7@mbp>
+Subject: Re: [PATCH v2 4/7] string-list: optionally trim string pieces split
+ by string_list_split*()
+Message-ID: <aIw85gIurfEhvuPC@mbp>
 References: <20250731063949.1601669-1-gitster@pobox.com>
  <20250731224607.3942417-1-gitster@pobox.com>
- <20250731224607.3942417-3-gitster@pobox.com>
- <aIwndQtEoKNXRG5z@mbp>
- <xmqqikj7ogf7.fsf@gitster.g>
+ <20250731224607.3942417-5-gitster@pobox.com>
+ <aIwyIJqEIdSdKINz@mbp>
+ <xmqqcy9fog8x.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,58 +76,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqikj7ogf7.fsf@gitster.g>
+In-Reply-To: <xmqqcy9fog8x.fsf@gitster.g>
 
-On Thu, Jul 31, 2025 at 08:43:24PM -0700, Junio C Hamano wrote:
+On Thu, Jul 31, 2025 at 08:47:10PM -0700, Junio C Hamano wrote:
 > shejialuo <shejialuo@gmail.com> writes:
 > 
-> > On Thu, Jul 31, 2025 at 03:46:01PM -0700, Junio C Hamano wrote:
-> >> diff --git a/setup.c b/setup.c
-> >> index 6f52dab64c..b9f5eb8b51 100644
-> >> --- a/setup.c
-> >> +++ b/setup.c
-> >> @@ -1460,8 +1460,9 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+> > On Thu, Jul 31, 2025 at 03:46:03PM -0700, Junio C Hamano wrote:
+> >>  static int split_string(struct string_list *list, const char *string, const char *delim,
+> >> -			int maxsplit, int in_place)
+> >> +			int maxsplit, int in_place, unsigned flags)
+> >>  {
+> >>  	int count = 0;
+> >>  	const char *p = string;
+> >> @@ -320,12 +327,18 @@ static int split_string(struct string_list *list, const char *string, const char
+> >>  	for (;;) {
+> >>  		char *end;
 > >>  
-> >>  	if (env_ceiling_dirs) {
-> >>  		int empty_entry_found = 0;
-> >> +		static const char path_sep[] = { PATH_SEP, '\0' };
+> >> +		if (flags & STRING_LIST_SPLIT_TRIM) {
+> >> +			/* ltrim */
+> >> +			while (*p && isspace(*p))
+> >> +				p++;
+> >> +		}
+> >> +
+> >>  		if (0 <= maxsplit && maxsplit <= count)
+> >>  			end = NULL;
+> >>  		else
+> >>  			end = strpbrk(p, delim);
 > >>  
 > >
-> > I am a little confused why we need to use `static`? Would this function
-> > be called many times?
+> > In `append_one`, we would tell whether `end` is NULL. I somehow feel
+> > strange why we need to do that in `append_one`. Should we just set `end`
+> > to be `p + strlen(p)` when `end` is NULL. And then we could do rtrim
+> > inside this function instead of `append_one` to avoid passing "flags" to
+> > `append_one`.
 > 
-> I actually am confused why you would want anything other than static
-> here.  Writing this way would allow the compiler to realize that the
-> array can be prepared at compile time, without need to do anything
-> at runtime.  If you made it non static, the runtime code would
-> allocate two bytes worth of memory on stack, and stuff these two
-> byte values there, each time this block is entered, which would be
-> at least once.
-> 
-
-Sorry to make you confused. Because there are some other changes where
-you don't use `static`. That's the main reason why I ask this question.
-
---- a/t/helper/test-path-utils.c
-+++ b/t/helper/test-path-utils.c
-@@ -348,6 +348,7 @@ int cmd__path_utils(int argc, const char **argv)
- 	if (argc == 4 && !strcmp(argv[1], "longest_ancestor_length")) {
- 		int len;
- 		struct string_list ceiling_dirs = STRING_LIST_INIT_DUP;
-+		const char path_sep[] = { PATH_SEP, '\0' };
- 		char *path = xstrdup(argv[2]);
-
-> > And I have a design question: by using "PATH_SEP", we need to convert
-> > this character to be string. Should we create a new variable named
-> > "PATH_SEP_STR" or whatever to do that?
-> 
-> Sorry, but I do not understand the question.  You want to see
-> something like
-> 
-> 	#define PATH_SEP_STR "/"
-> 
-> you mean?  I do not offhand see why anybody would want to do so.
+> Sorry, but I do not see why such an alternative design is a better
+> idea.  The helper function's purpose is to stuff the substring at
+> [p..end), possibly after rtrimming, to the list.  You could compute
+> rtrim in the caller, but that would make the logic here more complex
+> (at least, you'd need to introduce yet another variable similar to
+> "end" that points at the real tail of the string, and you cannot
+> reuse "end" for it, because of the exit condition you see below).
 > 
 
-Yes, that's my question. Because I see that we would define `path_sep`
-array in many place, so I wonder whether we could use such macro.
+I agree with you that we would introduce another variable. However, the
+thing I quite dislike is that we do ltrim inside the current function
+and we do rtrim inside `append_one`.
+
+My thinking is that we should handle the [p, end) string in the same
+place. We could either decide to drop the string or change the string in
+the same place. However, at now, the logic happens at two different
+places, which is my concern.
