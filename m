@@ -1,164 +1,131 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E63B139D
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 05:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAFD14A60F
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 05:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754026082; cv=none; b=T4Ck48Rbi1XVjjsqeWst5K1bs0NJu/aggJTuuWaJEJRi2zQt2+WrIYNw0nRJONLWr563Mz5nX5T6z8p5VVtjDrorLNGB1jdP7wslRcoto2BSvEJluwl+2d4Z+rng9atlDqpClizzE6tvZcnDKRDdtYubHd9sQW2gLeKRb8/uzDU=
+	t=1754027685; cv=none; b=eU1tewnJrhhvEmle7zeuqC9ypjhW7UNi54c56vOQlWBAmey6z3hIq8J8Sh8Tgenqq1H42cc71rxaGYBHmKwjdaRRdnM60kNKhqGG9z9jYFSfgClgK0prMQ0wdkVj3hVaFxr1DrUk/wGF6VB0wKpBVpOGUGxrxyUvzehwICSVNtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754026082; c=relaxed/simple;
-	bh=Ew+sqWEJ/8h5IidelaCc17OS3rbXSWRSj8cwLf9rArw=;
+	s=arc-20240116; t=1754027685; c=relaxed/simple;
+	bh=rZe+9OhRSQjUw/rO3LTBPsswqaFGCZNvpNT2Js1yL7M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=txdLzY84agwL/DE7jGV6/piIlfKJt4W9OGai1PYX0O/hydoLtlzxI/cBE2cDGihU4cXdfFCge72ImGktS0F0pHXx/7epUBPoCGm/DBz1MlL2mJreViHEZZzrDvgm/GUqJEhL30QmoyV4EEQvUFhvZefQmjb3L099UoZeFmCax2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FdTWuUvj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M1dqlZUx; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=pWubKqj/mVjEPmPrWDb9NriJNzEVE30f4SHlu2iDP9qqlqCwj+ioL3+W3JglVNeKAsY6d40domGW7sXkOKXsPdyoFEfvKDLneTtbfqLN6P3IdX4UUJMXkD96n4PKA6bopaSeRmrsj0MWw1hUpNxJHCJAv7e5oZ62YjmUWI46zbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G+GA5qx+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DYbSnxxF; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FdTWuUvj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M1dqlZUx"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 77A291D0058D;
-	Fri,  1 Aug 2025 01:27:59 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 01 Aug 2025 01:27:59 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G+GA5qx+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DYbSnxxF"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 756971D00B10;
+	Fri,  1 Aug 2025 01:54:42 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Fri, 01 Aug 2025 01:54:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754026079;
-	 x=1754112479; bh=Q93UBgU4NdYHX7hjCAWtvxl2jHooDcCUS6RsMGTI/K4=; b=
-	FdTWuUvjvR/L4tVexSU8tD5Bg2B7idxY3voNRQE1gJmo7cS9YQa8seBEWMUv20Ly
-	T7U3JElERqNzr0KbbjwageekC6yFfOhqfv7vmpjLUk6Pd32rm4fC3ZTIzy2uJgJX
-	SHp7TkVr2Bpya6GANCRGO8qRdIEoZuzVqC3RY6TcViYnaOekcqRGh4CQ/TEWzGJN
-	yFzEr4RyGJm2goUAF+smqPKQTVNCU8Rnab5klfw9ayuKgXP6n7OyQzQuDLS/ZqDR
-	a//60KAe2oSkk8nMlNeCoz+EFfrl+LgrSaKpq8eiLrX/oCUNEzprVdrgIqkwYYfg
-	/pnAg2Y6FpKcNzqRVdKEtQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1754027682; x=1754114082; bh=Z2DNjtU6Zr
+	eKSMpE0LAVBG+fmLt+qHPoQZxl0DNdYX4=; b=G+GA5qx+srEkYhmQYP/sJn4Lb5
+	RD/dw1lRcF6xhuqMUUC14FaC8DvpGUsupi2uz0eki9pBQ/MemW7ZWrMOAzILRVfn
+	6RYHtcYIjIdYAO/cIbwq6xvJ7EkJqKHrs/qNRw5mUmegZxr6ZbpRZYrRMrCb5skL
+	Q+bkE8Ndv/FhAIOhngA/z8YcmqglAxEDALic8j3VSqWcK1ylBMbJBPzWph8nglME
+	G8zRvvLKWSNJW5Pw+qHZpSHqU355SL8Z+uj7+GbSMQPs4tfieHxCyGvGmvswIgAt
+	xj9jCkmP9HHhu+Wr+VlChTJnNapecMEYt2+8pL1J43Pox9UQJuwmq/wwfRCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754026079; x=
-	1754112479; bh=Q93UBgU4NdYHX7hjCAWtvxl2jHooDcCUS6RsMGTI/K4=; b=M
-	1dqlZUxq2JaTuBaKwlMnI8B7n+jBzi1HlsWEIn6i8MagBt3zqL/d5Vn5riXYWg/U
-	mZei+ZFTpZe5boN1+5pzXJzWVyyjl7SR69qkNKamA86m05iPnaavCKG7PVk6gGRE
-	iM2pzwjvZS1LXxzKoujBosuDDqEpWV21dc3qTUjMfMAlsq8/pKae2ln+DQDEsTwj
-	PPhg1wU2QxtUk9TtXFhUI6gaBL08ab4glrMsmoFVU2eT27bss404p5fgFNm5XsjA
-	WXe0ouQ7YXqL1MF7y7lYV4dm7SA92LEABplhkhWuB90m5wuHukedTI3h8CU72SZa
-	i3nJXGCeVr80HywmPIumg==
-X-ME-Sender: <xms:X1CMaGckJ9adOyjWRX0oZqE4hnanA8V2AmnbruBDE68XV-db3SnRCg>
-    <xme:X1CMaAYAnG68hSnApyBHgfPfAg6cXi0Ubh_oU7F-2gUYhaSwPsb0lm9qdUEJkwRFN
-    I65mibjhTf29_xzDA>
-X-ME-Received: <xmr:X1CMaJWv06EX94V46dpvyRQbjRpk6o9dWlf7iBKiDA3xF5EPZbzSru-xrro2EBqur-r16VMTfqTeyUt-EMYx1QXe2ssVYaVv_UbXttVPR1zw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvkeehucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754027682; x=1754114082; bh=Z2DNjtU6ZreKSMpE0LAVBG+fmLt+qHPoQZx
+	l0DNdYX4=; b=DYbSnxxFT1ibIRTBf7Apbs4D/eEw7Btesp3ijaR/iaHRge3kbjv
+	mNYA0mZl+U4jXi6/iI/HpmjaiommW+STJlBWfTQX5A+NZap0GQ+R9BGUcYZgUsYz
+	xZ0iqTPL6uxRikfIsGWZ2x44nzUX+vckjJbeq6Lfae44oWC3CYlRRIr399/T7XND
+	QsHKXak/Y3juesrzoIkB/orem13svv98LAbCESOXvvc3nyn50L9CN7zs7S/u+k7p
+	rPOZb5ahwL7Nx0V5DxyBcHE4GA1dfEA+6F6mU0RlWeNdo23sNHPIqd75zxM8e+zB
+	KlJIYXs9FwoUZAfA4iJPpDhHMiqkCTiUR1A==
+X-ME-Sender: <xms:olaMaFGAhjn_n4btie9UoI3vUJ70uVpX-4c6A6XNaiZgnrYub3-y7Q>
+    <xme:olaMaHQmxnElbjgIBlBMR3umg3WLEqlcKSfui3Rb9_aACZKiRyB0cQtWH2i5qqvlY
+    9Xkv_u-JDZguMYvKg>
+X-ME-Received: <xmr:olaMaCy1w_fZB1PHhxOW4gfawk9YJeqrWObHjJqLvL5NMRmVvzY1D2hwKF9-6vBqrZKs-hYc4zDRsFjgAIC3xzfiaWwLTHfcyyck_2vuF7h8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddvledtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeortddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeduteehffeguedtfeevgfethefhgeevfffftdevieffjeelueetkeetueejgeekveen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrhhtih
-    hnsehmrghrthhinhdrshht
-X-ME-Proxy: <xmx:X1CMaCgeBBT4cRcg-AX60fDycupjUMFek2kDXoPknRdn_qHiOCOWNw>
-    <xmx:X1CMaHWyUFNcf5710zvPmlgv9McjWbfThYP7n4DVZQv0_3gNH-RzEA>
-    <xmx:X1CMaJPMIc9b7AKWyphId7YnUpTv1eMBUP2kHSpZPCNfALsiiF3dIA>
-    <xmx:X1CMaDYkhlIZDepBaqnJvvAtbfQJ88GSzZHYDUJ_5PrEKehe2vluZg>
-    <xmx:X1CMaIaStzgKIqfjS8ypy9pXKct7U-k0ajwDXtHYdjTYpelqWsT4ARkT>
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepvhguhigvsehgihhthhhusgdrtghomhdprhgtphhtthhopegrvhgrrhgrsgesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrth
+    hhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtg
+    hordgtohhmpdhrtghpthhtohepmhgvvghtshhonhhifedtudejsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:olaMaDc66KeL4LhLw5itVhe5TuO87zPEzNDl3oFVQzdtVFCJo9CoLg>
+    <xmx:olaMaFMxml9XkHRwtGrQwm0oMmKHNDLaTGXYdtHtfBxPUrCzRtlMTw>
+    <xmx:olaMaOviPjIsww-zR1E2JGPhcDD6_xLlqnkm3WQ9MLldCU4ReJarcg>
+    <xmx:olaMaGCg_RGPikP6Va20uRIjSOJqk5v1Jl6EafEAF-41H4Dd4Ut9Lw>
+    <xmx:olaMaH1K2RzKHC8uQ1YZwv1Eqs0UMjifTiVr7sHwMy_ZssdlniqRXupt>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Aug 2025 01:27:58 -0400 (EDT)
+ 1 Aug 2025 01:54:40 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bb3b06e6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 1 Aug 2025 05:27:56 +0000 (UTC)
-Date: Fri, 1 Aug 2025 07:27:53 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 9622aa16 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 1 Aug 2025 05:54:38 +0000 (UTC)
+Date: Fri, 1 Aug 2025 07:54:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Martin =?utf-8?Q?Storsj=C3=B6?= <martin@martin.st>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] meson: Check whether git is new enough to support
- ls-files --deduplicate
-Message-ID: <aIxQWSrnMOuEmfHo@pks.im>
-References: <20250731121533.178747-1-martin@martin.st>
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org, shejialuo@gmail.com, karthik.188@gmail.com,
+	gitster@pobox.com, sunshine@sunshineco.com,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Victoria Dye <vdye@github.com>
+Subject: Re: [GSoC][RFC PATCH v4 2/5] builtin/for-each-ref: factor out core
+ logic into a helper
+Message-ID: <aIxWlX36V6DcxWa0@pks.im>
+References: <20250723064313.29866-1-meetsoni3017@gmail.com>
+ <20250731090040.1625303-1-meetsoni3017@gmail.com>
+ <20250731090040.1625303-3-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250731121533.178747-1-martin@martin.st>
+In-Reply-To: <20250731090040.1625303-3-meetsoni3017@gmail.com>
 
-On Thu, Jul 31, 2025 at 03:15:30PM +0300, Martin Storsjö wrote:
-> This fixes Meson errors like this:
+On Thu, Jul 31, 2025 at 02:30:37PM +0530, Meet Soni wrote:
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index 3d2207ec77..bbc0e5ad1c 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -7,19 +7,9 @@
+>  #include "ref-filter.h"
+>  #include "strbuf.h"
+>  #include "strvec.h"
+> +#include "for-each-ref.h"
 
-Our commit messages are described so that we first describe the error
-and then we describe how this is fixed, and typically they are written
-in such a way that they can be read without requiring you to also read
-the subject line.
+Let's keep the includes alphabetically sorted.
 
-So something like:
+> diff --git a/t/t0450/adoc-help-mismatches b/t/t0450/adoc-help-mismatches
+> index 06b469bdee..2c6ecd5fc8 100644
+> --- a/t/t0450/adoc-help-mismatches
+> +++ b/t/t0450/adoc-help-mismatches
+> @@ -17,7 +17,6 @@ fast-export
+>  fast-import
+>  fetch-pack
+>  fmt-merge-msg
+> -for-each-ref
+>  format-patch
+>  fsck-objects
+>  fsmonitor--daemon
 
-    When using the Meson build system with an old-enough Git version
-    that does not yet know the `git ls-files --deduplicate` option one
-    can observe the following error:
-
-        ../meson.build:697:19: ERROR: Command `/usr/bin/git -C /home/martin/code/git ls-files --deduplicate '*.h' ':!contrib' ':!compat/inet_ntop.c' ':!compat/inet_pton.c' ':!compat/nedmalloc' ':!compat/obstack.*' ':!compat/poll' ':!compat/regex' ':!sha1collisiondetection' ':!sha1dc' ':!t/unit-tests/clar' ':!t/t[0-9][0-9][0-9][0-9]*' ':!xdiff'` failed with status 129.
-
-    The failing command is used to find all header files in our code
-    base, which is required for static analysis.
-
-    Static analysis is an entirely optional feature that distributors
-    typically don't care, and about we already know to skip running the
-    command when we are not in a Git repository. But we do not handle
-    the above failure gracefully, even though we could.
-
-    Fix this by detecting whether the Git version is new enough to
-    support the `--deduplicate` option. Unfortunately, Meson only
-    supports the external_program.version() method since Meson 0.62. So
-    with older versions of Meson, we have to just assume that it exists
-    (or maybe assume that it doesn't).
-
->     ../meson.build:697:19: ERROR: Command `/usr/bin/git -C /home/martin/code/git ls-files --deduplicate '*.h' ':!contrib' ':!compat/inet_ntop.c' ':!compat/inet_pton.c' ':!compat/nedmalloc' ':!compat/obstack.*' ':!compat/poll' ':!compat/regex' ':!sha1collisiondetection' ':!sha1dc' ':!t/unit-tests/clar' ':!t/t[0-9][0-9][0-9][0-9]*' ':!xdiff'` failed with status 129.
-> 
-> Unfortunately, Meson only supports the external_program.version()
-> method since Meson 0.62. So with older versions of Meson, we have
-> to just assume that it exists (or maybe assume that it doesn't).
-> 
-> Signed-off-by: Martin Storsjö <martin@martin.st>
-> ---
->  meson.build | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 9bc1826cb6..717365baec 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -693,7 +693,14 @@ third_party_excludes = [
->  ]
->  
->  headers_to_check = []
-> -if git.found() and fs.exists(meson.project_source_root() / '.git')
-> +if meson.version().version_compare('>=0.62')
-> +  new_enough_git = git.found() and git.version().version_compare('>=2.31')
-> +else
-> +  # On Meson 0.61, we can't check git.version(), so we just have to
-> +  # assume that the found git is new enough.
-> +  new_enough_git = git.found()
-
-I'd rather call this `git_supports_file_deduplication`. It's a bit of a
-mouthful, but `new_enough_git` raises the question of what it is new
-enough for.
-
-> +endif
-> +if new_enough_git and fs.exists(meson.project_source_root() / '.git')
->    foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_excludes, check: true).stdout().split()
-
-I wonder whether we could avoid the whole version check machinery and
-just change this command to `check: false`. If so we accept in case the
-command fails, which we can check by calling `.returncode()`.
-
-Thanks!
+Everything else looks sensible, but this change is surprising as it
+wasn't mentioned in the commit message. I see that you changed the usage
+though to match what we have in the man page. That's a good change
+overall, but should probably be moved into a separate commit so that
+this commit here is not changing any behaviour.
 
 Patrick
