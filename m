@@ -1,326 +1,223 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB76251792
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 13:11:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435A722D9EB
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 13:27:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754053902; cv=none; b=fB2nCMIJigxqI1n8kuSi48IWUhNY4ANa9Nnby5h9a121x5fgp/JuOXkhmaKkxOEdRJl87GlUOg85IlGSHRA6V2ExP7xi3VoU+TQBwWeL1Y7s2N9Q68f8My9mZZhKsYj9z+1MjUBFDfqBXdqFLoTcJllw0vHERZwlC0Dg/LKOUtw=
+	t=1754054874; cv=none; b=eKAdDugmjB1WA8xEDDyi4JC2fuZaSgOlfsKWheaNHHOGuT6JwYxKWS8a6g0onTROJUqPe1NHpSIAodAVj6VUsA9Kj97Lxu2/cT44DO61wIB0kMcpRdsQkB+ke6bnn4tXpLB8UhZn7IyPcRtAPe7t2pBgmqHOlOTdFULJrtOdWhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754053902; c=relaxed/simple;
-	bh=HPDCmZdAyY7TbJkC7tI9CfT3RLu5kvLVQ9+Lznk/Ivs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=d5rjDX7Q3d4YPsOIUu8lDbNHC2u9LjK0M3gjBzhqJXSUTmKfvP0FtPvtOYyHQY8BG9LH1ESAQ+rgMLjZ+QNMJpX6OH3++pDEcbQ7hmClH+Mx/s7oCFLFTMgWdAAGr7BppbM1uWWgVK7gOh3fqJEOhrOYBr8EoZZ2juiwu8MoktU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mbs0PeeZ; arc=none smtp.client-ip=209.85.210.173
+	s=arc-20240116; t=1754054874; c=relaxed/simple;
+	bh=WsqUzo+Zw6fmGeGmcZzDba6URiklGrnFw3nZ5g6UhGs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=C07ZdW8lPSies7J93CGl7waU4UrNilJIREbCA7GZ08sIir6lLPTjHLD1vx2NHFDenO8UkRi3fslettrQp1aKdqocrSV2FKrSd1PMD/AUmo4az3EVbIQCHvAseMfJjyqezZuKqDlk6i5q+2zzZeadKBeEIMkxPW4D+19nYaEihWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lMj7/f6r; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mbs0PeeZ"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-76aea119891so2892857b3a.1
-        for <git@vger.kernel.org>; Fri, 01 Aug 2025 06:11:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lMj7/f6r"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3b7886bee77so1720111f8f.0
+        for <git@vger.kernel.org>; Fri, 01 Aug 2025 06:27:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754053900; x=1754658700; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TKRWcx1VsUZiZB8FuFM6dR36hiiBnoZYlPDOCU02Ywc=;
-        b=Mbs0PeeZtygGba2PJPeIwkC4cNRyf559b5xyXd+Vm5169vrQz8qRv60LoeIcZflzTT
-         m14IeOd1BwkAsSiFSUWDh8Kch9pY0k86njBW7r13GaFa7U8MBnPqMcwqsh7yhVoqDLgL
-         k9m4zT2UC86oODUskGZNN74ncKmjBsF/uCH5kkxxtkaakuCix7nHU3pdD1BEVT1t6eVT
-         0PUQpNKpbmbv95n+Mj/wVBxVFu8IDgG+B4U8S7cX6YSSxmbVieidNIxP/uTGUyjCLRZ2
-         Ll/hhOm/G4dHlXk++90TILeyJdZ2x2JZWDlxogbn6TWAhdGKyGGmlMP+w56ah/Lp1530
-         FlKg==
+        d=gmail.com; s=20230601; t=1754054870; x=1754659670; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=vgfU5zFGR6ViMhhqo5hjxrIIZfvToph3q4URoXPbtr0=;
+        b=lMj7/f6rg2gVVBO1FyUd29AcySyT9hLdg5TLZwnlC+FiAf8Ggn5loVK9Q+dD6C7pjS
+         Ksv0i6RzitY0UxhbmKfcUtWWlr7K2qr7JR3jjXpN7hfjob8CSzWPoTJqqQOKoCuBgo29
+         yzAACcqU1wePbdsE5o2YUo/b3j2/WncnzDy4VGF5/o/XdiSJLR5JIkDDf0MRJGzC8O45
+         3tj+ybMqPw6dgOlXzoOV2wA8xopynlrsBhul/9p7Edi5qSYZ6VYTdPx9IagXw+/ZC2FU
+         XYFY6kPdjEua6OIRRqfA6oOQfTyu7Hy0drGX2HqHO0eiFuRRkZH8ncFkHCH+rsD3wXYf
+         PiDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754053900; x=1754658700;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TKRWcx1VsUZiZB8FuFM6dR36hiiBnoZYlPDOCU02Ywc=;
-        b=IxFlikDFYX3bpVtmfIWeMZXmoboOVw6hk0Klbk8QxABa54N4OIO1KVjYa34+7Ok1D8
-         D6wMiSqClqrB2soKxv9Ix+rO0J86HR6UUV/f3qzWd5tVNEolz1EvR5oNQ+qPucr6C3oA
-         KvdlPXeDRJ1kr1Gy2flvpTUxqQ87rIn2GpqtfTzp2QmGFFU07WIS7cwi91e9BcTqPWQt
-         wSmfrPTOul42DpB+qdLJF/xMAtxAV2cS3NA8y49QgRRFf6adG8gvcdZoBb9DP/Ph8CdH
-         4E1B0xLggEYFpeA7NxsG0Rec4b3dYdsIR2FFa7Tx/rsu8rmgIRMghATnJ8gRciBbBhXQ
-         kKWQ==
-X-Gm-Message-State: AOJu0Yy3XgGCqaS7NwUcDdqGzjePq6I8K6WA2CXT2cv3x929WrD78DUA
-	z85C0RaqeSuNRdftbuXj012oGtgMcukOihDxtiebBInhX+3+nUVNoTnrwITeOt6h
-X-Gm-Gg: ASbGncvwKHWTUU9sDmRa+mdi9fcbxaELVWDM9sjvzrXkE3WLXo7LqyIGbXBcUSEFWS/
-	siSmcHb8D9O2mUqIt2lV0eAY4kFcGJ40rjhS6E7hoDjkLs5s0BTyLVkxkpXd8nf7T0cuO7CVlIk
-	PY0hHLahSuVQGIhxr72MbNSS+aVCKCrLufLTw6a0dZvetHoGdKuQOoOti0PFXCcZbMuFopV8MIQ
-	BGh4k2JmatHdsgPYbTemtR3rnh/UDwVrowUgKaolBz+PAUCBR5p6y2epMIbma+UdDrxiewBK9iw
-	3s6YC1c8y/WVAcsHf8tcyPSKSFJBT/0+gfl96/zZdZW/RILOdB/fItl8TWm1/hAfVsD+EeiY2Ew
-	WJ4CBX9Mi3/x11HWMTaWHenoJtiMahvwhTnYj+hj+NIMI2kxE0OVI9lsPn5UcOpYbZQ==
-X-Google-Smtp-Source: AGHT+IHprzpH1v58XwO0U8ulGaCpK9X0L+IDdvBINwQT2atSj2lgsOIPd5q1ivKSEOZY+BeIvEyO9A==
-X-Received: by 2002:a05:6a20:94ca:b0:232:22a4:bd50 with SMTP id adf61e73a8af0-23dd7af497amr11691249637.9.1754053900018;
-        Fri, 01 Aug 2025 06:11:40 -0700 (PDT)
-Received: from localhost.localdomain ([2804:14c:32:8c1d:878:ec5d:4583:4785])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b422b7e4fc1sm3542272a12.28.2025.08.01.06.11.36
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 01 Aug 2025 06:11:39 -0700 (PDT)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: oswald.buddenhagen@gmx.de,
-	ps@pks.im,
-	karthik.188@gmail.com,
-	ben.knoble@gmail.com,
-	gitster@pobox.com,
-	phillip.wood@dunelm.org.uk,
-	jltobler@gmail.com,
-	jn.avila@free.fr,
-	sunshine@sunshineco.com,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH v7 5/5] repo: add the --format flag
-Date: Fri,  1 Aug 2025 10:11:10 -0300
-Message-Id: <20250801131111.8115-6-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250801131111.8115-1-lucasseikioshiro@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250801131111.8115-1-lucasseikioshiro@gmail.com>
+        d=1e100.net; s=20230601; t=1754054870; x=1754659670;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vgfU5zFGR6ViMhhqo5hjxrIIZfvToph3q4URoXPbtr0=;
+        b=Su0WG+ne50K0t/BtHBlwxxPiLhpyRDexdpKgerHZ10TH7WE6A5px8X0K9ULeGMniiR
+         oi1jPAI62dCvPfTKziiyZvwDFf+nTUa0eSXua6l42IMjuzrxS9tdvUoE49DT43jX2Vav
+         XUJevTPBT8yx2wbR6qD0KLLDRlaQNwPq5Y+ptxM3Tf2BoI90s1zXb5URT3oW9BsNcUT5
+         BG9P0lqHHun5ewnilGzGujwihRgOgYVbv2+lkq5RwPRrG2mj+EvpMtbs2UtxQWxAcRYo
+         oAJltco87FkD/5nAISW+ij1BKUWGrb7Ri3wRXOFnE8Y+xSBVG+3+dTWqM00G4S+8M47R
+         eXGg==
+X-Forwarded-Encrypted: i=1; AJvYcCX9IqTP+dbI5rNr7lG70jNquMnsPy8L/hdJHn8zfZa60f2tfM4NiaBXSowFphHP2iXIrbg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx04HOXQYFknMbEOMnH67gSAaBFnxuoBH/iv1SS28J9mcRVdtT4
+	L7HsGKzmBAeC4GKw2Pd9o4Elw95oZBqvhbomhpHHsiU6skNWVQuifJpR
+X-Gm-Gg: ASbGncvFCa0O2r9YOH0iHKh3SHbczoQYK0VXLR51DyBxqaBOXnEERml7u8bKjSzaam8
+	SAjKlxxdtancyuwi19wVNVjyb4To4fjRA5dJ1NRf7VaIeNP25wvblawgA38qhwtXzm/wuG0E30Y
+	tLPvgdcbBHb5NXVyePEP4XJl8WfLjNr3Tof7J30QKm72EdVOSfGoEi9X2YxvYXHLar0F3+7gd+a
+	8ikqZsqlpXA8285+m9mPJUGEGThNze8CHu7dd05yzSLffx/D8ccIPa+Ib7kVmsq6TZpTuoWLQFh
+	sX9lTr58WbZlO2jrMvKkJvsrNWv5ixv0vfglRc8LhcdO5F99TQ39PDJu0sPlV6g1qbMZgh8MKgi
+	zLvRqyBuQWSNx2wE3iOleTBI2XxmjSou6UQi9zM3W81SDPQwueCj8o8ZasoKJPWyOQEoCtC11oh
+	uG/ijtPUq2kZ8=
+X-Google-Smtp-Source: AGHT+IEN8aCfloEDOZxqGvskRhWi0q7QnQ/9/Fi+xRpuSRkb5EBIn70M4bbrQkV/Huzk8oUdtscTGA==
+X-Received: by 2002:a5d:588c:0:b0:3b7:735f:25c9 with SMTP id ffacd0b85a97d-3b794ff29cbmr9948545f8f.21.1754054870429;
+        Fri, 01 Aug 2025 06:27:50 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-458953eba17sm101893685e9.24.2025.08.01.06.27.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Aug 2025 06:27:50 -0700 (PDT)
+Message-ID: <2d2f823d-6e85-44a0-85d2-d45d4dc287fc@gmail.com>
+Date: Fri, 1 Aug 2025 14:27:47 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][RFC PATCH v4 3/5] builtin/refs: add list subcommand
+To: Meet Soni <meetsoni3017@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im, shejialuo@gmail.com, karthik.188@gmail.com, gitster@pobox.com,
+ sunshine@sunshineco.com, John Cai <johncai86@gmail.com>
+References: <20250723064313.29866-1-meetsoni3017@gmail.com>
+ <20250731090040.1625303-1-meetsoni3017@gmail.com>
+ <20250731090040.1625303-4-meetsoni3017@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20250731090040.1625303-4-meetsoni3017@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Add the --format flag to git-repo-info. By using this flag, the users
-can choose the format for obtaining the data they requested.
+Hi Soni
 
-Given that this command can be used for generating input for other
-applications and for being read by end users, it requires at least two
-formats: one for being read by humans and other for being read by
-machines. Some other Git commands also have two output formats, notably
-git-config which was the inspiration for the two formats that were
-chosen here:
+On 31/07/2025 10:00, Meet Soni wrote:
+> Git's reference management is distributed across multiple commands. As
+> part of an ongoing effort to consolidate and modernize reference
+> handling, introduce a `list` subcommand under the `git refs` umbrella as
+> a replacement for `git for-each-ref`.
+> 
+> Implement `cmd_refs_list` by having it call the `for_each_ref_core()`
+> helper function. This helper was factored out of the original
+> `cmd_for_each_ref` in a preceding commit, allowing both commands to
+> share the same core logic as independent peers.
+> 
+> Add documentation for the new command. The man page leverages the shared
+> options file, created in a previous commit, by using the AsciiDoc
+> `include::` macro to ensure consistency with git-for-each-ref(1).
 
-- keyvalue, where the retrieved data is printed one per line, using =
-  for delimiting the key and the value. This is the default format,
-  targeted for end users.
-- nul, where the retrieved data is separated by null characters, using
-  the newline character for delimiting the key and the value. This
-  format is targeted for being read by machines.
+I find the behavior of for-each-ref quite confusing so I wonder if we 
+really want to copy it to the new command. For example
 
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Justin Tobler <jltobler@gmail.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
- Documentation/git-repo.adoc | 31 +++++++++++++++++++-
- builtin/repo.c              | 58 +++++++++++++++++++++++++++++++------
- t/t1900-repo.sh             | 21 ++++++++++++--
- 3 files changed, 97 insertions(+), 13 deletions(-)
+     git for-each-ref 'refs/h*'
 
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 140ee3a0aa..b735cf4737 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -18,12 +18,23 @@ THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
- 
- COMMANDS
- --------
--`info [<key>...]`::
-+`info [--format=<keyvalue|nul>] [<key>...]`::
- 	Retrieve metadata-related information about the current repository. Only
- 	the requested data will be returned based on their keys (see "INFO KEYS"
- 	section below).
- +
- The returned data is lexicographically sorted by the keys.
-++
-+The output format can be chosen through the flag `--format`. Two formats are
-+supported:
-++
-+* `keyvalue`: output key-value pairs one per line using the `=` character as
-+the delimiter between the key and the value. This is the default.
-+
-+* `nul`: similar to `keyvalue`, but using a newline character as the delimiter
-+between the key and the value and using a null character after each value.
-+This format is better suited for being parsed by another applications than
-+`keyvalue`.
- 
- INFO KEYS
- ---------
-@@ -43,6 +54,24 @@ The reference storage format. The valid values are:
- +
- include::ref-storage-format.adoc[]
- 
-+
-+Examples
-+--------
-+
-+* Retrieves the reference format of the current repository:
-++
-+------------
-+git repo info references.format
-+------------
-++
-+
-+* Retrieves whether the current repository is bare and whether it is shallow
-+using the `nul` format:
-++
-+------------
-+git repo info --format=nul layout.bare layout.shallow
-+------------
-+
- SEE ALSO
- --------
- linkgit:git-rev-parse[1]
-diff --git a/builtin/repo.c b/builtin/repo.c
-index 56c3a4027f..4015cf88b7 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -9,12 +9,17 @@
- #include "shallow.h"
- 
- static const char *const repo_usage[] = {
--	"git repo info [<key>...]",
-+	"git repo info [--format=<keyvalue|nul>] [<key>...]",
- 	NULL
- };
- 
- typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
- 
-+enum output_format {
-+	FORMAT_KEYVALUE,
-+	FORMAT_NUL_TERMINATED,
-+};
-+
- struct field {
- 	const char *key;
- 	get_value_fn *get_value;
-@@ -74,18 +79,33 @@ static int qsort_strcmp(const void *va, const void *vb)
- 	return strcmp(a, b);
- }
- 
--static int print_fields(int argc, const char **argv, struct repository *repo)
-+static int print_fields(int argc, const char **argv,
-+			struct repository *repo,
-+			enum output_format format)
- {
- 	int ret = 0;
- 	const char *last = "";
- 	struct strbuf sb = STRBUF_INIT;
- 
-+	char kv_sep;
-+	char field_sep;
-+
-+	switch (format) {
-+	case FORMAT_KEYVALUE:
-+		kv_sep = '=';
-+		field_sep = '\n';
-+		break;
-+	case FORMAT_NUL_TERMINATED:
-+		kv_sep = '\n';
-+		field_sep = '\0';
-+		break;
-+	}
-+
- 	QSORT(argv, argc, qsort_strcmp);
- 
- 	for (int i = 0; i < argc; i++) {
- 		get_value_fn *get_value;
- 		const char *key = argv[i];
--		char *value;
- 
- 		if (!strcmp(key, last))
- 			continue;
-@@ -100,11 +120,14 @@ static int print_fields(int argc, const char **argv, struct repository *repo)
- 		strbuf_reset(&sb);
- 		get_value(repo, &sb);
- 
--		value = strbuf_detach(&sb, NULL);
--		quote_c_style(value, &sb, NULL, 0);
--		free(value);
-+		if (format == FORMAT_KEYVALUE) {
-+			char *value;
-+			value = strbuf_detach(&sb, NULL);
-+			quote_c_style(value, &sb, NULL, 0);
-+			free(value);
-+		}
- 
--		printf("%s=%s\n", key, sb.buf);
-+		printf("%s%c%s%c", key, kv_sep, sb.buf, field_sep);
- 		last = key;
- 	}
- 
-@@ -112,10 +135,27 @@ static int print_fields(int argc, const char **argv, struct repository *repo)
- 	return ret;
- }
- 
--static int repo_info(int argc, const char **argv, const char *prefix UNUSED,
-+static int repo_info(int argc, const char **argv, const char *prefix,
- 		     struct repository *repo)
- {
--	return print_fields(argc - 1, argv + 1, repo);
-+	const char *format_str = "keyvalue";
-+	enum output_format format;
-+	struct option options[] = {
-+		OPT_STRING(0, "format", &format_str, N_("format"),
-+			   N_("output format")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
-+
-+	if (!strcmp(format_str, "keyvalue"))
-+		format = FORMAT_KEYVALUE;
-+	else if (!strcmp(format_str, "nul"))
-+		format = FORMAT_NUL_TERMINATED;
-+	else
-+		die(_("invalid format '%s'"), format_str);
-+
-+	return print_fields(argc, argv, repo, format);
- }
- 
- int cmd_repo(int argc, const char **argv, const char *prefix,
-diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-index 6706cb4c44..463ec3af92 100755
---- a/t/t1900-repo.sh
-+++ b/t/t1900-repo.sh
-@@ -21,10 +21,17 @@ test_repo_info () {
- 	key=$4
- 	expected_value=$5
- 
--	test_expect_success "$label" '
--		eval "$init_command $repo_name" &&
-+	test_expect_success "keyvalue: $label" '
-+		eval "$init_command keyvalue-$repo_name" &&
- 		echo "$key=$expected_value" >expected &&
--		git -C $repo_name repo info "$key" >actual &&
-+		git -C keyvalue-$repo_name repo info "$key" >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "nul: $label" '
-+		eval "$init_command nul-$repo_name" &&
-+		printf "%s\n%s\0" "$key" "$expected_value" >expected &&
-+		git -C nul-$repo_name repo info --format=nul "$key" >actual &&
- 		test_cmp expected actual
- 	'
- }
-@@ -45,6 +52,7 @@ test_repo_info 'shallow repository = false is retrieved correctly' '
- 	git init' 'nonshallow' 'layout.shallow' 'false'
- 
- test_repo_info 'shallow repository = true is retrieved correctly' '
-+	test_when_finished "rm -rf remote" &&
- 	git init remote &&
- 	echo x >remote/x &&
- 	git -C remote add x &&
-@@ -79,4 +87,11 @@ test_expect_success 'output is returned correctly when two keys are requested' '
- 	git -C two-keys repo info layout.bare references.format
- '
- 
-+test_expect_success 'git-repo-info aborts when requesting an invalid format' '
-+	test_when_finished "rm -f err expected" &&
-+	echo "fatal: invalid format '\'foo\''" >expected &&
-+	test_must_fail git repo info --format=foo 2>err &&
-+	test_cmp expected err
-+'
-+
- test_done
--- 
-2.39.5 (Apple Git-154)
+does not print anything but
+
+     git for-each-ref 'refs/heads/m*'
+
+prints all the branches beginning with m. Another example is
+
+     git for-each-ref 'refs/heads'
+
+prints all the branches but
+
+     git for-each-ref 'refs/heads*'
+
+prints nothing. To me it would be much easier to understand if the 
+pattern always required an explicit wildcard (or possible always did a 
+prefix match in the absence of a wildcard).
+
+Thanks
+
+Phillip
+
+> Mentored-by: Patrick Steinhardt <ps@pks.im>
+> Mentored-by: shejialuo <shejialuo@gmail.com>
+> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+> Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
+> ---
+>   Documentation/git-refs.adoc | 16 ++++++++++++++++
+>   builtin/refs.c              | 14 ++++++++++++++
+>   2 files changed, 30 insertions(+)
+> 
+> diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+> index 4d6dc994f9..ee563aa7e0 100644
+> --- a/Documentation/git-refs.adoc
+> +++ b/Documentation/git-refs.adoc
+> @@ -11,6 +11,13 @@ SYNOPSIS
+>   [synopsis]
+>   git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
+>   git refs verify [--strict] [--verbose]
+> +git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
+> +	      [(--sort=<key>)...] [--format=<format>]
+> +	      [--include-root-refs] [ --stdin | <pattern>... ]
+> +	      [--points-at=<object>]
+> +	      [--merged[=<object>]] [--no-merged[=<object>]]
+> +	      [--contains[=<object>]] [--no-contains[=<object>]]
+> +	      [--exclude=<pattern> ...]
+>   
+>   DESCRIPTION
+>   -----------
+> @@ -26,6 +33,11 @@ migrate::
+>   verify::
+>   	Verify reference database consistency.
+>   
+> +list::
+> +	List references in the repository with support for filtering,
+> +	formatting, and sorting. This subcommand is an alias for
+> +	linkgit:git-for-each-ref[1] and offers identical functionality.
+> +
+>   OPTIONS
+>   -------
+>   
+> @@ -57,6 +69,10 @@ The following options are specific to 'git refs verify':
+>   --verbose::
+>   	When verifying the reference database consistency, be chatty.
+>   
+> +The following options are specific to 'git refs list':
+> +
+> +include::for-each-ref-options.adoc[]
+> +
+>   KNOWN LIMITATIONS
+>   -----------------
+>   
+> diff --git a/builtin/refs.c b/builtin/refs.c
+> index 998d2a2c1c..848a7c9072 100644
+> --- a/builtin/refs.c
+> +++ b/builtin/refs.c
+> @@ -6,6 +6,7 @@
+>   #include "refs.h"
+>   #include "strbuf.h"
+>   #include "worktree.h"
+> +#include "for-each-ref.h"
+>   
+>   #define REFS_MIGRATE_USAGE \
+>   	N_("git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]")
+> @@ -101,6 +102,17 @@ static int cmd_refs_verify(int argc, const char **argv, const char *prefix,
+>   	return ret;
+>   }
+>   
+> +static int cmd_refs_list(int argc, const char **argv, const char *prefix,
+> +			   struct repository *repo)
+> +{
+> +	static char const * const refs_list_usage[] = {
+> +		N_("git refs list " COMMON_USAGE_FOR_EACH_REF),
+> +		NULL
+> +	};
+> +
+> +	return for_each_ref_core(argc, argv, prefix, repo, refs_list_usage);
+> +}
+> +
+>   int cmd_refs(int argc,
+>   	     const char **argv,
+>   	     const char *prefix,
+> @@ -109,12 +121,14 @@ int cmd_refs(int argc,
+>   	const char * const refs_usage[] = {
+>   		REFS_MIGRATE_USAGE,
+>   		REFS_VERIFY_USAGE,
+> +		"git refs list " COMMON_USAGE_FOR_EACH_REF,
+>   		NULL,
+>   	};
+>   	parse_opt_subcommand_fn *fn = NULL;
+>   	struct option opts[] = {
+>   		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
+>   		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
+> +		OPT_SUBCOMMAND("list", &fn, cmd_refs_list),
+>   		OPT_END(),
+>   	};
+>   
 
