@@ -1,102 +1,130 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62441F2C45
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 16:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65BE2063FD
+	for <git@vger.kernel.org>; Fri,  1 Aug 2025 16:28:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754065691; cv=none; b=Fmefe3jvfKjEOfjjt74edXbk3g5KZL7itF9ScK1tVISVcoAz4aKwAEMdtBjVpGJ+8Z51ZIdOZIgufQ+mHb1SEDDynTNDoO3+DxW3QNAH46Z2n6encOtN/YxCxF4gSoB0ns9GVfiW8fHelpV6Nssa4nygsmqOzif9xNbi4o4pTEw=
+	t=1754065721; cv=none; b=uoEX3wWpOYFTpL/nmtXZ0V3VYBaSF7N2/00NqYCZU2b4ilBUAgg1bRjriMpZXWMrtsPYfplYhT8YugzKcrhUu6SNqzzWzeycPb5DSSoh1y7ThthSY6a5ziFI6vtjLTC8yMmsKB+CPhjMB2uucMtNUgVmQY7LAnQ44i9+aMwkHFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754065691; c=relaxed/simple;
-	bh=HaWlpj/dxprQqDecyyhNCNbLaADl/0cGv8mm6kEcsTY=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Bp8lDU+xdtrPJAbzxLmvR19ps39o1mqIUfahJbH/5UAgXKi/VxtBa/kJmGoTlGD3suvQ9DAFS1+J8+nJfgLjh2dWjQlIMtEvjb62rQS8y7BKoKhGGlLb6UW46FdVb/dduAO2WAda1r4nK2uOkoUDWo+i43k8h9oVIH/EKcwHZFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=martin.st; spf=pass smtp.mailfrom=martin.st; dkim=pass (2048-bit key) header.d=martin-st.20230601.gappssmtp.com header.i=@martin-st.20230601.gappssmtp.com header.b=UjYaeYgn; arc=none smtp.client-ip=209.85.208.180
+	s=arc-20240116; t=1754065721; c=relaxed/simple;
+	bh=QWqYWa8zrPD4Dc0MOZ1H8BFE87gAogcS5ZVkuLlw/ag=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GwzFWYmO3uzXnHpjfqQ0Q9sKwPbL7q9kQIabqP+D+GH8OtWbenfNOCWdN3prL/hG75OXoufC0M0ZnFXWmPN0D9Py8URRLkNcqHTR/lnIK3AT86gaxbHEe3770KwdZIx0QEWd6t5mH/yDVP4yWNnhwdtRCcKQuMFd5qJBjHRBR+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=martin.st; spf=pass smtp.mailfrom=martin.st; dkim=pass (2048-bit key) header.d=martin-st.20230601.gappssmtp.com header.i=@martin-st.20230601.gappssmtp.com header.b=XpFLSg1+; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=martin.st
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=martin.st
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=martin-st.20230601.gappssmtp.com header.i=@martin-st.20230601.gappssmtp.com header.b="UjYaeYgn"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-32f1df58f21so17507861fa.3
-        for <git@vger.kernel.org>; Fri, 01 Aug 2025 09:28:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=martin-st.20230601.gappssmtp.com header.i=@martin-st.20230601.gappssmtp.com header.b="XpFLSg1+"
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-553d52cb80dso2415282e87.1
+        for <git@vger.kernel.org>; Fri, 01 Aug 2025 09:28:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=martin-st.20230601.gappssmtp.com; s=20230601; t=1754065685; x=1754670485; darn=vger.kernel.org;
-        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=f92Qg5fenO3eyZikIbio7ufI9oWp1BoYfcMlWIV9y6A=;
-        b=UjYaeYgn2Oddmdc8534L2J0YlTmg0qeWjnNo4n20FuqRjsFRKdu2cTlcVvpED0HV/p
-         K5QI9NoUWjIQQ35YCW5F59XWMed4WJeyWobqkE9WYhSIcZA+7qU4czRGXfIh2nhkTVcs
-         tDLYAdiDTyKkE4wWObLtK4KHGhzQZZoLFaR9LEEzmtLXz7huP5byvcb63Tdhp9Aw/XV9
-         gx8ZDrrUAB/jvf2tPR4cmNWeZio6IiXYQLPcwkvzhezjLTxTv30e/TArR7uHrxHhilJY
-         mPWWyqXoJCzN+3JyAFbS9wUKs080wlA65GZhvV1T1nRaGCw9VBFVywh6B0iAifn3/c2X
-         P22w==
+        d=martin-st.20230601.gappssmtp.com; s=20230601; t=1754065716; x=1754670516; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B/yHlMaUzOJnvLbiM8goKlQIbT3HJZO70k5m5qDjuIM=;
+        b=XpFLSg1+zk1lbdxcBlcDSqMiygB4N8hOXL7jXxFRXb+bEhYoXV2FwljJ+cWa29KfZT
+         WY4pf/tcrhgP2q6EqXZQN8hDxuQquzxWzwEo8gSJjDhNAN6O6tQYYru3KNEYj/wBgJd0
+         Txs4kFl1WfxY9F3S1eFjPT9nDgkKLe350gtQFJHX3qWOEgYbiETbfyVN+y0g0qANUMkJ
+         voTNuloWuwP+B/auK9M49t5LM2z6crbbSkz0XvIssHNONlswLxflxssvuyvfCA5XPYqa
+         eGnFlIvCIO/hyIrb7vDe6psuIaEnmh7lhDq5DJXcuoBw0oMzPvBA09x5aTKrOuJnU1q9
+         hJLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754065685; x=1754670485;
-        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f92Qg5fenO3eyZikIbio7ufI9oWp1BoYfcMlWIV9y6A=;
-        b=mKJ53euw6/myM6LhnsiVM1Kg26KTGleMlgZvPBAEQnIBxW1mOzBX+i+SE11yZt5StA
-         EsiBm2bZyGv/VBlcPxNbpkeRRvswpyoCzdJ3A7L3sclAJsUDjIePoHy0rUvFxaqcvw7u
-         BcIkDfgKW7zyNyw83K8RNSwVYdFImAYux/4m0p+zdfsy0+D1mlpXDOLQi4oI2UB+224L
-         ZV3NBKzHMPIcSTHG2BvGLyRHFfN7PmiCOUev0vi5p6jtxwiuh06mKFuEG1TVrz0FSAvq
-         /gIwFc7PNjl2mvPBSpfewNUN5krqv1BmKrb+YnhsZySnvHVsWMYCnuIgpqBzIEv3bVPz
-         vN8g==
-X-Gm-Message-State: AOJu0YwCRK8XNU2d09Csj/zH2DXCsrguk+eUpPdz0lcLUhlYa5Q4iRMG
-	zIPdRr0miAbpZAQtiIVO9goVSmvRjThyvnTjdXAo2+O8KcepX46FDzo5ap/lqBy3IyKvJfYNtCL
-	x6wgDQnbj
-X-Gm-Gg: ASbGnct6iQeXfKCGdeNpE3G/TgkNt/83U4SBbjYPn5L+rysqio/K1vW+4dyy7MFikyx
-	xDA4aYCJk+1SnJ78xQ3c/uluEQJP1o3fkzezbHFHZkYakSOQ4xxyjTxf269Rx5sippv6gGAvIcX
-	1AANmoIWsAizhiyRm7nPq8BX61OMnLmmJDvGo0qqOuKQAjDVNqDzWw5mp1IKS51nxhp7CRh5nzd
-	J+Yzkw+lmZXStcPYFd4bYJ8f5i7CddNjCr+QsMIRMASLzaJ4vINmBX0bMjWFHDf6i2znRdi6NNe
-	dEHeXGMwE8QeCakB+x7QeL7Ae9H7HBqIAVUkbzZmVnba5pgjCYrPzbLHqKlim9QW5UoXri+K/Lc
-	8oWB+syBB+o+3KIPOK4Su4lIHxVEP/XMeFe6EqNbEN1csVJyIUbEZVWzaRj3nktsGxBY0AJb3vv
-	baJBLBl0akM29UgB0fzQ==
-X-Google-Smtp-Source: AGHT+IGqHI1YOB9VT/DaMzRrxo5Bx0ivyoCqIMgCv5GZvmldEc6raUgsxgAaDYWpl2fN18c4UYi5Jw==
-X-Received: by 2002:a05:651c:2220:b0:32b:82bf:cc55 with SMTP id 38308e7fff4ca-332567e84damr68411fa.31.1754065684586;
-        Fri, 01 Aug 2025 09:28:04 -0700 (PDT)
-Received: from tunnel335574-pt.tunnel.tserv24.sto1.ipv6.he.net (tunnel335574-pt.tunnel.tserv24.sto1.ipv6.he.net. [2001:470:27:11::2])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-332389807eesm6293831fa.88.2025.08.01.09.28.03
+        d=1e100.net; s=20230601; t=1754065716; x=1754670516;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=B/yHlMaUzOJnvLbiM8goKlQIbT3HJZO70k5m5qDjuIM=;
+        b=XjyDDVVixq5zxLmd6FlnNM/D/W5vWjA9CqT7p4UUHZQ+q6CUmGZBErEJhou9JH5rLP
+         IRvlUshcHJaTqNXfx/Xc0UbGZDrVAxPSChLK8C1mWNR+MREh6WAHlGTy3tI4irCakOza
+         AkR+lNQ9JKFmSxVey1mqM2xSXaNMaWHW062Z3y+Ow4xR5VHeAZtD4MmPISCgcwWZSD7R
+         p0NCI/4Mlm0IaPF33OdPbrY+Eb2XSo47V+OWszC12iKgJRHpab5m0rs1ghjgtrZGW+Uk
+         UXngvB2x7+Bj6Dx1B0WKQUrJYBVC59LXaLL/u5AhzOLmbADeAx0FQiKMb8fu7XfFSBS9
+         QM8Q==
+X-Gm-Message-State: AOJu0YyaaVqJFRO55JhaB+AtE8zXGXYo8YHZ/Hly8w+4sC6BZ1Z5wYFV
+	iQMIOMWYewpAJZOFrl7lnewC7F6vgXbicbeoAT/f8VfhkZ6jb/H8khGeTRGFoKfmbdbb2DLtKvp
+	X62ZypjKG
+X-Gm-Gg: ASbGncscHjwr7LQepddySuupaPGeDFUUfUWv5Chta13gQTm5Ppj2zbH7gbjh3i00DoP
+	dEtyj0bGanE28h1jXvWDKZHzxnxLmMuPlRxnTw258ODFY92kPec5XZXxFMboljFJuDaw5q6JK8H
+	ZKMp7w7VoBxo7Q0fwqa6BneNEmf83D+LXizdtKEHZ9gkukYEjc3VmEuHKT/FPIt8Ljxe9jEoN3n
+	JM25tPTJ4rHvEYbKuYkMM9NmHT22dve3jq+fAJslKYj2W2iCnskljnfTN+UkfLYoYmLYQmz9KoK
+	c1VrubFuB67vFu9fhJNvp5f0IJVpbiUOLlkCFR74pRJ4NNTr+IyJ9ZOypiQcl7vVI62Knvw+jt4
+	a87UOnF6ox2j2Z2EqWTsVGLlAX0UutkCHZE5Y+8NhMojXfmOOG1tMlDHMBKgfqEWj
+X-Google-Smtp-Source: AGHT+IG/WasDmifz7gAThfcQOsP9vtbDiNDhfsefE/Z5myyoermFNKEaTdxm3UNGuGvO+iT+NGT5cQ==
+X-Received: by 2002:a05:6512:1188:b0:553:2154:7bcc with SMTP id 2adb3069b0e04-55b88c8efc0mr2241832e87.20.1754065715749;
+        Fri, 01 Aug 2025 09:28:35 -0700 (PDT)
+Received: from localhost (dsl-tkubng21-50de30-198.dhcp.inet.fi. [80.222.48.198])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55b88cabb7fsm643636e87.146.2025.08.01.09.28.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Aug 2025 09:28:03 -0700 (PDT)
-Date: Fri, 1 Aug 2025 19:27:59 +0300 (EEST)
-From: =?ISO-8859-15?Q?Martin_Storsj=F6?= <martin@martin.st>
-To: Junio C Hamano <gitster@pobox.com>
-cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH v2] meson: Tolerate errors from git ls-files
- --deduplicate
-In-Reply-To: <xmqq34abm3sc.fsf@gitster.g>
-Message-ID: <8d86fb70-abd6-1a9d-f5cd-ad4ad7aa8e46@martin.st>
-References: <69faab5-43d4-812c-90f-c518ff7f618@martin.st> <20250801075649.1796238-1-martin@martin.st> <xmqq34abm3sc.fsf@gitster.g>
+        Fri, 01 Aug 2025 09:28:35 -0700 (PDT)
+From: =?UTF-8?q?Martin=20Storsj=C3=B6?= <martin@martin.st>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im
+Subject: [PATCH v4] meson: Tolerate errors from git ls-files --deduplicate
+Date: Fri,  1 Aug 2025 19:28:14 +0300
+Message-ID: <20250801162834.1923702-1-martin@martin.st>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <8d86fb70-abd6-1a9d-f5cd-ad4ad7aa8e46@martin.st>
+References: <8d86fb70-abd6-1a9d-f5cd-ad4ad7aa8e46@martin.st>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1443719927-1754065683=:2936788"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+When using the Meson build system with versions of Git before 2.31,
+that does not yet know the `git ls-files --deduplicate` option, one
+can observe the following error:
 
---8323329-1443719927-1754065683=:2936788
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+    ../meson.build:697:19: ERROR: Command `/usr/bin/git -C /home/martin/code/git ls-files --deduplicate '*.h' ':!contrib' ':!compat/inet_ntop.c' ':!compat/inet_pton.c' ':!compat/nedmalloc' ':!compat/obstack.*' ':!compat/poll' ':!compat/regex' ':!sha1collisiondetection' ':!sha1dc' ':!t/unit-tests/clar' ':!t/t[0-9][0-9][0-9][0-9]*' ':!xdiff'` failed with status 129.
 
-On Fri, 1 Aug 2025, Junio C Hamano wrote:
+The failing command is used to find all header files in our code
+base, which is required for static analysis.
 
-> Martin Storsjö <martin@martin.st> writes:
->
->> When using the Meson build system with an old-enough Git version
->
-> It would be good to be more specific what you mean by old-enough.
-> 93a7d983 (ls-files.c: add --deduplicate option, 2021-01-23) appeared
-> in 2.31-rc0, so
->
->    with versions of Git before 2.31
->
-> perhaps.
+Static analysis is an entirely optional feature that distributors
+typically don't care about, and we already know to skip running the
+command when we are not in a Git repository. But we do not handle
+the above failure gracefully, even though we could.
 
-Right, that's even clearer - will resend with amended commit message.
+Fix this by passing `check: false` to `run_command`, which makes it
+tolerate failures. Then check `returncode()` manually to decide
+whether to inspect the output.
 
-// Martin
+Signed-off-by: Martin Storsjö <martin@martin.st>
+---
+v4: Clarified the affected span of Git versions - no changes to the
+patch itself.
+---
+ meson.build | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---8323329-1443719927-1754065683=:2936788--
+diff --git a/meson.build b/meson.build
+index 9bc1826cb6..10a6dbc639 100644
+--- a/meson.build
++++ b/meson.build
+@@ -694,9 +694,14 @@ third_party_excludes = [
+ 
+ headers_to_check = []
+ if git.found() and fs.exists(meson.project_source_root() / '.git')
+-  foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_excludes, check: true).stdout().split()
+-    headers_to_check += header
+-  endforeach
++  ls_headers = run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_excludes, check: false)
++  if ls_headers.returncode() == 0
++    foreach header : ls_headers.stdout().split()
++      headers_to_check += header
++    endforeach
++  else
++    warning('could not list headers, disabling static analysis targets')
++  endif
+ endif
+ 
+ if not get_option('breaking_changes')
+-- 
+2.43.0
+
