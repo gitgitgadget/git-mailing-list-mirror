@@ -1,151 +1,358 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE2BE55B
-	for <git@vger.kernel.org>; Sat,  2 Aug 2025 11:11:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691B51F37D3
+	for <git@vger.kernel.org>; Sat,  2 Aug 2025 11:31:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754133092; cv=none; b=XMd6/V9LRpbkGAhd7kOQX2LFOFy60zBuiDZV++Oe8pYhgjyHXeaC/bOWy5AQpBhfU5mDM/c88LKzvTAFTjFC4TJndf0HwmNLZQUQp9kjOYT+aoOrHOKyW7DE262/PGD/j7k4vW1Vz9ffLtzmQeGSMPX8IOaKGBqnypIXSAR+bVU=
+	t=1754134299; cv=none; b=EdITIOEWvqIfJghOIlirqQ38C0NQAX5UcUV7Hr1Gp35I+Ar1K7pSHDSh5S5g2jQFMyvFSvSKQsRKpKzy1L7ZhmG3G5Vuk91y9rjRvWrrOZW6JwtTbTBbZcGnJQTcdjaDWAWUTTKOgJylQ1SAULq2BZlWHwc0jFsYTSvd4cHhjdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754133092; c=relaxed/simple;
-	bh=SmpH6TBTCruRb2Ya6d45tx3eDVjopveCnHvOlv99+gA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i75rHCdJ7MvHuvIUFQef84XYZRVSnfTixXVLt+h7DM4g9zn+TmHqsl6oQGuIThuzbxCDFKlS+6AlU3JICQtHdNp8jMszcYACWPqG9ylfRta66XILfqg8oNZiN7b5oB/rLqOSTCgsdtF1AOUK3nHJCtkIEWs3r1Oz+mM4sRTNkJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=K64vcdhW; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1754134299; c=relaxed/simple;
+	bh=o2DVxczBIwnCPArOW09QLA8xETKmpW855F5b0fBx7MM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bMVMWyPLl1qyWNkYAU0VaI8XtdxU+S4Fgs+UUHbSytZSakyvTyN81eDS7upnVl0mDr/Bg8dmobV6tNq855ToHgPuYgW01TkLR3e/D8IEt12qQmU1apukOYzQx6CPXHHHgWeLi5oo6ZKwZ/j0hC/hKhHmFiM6R5bk9WGAwJA0gSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h86lSRQJ; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="K64vcdhW"
-Received: (qmail 9719 invoked by uid 109); 2 Aug 2025 11:11:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=SmpH6TBTCruRb2Ya6d45tx3eDVjopveCnHvOlv99+gA=; b=K64vcdhWEIX8zXZkrV4EhI9nMqWzuQyFpHy7xpXCBwdrSDo1zKVgXyngJRqzoyQ9TMa5COO1A2OSufKqKl2NN6aH1J3ChFOAn1jkH72MH4aTTkdHkm91vHsJr0tpT2ofrvPDBAxWfG2cJWXKYnsHpd/vY8zyhjxQsby3aTnjTZmOKEO/iSDtrWevp3kYxu/RcDLMpuXz+pOlfVEEZVd+xcTiDlbubZ0pVTI4shlNsCU73z+C6AnrG8+usrbJWjLPFJxgWXBUfvyDaK7xYLkfvnBmpcKiCpNv2CoFsTEjQsx6ImjReBGwu6gODDbOsN/Cf7fbuPoYCrW8EyPx0r0xTg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 02 Aug 2025 11:11:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13101 invoked by uid 111); 2 Aug 2025 11:11:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 02 Aug 2025 07:11:29 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 2 Aug 2025 07:11:28 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Toon Claes <toon@iotcl.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [PATCH v3 7/9] refs/files: detect race when generating reflog
- entry for HEAD
-Message-ID: <20250802111128.GC1180347@coredump.intra.peff.net>
-References: <20250729-pks-reflog-append-v3-0-9614d310f073@pks.im>
- <20250729-pks-reflog-append-v3-7-9614d310f073@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h86lSRQJ"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-af93bcaf678so150125466b.0
+        for <git@vger.kernel.org>; Sat, 02 Aug 2025 04:31:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754134294; x=1754739094; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t/kaeC9goz3oQJbX/aGh4nsqfYSF9KqREV7T1sycLvk=;
+        b=h86lSRQJDnm8kKAxKMTGU05NtVzVcmy06T/nAZPTBj99pm7WQ6AkWm//4H/NENbLK6
+         qFC4TpD3OvX2Q//ON7m4Sw22qjh6YSdf6gXBicutl56R7xBnNwHk4+aEPr0oaAwrByqW
+         wCakE8PpZfzgdsxdgRakEtEB5xiXAaCfFSL9W8D3I3pCnspJyxwo+pnG6ANzDUeNAvkh
+         ORLYDHZt7q1O5apGKxWKqLBLmnYrpZJWsGjxDdoH11D3pM+wRct1GVY+fj6bROCB+HoZ
+         f8qSrl7u4kdOZ79+IcRLD+Bizbr6F4pc2am/4nIIgWE7tz1FnyPtphbSMQ7zhPgyNXHP
+         hc0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754134294; x=1754739094;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t/kaeC9goz3oQJbX/aGh4nsqfYSF9KqREV7T1sycLvk=;
+        b=TXlA3DUx98a9rPGEoMczfSZJNx+YYHxbnnfIBFAbim7KLi/2mS5Myw4A3j7v9EpES6
+         0yy/Dehcr4hNnE84aYMHQQfLSmseRxm7ZjGkouS1WGxxTmxw0qF6IIkbbbbliSpUH925
+         6PykOqJanWPHOGHCsKzh5GWoiOWI/0FjugvwFGt8IBqKIUxvZo/kLLkq8BgTdhjcLULh
+         OETdXldlHleZ8ftPjrE3EkXDLye8GblS541TN9Pa5QjVjwQcBZScgpAdbVOpb0fKvAUy
+         x2Qm1v3oGOikPP2ZXf8tqrH2pVvWLm7k4yZgfb/OVSS0b/Uu7qkuKXuC3kjreB6RIxri
+         d5zQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUbyQjfNjwbf3idSkI5QzauH7LRc6nJGJHI1Q9flulKD38J2mCbnvHMXwa0yj+bXyOB5zI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx12jgu3D28kV9PCxKdtDc0GFvmPe0ogS2ERupLSz3cPi1hOdqP
+	dgjqyZUprJMGMxSK+6jY9tWgSfAN9t9czMaeP8kqKguB5lgxSaLUj8bXluBcJSsmEZIoKMTam7G
+	AoWVCTrgKUXcyiFLqd2fWYZOS4mtEn18=
+X-Gm-Gg: ASbGncscnCLI1fuQWLjwRe/iJqX30osoX56rKKJq5hDFg8Kx9IkA+rLYf+tF8+GzuMe
+	6MdJzKPeyLCs1n2USXEdknOdZKOnGoPB3lcDUXUuPLGzU8ctRneynzBwsZ6LRGL9A6Vp9yioyr8
+	7XK4I3nHMP4CcSNqurhIf53jRJIQjhJeZfyipmNxkZlwq+J/GmxlvrSgm5GNUBtPRfUc+5PV3nq
+	2+7YL3Bag==
+X-Google-Smtp-Source: AGHT+IFy5qkao1d36N0sEFBbguTfHlj3tpMEVGToWT53G29y5WMYrdhh38BwVWJn8rxY2WfmoS27BuNzW9jRALJKjqU=
+X-Received: by 2002:a17:907:1ca2:b0:ae3:6028:e4d0 with SMTP id
+ a640c23a62f3a-af93ffc12f1mr263374966b.7.1754134294290; Sat, 02 Aug 2025
+ 04:31:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250729-pks-reflog-append-v3-7-9614d310f073@pks.im>
+References: <20250716133206.1787549-1-toon@iotcl.com> <20250730175510.987383-2-toon@iotcl.com>
+ <CAP8UFD0AEKDmvQJTanL+ZS+U66WAZz=FKSJ3LPE1QHSEyH-zNw@mail.gmail.com>
+ <aIyVft9PdlorttzZ@pks.im> <xmqq7bznm0nk.fsf@gitster.g> <CAP8UFD3rV5CmHbbmg9vQodJ3U=WxfmWHnaio+7RcBAKz=2Ar-A@mail.gmail.com>
+In-Reply-To: <CAP8UFD3rV5CmHbbmg9vQodJ3U=WxfmWHnaio+7RcBAKz=2Ar-A@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Sat, 2 Aug 2025 13:31:21 +0200
+X-Gm-Features: Ac12FXyc_hhyvfuGufq2tnIHUOZ-5PiCSGjOxVKXi7Tz7yIxW5vI3LJPqbBl4sg
+Message-ID: <CAP8UFD1hdykpEaFrs1VoHbU1f-vT7xL2R6uvFWzjPQKRp0eoEw@mail.gmail.com>
+Subject: Re: [PATCH v6 1/4] last-modified: new subcommand to show when files
+ were last modified
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Taylor Blau <me@ttaylorr.com>, 
+	Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 29, 2025 at 10:55:25AM +0200, Patrick Steinhardt wrote:
+On Sat, Aug 2, 2025 at 10:18=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Fri, Aug 1, 2025 at 7:06=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> > Given that even a long-time contributor gets confused (including me,
+> > who needed to see where we documented this for our developers),
+> > perhaps a clarification patch is in order?
+> >
+> > --- >8 ---
+> > Subject: CodingGuidelines: clarify that S_release() does not reinitiali=
+ze
+> >
+> > In the section for naming various API functions, the fact that
+> > S_release() only releases the resources without preparing the
+> > structure for immediate reuse becomes only apparent when you
+> > readentries for S_release() and S_clear().
+> >
+> > Clarify the description of S_release() a bit to make the entry self
+> > sufficient.
+> >
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > ---
+> >  Documentation/CodingGuidelines | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> >
+> > diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuide=
+lines
+> > index c1046abfb7..76ec6268f2 100644
+> > --- c/Documentation/CodingGuidelines
+> > +++ w/Documentation/CodingGuidelines
+> > @@ -610,8 +610,9 @@ For C programs:
+> >      - `S_init()` initializes a structure without allocating the
+> >        structure itself.
+> >
+> > -    - `S_release()` releases a structure's contents without freeing th=
+e
+> > -      structure.
+> > +    - `S_release()` releases a structure's contents without reinitiali=
+zing
+> > +      the structure for immediate reuse, and without freeing the struc=
+ture
+> > +      itself.
+> >
+> >      - `S_clear()` is equivalent to `S_release()` followed by `S_init()=
+`
+> >        such that the structure is directly usable after clearing it. Wh=
+en
+>
+> Yeah, I think that could help. Thanks!
 
-> Unfortunately, this change only helps with the second race. We cannot
-> reliably plug the first race without locking the HEAD reference at the
-> start of the transaction. Locking HEAD unconditionally would effectively
-> serialize all writes though, and that doesn't seem like an option. Also,
-> double checking its value at the end of the transaction is not an option
-> either, as its target may have flip-flopped during the transaction.
+For information, I have asked ChatGPT o3-pro (which can analyse a
+whole repo) about this and here is what it says:
 
-I agree we should not always take a lock on HEAD, since most refs would
-not need it. But I wonder if we could do better by examining HEAD, then
-taking a lock when we think we'll need it, and then re-checking the
-value of HEAD. That is still racy, though (somebody could have pointed
-HEAD at us between the two checks). Fundamentally the files backend is
-not atomic across the whole namespace, and we are trying to update two
-refs. So I think there will always be some race.
+---------------------------
 
-It does make me wonder if this race-fix is even worth it, then. We are
-catching the case where somebody moves HEAD away from the ref we are
-updating while we are updating it. But without atomicity, do we even
-know which happened first? That is, would it be incorrect to update
-HEAD anyway? I guess the outcome is observable because their movement of
-HEAD generated a reflog entry, and thus the entries would be out of
-order. So maybe that is worth it.
+Q: In the source code of the Git SCM software are there standard ways
+of naming functions that release memory from a struct or clear a
+struct? Are they consistently named using "clear" or "release" or
+"free" or "clear_and_free" or other things like that depending on what
+they actually do?
 
-Anyway, I had two questions about the code:
+A:
 
-> @@ -2600,7 +2607,36 @@ static enum ref_transaction_error lock_ref_for_update(struct files_ref_store *re
->  
->  	update->backend_data = lock;
->  
-> -	if (update->type & REF_ISSYMREF) {
-> +	if (update->flags & REF_LOG_VIA_SPLIT) {
-> +		struct ref_lock *parent_lock;
-> +
-> +		if (!update->parent_update)
-> +			BUG("split update without a parent");
-> +
-> +		parent_lock = update->parent_update->backend_data;
-> +
-> +		/*
-> +		 * Check that "HEAD" didn't racily change since we have looked
-> +		 * it up. If it did we must refuse to write the reflog entry.
-> +		 *
-> +		 * Note that this does not catch all races: if "HEAD" was
-> +		 * racily changed to point to one of the refs part of the
-> +		 * transaction then we would miss writing the split reflog
-> +		 * entry for "HEAD".
-> +		 */
-> +		if (!(update->type & REF_ISSYMREF) ||
-> +		    strcmp(update->parent_update->refname, referent.buf)) {
-> +			strbuf_addstr(err, "HEAD has been racily updated");
-> +			ret = REF_TRANSACTION_ERROR_GENERIC;
-> +			goto out;
-> +		}
+What the names mean in Git=E2=80=99s C code=E2=80=AF=E2=80=93 quick rules o=
+f thumb
 
-One, what happens with a multi-level ref (e.g., HEAD points to
-refs/heads/foo which points to refs/heads/bar)?
+- *_clear():
 
-We've resolved HEAD to get referent.buf. Do we get "foo" or "bar" here?
-If "bar", then a write through "foo" will complain. But if we get "foo",
-then theoretically a write through "bar" will complain.
+  effect: Free only the heap=E2=80=91memory owned by the struct (arrays,
+strings, hash=E2=80=91table buckets, etc.) and reset its fields to an
+initial/empty state.
 
-I _think_ we are OK, though. Constructing it like this:
+  reuse possible: Yes =E2=80=93 the variable itself remains valid and can b=
+e
+filled again.
 
-  git init
-  git commit --allow-empty -m whatever
+- *_release():
 
-  git symbolic-ref refs/heads/foo refs/heads/bar
-  git symbolic-ref HEAD refs/heads/foo
-  git update-ref refs/heads/foo main
+  effect: Historical synonym for the same thing as *_clear(), kept for
+backward compatibility in a few low=E2=80=91level APIs.
 
-triggers the check and shows that our referent from lock_raw_ref() is
-the first level (i.e., "foo"). Which is good.
+  reuse possible: Yes =E2=80=93 same as above.
 
-If we swap out "foo" for "bar" in the update-ref call, then we'd get a
-mismatch. But in that case we do not figure out that HEAD needs be
-written at all! That is, we only do a single level of look-back to
-decide whether to write HEAD at all. So as long as we keep doing so, we
-are OK.
+- free_*() or *_free():
 
-> +		if (!(update->type & REF_ISSYMREF) ||
-> +		    strcmp(update->parent_update->refname, referent.buf)) {
-> +			strbuf_addstr(err, "HEAD has been racily updated");
-> +			ret = REF_TRANSACTION_ERROR_GENERIC;
-> +			goto out;
-> +		}
+  effect: Free the struct itself (it was malloc=E2=80=91ed) and everything =
+it
+points at. After the call the pointer becomes dangling and must not be
+reused.
 
-And two, is an error the right thing here? The user asked us to update
-"foo", and we saw that HEAD pointed to it. So we decided to update
-HEAD's reflog, too. And when it came time to do so under lock, we found
-that HEAD did not point to "foo" any more.
+  reuse possible: No =E2=80=93 the storage is gone.
 
-Shouldn't we quietly drop the HEAD reflog update, rather than forcing
-the whole transaction to fail? The user never asked us to update HEAD at
-all. It was something we opportunistically decided to do, and now we
-find out that it is not appropriate to do so.
+- *_clear_and_free():
 
--Peff
+  effect: Convenience wrapper that first calls the type=E2=80=99s *_clear()=
+ on
+each contained element and then frees those elements themselves.
+Mainly used for containers implemented as macros.
+
+  reuse possible: Not applicable =E2=80=93 it is meant to be the last
+operation on the container.
+
+
+How consistent is the convention?
+
+- Within each mini=E2=80=91API the convention is very strict
+  The strbuf API always pairs strbuf_init()=E2=80=AF/=E2=80=AFstrbuf_releas=
+e(), the
+strvec API always pairs strvec_init()=E2=80=AF/=E2=80=AFstrvec_clear(), etc=
+.
+
+- Across the whole Git code=E2=80=91base the spelling is mostly consistent =
+but
+not 100=E2=80=AF% uniform
+  Very early core helpers (pre=E2=80=911.6): usually *_release()
+  Code written in the last decade: *_clear() for =E2=80=9Cempty in=E2=80=91=
+place=E2=80=9D,
+free_*() for =E2=80=9Cdestroy=E2=80=9D
+
+- No =E2=80=9Cmixed=E2=80=91semantics=E2=80=9D functions
+  You will not find a helper that sometimes frees the struct and
+sometimes only clears it depending on flags. The name alone tells you
+which category it belongs to.
+
+[...]
+
+Bottom line
+
+Git uses two distinct verbs to convey intent:
+
+- clear / release =E2=80=93 light=E2=80=91weight reset, keep the container =
+alive
+
+- free =E2=80=93 heavy=E2=80=91weight destruction of the container itself
+
+The rule is consistent enough that you can rely on it when reading or
+writing Git=E2=80=99s C code; the rare exceptions are historical, not
+ambiguous.
+
+
+Q: Some say that if the structure can be immediately reused afterwards
+without requiring another reinit the function should be named using
+"clear", otherwise if it only releases memory then it should be called
+"release". Is it true?
+
+A:
+
+Short answer =E2=80=93 no.
+
+In the Git source tree the verbs clear and release are not used to
+distinguish =E2=80=9Ccan I reuse the struct afterwards?=E2=80=9D=E2=80=AFvs=
+.=E2=80=AF=E2=80=9Cis this the
+final teardown?=E2=80=9D. Both variants free all heap memory owned by the
+structure and then reset the in=E2=80=91memory object to its pristine, empt=
+y
+state, so the variable can be used again without an extra call to the
+corresponding =E2=80=A6_init() helper.
+
+[...]
+
+Why two different verbs exist
+
+- Historical baggage =E2=80=93 the very early helper that everybody still
+uses, strbuf, was written long before today=E2=80=99s =E2=80=9C*_clear()=E2=
+=80=9D convention
+emerged, so its lifecycle pair is strbuf_init() / strbuf_release().
+
+- Later subsystems standardised on *_clear() when they were introduced
+(string=E2=80=91list, strvec, oidset, hashmap, etc.).
+
+- Because Git=E2=80=99s internal APIs are used by thousands of call=E2=80=
+=91sites,
+there has been no large=E2=80=91scale renaming; both spellings therefore
+coexist.
+
+[...]
+
+Conclusion
+
+The folk rule you quoted (=E2=80=9C*=E2=80=AFuse clear if the struct can be=
+ reused,
+release if not=E2=80=AF*=E2=80=9D) does not match what the Git code actuall=
+y does:
+
+strbuf_release() allows immediate reuse =E2=80=93 just like every *_clear()=
+ helper does.
+
+The difference in naming is historical, not semantic.
+
+If you want to know whether the variable itself has been freed, look
+for free_*()/*_free(), not for the presence or absence of the word
+release.
+
+
+Q: Do you have other examples than strbuf_release using "release"
+where the function behaves like a "clear" function?
+
+A:
+
+Yes=E2=80=AF=E2=80=93 a handful of other helpers are spelled =E2=80=9C*_rel=
+ease()=E2=80=9D, yet they
+merely clear the inside of an on=E2=80=91stack/object=E2=80=91lifetime stru=
+ct and
+leave the container itself reusable
+
+- Line reader: void line_buffer_release(struct line_buffer *buf);
+  Closes the underlying file descriptor and frees its internal scratch
+space; the struct line_buffer itself remains valid and can be
+re=E2=80=91initialised with line_buffer_open() if desired.
+
+- Packet=E2=80=91line writer: void packet_writer_release(struct packet_writ=
+er *writer);
+  Calls strbuf_release(&writer=E2=80=91>scratch_buf) and clears a few flags=
+;
+the struct packet_writer lives on so the caller may point it at
+another FILE * later.
+
+- FS=E2=80=91monitor IPC channel: void fsmonitor_ipc__release(struct
+fsmonitor_ipc *ipc);
+  Shuts down the socket, frees small temp buffers, and zeroes the
+struct for re=E2=80=91use inside the long=E2=80=91running daemon.
+
+All of these match the behaviour of strbuf_release() rather than that
+of the many *_free() helpers which actually free()=E2=80=AFthe struct itsel=
+f.
+
+How many are there?
+
+A quick git grep '_release(struct' over the Git 2.50 tree finds fewer
+than a dozen hits, and every one of them follows this
+=E2=80=9Cclear=E2=80=91but=E2=80=91don=E2=80=99t=E2=80=91free=E2=80=9D patt=
+ern. In other words:
+
+- *_release() in Git never deallocates the container itself.
+
+- The form survives today only in subsystems that pre=E2=80=91date the late=
+r
+project=E2=80=91wide switch to *_clear() (or that wrap strbuf_release()
+internally).
+
+- Newer code consistently uses *_clear() for the same semantics.
+
+Bottom line
+
+strbuf_release() is not unique, but it is the template that the other
+rare *_release() helpers copy: they wipe the contents and reset the
+struct so you can keep using the variable. If you are looking at Git C
+code and see =E2=80=9C_release=E2=80=9D in a function name, you can safely =
+assume
+=E2=80=9Cclear in place=E2=80=9D =E2=80=93 not =E2=80=9Cfree the object.=E2=
+=80=9D
+
+---------------------------
+
+In short it looks like it doesn't think there should be a distinction
+between *_release() and *_clear(), because in many cases the existing
+*_release() functions (starting with strbuf_release()) leave the
+struct ready for immediate reuse.
+
+For the documentation update, it suggests:
+
+  - `S_release()` releases a structure's contents without freeing the
+    structure. In older subsystems (e.g. *strbuf*), the helper also
+    resets the object to its initial, empty state; newer code should
+    prefer `S_clear()` for that purpose.
+
+But if our intention is to tend towards a clear distinction between
+"clear" and "release" even if in practice there is not a clear
+distinction right now (because of historical reasons), I think we
+could compromise with something like:
+
+- `S_release()` releases a structure's contents without reinitializing
+  the structure for immediate reuse, and without freeing the structure
+  itself. In older subsystems (e.g. *strbuf*), the helper also
+  resets the object to its initial, empty state; newer code should
+  prefer `S_clear()` for that purpose.
