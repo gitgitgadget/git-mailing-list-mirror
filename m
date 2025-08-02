@@ -1,59 +1,58 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C00772612
-	for <git@vger.kernel.org>; Sat,  2 Aug 2025 16:13:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FBE72612
+	for <git@vger.kernel.org>; Sat,  2 Aug 2025 16:14:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754151220; cv=none; b=DJlrqqy/humPQHVvvgYAYUghGbeYzC8wwN9LrGYL4LdQo6IHmUMPJ7tEEPoehsI5DqiUrx1pcJ4/kG9u/tZY5scV0rJ3skX/N3EXRGpy5mVNx5AIgUJjKkIaPAS6hd1xq8XvNyBRKNxE5bLW+0yNRqPl0BqbaKXVK+g37zkrQ6k=
+	t=1754151262; cv=none; b=sA3pLo8tFXLTjfFMpWEWEjVv3az8owI1ft1A/tAwCzd7j1sGLo3LI0V4/AacFVGbJeY1X8Dlgm3WpJV6GEXKxvA20BnLa1V1f9CuZoeF4im4CQIcnJAZkUFm/hA+4oDRQRXJ7IURX4UGfDEm/epvG4PIrbqHLyHBVk2OKJ+IUT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754151220; c=relaxed/simple;
-	bh=1H+jYTRSUkWfmHKX9KwFhylVI+H2gX/qLcn6RHtUCdM=;
+	s=arc-20240116; t=1754151262; c=relaxed/simple;
+	bh=kPurcfjxZEtDUzdtyVXPUfHmq3opj9nkQI307LMf924=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lvFN1fiINYHP5EZzjtk6Ns1MDeyPdo5+2AYv8Aj9IbcssVc+TUyhzdFwH/EhUWxknuUe/tP2lhQyEFId8nxyUNSdmn0CYlz40WEi9BoiGZI3kZLKBLGVfUyN4fQTowz0DsHC8O8VCL/u85dwnGteDMcA756jyy3yxQSkEDabk7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LOYXUEN/; arc=none smtp.client-ip=209.85.208.46
+	 To:Cc:Content-Type; b=F+yfyDuT72EVgqD3EdPh63RTyOzDLTJhjg0qlJxgHQox5PWGk7YtBF7zw7sW34DJ3+3NDDUfnSEGYRSI7D18Y6wtS0iXbxM2XtuznUEc4eSm79J6mP/WNzN87pSo57nTbkwD32o7xyJmU7uxiJbmB5hNO8gyfvLdiLoIkg6ny+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i0KnHoHK; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LOYXUEN/"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6156a162537so3870533a12.2
-        for <git@vger.kernel.org>; Sat, 02 Aug 2025 09:13:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i0KnHoHK"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6156a162537so3871288a12.2
+        for <git@vger.kernel.org>; Sat, 02 Aug 2025 09:14:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754151217; x=1754756017; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754151259; x=1754756059; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4KL/S6fBM/ji1Lc3pjK54y5F9SSE6V3q/wKypaYNDQI=;
-        b=LOYXUEN/o0xjhdjLQYjsNdOwLkjRZEt7DBKBXtHsuWOg4x2VGPIZNlBVwjxYBHAxx2
-         OpnZ5zfmkoiUJNkfbd4dH23vjmiUHXxlnV2vOA44xow/QNP5VoGnRAERetnUysF/37aU
-         eEm/J4+oypZGWqeRbTWXfXZ4UF8Ef01rSRQY6VR/JktLEYBYIDANPzsK7eLzwkn5Hvg/
-         4+QzxHgt5VVPaXhQKgLSLCZS87jRYiz5ByPxQQH2IFD0RloX1TdXzRPuwuggBMyapreZ
-         uPtqYK8BI6w76i6VCz71ESA4tDbHoNAynBVA4DyUtYJCB2bN6wiiX56rIXlCoVEtcx+R
-         qKRg==
+        bh=O6YJbn17rB0igGa3lekdqNc1HqR0q0PCTw9vXsLmX4c=;
+        b=i0KnHoHKb3YCs7J3sM+YhG6rCHpwT+hkEL6STf8QlzS+sv3bi1ix31XEwOkFz0lCAx
+         FxJM4XIMYeKAKRvaVjC9bLHsnWa+zRkafrC/jyZqKS+MqV1Hmz7XCST9b00hSVC0JBCb
+         D/IzqzSfyAnX0pGFL7Pe0j7Xo0NJ2RjUEeoCiq/42aX+vJE2k32nctmc6xC5AOt19WVk
+         QZIdj5oHBEuFwmqyS5AGwGBqySkHO2QudvHToyivY4cPzAOfdpYi0JU94HS3tUOyAfg8
+         nx59Fj6PhFriOTfX4jgkW6OoFNWjWrGwaqWeNY9T+6lOueq57InxBDThAWcPKYOMy8s1
+         KvzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754151217; x=1754756017;
+        d=1e100.net; s=20230601; t=1754151259; x=1754756059;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4KL/S6fBM/ji1Lc3pjK54y5F9SSE6V3q/wKypaYNDQI=;
-        b=TWuxUXfJHV0YNl5On2ZaEW/wPZaTtcE7dHksdv0atX92T00lUdU/yDBS3MPjxpJt/5
-         kbDG9RrOxaA4lhbxz850BjE4Rfs8WI0m9HSb5O6N4zlipywOFW667v5rbW+lax7nShP+
-         WtUghXzEyR6sHnf5Hnm+o0yAlUtN521LoATlbsAPzj/knZbqeD9TDaHAFPQVxbQAxd9b
-         MKaczpbwU2ZFeeAsUj6IJm9SH69JGdxh+f/52di4seNYcWxfjaxqsomKP4LWlll3Wjh0
-         8pYouzc/zW6ZDUgEXKZouuaTqH3na1SdUNigqrDu/r5kCAGXYP2UiwQps9S3MVdc1r7S
-         JI/g==
-X-Forwarded-Encrypted: i=1; AJvYcCVW4rfSK3HQ15H4Ml9Oty/9ctoyFxyqfweOjm2wsOdDYk8qSMlicQU01NVNiq+VwmqEjSQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzWLBti9ZUhNJ7+21JrcD7PGbZskuyxshogmqt/QK5hVk6mMurD
-	i6G1mO9VKwYLPUxjFTET0hZRthjKnh+d48Agbh6ohtZd4R82EaToB1Mx4XarCqGsCgW9Z2ijJpq
-	3hJjSYoHqH3vWPw4FwIu6APqWM01L1DE=
-X-Gm-Gg: ASbGncsZTEMR1hbJRzcGXGJ3EclllKbsa3gFd0et7og3EW0PkZmEj+Rw74s2bPHyY/f
-	YxovFHxm6aRGlIrzoO+gaqEFDv6JgqA8mXJ7qml2jBalv7qfhUdBwxTPeNft0feubJDWrd9dHhw
-	hOw2Azduc1IfPeuNm42uQIgGPAuCQV/XUJpuMCDBHXvYz3NXJvWGhpFmC7fIwvHajSOsVGSwiGv
-	hmuEi06Q1+OIu/uF9/gTNUzWdV74+Ml36WyjgILYQ==
-X-Google-Smtp-Source: AGHT+IEwCrfdyyWU7oTWr/4VNT3+QskPFL1Kbk3UP+tuhdNDCq0sLUy6KkWXh16XV9rTteDxMQaFVhIJihRt4OxBCy0=
-X-Received: by 2002:a17:906:f59f:b0:af9:38ed:935c with SMTP id
- a640c23a62f3a-af93ffc5908mr390859666b.3.1754151217237; Sat, 02 Aug 2025
- 09:13:37 -0700 (PDT)
+        bh=O6YJbn17rB0igGa3lekdqNc1HqR0q0PCTw9vXsLmX4c=;
+        b=d+yKL3I78iPQG6gFMFyyyZnKDCo+qhfYSK6wMWECea+FoIhvnGyynByJvN6cKjXng8
+         EF2pEG5ONuUpweso/0YcDLCocn6wSdYwkVoBJG7q7azR7bJvvIb/hB/SsZ5aLe2NBxTb
+         m/lRGQtKO4uzF1NhVTJ1oAWnxzNZUZrdO0APpnA6ae64bsFhEUi91lYXtuvJ7PPTnG6i
+         l+jDzU0V1jAAKmQLxzd/D4Z9PuV99I0+pSXsoZUR+XLtRgL4xWEE8rfViK0rcy704oS5
+         XX4ANPql0OzIueI7HtdHY/Gqfg7FKw/x6eC61dV5x6oP7oMhocgFBkx80g09fKowc6ER
+         c8Nw==
+X-Gm-Message-State: AOJu0YzUB+IkoJ/umeLS6TSRWcqKCzIw380cC+mgDFe7lVkv0CX6EOsk
+	rBDgYqVZZ428jqIkrwNlB3BzF11aeLMDYXfcMJ1efrRWS6e5WEWskscVN5Im13MDDOmJGVbIKkh
+	2KBd5W81EAyvzsmf8zNomjunS6wtFu/+zBQ==
+X-Gm-Gg: ASbGnctz43pseLTfDHspidb/Eb1gvNb2EXYTeb6D0nsvqwW20EclQBDlYl8/gPfCvMj
+	EvVGYhQxdvThVS7e32KQkRho6uzhjYoYEQPNs0tR/MhZQShZNE6PoTVZALOLplOIJLLR9qQnbo4
+	PU9D9wZt0+13giNM+tJ9eh4jCUIOOBEDbo33NLnSbGgszLnr9U2hOn+NnFq0e9mm/ypBF0TVQZU
+	6dFBbSomnfpU4wnv6aSKIiNc7uRgKG4YpOx/xsrDw==
+X-Google-Smtp-Source: AGHT+IEbPl7ZYIVOwIlVYcjvN9hzkwBGMkO92UzlT8R2EtbrZGRXYWHIa7OOaQ4qt5fmhRuIJBCK/MxhoeeUKBKbAls=
+X-Received: by 2002:a17:907:1c12:b0:ae0:34d4:28a5 with SMTP id
+ a640c23a62f3a-af93fd6a710mr409358666b.0.1754151258798; Sat, 02 Aug 2025
+ 09:14:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,75 +61,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <CALnO6CAOOTBQf3s9B1G8AgwcbYnv5VNY63q-6bGPeoaLy208rg@mail.gmail.com>
  <xmqqv7nezdw2.fsf@gitster.g> <CALnO6CDNDfx6L7CmPwE0eBZFkd_JkZf6hDwrADccAb14QhJGDg@mail.gmail.com>
- <20250802094657.GG3711639@coredump.intra.peff.net>
-In-Reply-To: <20250802094657.GG3711639@coredump.intra.peff.net>
+In-Reply-To: <CALnO6CDNDfx6L7CmPwE0eBZFkd_JkZf6hDwrADccAb14QhJGDg@mail.gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 2 Aug 2025 12:13:25 -0400
-X-Gm-Features: Ac12FXyj-3OzJPvMDNEgp4pBzdcmjSEU_hqxDC6WV4vsAUCQc6wyVTLbjqt8yxM
-Message-ID: <CALnO6CALb-_RjNZw9u-0R33O+KfccfZK0+mF-W7G659wc4PW7Q@mail.gmail.com>
+Date: Sat, 2 Aug 2025 12:14:07 -0400
+X-Gm-Features: Ac12FXy-AsE1iDwtQhkD49hYSsu7J76RCj66K6mW5qSnPQycE0XfJRHLIDr5ZMY
+Message-ID: <CALnO6CDgjmDd9kBCLzjb=JS6Rqg33aXesjthr_Q=HCA-ru2k6g@mail.gmail.com>
 Subject: Re: Why does git-grep appear to treat exclude pathspecs differently?
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 2, 2025 at 5:46=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+On Wed, Jul 30, 2025 at 5:49=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com=
+> wrote:
 >
-> On Wed, Jul 30, 2025 at 05:49:29PM -0400, D. Ben Knoble wrote:
->
-> > which eventually dies as noted. However:
+> On Sat, Jul 26, 2025 at 8:16=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
+> wrote:
 > >
-> > - looks_like_pathspec() only checks for long magic, as you noted
-> > - setup.c:check_filename() looks for short-magic, too, but only
-> > considers ":^" to work like a pathname if we're excluding everything?
+> > "D. Ben Knoble" <ben.knoble@gmail.com> writes:
 > >
-> > I think what I find confusing is that, while this is definitely a DWIM
-> > case for git-grep, it doesn't seem to do DWIM :) We are verifying that
-> > the remaining arguments are filenames, but couldn't they really be
-> > full pathspecs, as long as they aren't revisions?
+> > > With Git 2.48.1, I observe the following behavior:
+> > >
+> > > - "git ls-files :^:Documentation/RelNotes | grep Rel" yields
+> > > "RelNotes", as expected
 > >
-> > The difference for "^:<path>" from ":^:<path>", just to complete the
-> > story, is that in setup.c:check_filename() we try to stat whatever
-> > comes after ":^":
-> > - for the former, that's <path> and we are ok
-> > - for the latter, that's :<path>, fail.
-> >
-> > So it seems like the places that check for short-magic should also
-> > consider the optional trailing colon?
+> > It is deliberately confusing to spell ":(exclude)" as ":^:".
 >
-> Yeah, I'd think so. But it's worse than that, even. According to the
-> glossary definition you showed:
->
->   In the short form, the leading colon `:` is followed by zero or more
->   "magic signature" letters (which optionally is terminated by another
->   colon `:`)
->
-> we allow multiple bits of magic. So the code in check_filename() that
-> looks for ":/", ":^", etc would be fooled when seeing more than one
-> character, like: ":/^exclude-from-root". AFAICT there are only two short
-> magic types, so I guess nobody has really run into this before.
+> What makes you say that? It's documented in "git help revisions":
 
-Good call out! I also see only 2 magic items (one with a synonym) at the mo=
-ment.
+Er, that's "git help glossary" for the quotes below=E2=80=94woops!
 
 >
-> Also, I guess this function ought to be respecting the literal_pathspecs
-> global? The actual pathspec parser does.
+>            A pathspec that begins with a colon : has special meaning. In =
+the
+>            short form, the leading colon : is followed by zero or more "m=
+agic
+>            signature" letters (which optionally is terminated by another =
+colon
+>            :), and the remainder is the pattern to match against the path=
+.
 >
-> If we can, we probably ought to be feeding the paths to a function like
-> pathspec.c:parse_element_magic() and then checking the resulting flags
-> (and skipping past the prefix as it indicates).
-
-Thanks for pointing me at this; maybe I'll find some time for patches
-unless someone beats me to it.
-
+> and
 >
-> -Peff
+>            exclude
+>                After a path matches any non-exclude pathspec, it will be =
+run
+>                through all exclude pathspecs (magic signature: ! or its s=
+ynonym
+>                ^).
 >
-> PS I didn't even know that we allowed multiple short items or a trailing
->    colon until your email! Hidden corners of Git.
-
-;)
 
 --=20
 D. Ben Knoble
