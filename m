@@ -1,83 +1,165 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC58625776
-	for <git@vger.kernel.org>; Sat,  2 Aug 2025 20:38:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B691EDA3C
+	for <git@vger.kernel.org>; Sat,  2 Aug 2025 22:14:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754167111; cv=none; b=DVySKaUHF+JILIcccoBWo3ZcQ2jR6yo/PlnGM7ZYU1hziYIFDYvusHQ3CKPB1wubpgjtd9gkrDgKxOy/wT7iEz0hIbsmFgw+hNbiGOQn5yyZHGoSPmME1QoZq+PQHF1l46dy5S1R6RkVYj7U17JKwvkM7AI6uYktJISYCA5C34s=
+	t=1754172850; cv=none; b=mm1CjiMyGz1AsF+zMmb2WaFUnBIabtYNpE1BOEbI1U9zShKTxhdI2SYg2/Z59EtUFESqnDhAQykwPYKmoZ3DxqKVIONfZGhzaLdjlH+FFRZb9KqjI2Qd381fnbqiP+umwyWoOEum02I4eV3m1Cw22EnzI/UfrCIegaT93eAoFN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754167111; c=relaxed/simple;
-	bh=+NdCwvZzUsALPD5+O3X5xBKw6iLJxYUwKFnfxUwm1uo=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=nu3qKAw3rMhKFFOFLTWhnV7cbX1pUkY2VLCZR1UgzX0Sdw8gWvJwMFMfTd7OLSRSOVky1PfZA7KV3TyQij7JIVYKLfS5Ee3Y0pXTqiB89SAClCqOkGkqRhhkAM7RCAmrOKTRTy/9KjXOPJqV1IuRX8Ld//Fo5xQo1UmVzeftBO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LDjEdxp7; arc=none smtp.client-ip=209.85.210.171
+	s=arc-20240116; t=1754172850; c=relaxed/simple;
+	bh=6MfeoI7IAXvr66Hupsc28kF8sUUBMmCar5z4O6U3ubc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nxnrvTZVy6VDyzlsld/Azvfc03QiXt9b6ljHCHdhcyXo40/rWiWALYBCbCAtX2laEMyLWvBUIlAj0HoXaYSMNhF1eYP7L/ghA/uECHzuzz/KmyN6gofu8uEOMuGOW2R4THcvDjsSjQ9ZxtrX/zE0G8lGg+lolq6iZuQ8C8abbIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E4jTZ0v9; arc=none smtp.client-ip=209.85.167.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LDjEdxp7"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-76bd2b11f80so2568039b3a.3
-        for <git@vger.kernel.org>; Sat, 02 Aug 2025 13:38:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E4jTZ0v9"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-433f1f9718dso788180b6e.3
+        for <git@vger.kernel.org>; Sat, 02 Aug 2025 15:14:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754167109; x=1754771909; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+NdCwvZzUsALPD5+O3X5xBKw6iLJxYUwKFnfxUwm1uo=;
-        b=LDjEdxp7AtOR2a739QQH6m40EqKfdeJA64Sw/+4ETI99e+4nGCebDfx7P8prBhYS5H
-         zs9l+tz75UdU6t+0t5evh+5/tfwhVloGchn6AQaA/f2XjE1/ljDOoa78w3jOoGPRzC+M
-         l0k/m+BmaujDG7w5e+A2ccYnnkHu+QaspRY856f1U5Eq6EH1a9NziB9j9i0Hecx8a/RM
-         oSNpVqVeKVpRgTptze2cj7LUxCI0dIMFBxfthPYJ5Y2wcgdoNwhKDFS7EG2fCfNY7qnU
-         uGb9q7PjKfPRtsW2Y193ZtYB9ndJBEEgDIItQ0ESla/VdHjlHkiO/gie9Jzz4QO+He0V
-         V2qg==
+        d=gmail.com; s=20230601; t=1754172847; x=1754777647; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=c+bLXKJ6BXU5WTl7EAMRn+tucmDDbimnsPNXX3GGAac=;
+        b=E4jTZ0v9FWTQd6ROTWLzBNqyl6mniTDJxjoEc/eOBhgT6LzdnEEkuTd8peQBdrs0uE
+         xMkqCVuB648BmGgFoSwgAFaVHcjA0Xe22N8iPEkRdDQOQf6/9JRc3AZH+zppvQMtJqdJ
+         mam+bhzsN2x/az6Byy7imHjttLXKEKQTWAd746GATkRVcBlM5nCEIErfwldQV1ZovXiS
+         SeSa36njO/pnxp3eqNGZ7xxWc7rOhRN1PaE56KUubylzkp5F6hHL+zVJ7hHjyRXmczg9
+         YQaeT7G+POCl5j3trllBT7XM6aAeCeKrMiKLpMluVOQxmw+dzra3qaKI06yl4/STqtKe
+         AVtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754167109; x=1754771909;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+NdCwvZzUsALPD5+O3X5xBKw6iLJxYUwKFnfxUwm1uo=;
-        b=tft9EpUEZDZQy8rg0waeK+adD4WO2Ats374d3G22T4F5JS8T9ql+HCIB7ZlqcLJxRk
-         x/mvUXcZMDI2IiL4PsGFGpBbQLriLWkwXR3lUxT3b0PhrXhKkkyhxHq2KukSFCLBD1w4
-         J2on+AUfZ92CEe25GJCusaEo/wqQs/dwTOCGuAg2ccvhNPyADBJ/cv9nbTubazwZFCY0
-         eEV1yMACHlneslzWCQmaYCJTg39IMe3DHxF6PxocKzLft39PCTJVGribK8Mox5cI0Kk8
-         Wm6znKQNcDkl5Zc7XGX+JX8vcEqKQRaLIJYygDUbiT3xLSbgkiOtQMPZShCXgfeXJtmo
-         wxGQ==
-X-Gm-Message-State: AOJu0YymiQw8n22MNFdb/2ySWenPYwSr+aP6CB33PKa/SrFVduzfUBIe
-	hUkNZZsgo+tsv3MDtAzAdIfjSc8H5yuihxPye+OPR4HWS0VDrjAWVUTt
-X-Gm-Gg: ASbGncv4rDbm8t5mfMkxP3PqDDQ9Cda+bgpoCNXEf8YYL9aoGJcfCD2cdnJBr/muPy8
-	D1+elD0ydHC3n7dtDz8+Rfgkyzc2BS51JJoLz2YeCl8ZR7BM3hd8G4cUnEERxsahWVn2QJUbmvb
-	VZoptkNjjba4wRF5dv7VTgTrpY8HlCrXzI/Bbcb2N/0ptQhbakYD6TiRqghh1mSQxfX7Y09EVKk
-	hpFBqvRksSsg1cMUbRdqyUsggnIOoHvMTC5JgYH/Z8T7BK8u6X4mlcQn92489yusNjD4FPbPtub
-	cGYMeL0JV+dZkSVhvKyU5JP7cg/OPm7yGC8TJL98EhXHigkVNDRLD/58O7oljlMRb/cJf42zvRn
-	1hvzWbpMHk2v45Ip2YdEE2JGB1f27g1BereFWzV8hwXqUHkZhjRKO4ISn
-X-Google-Smtp-Source: AGHT+IFI2ik6bv3FM+KkERqn6P9s6t6w8lNcwJyuVIG0qIQE6IlSHnwqYI/qL48jJ0/hva98gtHZIA==
-X-Received: by 2002:a05:6300:2189:b0:230:69f1:620a with SMTP id adf61e73a8af0-23df917ef24mr5855799637.42.1754167108914;
-        Sat, 02 Aug 2025 13:38:28 -0700 (PDT)
-Received: from smtpclient.apple ([2804:7f0:b77d:9c5:2c33:dec0:3280:5f67])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b425731acc3sm53540a12.4.2025.08.02.13.38.27
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 Aug 2025 13:38:28 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        d=1e100.net; s=20230601; t=1754172847; x=1754777647;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=c+bLXKJ6BXU5WTl7EAMRn+tucmDDbimnsPNXX3GGAac=;
+        b=oG1tN+eAIV78oCEpIJoLdntjRCbpB/vtTd3LXx5HFfH3BhfJ6o2C0b0IRVn3TdK7ni
+         UwU8xXmoayaTNKmnsZ8FH77khqRWpXuOvrWRj/TqpEtmHnpnb6PtgRdIa636bdIPjt7m
+         SYLja7cGlzH7uHGqvoUtAHZ2NJuEA0y1Q+KsvRoOa9cNFU7tW8/qm66geEeY2TRfddHs
+         D9/ZrcA2YNp/C7zrEMnG2uL+0UvggdnN3uGav8yE5QkhoYVwsNmeVPQNcua1uko6MhT4
+         bFNeGydA+ZVTGpCyHrj5UjmrrnAt59nvpde/yBsjjg6kZI4XHtTxtrkLdU8H0Qti9+W2
+         zKhg==
+X-Gm-Message-State: AOJu0YwybaZ189gU9/KoXf7Q+tHhdNhslqjmbkKIuZwJmOnpUguBaaXQ
+	nNSkbzXWYjtyG0Pur9vKBoNLbgpGNhEzl7PGdPNq/622m1BvPiVrF/LGEpEoUw==
+X-Gm-Gg: ASbGnct64+lE+1szbM9QppqarHW4UnsrIqHPy+jAE+8chsf4sxv8qoW9g+BzSoZCB+A
+	4J8kNWC8q3XJk/xD8TzDl79jpvuQGgpFmzthmb6T8dvbChzjuh3xiJ3uS6DikdiWbZSpDCGvSzu
+	pwANfD8Qsh/dl8MTQoqSAiN+jONbZQauiiV3tK2Kq5cGhc/LPr1blia7BWP4hIfDZBaFZqFLalI
+	bxP/JcPe/qOP9+y1FIkMnBNj37vydqLgYWSy6UkK7GSJyeWfoMeY17dHZcFCSfv4PDN7XTikVaw
+	4vLNF9Y69dliLORuatGSJRAG3W1A2erCghE0iHZZlxI/VgjYEgta3CHsClU46ACPrr7ad16L8C0
+	A+yMLlFKcrePA4j++qkKeXYcGPwiwMQ==
+X-Google-Smtp-Source: AGHT+IGHX888hjbnBKccZfmrD3pKP4wF2NtZvhaPm0EV1bgpn26Chiv9j9EixFHfrZQN8KzdsEtXEw==
+X-Received: by 2002:a05:6808:1a23:b0:40b:121b:865c with SMTP id 5614622812f47-433f036a15cmr2613177b6e.36.1754172847483;
+        Sat, 02 Aug 2025 15:14:07 -0700 (PDT)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-433ebb185fcsm811283b6e.29.2025.08.02.15.14.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Aug 2025 15:14:06 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: toon@iotcl.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH] archive: flush deflate stream until Z_STREAM_END
+Date: Sat,  2 Aug 2025 17:08:03 -0500
+Message-ID: <20250802220803.95137-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.50.1.214.ga30f80fde9
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [ANNOUNCE] Git Rev News edition 125
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <CAP8UFD29T-BWhp7teeoUTmujoAWK_muj1JUqP9JaayiSaFCMsg@mail.gmail.com>
-Date: Sat, 2 Aug 2025 17:38:15 -0300
-Cc: git <git@vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <0999D89F-AFFB-466F-B5CC-E220B19908A4@gmail.com>
-References: <CAP8UFD29T-BWhp7teeoUTmujoAWK_muj1JUqP9JaayiSaFCMsg@mail.gmail.com>
-To: Christian Couder <christian.couder@gmail.com>,
- Usman Akinyemi <usmanakinyemi202@gmail.com>
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-I'm really happy that my GSoC project was mentioned by Usman!
-Feel free to join the discussion about the discussion!
+In `archive-zip.c:write_zip_entry()` when using a stream as input for
+deflating a file, the call to `git_deflate()` with Z_FINISH always
+expects Z_STREAM_END to be returned. Per zlib documentation[1]:
 
-Thanks!
+        If the parameter flush is set to Z_FINISH, pending input is
+        processed, pending output is flushed and deflate returns with
+        Z_STREAM_END if there was enough output space. If deflate
+        returns with Z_OK or Z_BUF_ERROR, this function must be called
+        again with Z_FINISH and more output space (updated avail_out)
+        but no more input data, until it returns with Z_STREAM_END or an
+        error. After deflate has returned Z_STREAM_END, the only
+        possible operations on the stream are deflateReset or
+        deflateEnd.
+
+In scenarios where the output buffer is not large enough to write all
+the compressed data, it is perfectly valid for the underlying
+`deflate()` to return Z_OK. Thus, expecting a single pass of `deflate()`
+here to always return Z_STREAM_END is a bug. Update the code to flush
+the deflate stream until Z_STREAM_END is returned.
+
+[1]: https://zlib.net/manual.html
+
+Helped-by: Toon Claes <toon@iotcl.com>
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+
+Greetings,
+
+At GitLab, we received a report of a user getting the following error
+when generating a zip archive of their repository via git-archive(1):
+
+        fatal: deflate error (0)
+
+I've so far only been able to reproduce this issue in the chromium.git
+repository with a specific file:
+
+        git clone --depth=1 https://github.com/chromium/chromium.git
+        cd chromium
+        git -c core.bigFileThreshold=1 archive -o foo.zip --format=zip HEAD -- \
+                ui/events/ozone/evdev/touch_filter/palm_model/onedevice_train_palm_detection_filter_inference.cc
+
+In the above example, `core.bigFileThreshold` is set to a low value to
+cause more files to use a stream as input while being deflated. This is
+the codepath that produces the specific error.
+
+I've tested the patch against this specific file, and it fixes the
+issue, but I'm uncertain how to reproduce and test this issue more
+generically. I'm open to suggestions if anyone has some ideas :)
+
+Thanks,
+-Justin
+
+---
+ archive-zip.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/archive-zip.c b/archive-zip.c
+index df8866d5bae..29e7c9f5e3f 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -492,14 +492,22 @@ static int write_zip_entry(struct archiver_args *args,
+ 
+ 		zstream.next_in = buf;
+ 		zstream.avail_in = 0;
+-		result = git_deflate(&zstream, Z_FINISH);
+-		if (result != Z_STREAM_END)
+-			die("deflate error (%d)", result);
++
++		do {
++			result = git_deflate(&zstream, Z_FINISH);
++			if (result != Z_OK && result != Z_STREAM_END)
++				die("deflate error (%d)", result);
++
++			out_len = zstream.next_out - compressed;
++			if (out_len > 0) {
++				write_or_die(1, compressed, out_len);
++				compressed_size += out_len;
++				zstream.next_out = compressed;
++				zstream.avail_out = sizeof(compressed);
++			}
++		} while (result != Z_STREAM_END);
+ 
+ 		git_deflate_end(&zstream);
+-		out_len = zstream.next_out - compressed;
+-		write_or_die(1, compressed, out_len);
+-		compressed_size += out_len;
+ 		zip_offset += compressed_size;
+ 
+ 		write_zip_data_desc(size, compressed_size, crc);
+-- 
+2.50.1.214.ga30f80fde9
+
