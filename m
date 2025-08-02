@@ -1,150 +1,136 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CFF2459F2
-	for <git@vger.kernel.org>; Sat,  2 Aug 2025 16:10:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C00772612
+	for <git@vger.kernel.org>; Sat,  2 Aug 2025 16:13:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754151032; cv=none; b=ReCPN/ff6jS1cHrsemxlcU5ZKzKTLyxCyU4dPLk7MSXL4sZcR+zRcjoONu0mT5Rtj/qZj8KqJ1ubcBviyjH7ih3Ip+IhZL7o6RWWBwKEoABKCnRaObHVuk9igq+RtTrm88cs/Wl12bNR3QGbBTrqdqK6G2PZs2TLYgik3Kd0qPw=
+	t=1754151220; cv=none; b=DJlrqqy/humPQHVvvgYAYUghGbeYzC8wwN9LrGYL4LdQo6IHmUMPJ7tEEPoehsI5DqiUrx1pcJ4/kG9u/tZY5scV0rJ3skX/N3EXRGpy5mVNx5AIgUJjKkIaPAS6hd1xq8XvNyBRKNxE5bLW+0yNRqPl0BqbaKXVK+g37zkrQ6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754151032; c=relaxed/simple;
-	bh=EErPOm9XZ+RAJM9q88JlPhAzYq/m2+f8eemW/KKvdvE=;
+	s=arc-20240116; t=1754151220; c=relaxed/simple;
+	bh=1H+jYTRSUkWfmHKX9KwFhylVI+H2gX/qLcn6RHtUCdM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KGdk6VHKOTp7dHskU6lTYp4E+6KE46goewoWFCt2X/J/2XUrHM7UcHyBnx80nM0uzgoWvwXlpvK6UcCuKQQMi3kwvUSeRXzR/qcgaxBmOOA7jv19NFb/ZjMteVEn1zyy+8ft1sI/+tZguauHNy1IPv+pOqyDM1iL7S4MRHUSoGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Erpol7Mw; arc=none smtp.client-ip=209.85.218.51
+	 To:Cc:Content-Type; b=lvFN1fiINYHP5EZzjtk6Ns1MDeyPdo5+2AYv8Aj9IbcssVc+TUyhzdFwH/EhUWxknuUe/tP2lhQyEFId8nxyUNSdmn0CYlz40WEi9BoiGZI3kZLKBLGVfUyN4fQTowz0DsHC8O8VCL/u85dwnGteDMcA756jyy3yxQSkEDabk7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LOYXUEN/; arc=none smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Erpol7Mw"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ae9c2754a00so752919666b.2
-        for <git@vger.kernel.org>; Sat, 02 Aug 2025 09:10:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LOYXUEN/"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6156a162537so3870533a12.2
+        for <git@vger.kernel.org>; Sat, 02 Aug 2025 09:13:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754151029; x=1754755829; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754151217; x=1754756017; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gZjuPI/YrzOub1ILAa1KJ8ZPbDfsmBajwgH9tN1t0P4=;
-        b=Erpol7MwsR1nEQlJOM3Wu6Gz/TZctUo1bwzeMQKC7m/9D0eVOTL0mnSLJAzcAEP2DE
-         bBPbWjzrv7llrCFdifR9Ljj0BYhpiAd3i6WmnyaR4bWtnP22mQWfbNr2hka2cFyW9Uw3
-         7GKMnj6Qttvs60CjPW2GwXEg+zjE5JjlAt/NdrGt0vMqYaS8Z+p8yU5zRQuERbMYlHpm
-         UaFauOiFc6JwhypXIE7QpUGzOA5DhVB3ILmnNwshm1J/fC6k2i6wQMa2H1lYl8+tpK9r
-         1QmpWcihrZU5YNDbKfch9Kuq1sGHUOlmN9X8YQ/WfF2JSwvsS0lZSfle7ivsoQfhYRTX
-         JWSw==
+        bh=4KL/S6fBM/ji1Lc3pjK54y5F9SSE6V3q/wKypaYNDQI=;
+        b=LOYXUEN/o0xjhdjLQYjsNdOwLkjRZEt7DBKBXtHsuWOg4x2VGPIZNlBVwjxYBHAxx2
+         OpnZ5zfmkoiUJNkfbd4dH23vjmiUHXxlnV2vOA44xow/QNP5VoGnRAERetnUysF/37aU
+         eEm/J4+oypZGWqeRbTWXfXZ4UF8Ef01rSRQY6VR/JktLEYBYIDANPzsK7eLzwkn5Hvg/
+         4+QzxHgt5VVPaXhQKgLSLCZS87jRYiz5ByPxQQH2IFD0RloX1TdXzRPuwuggBMyapreZ
+         uPtqYK8BI6w76i6VCz71ESA4tDbHoNAynBVA4DyUtYJCB2bN6wiiX56rIXlCoVEtcx+R
+         qKRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754151029; x=1754755829;
+        d=1e100.net; s=20230601; t=1754151217; x=1754756017;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gZjuPI/YrzOub1ILAa1KJ8ZPbDfsmBajwgH9tN1t0P4=;
-        b=eNSs6H2iI5BuICL6AAEsWpMnkBwmVu4ioicKWhH7CkFu/I+8PW8jYsR8jDI0k8PKYM
-         WG4MaPC0QnANndah/fkkuzf0U5bKU/naDUM6Sxo6PRwzdkog+SdrDBFS0TUutf9RxDi1
-         Oo10fz+PXwloIBsqEgzds8gmLhY2CK+9SBgK0HnnXSVbV8BqxQrVyxnGp6Y8E67ZmioZ
-         FvD4zRl9lzp6ljdiX9rapzDRlMSNYlz95cutwKdHWVP94NERl90k7kqDcS772WGDCzso
-         u3TIVrxvwDD94syBkPkdo1JsY+N9kkPUc17qU3CsBuHpkj2rHPfjh0AEwB7tk3HDlY6K
-         LXEA==
-X-Forwarded-Encrypted: i=1; AJvYcCU/voLpbR3Wfg5vMNwnS4tVjUy1ogYOTYIXrMyOTYj6/oRJ/qV/B+o2mHs9pC5JL98rtSk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTDTwt6uxv3NQrcEQp7lwM5hiblKFTFlAVuCzCpTiIUwm7bRwq
-	IWetYVXdlPQfqFWIKC875pzdN96fVQAuGdLHHk/IxGIK0nhacpkP7g8y9egF4aOvGA21yMGsbXr
-	0rTjYcnMzOzvUd8fFKm8gp0xQDY5zfq8=
-X-Gm-Gg: ASbGncucKWFJhCpkeYUwJbtndEypV/0oP2JyFpU04wT8u8ghBt4QLypWv1xcCZP3qqu
-	pMWElfFs+lHufSNGOVs4vqoMWKK4PpKZkzFS1J5kk/cV4YKGeiPnazqEaf7hf0OMot4F1ZLjsUV
-	o4f0X6WUO/5MJCrRMMubUFbDgDZMJjsOSJYhZfkpSWQ3QHpMVdOkCe0bPknkNDgp3MzkGHQ4s42
-	xRX6eYxrGaC9xHViI3cRuZtOqj+eYMRujSSVM0VBg==
-X-Google-Smtp-Source: AGHT+IEMnKwRII+sQz7z8ODnCtP4ALUWkWxIgEqQsH4SG9LUmwvezuVxPMxSkwHMCVaZ60t1dnR1rras7C5oYkvDpds=
-X-Received: by 2002:a17:906:c10b:b0:af9:3d0a:f37d with SMTP id
- a640c23a62f3a-af9401679d4mr397751766b.37.1754151029019; Sat, 02 Aug 2025
- 09:10:29 -0700 (PDT)
+        bh=4KL/S6fBM/ji1Lc3pjK54y5F9SSE6V3q/wKypaYNDQI=;
+        b=TWuxUXfJHV0YNl5On2ZaEW/wPZaTtcE7dHksdv0atX92T00lUdU/yDBS3MPjxpJt/5
+         kbDG9RrOxaA4lhbxz850BjE4Rfs8WI0m9HSb5O6N4zlipywOFW667v5rbW+lax7nShP+
+         WtUghXzEyR6sHnf5Hnm+o0yAlUtN521LoATlbsAPzj/knZbqeD9TDaHAFPQVxbQAxd9b
+         MKaczpbwU2ZFeeAsUj6IJm9SH69JGdxh+f/52di4seNYcWxfjaxqsomKP4LWlll3Wjh0
+         8pYouzc/zW6ZDUgEXKZouuaTqH3na1SdUNigqrDu/r5kCAGXYP2UiwQps9S3MVdc1r7S
+         JI/g==
+X-Forwarded-Encrypted: i=1; AJvYcCVW4rfSK3HQ15H4Ml9Oty/9ctoyFxyqfweOjm2wsOdDYk8qSMlicQU01NVNiq+VwmqEjSQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWLBti9ZUhNJ7+21JrcD7PGbZskuyxshogmqt/QK5hVk6mMurD
+	i6G1mO9VKwYLPUxjFTET0hZRthjKnh+d48Agbh6ohtZd4R82EaToB1Mx4XarCqGsCgW9Z2ijJpq
+	3hJjSYoHqH3vWPw4FwIu6APqWM01L1DE=
+X-Gm-Gg: ASbGncsZTEMR1hbJRzcGXGJ3EclllKbsa3gFd0et7og3EW0PkZmEj+Rw74s2bPHyY/f
+	YxovFHxm6aRGlIrzoO+gaqEFDv6JgqA8mXJ7qml2jBalv7qfhUdBwxTPeNft0feubJDWrd9dHhw
+	hOw2Azduc1IfPeuNm42uQIgGPAuCQV/XUJpuMCDBHXvYz3NXJvWGhpFmC7fIwvHajSOsVGSwiGv
+	hmuEi06Q1+OIu/uF9/gTNUzWdV74+Ml36WyjgILYQ==
+X-Google-Smtp-Source: AGHT+IEwCrfdyyWU7oTWr/4VNT3+QskPFL1Kbk3UP+tuhdNDCq0sLUy6KkWXh16XV9rTteDxMQaFVhIJihRt4OxBCy0=
+X-Received: by 2002:a17:906:f59f:b0:af9:38ed:935c with SMTP id
+ a640c23a62f3a-af93ffc5908mr390859666b.3.1754151217237; Sat, 02 Aug 2025
+ 09:13:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250726165320.4039-1-ben.knoble+github@gmail.com>
- <20250726165320.4039-5-ben.knoble+github@gmail.com> <xmqqms8qzdd0.fsf@gitster.g>
- <CALnO6CAbTjuFrLbhC24VDmdy4Utx29g92M5eYV9BPahXK+o+1A@mail.gmail.com> <20250802092331.GA3721454@coredump.intra.peff.net>
-In-Reply-To: <20250802092331.GA3721454@coredump.intra.peff.net>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Sat, 2 Aug 2025 12:10:17 -0400
-X-Gm-Features: Ac12FXwhM90cTTDueyu_Fz5jTQhqekFYT8-sGZiYU4jcSX7UHmT9ozZhoTgkMQo
-Message-ID: <CALnO6CD_=ksmXrzS-k5rQukYcMSDLm0HSLZ35xP-Y1neKc70Xw@mail.gmail.com>
-Subject: Re: [PATCH 4/4] builtins: show help on "-h"/"--help-all" with more
- than 2 arguments left
+References: <CALnO6CAOOTBQf3s9B1G8AgwcbYnv5VNY63q-6bGPeoaLy208rg@mail.gmail.com>
+ <xmqqv7nezdw2.fsf@gitster.g> <CALnO6CDNDfx6L7CmPwE0eBZFkd_JkZf6hDwrADccAb14QhJGDg@mail.gmail.com>
+ <20250802094657.GG3711639@coredump.intra.peff.net>
+In-Reply-To: <20250802094657.GG3711639@coredump.intra.peff.net>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Sat, 2 Aug 2025 12:13:25 -0400
+X-Gm-Features: Ac12FXyj-3OzJPvMDNEgp4pBzdcmjSEU_hqxDC6WV4vsAUCQc6wyVTLbjqt8yxM
+Message-ID: <CALnO6CALb-_RjNZw9u-0R33O+KfccfZK0+mF-W7G659wc4PW7Q@mail.gmail.com>
+Subject: Re: Why does git-grep appear to treat exclude pathspecs differently?
 To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Elijah Newren <newren@gmail.com>, Lessley Dennington <lessleydennington@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 2, 2025 at 5:23=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+On Sat, Aug 2, 2025 at 5:46=E2=80=AFAM Jeff King <peff@peff.net> wrote:
 >
-> On Wed, Jul 30, 2025 at 05:55:32PM -0400, D. Ben Knoble wrote:
+> On Wed, Jul 30, 2025 at 05:49:29PM -0400, D. Ben Knoble wrote:
 >
-> > >  * "git rebase -h new-base" that shows help is probably a bug (think
-> > >    what should happen with s/rebase/grep/) in the first place.
+> > which eventually dies as noted. However:
 > >
-> > And at least according to my tests, "git grep -h new-base" still greps
-> > rather than shows help. Compare
-> > - "git grep -h squash" (greps squash)
-> > - "git rebase -h @{u}" (shows help)
+> > - looks_like_pathspec() only checks for long magic, as you noted
+> > - setup.c:check_filename() looks for short-magic, too, but only
+> > considers ":^" to work like a pathname if we're excluding everything?
+> >
+> > I think what I find confusing is that, while this is definitely a DWIM
+> > case for git-grep, it doesn't seem to do DWIM :) We are verifying that
+> > the remaining arguments are filenames, but couldn't they really be
+> > full pathspecs, as long as they aren't revisions?
+> >
+> > The difference for "^:<path>" from ":^:<path>", just to complete the
+> > story, is that in setup.c:check_filename() we try to stat whatever
+> > comes after ":^":
+> > - for the former, that's <path> and we are ok
+> > - for the latter, that's :<path>, fail.
+> >
+> > So it seems like the places that check for short-magic should also
+> > consider the optional trailing colon?
 >
-> I was somewhat surprised that grep would still work, looking at the
-> diff. The reason is that it does not call any of the touched functions,
-> but instead relies on this line in parse-options to trigger help:
+> Yeah, I'd think so. But it's worse than that, even. According to the
+> glossary definition you showed:
 >
->   $ git grep -A2 'lone -h'
->   parse-options.c:                /* lone -h asks for help */
->   parse-options.c-                if (internal_help && ctx->total =3D=3D =
-1 && !strcmp(arg + 1, "h"))
->   parse-options.c-                        goto show_usage;
+>   In the short form, the leading colon `:` is followed by zero or more
+>   "magic signature" letters (which optionally is terminated by another
+>   colon `:`)
 >
-> rather than any of the if_asked functions you touched. So I think there
-> may be two problems:
->
->   1. You didn't touch this spot in the parse-options code. Would you
->      need to for it to be consistent with the non-parse-options callers
->      that use the if_asked functions?
->
->   2. We can only get here if we make it past the help check in
->      run_builtin(), that you do modify in your patch. That works for
->      git-grep because it does not use RUN_SETUP, and calls
->      parse_options() before checking whether we are in a repository.
->
->      So in run_builtin() we do set "help" to 1, but it does nothing
->      without the RUN_SETUP flag. But imagine a hypothetical git-foo that
->      takes a "-h" option and does require a repository. It would set the
->      RUN_SETUP flag, and then:
->
->        git foo -h bar
->
->      would show the help before we even get into cmd_foo() to parse the
->      options.
+> we allow multiple bits of magic. So the code in check_filename() that
+> looks for ":/", ":^", etc would be fooled when seeing more than one
+> character, like: ":/^exclude-from-root". AFAICT there are only two short
+> magic types, so I guess nobody has really run into this before.
 
-I think I need to consider both questions in parallel: as you point
-out, this patch probably doesn't work for a hypothetical command that
-both needs a repository and has a "-h" option. (I note that ls-remote
-also is RUN_SETUP_GENTLY, like grep). Since no such command exists
-today, we /could/ take some version of this patch and refine later if
-a command needs both RUN_SETUP and a "-h" option. Or we could reject
-this patch (assuming there's no workaround for now). Given Junio's
-concern, I'm inclined to just drop the patch from the series=E2=80=A6
-
-=E2=80=A6which moots question 1, I think. OTOH, if we keep the patch, it do=
-es
-seem like we might want the parse-options API to be consistent.
-Fortunately, I don't think this area needs adjusted for 3/4 based on
-the tests.
+Good call out! I also see only 2 magic items (one with a synonym) at the mo=
+ment.
 
 >
-> BTW, I applied your patch 4 manually to dig into this. I wasn't able to
-> apply the whole series. It doesn't go on top of the current 'master',
-> and applying with "am -3" mentions "sha1 information is lacking or
-> useless". Did you build this on some other unpublished series?
+> Also, I guess this function ought to be respecting the literal_pathspecs
+> global? The actual pathspec parser does.
+>
+> If we can, we probably ought to be feeding the paths to a function like
+> pathspec.c:parse_element_magic() and then checking the resulting flags
+> (and skipping past the prefix as it indicates).
+
+Thanks for pointing me at this; maybe I'll find some time for patches
+unless someone beats me to it.
+
 >
 > -Peff
+>
+> PS I didn't even know that we allowed multiple short items or a trailing
+>    colon until your email! Hidden corners of Git.
 
-The base is published and mentioned in the cover letter [1]; if I can
-make that more explicit in any way going forward, please let me know!
+;)
 
-[1]: https://lore.kernel.org/git/20250726165320.4039-1-ben.knoble+github@gm=
-ail.com/
+--=20
+D. Ben Knoble
