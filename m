@@ -1,153 +1,133 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC0F229B1F
-	for <git@vger.kernel.org>; Fri,  1 Aug 2025 23:10:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BCC8F58
+	for <git@vger.kernel.org>; Sat,  2 Aug 2025 01:51:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754089810; cv=none; b=lkUM/OHUXh+CG9Z9liJtWiXIlaIAEUG6jpP+1X6IqTHXAV9hGpo9PHVIezwKJt12hSeVyc9mwKQ0jM+mwLTcV9HCyYLsj55zEDgPqkl4Fvr4KQiLOdKMQW77tpBpat4qVnENAE7He6xgY54/UcNfz9JPc8GPLf19F/xq9liMA6A=
+	t=1754099482; cv=none; b=J/Qt9Uud9xSlaCscfCAzWmj9SSklukbSlZPPqngOxrGre6WzNoSNi2m/kdGqcj/ImX/UnQ/paFUwzT5EXBIEC+MX1pc5tAb9NyzK9j4qkl6qq9ScJMf8SwNqYxyba816jrC8xeZnNJDG5fRRaGxiSCOJm/0kr8Zg0aKt5k3g3nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754089810; c=relaxed/simple;
-	bh=5lpHHvKs7CMyWpTi3nMg5ZcIrHX9RT2NJH9OLJFjAa0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M1wBMwno3ID97Rjdl4UxRSKLvNpwMYkWhb1P3O8DK4r93i7ZzQQRzJnyMLQstyiPb5RoqVBbSkYaR2t9KEXVlUSYdfG+mb3JPa6TRo1ToGo+9rjbVnuRd5OpJFeVI/PJb0XZqdTho89YycuySd27Vs/S93WD+27Ki/7bIE0iomA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QjkC3W0f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MQbwGep3; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754099482; c=relaxed/simple;
+	bh=CelNZDzvwS94ULCqn7mUh0fAOrRJOImIPyIMoG5u1DA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UVgXf7/UC3QAziyyJcFQqgzyYduKWMBjvWO8hVsuys9wcbfWQeL+RabNHEXaEcd8dJC/eB9cS5FV3pr7BxQbjBupq9tMZahOXnJpbsW0a2hbBi/DFd+vJcZujRCA7n0OmZ6KbCLDW7ToBAJp/bdWxOH4yS2pdhWUEflyxu9a288=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z0xQkx1A; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QjkC3W0f";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MQbwGep3"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 93726EC15B9;
-	Fri,  1 Aug 2025 19:10:07 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 01 Aug 2025 19:10:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754089807; x=1754176207; bh=7iwjVoDAlg
-	mcKh4YsNorr59ASI83ptT/4dj6J5uM9PQ=; b=QjkC3W0fjwsqwFpVHFFG08VNsL
-	ohavvyjZYcXNuC8O3wXWOv+3sxU2dwvYIirhQich4YsPJPhuy0lRFcDk+EAb3RA8
-	upyD1ix0pnr3bPgJdNJ2npGHLFqJJgdkDgbwfx4MJ2e1pXiXzO7bGRG/axwFRxNP
-	wuHIAhdUmln5pn317w2EpeVvI+tn/x9bT6zxiMdmCvyGcx/I5w+IrOKnoY45Ehhm
-	KCgtEy80TyksCwbskFxZKHBcIGE41PW8s0Fv5zyTjNL1VrAIkxkNhG4/YA/kR6e5
-	NViVbSfqncaumYrhtAYKzfBYluZuEW109ey48XUQ+2Hu/erq8+Gp3LWOdK3w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754089807; x=1754176207; bh=7iwjVoDAlgmcKh4YsNorr59ASI83ptT/4dj
-	6J5uM9PQ=; b=MQbwGep37OEteB2AVVmiznm0SqyLgfFt4EulcogKbZ/4dRcCKqA
-	v7pT+95D7xjwhDqUoAzwVvlkQ+mbhDLR3JYcTi/wo0krR9cJ0DYDkHutXEMB+gwC
-	HemGspg7UXMGTiEx8I3/5VFWsQHaLUkensUSRxl2VoYi5Gv+tmrtt+qtmRvzjnAc
-	J6Gt8BGQMLahqS9S0xILvDV4fL+iy7+Q3HPvPnxQIUHs/bDIa2PgpmJ/5hQVyJ9M
-	+nzdeBk25nG0D3LIHAPZYchJdl3u9vXNiyy/YIaqMjwJyUfNv3wt612Ws3waU6ON
-	Q9ZQet3xjB4E5FgDMEaAsMcZL4NapLa5MXQ==
-X-ME-Sender: <xms:T0mNaJjkXddx8zdcH1u5LLWSJ1yKhRrmY9ExbM-kTFZVBUBLroXdtQ>
-    <xme:T0mNaBTt-M60A6GmbMjXsmSMQFG2A_vFMDyC74szKHVOoebFWAmLkZYaoe63vH8w4
-    3otvfby3McM_9dwpQ>
-X-ME-Received: <xmr:T0mNaChtN5TECQfwMIiQJgH-Se5RH2vk5Yphjg2ze9OIvDe2sFy2fFaEInmMH8YwA0rpH21QbjRYX7mccaYi05LkhORwetPEdOXZc7Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdegleekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhi
-    rghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:T0mNaJ7l7KLQ-Z_o-xRiFs0xKYssueCN17wgm8KBeU9bTgUV6b3b7Q>
-    <xmx:T0mNaHA5Y_HN3fq6tUAIeKyZX75xdn2hMVd__8axEVAY55NP6pmZcg>
-    <xmx:T0mNaIYe7W36ae4OdekshCY1EwJ1HryipeuhBb1Q4dVCc0tWAN5TcA>
-    <xmx:T0mNaKYjGZKibucrU9dhIraw-e-u6zPyl8z5SQgJ32gc8gGV8i4oHQ>
-    <xmx:T0mNaJ4CnTX0fLA64UniwQaFrqQs4IaZbDwPHMRGwn3KcaT6II16KnV_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Aug 2025 19:10:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z0xQkx1A"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b3507b63c6fso1582394a12.2
+        for <git@vger.kernel.org>; Fri, 01 Aug 2025 18:51:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754099480; x=1754704280; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9DMLRqaof1KjrMo+uG0TdN8Tsu9v02n7XDdkaWD6ukA=;
+        b=Z0xQkx1AuhdHw4/Mn87ueSEqkZ7b3ns8L4AcR4Ky+2c+XNFpmVePzGvuDSFvmug3Un
+         bUQQm7eAXRLqezmTltXRMjWzZiPinV5EVRce8Td5lqSpfbRmm6c6EZ3lDCmRB+9C9V6k
+         j7S0+3tlJKwR7TaS+w8TSDmB4eSkM+FIW64Z+YWYbSMHba7IfHzhAwQbr8QOkllh9zhh
+         /1a8R/U7cXf73V3AYFlCuU5FmEn81JQ5FvgvvicYTu5Xa8KReIlNy55WBM3JfsaoFC+U
+         JWVSduKWSb+HMuIrU0wzHUsjjRb0Sn2Lb/JkFHxHv+uury3jyn94oyThKjKI8a2jZnpP
+         8Eew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754099480; x=1754704280;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9DMLRqaof1KjrMo+uG0TdN8Tsu9v02n7XDdkaWD6ukA=;
+        b=XUDVqnh/zFp0De2UPWQksynys1jk/C4hAS06oP9Wk/jdNjIJrBxYXLZafzqMGmj2aB
+         FNTYwTQEBEH5wSeBHeKtj6IIf9ezq38u3RtXZMogOVt01zgg+r4vpHqJxSKmLM7UoNXe
+         CMqMSgfwrKIEdGuI1mu6PC065Wg/kZSO5xIG01QvJtTyVx+MBLjQS/7NIr1ljOggMHue
+         w+RDvZXY2kqItxBwO7aYvg3XdLndvv+zs9nS2YjNYNe8sckIvJkj25COrDS6Rjobw/Yn
+         XKg/1EMXl8JID5Y+p3Wp31ZutnP7/LYSLdgpCqrf4uD3WFMR7kVj8fAwqd03lbrAABFd
+         y/zg==
+X-Gm-Message-State: AOJu0YyZHjJnF0lUYT6Hh88JteSQbEiqn3VGiR7+jW30Qm1hejbyEhEl
+	1vaUWpDFJqSxioSx/RvM0Ien77Mqar+a6SzRgmV0zgIu4jITypYG05SQT1AcV/0n
+X-Gm-Gg: ASbGnctgwFAA10GLV4vkeUkVvsc+AKOmIe1EtH+1njx9OpCUEOtCr3haMyQrZnw2lkl
+	J45qOI5l/awHU+cBGpZGT2mCXFsUEtQOrUN0BnpkuA8TCb8sDkJkZnwxk9WMXxbEqpFCbs+d8Mu
+	Wg4i2cLoaFc+4xh/L26eeN3pEiymjuTFhxv17WHgjM7V/XiAK0/o7vF2fuMXNAzpSw1+bAJajxC
+	mX0vLm/P0vbtSgeH08GWZPSElc+7xxm6m8bcjG0WQBCuob4JLn42wZpGsiM7WCbKsu9VHbYWDnY
+	34W+HT14djMQP25b92ihUH5BnLQDpG55Z28ulk23jAiA3OlqyuS50qFCKu/DoNhtsUXeTUO/GTH
+	dXlRgHXy8k7wk4o1tjw==
+X-Google-Smtp-Source: AGHT+IEJwBaFUBnA4U8Ic94KUcYJrrVy0DuNh/vHqKwfguSu/WLBrvvjDNdMFleZ9XSLijAzsrSW4A==
+X-Received: by 2002:a05:6300:210b:b0:23d:5691:df51 with SMTP id adf61e73a8af0-23df8f9fbc6mr2687014637.1.1754099479909;
+        Fri, 01 Aug 2025 18:51:19 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-32102acbc56sm1708094a91.2.2025.08.01.18.51.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Aug 2025 18:51:19 -0700 (PDT)
+Date: Sat, 2 Aug 2025 09:51:15 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/7] string-list: align string_list_split() with its
- _in_place() counterpart
-In-Reply-To: <aIw6ojvvDWLPllG7@mbp> (shejialuo@gmail.com's message of "Fri, 1
-	Aug 2025 11:55:14 +0800")
+Subject: Re: [PATCH v2 4/7] string-list: optionally trim string pieces split
+ by string_list_split*()
+Message-ID: <aI1vEzuD2DeiFSzW@mbp>
 References: <20250731063949.1601669-1-gitster@pobox.com>
-	<20250731224607.3942417-1-gitster@pobox.com>
-	<20250731224607.3942417-3-gitster@pobox.com> <aIwndQtEoKNXRG5z@mbp>
-	<xmqqikj7ogf7.fsf@gitster.g> <aIw6ojvvDWLPllG7@mbp>
-Date: Fri, 01 Aug 2025 16:10:06 -0700
-Message-ID: <xmqq5xf6lju9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250731224607.3942417-1-gitster@pobox.com>
+ <20250731224607.3942417-5-gitster@pobox.com>
+ <aIwyIJqEIdSdKINz@mbp>
+ <xmqqcy9fog8x.fsf@gitster.g>
+ <aIw85gIurfEhvuPC@mbp>
+ <xmqqa54iljw1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqa54iljw1.fsf@gitster.g>
 
-shejialuo <shejialuo@gmail.com> writes:
+On Fri, Aug 01, 2025 at 04:09:02PM -0700, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
+> 
+> > I agree with you that we would introduce another variable. However, the
+> > thing I quite dislike is that we do ltrim inside the current function
+> > and we do rtrim inside `append_one`.
+> 
+> Your "quite dislike" does not matter unless backed by a reason why
+> it is not good, and for that, you need to think a bit deeper.  Then
+> you will hopefully appreciate why the current arrangement is more
+> optimal ;-)
+> 
+> There is a clear separation of tasks between this caller-callee
+> pair.  The caller is responsible for finding where the current token
+> ends, and the callee is responsible for massaging the current token
+> into the resulting list.
+> 
+> But ltrim needs to be done in the caller for this to be efficient.
+> 
+> Imagine the case where you want to allow both non-empty and trim
+> behaviour at the same time, and use a whitespace character as
+> delimiter.  If your token has leading whitespaces, instead of
+> chopping them into zero-length ranges and feeding it to append_one()
+> one by one, only to have them discarded (due to non-empty being
+> set), ltrimming in the caller before it decides where the next token
+> (i.e. "end") starts is far more efficient.  It may be more
+> conceptually cleaner, but cleanliness is more subjective ;-)
+> 
 
-> Sorry to make you confused. Because there are some other changes where
-> you don't use `static`. That's the main reason why I ask this question.
+Yes, I agree. Thanks for the wonderful explanation.
 
-Hmph, are there new things that are not static but have good reasons
-to be?  I am not aware of them offhand.
+> > My thinking is that we should handle the [p, end) string in the same
+> > place.
+> 
+> Again this sounds no more than a subjective "quite dislike".  Is
+> there a reason why anybody would want to insist these two things be
+> done at the same location?
+> 
+> You could satisfy the subjective "same place requirement" by
+> inlining the helper function into its sole caller and still keep the
+> current arrangement to ltrim before finding "end", of course.  But
+> at that point, I would have to say that it is a tail wagging the
+> dog.  You are making the code worse by destroying the caller-callee
+> division of responsibilities, only to satisfy a subjetive "quite
+> dislike" criteria.
+> 
 
-> --- a/t/helper/test-path-utils.c
-> +++ b/t/helper/test-path-utils.c
-> @@ -348,6 +348,7 @@ int cmd__path_utils(int argc, const char **argv)
->  	if (argc == 4 && !strcmp(argv[1], "longest_ancestor_length")) {
->  		int len;
->  		struct string_list ceiling_dirs = STRING_LIST_INIT_DUP;
-> +		const char path_sep[] = { PATH_SEP, '\0' };
->  		char *path = xstrdup(argv[2]);
->
->> > And I have a design question: by using "PATH_SEP", we need to convert
->> > this character to be string. Should we create a new variable named
->> > "PATH_SEP_STR" or whatever to do that?
->> 
->> Sorry, but I do not understand the question.  You want to see
->> something like
->> 
->> 	#define PATH_SEP_STR "/"
->> 
->> you mean?  I do not offhand see why anybody would want to do so.
->> 
->
-> Yes, that's my question. Because I see that we would define `path_sep`
-> array in many place, so I wonder whether we could use such macro.
+I get your point. In the later review, I think I should avoid commenting
+things using a subjetive idea. Really thanks for your suggestion.
 
-Why would we define path_sep[] in many places?  There is only one
-here, and no existing code outside this helper needs one.
-
-If it becomes necessary, I suspect that a global variable, i.e.
-
-    === in some header file, perhaps git-compat-util.h ===
-    extern const char PATH_SEP_STR[];
-
-    === in a C source file, perhaps dir.c ===
-    const char PATH_SEP_STR[] = { PATH_SEP, '\0' };
-
-would be more efficient than having such #define and use site across
-the codebase.
-
-Using PATH_SEP_STR defined as a literal string "/" and sprinkling
-many copies of it in the source files everywhere gives compilers
-opportunity to consolidate those that appear in each file into one
-copy (as these are literals and constant, they can be shared), but
-would not give opportunity to do so across compilation units so
-easily.  With an explicit singleton global instance, that is
-trivial.
-
-If we end up using great many number of them to matter, that is.  As
-I said above, we have no evidence that would be the case, and that
-is why I didn't make such a change in the first place.
-
-Also, if many code paths need to split a path into pieces, it is
-much more likely for us to give them a single well-designed helper
-function for doing exactly that, than to have PATH_SEP_STR[] that
-can be used by them from everywhere and have them use it to split
-their paths individually.
+Thanks,
