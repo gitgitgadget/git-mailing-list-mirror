@@ -1,115 +1,140 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FBE72612
-	for <git@vger.kernel.org>; Sat,  2 Aug 2025 16:14:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CF5A48
+	for <git@vger.kernel.org>; Sat,  2 Aug 2025 16:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754151262; cv=none; b=sA3pLo8tFXLTjfFMpWEWEjVv3az8owI1ft1A/tAwCzd7j1sGLo3LI0V4/AacFVGbJeY1X8Dlgm3WpJV6GEXKxvA20BnLa1V1f9CuZoeF4im4CQIcnJAZkUFm/hA+4oDRQRXJ7IURX4UGfDEm/epvG4PIrbqHLyHBVk2OKJ+IUT8=
+	t=1754151991; cv=none; b=GqkSg5gptZC6LFtwwWds04DPS13/y2UfRF6So0S6UYFuZ296mD/p2MCF/7tp3ADWxtKm33QxD8c05Ui27Ipxq6/OgNjxg/yQJQrt2a61tBNp3Grdl8jhvY0Km0CKFpt7/Do9k4+6OsSuy5yDEn6GfCzDqNmi0iZ0JY7FnxWcP6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754151262; c=relaxed/simple;
-	bh=kPurcfjxZEtDUzdtyVXPUfHmq3opj9nkQI307LMf924=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F+yfyDuT72EVgqD3EdPh63RTyOzDLTJhjg0qlJxgHQox5PWGk7YtBF7zw7sW34DJ3+3NDDUfnSEGYRSI7D18Y6wtS0iXbxM2XtuznUEc4eSm79J6mP/WNzN87pSo57nTbkwD32o7xyJmU7uxiJbmB5hNO8gyfvLdiLoIkg6ny+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i0KnHoHK; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754151991; c=relaxed/simple;
+	bh=uBCBa4azbyzZXtuFgx0BawKe6ohc47SrrL1RaMz/CGo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OXOBGrNN2J83n/VwMU1nClCHeIBtXcWszzbBDERnGNBO6LgxPO8WMRd/obQGYzH6UxMQ2X2tnvAieg/XPpqUtKpQNjKNy4bdegr/VHzmnJz/kq7UbZ/qVusxUtwABNaEePKrVxFERnSF6InzXjc3raglhFBOtWLOKKFc6qnWp8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ELdQgOa3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ArQJ/nNB; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i0KnHoHK"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6156a162537so3871288a12.2
-        for <git@vger.kernel.org>; Sat, 02 Aug 2025 09:14:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754151259; x=1754756059; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=O6YJbn17rB0igGa3lekdqNc1HqR0q0PCTw9vXsLmX4c=;
-        b=i0KnHoHKb3YCs7J3sM+YhG6rCHpwT+hkEL6STf8QlzS+sv3bi1ix31XEwOkFz0lCAx
-         FxJM4XIMYeKAKRvaVjC9bLHsnWa+zRkafrC/jyZqKS+MqV1Hmz7XCST9b00hSVC0JBCb
-         D/IzqzSfyAnX0pGFL7Pe0j7Xo0NJ2RjUEeoCiq/42aX+vJE2k32nctmc6xC5AOt19WVk
-         QZIdj5oHBEuFwmqyS5AGwGBqySkHO2QudvHToyivY4cPzAOfdpYi0JU94HS3tUOyAfg8
-         nx59Fj6PhFriOTfX4jgkW6OoFNWjWrGwaqWeNY9T+6lOueq57InxBDThAWcPKYOMy8s1
-         KvzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754151259; x=1754756059;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=O6YJbn17rB0igGa3lekdqNc1HqR0q0PCTw9vXsLmX4c=;
-        b=d+yKL3I78iPQG6gFMFyyyZnKDCo+qhfYSK6wMWECea+FoIhvnGyynByJvN6cKjXng8
-         EF2pEG5ONuUpweso/0YcDLCocn6wSdYwkVoBJG7q7azR7bJvvIb/hB/SsZ5aLe2NBxTb
-         m/lRGQtKO4uzF1NhVTJ1oAWnxzNZUZrdO0APpnA6ae64bsFhEUi91lYXtuvJ7PPTnG6i
-         l+jDzU0V1jAAKmQLxzd/D4Z9PuV99I0+pSXsoZUR+XLtRgL4xWEE8rfViK0rcy704oS5
-         XX4ANPql0OzIueI7HtdHY/Gqfg7FKw/x6eC61dV5x6oP7oMhocgFBkx80g09fKowc6ER
-         c8Nw==
-X-Gm-Message-State: AOJu0YzUB+IkoJ/umeLS6TSRWcqKCzIw380cC+mgDFe7lVkv0CX6EOsk
-	rBDgYqVZZ428jqIkrwNlB3BzF11aeLMDYXfcMJ1efrRWS6e5WEWskscVN5Im13MDDOmJGVbIKkh
-	2KBd5W81EAyvzsmf8zNomjunS6wtFu/+zBQ==
-X-Gm-Gg: ASbGnctz43pseLTfDHspidb/Eb1gvNb2EXYTeb6D0nsvqwW20EclQBDlYl8/gPfCvMj
-	EvVGYhQxdvThVS7e32KQkRho6uzhjYoYEQPNs0tR/MhZQShZNE6PoTVZALOLplOIJLLR9qQnbo4
-	PU9D9wZt0+13giNM+tJ9eh4jCUIOOBEDbo33NLnSbGgszLnr9U2hOn+NnFq0e9mm/ypBF0TVQZU
-	6dFBbSomnfpU4wnv6aSKIiNc7uRgKG4YpOx/xsrDw==
-X-Google-Smtp-Source: AGHT+IEbPl7ZYIVOwIlVYcjvN9hzkwBGMkO92UzlT8R2EtbrZGRXYWHIa7OOaQ4qt5fmhRuIJBCK/MxhoeeUKBKbAls=
-X-Received: by 2002:a17:907:1c12:b0:ae0:34d4:28a5 with SMTP id
- a640c23a62f3a-af93fd6a710mr409358666b.0.1754151258798; Sat, 02 Aug 2025
- 09:14:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ELdQgOa3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ArQJ/nNB"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A4D9140026A;
+	Sat,  2 Aug 2025 12:26:28 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Sat, 02 Aug 2025 12:26:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754151988; x=1754238388; bh=YpP95ncLPo
+	gojV0Lrt4N5LYJobocrnj4TYY6z0YctxU=; b=ELdQgOa3uEsIZKRVDyGJiGpD+n
+	2eoYll9w27sNDb3dK98exVMaJb5KPXgDZUpn0UuCZxUG0J1rnHQnXTtZzCtG/BEP
+	u1jTWWCnJcQeVwbIc5GG/A0xRUFGOEcm/YjGRSKCvux3wdVb0mW4ixCDR2g7u57n
+	yprxTw+ybEpESI30EjaH340V6UQV3bwOcJu7HqOwVr61TIx21BIkQiM41KcaFhVD
+	CHmR0ffg9KpfiPZfVSNIxoohf5JC4coETY643CRre+BD0MtDQbsp+Ut5/nGT6aq/
+	vGxuWQnmrnJkaZ9HMD+fyFZn9U7AfjZ3KihPkQWMGOy7slIVmVDTlD/ZfeNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754151988; x=1754238388; bh=YpP95ncLPogojV0Lrt4N5LYJobocrnj4TYY
+	6z0YctxU=; b=ArQJ/nNBE+atX3VlkZcHvwMoh4XhZEuDaETz/knNDduCiUVBzh4
+	UM8mPCg3C617yRH7b7/M+8joGoOTzfvi8XKpljp5RgGrIYy9qnKfXFXWdvMTsgV4
+	R+z+50O7notj4bOqN4n6UzF3q9HKNAG+jsa5KFC5+llNVY4FBjvvD2IWgNwsALKM
+	HvFIBnkUwdMtdYPMzwfFrAfLfbNRmtUbd735jNekHHfvLm9N8QXHiFaySyqNNgjE
+	jiF8161UI0/iyQTmpd0de4cHMZK0WMgdmkCSe5BsGi9KJyrW/gwk3p4tkILQkYPf
+	XuBH0iWe+E0pkxEp6w60fDdkOTE3YiSRoFA==
+X-ME-Sender: <xms:MzyOaFtMsVUaB0FUPXk88vgwlclCNM86tovkPw-q_eP-nzDsFFzmOw>
+    <xme:MzyOaKJ9oYguCEHHBBZcBiSpQ6Klol85gUTTulZe6Ivcmno-hLKjJq-B0_xUKHIHq
+    7_mF7zGLN3UAacIRA>
+X-ME-Received: <xmr:MzyOaFMLb8Fyc-xEVXDComUoU47mNUbcdGA4tqkS-O8l7gx7WNSdHEbJKKVgjVx3j2L29QEcBDVGlXfVoVneei1rqWceZEjLzdXH4Mo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdejtdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepthhoohhn
+    sehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
+    rghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
+    htohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghf
+    fhdrnhgvthdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:MzyOaFU8Fue5g0jOU1r3RBBwQG6iT6VRDgd3dSNaQ-BkXHs8SYmTIA>
+    <xmx:MzyOaLmFCoxV0OmGENgknez26-QsxTYtSEi1I8lYocxkZGmYf_3-2g>
+    <xmx:MzyOaMOO61w_0xSxKNU4hP-kU9a2HZYYM7BQ3IQ3pRlc6EBlx1Styw>
+    <xmx:MzyOaLILxaqWB1efa6V-BgWPJiczQ4N68Eon_XgIt9iOmSJiY-ohIQ>
+    <xmx:NDyOaKFJzHvUQUiJyFiwb2nfWM9DfiVUUJpCZzcG9quuPvCEUL6x2mMM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 2 Aug 2025 12:26:26 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Toon Claes <toon@iotcl.com>,
+  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Taylor Blau <me@ttaylorr.com>,
+  Derrick Stolee <stolee@gmail.com>,  Jeff King <peff@peff.net>,
+  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v6 1/4] last-modified: new subcommand to show when files
+ were last modified
+In-Reply-To: <CAP8UFD0Hrb-=TRNkueBw06Mgu6Hp1zO8qZVOFVLi8Qp4xkas+w@mail.gmail.com>
+	(Christian Couder's message of "Sat, 2 Aug 2025 15:38:37 +0200")
+References: <20250716133206.1787549-1-toon@iotcl.com>
+	<20250730175510.987383-2-toon@iotcl.com>
+	<CAP8UFD0AEKDmvQJTanL+ZS+U66WAZz=FKSJ3LPE1QHSEyH-zNw@mail.gmail.com>
+	<aIyVft9PdlorttzZ@pks.im> <xmqq7bznm0nk.fsf@gitster.g>
+	<CAP8UFD3rV5CmHbbmg9vQodJ3U=WxfmWHnaio+7RcBAKz=2Ar-A@mail.gmail.com>
+	<CAP8UFD1hdykpEaFrs1VoHbU1f-vT7xL2R6uvFWzjPQKRp0eoEw@mail.gmail.com>
+	<CAP8UFD0Hrb-=TRNkueBw06Mgu6Hp1zO8qZVOFVLi8Qp4xkas+w@mail.gmail.com>
+Date: Sat, 02 Aug 2025 09:26:24 -0700
+Message-ID: <xmqq8qk1k7v3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALnO6CAOOTBQf3s9B1G8AgwcbYnv5VNY63q-6bGPeoaLy208rg@mail.gmail.com>
- <xmqqv7nezdw2.fsf@gitster.g> <CALnO6CDNDfx6L7CmPwE0eBZFkd_JkZf6hDwrADccAb14QhJGDg@mail.gmail.com>
-In-Reply-To: <CALnO6CDNDfx6L7CmPwE0eBZFkd_JkZf6hDwrADccAb14QhJGDg@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 2 Aug 2025 12:14:07 -0400
-X-Gm-Features: Ac12FXy-AsE1iDwtQhkD49hYSsu7J76RCj66K6mW5qSnPQycE0XfJRHLIDr5ZMY
-Message-ID: <CALnO6CDgjmDd9kBCLzjb=JS6Rqg33aXesjthr_Q=HCA-ru2k6g@mail.gmail.com>
-Subject: Re: Why does git-grep appear to treat exclude pathspecs differently?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Jul 30, 2025 at 5:49=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com=
-> wrote:
->
-> On Sat, Jul 26, 2025 at 8:16=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> >
-> > "D. Ben Knoble" <ben.knoble@gmail.com> writes:
-> >
-> > > With Git 2.48.1, I observe the following behavior:
-> > >
-> > > - "git ls-files :^:Documentation/RelNotes | grep Rel" yields
-> > > "RelNotes", as expected
-> >
-> > It is deliberately confusing to spell ":(exclude)" as ":^:".
->
-> What makes you say that? It's documented in "git help revisions":
+Christian Couder <christian.couder@gmail.com> writes:
 
-Er, that's "git help glossary" for the quotes below=E2=80=94woops!
+> Sorry for the noise.
 
->
->            A pathspec that begins with a colon : has special meaning. In =
-the
->            short form, the leading colon : is followed by zero or more "m=
-agic
->            signature" letters (which optionally is terminated by another =
-colon
->            :), and the remainder is the pattern to match against the path=
-.
->
-> and
->
->            exclude
->                After a path matches any non-exclude pathspec, it will be =
-run
->                through all exclude pathspecs (magic signature: ! or its s=
-ynonym
->                ^).
->
+When 6d0618a8 (Add Documentation/CodingGuidelines, 2007-11-08)
+started a written guideline, the project already had two-year's
+worth of accumulated code.  It was more like "we have been operating
+without any written guideline, and so far it has been OK because
+most of our contributors and reviewers were competent and
+interaction among them amicable.  But now we are having more new
+faces.  It is a good time to codify the rules that we have been
+trying to adhere to.  It is possible we may have missed some
+violations during our reviews and have already took bad apples in
+the code base, but they are tolerated-but-undesirable exceptions.
+These are the rules we have been trying to follow."  It is expected
+that there are some corner cases that violate the writings without
+meaning to.
 
---=20
-D. Ben Knoble
+Anybody reading the document should take it as an aspirational
+guide, where existing violations (1) are not excuses to introduce
+more deviations, (2) are "once written, it is often not worth the
+code churn to go and fix them only for the sake of fixing them", and
+(3) are very welcome to be rewritten if you are rewriting the code
+that covers (not merely overlaps) the area.
+
+And we writing or updating the document should try to make sure that
+the aspirational nature is clear to readers.
+
+So your intention to improve the wording of one single item was
+surely appreciated, but I think the effort is better spent to make
+sure that readers are aware that not just that single item, but
+everything in the guideline, may have existing violations in the
+code base, and they understand how they should treat these existing
+violations, perhaps by polishing the preamble to the whole guideline
+document somehow.
+
+Thanks.
+
