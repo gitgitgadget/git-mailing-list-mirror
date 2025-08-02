@@ -1,42 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C25173
-	for <git@vger.kernel.org>; Sat,  2 Aug 2025 18:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECDE202C58
+	for <git@vger.kernel.org>; Sat,  2 Aug 2025 18:40:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754159960; cv=none; b=Shw6dbsCw1xdC8y7lBG74fIt/wHqVCfhMkAUzcuhMIlLCcbHuA5L4XHg8r1r5aK4hKr4eDiNbVkJ2vrBF7yC+ldKMEoiWDP0U6magl03QQyOJgpg4np2rntaA09Oux3LAVmPs9Io147dkbJM9c2z9T8yeYomCihUsNahZAsiPHs=
+	t=1754160047; cv=none; b=QyC9LCrPxzh969RFQD9eABU6BjppPNWp8q/D9/O3UWHijcFHePKw//svz3jNtVMfanJCRjRH/dPZGafRiJwaCnYF+ZovXLXi1GakatoPc1vaLwh8uo2dA+Llr56o0JTPTjF2Qpa/1LRficsWBt/B10jm5zBG/n4rV6lgRwTRGbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754159960; c=relaxed/simple;
-	bh=J3q/IQIiuoec9NDMoWZTZMOUq7uaCXXNTVUssehavAE=;
+	s=arc-20240116; t=1754160047; c=relaxed/simple;
+	bh=Z27sfXnXbvQ1AWQ6c0wI4iw8shpPvc9WVGaI1hBjGUY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QsvovYZeKrfsw+J/1Yo3bMOk5Mch4xYV6xK7wIet6N1anGNI3CPgK6LrBSHvWVTOTfxQI+9LNmgG/jLpMn/lHD6tvWhR1B6xevMZOxSVahNAa6k1B57IK4DfQHIq+l3Ilqi5CbFYDzwtbyH+Or5PGRlune4uTkElvpH81Nf4SuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=B5eABLGa; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=lfwNgcREfBWBYusuKPztTaAB+cDlcryEm/w/iTgbCh/XjAHKdh0FhJTKThOc2m1mLS5x9eP7Qm7bY49Qgs4rCXUSa+Hw2XMaZ1BxO9d0UdRGhoIQyNF8jlYBhDdURL151q4Z3PHqUdGCQo1ZaPcsiu6CbCfd5Y1B1kLsfVOAezI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=hKkuPxSy; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="B5eABLGa"
-Received: (qmail 13691 invoked by uid 109); 2 Aug 2025 18:39:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=J3q/IQIiuoec9NDMoWZTZMOUq7uaCXXNTVUssehavAE=; b=B5eABLGan1y59OVHP7JAVSIQE4qT3DzRXxZPIR7I7EQ5njBSULwSd9+jg6sB2OPJxlqPlnioLUk/1qkgji+wVGwkphpQDIh3S8EZ7HWcFQIhaEO47FsicfswVQrRddo1p2H4x8ZUo6JRmg6CvhX2zJ4lk2Ef4pf+/Pqwd/ilrvXGsZjei4jBkmgSvK7mMwoUOpFGYZyETHelYwJ2QVm00UcQwXMYWaNBBDD3/Nq5bJn+YgsG8xUW9Xil9zAaERVJXGxYrxAftQADjLMbb0YOSD96huqy+4iRJqCYPAthLm1wdx1+PG8sUDRCiyAHj3f5gms3ZUScBl4lEHfDCCLMAg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="hKkuPxSy"
+Received: (qmail 13696 invoked by uid 109); 2 Aug 2025 18:40:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Z27sfXnXbvQ1AWQ6c0wI4iw8shpPvc9WVGaI1hBjGUY=; b=hKkuPxSyI+yzXwyLusW42VnbOJ8VdfI3GVPZQhQevUYVQS5WaRpMaFGmajc/LPnwYo3XP7Q5I/TeGMt8hWA6B8Kjycu4+NWyP7gLd+Br0yXjjLoWH8pa/Nscz43u8NvgYKN+/CBwOWupQhnqlUJUG11NXMv5zUCWTykA0qD5l5PXEh5GROiT3AQ8rbhZEyyHE10yKXoLPFXL4cUf/wLN784v5sGVHMcW3z0yGkv6tupEzFiFiflvmvnmRx1lMdCj4v4AjVLC0qsCZ/IQtzBaAY/rSA+qZDnJBQdddPahBtp1FvRUGZXZRcqACOrtKZs1Y/ap4ftL7UZAI1XEkIVhlA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 02 Aug 2025 18:39:17 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 02 Aug 2025 18:40:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19195 invoked by uid 111); 2 Aug 2025 18:39:18 -0000
+Received: (qmail 19237 invoked by uid 111); 2 Aug 2025 18:40:46 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 02 Aug 2025 14:39:18 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 02 Aug 2025 14:40:46 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 2 Aug 2025 14:39:16 -0400
+Date: Sat, 2 Aug 2025 14:40:44 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 4/7] string-list: optionally trim string pieces split
- by string_list_split*()
-Message-ID: <20250802183916.GB1773585@coredump.intra.peff.net>
-References: <20250731224607.3942417-1-gitster@pobox.com>
- <20250801220423.1230969-1-gitster@pobox.com>
- <20250801220423.1230969-5-gitster@pobox.com>
- <20250802082659.GB3711639@coredump.intra.peff.net>
- <xmqqzfchispv.fsf@gitster.g>
+Subject: Re: [PATCH v2 02/11] clean: do not pass strbuf by value
+Message-ID: <20250802184044.GC1773585@coredump.intra.peff.net>
+References: <20250731074154.2835370-1-gitster@pobox.com>
+ <20250731225433.4028872-1-gitster@pobox.com>
+ <20250731225433.4028872-3-gitster@pobox.com>
+ <20250802083846.GC3711639@coredump.intra.peff.net>
+ <xmqqtt2pisg0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,30 +44,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqzfchispv.fsf@gitster.g>
+In-Reply-To: <xmqqtt2pisg0.fsf@gitster.g>
 
-On Sat, Aug 02, 2025 at 09:38:52AM -0700, Junio C Hamano wrote:
+On Sat, Aug 02, 2025 at 09:44:47AM -0700, Junio C Hamano wrote:
 
-> > It might be worth defining here what "trim" means. I can think of two
-> > obvious definitions:
-> >
-> >   1. trim whitespace from each split piece
-> >
-> >   2. trim excess delimiters from each split piece (which in turn depends
-> >      on how we handle multiple delimiters; do we make empty pieces, or
-> >      do we collapse them? I think the former, which would make this type
-> >      of trimming impossible?).
-> >
-> > It looks like the patch does (1).
+> > I dunno. Maybe it is nitpicking, but I think "don't take a strbuf if you
+> > only need a string" is a good general rule. Of course there is only one
+> > caller here, so flexibility is probably not that important.
 > 
-> True.  "nm git | grep trim" tells us that we most of the time use
-> the word to mean removing whitespaces, but there are exceptions.
-> 
-> It certainly is a good idea to rewrite "trim()" in that comment to
-> "trim whitespaces around" or something like that.
+> But I think we engrave both lessons in the history by keeping this
+> step as-is, do the string_list_split_in_place_f() thing, and then
+> add a new patch to pass just the .buf member to parse_choice().
 
-Yep, ordinarily I'd assume it means whitespace. But since the function
-takes a different delimiter, a hint of doubt crept into my mind. The
-text you suggest would have made that go away.
+I would certainly be happy with that.
+
+The other strbuf-by-value in write_worktree_linking_files() could also
+just turn into a "const char *".
 
 -Peff
