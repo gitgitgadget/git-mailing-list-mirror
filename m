@@ -1,54 +1,54 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793B12571D7
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:52:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117A1258CD8
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:52:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754203949; cv=none; b=FnGeg3DUCTeRgl0WZQKyofOsH8XdUynIBQYq/u51fqRr7/z0Y9FblnVZz2zh+Py+goFBKfmFySPev/AiIiIKbxA4Pa46CZTm8dySRdZfWUtjS13JqaFirKBiqa5JqtvovCPh/+3sGMhXHvPth8Fa0ygd15z8a+ggfacFhehKzQ8=
+	t=1754203951; cv=none; b=DKX90yqZMfLMDyFmoW77Qncl2UQw7vZfRUZgNs0nE3LWnBJR8+R6oZM16uW2d4qzEOfyX3XWiJQrPUu5ZgV+A8Gc7hn0aTun3g4DGeCn10SYXXJAyfF2z5Fhy0voqpdnwy1IkcmLO6nVT76iFc7SofqxIa11LXySt50mGS2Fpv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754203949; c=relaxed/simple;
-	bh=HL0M84fMmldR5qCGr2Ha+C9ypg0knSAyFnyx6GwxQbk=;
+	s=arc-20240116; t=1754203951; c=relaxed/simple;
+	bh=fFGUCx5EEMKSgIcBCIJEAMEVcs6pMYYAHK3JEKRDelo=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d64vcpS5Gi2m9cZgRi0JxQvPyvDDrL+tBDgqWBg98cU790j4wkntmTZAfjc7dSSnAu3SSAISOtWCbEVzGvu8L6OGUY/mpuFHfprhKGENbHhvfjFjWd/XYcdmCRCPjkFXI0Dkd2NEKKNdT8hR3T39yP88sOwoSNIyemrWRAFs/NQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eylxk0S9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fj5jzHlD; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version; b=mnWgZNdWJ5h/BF0iSTg+2pVnRNmfiehp3ZG8ji1iFZikX65fAptB2uf6Me84AMQMFv8kpDxMwA2BBsxPITU7KOfSj5fqzNzpfhqEZGfHg6f/eZcqthD6CWS3/AtrncqTnYJ+xHMJS5m82mjI0MQklq7zGEUfH3JtBCA0JRS6QZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZDjdc6UG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VySECKZM; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eylxk0S9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fj5jzHlD"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 83BDC1400350;
-	Sun,  3 Aug 2025 02:52:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sun, 03 Aug 2025 02:52:26 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZDjdc6UG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VySECKZM"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 22CA4EC1275;
+	Sun,  3 Aug 2025 02:52:28 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Sun, 03 Aug 2025 02:52:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1754203946; x=
-	1754290346; bh=JUEBlE8uUWz7wpXO/Vtutlts1rTe22PMjg8Axe/QXD8=; b=e
-	ylxk0S9Gx4g4YRkZ4d6C+6KIRomoAYLS1bAZvOXuNT3LJ8SXB1iA7Or/8EkkAFY1
-	2eIdFozLNpdODWVbiaceSGVino4M3hSx9oDbrbeMg6wbQO7xjfQF8vgczRmpgbVG
-	ZNKZ2C+Jf0yQQZpEUJFxWzNf1sa77RHPcoE2ViZqaTC7hOAkSmowz/+vNraIN2Gp
-	+F5EhEuqwTez5UX0VHt8sYJWaLzCEYPFeL37BXXrQAErfcPhapB153NfPBUUmXbz
-	Xg81t0piNGc+ag99cOzxQb7/+S8icZVa8emA/GTGHP/xFr+Jop9mmsKpJv/7vq4B
-	Ycw6R71YN4l8MWWYBAhqw==
+	:reply-to:subject:subject:to:to; s=fm2; t=1754203948; x=
+	1754290348; bh=zfIajVPhV28GRxljGq8XmVdkZYmlkBzB5h9aNwSvMpA=; b=Z
+	Djdc6UGIXfoxwj9Ml+jbRDnqqCegPx+YteMfZBdi0TQ4EZKVL7dmttGqWFtbcSrn
+	3TTmNTGF/vd3RyLervt247Pr8RLHEpvNba406IRn2KTY/PBJ/5ZzbdNtrY9JcWOP
+	SooZ6P+K0KrrwlxDzNp9T24L7sRBIMehmiXcs1igYrFZ4/MORw458QytF0YygEXl
+	/+owNPqXRGDO4T1qQNgSpTkNC/wYxsKsbUGMfh85ZnjqxbqBsgspf+heezFiVDaY
+	eKepI8nkJveHCOHdmsOjdUCsNb+sF0DcvctH0qRF0ZxmVWauD7ZCd7rIesOrxzgE
+	gG9O2RSr3pRsYPOlrKmNA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1754203946; x=1754290346; bh=JUEBlE8uUWz7wpXO/Vtutlts1rTe
-	22PMjg8Axe/QXD8=; b=Fj5jzHlD1SPI7e17iu4X4Ld3pN+hzUFb2AMlZKov7zDo
-	1Tzih7NpkSDWLLbc3QONstFWvMCKtJ3TBDUY5LuB6L9aHP6apXF5TLQaJG1I9vIZ
-	ypUYgFL176PnEsuAGf8NeCefu03Xw35yFc8u0Hp3QmRQCyt0L1av6CGYPU1IUuNa
-	IL2t4DyJUiz24B+dA2FVi7kji9Nmr1UAUUs2ERKU8E/Rp7qrluNjQAGBB/c9u0yk
-	550ozgbNXa6h+E1WBLbWerNUPdoviCqh/tOqZVH/zuMoYje40lLj3MLf2emu+1V6
-	HfDxsDhwqeuXGLcWZeqxsga/C44rmR+lVDHb54FEEg==
-X-ME-Sender: <xms:KgePaC0LUGp5-_70n-WtXsEn48dI-XXIeOOxabNZWmMw64_IOt8Fjg>
-    <xme:KgePaFQm5LUzGj5R3BIJn-LRLoGC2zpSzR1XzJZK-GXQaigs4e7h5bp_A8OZ_FryS
-    I5ar3HpjjPz9vYnYA>
-X-ME-Received: <xmr:KgePaMsS3sGC_3cm1bZy-dXAitT2aTgRE4aAHHNbLTC-ieQEusRFuKhK4mna2beLzOgGhBpkaMhpdrw0o413mAyKV08kGSYTl-q7Gzo>
+	fm3; t=1754203948; x=1754290348; bh=zfIajVPhV28GRxljGq8XmVdkZYml
+	kBzB5h9aNwSvMpA=; b=VySECKZMqZIs24W/ChGsZKsZ0JgejvZselvpcfoufrPY
+	jvbef+5tAsTQyJJu6frC+ilhzSU9QHKXuaTh+DpnhYjfZBb1oPb9GW27p+SWC2io
+	pNh9mywtZRBeU+6xVo1/fWdpJEIkYZuJHQCn2Vsw9MBVW+LXwN5ozjW/Fg8TrMlG
+	oqbYi5/zV1BZpXILE0EUt1+NUKqY0edM+pg+0IuvfCiOseZX4aFa43Blc2qzJakI
+	BA6KU45AaHRQ7DO1JsT9S7ar8Og7o2FfVu8iC4aNzA4q2E6nbr2nVM47L68YwCrL
+	xv20xqOkLWbBBFfjdMdWzg+0/H5pRg4fynBLwtcMiw==
+X-ME-Sender: <xms:LAePaKjwo6gJ03JkRdjrsjdWmLeUQYzwf8MLc89tlXgipjNHzbQX2A>
+    <xme:LAePaLNdLde-9QTDFsQqUkDvMZkmnD3A5FTjfasddv_VMWwFT-hsdfACR2mu-GIYh
+    aZ5Vr9Kr7JMi6ZxVQ>
+X-ME-Received: <xmr:LAePaD4AXiM1oLm5axX2vJSu1IKCpfT8QK1ksqOpd3XDpgYp3cjuwvHXtsACTc1hZ1vA45aDSvZxwY3hIN25g5CsaBBVBuKyDq8t_8k>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdekjeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdekjeekucetufdote
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:KgePaCbgWlenO5xm2VasLjPWWXL_jPEl8eLbsN3RjmlEEUvXaYY6Zw>
-    <xmx:KgePaJt_swuQ36q5R60XAdphALLk31iG99-zHLET-GQByBaSWI09mA>
-    <xmx:KgePaMFJiyijLjRCVqjUuoqBK593McP0PFqEvFUrW6C_Vh-_UVXPKw>
-    <xmx:KgePaMzET3XwINZ9FnHXAi_5LLT9QJ2id7polyGyWin27xQxr-mkEQ>
-    <xmx:KgePaFYhj7tSwXm0rOe6bFbVzQtJJE39NahDycoxpK9GycTwBOuZ9nic>
+X-ME-Proxy: <xmx:LAePaB1MLGq_p7YVP71VqC_j0LfHT-LvkdaFyk1ck4RJobKME1RvqQ>
+    <xmx:LAePaMZhku_tAzicUZPN3cq8rd3vV585JZ7WGuvRRHQGcD7Y6UYsZA>
+    <xmx:LAePaBA4SDdjmOuIHZeGjQ43TUPy4KUEaeNFT6mtrcqCywxW_5WKeg>
+    <xmx:LAePaG82sKwE3uX6pOLIWzzQj0eF0BIcE2Uu99PeeLMdrUn7JzRz8g>
+    <xmx:LAePaFFgojLiUxNPia9QgpzhNtYnCINGuDyYFZvOhcz3VU7B3cXWGSOw>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 Aug 2025 02:52:26 -0400 (EDT)
+ 3 Aug 2025 02:52:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v4 1/7] string-list: report programming error with BUG
-Date: Sat,  2 Aug 2025 23:52:17 -0700
-Message-ID: <20250803065223.3325111-2-gitster@pobox.com>
+Subject: [PATCH v4 2/7] string-list: align string_list_split() with its _in_place() counterpart
+Date: Sat,  2 Aug 2025 23:52:18 -0700
+Message-ID: <20250803065223.3325111-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.50.1-633-g69dfdd50af
 In-Reply-To: <20250803065223.3325111-1-gitster@pobox.com>
 References: <20250801220423.1230969-1-gitster@pobox.com>
@@ -84,41 +84,359 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Passing a string list that has .strdup_strings bit unset to
-string_list_split(), or one that has .strdup_strings bit set to
-string_list_split_in_place(), is a programmer error.  Do not use
-die() to abort the execution.  Use BUG() instead.
+The string_list_split_in_place() function was updated by 52acddf3
+(string-list: multi-delimiter `string_list_split_in_place()`,
+2023-04-24) to take more than one delimiter characters, hoping that
+we can later use it to replace our uses of strtok().  We however did
+not make a matching change to the string_list_split() function,
+which is very similar.
 
-As a developer-facing message, the message string itself should
-be a lot more concise, but let's keep the original one for now.
+Before giving both functions more features in future commits, allow
+string_list_split() to also take more than one delimiter characters
+to make them closer to each other.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- string-list.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/blame.c              |  2 +-
+ builtin/merge.c              |  2 +-
+ builtin/var.c                |  2 +-
+ connect.c                    |  2 +-
+ diff.c                       |  2 +-
+ fetch-pack.c                 |  2 +-
+ notes.c                      |  2 +-
+ parse-options.c              |  2 +-
+ pathspec.c                   |  2 +-
+ protocol.c                   |  2 +-
+ ref-filter.c                 |  4 ++--
+ setup.c                      |  3 ++-
+ string-list.c                |  4 ++--
+ string-list.h                | 16 ++++++++--------
+ t/helper/test-path-utils.c   |  3 ++-
+ t/helper/test-ref-store.c    |  2 +-
+ t/unit-tests/u-string-list.c | 16 ++++++++--------
+ transport.c                  |  2 +-
+ upload-pack.c                |  2 +-
+ 19 files changed, 37 insertions(+), 35 deletions(-)
 
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 91586e6852..70a6460401 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -420,7 +420,7 @@ static void parse_color_fields(const char *s)
+ 	colorfield_nr = 0;
+ 
+ 	/* Ideally this would be stripped and split at the same time? */
+-	string_list_split(&l, s, ',', -1);
++	string_list_split(&l, s, ",", -1);
+ 	ALLOC_GROW(colorfield, colorfield_nr + 1, colorfield_alloc);
+ 
+ 	for_each_string_list_item(item, &l) {
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 18b22c0a26..893f8950bf 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -875,7 +875,7 @@ static void add_strategies(const char *string, unsigned attr)
+ 	if (string) {
+ 		struct string_list list = STRING_LIST_INIT_DUP;
+ 		struct string_list_item *item;
+-		string_list_split(&list, string, ' ', -1);
++		string_list_split(&list, string, " ", -1);
+ 		for_each_string_list_item(item, &list)
+ 			append_strategy(get_strategy(item->string));
+ 		string_list_clear(&list, 0);
+diff --git a/builtin/var.c b/builtin/var.c
+index ada642a9fe..4ae7af0eff 100644
+--- a/builtin/var.c
++++ b/builtin/var.c
+@@ -181,7 +181,7 @@ static void list_vars(void)
+ 			if (ptr->multivalued && *val) {
+ 				struct string_list list = STRING_LIST_INIT_DUP;
+ 
+-				string_list_split(&list, val, '\n', -1);
++				string_list_split(&list, val, "\n", -1);
+ 				for (size_t i = 0; i < list.nr; i++)
+ 					printf("%s=%s\n", ptr->name, list.items[i].string);
+ 				string_list_clear(&list, 0);
+diff --git a/connect.c b/connect.c
+index e77287f426..867b12bde5 100644
+--- a/connect.c
++++ b/connect.c
+@@ -407,7 +407,7 @@ static int process_ref_v2(struct packet_reader *reader, struct ref ***list,
+ 	 * name.  Subsequent fields (symref-target and peeled) are optional and
+ 	 * don't have a particular order.
+ 	 */
+-	if (string_list_split(&line_sections, line, ' ', -1) < 2) {
++	if (string_list_split(&line_sections, line, " ", -1) < 2) {
+ 		ret = 0;
+ 		goto out;
+ 	}
+diff --git a/diff.c b/diff.c
+index dca87e164f..a81949a422 100644
+--- a/diff.c
++++ b/diff.c
+@@ -327,7 +327,7 @@ static unsigned parse_color_moved_ws(const char *arg)
+ 	struct string_list l = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *i;
+ 
+-	string_list_split(&l, arg, ',', -1);
++	string_list_split(&l, arg, ",", -1);
+ 
+ 	for_each_string_list_item(i, &l) {
+ 		struct strbuf sb = STRBUF_INIT;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index c1be9b76eb..9866270696 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1914,7 +1914,7 @@ static void fetch_pack_config(void)
+ 		char *str;
+ 
+ 		if (!git_config_get_string("fetch.uriprotocols", &str) && str) {
+-			string_list_split(&uri_protocols, str, ',', -1);
++			string_list_split(&uri_protocols, str, ",", -1);
+ 			free(str);
+ 		}
+ 	}
+diff --git a/notes.c b/notes.c
+index 97b995f3f2..6afcf088b9 100644
+--- a/notes.c
++++ b/notes.c
+@@ -892,7 +892,7 @@ static int string_list_add_note_lines(struct string_list *list,
+ 	 * later, along with any empty strings that came from empty
+ 	 * lines within the file.
+ 	 */
+-	string_list_split(list, data, '\n', -1);
++	string_list_split(list, data, "\n", -1);
+ 	free(data);
+ 	return 0;
+ }
+diff --git a/parse-options.c b/parse-options.c
+index 5224203ffe..9e7cb75192 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -1338,7 +1338,7 @@ static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t
+ 		if (!saw_empty_line && !*str)
+ 			saw_empty_line = 1;
+ 
+-		string_list_split(&list, str, '\n', -1);
++		string_list_split(&list, str, "\n", -1);
+ 		for (j = 0; j < list.nr; j++) {
+ 			const char *line = list.items[j].string;
+ 
+diff --git a/pathspec.c b/pathspec.c
+index a3ddd701c7..de325f7ef9 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -201,7 +201,7 @@ static void parse_pathspec_attr_match(struct pathspec_item *item, const char *va
+ 	if (!value || !*value)
+ 		die(_("attr spec must not be empty"));
+ 
+-	string_list_split(&list, value, ' ', -1);
++	string_list_split(&list, value, " ", -1);
+ 	string_list_remove_empty_items(&list, 0);
+ 
+ 	item->attr_check = attr_check_alloc();
+diff --git a/protocol.c b/protocol.c
+index bae7226ff4..54b9f49c01 100644
+--- a/protocol.c
++++ b/protocol.c
+@@ -61,7 +61,7 @@ enum protocol_version determine_protocol_version_server(void)
+ 	if (git_protocol) {
+ 		struct string_list list = STRING_LIST_INIT_DUP;
+ 		const struct string_list_item *item;
+-		string_list_split(&list, git_protocol, ':', -1);
++		string_list_split(&list, git_protocol, ":", -1);
+ 
+ 		for_each_string_list_item(item, &list) {
+ 			const char *value;
+diff --git a/ref-filter.c b/ref-filter.c
+index f9f2c512a8..4edfb9c83b 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -435,7 +435,7 @@ static int remote_ref_atom_parser(struct ref_format *format UNUSED,
+ 	}
+ 
+ 	atom->u.remote_ref.nobracket = 0;
+-	string_list_split(&params, arg, ',', -1);
++	string_list_split(&params, arg, ",", -1);
+ 
+ 	for (i = 0; i < params.nr; i++) {
+ 		const char *s = params.items[i].string;
+@@ -831,7 +831,7 @@ static int align_atom_parser(struct ref_format *format UNUSED,
+ 
+ 	align->position = ALIGN_LEFT;
+ 
+-	string_list_split(&params, arg, ',', -1);
++	string_list_split(&params, arg, ",", -1);
+ 	for (i = 0; i < params.nr; i++) {
+ 		const char *s = params.items[i].string;
+ 		int position;
+diff --git a/setup.c b/setup.c
+index 6f52dab64c..b9f5eb8b51 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1460,8 +1460,9 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 
+ 	if (env_ceiling_dirs) {
+ 		int empty_entry_found = 0;
++		static const char path_sep[] = { PATH_SEP, '\0' };
+ 
+-		string_list_split(&ceiling_dirs, env_ceiling_dirs, PATH_SEP, -1);
++		string_list_split(&ceiling_dirs, env_ceiling_dirs, path_sep, -1);
+ 		filter_string_list(&ceiling_dirs, 0,
+ 				   canonicalize_ceiling_entry, &empty_entry_found);
+ 		ceil_offset = longest_ancestor_length(dir->buf, &ceiling_dirs);
 diff --git a/string-list.c b/string-list.c
-index 53faaa8420..0cb920e9b0 100644
+index 0cb920e9b0..2284a009cb 100644
 --- a/string-list.c
 +++ b/string-list.c
-@@ -283,7 +283,7 @@ int string_list_split(struct string_list *list, const char *string,
+@@ -277,7 +277,7 @@ void unsorted_string_list_delete_item(struct string_list *list, int i, int free_
+ }
+ 
+ int string_list_split(struct string_list *list, const char *string,
+-		      int delim, int maxsplit)
++		      const char *delim, int maxsplit)
+ {
+ 	int count = 0;
  	const char *p = string, *end;
+@@ -291,7 +291,7 @@ int string_list_split(struct string_list *list, const char *string,
+ 			string_list_append(list, p);
+ 			return count;
+ 		}
+-		end = strchr(p, delim);
++		end = strpbrk(p, delim);
+ 		if (end) {
+ 			string_list_append_nodup(list, xmemdupz(p, end - p));
+ 			p = end + 1;
+diff --git a/string-list.h b/string-list.h
+index 122b318641..6c8650efde 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -254,7 +254,7 @@ struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
+ void unsorted_string_list_delete_item(struct string_list *list, int i, int free_util);
  
- 	if (!list->strdup_strings)
--		die("internal error in string_list_split(): "
-+		BUG("internal error in string_list_split(): "
- 		    "list->strdup_strings must be set");
- 	for (;;) {
- 		count++;
-@@ -309,7 +309,7 @@ int string_list_split_in_place(struct string_list *list, char *string,
- 	char *p = string, *end;
+ /**
+- * Split string into substrings on character `delim` and append the
++ * Split string into substrings on characters in `delim` and append the
+  * substrings to `list`.  The input string is not modified.
+  * list->strdup_strings must be set, as new memory needs to be
+  * allocated to hold the substrings.  If maxsplit is non-negative,
+@@ -262,15 +262,15 @@ void unsorted_string_list_delete_item(struct string_list *list, int i, int free_
+  * appended to list.
+  *
+  * Examples:
+- *   string_list_split(l, "foo:bar:baz", ':', -1) -> ["foo", "bar", "baz"]
+- *   string_list_split(l, "foo:bar:baz", ':', 0) -> ["foo:bar:baz"]
+- *   string_list_split(l, "foo:bar:baz", ':', 1) -> ["foo", "bar:baz"]
+- *   string_list_split(l, "foo:bar:", ':', -1) -> ["foo", "bar", ""]
+- *   string_list_split(l, "", ':', -1) -> [""]
+- *   string_list_split(l, ":", ':', -1) -> ["", ""]
++ *   string_list_split(l, "foo:bar:baz", ":", -1) -> ["foo", "bar", "baz"]
++ *   string_list_split(l, "foo:bar:baz", ":", 0) -> ["foo:bar:baz"]
++ *   string_list_split(l, "foo:bar:baz", ":", 1) -> ["foo", "bar:baz"]
++ *   string_list_split(l, "foo:bar:", ":", -1) -> ["foo", "bar", ""]
++ *   string_list_split(l, "", ":", -1) -> [""]
++ *   string_list_split(l, ":", ":", -1) -> ["", ""]
+  */
+ int string_list_split(struct string_list *list, const char *string,
+-		      int delim, int maxsplit);
++		      const char *delim, int maxsplit);
  
- 	if (list->strdup_strings)
--		die("internal error in string_list_split_in_place(): "
-+		BUG("internal error in string_list_split_in_place(): "
- 		    "list->strdup_strings must not be set");
- 	for (;;) {
- 		count++;
+ /*
+  * Like string_list_split(), except that string is split in-place: the
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index 086238c826..f5f33751da 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -348,6 +348,7 @@ int cmd__path_utils(int argc, const char **argv)
+ 	if (argc == 4 && !strcmp(argv[1], "longest_ancestor_length")) {
+ 		int len;
+ 		struct string_list ceiling_dirs = STRING_LIST_INIT_DUP;
++		const char path_sep[] = { PATH_SEP, '\0' };
+ 		char *path = xstrdup(argv[2]);
+ 
+ 		/*
+@@ -362,7 +363,7 @@ int cmd__path_utils(int argc, const char **argv)
+ 		 */
+ 		if (normalize_path_copy(path, path))
+ 			die("Path \"%s\" could not be normalized", argv[2]);
+-		string_list_split(&ceiling_dirs, argv[3], PATH_SEP, -1);
++		string_list_split(&ceiling_dirs, argv[3], path_sep, -1);
+ 		filter_string_list(&ceiling_dirs, 0,
+ 				   normalize_ceiling_entry, NULL);
+ 		len = longest_ancestor_length(path, &ceiling_dirs);
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index 8d9a271845..aa1cb9b4ac 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -29,7 +29,7 @@ static unsigned int parse_flags(const char *str, struct flag_definition *defs)
+ 	if (!strcmp(str, "0"))
+ 		return 0;
+ 
+-	string_list_split(&masks, str, ',', 64);
++	string_list_split(&masks, str, ",", 64);
+ 	for (size_t i = 0; i < masks.nr; i++) {
+ 		const char *name = masks.items[i].string;
+ 		struct flag_definition *def = defs;
+diff --git a/t/unit-tests/u-string-list.c b/t/unit-tests/u-string-list.c
+index d4ba5f9fa5..150a5f505f 100644
+--- a/t/unit-tests/u-string-list.c
++++ b/t/unit-tests/u-string-list.c
+@@ -43,7 +43,7 @@ static void t_string_list_equal(struct string_list *list,
+ 				  expected_strings->items[i].string);
+ }
+ 
+-static void t_string_list_split(const char *data, int delim, int maxsplit, ...)
++static void t_string_list_split(const char *data, const char *delim, int maxsplit, ...)
+ {
+ 	struct string_list expected_strings = STRING_LIST_INIT_DUP;
+ 	struct string_list list = STRING_LIST_INIT_DUP;
+@@ -65,13 +65,13 @@ static void t_string_list_split(const char *data, int delim, int maxsplit, ...)
+ 
+ void test_string_list__split(void)
+ {
+-	t_string_list_split("foo:bar:baz", ':', -1, "foo", "bar", "baz", NULL);
+-	t_string_list_split("foo:bar:baz", ':', 0, "foo:bar:baz", NULL);
+-	t_string_list_split("foo:bar:baz", ':', 1, "foo", "bar:baz", NULL);
+-	t_string_list_split("foo:bar:baz", ':', 2, "foo", "bar", "baz", NULL);
+-	t_string_list_split("foo:bar:", ':', -1, "foo", "bar", "", NULL);
+-	t_string_list_split("", ':', -1, "", NULL);
+-	t_string_list_split(":", ':', -1, "", "", NULL);
++	t_string_list_split("foo:bar:baz", ":", -1, "foo", "bar", "baz", NULL);
++	t_string_list_split("foo:bar:baz", ":", 0, "foo:bar:baz", NULL);
++	t_string_list_split("foo:bar:baz", ":", 1, "foo", "bar:baz", NULL);
++	t_string_list_split("foo:bar:baz", ":", 2, "foo", "bar", "baz", NULL);
++	t_string_list_split("foo:bar:", ":", -1, "foo", "bar", "", NULL);
++	t_string_list_split("", ":", -1, "", NULL);
++	t_string_list_split(":", ":", -1, "", "", NULL);
+ }
+ 
+ static void t_string_list_split_in_place(const char *data, const char *delim,
+diff --git a/transport.c b/transport.c
+index c123ac1e38..76487b5453 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1042,7 +1042,7 @@ static const struct string_list *protocol_allow_list(void)
+ 	if (enabled < 0) {
+ 		const char *v = getenv("GIT_ALLOW_PROTOCOL");
+ 		if (v) {
+-			string_list_split(&allowed, v, ':', -1);
++			string_list_split(&allowed, v, ":", -1);
+ 			string_list_sort(&allowed);
+ 			enabled = 1;
+ 		} else {
+diff --git a/upload-pack.c b/upload-pack.c
+index 4f26f6afc7..91fcdcad9b 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1685,7 +1685,7 @@ static void process_args(struct packet_reader *request,
+ 			if (data->uri_protocols.nr)
+ 				send_err_and_die(data,
+ 						 "multiple packfile-uris lines forbidden");
+-			string_list_split(&data->uri_protocols, p, ',', -1);
++			string_list_split(&data->uri_protocols, p, ",", -1);
+ 			continue;
+ 		}
+ 
 -- 
 2.50.1-633-g69dfdd50af
 
