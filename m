@@ -1,129 +1,102 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65ABF1C68F
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 22:30:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CB42AD31
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 22:54:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754260238; cv=none; b=F6/rqKusi86bWF7dc9G/lIU9Zv6yyZ8GI6+RO6A1pvx6Xy7RTgXN7mrRu5rWPignt5hKTVn+2xQ6b0pcSYytqI8lFAu4G3ZBZ1m7Ai32SbJDwpydvjQe6D/6vb1TJ7YgYhV3OVtLDPzoWHQ2YI6a0utfskle8Hr4itGRbCQhS+8=
+	t=1754261679; cv=none; b=WpZAZE6u0aLfPFX+JaFXkXGG6ACSEJI8vdvJt+BwSPCT7hqmJg3xFepi6gIu/AzOVM08GugwlWSY7DS2p+frFGgCFqG8VXD5R2JTEJlCu0hMSA4kqCwhazcRQLZj8lnvvtssa+AZ6hCo9as8skcCZDl1jahSDWmiVWNtAbFX8LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754260238; c=relaxed/simple;
-	bh=/VGlE+GtQRReuKWl62O4x2mv0bZb3JujncafVycQjMM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fGhdzjByXGaYaS/KdruUhJxS4qHSbET0I94LQsiXhQ04ILPGelRsrnG1WxcQBieqFMi8Va1fjXllxKvIOJWsgWTYstFBxTXfHSICZHbVsAFmRlYn4wQYq0WhFN3f6p/LxWVTZhvbFCJFHy0olitHz/SNWB2bOiNVjk8L6+4aGEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aJSojW04; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K0vWNZZa; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754261679; c=relaxed/simple;
+	bh=a2hrJmheOP0NDwJYclXhw0NVhD/uZikQ5ifQGhZC3x8=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=R97dXppNFRe4aZN/OVhM182IsHFzMkc0hWQN0KfA2P8Onh1ZZl06phGlLIBQRKL/eRHlfSV1puDJ2CodknX3lDfEO00m5OMvXCKMHSH7c8XC6t07rx+eygaiPvqVuKobKTLVpNQYrEHRxhas2aGyKvzkhRvN8h9c2pbCBjBz67o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YmIymA1L; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aJSojW04";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K0vWNZZa"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 49E2AEC00B5;
-	Sun,  3 Aug 2025 18:30:35 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sun, 03 Aug 2025 18:30:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1754260235;
-	 x=1754346635; bh=J9kokC+RmodwH/e8zhEJfwmGZuNFoq2kpRv0c7eR/HE=; b=
-	aJSojW04HdkuC/0HmWMYJLGOJV9cazOCmCKaJ2ADZPhKxVoAWVmWUW0qail8TCe8
-	l9ePKOGC48loYVIll4UukqXcLUWyHZtjE+rtBtLj5NW0Fy5xOllcM0oNLcx7bIvA
-	34VgyFcbTvMuTincUSPMcGjqn4kmrfRWvlUcGoFjLsBBhtrOiw4pO+eRebQ9axWF
-	kJItr+Qo2Gs49ncff2iQhdUY0E4BS4eE/klnkEnWIlGHQXCbrEijPg6r2zlj6B2L
-	DxzYnoI7wUzfbHr7qR7/lgcuwY/qef3tiX7rsiUummLZ9jrikQUQlYneiZEvX45P
-	2vdZeq8g6hjaFB5pgFND5A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754260235; x=
-	1754346635; bh=J9kokC+RmodwH/e8zhEJfwmGZuNFoq2kpRv0c7eR/HE=; b=K
-	0vWNZZaDgFksc9dxWz/PyMxL0xMbOovQjdFgKn3AqgfAlUFHwAVkq654uZfMXLon
-	2pfv4HHGcfAx7COmefgnv+Qk18qrmyhSNPyKpl79vXVwH+GRx2ye7Naz1fxrr1x7
-	ouknrpJIRYSltaOY5j2KwtU6AXDh//ceTl1tXG9SLFcVXJRq2P2qgdg8GUY974+T
-	Mfj8Wg/NMJy1IhqF7v3Qh/C82DjoWW1FX6sXEv971XCVSQuNxmWQ4NbKLIS8jQC2
-	CB6pBO5RZpTj2dvoV0FSJe6OeG8ChIcxJ/WNMGnUAQtZOTPuBKSFzuX6nVsI3Prr
-	zQjCrzn3/nGv8VrhUmXmg==
-X-ME-Sender: <xms:CuOPaPyotpDSW0--x6GRd6fJ9zUq4nonZxQKkEM_C04ftO3RaaDc9g>
-    <xme:CuOPaC-Ujn2WiRfazHcgWXk9SX0dp9Gw1O9Yuo4qFZbkHUEVQCXldPwWMxqZeBhVR
-    1jka_1INPNtZxK0FQ>
-X-ME-Received: <xmr:CuOPaFxToBwCEBpnG9REHjqg4TAlg7sdjMS3EKHKOaY3PnazPjQaYHk1NiII_uLK6tCENFmmp_MPuOvh9yORWR9Jq1yJ3zvkj4xFd1k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddtieeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnh
-    grmhgvpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehj
-    nhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunh
-    hshhhinhgvtghordgtohhmpdhrtghpthhtohepughsihhmihgtsehmrghnjhgrrhhordho
-    rhhgpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhm
-X-ME-Proxy: <xmx:CuOPaCr-FTg1dYsMXSvvnyw0GE2LFpPj3BexhdpHvNHPoHTq_NBD3g>
-    <xmx:CuOPaGprcTc9bOSxGfWQUlAbWsuoaecQJSP4Vo-a-1KY_K7CxLMnlQ>
-    <xmx:CuOPaCBhRAc_AqlCl6ybCjnzmPpjKiCxyexcqwQbxUml3JU8W7oLWw>
-    <xmx:CuOPaEsrUpN6u_I93I0I16tgWiTxCwvJH-dPLfoPpJt3q2EDCtk4vA>
-    <xmx:C-OPaPtWW9cTyjartAzf7krUoM2jzuTOy3U-gNcQswdmYGNODlbWR_Nz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 Aug 2025 18:30:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Kristoffer
- Haugsbakk <code@khaugsbakk.name>,  Taylor Blau <me@ttaylorr.com>,
-  =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Dragan Simic <dsimic@manjaro.org>,
-  rsbecker@nexbridge.com
-Subject: Re: [PATCH v5 08/14] builtin/config: introduce "get" subcommand
-In-Reply-To: <aI+oQvQgnNtC6DVw@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
- =?utf-8?Q?=22's?= message of "Sun,
-	3 Aug 2025 20:19:46 +0200")
-References: <cover.1709724089.git.ps@pks.im> <cover.1714982328.git.ps@pks.im>
-	<29676b81e0151e2982326663f8b64e2a70bec0f8.1714982328.git.ps@pks.im>
-	<aI+oQvQgnNtC6DVw@szeder.dev>
-Date: Sun, 03 Aug 2025 15:30:32 -0700
-Message-ID: <xmqqjz3kdomv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YmIymA1L"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-31f53b3b284so4785380a91.1
+        for <git@vger.kernel.org>; Sun, 03 Aug 2025 15:54:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754261678; x=1754866478; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a2hrJmheOP0NDwJYclXhw0NVhD/uZikQ5ifQGhZC3x8=;
+        b=YmIymA1LCRnXW5JJSnt4Sw1jfdypo7Jm2EGfELEw2PUh9+DXgJu1W45jLS8MsSvXfG
+         3+Iz0TozR6jAI8ZaIEuIggad+t7w+2DHi1vh8MSMNJGC5kktYlOyRy5yFKDz952Mr5Tl
+         6gpV2SepM2ZGU3MfsSwj4ZT8Vfp2jUOexsHZDnHL5K2MBDeFrDC5W1xdrWhwWR9DWxe4
+         CpWkYtzwa+uLbm9U232cEoAbNsyunTjTKaDz+xNGjGnxv26WPzOZZJZKDE2SSn+BXcls
+         kLsbZJ6/l79r6X5WXzi/a+BLzDou9fbiGlxP2L0+U8Qr30mibg4F96kWKXUcBpjuJuFV
+         jrVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754261678; x=1754866478;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=a2hrJmheOP0NDwJYclXhw0NVhD/uZikQ5ifQGhZC3x8=;
+        b=CShfEMogARwftK0CznOrkxKOEVvH1ZxQqkYHH5ty3Yszooky4ngGA7k3o96G/31AT8
+         NBNLJrrn4RMgsL7/DrZxla3JCxl1LnuHSLEwmsYSrB3hXDXfI3p+nnBaeLi2WvI/dHwz
+         GqUzSb1cjOI0eDiDzFLJYxDH7Bp28GA4VKqUuwwO0sByHKOBqZ41e753ZrW/PRWErgxb
+         lRor0rF40I4jjpgv9Birecd/dIghG6Zw204cTEqmPkTwHP/r4wQKqV9MbaNjCmxeMgpy
+         MJ4d/pjINznc+Wz06d+NRMxeuihUMLTxAotjrQNPtsjzD8X5JSEABAr85cljLCjwqB9n
+         GXkQ==
+X-Gm-Message-State: AOJu0YyaqIOzfahrmP707OZZcWB6EpxTvxp0uzs6y2uQmcoQLerHpbNL
+	wsel+MFMJb1qfk3ULMBH8kPQ6wX2gfHRu5TlF1+AQGlb1gdQvZ4gLrxa
+X-Gm-Gg: ASbGnct6zBBAeXOUvS0PaUhA0NzC6qcNXk97umD+NzWeVygm0KX8sAEmko5+K+DhXcr
+	4HyBUHrmMD7Jg1BS5OFCqLZb1V6nqAfpP7tBqQHTCQyQjp0dG7GeosI/8AEGfm+FISSK4wM9ybx
+	fVZpCuKGvoguRrrCdji5uIAhefC94OvYi6AXX01Zigj40fIVSN4Aqc8O1OJbGiA1pPmkB4F8/b0
+	OwsPKb9oxcqozyHxu+Z/9X/kP0wHL8KcbnSVPo399GiocneGS1Lxczc32r+cJXBaohXC6TQjTdG
+	NhXIs7aqXD8QDeUL/48gOk6mJZvB3CwdCiCXG2HVYXIW0Qw5TJLij0830MHGyY5iBLiBc25AT+n
+	rXtkKH386SG7tY/X97LRCjbcjagUS8AuvY8j4GuG9nMMIX2MrGGYNln3B+R65tfuz6A==
+X-Google-Smtp-Source: AGHT+IHYL3hu6PCICNsSqTUvNwJomUqX5RSHWl9ZLHRpBZOnzEkgLiv03vc/WT5YvtkSILTvoyUSug==
+X-Received: by 2002:a17:90b:1a91:b0:321:335e:19cc with SMTP id 98e67ed59e1d1-321335e24b2mr2908264a91.4.1754261677777;
+        Sun, 03 Aug 2025 15:54:37 -0700 (PDT)
+Received: from smtpclient.apple ([2804:14c:32:8359:ec14:6f00:6014:d8c0])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31f63f0b4aesm12841217a91.26.2025.08.03.15.54.34
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 03 Aug 2025 15:54:37 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [GSoC PATCH v7 3/5] repo: add the field layout.bare
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <CAPig+cR=vRu7GwGx_wpS_GZNdX7giosDK12K+qQdOW1va-6oWw@mail.gmail.com>
+Date: Sun, 3 Aug 2025 19:54:22 -0300
+Cc: git@vger.kernel.org,
+ oswald.buddenhagen@gmx.de,
+ ps@pks.im,
+ karthik.188@gmail.com,
+ ben.knoble@gmail.com,
+ gitster@pobox.com,
+ phillip.wood@dunelm.org.uk,
+ jltobler@gmail.com,
+ jn.avila@free.fr
+Content-Transfer-Encoding: 7bit
+Message-Id: <DADE940E-482B-45DC-8020-BD422FBA7B2E@gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250801131111.8115-1-lucasseikioshiro@gmail.com>
+ <20250801131111.8115-4-lucasseikioshiro@gmail.com>
+ <CAPig+cR=vRu7GwGx_wpS_GZNdX7giosDK12K+qQdOW1va-6oWw@mail.gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-Mailer: Apple Mail (2.3826.700.81)
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
 
->>  #!/bin/sh
->> -WS=$(git config --get-color color.diff.whitespace "blue reverse")
->> -RESET=$(git config --get-color "" "reset")
->> +WS=$(git config get --type=color --default="blue reverse" color.diff.whitespace)
->> +RESET=$(git config get --type=color --default="reset" "")
->>  echo "${WS}your whitespace color or blue reverse${RESET}"
->
-> In this example the second command in the postimage doesn't work:
->
->   $ RESET=$(git config get --type=color --default="reset" "")
->   error: key does not contain a section: 
->
-> Consequently, the last command doesn't work as expected anymore,
-> because the color is not reset at the end of the output.
->
-> Luckily, the commands in the preimage still work.
+> The quote placement used in these calls to `test_repo_info` is quite
+> unusual and more than a little confusing. I'm guessing you did it this
+> way to avoid having to use a backslash to continue the line or did it
+> to mimic how `test_expect/fail` is called
 
-Instead of an empty string as a configuration variable, using
-something like no.such.variable that does not exist would also be
-a workaround.  I.e.,
+Yeah, that's true :-). I'll change it. However, in the next patch, where
+I add `repository.shallow`, I need a more complex script for creating
+a shallow repository which needs several lines. In this case, do you
+think it would it be better to use the backslash before the line break
+or would it be like it currently is?
 
-  RESET=$(git config get --type=color --default=reset no.such.variable)
-
-What is bad about this is that there is no generic variable that is
-guaranteed to be unset.
-
+Thanks!
