@@ -1,175 +1,139 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E8E205502
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 09:54:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD9625A341
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 11:12:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754214879; cv=none; b=dLMWI3WTG4Zq5D9gyj6U3We2SgqTMEjs53lK3Qew3ENZfXv6zdiUPISVviuRIWtvlUc8DIk4aeIsQLRgqXWx1KKARWPyJYqGpEHlikWExOYHfTenvDenqQhYsRYBXGZoeeSEY7BASBMn9egy6TAWkXq+mc9youwGpdCgZjun7rE=
+	t=1754219550; cv=none; b=ieAl+/xgb1AK7f2rSLOtdyo/ovFECJuO8/fOvXIMYxST9QSRNTeMU8LoOt3hHroEnc1KD7RWGhV7WC9Vx0gxC8nbc62dVslluwkS/q+BYyXI0tKW3C4Q5dL6JyJ7XA4OkE1KcpbB2VcLDPvU6sf3V9Z/U/15TPrz/AoiP8O9P1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754214879; c=relaxed/simple;
-	bh=SwfJjldP1vdqJ4Egjs7j3x6EAcBvZIK4b75vvsU1CCM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ssCS+ShrAyLYf+aj32koXxyO7bhUU35zWkGN0WtRlNSmeHcJCpcjh3dGTrSV5hPlUqCOlUsQkCdt9v/otMrzej4kTn9VqmLlFwxzzgJvVebmyvUbiMADipQph2n9lql+VUpG2f54NNASP+w6toxU1Ghr9etWvBUWfTsIn/8h1zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=VdTsY9v6; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1754219550; c=relaxed/simple;
+	bh=VfFemjNzrdhZm1Q6bqWuLzrKTThZwnl3HtkJ7AENzXQ=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=KsQhz481XMbR3axv8/auiyZNyANCfO1es3s2XAE9RhvcehKLWrOIlS2c/VYCY9XXKBMqmsdsGg+oP3XVqG/5pZqRkD+zdGrBGdzMyFsqchDv5oimBLRk7mNyvRY3cSdO/pyF2iNCD0x/UnPJt9vbmGkemsf3Ynfnp0TimrUic9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=RSA8+jto; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="VdTsY9v6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1754214867; x=1754819667; i=l.s.r@web.de;
-	bh=iEdMJWXvKMiR5Mcir+PQnwkqOmdfj4pFCzYlehuu2t8=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
-	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=VdTsY9v65bkqmfR4BBtyfFlrerl6cdHUVnLG7BaGC8EnObKbJCePNIHeSDpxiOgr
-	 ulFWq6Ri1CIxHNNo6KVi8yqGwFIfkJnoF2nNHaGbsOtjHVMVOkt7ztFgjOFhpU4Wo
-	 HnE9scYLIv37yMoiLEcx6nIPVDJ06otpQfF7FYR+PXOK9WDzxUpMoEfEMuy3sGAX2
-	 yXjN1CSSv2nGV+19HqboBiMDfw74bl5maiaB1ppQgbsz4twjhDJb/2thCfvGvW0wW
-	 IqBjkYcqq2GU+mUX3N6nzDnbGyA9/bWpyId0w98TOr85/UZLltvwnDUPGp4z5WQJ3
-	 suZweZbCzfXFgNERoQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MjBVv-1uCSJz3LYT-00noWp; Sun, 03
- Aug 2025 11:54:26 +0200
-Message-ID: <c5d91cec-3fec-422e-86d4-78767d95f208@web.de>
-Date: Sun, 3 Aug 2025 11:54:26 +0200
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="RSA8+jto"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1754219538; x=1754824338;
+	i=johannes.schindelin@gmx.de;
+	bh=+77X6usejgWmYBu2+Jp7s5LuMnx3whtlnXjbZdK2LVw=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=RSA8+jtoLLsd0PHQDq/Z/F1C+Sw/9VJ53LYWDeEHeThdwuzAvRaTn6bh2T/y2m00
+	 d0wKDdedSPZ8BS1j+u2ra8KGxSwVaqRRLXWda3P55g/PpiWbfeiz6eBFz2ULclvht
+	 LrMkAEL4mqaQTFyQjN1DMup30NSJ6KajNyFJYxPIq5bXIMYHGFFq9IomdBIHyTfCf
+	 roPloTIlZyPg6z7OHHVti8O7wHpYDWgFT9mR3NnrfO1dVtkhR7V1mvla61lwOaIVp
+	 3a13p4GLCu5FmW4YPLTOw+E9ngMe058xokh1NmAe0HiG5Rclpe6den96aTnbzquyo
+	 C3z32tNljiGCLM12xQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([87.140.57.154]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MAOJV-1uoLXN0lxb-005Uh0; Sun, 03
+ Aug 2025 13:12:18 +0200
+Date: Sun, 3 Aug 2025 13:12:16 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>, 
+    Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 3/3] commit: use prio_queue_replace() in
+ pop_most_recent_commit(),MIME-Version: 1.0
+In-Reply-To: <494e9686-e014-45f8-86d2-8dfcd6630f46@web.de>
+Message-ID: <0d3ddfcc-485e-45cb-28e6-62108e6d5a4d@gmx.de>
+References: <bc079b3c-a472-4f5d-95ca-390f9de25196@web.de> <8ff40c56-368a-4347-aeae-2aca2cb6a5b2@web.de> <494e9686-e014-45f8-86d2-8dfcd6630f46@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH v2 1/3] commit: convert pop_most_recent_commit() to
- prio_queue
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
- Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-References: <bc079b3c-a472-4f5d-95ca-390f9de25196@web.de>
- <8ff40c56-368a-4347-aeae-2aca2cb6a5b2@web.de>
- <5d7c631a-ae94-4a59-b4ee-8161b5136d86@web.de>
- <148541F5-DC9F-4A3A-B1B1-0FED8AA5A101@gmail.com>
-Content-Language: en-US
-In-Reply-To: <148541F5-DC9F-4A3A-B1B1-0FED8AA5A101@gmail.com>
+Content-Type: multipart/mixed; boundary="8323328-455158330-1754219538=:3405"
+X-Provags-ID: V03:K1:M7LRZQcjQYuEv85QAd+ez4BvZAP/jdyqMu35ko4cuRfCg3LV7fD
+ EUsAhZ1qoaWW6pu/CiIiTHbLPWO2tVHb9KyoLLJZHo/9No7jxKxKkIpI+tlcd9IdxpRB0qi
+ a7ZygJ5tiPcpvbaPE4Ej2ajxLlMGjgDUrLGHrYo2dAT9+nuQBBvX4SpA1L+ysH9cRaB9zC6
+ VYbkqyoesjydky9ZYz05w==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:yS56umMaIaI=;GYVdN/AP8EETOr2LWHFTw0AgixT
+ cwQtWXVSZ78eKccfqWAq7EBNv8uBPeBINoaMSFS8c0xMpFtkxD7t6/x8RFKaHxDMl1jgarbVO
+ pCemjXdRuNFAy7zMUh6ftwkpwtDuGd4JGB8kD4SpGm/Gjdyr9C2tQcPY2Tk6qTJ1Oj+I41qnS
+ 0+I/EWSPRCsfCU/knP/XYW2ZOEPcxNum5XzTfVOTQZGAb53qlJAOenaPhTdhPlYzq6Wt2nsUD
+ iEuMpbl0XUVklAcJ0bgSXjV7PZnjhhTy+lO/k5Ls9BPGmK6mmfUJK3dvuic7X1w5RSW5MYq4g
+ yx3rgprKsNkqnm78iibqOpNjT3kWHIBwV+ESgZjlPL8zx4H6r2rWZfL+EeMhbsLTJI3YSW/kL
+ /o1rRmlyNjhhqWpvFFjfousBBEO6dsc8N+PpTcSTt8Jfy5M2hr2YsyPRECxyfs/IHf/F+sjvD
+ ml9nLF8nD1cYF02U94G5OdccTBUrgnLcKPyueiRiDtZji4KI6mL0ng+u1xqZZzIpndeN2H0pq
+ QbpvYJZU2pQWgH7KGyZKLcl78dU5jhQB8GQzV/0mJVATkRSIaawnJi5IUr84gSsc/7vQBMikm
+ ku6qE4M6lgG4mw5WjeCbPTR3uIKjpTbvKdiWAVcJDC4867X77AtinAkeTBJpi+Y9E1rLCPxC+
+ ToA70lizKwuNJ2d7lNsQcTu2E+EFPc1FD9uVa0FWrJlzB/fTKdekSCseJKACvv6eXxWCPnHEd
+ 86fbUsAa88fwES91fS11OySVL5ixy5ZEYTPuBbPf6RvSppPCraFJetIECY8pxAbpinGbLxezN
+ 7YFf8CW9uDJ/fOn2WIVZ+iIySOckGyMWNwA1rP6lzTcfqJ+Fx1gK+icICEQ5Bh7coX9gvylFQ
+ aYyKV5iWLRoaf7wZZcwx+AfgaLnw6VNxW02oifW8LsPIxMyrLbA0by/BqsjvxT9xOYzzFi2n/
+ 6T8P6SoGaiZdHoP89tbutSxsV5v9KzVHcRLSP5iGo2HcevpCr9NObnESwNwLgpIR3oCqbNX6Y
+ Ras/qeBxr9TeWJ6tqTv0JeN7Efdrfxaf+Ps0DU4wJAqE6i56beDQ0sFYPVZzYysSADwpCgTNY
+ GllOylBMi8ixDtO08EtRiKYBZQoKK9gYJ8G2FwznVpjSe5P+zEr7uxo+rRE2rqvWV12bTN3P6
+ p/A4qxVAQwcOgKO4BCDtTLnxUCwXsHRPiB57mPYri3WlurCzihCSfx+wXT2se3/+OuBn7zWCV
+ iE7CEnD2ZIZbQFiCYh3IB7VCk/oV+ASGQKlBDuEjuL83anzScfFWASMeMaldg40FqcIOzURW/
+ VzxvSWiTqLZzmoj/hqvNNtWuY3xX1Q9CJdrbxQOF/66Pt5pcM0CDYUyIZ0LiQzqPy5MIaUmV3
+ 2KU8hHpenOQ9eB99E9SyTHCfUzwf9IHPNhKP3hs6C8R8E7nAXCMquWhBXh+UZJSCa/TsCMDXZ
+ niDvNfcAQ6gK/WC93vk84CUlXBup97Wm8qpNs16HRYbrl3i05di8/SnAJZVT7RziG125Om/m9
+ 4QzGc1sB+xj/tTlZHUUXfXxNnmFXdCQ2ydSVqPVPOObalsg4rIX+bK4h+/j4OfFHPbUBiaEvL
+ FHpCzI3Ia1xUgCOp12XQ6xk8XhaGi/tU6dc0rwGGXH/CPfUkA9+t7sMCTlFZiupmUaIoVq1gH
+ 7L3hbRgeAljzZAWyWtQ//b9n+KqYqBzA/gmRZyYTmlWRmeX7Zz3beryT4ao0iYNBj+dXwyaWf
+ soJrvVd67V5pivxNJZ4Hscdm5bJOIDB6S7hYqVe9TIpCmEM9Jq1WmhmroVdSuWMELodmeX07F
+ bL9oX/ZBC3fBVmsaR94KdwB9WPz2d9jD132wgfpdd6zuNwCcdKox12N0W3smUmrPlLYBKF9O+
+ jxBpR1fVhjJ1gFMERooaLQ+iKsFQIHC4ogpUXP1r2T5mOZGkVPd+0dGAL9Pyd/7QEB04qdwSh
+ LM73cdinXP6nrCDq8a6xoIEioHf9U1Tywsk0fh/tKDCoQdINVSAiMI6XO6trNPTtUBkrYXaI1
+ 1/U50pu5ayda8nlmHomEMGB14BxsfS9VLgk7D4NgJ9KSO7paoe/+fF4rUxJfi8s4AYBUNXxTy
+ /UELAXR0qTPmA6T2+aYkJ5TktdIFBwM9/8Pl3DCaUWPVcsgZZb8PY6Ft1KGHiBjCrFrdiPbvq
+ CNiRRIvqjIHxyZx98rEZIwzCvw2ZaWVBFpkO3nnrX1SVpT0/oUPZsZdmUv0GKLgGv3Zg1LBs1
+ kh3IiutFUtcpibe4CgWYxbx8vQGVYnIpk6N/Of1Rm8dSpoh+NkK+Md1UNKVpO+7ge0ZW9lRIh
+ bi0mHX08ij1csi1jb1L3+QsRTt7KaK1Eb7bTagzi5yv9lsolesw2hX91Hg+znIuWlXcnjWmob
+ TQ8jIcO7h9/dgweKHDkeXRtrf5ISGqWESATob1a4ETRCy+HUodZ00JwIkEdR6rK3AsGGjrUTS
+ yg21popN64he0DZ6RgTZNOpkp3PQeqDvHXrTe60afwWq8wOLfZ10WsnY8F3whsQKeNOBoEWyk
+ LgqxZLb1gPO2xvCvM1NVgVnakCZ/yYZtARBV1fEO/7V1aVDkbrSLvYJ8GJZ8PrT9MO2NSo2/Q
+ 2NYJ5RmfCS4pAtqhN6R2p1giFmmHioS/0YouoyCkogkr7St/G4aLl9Y/o8o7BU4GBLkwcXmWm
+ turWUt0X1xQSngt7+pvYnEDsxmg4xCRQfcCErwluBobB5a61eVBeJ2WYlvmw05aVkC4xNK848
+ KJPSycJnzPWM4nerrUInXFam4N5eiWocTixaPw64CB2nG1aaYShaVaRttj395VbIqnDN9DAD4
+ sAnYIxW73D4kCuUE8b4fz4b66OUiL+bhLB+cqIDRaGlF0mPKgMLBdmJDynkAzX1tBXgHrtzRd
+ yBgNPvMNDDSbYdYlbiGB8+ADTKb3MebGdTIV368DUtzIcruQgy+mQry7DF2yYclpBhI0OmaHf
+ LOoMn70pkdGNSgyceryAuhtWDS6gENGlB2IYfaWBJuSahtCcEm24jgmy3kREBwlhS++bQVDNU
+ 7NESNdImQ0qF0KYB8Ca6SraDYB1/SMlvkQO+VH3W13856Vaw2QwA4/+ui6JWMTOuGnoUxXh4O
+ bmd6w5vaeFzVTQnfu63KX0tiqNXcWkQ4XurTvtiJsN09bAXPlMj0qLNICyzV8RETOLXgJRSsd
+ yQcpdeDeTGjkwDNsPpG9yDaoUWIi298lKUp7sB2QI5q5oUhuDHPtcBve6YmpIAeRfZdkTxEYl
+ BWUx5b2A9rxFrXPdB3vqc4pjCPe9TKD6f2ZRcN2o18s3BC7/ZMeeNSpVHjBN+KMhK74a07Cmr
+ 5qBfm4xV79lSy8lh6QBWYDhuICGB9Ck3zkGJGC7MJv99O0CTPrKbsnB4vazgvnjHLaNZiB2VO
+ vWim13ynwKYbUt5puDYl5siZ5AOuUYAy2dy0za03IPn7jGBfxIEqoRg+VWxZvbY7pBdADmhGr
+ OcQlGov7GFJjbI/sTseXmmYnqcDcZ81qw9cn27WJgLZrBRNLT+6VGWxowFMns0C2AMDvjmVX5
+ cvotf67fpoYmjRC+QHR+UawXIwyfQeYoF3lws1zDIwgfXQfNeVnQ6xqrC2ERweU4rg==
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-455158330-1754219538=:3405
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:dSgv03CMe+RdJrTkevxhIdxZIFFqJDZ8WNOxojM2DZfcZwALJ9p
- xY7E/QQIsPEwKF9L5GfK/rMo+rF8Sy4tjK4SqIjx9MUxuaR68OCfR5kmVPi7mopg0AVgWQF
- 7mrvUVfCuJH9i4Klcv1QOBvBaLNRBx+CMdGqqIGn11tva1GXLBH5a2KAlc6MBjVH5U1cI1w
- JyfQh/hIY+QXQMiHqnl1w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:69Xd21wOuxM=;hGbWsPzrVmnaA4ijbL8KqoIxBGg
- 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
- pdHuaA7c+FpslFvD4/CPuaM=
 
-On 7/21/25 4:02 PM, Lidong Yan wrote:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->>
->> +#
->> +# Creates lots of merges to make history traversal costly.  In
->> +# particular it creates 2^($max_level-1)-1 2-way merges on top of
->> +# 2^($max_level-1) root commits.  E.g., the commit history looks like
->> +# this for a $max_level of 3:
->> +#
->> +#     _1_
->> +#    /   \
->> +#   2     3
->> +#  / \   / \
->> +# 4   5 6   7
->> +#
->> +# The numbers are the fast-import marks, which also are the commit
->> +# messages.  1 is the HEAD commit and a merge, 2 and 3 are also merges=
-,
->> +# 4-7 are the root commits.
->> +#
+Hi Ren=C3=A9,
+
+On Fri, 18 Jul 2025, Ren=C3=A9 Scharfe wrote:
+
+> Optimize pop_most_recent_commit() by adding the first parent using the
+> more efficient prio_queue_peek() and prio_queue_replace() instead of
+> prio_queue_get() and prio_queue_put().
 >=20
-> I feel that the reason there's no significant performance improvement is=
- probably
-> because mostly we are using the priority queue to sort O(siblings) nodes=
-.
-> For example, in this case, the most time-consuming operation is when the=
- priority
-> queue or commit list contains 4 and 5, and we then need to insert 6 and =
-7.
->=20
-> Assuming the maximum number of siblings is W and the number of nodes is =
-N,
-> the time complexity with a commit list is O(W=C2=B2 =C3=97 N), while usi=
-ng a priority queue
-> gives O(W log W =C3=97 N). Perhaps in many projects, W isn't particularl=
-y large,
-> which results in the performance improvement not being very significant.
+> [... clipped ...]
 
-Kinda.  While traversing the history we take a commit from to the
-commit_list or prio_queue and put back its parents.  For single-parent
-commits this sequence keeps the number of stored items the same.  Merges
-increase that number.
+I noticed that v2 of this patch not only made it into `next`, but it also
+introduced a commit subject suffix (likely unintended?):
 
-We add and retrieve each commit in the (relevant part of) history.  That
-takes O(N) and O(1) for the sorted list, and O(log N) and O(log N) for
-the prio_queue, where N is the length of the list.
+  [PATCH v2 3/3] commit: use prio_queue_replace() in pop_most_recent_commi=
+t(),MIME-Version: 1.0
 
-So the best-case history is a string of single-parent commits, keeping
-only a single item on the list/queue throughout.  That requires no
-sorting or heaping, making the additions and retrievals O(1).  The
-overall complexity is then O(N) for both variants, N being the number
-of commits in the history.
+Maybe that is something you want to look into?
 
-Worst-case history might be a single merge of all commits -- a
-centipede or myriapod?  With all commits on the sorted list we get a
-complexity of O(N=C2=B2) for the traversal, and O(N log N) with a prio_que=
-ue.
+Ciao,
+Johannes
 
-Ren=C3=A9
-
+--8323328-455158330-1754219538=:3405--
