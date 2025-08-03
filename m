@@ -1,92 +1,151 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D99249E5
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 01:27:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DBB2E36EB
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 02:07:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754184472; cv=none; b=VqKT4ziJN96i0MLwQl4r3AwKMoeaNMPYlBU3g+joqUYq2ln6vCyNkfY0fQggy3R7mJf3Wr1iVSxdUYlz39r3e0dp6nFQzeSt/aI+BZhqVPIE67chwBfXdXVLuHxnDXGfac6Z4hVLdcY+ih8dd2clttfhfDs+Tf/ORjYyUDTLl68=
+	t=1754186873; cv=none; b=G+4LM1kYIH/ch10VMV3pCbDcSL8V/+YxmdwwBCrxmZeqWDPybh7CZxSuKO0BBW1oPiIhTgEIJTArBPZPk/IADV9yYNYhSU6/KX2AasrCvkaVfXHHlEdtpDYh0tJKO4QL1rkJweCrtQIF5SCLLGZ7ZFC5T4/wBPE68ygRdy90n2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754184472; c=relaxed/simple;
-	bh=Sis5PnNAfBMlAVeFw8+wnWUKq/SryQ+D5a6Zv1k1rKc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kEw8zovlH+qLHXJiQP0vcnJxaUbnuax5CywOcn5xGVwASD8vxMxKTUE51BzVJyFfz0VT6PORVXgvf7taSry1ehYC7c7WenCjKGwuowiAYroyMcNM8ml2R5SBG8wWyTQmPjPjv26B2mFuOVNAY4Lj5s5aTIrp3sboRQ0LJNx1wX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XvHkSCYZ; arc=none smtp.client-ip=209.85.217.50
+	s=arc-20240116; t=1754186873; c=relaxed/simple;
+	bh=x1CVyb40Uaj/CVEgTkOx5RtlQ4VWuE+hQdmz1uSlU98=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=U0ECIfOB6gyE8UkaAi3o5bLbweSY2Qa2ITUldXNu7t3aVbMQc/tJDD5N5MlZtZQmLozMJ106Ev2mpEzyTEFkEw6rHh6ZcwYkhHjvdXUFuNRt2RwzG2r3YyKFdbdIH133wZMjY7V3Yof6yS5kdCLj/mw7kB1WJIpCNx25m/q+xmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L3G3w0tg; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XvHkSCYZ"
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4fbf1326dfeso2491607137.3
-        for <git@vger.kernel.org>; Sat, 02 Aug 2025 18:27:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L3G3w0tg"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-76b8d289f73so2254579b3a.1
+        for <git@vger.kernel.org>; Sat, 02 Aug 2025 19:07:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754184470; x=1754789270; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1754186871; x=1754791671; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Sis5PnNAfBMlAVeFw8+wnWUKq/SryQ+D5a6Zv1k1rKc=;
-        b=XvHkSCYZyuI77e7aI72q1XJOEX6qahmY4YqpTDCkYYhN9aUNlhH7C/YZ4dxlaWNXj+
-         ZQfXGKP3to51iTuxMn2JEnJ9Zn9KPqdbcEELaLRDJAjJVMzklzvryBnm6EHc9gM4BVQt
-         RyKGViOaVGQ5goZ4O08VK1+uflKGLpbzXI3KMN9RHoUv7AOY9MDQQ0uMZpfUaGfFMgHl
-         Qx+dvyWt7rd3C9aS4RzaNFat5d0wV0oljR2hHlseyRu6dnMqNJPqGrX2MVz0+bgUR5wd
-         G60/qXwddcfg0I6bviOxcr0t5CtKbupivsLh7EAahKqhjdnlM5RQZfXWiSUIdDqgKfrI
-         cPwA==
+        bh=Q7lhR6EM6xoW9EUQo8qHhSA+OtttRzMRjCewQT1kCjc=;
+        b=L3G3w0tgrJPnwhvY8nYwMDQb0gmf8+ea5dIb44RnHJl1mTPiajkcQZ/6qOa3FgNkb/
+         5JvPus5ZxY1iS7ZByruXDfFZecZEa5V2HTCgh84KDH9MdYVXhAsHzHDNUZ7i1C+9uCrQ
+         U6STHLvo+h16r/zMKiFDGKnF8PWS7i0wl+3+t0nyfU/HPvJ/9WmPHrKNw/unVgrvnXPM
+         AGX5q30vcRQo2syBR62ZJl5b9NMrWiu4t0j93IwU/M343CFE6B59q25VtDGX5Rvfn3KE
+         nB6LuD6iSYuaOasncYckJjAedMD+YTzysv6/Lvp25U4MoHwHn70/Xk8VnWv9J0lT2buY
+         sd4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754184470; x=1754789270;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1754186871; x=1754791671;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Sis5PnNAfBMlAVeFw8+wnWUKq/SryQ+D5a6Zv1k1rKc=;
-        b=sNFIzoEUBQyu8l6CFpPghZnkE15Oc2v+zMHttwOZq9vsMgLYge+hWiB3STvPvRHoqM
-         Ti3AtqYCVr2BLzaWT4lNjHecA7xjax8mC3NjoP0PwkIqdYDZmR84IuSnCruRIfWQF5qp
-         LDkH4ZS8iiUQAwk5DDQzgsIVBeitcGWYAu0t8Q7TA3QnC0nhaQHKcjjvsmOqGng/Y/bE
-         mARZ/xjYQSZewloPwBosOZuL7aMd82LOTmcXG6WgSor16Y5w3ZMkVP5BvBqFF7iBKJ5I
-         jbcuQjZCfOMFc/Bllh6n8eUawCgGI9gKEwfse8QlrNnRpDl0VmOYIOWgb9XFmgh8byQI
-         n+dg==
-X-Gm-Message-State: AOJu0YzX/J+BphsnXzarTDhCxVwpn9jSoFIFOuQbeBAirZBhLvUB/8p+
-	pCR6j5GhFM3VBL6pMDJWUG0Sy7UmokedxehoJVtqSmaP117Blg32R4X3n098SXqmg5+gYb1aUf2
-	kzkNYOaPw77FjzGkXmcmYkrD9aaQC3Og=
-X-Gm-Gg: ASbGncu2A6TS6TTCMz7HvCE5YJVcjRlBUksdCt422kPo6d+l77QEnYCCMkUzARIGmdp
-	7AUzaWv4ixC8Srj0M1VNciumYu46Hi0w5uCmze600QKF3uEsbI9V6/Sw/8c7Luw5cm2j+D/kVq9
-	t7OSl6jkhvrfFITQUvSCMDFTM6yRrXbrloL8GP9QP6lLHDSehNs9D/92KMnnPWWEuald1j0LZvs
-	E45c9k=
-X-Google-Smtp-Source: AGHT+IGJucIg2+cNlGaAx38ai1KqWuRSdCuWJwiqFY5129nVVlTXEPxMqePVLMQK2DcU4ptmTUY9YTONQGOAhISDj5c=
-X-Received: by 2002:a05:6102:5090:b0:4e5:fe5e:2be4 with SMTP id
- ada2fe7eead31-4fdc40131b8mr1646874137.22.1754184469867; Sat, 02 Aug 2025
- 18:27:49 -0700 (PDT)
+        bh=Q7lhR6EM6xoW9EUQo8qHhSA+OtttRzMRjCewQT1kCjc=;
+        b=WS/8nVc4IBNMA6gXY5OCOzqFkYFrSozJf0O8nG8tFfWjquQkjBkeGUkuz2ixtz18PC
+         TDPr9kTxF5ZnPM00tgMmef3MeTJ+gj+bcchjEeLsebmOzYSWPDJIP8Ag3ga/Bw7xB8PU
+         kHzoZ3IhA0bGsOIawxFfV02WOSG9Ijs8YmysGcWMaFs0GJhDVJE5GIHuJ1OcQfj+r/M+
+         3NiTgB2PpSu1SnTiYUTXQDBgrjoqPUG6q/CZZf7N3NecaMObc+VJ0b7V9mFkejLT/WzG
+         l+SKJCV5DhkioV2hgsMl5g/c86awGY33bP87zesdBvAYFeN8VXG9WrR4XbtDb1ouAiJz
+         kYDw==
+X-Forwarded-Encrypted: i=1; AJvYcCUXyPxynMMUP4uepUKdMb04rTvo/8jnirdOLFdZXiA2KycYQpdaNoSueL/ciYTifb80ejc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwZ0f4ePx9RIfTj2tcGjp3QqJ5lPg1G2izkZQIIQzz+JvciYUii
+	oCfwa5aAYWB5Yj6C5eTW6tOFrmZa3R7V+D5ShbmhQu7/HAXoA506I1Jh
+X-Gm-Gg: ASbGncvmHKckxdYX9HijS9mDeLwybnxRtJfE+Um9pvCAqRC42LtTV7+0HMSF6Hd20ea
+	1F7n5aenkj7pnvu5a+xegIYPM9ab0i/wgh9EEh5SAWRUZMelzgmkNWJDK449Mn04Yu+RgwEiP2w
+	jgyGZPi2B360QqKrkuCPifFZHFgpV6xy15I0O5hnFtnro89HJu3JpWIGG4BgIbFmfqiuzpv4eXc
+	v2PN4iT7prpx5NASlMBU2dYTsLAziV/4BWCJGpFniwWkKZCJhsM18jG7t/SEQdezsTi/mnU82Wu
+	dNVyGDCEEvvJIFOBN0acxuyrzrwHOtoYn3mwcsco0M1S/o99oM5EMXRzXqTWvWDvtnsPyUPUmGV
+	OUH5QkkY9wJ/4XLklgnOmLCbKKbPYTuFdcQXiRx3QGvMbNxj1fwQ=
+X-Google-Smtp-Source: AGHT+IE5qqjCKdfMRVzbfqzJzlF84ZlvaMnpp00ApCROwXz9+9yLqQkb4gWtXf7B1Llin2r/pP16Cw==
+X-Received: by 2002:a05:6a20:3d8c:b0:220:631c:e090 with SMTP id adf61e73a8af0-23df8d498e8mr7833151637.0.1754186870760;
+        Sat, 02 Aug 2025 19:07:50 -0700 (PDT)
+Received: from archlinux.tail6959dd.ts.net ([202.164.41.66])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b422b77f530sm6466535a12.1.2025.08.02.19.07.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Aug 2025 19:07:50 -0700 (PDT)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: ben.knoble@gmail.com,
+	git@vger.kernel.org
+Cc: chriscool@tuxfamily.org,
+	christian.couder@gmail.com,
+	gitster@pobox.com,
+	me@ttaylorr.com,
+	ps@pks.im
+Subject: [PATCH V5 0/3] refactor t1517 to focus on help output outside a repository
+Date: Sun,  3 Aug 2025 07:37:41 +0530
+Message-ID: <20250803020744.1037392-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250721115519.140361-1-usmanakinyemi202@gmail.com>
+References: <20250721115519.140361-1-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqcya63cqx.fsf@gitster.g> <20250721115519.140361-1-usmanakinyemi202@gmail.com>
- <20250721115519.140361-2-usmanakinyemi202@gmail.com> <CALnO6CCN0HUXJVYmvAJO3EoQQZzHVjE0P=g+AUc9c5Ti0Rcm2w@mail.gmail.com>
- <CALnO6CAPBsxg=-aXVUUJSKrPLWWPLGdEM=k5J=GVoh5fVTAhYQ@mail.gmail.com>
-In-Reply-To: <CALnO6CAPBsxg=-aXVUUJSKrPLWWPLGdEM=k5J=GVoh5fVTAhYQ@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Sun, 3 Aug 2025 06:57:38 +0530
-X-Gm-Features: Ac12FXzjss-dXvJAsCXmDyyCvanR1JNurvBGNuei4JDnItUYZg_GDVf0NuQHr54
-Message-ID: <CAPSxiM978fqvC_TO8fKQrx=S4yPEkp3ZufTq+zv+Ws7zJx6yDg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] t/t1517: automate `git subcmd -h` tests outside a repository
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, chriscool@tuxfamily.org, 
-	christian.couder@gmail.com, me@ttaylorr.com, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-> > Hm=E2=80=94if we strip the suffix with ${cmd%.*}, do we need a p4.py pa=
-ttern
-> > too? Actually, at first I wondered why we need to strip the suffix at
-> > all. My local Git produces only unsuffixed commands. But
-> > bin-wrappers/git produces both p4 and p4.py; request-pull and
-> > request-pull.sh; and several others. So I think stripping is probably
-> > right, just drop the .py pattern.
->
-> I think that using "instaweb.sh" instead of "instaweb" also causes
-> this to fail on Windows, like:
->
-> https://github.com/benknoble/git/actions/runs/16695826272/job/47259908953
-I think this is expected breakage. Removing ".sh" makes the #TODO to pass.
->
-> --
-> D. Ben Knoble
+This series refactors t1517-outside-repo.sh to focus on testing
+`git subcmd -h` outside a Git repository. It does two things:
+
+  1. Moves the existing `update-server-info -h` test to t5200, since it
+     tests behavior *inside* a repo and belongs with other update-server-info
+     tests.
+  
+  2. Introduces a loop in t1517 that automatically verifies `-h` output
+     for all main Git subcommands when run outside a repository, using
+     the `nongit` helper and `git --list-cmds=main`.
+
+This makes t1517 easier to maintain and ensures that new commands are
+automatically covered for this class of behavior.
+
+
+Changes since v4:
+  - Changes the approach from having the t1517 to test
+  both help outside and inside repo to just having inside repo.
+  - Drop spurious message during test 
+  - Fix known breakages that actually work
+  - Fix new t5200 by removing the trailing &&
+  - Move the `prune -h` test to t5304
+
+Usman Akinyemi (3):
+  t/t1517: automate `git subcmd -h` tests outside a repository
+  t5200: move `update-server-info -h` test from t1517
+  t5304: move `prune -h` test from t1517
+
+ t/t1517-outside-repo.sh       | 34 +++++++++++++++++++++-------------
+ t/t5200-update-server-info.sh |  5 +++++
+ t/t5304-prune.sh              |  5 +++++
+ 3 files changed, 31 insertions(+), 13 deletions(-)
+
+Range-diff against v2:
+
+1:  11eb3e7bfe < -:  ---------- t/t1517: automate `git subcmd -h` tests outside a repository
+-:  ---------- > 1:  75a1d540e4 t/t1517: automate `git subcmd -h` tests outside a repository
+2:  5cf43192d0 ! 2:  8c028256a0 t5200: move `update-server-info -h` test from t1517
+    @@ t/t1517-outside-repo.sh: test_expect_success LIBCURL 'remote-http outside reposi
+      
+     -test_expect_success 'update-server-info does not crash with -h' '
+     -	test_expect_code 129 git update-server-info -h >usage &&
+    --	test_grep "[Uu]sage: git update-server-info " usage &&
+    +-	test_grep "[Uu]sage: git update-server-info " usage
+     -'
+     -
+    + test_expect_success 'prune does not crash with -h' '
+    + 	test_expect_code 129 git prune -h >usage &&
+    + 	test_grep "[Uu]sage: git prune " usage &&
+    + 	test_expect_code 129 nongit git prune -h >usage &&
+    + 	test_grep "[Uu]sage: git prune " usage
+    + '
+    ++
+      for cmd in $(git --list-cmds=main)
+      do
+      	cmd=${cmd%.*} # strip .sh, .perl, etc.
+    @@ t/t5200-update-server-info.sh: test_expect_success 'midx does not create duplica
+      
+     +test_expect_success 'update-server-info does not crash with -h' '
+     +	test_expect_code 129 git update-server-info -h >usage &&
+    -+	test_grep "[Uu]sage: git update-server-info " usage &&
+    ++	test_grep "[Uu]sage: git update-server-info " usage
+     +'
+     +
+      test_done
+-:  ---------- > 3:  c1cdbf272f t5304: move `prune -h` test from t1517
+-- 
+2.50.1
+
