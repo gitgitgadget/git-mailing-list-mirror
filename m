@@ -1,64 +1,68 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD097E792
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 21:25:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C591EDA3A
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 21:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256322; cv=none; b=onbwjE7U5QzMK1ix3l9qPy71loErMvQ8XOcAu0uMV7io3geLfpYzGfCeYVkurIXiL4Kp9/EbSPLmk4N7m/fPqHFAsVe6njiANQiPdj1gqAx9tpFWXLzc9P26h++RnRMmTIMtDwkktFpMsFozz/3xIT66YMuqKZjpsUWuJoAjHTw=
+	t=1754256323; cv=none; b=jV2HClTfCW9cFZhueDferl2PaY0RsGtOHaR+TTEzFzzwoDRQ8v48QavhE/OjlQalMsu4q+tLX0hhV1w+t5SJESC/7ArM1xUwF96B/SapdGFuJffZLT8qsLnXGcuupnyFQGbhP/nrqmA7yxzmOFyeyOvy3ru5jWXD2nzwQcYNsUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256322; c=relaxed/simple;
-	bh=j8/r46524Ur+blq4xd+N0su9CZohwWajVv0L+7QU+kY=;
-	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=Ku3E76r+QBXaeb4vlh8mShSQvzcH52ORo9clDTKOfxue4nHffn6YNviJn3M7sCHboakwF4+yR6QIXa7P5Sn+7a4Hr0c8bwv20ERdN6NFm7MDf1okBY/ErJgYz3jsj8eYmrMQqZ+nC2dO22Q19A0FDgL838ZNLOvzmr1ma/79DEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=avJsFbMd; arc=none smtp.client-ip=209.85.218.44
+	s=arc-20240116; t=1754256323; c=relaxed/simple;
+	bh=rB5Bkocpxn8bDqabQG5q3lh4UqAFNkuVDkDtJTb/dQg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=Kvgxecbq9oyHtJX6xML1Fn8YxJaV272DzLTs6WSJite5ipM5gCMePmiNgu9uP/uDNwd5Q0E9A6SJ5R9BYI9V7g80QiRAic5hLMC1WgUmIKgBcqmusQMgbHXFsHS6f7wT4JIj/j/GXE4aj+MgVtjsbwBheCPkt1K5++HDCejg8XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I8zg4SVM; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="avJsFbMd"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-af66d49daffso461125366b.1
-        for <git@vger.kernel.org>; Sun, 03 Aug 2025 14:25:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I8zg4SVM"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-af93bcaf678so260419666b.0
+        for <git@vger.kernel.org>; Sun, 03 Aug 2025 14:25:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754256319; x=1754861119; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754256320; x=1754861120; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=aFrkk+0JZqu0S3Z3L7GYTZNjp+DpAz3QEaaqNeL1fOE=;
-        b=avJsFbMdzJERid0P0RPHAanWaXLrVf+ti+yqkDLIOi5oDluU+gFr5YKL8rfquVBC3P
-         eNHubX2ZolNEoc2qo1Z1gPkeZCLspWkLWAucT2L/EhL8Jnu8FkuKMuMHuUR15NZagyNJ
-         NhD8ZtzZxxZGo7o8xA7cR5k5vqs1L7qCGfqjgqE8+/du5jvJI26dO/+n5ANZdoLQn80p
-         33L2oAuGuWYFdBiB7iejpTTeJRFNftoHSgxShF2278dy5yqzE5lHvzrfv8N/MpMJwBeu
-         rELfrQHAlUaAnUOAPqf+yGNfFweRBLGyTgYoleYIk+pzyA6vifHaeEOC09VAiRjRXc7e
-         gd3w==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OTEAVjTobAtBlyvqRitPQnExAaK65r3v9XFKcyD/57E=;
+        b=I8zg4SVMN+uF7eG1+m0/xZfCzfPSvoZJxUDjyimssvXLLvgbtWWyi2zR+VdP5E7+NM
+         SKMIVmhtAN2PTQR2xi/1gHEAyy8vn0rFMOmVFLlxP89sHQv7ggJMmfbXXPs2YB0CkF9D
+         8hEMNCdtK1lWAVDALVxOGi3abZM+HK97pgXY71QBPYmd2ReuIzpRfnszD/kV3zfCXU4w
+         AFb39vpxII+BKhkXY3z3XlfcCXcVmB2C/XVc3o9vufO6Oms73p57WSyV6lUHdTY7hIsL
+         bWURaVWkY38qHB2K1x2UffxjxIUGi7cSdLVEb1bVYPpqlcoUGdDglisB5EGg9OeOFzgS
+         49qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754256319; x=1754861119;
+        d=1e100.net; s=20230601; t=1754256320; x=1754861120;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aFrkk+0JZqu0S3Z3L7GYTZNjp+DpAz3QEaaqNeL1fOE=;
-        b=IccljkLBe1RQvOW1KWWkfPGa+ZLNpJsLXrhIbXwuxrIhJ2ZMkm2OUN0N5Rm5EnECSM
-         BMUKTGcBz5NtHriuPpEhz3uHgNhVOiy7pkz8QhNflqzq51cwTOdE3QFNQgZbRs7973JP
-         EGq8NBTXCUmMpJ90MridMEoLCcN5brRpf3R5zTr+rZC8TDT/SakukHWJXBmFMZkz6+Tw
-         rn4hXcpa9SRnDj1N9H0WYstgUNNnCQ0GqGsiT4j3hvDtNcqo0inLeMFvxg7S0PQ3PSCG
-         ES3iRovo3I7WOZlLv6FoKIsAjA0Wh3/QTxFf8VtD6TK+kdTlJa/ta8P8PI5ugshaUtDd
-         +Qbw==
-X-Gm-Message-State: AOJu0YzYDJRAraZK3pqTkMNsq8a/z6OdBfjEjQba413KoNqAyswPDX4E
-	Bgg8CYpeqMSzYP5FDvWT/9zlSJZXLkIEhl5QnEc/xcQxSi+3UMKmx3PRBdeGyQ==
-X-Gm-Gg: ASbGncsjjqgFu/fKimzFgrw23KzjHqLfLwSDaVT6lwWjv70zdDsMIu7CLlJ47qnuHjU
-	9xuPlCOe9v7tUeDyBfyXMxw9AkKaTYjyhl1upHIvw7fWa8pRQRGguDjMlQL4IbJVMwNBRw973vp
-	CIIIn+Qvl9I9jNa1PiI5VXr3GjXFnQH6wSkRxvsNanYitX8/OYa1hkyfEJ/YojNUdfeYJaJODsg
-	AXCs7EixBZcGoIoX0DhDYI2jWxysYOUH3DfcHIvuj+tzre3hXVGuGlg4dadqezRbgtW9lOIndMd
-	LNBL29SV73gKTHNeI+qCr9nviuXX+dKbbrbl9JD0G6hlZYxcpswU1Kc8KBPnYXv3Haxluj+vUkg
-	ECgeJ8GZEpty7jUVLfywP8AE=
-X-Google-Smtp-Source: AGHT+IE5TvvcD5oiaYZqHCuZ84R+lwPLrd0DuVyUc7AKHpDmxgNLlhK6cHnuISP/MrZZcodEZDq9Lg==
-X-Received: by 2002:a17:907:96ab:b0:ad8:a935:b908 with SMTP id a640c23a62f3a-af940180c31mr818759566b.30.1754256318939;
-        Sun, 03 Aug 2025 14:25:18 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OTEAVjTobAtBlyvqRitPQnExAaK65r3v9XFKcyD/57E=;
+        b=qgQk12WeiojBF+JLJ4dYN6DcHD+BhGgUz2JGQWZC2s9m5ZlzVnBrA/m3DNzddM3BzU
+         1TT8z1lvydyp8F/dmY0inyG/cnHfy2pk/Bzbv0MCvVeMKZQi3d4GpPNv8I1pQ5+Ysi93
+         pLpouQxecn1U6GipzJt0BCI2U2Mn+0t8vqkPjTTUVbLoH4JxrtzOV0AaPn20PYIaKyRL
+         kzEKKMnV7lTRMMMGcBd3R7F5v7dirqIhzPYPixJv6yWHtIOW8FV0XoW7YjyxKABXXp2T
+         uUfa8NZsVDir5XgLWJ8mB+3EODeRCtGi5wq3a4YKnjkbMtab+30N7eJz2oBUxq6YGajP
+         aVYg==
+X-Gm-Message-State: AOJu0Yyqi+ISEhbJJMylsygosqFfFVDhEXIr+cQSbUwXD4lb1Kn6ygBq
+	NgU0bBpUDURYhhFMwhJG4hBjnOTXXLsv24XDEjzKGRSHaJCVbjgnfqD/qkFNCg==
+X-Gm-Gg: ASbGnctS2KghcIiLeWc9vjlt71qSxdtZzizmXSr2VRBPlIOvu0AcOQrwo/hLotayA2r
+	+JieMV+1cKfOJKxvbwZ796HEOVpsWtPETIE1trIx+cZdj0K08xLXRsrVvJ0lcZGQHB7mDzZDlEE
+	RJh5N1WfOSblWo4MmeTKGJvjsPhL27LOmMd3JQxnoG18r6nUdg+og5DB3jdlk+8Q+Bz7amaFjIz
+	1RMAF/fVsnaqLgFBFywhvxDWtKr4LiYHCs08ls9UeMn787iEOM+m34lUKpFa3sDVuiVbHoSU99v
+	EDlMHNjV8dHYpYManmSMzDQOHoi7a3I1qyJMAzbwEifV+nvCcXC6SZ2JvQgAihigTNKQcQ91Pkl
+	YnbLrvt7A9UgtWjpwwfz6WRo=
+X-Google-Smtp-Source: AGHT+IH6229L2QzLFxumKIP3ifHkRRhcoDOtEj3vQhaq85KWCaSgV18/AOjC230r23nu+q/85unRVw==
+X-Received: by 2002:a17:907:3f99:b0:ae3:c767:da11 with SMTP id a640c23a62f3a-af940231530mr820516666b.50.1754256319622;
+        Sun, 03 Aug 2025 14:25:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a07670bsm639580766b.8.2025.08.03.14.25.18
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a24062esm632116266b.126.2025.08.03.14.25.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Aug 2025 14:25:18 -0700 (PDT)
-Message-Id: <pull.1948.git.1754256318.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 03 Aug 2025 21:25:14 +0000
-Subject: [PATCH 0/4] mingw: rename and open fixes
+        Sun, 03 Aug 2025 14:25:19 -0700 (PDT)
+Message-Id: <0995ecadaff56d2ff44c965763800ec892490bad.1754256318.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1948.git.1754256318.gitgitgadget@gmail.com>
+References: <pull.1948.git.1754256318.gitgitgadget@gmail.com>
+From: "=?UTF-8?q?Matthias=20A=C3=9Fhauer?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 03 Aug 2025 21:25:15 +0000
+Subject: [PATCH 1/4] mingw_open_existing: handle directories better
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,31 +73,58 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Fcc: Sent
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    =?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
 
-The recent change of mingw_rename() to use POSIX semantics had quite a bit
-of fall-out, breaking in pre-Windows 11 setups that use ReFS, and in a
-different way on Windows Server 2016.
+From: =?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
 
-While at it, this patch series also upstreams two related patches that
-matured in Git for Windows for long enough already.
+CreateFileW() requires FILE_FLAG_BACKUP_SEMANTICS to create a directory
+handle [1] and errors out with ERROR_ACCESS_DENIED without this flag.
+Fall back to accessing Directory handles this way.
 
-Johannes Schindelin (3):
-  mingw: drop Windows 7-specific work-around
-  mingw_rename: support ReFS on Windows 2022
-  mingw: support Windows Server 2016 again
+[1] https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew#directories
 
-Matthias Aßhauer (1):
-  mingw_open_existing: handle directories better
+This fixes https://github.com/git-for-windows/git/issues/5068
 
- Documentation/config/core.adoc |  6 ---
- compat/mingw.c                 | 93 +++++++++-------------------------
- 2 files changed, 23 insertions(+), 76 deletions(-)
+Signed-off-by: Matthias Aßhauer <mha1993@live.de>
+---
+ compat/mingw.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-
-base-commit: 866e6a391f466baeeb98bc585845ea638322c04b
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1948%2Fdscho%2Fmingw-rename-and-open-fixes-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1948/dscho/mingw-rename-and-open-fixes-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1948
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 5d69ae32f4b9..2dd5cbcaee0d 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -588,13 +588,24 @@ static int mingw_open_existing(const wchar_t *filename, int oflags, ...)
+ 			     &security_attributes, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+ 	if (handle == INVALID_HANDLE_VALUE) {
+ 		DWORD err = GetLastError();
++		if (err == ERROR_ACCESS_DENIED) {
++			DWORD attrs = GetFileAttributesW(filename);
++			if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
++				handle = CreateFileW(filename, access,
++							FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,
++							&security_attributes, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL| FILE_FLAG_BACKUP_SEMANTICS, NULL);
++		}
+ 
+-		/* See `mingw_open_append()` for why we have this conversion. */
+-		if (err == ERROR_INVALID_PARAMETER)
+-			err = ERROR_PATH_NOT_FOUND;
++		if (handle == INVALID_HANDLE_VALUE) {
++			err = GetLastError();
+ 
+-		errno = err_win_to_posix(err);
+-		return -1;
++			/* See `mingw_open_append()` for why we have this conversion. */
++			if (err == ERROR_INVALID_PARAMETER)
++				err = ERROR_PATH_NOT_FOUND;
++
++			errno = err_win_to_posix(err);
++			return -1;
++		}
+ 	}
+ 
+ 	fd = _open_osfhandle((intptr_t)handle, oflags | O_BINARY);
 -- 
 gitgitgadget
+
