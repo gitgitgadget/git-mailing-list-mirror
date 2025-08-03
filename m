@@ -1,77 +1,77 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94B527EFF1
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:53:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD932820B9
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:53:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754203994; cv=none; b=F2IDzf/b3jUhwoHSHM7SnsZwZY8IIc+xKsid3Js0P3cTdr4VLNHSE0PfgjSw3//H+CUvSGr2+AWn9mHHOsbJq99ggBx+l9gg3fnJfApkFeEok8+T/qrSvEC8qGox/2A63IBi/2pf5iqH1778MX3fbkYlSEh5S/58pVZxTdWnQHA=
+	t=1754203995; cv=none; b=rJ9rpalAdeJd1itFerZcbK9rxJF+ZbVHXpreWN1oFMR45pg+3q47NzyRw85P9k4GJ9MJpd4ICCk5Zt9urb/AZXzlQldoL1SSYZxPpja9pmz8H99Sx/HXL5Z1pzhlgViLoFXxDca+iARNam38UwJxVJfM03bWUT6XVPXpsJqohR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754203994; c=relaxed/simple;
-	bh=T8wjUpdcZ3Btx9+dQuXumMNZ1choPjjbD3xx14udjHU=;
+	s=arc-20240116; t=1754203995; c=relaxed/simple;
+	bh=5ihIZ8NnY87Qc/gSJ46m3J0aTvFexNBd1ooiWD94cKA=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KskGul+dB/unrYGOP10Yc8ZflGnohL671c+8/5dQVA5xxK5ke2gOG2C+tpuFnvayjO8d/3MBk6y1Dd7EEybCqwXcQR8sIySxb3Z0XMKyGpgAGg7OcVVD5im8uFZ4pQMjmCT0doJkEszx1rs5xVfQW4DA8PnSi118JYFNFtg72Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DJ/AXFSQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MdyFvIA3; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version; b=esBfVsNRIji2YOqWx7SVTgBV4876pAFiEIWvAiFSxD3z4TqfJuG7ui+Cx3Kye4R1/szeQigMFWUd0rrIgjWKM+qRC5PdROKOuMzrQicsFMkAQesMOB0ZU/eB1Pe4kdFHIWFPbdXI2ONDrCIQ8KK6GnkyxZmEFA9Zgir7Q8y4fXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Mddlrj+N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UEWrW3Hx; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DJ/AXFSQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MdyFvIA3"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mddlrj+N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UEWrW3Hx"
 Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2CA22EC1275;
-	Sun,  3 Aug 2025 02:53:12 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sun, 03 Aug 2025 02:53:12 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7D92A140032D;
+	Sun,  3 Aug 2025 02:53:13 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Sun, 03 Aug 2025 02:53:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1754203992; x=
-	1754290392; bh=9YRhfgn56AxyZc9ZxizVvaJEU4M4d2Ock21L3LajxoY=; b=D
-	J/AXFSQDtHSgPYVaKoNKKnvTGligS7exbrtWhTPlUlkwWy6FE+yH8UEzOvZa3sG6
-	gNPGCQhbudmJ/9PwbZ8AonsNBBphnkR013aVsWv5EAUxi6HzUSJtceZw2WAY3clc
-	vmiI75L3g3uZ9HalzDB1ymoQ1aAkMAow8+zIse0ZMYDrJqMi2IKg1CVJzxZmNRGU
-	nu+1YAbDsnWPy+XRvXgKiIWfBxKi1u2YH6WeKFR5uqxD25FCiIcKKcQzhkSnV0Co
-	kPyH8PYrF5LONgTfc8/oceBiXyoDOpxVqZYn6zG5SIyuFTl6A3c8fDpxxDV7CJz3
-	lX3RTai4QtPtXXUDq2QwA==
+	:reply-to:subject:subject:to:to; s=fm2; t=1754203993; x=
+	1754290393; bh=q5i3i9eXZT5rUc7kOn1093Kw6ZIEM1nJS9xPLbKGxuw=; b=M
+	ddlrj+NOfg5O7GJzwwlQTF2y+tvF3Efhy4sfEgGINe4sAPRwhGUK0FEJ2T414MYp
+	yp2WbIXzow4zV9YxxemAljQX4Xz6bl9jZ8zayXGtbo/pQk/AcHH9/VtY8jJtZszb
+	iP4N9J6mFq+mhWlhKPlC7P6CFdor71ru0SFScvn/ur6s4w6Fuse5QQDpPZR6aP6f
+	SpU0zPD9PeZ2o6POgx7r6ytJwLLhYJNarl+N42W7GM65OnlOasPaUsSDlgPQI7qt
+	jDa6ykRDtDPLTD22THHiwnTND/I4Dxvdu2GVharUy10Fb8XHs4JGdOHXDVTlgIza
+	dsT/F10O+fSk4hFOuhnPQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1754203992; x=1754290392; bh=9YRhfgn56AxyZc9ZxizVvaJEU4M4
-	d2Ock21L3LajxoY=; b=MdyFvIA3Thdga3lriPDnbkCP6mucbKCLmrJ7X2nvbUc2
-	kcXS/oG39ol3LK6RL6uoOzP1e4lumvoqMVpuf3rC15et61FiigkULvmFBQiqw9yR
-	CxV56g7Pa1HIoeaccDsSwdTSrBYTI04xsqNY4piVwKaWdPgtbyDHLxcWcewqglFh
-	Qzy8dLLwnytyHjKKiO/lyOAyuvLakoKt2bKfugqAxeOb7K9VxdwxhBvP6Oigdrnn
-	y4NIuybffCZbnwu16yz3nB6RfhjJnynMeNyofoGA79FXD9PdIT8W2TuDvKJP3A3b
-	vQjKPSTtA+caTc8bYgdahnx8oEQanM/SX4/DzDl9rw==
-X-ME-Sender: <xms:WAePaGgMVrL89uusrSu1q69X2RDlpPQPLq1km5cJGznD6PAv09mSXg>
-    <xme:WAePaHOu8RFeqHcD6lXpXN6C_R0Pos2fM7PsaPJzdllMsPnhaTSsgF73y82t9YvVf
-    kaDl03qt68Bo_ZRbg>
-X-ME-Received: <xmr:WAePaP7hgHqkyAeWfP_n96elJl5Zfa-UNL6b_l61MyRB4AYu6BBTgmjXllUxV0X9oEJnWrczq1w1bhX63VVFvb0s4uQzBzKVDZttGBg>
+	fm3; t=1754203993; x=1754290393; bh=q5i3i9eXZT5rUc7kOn1093Kw6ZIE
+	M1nJS9xPLbKGxuw=; b=UEWrW3HxwSJFneHdBC5n6K6zbE5yG2lfag5P8uY1tcka
+	7IMKuwAdUzObwgO33nNHMweYXOt4L3w/9aiKWM3wmYvk5qJvS622cwPoBZkzThUe
+	T19uo94i5SHCPRv/HnLP5y5B4tVCvZjVZLlXK64kp/EQPkvC8rhD5UpIAZrBpO5J
+	3fOx6KQt9E1ZY2hO6hUX0AON6fQtkZbmXfVPpwAwzQQrM6V2eAHFEXZwtUHL7jRd
+	NKdb/ej5Aej7ohjFfXrUJfKc6uZ40WU5qaNuaC4W+KgEmXozf7mpthCrb8gKHHXr
+	uBZrwpF8E7gHsgJXjMuOaAvkthB8ZBjVv6LSn1ITrA==
+X-ME-Sender: <xms:WQePaJNToY6coJlKWBNTHpScVcB8Jzlp1X6oue8qqjLkZQpOt22EnA>
+    <xme:WQePaMKdk2UiFM7-woNN969rQyFtu1DKn6Drj52nLgmUdQrpp-zlbH5XBdlVQqi3J
+    MXWERgTStT9KjkOAg>
+X-ME-Received: <xmr:WQePaKHASLLd13n-ptbAP_SZR8wWUyAPVMy3ZxNqVupXkZpfVA7wU8vSXnN2U2oO3N9dbZlz3uw8y3o8Ptto7s0gZSEMgEE9hxYX0bY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdekjeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
     dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
     sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepfeenucfr
+    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepieenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:WAePaN3q2HcxFFz-ohpiuunDwRoOQbcD_90kTezOMbU6MPaSU9c8RA>
-    <xmx:WAePaIZ5srG0tkMnxngr4qLrI4EKjx7sR87onmYaCEIRIAaGscmE_A>
-    <xmx:WAePaNDUSBn0euO23SbjHEwFUDkLVwYUNn-IqAa7tUo7FbNFW3IEWA>
-    <xmx:WAePaC90x3QMUF5Iluh1SHdZVxN1mCvmB6akiCD_5IjNfXEorMp7rg>
-    <xmx:WAePaBFcTTDo0WU3wXAp5AcA7SIyuwaZv6fRhRQZDhQbYDudYXb5me7D>
+X-ME-Proxy: <xmx:WQePaEQoPWIWdl4qZU9VDuXNggqpnc8fZ97CM8rDwR9XSPPMccwCSQ>
+    <xmx:WQePaGEof3rP2XBh7Vp7lIhb4I4rqCt3EeG58ojOPUXrNcbAl1eK2g>
+    <xmx:WQePaA8KbJmFHtq-OAbG9F2y0iiEfG81iM_F_WRSKOfD0DsZ-9YKHg>
+    <xmx:WQePaAK6r12iCfXId3HB4-v0Hz6zfNojQK_rFv0wsQmuXQaXWt8MpA>
+    <xmx:WQePaLyUmuTTiN70ukIncNjT-KKn5gzGT6iPIBhPAGQdASo05ULV7GDA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 Aug 2025 02:53:11 -0400 (EDT)
+ 3 Aug 2025 02:53:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v3 05/12] clean: do not use strbuf_split*() [part 2]
-Date: Sat,  2 Aug 2025 23:52:57 -0700
-Message-ID: <20250803065304.3325286-6-gitster@pobox.com>
+Subject: [PATCH v3 06/12] merge-tree: do not use strbuf_split*()
+Date: Sat,  2 Aug 2025 23:52:58 -0700
+Message-ID: <20250803065304.3325286-7-gitster@pobox.com>
 X-Mailer: git-send-email 2.50.1-633-g69dfdd50af
 In-Reply-To: <20250803065304.3325286-1-gitster@pobox.com>
 References: <20250801220423.1230969-1-gitster@pobox.com>
@@ -84,70 +84,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-builtin/clean.c:filter_by_patterns_cmd() interactively reads a line
-that has exclude patterns from the user and splits the line into a
-list of patterns.  It uses the strbuf_split() so that each split
-piece can then trimmed.
-
-There is no need to use strbuf anymore, thanks to the recent
-enhancement to string_list_split*() family that allows us to trim
-the pieces split into a string_list.
+When reading merge instructions from the standard input, the program
+reads from the standard input, splits the line into tokens at
+whitespace, and trims each of them before using.  We no longer need
+to use strbuf just for trimming, as string_list_split*() family can
+trim while splitting a string.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/clean.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ builtin/merge-tree.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 9bb920e7fd..38780edc39 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -674,12 +674,13 @@ static int filter_by_patterns_cmd(void)
- {
- 	struct dir_struct dir = DIR_INIT;
- 	struct strbuf confirm = STRBUF_INIT;
--	struct strbuf **ignore_list;
--	struct string_list_item *item;
- 	struct pattern_list *pl;
- 	int changed = -1, i;
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index cf8b06cadc..70235856d7 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -618,32 +618,34 @@ int cmd_merge_tree(int argc,
+ 			    "--merge-base", "--stdin");
+ 		line_termination = '\0';
+ 		while (strbuf_getline_lf(&buf, stdin) != EOF) {
+-			struct strbuf **split;
++			struct string_list split = STRING_LIST_INIT_NODUP;
+ 			const char *input_merge_base = NULL;
  
- 	for (;;) {
-+		struct string_list ignore_list = STRING_LIST_INIT_NODUP;
-+		struct string_list_item *item;
+-			split = strbuf_split(&buf, ' ');
+-			if (!split[0] || !split[1])
++			string_list_split_in_place_f(&split, buf.buf, " ", -1,
++						     STRING_LIST_SPLIT_TRIM);
 +
- 		if (!del_list.nr)
- 			break;
++			if (split.nr < 2)
+ 				die(_("malformed input line: '%s'."), buf.buf);
+-			strbuf_rtrim(split[0]);
+-			strbuf_rtrim(split[1]);
  
-@@ -697,14 +698,15 @@ static int filter_by_patterns_cmd(void)
- 			break;
+ 			/* parse the merge-base */
+-			if (!strcmp(split[1]->buf, "--")) {
+-				input_merge_base = split[0]->buf;
++			if (!strcmp(split.items[1].string, "--")) {
++				input_merge_base = split.items[0].string;
+ 			}
  
- 		pl = add_pattern_list(&dir, EXC_CMDL, "manual exclude");
--		ignore_list = strbuf_split_max(&confirm, ' ', 0);
+-			if (input_merge_base && split[2] && split[3] && !split[4]) {
+-				strbuf_rtrim(split[2]);
+-				strbuf_rtrim(split[3]);
+-				real_merge(&o, input_merge_base, split[2]->buf, split[3]->buf, prefix);
+-			} else if (!input_merge_base && !split[2]) {
+-				real_merge(&o, NULL, split[0]->buf, split[1]->buf, prefix);
++			if (input_merge_base && split.nr == 4) {
++				real_merge(&o, input_merge_base,
++					   split.items[2].string, split.items[3].string,
++					   prefix);
++			} else if (!input_merge_base && split.nr == 2) {
++				real_merge(&o, NULL,
++					   split.items[0].string, split.items[1].string,
++					   prefix);
+ 			} else {
+ 				die(_("malformed input line: '%s'."), buf.buf);
+ 			}
+ 			maybe_flush_or_die(stdout, "stdout");
  
--		for (i = 0; ignore_list[i]; i++) {
--			strbuf_trim(ignore_list[i]);
--			if (!ignore_list[i]->len)
--				continue;
-+		string_list_split_in_place_f(&ignore_list, confirm.buf, " ", -1,
-+					     STRING_LIST_SPLIT_TRIM);
- 
--			add_pattern(ignore_list[i]->buf, "", 0, pl, -(i+1));
-+		for (i = 0; i < ignore_list.nr; i++) {
-+			item = &ignore_list.items[i];
-+			if (!*item->string)
-+				continue;
-+			add_pattern(item->string, "", 0, pl, -(i+1));
+-			strbuf_list_free(split);
++			string_list_clear(&split, 0);
  		}
- 
- 		changed = 0;
-@@ -725,7 +727,7 @@ static int filter_by_patterns_cmd(void)
- 			clean_print_color(CLEAN_COLOR_RESET);
- 		}
- 
--		strbuf_list_free(ignore_list);
-+		string_list_clear(&ignore_list, 0);
- 		dir_clear(&dir);
- 	}
+ 		strbuf_release(&buf);
  
 -- 
 2.50.1-633-g69dfdd50af
