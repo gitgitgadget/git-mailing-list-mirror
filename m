@@ -1,77 +1,77 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591322820A4
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B6F2820CB
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754203954; cv=none; b=ALnjkWJU9/VgR7uM//Bweg5s2AbVk2fwBLynWblz8+2h0GV1/FzMnPEOFS6IJgJHLLB4NH4oBZTh9hmerNdmgrz5yz5pBlrmXLRagHHfqdM9Q3ninNCARTboWbNF8Mj9R5+wC2zGP+NVxY0zxorkdeRUq0AELNxDZnPcAyfBRgY=
+	t=1754203956; cv=none; b=Mt0Hxx8N850jUJhBr1hqi0nfUSmEwBcHb+shonw9QRX926f8jY78//7JR3Yyf0S0wCv43NEV+QmlfJ1RMOyn/Gj49BNNH5QswVN+MOb8JVXBVXRYuqAKpRTacAqNc3OGjeLCSZKs/2nLntTHt811qyEgAqPJVZukJPIpa76Q/zI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754203954; c=relaxed/simple;
-	bh=JNT32GaPJXno4+nubr4qRZioskpoREu7au9ju0UpuR4=;
+	s=arc-20240116; t=1754203956; c=relaxed/simple;
+	bh=Au1C2f943e+l3BUiHKwtTgLdT9TUBGfpoXQ+blUCQkk=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rip/i45HbM/5szJWwJxawLf9H0nee2f5K4tKLKRJeFHMoI9pgVOZcLRjWioAKZM6DNC6lrikpUJR2oVM26ukn++usmJ8k1MuapYGuJVGBYrRlti9ub4/knha5tAQ3cBxPuQumOkgGZ1QQ1idcccumOt4iMrIU1NGMLrPgtTwbI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E9MGBrQX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S067inA8; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version; b=f6SSHmHz1A/zvuqido4IY0MjI5n00A+MnzE1Ois9UcFuiOxOQt7kuxBGmwPHLyTLzekwuhMJNlTAyALBRdr3lIOi7FwxDaA4Zs2M6wFJxuetzIOqmgxHw9yhbtaKsyzshFKlqcQC72hkshvzbFG5YHGhGst9s7yX/L/3sNeN48A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F8pBoIvu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g/PhbBqc; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E9MGBrQX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S067inA8"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 90D90EC1275;
-	Sun,  3 Aug 2025 02:52:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Sun, 03 Aug 2025 02:52:32 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F8pBoIvu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g/PhbBqc"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id E8CD3EC1517;
+	Sun,  3 Aug 2025 02:52:33 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Sun, 03 Aug 2025 02:52:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1754203952; x=
-	1754290352; bh=C2bbn95KiEEKaIJ0NfjSg8bhEELKIh+xNFO3xC4W9GM=; b=E
-	9MGBrQXzWiB7FULPCInKMlQ7ZtVtnWtjh+3wwv8xvstdM35qgDotD/cTNaI/umzY
-	6bXp0TFwPpdcC57mGl40XAbwv54btoZBJZ5uzDMHFepvyP00l2NK46mHXsoFWLXM
-	NlMnyKMCRbc7cd90PJqTQL9GDSbho88G+yOCzcHFfwXBAwBQ6paH/i5Geik6joCb
-	J27NxiOJ3K0YdZgxf8U8rtvTpbnOQa4gYD4eOBNmIQpVjhZEpSuQJuSCtPtknrHb
-	4bczlauh9zdx8Z1hq6MgyPFFPbrPiOgWgkEA3bUqmJ1En/EbC7HfgIvZ5MLotF8T
-	c2vc6Fom29k3WpRp83ShQ==
+	:reply-to:subject:subject:to:to; s=fm2; t=1754203953; x=
+	1754290353; bh=TGzH4rf1FEXpU1qTwUWEt7Wr2N+Y4nPB/TCDDId3/8E=; b=F
+	8pBoIvuICdVYj5AsWa4tzcBHl1lkyyAnskooB8jX6CjmMtbDeWH8hfEb7F3rw0bs
+	kGp1NkA1MwU/C8WRJx/R8NZFU9P8fdQqwBoOQzDuPgTM6dnSsvPxvr6sI/F0mngb
+	2hFbKBdv3LXDSxPa366bWjvz/J22kkCO7/E/jZJ0Iz/VfuSGTXOwg9dIaA3JfzH7
+	1gwsrollIlXJUlUzHxQiS53+NA6NeFPNXjSp5vTImX7S1xKtqEOWL/UnzV0GQ3Zx
+	w11RRWfDU779UV7ZBS26cntJ9znbZlqjqOz4bGZ2EovKaeRPmhzZgzXLNc0vKNfN
+	6n5w9te+JhVfhav5I2ZfA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1754203952; x=1754290352; bh=C2bbn95KiEEKaIJ0NfjSg8bhEELK
-	Ih+xNFO3xC4W9GM=; b=S067inA8hw12v8GcDE3Ux7yXVQGJtPKxn1vx4YOSNRZl
-	yitmK4ox5uZN35K3k1nfaatveeLi7XrpnXfa0Z15Monvtg8B70l7q7ehtn7GWsVX
-	h/T67lS+Jua373WKeyXKrYxW7NdNs8Rp/HWLB+fPY+9cUzky3WgKAQezquxoM4pv
-	HWmAegBkQ+6g0dSjhCeWfmE2+buIPUWQcGDaG2vs9xK4FeC+NKFzTEY3LmKGdzOu
-	4jlr5VNyni5YiBS7Zd8oM0+T5pVW2NzODI2jgmgaiXPOnuN6H2jZ39nizCYLoXKO
-	p2cs/T9iJHTU3yduyktPguee8R+P7rWMmRyFF9152g==
-X-ME-Sender: <xms:MAePaDdFzM-yamrY3uquD4HqCAbCSF7MbPGHeAcByEJJRBC6rtEk_w>
-    <xme:MAePaJbYJbXqff9wguYnmGsKnSXxfv9i6-9FuEuUwQ26DW9rcQJH2mUWcjXKzchEr
-    JLmH3uKHSlCgEJCTw>
-X-ME-Received: <xmr:MAePaOVE1gfmlehMTWGt8kC5TfDgCEuDJb2haFew2eMzozKPzDSCXMWWhlvSiG0M81f_hXiioGNEY7pcYefemTeWKJ3Tlg0n9XNQ1cA>
+	fm3; t=1754203953; x=1754290353; bh=TGzH4rf1FEXpU1qTwUWEt7Wr2N+Y
+	4nPB/TCDDId3/8E=; b=g/PhbBqcAMCY2XNDjAv84jeapKR87O60R2UGiNF/5Vig
+	rPUoRJXripMFEi4ixtfBe1zrNiEPTBW15jBsF0YdtBQhlReIh7w7POYsmSP24W2Q
+	EWcTk1Z8G9NvtsOoUHwpcEac4WaBvmXikie23Kdy0LsE1PoYbp4m3mwK0R/ehN1o
+	zvJ+q1TsRy/sNN+CnyDl+MV8zdIO9mdtFhbEG5EFGsoRBQ6QdFen0HBjBHgbY0Ut
+	87D6t4LUGmzOjviG2V2mm8YYgYRM+AnuO09EtfS+fxJfboCcKIHr2zdiEWkpvSBD
+	2+irhPTSE2k3DDvwFvpIyGQoAgPuPc7AuLX1togLmw==
+X-ME-Sender: <xms:MQePaPm5fzzkdFuGmlmDeuXleACRe_PuubRprGOrfnrhSM3Ezlyl9Q>
+    <xme:MQePaDDbTBdGmZPuYDxFUuivHPfEjZyyE3e45L7J_dJ82DZhq4wvkG5BX8a2RKl4C
+    dR4ezeQPXfRikq-dg>
+X-ME-Received: <xmr:MQePaHe8wNAFL5y3aUGOCQvgP4faFty7ABc5I7COJL8f5ihQ6qA18mWs3GpR-ePYcKPsWKtc-jd3ufGMifAQoUhytLjqkcd7NSLc6LU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdekjeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
     dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
     sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepudenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:MAePaDiRA9siALBRcv5JpOblWL2sH7UE4f8XZ3bchMuaQe2MsOzVSQ>
-    <xmx:MAePaEUQNYLpmZJRN5lM0w6tc-4BAQgj_5vDJZZ9gMjm5s5SzhHAnw>
-    <xmx:MAePaCOeZs4w69FGxqrpu11dEr8H2Ia3C3XfxnsGMi4dTNUDXj6SRg>
-    <xmx:MAePaIa-2udgOQCukqdbd8TEIavQUvFNfTWvHFHGV_CkG5YvFi9oFg>
-    <xmx:MAePaGAo8zIMhWgyJqBpXmJUswLqGVBenoxMFnaiozi4_RP0lA7wkD8O>
+X-ME-Proxy: <xmx:MQePaGKm3eQTEZ91VNNYaRx5ts4FqvcHfGunoI7ce_U_NggFsQ9sqg>
+    <xmx:MQePaCfPy5F-SVcI9heTykflNzEip5qs0kdmt8qOp7PBOQwQ0YKMJw>
+    <xmx:MQePaF3wbNUIBXLL4MiiSnUuLI9SXVQ21tIR1NSkdTspbrRSqRXYxg>
+    <xmx:MQePaDjd46zcJ2gcdH9JOnNwNdyGWwu1q_wpcQHzte9jENJynINcug>
+    <xmx:MQePaCImGirz7uXYSJqlPleJn6AWmm3RQLF1WeIOhuwZIotDXYhREXk6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 Aug 2025 02:52:32 -0400 (EDT)
+ 3 Aug 2025 02:52:33 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v4 5/7] diff: simplify parsing of diff.colormovedws
-Date: Sat,  2 Aug 2025 23:52:21 -0700
-Message-ID: <20250803065223.3325111-6-gitster@pobox.com>
+Subject: [PATCH v4 6/7] string-list: optionally omit empty string pieces in string_list_split*()
+Date: Sat,  2 Aug 2025 23:52:22 -0700
+Message-ID: <20250803065223.3325111-7-gitster@pobox.com>
 X-Mailer: git-send-email 2.50.1-633-g69dfdd50af
 In-Reply-To: <20250803065223.3325111-1-gitster@pobox.com>
 References: <20250801220423.1230969-1-gitster@pobox.com>
@@ -84,62 +84,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The code to parse this configuration variable, whose value is a
-comma-separated list of known tokens like "ignore-space-change" and
-"ignore-all-space", uses string_list_split() to split the value into
-pieces, and then places each piece of string in a strbuf to trim,
-before comparing the result with the list of known tokens.
-
-Thanks to the previous steps, now string_list_split() can trim the
-resulting pieces before it places them in the string list.  Use it
-to simplify the code.
+Teach the unified split_string() machinery a new flag bit,
+STRING_LIST_SPLIT_NONEMPTY, to cause empty split pieces to be
+omitted from the resulting string list.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ string-list.c                |  3 +++
+ string-list.h                |  2 ++
+ t/unit-tests/u-string-list.c | 15 +++++++++++++++
+ 3 files changed, 20 insertions(+)
 
-diff --git a/diff.c b/diff.c
-index a81949a422..70666ad2cd 100644
---- a/diff.c
-+++ b/diff.c
-@@ -327,29 +327,23 @@ static unsigned parse_color_moved_ws(const char *arg)
- 	struct string_list l = STRING_LIST_INIT_DUP;
- 	struct string_list_item *i;
- 
--	string_list_split(&l, arg, ",", -1);
-+	string_list_split_f(&l, arg, ",", -1, STRING_LIST_SPLIT_TRIM);
- 
- 	for_each_string_list_item(i, &l) {
--		struct strbuf sb = STRBUF_INIT;
--		strbuf_addstr(&sb, i->string);
--		strbuf_trim(&sb);
--
--		if (!strcmp(sb.buf, "no"))
-+		if (!strcmp(i->string, "no"))
- 			ret = 0;
--		else if (!strcmp(sb.buf, "ignore-space-change"))
-+		else if (!strcmp(i->string, "ignore-space-change"))
- 			ret |= XDF_IGNORE_WHITESPACE_CHANGE;
--		else if (!strcmp(sb.buf, "ignore-space-at-eol"))
-+		else if (!strcmp(i->string, "ignore-space-at-eol"))
- 			ret |= XDF_IGNORE_WHITESPACE_AT_EOL;
--		else if (!strcmp(sb.buf, "ignore-all-space"))
-+		else if (!strcmp(i->string, "ignore-all-space"))
- 			ret |= XDF_IGNORE_WHITESPACE;
--		else if (!strcmp(sb.buf, "allow-indentation-change"))
-+		else if (!strcmp(i->string, "allow-indentation-change"))
- 			ret |= COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE;
- 		else {
- 			ret |= COLOR_MOVED_WS_ERROR;
--			error(_("unknown color-moved-ws mode '%s', possible values are 'ignore-space-change', 'ignore-space-at-eol', 'ignore-all-space', 'allow-indentation-change'"), sb.buf);
-+			error(_("unknown color-moved-ws mode '%s', possible values are 'ignore-space-change', 'ignore-space-at-eol', 'ignore-all-space', 'allow-indentation-change'"), i->string);
- 		}
--
--		strbuf_release(&sb);
+diff --git a/string-list.c b/string-list.c
+index 86a309f8fb..343cf1ca90 100644
+--- a/string-list.c
++++ b/string-list.c
+@@ -294,6 +294,9 @@ static int append_one(struct string_list *list,
+ 				break;
  	}
  
- 	if ((ret & COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) &&
++	if ((flags & STRING_LIST_SPLIT_NONEMPTY) && (end <= p))
++		return 0;
++
+ 	if (in_place) {
+ 		*((char *)end) = '\0';
+ 		string_list_append(list, p);
+diff --git a/string-list.h b/string-list.h
+index 40e148712d..2b438c7733 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -289,6 +289,8 @@ enum {
+ 	 * it to the list
+ 	 */
+ 	STRING_LIST_SPLIT_TRIM = (1 << 0),
++	/* omit adding empty string piece to the resulting list */
++	STRING_LIST_SPLIT_NONEMPTY = (1 << 1),
+ };
+ 
+ int string_list_split_f(struct string_list *, const char *string,
+diff --git a/t/unit-tests/u-string-list.c b/t/unit-tests/u-string-list.c
+index daa9307e45..a2457d7b1e 100644
+--- a/t/unit-tests/u-string-list.c
++++ b/t/unit-tests/u-string-list.c
+@@ -92,6 +92,13 @@ void test_string_list__split_f(void)
+ 			      "foo", "bar", "baz", NULL);
+ 	t_string_list_split_f("  a  b c  ", " ", 1, STRING_LIST_SPLIT_TRIM,
+ 			      "a", "b c", NULL);
++	t_string_list_split_f("::foo::bar:baz:", ":", -1, STRING_LIST_SPLIT_NONEMPTY,
++			      "foo", "bar", "baz", NULL);
++	t_string_list_split_f("foo:baz", ":", -1, STRING_LIST_SPLIT_NONEMPTY,
++			      "foo", "baz", NULL);
++	t_string_list_split_f("foo :: : baz", ":", -1,
++			      STRING_LIST_SPLIT_NONEMPTY | STRING_LIST_SPLIT_TRIM,
++			      "foo", "baz", NULL);
+ }
+ 
+ static void t_string_list_split_in_place_f(const char *data_, const char *delim,
+@@ -125,6 +132,14 @@ void test_string_list__split_in_place_f(void)
+ 				       "foo", "bar", "baz", NULL);
+ 	t_string_list_split_in_place_f("  a  b c  ", " ", 1, STRING_LIST_SPLIT_TRIM,
+ 				       "a", "b c", NULL);
++	t_string_list_split_in_place_f("::foo::bar:baz:", ":", -1,
++				       STRING_LIST_SPLIT_NONEMPTY,
++				       "foo", "bar", "baz", NULL);
++	t_string_list_split_in_place_f("foo:baz", ":", -1, STRING_LIST_SPLIT_NONEMPTY,
++				       "foo", "baz", NULL);
++	t_string_list_split_in_place_f("foo :: : baz", ":", -1,
++				       STRING_LIST_SPLIT_NONEMPTY | STRING_LIST_SPLIT_TRIM,
++				       "foo", "baz", NULL);
+ }
+ 
+ void test_string_list__split(void)
 -- 
 2.50.1-633-g69dfdd50af
 
