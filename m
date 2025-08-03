@@ -1,77 +1,77 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2EA283145
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:53:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4D2283686
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:53:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754204001; cv=none; b=jq1osSIKbrDhgtBRGzlr91OSBIJAyKZEC2T4fDzoDBX1qNR0RkaR4wtdzhmbyMqrh5EZoqHYaYIV9Lod3KSGXIB5hBnRn6jBoNHX1L6yYUIraOq1UZBBvqpvAZoj8roTNgGo/3FXi8HTun1taDuK+qDI7YN6WrEqbhAyZIGloac=
+	t=1754204002; cv=none; b=rskn/IVhO8NjJ5xp6BfKz6r+V3mP+1Nm9E2N0mPUx0c4YBpoL3thQr4/R1XmlEC43CG5vZDKrALcuHoWcig+DWCSMeFo+WwUojWgu4G41QydJQ0Qcv2Hf5Yi5murcboyoLhO7ftOXXQB1Sq3iq4nSGkdIoG/kquHxJQ/0FcO+zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754204001; c=relaxed/simple;
-	bh=/H5LLNYAL6d4lm5ZDuVzdI10sWZJeaWE5829qZa5JUY=;
+	s=arc-20240116; t=1754204002; c=relaxed/simple;
+	bh=zpSiz+Fg9mEHyDzGyb3B0QhOO/lIZK43BD1WB1t9cwI=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TfIx+V+1L1js+XTLwXa1+K1y+K0TQQTGc+N/YM95JoxwjscllHa+qHYX+XNm37/G3iQAfFMHnvIZgIFrAdbvKv2PzUP4dHb5E+WIVPNC7DtuIgMjJB21S7XqVA8QUeqMkcJ8IckhQxaYEeQZ50nrO0p+oeHODm3aO1rd7D6yX6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HjTQdvB+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ge+0Ph3W; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version; b=WdI08bgi69fPGbGNYdhgNWyzaUCpM5VnIB1VZx8w7ZL6h15SawlzCvU4YKN7othu9rN0I8cdteyvcY/MVCkcxeBkslVe0HxPhfZJrrIlV3KjfdbVUpDVgq2YxnUg9ARsHbQ0UaWSO18yxL4jTBifqFxri89QqrH+ZoMJtjXRkrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Exgauzqv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ebJzK5TO; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HjTQdvB+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ge+0Ph3W"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D9CD51400350;
-	Sun,  3 Aug 2025 02:53:18 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sun, 03 Aug 2025 02:53:18 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Exgauzqv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ebJzK5TO"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 34059EC1275;
+	Sun,  3 Aug 2025 02:53:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Sun, 03 Aug 2025 02:53:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1754203998; x=
-	1754290398; bh=z3gEoBaw6FweMR6/J/5AW+3WTLPisDU1Oe/bwU9zNWw=; b=H
-	jTQdvB+PPsNZzE8TnuTyvjtREJww0wD/yqMnJvLlVgFUFcLdEza0VqdXlDXFMLav
-	40Nb82xkXDf0lAHgMJPPbgnyYlEGfuLZDl9w+hOFCI8vUQhnLQFgPvRzX2flIOmr
-	ndcVut/qs5z7s3pEIF7j0qzoev6uSdGE+AzMtE+w4obw96j+dfbT3wgOYzDnys5c
-	wy/VTT+0s4kWl3NDib7w9FA7ygmpJnsDWvF3Ew+QKhgpRbT3e5q9uEArjdN9OczM
-	8Oy1jBCTciPzo7HtKawpGdK9W3l5Q9ALNo1VJOPaHp7lIbCBoZpxISUP3Kar1oaU
-	6tPEgbRP+WUn9nSgUonig==
+	:reply-to:subject:subject:to:to; s=fm2; t=1754204000; x=
+	1754290400; bh=yZBugOxVBskA918GdVHxTNLynFXxd/D9kpQ5MZMc8cg=; b=E
+	xgauzqvFra22nWrPtpcP8vcULnNClMPucIsj8Vcq9jkxpyAXDW+qVWZ0y1up/zGA
+	Aa0sIsf+u9OkGtxW/6kYrRU7nWKcDZXuudCw+Epeiu8wfSFtp+FIL3ZIqThybWVN
+	p9a3pySIcWWVnc8VwtEG4seevnxJFsaXHV1zsbQv0PtSzHn1E5HABPbYGQPj91td
+	0AojQ82kEg7PfC0cCIBywCIMKN1nfIEdRvgXwVMasaz7/srF6jW7r3rLF6a2dLwG
+	ZJqcTuxDOcaOeVBO9daPN+3jE63giU2b0isVQtx7JQ6zCpe1ZzVbK+akJXWlfxp/
+	TNHJ/k/5Mfou8s3Je79Ig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1754203998; x=1754290398; bh=z3gEoBaw6FweMR6/J/5AW+3WTLPi
-	sDU1Oe/bwU9zNWw=; b=ge+0Ph3WaHskKqG31E23EThYgUJIq1++XQE2DaPt51Qt
-	zsj9qKIImMsukHb3cyXvlyy6vDOBujfzJFyIeezSUwq7N06bDNlMQsyabF/mYOSk
-	4uEHsYyqFFa7Ax/P6Z5xmjFoph6Y+8vmPBkYj5ISod93mtC8w154yTsFVyhhdZ8l
-	IUW6f5WXjX+CM8Ye5WxUrMgQV/R4cZWH1ts+khp/HplVzXL4hXEXk9mBkBc3aAhq
-	/irGAXe6YqSlnLcBqRcpCad69yhKdAUWvXBnGUkAOC0W6Lkkl7gH9WaULRHSoUwN
-	2/ZCA+CjTyc8bkQjZ5oZH6Xo+ALNYbKGi2YXD1Cm3A==
-X-ME-Sender: <xms:XgePaEnPXROb5RcawNtTeyNGuHWWE8ifwMkvzq6cI2I8zJorcFMSbg>
-    <xme:XgePaEDOwSAbA6SfN_B3vInBYmyOSWZ1SrntLZZQLRU5sV9REbrBNfTv8aV-k2fHI
-    T36hZoGcOHhI-0QFw>
-X-ME-Received: <xmr:XgePaEearNx3TOWK_E5G0OA_LgUeiHKlYSbdSacW2EHRaqdXPDn6vX4YeyOFUr5k960_oZZ6uK0OGgWHOBzpqrYuG1jLf6uZyqzrsGU>
+	fm3; t=1754204000; x=1754290400; bh=yZBugOxVBskA918GdVHxTNLynFXx
+	d/D9kpQ5MZMc8cg=; b=ebJzK5TOdDD6G+v/jjWDFvOFIyrqzCDok3tqLrcJV7eN
+	ipP90BYbYL5es+cIHc+V6VvSTybk/u825xmFzKLJvbuSwqo/HyUqr3R2HnD2NOI6
+	6IGsFbxC1PJ78gU/rcojDqA/iRYxJsSupkbn+D2EIyl57tbPQXik+/Bs8P0wttFa
+	+FwdAdmmKhons9+NGwpDAp468dFGMqCgz5bvoNtDLqaYoqn/euarTZo53mkN/muc
+	yFzKtqLhGsfIVeWqqayrI/ixyeWx+ufd/fDKA2newpR+p1DK7FK66vF61QPqCiwn
+	UxMB6w4Dg2Q4xtJhD/7q6Gz11KApP/mtIb84a3/ZZw==
+X-ME-Sender: <xms:YAePaCNJ46ySp4Zp1Voe5mbvct11_BgA6b4DYJnSUiAd9347yy1y7Q>
+    <xme:YAePaBKMCMsTT5oaiTuR7qLzqam85_IBB64hClT_oBNzYOZLsu_i8d-_EMo8wWTYM
+    zBydd9MAqkttj32aw>
+X-ME-Received: <xmr:YAePaLEY7gQxqldvqxqrkb2xgRDlJyNoeVIW1TF9EUqeOZ6Q_kkDZaomtvj78dj1jFYKsFAMQauhfXTSOsfT2NIg--bsxlEnSWn0mwo>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdekjeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
     dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
     sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepieenucfr
+    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepgeenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:XgePaPL3U70TJZPNnrGdAXqCDLfhQCkf8Pxa-Oi8kQa5TIf4oBudQA>
-    <xmx:XgePaHfpMxoE1M-IfMz5MgIlzms577Gh498_xM98G62hxPjj1rgBjA>
-    <xmx:XgePaG0EJBO2mVsdEBeBMYg5zWvpLzkfkQ6fLoL01mu10GC4O132gg>
-    <xmx:XgePaAjInc7tpkXjEUJuKaaj979zk5KdJ9DlbOvGmrH0WG7jY9aEOw>
-    <xmx:XgePaHIjvaQKaXYPxrw5b-hejHL2-aGqh3Alh4tMmhN7Ng9xezFZCcvO>
+X-ME-Proxy: <xmx:YAePaBQHgi6SUFR6xJZyLU2Ha48NGhgyV4SE0BZA0YeGUp2xnHayOA>
+    <xmx:YAePaPHmwBurMo8FLfTiGAo_LSGa4uzqdmYD1NA6z1Qo7CbLnTExPA>
+    <xmx:YAePaF-NX-A9BjkedsotVC_QHGY2c8O4UhL3s1Hn5kLQWWKL_5LLLw>
+    <xmx:YAePaBKDGMmrICx9_SzQusOgOU9tQEQj527QXhQgPyuPBfYUt0UL3A>
+    <xmx:YAePaEySVkEtVN7n1EX70F5etyijrmYMANrVlKPRM6GwoGZxuBiRaStO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 Aug 2025 02:53:18 -0400 (EDT)
+ 3 Aug 2025 02:53:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v3 10/12] sub-process: do not use strbuf_split*()
-Date: Sat,  2 Aug 2025 23:53:02 -0700
-Message-ID: <20250803065304.3325286-11-gitster@pobox.com>
+Subject: [PATCH v3 11/12] trace2: trim_trailing_newline followed by trim is a no-op
+Date: Sat,  2 Aug 2025 23:53:03 -0700
+Message-ID: <20250803065304.3325286-12-gitster@pobox.com>
 X-Mailer: git-send-email 2.50.1-633-g69dfdd50af
 In-Reply-To: <20250803065304.3325286-1-gitster@pobox.com>
 References: <20250801220423.1230969-1-gitster@pobox.com>
@@ -84,49 +84,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The code to read status from subprocess reads one packet line and
-tries to find "status=<foo>".  It is way overkill to split the line
-into an array of two strbufs to extract <foo>.
+strbuf_trim_trailing_newline() removes a LF or a CRLF from the tail
+of a string.  If the code plans to call strbuf_trim() immediately
+after doing so, the code is better off skipping the EOL trimming in
+the first place.  After all, LF/CRLF at the end is a mere special
+case of whitespaces at the end of the string, which will be removed
+by strbuf_rtrim() anyway.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- sub-process.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ trace2/tr2_cfg.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sub-process.c b/sub-process.c
-index 1daf5a9752..83bf0a0e82 100644
---- a/sub-process.c
-+++ b/sub-process.c
-@@ -30,23 +30,20 @@ struct subprocess_entry *subprocess_find_entry(struct hashmap *hashmap, const ch
+diff --git a/trace2/tr2_cfg.c b/trace2/tr2_cfg.c
+index 22a99a0682..2b7cfcd10c 100644
+--- a/trace2/tr2_cfg.c
++++ b/trace2/tr2_cfg.c
+@@ -39,7 +39,6 @@ static int tr2_cfg_load_patterns(void)
  
- int subprocess_read_status(int fd, struct strbuf *status)
- {
--	struct strbuf **pair;
--	char *line;
- 	int len;
- 
- 	for (;;) {
-+		char *line;
-+		const char *value;
-+
- 		len = packet_read_line_gently(fd, NULL, &line);
- 		if ((len < 0) || !line)
- 			break;
--		pair = strbuf_split_str(line, '=', 2);
--		if (pair[0] && pair[0]->len && pair[1]) {
-+		if (skip_prefix(line, "status=", &value)) {
- 			/* the last "status=<foo>" line wins */
--			if (!strcmp(pair[0]->buf, "status=")) {
--				strbuf_reset(status);
--				strbuf_addbuf(status, pair[1]);
--			}
-+			strbuf_reset(status);
-+			strbuf_addstr(status, value);
- 		}
--		strbuf_list_free(pair);
+ 		if (buf->len && buf->buf[buf->len - 1] == ',')
+ 			strbuf_setlen(buf, buf->len - 1);
+-		strbuf_trim_trailing_newline(*s);
+ 		strbuf_trim(*s);
  	}
  
- 	return (len < 0) ? len : 0;
+@@ -78,7 +77,6 @@ static int tr2_load_env_vars(void)
+ 
+ 		if (buf->len && buf->buf[buf->len - 1] == ',')
+ 			strbuf_setlen(buf, buf->len - 1);
+-		strbuf_trim_trailing_newline(*s);
+ 		strbuf_trim(*s);
+ 	}
+ 
 -- 
 2.50.1-633-g69dfdd50af
 
