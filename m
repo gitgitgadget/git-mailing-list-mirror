@@ -1,279 +1,407 @@
-Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010008.outbound.protection.outlook.com [52.103.67.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f194.google.com (mail-pf1-f194.google.com [209.85.210.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0B0B661
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 13:59:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.8
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754229562; cv=fail; b=oeWPoFqmtvki33HehI7ZYuAc5ut0X9yeSj9Ocw3NK+ImY70B3NJn6kVQ1DTJfjdwyy98PZZBg1SwwUIsbkDARfj2+Sww1BlXp8xd010TBk+BdWJ6R9tYOYRPV18yQK6WtC9Hsh79kBP+mxDk5+nFznp3hmVoKSca0QhvoC77XwU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754229562; c=relaxed/simple;
-	bh=UB6PvdmR8Tg8duI/1P2BsyScvL7rOoY7c4tb0jor5Yw=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=mEumUugU1ZVkXqLj5fgOcUVIz2+FCYDCjfSFgqulJLZ9Quw1k2idd07WIOasISE2vbKy619O/INEbWO/V3/S3IiWFYKYbUlGmLv9+0eVVEf5awJBNfbHXG0FCxfUSdeKUlgET7FUhuz81bmfxU4iyfgHM6shdOb42leg6ck+nww=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=akQ37s4X; arc=fail smtp.client-ip=52.103.67.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4123B156677
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 14:52:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.194
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754232741; cv=none; b=GmHAPo1N9Srk8MyPG/0ZRL5olWj+/qj+0ke4TpRgGHNxrjquzF//Ju1IRkuXENFmhhwdmwC6zn2XS5BrJfZc9Jgr8KAvHnKSmcChub4zGeoY5z1OYEqTrWPEFa41qGQQnkL4+R42HkBDm6GfGF0CVo2tq3oRNv9GNib/PfmbmME=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754232741; c=relaxed/simple;
+	bh=vCUinTViVWKyJrVGZcE2569H0L/6t6UYTA6CObVm9Bc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=C5+mryeWXHNcK18RpgaTmpXb0oHeOGuQDUTdvRc0VkZZPwmjSP0e3Cfj7q0j8ZQdyULRUmW2i8ho+3zHmFqLa/qNFQmVKFvFr0j3ZPH5q2cL8HknJmLS6+XJxYgG2ISIXeLGRK0hfkan1nBi0uNl7PpwH8WPfFZ12lidaD3gP4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NoZuxTWj; arc=none smtp.client-ip=209.85.210.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="akQ37s4X"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YPyVHMq7mcttM49PQNKEFV1z8gRgpfJLBSKtWZElkgJ288zSXhieFmRPgn5bkt7OjKodlnH+XPoOWYyABW1aD5/KFXAOMgNTI0n4gHiY5hfRadMWSApz9+jSe3UeWNEvJbVcgHQ+NhCfhurMdQiUgOkHlJcQW6hCD2f4zUqVQaRxITk2J2k/GBJx4Di35TCR2tdGMBkUdHm7BHHxYaSOibqhdbCdYQ3mQ4jLet0befEV0vc/3OrOK48iW9dfLqsOn/Fi+HFngTZQ3aWvRCHVRtrZ6021UiicdKFepHkkhA4/HN0VAsXFy+JxJkil7rqlvSXtc4qqDoiOtqM+t7zFbg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=J3qV53fyaX6BxRuUZQMMJuKS41GrFEtkneohO4Kho6I=;
- b=rHhvjAEkCAner6U853r59dRpK3jb7exGXEKyPdjkN5/sWBzTanyNp8AMNNlH8zM+00tN9jffS0c888LZnirPAU/A8gJw8HThmUHmvNv+VTBOR5vIGBnzj5Dy+tE2G6/ZOEQ/PNy5OcIxClnWidbwjYEMpzEU04tPB2GkYqDMgggqbGCoWxvN59vsnPOyt1rfj62BiS3gwrjdKO/l3wd61iuZPUtpldfZ8HPpGdoM/HfcACw8LOKqCXWNAPUTIv0H7moKK5icUjZNOhvfK6G1wrjBdZC+y2MRC7nQsgAjHasZJh8wk6ABsOUFrYdvImpCstk4jOcZJdnfBROetjTADA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=J3qV53fyaX6BxRuUZQMMJuKS41GrFEtkneohO4Kho6I=;
- b=akQ37s4XWBXTddJ/DNyjVexAc9h0W3xbdesHFusNLFymDhL+KQ9TM7UglcpMqEGlS64jWwVKPX/Cgm4+w0zWixB3CTJMd6QcSnDKkHKj85GreobpuRnJguemTvRarKH6jfk+7eis5QxiNGL67y1f1xYoatQ1t4R8XvvA/uN2/RVpIrbMyXfGb5MtVpMn5Fjgmsg0W9Zjq78FDZwKGjdX7x6TnMMHfB2ETb7VGda0NeVB72PNdCHaxf1YQ3hyrmHtRumf75bcwL+vT4SUvVMVsZIJGkJWd2GEwv9c70lqQsgMZ8CyFC8lGJ3j/PF8lklKT4C8uEoQcAn+Tr2XecpCmQ==
-Received: from PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:10c::9)
- by MA0PR01MB7628.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:2a::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.19; Sun, 3 Aug
- 2025 13:59:15 +0000
-Received: from PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5b05:29d:5646:39aa]) by PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5b05:29d:5646:39aa%3]) with mapi id 15.20.8989.018; Sun, 3 Aug 2025
- 13:59:15 +0000
-From: Aditya Garg <gargaditya08@live.com>
-To: Julian Swagemakers <julian@swagemakers.org>, "git@vger.kernel.org"
-	<git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-CC: Eric Sunshine <sunshine@sunshineco.com>, Kristoffer Haugsbakk
-	<kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>, "brian
- m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2] send-email: add --get-smtp-server option to fetch SMTP
- settings
-Thread-Topic: [PATCH v2] send-email: add --get-smtp-server option to fetch
- SMTP settings
-Thread-Index: AQHcAWRimBaHkan2W0SdeBogO+mWgLRQ9IiAgAAGDwA=
-Date: Sun, 3 Aug 2025 13:59:14 +0000
-Message-ID: <1ABB6EBC-7CA0-4108-94AC-F38E96BC7673@live.com>
-References: <20250730151227.12389-1-gargaditya08@live.com>
- <DBSU01804YQB.2JA3KHG5FDV55@swagemakers.org>
-In-Reply-To: <DBSU01804YQB.2JA3KHG5FDV55@swagemakers.org>
-Accept-Language: en-IN, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PN0PR01MB9588:EE_|MA0PR01MB7628:EE_
-x-ms-office365-filtering-correlation-id: 0d214c59-5c19-4adb-0947-08ddd295ee6e
-x-microsoft-antispam:
- BCL:0;ARA:14566002|15080799012|8022599003|31061999003|19110799012|41001999006|8060799015|8062599012|461199028|3412199025|440099028|10035399007|102099032;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?JfSvr76A8atzUnpWQh43dpAQZ7hlfRKumXOBnv6nqACPqcAlENga14xyYeZX?=
- =?us-ascii?Q?X7mP/6pc6RnCRhJUCIj39LTQTAZZYIu44IVRsgHpV+MXgQuyFbX7LSFYwTkH?=
- =?us-ascii?Q?/CXlNktYojCHaCAzO/Dw8uRQZD+J4g0ctA1FVc2BD+xRnLMIRnHoCHiRtCun?=
- =?us-ascii?Q?ri/AaW7woodSU0kzXtc8oI7cBaLTTE/sU4CSzwhf5inM2bp1FF71ALjNLvsi?=
- =?us-ascii?Q?nCqdMDk1wkl0dH7yfKnVuHtn5X5p1Lo0dbNWTunHIB03+iSH56xC446GawJm?=
- =?us-ascii?Q?mA1FcOYjB3FAhX4jH72vFs+w77XE/ssmUXPoGoN1QgTNbDmAXCqMn4UuW33g?=
- =?us-ascii?Q?Zl/qVrOxLUgkFbQ9eL61WQuEIYPBUIIOlqY8apT7aFSR9ZLmXjfC9VE74TLo?=
- =?us-ascii?Q?9OhM4HLNIcRWOpfSal5/4oGhOwhlGgP00tERNkfbfc0K1WTSpaUHNR1NZCbW?=
- =?us-ascii?Q?U1dswJnJcgZ9Kju+YHYzXxlIxEkPLfdpzcGA3zdVAeIAOeXT5yrSvoR2BlG+?=
- =?us-ascii?Q?lrnq2YCpmcbKkXMAuRs1OFry7vPWbS8qJPrv7YRr2uL1IwVYDO9ILBnfVDiS?=
- =?us-ascii?Q?s0TSie2ZWSLiVh6l+tYl3NsydtZbizULULMNnc/upgcxSR70e9SGunxIK8Ck?=
- =?us-ascii?Q?7FTAD0fFgEtDudNm2U/F3YAef9FXJAcXvSc29XoZcqKxVIezQ/OdTpmwZw27?=
- =?us-ascii?Q?cxMuKoueSEKdeSne+7qbTMEBsBZxTQFw36K9ORWnGwnPYgHKOZrmkptoRSPY?=
- =?us-ascii?Q?qXJemuJpPWbTl1vAw6GhmxjDal1EgSoGRwLlglRp2c9LT5Okb/HDlhRiqYOR?=
- =?us-ascii?Q?OJ0kYxv7PGpFGfqLyqmMFE/F1LuJroOmBAZRMH6zeRMrddXIktGOz/WpfMSs?=
- =?us-ascii?Q?02FmuP2RysdCVrbIEJp3einsq7VFsXCmFKJLU6vO37JbvV+iXGMnVPDuazRp?=
- =?us-ascii?Q?n5YkkVt6a1p5CoPNL1UpN9R8RAdgvJ5kRFcmWGic3kAx9AXLcug5DTVTPGGc?=
- =?us-ascii?Q?XFb2iWObGYnZoftF3twkXYfE9sdRKiubt3SaUBsb+ZRdi4Op6AfGpezouFCY?=
- =?us-ascii?Q?/9PMQOq2h0VlvQ78twIDpgUuIqFBuMULjXMOFe+Sz63m3OQhfavERtrvSgzF?=
- =?us-ascii?Q?+/PwkR85uugsZjGH5gLRcskynuVkWyWM+v66is+dECaiC3mb5w7fKn2HqMpZ?=
- =?us-ascii?Q?o1s91ujKmX4tIgK/?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?eciwflbHqo7YGnyqgByhTvD3Ww09zmGBJisOjy0nilgBWLM6Ov/Y9u5w8280?=
- =?us-ascii?Q?AcINLgoVv/eqhl+BMcO+Q8E0BtlGGwj1JFDYRbsxf5ZxQ4Z23++YcMl5s1Kx?=
- =?us-ascii?Q?a1CvQVnWcxk5cXz9Q+bnmTLWAPScimbCBNMt/2tRXtQTgRxYT1PCBf9VnZ6O?=
- =?us-ascii?Q?QVYncBKm/e8LbA/1Wp67AgYjNCrePOYAojxSpOFHcrsXvMgKj8WQeIFN7Chn?=
- =?us-ascii?Q?THI7Z/rAzRfE7bo9CwbPtayX9sVqfaVBT0V8YxdYWAiyO3V9Osk/MYUKPREY?=
- =?us-ascii?Q?naVZLrmyVMLYiTnPwnIjoiGV8k0ZoQyJyo05qMOeahzzT4c7wgKpQqBP5YOx?=
- =?us-ascii?Q?VOa4qb4BhS4TFZlQjrLjOVs1i+xk69f+2dzph+PCLeOj43DF92PbTL4EPNTz?=
- =?us-ascii?Q?5nJjdln3Db8rY/NpmKj3SPClqyvYdJ0k2VbyoVluD+M5G28aYbVMDjU+ipJh?=
- =?us-ascii?Q?UQ4S6XtdUqywkPJxCxpoeLIpUR3Ru1zE60LucKxZ2T5a9lFXLYXVkXpdl8kq?=
- =?us-ascii?Q?UKSypD/YMFBpRBzr6cBmqDM7IEaNA1ipnTYwTmwQqT2Feez+PTwF87k+2iPv?=
- =?us-ascii?Q?rpPN9D+HqqauOCYYnzqmF1TZQphPwTJCh7Ep/1woznRNRYVWzetddsEKc1YJ?=
- =?us-ascii?Q?CSUmBpLUxxmk4pIGKCZp35Drivty4X+RYmD5vczogVONjCGgOgo6QluihWoI?=
- =?us-ascii?Q?ooedSJijt5/pc52S5VD52sJx750W+8vDmefK/uxu4IX2tWB6af6D0IoDQQVy?=
- =?us-ascii?Q?W8PyI8RkkYvgn+roNz9Kd9xU/Ix0DN5bTbI4yfVRR2gV/hiXCR3PWMrnqrXU?=
- =?us-ascii?Q?VOkeAQ8m9rDKR9ll4l+4xl5OWNbecC/snFXC/5ex22wTM8XTOYuxfSXEjmEf?=
- =?us-ascii?Q?Okm0VhEz8wG6KaILqGALblIYBdrvhaxialp9md3kZpMzd3+P63IWfr0GlgRF?=
- =?us-ascii?Q?DFHnoDYbgCXhDzgWQIxMSiVzhpgE5d663B5V1qXHGAT7k3qQBlWr39p3BCOC?=
- =?us-ascii?Q?ZRVgucRxU9ROwHS0InYgssJOlelAgpoEXlz0YPyMmBdGA7Pk1KXUUfRyMV5N?=
- =?us-ascii?Q?UjTxLZD7+aBswLmuOes6auz2ftDnpMMhu2fyPTngmUEphnoh3HxO3/XNHqYJ?=
- =?us-ascii?Q?LqJVb6hJPU+cgIOH4zNFxpAwRXQvPlyGxmx+7JPH7GlYRn2cLSegEp4jnLao?=
- =?us-ascii?Q?LdljeyfY+4/4CekUttUcoRXwIlstcYoxa0DUNxlYLOt7H3GfpdlTbqnB5CR1?=
- =?us-ascii?Q?J9xuyNpmaiLAF/4e+KqVfGc2mjhSHjcBm/q8LkJ5SCk+HbLVBGvu9dub2dg9?=
- =?us-ascii?Q?GQHIOQpsdADuXBx2Q0LRWHka?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <2216177545AEC346B5F68250A8A40C21@INDPRD01.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NoZuxTWj"
+Received: by mail-pf1-f194.google.com with SMTP id d2e1a72fcca58-76be8e4b59aso1175580b3a.1
+        for <git@vger.kernel.org>; Sun, 03 Aug 2025 07:52:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754232739; x=1754837539; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UCPMN5QV9g7Z1B7xnhm5t39s5Lb37HzqlXh6QRCBeyQ=;
+        b=NoZuxTWjZFt+wZcs4/8aaKhA/9PadaosSH84OqlKRAL33HuKLhXgXiZ+acf/6KtHrj
+         Aia5A3bBbyK3rhKc+1GJHUFLcUgoNPEyUFAaaZR0MuoT92BvFMSd2hC3GY085TchwW7y
+         9DBa0vqrdNXJzbjM30ptTGBQaiU+LA6SPwFtmX0z2Iy2jZuwEdMJufABBY7teQNOjgF4
+         yjfKS2DI81Dx7ujIWqh9QymZfKtgtWxkICL35y0jwz0yqs7fSD2HmrpLDwoyYv9ksTBD
+         FLAaxeDw3DCJXTgViUMnN2By/axX8nKF5XrouB162OWwQlvHsoHmKMKWcJgkNwNnLRiP
+         lhjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754232739; x=1754837539;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UCPMN5QV9g7Z1B7xnhm5t39s5Lb37HzqlXh6QRCBeyQ=;
+        b=cP6zEpU9jGV9jUouxeAuGTLFgsztAhhXYkiWtVLcq5ikj3BxCGt+zN24BylQ16S57y
+         dR03L77z8Y0jc0d54wWcXu5GmJq6tOcLYAC8moAHvCBR3QXBZEqb/+dByg3fFYIMA6hF
+         ZHosGh2sD4JbJJ8zOqLqPNXVtEKEs3ddUTIHmgQlzJMDxF/C/5BhiOD3byZGfb69PAaP
+         A/8LklNzAgQkNYj+h+sYW35FR7WDc3ncSFsLoIayPyfSMWqkB646tMjuK0y/AJcaAiuA
+         75QtW1BaqDFfeBfUNPbszheHuCE2CpzFWJe1BhDRFmE5UZnqCvho0/9agqvQC5SVP6xu
+         RFAw==
+X-Gm-Message-State: AOJu0YwNeIlYiQy+hB05y9d1vDSOR3jeuG2Fk/DC0XZ7KUZxWZ28K8In
+	Tsf7zbQh5eNcjL694TAbrxL7BSaUZFEaEfju3kPARCXObO1dV+Dd/BCb5Nw9j4RS769WBFyM
+X-Gm-Gg: ASbGnct4T18lT1VJH+29fP2dA3bJzcGRNeu23U/DmG9ovCwN13EIK77P8mIZbrO5R2t
+	gM2N+4KBm9c4p9eW3hfqSRZBHmzfuYl9+Gmq4lrcPhzCcWpxWrKNVxl+2YetxAHzGHT4+bpCHDN
+	tXlbNwUvZVTHsX5QBrpocHF6kVvhmUVCC0E9E73543Ya9wkOK6YusTyJCQ+7hDvwRe8bZsKmnb/
+	XDWJ7jjfm1Nywr3d4QVa57hSzmNlVoCJz/sodcPmCgETFom0Ff1esMiN1eTQ+3yJd+ZHo+wjjgJ
+	k3OU56DBmP/72U0vmo3hXQimJV/DIzJ0sZZ0qZZrZVh8MlYtrF4oEdiJ//WYn6YzDOSdPpqjePQ
+	d3RBJisoOh4Fiq2UNFtp28hri+WgdSM+SsYUGqHlIlCAvWTaqzDoCjXvfZ3ofG5ya
+X-Google-Smtp-Source: AGHT+IE++6Ib4iOSzkAOLcwixuqnBbUdlk6H+xCq9RBnY6Ke+xtnWxl7vR09c0mNIoUKYeeJqFePJQ==
+X-Received: by 2002:a05:6a21:898d:b0:23f:fe65:6f2c with SMTP id adf61e73a8af0-23ffe657721mr2561553637.33.1754232739265;
+        Sun, 03 Aug 2025 07:52:19 -0700 (PDT)
+Received: from localhost.localdomain (n058152109003.netvigator.com. [58.152.109.3])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b423d2f5035sm5052588a12.39.2025.08.03.07.52.15
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 03 Aug 2025 07:52:18 -0700 (PDT)
+From: Lidong Yan <yldhome2d2@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	hi@arnes.space,
+	michal@isc.org,
+	peff@peff.net,
+	yldhome2d2@gmail.com
+Subject: [PATCH v2] diff: ensure consistent diff behavior with -I<regex> across output formats
+Date: Sun,  3 Aug 2025 22:51:55 +0800
+Message-Id: <20250803145155.57894-1-yldhome2d2@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <xmqqcy9io73j.fsf@gitster.g>
+References: <xmqqcy9io73j.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-8880-26-msonline-outlook-ce67c.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0d214c59-5c19-4adb-0947-08ddd295ee6e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Aug 2025 13:59:14.8556
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB7628
+Content-Transfer-Encoding: 8bit
 
+`git diff -I<regex>` option is inconsistently applied across various
+output formats. In some cases, files would appear in the `--name-only`
+output but not in the accompanying `--stat` or `-p` outputs, despite
+the user explicitly requesting to ignore certain changes using
+`-I<regex>`. Not only for `-I<regex>`, but this inconsistency also
+exists for other output formats that have `.diff_from_content` set
+(e.g. `-w`, `--ignore-space-at-eol` and `--ignore-space-change`).
 
+To provide this consistency, introduces diffcore_ignore() to filter
+out file pairs which only contains changes marked for ignoring before
+flush diff output. Add test cases in t4015 and t4013 to verify that
+files ignored by each ignore option do not appear in the output when
+using the `--name-only` and `--name-status` options.
 
-On 03/08/25 7:06 pm, Julian Swagemakers wrote:
-> Hi Aditya, really cool idea, here are some random thoughts:
->=20
-> On Wed Jul 30, 2025 at 5:12 PM CEST, Aditya Garg wrote:
->> Autoconfiguring SMTP server settings is a common feature present in many
->> email clients. In order to get the correct SMTP server settings easily,
->> this commit adds a `--get-smtp-server` option to `git send-email`. This
->> option attempts to fetch the SMTP server settings for a given email addr=
-ess
->> via the following steps:
->>=20
->> 1. It first tries to fetch the settings from Mozilla's ISPDB at
->>   `https://autoconfig.thunderbird.net/v1.1/[domain]`.
->=20
-> We should first check autoconfig and then move to the 3rd party
-> database, this is how thunderbird[0] and aerc[1] do it.
+Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
+---
+ Makefile                   |   1 +
+ diff.c                     |   2 +
+ diffcore-ignore.c          | 151 +++++++++++++++++++++++++++++++++++++
+ diffcore.h                 |   1 +
+ meson.build                |   1 +
+ t/t4013-diff-various.sh    |  53 +++++++++++++
+ t/t4015-diff-whitespace.sh |  10 ++-
+ 7 files changed, 217 insertions(+), 2 deletions(-)
+ create mode 100644 diffcore-ignore.c
 
-Ah, I thought Thunderbird did the opposite. Thanks for noticing that.
-It does make more sense to use autoconfig first.
+diff --git a/Makefile b/Makefile
+index 5f7dd79dfa..2cdbd5d3fb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1014,6 +1014,7 @@ LIB_OBJS += diff-no-index.o
+ LIB_OBJS += diff.o
+ LIB_OBJS += diffcore-break.o
+ LIB_OBJS += diffcore-delta.o
++LIB_OBJS += diffcore-ignore.o
+ LIB_OBJS += diffcore-order.o
+ LIB_OBJS += diffcore-pickaxe.o
+ LIB_OBJS += diffcore-rename.o
+diff --git a/diff.c b/diff.c
+index dca87e164f..1f905b5354 100644
+--- a/diff.c
++++ b/diff.c
+@@ -7088,6 +7088,8 @@ void diffcore_std(struct diff_options *options)
+ 	}
+ 	if (options->pickaxe_opts & DIFF_PICKAXE_KINDS_MASK)
+ 		diffcore_pickaxe(options);
++	if (options->flags.diff_from_contents)
++		diffcore_ignore(options);
+ 	if (options->orderfile)
+ 		diffcore_order(options->orderfile);
+ 	if (options->rotate_to)
+diff --git a/diffcore-ignore.c b/diffcore-ignore.c
+new file mode 100644
+index 0000000000..2b80911449
+--- /dev/null
++++ b/diffcore-ignore.c
+@@ -0,0 +1,151 @@
++#include "git-compat-util.h"
++#include "diff.h"
++#include "diffcore.h"
++#include "xdiff-interface.h"
++
++#define KEEP   0
++#define IGNORE 1
++
++struct diffignore_cb {
++	regex_t **regex;
++	size_t sz;
++	int miss;
++};
++
++/*
++ * Check for any added or deleted line that does not match the ignore pattern.
++ * If found, mark data->miss=1 and return early.
++ */
++static int diffignore_consume(void *priv, char *line, unsigned long len)
++{
++	struct diffignore_cb *data = priv;
++
++	if (line[0] != '+' && line[0] != '-')
++		return 0;
++	if (data->miss)
++		BUG("Already matched in diffignore_consume! Broken xdiff_emit_line_fn?");
++
++	/* check if any of the regexes match */
++	data->miss = 1;
++	for (size_t nr = 0; nr < data->sz; nr++) {
++		regmatch_t regmatch;
++		regex_t *regex = data->regex[nr];
++
++		if (!regexec_buf(regex, line + 1, len - 1, 1,
++				 &regmatch, 0)) {
++			data->miss = 0;
++			break;
++		}
++	}
++
++	/* stop looking for miss */
++	if (data->miss)
++		return 1;
++	return 0;
++}
++
++/* return IGNORE to ignore this change, return KEEP to keep it. */
++static int diff_ignore(mmfile_t *one, mmfile_t *two, struct diff_options *o)
++{
++	struct diffignore_cb ecbdata;
++	xpparam_t xpp;
++	xdemitconf_t xecfg;
++	int ret;
++
++	/*
++	 * We have both sides; need to run textual diff and check if
++	 * there are any unmatched (non-ignored) added or deleted lines.
++	 */
++	memset(&xpp, 0, sizeof(xpp));
++	memset(&xecfg, 0, sizeof(xecfg));
++	ecbdata.regex = o->ignore_regex;
++	ecbdata.sz = o->ignore_regex_nr;
++	ecbdata.miss = 0;
++	xecfg.flags = XDL_EMIT_NO_HUNK_HDR;
++	xecfg.ctxlen = 0;
++	xecfg.interhunkctxlen = 0;
++	xpp.flags = o->xdl_opts & XDF_WHITESPACE_FLAGS;
++
++	/*
++	 * An xdiff error might be our "data->miss" from above. See the
++	 * comment for xdiff_emit_line_fn in xdiff-interface.h
++	 */
++	ret = xdi_diff_outf(one, two, NULL, diffignore_consume,
++			    &ecbdata, &xpp, &xecfg);
++
++	/* error happened, keep this change */
++	if (ret)
++		return KEEP;
++	/* If no regex matches, keep this change */
++	return ecbdata.miss ? KEEP : IGNORE;
++}
++
++/* return IGNORE to ignore this change, return KEEP to keep it. */
++static int ignore_match(struct diff_filepair *p, struct diff_options *o)
++{
++	struct userdiff_driver *textconv_one = NULL;
++	struct userdiff_driver *textconv_two = NULL;
++	mmfile_t mf1, mf2;
++	int ret;
++
++	/* keep unmerged */
++	if (DIFF_PAIR_UNMERGED(p))
++		return KEEP;
++
++	/* keep add/delete */
++	if (!DIFF_FILE_VALID(p->one) || !DIFF_FILE_VALID(p->two))
++		return KEEP;
++
++	/* keep mode changed pair */
++	if (DIFF_PAIR_MODE_CHANGED(p))
++		return KEEP;
++
++	if (o->flags.allow_textconv) {
++		textconv_one = get_textconv(o->repo, p->one);
++		textconv_two = get_textconv(o->repo, p->two);
++	}
++
++	/* unmodified pair will be ignored anyway */
++	if (textconv_one == textconv_two && diff_unmodified_pair(p))
++		return IGNORE;
++
++	/* keep binary files if diff cannot be performed */
++	if (!o->flags.text &&
++	    ((!textconv_one && diff_filespec_is_binary(o->repo, p->one)) ||
++	     (!textconv_two && diff_filespec_is_binary(o->repo, p->two))))
++		return KEEP;
++
++	mf1.size = fill_textconv(o->repo, textconv_one, p->one, &mf1.ptr);
++	mf2.size = fill_textconv(o->repo, textconv_two, p->two, &mf2.ptr);
++
++	ret = diff_ignore(&mf1, &mf2, o);
++
++	if (textconv_one)
++		free(mf1.ptr);
++	if (textconv_two)
++		free(mf2.ptr);
++	diff_free_filespec_data(p->one);
++	diff_free_filespec_data(p->two);
++
++	return ret;
++}
++
++void diffcore_ignore(struct diff_options *o)
++{
++	struct diff_queue_struct *q = &diff_queued_diff;
++	struct diff_queue_struct outq = DIFF_QUEUE_INIT;
++
++	if (!(o->output_format & (DIFF_FORMAT_NAME | DIFF_FORMAT_NAME_STATUS)))
++		return;
++
++	for (int i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++		if (ignore_match(p, o))
++			diff_free_filepair(p);
++		else
++			diff_q(&outq, p);
++	}
++
++	free(q->queue);
++	*q = outq;
++}
+diff --git a/diffcore.h b/diffcore.h
+index 9c0a0e7aaf..97e6e3553b 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -189,6 +189,7 @@ void diffcore_rename_extended(struct diff_options *options,
+ 			      struct strmap *cached_pairs);
+ void diffcore_merge_broken(void);
+ void diffcore_pickaxe(struct diff_options *);
++void diffcore_ignore(struct diff_options *);
+ void diffcore_order(const char *orderfile);
+ void diffcore_rotate(struct diff_options *);
+ 
+diff --git a/meson.build b/meson.build
+index 92d62695e3..c95c9b92bd 100644
+--- a/meson.build
++++ b/meson.build
+@@ -329,6 +329,7 @@ libgit_sources = [
+   'diffcore-delta.c',
+   'diffcore-order.c',
+   'diffcore-pickaxe.c',
++  'diffcore-ignore.c',
+   'diffcore-rename.c',
+   'diffcore-rotate.c',
+   'dir-iterator.c',
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 8ebd170451..72eb7ae703 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -643,6 +643,59 @@ test_expect_success 'diff -I<regex> --stat' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'diff -I<regex>: setup file1' '
++	test_seq 50 >file1 &&
++	git add file1 &&
++	test_seq 50 | sed -e "s/13/ten and three/" -e "s/^[124-9].*/& /" >file1
++'
++
++test_expect_success 'diff -I<regex>: ignore file1' '
++	git diff --ignore-blank-lines -I"ten.*e" -I"^[124-9]" >actual &&
++	cat >expect <<-\EOF &&
++	diff --git a/file0 b/file0
++	--- a/file0
++	+++ b/file0
++	@@ -34,7 +31,6 @@
++	 34
++	 35
++	 36
++	-37
++	 38
++	 39
++	 40
++	EOF
++	compare_diff_patch expect actual &&
++
++	git diff --stat --ignore-blank-lines -I"ten.*e" -I"^[124-9]" >actual &&
++	cat >expect <<-\EOF &&
++	 file0 | 1 -
++	 1 file changed, 1 deletion(-)
++	EOF
++	test_cmp expect actual &&
++
++	git diff --name-status --ignore-blank-lines -I"ten.*e" -I"^[124-9]" >actual &&
++	cat >expect <<-\EOF &&
++	M	file0
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'diff -I<regex> --raw: --raw ignores -I<regex>' '
++	git diff --raw >expect &&
++	git diff --raw --ignore-blank-lines -I"ten.*e" -I"^[124-9]" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff -I<regex> --check: --check ignores -I<regex>' '
++	test_must_fail git diff --check 2>&1 >expect &&
++	test_must_fail git diff --check --ignore-blank-lines -I"ten.*e" -I"^[124-9]" 2>&1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff -I<regex>: rm file1' '
++	git rm -f file1
++'
++
+ test_expect_success 'diff -I<regex>: detect malformed regex' '
+ 	test_expect_code 129 git diff --ignore-matching-lines="^[124-9" 2>error &&
+ 	test_grep "invalid regex given to -I: " error
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 52e3e476ff..6e46a070e5 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -11,7 +11,7 @@ test_description='Test special whitespace in diff engine.
+ . "$TEST_DIRECTORY"/lib-diff.sh
+ 
+ for opt_res in --patch --quiet -s --stat --shortstat --dirstat=lines \
+-	       --raw! --name-only! --name-status!
++	       --name-only --name-status --raw!
+ do
+ 	opts=${opt_res%!} expect_failure=
+ 	test "$opts" = "$opt_res" ||
+@@ -43,7 +43,13 @@ do
+ 		echo foo >x &&
+ 		git add x &&
+ 		echo " foo" >x &&
+-		$expect_failure git diff -w $opts --exit-code x
++		$expect_failure git diff -w $opts --exit-code x &&
++		echo "foo " >x &&
++		$expect_failure git diff --ignore-space-at-eol $opts --exit-code x &&
++		echo "fo o" >x &&
++		git add x &&
++		echo "fo  o " >x &&
++		$expect_failure git diff --ignore-space-change $opts --exit-code x
+ 	'
+ done
+ 
+-- 
+2.39.5 (Apple Git-154)
 
->=20
->>=20
->> 2. If that fails, it attempts to fetch the autoconfig file from the emai=
-l
->>   provider's autoconfig URL, which is typically in the format
->>   `https://autoconfig.[domain]/mail/config-v1.1.xml?emailaddress=3D[emai=
-l]`.
->=20
-> The documentation mentions using `DOMAIN/.well-known/autoconfig/mail/`
-> as an alternative to the autoconfig subdomain, what do you think about
-> supporting that?
-
-Can be supported, but I unfortunately didn't find any email provider having
-that sort of server to test. Do you have any in mind? Nevertheless, and unt=
-ested
-implementation can be done.
-
->=20
->>=20
->> 3. If that also fails, it falls back to checking the MX records of the
->>   domain used in the email address to find the SMTP server. It can be
->>   useful in case of emails with custom domains. It attempts to guess
->>   the correct domain for the email from the MX records, and repeats the
->>   first 2 steps with the guessed domain.
->>=20
->> This feature is heavily inpired by the autoconfig feature in Mozilla
->=20
-> s/inpired/inspired
-
-Thanks for noticing that :)
-
->=20
->=20
->> +sub parse_config {
->> +	require XML::LibXML;
->> +	my ($xml, $email) =3D @_;
->> +	my $parser =3D XML::LibXML->new;
->> +	my $doc =3D eval { $parser->load_xml(string =3D> $xml) };
->> +	die "Failed to parse XML\n" unless $doc;
->> +	my $config_num =3D 0;
->> +	my $smtp_encryption_config;
->> +	my $smtp_user_config;
->> +
->> +	foreach my $outgoing ($doc->findnodes('//outgoingServer')) {
->> +		$config_num++;
->> +		if ($outgoing->findvalue('./socketType') eq 'SSL') {
->> +			$smtp_encryption_config =3D 'ssl';
->> +		} elsif ($outgoing->findvalue('./socketType') eq 'STARTTLS') {
->> +			$smtp_encryption_config =3D 'tls';
->> +		} else {
->> +			$smtp_encryption_config =3D 'plain';
->=20
-> 'plain' is unencrypted, I think this should be accompanied by a big
-> warning.
-
-Any ideas on how you want that to be displayed?
-
->=20
->> +		}
->> +
->> +		if ($outgoing->findvalue('./username') eq '%EMAILADDRESS%') {
->> +			$smtp_user_config =3D $email;
->> +		} elsif ($outgoing->findvalue('./username') eq '%EMAILLOCALPART%') {
->> +			$smtp_user_config =3D (split /@/, $email)[0];
->> +		} elsif ($outgoing->findvalue('./username') eq '%EMAILDOMAIN%') {
->> +			$smtp_user_config =3D (split /@/, $email)[1];
->> +		} else {
->> +			$smtp_user_config =3D $outgoing->findvalue('./username');
->> +		}
->> +
->> +		print "\nConfiguration $config_num:\n";
->> +		print "  Server: ", $outgoing->findvalue('./hostname'), "\n";
->> +		print "  Port: ", $outgoing->findvalue('./port'), "\n";
->> +		print "  Encryption: ", $smtp_encryption_config, "\n";
->> +		print "  Username: ", $smtp_user_config, "\n";
->=20
-> The new option only gives you the needed SMTP configuration, as a
-> user you still need to apply them and to do that you will need to
-> look up how. We could help the user here and give them copy and
-> paste commands similar to when trying to commit without having an
-> identity set.
-
-Git allows you to set it as global config or repo specific config.
-I'm not sure how to give a copy/paste command for different needs.
-
->=20
-> The XML file also contains authentication details, what do you think
-> about processing those? That would also allow adding references to the
-> documentation in case it is OAuth2.
-
-Honestly, app passwords remain as a preferred way to use git send-email.
-Outlook I guess is just an exception due to obvious reasons. Plus, OAuth2
-does not tell if the Auth is XOAUTH2 or OAUTHBEARER. Not sure if its worth
-adding here. I am open to ideas on use cases though, and may try to
-implement.
-
->=20
->> +	}
->> +}
->> +
->> +if ($get_smtp_server) {
->> +	require URI::Escape;
->> +	print "Enter your email address: ";
->> +	chomp(my $email =3D <STDIN>);
->=20
-> Someone sending out emails will most likely already have set up
-> `user.email` in their gitconfig. We could just use that instead of
-> prompting for user input, or at least suggest it as a default.
-
-Suggesting as a default is better then not prompting. Although I think
-it won't be easy to read the config since all this exits before the config
-is parsed (I guess?).>
-> If you don't have an SMTP server configured then `git send-email`
-> will default to `localhost` and fail if you are not running a
-> local SMTP server with: `Unable to initialize SMTP properly.
-> Check config and use --smtp-debug.`. I would suggest altering the
-> message pointing the user to the new option.
-
-"Unable to initialize SMTP properly. Check config and use --smtp-debug. Use=
- --get-smtp-server to get the correct settings for you SMTP server if neede=
-d."
-
-What do you think about that?
