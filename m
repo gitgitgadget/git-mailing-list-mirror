@@ -1,208 +1,107 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039FC199E89
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 16:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAF82E3714
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 16:36:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754237449; cv=none; b=b5OxPOsuiodhzqjea4P+dRhzAj8qpfddabckd+NrqYT28ijFBigHohshj5xCsY602M5hNNlO3rg5iPYZ5qc8+XqnBIPVwOFy9X7Gp2XH+eMdRJe6Rpm8xVk402RteurQuNbIlrhmApAS7JUiE6ZaXPiLnF3kqjMohNnhwWKrBBw=
+	t=1754238964; cv=none; b=tQI4LInznT4AnOFd5bGTALupJodya8mjSmlzJSQVY1rTlWKQa+Yxhj7yu8T3/tFlT5e44GCh/9906AS+3a9eUIJeD67UvRg2VE6C9sGJR3jRC+6IBt/exDV+ld0O4Fsy55UwnhjAbRiOPWaAZyRVMByH3nqG8LhZupP73AUff4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754237449; c=relaxed/simple;
-	bh=R4S2GZy70RwfdW1CCN3ZQa3bomIHyzJfPf6P65Cfi54=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LS20j3w/95N8bEfhXf4CShWmDIw2fpTPjTgsXDtayQF7z5rArNtaMMawNGlUzk1b/8xKoU54L57iWvzrvlY4A9S00MWejazbZWwaRA4wFg4YBeR0wBnDdMvfOHS26yFgVb1PofeHvft+MB81HzqTBSBJY/9fWYv7gOwNlrGDL/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CU7ckkPa; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754238964; c=relaxed/simple;
+	bh=/5oRCqfra+e4tJJ0jsbbV5p859tB+5lyGsNo9NxGSqM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qcqMzenlxJ+9WDtxa1tecvFYlDHAtaOuRb/e61H+MmBwm1Exa/KoZftCLHOt5kmig5KnN6h8RrMdA2OwhNOsvp4o2I9Mmtm75ZNCKDqe7fFKaMnU9UtYx8Yf6xV7uBt7jbAJGad9qopUGvVsX/xJm0lz7i3nolsgOExXQz8zJ4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k3qiodZc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KcWXII6X; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CU7ckkPa"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e8fe4942e68so1390883276.2
-        for <git@vger.kernel.org>; Sun, 03 Aug 2025 09:10:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754237447; x=1754842247; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YLv1phfPWbFdIBIqkraNnqZqiOovxu/zyBlxTcLFfjQ=;
-        b=CU7ckkPasErrNtu2WxoGmKEUrTZrjIjRfiOAuGD/KAQclp9lZlWupZlHh+Cn9cuc2c
-         obL/Hx15r6XT5QgWmsOcHfAcFdZjnDLNMMVXnZHX4yGGuXXM0prt1HHkWOwwpEJKWtke
-         1+cUaH82o3RTCVjON7Vpivy2E9Dzq82ttGLKQ3U5hMOYvrnL86r2/PJzUaykrqimaqdu
-         gLnNvJzB4koUgRe2Oxd+wlPyuw7nDjdaMYC1qh7FRdJ67lwkabGN5mdecEvFKlQHV8+I
-         Ahx68Z8RhMAQ9Yb5mZuZ9KjCABZg+QHN53Dw5dzn1AkU0yVYW/JtS5FQkoXJqA07rKmN
-         fuqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754237447; x=1754842247;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=YLv1phfPWbFdIBIqkraNnqZqiOovxu/zyBlxTcLFfjQ=;
-        b=kSRPQWdu0gChBogltAldVDGINGcassiEDH6Po0SW/mlP5lGa6nEL+89bj1QuhPH5ZH
-         5/ymNeb55rOsYvQfhtVGr+r8TYe3Lyf969/qiEZ9qpbdk+7eS4QPXfm3jQfccfuC/wEb
-         0dbgS+DXrLQVfy51VbjPEm0EDrmnIwJcTR91fEBIIzVbm/3KNX7qu65oGzK1ER3sA+hV
-         NXS7yQPlgCCDxNe1+BISdroYL1h1teiMYjOIgJ2/cBSTaQB3JOLId2mp7emeINOgjqIQ
-         y0r03FG473SX70hKiR3bzLKRav4mNIQIfq1NsVQ0opNXy0CEpK1whZMwa7jiVud9pVtC
-         8E7w==
-X-Gm-Message-State: AOJu0Yw0EX2b4TzB/2xQvNxBDKOC5/yauENYBhlzNZDDMLL8mKSeWJYJ
-	i5kTHRB2MQb0FycJfNlE2ceU+OqMFHM90mlH18/r59MdbQLVrXMruY5bedDO6HXk
-X-Gm-Gg: ASbGncupbxGa45j7PwRsXyUliRx6QG2lz++CAmZH5yh4Yy2TxtnT0Uf/Qq+v2rgq51F
-	uc0ymrg/SRmvQJpKt98bvP42fuR3YsTTtzAstBaBt+IXY2qLOg1phzmidBkRjY0mv52ua/0oc8P
-	iEoQ6Cpq8gqc9HNjVJ5etbRb+1Vab/vkqkuhIS9wgvOInuC9YucjGZ7eew1idsBl8OvEwMsIKGi
-	kyHcUhOYoMlGda1DtV3LsLqGr9iX1mJoz5pr3wqoost6tfh0/tum/vZ3Eqd1wNWe/6LITXQ18w0
-	pFr7VuNGBOtDd3QvArX8miHcB4u4AOGQpu6AJ/QpPiZF2vSJCBuFajHBmfab6Z+V3f5OOwW7sf/
-	8aqL/9qeWy5okS1ATeFUG0VmxW6+nKBSC8HBZwoGmwWRgfjYVpS91vwYoby1ue8ERmUlVvLGViF
-	WVQNOWUA==
-X-Google-Smtp-Source: AGHT+IGmwcMzlI//HAXvP17pXMJ9v5zQCHN1qhWdabk0I9pZqmncbaJIEumKQraovUu2aNCVaG1IJg==
-X-Received: by 2002:a05:6902:4187:b0:e81:e494:eee0 with SMTP id 3f1490d57ef6-e8fee0d5256mr7541506276.27.1754237446616;
-        Sun, 03 Aug 2025 09:10:46 -0700 (PDT)
-Received: from localhost.localdomain ([2605:a601:90a8:8b00:a173:55da:e3b1:53f])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e8fd3713e9fsm3100175276.5.2025.08.03.09.10.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Aug 2025 09:10:45 -0700 (PDT)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Usman Akinyemi <usmanakinyemi202@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Lessley Dennington <lessleydennington@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>
-Subject: [PATCH v3 3/3] builtin: also setup gently for --help-all
-Date: Sun,  3 Aug 2025 12:10:27 -0400
-Message-ID: <20250803161033.77696-4-ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250803012613.54086-1-ben.knoble+github@gmail.com>
-References: <20250803012613.54086-1-ben.knoble+github@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k3qiodZc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KcWXII6X"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1002E7A0050;
+	Sun,  3 Aug 2025 12:36:00 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Sun, 03 Aug 2025 12:36:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754238959; x=1754325359; bh=yqLNuE6VoO
+	3xdZsDT4G0pwfw0N4J9myPtxEqeEt3qWM=; b=k3qiodZcTpx31gM5H61iwk5kSx
+	7HCgABLtv2B1TmMq/4PYwxogg2wqgUyYo90OwCcJYrTR3vuQpnznFiA2ZumMFHGE
+	fusTYFx2RKzk2ICZSTqRY9Oj6zFVDEtQOvdr59nzhBBLxxiVKGuC3ZrmHpYV08ta
+	Co8iRnH4LqDl8IlXJcFlM5vzwLs71rUw7VpTomJcyFnxybe+yp9wScK/MLPEdn+F
+	iFxLTSryvflgiqKFxnSy83niGTgjQ3zWQC3yLen/Dn0sCxezEbXa/CgshULiMs0w
+	wb88oChBr8uQJx+OjF0C+Inn7MvC9GaTqrZkmpFnTDDC0EgnAPwCa6qv5oXA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754238959; x=1754325359; bh=yqLNuE6VoO3xdZsDT4G0pwfw0N4J9myPtxE
+	qeEt3qWM=; b=KcWXII6X/F/x1PmUYbPpEsU5GVuYI1WXtAWfVXfXBDcx7dkEUA/
+	F0SOlVqEPIw/y160NXPuOuMNbwKYDs4Y6jA49Nb2daUd6KSBrcwvO8IfYE015Ah4
+	+uQreSIUV4Kl4KtUg9lSl4TlqtgX9rM/gL0JP07WYkabF/Wn+2iCLKDWmKNZn56U
+	S78CI0ev1nEQDB0rGPVFCpo8yKUbu+jY53YZpIj2OhDLer31TbBbQLaoWyS4xCVk
+	b0Tv75V3MB1JyRiHeBo04tgRbMzgFq/6MVCNz9zhz6XmHO0VaVurU2zmw4+4ntoH
+	W1STP+ieX7Mh20llh8od4DXVFGSUT3rwERA==
+X-ME-Sender: <xms:74-PaATk7S-LTZaxL27y7uS7x8Z7gj94m3sISq-Lao1Rr1y3Kn6Uog>
+    <xme:74-PaHPjFnzEPVpY35_uNcFsbcGJOYvvtUm8FUmzrC-syB15-SmVoT_LYk4ikfriU
+    UU0QyzWx4Q5Mh-UzQ>
+X-ME-Received: <xmr:74-PaNZ3shwr5XOA7wPmnFjJ3RJMgTwgPPrbIgduq6bKinP6y9kIQjFqhkQa9gMSdC5Z3DIP4fl_LDImLE80Gl5uVBUlIbv6cuN9bJQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdelleehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgeslhhi
+    nhhugidrsggvrghuthihpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvg
+    hlmhdrohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:74-PaJxd2iQe3ga3lwH1i4oNcSMlgTiC7zNyLKRiM6xiQBZggymDGA>
+    <xmx:74-PaALqEJA8jGMWo4pje9Pa6Qviei8QMhTZ4ZUr-vM0Zab6gL-WBA>
+    <xmx:74-PaLoBXKJG2FVI2JMARKd_n5z1NwL2s-HazK5hSGz4XOLOvgL41g>
+    <xmx:74-PaHIC0zNI-l8xjDCE8k-55JQSsAjvZTo-I0gzhVAk3lGLl_lCoA>
+    <xmx:74-PaESN-T68kFzQ39ZKh34acfs4qWDSi9J5AnAUFkGwd9x1scWNfPUM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 3 Aug 2025 12:35:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Li Chen <me@linux.beauty>
+Cc: "phillipwood" <phillip.wood@dunelm.org.uk>,  "git" <git@vger.kernel.org>
+Subject: Re: [PATCH v3 0/2] rebase: support --trailer
+In-Reply-To: <20250803150059.402017-1-me@linux.beauty> (Li Chen's message of
+	"Sun, 3 Aug 2025 23:00:55 +0800")
+References: <20250803150059.402017-1-me@linux.beauty>
+Date: Sun, 03 Aug 2025 09:35:57 -0700
+Message-ID: <xmqq8qk0fjma.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Git experts often check the help summary of a command to make sure they
-spell options right when suggesting advice to colleagues. Further, they
-might check hidden options when responding to queries about deprecated
-options like git-rebase(1)'s "preserve merges" option. But some commands
-don't support "--help-all" outside of a git directory. Running (for
-example)
+Li Chen <me@linux.beauty> writes:
 
-    git rebase --help-all
+> From: Li Chen <chenl311@chinatelecom.cn>
+>
+> This two-patch series teaches git rebase a new
+> --trailer <text> option and, as a prerequisite, moves all trailer
+> handling out of the external interpret-trailers helper and into the
+> builtin code path, as suggested by Phillip Wood.
+>
+> Patch 1 switches trailer.c to an in-memory implementation
+> (amend_strbuf_with_trailers()). It removes every fork/exec.
+>
+> Patch 2 builds on that helper to implement
+> git rebase --trailer.
 
-outside a directory fails in "setup_git_directory", erroring with the
-localized form of
+Try running "git show --check" on this commit.  My attempt found a
+handful of whitespace breakages ("indent with spaces.").
 
-    fatal: not a git repository (or any of the parent directories): .git
-
-Like 99caeed05d (Let 'git <command> -h' show usage without a git dir,
-2009-11-09), we want to show the "--help-all" output even without a git
-dir. Make "--help-all" where we expect "-h" to mean
-"setup_git_directory_gently", and interpose early in the natural place
-("show_usage_with_options_if_asked").
-
-Do the same for usage callers with show_usage_if_asked.
-
-The exception is merge-recursive, whose help block doesn't use newer
-APIs.
-
-Best-viewed-with: --ignore-space-change
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
-
-Notes:
-    Some usage.c callers, like check-ref-format, probably deserve to be
-    ported to parse-options at this point.
-
- builtin/merge-recursive.c |  3 ++-
- git.c                     |  2 +-
- parse-options.c           | 14 ++++++++++----
- t/t1517-outside-repo.sh   |  4 ++++
- usage.c                   |  3 ++-
- 5 files changed, 19 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index 03b5100cfa..17aa4db37a 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -38,7 +38,8 @@ int cmd_merge_recursive(int argc,
- 	if (argv[0] && ends_with(argv[0], "-subtree"))
- 		o.subtree_shift = "";
- 
--	if (argc == 2 && !strcmp(argv[1], "-h")) {
-+	if (argc == 2 && (!strcmp(argv[1], "-h") ||
-+			  !strcmp(argv[1], "--help-all"))) {
- 		struct strbuf msg = STRBUF_INIT;
- 		strbuf_addf(&msg, builtin_merge_recursive_usage, argv[0]);
- 		show_usage_if_asked(argc, argv, msg.buf);
-diff --git a/git.c b/git.c
-index 07a5fe39fb..40d3df1b76 100644
---- a/git.c
-+++ b/git.c
-@@ -445,7 +445,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
- 	const char *prefix;
- 	int run_setup = (p->option & (RUN_SETUP | RUN_SETUP_GENTLY));
- 
--	help = argc == 2 && !strcmp(argv[1], "-h");
-+	help = argc == 2 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help-all"));
- 	if (help && (run_setup & RUN_SETUP))
- 		/* demote to GENTLY to allow 'git cmd -h' outside repo */
- 		run_setup = RUN_SETUP_GENTLY;
-diff --git a/parse-options.c b/parse-options.c
-index 169d76fb65..d9f960b7b5 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -1461,10 +1461,16 @@ void show_usage_with_options_if_asked(int ac, const char **av,
- 				      const char * const *usagestr,
- 				      const struct option *opts)
- {
--	if (ac == 2 && !strcmp(av[1], "-h")) {
--		usage_with_options_internal(NULL, usagestr, opts,
--					    USAGE_NORMAL, USAGE_TO_STDOUT);
--		exit(129);
-+	if (ac == 2) {
-+		if (!strcmp(av[1], "-h")) {
-+			usage_with_options_internal(NULL, usagestr, opts,
-+						    USAGE_NORMAL, USAGE_TO_STDOUT);
-+			exit(129);
-+		} else if (!strcmp(av[1], "--help-all")) {
-+			usage_with_options_internal(NULL, usagestr, opts,
-+						    USAGE_FULL, USAGE_TO_STDOUT);
-+			exit(129);
-+		}
- 	}
- }
- 
-diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index 3dc602872a..e34321dd44 100755
---- a/t/t1517-outside-repo.sh
-+++ b/t/t1517-outside-repo.sh
-@@ -133,6 +133,10 @@
- 		test_expect_code 129 nongit git $cmd -h >usage &&
- 		test_grep "[Uu]sage: git $cmd " usage
- 	'
-+	test_$expect_outcome $prereq "'git $cmd --help-all' outside a repository" '
-+		test_expect_code 129 nongit git $cmd --help-all >usage &&
-+		test_grep "[Uu]sage: git $cmd " usage
-+	'
- done
- 
- test_done
-diff --git a/usage.c b/usage.c
-index 81913236a4..4c245ba0cb 100644
---- a/usage.c
-+++ b/usage.c
-@@ -192,7 +192,8 @@ static void show_usage_if_asked_helper(const char *err, ...)
- 
- void show_usage_if_asked(int ac, const char **av, const char *err)
- {
--	if (ac == 2 && !strcmp(av[1], "-h"))
-+	if (ac == 2 && (!strcmp(av[1], "-h") ||
-+			!strcmp(av[1], "--help-all")))
- 		show_usage_if_asked_helper(err);
- }
- 
--- 
-2.48.1
+Thanks.
 
