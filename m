@@ -1,39 +1,40 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5936EDF76
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 11:38:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572EF2BAF7
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 11:49:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754221114; cv=none; b=Td2todPDPlmtxsv/OV4AW85KYqNt/phQPAxzRyhTP5vAN3KR94EYOIgmPnLjsxc/1uBrdD/WYRe7kzQ/6c+yd0U9TLIGGDrfgiDCClmxLhM0H5SNZaxjlkdkhZJAfoutPmUp2kKEPejtfjgTQhFPlL4duH7+gfFNj7OaG6CMOrA=
+	t=1754221757; cv=none; b=AvrOHqDhm1uRZq52lZHmH2OjDZD96DDNClS7HvLW1AF17F8rszfvLnqU+w/ABlTI+xKeLROO9GdrUQ9c72AvA7Pp4jCN0WoMQQFFOhKT2dOZ4um0gozHYGwF6cOqHEUdbCX8NUX3iubAa/UCmGyHIFYFAvposN2yAnVB5nMOb/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754221114; c=relaxed/simple;
-	bh=JZg04Jjfi34uSQBX2Ect4uAJBIwVRG4FpKg89sE6Mso=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=XHIg1gCJyxC3UZZ7suGdYXn56iSJoHLOBmT293xgRAz5TbgzXp5vKaFZ1oOLCuB4AK6vALrGPb9Y5r2lpyAimKwMmmjfOuunZphHjaseggO8px1Lgk0AOmaQ3aKcu4hIMpdiMripsa0/JmJsnaNIdcqRyHveqAQMDWuSIZ1JUss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=uJLxAkOP; arc=none smtp.client-ip=217.72.192.78
+	s=arc-20240116; t=1754221757; c=relaxed/simple;
+	bh=Vg5U7XdJIRZAE2FQ0345Fyo6yr2RB0cEDP2jD5+jYvo=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=IdVTNcddhJbKdOa6+ohsPOGMnL+m6ouCQfMieSD8n9TESfk9fVQesrU37oVKJVV2LD3DbOY2PzEynka2Wovm0K/HjHHE9pgSYOoAZa6i1dl0dOTEMEJgarQTQOmaEfGwdZGRzFCJVIc6J76VbFk+es+S1MzxpkpmBuOm8YEKwJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=ZjYXHHFa; arc=none smtp.client-ip=212.227.17.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="uJLxAkOP"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="ZjYXHHFa"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1754221110; x=1754825910; i=l.s.r@web.de;
-	bh=fKTWqfKkYxlKIZlf3Q+O5bfvsyLQ/ULmAMWySL5iO2Y=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
-	 Content-Type:Content-Transfer-Encoding:cc:
+	s=s29768273; t=1754221752; x=1754826552; i=l.s.r@web.de;
+	bh=G4eJ/pYKvzsdKEe48GX7uPIi1M5iOWHBrDFzd3k3xxU=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+	 References:In-Reply-To:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=uJLxAkOPh5GCmQ9ssz5cIhtNfJCAOkJU5ubE7etdtofI0q+XIv75zCadj6FCRMSY
-	 RCrZa6B99Cn7XH+nmormJbzq9YBsqtcPKaSGtP4IWeFQIyd7IdyZxedFpFZLE0/FE
-	 +FEfWBB2TydfTEq8bhEIWpZrzv63ao5WsBVPSQkMT2iNr3fmmkSrsvrPmwmpGOek6
-	 HpD/uLFJgE6ey0/d7pTkF1gGARALjOo5tVzcrOpjysiQXidcRJ+Ana5ia8vCFO0RH
-	 kP+flk/HWkpUpVQyyr/jXELlkVmcfPu8iQk+HMDukiFyvfx8KyGOSBH/wJ8DnaTG8
-	 ZOi4fku+2Dr5em34Og==
+	b=ZjYXHHFaJYSPBOoicGTYHgaSbIr21Zje8cNbcy1Ke6C14vKyXF9ykt5i9we/Wjor
+	 3gg/hOc0R0XEJxj58RTX6UnUmRLd6fCAEtOkTGOWIM0gkcIT4PUnv5OXuIHmrBXKs
+	 Fj5aj+r/CycIJaQBAZE/83EHX0PWZ4l+fV8omao7nxUKaJsOWG5pMX9vqWjU6uCSG
+	 79I21Y6j1DeY1GtUC5nPoC7WKiVxnCHzPENUxi9C8RWu/VGrIy+MYqCpnsZal1s+w
+	 O3ANDgOl6UTzej0ZPFHfpkv/ERKDiO7sfQDkvwO8SiQh3as1wRKKBaxAJ8shbsf1c
+	 oYCK4ZGSPWFWVpMoBw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MNfY9-1v1Rdd125b-00Y4KB for
- <git@vger.kernel.org>; Sun, 03 Aug 2025 13:38:30 +0200
-Message-ID: <81c7deee-75e9-471a-84f3-8604c0860ee3@web.de>
-Date: Sun, 3 Aug 2025 13:38:29 +0200
+Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N2BM4-1uVyfG0wvu-00tQ26 for
+ <git@vger.kernel.org>; Sun, 03 Aug 2025 13:49:12 +0200
+Message-ID: <36d5b59a-a99a-4a6f-b637-dfb0b760660f@web.de>
+Date: Sun, 3 Aug 2025 13:49:11 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,225 +42,260 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
+Subject: [PATCH 2/2] describe: use prio_queue_replace()
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 1/2] describe: use prio_queue
+To: Git List <git@vger.kernel.org>
+References: <81c7deee-75e9-471a-84f3-8604c0860ee3@web.de>
+Content-Language: en-US
+In-Reply-To: <81c7deee-75e9-471a-84f3-8604c0860ee3@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:oO3jHWuBwK5xsXLW77pqfoRFSpFxub8ReVHrAoZJLrwUpWbY0gb
- 27SYSON59R4w2kG54Z4HQvbPiy4RKcPX+5GM97avWtl9SJgF4my5sePQsfd+Bxtuw+xdbgJ
- ktVsZf4+Y2cXJuTsyYU4KY+eZn3/9c6zquIn7KD+PxAtDnVyNwDiGita6RpZ/gA/IenJ+CR
- /O5Di8XKjb1mkxe8kQ5yw==
+X-Provags-ID: V03:K1:TE03crwhDh7r3SQAyaZk0/MveZXrAp2Y7bv6xMxyEGr2YRJbd8g
+ 8237Q5o6lAbRCAXc9MS2TkSb4RbGaWJLj0jvUj/AYEUGDcM3d9f4dV0j4bb9kEIK2lEW2n4
+ cB6OG0eiVgx1NBX8Uqd2CnhIpvvx9gqm+SMZz8Z2OG9dxMS+L25eoqY2wxufr9Qp9RYMFSk
+ jaXcmjm8mj7X3Hf8Lu6IA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:SAv6u2gJbEU=;9JyZE5fJD8ZV18A+2QXCaY/D6Pc
- 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
+UI-OutboundReport: notjunk:1;M01:P0:jis3sXNYq7M=;7pnFqHHsRbK3kRbUgGXLY/f9sQu
+ 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
+ 3NmY9QVhs1qd8FLQMtfPUO0=
 
-Replace the use a list-based priority queue whose order is maintained by
-commit_list_insert_by_date() with a prio_queue.  This avoids quadratic
-worst-case complexity.  And in the somewhat contrived example of
-describing the 4751 commits from v2.41.0 to v2.47.0 in one go (to get a
-sizable chunk of describe work with minimal ref loading overhead) it's
-significantly faster:
+Optimize the sequence get+put to peek+replace to avoid one unnecessary
+heap rebalance.
+
+Do that by tracking partial get operations in a prio_queue wrapper,
+struct lazy_queue, and using wrapper functions that turn get into peek
+and put into replace as needed.  This is simpler than tracking the
+state explicitly in the calling code.
+
+We get a nice speedup on top of the previous patch's conversion to
+prio_queue:
 
 Benchmark 1: ./git_2.50.1 describe $(git rev-list v2.41.0..v2.47.0)
-  Time (mean =C2=B1 =CF=83):      1.558 s =C2=B1  0.002 s    [User: 1.492 =
+  Time (mean =C2=B1 =CF=83):      1.559 s =C2=B1  0.002 s    [User: 1.493 =
 s, System: 0.051 s]
-  Range (min =E2=80=A6 max):    1.557 s =E2=80=A6  1.562 s    10 runs
+  Range (min =E2=80=A6 max):    1.556 s =E2=80=A6  1.563 s    10 runs
 
-Benchmark 2: ./git describe $(git rev-list v2.41.0..v2.47.0)
-  Time (mean =C2=B1 =CF=83):      1.209 s =C2=B1  0.006 s    [User: 1.143 =
+Benchmark 2: ./git_describe_pq describe $(git rev-list v2.41.0..v2.47.0)
+  Time (mean =C2=B1 =CF=83):      1.204 s =C2=B1  0.001 s    [User: 1.138 =
 s, System: 0.051 s]
-  Range (min =E2=80=A6 max):    1.201 s =E2=80=A6  1.219 s    10 runs
+  Range (min =E2=80=A6 max):    1.202 s =E2=80=A6  1.205 s    10 runs
+
+Benchmark 3: ./git describe $(git rev-list v2.41.0..v2.47.0)
+  Time (mean =C2=B1 =CF=83):     850.9 ms =C2=B1   1.6 ms    [User: 786.6 =
+ms, System: 49.8 ms]
+  Range (min =E2=80=A6 max):   849.1 ms =E2=80=A6 854.1 ms    10 runs
 
 Summary
   ./git describe $(git rev-list v2.41.0..v2.47.0) ran
-    1.29 =C2=B1 0.01 times faster than ./git_2.50.1 describe $(git rev-lis=
+    1.41 =C2=B1 0.00 times faster than ./git_describe_pq describe $(git re=
+v-list v2.41.0..v2.47.0)
+    1.83 =C2=B1 0.00 times faster than ./git_2.50.1 describe $(git rev-lis=
 t v2.41.0..v2.47.0)
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/describe.c | 51 ++++++++++++++++++++++++----------------------
- 1 file changed, 27 insertions(+), 24 deletions(-)
+A more convincing showcase for that optimization than a79e3519d6
+(commit: use prio_queue_replace() in pop_most_recent_commit(),
+2025-07-18).
+
+ builtin/describe.c | 68 +++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 52 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/describe.c b/builtin/describe.c
-index fbf305d762..80722ae0c0 100644
+index 80722ae0c0..c18e4b3e4b 100644
 =2D-- a/builtin/describe.c
 +++ b/builtin/describe.c
-@@ -23,6 +23,7 @@
- #include "list-objects.h"
- #include "commit-slab.h"
- #include "wildmatch.h"
-+#include "prio-queue.h"
-=20
- #define MAX_TAGS	(FLAG_BITS - 1)
- #define DEFAULT_CANDIDATES 10
-@@ -249,24 +250,26 @@ static int compare_pt(const void *a_, const void *b_=
+@@ -250,22 +250,58 @@ static int compare_pt(const void *a_, const void *b_=
 )
  	return 0;
  }
 =20
--static unsigned long finish_depth_computation(
--	struct commit_list **list,
--	struct possible_tag *best)
-+static bool all_have_flag(const struct prio_queue *queue, unsigned flag)
+-static bool all_have_flag(const struct prio_queue *queue, unsigned flag)
++struct lazy_queue {
++	struct prio_queue queue;
++	bool get_pending;
++};
++
++#define LAZY_QUEUE_INIT { { compare_commits_by_commit_date }, false }
++
++static void *lazy_queue_get(struct lazy_queue *queue)
 +{
-+	for (size_t i =3D 0; i < queue->nr; i++) {
-+		struct commit *commit =3D queue->array[i].data;
-+		if (!(commit->object.flags & flag))
-+			return false;
-+	}
-+	return true;
++	if (queue->get_pending)
++		prio_queue_get(&queue->queue);
++	else
++		queue->get_pending =3D true;
++	return prio_queue_peek(&queue->queue);
 +}
 +
-+static unsigned long finish_depth_computation(struct prio_queue *queue,
-+					      struct possible_tag *best)
++static void lazy_queue_put(struct lazy_queue *queue, void *thing)
++{
++	if (queue->get_pending)
++		prio_queue_replace(&queue->queue, thing);
++	else
++		prio_queue_put(&queue->queue, thing);
++	queue->get_pending =3D false;
++}
++
++static bool lazy_queue_empty(const struct lazy_queue *queue)
++{
++	return queue->queue.nr =3D=3D (queue->get_pending ? 1 : 0);
++}
++
++static void lazy_queue_clear(struct lazy_queue *queue)
++{
++	clear_prio_queue(&queue->queue);
++	queue->get_pending =3D false;
++}
++
++static bool all_have_flag(const struct lazy_queue *queue, unsigned flag)
+ {
+-	for (size_t i =3D 0; i < queue->nr; i++) {
+-		struct commit *commit =3D queue->array[i].data;
++	for (size_t i =3D queue->get_pending ? 1 : 0; i < queue->queue.nr; i++) =
+{
++		struct commit *commit =3D queue->queue.array[i].data;
+ 		if (!(commit->object.flags & flag))
+ 			return false;
+ 	}
+ 	return true;
+ }
+=20
+-static unsigned long finish_depth_computation(struct prio_queue *queue,
++static unsigned long finish_depth_computation(struct lazy_queue *queue,
+ 					      struct possible_tag *best)
  {
  	unsigned long seen_commits =3D 0;
--	while (*list) {
--		struct commit *c =3D pop_commit(list);
-+	while (queue->nr) {
-+		struct commit *c =3D prio_queue_get(queue);
+-	while (queue->nr) {
+-		struct commit *c =3D prio_queue_get(queue);
++	while (!lazy_queue_empty(queue)) {
++		struct commit *c =3D lazy_queue_get(queue);
  		struct commit_list *parents =3D c->parents;
  		seen_commits++;
  		if (c->object.flags & best->flag_within) {
--			struct commit_list *a =3D *list;
--			while (a) {
--				struct commit *i =3D a->item;
--				if (!(i->object.flags & best->flag_within))
--					break;
--				a =3D a->next;
--			}
--			if (!a)
-+			if (all_have_flag(queue, best->flag_within))
- 				break;
- 		} else
- 			best->depth++;
-@@ -274,7 +277,7 @@ static unsigned long finish_depth_computation(
+@@ -277,7 +313,7 @@ static unsigned long finish_depth_computation(struct p=
+rio_queue *queue,
  			struct commit *p =3D parents->item;
  			repo_parse_commit(the_repository, p);
  			if (!(p->object.flags & SEEN))
--				commit_list_insert_by_date(p, list);
-+				prio_queue_put(queue, p);
+-				prio_queue_put(queue, p);
++				lazy_queue_put(queue, p);
  			p->object.flags |=3D c->object.flags;
  			parents =3D parents->next;
  		}
-@@ -316,7 +319,7 @@ static void append_suffix(int depth, const struct obje=
+@@ -319,7 +355,7 @@ static void append_suffix(int depth, const struct obje=
 ct_id *oid, struct strbuf
  static void describe_commit(struct object_id *oid, struct strbuf *dst)
  {
  	struct commit *cmit, *gave_up_on =3D NULL;
--	struct commit_list *list;
-+	struct prio_queue queue =3D { compare_commits_by_commit_date };
+-	struct prio_queue queue =3D { compare_commits_by_commit_date };
++	struct lazy_queue queue =3D LAZY_QUEUE_INIT;
  	struct commit_name *n;
  	struct possible_tag all_matches[MAX_TAGS];
  	unsigned int match_cnt =3D 0, annotated_cnt =3D 0, cur_match;
-@@ -359,11 +362,10 @@ static void describe_commit(struct object_id *oid, s=
-truct strbuf *dst)
- 		have_util =3D 1;
+@@ -363,9 +399,9 @@ static void describe_commit(struct object_id *oid, str=
+uct strbuf *dst)
  	}
 =20
--	list =3D NULL;
  	cmit->object.flags =3D SEEN;
--	commit_list_insert(cmit, &list);
--	while (list) {
--		struct commit *c =3D pop_commit(&list);
-+	prio_queue_put(&queue, cmit);
-+	while (queue.nr) {
-+		struct commit *c =3D prio_queue_get(&queue);
+-	prio_queue_put(&queue, cmit);
+-	while (queue.nr) {
+-		struct commit *c =3D prio_queue_get(&queue);
++	lazy_queue_put(&queue, cmit);
++	while (!lazy_queue_empty(&queue)) {
++		struct commit *c =3D lazy_queue_get(&queue);
  		struct commit_list *parents =3D c->parents;
  		struct commit_name **slot;
 =20
-@@ -397,7 +399,7 @@ static void describe_commit(struct object_id *oid, str=
+@@ -399,7 +435,7 @@ static void describe_commit(struct object_id *oid, str=
 uct strbuf *dst)
  				t->depth++;
  		}
  		/* Stop if last remaining path already covered by best candidate(s) */
--		if (annotated_cnt && !list) {
-+		if (annotated_cnt && !queue.nr) {
+-		if (annotated_cnt && !queue.nr) {
++		if (annotated_cnt && lazy_queue_empty(&queue)) {
  			int best_depth =3D INT_MAX;
  			unsigned best_within =3D 0;
  			for (cur_match =3D 0; cur_match < match_cnt; cur_match++) {
-@@ -420,7 +422,7 @@ static void describe_commit(struct object_id *oid, str=
+@@ -422,7 +458,7 @@ static void describe_commit(struct object_id *oid, str=
 uct strbuf *dst)
  			struct commit *p =3D parents->item;
  			repo_parse_commit(the_repository, p);
  			if (!(p->object.flags & SEEN))
--				commit_list_insert_by_date(p, &list);
-+				prio_queue_put(&queue, p);
+-				prio_queue_put(&queue, p);
++				lazy_queue_put(&queue, p);
  			p->object.flags |=3D c->object.flags;
  			parents =3D parents->next;
 =20
-@@ -435,6 +437,7 @@ static void describe_commit(struct object_id *oid, str=
+@@ -437,7 +473,7 @@ static void describe_commit(struct object_id *oid, str=
 uct strbuf *dst)
  			strbuf_add_unique_abbrev(dst, cmit_oid, abbrev);
  			if (suffix)
  				strbuf_addstr(dst, suffix);
-+			clear_prio_queue(&queue);
+-			clear_prio_queue(&queue);
++			lazy_queue_clear(&queue);
  			return;
  		}
  		if (unannotated_cnt)
-@@ -450,11 +453,11 @@ static void describe_commit(struct object_id *oid, s=
+@@ -453,11 +489,11 @@ static void describe_commit(struct object_id *oid, s=
 truct strbuf *dst)
  	QSORT(all_matches, match_cnt, compare_pt);
 =20
  	if (gave_up_on) {
--		commit_list_insert_by_date(gave_up_on, &list);
-+		prio_queue_put(&queue, gave_up_on);
+-		prio_queue_put(&queue, gave_up_on);
++		lazy_queue_put(&queue, gave_up_on);
  		seen_commits--;
  	}
--	seen_commits +=3D finish_depth_computation(&list, &all_matches[0]);
--	free_commit_list(list);
-+	seen_commits +=3D finish_depth_computation(&queue, &all_matches[0]);
-+	clear_prio_queue(&queue);
+ 	seen_commits +=3D finish_depth_computation(&queue, &all_matches[0]);
+-	clear_prio_queue(&queue);
++	lazy_queue_clear(&queue);
 =20
  	if (debug) {
  		static int label_width =3D -1;
