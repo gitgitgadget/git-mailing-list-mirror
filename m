@@ -1,77 +1,77 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B692571D7
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C512125A659
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754203989; cv=none; b=uLcdRD8RYpat7NuSdHaXFcsJfnyQboEVn1BXYSEH5EL9TRgdBb1LfV4C+ZDxbmNk0hp19pDdal8S0tvLm/KbszMcuMaO0z9dI7GG5Tv1Rh6G3+gemv7DISFmCxzpSh9ulyPDKJAcZXKdzxOFMkXNrpjlsMwBnF74IfdLuWdVXrU=
+	t=1754203990; cv=none; b=Nx/8m/z+mS6M7DVzUCXsrSK1R/tVhWBbiWrtXS3UFdo4tS6Ad+cGPETCchZ0qLYLxxFAAeghuk8p0eLiCuCM45C6QmrGgbOEy+qVlKJlOz3ahrjoeEeYEgsmr790x8uIEUdPqyv3349H70sLt6lz9BlIBY7FyEe9OzEYmkrAuSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754203989; c=relaxed/simple;
-	bh=JAaxfg73jv2Y9sPnY85N0ypF2tdw1Y7/mnXDxSamRWQ=;
+	s=arc-20240116; t=1754203990; c=relaxed/simple;
+	bh=m7SJBLJK7Oo6ckRji5jWL+vsx4zsdX0DKCZiAkBGH9M=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/qpWkLMbaptePELoJMqg2WahTGWFhh7Cobd8oNlFrQCRsUonwJ4h+XsbcwUOcbJX1cDvBr2dV9OGmVrgHlfHQdM2Shp9YLe46AHCLn8Ol0+U1jrHh+uSlF1tENSeWTosxDQMeUnxQ9npDjKfU07vfOpAqiKqV2Mth4bnSoheAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MasMvBGm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FHz/w8Ok; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version; b=pfVo78Js6aQBXKbktJotN/WCrb6Ckv5dDtJV66jZbk24jone5vejTWslJEW6O94KUDbhZlJ0qT+IrsjmVr3HJsUOsn/iTv5evJ531gWjIIueE5wh4Kcib9j+sQOqc8Z8+fyPI1DoOTi2bqGPeQFFD6CsDnUzZLp8LCpN1wdyrnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W/ajOCIj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k2Xr+tRK; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MasMvBGm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FHz/w8Ok"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id E0FD1EC1517;
-	Sun,  3 Aug 2025 02:53:06 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sun, 03 Aug 2025 02:53:06 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W/ajOCIj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k2Xr+tRK"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 39957EC1275;
+	Sun,  3 Aug 2025 02:53:08 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sun, 03 Aug 2025 02:53:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1754203986; x=
-	1754290386; bh=WX3fU6g0IlxnRHV4aS2ZRSVSbjcWXdG+BeTeWmQgqVM=; b=M
-	asMvBGmpYycJwi6duS8ZKurV40fMMhEball4zVooYcK+WEFU4XlCf4AUMIh0zfhK
-	wKJmA1OcT9zXRza49U2WgbvbINMzo5dHbtqC+96936Sbxii5pCxI0XGq2x3M4Nbm
-	GVARCHo4S/RkoXPJMHlng6Y0xf4PEH8irFqfU1mF7tbNcQc5Gs82mjrmLDKH3e+A
-	/mFprs/BVujGE5HW60beM01pSxeS0cMpk1F8sLMoOVIxuxA7/uLbRcHkXMntit7r
-	O7TksgHGpOlh61oA/GPxH8Hhkg7lpuPIr9zwZ8BK4A8iW/gTFkziP8zqNU5/cF9K
-	yxPNFwxDUh59t8W4hRymg==
+	:reply-to:subject:subject:to:to; s=fm2; t=1754203988; x=
+	1754290388; bh=sy8XF6OGq0e2GXFijw4jUrWHLCO8vw8Ca21sFbMkVcE=; b=W
+	/ajOCIj53dEQxQQa0QLDwPpppp8l0s/9eZpsCSPD9+3STDfcUNmUOoT8Cglncqd/
+	pK83P1T3qKSL1bCeIJjUe+mWLwGemL9dW/v0kYFzLYPS/0to9vYN60JSam9MR3nN
+	Pi1xvyAnTgl/ScbHD9qNLdcVpScF+q+JFeL6Vb5J5+x/KO+KDZ77ik0SK2w4bUUN
+	gW07uvqht/ZJYS1D4OhqL65oeXpzTVGsQ35oMFYsJL18Jnfs7mZlMr4b4bRvmMVF
+	eZF8tg7FX6rSXjmHexmV1uzKqBNKf4O58P/lnq/xuH1NIPJvFa0SdUbQlBt/vdbq
+	enED3u/NE5eHDqvZDXMqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1754203986; x=1754290386; bh=WX3fU6g0IlxnRHV4aS2ZRSVSbjcW
-	XdG+BeTeWmQgqVM=; b=FHz/w8OkrD6JvC7iKLcx8rnM/k95KXabJSTyLAF8NwbH
-	RlaJDWlOrKL0qQAQxEU4b4iZHLWNCL5gA2dWoQFe2YSvBR44vjqhmJnwRtVlSDuz
-	3J+Un0AGEDVUrZP4ajZj+yfmBq5QRXm4faUGs5LKDeysD7tKUzPr403SJnAnM2lh
-	tPaip051Ek5lwqKjccaGpwpAxJYHc14ALlcvT6JS95/QA65Vw5ipS/+5Di+NJMIP
-	xU9Uh019MaMtv0FpxtplBo+Ptv00PSfuvPAd0Qd2oJrL51tADdC3aiu6qyhc5gwE
-	9L764xqyC+/Rplr2nt0sfjARzPUM/xuPGAA8K8icIg==
-X-ME-Sender: <xms:UgePaKXyYcKlOwnzh71jpTyceUYJE0SOl7bisQwbe8uf6oihE03_Mg>
-    <xme:UgePaGyEGb6e_MBKfo6_E0E1FSUbKAin1senLg1sEbeMehNUhVTuZHqKu2xTjqFF3
-    2CLnQVnCNoS8cQCDw>
-X-ME-Received: <xmr:UgePaAOzQMFX7T-ADlg1hflvKlSu-OqUITVXlIfZrfb4T3bXO8YgaoDJVioxJjI8a8b76WFaxS4z8ooEeSWOl2C68bG_RhGWkMZ1rlc>
+	fm3; t=1754203988; x=1754290388; bh=sy8XF6OGq0e2GXFijw4jUrWHLCO8
+	vw8Ca21sFbMkVcE=; b=k2Xr+tRK4JcCLiOkTvGpU+YZx/GNN7QW3Q4CICJqz6Yx
+	PTBw2/yPzSgm+rJwtirvBmxtMPfkOioreUy59r8vjXA2iPKVLIiY/cHqzqamtX1Q
+	W2aGsggeR7boaJwlO+17aqfKYXdRFnn2VqAiYCf9ig76owZxmRQOHEY0vHAzvo/t
+	R2t9na8pTF3qWr6bGfDzoKU7kOc7FW0Dye1meJTU7SjX/c3EnCo7uhS2gCZkC6ON
+	jgYRuoWQlS/cfr9ntS6tc/8ILHSA2zZQId4pKLyULxsTlOT2046KnpgEVYQtTApU
+	weXWe1MJu/9jif8pEk/IjrfUjBa0E5rOYzO98+Wxlw==
+X-ME-Sender: <xms:VAePaPx-12YpeK_v-O1PVU2XYXGh_960CKea8aYkMDeLVgKCK9jVMA>
+    <xme:VAePaHdvcDLRm5exrqdVpcPw9JPO9RznRXnaRTjDcn-qniHiv0_nVHBUPt7ya4bkG
+    aNWGA2xN6ltAWSG9A>
+X-ME-Received: <xmr:VAePaLKokpnElQzbpXdPEKQsFZY6mAnimyApvNai2DCLU8Y5nx9X0Txty7MKM7FoMp2-08DuGwLJ5_YFyWWrXlrqtRRBgTca9WWNLZc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdekjeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
     dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
     sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepgeenucfr
+    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepudenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:UgePaP5n6_MPG4WXfc4WeF8FkMBjwf7i1owT6vnmO6-NM4hkuuHwXA>
-    <xmx:UgePaJNmaRrTJ7KFnzEB_K3RjscJD1I2ekC2YZINngrnZnd9oRu1EA>
-    <xmx:UgePaFlxIdbH42MWWyarkR1SRG1nIR6noTytwCVjqg5wORFgMe1Nlw>
-    <xmx:UgePaIQw8ZWNMUH4OjnMFM6bevA4bHZ-KvfkKZoCJceGy5fZSd_1Kg>
-    <xmx:UgePaM4kwnwP9P5KPOFslmrZdlgCJDtRlX9eZP6sM5I9xxTrZ3Gj7Q1D>
+X-ME-Proxy: <xmx:VAePaIE94PA_27EOhcp6KSX8djEcx34CjE__k32tfAa-RGA_H_tIeA>
+    <xmx:VAePaFoBQDUShKx6pw2YgRWjf9W53h6ToS01t_TKPazq3jGsA6rIvQ>
+    <xmx:VAePaBQiBFTIeV8uwBJmSxrnjH5-z93XEVfOWvkECbUZxgGhl4XCRQ>
+    <xmx:VAePaCNyovCo2YrblxZrPcMKTunwUSsrYnQN0CXcomMajBz42S_KIg>
+    <xmx:VAePaKWofx0L0RMoTZyjcsyWx5MNC4fl1Nv_Hy4K1Yku36uWeEPuqNNm>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 Aug 2025 02:53:06 -0400 (EDT)
+ 3 Aug 2025 02:53:07 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v3 01/12] wt-status: avoid strbuf_split*()
-Date: Sat,  2 Aug 2025 23:52:53 -0700
-Message-ID: <20250803065304.3325286-2-gitster@pobox.com>
+Subject: [PATCH v3 02/12] clean: do not pass strbuf by value
+Date: Sat,  2 Aug 2025 23:52:54 -0700
+Message-ID: <20250803065304.3325286-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.50.1-633-g69dfdd50af
 In-Reply-To: <20250803065304.3325286-1-gitster@pobox.com>
 References: <20250801220423.1230969-1-gitster@pobox.com>
@@ -84,82 +84,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-strbuf is a very good data structure to work with string data
-without having to worry about running past the end of the string,
-but strbuf_split() is a wrong API and an array of strbuf that the
-function produces is a wrong thing to use in general.  You do not
-edit these N strings split out of a single strbuf simultaneously.
-Often it is much better off to split a string into string_list and
-work with the resulting strings.
+When you pass a structure by value, the callee can modify the
+contents of the structure that was passed in without having to worry
+about changing the structure the caller has.  Passing structure by
+value sometimes (but not very often) can be a valid way to give
+callee a temporary variable it can freely modify.
 
-wt-status.c:abbrev_oid_in_line() takes one line of rebase todo list
-(like "pick e813a0200a7121b97fec535f0d0b460b0a33356c title"), and
-for instructions that has an object name as the second token on the
-line, replace the object name with its unique abbreviation.  After
-splitting these tokens out of a single line, no simultaneous edit on
-any of these pieces of string that takes advantage of strbuf API
-takes place.  The final string is composed with strbuf API, but
-these split pieces are merely used as pieces of strings and there is
-no need for them to be stored in individual strbuf.
+But not a structure with members that are pointers, like a strbuf.
 
-Instead, split the line into a string_list, and compose the final
-string using these pieces.
+builtin/clean.c:list_and_choose() reads a line interactively from
+the user, and passes the line (in a strbuf) to parse_choice() by
+value, which then munges by replacing ',' with ' ' (to accept both
+comma and space separated list of choices).  But because the strbuf
+passed by value still shares the underlying character array buf[],
+this ends up munging the caller's strbuf contents.
+
+This is a catastrophe waiting to happen.  If the callee causes the
+strbuf to be reallocated, the buf[] the caller has will become
+dangling, and when the caller does strbuf_release(), it would result
+in double-free.
+
+Stop calling the function with misleading call-by-value with strbuf.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- wt-status.c | 31 ++++++++++---------------------
- 1 file changed, 10 insertions(+), 21 deletions(-)
+ builtin/clean.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index 454601afa1..a34dc144ee 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1351,8 +1351,8 @@ static int split_commit_in_progress(struct wt_status *s)
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 053c94fc6b..224551537e 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -477,7 +477,7 @@ static int find_unique(const char *choice, struct menu_stuff *menu_stuff)
   */
- static void abbrev_oid_in_line(struct strbuf *line)
+ static int parse_choice(struct menu_stuff *menu_stuff,
+ 			int is_single,
+-			struct strbuf input,
++			struct strbuf *input,
+ 			int **chosen)
  {
--	struct strbuf **split;
--	int i;
-+	struct string_list split = STRING_LIST_INIT_DUP;
-+	struct object_id oid;
+ 	struct strbuf **choice_list, **ptr;
+@@ -485,14 +485,14 @@ static int parse_choice(struct menu_stuff *menu_stuff,
+ 	int i;
  
- 	if (starts_with(line->buf, "exec ") ||
- 	    starts_with(line->buf, "x ") ||
-@@ -1360,26 +1360,15 @@ static void abbrev_oid_in_line(struct strbuf *line)
- 	    starts_with(line->buf, "l "))
- 		return;
- 
--	split = strbuf_split_max(line, ' ', 3);
--	if (split[0] && split[1]) {
--		struct object_id oid;
--
--		/*
--		 * strbuf_split_max left a space. Trim it and re-add
--		 * it after abbreviation.
--		 */
--		strbuf_trim(split[1]);
--		if (!repo_get_oid(the_repository, split[1]->buf, &oid)) {
--			strbuf_reset(split[1]);
--			strbuf_add_unique_abbrev(split[1], &oid,
--						 DEFAULT_ABBREV);
--			strbuf_addch(split[1], ' ');
--			strbuf_reset(line);
--			for (i = 0; split[i]; i++)
--				strbuf_addbuf(line, split[i]);
--		}
-+	if ((2 <= string_list_split(&split, line->buf, " ", 2)) &&
-+	    !repo_get_oid(the_repository, split.items[1].string, &oid)) {
-+		strbuf_reset(line);
-+		strbuf_addf(line, "%s ", split.items[0].string);
-+		strbuf_add_unique_abbrev(line, &oid, DEFAULT_ABBREV);
-+		for (size_t i = 2; i < split.nr; i++)
-+			strbuf_addf(line, " %s", split.items[i].string);
+ 	if (is_single) {
+-		choice_list = strbuf_split_max(&input, '\n', 0);
++		choice_list = strbuf_split_max(input, '\n', 0);
+ 	} else {
+-		char *p = input.buf;
++		char *p = input->buf;
+ 		do {
+ 			if (*p == ',')
+ 				*p = ' ';
+ 		} while (*p++);
+-		choice_list = strbuf_split_max(&input, ' ', 0);
++		choice_list = strbuf_split_max(input, ' ', 0);
  	}
--	strbuf_list_free(split);
-+	string_list_clear(&split, 0);
- }
  
- static int read_rebase_todolist(const char *fname, struct string_list *lines)
+ 	for (ptr = choice_list; *ptr; ptr++) {
+@@ -630,7 +630,7 @@ static int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff)
+ 
+ 		nr = parse_choice(stuff,
+ 				  opts->flags & MENU_OPTS_SINGLETON,
+-				  choice,
++				  &choice,
+ 				  &chosen);
+ 
+ 		if (opts->flags & MENU_OPTS_SINGLETON) {
 -- 
 2.50.1-633-g69dfdd50af
 
