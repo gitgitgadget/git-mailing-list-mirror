@@ -1,244 +1,218 @@
-Received: from mail-pj1-f65.google.com (mail-pj1-f65.google.com [209.85.216.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356382C190
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 08:43:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1E91DDC15
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 09:52:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754210585; cv=none; b=MilhoDOb5N04Q1yTcHWbP+jjlGr6Ht+iC0TgzoDjTKeuRMQSueTwOODN3pgtDN95WTQr987eF5b6uYsqJQ9F2cplK1p3u+ObgzBxW9EaA8x2xhbeMrNz0TcsDcmS9ljCsqNvHEVEZZb7dHbxuPbAA6qFCmAzgHyHN4MOi+XAacw=
+	t=1754214750; cv=none; b=aUhXdHUHicpycAt2zCCc680DzmYwtIl25KxJlcP8KuBO2RD9cXeDxIe9gjamrPvixObhA3YsC1qbvO8yNYYno73fIWpwF22m81SlEbThOxFMHZXItS++uRG+hwgqjZ2hJkMaEmKeix0QszUfC02sJ+pg06+1yyJMtTDTsK8d3sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754210585; c=relaxed/simple;
-	bh=J0K4EcG+BWC3qza0JnTHKUHEZmU7t8b4uBokI+VWKh0=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=Vgq1RxqzUNihY163ZKRSHlm0T5YWxcSSfbDihgVyfu/V422EMKSxq2E8RAHfMXN5kh84x4my+3m0QnKBFwVHWU23rFCOI3KBhroCUDcmZtkO1QsPhMFGrgGNsEb3ogyCHUqy95dhFRkp/LjXIxRi6up+k2gH6xvgl8wGopEy8Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sipao5+9; arc=none smtp.client-ip=209.85.216.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754214750; c=relaxed/simple;
+	bh=s1z3G0MmCX/CzYrcRkLG63/cZudgQJva6hBsrNDtxYk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OLj+/b8aG5vnHQ99ShjPgelsbB/GqmZhYHArvKlNis+l0zJoFu2uptDAYaU1ihqCI5s9dKqoB+S/58pBBXvqVRTNG60oW07c8PDncvRbwMM3lxqfkVvkhTSqSriF5/FMP87iTQIi50+usrPpCRVp7V6EM6JA8x2jggwrT1i9qGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=JjimI/kV; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sipao5+9"
-Received: by mail-pj1-f65.google.com with SMTP id 98e67ed59e1d1-313bb9b2f5bso3668397a91.3
-        for <git@vger.kernel.org>; Sun, 03 Aug 2025 01:43:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754210583; x=1754815383; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pJXTWChRaRopwitNWbFA0TWgB02gOzT6l1o+CzQGBzg=;
-        b=Sipao5+98igkI7l+ArMDoTksc6UC5XFYIMf9v4c547ppNvQo8Jc31IP4wET7UiE75r
-         xa2ut1vZb84o8cVOHwNtDg7pyC70xdV8sqCePjPBMpiDCUZ3jC8gsA3E1Hb8ozUBx0NU
-         JEdT8G1QBVnGwEznrtG2o7LmO0xUmDpYaS0ywgOVN+KQ7U82aAu2irETBlfduQWUPEAz
-         7rrMc0XX+v/LeRF49DyP3pieNe1a2UWt+HzU53EqUuMLxfCGG18IX3vIfwOoFi5ViO7t
-         x6WxV06WJHAjgXWc2CDMlQ5IW8LeQMpQMBTvE6Xewp2j+KFOzCkLzny/JvJHPzbRaqdN
-         H5TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754210583; x=1754815383;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pJXTWChRaRopwitNWbFA0TWgB02gOzT6l1o+CzQGBzg=;
-        b=jjO/POF8TXuxWh8d4RzyMyT+XV1zuUibr/uBXeviNTxbRAHHR1AB23e6DpWD5Z+Pgn
-         dXJgbaLuMZ5d6GyitGzdkOfDvkbDe9YpB96f6mu/GF8SB61TNSAY6sBaXxeoblJEVpWn
-         a1JT/xgFmYtskyej1ARzYHEtATE63YQaFw86buHJsVTl3f+YsfiuupEHg2esbxt9SYHD
-         J/j1UgLuVVK+pCWkZti7Y5afp86I62MSKWbqDzcG3N70tcuctqrKUP4UOFOfcazonmHK
-         8Ru3OtHN2dNtne0uJC+FTWp748FRYCFPUnKV6XmUyLRNwZQTY6FEGgC/wrHKW8s75Er1
-         dMMg==
-X-Gm-Message-State: AOJu0YzogoLjry28SPUPCgSGno39Y/l1Pp3G121fY/0LsUpD1g2QS4SM
-	jEfAXKCebInjHpQs6ukfEBkM3eNs5TLVw+xerbFsmnE0qt6B3aPJKmANZBrPyB2jtfG0Pw==
-X-Gm-Gg: ASbGncuWechDys7qT/ppdhHhcpmH3ZVqQZ1J8WNN6RJUTTSvGFscof+4MeTj8LltfAS
-	DCb996RmKhcxbo+ap5JIZmoWZfYNpZMwWed2JbBnwwlSh12CJDrHeB1bDz9N9na5kN1E2NgAKsL
-	L9vGmPYUr/vpbee4KOHTg1DInNA1voUXNshIEvuQlfd2j1mKMso2TGQLkgYGw1El9X3iLOijTGf
-	5OyGBiHXnJvY23HrxHbE9S2VfCFeO2mGNl/vptq8h+K3v9PHEiMUCynwmcR0qyUKRwnJJVuxCaQ
-	2OfJZQL1mHzBdA266nFp6ZTrUvEVDBf6ZsY2xT7Qpj7qUtLsHWO2pdtwDy20DOCdqKUWwwdGZ8M
-	mNHo7cbIs2Rhk2KwDtuUuAKmBiuiDXm2gArl0ENUGAPzrU9QC2GNycUblRWkF+vnG+sHXliHbOW
-	l/Jc4Z4fiTvx2tf4Bi3UxhyQIN7i6jg8LyRw==
-X-Google-Smtp-Source: AGHT+IEGjwjDUw5aJmO1Oe2S9eRetNURg3bQvwx4ruTdTC7iz0Wn9+/FeI6wfH5qsiqyrHLbrjjXpw==
-X-Received: by 2002:a17:90b:5110:b0:31f:6ddd:ef3 with SMTP id 98e67ed59e1d1-32116330b8amr7609811a91.35.1754210583393;
-        Sun, 03 Aug 2025 01:43:03 -0700 (PDT)
-Received: from smtpclient.apple (awork062145.netvigator.com. [203.198.28.145])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b422b7e21adsm6877526a12.26.2025.08.03.01.43.00
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Aug 2025 01:43:02 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="JjimI/kV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1754214740; x=1754819540; i=l.s.r@web.de;
+	bh=flLTpywpjWPuAq7bVL2pXjaNIN0RAwxyDtmYWvTVq+I=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=JjimI/kVl4tpRrmLeqUZJbkiNKIbVyCv9mFgunief6ssksQIzn8a9ujWDid/gtvG
+	 Q9E3DP3MoRhUiNXDxFLo1ONonNH9OsIdwdzRwW01gT/NkWK9c78Vz8g/KWncq+ew4
+	 mxMcp41OG6PHI4nbNxHKkVpGfAiYMLPpCT2/zZrBAZCVJJ4jJjSnKVr4HOVWYVcIi
+	 U+n7PaYeGX/bNFp57n8OWMzt4AROUN0qo5SRn3KcYyQty/JnW2qwKvPtTa6TxIhXP
+	 uk34YCe+sBjTdVMmWhMM6qqUx9ryuaHE1WLnBmiMbF0544zoiC8/HeNpu0cGUNzHn
+	 D7zLitfK2Wg1LFG4fQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mm9Zi-1uID7z35do-00bKcS; Sun, 03
+ Aug 2025 11:52:19 +0200
+Message-ID: <5817e9ed-5b5c-4539-85ea-07c601c0ac7e@web.de>
+Date: Sun, 3 Aug 2025 11:52:19 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH] diff: ensure consistent diff behavior with -I<regex>
- across output formats
-From: Lidong Yan <yldhome2d2@gmail.com>
-In-Reply-To: <20250802102249.GA3738980@coredump.intra.peff.net>
-Date: Sun, 3 Aug 2025 16:42:48 +0800
-Cc: git@vger.kernel.org,
- hi@arnes.space,
- michal@isc.org
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] archive: flush deflate stream until Z_STREAM_END
+To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Cc: toon@iotcl.com
+References: <20250802220803.95137-1-jltobler@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20250802220803.95137-1-jltobler@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <2C9BB1AD-A958-4AE6-9B85-E57437D00535@gmail.com>
-References: <xmqqikjg47qt.fsf@gitster.g>
- <20250729081820.34626-1-yldhome2d2@gmail.com> <xmqqcy9io73j.fsf@gitster.g>
- <20250802102249.GA3738980@coredump.intra.peff.net>
-To: Jeff King <peff@peff.net>,
- Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-Provags-ID: V03:K1:jxpv1dX4ZclpeW1S7mpK7ICvg1tlGPxbJan1ETewxqZbslkGiNz
+ bNGdR4Le4tAeKBQu3UT5xSMmA9joB5FOZtrLAW7I7KFLhvTmkjRVo+EfVGl1LgCHjvaAlJM
+ fn3wTnap67CXxo8P0dxV8XYWMtBzvEAGyz4mcq9Nr7uUiFPk8P0iH+O5rLcl73G4hcRF+2a
+ htJA2eiMhHGgmt9nMg5TQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:VI/70jJFOnM=;FqOkGocxGoE63XBqAudwSodZYIC
+ 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
+ 03lIU2wlga2MbJHChCXr79Q=
 
-On Sun, Aug 2, 2025 at 06:22PM, Jeff King <peff@peff.net> wrote:
+On 8/3/25 12:08 AM, Justin Tobler wrote:
+> In `archive-zip.c:write_zip_entry()` when using a stream as input for
+> deflating a file, the call to `git_deflate()` with Z_FINISH always
+> expects Z_STREAM_END to be returned. Per zlib documentation[1]:
 >=20
-> So here's a naive application of the same technique:
+>         If the parameter flush is set to Z_FINISH, pending input is
+>         processed, pending output is flushed and deflate returns with
+>         Z_STREAM_END if there was enough output space. If deflate
+>         returns with Z_OK or Z_BUF_ERROR, this function must be called
+>         again with Z_FINISH and more output space (updated avail_out)
+>         but no more input data, until it returns with Z_STREAM_END or an
+>         error. After deflate has returned Z_STREAM_END, the only
+>         possible operations on the stream are deflateReset or
+>         deflateEnd.
 >=20
-> diff --git a/diff.c b/diff.c
-> index 76291e238c..0fe6eb7443 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -6845,8 +6845,28 @@ void diff_flush(struct diff_options *options)
->     DIFF_FORMAT_CHECKDIFF)) {
-> for (i =3D 0; i < q->nr; i++) {
-> struct diff_filepair *p =3D q->queue[i];
-> - if (check_pair_status(p))
-> - flush_one_pair(p, options);
+> In scenarios where the output buffer is not large enough to write all
+> the compressed data, it is perfectly valid for the underlying
+> `deflate()` to return Z_OK. Thus, expecting a single pass of `deflate()`
+> here to always return Z_STREAM_END is a bug. Update the code to flush
+> the deflate stream until Z_STREAM_END is returned.
+>=20
+> [1]: https://zlib.net/manual.html
+
+Good find.  I guess back then I thought making the output buffer twice
+as big as the input buffer was sufficient, as deflateBound() guarantees
+compression is possible with a much lower ratio.  But this doesn't take
+the internal state of a stream into account.  Oof!
+
+> Helped-by: Toon Claes <toon@iotcl.com>
+> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> ---
+>=20
+> Greetings,
+>=20
+> At GitLab, we received a report of a user getting the following error
+> when generating a zip archive of their repository via git-archive(1):
+>=20
+>         fatal: deflate error (0)
+>=20
+> I've so far only been able to reproduce this issue in the chromium.git
+> repository with a specific file:
+>=20
+>         git clone --depth=3D1 https://github.com/chromium/chromium.git
+>         cd chromium
+>         git -c core.bigFileThreshold=3D1 archive -o foo.zip --format=3Dz=
+ip HEAD -- \
+>                 ui/events/ozone/evdev/touch_filter/palm_model/onedevice_=
+train_palm_detection_filter_inference.cc
+>=20
+> In the above example, `core.bigFileThreshold` is set to a low value to
+> cause more files to use a stream as input while being deflated. This is
+> the codepath that produces the specific error.
+>=20
+> I've tested the patch against this specific file, and it fixes the
+> issue, but I'm uncertain how to reproduce and test this issue more
+> generically. I'm open to suggestions if anyone has some ideas :)
+
+Not sure how to fill up zlib's pending buffer most efficiently.
+Reducing the size of the output buffer would make the bug easier to
+trigger, though.
+
+> Thanks,
+> -Justin
+>=20
+> ---
+>  archive-zip.c | 20 ++++++++++++++------
+>  1 file changed, 14 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/archive-zip.c b/archive-zip.c
+> index df8866d5bae..29e7c9f5e3f 100644
+> --- a/archive-zip.c
+> +++ b/archive-zip.c
+> @@ -492,14 +492,22 @@ static int write_zip_entry(struct archiver_args *a=
+rgs,
+> =20
+>  		zstream.next_in =3D buf;
+>  		zstream.avail_in =3D 0;
+> -		result =3D git_deflate(&zstream, Z_FINISH);
+> -		if (result !=3D Z_STREAM_END)
+> -			die("deflate error (%d)", result);
 > +
-> + if (!check_pair_status(p))
-> + continue;
+> +		do {
+> +			result =3D git_deflate(&zstream, Z_FINISH);
+> +			if (result !=3D Z_OK && result !=3D Z_STREAM_END)
+> +				die("deflate error (%d)", result);
 > +
-> + if (options->flags.diff_from_contents) {
-> + FILE *orig_out =3D options->file;
-> + int orig_changes =3D options->found_changes;
-> + int skip;
-> +
-> + options->file =3D xfopen("/dev/null", "w");
-> + diff_flush_patch(p, options);
-> + skip =3D !options->found_changes;
-> +
-> + fclose(options->file);
-> + options->file =3D orig_out;
-> + options->found_changes =3D orig_changes;
-> +
-> + if (skip)
-> + continue;
-> + }
-> +
-> + flush_one_pair(p, options);
-> }
-> separator++;
-> }
->=20
-> which works on a trivial example. It affects all of raw, name-only,
-> name-status, and checkdiff. I know Junio said that --raw should not be
-> affected, but I'm not sure I agree. Anyway, it should be possible to
-> split the logic by output type.
+> +			out_len =3D zstream.next_out - compressed;
+> +			if (out_len > 0) {
+> +				write_or_die(1, compressed, out_len);
+> +				compressed_size +=3D out_len;
+> +				zstream.next_out =3D compressed;
+> +				zstream.avail_out =3D sizeof(compressed);
+> +			}
+> +		} while (result !=3D Z_STREAM_END);
+> =20
+>  		git_deflate_end(&zstream);
+> -		out_len =3D zstream.next_out - compressed;
+> -		write_or_die(1, compressed, out_len);
+> -		compressed_size +=3D out_len;
 
-I think I could do the same thing in diffcore_ignore(). Like:
+Looks good.  Could probably rolled into the first loop, but that just
+would make this fix more complicated.
 
-+void diffcore_ignore(struct diff_options *o)
-+{
-+	struct diff_queue_struct *q =3D &diff_queued_diff;
-+	struct diff_queue_struct outq =3D DIFF_QUEUE_INIT;
-+
-+	if (!(o->output_format &
-+	    (DIFF_FORMAT_NAME |
-+	     DIFF_FORMAT_NAME_STATUS)))
-+		return;
-+
-+	for (int i =3D 0; i < q->nr; i++) {
-+		struct diff_filepair *p =3D q->queue[i];
-+		if (ignore_match(p, o))
-+			diff_free_filepair(p);
-+		else
-+			diff_q(&outq, p);
-+	}
-+
-+	free(q->queue);
-+	*q =3D outq;
-+}
-
-And ignore_match(p, o) will run xdl_diff() for file pair p. This =
-approach
-ensures that the behavior of `git diff --raw` and `git diff --check` =
-remains
-unaffected.
-
-> I'm not sure if stuff like --stat would need something similar. It's
-> already doing a content comparison, so presumably it handles it
-> internally. Maybe stuff like --dirstat would need it, too? In which =
-case
-> we'd maybe want to annotate each filepair in an initial loop with
-> whether it's modified at the content-level, and then take that into
-> account in various code paths.
->=20
-> And of course it's horribly hacky looking. Some refactoring might =
-help.
-> Certainly it is silly to open /dev/null each time through the loop.
-> There might also be a better way of checking whether the diff found
-> anything than the found_changes flag.
->=20
-> So this is really just sketching out the direction, and somebody would
-> need to figure out the details.
-
-Seems like compute_diffstat() will run xdl_diff() to fill diffstat. =
-Since diff_flush()
-calls compute_diffstat() for --stat, --dirstat=3Dlines, --shortstat and =
---namestat, we
-shouldn=E2=80=99t run an extra xdl_diff() for them. I don=E2=80=99t know =
-if --dirstat=3Dfiles would
-need an extra xdl_diff() though.
-
->> * Also, should we internally run diff twice, especially even when
->>   we are going to show the patch output and are not limited to
->>   FORMAT_NAME and FORMAT_NAME_STATUS?  Generally, running the real
->>   diff in any of the diffcore transformatin is a sign of trouble.
->=20
-> The patch above also runs the diff twice for "-Ifoo --name-only -p". =
-But
-> I think we are kind of stuck there. We want to show all name-only
-> entries before any content diffs. So either we have to run the content
-> diff twice, or we have to buffer it to show after we decide whether to
-> show name-only entries.
-
-I haven=E2=80=99t thought of a good way to avoid running the diff twice =
-either.
-Caching the diff content seems quite complicated. Moreover, `git diff =
--G<regex> -p`
-requires running the diff twice: the first diff is used to filter out =
-file pairs
-that don=E2=80=99t match, and the second diff outputs the patch.
-
-On Tue, Jul 29, 2025 at 05:28:00PM -0700, Junio C Hamano wrote:
->=20
-> The enthusiasm is appreciated, but the implementation raises two
-> questions.
->=20
-> * This special cases -I<pattern>, but any option that causes us to
->   set the .diff_from_contents flag, not just -I<pattern>, can cause
->   the raw blob comparison to be potentially different from what the
->   blob contents are compared with various "ignore this class of
->   changes" criteria.  Shouldn't "git diff -w --name-status" and the
->   like get the same treatment?
-
-Yes, I think I could modify ignore_match() to support -w and other =
-ignore options.
-
-> Also, the usual way to compose a log message of this project is to
->=20
->     - Give an observation on how the current system works in the
->       present tense (so no need to say "Currently X is Y", or
->       "Previously X was Y" to describe the state before your change;
->       just "X is Y" is enough), and discuss what you perceive as a
->       problem in it.
->=20
->     - Propose a solution (optional---often, problem description
->       trivially leads to an obvious solution in reader's minds).
->=20
->     - Give commands to somebody editing the codebase to "make it so",
->       instead of saying "This commit does X".
->=20
-> in this order.
-
-Thank you once again for patiently explaining how to write proper log =
-messages.
-I=E2=80=99ve made notes and am ready to apply them to future commits.
-
-Thanks,
-Lidong
-
+>  		zip_offset +=3D compressed_size;
+> =20
+>  		write_zip_data_desc(size, compressed_size, crc);
 
