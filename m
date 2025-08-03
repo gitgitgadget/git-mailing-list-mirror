@@ -1,54 +1,54 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E90F281526
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:53:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94B527EFF1
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 06:53:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754203993; cv=none; b=HXtmnbuQkC51XrOLw0xZmSTjvE0lZYXxoswNh2ff+UAIhffERGVvTnWIBl4bO9GLv/ocyIrMgmkPSrzfmJJ86vmLcHevRU2xq9y8zeA1XfTYQKyYDxKrfSV0zn8fDTByHZjG45jlFS0eZeXoZ2x2xIycugR7nk6MQK17z8Un1gg=
+	t=1754203994; cv=none; b=F2IDzf/b3jUhwoHSHM7SnsZwZY8IIc+xKsid3Js0P3cTdr4VLNHSE0PfgjSw3//H+CUvSGr2+AWn9mHHOsbJq99ggBx+l9gg3fnJfApkFeEok8+T/qrSvEC8qGox/2A63IBi/2pf5iqH1778MX3fbkYlSEh5S/58pVZxTdWnQHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754203993; c=relaxed/simple;
-	bh=ToOWadr+xltucKoXGj0cRxc/AVjx7MGhMzXZGjUPXfY=;
+	s=arc-20240116; t=1754203994; c=relaxed/simple;
+	bh=T8wjUpdcZ3Btx9+dQuXumMNZ1choPjjbD3xx14udjHU=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kid/9K506DnWX8WIIu7JWTJeI8zn9EjIBKKA+5mkiW+AgPRbLTTVxLN7mIdknndKOTRtp4OveBy+8zVM6mOUxlbLoN7OZ7VWpCp1gR00qpMW3j9iDLvc0rcRRcLOKo6qr8fAhi6qbsCm+zfs0hRhpDgmbwJ9/tr9NkWlDa0uO0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NQKl8XKC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UBkG6RSU; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version; b=KskGul+dB/unrYGOP10Yc8ZflGnohL671c+8/5dQVA5xxK5ke2gOG2C+tpuFnvayjO8d/3MBk6y1Dd7EEybCqwXcQR8sIySxb3Z0XMKyGpgAGg7OcVVD5im8uFZ4pQMjmCT0doJkEszx1rs5xVfQW4DA8PnSi118JYFNFtg72Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DJ/AXFSQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MdyFvIA3; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NQKl8XKC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UBkG6RSU"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DJ/AXFSQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MdyFvIA3"
 Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D4BD81400350;
-	Sun,  3 Aug 2025 02:53:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sun, 03 Aug 2025 02:53:10 -0400
+	by mailfout.phl.internal (Postfix) with ESMTP id 2CA22EC1275;
+	Sun,  3 Aug 2025 02:53:12 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Sun, 03 Aug 2025 02:53:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1754203990; x=
-	1754290390; bh=xW3JXc00ryvlVuJscPH41U/D8Na6R6Cza98VJetyGYo=; b=N
-	QKl8XKCUbaIHMNEEwmL2AQWzfs4A3ylnokUhuMgiR4FYyu5C9QOFVrzcQ6tcr3GQ
-	lo1QFUM08Sps182ct+meJ59FAMsFadKm0kHFjcSd18zzld8VliT36n1v2M/S4tMI
-	R3rjxbkiDOb06SR9FJVg1eO9tFDs2kwoycfqzVpGHrdIhfk/zoBr6+antiEQMCs9
-	KLLprSDhwhm81WNTl49+PAhn60GD7x0Q6r8XRQsl5GjP8IChR7f/MFnid6Th8TRK
-	A9cFRR6DkL8F35RSBBd2sDfzI0duYJJfyUJUWOq7ZdQH4h4ffYgHViCOnUvHicQ6
-	J5ELZ7UH59Z5tf6yV3b9A==
+	:reply-to:subject:subject:to:to; s=fm2; t=1754203992; x=
+	1754290392; bh=9YRhfgn56AxyZc9ZxizVvaJEU4M4d2Ock21L3LajxoY=; b=D
+	J/AXFSQDtHSgPYVaKoNKKnvTGligS7exbrtWhTPlUlkwWy6FE+yH8UEzOvZa3sG6
+	gNPGCQhbudmJ/9PwbZ8AonsNBBphnkR013aVsWv5EAUxi6HzUSJtceZw2WAY3clc
+	vmiI75L3g3uZ9HalzDB1ymoQ1aAkMAow8+zIse0ZMYDrJqMi2IKg1CVJzxZmNRGU
+	nu+1YAbDsnWPy+XRvXgKiIWfBxKi1u2YH6WeKFR5uqxD25FCiIcKKcQzhkSnV0Co
+	kPyH8PYrF5LONgTfc8/oceBiXyoDOpxVqZYn6zG5SIyuFTl6A3c8fDpxxDV7CJz3
+	lX3RTai4QtPtXXUDq2QwA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1754203990; x=1754290390; bh=xW3JXc00ryvlVuJscPH41U/D8Na6
-	R6Cza98VJetyGYo=; b=UBkG6RSURYMeKkMuPjYrhdsrRk2OiC6ArRheerp/KhKR
-	oJ2J5nk+ivGJOFCe50uFrUkznstlGYCWPAHPOlmv2CJqKQyddU+WDq27wXt848EW
-	VNnrvGxZz4QCZWQ5+ctW+oSdQARxCV7W2DRV496Z4Y9F0TZWGznqdGPVfZcsaLHI
-	UZRMeJZKj5rHAsMMqed6/tJns0kRpRshJClU7bCoGALim8lE6RofxL4ojM/Uwg0E
-	O/55UquxsS/xp3DzmrpFAyVERDDpD6v1DtgnFjJcDLafUnsCl/uriJr6JsEncivz
-	4OJnXrdBPsJjiCI0hLo1m8TpT9EF/sDNqcp4AG5fnQ==
-X-ME-Sender: <xms:VgePaIHJFldhd3Cczy_b4XGGYm6Ss1msOHqsO1x6O304VxyRNx8s4g>
-    <xme:VgePaBio8mJogh2m7l6kUmlvS_u_ot-okt7MNWLHEuv0kdiTN8qVWWJDTfEf9cPFU
-    5fdhu4x78J1X90DFw>
-X-ME-Received: <xmr:VgePaD9rURJ-swmQPdHlrCzB7aIgQP6jqVyb4lPmzc2YTpUM6YwomNVcsxS9omXQTK7pPwe5gjREU4hc4fgmXFFAWY5EMM1F9lF6W1E>
+	fm3; t=1754203992; x=1754290392; bh=9YRhfgn56AxyZc9ZxizVvaJEU4M4
+	d2Ock21L3LajxoY=; b=MdyFvIA3Thdga3lriPDnbkCP6mucbKCLmrJ7X2nvbUc2
+	kcXS/oG39ol3LK6RL6uoOzP1e4lumvoqMVpuf3rC15et61FiigkULvmFBQiqw9yR
+	CxV56g7Pa1HIoeaccDsSwdTSrBYTI04xsqNY4piVwKaWdPgtbyDHLxcWcewqglFh
+	Qzy8dLLwnytyHjKKiO/lyOAyuvLakoKt2bKfugqAxeOb7K9VxdwxhBvP6Oigdrnn
+	y4NIuybffCZbnwu16yz3nB6RfhjJnynMeNyofoGA79FXD9PdIT8W2TuDvKJP3A3b
+	vQjKPSTtA+caTc8bYgdahnx8oEQanM/SX4/DzDl9rw==
+X-ME-Sender: <xms:WAePaGgMVrL89uusrSu1q69X2RDlpPQPLq1km5cJGznD6PAv09mSXg>
+    <xme:WAePaHOu8RFeqHcD6lXpXN6C_R0Pos2fM7PsaPJzdllMsPnhaTSsgF73y82t9YvVf
+    kaDl03qt68Bo_ZRbg>
+X-ME-Received: <xmr:WAePaP7hgHqkyAeWfP_n96elJl5Zfa-UNL6b_l61MyRB4AYu6BBTgmjXllUxV0X9oEJnWrczq1w1bhX63VVFvb0s4uQzBzKVDZttGBg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdekjeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutdekjeekucetufdote
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:VgePaIrB31xc4awdtuk08QgQ2GTQKlxzv4abEl3E6kg_AtRCYxuvXg>
-    <xmx:VgePaC9P90dZxa4YYUBU8B2AnQde0U_CcTfc_3wOfR_X3ULbaa88yA>
-    <xmx:VgePaMWjWXJMgyh4QOKxzFsvSvvJ9U9aICldLfMCGp6AscCM7xKmow>
-    <xmx:VgePaICwu7rMaCNrls8L1lxCmdzxzTpOd3iVjtcxpNOa7TNDZ0zGTg>
-    <xmx:VgePaKqZVw6w_It3Kger9gmDQTIJHt7IXC2SEwr8ZJvME_NgfyQki3e2>
+X-ME-Proxy: <xmx:WAePaN3q2HcxFFz-ohpiuunDwRoOQbcD_90kTezOMbU6MPaSU9c8RA>
+    <xmx:WAePaIZ5srG0tkMnxngr4qLrI4EKjx7sR87onmYaCEIRIAaGscmE_A>
+    <xmx:WAePaNDUSBn0euO23SbjHEwFUDkLVwYUNn-IqAa7tUo7FbNFW3IEWA>
+    <xmx:WAePaC90x3QMUF5Iluh1SHdZVxN1mCvmB6akiCD_5IjNfXEorMp7rg>
+    <xmx:WAePaBFcTTDo0WU3wXAp5AcA7SIyuwaZv6fRhRQZDhQbYDudYXb5me7D>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 Aug 2025 02:53:10 -0400 (EDT)
+ 3 Aug 2025 02:53:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v3 04/12] clean: do not pass the whole structure when it is not necessary
-Date: Sat,  2 Aug 2025 23:52:56 -0700
-Message-ID: <20250803065304.3325286-5-gitster@pobox.com>
+Subject: [PATCH v3 05/12] clean: do not use strbuf_split*() [part 2]
+Date: Sat,  2 Aug 2025 23:52:57 -0700
+Message-ID: <20250803065304.3325286-6-gitster@pobox.com>
 X-Mailer: git-send-email 2.50.1-633-g69dfdd50af
 In-Reply-To: <20250803065304.3325286-1-gitster@pobox.com>
 References: <20250801220423.1230969-1-gitster@pobox.com>
@@ -84,46 +84,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The callee parse_choice() only needs to access a NUL-terminated
-string; instead of insisting to take a pointer to a strbuf, just
-take a pointer to a character array.
+builtin/clean.c:filter_by_patterns_cmd() interactively reads a line
+that has exclude patterns from the user and splits the line into a
+list of patterns.  It uses the strbuf_split() so that each split
+piece can then trimmed.
+
+There is no need to use strbuf anymore, thanks to the recent
+enhancement to string_list_split*() family that allows us to trim
+the pieces split into a string_list.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/clean.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/clean.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/clean.c b/builtin/clean.c
-index 708cd9344c..9bb920e7fd 100644
+index 9bb920e7fd..38780edc39 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -477,7 +477,7 @@ static int find_unique(const char *choice, struct menu_stuff *menu_stuff)
-  */
- static int parse_choice(struct menu_stuff *menu_stuff,
- 			int is_single,
--			struct strbuf *input,
-+			char *input,
- 			int **chosen)
+@@ -674,12 +674,13 @@ static int filter_by_patterns_cmd(void)
  {
- 	struct string_list choice = STRING_LIST_INIT_NODUP;
-@@ -485,7 +485,7 @@ static int parse_choice(struct menu_stuff *menu_stuff,
- 	int nr = 0;
- 	int i;
+ 	struct dir_struct dir = DIR_INIT;
+ 	struct strbuf confirm = STRBUF_INIT;
+-	struct strbuf **ignore_list;
+-	struct string_list_item *item;
+ 	struct pattern_list *pl;
+ 	int changed = -1, i;
  
--	string_list_split_in_place_f(&choice, input->buf,
-+	string_list_split_in_place_f(&choice, input,
- 				     is_single ? "\n" : ", ", -1,
- 				     STRING_LIST_SPLIT_TRIM);
+ 	for (;;) {
++		struct string_list ignore_list = STRING_LIST_INIT_NODUP;
++		struct string_list_item *item;
++
+ 		if (!del_list.nr)
+ 			break;
  
-@@ -626,7 +626,7 @@ static int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff)
+@@ -697,14 +698,15 @@ static int filter_by_patterns_cmd(void)
+ 			break;
  
- 		nr = parse_choice(stuff,
- 				  opts->flags & MENU_OPTS_SINGLETON,
--				  &choice,
-+				  choice.buf,
- 				  &chosen);
+ 		pl = add_pattern_list(&dir, EXC_CMDL, "manual exclude");
+-		ignore_list = strbuf_split_max(&confirm, ' ', 0);
  
- 		if (opts->flags & MENU_OPTS_SINGLETON) {
+-		for (i = 0; ignore_list[i]; i++) {
+-			strbuf_trim(ignore_list[i]);
+-			if (!ignore_list[i]->len)
+-				continue;
++		string_list_split_in_place_f(&ignore_list, confirm.buf, " ", -1,
++					     STRING_LIST_SPLIT_TRIM);
+ 
+-			add_pattern(ignore_list[i]->buf, "", 0, pl, -(i+1));
++		for (i = 0; i < ignore_list.nr; i++) {
++			item = &ignore_list.items[i];
++			if (!*item->string)
++				continue;
++			add_pattern(item->string, "", 0, pl, -(i+1));
+ 		}
+ 
+ 		changed = 0;
+@@ -725,7 +727,7 @@ static int filter_by_patterns_cmd(void)
+ 			clean_print_color(CLEAN_COLOR_RESET);
+ 		}
+ 
+-		strbuf_list_free(ignore_list);
++		string_list_clear(&ignore_list, 0);
+ 		dir_clear(&dir);
+ 	}
+ 
 -- 
 2.50.1-633-g69dfdd50af
 
