@@ -1,68 +1,68 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1180C2147E3
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 21:25:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFD21EDA3A
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 21:25:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256325; cv=none; b=RjtgIPi6FuGvc3qvVPmwDKAsnWRuzy9Ozqvo4Ev3/SByowt/fZVCOCCgGGCd5A9VPKiAEiE1dJZYqbkyZszMKOFo+Ud6+4GIIHjgxk2/UDyPJ5HSA4Rm2YH4PFyOhQTJMxwDAqEQd5TNYiD8jahUK99VG6BptrXj5h7UOqaVFD4=
+	t=1754256326; cv=none; b=JFH/140UwBIk5N/g0f6BeTNzlhYc0J/YiUJMI8i5Mtn5YIY0f8Yvd/OA1Gjo+5JGEMP4OiyXGJgd8U5eHAwnzT2xgTfb/wQHbbwK1pWTCqQiigUpOThHWx4B3CqmG0Sxu2HDxbBwZzNFssk73OQAeVkpRizKyyj3V/W+P6m21h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256325; c=relaxed/simple;
-	bh=Wd/u1lWvkDnGgGbpfs4j5JJFKtA9z3ssXFDzdMGF9JU=;
+	s=arc-20240116; t=1754256326; c=relaxed/simple;
+	bh=OW/Saae6YoAWD2SQmBRu/B13Gv3kz2esMzaGEaRMTg4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=fW+p3Lt1VEn1HbCrtcELZ246AtINp+UyiCcIE29/hYG2Wus889W6tUdgJvMrKrIu331FrgofLRHhIMtrF+z9kg3Unb8ZqsSlJnGkt/kjxR9e35QkfSpGVx8qzR3uHENfzcq5YOhAZldsjzIlm0FRl78GwftvQ1yCVbY6aK24biE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TZMjrDfT; arc=none smtp.client-ip=209.85.208.43
+	 MIME-Version:To:Cc; b=lCc00z3fczEv9YI5u03Kg/AZ6NMqXnpqa5LJuDSANcPiruwFIhZwZbdUScQrf0AWSLvq7OgDvh1pDtWMD5R2qgDd2ZHd3/CtkeVBQNZ/tfFiCG/p9+2ClZhis6j5mq+UwIWb1BiDVfQSUFPe63ZFnULGqLWBnEZLD1OLaeX0egs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SiFhCNJJ; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TZMjrDfT"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-61580eb7995so8324912a12.0
-        for <git@vger.kernel.org>; Sun, 03 Aug 2025 14:25:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SiFhCNJJ"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ae9c2754a00so932329266b.2
+        for <git@vger.kernel.org>; Sun, 03 Aug 2025 14:25:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754256322; x=1754861122; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754256323; x=1754861123; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=e1aa9wrxNUD4KDUgyDs7fO8Y19ltfoDR/mOfAgDsVZg=;
-        b=TZMjrDfTVIerTa40HHlCwEIwUsEkQZ4yT+b6WQDu/U9fl1geB7NVhuWjiiEe8EOwyx
-         321ToaPirt/cJ8xAbya+0MDL1/StLicxknffgjxxmfNe1MpUINf7iBecPfPoCJP3WF8W
-         vZDNFjHsj/WyLMUDhIFLftS5YxoT7j7hQqAJOjQfHQcdl/6UIUAvJLbWd4OqHJ0Pm8Ai
-         WiZl/fWMj5LRlRpEoOlFp1lRwo4WQAQvI6hm7lbzJ0PopX3DSW+QLrZAIiIHrURmkJ6X
-         PkUmr4AQrT//TwuH3ArlV+gAPN/9salXeg0vHuMXhKL6e7NLPt5/wuyQqAUBwC5rqt53
-         /gXQ==
+        bh=TJGJ88Ub+A0bLjV5eNpWDjXN/IhHezpzncWa15ImXXs=;
+        b=SiFhCNJJvQenqadEe1+cOrpdfBG7itrEHuvxH/tioi3LN4uvYOJUvvKuuGtL3cHDB9
+         Y2aY32lrVtc8AvmKrH1wVc6Ju1tBbNXEDKGIdG2kGaiLSA7QJHv5LUg719s6uTdW3uhR
+         MilNk8Esr1WSB4XBQQnGbSXJOrvMkcwrYDT9UDgVEAY4yClSRyOyL+gRm/3ez6Yqzsg4
+         2SOqLAj2IAiGOTBcMrW/HScevCxdsvQK0rOPM2hc+MfQ6nb07Ho4ZcLuZLtXjtklzYL9
+         Dd7QA7CE2blSsFFTEniBCiGFo94pHBlOnpwFouRMjI6lqxAcvEZz3OGWlb2sP8nxlVKW
+         GF0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754256322; x=1754861122;
+        d=1e100.net; s=20230601; t=1754256323; x=1754861123;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=e1aa9wrxNUD4KDUgyDs7fO8Y19ltfoDR/mOfAgDsVZg=;
-        b=v4TXPFHqNwTHFCcs7R6Lcjca3y+Db0yWpio6GyFENA5GZM6++xWIsN0fWvpp8IeybX
-         rE2nIoQpU0z31JWRTwC9EB4MR7NO6/kxAZ/d2vrLpBmRjBrUXOni7OMnIpJvh+y5BIdW
-         US7aP+prj3E+zL0m2caFprYWCnrVDs/HyE/jRR33QXlDsQngTeJ1Uu7lvTHQrdi+bQfK
-         aov+RLODlbs5DPvDcTY85SaWRZlB7KWii8S1aUOAlUzO0A4db63qhsy4QEyW1/t3RANZ
-         CLBwK5ixr0EdLidYzRR1u/bqGNF2nueJIBHaA9YP4/PW1hlLQ59Y85sggiXImg40RcAp
-         nJTw==
-X-Gm-Message-State: AOJu0Yy+AqjHC2nrNqdQKYM3JVjHm4fErubW4rCOGJ60uxEqTPveHLKN
-	NL6QZN4A7W+Zi35g2YhnN3achn2+EKyd0IFH5pTZCzYkgkZfkqUtbIDRGhgPCA==
-X-Gm-Gg: ASbGnctie6SA2uYNz12W1wufJbZOFYd93YZDsUo13xx9JYP1h03MavfxzRd1jGD/NVd
-	k/bOLCOqF/zNZuVF4plcuKVrw4z3/PgBYRjbtKInzaXdhCM6XzxrCelWTvRSszZZfL0erMGCXk6
-	vvMMNcIMwhwJYOyD3FYbcZ/Nc9mX6gUQFBqiHJMazcmfsO0IcJIfMFz5nbiE7fT1st/V5bwNWUE
-	DA36V1zROfNNzJqbSDPHMmAm7LPVgxT87wHUmjZBSMeUSMJTALmRgQUEbJcYxe1qziIW7o43I9Y
-	NVbb5wSMtAyse7CmZENQioeA5+szVCERUbIzTjpzE7I2cUK4J17ZZ87AlbDabpE/i+Afnrxg2X9
-	dB33qjEgrTwGEeamsq+ScOiA=
-X-Google-Smtp-Source: AGHT+IGjmwrfRLjZpy2afiDPxgRP3By2ZfmdgmKI8QXdQ54NCrB5sm5Jf8sRKSl5RtEIq446fz+07w==
-X-Received: by 2002:a05:6402:1e8c:b0:615:dc48:1ea with SMTP id 4fb4d7f45d1cf-615e5deba45mr6492219a12.8.1754256321968;
-        Sun, 03 Aug 2025 14:25:21 -0700 (PDT)
+        bh=TJGJ88Ub+A0bLjV5eNpWDjXN/IhHezpzncWa15ImXXs=;
+        b=XSF45hGJ9t8S8ddMA9i4NLyA4rjRShWT78KwpSU2zQloJIY+4jIf5ll7YJyDUSE3rq
+         RCvrmymDFjNNdU1g2C/8U50r0cbla/MfMUYndcOkWvNzvMzNMM4zEr3Ovs9M2aQl2DL2
+         rfLGnhVC0m333ImUVejSRdbdXtw3nkWbBF9rzNPep6hEwaJztmWZLJvfxz0QqijIrHA3
+         ex1bn4eyUbBRddqLuAlFT4d4ykyl6xJDBq7Gqq6nPQAAuAsmBQkwTcpkYp9HqPY8A4L0
+         ZO0INY4pxyRYxhhuk/dKNyV1/QVg1LEKzSr7LfZmC+pjEoSfJ+c0CC/4GLvzoG/gRgSO
+         lJEQ==
+X-Gm-Message-State: AOJu0Ywk/AM14ym8KPNl7lp87jCa6t33SVoEKaKz4wFWGIctc7mO86NK
+	9sXDCPpYWTfIguAAfQFpwT3pNTRLr3ekvb+l+FVFyjVW5dJPemLiwgHe0TKLog==
+X-Gm-Gg: ASbGncs1rGi9NWIX4DIDXXiXbLLdyMC65yZkn0xqzG+j140Oj+JcqHQRWaMShv9Vw25
+	dNC+Yx4ESAKqtD26ojLTqhbpQhpkUbEFtWGvnV0Ro7vilYFrfgDpP7VX04nt0J+7ms9fh5oVV0p
+	58fOV3nbYxwSnAKu03d7VDvIhwDKyg+Qgz3cqhmTp28zQWBHAS09RIDWjxS+DA+yeWPaCu8vcOZ
+	XW+d+sxCS46+DUviF9659tJ9L1MfsTd0w0W+Pz+TWhgqBPaOxWdoI/ecS3p0rgdOc4+U/vV6Z18
+	ygzfsIi/VP1TsDvp1WP5ppB2PJZ8bv+EyCjKfI72Lpn5hBeeloroQa36X6EKfDEETZ6NUwi2z1Z
+	8pNas5A5GlWM4sLeOXYFj8VM=
+X-Google-Smtp-Source: AGHT+IGuHLMZBhc4D85zbnpEVWZWzlV/5zx2GpIU5ptVLyLeC2uzQbw+C+ls2Ev9f86VXHpj6vFmNA==
+X-Received: by 2002:a17:907:9812:b0:af6:34ee:8a79 with SMTP id a640c23a62f3a-af94016b62dmr763962366b.36.1754256322945;
+        Sun, 03 Aug 2025 14:25:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-615a8f25739sm5964328a12.21.2025.08.03.14.25.21
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-615a8f00252sm5866165a12.8.2025.08.03.14.25.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Aug 2025 14:25:21 -0700 (PDT)
-Message-Id: <768a84c8c6ec063717d4a935b86d8110ba0a00c6.1754256318.git.gitgitgadget@gmail.com>
+        Sun, 03 Aug 2025 14:25:22 -0700 (PDT)
+Message-Id: <51113ab9b81555387d5c4083b3c0ec3b0c2d2596.1754256318.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1948.git.1754256318.gitgitgadget@gmail.com>
 References: <pull.1948.git.1754256318.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 03 Aug 2025 21:25:17 +0000
-Subject: [PATCH 3/4] mingw_rename: support ReFS on Windows 2022
+Date: Sun, 03 Aug 2025 21:25:18 +0000
+Subject: [PATCH 4/4] mingw: support Windows Server 2016 again
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,39 +78,42 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-ReFS is an alternative filesystem to NTFS. On Windows 2022, it seems not
-to support the rename operation using POSIX semantics that Git uses on
-Windows as of 391bceae4350 (compat/mingw: support POSIX semantics for
-atomic renames, 2024-10-27).
+It was reported to the Git for Windows project that a simple `git init`
+fails on Windows Server 2016:
 
-However, Windows 2022 reports `ERROR_NOT_SUPPORTED` in this instance.
-This is in contrast to `ERROR_INVALID_PARAMETER` (as previous Windows
-versions would report that do not support POSIX semantics in renames at
-all).
+  D:\Dev\test> git init
+  error: could not write config file D:/Dev/test/.git/config: Function not implemented
+  fatal: could not set 'core.repositoryformatversion' to '0'
 
-Let's handle both errors the same: by falling back to the best-effort
-option, namely to rename without POSIX semantics.
+According to https://endoflife.date/windows-server, Windows Server 2016
+is officially supported for another one-and-a-half years as of time of
+writing, so this is not good.
 
-This fixes https://github.com/git-for-windows/git/issues/5427
+The culprit is the `mingw_rename()` changes that try to use POSIX
+semantics when available, but fail to fall back properly on Windows
+Server 2016.
+
+This fixes https://github.com/git-for-windows/git/issues/5695.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ compat/mingw.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index c331c3ac32a8..d53ce38b7f82 100644
+index d53ce38b7f82..8538e3d1729d 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -2277,7 +2277,7 @@ repeat:
+@@ -2277,7 +2277,9 @@ repeat:
  		 * current system doesn't support FileRenameInfoEx. Keep us
  		 * from using it in future calls and retry.
  		 */
--		if (gle == ERROR_INVALID_PARAMETER) {
-+		if (gle == ERROR_INVALID_PARAMETER || gle == ERROR_NOT_SUPPORTED) {
+-		if (gle == ERROR_INVALID_PARAMETER || gle == ERROR_NOT_SUPPORTED) {
++		if (gle == ERROR_INVALID_PARAMETER ||
++		    gle == ERROR_NOT_SUPPORTED ||
++		    gle == ERROR_INVALID_FUNCTION) {
  			supports_file_rename_info_ex = 0;
  			goto repeat;
  		}
 -- 
 gitgitgadget
-
