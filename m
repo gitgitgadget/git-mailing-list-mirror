@@ -1,41 +1,40 @@
 Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1E91DDC15
-	for <git@vger.kernel.org>; Sun,  3 Aug 2025 09:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E8E205502
+	for <git@vger.kernel.org>; Sun,  3 Aug 2025 09:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754214750; cv=none; b=aUhXdHUHicpycAt2zCCc680DzmYwtIl25KxJlcP8KuBO2RD9cXeDxIe9gjamrPvixObhA3YsC1qbvO8yNYYno73fIWpwF22m81SlEbThOxFMHZXItS++uRG+hwgqjZ2hJkMaEmKeix0QszUfC02sJ+pg06+1yyJMtTDTsK8d3sc=
+	t=1754214879; cv=none; b=dLMWI3WTG4Zq5D9gyj6U3We2SgqTMEjs53lK3Qew3ENZfXv6zdiUPISVviuRIWtvlUc8DIk4aeIsQLRgqXWx1KKARWPyJYqGpEHlikWExOYHfTenvDenqQhYsRYBXGZoeeSEY7BASBMn9egy6TAWkXq+mc9youwGpdCgZjun7rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754214750; c=relaxed/simple;
-	bh=s1z3G0MmCX/CzYrcRkLG63/cZudgQJva6hBsrNDtxYk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OLj+/b8aG5vnHQ99ShjPgelsbB/GqmZhYHArvKlNis+l0zJoFu2uptDAYaU1ihqCI5s9dKqoB+S/58pBBXvqVRTNG60oW07c8PDncvRbwMM3lxqfkVvkhTSqSriF5/FMP87iTQIi50+usrPpCRVp7V6EM6JA8x2jggwrT1i9qGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=JjimI/kV; arc=none smtp.client-ip=217.72.192.78
+	s=arc-20240116; t=1754214879; c=relaxed/simple;
+	bh=SwfJjldP1vdqJ4Egjs7j3x6EAcBvZIK4b75vvsU1CCM=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ssCS+ShrAyLYf+aj32koXxyO7bhUU35zWkGN0WtRlNSmeHcJCpcjh3dGTrSV5hPlUqCOlUsQkCdt9v/otMrzej4kTn9VqmLlFwxzzgJvVebmyvUbiMADipQph2n9lql+VUpG2f54NNASP+w6toxU1Ghr9etWvBUWfTsIn/8h1zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=VdTsY9v6; arc=none smtp.client-ip=217.72.192.78
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="JjimI/kV"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="VdTsY9v6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1754214740; x=1754819540; i=l.s.r@web.de;
-	bh=flLTpywpjWPuAq7bVL2pXjaNIN0RAwxyDtmYWvTVq+I=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=JjimI/kVl4tpRrmLeqUZJbkiNKIbVyCv9mFgunief6ssksQIzn8a9ujWDid/gtvG
-	 Q9E3DP3MoRhUiNXDxFLo1ONonNH9OsIdwdzRwW01gT/NkWK9c78Vz8g/KWncq+ew4
-	 mxMcp41OG6PHI4nbNxHKkVpGfAiYMLPpCT2/zZrBAZCVJJ4jJjSnKVr4HOVWYVcIi
-	 U+n7PaYeGX/bNFp57n8OWMzt4AROUN0qo5SRn3KcYyQty/JnW2qwKvPtTa6TxIhXP
-	 uk34YCe+sBjTdVMmWhMM6qqUx9ryuaHE1WLnBmiMbF0544zoiC8/HeNpu0cGUNzHn
-	 D7zLitfK2Wg1LFG4fQ==
+	s=s29768273; t=1754214867; x=1754819667; i=l.s.r@web.de;
+	bh=iEdMJWXvKMiR5Mcir+PQnwkqOmdfj4pFCzYlehuu2t8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=VdTsY9v65bkqmfR4BBtyfFlrerl6cdHUVnLG7BaGC8EnObKbJCePNIHeSDpxiOgr
+	 ulFWq6Ri1CIxHNNo6KVi8yqGwFIfkJnoF2nNHaGbsOtjHVMVOkt7ztFgjOFhpU4Wo
+	 HnE9scYLIv37yMoiLEcx6nIPVDJ06otpQfF7FYR+PXOK9WDzxUpMoEfEMuy3sGAX2
+	 yXjN1CSSv2nGV+19HqboBiMDfw74bl5maiaB1ppQgbsz4twjhDJb/2thCfvGvW0wW
+	 IqBjkYcqq2GU+mUX3N6nzDnbGyA9/bWpyId0w98TOr85/UZLltvwnDUPGp4z5WQJ3
+	 suZweZbCzfXFgNERoQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mm9Zi-1uID7z35do-00bKcS; Sun, 03
- Aug 2025 11:52:19 +0200
-Message-ID: <5817e9ed-5b5c-4539-85ea-07c601c0ac7e@web.de>
-Date: Sun, 3 Aug 2025 11:52:19 +0200
+Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MjBVv-1uCSJz3LYT-00noWp; Sun, 03
+ Aug 2025 11:54:26 +0200
+Message-ID: <c5d91cec-3fec-422e-86d4-78767d95f208@web.de>
+Date: Sun, 3 Aug 2025 11:54:26 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,176 +42,134 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] archive: flush deflate stream until Z_STREAM_END
-To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Cc: toon@iotcl.com
-References: <20250802220803.95137-1-jltobler@gmail.com>
-Content-Language: en-US
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20250802220803.95137-1-jltobler@gmail.com>
+Subject: Re: [PATCH v2 1/3] commit: convert pop_most_recent_commit() to
+ prio_queue
+To: Lidong Yan <yldhome2d2@gmail.com>
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+ Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
+References: <bc079b3c-a472-4f5d-95ca-390f9de25196@web.de>
+ <8ff40c56-368a-4347-aeae-2aca2cb6a5b2@web.de>
+ <5d7c631a-ae94-4a59-b4ee-8161b5136d86@web.de>
+ <148541F5-DC9F-4A3A-B1B1-0FED8AA5A101@gmail.com>
+Content-Language: en-US
+In-Reply-To: <148541F5-DC9F-4A3A-B1B1-0FED8AA5A101@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:jxpv1dX4ZclpeW1S7mpK7ICvg1tlGPxbJan1ETewxqZbslkGiNz
- bNGdR4Le4tAeKBQu3UT5xSMmA9joB5FOZtrLAW7I7KFLhvTmkjRVo+EfVGl1LgCHjvaAlJM
- fn3wTnap67CXxo8P0dxV8XYWMtBzvEAGyz4mcq9Nr7uUiFPk8P0iH+O5rLcl73G4hcRF+2a
- htJA2eiMhHGgmt9nMg5TQ==
+X-Provags-ID: V03:K1:dSgv03CMe+RdJrTkevxhIdxZIFFqJDZ8WNOxojM2DZfcZwALJ9p
+ xY7E/QQIsPEwKF9L5GfK/rMo+rF8Sy4tjK4SqIjx9MUxuaR68OCfR5kmVPi7mopg0AVgWQF
+ 7mrvUVfCuJH9i4Klcv1QOBvBaLNRBx+CMdGqqIGn11tva1GXLBH5a2KAlc6MBjVH5U1cI1w
+ JyfQh/hIY+QXQMiHqnl1w==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:VI/70jJFOnM=;FqOkGocxGoE63XBqAudwSodZYIC
- 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
- 03lIU2wlga2MbJHChCXr79Q=
+UI-OutboundReport: notjunk:1;M01:P0:69Xd21wOuxM=;hGbWsPzrVmnaA4ijbL8KqoIxBGg
+ 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
+ pdHuaA7c+FpslFvD4/CPuaM=
 
-On 8/3/25 12:08 AM, Justin Tobler wrote:
-> In `archive-zip.c:write_zip_entry()` when using a stream as input for
-> deflating a file, the call to `git_deflate()` with Z_FINISH always
-> expects Z_STREAM_END to be returned. Per zlib documentation[1]:
+On 7/21/25 4:02 PM, Lidong Yan wrote:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>>
+>> +#
+>> +# Creates lots of merges to make history traversal costly.  In
+>> +# particular it creates 2^($max_level-1)-1 2-way merges on top of
+>> +# 2^($max_level-1) root commits.  E.g., the commit history looks like
+>> +# this for a $max_level of 3:
+>> +#
+>> +#     _1_
+>> +#    /   \
+>> +#   2     3
+>> +#  / \   / \
+>> +# 4   5 6   7
+>> +#
+>> +# The numbers are the fast-import marks, which also are the commit
+>> +# messages.  1 is the HEAD commit and a merge, 2 and 3 are also merges=
+,
+>> +# 4-7 are the root commits.
+>> +#
 >=20
->         If the parameter flush is set to Z_FINISH, pending input is
->         processed, pending output is flushed and deflate returns with
->         Z_STREAM_END if there was enough output space. If deflate
->         returns with Z_OK or Z_BUF_ERROR, this function must be called
->         again with Z_FINISH and more output space (updated avail_out)
->         but no more input data, until it returns with Z_STREAM_END or an
->         error. After deflate has returned Z_STREAM_END, the only
->         possible operations on the stream are deflateReset or
->         deflateEnd.
+> I feel that the reason there's no significant performance improvement is=
+ probably
+> because mostly we are using the priority queue to sort O(siblings) nodes=
+.
+> For example, in this case, the most time-consuming operation is when the=
+ priority
+> queue or commit list contains 4 and 5, and we then need to insert 6 and =
+7.
 >=20
-> In scenarios where the output buffer is not large enough to write all
-> the compressed data, it is perfectly valid for the underlying
-> `deflate()` to return Z_OK. Thus, expecting a single pass of `deflate()`
-> here to always return Z_STREAM_END is a bug. Update the code to flush
-> the deflate stream until Z_STREAM_END is returned.
->=20
-> [1]: https://zlib.net/manual.html
+> Assuming the maximum number of siblings is W and the number of nodes is =
+N,
+> the time complexity with a commit list is O(W=C2=B2 =C3=97 N), while usi=
+ng a priority queue
+> gives O(W log W =C3=97 N). Perhaps in many projects, W isn't particularl=
+y large,
+> which results in the performance improvement not being very significant.
 
-Good find.  I guess back then I thought making the output buffer twice
-as big as the input buffer was sufficient, as deflateBound() guarantees
-compression is possible with a much lower ratio.  But this doesn't take
-the internal state of a stream into account.  Oof!
+Kinda.  While traversing the history we take a commit from to the
+commit_list or prio_queue and put back its parents.  For single-parent
+commits this sequence keeps the number of stored items the same.  Merges
+increase that number.
 
-> Helped-by: Toon Claes <toon@iotcl.com>
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> ---
->=20
-> Greetings,
->=20
-> At GitLab, we received a report of a user getting the following error
-> when generating a zip archive of their repository via git-archive(1):
->=20
->         fatal: deflate error (0)
->=20
-> I've so far only been able to reproduce this issue in the chromium.git
-> repository with a specific file:
->=20
->         git clone --depth=3D1 https://github.com/chromium/chromium.git
->         cd chromium
->         git -c core.bigFileThreshold=3D1 archive -o foo.zip --format=3Dz=
-ip HEAD -- \
->                 ui/events/ozone/evdev/touch_filter/palm_model/onedevice_=
-train_palm_detection_filter_inference.cc
->=20
-> In the above example, `core.bigFileThreshold` is set to a low value to
-> cause more files to use a stream as input while being deflated. This is
-> the codepath that produces the specific error.
->=20
-> I've tested the patch against this specific file, and it fixes the
-> issue, but I'm uncertain how to reproduce and test this issue more
-> generically. I'm open to suggestions if anyone has some ideas :)
+We add and retrieve each commit in the (relevant part of) history.  That
+takes O(N) and O(1) for the sorted list, and O(log N) and O(log N) for
+the prio_queue, where N is the length of the list.
 
-Not sure how to fill up zlib's pending buffer most efficiently.
-Reducing the size of the output buffer would make the bug easier to
-trigger, though.
+So the best-case history is a string of single-parent commits, keeping
+only a single item on the list/queue throughout.  That requires no
+sorting or heaping, making the additions and retrievals O(1).  The
+overall complexity is then O(N) for both variants, N being the number
+of commits in the history.
 
-> Thanks,
-> -Justin
->=20
-> ---
->  archive-zip.c | 20 ++++++++++++++------
->  1 file changed, 14 insertions(+), 6 deletions(-)
->=20
-> diff --git a/archive-zip.c b/archive-zip.c
-> index df8866d5bae..29e7c9f5e3f 100644
-> --- a/archive-zip.c
-> +++ b/archive-zip.c
-> @@ -492,14 +492,22 @@ static int write_zip_entry(struct archiver_args *a=
-rgs,
-> =20
->  		zstream.next_in =3D buf;
->  		zstream.avail_in =3D 0;
-> -		result =3D git_deflate(&zstream, Z_FINISH);
-> -		if (result !=3D Z_STREAM_END)
-> -			die("deflate error (%d)", result);
-> +
-> +		do {
-> +			result =3D git_deflate(&zstream, Z_FINISH);
-> +			if (result !=3D Z_OK && result !=3D Z_STREAM_END)
-> +				die("deflate error (%d)", result);
-> +
-> +			out_len =3D zstream.next_out - compressed;
-> +			if (out_len > 0) {
-> +				write_or_die(1, compressed, out_len);
-> +				compressed_size +=3D out_len;
-> +				zstream.next_out =3D compressed;
-> +				zstream.avail_out =3D sizeof(compressed);
-> +			}
-> +		} while (result !=3D Z_STREAM_END);
-> =20
->  		git_deflate_end(&zstream);
-> -		out_len =3D zstream.next_out - compressed;
-> -		write_or_die(1, compressed, out_len);
-> -		compressed_size +=3D out_len;
+Worst-case history might be a single merge of all commits -- a
+centipede or myriapod?  With all commits on the sorted list we get a
+complexity of O(N=C2=B2) for the traversal, and O(N log N) with a prio_que=
+ue.
 
-Looks good.  Could probably rolled into the first loop, but that just
-would make this fix more complicated.
-
->  		zip_offset +=3D compressed_size;
-> =20
->  		write_zip_data_desc(size, compressed_size, crc);
+Ren=C3=A9
 
