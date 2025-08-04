@@ -1,54 +1,54 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1156D229B02
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 14:26:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5963C271458
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 14:29:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754317583; cv=none; b=EBZXMoMgspLSIXwoZ4NvEQhT69vxtFcpzZ1eWWSICfm07lBAJkTlnCs9BUXaS72JlmpKzbEyIwAwDtRC0JbEmpnKatMOv9VzyRUmbT6QkJbT/eFEyCCbSGKFeIGHrLMSzCL+R7ve6bM8RKPg0tu+QxDjlDx13q1a+8QRJptxhFo=
+	t=1754317768; cv=none; b=RyDLzWabrvwIdOwjBpg70klJ/oaAsn5ddODNfalpjeWGwfyKTOKITosON0FRpy1BQ9AIUZlaqZXb77aZ3t8TTbS8gof1QmzYmQOZPFbt8jE/cgdCOO36rcvsC6qz2nmjUX8pytTbtf5IKuS1sOmXFJ+Q0Gq600Pu4huTkCl2OQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754317583; c=relaxed/simple;
-	bh=hRm8L1brPaDRwoHf/VHPMzSwEAURXwsNduvZL6AJW4U=;
+	s=arc-20240116; t=1754317768; c=relaxed/simple;
+	bh=sthcfyb0/C6ONmeACF3YS5Yfr5F7FW8oIxegMTabTQs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gg5qwAfqOrhtQ8BTNvk0PJrQs+ntSMO4jkkfnEgtmD4NtcazTQ1sm1AtyQ15UwYe/GaCI9kTo3sh1T8RXArTf3ptvvw/eFmlg1WkREqC7TTRGry+s0/xrZzQq5ixBG/XJKh6PRwtw+Te+p6DZZkIUu5hox3Q4DsdRjRENfIQdWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dEBqXWao; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jm0z1x3G; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=AtgNZ+Wl1lkCZNz2n59XblUyvurS/M9sMrPXGHn3UeNQs5k+7Q2MW4ixsGKN4/prDkbZQIJdoVnh9Wvf8mvvBpqSD77t+vMlL0XcEyMFPIgjBM/dDnSRAV5LPBcxvdGYHcnD9k+vdckvqHtZYNyKfpoyFxEsciVFNiZLi6ibVKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QXx5jlaL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aElZwgM2; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dEBqXWao";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jm0z1x3G"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 29608EC018D;
-	Mon,  4 Aug 2025 10:26:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QXx5jlaL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aElZwgM2"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 75052140012F;
+	Mon,  4 Aug 2025 10:29:25 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Mon, 04 Aug 2025 10:26:20 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 04 Aug 2025 10:29:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754317580; x=1754403980; bh=PvlsxtsYM0
-	csmg6/Ska/YxpyyKy3aNZf4kuGq/XARP0=; b=dEBqXWaoVpx7fpW9cjgHe72sSz
-	D8032P7wx4/DYDSnailmmbAXSbNcQ7r/IiUCAHtjCYLqSc7W3swTwA3nqcBtok7s
-	07yXmVuXQKcoesWAKMkDI485mq9379pUqmgSrulXtYg78O7EkENj5EeXdTMXebmf
-	B5dis+KYE2fVV5tR9+ZwkYVum6F3LOPbmT4GNw8H/rLyYpjXlWOfgHO1KNcbbtTt
-	cGJ56G5r/r9XVD88V2AHFpYmONVnlBYZukPvSKstBVglsoRu3bcOfQ5SuMUp6nGn
-	kUd4URwM94Axd6jjSrwfmpUDwNDToW7DEoc9nk/O1u43Fc/G5JWwLmULyWhA==
+	:subject:to:to; s=fm2; t=1754317765; x=1754404165; bh=fwDDnSxLp4
+	n9atW50xTGxp1K7suvrj6ofWxinsGYikc=; b=QXx5jlaL7zuo/Or0k3uCTl1M1f
+	k85b5DT7urG9yVDnppb5dFgek3P10qFjB+u5GL0FGhCsTzJ//yk9Ssf88Ee+ocbU
+	euD8yEhpFZZonoxxyFwXZIE9Gd+IoxENwSz3oW0dOePZWl4fufZrn2euLV8cJIzu
+	NTZWMb1/r2/Cl3kqpcakrIdPg466lh/mCB3WlSHKYF2WXmgC1rhRGriHLxEZYAxu
+	ZVc6nODlR3EwOPXZTPBxTQZZuVlt1+iuaNNwJIrr8MoE/FCFb7a57KR6qutk7bJl
+	/h8TzDr+CZI25r2vmxgcuJymk+1gxIYa+ACneIbDRRKTtGfh6whT+F2Vk4Nw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754317580; x=1754403980; bh=PvlsxtsYM0csmg6/Ska/YxpyyKy3aNZf4ku
-	Gq/XARP0=; b=jm0z1x3GjgM/mukmb3/B9mTvuHCJtSMu+Ob0fXUpI1CJvt6j7aC
-	NYPlTqH7crXNDOKZuM7ROhSz0trUQr2KX5fZ3UOFJNr1FDEYSng+Zjj4b+6UF8pU
-	eYmx07EBuEHoAnUL3BzbrrcCdCSpOd6liF2AQIObgNkdELeH6yRr5q/Ods3QXr/3
-	qqnujG2XIsF+u2dzro3U/X9UhHRwbz9Hsspu8BZ1pSme8luxWnku9dd7Jt6ngTw5
-	YsjOKIVKcsj4kFVRzyxF0xCwrI2iX/JkwLzw6T1AKFdUISrsMy+GhENgivbcrabu
-	+xuAdQLL21ZMSMRDPRm8tuc0M6Aa4+MMS/A==
-X-ME-Sender: <xms:C8OQaA5TW83EhZ1-qdsAzvhcfY11QtxAuHwfYytRsWbonzuT19Am1Q>
-    <xme:C8OQaMf-Up8SR7AXWohgszDVJQ3m54xYQO1KKKSUiPX0CuMc5f2tXJP66j6_Q3OeO
-    P6X7gxuGc_TY9Ffsw>
-X-ME-Received: <xmr:C8OQaMBS0bEIJNwBB9NOb56hrFNf3N14v8K2kOjbCHuYjSRHJpYq4F8VKDEraSvhrnmqHXoDrPkC8bXv9m05XT05risNcf8B-xyqALY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvhedvucetufdoteggodetrf
+	1754317765; x=1754404165; bh=fwDDnSxLp4n9atW50xTGxp1K7suvrj6ofWx
+	insGYikc=; b=aElZwgM2J/eqChX6N0MbKNZhPNcty4/P4ryqraYZwLnHS2mHzu1
+	Qaqsp0HZ4oL6px3//V4uIKGHml8xeyKy+KP1wO46E2briqFfF7lJ8aLMVlW93luJ
+	8PAz1hNjd/9Zo4bKkgKf3wvRVQDKTl9QXnXjlaichJU1qvHKCA6xmYatlzT02wRu
+	FILyPkbgQo+slUJA6aDnyeQc256kwjGwtGn+ZRXGsZdNV67rZjHTQRXZ3jVgtSI9
+	II1LkKNVotOJRfmOcWNU/y6hcMhr22C3E7wk9FdgTh3nlPgpCTWEvpZIXCvDmOA+
+	dZhqRL2/CZYTws6/tZnH8yVo2HcaEcKZjDQ==
+X-ME-Sender: <xms:xcOQaIg7LM_2fDvdVlNd7-t_6C4j4Hjr-eq-TB-QppUbbS-eT1pdwQ>
+    <xme:xcOQaLmWmzJmIhmb0lay2uWC7SyN_LYp_j856zttfaXSfmHAvYEeqoykH9B5Ub7gI
+    ChE760hmzPKYrFq_g>
+X-ME-Received: <xmr:xcOQaMpwVY938t52wmf-b16YkLgo4S4b_5DGjLqFAvPls-v4D63jP5L2zCrYjyn1_HzYpcdGy1wNVkBY-GFEfC3WiWx-9HB6qdn15rg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvheegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -56,28 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvhedvucetufdote
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:C8OQaH_xuTxL1-rzeN8axFwGQYrwZohjPBAozl4nSsOxhu7NDkqxAQ>
-    <xmx:C8OQaPI6zvtdUigh2nm6Z4P-3pwEWroK5_vAK5qNc0IaGMM5I8M6ZQ>
-    <xmx:C8OQaIiYxzoQ4o28NREJPVtwmqCribW3BpGYswgXzPSzseJ6Q5xbyg>
-    <xmx:C8OQaH4IkwIZ8FVQcfBfosZh-8PkH4pYuAUop0dIJMFQTFrMFgfx7w>
-    <xmx:DMOQaOkQ8mbsvp2dIAUK9MhU6sSppO_JQ6RqNUlBMhqfufPJ8izdSeex>
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgv
+    thdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:xcOQaMG3L55vI6bHqWLOqURxRdE0lStvS3xoZqTugaIJdky6BEZhfw>
+    <xmx:xcOQaAzx6kujzYeza5a3aVvs6bXAXtFQUQ8CCOilpGCM7tIO7gVXIQ>
+    <xmx:xcOQaJp9lI6Spm6K4Do7kz3tjJaD6oTEMM4G2VcQP9Xm_-eqxgkXZw>
+    <xmx:xcOQaCi9No-T9X9CfdF0mgQYRK37vTfTzLQR0sQbXmN6ErrZnJkBhg>
+    <xmx:xcOQaDOTSmWKXH81FBQZijGI-Bjp6lFAy9TrtP6lE3K6LDpRrz9GV3Rn>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Aug 2025 10:26:19 -0400 (EDT)
+ 4 Aug 2025 10:29:24 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
-Subject: Re: [PATCH] revert: initialize const value
-In-Reply-To: <aJC3OiJoqJRnR_My@pks.im> (Patrick Steinhardt's message of "Mon,
-	4 Aug 2025 15:35:54 +0200")
-References: <20250804130011.GA93475@coredump.intra.peff.net>
-	<20250804130141.GA95101@coredump.intra.peff.net>
-	<aJC3OiJoqJRnR_My@pks.im>
-Date: Mon, 04 Aug 2025 07:26:18 -0700
-Message-ID: <xmqqy0rz88ol.fsf@gitster.g>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
+In-Reply-To: <aJCBlnHp-db4Nd5w@pks.im> (Patrick Steinhardt's message of "Mon,
+	4 Aug 2025 11:47:02 +0200")
+References: <xmqqms8fbilv.fsf@gitster.g> <aJCBlnHp-db4Nd5w@pks.im>
+Date: Mon, 04 Aug 2025 07:29:23 -0700
+Message-ID: <xmqqqzxr88jg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,13 +87,52 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Initializing the value feels like a pragmatic choice to me. There is no
-> downside, and anyone who might be puzzled by the comment is likely to
-> git-blame(1) to your commit anyway. So I think the current version is
-> good enough.
+> On Mon, Aug 04, 2025 at 01:23:40AM -0700, Junio C Hamano wrote:
+>> * ps/remote-rename-fix (2025-07-31) 7 commits
+>>  - builtin/remote: only iterate through refs that are to be renamed
+>>  - builtin/remote: rework how remote refs get renamed
+>>  - builtin/remote: determine whether refs need renaming early on
+>>  - builtin/remote: fix sign comparison warnings
+>>  - refs: simplify logic when migrating reflog entries
+>>  - refs: pass refname when invoking reflog entry callback
+>>  - Merge branch 'ps/reflog-migrate-fixes' into ps/remote-rename-fix
+>>  (this branch uses ps/reflog-migrate-fixes.)
+>> 
+>>  "git remote rename origin upstream" failed to move origin/HEAD to
+>>  upstream/HEAD when origin/HEAD is unborn and performed other
+>>  renames extremely inefficiently, which has been corrected.
+>> 
+>>  Will merge to 'next'?
+>>  source: <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
+>
+> I've sent one more version of this patch series for a couple of final
+> finishing touches. If Peff is happy with that version I'm happy to see
+> it merged.
 
-I had to run "git blame" to find out who was being overly clever by
-using a sentinel like this.  I am glad that it was not me ;-)
+Hmph, you have?
 
-The fix looks good.  It may make it even better if we renamed the
-variable to sentinel_address or something ;-).
+>
+>> * ps/reflog-migrate-fixes (2025-07-29) 9 commits
+>>  - refs: fix invalid old object IDs when migrating reflogs
+>>  - refs: stop unsetting REF_HAVE_OLD for log-only updates
+>>  - refs/files: detect race when generating reflog entry for HEAD
+>>  - refs: fix identity for migrated reflogs
+>>  - ident: fix type of string length parameter
+>>  - builtin/reflog: implement subcommand to write new entries
+>>  - refs: export `ref_transaction_update_reflog()`
+>>  - builtin/reflog: improve grouping of subcommands
+>>  - Documentation/git-reflog: convert to use synopsis type
+>>  (this branch is used by ps/remote-rename-fix.)
+>> 
+>>  "git refs migrate" to migrate the reflog entries from a refs
+>>  backend to another had a handful of bugs squashed.
+>> 
+>>  Will merge to 'next'?
+>>  source: <20250729-pks-reflog-append-v3-0-9614d310f073@pks.im>
+>
+> I'm happy with this version, so if the above goes in I think this one
+> here can also be merged.
+
+You have an update for this one.  Perhaps your comments are swapped
+between these two topics?
+
