@@ -1,155 +1,145 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348F32F2D
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 14:47:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED961FDE31
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 14:51:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754318849; cv=none; b=fzUwb50eyfF9yEidZP8UgcYGLex2WUK+1zdyD5C3Dqsif1Ns/rVmc2bFwa0w/Ax+MYjw0UzfMudY3/lmxA7LWJgSMR3tSKrkJQTGwzAkFc9FsUpuLtLOgul6DQZCifsiVeMG3XOdC9FG04lyM0bTNumxk39hPP19uivJN8/ggUE=
+	t=1754319073; cv=none; b=A+LctVSQPKqJXArcMyraVszYSljsqsOJubRgRiAPBKwMSVk1HWKGMqBa53J9ORkAYYhoVHrQPrz9b+vH3ZpxiTATCK8Jjx1qcEWp1QeyrlKwVuIGOjaw9Nx/NWM99MYl24JvX0AhPXqm9d4Ym9PRKHTUxq25jbUff66DtS/b4FQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754318849; c=relaxed/simple;
-	bh=6bjrCbW54HlCMc8mOu/tO8Mkbi8qs6+13N3+JO2AOBQ=;
+	s=arc-20240116; t=1754319073; c=relaxed/simple;
+	bh=PtiMlSff8tBiFSHKOW8cnYgMnVq5/7qM3m1IECyVX14=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tIjaObeZNOKH8ob17WEvkGTE2DEJRmtsMek5hW7jqDspHqeNCW0sH5/LAsM8k/ciboqZaOdIhR9jhxVy9DTtWuV3tNNhMbSFB+SuoqwmVkHnQI7Cp3SFSp0IoRcQPBbrpmilgH9vSNjIdzCWjsEUv6UqOlbhu29D27j91cRjHCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OA1ZQjm9; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=VVmq5+5bEX1fg678Mvezvka7fqqblRNjyh4AG0QU4qzwKjmGU1h2SKk9x1TPZhVoGNwp7/dBLubepj/T3XjQio1TcK8i1cGfzCwMxIgxfFzTt1t+b5PGc4wkCdQH2+U0c+f1K5J0VLlygAvi5400jyh35wFHclHmcAttZgKKIto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eQS1GRyO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nLqHAB7F; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OA1ZQjm9"
-Received: (qmail 1738 invoked by uid 109); 4 Aug 2025 14:47:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6bjrCbW54HlCMc8mOu/tO8Mkbi8qs6+13N3+JO2AOBQ=; b=OA1ZQjm9vYdkS66g6AA8QdZiKEprCMoB9Veotim8YlSaOTAdgt4rXy1p+Ye+Qj9kHDjtkQOlX82/Bm/l5PFJZpWJGAIc4KLSYR5JFyjORWD3FtCZne20yPnBLGbZoB3zCKCQJWr+JiFR8CBFa5X1kHWzUXvydAxrMoGeIA35GAAn3jwyMgPWCNDfmO+yBc4duPoyicRPdCs1e6nIxZb8lD0GL6+HGVl/V1aW+/WvhwHuhjiZck+VKI06T8bPWEgmNpcXWz/7i/q4U3P6cFkxSg2bZG9muYjxyqjMeQv9GXt2uMZ5FEOWQtf0kuvvGq6l2nG2ig//UI/Kf+KSHDp72Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 04 Aug 2025 14:47:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20736 invoked by uid 111); 4 Aug 2025 14:47:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 Aug 2025 10:47:26 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 4 Aug 2025 10:47:25 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Toon Claes <toon@iotcl.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [PATCH v3 7/9] refs/files: detect race when generating reflog
- entry for HEAD
-Message-ID: <20250804144725.GA109984@coredump.intra.peff.net>
-References: <20250729-pks-reflog-append-v3-0-9614d310f073@pks.im>
- <20250729-pks-reflog-append-v3-7-9614d310f073@pks.im>
- <20250802111128.GC1180347@coredump.intra.peff.net>
- <aJBjdWv9qUeBL25-@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eQS1GRyO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nLqHAB7F"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 172971D00009;
+	Mon,  4 Aug 2025 10:51:10 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 04 Aug 2025 10:51:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1754319069; x=1754405469; bh=uChKRShlAs
+	gBMVuHaY6uvFaYQOABdwf3CmgWPvbi9Xk=; b=eQS1GRyOlMQ5R1n3qRHUOTu+M6
+	qYu2/WI5zyD80D0VwP6jbN8Wo4ev/7p8fTX4zVkdX2a2V2Fc3JMHlRWbHHSrb5O3
+	UaJfWK6Dh/yr7ATcpwwNBUiHhi2Oo99gJRNdSv1un3nI5BcKWuHib00mM5CuL/c1
+	RkxJV/uLY26m2hqsVnxKnmWA6UEq1+nx0IzI2NzoTh3Z0hdfrPcR4EETh20EwaPo
+	GK1Bq9ds/xSyNx+ReB8Nl5xBkmKKwIxIq26zT/gvIOqNFijkWWyVj+BKoI5PlgR5
+	Tmnt240c2r9Dxpifufq9vqfQtFYH9ZyAXLa+fUcAEyAHrkdVhMiTJHDLLNuw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754319069; x=1754405469; bh=uChKRShlAsgBMVuHaY6uvFaYQOABdwf3Cmg
+	WPvbi9Xk=; b=nLqHAB7FFIffOp0vOOXEwgtnlFI9y9cNgUKw9eBzDGaiY7CSgAP
+	JmyV1fWNB9Ma7Cv4Jzx1/QKjVz4OGSyh5/Pe0lwM7CgFDQBwn8sD0+yaLYX0Y4wt
+	t+/3iiM1RjMloEdT06dczcaqXeldRiY6WzEmXFiaSpX28mS7eUBvgULD7tlN+g3W
+	DAiXh/Glk5iADKnQv8sjpWjJHm7CM7EZrocSP5AYMosWzsJ0MIcNCnAuL0tbWWhr
+	poNzctShqg8Lk6peeleKWs2AKtwR9Lz9ULrA6rBhTD7o/jHJfoevFhpdiXJwf4FY
+	tv1wBc3T4MG3jACj4Fz6UM4FNCqVXrfG3Xg==
+X-ME-Sender: <xms:3ciQaC-7jS8_cSjiYsjIOdcjGhFStRNqQQzD2VCsQ6VqekLgkmCT_Q>
+    <xme:3ciQaF_1Vhv60lobgfUA21-CnhPUgUdFWRr9E7kzzu-QwmUrjhhXPJhyxa4tB17TY
+    DGkSOD7S8N_IjNz2w>
+X-ME-Received: <xmr:3ciQaBdX2EJFMqXfh1rMHM-qXqVN2OfsAjkVnnr6YlsH40zpgFFG-LEUitTpUhWLRzBMxjsX2Yq2brKP_Jjuuu9jRbRKIJ4fM5IWXFOHZMk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvheekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
+    hpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:3ciQaGE68XlSa59wXXJTF4ZeQU8XhOWSuF0A-9OSnmjjfXHvhumhyw>
+    <xmx:3ciQaHeCJqCsh4Wd9DAqEzO-h836utYWh3PrPoMTPh0bUCGyD0WMvQ>
+    <xmx:3ciQaIGAI6-vzDEtL40RDSdeRKomiVivpN2AIW9YIYnL2thlWkfipg>
+    <xmx:3ciQaIVdrC91TSavDV8RzTMw_wRnA8p1O8emYAHec700jKKiGW-Rdw>
+    <xmx:3ciQaIB8sZj1Kq4QCaEWES5juusWYmjJtRlzy_TMGCvBDOpjUdWziBej>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 4 Aug 2025 10:51:08 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id e2b7674a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 4 Aug 2025 14:51:06 +0000 (UTC)
+Date: Mon, 4 Aug 2025 16:51:03 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
+Message-ID: <aJDI16RBR9QKdtW9@pks.im>
+References: <xmqqms8fbilv.fsf@gitster.g>
+ <aJCBlnHp-db4Nd5w@pks.im>
+ <xmqqqzxr88jg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aJBjdWv9qUeBL25-@pks.im>
+In-Reply-To: <xmqqqzxr88jg.fsf@gitster.g>
 
-On Mon, Aug 04, 2025 at 09:38:29AM +0200, Patrick Steinhardt wrote:
-
-> > Shouldn't we quietly drop the HEAD reflog update, rather than forcing
-> > the whole transaction to fail? The user never asked us to update HEAD at
-> > all. It was something we opportunistically decided to do, and now we
-> > find out that it is not appropriate to do so.
+On Mon, Aug 04, 2025 at 07:29:23AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> That's something I wasn't quite sure about, either. Honestly, the reason
-> I shied away from it is that it needs a bit more munging for an edge
-> case that is hard to test reliably. But I guess we can do something like
-> the below patch to skip writing the reflog message instea.
+> > On Mon, Aug 04, 2025 at 01:23:40AM -0700, Junio C Hamano wrote:
+> >> * ps/remote-rename-fix (2025-07-31) 7 commits
+> >>  - builtin/remote: only iterate through refs that are to be renamed
+> >>  - builtin/remote: rework how remote refs get renamed
+> >>  - builtin/remote: determine whether refs need renaming early on
+> >>  - builtin/remote: fix sign comparison warnings
+> >>  - refs: simplify logic when migrating reflog entries
+> >>  - refs: pass refname when invoking reflog entry callback
+> >>  - Merge branch 'ps/reflog-migrate-fixes' into ps/remote-rename-fix
+> >>  (this branch uses ps/reflog-migrate-fixes.)
+> >> 
+> >>  "git remote rename origin upstream" failed to move origin/HEAD to
+> >>  upstream/HEAD when origin/HEAD is unborn and performed other
+> >>  renames extremely inefficiently, which has been corrected.
+> >> 
+> >>  Will merge to 'next'?
+> >>  source: <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
+> >
+> > I've sent one more version of this patch series for a couple of final
+> > finishing touches. If Peff is happy with that version I'm happy to see
+> > it merged.
+> 
+> Hmph, you have?
+> 
+> >
+> >> * ps/reflog-migrate-fixes (2025-07-29) 9 commits
+> >>  - refs: fix invalid old object IDs when migrating reflogs
+> >>  - refs: stop unsetting REF_HAVE_OLD for log-only updates
+> >>  - refs/files: detect race when generating reflog entry for HEAD
+> >>  - refs: fix identity for migrated reflogs
+> >>  - ident: fix type of string length parameter
+> >>  - builtin/reflog: implement subcommand to write new entries
+> >>  - refs: export `ref_transaction_update_reflog()`
+> >>  - builtin/reflog: improve grouping of subcommands
+> >>  - Documentation/git-reflog: convert to use synopsis type
+> >>  (this branch is used by ps/remote-rename-fix.)
+> >> 
+> >>  "git refs migrate" to migrate the reflog entries from a refs
+> >>  backend to another had a handful of bugs squashed.
+> >> 
+> >>  Will merge to 'next'?
+> >>  source: <20250729-pks-reflog-append-v3-0-9614d310f073@pks.im>
+> >
+> > I'm happy with this version, so if the above goes in I think this one
+> > here can also be merged.
+> 
+> You have an update for this one.  Perhaps your comments are swapped
+> between these two topics?
 
-Yeah, I wondered what it would look like to drop a single update from a
-transaction, since that's not something we currently allow. And indeed,
-this is a bit scary:
+Oh, indeed. Sorry for the confusion.
 
-> @@ -2626,8 +2632,16 @@ static enum ref_transaction_error lock_ref_for_update(struct files_ref_store *re
->  		 */
->  		if (!(update->type & REF_ISSYMREF) ||
->  		    strcmp(update->parent_update->refname, referent.buf)) {
-> -			strbuf_addstr(err, "HEAD has been racily updated");
-> -			ret = REF_TRANSACTION_ERROR_GENERIC;
-> +			if (unlock_ref(lock))
-> +				strmap_remove(&backend_data->ref_locks,
-> +					      update->refname, 0);
-> +
-> +			memmove(transaction->updates + update_idx,
-> +				transaction->updates + update_idx + 1,
-> +				(transaction->nr - update_idx - 1) * sizeof(*transaction->updates));
-> +			transaction->nr--;
-> +
-> +			ret = 1;
->  			goto out;
->  		}
-
-Not because it's necessarily wrong, but it feels like a maintainability
-problem, when the transaction code learns some new struct field similar
-to "ref_locks", and we have to update it here, too. I dunno. Pulling it
-out into a "transaction_drop_update()" helper would make that a bit more
-obvious, but you're right that the fundamental issue is that we're not
-going to be testing this very well.
-
-Maybe erroring out, as your original patch did, is the least-bad thing,
-then? I think that _might_ even be what happens in the current code as
-an emergent behavior. We leave HAVE_OLD_OID set, so we'd expect HEAD to
-resolve to the same thing it originally did. If you've pointed it
-elsewhere, then it probably would fail to resolve to that same oid
-(unless you pointed to a different branch with the same tip commit).
-
-I really wish there was an easy way to test this. I guess something like
-this:
-
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 89ae4517a9..6aeec2e8e0 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2393,6 +2393,7 @@ static enum ref_transaction_error split_head_update(struct ref_update *update,
- 						    const char *head_ref,
- 						    struct strbuf *err)
- {
-+	static int force_split = -1;
- 	struct ref_update *new_update;
- 
- 	if ((update->flags & REF_LOG_ONLY) ||
-@@ -2401,7 +2402,10 @@ static enum ref_transaction_error split_head_update(struct ref_update *update,
- 	    (update->flags & REF_UPDATE_VIA_HEAD))
- 		return 0;
- 
--	if (strcmp(update->refname, head_ref))
-+	if (force_split < 0)
-+		force_split = git_env_bool("GIT_TEST_FORCE_SPLIT_HEAD_UPDATE", 0);
-+
-+	if (!force_split && strcmp(update->refname, head_ref))
- 		return 0;
- 
- 	/*
-
-along with:
-
-  git commit --allow-empty one
-  git commit --allow-empty two
-  GIT_TEST_FORCE_SPLIT_HEAD_UPDATE=1 git branch foo HEAD^
-
-creates roughly the situation (HEAD was never pointed at "foo", but
-we'll create the reflog update for it anyway). It does fail with:
-
-  fatal: cannot lock ref 'HEAD': reference already exists
-
-even before your patch. And after, we get:
-
-  fatal: HEAD has been racily updated
-
-So it probably is just not something that happens very often, as I don't
-recall ever seeing any discussion of it.
-
-I dunno. Looks like you posted a new version of the series that loosens
-this, so I'll take a peek at that (I also wondered whether what you
-posted above leaks entries in the update struct, so maybe you've dealt
-with that).
-
--Peff
+Patrick
