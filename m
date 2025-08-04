@@ -1,79 +1,81 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951D724678C
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 09:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2E8246798
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 09:40:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754300446; cv=none; b=A5rc11olat9LCKvMeIIlz+OAF0oVS9sjaGCko1PnTKmSbY84LgyjuITm5Ze0rL12QZvu/R76gh/ri7MqETB4mOuGZQQ/I+vQv7zd/ZXC0yF6zcYpy1NaPBVDdkp0wgkW4y5uceIRpoKUzPT54qXcNS7CDKo6sJpTiJYBHG/o8v8=
+	t=1754300448; cv=none; b=PGKh6pQoCqS2M4quzgKM2aNIVvOykjuqcz7nfuklqO+MlBWDFBL8PESPdaR2SX//tbVq9d0MCruO2kIX99hQXD94zgUY+EqXWBo7+K5vWN7hH2jI2YHYP49vpyidzkcFfmLj2EmGcXHBs/3GnZj6PvxMQPdnmC0Eovp+jGv2wxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754300446; c=relaxed/simple;
-	bh=FDzISb9n3sxfEDqesp7g7PJSr86uB3/asDMk633zIXg=;
+	s=arc-20240116; t=1754300448; c=relaxed/simple;
+	bh=SeoQJ4WI3OQU20fHFP9N49hjpWsas2BP7qgIoe5D/Pg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jCqPinKPBKYiwsAy7mCyCk1GwipLlwouNjwdd00VZ3azf0LYT0/f+iVnDyU96oKRjvj2lx1lFcvEmipPG9qUOx/GUsndDtCboFpbb6Ql3w7YAuSAs3gbFoz+Jqdz4fTArmUzhr76uw2PhMmbRbrRCeqAo54k5zT58EPJaRZlOVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F46rzStm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OosnaTSd; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=Sbl4cxm3TmGIBW1lveFkl/gMOmnCIJmmiudiZTPxHwyk5M+RGI3pxs0kSUC5Dz6LAaC4G5YIGrhPd/k2zaDEpaoCe49HgAeuR7U3tS3XW4xsO5CL/uyaWbML5oakUMqhzAX6qmdO+zNyOo5yqZG7ZXhbmeBBz+WnnJz+PrnzyDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c8sfukXj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AAEIDpNK; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F46rzStm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OosnaTSd"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A562A7A011A;
-	Mon,  4 Aug 2025 05:40:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c8sfukXj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AAEIDpNK"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id DBD231D0008E;
+	Mon,  4 Aug 2025 05:40:45 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 04 Aug 2025 05:40:43 -0400
+  by phl-compute-12.internal (MEProxy); Mon, 04 Aug 2025 05:40:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754300443;
-	 x=1754386843; bh=RWHqEX7b4gvdITiKCqtcicp2Okac3iE0AI5QORG0+uk=; b=
-	F46rzStmcPFhCxeCVT4A8m7y7YQIx3XB2lOSQh1jXgmKWKO1fkGb0GzD4cjvJWxD
-	qms+uDN6CczDNxPwHD+64HqgnMtP264xLMpfEqZEH7SpQf5x8cSEx0AnrDRqH1l8
-	731AM6GhLZNPrZ13hbDvM1A0eakU0ik8f2OgIceZY+ao44lb8HaHPLgP9Bd42+8M
-	mKJaA9A/fHV9zWnIuAEOAL4RzntBx6p6HEBFIDxx1/SFPFe1pnX9dtnbZGaZSdU4
-	m5pJoYJwFQrDgxjX88ONgtx7XxQHPhJxOyfUjbMfa2xxnrOFx2wjvneZNFtzxbsi
-	3de/WClCBZ/oMch9qF3BGw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754300445;
+	 x=1754386845; bh=dp1ouZ5y7wPH1ULfCu9qH6y0R5A9gruQPLDjQkWlOcY=; b=
+	c8sfukXjLC2F43JAZkYCK5jpP9dQ5i5mrqqxvQTix4jThWTdcCz6qCEQZCVajD/0
+	6rCuR1SaGEVewIF7FIfPYqTjwSUR+AksZNUWtU4xyBTH8oPaUSC7oxOxxAC5Zz3a
+	Nzp+H8LUR3ST/6Oyk519IurqwziQobXZjevVJY2LhwRSP7iKdRyglEVVyuUTdbmX
+	4FkQQ5kqGzgW7Q7rg4e2/4l6tPBCNN+xgt9EOyfNJX82P6KMm+h4DN2P/fy2KSHq
+	GydTcge9xhWIjenFZUyasmsjdnzvjFTlDJi1yNP0Y0bxju+ba4aDmW699ss3Bprm
+	vMay5oyfu9TdyNSF+KKDxw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754300443; x=
-	1754386843; bh=RWHqEX7b4gvdITiKCqtcicp2Okac3iE0AI5QORG0+uk=; b=O
-	osnaTSdXyGAQuAzTKEYY1JqLip+dRmJzOhVZgv09opGChvkhailEePEZoGDoUGRj
-	uyepZdlAaQMFGmRTDIaZkRUO5AcgBAAvrtq9jBp+qyBE2HQDd/5w0NQ3Ivc0w7qG
-	xEDcNozyszSRS3+sENqt+tCzFDFFuQIpois1kc1xVnQ+KodVyLyR36DYOIl43TwN
-	co7he1pl6xide3Ajal4Im6UZ5WFam0SWxMvENQBbM2K0mFDAiJpk0yts265IltXM
-	BhGBywG7VJgFlj8/ycoQD8f+meJjoI4A3vDxWLqhMnoko9eS7C0TYy5BkXTW87VL
-	mba9CIH53aOtt2CgDjugg==
-X-ME-Sender: <xms:G4CQaMyLKUIr9K_AwdExukb7YAzh1hoR_tZYij214JUOTvFoJfPOxQ>
-    <xme:G4CQaAfEonvMEX62xwzwNV1o1dtjDQAooPwLq4MGxWnx6INQBobLi0-hq9ElDsCll
-    Wvx1CpCru2mTSqSDg>
-X-ME-Received: <xmr:G4CQaAIKutDflaeEl76pnJNsUEVsce1W0zv1m0ji_R3ynkc_jVm0cATb45smnJHd7coJ1d7sOd4HRYZVciMOtu125RMV2RlEVfctUfToBQI>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754300445; x=
+	1754386845; bh=dp1ouZ5y7wPH1ULfCu9qH6y0R5A9gruQPLDjQkWlOcY=; b=A
+	AEIDpNKkwlygI8rf7m6A4igkTKDUvRsxaCvfhu4yQ1BcDfAuotP3lysLYKFBTP/U
+	bgHrqEjC2lc5fI0LRMFxCeKv/ixFFyLd7JI7UHQFI02iD9gngxN/Qv670pg6DPnE
+	LxlktwGt8ZSv7/ozDONKtBnHLaCLzUiJPWqM7qHoSL5RDByNXynfAB7dE/FsXh2x
+	fX8Tr0QFH5Bf8ZztlnfEGjmJ7MEgNxyCH3A8104e5YRMR3WyWaJ/8JMB443UFN2u
+	TX6w9z3ID42l528P3nLGaFsLEWoTtRRVD2q04RSXxleoupA1lm437JyF4yoLZcQO
+	4yRZT5e1qQ1s8F9J85Gtg==
+X-ME-Sender: <xms:HYCQaLAR6vj9SMLMfZQoe5N5gK28pDVxUL8j7ueTtAzhRSO1LBuyeA>
+    <xme:HYCQaBueFmqsJ56Y63iteMiRAm7OIZ7kEW9He_duNTPvbDgMYTzVuo-gRdyJ075rd
+    lBaNuwyHdA_w4o1yw>
+X-ME-Received: <xmr:HYCQaIbca9BWmMzzqc-h2B8L6b1ZmDw6XlxU-H5_9zIAb75okmc_v2urlO1t9NTYztKxP3Nj52yQt6FRcjeGkkLvwdb6T_iS3C3JUHIHBnc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudduleehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:G4CQaJGM0uN_DSn8dpyuHxH_21dsQUHWF5IdoodUQAdnPGp5cKdu7A>
-    <xmx:G4CQaCoLNBxPgbNNHloj1Yq9DPbmmZ10vTqVJeaaw4b0W77zms5tLA>
-    <xmx:G4CQaKQvfVaAYJL-AKWuA_yjSJo6P9h7Lxs3MayByBNxhnQB3ZAqVQ>
-    <xmx:G4CQaHOYHCElEQ6RuKVQynUUdrGu0n2TtK_vkjPJwOf4XK9VUKl3kw>
-    <xmx:G4CQaHVdaAfG97rmT5hbSNrwRYuUpKl4n132iSSKXOuyP4xRcVcsRISU>
+    hnpedtieffuddtudduvddvveehuefffefgkefftdffleffhfffvddtjeffueejudetffen
+    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
+    vddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgt
+    ohhm
+X-ME-Proxy: <xmx:HYCQaMXGWw_5XiaVpb18Kf-wfz2hQTwTvua4UruaxIqCmwasFG8Sfg>
+    <xmx:HYCQaE6L3K83NDxejcjobCfgk8RJ26u8DMlLfTZz7ZcUZmfTc9fqdg>
+    <xmx:HYCQaPgWjPEe3ZtCHPsQNeMIeYqYxLE8kS-qtkt2UsQP47lqMitlPQ>
+    <xmx:HYCQaDePuqMmIAzeF00QiPoFkGcNIZpYi9A-3LUhF5GCpO3gXeyy3w>
+    <xmx:HYCQaFml9QRkV6PeUmaS40dXql91kJVknB36MnuOUCPGh96w5kylm6Wu>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Aug 2025 05:40:42 -0400 (EDT)
+ 4 Aug 2025 05:40:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ecaf1c89 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 4 Aug 2025 09:40:41 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 348a2305 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 4 Aug 2025 09:40:44 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 04 Aug 2025 11:40:23 +0200
-Subject: [PATCH v2 2/6] reftable/writer: drop Git-specific `QSORT()` macro
+Date: Mon, 04 Aug 2025 11:40:24 +0200
+Subject: [PATCH v2 3/6] reftable/stack: fix compiler warning due to missing
+ braces
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,48 +84,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250804-pks-reftable-fixes-for-libgit2-v2-2-fef06209a984@pks.im>
+Message-Id: <20250804-pks-reftable-fixes-for-libgit2-v2-3-fef06209a984@pks.im>
 References: <20250804-pks-reftable-fixes-for-libgit2-v2-0-fef06209a984@pks.im>
 In-Reply-To: <20250804-pks-reftable-fixes-for-libgit2-v2-0-fef06209a984@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>
 X-Mailer: b4 0.14.2
 
-The reftable writer accidentally uses the Git-specific `QSORT()` macro.
-This macro removes the need for the caller to provide the element size,
-but other than that it's mostly equivalent to `qsort()`.
+While perfectly legal, older compiler toolchains complain when
+zero-initializing structs that contain nested structs with `{0}`:
 
-Replace the macro accordingly to make the library usable outside of Git.
+    /home/libgit2/source/deps/reftable/stack.c:862:35: error: suggest braces around initialization of subobject [-Werror,-Wmissing-braces]
+            struct reftable_addition empty = REFTABLE_ADDITION_INIT;
+                                             ^~~~~~~~~~~~~~~~~~~~~~
+    /home/libgit2/source/deps/reftable/stack.c:707:33: note: expanded from macro 'REFTABLE_ADDITION_INIT'
+    #define REFTABLE_ADDITION_INIT {0}
+                                    ^
+
+Silence this warning by using `{{0}}` instead.
+
+Note that we had the discussion around whether or not we want to handle
+such errors in the past already [1], where we basically decided that we
+do not care about such old-and-buggy compilers. But the reftable library
+is a special case because it is used by projects other than Git, and
+libgit2 for example hits the above issue in its pipeline. As there is
+only a single problematic instance of this issue we do the pragmatic
+thing and simply make the compiler happy.
+
+[1]: https://lore.kernel.org/git/20220710081135.74964-1-sunshine@sunshineco.com/T/
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/writer.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ reftable/stack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/reftable/writer.c b/reftable/writer.c
-index 5bad130c7e..0133b64975 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -399,7 +399,8 @@ int reftable_writer_add_refs(struct reftable_writer *w,
- {
- 	int err = 0;
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 4caf96aa1d..3480ad21c3 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -704,7 +704,7 @@ struct reftable_addition {
+ 	uint64_t next_update_index;
+ };
  
--	QSORT(refs, n, reftable_ref_record_compare_name);
-+	if (n)
-+		qsort(refs, n, sizeof(*refs), reftable_ref_record_compare_name);
+-#define REFTABLE_ADDITION_INIT {0}
++#define REFTABLE_ADDITION_INIT {{0}}
  
- 	for (size_t i = 0; err == 0 && i < n; i++)
- 		err = reftable_writer_add_ref(w, &refs[i]);
-@@ -491,7 +492,8 @@ int reftable_writer_add_logs(struct reftable_writer *w,
- {
- 	int err = 0;
- 
--	QSORT(logs, n, reftable_log_record_compare_key);
-+	if (n)
-+		qsort(logs, n, sizeof(*logs), reftable_log_record_compare_key);
- 
- 	for (size_t i = 0; err == 0 && i < n; i++)
- 		err = reftable_writer_add_log(w, &logs[i]);
+ static int reftable_stack_init_addition(struct reftable_addition *add,
+ 					struct reftable_stack *st,
 
 -- 
 2.50.1.723.g3e08bea96f.dirty
