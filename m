@@ -1,180 +1,102 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2393F246784
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 09:40:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A381F4617
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 09:43:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754300457; cv=none; b=bH5yIeDEUJI118cqe79hcXkL7jdnJpzlEATdzc5RjF4En6RdZ5NY3a0LuyfBGWfL49nl8CUwRlPYbby2gdVy8X9SkyyaJ5wtSZ8tgV64uNqKH80gwogHcdRL469+fAa8m/aOcLrxrzX6vS4dMSvI6BFAJmOWsw7XAWs5yH6Ahmk=
+	t=1754300584; cv=none; b=vFUXE5l6qUWatjJ6/EA6niAW1Htp/oLw/uoRnQexr/CGcsS23cGa9vLI7sw35POpGHtG3oj4UzHS21Sz+QxyYwDJxCpNVOFvul3vnThvWD7zBAtGemFctWcoPhax+GXtjQFfYUNp1OA6OzFZPw3P9t+tngSbIR0uUEhNKVFxjXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754300457; c=relaxed/simple;
-	bh=gbiiai0wol80jRymQ3AFSC/x5nwa8G8k2dv6H6aGDbQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bis+J+g2RFzKpsbbFysRtGUq70FhGBQ1irbh9HVf+uv8mltuGYfKv6iGtUnmbQQi6CIy31xKmF3tfg5gbGePjDpg3MoJMt1z9MNUF0yftp2bXCInMUWl6NeQO/rHZLeghrPZ0nvyQiv3o6AmpwLyuErxuEdXYddiseVHH8W61jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UtHiAuId; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TnEnu/mU; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1754300584; c=relaxed/simple;
+	bh=kFmKVvruUFRcYjZT/dS6B9XJ9a9+9zHuAobJUEz3IPo=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=V0p3ftKmPvybuTA3dZ8nMcC6H3r0dJP0HTN3B5ReBzkGafByPe2ISMQQ9rGsVnLfVvJSMl7VnWNJJ1xBAEn7PH2PRewM8BvsN0hT/CDOzx6fWkFlNaDCOL3rgZGVXr4vFzj7P1V80EPpZo61hgjGLX98CCg1bEt4YCZz0KZYzC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iwd+worT; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UtHiAuId";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TnEnu/mU"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3EBB77A0118;
-	Mon,  4 Aug 2025 05:40:55 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 04 Aug 2025 05:40:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754300455;
-	 x=1754386855; bh=GIB/J08aPbaYPSg/1msSqrMeJZKe9FPPF99ocRP4f0Y=; b=
-	UtHiAuIdK1LhMJlCDRArwmWAHlTzc7ixder9Wrhx5nxckfkTNDPE/y3n3jyZItw/
-	xQeFWkb2QWdCLO8D9v7qlzClP+hklNyycgCIAZci0XFbGVHR8A5DSlIfvzOdHZQP
-	zwUJgCLKIj/NlpBsiee8E/XxkwwHtFmOpM0z6VJF+QBxD4XucVot8kzsSQn0riV5
-	qE7UdJvMeezpn37IBakz2NY7Utfw9le8OgMwg+UCw8d2Fd72uYCZ972FNeyuTCio
-	MgtPRImPgeXpvmzYKkdGG6memMxEpRI4loKsvgpB/jHGtnE2GZHEOC1k/Ait1ENG
-	xc/fqWvT1H4T2TvGOHxi5A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754300455; x=
-	1754386855; bh=GIB/J08aPbaYPSg/1msSqrMeJZKe9FPPF99ocRP4f0Y=; b=T
-	nEnu/mUHebfmkSBJ9kEvnKfiIiYj+z1b6ZjDhBm1SrBY3Ck1F4Cer6d1Q+nNbOBQ
-	TXWncpMCiXfAOMjwJ3C8ZdFndWXzLTY2Z1HlPBCMMVKcOfMfo7kKnUY+n6UBdmoO
-	B/vob+Y1Jhc8lgQMiNk2Y2SNKJCduA0e6OzDAZiPmKpG+90i8Aef4pbEHF5uTY5N
-	bufiQPbkzH+UfGJ/YhGGmWB3yC5X/JD0lf+YNCAxAtWFTpM/m7Ipw5qkpxL0YEln
-	EDrbJ4S+dmiUb6Lp3jCuCpIQui49pCskxM7GzgHpH7KbPDXf2+A4CCpTvWvT/BEw
-	o890cTIpCm15B/d7BJAmg==
-X-ME-Sender: <xms:JoCQaIVVuP6dMFz5EBrk2MTHMH47BJlCDSyT3ILp-bYcqKt7AL4rSA>
-    <xme:JoCQaMzdNnI3-o27O9oRvj2eNDnLn6CuYmamQ505rUZmPBxS1UQDuqKZ2B3P7LKdT
-    6JdM9O5dW8y3oLGWg>
-X-ME-Received: <xmr:JoCQaOMAjHQtXogLTmx3v885dgejWSqwrE_b4Urf8GVrJwo8FcFjatPRZZ54CdiLfLrEKLGtRdxrOBgiHEVgYg0gpZYzFu9iiJyAYMa-03s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudduleeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:J4CQaF7Qcv1oobPEOCrbcwNnOxhRX8rzT3McTrIETnhelo4rODO3Gw>
-    <xmx:J4CQaHMXV0mUsBcwVokXprfFRP_G0GGU8CgtSteQGML3IcXxZY-s0A>
-    <xmx:J4CQaLkAv6wAkK1Z7k66pZrod6Qgy-ot3m_O1WJmIAGOoRd_oXYnHA>
-    <xmx:J4CQaGR8V_LK-dU6AiVA3fv91QU43i0Df5YAfHcIvw-Nyiy4hzuVSw>
-    <xmx:J4CQaK53Y-2YWMl8cNoiglz4dx7yYSk2K3xebO1dvEU1IKwRIgIIUYrJ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Aug 2025 05:40:54 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 075e5de1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 4 Aug 2025 09:40:53 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 04 Aug 2025 11:40:27 +0200
-Subject: [PATCH v2 6/6] reftable/stack: handle outdated stacks when
- compacting
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iwd+worT"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b350c85cf4eso467051a12.1
+        for <git@vger.kernel.org>; Mon, 04 Aug 2025 02:43:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754300582; x=1754905382; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Gi0AAvxky+sMzDizkvZdNy1G/+wNN/djL8fVPiLXLho=;
+        b=iwd+worT2YnC0KJ/Y8JlIxGKXiiZjMlCpGf1goUaUiGJ91pY5fkYK/k0K4+7/ZXt2K
+         8mISkuXZxjmYft7OCNUGyVUUwOguxWO882EUmNTYU9Smgpt4Ig4IV6Ykw6mAWh9RwIq2
+         zzxCpdG1A7EOvSenEhnVwvroyNYG4mkeLN4goWj23/o+PtmuVxEhCRCrOSq/f25supaf
+         V1x45s3GxLPppk2WAkB90y8CdUoYjP5G4QzsYndWNEaFO4GZrZzKmQw/C3xvafuC4liW
+         XSf4CKNDb6tIWTWsJUCA+bCMl5KJfWpfA3WNkzUHYPHzR9zVKFLnslIYmNAFVq/rc7+6
+         rkHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754300582; x=1754905382;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gi0AAvxky+sMzDizkvZdNy1G/+wNN/djL8fVPiLXLho=;
+        b=eWKJ7VhYVCf76m7UCZEpbYxVEbsjA3xEXlqFxTRV8V/4k2MdElUnSKPtAqZOhJTOkL
+         J4cmS+M50k8a1bUGdjHL88Es3UVTQwjMUu1jXouX9yYH1d6EG0TbdumGJkZfX3sSEoGG
+         Mh8ucYNoWtC7ymcoD9mG+/uww+dW9g8aI42IjRoLWGr83r4e+W875m3c7t8FfqoWUyl+
+         HPWW6151aKb1uoeyM7OM2vmKeMi44HAfkI6THclhQ0ZRJ5rhyISz7cKhu/Om7z2UBi85
+         8kQkwXLoodD4b/rAWyK7ppyNq+nV2tTjwEYzPsZhx2lgTZbCudvQIaxWUoiZh4aullMI
+         7y6Q==
+X-Gm-Message-State: AOJu0YzsEW6+ZXWc3qvsP30fXcc692NbrDBor1buXGMbMIWlP0BU2fMC
+	LKw5B+vOcRYDXHz/OhOU+JQQNwhKzvxHi/TBRYkfq7mUbeTIcGgneHRsQjjXxQ==
+X-Gm-Gg: ASbGncsSfFQBn7VJ9VATHBEFS8sFHqZb0OHzV2qnSkjoFNv51wXWpvvmFhr2+h8AOaB
+	UNW7GpP2zEOUmFjclPiCMcB9BRtg37fJrjyj3ZL2XI3wbPmN1n/ixCnPpc/i8ky3i8PpCz/YkWj
+	A977g9Ewx+q64Cg25HqtTxvrytFzsxGRQhxN7djLMTug4gohXd5jV3LHKHKgT1B5nxjDXrSzUzB
+	WyIK7Mr7UIOfcgqFNWb5FAfxM3rIeIhFMgO6+akQyRtgk7bUrOqF8aD/IannqPZdsyNLypqQYKa
+	ynwnoctX6q3HbskR3ACS9NQ4Cb+beXVkG7YQnSkfarPz1vBm3lEnIPWBpSVb48l9pcW2M7a1Axj
+	oS27B1fh9h1SzKvajIB58naHE6KcC0A==
+X-Google-Smtp-Source: AGHT+IHpwv7ohdNwRdnSCQtMt6oi3ogFeuHZ6WyfFlVSBTmwqTqHUSK0rrOncvwgt5r2v3VUadENbA==
+X-Received: by 2002:a05:6a00:4614:b0:730:9a85:c931 with SMTP id d2e1a72fcca58-76bec4d97e8mr4918290b3a.7.1754300582296;
+        Mon, 04 Aug 2025 02:43:02 -0700 (PDT)
+Received: from generichostname ([2601:645:8300:3b10:e54:15ff:fe8e:caa6])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76be8650387sm6163727b3a.51.2025.08.04.02.43.00
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Aug 2025 02:43:01 -0700 (PDT)
+Date: Mon, 4 Aug 2025 02:42:53 -0700
+From: Denton Liu <liu.denton@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH 0/2] remote.c: remove erroneous BUG case
+Message-ID: <cover.1754300389.git.liu.denton@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250804-pks-reftable-fixes-for-libgit2-v2-6-fef06209a984@pks.im>
-References: <20250804-pks-reftable-fixes-for-libgit2-v2-0-fef06209a984@pks.im>
-In-Reply-To: <20250804-pks-reftable-fixes-for-libgit2-v2-0-fef06209a984@pks.im>
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-When we compact the reftable stack we first acquire the lock for the
-"tables.list" file and then reload the stack to check that it is still
-up-to-date. This is done by calling `stack_uptodate()`, which knows to
-return zero in case the stack is up-to-date, a positive value if it is
-not and a negative error code on unexpected conditions.
+In the case where one pushes a non-existent oid to an unqualified
+destination, we encounter the following BUG
 
-We don't do proper error checking though, but instead we only check
-whether the returned error code is non-zero. If so, we simply bubble it
-up the calling stack, which means that callers may see an unexpected
-positive value.
+	error: The destination you provided is not a full refname (i.e.,
+	starting with "refs/"). We tried to guess what you meant by:
 
-Fix this issue by translating to `REFTABLE_OUTDATED_ERROR` instead.
-Handle this situation in `reftable_addition_commit()`, where we perform
-a best-effort auto-compaction.
+	- Looking for a ref that matches 'branch' on the remote side.
+	- Checking if the <src> being pushed ('0000000000000000000000000000000000000001')
+	  is a ref in "refs/{heads,tags}/". If so we add a corresponding
+	  refs/{heads,tags}/ prefix on the remote side.
 
-All other callsites of `stack_uptodate()` know to handle a positive
-return value and thus don't need to be fixed.
+	Neither worked, so we gave up. You must fully qualify the ref.
+	BUG: remote.c:1221: '0000000000000000000000000000000000000001' should be commit/tag/tree/blob, is '-1'
+	fatal: the remote end hung up unexpectedly
+	Aborted (core dumped)
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/stack.c | 32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+However, this isn't actually a bug so replace it with an advise()
+message.
 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index f77d7f58e8..effa2fc8cb 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -579,9 +579,11 @@ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
- 	return err;
- }
- 
--/* -1 = error
-- 0 = up to date
-- 1 = changed. */
-+/*
-+ * Check whether the given stack is up-to-date with what we have in memory.
-+ * Returns 0 if so, 1 if the stack is out-of-date or a negative error code
-+ * otherwise.
-+ */
- static int stack_uptodate(struct reftable_stack *st)
- {
- 	char **names = NULL;
-@@ -849,10 +851,13 @@ int reftable_addition_commit(struct reftable_addition *add)
- 		 * control. It is possible that a concurrent writer is already
- 		 * trying to compact parts of the stack, which would lead to a
- 		 * `REFTABLE_LOCK_ERROR` because parts of the stack are locked
--		 * already. This is a benign error though, so we ignore it.
-+		 * already. Similarly, the stack may have been rewritten by a
-+		 * concurrent writer, which causes `REFTABLE_OUTDATED_ERROR`.
-+		 * Both of these errors are benign, so we simply ignore them.
- 		 */
- 		err = reftable_stack_auto_compact(add->stack);
--		if (err < 0 && err != REFTABLE_LOCK_ERROR)
-+		if (err < 0 && err != REFTABLE_LOCK_ERROR &&
-+		    err != REFTABLE_OUTDATED_ERROR)
- 			goto done;
- 		err = 0;
- 	}
-@@ -1215,9 +1220,24 @@ static int stack_compact_range(struct reftable_stack *st,
- 		goto done;
- 	}
- 
-+	/*
-+	 * Check whether the stack is up-to-date. We unfortunately cannot
-+	 * handle the situation gracefully in case it's _not_ up-to-date
-+	 * because the range of tables that the user has requested us to
-+	 * compact may have been changed. So instead we abort.
-+	 *
-+	 * We could in theory improve the situation by having the caller not
-+	 * pass in a range, but instead the list of tables to compact. If so,
-+	 * we could check that relevant tables still exist. But for now it's
-+	 * good enough to just abort.
-+	 */
- 	err = stack_uptodate(st);
--	if (err)
-+	if (err < 0)
- 		goto done;
-+	if (err > 0) {
-+		err = REFTABLE_OUTDATED_ERROR;
-+		goto done;
-+	}
- 
- 	/*
- 	 * Lock all tables in the user-provided range. This is the slice of our
+Denton Liu (2):
+  t5516: introduce 'push ref expression with non-existent oid src'
+  remote.c: remove BUG in show_push_unqualified_ref_name_error()
+
+ remote.c              | 5 +++--
+ t/t5516-fetch-push.sh | 7 +++++++
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
 -- 
-2.50.1.723.g3e08bea96f.dirty
+2.50.1
 
