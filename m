@@ -1,62 +1,62 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0363B243946
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 09:23:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C54242D9E
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 09:23:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754299395; cv=none; b=SDmw9ZgdGtRXs/DWTlRk3bgxrictlv07DTQEdmUr5fUqNHTGjOevUw/peubiRM5ywNBDrjRoviRzq18DX3JezwXEh5DXvzfXj2sn1ztXwlEPXxp2tdFqHglR8Le2ahm6P5fRQwjoEH/JrrbM7rMfto+RdJO2bm0V8uP6cVGE+Dk=
+	t=1754299400; cv=none; b=akm2hwot+Ninyj6EZBvt4lz0bFbC9ZgfI8JCiSFjr2viPd5HsKWs5Njqbs//dUBimseZqqNpWkc4XWka0CTDA21tq3wg1zlI2q32w55khGEMMpOproLxDPiCgHaTrRRBTWH3TWJnoBr/SENmLj+IVBKmW6/IQO8AvegZi57yaGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754299395; c=relaxed/simple;
-	bh=Luw1ZnHBqNv5seZ3JYoUarxZrVMOoy8otRy5GilZldk=;
+	s=arc-20240116; t=1754299400; c=relaxed/simple;
+	bh=5klwY7y5ffFisuLLfpgtLmXI8oToSSEFKhC4apuER+E=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=m+mIi+0Ho9YGYnAQ8wEPsYpaH+zGCDxNMSBB6AYGNoY+ltADB4WgkmGVrQ04/t9eHHoBotldCvjPPl/Q4UOyZ4gkeaT+ElhhdEENNZB26MXX8WEiSkVGkPbupMKlkKOR0tlzB5fSmqiAmr0nChYBVQfRiQtpzsG0o0Fh/Cqd9es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DaDKuZcT; arc=none smtp.client-ip=209.85.215.173
+	 MIME-Version; b=pF/OwcO8zGJPshFzHt6pyUdd8PAnwkbbE+Ea1dwwUBUdfBYjnRy8byfXbLfgvr3jSIEIoQfc53gVp5h+GRaoX790O3xfKW6d/DdtKo1Fie2kmAjMi0GqhAh3s98g+1tEZN1HJ306KEmtacLc4qSQneGACBIgW7pREfnsQTTkTmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ROW3r0OV; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DaDKuZcT"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-b271f3ae786so3181208a12.3
-        for <git@vger.kernel.org>; Mon, 04 Aug 2025 02:23:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ROW3r0OV"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2401248e4aaso53579385ad.0
+        for <git@vger.kernel.org>; Mon, 04 Aug 2025 02:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754299393; x=1754904193; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754299397; x=1754904197; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SI15psiGYpi8mxluP/ygZsr9qurTvyHgEMjKCs+LREg=;
-        b=DaDKuZcTm2XikqLhubW8iSx2T+0xgv7ryM067JqCwzr17coOGw9deG2Cj7URtSFjj0
-         p/Udb1kJ7qUlx9Fum4VKr9w0GMRXuZdpigRXYzoUiJV0L+lTowqbwR+vrxnIDJuHEbSK
-         5FbodVty3KAkzIy8xkBrAGNn7u4Z7TSKk2M5K4cEiG1DOt/VqJAfOJlN67eWTr8LQmCJ
-         hcp13zmKc5LAhAswYphUCtcjle9djnd5k2Xdss4VYd4BqgibrXTZUo1+fdxjD2XO2fzE
-         XLUQL3jXRYlFeoc0LUJKh4VDXWAe5ra53wTj6Z7/ArbJQdINObBGuLceOJerJpgvebqM
-         l73A==
+        bh=84Ij2TtxPhuBBKO6R5fvkl5zfarx/ZqUMtqI5Am1mgE=;
+        b=ROW3r0OV4h48AvXsD/E9/JeKfv7Oef3L+g/vXoFE9SIT6YLL3atsZkc6r90GV0BArn
+         tx5KlWApsQuSyfJofHJ0FbU7rXsjsCcRejKYNPRsNaIjylApSX95X0Di7jgDkjwWUZ5v
+         P22ZSDYDJBZxJ5XQcXXlnvmRzLSW+08qr1zq30qvMjGgKzzjkSUcTGISqgkEVQ03obt+
+         fCvsxWRuLHBWrh44Q66QUqLtUTn0ohLIYWBJW4rgdzzlC0pC0uDxhdC7IEioPf8PM6m3
+         88sz9SUIs4GRX5isK79p9acTfmknmvDKgq9X99SJSUd0kRkR+prhPsj8WlcrTrtm3PLG
+         kRIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754299393; x=1754904193;
+        d=1e100.net; s=20230601; t=1754299397; x=1754904197;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SI15psiGYpi8mxluP/ygZsr9qurTvyHgEMjKCs+LREg=;
-        b=KlDmK0esew7SM9/hqTcYxjEmASyBLEl4ZgVDrXg/tPIy7StlYmxYyLGoMgMc/6TnKx
-         Mt6+DQpGdRlJ/YeMO9YWGhL18cgQNVvKKyYCRBV447LRtQ012Tb3LfMyl+0Ai45Ks7W7
-         wJXZjshPYj752rq8kvhqHX7LoX6JLWGBVtxWUVvNe73mPMkUF2qeYe00B36XmaC02QNl
-         atstzwyeChjL8daiHVyt7ePMr5uLGy+oqVv2WgaiD9/2R/b6bly4u/4NFZwJJzEBnn/q
-         DcWSZb1DPkwMckoXl4Esp4enU6N8LMcJGpBbXNCteGqyajkm5cQx14l6ub1FhWZpb9lp
-         MtWA==
-X-Gm-Message-State: AOJu0YzBw5PnnEN19SVInDT+dB4c2Q4Jq00RPkyjtkb/UgvSAfG3Fh3R
-	5gGQC8Um43cNorVbuclzt+tZLv8eOfbM5jDVpDqZgLAFdzKnFV8pzgo8O8pBwsQOFAs=
-X-Gm-Gg: ASbGncvSIzQB/1KJ6QwRCBWOuQtdL5s2KeneMbXMj6LwRjWQZ9bf0qOtvhexOIWd8JX
-	Jbfk26n90O3FnvMeL4m9Uz5k4+YlydXd+bTAB2pwFrIZLxBjiB2mDckKxNg2A5o1OiWOyAJ2y4H
-	w3+DMeV2IBDInlvca/0VPa92ku2Z0whKsEsu7xs35yMrHdoDCxv+6H60w/O3m8x5VgJoPjNKnHH
-	SA0qx4NNpPftw3K1SExtYH//FPRqXutyfDYTiMSXLPDj51/G/ixWma9XFX2Z00l+YZ3zEqX3/eY
-	o4Y3gtCwRbk0aKxUFYV9ieFMlan0+wGmFH2g2f7OZZ3dBjbqdZ1YFW4GFyAt1LpWOWOz+0eV3k3
-	jHhh6pV7vXbV/F399ivo=
-X-Google-Smtp-Source: AGHT+IEnyqpKH5aifCv9L4u73fshcZbyRzRhTCCnhVI2Zqy1FeWOGamGOxGXSmm70a2JDemSkaekxw==
-X-Received: by 2002:a17:903:2f87:b0:240:2774:8372 with SMTP id d9443c01a7336-24247033fe3mr120749915ad.36.1754299392800;
-        Mon, 04 Aug 2025 02:23:12 -0700 (PDT)
+        bh=84Ij2TtxPhuBBKO6R5fvkl5zfarx/ZqUMtqI5Am1mgE=;
+        b=tjW7nFiM1HMnjtJGGa7HFaw/NILjlgIbHbLifCpxdLk0BDCTcOwQBujMdxxSaC7D37
+         lrvDoi3RqawAsCAZh/iP2D6ZGcLZmsXGV2UyPETqcnQfNgg7h/Xcn1l8MdJE4Y2qgwfY
+         M9wyerBqCPcYIn+IngtIUyW8p86k4mTCgzEq1CZe+M1m3dg1XyiCz/CwmAegp4AcYLeu
+         cbgp5O4T0I8nCQccbWWKgbOgxF4WxReQgb5TLIQL1pmnxIOujMbIU64CX78LBtJH4DyZ
+         BO4q2nPrMMmbrNYPiW56g95viV9gsnnsoI38/3vp8GHCncyNQ4QwPOl2pj2qUDmswpVE
+         8o+A==
+X-Gm-Message-State: AOJu0YzUhSYW8zqQPigsbpryeL9FQxj6S0XtWOVXMBh8W0Iux8ER5sH3
+	AY8ubsgVAxrWDeJqh9WHyqFGaOy1Otg6ilNqYhAT3AjRqaPyVXEbVpNTb6iYI5gg
+X-Gm-Gg: ASbGnctupuSpQpA+Lxv7dMx685oH5F8RZas0okKDC7irZ+STtCBjB0Kr8gjGRbKDBj+
+	AD2NCyhV/pObGPFqm/00isyqekrPzIV+2spo0g0eoRkq3OdpvmAFDKIGXOrD/QGPxeB2QvMf5Uj
+	NO0ktFfb4hiHxlbNg86eRMIOTXCQYEWeCO20v1XMNFuShj1Tz/zWLO68p/jFXhwsqqA/579epu3
+	AyfXK/kqC0t2Ym6ewbCOtUhZj38F7BFPoatTTVV7GldVrmsjCNP3xEHYPC0K/Iiw84BY+trXYnw
+	CY8EoCZijLzZf4EkpCvpZQ3OLLwaiPW9XCK1Nw5DW8fvL1pVWMOmgS41U1g55fF04aIfMsUxdT2
+	EkzWqgDv8AxR3C6a3fww=
+X-Google-Smtp-Source: AGHT+IFZgAnijBUuYkGxiuRxAOGFZH/+Nd1aVALjLV880TbKctnwXqZmJQKzQXPjHE1e7L7bP1u/aQ==
+X-Received: by 2002:a17:903:41cc:b0:240:70d4:85c3 with SMTP id d9443c01a7336-24246f3094dmr130008005ad.9.1754299396969;
+        Mon, 04 Aug 2025 02:23:16 -0700 (PDT)
 Received: from meet.. ([103.176.11.198])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1ef6c62sm106205565ad.4.2025.08.04.02.23.08
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1ef6c62sm106205565ad.4.2025.08.04.02.23.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Aug 2025 02:23:12 -0700 (PDT)
+        Mon, 04 Aug 2025 02:23:16 -0700 (PDT)
 From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -66,13 +66,11 @@ Cc: ps@pks.im,
 	sunshine@sunshineco.com,
 	phillip.wood123@gmail.com,
 	Meet Soni <meetsoni3017@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Aaron Lipman <alipman88@gmail.com>
-Subject: [GSoC][RFC PATCH v5 2/6] builtin/for-each-ref: align usage string with the man page
-Date: Mon,  4 Aug 2025 14:52:51 +0530
-Message-Id: <20250804092255.1092973-3-meetsoni3017@gmail.com>
+	Victoria Dye <vdye@github.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: [GSoC][RFC PATCH v5 3/6] builtin/for-each-ref: factor out core logic into a helper
+Date: Mon,  4 Aug 2025 14:52:52 +0530
+Message-Id: <20250804092255.1092973-4-meetsoni3017@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250804092255.1092973-1-meetsoni3017@gmail.com>
 References: <20250731090040.1625303-1-meetsoni3017@gmail.com>
@@ -85,31 +83,128 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Usage string for `git for-each-ref` was out of sync with its official
-documentation. The test `t0450-txt-doc-vs-help.sh` was marked as broken
-due to this.
+The implementation of `git for-each-ref` is monolithic within
+`cmd_for_each_ref()`, making it impossible to share its logic with other
+commands. To enable code reuse for the upcoming `git refs list`
+subcommand, refactor the core logic into a shared helper function.
 
-Update the usage string to match the documentation. This allows the test
-to pass, so remove the corresponding 'known breakage' marker from the
-test file.
+Introduce a new `for-each-ref.h` header to define the public interface
+for this shared logic. It contains the declaration for a new helper
+function, `for_each_ref_core()`, and a macro for the common usage
+options.
+
+Move the option parsing, filtering, and formatting logic from
+`cmd_for_each_ref()` into a new helper function named
+`for_each_ref_core()`. This helper is made generic by accepting the
+command's usage string as a parameter.
+
+The original `cmd_for_each_ref()` is simplified to a thin wrapper that
+is only responsible for defining its specific usage array and calling
+the shared helper.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: shejialuo <shejialuo@gmail.com>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
 ---
- builtin/for-each-ref.c       | 14 ++++++++++----
- t/t0450/adoc-help-mismatches |  1 -
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ builtin/for-each-ref.c | 41 +++++++++++++++++++----------------------
+ for-each-ref.h         | 26 ++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 22 deletions(-)
+ create mode 100644 for-each-ref.h
 
 diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 3d2207ec77..b2186f9f9a 100644
+index b2186f9f9a..2d4945379a 100644
 --- a/builtin/for-each-ref.c
 +++ b/builtin/for-each-ref.c
-@@ -8,11 +8,17 @@
+@@ -1,6 +1,7 @@
+ #include "builtin.h"
+ #include "commit.h"
+ #include "config.h"
++#include "for-each-ref.h"
+ #include "gettext.h"
+ #include "object.h"
+ #include "parse-options.h"
+@@ -8,24 +9,7 @@
  #include "strbuf.h"
  #include "strvec.h"
  
+-#define COMMON_USAGE_FOR_EACH_REF \
+-	"[--count=<count>] [--shell|--perl|--python|--tcl]\n" \
+-	"                         [(--sort=<key>)...] [--format=<format>]\n" \
+-	"                         [--include-root-refs] [ --stdin | <pattern>... ]\n" \
+-	"                         [--points-at=<object>]\n" \
+-	"                         [--merged[=<object>]] [--no-merged[=<object>]]\n" \
+-	"                         [--contains[=<object>]] [--no-contains[=<object>]]\n" \
+-	"                         [--exclude=<pattern> ...]"
+-
+-static char const * const for_each_ref_usage[] = {
+-	"git for-each-ref " COMMON_USAGE_FOR_EACH_REF,
+-	NULL
+-};
+-
+-int cmd_for_each_ref(int argc,
+-		     const char **argv,
+-		     const char *prefix,
+-		     struct repository *repo)
++int for_each_ref_core(int argc, const char **argv, const char *prefix, struct repository *repo, const char *const *usage)
+ {
+ 	struct ref_sorting *sorting;
+ 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
+@@ -73,17 +57,17 @@ int cmd_for_each_ref(int argc,
+ 	/* Set default (refname) sorting */
+ 	string_list_append(&sorting_options, "refname");
+ 
+-	parse_options(argc, argv, prefix, opts, for_each_ref_usage, 0);
++	parse_options(argc, argv, prefix, opts, usage, 0);
+ 	if (format.array_opts.max_count < 0) {
+ 		error("invalid --count argument: `%d'", format.array_opts.max_count);
+-		usage_with_options(for_each_ref_usage, opts);
++		usage_with_options(usage, opts);
+ 	}
+ 	if (HAS_MULTI_BITS(format.quote_style)) {
+ 		error("more than one quoting style?");
+-		usage_with_options(for_each_ref_usage, opts);
++		usage_with_options(usage, opts);
+ 	}
+ 	if (verify_ref_format(&format))
+-		usage_with_options(for_each_ref_usage, opts);
++		usage_with_options(usage, opts);
+ 
+ 	sorting = ref_sorting_options(&sorting_options);
+ 	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+@@ -117,3 +101,16 @@ int cmd_for_each_ref(int argc,
+ 	strvec_clear(&vec);
+ 	return 0;
+ }
++
++int cmd_for_each_ref(int argc,
++		     const char **argv,
++		     const char *prefix,
++		     struct repository *repo)
++{
++	static char const * const for_each_ref_usage[] = {
++		N_("git for-each-ref " COMMON_USAGE_FOR_EACH_REF),
++		NULL
++	};
++
++	return for_each_ref_core(argc, argv, prefix, repo, for_each_ref_usage);
++}
+diff --git a/for-each-ref.h b/for-each-ref.h
+new file mode 100644
+index 0000000000..1662d25417
+--- /dev/null
++++ b/for-each-ref.h
+@@ -0,0 +1,26 @@
++#ifndef FOR_EACH_REF_H
++#define FOR_EACH_REF_H
++
++struct repository;
++
++/*
++ * Shared usage string for options common to git-for-each-ref(1)
++ * and git-refs-list(1). The command-specific part (e.g., "git refs list ")
++ * must be prepended by the caller.
++ */
 +#define COMMON_USAGE_FOR_EACH_REF \
 +	"[--count=<count>] [--shell|--perl|--python|--tcl]\n" \
 +	"                         [(--sort=<key>)...] [--format=<format>]\n" \
@@ -119,27 +214,13 @@ index 3d2207ec77..b2186f9f9a 100644
 +	"                         [--contains[=<object>]] [--no-contains[=<object>]]\n" \
 +	"                         [--exclude=<pattern> ...]"
 +
- static char const * const for_each_ref_usage[] = {
--	N_("git for-each-ref [<options>] [<pattern>]"),
--	N_("git for-each-ref [--points-at <object>]"),
--	N_("git for-each-ref [--merged [<commit>]] [--no-merged [<commit>]]"),
--	N_("git for-each-ref [--contains [<commit>]] [--no-contains [<commit>]]"),
-+	"git for-each-ref " COMMON_USAGE_FOR_EACH_REF,
- 	NULL
- };
- 
-diff --git a/t/t0450/adoc-help-mismatches b/t/t0450/adoc-help-mismatches
-index 06b469bdee..2c6ecd5fc8 100644
---- a/t/t0450/adoc-help-mismatches
-+++ b/t/t0450/adoc-help-mismatches
-@@ -17,7 +17,6 @@ fast-export
- fast-import
- fetch-pack
- fmt-merge-msg
--for-each-ref
- format-patch
- fsck-objects
- fsmonitor--daemon
++/*
++ * The core logic for for-each-ref and its clones.
++ */
++int for_each_ref_core(int argc, const char **argv, const char *prefix,
++		      struct repository *repo, const char *const *usage);
++
++#endif /* FOR_EACH_REF_H */
 -- 
 2.34.1
 
