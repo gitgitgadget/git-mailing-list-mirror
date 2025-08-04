@@ -1,116 +1,158 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8E113AD1C
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 06:34:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03EA2E36F4
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 06:35:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754289268; cv=none; b=ndc/8TM/E39/byup4hlWI2tIAXo8BQrDTX1bS2zUEAtqRrvK5iRAqcaQXXSnv6IHGB+/W8LLU6JFKl6dE6ZUuhgbN4sF8K3pR9pdFDrc21bUbNtWBhQj+p15uwlAcxX1d6Vn2nCeWxDZW1xsc60917sSseCElw3Cz0RjXJ7zZL8=
+	t=1754289360; cv=none; b=SvcNKWhUHtiHVYxEN5KGj9VemZo8xTpYRCBHG5rxdwJxndG4MXp+Cdk9R5H2oHH06Y1nG+tHlxMkATcuLu3UaUbSRvgpTSsT+uA8ePMIczvMHozM17Qu/sQssjjXcId7RoXIQ/IKF1nWFzvPGg8mPqQ21KNBzK8ybQj8k/I7Hn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754289268; c=relaxed/simple;
-	bh=LVFa241eUYVvB5ETp0H+jSeYl6O2CxOKqeHKI5easXQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MkztEo7R9MYia7mwdUFf8zz/OE0bW3we111ghhftuf4PNQ7/sVkWs9wH/2TVABgFz8uXLzP086as3K4kdq8NDl69Is70aI7IFGO23qaWYOVACyWXqcuYC/SikRliopXJGIT1LvSWZbbXPX9u/BhVIpKVrYB0kCO+E56IugUcRHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h88SMkCI; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754289360; c=relaxed/simple;
+	bh=laWuMHAtUru2tx9jqDA9DmOQHkKeRkxsCYYZ8c1tQyo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t6GV/vuxFaZQeATsxP6i7EDVYiUQhGZqeCavQPs+bT6faS5du0r7kVI9oUee/xFSRpOBktOipcZXqiD9NUgbqutlWrTTlX1Cg6tZZbA+bpoHc4UkOcEQHLnyMjwhXodmWWst9uv+lb9Sa8DQe0bVSiNBpLKm+YNZUCRSLkDQfso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ut+CjSPK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aCC7TkQb; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h88SMkCI"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-31ee880f7d2so4221397a91.0
-        for <git@vger.kernel.org>; Sun, 03 Aug 2025 23:34:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754289266; x=1754894066; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=owgzH3YynmQ11eI9VXLVHtBooyEwzgaNMZW3MuUoUyw=;
-        b=h88SMkCITZqzUFGF0qrCip2OPryuSySBl5VBguI0nwGbDhwOPHaxkieu0qKjv0+XcF
-         iNwsYZXwwc99N8mkM+H8RhbNVApSov9cr1mbbARY5/5tLA5gccKQWAMj419+mR4VtDeH
-         APccrOHPjQUoAoHTBSX8fn/ADfgEMSCH/UgeQE881raFauB4N14Sv6LuvwE+RpiHfwTc
-         6xaU0Mq6CAZf6Nd+D92Lw2jClgUGAewNxGuwTO158dyIVgzycmaDUVUW8S8tozQQQVOs
-         nsEQpPd3gWlfhSUuSAuMXsuEVC/k9++8OdWzTJV50KeqvfrTwLuB8htgv5J7i1a7R1y2
-         yKWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754289266; x=1754894066;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=owgzH3YynmQ11eI9VXLVHtBooyEwzgaNMZW3MuUoUyw=;
-        b=i+ucAx0tIJD51rCGOoSbqpjyS9CzgkwT6WRsOpRAXefHvxIy9Tt3tC7Fin1nLL5YgF
-         v6EOAFbmF8Mtf+OGfaVywwd7QQMSrBPPbbwQNoeAHNyylRUMjl1f/5QX470LRF2e7QC4
-         my9h7trvbFPeMTfCjHSoLXLNBhMBOjoEkkqx0BMuS+ccz3z08PUaaNndzfIuO/h5CVoI
-         5vTgdlZzp8KqH4+voYaEcJ7O/R//LqY+s+T2CzYEs7SGVtRmJ+TUFX7JJBDlxLNalm6G
-         3dpqo0OPuoVH90/+Sf/M+OHAEbE/+2dn+GKY2Jt94iQ5T6muKmUQ/hWCEAaxFrlmW+xB
-         Evzw==
-X-Gm-Message-State: AOJu0YydBh89uDKC5+Z+2uYRux1/twCjIEFH/U8aUBgq7r0aoe7W2SR8
-	cyzjUH9hBEvDOwggi7me6AOP0TBzLqs0XXqFRzDAF3N9PSi3r3ja+G0ZAve6zVOMXMGFyvLAOtq
-	9dd6Fh3foHdH0u0Fq5ZWrwz5PoqeLQ3OTzi6I
-X-Gm-Gg: ASbGncusiWTWR3A79cZhJFF5d4t2AJjR2kG7rULBIe4qwlS59/DJorAxansqvzfegG0
-	BvLIwmdw6xqqyTiveQ3UKKXqu31OOtI3H581y7CIs1o3Yi8xUDA1zsdV8A42MOWoyw+EXRxNRvH
-	DhUm2eku1W4j14ahHDL2YbIpJc2MhtKqu9+ow6cHLWTjwq6o7Fnh9UN2pXPulpDbr14GStltj0g
-	/Pp55Ay
-X-Google-Smtp-Source: AGHT+IF2iUnErCJKTnvmy9f78rSxN4s5jHrSIeElwwEUvJhq8gcQSCmKpmdHtmn4/jo883NM3VdYG4n7XpzKdB0cSHE=
-X-Received: by 2002:a17:90b:3886:b0:31e:f3b7:49d2 with SMTP id
- 98e67ed59e1d1-3211611bdf3mr12608740a91.0.1754289265758; Sun, 03 Aug 2025
- 23:34:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ut+CjSPK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aCC7TkQb"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 997D81D0010A;
+	Mon,  4 Aug 2025 02:35:56 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Mon, 04 Aug 2025 02:35:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1754289356; x=1754375756; bh=W18lSbL9Wb
+	3+2JVPhuTsnqgoXgBfwG+5DCLh00ZTt8E=; b=Ut+CjSPKqUAqTcV59svPyNykv7
+	OugIgw0off3BqiRY/fxVUVcY8mT9J9FeScBtCo330bAapScZ4B68zdAq1305c/xk
+	xFncghDzaaPhIzRqCXZoR3X6fizzu3+kZruE3rbNj6x/dTYk13AgiQzfAvqy9e2m
+	Ioz9i51TDQGNDtW26CLJzaYAETIDykE0mEjzOtEVtUqF+D2hzpnFy6ubch3+nCvJ
+	V2U/yeHCbFJxrr9RHt72gTVaqnN5yjxAsJI0TBGKzCM/TirEjtPuDnMRaL/hFE+f
+	YWx6URV+qpwUSwI1V+nCPkaUW/EQaWe468TVCx/KeP/JAROlsvGRUOXotbNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754289356; x=1754375756; bh=W18lSbL9Wb3+2JVPhuTsnqgoXgBfwG+5DCL
+	h00ZTt8E=; b=aCC7TkQb3hHuMGPI3Xypeko2DN3tGNuSMq4lfVUXC+T/3VvRZaG
+	ZsfiW8nEoi/FFUYvu9upmNtyV0yCI/Vulxdd5aYAFY+0t8z4hhEVwqJjle8J6+OS
+	5w5/ExH0NvDyVG1FYoCwgCRTGDOBOS150G/lNAYVidPjnNrg5X+lcSbji1dbRgGU
+	e4gzNxei1xKbKOhn2lWtfMS9lLmd+9lxfxJfmKfvBLR7u69cdCS76xQdjZ1i7LKZ
+	wgmRxCyo27lmsdyzNIj1H7HZqEAf3tLpxvfw9OljKK6DBPgKJ+rpcF7UzR1E1cB6
+	S7YY5aPxfD5PLPF3jWNZgBPV5/aDx5+HpVQ==
+X-ME-Sender: <xms:zFSQaBuB8cIK6JFng5MHqtGjDXHecde1q-k05nZ8RwjRCm_u41lJjQ>
+    <xme:zFSQaHUP1PC1ReBWoSbk7Fgnulgxftf6lIFs8eZvDK1K6yzmYTU-0C-RPABA33nYF
+    LRvY4WtvU-ZlZYQqQ>
+X-ME-Received: <xmr:zFSQaEholtPyTtIz5FRDN7HCpXTXW2vfGDhSl_eHK9jSMpC7BveDMAaAUhJAjGR0y-R9xjOCL8QMuJNnHB1rfcKZ6vmbQi7R_f6keWaIS_8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudduheelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    oheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrvhgrrhgrsges
+    ghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtg
+    hpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:zFSQaHpGm0w6jZIHr7EsB6EMFTbCWgr-LI3EqTfHW6M83AkCkLF4kg>
+    <xmx:zFSQaCFUiPXmS358v93HpqcYs2ES7Ei14-4bAjlHMFeH-8wncyYFqA>
+    <xmx:zFSQaE50FPxHucofhB0t6RF19PHS-Ds0Q7KBbCCkRu59LCdiRIoOwg>
+    <xmx:zFSQaCeA5whzofBUF4FZEixVCaT6U5wj-oeYqUJpW8kXj_c9mxuLbQ>
+    <xmx:zFSQaHtFK2qt5TbkXWRjEtN3lATPzP-JFYlq8UhzzAVVruZZt3Hv00m3>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 4 Aug 2025 02:35:54 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id cbea3b1d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 4 Aug 2025 06:35:53 +0000 (UTC)
+Date: Mon, 4 Aug 2025 08:35:50 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v6 1/4] last-modified: new subcommand to show when files
+ were last modified
+Message-ID: <aJBUxj7li3XsokdR@pks.im>
+References: <20250716133206.1787549-1-toon@iotcl.com>
+ <20250730175510.987383-2-toon@iotcl.com>
+ <CAP8UFD0AEKDmvQJTanL+ZS+U66WAZz=FKSJ3LPE1QHSEyH-zNw@mail.gmail.com>
+ <aIyVft9PdlorttzZ@pks.im>
+ <xmqq7bznm0nk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250723064313.29866-1-meetsoni3017@gmail.com>
- <20250731090040.1625303-1-meetsoni3017@gmail.com> <20250731090040.1625303-3-meetsoni3017@gmail.com>
- <aIxWlX36V6DcxWa0@pks.im>
-In-Reply-To: <aIxWlX36V6DcxWa0@pks.im>
-From: Meet Soni <meetsoni3017@gmail.com>
-Date: Mon, 4 Aug 2025 12:04:14 +0530
-X-Gm-Features: Ac12FXy4YAThBlM1vW64Y9rn1XtXeGMM9k6cn6KLQp93D5HhD2iPMTj_ku6r6P4
-Message-ID: <CAPhwyn0X1hS89B6p_NQKunrdO1EHMkwtF79RvA1riM6EH4PRJw@mail.gmail.com>
-Subject: Re: [GSoC][RFC PATCH v4 2/5] builtin/for-each-ref: factor out core
- logic into a helper
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, shejialuo@gmail.com, karthik.188@gmail.com, 
-	gitster@pobox.com, sunshine@sunshineco.com, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq7bznm0nk.fsf@gitster.g>
 
-On Fri, 1 Aug 2025 at 11:24, Patrick Steinhardt <ps@pks.im> wrote:
->
-> On Thu, Jul 31, 2025 at 02:30:37PM +0530, Meet Soni wrote:
-> > diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-> > index 3d2207ec77..bbc0e5ad1c 100644
-> > --- a/builtin/for-each-ref.c
-> > +++ b/builtin/for-each-ref.c
-> > @@ -7,19 +7,9 @@
-> >  #include "ref-filter.h"
-> >  #include "strbuf.h"
-> >  #include "strvec.h"
-> > +#include "for-each-ref.h"
->
-> Let's keep the includes alphabetically sorted.
->
-> > diff --git a/t/t0450/adoc-help-mismatches b/t/t0450/adoc-help-mismatches
-> > index 06b469bdee..2c6ecd5fc8 100644
-> > --- a/t/t0450/adoc-help-mismatches
-> > +++ b/t/t0450/adoc-help-mismatches
-> > @@ -17,7 +17,6 @@ fast-export
-> >  fast-import
-> >  fetch-pack
-> >  fmt-merge-msg
-> > -for-each-ref
-> >  format-patch
-> >  fsck-objects
-> >  fsmonitor--daemon
->
-> Everything else looks sensible, but this change is surprising as it
-> wasn't mentioned in the commit message. I see that you changed the usage
-> though to match what we have in the man page. That's a good change
-> overall, but should probably be moved into a separate commit so that
-> this commit here is not changing any behaviour.
->
-> Patrick
+On Fri, Aug 01, 2025 at 10:06:55AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> >> > +static void last_modified_release(struct last_modified *lm)
+> >> 
+> >> I think these days we tend to name those functions using "clear"
+> >> instead of "release"
+> >
+> > It actually depends: if the structure can be immediately reused
+> > afterwards without requiring another reinit it would be caller "clear"
+> > indeed. On the other hand, if we only release memory it's "release".
+> >
+> > I think this function here falls into the latter category, so it's
+> > correctly named.
+> 
+> Given that even a long-time contributor gets confused (including me,
+> who needed to see where we documented this for our developers),
+> perhaps a clarification patch is in order?
+> 
+> --- >8 ---
+> Subject: CodingGuidelines: clarify that S_release() does not reinitialize
+> 
+> In the section for naming various API functions, the fact that
+> S_release() only releases the resources without preparing the
+> structure for immediate reuse becomes only apparent when you
+> readentries for S_release() and S_clear().
+> 
+> Clarify the description of S_release() a bit to make the entry self
+> sufficient.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/CodingGuidelines | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuidelines
+> index c1046abfb7..76ec6268f2 100644
+> --- c/Documentation/CodingGuidelines
+> +++ w/Documentation/CodingGuidelines
+> @@ -610,8 +610,9 @@ For C programs:
+>      - `S_init()` initializes a structure without allocating the
+>        structure itself.
+>  
+> -    - `S_release()` releases a structure's contents without freeing the
+> -      structure.
+> +    - `S_release()` releases a structure's contents without reinitializing
+> +      the structure for immediate reuse, and without freeing the structure
+> +      itself.
+>  
+>      - `S_clear()` is equivalent to `S_release()` followed by `S_init()`
+>        such that the structure is directly usable after clearing it. When
 
-Makes sense, I'll send the updated version.
+Yup, this looks like a reasonable change to me, thanks!
 
-Thanks.
+Patrick
