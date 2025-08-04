@@ -1,142 +1,110 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFD32741D6
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 15:53:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709AD13C8FF
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 16:04:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754322813; cv=none; b=FSvpNl11a/OqBBEvcOLqvCwgdBT1Mx/RieRvs39euH6B77alx+mqZp+rit4LgGfAZQAX+YCVSp58ATEZ/9etQMUjzBM44QCMcJq34ocXguyzGEmHC5jANmfZrlsGmIwvrX1unhp3hEiSOezHDuuG2IumTnjEf19C3pDQcfiz8OA=
+	t=1754323479; cv=none; b=K/96EpEtftc9TaVUajIwnUeoN2Oj2Wrr6wfLnY+5wsMTZFiW/FBzTfI5xg1QTmCg4uRcivIawy380dA7WF+EmD7CULnmpNHcl0Z2H92GQkV3ouZ91UsOnuY2U/5A4CmXJo4DwCZH4+sshmEpu8ioFRrHRNC7rzIJeUv3ILuarb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754322813; c=relaxed/simple;
-	bh=/b2UwOddZ5M0GOZDUcYnL8rpzM896En9X/D7hRhyT8M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HpUEfrJO94cmnXxQH3Gp5GVcubbQ1APnJUb9VMwSLmUeu7nNBsuI6VkCxPGhnyI3zpXA2i+vu5VrOQgiD2Had0ZzjdhohGTzhDH7A/GemFAGvKSmolcaMIz1oVAgNM1HVdM+gltF4LfpjA60ivJBP9lSh5WWFVmlDpWx3xnIBv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cUbLm+LT; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1754323479; c=relaxed/simple;
+	bh=rMQowHroSdyQm0nmn5Eu6mtjkh9Otg32O89+6DJyR/k=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=RtNpHXyswIudPtNTpVm6FjstQ2y0y42gaWnyUru02zxT+1CNF9Hdpzx+zm4FOvTAtaUaXc9J4e6dxXXM/zCr3q9UGXVJ32cQPLwQjDGTdsNAm7JF2JOSIWZVvWKHE/p6MEeFpvDwCeLyUKejdhSTJ02Ed++lyLnamZOdMIUTfhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=IfE9okGc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fXUuLAgn; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cUbLm+LT"
-Received: (qmail 1981 invoked by uid 109); 4 Aug 2025 15:53:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/b2UwOddZ5M0GOZDUcYnL8rpzM896En9X/D7hRhyT8M=; b=cUbLm+LTDpf9dAT/v9eiCFmVgxoWbip5p5XVoBvR49dohmIunl969AC2FS7Fb5avlh5Wc9NorxBV8Ohvd5JjnG21mQuk97oCuRTDR+AM1XBkusf7Jq+CWK1rcmIUpKwrGXSBQtfYk9JkDeKdL6QPiKjKX1QSn+k8XdsbxpaY9Rv/d5RD7x21rHz5ee5Vy7w7ZV8clIMP8/cq5/GpeJ2m8aCS2ps8DTChbJnCAD56u36Ou/6UvPcMXW0kLtaCt38NEkTBPZrjcHRYJqakkZ7p2/d9pbsfQctYWb+ghHnrwAXKZZ6Y04rE9PN4RopSqz9exvK/ftKYtxUPM9XOJ66CTQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 04 Aug 2025 15:53:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21604 invoked by uid 111); 4 Aug 2025 15:53:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 Aug 2025 11:53:30 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 4 Aug 2025 11:53:29 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Denton Liu <liu.denton@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] fix -Wmaybe-uninitialized with -Og
-Message-ID: <20250804155329.GD109984@coredump.intra.peff.net>
-References: <d03308e9474f5e26fd4a5494ec243a278e971443.1754302009.git.liu.denton@gmail.com>
- <20250804131922.GB86602@coredump.intra.peff.net>
- <xmqqms8f9p2t.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="IfE9okGc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fXUuLAgn"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 80CB5EC0166;
+	Mon,  4 Aug 2025 12:04:36 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Mon, 04 Aug 2025 12:04:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754323476;
+	 x=1754409876; bh=rMQowHroSdyQm0nmn5Eu6mtjkh9Otg32O89+6DJyR/k=; b=
+	IfE9okGc5OLq1JKenOqfpdV1k3T9uCcE3JNlxSImCc0HGidq04qKMZ3OUrpJXpeE
+	ITX5KpidjWX7LyncESDWokODXot+m+WFaH6WoOf3Nz0ehROPggBe8yqrCMpacpV5
+	rpRnCOepqYgiGMBZroExXfuS6T5fgu8KJ1ZndWPB9qRFkBYSqoMZMF/dN2p81TDn
+	nF2PwDTcxZaQBwKu7beb3YIQBUGDrrw8FyG1XFuFFr8w2Kuya8kDpMevqWGDxAhJ
+	pt+bP2PsxD5zcZ3SYe8FxMuqBFgA5f4zFCLMy53+N9EGsgd8DvDIcSoJIGfb933x
+	i8IGU+BIwGYGqZWBMIBryQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754323476; x=
+	1754409876; bh=rMQowHroSdyQm0nmn5Eu6mtjkh9Otg32O89+6DJyR/k=; b=f
+	XUuLAgn5GhwZbjM+ZdLeojZWIs8r8AB/0hHgGMu07SKdvDzakRH5kUcjAr1rsdFu
+	s/RF6q+CeytCXmGHd8lD3rqtHZPdX+aTwyRpX5gFaGihRxirzFUWx8JZ3PIC8Pia
+	yjxjJltt8dgnDxeidgq6IpkeoOJkbb6OWMo0woJ1nXyI0NFnYrD855iTU5wtVf26
+	+T4lkn8ddV8Dq2EqxVwB3LsUjZelU6XxkZoEJ/dDI+kdBRt8dQ1Pv5c6xx3MVlxX
+	MT/iJb9oicZueUUHs1pCtdJWsuIpCX+GJne56Z+ZIJWDR0H2fHe1TfSlbFRF6KPT
+	5LM6zDnfPa+/j+Lz+Mvrw==
+X-ME-Sender: <xms:FNqQaEaHGQJ-9jszlKGLOA9mfGwJ-jZ8tkG2VY7j2Ggyl2s5bnTMb2s>
+    <xme:FNqQaPaY5YR0W5n1XcnhXm-cmnQuyDHwOfWtiTmaAPH97JuJeomxOqBnnxwmDSxAE
+    IM8WNO1hvjefQ-JbA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvjedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqre
+    dtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceo
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenuc
+    ggtffrrghtthgvrhhnpeehudfgvefgfefgffdvhfffvdevveegheehudetvdfgueffjeev
+    jedugeevfedvfeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehkohhsthhigiessghsfigrphdrrhhupdhr
+    tghpthhtohepghhithesfhhmohhrshgthhgvlhdruggvvhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:FNqQaNhHUQ2Lzr9sw4r0EsvFBCapF0TwrP5IowmQtyvv_OvcO2IiAw>
+    <xmx:FNqQaI4iqafn4Iagu2Gi_WB52qYoAMmcMACLqqIEUU_IoDLm9Wpkfg>
+    <xmx:FNqQaKDLiGGcNEIvi_IQiFGiwU9p_m7zzqqna4LNiTBdsG_YYaKVkg>
+    <xmx:FNqQaPZ8g1OquZvRG_iMcZc5FLuQ__oMwYXhd-YGreP55nZpe1g9Yw>
+    <xmx:FNqQaEMJ30hNXMZFpa8UXWHoJZWyA23wSqPUT1eq7yHu4Ox0POQa4HDn>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id E60C11EA0068; Mon,  4 Aug 2025 12:04:35 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: Ta85374b9201c6e20
+Date: Mon, 04 Aug 2025 18:04:05 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: FMorschel <git@fmorschel.dev>, git@vger.kernel.org
+Cc: "Konstantin Khomoutov" <kostix@bswap.ru>
+Message-Id: <ddc841ec-bc4b-4c01-a99e-9a65af3963bc@app.fastmail.com>
+In-Reply-To: <917aa62f-5f2a-40d7-8fa5-f19a14926241@fmorschel.dev>
+References: <1fa7a8d8-3ae5-4913-b3b5-21d8f67e567d@fmorschel.dev>
+ <0afc01b2-11a2-4f77-a858-7a444e8bb1d4@fmorschel.dev>
+ <2f505f75-112a-4b71-bb05-ea0cb7731cd7@fmorschel.dev>
+ <hi7t3qk7difgzip7syscarnf5ui5avnhmjxil4vzurwcfo7a6x@drccf7gibn72>
+ <917aa62f-5f2a-40d7-8fa5-f19a14926241@fmorschel.dev>
+Subject: Re: Feature Request: git mv --after (new flag)
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqms8f9p2t.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 04, 2025 at 06:46:50AM -0700, Junio C Hamano wrote:
+On Mon, Aug 4, 2025, at 17:53, FMorschel wrote:
+> Wow, this seems to me a really weird design choice.
+>
+> Do you have any insight on to why is this?
 
-> > +	/* All modes require at least a remote name. */
-> > +	if (!argc)
-> > +		usage_with_options(builtin_remote_sethead_usage, options);
-> > +
-> > +	strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
-> > +	remote = remote_get(argv[0]);
-> 
-> I do not know about compilers, but a sample of one, to this human it
-> is more obvious ;-).
+https://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl=
+.org/
 
-OK, cleaned up patch is below. Hopefully I am not stealing Denton's
-thunder, but this seemed trivial enough that I wanted to get it off my
-plate and never think of it again. ;)
+> And do you have any idea if this behaviour is tracked to change=20
+> somewhere? Maybe by project config? Like, one project could opt-in for=20
+> an actual "rename" history.
 
-> > and the line it complains about is:
-> >
-> >   if (filter && strncmp(test[i].name, filter, matchlen))
-> > ...
-> > At any rate I agree that "0" is the appropriate value here, and
-> > assigning it to shut up the compiler is the best approach.
-> 
-> ... simply because we know the value in matchlen does not matter
-> when filter is NULL?  I think that would work and I would be happy
-> with a less noisy compilation.
-> 
-> But any other value like 99 would equally well work, which is a bit
-> disturbing ;-).
+As a bystander: I=E2=80=99ve never seen anyone involved in this project
+wanting to track renames as part of the commit.
 
-It's true that any value would work with the current code. But I think
-"0" makes the most sense because it is counting bytes in "filter". If
-"filter" is NULL, then we have zero matched bytes. So if anybody _did_
-look at it, they'd hopefully do the right thing.
-
-BTW, this clar code comes from libgit2. They may want to fix it
-upstream, too. +cc Patrick.
-
--- >8 --
-Subject: [PATCH] remote: bail early from set_head() if missing remote name
-
-In "git remote set-head", we can take varying numbers of arguments
-depending on whether we saw the "-d" or "-a" options. But the first
-argument is always the remote name.
-
-The current code is somewhat awkward in that it conditionally handles
-the remote name up-front like this:
-
-  if (argc)
-     remote = ...from argv[0]...
-
-and then only later decides to bail if we do not have the right number
-of arguments for the options we saw.
-
-This makes it hard to figure out if "remote" is always set when it needs
-to be. Both for humans, but also for compilers; with -Og, gcc complains
-that "remote" can be accessed without being initialized (although this
-is not true, as we'd always die with a usage message in that case).
-
-Let's instead enforce the presence of the remote argument up front,
-which fixes the compiler warning and is easier to understand. It does
-mean duplicating the code to print a usage message, but it's a single
-line.
-
-Noticed-by: Denton Liu <liu.denton@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/remote.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 5dd6cbbaee..f0e49a5681 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1474,10 +1474,13 @@ static int set_head(int argc, const char **argv, const char *prefix,
- 	};
- 	argc = parse_options(argc, argv, prefix, options,
- 			     builtin_remote_sethead_usage, 0);
--	if (argc) {
--		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
--		remote = remote_get(argv[0]);
--	}
-+
-+	/* All modes require at least a remote name. */
-+	if (!argc)
-+		usage_with_options(builtin_remote_sethead_usage, options);
-+
-+	strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
-+	remote = remote_get(argv[0]);
- 
- 	if (!opt_a && !opt_d && argc == 2) {
- 		head_name = xstrdup(argv[1]);
--- 
-2.50.1.786.g492fc26cdf
-
+PS: You need to keep the CC intact when replying on this list. :)
