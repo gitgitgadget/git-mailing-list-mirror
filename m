@@ -1,148 +1,131 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE5723AB87
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 07:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4421E23504D
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 08:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754294209; cv=none; b=LsuJYdyVzx+SwEGrT6WzzlsKGLzK0z9inZeGQa/+eo5s3ERrw6ZCaBS1mLiLLt+ePnNcngcJn5YCi0wInZIVU5y7pUdBp+K/ZOT2RqcCyCXZmIkIrHwlHRVKqrYSQnr+lZycfmQu5Rt4+XAVGkm6JSd4mWJ1jdcUE+1X8KdoLdI=
+	t=1754294737; cv=none; b=aYbbRBKk9Rsnml+e+ZVCzBbtjyw9PPTfPwD+Korv4EamWTPMbqfptKEGvxOUYD2vZxTHLpZPr3z20IVI6R0jvp3kIpPWAPhkvxHmBIjvs/X8v3UIpDFltaJfDdHf/d01OFRJrvDxjUT1hB4w6LBFSDbT+1zPqKxwhAIiJMAZ5ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754294209; c=relaxed/simple;
-	bh=4IIKBfjON0bu+Z3iH/c8/I3u9BoWfIyuQU5sDMVFY/E=;
+	s=arc-20240116; t=1754294737; c=relaxed/simple;
+	bh=LpXD4DxPbU6Ztksnt0fsguHTd4IAOqiuWJj6bZeY8Yg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D+SPzBkf2+Yc038vC9P5dWfeJaKNFxR6I+D0316JSIGEkkUP/1vgwcxuUB/wd+0rBtjr/jPMIwayc/jJdsnTRZ3ERZp0sK1t2XlmtP6cs90UXd64Tdn/f8luCQUQ5Yxe42mItzE8FDWuZqZuPmW4NMRSFXGrr+s6PN6AZKT5cFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=da2M86c0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fYYZlJBe; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=To8QEjDpidVcsOCn3/p4IzNVsPt1PotjA2qFQN+tApCOwkzaWE11gC8ZUBY0GkljuddGKIXU4smuuhTjNoIEbfURbokO7WD/OoR9LvfgHuVb4pWPggvKQz5vZbfGia5Uez9LuEBbqN8kvX2nXUW61oWTpX1JHz3ASw9IXZlBjos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XMLqs65J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HMphxyip; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="da2M86c0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fYYZlJBe"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C252E7A008F;
-	Mon,  4 Aug 2025 03:56:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XMLqs65J";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HMphxyip"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 70B2D7A00D4;
+	Mon,  4 Aug 2025 04:05:34 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 04 Aug 2025 03:56:46 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 04 Aug 2025 04:05:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1754294206; x=1754380606; bh=zJNwf7PBIk
-	+JKmdQgnAuWU78ptrEgO0mhkPKf2HBgV8=; b=da2M86c08Z2nSLMkPCDEKTJ134
-	8rTYeEE2giCn28+COmp9fIiPhfs9x5p/x31sZvv+E028TkOyoSvxnzQGG251u89B
-	FFZ5ggqKWCnbIyhALkGyHHjAdhrA4/TpDWJFG96PFKjrRML0pwptQfJFnXtJb+cU
-	aS+uD1wp//XjimXNnNaaYPnQGwrkAGxQZ+ZL7BAfjrDMQQGtHhZjkxLhjVxKBCwb
-	U03t3gVAfmJxv/eEml8bg01N+lB48fmWVQ8pW1m/4Ww1+0fd4iC2gyg1Ra+do9Ej
-	NHRuUYqwxN98gU7fkCsGEt+08EVMk0v2fMem/UuJDCnSvSQ27AUmlk/3WBfg==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754294734;
+	 x=1754381134; bh=P0xheP6t3gkazGoBWXlxPVvPBvUvhPeiq1qRfcFp1hE=; b=
+	XMLqs65JEnXveV/CESKhwYwGD7Pqxn1iGt2YMTC/FLsKHznRwG4nW/dfGZtrYEAa
+	zKBq92TKg/4XSfprwh08w8M7zLpAyuIB0qGg6vOmycDvrqfO9vfd0YMrVz5+gOVP
+	dsz30vJXXWVQwgKE6A1JTG+up39ZPkzMAOtPAY48trk2yFkgPdBgET3U9JwK3gyG
+	WYD5sUv30mEHf431ziA4NVlnBnxymPnMToNCf8c+HHOoBfVC8bcvOJIBCAljxJkw
+	XjdWMGYR46d0d0hE2jnkCbG9/+IOISecO1rkIAaw3IHRATtCekGpqQmt3AuGHpp9
+	wNw8qPiF05xJ50JeUYgaLw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754294206; x=1754380606; bh=zJNwf7PBIk+JKmdQgnAuWU78ptrEgO0mhkP
-	Kf2HBgV8=; b=fYYZlJBeWeyU7JCoR3d2RNLF3Y5pegGtb81E/NMUyWL50R7Ocx6
-	okxlrehVH1LoqL/LhlGm4adwO4d2e+RCe4liUNiJYnrbEbyoYZR6yq4lDRLjcDMS
-	tAyDyclBuF+3hc6Wzc9mruuC9EAtbv5Aas7pNslMVXxAURyKg5H53GClWEbPmWmW
-	1+5tj0/02CoMdaT3rumwY5n5jdNUhLhbgIfmTqe7+aGurOV1H3B3JuPzyLEIZw0h
-	IuRW7Ehymwmls68f7WuqYCXtOymP/kEWUnPvOII4OQFEkKsQcyHewA/HARQVJvPA
-	0jZn3nH6lYsUGsFLb6VZYkWS3k/1k4hN6gA==
-X-ME-Sender: <xms:vmeQaH9b7DdKILxUkFb5zMWLXpdTd6lJtWNOCjGzgRnb9U8McyWniA>
-    <xme:vmeQaD4FNNnKwK3Z8K9lG7DhNmS3cwbABC-e8sJNP8-mQ7yXpy4X3ACarOm7gfbc-
-    5ahlsTbliPi1HbdRw>
-X-ME-Received: <xmr:vmeQaG043vjcMQod5PQt3jeQgTpO5wHhT7_lrjKvkZt8uDK0oL64EhV5CFBnm4D5ETA3Rhgjdpvv9rPHm1TPzT_sn-0uqww-4e0FdXzu4Qs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddujeehucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754294734; x=
+	1754381134; bh=P0xheP6t3gkazGoBWXlxPVvPBvUvhPeiq1qRfcFp1hE=; b=H
+	MphxyipMkyr1iSJ45kQYArjNXmRCnD6we0Ewa0g7B7zDqQ2B8e2e+MB1Lmf7lRe3
+	eTAi/u+mngbDrsE0TWDgLuVZ8iKC8XUmQCP50DXoNEOVxic5rw6sUX8UrF9MxA1K
+	TPs53Tl56dzUqauQGszbalog5IQZY+Gtk/cNT2DByhtfjBu6SGaFxQ7Al+hHoFh5
+	0h9d/TyN3TwxVHs5IIHrfHFyAagXmqpNLYUbQu8iqnSBWAvK9qJpuS9v0rJyvPvP
+	X6fksCp8H7ZQikuvN6lq/DG843UbLzg9FXpHeLxRh7uS13rDMJPbq+hRxLyjh21+
+	eZhvLlqrrVRgSU9BoYV1A==
+X-ME-Sender: <xms:zmmQaKMrWK1KJSUzL382h_UMWnf564JuLJAt4inBa72qK39O5MJaQQ>
+    <xme:zmmQaMMOgc5e3rcTscrnxvtah62vXveUtjrBO7pPS0xzfqRquCMOsDa2b8v0hFtlD
+    XndiiIuK7wrL6HmXQ>
+X-ME-Received: <xmr:zmmQaKv-xH4WgnBldINfhXUxV9wgk0dnOVHaLsZSh1hR0oAjY29ZdwftOoJxVX8Ia3a_Pgt4sLFDVaUutER22axOAFA4h-PB8Be-Q_xa0z0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddujeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:vmeQaCBykhFz6ezLq9RnblVqxSPBmJtmZxx9przF7Eplqbs8MyhsuQ>
-    <xmx:vmeQaA1D-6A8qBbpZj3SD7mlRHjR-CEnXBKiTgm1kY-5-L6m8hJBlg>
-    <xmx:vmeQaEvtyTrjXy0zGm7qz87wS7F4DdY6qDSJWdUvAUeNzSxbVroisQ>
-    <xmx:vmeQaI5iIfA4FhZAzJA56m5RBrZOYNRq0gbRdnZAM7uZFPKC8rAejw>
-    <xmx:vmeQaKgChJ1gEKe1tYGbkHJbqQqWiyejU41dJLBnJrOcRpX0tGW75PEn>
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeefheffgeeflefgieduleehueeugfeifeevjeejveelheetvdegjefgkeeguefgtden
+    ucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
+    fedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhdrlhdrmhgrlhhinhhouhhskh
+    hisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:zmmQaGWMs3A69UDf7qFhqFzgFO9XBppPd0tpZNMaTrbOukI_zbs4lQ>
+    <xmx:zmmQaCsGQ1oJN7lCfrudITwfKF2YPCk0-D4pw-3PpOfg6nrl4CtpTg>
+    <xmx:zmmQaCVMiw2NfgGLqo3KeAjEF0aYBjgxoF-TqNyD4k86bdzRXasdVA>
+    <xmx:zmmQaFlqA5ZbBnfttOh2aUVW7g8a6gZ1DEwLGFP3T9vk2VeqUCYLrA>
+    <xmx:zmmQaCI9DBwv_kIsrqn6Smcw0T96ErY3RXMmMXLt4PsxiBCHD3MfUboG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Aug 2025 03:56:45 -0400 (EDT)
+ 4 Aug 2025 04:05:33 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 27d42ebf (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 4 Aug 2025 07:56:44 +0000 (UTC)
-Date: Mon, 4 Aug 2025 09:56:40 +0200
+	by mail (OpenSMTPD) with ESMTPSA id f49fdc68 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 4 Aug 2025 08:05:32 +0000 (UTC)
+Date: Mon, 4 Aug 2025 10:05:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] t0450: fix test for out-of-tree builds
-Message-ID: <aJBnuOcQQ1AY6hR4@pks.im>
-References: <20250804073002.1586332-1-toon@iotcl.com>
+To: Mihail Malinouski via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Mihail Malinouski <m.l.malinouski@gmail.com>
+Subject: Re: [PATCH] docs: fix typo in worktree.adoc 'extension'
+Message-ID: <aJBpyYIFR-JLzu8e@pks.im>
+References: <pull.1936.git.1754291811503.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250804073002.1586332-1-toon@iotcl.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <pull.1936.git.1754291811503.gitgitgadget@gmail.com>
 
-On Mon, Aug 04, 2025 at 09:30:02AM +0200, Toon Claes wrote:
-> When using Meson, builds are out-of-tree and $GIT_BUILD_DIR gets set to
-> the path where the build output is landing. To locate the Documentation
-> sources, test 't0450' was using that path.
+On Mon, Aug 04, 2025 at 07:16:51AM +0000, Mihail Malinouski via GitGitGadget wrote:
+> From: M-L-Ml <m.l.malinouski@gmail.com>
+
+The "From" header and the Signed-off-by line need to match.
+
+> The documentation incorrectly referred to the extension without an 's'.
+> This fixes the typo for clarity.
 > 
-> Modify test 't0450' to use `$GIT_SOURCE_DIR/Documentation` to find the
-> documentation sources.
-> 
-> Signed-off-by: Toon Claes <toon@iotcl.com>
+> CC: m.l.malinouski@gmail.com
+
+This trailer is nothing we typically want to commit into our history.
+
+> Signed-off-by: Mikhail Malinouski <m.l.malinouski@gmail.com>
 > ---
->  t/t0450-txt-doc-vs-help.sh | 2 +-
+>     should be 's' on the end of the "extension" in the docs Update work…
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1936%2FM-L-Ml%2Fpatch-1-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1936/M-L-Ml/patch-1-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1936
+> 
+>  Documentation/config/worktree.adoc | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/t/t0450-txt-doc-vs-help.sh b/t/t0450-txt-doc-vs-help.sh
-> index 2f7504ae7e..da2d0af5b0 100755
-> --- a/t/t0450-txt-doc-vs-help.sh
-> +++ b/t/t0450-txt-doc-vs-help.sh
-> @@ -41,7 +41,7 @@ help_to_synopsis () {
->  }
->  
->  builtin_to_adoc () {
-> -       echo "$GIT_BUILD_DIR/Documentation/git-$1.adoc"
-> +       echo "$GIT_SOURCE_DIR/Documentation/git-$1.adoc"
->  }
+> diff --git a/Documentation/config/worktree.adoc b/Documentation/config/worktree.adoc
+> index 5e35c7d018a..9e3f84f748c 100644
+> --- a/Documentation/config/worktree.adoc
+> +++ b/Documentation/config/worktree.adoc
+> @@ -15,5 +15,5 @@ worktree.useRelativePaths::
+>  	different locations or environments. Defaults to "false".
+>  +
+>  Note that setting `worktree.useRelativePaths` to "true" implies enabling the
+> -`extension.relativeWorktrees` config (see linkgit:git-config[1]),
+> +`extensions.relativeWorktrees` config (see linkgit:git-config[1]),
+>  thus making it incompatible with older versions of Git.
 
-Ok, the change itself looks reasonable to me. One question that the
-commit message doesn't answer though is why this didn't cause the test
-to fail. I think the answer is that we have the following loop:
-
-	while read builtin
-	do
-		...
-
-		adoc="$(builtin_to_adoc "$builtin")" &&
-		preq="$(echo BUILTIN_ADOC_$builtin | tr '[:lower:]-' '[:upper:]_')" &&
-
-		if test -f "$adoc"
-		then
-			test_set_prereq "$preq"
-		fi &&
-
-		...
-	done <builtins
-
-So we explicitly check wether the ".adoc" file exists, and if it doesn't
-we don't have its prereq. All subsequent tests then use that prereq, so
-we skip all of those tests with Meson entirely.
-
-Which indicates that this prereq is overly loose: ideally we should not
-skip such tests, but rather print an error that something is fishy. I
-suspect that we have the prereq in place because there are some builtins
-that don't have a corresponding manpage though.
-
-Maybe this is something we could explore: what breaks if we remove the
-prereq entirely? And if this breakage is limited to a small number of
-builtins we can maybe use an explicit skip-list like we already do with
-"t/t0450/adoc-help-mismatches".
+The fix itself looks obviously correct to me.
 
 Thanks!
 
