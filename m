@@ -1,80 +1,79 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E442405F8
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 08:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682D52405F5
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 08:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754295450; cv=none; b=NOjyL2w5ZA7ploEkfRiaF02dH87nxSYOe/RiEoHYKVghDHnNb/VNLvjrL2UCCxbjbdJ1ao6Vzi0vYQkLPM2Qi0KF/i+9aHPhaU7GFbiMbPIgaTBjOPsbe2hmRNyFgO5SEAS+BaAdMUf7JEptaa1SrNpI/fke7BDgiguXbCK5bAc=
+	t=1754295453; cv=none; b=ECAIb5SLCQ8837ekVZ6gcKn1uynxbjkwa0r0hUNMN/x8WsUxFlKY/MDBSy4Fa0UfN4h8GyIJyqkK4/e0v/z/icLG9kjclXn+yNS0oQxkWHyVqnRezje+OGorvxePLgDC2pidbF3PJ9X9lnbJvPnrIWDXolejpA31kpuJbqztJSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754295450; c=relaxed/simple;
-	bh=SYVur6clzIqnHHKo7pZQb3d2tLbms0vS52ZsjydTIwY=;
+	s=arc-20240116; t=1754295453; c=relaxed/simple;
+	bh=SkM4s2mnb9+rt4nNSYIpVwg7J4trBU73l0sOxhUi4ck=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UkUs8gu0TFjfH933hSMDnFwVjAaHWrsm1Cd4gGrU2vIj9Vh7wYcF2OPSaGQS8J9pXG5JgIfg+c+VgMOVVGNNqYTx18J7RXfllLojGDMrxiV9pTC57mrfjetXZdAcirZUGXokSJTyK4FzXx1ecVQBDwLD6I3a9d9UfjeaYEg0ttc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HJGYJ1wL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cgT+WTDH; arc=none smtp.client-ip=202.12.124.145
+	 In-Reply-To:To:Cc; b=oFCCaph61YZZyt6XA1UPd//ICJsHdObkWM/b03fLRJqbCHmZstbo/+BdmNjD5yHGTYmcqW2THF/WF673gK6HkyCAxA8x7j/FPAOysYEkhpB8mRVhOH7+jzaFAxaS+/h08eUtaAxRSkcJ07vErZG1jzh43Om+OYaGAjwwGcFAYUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=g1WvYsiT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gPHoIknS; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HJGYJ1wL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cgT+WTDH"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="g1WvYsiT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gPHoIknS"
 Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id A56D61D00142
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 04:17:27 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 9D1931D00134
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 04:17:31 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 04 Aug 2025 04:17:27 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 04 Aug 2025 04:17:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754295447;
-	 x=1754381847; bh=+lJCz+cehtoCbkqyH6/hBkJRX69VsZqYM0WWFAWaBkA=; b=
-	HJGYJ1wL5bZ5eNAuzbQIWK6WUiPOiWcAw0iQ6UHnO94TPVGIaM3OlsGfjRKhgnf5
-	oRfq4yBY7NEA1C9B2l1fy6vzQer6gP3ZTjHOJoiKQ8StKbDISlfWRRxDQOekm7Dh
-	+c5J6nFAohNGx4yITT6Kj0BEKfmDgdkaB0/0XT9CKwGUnT9LkSDLxdkrzrkD6JnC
-	Tw6TzsPcQkvuxsP6UeyDn58tg/oQKjtqJLamrpMWjhbZBm7Pf6m79T4N4aZzCcjE
-	XVNmdMlgVfHyzToynvgqUIoGGg/6QTHn9DU/gUi1RoAdHZqSOcg9WnQy/d+91h7Y
-	C+SMVXaKj4G4fQJK5mGSzg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754295451;
+	 x=1754381851; bh=mYJVwv3OdnVZFPKzfLU4J59x2OC4h9pAfVO+eOe296k=; b=
+	g1WvYsiT6NHp2ooDOJDkZk4Y23q+nVBwJg4ApWxTReZMSHvPe/L0s8/i/7v72d+c
+	wbDWWbFKyfN6LGnMtGUN4K7D4h+6yzKLNLkosUfN82cREV3vL+GoK9q2EuKIobSb
+	yS7oAXf2s22cTYe2T/ZBStZoExsUPIhCuwF2eammE9v+sclWa8Rtdl46o9oNyXu3
+	pRPFlRN0xaJJWIfC2EMr+H1SV7duLNkwbUs9CRXl1c87cMnqSxhDHOSf97HU6Say
+	dsdPCTlIFLxJ+3vS67nSCiYsiH9CAIoN5oorVut6gJoBD+k9lvHmfGu2UrY2i0JX
+	Ttq9popST+CaUiXzjM93dw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754295447; x=
-	1754381847; bh=+lJCz+cehtoCbkqyH6/hBkJRX69VsZqYM0WWFAWaBkA=; b=c
-	gT+WTDHvsoK2yEMl2ruwldI851aLLfA9taAyEwqzcDyTx2qwuXHQE35ouVZPjngM
-	+5VKl6l0VsJ6DkeRvRpNzviQmAKSDCX7yj8LsgPuab9sbEfsCzUXsg+H0lfgQjqB
-	bvNHJCFRzxzwIru0a82iPK4/exG6XPOGnHJOiplp89oISja6I7m33EOUPtZJ94MB
-	B1l+pWRK0yvjFkwHhQ5+AhiqYwmXmPk3u1ePl0DMnOREQU2DqfkmOZ0WaWZat5+N
-	x0TlD0BaDrfZGZWUZ//n6J+PnVceglK7wEW3Q3BFYW2KdDfocTJ7MJ2l8dqMgZHt
-	MvpV1+Nc9h4aMbQIM50Ug==
-X-ME-Sender: <xms:l2yQaExbE3epYmg6MPvNhrdUfGtOYOmVu9B18I9Q9gCIq1ejOAVnqg>
-    <xme:l2yQaKSSdqWau3niWDMQqhvBuE5PwMo4d9elm9GmiSr6RE__VrSZAKJfU4agwi09T
-    XYtdfWS3wWDRq9Iqg>
-X-ME-Received: <xmr:l2yQaPtI4cpURKrfwqF4jMhNi6bTKym4DB02ufXsDKR7rTgfMtOWeyoOIGxsgGKMfGaUAXuY4yGQ5DHcZiD0XHw7Xx-6bH7ayJFQ5ohZDnA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754295451; x=
+	1754381851; bh=mYJVwv3OdnVZFPKzfLU4J59x2OC4h9pAfVO+eOe296k=; b=g
+	PHoIknShWB/cm9eQ+ObOAa7+GnD69eBQB2mZ6Sel7ZCDYS/b5wy4ZMELXSE+0dqP
+	T5j53GjyVPHf1JuXgvP7juzBQTflKjiOW9BSV74h16PwfB2Maq371QXnCh5AhOSO
+	Wl1KqbfkiMgnJhc2KhdikRRb1W4+1fFl5GepSusbJoTVA5R5P25aaNpSSL4FIvRv
+	Wd8kzVXnjLUBqdI+Zhjb/BsJE7RkAuzoJOlz03W6gRG0Z0MdtdDuwg0HtjzU7Fz7
+	k0IJDwGhJ86deJykcA42ENoEdGhwpRYPY2L27Br1MsEJQAYXgOAF1pRugVWvyWje
+	ICEamqWRap4S2AAImtnCw==
+X-ME-Sender: <xms:m2yQaEZcfcVcnbph3X7qPgGlev8MkSjoG0Pk9uejev-08V3_wEMmaQ>
+    <xme:m2yQaBaZ8fe44O9trfC3XCqNI4vbJmm8Xy_vjBi-zSVKAO_uaPbCfzg79HOAU8czl
+    l1GxVhTFugLe1ACsA>
+X-ME-Received: <xmr:m2yQaIVzJT67GGQ9nePw8NroYzcXpjgegqg21QDTgcPK8WsRecza1WILoRrklPWLWCPPuhRwcJ3nFKbX9TeMIECRkaHDKPM9ooilP5-B3dI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddujeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
     dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrgh
-X-ME-Proxy: <xmx:l2yQaEuKBlxywk9HBREOp4jmFcB7C8v4cmdE-6k6XtaTMthQgefe1Q>
-    <xmx:l2yQaNww11eGI3NHiox4-rr2jroWJEtb3Z-_nofSnFqBZXdMqPacsw>
-    <xmx:l2yQaCh_VJ7u7-K4iTJdbaFp4fdfQTAKFagYAyRgNivNdZ_fYThx7w>
-    <xmx:l2yQaJCzqxWG8apF-bKuvSQvLN8YtnyuL8hJBEqa3LVYHoaU146hLA>
-    <xmx:l2yQaPrX5AZG1CUDuf2363LP6yS42WS_JctXXez01oFED3fIoWVXD0iR>
+X-ME-Proxy: <xmx:m2yQaA2jfJGS-RuHf0ZueGZOBOOcu77FpsSqChOhA8FSyzySkM-b-A>
+    <xmx:m2yQaHYHNkTWxlaNaXtGoX2_hr0u2I1nSrxHshS3MH8wY6PIqWiFBw>
+    <xmx:m2yQaLo6fNm2pJzFZG7M2fZby13GQ4RmA4C6q1c740SOmYcs-zOcvw>
+    <xmx:m2yQaLq8s36YTC2gfOOomYLDFsMjHCCX9RI9NYnqYlrvuuAMzltx5Q>
+    <xmx:m2yQaDyl-n09QOsVRufEwZHc1sF2S7Zg0322VimxB7oHY2pLxuL-UfRn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 4 Aug 2025 04:17:26 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 4 Aug 2025 04:17:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 10b5ce1a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id f328ce11 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 4 Aug 2025 08:17:26 +0000 (UTC)
+	Mon, 4 Aug 2025 08:17:30 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 04 Aug 2025 10:17:18 +0200
-Subject: [PATCH 2/9] commit-graph: stop using signed integers to count
- bloom filters
+Date: Mon, 04 Aug 2025 10:17:19 +0200
+Subject: [PATCH 3/9] commit-graph: fix type for some write options
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,73 +82,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250804-b4-pks-commit-graph-wo-the-repository-v1-2-850d626eb2e8@pks.im>
+Message-Id: <20250804-b4-pks-commit-graph-wo-the-repository-v1-3-850d626eb2e8@pks.im>
 References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
 In-Reply-To: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-When writing a new commit graph we have a couple of counters that
-provide statistics around what kind of bloom filters we have or have not
-written. These counters naturally count from zero and are only ever
-incremented, but they use a signed integer as type regardless.
+The options "max-commits" and "size-multiple" are both supposed to be
+positive integers and are documented as such, but we use a signed
+integer field to store them. This causes sign comparison warnings in
+`split_graph_merge_strategy()` because we end up comparing the option
+values with the observed number of commits.
 
-Refactor those fields to be of type `size_t` instead.
+Fix the issue by converting the fields to be unsigned and convert the
+options to use `OPT_UNSIGNED()` accordingly. This macro has only been
+introduced recently, which might explain why the option values were
+signed in the first place.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- commit-graph.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ builtin/commit-graph.c | 4 ++--
+ commit-graph.c         | 5 ++---
+ commit-graph.h         | 4 ++--
+ 3 files changed, 6 insertions(+), 7 deletions(-)
 
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 25018a0b9d..145802afb7 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -241,9 +241,9 @@ static int graph_write(int argc, const char **argv, const char *prefix,
+ 			N_("allow writing an incremental commit-graph file"),
+ 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
+ 			write_option_parse_split),
+-		OPT_INTEGER(0, "max-commits", &write_opts.max_commits,
++		OPT_UNSIGNED(0, "max-commits", &write_opts.max_commits,
+ 			N_("maximum number of commits in a non-base split commit-graph")),
+-		OPT_INTEGER(0, "size-multiple", &write_opts.size_multiple,
++		OPT_UNSIGNED(0, "size-multiple", &write_opts.size_multiple,
+ 			N_("maximum ratio between two levels of a split commit-graph")),
+ 		OPT_EXPIRY_DATE(0, "expire-time", &write_opts.expire_time,
+ 			N_("only expire files older than a given date-time")),
 diff --git a/commit-graph.c b/commit-graph.c
-index bd7b6f5338..a7a1a761bc 100644
+index a7a1a761bc..ad3f084dd4 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1170,11 +1170,11 @@ struct write_commit_graph_context {
- 	size_t total_bloom_filter_data_size;
- 	const struct bloom_filter_settings *bloom_settings;
+@@ -2235,9 +2235,8 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
+ 	uint32_t num_commits;
+ 	enum commit_graph_split_flags flags = COMMIT_GRAPH_SPLIT_UNSPECIFIED;
+ 	uint32_t i;
+-
+-	int max_commits = 0;
+-	int size_mult = 2;
++	size_t max_commits = 0;
++	size_t size_mult = 2;
  
--	int count_bloom_filter_computed;
--	int count_bloom_filter_not_computed;
--	int count_bloom_filter_trunc_empty;
--	int count_bloom_filter_trunc_large;
--	int count_bloom_filter_upgraded;
-+	size_t count_bloom_filter_computed;
-+	size_t count_bloom_filter_not_computed;
-+	size_t count_bloom_filter_trunc_empty;
-+	size_t count_bloom_filter_trunc_large;
-+	size_t count_bloom_filter_upgraded;
+ 	if (ctx->opts) {
+ 		max_commits = ctx->opts->max_commits;
+diff --git a/commit-graph.h b/commit-graph.h
+index 78ab7b875b..b71cb55697 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -160,8 +160,8 @@ enum commit_graph_split_flags {
  };
  
- static int write_graph_chunk_fanout(struct hashfile *f,
-@@ -1779,16 +1779,16 @@ void ensure_generations_valid(struct repository *r,
- 
- static void trace2_bloom_filter_write_statistics(struct write_commit_graph_context *ctx)
- {
--	trace2_data_intmax("commit-graph", ctx->r, "filter-computed",
--			   ctx->count_bloom_filter_computed);
--	trace2_data_intmax("commit-graph", ctx->r, "filter-not-computed",
--			   ctx->count_bloom_filter_not_computed);
--	trace2_data_intmax("commit-graph", ctx->r, "filter-trunc-empty",
--			   ctx->count_bloom_filter_trunc_empty);
--	trace2_data_intmax("commit-graph", ctx->r, "filter-trunc-large",
--			   ctx->count_bloom_filter_trunc_large);
--	trace2_data_intmax("commit-graph", ctx->r, "filter-upgraded",
--			   ctx->count_bloom_filter_upgraded);
-+	trace2_data_uintmax("commit-graph", ctx->r, "filter-computed",
-+			    ctx->count_bloom_filter_computed);
-+	trace2_data_uintmax("commit-graph", ctx->r, "filter-not-computed",
-+			    ctx->count_bloom_filter_not_computed);
-+	trace2_data_uintmax("commit-graph", ctx->r, "filter-trunc-empty",
-+			    ctx->count_bloom_filter_trunc_empty);
-+	trace2_data_uintmax("commit-graph", ctx->r, "filter-trunc-large",
-+			    ctx->count_bloom_filter_trunc_large);
-+	trace2_data_uintmax("commit-graph", ctx->r, "filter-upgraded",
-+			    ctx->count_bloom_filter_upgraded);
- }
- 
- static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ struct commit_graph_opts {
+-	int size_multiple;
+-	int max_commits;
++	size_t size_multiple;
++	size_t max_commits;
+ 	timestamp_t expire_time;
+ 	enum commit_graph_split_flags split_flags;
+ 	int max_new_filters;
 
 -- 
 2.50.1.723.g3e08bea96f.dirty
