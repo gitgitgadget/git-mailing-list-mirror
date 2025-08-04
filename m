@@ -1,53 +1,53 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A402E36F4
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 06:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F872E36F4
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 06:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754289201; cv=none; b=IOJcd43ICigolwq1lKIxWZM7CwxmhfajAFoLwsgypLxUhm/hd3YNYh9KJWGsgkxddoMaqBINCuGinp3I/8gkcuW60djodU7KEbEwO+hGtvUGEknWWcCYottf6l77OAoewrCYk91BkCq/0P1NXY6kMW54NS4pnSzcOmZjdJSUR08=
+	t=1754289250; cv=none; b=Iq6tTrPGHEF3Uyj3RpAbkmbwjqKh51ui2pyTmipBFyERry9UnpFc11x196rhBOVV4XG9/oduFtRByob3nmQFKhib0BvfxeXUk8JECM5ZzXcPpQQpXyrE4k03HBlPoewxQdipwb2BcB+t2lfe7rBnL6vJYqBuU8LU/+5vmHeH1Eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754289201; c=relaxed/simple;
-	bh=xR/As7H9ZzuQQCtktLcBDE5qP9w4pmm5XtWFN5W3k9M=;
+	s=arc-20240116; t=1754289250; c=relaxed/simple;
+	bh=vDOpxwlX36fI11BHpjTyLozNqUmv4SFgbkuXL5uRXi0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UWwdBZVbahzLNJjy1TjQuFg8VvBqv8FWORc/68tUDNm3rvF2mRsK1JORsMdRc3M44AHa+GirmHZDHLYrCWIuuOVUuV9Qha99y9dGYa9DEiaq6sQ/wDxdjm7DjY57+zUjmd7Z/X9SnEkESn64Ix9aOuLF7GAeLENeJ3nhUACP86s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q/taRNw2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LEtqhzkd; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=sU55cJyszHNB0WCDz5//IldO0TYh2CTFUk7Bp35DR9vS/+pQtpW6T3NoWOnJm6wY8FkAdOlQd//DmgpWRrIS4vcI7Ge1eBrz568ZuNa+PtopUyas2KPZ0DX7cXQw2xQ7jc9lBSaIEDi7dVEHcKI1jEbwDneEVahl2GPxtGROfog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SE2q2t/V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tia4oz92; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q/taRNw2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LEtqhzkd"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 131631D000FD;
-	Mon,  4 Aug 2025 02:33:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SE2q2t/V";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tia4oz92"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id CAC401D000D9;
+	Mon,  4 Aug 2025 02:34:07 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Mon, 04 Aug 2025 02:33:19 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 04 Aug 2025 02:34:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1754289198; x=1754375598; bh=qBF/5DCZ09
-	Mf7nNVPGSv85fQm6Tm3iymEVQdpNvhQ44=; b=Q/taRNw25W9DrSmRSPoCWhyVfJ
-	vX7R9F9Z8ziXUupJeErpPRaMD2e0k+TEIrDZ1sEOQN9oLZzDTpGQ8oSYlTar69Hi
-	BHL/elkQK4/z2nqe6GfJWXz34VhFkzere5QrNgRXNOhY71mDU/uz0Bh7TJTVU1jC
-	qgZwlo5e2Tuj+SZr8W4QffoMGsIWKFPdEYD4Cszb6Up3eOKvAJZyG2PLRP8p0ERZ
-	qbMfdodu+IW7siYM/7+9Bl7pY7uuffJsmRiIj792WX3fXNecKVnNl9fltKOW+aCY
-	We5N1oXDTt4yQvhuoUhFkJUoXoS8FXX/9t/yn96oMZLpHPppdhGxFouGhH6g==
+	:subject:to:to; s=fm3; t=1754289247; x=1754375647; bh=Bm6u4YMQOb
+	Mr4AR8x6iZ4zFOIMNX2K4lmRD9h+vX11s=; b=SE2q2t/V6HIxjx6wbqttYYgZ1q
+	mAHszNa8NQHv+8GUgU2gwJ//h8F4r++1bcYhgPVibX1NDTT8s39FOUGf1b03PrWR
+	m2v1b1yERdwj6oCC2ib1bJtDGMveTEcx1lp5Ox6Oo0eJEDIyEfWeV3jb9q1TiEq4
+	Ie4K95IUA7+ISBTgHOMix/nYf78m/ZVkGB5UrSe5g3u0G951JPZ7e0ExIBtKEbr/
+	l6zJ49NJ+3KIVl2WYzRSOXFz6xRr0ZOojaULx6JEHSqOPmoXOaiHQIYeR0BvpB5W
+	/62mpr9/dpvb5WeD34jLLoADztTVeLUqbGpq+VmZp+VE30p6JBZwrgUpFqqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754289198; x=1754375598; bh=qBF/5DCZ09Mf7nNVPGSv85fQm6Tm3iymEVQ
-	dpNvhQ44=; b=LEtqhzkdxSbG73fZIiSNDUb2h2MDTIK+UpzfS9AFpobono7ljkl
-	0t2DkU4PRw5T+0FjjD9PW4TMafqGmjNLadl2yNEPWyT7b4mIetYXWohqGynLxlzk
-	HthpaQ+w8JYj0JS2k+RYb+G0fC6mcNYamo0QmJWE/nhCn0xcfNhVXUYs7EK9ZzWz
-	ZhptPk5RxhbZ0z/511rLfpEqo0T9EdsquW5EuM7b2zoi0w6kGu/97VXDWKBDEzLd
-	8GQTlOFMYdVJSNN2BVx2qjT0Vr4QV0IaPkdvbedQvTEBWqmv/wB/kZN37xbVePwJ
-	d2WIfHM6QufmXFAVH1Chnw5mHJ/HHL1ZAOw==
-X-ME-Sender: <xms:LlSQaIguJVeIKfax5vQ71lg_29TIu9EOBkhIPYe_MHv4OaGjDoJmSA>
-    <xme:LlSQaN7UIN8Ye9bRECbxZSWGu8dbEe6V0qY0T8WZMFTZZ6OPtX8YVcU6WTzH-uwYw
-    yppOZIfJ2Y70oZuZA>
-X-ME-Received: <xmr:LlSQaP3Lbk7tn4c9Gb_Qbg0ZRQAeCKnljajIU9_kPLjKU4oFzOTT75gOgXf8_S2-hnU0k-VtOHcjE3JWsc8a_7Eu34TPab3sYRkLcyWt6m8>
+	1754289247; x=1754375647; bh=Bm6u4YMQObMr4AR8x6iZ4zFOIMNX2K4lmRD
+	9h+vX11s=; b=Tia4oz92kXqu0wNEJbeTp/EHk5YL+tU7t6BPXyD1UlTxnVhzl6q
+	2F+qwZhYmhAVqnb/kG+JbSkUsnztXWJwvrSL0iy0IRj8ooD2+fffCFgyBCb32gRA
+	4+EZBh6fEFHgcx4KtndEq4dmMLVYLI4/t4HkOc9jrMabaui4YywYc85xy4uuTyfs
+	YbqlC6D+ufMtVvV+G/gXmsB8HA84BT7eLqIpRLYDdv8bWGP3vNva5WJcGVAOXjT1
+	LEabUq/jblXTT1aEyq+So0H3RZx322HahKKO0+EYw9zawdc+pTaeW7GksE+C/y9+
+	3bHozAAHF2iAHHqLi4SHxRku7xakjlqHpAQ==
+X-ME-Sender: <xms:X1SQaOcr0WWTLiRVXWzrIrQul4MGZe6nffFwWXe7_umBCn_itJBAkg>
+    <xme:X1SQaFEQk5nsaJn6wD_qHoWTEUgpj113m3pdcnEwRn_urYUTfIFlIxS8-QhXtM3VE
+    RT0FH7QBMPSaZ5csA>
+X-ME-Received: <xmr:X1SQaPRtf9pHlGKK7lpoA-i_ExWkstlQ4A6iXDKxRX1oJzc13Gys2AhQj54AAUi8QeFOjinln4_0l_VBpgIiI2GO3tE3Ft27z2CLT8R0oow>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudduheekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,28 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudduheekucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvg
-    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoheprghvrghr
-    rggssehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdp
-    rhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehpvghffhesph
-    gvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:LlSQaItYLuUGWBkGnRbnCZZNl__tTPSFtcuaUmX-hmz6FXaAiBuIbQ>
-    <xmx:LlSQaF5LDnRheM_jHcVc8-mCO98T1n3qYX_Ks8TZ5OVx5DmD07fghg>
-    <xmx:LlSQaEeHewmme0BBdStDM9i8WGx85Ar4FcGKtx9KddZkOlLOqEJPOA>
-    <xmx:LlSQaCxKYsTBDIVq1KreF7W8HvXF3GOBSLjBj8ce9MRHDvWrgMqDpQ>
-    <xmx:LlSQaMxvqv5_2P2x6KiBwYJ-SUhT9U6hp0LOPzZfn0BOhP486piiVsur>
+    oheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmvgesth
+    htrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgt
+    phhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvg
+    esghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:X1SQaLY4e_vLBClXfDWYbxGsFLnyxlfjErkyy0FpxWfnFfWhPikC0g>
+    <xmx:X1SQaK1f1PXCpvr2Uc7V1uOaK1-QRQgDRGOd0nbYAH_r8fhBFhglsA>
+    <xmx:X1SQaOom5XvRBcGdSjqq6hMuukc8AyyLAIj1nSCDmaZ9blnF0XAwpg>
+    <xmx:X1SQaJO0C-UeHgsMnhmRkCvfWXn0YRNFLVY-LxLNgor_U1XL_vz0Fg>
+    <xmx:X1SQaLd2m6iaEuPv9fXOX2Gfwwc7PNVT-KN9fk9kB3KBQpIMy7qDfdL5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Aug 2025 02:33:17 -0400 (EDT)
+ 4 Aug 2025 02:34:06 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8effc779 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 4 Aug 2025 06:33:16 +0000 (UTC)
-Date: Mon, 4 Aug 2025 08:33:13 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 8c9f2184 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 4 Aug 2025 06:34:05 +0000 (UTC)
+Date: Mon, 4 Aug 2025 08:34:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
@@ -85,11 +85,12 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Subject: Re: [PATCH v6 1/4] last-modified: new subcommand to show when files
  were last modified
-Message-ID: <aJBUKa3KuxXlXMzl@pks.im>
+Message-ID: <aJBUWveulX7HKAMY@pks.im>
 References: <20250716133206.1787549-1-toon@iotcl.com>
  <20250730175510.987383-2-toon@iotcl.com>
  <aIsQWcHf82ipHoWf@pks.im>
  <87ms8jui3p.fsf@iotcl.com>
+ <xmqq34abm0iy.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -98,50 +99,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87ms8jui3p.fsf@iotcl.com>
+In-Reply-To: <xmqq34abm0iy.fsf@gitster.g>
 
-On Fri, Aug 01, 2025 at 06:22:50PM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > On Wed, Jul 30, 2025 at 07:55:07PM +0200, Toon Claes wrote:
-> >> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-> >> new file mode 100644
-> >> index 0000000000..e4c73464c7
-> >> --- /dev/null
-> >> +++ b/builtin/last-modified.c
-> >> +static int last_modified_run(struct last_modified *lm)
-> >> +{
-> >> +	struct last_modified_callback_data data = { .lm = lm };
-> >> +
-> >> +	lm->rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-> >> +	lm->rev.diffopt.format_callback = last_modified_diff;
-> >> +	lm->rev.diffopt.format_callback_data = &data;
-> >> +
-> >> +	prepare_revision_walk(&lm->rev);
-> >> +
-> >> +	while (hashmap_get_size(&lm->paths)) {
-> >> +		data.commit = get_revision(&lm->rev);
-> >> +		if (!data.commit)
-> >> +			break;
+On Fri, Aug 01, 2025 at 10:09:41AM -0700, Junio C Hamano wrote:
+> Toon Claes <toon@iotcl.com> writes:
+> 
+> >>> +-t::
+> >>
+> >> -t, --tree-in-recursive::
 > >
-> > So in this case we have reached the end of our commit range. I assume we
-> > simply print the oldest commit of that range in this case?
+> > Sure!
 > 
-> Looking at this more in detail, I feel we should be calling BUG here.
-> When we've hit the boundary commit, we should be printing the remaining
-> paths with that commit, but with a caret `^` prepended. If we hit this
-> condition it means we went beyond the boundary, but still have paths
-> remaining. That's a bug.
+> Clarify *what* you do to trees in recursive by giving a verb, e.g.
 > 
-> But... As a matter of fact. I had a test failing (on the commit using
-> bloom filters). It didn't print remaining paths with the boundary commit
-> with a caret. This happens only when having GIT_TEST_COMMIT_GRAPH and
-> GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS set. And it's perfectly explainable
-> now:
-> 
-> With those set, we hit this exit condition. This happens because
-> maybe_changed_path() was called in previous loop, returning false. Then
-> we hit this exit, and un-printed paths remain. Big thanks for this hint.
+>     --show-trees-in-recursive
 
-Nice :)
+Ah, that's even better indeed! One question that this raises is whether
+this option then should continue to imply `--recursive`. I think it
+rather shouldn't with this new wording, but don't feel overly strong
+about it.
 
 Patrick
