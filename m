@@ -1,120 +1,133 @@
-Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
+Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3467165F13
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 16:33:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FFA3367
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 16:56:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754325224; cv=none; b=Y1sRyEjAGjeJOeAsW52ouWxTpTOxKhKTwx/pNRYce3pm0020cteKKDs1jsTZ4E43CuRRsp3EdKIR2gLvqvLLKCfLZZPg5DBc24NP+u9KtG47/69Wq7jJ6V6FG7dkfkegQ87M6LCD4x6w6tmVgb+PjTd7Oel9QDW4rNTvsIeAPDw=
+	t=1754326618; cv=none; b=EyWfTDoCT/ZHRasj6ej7DKghj8U6wviI2KWHXq5pCM1t7XZZ7a5lJz12/07VUxFg7rIcYd/k14wTR2sW5W9Yfhiy0G6Vb5PrIESn/Z0PW78ZKJtreTQh1hdcXG43cW6WkFO5GbGGo9oxElgZ32sOPxbUSrqrmiGEqoS0DOIvmPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754325224; c=relaxed/simple;
-	bh=nL0C92n5rPLCCcEKZ0k629qg0WE455+3rpP7gN7GlMg=;
-	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=ikWWgEJ79jrhw5JW2Z/zFE2I6iDhSnE2sSD2RgN12/3RxMQCM8fwBugrezHb3KMKFGzrJkkdovAY2CMI4C6i3ZRrJukOuCu3Sgcp9nAnMFRao+hwRvrkHdzcioc8d5Yi9MUYKz1/ovbnpQ3OIiK0Qd9yN1LKm3HT8Hq5QaAFYdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.104] (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4bwhvK50hLzRnmN;
-	Mon,  4 Aug 2025 18:33:33 +0200 (CEST)
-Message-ID: <e4feeed9-2807-4e6b-9641-350d91a97a59@kdbg.org>
-Date: Mon, 4 Aug 2025 18:33:33 +0200
+	s=arc-20240116; t=1754326618; c=relaxed/simple;
+	bh=vJA0Wvdt4WBtij/jt0+AsumQab8HvxJm38zCbbCzRjs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Oqf8h4tKqX/q+qc1utR/1lAK3sa/6cSjGKMqxm9BZkaMgNiLroKb0ZXk4H4swbQIB2igaIttqOfjNi5rdFhbFI5LHZ4Myd2U7mKPx6I9MKWkkkNlPrMMtFyqbTQZHFHZp4MOHgkBqClraecGZt9AWtj8KQBzCYfx7Ru3mApd8KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=ve4lXRq5; arc=none smtp.client-ip=95.215.58.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="ve4lXRq5"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1754326611;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=iNbZpL4S0Ib+Eb4TmzGMt6ep5+Eu8/8wYElzAP9JLUQ=;
+	b=ve4lXRq5H0ovv8+zecpRIP/6cFoXEuXMH+tpNmy638QFTxIUMiiF3po198fOOOsH2hNLI9
+	AMQJKMhm6xyXD8owRAcWz6iaHMN8aTosts0HOwO+++NY/UI7HrQiiGHMg7zlwitgq8Zuzy
+	FPLVI30sScxn6N2cBeewQ8Xbk9Wnj/Y=
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH 0/4] Fix archiving some corner-case files into zip
+Date: Mon, 04 Aug 2025 18:56:31 +0200
+Message-Id: <20250804-toon-archive-zip-fix-v1-0-ca89858e5eaa@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Subject: [GIT PULL] git-gui: Tcl-9, no 8.6 on macOS, polish Windows, clean msg
- after hooks
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAD/mkGgC/x2MQQqAIBAAvxJ7bkEtIfpKdFh0y72oaEQU/T3pO
+ AMzD1QuwhXm7oHCp1RJsYHuO3CB4s4ovjEYZayalMYjpYhUXJCT8ZaMm1xoPJMbjbdEA7Q0F27
+ 63y7r+37nloRMZgAAAA==
+X-Change-ID: 20250801-toon-archive-zip-fix-2deac42d5aa3
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>, 
+ =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-The following changes since commit 436dad00c5a717d56bf4feb8a1f5d39126579fe6:
+At $DAYJOB, we've add a customer report an issue where they failed to
+download a zip archive from a repository. The error they saw come from
+git-archive(1) is:
 
-  Merge branch 'ml/abandon-old-versions' (2025-07-22 17:37:33 +0200)
+        fatal: deflate error (0)
 
-are available in the Git repository at:
+My friendly colleague Justin Tobler was able to reproduce this issue[1].
+We've diagnosed this error happens on some files that exceed
+core.bigFileThreshold. To reproduce the issue, you can run:
 
-  https://github.com/j6t/git-gui.git master
+        git clone --depth=1 https://github.com/chromium/chromium.git
+        cd chromium
+        git -c core.bigFileThreshold=1 archive -o foo.zip --format=zip HEAD -- \
+                chrome/test/data/third_party/kraken/tests/kraken-1.1/imaging-darkroom-data.js
 
-for you to fetch changes up to e3923e3e90da55e12545b5ef5aa34f21e97409d8:
+(originally he mentioned another file, but that didn't trigger the bug
+for me)
 
-  Merge branch 'cb/no-tcl86-on-macos' (2025-08-04 18:27:03 +0200)
+And a patch to fix the issue was presented that message.
 
-----------------------------------------------------------------
-Alexander Shopov (2):
-      git-gui i18n: Update Bulgarian translation (557t)
-      git-gui i18n: Remove the locations within the Bulgarian translation
+I have tested the fix, and I can confirm this fixes the issue. But I'm
+concerned this doesn't fix all issues.
 
-Carlo Marcelo Arenas Belón (5):
-      git-gui: remove uname_O in Makefile
-      git-gui: fix dependency of GITGUI_MAIN on generator
-      git-gui: retire Git Gui.app
-      git-gui: honor TCLTK_PATH in git-gui--askpass
-      git-gui: ensure own version of git-gui--askpass is used
+Another way one could trigger the issue, is by initializing
+`unsigned char compressed` with length `STREAM_BUFFER_SIZE / 2` (so half
+the length of the input buffer, instead of double).
 
-Johannes Sixt (5):
-      Merge branch 'ml/windows-tie-loose-ends'
-      Merge branch 'master' of https://github.com/alshopov/git-gui
-      Merge branch 'ml/tcl90'
-      Merge branch 'strip-post-hooks' of github.com:orgads/git-gui
-      Merge branch 'cb/no-tcl86-on-macos'
+With Justin's fix, you see the error doesn't happen no more. But it
+seems, the resulting zip archive isn't valid. When I try to unzip it, I
+see:
 
-Mark Levedahl (13):
-      git-gui: do not add directories to PATH on Windows
-      git-gui: let nice work on Windows
-      git-gui: Windows tk_getSaveFile is not useful for shortcuts
-      git-gui: use /cmd/git-gui.exe for shortcut
-      git-gui: assure -eofchar {} on all channels
-      git-gui: translation binary defines iso8859-1
-      git-gui: replace encoding binary with iso8859-1
-      git-gui: do not mix -translation binary and -encoding
-      git-gui: remove EOL translation for gets
-      git-gui: themed.tcl: use full namespace for color
-      git-gui: use -profile tcl8 for file input with Tcl 9
-      git-gui: use -profile tcl8 on encoding conversions
-      git-gui: Allow Tcl 9.0
+    inflating: chrome/test/data/third_party/kraken/tests/kraken-1.1/imaging-darkroom-data.js   bad CRC 3ba68a86  (should be b09a04a2)
 
-Orgad Shaneh (1):
-      git-gui: strip the commit message after running commit-msg hook
+And when the length is set to `STREAM_BUFFER_SIZE` (so equal length to
+input buffer), the decompress goes well, but the data seems to be
+mangled.
 
- .gitignore                              |   2 +-
- GIT-GUI-BUILD-OPTIONS.in                |   1 -
- Makefile                                |  61 +--
- generate-macos-app.sh                   |  30 --
- generate-macos-wrapper.sh               |  35 --
- generate-script.sh                      |  22 +
- git-gui--askpass => git-gui--askpass.sh |   0
- git-gui.sh                              |  58 ++-
- lib/blame.tcl                           |   9 +-
- lib/branch.tcl                          |   4 +-
- lib/browser.tcl                         |   2 +-
- lib/checkout_op.tcl                     |   2 +-
- lib/choose_rev.tcl                      |   4 +-
- lib/commit.tcl                          |  83 ++--
- lib/diff.tcl                            |   3 +-
- lib/index.tcl                           |   3 -
- lib/mergetool.tcl                       |   4 +-
- lib/remote_branch_delete.tcl            |   1 -
- lib/shortcut.tcl                        |  52 ++-
- lib/spellcheck.tcl                      |   1 -
- lib/themed.tcl                          |   8 +-
- macosx/AppMain.tcl                      |  29 --
- macosx/Info.plist                       |  30 --
- macosx/git-gui.icns                     | Bin 28866 -> 0 bytes
- meson.build                             |  79 +---
- po/bg.po                                | 714 +-------------------------------
- windows/git-gui.sh                      |  12 +-
- 27 files changed, 197 insertions(+), 1052 deletions(-)
- delete mode 100755 generate-macos-app.sh
- delete mode 100755 generate-macos-wrapper.sh
- create mode 100755 generate-script.sh
- rename git-gui--askpass => git-gui--askpass.sh (100%)
- delete mode 100644 macosx/AppMain.tcl
- delete mode 100644 macosx/Info.plist
- delete mode 100644 macosx/git-gui.icns
+This is because only the final call of git_deflate() is being wrapped in
+a loop for the current chunk of input data. We can see in various other
+callsites in the Git codebase, git_deflate() is usually called in a
+`while` loop (even when the `flush` parameter is set to `0` =
+Z_NO_FLUSH).
+
+For the record, I want to give all the credit to Justin for diagnosing
+this bug and to determine a solution. Where he aims to provide a fix
+that is minimal, I wanted to present an alternative solution that
+implements zlib usuage according to the official usage example[2], but
+the changes are more substantial.
+
+I'm on the fence which of two is the better approach. Because the ZIP
+format has a End Of Central Directory record (EOCD) at the end, it's far
+more likely *only* the final git_deflate() call suffers from unprocessed
+input data, so the final Justin provides probably Just Works. I'm gonna
+leave it up to the community to decide what is "better"?
+
+[1]: https://lore.kernel.org/git/20250802220803.95137-1-jltobler@gmail.com/
+[2]: https://zlib.net/zlib_how.html
+[3]: https://en.wikipedia.org/wiki/ZIP_(file_format)#End_of_central_directory_record_(EOCD)
+
+--
+Cheers,
+Toon
+
+---
+Toon Claes (4):
+      archive-zip: deduplicate code setting output buffer in write_zip_entry()
+      archive-zip: remove unneccesarry condition in write_zip_entry()
+      archive-zip: in write_zip_entry() call git_deflate() in a loop
+      archive-zip: move git_deflate() with Z_FINISH into the loop
+
+ archive-zip.c | 40 +++++++++++++++-------------------------
+ 1 file changed, 15 insertions(+), 25 deletions(-)
+---
+
+
+
+---
+
+base-commit: e813a0200a7121b97fec535f0d0b460b0a33356c
+change-id: 20250801-toon-archive-zip-fix-2deac42d5aa3
+
+Thanks
+--
+Toon
+
