@@ -1,127 +1,132 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1194262FE5
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 13:36:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD0A1BEF7E
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 13:46:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754314564; cv=none; b=rEQ9Ilrt8T0mXQ02kgtltlvoSUH5OFx3J1MHOeqzbX4901FHaLJUoSeJcAAINWfWQTDTFv9nCSKQm4lhHMaC8eT2pUm6lDZJpkMSbhQskVcZN1CBvp0q6tNaRPjLrcOMi+O20MazsLcBliO3HftMA19Hc1guQI33qBS82MzDYyA=
+	t=1754315215; cv=none; b=DT6ggDlQs+Bmh3XaidbWQfEPaaYMSRZ+7wWxaYjrJLdmAWzhfX6nCqO4c4ZwTKdt/C8j151LnNclF6ovvhiXREVtzebfYl0C7qEgkPNLv70iR7wWNy9UOyaWitfBtLyUsBw2qlg9bXtYQbMyYFCSf2HN+eBG3awdHUeK9vYJyTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754314564; c=relaxed/simple;
-	bh=VLtqUvahwyQ+WDrgB0y+n+aIVZGTl5gY763OkjNzTUM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D+pWbW5ssz+wIjiBrjj+evPc2j5ELka7AgOSMEryW5Et6N4YQ+KCZ0de/zWl96n1s4BMhICHl1S/Ps/6SJbcJFT83CaWLPKFXIFd8mSfuyF+CLY8fd4STMRJkO3UHtccVR63k3KVhqxysghzMXwXmeCDVxHF96lOaNZzUMaALLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TzJpU9gE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hldEtsEI; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1754315215; c=relaxed/simple;
+	bh=WBk5WcoxPXIhZhLRBRT0hs49ONRM+l1pe4pz1w32pig=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZwvsPik7h9ZsM4Rv6rngGgHAAcNaqFujLGkFbI1Ko4MdLIPnbCCXU4DlXGygCyr1vZLGGjdL48/DAs6njFiGztx9CL4QL/d9oOAxrSx/7fVejENbLbCTiiS9ir/OVlVjIYQktdxVrIvaKoJNW8T7CF2jSsY7+43hl6Vy1mICNYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lqtiA8B9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GOi6NEZr; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TzJpU9gE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hldEtsEI"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B6B117A01CF;
-	Mon,  4 Aug 2025 09:36:00 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 04 Aug 2025 09:36:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lqtiA8B9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GOi6NEZr"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4B38314000FB;
+	Mon,  4 Aug 2025 09:46:52 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 04 Aug 2025 09:46:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1754314560; x=1754400960; bh=DlmsJ1bJdS
-	veG8mqpkh9ZQ6kau6shVzmi8wW6w9QBuM=; b=TzJpU9gE8T9oxdFe1IyubUULpU
-	I+WhB0GAPPgEb3+pt7GcrUNnuhzcTpBKLPv2XWFwBE9+LwIYPmKYh5z4qQvqvxa7
-	bVRt+jpxuwpP7Guj2Qif4CPkSiOj/cPikyMPu7JuAyxrMu0fTwikknkbPd9dyrOG
-	IZ1W+AzDpLsNLgi7ynw/4aKJhkW+PWXsyh9APH+JpnpYdN0sQSGGZul0gwDd1/k+
-	idloojGUesWv++TLBhGgma3o78LA5NaCWDtpcZD1Qac/DrKcdiLZpMVjd8syuvlV
-	lx3BPqHs/AL7eC3PQ1TGGeophZOWkKsDLhV43JeTdXLl7PrSUcq2cy5TbNLA==
+	:subject:to:to; s=fm2; t=1754315212; x=1754401612; bh=G1DafIP4F9
+	Eh4nyWnXXus6TdlPhSH/6Hyq/OcQZIb7Y=; b=lqtiA8B9TQqL5dMLo1vyAsOIqw
+	IPK0OHvKl+BoJbyxBBfqWS+ijDrWhWlVJG5a3Nue2gOkwtNxIjXs6vEON3Nu/sfN
+	+qgovNNPe/G5f7/7kwm3bL5oekhF1k2wiVpjjPZAMkXOSqDO3WZnNWv6brqxQ/ZS
+	zhcnRsPPY/IlX6wnhQ7VFKhWcNuDtM2AHwhVtFAGSBAg0AyI3gqXcyf+3VhoyQqH
+	3DI7ZkD/lD+S9N/dSxgNZckzBnoLmqR8A+COLvlHHOreNE3LJNF+zS2vUejt+ZgB
+	PM3D8MO/q6V6pZN5f96cQ98TK8KBsVT/hZTlUw4EC3baOWzzg7rB7TJ4m9Og==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754314560; x=1754400960; bh=DlmsJ1bJdSveG8mqpkh9ZQ6kau6shVzmi8w
-	W6w9QBuM=; b=hldEtsEI9DrIxiXWNT9kRD8EUmnkHELpykNcF7YAcZ6YphKzJUg
-	UvuzPjVp/MLfUm2HPgfYSzmshLQJ/0r+dvFLW11ycDcVwHt3xDMUixeFQ72xtUTp
-	npwU6bb72/aF039/Kfw28PKK938LeQa23JULpWaQBpf7z5b/1U0qNyuG4xOQmdmA
-	yy8MiDhQ6G35v+dYfyEhvP77OChIZkQQ1fDUSNd86WramEALcyU5EwQjehzZRPTA
-	QTivSHjTSivQid79D0XKBuKO6RXmnQm9AElaAM2rhFK1F6rB8Ml/DI6bNorjVhqA
-	Y5SOOrZa4orOq63+FIMBJysGrzpI0pFNgVg==
-X-ME-Sender: <xms:QLeQaHhaUinrzMzCS1GPPqgIslbWCnLffvgEQ8ioqQgX_DJlAxT5lA>
-    <xme:QLeQaENLQUAHJG_dkJMBrqJa-bQUYZDg_VGsRWUCjCQIxlLxkPQA5q3uYWxKeH6B2
-    w5dXxIKgRyO8nWq3A>
-X-ME-Received: <xmr:QLeQaI6GCamkXSBHW8mQ0Pf0XYXiZudrJ0iKZgEjWWE6IVcffmiTnoFzykiNvXV9G7HM0GruELl-a8IIP3bb5KsyfrVl8e4vm35YNgu_aCY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvgeefucetufdoteggodetrf
+	1754315212; x=1754401612; bh=G1DafIP4F9Eh4nyWnXXus6TdlPhSH/6Hyq/
+	OcQZIb7Y=; b=GOi6NEZrf//57GLek7FLoWAuofa5GPxrg4AN5foRvbqdu2llEjH
+	1xueTRtx+lWPslKDEIWr+CNmDGbRFpLGRcBEqNeN/LtT0ulseVy2t+/myOa1oCVu
+	SNSul1sd1c8AdoHdIdhN8sfCem34VMmf7LYIKuTGe7P9DMLj2rkmHBwnJdrPmgUX
+	PV71gpj2jipDNmTChVuG4H8cvz6xGcmD210e5Auas4/9MP2YnTsVSLz7q8nVKYXs
+	2H9WzBio21o0w6IpLQpUP24p05DU3HYXeJLtxFrUJjYVsTDE/HmQPLmNodYfbYQv
+	PPCJ49vPpRT+ULRaNtbL/jYUKE/lQPYd/ow==
+X-ME-Sender: <xms:zLmQaGWBrnsra13pzKBzYO7144O8xLXHSNruoagoO12jrlFMwIf4gg>
+    <xme:zLmQaNLjk74J5gwAEaMolnYc8ipSxL_xyfQS5qbqB9wNBE2uGtvSM3HkiLiEM0RAJ
+    NdqVPlE03BlIc1IYg>
+X-ME-Received: <xmr:zLmQaG-6Xv7xlW8ehCAFDSEwzimssj3Aqv9cScqItI10EAFj2LsoBrlR7jXWZe0gZl8DSDobJSoaUd-DNn2OrKdJMsA-EjqTc2VSqh4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvgeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:QLeQaC1coKB1dODDkiIsy3A-5RBbf7QRfdefJjes9yKd9qGZinCa1Q>
-    <xmx:QLeQaJaYKxTuPBGd5F49GPGVxli4yfX7DcbgtE7VjD7m12JGkNBipQ>
-    <xmx:QLeQaKBug1trr22boJGc3w8tJqpkvO8D_Q5xWUvQMh8fXllgZUWewg>
-    <xmx:QLeQaL_Rq3kO5RsPU1Xm_5oeILtLaj9FRpcQ0hxFpXL-zfObDMkL1A>
-    <xmx:QLeQaK8kum6mnKY4-pJkM0h_RwD0Kz4OOOgDzQI9xMwSKBUy48CAtY7L>
-Feedback-ID: i197146af:Fastmail
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hlihhurdguvghnthhonhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:zLmQaAJRajff3GUiASj5GjxJ7k6wHfTLv8-4ebAZPHeucR3Q3hkCWA>
+    <xmx:zLmQaLmXetWRdse1FsU5FXqAxs--wex-SzjZPn0L74P96a5ndzgY_w>
+    <xmx:zLmQaEPj-d29snjZgEfW9pA8_goBhMPjYWfulFF92eyXqctdsmi0Zw>
+    <xmx:zLmQaB3chLxrwSB7rqVmV3qKJKWGLfW0MvYuqwCBR5dqXyaRbLs0dg>
+    <xmx:zLmQaLFzEbID_-YZ_CR0pCBGjIdv58jlAaPf2T43auP0Nas5hpCICa2L>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Aug 2025 09:35:59 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cd538166 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 4 Aug 2025 13:35:58 +0000 (UTC)
-Date: Mon, 4 Aug 2025 15:35:54 +0200
-From: Patrick Steinhardt <ps@pks.im>
+ 4 Aug 2025 09:46:51 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] revert: initialize const value
-Message-ID: <aJC3OiJoqJRnR_My@pks.im>
-References: <20250804130011.GA93475@coredump.intra.peff.net>
- <20250804130141.GA95101@coredump.intra.peff.net>
+Cc: Denton Liu <liu.denton@gmail.com>,  Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] fix -Wmaybe-uninitialized with -Og
+In-Reply-To: <20250804131922.GB86602@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 4 Aug 2025 09:19:22 -0400")
+References: <d03308e9474f5e26fd4a5494ec243a278e971443.1754302009.git.liu.denton@gmail.com>
+	<20250804131922.GB86602@coredump.intra.peff.net>
+Date: Mon, 04 Aug 2025 06:46:50 -0700
+Message-ID: <xmqqms8f9p2t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250804130141.GA95101@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Mon, Aug 04, 2025 at 09:01:41AM -0400, Jeff King wrote:
-> On Mon, Aug 04, 2025 at 09:00:12AM -0400, Jeff King wrote:
-> 
-> > There are a few possible options:
-> > 
-> >   1. Instead of a variable, we could just construct an artificial
-> >      sentinel address like "1", "-1", etc. I think these technically
-> >      fall afoul of the C standard (even if we do not access them, even
-> >      constructing invalid pointers is not always allowed). But it's also
-> >      something we do elsewhere, and even happens in some standard
-> >      interfaces (e.g., mmap()'s MMAP_FAILED value). It does involve some
-> >      annoying casts, though.
-> > 
-> >   2. We can mark it as static. That gives it a definite value, but
-> >      perhaps makes people wonder if the static-ness is important, when
-> >      it's not.
-> > 
-> >   3. We can just give it a value to shut the compiler up, even though
-> >      nobody cares about that value.
-> > 
-> > I went with (3) here as the smallest and most obvious change.
-> > 
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
-> > I dunno, maybe the comment just makes things more mysterious and
-> > doing the casts would make it more clear what is going on.
-> 
-> Hmm, I guess one other option I did not consider: we could just drop the
-> "const". The pointers to it are "const char *", but it is fine for them
-> to point to a non-const variable. Maybe that is less mysterious.
+Jeff King <peff@peff.net> writes:
 
-Initializing the value feels like a pragmatic choice to me. There is no
-downside, and anyone who might be puzzled by the comment is likely to
-git-blame(1) to your commit anyway. So I think the current version is
-good enough.
+> So I wonder if this would be much more obvious (again, to both humans
+> and compilers):
+>
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 5dd6cbbaee..f0e49a5681 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -1474,10 +1474,13 @@ static int set_head(int argc, const char **argv, const char *prefix,
+>  	};
+>  	argc = parse_options(argc, argv, prefix, options,
+>  			     builtin_remote_sethead_usage, 0);
+> -	if (argc) {
+> -		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
+> -		remote = remote_get(argv[0]);
+> -	}
+> +
+> +	/* All modes require at least a remote name. */
+> +	if (!argc)
+> +		usage_with_options(builtin_remote_sethead_usage, options);
+> +
+> +	strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
+> +	remote = remote_get(argv[0]);
 
-Thanks!
+I do not know about compilers, but a sample of one, to this human it
+is more obvious ;-).
 
-Patrick
+> and the line it complains about is:
+>
+>   if (filter && strncmp(test[i].name, filter, matchlen))
+> ...
+> At any rate I agree that "0" is the appropriate value here, and
+> assigning it to shut up the compiler is the best approach.
+
+... simply because we know the value in matchlen does not matter
+when filter is NULL?  I think that would work and I would be happy
+with a less noisy compilation.
+
+But any other value like 99 would equally well work, which is a bit
+disturbing ;-).
+
+Thanks.
