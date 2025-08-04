@@ -1,75 +1,70 @@
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BBE239E92
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 21:44:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023A6634
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 21:59:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754343854; cv=none; b=uqNlRzgGjJd2wkeF+f0XeP1phKM4MG+qp9O1NorP9Ak334cnYM/NAEgGDoIwQZHgAUpK6yPQHMJsAR5js8IAlo8AadrSTfyf/s8r3w0MFGTD7GlfzZHKKqljXF6BxuKCHguCmPK9gSXyi5b3rCH+aZz7ELCjTY1IfBXB0Ue4Zg0=
+	t=1754344744; cv=none; b=q1SNtOlsVOFgRH0l6+Od5Fk7Ns3Jn6MAWavTTpSN5R0crZEuI5c2IkJdjg0PayLoDK327EBIJpcmuhPx+6K2dyfwM1rG+Kj40fxLaoh+rBjE9xIm1qvBp4nVoDLahqhcTJ3xIZDkB1BfTfE3gXhYib9KI2mTC1wKkagqz2Sk8Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754343854; c=relaxed/simple;
-	bh=Z6cy4HzDoX26i1PVfZ2y6bGKGhdw636lnXSO5wyemL4=;
+	s=arc-20240116; t=1754344744; c=relaxed/simple;
+	bh=MCt9cHGaVmDiu+b5BNzpaFrsR14J7OUUlBVxoHsNwJo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DNGsoSVYJ54Wygh8oMidB421NR/WofNW04MmclZKuqbz92vWizOWUyYeSzEVV9Nq7FIAjLA2L5mMtdGWlND7aOD8fKXYI00PQlX7bwFeuzikSY+bP0kZvNIGrIYbJb1WPA/HRQsXiTYQg34h+Q0f4S66jmsGRN8Vs3iuHp35WOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=WjTXECLA; arc=none smtp.client-ip=209.85.166.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=WDnx5jbSAfZsDFGk0Aju+dSPIzlBGQoVUhD33+JDgqMqjuozTxnHgc59YmhWXrBiv3jYv64qmpY+Cd0x2Ps2X9WlxtTH0gLlLatbLcAIzaeAa20tkjuN2q0xsKYPcoxPkUEYkiCk35FtSfhVlYYv8xaC8y2TbsbbXERSBSbgdtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=V850M21A; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="WjTXECLA"
-Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-875dd57d63bso119100439f.0
-        for <git@vger.kernel.org>; Mon, 04 Aug 2025 14:44:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="V850M21A"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4af123c6fc4so26151321cf.0
+        for <git@vger.kernel.org>; Mon, 04 Aug 2025 14:59:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1754343852; x=1754948652; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1754344742; x=1754949542; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lGZunhW/xOG4H3a/yhQmZ9kanuTmC/D3hWj7gxZnq/s=;
-        b=WjTXECLAIMvVm8+kza//+vbVA4aseILaakuUjw2WtUdV4E2CPfFwm0Dtq6Xd1BugpE
-         Ums/ODZPWrKnuCwU7lTCQHqn0tR2fjVNJDQz1MFJkakYuC89h2TdYhQn1k23iGh8jznU
-         LeBCMO5XifCCd8pyQmvAwZHM9LpdCptJJC8yun6uiOCCNFnzTQmtWR27LxZScEMNpEFu
-         W4DMudXFTANjgvANJJB90qQiHO2OGvZyFd/vCPAToPiXEhWM/1bfrIgrVgcnkZrMwml4
-         ucCmYPnAf5SdA7DOC+d3WMVHEPeWd5XEUyuAm8PMHoNQcFo9KZXbUaX9/JOI6RBCPEG5
-         I9bQ==
+        bh=ceJTJOPUFXhe1iP2hhLSTDSoevfbpk6Byov91qNfW9Q=;
+        b=V850M21AzEwqF8CB8iOWzkrSeK797DVZBDMpEsymL2fvj58tZEJCLeU2b/Z+sMrI7g
+         VxycqvfUdMpSEHa8Kt+mm6hvigmpsqBMAS/sVoFtgqdtvw3r9PDSh2wy//OjyK7T1ijC
+         wLapkMbIMcoZWqNsAibmDmXjsPOTajWkupgNhnvvqzqIZOif1RsGvFXlnfLxX0EdvWbz
+         5cecJLDEmU5dDkEEDH4vws0vCRVMuFpJgHoSwgDuh4o1MxHJ9tXXH2CdEKfp28lrpman
+         YuJqIER4rhqSyEPkt6Rbix88fcZONDHnO193XiaxupnpOuqxNwl1Yp1hacwiHL+CuSjM
+         FeQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754343852; x=1754948652;
+        d=1e100.net; s=20230601; t=1754344742; x=1754949542;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lGZunhW/xOG4H3a/yhQmZ9kanuTmC/D3hWj7gxZnq/s=;
-        b=G4vIZh9ylON3O06jV2jkW3HitLHOko4yV6mIztbo96yRXuYFxOSzkvQ3ZPLMJzM3l9
-         PLglVgeSFOcWrZLNycwT38ikyeAmdfbsQwdUpLFXptA+Y8BRNO+ply3lHLWN3ChpcYTx
-         LVy/UQKR5KA+riOOhOXHqw/qt7jDHhGBJi6M2VKdv1ijK3FTYU+D23WVYttrDNSgSb4N
-         RFSrWlB8D5kCoALuUH1uu3xVC4tQVDoaxWfiFt+XYdRLNYaYTrd5tWgyT5NexEXFy7Xp
-         M84SKQUrQKENNhWidSLDB03Rr/1327w4ZLtwMcoZ+G2dVs3+AbZXBh3n6d1f6Ny5RBBX
-         dZCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXKydMSIHndM71R+tQSFNL5pyEn5SYa+aIbv7GUTpj0y8D5WrfjI1LjopM85+kDgvwGmTo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2sDH7PG9sLE3hKTh95nO3IQC+NoizWZ0W/EbSzkoa7MRlXWZG
-	n7RGRMbpBqi2WTo+FQGY0Ymy86/i3/3ibO7wH+z2moVxxoqGxDYep9KvEPIOvzWNMSg=
-X-Gm-Gg: ASbGnctoaajqq0AEzPyJBSzflRasY3PBv5C0KW4D3RgM8zRROq36h6gTW7F1UuqHuYT
-	HEm2lnEUirqwH2zlBep7AVmIXLlQPSbyNWQY7zryZZ6hm3cGEtLtPediKaBStA7WhN/yQxUGg5A
-	rkOmcAG2l88dds4nvrxdo9QyrGLSIqRoB+YqJIMEPvM/1hOJs8eDpP18D3MtyigUuJSuaE5oPaZ
-	E53piwzCTulA/A95HcdWwaSm3nKe1Ybids8dUH1Ifj0Ackj/e0zCx5jO4+BVIaCXMIipaqIusS3
-	5D2jmfSKW4Yp7ms0WGN2K4DMH6lHPoy0EruA5Mb/xmbpmscblim+HmwAf2kH7tdIwRasHaULRKI
-	E8CDJ44MF69dY+4ql5msQDPsdCDkG2v8AA4x4Lfekg+JDKpzfjd95kZvrNIx+SlkvigVGGg==
-X-Google-Smtp-Source: AGHT+IFqOyxqsTAOOZTBfq3SBufsXRspcOLo4McyEP/Zw82YHqq3u74ZoL/IUtSiwPip6qZCDFV0Tg==
-X-Received: by 2002:a05:6602:6008:b0:86a:441:25ca with SMTP id ca18e2360f4ac-88191d1b9f3mr207694439f.6.1754343848147;
-        Mon, 04 Aug 2025 14:44:08 -0700 (PDT)
+        bh=ceJTJOPUFXhe1iP2hhLSTDSoevfbpk6Byov91qNfW9Q=;
+        b=TqOgEEu6SO9PdU8ejN9T+lmUNQYa70yjfdAzAJguUElIPiKVg4e7+XYMuC1+4NSDG8
+         02ffEQOkD3SW9GTzDsK3WJ2hBzzTzeSDzr3I3jD9b0Xca17JEx1MmowxsYhHXwboaHha
+         J7RNHY9E6BzhXDJksZHhO/THaRHID2aqi90aOx6RUPc/yI1AgtFLtxK1BURo8BGC4RXh
+         xZlfoOW9Elt829lQlUCBcC3oljJSX5V39EFa9ZsF6awCw8Yyq7O7t699JhSBVFvXen55
+         mZ/CTUrp8B0/VX7ismHNdHXMVyeFAI+Hmh5ZldpsnOIeJ2zwqgKP9SYR0trhKq8t9b1X
+         ljJw==
+X-Gm-Message-State: AOJu0YyJ8zxuWswChEKUiNaOB9AN/7aySrcz5I8/RskHq97I+qtHFmtH
+	VF7Zif5uc8WYLaaP0O4Yf40HSQ2PRqFS3aLx/DNtTgSOLDQIR4VaArAKjQBun+nD5AsrslYPQs8
+	3rmnd
+X-Gm-Gg: ASbGncsey5N6UrJLmmY2aE3zorjhjU9Mh0NB77iqoRD5LZrRfJUZpkV4/pTclxysFxc
+	O9iE0weUJvcRPh9EgqMvsAgq5FDwu831DXhULGco+8xSi7FzkHZbyM7JMeOs1XhOA+2faN0b6LU
+	iiP3toXQAx7cpWmsZZ4lprL7rhscXNynua1PWKmkgVWHfwSWbLEVBk02VQBLQ/BFwtIsGDo5mQN
+	nda0Z+DqKICbWxKURaKDpfGGefjTxIIY5PdM4sRoecGJMgzxLKOI6Mn+PCGICE6ihdbtn5OWUW3
+	+rXMeVMZ1vcMIKKat9lkAHjUPM5SGdwb+NvfpdaiEWT7l7FLORfwzfVoU7SrsyEPRi2CR7L1vH6
+	y/ccbi64oU+WbbXNZuyhJkjIKILeMlesJhaJ4JsS5BccALoEjSGBcc1cwTjU3nB2by4qezA==
+X-Google-Smtp-Source: AGHT+IEWmgW6stGQ2L/SzbBAcjUEvm1F/U+gJsKGDaPPKA5IL74q8Cmhw+LbmQcM9bh7oZ2kizUYrw==
+X-Received: by 2002:a05:6602:15c4:b0:861:d8ca:3587 with SMTP id ca18e2360f4ac-8816832a8d9mr2305041339f.4.1754344365792;
+        Mon, 04 Aug 2025 14:52:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-50a6096b11asm3231888173.7.2025.08.04.14.44.07
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-50ab413fdcfsm179895173.75.2025.08.04.14.52.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Aug 2025 14:44:07 -0700 (PDT)
-Date: Mon, 4 Aug 2025 17:44:06 -0400
+        Mon, 04 Aug 2025 14:52:43 -0700 (PDT)
+Date: Mon, 4 Aug 2025 17:52:42 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
-Subject: Re: [PATCH 2/9] commit-graph: stop using signed integers to count
- bloom filters
-Message-ID: <aJEppnTkY+66IEza@nand.local>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/9] commit-graph: fix type for some write options
+Message-ID: <aJErqjDHudSeyNHr@nand.local>
 References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
- <20250804-b4-pks-commit-graph-wo-the-repository-v1-2-850d626eb2e8@pks.im>
- <aJB5uKFdGybf-IbN@ugly>
- <aJCW7aYqJB20LDNg@pks.im>
- <xmqq5xf35429.fsf@gitster.g>
+ <20250804-b4-pks-commit-graph-wo-the-repository-v1-3-850d626eb2e8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,86 +73,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5xf35429.fsf@gitster.g>
+In-Reply-To: <20250804-b4-pks-commit-graph-wo-the-repository-v1-3-850d626eb2e8@pks.im>
 
-On Mon, Aug 04, 2025 at 11:34:22AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Aug 04, 2025 at 10:17:19AM +0200, Patrick Steinhardt wrote:
+> The options "max-commits" and "size-multiple" are both supposed to be
+> positive integers and are documented as such, but we use a signed
+> integer field to store them. This causes sign comparison warnings in
+> `split_graph_merge_strategy()` because we end up comparing the option
+> values with the observed number of commits.
 >
-> > On Mon, Aug 04, 2025 at 11:13:28AM +0200, Oswald Buddenhagen wrote:
-> >> On Mon, Aug 04, 2025 at 10:17:18AM +0200, Patrick Steinhardt wrote:
-> >> > When writing a new commit graph we have a couple of counters that
-> >> > provide statistics around what kind of bloom filters we have or have not
-> >> > written. These counters naturally count from zero and are only ever
-> >> > incremented, but they use a signed integer as type regardless.
-> >> >
-> >> > Refactor those fields to be of type `size_t` instead.
-> >> >
-> >> mind elaborating on that choice?
-> >
-> > We tend to use `size_t` when counting stuff.
->
-> And I would have to say that it is wrong and we need to wean
-> ourselves from such a superstition.  Unless you are measuring how
-> big a memory block you ask from the allocator, the platform natural
-> integer is often the right type to do the counting.
->
-> Each of your "stuff" may weigh N megabytes in core, and if you have
-> M of them, you may have to ask (N*2**20)*M bytes of memory from the
-> allocator.  Your (N*2**20)*M must fit size_t _and_ you must compute
-> it without overflowing or wrapping around.
->
-> None of the above mean you have to express N in size_t, though.
-> And more importantly, nobody gives you any extra guarantee that you
-> would compute the result correctly if you used size_t.  You can write
-> the right code with platform natural integer, and you have to take
-> the same care (e.g. by using st_mult()) to catch integer overflows
-> even if you used size_t.
+> Fix the issue by converting the fields to be unsigned and convert the
+> options to use `OPT_UNSIGNED()` accordingly. This macro has only been
+> introduced recently, which might explain why the option values were
+> signed in the first place.
 
-Agreed. I think it makes sense to use size_t to keep track of, say, the
-length and allocated size of a buffer, but when it comes to "counting"
-something that isn't directly related to memory allocation or pointer
-arithmetic, size_t is usually not the right choice.
+I have the same general feeling about this patch as the previous one:
+the -Wsign-compare warnings here are a bit of a red herring.
 
-For instance, the MIDX code counts the number of objects and packs in a
-given MIDX (and likewise for its base MIDX(s)), but those are all
-uint32_t. You could make the case to say that, "well, they are encoded
-in the file format as 4-byte unsigned values, so we should treat them
-the same way in memory at read-time", and I think that's reasonable. In
-that instance, using "int" would be the wrong choice, since I have
-definitely seen repositories that have in excess of 2^32-1 objects.
-But there is no reason that we shouldn't use size_t to make that count.
+That said, I do think that we need stricter validation for these
+options. Following the --size-multiple example, for instance, we get
+this rather unfriendly error message if we pass a bogus value:
 
-> > ... Regarding the data size I
-> > don't really think that matters much. It's not like we have hundreds of
-> > thousands of commit graphs in-memory at any point in time.
->
-> Aren't you saying that a platform natural integer is a much better
-> fit?
->
-> As to signedness, it sometimes is better for a struct member that is
-> used to record the number of "stuff" you have to be a signed integer
-> that is initialized to -1 to signal "we haven't counted so we do not
-> yet know how many there are".  So
->
->     These counters naturally count from zero and are only ever
->     incremented.
->
-> is not always a valid excuse to insist that such a variable must be
-> unsigned.
+    $ git.compile commit-graph write --split --size-multiple=-1 --reachable
+    fatal: size_t overflow: 18446744073709551615 * 34
 
-I wrote these counters in 312cff5207 (bloom: split 'get_bloom_filter()'
-in two, 2020-09-16) and 59f0d5073f (bloom: encode out-of-bounds filters
-as non-empty, 2020-09-17), and I don't see a compelling reason that
-these should be unsigned.
+This happens as a result of in
+commit-graph.c::split_graph_merge_strategy() doing the following:
 
-It's true that we don't have any need for negative values here since we
-are counting from zero, but I don't think that alone justifies changing
-the signed-ness here.
+    while (g && (g->num_commits <= st_mult(size_mult, num_commits) ||
+                 (max_commits && num_commits > max_commits))) {
 
-Is there a reason beyond "these are always non-negative" that changing
-the signed-ness is warranted? If so, let's discuss that and make sure
-that it is documented in the commit message. If not, I think we could
-drop this patch (and optionally the patch before it as well).
+, where size_mult is changed from a size_t to an int implicitly when
+assigning it to the stack-local "size_mult" variable.
+
+Indeed, this patch does improve that warning, but I am not convinced
+that changing the type is the right way to go about improving the error
+message in and of itself.
 
 Thanks,
 Taylor
