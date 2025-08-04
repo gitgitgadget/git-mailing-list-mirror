@@ -1,40 +1,42 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mail-24421.protonmail.ch (mail-24421.protonmail.ch [109.224.244.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3521FDD
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 15:41:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0ED421FF4D
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 15:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754322092; cv=none; b=Gx5lWOLop/RQLC+uXPjsSwPOnhgmiAEDRQXT5UgI8vgMFjMO6oIit4L+gGYoKUIN1KoiX1WLF2GmKr2sYCJuSUHLhE6T1uBh/NL9N1UOsQEwKD7weLHiB+gX+GCXzY7G1EWZDA3NZfdapmUwqGGDgi8oKHgVObeBuIVwg/yOXdY=
+	t=1754322792; cv=none; b=a51RYIGXM01vKwnXVidqgLWofP35j/s0dChNnXj8vPu04BY5CN9S3vdk3BxrxOJr1fSfeQz1SNQFZoX01mqfYCuLOZtl8QupytnMLQB3Qf0e3KN+NfzriIPUv5b4w+LBRnXLthQ2HqPhfMzb1vqpsWZDenyZAtoGD6eX/OSUu/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754322092; c=relaxed/simple;
-	bh=T2i7qyrpv2uQuz+rxHmJncOYdfV6udBfb4cspc/QvFw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WF8KYH7MKkV1mUlKJlBYJ+p5Mi6pYmCMa2IfB+bKKj1wMSk0MhbDHYvZz5sVGHt2wm4GjWscVDIICV02+YtWULWcZTRMhKcA55urXB57u7WlukzpnowyEPFoOMPh1IEaQ3S0038imSUwnu18WGTEAzEcbKNaV02qUnOEFXsMKY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=B2vSAw7b; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1754322792; c=relaxed/simple;
+	bh=iUMKx6Q7mGxrsPRrJqqE605YcBmLW4pU6Zl7QyC/g+I=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=IQvvRHz9WQNa+Tu9+f3wWUSM3maJI2WOccwVo2dfL32xf7T5ijRovyciJ1N3LYJZQ0aMSVnNJTt1NH8TDnZZseJDLvq3sp8MoNxsXQCV/WBMI4meBoFOKZouvdU+PA296OkvbBznS/7uSrgiZtC5dleKGeDPgU1XX8GOwFl/VJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fmorschel.dev; spf=pass smtp.mailfrom=fmorschel.dev; dkim=pass (2048-bit key) header.d=fmorschel.dev header.i=@fmorschel.dev header.b=kzMAB+8c; arc=none smtp.client-ip=109.224.244.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fmorschel.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fmorschel.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="B2vSAw7b"
-Received: (qmail 1943 invoked by uid 109); 4 Aug 2025 15:41:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=T2i7qyrpv2uQuz+rxHmJncOYdfV6udBfb4cspc/QvFw=; b=B2vSAw7b0RkrH+SZlycVvGgW+trn+216sKORa6pRzi8M/edNMz9lNmfmx9fwVkXZvxaVPOKuohK30BPJKyRzpE0ZDu6Jr4NZJkjs+5701zLigW/mZ2wbeonaiH8VTRj2qg96wVbCqAk7S3TbYTJlQ/eTlBvBHArF2+3NPSVUC/CVHlfT0yVnbPOays2CkLpcQiPl9Sxs8KIc3NCzpnOWQhu5JOv3oN0ipLLp4IXIGJkaFlcIo3l32nikXqOSnMKphayprW17JljrXfifttTpQR8VnH5zndfHtnMVQwtX6mJAWw0RDsaXKW3WlQTY8CU31TTr50K6sQmdt0si+GlIVA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 04 Aug 2025 15:41:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21458 invoked by uid 111); 4 Aug 2025 15:41:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 Aug 2025 11:41:31 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 4 Aug 2025 11:41:29 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
-Message-ID: <20250804154129.GC109984@coredump.intra.peff.net>
-References: <xmqqms8fbilv.fsf@gitster.g>
- <aJCBlnHp-db4Nd5w@pks.im>
- <xmqqqzxr88jg.fsf@gitster.g>
- <aJDI16RBR9QKdtW9@pks.im>
+	dkim=pass (2048-bit key) header.d=fmorschel.dev header.i=@fmorschel.dev header.b="kzMAB+8c"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fmorschel.dev;
+	s=protonmail2; t=1754322786; x=1754581986;
+	bh=dkd+2jaNSpruL3iz85Cllxv3gQ0nIl7/uOjQFkfN0Fs=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=kzMAB+8cf82MIXe6FUgzI7AkuxSpIOZByjRggdso89LHaKtjtUfu6kLVciq/6C0sW
+	 OUuO/lvFU7WFNfrmlmioQRuEst8LwO+R+YHyb+pknNTlrYahcDDlLO9MAu2M1/NmyQ
+	 +DbDuD18UsP3ivR1fbPm2s3kW4yug86M8XxJDPECncqFR98u8ao04deEJYILp2gEHP
+	 pBftbMKdMMc2hUqxCMWHcEU56kcbJVRZCaQJNYRyh2p3ys6H6sNt/HDcnxjw1cHLfT
+	 p37k0thVuD7cHVZQA2x3V0ldbeQ7L426KJLih0V1LGQYwWJAtP+JdTHM4EgWdWjrQ1
+	 3Nfz3oCYUJLzA==
+Date: Mon, 04 Aug 2025 15:53:03 +0000
+To: git@vger.kernel.org
+From: FMorschel <git@fmorschel.dev>
+Subject: Re: Feature Request: git mv --after (new flag)
+Message-ID: <917aa62f-5f2a-40d7-8fa5-f19a14926241@fmorschel.dev>
+In-Reply-To: <hi7t3qk7difgzip7syscarnf5ui5avnhmjxil4vzurwcfo7a6x@drccf7gibn72>
+References: <1fa7a8d8-3ae5-4913-b3b5-21d8f67e567d@fmorschel.dev> <0afc01b2-11a2-4f77-a858-7a444e8bb1d4@fmorschel.dev> <2f505f75-112a-4b71-bb05-ea0cb7731cd7@fmorschel.dev> <hi7t3qk7difgzip7syscarnf5ui5avnhmjxil4vzurwcfo7a6x@drccf7gibn72>
+Feedback-ID: 127627349:user:proton
+X-Pm-Message-ID: 09be017bcc810c61909d8212026ac08ae018da18
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,49 +44,39 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aJDI16RBR9QKdtW9@pks.im>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 04, 2025 at 04:51:03PM +0200, Patrick Steinhardt wrote:
+Wow, this seems to me a really weird design choice.
 
-> > >> * ps/reflog-migrate-fixes (2025-07-29) 9 commits
-> > >>  - refs: fix invalid old object IDs when migrating reflogs
-> > >>  - refs: stop unsetting REF_HAVE_OLD for log-only updates
-> > >>  - refs/files: detect race when generating reflog entry for HEAD
-> > >>  - refs: fix identity for migrated reflogs
-> > >>  - ident: fix type of string length parameter
-> > >>  - builtin/reflog: implement subcommand to write new entries
-> > >>  - refs: export `ref_transaction_update_reflog()`
-> > >>  - builtin/reflog: improve grouping of subcommands
-> > >>  - Documentation/git-reflog: convert to use synopsis type
-> > >>  (this branch is used by ps/remote-rename-fix.)
-> > >> 
-> > >>  "git refs migrate" to migrate the reflog entries from a refs
-> > >>  backend to another had a handful of bugs squashed.
-> > >> 
-> > >>  Will merge to 'next'?
-> > >>  source: <20250729-pks-reflog-append-v3-0-9614d310f073@pks.im>
-> > >
-> > > I'm happy with this version, so if the above goes in I think this one
-> > > here can also be merged.
-> > 
-> > You have an update for this one.  Perhaps your comments are swapped
-> > between these two topics?
-> 
-> Oh, indeed. Sorry for the confusion.
+Do you have any insight on to why is this?
 
-I just left a rather lengthy review of the split-HEAD patch in v4. I
-think hit has a few bugs that we need to address.
+And do you have any idea if this behaviour is tracked to change=20
+somewhere? Maybe by project config? Like, one project could opt-in for=20
+an actual "rename" history.
 
-I'm not sure if the right answer is to just go back to the v3 version
-that simply rejected the racy HEAD update (since that's more or less
-what happens now and nobody complains).
+On 04/08/2025 12:02, Konstantin Khomoutov wrote:
+> On Mon, Aug 04, 2025 at 02:05:32PM +0000, FMorschel wrote:
+>
+>> This is a request to add an =E2=80=93after mode to git mv command to exp=
+licitly
+>> mark a filesystem rename after it has occurred (analogous to mercurial
+>> =3D> hg mv =E2=80=93after).
+>>
+>> This would allow IDE/Language refactor renames/moves and would make sure
+>> git still detects the moves correctly for keeping the correct commit
+>> history.
+> Git does not track renames in the commits in creates, so, basically, if y=
+ou
+> have a file foo.txt under the Git's control, and do
+>
+>    $ git mv foo.txt bar.txt
+>    $ git commit
+>
+> The recorded commit will reference a tree object which will - compared
+> to the tree object of the preceding commit - have an entry for bar.txt
+> and not have an entry for foo.txt.
+>
+> Hence a command like "git mv --after", if implemented, would be a pure
+> syntactic sugar for "git rm <old_name> && git add <new_name>".
+>
 
-If we do want to stick with the "silently skip the racy HEAD update"
-strategy from v4, I left some fixes there. But I'd worry more about
-maintainability and regressions in the future. I'm not sure if my hacky
-"pretend the HEAD is this for splitting" patch is something we'd want to
-carry or not. But if so, I think we could at least get a little coverage
-in the test suite.
-
--Peff
