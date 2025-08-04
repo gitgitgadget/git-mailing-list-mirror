@@ -1,177 +1,127 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D881D6187
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 13:19:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1194262FE5
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 13:36:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754313565; cv=none; b=RA/lwlX4++Ga79U1xnLrgnfiPG96tnINJY+iJl1T/UPMHX/REAyvaKg7v1A2E3ftCy4FvfmlBSvlARkIdRssH/hLed4LNCDaH9Kg/sxtCI7dBkvnO5dUKnPlPdau6SjNHngwYDJskyeiGJvNTTN4O+tDNEkY6OX45tMB5QyH3PQ=
+	t=1754314564; cv=none; b=rEQ9Ilrt8T0mXQ02kgtltlvoSUH5OFx3J1MHOeqzbX4901FHaLJUoSeJcAAINWfWQTDTFv9nCSKQm4lhHMaC8eT2pUm6lDZJpkMSbhQskVcZN1CBvp0q6tNaRPjLrcOMi+O20MazsLcBliO3HftMA19Hc1guQI33qBS82MzDYyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754313565; c=relaxed/simple;
-	bh=KRpiWLVoBOBYlXTjl2iTYiAB5jxfIug9t62TDWmf+hA=;
+	s=arc-20240116; t=1754314564; c=relaxed/simple;
+	bh=VLtqUvahwyQ+WDrgB0y+n+aIVZGTl5gY763OkjNzTUM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c5SBizqyiWsTWtXcBtfkswC5can9XqkyUYW9B61X/6WBIVG10R9RsVGsoAZaNx9XhhN7+PHOIRUrNAe00JF0L2CbYonh9SuM8ngKUYolA9CS0UE+bRfQcQKj1DSMqN7OIvSFkjrS5tHVoiAjBRgq9ZsJTnBpZwNR4nMRyppvXYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PedeWYb/; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=D+pWbW5ssz+wIjiBrjj+evPc2j5ELka7AgOSMEryW5Et6N4YQ+KCZ0de/zWl96n1s4BMhICHl1S/Ps/6SJbcJFT83CaWLPKFXIFd8mSfuyF+CLY8fd4STMRJkO3UHtccVR63k3KVhqxysghzMXwXmeCDVxHF96lOaNZzUMaALLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TzJpU9gE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hldEtsEI; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PedeWYb/"
-Received: (qmail 890 invoked by uid 109); 4 Aug 2025 13:19:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=KRpiWLVoBOBYlXTjl2iTYiAB5jxfIug9t62TDWmf+hA=; b=PedeWYb/UR1t5iWhlgBeCTESjAeNjB8pp3eJKrmCPjjy2FtXALyW4pZejn/ePEeA24nOqSuyvvnMKTmzIBQYnKN0HsksZmoGt0dZUqyEVbi1OP5fsav4zHoTek5z+8VtcH1nzBXP5WW8p1N1Y4zP2eN64FLF7Gi7MaiGuH0ZzZJtbzGWCOFuhQyNMnEapXPklvVyKSnT9j/IalL4TEqFsSq8oCdUlOXcRB5XyDD9PsLKz1NY0g2dbwWPHis/XMDa1QmpCgWOGy3pYZuE6wBPiTvNGc0MJnWiAXZF0OH040NICaz4rmcHMPv37hzjpnyAD9sjAzp6Yk2hpg0jd+3FXg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 04 Aug 2025 13:19:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19357 invoked by uid 111); 4 Aug 2025 13:19:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 Aug 2025 09:19:23 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 4 Aug 2025 09:19:22 -0400
-From: Jeff King <peff@peff.net>
-To: Denton Liu <liu.denton@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] fix -Wmaybe-uninitialized with -Og
-Message-ID: <20250804131922.GB86602@coredump.intra.peff.net>
-References: <d03308e9474f5e26fd4a5494ec243a278e971443.1754302009.git.liu.denton@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TzJpU9gE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hldEtsEI"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B6B117A01CF;
+	Mon,  4 Aug 2025 09:36:00 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Mon, 04 Aug 2025 09:36:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1754314560; x=1754400960; bh=DlmsJ1bJdS
+	veG8mqpkh9ZQ6kau6shVzmi8wW6w9QBuM=; b=TzJpU9gE8T9oxdFe1IyubUULpU
+	I+WhB0GAPPgEb3+pt7GcrUNnuhzcTpBKLPv2XWFwBE9+LwIYPmKYh5z4qQvqvxa7
+	bVRt+jpxuwpP7Guj2Qif4CPkSiOj/cPikyMPu7JuAyxrMu0fTwikknkbPd9dyrOG
+	IZ1W+AzDpLsNLgi7ynw/4aKJhkW+PWXsyh9APH+JpnpYdN0sQSGGZul0gwDd1/k+
+	idloojGUesWv++TLBhGgma3o78LA5NaCWDtpcZD1Qac/DrKcdiLZpMVjd8syuvlV
+	lx3BPqHs/AL7eC3PQ1TGGeophZOWkKsDLhV43JeTdXLl7PrSUcq2cy5TbNLA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754314560; x=1754400960; bh=DlmsJ1bJdSveG8mqpkh9ZQ6kau6shVzmi8w
+	W6w9QBuM=; b=hldEtsEI9DrIxiXWNT9kRD8EUmnkHELpykNcF7YAcZ6YphKzJUg
+	UvuzPjVp/MLfUm2HPgfYSzmshLQJ/0r+dvFLW11ycDcVwHt3xDMUixeFQ72xtUTp
+	npwU6bb72/aF039/Kfw28PKK938LeQa23JULpWaQBpf7z5b/1U0qNyuG4xOQmdmA
+	yy8MiDhQ6G35v+dYfyEhvP77OChIZkQQ1fDUSNd86WramEALcyU5EwQjehzZRPTA
+	QTivSHjTSivQid79D0XKBuKO6RXmnQm9AElaAM2rhFK1F6rB8Ml/DI6bNorjVhqA
+	Y5SOOrZa4orOq63+FIMBJysGrzpI0pFNgVg==
+X-ME-Sender: <xms:QLeQaHhaUinrzMzCS1GPPqgIslbWCnLffvgEQ8ioqQgX_DJlAxT5lA>
+    <xme:QLeQaENLQUAHJG_dkJMBrqJa-bQUYZDg_VGsRWUCjCQIxlLxkPQA5q3uYWxKeH6B2
+    w5dXxIKgRyO8nWq3A>
+X-ME-Received: <xmr:QLeQaI6GCamkXSBHW8mQ0Pf0XYXiZudrJ0iKZgEjWWE6IVcffmiTnoFzykiNvXV9G7HM0GruELl-a8IIP3bb5KsyfrVl8e4vm35YNgu_aCY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvgeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:QLeQaC1coKB1dODDkiIsy3A-5RBbf7QRfdefJjes9yKd9qGZinCa1Q>
+    <xmx:QLeQaJaYKxTuPBGd5F49GPGVxli4yfX7DcbgtE7VjD7m12JGkNBipQ>
+    <xmx:QLeQaKBug1trr22boJGc3w8tJqpkvO8D_Q5xWUvQMh8fXllgZUWewg>
+    <xmx:QLeQaL_Rq3kO5RsPU1Xm_5oeILtLaj9FRpcQ0hxFpXL-zfObDMkL1A>
+    <xmx:QLeQaK8kum6mnKY4-pJkM0h_RwD0Kz4OOOgDzQI9xMwSKBUy48CAtY7L>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 4 Aug 2025 09:35:59 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id cd538166 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 4 Aug 2025 13:35:58 +0000 (UTC)
+Date: Mon, 4 Aug 2025 15:35:54 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] revert: initialize const value
+Message-ID: <aJC3OiJoqJRnR_My@pks.im>
+References: <20250804130011.GA93475@coredump.intra.peff.net>
+ <20250804130141.GA95101@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d03308e9474f5e26fd4a5494ec243a278e971443.1754302009.git.liu.denton@gmail.com>
+In-Reply-To: <20250804130141.GA95101@coredump.intra.peff.net>
 
-On Mon, Aug 04, 2025 at 03:07:15AM -0700, Denton Liu wrote:
+On Mon, Aug 04, 2025 at 09:01:41AM -0400, Jeff King wrote:
+> On Mon, Aug 04, 2025 at 09:00:12AM -0400, Jeff King wrote:
+> 
+> > There are a few possible options:
+> > 
+> >   1. Instead of a variable, we could just construct an artificial
+> >      sentinel address like "1", "-1", etc. I think these technically
+> >      fall afoul of the C standard (even if we do not access them, even
+> >      constructing invalid pointers is not always allowed). But it's also
+> >      something we do elsewhere, and even happens in some standard
+> >      interfaces (e.g., mmap()'s MMAP_FAILED value). It does involve some
+> >      annoying casts, though.
+> > 
+> >   2. We can mark it as static. That gives it a definite value, but
+> >      perhaps makes people wonder if the static-ness is important, when
+> >      it's not.
+> > 
+> >   3. We can just give it a value to shut the compiler up, even though
+> >      nobody cares about that value.
+> > 
+> > I went with (3) here as the smallest and most obvious change.
+> > 
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> > I dunno, maybe the comment just makes things more mysterious and
+> > doing the casts would make it more clear what is going on.
+> 
+> Hmm, I guess one other option I did not consider: we could just drop the
+> "const". The pointers to it are "const char *", but it is fine for them
+> to point to a non-const variable. Maybe that is less mysterious.
 
-> When building with -Og on gcc 15.1.1, the build produces two warnings.
-> Even though in practice, these codepaths can't actually be hit while the
-> variables are uninitialized, satisfy the compiler by initializing the
-> variables.
+Initializing the value feels like a pragmatic choice to me. There is no
+downside, and anyone who might be puzzled by the comment is likely to
+git-blame(1) to your commit anyway. So I think the current version is
+good enough.
 
-I see these on gcc 14.2.0, too.
+Thanks!
 
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index 5dd6cbbaee..cc462677e1 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -1463,7 +1463,7 @@ static int set_head(int argc, const char **argv, const char *prefix,
->  		b_local_head = STRBUF_INIT;
->  	char *head_name = NULL;
->  	struct ref_store *refs = get_main_ref_store(the_repository);
-> -	struct remote *remote;
-> +	struct remote *remote = NULL;
->  
->  	struct option options[] = {
->  		OPT_BOOL('a', "auto", &opt_a,
-
-I think you're right that this can't be triggered, but maybe a bit of
-reordering would make that more obvious both to the compiler and to
-humans. The issue is that we do this:
-
-          if (argc) {
-                  strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
-                  remote = remote_get(argv[0]);
-          }
-
-and then follow it up with various sanity checks about how the value of
-argc. But we always require that argc is at least 1 or we bail with a
-usage message.
-
-This comes from 012bc566ba (remote set-head: set followRemoteHEAD to
-"warn" if "always", 2024-12-05). If we revert out that change and
-instead add it later, like so:
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 5dd6cbbaee..8ba02d1854 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1474,10 +1474,8 @@ static int set_head(int argc, const char **argv, const char *prefix,
- 	};
- 	argc = parse_options(argc, argv, prefix, options,
- 			     builtin_remote_sethead_usage, 0);
--	if (argc) {
-+	if (argc)
- 		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
--		remote = remote_get(argv[0]);
--	}
- 
- 	if (!opt_a && !opt_d && argc == 2) {
- 		head_name = xstrdup(argv[1]);
-@@ -1501,6 +1499,8 @@ static int set_head(int argc, const char **argv, const char *prefix,
- 	} else
- 		usage_with_options(builtin_remote_sethead_usage, options);
- 
-+	remote = remote_get(argv[0]);
-+
- 	if (!head_name)
- 		goto cleanup;
- 	strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", argv[0], head_name);
-
-then the compiler is happy. Though I still find the whole b_head thing
-to be total spaghetti (it must be set before our argc if/else cascade
-because deletion mode expects it there, but we can't just set it inside
-there because other modes expect it to be set later on).
-
-So I wonder if this would be much more obvious (again, to both humans
-and compilers):
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 5dd6cbbaee..f0e49a5681 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1474,10 +1474,13 @@ static int set_head(int argc, const char **argv, const char *prefix,
- 	};
- 	argc = parse_options(argc, argv, prefix, options,
- 			     builtin_remote_sethead_usage, 0);
--	if (argc) {
--		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
--		remote = remote_get(argv[0]);
--	}
-+
-+	/* All modes require at least a remote name. */
-+	if (!argc)
-+		usage_with_options(builtin_remote_sethead_usage, options);
-+
-+	strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
-+	remote = remote_get(argv[0]);
- 
- 	if (!opt_a && !opt_d && argc == 2) {
- 		head_name = xstrdup(argv[1]);
-
-> diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c
-> index d54e455367..03a3aa8e87 100644
-> --- a/t/unit-tests/clar/clar.c
-> +++ b/t/unit-tests/clar/clar.c
-> @@ -350,7 +350,7 @@ static void
->  clar_run_suite(const struct clar_suite *suite, const char *filter)
->  {
->  	const struct clar_func *test = suite->tests;
-> -	size_t i, matchlen;
-> +	size_t i, matchlen = 0;
->  	struct clar_report *report;
->  	int exact = 0;
-
-For this one I don't see any real alternative. We set matchlen if and
-only if "filter" is set:
-
-  if (filter) {
-	...
-	matchlen = strlen(filter);
-	...
-  }
-
-and the line it complains about is:
-
-  if (filter && strncmp(test[i].name, filter, matchlen))
-
-so the short-circuit protects us. So it's only a problem if "filter"
-changes between those two lines. It is in a loop, but I don't see how
-"filter" could ever be changed within the loop. So I'm not sure if this
-is just a compiler bug, or if there's some really subtle alias thing
-where filter _could_ be changed in a sub-function or something.
-
-At any rate I agree that "0" is the appropriate value here, and
-assigning it to shut up the compiler is the best approach.
-
--Peff
+Patrick
