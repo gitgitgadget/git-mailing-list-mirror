@@ -1,90 +1,237 @@
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DD523F421
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 22:11:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816D918D
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 22:33:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754345466; cv=none; b=Iuy/U1rdKG/GEgbS0D0mI6lWMzNrk6UnD1xMNaxHeAM6j91x54mbfqQNeqB2fPsja71ZSxv7N+aFpWdEc66yWL3cuq/JLjAwfZ09C4f6LYJ/2woNBIj2XWUCHA7wvX4CyOhwVLpeREfJfsf1625CLYs8k3xdNVLuMf9yRiIg7Tk=
+	t=1754346809; cv=none; b=rWSBMq8/FysePoJLyEJxGfPuDI9tvutFDAOTLdglX2NCjYJrV67MR6gTcbH7dx8NF/TGjrK7Q0XXVXMZYd5+6zTQpvMHeo08PbfkF1OuiObNIkKuN2QKsnq9O5JMilQ6+18wMmnelzRU9SNaZMSuDuXcgaUu+ka6s2YTLoXcWSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754345466; c=relaxed/simple;
-	bh=6CeSRqbJLgb8t3SMQh5lowlckpdq3kSOIJdEWAXk//s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SBgO4Sp00QTL/BwE5Q789Q5Du7dcpFbRwhpInnLjAtnZW48Sg0vgMhKXCTm1I2BSIpwjtP4jOJfFjdcMuRG5t6lN27f29O1MGe3Os/9m1ddsCqVOcrmlnZQ8EE7vLVzmVzNBGdm2Sh1x0hRrJPHU24ONvSmmtzGDtmt8YEdJ++w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=iQsRSecr; arc=none smtp.client-ip=209.85.166.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1754346809; c=relaxed/simple;
+	bh=A49nmnjpYCLWpfqWUdljVk0Vx/EnH55O52Wq/ypG2nQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Lz6KG6sM9QDiEo/4tz/tuPAqa0mye7uvQ2We/2iRvsddO9NPYlL9H9qHZjHHlnwwrHaUdf4FCyMRwyWqFtINFIst5oGYgEynbGpsD+Z93vQb+7WUYQR88bkow9H3XPKNpSGX8+h91z+vUOm0aRYQ7ZQiCi6orTigvBRAAgvWJbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cEepONEv; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="iQsRSecr"
-Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-3e3f1e69090so14840645ab.0
-        for <git@vger.kernel.org>; Mon, 04 Aug 2025 15:11:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cEepONEv"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-313910f392dso2999862a91.2
+        for <git@vger.kernel.org>; Mon, 04 Aug 2025 15:33:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1754345464; x=1754950264; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vTYNCOpFtgrnXyqSJvxPIZ1u4EUGFrxsor8optNYW+U=;
-        b=iQsRSecrW2OqNxf9IX4ZE2XjV8UpVJdLLW7sKWnmehAfN09xfalVZaZCM9IeN5uQRY
-         rRdIoK0DG2L7f2ypqbV1ZYblscFI1JTdFYvQTR5/9HvVJA89v5+vYth8vhqssqRm75Lv
-         POziSDwhhIU9optJdhBaoPQFDpK976ENukuTa2QmbRDSQvFN/r84neQRRlkBwWd6mwdK
-         9fMB/P3N2Gfot2HPcKpX9C5KxYHplkspOinErPSwLgck7VwtavKw/vqdbXFDYK7bpmbR
-         Cx905ZCqLyUwoD1TZ3+h+vnJ0ntSlQLk8f/BVwy5yTBldkPFK7z6ch8B6MssVK/MUjsl
-         j7Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754345464; x=1754950264;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1754346807; x=1754951607; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vTYNCOpFtgrnXyqSJvxPIZ1u4EUGFrxsor8optNYW+U=;
-        b=QUyf2duFqGyCGx2CvDLOuoe29P1rIBXDqZ4CtEGH0WNK/6SRBbIxesE5yD/jOh2oad
-         gD7CKtQILzgBA9JJgfcRGJxa3gln69uE3Aju9malLveOYdvXtxlayqakPekUq5WqXL/u
-         uA8qR+qbAeOO8y9UkvK7Xz9FKcipM0jlQcSbXf90xhHsTpXj9mgBGK09Mw1SDPouAtsd
-         kibFaxqaSWrNAalGcxjYFgp6XvI+en22V8e7+B8XiSZYGFyW5tWaNZ+ORTZ00U2ZdXiN
-         g1EezlrkDD6MVq1x1/7kw38rdkCOcRRlTaRXqhP80P/zIYdcy1aDxuUj3qjrDk9TjSgt
-         OueA==
-X-Gm-Message-State: AOJu0YzYl1LP3MxYdfNhhPP8euDQl0w0+4LJh3SYy412U6EL+Lamax1G
-	IRvfvAfUTtnZxw+Ewe0CYfpPMP6irJvLqkbNt1YziDxNb15MeMfViqDZCPWESb65RvFygi98sxb
-	s1VYo
-X-Gm-Gg: ASbGncuokQ6o2QFjUaVPcwl79mzvCtFNvmT6bDJJr15wYgOUvvdAFAH71ezqGuICltF
-	MiikR4s/LTJd8c5BV/y2mrUsqlyhsrYaGVxRZqmmGirbTNiPVesVwyw1EXqwMY/iAzZq1Tzl2mi
-	v+hjZAtkq63fwPUDZ4mFaFFSmtqpoN6wwmvG6Mtn15Y3zq1ZdrqAYQCRWxrbfCuN7mC2clu2z5S
-	LAHFC9d+oBFepfdV/jfo0gXYoFO6jp0V528bIhBYO+90Ovyw/JI1NRT/tRHXG/k3EbzwcLgXR6A
-	iRidMZOAYqsKaKHz3k3kKudoybQ/C1R4aLOJFaxtq4fw81FoUheKArPEj3wmk1sM8518Ks/x26a
-	8cs79W+F6dAQApxj+DmKMi/3YQ3klkbQpa7Fk85sIEE9z1eK3XV2Xjd2vofg4n7a7D3rGUxbFnp
-	UbYoNO
-X-Google-Smtp-Source: AGHT+IEUTA25wd2Rwrc07hfxF9PkNDPANy1/UraawcJJOaGOJTPmHMo5Wbhd4kni94EK03l95odNHw==
-X-Received: by 2002:a05:6e02:b:b0:3e2:aafc:a7f with SMTP id e9e14a558f8ab-3e416122d83mr233866515ab.7.1754345464076;
-        Mon, 04 Aug 2025 15:11:04 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id e9e14a558f8ab-3e4029d9958sm44419585ab.25.2025.08.04.15.11.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Aug 2025 15:11:03 -0700 (PDT)
-Date: Mon, 4 Aug 2025 18:11:02 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 8/9] commit-graph: stop using `the_repository`
-Message-ID: <aJEv9vcdtsn7WGc8@nand.local>
-References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
- <20250804-b4-pks-commit-graph-wo-the-repository-v1-8-850d626eb2e8@pks.im>
+        bh=zQ6oTrec0njGwEsWvadP2hzg6khH0eSCZPCoswQoBSU=;
+        b=cEepONEvsFCvMxuGixNfWjJHs+5yGEkFW6qGttFhIeieMDLBkKw7ro8HXecWHdMbvM
+         AmmxeDeAfSMD84bmzMyb0gvIc4AzXN99XAEiCEFt7z+qG7ELBtq8Ex/jHUBwiwbXcwfG
+         +xRLBqrxAgzj9ik9QXSHxXr/y2wxqVIP/SYqO9Nc21Svi/+HsacbsE0GnoErWFWD9jzA
+         H2aVGC5ZcPn8e3/AY/+jZar9Vu3Ud1uvZwuX2WYxKedmdNZALJaJGYHGiHEi5kc12Wwg
+         JdhsI+XWNrrxvYreVh33xQbFpfVGZF78aj4rQV4fHmMGIXmkQCwoR88dF6d8vNCyGHdc
+         D5lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754346807; x=1754951607;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zQ6oTrec0njGwEsWvadP2hzg6khH0eSCZPCoswQoBSU=;
+        b=UJAaG0eCzCkAqu9sZaWNi1wNVe2/3RntXsr/sracUsGA9+Qd8SyBVPsqMeKbxOksEi
+         yWwDCJz22tzfz1kJ1i3zmWiqORY7wqIVD2lin1RCbI8Nh2XQ49TnAhFeKvXbi+Kz0Hyi
+         CmnHW8gGMDCwqZ/0FEYpO5SEjukpHw5IX44poz2un1Q75AFtO/nJPhwpduzsSTwXqAZK
+         Zu2MLIY4hdmuO9hof6cpePXiMkdbXIcfKeVM3OJcddG1pSPIUV36HbPb4VmADhyDhe+q
+         cCV30Y7cmAUY1Jf3Oq+tYZjb8VSo+CO+xvWxTWu/3S7srJLrZ0U70RNFDoKVfNyJ/Nfj
+         BCKg==
+X-Forwarded-Encrypted: i=1; AJvYcCUwkPn3gRwGsbV2OyH4FhMueRuijrW9VaiXyLisSOtiE70uE0Ey2QcGscUeM6J93XH/1LI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQFCf4E48+IoP78cJVq8UBJ91MkJxZKMKpsDi2/O8X8EZGII5/
+	LN0Rt2zOJD82cwskUTBJjPpYKdYMwRWDaCbMS9Lchmxoo2zLxoRNd7fHxJf74JaUcsnG8vk9384
+	61CAHXtFguRRjHpBNZzamTmJZnX5L5gs=
+X-Gm-Gg: ASbGncuykvuhKlQJg4/H6L1udvDdWgtW+N7eY6v/wDUOzhhllOiUL2ZCcHJTeGQruhj
+	GVsf39OPYCdJVA/dNLEl0YXMvZgYi/SYn4LwbgRQXiai9tJ7PnyC3BkzfWHQNtvlm4vb/YfKIrZ
+	1JuOeVPi8uryN51RfmwLHall9fd/c2qRT+YB4YooTBmm5W/ZYrOr2Nh527x6YaBrAJrzgC+S41C
+	p3Un1iwrkIzZI3TrZdiCP+ilM1zDh9BOsTesPMc
+X-Google-Smtp-Source: AGHT+IGKWzKueJfJ11qR2yriCD61E0k2HZkYBJxxf3YBkg893Oq4ez4OhrSdS+5SFgDV6oJd8G2O1gzdLqhvO0Q5Q7o=
+X-Received: by 2002:a17:90b:1c86:b0:321:265a:e0d3 with SMTP id
+ 98e67ed59e1d1-321265ae4bamr11051044a91.25.1754346806461; Mon, 04 Aug 2025
+ 15:33:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250804-b4-pks-commit-graph-wo-the-repository-v1-8-850d626eb2e8@pks.im>
+References: <pull.1943.git.1753197791.gitgitgadget@gmail.com>
+ <0813d42d91fe9e27f713de3c7d2377c28311ae57.1753197791.git.gitgitgadget@gmail.com>
+ <aIx7TxhXHhRI3vEt@pks.im>
+In-Reply-To: <aIx7TxhXHhRI3vEt@pks.im>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 4 Aug 2025 15:33:14 -0700
+X-Gm-Features: Ac12FXx8S78x1o5cHgwj2rGHn2RHP4oq2pz7WqE3leV0BSA0ayX_KQzyMnY83MQ
+Message-ID: <CABPp-BFUCPdxHi6XqNwGrUf7JBBJnd1SuPkHckg-8VyX=RGm+Q@mail.gmail.com>
+Subject: Re: [PATCH 6/6] merge-ort: fix directory rename on top of source of
+ other rename/delete
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 04, 2025 at 10:17:24AM +0200, Patrick Steinhardt wrote:
-> ---
->  builtin/commit.c |  2 +-
->  builtin/merge.c  |  2 +-
->  commit-graph.c   | 79 ++++++++++++++++++++++++++++----------------------------
->  commit-graph.h   |  2 +-
->  4 files changed, 43 insertions(+), 42 deletions(-)
+On Fri, Aug 1, 2025 at 1:31=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
+>
+> On Tue, Jul 22, 2025 at 03:23:11PM +0000, Elijah Newren via GitGitGadget =
+wrote:
+>
+> What a massive commit message. It almost felt like a blog post rather
+> than a commit message, but I certainly don't mind the additional
+> context.
 
-Looking good.
+Yeah...it certainly is.  I was spinning my wheels for a few weeks because o=
+f
+  * the number of items needed to trigger the issue
+  * the misleading/buggy testcases we had, now addressed earlier in this se=
+ries
+  * the number of other nearby bugs that also existed
+  * the fact that "relevant renames" sometimes tricks you into
+thinking you're testing a rename testcase when you're not
+and when I started explaining it, I realized there was lots of assumed
+background needed to understand the bug that I'm not sure others on
+the list would have.
 
-Thanks,
-Taylor
+Besides, I was worried that _I_ would forget all these details in 6
+months, so I wanted it all spelled out.
+
+Thanks for being understanding of the lengthy tome this commit message
+became.  And for reading all of it!
+
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > At GitHub, we've got a real-world repository that has been triggering
+> > failures of the form:
+> >
+> >     git: merge-ort.c:3007: process_renames: Assertion `newinfo && !newi=
+nfo->merged.clean' failed.
+> >
+> > which comes from the line:
+> >
+> >     VERIFY_CI(newinfo);
+> >
+> > Unfortunately, this one has been quite complex to unravel, and is a
+> > bit complex to explain.  So, I'm going to carefully try to explain each
+> > relevant piece needed to understand the fix, then carefully build up
+> > from a simple testcase to some of the relevant testcases.
+> >
+> > =3D=3D New special case we need to consider =3D=3D
+> >
+> > Rename pairs in the diffcore machinery connect the source path of a
+> > rename with the destination path of a rename.  Since we have rename
+> > pairs to consider on both sides of history since the merge base,
+> > merging has to consider a few special cases of possible overlap:
+> >
+> >   A) two rename pairs having the same target path
+> >   B) two rename pairs having the same source path
+> >   C) the source path of one rename pair being the target path of a
+> >      different rename pair
+>
+> So basically file A get's moved somewhere else and then replaced by a
+> different file B?
+
+Yup.
+
+>
+> > Some of these came up often enough that we gave them names:
+> >   A) a rename/rename(2to1) conflict (looks similar to an add/add confli=
+ct)
+> >   B) a rename/rename(1to2) conflict, which represents the same path bei=
+ng
+> >      renamed differently on the two sides of history
+> >   C) not yet named
+> >
+> > merge-ort is well-prepared to handle cases (A) and (B), as was
+> > merge-recursive (which was merge-ort's predecessor).  Case (C) was
+> > briefly considered during the years of merge-recursive maintenance,
+> > but the full extent of support it got was a few FIXME/TODO comments
+> > littered around the code highlighting some of the places that would
+> > probably need to be fixed to support it.  When I wrote merge-ort I
+> > ignored case (C) entirely, since I believed that case (C) was only
+> > possible if we were to support break detection during merges.  Not
+> > only had break detection never been supported by any merge algorithm,
+> > I thought break detection wasn't worth the effort to support in a
+> > merge algorithm.  However, it turns out that case (C) can be triggered
+> > without break detection, if there's enough moving pieces.
+> >
+> > Before I dive into how to trigger case (C) with directory renames plus
+> > other renames, it might be helpful to use a simpler example with break
+> > detection first.  And before we get to that it may help to explain
+> > some more basics of handling renames in the merge algorithm.  So, let
+> > me first backup and provide a quick refresher on on each of
+>
+> s/on on/on/
+
+Thanks.
+
+> [snip]
+> > =3D=3D Directory rename detection =3D=3D
+> >
+> > If one side of history renames directory D/ -> E/, and the other side o=
+f
+> > history adds new files to E/, then directory rename detection notices
+>
+> Did you mean to say "D/" here?
+
+Yes, thanks.
+
+> [snip]
+> > =3D=3D Testcases 8+ =3D=3D
+> >
+> > Another bonus bug, found via understanding our final solution (and the
+> > failure of our first attempted solution)!
+>
+> s/solution/solutions/ as there are multiple attempted solutions that
+> were discarded?
+
+Yeah, I typed up this commit message and then found more issues, and
+inserted them earlier.  I'll fix up the wording; thanks.
+
+> > diff --git a/merge-ort.c b/merge-ort.c
+> > index feb06720c7e1..f1ecccee940b 100644
+> > --- a/merge-ort.c
+> > +++ b/merge-ort.c
+> > @@ -2313,14 +2313,20 @@ static char *apply_dir_rename(struct strmap_ent=
+ry *rename_info,
+> >       return strbuf_detach(&new_path, NULL);
+> >  }
+> >
+> > -static int path_in_way(struct strmap *paths, const char *path, unsigne=
+d side_mask)
+> > +static int path_in_way(struct strmap *paths,
+> > +                    const char *path,
+> > +                    unsigned side_mask,
+> > +                    struct diff_filepair *p)
+> >  {
+> >       struct merged_info *mi =3D strmap_get(paths, path);
+> >       struct conflict_info *ci;
+> >       if (!mi)
+> >               return 0;
+> >       INITIALIZE_CI(ci, mi);
+> > -     return mi->clean || (side_mask & (ci->filemask | ci->dirmask));
+> > +     return mi->clean || (side_mask & (ci->filemask | ci->dirmask))
+> > +       // See testcases 12n, 12p, 12q for more details on this next co=
+ndition
+>
+> This should use `/* */`-style comments.
+
+Yep, will fix.
+
+>
+> > +                      || ((ci->filemask & 0x01) &&
+> > +                          strcmp(p->one->path, path));
+>
+> So if we have a stage 1 index entry and the path is the same due to a
+> transitive rename we can say that the path is not in the way?
+
+Right if A -> A, then we know that the original A and the new A do in
+fact have related contents and thus the old A is not in the way of the
+new A.  I would have rather just checked for a stage 1 index entry and
+said that the presence of such a thing means there's a file in the way
+(that's what I originally did), but the rename-to-self case is special
+and is why the strcmp condition is there.
