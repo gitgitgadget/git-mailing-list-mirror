@@ -1,125 +1,119 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C3E19755B
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 21:19:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728631C1F02
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 21:33:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754342353; cv=none; b=M+Hf1m15alT7uKzTS5hThV4c1zsAZl9lSsB6LZsq/GjzGDAkcIEyKDZXfeefLZz1pzh+I1pT+8Sv0MGeDvBACG+xRDP+EVjJxDl5khJtt6190flig/7TeE7akFaUSCePZuCWeCCmnccgqenRm/cv+b3RuMspPna2nOVPsBk8a1A=
+	t=1754343224; cv=none; b=JyltpKwukLPZlTKzbUEOSMZRFBCOsK6Sexv8L/0nnzVjmERALC3xIQ6b1rmk3mrzZoq/XdfdXgeLyIw678xsAHYrut6BtCBxq8FY1RpXvsAsAoocgC8wjq1UpLvUIbfxmRG69bde41KAHOc0TwU6Mz/fBpWIbOddosFwzHzSGwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754342353; c=relaxed/simple;
-	bh=xMkZgseAe5Zzwfo8GEOoIy7/kiZ3KOXjjD5NIkuYrhc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KWukBhDkGwivJwqvtga23imIUguM7jPsK6+IgCc6RIFwN2nWQZpasE3fgLejAHCSIXWXL/cDLA42reEz5P+gDfKumvX19rfnWXkJboZ+lhDuZoormlCQkXDuNzZ4hbmP36mCQc5Xh4uFCC5oZiNt4e8QSNiyADn90U7Z147S/nE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F6zIhcOr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H+JT9QyJ; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754343224; c=relaxed/simple;
+	bh=UqZp+IsnnMC8orAllbFekZBAoHI2lS4Ymy0UTT4/qTY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iG5D/5b96tmLfO1NtOXbPRf2kDZ4IrGtPlVLTN1X+2k4sIqRHglSk/HhQKo1Xth/DAlubnayol57X7TjetiMrMj5lyANez+d9QjTMBH7I0I6ZXACFVUzjN2xyO+X1b7b8ksurlMs2E3n5iPHroNh67cQjDVKOpG+XqqVA9KpX1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=kMMxNdxY; arc=none smtp.client-ip=209.85.166.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F6zIhcOr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H+JT9QyJ"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 34AE11D001E9;
-	Mon,  4 Aug 2025 17:19:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 04 Aug 2025 17:19:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754342350; x=1754428750; bh=/iclf67mUF
-	eL+Z0uiFK9Ei5BBDF1FSCsLeYxtv4YgVg=; b=F6zIhcOr0KuUnw4ipbjm1kQWJu
-	sqUuK+7TF8DCvr/2XqdEnjv/P//p4x32ob1HviTkYX6QgsGltS6mOiyHzzqAYWEB
-	fC9I3wlYEI1Vao4xmlU2qNvwHWjAKvUnIChlos8UfDdTh4BycHQ3x8Fn7Ioy3+3n
-	bFcF2bHEILNWuzdKIOerLf1o1KMZkEee/CL0R+lUdvmAit8IU9qyS836Su9KiLjT
-	ZnHaXisGn9XnE1C5QjdhUCI+dW0nK2SAPZelr/+v8x2G8Gsn8oZjk7R4YTuRZyh4
-	IA+AMgfFrgM7B65XumQJziA4B5RNO7AFF2GIyd5KFYmb2MdyfxV+rJdWb6wA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754342350; x=1754428750; bh=/iclf67mUFeL+Z0uiFK9Ei5BBDF1FSCsLeY
-	xtv4YgVg=; b=H+JT9QyJZhPPLWrqh2NpcMXyy5Pq7Ref0FVrNcRXGEugc98TxiN
-	GbWtzEV+jCuR5W03B+gM/SrwqqICs3R3pdlJ6eK/1H/eA70YWXfRXu+uGVd4xBHz
-	B52iG/1RqQAyB1mTWkJCWL3YfWf8xBRyPQ7MlnfyzVvZlPIyGCY2/eQ2pXrfr3YS
-	RcWbb/VK3USJvJlIUmYik5Y+0H6qW9meYjvLJzMHimvPJyQaqu2bpY45yPwFxxUu
-	xPHkNvPeci1fuQ3xK2KkCfeuQbUSBdYSoJPZarLDu8FnB/c+bBNAMyDSrQJrFRPv
-	k44wlwbYChMueNMBoV3F9gwL03FURDPwPHg==
-X-ME-Sender: <xms:zSORaJGLZsh90Ga_M61B_7Bx5eKVQuDOJ_ORBqWRnhCXCSl6AxkZNQ>
-    <xme:zSORaGwNfSUp4xLoWgfveb4nUKM6njMEWdfR2BrJctNaSLbDmQlAXsNrEIYaiwiZi
-    -pcd1oJ_fA9Cj8pnA>
-X-ME-Received: <xmr:zSORaLkuyzsQPQQneVOBiC1USepufpu0IzRG43Ry5CyruJTjsY0r-CgizxvVM54L7HRtFfswAXj_1n8o0nK5qyTs6HnjZyhe0PuJVnI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudeffeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepiihirhhosgihsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepuggvmhgvrhhphhhqsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghl
-    shestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtoheprghllhhrvg
-    gurdhsvggrnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:zSORaPnpfujCjTAvtXugpvf4G8Y4MFb4MTCEErRoogrPavPt6gtejA>
-    <xmx:zSORaNxz-zJ8b2KWauCrsRxqdQo2qi9di4cQXIEBU176-8pV2R7Vnw>
-    <xmx:zSORaEpzAEQEsVd8yVhdHB5pvqSI9MA7wrhGwmf0YJrSHeZYdJntNA>
-    <xmx:zSORaM6Wy85mvHtcCUaUNhwcd6yhVtuEbixI_eTEIjsrRR6ItJdA3A>
-    <xmx:ziORaFtGravHBz82B-zJ32lcEAJfE6rAOGELH63RtsooRUROTFRXEY4k>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Aug 2025 17:19:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ron Ziroby Romero <ziroby@gmail.com>
-Cc: demerphq <demerphq@gmail.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Sean Allred <allred.sean@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: Pretty output in JSON format
-In-Reply-To: <CAGW8g7kMVqsi6+JkdjDS-czKJQ=01ULUz36sZrGom+QPVtRF3A@mail.gmail.com>
-	(Ron Ziroby Romero's message of "Mon, 4 Aug 2025 21:39:02 +0100")
-References: <CAGW8g7=21pPAgCixjpayEvmw_ns-hcB4e59NP476TKtCRXHPXQ@mail.gmail.com>
-	<ZvM39VNFptcfwMGk@tapette.crustytoothpaste.net>
-	<m0r097mv19.fsf@epic96565.epic.com>
-	<ZvXMSKaUWWA-MG9J@tapette.crustytoothpaste.net>
-	<CANgJU+Xs-sQgAOCPL-5skaZGq7eHmhg0MaFGDr8N57=CK67iog@mail.gmail.com>
-	<CAGW8g7kMVqsi6+JkdjDS-czKJQ=01ULUz36sZrGom+QPVtRF3A@mail.gmail.com>
-Date: Mon, 04 Aug 2025 14:19:08 -0700
-Message-ID: <xmqqldny4wfn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="kMMxNdxY"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-3e3e926fdeaso19771355ab.1
+        for <git@vger.kernel.org>; Mon, 04 Aug 2025 14:33:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1754343221; x=1754948021; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yYt4ihzVtl8ADbVSBMB9lvF+ygiM8djw/WZxiKI7xG8=;
+        b=kMMxNdxYowp3jXOpeqf3mxgcZ4kcdpSv9RtCFo7xbYeC7XSDjua0NV/gECTz4X7rh3
+         jIaO8il0rnykfDjE9ylI1EaUc3aOGB9ltVPa8vOVObKwBzbfMITC4sdsX5i+PsPyi+u7
+         BgvTQ/thNv0nn22wEJVltGc1oS7/1Y+9AVe5HzKpRw22CdnzDZzTA2h55RwJ2BY7zrIr
+         8gQH28J7zzgLY+1n3esK9IC75Pcr++8X6Mjx7tgNqEN0sOGGQDqZecLctoRGctwjxUks
+         JrZ2xepg9KxjTIBM+iX7SB9LuZYo4M4DwVEjiyC0Ce16rrIa0RRGmhxwFnWcIFeUMDuU
+         Ahjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754343221; x=1754948021;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yYt4ihzVtl8ADbVSBMB9lvF+ygiM8djw/WZxiKI7xG8=;
+        b=D19fIMUWTWu/kh1cWgARr2xxGr6ikdY7xUuqU6HSQNFBNRoQQR+eQZAXFZboJOw3dT
+         bs4NFbLFXC4COoYXo57qzs6X+2SzhGbqnCcQ1U0jHQC5emUi1DAGugcXC42DWZ+yy86/
+         pGSUB7slzSkEPBdQp9ZpUJvpEQ/U0z0bY8JthxY3Dc58FVSUW+mfDugsL/u0izeg1Vwy
+         ifo88N8qOHvfKltq+nLraNiaRpwJDIsp9vxjmnlW4AAUltQB/D6LcnXLj/BHUeR/2Fwp
+         obolbh9IPKuLWk12zDj6lqvg2EP2R4WBjfDCyx9XAqjvGUPUEpg1JBOsqbloAwovbmwQ
+         kNjA==
+X-Gm-Message-State: AOJu0Yy93liyAmWMO72WL6XaG6lrZEcccj3FrxL2/4z0hSJ9tiTfTYaT
+	SvvGNNwUN5asZZGXxYW3aejrUCdM/+hV/XRnb08TY8YA1sNtH6BUkw2rPgr2poRTQT3qgY/HK0F
+	tVIn+
+X-Gm-Gg: ASbGncuAocawIEb69m/RflIk4yTdsULb/yUIQReLDdgea8PCe2DCQwtOpPvsE7Xo2LB
+	bmeeXWnCwkDFsjl2Mb0/bLJAdc5bh70MTTR5hS9ugnlSf22umaXvz6TtUbbN9NFVFoyBuRkL7uO
+	0gZZg5RKyJ2jN2CXNqMvY1jVyi9E4LkfBCRcid7aDYhuP93yMRXEvSIxnWMzZZr+XzHVwbli8YM
+	f2juAxUAQ/LjlGY0OFPDXeQIFceFxeRjlvsuzcvtCuflxsMpNol/fpbAJwyEUOkBx/Nk1Q4d7BH
+	94kt4h/u3Tdq/6eXo9qvDUQU31ine5v7Ow7lxwTAaAkq5MisULgjQn1pnB8HB7pe+FyXtpderAz
+	5qmL3dr8AI/Sb3ruSQafW+H8XsguNYz6ISDQc+rDsD00LYNLPhx9TkR3HbNKD7ILnuViOPQ==
+X-Google-Smtp-Source: AGHT+IEr0dbKUsCCjqYYX8S5H5XRWOuQOM3OvpJDp8SnpzharZEHHFd7r9EH9vX2Ph7oLP0JNWElIg==
+X-Received: by 2002:a05:6e02:1d9d:b0:3dc:7f3b:acb1 with SMTP id e9e14a558f8ab-3e41618be7dmr169667615ab.13.1754343221364;
+        Mon, 04 Aug 2025 14:33:41 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-50a55df2da7sm3485428173.111.2025.08.04.14.33.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Aug 2025 14:33:41 -0700 (PDT)
+Date: Mon, 4 Aug 2025 17:33:39 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/9] trace2: introduce function to trace unsigned integers
+Message-ID: <aJEnM0IOrgwizw2Y@nand.local>
+References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
+ <20250804-b4-pks-commit-graph-wo-the-repository-v1-1-850d626eb2e8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250804-b4-pks-commit-graph-wo-the-repository-v1-1-850d626eb2e8@pks.im>
 
-Ron Ziroby Romero <ziroby@gmail.com> writes:
+On Mon, Aug 04, 2025 at 10:17:17AM +0200, Patrick Steinhardt wrote:
+> While we have `trace2_data_intmax()`, there is no equivalent function
+> that takes an unsigned integer. Introduce `trace2_data_uintmax()` to
+> plug this gap.
+>
+> This function will be used in a subsequent commit.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  trace2.c | 14 ++++++++++++++
+>  trace2.h |  9 +++++++++
+>  2 files changed, 23 insertions(+)
+>
+> diff --git a/trace2.c b/trace2.c
+> index c23c0a227b..a687944f7b 100644
+> --- a/trace2.c
+> +++ b/trace2.c
+> @@ -948,6 +948,20 @@ void trace2_data_intmax_fl(const char *file, int line, const char *category,
+>  	strbuf_release(&buf_string);
+>  }
+>
+> +void trace2_data_uintmax_fl(const char *file, int line, const char *category,
+> +			    const struct repository *repo, const char *key,
+> +			    uintmax_t value)
+> +{
+> +	struct strbuf buf_string = STRBUF_INIT;
+> +
+> +	if (!trace2_enabled)
+> +		return;
+> +
+> +	strbuf_addf(&buf_string, "%" PRIuMAX, value);
+> +	trace2_data_string_fl(file, line, category, repo, key, buf_string.buf);
+> +	strbuf_release(&buf_string);
+> +}
+> +
 
-> First, I'm questioning my approach of hacking pretty.c with a series
-> of 'if json' blocks. Would it be better to make a new file,
-> json-log.c, and divorce myself from the pretty flow entirely?
+Looks like a faithful copy of its signed counterpart above, which is
+good. We *could* use a macro for this, but I don't think we *should*
+;-).
 
-The same question to the other thread applies: why json?
-
-If the objective is to give a parseable output for machines to
-robustly read, then I do not think you want to use any of the
-infrastructure laid by and for the pretty_print_commit() function,
-whose purpose is quite the opposite, like squeezing inter paragraph
-spaces, trimming trailing whitespaces, indenting even an empty line
-by 4 spaces, etc., etc.
-
-> Second, I see that someone is adding a --json flag to git status[1]. I
-> figure that argues for git log to use the --json flag. I don't think
-> that affects me other than making the case for this JSON output.
-
-Please don't.
-
-That other thread is getting discouraged from introducing a new
-option just for a single new format.  Unfortunately "status" does
-not have the --format={short,long,...} so we need to add one new
-option to allow new formats to be added in a more generic way, but
-once that is done, the next new format would not have to add a new
-option.  Compared to it, "log" already has --pretty={...}, so we do
-not have to add --json just for this single format, which makes us
-luckier than the other thread.
+Thanks,
+Taylor
