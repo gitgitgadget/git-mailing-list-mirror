@@ -1,571 +1,892 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C69242D78
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 08:17:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CA72309B9
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 08:23:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754295472; cv=none; b=WJCHdP/X4E4Trh8eXDq9mVFaFPlVTuUrtsdwKy+FcyI1NwO7kCH5DW8ob3fWnJCAosP/25mNl++ly5BKB1wVLiNIWjcbR6nus2k3edWjFhE6FU3s1OZKf6EduitQhifodeORIgF4BNamCpSGgZGlWQIVZlx4kN/IGd2w0NIW8+A=
+	t=1754295826; cv=none; b=Oqv3LJMfDt2lumW6txlzTiyYcx5qmG5cV8GbEq/WE6GfeYGmhXVzdcQozKbaf9stfuLI+NovTWjZKYJ6d51NR1cX8cVJdtuj+lvD3RFN+1gNSmm13I3/5oUvcA4c2B17oagw62wi69CMam2DzfAV5P/OdMKyO1yPbdiaYAq/bMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754295472; c=relaxed/simple;
-	bh=ABY8F3zpR8coQoe/SlHr1yKg971T6KocJF9hBPVDtns=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RVzHTzTwpZb4S20lo4m1i+DSXrjY82qMM3cVnlNXsr8QFv4l2zR1cDfdNdBWMgbjw6GXLrrhXnJS8Q4no6EdKrzdab7pHScjRsjQkxgBhpKAGw9CrE21+QflWfKiHBrG9xj/uAICzyhzUSQDh2K3HPQP33QbHXbayVCFVAqnXc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KOEItrc2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E8NKNO4I; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1754295826; c=relaxed/simple;
+	bh=O+AWM20+CTq9Cm5eyuSMOgm+DaPYVe14XeQNkMasXmc=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=rswTJ5nu9Vde7f/XMktFJV5+889k00uroTGt65+83UNhFlrXrTtxjNPaWZddL4WZIZb0DyZQloxd6n4ch84v3377tsWgRUAuzrn+4Y3Cm3xipc06IjVwVI4AJYaaFj7Z6Gan+jVl9sk35ik6Wsr/cqxlfcT3tQszDU495CpRx58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fTIjFnPP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JBwpx/8v; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KOEItrc2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E8NKNO4I"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 735CB1D00138
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 04:17:49 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 04 Aug 2025 04:17:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754295469;
-	 x=1754381869; bh=ZKFgabGMOgBn4Hg2U6u7ZqG8OIOIT2O1+DY7Ll8Jdvw=; b=
-	KOEItrc2IxIkx2BM0n927krTwksMirbA5Fr99fxXA5upT8eTBLZmjIZQdUFlIIp/
-	glWdvklSdQE1saED78/1zRj0SX7dPoiL0/svk8qR424FB/McnMGRBPbnDKISMVMi
-	vx+G+zIr/LLJCbHZoI2UQ8uaQWTl8Ymy0561lCzbzQs2cGH12Zb9NP0eWuccpTl8
-	bXpdDPAtQb3vNtxCr9+TrYT/Cw9lG/odi+OzZK7GQIrv1CjC4P7Mgw4AfMj4AZXG
-	HISRN2TqtDDz/nkSKj/yeUSLmXWMsRSAL4vkAMrJnS2RUrQvPrCgOVT8QOPBpJlw
-	852n3wRxQ/lzUs+fVzo6mQ==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fTIjFnPP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JBwpx/8v"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1ED02EC00AB;
+	Mon,  4 Aug 2025 04:23:42 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 04 Aug 2025 04:23:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1754295822; x=1754382222; bh=EI4JQkAiAHEcvE2GhwS8nl7S1nB770jD
+	7j4PWoWHZss=; b=fTIjFnPPCOKzv8ffQ/hsTLx3jpxX21mls3zsbiWXn/+KNNXd
+	exGQ/LZLm/KYs8T6Xv/qFH91sELgRGZFEghZSkw6oHJhLWzWk+HBhJKO0JB8hUEk
+	/Iji4VU7k8poUZxTirbF4PsADAslbJLPMHenor4qh2D97dlu42PjUP1mkszwVby2
+	en/uhc9YElojfmUTTSz0nAfwSwGcQVwuAPfrkYprAgzJ/2QG0vIJGaC1UY0Uc/uj
+	3JqDPfK7EuoL9h8EB8eA3g265LPo46onn3X4QYfdU3t9Q+LNtzxLjUYbQqmk+QFK
+	irzuFaihMi296ctZn3ojvMq8wLKZ+XXxGsImgw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754295469; x=
-	1754381869; bh=ZKFgabGMOgBn4Hg2U6u7ZqG8OIOIT2O1+DY7Ll8Jdvw=; b=E
-	8NKNO4I3CUaZAY6MWQPna09xS4PJQfwIn47yiWsJJFwIV8DEVenY0Y6IIIrwBNMb
-	zUmwLfjCoq2dBeqGc768WCOEN74j6nAB8GFCbkkKJncmIX4HnItM6Rx7xROJ+300
-	HR131VS4uzb4Ru+a3YHeO2THzWOA0BNdQl6UAkc7pIUGjwPGaOWch9eBckRVvxBU
-	Fqz2DRamXjJ4/F5L12mUPdPx3OyI586ghv8lhjo0C7izwbSv165opOayCzAh9U+5
-	DJVnPX2klIF9VLYotM1QMXwIoglNoH/IdkQWCfwDAgMiwUvWQbe2R8/M5v1rfs3Y
-	o1dAnpadKX4OBtZUsJu4Q==
-X-ME-Sender: <xms:rWyQaLtsx1oE7iXkLmVLDMuhm5zMTR6p4EZI-JpczxwYypikWqvnRA>
-    <xme:rWyQaOe4H7VvDIXCgPnFVeb-aLFpXdxMx5qgZiTnXyQ1lFi7tmlDKjUgLvt39ogV3
-    qxh3kKs72lnwFQrSQ>
-X-ME-Received: <xmr:rWyQaILFCs49QWMm3MZLY22_nBAe3H4GlK-U9BkUgOW_P94elboGOQPEWInuM-cnUB_LPnf_y_jEg3PzJWUxOWbGHp0RkX2MW49Jj9czpwo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddujeelucetufdoteggodetrf
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754295822; x=
+	1754382222; bh=EI4JQkAiAHEcvE2GhwS8nl7S1nB770jD7j4PWoWHZss=; b=J
+	Bwpx/8vKsv+qPD+/4Yt+wWIvXMkJmHEHZJcoO3WkIMjxTrl+aNaSJ9ZVoDg2JvHm
+	XFvjltbOVOoG3vZcs/6+IyybRos692dOyoWAYREOkkFJy3vyFcrpYu0/U+pMILqX
+	8ZCnkQxg84CA/EOXmbPN3PiknAqQ/VkqnH6WX4Q+ZBmc+x4ogeMtB6+csQxwwd98
+	o1ViH4HBkjRQtQQ4YB2J0Yks7kD9lL8EBlOjtIiB23YqCJN92Tvj338YTG7p3TgB
+	NYAWCy6KMMKVhUyNNs+8iW8YhHLp1drD9rpuqhpHeH4IzXLhr6vp/ga2J2fb5KQk
+	v3xlRMjmw8ZAD/PGj5TFA==
+X-ME-Sender: <xms:DW6QaHUG3MQFMKaVSBUdORybL3ybZnzlP045oKfe7HDGIrH0CPl02A>
+    <xme:DW6QaC3m1R1cdp2MgwAOMHrcAQP1cT_VMr3q4oOogxBVTbchpe5MX8OkH-u0gGL0V
+    igZIUgSgVe2KvHOMg>
+X-ME-Received: <xmr:DW6QaM3yJQHKxkDta__RnaJ4JrS_C5kzVEGOMGYl2QuxR8y9xnez2lzWtSleGxEHDah1olZppua1OW_hej8yJ5kpr1ENid4YZinljDY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddukedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
-    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:rWyQaMbZBdnTXS6EUGF5XsGO6-JGMwUCD4-a_Tj5u-au_WO-e2i9OA>
-    <xmx:rWyQaDuKWOGMjnqgcb2hdgN0VpLuTdT_hqAK9ICx2m23SAAeq4n1QA>
-    <xmx:rWyQaJvmRiace2mXCkiNMDrqE-nWD5R3zs8lzotwVsIVReXzezeUJw>
-    <xmx:rWyQaIcR19jlsi-ZCCNfjlVBVcAL6miG8fJmLnCh3R5WhQLMehnBVQ>
-    <xmx:rWyQaDX8EubR-LzTrcgvAeD92yc3SYhoTAPGOzRS2OQodPg1Bw1wfLXf>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 4 Aug 2025 04:17:48 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f49e37ed (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 4 Aug 2025 08:17:47 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 04 Aug 2025 10:17:25 +0200
-Subject: [PATCH 9/9] commit-graph: stop passing in redundant repository
+    rghilhhouhhtmecufedttdenucgoigegfedvqdehjeculddumdenucfjughrpefhvffuff
+    fkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceo
+    ghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptddtvdffle
+    ejvefhjeeigfelffefjefgfeegjeelheekffegiedvkedvkeeiledunecuffhomhgrihhn
+    pehkvghrnhgvlhdrohhrghdpohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpd
+    hgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgep
+    tdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomh
+    dpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlfihnsehlfihnrdhnvg
+    htpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:DW6QaN8KqprF7_vFKQ1pW3Hh55EZx2hZNhwb_Rr9Q9ZOtKJE5uZPhw>
+    <xmx:Dm6QaB18UBLV9iOaSe1i-f3mviU7jT9tWgvvAFuAGglatUhNC7EarA>
+    <xmx:Dm6QaC_wVRrjC0QmS8x7a5ynnvVMZl_Q7ojQmIceRRMMebNnpKfzfQ>
+    <xmx:Dm6QaJs-5Px8ZJfjGO9P9YfgOd4Cx3qy46oXPxf_YatPmaKor-tw6g>
+    <xmx:Dm6QaDqUAUPZ-Zhp3YE_yw7wc_Y0nivNkDP50AcEr2wPp8wWEaiw7BQZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 4 Aug 2025 04:23:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (Aug 2025, #01; Sun, 3)
+X-master-at: e0753259271b76f6e53b3b170b4bc08cca793bca
+X-next-at: 3e08bea96f415556e219a4557eec4b445ad5bb66
+Date: Mon, 04 Aug 2025 01:23:40 -0700
+Message-ID: <xmqqms8fbilv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250804-b4-pks-commit-graph-wo-the-repository-v1-9-850d626eb2e8@pks.im>
-References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
-In-Reply-To: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.2
+Content-Type: text/plain
 
-Many of the commit-graph related functions take in both a repository and
-the object database source (directly or via `struct commit_graph`) for
-which we are supposed to load such a commit-graph. In the best case this
-information is simply redundant as the source already contains a
-reference to its owning object database, which in turn has a reference
-to its repository. In the worst case this information could even
-mismatch when passing in a source that doesn't belong to the same
-repository.
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-Refactor the code so that we only pass in the object database source in
-those cases.
+Git 2.51-rc0 preview release is planned to happen tomorrow, but no
+promises.
 
-There is one exception though, namely `load_commit_graph_chain_fd_st()`,
-which is responsible for loading a commit-graph chain. It is expected
-that parts of the commit-graph chain aren't located in the same object
-source as the chain file itself, but in a different one. Consequently,
-this function doesn't work on the source level but on the database level
-instead.
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/commit-graph.c     |   6 +--
- commit-graph.c             | 123 +++++++++++++++++++--------------------------
- commit-graph.h             |  12 ++---
- t/helper/test-read-graph.c |   2 +-
- 4 files changed, 61 insertions(+), 82 deletions(-)
+With maint, master, next, seen, todo:
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 680b03a83a..1b80993b2d 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -121,15 +121,15 @@ static int graph_verify(int argc, const char **argv, const char *prefix,
- 	if (opened == OPENED_NONE)
- 		return 0;
- 	else if (opened == OPENED_GRAPH)
--		graph = load_commit_graph_one_fd_st(the_repository, fd, &st, source);
-+		graph = load_commit_graph_one_fd_st(source, fd, &st);
- 	else
--		graph = load_commit_graph_chain_fd_st(the_repository, fd, &st,
-+		graph = load_commit_graph_chain_fd_st(the_repository->objects, fd, &st,
- 						      &incomplete_chain);
- 
- 	if (!graph)
- 		return 1;
- 
--	ret = verify_commit_graph(the_repository, graph, flags);
-+	ret = verify_commit_graph(graph, flags);
- 	free_commit_graph(graph);
- 
- 	if (incomplete_chain) {
-diff --git a/commit-graph.c b/commit-graph.c
-index 7371db9702..308f27046c 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -250,9 +250,8 @@ int open_commit_graph(const char *graph_file, int *fd, struct stat *st)
- 	return 1;
- }
- 
--struct commit_graph *load_commit_graph_one_fd_st(struct repository *r,
--						 int fd, struct stat *st,
--						 struct odb_source *source)
-+struct commit_graph *load_commit_graph_one_fd_st(struct odb_source *source,
-+						 int fd, struct stat *st)
- {
- 	void *graph_map;
- 	size_t graph_size;
-@@ -260,15 +259,16 @@ struct commit_graph *load_commit_graph_one_fd_st(struct repository *r,
- 
- 	graph_size = xsize_t(st->st_size);
- 
--	if (graph_size < graph_min_size(r->hash_algo)) {
-+	if (graph_size < graph_min_size(source->odb->repo->hash_algo)) {
- 		close(fd);
- 		error(_("commit-graph file is too small"));
- 		return NULL;
- 	}
- 	graph_map = xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
- 	close(fd);
--	prepare_repo_settings(r);
--	ret = parse_commit_graph(&r->settings, r->hash_algo, graph_map, graph_size);
-+	prepare_repo_settings(source->odb->repo);
-+	ret = parse_commit_graph(&source->odb->repo->settings, source->odb->repo->hash_algo,
-+				 graph_map, graph_size);
- 
- 	if (ret)
- 		ret->odb_source = source;
-@@ -488,11 +488,9 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
- 	return NULL;
- }
- 
--static struct commit_graph *load_commit_graph_one(struct repository *r,
--						  const char *graph_file,
--						  struct odb_source *source)
-+static struct commit_graph *load_commit_graph_one(struct odb_source *source,
-+						  const char *graph_file)
- {
--
- 	struct stat st;
- 	int fd;
- 	struct commit_graph *g;
-@@ -501,19 +499,17 @@ static struct commit_graph *load_commit_graph_one(struct repository *r,
- 	if (!open_ok)
- 		return NULL;
- 
--	g = load_commit_graph_one_fd_st(r, fd, &st, source);
--
-+	g = load_commit_graph_one_fd_st(source, fd, &st);
- 	if (g)
- 		g->filename = xstrdup(graph_file);
- 
- 	return g;
- }
- 
--static struct commit_graph *load_commit_graph_v1(struct repository *r,
--						 struct odb_source *source)
-+static struct commit_graph *load_commit_graph_v1(struct odb_source *source)
- {
- 	char *graph_name = get_commit_graph_filename(source);
--	struct commit_graph *g = load_commit_graph_one(r, graph_name, source);
-+	struct commit_graph *g = load_commit_graph_one(source, graph_name);
- 	free(graph_name);
- 
- 	return g;
-@@ -640,7 +636,7 @@ int open_commit_graph_chain(const char *chain_file,
- 	return 1;
- }
- 
--struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
-+struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
- 						   int fd, struct stat *st,
- 						   int *incomplete_chain)
- {
-@@ -651,10 +647,10 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
- 	FILE *fp = xfdopen(fd, "r");
- 	size_t count;
- 
--	count = st->st_size / (r->hash_algo->hexsz + 1);
-+	count = st->st_size / (odb->repo->hash_algo->hexsz + 1);
- 	CALLOC_ARRAY(oids, count);
- 
--	odb_prepare_alternates(r->objects);
-+	odb_prepare_alternates(odb);
- 
- 	for (size_t i = 0; i < count; i++) {
- 		struct odb_source *source;
-@@ -662,7 +658,7 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
- 		if (strbuf_getline_lf(&line, fp) == EOF)
- 			break;
- 
--		if (get_oid_hex_algop(line.buf, &oids[i], r->hash_algo)) {
-+		if (get_oid_hex_algop(line.buf, &oids[i], odb->repo->hash_algo)) {
- 			warning(_("invalid commit-graph chain: line '%s' not a hash"),
- 				line.buf);
- 			valid = 0;
-@@ -670,9 +666,9 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
- 		}
- 
- 		valid = 0;
--		for (source = r->objects->sources; source; source = source->next) {
-+		for (source = odb->sources; source; source = source->next) {
- 			char *graph_name = get_split_graph_filename(source, line.buf);
--			struct commit_graph *g = load_commit_graph_one(r, graph_name, source);
-+			struct commit_graph *g = load_commit_graph_one(source, graph_name);
- 
- 			free(graph_name);
- 
-@@ -705,45 +701,33 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
- 	return graph_chain;
- }
- 
--static struct commit_graph *load_commit_graph_chain(struct repository *r,
--						    struct odb_source *source)
-+static struct commit_graph *load_commit_graph_chain(struct odb_source *source)
- {
- 	char *chain_file = get_commit_graph_chain_filename(source);
- 	struct stat st;
- 	int fd;
- 	struct commit_graph *g = NULL;
- 
--	if (open_commit_graph_chain(chain_file, &fd, &st, r->hash_algo)) {
-+	if (open_commit_graph_chain(chain_file, &fd, &st, source->odb->repo->hash_algo)) {
- 		int incomplete;
- 		/* ownership of fd is taken over by load function */
--		g = load_commit_graph_chain_fd_st(r, fd, &st, &incomplete);
-+		g = load_commit_graph_chain_fd_st(source->odb, fd, &st, &incomplete);
- 	}
- 
- 	free(chain_file);
- 	return g;
- }
- 
--struct commit_graph *read_commit_graph_one(struct repository *r,
--					   struct odb_source *source)
-+struct commit_graph *read_commit_graph_one(struct odb_source *source)
- {
--	struct commit_graph *g = load_commit_graph_v1(r, source);
-+	struct commit_graph *g = load_commit_graph_v1(source);
- 
- 	if (!g)
--		g = load_commit_graph_chain(r, source);
-+		g = load_commit_graph_chain(source);
- 
- 	return g;
- }
- 
--static void prepare_commit_graph_one(struct repository *r,
--				     struct odb_source *source)
--{
--
--	if (r->objects->commit_graph)
--		return;
--
--	r->objects->commit_graph = read_commit_graph_one(r, source);
--}
--
- /*
-  * Return 1 if commit_graph is non-NULL, and 0 otherwise.
-  *
-@@ -784,10 +768,12 @@ static int prepare_commit_graph(struct repository *r)
- 		return 0;
- 
- 	odb_prepare_alternates(r->objects);
--	for (source = r->objects->sources;
--	     !r->objects->commit_graph && source;
--	     source = source->next)
--		prepare_commit_graph_one(r, source);
-+	for (source = r->objects->sources; source; source = source->next) {
-+		r->objects->commit_graph = read_commit_graph_one(source);
-+		if (r->objects->commit_graph)
-+			break;
-+	}
-+
- 	return !!r->objects->commit_graph;
- }
- 
-@@ -872,8 +858,7 @@ static void load_oid_from_graph(struct commit_graph *g,
- 		g->hash_algo);
- }
- 
--static struct commit_list **insert_parent_or_die(struct repository *r,
--						 struct commit_graph *g,
-+static struct commit_list **insert_parent_or_die(struct commit_graph *g,
- 						 uint32_t pos,
- 						 struct commit_list **pptr)
- {
-@@ -884,7 +869,7 @@ static struct commit_list **insert_parent_or_die(struct repository *r,
- 		die("invalid parent position %"PRIu32, pos);
- 
- 	load_oid_from_graph(g, pos, &oid);
--	c = lookup_commit(r, &oid);
-+	c = lookup_commit(g->odb_source->odb->repo, &oid);
- 	if (!c)
- 		die(_("could not find commit %s"), oid_to_hex(&oid));
- 	commit_graph_data_at(c)->graph_pos = pos;
-@@ -940,8 +925,7 @@ static inline void set_commit_tree(struct commit *c, struct tree *t)
- 	c->maybe_tree = t;
- }
- 
--static int fill_commit_in_graph(struct repository *r,
--				struct commit *item,
-+static int fill_commit_in_graph(struct commit *item,
- 				struct commit_graph *g, uint32_t pos)
- {
- 	uint32_t edge_value;
-@@ -967,13 +951,13 @@ static int fill_commit_in_graph(struct repository *r,
- 	edge_value = get_be32(commit_data + g->hash_algo->rawsz);
- 	if (edge_value == GRAPH_PARENT_NONE)
- 		return 1;
--	pptr = insert_parent_or_die(r, g, edge_value, pptr);
-+	pptr = insert_parent_or_die(g, edge_value, pptr);
- 
- 	edge_value = get_be32(commit_data + g->hash_algo->rawsz + 4);
- 	if (edge_value == GRAPH_PARENT_NONE)
- 		return 1;
- 	if (!(edge_value & GRAPH_EXTRA_EDGES_NEEDED)) {
--		pptr = insert_parent_or_die(r, g, edge_value, pptr);
-+		pptr = insert_parent_or_die(g, edge_value, pptr);
- 		return 1;
- 	}
- 
-@@ -988,7 +972,7 @@ static int fill_commit_in_graph(struct repository *r,
- 		}
- 		edge_value = get_be32(g->chunk_extra_edges +
- 				      sizeof(uint32_t) * parent_data_pos);
--		pptr = insert_parent_or_die(r, g,
-+		pptr = insert_parent_or_die(g,
- 					    edge_value & GRAPH_EDGE_LAST_MASK,
- 					    pptr);
- 		parent_data_pos++;
-@@ -1054,14 +1038,13 @@ struct commit *lookup_commit_in_graph(struct repository *repo, const struct obje
- 	if (commit->object.parsed)
- 		return commit;
- 
--	if (!fill_commit_in_graph(repo, commit, repo->objects->commit_graph, pos))
-+	if (!fill_commit_in_graph(commit, repo->objects->commit_graph, pos))
- 		return NULL;
- 
- 	return commit;
- }
- 
--static int parse_commit_in_graph_one(struct repository *r,
--				     struct commit_graph *g,
-+static int parse_commit_in_graph_one(struct commit_graph *g,
- 				     struct commit *item)
- {
- 	uint32_t pos;
-@@ -1070,7 +1053,7 @@ static int parse_commit_in_graph_one(struct repository *r,
- 		return 1;
- 
- 	if (find_commit_pos_in_graph(item, g, &pos))
--		return fill_commit_in_graph(r, item, g, pos);
-+		return fill_commit_in_graph(item, g, pos);
- 
- 	return 0;
- }
-@@ -1087,7 +1070,7 @@ int parse_commit_in_graph(struct repository *r, struct commit *item)
- 
- 	if (!prepare_commit_graph(r))
- 		return 0;
--	return parse_commit_in_graph_one(r, r->objects->commit_graph, item);
-+	return parse_commit_in_graph_one(r->objects->commit_graph, item);
- }
- 
- void load_commit_graph_info(struct repository *r, struct commit *item)
-@@ -1097,8 +1080,7 @@ void load_commit_graph_info(struct repository *r, struct commit *item)
- 		fill_commit_graph_info(item, r->objects->commit_graph, pos);
- }
- 
--static struct tree *load_tree_for_commit(struct repository *r,
--					 struct commit_graph *g,
-+static struct tree *load_tree_for_commit(struct commit_graph *g,
- 					 struct commit *c)
- {
- 	struct object_id oid;
-@@ -1113,13 +1095,12 @@ static struct tree *load_tree_for_commit(struct repository *r,
- 				graph_pos - g->num_commits_in_base);
- 
- 	oidread(&oid, commit_data, g->hash_algo);
--	set_commit_tree(c, lookup_tree(r, &oid));
-+	set_commit_tree(c, lookup_tree(g->odb_source->odb->repo, &oid));
- 
- 	return c->maybe_tree;
- }
- 
--static struct tree *get_commit_tree_in_graph_one(struct repository *r,
--						 struct commit_graph *g,
-+static struct tree *get_commit_tree_in_graph_one(struct commit_graph *g,
- 						 const struct commit *c)
- {
- 	if (c->maybe_tree)
-@@ -1127,12 +1108,12 @@ static struct tree *get_commit_tree_in_graph_one(struct repository *r,
- 	if (commit_graph_position(c) == COMMIT_NOT_FROM_GRAPH)
- 		BUG("get_commit_tree_in_graph_one called from non-commit-graph commit");
- 
--	return load_tree_for_commit(r, g, (struct commit *)c);
-+	return load_tree_for_commit(g, (struct commit *)c);
- }
- 
- struct tree *get_commit_tree_in_graph(struct repository *r, const struct commit *c)
- {
--	return get_commit_tree_in_graph_one(r, r->objects->commit_graph, c);
-+	return get_commit_tree_in_graph_one(r->objects->commit_graph, c);
- }
- 
- struct packed_commit_list {
-@@ -2738,11 +2719,11 @@ static int commit_graph_checksum_valid(struct commit_graph *g)
- 				       g->data, g->data_len);
- }
- 
--static int verify_one_commit_graph(struct repository *r,
--				   struct commit_graph *g,
-+static int verify_one_commit_graph(struct commit_graph *g,
- 				   struct progress *progress,
- 				   uint64_t *seen)
- {
-+	struct repository *r = g->odb_source->odb->repo;
- 	uint32_t i, cur_fanout_pos = 0;
- 	struct object_id prev_oid, cur_oid;
- 	struct commit *seen_gen_zero = NULL;
-@@ -2776,7 +2757,7 @@ static int verify_one_commit_graph(struct repository *r,
- 		}
- 
- 		graph_commit = lookup_commit(r, &cur_oid);
--		if (!parse_commit_in_graph_one(r, g, graph_commit))
-+		if (!parse_commit_in_graph_one(g, graph_commit))
- 			graph_report(_("failed to parse commit %s from commit-graph"),
- 				     oid_to_hex(&cur_oid));
- 	}
-@@ -2812,7 +2793,7 @@ static int verify_one_commit_graph(struct repository *r,
- 			continue;
- 		}
- 
--		if (!oideq(&get_commit_tree_in_graph_one(r, g, graph_commit)->object.oid,
-+		if (!oideq(&get_commit_tree_in_graph_one(g, graph_commit)->object.oid,
- 			   get_commit_tree_oid(odb_commit)))
- 			graph_report(_("root tree OID for commit %s in commit-graph is %s != %s"),
- 				     oid_to_hex(&cur_oid),
-@@ -2830,7 +2811,7 @@ static int verify_one_commit_graph(struct repository *r,
- 			}
- 
- 			/* parse parent in case it is in a base graph */
--			parse_commit_in_graph_one(r, g, graph_parents->item);
-+			parse_commit_in_graph_one(g, graph_parents->item);
- 
- 			if (!oideq(&graph_parents->item->object.oid, &odb_parents->item->object.oid))
- 				graph_report(_("commit-graph parent for %s is %s != %s"),
-@@ -2890,7 +2871,7 @@ static int verify_one_commit_graph(struct repository *r,
- 	return verify_commit_graph_error;
- }
- 
--int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
-+int verify_commit_graph(struct commit_graph *g, int flags)
- {
- 	struct progress *progress = NULL;
- 	int local_error = 0;
-@@ -2906,13 +2887,13 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 		if (!(flags & COMMIT_GRAPH_VERIFY_SHALLOW))
- 			total += g->num_commits_in_base;
- 
--		progress = start_progress(r,
-+		progress = start_progress(g->odb_source->odb->repo,
- 					  _("Verifying commits in commit graph"),
- 					  total);
- 	}
- 
- 	for (; g; g = g->base_graph) {
--		local_error |= verify_one_commit_graph(r, g, progress, &seen);
-+		local_error |= verify_one_commit_graph(g, progress, &seen);
- 		if (flags & COMMIT_GRAPH_VERIFY_SHALLOW)
- 			break;
- 	}
-diff --git a/commit-graph.h b/commit-graph.h
-index 24c1aca69e..c7970be661 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -114,14 +114,12 @@ struct commit_graph {
- 	struct bloom_filter_settings *bloom_filter_settings;
- };
- 
--struct commit_graph *load_commit_graph_one_fd_st(struct repository *r,
--						 int fd, struct stat *st,
--						 struct odb_source *source);
--struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
-+struct commit_graph *load_commit_graph_one_fd_st(struct odb_source *source,
-+						 int fd, struct stat *st);
-+struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
- 						   int fd, struct stat *st,
- 						   int *incomplete_chain);
--struct commit_graph *read_commit_graph_one(struct repository *r,
--					   struct odb_source *source);
-+struct commit_graph *read_commit_graph_one(struct odb_source *source);
- 
- struct repo_settings;
- 
-@@ -186,7 +184,7 @@ int write_commit_graph(struct odb_source *source,
- 
- #define COMMIT_GRAPH_VERIFY_SHALLOW	(1 << 0)
- 
--int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags);
-+int verify_commit_graph(struct commit_graph *g, int flags);
- 
- void close_commit_graph(struct object_database *);
- void free_commit_graph(struct commit_graph *);
-diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
-index ef5339bbee..6a5f64e473 100644
---- a/t/helper/test-read-graph.c
-+++ b/t/helper/test-read-graph.c
-@@ -81,7 +81,7 @@ int cmd__read_graph(int argc, const char **argv)
- 
- 	prepare_repo_settings(the_repository);
- 
--	graph = read_commit_graph_one(the_repository, source);
-+	graph = read_commit_graph_one(source);
- 	if (!graph) {
- 		ret = 1;
- 		goto done;
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
 
--- 
-2.50.1.723.g3e08bea96f.dirty
+With all the integration branches and topics broken out:
 
+	https://github.com/gitster/git/
+
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
+
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* ag/imap-send-list-folders-doc (2025-07-22) 1 commit
+  (merged to 'next' on 2025-07-24 at d7db48890b)
+ + docs: explain how to use `git imap-send --list` command to get a list of available folders
+
+ Document recently added "git imap-send --list" with an example.
+ source: <20250722114827.22493-1-gargaditya08@live.com>
+
+
+* cb/meson-avoid-broken-macos-pcre2 (2025-07-18) 1 commit
+  (merged to 'next' on 2025-07-24 at b8cea692a4)
+ + meson: work around broken system PCRE2 dependency in macOS
+
+ Build fix for macOS.
+ source: <20250718170225.6063-1-carenas@gmail.com>
+
+
+* hl/test-helper-fd-close (2025-07-23) 4 commits
+  (merged to 'next' on 2025-07-28 at 1e63fd84fe)
+ + test-delta: close output descriptor after use
+ + test-delta: use strbufs to hold input files
+ + test-delta: handle errors with die()
+ + t/helper/test-truncate: close file descriptor after truncation
+
+ A few file descriptors left unclosed upon program completion in a
+ few test helper programs are now closed.
+ source: <20250722174102.1876197-1-lhywkd22@gmail.com>
+ source: <20250723235929.GB592873@coredump.intra.peff.net>
+
+
+* jc/ci-print-test-failures-fix (2025-07-16) 1 commit
+  (merged to 'next' on 2025-07-24 at a1924c981b)
+ + ci: allow github-actions print test failures again
+
+ CI fix.
+ source: <xmqqa553alp1.fsf_-_@gitster.g>
+
+
+* jc/do-not-scan-argv-without-parsing (2025-07-21) 1 commit
+  (merged to 'next' on 2025-07-23 at 8e3db5dcca)
+ + rev-list: update a NEEDSWORK comment
+
+ Update a hard-to-read in-code NEEDSWORK comment.
+ source: <xmqqecu9w4a5.fsf@gitster.g>
+
+
+* jc/document-test-balloons-in-flight (2025-07-23) 1 commit
+  (merged to 'next' on 2025-07-24 at c239410df9)
+ + CodingGuidelines: document test balloons in flight
+
+ To help our developers, document what C99 language features are
+ being considered for adoption, in addition to what past experiments
+ have already decided.
+ source: <xmqqecu6n1pt.fsf@gitster.g>
+
+
+* jc/rev-list-info-cleanup (2025-07-18) 1 commit
+  (merged to 'next' on 2025-07-23 at 09282d051a)
+ + rev-list: make "struct rev_list_info" static to the only user
+
+ Move structure definition from unrelated header file to where it
+ belongs.
+ source: <xmqqa551127o.fsf@gitster.g>
+
+
+* jk/revision-no-early-output (2025-07-19) 1 commit
+  (merged to 'next' on 2025-07-23 at cfc20b3eb9)
+ + revision: drop early output option
+
+ Remove unsupported, unused, and unsupportable old option from "git
+ log".
+ source: <20250719070813.GA706382@coredump.intra.peff.net>
+
+
+* jk/unleak-reflog-expire-entry (2025-07-22) 1 commit
+  (merged to 'next' on 2025-07-23 at 1663299f09)
+ + reflog: close leak of reflog expire entry
+
+ Leakfix.
+ source: <20250722-jk-fix-leak-reflog-expire-config-v4-1-b65a83551020@gmail.com>
+
+
+* kn/for-each-ref-skip (2025-07-24) 6 commits
+  (merged to 'next' on 2025-07-28 at c721b90bdc)
+ + ref-cache: set prefix_state when seeking
+  (merged to 'next' on 2025-07-15 at 4ea3c74afd)
+ + for-each-ref: introduce a '--start-after' option
+ + ref-filter: remove unnecessary else clause
+ + refs: selectively set prefix in the seek functions
+ + ref-cache: remove unused function 'find_ref_entry()'
+ + refs: expose `ref_iterator` via 'refs.h'
+ (this branch is used by kn/for-each-ref-skip-updates.)
+
+ "git for-each-ref" learns "--start-after" option to help
+ applications that want to page its output.
+ source: <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+
+
+* ly/pull-autostash (2025-07-20) 1 commit
+  (merged to 'next' on 2025-07-24 at dd85f09d69)
+ + pull: add pull.autoStash config option
+
+ "git pull" learned to pay attention to pull.autostash configuration
+ variable, which overrides rebase/merge.autostash.
+ source: <20250720124334.12045-1-yldhome2d2@gmail.com>
+
+
+* ow/rebase-verify-insn-fmt-before-initializing-state (2025-06-09) 1 commit
+  (merged to 'next' on 2025-07-28 at 561f172338)
+ + rebase: write script before initializing state
+
+ "git rebase -i" with bogus rebase.instructionFormat configuration
+ failed to produce the todo file after recording the state files,
+ leading to confused "git status"; this has been corrected.
+ source: <20250609221055.136074-1-oystwa@gmail.com>
+
+
+* ps/object-store-midx (2025-07-15) 9 commits
+  (merged to 'next' on 2025-07-28 at a6727995ac)
+ + midx: remove now-unused linked list of multi-pack indices
+ + packfile: stop using linked MIDX list in `get_all_packs()`
+ + packfile: stop using linked MIDX list in `find_pack_entry()`
+ + packfile: refactor `get_multi_pack_index()` to work on sources
+ + midx: stop using linked list when closing MIDX
+ + packfile: refactor `prepare_packed_git_one()` to work on sources
+ + midx: start tracking per object database source
+ + Merge branch 'tb/midx-avoid-cruft-packs' into ps/object-store-midx
+ + Merge branch 'ps/object-store' into ps/object-store-midx
+ (this branch is used by ps/object-store-midx-dedup-info.)
+
+ Redefine where the multi-pack-index sits in the object subsystem,
+ which recently was restructured to allow multiple backends that
+ support a single object source that belongs to one repository.  A
+ midx does span mulitple "object sources".
+ cf. <aIHoAiakZr5i2psM@pks.im>
+ source: <20250715-b4-pks-midx-via-odb-alternate-v2-0-b0ca0b4b516e@pks.im>
+
+
+* sk/reftable-clarify-tests (2025-07-24) 10 commits
+  (merged to 'next' on 2025-07-24 at b3930223b7)
+ + t/unit-tests: finalize migration of reftable-related tests
+ + t/unit-tests: convert reftable stack test to use clar
+ + t/unit-tests: convert reftable record test to use clar
+ + t/unit-tests: convert reftable readwrite test to use clar
+ + t/unit-tests: convert reftable table test to use clar
+ + t/unit-tests: convert reftable pq test to use clar
+ + t/unit-tests: convert reftable merged test to use clar
+ + t/unit-tests: convert reftable block test to use clar
+ + t/unit-tests: convert reftable basics test to use clar test framework
+ + t/unit-tests: implement clar specific reftable test helper functions
+
+ The reftable unit tests are now ported to the "clar" unit testing
+ framework.
+ cf. <aIJGNGxhkz9CESFu@pks.im>
+ source: <20250724142837.67149-1-kuforiji98@gmail.com>
+
+--------------------------------------------------
+[New Topics]
+
+* jc/doc-release-vs-clear (2025-08-01) 1 commit
+  (merged to 'next' on 2025-08-01 at dd9490d97e)
+ + CodingGuidelines: clarify that S_release() does not reinitialize
+
+ Doc update.
+
+ Will merge to 'master'.
+ source: <xmqq7bznm0nk.fsf@gitster.g>
+
+
+* kh/doc-fast-import-historical (2025-08-01) 1 commit
+  (merged to 'next' on 2025-08-01 at 111a582ca4)
+ + doc: fast-import: contextualize the hardware cost
+
+ Doc update.
+
+ Will merge to 'master'.
+ source: <a9bc7547a27aab8bc2404caeb821b7f5c4c10d14.1754055658.git.code@khaugsbakk.name>
+
+
+* ms/meson-with-ancient-git-wo-ls-files-dedup (2025-08-01) 1 commit
+  (merged to 'next' on 2025-08-01 at f2b8c802ec)
+ + meson: tolerate errors from git ls-files --deduplicate
+
+ Build fix.
+
+ Will merge to 'master'.
+ source: <20250801162834.1923702-1-martin@martin.st>
+
+
+* pw/reftable-libgit2-cleanup (2025-08-01) 5 commits
+ - reftable/stack: allow passing flags to `reftable_stack_add()`
+ - reftable/stack: reorder code to avoid forward declarations
+ - reftable/stack: fix compiler warning due to missing braces
+ - reftable/writer: drop Git-specific `QSORT()` macro
+ - reftable/writer: fix type used for number of records
+
+ Code clean-ups.
+
+ Comments?
+ source: <20250801-pks-reftable-fixes-for-libgit2-v1-0-f446e1c33cb9@pks.im>
+
+
+* tc/diff-tree-max-depth (2025-07-29) 3 commits
+ - diff: teach tree-diff a max-depth parameter
+ - within_depth: fix return for empty path
+ - combine-diff: zero memory used for callback filepairs
+
+ "git diff-tree" learned "--max-depth" option.
+
+ Comments?
+ source: <20250729-toon-max-depth-v1-0-c177e39c40fb@iotcl.com>
+
+
+* dk/help-all (2025-08-03) 4 commits
+ - builtin: also setup gently for --help-all
+ - parse-options: refactor flags for usage_with_options_internal
+ - t1517: fixup for ua/t1517-short-help-tests
+ - Merge branch 'ua/t1517-short-help-tests' into dk/help-all
+ (this branch uses ua/t1517-short-help-tests.)
+
+ "git cmd --help-all" outside repository.
+
+ Breaks t1517.296 under SANITIZE=leak?
+ source: <20250803012613.54086-1-ben.knoble+github@gmail.com>
+
+
+* js/mingw-fixes (2025-08-03) 4 commits
+  (merged to 'next' on 2025-08-03 at a222fda8c6)
+ + mingw: support Windows Server 2016 again
+ + mingw_rename: support ReFS on Windows 2022
+ + mingw: drop Windows 7-specific work-around
+ + mingw_open_existing: handle directories better
+
+ Windows fixes.
+
+ Will merge to 'master'.
+ source: <pull.1948.git.1754256318.gitgitgadget@gmail.com>
+
+
+* jt/archive-zip-deflate-fix (2025-08-02) 1 commit
+ - archive: flush deflate stream until Z_STREAM_END
+
+ The deflate codepath in "git archive --format=zip" had a
+ longstanding bug coming from misuse of zlib API, which has been
+ corrected.
+
+ Will merge to 'next'.
+ source: <20250802220803.95137-1-jltobler@gmail.com>
+
+
+* lc/rebase-trailer (2025-08-03) 2 commits
+ - rebase: support --trailer
+ - trailer: append trailers in-process and drop the fork to `interpret-trailers`
+
+ source: <20250803150059.402017-1-me@linux.beauty>
+
+
+* ly/diff-name-only-with-diff-from-content (2025-08-03) 1 commit
+ . diff: ensure consistent diff behavior with -I<regex> across output formats
+
+ Various options to "git diff" that makes comparison ignore certain
+ aspects of the differences (like "space changes are ignored",
+ "differences in lines that match these regular expressions are
+ ignored") did not work well with "--name-only" and friends.
+
+ Breaks t3040 when merged to 'seen'.
+ source: <20250803145155.57894-1-yldhome2d2@gmail.com>
+
+
+* rs/describe-with-prio-queue (2025-08-03) 2 commits
+ - describe: use prio_queue_replace()
+ - describe: use prio_queue
+
+ "git describe" has been optimized by using better data structure.
+
+ Will merge to 'next'?
+ source: <36d5b59a-a99a-4a6f-b637-dfb0b760660f@web.de>
+
+--------------------------------------------------
+[Cooking]
+
+* ps/meson-clar-decls-fix (2025-07-29) 1 commit
+  (merged to 'next' on 2025-08-01 at 627c189731)
+ + meson: ensure correct "clar-decls.h" header is used
+
+ Build fix.
+
+ Will merge to 'master'.
+ source: <20250729-b4-pks-meson-unit-tests-stale-decls-v1-1-4a7770c84307@pks.im>
+
+
+* ps/object-store-midx-dedup-info (2025-07-29) 9 commits
+ - midx: compute paths via their source
+ - midx: stop duplicating info redundant with its owning source
+ - midx: write multi-pack indices via their source
+ - midx: load multi-pack indices via their source
+ - midx: drop redundant `struct repository` parameter
+ - odb: return newly created in-memory sources
+ - odb: allow `odb_find_source()` to fail
+ - odb: store locality in object database sources
+ - Merge branch 'ps/object-store-midx' into ps/object-store-midx-dedup-info
+
+ Further code clean-up for multi-pack-index code paths.
+
+ Comments?
+ source: <20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im>
+
+
+* ch/t7450-recursive-clone-test-fix (2025-07-30) 1 commit
+  (merged to 'next' on 2025-08-01 at 478a84a4a9)
+ + t7450: inspect the correct path a broken code would write to
+
+ Test fix.
+
+ Will merge to 'master'.
+ source: <pull.2022.v2.git.git.1753933780883.gitgitgadget@gmail.com>
+
+
+* jc/strbuf-split (2025-07-31) 13 commits
+ - trace2: do not use strbuf_split*()
+ - trace2: trim_trailing_newline followed by trim is a no-op
+ - sub-process: do not use strbuf_split*()
+ - environment: do not use strbuf_split*()
+ - config: do not use strbuf_split()
+ - notes: do not use strbuf_split*()
+ - merge-tree: do not use strbuf_split*()
+ - clean: do not use strbuf_split*() [part 2]
+ - clean: do not pass the whole structure when it is not necessary
+ - clean: do not use strbuf_split*() [part 1]
+ - clean: do not pass strbuf by value
+ - wt-status: avoid strbuf_split*()
+ - Merge branch 'jc/string-list-split' into jc/strbuf-split
+ (this branch uses jc/string-list-split.)
+
+ Arrays of strbuf is often a wrong data structure to use, and
+ strbuf_split*() family of functions that create them often have
+ better alternatives.
+
+ Update several code paths and replace strbuf_split*().
+
+ Will merge to 'next'?
+ source: <20250731225433.4028872-1-gitster@pobox.com>
+
+
+* jc/string-list-split (2025-08-01) 7 commits
+ - string-list: split-then-remove-empty can be done while splitting
+ - string-list: optionally omit empty string pieces in string_list_split*()
+ - diff: simplify parsing of diff.colormovedws
+ - string-list: optionally trim string pieces split by string_list_split*()
+ - string-list: unify string_list_split* functions
+ - string-list: align string_list_split() with its _in_place() counterpart
+ - string-list: report programming error with BUG
+ (this branch is used by jc/strbuf-split.)
+
+ string_list_split*() family of functions have been extended to
+ simplify common use cases.
+
+ Will merge to 'next'?
+ source: <20250801220423.1230969-1-gitster@pobox.com>
+
+
+* jc/test-hashmap-is-still-here (2025-07-30) 1 commit
+  (merged to 'next' on 2025-08-01 at 0d766613fc)
+ + test-hashmap: document why it is no longer used but still there
+
+ Comment fix.
+
+ Will merge to 'master'.
+ source: <xmqqwm7ptghz.fsf@gitster.g>
+
+
+* js/prompt-crlf-fix (2025-07-31) 1 commit
+  (merged to 'next' on 2025-08-01 at 365b52c100)
+ + interactive: do strip trailing CRLF from input
+
+ Interactive prompt code did not correctly strip CRLF from the end
+ of line on Windows.
+
+ Will merge to 'master'.
+ source: <2295f183-038c-4751-b04d-0f1819b67b3a@kdbg.org>
+
+
+* am/xdiff-hash-tweak (2025-07-28) 3 commits
+ - fixup! xdiff: optimize xdl_hash_record_verbatim
+ - xdiff: optimize xdl_hash_record_verbatim
+ - xdiff: refactor xdl_hash_record()
+
+ Inspired by Ezekiel's recent effort to showcase Rust interface, the
+ hash function implementation used to hash lines have been updated
+ to the one used for ELF symbol lookup by Glibc.
+
+ Comments?
+ source: <20250728190520.10962-1-amonakov@ispras.ru>
+
+
+* cc/t9350-cleanup (2025-07-25) 1 commit
+  (merged to 'next' on 2025-07-29 at 3d39401b01)
+ + t9350: redirect input to only fast-import
+
+ Test clean-up.
+
+ Will merge to 'master'.
+ source: <20250725160536.2909011-1-christian.couder@gmail.com>
+
+
+* hy/blame-simplify-get-commit-info (2025-07-27) 1 commit
+  (merged to 'next' on 2025-07-29 at aa7b9a8ab6)
+ + blame: remove parameter detailed in get_commit_info()
+
+ Code simplification.
+
+ Will merge to 'master'.
+ source: <20250728035548.94277-1-hanyang.tony@bytedance.com>
+
+
+* kn/for-each-ref-skip-updates (2025-07-28) 5 commits
+  (merged to 'next' on 2025-07-29 at 6e97c528ef)
+ + ref-filter: use REF_ITERATOR_SEEK_SET_PREFIX instead of '1'
+ + t6302: add test combining '--start-after' with '--exclude'
+ + for-each-ref: reword the documentation for '--start-after'
+ + for-each-ref: fix documentation argument ordering
+ + ref-cache: use 'size_t' instead of int for length
+
+ Code clean-up.
+
+ Will merge to 'master'.
+ cf. <aIiAj8COJOAXv-xe@pks.im>
+ source: <20250728-kn-small-cleanups-v2-0-d3021c8bf471@gmail.com>
+
+
+* ps/remote-rename-fix (2025-07-31) 7 commits
+ - builtin/remote: only iterate through refs that are to be renamed
+ - builtin/remote: rework how remote refs get renamed
+ - builtin/remote: determine whether refs need renaming early on
+ - builtin/remote: fix sign comparison warnings
+ - refs: simplify logic when migrating reflog entries
+ - refs: pass refname when invoking reflog entry callback
+ - Merge branch 'ps/reflog-migrate-fixes' into ps/remote-rename-fix
+ (this branch uses ps/reflog-migrate-fixes.)
+
+ "git remote rename origin upstream" failed to move origin/HEAD to
+ upstream/HEAD when origin/HEAD is unborn and performed other
+ renames extremely inefficiently, which has been corrected.
+
+ Will merge to 'next'?
+ source: <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
+
+
+* rs/tighten-alias-help (2025-07-25) 1 commit
+  (merged to 'next' on 2025-08-01 at a0fb0696cd)
+ + git: show alias info only with lone -h
+
+ "git -c alias.foo=bar foo -h baz" reported "'foo' is aliased to
+ 'bar'" and then went on to do "git foo -h baz", which was
+ unexpected.  Tighten the rule so that alias expansion is reported
+ only when "-h" is the sole option.
+
+ Will merge to 'master'.
+ source: <a35dc2bf-015c-472d-9528-6763f7aac180@web.de>
+
+
+* ag/send-email-imap-sent (2025-07-22) 1 commit
+ - send-email: add ability to send a copy of sent emails to an IMAP folder
+
+ "git send-email" learned to drive "git imap-send" to store already
+ sent e-mails in an IMAP folder.
+
+ A reroll (v4) exists.
+ cf. <PN3PR01MB9597EC4C5DF97943587AEEB4B85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ source: <da7cee769f25871ed3f934e3ec7f2cccf0a0420c.1753182534.git.gargaditya08@live.com>
+
+
+* en/ort-rename-fixes (2025-07-22) 6 commits
+ - merge-ort: fix directory rename on top of source of other rename/delete
+ - merge-ort: fix incorrect file handling
+ - t6423: fix missed staging of file in testcases 12i,12j,12k
+ - t6423: document two bugs with rename-to-self testcases
+ - merge-ort: drop unnecessary temporary in check_for_directory_rename()
+ - merge-ort: update comments to modern testfile location
+
+ Various bugs about rename handling in "ort" merge strategy have
+ been fixed.
+
+ Expecting a reroll?
+ cf. <aIx7SXfRabJWpa0D@pks.im>
+ source: <pull.1943.git.1753197791.gitgitgadget@gmail.com>
+
+
+* jb/t7510-gpg-program-path (2025-07-24) 2 commits
+  (merged to 'next' on 2025-07-29 at f5dc13f52d)
+ + t7510: use $PWD instead of $(pwd) inside PATH
+  (merged to 'next' on 2025-07-24 at eb8bc447f9)
+ + t7510: add test cases for non-absolute gpg program
+
+ A new test to ensure that a recent change will keep working.
+
+ Will merge to 'master'.
+ cf. <20250725043043.GA3002998@coredump.intra.peff.net>
+ source: <20250722190922.51183-3-jonas.brandstoetter@gmx.at>
+ source: <20250725051309.GA3003751@coredump.intra.peff.net>
+
+
+* jt/switch-restore-no-longer-experimental (2025-07-28) 1 commit
+  (merged to 'next' on 2025-07-29 at 3c2cf5ab46)
+ + builtin: unmark git-switch and git-restore as experimental
+
+ Declare that "git switch" and "git restore" are no longer
+ experimental.
+
+ Will merge to 'master'.
+ source: <20250728194218.2379432-1-jltobler@gmail.com>
+
+
+* ps/reflog-migrate-fixes (2025-07-29) 9 commits
+ - refs: fix invalid old object IDs when migrating reflogs
+ - refs: stop unsetting REF_HAVE_OLD for log-only updates
+ - refs/files: detect race when generating reflog entry for HEAD
+ - refs: fix identity for migrated reflogs
+ - ident: fix type of string length parameter
+ - builtin/reflog: implement subcommand to write new entries
+ - refs: export `ref_transaction_update_reflog()`
+ - builtin/reflog: improve grouping of subcommands
+ - Documentation/git-reflog: convert to use synopsis type
+ (this branch is used by ps/remote-rename-fix.)
+
+ "git refs migrate" to migrate the reflog entries from a refs
+ backend to another had a handful of bugs squashed.
+
+ Will merge to 'next'?
+ source: <20250729-pks-reflog-append-v3-0-9614d310f073@pks.im>
+
+
+* ds/sparse-checkout-clean (2025-07-16) 9 commits
+ - sparse-checkout: make 'clean' clear more files
+ - t: expand tests around sparse merges and clean
+ - sparse-index: point users to new 'clean' action
+ - sparse-checkout: add --verbose option to 'clean'
+ - dir: add generic "walk all files" helper
+ - sparse-checkout: match some 'clean' behavior
+ - sparse-checkout: add basics of 'clean' command
+ - sparse-checkout: remove use of the_repository
+ - Merge branch 'ac/deglobal-sparse-variables' into ds/sparse-checkout-clean
+ (this branch uses ac/deglobal-sparse-variables.)
+
+ "git sparse-checkout" subcommand learned a new "clean" action to
+ prune otherwise unused working-tree files that are outside the
+ areas of interest.
+
+ Needs to wait for the base topic to solidify.
+ source: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
+
+
+* ps/config-wo-the-repository (2025-07-23) 22 commits
+  (merged to 'next' on 2025-07-29 at 13da88e8fb)
+ + config: fix sign comparison warnings
+ + config: move Git config parsing into "environment.c"
+ + config: remove unused `the_repository` wrappers
+ + config: drop `git_config_set_multivar()` wrapper
+ + config: drop `git_config_get_multivar_gently()` wrapper
+ + config: drop `git_config_set_multivar_in_file_gently()` wrapper
+ + config: drop `git_config_set_in_file_gently()` wrapper
+ + config: drop `git_config_set()` wrapper
+ + config: drop `git_config_set_gently()` wrapper
+ + config: drop `git_config_set_in_file()` wrapper
+ + config: drop `git_config_get_bool()` wrapper
+ + config: drop `git_config_get_ulong()` wrapper
+ + config: drop `git_config_get_int()` wrapper
+ + config: drop `git_config_get_string()` wrapper
+ + config: drop `git_config_get_string()` wrapper
+ + config: drop `git_config_get_string_multi()` wrapper
+ + config: drop `git_config_get_value()` wrapper
+ + config: drop `git_config_get_value()` wrapper
+ + config: drop `git_config_get()` wrapper
+ + config: drop `git_config_clear()` wrapper
+ + config: drop `git_config()` wrapper
+ + Merge branch 'bc/use-sha256-by-default-in-3.0' into ps/config-wo-the-repository
+ (this branch is used by pw/3.0-commentchar-auto-deprecation.)
+
+ The config API had a set of convenience wrapper functions that
+ implicitly use the_repository instance; they have been removed and
+ inlined at the calling sites.
+
+ Will merge to 'master'.
+ source: <20250723-pks-config-wo-the-repository-v2-0-1502d60d3867@pks.im>
+
+
+* pw/3.0-commentchar-auto-deprecation (2025-07-31) 4 commits
+ - commit: print advice when core.commentString=auto
+ - config: warn on core.commentString=auto
+ - breaking-changes: deprecate support for core.commentString=auto
+ - Merge branch 'ps/config-wo-the-repository' into pw/3.0-commentchar-auto-deprecation
+ (this branch uses ps/config-wo-the-repository.)
+
+ Proposes to deprecate "core.commentChar=auto" that attempts to
+ dynamically pick a suitable comment character, as it is too much
+ trouble to support for little benefit.
+
+ Comments?
+ source: <cover.1753975294.git.phillip.wood@dunelm.org.uk>
+
+
+* ps/object-file-wo-the-repository (2025-07-16) 17 commits
+  (merged to 'next' on 2025-08-01 at 0c1253014e)
+ + object-file: get rid of `the_repository` in index-related functions
+ + object-file: get rid of `the_repository` in `force_object_loose()`
+ + object-file: get rid of `the_repository` in `read_loose_object()`
+ + object-file: get rid of `the_repository` in loose object iterators
+ + object-file: remove declaration for `for_each_file_in_obj_subdir()`
+ + object-file: inline `for_each_loose_file_in_objdir_buf()`
+ + object-file: get rid of `the_repository` when writing objects
+ + odb: introduce `odb_write_object()`
+ + loose: write loose objects map via their source
+ + object-file: get rid of `the_repository` in `finalize_object_file()`
+ + object-file: get rid of `the_repository` in `loose_object_info()`
+ + object-file: get rid of `the_repository` when freshening objects
+ + object-file: inline `check_and_freshen()` functions
+ + object-file: get rid of `the_repository` in `has_loose_object()`
+ + object-file: stop using `the_hash_algo`
+ + object-file: fix -Wsign-compare warnings
+ + Merge branch 'ps/object-store' into ps/object-file-wo-the-repository
+
+ Reduce implicit assumption and dependence on the_repository in the
+ object-file subsystem.
+
+ Will merge to 'master'.
+ cf. <87ms8na1mc.fsf@iotcl.com>
+ cf. <aIhm_nqiH8Sci12i@pks.im>
+ source: <20250717-pks-object-file-wo-the-repository-v2-0-36d2cd6c700e@pks.im>
+
+
+* ua/t1517-short-help-tests (2025-08-02) 3 commits
+ - t5304: move `prune -h` test from t1517
+ - t5200: move `update-server-info -h` test from t1517
+ - t/t1517: automate `git subcmd -h` tests outside a repository
+ (this branch is used by dk/help-all.)
+
+ Test shuffling.
+
+ Needs the perl-prereq touch-up squashed in from dk/help-all topic.
+ source: <20250803020744.1037392-1-usmanakinyemi202@gmail.com>
+
+
+* tc/last-modified (2025-07-30) 4 commits
+ - last-modified: use Bloom filters when available
+ - commit-graph: export prepare_commit_graph()
+ - t/perf: add last-modified perf script
+ - last-modified: new subcommand to show when files were last modified
+
+ A new command "git last-modified" is proposed to show the closest
+ ancestor commit that touched each path.
+
+ Seems to break a CI job when merged to 'seen'.
+ cf. <xmqqpldfoqvz.fsf@gitster.g>
+ source: <20250716133206.1787549-1-toon@iotcl.com>
+
+
+* lo/repo-info (2025-08-01) 5 commits
+ . repo: add the --format flag
+ . repo: add the field layout.shallow
+ . repo: add the field layout.bare
+ . repo: add the field references.format
+ . repo: declare the repo command
+
+ A new subcommand "git repo" gives users a way to grab various
+ repository characteristics.
+
+ Breaks 0450 when merged to 'seen'.
+ source: <20250801131111.8115-1-lucasseikioshiro@gmail.com>
+
+
+* ac/deglobal-sparse-variables (2025-07-18) 3 commits
+ - environment: remove the global variable 'sparse_expect_files_outside_of_patterns'
+ - environment: move access to "core.sparsecheckoutcone" into repo_settings
+ - environment: move access to "core.sparsecheckout" into repo_settings
+ (this branch is used by ds/sparse-checkout-clean.)
+
+ Two global variables related to sparse checkout have been moved to
+ the repository settings structure.
+
+ Expecting a reroll.
+ cf. <CAE7as+bnG6KgA8X_n36pqP15bmyM6re+xEb1MOXKvZSUdJ8Arg@mail.gmail.com>
+ source: <cover.1752882401.git.ayu.chandekar@gmail.com>
+
+
+* tb/prepare-midx-pack-cleanup (2025-05-28) 5 commits
+ - midx: return a `packed_git` pointer from `prepare_midx_pack()`
+ - midx-write.c: extract inner loop from fill_packs_from_midx()
+ - midx-write.c: guard against incremental MIDXs in want_included_pack()
+ - midx: access pack names through `nth_midxed_pack_name()`
+ - Merge branch 'ps/midx-negative-packfile-cache' into tb/prepare-midx-pack-cleanup
+
+ Improvement on Multi-pack-index API.
+
+ Expecting a reroll.
+ cf. <20250530065034.GC1321283@coredump.intra.peff.net>
+ source: <cover.1748473122.git.me@ttaylorr.com>
+
+
+* kj/renamed-submodule (2025-07-24) 4 commits
+  (merged to 'next' on 2025-08-03 at c341b36545)
+ + fixup! submodule: skip redundant active entries when pattern covers path
+ + fixup! submodule: prevent overwriting .gitmodules on path reuse
+ + submodule: skip redundant active entries when pattern covers path
+ + submodule: prevent overwriting .gitmodules on path reuse
+
+ The case where a new submodule takes a path where used to be a
+ completely different subproject is now dealt a bit better than
+ before.
+
+ Will merge to 'master'.
+ source: <20250724152418.45226-1-jayatheerthkulkarni2005@gmail.com>
+
+
+* lm/add-p-context (2025-07-29) 4 commits
+  (merged to 'next' on 2025-07-29 at 393fa4b64b)
+ + add-patch: add diff.context command line overrides
+ + add-patch: respect diff.context configuration
+ + t: use test_config in t4055
+ + t: use test_grep in t3701 and t4055
+
+ "git add/etc -p" now honors diff.context configuration variable,
+ and learns to honor -U<n> option.
+
+ Will merge to 'master'.
+ source: <pull.1915.v5.git.1753772511.gitgitgadget@gmail.com>
+
+
+* cc/promisor-remote-capability (2025-07-31) 5 commits
+ - promisor-remote: use string constants for 'name' and 'url' too
+ - promisor-remote: allow a client to check fields
+ - promisor-remote: refactor how we parse advertised fields
+ - promisor-remote: allow a server to advertise more fields
+ - promisor-remote: refactor to get rid of 'struct strvec'
+
+ The "promisor-remote" capability mechanism has been updated to
+ allow the "partialCloneFilter" settings and the "token" value to be
+ communicated from the server side.
+
+ Expecting a reroll.
+ source: <20250731072401.3817074-1-christian.couder@gmail.com>
+
+--------------------------------------------------
+[Discarded]
+
+* pw/compound-literal-test-balloon (2025-07-14) 1 commit
+ . strbuf: add compound literal test balloon
+
+ Gauge if the world is ready for compound literal that can make the
+ resulting code clearer in some places.
+
+ Discarded; it turns out that we already have a test balloon on this.
+ source: <7ac55a5096c261b706f47ca239c381f71db2b67a.1752499653.git.phillip.wood@dunelm.org.uk>
+
+
+* jc/tag-idempotent-no-op (2025-07-11) 1 commit
+ . tag: allow idempotent "git tag" without "--force"
+
+ "git tag T O" when the tag T is already pointing at the object O is
+ a no-op; we used to but no longer error out such a request and
+ require "--force" and instead turn it into a no-op.
+
+ Will discard.
+ cf. <dt5ruadvr7lmhsbypmb6yili5cookfx5btw4gzfeui7ehxxajv@ziael4udbbcy>
+ source: <xmqqv7nyzgp7.fsf@gitster.g>
