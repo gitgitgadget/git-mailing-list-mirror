@@ -1,59 +1,59 @@
-Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEFD1C5F09
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 19:15:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BED91547D2
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 19:24:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754334930; cv=none; b=c9Tj6eQMTaX28DR1TLn80uVrW1FurtBRlLAmoPeGod1Adq0q/nc1BWQRWFud/lp5mCj3tSq1JL9aprqqSd9dtQug7fj2DBMJIC+ywBdjvc9gXpDN1jL61wkb85tWNZQG2JDBAhTe4nEwgD7/H1w+MYDD7CrST54p6RgVWgwjAoc=
+	t=1754335442; cv=none; b=mvxvA0X/jQbA1wpA2wljTmuqQuFqTiSXzPQ/s2pg5u5jFbUGXTUkqZxpiQN4WqU5px1rKq7dvXrR7j+sHf+LdkFn4RzcPAgD8RjrXoHFYIDhCEgRKK1vvLJF+ILdpT/DviKtF0BIfxWVGYB3AzMn/6p/RMCo3YHe3KcZkDemw00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754334930; c=relaxed/simple;
-	bh=3McdbDLDlV0Uw6+v9xs3HX+KR4+ipH7lt2EivLSYynY=;
+	s=arc-20240116; t=1754335442; c=relaxed/simple;
+	bh=7eYrGONTVllRujyOaMu9OfIYxrpB0gZVuG67d/bjaWs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bil+CxEyOrg6TmjHqRTGsFOniCa78Swyu0rZZqnArNdMvb6bejxK3LvPG8Q/gP5nIwemWND9ivM81sUmDMuHDMwDwnU6jxcAbo5Ev81oS7WqtnkLOygvmtAqtHmdrXYGictWPPSYYXcCHH1mIiB7J0FQLHNGKXBQcws7QWSxL+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hJ3YdGLh; arc=none smtp.client-ip=209.85.166.45
+	 To:Cc:Content-Type; b=ETcge4vPzun+tb8nNFp9gD3qo712dryD/r95NqYEoLBNtzk/Sui6GvS1c07ufD4VvhDxFmQ8eFijwhXDp0xHxV8ph4vX6eFc9IpwGwTi7BWAXyOPZCFJPzH/4gfOxS1Chb7MDtrJY13ZCdXcsxnh7jarZPBKXO0adxZlWwX2XFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ew/hdhPo; arc=none smtp.client-ip=209.85.166.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hJ3YdGLh"
-Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-88182bb2336so26169239f.3
-        for <git@vger.kernel.org>; Mon, 04 Aug 2025 12:15:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ew/hdhPo"
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3e3ea9e8154so22573835ab.2
+        for <git@vger.kernel.org>; Mon, 04 Aug 2025 12:24:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754334927; x=1754939727; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754335440; x=1754940240; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wrNGn0PZiJBBNFyWsTnJ+m3m7KDHM5RnWjAkTM5cUJc=;
-        b=hJ3YdGLh9OqMMrVUjdFqMEzFgNVTDGk97payKANGGo4KSGegJb/sBpPnpN/IxeeM50
-         cXujWOHh6FiCoO8QTRImAwoNCdsPu4/zZdQLWe5pYo9hWHuLpLOc5YLXcapm1uYTOiTM
-         N9Tjm2aH/XnoExdoQrgYTSEbU9cQi2hEh2UglDwezCPlKew9cHl0tzuAuxw3SfLPiHH7
-         Xe8k7K1fvt9Nt5xbjDnMWaYxd67BLGOChsheF10U++1vX4GZ+kLGw+dpBnNlDJilgXq6
-         NHTHiaKLxcb6x9TZ2yM1ATZU5kaVTNH9zbTJUw5+XloTlrVKILlx2LSaxkSFi/GmGTQ/
-         Prug==
+        bh=FrfB95BaBLa2IzFum5K5ORjVAF6W7xoOi5AFRz5caIU=;
+        b=Ew/hdhPouh/0pAVhqStBq6euWy9UV+SmbmOEP68INC/5ZEtacKHn94VP/kivp/7tWq
+         TvqReebGRckKtpNtv6rPx1dSeypE+NetqFGuKmCPiP6r97NSXD5QiCEHWzhEyMutPsVW
+         npQvua4QqrH4CErU+FqPhNMtdRRO+XszqrLmeVGpluKFHzFz2uBEkzGDxWC+hw1CUipt
+         9OHxVsprvPT/V9eBvIGu+JQmKPZrBIF2Xn2j6+pZz4VxvCAOQWp59tWCJZ5155hbwz0O
+         9b+z9/WxAF7hIxKqgVprychHOVGpm7ZEjk1O2+eaTIvBmsstAxrD5dR4K4JDzeBQS6Gs
+         ljgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754334927; x=1754939727;
+        d=1e100.net; s=20230601; t=1754335440; x=1754940240;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wrNGn0PZiJBBNFyWsTnJ+m3m7KDHM5RnWjAkTM5cUJc=;
-        b=azo/AlHkeoIhbZxmDTwrMQja+VDnP26aJZKt5YFOgDvi5uIEBPxeGLlFSenZEHRqkr
-         A+mK+vLskH65fOyp3gyJh4RSZtltSJCrlyYeLou38ZqpACY32/s/kmOP51kJHwzm6DjS
-         MmMpW421EF1HgegrfzhTIXibOTdPNALI2wOUPnRyee8SrlW17G8B0WcPKxIn7Won0Xba
-         kHyRH33EcgLQ2LXSDgNoHJIHMpnVB3V0msge1DyfCZdlMQPrwbneO6YqbMPem+fD0mhD
-         VfF27TlqGhH2tEheK+Hu6ZxHxfWFDQo++77BBM3m+B3wRqXowYLhEL5wb2urTHQLYU8a
-         P7jw==
-X-Forwarded-Encrypted: i=1; AJvYcCW7q5WE973PebQplfP37G5nCTW72Sgz9DZpwTLWE4sVKIatFjIcgxfnCRQnJkBW6Hdzb3E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwnsZK0H+rUz+2JC7BK1YvQ6EJDSn0mnRfSotPWbfBy0/+BWWzK
-	8CYmZfRBqmrOtGW67BWV2Mdbcgs00wF4shJ507UFiqx6E/LM/EFe2Ux+1/FQV3uJ0YJDylp1nCc
-	YPKi/lb1x4fBNoNqvJami61ZFTfGikpk=
-X-Gm-Gg: ASbGncsV8bvraEatZ34DHHSrT8XHV35fDmHkYhed0Jz626oXgtsPhmApNlE2WYhTW0X
-	k0sMtBvE4pxvsNzpg0D1JrWKw1hg/bwdu3Mkk3SbjD7YIop4cOjpI35l8bI6ohv07NG6txaklhf
-	ODls30YCVaNTy6bRSfDIGn6OxSph23OxLSLNHG0Ng5gBOlyi8rlyy91NC703kuB6CHxWV/DlrJ9
-	fB27qINYNOnYSNMIzjmC/1rAG/atnqgpEAX6OyX7mH1qvvN
-X-Google-Smtp-Source: AGHT+IGKbZRqthBvMO6vEycyMXllybjUAYQ5FnlSSzR9TETH2d5NVPVX5A5ikcSXx+vpw0HBSr3SvsirLRb8B/MXQHo=
-X-Received: by 2002:a05:6e02:1d9d:b0:3dc:7f3b:acb1 with SMTP id
- e9e14a558f8ab-3e41618be7dmr163530645ab.13.1754334926800; Mon, 04 Aug 2025
- 12:15:26 -0700 (PDT)
+        bh=FrfB95BaBLa2IzFum5K5ORjVAF6W7xoOi5AFRz5caIU=;
+        b=wJTG6n4LzM6PgYYejaBZhSj9sQUmRjkBvll4V++O/vCEysqaoihgXZ5NoQerSFdsRw
+         3ssppaqIb/UvVzBv8pmSKeEN0SLfWSwH7IfaZHmtFI+mPrDuBt+f3FE/cwPwkx6cvrnD
+         xpJoRUsb5OfE85FvZzoZIn38zueTDlEhc99Ww3v1Ibyx5+n527wMrG1k5bqKtuxqeKxq
+         l8pAwdGWy7FU/pdhrLtXouE2jXUNV9olfIWpK2IIOb2csgacx8AK/iRxnkEUUMcpZYXn
+         TZmx/GItBGQrJw/6bzMZfy1A1wboYUlSGh22N67FIAkZxRUDe8j9BSNQmqoQVLbmLZ7M
+         /WZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU9I3Ypgc9LJX4fBciinABx2vTx+qOfv226XdWuCLnMVLxgkbksijlNFGotNtesi6xHcxU=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3jbuez3VNwlpHaH79SZtZIort1vHk6yHf8+XmEsQU0af1Z7O6
+	hL95TieYcCCs013zLUR0ZCikt64bE3NcJXcWFfhMdbV8UOzpDNskQxyRijVm+g5h9rjNBmDi6OX
+	cgsmdtkFeBAYAKp3OQrt47R5XfqJoCZk=
+X-Gm-Gg: ASbGncsqBXHQpkN7emFvQXFojBna35am31EkXGePCq5UrDjrICQiepzXQZ915SVPl5h
+	BldGmmeUhl+2znpT4ioJSql+uVoLhmF6CoahY83ltnQyLw5j/WQ5Uo/ChnErQr6ys1mIFHzAW0+
+	UD40f3MtfRpWNPxu8liwwG5fjzDlJVaGE4Z4alROd5bxmduOxU7+B/KU1Baqmya8DGgSEjPghef
+	Z95EdcxfUHTBe4Bbrepa87DT2T3QkkAiu8lcg==
+X-Google-Smtp-Source: AGHT+IEWhpTo153CXZedZ1vm+p9WjO/nor4ZcgtzQbT0c5/Rbg8ia8qC6YMSPOFRmgEv/x1X4yNP0Bz6rT+NmdI0mYQ=
+X-Received: by 2002:a05:6e02:330e:b0:3e3:d5d2:23e4 with SMTP id
+ e9e14a558f8ab-3e41615b809mr192173305ab.13.1754335440147; Mon, 04 Aug 2025
+ 12:24:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,14 +61,14 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.1943.git.1753197791.gitgitgadget@gmail.com>
- <bda42aa85cf4f332ef60aca1a8937ed4b868fa87.1753197791.git.gitgitgadget@gmail.com>
- <aIx7OEX6AEqNsIHb@pks.im>
-In-Reply-To: <aIx7OEX6AEqNsIHb@pks.im>
+ <3b3b258cec5f0080beb64501f7510f7acbc3a91b.1753197791.git.gitgitgadget@gmail.com>
+ <aIx7Qp_epPOpk8OF@pks.im>
+In-Reply-To: <aIx7Qp_epPOpk8OF@pks.im>
 From: Elijah Newren <newren@gmail.com>
-Date: Mon, 4 Aug 2025 12:15:15 -0700
-X-Gm-Features: Ac12FXxVQnMgnfD7-p1ISfBJLWb0VkpvzGijz27Bv3-b9QA4HLOZL3YinHJ96lU
-Message-ID: <CABPp-BEUFaePoJx-dn9hOE6r7mQV_W_6QF2K1sJJ2uXeL81rdg@mail.gmail.com>
-Subject: Re: [PATCH 3/6] t6423: document two bugs with rename-to-self testcases
+Date: Mon, 4 Aug 2025 12:23:49 -0700
+X-Gm-Features: Ac12FXyJHddRXq5LSc7ExtAKyVUmCw5e3_x5zopEgiqHzLQJHMKX8a5kHQMFrq0
+Message-ID: <CABPp-BF36TtAaqbV01m82Cj_7Mr23P1DEuSTR7oM9odLbD9q5g@mail.gmail.com>
+Subject: Re: [PATCH 4/6] t6423: fix missed staging of file in testcases 12i,12j,12k
 To: Patrick Steinhardt <ps@pks.im>
 Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -77,93 +77,43 @@ Content-Transfer-Encoding: quoted-printable
 On Fri, Aug 1, 2025 at 1:31=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
 :
 >
-> On Tue, Jul 22, 2025 at 03:23:08PM +0000, Elijah Newren via GitGitGadget =
+> On Tue, Jul 22, 2025 at 03:23:09PM +0000, Elijah Newren via GitGitGadget =
 wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Commit 806f83287f8d (t6423: test directory renames causing
+> > rename-to-self, 2021-06-30) introduced testcase 12i-12k but omitted
+> > staging one of the files and copy-pasted that mistake to the other
+> > tests.  This means the merge runs with an unstaged change, even though
+> > that isn't related to what is being tested and makes the test look more
+> > complicated than it is.
+> >
+> > The cover letter for the series associated with the above commit noted
+>
+> It might be a good idea to provide the message ID of that cover letter.
+
+Sounds like a good idea; will do.
+
 > > diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename=
 -directories.sh
-> > index f48ed6d03534..69de7a3b84af 100755
+> > index 69de7a3b84af..c2032eb6cfa1 100755
 > > --- a/t/t6423-merge-rename-directories.sh
 > > +++ b/t/t6423-merge-rename-directories.sh
-> > @@ -5092,7 +5111,85 @@ test_expect_success '12n: Directory rename trans=
-itively makes rename back to sel
-> >               git checkout -q B^0 &&
-> >
-> >               test_must_fail git cherry-pick A^0 >out &&
-> > -             grep "CONFLICT (file location).*should perhaps be moved" =
-out
-> > +             grep "CONFLICT (file location).*should perhaps be moved" =
+> > @@ -5114,7 +5117,7 @@ test_expect_failure '12n: Directory rename transi=
+tively makes rename back to sel
+> >               grep "CONFLICT (file location).*should perhaps be moved" =
 out &&
->
-> Let's use `test_grep` while at it.
-
-Oh, right, it was test_i18ngrep that we weren't supposed to use.
-Yeah, I can switch over to test_grep.
-
-> [snip]
-> > +test_expect_failure '12n2: Directory rename transitively makes rename =
-back to self' '
-> > +     test_setup_12n2 &&
-> > +     (
-> > +             cd 12n2 &&
-> > +
-> > +             git checkout -q B^0 &&
-> > +
-> > +             # NOTE: Since merge.directoryRenames=3Dtrue, there is no =
-path
-> > +             # conflict for world vs. tools/world; it should end up at
-> > +             # world.  The fact that world was unmodified on side A, m=
-eans
-> > +             # there was no content conflict; we should just take the
-> > +             # content from side B -- i.e. delete the file.  So mergin=
-g
-> > +             # could just delete world.
-> > +             #
-> > +             # However, rename-to-self-via-directory-rename is a bit m=
-ore
-> > +             # challenging.  Relax this test to allow world to be trea=
-ted
-> > +             # as a modify/delete conflict as well.
-> > +
-> > +             test_might_fail git -c merge.directoryRenames=3Dtrue merg=
-e A^0 >out &&
-> > +
-> > +             # Should have 1 entry for hello, and either 0 or 2 for wo=
-rld
-> > +             test_stdout_line_count =3D 1 git ls-files -s hello &&
-> > +             test_stdout_line_count !=3D 1 git ls-files -s world &&
-> > +             if test_stdout_line_count !=3D 0 git ls-files -s world
-> > +             then
-> > +                     grep "CONFLICT (modify/delete).*world deleted in =
-HEAD" out
->
-> Here, as well.
-
-Will do.
-
-> > +             fi
+> >
+> >               # Should have 1 entry for hello, and 1 for world
+> > -             test_stdout_line_count =3D 2 git ls-files -s &&
+> > +             test_stdout_line_count =3D 3 git ls-files -s &&
+> >               test_stdout_line_count =3D 1 git ls-files -s hello &&
+> >               test_stdout_line_count =3D 2 git ls-files -s world
 > >       )
-> >  '
 >
-> I found it to be a bit weird that we have this conditional here.
-> Shouldn't we expect one particular outcome? Even if multiple outcomes
-> would be techincally correct I think we should expect one particular
-> result, but we may add a comment to explain that different output would
-> be fine, too.
+> Should we also explicitly check `git ls-files -s baz`?
 
-Isn't that exactly what I did, with the note I'll copy below?
-
-> > +             # NOTE: Since merge.directoryRenames=3Dtrue, there is no =
-path
-> > +             # conflict for world vs. tools/world; it should end up at
-> > +             # world.  The fact that world was unmodified on side A, m=
-eans
-> > +             # there was no content conflict; we should just take the
-> > +             # content from side B -- i.e. delete the file.  So mergin=
-g
-> > +             # could just delete world.
-> > +             #
-> > +             # However, rename-to-self-via-directory-rename is a bit m=
-ore
-> > +             # challenging.  Relax this test to allow world to be trea=
-ted
-> > +             # as a modify/delete conflict as well.
+Why?  There was no baz in this testcase -- not only did it not appear
+in the final commit, it didn't appear in either branch being merged
+nor anywhere in the entire history of the repository.  Testcases
+12{i,j,k} all had such a file, but testcase 12n does not.
