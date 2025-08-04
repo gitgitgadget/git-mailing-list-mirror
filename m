@@ -1,70 +1,69 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023A6634
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 21:59:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370904430
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 22:04:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754344744; cv=none; b=q1SNtOlsVOFgRH0l6+Od5Fk7Ns3Jn6MAWavTTpSN5R0crZEuI5c2IkJdjg0PayLoDK327EBIJpcmuhPx+6K2dyfwM1rG+Kj40fxLaoh+rBjE9xIm1qvBp4nVoDLahqhcTJ3xIZDkB1BfTfE3gXhYib9KI2mTC1wKkagqz2Sk8Rc=
+	t=1754345066; cv=none; b=XGfWAf1oINYMAf6RzjZQzKVqJCwL/OaNufFm+mr1mUITkffVWNvNu2WIYwWUzR4YpJcpss74Xn534n/obUIan49vNziQU7JoSjcq3t9OfyVf8v5t9KY8qTzgs3kNZTp5PaS9KaiUbiX+D1TjMCGati7sibGmJFvLqThjMMm6sko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754344744; c=relaxed/simple;
-	bh=MCt9cHGaVmDiu+b5BNzpaFrsR14J7OUUlBVxoHsNwJo=;
+	s=arc-20240116; t=1754345066; c=relaxed/simple;
+	bh=OqOAAUKhQojRp+xR+ktuRYpYGbf3IzmnhfkHCcdMhg4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WDnx5jbSAfZsDFGk0Aju+dSPIzlBGQoVUhD33+JDgqMqjuozTxnHgc59YmhWXrBiv3jYv64qmpY+Cd0x2Ps2X9WlxtTH0gLlLatbLcAIzaeAa20tkjuN2q0xsKYPcoxPkUEYkiCk35FtSfhVlYYv8xaC8y2TbsbbXERSBSbgdtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=V850M21A; arc=none smtp.client-ip=209.85.160.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=ccuTvKA2Ai2NqhKxypNaI5tzNsfTDx2f21XK8MrSFxna04GdxuNXkOw1ZJCPAIKOudT4xMWZy/ma0EhsK/Df7MIIXiUkR4Zy6m5RPArrYMdqf46weLMCVfz3e3AeU4Z5Whjn32riIcvwmbw7QhpmU7x8Ec0OVgwSbYxyXkjGmcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=L+a4L0Uo; arc=none smtp.client-ip=209.85.166.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="V850M21A"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4af123c6fc4so26151321cf.0
-        for <git@vger.kernel.org>; Mon, 04 Aug 2025 14:59:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="L+a4L0Uo"
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3e3f378ea68so33161135ab.1
+        for <git@vger.kernel.org>; Mon, 04 Aug 2025 15:04:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1754344742; x=1754949542; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1754345064; x=1754949864; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ceJTJOPUFXhe1iP2hhLSTDSoevfbpk6Byov91qNfW9Q=;
-        b=V850M21AzEwqF8CB8iOWzkrSeK797DVZBDMpEsymL2fvj58tZEJCLeU2b/Z+sMrI7g
-         VxycqvfUdMpSEHa8Kt+mm6hvigmpsqBMAS/sVoFtgqdtvw3r9PDSh2wy//OjyK7T1ijC
-         wLapkMbIMcoZWqNsAibmDmXjsPOTajWkupgNhnvvqzqIZOif1RsGvFXlnfLxX0EdvWbz
-         5cecJLDEmU5dDkEEDH4vws0vCRVMuFpJgHoSwgDuh4o1MxHJ9tXXH2CdEKfp28lrpman
-         YuJqIER4rhqSyEPkt6Rbix88fcZONDHnO193XiaxupnpOuqxNwl1Yp1hacwiHL+CuSjM
-         FeQg==
+        bh=qTSD7Tnr264BYWMQY6jDmUcQxdEWC6auOyzfWz10OoE=;
+        b=L+a4L0UoiAibLb2emZmXIFq3H/ITeptu4QKgZLq2fW3ETOWXj1Ncqtg/MSuBr2XtPX
+         oTwVT7ctGA/aSgEzkUZJT9qtpHupxXtXbFpfQm43ZbjqNpOs48TjUQthcdUZD9Is2aDB
+         UHskiggQaAV53LAaJZslqHXCl8HszD3DApqNMAuwk9jPdr0j20TEGROGxja2ecvgP/cV
+         CiP7MpOJlY1zPD30bV91FHpOrLK7wyilDMYyQdUf7B/mr/+O4Tlwei8/tX9T3omMjRpQ
+         n7QZaeEMjEujcLCStvRGDFc4m3Ycoc1+TZjX2Aqg6oGUstO5U0BrXEw9vTxcVzq/75Rr
+         ORNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754344742; x=1754949542;
+        d=1e100.net; s=20230601; t=1754345064; x=1754949864;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ceJTJOPUFXhe1iP2hhLSTDSoevfbpk6Byov91qNfW9Q=;
-        b=TqOgEEu6SO9PdU8ejN9T+lmUNQYa70yjfdAzAJguUElIPiKVg4e7+XYMuC1+4NSDG8
-         02ffEQOkD3SW9GTzDsK3WJ2hBzzTzeSDzr3I3jD9b0Xca17JEx1MmowxsYhHXwboaHha
-         J7RNHY9E6BzhXDJksZHhO/THaRHID2aqi90aOx6RUPc/yI1AgtFLtxK1BURo8BGC4RXh
-         xZlfoOW9Elt829lQlUCBcC3oljJSX5V39EFa9ZsF6awCw8Yyq7O7t699JhSBVFvXen55
-         mZ/CTUrp8B0/VX7ismHNdHXMVyeFAI+Hmh5ZldpsnOIeJ2zwqgKP9SYR0trhKq8t9b1X
-         ljJw==
-X-Gm-Message-State: AOJu0YyJ8zxuWswChEKUiNaOB9AN/7aySrcz5I8/RskHq97I+qtHFmtH
-	VF7Zif5uc8WYLaaP0O4Yf40HSQ2PRqFS3aLx/DNtTgSOLDQIR4VaArAKjQBun+nD5AsrslYPQs8
-	3rmnd
-X-Gm-Gg: ASbGncsey5N6UrJLmmY2aE3zorjhjU9Mh0NB77iqoRD5LZrRfJUZpkV4/pTclxysFxc
-	O9iE0weUJvcRPh9EgqMvsAgq5FDwu831DXhULGco+8xSi7FzkHZbyM7JMeOs1XhOA+2faN0b6LU
-	iiP3toXQAx7cpWmsZZ4lprL7rhscXNynua1PWKmkgVWHfwSWbLEVBk02VQBLQ/BFwtIsGDo5mQN
-	nda0Z+DqKICbWxKURaKDpfGGefjTxIIY5PdM4sRoecGJMgzxLKOI6Mn+PCGICE6ihdbtn5OWUW3
-	+rXMeVMZ1vcMIKKat9lkAHjUPM5SGdwb+NvfpdaiEWT7l7FLORfwzfVoU7SrsyEPRi2CR7L1vH6
-	y/ccbi64oU+WbbXNZuyhJkjIKILeMlesJhaJ4JsS5BccALoEjSGBcc1cwTjU3nB2by4qezA==
-X-Google-Smtp-Source: AGHT+IEWmgW6stGQ2L/SzbBAcjUEvm1F/U+gJsKGDaPPKA5IL74q8Cmhw+LbmQcM9bh7oZ2kizUYrw==
-X-Received: by 2002:a05:6602:15c4:b0:861:d8ca:3587 with SMTP id ca18e2360f4ac-8816832a8d9mr2305041339f.4.1754344365792;
-        Mon, 04 Aug 2025 14:52:45 -0700 (PDT)
+        bh=qTSD7Tnr264BYWMQY6jDmUcQxdEWC6auOyzfWz10OoE=;
+        b=bIJ16EFmd9lb9umCxTGea13J9MECA6mRB41jgfUZLytaVRQqemedpje719Pijs1pyK
+         8Qaq9ZBoA66/7Y51nyhxsV2u4Y+3JHSVtCbyNlKcwZEm9e0czEpxmssjGUNbFUL334zw
+         H8uTm+GFRKUNAsafkDsvuvi3tV6vIGKzvet2isaDf/smhW55WPamYtFAo8sxAnc1wTIN
+         YKF8WfnJ9EVuW4bTwqpOtx4F8UvBV4Xuc4lTHd15q6Z6pfHPeTUBM4NKwuzXsDKcyjOx
+         cw7xCQ5hypvcq3V3/fI07KUsfucRr/dRF8BEXGB7NG2k9DkpnCekm9zzhWhpbxhgByRd
+         7QDg==
+X-Gm-Message-State: AOJu0YyHPkWgndaKWv33ZWxYMOZ/12RrLUQ1MkaqIBKD6xiZYSLSFsXT
+	ATc6ahtlziwqCNad3nTZoGFUCHX/eJC4cdZG5tjTOrywyaMD3IX+zIqpL/8GnoQwgz4=
+X-Gm-Gg: ASbGncuD8ICy/sTZvou+ZwmMf6vOg8expryU4zR9NwBCxrW6I2ELIIfl55lWCQJsqBV
+	TMZretojjhVlyQljDO5JlAwwpUeSqrIWYeIBGeNpBQ/0gzNLdlYWqQV9aGybY7lSVQc+qLoUqZ9
+	sJ2RNCUVFxgqNUJwUQ1sa/w5XL1JDB9SCHXTEqvF2vq53oIkkg05Ktg37ZhN7twUJc+v+VQnJHU
+	YVX3029wgQ1QPv8c96Axa2G0aqXsxqJTpnscG2+VCOaJCIrUoxbtpqmc9BL/DkCCXZCBz+EqkFE
+	UrScgNE8s3w4QyOPjy+v2YWM+GXLuW9ZrDigEy9BsC/cvtceIPR8cLwWL04HNHUDXBd5To2+aLs
+	Wyj1Zg8grJcUIPyQ8Fg8PAba+S+TseaYuxYjG4fEw1lfOK2A8snNeJCi7WWOeRQCPAGemOw==
+X-Google-Smtp-Source: AGHT+IE5XJLZpCTykAqS6No2bQVMqNLQOPLkUDMqa6sr0Km+UgjGywOsemRpmVWm4S+7/nBFyhmexw==
+X-Received: by 2002:a05:6e02:2382:b0:3df:347f:ff3e with SMTP id e9e14a558f8ab-3e416116d8bmr208289075ab.7.1754345064145;
+        Mon, 04 Aug 2025 15:04:24 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-50ab413fdcfsm179895173.75.2025.08.04.14.52.43
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-50a55b1c5b7sm3451668173.22.2025.08.04.15.04.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Aug 2025 14:52:43 -0700 (PDT)
-Date: Mon, 4 Aug 2025 17:52:42 -0400
+        Mon, 04 Aug 2025 15:04:23 -0700 (PDT)
+Date: Mon, 4 Aug 2025 18:04:22 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/9] commit-graph: fix type for some write options
-Message-ID: <aJErqjDHudSeyNHr@nand.local>
+Subject: Re: [PATCH 4/9] commit-graph: fix sign comparison warnings
+Message-ID: <aJEuZnhxbJcfdWFw@nand.local>
 References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
- <20250804-b4-pks-commit-graph-wo-the-repository-v1-3-850d626eb2e8@pks.im>
+ <20250804-b4-pks-commit-graph-wo-the-repository-v1-4-850d626eb2e8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,42 +72,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250804-b4-pks-commit-graph-wo-the-repository-v1-3-850d626eb2e8@pks.im>
+In-Reply-To: <20250804-b4-pks-commit-graph-wo-the-repository-v1-4-850d626eb2e8@pks.im>
 
-On Mon, Aug 04, 2025 at 10:17:19AM +0200, Patrick Steinhardt wrote:
-> The options "max-commits" and "size-multiple" are both supposed to be
-> positive integers and are documented as such, but we use a signed
-> integer field to store them. This causes sign comparison warnings in
-> `split_graph_merge_strategy()` because we end up comparing the option
-> values with the observed number of commits.
+On Mon, Aug 04, 2025 at 10:17:20AM +0200, Patrick Steinhardt wrote:
+> The "commit-graph.c" file has a bunch of sign comparison warnings:
 >
-> Fix the issue by converting the fields to be unsigned and convert the
-> options to use `OPT_UNSIGNED()` accordingly. This macro has only been
-> introduced recently, which might explain why the option values were
-> signed in the first place.
+>   - There are a bunch of variables that are declared as signed integers
+>     even though they are used to count entities, like for example
+>     `num_commit_graphs_before` and `num_commit_graphs_after`.
 
-I have the same general feeling about this patch as the previous one:
-the -Wsign-compare warnings here are a bit of a red herring.
+I have similar thoughts as in the previous patch about this spot, too.
 
-That said, I do think that we need stricter validation for these
-options. Following the --size-multiple example, for instance, we get
-this rather unfriendly error message if we pass a bogus value:
+>   - There are several cases where we use signed loop variables to
+>     iterate through an unsigned entity count.
 
-    $ git.compile commit-graph write --split --size-multiple=-1 --reachable
-    fatal: size_t overflow: 18446744073709551615 * 34
+Here I am more sympathetic to using a size_t to count the number of
+allocated elements in some array/buffer.
 
-This happens as a result of in
-commit-graph.c::split_graph_merge_strategy() doing the following:
+>   - The bloom settings hash version is being assigned `-1` even though
+>     it's an unsigned value. This is used to indicate an unspecified
+>     value and relies on 1's complement.
 
-    while (g && (g->num_commits <= st_mult(size_mult, num_commits) ||
-                 (max_commits && num_commits > max_commits))) {
+OK. I think that comparing "-1" to an unsigned value is meant equivalent
+to saying "are all 32 of these bits set"? But making it explicit seems
+reasonable, since it's not immediately clear from reading this function
+that 'hash_version' is unsigned.
 
-, where size_mult is changed from a size_t to an int implicitly when
-assigning it to the stack-local "size_mult" variable.
+> @@ -622,7 +621,7 @@ int open_commit_graph_chain(const char *chain_file,
+>  		close(*fd);
+>  		return 0;
+>  	}
+> -	if (st->st_size < the_hash_algo->hexsz) {
+> +	if (st->st_size < (ssize_t) the_hash_algo->hexsz) {
 
-Indeed, this patch does improve that warning, but I am not convinced
-that changing the type is the right way to go about improving the error
-message in and of itself.
+I understand why the compiler is telling you to make hexsz a signed
+quantity, but I am not sure that the cast here is aiding the reader, nor
+am I sure that it is making the code safer.
 
 Thanks,
 Taylor
