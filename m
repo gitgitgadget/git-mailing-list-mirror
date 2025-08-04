@@ -1,49 +1,50 @@
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A59E2AD11
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 08:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFC8522F
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 09:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754297699; cv=none; b=rGoL5X8tzrYb9UPAio3gs/KHD/tiU4BPW4TrxpnHL3SAmSzSAZUBv3G1jHKHytJd9ZEQEsUbWa/EOyTRyS3udpWICFxEH5tLI/V3nYkGpptm1vrUVflovhvTvL0Rf3NeEkgcRfEykLVOw8wviCkT24VdrSt/0bGusg+s18NeazQ=
+	t=1754298813; cv=none; b=PrA3rYMT9063+3Vo2mdm3GlfCGcppTcUCf96mStsGRrkpv7LFLuLIbemfIpuHZ3zYM7A/fhvmotcdB2QOzm4G+OoERwZ0XXsAH/T623huN4ny1qDzZjuaU5JHZiVPaWl6rG83/fNXo0pJrafa0V7qqK6PON/5j3q9ubI+K6zhB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754297699; c=relaxed/simple;
-	bh=mVWStQnzo6rL9KYb5mom5Vz+sBWzWTi0czxLinEWSkE=;
+	s=arc-20240116; t=1754298813; c=relaxed/simple;
+	bh=1tIa7FnBQlHAkspqS39Srqn5JcUcEoCOC5g7Ste0E3g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ElwoHT+TmohTMy/FbapS+2n2/z75NMS3CsRnZQr18+o8If3XRXpyd0bx/jzQUertcdztYtscC5Rhq55uik/B0veoHeWwVQdf1b6i7tzNZDAVZWidDHvUa/ZVMoWJSda3WClYq8LrPXkVIYoiKaQemqW7EkMBfmXs3iQ7JBnY18I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=XH3APSM4; arc=none smtp.client-ip=212.227.15.19
+	 Content-Type:Content-Disposition:In-Reply-To; b=JIhzM2+mSLCjmzSwz5mixrha4x5CZab7LuhYCX79+A/eOhSHXO1dGwEs6ZJ7g2+rqOspq3UBjemuKg9jm8XYZVwoKNYJSTxEonldphn2JCEFCiJC1btOZzUtDkIDImPZd5N8PuC91w8lA1nl9JpCYo/OQ3xz6Jmx0/CmBR7qgVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=IQfgZUrm; arc=none smtp.client-ip=212.227.15.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="XH3APSM4"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="IQfgZUrm"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1754297695; x=1754902495;
+	s=s31663417; t=1754298808; x=1754903608;
 	i=oswald.buddenhagen@gmx.de;
-	bh=B+yv8P6tuVpTeBlYuhfBxXjFqmHxPkJ8wKFcsfsIHXQ=;
+	bh=1tIa7FnBQlHAkspqS39Srqn5JcUcEoCOC5g7Ste0E3g=;
 	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=XH3APSM4MWnXLNyNSd6tOqUqOD9teO/eMGMQZ4Cz55PLiwWqrAqJmIHelJTKpX0S
-	 lmW6Je74yRDQ6Vwmrc1GXnVgmcWSOGEfTRiOmzFHLHtZGfkY9XSfNtJcTBlkJUhVH
-	 aaGCakWPpKKWqu/8XZ4mgAzPXUOvrUss8hFa1gqIArbFyNedLoBaFMZ9h5Ndhn6F6
-	 DhonCncj/l7yk/6qB3QPRRFwPdLQtZHTaHGm4bpFIHJDWcvYuXnhKZuLarKGxN7Jr
-	 1rQdFPTEbZPmZRUyXY1E7ZAnp9Skr6K7WORO9t98BaAkkT8lKcMRC4cNbsRZbgOfu
-	 DdV1pAiB9Hwce0TkHQ==
+	b=IQfgZUrmyMVwrSW/0lfb92xjPeIFgkWXqUAOH6EcgYJ4KMLHlWITvRTysQDuZfVc
+	 OBm7loKMrXKI9uRUE69ShInXd+y/iHtoB85+Nd5Ckk6Ybo8u4/Wv5WubB9zGUppm+
+	 fsk6df/rbmxUDyH7Ytm9o9jWWWhU9nXxZS51Dt85dfpUTVyyxvDxnhXeQu042ZGTV
+	 OI/lCyLkQSjWFJTfT6VJWOgHkMyrG1odLVr34pnuv1KnnpEAiTGUFOhpEyKGzgvrp
+	 5U9lrquW0h16eP3z2rMIz+E0l4mcBQMEH2vYx94RrMaMNIzULRdZzb6U967XWxhCv
+	 q61v5O5dV35t1ZL6UA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from ugly.fritz.box ([89.247.162.126]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbAcs-1uC0Bi3sW8-00pRjl; Mon, 04
- Aug 2025 10:54:54 +0200
+Received: from ugly.fritz.box ([89.247.162.126]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUGe1-1v9ymZ1xtj-00PE9P; Mon, 04
+ Aug 2025 11:13:28 +0200
 Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
-	id 1uiqy6-r69-00; Mon, 04 Aug 2025 10:54:54 +0200
-Date: Mon, 4 Aug 2025 10:54:54 +0200
+	id 1uirG4-rkn-00; Mon, 04 Aug 2025 11:13:28 +0200
+Date: Mon, 4 Aug 2025 11:13:28 +0200
 From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] mingw: drop Windows 7-specific work-around
-Message-ID: <aJB1Xkr09XNjb-ON@ugly>
-References: <pull.1948.git.1754256318.gitgitgadget@gmail.com>
- <6b4f062d82a80d82eb927cda7304d053b2984aba.1754256318.git.gitgitgadget@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/9] commit-graph: stop using signed integers to count
+ bloom filters
+Message-ID: <aJB5uKFdGybf-IbN@ugly>
+References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
+ <20250804-b4-pks-commit-graph-wo-the-repository-v1-2-850d626eb2e8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,90 +53,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <6b4f062d82a80d82eb927cda7304d053b2984aba.1754256318.git.gitgitgadget@gmail.com>
-X-Provags-ID: V03:K1:05jYqQMb1yucecCJks2abpyYnNPJ8Z5Uv3ezW+FM/O0vRMiTBHj
- +zqpOxGq5dX5UjwVy0IMPC6oBGMl9TClhwqOnpgZ29UN3gulMD5m690gORmr95ChbQ6F1pz
- SHayvSUSKLiHFp7NfwbRjwLhHlbE6jonRZNNHrmmsOz4XdL6LMauXhXl8wevT3pQh7z+9qh
- DGp3UcBavlfDLD98Kgyjg==
+In-Reply-To: <20250804-b4-pks-commit-graph-wo-the-repository-v1-2-850d626eb2e8@pks.im>
+X-Provags-ID: V03:K1:cPH/VyrRdXHXSXL0SaqWzjc/czQudEPYgoPR9xnTePd6MhI0Wez
+ br7mUT9oYZv0Ds2vfA05aWIgbiqNFSfMAMmNIEktJgj47WTVcP7hwBjjqLtgj3VpDNaeqm1
+ FkZFC08Xvrij5vHjSBYEJblbRdUuANLHtK+Zi1ACLUPZzSCX92y36t6l6WzCmvD3Ak1kLpD
+ 9vSnvBWgK7Kt+zu+R3Yfw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:1/m/xbsDoS8=;HXGB2Cv2AWFpF/zbiWkGpOsW7TK
- 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
- hQ==
+UI-OutboundReport: notjunk:1;M01:P0:2RhcEHHOpY4=;5RBjciM91otaq9p8t+1CLr/7ylM
+ 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
+ DRISWUWyKu6pSKWVFAujzKw=
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Aug 03, 2025 at 09:25:16PM +0000, Johannes Schindelin via GitGitGa=
-dget wrote:
->From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Mon, Aug 04, 2025 at 10:17:18AM +0200, Patrick Steinhardt wrote:
+>When writing a new commit graph we have a couple of counters that
+>provide statistics around what kind of bloom filters we have or have not
+>written. These counters naturally count from zero and are only ever
+>incremented, but they use a signed integer as type regardless.
 >
->In ac33519ddfa8 (mingw: restrict file handle inheritance only on Windows
->7 and later, 2019-11-22), I introduced code to safe-guard the
->defense-in-depth handling that restricts handles' inheritance so that it
->would work with Windows 7, too.
+>Refactor those fields to be of type `size_t` instead.
 >
->Let's revert this patch: Git for Windows dropped supporting Windows 7 (an=
-d
->Windows 8) directly after Git for Windows v2.46.2.
->
-it doesn't follow from this why it's apparently ok to remove this for=20
-even newer versions.
-
->+	 * On the off-chance that something with the file handle restriction
->+	 * went wrong, silently fall back to trying without it.
-> 	 */
->+	if (!ret && stdhandles_count) {
->
-the comment should really spell out what that off chance is, so one=20
-doesn't have to check the log.
-
-it may also make sense to elaborate why just dropping the restrictions=20
-isn't a problem - my first thought is "huh, doesn't this open the door=20
-for security holes, at least theoretically?"
-
+mind elaborating on that choice?
+it feels like abuse at the semantic level, and it increases the data=20
+size on lp64 platforms. is it even compatible with OPT_UNSIGNED (in=20
+later commits)? that would be unexpected ...
