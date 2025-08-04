@@ -1,126 +1,242 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFC8522F
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 09:13:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7292E55B
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 09:23:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754298813; cv=none; b=PrA3rYMT9063+3Vo2mdm3GlfCGcppTcUCf96mStsGRrkpv7LFLuLIbemfIpuHZ3zYM7A/fhvmotcdB2QOzm4G+OoERwZ0XXsAH/T623huN4ny1qDzZjuaU5JHZiVPaWl6rG83/fNXo0pJrafa0V7qqK6PON/5j3q9ubI+K6zhB4=
+	t=1754299385; cv=none; b=OuEvqcND8vsy2m8TocUW5cz8jntRFvnKUHwrOE6XShW+DIIT888o2wd94Z6gvbRoCz2Kdos4LoGj+XNyNdJ+IaQlgU58HKarfHHL7yVgs5VCsjilqadvTbFI/GaVoA3KdroFE6FyKlcrcRdmRlRE64ftoQVEimGyv+UaKjq3nBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754298813; c=relaxed/simple;
-	bh=1tIa7FnBQlHAkspqS39Srqn5JcUcEoCOC5g7Ste0E3g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JIhzM2+mSLCjmzSwz5mixrha4x5CZab7LuhYCX79+A/eOhSHXO1dGwEs6ZJ7g2+rqOspq3UBjemuKg9jm8XYZVwoKNYJSTxEonldphn2JCEFCiJC1btOZzUtDkIDImPZd5N8PuC91w8lA1nl9JpCYo/OQ3xz6Jmx0/CmBR7qgVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=IQfgZUrm; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1754299385; c=relaxed/simple;
+	bh=c0FbflyQpFPGmNDUSnUtOKD7+y/C0lj7fu4wMjw/0aw=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=o6cLE99eX1uj4aYmkyqI5PrFhwzPf9OltZN93OQIF/n8BPagkZR71YV3yNfBwrSTlc2PTD5W8/96Q9N5ZTY1DXo4BZlRZo7UQaQh6El60eK4D5mFQfHuuKDRikK+wbWqO6HXYfmuEdf9V8p91J6fVKYqWhI6g36mc2VyzJnIYr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kbr/FfOO; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="IQfgZUrm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1754298808; x=1754903608;
-	i=oswald.buddenhagen@gmx.de;
-	bh=1tIa7FnBQlHAkspqS39Srqn5JcUcEoCOC5g7Ste0E3g=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=IQfgZUrmyMVwrSW/0lfb92xjPeIFgkWXqUAOH6EcgYJ4KMLHlWITvRTysQDuZfVc
-	 OBm7loKMrXKI9uRUE69ShInXd+y/iHtoB85+Nd5Ckk6Ybo8u4/Wv5WubB9zGUppm+
-	 fsk6df/rbmxUDyH7Ytm9o9jWWWhU9nXxZS51Dt85dfpUTVyyxvDxnhXeQu042ZGTV
-	 OI/lCyLkQSjWFJTfT6VJWOgHkMyrG1odLVr34pnuv1KnnpEAiTGUFOhpEyKGzgvrp
-	 5U9lrquW0h16eP3z2rMIz+E0l4mcBQMEH2vYx94RrMaMNIzULRdZzb6U967XWxhCv
-	 q61v5O5dV35t1ZL6UA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from ugly.fritz.box ([89.247.162.126]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUGe1-1v9ymZ1xtj-00PE9P; Mon, 04
- Aug 2025 11:13:28 +0200
-Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
-	id 1uirG4-rkn-00; Mon, 04 Aug 2025 11:13:28 +0200
-Date: Mon, 4 Aug 2025 11:13:28 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/9] commit-graph: stop using signed integers to count
- bloom filters
-Message-ID: <aJB5uKFdGybf-IbN@ugly>
-References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
- <20250804-b4-pks-commit-graph-wo-the-repository-v1-2-850d626eb2e8@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kbr/FfOO"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2403ca0313aso32378505ad.0
+        for <git@vger.kernel.org>; Mon, 04 Aug 2025 02:23:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754299383; x=1754904183; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8JLVDTWU8B1pqTRBopmvo/GUqlVlISWASxk3Pmjpj8s=;
+        b=kbr/FfOOU3SGGxdBDgotnQP666rn8+CnwT8940sDo7ccuHLFyLUaRmecNsDNhlJe66
+         //AfOpSxRTMRX5vA098qO9euTiTYVnLi+pwRJWALY88pxV+8m/dGX7puJRAvsYehg4A9
+         +qPzmYYkKexuzFvNu/tPzyRSgX5sW9z71Mm57zeln5QWAGrTMXMmn0trJTgRSAS314z2
+         QdBqReFXqbJf0aehqJqfdvNuyL/uw1WnskylBYvxxbr2Up1mQUWxlbS3eHvXnQy8mR2M
+         nuySMWVUx2bzoTw10QEqTMa7pl+uit2zgaMXQtqt5Ek4Q7iDVOfNstbjZrT1l3OL1Hn7
+         tq1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754299383; x=1754904183;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8JLVDTWU8B1pqTRBopmvo/GUqlVlISWASxk3Pmjpj8s=;
+        b=lsG07W7UNq8WNugyCBnaAAUf+L4MbqOGtiWvXunjS64tlJSakyDRQsQriRbAEB2pqB
+         FNylP9tDR4XhbUaXOKJUAhc3k1H5iG5fumgS56XM/IoG4Qba8fVVczguax9bGHDSViKn
+         gVbUZtJ6C+BO+0m5u78y0ulNgcCOxoDn8P7hFAsn42oz7pa5wTaVmgtKfV5StdECZawU
+         a1TVMNcvNHJssLbWUqu1UsKJsP5klmqAAAau7wpzXQT5LxHoRn0bUEhLEppdfVc3yFoR
+         eYG2EUYxAv4SZVcc33TwvkP9rDpN0uADeJ84GAyWnmQ0nH019LSjK8x3OnSjkjv8UjVH
+         oU/w==
+X-Gm-Message-State: AOJu0YzGgZMYtd1u8WHgBpcXTiIGjwHVFLzG+j7TKe2nUYM8ZtHAYgWA
+	wVo+WWW2RvoXwlK6w30YayBqzuAxfAFKuDS8KC10prUb7irgUrgL5Wcero24UMTl
+X-Gm-Gg: ASbGncuML3aTuv1llUqcAHOMDea3zOjeWLwxEPijuQT518NkurnjQpVIYDLWQIjfTJc
+	uYZTCdABXpxt1oKrs52mF2A1wQOCZgZs9l6Murfwvy/BXs+KJjm4llBf9GO9aVSl5K7nQanuI0L
+	l4JAuRBTh9cUbCJWBugO1OUa+ogGu382Jl61naGp67JQNPsbIy152hAMbymwx2OHkrsKl67k5Wg
+	Hc2YUXqG8rGhE4XzAK+4nPRTU42wDfO3ajAgt4+tbnG0ABxZf9e5nhl+skJIYkFPzXMMrDiGFu9
+	/L81v1CTcQZyh88TJ9sot64xwlexkGL0soEjMwJhdSdCVdxux2Ly7gEYO7yoUm1v47R4+0Aan4g
+	tzTx/BvH6b7ZyegPRx0sp96iS+4WKWA==
+X-Google-Smtp-Source: AGHT+IFuTMIjoDuevdmRno8n/7gKKBiLNPvDG4ph9JdewEN7feJ/keyDoZhEgMeVsQOInXykpDgMng==
+X-Received: by 2002:a17:902:e54a:b0:240:2145:e53b with SMTP id d9443c01a7336-24246f564b7mr114358935ad.9.1754299382659;
+        Mon, 04 Aug 2025 02:23:02 -0700 (PDT)
+Received: from meet.. ([103.176.11.198])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1ef6c62sm106205565ad.4.2025.08.04.02.22.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Aug 2025 02:23:01 -0700 (PDT)
+From: Meet Soni <meetsoni3017@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	shejialuo@gmail.com,
+	karthik.188@gmail.com,
+	gitster@pobox.com,
+	sunshine@sunshineco.com,
+	phillip.wood123@gmail.com,
+	Meet Soni <meetsoni3017@gmail.com>
+Subject: [GSoC][RFC PATCH v5 0/6] Add refs list subcommand
+Date: Mon,  4 Aug 2025 14:52:49 +0530
+Message-Id: <20250804092255.1092973-1-meetsoni3017@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250731090040.1625303-1-meetsoni3017@gmail.com>
+References: <20250731090040.1625303-1-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20250804-b4-pks-commit-graph-wo-the-repository-v1-2-850d626eb2e8@pks.im>
-X-Provags-ID: V03:K1:cPH/VyrRdXHXSXL0SaqWzjc/czQudEPYgoPR9xnTePd6MhI0Wez
- br7mUT9oYZv0Ds2vfA05aWIgbiqNFSfMAMmNIEktJgj47WTVcP7hwBjjqLtgj3VpDNaeqm1
- FkZFC08Xvrij5vHjSBYEJblbRdUuANLHtK+Zi1ACLUPZzSCX92y36t6l6WzCmvD3Ak1kLpD
- 9vSnvBWgK7Kt+zu+R3Yfw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:2RhcEHHOpY4=;5RBjciM91otaq9p8t+1CLr/7ylM
- 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
- DRISWUWyKu6pSKWVFAujzKw=
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 04, 2025 at 10:17:18AM +0200, Patrick Steinhardt wrote:
->When writing a new commit graph we have a couple of counters that
->provide statistics around what kind of bloom filters we have or have not
->written. These counters naturally count from zero and are only ever
->incremented, but they use a signed integer as type regardless.
->
->Refactor those fields to be of type `size_t` instead.
->
-mind elaborating on that choice?
-it feels like abuse at the semantic level, and it increases the data=20
-size on lp64 platforms. is it even compatible with OPT_UNSIGNED (in=20
-later commits)? that would be unexpected ...
+Hello Everyone,
+
+This is the fifth version of the patch series that introduces the git
+refs list subcommand.
+
+changes in v5:
+  - moved changes that fixed the test into a separate commit.
+
+---
+(v1 cover-letter text)
+
+This patch series introduces `git refs list` as a modern replacement for
+`git for-each-ref`, as part of an effort to consolidate ref-related
+functionality under a unified `git refs` command.
+
+Git's ref-related operations are currently handled by several distinct
+commands, such as `git show-ref`, `git for-each-ref`, `git update-ref`,
+`git pack-refs`, etc. This distribution has a few practical drawbacks:
+
+- Users need to rely on multiple commands for related tasks involving
+  refs.
+
+- The commands may differ slightly in behavior and option syntax,
+  leading to inconsistency.
+
+We propose a long-term consolidation effort to bring ref-related
+subcommands under the umbrella of a single command: `git refs`.
+
+The implementation of `git refs list` is functionally identical to `git
+for-each-ref`. It reuses the same internal logic (cmd_for_each_ref) to
+ensure complete backward compatibility. The purpose of this patch is not
+to introduce new behavior but to provide an alternate entry point under
+the consolidated `git refs` namespace.
+
+The motivation behind this change is twofold:
+
+- Consolidation: Centralizing ref-related operations makes them easier
+  to discover, use, and maintain.
+
+- Evolution: While the initial goal is parity with existing commands,
+  this consolidation allows for careful reconsideration of which
+  features are essential. Over time, we can:
+
+  - Remove legacy or obscure options that are no longer needed.
+  - Add improvements that wouldn't make sense to bolt onto legacy
+    commands.
+  - Offering a more consistent and user-friendly surface.
+
+To verify backward compatibility, this patch also includes a test
+`t/t1461-refs-list.sh`, which runs the full `t6300-for-each-ref.sh` test
+using `git refs list`. The test uses ${GIT_REFS_LIST_CMD:-for-each-ref}
+to allow substitution without duplicating tests.
+
+This patch is deliberately conservative: it introduces no behavioral
+changes and leaves `for-each-ref` untouched. The goal is to lay
+groundwork and demonstrate viability of ref consolidation within `git
+refs`.
+
+Going forward, I'd like to initiate a discussion on what the ideal
+surface of `git refs list` should look like. Which options and features
+from `for-each-ref` should be carried over? Are there any that are
+obsolete or overly niche? What improvements might be worth considering
+now that we have a new, consolidated interface?
+
+Feedback on this, especially from those who rely on `for-each-ref` in
+scripts or tooling would be very helpful.
+
+Meet Soni (6):
+  doc: factor out common option
+  builtin/for-each-ref: align usage string with the man page
+  builtin/for-each-ref: factor out core logic into a helper
+  builtin/refs: add list subcommand
+  t6300: refactor tests to be shareable
+  t: add test for git refs list subcommand
+
+ Documentation/for-each-ref-options.adoc |   79 +
+ Documentation/git-for-each-ref.adoc     |   80 +-
+ Documentation/git-refs.adoc             |   16 +
+ builtin/for-each-ref.c                  |   35 +-
+ builtin/refs.c                          |   14 +
+ for-each-ref.h                          |   26 +
+ t/for-each-ref-tests.sh                 | 2141 +++++++++++++++++++++++
+ t/meson.build                           |    1 +
+ t/t0450/adoc-help-mismatches            |    1 -
+ t/t1461-refs-list.sh                    |    8 +
+ t/t6300-for-each-ref.sh                 | 2140 +---------------------
+ 11 files changed, 2307 insertions(+), 2234 deletions(-)
+ create mode 100644 Documentation/for-each-ref-options.adoc
+ create mode 100644 for-each-ref.h
+ create mode 100644 t/for-each-ref-tests.sh
+ create mode 100755 t/t1461-refs-list.sh
+
+Range-diff against v4:
+1:  d2fa47a2b9 = 1:  d2fa47a2b9 doc: factor out common option
+-:  ---------- > 2:  48a006dca9 builtin/for-each-ref: align usage string with the man page
+2:  5084db4d14 ! 3:  b7788d477a builtin/for-each-ref: factor out core logic into a helper
+    @@ Commit message
+     
+      ## builtin/for-each-ref.c ##
+     @@
+    - #include "ref-filter.h"
+    + #include "builtin.h"
+    + #include "commit.h"
+    + #include "config.h"
+    ++#include "for-each-ref.h"
+    + #include "gettext.h"
+    + #include "object.h"
+    + #include "parse-options.h"
+    +@@
+      #include "strbuf.h"
+      #include "strvec.h"
+    -+#include "for-each-ref.h"
+      
+    +-#define COMMON_USAGE_FOR_EACH_REF \
+    +-	"[--count=<count>] [--shell|--perl|--python|--tcl]\n" \
+    +-	"                         [(--sort=<key>)...] [--format=<format>]\n" \
+    +-	"                         [--include-root-refs] [ --stdin | <pattern>... ]\n" \
+    +-	"                         [--points-at=<object>]\n" \
+    +-	"                         [--merged[=<object>]] [--no-merged[=<object>]]\n" \
+    +-	"                         [--contains[=<object>]] [--no-contains[=<object>]]\n" \
+    +-	"                         [--exclude=<pattern> ...]"
+    +-
+     -static char const * const for_each_ref_usage[] = {
+    --	N_("git for-each-ref [<options>] [<pattern>]"),
+    --	N_("git for-each-ref [--points-at <object>]"),
+    --	N_("git for-each-ref [--merged [<commit>]] [--no-merged [<commit>]]"),
+    --	N_("git for-each-ref [--contains [<commit>]] [--no-contains [<commit>]]"),
+    +-	"git for-each-ref " COMMON_USAGE_FOR_EACH_REF,
+     -	NULL
+     -};
+     -
+    @@ for-each-ref.h (new)
+     +#ifndef FOR_EACH_REF_H
+     +#define FOR_EACH_REF_H
+     +
+    ++struct repository;
+    ++
+     +/*
+     + * Shared usage string for options common to git-for-each-ref(1)
+     + * and git-refs-list(1). The command-specific part (e.g., "git refs list ")
+    @@ for-each-ref.h (new)
+     +		      struct repository *repo, const char *const *usage);
+     +
+     +#endif /* FOR_EACH_REF_H */
+    -
+    - ## t/t0450/adoc-help-mismatches ##
+    -@@ t/t0450/adoc-help-mismatches: fast-export
+    - fast-import
+    - fetch-pack
+    - fmt-merge-msg
+    --for-each-ref
+    - format-patch
+    - fsck-objects
+    - fsmonitor--daemon
+3:  1a15cd454b = 4:  97088dab96 builtin/refs: add list subcommand
+4:  29c41d682b = 5:  abe9df9c4f t6300: refactor tests to be shareable
+5:  0fd1f714c9 = 6:  a037a47dcd t: add test for git refs list subcommand
+-- 
+2.34.1
+
