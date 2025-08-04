@@ -1,97 +1,45 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF001F9F7A
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 15:35:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A834846F
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 15:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754321713; cv=none; b=JVNzEQxNI4TNagrRxYJ4vmLZc13ImybUYSYpyqXvvlx57/ZKEye2E9swuEJVBHDAKZyE+qwMsrjCe/wb7RvsiHx8N6GmLIeLP6jyRz7rkGd4KRqzgsmxcXrPY2D63LkgK2I/hBJHHLIxnVGGUHDhL01L4PDuR5EhrpU5cv2f5so=
+	t=1754321887; cv=none; b=EMDwas79OKo07OWe1nfGrPUlFtA5zw1ofFRVo4UC/h7zF1z3S03SHcD7y4i3cd3UdUBtzLArT8BQuTrnz9bDjonZ7SBDJU/2WhkIOF8x4shKPETsHTrSJ+IAPeOn4/aY0+p39prX5MpenB8POC9qsskL06JqskusQKqvaDtl09o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754321713; c=relaxed/simple;
-	bh=nsbtz4GDMvOTHkj2qyNfvh5MKWTZvOoVa8P/fgEVPF4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oeVXbcJJ4kt0o0F5Z0yU4f1YnB02z09KXoChitYkjTDPSCmMzZmoeLnbhOYpPWpPQ/gR9Vt0JHMGQXPJJXbZat7DmaT0Q+sONqKF7Dcxh0pYBNT9/1MBDRYaMYi8fFQv9RemPNQM1vZOD+FEu5/mXdqmF+Dpe2gp7XUxFfvQ2uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IFscuYfz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KqRShrwZ; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754321887; c=relaxed/simple;
+	bh=qvuwjRRSuTm/tk6Mop7hdGFAPeDX+eL7GnZ7aaf8LNc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lS6mQsGYJUUB3BsUL/4gDWaBoZmlPu3RIfaDXe9mfb7jqL6S1VfX3MxwgkFsheaPkcSGOe4up+UKpLcLRm2qSmUaTXFX5mmHxxcBHYFRyIQjR1cxzp63atIzValkoTxWFMrDW+TqiI/BUuWT+58sCixCOUZcwlg8oYsip4l709I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Da1NjNzo; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IFscuYfz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KqRShrwZ"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7B5C8EC01A5;
-	Mon,  4 Aug 2025 11:35:09 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 04 Aug 2025 11:35:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1754321709;
-	 x=1754408109; bh=Ihf6f2uwaijqugSEKhVc778O2XtU0CHtGKw0VNfz0eo=; b=
-	IFscuYfz3+OBa0cGJuyErKA3V7T7+1CzuCdZHBPY72Ig2JDtWsWXSlDD1K/WilEN
-	VzNyB6m6LbjAHZDB9TpT/1wtvbjKfsIkJHH9wvZ1n4k0jYfVTwZ+NhT0EQzRM5NH
-	4jjUHbm6t5AGimO634C3pWezQW6A+EcEIKF45jlW1MLr5K4uXHyV8qTwztcIvr6n
-	FfEEenVNOgx2Lf5MelNvaUaWvLBtoGlwxBuEjTMqGfOd7MQNvKBwGjhEJfzeD9no
-	xXUXo2RzLDzDA1ZQhL7t1jrs0oJt6/UWkx49PIPP/hsryJiukcx5bO6gfoTqf2Bt
-	C8GK6YjAWjO2LbblT3IDjQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754321709; x=
-	1754408109; bh=Ihf6f2uwaijqugSEKhVc778O2XtU0CHtGKw0VNfz0eo=; b=K
-	qRShrwZB9zA6BKATqVY2E/iljs1ciUqrCov6AlqbzTwdSxapYS6mVhUIHsepRRd1
-	3ebUcOFlEr0TUSq/VPP5MBeGO2sQzpZvE7s2g2UeoBq4MZkHlAhZiWaTIeQznErh
-	mFH2qrlRD8VaTNNRxxFqTtdgaubfJ13appvnt1Nj+qJ3gacmObdngsusLp+gsT9Q
-	Ce448UXH5fOAKJXxj1XvIYlHdeyMKfXgZU2wYIM3VdMYUOItsT1QIZfIWF3aUt7K
-	y+lDuYcYvCUSeHNjnpYASsLGNBqKitFIL1NGjWYU6oGjSAhqZXrgB0obI5p395l5
-	ZBbIvDwTten3178sP+D8w==
-X-ME-Sender: <xms:LdOQaAma_hwYHlx5OYwYX_R00sUdVqco4VVDscUoV2wHcBsnxj5JOQ>
-    <xme:LdOQaMuANWx0mdQRqpl6gZ2KvbzbnOL3Y9DHu0P5oaxK63zCH0FuNF6DkbUjeb1g0
-    ldTAH6r4HX4R_pqlg>
-X-ME-Received: <xmr:LdOQaObtLve0TZMK31WkfKbutHwusbJXZdGDjqDiry4e0A32Dy5QQl-pBaBveRhRFDtV36L_IOqrPBS7BZ1WoVyjGlS7xvkhsEe-38E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduuddvieejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepmhgvvghtshhonhhifedtudejsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hpshesphhkshdrihhmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehj
-    ohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:LdOQaMAeQK4me3m8HV2IWY0dQMA_EhpBdGnfSZ91vV-KfBAQ7U3NFQ>
-    <xmx:LdOQaO9Nj7ctDf4KbOfd674Y1deNxpxaKyvwVJHluh2Ww7xax-XDgA>
-    <xmx:LdOQaATlY8uJl8DnJbfVNAfRR9cNeuc0nTjlknR8si9WnubZgovcBA>
-    <xmx:LdOQaKUBxmimIKV3aAz2G4Y1DpS4FvB8SDvS9TEahw8V6HCJyH-Xtg>
-    <xmx:LdOQaP7VCjuobs8eN2J2-YYrj-Mh0J2nRDnkZkAaFZIGuyLmk-lcP795>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Aug 2025 11:35:08 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Meet Soni <meetsoni3017@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
-  shejialuo@gmail.com,  karthik.188@gmail.com,  sunshine@sunshineco.com,
-  John Cai <johncai86@gmail.com>
-Subject: Re: [GSoC][RFC PATCH v4 3/5] builtin/refs: add list subcommand
-In-Reply-To: <61933769-1992-473e-8d0b-8cd6946e80ce@gmail.com> (Phillip Wood's
-	message of "Mon, 4 Aug 2025 10:27:56 +0100")
-References: <20250723064313.29866-1-meetsoni3017@gmail.com>
-	<20250731090040.1625303-1-meetsoni3017@gmail.com>
-	<20250731090040.1625303-4-meetsoni3017@gmail.com>
-	<2d2f823d-6e85-44a0-85d2-d45d4dc287fc@gmail.com>
-	<xmqqseibm7ap.fsf@gitster.g>
-	<c4d9b25a-2a62-41bf-90e6-455c62b03aa3@gmail.com>
-	<61933769-1992-473e-8d0b-8cd6946e80ce@gmail.com>
-Date: Mon, 04 Aug 2025 08:35:07 -0700
-Message-ID: <xmqqh5yn6qxg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Da1NjNzo"
+Received: (qmail 1916 invoked by uid 109); 4 Aug 2025 15:38:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=qvuwjRRSuTm/tk6Mop7hdGFAPeDX+eL7GnZ7aaf8LNc=; b=Da1NjNzop07FiUmBUDhUey1SqKiUWIH7jFwCwUA7worXDF+5wWZs+5n+XfMAwHZN7KDHPeb3RmDvtybx2yr6JieEQi6cAWJbS1ykP/oAEKp2gtzdQE6ecG/uZBffyt2YOu2/AgCo/0d4+GhbAzRtYXUoA0nFCKQ0loNHLn+z0JWvNF8XfQu2EPhVCnVA8j85uw7axIx3g6XEa3ac08ybucleKsy4UOBjy8CLbBYyLaMUnI+PHkDJUqwSUrpp+L0k11aXA/INcsRtLoK2nupVqGFyWJ1tv1iS9MPxBSgb0qvueyRiMC3o0/sdWgfzkAS7LQ00Z7TBwMpwQWgNvKVEcA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 04 Aug 2025 15:38:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21416 invoked by uid 111); 4 Aug 2025 15:38:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 Aug 2025 11:38:04 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 4 Aug 2025 11:38:03 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Toon Claes <toon@iotcl.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>
+Subject: Re: [PATCH v4 7/9] refs/files: detect race when generating reflog
+ entry for HEAD
+Message-ID: <20250804153803.GB109984@coredump.intra.peff.net>
+References: <20250804-pks-reflog-append-v4-0-13213fef7200@pks.im>
+ <20250804-pks-reflog-append-v4-7-13213fef7200@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -99,48 +47,201 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <20250804-pks-reflog-append-v4-7-13213fef7200@pks.im>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Mon, Aug 04, 2025 at 11:46:07AM +0200, Patrick Steinhardt wrote:
 
-> On 01/08/2025 16:49, Phillip Wood wrote:
->> On 01/08/2025 15:43, Junio C Hamano wrote:
->>> Phillip Wood <phillip.wood123@gmail.com> writes:
->>>
->>> What does a double-asterisk currently do in these patterns?
->> refs/heads/m** seems to behave like refs/heads/m*. I'm a bit
->> surprised by that as for-each-ref seems to set WM_PATHNAME and I
->> thought that our wildmatch code used '**' to match any character in
->> that case.
->
-> I'd forgotten the rules for '**' - it must come after a slash and be
-> followed by a slash if it is not at the end of a pattern otherwise it
-> is silently converted to '*'. I wish our wildmatch code at least
-> warned when it did that. So one can query all the branches beginning
-> with "m" by passing
->
->     'refs/heads/m*' 'refs/heads/m*/**'
->
-> which isn't as convenient as it could be but it is possible.
+> +		/*
+> +		 * Check that "HEAD" didn't racily change since we have looked
+> +		 * it up. If it did we remove the reflog-only updateg from the
+> +		 * transaction again.
+> +		 *
+> +		 * Note that this does not catch all races: if "HEAD" was
+> +		 * racily changed to point to one of the refs part of the
+> +		 * transaction then we would miss writing the split reflog
+> +		 * entry for "HEAD".
+> +		 */
+> +		if (!(update->type & REF_ISSYMREF) ||
+> +		    strcmp(update->parent_update->refname, referent.buf)) {
+> +			if (unlock_ref(lock))
+> +				strmap_remove(&backend_data->ref_locks,
+> +					      update->refname, 0);
+> +
+> +			memmove(transaction->updates + update_idx,
+> +				transaction->updates + update_idx + 1,
+> +				(transaction->nr - update_idx - 1) * sizeof(*transaction->updates));
+> +			transaction->nr--;
+> +
+> +			ret = 1;
+> +			goto out;
+> +		}
 
-As long as the rules are consistent and understandable (once you
-understand it, that is), then I am perfectly fine.  And "** is
-written as /**/ (but you can omit slashes at either ends)" I find
-acceptable.
+OK, so this is basically the same as the patch you posted earlier. Let's
+see how it fares with my hacky GIT_TEST_FORCE_SPLIT_HEAD_UPDATE patch:
 
->>>   - "refs/heads/m*" matches all local branches whose name starts with
->>>     'm' like 'morning', but not the ones inside subhierarchies that
->>>     start with 'm' like 'mid/night'.
->>>
->>>   - "refs/heads/m**" matches all local branches whose name starts
->>>     with 'm' and in the ones inside subhierarchies that start with
->>>     'm'.
->> That sounds like a good idea
->
-> Now I'm not so sure.
+  $ GIT_TEST_FORCE_SPLIT_HEAD_UPDATE=1 git branch foo HEAD^
+  fatal:
 
-As long as the existing rule is serviceable (and you seem to have
-found that it is), we do not need to make such a change.
+Yikes. I'm not sure if there's a bug here, or if my hacky patch is
+violating some other assumption. It looks like we get to the die() call
+in branch.c:create_branch() because the transaction reports failure, but
+with an empty err strbuf.
 
-Thanks for thinking it through.
+Ah, I think I see it. When we return from lock_ref_for_update(), we've
+set "ret" to "1", indicating we are skipping the update. But then we do
+this:
 
+  if (ret > 0)
+	continue;
+
+I think there are two problems there:
+
+  1. That "ret" is also used as our return from
+     files_transaction_prepare(). So if this is the last update in the
+     transaction, then we return "1", rather than "0" for success, and
+     the caller thinks there was an error.
+
+  2. If it's not the last transaction, then we go to the next element in
+     the loop. But because it's a for-loop, we still increment "i",
+     which is wrong (because we shrunk the transaction list). We need to
+     check that "i" again.
+
+So maybe:
+
+@@ -2910,8 +2914,11 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 					  head_ref, &refnames_to_check,
+ 					  err);
+ 		if (ret) {
+-			if (ret > 0)
++			if (ret > 0) {
++				ret = 0; /* not an error; we skipped it */
++				i--; /* we shrunk the list */
+ 				continue;
++			}
+ 			if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
+ 				strbuf_reset(err);
+ 				ret = 0;
+
+I confirmed that fixes case (1). I guess I could test case (2) with a
+bigger transaction involving multiple refs, but it's awkward because my
+"force split update" patch would try to create multiple HEAD updates. :-/
+
+I guess maybe it should be "pretend HEAD is this", like so:
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 851b1b33f4..564b77d0da 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2895,6 +2895,14 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 		FREE_AND_NULL(head_ref);
+ 	}
+ 
++	{
++		const char *v = getenv("GIT_TEST_PRETEND_SPLIT_HEAD");
++		if (v) {
++			free(head_ref);
++			head_ref = xstrdup(v);
++		}
++	}
++
+ 	/*
+ 	 * Acquire all locks, verify old values if provided, check
+ 	 * that new values are valid, and write new values to the
+
+We have to be a bit tricky here. The split head update is always added
+at the end during the transaction preparation. So we need a situation
+where another update is added _after_ that. I guess it would be another
+symref split (but done by updating the symref).
+
+So:
+
+  git symbolic-ref refs/heads/SYMREF refs/heads/dest
+  (
+    echo "create refs/heads/foo HEAD"
+    echo "create refs/heads/SYMREF HEAD"
+  ) |
+  GIT_TEST_PRETEND_SPLIT_HEAD=refs/heads/foo git update-ref --stdin
+
+ends up with four updates:
+
+  - the original create foo
+  - the original create SYMREF
+  - the reflog update of HEAD from split_head_update()
+  - the update of refs/heads/dest from split_symref_update()
+
+And indeed, running that through the debugger shows that we'd otherwise
+skip the final update with your patch (but the extra "i--" fixes it).
+
+I also tried this with SANITIZE=leak, and I think you'd need something
+like this, as well:
+
+diff --git a/refs.c b/refs.c
+index 946eb48941..27c182e107 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1184,6 +1184,15 @@ struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
+ 	return tr;
+ }
+ 
++void ref_update_free(struct ref_update *u)
++{
++	free(u->msg);
++	free(u->committer_info);
++	free((char *)u->new_target);
++	free((char *)u->old_target);
++	free(u);
++}
++
+ void ref_transaction_free(struct ref_transaction *transaction)
+ {
+ 	size_t i;
+@@ -1204,13 +1213,8 @@ void ref_transaction_free(struct ref_transaction *transaction)
+ 		break;
+ 	}
+ 
+-	for (i = 0; i < transaction->nr; i++) {
+-		free(transaction->updates[i]->msg);
+-		free(transaction->updates[i]->committer_info);
+-		free((char *)transaction->updates[i]->new_target);
+-		free((char *)transaction->updates[i]->old_target);
+-		free(transaction->updates[i]);
+-	}
++	for (i = 0; i < transaction->nr; i++)
++		ref_update_free(transaction->updates[i]);
+ 
+ 	if (transaction->rejections)
+ 		free(transaction->rejections->update_indices);
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 851b1b33f4..0246715383 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2640,6 +2640,7 @@ static enum ref_transaction_error lock_ref_for_update(struct files_ref_store *re
+ 				transaction->updates + update_idx + 1,
+ 				(transaction->nr - update_idx - 1) * sizeof(*transaction->updates));
+ 			transaction->nr--;
++			ref_update_free(update);
+ 
+ 			ret = 1;
+ 			goto out;
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 95a4dc3902..6b5895a3b3 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -144,6 +144,8 @@ struct ref_update {
+ 	const char refname[FLEX_ARRAY];
+ };
+ 
++void ref_update_free(struct ref_update *);
++
+ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 		      struct object_id *oid, struct strbuf *referent,
+ 		      unsigned int *type, int *failure_errno);
+
+It's a little hard to see that freeing update inside
+lock_ref_for_update() is safe (but we "goto out" after and don't look at
+it again). I think it would all be a bit more obvious if
+lock_ref_for_update() just returned 1 for "skip this", and then the
+caller actually shrunk the transaction list.
+
+-Peff
