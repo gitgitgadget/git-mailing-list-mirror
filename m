@@ -1,81 +1,66 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565FD23ABBD
-	for <git@vger.kernel.org>; Mon,  4 Aug 2025 09:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CB024503B
+	for <git@vger.kernel.org>; Mon,  4 Aug 2025 10:07:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754300829; cv=none; b=HxAwasRvWGf/KDYve3yBGxAS29Ti/fhWtMDfnhMtFWhlkZQDoI1PmSEUQ5fQaJTBfqHTIjDS2YYwM8xEtXNJK5sKJ/UAdE832fep52/xEfzlEkif6w4SrBOKphyS6XG5LpMWlXbKpNEm0PWDQBtti7PvNBtaTjECMuKRL1uARSo=
+	t=1754302041; cv=none; b=bt3wj5TA411XK/2bBetBKzajrI9cvRcztnTnSYMbFgg0E+9i8Pc7vk9ewHLMV6MhfPeH+Q2wbodjEpOVrQVndbqPiw8lfC9I8dZwDNhycFWGzDgrT5PIrB+esRPXxyjQLrO9JFqaZjyVYx7EZLlGc+sIGmv/OEybDQ42aZz5CDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754300829; c=relaxed/simple;
-	bh=KQTW2HoSZUNQ9ZElH427FbH872cvtWdTxun/LQqNmd8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MDFE3iMtYpa8o5j7H8+uPiDZ1fhcrjBXW0pZp8aED0CTrMCatbhcgoH1bqTLwh23jl/GMypBDs1dwljx1YfxG0S13+F8F8aO6LIksbz7cQszoyPWxu6zMlbmIRoWRnxnSJbHi0IA/3/4To5A4KRFfDiLsSU9ZTjGy/FOSX0t9DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lH+U7cKm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iILNqudk; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1754302041; c=relaxed/simple;
+	bh=5j5r4rYGwQ+oGdV5iYtZut93ADLQ54cYHJGpTKC7Tws=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=SPYmx1eo7ACJnHqy6+4L3d4W1HjFdc25vM7mW2l7ILa0HRQ+5R+aFTYMWZgdgGyMz/0iaO/FSqq4opXcxVjO51KUy6s/M8udxSMzFiwXCENYSfDSlgoZg+LX309ReAgCcZs8b+dgH5f8lXNeyIdvluGIuxNGGUowcgevygZ/hf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XH0OIrk9; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lH+U7cKm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iILNqudk"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id AE5D31D000F6;
-	Mon,  4 Aug 2025 05:47:07 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Mon, 04 Aug 2025 05:47:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1754300827; x=1754387227; bh=yg8mtAfft4
-	KHr/B6/jgIXxRRoZH7DFnRvZIOWoz7cwA=; b=lH+U7cKmGYe1+pQxgKFgM3Qdon
-	mQk8s8/TV3ljHhrjrBmqaYmGIImSRMVBguWnlXeWqyO4H4WAz4bd3pLe2qAw6NsR
-	BuxcUOsHW5ORyGN3JpNcRHf8wy5KYmFs09p3G/S2g+Zd/2OjDKYJ/4YrYDfVcZBj
-	p1xRbs3FLDtsUKwoeVXOLgbcF9TQJDDiKn/4Qo1ehu3sULNvOLe7A7KYuDPBRSoH
-	4h9F5bVPMfDy718C8xW60B6P/5C+EUjQ9tgYHilrmT50ImPZpKqLg7dOesd+qmAg
-	ILQ6TyCDboa1dBHGsMZbikh2kuy+g3yWser/vo2yutO5g2hUROITm/zyK3Pw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754300827; x=1754387227; bh=yg8mtAfft4KHr/B6/jgIXxRRoZH7DFnRvZI
-	OWoz7cwA=; b=iILNqudkLuLq5t3U27kXlQ9+JM0AcA4D/33+TayPSaajh5nK1+j
-	kcZJmsag2um6oArt+9v18iSHwGTfD7BvOT2JBME1jsrM+tOZV1sQZFtWBSKzLkRy
-	zQ4cYQj/dcTQwqbx0ITwpLhYuMycC2XsPwINKZ94DABiraQNsnfGI10TLtNd/Mte
-	C6k3bYWbB0jYhoQmyNzWPFozDKzuYUhVgrhVOhh/49V2XMD5rydm/eh+gwuwIvau
-	ROD0Sg4F3Of9X0JVaLlj+wH1t2qUn/1/1oL2AAhLsSMVjeL27a1Ulf08NT+hNAXC
-	fFuIeA8fzaJIgmgJtbRUiyBV8b6gO3zyA4w==
-X-ME-Sender: <xms:m4GQaM1vWynW2ZqDeFcsIKucswc1Vk86iNAvq9qKx4qj8EG_7WV2iA>
-    <xme:m4GQaKXQ2s19w4e693eZDcZPcQZwodzmykaT4f8O55mt9RtMNQ9CvMh-C6j3C9GZj
-    TyGsAyXlV2NDYjXmQ>
-X-ME-Received: <xmr:m4GQaOWXhZRyCjSVspH8sY3H9JoYWMmls5a54DQIdqtRrEu0TxLP64EFLwXF_aHR6JznTVdT60bDjINy8CRfu85l0Kip2QQVCaPM94_HkvM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudduleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeduffevfffhvdeiuedvkeffkeekhfejhefhvd
-    ejudejteelgffgudeihfektdfhtdenucffohhmrghinhepmhgvrhhgvggurdhpshenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:m4GQaBfm1kokTmJ-C-HeBRL1L9waoKWReHJqSn55RFj5PWoYIdoNWg>
-    <xmx:m4GQaPUi_gkxlavHLP8YL6KsZEqgAu56HhhPXX_TmblRdGuqNbybbQ>
-    <xmx:m4GQaCcKTLIWY3h-oDpOrqy-kCj0ErtSeSXMOSF5H4uq4m4iHmr7WQ>
-    <xmx:m4GQaDMdosyddDNi4ZlsVtATmmF-EzlBXrjJY11wvMDFLev7cKLdnQ>
-    <xmx:m4GQaIa1RA16Oz3ZOLJuT7JMLrCXddn1kb8ZzVZo53yMfDul1AlMt61Z>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Aug 2025 05:47:06 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 40e8af0a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 4 Aug 2025 09:47:05 +0000 (UTC)
-Date: Mon, 4 Aug 2025 11:47:02 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
-Message-ID: <aJCBlnHp-db4Nd5w@pks.im>
-References: <xmqqms8fbilv.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XH0OIrk9"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2400b3008e8so6406855ad.3
+        for <git@vger.kernel.org>; Mon, 04 Aug 2025 03:07:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754302038; x=1754906838; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AQ3tBr+jp1kcgd5zspx7Hc2T9E3y8omtkCc8VbQIZWc=;
+        b=XH0OIrk9xFhjZsZsJ2i0tB5uiB0MGg036bt5A4aR1s4M3vhFox56YIkXQFeUc7PAsS
+         7ZRmdDyjM1GQU9mK1qUEeHV7xp4mtrzLvTAZ5D33JLNaEgUUt6NXtuKEpdlbdC2PiDhO
+         q91+RF8vPFNgtQ41NjUMikHbg/sDpv+mm+enf3U6KVK/O0fME7GRnWYLOZlDNjXTp6kO
+         aoBpHK5FDkCfpyRpYJrr34/+pC04dCVisIWRuvW6xf8WHygcsLKb8nlfr4LiOtYXuDLc
+         xc9r3g/lWb+i9tfnxuUMXMUBiNuRxANQUPts+t2FbD4TOnXMX4KcjTXNKdSMq7iGbLdC
+         o95w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754302038; x=1754906838;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AQ3tBr+jp1kcgd5zspx7Hc2T9E3y8omtkCc8VbQIZWc=;
+        b=YlRguWIiL/82pU0be6+FKJ0LhgHWk7GsNx6aI+vIeTi8K5FOY64sgWHO0W09iQyud/
+         DMNUwRzN0T33IXMrzF4hNgVWGT52PytlHVX84e28/fAG1pXqELH8z9zFo8tEiZit0BM9
+         ZGfNa/p9QnE52uXwt8dLX7VJOlwnQ0NrtFgYgli3XrqFb8Qw2zEoQRVxxRzY8HTCET6g
+         w8vf25LbC+pgMRKI3Aamig+TSW0lcv4mQm8f5JQFbg739SFfXTbbpBjX/aBb7Yppf3W0
+         P7XvyZlArFDl6RL/TDy/5Kw2Pm48RENk+c0pbEqAE9G0bsiQ7tI2Jef5cNM9nylZNl5h
+         AAaw==
+X-Gm-Message-State: AOJu0YyTvhJEafdJ3fuSekFEMPgpXn/qyTXoh8yhxfTkxrisKQWGVrpa
+	mbnAb4ZOYQpeNuIWo432Ugx/x+qYjZPlES+o/h1ENKOSWkB8U61ZPOHG5CzEMg==
+X-Gm-Gg: ASbGncvPDbb6upUdCgS+IBKDp10XF35trHdATvKU+9TkYWPHfCVEgxZyWKfav8xJARt
+	8zJQLdD+Yxut1IOHZbh4dEVRjJhv9UccrJsbblA46GRAGecVq26bJOb57Ern5c4a6sqE8+llLOC
+	kRdqy51a4nhcrOmeITfcDKEXfvtbvOTwD1yS3OVids8K3ehbbLRkHFVidN9EDv3DA/3VlxoUMxz
+	B5ataNrA9zanHCAoq686JsDbw9vjtxBpQ7bw1lLrEHTjB2Os5BXPkPPjfJOwe1N8A3O91U7RvHw
+	x3aBHJBeKAtKo75QAuT5sLJC+5emilOeslODg5ZU3hfTGl/NnGjovyHbqgwHHcr9uQrOPPyG+AL
+	8NmRGu6nRM2wRb06uxyeIscIV6rT3xQ==
+X-Google-Smtp-Source: AGHT+IHo319yO8mCQLb+/bVLJ17WiibhljTr+cukf+EcFpEB5GH8EkMvN/KQjiO8MFIVpX8EHg5cRg==
+X-Received: by 2002:a17:902:e543:b0:240:9ab5:4cae with SMTP id d9443c01a7336-24246f2cbc1mr52113285ad.1.1754302038286;
+        Mon, 04 Aug 2025 03:07:18 -0700 (PDT)
+Received: from generichostname ([2601:645:8300:3b10:e54:15ff:fe8e:caa6])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1f101e1sm104947065ad.58.2025.08.04.03.07.17
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Aug 2025 03:07:17 -0700 (PDT)
+Date: Mon, 4 Aug 2025 03:07:15 -0700
+From: Denton Liu <liu.denton@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH] fix -Wmaybe-uninitialized with -Og
+Message-ID: <d03308e9474f5e26fd4a5494ec243a278e971443.1754302009.git.liu.denton@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,51 +69,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqms8fbilv.fsf@gitster.g>
 
-On Mon, Aug 04, 2025 at 01:23:40AM -0700, Junio C Hamano wrote:
-> * ps/remote-rename-fix (2025-07-31) 7 commits
->  - builtin/remote: only iterate through refs that are to be renamed
->  - builtin/remote: rework how remote refs get renamed
->  - builtin/remote: determine whether refs need renaming early on
->  - builtin/remote: fix sign comparison warnings
->  - refs: simplify logic when migrating reflog entries
->  - refs: pass refname when invoking reflog entry callback
->  - Merge branch 'ps/reflog-migrate-fixes' into ps/remote-rename-fix
->  (this branch uses ps/reflog-migrate-fixes.)
-> 
->  "git remote rename origin upstream" failed to move origin/HEAD to
->  upstream/HEAD when origin/HEAD is unborn and performed other
->  renames extremely inefficiently, which has been corrected.
-> 
->  Will merge to 'next'?
->  source: <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
+When building with -Og on gcc 15.1.1, the build produces two warnings.
+Even though in practice, these codepaths can't actually be hit while the
+variables are uninitialized, satisfy the compiler by initializing the
+variables.
 
-I've sent one more version of this patch series for a couple of final
-finishing touches. If Peff is happy with that version I'm happy to see
-it merged.
+This also acts as defensive programming since these codepaths are a
+little bit spaghetti. If someone in the future makes a mistake and
+causes the branch with the uninitialized variable to be hit, at least we
+won't experience undefined behaviour.
 
-> * ps/reflog-migrate-fixes (2025-07-29) 9 commits
->  - refs: fix invalid old object IDs when migrating reflogs
->  - refs: stop unsetting REF_HAVE_OLD for log-only updates
->  - refs/files: detect race when generating reflog entry for HEAD
->  - refs: fix identity for migrated reflogs
->  - ident: fix type of string length parameter
->  - builtin/reflog: implement subcommand to write new entries
->  - refs: export `ref_transaction_update_reflog()`
->  - builtin/reflog: improve grouping of subcommands
->  - Documentation/git-reflog: convert to use synopsis type
->  (this branch is used by ps/remote-rename-fix.)
-> 
->  "git refs migrate" to migrate the reflog entries from a refs
->  backend to another had a handful of bugs squashed.
-> 
->  Will merge to 'next'?
->  source: <20250729-pks-reflog-append-v3-0-9614d310f073@pks.im>
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ builtin/remote.c         | 2 +-
+ t/unit-tests/clar/clar.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-I'm happy with this version, so if the above goes in I think this one
-here can also be merged.
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 5dd6cbbaee..cc462677e1 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1463,7 +1463,7 @@ static int set_head(int argc, const char **argv, const char *prefix,
+ 		b_local_head = STRBUF_INIT;
+ 	char *head_name = NULL;
+ 	struct ref_store *refs = get_main_ref_store(the_repository);
+-	struct remote *remote;
++	struct remote *remote = NULL;
+ 
+ 	struct option options[] = {
+ 		OPT_BOOL('a', "auto", &opt_a,
+diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c
+index d54e455367..03a3aa8e87 100644
+--- a/t/unit-tests/clar/clar.c
++++ b/t/unit-tests/clar/clar.c
+@@ -350,7 +350,7 @@ static void
+ clar_run_suite(const struct clar_suite *suite, const char *filter)
+ {
+ 	const struct clar_func *test = suite->tests;
+-	size_t i, matchlen;
++	size_t i, matchlen = 0;
+ 	struct clar_report *report;
+ 	int exact = 0;
+ 
+-- 
+2.50.1
 
-Thanks!
-
-Patrick
