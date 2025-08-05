@@ -1,55 +1,55 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2547279DCD
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 15:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A88279903
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 15:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754406714; cv=none; b=n8UMSzngkjK0aouEpcUl7XV0gMAw7eijBOrTLASisRGt+bkWlooCjs9X94EtLll7EilcThvl5U8vFAIKkW1yWOPAtYA5zhp+upXLzoDaJ7yxxNLj6Bi9SqGWCmvQT5YjY74L2FhWt+QxbxxRdJj4vBp7WBhSkOvy3DxYKR8b2Ns=
+	t=1754406717; cv=none; b=mF+gG+FdqvFuGUX1uWiZboCv6qX6rJJEL6h7qXqBlTX4BILtX9+gKZFJ1nK7/lXQj5AQvZfWZ+T5HhnUYfpToOGV0GmCuvqyzjpfZPP2fODsJl7U3TcZGWTTcYJ2Pyo8lT2Moo4Wz8Ct/RmDhVOHS9XYHw2RK4dZ5hDIeelIucs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754406714; c=relaxed/simple;
-	bh=Hc11O7oG0nRH74yo2fzNLygCJa5qgWnS67d/Nk2zVaY=;
+	s=arc-20240116; t=1754406717; c=relaxed/simple;
+	bh=bBL7lzZHA03TaonPOqm0Ud0vhHF9cvXRn6i3VYwHeWw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rips1OW80U1kSW7UXeZBACxeC5rASc9e+RKgd9Z0qBRgiqg0dCdZaJbtOTSnWH/+0DSBywnlSgjmwb6aTxcB1piEHfyQTATrgsQqV4TIUqjCzdtJ+e14HFUK/r+XB42Dg3XeBINP0JxCY088DC7jmYtGlnndXmwXRRWT9munOUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LDRvsAW1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hV3gyPGw; arc=none smtp.client-ip=103.168.172.155
+	 In-Reply-To:To:Cc; b=ELyMlNBVIcXWCcgDdM6GDlPX7czvaGmYTUjYqSdsd9ZgBaLolXf8iXzqU6qiHpnXoDi4jLn6qEg5ZaxMN9Sj5vHkEEGkYWp3Ury1PIm76n5tn9RXIKTbUNPxewuRQ9VPZ7HT8y8iBh12Sh+PeI6nK1q628vfJJFk6GQFyP+r0Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BudQyNYr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lk9Dx8m5; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LDRvsAW1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hV3gyPGw"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F12B3140004C;
-	Tue,  5 Aug 2025 11:11:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BudQyNYr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lk9Dx8m5"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C044F140014B;
+	Tue,  5 Aug 2025 11:11:54 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 05 Aug 2025 11:11:51 -0400
+  by phl-compute-08.internal (MEProxy); Tue, 05 Aug 2025 11:11:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754406711;
-	 x=1754493111; bh=unEgfeLs+zTBUArnihMrcWP1mZCFpRpWgWdPgmpfT8I=; b=
-	LDRvsAW1oN1GxssoIwZlEFLi4zju3/rX7P7y7FRTCAlV6VLwrLaIyPVW/sKCTb5l
-	5h4FKaVADBNGlsUjKoWlebhNElZEdsbY/sacV/z1CYlX8gDLrI1N2+yGOvS7m5Ei
-	zL7YFTHnRyVohvcc8eRst9pos1NA2a4PgQGbpxJrggdCV4cPnQ1E3NMl/WF3haBH
-	yU0yWJkLhILtgG2iPLljEexjlApeB2XnFq5ASRuVxyJbjY3tBnQKcwng/dIooUFk
-	/CP10sh6sGHTF4+cp5r+flm5jowOoj9MCrRYMkrmmM96IzyCpT3E5vlSMX/4aFsz
-	IM/SdOqwe5Whak0JE1+lJA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754406714;
+	 x=1754493114; bh=iVjEpcd4liAqcJjXvLA23M74fFWXeAoAheuzsVvvBCs=; b=
+	BudQyNYrzC6kCvsx+H+v+PmAuWVJqEZuo6HHO3lUsj2KZh12GPu7W5ogDwXY4Skx
+	25nFOTQtOZAu3NdvhNpsKiPjSp8a5syjvlFKTNQDGi7eO4CgVEl8TteKGpAH+Ni5
+	VUdlF/8hesxyUFRcIk6jA4F1yWhakbd6zYr+A7wPzERX0OQrF2gLpQrLb/PWlIBm
+	jsXyZBnpoAPu+aOrB9ZjXNNG8/IA+C00e2GLJciSIriRv0ng9u+gezPzawsWpxQD
+	sEpb/yMYkQFQgMJNWKFppsuOMdP1zPBWbZT0QPYgVYBGagV0e8IGaQVowcsDO+iJ
+	Wzyy4xtOTdcn0pG0u2JBEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754406711; x=
-	1754493111; bh=unEgfeLs+zTBUArnihMrcWP1mZCFpRpWgWdPgmpfT8I=; b=h
-	V3gyPGw3TXbOja3qRlmM7ThwZYX32G97EnRE2YUxcLd5uhAPyHw308Kv/cBwnycE
-	Ibshrrqt8EeKBGdMpC/uwRkUCD3GaYUdBQrqg5nylcjq4slrdZwnJkV9zuyi4bkD
-	UCMWcUZfd4YvVP5te/5l24j2VXcfpG8/K7tw+BdFfGHUhps59ncMLyIdTxGH0YRT
-	wyNwysU1f5vYwbyb4qym8lL0SVKHhnLLg+lZvm46B+Mf3Yt0MTEZx0rslaQsE/uW
-	t9HM176L02uhpauVAXgIAmCLpzZsqsDpkDAioFvdCrvUbrZ9xKYBqP0C9kE8iYRI
-	gz3xhVr2fIASAMOmUxFZA==
-X-ME-Sender: <xms:Nx-SaIqVXdQKQqcBN2AzerVjpMHsyB1a3sqfi0TfpQbBO8BZ1nF8yg>
-    <xme:Nx-SaLh8iI5nuCSwfKyEN3RJWbSQNg8OlStH4ZqFACBYnxmzT-sKZK3sBxn-5qtBk
-    tfV5c9zAflLWcno2A>
-X-ME-Received: <xmr:Nx-SaM8fV-fzZNvYlWFB4SRJyUhtvQzWnN6jefCW5BhKd4B5VOV3wry8x4BgjTYrtiiPFaQDqfl3OayMTuFXBMB7dJYPLbD0g4EqfOKGOQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754406714; x=
+	1754493114; bh=iVjEpcd4liAqcJjXvLA23M74fFWXeAoAheuzsVvvBCs=; b=l
+	k9Dx8m5957k4v6+vaaxjP0DWyEYWDzmtSvfKgb6mnCGc3UTwdQbuDbRe5ViBba1j
+	IGOIMdL2Y+Zs2RLujdfYCVGEv7su5oqq5YtZb3pWCjnWUpdhhSxZNGf4pmBOfh05
+	zaAVE5bwCScw+WAGq6TYT1rpKtPLxcQ517RDVg4QoLsjZWC3CUmNRkSvwuR0RHez
+	OOu9G3GHu9+sJz0qjOxmnva9m4Bo7sz1EJNUOQ+fLQksS9exGk2mqPo8XuVBHsYW
+	I0kQeLDdH31cyMPKOE+QIMJ1s64ioIlqiOsTmHWew/OmYMpDBXsgJv7Ba5ozzFVP
+	IG+GblpUR3ga0Ey2U2FlA==
+X-ME-Sender: <xms:Oh-SaLJwQZO9wx4_6SLZYUDds_c4Z-t6EbvPaAW1QRCwT4ahIyN3TQ>
+    <xme:Oh-SaMC8UkWPukt2ns-oUK1ulAgKTcdsa9YSv3U_E7oLdIktC_orPzovDmXIzDa-6
+    -V5QK4lr1gq7rQKqw>
+X-ME-Received: <xmr:Oh-SaDeTW2gXkJZ-QgnIswYhZGGAn5vk8CJyApRU_29vn_I38Cqorl7pf_scMOSo_GiuIJGaw24Fd5KNHBWY8oeoDNmodqZPm1FbW9k5Gg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudehhedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,27 +58,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudehhedtucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdr
-    tghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtth
-    hopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeek
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:Nx-SaPW0AB0RMi5DtpeZM21ja3LCXoD3F_yMwU6HeB21vV1ZFUuFgQ>
-    <xmx:Nx-SaIDgXlX3kjpbgA23TR5N6i2xjAE1TGbnupmcMuLspmrVnbOmKQ>
-    <xmx:Nx-SaMGSH1Yx6gCwIeAxVvpjugezhLX5rMOCjxRZ05LNVDaeCLm0DQ>
-    <xmx:Nx-SaB7JAinH_627qne4vpFTKkqCnUXjJQrnGzaWDcRG6QXf85i0tw>
-    <xmx:Nx-SaMFZkBQ5lHXHDnPxoWLIlxutX8d_l61u5bV-2gYOfB5LdQa2--UB>
+    thhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonh
+    esihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
+    grihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtth
+    hopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Oh-SaD1IdZ-psKcmlKASqsk8ApvfnBYUMu0lXt4_Jd2gS1ZH-NwCOw>
+    <xmx:Oh-SaChGtNNVzN5qPd7pZB0K0ioNcipjWjoOrJ3-tv0I6uAJsxJygQ>
+    <xmx:Oh-SaEnLsEA17hYSQc-mlHervPovt5FyfwcCvbUtJcAXYlpTyuYMcg>
+    <xmx:Oh-SaAYLAo_kX0AzKXQrY6vuf6JQQHnbAAXNvwl3RhuU0ih8osMOHg>
+    <xmx:Oh-SaG_Af1SGRGNR4sppMoXyxG9OYqnjBCD-G_TsJnGrANz3BVt4sQhj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Aug 2025 11:11:50 -0400 (EDT)
+ 5 Aug 2025 11:11:53 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bfced13e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 5 Aug 2025 15:11:49 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 73298511 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 5 Aug 2025 15:11:52 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 05 Aug 2025 17:11:32 +0200
-Subject: [PATCH v5 2/9] builtin/reflog: improve grouping of subcommands
+Date: Tue, 05 Aug 2025 17:11:33 +0200
+Subject: [PATCH v5 3/9] refs: export `ref_transaction_update_reflog()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250805-pks-reflog-append-v5-2-050997db09d5@pks.im>
+Message-Id: <20250805-pks-reflog-append-v5-3-050997db09d5@pks.im>
 References: <20250805-pks-reflog-append-v5-0-050997db09d5@pks.im>
 In-Reply-To: <20250805-pks-reflog-append-v5-0-050997db09d5@pks.im>
 To: git@vger.kernel.org
@@ -99,215 +99,98 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Ben Knoble <ben.knoble@gmail.com>
 X-Mailer: b4 0.14.2
 
-The way subcommands of git-reflog(1) are laid out does not make any
-immediate sense. Reorder them such that read-only subcommands precede
-writing commands for a bit more structure.
+In a subsequent commit we'll add another user that wants to write reflog
+entries. This requires them to call `ref_transaction_update_reflog()`,
+but that function is local to "refs.c".
 
-Furthermore, move the "expire" subcommand last. This prepares for a
-subsequent change where we are about to introduce a new "write" command
-to append reflog entries. Like this, the writing subcommands are ordered
-such that those affecting a single reflog come before those spanning
-across all reflogs.
+Export the function to prepare for the change. While at it, drop the
+`flags` field, as all callers are for now expected to use the same flags
+anyway.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-reflog.adoc | 61 ++++++++++++++++++++++---------------------
- builtin/reflog.c              | 38 +++++++++++++--------------
- 2 files changed, 50 insertions(+), 49 deletions(-)
+ refs.c | 29 +++++++++++------------------
+ refs.h | 15 +++++++++++++++
+ 2 files changed, 26 insertions(+), 18 deletions(-)
 
-diff --git a/Documentation/git-reflog.adoc b/Documentation/git-reflog.adoc
-index 707a9b39ed..c3801b82fb 100644
---- a/Documentation/git-reflog.adoc
-+++ b/Documentation/git-reflog.adoc
-@@ -11,13 +11,13 @@ SYNOPSIS
- [synopsis]
- git reflog [show] [<log-options>] [<ref>]
- git reflog list
--git reflog expire [--expire=<time>] [--expire-unreachable=<time>]
--	[--rewrite] [--updateref] [--stale-fix]
--	[--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]
-+git reflog exists <ref>
- git reflog delete [--rewrite] [--updateref]
- 	[--dry-run | -n] [--verbose] <ref>@{<specifier>}...
- git reflog drop [--all [--single-worktree] | <refs>...]
--git reflog exists <ref>
-+git reflog expire [--expire=<time>] [--expire-unreachable=<time>]
-+	[--rewrite] [--updateref] [--stale-fix]
-+	[--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]
+diff --git a/refs.c b/refs.c
+index dce5c49ca2..8aa9f7236a 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1371,27 +1371,21 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ 	return 0;
+ }
  
- DESCRIPTION
- -----------
-@@ -43,11 +43,9 @@ actions, and in addition the `HEAD` reflog records branch switching.
+-/*
+- * Similar to`ref_transaction_update`, but this function is only for adding
+- * a reflog update. Supports providing custom committer information. The index
+- * field can be utiltized to order updates as desired. When not used, the
+- * updates default to being ordered by refname.
+- */
+-static int ref_transaction_update_reflog(struct ref_transaction *transaction,
+-					 const char *refname,
+-					 const struct object_id *new_oid,
+-					 const struct object_id *old_oid,
+-					 const char *committer_info,
+-					 unsigned int flags,
+-					 const char *msg,
+-					 uint64_t index,
+-					 struct strbuf *err)
++int ref_transaction_update_reflog(struct ref_transaction *transaction,
++				  const char *refname,
++				  const struct object_id *new_oid,
++				  const struct object_id *old_oid,
++				  const char *committer_info,
++				  const char *msg,
++				  uint64_t index,
++				  struct strbuf *err)
+ {
+ 	struct ref_update *update;
++	unsigned int flags;
  
- The "list" subcommand lists all refs which have a corresponding reflog.
+ 	assert(err);
  
--The "expire" subcommand prunes older reflog entries. Entries older
--than `expire` time, or entries older than `expire-unreachable` time
--and not reachable from the current tip, are removed from the reflog.
--This is typically not used directly by end users -- instead, see
--linkgit:git-gc[1].
-+The "exists" subcommand checks whether a ref has a reflog.  It exits
-+with zero status if the reflog exists, and non-zero status if it does
-+not.
+-	flags |= REF_LOG_ONLY | REF_FORCE_CREATE_REFLOG | REF_NO_DEREF;
++	flags = REF_HAVE_OLD | REF_HAVE_NEW | REF_LOG_ONLY | REF_FORCE_CREATE_REFLOG | REF_NO_DEREF;
  
- The "delete" subcommand deletes single entries from the reflog, but
- not the reflog itself. Its argument must be an _exact_ entry (e.g. "`git
-@@ -58,9 +56,11 @@ The "drop" subcommand completely removes the reflog for the specified
- references. This is in contrast to "expire" and "delete", both of which
- can be used to delete reflog entries, but not the reflog itself.
+ 	if (!transaction_refname_valid(refname, new_oid, flags, err))
+ 		return -1;
+@@ -3019,8 +3013,7 @@ static int migrate_one_reflog_entry(struct object_id *old_oid,
  
--The "exists" subcommand checks whether a ref has a reflog.  It exits
--with zero status if the reflog exists, and non-zero status if it does
--not.
-+The "expire" subcommand prunes older reflog entries. Entries older
-+than `expire` time, or entries older than `expire-unreachable` time
-+and not reachable from the current tip, are removed from the reflog.
-+This is typically not used directly by end users -- instead, see
-+linkgit:git-gc[1].
+ 	ret = ref_transaction_update_reflog(data->transaction, data->refname,
+ 					    new_oid, old_oid, data->sb->buf,
+-					    REF_HAVE_NEW | REF_HAVE_OLD, msg,
+-					    data->index++, data->errbuf);
++					    msg, data->index++, data->errbuf);
+ 	return ret;
+ }
  
- OPTIONS
- -------
-@@ -71,6 +71,25 @@ Options for `show`
- `git reflog show` accepts any of the options accepted by `git log`.
+diff --git a/refs.h b/refs.h
+index 46a6008e07..253dd8f4d5 100644
+--- a/refs.h
++++ b/refs.h
+@@ -795,6 +795,21 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ 			   unsigned int flags, const char *msg,
+ 			   struct strbuf *err);
  
- 
-+Options for `delete`
-+~~~~~~~~~~~~~~~~~~~~
++/*
++ * Similar to `ref_transaction_update`, but this function is only for adding
++ * a reflog update. Supports providing custom committer information. The index
++ * field can be utiltized to order updates as desired. When set to zero, the
++ * updates default to being ordered by refname.
++ */
++int ref_transaction_update_reflog(struct ref_transaction *transaction,
++				  const char *refname,
++				  const struct object_id *new_oid,
++				  const struct object_id *old_oid,
++				  const char *committer_info,
++				  const char *msg,
++				  uint64_t index,
++				  struct strbuf *err);
 +
-+`git reflog delete` accepts options `--updateref`, `--rewrite`, `-n`,
-+`--dry-run`, and `--verbose`, with the same meanings as when they are
-+used with `expire`.
-+
-+Options for `drop`
-+~~~~~~~~~~~~~~~~~~
-+
-+--all::
-+	Drop the reflogs of all references from all worktrees.
-+
-+--single-worktree::
-+	By default when `--all` is specified, reflogs from all working
-+	trees are dropped. This option limits the processing to reflogs
-+	from the current working tree only.
-+
-+
- Options for `expire`
- ~~~~~~~~~~~~~~~~~~~~
- 
-@@ -130,24 +149,6 @@ which didn't protect objects referred to by reflogs.
- 	Print extra information on screen.
- 
- 
--Options for `delete`
--~~~~~~~~~~~~~~~~~~~~
--
--`git reflog delete` accepts options `--updateref`, `--rewrite`, `-n`,
--`--dry-run`, and `--verbose`, with the same meanings as when they are
--used with `expire`.
--
--Options for `drop`
--~~~~~~~~~~~~~~~~~~
--
----all::
--	Drop the reflogs of all references from all worktrees.
--
----single-worktree::
--	By default when `--all` is specified, reflogs from all working
--	trees are dropped. This option limits the processing to reflogs
--	from the current working tree only.
--
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 3acaf3e32c..b00b3f9edc 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -17,21 +17,21 @@
- #define BUILTIN_REFLOG_LIST_USAGE \
- 	N_("git reflog list")
- 
--#define BUILTIN_REFLOG_EXPIRE_USAGE \
--	N_("git reflog expire [--expire=<time>] [--expire-unreachable=<time>]\n" \
--	   "                  [--rewrite] [--updateref] [--stale-fix]\n" \
--	   "                  [--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]")
-+#define BUILTIN_REFLOG_EXISTS_USAGE \
-+	N_("git reflog exists <ref>")
- 
- #define BUILTIN_REFLOG_DELETE_USAGE \
- 	N_("git reflog delete [--rewrite] [--updateref]\n" \
- 	   "                  [--dry-run | -n] [--verbose] <ref>@{<specifier>}...")
- 
--#define BUILTIN_REFLOG_EXISTS_USAGE \
--	N_("git reflog exists <ref>")
--
- #define BUILTIN_REFLOG_DROP_USAGE \
- 	N_("git reflog drop [--all [--single-worktree] | <refs>...]")
- 
-+#define BUILTIN_REFLOG_EXPIRE_USAGE \
-+	N_("git reflog expire [--expire=<time>] [--expire-unreachable=<time>]\n" \
-+	   "                  [--rewrite] [--updateref] [--stale-fix]\n" \
-+	   "                  [--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]")
-+
- static const char *const reflog_show_usage[] = {
- 	BUILTIN_REFLOG_SHOW_USAGE,
- 	NULL,
-@@ -42,9 +42,9 @@ static const char *const reflog_list_usage[] = {
- 	NULL,
- };
- 
--static const char *const reflog_expire_usage[] = {
--	BUILTIN_REFLOG_EXPIRE_USAGE,
--	NULL
-+static const char *const reflog_exists_usage[] = {
-+	BUILTIN_REFLOG_EXISTS_USAGE,
-+	NULL,
- };
- 
- static const char *const reflog_delete_usage[] = {
-@@ -52,23 +52,23 @@ static const char *const reflog_delete_usage[] = {
- 	NULL
- };
- 
--static const char *const reflog_exists_usage[] = {
--	BUILTIN_REFLOG_EXISTS_USAGE,
--	NULL,
--};
--
- static const char *const reflog_drop_usage[] = {
- 	BUILTIN_REFLOG_DROP_USAGE,
- 	NULL,
- };
- 
-+static const char *const reflog_expire_usage[] = {
-+	BUILTIN_REFLOG_EXPIRE_USAGE,
-+	NULL
-+};
-+
- static const char *const reflog_usage[] = {
- 	BUILTIN_REFLOG_SHOW_USAGE,
- 	BUILTIN_REFLOG_LIST_USAGE,
--	BUILTIN_REFLOG_EXPIRE_USAGE,
-+	BUILTIN_REFLOG_EXISTS_USAGE,
- 	BUILTIN_REFLOG_DELETE_USAGE,
- 	BUILTIN_REFLOG_DROP_USAGE,
--	BUILTIN_REFLOG_EXISTS_USAGE,
-+	BUILTIN_REFLOG_EXPIRE_USAGE,
- 	NULL
- };
- 
-@@ -404,10 +404,10 @@ int cmd_reflog(int argc,
- 	struct option options[] = {
- 		OPT_SUBCOMMAND("show", &fn, cmd_reflog_show),
- 		OPT_SUBCOMMAND("list", &fn, cmd_reflog_list),
--		OPT_SUBCOMMAND("expire", &fn, cmd_reflog_expire),
--		OPT_SUBCOMMAND("delete", &fn, cmd_reflog_delete),
- 		OPT_SUBCOMMAND("exists", &fn, cmd_reflog_exists),
-+		OPT_SUBCOMMAND("delete", &fn, cmd_reflog_delete),
- 		OPT_SUBCOMMAND("drop", &fn, cmd_reflog_drop),
-+		OPT_SUBCOMMAND("expire", &fn, cmd_reflog_expire),
- 		OPT_END()
- 	};
- 
+ /*
+  * Add a reference creation to transaction. new_oid is the value that
+  * the reference should have after the update; it must not be
 
 -- 
 2.50.1.723.g3e08bea96f.dirty
