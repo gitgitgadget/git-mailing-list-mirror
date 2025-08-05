@@ -1,211 +1,108 @@
-Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
+Received: from send288.i.mail.ru (send288.i.mail.ru [95.163.59.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F290126C39F
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 09:34:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3620A21B9CD
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 09:52:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.59.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754386478; cv=none; b=Jret+e0j6pIDTdoaW28QMrBVFe+37Bvsu2obaSBIv2JEmNg77wutbyVwFl/aNO3hZcAgZzWEsBOhh2LwXgE6SVegALDBJO8hkM/qI2fg0C1NYtgu/uqjk7HVivd2sKHc98pvmsm9vw4b7gNcUKbpYYapiin5DL7etp//5v4/5JE=
+	t=1754387532; cv=none; b=YpIXLHL/sqyCuGy+m+rMfgPvqcMF5aaPlq6kJeeHVZq89+ippkYYyk8WLz01V2w5fRSmSxyLx1ltFv49o1Y8ey9n7ez4tKOdAl8xb1vyZj8HmdcdjsrNzgVbigUsOtfflKAkL/lr2YwPydl13BqyRm5j+utXdZsx7/ygHg0sSOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754386478; c=relaxed/simple;
-	bh=0rW/fsKycWmPWXq5fSSUXB44LvneFJ/7UkeynyEDDSs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQtU+IYHfV1Cms3hEzeu/cpGtJC7C8rczljoF49YV5G0O+YiJCW//PI/CjuEqkyWZGvySa6pcT+7Tb8FPiEEY4tteQbBfGIMmU0/jh2EEUl++Q2AuCYp8iavhXWMe1krFTqwEYUb58mvtCBw4ECJpjonjlA/fKVh2Ty30B8IT0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=pyAJl8oE; arc=none smtp.client-ip=95.215.58.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1754387532; c=relaxed/simple;
+	bh=LL6VBKbxtxrqTaRrvbGHOHDNCSB83RRaRTAWyDIsy08=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hPu4CphG01zWFSNFX1tm3lEXiwXu1BWJ0AJ/m2mB19DBUfHWz8nAqovyGiaD9HjtcNeuhPwGIlpIO/EqFbd3QIX2biKgau8ZdsY1dMPjyINKJ+MSo/7HCYZyMmJkzXAmkAginRrXDHcSzABV5/XJ8yGQevXgyHyh6di5MZ3ECjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru; spf=pass smtp.mailfrom=bswap.ru; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=eZD44hRu; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=qTgjyMv9; arc=none smtp.client-ip=95.163.59.127
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bswap.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="pyAJl8oE"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1754386473;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=H1wSBHI+8iSjU+dTLgHvYCkVLAT2xL+unjQiFrbhytw=;
-	b=pyAJl8oE2lPuCYUlM5qL/35CcKrdeJnpolmXtRdqX2MPbngaR6lxDCxcQG+A5qeje6ayly
-	s9wgMEm8iQPjsBGOGWRus1oglvPyjAV/ehTKR2Rmf9ZvVxvoVLq+un0VziQK8wvdcLowwi
-	r1IMsscQNN9RBFN+0vpwvmHafgSwy5Q=
-From: Toon Claes <toon@iotcl.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Taylor Blau <me@ttaylorr.com>,
-	Derrick Stolee <stolee@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Jeff King <peff@peff.net>,
-	Toon Claes <toon@iotcl.com>
-Subject: [PATCH v7 3/3] last-modified: use Bloom filters when available
-Date: Tue,  5 Aug 2025 11:33:58 +0200
-Message-ID: <20250805093358.1791633-4-toon@iotcl.com>
-In-Reply-To: <20250730175510.987383-1-toon@iotcl.com>
-References: <20250730175510.987383-1-toon@iotcl.com>
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="eZD44hRu";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="qTgjyMv9"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
+	bh=z5X3vICeOjqocOVIiwSWvskbvtp8+wTtc3HKWzL/13A=; t=1754387526; x=1754477526; 
+	b=eZD44hRu0pmQIP3Y2e8XW1tHBUGOtA8vQF42J6Pu+VLRGOIga9c8lA9OC6jERC9TWpIPO1lXjbr
+	hR6Spf3aB+PqcUzgFFm2FVDEkkOBgvgkpsiItz6gA8cFqhl/c8uxBbZ9j9PblBOS0M5NvKZwNAinx
+	duZTagEhd7hDsEsHJ3I=;
+Received: from [10.113.97.21] (port=51352 helo=send80.i.mail.ru)
+	by exim-fallback-67c4d9c84-w8bfv with utf8esmtp (envelope-from <kostix@bswap.ru>)
+	id 1ujE6J-00000000LaE-3ekL
+	for git@vger.kernel.org; Tue, 05 Aug 2025 12:36:56 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:From:Sender:Reply-To:To:Cc:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=z5X3vICeOjqocOVIiwSWvskbvtp8+wTtc3HKWzL/13A=; t=1754386615; x=1754476615; 
+	b=qTgjyMv9PraSvnZYdNEA2np4nwH3CaMPSF8nvSYLN/hwK+2TpX/+bcadkF37dmavi1vTyPe246Z
+	NoMzllsjQdrjQMWswq9kJZ9P2V3BCyR0aaJ/Ftm9iEr9plQLgVphpAJ19L0Ob9s743YhBuLHTNvKJ
+	KBheHw9ixw+xfB173UM=;
+Received: by exim-smtp-55657cf74-c25lx with utf8esmtpa (envelope-from <kostix@bswap.ru>)
+	id 1ujE6A-00000000Txp-3Wxo; Tue, 05 Aug 2025 12:36:47 +0300
+Date: Tue, 5 Aug 2025 12:36:46 +0300
+From: Konstantin Khomoutov <kostix@bswap.ru>
+To: FMorschel <git@fmorschel.dev>
+Cc: git@vger.kernel.org, Konstantin Khomoutov <kostix@bswap.ru>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: Feature Request: git mv --after (new flag)
+Message-ID: <d7ey5l2bcy4xzidqyq5by4mrwgziahypvnco5ilbik4y3feqhj@vspbafxowl5l>
+Mail-Followup-To: FMorschel <git@fmorschel.dev>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <1fa7a8d8-3ae5-4913-b3b5-21d8f67e567d@fmorschel.dev>
+ <0afc01b2-11a2-4f77-a858-7a444e8bb1d4@fmorschel.dev>
+ <2f505f75-112a-4b71-bb05-ea0cb7731cd7@fmorschel.dev>
+ <hi7t3qk7difgzip7syscarnf5ui5avnhmjxil4vzurwcfo7a6x@drccf7gibn72>
+ <917aa62f-5f2a-40d7-8fa5-f19a14926241@fmorschel.dev>
+ <ddc841ec-bc4b-4c01-a99e-9a65af3963bc@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ddc841ec-bc4b-4c01-a99e-9a65af3963bc@app.fastmail.com>
+X-Mailru-Src: smtp
+X-4EC0790: 10
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD9478038FB256C3880FB3D839CEDB18E654D256791FCB2EE0000894C459B0CD1B9F6E941E201961B81A421357250EF31ADBB4F3FB1C818EDD7BFC3571EF0B0A8FC2A808E2AF9A6ECDE
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7A8325FA649D0A450EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB55337566919098A35581D06D0690156E7E01CB5FA0E226A96A0C883B55A19A70D5CE6F46389733CBF5DBD5E913377AFFFEAFD269176DF2183F8FC7C0A3E989B1926288338941B15DA834481FCF19DD082D7633A0EF3E4896CB9E6436389733CBF5DBD5E9D5E8D9A59859A8B6D082881546D93491CC7F00164DA146DA6F5DAA56C3B73B237318B6A418E8EAB8D32BA5DBAC0009BE9E8FC8737B5C22492785264B78788A1276E601842F6C81A12EF20D2F80756B5FB606B96278B59C4276E601842F6C81A127C277FBC8AE2E8B377718C417CAE7783AA81AA40904B5D99C9F4D5AE37F343AD1F44FA8B9022EA23BBE47FD9DD3FB595F5C1EE8F4F765FC72CEEB2601E22B093A03B725D353964B0B7D0EA88DDEDAC722CA9DD8327EE4930A3850AC1BE2E735156CCFE7AF13BCA4B5C8C57E37DE458BEDA766A37F9254B7
+X-C1DE0DAB: 0D63561A33F958A53FD5E0A38EAE5C285002B1117B3ED6968636FF790CEC83F99E040399BDE4761E823CB91A9FED034534781492E4B8EEADA79578C5CF9A9009BDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742424CF958EAFF5D571004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D34F05B761BB9C2AA44B77EAA46FAA27FA7950A42AD4C3BFAA233773A651E6732CE792969C9D0A0730C1D7E09C32AA3244C74ABAA76898FB9EA77DD89D51EBB774234A34D70075D2FE8EA455F16B58544A21C197AAF4D2E47323871D1C702CBDB0A9665A0FD7AD89E8F722DFA761B3F797A
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXMZebaIdHP2ghjoIc/363UZI6Kf1ptIMVUlTLJrxaS1uWSbWzSgJr9g=
+X-Mailru-Sender: 139A7956A63CACCF7216901AE3D43F14FC7BC6B9CA290628B951B70A5BD4BD8E25B0878A11ACD61C8F834780009727FCFD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64A0D4ABDE8C577C2ED
+X-Mras: Ok
+X-Mailru-Src: fallback
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B4C75C13076030B660521124F307D4EDE263DDB5C41E93D6DC049FFFDB7839CE9EA21F94FA7D756BA8D5860B03F0C582AE0675B249E733A7CD56A5845FBB5B54C51AE65B700B8AFE19
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpEZ9wIMwqVP4jLQVQ+dVm7x9BpDHadBV9RMjI809PraZIRnOjZCLhOeHzC/J+EUlzA==
+X-Mailru-MI: 20000000000000800
+X-Mras: Ok
 
-Our 'git last-modified' performs a revision walk, and computes a diff at
-each point in the walk to figure out whether a given revision changed
-any of the paths it considers interesting.
+On Mon, Aug 04, 2025 at 06:04:05PM +0200, Kristoffer Haugsbakk wrote:
 
-When changed-path Bloom filters are available, we can avoid computing
-many such diffs. Before computing a diff, we first check if any of the
-remaining paths of interest were possibly changed at a given commit by
-consulting its Bloom filter. If any of them are, we are resigned to
-compute the diff.
+[...]
+>> Wow, this seems to me a really weird design choice.
+>>
+>> Do you have any insight on to why is this?
+> 
+> https://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org/
 
-If none of those queries returned "maybe", we know that the given commit
-doesn't contain any changed paths which are interesting to us. So, we
-can avoid computing it in this case.
+FMorschel, when reading, consider paying close attention to the two things:
 
-Comparing the perf test results on git.git:
+ - What Linus says about much of the code coming in in the form of the
+   textual patches mailed to the various mailing lists.
 
-    Test                                        HEAD~             HEAD
-    ------------------------------------------------------------------------------------
-    8020.1: top-level last-modified             4.49(4.34+0.11)   2.22(2.05+0.09) -50.6%
-    8020.2: top-level recursive last-modified   5.64(5.45+0.11)   5.62(5.30+0.11) -0.4%
-    8020.3: subdir last-modified                0.11(0.06+0.04)   0.07(0.03+0.04) -36.4%
+ - An example describing a commit which has unified 5 different code snippets
+   into one.
 
-Based-on-patch-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
- builtin/last-modified.c | 48 +++++++++++++++++++++++++++++++++++++++--
- commit-graph.c          |  7 +++++-
- 2 files changed, 52 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index 364493ac69..82c5739827 100644
---- a/builtin/last-modified.c
-+++ b/builtin/last-modified.c
-@@ -1,5 +1,7 @@
- #include "git-compat-util.h"
-+#include "bloom.h"
- #include "builtin.h"
-+#include "commit-graph.h"
- #include "commit.h"
- #include "config.h"
- #include "diff.h"
-@@ -18,6 +20,7 @@
- struct last_modified_entry {
- 	struct hashmap_entry hashent;
- 	struct object_id oid;
-+	struct bloom_key key;
- 	const char path[FLEX_ARRAY];
- };
- 
-@@ -42,6 +45,12 @@ struct last_modified {
- 
- static void last_modified_release(struct last_modified *lm)
- {
-+	struct hashmap_iter iter;
-+	struct last_modified_entry *ent;
-+
-+	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent)
-+		bloom_key_clear(&ent->key);
-+
- 	hashmap_clear_and_free(&lm->paths, struct last_modified_entry, hashent);
- 	release_revisions(&lm->rev);
- }
-@@ -63,6 +72,9 @@ static void add_path_from_diff(struct diff_queue_struct *q,
- 
- 		FLEX_ALLOC_STR(ent, path, path);
- 		oidcpy(&ent->oid, &p->two->oid);
-+		if (lm->rev.bloom_filter_settings)
-+			bloom_key_fill(&ent->key, path, strlen(path),
-+				       lm->rev.bloom_filter_settings);
- 		hashmap_entry_init(&ent->hashent, strhash(ent->path));
- 		hashmap_add(&lm->paths, &ent->hashent);
- 	}
-@@ -139,6 +151,7 @@ static void mark_path(const char *path, const struct object_id *oid,
- 	last_modified_emit(data->lm, path, data->commit);
- 
- 	hashmap_remove(&data->lm->paths, &ent->hashent, path);
-+	bloom_key_clear(&ent->key);
- 	free(ent);
- }
- 
-@@ -182,6 +195,30 @@ static void last_modified_diff(struct diff_queue_struct *q,
- 	}
- }
- 
-+static bool maybe_changed_path(struct last_modified *lm, struct commit *origin)
-+{
-+	struct bloom_filter *filter;
-+	struct last_modified_entry *ent;
-+	struct hashmap_iter iter;
-+
-+	if (!lm->rev.bloom_filter_settings)
-+		return true;
-+
-+	if (commit_graph_generation(origin) == GENERATION_NUMBER_INFINITY)
-+		return true;
-+
-+	filter = get_bloom_filter(lm->rev.repo, origin);
-+	if (!filter)
-+		return true;
-+
-+	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
-+		if (bloom_filter_contains(filter, &ent->key,
-+					  lm->rev.bloom_filter_settings))
-+			return true;
-+	}
-+	return false;
-+}
-+
- static int last_modified_run(struct last_modified *lm)
- {
- 	struct last_modified_callback_data data = { .lm = lm };
-@@ -202,9 +239,14 @@ static int last_modified_run(struct last_modified *lm)
- 				      &data.commit->object.oid, "",
- 				      &lm->rev.diffopt);
- 			diff_flush(&lm->rev.diffopt);
--		} else {
--			log_tree_commit(&lm->rev, data.commit);
-+
-+			break;
- 		}
-+
-+		if (!maybe_changed_path(lm, data.commit))
-+			continue;
-+
-+		log_tree_commit(&lm->rev, data.commit);
- 	}
- 
- 	return 0;
-@@ -231,6 +273,8 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
- 		return argc;
- 	}
- 
-+	lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
-+
- 	if (populate_paths_from_revs(lm) < 0)
- 		return error(_("unable to setup last-modified"));
- 
-diff --git a/commit-graph.c b/commit-graph.c
-index e0d92b816f..a74ac342b3 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -821,7 +821,12 @@ int corrected_commit_dates_enabled(struct repository *r)
- 
- struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r)
- {
--	struct commit_graph *g = r->objects->commit_graph;
-+	struct commit_graph *g;
-+
-+	if (!prepare_commit_graph(r))
-+	       return NULL;
-+
-+	g = r->objects->commit_graph;
- 	while (g) {
- 		if (g->bloom_filter_settings)
- 			return g->bloom_filter_settings;
--- 
-2.50.1.327.g047016eb4a
+Basically, these bits highlight the fact that files, albeit useful and
+ubiquitous on today's commodity operating systems, frame our way of thinking
+of how information is tracked a bit too much ;-)
 
