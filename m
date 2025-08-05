@@ -1,75 +1,120 @@
-Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC8E23F40C
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 12:11:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02032271471
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 12:50:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754395908; cv=none; b=GcFmvmCYIUGhLeFUTIuuq/hposZW8/Ow5qLTH6WWDWRF8wpPXgJ+2CgThkMq2SO/+RAloH2yBK6evHvAwpQc4DjBtrY3l/gNDLKQcjROKtfQt1b7BAuitjExTOprsoG8cjEmUFsGT3DeN/oH4Iu7MM7zGAwflR5c0r/kXeYBOc0=
+	t=1754398230; cv=none; b=puPcyd3Y/ADk/usEZegyavV4/dKQC1GG//XhmQM6SCPfMBEjHJTwLqVlUgCWfewLekmtE22IhvDHp1o25XvG/IN5Eqb6TWT1rHB2nJAtl+ITI/0VlyljoplsKFBnMDjImkCB9pob2eW6DLrwGk4oY3IVs+V+uiK9q6UguIKtrpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754395908; c=relaxed/simple;
-	bh=bOg341LhhA4w86PZoytErxswgACGLqgbd8EKJy+gc/U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LPs4KDPMMvXHuC0x2wZqcEj2c/xU8HLF4LonCkvCRxx4goq3uPBJ/tVQxfC+S1KtaRfZ0GKaG8xVd08v7i7o2oLennjoPD76iI8JtrhJjDxse5FadrjHedF5rVx9lgf7uPfREg7sC7KJJyiaDOKEyrZMMhz8ltL0giHPfz9ztYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=B0N5CUFX; arc=none smtp.client-ip=95.215.58.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1754398230; c=relaxed/simple;
+	bh=zR/KO1kEEIsjhKYbs2n/tEY4UZvH0n1ybaI+f7ZiYRY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FCii0YUuchnglVSyT/4Cs/OrqnlmeY7dx1Y8xFuVpbWogsdW9kUyRgAwKfF7V4jv23KNDMRjf+cM+mMOyBthSSkjbh2ZuSFRCEO2PH8+hZMOk26Oly9szvG4WIJaE+ksFuWxKPv8QETRnvb1r48M8pOxtKWWk+ZB/3b8gLxtaAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Lpbz1vDz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=apgNb86n; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="B0N5CUFX"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1754395901;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=fNX4v32XV9YSMHZy46hcvubVOmpl0+tBTxWNOWSpNew=;
-	b=B0N5CUFXinuR1T55mghYQy34aDlMNtVDhtLnAcD/uA3QS5KgxHofHXHKiw6LUY6vJNRsae
-	VNJHGqbkADLtvN/ZX+jPrcMwHTTZMJWpCxfYPbIvsLvbfz1P436QlMp0cvPbrGPXT2p6ha
-	czDRrCgzCK+fe/ofD88dBS3Xkqgruyk=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] t0450: fix test for out-of-tree builds
-In-Reply-To: <aJBnuOcQQ1AY6hR4@pks.im>
-References: <20250804073002.1586332-1-toon@iotcl.com> <aJBnuOcQQ1AY6hR4@pks.im>
-Date: Tue, 05 Aug 2025 14:11:29 +0200
-Message-ID: <8734a6ufwu.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Lpbz1vDz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="apgNb86n"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id CFD81EC01F9;
+	Tue,  5 Aug 2025 08:50:26 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 05 Aug 2025 08:50:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1754398226; x=1754484626; bh=nynxRD9DYE
+	UBpJlMnVXv7mc2HkEdaIemu59G04deKgU=; b=Lpbz1vDzg2p2RhRSStn3Mo0oPO
+	t/WxlcAZm2fhUZCn1xgJN8v3l/2WDUwzLHBJJKZuC6oaDue3dV6sRxodcyfXdh63
+	BFNUD2oiypD3pFHwN3hBUjdmazJ27GfEIjnJT2tYtijgmkcEVwakTGx+gmdeGRuq
+	MVwL7nuFk8kO9Hmqd+ty8KGK2krWWrjXMljhXPiXiGoPX2oohLeQO4VFuRASmf8b
+	eqpg+QGyxT/88NxP1iZvd+OOhGECHRBn3ju+AnHmt7AcixbaWqIE1mwI+M/ZWd8P
+	OUijnzylup2Rmb2TbrruqJRauBObkfonpPtUMFTA+qZ587GKkFwGLYY617VA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754398226; x=1754484626; bh=nynxRD9DYEUBpJlMnVXv7mc2HkEdaIemu59
+	G04deKgU=; b=apgNb86nn4Yie2dhgkYeLO7XFkD1ijhBCHyghEAIEyckuRd7ZkK
+	kKdkeMnwzlCQ3bnnT+Ov7dd7tOHF4FpX92SxbSb8c45YpvJpqSKyYtVuLryoSXlQ
+	ounDdyoK2EDLDWOXa3ePLDD016kuYYsuGQYJeHAwlLVh/BKrXif67i58+Fdacizl
+	uG4lZxkMLsGjdWu6U0cXshnRhPZnpEe5ntoKgFbkHAOJZoNQrTgI+KGU1k7rO0At
+	cCMzU6Ky5GAZQFR5KC/BvimiJBRXQ074tlaA66Tdcewwzslr0fmrzRSPmjo6xr7P
+	qu+5VTbYgovaBjh67HhI8rZ9TVnAHm1h1EQ==
+X-ME-Sender: <xms:Ef6RaJ5g9V5SJ6VxYJBXep6h5fKMTL5asAwHfoww3ZzsiKGfU4FcBA>
+    <xme:Ef6RaETvDVXXoPoj6Sx3V7X0mPXvwH9bhrS7JxzLKX_iaQLiAjT-7r8pQc6IPOBbD
+    JitkD98eUbnr2wqGQ>
+X-ME-Received: <xmr:Ef6RaHxvmB85opS6xsaqGysEdkqZsEOe533XY2G9LP4On6lijhFlKR7lwSqkvPTuqNkdK_Stee540E2UCz4zkAjb8uptV25ORg2HQGMm-A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudehvddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehoshifrghlug
+    drsghuugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohepshhunhhshhhinhgv
+    sehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeekse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhr
+    tghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmh
+    grihhlrdgtohhm
+X-ME-Proxy: <xmx:Ef6RaMpIIUo6ONNYy17YW1yroUZtG3jKzy0P8StihWUNRnbK12UE2A>
+    <xmx:Ef6RaK2KO4CPSd4DaEvLZTdAQGuxpLTLJscuh5jWWafmLpmzoJjIhw>
+    <xmx:Ef6RaMw76H434UekD2Zp_hLJyk93XZBCD1sXGNcE8sp89QV1AoyJ6Q>
+    <xmx:Ef6RaOhDIxnm9DVJM5zeZLRLXD5n2W39MP4K15KbT0d0an13QEMPXw>
+    <xmx:Ev6RaFLAcOUb7f69g6kDFD1k6KgvhciSD26qxF9oAvDKN_SLryLY5tjo>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 5 Aug 2025 08:50:24 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 8e3b0eac (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 5 Aug 2025 12:50:22 +0000 (UTC)
+Date: Tue, 5 Aug 2025 14:50:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, oswald.buddenhagen@gmx.de, karthik.188@gmail.com,
+	ben.knoble@gmail.com, gitster@pobox.com, phillip.wood@dunelm.org.uk,
+	jltobler@gmail.com, jn.avila@free.fr, sunshine@sunshineco.com
+Subject: Re: [GSoC PATCH v7 3/5] repo: add the field layout.bare
+Message-ID: <aJH-BA0jIgSOJZTk@pks.im>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250801131111.8115-1-lucasseikioshiro@gmail.com>
+ <20250801131111.8115-4-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250801131111.8115-4-lucasseikioshiro@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Fri, Aug 01, 2025 at 10:11:08AM -0300, Lucas Seiki Oshiro wrote:
+> diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
+> index 9796e36087..6c555e90c3 100755
+> --- a/t/t1900-repo.sh
+> +++ b/t/t1900-repo.sh
+> @@ -54,4 +60,12 @@ test_expect_success 'only one value is returned if the same key is requested twi
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'output is returned correctly when two keys are requested' '
+> +	cat >expect <<-\EOF &&
+> +	layout.bare=false
+> +	references.format=files
+> +	EOF
+> +	git init --ref-format=files two-keys &&
+> +	git -C two-keys repo info layout.bare references.format
+> +'
+>  test_done
 
-> Ok, the change itself looks reasonable to me. One question that the
-> commit message doesn't answer though is why this didn't cause the test
-> to fail.
+Tiny nit: there's a newline missing between the test and `test_done`.
 
-Ah yes, I should have pointed that out in the commit message. But as you
-say, in short it simply skips the tests is if cannot find the .adoc.
-
-> [snip]
-
-> Which indicates that this prereq is overly loose: ideally we should not
-> skip such tests, but rather print an error that something is fishy. I
-> suspect that we have the prereq in place because there are some builtins
-> that don't have a corresponding manpage though.
->
-> Maybe this is something we could explore: what breaks if we remove the
-> prereq entirely? And if this breakage is limited to a small number of
-> builtins we can maybe use an explicit skip-list like we already do with
-> "t/t0450/adoc-help-mismatches".
-
-I think that's a great change we should make on top. Being explicit
-about which subcommands do not require documentation is better than
-simply letting them slide through. Every new subcommand would require
-documentation, and if not so, adding them to a list somewhere makes it
-clear why.
-
--- 
-Cheers,
-Toon
+Patrick
