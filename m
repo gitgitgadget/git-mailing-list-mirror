@@ -1,87 +1,97 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6312080E8
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 21:46:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14A7EEA6
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 21:47:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754430379; cv=none; b=S9i6GZj6bGYQOD6WyTOzlr2ciTbaDFOFIURLGAhOQnM3Cdnr0KL1CWua20GIwbtsnxVfDf8Ff/Lfb6ZUrBch18XyFVCGeaUe3EsnrkSg1+xCBkD56NBOeXYMNeepsCic7507UR/+ZrJnsMW4GnEXYvNVR3rfEavPg3LqBnJcv9I=
+	t=1754430466; cv=none; b=rbTSdv3jwNapkaqZ0ZV/Y0XJJsVQcB1mgxhxzhV1nog7QZl7zuFenLMYlOikMB/noIzhOjibBh8Z2SaQwRGd/rTnkBNYWOiDy2J3hNgkJ6TSXhm3T68Ne8qWJaJC634R6/DfJOdIQx0bZ3latEyYPMP6ctDoQ+dbK7mdrpiGLcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754430379; c=relaxed/simple;
-	bh=ZONprYstB2J0QCEwicu5nHB9x0lqh35+pakYQrw4uZQ=;
+	s=arc-20240116; t=1754430466; c=relaxed/simple;
+	bh=nseH4VbjK+xylV/E9TGdAB3r0Fbvk/jA8WaXJHBmcYw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PR8GKE77hQs57Cf2nVKK5I3XRXTWFfIDTepgB+/CbpRtPNzb93CggA/nkxKP7hbLlfTr7ka+HjRv0ItVKPfvfmw5Jh1waoMVHSUxDVxdhXF/+vvgg/Ooo4Eul/gVJTqukdLJAQwhzrnWOBpHcb7Ei6kXRtmAQ7U63GBx//6gi7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hssvtiWd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DVXwH5Ab; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=OpRxhAJMFgYilcZGswFcOVNL1DO4xcp1v/MMj+kUBnHFX9YreoYHaY8b/aJoWvz9wtCm1tsB3qJ/ZHZiAWBgRezH2dViiM9vmVPPzab/kt/RyPd0QHIH6fa2lSMxP1ex4lr+ftx9G8oxGRNuvHHOKOgFzaqyw9i+HC7eq2TTNTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SRIWBDE5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W+EpIH6C; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hssvtiWd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DVXwH5Ab"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SRIWBDE5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W+EpIH6C"
 Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D20D3140016A;
-	Tue,  5 Aug 2025 17:46:15 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 01D0EEC018D;
+	Tue,  5 Aug 2025 17:47:43 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Tue, 05 Aug 2025 17:46:15 -0400
+  by phl-compute-07.internal (MEProxy); Tue, 05 Aug 2025 17:47:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1754430375;
-	 x=1754516775; bh=wunn6E2h3fh+f0e29qdUj3ojo+2YTbDHMTs9bfwn4jc=; b=
-	hssvtiWdYNhyK2LFHOqxkKqM2PQOydV4fF6keNYD+JJxU09tNHLYCMHKb3Z84iy0
-	UaBk8IVQt/DOVBWHNFI2YCguYrqV1bD7XAs7ywGD0gGjGzU+REevJIjVNNoS4RXt
-	h1eWPeF+BEjn/SPYa3xDogRAktXQxvpFqmols3X8I7upmLA/d1srTp+VQMQFpxat
-	4Z+3TsJJFKvLUiwcjnbHYLYYoq9zlff7n2md2cqEOVleXrBDkYiOyGKm5tbVrWqW
-	CXuxWZ5MykJPtIzDwsUHD+KSiQ6U/kJxPjU7jzyB15+N3OZ/QrCUtViEgoguNFZ0
-	tibs88xQNJzEnAz3yIReCA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1754430462;
+	 x=1754516862; bh=bxeZqWT/mx5NrsK4Rxd3m5gWzXD1EadswK7fMW2ANLc=; b=
+	SRIWBDE58dzeIhNTqV33UvFQ9keJZ8PplCSFN/ZYHt4UiOmDyIE6EAzPMd26gBJ+
+	C9eEBih5OpnZwOgGW6sXaxkEZ9QXsmpwPBVurGKsM6LGMYBtS3aOnYQ9erd2f4Lb
+	GLukGHTBw7e/iQsMKXjM2vUN5TCZ7sjlB7aU56/EMcxQkkekQ9fLQSZwm1EcnkVM
+	ag86ZZfK0YfS5TjzJrlopDmr8ygMxjMTvUY85RldqQFcrFcUpmuxDqR7UjFpOD/O
+	H2Qwtc2TbZNTO6M3h32hRlk5qrUMtNcsJRqGLB84Anu+nr8gA+SBR8sfNwsNy9Rk
+	Yi7SqKdiPYYhJ3gF7QX0VA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754430375; x=
-	1754516775; bh=wunn6E2h3fh+f0e29qdUj3ojo+2YTbDHMTs9bfwn4jc=; b=D
-	VXwH5AbSnDBweSz6IpShhCAgeDjaKswq/IOwE6pt7sI5BgbtrrpHGpvMZDXRojrl
-	xJp4j7IWBoYqzxy9GoNBrc4j79r3PDHa8ZFG/bUU4J4THhMJOhHEHdUd99G5I5vw
-	MfjeMxfzSai9m3IvAGcph03FLiHCcEeknsDtwrIEj736US1FmUnmNXly4elhTR+H
-	2bG5l3jkfqQOtMtSMMAvtmDM/6+mS6iHGz8RMQnvZaAGZ08c6NNvZe2nfBYFbg6V
-	+DYfTKMpFTqjZtIepHiM7LDNaxgfdvO68wmXq3wNl5vGCtgbHVDVqaWbCjc0EQfl
-	xAAtm8qPkOhPA8bP4f6xQ==
-X-ME-Sender: <xms:p3uSaNqAnvMmtS7WYUxW7ez-BG3QtYBaKvg_2949MOzTB9Pe6nehkA>
-    <xme:p3uSaKPGImUHol0SZY9IvAhsTf0rotj_2UVD1NToylMrlM7MT3izYpxPrMXOaqxon
-    Z7bQGjJ1ERDZ-yG2A>
-X-ME-Received: <xmr:p3uSaGwTqZ92hZE0V7ZnXorDUlfh8n57tAiBg5924NGUtrq9MYMV8vmPevpUvd_aYjm9NB0jJBmauXxB5JdhMTdQQs995uCtsfoBqWY>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754430462; x=
+	1754516862; bh=bxeZqWT/mx5NrsK4Rxd3m5gWzXD1EadswK7fMW2ANLc=; b=W
+	+EpIH6CBBM07Nzuyk9AeRO/95pWjqep/GGNxUZh3LpKnnPergZVVmXBO2mLPiZ/X
+	hvcmjrQ/M+mrv7RVQ+ueYXgHuLPB1ePgO7HCpWPJrM0/mpXPYHf/89jaccT0jkk3
+	TYbO5X/tXmfPqDb6Kqtoix6nzVtHa+Yfdn9MyQIkFlUrt1nKHUpilx7biYndmoEa
+	1K0kavoyKTXhUawsYuuYSHVF13u2KCdptyi4zQIDYqkKXKwK0jYQePe58mUbKrPF
+	TRPPMWcEUzM5Pqdt20c+96WD/v45ehMt4cRfBNLLrY2Ws8ylqphtWr/dK0Ar3X9I
+	ZaIdUk1HIqQQl7nLesJMw==
+X-ME-Sender: <xms:_nuSaGMi3G1qfUrv5eS8MDUt3b37Ti_0xLnlWAkOTBSRuidl4Gm7sw>
+    <xme:_nuSaEpYXqQwNtnd9dyZz-gocR8VN8KNE4PaaoPPFWbyeyOXnMiOtewdwWTq6ufhX
+    VsBlBTTnWvuOrc1fQ>
+X-ME-Received: <xmr:_nuSaI6ZLrJBGFU_GcZC7ChOAKv9ThL-eksnDqQQ65yWwXog5rfFgdW9lE7G1ptdyCS467vDEbblDaXtPELzD_0LzOF_Jgvi1xlNYBM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudeivdelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    gurhephffvvefujghffffkfgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihho
     ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtth
-    hopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:p3uSaLuCQR9rwQa4v4y9cleH-toulkOGi6xmc3ooERdsqY3URzE6_w>
-    <xmx:p3uSaH75UifG58vVkiI-tf9z3vICZHtNvWnW4GNaguQzce38umW7zw>
-    <xmx:p3uSaCSCjhYmEjxPdla2RhnKc2fbUKepnOBCdw0uXW6keqYlndFu0A>
-    <xmx:p3uSaOqn9u-m5YEepEp8CeQVFOTa6rF6UlvCzD-Hzd6ysObzQcyEmg>
-    <xmx:p3uSaOFmk3Z534IxHvBs7fknXJNtS5Bp66ZKnSgzuOYvK09vXNDbEKKJ>
+    htthgvrhhnpeekgfdtuedvjeffgfehueefueeghfdtjefhgfekhffhteeiffetheelhedt
+    gfehtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduuddpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhnrdgrvhhilhgrsehf
+    rhgvvgdrfhhrpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehs
+    iigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhoth
+    gtlhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:_nuSaCg5A2Y5fDW-TX7IVJCQS58c9-SU0glLt-nzAYrdxcbHQvnsww>
+    <xmx:_nuSaO4YfqwfLm6dJ6vPR1w1t0zfFIXZLs0w3udPwwW-ha0xWVZSNg>
+    <xmx:_nuSaHGMSevVlmSs51WFXwbK-RP0D-9tpzevDQhn_aaR03FYobU_OQ>
+    <xmx:_nuSaAK923XINTFo4OyGKQDyRM0FGCuUmz4LXfZLHe2UGf6AIzVecQ>
+    <xmx:_nuSaGL2JYEl0tr8_gipaPYoACMUDZQVoSuJRNpoB2c4JAHh_S7zjVYI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Aug 2025 17:46:14 -0400 (EDT)
+ 5 Aug 2025 17:47:42 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v7 0/3] Introduce git-last-modified(1) command
-In-Reply-To: <1929210.tdWV9SEqCh@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
+ <jn.avila@free.fr>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Justin Tobler <jltobler@gmail.com>,  SZEDER
+ =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,  Toon Claes
+ <toon@iotcl.com>,  Jeff King
+ <peff@peff.net>,  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+  Ben Knoble <ben.knoble@gmail.com>
+Subject: Re: [PATCH v5 1/9] Documentation/git-reflog: convert to use
+ synopsis type
+In-Reply-To: <5910515.DvuYhMxLoT@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
  AVILA"'s message of
-	"Tue, 05 Aug 2025 19:20:05 +0200")
-References: <20250730175510.987383-1-toon@iotcl.com>
-	<xmqqjz3h20cs.fsf@gitster.g> <87tt2lu2rx.fsf@iotcl.com>
-	<1929210.tdWV9SEqCh@cayenne>
-Date: Tue, 05 Aug 2025 14:46:13 -0700
-Message-ID: <xmqqwm7hxx0a.fsf@gitster.g>
+	"Tue, 05 Aug 2025 19:04:23 +0200")
+References: <20250805-pks-reflog-append-v5-0-050997db09d5@pks.im>
+	<20250805-pks-reflog-append-v5-1-050997db09d5@pks.im>
+	<5910515.DvuYhMxLoT@cayenne>
+Date: Tue, 05 Aug 2025 14:47:41 -0700
+Message-ID: <xmqqqzxpxwxu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,65 +104,103 @@ Content-Transfer-Encoding: 8bit
 
 Jean-Noël AVILA <jn.avila@free.fr> writes:
 
->> > I am not sure about the last two, i.e. things that are not dash+option
->> > appearing as enumeration labels, though (and Cc'ing Jean-Noël to ask
->> > for help).
->>  ...
-> Well, the check fails to catch all the missing cases: The last two terms 
-> should also be formatted. For the <revision-range>, you can either enclose it 
-> with underscores (as a placeholder) or with backticks (which the formatter 
-> formats like a placeholder). For the last one, backticks are definitely needed 
-> to differentiate the formatting between the placeholder and the syntax marks.
->
-> As for my patch series, this can definitely be checked. will reroll.
+> Be careful that with the doc lint series I'm proposing, this change will raise 
+> a failure: one of the tests checks that switching the main synopsis to 
+> [synopsis] is linked to switching the definitions lists to inline synopsis, 
+> using `backticks`. This check may be too restrictive though.
 
-This is what I queued on top of your topic to prepare the
-integration today.
+This is what I've queued on top of your topic to prepare for today's
+integration.
 
 --- >8 ---
-From: Junio C Hamano <gitster@pobox.com>
-Date: Tue, 5 Aug 2025 14:37:25 -0700
-Subject: [PATCH] fixup! last-modified: new subcommand to show when files were last modified
+Subject: [PATCH] fixup! Documentation/git-reflog: convert to use synopsis type
 
 ---
- Documentation/git-last-modified.adoc | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ Documentation/git-reflog.adoc | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
-index 35bd4a1dd0..602843e095 100644
---- a/Documentation/git-last-modified.adoc
-+++ b/Documentation/git-last-modified.adoc
-@@ -22,24 +22,24 @@ THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
- OPTIONS
- -------
+diff --git a/Documentation/git-reflog.adoc b/Documentation/git-reflog.adoc
+index 34232a539a..38af0c977a 100644
+--- a/Documentation/git-reflog.adoc
++++ b/Documentation/git-reflog.adoc
+@@ -88,10 +88,10 @@ used with `expire`.
+ Options for `drop`
+ ~~~~~~~~~~~~~~~~~~
  
---r::
----recursive::
-+`-r`::
-+`--recursive`::
- 	Instead of showing tree entries, step into subtrees and show all entries
- 	inside them recursively.
+---all::
++`--all`::
+ 	Drop the reflogs of all references from all worktrees.
  
---t::
----show-trees::
-+`-t`::
-+`--show-trees`::
- 	Show tree entries even when recursing into them. It has no effect
- 	without `--recursive`.
+---single-worktree::
++`--single-worktree`::
+ 	By default when `--all` is specified, reflogs from all working
+ 	trees are dropped. This option limits the processing to reflogs
+ 	from the current working tree only.
+@@ -100,15 +100,15 @@ Options for `drop`
+ Options for `expire`
+ ~~~~~~~~~~~~~~~~~~~~
  
--<revision-range>::
-+`<revision-range>`::
- 	Only traverse commits in the specified revision range. When no
- 	`<revision-range>` is specified, it defaults to `HEAD` (i.e. the whole
- 	history leading to the current commit). For a complete list of ways to
- 	spell `<revision-range>`, see the 'Specifying Ranges' section of
- 	linkgit:gitrevisions[7].
+---all::
++`--all`::
+ 	Process the reflogs of all references.
  
--[--] <path>...::
-+`[--] <path>...`::
- 	For each _<path>_ given, the commit which last modified it is returned.
- 	Without an optional path parameter, all files and subdirectories
- 	in path traversal the are included in the output.
+---single-worktree::
++`--single-worktree`::
+ 	By default when `--all` is specified, reflogs from all working
+ 	trees are processed. This option limits the processing to reflogs
+ 	from the current working tree only.
+ 
+---expire=<time>::
++`--expire=<time>`::
+ 	Prune entries older than the specified time. If this option is
+ 	not specified, the expiration time is taken from the
+ 	configuration setting `gc.reflogExpire`, which in turn
+@@ -116,7 +116,7 @@ Options for `expire`
+ 	of their age; `--expire=never` turns off pruning of reachable
+ 	entries (but see `--expire-unreachable`).
+ 
+---expire-unreachable=<time>::
++`--expire-unreachable=<time>`::
+ 	Prune entries older than `<time>` that are not reachable from
+ 	the current tip of the branch. If this option is not
+ 	specified, the expiration time is taken from the configuration
+@@ -126,17 +126,17 @@ Options for `expire`
+ 	turns off early pruning of unreachable entries (but see
+ 	`--expire`).
+ 
+---updateref::
++`--updateref`::
+ 	Update the reference to the value of the top reflog entry (i.e.
+ 	<ref>@\{0\}) if the previous top entry was pruned.  (This
+ 	option is ignored for symbolic references.)
+ 
+---rewrite::
++`--rewrite`::
+ 	If a reflog entry's predecessor is pruned, adjust its "old"
+ 	SHA-1 to be equal to the "new" SHA-1 field of the entry that
+ 	now precedes it.
+ 
+---stale-fix::
++`--stale-fix`::
+ 	Prune any reflog entries that point to "broken commits". A
+ 	broken commit is a commit that is not reachable from any of
+ 	the reference tips and that refers, directly or indirectly, to
+@@ -147,12 +147,12 @@ has the same cost as 'git prune'.  It is primarily intended to fix
+ corruption caused by garbage collecting using older versions of Git,
+ which didn't protect objects referred to by reflogs.
+ 
+--n::
+---dry-run::
++`-n`::
++`--dry-run`::
+ 	Do not actually prune any entries; just show what would have
+ 	been pruned.
+ 
+---verbose::
++`--verbose`::
+ 	Print extra information on screen.
+ 
+ 
 -- 
 2.51.0-rc0-162-g220549999b
 
