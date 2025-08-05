@@ -1,92 +1,122 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41782211A05
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 04:27:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF653FE7
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 04:38:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754368066; cv=none; b=df7US8TXOSaDDNlfGKE9nAQJRS/OL+gJxHosd7PN7XpG1Nc2x6SHHIS4i23Zb7BX5FtLK0Lg+vBTFveZmW4BeJVEP6TVXi9QOmfIH/SH1VajCb2wirXkVxq6oY86wNjI6jH9QqTHbwnHSZc3ileRnwwT4kW1LUhSCuf1L4jxKEo=
+	t=1754368741; cv=none; b=YeVRvx6SwMbDMXCcVc4cKbE9+YXjkhb3PuNQj4TvEJFUEmwueABHpGGUMhwUzd/4YFBtPfIwo3oFY1XeEw5ULuEjni933CiwZb2JMezUOOmT99BQ7pUPeFjOoNkIjbracupr+FrQ03txyjko2Fce1ZZVTqwYZF91DB7ztBbZVps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754368066; c=relaxed/simple;
-	bh=+a2pOp7XorMalJglDrJKblLxxT9pxwXgCqQ7sVAtoZ0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=q7T0tRKsUp3GiNzA+Gj55qH1JEDUrxbhTn0e2CmGs34cQ/jCMCpM7gjE55wQzu1ylTECy0SHAVxW7LyIEIo8bBNZmApTVkqDlOwnclP33xz6EYJzftKayIAHGpwkKf+hi67jRSr3UNRve/LF/OcNSvspGentu/SHPJtZH9cEpHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PPzpAWMs; arc=none smtp.client-ip=209.85.219.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754368741; c=relaxed/simple;
+	bh=ypXQ1pR43flC9IAXreMSI/ZqS9eyPzoFcGPziA0ZayM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BgqTqV5yAYhZJlsosqUCaP2F26OjcQAEfqExI/uQ+x9IJoe+tAf+UDgrbB+dIcYJfMENJIyTvN3zTtpj0c5fy8qknlWOH6AWGoprvEpTOrVvxQma80U9UrIWGRDCWYLRDtj5dO+A91KRo6NyVmkGRxWhHNOdWvb9qUDkdOCltoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YBl3tlfs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lgQp1/oP; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PPzpAWMs"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e8ff3ef84d7so1693268276.1
-        for <git@vger.kernel.org>; Mon, 04 Aug 2025 21:27:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754368064; x=1754972864; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=LG4Gt2T8jnHr74m/xys60X8Fcey4t7qq4PpZxnkWN7s=;
-        b=PPzpAWMspmLKL2Nmirh9CU56A0zDEug48TaB7B0gy9C2fOOZPVzjRG/lmtecdguIgD
-         k9eW/sYiu/OaNnGoaVYOzfw6SKrMPuJVZnG98kXDbm4a0Yn0V0G6YMuPw0dnOcuHBlK5
-         yPFNI/0CHy/rXaODZCxK4OzsZcIIgsRcAEQqMQ4kPcKEeM9B52EFZU0I1aTdgu+62V4L
-         1imNEXpZm8bxLuoHiOeZBZhZsqUkFA0Y13evx3C3APmDXrDfB3RQQ/GLLqQ7SHRis8Jk
-         mWSYfZua8zHBxSunUpjTOPYNif4ZmGndGxNMXaUZU6AMPh/z1dtSOWa3mQDvURJoRMXM
-         90+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754368064; x=1754972864;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LG4Gt2T8jnHr74m/xys60X8Fcey4t7qq4PpZxnkWN7s=;
-        b=JgltvxvYpqOEjLq94nenjuZCzi8HbBpwotahLLB1MBxMH+U3E6zhkGuyzeAba5mI7W
-         Msy0DsSMbeStsN+KacueUkhlxEDEpS5xz7TJrbAvwxPEx3jVs55glrz4aq1rGgJ2DlMW
-         zDfy3CQothp96s9s57eZgagVI3ksOEH6ANTSTpjI6ClVBh7zd+E5R6Ny1zTpm3QeU/53
-         86IVtmKGm4DRkiLXiJuIDraPrmjb6866QqK1bNmnYRMZMpXExow6bvYcYS+zr6d8YPUk
-         ntRGan7XG2IFhJsyzK+Ca/bYWBxyqKB/XvPD9GwCRS61rpBlC4y1yxKbPDwiEKJnja/N
-         otxg==
-X-Forwarded-Encrypted: i=1; AJvYcCVT55dtmVJbpIwpLHjWwkElapPcYLutaVC5TuJUgq9xqND68l8IEaLo8qgIldHxWwgJpWQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtX8txu12vP51chpq8NffPQoU4qJ0xi+x5ZuYEw0rgfTnphl+0
-	XxJEYrJM1ksVNlR4XJoclK1CUbXRGAv34vHc9DRCOqtSvLVzExyqcwspWd+3Rg==
-X-Gm-Gg: ASbGncuUfrP/JcbXlXp/FFKgRvdIQg8nbkpYtL3JcOeRJ+pd3u7zXOV5Yq1/j/UY9MW
-	5xNlHoxwLpt7Ko2CLiTzQdttlYohZW7UC1rc1pOER9/QynfGlCB0yiqJopS3Ss4KZ3cHQ1LUuTC
-	RtQOOwDRrg/OCPLnhHesflHCnaGCLIhj9AXCia4/cvHKZE7Q8PAl9ugdsT5Wp7W6RxOmnSqiuLD
-	DB5WOSIYdeslHtAVe7k1OjCGidvoNcCivpYJHLIGB1dNl1r85h6yFtsnhLVscltBWIYT9fHzVzN
-	kkiP4Aa9QCDUn9B/1lbMuh7W9UyXmPsxZ2SNKf4CV5q45K6YkuNgP4EwYL8Pvxo6wpH44cWCMg8
-	Waj+0SEXNFVNNghhYVw7y4swsjA==
-X-Google-Smtp-Source: AGHT+IGip2aPpUlyiDmWetMibeEQ5NigMCEQr2cdDMjSUz4pSjjw7BFtZ1NTxtoOHWactnqRAqd+bw==
-X-Received: by 2002:a05:6902:4385:b0:e81:8219:a9dd with SMTP id 3f1490d57ef6-e8fee00a4edmr13643627276.17.1754368063966;
-        Mon, 04 Aug 2025 21:27:43 -0700 (PDT)
-Received: from [172.16.1.5] ([96.79.203.1])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e8fd37525b5sm4377336276.17.2025.08.04.21.27.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Aug 2025 21:27:43 -0700 (PDT)
-Message-ID: <ad426013-bca4-4243-9e80-7d002f0eb808@gmail.com>
-Date: Mon, 4 Aug 2025 21:27:42 -0700
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YBl3tlfs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lgQp1/oP"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 30B5EEC02D1;
+	Tue,  5 Aug 2025 00:38:57 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 05 Aug 2025 00:38:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754368737;
+	 x=1754455137; bh=hknFOm2Txvhs3vbSjJ93HU7t0W18lQ9vYwvlEQ/MNdY=; b=
+	YBl3tlfs4CnsPK/9PZ5sDcWORjA7VFTHCFhVB5FWK2E/3GIaTz3dbAFM1pQMGZrk
+	LDJ9sNt9AD0Oq1+ZaB7efPzW5hbVXX6WedaLLkBXI2qWEAb/VJlUkK1FD2k/IYQa
+	GoAG8vlFPs+KKXOcoUFiajZKZPNNkknrixnj4JoD4gvfTYg8E5CrvShgoMhr8i7d
+	Nw3L5OjHURpbLJU7et1N01fVFduMtwNXj5eUqFvIS2w+kt0zElR8j198RJRwVJKY
+	bRBnHeHqpgE1GmqAzIW2+I/6lsSLGz4PWJe6IAX1+ue0moXy3vh+xRiH8y+HnahZ
+	1XeKi/yavE7dmvuTNWCTPw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754368737; x=
+	1754455137; bh=hknFOm2Txvhs3vbSjJ93HU7t0W18lQ9vYwvlEQ/MNdY=; b=l
+	gQp1/oPM+CVZ7gRj4TtjaY3yXUkK6rt3GWhITAhILaFdovyxaXwDKnfekIlWEqoo
+	9hjz07QAx3PwsR+t1NLlBGGXhECaCyFkFtxOakzIR2k0FzDRSzzg3EHd+P6Jqqrv
+	ho2XAcqJmhXrja3X+QhoKC+DQUa/lDM3CgIzEVovDNMvosa0qkDxF3bNlhWa0drn
+	GSjvHcwDB8rSuj5PuDbNRVAji5FRIpHbcJNaFIpkYqqQbRLgrOG8/hxHhQlFjJDh
+	OTdTMjwUEQr6odPczuIjCdW9AXHLsJ6Bc/bg8iIsuq8Rs/AQkS9BTdOMzBQPY023
+	1RLODdzefdYANCejmOhAQ==
+X-ME-Sender: <xms:4IqRaPlDSBIxY3oCegatANeQAwGa3xKVB3R5WFtuv3cSQOt3K_mdvQ>
+    <xme:4IqRaGGv4IH5F9wdjieXfFEj_fUH0RGUB1J8rnfuOhkX-IEWaX0dVpC66i3QnepER
+    qbOzrIBx0SGHPm5Mg>
+X-ME-Received: <xmr:4IqRaPFVct7l0odneHyeM6QiajeipGq4BX-34s7zIZjDElsK3NENhGrB4qrinKcO5aVCK57Ji8XiH1Fjq0qM8MCzhR-ksHcV8gRp6UY_mA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudegvdefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhgih
+    htghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgr
+    ihhlrdgtohhm
+X-ME-Proxy: <xmx:4YqRaDOZchI_m4XCldG_UUPcttlXQaqJc_MOXZVxnZeyks-1wTjlww>
+    <xmx:4YqRaOGNBFC04uxBrCS5RYI0NtiHWMWcs2simu0qJuHaXPPOlN4jaA>
+    <xmx:4YqRaKOYp4DqG8827fITErksvt3tuDeGYNPkdEACrnK-St5PJjuQfw>
+    <xmx:4YqRaP8v8c1BRIcleLYkmyhWq1uJWrVkPTpsSejilN23KKM6_rH9aA>
+    <xmx:4YqRaKA3jLiQ1l4IoVdHebwCWCG_vX-WAgqz6-CURCoZ8TjGrqymI2p3>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 5 Aug 2025 00:38:56 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id e7f9ba1b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 5 Aug 2025 04:38:54 +0000 (UTC)
+Date: Tue, 5 Aug 2025 06:38:45 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Elijah Newren <newren@gmail.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 3/6] t6423: document two bugs with rename-to-self
+ testcases
+Message-ID: <aJGK1afGLkNAQID6@pks.im>
+References: <pull.1943.git.1753197791.gitgitgadget@gmail.com>
+ <bda42aa85cf4f332ef60aca1a8937ed4b868fa87.1753197791.git.gitgitgadget@gmail.com>
+ <aIx7OEX6AEqNsIHb@pks.im>
+ <CABPp-BEUFaePoJx-dn9hOE6r7mQV_W_6QF2K1sJJ2uXeL81rdg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] commit-graph: remove reliance on global state
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BEUFaePoJx-dn9hOE6r7mQV_W_6QF2K1sJJ2uXeL81rdg@mail.gmail.com>
 
-On 8/4/25 1:17 AM, Patrick Steinhardt wrote:
-> Hi,
+On Mon, Aug 04, 2025 at 12:15:15PM -0700, Elijah Newren wrote:
+> On Fri, Aug 1, 2025 at 1:31 AM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > On Tue, Jul 22, 2025 at 03:23:08PM +0000, Elijah Newren via GitGitGadget wrote:
+> > > diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
+> > > index f48ed6d03534..69de7a3b84af 100755
+> > > --- a/t/t6423-merge-rename-directories.sh
+> > > +++ b/t/t6423-merge-rename-directories.sh
+> > I found it to be a bit weird that we have this conditional here.
+> > Shouldn't we expect one particular outcome? Even if multiple outcomes
+> > would be techincally correct I think we should expect one particular
+> > result, but we may add a comment to explain that different output would
+> > be fine, too.
 > 
-> this patch series is another step on our long road towards not having
-> global state. In addition to that, as commit-graphs are part of the
-> object database layer, this is also another step towards pluggable
-> object databases.
+> Isn't that exactly what I did, with the note I'll copy below?
 
-Thanks for carefully working through this code full of bad patterns
-and fixing not just the bare minimum to get it working. Each change
-was sufficiently motivated and carefully done. LGTM.
+Not quite -- you do have a comment explaining why you relax the test.
+But I think it would be preferable to _not_ relax the test but still
+have a comment that says that the outcome isn't quite clear cut. This
+would alert us if the outcome ever changed and thus make it way more of
+a concious change if we had to adapt the test, but it would still leave
+a future reader in the know that a changed test outcome might actually
+be okay.
 
-Thanks,
--Stolee
+Patrick
