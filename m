@@ -1,76 +1,85 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7362E36F6
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 18:57:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 751B42BE7C8
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 19:05:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754420227; cv=none; b=p0uktthq4h7SEDSadiUEt0drWhjVJcVxHY1H2QcGRnqK7nVVF9cC80V72KyyBbpY0+cnftAhC0NELEGIDsuROSb5Y6ZV+j9LOos3HaernNAW/WlWklcTVDE1VWrp2roq8A9cbpbsJlUVLktgIa54o14DSqLSP1LFUI76G7Kiedw=
+	t=1754420755; cv=none; b=rPpauAZo5g0e4j76CktXij+GfgH8OuRgT66p6E93oE6aRh5BApnOQ+h71rsOwjW1+xL7Ot0KoCydAykg9p+LrmJ4fhxJhiJXzXbiFPBmSbHn2CA7rgNxxzPPn76+wlnCZuFYhYWMXxHnAtnGUU1ZpYKjLn+iWMMoFywxpDYPfQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754420227; c=relaxed/simple;
-	bh=5yNdp0W/QLS3KKfh46Ow4XesRTjwdnAtvg1Xaa1HrNI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZlGJl8BXkPTYahyCMWxnBIRGJ7u6jswQMJdsIcoKcJYbZZd12rDPQpAnZ42UoSlhZ4HiPkTS1vMt1YgZyuU3iEa41lcHFisxYPZF8T3O/Q81OeSC884B7Ed2JY0w2Ec6GRXJ1B6z3vYo+HnXi0p5b/iQHOU0xo7fyzgRDwEvvcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ey/lul/6; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1754420755; c=relaxed/simple;
+	bh=YTlZXNbH91iEIOCLsZVbhDmEmAzS2kZlIIZVvZGSvJw=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=F2Y9YgxermSEajiD61YgTcB56vKLumioD0yJW4OKONk61KKazGihNS11Qsuhwe6rDPeAhgMJfPv01dWwP+fu/RXvQLaTiQ4h85iXH1n1iGZ2XWh/RbYeyZ7dtT5gGrRPm2yphDQTopZN6QCeYbPl9Qxj7yLnfrhJ23QdTcK6G84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T2LGsa3S; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ey/lul/6"
-Received: (qmail 16034 invoked by uid 109); 5 Aug 2025 18:57:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=5yNdp0W/QLS3KKfh46Ow4XesRTjwdnAtvg1Xaa1HrNI=; b=ey/lul/6UDQhVqgCHfolyHaT213HBl1SJQGyNAf8Du2EhKmmhKedZp9kaFUtmzHy94pvKrPG0omXYmionJh2Di1/aQkD1rBxIHe/Mz3m1WeZQxOCGdbagx6SI86oLICOvJpgqSOdieLjWxisJzyJ7hcKT9XqeJZRHZVmt0q+ZMqP0XFHPO3Xf5/W0Hra/W7MANnOZ31suDBTLFgaaB0NDezTmoLLvElJLriSOmBB1FZiHkdPMpg/FbTAR7ozziBHtDjK0rudS3Nep3rfkFZVoss9mxvq9WWQYSizvS2ZqNmfcPbjsf9Uy7p9yR03Od1KQLdPLH7zUG0Mi+Jdkw5u6w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Aug 2025 18:57:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11161 invoked by uid 111); 5 Aug 2025 18:57:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Aug 2025 14:57:05 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 5 Aug 2025 14:57:03 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>
-Subject: Re: Why does git-grep appear to treat exclude pathspecs differently?
-Message-ID: <20250805185703.GC1345110@coredump.intra.peff.net>
-References: <CALnO6CAOOTBQf3s9B1G8AgwcbYnv5VNY63q-6bGPeoaLy208rg@mail.gmail.com>
- <xmqqv7nezdw2.fsf@gitster.g>
- <CALnO6CDNDfx6L7CmPwE0eBZFkd_JkZf6hDwrADccAb14QhJGDg@mail.gmail.com>
- <20250802094657.GG3711639@coredump.intra.peff.net>
- <CALnO6CALb-_RjNZw9u-0R33O+KfccfZK0+mF-W7G659wc4PW7Q@mail.gmail.com>
- <20250802185238.GE1773585@coredump.intra.peff.net>
- <xmqqbjoxgd83.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T2LGsa3S"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-76bc55f6612so207821b3a.0
+        for <git@vger.kernel.org>; Tue, 05 Aug 2025 12:05:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754420753; x=1755025553; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YTlZXNbH91iEIOCLsZVbhDmEmAzS2kZlIIZVvZGSvJw=;
+        b=T2LGsa3Suqbqercvp4YTyjayS1jTknA9K9igh6qtHLSAk8ad3iDVAEtT/66XMJ5nZu
+         lqRmc5JL4JwUeEvWaxwxRh9kKvIADHeyrBMQKytFPVYIXC44CQnB6In32ASWffgBYsG3
+         GRKhPgpoL9UnjwF88yPsj4mnt29JBCtzdIh5AWviNzApk2o0NzSKXjCMZTjg4Ddi3fAT
+         lRwI1jn17rEjlrwB0Ad969DM+fCefkEaVco8p3gVxsWp7D9AuuH1wF9ufa23GwYQgES0
+         KUeOsWN4J+raKY3nGNQVSMsuG8z57LaUajQBQyUi7inUt4erOxEjiqTsfkny8KDEhgCH
+         sswg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754420753; x=1755025553;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YTlZXNbH91iEIOCLsZVbhDmEmAzS2kZlIIZVvZGSvJw=;
+        b=APRbk2EWkj2D/ngJ0kKu3cH0eP5aHfDvnGT1tiP20vsB3aS202qIioLZRwHXyI8G/e
+         +DcXHm8Hu4DjB608qFOHiXQ3KUJr+CqU3j71ggXCzzP8uDM0IqJ7qZIJxw1dsLrD0ZlF
+         EkhiMrAF56asfL8Q2pWvtNjswkEZ+PB2ikP8tTv9VWpYNtGFUfxkUHQ8qxqs9cSBJeS/
+         B7JA3p1fr1P23EQEA14QCiVZdSKdhKVSFK7DQNb9rRQKjjjABqyzOw95qhxgSz8LM8PO
+         H1AFPtETdPXEEXIrEB966KtMxQ3CBOysO6LBtDMJfFTDu5CJloyZzQC68tnNE0PavP9m
+         p77A==
+X-Gm-Message-State: AOJu0YxgQWvjA1bOSoeozTFdkAVinJjJyKTSCmPNPfMmzVtwtpPWKes4
+	j+ijbPDp5aLOJ70EnMkkZOjHoamoTdRfS7UJmoeasfVxW37+0uSuyBkSxJuPl/vr
+X-Gm-Gg: ASbGncsBfXodPndLa+wSf9hbAwfhrc2P4IdXEDttN71Bw6VKj94g/PMFPm+GJq7cO+W
+	WAwcAJ+h3tBlZyvI5iYe+AmBExThlCrHDcbV1mIE1Xe021on3pKOhmKUb+Q9BtnCdEBTqT4d8Ee
+	bKtSmxiNmvdq+Ye/abnGZDrL+S2OToI9K37VPvBvu4svr4yHtXcLQpKvvHMjelkYXsnGpJmXs6P
+	Dmo3WoICN6v0dDfAsxSes3E0xWgmgTXOfMY3p28jkkFliUFgqP4N3mu55eXW3Rk224wPn8DHMrw
+	/mGrQuJZIoaRY5A9ph+6nL68zL3xDySRVXWcHvi1cBY4tnUHc3kkSMYelUkaq6Yls+bNANl8ALL
+	O/s0yi1A80t/oetqmC7GvmkkryAkhA7e1M71JVmlHHU9Rv1b3XQNkjwT0
+X-Google-Smtp-Source: AGHT+IF4cb8hIz11JyDrrwkDrdCKPn/JKadn4Rehl1PcCdT6GUH1hFBbLmm0i9S4gaJY7O4l9eNtAw==
+X-Received: by 2002:a05:6a20:4309:b0:220:1843:3b7b with SMTP id adf61e73a8af0-2403190690dmr127013637.4.1754420753098;
+        Tue, 05 Aug 2025 12:05:53 -0700 (PDT)
+Received: from smtpclient.apple (nat.ime.usp.br. [143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b422b7be31dsm11729769a12.14.2025.08.05.12.05.51
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Aug 2025 12:05:52 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqbjoxgd83.fsf@gitster.g>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [GSoC] Blog: Machine-Readable Repository Information Query Tool
+ (week 9)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <A203C3BB-AEC9-457E-87B8-189B81C579BF@gmail.com>
+Date: Tue, 5 Aug 2025 16:05:39 -0300
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <31429FDA-8F4E-4BA4-AC53-825E00F24856@gmail.com>
+References: <A203C3BB-AEC9-457E-87B8-189B81C579BF@gmail.com>
+To: git <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3826.700.81)
 
-On Sat, Aug 02, 2025 at 10:56:28PM -0700, Junio C Hamano wrote:
+Hi!
 
-> > So I wonder if we have painted ourselves into a compatibility corner a
-> > bit, if we have two conflicting expectations. We might be better off
-> > just teaching check_filename() to parse multiple of [^/!] and the
-> > trailing colon. It's horrible and not great for maintainability, but
-> > this syntax is not something that changes often.
-> 
-> Ah, OK.
-> 
-> So the idea is that when given _as_ a pathspec element (e.g., after
-> an explicit "--" separator), we do want to interpret ":file.txt" as
-> the same as "file.txt", but when dwimming to sift revs and pathspec
-> elements apart, prefer to take it as a blob object name in the
-> index?
+Here's the 9th update on my GSoC blog:
 
-Yeah, I think that is a good way of framing / justifying it; DWIM can be
-looser because it's inherently about heuristics.
-
-I don't plan to do anything with this topic anytime soon, but maybe Ben
-wants to produce a patch in that direction.
-
--Peff
-
-PS I'll be offline for a week or so starting tomorrow, so apologies for
-   any discussions I leave hanging.
+https://lucasoshiro.github.io/gsoc-en/#week-9-jul-28th--ago-3rd
