@@ -1,132 +1,133 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D0020A5EB
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 06:24:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2C1253F11
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 09:22:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754375085; cv=none; b=nkWUv8TLb66pGna3re7rfAft6/WpQockLte8t1m2R02NL9mfOe5K8sfw024wR81MR1Jj9Qt2ztXVcYx1ZFKnYCEQQk1q2cjNZ6/BDL0IoApYl5hEZLeZg+6MzKXUnW78WQhuuHvvSUNsbqD+ylpljD3p6kakra+fd9ebQ1V0uLc=
+	t=1754385743; cv=none; b=OmOxH2H+KAq35qLyYeFa6UK0U9dMRjZrjuy9aOrn4nWyojtxOiMfzVqGY8gDqFTAoYTtgNpwNsYp0UdO0vom0yeXvYHhUm/3iAfurmcLTsZcAim23ZfRHoNOzKohQmYbDNHQgNZsU64lufvZMbuvmhBSqX2Dsls620Hpg2STlg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754375085; c=relaxed/simple;
-	bh=CQKZacetomdiyZQ4zd0soXc86tcjrRJUlyg5gfVAQQM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kS94FYC9FtchHv/F+zcEG5dJ6GqLboUgkfzEOo94pk0ykISsF9Sa8pqdgchZwypDdUcsG0XfNJmZEyVb/JsziGJ5sZ5HzwqPsGyAHU2gJxYBMRAi+HQFClwqwv+G6Hc97EgX726DkZ1EFPLFe0n564wr42g9JOMc0kN0D2wz/AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YVWgNBoL; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754385743; c=relaxed/simple;
+	bh=L4YElc1jjEszGAVLFR0ZhTQJn5Zuoinw9QBoYTQSd6Q=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=A4Dv51KC1puGqOXzygd020qh5M89ZI/e8LHPCYpunH75h2YKkKuPCKBOAOLgIM9+j5aT/hDIxU0EYaNp/Yft354oxEFm2jkfKmGVWruchncCQvwf4cPDWK6ggofGSBl5/CT5Y+o5huHxof3MkmacbUoFZlFdU6RZwWwkVVqT8hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=fk3sLo2h; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YVWgNBoL"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-24050da1b9eso6275055ad.3
-        for <git@vger.kernel.org>; Mon, 04 Aug 2025 23:24:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754375083; x=1754979883; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QwtrgI0Dek6GEMkkjvh34zVawCm/9GycLwobagNMcSk=;
-        b=YVWgNBoLGHEtbBjZH8VMhX/Cr6uECApeSbAdqDPLOBefWunGDXaE2IPum589Pj/KvD
-         PnUbkWntkkwTMWWB0x9r4kQXpDd4M08dIN/V4KfZWsVXAcqQijlcGYzMr8b91vvgbBH2
-         +M0DYvQ1tHGs3NZGgzPxjxDihXfN/K0sPnDfxnTFrGub4w9dyyyLbkFgb+gwwwtNlufw
-         dzx1Z/7gP8q6PlmuVqeaACatESl+nTKnKbA7T0wZoOwe03jGQygrycCfJNcUDA+LsGwC
-         WnDmyXEEzGUg7EVsMAw59EWUrcbID5BIkFozv6isA2BSg2/a7ABDc+JJGQk3vhYDePbt
-         XO3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754375083; x=1754979883;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QwtrgI0Dek6GEMkkjvh34zVawCm/9GycLwobagNMcSk=;
-        b=UiktLUIQF6454tfQxSGC48lzgZvFb/H+061E6zTpqcBIw/vQnVBHUXjENUkwwS5Vr/
-         KBl3H7Z+DAmvRDRaqe1EHsLQAZH28U859O9U1+4VhZVF/jHoGUedBQDy5Vk9HRkzSBHP
-         FWFq7TXk+gb8IqY/4t/Zl8uZ8pTgA7/yVWY4nkd3aGmBo/jsv4BFkMgcNmmwcRYW8Bb/
-         jXaMtQ1tiMg+vxtmXiNQEdyrWXTpfDwt+wUsE0XkmdRL1ozwucUCAsdLehkwW+d+NbLA
-         h0/5NgPYRA15R/8aepvrMBXkhfTUgiqHmRaZ56GPp5SK2PWvwNDrordKDMHQpKI9EWSY
-         me6w==
-X-Gm-Message-State: AOJu0YzAQJJ1iK++SK06Ld70Ec2zfg1BemNpyUs2jsBr+m4TjgPYf7V5
-	SudiTot2KjlHDaWPQWTckOxLRFf49GtmeMC0rtpqM8GCe8gA4dszXC6yh9NpLQ==
-X-Gm-Gg: ASbGncvLiy25q4WesDZTmuHiRpryjf8a1ru64T6K3WlT5C8I0Go8rzeIYXVSUKE6gsO
-	xIOyDHnkNoJ5ca1CWOneMFGniqXivg+qXTfWV5yxmcXH2O+dcjKFXpOtp6X3BJ70oAcnnTOskPX
-	6EFHONSEO95+JuBW3G3Mn3EvIaWtr2+6Y/op8c62mX6PYcI4NMb0f5Jp4d0DgtH72EuEraLUFsg
-	dv7alZ729LJwwIC3QQqzUvHV2GUOl9yqeIo/Ffylo+dbIU/nbGDAQGYcLHdiTV4KtuuIY7LzZAZ
-	UciS8G6E36M0pRpODUnpwLWP+wW8CTYHmnqwrtiH+Uhs1Zdy2KT84lA5C+wkkeDjEjARy2AgJVV
-	YR/Go7maTCfaNtevOFq03pP0+Mn7jVA==
-X-Google-Smtp-Source: AGHT+IF+t7DXMJ+1//wcR+5YRkhX8x2NJW2diDkX5KciymZiYEzZTjZkacZZ2/YmyMtDA1J7+8hFhw==
-X-Received: by 2002:a17:902:f60e:b0:240:8a87:a187 with SMTP id d9443c01a7336-24246d47d6emr72264975ad.0.1754375082926;
-        Mon, 04 Aug 2025 23:24:42 -0700 (PDT)
-Received: from generichostname ([2601:645:8300:3b10:e54:15ff:fe8e:caa6])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241e8976d13sm123916935ad.109.2025.08.04.23.24.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Aug 2025 23:24:42 -0700 (PDT)
-Date: Mon, 4 Aug 2025 23:24:40 -0700
-From: Denton Liu <liu.denton@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/2] remote.c: remove BUG in
- show_push_unqualified_ref_name_error()
-Message-ID: <2bd892b26c94133cd1a266d6ff4f2217418b0660.1754375026.git.liu.denton@gmail.com>
-References: <cover.1754300389.git.liu.denton@gmail.com>
- <cover.1754375026.git.liu.denton@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="fk3sLo2h"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1754385739; x=1754990539;
+	i=johannes.schindelin@gmx.de;
+	bh=MM0Nvo/RIhpdOttUNHwKj/a/cgmqsbSkAOXrd+iS7ME=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=fk3sLo2hMQYjUsfRlsXunxCv+UT4RCPQ11eXVung23BGjy43jsKTLUcyjy58XBj0
+	 T4SP0Er4EJdHz3auvs5qSYRC39llpoDvxmRUgkcRVrIn7r1q6jujaw/OeKPhHwWKX
+	 m+uivznc9+pr9E9YnHl1DeylTFyl6BZ3qq4RHmbrjUWs+7l4e0TmQJYK+VFyLsBPT
+	 ndKU/b7Q9aUAFEaVtm+sbFt0+GEvTCcZTvXLxrZMqRMIT8bsVDh187nITGCAeo85c
+	 Pq7ioV1F5wswrD7tSWZQp/dOr1oKK3HXb1vJ3uQeKiWehMt9LCe6DpnDfDN2OZ4E9
+	 XSbHUeLaV8wbunpL+w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([151.189.132.51]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MMGRA-1v2Osu3Un8-00YnmZ; Tue, 05
+ Aug 2025 11:22:18 +0200
+Date: Tue, 5 Aug 2025 11:22:17 +0200 (CEST)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.51.0-rc0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1754375026.git.liu.denton@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+Message-ID: <1MDywo-1ut9VW3fhk-007xUT@mail.gmx.net>
+X-Provags-ID: V03:K1:nvXY6KOeYhpp4TCZB3VqCStibY/+JvjZqtd1EJS11XxxlX8ihDR
+ jSzIECjIsMEIJr7AkkbnmPIqzTWc8DR4htQoKUBmpzsqsYwTLLqhVsvKE90CglBWdpEif6T
+ KP8+h5pPRhv1yPjcUDv5uUtfNyw8p1tteGpBdL5YbcnU1v9FSjEUAU1v3NAc2WGLVQ9l+EB
+ ziS5MC08dKFfy2E5PQDcQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:YeP8v1wGeCE=;jw6HPW3l0UAQZNqTv4oWSUwGZGH
+ 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
 
-When "git push <remote> <src>:<dst>" does not spell out the
-destination side of the ref fully, and when <src> is not given
-as a reference but an object name, the code tries to give advice
-messages based on the type of that object.
+Dear Git users,
 
-The type is determined by calling odb_read_object_info() and
-signalled by its return value.  The code however reported a
-programming error with BUG() when this function said that there
-is no such object, which happens when the object name is given
-as a full hexadecimal (if the object name is given as a partial
-hexadecimal or an non-existing ref, the function would have died
-without returning, so this BUG() wouldn't have triggered).  This
-is wrong.  It is an ordinary end-user mistake to give an object
-name that does not exist and treated as such.
+I hereby announce that Git for Windows 2.51.0-rc0 is available from:
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
-Thanks, I liked the way you phrased the commit message so I copied it
-wholesale over.
+    https://github.com/git-for-windows/git/releases/tag/v2.51.0-rc0.windows.1
 
- remote.c              | 3 +--
- t/t5516-fetch-push.sh | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+Changes since Git for Windows v2.50.1 (July 8th 2025)
 
-diff --git a/remote.c b/remote.c
-index e965f022f1..4ad20110e9 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1218,8 +1218,7 @@ static void show_push_unqualified_ref_name_error(const char *dst_value,
- 			 "'%s:refs/tags/%s'?"),
- 		       matched_src_name, dst_value);
- 	} else {
--		BUG("'%s' should be commit/tag/tree/blob, is '%d'",
--		    matched_src_name, type);
-+		advise(_("The <src> part of the refspec is an oid that doesn't exist.\n"));
- 	}
- }
- 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index c2fcfeca92..e064ea7433 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -509,7 +509,7 @@ test_expect_success 'push ref expression with non-existent, incomplete dest' '
- 
- '
- 
--test_expect_failure 'push ref expression with non-existent oid src' '
-+test_expect_success 'push ref expression with non-existent oid src' '
- 
- 	mk_test testrepo &&
- 	test_must_fail git push testrepo $(test_oid 001):branch
--- 
-2.50.1
+New Features
 
+  * Comes with Git v2.51.0-rc0.
+  * The Portable Git installers (which are self-extracting 7-Zip
+    archives) are now based off of 7-Zip 25.00
+  * Comes with cURL v8.15.0.
+  * Comes with the MSYS2 runtime (Git for Windows flavor) based on
+    Cygwin v3.6.4.
+
+Git-2.51.0-rc0-64-bit.exe | f10884d85577e87e49589e24ad461f1497ae48c03e725d6dd86f0a28a55872d0
+Git-2.51.0-rc0-arm64.exe | 1eaefeb121357b443bec2c9fb94f64fb7433e3961ab784278c9325cf09b21b5f
+PortableGit-2.51.0-rc0-64-bit.7z.exe | 8ae49916e2139fd6d388704a4ab7f7382480a0c63d12501b93238e6b2916a98f
+PortableGit-2.51.0-rc0-arm64.7z.exe | 4431babf9a3786952807a510c01972a5a03540e1a1ab623e9d99c47361244c0b
+MinGit-2.51.0-rc0-64-bit.zip | 36a36ca0d24d6ccdb5328888aceeea7127343c2f6faeaa8474f84d1d7a3575fb
+MinGit-2.51.0-rc0-arm64.zip | 8f39a5d5bd4b484b18bde06674c6d134440fe2d77306317eb60464ddb55f5971
+MinGit-2.51.0-rc0-32-bit.zip | a0651ed960e54e13ff63de20d61bfa50d4b1df2cfd870810c2528b8b662cbc21
+MinGit-2.51.0-rc0-busybox-64-bit.zip | 70e55379ca1e31013ac4f5e69589e13764622c220bc0c12d24320d3325ef6cfb
+MinGit-2.51.0-rc0-busybox-32-bit.zip | a6b267c3275cd39eb7649897d1931c87f3278fc43d2a8a965b095e1c89d144fc
+Git-2.51.0-rc0-64-bit.tar.bz2 | a77c02f8adcecf46a785c2a70557c04184c84bc12fc2480516c26c33fe035290
+Git-2.51.0-rc0-arm64.tar.bz2 | c8b12a3aadaa780cce6b0b007474d8cdc62ddc3d05025063e7ae55e142e4b810
+
+Ciao,
+Johannes
