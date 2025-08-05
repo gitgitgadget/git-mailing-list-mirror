@@ -1,127 +1,101 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070813FE5F
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 17:12:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06009291C0D
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 17:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754413976; cv=none; b=IenXAgBwr2YOQL+oet9vouTGiG56JbreME0k4Nb1H1esbhB1EUYlY6H8EMqtyKduFIZJOYs0HAJRXwrvHYYpxl3LxdVz8skABiO4VqpTEPfGsH+6GJKw9C9/F9kTyd3uScd4msCJNgFVoqZxG/VXdKpeCDebXJ7UuCBvwyyJNKY=
+	t=1754414412; cv=none; b=AHkibAxo2T6TOIsWq2fz88P2RasysRU2RPQ8Uldz6SXLzwzSjshk2P37CCJYUDzfBVN88LILrE3NoSyX1XbXSwmq+5Ohw7vmwYwpsAfyalPUgoc+oRQ8o7+1wzkZF2pfdovLgG51DoSdednRslmUxJ7/5WbQUOhoqjJl9UsTz5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754413976; c=relaxed/simple;
-	bh=+uRKYA5U7rg/ralxgJ5dYhd9Vi9SlkEEnLxSXIKpa2E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=W3ihmEzUDoWUxgpxfWYI6DHYF7+yTRRolUMa9E9xeKj+UTqSFzEELOXfQnsGlqPYhXkwc9sw7oH9WqwQIMMYF5+5lswJ3jjxlnwZdiFgFuhM8xWcl//wixVI3CDIJ0rkezCvZBW1FnC6ptkN302Bb0mdI4bIjbgPTLLPCFlA77A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HZJ7+h0/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=joQh7cIY; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754414412; c=relaxed/simple;
+	bh=QUWxLvW6i8tiHSjYApKE50u+VQdYBgSdoCgru+6dScE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uBBWOQ6ZTkXFBI+UY+zDbA/k/HQGwrEaQOVynpa8VvUxkQ9R7x2EIuWHva/Qd8cazkPeC/hbYV4kssxztgfsZrqFrspUDKeTQCz2UzWLoLlAqcU7Qa2cW9Z7x2/wNw7WjZ6EZ8PWidhNQiTLgAyEAv6carnpA5fNzdkgwEd2SLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=Npwoptqs; arc=none smtp.client-ip=212.27.42.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HZJ7+h0/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="joQh7cIY"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 116B87A0167;
-	Tue,  5 Aug 2025 13:12:54 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 05 Aug 2025 13:12:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754413973; x=1754500373; bh=oyxa742GfK
-	xSqrXT+9ev+tAGIJ+10JR4/f3WtARWaRw=; b=HZJ7+h0/lQhdWz2usepBIgQDc2
-	RfaYVz32pssKgiwexxsTGoHZn62gqVg7UaLbtLuLi33I0x+ngMSIKXsJ2oJ8VjnT
-	bPUcUwLW5LNvss0D4UNzSE2Si0FpQOcTDXEGd4DG4BUHwCICMk0r46EcoT/APfXe
-	jJ1wNt4SUFlQicEMiQaRrUyXoZHrWzd0PkC8Dbaa9deuQfddG3kswReOPqzlaGaR
-	jHpK+1leY96pyKY+TchGe/z+7fS1xBZ/2q2VKEB8OJO4ydFsLnEPY7QAlmN3gw7U
-	GsP/BOBtJ8cVLT/aCmRwfY0pkvbRtSwsMFVe1A5AyUBcHNBJFpMGwK/2XjqQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754413973; x=1754500373; bh=oyxa742GfKxSqrXT+9ev+tAGIJ+10JR4/f3
-	WtARWaRw=; b=joQh7cIY2dxThmjFcNm83aKIEdwhdDsHR78YZJg/4Tqr8t0BsVs
-	sa30u19QuYYY+A+CgSTxGP0Wzfi1z664WK3MfM+SjTwNVYVDZw83epr534k0SuvJ
-	F63pK6bu900hncZitPBTnnRyN6mxlBSkDbhz/KnBBZ4dt1WUE2AoiNgk7HyPGs1s
-	WYEH4KzWFvqc+Bb2bpa3RxCYbehxtCvsYd/PKlzKJrsBjlBOtKHnmiKp+S102YrG
-	MFh37Q7f8UHrHQxJ/YuPPWYJZzdbObunptBnLd4XkdZBe7JnwdyWtMkpyDSmZfZm
-	56IXdLw8OQvDVkoDjlbJ+0cwVEBvIVSviLw==
-X-ME-Sender: <xms:lTuSaJogU1tvv0ZBIL3Cd_1mycopRM2qGrzjw-lc97CoyHai8h-pgg>
-    <xme:lTuSaGNLkZnjZqM83wewIknHRJ-2ttOVx7SPR_FA8zG9EHgO3ckCWIrObiU-HNNHh
-    AqHnIRhB9E7cuqIEA>
-X-ME-Received: <xmr:lTuSaCwZ_B41Hl04yS7uVT1PGmAgtSo_BxLJ8lkAnyEH05j8jIhyOUPNVIVinBwnLCHuQcXN6J0rfk-B4B20RcrtCRBpQxU9VESj_fA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudehjeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehlihhurd
-    guvghnthhonhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:lTuSaHt1xbmzPXelgQrV0hAPOJA0K6rwnnCNUnZmA2PlWkqS7ShdAw>
-    <xmx:lTuSaD7VmcYoTXcRg_Wcw8mx7NAQTp9BOLxlkyYPf3rAlrdZ-vx0JQ>
-    <xmx:lTuSaOSSKKbcucH6ZQqmVBKbE3fhu-oSmiJpbhKDvVJoI0nZVG5sWQ>
-    <xmx:lTuSaKpJnHACd0J8kCGai0cd8DzyDudKNKR7Ssf_AY4kpohomZj1YQ>
-    <xmx:lTuSaPb1Se9YTzWZk4s3XCu_bB4rGs7qZcbGhqzS3xDBf_sBpoOWbzbN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Aug 2025 13:12:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Denton Liu <liu.denton@gmail.com>,  Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 1/2] t5516: introduce 'push ref expression with
- non-existent oid src'
-In-Reply-To: <aJIG4lZURgqvSup1@pks.im> (Patrick Steinhardt's message of "Tue,
-	5 Aug 2025 15:28:02 +0200")
-References: <cover.1754300389.git.liu.denton@gmail.com>
-	<cover.1754375026.git.liu.denton@gmail.com>
-	<d26f355c19c59eae30143900e218533bfeabec2a.1754375026.git.liu.denton@gmail.com>
-	<aJIG4lZURgqvSup1@pks.im>
-Date: Tue, 05 Aug 2025 10:12:52 -0700
-Message-ID: <xmqqqzxpzo8b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="Npwoptqs"
+Received: from cayenne.localnet (unknown [IPv6:2a01:cb06:114:e600:28d2:9042:8b81:c43a])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 1A2CCB005B1;
+	Tue,  5 Aug 2025 19:20:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1754414408;
+	bh=QUWxLvW6i8tiHSjYApKE50u+VQdYBgSdoCgru+6dScE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=NpwoptqstTZ2Fh/R+rcU8yJWvmmUXaYEhnVQcXji+Geu5UzSq7XEhWQ0Vd4MbxR3t
+	 6X+LECLApI5OC9FcvGNGg1KueSWAwAi4wIItn4tZe6Xob4PVoorWK0oSoL6VXPNnyY
+	 q6c3bqhrE0i4wW7COrK3QEeTah5xoVU5UULodEG52sBVaiu+q/Ov/xU5bWnofOau8i
+	 p1rxPbXF3LmB0FNRN1iLf+gMRqJQv5ojFZIvEAX/xf+TAXBm1YAti2bunqkFgf0yjm
+	 ZL8RST+j9Pt35j/vbOqgLZLvvmgQA5zNmL3pEH+fgWdFCxUFxUV6kVrReX3LZVHGsR
+	 hSDyFNtqi8fbg==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v7 0/3] Introduce git-last-modified(1) command
+Date: Tue, 05 Aug 2025 19:20:05 +0200
+Message-ID: <1929210.tdWV9SEqCh@cayenne>
+In-Reply-To: <87tt2lu2rx.fsf@iotcl.com>
+References:
+ <20250730175510.987383-1-toon@iotcl.com> <xmqqjz3h20cs.fsf@gitster.g>
+ <87tt2lu2rx.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Tuesday, 5 August 2025 18:55:14 CEST Toon Claes wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> > I am happy with the updates, but am wondering if documentation
+> > update along the lines of attached patch is also needed.
+>=20
+> Ah (annoyed grunt), I should have added backticks. Yes. I missed those,
+> sorry about that.
+>=20
+> > I am not sure about the last two, i.e. things that are not dash+option
+> > appearing as enumeration labels, though (and Cc'ing Jean-No=C3=ABl to a=
+sk
+> > for help).
+>=20
+> Well, this gave me a nice opportunity to test Jean-No=C3=ABl proposed docs
+> linter[1].
+>=20
+>     $ make check-docs
+>     [snip
+>     git-last-modified.adoc:25: '-r::' synopsis style and definition list=
+=20
+item not
+> backquoted git-last-modified.adoc:26: '--recursive::' synopsis style and
+> definition list item not backquoted git-last-modified.adoc:30: '-t::'=20
+synopsis
+> style and definition list item not backquoted git-last-modified.adoc:31:
+> '--show-trees::' synopsis style and definition list item not backquoted
+>=20
+> It seems only dashed options should be backquoted.
+>=20
+> [1]: https://lore.kernel.org/git/pull.1945.git.
+1754399033.gitgitgadget@gmail.com/
 
-> On Mon, Aug 04, 2025 at 11:24:37PM -0700, Denton Liu wrote:
->> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
->> index 4e9c27b0f2..c2fcfeca92 100755
->> --- a/t/t5516-fetch-push.sh
->> +++ b/t/t5516-fetch-push.sh
->> @@ -509,6 +509,13 @@ test_expect_success 'push ref expression with non-existent, incomplete dest' '
->>  
->>  '
->>  
->> +test_expect_failure 'push ref expression with non-existent oid src' '
->> +
->> +	mk_test testrepo &&
->> +	test_must_fail git push testrepo $(test_oid 001):branch
->> +
->> +'
->> +
->>  for head in HEAD @
->>  do
->
-> Nit: I don't think it's necessary to implement the test in a separate
-> commit. Folks who want to check that your fix really does something can
-> trivially revert the code changes while retaining the test. I used to do
-> the same in the past, but received the same feedback.
+Well, the check fails to catch all the missing cases: The last two terms=20
+should also be formatted. For the <revision-range>, you can either enclose =
+it=20
+with underscores (as a placeholder) or with backticks (which the formatter=
+=20
+formats like a placeholder). For the last one, backticks are definitely nee=
+ded=20
+to differentiate the formatting between the placeholder and the syntax mark=
+s.
 
-A very good suggestion.
+As for my patch series, this can definitely be checked. will reroll.
 
-> Also, I think we can drop the empty surrounding lines in the test body.
-> Other tests in this file do the same, but that is not a good reason to
-> not do better for newly added tests.
+Thanks
 
-Yup.  The style was from a decade ago when the test suite was being
-developed, and is very out of style these days.
+Jean-No=C3=ABl
 
-Thanks.
+
+
