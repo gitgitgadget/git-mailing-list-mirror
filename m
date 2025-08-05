@@ -1,97 +1,81 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from mail-05.mail-europe.com (mail-05.mail-europe.com [85.9.206.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB02B652
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 10:24:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79459248871
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 11:47:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.9.206.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754389468; cv=none; b=LJfumz0knBCnI/2TeHZUrqMUPuZbqrxgMQIdX/5o789jpjK+bSMo41g4ZcdeNm44nrC8Vv+oCmuGTlc95mLw1nIF7aOH3f2ZP4eARYHO5dmFwxZ7XwoHv6aeluIK9Vi0HO/QxpjcxzQhhH3SJeYRcBq44HVJzN48f4Iiw8R+u7Q=
+	t=1754394474; cv=none; b=kPT65zfjn+yEla0nXV1BgFnOFR6OKR09Bd0fY3ydfs4V6YAXrxiGla7qahpPqSEh44oyPHLvCAxPbUeqqeLnAjlO3xn5xvpbX3s1GaT8Or92Q+v24aIpPKLKEO+n9to0OKnxcCsrA0aBY03E2oeO9oymJxUgnFFPOwxf6mrADo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754389468; c=relaxed/simple;
-	bh=1dLvRU3Z2F2h0wIPOtIDOY4S8XLM7q+xgATg9WY+6e0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fZy40ScblyUvLW9OgI4kNQdMeYu8uRKxAZutZpJu58OOE3h+PwO0Fv6c7KX+MR926fn4qaRq/3i8vUuHivUu/q24v39gC4uhpidYZuO3hOzGRTRXLDxxf5LgHB4jLCG1fVKqWFCWLtLQrmJ3L1kit2xYezojHLKwFCPiQgjeUt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GGKp2N8O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S9Oh/9gu; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754394474; c=relaxed/simple;
+	bh=8yCv5oUny16XtMuh5lxle5ZqvvVls23usqklEpYDZJU=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PRLngFpFtv2C24dItetq477C9JJjQUnArmJOC6tUbcC2Y+WWHzo9dp8aikaEMtWafK3KBOJAvY7XWtREBKDzQWL9gOWjSGmLpq2R1ykbM8qQ2dodbjXG5BUoGmNEdy9G7Prz6OejWazVm7P6C87MsvvdfOJpv8Lsh750P0rDX3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fmorschel.dev; spf=pass smtp.mailfrom=fmorschel.dev; dkim=pass (2048-bit key) header.d=fmorschel.dev header.i=@fmorschel.dev header.b=pgbm17wi; arc=none smtp.client-ip=85.9.206.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fmorschel.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fmorschel.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GGKp2N8O";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S9Oh/9gu"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 65395EC0247;
-	Tue,  5 Aug 2025 06:24:24 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 05 Aug 2025 06:24:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754389464; x=1754475864; bh=QUIlE516PZ
-	TUo7DG0ch3mHV4FsPjYJ1dbywHNwSDDOw=; b=GGKp2N8OtWYeP5zrSClmaACxzf
-	989I8n2r3RWj6evNcsnifmXrlJX2qVB/zTh9ixmPyComvEt6q/OuwWrd9QHOI4Uo
-	bzHTcHTpMUrN4s3PwCOhO5yoSCs+nLqelpWol0Uoty1Uqguf3ZtYrdbz2WbCzzFR
-	KVVzwTjEGSgVvG7gZnxC9+ttUedZiya6z3fQH7u4yVvfT7RQon+OR/UOOWbHqhsa
-	BIo8i8NgQY/MDLRE/DOdW98pirFSPDfVHZNFKzeBewjzxqApfGPqPirClh/feNZX
-	SSqjrBvI5VZrQP2lnhhaBIeGS1RSNyHBxigQQ4K8HGEoeukJKTU6F8iHtjMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754389464; x=1754475864; bh=QUIlE516PZTUo7DG0ch3mHV4FsPjYJ1dbyw
-	HNwSDDOw=; b=S9Oh/9gubbymbSYQAZ6j+pxBQAHjTZBpMaP1ztHi46m9up2sY0o
-	hkOH0cNLVCxZ/BZwQ10g3wLg0ApLVk8KPq/usGfwhNSRVuvO28Vt9dcEwrhQFEA4
-	MDIJccRha9Yw2mt06ZiZxi0nyWXOdqPr4TQe7Cc2md4BPAtAW7evBEPnwoUYZ2Hw
-	q78xezhmpp+ZJwD1XhDnjEj5DkE85GoS1LhDIj7yMJcYqMvb5WzpIuZl725sJYHd
-	UA011+KSm6K1UQocE4tOObjprSKdUWndh0FVXFb3fIiG6GEl3duVPgpA8wzNZEVa
-	t1r9CSkaJUyAt19Nv4dWIqvfusrfnKAlz4w==
-X-ME-Sender: <xms:2NuRaC5KkcesvdDzfysqp1fmnnxDy7rL3ewJBe1JyxogXDSZzqprGg>
-    <xme:2NuRaPLxZ_w6Bl8IcF6cYw9ROZHzS3Av1TIDH2HJo1cmc6w_xT0YXicNIdhgXkmid
-    RXCQVBj2DZb3WXqZA>
-X-ME-Received: <xmr:2NuRaK7zg6sGDSZJNbCLtf0HwfH_m8FKUH6Xe7NLmIC08d4vH0pZgi19tIQLXPTJA4W6qxO06sYOvfvWD70hDK-z2EjW9NWq3xF-9sM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudegleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2NuRaKyQ5oaHDC6MWWhHuFcKOac0BvsHkpvIaZ8ydWusWaVCnhXMnQ>
-    <xmx:2NuRaGaiRycg0QDXDuFxFYIKfWN6FHhbsWJ6UI8rAU1wAatR85YS_A>
-    <xmx:2NuRaETTQq0_YlKerv2FHzL8hDWd8WhZ1xptmxsfG9LKwElMKsGccQ>
-    <xmx:2NuRaIzMIe0stw0j6F2l6dlwMJbPSUQpzokIDH0ZTp_ZLKECWjMGHA>
-    <xmx:2NuRaPyIkdaY8RqAJJ8n_7VJenx0s8b3E5RGyfclcQ6aAdQR49YjRoRW>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Aug 2025 06:24:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
-In-Reply-To: <CALnO6CDm5n0oZsXzvKz89jVg7E_h=1gqPFs2x7-UojdcY_Di_w@mail.gmail.com>
-	(D. Ben Knoble's message of "Mon, 4 Aug 2025 21:22:07 -0400")
-References: <xmqqms8fbilv.fsf@gitster.g>
-	<CALnO6CDm5n0oZsXzvKz89jVg7E_h=1gqPFs2x7-UojdcY_Di_w@mail.gmail.com>
-Date: Tue, 05 Aug 2025 03:24:22 -0700
-Message-ID: <xmqq4ium3w2x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=fmorschel.dev header.i=@fmorschel.dev header.b="pgbm17wi"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fmorschel.dev;
+	s=protonmail2; t=1754394456; x=1754653656;
+	bh=0RY7rV4AGxj7p9gts3qzv24JLisHQmb4N7Nrzi6Z6iY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=pgbm17wi1KRnfZvhMI3H7LG/YzFUNfOwmGpFcS+Ean/RASaw6rnJ8dpUKkLVmJ553
+	 u/+jH6v4S7Zr6+clbm8BLbSV9jmIoMJAtS3nczzis9VLSA6C++8TaZFi1p3SCbwzAl
+	 XYKlDeJ099pe/tTFT+G0WZrnMGiStYeW52Cu4Heu1PSxLv/uSnof+SVj8At85s6z12
+	 JjqYlCsfMTkvmO9RXfC8opTgLLu8ej5vR+azEhlVHLpOkpCLsjX/WBN40vXxPILWIg
+	 HCrgQcXu7psq5c8vATLVIQ21OGAG30SBTFboaVk+XOI/CXz5dM+7cc92oqX7Un2nAt
+	 LoCXb8ScxOLcw==
+Date: Tue, 05 Aug 2025 11:47:31 +0000
+To: git@vger.kernel.org
+From: FMorschel <git@fmorschel.dev>
+Cc: j6t@kdbg.org, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, kostix@bswap.ru
+Subject: Re: Feature Request: git mv --after (new flag)
+Message-ID: <09e2fb55-2f04-44db-a062-fa6c2c01c8eb@fmorschel.dev>
+In-Reply-To: <d7ey5l2bcy4xzidqyq5by4mrwgziahypvnco5ilbik4y3feqhj@vspbafxowl5l>
+References: <1fa7a8d8-3ae5-4913-b3b5-21d8f67e567d@fmorschel.dev> <0afc01b2-11a2-4f77-a858-7a444e8bb1d4@fmorschel.dev> <2f505f75-112a-4b71-bb05-ea0cb7731cd7@fmorschel.dev> <hi7t3qk7difgzip7syscarnf5ui5avnhmjxil4vzurwcfo7a6x@drccf7gibn72> <917aa62f-5f2a-40d7-8fa5-f19a14926241@fmorschel.dev> <ddc841ec-bc4b-4c01-a99e-9a65af3963bc@app.fastmail.com> <d7ey5l2bcy4xzidqyq5by4mrwgziahypvnco5ilbik4y3feqhj@vspbafxowl5l>
+Feedback-ID: 127627349:user:proton
+X-Pm-Message-ID: 44343f1e818b6ef3a465c546776841f32b11ed3c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+> On 05/08/2025 06:36, Konstantin Khomoutov wrote:
+>> FMorschel, when reading, consider paying close attention to the two thin=
+gs:
+>>
+>>   - What Linus says about much of the code coming in in the form of the
+>>     textual patches mailed to the various mailing lists.
+>
+>
+> I see that now, thanks for the link and for pointing it out.
+>
+>>   - An example describing a commit which has unified 5 different code sn=
+ippets
+>>     into one.
+>>
+>> Basically, these bits highlight the fact that files, albeit useful and
+>> ubiquitous on today's commodity operating systems, frame our way of thin=
+king
+>> of how information is tracked a bit too much ;-)
+>
+> I never had thought of that.
+>
+> My only push-back against this decision would be to allow the=20
+> developer (that actually _understands_ the changes) the ability to=20
+> make the decision of tracking that.
+>
+> But since the decision (of what is related to what) is that this=20
+> should mainly be handled by the threshold (so git can figure it out=20
+> for you) it's fine then.
+>
+> Thank you all for taking the time to answer me!
+>
 
-> .... This is true whether I use
-> my copy of the topic or the one you publish (4c8db1e55c (builtin: also
-> setup gently for --help-all, 2025-08-03)).
-
-I think the breakage I saw was while testing the 'seen' branch as a
-whole, so there may be some interactions with other topics.  IIRC,
-it was running "git repo --help-all" when I saw the complaints.
