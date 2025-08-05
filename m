@@ -1,106 +1,110 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950D01DD525
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 16:56:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01601E7C2D
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 17:04:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754413002; cv=none; b=Bu5YJh1clotj7GD/mfhClzUAqjnVX6S7nP1W4ZrPJWqZmz4kwdpdtb0xh4usXe7WIXtOG5NCquZSK0Ev4QcV7ITuoi4y8ZLh7TNwjco42whMQ6uIJOGGDSAhakE4P4phScJg6wOW5HsjY2i5cr7yEvvJmowrU+7acDXNXcOW78I=
+	t=1754413485; cv=none; b=uWoGowgTHprAvRu+jaFxtJ+D51q+rraoUui8ZA53wfD9NFWbQDERh0vAB9oYE1si9XRuTMEgw2cktVrN8kF5DpssLUXJXMO6aJgjYRM+zG8sc66BAJAAZFbTFPEUaVLACpm9lmvJ+O8E2a24yT/11YQ28CdjFPArInCOfs5J7c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754413002; c=relaxed/simple;
-	bh=Vc969tfXQFsPegENb1ecRUBtcpciM7IqTwN4QkmoXZs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XK5Go6W8XIiJ7r9my4jVrhyop0pPlH0LYlQON9fzRA2Ccg+XIEzhcftXxwDP0ViXY/uvVNVM3+8aTt5lDTXopxYOpXsmyYrwYkZcV9RVmm+E5w+108d5fGRcw8JcvyMVK7pEN687Qheau6gxUdVNVhHubStTCKjO5+tm0ggd5Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JYeS/6Xq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R5OBKf5G; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754413485; c=relaxed/simple;
+	bh=DH0aDac/e+UYXcsDJzQAQo40ucpnCb4LmlGtXsEXJT0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CC4XsG0WFjxATSC17V3wbgWmNmwJClv+VoOHNO6GHGQ/GsRUcWGAqkRKT1O/Ho+q+iamD9nf7GkKY6h/X35kVsfaeaPpwtfzbRujJH+vLbE0+1fvErZFzpersBUpwRBogM8iQQQp4DHLiupAgQg53YFdlcX31BHU5dnolWMGYxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=FtEjPQ4P; arc=none smtp.client-ip=212.27.42.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JYeS/6Xq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R5OBKf5G"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9A2BB1D00038;
-	Tue,  5 Aug 2025 12:56:39 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 05 Aug 2025 12:56:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1754412999;
-	 x=1754499399; bh=dQQjA79u8z4LetoUVIqHMmOt4AcG4EIl/ABG6EHm9Oo=; b=
-	JYeS/6Xq7mJ/8RsokKeSjRxhpAcNK7Bei76ohClLvRvk2XCyOqwlkjG2RTXKz15H
-	N2bngNtmsn3vSS/CPSWOwLwwqF+2YGXaNUKuOdlGLfrExeGVhUMdwBABCPGp3DS/
-	YaHcin0WJltBcS0eDO1txgskDE1QSQLnWsUy5nf+YusI6xJ9pzpekAx+vxa6nQBS
-	mUgqpnb0pzKPGE0F5BmWsfZW4g7w0E+3ZTWb0RbMHfXVwAVIRHl7D1Rai0eTQUtK
-	IqFdknYbqAmaCv0IA9+hL2HgYP60b2X9Euaf8EzjU5uYHP8MhMwijbzxcNsUHWL7
-	G92gBWZJEDQWdUUFiJcR1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754412999; x=
-	1754499399; bh=dQQjA79u8z4LetoUVIqHMmOt4AcG4EIl/ABG6EHm9Oo=; b=R
-	5OBKf5GCPU/wwTIYfZHuFMNIPgCqfZCEPyFwv8RXN65a3RXvdlnn9WRLn3sW+RxY
-	CPvXIwXYfzIa7m6Y8azFbP3EzcR2+ksvc+3x0aAk75dGgr4M9/qoMvJWFaDo0kzg
-	EiaJ0JFjU24vUAE4K49Y8/AN+MlG2+i06OJgm0bxePDWAi9PCM6BLsXNS9SERhAg
-	IHy1LRA09M2u5A+xNJlI6GbABSOY6RMnEL/D4XQJN1MSrQMjIzBfTw7Jo9Zn+d1Y
-	u6+yMAmisQORfjJSDEjbq/hhIr0YTSSSIb+FvEmH8d/VtKYrKfAH/UEDNGzn5a3d
-	ldeBDSI/hhgSj6Zuak3VQ==
-X-ME-Sender: <xms:xzeSaBQ5tz_HVyOKIUkyld7LEdJH0PIh1OPQxp7syS_qidLx3CGLmA>
-    <xme:xzeSaFVTpSInDZQV2E51iWsl5Ko8FzWZevas2ZHsxfTGty9F9JjKUF1kONuDLab9p
-    YfuRYIvDfpabM2QRw>
-X-ME-Received: <xmr:xzeSaDbnvqqmMLTWLQ4jdWLfCkVaUq-5irIwR0KOr7Us5uZfR4KnfVrvtQI1VPBOPLw6-H7BOIQRR-MsIlFs4hWXaIbXHYk4Q_ZEwPs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudehjeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:xzeSaL0rDN7TXUkEeEiGuTrk-oamE5TT97ZMD6ylrnpU0Xo3aelGeg>
-    <xmx:xzeSaFi7TAGhrxW-WgDMU5c2F8P0Ry2Z8DqLiPaZ6kY5KiceOCXOUQ>
-    <xmx:xzeSaPbnBwvEKz9XQgJKLsdl-zLqm1WYtCXmTEYH2ysoaVx-59ThuQ>
-    <xmx:xzeSaFSuuRIJQIpaUYb2VngO40eB8YHIrx9lcPXKSEZlmt_HVYvoaw>
-    <xmx:xzeSaAj8XQDy0FUlm0ElCpLyOdfkbgGDieN2tWiov2OLYT_89fsWiys3>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Aug 2025 12:56:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
- <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
- <jn.avila@free.fr>
-Subject: Re: [PATCH 0/6] Introduce more doc linting
-In-Reply-To: <pull.1945.git.1754399033.gitgitgadget@gmail.com>
- (=?utf-8?Q?=22Jean-No=C3=ABl?=
-	Avila via GitGitGadget"'s message of "Tue, 05 Aug 2025 13:03:47
-	+0000")
-References: <pull.1945.git.1754399033.gitgitgadget@gmail.com>
-Date: Tue, 05 Aug 2025 09:56:37 -0700
-Message-ID: <xmqqfre51zcq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="FtEjPQ4P"
+Received: from cayenne.localnet (unknown [IPv6:2a01:cb06:114:e600:28d2:9042:8b81:c43a])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 0146BB00596;
+	Tue,  5 Aug 2025 19:04:23 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1754413473;
+	bh=DH0aDac/e+UYXcsDJzQAQo40ucpnCb4LmlGtXsEXJT0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=FtEjPQ4Pmb9kklUqZUCr1XM6+o8X7QzLKi7KbaqP2VZQChbaOwSwX6LZ5BTA8InnD
+	 C+VPvzqbSrwb/0+rFkQr0D+DUxUrQk1oIMpra4HMAU/RYVuzCylQqOLI60HqNMnmi7
+	 tbKKa5CBgKipouw2e/Fx0c2/lBeg3pngYCVuaJc3/9dxBtDtScKSYh+/1yvh1r3WZ8
+	 ZomtTZdtI1GijHPSzRKMEP0Gm+hdrFy07tbcCqkZAcLnLyBxQMAhRul519rWWFNqRJ
+	 2os8K+MP5P42iaUxs1Ecz3RJ2m2Ik7l+OHWLKl/nJXl44rcHVaMvQiEaHkxH3YaRx1
+	 UD6fpmD2xWc6w==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>,
+ SZEDER =?UTF-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+ Toon Claes <toon@iotcl.com>, Jeff King <peff@peff.net>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Ben Knoble <ben.knoble@gmail.com>
+Subject:
+ Re: [PATCH v5 1/9] Documentation/git-reflog: convert to use synopsis type
+Date: Tue, 05 Aug 2025 19:04:23 +0200
+Message-ID: <5910515.DvuYhMxLoT@cayenne>
+In-Reply-To: <20250805-pks-reflog-append-v5-1-050997db09d5@pks.im>
+References:
+ <20250805-pks-reflog-append-v5-0-050997db09d5@pks.im>
+ <20250805-pks-reflog-append-v5-1-050997db09d5@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-"Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tuesday, 5 August 2025 17:11:31 CEST Patrick Steinhardt wrote:
+> With 974cdca345c (doc: introduce a synopsis typesetting, 2024-09-24) we
+> have introduced a new synopsis type that simplifies the rules for
+> typesetting a command's synopsis. Convert the git-reflog(1)
+> documentation to use it.
+>=20
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Documentation/git-reflog.adoc | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
+>=20
+> diff --git a/Documentation/git-reflog.adoc b/Documentation/git-reflog.adoc
+> index 412f06b8fe..707a9b39ed 100644
+> --- a/Documentation/git-reflog.adoc
+> +++ b/Documentation/git-reflog.adoc
+> @@ -8,16 +8,16 @@ git-reflog - Manage reflog information
+>=20
+>  SYNOPSIS
+>  --------
+> -[verse]
+> -'git reflog' [show] [<log-options>] [<ref>]
+> -'git reflog list'
+> -'git reflog expire' [--expire=3D<time>] [--expire-unreachable=3D<time>]
+> +[synopsis]
+> +git reflog [show] [<log-options>] [<ref>]
+> +git reflog list
+> +git reflog expire [--expire=3D<time>] [--expire-unreachable=3D<time>]
+>  	[--rewrite] [--updateref] [--stale-fix]
+>  	[--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]
+> -'git reflog delete' [--rewrite] [--updateref]
+> +git reflog delete [--rewrite] [--updateref]
+>  	[--dry-run | -n] [--verbose] <ref>@{<specifier>}...
+> -'git reflog drop' [--all [--single-worktree] | <refs>...]
+> -'git reflog exists' <ref>
+> +git reflog drop [--all [--single-worktree] | <refs>...]
+> +git reflog exists <ref>
+>=20
+>  DESCRIPTION
+>  -----------
 
-> Reviewing the documentation part of the last patches, it turns out that the
-> majority of my comments are related to the latest documentation guidelines
-> which are both easy to forget and almost trivial to automatically check.
 
-Thanks.  Automation is very much appreciated.  These updated
-documentation pages will also help as examples when reviewing
-others' patches.
+Hello,
 
-Will queue.
+Be careful that with the doc lint series I'm proposing, this change will ra=
+ise=20
+a failure: one of the tests checks that switching the main synopsis to=20
+[synopsis] is linked to switching the definitions lists to inline synopsis,=
+=20
+using `backticks`. This check may be too restrictive though.
+
+Jean-No=C3=ABl
+
+
