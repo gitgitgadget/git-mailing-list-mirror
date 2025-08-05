@@ -1,62 +1,62 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D236125C807
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 09:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60A0265626
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 09:28:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754386102; cv=none; b=SdiAfANJ7BEFlRPSkFl1sP7iXuLvLjiq7S+FJN7urIOfl6xUaU5/ZpcG88MYiHmti80zaNDe3B1TR5OfKii/xZDrtXSEHvN/CokQbEgG0KmmAt+iTZJLRvdX2skPCDzyDOH+69tdlIMnXHfV9kC6eYfUeoqgbf3Fi40xiczhfws=
+	t=1754386105; cv=none; b=WcVRe//STu7dVgCyWa7cjr0Nt4NNvVGpM3UvXxcrKMoIdDeecVwW030hFG1NPPrik9fFbwt5cq0U4kn/x14n5MpVFxWSNDFx3KLW0xPlOV48uXyh1Ll+cGaJM64vTfqDRilj44Y2S3v7133OeXuvUTZjFLh5CKK9crshG7N6Qu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754386102; c=relaxed/simple;
-	bh=nKv1CwFOPL0KeHUigqwVNFZeqt1X3KPl6/in+0QTmec=;
+	s=arc-20240116; t=1754386105; c=relaxed/simple;
+	bh=XjD7zolI0Yby5SrMYlT6olQOlur7fWcnjBDxc1Cxkk0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=AJ9cS+NLZ02TVmkpjHKb6czYh+5p34IrhvlRdOVyfW/Ks9Sgyc+UxNOYMOagwv1v8D6fDLmSioVSbHHygwuPYTjhTwOXAtIIv/FCMfKoPRYI6L5x1FiT9bR7LCUD/oXBzgg0VbSIF5RPDmN0USHbOyZSB89ynJxc4TfugLypdXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iB3ev2ge; arc=none smtp.client-ip=209.85.210.179
+	 MIME-Version; b=oSuRqS91msnlGHs89iIucJr+9goDviIX4Wi/vECRNuQnsvfbU1KTji0pZbLdbrst2Qtyumph1bAQhuMsID89EN/lTDjqN68HzWwsCEiDOSyuMJMPfp8AokvR4e473aHbt3g/IJAydlAnJ6NtOutGgg5aAuMFHA3ytneO5cEOsOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VR2dWErH; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iB3ev2ge"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-76b36e6b9ddso4409179b3a.1
-        for <git@vger.kernel.org>; Tue, 05 Aug 2025 02:28:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VR2dWErH"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-76bd041c431so4318502b3a.2
+        for <git@vger.kernel.org>; Tue, 05 Aug 2025 02:28:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754386099; x=1754990899; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754386103; x=1754990903; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EWb79U1Ps0rMxYzaWQJ21hUDEldvMpoXanQl/cjBXx0=;
-        b=iB3ev2getMcV3NH3XiLZqUW1aKI9SaQ+rFjIzfoYNFAZZ/8+gVhk88Vcs9ToBMj0tB
-         KhYBvrpk8PtlUzfjtDdNhcUSF8a1WtEYnRp+UxpG+0lVeaB0Qjgk1bddtteZI3kXTqqb
-         9qNtqMj4YjxLmUNe0zTsIqTmhky6IK9FSgI7yAkRBappPDx0Z4pEZPUWvpgraPgHuDAz
-         CqVmLBTtou8lBx2yQFwObEY/ZhGe1MZfRE1jMFrElTsrCGRam0SdERhecwC93hxg8Pb5
-         XuzqgzWEJIkMUdOulK6XBbj2/q9n5Z10LB7Z40VAXOELEK/3MJMd0eA3Xy/wIC0fuyls
-         lNiw==
+        bh=aFx7TosHSpFSAYlOSzIZlLKrO2G+e9IjCOpV/abCiRQ=;
+        b=VR2dWErHONHUDc89V2LhdKsXEngRm3lg2L8XEwqhJdXIDImGk857UTzSiu4EDwfE/U
+         VWVjZL1O0ZbxpZ17EoBl2BaPckSfWWAOX2XdgCzaigEC0wvXe0aT+wRDti8E2l3hwEXa
+         xwk56cNQzyf2iPhfqzqxZW5Ql2f43sz8t8Eh1E0LLlBo9glE5A+x7GX/t06ifDT0TnoS
+         H1aBz2hvTZtf+owKil3dFr2sYiqKOrZeue/Q8TwD0KmIeHJybFh84jjv5pr/S5W/n461
+         bcPqx18ObLRif9+hmXrzT2l1SnczTe4YWRIOfEUBSE3ak9lJQVyLXlXib4SqwB7AMtra
+         tlsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754386099; x=1754990899;
+        d=1e100.net; s=20230601; t=1754386103; x=1754990903;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EWb79U1Ps0rMxYzaWQJ21hUDEldvMpoXanQl/cjBXx0=;
-        b=ULxLf0JNM/7GzG/CmQRIsUI9R+zJMew1hkNRvi9I5xTAejzOvkp6o1CHCsZ9x6rYsk
-         02ZeoDQAePGdImveKssQ5Nt0jbEYmxLJ3ZglJRxGUO6An1pcAzCYHU63WNIbQO/3Vqww
-         sxicoV2+vAegWRI7JIOVcOcDnFR9cwPOOXtX/epmMoZD1suiZV/i7rgeyYVjdlXNmHF8
-         6oIHh+MBVMfCSNe5KaVhLPDbwbUrTkVt5VbGB2EO/4NY0UAYxiADKSKcxPX7x73eWvgX
-         BO8yavYfcWSzf62saXbUC7Fa0foq+PrksbLK/ueszPHwyTYLcmn+DsofxAAiBDCYfl/M
-         NIjw==
-X-Gm-Message-State: AOJu0Yw3CIW7VYp6zQE8+3EA05T58PdvHqbl1YAxv6Lwt+T1+/2/NwVh
-	I7moxizUQxWEUI97Ra9Co7a1iBGNBbWmKHZdcZKeY6+PiOQjiMgjR8CX3YdG9w==
-X-Gm-Gg: ASbGncuVCzaPAwW4WD1KfOjgcMmsYfOCbtVToUOprq3/w/G95h6z4kUV4oyLMitCYH0
-	UIRn9y4e6t24It/ufqOhNKGUzJP28YusQl1a3lAljkh5BXqS3cwHCk9Wz22ByjW7mpG+FD8l8mV
-	+Ye2XfW6MJ7zhqmAoWdOQ8PBlcmPJ9bgHUrLQl8cnPg+xASl+FisIagNqOA6NXD0jAQVMHaqWzM
-	tHPZsNO6rL4wAfl4Jh9VL3sZimWzpRCI1VcSUyDUpNWTpMQYUJ+oNMi2kbPS6lNYEF5m0XTMpap
-	9Z0SxbpMnPeBDTEYN5efTrMo0DczjB/KpNqbXq5XqFr/YVH+fb2sX3cMm7koEJiUDm3c5tUEyty
-	c+X/DZ1diuViH7ZwmDvU=
-X-Google-Smtp-Source: AGHT+IGcya38jWFqnsExyojm3BqsyWv40fC11BMomC5nTHuIM8hfH3fMgcsCTjrQddD3LnsO+UAXJQ==
-X-Received: by 2002:a05:6a00:3e25:b0:76b:92ac:27cc with SMTP id d2e1a72fcca58-76bec0dad9fmr15439684b3a.0.1754386098884;
-        Tue, 05 Aug 2025 02:28:18 -0700 (PDT)
+        bh=aFx7TosHSpFSAYlOSzIZlLKrO2G+e9IjCOpV/abCiRQ=;
+        b=bvEHVqaLdpOFh6wN5pDFlEPubq4d6Cq4JkLGDYpGNs2pQLLJIpWBKm4EzrvDBjKXsh
+         z+nA7EejvfhE7zKvbuyGS+X69KxYhU98mhEXyIFbmpOstBTOWfnM8Fks4/ZZkVkgSnNN
+         zsOLbdwIYIF7y2fOs6WfuePmMyRYvrTs23/j2MxyOEhks3FzXfRT8wQVN/fjR2pMH8go
+         socfWxjtbkE0M8+CTmZi0xCzQVLs21tZXC4n2bQQ/O6czm6GUlLKLZwllGcvmw4mVA2f
+         xcHQqaxsng+4Y7BB5Hv5YDT2LDZpIr5uSxvDkdLqCbzn/EnDcRvIohfalsdjMaITmP7R
+         pSZA==
+X-Gm-Message-State: AOJu0YzVEKTG9fV7BX7USS/mBGo5rTSmLplr4XZbuxL6r28aptcu3zeY
+	AkZu21Sz5UHsisoDypkHu7W7z7IFXAS7bycOjPHl6mIIfkKoP3EbhRZ+3voTCQ==
+X-Gm-Gg: ASbGnct20mN3akR+1FONjs2WcuE02oOSN7g1Br5JZuvUDu6KrFbddS2Xt8eVOF8AZ5o
+	IUk7zBZioTIjEMakg97xjGa6FMH41VDHqSs2wsc6K9HfPAgdeIFNDugnqzjMoAiuX3SamX+vTky
+	wRcJchQEiMOBbZ5jukQy2PIL1oTloI3JDCjH4DiTxCQKZVuTqbMc0PiffqnmQ6U+2yYnhKCg08H
+	FHAYuh/9A/3ZP5MdDmWzBi44aGxPnilPIsnzir7PD6U5I46uEYTyGdcLoR96xytc5dWf0jcan51
+	zhh41lb8dgg+fZ5Yp+Ete8F4+XK5V7ZgaAvvh6Yvv1fgr+UHQbtB6ba56QPddr0bm+hcrmmWSVH
+	+D5UILEs8at9K0RWcpJo69f88DSMpTg==
+X-Google-Smtp-Source: AGHT+IEYS273nbTcGzDeIMPI9HByYVgKUvKFUKQ2EqOiM2z0W+xiVu/k6WRLI27ZjQFMFWMmB4HYsg==
+X-Received: by 2002:a05:6a00:3e25:b0:76b:92ac:27cc with SMTP id d2e1a72fcca58-76bec0dad9fmr15439916b3a.0.1754386102601;
+        Tue, 05 Aug 2025 02:28:22 -0700 (PDT)
 Received: from meet.. ([103.176.11.198])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcceab592sm12465691b3a.58.2025.08.05.02.28.15
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcceab592sm12465691b3a.58.2025.08.05.02.28.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Aug 2025 02:28:18 -0700 (PDT)
+        Tue, 05 Aug 2025 02:28:22 -0700 (PDT)
 From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -66,11 +66,10 @@ Cc: ps@pks.im,
 	sunshine@sunshineco.com,
 	phillip.wood123@gmail.com,
 	Meet Soni <meetsoni3017@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Victoria Dye <vdye@github.com>
-Subject: [GSoC][PATCH v6 3/6] builtin/for-each-ref: factor out core logic into a helper
-Date: Tue,  5 Aug 2025 14:57:55 +0530
-Message-Id: <20250805092758.5321-4-meetsoni3017@gmail.com>
+	John Cai <johncai86@gmail.com>
+Subject: [GSoC][PATCH v6 4/6] builtin/refs: add list subcommand
+Date: Tue,  5 Aug 2025 14:57:56 +0530
+Message-Id: <20250805092758.5321-5-meetsoni3017@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250805092758.5321-1-meetsoni3017@gmail.com>
 References: <20250804092255.1092973-1-meetsoni3017@gmail.com>
@@ -83,144 +82,115 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The implementation of `git for-each-ref` is monolithic within
-`cmd_for_each_ref()`, making it impossible to share its logic with other
-commands. To enable code reuse for the upcoming `git refs list`
-subcommand, refactor the core logic into a shared helper function.
+Git's reference management is distributed across multiple commands. As
+part of an ongoing effort to consolidate and modernize reference
+handling, introduce a `list` subcommand under the `git refs` umbrella as
+a replacement for `git for-each-ref`.
 
-Introduce a new `for-each-ref.h` header to define the public interface
-for this shared logic. It contains the declaration for a new helper
-function, `for_each_ref_core()`, and a macro for the common usage
-options.
+Implement `cmd_refs_list` by having it call the `for_each_ref_core()`
+helper function. This helper was factored out of the original
+`cmd_for_each_ref` in a preceding commit, allowing both commands to
+share the same core logic as independent peers.
 
-Move the option parsing, filtering, and formatting logic from
-`cmd_for_each_ref()` into a new helper function named
-`for_each_ref_core()`. This helper is made generic by accepting the
-command's usage string as a parameter.
-
-The original `cmd_for_each_ref()` is simplified to a thin wrapper that
-is only responsible for defining its specific usage array and calling
-the shared helper.
+Add documentation for the new command. The man page leverages the shared
+options file, created in a previous commit, by using the AsciiDoc
+`include::` macro to ensure consistency with git-for-each-ref(1).
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: shejialuo <shejialuo@gmail.com>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
 ---
- builtin/for-each-ref.c | 41 +++++++++++++++++++----------------------
- for-each-ref.h         | 26 ++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+), 22 deletions(-)
- create mode 100644 for-each-ref.h
+ Documentation/git-refs.adoc | 16 ++++++++++++++++
+ builtin/refs.c              | 14 ++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index fe62f07861..4af33de576 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -2,6 +2,7 @@
- #include "commit.h"
- #include "config.h"
- #include "environment.h"
-+#include "for-each-ref.h"
- #include "gettext.h"
- #include "object.h"
- #include "parse-options.h"
-@@ -9,24 +10,7 @@
- #include "strbuf.h"
- #include "strvec.h"
+diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+index 4d6dc994f9..e608980711 100644
+--- a/Documentation/git-refs.adoc
++++ b/Documentation/git-refs.adoc
+@@ -11,6 +11,13 @@ SYNOPSIS
+ [synopsis]
+ git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
+ git refs verify [--strict] [--verbose]
++git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
++		   [(--sort=<key>)...] [--format=<format>]
++		   [--include-root-refs] [--points-at=<object>]
++		   [--merged[=<object>]] [--no-merged[=<object>]]
++		   [--contains[=<object>]] [--no-contains[=<object>]]
++		   [(--exclude=<pattern>)...] [--start-after=<marker>]
++		   [ --stdin | <pattern>... ]
  
--#define COMMON_USAGE_FOR_EACH_REF \
--	"[--count=<count>] [--shell|--perl|--python|--tcl]\n" \
--	"                         [(--sort=<key>)...] [--format=<format>]\n" \
--	"                         [--include-root-refs] [--points-at=<object>]\n" \
--	"                         [--merged[=<object>]] [--no-merged[=<object>]]\n" \
--	"                         [--contains[=<object>]] [--no-contains[=<object>]]\n" \
--	"                         [(--exclude=<pattern>)...] [--start-after=<marker>]\n" \
--	"                         [ --stdin | <pattern>... ]"
--
--static char const * const for_each_ref_usage[] = {
--	"git for-each-ref " COMMON_USAGE_FOR_EACH_REF,
--	NULL
--};
--
--int cmd_for_each_ref(int argc,
--		     const char **argv,
--		     const char *prefix,
--		     struct repository *repo)
-+int for_each_ref_core(int argc, const char **argv, const char *prefix, struct repository *repo, const char *const *usage)
- {
- 	struct ref_sorting *sorting;
- 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
-@@ -75,17 +59,17 @@ int cmd_for_each_ref(int argc,
- 	/* Set default (refname) sorting */
- 	string_list_append(&sorting_options, "refname");
+ DESCRIPTION
+ -----------
+@@ -26,6 +33,11 @@ migrate::
+ verify::
+ 	Verify reference database consistency.
  
--	parse_options(argc, argv, prefix, opts, for_each_ref_usage, 0);
-+	parse_options(argc, argv, prefix, opts, usage, 0);
- 	if (format.array_opts.max_count < 0) {
- 		error("invalid --count argument: `%d'", format.array_opts.max_count);
--		usage_with_options(for_each_ref_usage, opts);
-+		usage_with_options(usage, opts);
- 	}
- 	if (HAS_MULTI_BITS(format.quote_style)) {
- 		error("more than one quoting style?");
--		usage_with_options(for_each_ref_usage, opts);
-+		usage_with_options(usage, opts);
- 	}
- 	if (verify_ref_format(&format))
--		usage_with_options(for_each_ref_usage, opts);
-+		usage_with_options(usage, opts);
- 
- 	if (filter.start_after && sorting_options.nr > 1)
- 		die(_("cannot use --start-after with custom sort options"));
-@@ -125,3 +109,16 @@ int cmd_for_each_ref(int argc,
- 	strvec_clear(&vec);
- 	return 0;
- }
++list::
++	List references in the repository with support for filtering,
++	formatting, and sorting. This subcommand is an alias for
++	linkgit:git-for-each-ref[1] and offers identical functionality.
 +
-+int cmd_for_each_ref(int argc,
-+		     const char **argv,
-+		     const char *prefix,
-+		     struct repository *repo)
+ OPTIONS
+ -------
+ 
+@@ -57,6 +69,10 @@ The following options are specific to 'git refs verify':
+ --verbose::
+ 	When verifying the reference database consistency, be chatty.
+ 
++The following options are specific to 'git refs list':
++
++include::for-each-ref-options.adoc[]
++
+ KNOWN LIMITATIONS
+ -----------------
+ 
+diff --git a/builtin/refs.c b/builtin/refs.c
+index c7ad0a2963..76224feba4 100644
+--- a/builtin/refs.c
++++ b/builtin/refs.c
+@@ -6,6 +6,7 @@
+ #include "refs.h"
+ #include "strbuf.h"
+ #include "worktree.h"
++#include "for-each-ref.h"
+ 
+ #define REFS_MIGRATE_USAGE \
+ 	N_("git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]")
+@@ -101,6 +102,17 @@ static int cmd_refs_verify(int argc, const char **argv, const char *prefix,
+ 	return ret;
+ }
+ 
++static int cmd_refs_list(int argc, const char **argv, const char *prefix,
++			   struct repository *repo)
 +{
-+	static char const * const for_each_ref_usage[] = {
-+		N_("git for-each-ref " COMMON_USAGE_FOR_EACH_REF),
++	static char const * const refs_list_usage[] = {
++		N_("git refs list " COMMON_USAGE_FOR_EACH_REF),
 +		NULL
 +	};
 +
-+	return for_each_ref_core(argc, argv, prefix, repo, for_each_ref_usage);
++	return for_each_ref_core(argc, argv, prefix, repo, refs_list_usage);
 +}
-diff --git a/for-each-ref.h b/for-each-ref.h
-new file mode 100644
-index 0000000000..a5e0b6d17a
---- /dev/null
-+++ b/for-each-ref.h
-@@ -0,0 +1,26 @@
-+#ifndef FOR_EACH_REF_H
-+#define FOR_EACH_REF_H
 +
-+struct repository;
-+
-+/*
-+ * Shared usage string for options common to git-for-each-ref(1)
-+ * and git-refs-list(1). The command-specific part (e.g., "git refs list ")
-+ * must be prepended by the caller.
-+ */
-+#define COMMON_USAGE_FOR_EACH_REF \
-+	"[--count=<count>] [--shell|--perl|--python|--tcl]\n" \
-+	"                         [(--sort=<key>)...] [--format=<format>]\n" \
-+	"                         [--include-root-refs] [--points-at=<object>]\n" \
-+	"                         [--merged[=<object>]] [--no-merged[=<object>]]\n" \
-+	"                         [--contains[=<object>]] [--no-contains[=<object>]]\n" \
-+	"                         [(--exclude=<pattern>)...] [--start-after=<marker>]\n" \
-+	"                         [ --stdin | <pattern>... ]"
-+
-+/*
-+ * The core logic for for-each-ref and its clones.
-+ */
-+int for_each_ref_core(int argc, const char **argv, const char *prefix,
-+		      struct repository *repo, const char *const *usage);
-+
-+#endif /* FOR_EACH_REF_H */
+ int cmd_refs(int argc,
+ 	     const char **argv,
+ 	     const char *prefix,
+@@ -109,12 +121,14 @@ int cmd_refs(int argc,
+ 	const char * const refs_usage[] = {
+ 		REFS_MIGRATE_USAGE,
+ 		REFS_VERIFY_USAGE,
++		"git refs list " COMMON_USAGE_FOR_EACH_REF,
+ 		NULL,
+ 	};
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option opts[] = {
+ 		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
+ 		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
++		OPT_SUBCOMMAND("list", &fn, cmd_refs_list),
+ 		OPT_END(),
+ 	};
+ 
 -- 
 2.34.1
 
