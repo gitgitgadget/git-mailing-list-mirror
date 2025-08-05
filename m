@@ -1,109 +1,198 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04CF295DBE
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 19:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04743295DBE
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 19:10:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754420783; cv=none; b=bSDLp9gms+S3gjHOO7NA00k1hM8jXP5jyxJa+MtpO2XsVQT3p4CkncPmKLcDChGUm8AvXLFOkfMUtK0aMmsOWsbBmwEjhFk87t2q0OZaL+9OJetTh0qjI85+E8Nd+soZXp5XnxNLF3jpNzln9AosH5AVKuwtEsCbcokoFhHsdM8=
+	t=1754421052; cv=none; b=oiuVpwlaV/CpU2yLVTqV6aTmBTsXcs+yuztpZyZdt6lBs+Q/pCp9yHg9SjwNGkF/JAJGUfMywtf3/2fft0SyOVM1BqI5ehW1UtO4oGxfOh60vKLe2yh+UcpJO3P3PlzAwSUBvnRzoTQ2VnIZr7KavIgKoNxCHhs7UGawJyPWAeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754420783; c=relaxed/simple;
-	bh=khSDThI/HlJ2QQk+JzcsPBD/0+sp6u0q60EjQQiNyAM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OVyybsheVEfC8qk9X1ZiMCX/BWCCODSPAnHMaQ3JZwcwlVXmdkDejxXUUSuhLNacifUar1aY64WqEzZbBtOv3JLO7O1ptlwIFbmcn4yd40zoi9DutJ+DazIBh0HrFqrcQ0wpJCQpTGs5fU0cBGhll390gm5NVsXRBP99HHTNY1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VCgdJ6qz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vp6AtQys; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754421052; c=relaxed/simple;
+	bh=xq1kaD5L+/16evrTqLHqrrX2Rj1dzwbFus00CIiuJ1s=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=Tf8OKLwlyyvXk0o1KSo4BjIJWnEt0CiOhqX9FGagU5ayftE+64HWepDacq27imgA/GmViaoYuhENwFvFbGQxEScG5k/r6agh1C/BBDvyGWprLI539nGMjH3/zoIsPEGsHlKjQz4L2enebg60lX+ePaHuok7jZEyokFqQmzZ3DFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bi4jMuVw; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VCgdJ6qz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vp6AtQys"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E8F9514001FD;
-	Tue,  5 Aug 2025 15:06:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 05 Aug 2025 15:06:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754420780; x=1754507180; bh=URmX3xCd+s
-	rfxQxJqJZx/07Ncc4cW7aFauZKxMBJq5s=; b=VCgdJ6qz2aUL02swkb75ANM/G3
-	sz8dzVK3bKlrW005vHAkiCsx9yojLerFeV4OQgPN93YSr9fV3skLHyZe8sOWQf86
-	f0slsigXXJarL+xF2QtFKG4gvAI10glIF4iw0wgDSuQO2w22T8Bne6PajTJe4uap
-	ihZ9hNGXtFR/oB6DEgY1fEK5xNcp+bpj++0d3GLJCGb1WUHvqbscZQsOR/pQGFnh
-	mEw5wwNCUrAAzCPgc8SsQplHjUIAK0gl1u7EDiecQPQpIaUCLzo+qplf4fq+qDGJ
-	F0FnAMqdsvMjB2tYGzxOFfNVjFxPVnzyRYfClJK67bhego9rLJjIm1JxJiAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754420780; x=1754507180; bh=URmX3xCd+srfxQxJqJZx/07Ncc4cW7aFauZ
-	KxMBJq5s=; b=Vp6AtQysv+1nOOIfzSER+tvPpCCPNjSyAK4qId2VR13CYkeyTeo
-	/fTt1Yq9XkL7sKbnI4KphEdC5lUPR6lUxvjKu0yKOgO5yPK+yMrtC2FTiEjv5uCK
-	05IzkjQZPryb0AwnDG/r/y3XdOFR/HgDrQraLiwEr7x33Owpf40vpB1m1YIQzW3+
-	2+REpwixQyrlrvMUr416z2JZ9WRlEX5wGmZNMaWw/ZXfF4QCTEb3116cz+HHjfFt
-	XWE8RPTCVhPcIpMHhA5/ZOqh07Q0p/5u+Iv6xZZPoDZkLCQdMBg0smFQB6j0lDCn
-	ARoiO+XqjNyH5QaRwk5imXppzmrSydT+ShQ==
-X-ME-Sender: <xms:LFaSaGUKPBA7wWMNARHWnqIhjW-2deprGfvdc5Cm27RUtpnYjOllvw>
-    <xme:LFaSaNI47XNPVvPHRJT5Cngy0zGhLMQWXw2liGWKHK275VIIPmg9XMcd0h3qmx2BM
-    W3LdeGiufDFHNQdsw>
-X-ME-Received: <xmr:LFaSaG_rxdO5uWqSVxG_yThFHT0VG1T3ME6diFcIbb28u05zGDZxRv7PMOLaVHnOyfw5T263ZfWsKkg3ckwwL4i0taWPDjP2-S8Gs5k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudehleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehl
-    uhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:LFaSaAIuYPYwUCtlq9e5IAZMLzk71faRXTdWvBo05TNHc7DJ2-accA>
-    <xmx:LFaSaLmwt8QBjMzcZOzUm8tfFujg22W11gzMjV8VTuBojnsW6KXchA>
-    <xmx:LFaSaEOIc6uogm6qD0nLStAL1eb4DXRCy8oKwbAkUFOI_EtshlURww>
-    <xmx:LFaSaB0djp_rzQDxBCjFfpVSFqFm_VHkjsznA3jvwXVZq11MRrhjqg>
-    <xmx:LFaSaPkZlfF24yeVPihjuv2QlyfF2WAp9sA6IBZKWIYbb4MNMN96t7Jb>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Aug 2025 15:06:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
-In-Reply-To: <CALnO6CASXHv_wwmAfn9tZ4D1qdJBgVKfLEQ9+LTEF9FJPiS0qQ@mail.gmail.com>
-	(D. Ben Knoble's message of "Tue, 5 Aug 2025 12:30:04 -0400")
-References: <xmqqms8fbilv.fsf@gitster.g>
-	<CALnO6CDm5n0oZsXzvKz89jVg7E_h=1gqPFs2x7-UojdcY_Di_w@mail.gmail.com>
-	<xmqq4ium3w2x.fsf@gitster.g>
-	<CALnO6CBLF2Zxhy=mvz61U7M3X3UNA-V8R4tkzOvVjKWpEwi8Mg@mail.gmail.com>
-	<CALnO6CASXHv_wwmAfn9tZ4D1qdJBgVKfLEQ9+LTEF9FJPiS0qQ@mail.gmail.com>
-Date: Tue, 05 Aug 2025 12:06:18 -0700
-Message-ID: <xmqqectpziz9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bi4jMuVw"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3b78a034f17so4153937f8f.2
+        for <git@vger.kernel.org>; Tue, 05 Aug 2025 12:10:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754421048; x=1755025848; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tl1jQ2qF7i0DRJq6Bm2VSWcxoCJ5+OMOu3NUeBMgWXE=;
+        b=bi4jMuVwDI83+7LPo81F9B9IIgzuPlGejOY96v+Zu5D4c07B+i/DrkHt00nWHPpEeZ
+         5iWxd9Z5EMI/I8Rnq35mxSJCZnNhBdUBQz4se41oMqyqIbeOU2yuuqepiJiXS8xDCkiW
+         WXtW8F/RcIpiNhDeYjo7Z4Pu6zLQVQl05Cuvoey1OjHTdK5hRUKzWioNCaG3OpFgNE+P
+         6EuJrNWDmlKcevd9TVGgLZoo1WSZl1lG510cfq+YiY6pyrKKnVSXEEpaJLClsqPM6sc4
+         wjw0xOxS96JhPijad33lxBgF4jKQ8PDxcDpOAdZ7k4VzvsSFmXrFkpyMXaYtRd3dji1P
+         gj3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754421048; x=1755025848;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Tl1jQ2qF7i0DRJq6Bm2VSWcxoCJ5+OMOu3NUeBMgWXE=;
+        b=LiTFP6rYojue4PJUqgyHUG8K4EhqyQwHjJoTcYDve5Yz/VF+kxyHmQJeDGp0Y31xdv
+         6bzLzFJCP0QhRzGhEPH+UU9mmIXGDwJBt3eAIfUl/A22Yvo+5ATX2oXqzTa3CaC1qvMm
+         TTau9JY5IR/Qbj2kx6NbacGOWVtP+pgEbFmkCZholHtr4ce2yEJRFbPhxxZhiYMAcrfA
+         V6ios5GKqtX36iA0FzmgTrORyRHhWfGoIxeJZS5mPokiBRpS7C7GeoTguMky65+rfZZS
+         CCGf0tEjYo8ZJ0Igapj0gTsRauOGVlCwM79Lg3V5JCk/sugcii4mnxs5n+KoZIqfE50C
+         BR7A==
+X-Gm-Message-State: AOJu0YydNLJLfwwopJXWTJMPLzpnaXri2dMdLuy3ap5Hj3lW1bh7t7y0
+	fnUFdEv88dB1HxyJGWMsEmQcRNZ7L0LOhL1Dq9y7HCT4uCcI+jDMMICqipXIIA==
+X-Gm-Gg: ASbGnctGPurHGyXmC313Yunrgu3Mlmj0wHkQnUzFHCvmnuObrLiNYUbfhH3f5G8u3Di
+	jOuBlWqjDiIuf+amn+si+DGtFwCuFRaC1IxNg85Uc3HpJOWL1RUg+W0TUOhgnYLHD5oS2loKfe9
+	zWq8kM7DWxEbpHROa349/SOqMrsawuWGRqPXjvUmgTOArMMesziVBJMfS8M2WbCw3m5Wsaj1Pgi
+	Gx3TMOGQu3XWyDIYSB7GfGnpLlzxMdIQIHDLY2QHvwZdvLQOhztEaleEBhR03offFnV2hU5fo5M
+	lS9gaoRTfzFFOiTMUXft5SmNUFnga3i3VwNvyf5stjKF0Z/JityVk3ss7KOAySPloZrAwc7uKkS
+	l/8Q54UBgk8kfrt0wm1SEo5/S1RZriCyd/A==
+X-Google-Smtp-Source: AGHT+IF/rr5lgtcslDvf+orbzzvxyz8NJfWCUkphASCz04Kz+0FKQ4nNLp/xAW8ppzp4fy/TrtczTg==
+X-Received: by 2002:a05:6000:2003:b0:3b7:9dc1:74a9 with SMTP id ffacd0b85a97d-3b8f418ee53mr142247f8f.42.1754421047674;
+        Tue, 05 Aug 2025 12:10:47 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b8e9464f46sm5999175f8f.19.2025.08.05.12.10.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Aug 2025 12:10:47 -0700 (PDT)
+Message-Id: <pull.1945.v2.git.1754421045.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1945.git.1754399033.gitgitgadget@gmail.com>
+References: <pull.1945.git.1754399033.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 05 Aug 2025 19:10:39 +0000
+Subject: [PATCH v2 0/6] Introduce more doc linting
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+Reviewing the documentation part of the last patches, it turns out that the
+majority of my comments are related to the latest documentation guidelines
+which are both easy to forget and almost trivial to automatically check.
 
-> With apologies for the mail noise, but I can't seem to reproduce any
-> failures here on 371c45b569 (Merge branch 'dk/help-all' into seen,
-> 2025-08-04), which is the latest seen I can find.
+This series implements the automatic tests for basic doc rules. At the
+moment it conflicts with "[GSoC][PATCH v6 0/6] Add refs list subcommand" and
+possibly with "[PATCH v4 0/9] refs: fix migration of reflog entries"
 
-When I report a public CI failure, I'd try to give an exact URL, but
-otherwise the failure would have been seen in my local environment,
-and because I tend to refrain from pushing out a know-to-be-broken
-tree, it is unsurprising if 371c45b569 did not fail.
+Jean-Noël Avila (6):
+  doc: test linkgit macros for well-formedness
+  doc: check well-formedness of delimited sections
+  doc: check for absence of multiple terms in each entry of desc list
+  doc: check for absence of the form --[no-]parameter
+  doc:git-for-each-ref: fix styling and typos
+  doc lint: check that synopsis manpages have synopsis inlines
 
-That commit does not have lo/repo-info, I suspect.  I didn't know
-exactly which topic was causing, but the error was observed when
-"repo --help-all" was given, so perhaps some interactions between
-these two topics.
+ Documentation/Makefile                        |  21 +-
+ Documentation/RelNotes/1.6.2.4.adoc           |   1 +
+ Documentation/blame-options.adoc              |   3 +-
+ Documentation/diff-format.adoc                |   1 +
+ Documentation/diff-options.adoc               |   3 +-
+ Documentation/fetch-options.adoc              |  15 +-
+ Documentation/git-am.adoc                     |   3 +-
+ Documentation/git-backfill.adoc               |   3 +-
+ Documentation/git-cat-file.adoc               |   6 +-
+ Documentation/git-check-attr.adoc             |   3 +-
+ Documentation/git-check-ignore.adoc           |   9 +-
+ Documentation/git-check-ref-format.adoc       |   3 +-
+ Documentation/git-checkout.adoc               |   2 +-
+ Documentation/git-clone.adoc                  |  12 +-
+ Documentation/git-commit-graph.adoc           |   3 +-
+ Documentation/git-commit.adoc                 |   4 +-
+ Documentation/git-config.adoc                 |   3 +-
+ Documentation/git-difftool.adoc               |   9 +-
+ Documentation/git-fast-import.adoc            |   5 +-
+ Documentation/git-fmt-merge-msg.adoc          |   3 +-
+ Documentation/git-for-each-ref.adoc           | 264 +++++++++---------
+ Documentation/git-format-patch.adoc           |  12 +-
+ Documentation/git-fsck.adoc                   |   9 +-
+ Documentation/git-gc.adoc                     |   6 +-
+ Documentation/git-http-fetch.adoc             |   4 +-
+ Documentation/git-index-pack.adoc             |   3 +-
+ Documentation/git-log.adoc                    |   6 +-
+ Documentation/git-merge-tree.adoc             |   3 +-
+ Documentation/git-multi-pack-index.adoc       |   3 +-
+ Documentation/git-p4.adoc                     |   1 +
+ Documentation/git-pack-objects.adoc           |   3 +-
+ Documentation/git-pull.adoc                   |   3 +-
+ Documentation/git-push.adoc                   |  18 +-
+ Documentation/git-range-diff.adoc             |   3 +-
+ Documentation/git-read-tree.adoc              |   3 +-
+ Documentation/git-rebase.adoc                 |   2 +-
+ Documentation/git-refs.adoc                   |  20 +-
+ Documentation/git-reset.adoc                  |   3 +-
+ Documentation/git-send-email.adoc             |  30 +-
+ Documentation/git-send-pack.adoc              |   3 +-
+ Documentation/git-submodule.adoc              |   6 +-
+ Documentation/git-svn.adoc                    |   2 +
+ Documentation/git-update-index.adoc           |  12 +-
+ Documentation/git-upload-pack.adoc            |   3 +-
+ Documentation/git-worktree.adoc               |  12 +-
+ Documentation/gitprotocol-http.adoc           |   2 +-
+ Documentation/gitsubmodules.adoc              |   3 +-
+ Documentation/gitweb.conf.adoc                |   2 +-
+ Documentation/lint-delimited-sections.perl    |  48 ++++
+ Documentation/lint-documentation-style.perl   |  33 +++
+ Documentation/lint-gitlink.perl               |   7 +
+ Documentation/merge-options.adoc              |   3 +-
+ Documentation/mergetools/vimdiff.adoc         |   8 +
+ Documentation/scalar.adoc                     |  18 +-
+ Documentation/technical/api-path-walk.adoc    |   5 +-
+ .../long-running-process-protocol.adoc        |   1 +
+ shared.mak                                    |   2 +
+ 57 files changed, 446 insertions(+), 232 deletions(-)
+ create mode 100755 Documentation/lint-delimited-sections.perl
+ create mode 100755 Documentation/lint-documentation-style.perl
 
-Thanks.
+
+base-commit: 112648dd6bdd8e4f485cd0ae11636807959d48be
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1945%2Fjnavila%2Fdoc_linting-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1945/jnavila/doc_linting-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1945
+
+Range-diff vs v1:
+
+ 1:  e79bd6a67ef = 1:  e79bd6a67ef doc: test linkgit macros for well-formedness
+ 2:  322df2d8dde = 2:  322df2d8dde doc: check well-formedness of delimited sections
+ 3:  5806390052b = 3:  5806390052b doc: check for absence of multiple terms in each entry of desc list
+ 4:  03a8428849f = 4:  03a8428849f doc: check for absence of the form --[no-]parameter
+ 5:  713c86dae92 = 5:  713c86dae92 doc:git-for-each-ref: fix styling and typos
+ 6:  e03f3f5c55a ! 6:  d57478ea5cd doc lint: check that synopsis manpages have synopsis inlines
+     @@ Commit message
+      
+          Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+      
+     + ## Documentation/git-checkout.adoc ##
+     +@@ Documentation/git-checkout.adoc: include::diff-context-options.adoc[]
+     + 	separated with _NUL_ character and all other characters are taken
+     + 	literally (including newlines and quotes).
+     + 
+     +-<branch>::
+     ++`<branch>`::
+     + 	Branch to checkout; if it refers to a branch (i.e., a name that,
+     + 	when prepended with "refs/heads/", is a valid ref), then that
+     + 	branch is checked out. Otherwise, if it refers to a valid
+     +
+       ## Documentation/git-refs.adoc ##
+      @@ Documentation/git-refs.adoc: This command provides low-level access to refs.
+       COMMANDS
+     @@ Documentation/lint-documentation-style.perl: while (my $line = <>) {
+      +	if ($line =~ /^\[synopsis\]$/) {
+      +		$synopsis_style = 1;
+      +	}
+     -+	if (($line =~ /^-[-a-z].*(::|;;)$/) && ($synopsis_style)) {
+     ++	if (($line =~ /^(-[-a-z].*|<[-a-z0-9]+>(\.{3})?)(::|;;)$/) && ($synopsis_style)) {
+      +			report($line, "synopsis style and definition list item not backquoted");
+      +	}
+       }
+
+-- 
+gitgitgadget
