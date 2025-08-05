@@ -1,68 +1,70 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAAF21A454
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 06:24:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E04921A424
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 06:24:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754375080; cv=none; b=co4v/giBpjHmWqA8JqgK3nQvodbwX4EM9TWv/JLJRT9dRmyfHOzAW3kKQCIUMTx6Og2fnLsePEToQ95w7TiYSjYtdNOOXNLvuevZSLSggBcE9maJqRGZqn/2V7Nsqto9XXzxc4nB/cK/dDhBX912FsMNLbr5Nwpj3FsrjOv+osE=
+	t=1754375084; cv=none; b=DjtZwTkH8ctrEHUKp9iUlLnO8vstKUyX8aTVJcCyIgZEyS+ViCQMdwpHEd3UuMlzb6cWGMJkravmXWYhIWCajszd51h/JCzvvvzNzmkgKuaynGq8uSYHDZzo909arQJp/vREJgeaeE+ECO4/tT2gLwYNQFhC4YyJzPWNhACRodg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754375080; c=relaxed/simple;
-	bh=ZaZ1Kn3IfbSgCdLmbdnr78OLq8UngkQfFSzPJg6GMnk=;
+	s=arc-20240116; t=1754375084; c=relaxed/simple;
+	bh=bfQBjJDUmoXrOT84OunZOT0f7iMCPpEpF9nQJ8bn+yc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GNX8E//Wy1WEKUSl+G3H+7rCXXlsjTuOuMRiVfo6pJxFEGtdE6S6y+kw0HSNd/JbMBuklFPnNHEj05ofLg2ahThRbtaPXOLwCJlCRWmB8AbIgGraPJ3FRqnVB+CNxXomX0+q13qi78By3E+fLn81xs3D5PGgH5puWSOXNgi2Krw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kp+EMY2o; arc=none smtp.client-ip=209.85.214.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=r5IKbDQyFXz07r8o5oNe/p2HxZ57rISa2dRdjXHiH1PB5m0Nagk3J2dzEp2hLIxLTm2qHkrxUaVbsVD+G4rLugu7qluhOCjdYPKFKF9gaoU1G1wF4Y3Tdbv4Stq/oc+NUKcirCOSrH9B5m1bavVVPu0NPZVxUnHdGMO7tJLk3L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nKPryBAC; arc=none smtp.client-ip=209.85.210.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kp+EMY2o"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-24286ed4505so1487235ad.3
-        for <git@vger.kernel.org>; Mon, 04 Aug 2025 23:24:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nKPryBAC"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-76bf9b25cbbso77866b3a.3
+        for <git@vger.kernel.org>; Mon, 04 Aug 2025 23:24:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754375078; x=1754979878; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754375080; x=1754979880; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fFPoXc4loAa6pKxhV4YRwSlLoTXCHxa1n+gNymrOXcA=;
-        b=kp+EMY2owVNp0D55S3n64Kj+w/c1BQhjLN54AmBS8oejg9aQWpe2rINrJ2q2DFPrSn
-         BzwzNHI+Vcwe02G3Ba7Z0pdg6nU6hEosiNaP4oYZJ8i7wfEaY3DrNb4JqVP2lpgNG0fQ
-         rf+UQ/xndh8sVILCaIv+qIfNZSd2gHdAZHHPtwbsy9NfiRGHlg8m0JjJq4HjmgzSPznM
-         Lk5a+3Vb/ctfkfGVlHOqLHotarHBXiyGinuJRXUlWWk0RgSevzm252js4rkXVnpWC/jX
-         emUN+ERmytfdPg9RRqU/LFfSXyQrCR6A81XPPKbFjGHXh4ZjfRFY8bm1+S4d+Ci8Zb/O
-         9jWQ==
+        bh=1Ls5u45XUNiqzDGKug0BjktY4HYGL4SOJEc5jSayrZU=;
+        b=nKPryBAC8Yxu5yeSStkLihVWer7ya8yZ8M3uzkvaQsNPSvtIOy5ujbXmoyzySHucJI
+         c7duZPccivHAhdgfhUH6+jiBgMl7BuUuDYBNsf7gp3V9g8Jdvua1qArKeON/E40lKqy7
+         1+QJ4T/bb3A+D7wFm8IhWYnj9YTtLVd99gFKka5g9ZP+tBjy1OebPBmtY30dW1xRg56R
+         AxFd1LQgbIh7lQzObEkp4XdxPo9r6maYUOsIoVO88M9D9/dpIkvLwRI5oi8oqjWYsnXf
+         f1u/dfsq3uUU6XNKbdcKCffXlAWPNmKOCmN6ASkGT4LMJAfZTCaUnE0AzZTir/N7knZy
+         X+Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754375078; x=1754979878;
+        d=1e100.net; s=20230601; t=1754375080; x=1754979880;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fFPoXc4loAa6pKxhV4YRwSlLoTXCHxa1n+gNymrOXcA=;
-        b=XWNi5T1TjKz1oo1rW0fpTgGUUOC7SGJubDN8gHVHf/gC9MS+H/qVNsdJLq05dbX2HE
-         WdSDe8Nfj4/hxyIuGc9NfAuvFeyM2zsNNW+UwwLuk7FzVXGjxztz9rZFbwx0hBkEJ/WV
-         JlwENGu6yTvyOrG8mPnadHQQjZFwGzSQpqTKc1rUde4GYTCHlRn/h5fv+89wyIvpu/15
-         d1R991Q51IUfbmGih0skBGy03CGLm+hJpvoqsR0U+nQZNx+dEoiMGL4LFZQGQuqwcreO
-         yjji6eT8WGFO5I+j/PvPExxlZKyDhCU5Y6LDM7insnEJhzrEH5xycAGP56PRascZRNXI
-         G/cg==
-X-Gm-Message-State: AOJu0YzMPJgTsJvVgz+UjR68+aagTZ+Nrp7iAwZxqzYIqoJwhVpySp2j
-	dtk93R/CroL474OHZVyU4CxZOVWSt/M49UQDgFUvzJSW9T4T2/L4HkbCEzuYHw==
-X-Gm-Gg: ASbGnctQODViW+zUTZIVDp15xKjd5jlXczohciW42QhLprTzAD8lEZ79r87h+vQwPqe
-	SixmYvoVsM2+CpObOiTWqJ1719QP9YLmUAY4KwIH/M/mYSBOzy0TMGmYXc098jLsd5XNN44A+Uw
-	ktGO2hAhEh6VbUhxUKqcf7E3tj13hcfnrncEshmgjZ4+dJxOFB5SqsXrAOwj+Yyy+FbbFEGnHGa
-	eBFOQHgmzwDfjMsn9eGRa68eI+Ep4VW28ZOju1BGhRlC5u8wCEaKPdTdW6xxZn2Mi/bmZa5Nk9D
-	HM8sImwzXD9DyYA8FD/caZ6/8LeXaodXiOuGOhJo2A8b9t7A5yrqF78kseAtr2cw+3p2UxSF8lH
-	OpTKJC3cChGZeCrZ6h9bc635oGzRMsjjHXwIksjQt
-X-Google-Smtp-Source: AGHT+IE9D0AYCKb3gpPWubo1J5jr1/+DQX+3ndWnaoHVXDlYFVUXtBfgNgN6F1pu7Wr6Yz2W3HzAvg==
-X-Received: by 2002:a05:6a00:4fd0:b0:76b:cb84:36a5 with SMTP id d2e1a72fcca58-76bec47b498mr7357362b3a.3.1754375077702;
-        Mon, 04 Aug 2025 23:24:37 -0700 (PDT)
+        bh=1Ls5u45XUNiqzDGKug0BjktY4HYGL4SOJEc5jSayrZU=;
+        b=u4FDjRdgm5vvZRudDgJVXtUZvtBteUNZnwKprnz4jTy2ZipAcMp3k8dhqznPusYDD7
+         BbOUXZb/wDgNofp+UJDGN2rfnucYk7bbbVfCmUktpQLAL9Xp20dyZms88vI7msEqEOPn
+         /vmUAPxN431K8D0qwduoUt+4RfwlgQQ1qc4BLq5jIBOuWB6e8J0a8D7NJ6TTpZLhy6zv
+         bs/wBZelvbgFImWYUeOui5sIf/wa202kOY1SaYDyKM5qZFN94Fg8EEuJtxCg5jWyPPa4
+         klRfwmMn/xOvrpBpLd9ziFeQYYMWSolflZhMGFa3dRGdAahpQuasVsHaibgHI8Uj5IUt
+         nYJw==
+X-Gm-Message-State: AOJu0YzBU4/YcVuqbPAwRnE9cRHSEPeKw8ghKsMLo14heh3cDLk7BWS9
+	rIIcO9MrSRR7oJuKDnklqAoPtU+SGiFbKHtORToTySj20YwL5Y0x/td8oUBadQ==
+X-Gm-Gg: ASbGncvmB+Zb1k14hDecDyY7QfR+xmln7w/Cvn22ucA3HXUqjMGiClzs7Py7QjwRyBA
+	7giegkeXROCQZu7ZtZpQ0Bqerl+1nDCxoya335Z4hYxEqnMaFv6JNCeyO9/HCU8oecrDVsB21vy
+	+N7sXZS6ZkKDCQkWPTrk3SqdIUkevaWF5Pnw99mdXQYeIMfzeGIbB2cOv4AS8xyTPnpPhuAWB97
+	uhmM7jT2eDQ2KgyhVw49alVgX/i4ZGllgiYIxhVhnT7nPPkha7ykU91Mq9fXp9Kall4OuvB3Cm5
+	38TQ61g6unzO7HWlyFJVwuLWhWiLddDgMxfc2Fs2IZHCkJbRsddjvPMoMHiIUXFKAS2H18cg5ZT
+	V5Ko9zjSYaWb/k+O2vzEmhXJMTFWhGQ==
+X-Google-Smtp-Source: AGHT+IGANvap1wL1ZMMwXUv+6WGdraEkSfhsVFlJ6O3yqoMEJwQz0FuzttZ78xkSQJYbbiCwmIUV1w==
+X-Received: by 2002:a05:6a00:2351:b0:72a:a7a4:99ca with SMTP id d2e1a72fcca58-76bec2f4b95mr7494824b3a.2.1754375080367;
+        Mon, 04 Aug 2025 23:24:40 -0700 (PDT)
 Received: from generichostname ([2601:645:8300:3b10:e54:15ff:fe8e:caa6])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcce8911asm12000639b3a.36.2025.08.04.23.24.36
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bccfbcfa0sm11996744b3a.75.2025.08.04.23.24.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Aug 2025 23:24:37 -0700 (PDT)
-Date: Mon, 4 Aug 2025 23:24:35 -0700
+        Mon, 04 Aug 2025 23:24:39 -0700 (PDT)
+Date: Mon, 4 Aug 2025 23:24:37 -0700
 From: Denton Liu <liu.denton@gmail.com>
 To: Git Mailing List <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/2] *** SUBJECT HERE ***
-Message-ID: <cover.1754375026.git.liu.denton@gmail.com>
+Subject: [PATCH v2 1/2] t5516: introduce 'push ref expression with
+ non-existent oid src'
+Message-ID: <d26f355c19c59eae30143900e218533bfeabec2a.1754375026.git.liu.denton@gmail.com>
 References: <cover.1754300389.git.liu.denton@gmail.com>
+ <cover.1754375026.git.liu.denton@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,66 +73,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1754300389.git.liu.denton@gmail.com>
+In-Reply-To: <cover.1754375026.git.liu.denton@gmail.com>
 
-*** BLURB HERE ***
+It is possible to trigger a Git bug by pushing a refspec where the
+source is an oid that's non-existent. An example of the error message
+produced is as follows:
 
-Denton Liu (2):
-  t5516: introduce 'push ref expression with non-existent oid src'
-  remote.c: remove BUG in show_push_unqualified_ref_name_error()
+	error: The destination you provided is not a full refname (i.e.,
+	starting with "refs/"). We tried to guess what you meant by:
 
- remote.c              | 3 +--
+	- Looking for a ref that matches 'branch' on the remote side.
+	- Checking if the <src> being pushed ('0000000000000000000000000000000000000001')
+	  is a ref in "refs/{heads,tags}/". If so we add a corresponding
+	  refs/{heads,tags}/ prefix on the remote side.
+
+	Neither worked, so we gave up. You must fully qualify the ref.
+	BUG: remote.c:1221: '0000000000000000000000000000000000000001' should be commit/tag/tree/blob, is '-1'
+	fatal: the remote end hung up unexpectedly
+	Aborted (core dumped)
+
+Document this failure in a test case so that it can be confirmed fixed
+later.
+
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
  t/t5516-fetch-push.sh | 7 +++++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ 1 file changed, 7 insertions(+)
 
-Range-diff against v1:
-1:  d26f355c19 = 1:  d26f355c19 t5516: introduce 'push ref expression with non-existent oid src'
-2:  3eb95731ea ! 2:  2bd892b26c remote.c: remove BUG in show_push_unqualified_ref_name_error()
-    @@ Metadata
-      ## Commit message ##
-         remote.c: remove BUG in show_push_unqualified_ref_name_error()
-     
-    -    In the case where a non-existent oid is given as the <src> for a
-    -    refspec and the destination is unqualified, we end up hitting the BUG in
-    -    show_push_unqualified_ref_name_error().
-    +    When "git push <remote> <src>:<dst>" does not spell out the
-    +    destination side of the ref fully, and when <src> is not given
-    +    as a reference but an object name, the code tries to give advice
-    +    messages based on the type of that object.
-     
-    -    This is because before hitting this advise message, the <src> is passed
-    -    through repo_get_oid() which, upon receiving a fully qualified oid,
-    -    doesn't actually check the existence of the object and just returns
-    -    found. This means that it's actually possible for the
-    -    odb_read_object_info() call to return not found under normal usage and
-    -    thus, it's not actually a bug.
-    +    The type is determined by calling odb_read_object_info() and
-    +    signalled by its return value.  The code however reported a
-    +    programming error with BUG() when this function said that there
-    +    is no such object, which happens when the object name is given
-    +    as a full hexadecimal (if the object name is given as a partial
-    +    hexadecimal or an non-existing ref, the function would have died
-    +    without returning, so this BUG() wouldn't have triggered).  This
-    +    is wrong.  It is an ordinary end-user mistake to give an object
-    +    name that does not exist and treated as such.
-     
-    -    Replace the BUG() with an advise() displaying a helpful message about
-    -    the oid possibly not existing.
-    +    Helped-by: Junio C Hamano <gitster@pobox.com>
-     
-      ## remote.c ##
-     @@ remote.c: static void show_push_unqualified_ref_name_error(const char *dst_value,
-    @@ remote.c: static void show_push_unqualified_ref_name_error(const char *dst_value
-      	} else {
-     -		BUG("'%s' should be commit/tag/tree/blob, is '%d'",
-     -		    matched_src_name, type);
-    -+		advise(_("The <src> part of the refspec is an oid that doesn't exist.\n"
-    -+			 "Please ensure that the oid '%s' is correct."),
-    -+		       matched_src_name);
-    ++		advise(_("The <src> part of the refspec is an oid that doesn't exist.\n"));
-      	}
-      }
-      
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 4e9c27b0f2..c2fcfeca92 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -509,6 +509,13 @@ test_expect_success 'push ref expression with non-existent, incomplete dest' '
+ 
+ '
+ 
++test_expect_failure 'push ref expression with non-existent oid src' '
++
++	mk_test testrepo &&
++	test_must_fail git push testrepo $(test_oid 001):branch
++
++'
++
+ for head in HEAD @
+ do
+ 
 -- 
 2.50.1
 
