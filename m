@@ -1,181 +1,102 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5918829B22A
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 19:10:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F154A1F541E
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 19:18:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754421057; cv=none; b=gaNO/nMVXk04Eo5xSADbNJIaI4sAAuClPI9hIvOtGT2Fe3vf9r4LJhvpMxVjWWnuxhmfPJparzM0JGX9UIILo4TWHt82R9ZsYzjnMweKYS7CXCJdFSLD0k9VYXEmUhNtcwbS+OdLMyDLmmkdlIZnh0mBKOvzrmNiCbdz/cLH4IY=
+	t=1754421537; cv=none; b=WGiYIheIF+NG9Rj7LmJhsiQc/yIv6yCcO4o+PiMGF2SVIzjui3YVFmGY8jF3qsiYk3/yWYGx4rJcTSfRa1NKGQG3SFmZCLrAYRIRCwv6lqdeqnlg5hVOXlDembTb1siAezt284K3/Y1ImnB2Z6nfDWuKds5d5vCP0JPAyC+OEtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754421057; c=relaxed/simple;
-	bh=d9ezMIVIq+R+m8D5+9DdMQTya5EKbzurlEgcOosAoE4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=hBzkX6Kv6GL56ZV355heIA35fntFWUnW0yuQk9uR72N6odVBk3qt8mHndn157svQWn9gimcQlFJdswUTVSea9X+knBD9xr4U557E4SKrjeAqoMpy4k/II+nscncaicpLkriVG1KbFHLSH1f+0hU1GR54Owd4gcMyflmxq6yR9FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X2gzmZ/M; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1754421537; c=relaxed/simple;
+	bh=y4AAAiPXov3+D0B+PqELCh3tDkRNMrFGO1vVrCShhuI=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=IKFpdIlH6e9ICcmg45BhfygWZmmn72wm8/BcLIf3v2EwZoIUkAJDviH/3YLPIhvRjmJQwPYJbXsqRCoZF9J9FHB2m7FoJB/SJRwDA/0avLxlnXcY3WHJOzqXhZgSEaycdzYHF7Y/Df2bFZnNaN5lry0mbHkIN9GyiYGFezxb5Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R5AYbI5a; arc=none smtp.client-ip=209.85.219.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X2gzmZ/M"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-455b00339c8so38147475e9.3
-        for <git@vger.kernel.org>; Tue, 05 Aug 2025 12:10:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R5AYbI5a"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e8fe4942e68so3069050276.2
+        for <git@vger.kernel.org>; Tue, 05 Aug 2025 12:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754421053; x=1755025853; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1bV6/C4OMb77RQnDks9xjloZU1Cy/ufUvEVa1Lttyak=;
-        b=X2gzmZ/MiC13C4VyC6FFYk3jxQExbKEHhloW7l01UfRHnzNLaXYn0oEtGjizKwvHhY
-         oM1Hg+kP4rmMz7jiqeJtfdxgyD571noXhIr/cVPhsWSHmOtFwYxk1vQJQ/I2T+CMa2I+
-         apIfJAY1V2MJjQWEiYpSb98pb5gdSZV5igUgV27CGhoED8SLFcjjwkcAFaoA7RWdNivQ
-         zC+9VUy9a3TMJCWCqWB3ctKsw1k4b4AEVZD9QpQXaKfCdorT1VYpY0neKHSCXc3KzjZq
-         dOiDNw482aLYDCF87i9TPijl5/iWzotGABBDvM7P+xkBFJ8Dc6zlJOcQeE2vZBEOlH1K
-         xCXg==
+        d=gmail.com; s=20230601; t=1754421535; x=1755026335; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gV+v9JMHHVImAp69YJ2b8fWivVYdHXw7Z4m9O40zkeM=;
+        b=R5AYbI5atJJht7Qzq7BNPmJK60GN0O3UArUoVj9lzpWp+PUOj450XiFuVRwJ1hUWLb
+         xrq+gM4LGzNB9ePM+KBGQk0gpSCQ/wR7k+RyPVOBxGXFv2E+irlFKhI8bzCObL1sjZd0
+         OySVdgbui3rinTzK7FA/yPZDfWrez4j9P061Ywzj8qUFIBaEDrA5JcwfHAPQU7msMPW0
+         jUSEKjR0mg0hPk0SzG9pygAlxy4TEYlXXFPy95sqiBgVaExazXer4BVrA6kuVY9+FDwc
+         WS+bduL1xX+eghbOj1g3AOiSoiLV9NaKXNvfnvl1ACbiw0xf9UuiRQTzW0ng80Ccfnlg
+         BpXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754421053; x=1755025853;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1754421535; x=1755026335;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1bV6/C4OMb77RQnDks9xjloZU1Cy/ufUvEVa1Lttyak=;
-        b=R7YAoT4oThLEPop5QIxkOZ8EuXpN/ve9oGMVe/eH2HCJtZfoDKBFl0vqdjs8MNV6Fx
-         6JpbDmUBeCcHd6babZ86p+y4wc7qW/n9UDQLsxa39h70xzkETRvT1dK9DExm7+/x+iH6
-         W7lqEcsqpBTJPCfX+QJXmw0ITKrUZyPuXk1lybtTzvfyplhHNpYCYoQfVRdOc+gbY8H9
-         RHlOsE68MUmUBRLxv8F4+HVIa8JRoXstLfFxVntFPt2mUSasAk2Q99ieZtnhxltES9Pk
-         tRXSq2eRM0zG3t6yA06mxTuyseFpwrUj/9V7SRYf1TuyikvD75+hx88vbEgHlq45Z4gS
-         3apQ==
-X-Gm-Message-State: AOJu0YwweHQkHV+4LquSNwk9rUJKhj3U5BelPQwB35wGw/abzMT+ELT3
-	jKJLW5A+lxgUk/XDRRPtQAALdid8SdZWbiiFOdxyivVg0ZwK8eXVaW2JPwlU7w==
-X-Gm-Gg: ASbGnct2h+3A4XRamucQfS2eiqkLBmQifKFMZLJEYxW6UkG2ZSNhEIfNde8oZxlh30+
-	p7Dbt9nPIgh74aw+w5jYYBLvX33nDadEFiDQQfrgGEodcSetLShTQ2C/P67ukO64HHAiTthtwRj
-	ka18dDoaGIeue21Lx07JMHk95ZZmAfIaUOFZikRPLgZ7uHeMohllYJ+YehE9rRUvlU4jAcL/Obn
-	WhU4Xo4jf05qXk+H8SHVBUDruvQEb1ehLVw/NWNLHbXoRjVI1EqgvaxjiYigBVViHvTxkCAOBdw
-	KG6q9KnkRqs8OfgcAhX+9ZTOvSYD8f64oBmapVet4MmMzvmMpQfFfP/3DkUgL4QoUlVMKgbtQAM
-	xn2iq4w2blGO6IJqWv7/vga8=
-X-Google-Smtp-Source: AGHT+IHR4lwk0fDKlCs2V7QbyoLuBsVt9Y+Hnz/5Tg32iYGO9K8LAQi5jxoXUeimOus6kFQikfbw7g==
-X-Received: by 2002:a05:600c:45d1:b0:456:8eb:a35c with SMTP id 5b1f17b1804b1-459e7122a05mr443725e9.31.1754421053133;
-        Tue, 05 Aug 2025 12:10:53 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459c58ed0ecsm59951465e9.4.2025.08.05.12.10.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Aug 2025 12:10:52 -0700 (PDT)
-Message-Id: <d57478ea5cd8fb6166dddcea30e72a42df79ba2a.1754421046.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1945.v2.git.1754421045.gitgitgadget@gmail.com>
-References: <pull.1945.git.1754399033.gitgitgadget@gmail.com>
-	<pull.1945.v2.git.1754421045.gitgitgadget@gmail.com>
-From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 05 Aug 2025 19:10:45 +0000
-Subject: [PATCH v2 6/6] doc lint: check that synopsis manpages have synopsis
- inlines
+        bh=gV+v9JMHHVImAp69YJ2b8fWivVYdHXw7Z4m9O40zkeM=;
+        b=FAWUd7fCEk/kHH7eVrZcVLt/KhdsLC05rAoZiZ5PxkrI19/F6+Arze8JrI4V7YxM3W
+         W6EDOyr8kWmtOQIKKJYldTfOg32pY5fOsqIr5tk8Vk5eR5eC8a8Sw/Y9y7zevP2IjQsO
+         IftHXlCvDBNwZe0GfTR3qeZHHRmoH+ofS1Dijcajx7HNpkFj5uwnTnqGJQyh7RUjrioX
+         OJntBoHhY365sZlItd86oyF6PR/xcmqUDJNHfjj7mRQe9FUpDxug0vp3SS6TTKQKwtjY
+         YgPTYhA4BFyjySyrxmWGD3ozzsYBLX2XfcG3gvP1WbQIE7VuOzqe89ErjttD1SBhCCjp
+         2OCg==
+X-Gm-Message-State: AOJu0Yx3AOn691Uk4ugCjiF8RSI1Uj3RrLa9t/TzwGMrTyR63bM5Q00r
+	aY3bajFjUKGKJtzwXiqbXAoC4MZKcUAxnYyZVMzUq5HUoNfJCAmX7+lj
+X-Gm-Gg: ASbGncs9/oJQzWMaAATZZ52sfXfOuqGHjEIei0lC+Gi2mwm04nVZPkTJ1e5IYI1WPzH
+	spWMIfg/4rocg/koT5Y194lkVJQujgLmypO9ZlBE++cCdfUHdqA8dn35+hw3sV9Nd+s8C4oG6sh
+	9VDJAb+5+OXdwkeQZ+jzJpzu4ArYM1DL6yQ2OGqGMJs//T75TW9oK8RkxPGNbKzWdRi7nhPRu7m
+	U1UgmIBJPWQ4hC1IL8eWOxnsG80JZ1qyP4qeoUwItOARwIxKLByd9wvbByNoJtDz+pELZ/9P2C6
+	dy3JMc0UTC8DDFjvEsOM/mdR7Fg1gymbts+GVswowFZuyPO4YeX09mFztCN/QNBnQPktilBAvvN
+	2XTPGBNjXIfUh0ClfgsH4giQ5FlWUD+P5AGjuztcpx0lPiz2uYMI=
+X-Google-Smtp-Source: AGHT+IEe1sbg+aHdRHFrYt9lFBEwDU7WxfdensE1DraH+fE6LiYWKjzz0ojMZpKYEDTdVsb3Igk8Zg==
+X-Received: by 2002:a05:6902:3382:b0:e8e:a59:898c with SMTP id 3f1490d57ef6-e9028831487mr456813276.6.1754421534620;
+        Tue, 05 Aug 2025 12:18:54 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:81fd:b609:9cb0:d77c])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e8ff21f0793sm2940610276.38.2025.08.05.12.18.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Aug 2025 12:18:54 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Mime-Version: 1.0 (1.0)
+Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
+Date: Tue, 5 Aug 2025 15:18:43 -0400
+Message-Id: <7923AA49-A1E9-4E56-9397-0443481B97B8@gmail.com>
+References: <xmqqectpziz9.fsf@gitster.g>
+Cc: git@vger.kernel.org, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <xmqqectpziz9.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (21F90)
 
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-When switching manpages to the synopsis style, the description lists of
-options need to be switched to inline synopsis for proper formatting. This
-is done by enclosing the option name in double backticks, e.g. `--option`.
+> Le 5 ao=C3=BBt 2025 =C3=A0 15:06, Junio C Hamano <gitster@pobox.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BF"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+>=20
+>> With apologies for the mail noise, but I can't seem to reproduce any
+>> failures here on 371c45b569 (Merge branch 'dk/help-all' into seen,
+>> 2025-08-04), which is the latest seen I can find.
+>=20
+> When I report a public CI failure, I'd try to give an exact URL, but
+> otherwise the failure would have been seen in my local environment,
+> and because I tend to refrain from pushing out a know-to-be-broken
+> tree, it is unsurprising if 371c45b569 did not fail.
+>=20
+> That commit does not have lo/repo-info, I suspect.  I didn't know
+> exactly which topic was causing, but the error was observed when
+> "repo --help-all" was given, so perhaps some interactions between
+> these two topics.
 
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
----
- Documentation/git-checkout.adoc             |  2 +-
- Documentation/git-refs.adoc                 | 20 ++++++++++----------
- Documentation/lint-documentation-style.perl |  6 ++++++
- 3 files changed, 17 insertions(+), 11 deletions(-)
+I did also try a merge between 371c=E2=80=A6 and lo/repo-info with similar s=
+uccess. :/
 
-diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
-index 40e02cfd6562..ff1cb29bc1f8 100644
---- a/Documentation/git-checkout.adoc
-+++ b/Documentation/git-checkout.adoc
-@@ -334,7 +334,7 @@ include::diff-context-options.adoc[]
- 	separated with _NUL_ character and all other characters are taken
- 	literally (including newlines and quotes).
- 
--<branch>::
-+`<branch>`::
- 	Branch to checkout; if it refers to a branch (i.e., a name that,
- 	when prepended with "refs/heads/", is a valid ref), then that
- 	branch is checked out. Otherwise, if it refers to a valid
-diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
-index 4d6dc994f92e..5d26de8acb22 100644
---- a/Documentation/git-refs.adoc
-+++ b/Documentation/git-refs.adoc
-@@ -20,41 +20,41 @@ This command provides low-level access to refs.
- COMMANDS
- --------
- 
--migrate::
-+`migrate`::
- 	Migrate ref store between different formats.
- 
--verify::
-+`verify`::
- 	Verify reference database consistency.
- 
- OPTIONS
- -------
- 
--The following options are specific to 'git refs migrate':
-+The following options are specific to `git refs migrate`:
- 
----ref-format=<format>::
-+`--ref-format=<format>`::
- 	The ref format to migrate the ref store to. Can be one of:
- +
- include::ref-storage-format.adoc[]
- 
----dry-run::
-+`--dry-run`::
- 	Perform the migration, but do not modify the repository. The migrated
- 	refs will be written into a separate directory that can be inspected
- 	separately. The name of the directory will be reported on stdout. This
- 	can be used to double check that the migration works as expected before
- 	performing the actual migration.
- 
----reflog::
----no-reflog::
-+`--reflog`::
-+`--no-reflog`::
- 	Choose between migrating the reflog data to the new backend,
- 	and discarding them.  The default is "--reflog", to migrate.
- 
--The following options are specific to 'git refs verify':
-+The following options are specific to `git refs verify`:
- 
----strict::
-+`--strict`::
- 	Enable stricter error checking. This will cause warnings to be
- 	reported as errors. See linkgit:git-fsck[1].
- 
----verbose::
-+`--verbose`::
- 	When verifying the reference database consistency, be chatty.
- 
- KNOWN LIMITATIONS
-diff --git a/Documentation/lint-documentation-style.perl b/Documentation/lint-documentation-style.perl
-index 11321a151bca..d7ab7322939e 100755
---- a/Documentation/lint-documentation-style.perl
-+++ b/Documentation/lint-documentation-style.perl
-@@ -21,6 +21,12 @@ while (my $line = <>) {
- 	if ($line =~ /^`?--\[no-\][a-z0-9-]+.*(::|;;)$/) {
- 		report($line, "definition list item with a `--[no-]` parameter");
- 	}
-+	if ($line =~ /^\[synopsis\]$/) {
-+		$synopsis_style = 1;
-+	}
-+	if (($line =~ /^(-[-a-z].*|<[-a-z0-9]+>(\.{3})?)(::|;;)$/) && ($synopsis_style)) {
-+			report($line, "synopsis style and definition list item not backquoted");
-+	}
- }
- 
- 
--- 
-gitgitgadget
+If you happen to find such a faulty tree again, would you consider publishin=
+g a broken branch I can fetch?=
