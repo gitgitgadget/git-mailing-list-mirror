@@ -1,88 +1,84 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from out-177.mta0.migadu.com (out-177.mta0.migadu.com [91.218.175.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44368248871
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 13:44:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69AC2701D6
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 13:55:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754401498; cv=none; b=gwCGiUFe4OYqMUgeV06s1osExSJd7KQdYxzBAsTLcN2nSkiQkK8FUB6brrznUgiNk2Ro19qUlcgSyIH+eQEqNlzDQTAu6JPx0VvDj1shEHi9J9NEate+Ouw2fqSnnkuN3r+TQkxfL0dysSz5cQnmhekI8R3IPmcGtu+tjbTdjRo=
+	t=1754402143; cv=none; b=tSJnV/w97n83YWuporaYA2LiDsfXcp2anG8Rw5lzosjUwaESEwWZ3gX/L1BV+68S84gZ6vt91iZCLU11LGJ0mqtDfkcxWpNDqKbKUm5Fscw97HhCyaZs8cw7aZEV/vXL3aI/7xvTsmMeQ3OuMIlsc8HMhQV5d+AUVObl+YOm4pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754401498; c=relaxed/simple;
-	bh=upFJs/hKDUmw/SW54lFP5+T9k6cuX2vU+UD5I1XeGZw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C9jYh+iYASWOx6g0qB6wY1cr1It5bti03K0NVYbVumllqatW780an8p8kXUs3+Wko91CfzDTCsSr+GrrfbW6eQKW2Ol8dLPWxv6lxeUk+yOFCAp5BV3EpDE2oWsnSg9Dc9X3O1ZHJGEOmSVAG2buYxSzpV8zTdUtQaxf+Hd2cxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Dsdpo+gR; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1754402143; c=relaxed/simple;
+	bh=I3cy+bpdZiPv1Xpg7NFizSlIhL8SVvSjKZnAODaQO9A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KKtexCE0YWAmdYF3vgyuvTxUlV3vW1O+A/VTccBRjWzAy0zLoQjvG7MHQHVBlGJDiGmNBlGsacOpJ6WMUJmBrBEIUgLpvJ7kyDEVxylnyyXM64qRzUmb2i/7IDx6EuTagtC8ntq3Y7L7DllkS9i11Ga7f/1ZZ3hmq7DbgOGBlpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=j0nIyXf3; arc=none smtp.client-ip=91.218.175.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Dsdpo+gR"
-Received: (qmail 11935 invoked by uid 109); 5 Aug 2025 13:44:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=upFJs/hKDUmw/SW54lFP5+T9k6cuX2vU+UD5I1XeGZw=; b=Dsdpo+gRs+4QCJahFcCcpViF7bJNn6WIyKQdOH4h2MK5RLX1gwTGGkitxkvYxhKJXql64IA2yECJcdHGupkIez4HMEMmzmGi/yQOAd2SByU6Q9xfNiHDqI8Ehc61SqtNJiytH+XdIx+56pWhdLrc6BLnTsDG8Sa63W57TE9zxAl/wb0oOd8LS3XL9N2sk+Wqak0b748Ra4D/rrFTWOZ4RZ9SBBuopL4fPvE/Fr4nODhdnkDRrwVgSKhWYR3CoyaVI1aWs3mqgrS9etyngj4grkOt8Q+HCjs/PSKCeUidrhybyfkk3H8AnXXbqjp1KDAeoP99eq3vGJGqBy5Ywwq0xg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Aug 2025 13:44:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6186 invoked by uid 111); 5 Aug 2025 13:44:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Aug 2025 09:44:55 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 5 Aug 2025 09:44:54 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
-Message-ID: <20250805134454.GA1340331@coredump.intra.peff.net>
-References: <xmqqms8fbilv.fsf@gitster.g>
- <aJCBlnHp-db4Nd5w@pks.im>
- <xmqqqzxr88jg.fsf@gitster.g>
- <aJDI16RBR9QKdtW9@pks.im>
- <20250804154129.GC109984@coredump.intra.peff.net>
- <xmqqectq4ne9.fsf@gitster.g>
- <aJIBlIDto33lJEuK@pks.im>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="j0nIyXf3"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1754402136;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FhIYe1HksnTuLWErtFE5MUP5dGsae98kPdLVuUphDtk=;
+	b=j0nIyXf3PYq0EdmtSJs6ixnOcfxpXAj4p9K94c26tsN3feGW1aCuXQsdJKKKesjoTVPeOr
+	osvi/qUUsWoC4H9/jwPQ0uywizDy5T2ZRSdyW+Q9Q4i6Rjv4GToE/Ga1b+c/j4tuJ1eRkV
+	2YfJ/wY0SuCqGRm+AeJ1ii6opBwJt5w=
+From: Toon Claes <toon@iotcl.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2025, #02; Mon, 4)
+In-Reply-To: <xmqqectr57ax.fsf@gitster.g>
+References: <xmqqectr57ax.fsf@gitster.g>
+Date: Tue, 05 Aug 2025 15:55:25 +0200
+Message-ID: <87y0rxub3m.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aJIBlIDto33lJEuK@pks.im>
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Aug 05, 2025 at 03:05:24PM +0200, Patrick Steinhardt wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I am a bit torn overall. We _are_ talking about a race, even though it
-> is an implicit race because the user didn't explicitly ask for the ref
-> to be updated. So aborting the transaction is reasonable from my
-> perspective. But as Peff noted the user didn't ask for it explicitly, so
-> it may be surprising if we abort due to a concurrent update of HEAD.
-> 
-> Ultimately I'd claim that no end user will ever see this happen in
-> practice. You'd have to change HEAD at the same point in time as you
-> write a new commit directly to the branch that it's pointing to. That
-> is, git-commit(1) wouldn't even be able to trigger this case as that
-> command commits to HEAD, not to its target. And just to confirm my
-> claim: setting a breakpoint in `split_head_update()` and then executing
-> "git commit" doesn't trigger that function.
+> * jt/archive-zip-deflate-fix (2025-08-02) 1 commit
+>   (merged to 'next' on 2025-08-04 at 4444b611dc)
+>  + archive: flush deflate stream until Z_STREAM_END
+>
+>  The deflate codepath in "git archive --format=zip" had a
+>  longstanding bug coming from misuse of zlib API, which has been
+>  corrected.
+>
+>  Will merge to 'master'.
+>  source: <20250802220803.95137-1-jltobler@gmail.com>
 
-Yes, I think it's pretty unlikely on the client, where almost all of
-your ref updates are either via HEAD (because you're committing), or to
-remote tracking branches via fetch (and we never point HEAD there).
+I see this was merged into 'next' with 4444b611dc (Merge branch
+'jt/archive-zip-deflate-fix' into next, 2025-08-04), but was reverted
+again in 5297b08916 (Revert "Merge branch 'jt/archive-zip-deflate-fix'
+into next", 2025-08-04)
 
-The more likely case is a server where one user is pushing and another
-updates HEAD (to set the default branch for clones, etc). But those
-sorts of updates to HEAD are going to be rather rare there, as well.
+The fix in this patch definitely was the correct way forward, and it
+fixed the issue at hand. So I don't think it should have been reverted.
 
-So I agree it's not that likely to come up much in practice.
+I've sent a review and some patches in response, suggesting for an
+alternative fix. I'm not claiming my fix is better, and it might
+introduce other bug. I don't even know if the changes are even required.
 
-> So with that knowledge I'd rather do the safe thing and abort the
-> transaction. It requires less hard-to-test logic and feels safer
-> overall.
+To dive into the details: The output buffer for the compressed data is
+twice the size of the input buffer. There is no reason to believe this
+would cause any issues.
 
-I'm OK with that.
+So currently I'm more in line with Justin, and I agree with the
+pragmatic approach to only fix the issue we know is an issue, while we
+keep the number of changed lines minimal.
 
-> If we agree on that I can send a final reroll that reverts back to the
-> logic we had in v3, which did abort the transaction.
+Sorry for the confusion and for bringing in a concurrent series of
+patches. Please ignore those and continue with this patch from Justin.
 
-Yep, sounds good.
-
--Peff
+-- 
+Cheers,
+Toon
