@@ -1,206 +1,305 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14A7EEA6
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 21:47:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603C0200127
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 22:07:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754430466; cv=none; b=rbTSdv3jwNapkaqZ0ZV/Y0XJJsVQcB1mgxhxzhV1nog7QZl7zuFenLMYlOikMB/noIzhOjibBh8Z2SaQwRGd/rTnkBNYWOiDy2J3hNgkJ6TSXhm3T68Ne8qWJaJC634R6/DfJOdIQx0bZ3latEyYPMP6ctDoQ+dbK7mdrpiGLcM=
+	t=1754431626; cv=none; b=CY1dHi8o9c4p4uKIbEXs5IoVwQcdjdZpQgblOp5UqLwey5a2+28Loz0tbnUCmTSqNGJck42/zuVaCBytfciV26RME63zzDX8YoAZRKBMCtSqmiWTgctlDjv+ljU/6+6KB1NPhX3DlcbVOgFVOkH1CFDJdHLZ8AxSGsf5q0Nqz6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754430466; c=relaxed/simple;
-	bh=nseH4VbjK+xylV/E9TGdAB3r0Fbvk/jA8WaXJHBmcYw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OpRxhAJMFgYilcZGswFcOVNL1DO4xcp1v/MMj+kUBnHFX9YreoYHaY8b/aJoWvz9wtCm1tsB3qJ/ZHZiAWBgRezH2dViiM9vmVPPzab/kt/RyPd0QHIH6fa2lSMxP1ex4lr+ftx9G8oxGRNuvHHOKOgFzaqyw9i+HC7eq2TTNTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SRIWBDE5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W+EpIH6C; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754431626; c=relaxed/simple;
+	bh=IhFLTZQj2qLpIVd9UcAIEBYVlJhiiMDAnxL7hIRERLE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rRXv+oZDQ/5m3bi3rr95Be1KaSn/DssUle6JkTs5ZEENqK7dpnwpvJ9wEjuZs9ZhtTbzmWrEYM1/BwFGNofQxmSHiI7o/GpCgsZbMEq9XHt8cESP0dLvO6w9AESV/357tVZXVM8aCv20WsuKYu/zT3SUrpTu3H2J8cS8HB7/YUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SGxNE7SG; arc=none smtp.client-ip=209.85.210.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SRIWBDE5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W+EpIH6C"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 01D0EEC018D;
-	Tue,  5 Aug 2025 17:47:43 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Tue, 05 Aug 2025 17:47:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1754430462;
-	 x=1754516862; bh=bxeZqWT/mx5NrsK4Rxd3m5gWzXD1EadswK7fMW2ANLc=; b=
-	SRIWBDE58dzeIhNTqV33UvFQ9keJZ8PplCSFN/ZYHt4UiOmDyIE6EAzPMd26gBJ+
-	C9eEBih5OpnZwOgGW6sXaxkEZ9QXsmpwPBVurGKsM6LGMYBtS3aOnYQ9erd2f4Lb
-	GLukGHTBw7e/iQsMKXjM2vUN5TCZ7sjlB7aU56/EMcxQkkekQ9fLQSZwm1EcnkVM
-	ag86ZZfK0YfS5TjzJrlopDmr8ygMxjMTvUY85RldqQFcrFcUpmuxDqR7UjFpOD/O
-	H2Qwtc2TbZNTO6M3h32hRlk5qrUMtNcsJRqGLB84Anu+nr8gA+SBR8sfNwsNy9Rk
-	Yi7SqKdiPYYhJ3gF7QX0VA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754430462; x=
-	1754516862; bh=bxeZqWT/mx5NrsK4Rxd3m5gWzXD1EadswK7fMW2ANLc=; b=W
-	+EpIH6CBBM07Nzuyk9AeRO/95pWjqep/GGNxUZh3LpKnnPergZVVmXBO2mLPiZ/X
-	hvcmjrQ/M+mrv7RVQ+ueYXgHuLPB1ePgO7HCpWPJrM0/mpXPYHf/89jaccT0jkk3
-	TYbO5X/tXmfPqDb6Kqtoix6nzVtHa+Yfdn9MyQIkFlUrt1nKHUpilx7biYndmoEa
-	1K0kavoyKTXhUawsYuuYSHVF13u2KCdptyi4zQIDYqkKXKwK0jYQePe58mUbKrPF
-	TRPPMWcEUzM5Pqdt20c+96WD/v45ehMt4cRfBNLLrY2Ws8ylqphtWr/dK0Ar3X9I
-	ZaIdUk1HIqQQl7nLesJMw==
-X-ME-Sender: <xms:_nuSaGMi3G1qfUrv5eS8MDUt3b37Ti_0xLnlWAkOTBSRuidl4Gm7sw>
-    <xme:_nuSaEpYXqQwNtnd9dyZz-gocR8VN8KNE4PaaoPPFWbyeyOXnMiOtewdwWTq6ufhX
-    VsBlBTTnWvuOrc1fQ>
-X-ME-Received: <xmr:_nuSaI6ZLrJBGFU_GcZC7ChOAKv9ThL-eksnDqQQ65yWwXog5rfFgdW9lE7G1ptdyCS467vDEbblDaXtPELzD_0LzOF_Jgvi1xlNYBM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudeivdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeekgfdtuedvjeffgfehueefueeghfdtjefhgfekhffhteeiffetheelhedt
-    gfehtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduuddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhnrdgrvhhilhgrsehf
-    rhgvvgdrfhhrpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehs
-    iigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhoth
-    gtlhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:_nuSaCg5A2Y5fDW-TX7IVJCQS58c9-SU0glLt-nzAYrdxcbHQvnsww>
-    <xmx:_nuSaO4YfqwfLm6dJ6vPR1w1t0zfFIXZLs0w3udPwwW-ha0xWVZSNg>
-    <xmx:_nuSaHGMSevVlmSs51WFXwbK-RP0D-9tpzevDQhn_aaR03FYobU_OQ>
-    <xmx:_nuSaAK923XINTFo4OyGKQDyRM0FGCuUmz4LXfZLHe2UGf6AIzVecQ>
-    <xmx:_nuSaGL2JYEl0tr8_gipaPYoACMUDZQVoSuJRNpoB2c4JAHh_S7zjVYI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Aug 2025 17:47:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
- <jn.avila@free.fr>,  Karthik Nayak
- <karthik.188@gmail.com>,  Justin Tobler <jltobler@gmail.com>,  SZEDER
- =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,  Toon Claes
- <toon@iotcl.com>,  Jeff King
- <peff@peff.net>,  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-  Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [PATCH v5 1/9] Documentation/git-reflog: convert to use
- synopsis type
-In-Reply-To: <5910515.DvuYhMxLoT@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-	"Tue, 05 Aug 2025 19:04:23 +0200")
-References: <20250805-pks-reflog-append-v5-0-050997db09d5@pks.im>
-	<20250805-pks-reflog-append-v5-1-050997db09d5@pks.im>
-	<5910515.DvuYhMxLoT@cayenne>
-Date: Tue, 05 Aug 2025 14:47:41 -0700
-Message-ID: <xmqqqzxpxwxu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SGxNE7SG"
+Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-741a5e8fa94so1094637a34.2
+        for <git@vger.kernel.org>; Tue, 05 Aug 2025 15:07:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754431623; x=1755036423; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5iGpS3N2hCNAiJIPgrA2TaiIGABHcXgrBHtzzaSyDXY=;
+        b=SGxNE7SGeMJzy2OL2nzVR+Wk7uAl1p1DQQ3xHS6OxwAk1YHeEAfP1dPwwdTRYZwwb5
+         wgbuY1GqnmdoIbK2yfbnlxafFD5yQ8wqjCXJMS0mdcMoREnYiBBBCbETuOFoeoYzNios
+         XeHhz96NCpK8gCQP8ThlXlZZQsy5gJ/LFNhHZH8niEXf6fVJvaf4iBzcLKLA2lOsphkj
+         45dgMousax9p1G3Zznz2HLg+qpzVHflkyNC10V1yakbiw8hZg2kcGW2z2RpVpd+y7JS5
+         4oYBcS2b4s5HBAxGGMie2OS6eXrcAfajD43uiKw42bNx/pX7oPYHoRFN/c1+MSsHS0Uy
+         NS4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754431623; x=1755036423;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5iGpS3N2hCNAiJIPgrA2TaiIGABHcXgrBHtzzaSyDXY=;
+        b=Sw4kZA3WAkV/Ap3QM6A4ibqJcQl9kSlI/Xph1tfK4dzWErGBTpjV4tHuwvdO11dMHF
+         PZnkVY5vdl258ncyPPIN1U0jcSzsVyKQc253ynqtpgXB5vNdEYPXJEMD+Ehi0gDz18Lx
+         RElYKWXvFoo/i/Gf/oq/Z3c0uJV8hJGINQCOz80BS5++Csvbud90au9KnTiwhKYZ7VSb
+         NbKWx0KGZtWB9jTUSAlAtYZ0vwriKKem5W04Gg6ufJdn8Nih1p3BqPnkn2y2JvsDDU+i
+         SB64UzwgB1g48/3co0xo99495SWLtEcPdhqOTcuL0QW5BfYGqax+wco0c6EB9aBixEph
+         AabA==
+X-Gm-Message-State: AOJu0YwDq6XcyanAxP2DQsDpaYCT6NZUZn7/gsUujrHOopomIIWeOt/n
+	h507zitN8vYqcCSM7m+aDPLhNIW7WIL55ZF6cIqVChZcj1xFRBmKmjxi8+8zy9xqG/1lYa8HA8F
+	1ACipYExwK6Q2Zgmv9e+lKFMG7nd5nYnF8zvT
+X-Gm-Gg: ASbGncvsePsbAxn+yutAEMteNDleK1EIwwYhTjLO8dNbs+J/boZ1Uw1PzGObgaZOK1n
+	LODVuPZ4PRnYP8ZTxg4YoqCbk2wSvdihaCkagCkEt4r8GIi+VC0wwwICgScADA2YN35ddW5ry+1
+	q5LXXgfbk0GTn+Jwag2c0keNyzwA25fVo3GWxK/sUUKK5xQ0tUuSWjRMh+mrIITg/ay70/l6m4W
+	ZWkRb7oaOx0LvgNILLWgs0vN1AHlkXewv2HY3ld
+X-Google-Smtp-Source: AGHT+IFqGa5wKxjJRouzWx9Be5KeJhSgLp40Mm0WZ0Wurgs5xNAsxMdy+/1bsVDPhfnSVC0OnzlMkkPKgK2yZaMHHJU=
+X-Received: by 2002:a05:6808:4f2c:b0:433:fd5b:ca78 with SMTP id
+ 5614622812f47-4357a0ae231mr504045b6e.31.1754431623207; Tue, 05 Aug 2025
+ 15:07:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
+ <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com> <221f3e5fb0c56b75f8fbfa9f4aa34ae93fad0cdb.1752716054.git.gitgitgadget@gmail.com>
+In-Reply-To: <221f3e5fb0c56b75f8fbfa9f4aa34ae93fad0cdb.1752716054.git.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 5 Aug 2025 15:06:52 -0700
+X-Gm-Features: Ac12FXxZwaN3GffW_E07X7OFyShsdVjfCxJgCUL52tmgnMYVUc2OZNWaJV6FyoI
+Message-ID: <CABPp-BGQmoPQ9TOLjZPpPPEJ__0rsHgRMJ-nkiW4GcQjPCvaBA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/8] sparse-checkout: match some 'clean' behavior
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>, 
+	Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jean-Noël AVILA <jn.avila@free.fr> writes:
+On Wed, Jul 16, 2025 at 6:34=E2=80=AFPM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <stolee@gmail.com>
+>
+> The 'git sparse-checkout clean' subcommand is somewhat similar to 'git
+> clean' in that it will delete files that should not be in the worktree.
+> The big difference is that it focuses on the directories that should not
+> be in the worktree due to cone-mode sparse-checkout. It also does not
+> discriminate in the kinds of files and focuses on deleting entire
+> directories.
+>
+> However, there are some restrictions that would be good to bring over
+> from 'git clean', specifically how it refuses to do anything without the
+> '-f'/'--force' or '-n'/'--dry-run' arguments. The 'clean.requireForce'
+> config can be set to 'false' to imply '--force'.
+>
+> Add this behavior to avoid accidental deletion of files that cannot be
+> recovered from Git.
 
-> Be careful that with the doc lint series I'm proposing, this change will raise 
-> a failure: one of the tests checks that switching the main synopsis to 
-> [synopsis] is linked to switching the definitions lists to inline synopsis, 
-> using `backticks`. This check may be too restrictive though.
+I'm a bit surprised by this.  Given that the only kinds of files that
+this command cleans out are untracked and ignored files, and Junio's
+comments about clean.requireForce over in
+https://lore.kernel.org/git/xmqqv7o2togi.fsf@gitster.g/, I thought his
+comments could be interpreted as not wanting clean.requireForce to
+apply in more places.  Did I misunderstand?
 
-This is what I've queued on top of your topic to prepare for today's
-integration.
+Alternatively, maybe you thought that there were files other than
+untracked and ignored which `sparse-checkout clean` would clean up,
+and it was because of those files that we wanted the extra protection?
+ (In that case, it'd make sense, but it seems to go against what was
+demonstrated in the final testcase of the previous patch.)
 
---- >8 ---
-Subject: [PATCH] fixup! Documentation/git-reflog: convert to use synopsis type
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> ---
+>  Documentation/git-sparse-checkout.adoc |  9 ++++
+>  builtin/sparse-checkout.c              | 15 +++++-
+>  t/t1091-sparse-checkout-builtin.sh     | 66 +++++++++++++++++++++++++-
+>  3 files changed, 87 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-sparse-checkout.adoc b/Documentation/git-s=
+parse-checkout.adoc
+> index 6db88f00781d..823a66c40bc5 100644
+> --- a/Documentation/git-sparse-checkout.adoc
+> +++ b/Documentation/git-sparse-checkout.adoc
+> @@ -119,6 +119,15 @@ all sparsity paths.
+>         This command can be used to be sure the sparse index works
+>         efficiently, though it does not require enabling the sparse index
+>    feature via the `index.sparse=3Dtrue` configuration.
+> ++
+> +To prevent accidental deletion of worktree files, the `clean` subcommand
+> +will not delete any files without the `-f` or `--force` option, unless
+> +the `clean.requireForce` config option is set to `false`.
+> ++
+> +The `--dry-run` option will list the directories that would be removed
+> +without deleting them. Running in this mode can be helpful to predict th=
+e
+> +behavior of the clean comand or to determine which kinds of files are le=
+ft
+> +in the sparse directories.
+>
+>  'disable'::
+>         Disable the `core.sparseCheckout` config setting, and restore the
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index 6fe6ec718fe3..fe332ff5f941 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -931,6 +931,7 @@ static char const * const builtin_sparse_checkout_cle=
+an_usage[] =3D {
+>  };
+>
+>  static const char *msg_remove =3D N_("Removing %s\n");
+> +static const char *msg_would_remove =3D N_("Would remove %s\n");
+>
+>  static int sparse_checkout_clean(int argc, const char **argv,
+>                                    const char *prefix,
+> @@ -939,8 +940,12 @@ static int sparse_checkout_clean(int argc, const cha=
+r **argv,
+>         struct strbuf full_path =3D STRBUF_INIT;
+>         const char *msg =3D msg_remove;
+>         size_t worktree_len;
+> +       int force =3D 0, dry_run =3D 0;
+> +       int require_force =3D 1;
+>
+>         struct option builtin_sparse_checkout_clean_options[] =3D {
+> +               OPT__DRY_RUN(&dry_run, N_("dry run")),
+> +               OPT__FORCE(&force, N_("force"), PARSE_OPT_NOCOMPLETE),
+>                 OPT_END(),
+>         };
+>
+> @@ -954,6 +959,13 @@ static int sparse_checkout_clean(int argc, const cha=
+r **argv,
+>                              builtin_sparse_checkout_clean_options,
+>                              builtin_sparse_checkout_clean_usage, 0);
+>
+> +       repo_config_get_bool(repo, "clean.requireforce", &require_force);
+> +       if (require_force && !force && !dry_run)
+> +               die(_("for safety, refusing to clean without one of --for=
+ce or --dry-run"));
+> +
+> +       if (dry_run)
+> +               msg =3D msg_would_remove;
+> +
+>         if (repo_read_index(repo) < 0)
+>                 die(_("failed to read index"));
+>
+> @@ -977,7 +989,8 @@ static int sparse_checkout_clean(int argc, const char=
+ **argv,
+>
+>                 printf(msg, ce->name);
+>
+> -               if (remove_dir_recursively(&full_path, 0))
+> +               if (dry_run <=3D 0 &&
+> +                   remove_dir_recursively(&full_path, 0))
+>                         warning_errno(_("failed to remove '%s'"), ce->nam=
+e);
+>         }
+>
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout=
+-builtin.sh
+> index a48eedf766d2..69f5a6dcc689 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -1056,12 +1056,29 @@ test_expect_success 'clean' '
+>         touch repo/deep/deeper2/file &&
+>         touch repo/folder1/file &&
+>
+> +       test_must_fail git -C repo sparse-checkout clean 2>err &&
+> +       grep "refusing to clean" err &&
+> +
+> +       git -C repo config clean.requireForce true &&
+> +       test_must_fail git -C repo sparse-checkout clean 2>err &&
+> +       grep "refusing to clean" err &&
+> +
+> +       cat >expect <<-\EOF &&
+> +       Would remove deep/deeper2/
+> +       Would remove folder1/
+> +       EOF
+> +
+> +       git -C repo sparse-checkout clean --dry-run >out &&
+> +       test_cmp expect out &&
+> +       test_path_exists repo/deep/deeper2 &&
+> +       test_path_exists repo/folder1 &&
+> +
+>         cat >expect <<-\EOF &&
+>         Removing deep/deeper2/
+>         Removing folder1/
+>         EOF
+>
+> -       git -C repo sparse-checkout clean >out &&
+> +       git -C repo sparse-checkout clean -f >out &&
+>         test_cmp expect out &&
+>
+>         test_path_is_missing repo/deep/deeper2 &&
+> @@ -1077,16 +1094,61 @@ test_expect_success 'clean with staged sparse cha=
+nge' '
+>
+>         git -C repo add --sparse folder1/file &&
+>
+> +       cat >expect <<-\EOF &&
+> +       Would remove deep/deeper2/
+> +       EOF
+> +
+> +       git -C repo sparse-checkout clean --dry-run >out &&
+> +       test_cmp expect out &&
+> +       test_path_exists repo/deep/deeper2 &&
+> +       test_path_exists repo/folder1 &&
+> +       test_path_exists repo/folder2 &&
+> +
+>         # deletes deep/deeper2/ but leaves folder1/ and folder2/
+>         cat >expect <<-\EOF &&
+>         Removing deep/deeper2/
+>         EOF
+>
+> +       # The previous test case checked the -f option, so
+> +       # test the config option in this one.
+> +       git -C repo config clean.requireForce false &&
+>         git -C repo sparse-checkout clean >out &&
+>         test_cmp expect out &&
+>
+>         test_path_is_missing repo/deep/deeper2 &&
+> -       test_path_exists repo/folder1
+> +       test_path_exists repo/folder1 &&
+> +       test_path_exists repo/folder2
+> +'
+> +
+> +test_expect_success 'clean with merge conflict status' '
+> +       git clone repo clean-merge &&
+> +
+> +       echo dirty >clean-merge/deep/deeper2/a &&
+> +       touch clean-merge/folder2/extra &&
+> +
+> +       cat >input <<-EOF &&
+> +       0 $ZERO_OID     folder1/a
+> +       100644 $(git -C clean-merge rev-parse HEAD:folder1/a) 1 folder1/a
+> +       EOF
+> +       git -C clean-merge update-index --index-info <input &&
+> +
+> +       git -C clean-merge sparse-checkout set deep/deeper1 &&
+> +
+> +       test_must_fail git -C clean-merge sparse-checkout clean -f 2>err =
+&&
+> +       grep "failed to convert index to a sparse index" err &&
 
----
- Documentation/git-reflog.adoc | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+Oh, interesting...with merge conflicts you at least get an error that
+it can't convert, whereas when there are tracked files (whether with
+staged changes or unstaged changes or no changes), you don't?  That
+seems to at least be good for the merge conflicts case, but it seems
+like there's something to fix with the non-conflicted tracked files.
+But that's kind of tangential to this patch.
 
-diff --git a/Documentation/git-reflog.adoc b/Documentation/git-reflog.adoc
-index 34232a539a..38af0c977a 100644
---- a/Documentation/git-reflog.adoc
-+++ b/Documentation/git-reflog.adoc
-@@ -88,10 +88,10 @@ used with `expire`.
- Options for `drop`
- ~~~~~~~~~~~~~~~~~~
- 
----all::
-+`--all`::
- 	Drop the reflogs of all references from all worktrees.
- 
----single-worktree::
-+`--single-worktree`::
- 	By default when `--all` is specified, reflogs from all working
- 	trees are dropped. This option limits the processing to reflogs
- 	from the current working tree only.
-@@ -100,15 +100,15 @@ Options for `drop`
- Options for `expire`
- ~~~~~~~~~~~~~~~~~~~~
- 
----all::
-+`--all`::
- 	Process the reflogs of all references.
- 
----single-worktree::
-+`--single-worktree`::
- 	By default when `--all` is specified, reflogs from all working
- 	trees are processed. This option limits the processing to reflogs
- 	from the current working tree only.
- 
----expire=<time>::
-+`--expire=<time>`::
- 	Prune entries older than the specified time. If this option is
- 	not specified, the expiration time is taken from the
- 	configuration setting `gc.reflogExpire`, which in turn
-@@ -116,7 +116,7 @@ Options for `expire`
- 	of their age; `--expire=never` turns off pruning of reachable
- 	entries (but see `--expire-unreachable`).
- 
----expire-unreachable=<time>::
-+`--expire-unreachable=<time>`::
- 	Prune entries older than `<time>` that are not reachable from
- 	the current tip of the branch. If this option is not
- 	specified, the expiration time is taken from the configuration
-@@ -126,17 +126,17 @@ Options for `expire`
- 	turns off early pruning of unreachable entries (but see
- 	`--expire`).
- 
----updateref::
-+`--updateref`::
- 	Update the reference to the value of the top reflog entry (i.e.
- 	<ref>@\{0\}) if the previous top entry was pruned.  (This
- 	option is ignored for symbolic references.)
- 
----rewrite::
-+`--rewrite`::
- 	If a reflog entry's predecessor is pruned, adjust its "old"
- 	SHA-1 to be equal to the "new" SHA-1 field of the entry that
- 	now precedes it.
- 
----stale-fix::
-+`--stale-fix`::
- 	Prune any reflog entries that point to "broken commits". A
- 	broken commit is a commit that is not reachable from any of
- 	the reference tips and that refers, directly or indirectly, to
-@@ -147,12 +147,12 @@ has the same cost as 'git prune'.  It is primarily intended to fix
- corruption caused by garbage collecting using older versions of Git,
- which didn't protect objects referred to by reflogs.
- 
---n::
----dry-run::
-+`-n`::
-+`--dry-run`::
- 	Do not actually prune any entries; just show what would have
- 	been pruned.
- 
----verbose::
-+`--verbose`::
- 	Print extra information on screen.
- 
- 
--- 
-2.51.0-rc0-162-g220549999b
+> +       mkdir -p clean-merge/folder1/ &&
+> +       echo merged >clean-merge/folder1/a &&
+> +       git -C clean-merge add --sparse folder1/a &&
+> +
+> +       # deletes folder2/ but leaves staged change in folder1
+> +       # and dirty change in deep/deeper2/
+> +       cat >expect <<-\EOF &&
+> +       Removing folder2/
+> +       EOF
+> +
+> +       git -C clean-merge sparse-checkout clean -f >out &&
+> +       test_cmp expect out
+>  '
+>
+>  test_done
+> --
+> gitgitgadget
 
+Patch appears to correctly implement what was stated in the commit message.
