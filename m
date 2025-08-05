@@ -1,122 +1,88 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EFC274FDF
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 13:28:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44368248871
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 13:44:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754400489; cv=none; b=hsAPgFf2EhLq8cb8kIhiDq4zK5xGHXmHzAgmAJZGJ/XxIw+0VBoW/nMKs/wSCASx+sLXnhJSN/Dn+Kd+vS6FSrgsHh873+KlavKUhrChPimuqa1lriBBoA+bhUUmXUFjV0Be4iWRfDMG3MAQyd+EB34x1Ls5XxUo3VPa+6/fkSc=
+	t=1754401498; cv=none; b=gwCGiUFe4OYqMUgeV06s1osExSJd7KQdYxzBAsTLcN2nSkiQkK8FUB6brrznUgiNk2Ro19qUlcgSyIH+eQEqNlzDQTAu6JPx0VvDj1shEHi9J9NEate+Ouw2fqSnnkuN3r+TQkxfL0dysSz5cQnmhekI8R3IPmcGtu+tjbTdjRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754400489; c=relaxed/simple;
-	bh=v1Egkt/Xblme5Fjyla3yy4tafgHvq1Q+aSuJj4Im2QU=;
+	s=arc-20240116; t=1754401498; c=relaxed/simple;
+	bh=upFJs/hKDUmw/SW54lFP5+T9k6cuX2vU+UD5I1XeGZw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PaILcdUU62oH9PfzlFVdJAoYtAq4YvanRqgmDstlFW/gaKs0ZZJeAteBMSR1beZn+5smZqrcOMb5mzxrzel6YGu6cFKexExgkNKTkWBm+tbTap1YSnC6y4dPjrfux+/QtJo/vAnrSoEBJFL6EntrnEHlQL6H8zdLpd33ZbSDvdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T/UdnVRe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R3383XmU; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=C9jYh+iYASWOx6g0qB6wY1cr1It5bti03K0NVYbVumllqatW780an8p8kXUs3+Wko91CfzDTCsSr+GrrfbW6eQKW2Ol8dLPWxv6lxeUk+yOFCAp5BV3EpDE2oWsnSg9Dc9X3O1ZHJGEOmSVAG2buYxSzpV8zTdUtQaxf+Hd2cxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Dsdpo+gR; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T/UdnVRe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R3383XmU"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4FECE1400219;
-	Tue,  5 Aug 2025 09:28:07 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 05 Aug 2025 09:28:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1754400487; x=1754486887; bh=MSFAbWWOB9
-	9+ueURPPExAko1ripbHR8h5gNdhKvnOeo=; b=T/UdnVReiqly4eHzPsMd0wpSca
-	rWm2i5PvAEfQleldkC/CkZtubd3hdVXhcD5BHiOhcu6rByIXggARZJKyBYyGzIY3
-	j4EFmxcNY5K6joeyjbsH647/h18pU9+FADTvRkfQ5iB0pHEG4Xp1WxMrdmQe41Iu
-	ze5AvUHon7JxF0X25UOVvKUIRo3SlLwIYT70wl+mPNQTuBFmLaBv9PvOhif3i/i4
-	T5Cdn4oALHEXa6Q19JAQNZBRWKwDMnF018x8jPBb+fgynl5UZLirYr1yguTs/rXl
-	guwxJHserwtd5Oid9L2M2aS91A2e4I6nCQcBeH0hoVBEbVJJUJpEtCcTHhPQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754400487; x=1754486887; bh=MSFAbWWOB99+ueURPPExAko1ripbHR8h5gN
-	dhKvnOeo=; b=R3383XmUIcgKeezx8go5T40VRO8hKEJWOWqQQTCIAa4wmaB1kSN
-	7BPNTpzALogX8soZHDlwUbIqRamyXhBAWzgIT5EYyZOdHnu3fK+XsUQEkf0HEp4g
-	WF05L0MjoGKRLjcrymqY1Yzat2XFeZ55MIYz7+ipZk1ajkhtWC0QbH7YP70NIz1x
-	9S0z8L6rGjw9FOYAgdaLI1MUMHeJFhCbhXvq0xzxbxfCuK0dZxRo0wrKe8LEnM32
-	r+zoluLuF2jwVBRnGWBosTBzToATgwgF1EE2R+rYC7hcb1GdXFMtYjA9kuZJu/ps
-	4eeQs2uk1YLK9PLnMUV/35+olH4t/O1os+A==
-X-ME-Sender: <xms:5waSaHQCC44ZOFd61Iqw60YFqFctCeq2hGEpDaaYAL4YvjvsRnHg4g>
-    <xme:5waSaMBLUm5Uw4ZCVIsMlpZQjq3gQkum_1nmJc9Yb03nhRB-ngKc0X-qw2efNHVVV
-    qEOfHNtP8JWC6WBLA>
-X-ME-Received: <xmr:5waSaGRE4yYHcfhcEk1ooRJcd6HJiGOhO8A5lGhrbUpub-K6ijXOHFtnGqRE6Pq9ZhfhTQtob9xflnCORN5Ln12wQY6BSDULQfkBbv6zHA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudehvdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheplhhiuhdruggvnhhtohhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhg
-X-ME-Proxy: <xmx:5waSaCpyx-yDCeo9daj81B-HvbsX2-CM3Jk5HbT0QyW3ljzaFpKbxw>
-    <xmx:5waSaAzZxrYKAsX1DRB5YtGx0Q3W1CwmiziS9E-3qHYItg809D_YMw>
-    <xmx:5waSaPI7jmYNJASfo1noKXu2fkhy8igZwDd83ycKt71ROpvU2DLwcg>
-    <xmx:5waSaKKysfbHaWqv9pZJ0guT0Ele-0a1eweMfwOo8tkBpYzGfB_FXQ>
-    <xmx:5waSaErwspxA2MEys3n3MfUQMhYi7E8QGLjTv47SXAUJB0uWxn4EwKXR>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Aug 2025 09:28:06 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5fa0721d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 5 Aug 2025 13:28:06 +0000 (UTC)
-Date: Tue, 5 Aug 2025 15:28:02 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Denton Liu <liu.denton@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] t5516: introduce 'push ref expression with
- non-existent oid src'
-Message-ID: <aJIG4lZURgqvSup1@pks.im>
-References: <cover.1754300389.git.liu.denton@gmail.com>
- <cover.1754375026.git.liu.denton@gmail.com>
- <d26f355c19c59eae30143900e218533bfeabec2a.1754375026.git.liu.denton@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Dsdpo+gR"
+Received: (qmail 11935 invoked by uid 109); 5 Aug 2025 13:44:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=upFJs/hKDUmw/SW54lFP5+T9k6cuX2vU+UD5I1XeGZw=; b=Dsdpo+gRs+4QCJahFcCcpViF7bJNn6WIyKQdOH4h2MK5RLX1gwTGGkitxkvYxhKJXql64IA2yECJcdHGupkIez4HMEMmzmGi/yQOAd2SByU6Q9xfNiHDqI8Ehc61SqtNJiytH+XdIx+56pWhdLrc6BLnTsDG8Sa63W57TE9zxAl/wb0oOd8LS3XL9N2sk+Wqak0b748Ra4D/rrFTWOZ4RZ9SBBuopL4fPvE/Fr4nODhdnkDRrwVgSKhWYR3CoyaVI1aWs3mqgrS9etyngj4grkOt8Q+HCjs/PSKCeUidrhybyfkk3H8AnXXbqjp1KDAeoP99eq3vGJGqBy5Ywwq0xg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Aug 2025 13:44:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6186 invoked by uid 111); 5 Aug 2025 13:44:55 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Aug 2025 09:44:55 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 5 Aug 2025 09:44:54 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
+Message-ID: <20250805134454.GA1340331@coredump.intra.peff.net>
+References: <xmqqms8fbilv.fsf@gitster.g>
+ <aJCBlnHp-db4Nd5w@pks.im>
+ <xmqqqzxr88jg.fsf@gitster.g>
+ <aJDI16RBR9QKdtW9@pks.im>
+ <20250804154129.GC109984@coredump.intra.peff.net>
+ <xmqqectq4ne9.fsf@gitster.g>
+ <aJIBlIDto33lJEuK@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <d26f355c19c59eae30143900e218533bfeabec2a.1754375026.git.liu.denton@gmail.com>
+In-Reply-To: <aJIBlIDto33lJEuK@pks.im>
 
-On Mon, Aug 04, 2025 at 11:24:37PM -0700, Denton Liu wrote:
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index 4e9c27b0f2..c2fcfeca92 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -509,6 +509,13 @@ test_expect_success 'push ref expression with non-existent, incomplete dest' '
->  
->  '
->  
-> +test_expect_failure 'push ref expression with non-existent oid src' '
-> +
-> +	mk_test testrepo &&
-> +	test_must_fail git push testrepo $(test_oid 001):branch
-> +
-> +'
-> +
->  for head in HEAD @
->  do
+On Tue, Aug 05, 2025 at 03:05:24PM +0200, Patrick Steinhardt wrote:
 
-Nit: I don't think it's necessary to implement the test in a separate
-commit. Folks who want to check that your fix really does something can
-trivially revert the code changes while retaining the test. I used to do
-the same in the past, but received the same feedback.
+> I am a bit torn overall. We _are_ talking about a race, even though it
+> is an implicit race because the user didn't explicitly ask for the ref
+> to be updated. So aborting the transaction is reasonable from my
+> perspective. But as Peff noted the user didn't ask for it explicitly, so
+> it may be surprising if we abort due to a concurrent update of HEAD.
+> 
+> Ultimately I'd claim that no end user will ever see this happen in
+> practice. You'd have to change HEAD at the same point in time as you
+> write a new commit directly to the branch that it's pointing to. That
+> is, git-commit(1) wouldn't even be able to trigger this case as that
+> command commits to HEAD, not to its target. And just to confirm my
+> claim: setting a breakpoint in `split_head_update()` and then executing
+> "git commit" doesn't trigger that function.
 
-Also, I think we can drop the empty surrounding lines in the test body.
-Other tests in this file do the same, but that is not a good reason to
-not do better for newly added tests.
+Yes, I think it's pretty unlikely on the client, where almost all of
+your ref updates are either via HEAD (because you're committing), or to
+remote tracking branches via fetch (and we never point HEAD there).
 
-Patrick
+The more likely case is a server where one user is pushing and another
+updates HEAD (to set the default branch for clones, etc). But those
+sorts of updates to HEAD are going to be rather rare there, as well.
+
+So I agree it's not that likely to come up much in practice.
+
+> So with that knowledge I'd rather do the safe thing and abort the
+> transaction. It requires less hard-to-test logic and feels safer
+> overall.
+
+I'm OK with that.
+
+> If we agree on that I can send a final reroll that reverts back to the
+> logic we had in v3, which did abort the transaction.
+
+Yep, sounds good.
+
+-Peff
