@@ -1,55 +1,55 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF653FE7
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 04:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F530215062
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 04:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754368741; cv=none; b=YeVRvx6SwMbDMXCcVc4cKbE9+YXjkhb3PuNQj4TvEJFUEmwueABHpGGUMhwUzd/4YFBtPfIwo3oFY1XeEw5ULuEjni933CiwZb2JMezUOOmT99BQ7pUPeFjOoNkIjbracupr+FrQ03txyjko2Fce1ZZVTqwYZF91DB7ztBbZVps=
+	t=1754368746; cv=none; b=A20CV1FxwnJ1M8hIeoI+8p/KMw3ONITMeQ0oVG8DLPljoBouRkmluxVJLL18GJ1d5m5XZVe35GBHJrNTh+CMjSDRV5UcGFH1BX2KumlNuavKUOEctKPePnBN5rlJ0cvj5auCmGc+t3H8medez0Q8IodLzEF/agzbEF6MsLwui9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754368741; c=relaxed/simple;
-	bh=ypXQ1pR43flC9IAXreMSI/ZqS9eyPzoFcGPziA0ZayM=;
+	s=arc-20240116; t=1754368746; c=relaxed/simple;
+	bh=sTcm15KqqUOBXZ/B25jQ7JWhBZEe8pUy/VlVsPFumrc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BgqTqV5yAYhZJlsosqUCaP2F26OjcQAEfqExI/uQ+x9IJoe+tAf+UDgrbB+dIcYJfMENJIyTvN3zTtpj0c5fy8qknlWOH6AWGoprvEpTOrVvxQma80U9UrIWGRDCWYLRDtj5dO+A91KRo6NyVmkGRxWhHNOdWvb9qUDkdOCltoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YBl3tlfs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lgQp1/oP; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=sk7Ve7IxJwzq+bvEre6WDlP9GC2IZVDayOHzTxgKur41Ef8isFJvxrPdOg1xdqrmoDwpMaInih/7goE0TKorkd5eferRGteK488O6ces0lu0cbUPOGTfTTkMN/a/VhaiZ4q6IARFow6aWEHVgCntP5K63wcufeADBtBuRVfh5xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j9Wqwiml; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q0PEItwr; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YBl3tlfs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lgQp1/oP"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 30B5EEC02D1;
-	Tue,  5 Aug 2025 00:38:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j9Wqwiml";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q0PEItwr"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 63477EC02DE;
+	Tue,  5 Aug 2025 00:39:03 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 05 Aug 2025 00:38:57 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 05 Aug 2025 00:39:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754368737;
-	 x=1754455137; bh=hknFOm2Txvhs3vbSjJ93HU7t0W18lQ9vYwvlEQ/MNdY=; b=
-	YBl3tlfs4CnsPK/9PZ5sDcWORjA7VFTHCFhVB5FWK2E/3GIaTz3dbAFM1pQMGZrk
-	LDJ9sNt9AD0Oq1+ZaB7efPzW5hbVXX6WedaLLkBXI2qWEAb/VJlUkK1FD2k/IYQa
-	GoAG8vlFPs+KKXOcoUFiajZKZPNNkknrixnj4JoD4gvfTYg8E5CrvShgoMhr8i7d
-	Nw3L5OjHURpbLJU7et1N01fVFduMtwNXj5eUqFvIS2w+kt0zElR8j198RJRwVJKY
-	bRBnHeHqpgE1GmqAzIW2+I/6lsSLGz4PWJe6IAX1+ue0moXy3vh+xRiH8y+HnahZ
-	1XeKi/yavE7dmvuTNWCTPw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754368743;
+	 x=1754455143; bh=1nKGGrwF9FLb7N9Tb4rOEp5GHShrgVXE/vzF53q9yAI=; b=
+	j9Wqwiml31JVxXHroMjU4hTf70UKVVMNs+qMR19wz5IS3zclmukn37aKTd2l1tSW
+	d9PY/4vkGejL2Z9DrQuquEKORh0iSi6pzRI6FGCpIqwj4ox6Dd7QpO68FHsjzAY8
+	E64LNQh1cuUWUaBY1T9htVahbHVqcYq8LaH/WqlLXVBrYLFUOBVficSp21W7eXhD
+	1WFVyQIeBNgStlUkPVYCneTbRFMoZx1glHhsUwRZ5Y0+9xKAvsI4Sna9QsVeilW8
+	Q6QhrI1l4izp95issQlPZ2N/W5nTTsvfagECysUwEGWBPCY84D6jqHNtZsWf5isJ
+	Y2SkY7hAkBwwonlFHdDyRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754368737; x=
-	1754455137; bh=hknFOm2Txvhs3vbSjJ93HU7t0W18lQ9vYwvlEQ/MNdY=; b=l
-	gQp1/oPM+CVZ7gRj4TtjaY3yXUkK6rt3GWhITAhILaFdovyxaXwDKnfekIlWEqoo
-	9hjz07QAx3PwsR+t1NLlBGGXhECaCyFkFtxOakzIR2k0FzDRSzzg3EHd+P6Jqqrv
-	ho2XAcqJmhXrja3X+QhoKC+DQUa/lDM3CgIzEVovDNMvosa0qkDxF3bNlhWa0drn
-	GSjvHcwDB8rSuj5PuDbNRVAji5FRIpHbcJNaFIpkYqqQbRLgrOG8/hxHhQlFjJDh
-	OTdTMjwUEQr6odPczuIjCdW9AXHLsJ6Bc/bg8iIsuq8Rs/AQkS9BTdOMzBQPY023
-	1RLODdzefdYANCejmOhAQ==
-X-ME-Sender: <xms:4IqRaPlDSBIxY3oCegatANeQAwGa3xKVB3R5WFtuv3cSQOt3K_mdvQ>
-    <xme:4IqRaGGv4IH5F9wdjieXfFEj_fUH0RGUB1J8rnfuOhkX-IEWaX0dVpC66i3QnepER
-    qbOzrIBx0SGHPm5Mg>
-X-ME-Received: <xmr:4IqRaPFVct7l0odneHyeM6QiajeipGq4BX-34s7zIZjDElsK3NENhGrB4qrinKcO5aVCK57Ji8XiH1Fjq0qM8MCzhR-ksHcV8gRp6UY_mA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754368743; x=
+	1754455143; bh=1nKGGrwF9FLb7N9Tb4rOEp5GHShrgVXE/vzF53q9yAI=; b=Q
+	0PEItwrHNfJJbKZWbVrGO22FIP3p4s25iLJrUes+2+4My1OjtLrc3T6pcqrlMRna
+	MJZY7tlC9qNaIpui/gEqfHiQ29izhm9KJagOpmhwGs3/wzuPq50wB9AGveYx21hZ
+	/TI31c8dTUR+uJF3p4vOhUmtCJ53x3S5wOp7Ekk8Y52DLQ9rU8FVs7gXjxw1sDdY
+	de+wyfYDD96Bdv+979XzwSotCYAXgiLuSQQzPvarajAxB86TmLoK8Se9CZFed92n
+	LnzPGI0ecpZxVr4vaoD5tPO4Xd6P9sgUwNbA2g3e8dAFr4WxpPk3fX4Z4YOvok4F
+	mPDOaTTb60j53NmdUplwg==
+X-ME-Sender: <xms:54qRaEC_ilrfBg-9f-L3TMiIcnsd07zE-OP4K3lMDO7A5Ib13O3z-g>
+    <xme:54qRaJz2ZDiyH0_CWMWomwFFeSIrCaetEua13ngV_58PfTrD0tFp8dQyI47DKqTZE
+    UiQ0aRHDV3xQJU81g>
+X-ME-Received: <xmr:54qRaBCsJ0EDMjw9Gu9fY0yc5TOKy96qckh2XdiqAJU1x35MsiToOOi4eRZixqOUXssf53fIJvLa3jIXWQ6pqBtZgpQIfZ3RkyuVxU4YeQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudegvdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,32 +58,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudegvdefucetufdote
     hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhgih
-    htghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgr
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvg
+    hnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgr
     ihhlrdgtohhm
-X-ME-Proxy: <xmx:4YqRaDOZchI_m4XCldG_UUPcttlXQaqJc_MOXZVxnZeyks-1wTjlww>
-    <xmx:4YqRaOGNBFC04uxBrCS5RYI0NtiHWMWcs2simu0qJuHaXPPOlN4jaA>
-    <xmx:4YqRaKOYp4DqG8827fITErksvt3tuDeGYNPkdEACrnK-St5PJjuQfw>
-    <xmx:4YqRaP8v8c1BRIcleLYkmyhWq1uJWrVkPTpsSejilN23KKM6_rH9aA>
-    <xmx:4YqRaKA3jLiQ1l4IoVdHebwCWCG_vX-WAgqz6-CURCoZ8TjGrqymI2p3>
+X-ME-Proxy: <xmx:54qRaGYenEvOlk7VCam0qcxWHoNxrv7jKT5-sefeLkiK-71NDvssxw>
+    <xmx:54qRaJgWYvnHt9b2PHIth9NkUbdXzRk1tboigagzgOpL6zrbenBlYA>
+    <xmx:54qRaI44A2FTFJln0EmRYBPXm3NIUGsGZnU9G_YmDKrgsnri0oCNTg>
+    <xmx:54qRaA5pRd0p_JLydxt01wQiLLAoIFSNsjZ95W-jMPq2TorZuAfkug>
+    <xmx:54qRaFAOaRehlxZO_ixKvk83F5PG27h9bz_1qh3ytpMW60obtooqrLbc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Aug 2025 00:38:56 -0400 (EDT)
+ 5 Aug 2025 00:39:02 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e7f9ba1b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 5 Aug 2025 04:38:54 +0000 (UTC)
-Date: Tue, 5 Aug 2025 06:38:45 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 9125a7fa (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 5 Aug 2025 04:39:02 +0000 (UTC)
+Date: Tue, 5 Aug 2025 06:38:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Elijah Newren <newren@gmail.com>
 Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
 	git@vger.kernel.org
-Subject: Re: [PATCH 3/6] t6423: document two bugs with rename-to-self
- testcases
-Message-ID: <aJGK1afGLkNAQID6@pks.im>
+Subject: Re: [PATCH 4/6] t6423: fix missed staging of file in testcases
+ 12i,12j,12k
+Message-ID: <aJGK4tSCkWgBK32Q@pks.im>
 References: <pull.1943.git.1753197791.gitgitgadget@gmail.com>
- <bda42aa85cf4f332ef60aca1a8937ed4b868fa87.1753197791.git.gitgitgadget@gmail.com>
- <aIx7OEX6AEqNsIHb@pks.im>
- <CABPp-BEUFaePoJx-dn9hOE6r7mQV_W_6QF2K1sJJ2uXeL81rdg@mail.gmail.com>
+ <3b3b258cec5f0080beb64501f7510f7acbc3a91b.1753197791.git.gitgitgadget@gmail.com>
+ <aIx7Qp_epPOpk8OF@pks.im>
+ <CABPp-BF36TtAaqbV01m82Cj_7Mr23P1DEuSTR7oM9odLbD9q5g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,30 +93,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BEUFaePoJx-dn9hOE6r7mQV_W_6QF2K1sJJ2uXeL81rdg@mail.gmail.com>
+In-Reply-To: <CABPp-BF36TtAaqbV01m82Cj_7Mr23P1DEuSTR7oM9odLbD9q5g@mail.gmail.com>
 
-On Mon, Aug 04, 2025 at 12:15:15PM -0700, Elijah Newren wrote:
+On Mon, Aug 04, 2025 at 12:23:49PM -0700, Elijah Newren wrote:
 > On Fri, Aug 1, 2025 at 1:31 AM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Tue, Jul 22, 2025 at 03:23:08PM +0000, Elijah Newren via GitGitGadget wrote:
+> > On Tue, Jul 22, 2025 at 03:23:09PM +0000, Elijah Newren via GitGitGadget wrote:
 > > > diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-> > > index f48ed6d03534..69de7a3b84af 100755
+> > > index 69de7a3b84af..c2032eb6cfa1 100755
 > > > --- a/t/t6423-merge-rename-directories.sh
 > > > +++ b/t/t6423-merge-rename-directories.sh
-> > I found it to be a bit weird that we have this conditional here.
-> > Shouldn't we expect one particular outcome? Even if multiple outcomes
-> > would be techincally correct I think we should expect one particular
-> > result, but we may add a comment to explain that different output would
-> > be fine, too.
+> > > @@ -5114,7 +5117,7 @@ test_expect_failure '12n: Directory rename transitively makes rename back to sel
+> > >               grep "CONFLICT (file location).*should perhaps be moved" out &&
+> > >
+> > >               # Should have 1 entry for hello, and 1 for world
+> > > -             test_stdout_line_count = 2 git ls-files -s &&
+> > > +             test_stdout_line_count = 3 git ls-files -s &&
+> > >               test_stdout_line_count = 1 git ls-files -s hello &&
+> > >               test_stdout_line_count = 2 git ls-files -s world
+> > >       )
+> >
+> > Should we also explicitly check `git ls-files -s baz`?
 > 
-> Isn't that exactly what I did, with the note I'll copy below?
+> Why?  There was no baz in this testcase -- not only did it not appear
+> in the final commit, it didn't appear in either branch being merged
+> nor anywhere in the entire history of the repository.  Testcases
+> 12{i,j,k} all had such a file, but testcase 12n does not.
 
-Not quite -- you do have a comment explaining why you relax the test.
-But I think it would be preferable to _not_ relax the test but still
-have a comment that says that the outcome isn't quite clear cut. This
-would alert us if the outcome ever changed and thus make it way more of
-a concious change if we had to adapt the test, but it would still leave
-a future reader in the know that a changed test outcome might actually
-be okay.
+Mostly because the line count was adjusted, so it seems clear to me that
+"baz" at least plays a role here. Otherwise there's a mismatch between
+the number of lines we see and the state of files we verify.
 
 Patrick
