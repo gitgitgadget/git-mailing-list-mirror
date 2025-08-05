@@ -1,133 +1,125 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f196.google.com (mail-pf1-f196.google.com [209.85.210.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2C1253F11
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 09:22:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AC3183CC3
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 09:23:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754385743; cv=none; b=OmOxH2H+KAq35qLyYeFa6UK0U9dMRjZrjuy9aOrn4nWyojtxOiMfzVqGY8gDqFTAoYTtgNpwNsYp0UdO0vom0yeXvYHhUm/3iAfurmcLTsZcAim23ZfRHoNOzKohQmYbDNHQgNZsU64lufvZMbuvmhBSqX2Dsls620Hpg2STlg8=
+	t=1754385839; cv=none; b=ofuwaPIwq2dvNkYCReWVAiOXhb9QIeBwvClVNbJtdwWXS8QLyLjNhZBZlLM/Ly4/rsEz95PbPvxnbR3q1NoicE4/sl/O9CthKUof+Cr941ju4gxUUbPA87HG5fDSx9TIuLPeRUgsZGN8RXhjQFM7jkGYIxI0ERiq23N8RH2VQDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754385743; c=relaxed/simple;
-	bh=L4YElc1jjEszGAVLFR0ZhTQJn5Zuoinw9QBoYTQSd6Q=;
-	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=A4Dv51KC1puGqOXzygd020qh5M89ZI/e8LHPCYpunH75h2YKkKuPCKBOAOLgIM9+j5aT/hDIxU0EYaNp/Yft354oxEFm2jkfKmGVWruchncCQvwf4cPDWK6ggofGSBl5/CT5Y+o5huHxof3MkmacbUoFZlFdU6RZwWwkVVqT8hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=fk3sLo2h; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1754385839; c=relaxed/simple;
+	bh=EUBLnL4qOOPrJLn2IPG5nhmUkz/RFhD0UWqqgKvmAR8=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=CMu5Khf8p4tZERoDQHoYEIjXTx2UU1EF2Ct6cIIz4yE8sNXR/qdMSnOaH8hJ93FrJV9QOj57YOXABVyt6PmEmEliijFxtosWn7J6rmGp0bRHb3gZYElmN23TYnQMsZQt21kMouavYcG1ZAle327gqTK++JRWZR3NUa3zxSwZhk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CnDsrmVv; arc=none smtp.client-ip=209.85.210.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="fk3sLo2h"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1754385739; x=1754990539;
-	i=johannes.schindelin@gmx.de;
-	bh=MM0Nvo/RIhpdOttUNHwKj/a/cgmqsbSkAOXrd+iS7ME=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
-	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
-	 message-id:mime-version:reply-to:subject:to;
-	b=fk3sLo2hMQYjUsfRlsXunxCv+UT4RCPQ11eXVung23BGjy43jsKTLUcyjy58XBj0
-	 T4SP0Er4EJdHz3auvs5qSYRC39llpoDvxmRUgkcRVrIn7r1q6jujaw/OeKPhHwWKX
-	 m+uivznc9+pr9E9YnHl1DeylTFyl6BZ3qq4RHmbrjUWs+7l4e0TmQJYK+VFyLsBPT
-	 ndKU/b7Q9aUAFEaVtm+sbFt0+GEvTCcZTvXLxrZMqRMIT8bsVDh187nITGCAeo85c
-	 Pq7ioV1F5wswrD7tSWZQp/dOr1oKK3HXb1vJ3uQeKiWehMt9LCe6DpnDfDN2OZ4E9
-	 XSbHUeLaV8wbunpL+w==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([151.189.132.51]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MMGRA-1v2Osu3Un8-00YnmZ; Tue, 05
- Aug 2025 11:22:18 +0200
-Date: Tue, 5 Aug 2025 11:22:17 +0200 (CEST)
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git for Windows 2.51.0-rc0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CnDsrmVv"
+Received: by mail-pf1-f196.google.com with SMTP id d2e1a72fcca58-76bf3dafaa5so2166068b3a.0
+        for <git@vger.kernel.org>; Tue, 05 Aug 2025 02:23:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754385836; x=1754990636; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qXv+lGXpQqbq69g3qvxwojb9WRgGeIrQwKwYgGG6w9I=;
+        b=CnDsrmVvKmQNMq+CahjAq/D05ZiXhfvn4Ev1qVYsCK06agUCRvRs99E/BtXujgk29v
+         fWzRDMF+YxvJDbTclCGwMErhmQORmyW7aHSqGfPcEiwbg3ZfuV8JdZ0Nw5Mv8nMTDITx
+         BWcSZ8DfPKlSTrynqifhyYyBLQqV0yer4VVD+N4v00EGt5h9IN02NsDFpzbAKojEwXbk
+         TwNBXajx57aOqFL3AmT7j5/9oXNgsH1xUuTrx48I3SfJtnCex4RSRCGflPj526nQM5YE
+         adS1qaiGev9nLtqitDWol90O4da0Qn5iU/m/od3JrJnzg6GWlZatEEnB1W8Ptlub9gDR
+         HhCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754385836; x=1754990636;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qXv+lGXpQqbq69g3qvxwojb9WRgGeIrQwKwYgGG6w9I=;
+        b=LVO/pCw9bTUEqDWpw4ZNZGcUT8p4SE9bGBwQ188prA57eRt8b9v2a4xAIZg4d8i6Ve
+         HMdidJSP448OFdZ1ZsEFdqFYAlsLxAiB2pn6WwVq5Y8+m1ye9vKH5u10CiANyiPUsr8U
+         VXGYW+2ehcU57Atc7UKbacyemtmAao/Bv6A1/+2gdJf3sUvhcpiQag905CBnVKe0Ttio
+         Rw+r18oMPEbvnP/wYT+wsW/MGLkVOenNB6bQdlakbjhV2RVkY9Y89ZjT1md4B075cq71
+         PMGrQXss4wHVr0BU5ksAn3cGGMAam7UfFEYhvN2rUembNxzTiKx2mI+G/2P3Yl9zR0dP
+         qefw==
+X-Gm-Message-State: AOJu0YzvsIwMdiXHoCUhZDMihKSwQk+4x9zU16zX0p+NaCI4yfkU4nk7
+	faxb24iPAyb9VBY5KN/uQN4Syty4b/Bkls2tb52xZV8etTkMQBNcnW+cTfZjwGAmN5NDFQ==
+X-Gm-Gg: ASbGncvI4sl3Ch7L0Gu79ii4PsQEcMI0prjgoFcxgDDispC5Ebkmn5EIYT3PRz84F3x
+	buyFFKk2Dpe1T2i0AlcU3WDyOoHoRlbgNz86aV2T18jWJ30rvNGehGFlAAC/GA/DM8CtKMFhUkI
+	4kSzFprfTXwv/QKbVlbJN8tyhlSItW6ly1tO1voda2TK0PAJG2QJeK/jdDnZa72zyRkv6utmT+y
+	i/fYfRQsZVSzAwxOuFDmbVV636PyAGxzgefBO332ZOgxI3Hf+Dr3eDlXvaa/5mM3v3rZ6d593gH
+	Se89M+K29iIp3FxKK1LBZBPjoQ8K2BkaT2ybbjdSOTyTEiLuZrdNxlVrBkx9zjqJx29lUYWovId
+	t/RO0neXqSlUZcM3Peomzw3byRrBeIvUv8/ipOKnrzBQVmMeoBgzdntv9Vw==
+X-Google-Smtp-Source: AGHT+IHtpfmUQb9/cOTYe/L1T6lSq8jetUiNA+JRyNaIvEMpRnvWi0B4XGF2w0TOFeR2Y+Trp9HY0Q==
+X-Received: by 2002:a05:6a20:7347:b0:225:ba92:447d with SMTP id adf61e73a8af0-2401ea18e5dmr4051083637.9.1754385836093;
+        Tue, 05 Aug 2025 02:23:56 -0700 (PDT)
+Received: from smtpclient.apple (n058152109003.netvigator.com. [58.152.109.3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcce8960dsm12477957b3a.34.2025.08.05.02.23.52
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Aug 2025 02:23:55 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Message-ID: <1MDywo-1ut9VW3fhk-007xUT@mail.gmx.net>
-X-Provags-ID: V03:K1:nvXY6KOeYhpp4TCZB3VqCStibY/+JvjZqtd1EJS11XxxlX8ihDR
- jSzIECjIsMEIJr7AkkbnmPIqzTWc8DR4htQoKUBmpzsqsYwTLLqhVsvKE90CglBWdpEif6T
- KP8+h5pPRhv1yPjcUDv5uUtfNyw8p1tteGpBdL5YbcnU1v9FSjEUAU1v3NAc2WGLVQ9l+EB
- ziS5MC08dKFfy2E5PQDcQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:YeP8v1wGeCE=;jw6HPW3l0UAQZNqTv4oWSUwGZGH
- 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
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v2] diff: ensure consistent diff behavior with -I<regex>
+ across output formats
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <xmqqzfcfd7pp.fsf@gitster.g>
+Date: Tue, 5 Aug 2025 17:23:38 +0800
+Cc: git@vger.kernel.org,
+ hi@arnes.space,
+ michal@isc.org,
+ peff@peff.net
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F21E21EC-4894-4396-A126-8F6638731762@gmail.com>
+References: <xmqqcy9io73j.fsf@gitster.g>
+ <20250803145155.57894-1-yldhome2d2@gmail.com> <xmqqfre7ex8x.fsf@gitster.g>
+ <B1F1EBB7-1824-4776-B8B0-B557114546DB@gmail.com> <xmqqzfcfd7pp.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-Dear Git users,
+Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> But I think the refactoring of diff_flush() codepath would may
+> involve some new mode (perhaps DIFF_FORMAT_DRYRUN or something) that
+>=20
+> (1) does not produce any output, like DIFF_FORMAT_NO_OUTPUT, so
+>     that we do not need to play with /dev/null like Peff's
+>     illustration.
+>=20
+> (2) knows that the caller is only interested in each path having
+>     any change worth reporting, so that it can short-circuit once a
+>     change is found for each path.
+>=20
+> So, just before you want to decide showing name or name-status,
+> you'd do this extra diff_flush() that is run only to learn if each
+> path has changes (with various "ignore" criteria) in the dry-run
+> mode, and it can do as much short-cut as it needs to.
 
-I hereby announce that Git for Windows 2.51.0-rc0 is available from:
+I=E2=80=99m proposing to add a .diff_optimize field to struct =
+diff_options, which
+would support three modes: DIFF_OPT_NONE, DIFF_OPT_DRY_RUN,
+and DIFF_OPT_BUFFER. The appropriate value would be determined
+before calling diff_flush(), potentially in repo_diff_setup().
 
-    https://github.com/git-for-windows/git/releases/tag/v2.51.0-rc0.windows.1
+DIFF_OPT_NONE will be the code Peff provide, DIFF_OPT_DRY_RUN
+will optimize for --quiet, --name, --name-status, etc, so that we can =
+return
+early if we found any change. DIFF_OPT_BUFFER will first emit changes
+and context around changes into a buffer (so there would be a map from =
+file
+pair to change buffer), then operations after the buffer is built will =
+use the
+buffer instead of calling xdl_diff().
 
-Changes since Git for Windows v2.50.1 (July 8th 2025)
+However, I=E2=80=99m concerned that DIFF_OPT_BUFFER could lead to high =
+memory
+usage in Git, and I=E2=80=99m not entirely sure if this trade-off is =
+justified.
 
-New Features
-
-  * Comes with Git v2.51.0-rc0.
-  * The Portable Git installers (which are self-extracting 7-Zip
-    archives) are now based off of 7-Zip 25.00
-  * Comes with cURL v8.15.0.
-  * Comes with the MSYS2 runtime (Git for Windows flavor) based on
-    Cygwin v3.6.4.
-
-Git-2.51.0-rc0-64-bit.exe | f10884d85577e87e49589e24ad461f1497ae48c03e725d6dd86f0a28a55872d0
-Git-2.51.0-rc0-arm64.exe | 1eaefeb121357b443bec2c9fb94f64fb7433e3961ab784278c9325cf09b21b5f
-PortableGit-2.51.0-rc0-64-bit.7z.exe | 8ae49916e2139fd6d388704a4ab7f7382480a0c63d12501b93238e6b2916a98f
-PortableGit-2.51.0-rc0-arm64.7z.exe | 4431babf9a3786952807a510c01972a5a03540e1a1ab623e9d99c47361244c0b
-MinGit-2.51.0-rc0-64-bit.zip | 36a36ca0d24d6ccdb5328888aceeea7127343c2f6faeaa8474f84d1d7a3575fb
-MinGit-2.51.0-rc0-arm64.zip | 8f39a5d5bd4b484b18bde06674c6d134440fe2d77306317eb60464ddb55f5971
-MinGit-2.51.0-rc0-32-bit.zip | a0651ed960e54e13ff63de20d61bfa50d4b1df2cfd870810c2528b8b662cbc21
-MinGit-2.51.0-rc0-busybox-64-bit.zip | 70e55379ca1e31013ac4f5e69589e13764622c220bc0c12d24320d3325ef6cfb
-MinGit-2.51.0-rc0-busybox-32-bit.zip | a6b267c3275cd39eb7649897d1931c87f3278fc43d2a8a965b095e1c89d144fc
-Git-2.51.0-rc0-64-bit.tar.bz2 | a77c02f8adcecf46a785c2a70557c04184c84bc12fc2480516c26c33fe035290
-Git-2.51.0-rc0-arm64.tar.bz2 | c8b12a3aadaa780cce6b0b007474d8cdc62ddc3d05025063e7ae55e142e4b810
-
-Ciao,
-Johannes
+Thanks,
+Lidong=
