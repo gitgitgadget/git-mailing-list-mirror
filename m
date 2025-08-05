@@ -1,70 +1,76 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4EEA927
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 02:41:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095C7A927
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 02:41:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754361669; cv=none; b=FJwivkHIWaYsJrwFU4j9jD+tgv6aATx4rLMSA9h9IKhWe//v8XjN261MQTfEu6FQsaGXVr0eMOvE/rnrqR+SV+VKqDutDna2NUkIu6BWyox69Om0EKImgsHrw8zVaMVbqL4v5T0Gvn1zYRhC0FhXNAPNCdluttXy4Exb4rYtUNY=
+	t=1754361673; cv=none; b=JVrMKUfujGWmgx/Px4YhK9mK/aYw7bj19QuMZ4RYbjCfI5F/x9zSUP/6r7/EyW5E7qGT2kVSsgev5zh8nQIcwhIc/miu+X75+KZYEaP89eBmkO6rzDnL7jULO5EcPvwfyPaw9BQe1du1PRkgohWTUjghHsH9l6skg0k2cS/veT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754361669; c=relaxed/simple;
-	bh=DdKRoHYa6+KhPfZoRH89Tar2Lh+Kpn64gJz9JpCKJlE=;
+	s=arc-20240116; t=1754361673; c=relaxed/simple;
+	bh=Xtqh0aR26l0z4lkH3Mv6fd6oTykCXfJEaKpEx3NCAEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WtDsoElvbDfkm1k6iPCXpbJdqXRPi9VZyFnvy6M+ajLTgPlHen+fEY771SbtzPiCHuwiYS71vsM/xDRjaRQJArBXjY9RlLEIZvk9vTZD8hu5bE1zmh4SXVH39Dxwvb0OU+HBKTp8XEiDedRqOqYrYKvq6FY0VNxxQg3pzhJ2dOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bymr+1vd; arc=none smtp.client-ip=209.85.128.179
+	 MIME-Version; b=LunH4PCLV6rOjk4gTLSS+ybK6AeGhfLteSoMPzG96+haBB8KcTsGyn04tLkdxm2HJ7uPNPDLQzyPnHMYhLMgNlty4HldBhlZH7vhf5bFZxGQkoCNXYpWVNfZISpgLLNO5BLPQYgGLbKfIT7lq2qcg8GxmDaTPpiqMwLCPLr7QC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P1tcV1d5; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bymr+1vd"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-708d90aa8f9so54815187b3.3
-        for <git@vger.kernel.org>; Mon, 04 Aug 2025 19:41:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P1tcV1d5"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-71b52d6d1e3so50841097b3.1
+        for <git@vger.kernel.org>; Mon, 04 Aug 2025 19:41:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754361665; x=1754966465; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754361671; x=1754966471; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mwtsrYsgZcLjiYYXKY72hRS1IPr6KiHrr/5oCF/IBz8=;
-        b=Bymr+1vdSME+e86BmQC4+i5SbHzwfmpDI7dtzpslzM8Sgldaf5L2E5GyaPqGT+rVqT
-         A/wxCuIsC/qaRsSP0srOyCa3lITK3hO0f9yUwh3ptN/tYRaIEsk9EE65g0+UOvDCVbWP
-         sDc1gYvaUpgtB8edFfIc9VAqauYM+ZcLwdXDquLKgPBavKs4Nny5tWO4FF04E5FM9AAW
-         Xbv+08gOOzoqfJT6Vm0tW7VWFFo4JN8ipRBpBoNjjeGUWQ4yyAYtjIDwTj8yJ0W+Mn4x
-         KgbOvxT4f8qUmdZ/5ZIuzszVYqjNfNH2bf9rOQgD/8GGqeT4OevCWQNopQCH9rLFdpf/
-         pZ8w==
+        bh=yHObBpbzHMJinDzVbZmX8E3HkojQoP29R63sTkDC2Ss=;
+        b=P1tcV1d5vVF9cCqahXYo0HpofkOuCmqp3nDMKGjJP4Cr5pZhXlT7wNIz/4J8uTipbl
+         2O5CeDrF0LU7FmHbvzgo2TAfF9k2O7pkeo9QOCBoMLd/4ARo4krxUyNSdvZZ4BWQEGpI
+         Ye0kwpoNhhOgV02BphsdPp+2WLmf7WU8XXWu+11NtiV4j/ZUqX0snihgVdJkys6zdU96
+         LCWfBuP+vzbxCG7BSAzPov1CXbumhcVGfGlUomB44wM4y198+e0mnYCOxJ+mLj8CCXDt
+         fMXMzf19uAXlskRRN+QXGJ/mts/Lw8MC5h0inT9ffceTSK4QwJ1JEnHxwfm9mKXGBK8B
+         xVuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754361665; x=1754966465;
+        d=1e100.net; s=20230601; t=1754361671; x=1754966471;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=mwtsrYsgZcLjiYYXKY72hRS1IPr6KiHrr/5oCF/IBz8=;
-        b=Sfn1uOocSy0WoqpsEeZa+GzfX0VZ9Br/+PhvP5LIw2aKuF+WMn/1WiODino0z+S1UJ
-         gNp9I6eC8jnbz/CJdmRyStREIBAXboLR64ms/oJO0KcvYTX63dnIbkZcBJFl9HgZJVkf
-         5Zg40bAl8A/7hP4Y+OQMK0HXjsp5YfuHaZt00/Lo7hBVxYvikCaIdAjktN069LB/TdIs
-         KEW9LnSnLKOl9Y/DS0tW7X1aCyvtLQvwFjDLIStfzC23/xux1UYKzstNYGSJCM/C6ewI
-         IWx+WSJNqZlo6GqVfY3EsuSDnDs3XJpv2gBffulfVD0jcMwWqXHI3eAPcoYoL4juzvmV
-         r3MQ==
-X-Gm-Message-State: AOJu0YxeM6tZ00/XevsPRjeXsMYjG093nSHoWnlTZuxaXU2wHIWNOO1E
-	FyGkBW+ro5rN+yfx2zJvTmompZtBF0p+bWytvbv+3w9T+jY5o4BiS9ylwqtGrQ==
-X-Gm-Gg: ASbGncuKi/BJHlTfZ4MACrZwg5b/T9U4IFrnnIY7IJYgyOrWPXX477VYXpuw83HAs2g
-	kueUI11e7r95m9Q0ijOlnMuTtbUxYH2fl1dZ6FBccHPPtBIVE1s/RCvRxXLbuGXnGaLZaUwduUh
-	J5PugvtNgIB6qRyYYZT1qcYrzvyrxP/3ZWKmoeHrw1ogvdSXcQcILE2Ro5OXxqa1tJdUR4dkoFf
-	xUBgKK6iLmLCJ17bXNBoZ4saai7LQCwPa16VqhyjxEWCYd4h80SXQIwqxKR6/uQDKSbh5S3wF7e
-	o/dAGHWifszD1AHTyvTYT39ufon5/V1Sk8Of2CUOrzFKYONQByqF6ZMGfoT/+js9bNRGLrvWmpu
-	V4VxKsuX52QagOhoGgb5q/hWZ5X53nTJ+9tODnWIhlmzDssAzjvCirGxcDswOWcX2ctAHIJjU
-X-Google-Smtp-Source: AGHT+IHJ2b8Nw9RdJNhJwj2MnBiAGiWV4YmJeb9JCdZZ7pbnLHUYrC79JmiaT71KbkCzfQF6UXwRwg==
-X-Received: by 2002:a05:690c:ece:b0:71a:20e2:8958 with SMTP id 00721157ae682-71b7f0afbb4mr161700557b3.36.1754361665177;
-        Mon, 04 Aug 2025 19:41:05 -0700 (PDT)
+        bh=yHObBpbzHMJinDzVbZmX8E3HkojQoP29R63sTkDC2Ss=;
+        b=UDcsDqycIqxUmWZLhekl3mikoOLreg4l8f34LDLuFwju6XE/v+o4J2xiyvKa1o2qC4
+         7wij53E6OVnwb2MQkV/HxDp43uSNKfPQtwjvT+Hrlza9kPr2MVeCF1wIORRYp6hcmDXb
+         lwMjMQJv9J/LqX9UmzL+1F44RNl2XgIxmMPKEVz6pkWVTwUantsy5mxZedyHKyLPfuCe
+         x1lTYzbnl2rya6clShK3FZaPZ4MKAqmz4NJqB8DpoyHNSDKYQ6Z2ZdAD4mC0E+l6iLxc
+         01ZqlEtFcQiP/MkkuCpeI0RX6YuZrFYAwpq3JoBsLcs/W28xMXkOUzXMe7qRuT4X9ekp
+         cK5A==
+X-Gm-Message-State: AOJu0YyYrTuuVMNYtSCwbg2JB5cszzHyCd52N0+by9LpvdUR6/l2aU5V
+	JQYHYvKTkE/DJdHwOP5cqb0i+mlvxkOWJuJ+atI/AVXtiLxSHL0vmBwQDytuvRrO
+X-Gm-Gg: ASbGncutUJMY6dssFUnY/Ci67MdG+W0SYTYjA8rEzstxEjT+zfby02FfIAAMoYbm++J
+	weKmVWgd+/eML0JCtGT5ccJrfZPxI09WS01I451O85WMZCIpkw3HJ1sjHeNTyy5hujy7cJiGQIu
+	bVihYD4hsd5oVPURslaLwgvyWctMuDuWk3EeW7gIqr+uRXliYVFmFaJFCm7dhLN09gnft3mZ1QO
+	u3nqKi5bIrgySqmfnsT2nXPjcgDrci9qoCjcjLzgbFQC/3AA6gLM268rq1BTldJhtA+CMijIGBf
+	MUziqaObn3EmiZQpdIHbRt6+ZTgC/UjsFxcCLCZ5sr+9cMdDJBv/e+64p4lzLIGx1fTxOgExS8x
+	TQv+Uhf+D2a2DGh8bMm71+iFn/ww+FSiBkor+fBwSAz5nyRkiK/ErFnjvHTk/eBtnX65ziSJe
+X-Google-Smtp-Source: AGHT+IG2Woi9LWZKnsXnhriXQK1yGWLw5ecV1PQiWUaQngrvJUDV6SYyAmMH2RF4eXoPdB9j77DAGQ==
+X-Received: by 2002:a05:690c:14:b0:71a:2d5f:49d0 with SMTP id 00721157ae682-71b7f0c5706mr130873457b3.1.1754361670676;
+        Mon, 04 Aug 2025 19:41:10 -0700 (PDT)
 Received: from localhost.localdomain ([2605:a601:90a8:8b00:f9db:16d6:17d4:7ce7])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-71b5a5ce7b5sm29895707b3.71.2025.08.04.19.41.04
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-71b5a5ce7b5sm29895707b3.71.2025.08.04.19.41.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Aug 2025 19:41:04 -0700 (PDT)
+        Mon, 04 Aug 2025 19:41:10 -0700 (PDT)
 Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
 From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
 To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] t7005: sanitize test environment for subsequent tests
-Date: Mon,  4 Aug 2025 22:40:40 -0400
-Message-ID: <20250805024044.30024-2-ben.knoble+github@gmail.com>
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	Calvin Wan <calvinwan@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH 2/2] editor: use standard strvec API to receive environment for external editors
+Date: Mon,  4 Aug 2025 22:40:41 -0400
+Message-ID: <20250805024044.30024-3-ben.knoble+github@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250520193506.95199-1-ben.knoble+github@gmail.com>
 References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
@@ -76,50 +82,118 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some of the editor tests manipulate the environment or config in ways
-that affect future tests (because they test a sequence of overrides),
-but those modifications are visible to future tests and create a footgun
-for them.
+Going back to the introduction of the env parameter for the editor in
+8babab95af (builtin-commit.c: export GIT_INDEX_FILE for launch_editor as
+well., 2007-11-26), we pass a constant array of strings: as the
+surrounding APIs evolved to use strvecs (see 8d7aa4ba6a
+(builtin/commit.c: remove the PATH_MAX limitation via dynamic
+allocation, 2017-01-13) and later 46b225f153 (Merge branch 'jk/strvec',
+2020-08-10)), the editor code did not.
 
-We can't make the environment-munging override tests undo their
-modifications because they rely on editor variables overriding other
-previously-set editor variables.
+There is only one caller of all 3 editor APIs that does not pass a NULL
+environment (the same caller for which this parameter was added), and
+it already has a strvec available to use.
 
-Use test_config and undo environment modifications once finished.
-
+Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
 ---
- t/t7005-editor.sh | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ builtin/commit.c |  2 +-
+ editor.c         | 10 +++++-----
+ editor.h         |  7 ++++---
+ 3 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
-index 5fcf281dfb..06fa1ecd91 100755
---- a/t/t7005-editor.sh
-+++ b/t/t7005-editor.sh
-@@ -111,6 +111,8 @@
- 	'
- done
+diff --git a/builtin/commit.c b/builtin/commit.c
+index b5b9608813..16cad7fb03 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1116,7 +1116,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		struct strvec env = STRVEC_INIT;
  
-+unset EDITOR VISUAL GIT_EDITOR
-+git config --unset-all core.editor
- test_expect_success 'editor with a space' '
- 	echo "echo space >\"\$1\"" >"e space.sh" &&
- 	chmod a+x "e space.sh" &&
-@@ -119,13 +121,10 @@
+ 		strvec_pushf(&env, "GIT_INDEX_FILE=%s", index_file);
+-		if (launch_editor(git_path_commit_editmsg(), NULL, env.v)) {
++		if (launch_editor(git_path_commit_editmsg(), NULL, &env)) {
+ 			fprintf(stderr,
+ 			_("Please supply the message using either -m or -F option.\n"));
+ 			exit(1);
+diff --git a/editor.c b/editor.c
+index fd174e6a03..0bc781d50c 100644
+--- a/editor.c
++++ b/editor.c
+@@ -58,7 +58,7 @@ const char *git_sequence_editor(void)
+ }
  
- '
+ static int launch_specified_editor(const char *editor, const char *path,
+-				   struct strbuf *buffer, const char *const *env)
++				   struct strbuf *buffer, const struct strvec *env)
+ {
+ 	if (!editor)
+ 		return error("Terminal is dumb, but EDITOR unset");
+@@ -89,7 +89,7 @@ static int launch_specified_editor(const char *editor, const char *path,
  
--unset GIT_EDITOR
- test_expect_success 'core.editor with a space' '
--
--	git config core.editor \"./e\ space.sh\" &&
-+	test_config core.editor \"./e\ space.sh\" &&
- 	git commit --amend &&
- 	test space = "$(git show -s --pretty=format:%s)"
--
- '
+ 		strvec_pushl(&p.args, editor, realpath.buf, NULL);
+ 		if (env)
+-			strvec_pushv(&p.env, (const char **)env);
++			strvec_pushv(&p.env, env->v);
+ 		p.use_shell = 1;
+ 		p.trace2_child_class = "editor";
+ 		if (start_command(&p) < 0) {
+@@ -124,20 +124,20 @@ static int launch_specified_editor(const char *editor, const char *path,
+ 	return 0;
+ }
  
- test_done
+-int launch_editor(const char *path, struct strbuf *buffer, const char *const *env)
++int launch_editor(const char *path, struct strbuf *buffer, const struct strvec *env)
+ {
+ 	return launch_specified_editor(git_editor(), path, buffer, env);
+ }
+ 
+ int launch_sequence_editor(const char *path, struct strbuf *buffer,
+-			   const char *const *env)
++			   const struct strvec *env)
+ {
+ 	return launch_specified_editor(git_sequence_editor(), path, buffer, env);
+ }
+ 
+ int strbuf_edit_interactively(struct repository *r,
+ 			      struct strbuf *buffer, const char *path,
+-			      const char *const *env)
++			      const struct strvec *env)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int fd, res = 0;
+diff --git a/editor.h b/editor.h
+index f1c41df378..627e992f4d 100644
+--- a/editor.h
++++ b/editor.h
+@@ -3,6 +3,7 @@
+ 
+ struct repository;
+ struct strbuf;
++struct strvec;
+ 
+ const char *git_editor(void);
+ const char *git_sequence_editor(void);
+@@ -16,10 +17,10 @@ int is_terminal_dumb(void);
+  * file's contents are not read into the buffer upon completion.
+  */
+ int launch_editor(const char *path, struct strbuf *buffer,
+-		  const char *const *env);
++		  const struct strvec *env);
+ 
+ int launch_sequence_editor(const char *path, struct strbuf *buffer,
+-			   const char *const *env);
++			   const struct strvec *env);
+ 
+ /*
+  * In contrast to `launch_editor()`, this function writes out the contents
+@@ -30,6 +31,6 @@ int launch_sequence_editor(const char *path, struct strbuf *buffer,
+  * If `path` is relative, it refers to a file in the `.git` directory.
+  */
+ int strbuf_edit_interactively(struct repository *r, struct strbuf *buffer,
+-			      const char *path, const char *const *env);
++			      const char *path, const struct strvec *env);
+ 
+ #endif
 -- 
 2.48.1
 
