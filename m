@@ -1,54 +1,54 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789071DF258
-	for <git@vger.kernel.org>; Tue,  5 Aug 2025 17:10:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070813FE5F
+	for <git@vger.kernel.org>; Tue,  5 Aug 2025 17:12:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754413837; cv=none; b=RZJl+T/AnTYCoBQ8bsoK+FBhBDL2bd/DaZdwrbveguMhAPIjlOiR4co3mRwRD0wsDr5fsFYWxJ8HHm+TOk//2IygGyPnMqfROrWoY9vZiXTCjr/094u5itqOf7qOu/eFwNCzu2D81dpu3IZ603qOzKLkwoM6V2fnOsvf5cPlU10=
+	t=1754413976; cv=none; b=IenXAgBwr2YOQL+oet9vouTGiG56JbreME0k4Nb1H1esbhB1EUYlY6H8EMqtyKduFIZJOYs0HAJRXwrvHYYpxl3LxdVz8skABiO4VqpTEPfGsH+6GJKw9C9/F9kTyd3uScd4msCJNgFVoqZxG/VXdKpeCDebXJ7UuCBvwyyJNKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754413837; c=relaxed/simple;
-	bh=yq+1TR7/klA9d4GMQX6ykbZI0V0YuAV7S3tsxJuvGWc=;
+	s=arc-20240116; t=1754413976; c=relaxed/simple;
+	bh=+uRKYA5U7rg/ralxgJ5dYhd9Vi9SlkEEnLxSXIKpa2E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ucCluNXKLD21zl4L7+Dc3ckfn16D8aU6E1N/nNc4Mz5WeKYxBAl9lzzdxt5uLlJrCLf5cNKQ/SD0K7NVWLQNNONy8HTPug37p7tFa5/Y1nwcN+4ws1TYbvFCk20WTrhiQSs3ERyN4icAB3hZqNhNaaI/xG3VkTTDdvy2byIp0CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QySx7MeQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YJWF/sSw; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=W3ihmEzUDoWUxgpxfWYI6DHYF7+yTRRolUMa9E9xeKj+UTqSFzEELOXfQnsGlqPYhXkwc9sw7oH9WqwQIMMYF5+5lswJ3jjxlnwZdiFgFuhM8xWcl//wixVI3CDIJ0rkezCvZBW1FnC6ptkN302Bb0mdI4bIjbgPTLLPCFlA77A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HZJ7+h0/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=joQh7cIY; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QySx7MeQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YJWF/sSw"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7A18D1D0021A;
-	Tue,  5 Aug 2025 13:10:35 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Tue, 05 Aug 2025 13:10:35 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HZJ7+h0/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="joQh7cIY"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 116B87A0167;
+	Tue,  5 Aug 2025 13:12:54 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 05 Aug 2025 13:12:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754413835; x=1754500235; bh=yq+1TR7/kl
-	A9d4GMQX6ykbZI0V0YuAV7S3tsxJuvGWc=; b=QySx7MeQxVvuyLXn7MCZwLvis/
-	x5RhWL/esoxmnAZq9AifrXkoNMRlBXpny5KFZSjyCMhmJcKquQiwO0HVqLR46qN5
-	srBeAWzSe9XhyDNszBNIqs/OxtCTPNdOID+X5F0wbreFPEus03U05o3qsJGHiJGa
-	3SBqUI5WBX6j/GtUNw134GDKonMKUBjwzryiUH59jjDJDsq19yxzrmyqp9fo6Pwg
-	spo0FWYIR2E6kw+qoIy5u/3rhJxchyVUgmefOJyAGc+BaXxO4JOI+QnfLGNbb5vg
-	gSbgtvWqOMAQOnbgzvgNDUD9G2RxodCByzAK1PiidnUiEnLIoz6+Mn+DFRSw==
+	:subject:to:to; s=fm2; t=1754413973; x=1754500373; bh=oyxa742GfK
+	xSqrXT+9ev+tAGIJ+10JR4/f3WtARWaRw=; b=HZJ7+h0/lQhdWz2usepBIgQDc2
+	RfaYVz32pssKgiwexxsTGoHZn62gqVg7UaLbtLuLi33I0x+ngMSIKXsJ2oJ8VjnT
+	bPUcUwLW5LNvss0D4UNzSE2Si0FpQOcTDXEGd4DG4BUHwCICMk0r46EcoT/APfXe
+	jJ1wNt4SUFlQicEMiQaRrUyXoZHrWzd0PkC8Dbaa9deuQfddG3kswReOPqzlaGaR
+	jHpK+1leY96pyKY+TchGe/z+7fS1xBZ/2q2VKEB8OJO4ydFsLnEPY7QAlmN3gw7U
+	GsP/BOBtJ8cVLT/aCmRwfY0pkvbRtSwsMFVe1A5AyUBcHNBJFpMGwK/2XjqQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754413835; x=1754500235; bh=yq+1TR7/klA9d4GMQX6ykbZI0V0YuAV7S3t
-	sxJuvGWc=; b=YJWF/sSwgyU99kSNHjqJo2B5wyUQLp4sH9H9R16G3PA5JEYmdSG
-	3jOI52Rh9YOu1dxseD9Q1l9wuKISgx4wIZy6lRHe1pd6Nj9+hhJQSqJHIC2XMjKL
-	RKhKs9jVNmc2H8iTe1yBkvwXPDQ8Q8S6+6h7eGSX/TkhkqDuNyLBMAHCSLhna85E
-	psN6U6XTG8ijIft+R/IBE33QQpvrTiggG0ZhPsmH2b++ufxAeEwFlc4EFPde5j0c
-	OJJ//X5+nP9zMdmZk2AQNABVjMN0GNHa54jZKovhxHB8CK3i16esJay5HdgfhLOZ
-	yssM/MvDZQZdc4J0m2azRrmeC7184yX1mPg==
-X-ME-Sender: <xms:CzuSaIez8k198QTxt5-XgyQqk8pyRJNTLe2K4sXjfvcv1Bry_up1Xw>
-    <xme:CzuSaEzI_z3ulex3zLvQZiIdnA2hKCzGEHm4qw-Nv-iNA9QOJIfvUY-alRIOoYG0p
-    c3Cq06HX1A-upymiQ>
-X-ME-Received: <xmr:CzuSaGGeDJtxyB38ACA1gIE-0XgpDOyNtjshleMktOwRUbwU3DdVLcg7Vz3OTGq3GS3qpgIWJ_P0G74g_6oR99SGZe0tsDE-duINqfU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudehjeefucetufdoteggodetrf
+	1754413973; x=1754500373; bh=oyxa742GfKxSqrXT+9ev+tAGIJ+10JR4/f3
+	WtARWaRw=; b=joQh7cIY2dxThmjFcNm83aKIEdwhdDsHR78YZJg/4Tqr8t0BsVs
+	sa30u19QuYYY+A+CgSTxGP0Wzfi1z664WK3MfM+SjTwNVYVDZw83epr534k0SuvJ
+	F63pK6bu900hncZitPBTnnRyN6mxlBSkDbhz/KnBBZ4dt1WUE2AoiNgk7HyPGs1s
+	WYEH4KzWFvqc+Bb2bpa3RxCYbehxtCvsYd/PKlzKJrsBjlBOtKHnmiKp+S102YrG
+	MFh37Q7f8UHrHQxJ/YuPPWYJZzdbObunptBnLd4XkdZBe7JnwdyWtMkpyDSmZfZm
+	56IXdLw8OQvDVkoDjlbJ+0cwVEBvIVSviLw==
+X-ME-Sender: <xms:lTuSaJogU1tvv0ZBIL3Cd_1mycopRM2qGrzjw-lc97CoyHai8h-pgg>
+    <xme:lTuSaGNLkZnjZqM83wewIknHRJ-2ttOVx7SPR_FA8zG9EHgO3ckCWIrObiU-HNNHh
+    AqHnIRhB9E7cuqIEA>
+X-ME-Received: <xmr:lTuSaCwZ_B41Hl04yS7uVT1PGmAgtSo_BxLJ8lkAnyEH05j8jIhyOUPNVIVinBwnLCHuQcXN6J0rfk-B4B20RcrtCRBpQxU9VESj_fA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudehjeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -56,29 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudehjeefucetufdote
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:CzuSaAzLVycllYMk-T5sjxHvhY7CEfAT-Gy0F1W-JCDZknQDSAm-NQ>
-    <xmx:CzuSaPuJdIYDTzMxoNSCly9_rOymXremU9thY0Mrv2RNoZJFrdogbQ>
-    <xmx:CzuSaF1V5VihBZB-CwOX22E5HNunjqVZ0rYTi8VOwNXWTnFXZeP5Eg>
-    <xmx:CzuSaC_NP1eg3QTT-890jGxqraIw8-wys9hbd4VylVU7q04R_djaZQ>
-    <xmx:CzuSaCpEyMOQuahuLQnvm-1E2Xviv7_aqAO5kpAkXwbCa05VopM59qs5>
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehlihhurd
+    guvghnthhonhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:lTuSaHt1xbmzPXelgQrV0hAPOJA0K6rwnnCNUnZmA2PlWkqS7ShdAw>
+    <xmx:lTuSaD7VmcYoTXcRg_Wcw8mx7NAQTp9BOLxlkyYPf3rAlrdZ-vx0JQ>
+    <xmx:lTuSaOSSKKbcucH6ZQqmVBKbE3fhu-oSmiJpbhKDvVJoI0nZVG5sWQ>
+    <xmx:lTuSaKpJnHACd0J8kCGai0cd8DzyDudKNKR7Ssf_AY4kpohomZj1YQ>
+    <xmx:lTuSaPb1Se9YTzWZk4s3XCu_bB4rGs7qZcbGhqzS3xDBf_sBpoOWbzbN>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Aug 2025 13:10:34 -0400 (EDT)
+ 5 Aug 2025 13:12:53 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
-In-Reply-To: <aJIBlIDto33lJEuK@pks.im> (Patrick Steinhardt's message of "Tue,
-	5 Aug 2025 15:05:24 +0200")
-References: <xmqqms8fbilv.fsf@gitster.g> <aJCBlnHp-db4Nd5w@pks.im>
-	<xmqqqzxr88jg.fsf@gitster.g> <aJDI16RBR9QKdtW9@pks.im>
-	<20250804154129.GC109984@coredump.intra.peff.net>
-	<xmqqectq4ne9.fsf@gitster.g> <aJIBlIDto33lJEuK@pks.im>
-Date: Tue, 05 Aug 2025 10:10:33 -0700
-Message-ID: <xmqqv7n1zoc6.fsf@gitster.g>
+Cc: Denton Liu <liu.denton@gmail.com>,  Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 1/2] t5516: introduce 'push ref expression with
+ non-existent oid src'
+In-Reply-To: <aJIG4lZURgqvSup1@pks.im> (Patrick Steinhardt's message of "Tue,
+	5 Aug 2025 15:28:02 +0200")
+References: <cover.1754300389.git.liu.denton@gmail.com>
+	<cover.1754375026.git.liu.denton@gmail.com>
+	<d26f355c19c59eae30143900e218533bfeabec2a.1754375026.git.liu.denton@gmail.com>
+	<aJIG4lZURgqvSup1@pks.im>
+Date: Tue, 05 Aug 2025 10:12:52 -0700
+Message-ID: <xmqqqzxpzo8b.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,17 +91,37 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> So with that knowledge I'd rather do the safe thing and abort the
-> transaction. It requires less hard-to-test logic and feels safer
-> overall.
+> On Mon, Aug 04, 2025 at 11:24:37PM -0700, Denton Liu wrote:
+>> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+>> index 4e9c27b0f2..c2fcfeca92 100755
+>> --- a/t/t5516-fetch-push.sh
+>> +++ b/t/t5516-fetch-push.sh
+>> @@ -509,6 +509,13 @@ test_expect_success 'push ref expression with non-existent, incomplete dest' '
+>>  
+>>  '
+>>  
+>> +test_expect_failure 'push ref expression with non-existent oid src' '
+>> +
+>> +	mk_test testrepo &&
+>> +	test_must_fail git push testrepo $(test_oid 001):branch
+>> +
+>> +'
+>> +
+>>  for head in HEAD @
+>>  do
 >
-> If we agree on that I can send a final reroll that reverts back to the
-> logic we had in v3, which did abort the transaction.
+> Nit: I don't think it's necessary to implement the test in a separate
+> commit. Folks who want to check that your fix really does something can
+> trivially revert the code changes while retaining the test. I used to do
+> the same in the past, but received the same feedback.
 
-I guess both you and Peff also prefer code that is more maintainable
-and easier to reason about, and I am with you two, so let's go back
-to the approach of v3.
+A very good suggestion.
+
+> Also, I think we can drop the empty surrounding lines in the test body.
+> Other tests in this file do the same, but that is not a good reason to
+> not do better for newly added tests.
+
+Yup.  The style was from a decade ago when the test suite was being
+developed, and is very out of style these days.
 
 Thanks.
-
-
