@@ -1,82 +1,82 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E614431
-	for <git@vger.kernel.org>; Wed,  6 Aug 2025 06:53:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC304431
+	for <git@vger.kernel.org>; Wed,  6 Aug 2025 06:53:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754463190; cv=none; b=SbLL47O98ebAcD9uaBEp3D5AQM/0PSVbVm4u4luK+Rqlyg3pmb7G8HkdNFg/j5IeRLwUDLBxnqU/vBPGtK9ggyuYE35HIlu54n1c9DZaoxHogeY4j06tcu41XL/bCDyEQoIlreMWTkYk85vcC24OCZZwC/2ez/a37vpscOyyVMA=
+	t=1754463196; cv=none; b=aiCzjuvyvSZQWx1EsTGeQwxLo7CQGYaprFb20Rj6CabbBNR/MeqQUAP/DRDyeFP6cAf+MhDOvJ9+BnSTrhewv23Q9bgNX5Jhw1vup0K+CofymzHbIg0INSlC3pGNI+TP+6nshQ6uF2QgJiWOsl2BuWFBBUL/deQ4V0N3f+H6hJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754463190; c=relaxed/simple;
-	bh=L7xYaXdUa7A6k50gUYNlRsScvDUMS+AOkBaUfQURUhs=;
+	s=arc-20240116; t=1754463196; c=relaxed/simple;
+	bh=FdhfRwihOQkLisKLbCtNMBDsNjuQ+RcKZx+NcBG7w+I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gXwdpFjZT1HC9gJJ9e0TKeeqe84HXsr1v9pdtb8j7uhLTiaOkqr6HKWCJvm8MiNg5HMkGV9k5pRODqwlNzGWJlVBDxQt+LJePgXkBW1oE1Jr8o61mTpT8VnNHWzHXPRMAQWS3kEhMyjOESYuS3OyhMRk3ZrIE7IoNxP7pW6D2L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HCyZ1t7B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fqkXiWKZ; arc=none smtp.client-ip=202.12.124.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=m7qt0C7EehL0PM2UaA2nDvjzIcJxTDfJ6KAd35xFUlr2fwccraTzVL3Nx+4Wj5E2lmpDjiBNcNeMoNbEMPCQKYh0oBiCFRewPzumdpa1B+eefgRkTIUZAPh/Z97E6GDchvEnFU9xR3XU7QnyWP1+apad4EGxF8oVrbKFiyVHb2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e7otghGw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OFFhMdRh; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HCyZ1t7B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fqkXiWKZ"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7A75D7A0088;
-	Wed,  6 Aug 2025 02:53:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e7otghGw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OFFhMdRh"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 953211D0010D;
+	Wed,  6 Aug 2025 02:53:13 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 06 Aug 2025 02:53:07 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 06 Aug 2025 02:53:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1754463187; x=1754549587; bh=0jP5ye0AWD
-	WDhSHO5X9sewOIaTkteiFM/s54KJEIiyA=; b=HCyZ1t7BdZdu9Nu07IsSsyKkkd
-	MmlfHmMq023OqXANY37HayJs8u9Yqg2ceiUz24PfZjHs/RzektGOLsuFRUGgmkEn
-	/CmxhB+j1SeQ0UwE5XIoTxOGHwpD5CxJqzTz8B6cisPlkZuxY78+8RpEii06WUOi
-	dwtT87jEZm6JJpdR3vQbsLANAmaUvpdC2yGZWqE19RvtvG4M/D0w9UE4Yv2IEN7p
-	8kDvo75wg5ETykr7P1B5aZ400nwJX8GNO38QkDiSeBjDMIX6TqKb4hArdUd9N5+w
-	MncEPcrjdJfEmbz1H9WkjoWSam9ORDY3ZlHt4ap4TSuJRLrsLLi0b7VMU6NQ==
+	:subject:to:to; s=fm3; t=1754463193; x=1754549593; bh=vVfE6xoFcc
+	cScz907CskkOpcdbHP/OWD7w8NancK0/o=; b=e7otghGwIYUtAAZVyQwxohJX1D
+	7NMDX1wykkPrQMbF1J0WCMl01zjo0Hz2OxjMWM7mrXggONi+smW9+whfUTRW5LVv
+	s/KLedgWqbeHxrbzwzAgOWlYUiNRBkgYeBA3HsJt/LI/YguPIcHKu/oxnyBYLcli
+	axosmileQaDEnxkhRj+i1963sisZV7EbZ/6zmPhipeseTd8Dl5JFVPCotkYu0Q2r
+	3OEUCW3s3dwOddGtScjA2xB+YqHYH2/n7kxVS8JCazkfSiCJYDc8MzwPziQTfeyf
+	g2IvyWs5l9fCDktJSKsrp2wPaxpkShz6pl8+B7fYMt9sDUFD8U2wziAnJKog==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754463187; x=1754549587; bh=0jP5ye0AWDWDhSHO5X9sewOIaTkteiFM/s5
-	4KJEIiyA=; b=fqkXiWKZFv5d1i5Y0OkNG3arBoOgh7NKAfUe6VTUmTEAFXiwb6k
-	W8fJDDBtMG9tsFshuj1kqRu7mNe6QRu9gzvOq+gQx6OuriyAdywgzYFVo59wCU/M
-	R/ibeEBEUEdx6TBk2NM6+7s/3/tUUGm20GD3IGQKcmHwbR8mkKy26kRNBqDTr7L1
-	veY1O7fuEDClMOiBWAno6zJeanQ6yGvfsEVLVFPACT70hO9GwEkq3V9IIDqpzKJ5
-	i/fGlw/JUXTwS0d+MS3L6o07Jn49PNTvmCVo+3VE55gePpLv+/RrLZyRxxtEFuGy
-	MPrIaWDXJ8mbB2Ikb1jhq0wNDyX5xP6JqxQ==
-X-ME-Sender: <xms:0_uSaGoD-ajg8cTmnRCZjwosxMT89hrv5DTRKjY-cL2JtVutfQZ4-w>
-    <xme:0_uSaE2mGPEdFZdTDAeulLacXyuhBpdFTST71rezL3183OZwpZuXZKusiaphSXXDd
-    PHTcDyaVI_yzBJPEQ>
-X-ME-Received: <xmr:0_uSaNBFvgkov7WqrEosAtA63w0lrOp0sAEwzg3-PJW2O3yMsrmJTXmr4-Th_l8F9m0W40KD0OYJgpq-D-IINO4GBp7nFRxC1uKoxHgsYQ>
+	1754463193; x=1754549593; bh=vVfE6xoFcccScz907CskkOpcdbHP/OWD7w8
+	NancK0/o=; b=OFFhMdRhXhedUm1eet62npTgg92ELg8QMCctmQyW4dQZy0lfoWp
+	DAmBKVT/TCqckKefot2nvij4X2LKY65WoEhBRBcdS606xtjeFB5KwfGx/rbFmguM
+	aJzuQN+Yn3ZzHP/La8cFVV+VmiKFI/8VIFgXC8L24Kiryfehc90icn2XTfkgTe/C
+	f41i3po/JlSbNyQP/wXfWRfjvddvbKtagcDZjOHEJedx+cNYBRb/+NATZbrvgq9N
+	xaq/8k2xbN2oPwVySlUfzDn6AhonfwiSqc76S0yhjzmrbk5iBFGI3DC3Y8Mw8AJo
+	BPb4G/SBusqjkgHnSCJ1fCPB99QydQElD1g==
+X-ME-Sender: <xms:2fuSaONob88VyRY9QsPHVMeVt-NGS1WUiUHRJWL6SlQ5V2H20BXbgw>
+    <xme:2fuSaNKQOCo7VC8HLp4U6FMmsYSG8N5SFYFinEDPksT9Z_LbdAQbjFjoWB-LH03UW
+    -w-GpzZg62GKem4Wg>
+X-ME-Received: <xmr:2fuSaHGepJH7EeKcNkoxBlj1j0YMCKutLFe9P26THbbs46bChlqxlWmYkN_10hxd9IB8Vm7cybEcvxNd2NyKSNZb4U9ibGirImz-KhOfZA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudejfeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:0_uSaEcXQ75t5wKDQSR78mJM-_qMu9ZNF6HxNaKJPadfsCD4hIaFJA>
-    <xmx:0_uSaKiehu5qaUEfhonxFa_hVI4ZZk08itp29-D0gop2enVks78CbA>
-    <xmx:0_uSaEowUVD_laAZGczwnIoe4CDXbbnshzewKBc0jk4oQfASWD9Axw>
-    <xmx:0_uSaCED_oWDsFwlTvwomH1hdzDVY03DGoH3EedsMDYoIjuGyjrUNQ>
-    <xmx:0_uSaPHysho68ErKQF3ZwJ3xil8_CgpY4QvhmwJpIkmBlszeFRO3x6kh>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvg
+    esghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:2fuSaNR5Y-F01cCoUnkd23h0lG5KRs7qIrI5xmkOv5qoPXK8jb2vvg>
+    <xmx:2fuSaLFC1xuqrGTI-qu8iwp_wqFTVOsvKxcCYWtvMDSD618kLkiT-Q>
+    <xmx:2fuSaB8eUxUHxYl9paJ_vVvamVao2SI1g9PyHbw6lQsKoeWducraEQ>
+    <xmx:2fuSaNKk2Rnx_PDRXjXT46I35bWOJsdbF-i37YOzppZyrr5HfJ-D3w>
+    <xmx:2fuSaOeLLNbFE6LuRVX3Mnf0ZJW2sLK80YTT99CzOnVczmFR6miQPxXx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 6 Aug 2025 02:53:06 -0400 (EDT)
+ 6 Aug 2025 02:53:12 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7abc40f3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 6 Aug 2025 06:53:06 +0000 (UTC)
-Date: Wed, 6 Aug 2025 08:53:03 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 7e22b001 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 6 Aug 2025 06:53:11 +0000 (UTC)
+Date: Wed, 6 Aug 2025 08:53:08 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
+To: Derrick Stolee <stolee@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 7/9] commit-graph: stop using `the_hash_algo`
-Message-ID: <aJL7z2kHXCW1exWH@pks.im>
+Subject: Re: [PATCH 0/9] commit-graph: remove reliance on global state
+Message-ID: <aJL71OK_52-nQ9XQ@pks.im>
 References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
- <20250804-b4-pks-commit-graph-wo-the-repository-v1-7-850d626eb2e8@pks.im>
- <aJEvzR4wuve/9ltU@nand.local>
+ <ad426013-bca4-4243-9e80-7d002f0eb808@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,38 +85,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aJEvzR4wuve/9ltU@nand.local>
+In-Reply-To: <ad426013-bca4-4243-9e80-7d002f0eb808@gmail.com>
 
-On Mon, Aug 04, 2025 at 06:10:21PM -0400, Taylor Blau wrote:
-> On Mon, Aug 04, 2025 at 10:17:23AM +0200, Patrick Steinhardt wrote:
-> > Stop using `the_hash_algo` as it implicitly relies on `the_repository`.
-> > Instead, we either use the hash algo provided via the context or, if
-> > there is no such hash algo, we use `the_repository` explicitly. Such
-> > uses will be removed in subsequent commits.
+On Mon, Aug 04, 2025 at 09:27:42PM -0700, Derrick Stolee wrote:
+> On 8/4/25 1:17 AM, Patrick Steinhardt wrote:
+> > Hi,
+> > 
+> > this patch series is another step on our long road towards not having
+> > global state. In addition to that, as commit-graphs are part of the
+> > object database layer, this is also another step towards pluggable
+> > object databases.
 > 
-> Seems reasonable, and the implementation looks straightforward to me,
-> however I wonder...
-> 
-> > @@ -129,6 +130,7 @@ struct repo_settings;
-> >   * prior to calling parse_commit_graph().
-> >   */
-> >  struct commit_graph *parse_commit_graph(struct repo_settings *s,
-> > +					const struct git_hash_algo *hash_algo,
-> >  					void *graph_map, size_t graph_size);
-> 
-> ...does it make more sense to take a 'struct repository *' here instead
-> of passing both its settings and hash_algo separately? Is there a
-> scenario where we would want to parse a commit graph with a (settings,
-> hash_algo) pair that does not match that of any single repository?
+> Thanks for carefully working through this code full of bad patterns
+> and fixing not just the bare minimum to get it working. Each change
+> was sufficiently motivated and carefully done. LGTM.
 
-Fair. That'd also allow us to move the call of `prepare_repo_settings()`
-into this function.
-
-There's one catch though: in "oss-fuzz/fuzz-commit-graph.c" we manually
-stub out both the repository's hash function and its settings. But we
-can appease it by also setting `the_repository->settings.initialized`,
-which ensures that we won't try to populate the settings anymore.
-
-Will amend.
+Thanks for your review!
 
 Patrick
