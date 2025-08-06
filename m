@@ -1,69 +1,70 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC19E1401B
-	for <git@vger.kernel.org>; Wed,  6 Aug 2025 23:15:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1BC1FFC41
+	for <git@vger.kernel.org>; Wed,  6 Aug 2025 23:15:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754522129; cv=none; b=k7AEqlEeg9MnKKqLLNTUiJfQLwcfGjWtSs18pm+ighfDAcK8oTFeTE+xng2ZQOYcCXa5Vd3z9vClbtwQujd3OdtgLL7afLVDGY86rnib2S13PZDISb0Hop/cu3hT5ucbeZ2qAY8EESB0Xbb7p9jExY/31zi7e+t4BD8urcq03XI=
+	t=1754522130; cv=none; b=mYlW9VPHL5Twe1c/JmsnbCXKul7ivKeee92+c03i+foYVIqbvjg1mt+KmmRUk26SODuoW+tmRmVI/pXUIjPHxzhO3XbeE5+BspjkB9pxf/XTkY5u3rH1vLwxfxIHj1P+XAW7gSM54/aU1Z5dqZWdc+OUjydravq45i6/yc5Wz28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754522129; c=relaxed/simple;
-	bh=rW6XAXHR/baKs2zZ4OwvdZLmXD2Bq4LF8tM/Fw4bCbI=;
+	s=arc-20240116; t=1754522130; c=relaxed/simple;
+	bh=h28Zpuwr2aT+L8LcCx9BgrFwS268exxoyRg3EOF7lUQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=EpxH31eUKWe6L9c+kFOqB1I2r6ErNeP4a1H4p7t3lq6S17vAkBiQIUWfZNmSf+o64pa2/eDAA+mMmMrftLnQKV+NADdWK5EluwmOdpLHfXJZ6vuMm5z1AXMwMI0+LhaU68Q4VC2UEnOXXxoFvkq2xJj9vyQ+MBsfLzvzq/0IZEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X8haKP8H; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version:To:Cc; b=YvlI1wL7g7pPvH53L263wwN7uN4Af8h1VzEn/NEQOc1r4OcYCeeBpr6lk6WNov7bDMO7XTsVf+kWdBZUdkwtrBlhoMIJ8PsZuM7gXFcx8OalFLEpWisJF6NsLVtHNLteeGwCipGjTFb1o+BV+7bD4XkX76SymriLuzzjenkGNgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WIraBHKU; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X8haKP8H"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-459e20ec1d9so3586475e9.3
-        for <git@vger.kernel.org>; Wed, 06 Aug 2025 16:15:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WIraBHKU"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3b790dbb112so182215f8f.3
+        for <git@vger.kernel.org>; Wed, 06 Aug 2025 16:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1754522126; x=1755126926; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=J1X06A0NdexEto8yPmI1p6MIlBfs5M6iYOqr3bHf/G8=;
-        b=X8haKP8HCpFbbPJiYOk00VmCdDZPX3AwYAXUsn8FogXDAQGIICqen3xEwHyHOUI8V6
-         95ydd8xgB/Ab+oRo4EwPLXcXbrCEySMcAOa1LB+Cf6c3o0LrQTxFSzWIgdOR6byN89Cz
-         AGxe8KhiIeCwIe27gweak1QXwmlQtRKgqme6IDBTzo4m3XK1e1AfY88rtjQq6VVF3+rV
-         zVC7lGfLIi4FuNWj77CBAz2K9begPSIaX+/9aClVYglUDFgcab218m1kw1+1dIeRWilP
-         Lp9X/aEOxTnqgETuQu+462dAwMr9d+7MBf7uG8UkIF9RofPC4h1nfVJzZcFq4oSGen00
-         SOZA==
+        bh=n/A+51K2ywUduDL8AQtkLj2uWNhMnEXOkSFhqSgNP78=;
+        b=WIraBHKUZbF2xKR5YX6E7IYCz8iKeevv/jXLPk+U5w1VncA8JFnLQBHvkew0NB/8OY
+         ZpN8zfJp3coYS26d0dBQ80fF4ALOvPSySrI+VXf82P1lMFhj/LnRkWG4BUPsyAMHkl8L
+         bDe9Fztb9pBMvDPb4apgACKYJttjAo3CGcHFDL7NOmQRfOFQbGx/b0wH6A8lxRI9wAvA
+         9jspzLFzTyyKnfo6IRF0dlW9Um7mktfrcGCZjfBXBfcSqPCeqvYxhnBze+jN8Jdmngah
+         r4A+t9uI7UhrzKTwq3AoK6eFZo1gxgxKoE/RbfFavr2xllVjod0G2WL2WNxNdIjMy/Lr
+         ZRVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1754522126; x=1755126926;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=J1X06A0NdexEto8yPmI1p6MIlBfs5M6iYOqr3bHf/G8=;
-        b=bE2UNBXsd27Nv9zYCA7PmNU4ZOpc2O78FzOMR4dIDq3QtMXANYjLUjyM8SHb3P/x+R
-         8mS1NT8USzERemb1TN53K4mTnhg1MfsWTBgYadPDioSUXK0iEa2VDNhNyxhSJHQ08l0W
-         6x9Ga0pSJ4ypNPStuIFQCSIGNh3uiycSANh76PrFoJDZbrhMoO49JW/psfg98b1ZNPz7
-         fGk+xGBvjO/7clxeRxrBuEoMx+/Py22aYcrZz+gAYMJbtb+BA9JPxk6ijTP3ByjmvDGc
-         +77IC62PX03s61WAsO9cJmKfLBzTaLcsbtFiPHn/TTT2jPelhUUTW4ZeneNq5kklwe1D
-         +7AA==
-X-Gm-Message-State: AOJu0YzpKnk6WyGJOogRJ2UHzhWLIeYxGSp38dmfKCclNMlHlhBTX/yP
-	KJh3Qsk4SXhJK6BTv3HR2/LJ6pmSs6JffD8oZi8ML2WhvFQ2I82utwDbAIhu6w==
-X-Gm-Gg: ASbGnctDJSz3wcuwmKcqe0iOas/My6BsJXFLM2j8h3BS20fwUUh/k98JkZsgNRlu7Tk
-	mm8WEbHkzM8ENhP0m7ajixAkGN2Ls+IpaB6NKKB0FDj8VKsY+2xf8KXqMc30TvMETWFaFbBjqbN
-	AcRZrQ+yZWTBGSF2h2PGTqzKi+4Ig88ej77vkqNagyBLiu3rb7ViLCcT4PDqYrUnICTDeejn0e6
-	ulyhzxlHXriW0ZY4YNi0qBv+Wlkh1YW+IWQfCv9FLjjBgy9j7pz6cGozOXqFeS70lgMM8uV9HH8
-	fBUlLdQlpc7t+2XkIN0KUWTFN3eUAO7e3DzwXnARnbncD/YYBtBly5aKFIsSqLUDaz6UmMIhm0K
-	x7JmQQQamIMruOCUG6gC8QL4=
-X-Google-Smtp-Source: AGHT+IF83ALVqchPFCAUvHGJsWKmjmx12iGumWPSXRZvZkf1A2+4hSqiCgTc6XjjKxcra5grcMzVqw==
-X-Received: by 2002:a05:600c:5490:b0:458:add2:d4b4 with SMTP id 5b1f17b1804b1-459e741bd55mr42204455e9.12.1754522125497;
-        Wed, 06 Aug 2025 16:15:25 -0700 (PDT)
+        bh=n/A+51K2ywUduDL8AQtkLj2uWNhMnEXOkSFhqSgNP78=;
+        b=fvHOCubGvXF7RpcMl4tauHJVgKh2MQFJ5zYVYBtiCa+OT3GEBUMvCMNIRWgGRyXnMj
+         q89h+cVY6KvVdF36EXkZoqzPx2DVMsPj+d9Mub7CoLyfMVPbmlYsj+TSzvAZ1pcxDrU/
+         /x14NmyU5ejotdE9d8IS1XAcpulsqUv5Fb5yrmLfqSgaAA/GVH3bbiYbXtxbu5FGHcl6
+         qAtvNSv/DR2JoIrJNrv3z3YOXZP37/xYD+DQcrb22gtENCvwhPtyUwmpGH7NJox/XVYY
+         ya9dfeR1+d1Z+IkqlXCfdkx/ANI6/kZiOUMLCJoBXFkgIKXoWlEBrONObHKjdznJRQMg
+         VaaA==
+X-Gm-Message-State: AOJu0YxYsXUN/yutuELu6bvXP8qlbnOWvcNrRIYm7msKeGaKgPF/VHMd
+	bMHc5wT+NysYmZulI2XrdQieMDMIR+M5/ki0cCnO4aOQcto3BJ+Nb8dcKyWWBw==
+X-Gm-Gg: ASbGncs+bi736FNy/7vYEpv4nurW//VcPntmUvR5rl5c93NLaA2P0fO3PL0jSOmZyXa
+	YUWT77/QMOiTev+9yTArpoYzzLXT6YqGoDGECx1/4yKjz3+2ABYzjvYj1dvcdUMj8o/7DGS4UwV
+	m3Hbb7thmwGYF4C2yHrTZlO7AY6PTsCv67XQmctK3vo9voN/ZgbyVzboRquAYigTKpWrXFs8vbs
+	Ahixk55dGLaabCZ+elFgSk1Q1c49y7wYuLhwpvFZMUGzHUQ1STwNePbTN/6XhwKFW1PAO+NfAYP
+	flpURx7D2dnXXiunhy+9A/ZSDRlaJUWLBJecG+vBcEJGz2XrX2oz9DCU7bu+3x6+Qc4AgbAjsvP
+	qvLBzE9xNH/11mnjp8vHqk2ivybpY+3y5X9Oj8ZbtmZw5
+X-Google-Smtp-Source: AGHT+IFkiyDcIktNQVKELnFLL3bWt6A4OCMi9qFd/iww9oyZ49CMLOoCtKE2elTymg8IyYzssUDr6g==
+X-Received: by 2002:a05:6000:25c7:b0:3b7:95dd:e535 with SMTP id ffacd0b85a97d-3b8f41ce09amr3753064f8f.42.1754522126242;
+        Wed, 06 Aug 2025 16:15:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e58400f5sm65053055e9.2.2025.08.06.16.15.25
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b8e054036bsm14902082f8f.31.2025.08.06.16.15.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 06 Aug 2025 16:15:25 -0700 (PDT)
-Message-Id: <dccc204430535f8c9eb74d7861365dbb2c42bb02.1754522123.git.gitgitgadget@gmail.com>
+Message-Id: <58df0710efc042b014a0c8282ce1d7fa62fbb760.1754522123.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1943.v3.git.1754522122.gitgitgadget@gmail.com>
 References: <pull.1943.v2.git.1754422546.gitgitgadget@gmail.com>
 	<pull.1943.v3.git.1754522122.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 06 Aug 2025 23:15:16 +0000
-Subject: [PATCH v3 1/7] merge-ort: update comments to modern testfile location
+Date: Wed, 06 Aug 2025 23:15:17 +0000
+Subject: [PATCH v3 2/7] merge-ort: drop unnecessary temporary in
+ check_for_directory_rename()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,49 +82,44 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Elijah Newren <newren@gmail.com>
 
-In commit 919df3195553 (Collect merge-related tests to t64xx,
-2020-08-10), merge related tests were moved from t60xx to t64xx.  Some
-comments in merge-ort relating to some tricky code referenced specific
-testcases within certain testfiles for additional information, but
-referred to their historical testfile names; update the testfile names
-to mention their modern location.
+check_for_directory_rename() had a weirdly coded check for whether a
+strmap contained a certain key.  Replace the temporary variable and call
+to strmap_get_entry() with the more natural strmap_contains() call.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ merge-ort.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 47b3d1730ece..d87ba6dd42bf 100644
+index d87ba6dd42bf..9b9d82ed10f7 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -2163,7 +2163,7 @@ static int handle_content_merge(struct merge_options *opt,
- 		/*
- 		 * FIXME: If opt->priv->call_depth && !clean, then we really
- 		 * should not make result->mode match either a->mode or
--		 * b->mode; that causes t6036 "check conflicting mode for
-+		 * b->mode; that causes t6416 "check conflicting mode for
- 		 * regular file" to fail.  It would be best to use some other
- 		 * mode, but we'll confuse all kinds of stuff if we use one
- 		 * where S_ISREG(result->mode) isn't true, and if we use
-@@ -2520,7 +2520,7 @@ static void compute_collisions(struct strmap *collisions,
- 	 * happening, and fall back to no-directory-rename detection
- 	 * behavior for those paths.
+@@ -2580,7 +2580,6 @@ static char *check_for_directory_rename(struct merge_options *opt,
+ {
+ 	char *new_path;
+ 	struct strmap_entry *rename_info;
+-	struct strmap_entry *otherinfo;
+ 	const char *new_dir;
+ 	int other_side = 3 - side_index;
+ 
+@@ -2615,14 +2614,13 @@ static char *check_for_directory_rename(struct merge_options *opt,
+ 	 * to not let Side1 do the rename to dumbdir, since we know that is
+ 	 * the source of one of our directory renames.
  	 *
--	 * See testcases 9e and all of section 5 from t6043 for examples.
-+	 * See testcases 9e and all of section 5 from t6423 for examples.
- 	 */
- 	for (i = 0; i < pairs->nr; ++i) {
- 		struct strmap_entry *rename_info;
-@@ -2618,7 +2618,7 @@ static char *check_for_directory_rename(struct merge_options *opt,
- 	 * That's why otherinfo and dir_rename_exclusions is here.
+-	 * That's why otherinfo and dir_rename_exclusions is here.
++	 * That's why dir_rename_exclusions is here.
  	 *
  	 * As it turns out, this also prevents N-way transient rename
--	 * confusion; See testcases 9c and 9d of t6043.
-+	 * confusion; See testcases 9c and 9d of t6423.
+ 	 * confusion; See testcases 9c and 9d of t6423.
  	 */
  	new_dir = rename_info->value; /* old_dir = rename_info->key; */
- 	otherinfo = strmap_get_entry(dir_rename_exclusions, new_dir);
+-	otherinfo = strmap_get_entry(dir_rename_exclusions, new_dir);
+-	if (otherinfo) {
++	if (strmap_contains(dir_rename_exclusions, new_dir)) {
+ 		path_msg(opt, INFO_DIR_RENAME_SKIPPED_DUE_TO_RERENAME, 1,
+ 			 rename_info->key, path, new_dir, NULL,
+ 			 _("WARNING: Avoiding applying %s -> %s rename "
 -- 
 gitgitgadget
 
