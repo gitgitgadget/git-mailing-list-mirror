@@ -1,55 +1,55 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E208244688
-	for <git@vger.kernel.org>; Wed,  6 Aug 2025 12:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF70A23372C
+	for <git@vger.kernel.org>; Wed,  6 Aug 2025 12:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754481625; cv=none; b=aVljKjee6LYWdaoxUDsY3Ug/A8xI68rpnDfje6HYLn5iWJ9Fzc4Yrxk3xmmJ4E/Zc0Ohf6i5RWpzq89Al2n+vf4x9V+LX+jiNnE/FQNQCEM5WUjWGHEqkFdRbU/in8xwc3JIiTrICXSIW1kMIk/IOrMPVX+7SF/3pIdJT/KzMCU=
+	t=1754481628; cv=none; b=q5R9pzqYNS5V+n8EWyHkOGA6gVVlm52iwSoICq+l4rCzzACqE6Dzqw/hLsWX3xI3sufSYsChTCXrr4gd/T+DMoh1sUJuhsH2jVliAZHQXgd9weFh6DPF0ITNxfvnG94JghaBB3MoLnXZz7nXkncHDxN2oLHZ73Ta6pyyqC3jsl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754481625; c=relaxed/simple;
-	bh=3bPnKn/gja3ORJ5BqnE5WKiR1sUYXiU9rVRZ6g9bETE=;
+	s=arc-20240116; t=1754481628; c=relaxed/simple;
+	bh=F2zuRO3x5UsSwl/gmO8rG2VDE5V8mytlgns9RzYPf4E=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=apD33bmot+d8u3lT15V4bqZrrg31FnkLOKueKKFKJRfWPy49UfhVxkLRHs7eTG0PDt69j01T/FRa1vj22MdzqAz1kSfcNzdgfQmp4VcVnH12+8UF1UhVgGLGFJNMcN+Ai2fMvhAVp3e2DNsQnsWgOhU1d9KOmYMYSALXKvXF24Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UW8nPOxy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eqyq+NHE; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=Tm10Vv9yMix3RY0NcNzBh2gpgVFUiSfe/5+kJU7DT7rJgc9bZczTKTEN35vnwli6K0fKzfgBiolhjglpbtLW2kWkFCd7hBERwOQIj9A1ZNcyn3TdJ4VzdUIutj4iu/f+pyR7+I/ju6oxQ2OLE8/6faIKIUxcV/7VKpP/hXvfz0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Kr8bPrPM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DCSmHIDV; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UW8nPOxy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eqyq+NHE"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BB24D14000C9;
-	Wed,  6 Aug 2025 08:00:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Kr8bPrPM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DCSmHIDV"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0DF2A14000C9;
+	Wed,  6 Aug 2025 08:00:26 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Wed, 06 Aug 2025 08:00:22 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 06 Aug 2025 08:00:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754481622;
-	 x=1754568022; bh=9iQJYUvLvrBtxpMUyFQuDDbDGeK8Aeq6rMaTeD5DWNA=; b=
-	UW8nPOxyZQVZ3wO/S5quKsqb5g1hqULu2Dwen2PtwlZXdBNSecYRGQ1vaZf0EkBK
-	HhLiqvLHRpyew1koVubof1O4kaIb609kwu0fJxGYpR3rlTdkwbxGmcEkWScNqLfL
-	sq1qFIfqa+wGYiGjS7rCWjodWVEzi3odMMaMV8ahnTB16PLpmaBOt/F4RQPXF6uE
-	eQ4G9ZY5K6tN6fPcSTePdLT/DNnw0CvuI+R+Zcq1+xNI7QhD0gmFNoZ+JzeOrZMM
-	cYU9ArbizLacayVsEFIHzzCy3cwLpssyGR5tAkC4td7o5T4tAmnVPJJNsxP0Z0tE
-	VolVZgysYIHNZ6cqcwXAew==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754481626;
+	 x=1754568026; bh=oar9viIC0ob+u7gTtosNl4oXuuDr0u1JQiSPv45Sros=; b=
+	Kr8bPrPM+ZpJ0qQ2z1TkKtXKUmm/NJ4SfqRMVVTQdfY/4QnJzuoMgzfz7/kZe+we
+	YNMhLBPu83o8zNmt6/EjOA2QFSZv+EcdmT8uH7sYeZNA/lhQxsaUwwIcg8vrkZzc
+	YwYTZlRWcAHsuFebffqnb3bRFI0ARqwR8zt3Fk/p9NlDW0QFHBRkX5rGD8ZDObEB
+	9DgKjh+JsB0pswXqRnvj6sj/RtKDozndoz2cKcwcyJZ2gpHCZoA8gFya1RkhFmfb
+	lIz1/LAIcOCfyq/ohQ5Ow01DkqLad2MXQCRGIzAzhBx8lkgIv4mQ0BdY7LHPsE0e
+	WqStHkXeojLIIjZRxoq/vg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754481622; x=
-	1754568022; bh=9iQJYUvLvrBtxpMUyFQuDDbDGeK8Aeq6rMaTeD5DWNA=; b=e
-	qyq+NHECBJ1K03MCx8aAVJMGPhzTwk3z1hPa5DPAnaRNR0GWskQvHPHL7YqyWLwC
-	pfIxteEWW0kb9KN9XcbCq7CbD+Uxu8xqV2cbgpaYazPWc4AaEYXUNysBJOBp4fC4
-	pSHLPbr3vSeFQi8TG3FTAolIdloJOXyzeQJ9Yuzyzpvp3+gXY2QZNa3/XDs2K1Fd
-	78blkBbrddWEiec4Z6ZVAbpx8uAUNyq2uI+Hm2huqHw7Kr6Xu0tsG6Nj9IFHZwfW
-	RNXcWBaX+3i0pOONbjh7yF9gd9Sw82glTlLkypUqxYaNeHxLcxGVW2E4mqjZpeAv
-	jqJ1Po4drTWx0Cv9YXkGA==
-X-ME-Sender: <xms:1kOTaOpWMw5N1oq2nN5oQne8FD3_7x5cM_3LU8BM5jnqJ3TOW3FiPQ>
-    <xme:1kOTaILQvNqhZQvY3wlpOMhsNmGDQT5swNFXrczamzJfd80O5Q5cXpqocffbIVouX
-    WkVBicuFgj5-ULtYQ>
-X-ME-Received: <xmr:1kOTaJq9Mj-UtCL8rTqS2zD-b0_f387WlSEOQUJKFFshn6jvdorHCsp8Lm073HtIeNnujUh_Lgfgi58qftn3ErNqXIQfx2ntEMsTAMbrNg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754481626; x=
+	1754568026; bh=oar9viIC0ob+u7gTtosNl4oXuuDr0u1JQiSPv45Sros=; b=D
+	CSmHIDVMkIij+P1AVpSA2XxpthT6Vp+HiYIn5wQVtCUyusjHzlRWL3S7t9d+VBz/
+	XUsQb5IcdFE1ZL/YNZGeffX3A+S6o6ZVnLlVrHFWTWrAeWdU8xcN8uQraNMGXikh
+	sMMbWNEPz+W3trTr+wE9Bk4+LhTWE6KhUAFyLbJiUW556Ofy0umDskLIOmaYe27Q
+	etwV+vmtcP/TQR6z0bshg749DcEoQE3HZd5iOGlBnkaaECBffVn2iYa0fNvqqx5c
+	Kk3/zvjnGjIQDOMafmDf31QCD+opkM/j1248RZzrYa6fGzTUJW3yZ3H9cDQ1d+sd
+	VX7/p++6T/4eqGX72ylxA==
+X-ME-Sender: <xms:2UOTaIxAcwMBbEp6TyETguivdhlMbkn6OGxbWfOe6PmVaJXouOvdrw>
+    <xme:2UOTaHzWMpDoX9PfUUg5CdqV40YKAxzxsGQwktX8Gde70RtiCK7RJzXWTI3o6Osuq
+    fh7KGuznzwsjxlgPg>
+X-ME-Received: <xmr:2UOTaAzlSdo2Wzo9aLjk0p-4cVAPrX8awonm6kqAsviJwLa7FBMPeLTcDn71LFjqXbhNgVu8zivJpReYFnz_IMTJncOOh1D9ig9_JYV-PQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudektddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,25 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudektddtucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtth
-    grhihlohhrrhdrtghomhdprhgtphhtthhopehoshifrghlugdrsghuugguvghnhhgrghgv
-    nhesghhmgidruggvpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:1kOTaIzTAApSoxoA73AK1HVZDYenIuF3XeG4QXcGZIKb32aqQvEmvA>
-    <xmx:1kOTaFM0dnHaNsUpee19_nrcntFzPCpHLgURoqLsylEsn6UzPavRQw>
-    <xmx:1kOTaF4hFA_hf3DBWm1tkOxL_hVLscO2Bt3NqYs1UzFU6-hAUOTXPA>
-    <xmx:1kOTaGnqpb_h_nflOfBiUGigWGhFKt3jxzEbmGj6F97tSRwbipRAFg>
-    <xmx:1kOTaHkxfz3BBlBrjf0HlK5ujIMfUf3zSTCOyXLma19zncVkppIRdUPF>
+    thhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepohhsfi
+    grlhgurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvg
+X-ME-Proxy: <xmx:2UOTaBYLZRk9fSoGA5QRCxOtrlEAh01E78mi4xDb9hfuZL4QzoCdKg>
+    <xmx:2UOTaBXWP-htDA8fZ0YPsI3j6Oa7jQHdcEFuo0CJR_hh9qy2A0cnMw>
+    <xmx:2UOTaPhMGiXaEU8GdJDUEcrxJkrMlK_22k6WfjEW8VVYUZkSHvUYwQ>
+    <xmx:2UOTaPvWamlV_Pk6mA8P4veou-JkzkJ5Fx7nl_H6ZCZDp92DRFYCCQ>
+    <xmx:2kOTaEPE3iFCTg1gASgDyYlMl8B5Krf34_QcqUdrPtgRffrwNTQp3scp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 6 Aug 2025 08:00:21 -0400 (EDT)
+ 6 Aug 2025 08:00:24 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1af9939c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 6 Aug 2025 12:00:20 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 773f9263 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 6 Aug 2025 12:00:23 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 06 Aug 2025 14:00:06 +0200
-Subject: [PATCH v2 01/10] trace2: introduce function to trace unsigned
- integers
+Date: Wed, 06 Aug 2025 14:00:07 +0200
+Subject: [PATCH v2 02/10] commit-graph: stop using signed integers to count
+ Bloom filters
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250806-b4-pks-commit-graph-wo-the-repository-v2-1-911bae638e61@pks.im>
+Message-Id: <20250806-b4-pks-commit-graph-wo-the-repository-v2-2-911bae638e61@pks.im>
 References: <20250806-b4-pks-commit-graph-wo-the-repository-v2-0-911bae638e61@pks.im>
 In-Reply-To: <20250806-b4-pks-commit-graph-wo-the-repository-v2-0-911bae638e61@pks.im>
 To: git@vger.kernel.org
@@ -94,63 +94,68 @@ Cc: Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-While we have `trace2_data_intmax()`, there is no equivalent function
-that takes an unsigned integer. Introduce `trace2_data_uintmax()` to
-plug this gap.
+When writing a new commit graph we have a couple of counters that
+provide statistics around what kind of Bloom filters we have or have not
+written. These counters naturally count from zero and are only ever
+incremented, but they use a signed integer as type regardless.
 
-This function will be used in a subsequent commit.
+Refactor those fields to be unsigned instead. Using an unsigned type
+makes it explicit to the reader that they never have to worry about
+negative values and thus makes the code easier to understand.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- trace2.c | 14 ++++++++++++++
- trace2.h |  9 +++++++++
- 2 files changed, 23 insertions(+)
+ commit-graph.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/trace2.c b/trace2.c
-index c23c0a227b..a687944f7b 100644
---- a/trace2.c
-+++ b/trace2.c
-@@ -948,6 +948,20 @@ void trace2_data_intmax_fl(const char *file, int line, const char *category,
- 	strbuf_release(&buf_string);
+diff --git a/commit-graph.c b/commit-graph.c
+index bd7b6f5338..3fc1273ba5 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1170,11 +1170,11 @@ struct write_commit_graph_context {
+ 	size_t total_bloom_filter_data_size;
+ 	const struct bloom_filter_settings *bloom_settings;
+ 
+-	int count_bloom_filter_computed;
+-	int count_bloom_filter_not_computed;
+-	int count_bloom_filter_trunc_empty;
+-	int count_bloom_filter_trunc_large;
+-	int count_bloom_filter_upgraded;
++	unsigned count_bloom_filter_computed;
++	unsigned count_bloom_filter_not_computed;
++	unsigned count_bloom_filter_trunc_empty;
++	unsigned count_bloom_filter_trunc_large;
++	unsigned count_bloom_filter_upgraded;
+ };
+ 
+ static int write_graph_chunk_fanout(struct hashfile *f,
+@@ -1779,16 +1779,16 @@ void ensure_generations_valid(struct repository *r,
+ 
+ static void trace2_bloom_filter_write_statistics(struct write_commit_graph_context *ctx)
+ {
+-	trace2_data_intmax("commit-graph", ctx->r, "filter-computed",
+-			   ctx->count_bloom_filter_computed);
+-	trace2_data_intmax("commit-graph", ctx->r, "filter-not-computed",
+-			   ctx->count_bloom_filter_not_computed);
+-	trace2_data_intmax("commit-graph", ctx->r, "filter-trunc-empty",
+-			   ctx->count_bloom_filter_trunc_empty);
+-	trace2_data_intmax("commit-graph", ctx->r, "filter-trunc-large",
+-			   ctx->count_bloom_filter_trunc_large);
+-	trace2_data_intmax("commit-graph", ctx->r, "filter-upgraded",
+-			   ctx->count_bloom_filter_upgraded);
++	trace2_data_uintmax("commit-graph", ctx->r, "filter-computed",
++			    ctx->count_bloom_filter_computed);
++	trace2_data_uintmax("commit-graph", ctx->r, "filter-not-computed",
++			    ctx->count_bloom_filter_not_computed);
++	trace2_data_uintmax("commit-graph", ctx->r, "filter-trunc-empty",
++			    ctx->count_bloom_filter_trunc_empty);
++	trace2_data_uintmax("commit-graph", ctx->r, "filter-trunc-large",
++			    ctx->count_bloom_filter_trunc_large);
++	trace2_data_uintmax("commit-graph", ctx->r, "filter-upgraded",
++			    ctx->count_bloom_filter_upgraded);
  }
  
-+void trace2_data_uintmax_fl(const char *file, int line, const char *category,
-+			    const struct repository *repo, const char *key,
-+			    uintmax_t value)
-+{
-+	struct strbuf buf_string = STRBUF_INIT;
-+
-+	if (!trace2_enabled)
-+		return;
-+
-+	strbuf_addf(&buf_string, "%" PRIuMAX, value);
-+	trace2_data_string_fl(file, line, category, repo, key, buf_string.buf);
-+	strbuf_release(&buf_string);
-+}
-+
- void trace2_data_json_fl(const char *file, int line, const char *category,
- 			 const struct repository *repo, const char *key,
- 			 const struct json_writer *value)
-diff --git a/trace2.h b/trace2.h
-index e4f23784e4..115c45a1eb 100644
---- a/trace2.h
-+++ b/trace2.h
-@@ -463,6 +463,15 @@ void trace2_data_intmax_fl(const char *file, int line, const char *category,
- 	trace2_data_intmax_fl(__FILE__, __LINE__, (category), (repo), (key), \
- 			      (value))
- 
-+void trace2_data_uintmax_fl(const char *file, int line, const char *category,
-+			    const struct repository *repo, const char *key,
-+			    uintmax_t value);
-+
-+#define trace2_data_uintmax(category, repo, key, value)                       \
-+	trace2_data_uintmax_fl(__FILE__, __LINE__, (category), (repo), (key), \
-+			      (value))
-+
-+
- void trace2_data_json_fl(const char *file, int line, const char *category,
- 			 const struct repository *repo, const char *key,
- 			 const struct json_writer *jw);
+ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
 
 -- 
 2.51.0.rc0.215.g125493bb4a.dirty
