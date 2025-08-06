@@ -1,88 +1,91 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF0A1114
-	for <git@vger.kernel.org>; Wed,  6 Aug 2025 18:34:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6911A76B1
+	for <git@vger.kernel.org>; Wed,  6 Aug 2025 19:04:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754505248; cv=none; b=Ily4S57fbm3lgdwLkeyS/bmlSqwu/X2I9/lPPVuxRb+Jk6Uv0/X32IKLOJqJ3Vwe9T5eLCE6HTgBRuqX5J6pjZU5jSfcLsQawpcOZczP7I338t2tSvizYX8dBUR3e42HdCF715gbhmsTn9XMPJ6rA4ZXBCcZQqp913dq3XH19OY=
+	t=1754507090; cv=none; b=K7El/hZQ0wB25R8mm30GhFVjCI9J3COza28nt5BIYWIXHAg/t2AeP4P/Qcz2Ky9Zv+juw0URa7BeuCY4jT+AUmAfUy2jmKuUAGiuo6ghtPTyJqdevJaheof3giq/uV2nccrIpu/FwepdNjPQqAnJcz/eEtulKBXe/Yb3lY1hvYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754505248; c=relaxed/simple;
-	bh=QAJuSOzWCI9UO0BhtON1CLgnVWc82SdujKwqqXpu7m8=;
+	s=arc-20240116; t=1754507090; c=relaxed/simple;
+	bh=BtKvOX0EVwF1MFceUaLLpckS3GJQ+BtD3dTS5Ij7Vz4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fZ8xMx5+00Cxra4RogV0xw5+xTc6skcmNOQqsO68sQjz9T85ZMoZQbNrjaqVkamagETt615J3Dj78bQ1+U5MrmacFRMhkCvnOZlmWK839O3rlA6yzz3NU5IMOj5ScNQRodoG46ac2+MGTarflKZDy90t5Tzudi5jkUAgsGV/rrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cJbeBCxr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l3C4E25l; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=ECNLxdHGPXBEfJmGQa1kJ7z6O1JxIZiFMCzUurZWurS+q0rniQ+RteHDk1vF3o8LrZr/gtXd5o4V8osysiUoy3DM2AJRFB2pv4FsT26V9RV9gUyJT9mVwYdr7aAU1cs0/73gVOGwbHx3wkBJdBMvGz29/EJi0XqQ/Yy+5Py5/Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eKa5mF7Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lKYMeMmF; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cJbeBCxr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l3C4E25l"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 79F8C1D00145;
-	Wed,  6 Aug 2025 14:34:05 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Wed, 06 Aug 2025 14:34:05 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eKa5mF7Q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lKYMeMmF"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2F2287A01A4;
+	Wed,  6 Aug 2025 15:04:47 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 06 Aug 2025 15:04:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754505245; x=1754591645; bh=GjNuk65nGY
-	fbzKR6imTMubJFZhIoDbbyBgklXWiKyrA=; b=cJbeBCxrIKqFE+gs70AfAJLGAK
-	4OGITlxVo9OQDszA6Hbq84EpLtpAIdqpj6C7TRZpgSZfdpAhpffBRROX8wI1+EsC
-	/MjozeW7eJzH4phS80U9V58v8cLNNA9vkYdsfp8BD5XXUT+34suWp4UxRNZUpCMc
-	QgPq8M8gqKpj5rxAdjR2672EvsKNbgy9KqSnvnPizV4zAbTuRzeUntB7fffcFp0y
-	W45ZRlEl1qFLGFKFBpfc2O2kRcNPU/8+OglJ/cGCBX74/LN5q4uQXWDzYwfG7kFw
-	Azu7yjtVFIhvXVhY/Oo9wROpUC2eocEbhUwL1n0gjUQxW7V3mfyvGTiwJjww==
+	:subject:to:to; s=fm2; t=1754507087; x=1754593487; bh=BtKvOX0EVw
+	F1MFceUaLLpckS3GJQ+BtD3dTS5Ij7Vz4=; b=eKa5mF7QpycCUHNKi4L2R9NysK
+	g0ioT8eoOPJnedQKWZt3jey5IE05xLeKyX4TFWEqmlcFZkhdlGFdppur2mwE3u2h
+	qe1FEBe5PZUf/Edh2dKpTBTzvG3Obo5YSZSVgQPZ0qsRlxkRU/aP866QhRRghv1K
+	21nrRHVRvFeQZFfbE/dVwBTBiX7Ih6dGHnYftDpgnfh4MAGKcUtfVFESzGGsMVSU
+	L8TbN4XAekgY1w/+olrZ48etaYCnQZH8LeHIGZR+8ah2LBAbcj6V5XKqS/nsUglB
+	OILy/X1VZmk7LmfGBJu9RyVRn/UIaxyrA54vqqQflqSjyYzbTnXPiloiz6Ug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754505245; x=1754591645; bh=GjNuk65nGYfbzKR6imTMubJFZhIoDbbyBgk
-	lXWiKyrA=; b=l3C4E25l0CjGo+ESNp+8/HU40o3J87O89+R3phd4hGQobKEDP8A
-	jX9jICc0/+7kCAxMSgUZJGYXJl5OGH6u6H2ze1AdDaliDkYKh9A4mWu2d0/rYO7O
-	4KLCWVcQTLFkz2QOXspAHQj05pkj+mm/Rxtw3Bgdxwnyo5HJvHqyIWNzRxOKnTec
-	M8hs/mjv3SNlTX72EyLF1MpzoHBKk+dIvH9zXNVnFGCdA6Wedb4xiLM7ROH2C0PT
-	cjDegWHOY3VJZwZrp2uboXReqxdjS9K9xMvB8CSK2YE9WbCpp4yNdjSzHpOlwnGl
-	fiOHPWI/QPAV85Px6JRTAzeTnZld7ZwmFxw==
-X-ME-Sender: <xms:HaCTaJxmDcwnL_IOv-ZjstIcwK-3u0T11BjNxNeBeCSnbHF5Ivz99Q>
-    <xme:HaCTaD3mnjkfajcK6-gBVTgOrExpddICoOGgbeQjB9TBA70syqtEgQ4blxMEm-KiI
-    mAe5ZA8WSOabIB6FQ>
-X-ME-Received: <xmr:HaCTaP7j3kqTpvZBmKPVNczgCsdEkIHN4Y6y1GOHi5DOnqR1K-S22jRL0xCft6h3To41APKhGtrqAQAApvL03i-7UKalgd90AN-08Is>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudekjeekucetufdoteggodetrf
+	1754507087; x=1754593487; bh=BtKvOX0EVwF1MFceUaLLpckS3GJQ+BtD3dT
+	S5Ij7Vz4=; b=lKYMeMmF4KqAhffZRoTmG6gkkExXjQ/qXwPp2r3LuwM5WWTBWPC
+	G7FSw+Zo1ge9/AbGFasBW9cbZOjRIjaZzYRsap8cQrHWXcv3BY7BnJRA4XUYF/CV
+	JD4pNevDWXJqaKyUsKeX4u7Srh2yXuLlLMavhfJkpJvWq+ETsuk68thPAPT+JEHb
+	x499FUNnuxb1yp1GLjZoZjQHIfBGgKsWyPH1r+QrzqbVFGfyOtv02L4OmULUL3CL
+	OpNRxCTdAUi5UctDGc+FkcnflHHHL2kMehvCidHElqzccTgEfeS9c1zxClZ6TPrs
+	i1pZaQkEK8UHcxjJIllOr7VcuYq5oEjTHnA==
+X-ME-Sender: <xms:TqeTaC4_qtS8FcbsRD0JqSVI6AJuRuq5Wo_eh7JeM13gekFZOqzncg>
+    <xme:TqeTaHbNukYk0UDiMRMMCQ8EoLe5fhD3wKe6Mr-3hxdDE2dYoN9123CD0GMjVFg9d
+    UNBQaDURlAtOyXa9w>
+X-ME-Received: <xmr:TqeTaH6pijREem8N4FgwWPPhA4R-qjeGnoa8ogo9ONan4SGTvO6ryOSp-5vrNO-T5HqMa-NQ2VnAtT1t8Ycw5sVU_JXwhelGcF5yqR0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudekkeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:HaCTaOV8JkHrTfnZUrF81PzncD2-NFC3Pi2p2iLX3-HKvewsyppnKQ>
-    <xmx:HaCTaGA5S1nJPtALMfwPCpeEn9iKIXivmjwSNqM2G3SLdNuV99FQKg>
-    <xmx:HaCTaF7B_kY7TFgFGvnBI_gMGmGr0wL32aE5okC2bxLWeZbIjDXJOQ>
-    <xmx:HaCTaJyvB_7-JHs5SGC2MhMNo7i_VlfGtMoWMFoi8_WiDBCRWnbakQ>
-    <xmx:HaCTaEi7ddSN8pXtIPuRrTEj2VxAIMzJfHXVGK1XG9AR6foSDQc_wdlt>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegouf
+    hushhpvggtthffohhmrghinhculdegledmnecujfgurhephffvvefujghffffkfgggtges
+    thdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsth
+    gvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepveeujedvuefhteetveei
+    teevvdfhteegheduueeikeehgfeileevgfefudetheejnecuffhomhgrihhnpehgihhthh
+    husgdrihhopdgvshgthhgvrhhtvggthhdrtghomhdpshhouhhnughsohhfthifrghrvgdr
+    rggtrdhukhdpshhtrggtkhhovhgvrhhflhhofidrtghomhenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hoshifrghlugdrsghuugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohepphhs
+    sehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:TqeTaKAbj6zJNWHipgjS1mboYYb5x3YwCCBF4hhZQHWjDeLLReA_bw>
+    <xmx:TqeTaNfcPEc1rBX1LfyUlBmlGl6ZvwuN97WOBH_4GFgVFZ28L56XQA>
+    <xmx:TqeTaJJ5wGH5AvQFUv5Z7jHrn7xMoYiv8GwRiSqGmFVRuD3aAtRIzQ>
+    <xmx:TqeTaI0wNjIKVNp4IJNGFcINYfn5yT78srt4F0cxIKW9zVwHGZYwQw>
+    <xmx:T6eTaI0A2nnnj6ztdT6C0ceAILGkIMcT_eAfkUgaf7R9R0rRho7yZcRe>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 6 Aug 2025 14:34:04 -0400 (EDT)
+ 6 Aug 2025 15:04:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
-In-Reply-To: <DB375D08-5178-4A7C-9538-DE4A7CDD1346@gmail.com> (Lucas Seiki
-	Oshiro's message of "Wed, 6 Aug 2025 14:28:14 -0300")
-References: <xmqqms8fbilv.fsf@gitster.g>
-	<CALnO6CDm5n0oZsXzvKz89jVg7E_h=1gqPFs2x7-UojdcY_Di_w@mail.gmail.com>
-	<xmqq4ium3w2x.fsf@gitster.g>
-	<CALnO6CBLF2Zxhy=mvz61U7M3X3UNA-V8R4tkzOvVjKWpEwi8Mg@mail.gmail.com>
-	<CALnO6CASXHv_wwmAfn9tZ4D1qdJBgVKfLEQ9+LTEF9FJPiS0qQ@mail.gmail.com>
-	<xmqqectpziz9.fsf@gitster.g>
-	<DB375D08-5178-4A7C-9538-DE4A7CDD1346@gmail.com>
-Date: Wed, 06 Aug 2025 11:34:03 -0700
-Message-ID: <xmqqectouwo4.fsf@gitster.g>
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc: Patrick Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH 2/9] commit-graph: stop using signed integers to count
+ bloom filters
+In-Reply-To: <aJNQm1r_FOIqsDlZ@ugly> (Oswald Buddenhagen's message of "Wed, 6
+	Aug 2025 14:54:51 +0200")
+References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
+	<20250804-b4-pks-commit-graph-wo-the-repository-v1-2-850d626eb2e8@pks.im>
+	<aJB5uKFdGybf-IbN@ugly> <aJCW7aYqJB20LDNg@pks.im>
+	<xmqq5xf35429.fsf@gitster.g> <aJEppnTkY+66IEza@nand.local>
+	<aJL06Nlee6CR-KK0@pks.im> <aJNQm1r_FOIqsDlZ@ugly>
+Date: Wed, 06 Aug 2025 12:04:44 -0700
+Message-ID: <xmqqa54cuv8z.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,36 +95,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
->> 
->> When I report a public CI failure, I'd try to give an exact URL, but
->> otherwise the failure would have been seen in my local environment,
->> and because I tend to refrain from pushing out a know-to-be-broken
->> tree, it is unsurprising if 371c45b569 did not fail.
->> 
->> That commit does not have lo/repo-info, I suspect.  I didn't know
->> exactly which topic was causing
+> On Wed, Aug 06, 2025 at 08:23:36AM +0200, Patrick Steinhardt wrote:
+>>If I see a counting variable that is signed I immediately jump to the
+>>question of whether or not it can ever be a negative value. I assume
+>>that the author of this code _intentfully_ made it signed to cater to a
+>>specific edge case.
+>>
+> well, there is also the diametrically opposed view:
+> https://google.github.io/styleguide/cppguide.html#Integer_Types
+> https://critical.eschertech.com/2010/04/07/danger-unsigned-types-used-here/
+> https://soundsoftware.ac.uk/c-pitfall-unsigned
+> https://stackoverflow.com/questions/30395205/why-are-unsigned-integers-error-prone
+> ..
 >
-> Yeah, I forgot to check the CI before I sent the last version. My bad,
-> I'm sorry for this. I'll be more careful next time.
->
->> but the error was observed when
->> "repo --help-all" was given, so perhaps some interactions between
->> these two topics.
->
-> However, after merging my local repo-info-v7 onto 371c45b569 in my local
-> environment, I can execute `git repo --help-all` without any errors.
+> in isync, i standardized on unsigned where possible (e2d3b4d55), and
+> sure enough, i introduced one of those underflow bugs not much later
+> (859b7dd7f => 12e30ce56) ...
 
-The breakage reported was about some leaks, and not about "does the
-end-user observe any error when the command runs?".
-
-> I
-> also pushed this merge to GitHub [1], the only fails were directly related
-> to my branch (some tests that I wrote and some leaks).
-
-And it is not surprising, when these two were merged to 'seen',
-leaks in your topic were triggering failures.
-
-
+Thanks for an amusing reading list ;-)
 
