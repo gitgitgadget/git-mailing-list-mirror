@@ -1,89 +1,40 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569CA293C45
-	for <git@vger.kernel.org>; Wed,  6 Aug 2025 15:41:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F5223F424
+	for <git@vger.kernel.org>; Wed,  6 Aug 2025 16:40:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754494897; cv=none; b=l9ijBQTuVdkzz1XfJPYttoyywc2kEYlu77f6boMsE/JnadfMBKVSfUZuyRq64MhZxLHjJAf5JWvdI0eJ+e89fAxXWjLG82o7ZDd/hFRstwggkaOzpBGaCckBaYC1KnfHte8hE+x7GANhonktwKDG+yIBaPY5f0EHPNrqec0oGFY=
+	t=1754498416; cv=none; b=jl5vBpQA7ZHiN3lbaKFyG2CLICxH5NqYhS4eKbORLNtKnnwaE8V2WcXrpdmg0whST0KKfrieJs18JCwLsaaH3oN9OUn3CV430S+QAeEVi5ZUvLNq6CP9I/rV8L80kDC424TLmISFEyNB7ob6elRCQzkGDCizp8RINfvbyUmFTng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754494897; c=relaxed/simple;
-	bh=97mfJFN07JJVVhSu+FD+ilohFr6kIZilihqbjNfHwIQ=;
+	s=arc-20240116; t=1754498416; c=relaxed/simple;
+	bh=ue6Zart/wMJHOZXIs+D+WUc2t3rgVf/J2YT1mimTc18=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=A/8khrvW1I8DQudajc95Ba65xgWQezmBtoGYLLEWbgwnD2H13KwRdAOnDsB6mOdNyAFcrw3sGpZX4X1q5LGRiYA47Psfxtvr1V//VPm65otMai1A3zSJ3IL5gt6kRjalQA6AJkRhBknm+IJug+7UgH72qd1OpYuqHlkbDqdHIIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JFRVW6cY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JbEs1LOg; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=dxoCFoLWHnsnRJRa1zEY6oYzAl8m/Wd4GgAh0sq4ie4T2flxO5h0D7rf+ok0hEOpLKdpRb2Ms1Ucy/TXHQnxOIdtdhbWxFi1e6mA4uq2JODiQeuQzKxxZulemTntBqRjbtctpNhRhz3ddpZjXIHlkb/XPr2Q6pmQ4Dn4q/I9EB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Rh6oZnBb; arc=none smtp.client-ip=95.215.58.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JFRVW6cY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JbEs1LOg"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 646E81D00169;
-	Wed,  6 Aug 2025 11:41:34 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 06 Aug 2025 11:41:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754494894; x=1754581294; bh=vY4iHTErkR
-	e9ltBy3YUHsCtHWFeEXLLJzGjRrgRR/xU=; b=JFRVW6cYevKoDgiJUJCC4OPxQ8
-	6fHBB8vccY9fuKgWjo0fIOiFQMumifouvrZezYtJ3SmdtGifXyRl7BvzL0f6uTZA
-	k1l0DlFr9sG4DQ8upgIVf8Ln1Z+3mOc7hq9aj0GFnWThJyMeStBE+Ne+vZmWcB2T
-	w7PS0fXs08FxtT+TDfKaEmabPdivm23FvV0X1f2Lf2F5wem0FMzq/A7GQQss4xRZ
-	9wc60LF2toMJe8gLdIO0HaQ1uudu7noFI2sXyQvNG7hUWPxq5rQtJvUO355i57XF
-	ubpmpYeiV16mf6MFqKFF6w5kp+FciuKQnvZ2Qjxdp1NncpPp6ZUGyPHxA4Jg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754494894; x=1754581294; bh=vY4iHTErkRe9ltBy3YUHsCtHWFeEXLLJzGj
-	RrgRR/xU=; b=JbEs1LOgaCo/Zp22aiJafGUHHBaslc7Dqu5EHCJFNdYZiL/d7T+
-	IfDs2XwXyYYWy3HP/UodZM8Os6JttTXasz9BXbluzZX1FDziEScLuGx6n4YsqUaI
-	I2BJvMz1KC13Y2RyHlML9POZ9jn81PA6BvSipr8yDLIc/Hpnk5iB1Pj5hrURcnJ+
-	bjD6rxoh/qmDjdr6a7CaxFRrWp1F4l9vvLrLSH7qjWwi1HhSuix5O4PMnG6WCknm
-	7uSYOTibeJhfMHiE/s06eFKTx95l+B3CF3n7e7NbmT2gnPCLYsFRuSypQR0NFfL6
-	j96jPmNMoxcjmBTfIzH7BD9NGqeNF9c6UfQ==
-X-ME-Sender: <xms:rXeTaFfWJcDLf7_TAfAbvAyJB__ghxnxIJhGSQN0BdsNHYzrlXs2mA>
-    <xme:rXeTaOv_9HsaL9BEJul6R1XwGMe6PYa_20VainxrmKDrw0y-nj_f2GslTh9RB3iSE
-    Cmmrl3r7LaDk9LjPg>
-X-ME-Received: <xmr:rXeTaE9DgyHpsrkleUnU2xfTDMzsWeK2RL2dIdS0WAG1YaMvF7vj-LnECgkAFwUWL9LQHVA4cFKJOHRrUf_YJdNP2uu8-smM8JYHTMg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudekgeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehmvgesth
-    htrgihlhhorhhrrdgtohhmpdhrtghpthhtohepohhsfigrlhgurdgsuhguuggvnhhhrghg
-    vghnsehgmhigrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:rneTaJ1fRvdKAKnb0v8N1P-avIdBFirff2Xzem06dZX4dHJEfisR0w>
-    <xmx:rneTaJAdltHgyIhyLEcl4xzR9-Tukn7uioeGZokFtC51THFhkEa4_Q>
-    <xmx:rneTaFc-c5KIFLHo_vvf11bTda_LsqyIhKtNHM-cEHW--vczElyYVg>
-    <xmx:rneTaG72uMZW8R94lujRyO1f5LAtTh0wjzVPyirLm3FMfyfui6M2fg>
-    <xmx:rneTaGptrx61hvIb3JsbHWajEUC7GwNkFwjk8l0bJWmRYA4xSXykHp3y>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 6 Aug 2025 11:41:33 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Taylor Blau <me@ttaylorr.com>,  Oswald Buddenhagen
- <oswald.buddenhagen@gmx.de>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/9] commit-graph: stop using signed integers to count
- bloom filters
-In-Reply-To: <aJL06Nlee6CR-KK0@pks.im> (Patrick Steinhardt's message of "Wed,
-	6 Aug 2025 08:23:36 +0200")
-References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
-	<20250804-b4-pks-commit-graph-wo-the-repository-v1-2-850d626eb2e8@pks.im>
-	<aJB5uKFdGybf-IbN@ugly> <aJCW7aYqJB20LDNg@pks.im>
-	<xmqq5xf35429.fsf@gitster.g> <aJEppnTkY+66IEza@nand.local>
-	<aJL06Nlee6CR-KK0@pks.im>
-Date: Wed, 06 Aug 2025 08:41:32 -0700
-Message-ID: <xmqq4iukwj83.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Rh6oZnBb"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1754498408;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=sMZL6A8CWNAZXZ5ghqSicNaoQqVuO25qwNcN+Rz3ZsU=;
+	b=Rh6oZnBbhoO5GAYx+oPMrxlVeNoE4YpOmtNgOqM2X2eLldaBHKnhYFZjUtTpkKVOMx9TGh
+	xySCK0+dVZRWXYcg4IL4+FB0ddT5xyZiobqyAFihlzc/nag3LfWORCOmmmexjFQTa2vLBX
+	xwA3aMX3HSkyf4rNjAgqtyAWqk9nEzM=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 1/8] odb: store locality in object database sources
+In-Reply-To: <20250729-b4-pks-midx-deduplicate-source-info-v1-1-748db2eda3b5@pks.im>
+References: <20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im>
+ <20250729-b4-pks-midx-deduplicate-source-info-v1-1-748db2eda3b5@pks.im>
+Date: Wed, 06 Aug 2025 18:39:54 +0200
+Message-ID: <87fre4tndx.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,41 +42,95 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
 Patrick Steinhardt <ps@pks.im> writes:
 
->> I wrote these counters in 312cff5207 (bloom: split 'get_bloom_filter()'
->> in two, 2020-09-16) and 59f0d5073f (bloom: encode out-of-bounds filters
->> as non-empty, 2020-09-17), and I don't see a compelling reason that
->> these should be unsigned.
+> Object database sources are classified either as:
 >
-> I think that is going backwards though: the question to ask is why
-> should these be signed if they cannot ever be negative?
+>   - Local, which means that the source is the repository's primary
+>     source. This is typically ".git/objects".
+>
+>   - Non-local, which is everything else. Most importantly this includes
+>     alternates and quarantine directories.
+>
+> This locality is often computed ad-hoc by checking whether a given
+> object source is the first one. This works, but it is quite roundabout.
+>
+> Refactor the code so that we store locality when creating the sources in
+> the first place. This makes it both more accessible and robust.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  midx.c       | 5 +++--
+>  midx.h       | 2 +-
+>  odb.c        | 1 +
+>  odb.h        | 8 ++++++++
+>  packfile.c   | 9 ++++-----
+>  repository.c | 1 +
+>  6 files changed, 18 insertions(+), 8 deletions(-)
+>
+> diff --git a/midx.c b/midx.c
+> index 7d407682e6..b9ca0915a6 100644
+> --- a/midx.c
+> +++ b/midx.c
+> @@ -723,7 +723,7 @@ int midx_preferred_pack(struct multi_pack_index *m, uint32_t *pack_int_id)
+>  	return 0;
+>  }
+>  
+> -int prepare_multi_pack_index_one(struct odb_source *source, int local)
+> +int prepare_multi_pack_index_one(struct odb_source *source)
+>  {
+>  	struct repository *r = source->odb->repo;
+>  
+> @@ -734,7 +734,8 @@ int prepare_multi_pack_index_one(struct odb_source *source, int local)
+>  	if (source->midx)
+>  		return 1;
+>  
+> -	source->midx = load_multi_pack_index(r, source->path, local);
+> +	source->midx = load_multi_pack_index(r, source->path,
+> +					     source->local);
+>  
+>  	return !!source->midx;
+>  }
+> diff --git a/midx.h b/midx.h
+> index 076382de8a..28c426a823 100644
+> --- a/midx.h
+> +++ b/midx.h
+> @@ -122,7 +122,7 @@ int fill_midx_entry(struct repository *r, const struct object_id *oid, struct pa
+>  int midx_contains_pack(struct multi_pack_index *m,
+>  		       const char *idx_or_pack_name);
+>  int midx_preferred_pack(struct multi_pack_index *m, uint32_t *pack_int_id);
+> -int prepare_multi_pack_index_one(struct odb_source *source, int local);
+> +int prepare_multi_pack_index_one(struct odb_source *source);
+>  
+>  /*
+>   * Variant of write_midx_file which writes a MIDX containing only the packs
+> diff --git a/odb.c b/odb.c
+> index 1f48a0448e..1761a50840 100644
+> --- a/odb.c
+> +++ b/odb.c
+> @@ -176,6 +176,7 @@ static int link_alt_odb_entry(struct object_database *odb,
+>  
+>  	CALLOC_ARRAY(alternate, 1);
+>  	alternate->odb = odb;
+> +	alternate->local = false;
+>  	/* pathbuf.buf is already in r->objects->source_by_path */
+>  	alternate->path = strbuf_detach(&pathbuf, NULL);
+>  
+> diff --git a/odb.h b/odb.h
+> index 09177bf430..d9f4dcf79f 100644
+> --- a/odb.h
+> +++ b/odb.h
+> @@ -63,6 +63,14 @@ struct odb_source {
+>  	 */
+>  	struct multi_pack_index *midx;
+>  
+> +	/*
+> +	 * Figure out whether this is the local alternate of the owning
 
-Earlier I gave an example of allowing for a "not yet counted"
-sentinel value for a variable or a structure member.  Another
-example may be for a function that counts that also needs to signal
-an error, and as usual in any C programs, the natural way to do so
-for any function whose "normal" return values are non-negative
-integers is to signal errors with a negative value.
+Do we still use "alternate" in this context? Shouldn't it be "source"?
 
-Note that a structure member or a variable that does not need such a
-"not yet counted" sentinel value (e.g., it may have a separate
-"counted already" member associated with it, or the nature of the
-thing it counts does not have such "not yet counted" state), and it
-is possible for such a variable to live happily with a function that
-can signal an error.
-
-It means the variable that receives the counted result from such a
-function may be able to use only half a range of values as its type
-implies, if that helper function is the only source of information
-that is assigned to it, though.
-
-If the counter in question never needs to store such a sentinel
-value itself, then I am OK for it to be unsigned, and that is
-exactly why I said "not always a valid excuse".  But if the counter
-variable or structure member has to work with functions that need to
-return sentinel values (like platform natural int that can use the
-usual "negative is an error, non-negative is a normal result"), it
-may have less chance to trigger the -Wsign-compare irritation, if
-you made it also signed.
+-- 
+Cheers,
+Toon
