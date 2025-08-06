@@ -1,42 +1,42 @@
-Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4C3243951
-	for <git@vger.kernel.org>; Wed,  6 Aug 2025 14:30:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5EC1BD9CE
+	for <git@vger.kernel.org>; Wed,  6 Aug 2025 14:49:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754490660; cv=none; b=kk0nLRHz2R26NyTacXtogpQJbkH6z3s9s1Z3qtU56XinhPpzJX0Mj0CHTmVYx1Q8JxPfHtKeqLdYjO3p5TaFhsfiPCZdc2M0PhtGpN9QLVScs5A9B7RJJo7HIl9cEQfHMt7EFW69WDNTcAyAupedPTT4E9eRlV7gqNCJSgWVFQ0=
+	t=1754491786; cv=none; b=eCvffzys1DMfJckgaD5b6lfUizE01tq1lrQ4h2X/XBhPf+mxHrOPh9i+O+Hy2UagmVLPEx6lLdAeVVsz47hb93UuQisanzlFZKAfy+K1lrsBWtDGyDRmZJUVRh/6OEsRuyst2bCN5vIhXa8g/d8ugyCgUMkKS+proBrFpweaLDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754490660; c=relaxed/simple;
-	bh=bhnKwHRVoGKBwwBPG2lkNO/J2OROnS2Q0R2Sf5T8qyU=;
+	s=arc-20240116; t=1754491786; c=relaxed/simple;
+	bh=0ACVtkWfujWCrPyere7nXZ4ywmHJ6QZqwSb0Xz2X2hg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qFJFtfuQTlBZ8XtOcuqIXheQw1LQgtKLv2gzu4x8kH0t7u1bIbnY+urzDKIBibx0AEvz2Fri9mDZsFNmA8HMJpw/+JDmF0w/SUS5RqE/h0doBJ7o+j95GhaKbHiexdpY9ue53f2f8dofnQ8tShMUsFYxNhf0Vx/3fBgGY/ltaa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=xmHDJEaR; arc=none smtp.client-ip=95.215.58.186
+	 MIME-Version:Content-Type; b=kpRJPAJDL053McGrJocOXXG4Xa2+BK/TMcFcVym9AzH12MHpdniFpByVWc1mvEgg3NSWrV5mrC7XvzZCLtsZ1B94Qx1YoZFJgCAJrw0ZxXL6K490jHS79b59k660TMGP4eAehMLmKxDr4n36sXEj68+8fEpUxKUaT4NNlhOBZqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=KCutuLcP; arc=none smtp.client-ip=91.218.175.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="xmHDJEaR"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="KCutuLcP"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1754490648;
+	t=1754491780;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=hNn/O6m00snK+mswHBkNx8/YGYX66iKFMOJSy1bITnE=;
-	b=xmHDJEaRuZBs5VgU5i3lsAWgzj39U4xp4aibwjAZ2wVys9qoBEao1p6mj3o6J9tNmKBP76
-	1CaSYkMTjvEmqS7d3SpXySPKXMZMT7b5PiXJUMOf/CF1zMgqIJD7rA2OAHv0XaZLRCJcZO
-	vOOgDaFT5dextO41Lvyplhwnzq9ar9U=
+	bh=U3JoRmMb38DOhtPEquWw+ThlBIj93chu1RNQ+w9iMeA=;
+	b=KCutuLcPU+rwuM7tR931gXTdI4ego7hDIZ3Ess7WkTL0wqq2u52zSree9Y/mtWMp1r3cPR
+	FfnWoFSmIqhdKxv60sogKXh00m9zU4DFLCTnGnDWrYMAu7xmHBrUvSFQDQIOZYf93C5vrb
+	VBJ5UdhY1WZyevP294QGEdJtetGzYdY=
 From: Toon Claes <toon@iotcl.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Justin Tobler
  <jltobler@gmail.com>
-Subject: Re: [PATCH 2/3] within_depth: fix return for empty path
-In-Reply-To: <aIm5vMeTLSLD-6Fz@pks.im>
+Subject: Re: [PATCH 3/3] diff: teach tree-diff a max-depth parameter
+In-Reply-To: <aIm5x4kah8608Ba5@pks.im>
 References: <20250729-toon-max-depth-v1-0-c177e39c40fb@iotcl.com>
- <20250729-toon-max-depth-v1-2-c177e39c40fb@iotcl.com>
- <aIm5vMeTLSLD-6Fz@pks.im>
-Date: Wed, 06 Aug 2025 16:30:32 +0200
-Message-ID: <87ms8cttdj.fsf@iotcl.com>
+ <20250729-toon-max-depth-v1-3-c177e39c40fb@iotcl.com>
+ <aIm5x4kah8608Ba5@pks.im>
+Date: Wed, 06 Aug 2025 16:49:30 +0200
+Message-ID: <87jz3gtshx.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,222 +48,276 @@ X-Migadu-Flow: FLOW_OUT
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Tue, Jul 29, 2025 at 08:57:43PM +0200, Toon Claes wrote:
+> On Tue, Jul 29, 2025 at 08:57:44PM +0200, Toon Claes wrote:
 >> From: Jeff King <peff@peff.net>
 >> 
->> The within_depth() function is used to check whether pathspecs limited
->> by a max-depth parameter are acceptable. It takes a path to check, a
->> maximum depth, and a "base" depth. It counts the components in the
->> path (by counting slashes), adds them to the base, and compare them to
+>> When you are doing a tree-diff, there are basically two options: do not
+>> recurse into subtrees at all, or recurse indefinitely. While most
+>> callers would want to always recurse and see full pathnames, some may
+>> want the efficiency of looking only at a particular level of the tree.
+>> This is currently easy to do for the top-level (just turn off
+>> recursion), but you cannot say "show me what changed in subdir/, but do
+>> not recurse".
+>> 
+>> This patch adds a max-depth parameter which is measured from the closest
+>> pathspec match, so that you can do:
+>> 
+>>   git log --raw --max-depth=1 -- a/b/c
+>> 
+>> and see the raw output for a/b/c/, but not those of a/b/c/d/
+>> (instead of the raw output you would see for a/b/c/d).
 >
-> s/compare/&s/
->
->> the maximum.
->> 
->> However, if the base does not have any slashes at all, we always return
->> `true`. If the base depth is 0, then this is correct; no matter what the
->> maximum is, we are always within it. However, if the base depth is
->> greater than 0, then we might return an erroneous result.
->> 
->> This ends up not causing any user-visible bugs in the current code. The
->> call sites in dir.c always pass a base depth of 0, so are unaffected.
->> But tree_entry_interesting() uses this function differently: it will
->> pass the prefix of the current entry, along with a `1` if the entry is a
->> directory, in essence checking whether items inside the entry would be
->> of interest. It turns out not to make a difference in behavior, but the
->> reasoning is complex.
->> 
->> Given a tree like:
->> 
->>   file
->>   a/file
->>   a/b/file
->> 
->> walking the tree and calling tree_entry_interesting() will yield the
->> following results:
->> 
->>   (with max_depth=0):
->>       file: yes
->>          a: yes
->>     a/file: no
->>        a/b: no
->> 
->>   (with max_depth=1):
->>       file: yes
->>          a: yes
->>     a/file: yes
->>        a/b: no
->> 
->> So we have inconsistent behavior in considering directories interesting.
->> If they are at the edge of our depth but at the root, we will recurse
->> into them, but then find all of their entries uninteresting (e.g., in
->> the first case, we will look at "a" but find "a/*" uninteresting). But
->> if they are at the edge of our depth and not at the root, then we will
->> not recurse (in the second example, we do not even bother entering
->> "a/b").
->> 
->> This turns out not to matter because the only caller which uses
->> max-depth pathspecs is cmd_grep(), which only cares about blob entries.
->> From its perspective, it is exactly the same to not recurse into a
->> subtree, or to recurse and find that it contains no matching entries.
->> Not recursing is merely an optimization.
->
-> Okay, well-explained.
->
->> It is debatable whether tree_entry_interesting() should consider such an
->> entry interesting. The only caller does not care if it sees the tree
->> itself, and can benefit from the optimization. But if we add a
->> "max-depth" limiter to regular diffs, then a diff with
->> DIFF_OPT_TREE_IN_RECURSIVE would probably want to show the tree itself,
->> but not what it contains.
->
-> I haven't yet read the cover letter, but I guess that the scenario where
-> we'll care about this is in git-last-modified(1) if we want to teach
-> that command a `--max-depth` parameter?
+> Hm, okay. So what happens if I pass both "a/b" and "a/b/c"? Would I see
+> the contents of both trees?
 
-Well, yes git-last-modified(1) will be able to use this option as well.
-And it will be useful there. But those patches are still in flight in a
-separate series.
+Yes, the max-depth applies to both pathspecs and entries that match
+either of them are shown.
 
-In the commit following this one we see `--max-depth` being used in
-git-diff-tree(1). Maybe I can do a better job explaining how this
-changes affects that patch. Let me see how I can phrase this.
-
->> This patch just fixes within_depth(), which means we consider such
->> entries uninteresting (and makes the current caller happy). If we want
->> to change that in the future, then this fix is still the correct first
->> step, as the current behavior is simply inconsistent.
 >
-> So... do we end up with this now?
+>> diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
+>> index f3a35d8141..46e6ed2d67 100644
+>> --- a/Documentation/diff-options.adoc
+>> +++ b/Documentation/diff-options.adoc
+>> @@ -893,5 +893,33 @@ endif::git-format-patch[]
+>>  	reverted with `--ita-visible-in-index`. Both options are
+>>  	experimental and could be removed in future.
+>>  
+>> +--max-depth=<n>::
+>> +
+>> +	Limit diff recursion to `<n>` levels (implies `-r`). The depth
+>> +	is measured from the closest pathspec. Given a tree containing
+>> +	`foo/bar/baz`, the following list shows the matches generated by
+>> +	each set of options:
+>> ++
+>> +--
+>> + - `--max-depth=0 -- foo`: `foo`
+>> +
+>> + - `--max-depth=1 -- foo`: `foo/bar`
+>> +
+>> + - `--max-depth=1 -- foo/bar`: `foo/bar/baz`
+>> +
+>> + - `--max-depth=1 -- foo foo/bar`: `foo/bar/baz`
 >
->    (with max_depth=1):
->        file: yes
->           a: yes
->      a/file: no
->         a/b: no
+> This partially answers my question, as we talk about the scenario where
+> we have "foo/bar/baz", but no "foo/qux". If we had the latter, would
+> that also be displayed here because it's 1 level deep from the closest
+> matching pathspec ("foo")?
+
+"foo/qux" is indeed within 1 level deep from "foo", so yes "foo/qux"
+will be shown. "foo/qux/duck" not obviously.
+
 >
-> I think it would be nice to include that in the message to show the
-> change in behaviour at a glance.
+>> + - `--max-depth=2 -- foo`: `foo/bar/baz`
+>> +--
+>> ++
+>> +If no pathspec is given, the depth is measured as if all
+>> +top-level entries were specified. Note that this is different
+>> +than measuring from the root, in that `--max-depth=0` would
+>> +still return `foo`. This allows you to still limit depth while
+>> +asking for a subset of the top-level entries.
+>> ++
+>> +Note that this option is only supported for diffs between tree objects,
+>> +not against the index or working tree.
+>
+> Let's also note that wildcard pathspecs aren't supported.
 
-The change in behavior happens when max_depth equals zero. In that case
-the example would be:
+Ah yes, good point. Will add.
 
-    (with max_depth=0):
-        file: yes
-           a: yes
-      a/file: no
-         a/b: no
+>>  For more detailed explanation on these common options, see also
+>>  linkgit:gitdiffcore[7].
+>> diff --git a/diff-lib.c b/diff-lib.c
+>> index 244468dd1a..fa7c24c267 100644
+>> --- a/diff-lib.c
+>> +++ b/diff-lib.c
+>> @@ -115,6 +115,9 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
+>>  	uint64_t start = getnanotime();
+>>  	struct index_state *istate = revs->diffopt.repo->index;
+>>  
+>> +	if (revs->diffopt.max_depth_valid)
+>> +		die("max-depth is not supported for worktree diffs");
+>
+> This and the following error messages should be made translatable.
 
-So no change actually. But that's due to how tree_entry_interesting()
-calls within_depth(). It doesn't pass the path of the entry, but the
-base of it. I'm not sure using tree_entry_interesting() here in the
-commit message to explain the change is the best idea, but it's the
-callsite that /might/ be affected. But it isn't. So it's pretty involved
-trying to put this change into words.
+True. Will do.
 
->> Signed-off-by: Jeff King <peff@peff.net>
->> Signed-off-by: Toon Claes <toon@iotcl.com>
->> ---
->>  dir.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/dir.c b/dir.c
->> index 02873f59ea..900ee5e559 100644
->> --- a/dir.c
->> +++ b/dir.c
->> @@ -277,7 +277,7 @@ int within_depth(const char *name, int namelen,
->>  		if (depth > max_depth)
->>  			return 0;
->>  	}
->> -	return 1;
->> +	return depth <= max_depth;
+>> diff --git a/diff.c b/diff.c
+>> index dca87e164f..c03a59ac3b 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -5622,6 +5625,18 @@ static int diff_opt_rotate_to(const struct option *opt, const char *arg, int uns
+>>  	return 0;
 >>  }
+>>  
+>> +static int diff_opt_max_depth(const struct option *opt,
+>> +			      const char *arg, int unset)
+>> +{
+>> +	struct diff_options *options = opt->value;
+>> +
+>> +	BUG_ON_OPT_NEG(unset);
+>> +	options->flags.recursive = 1;
+>> +	options->max_depth = strtol(arg, NULL, 10);
 >
-> Just for my own understanding: the only difference is when we don't have
-> even a single matching slash, as we don't verify `depth > max_depth` in
-> that case. So in theory, we could modify the function to the following
-> equivalent:
+> We're missing error handling in case the argument is not an integer. We
+> should probably use `git_parse_unsigned()` instead.
+
+Absolutely. Well, TIL!
+
 >
-> 	int within_depth(const char *name, int namelen,
-> 				int depth, int max_depth)
-> 	{
-> 		const char *cp = name, *cpe = name + namelen;
+>> @@ -5894,6 +5909,10 @@ struct option *add_diff_options(const struct option *opts,
+>>  		OPT_CALLBACK_F(0, "diff-filter", options, N_("[(A|C|D|M|R|T|U|X|B)...[*]]"),
+>>  			       N_("select files by diff type"),
+>>  			       PARSE_OPT_NONEG, diff_opt_diff_filter),
+>> +		OPT_CALLBACK_F(0, "max-depth", options, N_("<depth>"),
+>> +			       N_("maximum tree depth to recurse"),
+>> +			       PARSE_OPT_NONEG, diff_opt_max_depth),
+>> +
+>>  		{
+>>  			.type = OPTION_CALLBACK,
+>>  			.long_name = "output",
 >
-> 		if (depth > max_depth)
-> 			return 0;
+> Okay. We don't use `OPT_UNSIGNED()` because we also want to impliy the
+> `recursive` flag. Wouldn't it be simpler though to use `OPT_UNSIGNED()`
+> and then set the flag in `diff_setup_done()` like we already do for a
+> couple of other options?
+
+But how would you determine `max_depth_valid`?
+
+And, without realizing, you touch a good point here. Looking at the
+git-grep(1) docs, it says:
+
+    For each <pathspec> given on command line, descend at most <depth>
+    levels of directories. A value of -1 means no limit.
+
+And:
+
+    -r::
+    --recursive::
+    	Same as `--max-depth=-1`; this is the default.
+
+We should handle -1 the same, that's currently not the case.
+
+>> diff --git a/diff.h b/diff.h
+>> index 62e5768a9a..e3767df237 100644
+>> --- a/diff.h
+>> +++ b/diff.h
+>> @@ -404,6 +404,15 @@ struct diff_options {
+>>  	struct strmap *additional_path_headers;
+>>  
+>>  	int no_free;
+>> +
+>> +	/*
+>> +	 * The extra "valid" flag is a slight hack. The value "0" is perfectly
+>> +	 * valid for max-depth. We would normally use -1 to indicate "not set",
+>> +	 * but there are many code paths which assume that assume that just
 >
-> 		while (cp < cpe) {
-> 			if (*cp++ != '/')
-> 				continue;
-> 			depth++;
-> 			if (depth > max_depth)
-> 				return 0;
-> 		}
-> 		return 1;
-> 	}
+> Double "assume that".
+
+Thanks!
+
+>> +	 * zero-ing out a diff_options is enough to initialize it.
+>> +	 */
+>> +	int max_depth;
+>> +	int max_depth_valid;
 >
-> (Not saying we should, I'm just double checking my understanding).
+> So in that case, shouldn't we convert `max_depth` to be unsigned and
+> `max_depth_valid` to be a boolean?
 
-To be honest, I wasn't sure no more. I decided to see if I can write a
-unit test. This is what I came up with:
+As I mentioned above, -1 should mean "No limit", but should enable
+recursion. Now, that doesn't mean we can't make the changes you suggest,
+we just have to take that into account.
 
-    void test_dir__within_depth(void)
-    {
-    	struct test_case {
-    		const char *path;
-    		int depth;
-    		int max_depth;
-    		int expect;
-    	} test_cases[] = {
-    		/* depth = 0; max_depth = 0 */
-    		{ "",         0, 0, 1 },
-    		{ "file",     0, 0, 1 },
-    		{ "a",        0, 0, 1 },
-    		{ "a/file",   0, 0, 0 },
-    		{ "a/b",      0, 0, 0 },
-    		{ "a/b/file", 0, 0, 0 },
+>> diff --git a/tree-diff.c b/tree-diff.c
+>> index e00fc2f450..acd302500f 100644
+>> --- a/tree-diff.c
+>> +++ b/tree-diff.c
+>> @@ -48,6 +49,73 @@
+>>  		free((x)); \
+>>  } while(0)
+>>  
+>> +/* Returns true if and only if "dir" is a leading directory of "path" */
+>> +static int is_dir_prefix(const char *path, const char *dir, int dirlen)
+>> +{
+>> +	return !strncmp(path, dir, dirlen) &&
+>> +		(!path[dirlen] || path[dirlen] == '/');
+>> +}
+>> +
+>> +static int check_recursion_depth(struct strbuf *name,
+>
+> Let's mark the `name` parameter as `const` both here and in
+> `should_recurse()` so that it becomes clear that it shouldn't be
+> modified.
 
-    		/* depth = 0; max_depth = 1 */
-    		{ "",         0, 1, 1 },
-    		{ "file",     0, 1, 1 },
-    		{ "a",        0, 1, 1 },
-    		{ "a/file",   0, 1, 1 },
-    		{ "a/b",      0, 1, 1 },
-    		{ "a/b/file", 0, 1, 0 },
+:+1:
 
-    		/* depth = 1; max_depth = 1 */
-    		{ "",         1, 1, 1 },
-    		{ "file",     1, 1, 1 },
-    		{ "a",        1, 1, 1 },
-    		{ "a/file",   1, 1, 0 },
-    		{ "a/b",      1, 1, 0 },
-    		{ "a/b/file", 1, 1, 0 },
+>> +				 const struct pathspec *ps,
+>> +				 int max_depth)
+>> +{
+>> +	int i;
+>> +
+>> +	if (!ps->nr)
+>> +		return within_depth(name->buf, name->len, 1, max_depth);
+>> +
+>> +	/*
+>> +	 * We look through the pathspecs in reverse-sorted order, because we
+>> +	 * want to find the longest match first (e.g., "a/b" is better for
+>> +	 * checking depth than "a/b/c").
+>> +	 */
+>> +	for (i = ps->nr - 1; i >= 0; i--) {
+>
+> `nr` is of type `int` indeed, so the loop index is correct even though
+> it feels wrong. But that's nothing we have to fix as part of this patch
+> series. We could inline the declaration though and make it loop-local.
 
-    		/* depth = 1; max_depth = 0 */
-    		{ "",         1, 0, 0 },
-    		{ "file",     1, 0, 0 },
-    		{ "a",        1, 0, 0 },
-    		{ "a/file",   1, 0, 0 },
-    		{ "a/b",      1, 0, 0 },
-    		{ "a/b/file", 1, 0, 0 },
-    	};
+Ack.
 
-    	for (size_t i = 0; i < ARRAY_SIZE(test_cases); i++) {
-    		int result = within_depth(test_cases[i].path, strlen(test_cases[i].path),
-    					  test_cases[i].depth, test_cases[i].max_depth);
-    		cl_assert_equal_b(result, test_cases[i].expect);
-    	}
-    }
+>> +		const struct pathspec_item *item = ps->items+i;
+>> +
+>> +		/*
+>> +		 * If the name to match is longer than the pathspec, then we
+>> +		 * are only interested if the pathspec matches and we are
+>> +		 * within the allowed depth.
+>> +		 */
+>> +		if (name->len >= item->len) {
+>> +			if (!is_dir_prefix(name->buf, item->match, item->len))
+>> +				continue;
+>> +			return within_depth(name->buf + item->len,
+>> +					    name->len - item->len,
+>> +					    1, max_depth);
+>> +		}
+>> +
+>> +		/*
+>> +		 * Otherwise, our name is shorter than the pathspec. We need to
+>> +		 * check if it is a prefix of the pathspec; if so, we must
+>> +		 * always recurse in order to process further (the resulting
+>> +		 * paths we find might or might not match our pathspec, but we
+>> +		 * cannot know until we recurse).
+>> +		 */
+>> +		if (is_dir_prefix(item->match, name->buf, name->len))
+>> +			return 1;
+>> +	}
+>> +	return 0;
+>> +}
+>> +
+>> +static int should_recurse(struct strbuf *name, struct diff_options *opt)
+>> +{
+>> +	if (!opt->flags.recursive)
+>> +		return 0;
+>> +	if (!opt->max_depth_valid)
+>> +		return 1;
+>> +
+>> +	/*
+>> +	 * We catch this during diff_setup_done, but let's double-check
+>> +	 * against any internal munging.
+>> +	 */
+>> +	if (opt->pathspec.has_wildcard)
+>> +		die("BUG: wildcard pathspecs are incompatible with max-depth");
+>
+> Let's use `BUG()` instead. This patch series must be old, the function
+> has been introduced 8 years ago in d8193743e0 (usage.c: add BUG()
+> function, 2017-05-12).
 
-The change in this patch affect the last batch of tests (the batch with
-'depth = 1; max_depth = 0'). Running the test on both this patch and
-your suggestion gives the same results, so yes your suggestion has the
-same output.
-
-Do you think it's worth to add such unit test?
-
-I did add `""` because I've seen cmd_grep() might be passing an empty
-path.
+Good catch. Even looking at your suggestion, at first I didn't realize
+it wasn't using BUG(). ;)
 
 -- 
 Cheers,
