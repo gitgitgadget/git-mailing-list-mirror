@@ -1,42 +1,86 @@
-Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5EC1BD9CE
-	for <git@vger.kernel.org>; Wed,  6 Aug 2025 14:49:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDAE28F95E
+	for <git@vger.kernel.org>; Wed,  6 Aug 2025 15:17:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754491786; cv=none; b=eCvffzys1DMfJckgaD5b6lfUizE01tq1lrQ4h2X/XBhPf+mxHrOPh9i+O+Hy2UagmVLPEx6lLdAeVVsz47hb93UuQisanzlFZKAfy+K1lrsBWtDGyDRmZJUVRh/6OEsRuyst2bCN5vIhXa8g/d8ugyCgUMkKS+proBrFpweaLDs=
+	t=1754493466; cv=none; b=Lc41TseRyxTxazZ9Z2uTZpqHojtVqxaZ89Yv40rhHOO8DTV8yM0A40vndM58eOV+9x47uPn8FvELuvpCx23/bL1wIAdqtENcth/YvWFAcIEvDNZBphe8NVqcWA29NctI83JRwOm4GPbK3n4V9pIMD4QVZhdMjeCws5uQUfhqElw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754491786; c=relaxed/simple;
-	bh=0ACVtkWfujWCrPyere7nXZ4ywmHJ6QZqwSb0Xz2X2hg=;
+	s=arc-20240116; t=1754493466; c=relaxed/simple;
+	bh=lI9GNvj5rAPYYPZe+fBj6kknt7P7NEaJ/JJCzgPVJdM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kpRJPAJDL053McGrJocOXXG4Xa2+BK/TMcFcVym9AzH12MHpdniFpByVWc1mvEgg3NSWrV5mrC7XvzZCLtsZ1B94Qx1YoZFJgCAJrw0ZxXL6K490jHS79b59k660TMGP4eAehMLmKxDr4n36sXEj68+8fEpUxKUaT4NNlhOBZqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=KCutuLcP; arc=none smtp.client-ip=91.218.175.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=HbauESWJvBqMVn5NSsz9+D9KgDddtdP3d386ag52800k2kxGWI6h6cN8uzpkSFq+7D/sOyZG26ZA801ZWQTiEkE8+B121R+gqpOCrtug6z4uXk6rX7gvgHB+rhFbErQfw4Dr+AWBpqGaVawObFKsRbv+QCQHBte6HnfYY068tsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dAZ91I8U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IbWeQ9P3; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="KCutuLcP"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1754491780;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=U3JoRmMb38DOhtPEquWw+ThlBIj93chu1RNQ+w9iMeA=;
-	b=KCutuLcPU+rwuM7tR931gXTdI4ego7hDIZ3Ess7WkTL0wqq2u52zSree9Y/mtWMp1r3cPR
-	FfnWoFSmIqhdKxv60sogKXh00m9zU4DFLCTnGnDWrYMAu7xmHBrUvSFQDQIOZYf93C5vrb
-	VBJ5UdhY1WZyevP294QGEdJtetGzYdY=
-From: Toon Claes <toon@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dAZ91I8U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IbWeQ9P3"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E518B7A00BC;
+	Wed,  6 Aug 2025 11:17:42 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Wed, 06 Aug 2025 11:17:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754493462; x=1754579862; bh=HfSNVGSydW
+	VkuaQpSlsQz8pwErPV5OZRsdH4DBjnWU8=; b=dAZ91I8UcPGwWHB95WX2+tIURE
+	zRvuZNfXBXEc7+wydwqiYx1TQG5z477+GnxIsr6N41qTbwpakHxvjo0/J5xsgBtz
+	Fp++W+aWrbRSidjP1RKW1GovPL0YN+6QZVIQQWd8WdZrf1eHiV9nGfW71LNDhzOW
+	B9Hld1oLfMw7bBMPUNNFqv32KC7A4Cn+F/GFkB29wkMc8RjLs8hVcFIbYOhcLjah
+	JP/UiOG9oN+8IZ0/9B3eNQ4kRXK9zGKsFG3zi0Yy0S0ndrhkDOrgGLIr9XsWSy/G
+	zca6sJn5qtrwYvGlTzJ8stsgwf0ElB565Gye0B7tj+R4pPz4j4NiTmdUV2Lg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754493462; x=1754579862; bh=HfSNVGSydWVkuaQpSlsQz8pwErPV5OZRsdH
+	4DBjnWU8=; b=IbWeQ9P38w4DMgtrnhNZ+0eUa6oWiRLSTR+VKMgzpQ3NzqnmJeR
+	GXT/eRH8wp5R0C1IO6+Qk2Xd/8A5Rb2NjCRsN9joHBlJW9UcxQA/RKz5VFZ7i0xX
+	U0KcLyhcB3NyV2cMyjmWKpnSbEJQob+mIlzwqfGJN1nGo1SXkUFjTVtvWa1o+c4L
+	AGfz8S1Md45Iw1oKpRv5VHCc6T6cMBxr/doQkAIRLDb5B7Aqrr2UPUq3xVELucue
+	lkBWuTRdtIefqwAjG/IIJw4f/ioC2sfzA4Xkv7njtWpM4ojeTl3v+p2yVPdU8rrK
+	Na8DaNKbVgFrI8FepmrxY1NXiwdMcq2DPFQ==
+X-ME-Sender: <xms:FnKTaH6F0_Oa4VhaHxNvxR-ZR-UioNqZIL_gmEB-ajkY_vNrlVnTEQ>
+    <xme:FnKTaHcYEZ1fNwhF0mn1zR8yS2HhFhK80esOAPw7bBKHGBtdkbfqkSQMufUemGk1L
+    gtkuZ6H3H7wKFV1cA>
+X-ME-Received: <xmr:FnKTaLBiFtWng_xzN0wwIw6ov4X-2JqWg1cqjl2Gxtdt4kc_xxVpyjrJeCVmXQT0XSKZ0C7MPorHXGtQT-zhhOcuRr1b8bXbCMzbjrA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudekfeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehlihhurd
+    guvghnthhonhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:FnKTaK9asx4PSUHaVdXdENpqT4iPLK3ueh7fDbxB8IX0B7meYCSlLw>
+    <xmx:FnKTaGIkwd-E_kGo0YnQdZ_aakzySOIRjY5ZTZSYr1_Ku2z2gysg8A>
+    <xmx:FnKTaDidL9oiUlKFIRUuV9w5o_3VHc4liJEO6oZCICYhj8cFR7N3hA>
+    <xmx:FnKTaG4nU0hSDgV4Yg7X_nPQggkajDYHk730cZDHB8OnwQbFvE_3mw>
+    <xmx:FnKTaHrMia2Fl7DOdbw6BUQQqZymTnEZwTbrjT_SKf0JecQKJewp3gk2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 6 Aug 2025 11:17:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Justin Tobler
- <jltobler@gmail.com>
-Subject: Re: [PATCH 3/3] diff: teach tree-diff a max-depth parameter
-In-Reply-To: <aIm5x4kah8608Ba5@pks.im>
-References: <20250729-toon-max-depth-v1-0-c177e39c40fb@iotcl.com>
- <20250729-toon-max-depth-v1-3-c177e39c40fb@iotcl.com>
- <aIm5x4kah8608Ba5@pks.im>
-Date: Wed, 06 Aug 2025 16:49:30 +0200
-Message-ID: <87jz3gtshx.fsf@iotcl.com>
+Cc: Denton Liu <liu.denton@gmail.com>,  Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v3 2/2] remote.c: remove BUG in
+ show_push_unqualified_ref_name_error()
+In-Reply-To: <aJLywm9xWQQUADH1@pks.im> (Patrick Steinhardt's message of "Wed,
+	6 Aug 2025 08:14:26 +0200")
+References: <cover.1754375026.git.liu.denton@gmail.com>
+	<cover.1754455931.git.liu.denton@gmail.com>
+	<938dfb8d4e37ef962c811d6e0f32122a2522deb5.1754455931.git.liu.denton@gmail.com>
+	<aJLywm9xWQQUADH1@pks.im>
+Date: Wed, 06 Aug 2025 08:17:40 -0700
+Message-ID: <xmqqv7n0wkbv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,281 +88,35 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Tue, Jul 29, 2025 at 08:57:44PM +0200, Toon Claes wrote:
->> From: Jeff King <peff@peff.net>
->> 
->> When you are doing a tree-diff, there are basically two options: do not
->> recurse into subtrees at all, or recurse indefinitely. While most
->> callers would want to always recurse and see full pathnames, some may
->> want the efficiency of looking only at a particular level of the tree.
->> This is currently easy to do for the top-level (just turn off
->> recursion), but you cannot say "show me what changed in subdir/, but do
->> not recurse".
->> 
->> This patch adds a max-depth parameter which is measured from the closest
->> pathspec match, so that you can do:
->> 
->>   git log --raw --max-depth=1 -- a/b/c
->> 
->> and see the raw output for a/b/c/, but not those of a/b/c/d/
->> (instead of the raw output you would see for a/b/c/d).
+> This reads a lot better, thanks. We could arguably convert the
+> if-else-chain into a switch to make all of this read a bit better, but
+> that is a subjective style change and definitely not something that you
+> have to do as part of this series.
+
+I concur.  I admit that using switch never occured to me but I agree
+100% with you that it would make the result nicer, and that it does
+not have to be part of this series.
+
+> One thing I wondered is whether it's okay to not die anymore via
+> `BUG()`. The other error cases already don't die though, so this ought
+> to be fine. Going up the callchain shows that we do bubble up the error
+> as expected until we end up in `match_push_refs()`. There's multiple
+> callers of that function, and all except one perform error handling for
+> it.
 >
-> Hm, okay. So what happens if I pass both "a/b" and "a/b/c"? Would I see
-> the contents of both trees?
-
-Yes, the max-depth applies to both pathspecs and entries that match
-either of them are shown.
-
+> The only exception is git-remote(1) in `get_push_ref_states()`, where it
+> gets executed via `git remote show $remote_name`. As far as I understand
+> we would end up not showing any references that are broken, and we would
+> print the above advise. Which I think is reasonable.
 >
->> diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
->> index f3a35d8141..46e6ed2d67 100644
->> --- a/Documentation/diff-options.adoc
->> +++ b/Documentation/diff-options.adoc
->> @@ -893,5 +893,33 @@ endif::git-format-patch[]
->>  	reverted with `--ita-visible-in-index`. Both options are
->>  	experimental and could be removed in future.
->>  
->> +--max-depth=<n>::
->> +
->> +	Limit diff recursion to `<n>` levels (implies `-r`). The depth
->> +	is measured from the closest pathspec. Given a tree containing
->> +	`foo/bar/baz`, the following list shows the matches generated by
->> +	each set of options:
->> ++
->> +--
->> + - `--max-depth=0 -- foo`: `foo`
->> +
->> + - `--max-depth=1 -- foo`: `foo/bar`
->> +
->> + - `--max-depth=1 -- foo/bar`: `foo/bar/baz`
->> +
->> + - `--max-depth=1 -- foo foo/bar`: `foo/bar/baz`
->
-> This partially answers my question, as we talk about the scenario where
-> we have "foo/bar/baz", but no "foo/qux". If we had the latter, would
-> that also be displayed here because it's 1 level deep from the closest
-> matching pathspec ("foo")?
+> So all of this looks good to me, thanks!
 
-"foo/qux" is indeed within 1 level deep from "foo", so yes "foo/qux"
-will be shown. "foo/qux/duck" not obviously.
+Nice to see somebody thinks through the potential impact for all the
+callers.  Very much appreciated.
 
->
->> + - `--max-depth=2 -- foo`: `foo/bar/baz`
->> +--
->> ++
->> +If no pathspec is given, the depth is measured as if all
->> +top-level entries were specified. Note that this is different
->> +than measuring from the root, in that `--max-depth=0` would
->> +still return `foo`. This allows you to still limit depth while
->> +asking for a subset of the top-level entries.
->> ++
->> +Note that this option is only supported for diffs between tree objects,
->> +not against the index or working tree.
->
-> Let's also note that wildcard pathspecs aren't supported.
+Let's merge the topic to 'next'.
 
-Ah yes, good point. Will add.
-
->>  For more detailed explanation on these common options, see also
->>  linkgit:gitdiffcore[7].
->> diff --git a/diff-lib.c b/diff-lib.c
->> index 244468dd1a..fa7c24c267 100644
->> --- a/diff-lib.c
->> +++ b/diff-lib.c
->> @@ -115,6 +115,9 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
->>  	uint64_t start = getnanotime();
->>  	struct index_state *istate = revs->diffopt.repo->index;
->>  
->> +	if (revs->diffopt.max_depth_valid)
->> +		die("max-depth is not supported for worktree diffs");
->
-> This and the following error messages should be made translatable.
-
-True. Will do.
-
->> diff --git a/diff.c b/diff.c
->> index dca87e164f..c03a59ac3b 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -5622,6 +5625,18 @@ static int diff_opt_rotate_to(const struct option *opt, const char *arg, int uns
->>  	return 0;
->>  }
->>  
->> +static int diff_opt_max_depth(const struct option *opt,
->> +			      const char *arg, int unset)
->> +{
->> +	struct diff_options *options = opt->value;
->> +
->> +	BUG_ON_OPT_NEG(unset);
->> +	options->flags.recursive = 1;
->> +	options->max_depth = strtol(arg, NULL, 10);
->
-> We're missing error handling in case the argument is not an integer. We
-> should probably use `git_parse_unsigned()` instead.
-
-Absolutely. Well, TIL!
-
->
->> @@ -5894,6 +5909,10 @@ struct option *add_diff_options(const struct option *opts,
->>  		OPT_CALLBACK_F(0, "diff-filter", options, N_("[(A|C|D|M|R|T|U|X|B)...[*]]"),
->>  			       N_("select files by diff type"),
->>  			       PARSE_OPT_NONEG, diff_opt_diff_filter),
->> +		OPT_CALLBACK_F(0, "max-depth", options, N_("<depth>"),
->> +			       N_("maximum tree depth to recurse"),
->> +			       PARSE_OPT_NONEG, diff_opt_max_depth),
->> +
->>  		{
->>  			.type = OPTION_CALLBACK,
->>  			.long_name = "output",
->
-> Okay. We don't use `OPT_UNSIGNED()` because we also want to impliy the
-> `recursive` flag. Wouldn't it be simpler though to use `OPT_UNSIGNED()`
-> and then set the flag in `diff_setup_done()` like we already do for a
-> couple of other options?
-
-But how would you determine `max_depth_valid`?
-
-And, without realizing, you touch a good point here. Looking at the
-git-grep(1) docs, it says:
-
-    For each <pathspec> given on command line, descend at most <depth>
-    levels of directories. A value of -1 means no limit.
-
-And:
-
-    -r::
-    --recursive::
-    	Same as `--max-depth=-1`; this is the default.
-
-We should handle -1 the same, that's currently not the case.
-
->> diff --git a/diff.h b/diff.h
->> index 62e5768a9a..e3767df237 100644
->> --- a/diff.h
->> +++ b/diff.h
->> @@ -404,6 +404,15 @@ struct diff_options {
->>  	struct strmap *additional_path_headers;
->>  
->>  	int no_free;
->> +
->> +	/*
->> +	 * The extra "valid" flag is a slight hack. The value "0" is perfectly
->> +	 * valid for max-depth. We would normally use -1 to indicate "not set",
->> +	 * but there are many code paths which assume that assume that just
->
-> Double "assume that".
-
-Thanks!
-
->> +	 * zero-ing out a diff_options is enough to initialize it.
->> +	 */
->> +	int max_depth;
->> +	int max_depth_valid;
->
-> So in that case, shouldn't we convert `max_depth` to be unsigned and
-> `max_depth_valid` to be a boolean?
-
-As I mentioned above, -1 should mean "No limit", but should enable
-recursion. Now, that doesn't mean we can't make the changes you suggest,
-we just have to take that into account.
-
->> diff --git a/tree-diff.c b/tree-diff.c
->> index e00fc2f450..acd302500f 100644
->> --- a/tree-diff.c
->> +++ b/tree-diff.c
->> @@ -48,6 +49,73 @@
->>  		free((x)); \
->>  } while(0)
->>  
->> +/* Returns true if and only if "dir" is a leading directory of "path" */
->> +static int is_dir_prefix(const char *path, const char *dir, int dirlen)
->> +{
->> +	return !strncmp(path, dir, dirlen) &&
->> +		(!path[dirlen] || path[dirlen] == '/');
->> +}
->> +
->> +static int check_recursion_depth(struct strbuf *name,
->
-> Let's mark the `name` parameter as `const` both here and in
-> `should_recurse()` so that it becomes clear that it shouldn't be
-> modified.
-
-:+1:
-
->> +				 const struct pathspec *ps,
->> +				 int max_depth)
->> +{
->> +	int i;
->> +
->> +	if (!ps->nr)
->> +		return within_depth(name->buf, name->len, 1, max_depth);
->> +
->> +	/*
->> +	 * We look through the pathspecs in reverse-sorted order, because we
->> +	 * want to find the longest match first (e.g., "a/b" is better for
->> +	 * checking depth than "a/b/c").
->> +	 */
->> +	for (i = ps->nr - 1; i >= 0; i--) {
->
-> `nr` is of type `int` indeed, so the loop index is correct even though
-> it feels wrong. But that's nothing we have to fix as part of this patch
-> series. We could inline the declaration though and make it loop-local.
-
-Ack.
-
->> +		const struct pathspec_item *item = ps->items+i;
->> +
->> +		/*
->> +		 * If the name to match is longer than the pathspec, then we
->> +		 * are only interested if the pathspec matches and we are
->> +		 * within the allowed depth.
->> +		 */
->> +		if (name->len >= item->len) {
->> +			if (!is_dir_prefix(name->buf, item->match, item->len))
->> +				continue;
->> +			return within_depth(name->buf + item->len,
->> +					    name->len - item->len,
->> +					    1, max_depth);
->> +		}
->> +
->> +		/*
->> +		 * Otherwise, our name is shorter than the pathspec. We need to
->> +		 * check if it is a prefix of the pathspec; if so, we must
->> +		 * always recurse in order to process further (the resulting
->> +		 * paths we find might or might not match our pathspec, but we
->> +		 * cannot know until we recurse).
->> +		 */
->> +		if (is_dir_prefix(item->match, name->buf, name->len))
->> +			return 1;
->> +	}
->> +	return 0;
->> +}
->> +
->> +static int should_recurse(struct strbuf *name, struct diff_options *opt)
->> +{
->> +	if (!opt->flags.recursive)
->> +		return 0;
->> +	if (!opt->max_depth_valid)
->> +		return 1;
->> +
->> +	/*
->> +	 * We catch this during diff_setup_done, but let's double-check
->> +	 * against any internal munging.
->> +	 */
->> +	if (opt->pathspec.has_wildcard)
->> +		die("BUG: wildcard pathspecs are incompatible with max-depth");
->
-> Let's use `BUG()` instead. This patch series must be old, the function
-> has been introduced 8 years ago in d8193743e0 (usage.c: add BUG()
-> function, 2017-05-12).
-
-Good catch. Even looking at your suggestion, at first I didn't realize
-it wasn't using BUG(). ;)
-
--- 
-Cheers,
-Toon
+Thanks.
