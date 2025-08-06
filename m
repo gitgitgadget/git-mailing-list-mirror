@@ -1,180 +1,112 @@
-Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDF623F424
-	for <git@vger.kernel.org>; Wed,  6 Aug 2025 16:40:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AB21A3166
+	for <git@vger.kernel.org>; Wed,  6 Aug 2025 17:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754498438; cv=none; b=DTGHJsSorX8XP/YUPtFXix7l6O2tKiliMIKRpxdf1JjTot4NOAYw+D6NI3l+1AVwAeuq9Yu1v6+0kgbjZHjs1eeRo67Y//NypU+ddvnlzXyvyaPF38iOlkkNJgmG+OFgyVz5u9p95K1X1OTegL5CBvnWkCkfbPK4Ml+7BTb74EQ=
+	t=1754501311; cv=none; b=L6BEgnssp+ChY+2ZrqVtTzQoVNdXkZFnmtQ3cTv7rnXrQea//dEbaqpmclkMW3LqoaFDSieDZuo3mKJBfNNF4lKCBEDOZYghIlWgYY1X94JKEvl+/1C00KBU6+oKPcNdJMLwyD8MR2ugmGKOVvmXdyUAnHeCl5Q0NSza9t6iQb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754498438; c=relaxed/simple;
-	bh=ecmapRE8Ae9ccHxSh3j/GtzACsOhqJ9D+kW3tJA4/5E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YLBFys6a4D6cDGL9kjsWFYYFNyZ/XFaixPKXc9M+em8IveoHsdJO0NKsxLhZFtJlO1FE0Bup55UwaIszKn5MdN1SZMGLzoaJ8UGB4JwcADfO5+PfdUSy+zQANq2EWrG40ygX4nXamwrM0tspiFtZhVtmxJy0Dr1GtncMwBm+iQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=fIFPkhxU; arc=none smtp.client-ip=95.215.58.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1754501311; c=relaxed/simple;
+	bh=s7QT13abeB2AE0+Hp5mgiRRsvIv/g5LO4pWu8Mst6dM=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=nrxA0pLmCVLfGTadI7Ey+cp3Y1V8JquNi9lFlFeQhjsP3Nr4EYVNB9WISYYG2+KRKBxqmL22t3SUTXkJLQp2ulyGw8vyjDrZ9ks1NJaT/D0Wvf/O6ml+18EZNKdefaXHnuID/8lL/2f4QIKgCQ9xJuKlr2W38mCWjkXItWh6b2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nx8tVvV6; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="fIFPkhxU"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1754498433;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0L5oahAeW44wZlVWOGLGBuRY6NNUN+w9ZiRmVt+O6FA=;
-	b=fIFPkhxUkTiqzfLT40aDEtvSN3m8x2aGt7PtQX4w0pHMFN7Rh3MTMPvuFZpNC2YcXsRm7F
-	BR2Shtp0foOqt+BKS0RllQk0BBe+ogThz8uoUzISd1J5SChtfc+xCHpyUfnqCPwuPvdPMb
-	+xoa87CIDXJ4jNqxOqjaoHFHyyuCG0E=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 3/8] odb: return newly created in-memory sources
-In-Reply-To: <20250729-b4-pks-midx-deduplicate-source-info-v1-3-748db2eda3b5@pks.im>
-References: <20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im>
- <20250729-b4-pks-midx-deduplicate-source-info-v1-3-748db2eda3b5@pks.im>
-Date: Wed, 06 Aug 2025 18:40:23 +0200
-Message-ID: <87ectotnd4.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nx8tVvV6"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-b428dd79d46so42383a12.0
+        for <git@vger.kernel.org>; Wed, 06 Aug 2025 10:28:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754501309; x=1755106109; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g87zcHvZ+LA6kiuYrBpo5lJSjf0MKUZxsN3tqGfLMRI=;
+        b=Nx8tVvV63wyQy0wZ6KOKmJ2az6dTQUOLWGCTI3ghCMTHbjIha/RpvQyVLcJUgbfEhF
+         8WToUx+25+Ffwg1xFsy/TzpSMkwYya0T2kHERFs4b+2GZhEm700uYJ1u2Po8q23vU2+r
+         DYVkvuqKnqoen6f/lQ6uxcOjWUh81BZbHKLyfMduZJxaeOPuLmolZ9NbRa5rY2mA0DKD
+         Q8LaDPwfkc+/AFFRggUtwBf5ShTzt3mTWiUmimmH0MmWMAyowPePhJwD07SRxAW52yZR
+         6GaKf/H3Cvuvvuf+cFjWqVAuS+JC5BTI/gKh32Zrr1lyeDHRgakpVs2b0ZR5YLErtgxi
+         A2qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754501309; x=1755106109;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=g87zcHvZ+LA6kiuYrBpo5lJSjf0MKUZxsN3tqGfLMRI=;
+        b=RJvTjSfivpsuIrHOlOlXkfM9MTUzfYkwqLRQtMZ8iAkMipkR/LUSAkR0OaIylAein4
+         o7ROculWToE9dafxoednYUEi+0+9HXi9mBfk3i/+/8lTukWA0Au3AuJ10zBxz6DcRinr
+         D+mqzHN9miGtJ25pEbt/hb5AIM7q1VJbsf/hoqua96UlRThl0q+tD+qLuPW44Kqvz15W
+         o1hUfj15FMxmwmPsznbkstq+kEN0waB/2wNDo5dHf1pghkUWw2V4IaZBBo5mPYpouJlY
+         abKIG0Md9qWDPSfDa6/mXDLZIQ0rrRyft95iPXVwhmEXyLORpxQhqojVYfTJ/iW7BvFL
+         n0HA==
+X-Forwarded-Encrypted: i=1; AJvYcCUycLrdrdFg/d7GPLbBDveVu5LvJNtJR0XjUi72iqX8z1oo5FkUCTAwHhqqJkQ3PqSfC3Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXkwJv16SW3y8GzjW63cqA+zUf8QW7cnxlduuvUKcI3J2Vulfz
+	0xqm+H9m3ZB56N47kbgcBq7K5XywaQRYb2qLnIHoP8ScmkyuKYmPr4A3
+X-Gm-Gg: ASbGncsBpmMjBpjylhZvjBj7iHz6buGejtuJiBtVwIFh+kadzKQMOLQxehA7BhUH9IW
+	ewcrAXtsagFoZbjBjngewH7SrbbSXxl4bBG/IU7leL0Im513ZcE8aq6+hDFD6VqcEjEf5QqW0GB
+	sHFzPMt6p6Z36XyIuLDphfvYPdfwDMcTzlU5pCUbDighL1r0AFOmN+Ck7RFbqnEHKiH26HjbwVB
+	srcYG7scMH6awDDuVi91o1vcqsUILIIAQzRic3KBibZ4eQAA0AWgzVsJJfludTYETKvy4Ls21Ba
+	YJH3JVt8JV/j5Ct8FbMw4MFQ4rdBB+LN1gtPAQqAjjGKQp8iX6Jf7pR/3ZsGSNJX7lcZ5oYaEuT
+	MfTMMo4UPSAcRB1F1PW27eU/Gi6SOqAjxHOu0aTFB0h9NrrHDpt8FtjKy
+X-Google-Smtp-Source: AGHT+IGLWzBg+MIgQQr3/2NOo2MdsbNyZlWIuajsz3u7bSf5X2rgUSiOB4AkyERxikXNJOFmDU8RCA==
+X-Received: by 2002:a17:902:f552:b0:242:8a45:a95e with SMTP id d9443c01a7336-242a0aa6987mr48444185ad.15.1754501309170;
+        Wed, 06 Aug 2025 10:28:29 -0700 (PDT)
+Received: from smtpclient.apple (nat.ime.usp.br. [143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1f1efe8sm162388395ad.69.2025.08.06.10.28.27
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Aug 2025 10:28:28 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: What's cooking in git.git (Aug 2025, #01; Sun, 3)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <xmqqectpziz9.fsf@gitster.g>
+Date: Wed, 6 Aug 2025 14:28:14 -0300
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <DB375D08-5178-4A7C-9538-DE4A7CDD1346@gmail.com>
+References: <xmqqms8fbilv.fsf@gitster.g>
+ <CALnO6CDm5n0oZsXzvKz89jVg7E_h=1gqPFs2x7-UojdcY_Di_w@mail.gmail.com>
+ <xmqq4ium3w2x.fsf@gitster.g>
+ <CALnO6CBLF2Zxhy=mvz61U7M3X3UNA-V8R4tkzOvVjKWpEwi8Mg@mail.gmail.com>
+ <CALnO6CASXHv_wwmAfn9tZ4D1qdJBgVKfLEQ9+LTEF9FJPiS0qQ@mail.gmail.com>
+ <xmqqectpziz9.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.700.81)
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> Callers have no trivial way to obtain the newly created object database
-> source when adding it to the in-memory list of alternates. While not yet
-> needed anywhere, a subsequent commit will want to obtain that pointer.
->
-> Refactor the function to return the source to make it easily accessible.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb.c | 37 +++++++++++++++++++++----------------
->  odb.h |  4 ++--
->  2 files changed, 23 insertions(+), 18 deletions(-)
->
-> diff --git a/odb.c b/odb.c
-> index 61104b7cb8..7793816f81 100644
-> --- a/odb.c
-> +++ b/odb.c
-> @@ -139,23 +139,22 @@ static void read_info_alternates(struct object_database *odb,
->  				 const char *relative_base,
->  				 int depth);
->  
-> -static int link_alt_odb_entry(struct object_database *odb,
-> -			      const struct strbuf *entry,
-> -			      const char *relative_base,
-> -			      int depth,
-> -			      const char *normalized_objdir)
-> +static struct odb_source *link_alt_odb_entry(struct object_database *odb,
-> +					     const char *entry,
-> +					     const char *relative_base,
-> +					     int depth,
-> +					     const char *normalized_objdir)
->  {
-> -	struct odb_source *alternate;
-> +	struct odb_source *alternate = NULL;
->  	struct strbuf pathbuf = STRBUF_INIT;
->  	struct strbuf tmp = STRBUF_INIT;
->  	khiter_t pos;
-> -	int ret = -1;
->  
-> -	if (!is_absolute_path(entry->buf) && relative_base) {
-> +	if (!is_absolute_path(entry) && relative_base) {
->  		strbuf_realpath(&pathbuf, relative_base, 1);
->  		strbuf_addch(&pathbuf, '/');
->  	}
-> -	strbuf_addbuf(&pathbuf, entry);
-> +	strbuf_addstr(&pathbuf, entry);
->  
->  	if (!strbuf_realpath(&tmp, pathbuf.buf, 0)) {
->  		error(_("unable to normalize alternate object path: %s"),
-> @@ -189,11 +188,11 @@ static int link_alt_odb_entry(struct object_database *odb,
->  
->  	/* recursively add alternates */
->  	read_info_alternates(odb, alternate->path, depth + 1);
-> -	ret = 0;
-> +
->   error:
->  	strbuf_release(&tmp);
->  	strbuf_release(&pathbuf);
-> -	return ret;
-> +	return alternate;
->  }
->  
->  static const char *parse_alt_odb_entry(const char *string,
-> @@ -246,7 +245,7 @@ static void link_alt_odb_entries(struct object_database *odb, const char *alt,
->  		alt = parse_alt_odb_entry(alt, sep, &entry);
->  		if (!entry.len)
->  			continue;
-> -		link_alt_odb_entry(odb, &entry,
-> +		link_alt_odb_entry(odb, entry.buf,
->  				   relative_base, depth, objdirbuf.buf);
->  	}
->  	strbuf_release(&entry);
-> @@ -316,17 +315,23 @@ void odb_add_to_alternates_file(struct object_database *odb,
->  	free(alts);
->  }
->  
-> -void odb_add_to_alternates_memory(struct object_database *odb,
-> -				  const char *reference)
-> +struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
-> +						const char *reference)
->  {
-> +	struct odb_source *alternate;
-> +	char *objdir;
-> +
->  	/*
->  	 * Make sure alternates are initialized, or else our entry may be
->  	 * overwritten when they are.
->  	 */
->  	odb_prepare_alternates(odb);
->  
-> -	link_alt_odb_entries(odb, reference,
-> -			     '\n', NULL, 0);
-> +	objdir = real_pathdup(odb->sources->path, 1);
-> +	alternate = link_alt_odb_entry(odb, reference, NULL, 0, objdir);
+>=20
+> When I report a public CI failure, I'd try to give an exact URL, but
+> otherwise the failure would have been seen in my local environment,
+> and because I tend to refrain from pushing out a know-to-be-broken
+> tree, it is unsurprising if 371c45b569 did not fail.
+>=20
+> That commit does not have lo/repo-info, I suspect.  I didn't know
+> exactly which topic was causing
 
-If I understand correctly, instead of using real_pathdup() we could
-instead call:
+Yeah, I forgot to check the CI before I sent the last version. My bad,
+I'm sorry for this. I'll be more careful next time.
 
-    alternate = link_alt_odb_entry(odb, reference, "/", 0, odb->sources->path);
+> but the error was observed when
+> "repo --help-all" was given, so perhaps some interactions between
+> these two topics.
 
-I did not test this, but it would avoid duplicating the path here. I'm
-not sure though whether it's easier to read.
+However, after merging my local repo-info-v7 onto 371c45b569 in my local
+environment, I can execute `git repo --help-all` without any errors. I
+also pushed this merge to GitHub [1], the only fails were directly =
+related
+to my branch (some tests that I wrote and some leaks).
 
-> +
-> +	free(objdir);
-> +	return alternate;
->  }
->  
->  struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
-> diff --git a/odb.h b/odb.h
-> index 387b117c87..ac7ee05188 100644
-> --- a/odb.h
-> +++ b/odb.h
-> @@ -265,8 +265,8 @@ void odb_add_to_alternates_file(struct object_database *odb,
->   * recursive alternates it points to), but do not modify the on-disk alternates
->   * file.
->   */
-> -void odb_add_to_alternates_memory(struct object_database *odb,
-> -				  const char *dir);
-> +struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
-> +						const char *dir);
->  
->  /*
->   * Read an object from the database. Returns the object data and assigns object
->
-> -- 
-> 2.50.1.619.g074bbf1d35.dirty
->
->
+[1] =
+https://github.com/lucasoshiro/git/actions/runs/16759427895/job/4745054874=
+0
 
--- 
-Cheers,
-Toon
