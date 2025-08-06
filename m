@@ -1,168 +1,270 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9B41F9F73
-	for <git@vger.kernel.org>; Wed,  6 Aug 2025 13:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4C3243951
+	for <git@vger.kernel.org>; Wed,  6 Aug 2025 14:30:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754486418; cv=none; b=HonjfEfpjq1nEBVvUGAI7k/wTFGLJssL2mEV4PU4t5y4E0ngL58igcOBArZoETcEmsG3K71dULT3bTKCPwYj0tE0wEqHbezjiOyk7qjfI0D9Wjnrn9HZCmsqjVIEan8a9dH8B0pm5aIBrx6VdMu0oXKMaCKzITnt6GZaaxgFxfs=
+	t=1754490660; cv=none; b=kk0nLRHz2R26NyTacXtogpQJbkH6z3s9s1Z3qtU56XinhPpzJX0Mj0CHTmVYx1Q8JxPfHtKeqLdYjO3p5TaFhsfiPCZdc2M0PhtGpN9QLVScs5A9B7RJJo7HIl9cEQfHMt7EFW69WDNTcAyAupedPTT4E9eRlV7gqNCJSgWVFQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754486418; c=relaxed/simple;
-	bh=q1j2Qbf+aN0fxl31n92so+y8yDhjmBpts3LYsRYMFF4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=LCbSWZ/a4xm9/ApJ73Mkao0ST5nbT3Vsy7gibspyrtvOQy/iRjxydZUNY5J26MytRqGhq8e/sU5NA9rWDQBHYbDWvgh9AQ3vacz2Vyb6Pkp/rsnnfwbHTK+eezNlqr7fW5it70dqwxOicUWTg3VsOxQ6eQr7QKIwLjqzrARzwbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S5dkj/vm; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754490660; c=relaxed/simple;
+	bh=bhnKwHRVoGKBwwBPG2lkNO/J2OROnS2Q0R2Sf5T8qyU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qFJFtfuQTlBZ8XtOcuqIXheQw1LQgtKLv2gzu4x8kH0t7u1bIbnY+urzDKIBibx0AEvz2Fri9mDZsFNmA8HMJpw/+JDmF0w/SUS5RqE/h0doBJ7o+j95GhaKbHiexdpY9ue53f2f8dofnQ8tShMUsFYxNhf0Vx/3fBgGY/ltaa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=xmHDJEaR; arc=none smtp.client-ip=95.215.58.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S5dkj/vm"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3b8d0f1fb49so3465450f8f.2
-        for <git@vger.kernel.org>; Wed, 06 Aug 2025 06:20:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754486415; x=1755091215; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :reply-to:to:from:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pzPNfAA5UltyQsoH887zsTVM3BMpqiqH0Gt9NpsmZMA=;
-        b=S5dkj/vmhg1H2PvLZGT+jQG8ZirfzsVifY//V1mHRSzEUYnBhMS1M60qX3MGRiLSwE
-         C/nlu+zuZsDSJah2/COViBQZxu5GJvZHB5AoFrOzbzlqH97Zvze2qTEOktCF3Q8T+KhP
-         /A4wuaTUAETz1DGJAYHcOlzgtFhRf0NFpM+8Lpvq0hx1tnVZsiwsLUHXSYNHXTaWAttI
-         LejPKgtAvcviSm5RUg6EwSMlP3JimMqo4h/f6jBeNI5PTJVWJUlC2m/P2a8hVFpmY6IM
-         ZlZ402jKUfA/PBxM0zUqlzolCdO/ft1GA+TGyxXQAg2+GwkG1o46A6pWJA5xqtWQVEUX
-         M6Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754486415; x=1755091215;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :reply-to:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pzPNfAA5UltyQsoH887zsTVM3BMpqiqH0Gt9NpsmZMA=;
-        b=Vf7ejllt8IuEBx1Lw/dy4n1xCHVf/P3VfwkPXMBiAB24OTNdX87E4CXkVyd5iRr9t4
-         ec2w/P+hDewvLCo+XrOj/qVV8iE/NkiLe1ps4v9HXsxWqGVRMi6cetM0IsACXDq06ADr
-         a5MILDiiar0jKS9FHiv3EcCbECAGCZk1mC/K7oUg7ljYziAXdNQ6/gqnwrfYFvsXkhKr
-         mSPc/uzeKjZfo2f4t+c0ND0ttHR4UnBkqjKV1sJ9WV2vhqRIFQH54KI/Xzlkfv7aqsnc
-         lx/6h6p5PwHjDJ3izYV8gw5fJfmHgWXp/bfI8KFHuCWaU+Pr3FaSH/BxUKQmSVfvFxsh
-         CDIg==
-X-Forwarded-Encrypted: i=1; AJvYcCVz7Drb4GjMI52H2IczPIcxLef1fHqN/1+w61o9712ZbClLquNPeybyY9pC3HDYz2Pke0g=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxagfAEpyy9t74WnAY9bTcw2vDvZZ4c+nJBmsKBF7WhJHxkfdOq
-	ChFaDEpzs0kp5iWdSOUtS0UKGkR+vPFcMFbP7zgZTLQW63VbZGQiOPEM
-X-Gm-Gg: ASbGncs9/rGsqUwD6NLlwJ97xAm3W0dNoLgQyuywqGrveCMbUKg/PuiSuFeNW3xdSKS
-	IyXldUfloroSSdQVNx8icqUqDjCu2VvG4Tl1ORMRDP7+ihXsHHMxWxbA9QFBpjr47qj3NMGa6lz
-	r23sADJ0V9vurMrppt1guz769Y26zPRN/42Sms4B4oOdhURTe/bCcA603ydIAh42RrhIggxqyNX
-	NJSIs9qUrEN44ynvGz6iGa5dqkSJjrKohLiTW/GLMpyQSqhrC0DFMI+IWd1aWBM1QPYNiiirnNT
-	JBoETa6bwhUa6Yg1SPZ594Chsoyhh4/ONJTGlOS2v7CSo0prWsMy+c471wvQng0aNcmLQhOsvCS
-	t26+8EJppekVFvSLpsyvtQdEcxrEGswPlMqpWNbvBlYHLYJhg4YFGeKK3HQ==
-X-Google-Smtp-Source: AGHT+IEF4JwukCzFJz4ZAJSz9x4FhAhr4skCDB8rkugCvYy+XFdK45KohjsRWM4njhSjPq4Ak9ZyBw==
-X-Received: by 2002:a05:6000:310c:b0:3a5:8934:493a with SMTP id ffacd0b85a97d-3b8f41f30e5mr2399924f8f.44.1754486414744;
-        Wed, 06 Aug 2025 06:20:14 -0700 (PDT)
-Received: from [192.168.1.194] ([90.254.76.86])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e87487fcsm28218455e9.3.2025.08.06.06.20.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Aug 2025 06:20:14 -0700 (PDT)
-Message-ID: <499da566-66a8-4c38-a2b3-13c06092568f@gmail.com>
-Date: Wed, 6 Aug 2025 14:19:57 +0100
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="xmHDJEaR"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1754490648;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hNn/O6m00snK+mswHBkNx8/YGYX66iKFMOJSy1bITnE=;
+	b=xmHDJEaRuZBs5VgU5i3lsAWgzj39U4xp4aibwjAZ2wVys9qoBEao1p6mj3o6J9tNmKBP76
+	1CaSYkMTjvEmqS7d3SpXySPKXMZMT7b5PiXJUMOf/CF1zMgqIJD7rA2OAHv0XaZLRCJcZO
+	vOOgDaFT5dextO41Lvyplhwnzq9ar9U=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Justin Tobler
+ <jltobler@gmail.com>
+Subject: Re: [PATCH 2/3] within_depth: fix return for empty path
+In-Reply-To: <aIm5vMeTLSLD-6Fz@pks.im>
+References: <20250729-toon-max-depth-v1-0-c177e39c40fb@iotcl.com>
+ <20250729-toon-max-depth-v1-2-c177e39c40fb@iotcl.com>
+ <aIm5vMeTLSLD-6Fz@pks.im>
+Date: Wed, 06 Aug 2025 16:30:32 +0200
+Message-ID: <87ms8cttdj.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] rebase: support --trailer
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Li Chen <me@linux.beauty>, phillipwood <phillip.wood@dunelm.org.uk>,
- git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Reply-To: phillip.wood@dunelm.org.uk
-References: <20250803150059.402017-1-me@linux.beauty>
- <20250803150059.402017-3-me@linux.beauty>
- <e911d897-8664-40a7-b7a9-8eb9f71a8735@gmail.com>
-Content-Language: en-US
-In-Reply-To: <e911d897-8664-40a7-b7a9-8eb9f71a8735@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Hi Li
+Patrick Steinhardt <ps@pks.im> writes:
 
-I had a couple more thoughts about the tests ...
+> On Tue, Jul 29, 2025 at 08:57:43PM +0200, Toon Claes wrote:
+>> From: Jeff King <peff@peff.net>
+>> 
+>> The within_depth() function is used to check whether pathspecs limited
+>> by a max-depth parameter are acceptable. It takes a path to check, a
+>> maximum depth, and a "base" depth. It counts the components in the
+>> path (by counting slashes), adds them to the base, and compare them to
+>
+> s/compare/&s/
+>
+>> the maximum.
+>> 
+>> However, if the base does not have any slashes at all, we always return
+>> `true`. If the base depth is 0, then this is correct; no matter what the
+>> maximum is, we are always within it. However, if the base depth is
+>> greater than 0, then we might return an erroneous result.
+>> 
+>> This ends up not causing any user-visible bugs in the current code. The
+>> call sites in dir.c always pass a base depth of 0, so are unaffected.
+>> But tree_entry_interesting() uses this function differently: it will
+>> pass the prefix of the current entry, along with a `1` if the entry is a
+>> directory, in essence checking whether items inside the entry would be
+>> of interest. It turns out not to make a difference in behavior, but the
+>> reasoning is complex.
+>> 
+>> Given a tree like:
+>> 
+>>   file
+>>   a/file
+>>   a/b/file
+>> 
+>> walking the tree and calling tree_entry_interesting() will yield the
+>> following results:
+>> 
+>>   (with max_depth=0):
+>>       file: yes
+>>          a: yes
+>>     a/file: no
+>>        a/b: no
+>> 
+>>   (with max_depth=1):
+>>       file: yes
+>>          a: yes
+>>     a/file: yes
+>>        a/b: no
+>> 
+>> So we have inconsistent behavior in considering directories interesting.
+>> If they are at the edge of our depth but at the root, we will recurse
+>> into them, but then find all of their entries uninteresting (e.g., in
+>> the first case, we will look at "a" but find "a/*" uninteresting). But
+>> if they are at the edge of our depth and not at the root, then we will
+>> not recurse (in the second example, we do not even bother entering
+>> "a/b").
+>> 
+>> This turns out not to matter because the only caller which uses
+>> max-depth pathspecs is cmd_grep(), which only cares about blob entries.
+>> From its perspective, it is exactly the same to not recurse into a
+>> subtree, or to recurse and find that it contains no matching entries.
+>> Not recursing is merely an optimization.
+>
+> Okay, well-explained.
+>
+>> It is debatable whether tree_entry_interesting() should consider such an
+>> entry interesting. The only caller does not care if it sees the tree
+>> itself, and can benefit from the optimization. But if we add a
+>> "max-depth" limiter to regular diffs, then a diff with
+>> DIFF_OPT_TREE_IN_RECURSIVE would probably want to show the tree itself,
+>> but not what it contains.
+>
+> I haven't yet read the cover letter, but I guess that the scenario where
+> we'll care about this is in git-last-modified(1) if we want to teach
+> that command a `--max-depth` parameter?
 
-On 06/08/2025 11:28, Phillip Wood wrote:
-> On 03/08/2025 16:00, Li Chen wrote:
->> +create_expect() {
->> +    cat >"$1" <<-EOF
->> +        $2
->> +
->> +        Reviewed-by: Dev <dev@example.com>
->> +    EOF
->> +}
->> +
->> +test_expect_success 'setup repo with a small history' '
->> [...]
- >> +    create_expect third-signed    "third"                 &&>> +    
-create_expect conflict-signed "conflict"
-> 
-> Normally we create the "expect" file in the test where it is used.
+Well, yes git-last-modified(1) will be able to use this option as well.
+And it will be useful there. But those patches are still in flight in a
+separate series.
 
-Thinking about this some more, if we want to use test_commit_message 
-then I think we can change create_expect to write to stdout and do
+In the commit following this one we see `--max-depth` being used in
+git-diff-tree(1). Maybe I can do a better job explaining how this
+changes affects that patch. Let me see how I can phrase this.
 
-	test_commit_message HEAD <<-EOF
-	$(create_expect first)
-	EOF
+>> This patch just fixes within_depth(), which means we consider such
+>> entries uninteresting (and makes the current caller happy). If we want
+>> to change that in the future, then this fix is still the correct first
+>> step, as the current behavior is simply inconsistent.
+>
+> So... do we end up with this now?
+>
+>    (with max_depth=1):
+>        file: yes
+>           a: yes
+>      a/file: no
+>         a/b: no
+>
+> I think it would be nice to include that in the message to show the
+> change in behaviour at a glance.
 
-rather than having to create a file.
+The change in behavior happens when max_depth equals zero. In that case
+the example would be:
 
->> +
->> +test_expect_success 'reject empty --trailer argument' '
->> [...]
->> +test_expect_success 'reject trailer with missing key before separator' '
+    (with max_depth=0):
+        file: yes
+           a: yes
+      a/file: no
+         a/b: no
 
-Should we also test for a missing value or are trailers without a value 
-allowed?
+So no change actually. But that's due to how tree_entry_interesting()
+calls within_depth(). It doesn't pass the path of the entry, but the
+base of it. I'm not sure using tree_entry_interesting() here in the
+commit message to explain the change is the best idea, but it's the
+callsite that /might/ be affected. But it isn't. So it's pretty involved
+trying to put this change into words.
 
->> +        git rebase -m \
->> +            --trailer "Signed-off-by: Dev A <a@ex.com>" \
->> +            --trailer "Signed-off-by: Dev B <b@ex.com>" HEAD~1 &&
+>> Signed-off-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Toon Claes <toon@iotcl.com>
+>> ---
+>>  dir.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> 
+>> diff --git a/dir.c b/dir.c
+>> index 02873f59ea..900ee5e559 100644
+>> --- a/dir.c
+>> +++ b/dir.c
+>> @@ -277,7 +277,7 @@ int within_depth(const char *name, int namelen,
+>>  		if (depth > max_depth)
+>>  			return 0;
+>>  	}
+>> -	return 1;
+>> +	return depth <= max_depth;
+>>  }
+>
+> Just for my own understanding: the only difference is when we don't have
+> even a single matching slash, as we don't verify `depth > max_depth` in
+> that case. So in theory, we could modify the function to the following
+> equivalent:
+>
+> 	int within_depth(const char *name, int namelen,
+> 				int depth, int max_depth)
+> 	{
+> 		const char *cp = name, *cpe = name + namelen;
+>
+> 		if (depth > max_depth)
+> 			return 0;
+>
+> 		while (cp < cpe) {
+> 			if (*cp++ != '/')
+> 				continue;
+> 			depth++;
+> 			if (depth > max_depth)
+> 				return 0;
+> 		}
+> 		return 1;
+> 	}
+>
+> (Not saying we should, I'm just double checking my understanding).
 
-Lets use example.com here rather than some random domain that might 
-actually exist.
+To be honest, I wasn't sure no more. I decided to see if I can write a
+unit test. This is what I came up with:
 
->> +test_expect_success 'rebase -m --trailer adds trailer after conflicts' '
->> +    git reset --hard third &&
->> +    test_must_fail git rebase -m \
->> +        --trailer "Reviewed-by: Dev <dev@example.com>" \
->> +        second third &&
->> +    git checkout --theirs file &&
->> +    git add file &&
->> +    git rebase --continue &&
+    void test_dir__within_depth(void)
+    {
+    	struct test_case {
+    		const char *path;
+    		int depth;
+    		int max_depth;
+    		int expect;
+    	} test_cases[] = {
+    		/* depth = 0; max_depth = 0 */
+    		{ "",         0, 0, 1 },
+    		{ "file",     0, 0, 1 },
+    		{ "a",        0, 0, 1 },
+    		{ "a/file",   0, 0, 0 },
+    		{ "a/b",      0, 0, 0 },
+    		{ "a/b/file", 0, 0, 0 },
 
-This checks that the commit with conflicts has a trailer added but it 
-does not check that the commits picked by "git rebase --continue" do. To 
-check that we actually save the trailers and use them when continuing we 
-need to add a fourth commit on top of third and check that has a trailer 
-add here as well.
+    		/* depth = 0; max_depth = 1 */
+    		{ "",         0, 1, 1 },
+    		{ "file",     0, 1, 1 },
+    		{ "a",        0, 1, 1 },
+    		{ "a/file",   0, 1, 1 },
+    		{ "a/b",      0, 1, 1 },
+    		{ "a/b/file", 0, 1, 0 },
 
-A couple more thoughts:
+    		/* depth = 1; max_depth = 1 */
+    		{ "",         1, 1, 1 },
+    		{ "file",     1, 1, 1 },
+    		{ "a",        1, 1, 1 },
+    		{ "a/file",   1, 1, 0 },
+    		{ "a/b",      1, 1, 0 },
+    		{ "a/b/file", 1, 1, 0 },
 
-  - We should check that
-      git -c trailer.review.key=Reviewed-by rebase \
-          --trailer=review="Dev <dev@example.com>"
-    adds a "Reviewed-by:" trailer. We can do that by changing one of the
-    tests in this patch rather than adding a new one. This checks that we
-    accept '=' as a separator as well a respecting the config.
+    		/* depth = 1; max_depth = 0 */
+    		{ "",         1, 0, 0 },
+    		{ "file",     1, 0, 0 },
+    		{ "a",        1, 0, 0 },
+    		{ "a/file",   1, 0, 0 },
+    		{ "a/b",      1, 0, 0 },
+    		{ "a/b/file", 1, 0, 0 },
+    	};
 
-  - We should check that the todo list
-      pick first
-      fixup second
-    adds the trailer as expected and that
-      pick first
-      fixup -C second
-    also works. To do that we will need to source lib-rebase.sh at the
-    start of the test file and add a test that uses set_replace_editor()
-    which should be called in a subshell.
+    	for (size_t i = 0; i < ARRAY_SIZE(test_cases); i++) {
+    		int result = within_depth(test_cases[i].path, strlen(test_cases[i].path),
+    					  test_cases[i].depth, test_cases[i].max_depth);
+    		cl_assert_equal_b(result, test_cases[i].expect);
+    	}
+    }
 
+The change in this patch affect the last batch of tests (the batch with
+'depth = 1; max_depth = 0'). Running the test on both this patch and
+your suggestion gives the same results, so yes your suggestion has the
+same output.
 
-Do please ask if you have any questions about these suggestions
+Do you think it's worth to add such unit test?
 
-Thanks
+I did add `""` because I've seen cmd_grep() might be passing an empty
+path.
 
-Phillip
-
+-- 
+Cheers,
+Toon
