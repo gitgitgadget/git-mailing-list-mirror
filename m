@@ -1,329 +1,127 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD0413AF2
-	for <git@vger.kernel.org>; Wed,  6 Aug 2025 00:22:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D102E36EC
+	for <git@vger.kernel.org>; Wed,  6 Aug 2025 01:02:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754439726; cv=none; b=a41M+GxYgz/3/xa8MITNz6ipLRZnfsJtbyKgv+KWO2tGp565VSyg6Qz6Qzx7hAX31IZD2D30WXk0cPXyFRQQfUGKJnGzyEG6VpxMrcb1NuAMK5PcOD//kfbdsxC2MUpBvwcHK7re+70nnYuSR+z2NvQM9CpttnbJ+mhC3LI3uqA=
+	t=1754442128; cv=none; b=EuEeJMU4biw7FKIPZl23CsztOK1ZeCIJ1Wnjwv9jlXeEsDmnVm/fKxF52P/b1DJFpNWykmto1uy+Pidza7OukfjrrLgb0GXFFAAkKuRBvDmcjFFbja12YPM2Idc2ksGpHYTTWlPYsOmKajiiq4VRq08t6dSyShVOrYekfC+3/Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754439726; c=relaxed/simple;
-	bh=xReg1iqgeB6oa8eRIaZFi2XA9NKFRtd6XgeBja0sKZ0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=S+46RWZgdz/izx99thW30MXXHfMNlk+c/QtxoQBCHJoRL1jR8DCULHXm3+63gMhRyHz4ogLwAa3mC2g88QJRoaUFIVdN2/resakLnXXt8dQ3Wt8D246f2VkZj9/cMphBVCe1qYXZiW1AUImTmy85ki3KGKz1iZnxgDmv/I+R5ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e8C4rKns; arc=none smtp.client-ip=209.85.166.178
+	s=arc-20240116; t=1754442128; c=relaxed/simple;
+	bh=Z0zNRfG/GZZLT/iYwxuIiQ3IpBunEbhEmBXWJxbt5DE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bfFpFG2BR+yfj0mld5gGLyv+OdNgmRuV9OYwaaRGr2nX6yMBVztOpCPPo4S2iPqbT6g0ftpmKYV+PYJbSRsKbUF9qM+2fK2j4J6QZHKUEcroDYfK4fkttRNUdx8GG0xJQm6wg5wGdlugHI+gqCSEvuK5nji74qwrbqSXp9V5klI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GtxGq7K9; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e8C4rKns"
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3e3f449fa6fso53533165ab.3
-        for <git@vger.kernel.org>; Tue, 05 Aug 2025 17:22:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GtxGq7K9"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-31ecd40352fso5289138a91.2
+        for <git@vger.kernel.org>; Tue, 05 Aug 2025 18:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754439723; x=1755044523; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1754442126; x=1755046926; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SwR6hv3XjEMTlB1d8Mme5P9qEbBT+MX7IpmGIz1HZKY=;
-        b=e8C4rKnsOf8+LKhXTrFNIwKf28tQRi8id+qBFPKtRMnpMTs22N5ZBtLSeYrz8SpUSR
-         waG85+DArxggbYufgjxvvPScoR/HvWMaps72XJiD3Q222mtcix68P8m+HVfsFKLV0ijY
-         Yuea/TLz8glYotpUq7KCw5VaH3XuzbISqzF/mg9KtOwzi7f5E2A3PWLcOHK41mOa+u8h
-         UIDoILHotGRI3u/JLp21Wb2yD0lPgxVIS/Yvlt9L6R7Afz4vhRpRrTFB0T3kdsL7AuX1
-         RmsemNnCQe5dkNZ0oQVtakj+2eE+DHPRmsPtl4tOo+W4MismIE1MFeHUMYpPQYpisO4C
-         IwcQ==
+        bh=VqBBEA/TQfmQS9uYDn+dtu+PG0eAtPCMCb/hdKW75L8=;
+        b=GtxGq7K9KYdNzqjSlmIu/wZ8ufM4cwGXNgRNbhiSqaqaknkj6GVPe8fvC1J+dX2uoZ
+         Rz/M2bud0GVDNl3VA935Gfmhi5kAZvPdJG8vpXtkNDpXmZ67oyJuXWTsmkf9D8TC/yrw
+         xcidkwnuWgy7P8d3yPCV+PSGw/t5vHWQhKr3uPi1/RYzbEPvN7WJqxsNAc5O32tPfzvN
+         ej3jhWEJlnVUKe6PfmKklKDDacumA1M9DzpeWDQFrgUcIRDIpm42Pa1R+bJpbjOa6/Kg
+         wFqa2C2BuDGNaGHUreQAh5pvXS7gTKjBSyX5IFS4B2QGSgglRMiQUhHpNxN9yJvHD3bm
+         rC/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754439723; x=1755044523;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SwR6hv3XjEMTlB1d8Mme5P9qEbBT+MX7IpmGIz1HZKY=;
-        b=PsDq4Hb+W51Huhz4dlKeC41gfXarqdBmd1oZ/zopnFwpPh4kGY+acF6h8F6Z7tSbwh
-         rigeNkHPF4kBw9dtMW7jg+ls5SYmWpz5m1JP3iaoba1MK79gc8WE9/F6FctjWEMxzGU0
-         OoGy0cEsO8td6jtGuSgJIYl+9CNxYRCxco3t328XHIRI0Vu0XwzzKJa99i47RrkMRqYN
-         +gZYeQ+jSP6SKC8GdXJwDX/I07vqax60QHyi7gbmA5qVs7do5bJUEbiRdmos2dFdfPCv
-         NpniiyFUGLgqd5X+YTFY8a9+5DR0DHnRGZexTGv5zXGWhvTmhG4As6Zycw9Y38yA4Sa2
-         9u5A==
-X-Gm-Message-State: AOJu0Yxcg20r1jYGbGCy0OqjICp0Gkem0/7oE1iggFsfTtccVvDJOUmW
-	kaUBOZ/WqXoMKtURqZTazTi4sztvm28EaEMESRNz98VwSE3GnigMtrTsKYbtZwREUPpOoCD6hw0
-	9vjTqJfzQvMzdM6dzpV5quNqojZH31Pg=
-X-Gm-Gg: ASbGncvMnBavrJzdmCuEotH9CEbU9A8jCQax8fAMW+qOMEcOzjOdN2kbIFdkCmFrZS/
-	DhhFpFxaSadha3rl5FPxzD1RkxeqevUljKFFZCq6i200sGayfK5sOw0arn/Zw+4cU/ckb3HAL7u
-	sevVhOKPWjOHXaRnUkte9q0rwFC+kqoziqADqkcOw01/Fj9QbywxcLtApifYN/tf8GFNJjqifJ+
-	UGumrN11OaBUgJ33b948j5/DTpRfKhNsPa3eTk4xtTely2mjvI=
-X-Google-Smtp-Source: AGHT+IFVtXmOF6hSDSay8qDmLHn2VqNdlCIhMtMQBl1SYKr5pa1yeOWQVhv7gTTyNp1b6Idb6aCquic+xKnT0FUf4Xk=
-X-Received: by 2002:a05:6e02:348c:b0:3e3:fd25:f6a with SMTP id
- e9e14a558f8ab-3e51b8f5a5bmr10565495ab.11.1754439723157; Tue, 05 Aug 2025
- 17:22:03 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1754442126; x=1755046926;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=VqBBEA/TQfmQS9uYDn+dtu+PG0eAtPCMCb/hdKW75L8=;
+        b=Hlm1X0f6cHtMeLvQl2Egdjz02SUQsf+ACKDalCg5MfjOpZoJNTujZe8TkjxFnfzBoc
+         soH5bxbCQ7B9Ab8bbzOlTUWvEvPy1P29ohHzU1nTXJDYtXQmCXct2VA6Ju6KyVYkyeEz
+         kLe4HTOJm44xH0/2SeIrX6xNIi6S3khMlcLiMlLN3rOFOnNLwnM0OWF6wPOB8GR3ALBT
+         HwmtdQAt9nfoy8pl6Sb561EQR91TTbdZNVZmbMUkC8xdmhMC5AbCJk2P/fPi+LW8Vu1M
+         cKJGcXip57ACwlgtPIHl5LzVElIJmg92TePfWfCDLKZTdzxMADDisgnSIf9bhCNG+z0V
+         P5BA==
+X-Gm-Message-State: AOJu0YxlVtVztv+8sboFsgnJ4sYi37x2YYH/sIIffExqKKOu9XcqXgFI
+	hieh00Epm8kivc16y+Mazrmi5KK7XIMIGwjMw8RXkkZqoiHG6VSgug1JxKMk8A==
+X-Gm-Gg: ASbGncsHOXPI6k2pS3cX+PmTDch0IhKHP6e9fhKepiTrqERMaKy1YVtphxq0h2g0SGh
+	S0gs+OkvAVrWYnylS2g1mzN9uw3o2gNiIpFzNTKuphm14fW23HqmSIQLDvqJnv01POzILP+dCvD
+	WWXK+xhCgbR9rl+fIv9zpVMOSKlbZgxAflj7KIqIo8FKzmPuV5ze+QAAK1iIwP7uE2OfU/ZvAzC
+	PjBWoE4B1n8l09E8LlNTdWYQuK0oLxRFcxjCvUgv75E9ZewNv7aWAsZI9o3I54tq1KKux8UmPhb
+	J1RLrRxUOXfcwSR4ynvYTxQL/b9TzQuNwZ80tilG1aYKAhSrDqijudH4mpcAM4ceLrLhZNSsBdm
+	1p6bKG932pWfaNw==
+X-Google-Smtp-Source: AGHT+IGKDVTFRakwOilm8zqlBMuyvGuteuD9ArIsDXtrc1k6uyDL/gsL51XhKU8h8IgYg5cOryNnZw==
+X-Received: by 2002:a17:90b:3cc7:b0:31f:2101:849c with SMTP id 98e67ed59e1d1-32166c2d70emr1112311a91.12.1754442126205;
+        Tue, 05 Aug 2025 18:02:06 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::e9a2])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b422b77efe4sm11875971a12.6.2025.08.05.18.02.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Aug 2025 18:02:05 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH v2 3/6] doc: check for absence of multiple terms in each
+ entry of desc list
+In-Reply-To: <5806390052b7a7cbdb8dc843bfcc24102604e2f6.1754421046.git.gitgitgadget@gmail.com>
+References: <pull.1945.git.1754399033.gitgitgadget@gmail.com>
+	<pull.1945.v2.git.1754421045.gitgitgadget@gmail.com>
+	<5806390052b7a7cbdb8dc843bfcc24102604e2f6.1754421046.git.gitgitgadget@gmail.com>
+Date: Tue, 05 Aug 2025 18:02:04 -0700
+Message-ID: <878qjxi7oz.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
- <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com> <82c24ce51980d85e1a53e746b462397e6e6c908a.1752716054.git.gitgitgadget@gmail.com>
-In-Reply-To: <82c24ce51980d85e1a53e746b462397e6e6c908a.1752716054.git.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 5 Aug 2025 17:21:50 -0700
-X-Gm-Features: Ac12FXxTsVbaAdjh59FaaR6Kghd4GNcHzmAhwGywLGx_CPmnMtNudr1LlDPcCqg
-Message-ID: <CABPp-BHLcy-A4yLR8gP1Sjt_EKQ4K08kPyb7G6yifdZj+0MJNg@mail.gmail.com>
-Subject: Re: [PATCH v2 8/8] sparse-checkout: make 'clean' clear more files
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>, 
-	Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 16, 2025 at 6:34=E2=80=AFPM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+Hi,
+
+"Jean-No=C3=ABl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
 >
-> From: Derrick Stolee <stolee@gmail.com>
+> Due to portability issues, the script generate-configlist.sh was fixed to
+> not use carriage returns in the output. However, the result is that it no
+> longer correctly handles multiple terms in a single entry of the definiti=
+on
+> list.
 >
-> The 'git sparse-checkout clean' command is designed to be a one-command
-> way to get the worktree in a state such that a sparse index would
-> operate efficiently. The previous change demonstrated that files outside
-> the sparse-checkout that were committed due to a merge conflict would
-> persist despite attempts to run 'git sparse-checkout clean' and instead
-> a 'git sparse-checkout reapply' would be required.
+> We now check that these entries do not exist in the documentation.
 >
-> Instead of requiring users to run both commands, update 'clean' to be
-> more ruthless about tracked sparse directories. The key here is to make
-> sure that the SKIP_WORKTREE bit is removed from more paths in the index
-> using update_sparsity() before compressing the index to a sparse one
-> in-memory.
->
-> The tricky part here is that update_sparsity() was previously assuming
-> that it would be in 'update' mode and would change the worktree as it
-> made changes. However, we do not want to make these worktree changes at
-> this point, instead relying on our later logic (that integrates with
-> --dry-run and --verbose options) to perform those steps.
->
-> One side-effect here is that we also clear out staged files that exist
-> in the worktree, but they would also appear in the verbose output as
-> part of the dry run.
->
-> The final test in t1091 demonstrates that we no longer need the
-> 'reapply' subcommand for merge resolutions. It also fixes an earlier
-> case where 'git add --sparse' clears the SKIP_WORKTREE bit and avoids a
-> directory deletion.
->
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
 > ---
->  builtin/sparse-checkout.c          |  8 ++++++++
->  t/t1091-sparse-checkout-builtin.sh | 24 +++++++++++++++++-------
->  unpack-trees.c                     |  2 +-
->  3 files changed, 26 insertions(+), 8 deletions(-)
->
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> index f38a0809c098..1d1d5208a3ba 100644
-> --- a/builtin/sparse-checkout.c
-> +++ b/builtin/sparse-checkout.c
-> @@ -962,6 +962,7 @@ static int sparse_checkout_clean(int argc, const char=
- **argv,
->         size_t worktree_len;
->         int force =3D 0, dry_run =3D 0, verbose =3D 0;
->         int require_force =3D 1;
-> +       struct unpack_trees_options o =3D { 0 };
->
->         struct option builtin_sparse_checkout_clean_options[] =3D {
->                 OPT__DRY_RUN(&dry_run, N_("dry run")),
-> @@ -990,6 +991,13 @@ static int sparse_checkout_clean(int argc, const cha=
-r **argv,
->         if (repo_read_index(repo) < 0)
->                 die(_("failed to read index"));
->
-> +       o.verbose_update =3D verbose;
-> +       o.update =3D 0; /* skip modifying the worktree here. */
-> +       o.head_idx =3D -1;
-> +       o.src_index =3D o.dst_index =3D repo->index;
-> +       if (update_sparsity(&o, NULL))
-> +               warning(_("failed to reapply sparse-checkout patterns"));
-> +
->         if (convert_to_sparse(repo->index, SPARSE_INDEX_MEMORY_ONLY) ||
->             repo->index->sparse_index =3D=3D INDEX_EXPANDED)
->                 die(_("failed to convert index to a sparse index; resolve=
- merge conflicts and try again"));
-> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout=
--builtin.sh
-> index 116ad7c9a20e..4b9078d90a61 100755
-> --- a/t/t1091-sparse-checkout-builtin.sh
-> +++ b/t/t1091-sparse-checkout-builtin.sh
-> @@ -1104,6 +1104,7 @@ test_expect_success 'clean with staged sparse chang=
-e' '
->
->         cat >expect <<-\EOF &&
->         Would remove deep/deeper2/
-> +       Would remove folder1/
->         EOF
->
->         git -C repo sparse-checkout clean --dry-run >out &&
-> @@ -1115,6 +1116,7 @@ test_expect_success 'clean with staged sparse chang=
-e' '
->         # deletes deep/deeper2/ but leaves folder1/ and folder2/
->         cat >expect <<-\EOF &&
->         Removing deep/deeper2/
-> +       Removing folder1/
->         EOF
->
->         # The previous test case checked the -f option, so
-> @@ -1124,7 +1126,7 @@ test_expect_success 'clean with staged sparse chang=
-e' '
->         test_cmp expect out &&
->
->         test_path_is_missing repo/deep/deeper2 &&
-> -       test_path_exists repo/folder1 &&
-> +       test_path_is_missing repo/folder1 &&
->         test_path_exists repo/folder2
+>  Documentation/Makefile                      | 10 +++++++++
+>  Documentation/git-check-attr.adoc           |  3 ++-
+>  Documentation/git-check-ignore.adoc         |  9 +++++---
+>  Documentation/git-http-fetch.adoc           |  4 +++-
+>  Documentation/lint-documentation-style.perl | 24 +++++++++++++++++++++
+>  Documentation/technical/api-path-walk.adoc  |  5 ++++-
+>  shared.mak                                  |  1 +
+>  7 files changed, 50 insertions(+), 6 deletions(-)
+>  create mode 100755 Documentation/lint-documentation-style.perl
 
-What this doesn't show is that afterwards:
+I documented that this was the correct way to format them in
+CodingGuidelines. At the time I commented that there were some places
+that didn't follow this rule. Junio replied [1]:
 
-$ git -C repo status
+> We are updating them gradually while avoiding collisions with
+> patches that do other "real" work; see many recent patches to
+> Documentation/config/ area by Jean-No=C3=ABl Avila for more, e.g.
+> d30c5cc4 (doc: convert git-mergetool options to new synopsis style,
+> 2025-05-25).
 
-On branch main
-You are in a sparse checkout with 78% of tracked files present.
+As long as he is okay with the change, this looks good to me. It isn't
+that many changes, so hopefully it is. :)
 
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-    new file:   folder1/file
+Small nit, but the issue was '\n' not being interpreted as a newline in
+sed's s command. Mentioning carriage return makes me think of '\r'.
 
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-    deleted:    folder1/file
-    modified:   folder2/a
+Reviewed-by: Collin Funk <collin.funk1@gmail.com>
 
-
-=3D=3D> In other words, folder1/file and folder1/ were successfully
-removed by this clean command, but when the user runs status, they see
-that folder1/file has been deleted (and has a staged change).  This is
-probably correct behavior and may be expected, but might be surprising
-to users at first; it probably deserves to be documented, or at least
-covered in the commit message.  Especially since it's somewhat
-difficult for users to work with:
-
-$ cd repo
-$ git checkout HEAD -- folder1/file
-error: pathspec 'folder1/file' did not match any file(s) known to git
-
-$ git add -- folder1/file
-The following paths and/or pathspecs matched paths that exist
-outside of your sparse-checkout definition, so will not be
-updated in the index:
-folder1/file
-hint: If you intend to update such entries, try one of the following:
-hint: * Use the --sparse option.
-hint: * Disable or modify the sparsity rules.
-hint: Disable this message with "git config set advice.updateSparsePath fal=
-se"
-
-$ git add --sparse -- folder1/file
-fatal: pathspec 'folder1/file' did not match any files
-
-$ git reset -- folder1/file
-Unstaged changes after reset:
-M    folder2/a
-
-$
-
-=3D=3D> So, both checkout and add fail to work with this path while reset
-works.  `git commit` also would have worked; let's back up to the
-point of status above, then get rid of the folder2/a modification, and
-then use git commit to commit our folder1/file change:
-
-$ git checkout folder2/a
-Updated 1 path from the index
-$ git commit -m "A change"
-[main aad2d89] A change
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 folder1/file
-$ git status
-On branch main
-You are in a sparse checkout with 78% of tracked files present.
-
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-    deleted:    folder1/file
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-=3D=3D> Great, so we got rid of the folder2/a modification, and committed
-the staged folder1/file modification.  The folder1/file showing as
-deleted is annoying but a `sparse-checkout clean` should get rid of it
-as well as the pesky folder2/ directory, right?
-
-$ git sparse-checkout clean -f
-Removing folder2/
-
-$ git status
-On branch main
-You are in a sparse checkout with 78% of tracked files present.
-
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-    deleted:    folder1/file
-    deleted:    folder2/a
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-=3D=3D> Huh, `git sparse-checkout clean -f` got rid of folder2, but now
-folder2/a shows up as deleted locally...and folder1/file is still
-showing as deleted locally.  And it doesn't matter how many times we
-run `git sparse-checkout clean -f`; this is the end state for it.  But
-if we run `git sparse-checkout reapply`:
-
-$ git sparse-checkout reapply
-$ git status
-On branch main
-You are in a sparse checkout with 56% of tracked files present.
-
-nothing to commit, working tree clean
-
-=3D=3D> So, you still need to use `git sparse-checkout reapply` together
-with `git sparse-checkout clean -f`; you haven't fixed that yet.
-
-
-> @@ -1147,7 +1149,11 @@ test_expect_success 'sparse-checkout operations wi=
-th merge conflicts' '
->                 git commit -a -m "left" &&
->
->                 git checkout -b merge &&
-> -               git sparse-checkout set deep/deeper1 &&
-> +
-> +               touch deep/deeper2/extra &&
-> +               git sparse-checkout set deep/deeper1 2>err &&
-> +               grep "contains untracked files" err &&
-> +               test_path_exists deep/deeper2/extra &&
->
->                 test_must_fail git merge -m "will-conflict" right &&
->
-> @@ -1159,15 +1165,19 @@ test_expect_success 'sparse-checkout operations w=
-ith merge conflicts' '
->                 git merge --continue &&
->
->                 test_path_exists folder1/even/more/dirs/file &&
-> +               test_path_exists deep/deeper2/extra &&
-> +
-> +               cat >expect <<-\EOF &&
-> +               Removing deep/deeper2/
-> +               Removing folder1/
-> +               EOF
->
->                 # clean does not remove the file, because the
->                 # SKIP_WORKTREE bit was not cleared by the merge command.
-
-Shouldn't the comment be updated, given the testcase updates?
-
->                 git sparse-checkout clean -f >out &&
-> -               test_line_count =3D 0 out &&
-> -               test_path_exists folder1/even/more/dirs/file &&
-> -
-> -               git sparse-checkout reapply &&
-> -               test_path_is_missing folder1
-> +               test_cmp expect out &&
-> +               test_path_is_missing folder1 &&
-> +               test_path_is_missing deep/deeper2
-
-Yes, but why does `git status` show folder1/even/more/dirs/file as
-being locally deleted?  Does the code forget to update the
-SKIP_WORKTREE status after clearing out the files?
+Collin
