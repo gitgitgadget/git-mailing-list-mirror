@@ -1,55 +1,55 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D43242D6E
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 08:04:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C58E253F07
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 08:05:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754553901; cv=none; b=XRQNx+rx233FSz4TesPJ1k3giYbuU04LmkOasUdvW4dQx4YtoCqwTbJS+2GYwaIbtzJy1OFaWmgCFM1v/eAWjAXkUlt4E+kYkr0bOzfTjiyd9tLWLDMKJFmSDnxL7bQm3fVjqro3z7JFra4RNJkVsNoNlokSfLwTNgVbW8T4LFE=
+	t=1754553905; cv=none; b=Fwyp5AKdyFNe7apa5blpxXzdrl5R+q6beLOFjH2G8jlGOlQE984DOEJJqPkfQFWUmecja4f46hgB3fi4n3isAO/SrD3ElLAdULInNhmAXgt+lWNedTtbyLzbYi6PF/ckLAXozRV7yIJ/lEjWd1s+aULs6pp4npFApPUL8iWsk7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754553901; c=relaxed/simple;
-	bh=x7kyJx8vasTwyeW4Jns0Zz54KEwbp42wwRzh6L4dEv8=;
+	s=arc-20240116; t=1754553905; c=relaxed/simple;
+	bh=F255LI3twtDZ1khioYj6AWXiRv0ScAlzNdeyhhoIorc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PH8Bk98Mw7M9HLLeVg0ROOxjIj6Vnua0KXzTCAMr4pDsw8S6WCuplDQXsR2Yp/3om75X2VnZ+vamEdWF5ZgcOYzE1kiR6XOk7muQyceuxU3H7XcE39yQvH8VuRbnQsi0D/bxdsSZekDaCU7QBFVOG0xvryTYkOp/uyWtTTb+IMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YAKqFdKU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TACuVNyg; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=fKg0+ReJMGwRaR5OUl0SW+0JI6ohZqaJq9XQL6dzmVa+j8r/I+FOLJlIVi2yUbDZc2mvxoF1/ha1OxZfUhgey46dTIfNKKpb7FZBfPsoTjcgI6mA57eH93vjIHtCSYyw0SVXzn9iR0TF9Q/5CmnRnUyvcn7G6daoE3XXKefVHeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GJt4P010; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TVNerzFx; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YAKqFdKU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TACuVNyg"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3D49814000BA;
-	Thu,  7 Aug 2025 04:04:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GJt4P010";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TVNerzFx"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9C03CEC0015;
+	Thu,  7 Aug 2025 04:05:02 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Thu, 07 Aug 2025 04:04:59 -0400
+  by phl-compute-09.internal (MEProxy); Thu, 07 Aug 2025 04:05:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754553899;
-	 x=1754640299; bh=TGPHApPU0qOS4YRPyw4o3qsM2LLSBEZ14+P4LBU2oQw=; b=
-	YAKqFdKUqRlW8I2kKaki/G+OzN4TI8enTpLqUfZndjx/XjNz8Sq7UVdiONvIHpuN
-	3Q3H9kOL0QJVHctEypt3tdFZgIC9oflbLYksKg7a0zG8Kpi8PI+Eb45apOUsGSbZ
-	n3oD9qpKJE1ZiIPaDhmbi0cgwNLJYdOw/TAvbVoD3OLHj89JgbA4pE/kjgFKmL6x
-	mpWU1egLCpHJloSi4bWcX8wETh7vBtNV4LbI0fmSQfUa0ODUtaMa8lFQcRT1TXmP
-	AnXVZY2QBaiUzThMbRKs2jqPiwKEQ+h0yN6o0egmaHq9SSylHNz1KrVV4lJD3Y4F
-	BdM5aw5M7yY5+xMnXTKKkw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754553902;
+	 x=1754640302; bh=95gnkqZtZn+MvvyH348vGk5nqbo/FhlxBJ0XFQrvUMw=; b=
+	GJt4P010/tJe/mMojcTJGv/DDwpq5C5swEaRN4fhuOul01tz5SB6xfMLNHhp0QBM
+	/cq3iDPWpmrJNdSF1x7h9aF5NDzPWQhIXB8Xm6sK9Nhp444KJQ531bJiRp5zDm9G
+	Pr+bu/aXDjHSBxPk4f15K+0Yfpv3jZWWrOuNVYhb6fvNkDM0qLhevcG7K6xhQKN1
+	IAPNnUKD0xbnxISW3Xt+IxpTCplZhh4vrQmg1Cl95R8Mc8FQyLWG/K+pd0wmOqqK
+	BXgHCnsiLE/wdgoIW6NIcKqFNcPVE1t8UWjenppk9RQFNR/6MAt0nve7m4s/jRVj
+	tDjCBIPQjED6IFnlDm3qiQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754553899; x=
-	1754640299; bh=TGPHApPU0qOS4YRPyw4o3qsM2LLSBEZ14+P4LBU2oQw=; b=T
-	ACuVNyg3Bt4Aw6MZLsimCTNBO5eRuWiX/wEwOByR/0L3KpqX+qYbUpZYLFG7gyNV
-	osfV3A+bPgJLtm6mMIbxwzIMUUBHHigV2piiM0Uc7kFnL3DXiinpHFEhM7B5Ha3g
-	KscZaCVmgE3PLKIjAqVEp2ygzXUEIO78f4hwfxGJSBzCF/LjKUms308KDy9WyNmG
-	rhRflxl0/x6KStr6dQ7NQGIXix3puXdTokzgrgtnqW8H/E2KwEMs5fOh9BpA6mbU
-	zaxTYkFou+edZsjaYIc85/q0OhilytPdcjnmTLSMqE7blISovGEdm9wCkEFmUimu
-	vgyNC04gbtWxXVkw952hA==
-X-ME-Sender: <xms:Kl6UaJ0EcSfm9hHghwIEClc2_DsoikwTmz2XfhD4EM74I_uT1ibN8Q>
-    <xme:Kl6UaLmXEl85GNxofYD3RZ0lt0YKqAeZRs0d4aj-QVZo21WGYeyHQQKjcujOay9N_
-    3TMRhpHKVPkhfX9hw>
-X-ME-Received: <xmr:Kl6UaAX6ZwFoT54MzYSVtHlzaJiE3dsdHvO0kCNpEG-2n-Ii55QoGboCoM1xUNyol_zlBylooKWT0s5l1m_sPfK-V0n4FFr44t2tKVAlUw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754553902; x=
+	1754640302; bh=95gnkqZtZn+MvvyH348vGk5nqbo/FhlxBJ0XFQrvUMw=; b=T
+	VNerzFx42EiauF8rziuPttuKiuVYUOc2RLQ1kdQwBiv6Tp8OGaZrPp5n6ZiiIIm9
+	n40Y1th/tYyXM7ni2siz5GhzsijU1pzOdaDAcrxpqhj6UmwDN9SQQXaNKiYgkkTR
+	NzsVI2l7NGcgXF7YqiZGWfwdP4NQk5gjHKeM37sMjOiOFH+BPR+m3vi9nHHHJSj0
+	pQ5YSRjiyWp0NPP4lSZ48qU44u8MJjYl6VDkphXLmjor/qwzqzp3htzcqSfIXRqf
+	3DfsNdOXmwbfbGqMz5EzJW4Mq7F7CecX7LycS7jjtEcBNKp2MNyC/4gCNMCPsOwx
+	9xfV99HL8bBVUwVx9RkBA==
+X-ME-Sender: <xms:Ll6UaPRtyZUURoxGXXLHTU392zUeEvx-gR_n4MXGRLjg_jXQRldWyA>
+    <xme:Ll6UaMSbj1cUgaijgP1IqN9pEH59xDl8-2jB1Gbvnd9UgtrPVjCExZFzV8nT70EBJ
+    B6gYRq8cVikxcQOHw>
+X-ME-Received: <xmr:Ll6UaLSUaGSFVlgHrvvAskwUx9sIC7LGbDx0qS6yRtOfSVIFBA08esxq0Vl__pXGa5qE2tCuUKGI2muqqQLraA7HwcVGrvlSRtkRty5alA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddtgedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddtgedtucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlh
-    horhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehoshifrghlugdrsghuugguvghnhhgrghgvnhesghhmgidruggvpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:K16UaBuvlws-ZQ5yfpl2i13X6NT0-8NNM1Yyuqzs6quEhB3HG8dNpg>
-    <xmx:K16UaDYqyBHLvvd055t5Vk8FrUrbS5Ng38-mLlli6d2F52MkhCyTxw>
-    <xmx:K16UaAXFJ3yJ-kFIE1k6kjBAJJ1EsxHZfNFHw-OYTRRX8O6zzofl9Q>
-    <xmx:K16UaISi_oVv_PAXqtbW_Py6TwHRVuvvc-HO8occuogspofp-l2-9A>
-    <xmx:K16UaOhdlJvcLhXovhDrS4D6MLwNqL0cvwxZ3_XCA3LpJC-iy9C3iPDX>
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhtohhlvggvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepohhsfi
+    grlhgurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvg
+X-ME-Proxy: <xmx:Ll6UaJ7FJhkDkfvf6cpYhNrUzTonG6TZa3Q8SRMin4_l-ZwkJfHlvA>
+    <xmx:Ll6UaP1xssB0thEdZZMZELeT5UQx0rbrjlN9qjCV15Dw1WIQo5ffIw>
+    <xmx:Ll6UaMAe2S_8lBywL7tpEzo5QX4dVD3UcXeL3UPkmNwk41ricnEMmA>
+    <xmx:Ll6UaCPZg0F0t6htQrzYDzXwRVmIa-8HViVmUcj1YmjEGG2U6owYLA>
+    <xmx:Ll6UaMvXJ9qlHn3okrJAaGYpNTDjUQzT08T1oGmwatgKkoBg_PO6terF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Aug 2025 04:04:58 -0400 (EDT)
+ 7 Aug 2025 04:05:01 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a4e9144a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 7 Aug 2025 08:04:57 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 5d2736d6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 7 Aug 2025 08:05:00 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 07 Aug 2025 10:04:45 +0200
-Subject: [PATCH v3 03/10] commit-graph: fix type for some write options
+Date: Thu, 07 Aug 2025 10:04:46 +0200
+Subject: [PATCH v3 04/10] commit-graph: fix sign comparison warnings
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250807-b4-pks-commit-graph-wo-the-repository-v3-3-82edef830a1e@pks.im>
+Message-Id: <20250807-b4-pks-commit-graph-wo-the-repository-v3-4-82edef830a1e@pks.im>
 References: <20250807-b4-pks-commit-graph-wo-the-repository-v3-0-82edef830a1e@pks.im>
 In-Reply-To: <20250807-b4-pks-commit-graph-wo-the-repository-v3-0-82edef830a1e@pks.im>
 To: git@vger.kernel.org
@@ -93,71 +93,230 @@ Cc: Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-The options "max-commits" and "size-multiple" are both supposed to be
-positive integers and are documented as such, but we use a signed
-integer field to store them. This causes sign comparison warnings in
-`split_graph_merge_strategy()` because we end up comparing the option
-values with the observed number of commits.
+The "commit-graph.c" file has a bunch of sign comparison warnings:
 
-Fix the issue by converting the fields to be unsigned and convert the
-options to use `OPT_UNSIGNED()` accordingly. This macro has only been
-introduced recently, which might explain why the option values were
-signed in the first place.
+  - There are a bunch of variables that are declared as signed integers
+    even though they are used to count entities, like for example
+    `num_commit_graphs_before` and `num_commit_graphs_after`.
+
+  - There are several cases where we use signed loop variables to
+    iterate through an unsigned entity count.
+
+  - In `write_graph_chunk_base_1()` we count how many chunks we have
+    written in total. But while the value represents a positive
+    quantity, we still return a signed integer that we then later
+    compare with unsigned values.
+
+  - The Bloom settings hash version is being assigned `-1` even though
+    it's an unsigned value. This is used to indicate an unspecified
+    value and relies on 1's complement.
+
+Fix all of these cases by either using the proper variable type or by
+adding casts as required.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/commit-graph.c | 4 ++--
- commit-graph.c         | 5 ++---
- commit-graph.h         | 4 ++--
- 3 files changed, 6 insertions(+), 7 deletions(-)
+ commit-graph.c | 54 +++++++++++++++++++++++++++---------------------------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 25018a0b9d..145802afb7 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -241,9 +241,9 @@ static int graph_write(int argc, const char **argv, const char *prefix,
- 			N_("allow writing an incremental commit-graph file"),
- 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
- 			write_option_parse_split),
--		OPT_INTEGER(0, "max-commits", &write_opts.max_commits,
-+		OPT_UNSIGNED(0, "max-commits", &write_opts.max_commits,
- 			N_("maximum number of commits in a non-base split commit-graph")),
--		OPT_INTEGER(0, "size-multiple", &write_opts.size_multiple,
-+		OPT_UNSIGNED(0, "size-multiple", &write_opts.size_multiple,
- 			N_("maximum ratio between two levels of a split commit-graph")),
- 		OPT_EXPIRY_DATE(0, "expire-time", &write_opts.expire_time,
- 			N_("only expire files older than a given date-time")),
 diff --git a/commit-graph.c b/commit-graph.c
-index 3fc1273ba5..53bf83f7b5 100644
+index 53bf83f7b5..7c0ded4532 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -2235,9 +2235,8 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
- 	uint32_t num_commits;
- 	enum commit_graph_split_flags flags = COMMIT_GRAPH_SPLIT_UNSPECIFIED;
- 	uint32_t i;
--
--	int max_commits = 0;
--	int size_mult = 2;
-+	unsigned max_commits = 0;
-+	unsigned size_mult = 2;
+@@ -1,5 +1,4 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+-#define DISABLE_SIGN_COMPARE_WARNINGS
  
- 	if (ctx->opts) {
- 		max_commits = ctx->opts->max_commits;
-diff --git a/commit-graph.h b/commit-graph.h
-index 78ab7b875b..f5b032e982 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -160,8 +160,8 @@ enum commit_graph_split_flags {
- };
+ #include "git-compat-util.h"
+ #include "config.h"
+@@ -569,7 +568,7 @@ static void validate_mixed_bloom_settings(struct commit_graph *g)
+ static int add_graph_to_chain(struct commit_graph *g,
+ 			      struct commit_graph *chain,
+ 			      struct object_id *oids,
+-			      int n)
++			      size_t n)
+ {
+ 	struct commit_graph *cur_g = chain;
  
- struct commit_graph_opts {
--	int size_multiple;
--	int max_commits;
-+	unsigned size_multiple;
-+	unsigned max_commits;
- 	timestamp_t expire_time;
- 	enum commit_graph_split_flags split_flags;
- 	int max_new_filters;
+@@ -622,7 +621,7 @@ int open_commit_graph_chain(const char *chain_file,
+ 		close(*fd);
+ 		return 0;
+ 	}
+-	if (st->st_size < the_hash_algo->hexsz) {
++	if (st->st_size < (ssize_t) the_hash_algo->hexsz) {
+ 		close(*fd);
+ 		if (!st->st_size) {
+ 			/* treat empty files the same as missing */
+@@ -643,15 +642,16 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
+ 	struct commit_graph *graph_chain = NULL;
+ 	struct strbuf line = STRBUF_INIT;
+ 	struct object_id *oids;
+-	int i = 0, valid = 1, count;
++	int valid = 1;
+ 	FILE *fp = xfdopen(fd, "r");
++	size_t count;
+ 
+ 	count = st->st_size / (the_hash_algo->hexsz + 1);
+ 	CALLOC_ARRAY(oids, count);
+ 
+ 	odb_prepare_alternates(r->objects);
+ 
+-	for (i = 0; i < count; i++) {
++	for (size_t i = 0; i < count; i++) {
+ 		struct odb_source *source;
+ 
+ 		if (strbuf_getline_lf(&line, fp) == EOF)
+@@ -1145,12 +1145,12 @@ struct write_commit_graph_context {
+ 	int num_generation_data_overflows;
+ 	unsigned long approx_nr_objects;
+ 	struct progress *progress;
+-	int progress_done;
++	uint64_t progress_done;
+ 	uint64_t progress_cnt;
+ 
+ 	char *base_graph_name;
+-	int num_commit_graphs_before;
+-	int num_commit_graphs_after;
++	uint32_t num_commit_graphs_before;
++	uint32_t num_commit_graphs_after;
+ 	char **commit_graph_filenames_before;
+ 	char **commit_graph_filenames_after;
+ 	char **commit_graph_hash_after;
+@@ -1181,7 +1181,7 @@ static int write_graph_chunk_fanout(struct hashfile *f,
+ 				    void *data)
+ {
+ 	struct write_commit_graph_context *ctx = data;
+-	int i, count = 0;
++	size_t i, count = 0;
+ 	struct commit **list = ctx->commits.list;
+ 
+ 	/*
+@@ -1209,7 +1209,8 @@ static int write_graph_chunk_oids(struct hashfile *f,
+ {
+ 	struct write_commit_graph_context *ctx = data;
+ 	struct commit **list = ctx->commits.list;
+-	int count;
++	size_t count;
++
+ 	for (count = 0; count < ctx->commits.nr; count++, list++) {
+ 		display_progress(ctx->progress, ++ctx->progress_cnt);
+ 		hashwrite(f, (*list)->object.oid.hash, the_hash_algo->rawsz);
+@@ -1331,9 +1332,9 @@ static int write_graph_chunk_generation_data(struct hashfile *f,
+ 					     void *data)
+ {
+ 	struct write_commit_graph_context *ctx = data;
+-	int i, num_generation_data_overflows = 0;
++	int num_generation_data_overflows = 0;
+ 
+-	for (i = 0; i < ctx->commits.nr; i++) {
++	for (size_t i = 0; i < ctx->commits.nr; i++) {
+ 		struct commit *c = ctx->commits.list[i];
+ 		timestamp_t offset;
+ 		repo_parse_commit(ctx->r, c);
+@@ -1355,8 +1356,8 @@ static int write_graph_chunk_generation_data_overflow(struct hashfile *f,
+ 						      void *data)
+ {
+ 	struct write_commit_graph_context *ctx = data;
+-	int i;
+-	for (i = 0; i < ctx->commits.nr; i++) {
++
++	for (size_t i = 0; i < ctx->commits.nr; i++) {
+ 		struct commit *c = ctx->commits.list[i];
+ 		timestamp_t offset = commit_graph_data_at(c)->generation - c->date;
+ 		display_progress(ctx->progress, ++ctx->progress_cnt);
+@@ -1526,7 +1527,7 @@ static void add_missing_parents(struct write_commit_graph_context *ctx, struct c
+ 
+ static void close_reachable(struct write_commit_graph_context *ctx)
+ {
+-	int i;
++	size_t i;
+ 	struct commit *commit;
+ 	enum commit_graph_split_flags flags = ctx->opts ?
+ 		ctx->opts->split_flags : COMMIT_GRAPH_SPLIT_UNSPECIFIED;
+@@ -1620,10 +1621,9 @@ static void compute_reachable_generation_numbers(
+ 			struct compute_generation_info *info,
+ 			int generation_version)
+ {
+-	int i;
+ 	struct commit_list *list = NULL;
+ 
+-	for (i = 0; i < info->commits->nr; i++) {
++	for (size_t i = 0; i < info->commits->nr; i++) {
+ 		struct commit *c = info->commits->list[i];
+ 		timestamp_t gen;
+ 		repo_parse_commit(info->r, c);
+@@ -1714,7 +1714,7 @@ static void set_generation_v2(struct commit *c, timestamp_t t,
+ 
+ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
+ {
+-	int i;
++	size_t i;
+ 	struct compute_generation_info info = {
+ 		.r = ctx->r,
+ 		.commits = &ctx->commits,
+@@ -1793,10 +1793,10 @@ static void trace2_bloom_filter_write_statistics(struct write_commit_graph_conte
+ 
+ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ {
+-	int i;
++	size_t i;
+ 	struct progress *progress = NULL;
+ 	struct commit **sorted_commits;
+-	int max_new_filters;
++	size_t max_new_filters;
+ 
+ 	init_bloom_filters();
+ 
+@@ -1814,7 +1814,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ 		QSORT(sorted_commits, ctx->commits.nr, commit_gen_cmp);
+ 
+ 	max_new_filters = ctx->opts && ctx->opts->max_new_filters >= 0 ?
+-		ctx->opts->max_new_filters : ctx->commits.nr;
++		(size_t) ctx->opts->max_new_filters : ctx->commits.nr;
+ 
+ 	for (i = 0; i < ctx->commits.nr; i++) {
+ 		enum bloom_filter_computed computed = 0;
+@@ -2017,10 +2017,10 @@ static void copy_oids_to_commits(struct write_commit_graph_context *ctx)
+ 	stop_progress(&ctx->progress);
+ }
+ 
+-static int write_graph_chunk_base_1(struct hashfile *f,
+-				    struct commit_graph *g)
++static size_t write_graph_chunk_base_1(struct hashfile *f,
++				       struct commit_graph *g)
+ {
+-	int num = 0;
++	size_t num = 0;
+ 
+ 	if (!g)
+ 		return 0;
+@@ -2034,7 +2034,7 @@ static int write_graph_chunk_base(struct hashfile *f,
+ 				    void *data)
+ {
+ 	struct write_commit_graph_context *ctx = data;
+-	int num = write_graph_chunk_base_1(f, ctx->new_base_graph);
++	size_t num = write_graph_chunk_base_1(f, ctx->new_base_graph);
+ 
+ 	if (num != ctx->num_commit_graphs_after - 1) {
+ 		error(_("failed to write correct number of base graph ids"));
+@@ -2480,7 +2480,7 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
+ 		if (stat(path.buf, &st) < 0)
+ 			continue;
+ 
+-		if (st.st_mtime > expire_time)
++		if ((unsigned) st.st_mtime > expire_time)
+ 			continue;
+ 		if (path.len < 6 || strcmp(path.buf + path.len - 6, ".graph"))
+ 			continue;
+@@ -2576,7 +2576,7 @@ int write_commit_graph(struct odb_source *source,
+ 			ctx.changed_paths = 1;
+ 
+ 			/* don't propagate the hash_version unless unspecified */
+-			if (bloom_settings.hash_version == -1)
++			if (bloom_settings.hash_version == (unsigned) -1)
+ 				bloom_settings.hash_version = g->bloom_filter_settings->hash_version;
+ 			bloom_settings.bits_per_entry = g->bloom_filter_settings->bits_per_entry;
+ 			bloom_settings.num_hashes = g->bloom_filter_settings->num_hashes;
 
 -- 
 2.51.0.rc0.215.g125493bb4a.dirty
