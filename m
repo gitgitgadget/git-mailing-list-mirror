@@ -1,172 +1,132 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268A423FC42
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 07:43:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203701DF258
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 07:48:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754552636; cv=none; b=qzl1XtZnOxzPuBobat7TjDIaQmL80FmSHa2X2P3pzSIkDfQk16Xv3pFzwULUpKT/r58ryUGpooNQPUEA08FUqb0XcyRYen61bv3CCKi27Sy7Y9UZRjoPgzOpNKE1+Ff1AOOvT0vmNTpuijEUxTcHxOGUgE9m5nB9GLpm5Ohsdjs=
+	t=1754552918; cv=none; b=GDShgiSrB/tNzjxf9i0l160nAah8EFFPk2vwGUNnBrAxK0x2BHD2gmVQHnsah/iDbZ0NkjH734pkNHsIIu1a+DBKonBnd/YY8lABfdhRSDzLpDK+brJSTwwTCafj1FVAK/R3sopzh2McY3+fgC2AgmW5MDtY6q4FeByIEAp18vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754552636; c=relaxed/simple;
-	bh=0bvMuaT5TUSn8ENwErXKhHX02yXpWuAnyKzj9IGPOg0=;
+	s=arc-20240116; t=1754552918; c=relaxed/simple;
+	bh=bYk4Eb5RFQzh+cNCGVYCaFU1MLx3JpWSfmi+gE9csAw=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=S9GPwYTJr/+zmIAX7kLiB+s8OldtqGnbAwBINBY4iLa+csbsUZQtpKqPMkeP9tTWRn6WAE8ADvlxlnonoYpWFjn2+FC8Ym3Z+/hqRvugH0sgr+MJ3buRcV5cLLahYlESeSkyRLQPnlNDbo9G00Uv8bli7nxINkiAoQqBkhSi4h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eXfVSZW6; arc=none smtp.client-ip=209.85.222.54
+	 To:Cc:Content-Type; b=IeU3apMaqIG3E59aoKLF0a4L6GybeSjTyCfveRMCopiLZqbjXtMBXmLPBvV0UAfAmx35mkAxd0jXm4dnU6hewy/VvY8Lc8kNJuGjkufotXGmcYeTje1wkzhZ6MCZZm3sZy6x+G3rVBh7ILvcxUyGOpdC2fqa3yghBNcNQXH5g3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YTAKOEmj; arc=none smtp.client-ip=209.85.217.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eXfVSZW6"
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-88ddd1c6178so352324241.2
-        for <git@vger.kernel.org>; Thu, 07 Aug 2025 00:43:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YTAKOEmj"
+Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-4fc009e3050so540753137.0
+        for <git@vger.kernel.org>; Thu, 07 Aug 2025 00:48:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754552634; x=1755157434; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754552916; x=1755157716; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=aoJ819cKJyjvg3YrQ0vn4SG9e9dItOPjRgpcyIf4oUM=;
-        b=eXfVSZW60AjGSv+gLKiFkap5LTH28AnRGdwyWuki4w4ldicGil1mQAgbwwehbQDLhJ
-         0opWcfl+kyOHv2qB9wCbbfg0alFmcdCtSEjQS5GCCO0muZwck5jVtZXu/et/W7Gk4rp1
-         lKYPWrYH8284trYinCQTEuz/op1vLsrTubNUpBe4+OJgFnFYV7Orbc4Uclzz5OiyujTs
-         QJZRaFnkAYTEwEMvAZD9qUIV0+ivwMlJYPkj9h5vuczNpN6sLuOWiFHqIKmMs2d/yPw4
-         rNzT6P89QyUFlJRUga0uTVrJwzuHHHWpeusz4zjId2LcS9XKrXwjm+Q2E4o/ZYiy52Nx
-         KzMA==
+        bh=IPs/CwvTjC176HA6f5Zsjrfr/fVvIp2TjbntQ6X+j8Q=;
+        b=YTAKOEmjlm4s1WYTUqez8NBYa/VHEpNS1+++F9aMgAlQmdEQQ4liRnOIlqGLkQ+6Og
+         /HyKUPOzQMDHNJYXzpbvGs2ln8dBa9ljDhGJt2FxvtHD833huP5s2MqI6ER+rW4l1sH5
+         GLZJgGm5hOrdkuJnWOLOE7VcrhGCsnkj4bMVpdb+PgMPyD/vLl4JGrRbTDPlq+AZZdrE
+         hJRFZ2KjVkR45UOnLnaGeLpvGdFqfbTSW94XYKf1tQhSUnvI8to8sr4xrtAFhyeNf640
+         0rfxeAUgzBAf02wjzQxXD769GsOudb2YblTR27wmQQthkevRdQt4e07CnQdafSSGwnZ7
+         7qFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754552634; x=1755157434;
+        d=1e100.net; s=20230601; t=1754552916; x=1755157716;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aoJ819cKJyjvg3YrQ0vn4SG9e9dItOPjRgpcyIf4oUM=;
-        b=ejm5ZqDNyvroLvXgMXbdPmQhzx4piUR/pphqb1FieAXzgMRUu28/Mn66aQURM95BOg
-         HCEPc4tSlg35Cqo4MTwDxc+G9/8alJNRjqurK815jhu4xeWHmBt1CcgYVZ1dr8gKHZr8
-         odm++HHdxUhtUgWBl9dY1F5LIviNJae8FrwIahwMppdKKUEJ3NpH07wjfCgGUEvPBjcU
-         kTB0SOmbGGCFzdDHtN2ovFz3CTFEOOhqtfQmnqBhV4HskuQoa3YB54WNXqSKwF7fr/nZ
-         uUO0DGVlmAcRijVnb6lf4wrZDtJ6rMtC39X/bsvbz0iHXV8TipxnXZ9SG/283p3EiTqZ
-         je/w==
-X-Forwarded-Encrypted: i=1; AJvYcCVLVcVzFUUcJnviLFk9dsnPYeUexHOzTd9OPWYXfGlYvVphDHrsT5vc3YF1J0aUOH7vrkA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFPAxgb9Xnw7vkN5fgWDmbrxVpnM8zsl4vvmKUMPG0nmPOtzvR
-	w/iTxNENbg6vP8mevPiFo+F8AfXikPp8mfYbB3dsankwnwRPXY4C6qyGAtGAFZ2dO6E+7ldoSVn
-	6KrEpXbSQvinZKyKJ0+2BvSQxBFBSIAg=
-X-Gm-Gg: ASbGncsJu0I2dBt34ksPa5/6nrFixTOJnCdDgUS3HbVvx26009bnfmhv5P0Lw1JfZyR
-	GiiffnknN+x90cUwhqdpVXHEOnDrxYWZ3jRJl+pRUWgmbJHZwN8p2Zz9DbeKqc2936EWkqkl96R
-	bXk5FqZ2JZZgwC0mDWsXwUQCTfgS/fzyO7UXnEwFH+CkH5lfD/BrdjybcbXpz2Oj42pI674LVTm
-	A++oA==
-X-Google-Smtp-Source: AGHT+IErImyrRDdQe820pXnlP294gFJ9FE+d8OPwO9fFY/eSUwvTWbSY2txMWFHWva1i/WHgwAhxVYUhgohCuHYgZjs=
-X-Received: by 2002:a05:6102:3e27:b0:4e9:ba27:2c94 with SMTP id
- ada2fe7eead31-5037810e30cmr3095475137.6.1754552633800; Thu, 07 Aug 2025
- 00:43:53 -0700 (PDT)
+        bh=IPs/CwvTjC176HA6f5Zsjrfr/fVvIp2TjbntQ6X+j8Q=;
+        b=w56riTwf3/HXm1IMU5OQtFw19npUS7eCssPathJs7kSEOE9cEoaTe676tGvyhiRpfq
+         ntWMa5DiQiAr3WMMGbJKklvtbpVjIDe92aWd69JVnHhtfrrHRe/CTs0kqTa0yhyEUnTs
+         a3oSzYE9zRnFkncqBfDfVPS5gY/SJh/IlFWpXxle2ttpzJSBB1kOaebqENQ1gEaymxkH
+         nKSt5D+OQE4KmuQhCxZeFPn3n3baEXW8BDkV5LDO/2lyyAebMDVBQuBXIFbMSkammJZi
+         3zm06vvyolOLCW8vWsuDuDcDaGg840yn5Uj3k48c5pMS/3FbWY3sZ3AOpbHrXSkaeWSo
+         atIg==
+X-Forwarded-Encrypted: i=1; AJvYcCUU1EZIEFfUc0VCLTcXOa6jWmPVYRDRNiLWZJPOaV0cRhXE8/1OZ+abo4eUPyfQ88JrqpY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YykW7r9192p3lgERGCvei4fOr8XcM5nM0bHh0iQGKp6C3UPofit
+	lk+KNllH9lqf4L+/+RKgIwel32HI7HAmSBfHLE4hEBQ7gD/+zlpAtcmASYTRdTqkfLGwxZRCjeX
+	O4gtRDaQjMExIIlspoHr3cKNwmc78hMs=
+X-Gm-Gg: ASbGncsVrmVG5VtslCCCWDNjGYUYPxO/yAapRTyc8Y0Gkw/nvlEHY/B6g6i/koVddEW
+	G/dKwHjzgLS4VGLeuO02Plvw2zS7MiuJKQ6phJTAOQpP6NZpnmWJ1q+OTGKMNrpijiadgzI+8DP
+	pWKqZq7Dbu3bfzqvdY41dTKebdWIQMjRHxnifrQTWipnrYpkxkgAoKsB/KcVXXk/zx1OCq1AdR/
+	jZsUg==
+X-Google-Smtp-Source: AGHT+IHe0ddfsbUYAlhTaOlQiVj5eRaMPTS/SQ8jSR/xJgbVfyg8CNs9GOPf4+tbpoOlxYkB6XTEQgusM1yM3rqUFt0=
+X-Received: by 2002:a05:6102:5128:b0:4e7:b893:fec7 with SMTP id
+ ada2fe7eead31-5037873e5b0mr2731617137.5.1754552915945; Thu, 07 Aug 2025
+ 00:48:35 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 7 Aug 2025 03:43:53 -0400
+ HTTPREST; Thu, 7 Aug 2025 03:48:35 -0400
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 7 Aug 2025 03:43:53 -0400
+ HTTPREST; Thu, 7 Aug 2025 03:48:35 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250806195537.93302-3-lucasseikioshiro@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250806195537.93302-1-lucasseikioshiro@gmail.com> <20250806195537.93302-3-lucasseikioshiro@gmail.com>
+In-Reply-To: <20250806195537.93302-1-lucasseikioshiro@gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com> <20250806195537.93302-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 7 Aug 2025 03:43:53 -0400
-X-Gm-Features: Ac12FXwJaI1VOrrV1vIb-bSZF9vm_JRKopJfJzoPR8q5TUwSuLq-5vYI8YjU7WY
-Message-ID: <CAOLa=ZSX0hFt7PRdXssz2xGG17bmDchS=EheBSmQj9xr+r_baA@mail.gmail.com>
-Subject: Re: [GSoC PATCH v8 2/5] repo: add the field references.format
+Date: Thu, 7 Aug 2025 03:48:35 -0400
+X-Gm-Features: Ac12FXzwqTBVso3aNLN2RVa0GVspXv1Ydh9XTx_gDtFTAHkQbEQ5zaUZ_DIm5NM
+Message-ID: <CAOLa=ZT9BvAp_TvD3MnUJxtpmT=U=hzi3NapokWbEyvyrv_y3A@mail.gmail.com>
+Subject: Re: [GSoC PATCH v8 0/5] repo: add new command for retrieving
+ repository info
 To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
 Cc: oswald.buddenhagen@gmx.de, ps@pks.im, ben.knoble@gmail.com, 
 	gitster@pobox.com, phillip.wood@dunelm.org.uk, jltobler@gmail.com, 
 	jn.avila@free.fr, sunshine@sunshineco.com
-Content-Type: multipart/mixed; boundary="0000000000007a60ec063bc19e24"
+Content-Type: multipart/mixed; boundary="0000000000004b91e5063bc1afe8"
 
---0000000000007a60ec063bc19e24
+--0000000000004b91e5063bc1afe8
 Content-Type: text/plain; charset="UTF-8"
 
 Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-> diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-> new file mode 100755
-> index 0000000000..ce02b394da
-> --- /dev/null
-> +++ b/t/t1900-repo.sh
-> @@ -0,0 +1,57 @@
-> +#!/bin/sh
-> +
-> +test_description='test git repo-info'
-> +
-> +. ./test-lib.sh
-> +
-> +# Test whether a key-value pair is correctly returned
-> +#
-> +# Usage: test_repo_info <label> <init command> <key> <expected value>
-> +#
-> +# Arguments:
-> +#   label: the label of the test
-> +#   init_command: a command which creates a repository
-> +#   repo_name: the name of the repository that will be created in init_command
-> +#   key: the key of the field that is being tested
-> +#   expected_value: the value that the field should contain
-> +test_repo_info () {
-> +	label=$1
-> +	init_command=$2
-> +	repo_name=$3
-> +	key=$4
-> +	expected_value=$5
-> +
-> +	test_expect_success "$label" '
-> +		eval "$init_command $repo_name" &&
-> +		echo "$key=$expected_value" >expected &&
-> +		git -C $repo_name repo info "$key" >actual &&
-> +		test_cmp expected actual
-> +	'
-> +}
-> +
-> +test_repo_info 'ref format files is retrieved correctly' '
-> +	git init --ref-format=files' 'format-files' 'references.format' 'files'
-> +
-> +test_repo_info 'ref format reftable is retrieved correctly' '
-> +	git init --ref-format=reftable' 'format-reftable' 'references.format' 'reftable'
-> +
-> +test_expect_success 'git-repo-info fails if an invalid key is requested' '
-> +	echo "error: key '\'foo\'' not found" >expected_err &&
+> Hi again!
+>
+> This 8th version of `git-repo` basically address minor issues from the 7th
+> version:
+>
+> - A test wasn't passing in the CI because it assumed that the ref
+>   format was files by default. I fixed that.
+>
+> - t0450 wasn't passing because the documentation didn't match the
+>   usage string. I fixed that.
+>
+> - A test generated the output and the expected value but wasn't
+>   comparing them. I also fixed that.
+>
+> - strbuf management: now we have two strbufs for printing values:
+>   one for unquoted values and other for quoted values
+>
+> - Test codestyle: now it's ending test case liness with \ instead of
+>   open strings
+>
+> - Documentation: this version documents that we escape the value in
+>   the `keyvalue` format.
+>
 
-Nit: we generally use '${SQ}foo${SQ}' for single quoting in tests.
+Apart from a single nit on my side, I couldn't find any other changes
+needed, this version looks good! :)
 
-> +	test_must_fail git repo info foo 2>actual_err &&
-> +	test_cmp expected_err actual_err
-> +'
-> +
-> +test_expect_success 'git-repo-info outputs data even if there is an invalid field' '
-> +	echo "references.format=$(test_detect_ref_format)" >expected &&
-> +	test_must_fail git repo info foo references.format bar >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'only one value is returned if the same key is requested twice' '
-> +	val=$(git rev-parse --show-ref-format) &&
-> +	echo "references.format=$val" >expect &&
-> +	git repo info references.format references.format >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_done
-> --
-> 2.39.5 (Apple Git-154)
+[snip]
 
---0000000000007a60ec063bc19e24
+--0000000000004b91e5063bc1afe8
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 887c226d87b8d281_0.1
+X-Attachment-Id: 9093546971de330b_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pVVdUY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMVNpQy80aXNsQld1enFzSEhvNDU1OTBHajdQUHQ0bwoxanhweWk4c1dk
-ZG5Qb3lzTzU0ZGZoOW9KbFU2SVVPcTd2akttaUpqS1BoS3QxSWUxK2JNT0NLd0tsMVFKSW9GCi9B
-ZGU0SXJSQnJ3ZlR6eS9JUWc4SmgyY3pLWG5TZURNM04zSWFnbHhXeUZ6NHVvaVhCOW5rclZ2QjJ5
-b29JOFcKZ1BkTkozdjdkMFExbHVOL1RiSkRrOW1SckNPYVpMbWppYS8xYlhnUk1XNGkrdkdrektF
-OUR6SmdWaWN2SWRubgpYdjdBL1N3MDZRTDFsZHRzSHVKVVJJeUkxYlFJeUVRZmhiUnAwMC9BbHIy
-NFhvTHlsUGRYb1NVK3JGc1A1anA2CjdJOERiYzhReDZPa3B5RDlmL3BpNU91QmlaSExkKzRkU0J2
-aVhQZm1LWlNIcjh4MlhvOGRnMDZmVFVPU2szL2UKVWZYaUhlZ0hScWhKQlltMEM1WWtSVWk0aVNN
-bjZUTU15RnhZdEpud24ydmJJSFY2aFZxZElqMGNJb09TSTM3NwplTXJ4MTBQMWE3THNjZFZtSWYy
-SmZ0L0xYaEZoMTEzNEFuaER6eFpPZm1Wd1dHVXZHb2ZMaGVyWFVhRko3aUhvCk1pVVVNSVIwbGRR
-VlV0SkZPalh6MnF0cDNWMXRNdFByK2xGaGpWQT0KPUlJU3UKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pVVdsRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meHh6Qy85MjdoY2N5b1U2blc4ZUxNRlJEQkFMNTQwTApiSTMwblVTeXE1
+b3puT1lsNVlxMWJhNWNZZFJSeUZia2g4enc5WmdSRWZkWE9ScWxEN2pzV2orNGxPakhRWnc5CkJw
+YnBka0NCNmxRS3BDVGNLZVZCVjMvV2RzaENEVzJrTEMvQ09QSnVqdzlJUGdpbDZvYUVGQXVPblBI
+Ky9EcGkKN01sN3ZnTE03WTJlTzJ2Mmp1bnJPd0JFZ2R6b2NQdWI3a05KUGpBQzRVd3hUTElzSTdF
+eWRnL0lXdUg2QVlRVgp0NWFQeUFiamVCcjdaT0hKWWJoN0RpVDhYZ1pkcnRJNDdGaTU2a3J5MmlQ
+c1pyQXNZK2twcGtKNWx0UEZxclRYCjRzS0ZyeW8waFIrRmZVeVV0R2ZQb3ZsYjQyd1kzZHBYaEsy
+RVhIcEVUbWI3NXRYQUZ4UUUrNk5mc2JLTkxtSWgKVFV4TTVOTmE2azR4Q01WQUQ2ckp2YXo4M1E1
+YW00Nkl5aWM3K2s5NzlJT3RTcE5NelRYNkllZmI4QXE0and2TAo5dGlDUXo5c0VqT1FiaG8vT0pS
+ZnRiS1hJSm83d2hCcGJlSkdNVzFzN2h0NWx1eEpIL0JNajNoWTJuN2d3TlJ2Cjdld2hwNDRkRXUy
+c3ZQUTF0V0xsRy9XUi91a01KaStrcnI5QXdjUT0KPVlFa2YKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000007a60ec063bc19e24--
+--0000000000004b91e5063bc1afe8--
