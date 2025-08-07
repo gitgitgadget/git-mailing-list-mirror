@@ -1,293 +1,180 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E19B4430
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 21:27:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B73E1E1A3F
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 22:07:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754602053; cv=none; b=qE+lP+CuvM+9jwQ+pGWstI3HvNcuhpaIiCprHDEotQuBBN0/UBsKtF6VVMaOYukyUVkAN/NwSkIvH5QWsIXMr4W4uXjDMk319qGN0U1Q9TeMWOFvpUJaqvkNYPod9dBw9N3GIEN+wBNmewBwZNfCpTGjcmuj1hGD9yNPW8KS68k=
+	t=1754604434; cv=none; b=WQkIEBmtBYW8lPTjhDG9SQX5nmF0rmg/jjIOPBE8ZgBV1wCKB75hu7l6+/dgIjhMHLWB6FDwjUd/Evbt5/5qJX2BBGbTObaxtBsWUqEigZhPpSAGrhAN8wHuU7nIG1ehyVnsPmLY+mFYRRcbt/A+/rlnY5+/sSQkNsZOWJzLzlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754602053; c=relaxed/simple;
-	bh=EScjM82dog/mxFdD6vlekJSnXdXFuWr3kk20aVxMd4s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LR4kKa/xYP3jSqI/fye3MySkpNLkKPCWErOZe+mPpXVIzRb4QCdJOQ4AJzNSu+e66editXpb2J5RQdQnteJI1M6IVDUvL8s0aCsm3zg9m3/S74SnJr8dND6yffm0cDByuCmRhV8b75Ek9brDoOwnZjGkN1nW6gGvVpCPpBpKOkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KS821TFm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=giOcP9gO; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754604434; c=relaxed/simple;
+	bh=4u1SdEEv+uXRJdisrgU8jD4TEq9S3jlBMM64F+x5zrM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wqa5YrhpmM681XtKQNnj7MJmNOF9yM0OE1dV81HTm+6VaH6BdQCbRloEGgrRjMQ9+4cw6HRYD0VQwOsZOTz+zVXVep0ulwNxiKw0pzhKgZV/rRX74F21JW9AXAbIGBoqTjvwEtjd0zFe71tKD+2CSox5u/F+NmaJRnDEMz9e5Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=fyHsiU+d; arc=none smtp.client-ip=209.85.166.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KS821TFm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="giOcP9gO"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 395F6140011F;
-	Thu,  7 Aug 2025 17:27:30 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 07 Aug 2025 17:27:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754602050; x=1754688450; bh=czAZ2+7Swu
-	ju7kPERGFYqe/Tdec2DfMGbfCL7Av6AKg=; b=KS821TFmLAq3VIEKj1vwbJnnJV
-	8Pn/GkNR6xSEXJYGbYmYEgbQf1lheX3yuLFT8r5UoEJVWWkDVHGpg4ecyLQO/wIU
-	lwKz0OLevebhB9TOD3OZ8itjVIPpz5HhM4lFCsx8YC6c/4aw6Cuagnx06Z3tHEH5
-	SkrUjuMHHiXEoldxdEpR9194HawyAiTH9nLjEzpE7K4XInmo9dC6sATfPhZxR6C6
-	qiZdbIeH3calG/bw7HjthmZ1NFYvZ8Lkulh1ePKLLCZIuD8bgsI/IGQD+MoCUJgQ
-	R2ErlfnHNtcF5WRpsM78A5JTtli396DSSjXJ+aK4r1d7c1O9H3kQcVUUknxg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754602050; x=1754688450; bh=czAZ2+7Swuju7kPERGFYqe/Tdec2DfMGbfC
-	L7Av6AKg=; b=giOcP9gOJVNnIlBamsPaLyHnaUKxgD8T99RRgViGogqbanxj/Xl
-	/3d6IZ2wgUPRVv2gcnbpy6V5KJZM0tM34+EYZBr+lSZzCcKvxY0vXT0+ghHSRDOp
-	PHuVq2iFnEGhrCBs+gTRUc/34dcFUQs3YzgEU2LBpZdlYCJWpWc5F4+oKVsrdy5I
-	xmwu1fO0evhqaLMkDlBRZYLo0gf/Zzqe0D7iqVlMtXI+LKjN33bPNIu12DmYyr6X
-	Qu87wEr+mTtrOkhXHMA4LoTZSdaagFbgRWr68r7zdUo79+ra21kdcszwwy2dd2PJ
-	OgNWIjcTvJsWlEOawLs6vGtyoLimP9KVUKg==
-X-ME-Sender: <xms:QRqVaNk0HfooASoviK0Skj-WuRUg_6kn_dd5nkG3dqJxeIZc6l-9mw>
-    <xme:QRqVaBTRueppwowZTuAXhrAOa4losA7MmN7podL1_BibqfYKx5ud-6i85f8d6J2jM
-    94ZFwU4qPTvuVHrog>
-X-ME-Received: <xmr:QRqVaEFtU92dDftdOV4StbDlkJzOYddFNO1UBfhhhnKCxSW71E9rrTgNBqLtVlqxE6e9adbfkr-QDRcoTR3ah_2PXeP5G7bT0m5gtlE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddvtdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeihlhguhhho
-    mhgvvdguvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohephhhisegrrhhnvghsrdhsphgrtggvpdhrtghpthht
-    ohepmhhitghhrghlsehishgtrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:QRqVaOG5D62ARgAND8DqKo45OODqNF7s3QeZK3ckoEN4oEaRn6CWbg>
-    <xmx:QRqVaKRpTtnGVAGLwFZluZL04Lp5w9Y6re_1rWBsSXsO9nlCOljTOA>
-    <xmx:QRqVaHLJhKKBMYnC9H_kfLcbnqHGlYYvf0u0AKRjaftRcgN-sk7OFg>
-    <xmx:QRqVaNY1bA-1hw4fmKrlQgG7NHzORl4CYx6UQ5jO4wBp6ONT_T6wmw>
-    <xmx:QhqVaDryx54K7O-NllMiXWdbcI0hvEJyYCe_M7NcEKHBCO_2c1g9jMxy>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Aug 2025 17:27:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: git@vger.kernel.org,  hi@arnes.space,  michal@isc.org,  peff@peff.net
-Subject: Re: [PATCH v4] diff: ensure consistent diff behavior with ignore
- options
-In-Reply-To: <20250807020643.40213-1-yldhome2d2@gmail.com> (Lidong Yan's
-	message of "Thu, 7 Aug 2025 10:06:43 +0800")
-References: <20250806123306.25532-1-yldhome2d2@gmail.com>
-	<20250807020643.40213-1-yldhome2d2@gmail.com>
-Date: Thu, 07 Aug 2025 14:27:27 -0700
-Message-ID: <xmqqldnult4w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="fyHsiU+d"
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3e5328231e6so1211245ab.0
+        for <git@vger.kernel.org>; Thu, 07 Aug 2025 15:07:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1754604431; x=1755209231; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=GqEHVi4P0miiFm9LEd5Xo4Ck+aE9j4xgX6C2UzAN1Is=;
+        b=fyHsiU+dVpfXIR3Mvw73HjGA8Vo4L2W1KlJefNZSgL31izWA2GXqtv6OjiNkSQ1acC
+         YXxFsweHOsvWMK+G6RnQpJ9n/Bw/sZefU58lxamVlneNHUvvOtPa0+h17tJCUzI7HkS3
+         uC9q+7NALSqK4t/YGTCVofM4ubZld9WYT8NFqo4yK+6ft1VmUZGsWzb82PfksRbddbya
+         US3HlRdhvFytdsBjYeQfwZvTvO7KbF0nFJbYC6L0z0l24exUBRGKLARrW3hT77Sl8DDo
+         HF1urjZtBlUuK0osMI3UVoHkwrDgGNz/X23zYubdu1f50j+Z016qn6L6BgwQjqm4BSFh
+         Pl0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754604431; x=1755209231;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GqEHVi4P0miiFm9LEd5Xo4Ck+aE9j4xgX6C2UzAN1Is=;
+        b=PEUiQbK9NU83Z4dvm8ezA5eqpbxbiBQhaAvJ1VSrrjYFdtJu0KuhAc4Ka1SxRnPMMb
+         R//PpSZNgt7GvLLuomp8bl70vCpjcmC6SZlpajALYsWswcvvW9AVzLGglCUsGQgiNVwF
+         GaHB+ED6/BZLkUI/xH1PwhCgnomDkt/0zIgrGwsLh1dYu7emMLBwjKgGPLQC5qAjw/3G
+         d/RCF9gkQy0mm6I/4hvNQ2Dj52iMZxBaVHBpVlK5ZmASuRhvHVmgR4Rc7ixUS0+BSc3N
+         w6J4OSMHAPYNGHzFBJMxgWc7+fQd0NAqdBWCt/Lax8UL5vU3yDkBqDvEN18U0wxwr6mp
+         mA/A==
+X-Forwarded-Encrypted: i=1; AJvYcCWtFn/GQ2jPM0PBUG80DAxExQAonLXgAUsGcNPpZzXulnW6sOVzXb4dfpXzbC3b57z5KcY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz+JkXiCX/4seYsTa/0PnvrGYb0yE3xtCqQ14TULzxVbLK1nkZk
+	8QouH9Wh+cBZBQyc7itP61/IZKw+wGU4x0wjDxOvNRgukFEz8NY3ib69jD46Nbcov3o=
+X-Gm-Gg: ASbGncszTAa8LMv5S8+aTzXu+eYJDE3DJo/x4j53XI9ni3ih9nC6F59n73fZ1DrbCUX
+	hHc24lt1ZK21C2S/sZfsD9jQZiUNY3EIMS8iDbPxmwo465d1LmZeyv4oWnSWbWbWco6yX7YBtAa
+	DQ//QPU9al4k/Kg/LOGsmC4qLODJMnOoe1ZtJ9cnI60EBMKomzSJz32hlijr/+EGdpuzVFNKd66
+	NNvhQLpM2/R2s7Sq2P09Tv3Vh081oEXtK0eIp5I5135eFcgpunj1k+A+8P+JWvhVsHUKdSI+of3
+	mXiLMVTSvnfeu/t1VkWLMKz+1F9dS9ZfVabeBFm3IXJWNqVKFZQ50tntJK0dT4Ls63Q5+pPX0AN
+	HmSbFF2Pb+g9+g057hv7I4a7xoxi3jWykkYuNzIbQdMCD7nL/57HLDGPtgmZqCgHY2cHpbA==
+X-Google-Smtp-Source: AGHT+IEyJei3Xl9rkQZWz0lgd4ZjdxG5LbkGZF5XVeg9qnH0wthZEki650IAwZX7K02YOSAhQMpv2Q==
+X-Received: by 2002:a05:6e02:160e:b0:3e4:a72:50ec with SMTP id e9e14a558f8ab-3e5330d8975mr15601975ab.7.1754604431321;
+        Thu, 07 Aug 2025 15:07:11 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-50ae9cee258sm68965173.99.2025.08.07.15.07.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Aug 2025 15:07:10 -0700 (PDT)
+Date: Thu, 7 Aug 2025 18:07:03 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-compat-util: introduce `count_t` typedef
+Message-ID: <aJUjh0Uu3/UU5bVg@nand.local>
+References: <20250807-pks-introduce-count-t-v1-1-e96be52d8db1@pks.im>
+ <xmqqa54bqe7d.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqa54bqe7d.fsf@gitster.g>
 
-Lidong Yan <yldhome2d2@gmail.com> writes:
-
-> In git-diff, options like `-w` and `-I<regex>` require comparing
-> file contents to determine whether two files are the same, even when
-> their SHA values differ.
-
-Let's see if we can do something to clarify "the same" here.
-Perhaps
-
-	... two files are considered equivalent under the specified
-	"ignore" rules, even when they are not bit-for-bit identical.
-
-> For options like `--raw`, `--name-status`,
-> and `--name-only`, git-diff deliberately compares only the SHA values
-> to determine whether two files are the same, for performance reasons.
-> As a result, a file shown in `git diff --name-status` may not appear
-> in `git diff --patch`.
+On Thu, Aug 07, 2025 at 09:38:46AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> To quickly determine whether two files are identical, Add helper
-
-Following the above, perhaps replace "identical" with "equivalent".
-
-Also, ", Add helper" should be ", add a helper", as that comma is
-not finishing a sentence, hence the word that follows it is not at
-the beginning of the next sentence.
-
-> function diff_flush_patch_quiet() in diff.c. Add `.diff_optimize`
-> field in `struct diff_options`. When `.diff_optimize` is set to
-> `DIFF_OPT_DRY_RUN`, builtin_diff() will return immediately upon
-> detecting any change. Call diff_flush_patch_quiet() to determine
-> if we should flush `--raw`, `--name-only` or `--name-status` output.
-
-Also the implementation details like the name of the .diff_options
-member and the name of the helper function have changed, and the
-proposed log message should be updated to match.
-
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
-> ---
->  diff.c                     | 55 ++++++++++++++++++++++++++++----------
->  diff.h                     |  2 ++
->  t/t4013-diff-various.sh    | 14 ++++++++++
->  t/t4015-diff-whitespace.sh |  2 +-
->  xdiff-interface.h          |  6 ++---
->  5 files changed, 61 insertions(+), 18 deletions(-)
+> >  For C programs:
+> >
+> > + - We use `size_t` to count the number of bytes and `count_t` to count the
+> > +   number of entities of a given type.
 >
-> diff --git a/diff.c b/diff.c
-> index dca87e164f..3bd432db32 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -2444,6 +2444,15 @@ static int fn_out_consume(void *priv, char *line, unsigned long len)
->  	return 0;
->  }
->  
-> +static int quick_consume(void *priv, char *line UNUSED, unsigned long len UNUSED)
-> +{
-> +	struct emit_callback *ecbdata = priv;
-> +	struct diff_options *o = ecbdata->opt;
-> +
-> +	o->found_changes = 1;
-> +	return 1;
-> +}
+> I am not interested in this specific implementation at all for a
+> number of reasons, but I am excited to see people thinking about the
+> issues.  The following is a random list of things, both positive and
+> negative, that came to my mind after skimming the changes.
+>
+>  * We do not want to pretend that one size fits all.  If it were a
+>    good idea for developers to express "This variable is a simple
+>    counter that counts up from 0 and never goes negative" by using
+>    an unsigned type (which is dubious), it should be equally, or not
+>    more, a good idea to allow them to say "We will not have more
+>    than 256 fan-out directories under .git/objects/ and this is a
+>    counter to count them, so I know 'unsigned short' is big enough
+>    on any platforms".
 
-OK.
+This to me is the most compelling argument against a "count_t" typedef
+or something similar. Different callers have different needs (the ones
+you pointed out above are the ones that I thought of as most relevant),
+and we shouldn't force them to all use the same type, or pretend that
+one type is best for all of them.
 
-> @@ -3709,6 +3718,7 @@ static void builtin_diff(const char *name_a,
->  		xdemitconf_t xecfg;
->  		struct emit_callback ecbdata;
->  		const struct userdiff_funcname *pe;
-> +		int dry_run = o->dry_run;
+>  * As far as I can tell, the patch does not seem to address the
+>    biggest concern of unsigned integer wraparound.  We often see
+>
+> 	ALLOC_GROW(thing.entry, thing.nr + 1, thing.alloc);
+>
+>    with the arithmetic "thing.nr + 1" checked by nobody.
+>    ALLOC_GROW_BY() is slightly better in this regard, but nobody
+>    uses it with only small exceptions.  And of course, alloc_nr()
+>    does even riskier arithmetic that is unchecked.
 
-As the "dry_run" variable is used only once in this block, we
-probably do not want to add it.
+I wonder if we should push more people towards ALLOC_GROW_BY() for that
+reason. We could do something like recommend that callers use
+ALLOC_GROW_BY() instead of ALLOC_GROW() in cases like:
 
->  		if (must_show_header) {
->  			emit_diff_symbol(o, DIFF_SYMBOL_HEADER,
-> @@ -3759,8 +3769,11 @@ static void builtin_diff(const char *name_a,
->  
->  		if (o->word_diff)
->  			init_diff_words_data(&ecbdata, o, one, two);
-> -		if (xdi_diff_outf(&mf1, &mf2, NULL, fn_out_consume,
-> -				  &ecbdata, &xpp, &xecfg))
+    @@
+    expression array, nr, n, alloc;
+    @@
+    - ALLOC_GROW(array, nr + n, alloc)
+    + ALLOC_GROW_BY(array, nr, n, alloc)
 
-Instead we can check o->dry_run here.
+, but I'm not sure that's a good idea as a blanket rule, since it's
+changing the behavior away from using alloc_nr() to instead grow by a
+fixed amount.
 
-> +		if (dry_run)
-> +			xdi_diff_outf(&mf1, &mf2, NULL, quick_consume,
-> +				      &ecbdata, &xpp, &xecfg);
+We have definitely talked before about adding overflow checks to
+alloc_nr() before, but I think the slow-down made it a non-starter
+(IIRC). I wonder if something like this:
 
-We may want to leave a comment to explain why we ignore the error
-return from xdi_diff_outf()?  Perhaps like below?
+    diff --git a/git-compat-util.h b/git-compat-util.h
+    index 9408f463e31..22b8701b40d 100644
+    --- a/git-compat-util.h
+    +++ b/git-compat-util.h
+    @@ -852,11 +852,14 @@ static inline void move_array(void *dst, const void *src, size_t n, size_t size)
+      */
+     #define ALLOC_GROW(x, nr, alloc) \
+      do { \
+    +		size_t __alloc__ = alloc; \
+        if ((nr) > alloc) { \
+          if (alloc_nr(alloc) < (nr)) \
+            alloc = (nr); \
+          else \
+            alloc = alloc_nr(alloc); \
+    +			if (alloc < __alloc__) \
+    +				BUG("negative growth in ALLOC_GROW"); \
+          REALLOC_ARRAY(x, alloc); \
+        } \
+      } while (0)
 
-		if (o->dry_run)
-			/*
-                         * Unlike the !dry_run case, we need to ignore the
-			 * return value from xdi_diff_outf() here, because
-			 * xdi_diff_outf() takes non-zero return from its
-                         * callback function as a sign of error and returns
-		         * early (which is why we return non-zer from our
-			 * callback, quick_consume()).  Unfortunately,
-			 * xdi_diff_outf() signals an error by returning
-			 * non-zero.
-                         */
-			xdi_diff_outf(&mf1, &mf2, NULL, quick_consume,
-				      &ecbdata, &xpp, &xecfg);
+would be a reasonable compromise? It's not quite as careful as checking
+each step of the computation done by alloc_nr(), but it's better than
+not checking at all.
 
-I am undecided.
+So perhaps we should do some combination of the two ;-).
 
-> +		else if (xdi_diff_outf(&mf1, &mf2, NULL, fn_out_consume,
-> +				       &ecbdata, &xpp, &xecfg))
+>  * Standardising the names used for <item[], item_nr, item_alloc>
+>    somehow is very much welcome (we can see an example in the change
+>    to builtin/rm.c below).  Such a naming convention would allow us
+>    to write
+>
+> 	#define ALLOC_INCR(thing) ALLOC_INCR_BY(thing, 1)
+> 	ALLOC_INCR_BY(thing, increment)
+>
+>    that do ALLOC_GROW(thing, thing_nr + increment, thing_alloc) more
+>    safely than what the current code does, perhaps?  Also, we should
+>    be able to use any unsigned integral type and perform sensible
+>    bound checking with typeof().
 
-> +/* return 1 if any change is found; otherwise, return 0 */
-> +static int diff_flush_patch_quietly(struct diff_filepair *p, struct diff_options *o)
-> +{
-> +	int dry_run = o->dry_run;
-> +	int found_changes = o->found_changes;
+...meaning that ALLOC_INCR() and ALLOC_INCR_BY() would use thing##_nr? I
+do like the idea of standardizing on that naming scheme, but the
+thing##_nr approach is a bit magical for my taste.
 
-In this codebase, these "original value of the variable X was this, we
-tentatively save that original value away, tweak the variable X to do
-something, and restore the saved value to variable X" variables are often
-called "saved_X".
-
-> +	int ret;
-> +
-> +	o->dry_run = 1;
-> +	o->found_changes = 0;
-> +	diff_flush_patch(p, o);
-> +	ret = o->found_changes;
-> +	o->dry_run = dry_run;
-> +	o->found_changes |= found_changes;
-> +	return ret;
-> +}
-
-In the previous iteration, .dry_run/.diff_optimize was set and reset in
-different places; doing it in a single function here makes it easier to
-understand what is going on.  Nice improvement.
-
-> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> index 8ebd170451..b56a79d979 100755
-> --- a/t/t4013-diff-various.sh
-> +++ b/t/t4013-diff-various.sh
-> @@ -648,6 +648,20 @@ test_expect_success 'diff -I<regex>: detect malformed regex' '
->  	test_grep "invalid regex given to -I: " error
->  '
->  
-> +test_expect_success 'diff -I<regex>: ignore matching file' '
-> +	test_seq 50 >file1 &&
-> +	git add file1 &&
-> +	test_seq 50 | sed -e "s/13/ten and three/" -e "s/^[124-9].*/& /" >file1 &&
-> +
-> +	: >actual &&
-> +	git diff --raw --ignore-blank-lines -I"ten.*e" -I"^[124-9]" >>actual &&
-> +	git diff --name-only --ignore-blank-lines -I"ten.*e" -I"^[124-9]" >>actual &&
-> +	git diff --name-status --ignore-blank-lines -I"ten.*e" -I"^[124-9]" >>actual &&
-> +	! grep "file1" actual &&
-
-Perhaps use test_grep helper shell function, i.e.
-
-	test_grep ! "file1" actual &&
-
-> +	git rm -f file1
-
-Is this because later tests will break if you leave "file1" in the working
-tree and/or in the index?  If so, we should use test_when_finished to make
-such a clean-up.  If you insert
-
-	test_when_finished "git rm file1; rm -f file1" &&
-
-at the very beginning, before you create file1 with 1..50, when this test
-piece finishes executing (whether it completed successfully, or failed in
-the middle of the &&-chain), the specified command will run.
-
-On the other hand, if the later tests won't mind whether "file1" does or
-does not exist in the working tree and/or in the index, it is common to
-leave it behind without cleaning it.  When running the test script with the
-"-i" option, i.e.
-
-	$ sh t4013-diff-various.sh -i -v
-
-leaving the files that were used in the test, without cleaning up,
-sometimes helps your debugging of the test script.
-
-> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-> index 52e3e476ff..e7be8c5a8f 100755
-> --- a/t/t4015-diff-whitespace.sh
-> +++ b/t/t4015-diff-whitespace.sh
-> @@ -11,7 +11,7 @@ test_description='Test special whitespace in diff engine.
->  . "$TEST_DIRECTORY"/lib-diff.sh
->  
->  for opt_res in --patch --quiet -s --stat --shortstat --dirstat=lines \
-> -	       --raw! --name-only! --name-status!
-> +	       --raw --name-only --name-status
->  do
-
-Wouldn't this make the "if the option is marked with !, tweak the test that
-notices these two equivalent paths are not-identical" extra code, whose
-beginning part we see below, unnecessary?  The $expect_failure variable
-would always be an empty string, so "different but equivalent" test should
-see "git diff --exit-code" exit with status 0, right?
-
-Other than that, looking quite good.
-
-Thanks.
+Thanks,
+Taylor
