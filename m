@@ -1,82 +1,81 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF6F255F53
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 08:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D388256C61
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 08:05:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754553914; cv=none; b=SiP8Vx8vHGigVfWT0Jm3J+ca/EwnMoQmlMPcUIZwpUUwvxLNtmMipVuVZT1IhFrwFKONcmxQgUitcl1tQpwFgrDjZhxHOuoUqBI7OLit0/KTiwYJX87e/K2H4Y2Ae77F5Y9iyebv5NYqyZ3XPb1H+SRKgA4vWx/RBoO0I8NDpU0=
+	t=1754553918; cv=none; b=hwqU966fpt+QkNUABF6ig+STzIIYygSSVHZT9mVxk/yuSc4ety4G2B3ax6W/GNWq/Ili1vwcgiuUbQ7Fd1CAV+H36jT8aR4EJ29/JW99J7ZwpJliQ2K1q90WcmxlqQvrwceejCcx/soCsogJgEL9nY49EsIOzyg5u6Dhp5T4QYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754553914; c=relaxed/simple;
-	bh=dxZFpGScxylRAwYmlSQHDHl6MAmhCjSz28tfh9KPLPI=;
+	s=arc-20240116; t=1754553918; c=relaxed/simple;
+	bh=UEn5JR99BfKUSV926qM6wYfU/qn/vudf0Pxp3rjtUmk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VSUrw/QlKKEOuELrcW4DqbgtANFpeKRrwPtNzlh0GwL0L0pAtrP4Iimv3bX4Nr9+jdWjVwVm+SyrIax9G3fzI7ENcPngwh6O53zi47ztIfd4AAredfHOT33aQp8SyLsONP0MhMixOMJfd2YOdiK8412UEWy9AMmG7VVJhMEPEHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EaHLhSPx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nP7fvz1E; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=L73Hyp+gFzTLW6aze4ZlQIh1kP6qU9lwtNvViww5p3xiLXmL19I2CJp8Xa2WaN5ERBXT1grCkhzvIdXaye/3iN2ma+TiEszZ0DdyQ7pFM4TtMqcpsKHrdfwkgbtW74h5GkmFSsaG1rdYbogwK4I6rTSag9YnICCsG/Q+VB4JEYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YAi5KyOL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NKVMqU7h; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EaHLhSPx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nP7fvz1E"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 566C214000BA;
-	Thu,  7 Aug 2025 04:05:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YAi5KyOL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NKVMqU7h"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 99D0BEC00AB;
+	Thu,  7 Aug 2025 04:05:15 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 07 Aug 2025 04:05:12 -0400
+  by phl-compute-09.internal (MEProxy); Thu, 07 Aug 2025 04:05:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754553912;
-	 x=1754640312; bh=tUj9CZam8KuFlOercbeJpTu5t03ar4MyzAKk2e0pzb4=; b=
-	EaHLhSPxywmZZe3Pgz2bz3R4yUd3KgcXL41ihrT3/xVB+BQAJyrcQSpFpLE8G+/0
-	jF4rn9pvxdj4O/7Bycafl/LRXo0vSFH+vpLvAIjgNF5VaARVLG82tk+gZupP0LSb
-	xsrBOGg+Q0f8GPZaXqe3Ng2dE0gmP0ogRp44p+TRXM6K/MTRwWyvqmLreliOZ74Y
-	wfCPMqbnYk9TUFCnAD0IKt4qKJKhgOr8dihumW6JkkacIfeUBynccYb1PcnJJDiE
-	EuP2Ga+kWglQtczrM1Mvf2KX2bkNgzTjRBRaucO4lMgozGOXebs2ABsXiGFIE2UQ
-	t/9cOGOsfi1p4ip+aTh9dA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754553915;
+	 x=1754640315; bh=+SWKJHrJK5+Ra+kWTozCvxR74PIXkG47uouL6XIjEyY=; b=
+	YAi5KyOLXStlPG0iljed6rghn3WB2SyJqPiqfD4mU8R9IWp/Z5EeHLuWoYuXyKn1
+	SkxkQlKpzJWLLPavnD0wjKsIVc14PyFFBf3RMEhW9mXyTZFckyN4zJ5SnYL/f6GN
+	5zftPurmAWJ09eKZnGn46xUYTtifz8hw51mHSdPZWdM/Dc4tjWRUknQplipcCDoz
+	YG7fpnJce4Cze2uGX4vXzSNK7xIAfbH2reeTs2Mt73ApN46J8gyGcgUBkLKhYnnC
+	s21o1wXIpIMK7NVwK4gU33FQnDj5aNugFt4Owc8dpKKf2Cw7vJQu8x1n8lRoWJVd
+	JDxj8fp/s28bQFX/dmMzmQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754553912; x=
-	1754640312; bh=tUj9CZam8KuFlOercbeJpTu5t03ar4MyzAKk2e0pzb4=; b=n
-	P7fvz1EyllBxtONUaY0p5vE3W8/A+w2pobCX/XYFF1YyRtbuJljnq4rB5PQjcsvS
-	JnExeL2quJqPahIEPxIdcHNqIaMqKkfwAUwrYBLz6X+axLIvejEDZyOYGCsGHKjb
-	re9ZlDZxuwUfe4cOl7swl8EyRl619lmehlVzuB2mnm1lu/Qnl71iQDw2x5fTSG9q
-	B3oOhsZSzFNDsUeL2/HU/X1tXEOLPO09kN7+Edoz+wgGy/H8rmyAhTbh/dWeVz9T
-	2G0MMhZydaAUrhCxN/nGsLIO5sN9ayXaSygMAaOsLwyvcfstBfD1Lch8dhiEY59V
-	o7lU2uk8UHtmRnLuhIOwQ==
-X-ME-Sender: <xms:OF6UaMglEb9WkpD-vulkE4MJTsxah8F-xdFZ_DcIK5yNMEiCvUhEXg>
-    <xme:OF6UaAhZsaltssO46Zsxl0j9gjUxjk2HcVVmGEJ6kL1bNIkRj7fvzRNWj0W6rnq92
-    5JT7cw2NKjxjMjmyw>
-X-ME-Received: <xmr:OF6UaKhCgR9eHeOiErEJi5dW-piTBa3_7m4n5S_b-6jgzRZ0EOQ_Uzgfka3CW8Fpo6xc6x0lbjwKWeHqTUufbLX71Wby66a6q9Yf-ATrYg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddtgeduucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754553915; x=
+	1754640315; bh=+SWKJHrJK5+Ra+kWTozCvxR74PIXkG47uouL6XIjEyY=; b=N
+	KVMqU7h7+Hwj1MlmrCh5CR/lnIM+RZrV8xsVN/SYPq3pHCyh24nQu+lIvrcm6XHx
+	xixkLwAzMzt2B4hcG3s5CiCygv1/uT7nm2Mf28RB25iks5v+bHYZIrHg75h2/nxF
+	4FVhohrH2fDhRMIwEfDClG4ENNxyxAH/9SL32LDOwe7SizoY5hJ5mhgcc0A2L5Nb
+	Z2EXEZzCoFpoISU5AvN+WomXHSmC0aTfN2PSFj0ugR0elKpNCGDXX7rpDgYlq7yE
+	65dwdaM3b/QZt7KBEGSLT/m8kkQX/gNYQ+WZY6aXNzFzZ0ZyqsudmttBk7OQ3NK9
+	AULn31J073P80VuOkgyLQ==
+X-ME-Sender: <xms:O16UaKNruy4mLokPdr4xCyDbbBrpuVot1xnnF8AWnmR1pRIXsuXh1A>
+    <xme:O16UaKdwZmKWBKhZuexhK2YkonF7xp0318qeDtNNbq-UGAKH89F_DcU476E3TS6Zw
+    jXpcxqjCul2yEIo0w>
+X-ME-Received: <xmr:O16UaBW-3c_UAlnX96pxJbAz-P4QGePqLejOwDasIHThFvsNqYoijnuvx7C0JVML8Nn66K5Sb4t9q0Z5iQHVXOmPXYoYU4O1xr6gDaP6YQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddtgedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhi
+    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
     pdhrtghpthhtohepohhsfigrlhgurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvgdprh
     gtphhtthhopehsthholhgvvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:OF6UaIIO4uOdCsX4bvotq3eqLmPUsTKMcXrdsA64h4Gw-D5NGsHfag>
-    <xmx:OF6UaBFTHUD4lHKDlmh42x9eiQE7e8YiyxfmMiiYUIwE7K28kR1Srg>
-    <xmx:OF6UaETsAk0bhqxR99VJgBI8aI9D8jkH-67XrPHWJJ5u_gRl3AK-uQ>
-    <xmx:OF6UaFfypCjh4Srr_oJUEMKl4XG02ItZsdNGy0XbvF_SnnY-DjRWAQ>
-    <xmx:OF6UaC_hvSIOo7OtGi4fsosGQ2p5kKD6jljqlnIZd-L9KR22CjOyIlxk>
+X-ME-Proxy: <xmx:O16UaKgmiS9lxNWIx_WtdA7FShYx_iKyyoyPUcqzM9de5pJRPaWGbw>
+    <xmx:O16UaI-tOR8JiH42zZYuZj1FNrtD4o07mAbm8zd2UswUQjqG358x3g>
+    <xmx:O16UaEahwhZBl1RiHrDsoEcc4A62juYAYRX7kK3ge6JUPaKDd6l1ew>
+    <xmx:O16UaH3pDjccbiQvaBVVVGqathQLTsZbzehB6NP5mSmulF-w2sYYPQ>
+    <xmx:O16UaDf6uZ7bQyl9D786BNLTOI44zwwLfFBZQnpXxnJ0JMmntEa0HWdz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Aug 2025 04:05:11 -0400 (EDT)
+ 7 Aug 2025 04:05:14 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id aee264ab (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 7 Aug 2025 08:05:10 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id cb7922e9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 7 Aug 2025 08:05:14 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 07 Aug 2025 10:04:49 +0200
-Subject: [PATCH v3 07/10] commit-graph: refactor `parse_commit_graph()` to
- take a repository
+Date: Thu, 07 Aug 2025 10:04:50 +0200
+Subject: [PATCH v3 08/10] commit-graph: stop using `the_hash_algo`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250807-b4-pks-commit-graph-wo-the-repository-v3-7-82edef830a1e@pks.im>
+Message-Id: <20250807-b4-pks-commit-graph-wo-the-repository-v3-8-82edef830a1e@pks.im>
 References: <20250807-b4-pks-commit-graph-wo-the-repository-v3-0-82edef830a1e@pks.im>
 In-Reply-To: <20250807-b4-pks-commit-graph-wo-the-repository-v3-0-82edef830a1e@pks.im>
 To: git@vger.kernel.org
@@ -94,161 +93,168 @@ Cc: Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Refactor `parse_commit_graph()` so that it takes a repository instead of
-taking repository settings. On the one hand this allows us to get rid of
-instances where we access `the_hash_algo` by using the repository's hash
-algorithm instead. On the other hand it also allows us to move the call
-of `prepare_repo_settings()` into the function itself.
-
-Note that there's one small catch, as the commit-graph fuzzer calls this
-function directly without having a fully functional repository at hand.
-And while the fuzzer already initializes `the_repository` with relevant
-info, the call to `prepare_repo_settings()` would fail because we don't
-have a fully-initialized repository.
-
-Work around the issue by also settings `settings.initialized` to pretend
-that we've already read the settings.
-
-While at it, remove the redundant `parse_commit_graph()` declaration in
-the fuzzer. It was added together with aa658574bf (commit-graph, fuzz:
-add fuzzer for commit-graph, 2019-01-15), but as we also declared the
-same function in "commit-graph.h" it wasn't ever needed.
+Stop using `the_hash_algo` as it implicitly relies on `the_repository`.
+Instead, we either use the hash algo provided via the context or, if
+there is no such hash algo, we use `the_repository` explicitly. Such
+uses will be removed in subsequent commits.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- commit-graph.c               | 23 ++++++++++++-----------
- commit-graph.h               |  2 +-
- oss-fuzz/fuzz-commit-graph.c |  6 ++----
- 3 files changed, 15 insertions(+), 16 deletions(-)
+ builtin/commit-graph.c |  3 ++-
+ commit-graph.c         | 27 ++++++++++++++-------------
+ commit-graph.h         |  3 ++-
+ 3 files changed, 18 insertions(+), 15 deletions(-)
 
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 145802afb7..680b03a83a 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -108,7 +108,8 @@ static int graph_verify(int argc, const char **argv, const char *prefix,
+ 		opened = OPENED_GRAPH;
+ 	else if (errno != ENOENT)
+ 		die_errno(_("Could not open commit-graph '%s'"), graph_name);
+-	else if (open_commit_graph_chain(chain_name, &fd, &st))
++	else if (open_commit_graph_chain(chain_name, &fd, &st,
++					 the_repository->hash_algo))
+ 		opened = OPENED_CHAIN;
+ 	else if (errno != ENOENT)
+ 		die_errno(_("could not open commit-graph chain '%s'"), chain_name);
 diff --git a/commit-graph.c b/commit-graph.c
-index 430eab0b869..77b785a5e05 100644
+index 77b785a5e0..594eca4110 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -270,9 +270,8 @@ struct commit_graph *load_commit_graph_one_fd_st(struct repository *r,
- 	}
- 	graph_map = xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
- 	close(fd);
--	prepare_repo_settings(r);
--	ret = parse_commit_graph(&r->settings, graph_map, graph_size);
+@@ -263,7 +263,7 @@ struct commit_graph *load_commit_graph_one_fd_st(struct repository *r,
  
-+	ret = parse_commit_graph(r, graph_map, graph_size);
- 	if (ret)
- 		ret->odb_source = source;
- 	else
-@@ -372,7 +371,7 @@ static int graph_read_bloom_data(const unsigned char *chunk_start,
+ 	graph_size = xsize_t(st->st_size);
+ 
+-	if (graph_size < graph_min_size(the_hash_algo)) {
++	if (graph_size < graph_min_size(r->hash_algo)) {
+ 		close(fd);
+ 		error(_("commit-graph file is too small"));
+ 		return NULL;
+@@ -318,7 +318,7 @@ static int graph_read_commit_data(const unsigned char *chunk_start,
+ 				  size_t chunk_size, void *data)
+ {
+ 	struct commit_graph *g = data;
+-	if (chunk_size / graph_data_width(the_hash_algo) != g->num_commits)
++	if (chunk_size / graph_data_width(g->hash_algo) != g->num_commits)
+ 		return error(_("commit-graph commit data chunk is wrong size"));
+ 	g->chunk_commit_data = chunk_start;
  	return 0;
+@@ -619,7 +619,8 @@ static int add_graph_to_chain(struct commit_graph *g,
  }
  
--struct commit_graph *parse_commit_graph(struct repo_settings *s,
-+struct commit_graph *parse_commit_graph(struct repository *r,
- 					void *graph_map, size_t graph_size)
+ int open_commit_graph_chain(const char *chain_file,
+-			    int *fd, struct stat *st)
++			    int *fd, struct stat *st,
++			    const struct git_hash_algo *hash_algo)
  {
- 	const unsigned char *data;
-@@ -384,7 +383,7 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
- 	if (!graph_map)
- 		return NULL;
+ 	*fd = git_open(chain_file);
+ 	if (*fd < 0)
+@@ -628,7 +629,7 @@ int open_commit_graph_chain(const char *chain_file,
+ 		close(*fd);
+ 		return 0;
+ 	}
+-	if (st->st_size < (ssize_t) the_hash_algo->hexsz) {
++	if (st->st_size < (ssize_t) hash_algo->hexsz) {
+ 		close(*fd);
+ 		if (!st->st_size) {
+ 			/* treat empty files the same as missing */
+@@ -653,7 +654,7 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
+ 	FILE *fp = xfdopen(fd, "r");
+ 	size_t count;
  
--	if (graph_size < graph_min_size(the_hash_algo))
-+	if (graph_size < graph_min_size(r->hash_algo))
- 		return NULL;
+-	count = st->st_size / (the_hash_algo->hexsz + 1);
++	count = st->st_size / (r->hash_algo->hexsz + 1);
+ 	CALLOC_ARRAY(oids, count);
  
- 	data = (const unsigned char *)graph_map;
-@@ -404,22 +403,22 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
+ 	odb_prepare_alternates(r->objects);
+@@ -715,7 +716,7 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
+ 	int fd;
+ 	struct commit_graph *g = NULL;
+ 
+-	if (open_commit_graph_chain(chain_file, &fd, &st)) {
++	if (open_commit_graph_chain(chain_file, &fd, &st, r->hash_algo)) {
+ 		int incomplete;
+ 		/* ownership of fd is taken over by load function */
+ 		g = load_commit_graph_chain_fd_st(r, fd, &st, &incomplete);
+@@ -907,7 +908,7 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
+ 		die(_("invalid commit position. commit-graph is likely corrupt"));
+ 
+ 	lex_index = pos - g->num_commits_in_base;
+-	commit_data = g->chunk_commit_data + st_mult(graph_data_width(the_hash_algo), lex_index);
++	commit_data = g->chunk_commit_data + st_mult(graph_data_width(g->hash_algo), lex_index);
+ 
+ 	graph_data = commit_graph_data_at(item);
+ 	graph_data->graph_pos = pos;
+@@ -1111,7 +1112,7 @@ static struct tree *load_tree_for_commit(struct repository *r,
+ 		g = g->base_graph;
+ 
+ 	commit_data = g->chunk_commit_data +
+-			st_mult(graph_data_width(the_hash_algo),
++			st_mult(graph_data_width(g->hash_algo),
+ 				graph_pos - g->num_commits_in_base);
+ 
+ 	oidread(&oid, commit_data, the_repository->hash_algo);
+@@ -1221,7 +1222,7 @@ static int write_graph_chunk_oids(struct hashfile *f,
+ 
+ 	for (count = 0; count < ctx->commits.nr; count++, list++) {
+ 		display_progress(ctx->progress, ++ctx->progress_cnt);
+-		hashwrite(f, (*list)->object.oid.hash, the_hash_algo->rawsz);
++		hashwrite(f, (*list)->object.oid.hash, f->algop->rawsz);
  	}
  
- 	hash_version = *(unsigned char*)(data + 5);
--	if (hash_version != oid_version(the_hash_algo)) {
-+	if (hash_version != oid_version(r->hash_algo)) {
- 		error(_("commit-graph hash version %X does not match version %X"),
--		      hash_version, oid_version(the_hash_algo));
-+		      hash_version, oid_version(r->hash_algo));
- 		return NULL;
- 	}
+ 	return 0;
+@@ -1252,7 +1253,7 @@ static int write_graph_chunk_data(struct hashfile *f,
+ 			die(_("unable to parse commit %s"),
+ 				oid_to_hex(&(*list)->object.oid));
+ 		tree = get_commit_tree_oid(*list);
+-		hashwrite(f, tree->hash, the_hash_algo->rawsz);
++		hashwrite(f, tree->hash, ctx->r->hash_algo->rawsz);
  
- 	graph = alloc_commit_graph();
+ 		parent = (*list)->parents;
  
--	graph->hash_algo = the_hash_algo;
-+	graph->hash_algo = r->hash_algo;
- 	graph->num_chunks = *(unsigned char*)(data + 6);
- 	graph->data = graph_map;
- 	graph->data_len = graph_size;
+@@ -2034,7 +2035,7 @@ static size_t write_graph_chunk_base_1(struct hashfile *f,
+ 		return 0;
  
- 	if (graph_size < GRAPH_HEADER_SIZE +
- 			 (graph->num_chunks + 1) * CHUNK_TOC_ENTRY_SIZE +
--			 GRAPH_FANOUT_SIZE + the_hash_algo->rawsz) {
-+			 GRAPH_FANOUT_SIZE + r->hash_algo->rawsz) {
- 		error(_("commit-graph file is too small to hold %u chunks"),
- 		      graph->num_chunks);
- 		free(graph);
-@@ -450,7 +449,9 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
- 	pair_chunk(cf, GRAPH_CHUNKID_BASE, &graph->chunk_base_graphs,
- 		   &graph->chunk_base_graphs_size);
+ 	num = write_graph_chunk_base_1(f, g->base_graph);
+-	hashwrite(f, g->oid.hash, the_hash_algo->rawsz);
++	hashwrite(f, g->oid.hash, g->hash_algo->rawsz);
+ 	return num + 1;
+ }
  
--	if (s->commit_graph_generation_version >= 2) {
-+	prepare_repo_settings(r);
-+
-+	if (r->settings.commit_graph_generation_version >= 2) {
- 		read_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA,
- 			   graph_read_generation_data, graph);
- 		pair_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA_OVERFLOW,
-@@ -461,7 +462,7 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
- 			graph->read_generation_data = 1;
- 	}
+@@ -2058,7 +2059,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	struct hashfile *f;
+ 	struct tempfile *graph_layer; /* when ctx->split is non-zero */
+ 	struct lock_file lk = LOCK_INIT;
+-	const unsigned hashsz = the_hash_algo->rawsz;
++	const unsigned hashsz = ctx->r->hash_algo->rawsz;
+ 	struct strbuf progress_title = STRBUF_INIT;
+ 	struct chunkfile *cf;
+ 	unsigned char file_hash[GIT_MAX_RAWSZ];
+@@ -2146,7 +2147,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	hashwrite_be32(f, GRAPH_SIGNATURE);
  
--	if (s->commit_graph_changed_paths_version) {
-+	if (r->settings.commit_graph_changed_paths_version) {
- 		read_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
- 			   graph_read_bloom_index, graph);
- 		read_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
-@@ -478,7 +479,7 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
- 	}
+ 	hashwrite_u8(f, GRAPH_VERSION);
+-	hashwrite_u8(f, oid_version(the_hash_algo));
++	hashwrite_u8(f, oid_version(ctx->r->hash_algo));
+ 	hashwrite_u8(f, get_num_chunks(cf));
+ 	hashwrite_u8(f, ctx->num_commit_graphs_after - 1);
  
- 	oidread(&graph->oid, graph->data + graph->data_len - graph->hash_algo->rawsz,
--		the_repository->hash_algo);
-+		r->hash_algo);
- 
- 	free_chunkfile(cf);
- 	return graph;
 diff --git a/commit-graph.h b/commit-graph.h
-index 2228c714cb1..4879643db0f 100644
+index 4879643db0..5f417f7666 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -128,7 +128,7 @@ struct repo_settings;
-  * Callers should initialize the repo_settings with prepare_repo_settings()
-  * prior to calling parse_commit_graph().
-  */
--struct commit_graph *parse_commit_graph(struct repo_settings *s,
-+struct commit_graph *parse_commit_graph(struct repository *r,
- 					void *graph_map, size_t graph_size);
+@@ -32,7 +32,8 @@ struct string_list;
+ char *get_commit_graph_filename(struct odb_source *source);
+ char *get_commit_graph_chain_filename(struct odb_source *source);
+ int open_commit_graph(const char *graph_file, int *fd, struct stat *st);
+-int open_commit_graph_chain(const char *chain_file, int *fd, struct stat *st);
++int open_commit_graph_chain(const char *chain_file, int *fd, struct stat *st,
++			    const struct git_hash_algo *hash_algo);
  
  /*
-diff --git a/oss-fuzz/fuzz-commit-graph.c b/oss-fuzz/fuzz-commit-graph.c
-index fbb77fec197..fb8b8787a46 100644
---- a/oss-fuzz/fuzz-commit-graph.c
-+++ b/oss-fuzz/fuzz-commit-graph.c
-@@ -4,9 +4,6 @@
- #include "commit-graph.h"
- #include "repository.h"
- 
--struct commit_graph *parse_commit_graph(struct repo_settings *s,
--					void *graph_map, size_t graph_size);
--
- int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
- 
- int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
-@@ -22,9 +19,10 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
- 	 * possible.
- 	 */
- 	repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+	the_repository->settings.initialized = 1;
- 	the_repository->settings.commit_graph_generation_version = 2;
- 	the_repository->settings.commit_graph_changed_paths_version = 1;
--	g = parse_commit_graph(&the_repository->settings, (void *)data, size);
-+	g = parse_commit_graph(the_repository, (void *)data, size);
- 	repo_clear(the_repository);
- 	free_commit_graph(g);
- 
+  * Given a commit struct, try to fill the commit struct info, including:
 
 -- 
 2.51.0.rc0.215.g125493bb4a.dirty
