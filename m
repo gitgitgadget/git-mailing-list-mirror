@@ -1,157 +1,132 @@
-Received: from outbound.mr.icloud.com (p-west2-cluster6-host12-snip4-1.eps.apple.com [57.103.70.114])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F8125B311
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 15:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.70.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559041993B7
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 15:22:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754579221; cv=none; b=W4xsT+CJ2J84DBLQhD4JZWTBsYRmxSiPQo8AwKt+d1CdK2dt/Yie76waP/UwRpB03FshjeKH3lYmAyUMS7DN91nY5Fg9zx3WpqStiNA71q2SjYD1gl63aPePtuvm8Gp8XdkY+gFW3h/GGf/Cr7NM4K3JVo6xTqJ/DTw48voOLVg=
+	t=1754580148; cv=none; b=oyzKI/PY4gATtngKCm5oO/3iHjyPscv8nl9Ma7yAKqnJxBncw5muQfhkYNc+C7wOcRJxxAwyQjFTRDu9GmqmDSBXzGUxQXvbBJYija/dZhlk1kTboVvgNnk51BKTohvFO8kYIPEBB/oWHjVzF70SLBIZplhnkQ73hIuQQrN3dZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754579221; c=relaxed/simple;
-	bh=sEAgP34mv2ScwExR6hwmXn58G47Tvau4fCjJTuWOLRM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=kLn2lDVe0IVHVq1jrWmDmjIEaDuakBZGWLrH1d9zS0cXbNCkVSKScjoL3HU9chJA3s+9ZftzoaKk8ObTG0jihH6Gk8+NPDPXRPgMORuJUW1cUwnWJgm3qRIlVjLC0f4MnWKnkBbkJj6TYeXFNIvJHO3EIR9AAYbyJJAgvI+LY5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gregoirege.is; spf=pass smtp.mailfrom=gregoirege.is; dkim=pass (2048-bit key) header.d=gregoirege.is header.i=@gregoirege.is header.b=uL23Yplf; arc=none smtp.client-ip=57.103.70.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gregoirege.is
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gregoirege.is
+	s=arc-20240116; t=1754580148; c=relaxed/simple;
+	bh=xORDaFpPTNqdUABqB4oXPvIOk9+vo+asTMZbA3WUeno=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=u7iVJBRyxrkqkAHKDll+SyVVO/R3Xh/uMfVkdLvvdanGeLnAR8tQL87DWMQ8QLOO0I1EjDNTycp8pUoCzLDS28q/25eOdYcWa6Yj+fIJRuHnmrAjtepujGw7yIOl3WUflEvePKM5cHAnEibNTjs+v/am1yONoHjcvpgbqprXkuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TprUPckW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XPPUOxNZ; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gregoirege.is header.i=@gregoirege.is header.b="uL23Yplf"
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-west-2a-10-percent-2 (Postfix) with ESMTPS id 0BBB41803854;
-	Thu,  7 Aug 2025 15:06:57 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gregoirege.is; s=sig1; bh=3/P4gyrmOaD4yRnyxB0yNJJDsKEL9ZF+/W91CNdyzTc=; h=From:To:Subject:Date:Message-Id:MIME-Version:x-icloud-hme; b=uL23Yplf153OugH7UJ32HO5f5xDx4FWxvDhuD0T7pymhM2mEOKkx4SOO0EpDPG/KKrGSkaEGxny2LYkrdAsShK433s1ZWcUJxgkkc5OCfRDnyalgWP9c/abRSrjxh8W+93yI0NKFvgwe74LbfM7Cyp1nC1ure9UqgZIDk+PT79nv/apnBfJcdJCanIgV/2N2HlSYKUhPWy39JqF087hJjXLDaKlSW569007SFu4CKb1v6/OH8Bo3o0E5pqqLTzfHDsMZ0jCXMCF63Hm/d6mZTDoLaMq/J5nIF2S167pqL0x2u7Mm8pVw/ew4y2B6yChPjn//UoP09F+/Qxf8Ws1jNw==
-X-Client-IP: 118.221.50.200
-Received: from localhost.localdomain (mr-asmtp-me-k8s.p00.prod.me.com [17.57.152.38])
-	by p00-icloudmta-asmtp-us-west-2a-10-percent-2 (Postfix) with ESMTPSA id 0163B1803876;
-	Thu,  7 Aug 2025 15:06:56 +0000 (UTC)
-From: Gregoire Geis <opensource@gregoirege.is>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Gregoire Geis <opensource@gregoirege.is>
-Subject: [PATCH] diff-no-index: fix stdin path in subdirectory
-Date: Fri,  8 Aug 2025 00:06:13 +0900
-Message-Id: <20250807150613.32177-1-opensource@gregoirege.is>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TprUPckW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XPPUOxNZ"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6715E1D001AF;
+	Thu,  7 Aug 2025 11:22:25 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 07 Aug 2025 11:22:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1754580145;
+	 x=1754666545; bh=+aWXqAnstgfeiD99bKCtSyyIMTwY2+DVArr3Sqcg7wM=; b=
+	TprUPckWPoC9BXXm7mBw9B9gt/qai0dFB+61OCtf3NDLZai6Cu880IB5XZV1qcFy
+	FtDB7u1btTOmvKkodAwMp1R14/7OU6VbS/AT+ijMi1X2ve+Jf3PQ8swZ22j7p6vi
+	tL151T/GeLRIV7Hu59aZcnBOKViARIRiPGFrDmk0Ti9A8p4cdv0/4K/T7fIe0uCF
+	wYo86nV9ek0TW/ueP0FzVIrPlynPrEkfm4kDVKioLm4CKniR6e1KYehEgdPF8BxE
+	Sa1pzL/qbYEPFAEqphHAM/5Y1A50cbPqYSR2x0gl5MN847mNEyU51N5Bh/XAUKeC
+	arkOnMDAKSEC71SEd4nfug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754580145; x=
+	1754666545; bh=+aWXqAnstgfeiD99bKCtSyyIMTwY2+DVArr3Sqcg7wM=; b=X
+	PPUOxNZt8fB7/5dCifByDgcTMnxCgiOWSUSRxYvm+iH6ZKyN4IOt9OK7D4hMa6O/
+	k8VQJMZCNelcsrwLnp2YWX8VhPy3EDrPD/+EwXCN542ViGmQcajTm6pr5bBcG2dF
+	0zhelUBkbjeQwW/KRZZAFkeGWrcPguhx/TV9jfueqcOlCU8o1M93GkZArxl4nfhw
+	ZfymvAiPvfySaZSHrKPcTi38pjjStu1e3H+b6oPVW1Gb15xxRP9PhgYlneJ0Fgun
+	pci1Ew1ivRTFvaVZiTgKvmDk+Pk1zkw7q6wT6NnFa5QTtkCIzUhx2bgxwiyNjbsV
+	bxfY1vg5SD57KKD3781Sw==
+X-ME-Sender: <xms:sMSUaKl3MLJao5TrmeCpaDSJCh5--l1zGb6OjvOj-gGH16Oa_tSgHQ>
+    <xme:sMSUaMbW2rXPt5YzvaCZTVjUbgzqKpZryFRLmNWeaXAaMzgKUVMhGNcjF2TnObZda
+    RHiHvNBnfowR9bN7w>
+X-ME-Received: <xmr:sMSUaFNky5Zo3B8YLhBXubd7EWBOgG-DDIm6Ev1WIXp7MGyEqoY9FQrJf8qyxuZA0iny0GXmqDikoOFf2nKhgSaQ09eKOMeyxdKbOOI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdduvdekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshiivg
+    guvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:sMSUaBZ_gRRy_LiUQ0ybnH0P0ytSx1YkQ3EoqJs2ETLIpoN6iCqo-A>
+    <xmx:sMSUaD0uL55YsPYyg2OOosUJ4I_tspUBsnmTj07ofSwB6lNYCtKugA>
+    <xmx:sMSUaHeRyMsZh9O9fgp9zcacucseCf2KcXx_6n8AjYiYKqTBQBOZzw>
+    <xmx:sMSUaEHA910d0tLkoSJgL50-UVvq22xaKETMqELa9-bCtPtUPLjEFw>
+    <xmx:scSUaN0XcVVG5VUYapxbR8hbWL_voDidBRXyeh8Tmw7Xr8STvYfwtZZN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 7 Aug 2025 11:22:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2025, #02; Mon, 4)
+In-Reply-To: <aJQu5VJ_w1Vq_VYW@pks.im> (Patrick Steinhardt's message of "Thu,
+	7 Aug 2025 06:43:17 +0200")
+References: <xmqqectr57ax.fsf@gitster.g> <aJO/VhvaH7FgluZA@szeder.dev>
+	<xmqqfre4tahh.fsf@gitster.g> <aJQu5VJ_w1Vq_VYW@pks.im>
+Date: Thu, 07 Aug 2025 08:22:23 -0700
+Message-ID: <xmqqo6srrwb4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: g1zrvL__495jBRptJNBwiQ0cy4kHETZj
-X-Proofpoint-ORIG-GUID: g1zrvL__495jBRptJNBwiQ0cy4kHETZj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA3MDEyMyBTYWx0ZWRfXzQKaZVSQ/3PD
- bD8oHgVc/JP1tiqHrgw5TEfm65xhylTF8FO25miPNKjfzI19G2i6JuKW3qKnZw25JTEKHJJRigi
- bMT6x3bizFpmqg6mGUtxPbchlpIRKITWvYehSj3A84bkX7eTl6XG+xlNdLgn8kqucEtByQEYzXE
- 5gUBONeSd6y5okpetCli69k+94XfwPPF1dW6tl0xVnsR0GjJIksuDng6VlKyzqbzcNu4qlMvUoJ
- qNmaVw9E3cksuHerg9/2Jtu6FBRDZcg3bU85xMIWP3zwpsEEFg2mN+gaLB3Ozq7K9ZogPYgsI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-07_03,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- adultscore=0 phishscore=0 spamscore=0 malwarescore=0 clxscore=1030 mlxscore=0
- bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.22.0-2506270000 definitions=main-2508070123
 
-`git diff --no-index` tried to normalize paths before printing them,
-skipping a prefix before reading a string. However, `-` doesn't start
-with this prefix, leading to a buffer overflow:
+Patrick Steinhardt <ps@pks.im> writes:
 
-$ make SANITIZE=address
-$ mkdir a && cd a
-$ echo a | ../git diff --no-index /dev/null -
-=================================================================
-==14536==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60b000001f92 at pc 0x000102612a30 bp 0x00016db386d0 sp 0x00016db386c8
-READ of size 1 at 0x60b000001f92 thread T0
-    #0 0x102612a2c in diff_flush_patch diff.c:6154
-    #1 0x10260dbfc in diff_flush diff.c:6829
-    #2 0x1025f218c in diff_no_index diff-no-index.c:422
-    #3 0x102356338 in cmd_diff diff.c:501
-    #4 0x1022cc780 in run_builtin git.c:480
-    #5 0x1022c9bec in handle_builtin git.c:746
-    #6 0x1022c8670 in cmd_main git.c:953
-    #7 0x1024fe230 in main common-main.c:9
+> On Wed, Aug 06, 2025 at 02:18:34PM -0700, Junio C Hamano wrote:
+>> SZEDER Gábor <szeder.dev@gmail.com> writes:
+>> 
+>> > Before merging please make sure that the topic can be built on its
+>> > own.  Currently all of its commits, including the merge commit the
+>> > topic is based on, fail to build because:
+>> >
+>> >   $ git log --oneline -1
+>> >   fc33fe7eff (HEAD) Merge branch 'ps/reflog-migrate-fixes' into ps/remote-rename-fix
+>> >   $ make
+>> >       CC builtin/reflog.o
+>> >   builtin/reflog.c:7:10: fatal error: object-store.h: No such file or directory
+>> >       7 | #include "object-store.h"
+>> >         |          ^~~~~~~~~~~~~~~~
+>> >   compilation terminated.
+>> >   make: *** [Makefile:2817: builtin/reflog.o] Error 1
+>> 
+>> The joy of having too many moving parts X-<.
+>> 
+>> Thanks for catching.
+>
+> I guess what I learned is that I'll refrain from building on top of a
+> topic that hasn't hit "next" yet from now on. I knew it was a going to
+> become a bit painful, but I guess it's even more so than I expected.
 
-Signed-off-by: Gregoire Geis <opensource@gregoirege.is>
----
-Hello!
+As long as the base topic is reasonably stable, having to recreate
+the base merge(s---there have been cases where a topic depended on
+multiple in-flight topics) and rebasing the existing dependign topic
+on top of the updated base was not _too_ painful.  In addition to
+rerere, I use machinery to remember and reuse necessary semantic
+conflict resolution that was done once (which is used to rebuild
+'seen' on top of 'master' a few times every day).
 
-I noticed that running `git diff --no-index /dev/null -` in a
-subdirectory leads to garbage file names (instead of `a/-` and `b/-`).
+In this particular case, it was me being absent-minded without
+realizing the base merge may need merge fixes until SZEDER pointed
+out.
 
-Valgrind and ASAN confirmed that this is a heap buffer overflow. I
-fixed it by checking against "-" when writing the file names in the
-patch, which leads to results similar to using an absolute path (e.g.
-`a/dev/stdin`, `a/-`, no matter the working directory). "-" is a
-special input for `git diff --no-index`, so I don't think we need any
-kind of normalization before this check.
-
-I added a test which currently fails on `master`. I chose a
-subdirectory `aa/bb/cc` to make sure that the path is long enough for
-garbage to appear even if git is compiled without ASAN.
-
- diff.c                        |  4 ++--
- t/meson.build                 |  1 +
- t/t4072-diff-no-index-dash.sh | 17 +++++++++++++++++
- 3 files changed, 20 insertions(+), 2 deletions(-)
- create mode 100755 t/t4072-diff-no-index-dash.sh
-
-diff --git a/diff.c b/diff.c
-index dca87e1..88e93e5 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4626,12 +4626,12 @@ static void diff_fill_oid_info(struct diff_filespec *one, struct index_state *is
- static void strip_prefix(int prefix_length, const char **namep, const char **otherp)
- {
- 	/* Strip the prefix but do not molest /dev/null and absolute paths */
--	if (*namep && !is_absolute_path(*namep)) {
-+	if (*namep && !is_absolute_path(*namep) && strcmp(*namep, "-")) {
- 		*namep += prefix_length;
- 		if (**namep == '/')
- 			++*namep;
- 	}
--	if (*otherp && !is_absolute_path(*otherp)) {
-+	if (*otherp && !is_absolute_path(*otherp) && strcmp(*otherp, "-")) {
- 		*otherp += prefix_length;
- 		if (**otherp == '/')
- 			++*otherp;
-diff --git a/t/meson.build b/t/meson.build
-index bbeba1a..9042f3f 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -486,6 +486,7 @@ integration_tests = [
-   't4069-remerge-diff.sh',
-   't4070-diff-pairs.sh',
-   't4071-diff-minimal.sh',
-+  't4072-diff-no-index-dash.sh',
-   't4100-apply-stat.sh',
-   't4101-apply-nonl.sh',
-   't4102-apply-rename.sh',
-diff --git a/t/t4072-diff-no-index-dash.sh b/t/t4072-diff-no-index-dash.sh
-new file mode 100755
-index 0000000..35170a4
---- /dev/null
-+++ b/t/t4072-diff-no-index-dash.sh
-@@ -0,0 +1,17 @@
-+#!/bin/sh
-+
-+test_description='`git diff file -` does not crash'
-+
-+. ./test-lib.sh
-+
-+test_expect_success '`git diff --no-index /dev/null -` works in root' '
-+  echo foo | git diff --no-index /dev/null - | grep "a/- b/-"
-+'
-+
-+test_expect_success '`git diff --no-index /dev/null -` works in subdirectory' '
-+  mkdir -p aa/bb/cc &&
-+  cd aa/bb/cc &&
-+  echo foo | git diff --no-index /dev/null - | grep "a/- b/-"
-+'
-+
-+test_done
-
-base-commit: 64cbe5e2e8a7b0f92c780b210e602496bd5cad0f
--- 
-2.48.1
-
+Thanks.
