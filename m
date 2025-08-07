@@ -1,255 +1,183 @@
-Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF8124503F
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 08:12:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78C21B7F4
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 08:21:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754554361; cv=none; b=HVGHhltU8FvRAJVJIiwNpl28V6IIj/piYatEAwRk2BEnUk/cpfdDcSsDu9cEg/HTGQ3XIQA072OIqj+ft4aJye0WbJcYKgBYcDhPxntaHloS0ATZeHIe3YLtu6xcrr7T+hIoZnIDLEuBmQMWbJu5sKo5K5ZXvuHKFkGVtLg3mTs=
+	t=1754554881; cv=none; b=VZyF43lpRl8jKkgL9HxRwlysZaUiAXy+QloQtpcYpi88BGvaj3WFovlz+tBE0s97Cl5LnEXLUadxRSttwRjZYFpH613lBmdAkeLIwfrP3f3YiFk7x+ER1pkX7iUYkI3lxzmCIPVtHJUvyg1/BVS3xrlw2EKLrp8NP6eBKRPZeoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754554361; c=relaxed/simple;
-	bh=pAa8wvrwgAquHrI3GtE5shRbldkxntw9T2eSxjKRqmg=;
+	s=arc-20240116; t=1754554881; c=relaxed/simple;
+	bh=iyPZolLaZAwB8WxEqsal/Vw9vN56QaAiXTGn4MYkmTw=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HI7Y0mZw9rqgk40VohBvTMJz373PA2ARsaVm60BzlBJvmajjAaSs8pcEjHhxnGcDrYuOv0ZXvfSixITgZ2SFQQ0rx9wp0Wyz1B7RDYebz+0S892SyX0MhUJne5mnsHDk60Z+o59EVaL4YsXpoaA6gYYWSp0d2oPt39ejQJC/egw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O0r43q7v; arc=none smtp.client-ip=209.85.222.46
+	 To:Cc:Content-Type; b=TGW6Z1UrePHIynt0nx+8D+V8+3yV9QywaUk8tdRDUt3B4kBoqPMCAIHvmyRFrqlRK1TgfLTM45AS1CSjWQ4zY3iih7rEWcYhUrPO2VlHsgBjewqA3WmjKGJwWCyKx1vi0GOid8rcOw1Kw3IzVIFZewdWPYk2MFITeAm0pb4anqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bq3pGFRU; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O0r43q7v"
-Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-88db7a27cdcso202926241.1
-        for <git@vger.kernel.org>; Thu, 07 Aug 2025 01:12:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bq3pGFRU"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b423b13e2c3so500743a12.3
+        for <git@vger.kernel.org>; Thu, 07 Aug 2025 01:21:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754554359; x=1755159159; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754554879; x=1755159679; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oMxhB2qbJVvDYJzU/hlW3rx0AHe+yI+4KZs1V5dIE9c=;
-        b=O0r43q7v5iiBQOEwjjmsIHBdBkCuFaQATFgXkRdezJ5YLK+R/4TF6Km654CHsNc5uP
-         8HkdYHjA2jdwHzemuzLmsjU4Cv9Fx7sBN4SxUAfE1UG46fxEUO3nIYkJKiiAgZIP0xbQ
-         6bIIWOwViXJkg+pR52538/G62e/Ss3WQSpFA3gpBFOYG6dpw0nGYZlQUn0KOc5XfAFs7
-         +XLhCO4d7GP/imn4diUnI5FG3cwRt4tCLeHuFZokCujzYVU85qU2kFc/a4TD8lgpCJnI
-         o4NyPUlgAjC5BpETo8pGWSen1tLf855Dzgx5jLEOp3RqrMIYLfa2tFYa2Ml8kjjUtGgR
-         UwOw==
+        bh=TkpGwOPLIbxxd3wghRAlBPGx8T/Bc4ov8GE5KKLbkvU=;
+        b=bq3pGFRUDDcfu6rzxcxjIDJRSbwIEKJtBlhrSMnhYJDIfEX1oMUrhUcU/Bu02YcZbR
+         +B7uKYDN7v9M849rEqb2wm3C0RxTA9YWGJtuJABamgGCoj6lMwYYDnncTLfw7CbDGIMH
+         oWD8GsrgibgeIZFeiFiKrXJz5xRtCesQhoWrW2bAgcBODmv9l/pG3iU6gydf0H3AWAMV
+         ks/mkTUZ4f1dalRLA+GOmuWsb9PMMCy33GTmrYxTESddLCTVc9NELdjDCrs6xIdmdKyu
+         K4dkZO1mkCvjz1aeW5Gd2MHMy/Cn25eywN7jJ6XNh8dKJMtK939btnIswSf9bd3u5Dih
+         R6pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754554359; x=1755159159;
+        d=1e100.net; s=20230601; t=1754554879; x=1755159679;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oMxhB2qbJVvDYJzU/hlW3rx0AHe+yI+4KZs1V5dIE9c=;
-        b=LSb51OeUlKQmH+WHfQf56HVMVBqXmBzE+jxIyKuSSZokLL6/fdDFLs8TcBLHNnyA/w
-         3esHoTF1EeW+wYLOiHUEtYTQaLmejBclryznfG8lGRr7QDAP6cIYNVz5GgmO6NtNT889
-         bvZnThkPYbzUQaZ0fkg+bUAFMl1Mz12KTp9R7i2oAxmRP3hb5mzY0G/lKCopNhAumJwe
-         STyJzPR54e80vpWmDPKjVoWefKnml+Ao3lWfEuJ2HgAQ+8A39TqxGH95sOWl1sXF+kBf
-         91zg7ID+V6wInhTgtmSNQCERk+zn4FIFOIqHz3lwd7eBLcKPeZXfMaJFVu9U/54BSEp/
-         BIkw==
-X-Forwarded-Encrypted: i=1; AJvYcCWWkkH1IToZlFzmZ8yEf0uVbvb64QsPPUz5gwAZPcyCdOkSZrJC34+MqjR7/q+lGxjHXLA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4MDb0YV4iJ+pZjksdvbyCcIKL0qM3xsT9QcESSf8YEs5QZtul
-	pJ944pNN3GDzrJvA58MBDl/XF5XoYLPXvxPMPrfhQYKV0bvumxE0SVA5jHD5ruvSitP2OxyXdvp
-	Bj0snt3k5v6o03KVJfzqHsW0mKVy/+KP27JMa
-X-Gm-Gg: ASbGncv8+2x8WWWjQjWowVVBO5suQCkf2Nzu3ZHUhEZWsCjkmzN27S75Ca59bFA+EvE
-	tjVyAmsW0W9tTRYZvWftveXQw5Tb15LPgCLViLrnfzxuBHVbhssw1FrGxXdg9xWEe4SqWGvfMay
-	/tdfrsZATwGLPUDw6qSIUBEO+gZyFg3FIR94i+25tfJRor3R/28kM2TFKiQuz1nXwTOx/5N/glO
-	E2lLA==
-X-Google-Smtp-Source: AGHT+IGcML3H0rd1cnE/Gi6XOOLOGteo1afsbLWBMhDhi/c5v9nH690NM7Td9Ajne5AyHHWFCZb2lJhimtgdwB58iuE=
-X-Received: by 2002:a05:6102:508a:b0:4fc:e593:b20e with SMTP id
- ada2fe7eead31-5037b5d4161mr3008816137.26.1754554358556; Thu, 07 Aug 2025
- 01:12:38 -0700 (PDT)
+        bh=TkpGwOPLIbxxd3wghRAlBPGx8T/Bc4ov8GE5KKLbkvU=;
+        b=Pru5HrQbAMHb2qMm0ah3sheGkR8trQycTN/u11mGYcBN37RzrJsBO1NkNRQAD1WO9I
+         umwqeFh2AxO69ZMk+Jq+BNF/tzjl2EVcVuLGT0XRtcWf2ZT/XkOUnl/B8L2KC7pO2nQy
+         YTW/gxCbanuJock/sCDmgXhU0IGnmUxnWifoiehgKz/xA1A3QgFxXYU8gi5x/Ksc5/8O
+         0J0S0wFRmEaesH8OfLeRudJcWqx9iXfzLdP0QmyppxIqR9vtnpQevTvV+c0vLBm995sd
+         wcgVlSEZ2hGqeoTkRZwak2J+6s5M7U8oqqJCLNzl4s5KiI+rMnzdun/juuUVcnbaF6AG
+         ioQA==
+X-Forwarded-Encrypted: i=1; AJvYcCXnJF6L4OW47hCTo2N/84932EnxY4EmxFqcALbnmwOUSia5xMqbe2fIoTfk5ZPZmyh/ctM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzka4ydArHgrnJr7n+5duzz90Wx8eL5LM1dTX6eBU7oxP8Kj8h2
+	042BgBrfv1RqYuxGY+5AXsHD3vfwI9vPk/SoJFDhoulr534Vr3HFawmma8CcNig7pFB5k5+BSc8
+	wz3LeS3SKfn1ibhQC121DvKRBl6yVj58=
+X-Gm-Gg: ASbGncu/L4/FniT7S7kZkxGbOdunQt5YI1FhswRjSWpvFCTY4W7zcGsWqTNGTEk1aXE
+	w10MOvczpErvyKURqm+T6AV6Rs412QA331+Y6eNzNnD0KV7BcaBFXcJrbeURoKizJbxSpEnIGV5
+	ejGlfQybrmi73vyCwbb2tMKI8oxzNAvZUEAL5VZZ8Aw883edkbAiD0B5u5/P09rpuH4LTXVhOQW
+	sEGsN4irRKc0gfg
+X-Google-Smtp-Source: AGHT+IFLx0Y4VNUoMCOONIS37q5YKtzd4xsETCYNgJ1ez5Lx+ephO8LMURIrCOiY+01SaZd436xgGqS5ARHISabPw6I=
+X-Received: by 2002:a17:903:987:b0:240:2a0:c449 with SMTP id
+ d9443c01a7336-242a0a90e6fmr74147485ad.8.1754554878787; Thu, 07 Aug 2025
+ 01:21:18 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 7 Aug 2025 04:12:37 -0400
+ HTTPREST; Thu, 7 Aug 2025 01:21:17 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 7 Aug 2025 04:12:37 -0400
+ HTTPREST; Thu, 7 Aug 2025 01:21:17 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250729-b4-pks-midx-deduplicate-source-info-v1-1-748db2eda3b5@pks.im>
+In-Reply-To: <20250729-b4-pks-midx-deduplicate-source-info-v1-3-748db2eda3b5@pks.im>
 References: <20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im>
- <20250729-b4-pks-midx-deduplicate-source-info-v1-1-748db2eda3b5@pks.im>
+ <20250729-b4-pks-midx-deduplicate-source-info-v1-3-748db2eda3b5@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 7 Aug 2025 04:12:37 -0400
-X-Gm-Features: Ac12FXwoJU0P1MfjzFuMVVFkNGlWo-1g8x1x63T-Ogjkeqnq5YwU5wZRwledIso
-Message-ID: <CAOLa=ZTr6pkYHu05xBKJwY+6RL215o06c=qgZ1b=4MTMxyV6cg@mail.gmail.com>
-Subject: Re: [PATCH 1/8] odb: store locality in object database sources
+Date: Thu, 7 Aug 2025 01:21:17 -0700
+X-Gm-Features: Ac12FXzfQvGC9F23p9JcpEy-q_YccMk6YandX9auFVMFZ0dkvx_NzmYxNH1_BXs
+Message-ID: <CAOLa=ZThnuczO3xXdVupaqmbQK6t8z30pE7krG2djS4Lfr=jyg@mail.gmail.com>
+Subject: Re: [PATCH 3/8] odb: return newly created in-memory sources
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>
-Content-Type: multipart/mixed; boundary="000000000000480e43063bc20559"
+Content-Type: multipart/mixed; boundary="0000000000004a1eeb063bc224a3"
 
---000000000000480e43063bc20559
+--0000000000004a1eeb063bc224a3
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Object database sources are classified either as:
+> Callers have no trivial way to obtain the newly created object database
+> source when adding it to the in-memory list of alternates. While not yet
+> needed anywhere, a subsequent commit will want to obtain that pointer.
 >
->   - Local, which means that the source is the repository's primary
->     source. This is typically ".git/objects".
->
->   - Non-local, which is everything else. Most importantly this includes
->     alternates and quarantine directories.
->
-> This locality is often computed ad-hoc by checking whether a given
-> object source is the first one. This works, but it is quite roundabout.
->
-> Refactor the code so that we store locality when creating the sources in
-> the first place. This makes it both more accessible and robust.
+> Refactor the function to return the source to make it easily accessible.
 >
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  midx.c       | 5 +++--
->  midx.h       | 2 +-
->  odb.c        | 1 +
->  odb.h        | 8 ++++++++
->  packfile.c   | 9 ++++-----
->  repository.c | 1 +
->  6 files changed, 18 insertions(+), 8 deletions(-)
+>  odb.c | 37 +++++++++++++++++++++----------------
+>  odb.h |  4 ++--
+>  2 files changed, 23 insertions(+), 18 deletions(-)
 >
-> diff --git a/midx.c b/midx.c
-> index 7d407682e6..b9ca0915a6 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -723,7 +723,7 @@ int midx_preferred_pack(struct multi_pack_index *m, uint32_t *pack_int_id)
->  	return 0;
->  }
->
-> -int prepare_multi_pack_index_one(struct odb_source *source, int local)
-> +int prepare_multi_pack_index_one(struct odb_source *source)
->  {
->  	struct repository *r = source->odb->repo;
->
-> @@ -734,7 +734,8 @@ int prepare_multi_pack_index_one(struct odb_source *source, int local)
->  	if (source->midx)
->  		return 1;
->
-> -	source->midx = load_multi_pack_index(r, source->path, local);
-> +	source->midx = load_multi_pack_index(r, source->path,
-> +					     source->local);
->
->  	return !!source->midx;
->  }
-> diff --git a/midx.h b/midx.h
-> index 076382de8a..28c426a823 100644
-> --- a/midx.h
-> +++ b/midx.h
-> @@ -122,7 +122,7 @@ int fill_midx_entry(struct repository *r, const struct object_id *oid, struct pa
->  int midx_contains_pack(struct multi_pack_index *m,
->  		       const char *idx_or_pack_name);
->  int midx_preferred_pack(struct multi_pack_index *m, uint32_t *pack_int_id);
-> -int prepare_multi_pack_index_one(struct odb_source *source, int local);
-> +int prepare_multi_pack_index_one(struct odb_source *source);
->
->  /*
->   * Variant of write_midx_file which writes a MIDX containing only the packs
 > diff --git a/odb.c b/odb.c
-> index 1f48a0448e..1761a50840 100644
+> index 61104b7cb8..7793816f81 100644
 > --- a/odb.c
 > +++ b/odb.c
-> @@ -176,6 +176,7 @@ static int link_alt_odb_entry(struct object_database *odb,
+> @@ -139,23 +139,22 @@ static void read_info_alternates(struct object_database *odb,
+>  				 const char *relative_base,
+>  				 int depth);
 >
->  	CALLOC_ARRAY(alternate, 1);
->  	alternate->odb = odb;
-> +	alternate->local = false;
->  	/* pathbuf.buf is already in r->objects->source_by_path */
->  	alternate->path = strbuf_detach(&pathbuf, NULL);
+> -static int link_alt_odb_entry(struct object_database *odb,
+> -			      const struct strbuf *entry,
+> -			      const char *relative_base,
+> -			      int depth,
+> -			      const char *normalized_objdir)
+> +static struct odb_source *link_alt_odb_entry(struct object_database *odb,
+> +					     const char *entry,
+> +					     const char *relative_base,
+> +					     int depth,
+> +					     const char *normalized_objdir)
+
+The change in return value makes sense, since we now want to return the
+'odb_source' newly created.
+
+But the 'entry' argument is also changed here.
+
+>  {
+> -	struct odb_source *alternate;
+> +	struct odb_source *alternate = NULL;
+>  	struct strbuf pathbuf = STRBUF_INIT;
+>  	struct strbuf tmp = STRBUF_INIT;
+>  	khiter_t pos;
+> -	int ret = -1;
 >
-> diff --git a/odb.h b/odb.h
-> index 09177bf430..d9f4dcf79f 100644
-> --- a/odb.h
-> +++ b/odb.h
-> @@ -63,6 +63,14 @@ struct odb_source {
->  	 */
->  	struct multi_pack_index *midx;
+> -	if (!is_absolute_path(entry->buf) && relative_base) {
+> +	if (!is_absolute_path(entry) && relative_base) {
+>  		strbuf_realpath(&pathbuf, relative_base, 1);
+>  		strbuf_addch(&pathbuf, '/');
+>  	}
+> -	strbuf_addbuf(&pathbuf, entry);
+> +	strbuf_addstr(&pathbuf, entry);
 >
-> +	/*
-> +	 * Figure out whether this is the local alternate of the owning
-> +	 * repository, which would typically be its ".git/objects" directory.
-> +	 * This local object directory is usually where objects would be
-> +	 * written to.
-> +	 */
-> +	bool local;
+>  	if (!strbuf_realpath(&tmp, pathbuf.buf, 0)) {
+>  		error(_("unable to normalize alternate object path: %s"),
+> @@ -189,11 +188,11 @@ static int link_alt_odb_entry(struct object_database *odb,
+>
+>  	/* recursively add alternates */
+>  	read_info_alternates(odb, alternate->path, depth + 1);
+> -	ret = 0;
 > +
-
-So now, each 'obd_source' has a 'local' field, which would be false by
-default. But when the local 'odb_source' is setup, we set it to true.
-
->  	/*
->  	 * This is a temporary object store created by the tmp_objdir
->  	 * facility. Disable ref updates since the objects in the store
-> diff --git a/packfile.c b/packfile.c
-> index 5d73932f50..a38544b87b 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -935,14 +935,14 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
->  		report_garbage(PACKDIR_FILE_GARBAGE, full_name);
+>   error:
+>  	strbuf_release(&tmp);
+>  	strbuf_release(&pathbuf);
+> -	return ret;
+> +	return alternate;
 >  }
 >
-> -static void prepare_packed_git_one(struct odb_source *source, int local)
-> +static void prepare_packed_git_one(struct odb_source *source)
->  {
->  	struct string_list garbage = STRING_LIST_INIT_DUP;
->  	struct prepare_pack_data data = {
->  		.m = source->midx,
->  		.r = source->odb->repo,
->  		.garbage = &garbage,
-> -		.local = local,
-> +		.local = source->local,
->
+>  static const char *parse_alt_odb_entry(const char *string,
+> @@ -246,7 +245,7 @@ static void link_alt_odb_entries(struct object_database *odb, const char *alt,
+>  		alt = parse_alt_odb_entry(alt, sep, &entry);
+>  		if (!entry.len)
+>  			continue;
+> -		link_alt_odb_entry(odb, &entry,
+> +		link_alt_odb_entry(odb, entry.buf,
+>  				   relative_base, depth, objdirbuf.buf);
 
-The 'prepare_pack_data' already has a 'local' field, so we can now
-simply set it using the 'odb_source's field of the same name. Nice.
+I'm assuming that passing 'const char *' directly makes the function
+more versatile. Might be worthwhile to call this out in the commit
+message.
 
->  	};
->
->  	for_each_file_in_pack_dir(source->path, prepare_pack, &data);
-> @@ -1037,9 +1037,8 @@ static void prepare_packed_git(struct repository *r)
->
->  	odb_prepare_alternates(r->objects);
->  	for (source = r->objects->sources; source; source = source->next) {
-> -		int local = (source == r->objects->sources);
-> -		prepare_multi_pack_index_one(source, local);
-> -		prepare_packed_git_one(source, local);
-> +		prepare_multi_pack_index_one(source);
-> +		prepare_packed_git_one(source);
->  	}
->  	rearrange_packed_git(r);
->
-> diff --git a/repository.c b/repository.c
-> index ecd691181f..97f0578381 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -168,6 +168,7 @@ void repo_set_gitdir(struct repository *repo,
->  	if (!repo->objects->sources) {
->  		CALLOC_ARRAY(repo->objects->sources, 1);
->  		repo->objects->sources->odb = repo->objects;
-> +		repo->objects->sources->local = true;
->  		repo->objects->sources_tail = &repo->objects->sources->next;
->  	}
->  	expand_base_dir(&repo->objects->sources->path, o->object_dir,
->
+[snip]
 
-So this sets up the local 'odb_source' and as such sets 'local' to true.
-
-Looks good.
-
-> --
-> 2.50.1.619.g074bbf1d35.dirty
-
---000000000000480e43063bc20559
+--0000000000004a1eeb063bc224a3
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 243ac47ad4051f50_0.1
+X-Attachment-Id: a721e1e84fbb677d_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pVVgvUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meEhOREFDYlNVVFkzbHloaWtJZ0pXNDcwNURMMTM3TQpuQ0R5VXlPNzBv
-MTI3UXdDQW5CWnZPVDk1UG9seGg1eUhQYXF5RnZnbDk0VWlMbzQ4c2Rjd0VkVHZqSGZ0MW5aCkt1
-SU1JM1FqdGJiUmtPbUlNMlFtK09CNEZkUG11MFM1T3poM3l1SGVmbWE0RzB6QlZTaS9TTkQvNGxj
-djRKNjkKQXRYSGJ6dDRCbk1BZ0lmbGVWNVk0NkE4VzFPUkk4KzFzYzlYY0dGd00wRmw5TGlSTjdV
-c1RqQXhSMGx0TzNIYgozbXhqVW45aFVLK1NiQWlpYk9nWFVIeUZQMHAxd2NXdkVUTzlNODJqZDEx
-a1krbFIraHFQWXZkbWdTWmZ5c2tvCmQ3Uk5JOWhoUDg3QmIyd3NSYkxPVEk5cmxEelpVY0Ercm5J
-NVlxR0pyKzNURGxCcTVxSzF4Zm5XSCtubVRxdk0Kd0pnR0lnUkprQ3VKc0NEcm5rejdVUHpSSllI
-QmNsWGpSNUdmWTRDZTFoVEp0VFByOHlsT1h0L0xodkswVkg3MApvbHZzeDhVdmpiQWptclRPWis5
-TUg0YmFpQks5OXVMZUhGazlZZkdHazg2MXZKL1VjWVJ2Y0lUQklNMmc5TkRYCnFVamhwK2hQbk1E
-QTBoSHhmMVVyREh0VkxKTUl0dHEyZnpRZEdaRT0KPVNCMGcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pVVlmc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNGFRQy85QVprYWRxSDZpeWRWNlZkTGdscTdCNk9DaApUQ1duV1VSN1hI
+bUpEUXNlU0xVV25RVXpoWFEwTmZoRmFlM3BTYTVLSnF5R0UvSnFFQnF5YWJhdnJ3TXZQVHhCCkdw
+bEFRUGVRa0Q5UnZjdmJCNjZPQXVPYkRnb2UwZ011a3VlZEVsYXBMNXpGYmNKRnN4ZHhDTVh4MFln
+clZPbUIKYXNTWDkxMTArakI0Y2huVXZLck02a0txOHVrdjUwOEhPcndGM1lUT3lpWTJKc3dzaVBn
+bHNKZEtJajZUTmFxTwpuZXFhVVJQaGUxNmpmQ21KR3B1SHBsbG1IOHNTWkVXRDNPN1U0b3BGdGRs
+M3h6Y3pMeVIydUVpQmo0RDJETzBYClFyMWpGSXBHRHh5UzZHdlc3MFduNnd6Mm4vZHNlU0RvcGVN
+OUV1dVN2alJvK1pkVDZQTXVRVEhxc3RjQmYrVjcKQTI4V21LbWdQN3Y5d3A1TUlZSko5M3k0YVRK
+WUFsK0pwM1ptQlJ1TGxCaXpJT3djS3pHSk9ZY25POUxpMDJxVApGcGdGcUwwUVVOTmJEZXYvaTh0
+SnBDM2pXYzZ2RzdQc3BLWFJnbWIvZW9RQmk2Q3pkTUF6UXJGRlloR2loQThMCjBzRVJWSHZKMmZ2
+LzU0UnAvbnlrVm9zOWF1bDg1Y3hBVjRJUTlFQT0KPTNFR0oKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000480e43063bc20559--
+--0000000000004a1eeb063bc224a3--
