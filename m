@@ -1,70 +1,71 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDDD1C8633
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 22:10:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42341C8633
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 22:13:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754604643; cv=none; b=QhvNGU9nCmYkXgXeKgysO1N2NadA6AuK7jaPtk22h7vq7vBXn85vxNLCyay/eg2a+a+9iN+OanmDF0F+dJQW4oTv91jk68ldUF/rHUVdwTvipnqs6Tv6QwvBv9xeO8cpPRThTx0N4+NEZzS4nTA9zCNwyOXWsCiV+QdEFaHus+A=
+	t=1754604783; cv=none; b=PsTd2VK/EhnE5re08pvcnpLIbqLcKcBBGOD9vSWw29j/IITMhyvUlYZsEaoTPkkabm9iUm6S+Hg/2xOu3UtHylQiqmClUXhGUoo0mYNdG2mKWNgu332YW/Ru+KlhE834QiHAUR52x/7ZyCsBluovIWIEyS9EIDPgytUG0X2ZZgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754604643; c=relaxed/simple;
-	bh=N9NgjcIhiihfcExtXcA+fn2I6O7L0LGkKKNe9Nuamxs=;
+	s=arc-20240116; t=1754604783; c=relaxed/simple;
+	bh=M12lwG3WlRzbUAE/Q5n2S5EDzTIO2YXOcW2QVK3qvlM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=omjMtR0uVR2SGMxuWDe6cPgzm23tFwG7wSlYc4ncNZOh/yfVAqsNSS9TyzFd/3T7KlnKezi5+zawOi1jK4pugIncSD6L+npn3QakGEr9Ttv/KRR4ddUb66jCVHm6JisXxm5crevgrunpz/jebWE03rHeJjlTO23iCiPIEOy3SuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=VTTZAcE6; arc=none smtp.client-ip=209.85.166.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=lNLREFiw1RVZKorYzTiIzm1YUNt3XwXS+yNCwZZ1biXQFEVT6X+o1S6Ejl3TmzqFtOFa2sw/PBFPE+/XddIDIcPq1nGKZMn7LY/np1MetOqIt5RSFgSdASqhpHA5shGtYnvMgjOGHW4mACCFYJPOlEWNB9cnRAvpWNC0yBBTuSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=DOf9i+ZZ; arc=none smtp.client-ip=209.85.166.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="VTTZAcE6"
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3e52571cacfso6229445ab.3
-        for <git@vger.kernel.org>; Thu, 07 Aug 2025 15:10:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="DOf9i+ZZ"
+Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-3dc9e7d10bdso4298985ab.2
+        for <git@vger.kernel.org>; Thu, 07 Aug 2025 15:13:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1754604641; x=1755209441; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1754604781; x=1755209581; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=b1anu3gCK1r0iw/roKIP3cwHtxM5d35WgGnFze7b3s8=;
-        b=VTTZAcE6mfB/FkvgQ3/KWZsZrife7NjQB6zZOQhW/48Hw1JjKmfFNfnbIdoteDeJMs
-         wV8cLr5/EjJMtYC/YdZ8wP2kXTZ2L9Zd1dihD/Bhn6iPAPMT5+h7KNg1PrS2i5Zpm1Yq
-         Lj9AgaP3EZUIGcjkq+uf3DIOqJAqGOPR+v5FptzlufXaajxn4/li3hKAofjoWSQ5b5cZ
-         TptQ0mnlLbLM85H0oTXmcIdUqXeK/QkmzTinR36jJifOwoj/uOTEBYxLUJlhIkbdA+Bd
-         dEWOmzZgpl7NaInXVwAW9RJkAkdkqsqL23GBAJG862jG4LHL8vUS6UbsFi8oUPiNWc4c
-         hprw==
+        bh=ZcB4U3TsG4/0rXnI83azIMpouUdjKqbA1Va4O1GtRSw=;
+        b=DOf9i+ZZLYkd8XVz9FXiYlotBQmf74N/sjOxWtsH8Pxgb2zFX8j1FpyBNjzYajxuNL
+         g2dZs2d/rQAYdby/D77ESdPkbarsNKgpxHZcjia9hockbsUIDoDfGUhVmLtUEn1TF8hz
+         2DfUcY5i7/Sft2b4bgpH/cjs5vbKn47z8IGlSWvBNVF5XOkrL58Ba/g4pJFb1QW97QfK
+         gK7l7m5UrnlpAN9qEx+VUUV9TyOhFLlVkFHxDPoaT5XPNVh+9GaFRzygaqXkRI0Mgy37
+         p9bLISS/iUykCsFYqtUw6w+UcQoW+7qEYMmrRHSTWc6hjYUVQHQOOGvA1yrW5uO0pOTU
+         ugbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754604641; x=1755209441;
+        d=1e100.net; s=20230601; t=1754604781; x=1755209581;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=b1anu3gCK1r0iw/roKIP3cwHtxM5d35WgGnFze7b3s8=;
-        b=qWD7a51pJ9eclclhP94hqNgmz9eaovi9o7WpxfDkvU/VbQiKVDET/Jj4SUjMPLTwQ5
-         oYsm6lPASw005C0pOdqyFhypLpEJy7pBomUbQLaPLP3eTdwlPROJ/UXNXaBmv8qBqQH0
-         ckYWhvEhdm38YeCbXmY+oqMivD74TpfXcA2AO6s/hWc5CBp7Vj14QMRo86HdXHhI8asU
-         SVmkMlI0dlwV++PipxNK75U7MeqnZtb1ybpRB22PhyJSMPMGiVPByYm6H1/aJ9YJRJcM
-         OggMebnnH1MJap0wPD1iBi/YW5hRKCU3t+k4eT9PrRkIzYS1bp9h/heFVTMuqTYE1x92
-         jmJg==
-X-Gm-Message-State: AOJu0YzU4xNB3kDuNu5hzZV1SN7yu/wsLCYz8lhx1r0Dzpra6G6fVtrX
-	WzVjJLtiDyn+fMqFspmZ/T7FluOAOM1mIKq1mn1psi6DaAFvEf5KI3ErOUzbxEbsn5CWc3umufX
-	Bbasu
-X-Gm-Gg: ASbGnctlnko9ZbtaEjYacLvKBU47eLKYQtqK1P8N58Wdk/p8xWIyOjdQla6KmOOfRuP
-	XM2BTAW4+EpF/oRfC1ZMNuTY1h/l8qNUPBI3+GcdU3byHsIbKjgLzEaZ4Dbdjc1i2w8pvSIKG5k
-	8kYKQwpMroVq5bTHwUkASww2CFVoGYRQfn8JBE+VkRsLD6GUED05jlfBMQlZsejvxRDzPNuU0pb
-	9IBt1oHu6WQ/HXw3AlTP1m43iWGVe1hyx1BVrmu9xYDlbXTGR9eRQC95hNn/DwoMOTYK9hJc5hW
-	DVo837+qt9lUVM0i9ESyB5XomkQ/kBy8xCXfb/gFbzRSGW/YCZFYsP3t4NKJh9pf8tfpaaWwX69
-	dosMAvLziLKEvB/kQH5e2epR65C6nfuEV34Xrvd3HqGrs+T3E2ThWsMjDm1JFvCCsvwOW0w==
-X-Google-Smtp-Source: AGHT+IFbiK9jFK8Q6y6FkMvVQ01h+HW6thvMDWdJzWu60445LESb4qoedBWz/Zq5CoAZyG1dYxHWhg==
-X-Received: by 2002:a05:6e02:1687:b0:3e3:fd04:5768 with SMTP id e9e14a558f8ab-3e5330b5bcdmr14625235ab.5.1754604641348;
-        Thu, 07 Aug 2025 15:10:41 -0700 (PDT)
+        bh=ZcB4U3TsG4/0rXnI83azIMpouUdjKqbA1Va4O1GtRSw=;
+        b=F2dVUSIPTamn7auEiC6fDH1vS6nKvTScVZfXnm+gBnYajyPifGB/fKD+5VY5G/aTpN
+         MtqOx1zKp+kBCDxLKE5+KZmwXjTbnN/dL1FSFfdQ+nBI02U47HF0TfVnq0CcgGOcUIZn
+         hiev8NOT3Q9Wf6HzRoQ3vVUgfVeUfOYTC3oIRHbYYJYwaj9uA6yfIkF99TMkjw3OHPS/
+         +7/liBifz8CY87WIfgFtdvjceTeIDIRErjVqAqqFR13vk+NHWdF73kTJ2JQLP5BuzmIO
+         LwMZfT1OkNAF3LK/Pi7DM6nhxIktufsGBwHWkx4HEOCZCbl7RT7+LTMJiSohVQLXe9K0
+         3+Xg==
+X-Gm-Message-State: AOJu0Yz4/QD4H6AwBdUrzk8sWCNT5G64nWJzJ+CwVT7iTtQ/CQutGWAD
+	rY0+Hv4+S3oneStCtOlc7pWLz6B0oCuWtS8LUphpb3qiYRA2OKIsBmlELRJ+XLJWfa1kq5+wm1j
+	fqYyX
+X-Gm-Gg: ASbGncu5ZIaGplHlkQkJAVBaWPG1p0+PJG9alcvTnJ7TMk11c5P6ErAwptpw9afAOqY
+	grn976tkdZy92gK0Wa/3Bu2ZjZXO+StQ2AK55g1oyTFJ3geWfyHdLBdeYfCGxeZ+QuLEp31bWuO
+	Dc3aDTUa4lro+WnT3Wp1jvmoQ6B/kKXSuMUW5t2K1vheVyeMyjC06z3eGAmGBCtl3m6AQATQbEz
+	AGYEk3/2CnFy2gZZI3P/WyMNR1/CAqbSA07J3C+ecaLQh4RBSRBKa4DMPZIyW9nQeFYYhBNzE2M
+	AvPn2Mb50bUQEatZUAzHRv3d5OmHaPxU3BvzjQjYCg/wXUV+CrNbB7TdZqrn8U/IkZuSjxy8GkN
+	d2XGidT4av9kEJh8MdlyQrLSy+Yxx5WxvJM0XeWb6XfK1XIo4Wf+OdzVdWkk5LI6h9TFV1d7sVX
+	u+lQY3
+X-Google-Smtp-Source: AGHT+IH3o1p1gwyyLcumhAVMSFcc8/P7NWKdG6MDIPjV5jebHwNXpSxW58Vkt6R0zitwMJi5nenSxw==
+X-Received: by 2002:a92:c266:0:b0:3e3:fa5b:d4cd with SMTP id e9e14a558f8ab-3e5331a950cmr14793825ab.19.1754604780881;
+        Thu, 07 Aug 2025 15:13:00 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-50ae9bd3286sm71842173.64.2025.08.07.15.10.40
+        by smtp.gmail.com with UTF8SMTPSA id e9e14a558f8ab-3e533c00e82sm1148055ab.19.2025.08.07.15.13.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Aug 2025 15:10:40 -0700 (PDT)
-Date: Thu, 7 Aug 2025 18:10:39 -0400
+        Thu, 07 Aug 2025 15:13:00 -0700 (PDT)
+Date: Thu, 7 Aug 2025 18:12:59 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v2 1/9] odb: store locality in object database sources
-Message-ID: <aJUkX0SRmBWLS6rQ@nand.local>
+Subject: Re: [PATCH v2 2/9] odb: allow `odb_find_source()` to fail
+Message-ID: <aJUk68fgQttR2gMe@nand.local>
 References: <20250807-b4-pks-midx-deduplicate-source-info-v2-0-bcffb8fc119c@pks.im>
- <20250807-b4-pks-midx-deduplicate-source-info-v2-1-bcffb8fc119c@pks.im>
+ <20250807-b4-pks-midx-deduplicate-source-info-v2-2-bcffb8fc119c@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,27 +74,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250807-b4-pks-midx-deduplicate-source-info-v2-1-bcffb8fc119c@pks.im>
+In-Reply-To: <20250807-b4-pks-midx-deduplicate-source-info-v2-2-bcffb8fc119c@pks.im>
 
-On Thu, Aug 07, 2025 at 10:09:51AM +0200, Patrick Steinhardt wrote:
-> Object database sources are classified either as:
+On Thu, Aug 07, 2025 at 10:09:52AM +0200, Patrick Steinhardt wrote:
+> When trying to locate a source for an unknown object directory we will
+> die right away. In subsequent patches we will add new callsites though
+> that want to handle this situation gracefully instead.
 >
->   - Local, which means that the source is the repository's primary
->     source. This is typically ".git/objects".
+> Refactor the function to return a `NULL` pointer if the source could not
+> be found and adapt the callsites to die instead.
 >
->   - Non-local, which is everything else. Most importantly this includes
->     alternates and quarantine directories.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/commit-graph.c | 4 ++++
+>  midx-write.c           | 2 ++
+>  odb.c                  | 2 --
+>  odb.h                  | 4 ++--
+>  4 files changed, 8 insertions(+), 4 deletions(-)
 >
-> This locality is often computed ad-hoc by checking whether a given
-> object source is the first one. This works, but it is quite roundabout.
+> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+> index 25018a0b9d..dc2c1a5432 100644
+> --- a/builtin/commit-graph.c
+> +++ b/builtin/commit-graph.c
+> @@ -102,6 +102,8 @@ static int graph_verify(int argc, const char **argv, const char *prefix,
+>  		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
 >
-> Refactor the code so that we store locality when creating the sources in
-> the first place. This makes it both more accessible and robust.
+>  	source = odb_find_source(the_repository->objects, opts.obj_dir);
+> +	if (!source)
+> +		die(_("could not find object directory matching %s"), opts.obj_dir);
 
-Looking good. The only caller here is packfile.c::prepare_packed_git(),
-which passes local when "source == r->objects->sources". Assuming that
-->local is faithfully set to true in that case, this change looks good
-to me.
+Makes sense, and I am glad that we are trending towards having fewer
+internal functions that assume the caller wants to die() on failure. I
+wonder if it might be worth having a odb_find_source_or_die()
+counterpart here such that callers don't have to repeat the "could not
+find object directory ..." message.
+
+Perhaps something like:
+
+    struct odb_source *odb_find_source_or_die(struct object_database *odb,
+                                              const char *obj_dir)
+    {
+        struct odb_source *source = odb_find_source(odb, obj_dir);
+        if (!source)
+            die(_("could not find object directory matching %s"),
+                obj_dir);
+        return source;
+    }
+
+?
+
+Of course, callers that want to use a different message or otherwise
+handle a missing source differently would still be able to do so by
+calling odb_find_source() directly.
 
 Thanks,
 Taylor
