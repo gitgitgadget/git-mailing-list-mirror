@@ -1,83 +1,85 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2634155A4D
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 06:16:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63CD201266
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 06:49:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754547391; cv=none; b=o6CyKNWLJJW6UKA9WCl8XnZZDwDCkzFz83G2Jtdm1tVOkCP9gH2Wi0B+a6zROUMs1TsXuFCBT11aVCpr+Saol2DcbL2SMIsuHOCLppH/u7rBHkWWRkDAASgP3/95740q1axri7xrdMO0pBSXJ2qrn2fshXjzKMXtMCQBK7Wh3kc=
+	t=1754549362; cv=none; b=mMlzyNnA4zRmllMDc3nBGevEbXflFm4T6J0VE8uGGKfkTw8x5oWOnFrzdn3Ac8QeEqsTIDQl+EmOnC7KadB+FnwOooAzBESeaE7BO+LDOL8JJ4i4kR9YW0JdD6gSNfsJ5oSKluSA2fvXSj2WzzdyUNBUyEkQG+LzKhfAkiB6k8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754547391; c=relaxed/simple;
-	bh=7Vmf+jRVXIkqkIyX8FknO1kbV4EGpBJrPF8r6LzVuy0=;
+	s=arc-20240116; t=1754549362; c=relaxed/simple;
+	bh=+LFsKLDAdSU0/IH647BDNqqSZNU1pHo7pTLx9m8kJz4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r6jCo5YGdz3A/LUt4GAmExz8z9T68eE3WeUZSgI0+CqWzEIzUdkyfxOH0syg+7A5jqUN1Tjxjwz68Bj1UMOtfRZ1VmS+40ZJ1EbqElUsKoyX96RcqxAAwdaYZFGEySCXfZE1lOfKQm523QEUP8Ev1OShZC43XRrrVvHnP1Sr8jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U9dL2MK3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VeQIa34e; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=iEcG3EC6fvXN5PnZFFo6Bl/gUCubj0JaF9TqhhPkvX+rDJ4vXtZTEuTU1HcBIvZ/8GI2BYdgeFiMocJf9/B8Nc8B0n5LthN8wLBTBRZxOsWlkwtSeDS3NgcG19KgSiLaCaU1d2ubMpe1OKxCgdNXevHyV3MDMTuI99TJ7zNN4I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a7ayHhjk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R8Xo/uEt; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U9dL2MK3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VeQIa34e"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a7ayHhjk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R8Xo/uEt"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id A09E2EC0178;
-	Thu,  7 Aug 2025 02:16:28 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 07 Aug 2025 02:16:28 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E5E8114001ED;
+	Thu,  7 Aug 2025 02:49:19 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Thu, 07 Aug 2025 02:49:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1754547388; x=1754633788; bh=QELinpVxVW
-	YGNUaJGSwtF6Gq64WnhgKuAOXZPAW4kWE=; b=U9dL2MK37YzyHH6w3hJCU9S/7W
-	B1nJdMZEqI9l7lB8cXQZ5IGJllous9+r6rBwHxpF/FSqOo0dlJkNRpZxEV1G0pMq
-	FrsWBJPXWxp9VhVeWlkQTKuaA+AnDMmiWlfSnxU3DiWkXeoVXiQC26AEbHjcMCm0
-	9r+IXdcIGHxJhBa4Q+9IrENun0lS/EBnlB/tB55Y4vQ16kbm4p9SRAlDWbw6k/wy
-	r05nuAt+yBxWJA6kFRsQiRiZC+Z+A8Vf26CmkRESjaBCQ6DFNIOHAxNr+Wp7fFlC
-	cHwpgc9AmX7RKTMidMof6o716qxnbtqZGZ08PGbORWsXUuksBkOIU4Ult3Qg==
+	:subject:to:to; s=fm3; t=1754549359; x=1754635759; bh=i81vAi+p/J
+	43E0gwhDDe7gHIcXtL36g1gWcNjpRq6t0=; b=a7ayHhjk1jYIAwbLsdZa7DO+nG
+	+67JnLuBo7n+Ob/Wmi7zfKyecNvaOMlpImLyRaR4gKOC73cCCHiOp6SmWCYjc3Zx
+	G7Mna+kCQ7cZhNkvSwJ1W1JAHEzdVJvMz6ICoB5Tt9ZVabAKf5T6yofkGrGI2FwM
+	xJhsVQz/Z6kKmvMSQnr7jR1ewKFST/aUtM9wLcVMro1/m4++ViS/qxBPcjN2+CQa
+	GgseWD0EyoKLo/I8GnrH6Je13NYay3i9wWNkxm0/2FTc7Rhas16aSMPq9Jh58Box
+	qRRCE+ZeEyjdNfUfRb1cC8qKfKZ48an5XxYKZQ48oZlED7bvZ+7owb2U9opQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754547388; x=1754633788; bh=QELinpVxVWYGNUaJGSwtF6Gq64WnhgKuAOX
-	ZPAW4kWE=; b=VeQIa34eT5+cSmVsErizzjSFkwJ0ixbetfJaD8cvPaEe0At0b14
-	q3YfVcs5OsDZq5kb2i+1Yt7oN4kWUS4qqptDgvRkE0SOyKxcnkYaQwMhuVyBGgaj
-	f+et4q4JC9+lTCPdVGxvxDXyQ/6luaG5tirXtkAgPYtXrLYD5vWAUCvGtbzz4YnW
-	aMUm34gVOnof/inSaNY5cIST2M6AUYSLX9zq5rCCC26JT6YWk57GJ6S+aERnoVBR
-	t1yk2R548Dsq2xB4/ZY2es5t6u5to9gpPiMWrovaxr4dael4XnUMNChsjj9oDzew
-	h+48QT0fXzjISFQA+JGhHyCU3pPGI6XW/pQ==
-X-ME-Sender: <xms:vESUaBTO9LKOoSX2yBd0QcCiD3SF5ugajYzIcbndp9lj0ljUbZNDuQ>
-    <xme:vESUaOC-T6o-2hkJG7mSLf7ojMgKuvBHKwtQdz3xVaEr6B4XZUIlkueRnlHO3Wp6y
-    xPbYP-3OrYARCXegg>
-X-ME-Received: <xmr:vESUaAQJvEhv_e1jeUjnZbg6xO4qgmwNTjUQ9wdq7dDsitYoQtfLB7axkqnu_nGqWlByutTJUpTy-e0dNnJAvKntLqRqajA5zIf160npWA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddtudelucetufdoteggodetrf
+	1754549359; x=1754635759; bh=i81vAi+p/J43E0gwhDDe7gHIcXtL36g1gWc
+	NjpRq6t0=; b=R8Xo/uEtWEDCf9pkbkCmG75t2oRqXmEH7YG0jf71yhymLpVS9W0
+	l/yXPhgn9kdKL/tmGTmRl0i2F+EO3dCkIx9xgDfTxXN86p//f2FUaDjSIARHLJuC
+	sf4kRwZAd+3iaX/u641cLtFrLNT++HCh0p9KIf8cwncsYmryRUjkMFf+B6l/OQZ6
+	5JQfOffuLWlO3z/p0FhHJ6h/LXl+hvjM4CGfZau9MFGeybggWXXPUoDt6l/2Elat
+	+hDVwy0SqLzFzPtzEYVcAv38POb0l9XuiU66mLqH41N5VctBK0bGps7pzrk1p4AG
+	tEFugsPD1wt0YQHzhFJoc+DpJVOTVxrtpew==
+X-ME-Sender: <xms:b0yUaOg9Nu9KzDsxYbPIpZ12CMA7mwv5h4_2OaPo7yrStpohqvmXXQ>
+    <xme:b0yUaKheqXpkSmABQVaql3-Inaxps6r57BUM16cWxdilZDxUYwTmAuQh4goaAWkTg
+    P0zWAoGpPdk2xjFMQ>
+X-ME-Received: <xmr:b0yUaMhnqd0iBgfE6ftdqwOMm2DUStyzjJg5lnKoOOMK4dOe_msoQXm23QnWM1qz5P5cop0y3EQx4W2kx2m5BeNSE4tC-OeU9SSQaa4mNw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddtvdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:vESUaErqOhqO7vaGpti31m_QoU79AXiKVjjo5PK0u3piv5KW2pbm8Q>
-    <xmx:vESUaKy-XUy0ka2IUd5O9eNv6PxM9XcryBVNTvPEF9NHut5Q4kAhPg>
-    <xmx:vESUaBLBmxnRGiaV5ziT-EhzuKfVnj8FSkFaf3363PIocUXquWztFA>
-    <xmx:vESUaEIhjtKtqrQwmgCRe1YiQe10yeJRuvVzYqe11g6tUYlCCJqXOA>
-    <xmx:vESUaC2QBjJxhAcmklTQz8HVHRfAAXPzyQdQo9tENYGFsJ-Yqq6cycW_>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopeihlhguhhhomhgvvdguvdesghhmrghilhdr
+    tghomhdprhgtphhtthhopehtthgrhihlohhrrhesghhithhhuhgsrdgtohhmpdhrtghpth
+    htohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hg
+X-ME-Proxy: <xmx:b0yUaCKd1OXz9pKbum5kkb5fwnlhR8Zq2T1QKSVdjVogRtzWqV2iPw>
+    <xmx:b0yUaDHNBzz2P_keOZaYnUo0OwtUIlYQMgJt9jSTWFAt175VKj6w8A>
+    <xmx:b0yUaOSrEY_QAHJzNF9gkd1qZK11SVtvri5EnXxMSqWLEggZCD9oDg>
+    <xmx:b0yUaHdJlvB2V5pHwb7X9tj-SOF8DC5N1dsqu8nmpxuvIb4e4Oxt1g>
+    <xmx:b0yUaFeIE_YWBtQxO6mFoBIMZEee289EpvEqNTHz1nnF3GYQEqWkwNiV>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Aug 2025 02:16:27 -0400 (EDT)
+ 7 Aug 2025 02:49:18 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b19f940c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 7 Aug 2025 06:16:26 +0000 (UTC)
-Date: Thu, 7 Aug 2025 08:16:23 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 00aa4337 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 7 Aug 2025 06:49:16 +0000 (UTC)
+Date: Thu, 7 Aug 2025 08:49:13 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 3/8] odb: return newly created in-memory sources
-Message-ID: <aJREtxNAJ9tK30GT@pks.im>
-References: <20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im>
- <20250729-b4-pks-midx-deduplicate-source-info-v1-3-748db2eda3b5@pks.im>
- <87ectotnd4.fsf@iotcl.com>
+To: Lidong Yan <yldhome2d2@gmail.com>
+Cc: git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
+	ttaylorr@github.com
+Subject: Re: [PATCH] bloom: enable bloom filter with wildcard pathspec in
+ revision traversal
+Message-ID: <aJRMaYfMd3PlRtoz@pks.im>
+References: <20250807051243.96884-1-yldhome2d2@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,52 +88,148 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87ectotnd4.fsf@iotcl.com>
+In-Reply-To: <20250807051243.96884-1-yldhome2d2@gmail.com>
 
-On Wed, Aug 06, 2025 at 06:40:23PM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/odb.c b/odb.c
-> > index 61104b7cb8..7793816f81 100644
-> > --- a/odb.c
-> > +++ b/odb.c
-> > @@ -316,17 +315,23 @@ void odb_add_to_alternates_file(struct object_database *odb,
-> >  	free(alts);
-> >  }
-> >  
-> > -void odb_add_to_alternates_memory(struct object_database *odb,
-> > -				  const char *reference)
-> > +struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
-> > +						const char *reference)
-> >  {
-> > +	struct odb_source *alternate;
-> > +	char *objdir;
-> > +
-> >  	/*
-> >  	 * Make sure alternates are initialized, or else our entry may be
-> >  	 * overwritten when they are.
-> >  	 */
-> >  	odb_prepare_alternates(odb);
-> >  
-> > -	link_alt_odb_entries(odb, reference,
-> > -			     '\n', NULL, 0);
-> > +	objdir = real_pathdup(odb->sources->path, 1);
-> > +	alternate = link_alt_odb_entry(odb, reference, NULL, 0, objdir);
-> 
-> If I understand correctly, instead of using real_pathdup() we could
-> instead call:
-> 
->     alternate = link_alt_odb_entry(odb, reference, "/", 0, odb->sources->path);
-> 
-> I did not test this, but it would avoid duplicating the path here. I'm
-> not sure though whether it's easier to read.
+On Thu, Aug 07, 2025 at 01:12:43PM +0800, Lidong Yan wrote:
 
-We can't quite, as the call to `alt_odb_usable()` needs the normalized
-object directory path so that it can figure out whether its local object
-directory is the same as the proposed new object directory.
+In the subject it should be s/enable bloom/enable Bloom.
 
-But what I noticed is that we're passing in redundant information: the
-path is already stored in `struct object_database`, and all callers of
-`link_alt_odb_entry()` pass both that ODB and its path. So we can drop
-the parameter and make it an internal implementation detail.
+> When traversing commits, a pathspec item can be used to limit the
+> traversal to commits that modify the specified paths. And the
+> commit-graph includes a Bloom filter to exclude commits that definitely
+> did not modify a given pathspec item. During commit traversal, the
+> Bloom filter can significantly improve performance. However, it is
+> disabled if the specified pathspec item contains wildcard characters
+> or magic signatures.
 
-Patrick
+Let's add a paragraph here, as we now switch into the "what is being
+done mode".
+
+> Enable Bloom filter even if a pathspec item contains wildcard
+> characters by filter only the non-wildcard part of the pathspec item.
+
+s/by filter/by filtering/
+
+> Also Enable Bloom filter if magic signature is not "exclude" or
+> "icase".
+
+This explains what is done, but not why this is safe to do.
+
+> With this optimization, we get some improvements for pathspec with
+> wildcard and magic signature. First, in the Git repository we see these
+
+"for pathspecs with wildcards or magic signatures".
+
+> diff --git a/revision.c b/revision.c
+> index 18f300d455..ef8c0b6eca 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -671,12 +671,13 @@ static void trace2_bloom_filter_statistics_atexit(void)
+>  
+>  static int forbid_bloom_filters(struct pathspec *spec)
+>  {
+> -	if (spec->has_wildcard)
+> -		return 1;
+> -	if (spec->magic & ~PATHSPEC_LITERAL)
+> +	int forbid_mask =
+
+The mask should be `unsigned`.
+
+> +		PATHSPEC_EXCLUDE | PATHSPEC_ICASE;
+
+I think instead of a forbid-mask we should use an allow-mask. Otherwise
+it can happen quite easily that we add new magic that isn't compatible
+with Bloom filters but forget to update this part here. I'd rather be
+slow but correct than fast but incorrect.
+
+> +	if (spec->magic & forbid_mask)
+>  		return 1;
+>  	for (size_t nr = 0; nr < spec->nr; nr++)
+> -		if (spec->items[nr].magic & ~PATHSPEC_LITERAL)
+> +		if (spec->items[nr].magic & forbid_mask)
+>  			return 1;
+>  
+>  	return 0;
+> @@ -693,9 +694,22 @@ static int convert_pathspec_to_bloom_keyvec(struct bloom_keyvec **out,
+>  	size_t len;
+>  	int res = 0;
+>  
+> +	len = pi->nowildcard_len;
+>  	/* remove single trailing slash from path, if needed */
+> -	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
+> -		path_alloc = xmemdupz(pi->match, pi->len - 1);
+> +	if (len > 0 && pi->match[len - 1] == '/')
+> +		len--;
+> +	else if (len != pi->len) {
+> +		/*
+> +		 * for path like "/dir/file*", nowildcard part would be
+> +		 * "/dir/file", but only "/dir" should be used for the
+> +		 * bloom filter
+> +		 */
+> +		while (len > 0 && pi->match[len - 1] != '/')
+> +			len--;
+> +	}
+> +
+> +	if (len != pi->len) {
+> +		path_alloc = xmemdupz(pi->match, len);
+>  		path = path_alloc;
+>  	} else
+>  		path = pi->match;
+
+Okay, this matches what I've expected: if we have a wildcard we cannot
+match on the component that contains the wildcard itself. But what we
+_can_ do is to match on all the components leading to that wildcard
+component.
+
+One thing I did wonder though: what happens if the first component
+contains the wildcard? We cannot really make any use of the Bloom filter
+in that case as the path we match against becomes empty. I expect that
+we'll handle this just fine. But is it still more performant than not
+even trying Bloom filters in the first place?
+
+> diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+> index 639868ac56..d8200e4dcb 100755
+> --- a/t/t4216-log-bloom.sh
+> +++ b/t/t4216-log-bloom.sh
+> @@ -154,11 +154,34 @@ test_expect_success 'git log with multiple literal paths uses Bloom filter' '
+>  	test_bloom_filters_used "-- file*"
+>  '
+>  
+> -test_expect_success 'git log with path contains a wildcard does not use Bloom filter' '
+> +test_expect_success 'git log with paths all contain non-wildcard part uses Bloom filter' '
+> +	test_bloom_filters_used "-- A/\* file4" &&
+> +	test_bloom_filters_used "-- file4 A/\*" &&
+> +	test_bloom_filters_used "-- * A/\*"
+> +'
+> +
+> +test_expect_success 'git log with path only contains wildcard part does not use Bloom filter' '
+>  	test_bloom_filters_not_used "-- file\*" &&
+> -	test_bloom_filters_not_used "-- A/\* file4" &&
+> -	test_bloom_filters_not_used "-- file4 A/\*" &&
+> -	test_bloom_filters_not_used "-- * A/\*"
+> +	test_bloom_filters_not_used "-- file\* A/\*" &&
+> +	test_bloom_filters_not_used "-- file\* *" &&
+> +	test_bloom_filters_not_used "-- \*"
+> +'
+> +
+> +test_expect_success 'git log with path contains various magic signatures' '
+> +	cd A &&
+> +	test_bloom_filters_used "-- \:\(top\)B" &&
+> +	cd .. &&
+> +
+> +	test_bloom_filters_used "-- \:\(glob\)A/\*\*/C" &&
+> +	test_bloom_filters_not_used "-- \:\(icase\)FILE4" &&
+> +	test_bloom_filters_not_used "-- \:\(exclude\)A/B/C" &&
+> +
+> +	cat >.gitattributes <<-EOF &&
+> +		A/file1 text
+> +		A/B/file2 -text
+
+We typically indent the heredoc text to the same level as the command.
+
+> +	EOF
+> +	test_bloom_filters_used "-- \:\(attr\:text\)A" &&
+> +	rm .gitattributes
+
+You can use `test_when_finished" instead to clean up after yourself even
+in case the test fails.
