@@ -1,85 +1,91 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63CD201266
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 06:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBF622A813
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 07:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754549362; cv=none; b=mMlzyNnA4zRmllMDc3nBGevEbXflFm4T6J0VE8uGGKfkTw8x5oWOnFrzdn3Ac8QeEqsTIDQl+EmOnC7KadB+FnwOooAzBESeaE7BO+LDOL8JJ4i4kR9YW0JdD6gSNfsJ5oSKluSA2fvXSj2WzzdyUNBUyEkQG+LzKhfAkiB6k8c=
+	t=1754550279; cv=none; b=bjcOMe6dVbp2SHkFidB0DxCFSVKvDLFNeqxq1ai2kCTTmCjGhsrsxBgtE2SDCPqX7eRi/Snz3OE29r6F9QFY1D6pBUs0Acpr8183J/pm0np6LlXQfsqd7WWGFk1A6rg0B8kkNSO6bxeuUPqzIDflImb3S4QZK6KHyyBHdPvwH+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754549362; c=relaxed/simple;
-	bh=+LFsKLDAdSU0/IH647BDNqqSZNU1pHo7pTLx9m8kJz4=;
+	s=arc-20240116; t=1754550279; c=relaxed/simple;
+	bh=ey95W1jRnlr41W1N3uJ/1pKCRp6RUKYt6xqcgJT4S+c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iEcG3EC6fvXN5PnZFFo6Bl/gUCubj0JaF9TqhhPkvX+rDJ4vXtZTEuTU1HcBIvZ/8GI2BYdgeFiMocJf9/B8Nc8B0n5LthN8wLBTBRZxOsWlkwtSeDS3NgcG19KgSiLaCaU1d2ubMpe1OKxCgdNXevHyV3MDMTuI99TJ7zNN4I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a7ayHhjk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R8Xo/uEt; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=RAHtQCDqr/pM+9bwFfoUh1YqWHq011kwdE1LD+n5TMEBbi+kJiengDDVm+BU5f0g3z8+PodslHSGvxqa+AZdxxSAZdpTIvPa9vbxzZggti/x5vZVUFtMx9HdWGWeclYaIiiKt+JllbUj24WMGvwJ/37U8+eyDgLFRPJUL9J16RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VUy78Rr8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KuWRrcEh; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a7ayHhjk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R8Xo/uEt"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E5E8114001ED;
-	Thu,  7 Aug 2025 02:49:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VUy78Rr8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KuWRrcEh"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C0983140023D;
+	Thu,  7 Aug 2025 03:04:36 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 07 Aug 2025 02:49:19 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 07 Aug 2025 03:04:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1754549359; x=1754635759; bh=i81vAi+p/J
-	43E0gwhDDe7gHIcXtL36g1gWcNjpRq6t0=; b=a7ayHhjk1jYIAwbLsdZa7DO+nG
-	+67JnLuBo7n+Ob/Wmi7zfKyecNvaOMlpImLyRaR4gKOC73cCCHiOp6SmWCYjc3Zx
-	G7Mna+kCQ7cZhNkvSwJ1W1JAHEzdVJvMz6ICoB5Tt9ZVabAKf5T6yofkGrGI2FwM
-	xJhsVQz/Z6kKmvMSQnr7jR1ewKFST/aUtM9wLcVMro1/m4++ViS/qxBPcjN2+CQa
-	GgseWD0EyoKLo/I8GnrH6Je13NYay3i9wWNkxm0/2FTc7Rhas16aSMPq9Jh58Box
-	qRRCE+ZeEyjdNfUfRb1cC8qKfKZ48an5XxYKZQ48oZlED7bvZ+7owb2U9opQ==
+	:subject:to:to; s=fm3; t=1754550276; x=1754636676; bh=SJNw2jemkG
+	WV+adbB/1PhJkHRQGUXRKux5wuxXxsM8s=; b=VUy78Rr8cguCR4BkvUYWQ5F+b3
+	8Tm+hllLGvkS5fS65Y0favWLaE7Y5/8W6rImteW9un4k6erdmWljZc9WeHiVSdUo
+	GxXsqBW4VELbKJysj6+1fPYEl4371w77DD8p4aUUQbCOAzmE3byEBDs1pyryQSIF
+	wMKBi8D4+hXBDjfoD9nD4AKdNmd6GB3/F45vu4RlxRvM0wajr7nlT2xq9t4v90PF
+	GVWZ6IoPhHO/X85o3wZFkd3ciZNrTSK99IwUyp1G299W4y2lB/P8BzbvsC8k1Z+n
+	3qIJpCsE9aMId7iR/MThvx+o0zzu2zhghiIhO+JH+AQVpJHmRL1GHdi0lgTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754549359; x=1754635759; bh=i81vAi+p/J43E0gwhDDe7gHIcXtL36g1gWc
-	NjpRq6t0=; b=R8Xo/uEtWEDCf9pkbkCmG75t2oRqXmEH7YG0jf71yhymLpVS9W0
-	l/yXPhgn9kdKL/tmGTmRl0i2F+EO3dCkIx9xgDfTxXN86p//f2FUaDjSIARHLJuC
-	sf4kRwZAd+3iaX/u641cLtFrLNT++HCh0p9KIf8cwncsYmryRUjkMFf+B6l/OQZ6
-	5JQfOffuLWlO3z/p0FhHJ6h/LXl+hvjM4CGfZau9MFGeybggWXXPUoDt6l/2Elat
-	+hDVwy0SqLzFzPtzEYVcAv38POb0l9XuiU66mLqH41N5VctBK0bGps7pzrk1p4AG
-	tEFugsPD1wt0YQHzhFJoc+DpJVOTVxrtpew==
-X-ME-Sender: <xms:b0yUaOg9Nu9KzDsxYbPIpZ12CMA7mwv5h4_2OaPo7yrStpohqvmXXQ>
-    <xme:b0yUaKheqXpkSmABQVaql3-Inaxps6r57BUM16cWxdilZDxUYwTmAuQh4goaAWkTg
-    P0zWAoGpPdk2xjFMQ>
-X-ME-Received: <xmr:b0yUaMhnqd0iBgfE6ftdqwOMm2DUStyzjJg5lnKoOOMK4dOe_msoQXm23QnWM1qz5P5cop0y3EQx4W2kx2m5BeNSE4tC-OeU9SSQaa4mNw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddtvdehucetufdoteggodetrf
+	1754550276; x=1754636676; bh=SJNw2jemkGWV+adbB/1PhJkHRQGUXRKux5w
+	uxXxsM8s=; b=KuWRrcEhbOT3ph6iE5gLw4qDkB7xAoefEG/KqYTEY0CP3K5r8J/
+	525ssA85Z9gyFysUXd/ML8UzjfurVhpFvGDJHMsBqiPsA+Z4MFm7otDTP9QhdyO+
+	8G1+6Lpia6SGRi3fiJDF/MnhcPhHNSR6X9pAi6LJUBDb6cRGVqBHtz0upt3cIGp8
+	dJbRaf6/U3yc9yxwQVyScN2qBYp+GYCDbyhDivm+K+WX51JKAorgsE/x2bxTCmsI
+	c3MSxVpFN8L6pE/ARF/jiqKjZ6lwTuET3gaiFFpp1YSDPHAYNUgkwPx6GeCW0eb2
+	xiAx3oHF5jDuyDxywJcwR2CndTZICLcDxmQ==
+X-ME-Sender: <xms:BFCUaF03sKYagolk8nGBDgOfJe0GO-46SR9pv_NS_YginvKxmOMSLQ>
+    <xme:BFCUaGoua2jyy1W6zCvkDvD4ftVUtZ_BzU07Sti17pqTWGx1Sa51aifGufYtaA5nn
+    uhHWiWDCdauX8XJ_g>
+X-ME-Received: <xmr:BFCUaCcNLlB-CCf23k82yFK9lrjDpft1v9TVP_OWxHAcihbSuwmxk-qovvixxfGS0qaY7TTJZiEbB3PfnxTMMa1oAkpfo9n2C58WdfUSbA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddtvdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopeihlhguhhhomhgvvdguvdesghhmrghilhdr
-    tghomhdprhgtphhtthhopehtthgrhihlohhrrhesghhithhhuhgsrdgtohhmpdhrtghpth
-    htohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hg
-X-ME-Proxy: <xmx:b0yUaCKd1OXz9pKbum5kkb5fwnlhR8Zq2T1QKSVdjVogRtzWqV2iPw>
-    <xmx:b0yUaDHNBzz2P_keOZaYnUo0OwtUIlYQMgJt9jSTWFAt175VKj6w8A>
-    <xmx:b0yUaOSrEY_QAHJzNF9gkd1qZK11SVtvri5EnXxMSqWLEggZCD9oDg>
-    <xmx:b0yUaHdJlvB2V5pHwb7X9tj-SOF8DC5N1dsqu8nmpxuvIb4e4Oxt1g>
-    <xmx:b0yUaFeIE_YWBtQxO6mFoBIMZEee289EpvEqNTHz1nnF3GYQEqWkwNiV>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehoshifrghlugdrsg
+    huugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:BFCUaFrZoSJvti4ft6BF2FoZp3F1lfy-m27RBIUUn_7tcm6f-lNzzA>
+    <xmx:BFCUaDG1vuE4NXG2E158-vp9yT5wrL_4J7Tqg4YsNsNsOFcXVSP3hQ>
+    <xmx:BFCUaFs_FIQ2V_RKciUvAtBba8raZVRM2-yXt7aRJVBMoLpIicVzEA>
+    <xmx:BFCUaFWim9rIdBZ3cHO0gpUJhgoh1wkgXNxg-1iSM6UfuZim-AjPlg>
+    <xmx:BFCUaGm7ReHvxSLPLbWvg642nN4a4O5kxzRE5lcPnRe5fk-bWbHTjiwn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Aug 2025 02:49:18 -0400 (EDT)
+ 7 Aug 2025 03:04:35 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 00aa4337 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 7 Aug 2025 06:49:16 +0000 (UTC)
-Date: Thu, 7 Aug 2025 08:49:13 +0200
+	by mail (OpenSMTPD) with ESMTPSA id e9833969 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 7 Aug 2025 07:04:34 +0000 (UTC)
+Date: Thu, 7 Aug 2025 09:04:30 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
-	ttaylorr@github.com
-Subject: Re: [PATCH] bloom: enable bloom filter with wildcard pathspec in
- revision traversal
-Message-ID: <aJRMaYfMd3PlRtoz@pks.im>
-References: <20250807051243.96884-1-yldhome2d2@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <me@ttaylorr.com>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
+Subject: Re: [PATCH 2/9] commit-graph: stop using signed integers to count
+ bloom filters
+Message-ID: <aJRP_muuzCAy3mzF@pks.im>
+References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
+ <20250804-b4-pks-commit-graph-wo-the-repository-v1-2-850d626eb2e8@pks.im>
+ <aJB5uKFdGybf-IbN@ugly>
+ <aJCW7aYqJB20LDNg@pks.im>
+ <xmqq5xf35429.fsf@gitster.g>
+ <aJEppnTkY+66IEza@nand.local>
+ <aJL06Nlee6CR-KK0@pks.im>
+ <xmqq4iukwj83.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,148 +94,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250807051243.96884-1-yldhome2d2@gmail.com>
+In-Reply-To: <xmqq4iukwj83.fsf@gitster.g>
 
-On Thu, Aug 07, 2025 at 01:12:43PM +0800, Lidong Yan wrote:
+On Wed, Aug 06, 2025 at 08:41:32AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> >> I wrote these counters in 312cff5207 (bloom: split 'get_bloom_filter()'
+> >> in two, 2020-09-16) and 59f0d5073f (bloom: encode out-of-bounds filters
+> >> as non-empty, 2020-09-17), and I don't see a compelling reason that
+> >> these should be unsigned.
+> >
+> > I think that is going backwards though: the question to ask is why
+> > should these be signed if they cannot ever be negative?
+> 
+> Earlier I gave an example of allowing for a "not yet counted"
+> sentinel value for a variable or a structure member.  Another
+> example may be for a function that counts that also needs to signal
+> an error, and as usual in any C programs, the natural way to do so
+> for any function whose "normal" return values are non-negative
+> integers is to signal errors with a negative value.
+> 
+> Note that a structure member or a variable that does not need such a
+> "not yet counted" sentinel value (e.g., it may have a separate
+> "counted already" member associated with it, or the nature of the
+> thing it counts does not have such "not yet counted" state), and it
+> is possible for such a variable to live happily with a function that
+> can signal an error.
+> 
+> It means the variable that receives the counted result from such a
+> function may be able to use only half a range of values as its type
+> implies, if that helper function is the only source of information
+> that is assigned to it, though.
+> 
+> If the counter in question never needs to store such a sentinel
+> value itself, then I am OK for it to be unsigned, and that is
+> exactly why I said "not always a valid excuse".  But if the counter
+> variable or structure member has to work with functions that need to
+> return sentinel values (like platform natural int that can use the
+> usual "negative is an error, non-negative is a normal result"), it
+> may have less chance to trigger the -Wsign-compare irritation, if
+> you made it also signed.
 
-In the subject it should be s/enable bloom/enable Bloom.
+Yup, fully agreed, and this is a good reason why it should be signed. In
+the case at hand though we never use such sentinel values, and I think
+making that explicit by using an unsigned type is a good thing as it
+tells the reader that "Yup, no sentinels involved, it's a plain counter
+from 0 to $NUM_ENTRIES".
 
-> When traversing commits, a pathspec item can be used to limit the
-> traversal to commits that modify the specified paths. And the
-> commit-graph includes a Bloom filter to exclude commits that definitely
-> did not modify a given pathspec item. During commit traversal, the
-> Bloom filter can significantly improve performance. However, it is
-> disabled if the specified pathspec item contains wildcard characters
-> or magic signatures.
-
-Let's add a paragraph here, as we now switch into the "what is being
-done mode".
-
-> Enable Bloom filter even if a pathspec item contains wildcard
-> characters by filter only the non-wildcard part of the pathspec item.
-
-s/by filter/by filtering/
-
-> Also Enable Bloom filter if magic signature is not "exclude" or
-> "icase".
-
-This explains what is done, but not why this is safe to do.
-
-> With this optimization, we get some improvements for pathspec with
-> wildcard and magic signature. First, in the Git repository we see these
-
-"for pathspecs with wildcards or magic signatures".
-
-> diff --git a/revision.c b/revision.c
-> index 18f300d455..ef8c0b6eca 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -671,12 +671,13 @@ static void trace2_bloom_filter_statistics_atexit(void)
->  
->  static int forbid_bloom_filters(struct pathspec *spec)
->  {
-> -	if (spec->has_wildcard)
-> -		return 1;
-> -	if (spec->magic & ~PATHSPEC_LITERAL)
-> +	int forbid_mask =
-
-The mask should be `unsigned`.
-
-> +		PATHSPEC_EXCLUDE | PATHSPEC_ICASE;
-
-I think instead of a forbid-mask we should use an allow-mask. Otherwise
-it can happen quite easily that we add new magic that isn't compatible
-with Bloom filters but forget to update this part here. I'd rather be
-slow but correct than fast but incorrect.
-
-> +	if (spec->magic & forbid_mask)
->  		return 1;
->  	for (size_t nr = 0; nr < spec->nr; nr++)
-> -		if (spec->items[nr].magic & ~PATHSPEC_LITERAL)
-> +		if (spec->items[nr].magic & forbid_mask)
->  			return 1;
->  
->  	return 0;
-> @@ -693,9 +694,22 @@ static int convert_pathspec_to_bloom_keyvec(struct bloom_keyvec **out,
->  	size_t len;
->  	int res = 0;
->  
-> +	len = pi->nowildcard_len;
->  	/* remove single trailing slash from path, if needed */
-> -	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
-> -		path_alloc = xmemdupz(pi->match, pi->len - 1);
-> +	if (len > 0 && pi->match[len - 1] == '/')
-> +		len--;
-> +	else if (len != pi->len) {
-> +		/*
-> +		 * for path like "/dir/file*", nowildcard part would be
-> +		 * "/dir/file", but only "/dir" should be used for the
-> +		 * bloom filter
-> +		 */
-> +		while (len > 0 && pi->match[len - 1] != '/')
-> +			len--;
-> +	}
-> +
-> +	if (len != pi->len) {
-> +		path_alloc = xmemdupz(pi->match, len);
->  		path = path_alloc;
->  	} else
->  		path = pi->match;
-
-Okay, this matches what I've expected: if we have a wildcard we cannot
-match on the component that contains the wildcard itself. But what we
-_can_ do is to match on all the components leading to that wildcard
-component.
-
-One thing I did wonder though: what happens if the first component
-contains the wildcard? We cannot really make any use of the Bloom filter
-in that case as the path we match against becomes empty. I expect that
-we'll handle this just fine. But is it still more performant than not
-even trying Bloom filters in the first place?
-
-> diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-> index 639868ac56..d8200e4dcb 100755
-> --- a/t/t4216-log-bloom.sh
-> +++ b/t/t4216-log-bloom.sh
-> @@ -154,11 +154,34 @@ test_expect_success 'git log with multiple literal paths uses Bloom filter' '
->  	test_bloom_filters_used "-- file*"
->  '
->  
-> -test_expect_success 'git log with path contains a wildcard does not use Bloom filter' '
-> +test_expect_success 'git log with paths all contain non-wildcard part uses Bloom filter' '
-> +	test_bloom_filters_used "-- A/\* file4" &&
-> +	test_bloom_filters_used "-- file4 A/\*" &&
-> +	test_bloom_filters_used "-- * A/\*"
-> +'
-> +
-> +test_expect_success 'git log with path only contains wildcard part does not use Bloom filter' '
->  	test_bloom_filters_not_used "-- file\*" &&
-> -	test_bloom_filters_not_used "-- A/\* file4" &&
-> -	test_bloom_filters_not_used "-- file4 A/\*" &&
-> -	test_bloom_filters_not_used "-- * A/\*"
-> +	test_bloom_filters_not_used "-- file\* A/\*" &&
-> +	test_bloom_filters_not_used "-- file\* *" &&
-> +	test_bloom_filters_not_used "-- \*"
-> +'
-> +
-> +test_expect_success 'git log with path contains various magic signatures' '
-> +	cd A &&
-> +	test_bloom_filters_used "-- \:\(top\)B" &&
-> +	cd .. &&
-> +
-> +	test_bloom_filters_used "-- \:\(glob\)A/\*\*/C" &&
-> +	test_bloom_filters_not_used "-- \:\(icase\)FILE4" &&
-> +	test_bloom_filters_not_used "-- \:\(exclude\)A/B/C" &&
-> +
-> +	cat >.gitattributes <<-EOF &&
-> +		A/file1 text
-> +		A/B/file2 -text
-
-We typically indent the heredoc text to the same level as the command.
-
-> +	EOF
-> +	test_bloom_filters_used "-- \:\(attr\:text\)A" &&
-> +	rm .gitattributes
-
-You can use `test_when_finished" instead to clean up after yourself even
-in case the test fails.
+Patrick
