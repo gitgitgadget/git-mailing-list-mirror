@@ -1,448 +1,293 @@
-Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB1E1FDD
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 20:53:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E19B4430
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 21:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754600006; cv=none; b=Gto8ySS/vcZCIt4um9TsFDTvsjee06hOqMxxv3HN/2J34aDcGfC32m/ddSvE3uwhf8WKLdMPRBYqduq7ZxmCFMWlRETJV2yZoIOdhMP1jLJ8tLeinDuHJccKvfUMN3A36ujfRdoU+BVCVWp3mxa4mnCmh/3ElQJ1Q+SBwaigtZw=
+	t=1754602053; cv=none; b=qE+lP+CuvM+9jwQ+pGWstI3HvNcuhpaIiCprHDEotQuBBN0/UBsKtF6VVMaOYukyUVkAN/NwSkIvH5QWsIXMr4W4uXjDMk319qGN0U1Q9TeMWOFvpUJaqvkNYPod9dBw9N3GIEN+wBNmewBwZNfCpTGjcmuj1hGD9yNPW8KS68k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754600006; c=relaxed/simple;
-	bh=pnJDSf3rRlxO4CtbKeQa6Rn4dIYNlO22L4uwKLGON/w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Fta1ZxTtqhEv1QmM1oqVmFGgStBxW5aK6LtWOOXAPK6O1x+QLKlaFKraMPnDExiS3mo9PuOz8nLRKaG/RydRCE/76irUy95VIWCNrZ3VGbGlWrsk32D2+EnQbVREOqUSPrgFs+pAS4XzpdqAX/kKRywbA5MlRoIM2OMcGr269ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Tu405V3Z; arc=none smtp.client-ip=95.215.58.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1754602053; c=relaxed/simple;
+	bh=EScjM82dog/mxFdD6vlekJSnXdXFuWr3kk20aVxMd4s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LR4kKa/xYP3jSqI/fye3MySkpNLkKPCWErOZe+mPpXVIzRb4QCdJOQ4AJzNSu+e66editXpb2J5RQdQnteJI1M6IVDUvL8s0aCsm3zg9m3/S74SnJr8dND6yffm0cDByuCmRhV8b75Ek9brDoOwnZjGkN1nW6gGvVpCPpBpKOkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KS821TFm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=giOcP9gO; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Tu405V3Z"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1754600002;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BVnRIokZZl915xnSb0z47gabEBy/lZTxI7bHrJbW0Xs=;
-	b=Tu405V3ZvwjpYHnoJpTQxUUX7ldJ6fWolon9T7Txj55g1SfusLQJkDOYNOHd+Epk23sO9y
-	tiYKH0A8WC/YwEK8uvxXf/+RHQkHg8BshdEaGb1Mrh7P8PqSf02bW+kTaGXsB83+oNZjCm
-	5mOO8R/LuvDhKtnb7W/gZT4el7wBZlI=
-From: Toon Claes <toon@iotcl.com>
-Date: Thu, 07 Aug 2025 22:52:58 +0200
-Subject: [PATCH v2 3/3] diff: teach tree-diff a max-depth parameter
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KS821TFm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="giOcP9gO"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 395F6140011F;
+	Thu,  7 Aug 2025 17:27:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 07 Aug 2025 17:27:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754602050; x=1754688450; bh=czAZ2+7Swu
+	ju7kPERGFYqe/Tdec2DfMGbfCL7Av6AKg=; b=KS821TFmLAq3VIEKj1vwbJnnJV
+	8Pn/GkNR6xSEXJYGbYmYEgbQf1lheX3yuLFT8r5UoEJVWWkDVHGpg4ecyLQO/wIU
+	lwKz0OLevebhB9TOD3OZ8itjVIPpz5HhM4lFCsx8YC6c/4aw6Cuagnx06Z3tHEH5
+	SkrUjuMHHiXEoldxdEpR9194HawyAiTH9nLjEzpE7K4XInmo9dC6sATfPhZxR6C6
+	qiZdbIeH3calG/bw7HjthmZ1NFYvZ8Lkulh1ePKLLCZIuD8bgsI/IGQD+MoCUJgQ
+	R2ErlfnHNtcF5WRpsM78A5JTtli396DSSjXJ+aK4r1d7c1O9H3kQcVUUknxg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754602050; x=1754688450; bh=czAZ2+7Swuju7kPERGFYqe/Tdec2DfMGbfC
+	L7Av6AKg=; b=giOcP9gOJVNnIlBamsPaLyHnaUKxgD8T99RRgViGogqbanxj/Xl
+	/3d6IZ2wgUPRVv2gcnbpy6V5KJZM0tM34+EYZBr+lSZzCcKvxY0vXT0+ghHSRDOp
+	PHuVq2iFnEGhrCBs+gTRUc/34dcFUQs3YzgEU2LBpZdlYCJWpWc5F4+oKVsrdy5I
+	xmwu1fO0evhqaLMkDlBRZYLo0gf/Zzqe0D7iqVlMtXI+LKjN33bPNIu12DmYyr6X
+	Qu87wEr+mTtrOkhXHMA4LoTZSdaagFbgRWr68r7zdUo79+ra21kdcszwwy2dd2PJ
+	OgNWIjcTvJsWlEOawLs6vGtyoLimP9KVUKg==
+X-ME-Sender: <xms:QRqVaNk0HfooASoviK0Skj-WuRUg_6kn_dd5nkG3dqJxeIZc6l-9mw>
+    <xme:QRqVaBTRueppwowZTuAXhrAOa4losA7MmN7podL1_BibqfYKx5ud-6i85f8d6J2jM
+    94ZFwU4qPTvuVHrog>
+X-ME-Received: <xmr:QRqVaEFtU92dDftdOV4StbDlkJzOYddFNO1UBfhhhnKCxSW71E9rrTgNBqLtVlqxE6e9adbfkr-QDRcoTR3ah_2PXeP5G7bT0m5gtlE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddvtdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeihlhguhhho
+    mhgvvdguvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohephhhisegrrhhnvghsrdhsphgrtggvpdhrtghpthht
+    ohepmhhitghhrghlsehishgtrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
+    gvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:QRqVaOG5D62ARgAND8DqKo45OODqNF7s3QeZK3ckoEN4oEaRn6CWbg>
+    <xmx:QRqVaKRpTtnGVAGLwFZluZL04Lp5w9Y6re_1rWBsSXsO9nlCOljTOA>
+    <xmx:QRqVaHLJhKKBMYnC9H_kfLcbnqHGlYYvf0u0AKRjaftRcgN-sk7OFg>
+    <xmx:QRqVaNY1bA-1hw4fmKrlQgG7NHzORl4CYx6UQ5jO4wBp6ONT_T6wmw>
+    <xmx:QhqVaDryx54K7O-NllMiXWdbcI0hvEJyYCe_M7NcEKHBCO_2c1g9jMxy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 7 Aug 2025 17:27:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Lidong Yan <yldhome2d2@gmail.com>
+Cc: git@vger.kernel.org,  hi@arnes.space,  michal@isc.org,  peff@peff.net
+Subject: Re: [PATCH v4] diff: ensure consistent diff behavior with ignore
+ options
+In-Reply-To: <20250807020643.40213-1-yldhome2d2@gmail.com> (Lidong Yan's
+	message of "Thu, 7 Aug 2025 10:06:43 +0800")
+References: <20250806123306.25532-1-yldhome2d2@gmail.com>
+	<20250807020643.40213-1-yldhome2d2@gmail.com>
+Date: Thu, 07 Aug 2025 14:27:27 -0700
+Message-ID: <xmqqldnult4w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250807-toon-max-depth-v2-3-50b7e5c81665@iotcl.com>
-References: <20250807-toon-max-depth-v2-0-50b7e5c81665@iotcl.com>
-In-Reply-To: <20250807-toon-max-depth-v2-0-50b7e5c81665@iotcl.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Justin Tobler <jltobler@gmail.com>, 
- Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain
 
-From: Jeff King <peff@peff.net>
+Lidong Yan <yldhome2d2@gmail.com> writes:
 
-When you are doing a tree-diff, there are basically two options: do not
-recurse into subtrees at all, or recurse indefinitely. While most
-callers would want to always recurse and see full pathnames, some may
-want the efficiency of looking only at a particular level of the tree.
-This is currently easy to do for the top-level (just turn off
-recursion), but you cannot say "show me what changed in subdir/, but do
-not recurse".
+> In git-diff, options like `-w` and `-I<regex>` require comparing
+> file contents to determine whether two files are the same, even when
+> their SHA values differ.
 
-This patch adds a max-depth parameter which is measured from the closest
-pathspec match, so that you can do:
+Let's see if we can do something to clarify "the same" here.
+Perhaps
 
-  git log --raw --max-depth=1 -- a/b/c
+	... two files are considered equivalent under the specified
+	"ignore" rules, even when they are not bit-for-bit identical.
 
-and see the raw output for a/b/c/, but not those of a/b/c/d/
-(instead of the raw output you would see for a/b/c/d).
+> For options like `--raw`, `--name-status`,
+> and `--name-only`, git-diff deliberately compares only the SHA values
+> to determine whether two files are the same, for performance reasons.
+> As a result, a file shown in `git diff --name-status` may not appear
+> in `git diff --patch`.
+>
+> To quickly determine whether two files are identical, Add helper
 
-Co-authored-by: Toon Claes <toon@iotcl.com>
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
- Documentation/diff-options.adoc |  28 ++++++++++
- diff-lib.c                      |   5 ++
- diff.c                          |  24 +++++++++
- diff.h                          |   8 +++
- t/meson.build                   |   1 +
- t/t4072-diff-max-depth.sh       | 116 ++++++++++++++++++++++++++++++++++++++++
- tree-diff.c                     |  78 +++++++++++++++++++++++++--
- 7 files changed, 257 insertions(+), 3 deletions(-)
+Following the above, perhaps replace "identical" with "equivalent".
 
-diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-index f3a35d8141..b4cbbd4290 100644
---- a/Documentation/diff-options.adoc
-+++ b/Documentation/diff-options.adoc
-@@ -893,5 +893,33 @@ endif::git-format-patch[]
- 	reverted with `--ita-visible-in-index`. Both options are
- 	experimental and could be removed in future.
- 
-+--max-depth=<depth>::
-+	For each pathspec given on command line, descend at most `<depth>`
-+	levels of directories. A value of `-1` means no limit.
-+	Cannot be combined with wildcards in the pathspec.
-+	Given a tree containing `foo/bar/baz`, the following list shows the
-+	matches generated by each set of options:
-++
-+--
-+ - `--max-depth=0 -- foo`: `foo`
-+
-+ - `--max-depth=1 -- foo`: `foo/bar`
-+
-+ - `--max-depth=1 -- foo/bar`: `foo/bar/baz`
-+
-+ - `--max-depth=1 -- foo foo/bar`: `foo/bar/baz`
-+
-+ - `--max-depth=2 -- foo`: `foo/bar/baz`
-+--
-++
-+If no pathspec is given, the depth is measured as if all
-+top-level entries were specified. Note that this is different
-+than measuring from the root, in that `--max-depth=0` would
-+still return `foo`. This allows you to still limit depth while
-+asking for a subset of the top-level entries.
-++
-+Note that this option is only supported for diffs between tree objects,
-+not against the index or working tree.
-+
- For more detailed explanation on these common options, see also
- linkgit:gitdiffcore[7].
-diff --git a/diff-lib.c b/diff-lib.c
-index 244468dd1a..b8f8f3bc31 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -115,6 +115,9 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
- 	uint64_t start = getnanotime();
- 	struct index_state *istate = revs->diffopt.repo->index;
- 
-+	if (revs->diffopt.max_depth_valid)
-+		die(_("max-depth is not supported for worktree diffs"));
-+
- 	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
- 
- 	refresh_fsmonitor(istate);
-@@ -560,6 +563,8 @@ static int diff_cache(struct rev_info *revs,
- 	opts.dst_index = NULL;
- 	opts.pathspec = &revs->diffopt.pathspec;
- 	opts.pathspec->recursive = 1;
-+	if (revs->diffopt.max_depth_valid)
-+		die(_("max-depth is not supported for index diffs"));
- 
- 	init_tree_desc(&t, &tree->object.oid, tree->buffer, tree->size);
- 	return unpack_trees(1, &t, &opts);
-diff --git a/diff.c b/diff.c
-index dca87e164f..b548e952fc 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4988,6 +4988,9 @@ void diff_setup_done(struct diff_options *options)
- 			options->filter = ~filter_bit[DIFF_STATUS_FILTER_AON];
- 		options->filter &= ~options->filter_not;
- 	}
-+
-+	if (options->pathspec.has_wildcard && options->max_depth_valid)
-+		die("max-depth cannot be used with wildcard pathspecs");
- }
- 
- int parse_long_opt(const char *opt, const char **argv,
-@@ -5622,6 +5625,23 @@ static int diff_opt_rotate_to(const struct option *opt, const char *arg, int uns
- 	return 0;
- }
- 
-+static int diff_opt_max_depth(const struct option *opt,
-+			      const char *arg, int unset)
-+{
-+	struct diff_options *options = opt->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+
-+	if (!git_parse_int(arg, &options->max_depth))
-+		return error(_("invalid value for '%s': '%s'"),
-+			     "--max-depth", arg);
-+
-+	options->flags.recursive = 1;
-+	options->max_depth_valid = options->max_depth >= 0;
-+
-+	return 0;
-+}
-+
- /*
-  * Consider adding new flags to __git_diff_common_options
-  * in contrib/completion/git-completion.bash
-@@ -5894,6 +5914,10 @@ struct option *add_diff_options(const struct option *opts,
- 		OPT_CALLBACK_F(0, "diff-filter", options, N_("[(A|C|D|M|R|T|U|X|B)...[*]]"),
- 			       N_("select files by diff type"),
- 			       PARSE_OPT_NONEG, diff_opt_diff_filter),
-+		OPT_CALLBACK_F(0, "max-depth", options, N_("<depth>"),
-+			       N_("maximum tree depth to recurse"),
-+			       PARSE_OPT_NONEG, diff_opt_max_depth),
-+
- 		{
- 			.type = OPTION_CALLBACK,
- 			.long_name = "output",
-diff --git a/diff.h b/diff.h
-index 62e5768a9a..bbced5f745 100644
---- a/diff.h
-+++ b/diff.h
-@@ -404,6 +404,14 @@ struct diff_options {
- 	struct strmap *additional_path_headers;
- 
- 	int no_free;
-+
-+	/*
-+	 * The value '0' is a valid max-depth (for no recursion), and value '-1'
-+	 * also (for unlimited recursion), so the extra "valid" flag is used to
-+	 * determined whether the user specified option --max-depth.
-+	 */
-+	int max_depth;
-+	int max_depth_valid;
- };
- 
- unsigned diff_filter_bit(char status);
-diff --git a/t/meson.build b/t/meson.build
-index 03245e2160..adae038f4a 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -487,6 +487,7 @@ integration_tests = [
-   't4069-remerge-diff.sh',
-   't4070-diff-pairs.sh',
-   't4071-diff-minimal.sh',
-+  't4072-diff-max-depth.sh',
-   't4100-apply-stat.sh',
-   't4101-apply-nonl.sh',
-   't4102-apply-rename.sh',
-diff --git a/t/t4072-diff-max-depth.sh b/t/t4072-diff-max-depth.sh
-new file mode 100755
-index 0000000000..0fbf1321f7
---- /dev/null
-+++ b/t/t4072-diff-max-depth.sh
-@@ -0,0 +1,116 @@
-+#!/bin/sh
-+
-+test_description='check that diff --max-depth will limit recursion'
-+. ./test-lib.sh
-+
-+make_dir() {
-+	mkdir -p "$1" &&
-+	echo "$2" >"$1/file"
-+}
-+
-+make_files() {
-+	echo "$1" >file &&
-+	make_dir one "$1" &&
-+	make_dir one/two "$1" &&
-+	make_dir one/two/three "$1"
-+}
-+
-+test_expect_success 'setup' '
-+	git commit --allow-empty -m empty &&
-+	git tag empty &&
-+	make_files added &&
-+	git add . &&
-+	git commit -m added &&
-+	make_files modified &&
-+	git add . &&
-+	git commit -m modified &&
-+	make_files index &&
-+	git add . &&
-+	make_files worktree
-+'
-+
-+test_expect_success '--max-depth is disallowed with wildcard pathspecs' '
-+	test_must_fail git diff-tree --max-depth=0 HEAD^ HEAD -- "f*"
-+'
-+
-+check_one() {
-+	type=$1; shift
-+	args=$1; shift
-+	path=$1; shift
-+	depth=$1; shift
-+	test_expect_${expect:-success} "diff-$type $args, path=$path, depth=$depth" "
-+		for i in $*; do echo \$i; done >expect &&
-+		git diff-$type --max-depth=$depth --name-only $args -- $path >actual &&
-+		test_cmp expect actual
-+	"
-+}
-+
-+# For tree comparisons, we expect to see subtrees at the boundary
-+# get their own entry.
-+check_trees() {
-+	check_one tree "$*" '' 0 file one
-+	check_one tree "$*" '' 1 file one/file one/two
-+	check_one tree "$*" '' 2 file one/file one/two/file one/two/three
-+	check_one tree "$*" '' 3 file one/file one/two/file one/two/three/file
-+	check_one tree "$*" '' -1 file one/file one/two/file one/two/three/file
-+	check_one tree "$*" one 0 one
-+	check_one tree "$*" one 1 one/file one/two
-+	check_one tree "$*" one 2 one/file one/two/file one/two/three
-+	check_one tree "$*" one 3 one/file one/two/file one/two/three/file
-+	check_one tree "$*" one/two 0 one/two
-+	check_one tree "$*" one/two 1 one/two/file one/two/three
-+	check_one tree "$*" one/two 2 one/two/file one/two/three/file
-+	check_one tree "$*" one/two 2 one/two/file one/two/three/file
-+	check_one tree "$*" one/two/three 0 one/two/three
-+	check_one tree "$*" one/two/three 1 one/two/three/file
-+}
-+
-+# But for index comparisons, we do not store subtrees at all, so we do not
-+# expect them.
-+check_index() {
-+	check_one "$@" '' 0 file
-+	check_one "$@" '' 1 file one/file
-+	check_one "$@" '' 2 file one/file one/two/file
-+	check_one "$@" '' 3 file one/file one/two/file one/two/three/file
-+	check_one "$@" one 0
-+	check_one "$@" one 1 one/file
-+	check_one "$@" one 2 one/file one/two/file
-+	check_one "$@" one 3 one/file one/two/file one/two/three/file
-+	check_one "$@" one/two 0
-+	check_one "$@" one/two 1 one/two/file
-+	check_one "$@" one/two 2 one/two/file one/two/three/file
-+	check_one "$@" one/two/three 0
-+	check_one "$@" one/two/three 1 one/two/three/file
-+
-+	# Value '-1' for '--max-depth is the same as recursion without limit,
-+	# and thus should always succeed.
-+	local expect=
-+	check_one "$@" '' -1 file one/file one/two/file one/two/three/file
-+}
-+
-+# Check as a modification...
-+check_trees HEAD^ HEAD
-+# ...and as an addition...
-+check_trees empty HEAD
-+# ...and as a deletion.
-+check_trees HEAD empty
-+
-+# We currently only implement max-depth for trees.
-+expect=failure
-+# Check index against a tree
-+check_index index "--cached HEAD"
-+# and index against the worktree
-+check_index files ""
-+expect=
-+
-+test_expect_success 'find shortest path within embedded pathspecs' '
-+	cat >expect <<-\EOF &&
-+	one/file
-+	one/two/file
-+	one/two/three/file
-+	EOF
-+	git diff-tree --max-depth=2 --name-only HEAD^ HEAD -- one one/two >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
-diff --git a/tree-diff.c b/tree-diff.c
-index e00fc2f450..5988148b60 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -13,6 +13,7 @@
- #include "tree-walk.h"
- #include "environment.h"
- #include "repository.h"
-+#include "dir.h"
- 
- /*
-  * Some mode bits are also used internally for computations.
-@@ -48,6 +49,73 @@
- 		free((x)); \
- } while(0)
- 
-+/* Returns true if and only if "dir" is a leading directory of "path" */
-+static int is_dir_prefix(const char *path, const char *dir, int dirlen)
-+{
-+	return !strncmp(path, dir, dirlen) &&
-+		(!path[dirlen] || path[dirlen] == '/');
-+}
-+
-+static int check_recursion_depth(const struct strbuf *name,
-+				 const struct pathspec *ps,
-+				 int max_depth)
-+{
-+	int i;
-+
-+	if (!ps->nr)
-+		return within_depth(name->buf, name->len, 1, max_depth);
-+
-+	/*
-+	 * We look through the pathspecs in reverse-sorted order, because we
-+	 * want to find the longest match first (e.g., "a/b" is better for
-+	 * checking depth than "a/b/c").
-+	 */
-+	for (i = ps->nr - 1; i >= 0; i--) {
-+		const struct pathspec_item *item = ps->items+i;
-+
-+		/*
-+		 * If the name to match is longer than the pathspec, then we
-+		 * are only interested if the pathspec matches and we are
-+		 * within the allowed depth.
-+		 */
-+		if (name->len >= item->len) {
-+			if (!is_dir_prefix(name->buf, item->match, item->len))
-+				continue;
-+			return within_depth(name->buf + item->len,
-+					    name->len - item->len,
-+					    1, max_depth);
-+		}
-+
-+		/*
-+		 * Otherwise, our name is shorter than the pathspec. We need to
-+		 * check if it is a prefix of the pathspec; if so, we must
-+		 * always recurse in order to process further (the resulting
-+		 * paths we find might or might not match our pathspec, but we
-+		 * cannot know until we recurse).
-+		 */
-+		if (is_dir_prefix(item->match, name->buf, name->len))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
-+static int should_recurse(const struct strbuf *name, struct diff_options *opt)
-+{
-+	if (!opt->flags.recursive)
-+		return 0;
-+	if (!opt->max_depth_valid)
-+		return 1;
-+
-+	/*
-+	 * We catch this during diff_setup_done, but let's double-check
-+	 * against any internal munging.
-+	 */
-+	if (opt->pathspec.has_wildcard)
-+		BUG("wildcard pathspecs are incompatible with max-depth");
-+
-+	return check_recursion_depth(name, &opt->pathspec, opt->max_depth);
-+}
-+
- static void ll_diff_tree_paths(
- 	struct combine_diff_path ***tail, const struct object_id *oid,
- 	const struct object_id **parents_oid, int nparent,
-@@ -170,9 +238,13 @@ static void emit_path(struct combine_diff_path ***tail,
- 		mode = 0;
- 	}
- 
--	if (opt->flags.recursive && isdir) {
--		recurse = 1;
--		emitthis = opt->flags.tree_in_recursive;
-+	if (isdir) {
-+		strbuf_add(base, path, pathlen);
-+		if (should_recurse(base, opt)) {
-+			recurse = 1;
-+			emitthis = opt->flags.tree_in_recursive;
-+		}
-+		strbuf_setlen(base, old_baselen);
- 	}
- 
- 	if (emitthis) {
+Also, ", Add helper" should be ", add a helper", as that comma is
+not finishing a sentence, hence the word that follows it is not at
+the beginning of the next sentence.
 
--- 
-2.50.1.327.g047016eb4a
+> function diff_flush_patch_quiet() in diff.c. Add `.diff_optimize`
+> field in `struct diff_options`. When `.diff_optimize` is set to
+> `DIFF_OPT_DRY_RUN`, builtin_diff() will return immediately upon
+> detecting any change. Call diff_flush_patch_quiet() to determine
+> if we should flush `--raw`, `--name-only` or `--name-status` output.
 
+Also the implementation details like the name of the .diff_options
+member and the name of the helper function have changed, and the
+proposed log message should be updated to match.
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
+> ---
+>  diff.c                     | 55 ++++++++++++++++++++++++++++----------
+>  diff.h                     |  2 ++
+>  t/t4013-diff-various.sh    | 14 ++++++++++
+>  t/t4015-diff-whitespace.sh |  2 +-
+>  xdiff-interface.h          |  6 ++---
+>  5 files changed, 61 insertions(+), 18 deletions(-)
+>
+> diff --git a/diff.c b/diff.c
+> index dca87e164f..3bd432db32 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -2444,6 +2444,15 @@ static int fn_out_consume(void *priv, char *line, unsigned long len)
+>  	return 0;
+>  }
+>  
+> +static int quick_consume(void *priv, char *line UNUSED, unsigned long len UNUSED)
+> +{
+> +	struct emit_callback *ecbdata = priv;
+> +	struct diff_options *o = ecbdata->opt;
+> +
+> +	o->found_changes = 1;
+> +	return 1;
+> +}
+
+OK.
+
+> @@ -3709,6 +3718,7 @@ static void builtin_diff(const char *name_a,
+>  		xdemitconf_t xecfg;
+>  		struct emit_callback ecbdata;
+>  		const struct userdiff_funcname *pe;
+> +		int dry_run = o->dry_run;
+
+As the "dry_run" variable is used only once in this block, we
+probably do not want to add it.
+
+>  		if (must_show_header) {
+>  			emit_diff_symbol(o, DIFF_SYMBOL_HEADER,
+> @@ -3759,8 +3769,11 @@ static void builtin_diff(const char *name_a,
+>  
+>  		if (o->word_diff)
+>  			init_diff_words_data(&ecbdata, o, one, two);
+> -		if (xdi_diff_outf(&mf1, &mf2, NULL, fn_out_consume,
+> -				  &ecbdata, &xpp, &xecfg))
+
+Instead we can check o->dry_run here.
+
+> +		if (dry_run)
+> +			xdi_diff_outf(&mf1, &mf2, NULL, quick_consume,
+> +				      &ecbdata, &xpp, &xecfg);
+
+We may want to leave a comment to explain why we ignore the error
+return from xdi_diff_outf()?  Perhaps like below?
+
+		if (o->dry_run)
+			/*
+                         * Unlike the !dry_run case, we need to ignore the
+			 * return value from xdi_diff_outf() here, because
+			 * xdi_diff_outf() takes non-zero return from its
+                         * callback function as a sign of error and returns
+		         * early (which is why we return non-zer from our
+			 * callback, quick_consume()).  Unfortunately,
+			 * xdi_diff_outf() signals an error by returning
+			 * non-zero.
+                         */
+			xdi_diff_outf(&mf1, &mf2, NULL, quick_consume,
+				      &ecbdata, &xpp, &xecfg);
+
+I am undecided.
+
+> +		else if (xdi_diff_outf(&mf1, &mf2, NULL, fn_out_consume,
+> +				       &ecbdata, &xpp, &xecfg))
+
+> +/* return 1 if any change is found; otherwise, return 0 */
+> +static int diff_flush_patch_quietly(struct diff_filepair *p, struct diff_options *o)
+> +{
+> +	int dry_run = o->dry_run;
+> +	int found_changes = o->found_changes;
+
+In this codebase, these "original value of the variable X was this, we
+tentatively save that original value away, tweak the variable X to do
+something, and restore the saved value to variable X" variables are often
+called "saved_X".
+
+> +	int ret;
+> +
+> +	o->dry_run = 1;
+> +	o->found_changes = 0;
+> +	diff_flush_patch(p, o);
+> +	ret = o->found_changes;
+> +	o->dry_run = dry_run;
+> +	o->found_changes |= found_changes;
+> +	return ret;
+> +}
+
+In the previous iteration, .dry_run/.diff_optimize was set and reset in
+different places; doing it in a single function here makes it easier to
+understand what is going on.  Nice improvement.
+
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 8ebd170451..b56a79d979 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -648,6 +648,20 @@ test_expect_success 'diff -I<regex>: detect malformed regex' '
+>  	test_grep "invalid regex given to -I: " error
+>  '
+>  
+> +test_expect_success 'diff -I<regex>: ignore matching file' '
+> +	test_seq 50 >file1 &&
+> +	git add file1 &&
+> +	test_seq 50 | sed -e "s/13/ten and three/" -e "s/^[124-9].*/& /" >file1 &&
+> +
+> +	: >actual &&
+> +	git diff --raw --ignore-blank-lines -I"ten.*e" -I"^[124-9]" >>actual &&
+> +	git diff --name-only --ignore-blank-lines -I"ten.*e" -I"^[124-9]" >>actual &&
+> +	git diff --name-status --ignore-blank-lines -I"ten.*e" -I"^[124-9]" >>actual &&
+> +	! grep "file1" actual &&
+
+Perhaps use test_grep helper shell function, i.e.
+
+	test_grep ! "file1" actual &&
+
+> +	git rm -f file1
+
+Is this because later tests will break if you leave "file1" in the working
+tree and/or in the index?  If so, we should use test_when_finished to make
+such a clean-up.  If you insert
+
+	test_when_finished "git rm file1; rm -f file1" &&
+
+at the very beginning, before you create file1 with 1..50, when this test
+piece finishes executing (whether it completed successfully, or failed in
+the middle of the &&-chain), the specified command will run.
+
+On the other hand, if the later tests won't mind whether "file1" does or
+does not exist in the working tree and/or in the index, it is common to
+leave it behind without cleaning it.  When running the test script with the
+"-i" option, i.e.
+
+	$ sh t4013-diff-various.sh -i -v
+
+leaving the files that were used in the test, without cleaning up,
+sometimes helps your debugging of the test script.
+
+> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+> index 52e3e476ff..e7be8c5a8f 100755
+> --- a/t/t4015-diff-whitespace.sh
+> +++ b/t/t4015-diff-whitespace.sh
+> @@ -11,7 +11,7 @@ test_description='Test special whitespace in diff engine.
+>  . "$TEST_DIRECTORY"/lib-diff.sh
+>  
+>  for opt_res in --patch --quiet -s --stat --shortstat --dirstat=lines \
+> -	       --raw! --name-only! --name-status!
+> +	       --raw --name-only --name-status
+>  do
+
+Wouldn't this make the "if the option is marked with !, tweak the test that
+notices these two equivalent paths are not-identical" extra code, whose
+beginning part we see below, unnecessary?  The $expect_failure variable
+would always be an empty string, so "different but equivalent" test should
+see "git diff --exit-code" exit with status 0, right?
+
+Other than that, looking quite good.
+
+Thanks.
