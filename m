@@ -1,54 +1,54 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804031F4198
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 05:55:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C48155A4D
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 06:15:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754546129; cv=none; b=DvlcZ/onffw97t3rsINgybZosLalTLKDEUh1HuOlv8u7vPXcEzuVCoeSmQdVgYfCp9lS2GP9+DO2YNlvNirTNTpfBlpd04IosKDmTxWMCNI9mxJFN1gdeICSwDfGgp8Sao4WVfXeKEu72rvBp/+Een2msq6fcawcOYGAA3h/Toc=
+	t=1754547347; cv=none; b=IIyKHCPETgstdvdJz38tBmpo+XEoZR7dzd7VEw+ELc7gxWXvCtzsXY/c5EFvVOQ7qI9v7RDAZKpyZAlksVAaSKpRdK4hZ+LFtOeKGN8r5Mioi2GAIkDrUYrKU10TWXMPfwwDwMGUXRwLEZoVDjPhYZSfvE6CrA83myQs6W+sdjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754546129; c=relaxed/simple;
-	bh=O2WuiSELz3VBf5qqbabJPnkGXNAXgv3JYmVIiTWKpec=;
+	s=arc-20240116; t=1754547347; c=relaxed/simple;
+	bh=ZC5SCCnSG89PQy0c8eYEgf3omuj1C6tyWCaWZ9lPLFc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KJWCNMf8xWDajr74nlmPgBvxhpU7H36kCMqtlyPZaMwG/MzvKEh8sRc+gaSTRZH7vAMYe14HTlLHJX5Ul4wu+6pTeHj627wkYzRGhS9W5jpR+50mNmgRYbSi+WQXFg74iM/+qnaQ1bupDd7aVPnShwArIOUJNU+Y7uYFa9yO7LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TPqP3DPn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Frv0iV30; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=hcEURKw+b9ua4eJrrLYRmFsjeN7WHk1IFHapV48oGXs+fO8A8xMn+mDlER8MxBYdX+KXQ5uo6RB8qtpHAa1TP0n1DFs5yGXUacFaUqv8lvBn3tlYC1/mXJKg5wVwhu18s8tqSG3tNgPxUo/2irsccQDOYIjC7RDO+ejaK/satas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P3QhI1dv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KoN+qODc; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TPqP3DPn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Frv0iV30"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8B6F614000EA;
-	Thu,  7 Aug 2025 01:55:26 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 07 Aug 2025 01:55:26 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P3QhI1dv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KoN+qODc"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6CF15EC013B;
+	Thu,  7 Aug 2025 02:15:44 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Thu, 07 Aug 2025 02:15:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1754546126; x=1754632526; bh=LRw7ODgUgC
-	hwz5BpjnCjDGlNh/hWAXfbZ5/VnlhIl5o=; b=TPqP3DPnep3Jyk02klf6/AoKLG
-	2P3Cdpi2c1BkSXSltSXJMRce/QLGig/gz4BBbEDLpP/OUIVZWa8D4LoBJJzs+XVj
-	Ez5ybelPwQ5JAZzZEyJe4p0uu2eZPS1WhIsgecMpCCb573ey2D+ZeH4V9qT+UKvD
-	N8mXJR/SkLtT1eHuMy8vSZJvMp4vSHI/Z0jQ0GdwOXxAjmMRNF6sNQk0Dm3DSJGb
-	/U1pIPv3GrLStuwgsOg9+YNaVKNhm5qj1AUVOkBaa64dZz8gsnv8akyw6/+xKFpK
-	rS6OiPAPL+iQLPnOjev0itThj8adVzGa8d3j2EpDv48VnB+f502egkIGX8zA==
+	:subject:to:to; s=fm3; t=1754547344; x=1754633744; bh=rYEpxffDmE
+	QbwE8daTxKWo6WW8XoHeJnGt5erP0ECog=; b=P3QhI1dv+fwTBYkuVOWLmo+Ekx
+	c8otnO44muXjyz1BUtzeIn3N63Py9jwLcyaVYhYnsM9j8kiLvHsiNj8raeZb7Cjk
+	T4JXIc7J43PVPpG5ddypfEKMdIbldRX3ALDqHUhF1PKqaGHJ2esYo8JM79/SkMf9
+	Fg2UKft/R8+wyjKnVLl8ih8RI1p7y3G00bxGSsZLpNzsFdAH5Wii4y5Q+KDcv32N
+	Wte1ezwUkz6SQwaVp/qFWribSPo0z4sIrSZHncY5FGstT59sQSWKeVGKikXS6bK7
+	n+DmjCRIUwKny6GQaMfs4xgaRBtu13w7Bx4E6jlB0dYAdzvy0llZyWwLbZnA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754546126; x=1754632526; bh=LRw7ODgUgChwz5BpjnCjDGlNh/hWAXfbZ5/
-	VnlhIl5o=; b=Frv0iV30ItnOfd3gGYzWg5E0fPJEAPaf+rrDCsHioFuM9NaRQ/U
-	MN4d6k/duSl9yVxmBcDBClnBWl8/EE+ivmKQ+jWjqHccd6vSZWfPVQ55IkXtvlbR
-	FNdMpgqPxWWq2T+lO52lmi38iGAvIudgtE0TyKhOHZdZP4ru43PTJi1AKIHvDz9v
-	rT94/qFIDcOkbBmrYjnACHL+EBqjd9FJGm+l2NOrdpp6FhPB8UttzBL/FdUL62zC
-	K238vViSxwGmp6S3FQuvMEZTWoXbq0Ji7YjEUIWgvJHeZWwbBCD+xU9hUsD95AuZ
-	cdJ2/8Ocal6Qm7ze+pKgEw8Q0u4xeQ5s0WQ==
-X-ME-Sender: <xms:zT-UaGCalssZWATJRSOT1mDWrrQPSRi4P7o7vaMahoSNZUWoDFOqNQ>
-    <xme:zT-UaLEIPPwj9kgisMKXi5hm1JULs5ehAlDI3rHhGqH28y2LpGp-Hv7vpZLIZXMXy
-    R00lgP-lB_kwru9bQ>
-X-ME-Received: <xmr:zT-UaGLHqq9WxoQwYUxJ9YZGV4r4jz50DcKmL2ZlqRfDMWsnPcM5018M581AzBBLA89WhIaGsEbchzJoby6F6nXT_47CPRcO8XLkgvmCSQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddtudehucetufdoteggodetrf
+	1754547344; x=1754633744; bh=rYEpxffDmEQbwE8daTxKWo6WW8XoHeJnGt5
+	erP0ECog=; b=KoN+qODcDeJS5csKSjbM7GrG4ympUC5tNiUnd2m8qAWaUtyNL4Y
+	Md1+pGQtTs/XE2PQp5pO5xlm678L9LXkV7slKMyqoYa2n4Yrq8AQTRj35RQ9nF5e
+	hYn08Kho1Ny/npofK+KwtrQsPeDuSB0+h/AhowQUnIRlxvFitRItaEf7o9nvwrZp
+	WeeQ6+OPgy8XsQ2tQgme3+oSZ7Nj0ns0ac2Bf2tFgXB0vID+2h5Wy3cACN2XXRyo
+	Oo69MQ0ucNTXu/uI8A4Kp//m5g0uyQtrihuMTekpM8X4RKrCa35gSsv4GBI7T1pA
+	gnw1668l2yCWE9cRKc98nZ4erV2KBZcIpag==
+X-ME-Sender: <xms:kESUaBZKJp2gV6dc46qKIikAzGtpHbAGx2Q_We7aVYdhTwhfFsTfBQ>
+    <xme:kESUaC9dDx6FfR4c0y6Uosw9hpLahy8cuBDQAL9he-f5n4lphQJAReD_oMfCIVS8v
+    Rz0pTb3sTPjiE2I4g>
+X-ME-Received: <xmr:kESUaAj1thy0-RNj4asZxVJSZbbYrnR2gn475Rnh3TPhdVEVphRpleLVoczk9lRnHd1z4b4wuDUNFm3kZ9kLyaQJLTTkEvukcdD5eJP_Gw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddtudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
@@ -56,31 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvddtudehucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthht
     ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:zT-UaHkmcrIeBDyl6FvV3pIJLQ1mqjzUrMbtNvBFWMB6QIRdaj3i2Q>
-    <xmx:zT-UaGRlTT2PjWqbFXtqf9lmy1qHJhSJeWPqyOM5ozdM6talspFCvA>
-    <xmx:zT-UaBIXJ1uZKNOUtcbR0tK9XhXh-vPj3JLgG46lC0b-kELDaEym_A>
-    <xmx:zT-UaEDlI-oirXS6tKqhqEI_yRE5leZ_LYjOUfETeB3P4RttkClhmA>
-    <xmx:zj-UaMSRKIul_DCto0efGBU2yMdR_cQMTcO6haHtSVhwsH5OLKm-IyZZ>
+X-ME-Proxy: <xmx:kESUaCe6rBpVG0rSvrjnZOY65JAGDEiNieySgOSos1ENiiZDCfiX0g>
+    <xmx:kESUaHqaVEd-4XwFgH_XZjvb3qKVv3-T-Px5v1a_kOBuHn-FNHBI3Q>
+    <xmx:kESUaHB1Mh4liHdz5OmEjCmWHIe9Sv3F1JuVVpzOR5za56s_r3ruNQ>
+    <xmx:kESUaEaHa69ODI-_dkWZN-TGwytp4LnK4jaeFuPs60FtHVRzijkQaQ>
+    <xmx:kESUaKrJnd6P3nZ50zqTomEc4DXJsBJDXtnxQzz4w6BINmH4-y4O1pU3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Aug 2025 01:55:24 -0400 (EDT)
+ 7 Aug 2025 02:15:43 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 64951706 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 7 Aug 2025 05:55:23 +0000 (UTC)
-Date: Thu, 7 Aug 2025 07:55:19 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a0d8507e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 7 Aug 2025 06:15:41 +0000 (UTC)
+Date: Thu, 7 Aug 2025 08:15:38 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Toon Claes <toon@iotcl.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 3/3] diff: teach tree-diff a max-depth parameter
-Message-ID: <aJQ_x787aceaudef@pks.im>
+Subject: Re: [PATCH 2/3] within_depth: fix return for empty path
+Message-ID: <aJREivx80NI08BEU@pks.im>
 References: <20250729-toon-max-depth-v1-0-c177e39c40fb@iotcl.com>
- <20250729-toon-max-depth-v1-3-c177e39c40fb@iotcl.com>
- <aIm5x4kah8608Ba5@pks.im>
- <87jz3gtshx.fsf@iotcl.com>
+ <20250729-toon-max-depth-v1-2-c177e39c40fb@iotcl.com>
+ <aIm5vMeTLSLD-6Fz@pks.im>
+ <87ms8cttdj.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,54 +89,94 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87jz3gtshx.fsf@iotcl.com>
+In-Reply-To: <87ms8cttdj.fsf@iotcl.com>
 
-On Wed, Aug 06, 2025 at 04:49:30PM +0200, Toon Claes wrote:
+On Wed, Aug 06, 2025 at 04:30:32PM +0200, Toon Claes wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> > On Tue, Jul 29, 2025 at 08:57:44PM +0200, Toon Claes wrote:
-> >> diff --git a/diff.c b/diff.c
-> >> index dca87e164f..c03a59ac3b 100644
-> >> --- a/diff.c
-> >> +++ b/diff.c
-> >> @@ -5894,6 +5909,10 @@ struct option *add_diff_options(const struct option *opts,
-> >>  		OPT_CALLBACK_F(0, "diff-filter", options, N_("[(A|C|D|M|R|T|U|X|B)...[*]]"),
-> >>  			       N_("select files by diff type"),
-> >>  			       PARSE_OPT_NONEG, diff_opt_diff_filter),
-> >> +		OPT_CALLBACK_F(0, "max-depth", options, N_("<depth>"),
-> >> +			       N_("maximum tree depth to recurse"),
-> >> +			       PARSE_OPT_NONEG, diff_opt_max_depth),
-> >> +
-> >>  		{
-> >>  			.type = OPTION_CALLBACK,
-> >>  			.long_name = "output",
+> > Just for my own understanding: the only difference is when we don't have
+> > even a single matching slash, as we don't verify `depth > max_depth` in
+> > that case. So in theory, we could modify the function to the following
+> > equivalent:
 > >
-> > Okay. We don't use `OPT_UNSIGNED()` because we also want to impliy the
-> > `recursive` flag. Wouldn't it be simpler though to use `OPT_UNSIGNED()`
-> > and then set the flag in `diff_setup_done()` like we already do for a
-> > couple of other options?
+> > 	int within_depth(const char *name, int namelen,
+> > 				int depth, int max_depth)
+> > 	{
+> > 		const char *cp = name, *cpe = name + namelen;
+> >
+> > 		if (depth > max_depth)
+> > 			return 0;
+> >
+> > 		while (cp < cpe) {
+> > 			if (*cp++ != '/')
+> > 				continue;
+> > 			depth++;
+> > 			if (depth > max_depth)
+> > 				return 0;
+> > 		}
+> > 		return 1;
+> > 	}
+> >
+> > (Not saying we should, I'm just double checking my understanding).
 > 
-> But how would you determine `max_depth_valid`?
+> To be honest, I wasn't sure no more. I decided to see if I can write a
+> unit test. This is what I came up with:
+> 
+>     void test_dir__within_depth(void)
+>     {
+>     	struct test_case {
+>     		const char *path;
+>     		int depth;
+>     		int max_depth;
+>     		int expect;
+>     	} test_cases[] = {
+>     		/* depth = 0; max_depth = 0 */
+>     		{ "",         0, 0, 1 },
+>     		{ "file",     0, 0, 1 },
+>     		{ "a",        0, 0, 1 },
+>     		{ "a/file",   0, 0, 0 },
+>     		{ "a/b",      0, 0, 0 },
+>     		{ "a/b/file", 0, 0, 0 },
+> 
+>     		/* depth = 0; max_depth = 1 */
+>     		{ "",         0, 1, 1 },
+>     		{ "file",     0, 1, 1 },
+>     		{ "a",        0, 1, 1 },
+>     		{ "a/file",   0, 1, 1 },
+>     		{ "a/b",      0, 1, 1 },
+>     		{ "a/b/file", 0, 1, 0 },
+> 
+>     		/* depth = 1; max_depth = 1 */
+>     		{ "",         1, 1, 1 },
+>     		{ "file",     1, 1, 1 },
+>     		{ "a",        1, 1, 1 },
+>     		{ "a/file",   1, 1, 0 },
+>     		{ "a/b",      1, 1, 0 },
+>     		{ "a/b/file", 1, 1, 0 },
+> 
+>     		/* depth = 1; max_depth = 0 */
+>     		{ "",         1, 0, 0 },
+>     		{ "file",     1, 0, 0 },
+>     		{ "a",        1, 0, 0 },
+>     		{ "a/file",   1, 0, 0 },
+>     		{ "a/b",      1, 0, 0 },
+>     		{ "a/b/file", 1, 0, 0 },
+>     	};
+> 
+>     	for (size_t i = 0; i < ARRAY_SIZE(test_cases); i++) {
+>     		int result = within_depth(test_cases[i].path, strlen(test_cases[i].path),
+>     					  test_cases[i].depth, test_cases[i].max_depth);
+>     		cl_assert_equal_b(result, test_cases[i].expect);
+>     	}
+>     }
+> 
+> The change in this patch affect the last batch of tests (the batch with
+> 'depth = 1; max_depth = 0'). Running the test on both this patch and
+> your suggestion gives the same results, so yes your suggestion has the
+> same output.
+> 
+> Do you think it's worth to add such unit test?
 
-Ideally we wouldn't need it as we could just initialize with a default
-value.
-
-> And, without realizing, you touch a good point here. Looking at the
-> git-grep(1) docs, it says:
-> 
->     For each <pathspec> given on command line, descend at most <depth>
->     levels of directories. A value of -1 means no limit.
-> 
-> And:
-> 
->     -r::
->     --recursive::
->     	Same as `--max-depth=-1`; this is the default.
-> 
-> We should handle -1 the same, that's currently not the case.
-
-True. Do we have the same default? If so, couldn't we drop
-`max_depth_valid` and initialize it with -1 from the start?
-
-If that's not easily possible we can just stick with what you have.
+Sure, if we can easily test this via such a unit test I think it would
+be a good addition.
 
 Patrick
