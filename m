@@ -1,67 +1,67 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39B8221269
-	for <git@vger.kernel.org>; Thu,  7 Aug 2025 13:50:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24DB258CFA
+	for <git@vger.kernel.org>; Thu,  7 Aug 2025 14:17:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754574643; cv=none; b=VeuPHjDKo45jVsCnp1hUzw6o+mqSSA9kIXXOi2Qbo1/+J+CHFuSP1GpcYE9XWo+L+SisNEM7SEzfW6PIDgHPrl/9nWfEfsD0rCHdjOWRDsmW+Rv+0K9gOGGzlf7g+LnoQ3dt5eWiIjJLb+bb+QsXOvGHcoWGUcprYLSzi/P36fQ=
+	t=1754576241; cv=none; b=MlCP2d6RN70vzFzlJ7XJ4+kiIF5cQ72jTM67DDChb3WphXbpOmYQnRq++UVLKN+K++d1NWmjrR+gWV1yt3rlTsVnCFDR2fjjXPH1rEW4A3J8Qi6CgtH+L3ONGxdmFka1B/c2bJP9XajMrIvza93BBUYgruGNKs0wUZ1NcJjagyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754574643; c=relaxed/simple;
-	bh=dCV4HNCtzWS4I7pQ/y8Bq52QqhO207DkSozF501Oul8=;
+	s=arc-20240116; t=1754576241; c=relaxed/simple;
+	bh=R3+qOlz4yDVv7u7BiWn/3SIefY7iKjq1po29cI8CRvg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WoHgvHvViY9iWKRWkFMft22xhpG9OI7P3pr7KrSKESTSSN66EzjJrWwkBTtyzz5B4rfaiJmJq2ejMk4pLLK32TpSxbBm/BYYIBzt7SYR8jBbte+9kHfrbxDTRdluENOSRTwElcYhNj3B0zjg6jHpRNf94fjMjfs6J0ePGeeMqqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HoR99S+O; arc=none smtp.client-ip=209.85.128.45
+	 In-Reply-To:Content-Type; b=snmn9LToPyKeRqRupjbjh3iwF5+4lXg72+/tF1XRxcmUeJh+MDobz/TnYu5dRYoSs56lsMR0bHjNKEbnyPYYpGsPHeZXe0dxrCmttxCCShWF843z/kHBTXMkkZxAvWM61uMgFxUtnf6Dug+Ktqa4jrpvzbGTby1TTPo3MRMmXdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QvsF3KTt; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HoR99S+O"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-459e39ee7ccso10308775e9.2
-        for <git@vger.kernel.org>; Thu, 07 Aug 2025 06:50:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QvsF3KTt"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-458ba079338so7815455e9.1
+        for <git@vger.kernel.org>; Thu, 07 Aug 2025 07:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754574639; x=1755179439; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754576236; x=1755181036; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=YIeOuRAPJyJuSBYAmZYIAEZe2qddezmuuQFQHT/RZCE=;
-        b=HoR99S+O8DTXr8HBrKrTxn5h0cX3VpZAsdDxTtqZ1KPJKuiXwTKRiMpA6O6qqEELoZ
-         5e6mHzzLvGhSIP1C5zF3GpcZUiskiFrDobmcxskcDBJNL6KLuwhLfWegpp09l6VTo9pr
-         /s12EPhTqlR0hkNglSpu8eZ3NQo4sKFG7LvzLW+NK/YYcha+ZNBfYGJdQ7cY+3pOj/ah
-         iNeuwZ669KGvmocwpNgsgkCix2fib2P1nVk6yx2v3VICysrqJkLK6gtnmtsJP0L0ZtsV
-         OmwIziXN0y5PeVskH4u9426OlCaA+Wk4LnobE0YWGW8lAEsiCfoJysjEiAkswMMjSUaE
-         oEtg==
+        bh=j5b1An31EmqxOvZGIHI4Kl6IJJ4nu8samzcjyquGwZE=;
+        b=QvsF3KTtYjveyynvG8JEvoirYVSK2Z0CuaD7WizLU1YjZZ8o+8CYGTb+YVH25sUgZ/
+         B+Lx6t9ChIvHjCIPdYOQomHXLzzopUFucvK33fyYxS3hYjWPzFrCt+aqE3MfsGt93IGz
+         xCXL/wLP41s8xd504+xsWxrJ5vaZzkjx5En5kxes4yaX9FksqrBh6buM2AxyathCjoNU
+         SkTTFQrXB1kbR0YNWSeEEhNdHZNl43365j0J6sHnK9qfy7K3MyM4N8Iz2uqVTPp7iTtE
+         NrTMAAqZrieU0Aq5nK/DbA4od8tX0oL74OMVPJds2pHN+TJBLVDfCvDIyaiKu8tTTloN
+         mnDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754574639; x=1755179439;
+        d=1e100.net; s=20230601; t=1754576236; x=1755181036;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YIeOuRAPJyJuSBYAmZYIAEZe2qddezmuuQFQHT/RZCE=;
-        b=BWg+JPD+GOwD2CIkCCx5ptpU/lzp+1MSmThj9JJ9+jwd2+rPEBPzRlHQKbJw+7Ff78
-         8iHnlYVdqiXmTFJ1y9PZwcqgGEdgRoAFfGATBumHELtpCwNEry6NgwrainrtxKw86+UQ
-         Zcvhsvpu1NN4S2VJDGJJExI1ZS4uqCu5Fz/TzjTMxeX8QNCmipfdvkg0WFH5Wv+0LJQf
-         wuQf4pHaDFMC60gK6TUdPfy9tXLgeQ/HgS2kW1LGDJRnXlCx3vsmgBNSjE/vaxOY6mtm
-         U+x4w9hECzD+3kyFDJClIetACz7CJk4zD+Yzdth7dJmIY6J41I2V430GqSIp8IE7OFyQ
-         nkkA==
-X-Forwarded-Encrypted: i=1; AJvYcCUtzbxJnyyeeLO/N6W22wj4E3VJoqgwW0J5pYG6VPbDDGVfZO1M1t2K9ak+KxmUvmxo0Io=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8ARN6pbXZCWtzwGszNbTJpEF/aEaUpHC5S1EP7jUbNCfeHPRL
-	spg6iB4eAAJUSI96m8u75o36J/2GnHSWzbVjiH6dYA03WQdBIdvK/aFt5sJy9A==
-X-Gm-Gg: ASbGncsrp1kBx4C28AoG94Ws+VN3K+aRRyV47h/SxeGqqnJWo31Siz2VAkjysaOerdZ
-	4JWj5PFSmmwpCj9I/jQiKtfYcAziP1sLYunUmO5MtcRnYgNL6SmGjCl4IKXTjYQ/UV7VRVC4hOL
-	WQZ2g3qWzmuW327KS4B3UQy4mKysTVuCyX1LJx1X0l6WveBtypYDEHYNaiqv4w7qM7BFJNmvOfP
-	cqGKdmBbgdeJ+y6TH+nIs633wi38v7xTjESfpH3qzYZv4qgEfloaRdQk4iC1ueRog3SrehYxcNq
-	imv1T9tRbENfvBZblNotCsooUAndN71aR6d0EzTK0BNhBR2ZpqpraGWdx+owpkJiNdP8Hpuskdw
-	oVJsA/MAPU6ddgDzDVEWF1CUbB1MhyZ1T7AuP8zONtmABqyhVvgRmUTEg7+X0OFYYsfATE5mM+W
-	uY
-X-Google-Smtp-Source: AGHT+IEX6EJtNc3Jtg4XXssHt/CEMUcrjWICDTDfcLYGqHTp51v+bvJWvUm4XodgIu0+OvwvcUmuXw==
-X-Received: by 2002:a05:6000:26c1:b0:3b8:d8cc:dcf3 with SMTP id ffacd0b85a97d-3b8f41aca24mr5333765f8f.29.1754574638846;
-        Thu, 07 Aug 2025 06:50:38 -0700 (PDT)
+        bh=j5b1An31EmqxOvZGIHI4Kl6IJJ4nu8samzcjyquGwZE=;
+        b=rCt1ZhYIZaia0vXDfAgIrGqpHObP/vNNKgp7qDV398QivVZCk6c2135cwH9yWvZayc
+         5n+RWLQsatD7tfAKvCR1vvpkLkn5eUeM8177PkBZWra+ZzVGaL5MYwM8J7LgL2cbRtXH
+         E0DbLkuers1r1VqHt1eJfE+K5/jDOQC1lSw8ru0A0Eny98j4q4mLHH5yMve6CWtfdlAz
+         wcrkzf+tLcjDOJa+zkHEdcI1WqmNYwae6PR6J9scnVULi3G0TTif2DZEXkUJu4+ivHmz
+         5HkXE8VvIOrycvXlZ3FBmz+BK4ALpfF6dknUmWKhQ+i8tGpBNImngAC/tPDEhqDiZlOs
+         XYNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVy5SLdX7ehion9KiAckocizKoufUhuVKpL6gxrOeCM6vRuFAsrQRC3huYauJlUg4kD+HQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzs1wkPGKBhwlgzavPghWnsPNFbuvic0U0azKtBeHjtS71FL3tJ
+	WREwvWEmoWTr3BbL61xVkA1m4eh2e0JowDvBfftmtUgmSUW1/QlYvGC7T2d4jA==
+X-Gm-Gg: ASbGnctCl6xUefK2Lfvya+UhsIBriOew4pOASlRZB8oMBD6sMr/3OsVh1o0OSOVbK6N
+	zeJTgfAq7yrdhDZhI+9f+YO+OT+hPHGyL/PWxeoZg4YspkmjEYtIsVHjeEe7fJJUILVxbQ3oRng
+	8qsVMeuwRftVWtaiYP9C6udNQlyuZ3WqQ1hBxgoc8Q+mrnjgI4O8NOToLR7YGpjuJ9aoJeVQ/F2
+	xWJafT4hcvssjP+1h50TLoriSZWqO9aiIbYDS3melVMBo+6cwyZHB0O7NDivipP3yY5szQgWQTF
+	1Cw+kDMZu4RQV/81k71tRdyvi6Qxfe2zerp/wh/VW2kgnUS9DxkXFhSQJn/fPoQzAHQH+Py5hle
+	WiznfQzgPd70JwzezqGNbZA7QSkJWS5nNfIhBMS25FdGc+31oZVJjAHMyL3YLdQrW4RUn0qhX12
+	lJ
+X-Google-Smtp-Source: AGHT+IHiuwvR2BLE2ZZ4yd4Tt5ZM9j7aOfyuuGxemrPPIAJzMnrya0nltnaEVghyUN4J6zeisY2Z0w==
+X-Received: by 2002:a05:600c:6211:b0:458:b4a9:b024 with SMTP id 5b1f17b1804b1-459ee0a9cb0mr39907085e9.11.1754576236115;
+        Thu, 07 Aug 2025 07:17:16 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e5869cccsm104864325e9.17.2025.08.07.06.50.38
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e584302csm103001445e9.7.2025.08.07.07.17.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Aug 2025 06:50:38 -0700 (PDT)
-Message-ID: <7c8b1886-e5cb-420a-894a-f0434a766117@gmail.com>
-Date: Thu, 7 Aug 2025 14:50:30 +0100
+        Thu, 07 Aug 2025 07:17:15 -0700 (PDT)
+Message-ID: <582e8e75-c6eb-4845-8f3b-62f234f0964f@gmail.com>
+Date: Thu, 7 Aug 2025 15:17:14 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,73 +70,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase -i: permit 'drop' of a merge commit
-To: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
- Git Mailing List <git@vger.kernel.org>
-References: <37f6e34c-91aa-4e55-88e1-019d2e042df3@kdbg.org>
- <xmqqjz3gtb4w.fsf@gitster.g>
+Subject: Re: [PATCH] git-compat-util: introduce `count_t` typedef
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+ Jeff King <peff@peff.net>
+References: <20250807-pks-introduce-count-t-v1-1-e96be52d8db1@pks.im>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqjz3gtb4w.fsf@gitster.g>
+In-Reply-To: <20250807-pks-introduce-count-t-v1-1-e96be52d8db1@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 06/08/2025 22:04, Junio C Hamano wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
-> Thanks.  Now I understand why some people are sometimes tempted to
-> omit the default arm in switch() and allow compilers complain when
-> explicit case arms are not exhaustive.  I am not saying we should do
-> so, and I am not convinced that it is a good idea (there are cases
-> you cannot afford to be exhausitive, yet the cases your particular
-> switch must care about are multiple to make an if/else if cascade
-> impractical).  But this is one of the case it might make sense.
+Hi Patrick
 
-I think there are definitely cases like this where it makes sense to 
-require the case statements to be exhaustive. Looking at the 
-documentation for -Wswitch [1] which is enabled by -Wall it only issues 
-a warning when there is no default arm and the case statements are 
-non-exhaustive. So I think we could start relying on that just by 
-deleting the default arms where we think it makes sense for the case 
-statements to be exhaustive. I've previously worked on a code base that 
-enabled -Wswitch-enum which requires the case statements to be 
-exhaustive even if there is a default arm and that was a pain in the neck.
+On 07/08/2025 10:22, Patrick Steinhardt wrote:
+> Historically, Git has been very lenient with its use of integer types
+> and didn't really give much thought into which type to use in what
+> situation. We interchangeably mix and match signed and unsigned types
+> and often times blindly convert them. This use has led to several
+> out-of-bounds reads and writes in the past, some of which could be
+> turned into arbitrary code execution.
+
+My feeling is that one of the main problems has been using different 
+types for loop indexes and loop limits. If we mandated that the loop 
+index had to be the same type as the limit that would improve things 
+considerably and without mandating a particular type.
+
+> A discussion that regularly comes up in this context though is what
+> types to use for counting entities:
+> 
+>    - One question is whether the type should be signed or unsigned.
+>      Arguably, the answer should be to use unsigned types as long as we
+>      know that we never need a negative value, e.g. as a sentinel. This
+>      helps guide the reader and explicitly conveys the sense that such a
+>      counter is only ever going to be a non-negative number. Otherwise,
+>      code would need to be more careful as it may hold negative values.
+
+The counter argument to this is that it is easy to write incorrect loops 
+when counting down if the loop variable is unsigned. Using a typedef 
+that hides the actual type makes that harder to spot as it is not 
+immediately obvious whether the loop index is signed or not. As we have 
+cases that do need to store a negative value then we're still left with 
+using a mix of signed and unsigned types for counting in our code base.
+
+> Introduce a new typedef for `count_t` that is of type `uintptr_t` to
+> give clear guidance what type to use for counting entities. This type
+> was chosen because in the worst case, an entity may be a single byte and
+> we fill all of our memory with these entities. As `uintptr_t` is
+> guaranteed to hold at least the value of a pointer, we know that it
+> could be used to index into every single such entity.
+
+How many sites actually allocate anything like that number of 
+entities?Generally we use ALLOC_GROW() or ALLOC_GROW_BY() which means 
+that we're not normally counting bytes. ALLOC_GROW_BY() assumes the 
+number of entities fits into a size_t so should be be changing that to 
+use count_t? If we're worried about overflows then maybe we should look 
+at alloc_nr() which calculates the new allocation with
+
+     (nr + 16) * 3 / 2
+
+which which will start overflowing long before we starting allocating 
+UINTPTR_MAX single byte entities.
 
 Thanks
 
 Phillip
-
-[1] 
-https://gcc.gnu.org/onlinedocs/gcc-15.1.0/gcc/Warning-Options.html#index-Wswitch
-
->> diff --git a/sequencer.c b/sequencer.c
->> index aaf2e4df64..9ae40a91b2 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -2720,8 +2720,9 @@ static int check_merge_commit_insn(enum todo_command command)
->>   	case TODO_SQUASH:
->>   		return error(_("cannot squash merge commit into another commit"));
->>   
->>   	case TODO_MERGE:
->> +	case TODO_DROP:
->>   		return 0;
->>   
->>   	default:
->>   		BUG("unexpected todo_command");
->> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
->> index 6bac217ed3..34d6ad0770 100755
->> --- a/t/t3404-rebase-interactive.sh
->> +++ b/t/t3404-rebase-interactive.sh
->> @@ -2262,8 +2262,9 @@ rebase_setup_and_clean () {
->>   	reword $oid
->>   	edit $oid
->>   	fixup $oid
->>   	squash $oid
->> +	drop $oid # acceptable, no advice
->>   	EOF
->>   	(
->>   		set_replace_editor todo &&
->>   		test_must_fail git rebase -i HEAD 2>actual
-> 
 
