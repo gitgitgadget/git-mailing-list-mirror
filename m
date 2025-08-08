@@ -1,151 +1,120 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2192270EDD
-	for <git@vger.kernel.org>; Fri,  8 Aug 2025 22:52:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433C428C034
+	for <git@vger.kernel.org>; Fri,  8 Aug 2025 23:31:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754693561; cv=none; b=Qb40LSP/cMfNNKCZSdU/q/Vp85ghGBWXv0whYsxEfRnTpe3t0EBeDp2mh0F48OHNy/PUgYx5H+IwFUKHw624HWdmGVPXEvS1vlP/RXImFWSSlZkT0ola/fe/+S6KQGiIDLyfPJgf0S3O1jlQIZVcmDL95bZXojGa1cRgRwqi3DM=
+	t=1754695870; cv=none; b=l1mMIBHrbyfzLDYQbl6HwEqYGMh01JfOlBeZZo8HCqvirTcID3xSgOaH+d0fwGDQU6AbDrpVH+UTn81cHkZc85wrHiCCWw4uI8tFIy08zX3k46kdqEq7U8ONXrIwNmPJtUneqNf4faa0ul0Fk8nQz3gSTX1kXQNpIEjffUN2g5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754693561; c=relaxed/simple;
-	bh=funV0MKY4zMbi/0U0XDay1k7QI3jQgquhtZNbmJJBRY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KyvdPesF9QZNgTX9yIRXezBcvkIKay4TopKyl6eesbRfxh6sxFseYc6demIvSOSUhl1qV1xZxnp64YyA+9umoXZ9tl01MP+IE2/MEccfKNLoaQjm9oyWE2V3wzeoGqeQBwYe/ir7tahlAA2lXHM538OjbMK9HBMdJJqEgGyakB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gAL2dalj; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754695870; c=relaxed/simple;
+	bh=BQ/aexnCk4ot2rWeCbyjD7tY88vXmHSZcpSBLNGtXt0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=E5cFwjcDL58JVJWPL15GTmKNIP6Yx5w5m1wJvzXIl3qbAdr/6kbsXor09AejPGu+U7ozCQbPXCtvPm5DBJT7ikOv0+8Nu3DVvChPx8UfI91+NpTL6r71LtMTYlyvO13/us2M9Hq7NZR7tI3A9EOrowKVXwFsOWGXXtVcNHykcFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a5LwQz9v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dClZLY7d; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gAL2dalj"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-458b2d9dba5so16554655e9.1
-        for <git@vger.kernel.org>; Fri, 08 Aug 2025 15:52:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754693558; x=1755298358; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2A/fu11vuLMdDVFtnSZIiYja3lIZ/zZyhk8VFLAAbKk=;
-        b=gAL2daljPd8dwXkPoCEojopP/OeCf7YCtn2IVGAm+mzRN1hwQ4k30JTeGTjfizPG7o
-         zdnfK0bVfHSH93cNsiEc9EfMkUUzjiIvFYGspL/zlCFRUkKG4cdnoHwJbpCb2+b8lZYq
-         Y5W7D4xEhDPInqLz2lQwx8AgUCc8MkR4olwRHr/wWisKHzNLOLaTvsg4z/nK+PhpB5Yh
-         MUwIEhfCz1RcXRmYk0GCmRbOV4EN9g/ZqiumjiyKtcuimgUHRakGuKzndp7p5oAbnZV3
-         qzGUbnfzcXxdMN+LKW3n3923+kDj//+bJW256CGEVQENe69OFiYzrQM9Lo82bfXI6aqv
-         HSHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754693558; x=1755298358;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2A/fu11vuLMdDVFtnSZIiYja3lIZ/zZyhk8VFLAAbKk=;
-        b=goGZy+Rg5ar84SaMnwYxpkpiRTMTM8KWsIfNVQhYwd5HH1eejJZD1Ks69sXjbo5jsK
-         N+FlCRIb64pcSVMuksv5sz275C8Zvn5sbQP4zHwGTBGKGomULGXpXJkrFJxmLjqgFgQo
-         4U1EatIUWryG9wYZfjL7CggDSMZIPt3Q1CMYiIzoyeh3KwyRXl4uvWCfYsiQLnFMZvef
-         WaltwssclREzjPpkx71Okxg4qFzy6PpJ5yFt9tV8gzDGR35+k3Yzb+pyBwSp7uJOuJnL
-         UITyBkp4kDibQ8GpfGwfjBJ2UYKJXYzI3/NJ+PqxVHtVA+Nd1y8C/cQCO/6rZPxpoc20
-         B0Fw==
-X-Gm-Message-State: AOJu0YzSKuCsa073rY7wcp650/R7UcJ5kXOeuByekYuED6JQhAIl7xUN
-	j6jTPaWdys4vtOjKWJko/9BT2mUwilFh1PfBbvR3s5DwUcHD4hMfqVjnjg2fdg==
-X-Gm-Gg: ASbGncuN0nHDFnVs6h12QGq3eQ9jEg5XxsU+vrWJlZDtUfWKkbxypxwZ5gB4fDBKOk1
-	5GtEsRPj/GUKN4LtHtRUpSa3mK+++Y0Rr/6fypIo0fZmO/rVC6IGyldpAXfmedVZIg+EH6fn3Sf
-	yK9iMpM8vsoyq9pUmg1ikZd0UGzYrfWXgl6v8U+/4Yg6wHMhBEIyMRNLuXqyxTKQV1La9nGwmEx
-	O/Q2DB3ndlVd0vnxl6BkgSbWoWMtGa8HvjZ1gyBOkniT7qIHTXj68DelmvbbW2/9iF28zyLQgtw
-	CYuH+Ut5w04T0TgnHad2A22tN9DPh55Ow0rG1tElUinEMohscFc8esT+UOiX+kos7DOy6Xw3nVt
-	3FX5qftfsTt4Ws4vTqWjvfA8=
-X-Google-Smtp-Source: AGHT+IGrGRSEOeqjI8t/+nGGf9d8mXdV2uxN3aGlADHkq2AofI39UEqrLcF+Kd6Ek4Hj/CgGV/LCMA==
-X-Received: by 2002:a05:600c:3589:b0:456:19b2:6aa8 with SMTP id 5b1f17b1804b1-459f4f0f380mr43261895e9.19.1754693557987;
-        Fri, 08 Aug 2025 15:52:37 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e584302csm166939415e9.7.2025.08.08.15.52.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Aug 2025 15:52:37 -0700 (PDT)
-Message-Id: <eabacd3c159a9abe656cbb778a53558d471b5165.1754693552.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
-References: <pull.1949.v2.git.1754680525.gitgitgadget@gmail.com>
-	<pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 08 Aug 2025 22:52:32 +0000
-Subject: [PATCH v3 5/5] doc: git-rebase: update discussion of internals
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a5LwQz9v";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dClZLY7d"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1E5341D0006D;
+	Fri,  8 Aug 2025 19:31:06 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 08 Aug 2025 19:31:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754695865; x=1754782265; bh=IKYKV5u7CI
+	xtae1eIqPMPdhDq0nXsFn+t8mOJ/n6rlk=; b=a5LwQz9vf094rXBXDr//WNP2AY
+	wVYgpH7L5GbDmduIySgn66/ONcLcsHqzZgL1j9fRyayN0cta9L6kciJxaHSTBaKr
+	VxbciPPYRQTkAhMjmVRTM3rNYXRxP1PKI7/ilSPRpO4MGIGNygyueNojH+2xcISH
+	9rcknwT8H4icFQGyV52N0ySeIimN5Ij11vhTyRhb67D+/WmGDA52U3jnbjdqYVfb
+	F/DbSTG6ERLmcqhtV1k9obF2eIOHcEnnPh+llnKlc//fLjYdvCAImOeaJH7zfCJR
+	fpjbCaRH1ZpoisOKb+g5rBaK01W4rCKtfFpQE8QE5eznqKHc6ZWLDzWNVTJg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754695865; x=1754782265; bh=IKYKV5u7CIxtae1eIqPMPdhDq0nXsFn+t8m
+	OJ/n6rlk=; b=dClZLY7dfN12EZKEkEKvsb7nIOFHcWWGe/oPNCiufkp9QSFufm8
+	EiDEeDg2pi1RnLW6w+RrLjFtC1XZNvgSpvk2NHRX266DpXUdrl7uGQ2AelE2w/L0
+	3xwqFEM8SiFzW15xm5AoTqHhWEInCaB3wCHisg3egDarwwxgcNpTGz0abfNBEByT
+	yjyMEIEqW9Y3zybe4+YhCgBKtInpXF8gFRHD/9kXsO+3TzAv8h+cY3GIWD46CK+G
+	10BLZfCKeM7tbwWilH4PzSi4tLmIleHC+E9Tq37npNUWuwXxu59lsmY163ixy8dS
+	bhd50L9+kRwatp2uIxqHgdbzOvYxtMGIdsw==
+X-ME-Sender: <xms:uYiWaGfDAnHLpxiZKH7F14e2KLnMdlNPckm8AM4T0NfeL_7C0rf79w>
+    <xme:uYiWaKzKmXyq7mQDArItzanDXSwW_cPxdD83kLwG7nweRYojVNoouMd2kUkAnZqb7
+    UrhuqcGYZF7owvqIg>
+X-ME-Received: <xmr:uYiWaEHhQRFYcimc_SmYoBRllHrdtM-yvrvQa2xkVlRBX_xBHOC_w99ye95J7QEgQQ2IR-_ruR9YUimyxiefktvvhcadwH7GiW3Br0w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdehudegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:uYiWaGyEmjyofcNa_vQWF_zSv64RY8Sqf86mk6NzQIFbl2XukYn4xA>
+    <xmx:uYiWaNu36aqsuV36C-Zkjvak5Wg-hL7uGtU-oHOuoyhoaDopOjYV3A>
+    <xmx:uYiWaL0dgbCE_k4OPIE02Q6GTn90oS3MIOBUDEDhOz2BR-6BGsME1Q>
+    <xmx:uYiWaA9eGpOHNQFiprbiB2DBDRX7jCY4oSNmVXzfJ-CLiCLaPPxI_w>
+    <xmx:uYiWaEvKXWgWXofuNyHccmoDl3v3UcntLlPfA6o40-xNdrJrpKDZ-bV6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 8 Aug 2025 19:31:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v2 1/5] doc: git-rebase: start with an example
+In-Reply-To: <26b742eb49f935147ac373bf9435827a6f85e531.1754680525.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Fri, 08 Aug 2025 19:15:21
+	+0000")
+References: <pull.1949.git.1754666665.gitgitgadget@gmail.com>
+	<pull.1949.v2.git.1754680525.gitgitgadget@gmail.com>
+	<26b742eb49f935147ac373bf9435827a6f85e531.1754680525.git.gitgitgadget@gmail.com>
+Date: Fri, 08 Aug 2025 16:31:04 -0700
+Message-ID: <xmqqldnte6h3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Content-Type: text/plain
 
-From: Julia Evans <julia@jvns.ca>
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-- make it clearer that we're talking about a multistep process
-- give a more technically accurate description how rebase works with the
-  merge backend.
-- delete a duplicate explanation of how git rebase skips commits with
-  the same textual changes (it's explained in more detail a few lines
-  further down)
-- remove the explanation of how exactly `--fork-point` and `--root`
-  work since that information is in the OPTIONS section
-- put all discussion of `ORIG_HEAD` inside the note
+> +Transplant a series of commits onto a different starting point.
+> +
+> +For example, imagine that you have been working on the `topic` branch in this
+> +history, and you want to "catch up" to the work done on the `master` branch.
+> +
+> +------------
+> +          A---B---C topic
+> +         /
+> +    D---E---F---G master
+> +------------
+> +
+> +You want to transplant the commits you made on `topic` since it diverged from
+> +`master` (i.e. A, B, and C), on top of the current `master`.  You can do this
+> +by running `git rebase master` while the `topic` branch is checked out.  If you
+> +want to rebase `topic` while on another branch, `git rebase master topic` is a
+> +short-cut for `git switch topic && git rebase master`.
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/git-rebase.adoc | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+s/switch/checkout/, as that is how the original defines the short-cut.
 
-diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index 6a4b3dbd5960..df77bbdecfec 100644
---- a/Documentation/git-rebase.adoc
-+++ b/Documentation/git-rebase.adoc
-@@ -65,31 +65,31 @@ linkgit:git-config[1] for details) and the `--fork-point` option is
- assumed.  If you are currently not on any branch or if the current
- branch does not have a configured upstream, the rebase will abort.
- 
--All changes made by commits in the current branch but that are not
--in `<upstream>` are saved to a temporary area.  This is the same set
--of commits that would be shown by `git log <upstream>..HEAD`; or by
--`git log 'fork_point'..HEAD`, if `--fork-point` is active (see the
--description on `--fork-point` below); or by `git log HEAD`, if the
--`--root` option is specified.
--
--The current branch is reset to `<upstream>` or `<newbase>` if the
--`--onto` option was supplied.  This has the exact same effect as
--`git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
--to point at the tip of the branch before the reset.
-+Here is a more detailed description of what `git rebase <upstream>` does:
-+
-+First, it makes a list of all commits in the current branch that are not in
-+`<upstream>`. This is the same set of commits that would be shown by `git log
-+<upstream>..HEAD`. You can use `--fork-point` or `--root` to change how this
-+list of commits is constructed.
-+
-+Then it checks out `<upstream>` (or `<newbase>` if the `--onto` option was
-+supplied) with the equivalent of `git switch --detach <upstream>`.
-+
-+Then it replays the commits, one by one, in order. This is similar to running
-+`git cherry-pick <commit>` for each commit. See REBASING MERGES for how merges
-+are handled.
-+
-+Finally, it updates your branch to point to the final commit with the equivalent
-+of `git switch -C <branch>`.
- 
- [NOTE]
-+`ORIG_HEAD` is set to point at the tip of the branch before the rebase.
- `ORIG_HEAD` is not guaranteed to still point to the previous branch tip
- at the end of the rebase if other commands that write that pseudo-ref
- (e.g. `git reset`) are used during the rebase. The previous branch tip,
- however, is accessible using the reflog of the current branch
- (i.e. `@{1}`, see linkgit:gitrevisions[7]).
- 
--The commits that were previously saved into the temporary area are
--then reapplied to the current branch, one by one, in order. Note that
--any commits in `HEAD` which introduce the same textual changes as a commit
--in `HEAD..<upstream>` are omitted (i.e., a patch already accepted upstream
--with a different commit message or timestamp will be skipped).
--
- If the upstream branch already contains a change you have made (e.g.,
- because you mailed a patch which was applied upstream), then that commit
- will be skipped and warnings will be issued (if the 'merge' backend is
--- 
-gitgitgadget
+> +------------
+> +                  A'--B'--C' topic
+> +                 /
+> +    D---E---F---G master
+> +------------
+> +
+
+Other than that, looks great.
