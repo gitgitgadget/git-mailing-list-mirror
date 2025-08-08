@@ -1,197 +1,133 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0752874E9
-	for <git@vger.kernel.org>; Fri,  8 Aug 2025 16:30:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5C828689C
+	for <git@vger.kernel.org>; Fri,  8 Aug 2025 17:14:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754670609; cv=none; b=l8J0C4aO5asIZ2fbgaorjzbcsRxyQEv+inENkFNIEfY4FywpqqT9fwlv8rZS7nvKtiG1FLM+JNeORKmyJfCGeu+LJrHWAhMRgo+lcczDamiWLjTASwUt+uExAiRvUsNeq/fURYHQMWE+jEWRIiY9B2Y2Nc4u748z/yDCreDjX0c=
+	t=1754673252; cv=none; b=m83GYE76+wMpIowhcyHahwfP0C3mSNLbGYWxhNn5sd+t8IbCsFDrwCjjF/ypF+vpdEEiKiv6iUg/avjzM9WQlMD+Y9A0WIL5D8FPI3+00x1QULFgO2MtXJ9mzLBzs9nFL1sJMPdULm/wnWiVw7WD5Xqj1xdtb8P0wv+k/4bboUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754670609; c=relaxed/simple;
-	bh=v1NTgEORvvmDbdNS2q9WoaqqVKFk2ogrFJzUYoaU/X0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=W9urCDoAI+TUhVH2L8YBVVv41JN6sNHyiFFrjAbiIvYZgyPEsX+2LQmxQjSN2Zrv//PtWaRufSUVWlZsmL6ks1WCVIsVLhYAIyVTrUd2/S80n5OTzqltWfI8qaLVhb/JPX15xxdKoN8fVBNh8zMUEaSxLmqtZPZgYYtpSj3MpQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TDe8/Jox; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m+ubQv8F; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754673252; c=relaxed/simple;
+	bh=DQ7+rr/6SfWwS7YG0h6og49t4sRG9uHsWTwGI4pthHI=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=qVmtZSOC81gaFTE4GYXZCPh9xTQ8YH/zgJ8I1gItXTZMmBLTGF+4IoYOdpIBDwenOesfP8/+YS8E/ycpnqggNkwHJYOoX4zCyO4N9IiKTuvVWkXp1SpUs61UgQjbUUXWmCvnW0JKnfGvFxnhCFaKt8MQ8FOvKy2Jby5XKsgWrM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=PrrLxK1T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YygYvktf; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TDe8/Jox";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m+ubQv8F"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C793C7A0306;
-	Fri,  8 Aug 2025 12:30:06 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Fri, 08 Aug 2025 12:30:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754670606; x=1754757006; bh=V+Yax5cd8m
-	44SUdQfztzg/ZmFEZ1MPqvdM/+HiauMPk=; b=TDe8/Joxr/xrkSFm6+LDitEtsU
-	1/5ytQqqz77e7fwphb+KuVdrbgtufuefUnXCuHX3lhM80Q76l9IDTlu3hHgHa3aX
-	16jvPd3WT88yge1uY7ocDThk80A9zXRIi5bmlJmK9y1hRn5gHVQ7Nt+Izl74kn09
-	/Jiumy2GwUP+oOyCQ2d8IClsMYyoSaG4mOKMgmfYUnmGT4Sh/GWCPHZL0zbODJJ6
-	R/ViRRE2M/UWJrtR7lk1suK8M6OVTeMOU5dn5CzTmwUSF5eAQj39eUGfqwyE+yHV
-	X4iZElrhVDkImV+qtrTG63tiysSJg3q/ngcgPm0GiWeOGwI2dGWNKphV6DDA==
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="PrrLxK1T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YygYvktf"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 64FB91D00152;
+	Fri,  8 Aug 2025 13:14:09 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Fri, 08 Aug 2025 13:14:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754673249;
+	 x=1754759649; bh=65mqWdK4Tp/FM2hCnQZwUSdwwlDnNHGtmZa8IP28348=; b=
+	PrrLxK1T9EgF+JoDXycnNlXVDI40bp/487Vh13GY3nZY3viBvW+3O5mxhNO9uFXL
+	XHMDllxK6E0IjSA4zLTWRMKs8CvBBVvVLFdzyeSik+K2y/MBjcJiBnXRn+LXZ6nM
+	mQRunkEhrY0Q5Ov1XoLqHEmbC+yB3zBtWYlz5ir6XmqUxurmOntoS0Ozy9ZJut7f
+	G8wwaD+bTBbwtu+G3zhNclzBVdj8pGmyPNiPOtZrSUrMiXjUofOcKU/YDbcOc9kH
+	PD8L6X80quhm/y140TWnQyLUO0ydBXC8fSmdQG/Z1Pu/aNyNaiRAWFbFtI7cGExd
+	M73JzTTxRIfa1Jdx4EKFbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754670606; x=1754757006; bh=V+Yax5cd8m44SUdQfztzg/ZmFEZ1MPqvdM/
-	+HiauMPk=; b=m+ubQv8F0SKSH3L32vKGHWYTx/4TJBdi/lZ0Nf4StoPWi2k3XJ6
-	c7RKw5EHSNYqm/7kqK0WYgeRmwJzoWp9JgQxJ7/x+ZuI+3G2jX9kroVDZLUAZ0oP
-	H7TIEcbZrt6JZBSLFlxzUqzODCLjQeUafv2IPZ7ciG/JZsdBOExeCI0oF+8UWUsj
-	xDIxuwtekmkqSiTngpFgYqkgLhuUEHn3EK0oLg2enhX9s8TiB167o+xHeC7sH9gE
-	h5S1ffvLi3raKbrqg0m01cpAP3NLiR078jOTJlneEG0xiS6JT3gR9F5kcGk2Y8Ak
-	cT9nZD3Og1KLqXVsducY9RzbVh6Rbql18uQ==
-X-ME-Sender: <xms:DiaWaLQtCuhZldTVYX1i4oSP7yxEuGLfqjm2vcGaoEG_QQTSnO_QEw>
-    <xme:DiaWaHU7P5lDsMXvi8DP5VqIAMNtdu85AXxZYJvC5UYjdnJf1_0pZ2_ki-LFjJsqr
-    Pnu2FzQOIWYy5Teug>
-X-ME-Received: <xmr:DiaWaNZ8Uy5z7zsS4DGXhudpFBCkDFoSYZFdrqWXTHBu06-yP8vDfUORHa04jm4zO_6GcCQEniXHzU5w0gnEON1RIIVPV_fKOpdeZX0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdegvdelucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754673249; x=
+	1754759649; bh=65mqWdK4Tp/FM2hCnQZwUSdwwlDnNHGtmZa8IP28348=; b=Y
+	ygYvktfrD0sPZg9urgy9G61EuQ80/9+Y2rRBXu8Nwb0RXNvCbNxfeUzLf1esk2f8
+	cUZYNamDgk2w+Q3hcnnSyPzYHWyzcd9pEH7IAOcgmmasgCGtq0RPxEWIdHUGxSWi
+	zmWWtg2K21IpqT9cUTbINfdX+NSFFpdL9BWilPQoQsRCHmJzGO7MT8e+1iUujper
+	5Jqmyo7GQ9yXUWiKT3WCI9eNYpIsnRChFro+994VBkXqLe+EQsNBrMfIdSrjDk6t
+	/Nq+BdPJJzuz5/dfj+ifW3rkbBE90Z1kvWPdfOuEM9w4vFC4i31xvrf3K12dbQhx
+	6f8qrCxJs3XnrUT55zruQ==
+X-ME-Sender: <xms:YTCWaEJqZVmrKNEIJrdPaeBHT_bt_a2BLZVUpAk-ErWq7uZqP3-T2A>
+    <xme:YTCWaEKmc6ZHYuA0dVGmqEgA7YqfF-CvpwuLX3OPtyB0HR3jzaYkx8MyV2IvJx0va
+    kKLqvLyX1Sp5ac-7nY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdegfeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:DiaWaN2gPRKR9O_kgc2SE7zTlZzD-eZiZpKtBuOLpe43e2-9et6Vxw>
-    <xmx:DiaWaPhZFmO21EFjJI6O9UVw7kAkCljClJ_W9foN_59kQ2uaSlb1jQ>
-    <xmx:DiaWaBYy5M0gb79a-ZJZ8-NirvzZC8b0B8fhClkDcqIPxyjk9j9N7A>
-    <xmx:DiaWaPT9nQpxOSWdaOcTyPJJprldGyKbrtw8Y8FgLuqZUefFwv3M6Q>
-    <xmx:DiaWaCDSeA5a2-mHHrzpJjBL4JoPjpfN_9zXEQewZOL6fyPX3_3d7h58>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 8 Aug 2025 12:30:06 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 1/5] doc: git-rebase: start with an example
-In-Reply-To: <ac3a91c04bfa5ab2b0e479c0bfeb2ba275fe1d56.1754666665.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Fri, 08 Aug 2025 15:24:21
-	+0000")
-References: <pull.1949.git.1754666665.gitgitgadget@gmail.com>
-	<ac3a91c04bfa5ab2b0e479c0bfeb2ba275fe1d56.1754666665.git.gitgitgadget@gmail.com>
-Date: Fri, 08 Aug 2025 09:30:04 -0700
-Message-ID: <xmqq34a1ixo3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
+    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
+    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
+    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:YTCWaPRxoMlbJMOPLUwx6bV-j6kjRIfUZUSb9dMy2snjGa6dDKt1jQ>
+    <xmx:YTCWaHo4Aw-CU_8JpNA6De5c7BOxJe-2JMzMAKJvouzkPelhXwW-LA>
+    <xmx:YTCWaBwpJjCKY2lCOdnr-Qa-sleTLHr6pTkyeZyMCcCC6mB6eWuFkA>
+    <xmx:YTCWaMKy0WTqKbF3eVTTIi9WPHDUJwlkfNhc0ThVp6W4Rox_MJ7F7A>
+    <xmx:YTCWaMSo8f5zrpqYFc-XyVpADuOO2Da6D3yPKF6TOgmdV2ruVKWTjbA9>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 03B717840B1; Fri,  8 Aug 2025 13:14:09 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: T8811983d8c40361f
+Date: Fri, 08 Aug 2025 13:13:48 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <f9cd981e-276b-4b13-8e98-c7bae17bcf62@app.fastmail.com>
+In-Reply-To: <xmqq34a1ixo3.fsf@gitster.g>
+References: <pull.1949.git.1754666665.gitgitgadget@gmail.com>
+ <ac3a91c04bfa5ab2b0e479c0bfeb2ba275fe1d56.1754666665.git.gitgitgadget@gmail.com>
+ <xmqq34a1ixo3.fsf@gitster.g>
+Subject: Re: [PATCH 1/5] doc: git-rebase: start with an example
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Julia Evans <julia@jvns.ca>
+On Fri, Aug 8, 2025, at 12:30 PM, Junio C Hamano wrote:
+> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Start with an example that mirrors the example in the `git-merge` man
-> page, to make it easier for folks to understand the difference between a
-> rebase and a merge.
+>> From: Julia Evans <julia@jvns.ca>
+>>
+>> Start with an example that mirrors the example in the `git-merge` man
+>> page, to make it easier for folks to understand the difference between a
+>> rebase and a merge.
+>>
+>> Signed-off-by: Julia Evans <julia@jvns.ca>
+>> ---
+>>  Documentation/git-rebase.adoc | 46 +++++++++++++++--------------------
+>>  1 file changed, 20 insertions(+), 26 deletions(-)
+>>
+>> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
+>> index 956d3048f5a6..fee73623990d 100644
+>> --- a/Documentation/git-rebase.adoc
+>> +++ b/Documentation/git-rebase.adoc
+>> @@ -16,6 +16,26 @@ SYNOPSIS
+>>  
+>>  DESCRIPTION
+>>  -----------
+>> +Transplant a series of commits onto a different starting point.
 >
-> Signed-off-by: Julia Evans <julia@jvns.ca>
-> ---
->  Documentation/git-rebase.adoc | 46 +++++++++++++++--------------------
->  1 file changed, 20 insertions(+), 26 deletions(-)
+> It is an excellent idea to start with what it does, before
+> explaining how you would drive it.
 >
-> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-> index 956d3048f5a6..fee73623990d 100644
-> --- a/Documentation/git-rebase.adoc
-> +++ b/Documentation/git-rebase.adoc
-> @@ -16,6 +16,26 @@ SYNOPSIS
->  
->  DESCRIPTION
->  -----------
-> +Transplant a series of commits onto a different starting point.
+>> +For example, assume the following history exists and the current branch is `topic`:
+>
+> The line is a bit overly long, and the style a bit on the
+> "description of dry facts" side, which might want to give
+> a bit more "motivation" to help readers.
 
-It is an excellent idea to start with what it does, before
-explaining how you would drive it.
+I'm very happy to hear that feedback: I thought it was very dry as well, but I copied that part from elsewhere in the man page because I thought that was git's preferred documentation style. I'll work on making it less dry.
 
-> +For example, assume the following history exists and the current branch is `topic`:
+> Note that you lost the mention of `git rebase master topic` syntax
+> and the explanation that the form being a shorthand for checkout
+> followed by rebase, which I do not think appear anywhere else in the
+> document, so my suggested rewrite above resurrects it.
 
-The line is a bit overly long, and the style a bit on the
-"description of dry facts" side, which might want to give
-a bit more "motivation" to help readers.
-
-Here is my attempt.
-
-    Imagine that you have been working on the `topic` branch in this
-    history, and you'd want to "catch up" to the work done on the
-    `master` branch.
-
-      *** Illustration of "before" state ***
-
-    You want to transplant the commits you made on `topic` since it
-    diverged from `master` (i.e. A, B, and C), on top of the current
-    `master`.  You can do so by running `git rebase master` while the
-    `topic` branch is checked out.  `git rebase master topic` works
-    as a short-cut to `git checkout topic && git rebase master`.
-
-      *** Illustration of "after" state ***
-
-perhaps?  
-
-Note that you lost the mention of `git rebase master topic` syntax
-and the explanation that the form being a shorthand for checkout
-followed by rebase, which I do not think appear anywhere else in the
-document, so my suggested rewrite above resurrects it.
-
-> +------------
-> +          A---B---C topic
-> +         /
-> +    D---E---F---G master
-> +------------
-> +
-> +Then `git rebase master` will find all of the commits since `topic` diverged
-> +from `master` and copy the changes in each of those commits on top of the
-> +`master` branch.
-> +
-> +------------
-> +                  A'--B'--C' topic
-> +                 /
-> +    D---E---F---G master
-> +------------
-> +
->  If `<branch>` is specified, `git rebase` will perform an automatic
->  `git switch <branch>` before doing anything else.  Otherwise
->  it remains on the current branch.
-> @@ -58,32 +78,6 @@ that caused the merge failure with `git rebase --skip`.  To check out the
->  original `<branch>` and remove the `.git/rebase-apply` working files, use
->  the command `git rebase --abort` instead.
->  
-> -Assume the following history exists and the current branch is "topic":
-> -
-> -------------
-> -          A---B---C topic
-> -         /
-> -    D---E---F---G master
-> -------------
-> -
-> -From this point, the result of either of the following commands:
-> -
-> -
-> -    git rebase master
-> -    git rebase master topic
-> -
-> -would be:
-> -
-> -------------
-> -                  A'--B'--C' topic
-> -                 /
-> -    D---E---F---G master
-> -------------
-> -
-> -*NOTE:* The latter form is just a short-hand of `git checkout topic`
-> -followed by `git rebase master`. When rebase exits `topic` will
-> -remain the checked-out branch.
-> -
->  If the upstream branch already contains a change you have made (e.g.,
->  because you mailed a patch which was applied upstream), then that commit
->  will be skipped and warnings will be issued (if the 'merge' backend is
+That's actually in PATCH 3/5 of this series: I also thought the explanation that the form being a shorthand for checkout followed by rebase was extremely clear so I moved it to be the primary explanation of what `git rebase <upstream> <branch>` does.
