@@ -1,102 +1,251 @@
-Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
+Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com [209.85.215.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBB91BFE00
-	for <git@vger.kernel.org>; Fri,  8 Aug 2025 06:41:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE0D14885D
+	for <git@vger.kernel.org>; Fri,  8 Aug 2025 06:58:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754635261; cv=none; b=gnUT0uDrmA7oP38nRgfuKjDt88W/k1ZwqUW66idpd30e7D3XHKaJWZALZR6mKDGWxiTxTESRsICu77eBsTzVKL90ARtfvIDzXqp/XMry7DNgISs0PJQ5YPq4CHgWVWXOcBr4qcByoTWQ34JHOSDz4uPbZtQbmffpsrsnUcCoa7w=
+	t=1754636335; cv=none; b=A6tR962I1RyQtRU97v6CW9brLlZDxFx/l2Vtihc1zoYGvoGVJyxd39DdEei0up45NfqNo8Wg2ISVjj0kCJqY6vuaT6Q60kwhXkftV9tkVc6TWAFv7vuwzTZcAR5vfIK1vJYNhsONO7BYlxxHZgI2OV0Bd5OqSDbs1rkYwqLz0kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754635261; c=relaxed/simple;
-	bh=zU44n4uhQEZx1NSqVmqmxDYuggn5Ta6UAp3Y88gKKDo=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=NF325AybjdhiKdCDSKa/fx4KdOf+dOmjW+MK1trilVmP/BZJkoCatFw/Y6jn39kwJvpp9a31ptlbcmdxXV0Cgcf3g2f2EWNb2SKpDGnB7rTB+eLu/XPveKmf1tLEa6OjVlF66AsYjmM0AALPMXfaoWgiSYtaBwlZEk2QtV2RnIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H2ygqZ7K; arc=none smtp.client-ip=209.85.210.193
+	s=arc-20240116; t=1754636335; c=relaxed/simple;
+	bh=xIJNMY6CAg02tgWlPrB+VbEoWXW2+W+Pd+d4sZHzHKs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FQxVCTcHoIGLZjtDmgm0D/cSAIPYpOTtcy4xYqVfDlUlW98AG/6WtEgrNOJqmZ9ahMwYrJGoZR/XI2F6xelSzll/+R6nRXUo0H/ViU25FhkgEuRuTULf1jCXTU27oiif4YubR+CDj/7U5Qj+KY3frPjIPFgkiX7P0N89LnShZEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EVNhKnJp; arc=none smtp.client-ip=209.85.215.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H2ygqZ7K"
-Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-76bc5e68e26so1853050b3a.0
-        for <git@vger.kernel.org>; Thu, 07 Aug 2025 23:41:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EVNhKnJp"
+Received: by mail-pg1-f194.google.com with SMTP id 41be03b00d2f7-af51596da56so1389886a12.0
+        for <git@vger.kernel.org>; Thu, 07 Aug 2025 23:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754635259; x=1755240059; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1754636334; x=1755241134; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zU44n4uhQEZx1NSqVmqmxDYuggn5Ta6UAp3Y88gKKDo=;
-        b=H2ygqZ7KYBgYT7tR6EZLPdsmYC7OgoMLQYR3nql9cLZqE3NWNmpbMdYI/RzBb/Koq7
-         l2MPr9ddtxrW3yJw1rZwX/a/rKnC4ii/5E0a7/AIntUhmVDX3+v8KiTI7VJHa+cBtZg+
-         ck5Fk5HIJ6HqpLOoDwvfRQ+XHNrimMwBg/A+Ckf8V4wthMjU4+i2yrvLo2gMKniCZ5ik
-         CSLiyX8/3qxCGJgUq0hi1UjBVc+SzqqRPUSFyuXu4M42FVfUO1xETVnxBoaiI9INwARz
-         hDzDH634iJBfcp9Wv7Nb9voZaPjlH2Y5ZxPcE8rxn7LPYHenSHdvqO5TW1+wIYSH8Eyo
-         crTA==
+        bh=hs1mLbfEGlFAvJjVvRgoT5M72l0cXdKDxaCU7z1Q3mA=;
+        b=EVNhKnJpkZlwj+c/rq/vYsOkzGYM6LLnr9G0cePDSuOt7I9rYRqfhqdABpaSd8CqKc
+         gmsDD0SxT6jWuZDza7upvE7Wm4ghQuFFEocIwQgEyJAi+fzS0AkmeNdu+a+74hph3SWm
+         hrdEnE9SUtJHZNablGroQgrvTPdV0ENcRJ0KI76nIC/49JOwrpnbcL+tTECIEXNECBJ2
+         SZ2gAirr/7JHN7//KVKAgmgJa6xmsZtxGjHZDU7hYny75gYCSNwv2mnA0BwY9VIscPfb
+         Z3aAuDMrXYxC10wKQNU14byMiyQS1d+/CdIYesykYFLmQFWh4e7l/xo/SpLFPcc+SgT+
+         Lwqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754635259; x=1755240059;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1754636334; x=1755241134;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zU44n4uhQEZx1NSqVmqmxDYuggn5Ta6UAp3Y88gKKDo=;
-        b=OJvE2yTy2Qk2hgSc7micXF+6+VA/diUpSuxYyed2f06D4CPYGRWt4nn+lXAaY5ihsK
-         KIejBxsQ3hHXXvr6xftOBC8V9iB6fyBWMh4jkmSyvzn1uHOeRR8vjBD7jKooeWuqizRe
-         /rv7+LVn8Z99l2Yw5ekPyjmqZlNzPexdQS4tZYOSf+dQV6UEy6QPO3fg4b9PoZ8jixVV
-         HzunhIUMh+gyfFGRjCg5MfsJ4Mv2tPaBVSOrMFrYW9S5CL2Nu+tgZdcpv1xoZijJo+IY
-         EubN/VKQx7d+dUY343UHDAF/8t9eIaxDh0RMwjZKqj9Doum++gC9UdeZBN+fj/1PHqyt
-         poEw==
-X-Forwarded-Encrypted: i=1; AJvYcCWx8ffu6yI/e0OnOs80XFsYTM3z9ctkVo1warYi1RyXNitoV+wqURfwGB1dYoJNSd1mBAM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwdBF1ihKa7bHzdLoGX3HXCRVP4XExcI8XLYvl7i45ZdtxxNRmH
-	M00sdphp9D64rRYY+4haCsT1nZ947BeHGwYYNWTWAuv4MCQrsKV9Ur7N
-X-Gm-Gg: ASbGncuqqo+51UuhXqzIH3a6eS2ZOihGGAe7uqnm5FzAMJ7MRChvDH8se/FsZCdPoBP
-	ttC34DBAB7URqEpHzsdgDC34fRKPKK8C1g2OuQcMPnfYTuRjoj5loygbKQJJkoOR13rSne0DISF
-	CYJcPuYnsXv6YRxAIPjiHGNbqYLO2/nLhe06Rrby0O5GetHyI+Cm0QuoA73MT5sJNNyOj9GuQtW
-	zTxTDqypjmOwdcPGqcxIYS6GaPAAyouaJ5Rb4I6MF9g1BGupFPD2YdLiMAmsFFTjq3+a+Tsv+69
-	NvDrNoEbJqr2CeUF7YeMrzj3CH4czAIyF5IzuUTlNqgX40557pua+j2vjmvsACQyYucBi2+Xhvo
-	1ttnTm0gewhsetl/1NF8hnp2UFNHVpSY+3SRvYHkhB16Rm7g1M1895OBOsw==
-X-Google-Smtp-Source: AGHT+IFPuaFYECoPPOib5pM3KMXi3vFDkpShhY/lgwaDDg6HEDU+2edMUXT69J2tS2iU8SKbs5S9ig==
-X-Received: by 2002:a05:6a20:1588:b0:240:10d2:adea with SMTP id adf61e73a8af0-2405501259amr2859351637.5.1754635259369;
-        Thu, 07 Aug 2025 23:40:59 -0700 (PDT)
-Received: from smtpclient.apple (awork062197.netvigator.com. [203.198.28.197])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76c09adf8efsm11175244b3a.68.2025.08.07.23.40.55
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Aug 2025 23:40:59 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        bh=hs1mLbfEGlFAvJjVvRgoT5M72l0cXdKDxaCU7z1Q3mA=;
+        b=HJxO0/8UytiJsC4iLD6X0e8ruetUmjHzZImlzwH6ssU2USSoEg1In/HFk01FjdwRaw
+         j/CtosE+Zi//CrLm7DSXsJSHgjikRmmDmiFq30m1u2ehvirNrNissXcSUtG8ZBfb4tAF
+         dLzmJYQL19+sl59tEh9gzUZFh0BUX6MIzdHbZK9xTeD1XwZmAYG6wuEKAH04d/sXt+UW
+         Wi2VukfgxHGVEr8FaVFnlQV+wL3lEkTWt/R7OOi89i7AQM/LUrHEZ9O4OQW6lDNxTjd+
+         MSkydyuR9gW97H3X0AAULqrkjQNokE419GmwDg1Vh/7IiQ0Pq4dSdDSCrsJVVD4Enoaj
+         Aa4w==
+X-Gm-Message-State: AOJu0YwCTtH2Iz1cPx06w9nIjpGM4OdSXBxVIx3AKZUKVMr2qAgs2I86
+	hpQ+DwDHJGY4zvhXP8yASY8fvgtJ0UXkx5AjfQBkrWDRx+SVrKQSMySk
+X-Gm-Gg: ASbGncvSixQdHDiWXAalC1edNEXzbxI8Eg9S2W3vF21XmIW83ZrdwGLUZsKklfbvAHb
+	ZxUTf2MY5IzMTEh4TCQycMPN/YbbT41PNZ7hFauooPzEGBHFNB/ysDBPwbVeiL9ju2rFtBMEjmD
+	wpPUfsu1R8jdGRCz/Am8HK7eUzvrKKXV4aKiSjjjMoJ8Brk0W4TvE+EN34rpCOvQsQnWVSMvwJg
+	CChKO+BgX3cMHRRiALYR53txGVgyoQMWSWuE29Y4gXVFB2cqe1kaUCoHzVt87GpO+1nupcBbyTo
+	pGCenrDi3CE5wwqtxa05rcs9SsB6N0Ixzp4kmgKKs+aNrgkY4zN/MjeaMECHpxJR6q95nozsPNa
+	UEIP1XvD7ZrmLWnRY2Zsq7wyYSoPhRt1lJuJQM0y62HG1iNVb6+DxdAcxkATkvK6lDQ==
+X-Google-Smtp-Source: AGHT+IGbXJkZzWprU8Hz2k3zGJ5Q1zWFQyfvhTnYaP5tfRAKfx+42bAXs/m+gwSAElu8BoI578ZqWA==
+X-Received: by 2002:a17:903:124d:b0:240:79d5:8dd0 with SMTP id d9443c01a7336-242c1fdf8f5mr28020445ad.13.1754636333516;
+        Thu, 07 Aug 2025 23:58:53 -0700 (PDT)
+Received: from localhost.localdomain (n058152022104.netvigator.com. [58.152.22.104])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241e8aa8e0esm203955635ad.151.2025.08.07.23.58.50
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 07 Aug 2025 23:58:53 -0700 (PDT)
+From: Lidong Yan <yldhome2d2@gmail.com>
+To: yldhome2d2@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	stolee@gmail.com,
+	ttaylorr@github.com
+Subject: [PATCH v2] bloom: enable bloom filter with wildcard pathspec in revision traversal
+Date: Fri,  8 Aug 2025 14:58:34 +0800
+Message-Id: <20250808065834.22743-1-yldhome2d2@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250807051243.96884-1-yldhome2d2@gmail.com>
+References: <20250807051243.96884-1-yldhome2d2@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH] bloom: enable bloom filter with wildcard pathspec in
- revision traversal
-From: Lidong Yan <yldhome2d2@gmail.com>
-In-Reply-To: <xmqqa54brtve.fsf@gitster.g>
-Date: Fri, 8 Aug 2025 14:40:42 +0800
-Cc: Patrick Steinhardt <ps@pks.im>,
- git@vger.kernel.org,
- stolee@gmail.com,
- ttaylorr@github.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <1369D2B0-9B41-40F4-ADE1-B109F0B7B56C@gmail.com>
-References: <20250807051243.96884-1-yldhome2d2@gmail.com>
- <aJRMaYfMd3PlRtoz@pks.im> <xmqqa54brtve.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
->=20
-> The numbers are impressive ;-)
+When traversing commits, a pathspec item can be used to limit the
+traversal to commits that modify the specified paths. And the
+commit-graph includes a Bloom filter to exclude commits that definitely
+did not modify a given pathspec item. During commit traversal, the
+Bloom filter can significantly improve performance. However, it is
+disabled if the specified pathspec item contains wildcard characters
+or magic signatures.
 
-The bad news is that the Git versions I tested are 2.39 and 2.51, and I =
-used
-git commit-graph write --split to build the commit graph, which resulted =
-in a
-large value for filter_not_present in trace.perf.
+For performance reason, enable Bloom filter even if a pathspec item
+contains wildcard characters by filtering only the non-wildcard part of
+the pathspec item.
 
-The good news is that after rebuilding the commit-graph, I repeated the =
-experiment
-on HEAD and HEAD~1, and the results on HEAD were still better. Anyway, I =
-will
-update the experimental results in the next patch.
+The function of pathspec magic signature is generally to narrow down
+the path specified by the pathspecs. So, enable Bloom filter when
+the magic signature is "top", "glob", "attr", "--depth" or "literal".
+"exclude" is used to select paths other than the specified path, rather
+than serving as a filtering function, so it cannot be used together with
+the Bloom filter. Since Bloom filter is not case insensitive even in
+case insensitive system (e.g. MacOS), it cannot be used together with
+"icase" magic.
 
-Thanks,
-Lidong=
+With this optimization, we get some improvements for pathspecs with
+wildcards or magic signatures. First, in the Git repository we see these
+modest results:
+
+git log -100 -- "t/*"
+
+Benchmark 1: new
+  Time (mean ± σ):      20.4 ms ±   0.6 ms
+  Range (min … max):    19.3 ms …  24.4 ms
+
+Benchmark 2: old
+  Time (mean ± σ):      23.4 ms ±   0.5 ms
+  Range (min … max):    22.5 ms …  24.7 ms
+
+git log -100 -- ":(top)t"
+
+Benchmark 1: new
+  Time (mean ± σ):      16.2 ms ±   0.4 ms
+  Range (min … max):    15.3 ms …  17.2 ms
+
+Benchmark 2: old
+  Time (mean ± σ):      18.6 ms ±   0.5 ms
+  Range (min … max):    17.6 ms …  20.4 ms
+
+But in a larger repo, such as the LLVM project repo below, we get even
+better results:
+
+git log -100 -- "libc/*"
+
+Benchmark 1: new
+  Time (mean ± σ):      16.0 ms ±   0.6 ms
+  Range (min … max):    14.7 ms …  17.8 ms
+
+Benchmark 2: old
+  Time (mean ± σ):      26.7 ms ±   0.5 ms
+  Range (min … max):    25.4 ms …  27.8 ms
+
+git log -100 -- ":(top)libc"
+
+Benchmark 1: new
+  Time (mean ± σ):      15.6 ms ±   0.6 ms
+  Range (min … max):    14.4 ms …  17.7 ms
+
+Benchmark 2: old
+  Time (mean ± σ):      19.6 ms ±   0.5 ms
+  Range (min … max):    18.6 ms …  20.6 ms
+
+Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
+---
+ revision.c           | 30 ++++++++++++++++++++++++------
+ t/t4216-log-bloom.sh | 31 +++++++++++++++++++++++++++----
+ 2 files changed, 51 insertions(+), 10 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index 18f300d455..2a5b98390e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -671,12 +671,17 @@ static void trace2_bloom_filter_statistics_atexit(void)
+ 
+ static int forbid_bloom_filters(struct pathspec *spec)
+ {
+-	if (spec->has_wildcard)
+-		return 1;
+-	if (spec->magic & ~PATHSPEC_LITERAL)
++	unsigned int allowed_magic =
++		PATHSPEC_FROMTOP |
++		PATHSPEC_MAXDEPTH |
++		PATHSPEC_LITERAL |
++		PATHSPEC_GLOB |
++		PATHSPEC_ATTR;
++
++	if (spec->magic & ~allowed_magic)
+ 		return 1;
+ 	for (size_t nr = 0; nr < spec->nr; nr++)
+-		if (spec->items[nr].magic & ~PATHSPEC_LITERAL)
++		if (spec->items[nr].magic & ~allowed_magic)
+ 			return 1;
+ 
+ 	return 0;
+@@ -693,9 +698,22 @@ static int convert_pathspec_to_bloom_keyvec(struct bloom_keyvec **out,
+ 	size_t len;
+ 	int res = 0;
+ 
++	len = pi->nowildcard_len;
++	if (len != pi->len) {
++		/*
++		 * for path like "/dir/file*", nowildcard part would be
++		 * "/dir/file", but only "/dir" should be used for the
++		 * bloom filter
++		 */
++		while (len > 0 && pi->match[len - 1] != '/')
++			len--;
++	}
+ 	/* remove single trailing slash from path, if needed */
+-	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
+-		path_alloc = xmemdupz(pi->match, pi->len - 1);
++	if (len > 0 && pi->match[len - 1] == '/')
++		len--;
++
++	if (len != pi->len) {
++		path_alloc = xmemdupz(pi->match, len);
+ 		path = path_alloc;
+ 	} else
+ 		path = pi->match;
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index 639868ac56..1064990de3 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -154,11 +154,34 @@ test_expect_success 'git log with multiple literal paths uses Bloom filter' '
+ 	test_bloom_filters_used "-- file*"
+ '
+ 
+-test_expect_success 'git log with path contains a wildcard does not use Bloom filter' '
++test_expect_success 'git log with paths all contain non-wildcard part uses Bloom filter' '
++	test_bloom_filters_used "-- A/\* file4" &&
++	test_bloom_filters_used "-- A/file\*" &&
++	test_bloom_filters_used "-- * A/\*"
++'
++
++test_expect_success 'git log with path only contains wildcard part does not use Bloom filter' '
+ 	test_bloom_filters_not_used "-- file\*" &&
+-	test_bloom_filters_not_used "-- A/\* file4" &&
+-	test_bloom_filters_not_used "-- file4 A/\*" &&
+-	test_bloom_filters_not_used "-- * A/\*"
++	test_bloom_filters_not_used "-- file\* A/\*" &&
++	test_bloom_filters_not_used "-- file\* *" &&
++	test_bloom_filters_not_used "-- \*"
++'
++
++test_expect_success 'git log with path contains various magic signatures' '
++	cd A &&
++	test_bloom_filters_used "-- \:\(top\)B" &&
++	cd .. &&
++
++	test_bloom_filters_used "-- \:\(glob\)A/\*\*/C" &&
++	test_bloom_filters_not_used "-- \:\(icase\)FILE4" &&
++	test_bloom_filters_not_used "-- \:\(exclude\)A/B/C" &&
++
++	test_when_finished "rm -f .gitattributes" &&
++	cat >.gitattributes <<-EOF &&
++	A/file1 text
++	A/B/file2 -text
++	EOF
++	test_bloom_filters_used "-- \:\(attr\:text\)A"
+ '
+ 
+ test_expect_success 'setup - add commit-graph to the chain without Bloom filters' '
+-- 
+2.39.5 (Apple Git-154)
+
