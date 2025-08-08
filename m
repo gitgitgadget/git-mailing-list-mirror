@@ -1,131 +1,207 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421692E370A
-	for <git@vger.kernel.org>; Fri,  8 Aug 2025 22:07:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B39A1DA3D
+	for <git@vger.kernel.org>; Fri,  8 Aug 2025 22:52:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754690835; cv=none; b=IDNZTT3EVYv1bHwDfEBbljL004PRIqbKPJ0hqa3lKLIeebSTJlnNwAiP5ldJtIeWWYVzPw8QqKmvJbsMdGgIFRIE4TT1XkGCsyGLdspKGL6QGlzNyLU2kTVVUBVOA57t2wAGgVGMoG9taL4/Tm+c2pUFJjMHc7VFWL++a2udCwQ=
+	t=1754693558; cv=none; b=qqe67kT8MVaiacICN5zzfSPaMVxslbV7H+wtzChuZhmGpP5EAuutrtFPuha5Z0Z8x+RwGPrApPLalUTk8AHtqYGlIcgac92EfBQfCke62HVPxPmTZseXSvRFIoviC2UIW3wIMLdF15rzqfcJv+h4GnS0bMHyQGmSqoPFnmVtQ+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754690835; c=relaxed/simple;
-	bh=YyosvouwmZYXCWWuIrbkqcU7XpmW1Oj2t2LwJkcSQio=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dwYoOK8n+l+GRLrj8kl2uzMmUIfnzSe8qlEzR3gFMx8Jsawx5uXuC1bgmpe/fa67pA3fZpkasdVPc3ufbnjbfJlqy22ePbL4x1+MF9d5MTeusFiFuehmDBugQgrAfq9UxPdfbQRV89lolKCoXJg1XFS9uTKBFN+RoKmlyXqjs7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e3dEUo8p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gCvd3vOw; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754693558; c=relaxed/simple;
+	bh=m70rbhhws+Lnoixlmi+weDvKvYjqBUFlndfU7cvhV6M=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=FYkF90FSCBJ8m2Z0ZuR22jqrot96TPTnnuRa3WJTr5eNXQRqt3m+4bxwZbDGaGZgOf0mLrCyvVhn3CoJB2yoxO576qV8yDTD9jEZshoHldqEIET3M4xmbWUZJh+yjZ9ZbtGGK9loCBtqOX1ZtvGLNs5CIwzswpCDfVWZqITOzQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g41QQQ4c; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e3dEUo8p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gCvd3vOw"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3C6591D00142;
-	Fri,  8 Aug 2025 18:07:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Fri, 08 Aug 2025 18:07:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754690832; x=1754777232; bh=E3rWxCaWDC
-	lQ8FPK1qJ3//uhA3zNGU++mJgRCWrk34Q=; b=e3dEUo8pIPAGuvokIPBoYLnSxK
-	iKysR7XOiqeZo4F38OjFoX53YbSOrKNkg5dfZyJ4Pk9Jf2JWl2vzFYtmwIiH8K6k
-	LUrmSgmInqcWrQlRwdrVmn09i0WVXUPn2LJ4k72HhyE2we2OtAR5i0FbJFRJD8o9
-	Le6FPT7na0qjmBwbA/2l4UeK5PbMIWlDrebLeVb/x2YFnDVdPhx9bWI1ny0NBrKI
-	nfc3yPb928swhmPmWyp02YyJif34+0P5apuLUS1lQf11VBGrjFa3KvFu55q1wt/r
-	WZ7ySv+h1o5vWHYIHtXlvqoIyKEv8D8qux0EjJFg04m1WDoKKgT0HXaYOU3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754690832; x=1754777232; bh=E3rWxCaWDClQ8FPK1qJ3//uhA3zNGU++mJg
-	RCWrk34Q=; b=gCvd3vOw3sOJlA8fg26C45doUPsyXomLE3XRXse+aCPLgMO5xcq
-	a/MLC+NjzJhnfQ6+UMtxGRsKKaOTHJwBj39Zd8x0qjlv9YoG6nI6Y+IVd1dcQbMA
-	HQ39FxAZuwQko4U7p3ZZk/bGyt9t1JObw+NNgSccO7545Oc/Y8Pe3unD8czEt41/
-	Lo/rP0ioTY/ideK/tII9GvLy9DvIWeR100y6OraTmH2dxWmZxDGA1M+uEw4p+QF4
-	o8WCsThkT9cVnwVgV5d7sX6/Vao/IW6hUfKWAkplIlEMKOcJ2uzQtGdXKyyAFoth
-	8p5JdISwalkNAxyCx0ip7xrtiknzpPtamew==
-X-ME-Sender: <xms:D3WWaM_EzvPYxl-6DDwqvIyyXNhgAxbH11omeY3CbNxSwHafDhO0Ww>
-    <xme:D3WWaPTTmfJCbOrj3NpWUf-kwZAYpYB6UsFJLZ1t9Mch9WZR4ZKgSTkvuTt1kOlWQ
-    LQiq0k_VgSgIg7zzQ>
-X-ME-Received: <xmr:D3WWaOmE_FXOQy2hX1EvyJSRSL6_9rSz8jsqmNn9qhYvlioIwg8PjPm_4pBVSsQih8BHn606z2PoFnYh4SsDhDHs4uxwnXg_i2gbk3Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdegleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdr
-    ihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:D3WWaPQi-71q1674VewOQB92ks45OLrft_KWgo_W5BgQApdfly7mBw>
-    <xmx:D3WWaMNn26RI6nMjT6onn1ktrCTLNNSbQKn55JxQnJPbScVOv5mdsQ>
-    <xmx:D3WWaIVzU5pa0jwhBha0_E1JLWEdZIhbToNI0dFWXQwSG3eiUL-Lng>
-    <xmx:D3WWaDeUGp-lp435I9yleFEas92oTAKDaW3ayOF4AqPXRmxxuk7eng>
-    <xmx:EHWWaC10m6YgDaNv-Bx8fnxXbhmZ1rm4rNjyWdiG79kpiRIWjOLm6IS->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 8 Aug 2025 18:07:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 2/2] t0450: add allowlist for builtins with missing
- .adoc
-In-Reply-To: <20250808095943.3312265-3-toon@iotcl.com> (Toon Claes's message
-	of "Fri, 8 Aug 2025 11:59:43 +0200")
-References: <20250804073002.1586332-1-toon@iotcl.com>
-	<20250808095943.3312265-3-toon@iotcl.com>
-Date: Fri, 08 Aug 2025 15:07:09 -0700
-Message-ID: <xmqq7bzdfoxe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g41QQQ4c"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-459d7726ee6so13175505e9.2
+        for <git@vger.kernel.org>; Fri, 08 Aug 2025 15:52:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754693554; x=1755298354; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=j/krLae0qUdp2/ybc7r8a1OWFKQMkXtZz6tYmJ3lV2s=;
+        b=g41QQQ4c/eq4vHH6GYoXmb9XSoyozrMhrXGGQEez/zx51dyWs3eLjpUg4/sCvklEjW
+         o3g34L6iP3eNyVcUvNIlaUHJsrhZcHwdTqthVJ/XhxFMZWcKHsS+k3dSs1HkItxh0ssA
+         dDxd/3e+kTXq47uadbRnwqBddVvGTJuoyPHJlCPkXFkDJBo9eJJuXhHOQmvDH0R9E18b
+         qgSNbXuw3i/KopFYpHTCT+ZGdTy7JAauacyIRVZ/GDvPdIgn6c3QHNPsk5RqcUNklh5H
+         cIzBDiklGZrlPiJt1ozAodNnysg10mx99kl0FellNnjouZR5fPhFcreEozWbJGPrfSTN
+         k6NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754693554; x=1755298354;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=j/krLae0qUdp2/ybc7r8a1OWFKQMkXtZz6tYmJ3lV2s=;
+        b=asgCGnaqPO3tG8Asro7Bh9hi+M0BlZA8DQpo9lBBQ9kLwxjLFDb129ZfodYsC7LyrH
+         LFEqUf+PhMaNSrF5blHozF/SuyQxicsEgtcTK5w/k6yl8icAWlsD7zemQJlV09gDulHC
+         QHpHTw/d4Js47kxOWJy6jZU4YMUJMaX/qQUMa+T8yMEljkykZAsa5pUIGgq+qmT0pYhx
+         I6K/ehgHSREBAlxGP6FIIZBxgnibm5nO5GD9gDGpCK9wtn1ymNalQdymoEO7nTGpFOmV
+         Xf8Q9pUvi/3to3tLd+b2w1k1sTBWl5yd6efue8l0Dr4sJ4sI3MZl6RrbyR99obZVOSxz
+         Mfig==
+X-Gm-Message-State: AOJu0YyY2AIJQXGK/e2JiSzdzauyPvfXOsFpOC6MRaCbaQq5D5YqQDK/
+	sgWwnidNRPjcyfLmq5TTEnOMsh6XnV0IcwY8xlkVYKSWZ7j1SqPA/oXtUlxUdA==
+X-Gm-Gg: ASbGncsbpy0hl3Uzf8/9EjUiler7tKq1v2C8Ggzu70A1MTHAirziH1ueW+aCyQA7hP+
+	d92GTp3/jxsEzHlYKLuAbUVDIDMjXq2jVX12th8jvrq3frPFwHwZy9N3Ezkt6cpzi+6N4FeOoVt
+	JFjqmbSv5k/MhcS8XXtPIcmLAUJmTABdREafcVKLPGu6UbM+W76Y0Eds+4q4RT50smDUqraymu1
+	RBrskRUHn30iHPBeNcavgLe1aB6c/PqY9tw1Hd2K2G4wNLPX0Ea2jBh22EdbEsgbK+VYb94xxGS
+	waD50+g0VzLRC/WzMsB82JdGv5PPPm5Psr/D1wT9bfRufvwNGWxftvw2eI4UvsIlBsjRdsuT6Go
+	hjGMMCD1TDuryFKRMzRI7nzc=
+X-Google-Smtp-Source: AGHT+IHsxwruRlGG8HZbcuMsNN3Rcb4avA5v7gcsqdm9WlGi0OhxGjDrJrbDDstqerQXbxXKkqavvQ==
+X-Received: by 2002:a05:600c:1c18:b0:459:443e:b180 with SMTP id 5b1f17b1804b1-459f4f3e153mr44523965e9.8.1754693553950;
+        Fri, 08 Aug 2025 15:52:33 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e583f9fcsm148666205e9.4.2025.08.08.15.52.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Aug 2025 15:52:33 -0700 (PDT)
+Message-Id: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1949.v2.git.1754680525.gitgitgadget@gmail.com>
+References: <pull.1949.v2.git.1754680525.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 08 Aug 2025 22:52:27 +0000
+Subject: [PATCH v3 0/5] doc: git-rebase: clarify DESCRIPTION section
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Julia Evans <julia@jvns.ca>
 
-Toon Claes <toon@iotcl.com> writes:
+I liked the idea of trying a more ambitious rewrite of the "here's how git
+rebase works internally" section, so here's an attempt at it.
 
-> Before we were silently skipping all builtins that don't have a matching
-> .adoc file. This is overly loose and might skip documentation files
-> when it shouldn't, for example when there was a typo in the filename.
->
-> To ensure no new builtins are added without documentation, add an
-> allowlist: t0450/adoc-missing. In this file only builtin commands that
-> do *not* have a corresponding .adoc file shall be listed. If there is a
-> mismatch, fail the test. This should force future contributions to
-> either add an .adoc, or add the builtin name to the allowlist file.
->
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
->  t/t0450-txt-doc-vs-help.sh | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
+My idea is to give an accurate technical description of how the merge
+backend works while deferring some of the details (like how exactly
+--fork-point works or what happens when you rebase a merge) to later in the
+man page. I've also tried to use a minimum of git jargon, for example saying
+"Then it checks out <upstream>" instead of mentioning anything about a
+"detached HEAD" since I know that term can jarring for folks who aren't used
+to that term.
 
-Forgot to add something?
+I hedged a bit by saying that rebase is "similar to" running git cherry-pick
+repeatedly since I think of a rebase as being like doing a bunch of
+cherry-picks (and very often hear people describing it that way), but I'm
+sure that there are differences that I'm not aware of.
 
->
-> diff --git a/t/t0450-txt-doc-vs-help.sh b/t/t0450-txt-doc-vs-help.sh
-> index da2d0af5b0..980130be78 100755
-> --- a/t/t0450-txt-doc-vs-help.sh
-> +++ b/t/t0450-txt-doc-vs-help.sh
-> @@ -112,10 +112,16 @@ do
->  	adoc="$(builtin_to_adoc "$builtin")" &&
->  	preq="$(echo BUILTIN_ADOC_$builtin | tr '[:lower:]-' '[:upper:]_')" &&
->  
-> -	if test -f "$adoc"
-> +	# if and only if *.adoc is missing, builtin shall be listed in t0450/adoc-missing
-> +	result=success
-> +	if grep -q "^$builtin$" "$TEST_DIRECTORY"/t0450/adoc-missing
->  	then
->  		test_set_prereq "$preq"
-> +		result=failure
->  	fi &&
-> +	test_expect_$result "$builtin appropriately marked as having missing .adoc" '
-> +		test -f "$adoc"
-> +	'
->  
->  	# *.adoc output assertions
->  	test_expect_success "$preq" "$builtin *.adoc SYNOPSIS has dashed labels" '
+I've also updated the "clarify arguments syntax" commit message.
+
+Julia Evans (5):
+  doc: git-rebase: start with an example
+  doc: git rebase: dedup merge conflict discussion
+  doc: git rebase: clarify arguments syntax
+  doc: git-rebase: move --onto explanation down
+  doc: git-rebase: update discussion of internals
+
+ Documentation/git-rebase.adoc | 300 ++++++++++++++++------------------
+ 1 file changed, 145 insertions(+), 155 deletions(-)
+
+
+base-commit: 2c2ba49d55ff26c1082b8137b1ec5eeccb4337d1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1949%2Fjvns%2Fclarify-rebase-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1949/jvns/clarify-rebase-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1949
+
+Range-diff vs v2:
+
+ 1:  26b742eb49f = 1:  26b742eb49f doc: git-rebase: start with an example
+ 2:  249a5127904 = 2:  249a5127904 doc: git rebase: dedup merge conflict discussion
+ 3:  ce7ab74ea0f ! 3:  013a5044ef3 doc: git rebase: clarify arguments syntax
+     @@ Metadata
+       ## Commit message ##
+          doc: git rebase: clarify arguments syntax
+      
+     -    This removes the explanation of `git rebase <upstream> <branch>`, since
+     -    it was already explained above that it's shorthand for `git switch
+     -    <branch> && git rebase <upstream>`
+     +    Remove duplicate explanation of `git rebase <upstream> <branch>` which
+     +    is already explained above.
+      
+          Signed-off-by: Julia Evans <julia@jvns.ca>
+      
+ 4:  590d7486d3d = 4:  c574a27412d doc: git-rebase: move --onto explanation down
+ 5:  ad97cd9e671 ! 5:  eabacd3c159 doc: git-rebase: update discussion of internals
+     @@ Metadata
+       ## Commit message ##
+          doc: git-rebase: update discussion of internals
+      
+     -    - make it clearer that we're talking about three steps of a process
+     +    - make it clearer that we're talking about a multistep process
+     +    - give a more technically accurate description how rebase works with the
+     +      merge backend.
+          - delete a duplicate explanation of how git rebase skips commits with
+            the same textual changes (it's explained in more detail a few lines
+            further down)
+     -    - move the `ORIG_HEAD` note down so that it doesn't interrupt the
+     -      discussion of the mechanics.
+     +    - remove the explanation of how exactly `--fork-point` and `--root`
+     +      work since that information is in the OPTIONS section
+     +    - put all discussion of `ORIG_HEAD` inside the note
+      
+          Signed-off-by: Julia Evans <julia@jvns.ca>
+      
+     @@ Documentation/git-rebase.adoc: linkgit:git-config[1] for details) and the `--for
+       branch does not have a configured upstream, the rebase will abort.
+       
+      -All changes made by commits in the current branch but that are not
+     +-in `<upstream>` are saved to a temporary area.  This is the same set
+     +-of commits that would be shown by `git log <upstream>..HEAD`; or by
+     +-`git log 'fork_point'..HEAD`, if `--fork-point` is active (see the
+     +-description on `--fork-point` below); or by `git log HEAD`, if the
+     +-`--root` option is specified.
+     +-
+     +-The current branch is reset to `<upstream>` or `<newbase>` if the
+     +-`--onto` option was supplied.  This has the exact same effect as
+     +-`git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
+     +-to point at the tip of the branch before the reset.
+      +Here is a more detailed description of what `git rebase <upstream>` does:
+      +
+     -+First, all changes made by commits in the current branch but that are not
+     - in `<upstream>` are saved to a temporary area.  This is the same set
+     - of commits that would be shown by `git log <upstream>..HEAD`; or by
+     - `git log 'fork_point'..HEAD`, if `--fork-point` is active (see the
+     - description on `--fork-point` below); or by `git log HEAD`, if the
+     - `--root` option is specified.
+     - 
+     --The current branch is reset to `<upstream>` or `<newbase>` if the
+     -+Then the current branch is reset to `<upstream>` or `<newbase>` if the
+     - `--onto` option was supplied.  This has the exact same effect as
+     - `git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
+     - to point at the tip of the branch before the reset.
+     - 
+     -+Then the commits that were previously saved into the temporary area are
+     -+reapplied to the current branch, one by one, in order.
+     ++First, it makes a list of all commits in the current branch that are not in
+     ++`<upstream>`. This is the same set of commits that would be shown by `git log
+     ++<upstream>..HEAD`. You can use `--fork-point` or `--root` to change how this
+     ++list of commits is constructed.
+     ++
+     ++Then it checks out `<upstream>` (or `<newbase>` if the `--onto` option was
+     ++supplied) with the equivalent of `git switch --detach <upstream>`.
+      +
+     ++Then it replays the commits, one by one, in order. This is similar to running
+     ++`git cherry-pick <commit>` for each commit. See REBASING MERGES for how merges
+     ++are handled.
+     ++
+     ++Finally, it updates your branch to point to the final commit with the equivalent
+     ++of `git switch -C <branch>`.
+     + 
+       [NOTE]
+     ++`ORIG_HEAD` is set to point at the tip of the branch before the rebase.
+       `ORIG_HEAD` is not guaranteed to still point to the previous branch tip
+       at the end of the rebase if other commands that write that pseudo-ref
+     -@@ Documentation/git-rebase.adoc: at the end of the rebase if other commands that write that pseudo-ref
+     + (e.g. `git reset`) are used during the rebase. The previous branch tip,
+       however, is accessible using the reflog of the current branch
+       (i.e. `@{1}`, see linkgit:gitrevisions[7]).
+       
+
+-- 
+gitgitgadget
