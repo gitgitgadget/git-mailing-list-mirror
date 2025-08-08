@@ -1,149 +1,154 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616891E9B2D
-	for <git@vger.kernel.org>; Fri,  8 Aug 2025 17:43:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975EC10F1
+	for <git@vger.kernel.org>; Fri,  8 Aug 2025 17:48:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754674985; cv=none; b=vGMfkEOW6nnta2pKE5VfjHaOTjFNH19YR/BKsaBQ/tiYEHIpNnLBBa2ncK8VRpIPMTlujE4vlh/puUb8xOAZt1tP+eRkz1tHU68AfveptgMviL+3itsLNyOqqJYdcmRoWGgxKE3bDuSUcXy5vn/EEr+ZHI6pLDv779BOVMHx16g=
+	t=1754675293; cv=none; b=iJ+luyd7VbcKHLkH6UIO67s085tgtcHQjOlkaQrzRG9cAY8gjYfUxNhLFpXThtF6dHsc4PmlESt8ET3kmGp5QdfoqIfOuKWQwG2isSPMykkWbQcSSYdVfleTBscqnOyTzz+Rjw6xC2qQjJvxOkBxVtB31BehnDHB5lZUfNFpBt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754674985; c=relaxed/simple;
-	bh=r5l17+0NcpNpK+4tQPJJ9Pe+bEHyJ7RdWLfZmNaes+M=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=YR9wPmPExGNe1X/BSUV5a34k2tyS1IkFTGaRq3/k2fl//XwLzJXxB8RY+1Qvj9EzQ1fC1EcD6oIHq2FLbESCJA9kJDv3ey46ib85VifxEuQm4p3KbFL1FsaaMFnFBuK2Z2GTyMvy6wg+3hNjxTGNCGYbVw1MUPi3csD9f6zWDXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OcA9Za/j; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754675293; c=relaxed/simple;
+	bh=XbVXXGqkIQV0COvUIrJexG4sM9SOj7pB+aJ5ThXBn58=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IJ+pGbX1KbSm7D53ObGfX+tF82n9wmRms2e6RGz3koy9dhxJmr3GpW/gnzYz7iFUa3Jzgyy5B6hT4c0prWREyF2OKUEtWzTWjGQYYx0PTPwvYXwPJN3WB54HRR4tNZaKisfRvi218Gnyp/imWgP0Aj4KbHCwCczc09WzZ8TSeFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ixLyH3hD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PszbQ4/I; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OcA9Za/j"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-459e794b331so15369665e9.3
-        for <git@vger.kernel.org>; Fri, 08 Aug 2025 10:43:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754674981; x=1755279781; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qx4+7Cre9QmYrXeXTdOarI85GvRo97uk2g7BYSSqQoM=;
-        b=OcA9Za/jgxsYCY7HwQNT+Vr6DQecVlEbtUtByg6yEp2DVXVxxfGZSRZI3RzAgHCTtV
-         kYOlZAgkrEOE92QmTWEtBnirI2TRnN4ViKA4pMREPnWEJLj59ENx9JohQawzuNuxNadU
-         in4lxL3qFxQY+8F/uuRWVmNQJrE8K48Igo2LUBwoJ5f44n3xcYbslLFEgtI+GAmIROTF
-         DY3Q67V4cxOXqbS0bSS9/yLdrKOBvpJAurMo+Z+/ZYBCzXzaIvaPx+1t2yEStJM2ahQ4
-         92aEOFZzpDaxNfp98wGdm1KnUXI7mnTRwE6g22c0hM4evYrlGWHwTdZaQKCmg6jG+R9e
-         NRcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754674981; x=1755279781;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qx4+7Cre9QmYrXeXTdOarI85GvRo97uk2g7BYSSqQoM=;
-        b=Lr7iezxZzyeSF3jbvwt2EnI8NT938mIl9KEvYARrWf4HIVpW8poRgKkr6yPFQ5fdM2
-         E/P2FN4U+ugAUmC/7S5pFc/pEfrOTBiQgNYwWccezJ2J7e0sZ7XvjZSSTc5HN+AjKX7N
-         Eq7qwtPZkL8vOEesXc4KHkhVGRGNE+oMyuBGNmpCl0Im0KW4jeryjcY0YjKSbmzmdqh9
-         keig0ohgEODoNsEIfN/8umYHWOqR8ObQizgE3RzzfZhB/pwCgaJXBKimtkxj4cyVeMHQ
-         kIJKeNvrL9Itc0R379GH71qHsqs8+8Eh3VL9oA92UipEIEdcjIqApVg55Zygzp5PSKCZ
-         MSPg==
-X-Gm-Message-State: AOJu0YxWVi0/cE8v0EkEz+NEShEGrapkY1qail9lomARU/nzRjdQZom0
-	B5mRou6jnepuKsloJCxXguAne2fSdtYnAP4ZC6TXETT69Iz7yFEwE03Er2W+NA==
-X-Gm-Gg: ASbGncvUONWhFuHStS3M/eCKeZ1SA5qVz7WTraa7Eigb4VHGVmQfT1ZI42QILkzRjCB
-	ASPNaPzEp7vp8YHH4DhzLwzA6oWRus4FL04GrPoDLn8Sz3u+vt2y/2rVi4x8FCno1Aa8m5NGoh7
-	ENV00yPMqCwKw/pPnDKB97Zyuo740DSoWgMN1qb0FfWw5j+0yUCxONIhnY7w0yhY5+uXSs0+Dfn
-	GzClXFrS8DKTJvkRqYW+q0Enj/ihHWZxS/afnbGXKZKUHwMsdPMpSEXpw4H3US+m9kdRb6IzTwQ
-	rurQwWsrsAH83nz4xA6tLp9ehA5iIhlLb0ovYY+WfOOW86xlqDDovNiNJ8RgDAU+ldKhs1tTa7h
-	BsAX/M0ErC4xB7hbeCa9a7QI=
-X-Google-Smtp-Source: AGHT+IEFBAs4UxkXJESKlQmUWJ29NWzw4tCuLU+P14tVtuQNp11re9jr93qGWhv1FSy1vVIXihXF8Q==
-X-Received: by 2002:a05:600c:b99:b0:43d:abd:ad1c with SMTP id 5b1f17b1804b1-459f4eaa292mr28443625e9.6.1754674980960;
-        Fri, 08 Aug 2025 10:43:00 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e075047fsm101554255e9.1.2025.08.08.10.43.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Aug 2025 10:43:00 -0700 (PDT)
-Message-Id: <pull.1950.git.1754674979929.gitgitgadget@gmail.com>
-From: "Greg Hurrell via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 08 Aug 2025 17:42:59 +0000
-Subject: [PATCH] git-jump: make `diff` work with filenames containing spaces
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ixLyH3hD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PszbQ4/I"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9D0E91D000D7;
+	Fri,  8 Aug 2025 13:48:09 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Fri, 08 Aug 2025 13:48:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754675289; x=1754761689; bh=Po8OSxK00z
+	ZlmBtABb8RyrKeSzn0ZLuuXG/g94rP+fI=; b=ixLyH3hDL7KRib0jTbGRoiie6d
+	cbbqxIypqQBb6RKZ6zvGCexkDKENlI/H3HDp9gv1xbLvFmTG6vJOXAEnN0yAKwJ2
+	K9ucYKTU5/nu9PkfDiiRk8eZd6zEtEU2Ih79FzSPJLoBK1nrMEUAHUTYfTcYw3yk
+	JHDUkdkWyyBLAWTRXrdTTBRXvgWg0ZxPPOOjrnK0ft7jFceqI2wPD4cxy7Pf/Ngm
+	2mKsSW9yiRey9Mr95YQnk+fPj+oAyQP0TkvFKrJffjc54Jg90LFBvJPWY7vw9C1i
+	iHuXhMWyPq8MgO7E36bmRUY9OCf5LSmyzW4OFSV1muKadaimZJvsCvikhPrA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754675289; x=1754761689; bh=Po8OSxK00zZlmBtABb8RyrKeSzn0ZLuuXG/
+	g94rP+fI=; b=PszbQ4/IqQoLHdr6C8FOBysie7PXYuYzOveL1hK8NXkjrzjXVMG
+	LZOVtlS+ZFsg0vQYfeHJ8YANOJXsgBLIhLRF2zChpsBwNw3/wF/ZRXOBQINneFdS
+	HaByMUWoBg4zD7bpiCVXrf0mtsl7hTGp6Po05Z+t5+uj1Xdy9UpvXx28LgkUZ+ts
+	vk+O/Pj3PbtKVIDqnBEs1K4QvTI97XG8IsLBZLDagxp1obGMZpuBt7YODY0LVTnE
+	Z9p3bzKjW5202ErSMPRq6uCFThBKbRyHmsdGdkGgLnmqYmYsHX1ywyVUPq0m89Br
+	OWSB4jNjnz7TMJLxjoxbtIE/z9RFYPpx1Iw==
+X-ME-Sender: <xms:WTiWaNxMO-a_eFuP7mQNlV6_zWxMopcl6zDdcY44g2rBoSSonfr8Cw>
+    <xme:WTiWaH1vB19dDBnFxTgRPIzgR6d0MEy9ZxLyuXxxBklBpigM9nV2yfv17yoI0I32L
+    ysvOlUm3y1HZtv7UQ>
+X-ME-Received: <xmr:WTiWaD7UsCrI4j4E9YLBGpp_-_mjrkuc1AH3hrzDgC5Ob73aJbhWOReQWMAND2lvCycgH2JgKmMDj1A0GmicMyFbkS0ZXWRrDJ_l-a0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdeggeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:WTiWaCVIYyZVdJqg5o6qMnnwbSKpER6xdO55VfKtBhpFj0knjIvekQ>
+    <xmx:WTiWaKBDyXFCtiazIKURIBGnu7Lc-3OOdEeXxe0PMjhAo2DMeD9OTA>
+    <xmx:WTiWaJ6e3uTvJGe_79gJ0bq8AWP3DwGmRleS39SRZXuurporlv5c4A>
+    <xmx:WTiWaNxjIM4lYyQRLDh1XZEpjZQR-sjOC-0sM6Kr412dmGBMqueVfg>
+    <xmx:WTiWaIh7vlvMz86H9ViKIdT8qqhkPcpZ5Yvl8Ph6fnjbjKAgzi4Cn5a6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 8 Aug 2025 13:48:08 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH 2/5] doc: git rebase: dedup merge conflict discussion
+In-Reply-To: <f4f0a5a1172b283d5254ce06ef08795286bb725c.1754666665.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Fri, 08 Aug 2025 15:24:22
+	+0000")
+References: <pull.1949.git.1754666665.gitgitgadget@gmail.com>
+	<f4f0a5a1172b283d5254ce06ef08795286bb725c.1754666665.git.gitgitgadget@gmail.com>
+Date: Fri, 08 Aug 2025 10:48:07 -0700
+Message-ID: <xmqqikixhfhk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Greg Hurrell <greg.hurrell@datadoghq.com>,
-    Greg Hurrell <greg.hurrell@datadoghq.com>
+Content-Type: text/plain
 
-From: Greg Hurrell <greg.hurrell@datadoghq.com>
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-In diff.c, we output a trailing "\t" at the end of any filename that
-contains a space:
+> +If there is a merge conflict during this process, `git rebase` will stop at the
+> +first problematic commit and leave conflict markers. If this happens, you can:
 
-    case DIFF_SYMBOL_FILEPAIR_PLUS:
-            meta = diff_get_color_opt(o, DIFF_METAINFO);
-            reset = diff_get_color_opt(o, DIFF_RESET);
-            fprintf(o->file, "%s%s+++ %s%s%s\n", diff_line_prefix(o), meta,
-                    line, reset,
-                    strchr(line, ' ') ? "\t" : "");
-            break;
+By using the numbered enumeration below, we may mislead the readers
+that these are the things they have to do in this order, when we
+actually are giving them choices.
 
-That is, for a file "foo.txt" we'll emit:
+	If this happens, you can do one of these things:
 
-    +++ a/foo.txt
+would be an easy workaround.
 
-but for "foo bar.txt" we'll emit:
+> +1. Resolve the conflict. You can use `git diff` to find the markers (<<<<<<)
+> +   and make edits to resolve the conflict. For each file you edit, you need to
+> +   tell Git that the conflict has been resolved. Typically this would be
+> +   done with
+> +
+> +   git add <filename>
+> +
+> +   You can then continue the rebasing process with
+> +
+> +   git rebase --continue
 
-    +++ a/foo bar.txt\t
+The original (below) does not do a perfect job, but I am afraid that
+this increases the chance of misunderstanding by new readers that
+they'd run "continue" after marking each confclited fines as "done"
+with "git add", by reducing a sentence to a mere "then" in "You can
+then continue".
 
-This in turn leads us to produce a quickfix format like this:
+	Typically after resolving all the conflicts in a single
+	file, you would tell Git that you are done with this file:
 
-    foo bar.txt\t:1:1:contents
+	git add <filename>
 
-Because no "foo bar.txt\t" file actually exists on disk, opening it in
-Vim will just land the user in an empty buffer.
+	And after dealing with all the conflicted files and telling
+	Git that you are done, you would continue the rebasing
+	process with
 
-This commit takes the simple approach of unconditionally stripping any
-trailing tab. Consider the following three examples:
+	git rebase --continue
 
-1. For file "foo bar", Git will emit "foo bar\t".
-2. For file "foo\t", Git will emit "foo\t".
-3. For file "foo bar\t", Git will emit "foo bar\t\t".
+or something?
 
-Before this commit, `git-jump` correctly handled only case "2".
+> +2. Stop the `git rebase` and return your branch to its original state with
+> +
+> +   git rebase --abort
+> +
+> +3. Skip the commit that caused the merge conflict with
+> +
+> +   git rebase --skip
 
-After this commit, `git-jump` correctly handles cases "1" and "3". In
-reality, "1" is the only case people are going to run into with any
-regularity, and the other two are extreme edge cases.
+The explanation in the above looks good, and the new organization is
+much easier to follow and is definite improvement compared to the
+original.
 
-The argument here is that stripping the "\t" unconditionally gives us a
-minimal change, and it addresses the common case without bringing in
-complexity for the uncommon ones. If anybody ever complains about case
-"2" no longer working for them, we can do the more complicated thing and
-only strip the "\t" if the filename contains a space.
+I am not sure how the above how the above formats, though,
+especially on a medium that is not monospaced text (e.g., html
+rendition, not "git help -m rebase" on terminals).  The prose should
+typeset just like the normal text (i.e. your "Transplant a series of
+commits" in the previous step that starts the description section),
+but the command that the users would type should be typeset in
+monospace typewriter.  Have you tried?
 
-Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
----
-    git-jump: make diff work with filenames containing spaces
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1950%2Fwincent%2Fstrip-trailing-tab-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1950/wincent/strip-trailing-tab-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1950
-
- contrib/git-jump/git-jump | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 3f696759617..8d1d5d79a69 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -44,7 +44,7 @@ open_editor() {
- mode_diff() {
- 	git diff --no-prefix --relative "$@" |
- 	perl -ne '
--	if (m{^\+\+\+ (.*)}) { $file = $1 eq "/dev/null" ? undef : $1; next }
-+	if (m{^\+\+\+ (.*?)\t?$}) { $file = $1 eq "/dev/null" ? undef : $1; next }
- 	defined($file) or next;
- 	if (m/^@@ .*?\+(\d+)/) { $line = $1; next }
- 	defined($line) or next;
-
-base-commit: 2c2ba49d55ff26c1082b8137b1ec5eeccb4337d1
--- 
-gitgitgadget
+Thanks.
