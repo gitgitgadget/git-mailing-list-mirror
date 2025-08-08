@@ -1,96 +1,142 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outbound.pv.icloud.com (p-west1-cluster6-host11-snip4-9.eps.apple.com [57.103.67.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B31E23770D
-	for <git@vger.kernel.org>; Fri,  8 Aug 2025 07:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322D52698BF
+	for <git@vger.kernel.org>; Fri,  8 Aug 2025 08:58:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.67.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754639729; cv=none; b=KF4N6fU2E4lc6QMpP3HlGmHh3xKejzCgtdKE2t0sNen/dYe8GxRdPhyuvJqwRg0AT0ibnhmlKwp1BuDMH4f0ZPeV5+2sthfgGppV0+aVQpfOFvd7oaaOQkFmktmkb2thQ8TSNc04XOQTm0/1gJKXmJr5uL9jsdpn1On1h+kb7H8=
+	t=1754643528; cv=none; b=E8nsOZHO3yPGxRQ4dN6hJPxBQFpUstdOUmAmO7NJdsNrQ78GVlmkJwDKmoG6uZMkypidDJ6Lsh/sZnYl4TPMDxI+XxGHxq/3lV2K3vUFqY/flsG3kVDDMuvNP8//fARTXbssWb11chiB1vjCqfWVtOc4UetEPh2e8XyipZOMa+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754639729; c=relaxed/simple;
-	bh=17sw/A6iruF8MfoGEx5k7SjtxqDNJzvQ0Eh6lPldhNM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GB0fpkx7tQRU9yC171ULAB2lGLpw6UdyeFxk/4R22e8T7yFJ2gktA5WTXy/bTWIXXPGXJabGIuMUg14qw2IKTezXHE8GF6myeVaUCpbZrGYEKMMjh/YI0WeCYNf8aN+EKLdpr9J/44Wxllm3UpPOsjwajgr8cxt+baY/fNYsaTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XmH9M0UU; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754643528; c=relaxed/simple;
+	bh=73znUd8jesLGR1173I2rNInEW11My2yC5ubK/MJe1Cg=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=W4hgO9/M6MsxM9Szu+wWXnd/gH0lmpPwiOa7KuOs+o/kbUpmyw7szsz+Cl5no6f/kj9/vHh0Dhk7wO/M+wDt+t9b50JLUFdzmHaC5Cjo5W+lIcgDyQksk60m02qDiMBtnShNSCzi+uNhtEKRIJp0lULNVE5FijV3h0jK5LKL81g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=i3sxTQCH; arc=none smtp.client-ip=57.103.67.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XmH9M0UU"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-32130f6cfbbso295609a91.0
-        for <git@vger.kernel.org>; Fri, 08 Aug 2025 00:55:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754639727; x=1755244527; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZznwwwpPOOmMqMRJnTVKx+ZqPDQcG3IYHxgjfvFARq8=;
-        b=XmH9M0UUOaB1+JBAemXNfKFLWSgKZ1xAPSwRTcfGXCCkEI02kFTz+9C39ft+1kQyiq
-         JwzN5LbIzNddF8zIfBnF75ryZOa1WK/P/dvDMqj5L01XNy+adeKl7BHrvaCjrVjVmBNr
-         P8B8a2q7jfH+pgMTFmcY318V7FWcHYhS3Odku5yXAY28zLDms4gAlJWLNHQwhZ/B8Wbl
-         kQlwiN4WVAQ5qxHlRuab2eyqlqzD2BZ4JioWkExPWDazsbBy4920pDRzN2IPWsMPIgcT
-         FVNhEbxs39Wr/Yf6V3gZA6w4Ad30Rv8EX4tStiYGJ2Q6EF9w++rNFTFZUBn69o/9yDv5
-         fJaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754639727; x=1755244527;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZznwwwpPOOmMqMRJnTVKx+ZqPDQcG3IYHxgjfvFARq8=;
-        b=OeDfCBQrOBKwypWEqzcf3B8OePUhR3uWr0a/tH1UvOl0QPNrhPeLOfZr0tBfcX8BeR
-         TuTWOZScK4oPA0aS4paUBRd2SuOmrfpiDzrAOdERWKRauSSXuqepNRIlftSpFEjsDJxo
-         lRH18B1wujythlUoqiY1uEMCgF7NgdI5q3p3j+L1Jna04/QYNunYBYm8mUCAEOAr55vE
-         4X5IoEjeKxf3U8YlIM/RKSankldzxyPaOgfjQHqBZqzRSX+Wo1YtT5UpTddtzzWPcl6W
-         V3JO85tjB7mx37SnN3qXa/uPgkvO/iNMNlmIvNucgiJ2vAHCeFx5+FhvtLQPl0PQdChx
-         l5fw==
-X-Gm-Message-State: AOJu0YyQOVd39RAOfwsBjqA8CbTmhTlIGeGK2UZAPOyh3/6hVmajag9M
-	1VhT2/p5S5Wiu+meB3zDE43pPMmq6bBqQPAzDN56Cz+brg1Sn66t3bPTDrYTeA==
-X-Gm-Gg: ASbGncvnGzYd7Fnv/eKPw940T6tYlmL3w4kAnT/eTBHeE7hxCAJHLU2Bnc7OiKzXUpO
-	bp9PDNzrbLIigWhUrCBnjFjygZpbAwQ2koWY1j+jNR1fg7LwDWU7/Ma3cH3XjExioMBB/L0CrzK
-	zpaBkqUHhi/z74XBGPFXbk86Zyc/tvAkxYg+FW0GOhWp43i+NVuR2E50FdbRM/u9D7sMrG7sG3/
-	UPChAuLuPHA2dYhsTnY7KhOdU/MW3AWodAH3XGk32H61+d9WjhAqP7v2aTNDOkYghHdicksWdhH
-	MLwtQpWF/iEvSgI3a1zF9fve2V+XkSUaCG4GFQpkGFYLphJVwpSt4uG9JdWhaMynDyfsbfu/Mve
-	oAn+j7Gv/lRTQNtIfHChXuSWizB4jYA==
-X-Google-Smtp-Source: AGHT+IE5IQuAwj2cJelKFbrvHUW4g6kGbL2i9qhtUQ17mGNzmKxQtY1i+Gfand/Y32NKWxTTcX9qKQ==
-X-Received: by 2002:a17:90b:33d2:b0:31f:ea:ca84 with SMTP id 98e67ed59e1d1-321839ec014mr1406998a91.2.1754639727400;
-        Fri, 08 Aug 2025 00:55:27 -0700 (PDT)
-Received: from generichostname ([2601:645:8300:3b10:e54:15ff:fe8e:caa6])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3216121ec0esm7596061a91.10.2025.08.08.00.55.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Aug 2025 00:55:26 -0700 (PDT)
-Date: Fri, 8 Aug 2025 00:55:24 -0700
-From: Denton Liu <liu.denton@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] t/unit-tests/clar: fix -Wmaybe-uninitialized with
- -Og
-Message-ID: <aJWtbGGBOELZN6tp@generichostname>
-References: <d03308e9474f5e26fd4a5494ec243a278e971443.1754302009.git.liu.denton@gmail.com>
- <cover.1754371649.git.liu.denton@gmail.com>
- <8ed0ac14092e7ec979e53d2a3da84dfe884d6b3f.1754371650.git.liu.denton@gmail.com>
- <aJWPmo6oGCuQvqMG@pks.im>
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="i3sxTQCH"
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-west-1a-20-percent-1 (Postfix) with ESMTPS id F00B518001A2;
+	Fri,  8 Aug 2025 08:58:43 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; bh=coNIxewQhg6ym4KQAQxFrz5J27AIrTUzNforHwVVMrE=; h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme; b=i3sxTQCHRbWkJSItcBb8D+U/2xGYo2PIxRe6Gok5P2u/gULb3vOG2ekFsJBHzDxwuoaTn3UHUdDYZZFGIWmo2a5ZdJcol3sJh0aqmgWk4dzUushyfX7Srp4BVsGjQrl/Dd1JOLyqX24u2+nLY6R13BevlfwwZIUWZZikkSW6l+zqv40MtVNIlhcflVzfl9iRMPdKqbpsSma8QS0K1qb6rWqmoIdvpSRjug+p60+cTi7YyQtG6emC+Kxzxi7MvZalID1JvrJsN8ToZxW9wEACcsfhyzjKZrsc5PSVlETgfFVALptgP7XNRSV8Zz5lIJDI3ARV9EhHwrlcYWBuAbtEJw==
+Received: from smtpclient.apple (pv-asmtp-me-k8s.p00.prod.me.com [17.56.9.36])
+	by p00-icloudmta-asmtp-us-west-1a-20-percent-1 (Postfix) with ESMTPSA id C29DA180056A;
+	Fri,  8 Aug 2025 08:58:41 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aJWPmo6oGCuQvqMG@pks.im>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
+Subject: Re: Discussion: Future-Proofing Git for Massive AI Parallelism
+From: tanish desai <tanishdesai37@icloud.com>
+In-Reply-To: <DB7PR02MB4265771098F7314E47D9F2C0B326A@DB7PR02MB4265.eurprd02.prod.outlook.com>
+Date: Fri, 8 Aug 2025 14:28:23 +0530
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+ Tanish Desai #TD <tanishdesai37@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <6C289832-28F7-4173-8C65-A95EEAB333B6@icloud.com>
+References: <VI1PR02MB4271E311313F60FB07359BB0B352A@VI1PR02MB4271.eurprd02.prod.outlook.com>
+ <32989B0A-2DB0-4787-8A08-BDED46258C7D@icloud.com>
+ <DB7PR02MB4265771098F7314E47D9F2C0B326A@DB7PR02MB4265.eurprd02.prod.outlook.com>
+To: Skybuck Flying <skybuck2000@hotmail.com>
+X-Mailer: Apple Mail (2.3826.400.131.1.6)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA4MDA3MyBTYWx0ZWRfX6pByXfaT855H
+ /lzRNrq68bTsapgpnY835plAs2eMTsDdCdkvmsO5ZVmDvNRcSWqWXjNuhHK5rA8DjcoWClsI0WF
+ z1WvomNWremTNit5KQrOU/AMorB1oquyaKmbFIkL8V21hWq91NUL65kkB/LAbYByPs4r7EmSCAD
+ l25A5JJ7bSbejBSfXQ9t+P75crEVaD/YF6owEZI2JhYQIB8KroVJxljle7RLOzvOBDQsGyz+/09
+ 43uqxMdpyTFoCu1Wv8Daf/ung2ve1SVuNlYoDAOjSHOmid7SLLUGZeUJtB7QtzQg317SVK1ww=
+X-Proofpoint-ORIG-GUID: KqU3nZpCVom8fDzNvGT6zCF133Hbcph7
+X-Proofpoint-GUID: KqU3nZpCVom8fDzNvGT6zCF133Hbcph7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-08_02,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ clxscore=1011 adultscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
+ suspectscore=0 phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2508080073
 
-On Fri, Aug 08, 2025 at 07:48:10AM +0200, Patrick Steinhardt wrote:
-> On Mon, Aug 04, 2025 at 10:31:16PM -0700, Denton Liu wrote:
-> > When building with -Og on gcc 15.1.1, the build produces a warning. In
-> > practice, though, this cannot be hit because `exact` acts as a guard and
-> > that variable can only be set after `matchlen` is already initialized
-> > 
-> > Assign a default value to `matchlen` so that the warning is silenced.
-> 
-> Would you mind creating a PR against upstream [1] so that we also have it
-> over there? Thanks!
 
-Good idea. PR over at [0]
+FIrst of all sorry for such a late reply from last 1 week I was =
+travelling and I was not having access to email. ; )=20
+> On 2 Aug 2025, at 2:33=E2=80=AFAM, Skybuck Flying =
+<skybuck2000@hotmail.com> wrote:
+>=20
+> Thank you for your reply, it was fun reading !
+>=20
+> My current plan to experiment with git, ai agents and parallelism is =
+as follows:
+>=20
+> =E2=80=82=E2=80=82=E2=80=821. Windows 11 as base operating system.
+why not linux distro(alpine or maybe ubuntu)?
+> =E2=80=82=E2=80=82=E2=80=822. PostGreSQL database server (for windows =
+11) as back-end/support for:
+> =E2=80=82=E2=80=82=E2=80=823. Gitea git server (for windows 11) for =
+local git server/github-like support.
+Why not git itself?
+> =E2=80=82=E2=80=82=E2=80=824. Git client (for windows 11)
+> =E2=80=82=E2=80=82=E2=80=825. Gemini cli (for windows 11/npm/etc)
+> =E2=80=82=E2=80=82=E2=80=826. Gemini 2.5 pro/cloud access from google.
+> =E2=80=82=E2=80=82=E2=80=827. (Perhaps some) custom developed =
+communication layer/channel utilizing PostGreSQL database server to =
+store/retrieve messages for AI. (Still in testing phase).
+>=20
+> (Optional 8. I also considered MailEnable mail server (for windows =
+11), but I suspect using e-mail for AI-to-AI might be too slow because =
+of e-mail anti-spam and      throttling issues/rate limitters, and =
+complexity overhead and processing overhead of e-mail protocols in =
+general like smtp for sending, pop3/imap for receiving.)
+>=20
+> (Future maybe 9. Ollama/local AI models, but not powerful-enough =
+hardware for now to run either large AI models or AI models with large =
+context windows).
+> (Also tested 10. LM Studio to serve local AI models and mimic/fake =
+OpenAI API for cli tools which use OpenAI API).
+>=20
+> I'd love to hear more from you, which software solutions you have =
+tried so far, or what you are experimenting with it or considering for =
+future use.
+>=20
 
--Denton
+I experimented with using a local Git server setup and Docker pods =
+(based on Ubuntu 22.04) on a GCP instance. The GCP host acts as the main =
+Git server, and each Docker pod connects to it via SSH. This setup =
+proved to be very fast.
 
-[0]: https://github.com/clar-test/clar/pull/119
+Each pod contains a clone of a common Git repository that includes an =
+instruction file. Every pod has a unique hostname, and the instruction =
+file includes commands specific to that hostname. A script reads the =
+relevant instructions for each host, formats them, and sends them to the =
+gemini-cli (for now).
+
+The CLI applies the changes, and then another script handles the Git =
+workflow. I've experimented with multiple approaches for this step:
+1. Direct commit and merge: After applying changes, the script commits =
+them and tries to merge directly into the master branch. If any merge =
+conflict occurs, it=E2=80=99s sent back to the CLI, which can choose to =
+accept the new changes, reject them, or perform a manual merge.
+
+2. Patch-based queue: Instead of direct merging, changes are converted =
+into patch files and added to a queue (using a Docker-mounted volume on =
+the host filesystem, which also solves the email issue). These patches =
+are then applied in order using git am -3. This reduces conflicts but =
+doesn't scale well.
+
+3. File-level locking: A lock is used to prevent multiple agents from =
+modifying the same file at the same time. For example, if one agent is =
+working on file1, it's locked until that agent finishes. This approach =
+significantly reduces merge conflicts. However, it's slow=E2=80=94while =
+it works reasonably well for 2=E2=80=934 agents, with 10=E2=80=9320 =
+agents, the performance degrades to the level of a 2=E2=80=934 agent =
+setup but with many more conflicts.
+
+> Bye for now,
+>   Skybuck Flying.
+>=20
+>=20
+>=20
+>=20
+>=20
