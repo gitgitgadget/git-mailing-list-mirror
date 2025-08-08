@@ -1,85 +1,83 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB0E25CC5B
-	for <git@vger.kernel.org>; Fri,  8 Aug 2025 21:54:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421692E370A
+	for <git@vger.kernel.org>; Fri,  8 Aug 2025 22:07:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754690059; cv=none; b=Qmdk8A6EbcVqH3wI9T2eH0tfKwq5FUU4LzvpQ0VUUEpVpMk50DzvR8+sF+mDnORO2XcGo1i1Sk54/pJIHNwdXpb9dFAuBribxlNqkmKvrUxrYkysZx7/VbMNQCksa45AZD0KcnOQ3PGLHfnuKscbmHZ/7HVgli+1FU8ROQF+uWQ=
+	t=1754690835; cv=none; b=IDNZTT3EVYv1bHwDfEBbljL004PRIqbKPJ0hqa3lKLIeebSTJlnNwAiP5ldJtIeWWYVzPw8QqKmvJbsMdGgIFRIE4TT1XkGCsyGLdspKGL6QGlzNyLU2kTVVUBVOA57t2wAGgVGMoG9taL4/Tm+c2pUFJjMHc7VFWL++a2udCwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754690059; c=relaxed/simple;
-	bh=TAPgtmexE4d7eZs5besxL3QFbjOujiTXOYVtGYOoCOM=;
+	s=arc-20240116; t=1754690835; c=relaxed/simple;
+	bh=YyosvouwmZYXCWWuIrbkqcU7XpmW1Oj2t2LwJkcSQio=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Wmgz7VDD29nGDLucS8+EDOA1hK9W5mbAzeGLwp8V1RwVn6kLhF+TagTMI5EkxbEOwpnDoadZH1UfPsIkB67agDWrG3KqmeA1MOz+nPpvfse26oRMSAwXyGWRZi3Aywaw0UMa/7Vd/qOPDAG6E954rMKFhh3ZL3+ADXLPMX1sJBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KK5rn+rg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AIK9vhwh; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=dwYoOK8n+l+GRLrj8kl2uzMmUIfnzSe8qlEzR3gFMx8Jsawx5uXuC1bgmpe/fa67pA3fZpkasdVPc3ufbnjbfJlqy22ePbL4x1+MF9d5MTeusFiFuehmDBugQgrAfq9UxPdfbQRV89lolKCoXJg1XFS9uTKBFN+RoKmlyXqjs7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e3dEUo8p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gCvd3vOw; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KK5rn+rg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AIK9vhwh"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e3dEUo8p";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gCvd3vOw"
 Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 83C5C1D0003C;
-	Fri,  8 Aug 2025 17:54:15 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 3C6591D00142;
+	Fri,  8 Aug 2025 18:07:12 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Fri, 08 Aug 2025 17:54:15 -0400
+  by phl-compute-12.internal (MEProxy); Fri, 08 Aug 2025 18:07:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754690055; x=1754776455; bh=aSMZvPhDfD
-	RBLxxjuZ7aOkpQkMItAyMwWRJmXt6XNbc=; b=KK5rn+rg4oAE2Q6Om3Fdkh8FrP
-	MRp7VbEcT6P1CDGcjSCwzJf3+yKItSAp/yg6RqYVJZKKTWADoOc1teDzPCiBuM0a
-	FtF/I7fckJnwN+lIztsY95Y/Uacz8hAooglneCFfOeLC6otXvvp+O5cjPDsVjcWh
-	515O4MREWS04BxyRdVzYGD3+s6QK8iXZZfj4EjKpEKoiwsbfPzxeYN589sOC45ZD
-	xl15bJI8pwWj1DiRxVpNbPHDTPNRY2N1P0WmVI8hfLVEsDXOzulJGnEKOC7w82oO
-	rX1rW9Ma3sXRtRDT1zTW4iLSCHOWN8SQ6dixOOZ/NjD9LfMCyMbWdD54MTHw==
+	:subject:to:to; s=fm2; t=1754690832; x=1754777232; bh=E3rWxCaWDC
+	lQ8FPK1qJ3//uhA3zNGU++mJgRCWrk34Q=; b=e3dEUo8pIPAGuvokIPBoYLnSxK
+	iKysR7XOiqeZo4F38OjFoX53YbSOrKNkg5dfZyJ4Pk9Jf2JWl2vzFYtmwIiH8K6k
+	LUrmSgmInqcWrQlRwdrVmn09i0WVXUPn2LJ4k72HhyE2we2OtAR5i0FbJFRJD8o9
+	Le6FPT7na0qjmBwbA/2l4UeK5PbMIWlDrebLeVb/x2YFnDVdPhx9bWI1ny0NBrKI
+	nfc3yPb928swhmPmWyp02YyJif34+0P5apuLUS1lQf11VBGrjFa3KvFu55q1wt/r
+	WZ7ySv+h1o5vWHYIHtXlvqoIyKEv8D8qux0EjJFg04m1WDoKKgT0HXaYOU3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754690055; x=1754776455; bh=aSMZvPhDfDRBLxxjuZ7aOkpQkMItAyMwWRJ
-	mXt6XNbc=; b=AIK9vhwhrzi2cSETzPSABpiqoRfcQe+Nn9j81mb+lLCp+lbxKO2
-	/AsMOqBswDFSwkzVz4AoK3RRpO83iExc3Qs9qHFn9toYEXsW1kGM4U5VDZKBN6gq
-	h9MG+N3moC04TocaYl+8vnGw5AVk+p8C9oW19fsUyGRXcJ/H8ftXaaXgAVY1C+0a
-	EGD2jWJPh035ZsJm3nvONn6QZ1IcnZ4fFMPXnYoL2kP6vu2v01Z/OQANNbFlTlmi
-	g6GyZZmsVQI0FmBIntNYsg+TcjonGr0vWZOelK1JcifSzCXJANwQfFrAoIwNheTq
-	85uRwK1FOb5BRFz+iuJDWskMEat5G4wGYCQ==
-X-ME-Sender: <xms:B3KWaFVRlsCfLlF7_bN-eriP7w4iRSXpwcBqhP7dUp2tTqLGSUUymg>
-    <xme:B3KWaAINWSuleACNFaTMqfMakHBjk1PTQSL-OUw1CffZweAa6o6kNzeBTMWTkYu7s
-    kQoQFwR_H5vvs7-1w>
-X-ME-Received: <xmr:B3KWaN9jkgmBIJcgKbvK7rq-3LM57nplnD1gXlvVxa3Kx6Hr63jBGxmIxfwQNZwFaycPJjCUIxgT7Mqi276e07DGW0tNaeXpuJej5ig>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdegleegucetufdoteggodetrf
+	1754690832; x=1754777232; bh=E3rWxCaWDClQ8FPK1qJ3//uhA3zNGU++mJg
+	RCWrk34Q=; b=gCvd3vOw3sOJlA8fg26C45doUPsyXomLE3XRXse+aCPLgMO5xcq
+	a/MLC+NjzJhnfQ6+UMtxGRsKKaOTHJwBj39Zd8x0qjlv9YoG6nI6Y+IVd1dcQbMA
+	HQ39FxAZuwQko4U7p3ZZk/bGyt9t1JObw+NNgSccO7545Oc/Y8Pe3unD8czEt41/
+	Lo/rP0ioTY/ideK/tII9GvLy9DvIWeR100y6OraTmH2dxWmZxDGA1M+uEw4p+QF4
+	o8WCsThkT9cVnwVgV5d7sX6/Vao/IW6hUfKWAkplIlEMKOcJ2uzQtGdXKyyAFoth
+	8p5JdISwalkNAxyCx0ip7xrtiknzpPtamew==
+X-ME-Sender: <xms:D3WWaM_EzvPYxl-6DDwqvIyyXNhgAxbH11omeY3CbNxSwHafDhO0Ww>
+    <xme:D3WWaPTTmfJCbOrj3NpWUf-kwZAYpYB6UsFJLZ1t9Mch9WZR4ZKgSTkvuTt1kOlWQ
+    LQiq0k_VgSgIg7zzQ>
+X-ME-Received: <xmr:D3WWaOmE_FXOQy2hX1EvyJSRSL6_9rSz8jsqmNn9qhYvlioIwg8PjPm_4pBVSsQih8BHn606z2PoFnYh4SsDhDHs4uxwnXg_i2gbk3Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdegleejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:B3KWaLIV5Llvzzcal2wyAmSe54rbAX_F8Ko0FyGrr2uzBaw_XWB-VQ>
-    <xmx:B3KWaKl2Sbw4v4gxPcYmh0WqSo4vemDEftleceAJ28VaArJb_VSZVA>
-    <xmx:B3KWaHNvmqUuilZHSKDhFsjo_-Ew-2WTHqaLgyTJfNRxBdwSdtMxYw>
-    <xmx:B3KWaI2sE9ZX-xoDtyWlQC2yiYABorR2_LwFB2BPhVZGj4QVOl6eYw>
-    <xmx:B3KWaIgu61JDnVM1FV3Z_DXXG2xLv7u2d2i-DG-BdJq1UL-Yp79UNZ2Y>
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdr
+    ihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:D3WWaPQi-71q1674VewOQB92ks45OLrft_KWgo_W5BgQApdfly7mBw>
+    <xmx:D3WWaMNn26RI6nMjT6onn1ktrCTLNNSbQKn55JxQnJPbScVOv5mdsQ>
+    <xmx:D3WWaIVzU5pa0jwhBha0_E1JLWEdZIhbToNI0dFWXQwSG3eiUL-Lng>
+    <xmx:D3WWaDeUGp-lp435I9yleFEas92oTAKDaW3ayOF4AqPXRmxxuk7eng>
+    <xmx:EHWWaC10m6YgDaNv-Bx8fnxXbhmZ1rm4rNjyWdiG79kpiRIWjOLm6IS->
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 8 Aug 2025 17:54:14 -0400 (EDT)
+ 8 Aug 2025 18:07:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v2 5/5] doc: git-rebase: update discussion of internals
-In-Reply-To: <ad97cd9e6718be2540657c2c820f29b9efafa883.1754680525.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Fri, 08 Aug 2025 19:15:25
-	+0000")
-References: <pull.1949.git.1754666665.gitgitgadget@gmail.com>
-	<pull.1949.v2.git.1754680525.gitgitgadget@gmail.com>
-	<ad97cd9e6718be2540657c2c820f29b9efafa883.1754680525.git.gitgitgadget@gmail.com>
-Date: Fri, 08 Aug 2025 14:54:13 -0700
-Message-ID: <xmqqbjopfpiy.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 2/2] t0450: add allowlist for builtins with missing
+ .adoc
+In-Reply-To: <20250808095943.3312265-3-toon@iotcl.com> (Toon Claes's message
+	of "Fri, 8 Aug 2025 11:59:43 +0200")
+References: <20250804073002.1586332-1-toon@iotcl.com>
+	<20250808095943.3312265-3-toon@iotcl.com>
+Date: Fri, 08 Aug 2025 15:07:09 -0700
+Message-ID: <xmqq7bzdfoxe.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,100 +87,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> From: Julia Evans <julia@jvns.ca>
+> Before we were silently skipping all builtins that don't have a matching
+> .adoc file. This is overly loose and might skip documentation files
+> when it shouldn't, for example when there was a typo in the filename.
 >
-> - make it clearer that we're talking about three steps of a process
+> To ensure no new builtins are added without documentation, add an
+> allowlist: t0450/adoc-missing. In this file only builtin commands that
+> do *not* have a corresponding .adoc file shall be listed. If there is a
+> mismatch, fail the test. This should force future contributions to
+> either add an .adoc, or add the builtin name to the allowlist file.
+>
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+>  t/t0450-txt-doc-vs-help.sh | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
 
-A good call.  "First, then, then" does make it clear where each new
-step begins.  "First, then, finally" would make it even more obvious
-which step concludes the sequence, though.
+Forgot to add something?
 
-> - delete a duplicate explanation of how git rebase skips commits with
->   the same textual changes (it's explained in more detail a few lines
->   further down)
-
-OK.
-
-> - move the `ORIG_HEAD` note down so that it doesn't interrupt the
->   discussion of the mechanics.
-
-I thought you moved the "finally we reapply" up, instead of moving
-the note down ;-) And when viewed that way, a more direct way to
-justify this change is that you made sure these three steps are kept
-together.
-
-Again, good change.
-
-> -All changes made by commits in the current branch but that are not
-> +Here is a more detailed description of what `git rebase <upstream>` does:
-> +
-> +First, all changes made by commits in the current branch but that are not
->  in `<upstream>` are saved to a temporary area.  This is the same set
->  of commits that would be shown by `git log <upstream>..HEAD`; or by
->  `git log 'fork_point'..HEAD`, if `--fork-point` is active (see the
->  description on `--fork-point` below); or by `git log HEAD`, if the
->  `--root` option is specified.
-
-If we are ambitious, we may want to rewrite this first step to put
-almost no stress on "saving" and "temporary area".  Especially when
-you rebase with merge backend, it would be morally a sequence of
-cherry-pick, without us having to save anything---we only need to
-figure out which commits to replay in what order.
-
-    First, the command figures out changes from which commits to
-    replay in what order.  The set of commits are those shown by
-    `git log <base>..HEAD`, where <base> is the <upstream> if given,
-    or computed fork-point if the `--fork-point` option is active,
-    or all commits that lead to `HEAD` if `--root` is given.
-
-
-> -The current branch is reset to `<upstream>` or `<newbase>` if the
-> +Then the current branch is reset to `<upstream>` or `<newbase>` if the
->  `--onto` option was supplied.  This has the exact same effect as
->  `git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
->  to point at the tip of the branch before the reset.
-
-"This has the exact same effect as" made my reading hiccup.
-
-    Then `git reset --hard` rewinds the current branch to the commit
-    given by `--onto`, if specified, or to `<upstream>`.
-
-I am not sure if it is worth talking about ORIG_HEAD at this point,
-as that is part of what `git reset --hard` does with this step.
-Given especially that we have NOTE that says ORIG_HEAD cannot be
-relied upon once the replaying of commits begin, mentioning the
-value of ORIG_HEAD before the replaying begins does not seem to add
-much value to the explanation.
-
-> +Then the commits that were previously saved into the temporary area are
-> +reapplied to the current branch, one by one, in order.
-
-Yup.  As I suggested, "Then" -> "Finally".
-
-I do not know how much detail we want to give to readers, and I do
-to prefer to tell some white lie in end-user facing documentation if
-simplified description helps the initial understanding, so I am not
-yet decided if I recommend rewriting these "three step" explanation,
-but FYI, the modern rebase machinery works slightly differently:
-
-    First the command figures out what to replay, on which commit,
-    and in what order.
-
-    Then the HEAD is detached ("git checkout --detach <onto>") to
-    the commit the first change is replayed onto.
-
-    Then the changes are replayed, one by one, in the order.
-    Optionally a mergy history can be rebased while retaining
-    the topology.
-
-    Finally, the branch being rebased is made to point at the
-    resulting HEAD (i.e. equivalent to "git checkout -B <branch>"
-    to jump back from the detached HEAD state).
-
-The difference between the simplified procedure and this "replaying
-is done while on detached HEAD" procedure gives us a somewhat big
-usability improvement, as a rebasing will be recorded in a single
-reflog event for the branch getting rebased, no matter how many
-commits are on the branch.
+>
+> diff --git a/t/t0450-txt-doc-vs-help.sh b/t/t0450-txt-doc-vs-help.sh
+> index da2d0af5b0..980130be78 100755
+> --- a/t/t0450-txt-doc-vs-help.sh
+> +++ b/t/t0450-txt-doc-vs-help.sh
+> @@ -112,10 +112,16 @@ do
+>  	adoc="$(builtin_to_adoc "$builtin")" &&
+>  	preq="$(echo BUILTIN_ADOC_$builtin | tr '[:lower:]-' '[:upper:]_')" &&
+>  
+> -	if test -f "$adoc"
+> +	# if and only if *.adoc is missing, builtin shall be listed in t0450/adoc-missing
+> +	result=success
+> +	if grep -q "^$builtin$" "$TEST_DIRECTORY"/t0450/adoc-missing
+>  	then
+>  		test_set_prereq "$preq"
+> +		result=failure
+>  	fi &&
+> +	test_expect_$result "$builtin appropriately marked as having missing .adoc" '
+> +		test -f "$adoc"
+> +	'
+>  
+>  	# *.adoc output assertions
+>  	test_expect_success "$preq" "$builtin *.adoc SYNOPSIS has dashed labels" '
