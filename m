@@ -1,69 +1,69 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE51D1C8633
-	for <git@vger.kernel.org>; Fri,  8 Aug 2025 22:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159EF20E71D
+	for <git@vger.kernel.org>; Fri,  8 Aug 2025 22:52:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754693558; cv=none; b=H5v1eEFeeRpJFp11FHaiqH0fmLEzj1T/l+X0kJJGYoxdSyZAxcp7xBErBfbzh3/e9OLs96eJtopMFZ9fdqPLBogkd3WJe/vZqUpvlLhm6Wynh/XEHX/KIFHeu8K4C50iGCRq+X47CgOPvr36TaL3t47CRahzv0kOA5Gvyz/tUlE=
+	t=1754693559; cv=none; b=MCg2ivJ9sDzMYWzzCWbXF9jTTvr0SZ0adlvs/idwveG6HarOLChwAmVXWYhgfUMy1IZgm+AD8ZK2sN8PEJLDIKpjcch59qpYSvRh1+S3kIfGO6ytHlOkU4NysEP8vciFc02uDYewnqnwgShpudaILVpn0MVZfIjodYUWgEhbJPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754693558; c=relaxed/simple;
-	bh=GwwITLNrFdwyo5wDr6lvV6IZicEizV3B39frREV5FT0=;
+	s=arc-20240116; t=1754693559; c=relaxed/simple;
+	bh=xl+dV4iFV8i4mxBtmm9C26PjL7rbvJkzoJHhCBigYys=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=BXsEEIshwY8QH9JHgE0zyQZClx9d6AiRd9q5Xx7VPTlPsaJwCvV16pawO9mBcxrcP2sYs86DmoY88IHof0HVLWHS1v24gVnYgxN/2UXapuUMFthkccaWmim6N3m3STAKNnCV2zcMpKPEJ/nvcjjwwD6d47WpbP5iRgAoJi2h9dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Akg0MlEa; arc=none smtp.client-ip=209.85.221.42
+	 MIME-Version:To:Cc; b=SJ0VYei70rhxRrr7BhtGNRzxTMb1VPxe33VJudy3qjfX1/n5fxtjdpWz0erTymTLe7FYCpiiJDT8Fk0w/LDRfm6CHUJiXc8ClR9tztuGChMND0GOYyMSXZWOwybMXd1hzQ9xGRwc9dDpSUzEdDDinzueab9Qyb2wC/2oWlx8aDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eYHmAaJP; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Akg0MlEa"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3b7834f2e72so1351190f8f.2
-        for <git@vger.kernel.org>; Fri, 08 Aug 2025 15:52:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eYHmAaJP"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-459e794b331so16574855e9.3
+        for <git@vger.kernel.org>; Fri, 08 Aug 2025 15:52:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754693555; x=1755298355; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754693556; x=1755298356; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ndt4ntVDvjqyp49SZQYTinSgZIt6HUAOOzIGm3XQTSI=;
-        b=Akg0MlEaCiM3Y7L2ZHHssLMeUrVmQXmhDByQeLwajx19rqmxXh0pksaDMqEgEuNSg0
-         +jwK8ycAs1ligcmitqEjO6OwxnYayEVVNkEcdw48WCaSC2JC6i7QAqGPoliUBsDhqpJ6
-         fsmg0Cde3p7x4de02akexTBo1UbE8XcanXoVuht8pryX3DwcKEZbE433gGJEElRq4i2p
-         froFaPNDvd3bu5ahRXtjen60HpuG+atPLesgeQf6S57LaFG236RR/WlaCioVDnTbVy/a
-         Pubr+Y/xI3Oe4QlsIMlEKVPsbarusev3Cm1YNN26Kd2MnVMegJERY52xtXJjKDzDdmPI
-         FoQA==
+        bh=TXHDoiIK5bO+424aEKX0ocmutw7x0EOE1OCtaoqUbDk=;
+        b=eYHmAaJPPiEHhn/wuc9TvpAqCNQLnRC4jrOEuRbrzd/JQ5TLcZ1vaIYDmUHHHZj2Vo
+         Ce3BSHvVtkp17YnykgYfjjdqnoVt/IN8VcOHV/K0Q+k+tlFiTo7P4wPkmzweNtkqOVTa
+         eESO9eiWCxRZ9Gbt5F7YO/x49N7PjWFmtOAfTdwwpUgC3xoM7lOZwLSoKQr/qgPbTXiD
+         4ZWPDjtz+It6lUDWxvoQyYiHBsyG2iA/I3966b03MJX/3bQfzBo4hbwfQfftVw54JXy8
+         xf9sQ6/zHK/XQurKbQlOfnYhl3qUzkFmpDSz0OM4M9IJHsaBxURep3cdqRdztDL85Ixn
+         OrBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754693555; x=1755298355;
+        d=1e100.net; s=20230601; t=1754693556; x=1755298356;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Ndt4ntVDvjqyp49SZQYTinSgZIt6HUAOOzIGm3XQTSI=;
-        b=W1LpaPsPSUr8jAYl5LAE25DCRIkqLpuo1tvcqvFvx6yGo3TgaZ850I04NcOfE9HJPy
-         /L95DjLmbdEj6nZXfSoI0bjstJyjvpKEosvZ8e7eDu8Zk3ytY5Wj7PBjM8UZttdz8E6J
-         mBzMXw+f7VCqkjksJGN0jt1U/LtD49SbwzXYY3CZLF3cbQLKiswxdt7gz7o1P+N6tnXj
-         4qvWh8lTB9IaillN2fj6xTDgy2QcqxrlCWbsdOykJWDRilnYH9aYeg4wob4xstv8kkkA
-         JGDfiiZo86CMbt5ywk5Lt4hNXouioElfligxwSH1D0R6du6OnYnnlDmnE9/sKX3gZtPq
-         PTQw==
-X-Gm-Message-State: AOJu0YxHvSp4luN4TOYCkkBK5aaSH4lNFXyW7GtVxMMgCnZ1B2pmfzhO
-	gfQhLa4yqxre00qbVaESc2SkpU6dloyfUWrf6qtH+FbiYbc3P0L93rn7oFhIiw==
-X-Gm-Gg: ASbGncvXamf1vUnVRuA8WPINigf8SJa5pRrL/1ZzJxhAPTJlLPKhLCMr2BoQjYT4QO9
-	W3ELqCI7bOCp9PNXnHNoV3Zg192n7YISSol55/iKsq5AEVSbGFaKa52LKkuDSaH3DgRgwOydgmM
-	B/grnxDFrVm612k009ff1ey3taZ4/Lb90VR+Vrkr5VvApGYTkPSHl6TZ3wdZoiyxgd0RbgA3io8
-	AaJqr5T+itX9Mkjxvu6KtOF9XN5BZdX7L1EGBPEXgfnOucC3kAMxobrqPuzOQKr8cqFKN7FQkIs
-	mR57q5SyRECgF3DARiL9+rqo5vay+19sWwtD8rNOIsyBgthrlXt/UWLcs/K46MlWM9IH9w+H0Nq
-	0zm/+0bB4tWwKC7/bPeTFrPY=
-X-Google-Smtp-Source: AGHT+IGe+AdLdCKTJJvBgE/deWXgnOzP3wCmmptbAztKhN7iqvFYl/ONoOVWLGA7/Y0SVsyJOvccaw==
-X-Received: by 2002:a5d:64e7:0:b0:3b7:58be:8fc with SMTP id ffacd0b85a97d-3b900b51133mr3558147f8f.43.1754693554736;
-        Fri, 08 Aug 2025 15:52:34 -0700 (PDT)
+        bh=TXHDoiIK5bO+424aEKX0ocmutw7x0EOE1OCtaoqUbDk=;
+        b=UvN1MV6U4jVXBoymcr3jj+KlNlrXrpXz3Egr1Pb9XqxmX+DW0OTKrJ0dNtVGrZCTvk
+         lZCtA1be8FHghHvrILcAsN60FsJo7na0j46Il4V6w4yDMFwN3mnJWg8XynYB5iT6FZLH
+         P2JAfflpv1wXN3Y1OuO+gYxzyWUTQzKmPb8AdJCYG2ndaQ4GWUdpYfkr15bhum9q0wI2
+         Zv2mbg1MTjNQIGgCEtO7hY2y0PEEwLwYA11sOwtuOEBNDG8kqJOKnBo6phDfo4nKYK7r
+         fprA2bA2KLF6FGdknR1BAJ3NHwwy729952kdUX63EZ+XwndMfs83S3gV38MWF1TW76lJ
+         +zGw==
+X-Gm-Message-State: AOJu0YxWrJ6fd19qRN0rBs0ayHvti9k03BXiP1b6hOf1Erge6xL5KjVt
+	xxJpIU/asGg+cIFfJ9KjowNavLci3sG9Mj0+PWUuZeYupY9FOK6S4n961fz6Pw==
+X-Gm-Gg: ASbGncvi5mXoNdwrYycd1WgCjIE77oXhcdcRlieDuEH3F4lkM/xHXpXmDKvya2cUdCp
+	rywWM6SDbWbwjkXTVJCv+U/VfVPJdCDHpY/31QHfaTLP+I4FlRE3SppL581ZKj9u4KAmyW553q9
+	Ww+5666crFqo/dPFUp2OBDrZWGHLg/wK6pSDOzDRUKDJBRp4b6H8x7vzF4Xksek8BXwIq9oqQWT
+	ABJ2qJAfh0AHjHnLf00xiJi8cRscbSKZNT+yxhh358Q5zRX3tSu5fAQbpx/UheORZTzfzMl2Z3G
+	PYD/MY0JjHKONw6S2CgbhvYLagmONo394UqEV5dl83fkI8zat1A+x+tY8jb7aot3vMtB7e70SUb
+	Zp8sOw9i8WHHLgjwuujXJ+yozCZy00S6Opg==
+X-Google-Smtp-Source: AGHT+IGuJeoG1m6Bs5A29XZNL6GKEpw5MCwE+kfVRS0/ZYt2V4NU1Zkp1dJ7mx2b7inW707HYbBp3g==
+X-Received: by 2002:a05:600c:35c1:b0:450:d30e:ff96 with SMTP id 5b1f17b1804b1-459fc0de784mr5377505e9.0.1754693555819;
+        Fri, 08 Aug 2025 15:52:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45923c34af8sm253841745e9.24.2025.08.08.15.52.34
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459fb43b491sm17102165e9.3.2025.08.08.15.52.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Aug 2025 15:52:34 -0700 (PDT)
-Message-Id: <26b742eb49f935147ac373bf9435827a6f85e531.1754693552.git.gitgitgadget@gmail.com>
+        Fri, 08 Aug 2025 15:52:35 -0700 (PDT)
+Message-Id: <249a5127904f2d73119f3b60d70a57fe84d1b4ad.1754693552.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
 References: <pull.1949.v2.git.1754680525.gitgitgadget@gmail.com>
 	<pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 08 Aug 2025 22:52:28 +0000
-Subject: [PATCH v3 1/5] doc: git-rebase: start with an example
+Date: Fri, 08 Aug 2025 22:52:29 +0000
+Subject: [PATCH v3 2/5] doc: git rebase: dedup merge conflict discussion
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,82 +79,89 @@ Cc: Julia Evans <julia@jvns.ca>,
 
 From: Julia Evans <julia@jvns.ca>
 
-Start with an example that mirrors the example in the `git-merge` man
-page, to make it easier for folks to understand the difference between a
-rebase and a merge.
+Previously there were two explanations, this combines them both into a
+single explanation.
 
 Signed-off-by: Julia Evans <julia@jvns.ca>
 ---
- Documentation/git-rebase.adoc | 49 ++++++++++++++++-------------------
- 1 file changed, 23 insertions(+), 26 deletions(-)
+ Documentation/git-rebase.adoc | 50 +++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 29 deletions(-)
 
 diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index 956d3048f5a6..6dacf693bd71 100644
+index 6dacf693bd71..a93c616f38b1 100644
 --- a/Documentation/git-rebase.adoc
 +++ b/Documentation/git-rebase.adoc
-@@ -16,6 +16,29 @@ SYNOPSIS
+@@ -39,6 +39,27 @@ short-cut for `git switch topic && git rebase master`.
+     D---E---F---G master
+ ------------
  
- DESCRIPTION
- -----------
-+Transplant a series of commits onto a different starting point.
++If there is a merge conflict during this process, `git rebase` will stop at the
++first problematic commit and leave conflict markers. If this happens, you can do
++one of these things:
 +
-+For example, imagine that you have been working on the `topic` branch in this
-+history, and you want to "catch up" to the work done on the `master` branch.
++1. Resolve the conflict. You can use `git diff` to find the markers (<<<<<<)
++   and make edits to resolve the conflict. For each file you edit, you need to
++   tell Git that the conflict has been resolved. You can mark the conflict as
++   resolved with  `git add <filename>`. After resolving all of the conflicts,
++   you can continue the rebasing process with
 +
-+------------
-+          A---B---C topic
-+         /
-+    D---E---F---G master
-+------------
++   git rebase --continue
 +
-+You want to transplant the commits you made on `topic` since it diverged from
-+`master` (i.e. A, B, and C), on top of the current `master`.  You can do this
-+by running `git rebase master` while the `topic` branch is checked out.  If you
-+want to rebase `topic` while on another branch, `git rebase master topic` is a
-+short-cut for `git switch topic && git rebase master`.
++2. Stop the `git rebase` and return your branch to its original state with
 +
-+------------
-+                  A'--B'--C' topic
-+                 /
-+    D---E---F---G master
-+------------
++   git rebase --abort
++
++3. Skip the commit that caused the merge conflict with
++
++   git rebase --skip
++
 +
  If `<branch>` is specified, `git rebase` will perform an automatic
  `git switch <branch>` before doing anything else.  Otherwise
  it remains on the current branch.
-@@ -58,32 +81,6 @@ that caused the merge failure with `git rebase --skip`.  To check out the
- original `<branch>` and remove the `.git/rebase-apply` working files, use
- the command `git rebase --abort` instead.
+@@ -74,13 +95,6 @@ any commits in `HEAD` which introduce the same textual changes as a commit
+ in `HEAD..<upstream>` are omitted (i.e., a patch already accepted upstream
+ with a different commit message or timestamp will be skipped).
  
--Assume the following history exists and the current branch is "topic":
--
--------------
--          A---B---C topic
--         /
--    D---E---F---G master
--------------
--
--From this point, the result of either of the following commands:
--
--
--    git rebase master
--    git rebase master topic
--
--would be:
--
--------------
--                  A'--B'--C' topic
--                 /
--    D---E---F---G master
--------------
--
--*NOTE:* The latter form is just a short-hand of `git checkout topic`
--followed by `git rebase master`. When rebase exits `topic` will
--remain the checked-out branch.
+-It is possible that a merge failure will prevent this process from being
+-completely automatic.  You will have to resolve any such merge failure
+-and run `git rebase --continue`.  Another option is to bypass the commit
+-that caused the merge failure with `git rebase --skip`.  To check out the
+-original `<branch>` and remove the `.git/rebase-apply` working files, use
+-the command `git rebase --abort` instead.
 -
  If the upstream branch already contains a change you have made (e.g.,
  because you mailed a patch which was applied upstream), then that commit
  will be skipped and warnings will be issued (if the 'merge' backend is
+@@ -183,28 +197,6 @@ This is useful if F and G were flawed in some way, or should not be
+ part of topicA.  Note that the argument to `--onto` and the `<upstream>`
+ parameter can be any valid commit-ish.
+ 
+-In case of conflict, `git rebase` will stop at the first problematic commit
+-and leave conflict markers in the tree.  You can use `git diff` to locate
+-the markers (<<<<<<) and make edits to resolve the conflict.  For each
+-file you edit, you need to tell Git that the conflict has been resolved,
+-typically this would be done with
+-
+-
+-    git add <filename>
+-
+-
+-After resolving the conflict manually and updating the index with the
+-desired resolution, you can continue the rebasing process with
+-
+-
+-    git rebase --continue
+-
+-
+-Alternatively, you can undo the 'git rebase' with
+-
+-
+-    git rebase --abort
+-
+ MODE OPTIONS
+ ------------
+ 
 -- 
 gitgitgadget
 
