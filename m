@@ -1,117 +1,108 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A276127FB21
-	for <git@vger.kernel.org>; Fri,  8 Aug 2025 15:02:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605A1285067
+	for <git@vger.kernel.org>; Fri,  8 Aug 2025 15:24:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754665362; cv=none; b=ah18PWdEqo7MnY2JVzaQ6sVhXls+xTgZLhAf/4V8ybxkR2BMTmf5Bol8//j3bmRj3b+0gxncriFkFcWNsa6A9vfP6qDF43jUnynPXsQgnuqiwY0krcUDe9cYc6sV1DJhf6H1Evky1dpcoNPxJAaXr18fJzZa43Jb1VLQfc2wFVw=
+	t=1754666670; cv=none; b=oBhXncPDqwXWsDhq0+a4YzrTrwI1Q8y+oFR0TXquR5/TMILjo8S+orkBFF6Brp4N7sycQVzhCfOYhhbAQzsF9cLxoleIaQZYDwHCHHtd53LFQtJHgdKEd9Tug/mxXaYqnL0wZ4QoupOKmI/U0ZPAQXWRk9bZIJnJGgJxp3GR4xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754665362; c=relaxed/simple;
-	bh=AucKW+2zXuuCNETvpuEHO0XHpMttrMn16SrgYYxmXIM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gdx7tfSoZgonswJufq3hnDm0t7LN145RVsN/oUVBpFDAFXPrUTGk4XtPlYRd3s35lZ04KB5irYbSwIrhj27kTe8g3BststAUhMKxXZo3WNZ0KP528+GlR1uINGNWlFXhGbuuVAvDIFWuWMM8pq/ITszVcR2hgWjEwHkILeX1VDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=H/O0BJbK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U/xuVNNc; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754666670; c=relaxed/simple;
+	bh=UXv5mORioX1LsAARlJjSkHvoKvsfZ502stTEsQmJuWY=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=rYDUplgLfEL60rt/WzVfjds/mcd1cfTVtrgLNGn++NjjP+4PFZJKhNm8OjmAXqMdmArlO7DhCBaACSdaHFm9x3ue88mFEhMFWppFw9wdokkXcbn1x2A7XjU9HcfZS4MirxXmgwHDeTCt0PPAX34vn9Bt2tce3Ak1BOJtT74QaV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GVZtm0v+; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="H/O0BJbK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U/xuVNNc"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 688821D000D7;
-	Fri,  8 Aug 2025 11:02:39 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 08 Aug 2025 11:02:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754665359; x=1754751759; bh=d2TisobGuN
-	P8870eSRrCDFu/YEPiwoKjk4hmKMyv/rc=; b=H/O0BJbKCsZtxDKq2nTHB1kr3U
-	biIvz12TB8ObXOyetvvM7VcTDgtD3nx7of0Ka2sujRtvKFDvJvBoikI3YOp6Gd3x
-	lkzMCDrd/4RaA6Uh5ihqVGuejJfNg2hWuSbYQXf6V2dJfIBS8dR1r70t3fRf7l1T
-	41Mgqj9B+gJThW8tXZGcOINl4jcYR1g+0cSrRp9hYlpL56oO7h5LtgoZ6krwstME
-	fXL4flaiBCmiQkCYXiYbAQpymhVn8xUgGrt1jbDAS5L2u37WZrkrWeBBnbIqnZwS
-	jY/TAOgzIbut+xeGZKOnDHMd/xK5E4loSsPmUvcMmDtdBEPBX40z/oIZFfQQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754665359; x=1754751759; bh=d2TisobGuNP8870eSRrCDFu/YEPiwoKjk4h
-	mKMyv/rc=; b=U/xuVNNc1WlmF4YH612iYwMiZvBv5qDLQ6QtFNe2oNDHe/enlla
-	lfkLwOF1BSW+1wb4VtnffHcFtXT0NIgDUmuiuCfGKSDoH5yI47yLGM1vrSwGh9Yn
-	nTbz57CcITBqMcRDszydI+i+JegEMVZt+MG3Fk6xDTEqhY+wTxyX02baDmDCvrSk
-	6xe7rz3VkXHHj46ilA4CGB8Zf686JgUXppCmTXqv2e3ofwWMhOvCWyB3ob0OqtWs
-	WvWG3ca0HWwVr9huUkBjqBeWXjSaP/1+uba5qytmMdetntFh9bkOLDhAey6gCjTN
-	IbOCunuJeCjkU5icjBaO3AMzcP9j9uZ868A==
-X-ME-Sender: <xms:jhGWaEf4hPFzE2NhMwZ9Pp9RlUeMnICnDqCGWaqrh6NFtaBMG4jLxQ>
-    <xme:jhGWaO3Db7dftGeecBRRg8fMSnuIOSPS1eqSnVNA17D_WsJflwbeJhN6a2magGjtb
-    wDT1yN17S6lYSZeqw>
-X-ME-Received: <xmr:jhGWaM8s_p94vSM0HyDhi5cse8d9DhL8SzhylzLihvvWvnIjepGj1JPMBImrHR81Gi89i-h6bZynNtBFpIBQCL2Xg5uIF-m7LJdaSpo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdeguddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheplhhutg
-    grshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehoshifrghlugdrsghuugguvg
-    hnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
-    rghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdp
-    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjnh
-    drrghvihhlrgesfhhrvggvrdhfrh
-X-ME-Proxy: <xmx:jhGWaD4pGhxog3JgJQs2yYyyRodLaSQj0hEy7FAdmlSCeIDFFK6vBA>
-    <xmx:jhGWaEuuiv4TCOIPLoUK7_OC7tp24Le_UtQecqJvEc-x8EJo7MnHMQ>
-    <xmx:jhGWaF3RGHmZ2dTNOytzRMOIdZOsK3YuU-XKqe4WEPomlfE3JDYy3A>
-    <xmx:jhGWaNrvFLYnUL3VxYRVG5klCl4zLonTUouplSfiLIHoTYXOLyUVyA>
-    <xmx:jxGWaAo9iM4qxykkveIKd2XWOKBOWsnyyTaBtiGng97S5cgSLQbyJLeF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 8 Aug 2025 11:02:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
-  oswald.buddenhagen@gmx.de,  karthik.188@gmail.com,  ben.knoble@gmail.com,
-  phillip.wood@dunelm.org.uk,  jltobler@gmail.com,  jn.avila@free.fr,
-  sunshine@sunshineco.com
-Subject: Re: [GSoC PATCH v9 0/5] repo: add new command for retrieving
- repository info
-In-Reply-To: <aJWO78GrsUc7iBFt@pks.im> (Patrick Steinhardt's message of "Fri,
-	8 Aug 2025 07:45:19 +0200")
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
-	<20250807150239.6987-1-lucasseikioshiro@gmail.com>
-	<aJWO78GrsUc7iBFt@pks.im>
-Date: Fri, 08 Aug 2025 08:02:36 -0700
-Message-ID: <xmqqh5yhkgab.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GVZtm0v+"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3b78310b296so1144591f8f.2
+        for <git@vger.kernel.org>; Fri, 08 Aug 2025 08:24:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754666666; x=1755271466; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=0tO2wEsFWO7gLfwjjFRl3U16y8oqE2MVgcXpwD0zAfE=;
+        b=GVZtm0v+g5eXAaB5TH1G/7A9jmfKBPk38bgwT7OGzXMGT892YDN+mN5Wfl2nwovlAS
+         8aMY4s6aRmh+FaWag6o743lwx2+o5E5LB29m4CAWyZybqbhs1vnFUcrphCzRF35hoSWs
+         WIVsim0h9b2Z/rV3EnR4d1z22qBk9BZxFUg+A79uoi+wlHuSTRwhw7hwjstgalhW4eWX
+         zgV/Ssv47JAFtWbuRI2Hv951mRT/NJZCLy0oNKxFfQSgsREgXTl2RK1AaQH0wSeMJIqV
+         4i/O8ygGX2S+puMiR6eO7tBxogsQZfph8g0xA21vrI7UNtocgTMqfdATNGB7YEwMXXl3
+         REFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754666666; x=1755271466;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0tO2wEsFWO7gLfwjjFRl3U16y8oqE2MVgcXpwD0zAfE=;
+        b=SPUPVm+q25nof1gLzelRtZHXu8qZQEacOzHoZfL4jSwFFH9+7Osnrqc7cqkGNbICYA
+         yuPwYUgEyWb00UnPRFEXtyadP+xBhoyzvx4LFlsz8F47wb7hdjLgJPX0IJAbRoyBhtMm
+         zmfWo7luRG5YH2AC22gPYoef34BOncZgafSNnY8l6g5MpOUIzIpxO5oVUyEFriDtDBum
+         K5JQ0WJLfI9uKImnZ4FXbExxa007yl45sDsaKJN4xyWE4yx2RmNhUg6/OPPBUiTSCs3k
+         nvhnXiBeagmXbCHolXvAzaroKsSAniyqm2+MZtHlI8i447D8NjD5eWLAeUmBByNdENvX
+         6a5w==
+X-Gm-Message-State: AOJu0YxtuO7ZxF+32izLL0ujYFjdRmv6GDYkjmxf0CcEUdrkV3mq0G3V
+	brSvqP98e5wYW+mRgM03pgVbldEZBNuB2bFgnIC/hTMmlKqADgYzbpX4UGhVmA==
+X-Gm-Gg: ASbGncvEmibvEyBlGy7EW57OnnwUTPAbUIjYa/Q2f9pfcQFRlvbmjedplExhWvea6IG
+	TNXgBXG7syeANY9FWNUvewyr0BW5NGY1VDAmF/Mizte6NWo6C65bOJ+10DSHs7YipUCnUlj7iis
+	huQ0yvdTqR5PV5hlWS8DfqyFMN9Gh7AxcBmllBFYP/m8uY0S9xBxmtN3PoQj2SioB7R4wM1CNbN
+	179VE2ASqk/hCSGTaR6mewG2MP/W/+c+5gffxv0ZNf/udxulubUb4gJR8x+jFqW1tVB+qeULmOw
+	m4/GdGV86ZdhjNwrw/yEWbQFGA7C/xsmSYCu7PreWN1wxRf0TsfHRqDG8CBHvE4SgSphS383OO5
+	amQxjjppegjeeWwuW0+s5Tl0=
+X-Google-Smtp-Source: AGHT+IE4XGDMItC58Kg8JXcr/xaXSXVbDK96uHO9IOZ5w6XonkTnkabWFCgQBS6fJRFwhZ8mgBfquw==
+X-Received: by 2002:a05:6000:26c1:b0:3b7:8b5e:831d with SMTP id ffacd0b85a97d-3b900b2d7admr2889709f8f.17.1754666666205;
+        Fri, 08 Aug 2025 08:24:26 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459dd85f423sm202346705e9.18.2025.08.08.08.24.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Aug 2025 08:24:25 -0700 (PDT)
+Message-Id: <pull.1949.git.1754666665.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 08 Aug 2025 15:24:20 +0000
+Subject: [PATCH 0/5] doc: git-rebase: clarify DESCRIPTION section
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Julia Evans <julia@jvns.ca>
 
-Patrick Steinhardt <ps@pks.im> writes:
+This patch series reorganizes the DESCRIPTION section of the git rebase man
+page. My goal is to make the page more accessible to git newcomers (who from
+my experience have an extremely difficult time understanding git man pages)
+while keeping the exact same information available for more advanced users.
+This series:
 
-> On Thu, Aug 07, 2025 at 12:02:34PM -0300, Lucas Seiki Oshiro wrote:
->> Hi!
->> 
->> Thank you all for your time reviewing and helping me with this patchset!
->> 
->> This v9 only solve tiny nitpicks pointed by Karthik and Patrick in v8,
->> just to make clear that everything is ok!
->> 
->> Junio, would you mind to replace v8 by this v9 as lo/repo-info in seen?
->
-> Thanks, this version looks good to me!
->
-> Patrick
+ * puts more commonly used information first (a basic example of a rebase
+   and "how to fix merge conflicts" are moved to before "how rebase modifies
+   ORIG_HEAD" and "what git rebase <upstream> <branch> does")
+ * removes duplication
+ * more closely parallels the git merge man page's structure by starting it
+   with the same example history
+ * moves the --onto examples to their own section
 
-Thanks, both.  Let's mark it for 'next' now.
+I've never contributed to Git before so I'd appreciate any pointers to past
+discussions of Git's documentation philosophy or who the target audience for
+Git documentation is.
 
-5753e542 (repo: add the --format flag, 2025-08-07)
+Julia Evans (5):
+  doc: git-rebase: start with an example
+  doc: git rebase: dedup merge conflict discussion
+  doc: git rebase: clarify arguments syntax
+  doc: git-rebase: move --onto explanation down
+  doc: git-rebase: update discussion of internals
+
+ Documentation/git-rebase.adoc | 287 ++++++++++++++++------------------
+ 1 file changed, 139 insertions(+), 148 deletions(-)
+
+
+base-commit: 64cbe5e2e8a7b0f92c780b210e602496bd5cad0f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1949%2Fjvns%2Fclarify-rebase-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1949/jvns/clarify-rebase-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1949
+-- 
+gitgitgadget
