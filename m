@@ -1,151 +1,161 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-pf1-f196.google.com (mail-pf1-f196.google.com [209.85.210.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF48277031
-	for <git@vger.kernel.org>; Sat,  9 Aug 2025 01:14:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C242C2FB
+	for <git@vger.kernel.org>; Sat,  9 Aug 2025 02:06:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754702069; cv=none; b=uLP7hbtvU5tuYCMl+GC97JUCSoOcXqcsaoMDmclnK8vgaOaKvTFQ3jwtLPeSxbIPNwZDECby1rkVpFqJIuxO5J05FodO9eH1+VdsXBZazRLKjFqtgr2uH/VgbYMCb3UIgN8kipwDTTArebPidezUTPdHrWPGLvGy80Wx/vWdjug=
+	t=1754705182; cv=none; b=kupF10dDN1DtfQEAqqtr8bKbwzOQ72Ym5XE08Fg/JJQRB3dJMqHBbDvdhghatvks6e+wdZOncw8opdDgU9C9y6wwUzyY9sK4MPqVXLFe8oe3fhmGc/02EU6NE88FiJ9PJXi+Z20uY6rXwXDyYdB9ipnNolRPVHgQUXKJj9zlAwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754702069; c=relaxed/simple;
-	bh=v3SjaZJIFv+L8xtxzF93GEATKxncPdGnBMufZu8m3WI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ZR75071j+j+YzTX725PsgnBOGjK0+bMGZ5MpvJQ5mi5/rabPb8/Qm4hrz3s/4ODUQD8EicYSRxi/3ppevVTduToCvZ58VJ5jipbbrCrzYRjM1qK2hgC9c8SHAs+szPSCJ0LZH9hIQ4hm11BuToDoQyNiglDaNhtlXfWlJdtoINo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ixef22W6; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1754705182; c=relaxed/simple;
+	bh=CdhlrtK2u1UzkKXgYJ5OG6o4/6HfmTDTkQ8owZmbGVA=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=HrXWR+kHsCD9KL/1PB1gltxwD1UFnTmMT6+07gLIwSIoKIca1KCJCymecRJeSAqXecv+klUsYZkWZ764BFk66jGfNLxUwV+TavK0SZEiJGZJDMF3ptGlcN9USSgwYWOPyTRef1s0BNP8C3mACe9keb7ELKTNBhkojq7402NW2pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aZFOl1e0; arc=none smtp.client-ip=209.85.210.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ixef22W6"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-459ddf8acf1so22907165e9.0
-        for <git@vger.kernel.org>; Fri, 08 Aug 2025 18:14:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aZFOl1e0"
+Received: by mail-pf1-f196.google.com with SMTP id d2e1a72fcca58-76bfd457607so2978230b3a.0
+        for <git@vger.kernel.org>; Fri, 08 Aug 2025 19:06:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754702066; x=1755306866; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1754705180; x=1755309980; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XJEnUvOivdSppTnA+m5QlaWFUai/ubIYcKvlnzFC+QE=;
-        b=ixef22W6TgLMGPx3ga/dV4G6eNXbLP01jjJ8eQ/5K6GNSv5UFo7N0YfPn3/GNSpKZG
-         Bqho+Tqs9eWMI/5qYU+dkszhGZeq9KcECF9E0iRRCvegDGMrfag2mz65LSjSxyWcdISF
-         fdTV4NKfHD1JxkxuXpGkKv26B7DN0p6Xk+Zi8AV9vwNsi93O7iDXmKejGjgM82FtPvbO
-         qFWjdY0B+k9W8dF+yoUg21wCmh2cVl3WtATw2BlR0bKttsjeDfOiAKuRdjexs5bVKUwu
-         O4zSIGA4GJkjBZ2xZIAltTyPPMRBYVm4iHpwY6LszvHs2tvKehjaxD/8RDZl6UsUp26v
-         /nxA==
+        bh=CdhlrtK2u1UzkKXgYJ5OG6o4/6HfmTDTkQ8owZmbGVA=;
+        b=aZFOl1e0D1Rr5/lUtdididWUCiZrWggdsYJlTJizQWy19VuVhzLJ3cfqCZwFtasl/l
+         xb8ox5mBt50F9IMRMThZmsxCI8uzYBxHlvSGJsCJO1/VJnN9Ctu0k9whBtAmIY5qzRyc
+         /gxwZgw3x6CuthdC4Y//LAw9dEXLOMgb/dg/l5NSOAXIqGqbIszOnSYKJOWQEX6Yod2k
+         HSMfDlFgSHTRFdUtRS97xx03dew3yiNT4joV20W+Xx2DJMuIRYRt8A2znu7K0jKEQ8fG
+         l0X2/iXE/42GZS+ADVcM62Y+bXhshm0iCGL44cSIDDtBpl56B1Wcpq068QpuCxZ/rhR/
+         ST5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754702066; x=1755306866;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1754705180; x=1755309980;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XJEnUvOivdSppTnA+m5QlaWFUai/ubIYcKvlnzFC+QE=;
-        b=aQrBe5wEbx7motPmIMeNru9GE6okrsn1DehGM2paRKKhoEfYLUYs6OLUmVviRcan5c
-         DwosxPT5qjjQR+0321ytD84qRnvPVKIMW8ixlavjhQrvyfe5QTUrnF7Rfelb1+ygS8mC
-         /H9261luXi+ClIDSQeQ5q6SOBG575sL8h8BjLQHm/3zviwtrO+xPO5NH+1MRyJaWdYS0
-         UvI5B56nq6yJn1mQESXMrHizurz5GjXBa035WudXL7FjwDuYOhIOR8vrn6vkowVY7Rp7
-         Zb6RsfGo0r4rzJ4oaEEAK8nKexXwYTY0DenggSUfzF4uWsxbyo34NVGR1hNk+ToIH9/x
-         y39A==
-X-Gm-Message-State: AOJu0YwKhC/9SacczAy9hut3ZR6FHR5TZbQ/Em6Odg6m3xaxyV+88oJ8
-	/zRQvG6907aR659Pt2Zxuryx5s39MGnZ4SIUe7SpuwzneEpk6DsRZkhLL/P5Bg==
-X-Gm-Gg: ASbGncsXABJRP0fPfJ8F3/Toosxim3sufhVeb2eUA0hcXEx1m9tNhEU/6LuEvodg2zn
-	kfR96u3VM0ArHdUHm1YvRlwhXBM+7A7P8LczUolOOJGcIbq2d/UQbWE8dL/fG7+GfbZZT6cTVBI
-	fCl2u748JI6vkBtEYT44+duHRCAKVmO1uO9UMhch7Jy1MoaoRkb8s2gBtLGXTixIR4PZfYJGNRG
-	Wn8alosht9qItWvA7/cxGGVWALwcidqcv8ZDdPs9X+9+TwwEnXTBl2xL+rdnFWIkhMOqPJWJRxf
-	tMixqiGqYV/X5nL3kzF2NHYELBh9Vnv5f7jW3EreHVG/OzLJ0zvM7WVWuEXidqbvxjFVHTa6zbx
-	tnc/I0ZHRf4MaC8ulnU3BxB0=
-X-Google-Smtp-Source: AGHT+IE4RlrOk+rpdn1gKj17PwxdeGeEqdZcU3JaEI0HPM6sWmV5TfmQcq/zf9tHNwZU7pll8+txtg==
-X-Received: by 2002:a05:600c:4ec7:b0:459:e398:ed89 with SMTP id 5b1f17b1804b1-459f4ea2167mr35458935e9.1.1754702065712;
-        Fri, 08 Aug 2025 18:14:25 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b8e04c7407sm22544486f8f.13.2025.08.08.18.14.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Aug 2025 18:14:24 -0700 (PDT)
-Message-Id: <105a65e6e7121ac6a9a8a1d0b4f3217495a9f5e7.1754702057.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1949.v4.git.1754702057.gitgitgadget@gmail.com>
-References: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
-	<pull.1949.v4.git.1754702057.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 09 Aug 2025 01:14:17 +0000
-Subject: [PATCH v4 5/5] doc: git-rebase: update discussion of internals
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=CdhlrtK2u1UzkKXgYJ5OG6o4/6HfmTDTkQ8owZmbGVA=;
+        b=JScbE5y06MmRVQPIbxT+g/N1DlZU7aQs3Itjq3C7qVf4ngURYBrS5fj60DsSJ41MVn
+         l+5j8oQi4I/y141UUCdAzU0EG1lzBbtOAFsYlpObMrAiTI9hTGPVZ5bjykg5pJDxdvfq
+         HoIGej/b9xY6DAlRdiWPzZD7xTmjdfgcYDpMIi+uA8UJ8Dj7BVgoKcHmgG4Ag8Zq3pmi
+         jwMJW37f9tvJYMtWpZAJVIuBembp1yech/VUYT9ti5Euetxq+L8QhgrFYtPtBXUxkmHm
+         NBYYQah4/rRPrlvvZAMdWpIJKGDJcJGVDMDVnPc8NP7wPgCgxUau0IHwz9lPGqG8oQR9
+         lsjQ==
+X-Gm-Message-State: AOJu0Yywp40KgPEtPhabBwT/sKopQFr/nDHZYyWZrs81e8Kcvm8uxzhq
+	44hjtXnMj03agJbE5Km5QMDqUrbj5o0OqXaa5OqNOc/Hi2PZVFg1Ltok
+X-Gm-Gg: ASbGnctADeN06eBEiGAJNAXRHDpdAvh2C4M4rnB+brToOmwduXwuKXV8q0DxMsTGQyp
+	oq7kaUCVs1EcwkuVKNbYZoTX8GlA/ZhFghyHQBo22Gp3SDKQYXObJaAI5RNCZiaUPZpa8AcaK+H
+	PuvgChML0yKgiSNWus4JaaaWqSWt287g8dWy0DeLxTrl8/tPE/rR1nGWdajLzQeVkTZqib8j5mE
+	o4p+67maT7bgNDG7tjNArgnscBhQYccLPGQgoZzB39FIkt8UrJvXvzfN6aaxE7uPmpUoFT5m3HC
+	qSqflIzZcDrPpq5+W1WW9uXrZ7FHPboVjk5dlpflvwMAZ+XBILtMRGUvREJ9glO0WdXWX6Hf2oh
+	UbZsA2VxvEGyeMUwQMXcKYpw4INQ+h53bQXj6Rk3+iXg+dt2TTAA9WcDN1xEZokLV7/iFng==
+X-Google-Smtp-Source: AGHT+IEzuj21IXw+gBl4uQPv7XVhkPhvCbDE+qLyXMJtCVxMR6yawtTsQLJ/dXgpSB0eWQHx1r9RYw==
+X-Received: by 2002:a05:6300:210f:b0:23d:9fd5:9231 with SMTP id adf61e73a8af0-240551fa3f3mr9747135637.46.1754705180246;
+        Fri, 08 Aug 2025 19:06:20 -0700 (PDT)
+Received: from smtpclient.apple (n058152109064.netvigator.com. [58.152.109.64])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bccfd1d8csm21446279b3a.101.2025.08.08.19.06.17
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Aug 2025 19:06:20 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [PATCH v2] bloom: enable bloom filter with wildcard pathspec in
+ revision traversal
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <xmqqsei1izhs.fsf@gitster.g>
+Date: Sat, 9 Aug 2025 10:06:06 +0800
+Cc: git@vger.kernel.org,
+ stolee@gmail.com,
+ ttaylorr@github.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B2F0FE14-AA88-490D-989C-3D93BF972DCF@gmail.com>
+References: <20250807051243.96884-1-yldhome2d2@gmail.com>
+ <20250808065834.22743-1-yldhome2d2@gmail.com> <xmqqsei1izhs.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.700.81)
 
-From: Julia Evans <julia@jvns.ca>
+Junio C Hamano <gitster@pobox.com> writes:
+>=20
+>> @@ -693,9 +698,22 @@ static int =
+convert_pathspec_to_bloom_keyvec(struct bloom_keyvec **out,
+>> size_t len;
+>> int res =3D 0;
+>>=20
+>> + len =3D pi->nowildcard_len;
+>> + if (len !=3D pi->len) {
+>> + /*
+>> + * for path like "/dir/file*", nowildcard part would be
+>> + * "/dir/file", but only "/dir" should be used for the
+>=20
+> Leading "/" makes it look as if the pathspec element can begin with
+> a slash, but it can not, can it?
 
-- make it clearer that we're talking about a multistep process
-- give a more technically accurate description how rebase works with the
-  merge backend.
-- delete a duplicate explanation of how git rebase skips commits with
-  the same textual changes (it's explained in more detail a few lines
-  further down)
-- remove the explanation of how exactly `--fork-point` and `--root`
-  work since that information is in the OPTIONS section
-- put all discussion of `ORIG_HEAD` inside the note
+Yes, seems like if we pass a absolute path =
+"/path/to/repository/dir/file=E2=80=9D, git
+will automatically move "/path/to/repository=E2=80=9D (in setup.c =
+abspath_part_inside_repo())
+So I should remove leading slash in my comment.
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/git-rebase.adoc | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+> Taking what I suggested above, here is a possible improvement.
+>=20
+> revision.c | 18 ++++++++----------
+> 1 file changed, 8 insertions(+), 10 deletions(-)
+>=20
+> diff --git i/revision.c w/revision.c
+> index 2a5b98390e..2a92bdda84 100644
+> --- i/revision.c
+> +++ w/revision.c
+> @@ -696,14 +696,14 @@ static int =
+convert_pathspec_to_bloom_keyvec(struct bloom_keyvec **out,
+> char *path_alloc =3D NULL;
+> const char *path;
+> size_t len;
+> - int res =3D 0;
+> + int res =3D -1; /* be pessimistic */
+>=20
+> len =3D pi->nowildcard_len;
+> if (len !=3D pi->len) {
+> /*
+> - * for path like "/dir/file*", nowildcard part would be
+> - * "/dir/file", but only "/dir" should be used for the
+> - * bloom filter
+> + * for path like "dir/file*", nowildcard part would be
+> + * "dir/file", but only "dir" should be used for the
+> + * bloom filter.
+> */
+> while (len > 0 && pi->match[len - 1] !=3D '/')
+> len--;
+> @@ -712,19 +712,17 @@ static int =
+convert_pathspec_to_bloom_keyvec(struct bloom_keyvec **out,
+> if (len > 0 && pi->match[len - 1] =3D=3D '/')
+> len--;
+>=20
+> + if (!len)
+> + goto cleanup;
+> +
+> if (len !=3D pi->len) {
+> path_alloc =3D xmemdupz(pi->match, len);
+> path =3D path_alloc;
+> } else
+> path =3D pi->match;
+>=20
+> - len =3D strlen(path);
+> - if (!len) {
+> - res =3D -1;
+> - goto cleanup;
+> - }
+> -
+> *out =3D bloom_keyvec_new(path, len, settings);
+> + res =3D 0;
+>=20
+> cleanup:
+> free(path_alloc);
 
-diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index 50c84f138212..c16ee37b46a7 100644
---- a/Documentation/git-rebase.adoc
-+++ b/Documentation/git-rebase.adoc
-@@ -65,31 +65,31 @@ linkgit:git-config[1] for details) and the `--fork-point` option is
- assumed.  If you are currently not on any branch or if the current
- branch does not have a configured upstream, the rebase will abort.
- 
--All changes made by commits in the current branch but that are not
--in `<upstream>` are saved to a temporary area.  This is the same set
--of commits that would be shown by `git log <upstream>..HEAD`; or by
--`git log 'fork_point'..HEAD`, if `--fork-point` is active (see the
--description on `--fork-point` below); or by `git log HEAD`, if the
--`--root` option is specified.
--
--The current branch is reset to `<upstream>` or `<newbase>` if the
--`--onto` option was supplied.  This has the exact same effect as
--`git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
--to point at the tip of the branch before the reset.
-+Here is a more detailed description of what `git rebase <upstream>` does:
-+
-+First, it makes a list of all commits in the current branch that are not in
-+`<upstream>`. This is the same set of commits that would be shown by `git log
-+<upstream>..HEAD`. You can use `--fork-point` or `--root` to change how this
-+list of commits is constructed.
-+
-+Then it checks out `<upstream>` (or `<newbase>` if the `--onto` option was
-+supplied) with the equivalent of `git switch --detach <upstream>`.
-+
-+Then it replays the commits, one by one, in order. This is similar to running
-+`git cherry-pick <commit>` for each commit. See REBASING MERGES for how merges
-+are handled.
-+
-+Finally, it updates your branch to point to the final commit with the equivalent
-+of `git switch -C <branch>`.
- 
- [NOTE]
-+`ORIG_HEAD` is set to point at the tip of the branch before the rebase.
- `ORIG_HEAD` is not guaranteed to still point to the previous branch tip
- at the end of the rebase if other commands that write that pseudo-ref
- (e.g. `git reset`) are used during the rebase. The previous branch tip,
- however, is accessible using the reflog of the current branch
- (i.e. `@{1}`, see linkgit:gitrevisions[7]).
- 
--The commits that were previously saved into the temporary area are
--then reapplied to the current branch, one by one, in order. Note that
--any commits in `HEAD` which introduce the same textual changes as a commit
--in `HEAD..<upstream>` are omitted (i.e., a patch already accepted upstream
--with a different commit message or timestamp will be skipped).
--
- If the upstream branch already contains a change you have made (e.g.,
- because you mailed a patch which was applied upstream), then that commit
- will be skipped and warnings will be issued (if the 'merge' backend is
--- 
-gitgitgadget
+Thanks, I will apply this and add your signed-off.
+Lidong=
