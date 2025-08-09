@@ -1,193 +1,83 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from outbound.mr.icloud.com (p-west2-cluster4-host8-snip4-9.eps.apple.com [57.103.69.230])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B8B1BC41
-	for <git@vger.kernel.org>; Sun, 10 Aug 2025 00:20:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F35023A6
+	for <git@vger.kernel.org>; Sun, 10 Aug 2025 01:24:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.69.230
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754785241; cv=none; b=Cc9hAZUjSiY9VPVYGuIZsVFdqGkfsgjw6rqqqa/5PBfveO51zN/Cgs6lE8v4Q/jQh2qq/0d4ERs+4BCJ+IBMh8+uvt3WjTYbW4FDMkTvdOO3uVyKGaP1GjmTn50OmCKt42od2McceovTWIif6KdoifkAL2OS0YaV5lBuIhWmoZA=
+	t=1754789047; cv=none; b=jcWBMmzUa05LaT8gb//D2VD36D/8WHTU82ufvzUer7C4ywbS4vick30Evc1nvnouc52gOm03qc4GpakQgQBX385VjbUCNwv2w19fQT8ehVUvXQ0fzTruwlKCsJ6sKmgeYzf8FUlxOaf875JEnwSEEpbF+t5b90vnhdtbbxrgtNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754785241; c=relaxed/simple;
-	bh=GHXC3gmNRj6snajHqRMKy+uLDI0O/sytzVLkEvOzOws=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=i0zkQp7WXWUp2LTF1SdWz45Mw9P3oiZwSvb9KaIpcGXwsZT93uqzhFuO8IQZL6/yrVzmuzraNBAH55EvYdQWBNpyUsB0guz8v0qnKFkaqqJpWK9Q821g+Vr7EZy5ArwNbvBTgYb5tuGt2XxCSSyFGfr4SRiYrX6shbvr2vP2s4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q/uVj/R5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ib3cMpZi; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754789047; c=relaxed/simple;
+	bh=OAxfx5qggMThXLnPHki5/xxwHLjG3XXp8jtf9LRWYLA=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=iq7x/TnNvaLZoNtsfv784fjpsL+pPEl4SAnMkyr0ftcldyi6j6/EC2ba+hGkVRJYT6ahA8Gws0mtaLR23deSaytLislWxlgUbN7bCPwy8mABbsyUw4LQHuypR/LbPmmUoYVlex00B8NPmmcQf1FA1uuSb4HYtYgW3qImRyyk40U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gregoirege.is; spf=pass smtp.mailfrom=gregoirege.is; dkim=pass (2048-bit key) header.d=gregoirege.is header.i=@gregoirege.is header.b=liViQwQW; arc=none smtp.client-ip=57.103.69.230
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gregoirege.is
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gregoirege.is
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q/uVj/R5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ib3cMpZi"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CBAC41400040;
-	Sat,  9 Aug 2025 20:20:38 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Sat, 09 Aug 2025 20:20:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1754785238; x=1754871638; bh=XQr+h+1jIw757JoQgsbuYYZV7zsrU6vt
-	hW/Hxd95SVM=; b=Q/uVj/R5LlY4R4j9sq+dph8Rl+XWrxnnCcbm1b/coOk+sl1m
-	PXbuxYKtd7yYiZ2l8x24BMo4fRmIdI6cRk+ie8yFWWrVW2OqZOxeFRI8CNGktSMy
-	xgM9V8iQFo03jcj+fsLr3J1y+rm8R8fGrGOGgt5l1c08sSXlczqFKfbGXPI3pXM6
-	gVRv934VvvBf65QgXJIIed5maiH/Y9vsso0i6j9SPPKq72nNRJpw67kjJjF7+K1h
-	p+iQwy2ct+tkHdQZMKX3kWxpVikDts52EuE7CyOpQZw1j97XyoYzcZx2ZOtbXOOH
-	XnajNg4EZ96JE1IBfgxe2P7vGwI/qDSTinI13w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754785238; x=
-	1754871638; bh=XQr+h+1jIw757JoQgsbuYYZV7zsrU6vthW/Hxd95SVM=; b=i
-	b3cMpZiX01/tSslOChAGYZYLJF765mWAYbvgaQDuoJoxxRG2Yt9ZKPz86XCa/nHn
-	HMqlk3MBH9AUf2gm9TGVUFdz0nD3KY8Nz003UClzdZcaqmIf8JxPGF5sRh3wApcK
-	pXvD5/+5p+j3pEhP2teH3E6viN5VT2luSU085YLmbBApzFFz+7faa6ivNWi77c3J
-	LmiBSRyDltQasup33Wo2tJZ4NaoKa+YyFBwWYgPpz3b90db6VyqEfd1QucOx+z9k
-	Iv/Xq0oTqO8AeMwwXiRSrFWCUYxM0sVipXiATbA6OZnCdGfxBJhibsFrZz+9fcSb
-	zbuTeWE2B8AMKdlz4NZJA==
-X-ME-Sender: <xms:1uWXaFrltv1znSF9x_dgj2UUTYdMVpKQC18KLWX0RYhNosEwbeE2OQ>
-    <xme:1uWXaDHRfCJg6X7rL7_BUjvdd1Bh1kzBLjZsxH-unzUcmLsdV1h810r4ZrfrZ6c9x
-    4SASKNFZldqxCkrNw>
-X-ME-Received: <xmr:1uWXaFsrLrI5WE6FsMxByEwp7WZwDLhM2ibxmqiN0QqnIWVlwVpnj1Ts5lFRB_4uRoJShp5xBpcttKxSItXnJIu48sfuFVc_6oGc-04>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdekudduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefufffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepjefhgfefvdekfedthfejgeffieevieeifeegueeihfejleeufeffjeetkeffffej
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghp
-    thhtohepohhpvghnshhouhhrtggvsehgrhgvghhoihhrvghgvgdrihhspdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:1uWXaFUerVUXKvgfrh7Ht-TxatyTAVTQknw297ucJfsTJpxoTqPEtg>
-    <xmx:1uWXaBHbZFO-PapT2JpuwvGjFxuQFPVhXN-AA_y2lEnVQr4_3cm4eQ>
-    <xmx:1uWXaH22D1YR8uC0nZirmo-TXAddldrkGUMiAAHR9toNH8Jj5C_3ag>
-    <xmx:1uWXaDO-9pjh_du_kvI4yiclVT5MflAiXKOcPtxUJgYDDnuDHDZWMw>
-    <xmx:1uWXaC-hZBtZWKzGeGiKk8wCfTx-NxD6FT3qdVD1GSEW38lup5Osutlz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 9 Aug 2025 20:20:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-    Gregoire Geis <opensource@gregoirege.is>
-Subject: [PATCH v2] diff: --no-index should ignore the worktree
-Date: Sat, 09 Aug 2025 17:20:36 -0700
-Message-ID: <xmqq1ppk58ob.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gregoirege.is header.i=@gregoirege.is header.b="liViQwQW"
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-west-2a-60-percent-4 (Postfix) with ESMTPS id D739C18000BC;
+	Sun, 10 Aug 2025 01:24:03 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gregoirege.is; s=sig1; bh=OAxfx5qggMThXLnPHki5/xxwHLjG3XXp8jtf9LRWYLA=; h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme; b=liViQwQW0FQKlBtDbsPW4dNqOAgNK4YpDxpCsCVYS4GpHKR2in1UPgjCC3pgcg/ypnGJxWOXBL56Kxf1KQDW3x+5z88r+Lb2BHCRrzPnb/DTuMNKcpDVL0UuUlv1AgMnT7xyQSIgjbn9bRc0nwijVGBf7OZCLIlcDYM+g9wLRotNxWy4XJBgFt53zOJxHKnvIrvKG2Bay2zgrQ9GAoFaz9ausA67xXCSqaO+UVg0/SGI+TO+wEetH4QGOelf8F9M6EpL96W48Cfz36QRhS+fsE6gAx+g/Ns3qzcGEzsWavuaCIiPxz3NXp+gumrUK8Mb8+7GbKDFto6r0SMljtPMpA==
+X-Client-IP: 118.221.50.200
+Received: from smtpclient.apple (mr-asmtp-me-k8s.p00.prod.me.com [17.57.152.38])
+	by p00-icloudmta-asmtp-us-west-2a-60-percent-4 (Postfix) with ESMTPSA id AD88F1800196;
+	Sun, 10 Aug 2025 01:24:02 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: [PATCH] diff-no-index: fix stdin path in subdirectory
+From: opensource@gregoirege.is
+In-Reply-To: <xmqqjz3diymi.fsf@gitster.g>
+Date: Sat, 9 Aug 2025 11:12:13 +0900
+Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <7E0AF030-2C14-4121-A2AE-A419B46EA701@gregoirege.is>
+References: <20250807150613.32177-1-opensource@gregoirege.is>
+ <xmqqtt2jm118.fsf@gitster.g>
+ <CCF4B0E0-980D-472A-8689-7615FFFE0198@gregoirege.is>
+ <xmqqjz3diymi.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
+X-Proofpoint-GUID: VNRJ5hF5fxbxGX554YFGvxFv27i7v3BD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEwMDAwOCBTYWx0ZWRfXxeFV91YJ5f2x
+ hkf1ny/D1b6GQEdaNxI6Kh6KbmNCzdDuRQjhxfiAPZm5YiUbz8NeRdOsqDzvCSu0nXAaqjYWwt2
+ p2m0U5skuckhJ929aKUdQH6N4KlmpiFV2vGuqwQ21PH9RRVRRsC3NL/fg9mS2U/hhR1eRi9c2Z3
+ 5cggHyeOQNs0rZTazhwuQZ17yyUHA/aaS97hNp5pD/PCE5OmScaPnxwh0tZwObJz4j4DkCOy7wx
+ zlMJiVQxZj40KWFNiUJB/I5+zqYJfk/Xc7p9vqAHKMTmlJFivmbwBXVjLQ9UqchW5hYJAdjGc=
+X-Proofpoint-ORIG-GUID: VNRJ5hF5fxbxGX554YFGvxFv27i7v3BD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-09_08,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ adultscore=0 clxscore=1030 mlxlogscore=999 suspectscore=0 phishscore=0
+ bulkscore=0 mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2508100008
 
-The act of giving "--no-index" tells Git to pretend that the current
-directory is not under control of any Git index or repository, so
-even when you happen to be in a Git controlled working tree, where
-in that working tree should not matter.
+Junio C Hamano <gitster@pobox.com> wrote:
 
-But the start-up sequence tries to discover the top of the working
-tree and chdir(2)'s there, even before Git passes control to the
-subcommand being run.  When diff_no_index() starts running, it
-starts at a wrong (from the end-user's point of view who thinks "git
-diff --no-index" is merely a better version of GNU diff) directory,
-and the original directory the user started the command is at
-"prefix".
+> Ah, what I meant was that I did not test the patch, so I did not
+> know if it solves the problem you observed in your environment and
+> with your development tools, hence I was asking you to apply it and
+> test, like you did when you originally noticed the problem ;-)
 
-Because the paths given from argv[] have already been adjusted to
-account for this path shuffling by prepending the prefix, and
-showing the resulting path by stripping the prefix, the effect of
-these nonsense operations (nonsense in the context of "--no-index",
-that is) is usually not observable.
+Ah, I definitely should have been more explicit, sorry. I did test
+your patch, and it did work where git previously encountered a buffer
+overflow.
 
-Except for special cases like "-", where it is not preprocessed by
-prepending the prefix.
+I didn't try a lot of inputs, but different combinations of `-`,
+`/dev/null` and files in parent / subdirectories yield the same
+outputs as before, and additionally don't trigger any buffer overflow
+with ASAN.
 
-Instead of papering over by adding more special cases only to cater
-to the no-index codepath in the generic code, drive the diff
-machinery more faithfully to what is going on.  If the user started
-"git diff --no-index" in directory X/Y/Z in a working tree
-controlled by Git, and the start up sequence of Git chdir(2)'ed up
-to directory X and left Y/Z in the prefix, revert the effect of the
-start up sequence by chdir'ing back to Y/Z and emptying the prefix.
-
-Reported-by: Gregoire Geis <opensource@gregoirege.is>
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/diff.c           | 15 +++++++++++++++
- t/t4053-diff-no-index.sh | 17 +++++++++++++++++
- 2 files changed, 32 insertions(+)
-
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 9a89e25a98..0b23c41456 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -487,6 +487,21 @@ int cmd_diff(int argc,
- 
- 	init_diff_ui_defaults();
- 	repo_config(the_repository, git_diff_ui_config, NULL);
-+
-+	/*
-+	 * If we are ignoring the fact that our current directory may
-+	 * be part of a working tree controlled by a Git repository to
-+	 * pretend to be a "better GNU diff", we should undo the
-+	 * effect of the setup code that did a chdir() to the top of
-+	 * the working tree.  Where we came from is recorded in the
-+	 * prefix.
-+	 */
-+	if (no_index && prefix) {
-+		if (chdir(prefix))
-+			die(_("cannot come back to cwd"));
-+		prefix = NULL;
-+	}
-+
- 	prefix = precompose_argv_prefix(argc, argv, prefix);
- 
- 	repo_init_revisions(the_repository, &rev, prefix);
-diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
-index 01db9243ab..44b4b13f5d 100755
---- a/t/t4053-diff-no-index.sh
-+++ b/t/t4053-diff-no-index.sh
-@@ -26,6 +26,23 @@ test_expect_success 'git diff --no-index directories' '
- 	test_line_count = 14 cnt
- '
- 
-+test_expect_success 'git diff --no-index with -' '
-+	cat >expect <<-\EOF &&
-+	diff --git a/- b/-
-+	new file mode 100644
-+	--- /dev/null
-+	+++ b/-
-+	@@ -0,0 +1 @@
-+	+frotz
-+	EOF
-+	(
-+		cd a &&
-+		echo frotz |
-+		test_expect_code 1 git diff --no-index /dev/null - >../actual
-+	) &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'git diff --no-index relative path outside repo' '
- 	(
- 		cd repo &&
-
-Range-diff against v1:
-1:  456a265746 ! 1:  4166ccb163 diff: --no-index should ignore the worktree
-    @@ builtin/diff.c: int cmd_diff(int argc,
-     +	 * prefix.
-     +	 */
-     +	if (no_index && prefix) {
-    -+		chdir(prefix);
-    ++		if (chdir(prefix))
-    ++			die(_("cannot come back to cwd"));
-     +		prefix = NULL;
-     +	}
-     +
--- 
-2.51.0-rc1-130-g831cc762e6
+`prove --shuffle -j8 t*-diff*.sh` also succeeded with your patch,
+whereas `t4053-diff-no-index.sh` fails on current `master`. I did
+skip `t4056-diff-order.sh` as it never terminates on my computer
+both with and without your patch.
 
