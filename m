@@ -1,94 +1,167 @@
-Received: from mail-10629.protonmail.ch (mail-10629.protonmail.ch [79.135.106.29])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6134265CDD
-	for <git@vger.kernel.org>; Sat,  9 Aug 2025 22:24:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.29
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FC91E2606
+	for <git@vger.kernel.org>; Sat,  9 Aug 2025 23:51:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754778255; cv=none; b=LrGFURCjg4cmLOw/h5Sw2xA9RyTZgDcGyHQoudlobptRsi4V+KOxnDeRwq37kChrziCBTtwH9etIFTdU3BGE3D5aTeSTnsQhNTovuVTaR0VgZ286G5VngIARzjGcR2etqtdG80AIsB0z1boqXc2aIJO47HDeS/f3dJX+qV8ooLs=
+	t=1754783507; cv=none; b=OLx1nfQOaXTi7TH7pfoHIVOHMLIwVuDo+sbjInJ0pFDel4TrG1/4YvMruQrW4nRZvig85Jvo4E4EsKREMmqzJYfFkHZ0A1Jk8pudvJvipPaUYUrW9TMZvbwZwCFx9oVnnxIEbzlyVAHx8Iqko6WRIoznL6LMNkbFatxJ8D57OFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754778255; c=relaxed/simple;
-	bh=137LfFVsUe3zbo2Xb2nHb7tRMBzaRo247Z1lm35SJ58=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=KWuEJmPVDewzjR2z5GIFjexJpArhmN1hJC9JD/Wfl7zH4W2KXVr6OKglAU8rpCjMYj51/JeWT4y8ypB4WqpVRQowOBBj58nZQzuC3zNiAO/oYH1VxcAfbldW+X9IiuQoqexmT00N9xZ64oCZIauWKAU940H6G7cghtA+1xlvaIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=JtKteCKE; arc=none smtp.client-ip=79.135.106.29
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1754783507; c=relaxed/simple;
+	bh=9hglmvnFU7yfhafO/c1YZkscztONbGXXf8qq4ysj5gM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tvsNuZZ5E5BbjgfnHYt9f6IA0l0RbVSvnMvg/vIH8Bb1xYJbYwAHi8VDPhKuhRyFdoX02Ml79ydLVHoKAN8y5Sgkmc0l8J2Ewtab6CRH7nMMQqkJTksbwFmS34drHfiqM7n6IlEDZ6nBe1q8U/BH0mIHllSI90fc4qNdv5jbgWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MkM5qpvQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HPK6kaow; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="JtKteCKE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1754778250; x=1755037450;
-	bh=nK7IT2wUHjU2fFe9sVnvTbAKm78NjhVsmA5s3i5VqNs=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=JtKteCKEd4GSchzh6EdzyC1P2t6wBR1FEC1KsE0O8yyhgiylJ3cDm1K3BsNW41ENC
-	 +JE6WSt3xWyxL0qihtpVyZG0HQWa3QhXjzzgIDJkaKY8H71TbT+nw4KGuUI02x9eMQ
-	 dkrFf7zc9MeghS6nNOt9cdOHykcbC5RmF3tgFbZ0604uDimRNXMt2558T44rHNo6CQ
-	 QvfCgF2z7fEeF/FvL9p2+MtgTSkNPlLkK56BKP8zBMvHJMV71CJ3ku4D991/cnWiu2
-	 OJpPd3oq3qnl0NRTnBKVwmwlG5S8MXH7PXvJIBi9veoKJmLp88blZOLaX8JFmvmvrR
-	 CBGF4rzOXX1Yw==
-Date: Sat, 09 Aug 2025 22:24:06 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: Sergey Poznyak <sergeypoznyak@protonmail.com>
-Subject: Fatal error in git subtree split
-Message-ID: <filx6Yt3bQSp1GJwOQKS6cZwaPFfFn5TgcuH0fv1kS3Wgo0xSKxhXDYs6zUm8f_9tZCtF-scyAhFi7dTl3q44w5RkM99QH8gR8RJB5UA7m4=@protonmail.com>
-Feedback-ID: 4253912:user:proton
-X-Pm-Message-ID: 183850cb934e3b3701426abf17293a3ada6ddfbe
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MkM5qpvQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HPK6kaow"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A0631400050;
+	Sat,  9 Aug 2025 19:51:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Sat, 09 Aug 2025 19:51:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754783504; x=1754869904; bh=QoaJBhYqVC
+	SPIhR7Uy12nXtE2Johy1KRkr65Xxy+grw=; b=MkM5qpvQK+LwNvz14mss1TV+x4
+	tl8w9cl5osmhCt0OT5fctCcM7ldLkFxXYJc/WpwrP3e0kOD8P1L8tYLfdLls5FPW
+	vDp7E4IVkCMvhYSi7mvRKQf3B+M73aQJKbZsWQjOuSa7kDEmOGDTMuW/3YGt/dOG
+	PBggj+jiwe196qLULezOJggyj+cVkd32Uaf3gZzw+VMhqB2kJkqDGWNq8l7t6CId
+	X1soFYGiYkU5RU0KHudssSDVtatGrZJJCAUSEKWjKppFnapvL0DfrpmUDnyZxtz+
+	KMyneE/6OBQrqZcR8M/4A0zr7iUSPRzVa9RWmxWOriP9iOTQyv1MNoydlOJQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754783504; x=1754869904; bh=QoaJBhYqVCSPIhR7Uy12nXtE2Johy1KRkr6
+	5Xxy+grw=; b=HPK6kaowm1DMmcWC71CaWyFPRPFuzPGr5plhYYVhbaSIgejNHIc
+	+RvtaoQ9y5yrHjUTWRdtswQToGWkqdYk/T96UHrCsAd8u+012OYcNv7tjHoliBtr
+	bdBDh5TsNFXOeiXTvTSQZsNv0PUMDuA5iORXrtqGhMtJAC40rV+rWx/KcQ4YYLHJ
+	MeYW1DYvWmedTSsMi41f8e/9/bazEgyxU6Aii/yXwo13wG8fY11ZsLmWBk16qMBS
+	zzlpHY0wm6lwBexKnyMNizRWIIeD6MYjz4k0RGo0WE3NbZexU3eh9cAiqpM1OdBZ
+	EAr94Qtia7A+lxztCcm6xvvcfXkvl7MxxHg==
+X-ME-Sender: <xms:EN-XaKgrCZHqg8eaOHhtEy0-ZP3dTSYG8aBNJ50Syrlb5ivWaYsMQw>
+    <xme:EN-XaGgZE5ANbB-y25X43y_hzUx-CUF2tiYVM92wE1MgYN5JOIqaus0tyWH92JCJi
+    Kx_tJQVuM5YzfMyCQ>
+X-ME-Received: <xmr:EN-XaIhrdqK8tChJti-HaIwVNlwcXpKVhncn_x-g6t2EC5OOK6rm8it49EpcJ7ibP748Zl4dnf5Qwz-4j-g84IBJuosAevgH4qOJvzA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdektdeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeihlhguhhho
+    mhgvvdguvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepthhtrgihlhhorhhrsehgihhthhhusgdrtghomhdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:EN-XaOK1fddU7FBy_pFYmknny8w_nnlluLwB2Ze82WNpygGlAeobFA>
+    <xmx:EN-XaPHWQ17WI5zQNTiZ1YAJloIhbkFGSWhcOBno1i6Id5eYYozFdQ>
+    <xmx:EN-XaKRSZJDPT5DO1ovZ_2i5cjidd6c0jRCSGdkPc-5NkffEcHlLHw>
+    <xmx:EN-XaDfJl_v335Ib100Xl_3YveMJXgLD4030Gfo5k988w0aqThvtng>
+    <xmx:EN-XaBcSD9d-_kGcI3KPLdpmnX87-8FEa7i8kXelky9ovf1iTenGoFZj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 9 Aug 2025 19:51:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Lidong Yan <yldhome2d2@gmail.com>
+Cc: git@vger.kernel.org,  stolee@gmail.com,  ttaylorr@github.com
+Subject: Re: [PATCH v3] bloom: enable bloom filter with wildcard pathspec in
+ revision traversal
+In-Reply-To: <20250809021642.22195-1-yldhome2d2@gmail.com> (Lidong Yan's
+	message of "Sat, 9 Aug 2025 10:16:42 +0800")
+References: <xmqqsei1izhs.fsf@gitster.g>
+	<20250809021642.22195-1-yldhome2d2@gmail.com>
+Date: Sat, 09 Aug 2025 16:51:42 -0700
+Message-ID: <xmqqpld45a0h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hello,
+Lidong Yan <yldhome2d2@gmail.com> writes:
 
-I'm trying to split a part of my repo into a separate tree using this comma=
-nd:
+> [jc: avoid allocating zero length path in
+> convert_pathspec_to_bloom_keyvec()]
 
-=3D=3D=3D=3D=3D
-$ git subtree split --debug --prefix=3Dcommon/container/xarr -b xarr
----
-truncated output
----
-progress: 16/161 (15) [0]
-Processing commit: e618ad95203d72380cd38124b446dfd71a663e86
-  parents: e22e667e27a77d22f9b2091df7e7f16e47808a9a=20
-  newparents:=20
-  tree is:=20
-fatal: no new revisions were found
-=3D=3D=3D=3D=3D
+This is different from what I did, though.
 
+> @@ -693,19 +698,31 @@ static int convert_pathspec_to_bloom_keyvec(struct bloom_keyvec **out,
+>  	size_t len;
+>  	int res = 0;
+>  
+> +	len = pi->nowildcard_len;
+> +	if (len != pi->len) {
+> +		/*
+> +		 * for path like "dir/file*", nowildcard part would be
+> +		 * "dir/file", but only "dir" should be used for the
+> +		 * bloom filter
+> +		 */
 
+A missing full-stop.
 
-It always stops at this commit. I think the problem is in the next commit t=
-hough, which is a merge created by git subtree add (without squash) a long =
-time ago that I did vendor in an external library.
-The merge commit looks like this:
+> +		while (len > 0 && pi->match[len - 1] != '/')
+> +			len--;
+> +	}
+>  	/* remove single trailing slash from path, if needed */
+> -	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
+> -		path_alloc = xmemdupz(pi->match, pi->len - 1);
+> -		path = path_alloc;
+> -	} else
+> -		path = pi->match;
+> +	if (len > 0 && pi->match[len - 1] == '/')
+> +		len--;
+>  
+> -	len = strlen(path);
+>  	if (!len) {
+>  		res = -1;
+>  		goto cleanup;
+>  	}
+>  
+> +	if (len != pi->len) {
+> +		path_alloc = xmemdupz(pi->match, len);
+> +		path = path_alloc;
+> +	} else
+> +		path = pi->match;
+> +
+>  	*out = bloom_keyvec_new(path, len, settings);
+>  
+>  cleanup:
 
-=3D=3D=3D=3D=3D
-$ git show 32d21757c1e4446cc87ddb2e93c4d49c0d205eb3
+Two comments.
 
-commit 32d21757c1e4446cc87ddb2e93c4d49c0d205eb3
-Merge: e618ad9 e60e9b9
-Author: sergeypdev <sergeypoznyak@protonmail.com>
-Date:   Fri Jan 10 01:29:33 2025 +0400
+ * For a function that finds an error condition in the middle and
+   jumps to the "cleanup:" label at the end, it is more future-proof
+   to start pessimistic (i.e. initialize 'res' to error(-1)) and
+   flip 'res' to success(0) at the very end when everything went
+   well.  It would simplify the change necessary when we need to add
+   _more_ early error return code paths to the function in the
+   future.
 
-    Merge commit 'e60e9b99af9e2738378444265819df71c8bba134' as 'libs/tracy'
-=3D=3D=3D=3D=3D
+   But this flip from "assume success" to "assume failure" is
+   something that should be not be done as part of this patch;
+   perhaps doing it a separate preliminary clean-up patch is a
+   better way to do so.
 
+ * I think the change from v3 (this one) to v4 makes the function
+   worse; we found that it is a good practice to have a single place
+   to release any resources we temporarily acquired and arrange
+   exception handling code to just jump there during the course of
+   this project.
 
-I tried doing a fresh clone of the repo, but the exact same issue persists.=
- You can reproduce yourself if you want, the repo is public: https://git.se=
-rgeyp.dev/sergeypdev/gutter_runner
-
-
-I'm using
-Git Version: 2.50.1
-OS: Fedora Workstation 41
-
-
-
-Thank you,
-Sergei.
+   The current implementation may happen to have only one such early
+   return (i.e. "len has become 0; we realize that we cannot use the
+   Bloom filter"), but adding a new early return in the future would
+   be easier if you kept the original arrangement.  The new early
+   return condition may have to be computed after we have acquired
+   resources we need to release, so it may need more than a simple
+   "return -1".
