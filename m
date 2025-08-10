@@ -1,200 +1,83 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1200726A0EB
-	for <git@vger.kernel.org>; Sun, 10 Aug 2025 16:03:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7B114AD2D
+	for <git@vger.kernel.org>; Sun, 10 Aug 2025 16:06:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754841824; cv=none; b=SgXIP+Caf0Tnr27WRd5Xd8Yz+dbtu8dUTReNG9y94oXVlH8brgW3w9WMUMzKnRL48eT1qdQpEcNoxbUkEYrKM89YMdahjTaE02xDkPN0aUMDmyvarQynOJCTGH+cjbI0mlaQGM6y77xM8Pj+KwGkQHGLNIKWriXuEiIhjJK1jck=
+	t=1754841981; cv=none; b=eu610rXqBp7Vi3z8+5cbdgBEf5QCEx7Mkn6nZOfORtB+SDaUFPepJHW062HCe0BHj5o7ibNf3HNkCpbvXnSNi8+nW37GsBeYOy+T496qacKu0JksnC8t59IxbOx1LQ6k9pCsvPiNNiKg4JI3eC2x6lpMsVqwz9mCV5L9if9YISs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754841824; c=relaxed/simple;
-	bh=Xtqh0aR26l0z4lkH3Mv6fd6oTykCXfJEaKpEx3NCAEA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jq3WHwq9iW8Fq3/6oWsg/gWrrCF91Fp7fvd9mJORKwX6dycgjB6yJ17g9c78V7utPy5omMPYOVhC2mI418lB35H6NvTSDGJaTrtn9E60KyeNb5d+PCJ1ETTmEiY4QyZ1QfMRr3mNh8vt0FgJnqryJqWYMfxHJX5QXnF/XPl2U/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YVoxiMn8; arc=none smtp.client-ip=209.85.128.173
+	s=arc-20240116; t=1754841981; c=relaxed/simple;
+	bh=65knznNM2cZLNgMkhMjQgkbYH/Ouy8RDxCWVoMHcdDM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PK7PNoP7aya2jyFc0kpA49EveaZXLY+Cy8uSr1hpETFHDLGCh51eytepknfVsNh5y1ySyiYtv8T5FfrKiw49yf5hDZCwiMoK49lJCu0zrxEWfN+oRIZ1VxqXu9SYP/yoGnNr+EdGRfC9EDICzSAike/5fiH/+TIFYLXPAmOh1qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VZPf06WY; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YVoxiMn8"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-71b49bbb95cso33699317b3.1
-        for <git@vger.kernel.org>; Sun, 10 Aug 2025 09:03:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VZPf06WY"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-adfb562266cso499786866b.0
+        for <git@vger.kernel.org>; Sun, 10 Aug 2025 09:06:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754841822; x=1755446622; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1754841978; x=1755446778; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yHObBpbzHMJinDzVbZmX8E3HkojQoP29R63sTkDC2Ss=;
-        b=YVoxiMn8YH0LgxYloAiCnRzC9Ji8FWG+d3t3cLRPsooBOdxSt4gwFC1DpH/Gel2GEc
-         WP2JS+/PL1sj/NSR/1gB0nVSqB8+frTK+hwXDdJOqGVefeh3/3o7JEdwI8M3dl4Evpex
-         SWjUxU8hbDyKgy4ZcoQfGT1QqzjNMjjLV9Vdj8fj+UsHcm0zuGdDZGX5tkxY8GPIaGft
-         Y8F4vAzSqlx/mHejA4dLwvZvcKUAvfiCvAs/gvz2vu5DHwt4wWpxwLJSBwlrIt808aN5
-         29RvMFW8b15D/Os3D/ZZSEfAUaKzmtngN8U97YDMb/loKGHBHwnz8LiD27xrYitCIi+V
-         k19Q==
+        bh=ruqRhvdBgcUD6BCZN1Wpt83H9FBNbqSnv05hRwR4ks4=;
+        b=VZPf06WYX7SJdZE0X+eEoezjkzUd3Yl6KZUzfBfWf5BDT7I6XiK+Ckunsubjt/3XgG
+         VxkOO6jEwblFR2bhYa4BsJ+2NAfEC/gAn2K/ZykCUwqJM6jXxSzsGTu7fMxGYy0lgnV7
+         i6vD4bzCafHgDpdrizoHOD77xp9sD/Ix7n7pVqotYvnArzconLxal4URvP6O6UamqFFV
+         rnwR+Z4GKHHUxfZULMc/7/0iStyrhWLkrDGWNg3DBgxVpqGp8eS9G+K/WesS5qtRsYvT
+         nr14o+gjUXbjqSKY9Mu9NgsHPBjksAuMknUccUPOWzQrxOf1qxn0qLJ4wILmH/G9VkzI
+         07rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754841822; x=1755446622;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=yHObBpbzHMJinDzVbZmX8E3HkojQoP29R63sTkDC2Ss=;
-        b=qkiO5zj9fHu9U/NddlJDj+NmiieFojWZLduoSFxmmG+9OKNBkOfEZFj10Bv9DPPi+/
-         eVW5V/yOHWWpiSc0z77FNEqPidb/R5ETL0FUPrG5xtwmx97CwzRcXATdn//8HEkXFVwf
-         TbjNyugTDA6NcDz1ctoY6jrKwRDCSRTromUC0PikAayfbGSzY37y9XA6rDgZhr3H0jxR
-         UQWhhvaL+n13T7iuXgxnDahM0C5TTWTgRgIIF7Bfi3VhDrxpL0SNUGRdZKdu5tJu2hr3
-         EDxPpKck0NwbUpMJUK8s4dXluRNl40gzHv5cjrBZM37Yjghzmc6w9Blbm+6jNA+l3cLQ
-         lsdw==
-X-Gm-Message-State: AOJu0Yyyq7/UvesT9rYnVusRIcfi9ChU8/ZG7cEBY3LK5tBWUHwvWgc/
-	YRJrpXTP6aN5BpEF7DTZSzNAatoccnYiqXleckV1435Hb+QHMPhrZp6Y5He8Mruk
-X-Gm-Gg: ASbGncuJtbq8+zWBesKauRDibKOifrIGCPfDt1q5OiIh6XzTplWSsqAWepWBomHQRne
-	GpqozG9JtPhCkDKtbBENJpJDC6t5FbQSFVJ3xeJBEQ5MAmsA1jTysOJVigvNn9wSUDRuOxxmY1j
-	GRJWi8aPcV40vuI8ruFrzNmo9eKuIohFiG5wAxzngQvgAJsWUYwdXnvP4nP9nLC/V+vn12ZzdsF
-	bKtui5+so9bNjazh2MZ/zqj2WLisxp59G2RZwbDn+CKBzc7Mv4K554ztJDep5vLWVZcC0vl+coH
-	BX/FrLL+3uImbnT6oP8xdnmwbYQ2dnurRCGMranpXPtHLIry8/x/WR1Zoj63OQAXFjnXKHUET40
-	N6+D6L4bkMcbP58OOSajUUl84jmu3O+b4RFvLuzuRyzipmQ+LJbMEiUjLNSgoqYCIO1RIEZRh
-X-Google-Smtp-Source: AGHT+IEyFaNRz8+4igB/xwT2NA03MUfBfCBe+T2PmfRMtEPEEhotaXvoLQOmyGJAteDCjjG2Ct+jYg==
-X-Received: by 2002:a05:690c:a9a:b0:71c:1e33:367d with SMTP id 00721157ae682-71c1e333d12mr27277107b3.33.1754841821578;
-        Sun, 10 Aug 2025 09:03:41 -0700 (PDT)
-Received: from localhost.localdomain ([2605:a601:90a8:8b00:dc6d:d141:d6d7:493e])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-71b5a3a999esm64149937b3.2.2025.08.10.09.03.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Aug 2025 09:03:41 -0700 (PDT)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>,
-	Calvin Wan <calvinwan@google.com>
-Subject: [PATCH 3/3] editor: use standard strvec API to receive environment for external editors
-Date: Sun, 10 Aug 2025 12:03:19 -0400
-Message-ID: <20250810160323.49372-4-ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250520193506.95199-1-ben.knoble+github@gmail.com>
-References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
+        d=1e100.net; s=20230601; t=1754841978; x=1755446778;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ruqRhvdBgcUD6BCZN1Wpt83H9FBNbqSnv05hRwR4ks4=;
+        b=jpJIBt2SfXDo3i+CxMzcerpLZOdwCHp9WC6Snys8Qn1crWNxarl8BDfOIONWCOBOIj
+         US27AyD/VwbGN6ClyAEE4c6Rjw9OGm9YChiKlSe33VgIiol5m6aFGyidWl5ZtNdOGURB
+         GvkxJdjRYSkp9X9XVHBpRKtEWI5STJzgEY5j99kGlZ8OMDHBujOxPgBKTvWEx+803X5l
+         r/NwW9B/VFYLFZHFErEEXNRmSOE4Ci1GltrhQR0sH5+lqtJfOBs8y/EiIsCerAd65QT5
+         Na0FSisTsqg4wPF8DatI9/0C/Jm+DKItqkA3IAbQGjhqfMysThq5jjyMDklFghsNlMJ8
+         bUHQ==
+X-Gm-Message-State: AOJu0YwvvX+uI+tngh+gnyIZKPr9XiU15C8bNqotrqKwGZal1M8LGsh4
+	0iNAsd6KngY7+YpZRoS2pfpvnN48o6lnhqjFlWMIb8HuiYmKxxlqwVya5fZqLQc/gcP6SbfJELV
+	tqPltAmjPtNQg+VAQT3KJ3katK3qoF/og3JjQ
+X-Gm-Gg: ASbGncslYMYzjfkmaPRHSc7nRS2MxZVCQIXAUClXUc97HdmijorsyS1ZrtOvx8zWCPo
+	HIo/33iFisGP8gbY/URsB6f9cAoe16ZPmaUIc+knSwHq0/IjJAhiejOu9Cz1vchY5mleorzq/9d
+	0EYd2+XqRKU+SGyGNT3NK4hkfVlAyynDAuwr8votvC2Khd017nBJ1l16d2uMh/QaOtt357DqcXa
+	NMVvpG8VL7vyt516wtS7N4pMk/LY+qHPniKNty8vW4l7uP3b7rd
+X-Google-Smtp-Source: AGHT+IGHOoe6CQzfPqWwdLoVcuN+n3/sRKoYS9wXi1UkEI875oxfS5ZF2CkwWG0J52ibOJP1EWw7XqoIMnzHGZ81n04=
+X-Received: by 2002:a17:907:2d93:b0:af9:1d21:65a1 with SMTP id
+ a640c23a62f3a-af9c63308b6mr907306966b.11.1754841977712; Sun, 10 Aug 2025
+ 09:06:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250520193506.95199-1-ben.knoble+github@gmail.com> <20250810160323.49372-1-ben.knoble+github@gmail.com>
+In-Reply-To: <20250810160323.49372-1-ben.knoble+github@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Sun, 10 Aug 2025 12:06:06 -0400
+X-Gm-Features: Ac12FXxTNLUHtdIbXKpoxCd-kdIb4qluJhHjWxRFHyg8Kb7XXZgG1jtSAgodYU0
+Message-ID: <CALnO6CAQNF2gD5BWvm50LN2D6mAHNRxdzeZ7ZQhvt-Gr3oHumg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] clean up some code around editors
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Going back to the introduction of the env parameter for the editor in
-8babab95af (builtin-commit.c: export GIT_INDEX_FILE for launch_editor as
-well., 2007-11-26), we pass a constant array of strings: as the
-surrounding APIs evolved to use strvecs (see 8d7aa4ba6a
-(builtin/commit.c: remove the PATH_MAX limitation via dynamic
-allocation, 2017-01-13) and later 46b225f153 (Merge branch 'jk/strvec',
-2020-08-10)), the editor code did not.
+On Sun, Aug 10, 2025 at 12:03=E2=80=AFPM D. Ben Knoble
+<ben.knoble+github@gmail.com> wrote:
+>
+> Changes from v1:
+> - add a prep patch with style fixes to t7005
+> - rework the environment munging to use subshells, per Phillip Wood's
+>   suggestion
 
-There is only one caller of all 3 editor APIs that does not pass a NULL
-environment (the same caller for which this parameter was added), and
-it already has a strvec available to use.
-
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
- builtin/commit.c |  2 +-
- editor.c         | 10 +++++-----
- editor.h         |  7 ++++---
- 3 files changed, 10 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b5b9608813..16cad7fb03 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1116,7 +1116,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		struct strvec env = STRVEC_INIT;
- 
- 		strvec_pushf(&env, "GIT_INDEX_FILE=%s", index_file);
--		if (launch_editor(git_path_commit_editmsg(), NULL, env.v)) {
-+		if (launch_editor(git_path_commit_editmsg(), NULL, &env)) {
- 			fprintf(stderr,
- 			_("Please supply the message using either -m or -F option.\n"));
- 			exit(1);
-diff --git a/editor.c b/editor.c
-index fd174e6a03..0bc781d50c 100644
---- a/editor.c
-+++ b/editor.c
-@@ -58,7 +58,7 @@ const char *git_sequence_editor(void)
- }
- 
- static int launch_specified_editor(const char *editor, const char *path,
--				   struct strbuf *buffer, const char *const *env)
-+				   struct strbuf *buffer, const struct strvec *env)
- {
- 	if (!editor)
- 		return error("Terminal is dumb, but EDITOR unset");
-@@ -89,7 +89,7 @@ static int launch_specified_editor(const char *editor, const char *path,
- 
- 		strvec_pushl(&p.args, editor, realpath.buf, NULL);
- 		if (env)
--			strvec_pushv(&p.env, (const char **)env);
-+			strvec_pushv(&p.env, env->v);
- 		p.use_shell = 1;
- 		p.trace2_child_class = "editor";
- 		if (start_command(&p) < 0) {
-@@ -124,20 +124,20 @@ static int launch_specified_editor(const char *editor, const char *path,
- 	return 0;
- }
- 
--int launch_editor(const char *path, struct strbuf *buffer, const char *const *env)
-+int launch_editor(const char *path, struct strbuf *buffer, const struct strvec *env)
- {
- 	return launch_specified_editor(git_editor(), path, buffer, env);
- }
- 
- int launch_sequence_editor(const char *path, struct strbuf *buffer,
--			   const char *const *env)
-+			   const struct strvec *env)
- {
- 	return launch_specified_editor(git_sequence_editor(), path, buffer, env);
- }
- 
- int strbuf_edit_interactively(struct repository *r,
- 			      struct strbuf *buffer, const char *path,
--			      const char *const *env)
-+			      const struct strvec *env)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	int fd, res = 0;
-diff --git a/editor.h b/editor.h
-index f1c41df378..627e992f4d 100644
---- a/editor.h
-+++ b/editor.h
-@@ -3,6 +3,7 @@
- 
- struct repository;
- struct strbuf;
-+struct strvec;
- 
- const char *git_editor(void);
- const char *git_sequence_editor(void);
-@@ -16,10 +17,10 @@ int is_terminal_dumb(void);
-  * file's contents are not read into the buffer upon completion.
-  */
- int launch_editor(const char *path, struct strbuf *buffer,
--		  const char *const *env);
-+		  const struct strvec *env);
- 
- int launch_sequence_editor(const char *path, struct strbuf *buffer,
--			   const char *const *env);
-+			   const struct strvec *env);
- 
- /*
-  * In contrast to `launch_editor()`, this function writes out the contents
-@@ -30,6 +31,6 @@ int launch_sequence_editor(const char *path, struct strbuf *buffer,
-  * If `path` is relative, it refers to a file in the `.git` directory.
-  */
- int strbuf_edit_interactively(struct repository *r, struct strbuf *buffer,
--			      const char *path, const char *const *env);
-+			      const char *path, const struct strvec *env);
- 
- #endif
--- 
-2.48.1
-
+Apologies; this should have had the "v2" subject.
