@@ -1,186 +1,117 @@
-Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com [209.85.215.194])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7279023A6
-	for <git@vger.kernel.org>; Sun, 10 Aug 2025 01:57:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D98A24293B
+	for <git@vger.kernel.org>; Sun, 10 Aug 2025 10:09:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754791053; cv=none; b=uGL6fMJmZkUTmzVxkpoT/v0F1zHVUkiwO04l1uDynWKCnvFqhgsczvhH5oIMUgfDlhn0uemIzHEf2BtF9fXfuDnWnO7XncAnRNHHXOJmVev2GefN8ejARahU3whW+zdfmvBgVsjn3xcFMkEcq2LFYyA8ij2mpPD1aqIhfMwmgbI=
+	t=1754820542; cv=none; b=ih/k2m11DtQoH66jBwFXeOfTGX4f1jWE9dXuMLQ9Wi5NRNGwwsw2jGOYnwF3CbX42UQ5IwhrkzGvbw2bqWv0PyAYZFQGHvbQiSS9hD2e8qZJS3czalSVCOKU34mwd1YgpTawkNKDszLR/D7AIHWqDbvO+oOPBHuwZmRGo2Ivhu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754791053; c=relaxed/simple;
-	bh=Y+bojvseISA7ryM8g4sqXz2Jz4NYpDDSZIgDf1MRXfI=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=KAbr5gBvrCwdFi8WklfurHch84U6NdVVLpSickuIKgcm9JTpBAMjgzP0DqSFI+y/fYempiFn1ZzvAgGl7W40eMBbJiZVybS82ejAO4Q5CKRbGV6ILf8u7ulOH1uxlK+1MagzrAduLjD0LjpJD3/+2AsQeygq/wKp+gVsjhyPoms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XgTGqt0m; arc=none smtp.client-ip=209.85.215.194
+	s=arc-20240116; t=1754820542; c=relaxed/simple;
+	bh=Knib10HvpGv2N1cWPmlchMXkFRdHTSF0GpfOrXabgvI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QETrx9qSTGMeKwOuS6bAr6GL3D0dg4EoVdvikOjTR6JBGx4yizk8Fj65tyFGh6C4c+oMZn3r46NOiUE0N1ULe85YRlJA3UeadZZ4XYjKepOus5Wfl7yrdG02B7n5dX6L+IvyMswLI93y41930XvkkezloOpQKQPagbplPqm6DHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nlU8n2tW; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XgTGqt0m"
-Received: by mail-pg1-f194.google.com with SMTP id 41be03b00d2f7-b46d905cb67so42473a12.1
-        for <git@vger.kernel.org>; Sat, 09 Aug 2025 18:57:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nlU8n2tW"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3b79bd3b1f7so1621187f8f.1
+        for <git@vger.kernel.org>; Sun, 10 Aug 2025 03:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754791052; x=1755395852; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oYB9rbnnPYJBqCOKgfbYe8oQ/5IzXgip0bt/VTZqhcE=;
-        b=XgTGqt0mSfdD+I0L3mXg24GNPRZDL5u74lavwhi43R1MVWo1XVJE/SUYozdpwwSNTr
-         fhJzm60M9JQ+nscbWFK/XaoKcD0wsrqHq9PDbuuxSa1igsZCaaSItjGqtUQaSdONWssb
-         CP9oS6wBMZVv46oRRM0u0Dee7Awu6bjl7q1aXxX/lCQDER3/mC960pnG6RdOzLA1i6Q8
-         yvPYZ7zEV6QUSScLalqmltholVk3/W+Wcon4Gk3KNWOQBZgOYM8HjzIN1QqKaBsxK1zq
-         b7NdqJGcf2OSVYqhiF44Pne93stgJZqVxy9ysSkudKyGg9DzPq8Yai4UObHU9+MM1aD9
-         GhVg==
+        d=gmail.com; s=20230601; t=1754820539; x=1755425339; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XwSOFjnZGqsfLbHAJQV7KyIzcMdXo7zPuTbKTj0vr3o=;
+        b=nlU8n2tW4MbQT2bzqOCkWKNRaaKZFXCvdVAEb9PGSESCPNaD6/rXCmkuskiUTO2GzC
+         SfrcxY2bqUVdd6yT/ba1lyaDlh6lmozvh4gnDDzDYat2tgRtTNGgyF22Y5/DfEtRaHw8
+         BE8/V7Ce9K9QcobpwIiIRH/lflW8bOMfSSh3sQ6SCvImREJ4BtYvfCKVKE0fMMJp6kJc
+         GkjJtOxzWtFiBat+e0QepXzctV6s22TScYtg3DF2+dcEEQ5kNj7yespPkZIBph1MhcOX
+         OsGKzVSU2ZXfQ5ekmxwj6lw1dsv8KIKX4IX1ATYzIKFJ0Vz4zs7VmGSH4NZ38jwmtGKD
+         rLkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754791052; x=1755395852;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oYB9rbnnPYJBqCOKgfbYe8oQ/5IzXgip0bt/VTZqhcE=;
-        b=am4NU+7wKpWAQsai9ZDRh0CM82Qz/uCC/yqSVYctRVI7XLmuTvQzZy24HFexj5knaa
-         n17d6GFqYCPFDqd/VjKlZS+Tv48X8r+28x9dcQWJ95dtJvxYk7sV+1iusEMUQr2YXrlc
-         S0EfWyB1QpVtPYyRFCoj3uSu+l0FiQeK2NH4Wqx/mxTDH86uAgwGu4nszSSO0sY9UDmL
-         a2cPGu7dXDF5DkdrOAKE12q+Efajhnz3lJjmU9XhAozNjuGh+2W4dWHPflS66HfWDpxg
-         E6qanDjhVFfVUw0a8lkKwjjFv503O39Nx1gd+HnlRjCDAEeDie/w3VbCRYdgyFrNtzC9
-         ZSUA==
-X-Gm-Message-State: AOJu0YzYfSf0+wL+rrKVeOKuw1spt2NpjwmZSaKCXNhO4PtarK7S8Fou
-	jdld+baznYJxmV0s0H877PIZP2Ldk7nuj3kDxamJwuWQDJ4+Uhskon+cZhF4lhe4MFMKcA==
-X-Gm-Gg: ASbGncvar9qzduX8u+nYdW6RK0BRNv4xO8qocGqkNi7C7ZyqXPwwi655KfKLHvHoG4C
-	5R4LeKX0QI1EsJIK8BCyFx4X538XsNtbVquek9PpwJr5tcSYgfYVVokJ8xDIYcGPkKUf80t4Rob
-	LEI2gPoFbjF13/Y+mYBOvWY1ziX6H32GVTXyROhb0CFfkOO38PJbRxkq13rgzLuGEurE6HG/0j4
-	Jzr2B1HWMjdmm0wVT2WdINZ6Hm9rhwHRxl1HAYiNLOJNbXQZfkEBBI9+tIr4W1adGAXuR+/sjkJ
-	WFVr+GOa0NLYO15LvRLxt/I8G36Kh53kcrkCcBGXCsLzYdSWDNr/V3m1yPenKYsxGfF6w2NUR7k
-	mWV87hK480r0o25xNO3uZBYKM4ZRZrm3GTNdL5T5sCQ8gR+bJGKSTJoY/zg==
-X-Google-Smtp-Source: AGHT+IF77oZ/2qPvAsWBZU2X8L+0TsKdH4V6+dMXm5axyxpM7pu1U2ItH7tzi44s2gzQ/H9fhQPmaw==
-X-Received: by 2002:a17:90b:4d8a:b0:31f:252:e765 with SMTP id 98e67ed59e1d1-3218439cfacmr11649566a91.6.1754791051468;
-        Sat, 09 Aug 2025 18:57:31 -0700 (PDT)
-Received: from smtpclient.apple (awork062145.netvigator.com. [203.198.28.145])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31f63da5719sm28174649a91.6.2025.08.09.18.57.28
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 09 Aug 2025 18:57:31 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+        d=1e100.net; s=20230601; t=1754820539; x=1755425339;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XwSOFjnZGqsfLbHAJQV7KyIzcMdXo7zPuTbKTj0vr3o=;
+        b=ZlK9DugZJNMTt//BpxkSJX5IioFUlTZyVV5Hra9L7c2IJkh5ghz6sc+4+pBLRBvDQI
+         ldN8CWofdP89fCqit3M/oatZ1hNe6SwnVp95NEYU9pOONJx+4R2sowxyuTT80nYU7ACF
+         y2/rtwIMZsi+d8egOiZUUonv2ub1TymOOXdHff5uIuJ7I0AzZUI7OVI1MQ9OtOK+i5Gx
+         4QCjxe4D53hGltQA4sskNrKdHfL9KsynQxZf1fCNEhGKPawuQRB5XvCQesaIOYYIAsoR
+         iuyswRoBrbVVXRMCf5hYet/idpfAc6iBQGBhDSvfYUxQBsQcNzGC6GPJZ4hS2Bnqa9bE
+         obXw==
+X-Gm-Message-State: AOJu0YxTuGsddwcp8HtoAtKTqWGn1AT/a/zRirR25YzdmF3i6Yt1SNOi
+	uHrQFONKNikKzGcJld0/w9LGs8fFR+FvvRt7nfviBaaucw1dxxDAKxmd
+X-Gm-Gg: ASbGncu/4OVKCGldqUN+0SONlJ4q98IBxnkcUuGNkTp7n4IcMU+Exfcn2mUqLzHL0EH
+	ptwc99Bm1iI5r7INa8JkYcUqq2a7y5fat9mBEksZVM5QQpwLdvW6zBgJTcw2Y+KAtSgIR2JTjGa
+	1Ruu199C+Z7JYlF5OeQg5ChSLqxJy9MdxHzyou0SbiL2TAX2fSBhhgmZmHaf183LEnxNaSFyR8A
+	froSsC6MHnLMh023+8lLNpY7aLrWlfmZeLDI3ECvAkcO4M5Kn6tquRlboaBG1A5SQ+c2sGAkOuW
+	AXA2/AZm0blrDOQj+zyGXsv+H50X+jHq1QAoCPQ5f32GWSh4BsetEFuxLpk413AMWh/uCWaghqq
+	XAM6N7yYBWsLsjG8Dcrzk7EzPb4UGjv6+c9CxJgIwr0z1JDebr7zlz8gUqt99wq/z0UDAX//HJ6
+	aVwiCmCPA=
+X-Google-Smtp-Source: AGHT+IFDESrgR88kciMqxBIsc/6GDGMK5EcKxcO9e+JXC2QFVGJulUUd6/dZZoE/qhB3ZwYClbeuqw==
+X-Received: by 2002:a05:6000:144f:b0:3a4:f663:acb9 with SMTP id ffacd0b85a97d-3b90093e6d2mr7116737f8f.9.1754820538654;
+        Sun, 10 Aug 2025 03:08:58 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7a5:4701:388b:154d:e1e3:7131? ([2a0a:ef40:7a5:4701:388b:154d:e1e3:7131])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3c33fesm37300680f8f.29.2025.08.10.03.08.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Aug 2025 03:08:58 -0700 (PDT)
+Message-ID: <cc90fefd-9234-4fb7-a00e-96c4004ddace@gmail.com>
+Date: Sun, 10 Aug 2025 11:09:19 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH v3] bloom: enable bloom filter with wildcard pathspec in
- revision traversal
-From: Lidong Yan <yldhome2d2@gmail.com>
-In-Reply-To: <xmqqpld45a0h.fsf@gitster.g>
-Date: Sun, 10 Aug 2025 09:57:15 +0800
-Cc: git@vger.kernel.org,
- stolee@gmail.com,
- ttaylorr@github.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3C87ACC0-DFC0-4941-9611-1325911A92BE@gmail.com>
-References: <xmqqsei1izhs.fsf@gitster.g>
- <20250809021642.22195-1-yldhome2d2@gmail.com> <xmqqpld45a0h.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] git-jump: make `diff` work with filenames containing
+ spaces
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Greg Hurrell via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Greg Hurrell <greg.hurrell@datadoghq.com>
+References: <pull.1950.git.1754674979929.gitgitgadget@gmail.com>
+ <CALnO6CDnSXpUVQEUJr=dc1ZY6errSv2M=4EmeaOmfDvcifHvnA@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CALnO6CDnSXpUVQEUJr=dc1ZY6errSv2M=4EmeaOmfDvcifHvnA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
->=20
-> Lidong Yan <yldhome2d2@gmail.com> writes:
->=20
->> [jc: avoid allocating zero length path in
->> convert_pathspec_to_bloom_keyvec()]
->=20
-> This is different from what I did, though.
+On 09/08/2025 15:44, D. Ben Knoble wrote:
+> On Fri, Aug 8, 2025 at 1:43 PM Greg Hurrell via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> From: Greg Hurrell <greg.hurrell@datadoghq.com>
+>>
+>> This commit takes the simple approach of unconditionally stripping any
+>> trailing tab. Consider the following three examples:
+>>
+>> 1. For file "foo bar", Git will emit "foo bar\t".
+>> 2. For file "foo\t", Git will emit "foo\t".
+>> 3. For file "foo bar\t", Git will emit "foo bar\t\t".
+>>
+>> Before this commit, `git-jump` correctly handled only case "2".
+>>
+>> After this commit, `git-jump` correctly handles cases "1" and "3". In
+>> reality, "1" is the only case people are going to run into with any
+>> regularity, and the other two are extreme edge cases.
+> 
+> So we drop support for case 2? Hm. I personally try to avoid this
+> situation anyway, but it would be nice if we could just do the right
+> thing here.
+> Or maybe we should consider trying to parse --patch-with-raw output
+> for the filenames?
 
-Sorry, I don=E2=80=99t fully understand what you mean =E2=80=94 should I =
-remove
-this line or rewrite it?
+An alternative would be to parse the filename from the "diff --git" line 
+like "git apply" does. As we're generating the diff with "--no-prefix" 
+that should be straight forward as the line is "diff --git <name> 
+<name>" where <name> is the name of the post-image file unless it is a 
+deletion in which case it is the name of the pre-image file. We'd still 
+need to check the "+++ " line or look for a "deleted file mode" line to 
+handle deletions.
 
->=20
->> @@ -693,19 +698,31 @@ static int =
-convert_pathspec_to_bloom_keyvec(struct bloom_keyvec **out,
->> size_t len;
->> int res =3D 0;
->>=20
->> + len =3D pi->nowildcard_len;
->> + if (len !=3D pi->len) {
->> + /*
->> + * for path like "dir/file*", nowildcard part would be
->> + * "dir/file", but only "dir" should be used for the
->> + * bloom filter
->> + */
->=20
-> A missing full-stop.
+Thanks
 
-Will fix.
-
->=20
->> + while (len > 0 && pi->match[len - 1] !=3D '/')
->> + len--;
->> + }
->> /* remove single trailing slash from path, if needed */
->> - if (pi->len > 0 && pi->match[pi->len - 1] =3D=3D '/') {
->> - path_alloc =3D xmemdupz(pi->match, pi->len - 1);
->> - path =3D path_alloc;
->> - } else
->> - path =3D pi->match;
->> + if (len > 0 && pi->match[len - 1] =3D=3D '/')
->> + len--;
->>=20
->> - len =3D strlen(path);
->> if (!len) {
->> res =3D -1;
->> goto cleanup;
->> }
->>=20
->> + if (len !=3D pi->len) {
->> + path_alloc =3D xmemdupz(pi->match, len);
->> + path =3D path_alloc;
->> + } else
->> + path =3D pi->match;
->> +
->> *out =3D bloom_keyvec_new(path, len, settings);
->>=20
->> cleanup:
->=20
-> Two comments.
->=20
-> * For a function that finds an error condition in the middle and
->   jumps to the "cleanup:" label at the end, it is more future-proof
->   to start pessimistic (i.e. initialize 'res' to error(-1)) and
->   flip 'res' to success(0) at the very end when everything went
->   well.  It would simplify the change necessary when we need to add
->   _more_ early error return code paths to the function in the
->   future.
->=20
->   But this flip from "assume success" to "assume failure" is
->   something that should be not be done as part of this patch;
->   perhaps doing it a separate preliminary clean-up patch is a
->   better way to do so.
-
-Ah, I=E2=80=99ve always thought that `ret =3D -1; goto cleanup;` was a =
-kind of the
-everybody-should-use pattern. So when I saw you write `int ret =3D -1;` =
-first,
-I was a bit puzzled. Now I understand what you mean, and I=E2=80=99ll =
-add a
-cleanup patch.
-
->=20
-> * I think the change from v3 (this one) to v4 makes the function
->   worse; we found that it is a good practice to have a single place
->   to release any resources we temporarily acquired and arrange
->   exception handling code to just jump there during the course of
->   this project.
->=20
->   The current implementation may happen to have only one such early
->   return (i.e. "len has become 0; we realize that we cannot use the
->   Bloom filter"), but adding a new early return in the future would
->   be easier if you kept the original arrangement.  The new early
->   return condition may have to be computed after we have acquired
->   resources we need to release, so it may need more than a simple
->   "return -1=E2=80=9D.
-
-Understand. I was thinking about less code is better. I will add the =
-cleanup
-part back.
-
-Thanks,
-Lidong=
+Phillip
