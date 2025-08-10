@@ -1,62 +1,62 @@
 Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524F014AD2D
-	for <git@vger.kernel.org>; Sun, 10 Aug 2025 16:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DA525BEF2
+	for <git@vger.kernel.org>; Sun, 10 Aug 2025 16:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754841814; cv=none; b=bpal2+PLHxwCkDyS5KlTmR9LyrVjY4KkP3dAXyIyGTHL0PemGhzBAiwe1OurDPYJambYnosZHOXcvIhugA15d/ZLNOV7CP9P/pU3j9HPjkPzGn8x9ww9Yf53s/YJVdSzWf2GvWhZgx/EX3bL2KSoxv2O2OPFPAPmekaqZePGk8I=
+	t=1754841815; cv=none; b=KmQ1syB+sLm+kZx/Ow6f7HBcinmM/qRsWZ1CUnTcA00aRia2rXzMwNMeqOLsuDxx/G8ByaR3y0cXX04B0BlYIPI4JYp2uys+rzhFKh/+VO5/4gdbqcBOd1TN/4NNS3hQVFmCxO5F89g7/03nVa85rLHQjvWby80z9pP8+Q6ghQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754841814; c=relaxed/simple;
-	bh=qhlqpeeOoWA9StQVGmFMeT9XDQps9xuwgVx+blDCaks=;
+	s=arc-20240116; t=1754841815; c=relaxed/simple;
+	bh=qoLiv0Onzb/xEnMDclh4YnKyOzQ9kJ6phB5idsjaU9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=inF0fp1RINVAF5g/tI2d8MszkyQKcKmlDXGmOwl6YnoUquhLjno15hHNeaeeduaVZW42Y16+ID/LnWPKX6nDLvJwnqhfmmF23rPppRLmwxi1/BP4necl3yGqJMaL3JkqfTVF1kTAsKZXbCeUg4B/o6BYHn3CiausN6qgILVgcsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ABiJ/4Jz; arc=none smtp.client-ip=209.85.128.180
+	 MIME-Version; b=M8LI2LKljr1PAlnXCfbGohIRAW5bu40OaJEpGCXbnNbrIjVdlhvf4k2nyx+QSdxNJGWkiuIITlU5DwKszrTdcT19Pf2cNEa7AGp4K6wAY/Q0OtX/IilXMbT5YsvhzH6yTzABRHx3MoFWBuW+y+ECw0rUnKWxT6idcfcr9wOSrXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WWxMG3yS; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ABiJ/4Jz"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-71b71a8d5f0so41096117b3.3
-        for <git@vger.kernel.org>; Sun, 10 Aug 2025 09:03:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WWxMG3yS"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-71bd9e38af7so33285077b3.1
+        for <git@vger.kernel.org>; Sun, 10 Aug 2025 09:03:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754841810; x=1755446610; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754841813; x=1755446613; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=B9WPQGbLmBgTI9J2INqnhlIglejr0grrpA347O9Tu2U=;
-        b=ABiJ/4Jzh3gfUzxeMlU58crZiquaPa7v1V4LzlOTpzNl6HKmQafEa1fF58iVO1B2q/
-         04Fjme5Ge1Pp1efzOwEWPYZha22f54AmgIhkUBYLGaF6X69FJq+0/0+z9Jksa7Pz0HTw
-         6rhKIESYS0VP8757uQMAQujGRyTp6uWQ+sT/E0wUAYZDSE0ZN0HrlTpo0y1puXhpPYa/
-         rwV5eCubDlQZELwm4xe7aqF08tmT85xiJCNcLZIf25JoFewSrc9TGSNSRGQgZsOIQGwl
-         zdGdPNwaefYFeIE0/FGvzoYKqzSF6r+mkw0zgNtHafGOJsgKMjCGN18qaawisBjTzkvd
-         lCwA==
+        bh=xVi+DmLyiC6v2ZKNBrE9DU3piGbuOuwJGD2ZzWZTCWg=;
+        b=WWxMG3ySCG1/eD/n1bWtSoJs8EMOTL73VhJ6iljXiM1GOMJ+oPOTGnorFct0vPaixa
+         WznHEl9CetS4+PQF4n9bz7jZdIDPN1ePl37gDwDiZbHP2HfjHoKuMNlcqslFqeSnOeIf
+         7jClCLDskVH3UlsadF7xwsAWy/MgR3ghjXL72pcRhbdEuwmCyiy+9bzBtvsQPdIvTUug
+         WcisZUXZNf5HH0vmpu93FJ0VONP51MvNGpW+uMgQT0mU7Ahs1A5nBnF0aBWy/NaF7zT/
+         qXPVxPSGw0tBXn9GmHPQ1Ov48RwIeX3EUdbUloBriMbkl0Ef+PllQryAvefBKcM+Q8+r
+         NWpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754841810; x=1755446610;
+        d=1e100.net; s=20230601; t=1754841813; x=1755446613;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=B9WPQGbLmBgTI9J2INqnhlIglejr0grrpA347O9Tu2U=;
-        b=dHv6zpm22UXJ5BQCZWYGc4/RG1ddQuAaGH9nUWnv7DuxXY+mrBdmvgXWROelGuT0+X
-         nV79d5c9ThmQQ7v8/fC+l7KSw+2w20lBSnwgpD9zx2lR72J4vmdmqAodHhljABAWsar7
-         pVCB6MtPmBgRF56GjPNF70tL7Gvaj6Ukj/wtlTazaA2jOUsOHn+GtTI/MbpnDhmzR1zC
-         JukqXKUQKEbILbyWPsLUJjHv4LE8XAdK67vN4QfY4nNgZO62FYX+beMM/zfrgqH2oOAU
-         5mnUfxhRB4FMWtxwctxwRJ01vR+VboVl55U8U1e08qyBBVIb551qncVjBcXy1ZmD6B0w
-         wd8g==
-X-Gm-Message-State: AOJu0Yxo5rD6VN9kc9Y5HsIOz6p75wgRB4flyY8P6Qujcse9w5nwRQ12
-	WyvEJu0vMINOU4weqVz0qjbnZS8yNeXFvgHluWjKl5EPqSqv9vKUVQ7uTJbrX4TJ
-X-Gm-Gg: ASbGncuzRn2Qh3C9bMX+vUUO9Ox8DYZZoFddHfJ/eSIk7rnAxt/2FsRiSGrdANPAtyW
-	s2tCoiGnQV0bVMMjfz4c6T4lN3q5ZGSvmuTuhAM+fWMTygGIePqpN4Se6kAo+0d/PZBNjBin4t2
-	WpnBktAjs7Op2shNA2hbS5EYErkKEhjWUMHYwR12y6TwpuqGtAiI5PL2CN9SoiUYzXvdAf1Gbgu
-	KygXbjYjV+lSLNafLcL+AhtpHZFiGDAgeYr74kMilG7iW4zWEVi5B/vQJlnouw5goyA/uqAGXKu
-	NZBstahWnKEW+Euk+O2uihj4X8iNUXgBzHUCtSMumxrjhi1Ka9M67tyZeMZRPttwG3ID8m1vpe4
-	aikU8H2GohT7srnwGZ8hvpFvqp6xUVO+3PrQdtMvft6k0Kh+Mt3cVmXdFNzlLR/SVBc7SQJop
-X-Google-Smtp-Source: AGHT+IF0b3p/9k7oBBaE3FSE0ara5FPMty2r4Go4QUCd8LFQHf31caqvVxtWEyUwLHeDI/2IewNx4A==
-X-Received: by 2002:a05:690c:9a8a:b0:71a:51f:81a7 with SMTP id 00721157ae682-71bf0e13d6amr120562027b3.26.1754841809349;
-        Sun, 10 Aug 2025 09:03:29 -0700 (PDT)
+        bh=xVi+DmLyiC6v2ZKNBrE9DU3piGbuOuwJGD2ZzWZTCWg=;
+        b=poqCURhLYMjbHcdtrTYoPLUMlS2iAYrJq4H8mwokDCy1Kr4bDMvPNjj4/AuMUaPgh3
+         nOlTj8MlMtPSMUhZU+nFnk3GvAyJTeC8Jl5LBp9wcGITEDUsTtMCeztgAe6kKD9C1Bl8
+         WThX79xxept38GA13hYdQ8w4nUWuyvSFlr2fmf6nwoNPeLKo5qv/n43k5kIAG7VWV3Ag
+         H/BlXK/KdjEitTBIP2s+IXbZA6W96cEXu6iYOpmXf3cZruvNdu+0elpcvH94ShvBTYNC
+         Zjac/vz3OqAJsR0UWn+4R45fYWMdLWWHFj5+0eZaLpvgJ+Z+qjUDhfeSiFgEHmeaEehK
+         3Fow==
+X-Gm-Message-State: AOJu0Ywoe+y+0RXm0e41y4ojp33d2imNUv+ejNXtY2tCgAeuI6iujCEq
+	rb6/iqwBb3M7CEBNVJWjnu/0rCtLqOpXev4jTTBqPW/QwYtu/b71KEsqU60C3iHq
+X-Gm-Gg: ASbGnctmYA6ZiIc2jCNZ/E/cooUp2JvEiEM9VonjIGsAmmxb4WMnePp04/8yJe4FIgL
+	XLGPVFssPqaaUVdrei0W1M0O7crjqLmKI/TbkEKv7zGWgbqA2EZJG0yyGycLY13C7BS9zaBkER2
+	DDUHOdoe/2pqj6/a7RqBzkdJwewHi4a78M4nF1McwzgO1wPS1LvTVeucmQiKubQay19kY7m/1Gj
+	u4Edl8vFXrKO+zCzkWjRZEaQVDXtpP6vtVwZkh3+IC84ggTpzQgliP52cBs7T2RvLV8zVT7JL6j
+	V/4L818oietJsWPEAJRlkXi8GqLEzRI8GpaJn6tTx0a4fPtMNdVN28J5tDJAnFuZ7YFcOvcBkMH
+	drhylzhitTCWO9WyVaQB1IUuoA0+AfODf3RLCSVYZ48nda1kvwgmp52DXC26OYzcbIbnBm8XY
+X-Google-Smtp-Source: AGHT+IEv97U7DUd9ux83EIGDyjvpvftq63yd09dvjMMNKJoXxCpYDtzLJdJaezc6hmeMNfEvblDs7Q==
+X-Received: by 2002:a05:690c:4a06:b0:71a:198a:217f with SMTP id 00721157ae682-71bf0cdefe4mr115951357b3.8.1754841812531;
+        Sun, 10 Aug 2025 09:03:32 -0700 (PDT)
 Received: from localhost.localdomain ([2605:a601:90a8:8b00:dc6d:d141:d6d7:493e])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-71b5a3a999esm64149937b3.2.2025.08.10.09.03.28
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-71b5a3a999esm64149937b3.2.2025.08.10.09.03.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Aug 2025 09:03:28 -0700 (PDT)
+        Sun, 10 Aug 2025 09:03:31 -0700 (PDT)
 Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
 From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
 To: git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 0/3] clean up some code around editors
-Date: Sun, 10 Aug 2025 12:03:16 -0400
-Message-ID: <20250810160323.49372-1-ben.knoble+github@gmail.com>
+Subject: [PATCH 1/3] t7005: use modern test style
+Date: Sun, 10 Aug 2025 12:03:17 -0400
+Message-ID: <20250810160323.49372-2-ben.knoble+github@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250520193506.95199-1-ben.knoble+github@gmail.com>
 References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
@@ -76,235 +76,116 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Changes from v1:
-- add a prep patch with style fixes to t7005
-- rework the environment munging to use subshells, per Phillip Wood's
-  suggestion
+Tests in t7005 mask Git error codes and do not use our nice helpers for
+comparing results. Improve that, and drop a few old-style blank lines
+while at it.
 
-This reroll of the previous exec-path series is simplified to contain
-only the first 2 cleanup patches, which were largely acked by the list.
-Drop the controversial and broken PATH munging.
+Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+---
+ t/t7005-editor.sh | 32 ++++++++++++++------------------
+ 1 file changed, 14 insertions(+), 18 deletions(-)
 
-Also, this version is (still) based on a later master 112648dd6b (Merge
-branch 'master' of https://github.com/j6t/git-gui, 2025-08-04) than the
-original from May.
-
-These patches clean up some old code in the editor tests and subsystem
-that does not use our modern idioms.
-
-v1: https://lore.kernel.org/git/20250520193506.95199-1-ben.knoble+github@gmail.com/
-Published-as: https://github.com/benknoble/tree/editor-cleanup
-
-D. Ben Knoble (3):
-  t7005: use modern test style
-  t7005: sanitize test environment for subsequent tests
-  editor: use standard strvec API to receive environment for external
-    editors
-
- builtin/commit.c  |   2 +-
- editor.c          |  10 +--
- editor.h          |   7 ++-
- t/t7005-editor.sh | 152 ++++++++++++++++++++++++----------------------
- 4 files changed, 89 insertions(+), 82 deletions(-)
-
-Diff-intervalle :
--:  ---------- > 1:  e7629202a1 t7005: use modern test style
-1:  a37db65107 ! 2:  0467e33ed0 t7005: sanitize test environment for subsequent tests
-    @@ Commit message
-         t7005: sanitize test environment for subsequent tests
-     
-         Some of the editor tests manipulate the environment or config in ways
-    -    that affect future tests (because they test a sequence of overrides),
-    -    but those modifications are visible to future tests and create a footgun
-    -    for them.
-    +    that affect future tests, but those modifications are visible to future
-    +    tests and create a footgun for them.
-     
-    -    We can't make the environment-munging override tests undo their
-    -    modifications because they rely on editor variables overriding other
-    -    previously-set editor variables.
-    -
-    -    Use test_config and undo environment modifications once finished.
-    +    Use test_config, subshells, and test helpers to automatically undo
-    +    environment and config modifications once finished.
-     
-    +    Best-viewed-with: --ignore-all-space
-         Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-     
-      ## t/t7005-editor.sh ##
-     @@
-    - 	'
-    - done
-    + 	test_cmp expect actual
-    + '
-    + 
-    +-TERM=dumb
-    +-export TERM
-    + test_expect_success 'dumb should error out when falling back on vi' '
-    +-	if git commit --amend
-    +-	then
-    +-		echo "Oops?"
-    +-		false
-    +-	else
-    +-		: happy
-    +-	fi
-    ++	(
-    ++		TERM=dumb &&
-    ++		export TERM &&
-    ++		if git commit --amend
-    ++		then
-    ++			echo "Oops?"
-    ++			false
-    ++		else
-    ++			: happy
-    ++		fi
-    ++	)
-    + '
-    + 
-    + test_expect_success 'dumb should prefer EDITOR to VISUAL' '
-    +-	EDITOR=./e-EDITOR.sh &&
-    +-	VISUAL=./e-VISUAL.sh &&
-    +-	export EDITOR VISUAL &&
-    +-	git commit --amend &&
-    +-	echo "Edited by EDITOR" >expect &&
-    +-	git show -s --format=%s >actual &&
-    ++	(
-    ++		TERM=dumb &&
-    ++		export TERM &&
-    ++		EDITOR=./e-EDITOR.sh &&
-    ++		VISUAL=./e-VISUAL.sh &&
-    ++		export EDITOR VISUAL &&
-    ++		git commit --amend &&
-    ++		echo "Edited by EDITOR" >expect &&
-    ++		git show -s --format=%s >actual
-    ++	) &&
-    + 	test_cmp expect actual
-    + '
-    + 
-    +-TERM=vt100
-    +-export TERM
-    +-for i in $vi EDITOR VISUAL core_editor GIT_EDITOR
-    +-do
-    +-	echo "Edited by $i" >expect
-    +-	unset EDITOR VISUAL GIT_EDITOR
-    +-	git config --unset-all core.editor
-    +-	case "$i" in
-    +-	core_editor)
-    +-		git config core.editor ./e-core_editor.sh
-    +-		;;
-    +-	[A-Z]*)
-    +-		eval "$i=./e-$i.sh"
-    +-		export $i
-    +-		;;
-    +-	esac
-    +-	test_expect_success "Using $i" '
-    +-		git --exec-path=. commit --amend &&
-    +-		git show -s --pretty=oneline >show &&
-    +-		<show sed -e "s/^[0-9a-f]* //" >actual &&
-    +-		test_cmp expect actual
-    +-	'
-    +-done
-    ++test_expect_success 'Using individual editors' '
-    ++	test_when_finished "test_unconfig --unset-all core.editor" &&
-    ++	(
-    ++		TERM=vt100 &&
-    ++		export TERM &&
-    ++		for i in $vi EDITOR VISUAL core_editor GIT_EDITOR
-    ++		do
-    ++			sane_unset EDITOR VISUAL GIT_EDITOR &&
-    ++			test_might_fail git config --unset-all core.editor &&
-    ++			echo "Edited by $i" >expect &&
-    ++			case "$i" in
-    ++			core_editor)
-    ++				git config core.editor ./e-core_editor.sh
-    ++				;;
-    ++			[A-Z]*)
-    ++				eval "$i=./e-$i.sh" &&
-    ++				export $i
-    ++				;;
-    ++			esac &&
-    ++			git --exec-path=. commit --amend &&
-    ++			git show -s --pretty=oneline >show &&
-    ++			<show sed -e "s/^[0-9a-f]* //" >actual &&
-    ++			test_cmp expect actual
-    ++		done
-    ++	)
-    ++'
-    + 
-    +-unset EDITOR VISUAL GIT_EDITOR
-    +-git config --unset-all core.editor
-    +-for i in $vi EDITOR VISUAL core_editor GIT_EDITOR
-    +-do
-    +-	echo "Edited by $i" >expect
-    +-	case "$i" in
-    +-	core_editor)
-    +-		git config core.editor ./e-core_editor.sh
-    +-		;;
-    +-	[A-Z]*)
-    +-		eval "$i=./e-$i.sh"
-    +-		export $i
-    +-		;;
-    +-	esac
-    +-	test_expect_success "Using $i (override)" '
-    +-		git --exec-path=. commit --amend &&
-    +-		git show -s --pretty=oneline >show &&
-    +-		<show sed -e "s/^[0-9a-f]* //" >actual &&
-    +-		test_cmp expect actual
-    +-	'
-    +-done
-    ++test_expect_success 'Using editors with overrides' '
-    ++	(
-    ++		TERM=vt100 &&
-    ++		export TERM &&
-    ++		for i in $vi EDITOR VISUAL core_editor GIT_EDITOR
-    ++		do
-    ++			echo "Edited by $i" >expect &&
-    ++			case "$i" in
-    ++			core_editor)
-    ++				git config core.editor ./e-core_editor.sh
-    ++				;;
-    ++			[A-Z]*)
-    ++				eval "$i=./e-$i.sh" &&
-    ++				export $i
-    ++				;;
-    ++			esac &&
-    ++			git --exec-path=. commit --amend &&
-    ++			git show -s --pretty=oneline >show &&
-    ++			<show sed -e "s/^[0-9a-f]* //" >actual &&
-    ++			test_cmp expect actual
-    ++		done
-    ++	)
-    ++'
-      
-    -+unset EDITOR VISUAL GIT_EDITOR
-    -+git config --unset-all core.editor
-      test_expect_success 'editor with a space' '
-      	echo "echo space >\"\$1\"" >"e space.sh" &&
-    - 	chmod a+x "e space.sh" &&
-     @@
-    - 
-    + 	test_cmp expect actual
-      '
-      
-     -unset GIT_EDITOR
-      test_expect_success 'core.editor with a space' '
-    --
-     -	git config core.editor \"./e\ space.sh\" &&
-     +	test_config core.editor \"./e\ space.sh\" &&
-      	git commit --amend &&
-    - 	test space = "$(git show -s --pretty=format:%s)"
-    --
-    - '
-    - 
-    - test_done
-    + 	echo space >expect &&
-    + 	git show -s --pretty=tformat:%s >actual &&
-2:  5450c99f59 = 3:  4a9bb52470 editor: use standard strvec API to receive environment for external editors
-
-base-commit: 112648dd6bdd8e4f485cd0ae11636807959d48be
+diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
+index 5fcf281dfb..2f59fc0549 100755
+--- a/t/t7005-editor.sh
++++ b/t/t7005-editor.sh
+@@ -7,10 +7,8 @@
+ unset EDITOR VISUAL GIT_EDITOR
+ 
+ test_expect_success 'determine default editor' '
+-
+ 	vi=$(TERM=vt100 git var GIT_EDITOR) &&
+ 	test -n "$vi"
+-
+ '
+ 
+ if ! expr "$vi" : '[a-z]*$' >/dev/null
+@@ -33,19 +31,16 @@
+ fi
+ 
+ test_expect_success setup '
+-
+ 	msg="Hand-edited" &&
+ 	test_commit "$msg" &&
+ 	echo "$msg" >expect &&
+-	git show -s --format=%s > actual &&
++	git show -s --format=%s >actual &&
+ 	test_cmp expect actual
+-
+ '
+ 
+ TERM=dumb
+ export TERM
+ test_expect_success 'dumb should error out when falling back on vi' '
+-
+ 	if git commit --amend
+ 	then
+ 		echo "Oops?"
+@@ -56,13 +51,13 @@
+ '
+ 
+ test_expect_success 'dumb should prefer EDITOR to VISUAL' '
+-
+ 	EDITOR=./e-EDITOR.sh &&
+ 	VISUAL=./e-VISUAL.sh &&
+ 	export EDITOR VISUAL &&
+ 	git commit --amend &&
+-	test "$(git show -s --format=%s)" = "Edited by EDITOR"
+-
++	echo "Edited by EDITOR" >expect &&
++	git show -s --format=%s >actual &&
++	test_cmp expect actual
+ '
+ 
+ TERM=vt100
+@@ -83,8 +78,8 @@
+ 	esac
+ 	test_expect_success "Using $i" '
+ 		git --exec-path=. commit --amend &&
+-		git show -s --pretty=oneline |
+-		sed -e "s/^[0-9a-f]* //" >actual &&
++		git show -s --pretty=oneline >show &&
++		<show sed -e "s/^[0-9a-f]* //" >actual &&
+ 		test_cmp expect actual
+ 	'
+ done
+@@ -105,8 +100,8 @@
+ 	esac
+ 	test_expect_success "Using $i (override)" '
+ 		git --exec-path=. commit --amend &&
+-		git show -s --pretty=oneline |
+-		sed -e "s/^[0-9a-f]* //" >actual &&
++		git show -s --pretty=oneline >show &&
++		<show sed -e "s/^[0-9a-f]* //" >actual &&
+ 		test_cmp expect actual
+ 	'
+ done
+@@ -115,17 +110,18 @@
+ 	echo "echo space >\"\$1\"" >"e space.sh" &&
+ 	chmod a+x "e space.sh" &&
+ 	GIT_EDITOR="./e\ space.sh" git commit --amend &&
+-	test space = "$(git show -s --pretty=format:%s)"
+-
++	echo space >expect &&
++	git show -s --pretty=tformat:%s >actual &&
++	test_cmp expect actual
+ '
+ 
+ unset GIT_EDITOR
+ test_expect_success 'core.editor with a space' '
+-
+ 	git config core.editor \"./e\ space.sh\" &&
+ 	git commit --amend &&
+-	test space = "$(git show -s --pretty=format:%s)"
+-
++	echo space >expect &&
++	git show -s --pretty=tformat:%s >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_done
 -- 
 2.48.1
 
