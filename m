@@ -1,84 +1,86 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FC91E2606
-	for <git@vger.kernel.org>; Sat,  9 Aug 2025 23:51:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A7F635
+	for <git@vger.kernel.org>; Sun, 10 Aug 2025 00:03:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754783507; cv=none; b=OLx1nfQOaXTi7TH7pfoHIVOHMLIwVuDo+sbjInJ0pFDel4TrG1/4YvMruQrW4nRZvig85Jvo4E4EsKREMmqzJYfFkHZ0A1Jk8pudvJvipPaUYUrW9TMZvbwZwCFx9oVnnxIEbzlyVAHx8Iqko6WRIoznL6LMNkbFatxJ8D57OFo=
+	t=1754784195; cv=none; b=mdu04nFlXPUraSv+cjeZpOsiRuKfZgscMXd9rHoAPmAxUXPvcpXGzO/A8Uvy0worXiCrg4Cz+C/yge6zH9Po/zZHEpulcbZK8k2FHAATciLxVLP6MBZ7EtlaJxrBIV2N8A1Fvtt/5vqjXZ5hN0B8dU7/D4k9osw7ImPcRvB4nik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754783507; c=relaxed/simple;
-	bh=9hglmvnFU7yfhafO/c1YZkscztONbGXXf8qq4ysj5gM=;
+	s=arc-20240116; t=1754784195; c=relaxed/simple;
+	bh=zZHctESx3GznaA9aKEiQMVtwD9pz6CzqCZoAVaIwTDg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tvsNuZZ5E5BbjgfnHYt9f6IA0l0RbVSvnMvg/vIH8Bb1xYJbYwAHi8VDPhKuhRyFdoX02Ml79ydLVHoKAN8y5Sgkmc0l8J2Ewtab6CRH7nMMQqkJTksbwFmS34drHfiqM7n6IlEDZ6nBe1q8U/BH0mIHllSI90fc4qNdv5jbgWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MkM5qpvQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HPK6kaow; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=QQRQ3zkVJO7BSm+F1DWc9eeoMYUCi+CrJwMSyNx7/qJyInS2IUzIbPtgHlitUUGd6jlht6r6z4p0Y96yZka2jGYTFYnEnjuSr8UVgk4hJOmjop62xU/3QJP60nBR28EWbqJqJ4N5WwoAiV8ZsU2+iCtJFk6Q86DpA0a4PvHTUiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QItraZ3n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xlmhod65; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MkM5qpvQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HPK6kaow"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A0631400050;
-	Sat,  9 Aug 2025 19:51:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QItraZ3n";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xlmhod65"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8035AEC00CC;
+	Sat,  9 Aug 2025 20:03:12 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sat, 09 Aug 2025 19:51:44 -0400
+  by phl-compute-02.internal (MEProxy); Sat, 09 Aug 2025 20:03:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754783504; x=1754869904; bh=QoaJBhYqVC
-	SPIhR7Uy12nXtE2Johy1KRkr65Xxy+grw=; b=MkM5qpvQK+LwNvz14mss1TV+x4
-	tl8w9cl5osmhCt0OT5fctCcM7ldLkFxXYJc/WpwrP3e0kOD8P1L8tYLfdLls5FPW
-	vDp7E4IVkCMvhYSi7mvRKQf3B+M73aQJKbZsWQjOuSa7kDEmOGDTMuW/3YGt/dOG
-	PBggj+jiwe196qLULezOJggyj+cVkd32Uaf3gZzw+VMhqB2kJkqDGWNq8l7t6CId
-	X1soFYGiYkU5RU0KHudssSDVtatGrZJJCAUSEKWjKppFnapvL0DfrpmUDnyZxtz+
-	KMyneE/6OBQrqZcR8M/4A0zr7iUSPRzVa9RWmxWOriP9iOTQyv1MNoydlOJQ==
+	:subject:to:to; s=fm2; t=1754784192; x=1754870592; bh=iLuU/4LSJk
+	DB2Iete0sdoPBF6sH+Ld0/tVPdfe/bNlE=; b=QItraZ3nkd26fnRbAHuG4u5mLO
+	F8CezL7T7bV9mJcub4UVpybVDekjI2jp+tO/wOJ5WgRmnVYFarlLzP1Lv6q7NCPI
+	wQ1y6FeMlBm5y/YcBFmYwLmVRgQ55dDXTxPEo+nhYmZ6sLNJjKo5Zac/3uiFzJ4/
+	vyS21sKLlC0oJwoA84Yqv/aphHW3LYzcWFC0SNZ+Hgzuk3DxjEtJKDzxZFZ00qP+
+	qx3W5iCWOb++SzL3Lfn1YDp4LmIjRV+azVoauOYcQYtPPzFWUoD/EEu1+I7NxprR
+	Yg3rmeAl5de0XbIzTDWZh3XV1x4KS6FvsLGLsBm2bRpr9fwMXkAHfpFSqkIw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754783504; x=1754869904; bh=QoaJBhYqVCSPIhR7Uy12nXtE2Johy1KRkr6
-	5Xxy+grw=; b=HPK6kaowm1DMmcWC71CaWyFPRPFuzPGr5plhYYVhbaSIgejNHIc
-	+RvtaoQ9y5yrHjUTWRdtswQToGWkqdYk/T96UHrCsAd8u+012OYcNv7tjHoliBtr
-	bdBDh5TsNFXOeiXTvTSQZsNv0PUMDuA5iORXrtqGhMtJAC40rV+rWx/KcQ4YYLHJ
-	MeYW1DYvWmedTSsMi41f8e/9/bazEgyxU6Aii/yXwo13wG8fY11ZsLmWBk16qMBS
-	zzlpHY0wm6lwBexKnyMNizRWIIeD6MYjz4k0RGo0WE3NbZexU3eh9cAiqpM1OdBZ
-	EAr94Qtia7A+lxztCcm6xvvcfXkvl7MxxHg==
-X-ME-Sender: <xms:EN-XaKgrCZHqg8eaOHhtEy0-ZP3dTSYG8aBNJ50Syrlb5ivWaYsMQw>
-    <xme:EN-XaGgZE5ANbB-y25X43y_hzUx-CUF2tiYVM92wE1MgYN5JOIqaus0tyWH92JCJi
-    Kx_tJQVuM5YzfMyCQ>
-X-ME-Received: <xmr:EN-XaIhrdqK8tChJti-HaIwVNlwcXpKVhncn_x-g6t2EC5OOK6rm8it49EpcJ7ibP748Zl4dnf5Qwz-4j-g84IBJuosAevgH4qOJvzA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdektdeiucetufdoteggodetrf
+	1754784192; x=1754870592; bh=iLuU/4LSJkDB2Iete0sdoPBF6sH+Ld0/tVP
+	dfe/bNlE=; b=Xlmhod65IFqPukwj8yBvShD5xFEFYomZEq+NaWrsoOnhOVfIXuT
+	MAYFKxY/oMKV3vS9KRU6snxaxc91TXl8PMyEN2bX1rW8FfuA9nOwpHZ2xOFQEORr
+	bpRCXjM8xxfA6UyYVqW5ou+xTsEwNYplHAvVMiCsvO1yi+9mbqF0fgtSDVS/rMhM
+	KjYEXC7rNsjaQO4JIVJR4Ta/pjdWNK2cFjypwkTQ5hxdUIUr0myJlBc6fmtJUVae
+	WX93hTRHLT3GUEQNo6C8TQEaItDsLZnqd+dfDIRZbTx0xKDdvHOsF7WskhwINGY8
+	Bbuz9p5cLFS6jfxSr1ZsobUV/o4YE7qOU5g==
+X-ME-Sender: <xms:wOGXaAAeQoT6pnZ-5rbpRfDdT2qnPfR3nwgYvg3CSO4NrqLsThLRGQ>
+    <xme:wOGXaOBYLQKp5tkMTRhJ4mr1sUOueq1GZgMC1d-8uGzC4RD8dWA5zkpz0e3Uvl8UI
+    hjEtvKXy0lIurqtXw>
+X-ME-Received: <xmr:wOGXaKBBSV_rQpZJs_rDxyvYF33XfxyNB4XM0UZnA-FCHirRTbSoh4YALGUGHME6ru_2hW_0aIF6C3KM5_MA1yZ8mMXSFKoA-q02h1c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdektdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeihlhguhhho
-    mhgvvdguvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepthhtrgihlhhorhhrsehgihhthhhusgdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:EN-XaOK1fddU7FBy_pFYmknny8w_nnlluLwB2Ze82WNpygGlAeobFA>
-    <xmx:EN-XaPHWQ17WI5zQNTiZ1YAJloIhbkFGSWhcOBno1i6Id5eYYozFdQ>
-    <xmx:EN-XaKRSZJDPT5DO1ovZ_2i5cjidd6c0jRCSGdkPc-5NkffEcHlLHw>
-    <xmx:EN-XaDfJl_v335Ib100Xl_3YveMJXgLD4030Gfo5k988w0aqThvtng>
-    <xmx:EN-XaBcSD9d-_kGcI3KPLdpmnX87-8FEa7i8kXelky9ovf1iTenGoFZj>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvg
+    hffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehgrhgvghdrhhhurhhrvghllhesuggrthgrughoghhhqhdrtg
+    homhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:wOGXaBpuvNcLdvf6jCSLoNvaA1ju1QKa34elTqVg75JVPf5WBIS6og>
+    <xmx:wOGXaMmWGjadJo3ie6wBJyTxoEIWLwKQUtLO_9ZUyl3YdW9zFSFB4A>
+    <xmx:wOGXaJwRUJKPwVZ4jEJAZcSgHLSdN27hnAYR-Bhveuav0h3sqUouyQ>
+    <xmx:wOGXaM_oKrcmfhjdR5xVBw-rGNMTeG3f0_7-ohUJ5KL-RJ9tcleyzw>
+    <xmx:wOGXaDzwlmDLy-SbF1Z81oPL_uJ-sXAKZ_hbSIOx-N1uXH3k4Rz7ltWE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 9 Aug 2025 19:51:43 -0400 (EDT)
+ 9 Aug 2025 20:03:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: git@vger.kernel.org,  stolee@gmail.com,  ttaylorr@github.com
-Subject: Re: [PATCH v3] bloom: enable bloom filter with wildcard pathspec in
- revision traversal
-In-Reply-To: <20250809021642.22195-1-yldhome2d2@gmail.com> (Lidong Yan's
-	message of "Sat, 9 Aug 2025 10:16:42 +0800")
-References: <xmqqsei1izhs.fsf@gitster.g>
-	<20250809021642.22195-1-yldhome2d2@gmail.com>
-Date: Sat, 09 Aug 2025 16:51:42 -0700
-Message-ID: <xmqqpld45a0h.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Greg Hurrell <greg.hurrell@datadoghq.com>, "Greg
+ Hurrell via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: Re: [PATCH] git-jump: make `diff` work with filenames containing
+ spaces
+In-Reply-To: <pull.1950.git.1754674979929.gitgitgadget@gmail.com> (Greg
+	Hurrell via GitGitGadget's message of "Fri, 08 Aug 2025 17:42:59
+	+0000")
+References: <pull.1950.git.1754674979929.gitgitgadget@gmail.com>
+Date: Sat, 09 Aug 2025 17:03:10 -0700
+Message-ID: <xmqqjz3c59hd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,80 +90,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Lidong Yan <yldhome2d2@gmail.com> writes:
+"Greg Hurrell via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> [jc: avoid allocating zero length path in
-> convert_pathspec_to_bloom_keyvec()]
+> From: Greg Hurrell <greg.hurrell@datadoghq.com>
+>
+> In diff.c, we output a trailing "\t" at the end of any filename that
+> contains a space:
+>
+>     case DIFF_SYMBOL_FILEPAIR_PLUS:
+>             meta = diff_get_color_opt(o, DIFF_METAINFO);
+>             reset = diff_get_color_opt(o, DIFF_RESET);
+>             fprintf(o->file, "%s%s+++ %s%s%s\n", diff_line_prefix(o), meta,
+>                     line, reset,
+>                     strchr(line, ' ') ? "\t" : "");
+>             break;
+>
+> That is, for a file "foo.txt" we'll emit:
+>
+>     +++ a/foo.txt
+>
+> but for "foo bar.txt" we'll emit:
+>
+>     +++ a/foo bar.txt\t
+>
+> This in turn leads us to produce a quickfix format like this:
+>
+>     foo bar.txt\t:1:1:contents
+>
+> Because no "foo bar.txt\t" file actually exists on disk, opening it in
+> Vim will just land the user in an empty buffer.
+>
+> This commit takes the simple approach of unconditionally stripping any
+> trailing tab. Consider the following three examples:
+>
+> 1. For file "foo bar", Git will emit "foo bar\t".
+> 2. For file "foo\t", Git will emit "foo\t".
+> 3. For file "foo bar\t", Git will emit "foo bar\t\t".
+>
+> Before this commit, `git-jump` correctly handled only case "2".
+>
+> After this commit, `git-jump` correctly handles cases "1" and "3". In
+> reality, "1" is the only case people are going to run into with any
+> regularity, and the other two are extreme edge cases.
+>
+> The argument here is that stripping the "\t" unconditionally gives us a
+> minimal change, and it addresses the common case without bringing in
+> complexity for the uncommon ones. If anybody ever complains about case
+> "2" no longer working for them, we can do the more complicated thing and
+> only strip the "\t" if the filename contains a space.
+>
+> Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
+> ---
 
-This is different from what I did, though.
+Because (1) I do not use 'git jump', (2) I do not use 'vim' or
+'quickfix format', and (3) I know this is your brainchid but you are
+offline this week, I won't do anything to this topic other than
+possibly to keep it in 'seen' to avoid losing it.
 
-> @@ -693,19 +698,31 @@ static int convert_pathspec_to_bloom_keyvec(struct bloom_keyvec **out,
->  	size_t len;
->  	int res = 0;
->  
-> +	len = pi->nowildcard_len;
-> +	if (len != pi->len) {
-> +		/*
-> +		 * for path like "dir/file*", nowildcard part would be
-> +		 * "dir/file", but only "dir" should be used for the
-> +		 * bloom filter
-> +		 */
+FWIW, I do not disagree with the decision of this patch makes to
+"break" those who has file "foo\t" to help those with file "foo",
+even though I usually frown upon a change that robs Peter to pay
+Paul.  Among the three cases considerd, #1 is the only one that
+would matter in practice.
 
-A missing full-stop.
-
-> +		while (len > 0 && pi->match[len - 1] != '/')
-> +			len--;
-> +	}
->  	/* remove single trailing slash from path, if needed */
-> -	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
-> -		path_alloc = xmemdupz(pi->match, pi->len - 1);
-> -		path = path_alloc;
-> -	} else
-> -		path = pi->match;
-> +	if (len > 0 && pi->match[len - 1] == '/')
-> +		len--;
->  
-> -	len = strlen(path);
->  	if (!len) {
->  		res = -1;
->  		goto cleanup;
->  	}
->  
-> +	if (len != pi->len) {
-> +		path_alloc = xmemdupz(pi->match, len);
-> +		path = path_alloc;
-> +	} else
-> +		path = pi->match;
-> +
->  	*out = bloom_keyvec_new(path, len, settings);
->  
->  cleanup:
-
-Two comments.
-
- * For a function that finds an error condition in the middle and
-   jumps to the "cleanup:" label at the end, it is more future-proof
-   to start pessimistic (i.e. initialize 'res' to error(-1)) and
-   flip 'res' to success(0) at the very end when everything went
-   well.  It would simplify the change necessary when we need to add
-   _more_ early error return code paths to the function in the
-   future.
-
-   But this flip from "assume success" to "assume failure" is
-   something that should be not be done as part of this patch;
-   perhaps doing it a separate preliminary clean-up patch is a
-   better way to do so.
-
- * I think the change from v3 (this one) to v4 makes the function
-   worse; we found that it is a good practice to have a single place
-   to release any resources we temporarily acquired and arrange
-   exception handling code to just jump there during the course of
-   this project.
-
-   The current implementation may happen to have only one such early
-   return (i.e. "len has become 0; we realize that we cannot use the
-   Bloom filter"), but adding a new early return in the future would
-   be easier if you kept the original arrangement.  The new early
-   return condition may have to be computed after we have acquired
-   resources we need to release, so it may need more than a simple
-   "return -1".
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1950%2Fwincent%2Fstrip-trailing-tab-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1950/wincent/strip-trailing-tab-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1950
+>
+>  contrib/git-jump/git-jump | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
+> index 3f696759617..8d1d5d79a69 100755
+> --- a/contrib/git-jump/git-jump
+> +++ b/contrib/git-jump/git-jump
+> @@ -44,7 +44,7 @@ open_editor() {
+>  mode_diff() {
+>  	git diff --no-prefix --relative "$@" |
+>  	perl -ne '
+> -	if (m{^\+\+\+ (.*)}) { $file = $1 eq "/dev/null" ? undef : $1; next }
+> +	if (m{^\+\+\+ (.*?)\t?$}) { $file = $1 eq "/dev/null" ? undef : $1; next }
+>  	defined($file) or next;
+>  	if (m/^@@ .*?\+(\d+)/) { $line = $1; next }
+>  	defined($line) or next;
+>
+> base-commit: 2c2ba49d55ff26c1082b8137b1ec5eeccb4337d1
