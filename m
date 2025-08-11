@@ -1,121 +1,147 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C762E0935
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 09:10:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE7A2727F0
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 09:13:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754903434; cv=none; b=OpvXWtm7MZ4PkRZ7Gzor9Jn3Pj6fg/I+sdnRQUlHuZWCWjKdjEpN9N1gaMH772Wig+RsKYha1M1CqAbRfrxaeQt9GfYWPc3psSUFULJy3SmtopVATmq7ZXzRSmi1HwWcq52VekhEk4SIcBAW4D6UJ2jHj6zNO2+2xr+TCXjdpbA=
+	t=1754903590; cv=none; b=FS6oTgeQLPrp8ZiBJ7CHnarVPrlKK1qwoAHWJNIDfwTAIbGmQR0r1MQOmBPa1hLleDz45AcB28R3pAwFKPiK4BhmhuxO2PrgFqTCMRGFv0+Lou3c84suNX02+MaU0dikAkQOCGg55TdwPHXd8Hy2aMX+TVGKd6O0vAfXdcIkcgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754903434; c=relaxed/simple;
-	bh=2RYhOzyX1zYGUT//+HGKuCNwpWZi8d7jZmDJxIMvhzk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EyoJbIt1MCF0uXN1Tf/iEYQK0kOjAm6ww9x3YKhHK9qdTRBI19ykpqGsewrYqtBuZDSxx0fo0MAUE08nJ4UXeUbaEAANoBv+pdfxuVws38bawAjSext+Kkqq9NIoOSxAEsF1tRpVGJp+n2B6ohD/Ce7+S2P3qd/G9kFdLCumHuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aBIV/Brr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SrrN5eRs; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1754903590; c=relaxed/simple;
+	bh=TPjRtkfwd5UWszceJzfCHvMlX621xfG2rZ/H6OAxtyc=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=evnJRPtOJYUfZjdRE4Y1BLTOn70YhcLnazPuz6XL8GuS+3Kd+00R2bO276mVQ8MWenSFe4O8fyKEZjDZYCQfxyykPrqPp9i/lYEhHYzPLPKofWfa7+Zcd2cOwXcTIAAXRqMXGg5tNOhTQHHLyTa7lrjbXL9k7LsnU2HaIGkzYmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dW2P0m8s; arc=none smtp.client-ip=209.85.221.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aBIV/Brr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SrrN5eRs"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id E0DE1EC0099;
-	Mon, 11 Aug 2025 05:10:31 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 11 Aug 2025 05:10:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754903431;
-	 x=1754989831; bh=sPKiv/0cAaYHUmzrHwql4+QGErldkrjOujgrJGl4A+0=; b=
-	aBIV/Brr68dFg8DHgqqFYW5a0r9FFxHM5Vx8aaAlkfl4TBSleTjGHD9VsFubSZDJ
-	XHu7sIFNPUs+02w4SvdEee6s6JOjEzv6X+u+CFrSA/N/ICjK8tNHqrQcjliCWATf
-	mEuHmJph4QzV4wBsiHm+QtGPQp9D9LlpID9MKgQnoXAwLiazl9RZG8qoKlW87c4P
-	xtbPnk6NjwWrhR55MH3HPzEmPRxRQyY2ObSRVsbE98WUDNk8vLBsutnqQvNc7luv
-	YJWz4HHwvhcDW/tJZEIxhPkVHD4+XPKiD8FRUSNCESAutObN4TCaAvNcoXsQcz76
-	ItljZ9wnZmNzk/qHFwbjUQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754903431; x=
-	1754989831; bh=sPKiv/0cAaYHUmzrHwql4+QGErldkrjOujgrJGl4A+0=; b=S
-	rrN5eRsY9SljhqD5aIt/VSHlU4CpQJOrD0PjdtVdjmBQ2WWOqOz09S9DxQGXshmj
-	7iuY+CrIcBrZisWdUTd38ndBlFkOM7+SjVf1R3+amZi0NeOINwRdwg8+yFIqrwy1
-	bGGvYRcfdQ3Oy+Qe0faxv5WvhdlGYq+6Qjgns8oDwtFPZ8SkXDhJ5ccjfzBbGJJa
-	GJ8uN3Dm7M3+1aGBM7X9Ef8bMt0QE3htd7KbtwZ6nGIvqJh1T9LMQ5CbsSi5+NxB
-	ljmnyHSDve5iAh5V3S9UvWT/Uc3jk6eXmgah6wD+0tn6EeHyLJUgyNIR912rcm/b
-	d9ITl5ae2gvqTNm4i++Eg==
-X-ME-Sender: <xms:h7OZaAAclm3urovEYRvg8BGLb7AuXqC3SGS2lHMY587xHZ_AeBM5rg>
-    <xme:h7OZaCviWoqlJnIFtIRdAturUmwNS76JiGt32TLbhNgEae3-UpOVHnDGKK_Wp9wdo
-    yY-8ULsmLaLllMP_Q>
-X-ME-Received: <xmr:h7OZaFY3Y4GWvrhnVgIFLXRHd09yZUZdQ6L4px3VZ3-d_iOk74lRmnKwe5DI-5LMpzBcP79P6Slq2pJzEuaL97nkf5gZlopBPjXM7tN6Hu4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvtdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesthekre
-    dttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvhe
-    ekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehjohhhnhhkfiesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:h7OZaFVRBLzwGHuKoJ4utN1z89iSXR8DwDs5fY_wQ8sEjrYHIiMwbA>
-    <xmx:h7OZaJ7q3DxNsyL1azbp_Njzy2KLfYzDEYMZD5dNaoQ0lJdAZUW5Rw>
-    <xmx:h7OZaAiMFo5EF8ti44yqSo2hCQ9iqfOExE3Xou1IvNmG0P9sV5Bl1A>
-    <xmx:h7OZaAfHmnoO5oFbqfF7bzyNnVc695vzFxBE15bt7R2FkPUem1Wppg>
-    <xmx:h7OZaNRouIuKaHKRWlklH_lygw8fb9GUwVJBpEjXCYSiUSgwZUQsUR9f>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Aug 2025 05:10:31 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3b66c1ed (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 11 Aug 2025 09:10:29 +0000 (UTC)
-Date: Mon, 11 Aug 2025 11:10:25 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: johnkw <johnkw@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: `git stash --include-untracked` touches .pack files
-Message-ID: <aJmzgfucZIJf_iQA@pks.im>
-References: <2ea19b6b-716b-4736-8dd3-8831056c39f9@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dW2P0m8s"
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5393776550aso3479395e0c.2
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 02:13:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754903588; x=1755508388; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9K7x8QMlUJvyBu8dnugQGS3uRqTRoDlKWJaBcBZl/E0=;
+        b=dW2P0m8s9sn9EAl+Z3gNpfvApKV991Rv93lCMxO9BaD0hCLSiX2xOJqUt8z5xQezBj
+         UA0zaaSLqz3oplF0PC+ROQPlYX1BPqIQ6pleEhqCH4RG/lvKBNjFYjcvjJJw7hclbp6l
+         ROzeU4nSaD3zMk0QFJ6UvfrUBmJdnd4o8seKVp4etaaPNkHJe+U+BXMkscjvAB6DYi+X
+         CYLwF/tRhHw/ayXI40xSgrS37IN3aGRjwO1Brcn8/VXUxbx/j9d2i6VLjOqtxRtkiXBV
+         +sX1itHwFzq0lcnOSkzttMAO71R++jCysXW+Ntpo04c4C4vL+9RBf0DXncN13QIECuHX
+         3d1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754903588; x=1755508388;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9K7x8QMlUJvyBu8dnugQGS3uRqTRoDlKWJaBcBZl/E0=;
+        b=cXVxeSJep5l6X7OmcCmiBYO4VDrzCMA2LhhpED6OokltBRFLXk8vRCRqxAWPeOxvEM
+         ELOSKPYDS41+1s+UsxPsqLAeG1DzreAWXCztl3fhzk5tjJc0F/MnCFwLy2/WeBMdJy96
+         vFqwsbg/zYd3UpPA6Qhf1P7Yp0DGi60h9x5/d8PyYjrGUT+T69CsF3ZD16Plk3rVVdj7
+         fT3KUyE5ZbQSJ0j2JV6R8B39I8bb4hEZzLXniXihTftycTsp3t3r+cfZD9JdXW/8xxC/
+         4VJACqfHT1BDJa/OeJ+ulAwD6ae8UTJyJOY+pHHrqQbSet+Id46diaaJI4yA0pKl5ZA8
+         tjBw==
+X-Forwarded-Encrypted: i=1; AJvYcCXEpgobobgfWlR9Ygovto2ssw18+Cm9RboyzYKJPFkSWX2GBkJ291TzWRveGD9O+TtE8/Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJVuyvg8TqqvPLLFjQ74f85it+GkNMJGleG9RG6hA7qetNFb+K
+	kryZxoGjq67NDuuUGPmWeSKo9hhS9oBMi0+8zuavWosujcgn0n8HTKjbu8ySReZvTwcyKACvR8S
+	982rqZHFVj/diJFzGETkWhkm1j8nvQck=
+X-Gm-Gg: ASbGnct1F8vPN5Kdsy23vrp9A3VxiXPMQNCV0cHpx+7+BQRlrebxQml0ff5ck3nsztL
+	bHYGsPJ37WjxQ6yPwFWcmDHToGV+fajKdTGJDBMVhIS9ooVk3mRPZKEHtvZW6VgJW6bbGWWZZZm
+	LCqXU8ff14sr/nzku1gdho0Y2LRPPNpGIu7nCUL71azB6rVcdT1QZtJnQHxy7jBhInLEtUsia+y
+	6HPMg==
+X-Google-Smtp-Source: AGHT+IGOC38ejr9DR5LSGL5tO8ShP8KIo0xjBZxdn+8fUq6u1ykVfE8AkNkvvFzM9lEciWo48/Ni81ia26C+HPPk27w=
+X-Received: by 2002:a05:6122:512:b0:537:3e5b:9f66 with SMTP id
+ 71dfb90a1353d-53a54510e67mr4089224e0c.12.1754903587939; Mon, 11 Aug 2025
+ 02:13:07 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 11 Aug 2025 02:13:07 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 11 Aug 2025 02:13:07 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <07a4bdb7ce5eb456bd81972c350d0c4f298ebd46.1754702057.git.gitgitgadget@gmail.com>
+References: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
+ <pull.1949.v4.git.1754702057.gitgitgadget@gmail.com> <07a4bdb7ce5eb456bd81972c350d0c4f298ebd46.1754702057.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2ea19b6b-716b-4736-8dd3-8831056c39f9@gmail.com>
+Date: Mon, 11 Aug 2025 02:13:07 -0700
+X-Gm-Features: Ac12FXxVZwS_nS_JKFpBasw9nLeBdbQvPP51OTxeUj8q3eiKfu-qGXhygUrUzZw
+Message-ID: <CAOLa=ZSTaAaWJWeXBkoxPx46g_Equo-sHWgCESE9G6vk3HZeqA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] doc: git-rebase: start with an example
+To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Julia Evans <julia@jvns.ca>
+Content-Type: multipart/mixed; boundary="000000000000f9854f063c135441"
 
-On Wed, Aug 06, 2025 at 09:27:05PM -0500, johnkw wrote:
-> `git stash --include-untracked` causes the timestamp to be touched for some
-> .pack files.  It's not always all .pack files, although I don't see a
-> pattern regarding how some survive the operation with the timestamp intact. 
-> For a given repo it seems consistent though on the .pack files impacted by
-> the issue.
-> 
-> This breaks backup systems such as rsync, causing pointless churn.
-> 
-> The issue occurs with or without ".keep" files for the ".pack" files in
-> question.
-> 
-> `git stash` without `--include-untracked` does not have this issue.
-> 
-> The issue occurs with no untracked files actually even in the repo for
-> `--include-untracked` to take action on.
+--000000000000f9854f063c135441
+Content-Type: text/plain; charset="UTF-8"
 
-What you probably see here is Git freshening its objects: when Git is
-asked to write objects into the object database that it already knows
-about it will freshen the access time of each such object. If the object
-is stored in a packfile, then the whole packfile is getting freshened.
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This is overall an expected outcome, and Git relies on those freshened
-access times to do garbage collection. So this isn't something that we
-can change. One _could_ have a look at `save_untracked_files()` and
-teach it to skip writing objects in case there is nothing to be done.
-But honestly, I doubt that this would really solve the underlying issue
-for you, as any other command that writes objects might also cause Git
-to freshen the packfile.
+> From: Julia Evans <julia@jvns.ca>
+>
+> Start with an example that mirrors the example in the `git-merge` man
+> page, to make it easier for folks to understand the difference between a
+> rebase and a merge.
+>
 
-Patrick
+Happy to see these changes.
+
+> Signed-off-by: Julia Evans <julia@jvns.ca>
+> ---
+>  Documentation/git-rebase.adoc | 49 ++++++++++++++++-------------------
+>  1 file changed, 23 insertions(+), 26 deletions(-)
+>
+> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
+> index 956d3048f5a6..449f01fba560 100644
+> --- a/Documentation/git-rebase.adoc
+> +++ b/Documentation/git-rebase.adoc
+> @@ -16,6 +16,29 @@ SYNOPSIS
+>
+>  DESCRIPTION
+>  -----------
+> +Transplant a series of commits onto a different starting point.
+> +
+> +For example, imagine that you have been working on the `topic` branch in this
+> +history, and you want to "catch up" to the work done on the `master` branch.
+> +
+> +------------
+> +          A---B---C topic
+> +         /
+> +    D---E---F---G master
+> +------------
+> +
+> +You want to transplant the commits you made on `topic` since it diverged from
+> +`master` (i.e. A, B, and C), on top of the current `master`.  You can do this
+> +by running `git rebase master` while the `topic` branch is checked out.  If you
+> +want to rebase `topic` while on another branch, `git rebase master topic` is a
+> +shortcut for `git checkout topic && git rebase master`.
+> +
+
+Nit: now that `git-switch(1)` is no longer experimental, we should start
+recommending it over `git-checkout(1)` as necessary. So perhaps, we
+could s/checkout/switch here?
+
+[snip]
+
+--000000000000f9854f063c135441
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f40ad03c4812424e_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pWnRDRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN0ZiQy85dXJDRjdlaDlFRnQyMHZzK0tZSk9XNDE4QgppRXQ4SUl1bEN5
+VEhEa0VmNlg1WCtHV3Nad1VlY2cyVzVWVG14cU8zM3RPUTc5czJrVVh6c1NLd2RLYlB4c0hwCmxS
+SHdRWnh5S002QTRWTk9jK05MdTJBMlhHNmpjeG1Ya1dOUFJ3STcwTm1qQWkwWEFQaG4vOFNTL1FG
+S2ovV00KWEhxcitIN1JueFkrUjQ3bkswRDhIRHFtaDdnaUNVMTg1QzVhNXVJWU4vYnVocGMyanlm
+ZHRWZkZBc29xY3UwYgpQREtHR2IrSzdmY2JnYXRmRmNRUFpmVTRTcmdVWEdubGl6bFg0a0tFOFdl
+L3M0Y2NRbHA3Y1ZEMFZ3SHV6L1VCClJ3cFh3cUNtd0oxTnRuODhhQlFWMFRiaXdwWlhqVlZ3bXFJ
+QUZNa0VoSUpSYmx3MDJOYytzeXlkVnp4OW83ck0KZGNNTFFTN1pGUit4elJQaWJRYTBhekRVNHVF
+c3htMEo2S3BsLzVoYW5LdVVZV0tvMXBmdHJ2UjBFSjl4cjJSMwpWbUxnbmQ3UDhwZmtQMXplQ1Zl
+SDRVQTA4UDlVdS9aYks4WHNXV0NiVS85YlVtYWs3MVpRTEtuUmlSTVhKUTlRCjlaYTlYNmxiSWVW
+SVlXNmtQTEJPUEpQRVc4WEE2TGFtM21LMEdKMD0KPWhEM24KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f9854f063c135441--
