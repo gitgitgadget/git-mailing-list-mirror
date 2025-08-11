@@ -1,136 +1,110 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E377F26AE4
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 12:29:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003FB139D
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754915397; cv=none; b=PNfsbYRwoiLHyPVHp7ppH8pFkGLSOmY1PQRxv2VCB02qoKfY81kyN3luWectN8Zea/MpEWMe24paJQydPwmwFErYdbjOKK9t/EHdrxTJCwvi1w3utFuerzaT44F65Me8nfpWbCxaENkGZ+p0Mg9e5HGVM2PhyQXBnA2N2nb1K64=
+	t=1754917325; cv=none; b=FLTA/vcp9pfjEzVNBeL9oMfj3LZWXrPrmtTpt28L54k0RjGdFWePoLM3Wt/RZzhO6V5GqdZvUJaASF82vWtEGHS2LSLk/Lyqz9JwLHsY5/TOZILazaZ+SsZMzH4DOexJrq2Xk4YO82u8fgbxdEAwJPa47VeCFXVvldIPo/usbjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754915397; c=relaxed/simple;
-	bh=D+FmIv/vhbkg8bNuStnhkwRzQkJ+gYou3gFrQ4eWtxE=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=uaheyar9cji9Cvpw0ouqteODYqkc0eyLoBIQ/nGdDiRSl5X9hBCwWDzSI7ge7+BWq5cZgFRVIjlTwYws2nGD0tq8Y56zMGLYberF7SMTdSb8W+HrAxzhUwibRq2JRQibu9gVqHVn7FznRqZMq++SGn2ek3jwmVw9LKtcFwcFqEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FIDuJyB1; arc=none smtp.client-ip=209.85.219.181
+	s=arc-20240116; t=1754917325; c=relaxed/simple;
+	bh=d8rPtw6R4lORKnF/iJ8rQm3CiwgtWAS3HVIur/r3eDQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=b2JWohoQsvclOiBRR0hxOmmFinBv9CG9nTlp4kKywBr68j/eWfkzRP3hwAm0SfxEWE3iqXIYCR24TnTSjh5uH66SauY8YKZ1BINBCg4qN81vW+BJtsgq8yy9qZP0yIwiFjQSmPysE14bvLN4TmvrL/os4ud/uxtRcr+jSkBu6u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E5+ujnGB; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FIDuJyB1"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e8da9b7386dso4089355276.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 05:29:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E5+ujnGB"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-459ddb41539so13846735e9.2
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 06:02:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754915394; x=1755520194; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CcpPw1BwJ7Hp/eUuCtMKo0AHzuGoi+AHpQSazQmqtzY=;
-        b=FIDuJyB1Eq319S+Kv9/HliSCEq7efXUu105SSWBjxIoeS+99lfT4M9KLvIIidFIvsG
-         ZzLxVLVRk86a2mJOu5WmLDh0sojWasp0YSbjNE16PuiIzMURp22yRFXf5etGwPv10p3p
-         CZAJPopTTQAULQTEjvZ911K90kuAmt2wMuq846SfA/jWHBSPS3OCIm+QrNmW3jCmxDcU
-         +/ELeAJdzv12ngU8HIfEMDc+yJauCPHOZFHtceUXfDd/uFD/ry3rspmpKRvLVclh4v5Y
-         Y5iV2czLdzGajMqnNa37/jscgrvRzHm5T+Y/FOV4d356W9l8tixwc84fWyR3Ndke0p5H
-         Cj9Q==
+        d=gmail.com; s=20230601; t=1754917322; x=1755522122; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Hkpl0cTVKv3KY/dR00IHUAibYlmn1oE+S+hNDuPTsiw=;
+        b=E5+ujnGBPqDTA8Bng2oLfW/Z7FTrXKXKD/O7GQuDwOb9Op0tP1423qj1/iVfXOkP3H
+         h0XwyUcTXbPNCTZRHaTEkdU/3ed2kQjXoAkDFneXz3cThWz1mZ6BARotKWWAKFtP14/w
+         4qjaVD8Buep2nuDIDluLFBjnSpZDJZXUPx5QmOnKPTs1tXyKTtNJoy9E08JK/RF29Rg+
+         jvQysph7kbHG2oyodCTRBLJ18A5lDf2mU1eeUE9DKiJTOfr29YTjmxQIYjrJxBCl/oxm
+         hFYiltpFb4v9tOhm8r8n6/WAn+i+VAQFisq982d1FdbGhssmzRmDY+1lzvDJXhyumLPt
+         4uyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754915394; x=1755520194;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CcpPw1BwJ7Hp/eUuCtMKo0AHzuGoi+AHpQSazQmqtzY=;
-        b=D52cNWoljeJdkb9ddJ0inK+j+KDpjTRr0UYRIefkohFdO7GqN1FYbSlktS/IiPQFP6
-         yWruSn8+WrPKl4FZZB+iWYThzTCb1H0OjLOYgxwC14nX17GXJ0CCsVKyxAo1GmsXW6Fm
-         7+CUoenOGog46YiMePZrzJil8F3ktQ6EdWlfY7r3bmdo+AkDeis1jqZ2UOnXx4y24vpN
-         M7beZRtH+Rb1DJO5HMkeRCuesD9eRbgh092+nTuhpWYpP2syV9HADo+dCmtjXYwyU0Ok
-         PANxluA0MfpYJVkxTepVlhf/T7ol5+7oj+JFkbHcofH90hMR3h2XgLS0nwzHtRVsZc8u
-         EdWA==
-X-Forwarded-Encrypted: i=1; AJvYcCUJ2h9GcAExHb2t7VHw+2hYM7+OpZkdzKxiY8HBJEs+OpkC10jEdd4jOEVyrTrNLKQ17cs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzPnZtASjHt7eHnUkr8CzJ8jmdJdCFGbdJhYQ/42O+eyn2NDSRA
-	X0BdF4hZXN2lu1GMINaS97JLnCybbRmqUu4T+qtok+hrgu8mFs5smygPM0fIYjjF
-X-Gm-Gg: ASbGnctnX3avywuvcTJECvgLq3voedHWBqE78s1t+nyWEdTNSqZlPm1w5ozP1cYVrBo
-	f46hbgnt142Az6jehu2iC50WqGV3Gsc2EzMpb5Uu7ZHzREFMS/4NpzdOrsmI2k5KSeZ+FURYdxw
-	qoxDsq2axAA2YxznA0jDGB2uXveHUFKaWGnINYmajal0w9SQCWdb8odSw0acO1oJJsopvnD1WLo
-	5VbUSewwRqzEkXTIVxuZlNMTFIycrEmJ7d/wZqeAQw1IqYzTdFo1oIdifH/C/eb+whLtV35M4Sd
-	6FV2WQNjfa53jGJxe7f7Og7WllK/lBtzcSWr6JeGFmdGETXHSTY7xHKKfsqg8Cmmv6pItjgz76D
-	0eLiyGW4OUPlMRR/EV0Wj+igk7tZ3O3kPoVnbPHe5AzzqAYUAXncEZ0ZR1NAdKw==
-X-Google-Smtp-Source: AGHT+IGJEkZezZBdLnM9zFTxJSd309wMogtHSLw6lkLyqKtu4q2R5MjDxUfIove7UnEp5QedjFMqxA==
-X-Received: by 2002:a05:6902:2b01:b0:e90:47a7:d67a with SMTP id 3f1490d57ef6-e9047a7daedmr14990103276.5.1754915393895;
-        Mon, 11 Aug 2025 05:29:53 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:f5e7:14b4:8a2a:aa03])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e90613ca6c3sm1957772276.2.2025.08.11.05.29.52
+        d=1e100.net; s=20230601; t=1754917322; x=1755522122;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hkpl0cTVKv3KY/dR00IHUAibYlmn1oE+S+hNDuPTsiw=;
+        b=FKzxPNXxx97YfPVGEcW2VQ7j89fX6sKJ2HRcsX4FECe4gPMZ8PuqiwUZEg3lwvG8pz
+         KjJAAsup6FiYbnqqw93mWRJjUv6oN4kOOcof1CeVS2qy8vqRA/N3NKFTyp4OhnxI3l2T
+         rL3K76eGNgeBxZObHCYd1bH2Zjjnj60aaJ+urQaByjfgUKhMpEQuQb8VECpVtpofSkJd
+         esKZpG3/k5cO5f5PLz4fEUQ8aFIFoA4Lt1et9u2GQhlMRo0XvVur5H3c5ddZxdUURv+O
+         iKftsYWKuSQvRC7eBXBHNJ/6XhQyHb/RJHqkqMh7kM7jyql85SOz0/QXNCLt93piYlpn
+         +nhg==
+X-Gm-Message-State: AOJu0YxIKRD/u8iPj+gHzNHQwJWBbHC0XtfWbR/Cts3QP4kEmYTnkz+0
+	e+h7mbXz3yXAot5wA5HQ7RBH4HE1UeN/VXgKhYYn01QfXWwBpgEetg2LSWwsAA==
+X-Gm-Gg: ASbGnctNkBYZtmCkqqqviC5zhBfMfZ00oJkjK4GiFlCLRugTsJRLu+vl/lC3UtIvduC
+	rvhy5YO8d3C3DdogiGoDIgiegr44e+Et/VlNhNiY8YFc6ti3ibT7ah+Vz58n4V6hn+2GCjD4qIX
+	9IfPgEykYN3KozbSoZqDF1ueeLnCv6Eozm3RNng5tiQefsiYyKb7FkKxgXbiXdxXj9PuFQ7c+Yr
+	e1JrJWX8vYeLa5GV+p3m+P2KFyFaiQ6fbkOwKXReJGEkpv5njXwXz741pVn56n2DzIcHAVNYGu9
+	4+mQwCUG2dkRnBBZtiJwn4ERYMMyUvYIWbFHWRtqvmpISFy5nKFNn74kStjHBkve4WNILRoAIcq
+	xMB2MYUdClQzdWbwL8q0w8dJUIs40auAdxGttYhYUwZnjoW6+BSTm644TjhnQWGzPOCFjkkOez2
+	BQ6AYsm+Q=
+X-Google-Smtp-Source: AGHT+IGFFztx7wt3VdRFh5xN24Ym5eur+hTZ07BXDpuSYQ0U0NJA4EVDGb/abqexQ1uj2myQVTqloA==
+X-Received: by 2002:a05:600c:1d01:b0:459:dba8:bb7b with SMTP id 5b1f17b1804b1-459f4ecf85cmr118442245e9.13.1754917321889;
+        Mon, 11 Aug 2025 06:02:01 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7a5:4701:9bd8:62f6:3085:6ee3? ([2a0a:ef40:7a5:4701:9bd8:62f6:3085:6ee3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e5868fd7sm271509165e9.18.2025.08.11.06.02.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Aug 2025 05:29:53 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        Mon, 11 Aug 2025 06:02:01 -0700 (PDT)
+Message-ID: <14d6589c-87a1-4d08-84c1-a9398f6cb8d8@gmail.com>
+Date: Mon, 11 Aug 2025 14:02:26 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v4 5/5] doc: git-rebase: update discussion of internals
-Date: Mon, 11 Aug 2025 08:29:42 -0400
-Message-Id: <FA86B191-AEA6-49AE-A04F-EB736DF4845B@gmail.com>
-References: <aJmt1fv66bO_ZMpI@pks.im>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Julia Evans <julia@jvns.ca>
-In-Reply-To: <aJmt1fv66bO_ZMpI@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/5] doc: git rebase: dedup merge conflict discussion
+To: Patrick Steinhardt <ps@pks.im>,
+ Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Julia Evans <julia@jvns.ca>
+References: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
+ <pull.1949.v4.git.1754702057.gitgitgadget@gmail.com>
+ <061790686b9036cf862c5b918126eac1ca02a79b.1754702057.git.gitgitgadget@gmail.com>
+ <aJmtzfuibPwS1WVl@pks.im>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <aJmtzfuibPwS1WVl@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-> Le 11 ao=C3=BBt 2025 =C3=A0 04:46, Patrick Steinhardt <ps@pks.im> a =C3=A9=
-crit :
->=20
-> =EF=BB=BFOn Sat, Aug 09, 2025 at 01:14:17AM +0000, Julia Evans via GitGitG=
-adget wrote:
->> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.ado=
-c
->> index 50c84f138212..c16ee37b46a7 100644
->> --- a/Documentation/git-rebase.adoc
->> +++ b/Documentation/git-rebase.adoc
->> @@ -65,31 +65,31 @@ linkgit:git-config[1] for details) and the `--fork-po=
-int` option is
->> assumed.  If you are currently not on any branch or if the current
->> branch does not have a configured upstream, the rebase will abort.
->>=20
->> -All changes made by commits in the current branch but that are not
->> -in `<upstream>` are saved to a temporary area.  This is the same set
->> -of commits that would be shown by `git log <upstream>..HEAD`; or by
->> -`git log 'fork_point'..HEAD`, if `--fork-point` is active (see the
->> -description on `--fork-point` below); or by `git log HEAD`, if the
->> -`--root` option is specified.
+On 11/08/2025 09:46, Patrick Steinhardt wrote:
+> On Sat, Aug 09, 2025 at 01:14:14AM +0000, Julia Evans via GitGitGadget wrote:
+>>   
+>> -It is possible that a merge failure will prevent this process from being
+>> -completely automatic.  You will have to resolve any such merge failure
+>> -and run `git rebase --continue`.  Another option is to bypass the commit
+>> -that caused the merge failure with `git rebase --skip`.  To check out the
+>> -original `<branch>` and remove the `.git/rebase-apply` working files, use
+>> -the command `git rebase --abort` instead.
 >> -
->> -The current branch is reset to `<upstream>` or `<newbase>` if the
->> -`--onto` option was supplied.  This has the exact same effect as
->> -`git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
->> -to point at the tip of the branch before the reset.
->> +Here is a more detailed description of what `git rebase <upstream>` does=
-:
->> +
->> +First, it makes a list of all commits in the current branch that are not=
- in
->> +`<upstream>`. This is the same set of commits that would be shown by `gi=
-t log
->> +<upstream>..HEAD`. You can use `--fork-point` or `--root` to change how t=
-his
->> +list of commits is constructed.
->> +
->> +Then it checks out `<upstream>` (or `<newbase>` if the `--onto` option w=
-as
->> +supplied) with the equivalent of `git switch --detach <upstream>`.
->> +
->> +Then it replays the commits, one by one, in order. This is similar to ru=
-nning
->> +`git cherry-pick <commit>` for each commit. See REBASING MERGES for how m=
-erges
->> +are handled.
->> +
->> +Finally, it updates your branch to point to the final commit with the eq=
-uivalent
->> +of `git switch -C <branch>`.
->=20
-> Would it make sense to convert this into a bulleted list to further
-> highlight this multi-step process?
+>>   If the upstream branch already contains a change you have made (e.g.,
+>>   because you mailed a patch which was applied upstream), then that commit
+>>   will be skipped and warnings will be issued (if the 'merge' backend is
+> 
+> We lose the bit about `.git/rebase-apply`, but I don't think that's a
+> bad thing. The user shouldn't have to care how exactly a rebase looks on
+> disk.
 
-Nit: ordered list, perhaps? Unless we don=E2=80=99t use those in our manuals=
- (away from documentation at the moment).=20=
+Exactly, we don't want to encourage the user to poke about in the state 
+directory. Also ".git/rebase-apply" wont exist unless the user requested 
+the apply backend so mentioning it is misleading (the default is 
+".git/rebase-merge" these days).
+
+Thanks
+
+Phillip
+
