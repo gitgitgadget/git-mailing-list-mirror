@@ -1,69 +1,70 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8A42E2EE1
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 20:53:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E42D2D6608
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 20:53:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754945615; cv=none; b=ck64JYtoiv/G6ckvT7WppaCDZf3xq69J1d508Zb0WU2uu+EX+izqtRwXVKudVCvbcNC6fcrAiPQIk4ESYGGAGNQv7iJ+xi6fq7vDyOhUpbFf9FK6D0YFp9uTwQ64I177TnIknRU032+XnCZV2g/oZz9g9Jvj8Fua32kvJ6Q+etg=
+	t=1754945616; cv=none; b=QOiftKJOi2jYdk7/syfEsdgmLXIo7blwZJHtl2e5SEz4uuX6qn/+m+WijfMyhesmAjeA221EMOujrNEcvGTT27i/2O2kffmA0f4MvBRgeeeh30ug9V0bXsxqwtjM8c7iKl4p2hRlFHQazDGr2o594wSkG9XH7HVuv6Lj6MhEgGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754945615; c=relaxed/simple;
-	bh=nPCgSqiu42Hrg74tg2rHVPGPhkJ2esrgkRbQZP/arVY=;
+	s=arc-20240116; t=1754945616; c=relaxed/simple;
+	bh=d9ezMIVIq+R+m8D5+9DdMQTya5EKbzurlEgcOosAoE4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=AvolJxpgo/YEwkaWmlzlOnq2WFMaTldxbwIvsXtZoXx3PGcl6Aiqzgx2BVwndEDWRMZUdwLQe2Z3FeMt8p1TfKbnWp+QsCSlZh5CQMAkK7KmaKOaT5fxZpn0BupD4eYBv3VBTAikRT5vx2OvzIXYfrXWMDMrIgaf2gfFZm7SOlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YxGaa9Ee; arc=none smtp.client-ip=209.85.128.52
+	 Content-Type:To:Cc; b=N556XbzTQqkPhnfyYS2CP4Q23jmgWyuKf3laUJ1K3zVlWaZEQGeR/Sd7RECp2AEWqQH56+wWcrMSG09qMdBSJnMin1UjGY7BStqxA0Hgxcpacn/A/GloEs0QDQwsrWd2me5pWEnO0V6t01cij8HyDgBqd1+v60OOl8PxoiNOV6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aGwCkKpZ; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YxGaa9Ee"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-459e794b331so28897655e9.3
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:53:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aGwCkKpZ"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-459ebb6bbdfso30891975e9.0
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:53:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754945611; x=1755550411; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754945613; x=1755550413; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A3nCOTQw/5A7EKET34Mc5OcEiE5WWQDlXScUm88Kslk=;
-        b=YxGaa9EeDnjWnS0duQ7tZOM3VMhaMQtGxVNsWXHRGPvUBWjejnQo42jFirk+c/VXuL
-         ifmxFqTumflEwSlKiutjbtcAbi4GDQRBOHSOxX7XWcgo2BkQ+TP/R76vO70vn4+ZIZwA
-         I9IJwamf4s17UOZleh4DTVJVGMOVOLbQjs6OVG/S1Y2vB7x7sN6hai/S8VkyD+yHiPWP
-         Bb2Sftk9tuqmB7LRGn+6sAL25kJQBDQ7xNG0cdNxSja+QhYjZOAeibyq1cd/N5O50N9x
-         DMTTYCGQk23yCD0U70UrAcYFvV0QTpYslU2wwlilglrikyt2V9jqtUEobcVeuVQdMn8l
-         gVUg==
+        bh=1bV6/C4OMb77RQnDks9xjloZU1Cy/ufUvEVa1Lttyak=;
+        b=aGwCkKpZzxudr9ayTED6vlj9v5Fz5dKRI7OaTGHvrjLYNaGBNjWkq3KH5la7RcpSxp
+         4gef+bufp5jh7E88SbyUI5aOrIAskEQ3/pctAM/os7GB/v/Gjij7NXxPzHXzHryrwE6S
+         ZhM0vi2fuZ3dhhGUerXiiCYOC/4xwGxoUO4bh2vi0aJ4P3STEI1weV0I1a38//7Sktku
+         /qu3wSvIeHO5xOt33iPCak/biMg7TMAiA0hNNqvfvslnk0JXRo7ZLlHWwnWFUDHyE17t
+         SpU87e9nE1zwPI5n/qN5cOQFVRQrD/bEodOduTM+opCQPlRvg8w32dh5U/QU+1Th7id1
+         bpVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754945611; x=1755550411;
+        d=1e100.net; s=20230601; t=1754945613; x=1755550413;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A3nCOTQw/5A7EKET34Mc5OcEiE5WWQDlXScUm88Kslk=;
-        b=aVD+UN2PbWiT6DuQuxAbUNwV3T5fFITd93pssSucu3LPmgTtFEo0o+Jz6ZkEpU34Sj
-         Db4Jox3diHoIC0oc+ZpyL3312T5/ZxEsl0itZixBQeU4LqAcueHvuev0NHcvmZHvQy34
-         uHeNmUDo2mD9jle2oLM6HcSM6rB6OZVozqmja7jmV2BOeuOA2q6olOAqFZ45D/81D9m0
-         uv92ZxgE7A/jYPGvCkrYBg0FAl+u1zHcW3jhbnxNvSx6k3Q1alx0xhu2S7w+2/chLC/P
-         b0FgiwhNmIDXxJlJjfIxYF/MvEF4uUi3vcrrZ6e5vjZNOGyKLhUDMSa+u+W/8zM9DVIN
-         kGNg==
-X-Gm-Message-State: AOJu0Ywyh9peZHziM+/rCZ3amN/Yhp+a56T8o57VGT0cIUFm8ZKmMVux
-	uB83s5mRWbQJ55uJtP1rWaLlYTFazykB/fNy+Kw99FgzQT4F/gL9RJCyEL2nrA==
-X-Gm-Gg: ASbGncsVLyNKR/gsS5kIDDvKl4wEqv7RzUmdT005YpROLn6cZE1BPh5wzetGNRImFzC
-	gd2w85gSY1D88vPGfMNJJ552wg9Z/WTOJjklX5IpaBxpn7rz6S2ncyuldND0TrCtzA1XGs9WMJn
-	Qw6axrzkn0xEBc13ebNGh/rW/gbao7sXRv+A1rSidZsi7Lsv+nB35GV13GxvwJoMtS4lIPPxucU
-	aYiM1T+/AOmkviDD1yfezsFO89fkkTmEMeddSD9B4YnJrePhEQmdCR4k+PLukA4FstJAZ0+nesC
-	u/InRLhqiAjsfLAoF+BqCVGKe9P0yUUj1bBHw81aJdpkzFUUlhjpdqz2UM9n8OR8FA//5+Yb/ZB
-	TKlzB9a/Dxm76tEkVZCTlzyI=
-X-Google-Smtp-Source: AGHT+IE/hgmaR5OzLO5md51PXRFuDZZh6NxXnruUvJzbENfuv59aCNSttSYKAsSBZCmoQ2booe1TVw==
-X-Received: by 2002:a05:600c:1ca0:b0:43c:f8fc:f697 with SMTP id 5b1f17b1804b1-459fcd284e9mr87638245e9.9.1754945611146;
-        Mon, 11 Aug 2025 13:53:31 -0700 (PDT)
+        bh=1bV6/C4OMb77RQnDks9xjloZU1Cy/ufUvEVa1Lttyak=;
+        b=NsnqNGMXGexFYFZCLHG3jsYCUE/fgo+LopNczo9U9vIKb6DZIs6wTbXIGNzhR9eTFM
+         XMM6d3DTXprr0vQrtcYvUtFJPYLk+MDLUWHdGA1yPs3hLDcu79TZEtqweu88RLdVOu4R
+         XQSr+yglGDfdUVSsATyDloaYrWNpWlvIBS9TM5oEciUx3xZWPezNzPbDTCYoy0L8+I+H
+         NsmnWdH2/hINXPqJ5Vqh1dGB+Xy1DmahJ6ZMeHB/0vBgTovs07SSDZq8Rq3h8tzf2tUw
+         HbKll7yoy/GyOnMdW+yL8/ce3k/Fd0MN6kkfCQfvgWyyXJFd0CAlSfu4Y5rR0j8OK7Nq
+         kRYw==
+X-Gm-Message-State: AOJu0Yxh3NvcsSQvReF9jnCsBvWqzSncxLaUyfZUSbO0hhIHEBlDWEUi
+	NKBhWVVK+WcdhrCfs4vMHuKN96sl3eI0Px+OE225znS1UB8/icsTgiArU/ooYA==
+X-Gm-Gg: ASbGncvcYNCroFto5fjDUww4iv00Hr6gfZ6YR/FOM8cFDT2sce72U21zYX4LYhA69j8
+	sZBmWVJdg1ZeEnRQa5a4qSUo3HSxRzNipy8cWFoTOHxJGbIEvNo/jeKoEwOcdZAHZS/YwwT67N0
+	AgwnrM0Ks+Mb2JlunvVjH3L78u8BifJFMRBtU9ZQnfUgmgMNIz+/25wpcLNbETnUM8UZzbZZKvY
+	NJxNk5nqip3OgpR0YEYpGaLXVqBQW4B33QbuOzGli8GFYYOkEVMZwCT8hLsIRH0FtBZxxbjmpO3
+	KGCinwBY9Ok/Ca7tkwTaGlkCQTaIrTgQR8Dv1wZs0MgIYrJ2VcUzIepGa72x8RT4DD9bZYubZs2
+	WmaJM0u9O5eZ94YH+0Mn69koOMMAOBeo+2A==
+X-Google-Smtp-Source: AGHT+IFwRtk52jDHFUKIdgfCPVH+KgriuRTdMZ2LgYHWXtilsq7fBvxSErGwaRNrDOez+imVIq/2HQ==
+X-Received: by 2002:a05:600c:8b04:b0:459:d709:e5c9 with SMTP id 5b1f17b1804b1-45a110d4a3bmr4991725e9.6.1754945612797;
+        Mon, 11 Aug 2025 13:53:32 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3abed3sm41673059f8f.10.2025.08.11.13.53.29
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e0e70218sm296572845e9.20.2025.08.11.13.53.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 13:53:30 -0700 (PDT)
-Message-Id: <c32e74fad94f1af69218c29f5d42128445b1680b.1754945601.git.gitgitgadget@gmail.com>
+        Mon, 11 Aug 2025 13:53:31 -0700 (PDT)
+Message-Id: <8ec969fe4bd0efde5c8cbb1717c1159e6a51fd78.1754945601.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1945.v3.git.1754945600.gitgitgadget@gmail.com>
 References: <pull.1945.v2.git.1754421045.gitgitgadget@gmail.com>
 	<pull.1945.v3.git.1754945600.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 11 Aug 2025 20:53:19 +0000
-Subject: [PATCH v3 5/6] doc:git-for-each-ref: fix styling and typos
+Date: Mon, 11 Aug 2025 20:53:20 +0000
+Subject: [PATCH v3 6/6] doc lint: check that synopsis manpages have synopsis
+ inlines
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,511 +82,102 @@ Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-This commit fixes the synopsis syntax and changes the wording of a few
-descriptions to be more consistent with the rest of the documentation.
-
-It is a prepartion for the next commit that checks that synopsis style is
-applied consistently across a manual page.
+When switching manpages to the synopsis style, the description lists of
+options need to be switched to inline synopsis for proper formatting. This
+is done by enclosing the option name in double backticks, e.g. `--option`.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/git-for-each-ref.adoc | 264 ++++++++++++++--------------
- 1 file changed, 132 insertions(+), 132 deletions(-)
+ Documentation/git-checkout.adoc             |  2 +-
+ Documentation/git-refs.adoc                 | 20 ++++++++++----------
+ Documentation/lint-documentation-style.perl |  6 ++++++
+ 3 files changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.adoc b/Documentation/git-for-each-ref.adoc
-index 060940904da2..b69080c4a000 100644
---- a/Documentation/git-for-each-ref.adoc
-+++ b/Documentation/git-for-each-ref.adoc
-@@ -14,101 +14,98 @@ git for-each-ref [--count=<count>] [--shell|--perl|--python|--tcl]
- 		   [--merged[=<object>]] [--no-merged[=<object>]]
- 		   [--contains[=<object>]] [--no-contains[=<object>]]
- 		   [(--exclude=<pattern>)...] [--start-after=<marker>]
--		   [ --stdin | <pattern>... ]
-+		   [ --stdin | (<pattern>...)]
+diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
+index 40e02cfd6562..ff1cb29bc1f8 100644
+--- a/Documentation/git-checkout.adoc
++++ b/Documentation/git-checkout.adoc
+@@ -334,7 +334,7 @@ include::diff-context-options.adoc[]
+ 	separated with _NUL_ character and all other characters are taken
+ 	literally (including newlines and quotes).
  
- DESCRIPTION
- -----------
+-<branch>::
++`<branch>`::
+ 	Branch to checkout; if it refers to a branch (i.e., a name that,
+ 	when prepended with "refs/heads/", is a valid ref), then that
+ 	branch is checked out. Otherwise, if it refers to a valid
+diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+index 4d6dc994f92e..5d26de8acb22 100644
+--- a/Documentation/git-refs.adoc
++++ b/Documentation/git-refs.adoc
+@@ -20,41 +20,41 @@ This command provides low-level access to refs.
+ COMMANDS
+ --------
  
--Iterate over all refs that match `<pattern>` and show them
--according to the given `<format>`, after sorting them according
--to the given set of `<key>`.  If `<count>` is given, stop after
--showing that many refs.  The interpolated values in `<format>`
-+Iterate over all refs that match _<pattern>_ and show them
-+according to the given _<format>_, after sorting them according
-+to the given set of _<key>_.  If _<count>_ is given, stop after
-+showing that many refs.  The interpolated values in _<format>_
- can optionally be quoted as string literals in the specified
- host language allowing their direct evaluation in that language.
+-migrate::
++`migrate`::
+ 	Migrate ref store between different formats.
+ 
+-verify::
++`verify`::
+ 	Verify reference database consistency.
  
  OPTIONS
  -------
--<pattern>...::
--	If one or more patterns are given, only refs are shown that
--	match against at least one pattern, either using fnmatch(3) or
-+`<pattern>...`::
-+	If one or more _<pattern>_ parameters are given, only refs are shown that
-+	match against at least one pattern, either using `fnmatch`(3) or
- 	literally, in the latter case matching completely or from the
- 	beginning up to a slash.
  
----stdin::
--	If `--stdin` is supplied, then the list of patterns is read from
--	standard input instead of from the argument list.
-+`--stdin`::
-+	The list of patterns is read from standard input instead of from
-+	the argument list.
+-The following options are specific to 'git refs migrate':
++The following options are specific to `git refs migrate`:
  
----count=<count>::
--	By default the command shows all refs that match
--	`<pattern>`.  This option makes it stop after showing
--	that many refs.
-+`--count=<count>`::
-+	Stop after showing _<count>_ refs.
- 
----sort=<key>::
--	A field name to sort on.  Prefix `-` to sort in
-+`--sort=<key>`::
-+	Sort on the field name _<key>_.  Prefix `-` to sort in
- 	descending order of the value.  When unspecified,
--	`refname` is used.  You may use the --sort=<key> option
-+	`refname` is used.  You may use the `--sort=<key>` option
- 	multiple times, in which case the last key becomes the primary
- 	key.
- 
----format=<format>::
-+`--format[=<format>]`::
- 	A string that interpolates `%(fieldname)` from a ref being shown and
- 	the object it points at. In addition, the string literal `%%`
- 	renders as `%` and `%xx` - where `xx` are hex digits - renders as
- 	the character with hex code `xx`. For example, `%00` interpolates to
--	`\0` (NUL), `%09` to `\t` (TAB), and `%0a` to `\n` (LF).
--+
--When unspecified, `<format>` defaults to `%(objectname) SPC %(objecttype)
-+	`\0` (_NUL_), `%09` to `\t` (_TAB_), and `%0a` to `\n` (_LF_).
-+
-+When unspecified, _<format>_ defaults to `%(objectname) SPC %(objecttype)
- TAB %(refname)`.
- 
----color[=<when>]::
-+`--color[=<when>]`::
- 	Respect any colors specified in the `--format` option. The
--	`<when>` field must be one of `always`, `never`, or `auto` (if
-+	_<when__ field must be one of `always`, `never`, or `auto` (if
- 	`<when>` is absent, behave as if `always` was given).
- 
----shell::
----perl::
----python::
----tcl::
-+`--shell`::
-+`--perl`::
-+`--python`::
-+`--tcl`::
- 	If given, strings that substitute `%(fieldname)`
- 	placeholders are quoted as string literals suitable for
- 	the specified host language.  This is meant to produce
--	a scriptlet that can directly be `eval`ed.
-+	a scriptlet that can directly be "eval"ed.
- 
----points-at=<object>::
-+`--points-at=<object>`::
- 	Only list refs which points at the given object.
- 
----merged[=<object>]::
-+`--merged[=<object>]`::
- 	Only list refs whose tips are reachable from the
--	specified commit (HEAD if not specified).
--
----no-merged[=<object>]::
--	Only list refs whose tips are not reachable from the
--	specified commit (HEAD if not specified).
-+	specified commit (`HEAD` if not specified).
- 
----contains[=<object>]::
--	Only list refs which contain the specified commit (HEAD if not
-+`--no-merged[=<object>]`::
-+	Only list refs whose tips are not reachable from _<object>_(`HEAD` if not
- 	specified).
- 
----no-contains[=<object>]::
--	Only list refs which don't contain the specified commit (HEAD
-+`--contains[=<object>]`::
-+	Only list refs which contain _<object>_(`HEAD` if not specified).
-+
-+`--no-contains[=<object>]`::
-+	Only list refs which don't contain _<object>_ (`HEAD`
- 	if not specified).
- 
----ignore-case::
-+`--ignore-case`::
- 	Sorting and filtering refs are case insensitive.
- 
----omit-empty::
-+`--omit-empty`::
- 	Do not print a newline after formatted refs where the format expands
- 	to the empty string.
- 
----exclude=<pattern>::
--	If one or more patterns are given, only refs which do not match
--	any excluded pattern(s) are shown. Matching is done using the
--	same rules as `<pattern>` above.
-+`--exclude=<excluded-pattern>`::
-+	If one or more `--exclude` options are given, only refs which do not
-+	match any _<excluded-pattern>_ parameters are shown. Matching is done
-+	using the same rules as _<pattern>_ above.
- 
----include-root-refs::
--	List root refs (HEAD and pseudorefs) apart from regular refs.
-+`--include-root-refs`::
-+	List root refs (`HEAD` and pseudorefs) apart from regular refs.
- 
----start-after=<marker>::
-+`--start-after=<marker>`::
-     Allows paginating the output by skipping references up to and including the
-     specified marker. When paging, it should be noted that references may be
-     deleted, modified or added between invocations. Output will only yield those
-@@ -126,44 +123,44 @@ keys.
- 
- For all objects, the following names can be used:
- 
--refname::
--	The name of the ref (the part after $GIT_DIR/).
-+`refname`::
-+	The name of the ref (the part after `$GIT_DIR/`).
- 	For a non-ambiguous short name of the ref append `:short`.
--	The option core.warnAmbiguousRefs is used to select the strict
--	abbreviation mode. If `lstrip=<N>` (`rstrip=<N>`) is appended, strips `<N>`
-+	The option `core.warnAmbiguousRefs` is used to select the strict
-+	abbreviation mode. If `lstrip=<n>` (`rstrip=<n>`) is appended, strip _<n>_
- 	slash-separated path components from the front (back) of the refname
- 	(e.g. `%(refname:lstrip=2)` turns `refs/tags/foo` into `foo` and
- 	`%(refname:rstrip=2)` turns `refs/tags/foo` into `refs`).
--	If `<N>` is a negative number, strip as many path components as
--	necessary from the specified end to leave `-<N>` path components
-+	If _<n>_ is a negative number, strip as many path components as
-+	necessary from the specified end to leave `-<n>` path components
- 	(e.g. `%(refname:lstrip=-2)` turns
- 	`refs/tags/foo` into `tags/foo` and `%(refname:rstrip=-1)`
- 	turns `refs/tags/foo` into `refs`). When the ref does not have
- 	enough components, the result becomes an empty string if
--	stripping with positive <N>, or it becomes the full refname if
--	stripping with negative <N>.  Neither is an error.
-+	stripping with positive _<n>_, or it becomes the full refname if
-+	stripping with negative _<N>_.  Neither is an error.
+---ref-format=<format>::
++`--ref-format=<format>`::
+ 	The ref format to migrate the ref store to. Can be one of:
  +
- `strip` can be used as a synonym to `lstrip`.
+ include::ref-storage-format.adoc[]
  
--objecttype::
-+`objecttype`::
- 	The type of the object (`blob`, `tree`, `commit`, `tag`).
+---dry-run::
++`--dry-run`::
+ 	Perform the migration, but do not modify the repository. The migrated
+ 	refs will be written into a separate directory that can be inspected
+ 	separately. The name of the directory will be reported on stdout. This
+ 	can be used to double check that the migration works as expected before
+ 	performing the actual migration.
  
--objectsize::
-+`objectsize`::
- 	The size of the object (the same as 'git cat-file -s' reports).
- 	Append `:disk` to get the size, in bytes, that the object takes up on
--	disk. See the note about on-disk sizes in the `CAVEATS` section below.
--objectname::
-+	disk. See the note about on-disk sizes in the 'CAVEATS' section below.
-+`objectname`::
- 	The object name (aka SHA-1).
- 	For a non-ambiguous abbreviation of the object name append `:short`.
- 	For an abbreviation of the object name with desired length append
--	`:short=<length>`, where the minimum length is MINIMUM_ABBREV. The
-+	`:short=<length>`, where the minimum length is `MINIMUM_ABBREV`. The
- 	length may be exceeded to ensure unique object names.
--deltabase::
-+`deltabase`::
- 	This expands to the object name of the delta base for the
- 	given object, if it is stored as a delta.  Otherwise it
- 	expands to the null object name (all zeroes).
+---reflog::
+---no-reflog::
++`--reflog`::
++`--no-reflog`::
+ 	Choose between migrating the reflog data to the new backend,
+ 	and discarding them.  The default is "--reflog", to migrate.
  
--upstream::
-+`upstream`::
- 	The name of a local ref which can be considered ``upstream''
- 	from the displayed ref. Respects `:short`, `:lstrip` and
- 	`:rstrip` in the same way as `refname` above.  Additionally
-@@ -185,100 +182,103 @@ Has no effect if the ref does not have tracking information associated
- with it.  All the options apart from `nobracket` are mutually exclusive,
- but if used together the last option is selected.
+-The following options are specific to 'git refs verify':
++The following options are specific to `git refs verify`:
  
--push::
-+`push`::
- 	The name of a local ref which represents the `@{push}`
- 	location for the displayed ref. Respects `:short`, `:lstrip`,
- 	`:rstrip`, `:track`, `:trackshort`, `:remotename`, and `:remoteref`
- 	options as `upstream` does. Produces an empty string if no `@{push}`
- 	ref is configured.
+---strict::
++`--strict`::
+ 	Enable stricter error checking. This will cause warnings to be
+ 	reported as errors. See linkgit:git-fsck[1].
  
--HEAD::
--	'*' if HEAD matches current ref (the checked out branch), ' '
-+`HEAD`::
-+	`*` if `HEAD` matches current ref (the checked out branch), ' '
- 	otherwise.
+---verbose::
++`--verbose`::
+ 	When verifying the reference database consistency, be chatty.
  
--color::
-+`color`::
- 	Change output color. Followed by `:<colorname>`, where color
- 	names are described under Values in the "CONFIGURATION FILE"
- 	section of linkgit:git-config[1].  For example,
- 	`%(color:bold red)`.
- 
--align::
-+`align`::
- 	Left-, middle-, or right-align the content between
--	%(align:...) and %(end). The "align:" is followed by
-+	`%(align:...)` and `%(end)`. The "`align:`" is followed by
- 	`width=<width>` and `position=<position>` in any order
--	separated by a comma, where the `<position>` is either left,
--	right or middle, default being left and `<width>` is the total
-+	separated by a comma, where the _<position>_ is either `left`,
-+	`right` or `middle`, default being `left` and _<width>_ is the total
- 	length of the content with alignment. For brevity, the
- 	"width=" and/or "position=" prefixes may be omitted, and bare
--	<width> and <position> used instead.  For instance,
-+	_<width>_ and _<position>_ used instead.  For instance,
- 	`%(align:<width>,<position>)`. If the contents length is more
- 	than the width then no alignment is performed. If used with
--	`--quote` everything in between %(align:...) and %(end) is
-+	`--quote` everything in between `%(align:...)` and `%(end)` is
- 	quoted, but if nested then only the topmost level performs
- 	quoting.
- 
--if::
--	Used as %(if)...%(then)...%(end) or
--	%(if)...%(then)...%(else)...%(end).  If there is an atom with
--	value or string literal after the %(if) then everything after
--	the %(then) is printed, else if the %(else) atom is used, then
-+`if`::
-+	Used as `%(if)...%(then)...%(end)` or
-+	`%(if)...%(then)...%(else)...%(end)`.  If there is an atom with
-+	value or string literal after the `%(if)` then everything after
-+	the `%(then)` is printed, else if the `%(else)` atom is used, then
- 	everything after %(else) is printed. We ignore space when
--	evaluating the string before %(then), this is useful when we
--	use the %(HEAD) atom which prints either "*" or " " and we
--	want to apply the 'if' condition only on the 'HEAD' ref.
--	Append ":equals=<string>" or ":notequals=<string>" to compare
--	the value between the %(if:...) and %(then) atoms with the
-+	evaluating the string before `%(then)`, this is useful when we
-+	use the `%(HEAD)` atom which prints either "`*`" or " " and we
-+	want to apply the 'if' condition only on the `HEAD` ref.
-+	Append "`:equals=<string>`" or "`:notequals=<string>`" to compare
-+	the value between the `%(if:...)` and `%(then)` atoms with the
- 	given string.
- 
--symref::
-+`symref`::
- 	The ref which the given symbolic ref refers to. If not a
- 	symbolic ref, nothing is printed. Respects the `:short`,
- 	`:lstrip` and `:rstrip` options in the same way as `refname`
- 	above.
- 
--signature::
-+`signature`::
- 	The GPG signature of a commit.
- 
--signature:grade::
--	Show "G" for a good (valid) signature, "B" for a bad
--	signature, "U" for a good signature with unknown validity, "X"
--	for a good signature that has expired, "Y" for a good
--	signature made by an expired key, "R" for a good signature
--	made by a revoked key, "E" if the signature cannot be
--	checked (e.g. missing key) and "N" for no signature.
--
--signature:signer::
-+`signature:grade`::
-+	Show
-+`G`;; for a good (valid) signature
-+`B`;; for a bad signature
-+`U`;; for a good signature with unknown validity
-+`X`;;	for a good signature that has expired
-+`Y`;; for a good signature made by an expired key
-+`R`;; for a good signature made by a revoked key
-+`E`;; if the signature cannot be checked (e.g. missing key)
-+`N`;; for no signature.
-+
-+`signature:signer`::
- 	The signer of the GPG signature of a commit.
- 
--signature:key::
-+`signature:key`::
- 	The key of the GPG signature of a commit.
- 
--signature:fingerprint::
-+`signature:fingerprint`::
- 	The fingerprint of the GPG signature of a commit.
- 
--signature:primarykeyfingerprint::
-+`signature:primarykeyfingerprint`::
- 	The primary key fingerprint of the GPG signature of a commit.
- 
--signature:trustlevel::
-+`signature:trustlevel`::
- 	The trust level of the GPG signature of a commit. Possible
- 	outputs are `ultimate`, `fully`, `marginal`, `never` and `undefined`.
- 
--worktreepath::
-+`worktreepath`::
- 	The absolute path to the worktree in which the ref is checked
- 	out, if it is checked out in any linked worktree. Empty string
- 	otherwise.
- 
--ahead-behind:<committish>::
-+`ahead-behind:<commit-ish>`::
- 	Two integers, separated by a space, demonstrating the number of
- 	commits ahead and behind, respectively, when comparing the output
--	ref to the `<committish>` specified in the format.
-+	ref to the _<committish>_ specified in the format.
- 
--is-base:<committish>::
--	In at most one row, `(<committish>)` will appear to indicate the ref
-+`is-base:<commit-ish>`::
-+	In at most one row, `(<commit-ish>)` will appear to indicate the ref
- 	that is most likely the ref used as a starting point for the branch
--	that produced `<committish>`. This choice is made using a heuristic:
-+	that produced _<commit-ish>_. This choice is made using a heuristic:
- 	choose the ref that minimizes the number of commits in the
--	first-parent history of `<committish>` and not in the first-parent
-+	first-parent history of _<commit-ish>_ and not in the first-parent
- 	history of the ref.
- +
- For example, consider the following figure of first-parent histories of
-@@ -312,29 +312,29 @@ common first-parent ancestor of `B` and `C` and ties are broken by the
- earliest ref in the sorted order.
- +
- Note that this token will not appear if the first-parent history of
--`<committish>` does not intersect the first-parent histories of the
-+_<commit-ish>_ does not intersect the first-parent histories of the
- filtered refs.
- 
--describe[:options]::
-+`describe[:<option>,...]`::
- 	A human-readable name, like linkgit:git-describe[1];
- 	empty string for undescribable commits. The `describe` string may
- 	be followed by a colon and one or more comma-separated options.
- +
- --
--tags=<bool-value>;;
-+`tags=<bool-value>`;;
- 	Instead of only considering annotated tags, consider
- 	lightweight tags as well; see the corresponding option in
- 	linkgit:git-describe[1] for details.
--abbrev=<number>;;
--	Use at least <number> hexadecimal digits; see the corresponding
-+`abbrev=<number>`;;
-+	Use at least _<number>_ hexadecimal digits; see the corresponding
- 	option in linkgit:git-describe[1] for details.
--match=<pattern>;;
--	Only consider tags matching the given `glob(7)` pattern,
--	excluding the "refs/tags/" prefix; see the corresponding option
-+`match=<pattern>`;;
-+	Only consider tags matching the `glob`(7) _<pattern>_,
-+	excluding the `refs/tags/` prefix; see the corresponding option
- 	in linkgit:git-describe[1] for details.
--exclude=<pattern>;;
--	Do not consider tags matching the given `glob(7)` pattern,
--	excluding the "refs/tags/" prefix; see the corresponding option
-+`exclude=<pattern>`;;
-+	Do not consider tags matching the `glob`(7) _<pattern>_,
-+	excluding the `refs/tags/` prefix; see the corresponding option
- 	in linkgit:git-describe[1] for details.
- --
- 
-@@ -366,7 +366,7 @@ variable (see linkgit:gitmailmap[5]).
- 
- The raw data in an object is `raw`.
- 
--raw:size::
-+`raw:size`::
- 	The raw data size of the object.
- 
- Note that `--format=%(raw)` can not be used with `--python`, `--shell`, `--tcl`,
-@@ -376,10 +376,10 @@ variable type.
- The message in a commit or a tag object is `contents`, from which
- `contents:<part>` can be used to extract various parts out of:
- 
--contents:size::
-+`contents:size`::
- 	The size in bytes of the commit or tag message.
- 
--contents:subject::
-+`contents:subject`::
- 	The first paragraph of the message, which typically is a
- 	single line, is taken as the "subject" of the commit or the
- 	tag message.
-@@ -387,19 +387,19 @@ contents:subject::
- 	obtain same results. `:sanitize` can be appended to `subject` for
- 	subject line suitable for filename.
- 
--contents:body::
-+`contents:body`::
- 	The remainder of the commit or the tag message that follows
- 	the "subject".
- 
--contents:signature::
-+`contents:signature`::
- 	The optional GPG signature of the tag.
- 
--contents:lines=N::
--	The first `N` lines of the message.
-+`contents:lines=<n>`::
-+	The first _<n>_ lines of the message.
- 
- Additionally, the trailers as interpreted by linkgit:git-interpret-trailers[1]
--are obtained as `trailers[:options]` (or by using the historical alias
--`contents:trailers[:options]`). For valid [:option] values see `trailers`
-+are obtained as `trailers[:<option>,...]` (or by using the historical alias
-+`contents:trailers[:<option>,...]`). For valid _<option>_ values see `trailers`
- section of linkgit:git-log[1].
- 
- For sorting purposes, fields with numeric values sort in numeric order
-@@ -419,8 +419,8 @@ option to linkgit:git-rev-list[1] takes). If this formatting is provided in
- a `--sort` key, references will be sorted according to the byte-value of the
- formatted string rather than the numeric value of the underlying timestamp.
- 
--Some atoms like %(align) and %(if) always require a matching %(end).
--We call them "opening atoms" and sometimes denote them as %($open).
-+Some atoms like `%(align)` and `%(if)` always require a matching `%(end)`.
-+We call them "opening atoms" and sometimes denote them as `%($open)`.
- 
- When a scripting language specific quoting is in effect, everything
- between a top-level opening atom and its matching %(end) is evaluated
-@@ -438,7 +438,7 @@ An example directly producing formatted text.  Show the most recent
- #!/bin/sh
- 
- git for-each-ref --count=3 --sort='-*authordate' \
----format='From: %(*authorname) %(*authoremail)
-+`--format='From: %(*authorname) %(*authoremail)
- Subject: %(*subject)
- Date: %(*authordate)
- Ref: %(*refname)
-@@ -449,7 +449,7 @@ Ref: %(*refname)
+ KNOWN LIMITATIONS
+diff --git a/Documentation/lint-documentation-style.perl b/Documentation/lint-documentation-style.perl
+index 11321a151bca..d7ab7322939e 100755
+--- a/Documentation/lint-documentation-style.perl
++++ b/Documentation/lint-documentation-style.perl
+@@ -21,6 +21,12 @@ while (my $line = <>) {
+ 	if ($line =~ /^`?--\[no-\][a-z0-9-]+.*(::|;;)$/) {
+ 		report($line, "definition list item with a `--[no-]` parameter");
+ 	}
++	if ($line =~ /^\[synopsis\]$/) {
++		$synopsis_style = 1;
++	}
++	if (($line =~ /^(-[-a-z].*|<[-a-z0-9]+>(\.{3})?)(::|;;)$/) && ($synopsis_style)) {
++			report($line, "synopsis style and definition list item not backquoted");
++	}
+ }
  
  
- A simple example showing the use of shell eval on the output,
--demonstrating the use of --shell.  List the prefixes of all heads:
-+demonstrating the use of `--shell`.  List the prefixes of all heads:
- 
- ------------
- #!/bin/sh
-@@ -517,7 +517,7 @@ eval "$eval"
- ------------
- 
- 
--An example to show the usage of %(if)...%(then)...%(else)...%(end).
-+An example to show the usage of `%(if)...%(then)...%(else)...%(end)`.
- This prefixes the current branch with a star.
- 
- ------------
-@@ -525,7 +525,7 @@ git for-each-ref --format="%(if)%(HEAD)%(then)* %(else)  %(end)%(refname:short)"
- ------------
- 
- 
--An example to show the usage of %(if)...%(then)...%(end).
-+An example to show the usage of `%(if)...%(then)...%(end)`.
- This prints the authorname, if present.
- 
- ------------
 -- 
 gitgitgadget
-
