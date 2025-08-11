@@ -1,183 +1,266 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E630526E71F
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 20:04:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3888F1FAC34
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 20:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754942649; cv=none; b=jxcTqMkSVN5LOpks2yzyImGogXA55fWNRyJZI2m6lZkzJEmxVRIPJ8iEA4Ly7ZfmVQilAWOngbN+LMwYYQ1U79qLmRuOWhso/05YB7gE0tH3s74mOkeOCfCTN1YlI18kjVjbTUhrGQfpceuOaEfXtBUy78TiSbcVePjKHcsxRC0=
+	t=1754943133; cv=none; b=ngXBNSzmePEh9f7tMVdeObx64oyJsL6RGg26XATnQmBjA4fNYy0IUhnaA2ZnaNxV+vR6lwY0IYRISRDQwjvFfwIrWkbQFD8/AtPBbhEOBJPW/TQ0p16V/AZJGFSdsUvoQqHVLdLfK5qGUiyCkqQEby4yLewyW9LutBKUj9mCOEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754942649; c=relaxed/simple;
-	bh=WZlUidRwdcIOrN06mxOfIURgVzSDc7yibJFkFD+FRRw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RrmCUUrkTXBHHU6+oe7PSudZByB6Oftv4rvmYGQratWHEk4dZaUrAz6ZYK2jCvjN2TopefP26l1g2VHmgHzZNJVoNH5RzA32QGVyuSaU2of1RF89DfdsQYWkvlxSUYJOhm7BUXCrHM9AA4+qZc1P/F5BxyJoYpBNE4MLdgXmCuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ae76CmsX; arc=none smtp.client-ip=209.85.210.44
+	s=arc-20240116; t=1754943133; c=relaxed/simple;
+	bh=vhN+8gSO2NE6by3yiHa4KmgQE8eUHjiWmJPyiHBQ1MQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=tMEKHGMWS7A6DVd2Jj5yC3Pd5mXiEnhgwQBKGjVXQIQmQ8Ex7+u73FfT/SUSaI61Tb5VX2R11UTvHAdJSCcjciVkE6zX1lxAzPUfk9ySvB4J2KCRZNH3A2qRXjrd6MDaJuAvtrAkC0nmkXli7Exec0tyh7VBHZTSqpTD1S9H2QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lSG3/AFp; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ae76CmsX"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-72c47631b4cso3222435a34.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:04:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lSG3/AFp"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-458b49c98a7so30374955e9.1
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754942647; x=1755547447; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lpzLjnH8NGXmsbd6cqBFNVLh2wASTfNKN/p+A1+UNa8=;
-        b=Ae76CmsXWioLCQDDerIZObB8F+98zmN9YMA0H1D/tqBtoYNny4v/Q593hlFv5nbDk+
-         kjZqVlazMk2Sy0ZV175ISd8dAOAVajv9lCc5DMg1aSciRybsV5t+STRwlU7uFgxuX3bF
-         b5Saw2sXYADCkaBBaUbJiL8+vyOEfxEXRcPjhL9hH4coS3G+NPGDWSG5WYjHW6OfhhtA
-         c9jvdgxubIcKOm7zc2QLLsKBvApY1dDcYWzEH9mZ66WZpTw8sK33jegnINi4JtvpVpy/
-         sGhF5w+sl3oLaLtLGXfRaIHYyzNvODYo2WNVwLgTRIsvZe8SHntCSjfQBr3iItcYA0tg
-         6oTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754942647; x=1755547447;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1754943129; x=1755547929; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lpzLjnH8NGXmsbd6cqBFNVLh2wASTfNKN/p+A1+UNa8=;
-        b=RrVpy0yovHLYGgdkwd73snrvdgF3RDPz+nV34qCKZxGE+jK3Y3zWuqYkPkhH4xI+32
-         2LAwpy3TRQDibfeWKMuNJFT6eBYdO4PeKTGgbuD5iSm3PWsmwtruPyMRmGqAkhtA2y8Q
-         CFPZeQOWqCeS5N/JsISCmrt97kdHAFUGuzH7u1Dp5uq+r208S3JqYgq2X5AwHnQBFlHM
-         bDAy05rC1oC6lyI/gcgn+b45IeM2yu7ouhlGm1DsK16+b5PGW2Jzp5HbMWFcBDvmi/cu
-         lBeWho8Vbn5A/rduU5487d0LyylvYgl2WkQ1tmCMu0Tj3WQjwcRegklj+nrSU82uqe0C
-         PfeQ==
-X-Gm-Message-State: AOJu0Yyv6tFN/Dt8KSId3xWVtUoNO0XXonZOwp1YnQNTGPSHUeTtdwSr
-	qOMe02bRmXBE2DXiXfZEYgSYCRfxOvArAULabJ8gXkEuWERWh1ZKihVqrGTUi/oK
-X-Gm-Gg: ASbGnctnFENBJe9QWo0hmDpuvseCszZKA4tfRfgX9rZbQUnaqlWlWJOLl8NTy3YwPnC
-	aZe65Yhoz8DIdF+gvbfjhC9fUc4DYT8F74VWP7ZWxYF1xjJ73vriF3yRxXgMIwMZPMSEWTPSLxe
-	sMeSYpA50XGGEqXiP+iTDMhHHTk3vgnVB8ZCdEqt26qRhhi3WswnpB4LfxQj3xNQPceTFJQVSP2
-	cDo6XU5Ck/6t2FoQx1BE/v2BomxkqCcaEQFDK7MxU4+Un6C1L0Cl/CRhCDcLkWXapejfdYvuVK4
-	bZF/TDbYzx3oc4lNDw/YmKCzngvmdUWnu0xh8E0n048cRLeKUY8ChLsQoaFXkT/ufWnCdTbxgvN
-	N2Cl9PeGZ/1CfGJQ=
-X-Google-Smtp-Source: AGHT+IH85PnRApedQ3W6VRtFHJaTGb/TV1EK4CspxYNowFlbX3FOIzwHhjobDXUeSOGJhbV8X0M2dw==
-X-Received: by 2002:a05:6808:1446:b0:435:6f4c:8b1e with SMTP id 5614622812f47-43597b4268bmr7956737b6e.6.1754942646834;
-        Mon, 11 Aug 2025 13:04:06 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-434131af52dsm3604793b6e.18.2025.08.11.13.04.05
+        bh=9PkQGafjPFHm5AR2gFFOx59SBF1HwauSRhyK6yh8SXI=;
+        b=lSG3/AFpggCgyfWe9KZF5t/FPnysLi+CqK1G3bMEr512B0cTfKsgABb5bPPOOURAXm
+         TKwLy5qn4dr4Vi5wHjyP+qAfgB7pRH6iTM2k0RlxlU7uGE0wg6OJOdF1A4mIOh2i7azK
+         F4OGF+QQSn5CRjrke9xJpXjPIjCrvY6VpSKOwkGaFBKXq94xVQdZvvBrKUuwwqr1sAhW
+         WYQ2qvswxew6ELHGEt8SzDCKHDMpleNEM/Co+C15sIVRjmTJrSv1iXyPnjy6hn24izpE
+         +ztqZBNCx9PnOapOQB+RF1T4LlStlU9So9ELdU9lPwH41LJeKk79IYWTgHpmI77m3N11
+         FHcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754943129; x=1755547929;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9PkQGafjPFHm5AR2gFFOx59SBF1HwauSRhyK6yh8SXI=;
+        b=o4REYgcoIXeSjZoH3wZtgN8YQyazoPH1m57R2gY9CwBST8S0f7fbc5xhqFrrCqBc6b
+         i6MpvM2AcCR9YpTpkC+wpk6vUjccmxXXZxhw1g4SeAlJvaqNF/feEKEg/W9RpFjSWMf2
+         sxJVXKv6ZEzffoTUQT+NFdC4+SwL2DE6E00i/MK0uOUpQQuGDWgoWPGyxThV92rgZH8z
+         C2QJQ/J3i3OoHRx1dMNKlXbgpFS6VE6BsSpEsqnOBnFG13SX8FRRALeyn6VLmZBs6n8Q
+         z3xvRJxCUkacCqJ6PjtFanNaZnLWk1d+BM9bQQP2Ivz19EOqm2wRMrKJecbfeQaltHBS
+         WRJQ==
+X-Gm-Message-State: AOJu0YxLkaZOR2lk44Jjh6IVOptAEAMb+0uViLc6+uvq6DAogS7xu4BS
+	K40QdwRS4KUk2QW7d7FyImV5cqsSe5eNRdx16WY5Ac+PmRa3+bOJCkPylEiMCA==
+X-Gm-Gg: ASbGncteAVJcjsGeM/FzRru+PvPhYFfVoNHBwwHm/s4gLQ4UtO7WAA0K90wiWdr9dPf
+	I4DNfJ+nV6qNOwxACXxtigQ5El1sWzwQtpAVlU/LFRBgMMh0mmzirBbLLs9gQfEzF8Lpti/4IxY
+	012dxgrNU7zhWvQjCEhL4tk5gt3PGa8R3/v1qAgyYCHupCiGBcMo/FBC8Ub3uzyJPwfYgIlB0y8
+	GqQ4Q0FPJRdZbaDlQ2GdrNWNtJbj2LinW5DH0Eqs3z7NM49m4Pz9rOdY5veBAXdueVgZU6lFRbK
+	YaynaS33Q0/7SGO0QmZZHJXECANN5u6bDyX3XYbSLH7xepWR6WFzTq7eaoywLhvY3hkgOUfLBrS
+	KWwCCgnML5Wx9Zycf+AUohrO0BzIZCe4S6w==
+X-Google-Smtp-Source: AGHT+IH/QV5aDSAsYP2R/3T1ahufJO1qx8fsvKPTwhVOOlGwb7Kgi9NbeATymtsaLir0t8Nbxh5bxQ==
+X-Received: by 2002:a05:600c:a46:b0:453:5a04:b60e with SMTP id 5b1f17b1804b1-45a10c0020amr7563685e9.26.1754943128741;
+        Mon, 11 Aug 2025 13:12:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-458f713eb44sm393548585e9.14.2025.08.11.13.12.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 13:04:05 -0700 (PDT)
-Date: Mon, 11 Aug 2025 15:04:05 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 6/6] reftable/stack: handle outdated stacks when
- compacting
-Message-ID: <3vkwdsqcas22um2djaic43ntapedwz4wqnrrnhvhngqdul2vmj@2rwfqngzyuup>
-References: <20250804-pks-reftable-fixes-for-libgit2-v2-0-fef06209a984@pks.im>
- <20250804-pks-reftable-fixes-for-libgit2-v2-6-fef06209a984@pks.im>
+        Mon, 11 Aug 2025 13:12:08 -0700 (PDT)
+Message-Id: <pull.1949.v5.git.1754943127.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1949.v4.git.1754702057.gitgitgadget@gmail.com>
+References: <pull.1949.v4.git.1754702057.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 11 Aug 2025 20:12:02 +0000
+Subject: [PATCH v5 0/5] doc: git-rebase: clarify DESCRIPTION section
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250804-pks-reftable-fixes-for-libgit2-v2-6-fef06209a984@pks.im>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Karthik Nayak <karthik.188@gmail.com>,
+    Julia Evans <julia@jvns.ca>
 
-On 25/08/04 11:40AM, Patrick Steinhardt wrote:
-> When we compact the reftable stack we first acquire the lock for the
-> "tables.list" file and then reload the stack to check that it is still
-> up-to-date. This is done by calling `stack_uptodate()`, which knows to
-> return zero in case the stack is up-to-date, a positive value if it is
-> not and a negative error code on unexpected conditions.
+ * Add a note about how you can use git rebase to reorder or combine commits
+ * Convert the explanation of how rebase works to an ordered list, make it
+   more accurate (include how duplicate commits are removed), and remove the
+   diagram showing how duplicate commits are removed. I'm happy to bring the
+   diagram back if folks think it's important, but I felt like it made the
+   section end in an awkward way and I'm not sure that "git rebase removes
+   duplicate commits" really needs a diagram to explain it.
 
-So `stack_uptodate()` returns a negative value for error cases and a
-positive value if the stack is out of date. `REFTABLE_OUTDATED_ERROR` is
-really also an error, but it is special cased to differentiate it from
-the others.
+Julia Evans (5):
+  doc: git-rebase: start with an example
+  doc: git rebase: dedup merge conflict discussion
+  doc: git rebase: clarify arguments syntax
+  doc: git-rebase: move --onto explanation down
+  doc: git-rebase: update discussion of internals
 
-> We don't do proper error checking though, but instead we only check
-> whether the returned error code is non-zero. If so, we simply bubble it
-> up the calling stack, which means that callers may see an unexpected
-> positive value.
-> 
-> Fix this issue by translating to `REFTABLE_OUTDATED_ERROR` instead.
-> Handle this situation in `reftable_addition_commit()`, where we perform
-> a best-effort auto-compaction.
-> 
-> All other callsites of `stack_uptodate()` know to handle a positive
-> return value and thus don't need to be fixed.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  reftable/stack.c | 32 ++++++++++++++++++++++++++------
->  1 file changed, 26 insertions(+), 6 deletions(-)
-> 
-> diff --git a/reftable/stack.c b/reftable/stack.c
-> index f77d7f58e8..effa2fc8cb 100644
-> --- a/reftable/stack.c
-> +++ b/reftable/stack.c
-> @@ -579,9 +579,11 @@ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
->  	return err;
->  }
->  
-> -/* -1 = error
-> - 0 = up to date
-> - 1 = changed. */
-> +/*
-> + * Check whether the given stack is up-to-date with what we have in memory.
-> + * Returns 0 if so, 1 if the stack is out-of-date or a negative error code
-> + * otherwise.
-> + */
->  static int stack_uptodate(struct reftable_stack *st)
->  {
->  	char **names = NULL;
-> @@ -849,10 +851,13 @@ int reftable_addition_commit(struct reftable_addition *add)
->  		 * control. It is possible that a concurrent writer is already
->  		 * trying to compact parts of the stack, which would lead to a
->  		 * `REFTABLE_LOCK_ERROR` because parts of the stack are locked
-> -		 * already. This is a benign error though, so we ignore it.
-> +		 * already. Similarly, the stack may have been rewritten by a
-> +		 * concurrent writer, which causes `REFTABLE_OUTDATED_ERROR`.
-> +		 * Both of these errors are benign, so we simply ignore them.
->  		 */
->  		err = reftable_stack_auto_compact(add->stack);
-> -		if (err < 0 && err != REFTABLE_LOCK_ERROR)
-> +		if (err < 0 && err != REFTABLE_LOCK_ERROR &&
-> +		    err != REFTABLE_OUTDATED_ERROR)
->  			goto done;
->  		err = 0;
->  	}
-> @@ -1215,9 +1220,24 @@ static int stack_compact_range(struct reftable_stack *st,
->  		goto done;
->  	}
->  
-> +	/*
-> +	 * Check whether the stack is up-to-date. We unfortunately cannot
-> +	 * handle the situation gracefully in case it's _not_ up-to-date
-> +	 * because the range of tables that the user has requested us to
-> +	 * compact may have been changed. So instead we abort.
-> +	 *
-> +	 * We could in theory improve the situation by having the caller not
-> +	 * pass in a range, but instead the list of tables to compact. If so,
-> +	 * we could check that relevant tables still exist. But for now it's
-> +	 * good enough to just abort.
-> +	 */
->  	err = stack_uptodate(st);
-> -	if (err)
-> +	if (err < 0)
->  		goto done;
-> +	if (err > 0) {
-> +		err = REFTABLE_OUTDATED_ERROR;
-> +		goto done;
-> +	}
+ Documentation/git-rebase.adoc | 305 ++++++++++++++++------------------
+ 1 file changed, 139 insertions(+), 166 deletions(-)
 
-I was thinking that maybe `stack_uptodate()` could maybe handle
-returning the `REFTABLE_OUTDATED_ERROR` directly so we could avoid
-having to map the error here. This could require callers to check for
-`err == REFTABLE_OUTDATED_ERROR` instead of `err > 0`. Probably not a
-big deal either way though.
 
-Otherwise this looks good to me :)
+base-commit: 2c2ba49d55ff26c1082b8137b1ec5eeccb4337d1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1949%2Fjvns%2Fclarify-rebase-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1949/jvns/clarify-rebase-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/1949
 
--Justin
+Range-diff vs v4:
 
->  
->  	/*
->  	 * Lock all tables in the user-provided range. This is the slice of our
-> 
-> -- 
-> 2.50.1.723.g3e08bea96f.dirty
-> 
-> 
+ 1:  07a4bdb7ce5 ! 1:  c2f2e05078f doc: git-rebase: start with an example
+     @@ Metadata
+       ## Commit message ##
+          doc: git-rebase: start with an example
+      
+     -    Start with an example that mirrors the example in the `git-merge` man
+     -    page, to make it easier for folks to understand the difference between a
+     -    rebase and a merge.
+     +    - Start with an example that mirrors the example in the `git-merge` man
+     +      page, to make it easier for folks to understand the difference between
+     +      a rebase and a merge.
+     +    - Mention that rebase can combine or reorder commits
+      
+          Signed-off-by: Julia Evans <julia@jvns.ca>
+      
+     @@ Documentation/git-rebase.adoc: SYNOPSIS
+      +                 /
+      +    D---E---F---G master
+      +------------
+     ++
+     ++You can also use `git rebase` to reorder or combine commits: see INTERACTIVE
+     ++MODE below for how to do that.
+      +
+       If `<branch>` is specified, `git rebase` will perform an automatic
+       `git switch <branch>` before doing anything else.  Otherwise
+ 2:  061790686b9 ! 2:  5459b7ff560 doc: git rebase: dedup merge conflict discussion
+     @@ Commit message
+      
+       ## Documentation/git-rebase.adoc ##
+      @@ Documentation/git-rebase.adoc: shortcut for `git checkout topic && git rebase master`.
+     -     D---E---F---G master
+     - ------------
+     + You can also use `git rebase` to reorder or combine commits: see INTERACTIVE
+     + MODE below for how to do that.
+       
+      +If there is a merge conflict during this process, `git rebase` will stop at the
+      +first problematic commit and leave conflict markers. If this happens, you can do
+     @@ Documentation/git-rebase.adoc: shortcut for `git checkout topic && git rebase ma
+      +3. Skip the commit that caused the merge conflict with
+      +
+      +   git rebase --skip
+     -+
+      +
+       If `<branch>` is specified, `git rebase` will perform an automatic
+       `git switch <branch>` before doing anything else.  Otherwise
+ 3:  fe9e161a51b ! 3:  948c205f1e6 doc: git rebase: clarify arguments syntax
+     @@ Documentation/git-rebase.adoc: one of these things:
+       
+          git rebase --skip
+       
+     --
+      -If `<branch>` is specified, `git rebase` will perform an automatic
+      -`git switch <branch>` before doing anything else.  Otherwise
+      -it remains on the current branch.
+ 4:  b37ebc8389d = 4:  e229b9fccb2 doc: git-rebase: move --onto explanation down
+ 5:  105a65e6e71 ! 5:  5ab235b067b doc: git-rebase: update discussion of internals
+     @@ Commit message
+          - make it clearer that we're talking about a multistep process
+          - give a more technically accurate description how rebase works with the
+            merge backend.
+     -    - delete a duplicate explanation of how git rebase skips commits with
+     -      the same textual changes (it's explained in more detail a few lines
+     -      further down)
+     +    - condense the explanation of how git rebase skips commits with the same
+     +      textual changes into a single bullet point and remove the explanatory
+     +      diagram. Lots of things which are more complicated are already being
+     +      explained without a diagram.
+          - remove the explanation of how exactly `--fork-point` and `--root`
+            work since that information is in the OPTIONS section
+          - put all discussion of `ORIG_HEAD` inside the note
+     @@ Documentation/git-rebase.adoc: linkgit:git-config[1] for details) and the `--for
+      -to point at the tip of the branch before the reset.
+      +Here is a more detailed description of what `git rebase <upstream>` does:
+      +
+     -+First, it makes a list of all commits in the current branch that are not in
+     -+`<upstream>`. This is the same set of commits that would be shown by `git log
+     -+<upstream>..HEAD`. You can use `--fork-point` or `--root` to change how this
+     -+list of commits is constructed.
+     -+
+     -+Then it checks out `<upstream>` (or `<newbase>` if the `--onto` option was
+     -+supplied) with the equivalent of `git switch --detach <upstream>`.
+     -+
+     -+Then it replays the commits, one by one, in order. This is similar to running
+     -+`git cherry-pick <commit>` for each commit. See REBASING MERGES for how merges
+     -+are handled.
+     -+
+     -+Finally, it updates your branch to point to the final commit with the equivalent
+     -+of `git switch -C <branch>`.
+     ++1. Make a list of all commits in the current branch that are not in
+     ++   `<upstream>`. This is the same set of commits that would be shown by `git log
+     ++   <upstream>..HEAD`. You can use `--fork-point` or `--root` to change how this
+     ++   list of commits is constructed.
+     ++2. Check whether any of those commits are duplicates of commits already
+     ++   in `<upstream>`, remove them from the list, and print out a warning about
+     ++   each removed commit. You can use `--reapply-cherry-picks` to include
+     ++   duplicate commits.
+     ++3. Check out `<upstream>` (or `<newbase>` if the `--onto` option was
+     ++   supplied) with the equivalent of `git checkout --detach <upstream>`.
+     ++4. Replay the commits, one by one, in order. This is similar to running
+     ++   `git cherry-pick <commit>` for each commit. See REBASING MERGES for how merges
+     ++   are handled.
+     ++5. Update your branch to point to the final commit with the equivalent
+     ++   of `git switch -C <branch>`.
+       
+       [NOTE]
+     -+`ORIG_HEAD` is set to point at the tip of the branch before the rebase.
+     - `ORIG_HEAD` is not guaranteed to still point to the previous branch tip
+     - at the end of the rebase if other commands that write that pseudo-ref
+     - (e.g. `git reset`) are used during the rebase. The previous branch tip,
+     - however, is accessible using the reflog of the current branch
+     - (i.e. `@{1}`, see linkgit:gitrevisions[7]).
+     - 
+     +-`ORIG_HEAD` is not guaranteed to still point to the previous branch tip
+     +-at the end of the rebase if other commands that write that pseudo-ref
+     +-(e.g. `git reset`) are used during the rebase. The previous branch tip,
+     +-however, is accessible using the reflog of the current branch
+     +-(i.e. `@{1}`, see linkgit:gitrevisions[7]).
+     +-
+      -The commits that were previously saved into the temporary area are
+      -then reapplied to the current branch, one by one, in order. Note that
+      -any commits in `HEAD` which introduce the same textual changes as a commit
+      -in `HEAD..<upstream>` are omitted (i.e., a patch already accepted upstream
+      -with a different commit message or timestamp will be skipped).
+      -
+     - If the upstream branch already contains a change you have made (e.g.,
+     - because you mailed a patch which was applied upstream), then that commit
+     - will be skipped and warnings will be issued (if the 'merge' backend is
+     +-If the upstream branch already contains a change you have made (e.g.,
+     +-because you mailed a patch which was applied upstream), then that commit
+     +-will be skipped and warnings will be issued (if the 'merge' backend is
+     +-used).  For example, running `git rebase master` on the following
+     +-history (in which `A'` and `A` introduce the same set of changes, but
+     +-have different committer information):
+     +-
+     +-------------
+     +-          A---B---C topic
+     +-         /
+     +-    D---E---A'---F master
+     +-------------
+     +-
+     +-will result in:
+     +-
+     +-------------
+     +-                   B'---C' topic
+     +-                  /
+     +-    D---E---A'---F master
+     +-------------
+     ++When starting the rebase, `ORIG_HEAD` is set to point to the commit at the tip
+     ++of the to-be-rebased branch. However, `ORIG_HEAD` is not guaranteed to still
+     ++point to that commit at the end of the rebase if other commands that change
+     ++`ORIG_HEAD` (like `git reset`) are used during the rebase. The previous branch
+     ++tip, however, is accessible using the reflog of the current branch (i.e. `@{1}`,
+     ++see linkgit:gitrevisions[7].
+     + 
+     + MODE OPTIONS
+     + ------------
+
+-- 
+gitgitgadget
