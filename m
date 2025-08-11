@@ -1,94 +1,94 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA86E1E515
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 22:46:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282E11EB1AF
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 22:59:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754952412; cv=none; b=n5FG4lscQHRpXXKJ1iWdOs8mxSxB/IB89kkDlDrNO4XlLXW5kyfdondb1OV5MkgDh1bo73cW/MpcsEJ1f5q0gfavzwS4VZ/5xU5GV33mv6a/oZvgTNz16zW7bWwF0Qpc7JrThrtsssKAmEwO+X1s/brnoYVRcmtJ89mzdZ22tes=
+	t=1754953162; cv=none; b=a7jGHh7b3CEOMM2yKyn0v7dstujdh+ccY9OKZENPCrdUt57H2yIVybCyY1KHj0WQhiYG4hVQimRQbWZRR0ZsubBy7MP/UDQoHUz/yFqUx+8S12FZgsFb2bWyqi3rXwmZMY8BPGOFmkFIho7fm8MrHsYtS8/sVyx/j2bwVNn/bU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754952412; c=relaxed/simple;
-	bh=ePcea6RBgbBHIb2YIRVCOLweFMwXYYVYMZTmussMYWY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R76KufB6mXt+0nh7Dx8eVcrzfw/1FwuK8x3mxbmGnfOX2tls+yUZLuiRIGUxx0KVxWJZ0z9ZcpLRJcxaExNQCZ9rzFqEvXpKH51elnJzg9MVKE36qxCAapOb6wHb7l/+ubLVmqBW7oTQnPr0/q4Vlf/utKFiLAKLUxmDebz5qdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1754953162; c=relaxed/simple;
+	bh=pCr3rrMiUdUCElRJ+IGHBKIBTApWKoIC7F5FksO2UVs=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=jf8VJcn3VI9cYFmspU2jtsrtliGC7HsWoui8bXbXpYG6fUxH/cOzKOp0t+BiJO+C4JXcfqIwHJx3z/CE619C5lg7OOwwqHZoCMeu74Bqwmra7seIQVdrKmJFab2ZAHXxohOB4OX/M4QjNyfpD9qTSR6pef24YqSNvvRW/QNYZV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HVKhct2u; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-707564a46caso2397856d6.2
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 15:46:50 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HVKhct2u"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7180bb37846so46445357b3.3
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 15:59:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754953160; x=1755557960; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pCr3rrMiUdUCElRJ+IGHBKIBTApWKoIC7F5FksO2UVs=;
+        b=HVKhct2uJQpQpF64GlsSSadvwAj3ekfaHNcRcTaE/w3redUciZvaaisPa7+XS58cXo
+         EvLgxzFNQfw28xI8poehF4vg6rqBvNKjEHlcWjfjFHP3d9Ba+J0vdPnIC+H5MKNwZlYx
+         HoAuM3UE81madmOqEd0ShVxmeW59lWa4TxFbV9a1FxGiRlvMEfK/+bbHf11kvNY3zXau
+         bHsAXj4SO7fNRwAfFVwC6D3KrVMSnNn4pQ7GKEqo/CDT3YEl+dpPNbE+810AmlCzO83q
+         NoU81ESoght0SkXnSB+/4CtSFDiYi/GFt/ILoFA1qMw1b6i9A9/ZmgPnHtsqBA2TTdSC
+         aD8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754952410; x=1755557210;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1754953160; x=1755557960;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rDhq/tau5CHLKJuAZNlXSPOXmD+TUzyhspfKLMmqeDM=;
-        b=bGuWSePeT2Kf6PFOe48BwYA4zGgWeTBqXMhdJSHbDaDS6Hl297dRC3mstswBgkzBdB
-         8Uq/zY+xTI5FIKpt/VqLaMSI88aqhaa9IwiH/WeTNx5xSzfL6JyMM4N2Qwuha9PeeQNy
-         3+cRkDY9s/BdkBrl60g3nOoO9vTQei1qWlRU2rnA0jhZ8RFD7HXbc5AmrUai5vqkQbHC
-         lZH+4YydsY3ywDk1iOIR88BWlNDXl0BVYoPcKBHcKXDE8y7yjZ2czscT7GWMJhf0YhRE
-         ro0wWz5yYTlOKAxw7NP5xSHDyb2wWplCUihkteb4bAPkTDzzosDlqmqLplsLnZj5JMXf
-         Vhhw==
-X-Gm-Message-State: AOJu0YyqIgEuXDJnFzoreQO/abJieByGatqq90I+RBTjxV0zH5805Bf8
-	dsakujfllxLuYSDkNycF4WuSBMcrmB3di4bzHNqew7P7PUT4sbOHUyDEvi8bYBg/qCz+cuocMsy
-	UafwzPs0KCqMLTp5ofpW7X2OzZBUj0iU=
-X-Gm-Gg: ASbGncs24NJ/tq53WMMvMyHm76p6bxXNsEeGjFK+7k+AcvZWeKei7oA3gJ25duJEBQ3
-	MQLr8+fGrcENh1cgDQQ76IPa/Sgtd/bFbrUl7zAt9PCtU+eDvGZzkLUblzJbzm7eut2u60PG70j
-	yJSMrvbAoCkCFUDAai9k3Dx+JFt7k3pabBf8LvR1y1rus4qyrDQVWtv6nwpul6FxY6F5mwiNMbW
-	m3fPTqFGs1JLeJU2E5gkvj6LPNe9DWPMTHjRrqv
-X-Google-Smtp-Source: AGHT+IFo1VjqSPzX7vr9UGsO4JC/j+eGFvJuqA5lpgXq32MEFdwO66zfAWl+Fuexy6kyhm4oQ8kaDSqwuNAMERlwWWM=
-X-Received: by 2002:ad4:5f45:0:b0:709:8dee:52bb with SMTP id
- 6a1803df08f44-709ac2fda81mr66322146d6.7.1754952409788; Mon, 11 Aug 2025
- 15:46:49 -0700 (PDT)
+        bh=pCr3rrMiUdUCElRJ+IGHBKIBTApWKoIC7F5FksO2UVs=;
+        b=NP8zwsbsHpvW7l+k1l+MpbZrfWiPG6P09YxYw3Lev44+wH4wK3YpX3HZRDuuLqqBAg
+         gt1tobfCiQ0Na9S4vKTI7uvOLQnuvDVWPRk+IaFeMb7j/HoW51NOUuly2m3iNcacKBsQ
+         uyH7ct0PoO70AhioXWwUZVtB1CSZEy+eG5M3IpEPRm5sHR0YwH6kQeHv4ojo7RmH1lvJ
+         JQYH2KYUZeiX6ofislFGEpr9k55OHF2ZF5j4c7qC7xkYD1CP+c5PO1bkLO0b0KIRBzcu
+         BpMgl1zq+zAfVBHRdXErjjUWmwdMKGinU4WYmUVw8X+V9Y+qEDcooQNxX/TDBn46JEzi
+         yiUw==
+X-Gm-Message-State: AOJu0Yy8mIEvorSjsoCiMfNgvszGvBImY9zeJem9OCKvTgpIg9CtcPA1
+	5yBp+NnJpkYml4ZDLVjjNEXN6YI4FGTuNbzoroczoO+mmkOCSnERFkF2
+X-Gm-Gg: ASbGncv5zmRRP6cm0sf7rJ0SToAwSHGdqXLueLx9io534rP0gI/IuBcc7qM+K6mohJP
+	N+r3eMrCi7OZWCK/nqWHWBzPLFm9DYHfivLVkGm3/bHoc+7smhjDR61cILkyEEuO6f7zUWX0P7j
+	fLXdSAkbKSm2Z1HbmDgU+0k+YiXM8zv9SUvgVOh+XJeyMLIbvjsYGf84Ii5psAB4R741EgnpCmn
+	oNqg/FEVjLTNv1aYZmiLw9VgpJwj2rimL7gYoNnrEKqtg1Qm1Jf6w68tzvgg57jziZFkUSKJaFY
+	CQqVB3eWJt5PZcJJ1ut8xCj+myEbePaTFtH7GyLu3HzsiYcVMdzEU0ILeShOmbFlv08BfcXNQ11
+	Hmb8gYd8bXE02nG2LWU5uc+iiFolXOXI56IXgydy2ewX5Qa9KQ2c=
+X-Google-Smtp-Source: AGHT+IEP/c+pev8fcilOKTGfEpWNZUw9M9Tmja1iTzCMStUGaO4H0CQKQzJ/QXKRH2atcfABXVActA==
+X-Received: by 2002:a05:690c:d95:b0:70c:c013:f26 with SMTP id 00721157ae682-71bf0e78fa9mr196398747b3.33.1754953159890;
+        Mon, 11 Aug 2025 15:59:19 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:f5e7:14b4:8a2a:aa03])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-71bd09175dcsm35896797b3.78.2025.08.11.15.59.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Aug 2025 15:59:19 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20250810160323.49372-1-ben.knoble+github@gmail.com> <20250811221706.67168-5-ben.knoble+github@gmail.com>
-In-Reply-To: <20250811221706.67168-5-ben.knoble+github@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 11 Aug 2025 18:46:38 -0400
-X-Gm-Features: Ac12FXyIhnquf_EfmVGvai6E1jmHQsFG8HSCCE9Lp3KXylhy8UtRJiHwqXvKBFQ
-Message-ID: <CAPig+cTXuTaMd1+sbSSDNbGKxxciyxAT3LMk44aSaimPco8XTQ@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] editor: use standard strvec API to receive
- environment for external editors
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v3 0/4] clean up some code around editors
+Date: Mon, 11 Aug 2025 18:59:08 -0400
+Message-Id: <6BCA1E93-7409-41FA-81FB-0CB75A3A55FB@gmail.com>
+References: <20250811221706.67168-1-ben.knoble+github@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+ Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ Eric Sunshine <sunshine@sunshineco.com>
+In-Reply-To: <20250811221706.67168-1-ben.knoble+github@gmail.com>
 To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, 
-	Johannes Schindelin <johannes.schindelin@gmx.de>, Elijah Newren <newren@gmail.com>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Calvin Wan <calvinwan@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Mailer: iPhone Mail (21F90)
 
-On Mon, Aug 11, 2025 at 6:17=E2=80=AFPM D. Ben Knoble
-<ben.knoble+github@gmail.com> wrote:
-> Going back to the introduction of the env parameter for the editor in
-> 8babab95af (builtin-commit.c: export GIT_INDEX_FILE for launch_editor as
-> well., 2007-11-26), we pass a constant array of strings: as the
-> surrounding APIs evolved to use strvecs (see 8d7aa4ba6a
-> (builtin/commit.c: remove the PATH_MAX limitation via dynamic
-> allocation, 2017-01-13) and later 46b225f153 (Merge branch 'jk/strvec',
-> 2020-08-10)), the editor code did not.
->
-> There is only one caller of all 3 editor APIs that does not pass a NULL
-> environment (the same caller for which this parameter was added), and
-> it already has a strvec available to use.
 
-I'm confused as to *why* we want to make this change, and the commit
-message doesn't seem to explain the motivation or why doing so is
-beneficial.
+> Le 11 ao=C3=BBt 2025 =C3=A0 18:17, D. Ben Knoble <ben.knoble+github@gmail.=
+com> a =C3=A9crit :
+>=20
+> =EF=BB=BFChanges from v2:
+> - shuffle setup code and use more helpers in 1/4
+> - insert 2/4 to stop abusing --exec-path
+> - improve environment-cleansing idioms in {2 =3D> 3}/4
+>=20
+> Thanks especially to Phillip's encyclopaedic knowledge of test helpers ;)
 
-> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> ---
-> diff --git a/editor.h b/editor.h
-> @@ -3,6 +3,7 @@
->  int launch_editor(const char *path, struct strbuf *buffer,
-> -                 const char *const *env);
-> +                 const struct strvec *env);
-
-Typically, we would want to have the API accept the narrowest type in
-order to remain as general as possible, but this change makes it a
-requirement that a caller must have the much wider `strvec` type at
-hand, which seems counterproductive.
+Some of this shuffling turned out to be unportable, which CI caught (but run=
+ning the test locally didn=E2=80=99t??). Fortunately it pointed me at test_e=
+nv and I=E2=80=99ll either use it or go back to the subshells.=
