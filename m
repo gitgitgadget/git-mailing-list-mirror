@@ -1,204 +1,145 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784AFC148
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:15:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FD6157493
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:45:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754918150; cv=none; b=VE+GED7lwCDzI/GpDDJQvO/Mo5nx87Q3TLNY40djbzcnK9vaasdO2xEiH3UYCBSP6LPEJBkA+RRR5LavITeIGw3ojduOgu4q87eF2C7kx+QgKBzuG8ZC7zqwa7uNZvYTndc4tcLE7GHEwrNeF9dl1PmrlzEIOSNmPPpijDNhfUA=
+	t=1754919953; cv=none; b=Qz59NQyeVpGjbo3h1FL7A5egYc8tFqzV+y7GQVoyET77KTgNolQro7mqykjckVyJxvDd3mu95ltZGZ2hVD1FdP4ELI/RExZWyzF2E3f4cM6NHyK6aDBexJrRSaFNdPKPBpMUfOCHuobG3Ar1QdoQnD/WXFP1nhhMyH6zGnCebUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754918150; c=relaxed/simple;
-	bh=rFvWnkmHhA5Zmhfckv6l5015VQGK24WfpDGV5/4YTcU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HajODmKhcjOHajQFn9GGTax0FEAR4miw19hi8OgHyKlzKWRQFw9sJxHW7NJgiadp3NzuPnCOKeDgITBIxQMa6WJbh3eP85pQSVk7UKz1hBI0WlswHl5Z0AQX/vLeLQWMdqpggyvEo/GsEiQyuAD6BTYAc2nUu9pdfT0AIH8U1J8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mx+ty5oh; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754919953; c=relaxed/simple;
+	bh=nUOThbPINWuWvyg0f2sIhUtStSpNsCRkUiv+hAS+CPk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D2yojLrKp/MN+upBmublN2DJ9B2WAJ1qL397f0wZY/9zDQtv1b27NU2noHlOBcreO3li3U8tsPeHNkpvCCDYyxvwf+lQmBV3LdUOHmWo+bd+aWASOsVSxPS7bVy4pQLs4wNSFlGG1JJmHf92EMgS+qag0Ate+hPVp1INO5S1kFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FmavOLRd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PlHOwRbL; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mx+ty5oh"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3b8db5e9b35so2658445f8f.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 06:15:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754918147; x=1755522947; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=y4G/sG8Vg0xd3UbnMx5h25Hx+xJQdy7/ZtywzI4TqK8=;
-        b=mx+ty5ohiDHAS5SUxGUlL+PkJOJ6IGgceYAk8oOol2AgW9OiQd0vjDN+ECaBGQQ3Tp
-         mg/ywVXG+0SZgcrF+f4oL91QuV4BB8ok4M1ajhhjHlHQJlLP0HTRDR1tgvOBt0UJx8uI
-         JXs0bPVQcAaCL5YlkgpnLXPCtNNT1anLjzNBIc3zUi8HRsW5EJ+h3FyODCXmuimQv/lv
-         JlcwWj9rjyoOgnxzpv3jkkLGqNLgeqBqJhtBqc4Gm7JZC2SAKn0X0ZfM/xkvGI+tZLWB
-         BMyy9htRtpCacjLZOw4qg2/JJoV6LXSaAhz8glR92tsxWZ3ZHfdYiu0tGvNeBwcubxBk
-         Un8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754918147; x=1755522947;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=y4G/sG8Vg0xd3UbnMx5h25Hx+xJQdy7/ZtywzI4TqK8=;
-        b=XFFJPBBgJkZqynMP2qF1AexIFQdMtEI88q5oLy2p/ktirHBbJJ8MaDiWwYACFotlne
-         X99wDYccNXyM5ZnrpA6Xuha+BRyKzvxWGBYQ2lAcH96EWnwfQlVZfrV1PZsOydLRLYKa
-         wLmVjNg5VObUsF7E6lO1/AySk1Wow57GsXfHw8FON5YycQkjXARitjEZ+U4GEpVS/4NJ
-         FdG87Ee8izSlz67YXhB3OySAmeslu5BQtI301xs5w3G7ZErQ/zGRdNTUGO3yst48jdXi
-         9GJfq1QUhN/8SLgPkMTID5jfeZYVzNtM8Fil9uX0jz0FJgM6qwHPpbuEFe+LbyvdIBzg
-         TI2g==
-X-Forwarded-Encrypted: i=1; AJvYcCWsvSXbo9xpHvGC+9NRoS/raQi0U/GtZxsw/djHF+HKRcX5vsfwb6/F7pDGyD4FWJQu7oc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzqwdCoendHQzIXGigy4b0/xScc9q5DVJVRGBYhFxjue0QTziAA
-	gqH6CLLdcBisjxcmyts7XGEeWZ3JM6vYLfI71P/whhc5B+N6Vxck6UVy
-X-Gm-Gg: ASbGncuCcGxmCHU/szv0C+D7ay8W2y7YoP5xg2lqcW1f7zUMB/Moo6gusY0+YgyMBC0
-	2aLJg0YN5Fy7bRo1seKBcf8RKzcaevyMoOxZmeXOQMCqjDC1N0t4UmxaVmW1kjDQ0xRIxlWmz2z
-	Gb5T4swY4nesI2/ZCZgeCk86NuBlvnj5cQph0Pvoq2JQab3JbE/ffHbg7J+NV8puGvkCJrS/yAZ
-	MnWYICEmeaKwO2bi1BNzzFu82kFWJtDU2dRQ9Nyhn0K6BtrGPg3YnMi7OaSX2iKoYQyVSUkeURC
-	IW2Y95QRqw/VfEIvAu9Yq/C276K6o5+odzCP0dWfhSbXqzRWClfahN5fhJ4ntAy48B2elW1PX71
-	DUWCxpBQi+FK60MaeBQZwRwq1DOJsNT8pbRaKEnT80qH3Xnx5aR05Umbvtv18arIXfWSvIkr3vK
-	88qDNmZp8=
-X-Google-Smtp-Source: AGHT+IFZXRAaOSD5lJhsEYjPZ7QsifWxC9M1aHto8bDSIBk/yvFrJl+dwS6QAFzBtWG7LbevsC60YA==
-X-Received: by 2002:a05:6000:2410:b0:3b8:ffd2:6745 with SMTP id ffacd0b85a97d-3b900b51264mr11145808f8f.44.1754918146509;
-        Mon, 11 Aug 2025 06:15:46 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7a5:4701:9bd8:62f6:3085:6ee3? ([2a0a:ef40:7a5:4701:9bd8:62f6:3085:6ee3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b8e054036bsm30945717f8f.31.2025.08.11.06.15.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Aug 2025 06:15:46 -0700 (PDT)
-Message-ID: <4e2e2bea-c8e5-4343-9e70-a2bd139eb242@gmail.com>
-Date: Mon, 11 Aug 2025 14:16:11 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FmavOLRd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PlHOwRbL"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 799A41D00094;
+	Mon, 11 Aug 2025 09:45:49 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 11 Aug 2025 09:45:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754919949;
+	 x=1755006349; bh=4tewpSR+5hF+K41wZEh8UaYQpySOh4zLjn0CP2nb3wE=; b=
+	FmavOLRd6CZGn+09SzCov28d1rlCo6ZOqjBbojevn1+rBJxe+znjFD52wmfaLRwV
+	IhfKnkY7hHe6VVIDuUfD/gAva3MdGQg+9TYb7QvrACBYXn7DOfUqkPCv00E4zxUn
+	1Y8B4Gt6C3iC2jsMPhUbBWxPjI8uj1GqfnxlWyGF2IieXsARhTjfg2oB3WLrXsJD
+	QnjYxdP64NPw843QRZOJnZa9xQb4LifJHcWZLFbg64A/D0JISO9SJiVrPTsPxt0E
+	fJURgmjpjlFfArpC6Vt6octvs480enbzkslGPGh7Y1EH5hpF3g7degQR3hbTrz61
+	ED/ZKManS2gB/zxm7xDkew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754919949; x=
+	1755006349; bh=4tewpSR+5hF+K41wZEh8UaYQpySOh4zLjn0CP2nb3wE=; b=P
+	lHOwRbLdoeCqSkWC+BC89qGciJRTNV2AORcbSI12D0UaaYyYHs8ryXwtr7LTA8eD
+	CvwYx4oT3LXbFTwF78zqKqrmiN6o6jqtyJrw4b9p56+Xs1I8wHPyVoirM3tTAUPv
+	+zBum+/9m7QLhPJ//OtcX4ACAO4/Zzy/Dx0iKoRhKhtS3Gphi8tzkc1XC1Ckm89t
+	DzFVuO/DJLjCrVgAFa0HOZDAo0C2VbHJKWhSmZhEec4cDZ93I+Y+7ShGg7XLzKnN
+	wbFSNqocJCD4ePlwn0LKHC6ZoCV0jCpSfSAj37dKCMBALASBlOBNE0Narv4b5a0p
+	0TJVhBya3G/MuA2hEGwIg==
+X-ME-Sender: <xms:DfSZaAz4ExaefLx2yIeOIUz0jxgjmhwmPLFQjIi70zI7nkYaizXpYg>
+    <xme:DfSZaO1yVdgr23-XhSI6VERvlGZo3K4ky9hazaLH-1b-VmnALEZR_qOkFTnV6mc3a
+    ibzsaQDCdMNjwBmpw>
+X-ME-Received: <xmr:DfSZaO7qPjNMshuNs6ttzhvt6fF2uw6S0WAv-2ukeNqhW5noyJdhsRYdrER5eW8gH_3aqrtrrYo_3pfPuT0CKgwtY4j2qZxnQYuxkn0Pc2c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvieduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopegsvg
+    hnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrg
+X-ME-Proxy: <xmx:DfSZaBURhf2qqJzQj9K056VUX5DVpdeJ2q8Y1CR4PDg4pBcCiTDamA>
+    <xmx:DfSZaNBx88LCdS4T9LVU0351nT9OO055h-kT9mbFLePprKv45y3wWA>
+    <xmx:DfSZaA5pk43nkVv16DGhtp_ZRCFzv8PJt0T9gcs76T6_J2NIhFZ9Kg>
+    <xmx:DfSZaIw1O9Amdmh93G7sPXkLg3B6hqWIWivTtOh3JQFD1W9exmqoEw>
+    <xmx:DfSZaDjOmbXpZRJVXXcBDYr9w8F8pMacvSyYScCDFnD8-JonlzrVlNKi>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Aug 2025 09:45:48 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d2138227 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 11 Aug 2025 13:45:46 +0000 (UTC)
+Date: Mon, 11 Aug 2025 15:45:43 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v4 5/5] doc: git-rebase: update discussion of internals
+Message-ID: <aJn0B-RNjLXjmqKl@pks.im>
+References: <aJmt1fv66bO_ZMpI@pks.im>
+ <FA86B191-AEA6-49AE-A04F-EB736DF4845B@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] git-jump: make `diff` work with filenames containing
- spaces
-To: Greg Hurrell via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Greg Hurrell <greg.hurrell@datadoghq.com>
-References: <pull.1950.git.1754674979929.gitgitgadget@gmail.com>
- <pull.1950.v2.git.1754913323810.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.1950.v2.git.1754913323810.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <FA86B191-AEA6-49AE-A04F-EB736DF4845B@gmail.com>
 
-Hi Greg
+On Mon, Aug 11, 2025 at 08:29:42AM -0400, Ben Knoble wrote:
+> 
+> > Le 11 août 2025 à 04:46, Patrick Steinhardt <ps@pks.im> a écrit :
+> > 
+> > ﻿On Sat, Aug 09, 2025 at 01:14:17AM +0000, Julia Evans via GitGitGadget wrote:
+> >> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
+> >> index 50c84f138212..c16ee37b46a7 100644
+> >> --- a/Documentation/git-rebase.adoc
+> >> +++ b/Documentation/git-rebase.adoc
+> >> @@ -65,31 +65,31 @@ linkgit:git-config[1] for details) and the `--fork-point` option is
+> >> assumed.  If you are currently not on any branch or if the current
+> >> branch does not have a configured upstream, the rebase will abort.
+> >> 
+> >> -All changes made by commits in the current branch but that are not
+> >> -in `<upstream>` are saved to a temporary area.  This is the same set
+> >> -of commits that would be shown by `git log <upstream>..HEAD`; or by
+> >> -`git log 'fork_point'..HEAD`, if `--fork-point` is active (see the
+> >> -description on `--fork-point` below); or by `git log HEAD`, if the
+> >> -`--root` option is specified.
+> >> -
+> >> -The current branch is reset to `<upstream>` or `<newbase>` if the
+> >> -`--onto` option was supplied.  This has the exact same effect as
+> >> -`git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
+> >> -to point at the tip of the branch before the reset.
+> >> +Here is a more detailed description of what `git rebase <upstream>` does:
+> >> +
+> >> +First, it makes a list of all commits in the current branch that are not in
+> >> +`<upstream>`. This is the same set of commits that would be shown by `git log
+> >> +<upstream>..HEAD`. You can use `--fork-point` or `--root` to change how this
+> >> +list of commits is constructed.
+> >> +
+> >> +Then it checks out `<upstream>` (or `<newbase>` if the `--onto` option was
+> >> +supplied) with the equivalent of `git switch --detach <upstream>`.
+> >> +
+> >> +Then it replays the commits, one by one, in order. This is similar to running
+> >> +`git cherry-pick <commit>` for each commit. See REBASING MERGES for how merges
+> >> +are handled.
+> >> +
+> >> +Finally, it updates your branch to point to the final commit with the equivalent
+> >> +of `git switch -C <branch>`.
+> > 
+> > Would it make sense to convert this into a bulleted list to further
+> > highlight this multi-step process?
+> 
+> Nit: ordered list, perhaps? Unless we don’t use those in our manuals
+> (away from documentation at the moment). 
 
-On 11/08/2025 12:55, Greg Hurrell via GitGitGadget wrote:
-> From: Greg Hurrell <greg.hurrell@datadoghq.com>
-> [...]
-> 1. For file "foo", Git will emit "foo".
-> 2. For file "foo bar", Git will emit "foo bar\t".
-> 3. For file "foo\t", Git will emit "\"foo\t\"".
-> 4. For file "foo bar\t", Git will emit "\"foo bar\t\"".
-> 
-> Before this commit, `git-jump` correctly handled only case "1".
-> 
-> After this commit, `git-jump` correctly handles cases "1" and "2". In
-> reality, these are the only cases people are going to run into with any
-> regularity, and the other two are rare edge cases, which probably aren't
-> worth the effort to support unless somebody actually complains about
-> them.
+Ah, I actually wanted to propose using an ordered list, not bulleted list.
+Thanks for correcting me.
 
-Thanks for updating the commit message, I agree it's probably not worth 
-worrying about cases 3 & 4 unless someone complains
-
-Thanks
-
-Phillip
-
-> Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
-> ---
->      git-jump: make diff work with filenames containing spaces
->      
->      Changed since v1:
->      
->       * No code changes, but reworded commit message to include examples of
->         quoted paths.
->      
->      Turns out that quoted paths never worked, so this commit isn't "robbing
->      Peter to pay Paul", but rather, "giving something to Paul for free
->      (Peter, sadly, is still out of luck)".
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1950%2Fwincent%2Fstrip-trailing-tab-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1950/wincent/strip-trailing-tab-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1950
-> 
-> Range-diff vs v1:
-> 
->   1:  afe01c156e5 ! 1:  03fa9ac1ab2 git-jump: make `diff` work with filenames containing spaces
->       @@ Commit message
->                                strchr(line, ' ') ? "\t" : "");
->                        break;
->        
->       -    That is, for a file "foo.txt" we'll emit:
->       +    That is, for a file "foo.txt", `git diff --no-prefix` will emit:
->        
->       -        +++ a/foo.txt
->       +        +++ foo.txt
->        
->       -    but for "foo bar.txt" we'll emit:
->       +    but for "foo bar.txt" it will emit:
->        
->       -        +++ a/foo bar.txt\t
->       +        +++ foo bar.txt\t
->        
->       -    This in turn leads us to produce a quickfix format like this:
->       +    This in turn leads `git-jump` to produce a quickfix format like this:
->        
->                foo bar.txt\t:1:1:contents
->        
->       @@ Commit message
->            This commit takes the simple approach of unconditionally stripping any
->            trailing tab. Consider the following three examples:
->        
->       -    1. For file "foo bar", Git will emit "foo bar\t".
->       -    2. For file "foo\t", Git will emit "foo\t".
->       -    3. For file "foo bar\t", Git will emit "foo bar\t\t".
->       +    1. For file "foo", Git will emit "foo".
->       +    2. For file "foo bar", Git will emit "foo bar\t".
->       +    3. For file "foo\t", Git will emit "\"foo\t\"".
->       +    4. For file "foo bar\t", Git will emit "\"foo bar\t\"".
->        
->       -    Before this commit, `git-jump` correctly handled only case "2".
->       +    Before this commit, `git-jump` correctly handled only case "1".
->        
->       -    After this commit, `git-jump` correctly handles cases "1" and "3". In
->       -    reality, "1" is the only case people are going to run into with any
->       -    regularity, and the other two are extreme edge cases.
->       -
->       -    The argument here is that stripping the "\t" unconditionally gives us a
->       -    minimal change, and it addresses the common case without bringing in
->       -    complexity for the uncommon ones. If anybody ever complains about case
->       -    "2" no longer working for them, we can do the more complicated thing and
->       -    only strip the "\t" if the filename contains a space.
->       +    After this commit, `git-jump` correctly handles cases "1" and "2". In
->       +    reality, these are the only cases people are going to run into with any
->       +    regularity, and the other two are rare edge cases, which probably aren't
->       +    worth the effort to support unless somebody actually complains about
->       +    them.
->        
->            Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
->        
-> 
-> 
->   contrib/git-jump/git-jump | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-> index 3f696759617..8d1d5d79a69 100755
-> --- a/contrib/git-jump/git-jump
-> +++ b/contrib/git-jump/git-jump
-> @@ -44,7 +44,7 @@ open_editor() {
->   mode_diff() {
->   	git diff --no-prefix --relative "$@" |
->   	perl -ne '
-> -	if (m{^\+\+\+ (.*)}) { $file = $1 eq "/dev/null" ? undef : $1; next }
-> +	if (m{^\+\+\+ (.*?)\t?$}) { $file = $1 eq "/dev/null" ? undef : $1; next }
->   	defined($file) or next;
->   	if (m/^@@ .*?\+(\d+)/) { $line = $1; next }
->   	defined($line) or next;
-> 
-> base-commit: 2c2ba49d55ff26c1082b8137b1ec5eeccb4337d1
-
+Patrick
