@@ -1,69 +1,69 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EE82E3B03
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 21:51:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116C02E2F16
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 21:51:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754949083; cv=none; b=JLKQyoTrfrSYfKzsokZHPVwbGmrZmywFpRfgUaudgctg7Fxb3z1vidVzWoKIaA8UisTvYZpTUTpEIpEFiM2SoiNEI8u8B7sM+Q1n1RMJeDXIgJSk+tsHk6568fNx6lY0AvsSPsX6Eiw2JZjHHdhHusQZXsoiKEAo8grf+sTDxsk=
+	t=1754949086; cv=none; b=pFyYimvbQBgrA8bBuVHJU+ZgIcSPBPA1Dq8kV7Q28WIuXktObtdGgvV/qY8wHLLtQupc/Pv7SIxh5mh7yNQdPhN7HhxwZTvtkrkGEOKtX9lXWeqWvWx3uVKNgumY66tzJ2UwhFTnjAIKWl9v+IgguVlg1jdGDGRcqFmSXiU/0lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754949083; c=relaxed/simple;
-	bh=bLmeyXSHKM8Az49Ee1PjpFuNowdoVfPlCgQV1L1F/6U=;
+	s=arc-20240116; t=1754949086; c=relaxed/simple;
+	bh=DV0RE0LuOmQ5WZcn2WDmG8Ap0E2kUBX0y6dIYZk8cdU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kOfkC+BehKPeFFeYSmusUPRVgzpVcBW/RQmJrHg2DFdv8efuPX/PLPxV6nEiVoAjfjCiwi/GfA2hb3YwlghaTIU2jYsiujZlUlPOTSBmWK1i/a5sOQtRytK1zlj77zI4UmyPZ8LqMgKKhXwRbhnU2zDQJos0mL5xYI2nzMs7X3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JvwnXjd9; arc=none smtp.client-ip=209.85.128.46
+	 MIME-Version:To:Cc; b=r4O/d9Uy+32wa6087l3IjaiFNTE3+LF4qyJjPdTmT+rJ3fhROPwJLv8LUHNWjl3eRfch8pnCHtl9xw8H+BCOgiOf3r3U2Vx2k4+Zm8M4ue6Zf61xLhawK6Yhi+mrAUBc7v/f9U7UKOL1YS0KexReaS2jFIRMtweYvkdLLMdgJP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OnZhPB0H; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JvwnXjd9"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-459eb4ae596so44541305e9.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 14:51:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OnZhPB0H"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-459fdc391c6so21092045e9.3
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 14:51:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754949080; x=1755553880; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754949083; x=1755553883; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zRG1tCa/IrI9Mc4Lghqvcla/Of5GXD5DMJ1yUWYoUvw=;
-        b=JvwnXjd9FvgrltmNumbOKBh6GH+xqMxW6MZFW3m+ANs0MxZdYQ+S6ikHSDb+pa8zCI
-         WfilFUX9eRI+U5yA5qhaKD3yl2fepW1CinTAKLUZnpU7aP+KEy+28nQo8zFUWXlqKaxk
-         JUCg5g8ObrVgvtkVbV17hbkj/5YMRRtIn9wm/RIT6yq8sWFHHapI8eLmKa9f3MGu/Apw
-         RRA+4J/L6Ftjlu4HG/hE8wunv6v2ivzG8BzCKH2uzuT6IdU8DEfA4Lby1TdMLkqq50/t
-         QatwvhIW8NqULxN9+0LhKZUSfTwaqbhoHmKV/L6hv7GeZpSN2oDsbD4li0VcGJJ2IzgL
-         P5ew==
+        bh=06mxZlMd6Ld6PBCaiMg0tF5UZv74Pr340bDXqAEbmMI=;
+        b=OnZhPB0H7toWqMDxnbKqwZPiljuSW5KHCkuOllbEwvtp9GVLPlgSItXWYYhMVI/uit
+         wgsHKOk9DnQkpjuAm6plZaLl263Cg0m8UK98JREdXXEj8ws6pCWO0ZI8zWWrEnrA3+Jv
+         YST4G2VK3D/tY+99N8shdSG2gFw3wkQ9bzrDpgfIfwwZPjxkl+QHo3+m0i6urFAfJAw6
+         za7ox4XWz4RWlR2rxfwsNEytBMcUMLb7lapwre5uUjBfCR+VYOaiXy4fw+FLTMRyw6Hv
+         6/5c7Hmf7YpQJeE2Dkp7j+0sz2/obI/5idLzymaii/Bq9xiSGQMxRLv+YCQIqdEjQr3d
+         g7Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754949080; x=1755553880;
+        d=1e100.net; s=20230601; t=1754949083; x=1755553883;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zRG1tCa/IrI9Mc4Lghqvcla/Of5GXD5DMJ1yUWYoUvw=;
-        b=xKdil3m5MiWpEVgJSSqATx7J+HL54Apo2MHisQ8mklATlzCq7bxUkHL5Mx5mfcYKUh
-         7DhPbCMPyCTHpUAgP5+CJUyVdLlHHdDNp97tuhqBJWuos11pq9P6YpHrm8yyaEILUkpQ
-         yhVqqoVvDgG96WcE/IzmXHtnSEsYO6/B7c59uJUxD4TdgpmUsFPGzPY439RFPwPtNgJi
-         GfhmYNoZqgwsl0yzDA8Zb7AdB1jnE5prJ5xR0IY4ZkYOnFc4PCXw4jaJX05Jo5dyVgem
-         EL5wfDCO7iO7dx5zPpF0ha5ORXFt7pIHS/rZ6SBoOdt9Uf2PyvO8orJ6uSOQV1B0pOZm
-         XDxQ==
-X-Gm-Message-State: AOJu0Yz6UjMmvU0c9YBjg7TYeb6lbFuq/5oPZ3Dq5FaCjm9c44IcGI4h
-	YA18yX8rWZLxqLRiF41j6911NDYa4MefQe8zsVZsIeqVlr7bynwb5ZV3pto8FA==
-X-Gm-Gg: ASbGncvhAh2O79gOEigva1NX9d/bonN7hXf1Yd4iR92EhULTdq1MS3dUIWdt2PfbXc0
-	RNUsXp3l99tJOviHNpT3autO55cGXGF1kL2f1MI5IMYrhYQnv8Ywhs/Qv7xKFu1m4VncqxWsiAH
-	bKJZbmMLr4oQ1KyVMpq1uDzRi0eopnM0CGHfTw1PwxuuYTh11iZA1UXIo/wd8M1T5AsPlyvkz0c
-	p7e9+YX7ABuyqElSSV34nfP6oj8Sta9EQ8D/rutu+BL/wVWQqDMTuhBzz3E0nLGKwopB+0Y43CH
-	mN9VlwGa2SEn6u4WDiagTT3JWK8OgyJZs+wVWTn83WjDGnTXn8wjza4hD1XnP84DlvygeQqk20j
-	CnHTq4D+8o7upg4EObGg9IMODIBIvKwLdZg==
-X-Google-Smtp-Source: AGHT+IEjnA4Qpg92D1+NTVOVYqsx3dgoIObVRdkB1Lc0+kxZuSEhjh6TKQ7zetIySuhlanarpZEBzQ==
-X-Received: by 2002:a05:600c:3b9e:b0:459:e165:2661 with SMTP id 5b1f17b1804b1-459f4fac83emr122919725e9.23.1754949079988;
-        Mon, 11 Aug 2025 14:51:19 -0700 (PDT)
+        bh=06mxZlMd6Ld6PBCaiMg0tF5UZv74Pr340bDXqAEbmMI=;
+        b=rrcHv27XWV8vQKUQicSkZzKspqPLlZgly/fS5dfTz8bMrovXexLg72Y4bsEj5DGyB1
+         dFbmUs/OvFAjFYW0FjlK95Ao/cQRxtYU1OFWlbFNuUwtHAHsyFPrQ1DQtKgbpf7rEVa6
+         zZ807i9VwG54bqu6fJWOOg0nEiXyGACiUbTrGJdVCiMTJVHQQ0l70tCgU7WN1/tsQpQ8
+         LtvCtepx70Oc4Co4SA+QRp8QLZTQxtiWKD2MzvOz/1M4/Bv175/ONbEVIMJlcB2mg/xA
+         nu6XOLibGRnffU/1sRHvu20EeG+5riYKDG08SW6ZRE/6mm091iu00GTe/zNUu/L31MkZ
+         Dwig==
+X-Gm-Message-State: AOJu0YxjQWKJnzg+xylwcaHhdh20y64uY5ZZHvePUL7IfbBEAanuzz6q
+	U+4jXH3a6mNjHknfYsd1VRzf4lbT9GAGf0z9FxLYqVaYuuMMyFqRG5W0ogVgSg==
+X-Gm-Gg: ASbGnctldkgOIn0oDRFomvRgWf2E8y2U0Wl2yR9USrCYuNzzk+K6wqRYEquVza/G3Gx
+	SGn9rZhdXh9bmj0Y0FRqBanWv9FI4FtE1tvMyjqcrmZPOAYtrLVAytiaAvNvXDhA9wu64fwud+q
+	px/kS42UPx2I/qB9A9XuVD48XXqetZ/iIE3Jw/irSGRqiMqyquaqIGbdEzGatMatwEh6wBlejr1
+	JLXL5aqTzGH0Mt2E0c0SaAjcwGpBFiFSovgRuhhUPcLEdJubOFGxtWY85K6Z6Pjw0DXY2QFHWmW
+	xfHgEpujn1QWuc9vpYazxbwKi2OOhRaxB6u9lAu7sCAFCpryH1Ar4d7EPq0I4utpEaTh9AbvSMd
+	o1Jh9/AfmNTCbbpP8KG9/dtI=
+X-Google-Smtp-Source: AGHT+IFxEv4MaUp7IRg7UBovBu5q5yAj3H9VuVIx8/GbLnKjo77hIIn8w/2auObNPYdmgO78JCg9SQ==
+X-Received: by 2002:a05:600c:46c7:b0:459:d408:d890 with SMTP id 5b1f17b1804b1-45a10c09e5cmr9860435e9.33.1754949082643;
+        Mon, 11 Aug 2025 14:51:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459db13fc9fsm343412075e9.7.2025.08.11.14.51.19
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c489e81sm42454012f8f.68.2025.08.11.14.51.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 14:51:19 -0700 (PDT)
-Message-Id: <7ee6b0afe88fe4f5346776192a0df99c6b64de19.1754949075.git.gitgitgadget@gmail.com>
+        Mon, 11 Aug 2025 14:51:22 -0700 (PDT)
+Message-Id: <4686417b28e4ab386983ad68e4d4d4798a467811.1754949075.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1949.v6.git.1754949075.gitgitgadget@gmail.com>
 References: <pull.1949.v5.git.1754943127.gitgitgadget@gmail.com>
 	<pull.1949.v6.git.1754949075.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 11 Aug 2025 21:51:13 +0000
-Subject: [PATCH v6 3/5] doc: git rebase: clarify arguments syntax
+Date: Mon, 11 Aug 2025 21:51:14 +0000
+Subject: [PATCH v6 4/5] doc: git-rebase: move --onto explanation down
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,31 +83,209 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Julia Evans <julia@jvns.ca>
 
-Remove duplicate explanation of `git rebase <upstream> <branch>` which
-is already explained above.
+There's a very clear explanation with examples of using --onto which is
+currently buried in the very long DESCRIPTION section. This moves it to
+its own section, so that we can reference the explanation from the
+`--onto` option by name.
 
 Signed-off-by: Julia Evans <julia@jvns.ca>
 ---
- Documentation/git-rebase.adoc | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ Documentation/git-rebase.adoc | 168 ++++++++++++++++++----------------
+ 1 file changed, 87 insertions(+), 81 deletions(-)
 
 diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index e82ceb9cbfce..6d02648a9b3c 100644
+index 6d02648a9b3c..d041d87f270b 100644
 --- a/Documentation/git-rebase.adoc
 +++ b/Documentation/git-rebase.adoc
-@@ -62,11 +62,7 @@ one of these things:
+@@ -114,87 +114,6 @@ will result in:
+     D---E---A'---F master
+ ------------
  
-    git rebase --skip
- 
--If `<branch>` is specified, `git rebase` will perform an automatic
--`git switch <branch>` before doing anything else.  Otherwise
--it remains on the current branch.
+-Here is how you would transplant a topic branch based on one
+-branch to another, to pretend that you forked the topic branch
+-from the latter branch, using `rebase --onto`.
 -
--If `<upstream>` is not specified, the upstream configured in
-+If you don't specify an `<upstream>` to rebase onto, the upstream configured in
- `branch.<name>.remote` and `branch.<name>.merge` options will be used (see
- linkgit:git-config[1] for details) and the `--fork-point` option is
- assumed.  If you are currently not on any branch or if the current
+-First let's assume your 'topic' is based on branch 'next'.
+-For example, a feature developed in 'topic' depends on some
+-functionality which is found in 'next'.
+-
+-------------
+-    o---o---o---o---o  master
+-         \
+-          o---o---o---o---o  next
+-                           \
+-                            o---o---o  topic
+-------------
+-
+-We want to make 'topic' forked from branch 'master'; for example,
+-because the functionality on which 'topic' depends was merged into the
+-more stable 'master' branch. We want our tree to look like this:
+-
+-------------
+-    o---o---o---o---o  master
+-        |            \
+-        |             o'--o'--o'  topic
+-         \
+-          o---o---o---o---o  next
+-------------
+-
+-We can get this using the following command:
+-
+-    git rebase --onto master next topic
+-
+-
+-Another example of --onto option is to rebase part of a
+-branch.  If we have the following situation:
+-
+-------------
+-                            H---I---J topicB
+-                           /
+-                  E---F---G  topicA
+-                 /
+-    A---B---C---D  master
+-------------
+-
+-then the command
+-
+-    git rebase --onto master topicA topicB
+-
+-would result in:
+-
+-------------
+-                 H'--I'--J'  topicB
+-                /
+-                | E---F---G  topicA
+-                |/
+-    A---B---C---D  master
+-------------
+-
+-This is useful when topicB does not depend on topicA.
+-
+-A range of commits could also be removed with rebase.  If we have
+-the following situation:
+-
+-------------
+-    E---F---G---H---I---J  topicA
+-------------
+-
+-then the command
+-
+-    git rebase --onto topicA~5 topicA~3 topicA
+-
+-would result in the removal of commits F and G:
+-
+-------------
+-    E---H'---I'---J'  topicA
+-------------
+-
+-This is useful if F and G were flawed in some way, or should not be
+-part of topicA.  Note that the argument to `--onto` and the `<upstream>`
+-parameter can be any valid commit-ish.
+-
+ MODE OPTIONS
+ ------------
+ 
+@@ -240,6 +159,8 @@ As a special case, you may use "A\...B" as a shortcut for the
+ merge base of A and B if there is exactly one merge base. You can
+ leave out at most one of A and B, in which case it defaults to HEAD.
+ 
++See TRANSPLANTING A TOPIC BRANCH WITH --ONTO below for examples.
++
+ --keep-base::
+ 	Set the starting point at which to create the new commits to the
+ 	merge base of `<upstream>` and `<branch>`. Running
+@@ -1018,6 +939,91 @@ consistent (they compile, pass the testsuite, etc.) you should use
+ after each commit, test, and amend the commit if fixes are necessary.
+ 
+ 
++TRANSPLANTING A TOPIC BRANCH WITH --ONTO
++----------------------------------------
++
++Here is how you would transplant a topic branch based on one
++branch to another, to pretend that you forked the topic branch
++from the latter branch, using `rebase --onto`.
++
++First let's assume your 'topic' is based on branch 'next'.
++For example, a feature developed in 'topic' depends on some
++functionality which is found in 'next'.
++
++------------
++    o---o---o---o---o  master
++         \
++          o---o---o---o---o  next
++                           \
++                            o---o---o  topic
++------------
++
++We want to make 'topic' forked from branch 'master'; for example,
++because the functionality on which 'topic' depends was merged into the
++more stable 'master' branch. We want our tree to look like this:
++
++------------
++    o---o---o---o---o  master
++        |            \
++        |             o'--o'--o'  topic
++         \
++          o---o---o---o---o  next
++------------
++
++We can get this using the following command:
++
++    git rebase --onto master next topic
++
++
++Another example of --onto option is to rebase part of a
++branch.  If we have the following situation:
++
++------------
++                            H---I---J topicB
++                           /
++                  E---F---G  topicA
++                 /
++    A---B---C---D  master
++------------
++
++then the command
++
++    git rebase --onto master topicA topicB
++
++would result in:
++
++------------
++                 H'--I'--J'  topicB
++                /
++                | E---F---G  topicA
++                |/
++    A---B---C---D  master
++------------
++
++This is useful when topicB does not depend on topicA.
++
++A range of commits could also be removed with rebase.  If we have
++the following situation:
++
++------------
++    E---F---G---H---I---J  topicA
++------------
++
++then the command
++
++    git rebase --onto topicA~5 topicA~3 topicA
++
++would result in the removal of commits F and G:
++
++------------
++    E---H'---I'---J'  topicA
++------------
++
++This is useful if F and G were flawed in some way, or should not be
++part of topicA.  Note that the argument to `--onto` and the `<upstream>`
++parameter can be any valid commit-ish.
++
++
+ RECOVERING FROM UPSTREAM REBASE
+ -------------------------------
+ 
 -- 
 gitgitgadget
 
