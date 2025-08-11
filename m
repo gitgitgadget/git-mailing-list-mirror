@@ -1,201 +1,133 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506B91534EC
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 22:17:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA5B2253FE
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 22:23:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754950637; cv=none; b=caV97QXePcZJWw2biz7UQbKDT4Dv0std+B0vOE+9mUiUvUqM8PdOT4R0MeTw67MOKSYxfRp2bnz811TBlP2+Vgmyf+TLY5ApqK70wiop+DNihK0BTVlf7qAw2abXDsRC+vrPweGS4jj1sCiPo6dO7C20k1WbXqEDy9GV3KUgCqE=
+	t=1754951031; cv=none; b=jcKUZWPKfwKfdMplEscGEUuH/X9B/ggsEI/bZSlF+tKm+WCA4kdRWJ3XwQR/889I3Ny6cUQw9GqlV0QqP//gqtdkyGSbVwcZe+YyERyULNOwShZENXaEQQG0Ik5YO5ISKVQUuwxmq3O35oUTQek1vhx8JIp7ayM/3KEA3yqNGSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754950637; c=relaxed/simple;
-	bh=Xtqh0aR26l0z4lkH3Mv6fd6oTykCXfJEaKpEx3NCAEA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNZnEHUA+zvDC/9674cnGDT8K7g022DBEmoAEmdukeCq5U3a0Vy0dqHmAde7yFTTjzkc0YVmIH6O7WjYulPcTUa47Owz4AgVmw1eGuEdyAkjXiNXj0UKGmYGaBmf5K7b/0LFDiUItzeWDHSLH2EpEinIyEMeZxriJZbML/piJOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yfkn27+q; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754951031; c=relaxed/simple;
+	bh=tZznFiJxNb0s0/Vp/LPLsLWHwL4Ngzi1zONmdmHt86k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nhUQE3gjKTnIPMBGgEDsWVgamiPu12iuax76Tj0kKWfR5PGYvXwa0Z6fXyljaqXxzpvc01Fvy/FZWVH1Vhy+LEYVnkHBJd265xLpIsPb8x6T+0Y8+gaFZNeswcIV4q/TRcteaDC6Yb21IR7fcykj+OxcdjwNfKdgf1XIMDTcres=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=pvAp31aj; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yfkn27+q"
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e917b687974so194940276.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 15:17:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754950635; x=1755555435; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yHObBpbzHMJinDzVbZmX8E3HkojQoP29R63sTkDC2Ss=;
-        b=Yfkn27+qqX2sWPeFzqJ1HBYdSFvhfZEUylTtgp+YdKieM34fADDuqTyhl5YrC9PMhM
-         PiEp9zumDh5H+RVzjrkUGGH4Ad8cmaxUPzX5aevYaPRwJp9lgUZd29/mVN5AFz/EpF2L
-         QmIAxqWIVAwpG8fGPV85feGm/WI7nZLKXaDgw1OzvfbS+zwOXt0t3M2uLOMh1ZlkMLzM
-         zdOv6r0tcBeFvX+n8qji/Yht7QoGP1Kf/mgAiAxGIRyTesrBXlJaThqH+TemIDz7uM4g
-         moeNip4EDO0brfNNJAL4RyR/rKrlwFhoTB11dvLTewStNyB/K4pLgvf9CaJAY+vpE12d
-         YXcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754950635; x=1755555435;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=yHObBpbzHMJinDzVbZmX8E3HkojQoP29R63sTkDC2Ss=;
-        b=o20XA8Zva/R/TKqy+RQL06MzGRxUAJmQiGPdv1svE13tBWAnzfDkFYDkjRud6RUY0O
-         t03whMF1qukgTOrr9EhxBOlNZv2SqdQg6coJaEk7zVg5kocgOrW/lGsR42D4wtSf9eN9
-         +OoFysinBM7ccQ0AFRlcCOUQe46f93WjrGsgy3PkZ7QByrxpILHXUQ+JuarwjKTU324f
-         1+JrI0zM6kwaZF31rPb1Mq+eI4UMmET/yAJbNy2wfMOLzXmIhSusSlY9XjAG12Oaxmt3
-         wBXHaCF/r+gkwaLbCZXNM8eC5N/C0M01cj3r3o4bd9oAVGk5MIvmD2e5IoPmVvCu3c8b
-         i8BA==
-X-Gm-Message-State: AOJu0Yxfe7Hfy9LbOjzPVqa4lKMcNVRjtclFrdJWUE/9vvS8nHntHrAk
-	LBUQuMAgBUh6Uzf2mzlx+XwmDeHguDbdXzxqc9GFoZ8ngM0NaOy+jhYDZAvw5U/r
-X-Gm-Gg: ASbGnct2PvFTPFRec5ybsd3mUb6Jln7kEO2O41oRsDdpl7UdR2e6Zqy2+ql1iJUHPKt
-	8NG5yCmNVCiSmLAEkGDhKXNPEQAxSFY7YYYzSigPvnFqW+062aiA5Ynkota6lQhZ+xRNGt8UHYY
-	hAozeRmkZQCtA8HLCsPx87yVpC+Bn+UE9vuJouT4l2gNPyZNx/KL93h0hMrCld67m+zvgSSNexR
-	cXRY0QN/r/b6rKWX6/KiyEyWNl1xtpTlVFPvlLAb43Afh1WQLNLNW+1rTUJKLHsPtL/uUo19yF8
-	iFyy4Tq8OOfjCO7oFqgeeEo5VApg8zoGcImt97/ahvky+7Q94wZZs8F/Hem+loI35QfN4NMnTkL
-	wWZn8FGTFSuwzu+ZpA9RTXS8xWEeE91aK5qqD3MmKtch7R/6m8BTJKsmq6gW7sduQsMbVMReqHU
-	0befB9Yg==
-X-Google-Smtp-Source: AGHT+IFbivO17IdE59a5VrtZqz5ASlc0aKQIMTN9ZMhlaSpk/3J5XBhRtzVVF1iFWQb1hXNE6nQFgQ==
-X-Received: by 2002:a05:6902:6b03:b0:e90:6d16:8622 with SMTP id 3f1490d57ef6-e917a19d6aamr1956874276.2.1754950634803;
-        Mon, 11 Aug 2025 15:17:14 -0700 (PDT)
-Received: from localhost.localdomain ([2605:a601:90a8:8b00:7d40:489a:fc5:8804])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e917b3ec714sm176217276.11.2025.08.11.15.17.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 15:17:14 -0700 (PDT)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Elijah Newren <newren@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Calvin Wan <calvinwan@google.com>
-Subject: [PATCH v3 4/4] editor: use standard strvec API to receive environment for external editors
-Date: Mon, 11 Aug 2025 18:16:55 -0400
-Message-ID: <20250811221706.67168-5-ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250810160323.49372-1-ben.knoble+github@gmail.com>
-References: <20250810160323.49372-1-ben.knoble+github@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pvAp31aj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1754951027;
+	bh=tZznFiJxNb0s0/Vp/LPLsLWHwL4Ngzi1zONmdmHt86k=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=pvAp31ajiyWgaseaOUVhYAvJs35UaHMKdUj4HWzcxjbeZE0hW+SRIouZN8nFXqz02
+	 vrbvaWduvG4jQXQoZaJKmRM4l12FiEdoIhD3VEh8tsBX0gpQBcgeR9keS95vA8+rvb
+	 Pl6kMKC2XRqCNwgEOLW/yrdVOEr81D58af94ycyiWA8oKSZ25VWFAr52Xr5HRW9HAM
+	 /ieyKqBSyLRZznQ42WJThJKdmuC21/T7lp3UMC9VEuyQJr3USksbslhaojxhvft7U1
+	 OY12jTvq+j6zHSdO1t9zTQ0wlv2IEnOngvF4b8fajQ+3AlBORNGfPXr/UYfImg06Ao
+	 L+W+wYYO8lKgIG7yboUldrqMv10QNpLxERJaYFbi1flFoolp4ngiW34uiXO/lclAUM
+	 A6lRoESDhF5I1QUVvIoE52z2q/FQbSuqljlwbfgGRolALhX516CHThxkJ9VGr1bAkU
+	 NvEp8OOUZXWlutnamuTO3LWrmP1IdfzCyANZ8fgWyhDSNo84xBu
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:bbea:a384:d97f:8068])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B5EDF20073;
+	Mon, 11 Aug 2025 22:23:47 +0000 (UTC)
+Date: Mon, 11 Aug 2025 22:23:46 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jon Forrest <nobozo@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2] abbrev: allow extending beyond 20 chars to
+ disambiguate
+Message-ID: <aJptcgwQmwIbnrqE@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jon Forrest <nobozo@gmail.com>, Derrick Stolee <stolee@gmail.com>
+References: <xmqqfrdx517b.fsf@gitster.g>
+ <xmqqzfc51xvk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BYY1ZvBZLZ025aK/"
+Content-Disposition: inline
+In-Reply-To: <xmqqzfc51xvk.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Going back to the introduction of the env parameter for the editor in
-8babab95af (builtin-commit.c: export GIT_INDEX_FILE for launch_editor as
-well., 2007-11-26), we pass a constant array of strings: as the
-surrounding APIs evolved to use strvecs (see 8d7aa4ba6a
-(builtin/commit.c: remove the PATH_MAX limitation via dynamic
-allocation, 2017-01-13) and later 46b225f153 (Merge branch 'jk/strvec',
-2020-08-10)), the editor code did not.
 
-There is only one caller of all 3 editor APIs that does not pass a NULL
-environment (the same caller for which this parameter was added), and
-it already has a strvec available to use.
+--BYY1ZvBZLZ025aK/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
- builtin/commit.c |  2 +-
- editor.c         | 10 +++++-----
- editor.h         |  7 ++++---
- 3 files changed, 10 insertions(+), 9 deletions(-)
+On 2025-08-11 at 19:06:39, Junio C Hamano wrote:
+> diff --git a/object-name.c b/object-name.c
+> index 11aa0e6afc..8f9af57c0a 100644
+> --- a/object-name.c
+> +++ b/object-name.c
+> @@ -680,6 +680,7 @@ static unsigned msb(unsigned long val)
+>  struct min_abbrev_data {
+>  	unsigned int init_len;
+>  	unsigned int cur_len;
+> +	unsigned int max_len;
+>  	char *hex;
+>  	struct repository *repo;
+>  	const struct object_id *oid;
+> @@ -699,12 +700,12 @@ static inline char get_hex_char_from_oid(const stru=
+ct object_id *oid,
+>  static int extend_abbrev_len(const struct object_id *oid, void *cb_data)
+>  {
+>  	struct min_abbrev_data *mad =3D cb_data;
+> -
+>  	unsigned int i =3D mad->init_len;
+> +
+>  	while (mad->hex[i] && mad->hex[i] =3D=3D get_hex_char_from_oid(oid, i))
+>  		i++;
+> =20
+> -	if (i < GIT_MAX_RAWSZ && i >=3D mad->cur_len)
+> +	if (mad->cur_len <=3D i && i < mad->max_len)
+>  		mad->cur_len =3D i + 1;
+> =20
+>  	return 0;
+> @@ -864,6 +865,7 @@ int repo_find_unique_abbrev_r(struct repository *r, c=
+har *hex,
+>  	mad.repo =3D r;
+>  	mad.init_len =3D len;
+>  	mad.cur_len =3D len;
+> +	mad.max_len =3D hexsz;
+>  	mad.hex =3D hex;
+>  	mad.oid =3D oid;
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b5b9608813..16cad7fb03 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1116,7 +1116,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		struct strvec env = STRVEC_INIT;
- 
- 		strvec_pushf(&env, "GIT_INDEX_FILE=%s", index_file);
--		if (launch_editor(git_path_commit_editmsg(), NULL, env.v)) {
-+		if (launch_editor(git_path_commit_editmsg(), NULL, &env)) {
- 			fprintf(stderr,
- 			_("Please supply the message using either -m or -F option.\n"));
- 			exit(1);
-diff --git a/editor.c b/editor.c
-index fd174e6a03..0bc781d50c 100644
---- a/editor.c
-+++ b/editor.c
-@@ -58,7 +58,7 @@ const char *git_sequence_editor(void)
- }
- 
- static int launch_specified_editor(const char *editor, const char *path,
--				   struct strbuf *buffer, const char *const *env)
-+				   struct strbuf *buffer, const struct strvec *env)
- {
- 	if (!editor)
- 		return error("Terminal is dumb, but EDITOR unset");
-@@ -89,7 +89,7 @@ static int launch_specified_editor(const char *editor, const char *path,
- 
- 		strvec_pushl(&p.args, editor, realpath.buf, NULL);
- 		if (env)
--			strvec_pushv(&p.env, (const char **)env);
-+			strvec_pushv(&p.env, env->v);
- 		p.use_shell = 1;
- 		p.trace2_child_class = "editor";
- 		if (start_command(&p) < 0) {
-@@ -124,20 +124,20 @@ static int launch_specified_editor(const char *editor, const char *path,
- 	return 0;
- }
- 
--int launch_editor(const char *path, struct strbuf *buffer, const char *const *env)
-+int launch_editor(const char *path, struct strbuf *buffer, const struct strvec *env)
- {
- 	return launch_specified_editor(git_editor(), path, buffer, env);
- }
- 
- int launch_sequence_editor(const char *path, struct strbuf *buffer,
--			   const char *const *env)
-+			   const struct strvec *env)
- {
- 	return launch_specified_editor(git_sequence_editor(), path, buffer, env);
- }
- 
- int strbuf_edit_interactively(struct repository *r,
- 			      struct strbuf *buffer, const char *path,
--			      const char *const *env)
-+			      const struct strvec *env)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	int fd, res = 0;
-diff --git a/editor.h b/editor.h
-index f1c41df378..627e992f4d 100644
---- a/editor.h
-+++ b/editor.h
-@@ -3,6 +3,7 @@
- 
- struct repository;
- struct strbuf;
-+struct strvec;
- 
- const char *git_editor(void);
- const char *git_sequence_editor(void);
-@@ -16,10 +17,10 @@ int is_terminal_dumb(void);
-  * file's contents are not read into the buffer upon completion.
-  */
- int launch_editor(const char *path, struct strbuf *buffer,
--		  const char *const *env);
-+		  const struct strvec *env);
- 
- int launch_sequence_editor(const char *path, struct strbuf *buffer,
--			   const char *const *env);
-+			   const struct strvec *env);
- 
- /*
-  * In contrast to `launch_editor()`, this function writes out the contents
-@@ -30,6 +31,6 @@ int launch_sequence_editor(const char *path, struct strbuf *buffer,
-  * If `path` is relative, it refers to a file in the `.git` directory.
-  */
- int strbuf_edit_interactively(struct repository *r, struct strbuf *buffer,
--			      const char *path, const char *const *env);
-+			      const char *path, const struct strvec *env);
- 
- #endif
--- 
-2.48.1
+This definitely looks more sensible, since we're using the algorithm
+specified in the passed in `oid` variable in
+`repo_find_unique_abbrev_r` to determine the length.
 
+I will admit that despite having touched this code recently in my
+SHA-1/SHA-256 interoperability work, I'm definitely not an expert in
+this area, so while I don't see anything that stands out to me as wrong,
+you probably will want someone else to verify here.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--BYY1ZvBZLZ025aK/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaJptcQAKCRB8DEliiIei
+gXDhAQC2krQlavlHVFiT3l+tA9iXtoKD2jePqfgIVX7PFLTr4QD/bsIfvCc2FvO8
+mYsvTawfPzmrwoV20bD4l/eotbvxCwA=
+=qCui
+-----END PGP SIGNATURE-----
+
+--BYY1ZvBZLZ025aK/--
