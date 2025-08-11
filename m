@@ -1,68 +1,69 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165EC17C220
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 20:53:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31492D6608
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 20:53:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754945606; cv=none; b=gEMb/es1eb21svRss0HbYcRGhgtr49QKahJKBgq6Ngi5GzsmD6t5mnaTcUWnaO/d6/znRQssNM5acMhoU/cUfcSrvDPwIGyQc1yruPtN5X6XAmJorAdCWGsHtQamCHLUlKuLz5AlV607VvW3M46owT/jfo40xA7v0mNL+VuFbd4=
+	t=1754945608; cv=none; b=j9mWa7ymsVp2MEYbTdHMPOesqU9MD0L0FT69n0JQBH5VaeDMOq6A4z16RsEPIN54iHvX2y8ZoJKd1swL6w/ksgKaIfKiZ7+Fvd+Nl/rFRIEovUE9g/2peZmqhIu/8suO6DX4u3SDLmswbojZgxf2SHvOQzSE1lh9ACgYV+EXt6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754945606; c=relaxed/simple;
-	bh=v9xQKwhcbp3Qjj56FRww2+HnisWHgFrc3sjzYE0tQ6s=;
+	s=arc-20240116; t=1754945608; c=relaxed/simple;
+	bh=EFRlGS3XaUpBAhrlPc8yt1TrLKOkS7+PKGO6stDRsbo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=F3e0pbBoWRLAuLQjes1mUb9BWwKq7jDh5PYp0nKjxqdlnj321t+aWuW6l0m5Q3w9Qhawjwk0puT3gfnKq1vV/DbXrVENa6+hMVmxbqnY82EDx8R/l/Ruq8myo1P++wpUPyrctDV17Cb+xblCYXNJpOXP17HHaqhh7vyx3tL9Nek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A7vXi1Di; arc=none smtp.client-ip=209.85.128.51
+	 Content-Type:To:Cc; b=IyMnSRV32UuJEsLDz3XZeJld/J17TSHLpP0Fx2P8Ds/H7rGmEr76blF9b1SGbdfdN05imQVXOHb56UboqRN0zEjjMF3B+1wWMzIoSte77AstoIAPGo5fo5/nd8DVJpGQqcjeB4BrH+Jc8i4t6B2/LtYwIeZSa+yvs3MGbUigiis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FJVx0FnQ; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A7vXi1Di"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-459d4d7c745so44384025e9.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:53:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FJVx0FnQ"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-459eb4ae596so44208135e9.1
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754945603; x=1755550403; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754945605; x=1755550405; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2trcYk8TVmGlmC24UMBDj84s9eK7uggQc41/Vjo9PhE=;
-        b=A7vXi1DieTdcpJ3xwN3NR32D8byC8RvsAHRoweEqF1CSnaQ7VxGaiKGySr1SIg0RAa
-         Dpo8kZCQfhZ6zi0xC0Ou2bsdDKQgnB5dleNQ9mo8SpxcyOtsXeENeYkofGDju9cw8oGN
-         yjjmFf6jobjcLKFCxq40OCJ4bFumJOLt9qdnA2SuJKK2v0LQ2OWgwd4S9evPdN2FsK1t
-         Ez3mVm3xhL2jOCgOhIlnApaMm20X0jNekz75CQNll5wdw0K8k28zwqR11mG0XD8u7Zq3
-         JQHYGupa5vHtXJ3osz/H/H3z6ea/YxYBBEd10Jg5wmKiuOGcbXLZxtgnuZr7rkzjXLd3
-         TmmQ==
+        bh=GTKPfqiztIA2fNz+ruzT9qUKZbuL519S/m9xQBwSB5Q=;
+        b=FJVx0FnQ7fADkDW6uQiFxj8EKXlKrPWUqhwKn7iXH43vaIFC5GYVGeGykP3joOqKsM
+         D3mp5kQuztgy+W8CpWNuxbAO9tXHdM5Iq2VTp4Rua2QJtaKTAUw4pgj1YKrWZUnylZrJ
+         M89gVup84272LFPbSugdtSpeDjXdt8T5yW+wBVil5gSXL57cU3xDCLRb/gd9ZDTpMve0
+         UFleJygRRodcaCjEctKnxEWKlff4u/RcjS/X/sOMDE1ldIWTFbfatT8pWg6XwBC1AyKf
+         rdVChGtnum6V29w65c6FiOsQsFsmFwMyn167ozgxHIuBMW5RZ1qB/FU3/YatuOl3uvSy
+         mxwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754945603; x=1755550403;
+        d=1e100.net; s=20230601; t=1754945605; x=1755550405;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2trcYk8TVmGlmC24UMBDj84s9eK7uggQc41/Vjo9PhE=;
-        b=Jo9jo28DhEuo2wrzIzNzXVL0wWRgarRm+Ht5bWqZz/GmePRgswNNQUpNQt9EgblXAe
-         xDv1KmdML5sWv6e2Jy1Z/25Tq2VHrGjKgyoyiZ9YUx4+CKLvTgAgS3WTBeWBZYOoc03U
-         f9PHoxKDT0rbHcOp2neRmiqOBp/5ZULCIToARPEwENdvMm0CWv3q2fXqsRuV6ryHm/6h
-         QHzDmnTYUvwjD8Kz6hnY/1gUSae/U5axyT2C+6h4WSJeWG7eXqhKA25ECEPGxVqUGzQh
-         P3jzqXYraumNBJEV5kAuWPf2GYCihKi+eP4KsSzBSASZKXIQRrrOolD8nA/tz5hn4C+H
-         opVQ==
-X-Gm-Message-State: AOJu0YzwGA4Qn8L267E1xMkQy25kfGk3tRdYwk3BZ7puvs12Af0OFJ8g
-	xWA3+YwBIJqgn5xCyB2RWgDlQqPm3WQlrXz0+KkMvPOc7ym99G+sOy6lD/FFNg==
-X-Gm-Gg: ASbGncuo9spk0ucnudZGGSD9OMAIiJAwh8tNjgvEltib2NclX5Kf9GmTFhmc3BhNBQZ
-	UWS6KICwhGQEzW8JOGWwShWXqsaG7iEoD63v41TJwwas/S2c7GLGxPhjOJ3MxqzZ0TRTu/TKVTX
-	zyeR5Du73ssMMUOcnB5/v+PVtR0zKCCCVAu0m4dmXmdXVMzdOLkHH1M4NoSMohYJ70gvaIncuHo
-	cI7++CfOTsdpH/y8czlunEnZ+X3aGFmdgGg9IMyICduknalquibQDkXUaiSCmpEfHT4pKJqIvQ0
-	xJzbaJc4z/PMwXzivrt8kNGUBMtnztaNxPVugHDpnyQD+fGOS+1mjbJ09tiRW6NZVcLEcKYXFCU
-	86I7FkFBxv6ItrDJB+BLTSvqYQMpnuTao8g==
-X-Google-Smtp-Source: AGHT+IF9JCKu/SpWphY7UhTVtGKySn8BTpt9tC2Xbtk5QnBC8BKJR3fXwktYQG4dXgHa5+LXYRD77w==
-X-Received: by 2002:a05:600c:a085:b0:456:11cc:360d with SMTP id 5b1f17b1804b1-459f7a5d1f4mr120227775e9.9.1754945603002;
-        Mon, 11 Aug 2025 13:53:23 -0700 (PDT)
+        bh=GTKPfqiztIA2fNz+ruzT9qUKZbuL519S/m9xQBwSB5Q=;
+        b=i5TOTOa/Sr7PlxgtuJQ1fBnWewJqwJPfgV1PREUEEZM0iUZBOpLlLgdfaXP9q11yIt
+         u6tu3eSdA2MKkGMJ2wwHfM7BOxqHDUnOCZ4rNYc7igtWHWqlkiQPEiZcQkX1rs6CJUCw
+         bjkyH6QQ45iFWkIyAOKFGU07SEBaca11HoKZHKoSPbSce6vDDt1syysO7jtXRE4K/gQL
+         dZlXaXgQ2oWabnRQlXQdbzRBh/jQw9F5wH7bMeuUVrOhSZ5EZx3occJyPeWvfc3Jv7jj
+         JEem4KmxXAFgS5UEBWZ7eLcXEWzeEBenNomGxqUb/GVfD/x/xYyrbzQ8I/SshLvJJUJ0
+         avQg==
+X-Gm-Message-State: AOJu0Yyj9I/8qzCJOpPlCQ4Pb4fFuS47Ecy18TE2Q0dzMkFiJbq84CLf
+	paCfLaeV2xbCR+KArWdB1gzGhOmLT/b3cpMllvd+aUL/M5VKhDadwT6y9a0yrg==
+X-Gm-Gg: ASbGncsfaTFCjjvG14fM/ejmSLWiYqjXWm3wCxrL05P9jwVvWhI1wwchz9ISzBSWITP
+	flErxzdNAcyZrJuJ5vcGi0h5hqdzrqPSZT/vHc31BqYTeifSuZZHLaTT2I5qOtF0chHqef1cp5B
+	dzPJ3mwl7kZ10dhWcphROYWl1PTWPeYSaP4EcqPnusQmEzqon9F+PWRIQEHGt3TiVEMWlxrvAVt
+	jmMshN9+dv32Sg489WIs/E5wfXYtdD8Bv+ZjWxxc176ureDMHcbMdnGpMczAys16vDHAjbHHLHq
+	497L37xRDMpt3TnDZQJiy3yLSxgTBlQig+S0x43FS4ztT7aqIxis/ppb/oOB0Udp0OrZz+BWpLt
+	02aEfQMcbVI/hzEbdP8Ez74c=
+X-Google-Smtp-Source: AGHT+IExLxWavf5Dcfk+dal12F2t+8fOf51+MW08FLvJvMU/dSC+gaQu7tJ/Q1ofm4FH3Q/cWjiwYg==
+X-Received: by 2002:a05:600c:548f:b0:456:1a69:950b with SMTP id 5b1f17b1804b1-459f4f9b23cmr112776215e9.22.1754945604375;
+        Mon, 11 Aug 2025 13:53:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3c51e2sm40652812f8f.32.2025.08.11.13.53.22
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459dbba5210sm340922985e9.2.2025.08.11.13.53.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 13:53:22 -0700 (PDT)
-Message-Id: <pull.1945.v3.git.1754945600.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1945.v2.git.1754421045.gitgitgadget@gmail.com>
+        Mon, 11 Aug 2025 13:53:23 -0700 (PDT)
+Message-Id: <e79bd6a67ef2ea7247359b2449c7c313c7fa9922.1754945600.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1945.v3.git.1754945600.gitgitgadget@gmail.com>
 References: <pull.1945.v2.git.1754421045.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 11 Aug 2025 20:53:14 +0000
-Subject: [PATCH v3 0/6] Introduce more doc linting
+	<pull.1945.v3.git.1754945600.gitgitgadget@gmail.com>
+From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 11 Aug 2025 20:53:15 +0000
+Subject: [PATCH v3 1/6] doc: test linkgit macros for well-formedness
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,154 +76,52 @@ Fcc: Sent
 To: git@vger.kernel.org
 Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
     Collin Funk <collin.funk1@gmail.com>,
-    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Reviewing the documentation part of the last patches, it turns out that the
-majority of my comments are related to the latest documentation guidelines
-which are both easy to forget and almost trivial to automatically check.
+From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-This series implements the automatic tests for basic doc rules. At the
-moment it conflicts with "[GSoC][PATCH v6 0/6] Add refs list subcommand" and
-possibly with "[PATCH v4 0/9] refs: fix migration of reflog entries"
+Some readers of man pages have reported that they found
+malformed linkgit macros in the documentation (absence or bad
+spelling).
 
-Changes since v1:
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+---
+ Documentation/gitweb.conf.adoc  | 2 +-
+ Documentation/lint-gitlink.perl | 7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
- * fix a small typo
-
-Changes since v2:
-
- * extend range of check files for multiple entries in definition list
-   entries
- * extend checks for new synopsis styles
-
-Jean-Noël Avila (6):
-  doc: test linkgit macros for well-formedness
-  doc: check well-formedness of delimited sections
-  doc: check for absence of multiple terms in each entry of desc list
-  doc: check for absence of the form --[no-]parameter
-  doc:git-for-each-ref: fix styling and typos
-  doc lint: check that synopsis manpages have synopsis inlines
-
- Documentation/Makefile                        |  21 +-
- Documentation/RelNotes/1.6.2.4.adoc           |   1 +
- Documentation/blame-options.adoc              |   3 +-
- Documentation/diff-format.adoc                |   1 +
- Documentation/diff-options.adoc               |   3 +-
- Documentation/fetch-options.adoc              |  15 +-
- Documentation/git-am.adoc                     |   3 +-
- Documentation/git-backfill.adoc               |   3 +-
- Documentation/git-cat-file.adoc               |   6 +-
- Documentation/git-check-attr.adoc             |   3 +-
- Documentation/git-check-ignore.adoc           |   9 +-
- Documentation/git-check-ref-format.adoc       |   3 +-
- Documentation/git-checkout.adoc               |   2 +-
- Documentation/git-clone.adoc                  |  12 +-
- Documentation/git-commit-graph.adoc           |   3 +-
- Documentation/git-commit.adoc                 |   4 +-
- Documentation/git-config.adoc                 |   3 +-
- Documentation/git-difftool.adoc               |   9 +-
- Documentation/git-fast-import.adoc            |   5 +-
- Documentation/git-fmt-merge-msg.adoc          |   3 +-
- Documentation/git-for-each-ref.adoc           | 264 +++++++++---------
- Documentation/git-format-patch.adoc           |  12 +-
- Documentation/git-fsck.adoc                   |   9 +-
- Documentation/git-gc.adoc                     |   6 +-
- Documentation/git-http-fetch.adoc             |   5 +-
- Documentation/git-index-pack.adoc             |   3 +-
- Documentation/git-log.adoc                    |   6 +-
- Documentation/git-merge-tree.adoc             |   3 +-
- Documentation/git-multi-pack-index.adoc       |   3 +-
- Documentation/git-p4.adoc                     |   1 +
- Documentation/git-pack-objects.adoc           |   3 +-
- Documentation/git-pull.adoc                   |   3 +-
- Documentation/git-push.adoc                   |  18 +-
- Documentation/git-range-diff.adoc             |   3 +-
- Documentation/git-read-tree.adoc              |   3 +-
- Documentation/git-rebase.adoc                 |   2 +-
- Documentation/git-refs.adoc                   |  20 +-
- Documentation/git-reset.adoc                  |   3 +-
- Documentation/git-send-email.adoc             |  30 +-
- Documentation/git-send-pack.adoc              |   3 +-
- Documentation/git-submodule.adoc              |   6 +-
- Documentation/git-svn.adoc                    |   2 +
- Documentation/git-update-index.adoc           |  12 +-
- Documentation/git-upload-pack.adoc            |   3 +-
- Documentation/git-worktree.adoc               |  12 +-
- Documentation/gitprotocol-http.adoc           |   2 +-
- Documentation/gitsubmodules.adoc              |   3 +-
- Documentation/gitweb.conf.adoc                |   2 +-
- Documentation/lint-delimited-sections.perl    |  48 ++++
- Documentation/lint-documentation-style.perl   |  33 +++
- Documentation/lint-gitlink.perl               |   7 +
- Documentation/merge-options.adoc              |   3 +-
- Documentation/mergetools/vimdiff.adoc         |   8 +
- Documentation/scalar.adoc                     |  18 +-
- Documentation/technical/api-path-walk.adoc    |   5 +-
- .../long-running-process-protocol.adoc        |   1 +
- shared.mak                                    |   2 +
- 57 files changed, 447 insertions(+), 232 deletions(-)
- create mode 100755 Documentation/lint-delimited-sections.perl
- create mode 100755 Documentation/lint-documentation-style.perl
-
-
-base-commit: 112648dd6bdd8e4f485cd0ae11636807959d48be
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1945%2Fjnavila%2Fdoc_linting-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1945/jnavila/doc_linting-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1945
-
-Range-diff vs v2:
-
- 1:  e79bd6a67ef = 1:  e79bd6a67ef doc: test linkgit macros for well-formedness
- 2:  322df2d8dde = 2:  322df2d8dde doc: check well-formedness of delimited sections
- 3:  5806390052b ! 3:  4e0178218e8 doc: check for absence of multiple terms in each entry of desc list
-     @@ Metadata
-       ## Commit message ##
-          doc: check for absence of multiple terms in each entry of desc list
-      
-     -    Due to portability issues, the script generate-configlist.sh was fixed to
-     -    not use carriage returns in the output. However, the result is that it no
-     -    longer correctly handles multiple terms in a single entry of the definition
-     -    list.
-     +    For simplifying automated translation of the documentation, it is better to
-     +    only present one term in each entry of a description list of options. This
-     +    is because most of these terms can automatically be marked as
-     +    notranslatable.
-      
-     -    We now check that these entries do not exist in the documentation.
-     +    Also, due to portability issues, the script generate-configlist.sh can no
-     +    longer insert newlines in the output. However, the result is that it no
-     +    longer correctly handles multiple terms in a single entry of definition
-     +    lists.
-      
-     +    As a result, we now check that these entries do not exist in the
-     +    documentation.
-     +
-     +    Reviewed-by: Collin Funk <collin.funk1@gmail.com>
-          Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-      
-       ## Documentation/Makefile ##
-     @@ Documentation/Makefile: $(LINT_DOCS_DELIMITED_SECTIONS): .build/lint-docs/delimi
-       lint-docs-delimited-sections: $(LINT_DOCS_DELIMITED_SECTIONS)
-       
-      +## Lint: Documentation style
-     -+LINT_DOCS_DOC_STYLE = $(patsubst %.adoc,.build/lint-docs/doc-style/%.ok,$(MAN_TXT))
-     ++LINT_DOCS_DOC_STYLE = $(patsubst %.adoc,.build/lint-docs/doc-style/%.ok,$(DOC_DEP_TXT))
-      +$(LINT_DOCS_DOC_STYLE): lint-documentation-style.perl
-      +$(LINT_DOCS_DOC_STYLE): .build/lint-docs/doc-style/%.ok: %.adoc
-      +	$(call mkdir_p_parent_template)
-     @@ Documentation/git-http-fetch.adoc: commit-id::
-               pull.
-       
-      --a, -c, -t::
-     -+-a::-c::
-     ++-a::
-     ++-c::
-      +-t::
-       	These options are ignored for historical reasons.
-      +
- 4:  03a8428849f = 4:  2b43e196ec0 doc: check for absence of the form --[no-]parameter
- 5:  713c86dae92 = 5:  c32e74fad94 doc:git-for-each-ref: fix styling and typos
- 6:  d57478ea5cd = 6:  8ec969fe4bd doc lint: check that synopsis manpages have synopsis inlines
-
+diff --git a/Documentation/gitweb.conf.adoc b/Documentation/gitweb.conf.adoc
+index 1348e9b12504..64bebb811c97 100644
+--- a/Documentation/gitweb.conf.adoc
++++ b/Documentation/gitweb.conf.adoc
+@@ -178,7 +178,7 @@ $export_ok::
+ 	Show repository only if this file exists (in repository).  Only
+ 	effective if this variable evaluates to true.  Can be set when
+ 	building gitweb by setting `GITWEB_EXPORT_OK`.  This path is
+-	relative to `GIT_DIR`.  git-daemon[1] uses 'git-daemon-export-ok',
++	relative to `GIT_DIR`.  linkgit:git-daemon[1] uses 'git-daemon-export-ok',
+ 	unless started with `--export-all`.  By default this variable is
+ 	not set, which means that this feature is turned off.
+ 
+diff --git a/Documentation/lint-gitlink.perl b/Documentation/lint-gitlink.perl
+index aea564dad7ed..f183a18df284 100755
+--- a/Documentation/lint-gitlink.perl
++++ b/Documentation/lint-gitlink.perl
+@@ -41,6 +41,13 @@ die "BUG: No list of valid linkgit:* files given" unless @ARGV;
+ @ARGV = $to_check;
+ while (<>) {
+ 	my $line = $_;
++	while ($line =~ m/(.{,8})((git[-a-z]+|scalar)\[(\d)*\])/g) {
++	    my $pos = pos $line;
++	    my ($macro, $target, $page, $section) = ($1, $2, $3, $4);
++		if ( $macro ne "linkgit:" && $macro !~ "ifn?def::" && $macro ne "endif::" ) {
++			report($pos, $line, $target, "linkgit: macro expected");
++		}
++	}
+ 	while ($line =~ m/linkgit:((.*?)\[(\d)\])/g) {
+ 		my $pos = pos $line;
+ 		my ($target, $page, $section) = ($1, $2, $3);
 -- 
 gitgitgadget
+
