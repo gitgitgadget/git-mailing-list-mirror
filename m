@@ -1,207 +1,86 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5983823BCE3
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 14:42:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08681E555
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 14:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754923374; cv=none; b=aYaYHSx/HOHB6IgP6sZ0fw7Gu2/bwZfGYxvPuwTgsrWy8L7WlpcJ02S/WhtMMOdhJ4im6d+52t3lWn5SkrCtOW+T6U/CTXkI2TmGheQuqkUK1KE8DeELokR2VGvIwrCg1sKOjBcX/9UpfP3Nh/1oWnQMfIWjG+RLRvfEikoVuQU=
+	t=1754923671; cv=none; b=cqZdmKgNPNN/b4UAMPjFD73K6XfJ66qc+CFTaBAQ/i8ulyxbRLFCNfbEbm8dL27+bBVEzCK6lh+zdSNxQ9ui7+BWBq/cJXuwu8Yr3iCVOyQVgrjRjgwDZ+JcMS8UlOXmmLZkBW0r+G8f6YatgvclYGDqs5oRkw7Sx4zqDn7g40E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754923374; c=relaxed/simple;
-	bh=UuvraPn3S2B4h92iV/TXpRxV1GcBGqtNC7y1dIAFlhc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=RIma7ejk5bac8xZLxfewnXEPXVURnPoivnoznldRnNaZMYHTHiDpwkhDTI8J2vFeztep857kVAGMyFhY7JkjEkfp3HrqaTFW5pnVpjmW9a93BLuqWD2vBNnOvg2cR56+g/Q80jWyHjyw+cd2zTKIO5K+c3XSl2Ond7Xy1XdurQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U2LUrX71; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1754923671; c=relaxed/simple;
+	bh=ute0VcaZ0fKrSlDkMS/ckrknxVE0txcmvJiBrwA9lhE=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ge0rxnDPLITMEeyVW2pXhiyrfaT49m/93eaoqKO55BNsMlpuuMERoLEoZzSb1QY0cTIyslIXAxNJmU88KwZcHBKdctaQ54q5/CxTBgHUFkoKabNs9NqGDe3KsWRer8lGhkFQBds5CcyW2uV4L3JYY7wlCRs4e+mZVtijgbwMaOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PJw8tVoc; arc=none smtp.client-ip=209.85.160.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U2LUrX71"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-459e20ec1d9so44330525e9.3
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 07:42:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PJw8tVoc"
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-30b7eba97f5so1506617fac.2
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 07:47:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754923370; x=1755528170; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uTwsh+4UFT1mfke3+yfrVapnml65/MoKDm3eFtvqlRA=;
-        b=U2LUrX71cgOlrQsSYylzWLlPHvlcxuEeHgEhGYhrsJtKOiWjSQwcdRM2ur+iPZu6KY
-         boOgqxDASwvhUw2dsrQUT6rlzM7mzW5mdQB6FkCBQiRPA3OTh6QB/wM3wqRLgbjgBGgC
-         SmArBl/jui98CCVKx8QcTH+J6kSg3A9YZR8fmCpDz4DJVk5TvxjqwBWmrRCU3CWtCAAX
-         bLD/ACq1A9d3fAkBxMgHCCqp5DI13gii/p1TjKNKs8MEJorEXbPTlwLxP0UCoK5MXqR2
-         rc3Eh5w+21OZzfEVtG79cirYvEpVr/HdExdv7JxwDXXubOwZot2gurhtCKM/H43MwIfE
-         THag==
+        d=gmail.com; s=20230601; t=1754923669; x=1755528469; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=K2VfjAttlVgu+sbsa82z9ipbqKF+wab93ANLbEavEgU=;
+        b=PJw8tVoceUb26W2Fo1DLQRC96gxAYgnUIwNijWGQJkH+XMek6FxvEDHt8QDGZ/nXOK
+         j69zC1kcu74WJzit7x7OTrifNrnitxtjDsZ8hyTGs5gBQuJ6U1Y3N6/pAf/JUNyeVNcG
+         TrdJPCuO9RL8InzGybTqqm97RpD4bKMPVbKI/3UXAO2aEc4CM8X0jZ52MwjT7vrmbjz+
+         CJXOPlqpuM3EGQvnx5BNvYOJ1xWUkc4vFdAajEkznWtPIUYmp9aYw3pqj3MggO6jmNgo
+         gxi19qmjXE3JEbq8OpZh8smTrK2tpf/RHDohy9EMbWl7nUEG3gHOQZnd1zqj6XGBahso
+         H3BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754923370; x=1755528170;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uTwsh+4UFT1mfke3+yfrVapnml65/MoKDm3eFtvqlRA=;
-        b=HqF4PJu2t3NAIVpMVeTEJ9yD28Vv2I2VaiuPSAwzGXU9kkxJFsFwrxZudhUuxtkqa3
-         27dHZXIRJ+7102ny6ngQntl75dIreQ1LOfnumI7tdkjP7EXUkKHVE3Cur//n6naNlq6M
-         jS8XRzOA1aOBN38oYczkt2cwLWkZr11GXJwETE/U18DXedIz2o7vencvFIE3c+GDwNTl
-         fxxm2rRqI4Lk3xXrM12K99qrR0HfTyXUUm4S+ETbIjXUbN4pmuuqMnMlrXQc/CPzjdbM
-         A91ahdKxJz7x+VINgko33CDghG3DRfEv1Tcp07IRbkWSCO+3/oYMCdJHYcAiUtCmv/OP
-         c1Ag==
-X-Forwarded-Encrypted: i=1; AJvYcCWh+i8ka4lGu0/YISsc8mHXbZk8+wl1RQ8MJ1KtUJk8GbHX2xykdPQDPSyzQciHCVSLQHI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLh43XkHbJvJcFkICCemJAYpglAreOItYv2RZu5eYhy/TKUgM/
-	8oPpXxbWF0+gxiOntifse5Kex0DlwO+SzLTx+2VLPHVymH7oglJqzxoV
-X-Gm-Gg: ASbGncv2h48m+eGUP7Xrcqd1t3Iy1zzQPSthH/CCDNscq+K5epA4zG+qwIju0PpYlZd
-	PqIdAgkiK8478aEq7deIvWOneZmu5/ldxxOpClSFFJZX3nOZUbT47F+DCyfGIjPF0bJ6QQan93y
-	gcpTmft86240er0RA8pkN2Yz+brLo9hSCBp851FYNTl6kmV0w0+KRkjM3jG39OMkgSMQNQqjrEi
-	BRtEMcS12gh4+p1zC7sHDxNwtIZQy8IOj+FF4LtrU+AqkNfjkyNMHz5c+A+R7frk35ElX95Y7p7
-	cVH9fxwKgn7JYVN2I09rDiFdA0xrGGUoY+uIaddLEWf/yIUkVXecxQwpNLTgfHSEKgq4f7FJyYd
-	Zp9ubekvtQqIhqkWAwGmUP4/M3r+HklGeLAVIrOW4ewm4dGvVjd7JykAHKM3UvZXsq+QBIRY+BV
-	og
-X-Google-Smtp-Source: AGHT+IEA/z71DeCCHtOw30iBRe0+F/NQWGa7dO4R6M96CC2LSD5hlxS6Q6BpgWo2Bxz9WG9/6MSshQ==
-X-Received: by 2002:a05:600c:35cb:b0:456:1d4e:c127 with SMTP id 5b1f17b1804b1-459f4f5124cmr112156935e9.8.1754923370212;
-        Mon, 11 Aug 2025 07:42:50 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459e3d37439sm161555315e9.2.2025.08.11.07.42.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Aug 2025 07:42:49 -0700 (PDT)
-Message-ID: <076c19ae-58fc-4823-9679-1d5fe6e46211@gmail.com>
-Date: Mon, 11 Aug 2025 15:42:48 +0100
+        d=1e100.net; s=20230601; t=1754923669; x=1755528469;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=K2VfjAttlVgu+sbsa82z9ipbqKF+wab93ANLbEavEgU=;
+        b=hYn0tP2U0/8WJXIY59CXy8Ht9QYxj4isWd5d1sjswPQ3fTapbP0LjMVu7JON+C+DZi
+         KaLwJKQOeVt6uHH4/wqoag/vxfD+M9qM2QqDRXhv4Ga8eMR7NZrXPVRQbBa9A834gjlw
+         OGJBtMen7hRyKOiRmDpUjl6LbZaN92oH+eL3U1uJLUM6UqjDh2LkHdjWNFABGMbd84nV
+         LvPYH8iipMl6GIa9r9HS0snXrdcKHs0Xly9uQWCo6f5eT/1kJ9al+VorBivRqYmW8Uhr
+         aNJofy7ZVJcWE/f2BRQAfXEVrmYgWoxzUdjSC9RNk6O4Tgyct6uzefap5XWR/nmTJD1r
+         RfzA==
+X-Gm-Message-State: AOJu0YwqByThkAX/gP4b070Ql1bHcRK6Nk5ttS31GUSO15b+RNjqT8pl
+	lwNIgu0AeKShLWxM/uXfhD4z4VqgMgRpiwCvibnXtdU7nOVhhjGzmSKkhUXEZr5scP/uFGRuVMW
+	HfT80twFP78k3mjAy6OVK+k1HODgrCKiUuzey
+X-Gm-Gg: ASbGncuVkAr+g7R5GNGzUMKvRqOJWGt089LlwcKLEKSIhPvn3ND9Q/+yRTJ2xAAVURJ
+	Gb5LyQ51haQGavSv2LjZQriNCgK59ZrUrqfm+Y4IoJuqgpZULsZyHjCFtJVOUVV89E8aTgyRVvE
+	7wF2PYRuOko74i50GysvCuaAQINJT+oEezpjcYYQAM3GyyP+eh44AA62tTR2sCc/s7NppCxQu9/
+	qoy9fo=
+X-Google-Smtp-Source: AGHT+IGZ6hp3evnsRZfoXACu43F/tw+OPbiu/v3rPUfdC+EIYvy8EjeuJPduFonFGutMbv+7fHk/fVmYs/7cJgTWt0k=
+X-Received: by 2002:a05:6871:a207:b0:30c:46b5:6a92 with SMTP id
+ 586e51a60fabf-30c46b578e4mr285831fac.2.1754923668934; Mon, 11 Aug 2025
+ 07:47:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSOC PATCH v2 1/2] environment: remove the global variable
- 'merge_log_config'
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
-Cc: christian.couder@gmail.com, git@vger.kernel.org,
- shyamthakkar001@gmail.com, gitster@pobox.com
-References: <cover.1754868681.git.ayu.chandekar@gmail.com>
- <3aa014ed46d14e31ea0c2f6b7631e7e4cbbd3943.1754868681.git.ayu.chandekar@gmail.com>
-Content-Language: en-US
-In-Reply-To: <3aa014ed46d14e31ea0c2f6b7631e7e4cbbd3943.1754868681.git.ayu.chandekar@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: ryenus <ryenus@gmail.com>
+Date: Mon, 11 Aug 2025 22:47:37 +0800
+X-Gm-Features: Ac12FXwrk-F1pjyjRD6Ch4HCTx7fd5s0w8-5_2pHLuX11XY472NML7AENXkJ-IY
+Message-ID: <CAKkAvayK9WRBLtPL7XCsBP=UGbYMnDYE6+EPRpCxJioryNeBBA@mail.gmail.com>
+Subject: [bug] git clone: -c key=value missed when cloning submodules with --recurse-submodules
+To: Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Ayush
+Given 2 repositories, the 1st is "parent", with the 2nd as a submodule:
 
-On 11/08/2025 00:45, Ayush Chandekar wrote:
-> The global variable 'merge_log_config', set via the "merge.log" or
-> "merge.summary" settings, is only used in 'cmd_fmt_merge_msg()' and
-> 'cmd_merge()' to adjust the 'shortlog_len' variable.
-> 
-> Remove 'merge_log_config' globally and localize it in
-> 'cmd_fmt_merge_msg()' and 'cmd_merge()'. Set its value by passing it in
-> 'fmt_merge_msg_config()' by passing its pointer to the function via the
-> callback parameter.
+* https://remote.host/parent
+* https://remote.host/submodule
 
-This looks like a good solution
+When cloning the parent repo with the below command:
 
-Thanks
+    git clone -c key=value --recurse-submodules https://remote.host/parent
 
-Phillip
+While "-c key=value" is properly applied when cloning the parent, it's
+missed when cloning the submodule.
 
-> This change is part of an ongoing effort to eliminate global variables,
-> improve modularity and help libify the codebase.
-> 
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-> Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-> ---
->   builtin/fmt-merge-msg.c |  3 ++-
->   builtin/merge.c         |  3 ++-
->   environment.c           |  1 -
->   fmt-merge-msg.c         | 10 ++++++----
->   fmt-merge-msg.h         |  1 -
->   5 files changed, 10 insertions(+), 8 deletions(-)
-> 
-> diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-> index 3b6aac2cf7..4b24de32fb 100644
-> --- a/builtin/fmt-merge-msg.c
-> +++ b/builtin/fmt-merge-msg.c
-> @@ -19,6 +19,7 @@ int cmd_fmt_merge_msg(int argc,
->   	const char *message = NULL;
->   	char *into_name = NULL;
->   	int shortlog_len = -1;
-> +	int merge_log_config = -1;
->   	struct option options[] = {
->   		{
->   			.type = OPTION_INTEGER,
-> @@ -53,7 +54,7 @@ int cmd_fmt_merge_msg(int argc,
->   	int ret;
->   	struct fmt_merge_msg_opts opts;
->   
-> -	git_config(fmt_merge_msg_config, NULL);
-> +	git_config(fmt_merge_msg_config, &merge_log_config);
->   	argc = parse_options(argc, argv, prefix, options, fmt_merge_msg_usage,
->   			     0);
->   	if (argc > 0)
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 18b22c0a26..c2089b5e6f 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -1374,6 +1374,7 @@ int cmd_merge(int argc,
->   	struct commit_list *remoteheads = NULL, *p;
->   	void *branch_to_free;
->   	int orig_argc = argc;
-> +	int merge_log_config = -1;
->   
->   	show_usage_with_options_if_asked(argc, argv,
->   					 builtin_merge_usage, builtin_merge_options);
-> @@ -1392,7 +1393,7 @@ int cmd_merge(int argc,
->   		skip_prefix(branch, "refs/heads/", &branch);
->   
->   	init_diff_ui_defaults();
-> -	git_config(git_merge_config, NULL);
-> +	git_config(git_merge_config, &merge_log_config);
->   
->   	if (!branch || is_null_oid(&head_oid))
->   		head_commit = NULL;
-> diff --git a/environment.c b/environment.c
-> index 7c2480b22e..6751aa5683 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -66,7 +66,6 @@ int grafts_keep_true_parents;
->   int core_apply_sparse_checkout;
->   int core_sparse_checkout_cone;
->   int sparse_expect_files_outside_of_patterns;
-> -int merge_log_config = -1;
->   int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
->   unsigned long pack_size_limit_cfg;
->   int max_allowed_tree_depth =
-> diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-> index 40174efa3d..c9085edc40 100644
-> --- a/fmt-merge-msg.c
-> +++ b/fmt-merge-msg.c
-> @@ -26,13 +26,15 @@ static struct string_list suppress_dest_patterns = STRING_LIST_INIT_DUP;
->   int fmt_merge_msg_config(const char *key, const char *value,
->   			 const struct config_context *ctx, void *cb)
->   {
-> +	int *merge_log_config = cb;
-> +
->   	if (!strcmp(key, "merge.log") || !strcmp(key, "merge.summary")) {
->   		int is_bool;
-> -		merge_log_config = git_config_bool_or_int(key, value, ctx->kvi, &is_bool);
-> -		if (!is_bool && merge_log_config < 0)
-> +		*merge_log_config = git_config_bool_or_int(key, value, ctx->kvi, &is_bool);
-> +		if (!is_bool && *merge_log_config < 0)
->   			return error("%s: negative length %s", key, value);
-> -		if (is_bool && merge_log_config)
-> -			merge_log_config = DEFAULT_MERGE_LOG_LEN;
-> +		if (is_bool && *merge_log_config)
-> +			*merge_log_config = DEFAULT_MERGE_LOG_LEN;
->   	} else if (!strcmp(key, "merge.branchdesc")) {
->   		use_branch_desc = git_config_bool(key, value);
->   	} else if (!strcmp(key, "merge.suppressdest")) {
-> diff --git a/fmt-merge-msg.h b/fmt-merge-msg.h
-> index 73ca3e4465..c066d83761 100644
-> --- a/fmt-merge-msg.h
-> +++ b/fmt-merge-msg.h
-> @@ -12,7 +12,6 @@ struct fmt_merge_msg_opts {
->   	const char *into_name;
->   };
->   
-> -extern int merge_log_config;
->   int fmt_merge_msg_config(const char *key, const char *value,
->   			 const struct config_context *ctx, void *cb);
->   int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+Here the actual key/value is something like "url.new.insteadOf=old" for
+authentication purpose.
 
+Fortunately the following works:
+
+    git -c key=value clone --recurse-submodules https://remote.host/parent
+
+Ideally the first form should also work.
