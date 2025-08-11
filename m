@@ -1,147 +1,192 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD596213E90
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 21:14:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3412E2F16
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 21:14:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754946865; cv=none; b=tT4VR1YLsgodEEsiokQ4K7EfxKaja22a1M4T0zh8K5T9IGF96FV3WVrzlSJHsFyKKelNIW2Qg/Uw3ErOig2weaxIa1nYc3mBXW10IlaeC+oFt76PcDe+16V98nyMm4JS2B5N5gyVf4T3gf8N9r2TdFaGB/i5BLooeuABcmrTngM=
+	t=1754946868; cv=none; b=Tq80RLeLLcCTFGEmCvgASn2OzLQM37JkCZlmDk15/i7Jvxh+sxIFmUkO4XSdtvbvy8Ds3tQ2dKR9b6d4Xp3qjbddaAp1DJ6ug6yTmLudiIp1qfbxIIgzCzyYI7kcYgD1cIewFEkKGOFI5p6zNSH9X5g2965xa544UYeCwBethPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754946865; c=relaxed/simple;
-	bh=uRko4td3CvpmXjvqkbEAsNfIelRXUqaWLGZ7k/zaN8w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f44Urf/bKg/MmzLm5bXnljLjEAz4qw/2RyxPHtNy5sDIpQozu9CRPKJTrafjFUStEEaw/zvlwiQUDy+dTFnnZuIdqRexn4fkanEsYEYVRmwVceW1VzJ6hYlsXripYGTIaeCTeUPc/5rJRWiuCggiZrIMYOoLHIrKlTt1n/qrms0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LmF/nNSg; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754946868; c=relaxed/simple;
+	bh=Z2bkr5FWkSFVuv+MEF3hit1kdd/TCBVcHyl611MRaEc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oEKY3zzRFKhVyN6Iq399cbWB+hALEPSJyi5/878GIxh5HUrDeLQzoons7DafUN+MVMepqTxk2FE8fzn5y0c1N0XVYskF49ax7ydg5/UJqcmse4x0XhpdhiiloeqQ0sr2nxZdRPCDyKldYNpRqQ6zDiLpqOG9dG+V1E7FYSwODNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y0eBLfn7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Orv0OudY; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LmF/nNSg"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6157ed5dc51so7309727a12.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 14:14:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754946862; x=1755551662; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KYXG7kXO4+cWyb4Ox9MupUyOS6Vj3Rwz3ixB9s3PC1k=;
-        b=LmF/nNSglPTXYy9pn7LIa+NOGWhIW98fzxbPxT9tPVtAvZKAX5voUEZp/QQFJ6EVTz
-         D9LfedFK/+DIreg190UDj7tUM4sRhvgplcHOlouOLSnn2xHoIr+CfgochUTRAJCowXlA
-         aYVVPXZFNZ47LD68LokTiJX1fGv4gK/BYiElZGq6sZ7tpLNAKCdXSg/HMgYvwXmop04M
-         8XmP6ySeGMGU1fy8BhpHBVNzNaEQ1bzW/FB8soAKbg+60EynK5IS8hlruSdApbwklYeL
-         frrXomeEs+AwxubI7yOi/K/z6A9+FaT7KzMQtGKlLsDdB9hIDSLf/jqTSTsozdw2P7Mn
-         Itdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754946862; x=1755551662;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KYXG7kXO4+cWyb4Ox9MupUyOS6Vj3Rwz3ixB9s3PC1k=;
-        b=FPhBFuI2aDsmAd6nXPXFkwE6rYEzZ1W4BprxchJMODlE4U/VGGyNnuyr0Em7lmk3AY
-         PPCyx34JNq6IK5vwFUkKFSsrToapsceDDrngL4zivOQVeJNv/QsUlHD2Nm9AVRo4d0Nd
-         an9RP2uE3mpD+Or6apXRWw414qJr2Uxfm2pUyZuKuct/aJZN1M4jamZis51f/BhRi686
-         8rJktlLcdtmf6FZKPxMF7tINc09X2swI3VPrhxtwfjvrMV7RpTbdB8c10lGNDOkkugOc
-         4Hai2A5iQ5WpZC9x4mLfhUI2Uq2OT1djc7sGb0X1vOHv4MkcmmIX4KYbVscfb/ZzNCBr
-         DUJA==
-X-Gm-Message-State: AOJu0Yyv84LPF4bNL1YEma1M+t8Tg8aP9UAMs0ktJuiGIMmWYOq2aiMN
-	hchgbG9GAcrGQP96P+5FFSvbL4LR6LEYKbjRWKH2kYCTUi4reyy4Oxq5R0kLh29+VILj0bfg9Ln
-	kkikj8GV8H8ybsHAnXh6ZZhCmjwDbr0LQI1av
-X-Gm-Gg: ASbGnct9iHL5zdkzcyDSIQx29bPJnijcXsBwqW7VQoBzCTy37nozIhf4Kj50GQsfpE0
-	sM2XeEqaXaJy+Oe7YjMgd8MNe4GyGWeI0NMzXBm4UbpkvNulp1lDX/hadY7Xg9RxkLqxkT3HyOp
-	PflKSeBzP/xAuEk3cDRwrgn6mGWpFNi7/obeTr4S1lKKog0w6f/nNdoVa+ywr0PpA+EszCm+R8H
-	PzNOH9Mc5khCBd1jGLeStzH+ILFdQaBlcgBBCDv
-X-Google-Smtp-Source: AGHT+IEt83eOyPG+2BzihC0sNiY4QbGkC0WOz6gGm40sTTQYEC0vjQaTI0hm2Mca+uwPYIjY4B7vIHtHwOG0x1pBCm8=
-X-Received: by 2002:a17:907:7fa8:b0:ae9:ca8f:9642 with SMTP id
- a640c23a62f3a-afa1e04122bmr76570366b.15.1754946861676; Mon, 11 Aug 2025
- 14:14:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y0eBLfn7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Orv0OudY"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A6997140009C;
+	Mon, 11 Aug 2025 17:14:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 11 Aug 2025 17:14:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754946865; x=1755033265; bh=y7uJ2wAH8I
+	jM3PtJaT36sMR6+FceDNNsIbJMcZLJUC8=; b=Y0eBLfn7B0IMU4hUILhXlmF3Ju
+	1v0czTdRyxnV3SO9T9LDt3vo7612K97c+5SfCGPT/lbeEOx4m6S+bIhoXKitscKi
+	Ev/kRgM/gkhD/MGXzhwUxTatuyTkS6mG1BIGXD59ddKOIcWp9AeOBGH8FHV+bgqJ
+	Gc7vJD75t7LQoUPMWVC1IuGRv7aoVUEK9pakJSqZS+DeGL6ZE7BmkT/O9RT/3TM4
+	DRwBdTr6pZPxEPPewXj050nQvnwlSOHxedQMgz371LeFCbGfMic6vYoXlBRb7LxB
+	4Qc+OEgPe88APyFIkisdQtuvkzuE/1SdHiIgT7s0NXAuU+rtGuKY0OEyi85w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754946865; x=1755033265; bh=y7uJ2wAH8IjM3PtJaT36sMR6+FceDNNsIbJ
+	McZLJUC8=; b=Orv0OudYiyuys6qPm62vEWyU59TKzGovW3zuH4sDtb0VkMzRAEd
+	MQkluwHbzy0xBZN+glQq1l0iz7nSO30Uq/xRucWlZNZgUKpfvU8+/fFi4ocsfucx
+	iqzwQlOTibVAZZpOQRHPDVXub8YWv+hJUZ83HD2EmDGpgX8eKa783iYNW7qep4BM
+	jZDqHp5c1oelfDvdutCVb+F4NtDeS+0JRptYOb1IB9Q+J+G4+ieVWS99WiM+xZVu
+	2Mot85K9GEees1yO3LWwXrQXwcO8kSPLZoc53UUIAhJ/Pom6YR+Phea3mm5L+qXh
+	Mu+EbqbU+eUgn3KG+b6Lhh+YvZxvlGq0NyQ==
+X-ME-Sender: <xms:MV2aaP894aGHQrklXcLOaFNXGMZvvm9t-llqRq4GMykWUoQ77GCCNQ>
+    <xme:MV2aaIo9OydrVZ0jvbQo-a1boZZWe_gTCg4rTKRO00F4yrAGbiTAVluwFhVEJFYQt
+    XhKEBFwaOLcrLUAww>
+X-ME-Received: <xmr:MV2aaIpNpMmaoJD82zXNLFWIioTpiN6aZS40TxghP9O7Aevh_yWieawiHbTPpDpty3bqcpVEWD9HUfdh0oGmiyCXAFE6bnDm4drIq6A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeefhedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:MV2aaD2OFciOnhdheMsvoKivkHiS6RphTj-qXLr_s9AKqaFZiIv_0A>
+    <xmx:MV2aaOFb7HWI0Itk9YcV6LHBD2BSlAYIaLFLr-Eb7iNXyQWTJ5AIfQ>
+    <xmx:MV2aaGGVXuRPtsVDLvR1UBjX6sRp5bZ9niN_RKuH4KcB5w_enk5UIQ>
+    <xmx:MV2aaJ6gmjxrUwamF9w-mtZm-vb9dU2DlDedgApFf_AsxQWAgMDTIg>
+    <xmx:MV2aaANlv1qmPWvfLaftBTzno1_rRecJazYpnFJMMJ9jHh1Ooq-x9LVB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Aug 2025 17:14:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  Karthik Nayak <karthik.188@gmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v5 5/5] doc: git-rebase: update discussion of internals
+In-Reply-To: <5ab235b067b40e468185ee905f735ff73ccc9552.1754943127.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Mon, 11 Aug 2025 20:12:07
+	+0000")
+References: <pull.1949.v4.git.1754702057.gitgitgadget@gmail.com>
+	<pull.1949.v5.git.1754943127.gitgitgadget@gmail.com>
+	<5ab235b067b40e468185ee905f735ff73ccc9552.1754943127.git.gitgitgadget@gmail.com>
+Date: Mon, 11 Aug 2025 14:14:23 -0700
+Message-ID: <xmqq8qjp1ryo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAKkAvayK9WRBLtPL7XCsBP=UGbYMnDYE6+EPRpCxJioryNeBBA@mail.gmail.com>
-In-Reply-To: <CAKkAvayK9WRBLtPL7XCsBP=UGbYMnDYE6+EPRpCxJioryNeBBA@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Mon, 11 Aug 2025 17:14:10 -0400
-X-Gm-Features: Ac12FXzVpR7P9MnumSeYs4YS2NgboQ653-378LUxFurmy2gGLHUbjTd4UJSSRZ8
-Message-ID: <CALnO6CAJsXJXDtw_ewXnV4rydmnfh4Fm=eDE9WQ0_t8BpFEi_w@mail.gmail.com>
-Subject: Re: [bug] git clone: -c key=value missed when cloning submodules with --recurse-submodules
-To: ryenus <ryenus@gmail.com>
-Cc: Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Aug 11, 2025 at 10:52=E2=80=AFAM ryenus <ryenus@gmail.com> wrote:
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Julia Evans <julia@jvns.ca>
 >
-> Given 2 repositories, the 1st is "parent", with the 2nd as a submodule:
+> - make it clearer that we're talking about a multistep process
+> - give a more technically accurate description how rebase works with the
+>   merge backend.
+> - condense the explanation of how git rebase skips commits with the same
+>   textual changes into a single bullet point and remove the explanatory
+>   diagram. Lots of things which are more complicated are already being
+>   explained without a diagram.
+> - remove the explanation of how exactly `--fork-point` and `--root`
+>   work since that information is in the OPTIONS section
+> - put all discussion of `ORIG_HEAD` inside the note
 >
-> * https://remote.host/parent
-> * https://remote.host/submodule
+> Signed-off-by: Julia Evans <julia@jvns.ca>
+> ---
+>  Documentation/git-rebase.adoc | 66 ++++++++++++-----------------------
+>  1 file changed, 23 insertions(+), 43 deletions(-)
 >
-> When cloning the parent repo with the below command:
->
->     git clone -c key=3Dvalue --recurse-submodules https://remote.host/par=
-ent
->
-> While "-c key=3Dvalue" is properly applied when cloning the parent, it's
-> missed when cloning the submodule.
->
-> Here the actual key/value is something like "url.new.insteadOf=3Dold" for
-> authentication purpose.
->
-> Fortunately the following works:
->
->     git -c key=3Dvalue clone --recurse-submodules https://remote.host/par=
-ent
->
-> Ideally the first form should also work.
+> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
+> index 750f5e67e4c3..b4e5519d2839 100644
+> --- a/Documentation/git-rebase.adoc
+> +++ b/Documentation/git-rebase.adoc
+> @@ -68,51 +68,31 @@ linkgit:git-config[1] for details) and the `--fork-point` option is
+>  assumed.  If you are currently not on any branch or if the current
+>  branch does not have a configured upstream, the rebase will abort.
+>  
+> -All changes made by commits in the current branch but that are not
+> -in `<upstream>` are saved to a temporary area.  This is the same set
+> -of commits that would be shown by `git log <upstream>..HEAD`; or by
+> -`git log 'fork_point'..HEAD`, if `--fork-point` is active (see the
+> -description on `--fork-point` below); or by `git log HEAD`, if the
+> -`--root` option is specified.
+> -
+> -The current branch is reset to `<upstream>` or `<newbase>` if the
+> -`--onto` option was supplied.  This has the exact same effect as
+> -`git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
+> -to point at the tip of the branch before the reset.
 
-I don't /think/ this is a bug: the manual for git(1) describes the form
 
-    git -c <name>=3D<value> <command> [<args>]
 
-as
+> +Here is a more detailed description of what `git rebase <upstream>` does:
 
-       -c <name>=3D<value>
-           Pass a configuration parameter to the command. The value given w=
-ill
-           override values from configuration files. The <name> is expected=
- in
-           the same format as listed by git config (subkeys separated by do=
-ts).
+Were there a sketchy description given elsewhere already?  I
+personally feel that giving too much details here would not
+necessarily help readers' understanding.  I'd prefer to see an
+introduction read more like "The command conceptually does these
+things in the following order", and leave the level of description
+also to match that introduction.  It may be just me, but when
+somebody says "here is a detailed description", I would expect it to
+contain little or no white lies mixed in, even for simplicity.
 
-Meanwhile, the manual for git-clone(1) omits "-c" from the synopsis
-(?), but does say
+But of course others may have different opinions ;-)
 
-       -c <key>=3D<value>, --config <key>=3D<value>
-           Set a configuration variable in the newly-created repository; th=
-is
-           takes effect immediately after the repository is initialized, bu=
-t
-           before the remote history is fetched or any files checked out. T=
-he
-           <key> is in the same format as expected by git-config(1) (e.g.,
-           core.eol=3Dtrue). If multiple values are given for the same key,=
- each
-           value will be written to the config file. This makes it safe, fo=
-r
-           example, to add additional fetch refspecs to the origin remote.
+> +1. Make a list of all commits in the current branch that are not in
+> +   `<upstream>`. This is the same set of commits that would be shown by `git log
+> +   <upstream>..HEAD`. You can use `--fork-point` or `--root` to change how this
+> +   list of commits is constructed.
 
-    [ some caveats omitted ]
+Didn't somebody mention "git log --cherry-pick <upstream>..HEAD"?
+If omission of it is for simplicity, that is fine, but that is
+another reason why we do not want to say "more detaild description".
 
-So they are 2 different commands, and the position of "-c" matters.
+Also, shouldn't there be step #0 that says "If the <branch> to rebase
+is given, check out that branch and make it current", for the HEAD
+in this description to work correctly?
 
-All that said=E2=80=A6 upon a re-read, I see "this [config] takes effect [=
-=E2=80=A6]
-before the remote history is fetched." So let's take a look at the
-omitted caveats:
+> +2. Check whether any of those commits are duplicates of commits already
+> +   in `<upstream>`, remove them from the list, and print out a warning about
+> +   each removed commit. You can use `--reapply-cherry-picks` to include
+> +   duplicate commits.
 
-           Due to limitations of the current implementation, some configura=
-tion
-           variables do not take effect until after the initial fetch and
-           checkout. Configuration variables known to not take effect are:
-           remote.<name>.mirror and remote.<name>.tagOpt. Use the correspon=
-ding
-           --mirror and --no-tags options instead.
+This is done as part of #1 above as part of a single invocation of
+revision walk (i.e. a loop in sequencer.c:sequencer_make_script()
+that calls get_revision() repeatedly).
 
-Perhaps url.<name>.insteadOf deserves mention here?
+> +3. Check out `<upstream>` (or `<newbase>` if the `--onto` option was
+> +   supplied) with the equivalent of `git checkout --detach <upstream>`.
+> +4. Replay the commits, one by one, in order. This is similar to running
+> +   `git cherry-pick <commit>` for each commit. See REBASING MERGES for how merges
+> +   are handled.
+> +5. Update your branch to point to the final commit with the equivalent
+> +   of `git switch -C <branch>`.
+
+In step #3, you switched to <upstream> with "git checkout"; here you
+use "git switch".  Uninitiated readers would wonder what criteria
+were used to decide which one among these two different commands to
+use in steps #3 and #5, even though either would work fine.  Because
+this page is not where readers come to learn about the equivalence
+of these two commands that are not essential to learning "git
+rebase", it is better, so once you started with "git checkout", to
+stick to it throughout to reduce the mental burden to first-time
+learners.
+
+Thanks.
