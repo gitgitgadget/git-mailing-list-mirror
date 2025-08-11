@@ -1,134 +1,111 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE589311C25
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 19:10:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F44B2E2DF2
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 19:10:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754939415; cv=none; b=gCKkNY8vluaqiHCKPfVYB6PIqPlycpYn9ntHF6mm95IbPntRifjyLoYKGrSiKVbaWE8cz3dNS9xXTKoFZgAqX3Tdh3/SFG58LmrN6NFtx/RsSIwBrbBqEd4t6L24UNMJVr23scfLmSXR/q7AvTFHWvNavqbAJuNO3E8KDAi2ZZ4=
+	t=1754939420; cv=none; b=rUoOL8nCs7zqAI5g5LM4CtdYwAyVmgJFoEaL8Bh0Qkt9s+YuuUYIX1GYBWcN8d1R4UX2+DUCEYEvfn43h4Dp3K0n4YK7aodCvdCPmv+AzYcygTlvFhlUdzAfEs6h3D4MQ4qz+zpkYH0/rIfrsCmcaTy0E8hHZdHhW7RKSnRTGmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754939415; c=relaxed/simple;
-	bh=RQ22MYBOOvgBbsIJmnqc4h8p6+Lmyxx0ZMjTaxpAxnw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ntLoeXlqXC6eIMPGSyMmrlFF+GyDtR3XNh+zsfWugMUkeaV6e/HAiwQv1NPmF3btP1In90DAMzAWSKwgQ0dNrGYaGMe4EBENVjcQaaUbnsgZtvs6Nkv1Ulf6DFd0zSEv6FZyxVeauZutlBFEicBu6X1yFVChz/e6Qpny4Xa6pLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EDTFMucS; arc=none smtp.client-ip=209.85.210.180
+	s=arc-20240116; t=1754939420; c=relaxed/simple;
+	bh=nuRYJtmBMX/8Q9bCiUkTxQDC1sreC7lOVJ9BcNoGi4E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=opxpzJt4KYJKdFntkoRZxbNvm1F747RScQXZ/laQc7rwG/Zwo6FawxuUtmXSQwTRTqXENeJnI5Is8a1BAewV57UyDzWni3LPjdS1vLBagPnI8ozvfym/sxrzX0r9cNqxJ81JL/Lzzr1gby1NO6zHzxDECT8dTJ1vIDO0wqsWgEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AxsJA44W; arc=none smtp.client-ip=209.85.161.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EDTFMucS"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-76b36e6b9ddso4019621b3a.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 12:10:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AxsJA44W"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6199e7dea32so2181945eaf.2
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 12:10:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754939413; x=1755544213; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7aMUEVpPBHREekB3idnM7dUB57tJUrj6LzvACriv4h0=;
-        b=EDTFMucSgQ6qRi08jre7lfkPbkdP+Gol0SOSzmpIZHa48eSM8sQ1vuj14UAWE4lZDY
-         ljeU/UDy7iII4M41pYZ7CWD7lxTfGM3kOy6/0EcCEHidB9x/mTXU1Mn0XNTtlOhaLtcw
-         rukcuqGN/0ObrytXGooA/uuhmPy/+TSoEPsMnG+QE2T9z20lWEOZuKnwL2v7EnEKU9E/
-         8RxiKX/g2LVAml4HrNsCRmTzixP0n3P0aM6A+MVZQun0F/mivYEPo+0N+l4GT7i1W0yQ
-         h3nD3+HsrwdCWsOQZuu54ZCHxYD6N3FNjfOneHaHw2a66wZ7WiD4mUfGyli5Z5/ZCZW2
-         X6Dg==
+        d=gmail.com; s=20230601; t=1754939418; x=1755544218; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ydNmCJN+L4GTRIqvxFnhgUB8IvDpNqkuQU/yNdxN4RE=;
+        b=AxsJA44WZMrodjv3XZY+JUxDekX2OXdJLlWEmrl6XEk7jr4R0AtZ3ROKEAmfFA9pAQ
+         LAJXIkJcjZ23SNFT3AOaRITQQpC5+UWE0wcQKc/1K7fwYfpHmivlRjvhgm4p7d0dcxih
+         JhlGrSlex1LNyuQ6DyGq2zmkaCTmdTLgbhuJdmdAilV8s6BmHt7k502hMwgQfzdnBZVN
+         HlB9F83QZQEcTW0Se0qB2GZXiXOIc/ltACXr2Ru7+gM3LrwJs1VJlP9f6aVHqjg/3M/i
+         tCVFQ+LObRyBHxCc250qWsQaFiNYpIJ9LQk1WFwh4dWTunU8RxP2S+vcL4nNUIy0xWWK
+         yxeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754939413; x=1755544213;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7aMUEVpPBHREekB3idnM7dUB57tJUrj6LzvACriv4h0=;
-        b=G4GDMLp/Eicmg6n5aRMBhLgpC5htyCT4IpngyQmafaKM+WsbKaJV9YiZxCtpfgYgTw
-         2opafHO7FKzSfqaK5+EVXzbtXYUMZ4h4pK81klqJgUq5gG6TP3IHFCS7XW2V+dCxNSXl
-         bl19iXMYuKmLRl1e5QLkEQPQybiyjCHbiJTQO+ixebzmQbRbGnsdAux/ZHmhOCIuAHCB
-         tQcu3UwVsmYBILc/4yTVwOrTN+XtCOOzhGzx0XSWXXZouYcuttcazW+6wU2pA7hEX/ug
-         C1a/Qe0tsdX7XZgmlcFp1J2H4UKxWdzZxFYOhoKhJRlxhpbXpXHb/wIaFTv4AaYhdgHc
-         q9sg==
-X-Gm-Message-State: AOJu0Yz/5l5y11NTiz7Tk3r0n4Q14xhqrutYyvhlx5oJ0gY1VQ8Fsg5L
-	1vVFtcLtGGZsUl/U9GRoizjwcArp2kvpUFmvEgJwxDfkUrKa1l4nVLPv7njrrVCg
-X-Gm-Gg: ASbGncvvopC78f5kGtDXW/0x4qk7vzWZisIf2QrF8Ioaa1Eoe9CTBS/hWWD2CjFw5Qa
-	egCWcfX/HcmNO75hHh7sw4V8eS+u1OMVMsFKxBGpwKcjYc1NCr1aflv9Lw8X/u7wN+uoeYFM6ec
-	FpZ9dwby/Id+yAuxeeZtuxrMlesk5AHjlzSXnnyPgYUX0epjvvr/oT9hHX2W/Ln6cxK7AtGiYuV
-	NinVkV3QqlG9MD3ubUyXSmEtviEkYXYzM71JpQZDypU9/ZZIaTZmRrIdEHJfRNB4QoW+gRX56v6
-	hGxHg0PQTsC9nWR2s4KFVQnZ4wXlzkQFzWzl+skrD609FFwYFrfqgeRmUUAwlH30+3IN9g2BMb1
-	UzC6wCjj+xs2ndIKRv4z/op3C5eRlMGH9qmQwnbwAu4041lJ7DaTVZxCMlQ==
-X-Google-Smtp-Source: AGHT+IEH7fGANWnCDHXKkIf6OG6j0SQFq604/nlcmtmiYbkAiOpee54dajkqQjASK7L7g94cqfYYdQ==
-X-Received: by 2002:a05:6a00:10c2:b0:76b:fe65:71f5 with SMTP id d2e1a72fcca58-76e0df2969emr978487b3a.20.1754939412838;
-        Mon, 11 Aug 2025 12:10:12 -0700 (PDT)
-Received: from [192.168.1.105] (23-93-88-48.fiber.dynamic.sonic.net. [23.93.88.48])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcce8fa92sm27576779b3a.45.2025.08.11.12.10.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Aug 2025 12:10:11 -0700 (PDT)
-Message-ID: <ee87e67e-7551-428c-843e-1a4f57548f9f@gmail.com>
-Date: Mon, 11 Aug 2025 12:10:11 -0700
+        d=1e100.net; s=20230601; t=1754939418; x=1755544218;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ydNmCJN+L4GTRIqvxFnhgUB8IvDpNqkuQU/yNdxN4RE=;
+        b=uwmY0/8csYauz2nSBvCj14yKR28Sh/Bm1UFztNnsL9+VU8FlnkJ0PM9ZEBoRCMz7iA
+         urQCofPE0j7WVHmVpd1f66IidRZ2VxnvwnDgk39myHEV+8nci5kvI/bwmDn7j4tDcumM
+         i4LcgivCJrhFMNplsHJvitr0gzRKAoOSlVRbTTaOfZxVVDk11qWlfFcJ9apMaYU3d4XW
+         fY5zMW3UipFwzsfFKQpBoX3qhGoRjcUGmx3hiM3NwC9FpCzS15WbhyrR1mIRb1oJLMvw
+         SuTOS5ad0CWG5hzK0S3vb2DdOQ/9aIYoHRepQVCUeHTnR1TmmTFlPe70MUfCbq2CN3Qu
+         vrBw==
+X-Gm-Message-State: AOJu0YwqFVM8OcuxlkYrzJokxZ6J7NV8Mzp3Dk1Ij2xEPKfCXZ5CDAk7
+	XkcxCP0cvWjzw4DCuHOcxqsdBTwrfNWC4BhDnMgD57gaLiWuMEYRpsFutsHAFGid
+X-Gm-Gg: ASbGnctAypINdkrdYzorbuRxVOFmBN/nA5RmWb42entiakgmDDwlf9LC6Dmkq2VSgXU
+	8wexI8FWrX5boYCyis1uDxjNqU/Lh6ESDA3qy5ONV44qGtk7kYWHv98zPy3RAmWr8lmqi3+m87f
+	VLVfu7heDC8HuuNVxtMh8DytHBI/i5W6WOhYxtuQzk6/zNmIQ2zvbQe8+noff9kR7X4aMJ0MJSv
+	/Q2R5srQMVx0IsM4TXF5zfLA7kWQh2h0JbFC60XcCTemFLDDyz/jYKcuzcxUHVYTYOUyN2V2Lja
+	Wdw0qhs9Lz4fLNWr0cwC6sTVa7vnIHFgOhAEa+R7w9AwSRiS45WIS7kWTDUC4R0P712hrWfbkWM
+	eVNX/mBbUqhlq0KA=
+X-Google-Smtp-Source: AGHT+IE2H4Z15FcdGYFOLBlppk6SKUvekNBCLQ2RSbCIknAJuWsOV+OE1I1aOBx2tVgmgKQ72r+eVg==
+X-Received: by 2002:a05:6820:822:b0:619:6fea:2fb8 with SMTP id 006d021491bc7-61bb5bc72f0mr554419eaf.5.1754939418175;
+        Mon, 11 Aug 2025 12:10:18 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-61b7c86474asm1025980eaf.6.2025.08.11.12.10.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Aug 2025 12:10:17 -0700 (PDT)
+Date: Mon, 11 Aug 2025 14:10:16 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 4/6] reftable/stack: reorder code to avoid forward
+ declarations
+Message-ID: <gisipxu5fdge3762fddx4qyiccwdtg34a42uiv4lpevuwgmsbz@lcj7fcifogvk>
+References: <20250804-pks-reftable-fixes-for-libgit2-v2-0-fef06209a984@pks.im>
+ <20250804-pks-reftable-fixes-for-libgit2-v2-4-fef06209a984@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Minor Bug in git cat-file (git 2.50)?
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <b37629c6-b730-45ce-b839-e782aafe238d@gmail.com>
- <aJmvykqFbsBJR_xk@pks.im>
-Content-Language: en-US
-From: Jon Forrest <nobozo@gmail.com>
-In-Reply-To: <aJmvykqFbsBJR_xk@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250804-pks-reftable-fixes-for-libgit2-v2-4-fef06209a984@pks.im>
 
+On 25/08/04 11:40AM, Patrick Steinhardt wrote:
+> We have a couple of forward declarations in the stack-related code of
+> the reftable library. These declarations aren't really required, but are
+> simply caused by unfortunate ordering.
+> 
+> Reorder the code and remove the forward declarations.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  reftable/stack.c | 364 +++++++++++++++++++++++++++----------------------------
+>  1 file changed, 176 insertions(+), 188 deletions(-)
+> 
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index 3480ad21c3..d6e4ea93a3 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -17,18 +17,6 @@
+>  #include "table.h"
+>  #include "writer.h"
+>  
+> -static int stack_try_add(struct reftable_stack *st,
+> -			 int (*write_table)(struct reftable_writer *wr,
+> -					    void *arg),
+> -			 void *arg);
+> -static int stack_write_compact(struct reftable_stack *st,
+> -			       struct reftable_writer *wr,
+> -			       size_t first, size_t last,
+> -			       struct reftable_log_expiry_config *config);
+> -static void reftable_addition_close(struct reftable_addition *add);
+> -static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
+> -					     int reuse_open);
+> -
 
-
-On 8/11/25 1:54 AM, Patrick Steinhardt wrote:
-
-Thanks to you and Junio for looking at this.
-
-I agree that this shouldn't be considered a high priority
-bug.
-
-Do you agree that the below should be what I see?
-
->> # I would have expected:
->> hint:   78981922613b2afb6025042ff6bd878ac1994e85 blob
->> hint:   78981922613b2afb6025042ff6bd878ac1994e86 blob
-
-The reason I'm doing this is because, just for fun, I'm
-trying to implement the disambiguation code in Go, and
-I needed a test case.
-
-> Hm. I think the problem here is that you intentfully corrupt the
-> repository by copying the blob to a different name. 
-
-I didn't intentionally corrupt the repository but I couldn't think
-of any other way to do what I needed to do.
-
-How would you have done this?
-
-> I'm not really sure that this is something that we need to fix -- the
-> repository is corrupt, and git-fsck(1) should tell you so.
-
-Here's what git-fsck said:
-
-% git fsck
-Checking ref database: 100% (1/1), done.
-error: ee1a0d672b283dc03c94a266647e505ad340dc29: hash-path mismatch, 
-found at: .git/objects/ee/1a0d672b283dc03c94a266647e505ad340dc30
-Checking object directories: 100% (256/256), done.
-dangling tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-dangling tree d4607c312181a2fdbb66e8accb5b006156b6b733
-
-> Did you hit any real world scenario where this has happened
- > in the wild without intentfully corrupting the repository?
-
-No
-
- > Or given that you explicitly mention Git 2.50, has the behaviour
- > changed recently?
-
-I mentioned Git 2.50 because I wanted to write a useful bug report.
-I have no idea if the behavior has changed.
-
-Thanks for your work.
-
-Jon
-
+Nice cleanup :)
