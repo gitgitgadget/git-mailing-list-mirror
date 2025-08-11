@@ -1,86 +1,150 @@
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08681E555
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 14:47:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C7E2DECA5
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 15:09:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754923671; cv=none; b=cqZdmKgNPNN/b4UAMPjFD73K6XfJ66qc+CFTaBAQ/i8ulyxbRLFCNfbEbm8dL27+bBVEzCK6lh+zdSNxQ9ui7+BWBq/cJXuwu8Yr3iCVOyQVgrjRjgwDZ+JcMS8UlOXmmLZkBW0r+G8f6YatgvclYGDqs5oRkw7Sx4zqDn7g40E=
+	t=1754924974; cv=none; b=DuXHIVjX6Gplihw1evELX9aU73sG21mQt78KA0eVjHSIBNxQ8LbyUV4cn7m5zoI6aRObKtaHPE0Q3T0GsqvW8qHn6GRrV965cxwvDNbuKSMNpR7TYBU1Ki+4tzHtG+8OKQyJXuxousJEBp173iWu21tO8m+xs5EjuSyzEHeUBlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754923671; c=relaxed/simple;
-	bh=ute0VcaZ0fKrSlDkMS/ckrknxVE0txcmvJiBrwA9lhE=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ge0rxnDPLITMEeyVW2pXhiyrfaT49m/93eaoqKO55BNsMlpuuMERoLEoZzSb1QY0cTIyslIXAxNJmU88KwZcHBKdctaQ54q5/CxTBgHUFkoKabNs9NqGDe3KsWRer8lGhkFQBds5CcyW2uV4L3JYY7wlCRs4e+mZVtijgbwMaOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PJw8tVoc; arc=none smtp.client-ip=209.85.160.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754924974; c=relaxed/simple;
+	bh=aqWP0ou24qpaedYbT0drc0Nlm/idtOlR1ex1XRcpC40=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sY0FcL2zxaycSJXyKad7qVzhQTU27KFpSRELYRiVJ73PdL/Erg00ITDFFcqlk/isRP+LJwwb2wa52ZZE3uLCNCwfMakO3hgHls7vHThmEM1od1ozoVTQoumkoKXnFjqRmir4PUSW0aPsl5sZkipeq9Bjs9wKSP4sUXUMO5AMk2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WVu4jhr+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KoFeQD7j; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PJw8tVoc"
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-30b7eba97f5so1506617fac.2
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 07:47:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754923669; x=1755528469; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=K2VfjAttlVgu+sbsa82z9ipbqKF+wab93ANLbEavEgU=;
-        b=PJw8tVoceUb26W2Fo1DLQRC96gxAYgnUIwNijWGQJkH+XMek6FxvEDHt8QDGZ/nXOK
-         j69zC1kcu74WJzit7x7OTrifNrnitxtjDsZ8hyTGs5gBQuJ6U1Y3N6/pAf/JUNyeVNcG
-         TrdJPCuO9RL8InzGybTqqm97RpD4bKMPVbKI/3UXAO2aEc4CM8X0jZ52MwjT7vrmbjz+
-         CJXOPlqpuM3EGQvnx5BNvYOJ1xWUkc4vFdAajEkznWtPIUYmp9aYw3pqj3MggO6jmNgo
-         gxi19qmjXE3JEbq8OpZh8smTrK2tpf/RHDohy9EMbWl7nUEG3gHOQZnd1zqj6XGBahso
-         H3BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754923669; x=1755528469;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=K2VfjAttlVgu+sbsa82z9ipbqKF+wab93ANLbEavEgU=;
-        b=hYn0tP2U0/8WJXIY59CXy8Ht9QYxj4isWd5d1sjswPQ3fTapbP0LjMVu7JON+C+DZi
-         KaLwJKQOeVt6uHH4/wqoag/vxfD+M9qM2QqDRXhv4Ga8eMR7NZrXPVRQbBa9A834gjlw
-         OGJBtMen7hRyKOiRmDpUjl6LbZaN92oH+eL3U1uJLUM6UqjDh2LkHdjWNFABGMbd84nV
-         LvPYH8iipMl6GIa9r9HS0snXrdcKHs0Xly9uQWCo6f5eT/1kJ9al+VorBivRqYmW8Uhr
-         aNJofy7ZVJcWE/f2BRQAfXEVrmYgWoxzUdjSC9RNk6O4Tgyct6uzefap5XWR/nmTJD1r
-         RfzA==
-X-Gm-Message-State: AOJu0YwqByThkAX/gP4b070Ql1bHcRK6Nk5ttS31GUSO15b+RNjqT8pl
-	lwNIgu0AeKShLWxM/uXfhD4z4VqgMgRpiwCvibnXtdU7nOVhhjGzmSKkhUXEZr5scP/uFGRuVMW
-	HfT80twFP78k3mjAy6OVK+k1HODgrCKiUuzey
-X-Gm-Gg: ASbGncuVkAr+g7R5GNGzUMKvRqOJWGt089LlwcKLEKSIhPvn3ND9Q/+yRTJ2xAAVURJ
-	Gb5LyQ51haQGavSv2LjZQriNCgK59ZrUrqfm+Y4IoJuqgpZULsZyHjCFtJVOUVV89E8aTgyRVvE
-	7wF2PYRuOko74i50GysvCuaAQINJT+oEezpjcYYQAM3GyyP+eh44AA62tTR2sCc/s7NppCxQu9/
-	qoy9fo=
-X-Google-Smtp-Source: AGHT+IGZ6hp3evnsRZfoXACu43F/tw+OPbiu/v3rPUfdC+EIYvy8EjeuJPduFonFGutMbv+7fHk/fVmYs/7cJgTWt0k=
-X-Received: by 2002:a05:6871:a207:b0:30c:46b5:6a92 with SMTP id
- 586e51a60fabf-30c46b578e4mr285831fac.2.1754923668934; Mon, 11 Aug 2025
- 07:47:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WVu4jhr+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KoFeQD7j"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 114FB1D00033;
+	Mon, 11 Aug 2025 11:09:30 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 11 Aug 2025 11:09:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754924969; x=1755011369; bh=JDs7OAs7pT
+	nAefoTrTIzJ+aEC29Qw0cdaZMdr55X1CI=; b=WVu4jhr+65LvhO6hvUTwHxtBPL
+	XJApdsg5ergw+QMBBjPNUs5mQpRi1l9CXxwu5yMrj1Pqyb5AylNzV9cDdvGFJ6Up
+	irKjonH6T8ZD3sD2xT3T9ha2wrlDzd0AgFg7XPQpISrtD+Czj2EwT6BJ9Th6yiBE
+	waN0GImjZwcwCDVbAN/Z03qW+PjDPG+/hpvsjo22POdkeccbU3CASwr6XjfzKKop
+	TwiRYUmest2z9jy7ni2bQUU+05CptKL1e7xiDHruy5FuKeDiNZ6BIzMUWsZHvZFM
+	JNOxM+CHnqCDTvsd3iBL2v1HM+DQYKFjM/2Wx0kslFFUMlfdDukedNcguOrw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754924969; x=1755011369; bh=JDs7OAs7pTnAefoTrTIzJ+aEC29Qw0cdaZM
+	dr55X1CI=; b=KoFeQD7jhHVCxXA1kpdTXoh4F2s2GDp5/DfFtO5j4gzg1CPmhp4
+	wb/feljVVs3ynEIBaKMejW8rSRc2heL6LcosADTR/0iR9LHq/A80JtM8SQ1qbJn0
+	0UE0TK6G1OQoVc458skn3r3qYjbxEloIA2nhaFlnRNJk4Xc2YYT2eOJFs7ESQj1Y
+	Ic5DpDXF8EX3E8vuEOJ667+bvV0wpN8Q36uBxXUGzDWtUKSxNloJQqy3mIHZKGTK
+	tBdFXWOhmU5S14s8lJ4HCE1mDUrLx9QKYbTqdRH8kepmU4WRdPRTg93YeaBB6D/+
+	u2HgOIXeJSWJWQBa632zQg1nyBj3tmnjtFw==
+X-ME-Sender: <xms:qQeaaBo2u5R4-HzIr305lR04KdEypXihkv9fn7wcbzdSNSTtGfLq4Q>
+    <xme:qQeaaLboE9u1OxWmduSdd45YBKnMwqhekHVm_OACTkjsXwPqkYd__qjgx0hGmKzK9
+    xxIOZOlhrZsW1Cw8Q>
+X-ME-Received: <xmr:qQeaaBQVt_BTMgw0UqZxD9pKKYOxTPnCPBpgP4lnx_4plcgZFoZ3kp84xQqCUqeIW8wFh95v7xTPvCQKLhqxr5pbr-BrtOyjmFIm3w4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvjeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeelkeehhfevtddvffeghfegkeehgf
+    ektdfhtedvgeetleduvedvvefftdehkeehteenucffohhmrghinhepohgsjhgvtghtqdhn
+    rghmvgdrtgifnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepnhhosghoiihosehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:qQeaaK5y5cuCwOeYe2Gau98zEw2-KGZVmmttt_wSZA7eBEg82cz3xg>
+    <xmx:qQeaaOwx9f9e0uHqXKYawVk4KGZgTrDH0TOchg3IgqGO5wyb90PpaQ>
+    <xmx:qQeaaBQK_1Z7nV40Rp_OEWPomSK23fe4OXSgEwOUm1EAwLR6KOu97g>
+    <xmx:qQeaaFVQ_z0CwT9KIhH5C_-pvMgp3ER7RTxqAAuZdTEBYJdxeaSSPA>
+    <xmx:qQeaaNWpNr66TsL_-w93QgSQ5U3GM6EXmeId6VyMesDwLtaPYI4aSMaZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Aug 2025 11:09:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jon Forrest <nobozo@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Minor Bug in git cat-file (git 2.50)?
+In-Reply-To: <b37629c6-b730-45ce-b839-e782aafe238d@gmail.com> (Jon Forrest's
+	message of "Sun, 10 Aug 2025 07:52:42 -0700")
+References: <b37629c6-b730-45ce-b839-e782aafe238d@gmail.com>
+Date: Mon, 11 Aug 2025 08:09:28 -0700
+Message-ID: <xmqqtt2d51zr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: ryenus <ryenus@gmail.com>
-Date: Mon, 11 Aug 2025 22:47:37 +0800
-X-Gm-Features: Ac12FXwrk-F1pjyjRD6Ch4HCTx7fd5s0w8-5_2pHLuX11XY472NML7AENXkJ-IY
-Message-ID: <CAKkAvayK9WRBLtPL7XCsBP=UGbYMnDYE6+EPRpCxJioryNeBBA@mail.gmail.com>
-Subject: [bug] git clone: -c key=value missed when cloning submodules with --recurse-submodules
-To: Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Given 2 repositories, the 1st is "parent", with the 2nd as a submodule:
+Jon Forrest <nobozo@gmail.com> writes:
 
-* https://remote.host/parent
-* https://remote.host/submodule
+> % ls
+> 981922613b2afb6025042ff6bd878ac1994e85
+> 981922613b2afb6025042ff6bd878ac1994e86
+> % popd
+> # use an ambiguous SHA1 prefix
+> # why does the next command produce two identical hints, both of which
+> # are incorrect?
+> % git cat-file -t 78981922613b2afb6025042ff6bd878ac1994e8
+> error: short object ID 78981922613b2afb6025042ff6bd878ac1994e8 is
+> ambiguous  # this is correct
+> hint: The candidates are:
+> hint:   7898192 blob
+> hint:   7898192 blob
+> fatal: Not a valid object name 78981922613b2afb6025042ff6bd878ac1994e8
+> # I would have expected:
+> hint:   78981922613b2afb6025042ff6bd878ac1994e85 blob
+> hint:   78981922613b2afb6025042ff6bd878ac1994e86 blob
+> # using the supplied hint doesn't work, which is no surprise
+> % git cat-file -t 7898192
+> fatal: Not a valid object name 7898192
 
-When cloning the parent repo with the below command:
+Fun.
 
-    git clone -c key=value --recurse-submodules https://remote.host/parent
+I do not think disambiguation code inspects object validity to
+filter out invalid one when computing the shortened object name when
+giving hints, so one of these two being a corrupt object should not
+have anything to do with this outcome.
 
-While "-c key=value" is properly applied when cloning the parent, it's
-missed when cloning the submodule.
+Perhaps something like this would help?
 
-Here the actual key/value is something like "url.new.insteadOf=old" for
-authentication purpose.
+ object-name.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Fortunately the following works:
+diff --git c/object-name.c w/object-name.c
+index 11aa0e6afc..13e8a4e47d 100644
+--- c/object-name.c
++++ w/object-name.c
+@@ -704,7 +704,7 @@ static int extend_abbrev_len(const struct object_id *oid, void *cb_data)
+ 	while (mad->hex[i] && mad->hex[i] == get_hex_char_from_oid(oid, i))
+ 		i++;
+ 
+-	if (i < GIT_MAX_RAWSZ && i >= mad->cur_len)
++	if (i < GIT_MAX_HEXSZ && i >= mad->cur_len)
+ 		mad->cur_len = i + 1;
+ 
+ 	return 0;
 
-    git -c key=value clone --recurse-submodules https://remote.host/parent
 
-Ideally the first form should also work.
+
+
+
+
+
+
+
+
+
+
+
+
+
