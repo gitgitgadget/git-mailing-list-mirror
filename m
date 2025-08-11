@@ -1,147 +1,138 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBD21EB1AF
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 22:04:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470502C21C5
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 22:10:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754949877; cv=none; b=HxYWfgbo9QaIwAJOpRCIZgfWJVJYiKiKfzPu0ae12IEYp3eEwvlkbYiZ2ZDbxy86eIlvANjCe53SdL7mszx3Wjdjo7bK5ij0TLv+kBERskgxaf+lfxrOmgX/4np3bssGvYQHoV6465vR4Tg2ZamY32nWwIV3S8a9Mb0cP+W7nm4=
+	t=1754950228; cv=none; b=Do8AsDweL4UmDXvECQ1ADVmyqTV2eloMgU4hQV7BIx6+zKX8AAwKUm81KdH5DFhJ5p0eFChZb6Kin+k2GvFtIiIAPd+TtRtiZSQPrGJDq8oDziLUMyqlHEcb15QKFYpepYOy+FR+X+x4IvHO2bQwiQFQugjLPykG3ZZZs3Aqy20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754949877; c=relaxed/simple;
-	bh=6OvRAMKSIJbl00jFXTU7oHANUewnjw3VIt1bZAn5c74=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=njKWUXffhfQnDj+++WZ3T28f0tFY+C0jimRIYa2Pfq6ekTb9Xp6xllhAc4Kn6krc9i4ci8L7fln3e9w9u5ebUdctBLc/+Lk7cQS8C4qsZ+5gUYETWjHOTVWccxxQoPHzwgwRYwZA0tZTjgxYpBs+PiVQHlI/tJDZrSw35goPMmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CvGppfYP; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754950228; c=relaxed/simple;
+	bh=u0oo1qEXtddLHaLwwilH8FD7BqrwgL0Chzuq0Ojzi1g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gd+XAsQtO+qyXSBHytY2tReA8JyIVscn0J8R4w0HdQ6bC5lRhK4STlVQA0uKoduQLpVlLWiTBENGsXCn/KQtGqIHNiEJCNSmthbgV2RrLJ83HvE0s5+9TjNcoisvXeA91q1z+9fb0DhyJr9VqRUnhXJkLgy4fg9x8m0z9df7hfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TCtybWWs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K9pzitmF; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CvGppfYP"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-459ddf83023so29626875e9.0
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 15:04:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754949874; x=1755554674; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9a62vmRMi1htCJq97nCgi9k2KD/y38MqPAfe+0tNh+s=;
-        b=CvGppfYPM4T3hM8aGDszas02TrIQ4PgXjKDP6ePWw/xI8PwROZV9xEAcCP/TfXVRDt
-         5o8ZYxolsNvVfxABvSQ+CHEOA7bDUfDf9Ybhj62ewFyro+72UKs/L6rI8u+y1VU39AG/
-         GJGXOZ2A2NY2OM4ypt0BnSHylvqoCD/4csYUovlGDEduf9NtkF+wPC1WqBfges1IXmV2
-         lUCrYcCCpOdYljanHU848ckRJ0iiyJWifVBe5fU7Q9zughsoqvvglvt8yffbnVu38B1U
-         LE00U4SBQve8PRylFN1zZ6iLWCmD6Q0xJD2WRL8dxT9HuURJKhsY3JTYiPl7IsM+cVp7
-         OvYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754949874; x=1755554674;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9a62vmRMi1htCJq97nCgi9k2KD/y38MqPAfe+0tNh+s=;
-        b=fDK2T72Zs1ubM96/qQ1+8/BMr0E79efmcZxl3MYrpHzYw5ZV/ieJcgmray+5its223
-         mlrE0tA0pRNTdGK3alciWLK+ZH8hY1ZParu44pDdzwKcajdXkMWwpX9f1j3egsUeXVbR
-         m71C3k70qO6MG2JREja07rAlLsPnoJUk5/IRqcMdk+HDZUtHHbn/udADflnleWM5EH4g
-         FF3mXUtrv2CnxWxKAk6YH3+yd3Jp3MxnHNl7ApFvLZfRlpX/2GikQ9SgTyAosfsdzeKh
-         meXZXUUexp/jhizYOjOvt4ZH+H731zXuexlHDeLdf0e78JEWwYSh/QFZr36RfiFmglre
-         NDkg==
-X-Gm-Message-State: AOJu0YwkLJpbMdZX7BIskExGhOx8n3Ta8gZm7c9YDA10kj/nDpZU5kga
-	r5frbkbGpbugcnmlPTyIMe+VlTi8WNKrSmtjsZauRYPNxyDUKojXpGk78+eg5w==
-X-Gm-Gg: ASbGncuUjK/9VE3uhJZ05oCAabzEaF+YrUZ0lLIi0NMmAc9v2JzOFgHYNjOg8/DYbVW
-	4hE2FXMQl2zBP+EMZfAnN1beeQJNTMKKbmcFvRbNuknMSJMdJ++IhldIE2B/Pswr2NF42cpDXU8
-	9xpgFe1UzZbq8cj7r4kvYKFHi8Fq1ibpNvL+8DmlW9d+lpOL7HkGgeDVRKkdmfWu3rB2Y7Bypk8
-	5XwExgdH50t1HnTEPtQ3jI2ABDyj5+P1A/wtYPEo053QepnpCsI0m+qgsNko2KQLNM2nFk/21IJ
-	2gbd9sWrTZFuSjIR7tZHZ9/T5wG8KsWvvuc9kW08liPcLAbliLw+sTZRaxQQI4b7Obh1BtaASl4
-	9ymmIEmunxq9tIq+Ttw/kGWI=
-X-Google-Smtp-Source: AGHT+IEVZ2X4xE3msuEibiG9kj4IGaeyALdXXo9dByJf2szJcPDm8Wzxi8KtgCAlRgcEloy2pDphLg==
-X-Received: by 2002:a05:600c:4f86:b0:456:3b21:ad1e with SMTP id 5b1f17b1804b1-459f4f1278dmr139712625e9.17.1754949873853;
-        Mon, 11 Aug 2025 15:04:33 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c46ee84sm40907807f8f.57.2025.08.11.15.04.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 15:04:33 -0700 (PDT)
-Message-Id: <pull.2023.v3.git.git.1754949872593.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2023.v2.git.git.1754861423787.gitgitgadget@gmail.com>
-References: <pull.2023.v2.git.git.1754861423787.gitgitgadget@gmail.com>
-From: "Knut Harald Ryager via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 11 Aug 2025 22:04:32 +0000
-Subject: [PATCH v3] docs: remove stray bracket from git-clone synopsis
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TCtybWWs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K9pzitmF"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 82C901400138;
+	Mon, 11 Aug 2025 18:10:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 11 Aug 2025 18:10:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754950225; x=1755036625; bh=FT7uMNKUde
+	DrTGahu7lnvwy7EctD9eBCEuLSPIn4uL8=; b=TCtybWWsYhcv9qvGyNY3H3s7D8
+	V9Hm9Nt1RgjIPFmvofm36CMmAi/Q9Shs+F4ESH/PhAtznda/DdqPhorteCoVuBB9
+	9wLwZIyC4/dWoRNVQAs9BMr7aktS/rvtLjbAmUQagXOA1veS2lkQWnEjcTPamf5Z
+	NwDksgcp/OTkEvhj248LehZdhsBQDrz81QgvY3cpPJC5USHRIEqC7eb/usFH0YW+
+	VLeihdmuF0SqZWEI4Xr0in6IYNtKJcmdcMQ18hOQGHKuXq9j77v+GF0lgy71DkRM
+	HcD5WLXLBMZXvt89lE7b9KNdvTZg8sR5ER3l5ma0vSFn4zpQSmPC88pTYtgA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754950225; x=1755036625; bh=FT7uMNKUdeDrTGahu7lnvwy7EctD9eBCEuL
+	SPIn4uL8=; b=K9pzitmFAvhsscMFqlDTngMXYBIBg5e9f18Y576s5E8jG7SrWsm
+	8/P6oYJCKz0MJUuLK35G+vPt2FTvmUovaqsRXoQ3a3kTlZRDjT99/sLbEhBcIgsc
+	Rfw+XxQEfkCqIlTtf6yfNMalTnpqUzDGs9KsFyoDkobLKHYd/kMtuZytqzEhIExw
+	7ayGLgQMy3Ep+JOaWFFYjj/3RU+7f/M1el5AzDjKDxv9CBjHDXLeHd4hdJM5kzPY
+	JHrT2gKIfzK3WZaadt7cxa6Z9stIzDJf+QvrcCZLmGIUILKNSSB0O5AbOp1BxTAC
+	IbGEhoSdJ7gwzVj5KLkUk7FDL4ZreW7WpAQ==
+X-ME-Sender: <xms:UWqaaHi0m5uqVGtxx7VnoyuXJtd1_1bR3pjuWr6b0rvsaVZtiyssYg>
+    <xme:UWqaaA9lnCdGmwqFy0Ye9bqpPNgC7uqgeQfr3Q2kJtFaT-bIrh6JMk8oQHdXMI6Po
+    UuyICb-u05iOR2h-g>
+X-ME-Received: <xmr:UWqaaCufHwF0yf3XJfk1mdVHr2PSGeYktprmme53Ih84qonfG94Og5rsNpHzJIoO83-rT0Gl-q2Xi-ex1E9aVlaUIhDN97TnSVurZ-0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeefiedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:UWqaaMr1WRGm1Oowcv8Oqz_ZNWd_y_YVKCI0IbBpJnSyBon9RGPmYA>
+    <xmx:UWqaaOogEdmn1zS54FIYPpzbAafjnuojEuWuFeVHoBK4xLykbirLUg>
+    <xmx:UWqaaDaQWJZbPSeIv-8KVDmZ2C8DGFmN9RWKOi4rD-SbTh_5mT3uyg>
+    <xmx:UWqaaE_LwY2W0iCFw9XUiarlqNzi3UHEj5rP1aKx-RDEgLGuO5PTuw>
+    <xmx:UWqaaG7i5xNwcwvjOhSuYbsKQeHLmefbpNGmRBQDW5YKh91-EDLtxRFS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Aug 2025 18:10:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  Karthik Nayak <karthik.188@gmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v6 5/5] doc: git-rebase: update discussion of internals
+In-Reply-To: <9c7f2716bc8dca2a73f7c8a994ccb8ed4a66fd9a.1754949075.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Mon, 11 Aug 2025 21:51:15
+	+0000")
+References: <pull.1949.v5.git.1754943127.gitgitgadget@gmail.com>
+	<pull.1949.v6.git.1754949075.gitgitgadget@gmail.com>
+	<9c7f2716bc8dca2a73f7c8a994ccb8ed4a66fd9a.1754949075.git.gitgitgadget@gmail.com>
+Date: Mon, 11 Aug 2025 15:10:23 -0700
+Message-ID: <xmqqh5ydzf00.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Knut Harald Ryager <e-k-nut@hotmail.com>,
-    Knut Harald Ryager <e-k-nut@hotmail.com>
+Content-Type: text/plain
 
-From: Knut Harald Ryager <e-k-nut@hotmail.com>
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Remove the extra and incorrect closing bracket, so that the line reads:
+> +Here is a simplified description of what `git rebase <upstream>` does:
 
-    [--filter=<filter> [--also-filter-submodules]]
+Now this is a "this is roughly how it works", we can afford to give
+a simplified picture that may not exactly match the implementation,
+which is great freedom to have while writing documentation for first
+time users.
 
-instead of
+> +1. Make a list of all new commits on your current branch since it branched
+> +   off from `<upstream>`. This is the same set of commits that would be shown
+> +   by `git log  <upstream>..HEAD`. You can use `--fork-point` or  `--root` to
+> +   change how this list of commits is constructed.
+> +2. Check whether any of those commits are duplicates of commits already
+> +   in `<upstream>` and remove them from the list.
 
-    [--filter=<filter>] [--also-filter-submodules]]
+So, I do not mind #2 described as a separate step.  Conceptually, it
+is between "create a list of all commits in the range and filter out
+what have already been applied" and "create a list of all commits
+that are not in the upstream yet".  We may be able to rephrase "all
+new commits on your current branch" somewhat to make it unnecessary
+to describe #2, though.  If we are willing to stop talking about
+"This is the same set of ...", then the description becomes very
+simple:
 
-Note: Both filter options were grouped when --also-filter-submodules
-was added by commit f05da2b4. The extra bracket was added
-later by commit 76880f05.
+    Make a list of all commits on your current branch since it
+    branched off from `<upstream>` that do not have equivalent
+    change in `<upstream>`.
 
-Signed-off-by: Knut Harald Ryager <e-k-nut@hotmail.com>
----
-    Remove excess right bracket from git-clone docs
-    
-    cc: "Kristoffer Haugsbakk" code@khaugsbakk.name
+> +3. Check out `<upstream>` with the equivalent of `git checkout --detach <upstream>`.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2023%2FKnutRyager%2Fmaster-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2023/KnutRyager/master-v3
-Pull-Request: https://github.com/git/git/pull/2023
+The line is getting overly long here and a few lines below.  If your
+editor has the feature, tell it to auto-wrap at around 66-72 column.
 
-Range-diff vs v2:
+> +4. Replay the commits, one by one, in order. This is similar to running
+> +   `git cherry-pick <commit>` for each commit. See REBASING MERGES for how merges
+> +   are handled.
+> +5. Update your branch to point to the final commit with the equivalent
+> +   of `git checkout -C <branch>`.
 
- 1:  bb158425b8a ! 1:  c1a167a16fd Remove the extra and incorrect closing bracket, so that the line reads:
-     @@ Metadata
-      Author: Knut Harald Ryager <e-k-nut@hotmail.com>
-      
-       ## Commit message ##
-     +    docs: remove stray bracket from git-clone synopsis
-     +
-          Remove the extra and incorrect closing bracket, so that the line reads:
-      
-              [--filter=<filter> [--also-filter-submodules]]
-     @@ Commit message
-      
-              [--filter=<filter>] [--also-filter-submodules]]
-      
-     +    Note: Both filter options were grouped when --also-filter-submodules
-     +    was added by commit f05da2b4. The extra bracket was added
-     +    later by commit 76880f05.
-     +
-          Signed-off-by: Knut Harald Ryager <e-k-nut@hotmail.com>
-      
-       ## Documentation/git-clone.adoc ##
-
-
- Documentation/git-clone.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/git-clone.adoc b/Documentation/git-clone.adoc
-index 222d558290e..d829206d1b5 100644
---- a/Documentation/git-clone.adoc
-+++ b/Documentation/git-clone.adoc
-@@ -16,7 +16,7 @@ git clone [--template=<template-directory>]
- 	  [--depth <depth>] [--[no-]single-branch] [--[no-]tags]
- 	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
- 	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reject-shallow]
--	  [--filter=<filter-spec>] [--also-filter-submodules]] [--] <repository>
-+	  [--filter=<filter-spec> [--also-filter-submodules]] [--] <repository>
- 	  [<directory>]
- 
- DESCRIPTION
-
-base-commit: e813a0200a7121b97fec535f0d0b460b0a33356c
--- 
-gitgitgadget
+Force-create-branch while checking out is `git checkout -B
+<branch>`, not -C.
