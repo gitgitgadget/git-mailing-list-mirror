@@ -1,220 +1,146 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBD58248B
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 11:55:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C936A2D321A
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 11:56:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754913328; cv=none; b=QfVPiYyw6Mqd9kuZ/4PTZ769QoaGVseGbDn0fenlHRyI1L9ndewWBqHhYpB+T3EY/0LDi8c1dYOS0YPeTH8198j8VUy4fYrwdnqAnUfdWfJpflMNVw3LXSMhQQeVl5RZMZPHSloRJV13nzsy6dFtucDRYN1wP9vJKqrxJyFWb2c=
+	t=1754913401; cv=none; b=tdJY2A8VvMjUxvm7jJCTeA32fCfu8QEjAXzPKRVyN7rd60iSOXEWnBQaunf0HxuadC1WGwJ3DZGNmoB2/lr0P1oCJhwhgg809+w/LZ5yABnpsJXj7djHFrDglSFkCs4DdAgxnhuHwAqVxryO1iEu3HT788ieQy7MQVXzl79meyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754913328; c=relaxed/simple;
-	bh=qL0o1MBgKjB0qcUcyHNdmToiygvFTpTQOOsJ0Oiw7yY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=pCt+ibzTt9+Af6J/4KqmU4QG5OIgWloCCbDKTtEDCX5kEWUN7hLRS6xZTekDN/VtvjNv1vRMOPvi+qkyBM4SLYyXqdwLMcDKqlfQy1LLoCLyuSat0T35C8+COdgy+GyiNSU67c124zw7m5zFXsRPdM5BLwvdvRrTX/m5X7cs4CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dQjEoWtM; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754913401; c=relaxed/simple;
+	bh=p53YJ9LlQcVzvjAyp/n8mtC4wHFC+KB8DjbyOxdHa+E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QbaKIFlM5+UUdP5nuwvYZfdhniEOZqvi8n6pWYy+1zVckMURGxN6x9lYkt0lR/4yr6XEa82cY8KNrzQyvmxgJQRzpY/4YJQ6MEquFBUYfEw3i3C6g5/G2+bKCyAgdPbnqnc9mdb2KBc2iDQYipm0cXx49xYsI6iL77GCFuedJ3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OJrd10hS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eEL+D/iF; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dQjEoWtM"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-459ddf9019cso13188465e9.0
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 04:55:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754913325; x=1755518125; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OmaJYRBQarzJvEKIrNEbevX7oQrhSRBq3TIODmgQSWs=;
-        b=dQjEoWtMHness7DQia3yWk+xS52QMOSrY12Y3NZxZ4BRAjw5nZGKAjetS5TYqBYN3Q
-         HGYVQo1j64T/DrXfiwTd3lvuFOAqRoF8rlPzHsN1pGyNHTBV9U2MRNKzlJ8Z4eXA7/V/
-         +2k8KLH3f9Be4+f4paOnvYISi1TZi/58PgF8HQNalXTAzMwDYKr06wJJVVkxwZ6kPO6g
-         I9WKOx0skZc8F+HS94+GiD6Hs632WuWz793AZqKdXujsLTTOh8dcW3W8Pq7oMZOq0dVh
-         EGBUPf6sX+I31rXMhILgemI+J8j3I+x9QJgAahMtm08AlHEuXiVieB/55MtFF36RvFCd
-         h2Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754913325; x=1755518125;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OmaJYRBQarzJvEKIrNEbevX7oQrhSRBq3TIODmgQSWs=;
-        b=uB3xb056xPhc/HDyypAOBxOdZebH6QyMG3fyJLF0EevcaIggaOrXepbQrMb5f7bYmC
-         PkVNdDuP3LxyCoW1G1SPoDsM4Rd7QYUutyktURnYsLseOZ6WsaAmBFdOQpKoGSuxrRd9
-         Uw89h7xUIYLZjdo+ISmIXBndXlhKMwhvOTIZ24tT37VNNE237ufjVdO1G9pCd1/xoUwD
-         /SKRarsioFKIDp4kGnBNz5iGByPxSsPj2+Bt2Xi6+w3sp9QZ/C3GcRqwFe4j05Nez+Jb
-         THI831nQVL/Gl4V5dAxbH2VPo8VxX9qWo/XTozqZDUflIhum1EKTb8Cfw8SAdOmAPBTA
-         R8Aw==
-X-Gm-Message-State: AOJu0YzcaJCpGiZRww29rsXAo2PdsBTuSOCUbBN87lnZb4Tnh9KNdwlz
-	BiMFJOkwmkDaRpiTBwAUkL2hMKHA6iI3+vh54k8uHOsKISYNX9t36in7YcKwAQ==
-X-Gm-Gg: ASbGncv+jOMsq0yc4KXreLE57oqO6yo3Z5tWVb2E+ewXbq9GLOdubrasmKgYHkQyzJP
-	LobENQyRa4hEPCMM5xlRswfg4vEVeqMigMMnynNPUmukQNxuHKZyzHihVd+J1EnSDfAP5QwTRPV
-	24rtT8Y7+FQt1ctlkWEdY/1ORNkMu7naPak8vKbiROsSS0B87RQ5d+U9GfEwT4kNY1FYgKPMjgU
-	YpN+0vqfClaL1Bkw7AGdd8yl48MdeEZJXWRrIZQEM4VmkpFppbe6h0O7E2FoBTSfuDRzAy4dROX
-	H0P0FkxpaqI5k67Y1H0nSaXju6befuTalL3OWjXrY8zO/8vbjcxJr9GCZTe8OaG7PfrAMNoLDCZ
-	6Pt0Jqo5E5xQ3N4zZ88MPbg0=
-X-Google-Smtp-Source: AGHT+IFxDkevAlm8x5su5MFdzVdO2Aap0ipwkAd81gCcg0RoJyznKBYitMRR1FqcbbQfqtAGy77q+Q==
-X-Received: by 2002:a05:600c:354d:b0:458:a7b6:c683 with SMTP id 5b1f17b1804b1-459f4ea20d9mr97005035e9.1.1754913325087;
-        Mon, 11 Aug 2025 04:55:25 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c4530b3sm41167984f8f.34.2025.08.11.04.55.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 04:55:24 -0700 (PDT)
-Message-Id: <pull.1950.v2.git.1754913323810.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1950.git.1754674979929.gitgitgadget@gmail.com>
-References: <pull.1950.git.1754674979929.gitgitgadget@gmail.com>
-From: "Greg Hurrell via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 11 Aug 2025 11:55:23 +0000
-Subject: [PATCH v2] git-jump: make `diff` work with filenames containing
- spaces
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OJrd10hS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eEL+D/iF"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 97E23140008A;
+	Mon, 11 Aug 2025 07:56:36 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 11 Aug 2025 07:56:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1754913396; x=1754999796; bh=ZSePJpbPTL
+	wlTDTPjN7EakM9eJHn1iMVFZuI/fHNQww=; b=OJrd10hSu5sNPnSYL+EUShoBU4
+	yyQAv7HMn6lsf/8nKWDW5lGhZHFgnbJbtAAhM0sB6ucwMp1UIMFxSu9AH9K9mDC5
+	mxfE3cdClQTdq914A8RAZf0EbziBYCX+TS/ChMzPD4RqYT2tY6fwv8c7oBAIQIzl
+	pqj4fcgODYPRDG0CF1pX6MlNNbpda1kpszCUj/pK5bZWL//WO7X+zXiDJS+YJs0Q
+	NtdRS1xv+G08o5eVAphrTi1br78WCaGa44ZjpcPQPS8eMkhbI/EIHUl3vZvOFeX7
+	2tjxpBoOzgdRsjv3ygk8nDPCkcgRleWaqOnUTHun4UZwXeQVXDxfgUBhjuXg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754913396; x=1754999796; bh=ZSePJpbPTLwlTDTPjN7EakM9eJHn1iMVFZu
+	I/fHNQww=; b=eEL+D/iFt9bD/IrMBDJyNB+msULOvxauK3/M7yGRzHCvutvbTK8
+	7OZdowf3di1tN7Ug6MrU+3FTVqU30Yrd6VgivmnTB/5VeYxC3KxEfAIzw32gmYbW
+	ct4b1zZ2yW+VNTt5BgC1IvnDiLwo9rOJMz1g63cQnNPDcZKDIlusTGYWfv/55zGH
+	1L92z5Ie3AGMWsd1x4BoCUohSuX6PJdjv3YioSiITI1kwM4z0SdOgOxrxSJ0T/Fv
+	ABqmn/WbCbwQFjk3Rl5pX8ZGkAvZItDEjvWvpJzpSTJskLqodp4ckyLx8gVW1Xt6
+	Qk10P1VVFCm5LqSUaX4R633bLH2l9Z9/X+Q==
+X-ME-Sender: <xms:c9qZaBlY0fKRdiChqBQhBBZKJxytmQIWsdj68F70o3B9Q50HkBPPHQ>
+    <xme:c9qZaAEB05Ecr-pCm6Hcddbtv2SvQ4Rs0CgAbFSk9vjN4251cWyBw7N4SoMZlqfzh
+    bHhfmIQH8zCn_FTAw>
+X-ME-Received: <xmr:c9qZaBHXdF06rY-uIgpQCl8yAPomKp_Ce82G1Xq0oj7mU1Tau0xCWTks6Q75woW8umt3fjax5YpS2YBlF_6XmXvtHdq5BAiGL4AsEkeCVp4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvfeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhonhesih
+    hothgtlhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:c9qZaNNTBjBU7N_Q8BkDOZmHz4MAjJrnG8u64XC9DClkrNyKQ0byEw>
+    <xmx:c9qZaAHEFm3R7ElrWZIDqa450JAdDvwrefjopqbUxbtCM5vt4rwaNQ>
+    <xmx:c9qZaENkieMCVOtFP1YisjHR8NQ1qSt0TNLlvzWdXiIdzMGF5DMmRg>
+    <xmx:c9qZaB-jhjxu8rV8vEV2FkVtCchZiYLgqYV7lL5hBMc_NUZSDXavWA>
+    <xmx:dNqZaG4-77x8j68h_L4l3o7JTzyegkvMRjbm5RYaYG-4DPWWSHyGY2dH>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Aug 2025 07:56:35 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id eabfb106 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 11 Aug 2025 11:56:33 +0000 (UTC)
+Date: Mon, 11 Aug 2025 13:56:29 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v2 2/9] odb: allow `odb_find_source()` to fail
+Message-ID: <aJnabZWb9WBQK2KF@pks.im>
+References: <20250807-b4-pks-midx-deduplicate-source-info-v2-0-bcffb8fc119c@pks.im>
+ <20250807-b4-pks-midx-deduplicate-source-info-v2-2-bcffb8fc119c@pks.im>
+ <aJUk68fgQttR2gMe@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Greg Hurrell <greg.hurrell@datadoghq.com>,
-    Greg Hurrell <greg.hurrell@datadoghq.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aJUk68fgQttR2gMe@nand.local>
 
-From: Greg Hurrell <greg.hurrell@datadoghq.com>
+On Thu, Aug 07, 2025 at 06:12:59PM -0400, Taylor Blau wrote:
+> On Thu, Aug 07, 2025 at 10:09:52AM +0200, Patrick Steinhardt wrote:
+> > When trying to locate a source for an unknown object directory we will
+> > die right away. In subsequent patches we will add new callsites though
+> > that want to handle this situation gracefully instead.
+> >
+> > Refactor the function to return a `NULL` pointer if the source could not
+> > be found and adapt the callsites to die instead.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  builtin/commit-graph.c | 4 ++++
+> >  midx-write.c           | 2 ++
+> >  odb.c                  | 2 --
+> >  odb.h                  | 4 ++--
+> >  4 files changed, 8 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+> > index 25018a0b9d..dc2c1a5432 100644
+> > --- a/builtin/commit-graph.c
+> > +++ b/builtin/commit-graph.c
+> > @@ -102,6 +102,8 @@ static int graph_verify(int argc, const char **argv, const char *prefix,
+> >  		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
+> >
+> >  	source = odb_find_source(the_repository->objects, opts.obj_dir);
+> > +	if (!source)
+> > +		die(_("could not find object directory matching %s"), opts.obj_dir);
+> 
+> Makes sense, and I am glad that we are trending towards having fewer
+> internal functions that assume the caller wants to die() on failure. I
+> wonder if it might be worth having a odb_find_source_or_die()
+> counterpart here such that callers don't have to repeat the "could not
+> find object directory ..." message.
+> 
+> Perhaps something like:
+> 
+>     struct odb_source *odb_find_source_or_die(struct object_database *odb,
+>                                               const char *obj_dir)
+>     {
+>         struct odb_source *source = odb_find_source(odb, obj_dir);
+>         if (!source)
+>             die(_("could not find object directory matching %s"),
+>                 obj_dir);
+>         return source;
+>     }
+> 
+> ?
+> 
+> Of course, callers that want to use a different message or otherwise
+> handle a missing source differently would still be able to do so by
+> calling odb_find_source() directly.
 
-In diff.c, we output a trailing "\t" at the end of any filename that
-contains a space:
+Fair, that'd allow us to get rid of the repeated calls to `die()`. Will
+do, thanks!
 
-    case DIFF_SYMBOL_FILEPAIR_PLUS:
-            meta = diff_get_color_opt(o, DIFF_METAINFO);
-            reset = diff_get_color_opt(o, DIFF_RESET);
-            fprintf(o->file, "%s%s+++ %s%s%s\n", diff_line_prefix(o), meta,
-                    line, reset,
-                    strchr(line, ' ') ? "\t" : "");
-            break;
-
-That is, for a file "foo.txt", `git diff --no-prefix` will emit:
-
-    +++ foo.txt
-
-but for "foo bar.txt" it will emit:
-
-    +++ foo bar.txt\t
-
-This in turn leads `git-jump` to produce a quickfix format like this:
-
-    foo bar.txt\t:1:1:contents
-
-Because no "foo bar.txt\t" file actually exists on disk, opening it in
-Vim will just land the user in an empty buffer.
-
-This commit takes the simple approach of unconditionally stripping any
-trailing tab. Consider the following three examples:
-
-1. For file "foo", Git will emit "foo".
-2. For file "foo bar", Git will emit "foo bar\t".
-3. For file "foo\t", Git will emit "\"foo\t\"".
-4. For file "foo bar\t", Git will emit "\"foo bar\t\"".
-
-Before this commit, `git-jump` correctly handled only case "1".
-
-After this commit, `git-jump` correctly handles cases "1" and "2". In
-reality, these are the only cases people are going to run into with any
-regularity, and the other two are rare edge cases, which probably aren't
-worth the effort to support unless somebody actually complains about
-them.
-
-Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
----
-    git-jump: make diff work with filenames containing spaces
-    
-    Changed since v1:
-    
-     * No code changes, but reworded commit message to include examples of
-       quoted paths.
-    
-    Turns out that quoted paths never worked, so this commit isn't "robbing
-    Peter to pay Paul", but rather, "giving something to Paul for free
-    (Peter, sadly, is still out of luck)".
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1950%2Fwincent%2Fstrip-trailing-tab-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1950/wincent/strip-trailing-tab-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1950
-
-Range-diff vs v1:
-
- 1:  afe01c156e5 ! 1:  03fa9ac1ab2 git-jump: make `diff` work with filenames containing spaces
-     @@ Commit message
-                              strchr(line, ' ') ? "\t" : "");
-                      break;
-      
-     -    That is, for a file "foo.txt" we'll emit:
-     +    That is, for a file "foo.txt", `git diff --no-prefix` will emit:
-      
-     -        +++ a/foo.txt
-     +        +++ foo.txt
-      
-     -    but for "foo bar.txt" we'll emit:
-     +    but for "foo bar.txt" it will emit:
-      
-     -        +++ a/foo bar.txt\t
-     +        +++ foo bar.txt\t
-      
-     -    This in turn leads us to produce a quickfix format like this:
-     +    This in turn leads `git-jump` to produce a quickfix format like this:
-      
-              foo bar.txt\t:1:1:contents
-      
-     @@ Commit message
-          This commit takes the simple approach of unconditionally stripping any
-          trailing tab. Consider the following three examples:
-      
-     -    1. For file "foo bar", Git will emit "foo bar\t".
-     -    2. For file "foo\t", Git will emit "foo\t".
-     -    3. For file "foo bar\t", Git will emit "foo bar\t\t".
-     +    1. For file "foo", Git will emit "foo".
-     +    2. For file "foo bar", Git will emit "foo bar\t".
-     +    3. For file "foo\t", Git will emit "\"foo\t\"".
-     +    4. For file "foo bar\t", Git will emit "\"foo bar\t\"".
-      
-     -    Before this commit, `git-jump` correctly handled only case "2".
-     +    Before this commit, `git-jump` correctly handled only case "1".
-      
-     -    After this commit, `git-jump` correctly handles cases "1" and "3". In
-     -    reality, "1" is the only case people are going to run into with any
-     -    regularity, and the other two are extreme edge cases.
-     -
-     -    The argument here is that stripping the "\t" unconditionally gives us a
-     -    minimal change, and it addresses the common case without bringing in
-     -    complexity for the uncommon ones. If anybody ever complains about case
-     -    "2" no longer working for them, we can do the more complicated thing and
-     -    only strip the "\t" if the filename contains a space.
-     +    After this commit, `git-jump` correctly handles cases "1" and "2". In
-     +    reality, these are the only cases people are going to run into with any
-     +    regularity, and the other two are rare edge cases, which probably aren't
-     +    worth the effort to support unless somebody actually complains about
-     +    them.
-      
-          Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
-      
-
-
- contrib/git-jump/git-jump | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 3f696759617..8d1d5d79a69 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -44,7 +44,7 @@ open_editor() {
- mode_diff() {
- 	git diff --no-prefix --relative "$@" |
- 	perl -ne '
--	if (m{^\+\+\+ (.*)}) { $file = $1 eq "/dev/null" ? undef : $1; next }
-+	if (m{^\+\+\+ (.*?)\t?$}) { $file = $1 eq "/dev/null" ? undef : $1; next }
- 	defined($file) or next;
- 	if (m/^@@ .*?\+(\d+)/) { $line = $1; next }
- 	defined($line) or next;
-
-base-commit: 2c2ba49d55ff26c1082b8137b1ec5eeccb4337d1
--- 
-gitgitgadget
+Patrick
