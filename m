@@ -1,117 +1,130 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B942D323D
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 11:56:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F70226AE4
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 12:28:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754913414; cv=none; b=ZyjGDzV+XuCGOL84jrVTRX0YjQZ436qHLg0gmbHbhwnZnE9ecTKhd7qHEfURhHp0KLFfXbTQ3XGI3ERBF4Mrh/bLXYbTJPwldsNWDm8G88hj/WqlvdK77CuKzLLz5x8bi5by50ZVPrHz8xfCV7v3B7e7VswVRqHStCQ6lgG+r74=
+	t=1754915288; cv=none; b=esaecaK45QzlON3r28EZp9J+dkw+0XnS45x0hMtMBB/SEczVG/i8+z4kcejxyanYBVe+QOrV6SZnX0bghMEkEbOkwg5s2R5/oq9DbxF+8X5AGOVf6w9yq4wwLWpgyYCsm23ehDq+G/dV+pkz7VR5GlG9Ihl45tY32IdB8m4Ftmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754913414; c=relaxed/simple;
-	bh=akra6cP53kTcEVyPYXAuKGKFarl0Dr4cFq4UcyIQpi0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CwxV3Baz+k7S8suFI3lOoxWN2eraCqV0vzc1axDaVpA3Oha1s4mNvzMKkYePQe8xxAmjUhX9UOv9w7h/F3BTzH9lk7USWSJi+PFMPhaEetcanv1eXe3sjDbpOAGXNHf0Mo4zBydsEzLuymiPwULhzs9TTgL41fKAhLljcE+9eks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R5o4PngF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k3vds+Hu; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1754915288; c=relaxed/simple;
+	bh=oVK5xW6m7uIjkEcuc/TBHgUF6PL1uLXURvxaDfUnpgg=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=LC2uSG3kd0Xllx5dKAw/a/dy2OevdsajuZU6D03AfKjyYZyqOYnxpHdRUD15ED8W5j8L9Xxsuwqx+AwAKHYVd5VeBmCI+oWqgQ2vil3fzc2DSpVQIzhxT0S9TBYq3sfhyctdOX9ZjeZurzVAPYBfCtngChyKM7sC53wuvVUqCYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GJdoCYQ9; arc=none smtp.client-ip=209.85.219.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R5o4PngF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k3vds+Hu"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 41D1DEC0083;
-	Mon, 11 Aug 2025 07:56:51 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 11 Aug 2025 07:56:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1754913411; x=1754999811; bh=mJRB/6Zw1i
-	dBG7+SXCaCp8BWp/kIjF+QLv+Fx5O5rNA=; b=R5o4PngFjaZLyJpbT+pMah5aW5
-	Ngs37nPmp8dlhJr55E9M7qJpOBvlSlXKd/A6zRmd47f9JaraYAN33/3lfA8gi2GR
-	javKjZOLGQws+ypsagcB2S5xU94gD9ZF7zRGi1SuqF2oM65pu2gVK7U6pSHL7cMX
-	H2SBMhs1+KY6/rglmUt0hvIymNv+3UjjDroyw5CHuuJTDwSJ+OKK1rgTZjhHc2BE
-	Vj9I8hyXS1sy41AnaqcX1ruumLn1dYD9Cdi3DvbI/5L/vKrwNM5llZ3B6G5ohT2A
-	y8Azg8oolbOexv4VTPELR3Vhqd27FhBZXyxgjw6B3M5QC79QNkIEUxtRISyQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754913411; x=1754999811; bh=mJRB/6Zw1idBG7+SXCaCp8BWp/kIjF+QLv+
-	Fx5O5rNA=; b=k3vds+HugprqjY5lBmipQAQnzGXrBTvk7SgST/Plc1lliyFaagw
-	3o3rOoEDYPzO9vr8xOmDpj7Xqw4NIJs4XLc1pUgLnNZaDaaAR2raz8qTqcZy3MRS
-	u9tyiQCKA//eOm5cLf9lN8sB5YsQRUASTAl0tdrKgvCXeOxs9D7GG2O4pwzEsHdT
-	IbwqZ5xKjlNK/GPjyEUZdozxNvGJsKu5UeRXmBTQsfwllZq4L2gPBnqYG93DV823
-	SsPcWYRM7LT7rPAerCUr5lvu3hhTOd2vsB21yACL0wfWZqiVGAKaJrygiqTdTfmF
-	Z+z1LJ3hCbkmNtyqTBcf50fRhkGhWPm9IcA==
-X-ME-Sender: <xms:g9qZaLDQy_rbHKdllnlawcOLDrFfDeuDQm1fpl0wyEIZ3rCkHYweXQ>
-    <xme:g9qZaEwDBB16bA6m1ZaHHSnJKmdYHbhRDO4nEp4oxToqpApwFbDIaNFDscbLL_O3t
-    dgrRSafayp2KNXcLw>
-X-ME-Received: <xmr:g9qZaAAzhtBlmwGi-SNP084Gjz1KtV1yN4i1Pk3aEzHYYImYupdhfRDw7DbyjcEJzSllZKP9dYVIE2dKxrmtedlGeVRD0ZqlGt5JiGMwJCI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvfeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
-X-ME-Proxy: <xmx:g9qZaJYyV8naLTB3Nb3_SG45y3fIm82DyFothg_RKPPvWfuKyQNu0w>
-    <xmx:g9qZaAjPbNKdTqOGXaiYAiaKRI6PtiCeyTz2pJ4OsjzIz5yjadS5bA>
-    <xmx:g9qZaD5giJOjeZT2hXRV2Hi4pn8TYmaCcyyuNuByG-A64kCoBD8KSA>
-    <xmx:g9qZaP5u3ze78Nb9SbHVBdHNYoZo-N1GefHods17hA1K2PjEccN-RQ>
-    <xmx:g9qZaBlC1DCFFKw7XeMlfg3zWnLWkxFeTEXPCmxjTGSCLVTJVfaZPHeh>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Aug 2025 07:56:50 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2b2b20fe (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 11 Aug 2025 11:56:50 +0000 (UTC)
-Date: Mon, 11 Aug 2025 13:56:47 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v2 0/9] midx: stop duplicating info redundant with their
- sources
-Message-ID: <aJnaf_7i08pGvV43@pks.im>
-References: <20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im>
- <20250807-b4-pks-midx-deduplicate-source-info-v2-0-bcffb8fc119c@pks.im>
- <aJUoPJrVfGS5l9L1@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GJdoCYQ9"
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e8bbb605530so4356429276.0
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 05:28:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754915284; x=1755520084; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rRaWtRWZJ+v5ovma22ggI3b0xjxrdNvEe5PblBjKa5U=;
+        b=GJdoCYQ9DFLTwbv5khuiHqcHxa9IvG7gq26DdtEPe1nvlAwc75iz5SegBEOJF7W1h6
+         ahgvlamIM4x7nE+aqJAQXnWlj1QdIrgbPIo+6/upr8a6hjrcUJCoZxRgLcIY9nmOzcPI
+         uwaIheyZ9Vz2UJuvwryf8Tm1JCSBZ6aMQFzTjisFXW3VCr1JSW8sDcMiB0OtmXJz/fQl
+         uoyEY84cFyf2TIGxuYJbTigrSmJldaYFImoWBijStC4etLyC1JbaMS5cqSgsGyAFyBkU
+         7YlMnhbHAQ+QfZvr5cjT0aCeakeFu7ZXGEOKc1FDgCaA5QorcTG2XortztboftdgV7hA
+         Wxww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754915284; x=1755520084;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rRaWtRWZJ+v5ovma22ggI3b0xjxrdNvEe5PblBjKa5U=;
+        b=IlGEEapq08FVaM8Knjr73UO4j4F6geg7PvrL6Xln/yCB1TsKLnmR8rTFAKvT6wS64k
+         K2TiNHZc6BpgYjwc7njaBhPdwgMxarj4U1QM1EuGTpGXOuID2ik6HpOHTGtOsHU6nmdb
+         6u7bMUe6RniU4jqN0PbmfUGWXd5kqB6K86doh42H3+XftlehY3J9ueUb1Qy0NQ6Esso7
+         qp/PdDo0++w+GwiDASPSmXemEu+IPSiN74fknTLxv5xP3Mf4gVKd479UKZSebWQFEPSN
+         JzIsyVaEvHR0WxK4yHJOqmhvmmwr+RVe2y+Z8LrYo24czHMeCloEw2DeKBZzwBi+270A
+         MVRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWbdAja13StH5O9gpuDKBy4VpfHhdalezSMhh9hJzwkTf310RN8jVCX4BZ+Qkp+oQkgKnI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YywHrNsAklAoNA1n993U0V+FCD3FpOHPC2dmfeXuAlaPCvjl6aF
+	zTq77ik8fz323zesrKmNutQmQIRbyAmm/8etxUhII9h5xh6JTs5tREzvMzaltU+W
+X-Gm-Gg: ASbGncu0Of+aQwBUlZ9NzkNulp7eWG3SNX39Gp2viJYfvxKbC735fkjhjGAaq2bToj4
+	bos9DvBfLx3xWrcSsu8TpEw9GLguO5F1DXqehw9M27N4UJ5cgXGEO19t1TbPQohE2R4z+ZC6Swz
+	f6popUq21y9FdGvstbBVFDJ1IxOZQfhyd2W5mnJq1bI/5ONEcpg5DsGvnlI+ShRUsMchtZHZaJU
+	e554sGp8nXZXVDuVYCsc41AFNhgFsrmTb3wj1cuLEmjI4cf4iOG7DfjT66seyoEPQfWSGkuFd5n
+	RcrPiMfU1LWUEKxw1YfKV24IUDHkzLNF0Ybk9KeX81J4FXCYBwT/RhcT/Qav2n7vIu1xqL/Yoyl
+	HP20eUJ9MqaRs+2P+zHJy+F50bu0MRlNFC5fIG4d3LPEG4j9KYZXt5LzJdUR3VQ==
+X-Google-Smtp-Source: AGHT+IGUS85MQtI4L7ZQv/CWxxplQiwBIxcZbK8L7fV9lYW/V6cLUc4ALv4ENIElit+s7vylMCMYvQ==
+X-Received: by 2002:a05:6902:1146:b0:e90:5e84:a3d5 with SMTP id 3f1490d57ef6-e905e84a713mr9012110276.10.1754915284297;
+        Mon, 11 Aug 2025 05:28:04 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:f5e7:14b4:8a2a:aa03])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e8fd3713f97sm9607051276.9.2025.08.11.05.28.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Aug 2025 05:28:03 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aJUoPJrVfGS5l9L1@nand.local>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v4 1/5] doc: git-rebase: start with an example
+Date: Mon, 11 Aug 2025 08:27:52 -0400
+Message-Id: <46477AC9-8363-453D-8A57-F599A451D36D@gmail.com>
+References: <CAOLa=ZSTaAaWJWeXBkoxPx46g_Equo-sHWgCESE9G6vk3HZeqA@mail.gmail.com>
+Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Julia Evans <julia@jvns.ca>
+In-Reply-To: <CAOLa=ZSTaAaWJWeXBkoxPx46g_Equo-sHWgCESE9G6vk3HZeqA@mail.gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: iPhone Mail (21F90)
 
-On Thu, Aug 07, 2025 at 06:27:08PM -0400, Taylor Blau wrote:
-> On Thu, Aug 07, 2025 at 10:09:50AM +0200, Patrick Steinhardt wrote:
-> > ---
-> > Patrick Steinhardt (9):
-> >       odb: store locality in object database sources
-> >       odb: allow `odb_find_source()` to fail
-> >       odb: return newly created in-memory sources
-> >       odb: simplify calling `link_alt_odb_entry()`
-> >       midx: drop redundant `struct repository` parameter
-> >       midx: load multi-pack indices via their source
-> >       midx: write multi-pack indices via their source
-> >       midx: stop duplicating info redundant with its owning source
-> >       midx: compute paths via their source
-> 
-> I read through these patches, and they look pretty good to me. I left a
-> few minor comments in the first half of the series, but nothing
-> show-stopping there.
-> 
-> I would, however, like to hear from Stolee on the --object-dir stuff,
-> since I am not sure if the implementation here has any unintended
-> consequences. That feature is (as yet) mysterious to me.
 
-Thanks for your review! I'll reroll even without having heard from
-Stolee just yet, but will add him to Cc for the next iteration.
+> Le 11 ao=C3=BBt 2025 =C3=A0 05:29, Karthik Nayak <karthik.188@gmail.com> a=
+ =C3=A9crit :
+>=20
+> =EF=BB=BF"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>=20
+>> Signed-off-by: Julia Evans <julia@jvns.ca>
+>> ---
+>> Documentation/git-rebase.adoc | 49 ++++++++++++++++-------------------
+>> 1 file changed, 23 insertions(+), 26 deletions(-)
+>>=20
+>> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.ado=
+c
+>> index 956d3048f5a6..449f01fba560 100644
+>> --- a/Documentation/git-rebase.adoc
+>> +++ b/Documentation/git-rebase.adoc
+>> @@ -16,6 +16,29 @@ SYNOPSIS
+>>=20
+>> DESCRIPTION
+>> -----------
+>> +Transplant a series of commits onto a different starting point.
+>> +
+>> +For example, imagine that you have been working on the `topic` branch in=
+ this
+>> +history, and you want to "catch up" to the work done on the `master` bra=
+nch.
+>> +
+>> +------------
+>> +          A---B---C topic
+>> +         /
+>> +    D---E---F---G master
+>> +------------
+>> +
+>> +You want to transplant the commits you made on `topic` since it diverged=
+ from
+>> +`master` (i.e. A, B, and C), on top of the current `master`.  You can do=
+ this
+>> +by running `git rebase master` while the `topic` branch is checked out. =
+ If you
+>> +want to rebase `topic` while on another branch, `git rebase master topic=
+` is a
+>> +shortcut for `git checkout topic && git rebase master`.
+>> +
+>=20
+> Nit: now that `git-switch(1)` is no longer experimental, we should start
+> recommending it over `git-checkout(1)` as necessary. So perhaps, we
+> could s/checkout/switch here?
 
-Patrick
+Junio previously recommended checkout (a prior version used switch): I suspe=
+ct because checkout will detach head without extra syntax (where switch will=
+ not)?=
