@@ -1,84 +1,84 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035B62D47E9
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 15:56:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E021B241136
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 15:59:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754927799; cv=none; b=J1svDK2nbLG/sHrut41slz6dmRRDYq0mehvwXaIGR+I+9qKA/H3TL7oHCgrr9LxSBhQrmlDBKDy61J7QvY2p661e8epEIVj2SFtWzDobU4YTDyiDQQ5XRxnZOQ4TyWNcrFXzHVz6GkyEie0nzmBCgF0v2rVsnetAIrc63WVJzDc=
+	t=1754927996; cv=none; b=nqvxmLFD5GZR66tuPGZreEHUQeAvObC/rHHfm4ZfVn4kGgdn420Hmk7aLe2S2/UMcMLVf5dS8abLe3EGnRFDEqL96kTE1APH5Ri84rJKcHkNOxKcUHora7yxjqrVfUZ7bN6MB7OpZmbp4o0P8ybiiiAiu79nxgjS3knjbrMgjwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754927799; c=relaxed/simple;
-	bh=CObwfjEmq5CUvt5fcIRIBnc59gXh20Q4nt1BaEJyfbA=;
+	s=arc-20240116; t=1754927996; c=relaxed/simple;
+	bh=sR85VH9Lf2m5IEjj8n6JfS340wgQ9lUi5KBu8FFow7Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Wu2WTibcAM0KtqOGOnTG15WeuwkvePjsHvlPwz5goXdQOWRjR9OLNdvo/27pHeoHAtWC+Tz2LmeRQEapwGyryZ7esr8jlICjSvkXbxP5q8bk7n6JIzdhDsL8SRGsFGZ5+e6TDNJqCGjFOyIOn2JAbuCLPBU3gRP2Kkr84WVk/tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f/yOKg2x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PDS1y4+h; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=ksmkEE3fKxG2natXo3FAV+wfN+afDvJhkdchO9R2Molt3RSd6oNY8siZgOPsiQtpgQJ4uyEKk7FifhYFbuMRgpbZA6qlzhVEv32QwL5xiqBD7+W3h60qD15+W57SF+P9m3oaIA22NOcpE/K/KGL/E/XIggtDfdnCABE8eG+ZyG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PsX1db+D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zy9oROm9; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f/yOKg2x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PDS1y4+h"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0C60E7A00C4;
-	Mon, 11 Aug 2025 11:56:37 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 11 Aug 2025 11:56:37 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PsX1db+D";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zy9oROm9"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id A746F1D00098;
+	Mon, 11 Aug 2025 11:59:53 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 11 Aug 2025 11:59:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754927796; x=1755014196; bh=EikRbYXhR8
-	R58arYBWUkrOCPVuYVIeQsO+eqyOWp6ts=; b=f/yOKg2x/H04jPfHw+oyc/G2MJ
-	zDGSARP+FVUd6+NX4YdNKDYxVhZthjMP02oDjAfBwlDMI6cYrX/EHD+t+eLylTpD
-	DV4LwIxO9QIzndC6+ObEXTYdNFI498Xz9dfr3mmHQHlV0uNMLoA4TNRhy3+ANZdr
-	8EO41SYMsfo4hBU5l774YDECJmqCwVUUw+a5T2FFdJ8AhUnW4ujzADV3piKEb9L/
-	WMdEzxJYi3Oj9Rjm0aBsPEUgGpKEq8pzHuS3CEPfvvxK9iZNZFEXUQxxlIQ0GNHc
-	03MAiadCDxdDfO9O7qihIAN5px3CrG1jlZxCJ0rFp25s/BLbTARJCDoGLCIg==
+	:subject:to:to; s=fm2; t=1754927993; x=1755014393; bh=XRQ/yf1tzk
+	9SRxYP5xIucKJcswVz2qtnkbPtLVVsMwc=; b=PsX1db+D41Jc3cIw6kCZ8/ydBJ
+	g5cFfbopt8jtr/0UfM0Upf+77K2UINV1j6lQRIbCHKOsCbMFvLpq80TCk+UEAmzo
+	0vkjjbAKyN67Oc6rBEo48536scLK9TMN9T23zlpkAb+jq8Af3VaE1Uy7L8m5bn4p
+	C5sSR5QXTRGXXbfn2Mlu4SkPED0E58P+e5VbKt74m940wA2a4J3MSAsvRY+1KdbW
+	Gmxjvr1wTRBC/AJ0W/1qzk6m5d8PHVpPW7c6MNHQvfpjdfFJQ2tIM5/yRBXfhoP2
+	TvVb5XknRSf6LHYEvarTxrg9J7f76+NSrVZjGUR9J2qhF8hWSXGPc/KQ9ENQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754927796; x=1755014196; bh=EikRbYXhR8R58arYBWUkrOCPVuYVIeQsO+e
-	qyOWp6ts=; b=PDS1y4+hZubEyrn4jY6UySXL5bvD0Qya33oNyP3BbbdcgOW0UGV
-	Qsn916NABt+1xGLf47u2sKgVMltMQRp0vkuDhOfvkrrz5woN39uPXw7xTF0Xy8Pk
-	na1sC7nAkhMiBjqf5m+b50MzzmhdoadGLo1kZ5+aDcocXotToDIvegNU+z06ZmxZ
-	XunYqcQNGUa2Y0ESzIPhhUNbEZ5dtrEI5ewEJaSdGVfuLhgFZn6pw5TxXvOM+OTX
-	Qr74z2grdnEdpxP0HmeXLDhB/ipbw3TMCOWtmYBBNEQOV96SofYh74uWSOq8UMMb
-	8nwU7OzYJcG9eSAocWblnvPdpq+Qi/ig0FA==
-X-ME-Sender: <xms:tBKaaCwk3gYzv-pNBRWKg8A2jQIzBsNLYGDsUpMl9HAGhdFWGEKbcA>
-    <xme:tBKaaJyBt6TuSfy80kbtUds4tTKeejN8ursLaU1JcU3AxPiuaP33HXPAyodKy-kgN
-    kqx7LFtONGt_LQcSA>
-X-ME-Received: <xmr:tBKaaKyBBUrMfJMsvKOz1rtkItf8Ce34Ah1phFJuWK4sIxnZK6mT_YDXqRcDWgbKKCo9imIyviDM1E6GGJmYPkYxNtzuxcg2SB9XBNo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvkeejucetufdoteggodetrf
+	1754927993; x=1755014393; bh=XRQ/yf1tzk9SRxYP5xIucKJcswVz2qtnkbP
+	tLVVsMwc=; b=Zy9oROm919WIZ8kj5XqBqxwUPo5dF16jitvJiM0mXs1v6JD8/o7
+	2AYoq82BoxhH1Imtxn5N9TybkK/c9myWNotpTXYSZN9wFDrEg59tXwpdrsmArphs
+	WpXMPp3DO91SF6sT2Qb0xEpnDIInpAr3StPw5W3I5wbf0tyKT+dI7oVyGd6OO4ds
+	vh0YX27JUVxeQWvMWPuPNL3/Fg7rrNNj3vJMwF3jB8+HjqvfTWtuqUMGyUa4SBO+
+	3L72zHOYLEGKVVcre2vGj3xL0DbG1uCpJYuHYZUc83BfVt5DzvnUAB3tcsagth3W
+	fNssH7m9MeFrQ7sxQu5utbqWlQPrdNOfk+g==
+X-ME-Sender: <xms:eROaaPeSYDDBW5fRMLzKGgBQJiqShkniVUq6F374fiKN4TLxav5BKg>
+    <xme:eROaaPyKxnghL6iQvyubUHZaLwOjyMlajri9EqxfhHrZOKF9tZzmCBynlaj-qR1bj
+    O8oU9vp4_0F68ycAw>
+X-ME-Received: <xmr:eROaaFGj1067rBE-5R1RVi71p9FGk_cPK85EvT12XapURRoImjcuPIzcgSIlm1L3X07Qh_xYqVux98A_hGRPls3VvTsNejXOuYz8nuw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvkeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeihlhguhhho
-    mhgvvdguvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepthhtrgihlhhorhhrsehgihhthhhusgdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:tBKaaDZ7fl4JNN2k5zbO3l_eC3aEgSapKcBsPWbFVkFbnJ803JsKAA>
-    <xmx:tBKaaLVTUUxqduswAgrHsW4vg6RaYtkXb5JjOHLCoJuwnda-3HgyWA>
-    <xmx:tBKaaBiK6gYw4-szj35vYz7EXmvvUElnQwa1GgyCcpTwPSe0zChGJw>
-    <xmx:tBKaaJudf7_uuod4SM7Wq97Dr2Ha_K3JSF8i4ZV1HeGLgV6DVPhZxA>
-    <xmx:tBKaaGmJvAyghXXHaSneiXimtzB9EtsHNnpPvhvZ-2EWxU1foT7Zki3d>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:eROaaDyFeMgn7RVjrrDzyQtVGYIFsz4-6P9M_gmgjmDn51WxouBewQ>
+    <xmx:eROaaGvw6sz02RVfU-_wOdAlhD_YFSiFgbqsxeEUTzGnbseWtXu_DQ>
+    <xmx:eROaaA2Tl0i8LzxgcyJO75uMALGRcxwcfvpEZK13EO14S27rQbx1Dw>
+    <xmx:eROaaB8x0AeLnnZ_feugdEcKMPYdaKHUa-iRmTeJGDajMkeNUs4t3A>
+    <xmx:eROaaPPwNc_RHROn3LH3SB29Q3_OPfR83TopMixzj8LqcksXEF5z6PjW>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Aug 2025 11:56:36 -0400 (EDT)
+ 11 Aug 2025 11:59:52 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: git@vger.kernel.org,  stolee@gmail.com,  ttaylorr@github.com
-Subject: Re: [PATCH v5] bloom: enable bloom filter with wildcard pathspec in
- revision traversal
-In-Reply-To: <20250811060137.75135-1-yldhome2d2@gmail.com> (Lidong Yan's
-	message of "Mon, 11 Aug 2025 14:01:37 +0800")
-References: <20250809042236.72695-1-yldhome2d2@gmail.com>
-	<20250811060137.75135-1-yldhome2d2@gmail.com>
-Date: Mon, 11 Aug 2025 08:56:35 -0700
-Message-ID: <xmqqy0rp3l8s.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Git List
+ <git@vger.kernel.org>
+Subject: Re: [PATCH] for-each-ref: call --start-after argument "marker"
+In-Reply-To: <CAOLa=ZQqY8MDTs846mkVsxXrmOmC5O_sv6BxUHqYjGk1Ag+Osw@mail.gmail.com>
+	(Karthik Nayak's message of "Mon, 11 Aug 2025 02:19:39 -0700")
+References: <1a32a666-fcf4-4f05-a468-2afa07fa0e2d@web.de>
+	<CAOLa=ZQqY8MDTs846mkVsxXrmOmC5O_sv6BxUHqYjGk1Ag+Osw@mail.gmail.com>
+Date: Mon, 11 Aug 2025 08:59:51 -0700
+Message-ID: <xmqqtt2d3l3c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,22 +88,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Lidong Yan <yldhome2d2@gmail.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
-> [jc: avoid allocating zero length path in
-> convert_pathspec_to_bloom_keyvec()]
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> -		OPT_STRING(  0 , "start-after", &filter.start_after, N_("start-after"), N_("start iteration after the provided marker")),
+>> +		OPT_STRING(  0 , "start-after", &filter.start_after, N_("marker"), N_("start iteration after the provided marker")),
+>>
+>
+> Ah! I did fix a typo here, but your fix is better. Thanks.
 
-Instead just do
-
-        Helped-by: Junio C Hamano <gitster@pobox.com>
-        Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
-
-here.  [who: comment] followed by a sign-off from that person is
-done by the person who is signing off the tweak, not by the original
-author.
-
-No need to resend; I'll fix it up locally.
+Here where?  Is that "fix a typo" something I should go around and
+make sure I do not miss?
 
 Thanks.
+
+>
+>>  		OPT__COLOR(&format.use_color, N_("respect format colors")),
+>>  		OPT_REF_FILTER_EXCLUDE(&filter),
+>>  		OPT_REF_SORT(&sorting_options),
+>> --
+>> 2.50.1
