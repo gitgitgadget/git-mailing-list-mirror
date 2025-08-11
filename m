@@ -1,115 +1,106 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f195.google.com (mail-pf1-f195.google.com [209.85.210.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B1E217736
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 16:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5D61A9FB8
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 16:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754928481; cv=none; b=Lf8ZvvU7+L5oLJf9R0aq24JevquWEZa91Tt6sVYaQ/7PW+aTcr00SFwk7FKEsmFf2txh8f1fIadTN28Ast1SA4ko87m7xA+/wzgi4FLaLZtSuoJSwKb398oAZNXtj3WdXlTE6RQfE8zDqieisrgZ704pJECq1jilEUV295+Y4bs=
+	t=1754928500; cv=none; b=UsXzpCANt1t/kusrb4lZBosXVvFS3mIsOXOo/Zsq/t5dkbVgpd0Ktc64iuseAJaJhTH3e87o9THMn8Is9BOB4SabRyge0wSgcuE1Mhny02kyokxzxsLrKtpyLLjUBYCMOnqrCEUbO+KyzvxGf+zemS0pV4NR9tYVzw2+FUJVHEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754928481; c=relaxed/simple;
-	bh=oA2ZRBzfKcv1ZC0/9mlvIP90XIZiznXijxxp1G9oO/E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Fj+wGTz1XaU5wKgoP8EZqQXWbvGD0dyv+s76llD+qdO+I8yx6Bp3y2Z1UGvSKVJ9speD0v1EAYS6/E7cCIbkxcclNuhJee0fgdJBz5J5WoX76IDsUP2iCrWJppFtrOKSRdBZgzXJs6K3D3tqXkXLZyavQ4wxaTHcalB00nLQ18o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k6/ybtch; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kKDPmZaO; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1754928500; c=relaxed/simple;
+	bh=EXVcTJ0aEesZ2UhNCh7q3uxXteyFaRr7NXDLfeTXq7I=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=TQDPlj5LwPKMOxc5SI4bD9ryRihBDIdwChyEgG1gwVN5NvzhpgTUypVYrW4BujA6RZw+jJDCDeWgHGwl4KjNg9z9ptiYndyXTTYXvZV9oKzsW2u4QgyJU8Qpo4+igZ3Vfvh0lIuFZr1FYtjLoA03NTpZEInODY5rrr3Myc5973E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JGlqzVLM; arc=none smtp.client-ip=209.85.210.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k6/ybtch";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kKDPmZaO"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id C3A6F1D00081;
-	Mon, 11 Aug 2025 12:07:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 11 Aug 2025 12:07:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1754928478; x=1755014878; bh=XCPsACJh1A
-	4uQ+X1dHKrniov3pgYGu4ja/TO0QUFqCk=; b=k6/ybtchZZVT0PvEIFhsdpRAyz
-	m+09erSqU4VHV+0oAL7T5bzkenxTMMd+2PElEL1p61BFh/45j2NjYL/RF8iCHqou
-	Sx3OmJap5EHoQUvSth0bGULtTINSlydTFT8ph6YOSnUcS/bLQKQ4a4WnuUNwoCB8
-	qDdqrQ3owuGgx3UsHFrZRzEla/PoxqJuIV2Xb/BiwW9f/JchWggeXBobpFH1CdPH
-	H/4W9kJj00DF3jRaMIQIK3C1ts2oOxq7R941rCaIbqe+djnfNvBxRv25oCG/csJq
-	r2Hd5eDzwZT03NYidBwsnaeefAzjtCiGECdwu72/D+sfQuqmwx/RGtupuRHQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1754928478; x=1755014878; bh=XCPsACJh1A4uQ+X1dHKrniov3pgYGu4ja/T
-	O0QUFqCk=; b=kKDPmZaO4D7EsIej0CShyDjl00IFWVupnVyLopLgVibj1aP3XDz
-	6Ui1kxs8tyzWKw63wFxtCQjlasVoX2cTh3+wcKqf4aChPi8ffJEUbVbxZxxRdTVS
-	80LYVoqnLphjCOPXns0vy+nfg9NQZTHzYxYSKjv2Ayikb2/69UwN43ZTa3IygQm0
-	pv1eqEWAa2y7yQ2tc5DRxSkGs2P5CpqSzjjjQ704MN/NAiTrDBlO8KyVUJ8TrYcu
-	OnGlF56QZB0Rvza+0NFGioOAhBhsfMcgd2VQ2rxjJ2X/XIIjQ7U1RbU6dr94p2Kc
-	tg+limEGNYRbFFIFGu5nGvNtg1lNDdoXqCw==
-X-ME-Sender: <xms:XhWaaKt8j1lU7s5OAzYmorP-BjSjvTYEU7vI8CuGw5jZL3-euU7GpA>
-    <xme:XhWaaK9J0OZvldYoV2GRFiqNmSRqGcYt9qLvluaV4yDlzzPM8tfMiOFekU2fe84S_
-    y-XSIRSN3XCSarybg>
-X-ME-Received: <xmr:XhWaaMPD152djbV2qhD7N_jprc-qVrbMj12R0_4W4fqhWFl3xAeTABEAh6SJ-77bVeWiP0Zm3iGV8zQMeG3wFzjiINrqx4BvcM-612I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvkeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtohguvges
-    khhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtghhithhgrggughgvth
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepvgdqkhdqnhhutheshhhothhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:XhWaaAFJmdX8LkVpIteZ5QilmTf9zG7e5UaH1ggLOC0bueTqSaXPOg>
-    <xmx:XhWaaCRVw9gjUnQcwaa8W1ZgyNE3NSuXM_wBRlXeDIXlw4f8YScFdA>
-    <xmx:XhWaaFvgEtVDLJViXwRFnqCzRVpnhj1CW2XH4vq-QP5Y7a4yeSYnFQ>
-    <xmx:XhWaaCKK8GOt6U9TIVXYmHw8P7mFyMQTKRPXEQrSOfRhcRjxIS--yQ>
-    <xmx:XhWaaGQwokhBRHWh_jjUwYkGjJE5FW5nVgi8n9WJsYnURMj7r-Zu9Q-D>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Aug 2025 12:07:58 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc: "Josh Soref" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Knut
- Harald Ryager" <e-k-nut@hotmail.com>
-Subject: Re: [PATCH v2] Remove the extra and incorrect closing bracket, so
- that the line reads:
-In-Reply-To: <a065e0cb-75e6-4836-9897-05089089367c@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Mon, 11 Aug 2025 08:14:06 +0200")
-References: <pull.2023.git.git.1753973177262.gitgitgadget@gmail.com>
-	<pull.2023.v2.git.git.1754861423787.gitgitgadget@gmail.com>
-	<a065e0cb-75e6-4836-9897-05089089367c@app.fastmail.com>
-Date: Mon, 11 Aug 2025 09:07:57 -0700
-Message-ID: <xmqqms853kpu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JGlqzVLM"
+Received: by mail-pf1-f195.google.com with SMTP id d2e1a72fcca58-76b8d289f73so4229681b3a.1
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 09:08:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754928497; x=1755533297; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9bVtsiIjiVW8+JnP376FaHOdfWD4ILRAfxWhIK7mx1g=;
+        b=JGlqzVLMCSK48EBipFNbumOE1eGqBv7d7SHed6rxLjQ6wgm1CGoRjfBDHkps1nKEBA
+         J937TGjIMf/gNDHDsIau/KkSsMc4NGFrLAX4dQM/9d5TWYDWCu3TmfKJ4HHy/1e9ldnA
+         mY53aAQ8+0oK4cVF96x2Kx5N2ddQ89wU4A1Dp8YOcYYuP8/VUhgQuCJ2g6d7jb9w1qOU
+         5AA2TYY94KbaERxVX/MOoIyp2kHKE6WTkmSLFgRN0zdM2/suzyAtdVjZoQ9ZCq7qBvXv
+         47Tn/AmBju3lEoQO35jf0lx94GgluEHMHxGWcAlfQoci76+n1Mj0a6vZACuMgLI8djDk
+         ScKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754928497; x=1755533297;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9bVtsiIjiVW8+JnP376FaHOdfWD4ILRAfxWhIK7mx1g=;
+        b=Pep8cXVGYvOQSq75GPn2vLSh0/IByYt5bC/gO+RQMl2ubPBIRgFOTCjcE4vH1X1bMX
+         wrD9bS8VQBRqGg9AvEGCi8NgwcZdglFkXbebN3PMIeedg18qo72q8OXDury7Yera2OiT
+         jMh6GSxftXxujQno9rSoFbcTzFWj9yTMSqJszHn9LLXpdpHOEc9VmIxoCsZzaujrxXQH
+         ds2PkZrpMGZi67HsFVlb9bfa7Fc1xM+x08ls9UPZVaoHEO7GHC3Xadd1qmWSepcgSGh0
+         qKjpBtQXrai8NFRuud/Ko3EhNdDeM6KPsolhjzmXGRCB3zFv8+THP2YlxdIxzMR4tcRP
+         gSNw==
+X-Gm-Message-State: AOJu0YwczTOvCGf6uC3huho9fPe7DNBZjW7CcRMFkcA5TSkg6A86l5TT
+	XeYAyDdEqMmxKs1U3TovyrYU2gLyoqytK66qg2EvoxlQd6u36N5GJyxj1yjy7KvaalM=
+X-Gm-Gg: ASbGncsChM/wJqkoi1s3r8rXeO2UnQSPk1Gtms+sWfDFBsSCQtCfmW9AgI4MMJ4+Dfa
+	hSSRKIaRThJUuAnrK9vt9lT/4Oopp4uEGfDH9ZWmIztuvM67yW35fwI68uLZsPg3jskECFbvb41
+	NrOBBzzTHvGpa+W/hbJpP3CUpRHnZI+NwpX2B9Uc+SAprV9p6MJ7DQeuuwxFtMSIpS7WivVfcsF
+	ekCas6vEByVpJI5iW5NlAgZIJi1Gq5kTec9X3NvIX0FkTkUM2ldIMS5M8Brq7X9tdt4Lo19CpCo
+	N/iPWAKWXB3zzREQa0OsSRp8vrAlqZTrnZ3WHOuHJkvcXm/NsKYxSNodbNVRGY4n/1G4BF63lRl
+	N9tZ5tQQCl1zC59Xc+htgFCYf2LyBKDcitOjGbQ3Tr3JmeAKDjyY4zazC6w==
+X-Google-Smtp-Source: AGHT+IEvHWiiamHI2YL0nu7FrQXRGI9b+9uAHKwhYofoX/00SxGADpsMGve4Alurh5CQo9DD0pjeYA==
+X-Received: by 2002:a05:6a00:1493:b0:76b:fe5e:3994 with SMTP id d2e1a72fcca58-76e0df22a4dmr203276b3a.20.1754928496899;
+        Mon, 11 Aug 2025 09:08:16 -0700 (PDT)
+Received: from smtpclient.apple (awork062197.netvigator.com. [203.198.28.197])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76c5d73eb9dsm6932218b3a.3.2025.08.11.09.08.15
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Aug 2025 09:08:16 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [PATCH v5] bloom: enable bloom filter with wildcard pathspec in
+ revision traversal
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <xmqqy0rp3l8s.fsf@gitster.g>
+Date: Tue, 12 Aug 2025 00:08:03 +0800
+Cc: git@vger.kernel.org,
+ stolee@gmail.com,
+ ttaylorr@github.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B5A8897E-3D20-487D-9774-444463F81DA4@gmail.com>
+References: <20250809042236.72695-1-yldhome2d2@gmail.com>
+ <20250811060137.75135-1-yldhome2d2@gmail.com> <xmqqy0rp3l8s.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.700.81)
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> Lidong Yan <yldhome2d2@gmail.com> writes:
+>=20
+>> Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
+>> [jc: avoid allocating zero length path in
+>> convert_pathspec_to_bloom_keyvec()]
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>=20
+> Instead just do
+>=20
+>        Helped-by: Junio C Hamano <gitster@pobox.com>
+>        Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
+>=20
+> here.  [who: comment] followed by a sign-off from that person is
+> done by the person who is signing off the tweak, not by the original
+> author.
 
-> I think you want this:
->
->     docs: remove stray bracket from git-clone synopsis
->
->     Remove the extra and incorrect closing bracket, so that the line
->     reads:
->
->         [--filter=<filter> [--also-filter-submodules]]
->
->     instead of
->
->         [--filter=<filter>] [--also-filter-submodules]]
+I see =E2=80=94 when someone makes additions to another person=E2=80=99s
+commit, they=E2=80=99ll also modify the log message in the process.
 
-As even the author of this patch was once confused, I think 
-the reason why this plausible change
-
-          [--filter=<filter>] [--also-filter-submodules]
-
-is not a correct fix should also be in the proposed log message to
-help readers.
+Thanks,
+Lidong
 
