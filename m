@@ -1,133 +1,97 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA5B2253FE
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 22:23:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C881D8DFB
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 22:34:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754951031; cv=none; b=jcKUZWPKfwKfdMplEscGEUuH/X9B/ggsEI/bZSlF+tKm+WCA4kdRWJ3XwQR/889I3Ny6cUQw9GqlV0QqP//gqtdkyGSbVwcZe+YyERyULNOwShZENXaEQQG0Ik5YO5ISKVQUuwxmq3O35oUTQek1vhx8JIp7ayM/3KEA3yqNGSQ=
+	t=1754951680; cv=none; b=AOYTPpz2pMdfS1Pom7deZ7UCqoARZaEPxlLYK+DtNwnHKGSjMBmhUBVt60f6KpL3u98aOoYA5kgx5Huq9m0v69uzMzzx1/jWs3NZAR25IAGov3o7IrGoinLKAQQTMgDvb07xXNTGuhVi7ZhRKWzhPNvYjmNLCIUSPbnaqri3pIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754951031; c=relaxed/simple;
-	bh=tZznFiJxNb0s0/Vp/LPLsLWHwL4Ngzi1zONmdmHt86k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nhUQE3gjKTnIPMBGgEDsWVgamiPu12iuax76Tj0kKWfR5PGYvXwa0Z6fXyljaqXxzpvc01Fvy/FZWVH1Vhy+LEYVnkHBJd265xLpIsPb8x6T+0Y8+gaFZNeswcIV4q/TRcteaDC6Yb21IR7fcykj+OxcdjwNfKdgf1XIMDTcres=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=pvAp31aj; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pvAp31aj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1754951027;
-	bh=tZznFiJxNb0s0/Vp/LPLsLWHwL4Ngzi1zONmdmHt86k=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=pvAp31ajiyWgaseaOUVhYAvJs35UaHMKdUj4HWzcxjbeZE0hW+SRIouZN8nFXqz02
-	 vrbvaWduvG4jQXQoZaJKmRM4l12FiEdoIhD3VEh8tsBX0gpQBcgeR9keS95vA8+rvb
-	 Pl6kMKC2XRqCNwgEOLW/yrdVOEr81D58af94ycyiWA8oKSZ25VWFAr52Xr5HRW9HAM
-	 /ieyKqBSyLRZznQ42WJThJKdmuC21/T7lp3UMC9VEuyQJr3USksbslhaojxhvft7U1
-	 OY12jTvq+j6zHSdO1t9zTQ0wlv2IEnOngvF4b8fajQ+3AlBORNGfPXr/UYfImg06Ao
-	 L+W+wYYO8lKgIG7yboUldrqMv10QNpLxERJaYFbi1flFoolp4ngiW34uiXO/lclAUM
-	 A6lRoESDhF5I1QUVvIoE52z2q/FQbSuqljlwbfgGRolALhX516CHThxkJ9VGr1bAkU
-	 NvEp8OOUZXWlutnamuTO3LWrmP1IdfzCyANZ8fgWyhDSNo84xBu
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:bbea:a384:d97f:8068])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B5EDF20073;
-	Mon, 11 Aug 2025 22:23:47 +0000 (UTC)
-Date: Mon, 11 Aug 2025 22:23:46 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jon Forrest <nobozo@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2] abbrev: allow extending beyond 20 chars to
- disambiguate
-Message-ID: <aJptcgwQmwIbnrqE@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jon Forrest <nobozo@gmail.com>, Derrick Stolee <stolee@gmail.com>
-References: <xmqqfrdx517b.fsf@gitster.g>
- <xmqqzfc51xvk.fsf@gitster.g>
+	s=arc-20240116; t=1754951680; c=relaxed/simple;
+	bh=fd0aL5RB+WeuRGMO1NyZkYxvMeOS2wG2CZZwU0ThDow=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sIq0tX/Q7cSAUiidsX5OCg77Pp+rvEuFz5IumTTnZ0Cdz+gOP1Fbh6Jnkn5IHA63EubdOIi2ssgNaSKFkMeb28S9ct25am/BcKjcndzPE+rfWhccJ9Ft94TIZJs9T96qD9k+svJ4TZuV8HKEj0IFk+o7Bs7uIoHX2H4HvrFxc9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4b0742a1d95so10509811cf.3
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 15:34:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754951678; x=1755556478;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=b9sCViDapXA6Z9QMyHm9J/At+NbX3Xj0CZto3K+qyGI=;
+        b=ihv+24FMZ1k3QSWPOZkjECYwJA7HH/nyhs3tK7NN3pO5E9r45y8cyu6R0L8g3QuHWk
+         AcvzGTnm3yTvicYecRZPAW4e16+78xAVZ7i1Yd6MKZpWTj1dSA0jEOMD1L99xlepXCgh
+         pRccdARmo9HaaqsVwdljkI4YOcS0PUSCKYgiDZrPbHzVvej+da+8uDpWuBQcziGEdCls
+         NhXZKwJg/+P+IkRLfZiFmHr8hlZn8QOcB0leq+/QDiZVwNZAPLJKkn2L6GK32nbqY7wi
+         w+pkJnBFK27bUGetM98QZ0qJ6rTOlSywyUi+SkhcSnjdbHGqGkZrNyPVMCnEM839TLaE
+         o83Q==
+X-Gm-Message-State: AOJu0Yxah5VqNRbzOVzQRdi3Ds1h7QyaS6Q7p04Zq1knwPpkiXpt0h3k
+	0pA3aB636CpxID4zrf45JXoWrMW6MOpqdKqtoJS4nZX+90tIhlsyxnHA4AccaIxhf/zJ9hKbo9K
+	uYc3cdEN6siSjLnqAODxdmJ9El+ClzR87K+vD
+X-Gm-Gg: ASbGncvBy0JJa2aaSG1WIWIFU3Yv8IMAXNHbMFL9KkeB5OnBQGtI+x/PeuxtG8X9wR4
+	pDTxLoJbu370G2IhSE0zyDZ45N05g2nhm/WRsyneT4ZIbe2Y4plHtE/xMHx2h3j0/kfs7PRCCLL
+	URmAtvF2yPVwVuzQp82zi0I/nE9RKkx17GrD6HTZiFDhZtdkjXJNEUfylQpHzs5NxE6YGJE1v0G
+	9Esjpt5vsbNN4cR26bEqMKsmWLDKlUDIsNENZFDa7Q3JvRGSmQ=
+X-Google-Smtp-Source: AGHT+IHFAiXTJtONCTipmsRmN0J9BiKtTkBS9mT63WroirAp5mViTfir+Hkk7S6bS8FX/BhfULTJPuYegeJM7CwT0MA=
+X-Received: by 2002:a0c:e343:0:b0:709:d664:3cf5 with SMTP id
+ 6a1803df08f44-709d6643d2emr7419786d6.3.1754951677766; Mon, 11 Aug 2025
+ 15:34:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BYY1ZvBZLZ025aK/"
-Content-Disposition: inline
-In-Reply-To: <xmqqzfc51xvk.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---BYY1ZvBZLZ025aK/
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20250810160323.49372-1-ben.knoble+github@gmail.com> <20250811221706.67168-4-ben.knoble+github@gmail.com>
+In-Reply-To: <20250811221706.67168-4-ben.knoble+github@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 11 Aug 2025 18:34:26 -0400
+X-Gm-Features: Ac12FXzRKNDgPYkjlEwR6UDhFOc5rI_iC5jhbsl93nGIuwpGukz098oiONx1FMs
+Message-ID: <CAPig+cThhm8b2vE=vAHYc5cEA9n232Lwi1c+p=LV9hK4hz=0Hw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] t7005: sanitize test environment for subsequent tests
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-08-11 at 19:06:39, Junio C Hamano wrote:
-> diff --git a/object-name.c b/object-name.c
-> index 11aa0e6afc..8f9af57c0a 100644
-> --- a/object-name.c
-> +++ b/object-name.c
-> @@ -680,6 +680,7 @@ static unsigned msb(unsigned long val)
->  struct min_abbrev_data {
->  	unsigned int init_len;
->  	unsigned int cur_len;
-> +	unsigned int max_len;
->  	char *hex;
->  	struct repository *repo;
->  	const struct object_id *oid;
-> @@ -699,12 +700,12 @@ static inline char get_hex_char_from_oid(const stru=
-ct object_id *oid,
->  static int extend_abbrev_len(const struct object_id *oid, void *cb_data)
->  {
->  	struct min_abbrev_data *mad =3D cb_data;
-> -
->  	unsigned int i =3D mad->init_len;
-> +
->  	while (mad->hex[i] && mad->hex[i] =3D=3D get_hex_char_from_oid(oid, i))
->  		i++;
-> =20
-> -	if (i < GIT_MAX_RAWSZ && i >=3D mad->cur_len)
-> +	if (mad->cur_len <=3D i && i < mad->max_len)
->  		mad->cur_len =3D i + 1;
-> =20
->  	return 0;
-> @@ -864,6 +865,7 @@ int repo_find_unique_abbrev_r(struct repository *r, c=
-har *hex,
->  	mad.repo =3D r;
->  	mad.init_len =3D len;
->  	mad.cur_len =3D len;
-> +	mad.max_len =3D hexsz;
->  	mad.hex =3D hex;
->  	mad.oid =3D oid;
+On Mon, Aug 11, 2025 at 6:17=E2=80=AFPM D. Ben Knoble
+<ben.knoble+github@gmail.com> wrote:
+> Some of the editor tests manipulate the environment or config in ways
+> that affect future tests, but those modifications are visible to future
+> tests and create a footgun for them.
+>
+> Use test_config, subshells, single-command environment overrides, and
+> test helpers to automatically undo environment and config modifications
+> once finished.
+>
+> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> ---
+> diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
+> @@ -34,61 +34,57 @@
+> -TERM=3Ddumb
+> -export TERM
+>  test_expect_success 'dumb should error out when falling back on vi' '
+> -       test_must_fail git commit --amend
+> +       TERM=3Ddumb test_must_fail git commit --amend
+>  '
 
-This definitely looks more sensible, since we're using the algorithm
-specified in the passed in `oid` variable in
-`repo_find_unique_abbrev_r` to determine the length.
+Don't use one-shot environment variable assignments when calling shell
+functions. Instead, you can do this:
 
-I will admit that despite having touched this code recently in my
-SHA-1/SHA-256 interoperability work, I'm definitely not an expert in
-this area, so while I don't see anything that stands out to me as wrong,
-you probably will want someone else to verify here.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+    test_env TERM=3Ddumb test_must_fail git commit --amend
 
---BYY1ZvBZLZ025aK/
-Content-Type: application/pgp-signature; name="signature.asc"
+or employ the standard assignment/export boilerplate:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
+    TERM=3Ddumb &&
+    export TERM &&
+    test_must_fail git commit --amend
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaJptcQAKCRB8DEliiIei
-gXDhAQC2krQlavlHVFiT3l+tA9iXtoKD2jePqfgIVX7PFLTr4QD/bsIfvCc2FvO8
-mYsvTawfPzmrwoV20bD4l/eotbvxCwA=
-=qCui
------END PGP SIGNATURE-----
-
---BYY1ZvBZLZ025aK/--
+References:
+https://lore.kernel.org/git/20240727053509.34339-1-ericsunshine@charter.net=
+/T/#u
+https://lore.kernel.org/git/20180713055205.32351-1-sunshine@sunshineco.com/=
+T/#u
