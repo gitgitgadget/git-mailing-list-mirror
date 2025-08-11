@@ -1,66 +1,65 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF7F3B29E
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:07:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035E023F40A
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754917642; cv=none; b=BT/0V+SjyzhRAntOgYoyYRHNqfhT5YakSjQTlTto0nWzulaBrY/LZibrjZpCa5xEdRWW/BMBoY4JUT2sRANVBW/Tz8TxKOp43r96TXbEshmxIim7Dw8KMIqABNobHdmeblYuXbzu+cQmVZaaiGKUbAUIJCKaeTK+wBd25PZrW10=
+	t=1754917985; cv=none; b=V1EQQcEB+R2gyO/hIp1nJ2C8XK0OJD1GZDf67nbHOU0RO0c3hS7nMhQPc6t2bmQtNKXMsNSlGpaBENA4Rv+IF1TOkiPrC1/2yuQTUy4E9TZHSjLHDKZ6weNw1Vkv6uDmFgjxGlF5LSkXwIUF/0G1JyTmAXJnE2JhTu4oqouTiIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754917642; c=relaxed/simple;
-	bh=OFbfWrNJhT2PW9WJBXIxLQiRDqz2Ou3n+6VRliWswd0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OseyOCrP4WrDgi+L2UAYLj4gRkMTopILUs91TFH/y+8pEG+EKoal8VQVl/MiT6WnGzix8C1NbjBcomO2dZud8qlWhC7Hz5JBg3MdMC65g0ShU0CXR8/e+51fBoWgkgs2PWQRrcFdnArzX5v8Z+570KzLzpN+BaRlQ75ApZvhh7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SakI4tJE; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1754917985; c=relaxed/simple;
+	bh=4GsZtCW/qse+bjFze+fscPVXV2IWGmh4IP7C1d3mMKM=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=mkxK5S518fH7ZNduubucYNhHiOLZaizfzeVAvPmUyXLWXb4pV8wdOob8pKcU7t1cZRvu5DFsIx+mygI7uvGydWwX229CPiPWx7sCO15TQbzXds+QMsePN2LkOUzBYVl2rFalBNrXM6Rp9kja6a9se4R7jrdKO5ZoZGYq6QMME+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L6K6hMum; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SakI4tJE"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3b77b8750acso2607849f8f.0
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 06:07:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L6K6hMum"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3b78a034f17so3350870f8f.2
+        for <git@vger.kernel.org>; Mon, 11 Aug 2025 06:13:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754917639; x=1755522439; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1754917982; x=1755522782; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2yxKwDLBaIJ2wldr//fyfdEXI0Yny79Q7D+3+DGASNQ=;
-        b=SakI4tJEKiVngflveX8xkXEGxvlLxIvebuXOG+6wwhICOr3gHpw2qAue6HL1VZk5hg
-         SXv6upS28QV4shwg9NZr1CRvAFx9Epiy13cUvHY+/O69a0vaRoiZRSIwOl1neRKDlgBz
-         iOSEBmI2v/c5LvbrGhvWrbfeWh6/TVMDByG/lSM21q6wEJxh469mrxd48aBpugVzqLsD
-         er0Gc5rNOtV8P/7z/1EK7NWoTxLhjyDku8Ucg8IP0oQ52RC0gslwNH7K0S9QhoLXeoJ+
-         KBGTckcT2RCXCeKLmXgCwt/tut8Qv5hG9gkEgqzZ9Fd3bCYb6PwoIaqRDuujrzuZlvTn
-         q4ag==
+        bh=0wL6knrg9g7lzZk+swFJjw81WGIV/aiy4SFNdgRbVeQ=;
+        b=L6K6hMumDBblb+rTbV9NaG4IeJS91ymlKn8wM2KXmm/gfeMxg/b4wAZYi4G+AFLjkM
+         GZQlVzOXJRI8MuopfwxON88OS6h6lJqREb3C2eCAJ2JOV4FeLM8WCuX63d/xMUKewIO+
+         MO173tHoFoeCDDnWxyd0qZam1tiLUl3MqI+ri7V/PQpc6bk5m2aRJGiiIIOWFq7TjT2A
+         cPih1pgyivHRCDnbJCExakZvKwE43+KmXhJgkyiFtUVS+E9OP6Kd2EeoofI6BPyf+ISu
+         jwQ7CdItVQmgSWOKoWiswEF3qAaKLb4m74+YZ65HkfqKKi5l1a00jfcCS3k0SeSLx0Z8
+         iyww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754917639; x=1755522439;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1754917982; x=1755522782;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2yxKwDLBaIJ2wldr//fyfdEXI0Yny79Q7D+3+DGASNQ=;
-        b=isG3L9mmD7x1/TJEny2uMhWo8/NFKU1lm6GdlZFm8w2lnF3ABlR5Ih7ug8GXmewkA1
-         aNlyB/dqzFIevteFHjCz6U7ApAqvYg+i+ggHbBhpNQHsVNiYhVYzwaWosbA43Ky9xEwg
-         VbJ5UhmyzQI8u4ShgTrUx7WFAuRMPPA1Q+xzcJPnr2Ikx4DfhiUTOwbmTAJZVChA6caN
-         JjSYaK2ogytFCbg5e/OeDBNxqkizeMv75H6FvZMWJN9UyNsIWsvdcJSH9KW45ZTaZMMA
-         bt8RHOpIU9wXl/K7RHWJlNXQO7e6238g2UQ1gXC+HQF90qOQo15B0WMMI/YihgPybHp2
-         9Rtg==
-X-Forwarded-Encrypted: i=1; AJvYcCWyLkgQbdG4odZ5ch3j/2EpoGDq/z/aDAU/aofG1gn/VWf7781D3PPlU3r5jyyIDVyE2tU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyc9d38qlGUpANNXvdhM15XuWp3qCWqhPNq8SlJfiypGOdrRbNG
-	H29kRa0StBIyXNEPTv7Zt7ClyITXJ70ajqDKlEwFXg7Q/Q7PRSWcfXCo
-X-Gm-Gg: ASbGncvbHWjCrnhs9Jn+pFV6gAgTuO/6znIZTmiGJLNBHLsopiBj6f3ImghQUJDvA6O
-	ulT4TBAZmS7ZvZjXLBGWCJSX72ALNJOTzHEosT+P/Y6eoL/clHnqG+OsAznZom8k9lzx+Gr9LLJ
-	GOEB5r+uioF2+gTqU+nNjrDgv3UB34X4rDQULpwlUFI1X3m8EDpwoRaQdhiIwQCS9caSHl+tNkD
-	3ieUAG/JLxlcXOGknmrVbp7Dff+DOIpTkmjdCPltYcWZt4Eb5Ep0rjIN2+I2rAaLOM2XxQk1jml
-	rrF5Fonl+rMnTgA69QmSvM28/E9iypdnTX7WX4C088rnNrQmF9T0ce7QCxDCVNLlTtyeZtu3wHO
-	l9B3Rx8iOQA5FS2THAjJxJ6c/OTjKonxm1NCxrwysIvS5SpEc1O82CKVjNs/wpAxSQUdwwzPWW8
-	n8nOUQmEs=
-X-Google-Smtp-Source: AGHT+IFta+CZWNqhFfiSyC3b8Ywa/brcpMaH0/cw8v/4D1gRqnvK6rKOquhRhI01uJGmvIv0dBWZGw==
-X-Received: by 2002:a05:6000:2210:b0:3b8:f864:9a19 with SMTP id ffacd0b85a97d-3b8f97ec4d5mr14217188f8f.22.1754917638671;
-        Mon, 11 Aug 2025 06:07:18 -0700 (PDT)
+        bh=0wL6knrg9g7lzZk+swFJjw81WGIV/aiy4SFNdgRbVeQ=;
+        b=jWJqZGV3H9ebeBQwwC8kfVG7nPjXLs0UCVcRsidMlnF77xEIs092rpFa/rKiqUu8h/
+         Ck7YrUWkoRxn0+QkqJo6w8W2WGOGflknbPrcJxFMEQz7E4J2cpUG7Rejnm4Bkbvzen9Y
+         wzF+m0Ubus6yzuTkW+F6ZfY7hcWitZ5p0iyS4O0mv5V71Ogm1Fj0lvK+TKEHZdk2dSHP
+         RTkV/dXwlqfVl5gzb4vHfUJ+Xsftr41r0TWqmvyp787Ku/A8hIYsK5peuklekQ/X8l6l
+         O4LtJzPj8SNugm+71DnpBm0gW7C4qI3tUnwh1zNUBuXf2f4HdUvNJG0YDkNSbb9KtfMR
+         eF/Q==
+X-Gm-Message-State: AOJu0Yw6dokVS/259lRRPFLSmZaq0lTPEz5kkc5hw33PiXArSIogRlVj
+	QRRyt6oG1I5xE3Om7RjCN8gBF9OhPu2MHoKv0ZIzYscpikyJJm6ZEqT+YVSEBA==
+X-Gm-Gg: ASbGncs9gTBRYgZkuw+qCojmHjumKyDS1GNzVA+CBbmbQiQbCnQlmqtVIXMHmdJ3vYQ
+	8FGB2ytNfQnKcakXFGfC6nYKQBujTz7SYzSHuZVfBrgjB6ImK8zf7+HOiMYQcxJ4ie5gbtpGhnA
+	HhFWcCsdlew6h6FD4aQ5M+pA8sYKv7BIFHPNaIblvFXRO1JOlANE41trxMVGLCkEI+MHfUdm5Qg
+	A5wUpd78U/9f95d37naeYRhffgJEFizgU1BXkpmfq+7YO4KwgP0mxsVLDmOtOWbu/o54kR4u2+h
+	iYq76TXW5bTY9eVe/oHN7EEqxjfNueBf2sFbThKrFra/eKCzHUxdEZUhD4f0DhSlPRShXfdXkre
+	/SuYUGNYA1htB+GfZs0U1qWS8PRcOVWx3iIP3yNd7JjBec6koiP2pgtpMFb7eq3Je6aM+z40KBG
+	41D7937Zs=
+X-Google-Smtp-Source: AGHT+IHW5ck6KyFA4f7bJdjFItusTYpPmvIxg23Qa9JiBA/a5PrjKkQxB42ka6I5XqwqbypW0BI24g==
+X-Received: by 2002:a05:6000:290c:b0:3b7:899c:e887 with SMTP id ffacd0b85a97d-3b900b4f687mr11770691f8f.24.1754917981986;
+        Mon, 11 Aug 2025 06:13:01 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:7a5:4701:9bd8:62f6:3085:6ee3? ([2a0a:ef40:7a5:4701:9bd8:62f6:3085:6ee3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c48de68sm40855883f8f.67.2025.08.11.06.07.17
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3abedesm40993993f8f.3.2025.08.11.06.13.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Aug 2025 06:07:18 -0700 (PDT)
-Message-ID: <84258154-322c-4ef0-9ebb-44858a5d58fc@gmail.com>
-Date: Mon, 11 Aug 2025 14:07:43 +0100
+        Mon, 11 Aug 2025 06:13:01 -0700 (PDT)
+Message-ID: <5cf47722-7073-4761-8698-090af840d0c4@gmail.com>
+Date: Mon, 11 Aug 2025 14:13:26 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,42 +67,95 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/5] doc: git-rebase: start with an example
-To: Karthik Nayak <karthik.188@gmail.com>,
- Julia Evans via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>
-References: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
- <pull.1949.v4.git.1754702057.gitgitgadget@gmail.com>
- <07a4bdb7ce5eb456bd81972c350d0c4f298ebd46.1754702057.git.gitgitgadget@gmail.com>
- <CAOLa=ZSTaAaWJWeXBkoxPx46g_Equo-sHWgCESE9G6vk3HZeqA@mail.gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 2/2] xdiff: optimize xdl_hash_record_verbatim
+Reply-To: phillip.wood@dunelm.org.uk
+To: Alexander Monakov <amonakov@ispras.ru>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc: git@vger.kernel.org
+References: <20250728190520.10962-1-amonakov@ispras.ru>
+ <20250728190520.10962-3-amonakov@ispras.ru>
+ <aedb1be1-3151-421e-94ce-27bc77d80b83@gmail.com>
+ <353c7865-d9b5-2a1c-4d71-cd1136581f01@ispras.ru>
 Content-Language: en-US
-In-Reply-To: <CAOLa=ZSTaAaWJWeXBkoxPx46g_Equo-sHWgCESE9G6vk3HZeqA@mail.gmail.com>
+In-Reply-To: <353c7865-d9b5-2a1c-4d71-cd1136581f01@ispras.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/08/2025 10:13, Karthik Nayak wrote:
-> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> +
->> +You want to transplant the commits you made on `topic` since it diverged from
->> +`master` (i.e. A, B, and C), on top of the current `master`.  You can do this
->> +by running `git rebase master` while the `topic` branch is checked out.  If you
->> +want to rebase `topic` while on another branch, `git rebase master topic` is a
->> +shortcut for `git checkout topic && git rebase master`.
->> +
+On 04/08/2025 15:39, Alexander Monakov wrote:
+> On Mon, 4 Aug 2025, Phillip Wood wrote:
 > 
-> Nit: now that `git-switch(1)` is no longer experimental, we should start
-> recommending it over `git-checkout(1)` as necessary. So perhaps, we
-> could s/checkout/switch here?
+>>> Switch xdl_hash_record_verbatim to additive hashing and implement
+>>> an optimized loop following the scheme suggested by Noah.
+>>>
+>>> Timing 'git log --oneline --shortstat v2.0.0..v2.5.0' under perf, I got
+>>>
+>>> version | cycles, bn | instructions, bn
+>>> ---------------------------------------
+>>> A         6.38         11.3
+>>> B         6.21         10.89
+>>> C         5.80          9.95
+>>> D         5.83          8.74
+>>> ---------------------------------------
+>>>
+>>> A: baseline (git master at e4ef0485fd78)
+>>> B: plus 'xdiff: refactor xdl_hash_record()'
+>>> C: and plus this patch
+>>> D: with 'xdiff: use xxhash' by Phillip Wood
+>>
+>> I think it would be helpful to say that B is the previous patch and provide a
+>> link for D.
+> 
+> Ok, reworded locally, will appear in v2.
 
-Junio has already expressed a preference for "checkout" here c.f. 
-<xmqqldnte6h3.fsf@gitster.g>. I think that is technically correct as 
-"topic" can be a commitish and "git switch <object-id>" fails without 
-"--detach". Also rebase does not do any of the extra checks that "git 
-switch" does before switching branches (I'm not saying that is 
-necessarily a good thing).
+Thanks
+
+>>> The resulting speedup for xdl_hash_record_verbatim itself is about 1.5x.
+>>
+>> While that's interesting it does not tell us how much this speeds up diff
+>> generation.
+> 
+> That's what the 'cycles' column in the table gives (6.21/5.8 = 1.070...)
+
+It would be helpful to add a column with those calculations in it rather 
+than forcing the reader to calculate the speed up for themselves. Also 
+what is the cycles column measuring? What is it that takes 6.21 cycles 
+for B and only 5.8 cycles for C?
+
+>> Running the command above under hyperfine it is 1.02 ± 0.01 times
+>> faster than the previous patch and 1.11 ± 0.01 times faster than master.
+> 
+> Then you get 9% from the inlining patch and only 2% from the faster hash
+> function? That's a bit surprising, which compiler and CPU you used? Is it
+> with default optimization (-O2)?
+
+I used gcc with -O2 -march=native on an i5-8500. I saw a similar 
+improvement from the inlining when I was playing with xxhash.
+
+>> Using
+>> xxhash (D above) is 1.03 ± 0.01 times faster than this patch. How do the
+>> changes below affect compilers other than gcc and clang than do not see the
+>> re-association barrier?
+> 
+> I'd say under reasonable assumptions (e.g. a not too ancient CPU with 3-cycle
+> integer multiplication) the new scheme is generally faster even without asm.
+
+Thanks, fwiw I don't see a measurable difference in the timings with and 
+without the asm on my machine - sometimes one is faster, sometimes the 
+other, any difference is within the noise.
+
+> But Git can certainly follow Glibc's choice and employ this only on x86_64
+> (and only with GCC or Clang).
+> 
+>> We'd want to make sure that it does not result in
+>> slower diffs. Can we use atomic_signal_fence() on compilers that support C11?
+> 
+> No, what we need to do here is outside of the abstract machine's view, standard
+> functions are not going to help.
+
+That's a shame. I'd hoped that stopping the compiler reorder the code 
+would do the same thing - what is the asm doing that's different?
 
 Thanks
 
 Phillip
-
