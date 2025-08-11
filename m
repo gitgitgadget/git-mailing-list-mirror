@@ -1,182 +1,122 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E3F246783
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 20:13:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699F22D4803
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 20:50:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754943231; cv=none; b=WA36EhvpUIKJr9k1TzfVVhQaj46/sDzM4tm0HVCxbD5TJ4ov8goC+CN0i0nQ/OpqR2K85U8Qu4qAiJMBY6JrnC9Crl4xqwvJNaWTaHINZ/9+EiX8FAWIMjXdZi1dYhkZEanH8A8zByVVKg3t9KNVy7r7eZ6yO7rCHvLnlSLLv2U=
+	t=1754945440; cv=none; b=pKtqzEtb7qJ4SWtRVFsXNLGDWijPspLBKwTSsw/+oK2T6qNgjgynG/v1f8a1mcmZ1DYtV6aTukTUTL2NF6og7TTFCFNB2jj9Sm7P9FJUV0O76MVJDOd7k51XQzSQmO4eQMKWYMXmgky1QXszTZnKKGxk77jYbTtvN9+k8gggE1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754943231; c=relaxed/simple;
-	bh=3BGHUZu9fubCEFdr8NvEv/e//LYA40oTufTaGyIc/wE=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=oV7c5Kps9ua9W6Kn4n9m8+7D8BfQKW1u+Mt7S0elU8pDEE1RiuzXAdSQJ5F/fp8ZUasNM9ODhFLnVoOo+rLKC9Z9VBkxdtUWXTIyyVRnNIXaP8+5/RDAkpDa6jRHULpygp71IpsbV7+IPXONDnOtOV5c9uD1oDT5iPsst3as7t4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EDI9MMLN; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754945440; c=relaxed/simple;
+	bh=AlhVxc+CFYcExq5SU7XPZRGmlYYpWaibeoVawXlTlZk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FAetXnG4vI3S87OoO6F2dlHyV3D7r445aPN4MvNkGRfMW4qbcAetx1IW8zS6xqMI+Y5dNtw3mAfl2FhkJCtS1nhF1xo/JzPlVPE9kDbc6mstrrczSxnGkxaub519kJiJeerZbXUbQTHFlDL3dO9r2tCyii2XcR/L8+X6F5bTtJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g8e5Cahm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bb9Fr6Xf; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EDI9MMLN"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3b7862bd22bso2877004f8f.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:13:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754943228; x=1755548028; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KplK85vCAI6MG79I1tYeIHJxu2eE9P+Fhrny8j05G0M=;
-        b=EDI9MMLNHAlc56JAWzVGBLn+XuhMUN0gx7741+BDkdTGCK+kqQ2ONvCoIqz5Jyr3Qw
-         OuOEZOYutR1khyqkTOEQibHMlJqy1DZTJgcvr5RIcQILmUHq6q+k6qQ8OOI8r/A9owJk
-         u3AN4AbrR/57ldRXx9/wA7sTPsI+k3B9zZNUrbRTLCPCzJmgDcOwkXIvAe/BBxabE0Pq
-         ebcLRvJ4fyTudbsmbd1Ip+Q/mHYgYll68CEWWfPoyOTRfCJBXLqkd8nz/hJ6ftvxl2c+
-         i6XpBY/TW6R1CLu+Imm88vKZ8+foaHIsfdkss5RoSR999ady7iXaLDTS9E1QVz97lnhJ
-         FCkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754943228; x=1755548028;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KplK85vCAI6MG79I1tYeIHJxu2eE9P+Fhrny8j05G0M=;
-        b=QLBTZMQM7WwfM5JAHVdCblZKY7nO6WLFH/tA8L64LRi35ZCi5hX8erioIs2ZeMCVBY
-         zNlFWCBYH94IJpqiB/O1UAyNcGPg0MkhzXT5/ff46+NumF+a2uqlxcBAyeQr/3w329Vt
-         vvfNiydkU2ZD5Ak4cU3SuI6jnT6H+4bqmTMcVxyrivc43Dd11mWwHgdYr3dsSQtwhS4D
-         dLjJMBaazkAfmjHSjmUZIUtjByERgc2FR1hFV0RmyOr7J+Ac3/KtDpvJHkiJWbfELVPt
-         0pG9rP39qJq1gdju24mcccZv/4a6KcJcNPi0+uQwAYDR7KR9vuHo7dniHimDHYZPUeF7
-         1SeA==
-X-Gm-Message-State: AOJu0YyxmaNeqmSXqIluSId8N2m7J6vxhfSYDqCFiZfkktvIS6rKM9Ns
-	ndoUX1/q6mIbRBvJY91rIyViBR/Y+jhafo9Y34vY9+m46rVdOheVL5SU/5k3sw==
-X-Gm-Gg: ASbGncswQYfN7v8Qkwq+OY0t9om0SQj2cKwEf0nPewjStvYULwQgb7ArdkGKZmZNn/2
-	kLdWpGRrXCsDWv5z/99phmSyqmu4AZKzKuIYUiNgj2FiffwuNHQXcLq+fCe0cttSsSLDTQH4gIz
-	S2V9NDBTV5L6oyANynU7jctxZRaTUj5KyeZ60rvnxFLIX9WtzcsK1vCZV+J6Tb/0mQd72gw9SUU
-	f1qxe121772POZh8m6QooupursCcHAuPXpPXlSdtOTe50Bc6VtdiLNEoecCV9Xq68mLcB9KlDt1
-	W7Xtb+acua9nAqwvsdHpTuetSixVUUEcm5xLgLah765XKGZm8IGvWeY4wbhlCaxdU9qtbV8rYo3
-	dZroRl2yYdv7WsyvOUFbeGx0=
-X-Google-Smtp-Source: AGHT+IHvFcKUWMcC1q+gl/qRtWNbdZ1PveotEHw4C2msTAdpkeZ5JX5k6+c5Y+Va8MruKANm0mPBkw==
-X-Received: by 2002:a5d:5f81:0:b0:3a5:8991:64b7 with SMTP id ffacd0b85a97d-3b9111f458bmr718499f8f.26.1754943227536;
-        Mon, 11 Aug 2025 13:13:47 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-459ee17535bsm230810615e9.16.2025.08.11.13.13.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 13:13:38 -0700 (PDT)
-Message-Id: <5ab235b067b40e468185ee905f735ff73ccc9552.1754943127.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1949.v5.git.1754943127.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g8e5Cahm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bb9Fr6Xf"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 784461400095;
+	Mon, 11 Aug 2025 16:50:37 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Mon, 11 Aug 2025 16:50:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754945437; x=1755031837; bh=aRCU7GG5Rw
+	WqvqlYhBD918dsqE8eIZqz6Fzp0pA7PUY=; b=g8e5CahmYFHxQzEBrISK4EcEms
+	ZjIZMinHpQ14SI8TubQfaYBqB9EhKud9GQE1KbUzSwUNg1Y494VF1UIC+SWHebwM
+	W69RQ/5rbIaF3pGM4l4RKhp9iLy9zwQmI9sIp10unhc20LP5aFSa5muJhYO8FFf2
+	Hd//n/sKzA18RA9u/pY8w8o+Bw9e9PjWNoZOEJzN5qBubqrHjCkn/x6hvZnW2nro
+	16nTkkXkfokFHv+NcMpMLXsqk89Q7XXlxj+CmIOw27zxE8pYkBaSoJUy8tPWubva
+	Xc6htIklYQILp9l86ns9Q73v7UoeAuQC23Uox8S1y+BN5BZIKL4Lq/FTtSFg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754945437; x=1755031837; bh=aRCU7GG5RwWqvqlYhBD918dsqE8eIZqz6Fz
+	p0pA7PUY=; b=Bb9Fr6Xf/ywY0DZ+h7iz8hUXR5TKSncJRLL2yGPnSEUx/h6TOlL
+	dE+kz9Tqd5QsYkByVUl2E2o33m6+2cUcqdXHd+oWMPWD28r6msK/yAUlcneHMb+j
+	J2OCx8/gEKXGHvhjLZaK8qNVKPUhhzEHzKkpkgswvd0Qb219hLhBv5HhaZ/aAiUI
+	JeUHSlywUosecjTMpAbsie9KKdMoZkp36V21Y/VjIMIyQ+lRvWvpf/5VOogshzM2
+	W1jK3rfLY00pugg7BKXB/xvnAnwuUEM/iY/Km/HeHtTmku5BSukAPTmn04VhBdCb
+	5SYCe/dyduNCVGur3wairSPsjdcD53MFZfQ==
+X-ME-Sender: <xms:nVeaaNfbEYkcAWKdeM7-EPnJmFAt1ZauEih_s1f1QzNH-xNbZ56SkQ>
+    <xme:nVeaaIKC3hedCL4Q9jp0SVc8ga4g0oaPX5c-mPOop21CRfov-aj-LyS5Cj9_Mayvj
+    P2uMLyZmXF7ZVh-vA>
+X-ME-Received: <xmr:nVeaaCJ7v5MtQtPDOU1hNUeAVCI5vQGiOg3lw3k3FftIjKyPpKpaLoPkewpbAf6dwgEZ1h4L_Mhmynp4flVFw5P7rxsRpNodS8jBAfA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeefgeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:nVeaaPWHvhjrs6RHm2Vs34_kRBC0XZHwTEgj8xR7tZ-ffCZtoGzUwQ>
+    <xmx:nVeaaDn_2WMadoefxmQ95sK9Ee-QhBEbWMlMy3YAun4UfGY-ipqTQA>
+    <xmx:nVeaaNkxbphKGujTB89w3gizNufzE32EILbKLhncRry8pNV_hEhCBQ>
+    <xmx:nVeaaLYPdDxdmUJv4LMpflXGV0b1tX-G26b2mP-Kp1PYG5HboDMYCg>
+    <xmx:nVeaaBui-RBJ9KeDQthDfKQfLIz6r1ddYvADZSdG3KUsfqKotgu9NVzp>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Aug 2025 16:50:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  Karthik Nayak <karthik.188@gmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v5 1/5] doc: git-rebase: start with an example
+In-Reply-To: <c2f2e05078f3be604495b53f295e9a8a75f223a7.1754943127.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Mon, 11 Aug 2025 20:12:03
+	+0000")
 References: <pull.1949.v4.git.1754702057.gitgitgadget@gmail.com>
 	<pull.1949.v5.git.1754943127.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 11 Aug 2025 20:12:07 +0000
-Subject: [PATCH v5 5/5] doc: git-rebase: update discussion of internals
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	<c2f2e05078f3be604495b53f295e9a8a75f223a7.1754943127.git.gitgitgadget@gmail.com>
+Date: Mon, 11 Aug 2025 13:50:35 -0700
+Message-ID: <xmqqpld11t2c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Karthik Nayak <karthik.188@gmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Content-Type: text/plain
 
-From: Julia Evans <julia@jvns.ca>
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-- make it clearer that we're talking about a multistep process
-- give a more technically accurate description how rebase works with the
-  merge backend.
-- condense the explanation of how git rebase skips commits with the same
-  textual changes into a single bullet point and remove the explanatory
-  diagram. Lots of things which are more complicated are already being
-  explained without a diagram.
-- remove the explanation of how exactly `--fork-point` and `--root`
-  work since that information is in the OPTIONS section
-- put all discussion of `ORIG_HEAD` inside the note
+> From: Julia Evans <julia@jvns.ca>
+>
+> - Start with an example that mirrors the example in the `git-merge` man
+>   page, to make it easier for folks to understand the difference between
+>   a rebase and a merge.
+> - Mention that rebase can combine or reorder commits
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/git-rebase.adoc | 66 ++++++++++++-----------------------
- 1 file changed, 23 insertions(+), 43 deletions(-)
+The new comment added by this second point looks somewhat out of
+place.  With this patch as-is, the text talks only about the best
+case of the basic usage, tell the reader to go elsewhere if they are
+not interested in learning the basic usage, and then switches back
+to the basic usage topic and talks about conflict resolution.
 
-diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index 750f5e67e4c3..b4e5519d2839 100644
---- a/Documentation/git-rebase.adoc
-+++ b/Documentation/git-rebase.adoc
-@@ -68,51 +68,31 @@ linkgit:git-config[1] for details) and the `--fork-point` option is
- assumed.  If you are currently not on any branch or if the current
- branch does not have a configured upstream, the rebase will abort.
- 
--All changes made by commits in the current branch but that are not
--in `<upstream>` are saved to a temporary area.  This is the same set
--of commits that would be shown by `git log <upstream>..HEAD`; or by
--`git log 'fork_point'..HEAD`, if `--fork-point` is active (see the
--description on `--fork-point` below); or by `git log HEAD`, if the
--`--root` option is specified.
--
--The current branch is reset to `<upstream>` or `<newbase>` if the
--`--onto` option was supplied.  This has the exact same effect as
--`git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
--to point at the tip of the branch before the reset.
-+Here is a more detailed description of what `git rebase <upstream>` does:
-+
-+1. Make a list of all commits in the current branch that are not in
-+   `<upstream>`. This is the same set of commits that would be shown by `git log
-+   <upstream>..HEAD`. You can use `--fork-point` or `--root` to change how this
-+   list of commits is constructed.
-+2. Check whether any of those commits are duplicates of commits already
-+   in `<upstream>`, remove them from the list, and print out a warning about
-+   each removed commit. You can use `--reapply-cherry-picks` to include
-+   duplicate commits.
-+3. Check out `<upstream>` (or `<newbase>` if the `--onto` option was
-+   supplied) with the equivalent of `git checkout --detach <upstream>`.
-+4. Replay the commits, one by one, in order. This is similar to running
-+   `git cherry-pick <commit>` for each commit. See REBASING MERGES for how merges
-+   are handled.
-+5. Update your branch to point to the final commit with the equivalent
-+   of `git switch -C <branch>`.
- 
- [NOTE]
--`ORIG_HEAD` is not guaranteed to still point to the previous branch tip
--at the end of the rebase if other commands that write that pseudo-ref
--(e.g. `git reset`) are used during the rebase. The previous branch tip,
--however, is accessible using the reflog of the current branch
--(i.e. `@{1}`, see linkgit:gitrevisions[7]).
--
--The commits that were previously saved into the temporary area are
--then reapplied to the current branch, one by one, in order. Note that
--any commits in `HEAD` which introduce the same textual changes as a commit
--in `HEAD..<upstream>` are omitted (i.e., a patch already accepted upstream
--with a different commit message or timestamp will be skipped).
--
--If the upstream branch already contains a change you have made (e.g.,
--because you mailed a patch which was applied upstream), then that commit
--will be skipped and warnings will be issued (if the 'merge' backend is
--used).  For example, running `git rebase master` on the following
--history (in which `A'` and `A` introduce the same set of changes, but
--have different committer information):
--
--------------
--          A---B---C topic
--         /
--    D---E---A'---F master
--------------
--
--will result in:
--
--------------
--                   B'---C' topic
--                  /
--    D---E---A'---F master
--------------
-+When starting the rebase, `ORIG_HEAD` is set to point to the commit at the tip
-+of the to-be-rebased branch. However, `ORIG_HEAD` is not guaranteed to still
-+point to that commit at the end of the rebase if other commands that change
-+`ORIG_HEAD` (like `git reset`) are used during the rebase. The previous branch
-+tip, however, is accessible using the reflog of the current branch (i.e. `@{1}`,
-+see linkgit:gitrevisions[7].
- 
- MODE OPTIONS
- ------------
--- 
-gitgitgadget
+It may be easier to read if you covered the fact that there are two
+major use cases upfront, perhaps like:
+
+    DESCRIPTION
+    -----------
+    Transplant a series of commits onto a different starting point.
+    You can also use `git rebase` to reorder or combine commits: see
+    INTERACTIVE MODE below for how to do that.
+
+    For example, imagine ...
+
