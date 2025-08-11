@@ -1,106 +1,113 @@
-Received: from mail-pf1-f195.google.com (mail-pf1-f195.google.com [209.85.210.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5D61A9FB8
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 16:08:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83DD6296BD4
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 16:13:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754928500; cv=none; b=UsXzpCANt1t/kusrb4lZBosXVvFS3mIsOXOo/Zsq/t5dkbVgpd0Ktc64iuseAJaJhTH3e87o9THMn8Is9BOB4SabRyge0wSgcuE1Mhny02kyokxzxsLrKtpyLLjUBYCMOnqrCEUbO+KyzvxGf+zemS0pV4NR9tYVzw2+FUJVHEU=
+	t=1754928812; cv=none; b=BRoGSkysnd2hwaF4TjmtOgQ8vPqDmiR/WD9PMr6lViJG3dzkdb2vvhDnKu6dxTyoA+Pp3nv0qKEYCseVIypQvM18cnP+h8PuDLHHQiguT9O1XOWujha2OsVduM4TfLg76rC8TxIUtjWRAibvQEtP7r4JtU+ESZnYmaWcJfDzcC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754928500; c=relaxed/simple;
-	bh=EXVcTJ0aEesZ2UhNCh7q3uxXteyFaRr7NXDLfeTXq7I=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=TQDPlj5LwPKMOxc5SI4bD9ryRihBDIdwChyEgG1gwVN5NvzhpgTUypVYrW4BujA6RZw+jJDCDeWgHGwl4KjNg9z9ptiYndyXTTYXvZV9oKzsW2u4QgyJU8Qpo4+igZ3Vfvh0lIuFZr1FYtjLoA03NTpZEInODY5rrr3Myc5973E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JGlqzVLM; arc=none smtp.client-ip=209.85.210.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754928812; c=relaxed/simple;
+	bh=PUXMV8QSUZrtNj4WhRbQ8GJUlkMf7x7iDNPllGeuOco=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=o+egAxvTi2r0Qy4/pDQB/6gqrIt2UsSAS4x1lGa7bY1/Gl8s/9aluSQCrP2K/X7Fig7NJu3VUDWJZR/i3I1UBzXuk/knC443h6SXxp5P+cq8BWjlhZJuX0j2gJUPEZXzJz2kzf+j7OmnlhVzX6MRdpknNiS3P0bjPaGxZHLkXNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AeDXGz3k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fm/MuRwJ; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JGlqzVLM"
-Received: by mail-pf1-f195.google.com with SMTP id d2e1a72fcca58-76b8d289f73so4229681b3a.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 09:08:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754928497; x=1755533297; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9bVtsiIjiVW8+JnP376FaHOdfWD4ILRAfxWhIK7mx1g=;
-        b=JGlqzVLMCSK48EBipFNbumOE1eGqBv7d7SHed6rxLjQ6wgm1CGoRjfBDHkps1nKEBA
-         J937TGjIMf/gNDHDsIau/KkSsMc4NGFrLAX4dQM/9d5TWYDWCu3TmfKJ4HHy/1e9ldnA
-         mY53aAQ8+0oK4cVF96x2Kx5N2ddQ89wU4A1Dp8YOcYYuP8/VUhgQuCJ2g6d7jb9w1qOU
-         5AA2TYY94KbaERxVX/MOoIyp2kHKE6WTkmSLFgRN0zdM2/suzyAtdVjZoQ9ZCq7qBvXv
-         47Tn/AmBju3lEoQO35jf0lx94GgluEHMHxGWcAlfQoci76+n1Mj0a6vZACuMgLI8djDk
-         ScKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754928497; x=1755533297;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9bVtsiIjiVW8+JnP376FaHOdfWD4ILRAfxWhIK7mx1g=;
-        b=Pep8cXVGYvOQSq75GPn2vLSh0/IByYt5bC/gO+RQMl2ubPBIRgFOTCjcE4vH1X1bMX
-         wrD9bS8VQBRqGg9AvEGCi8NgwcZdglFkXbebN3PMIeedg18qo72q8OXDury7Yera2OiT
-         jMh6GSxftXxujQno9rSoFbcTzFWj9yTMSqJszHn9LLXpdpHOEc9VmIxoCsZzaujrxXQH
-         ds2PkZrpMGZi67HsFVlb9bfa7Fc1xM+x08ls9UPZVaoHEO7GHC3Xadd1qmWSepcgSGh0
-         qKjpBtQXrai8NFRuud/Ko3EhNdDeM6KPsolhjzmXGRCB3zFv8+THP2YlxdIxzMR4tcRP
-         gSNw==
-X-Gm-Message-State: AOJu0YwczTOvCGf6uC3huho9fPe7DNBZjW7CcRMFkcA5TSkg6A86l5TT
-	XeYAyDdEqMmxKs1U3TovyrYU2gLyoqytK66qg2EvoxlQd6u36N5GJyxj1yjy7KvaalM=
-X-Gm-Gg: ASbGncsChM/wJqkoi1s3r8rXeO2UnQSPk1Gtms+sWfDFBsSCQtCfmW9AgI4MMJ4+Dfa
-	hSSRKIaRThJUuAnrK9vt9lT/4Oopp4uEGfDH9ZWmIztuvM67yW35fwI68uLZsPg3jskECFbvb41
-	NrOBBzzTHvGpa+W/hbJpP3CUpRHnZI+NwpX2B9Uc+SAprV9p6MJ7DQeuuwxFtMSIpS7WivVfcsF
-	ekCas6vEByVpJI5iW5NlAgZIJi1Gq5kTec9X3NvIX0FkTkUM2ldIMS5M8Brq7X9tdt4Lo19CpCo
-	N/iPWAKWXB3zzREQa0OsSRp8vrAlqZTrnZ3WHOuHJkvcXm/NsKYxSNodbNVRGY4n/1G4BF63lRl
-	N9tZ5tQQCl1zC59Xc+htgFCYf2LyBKDcitOjGbQ3Tr3JmeAKDjyY4zazC6w==
-X-Google-Smtp-Source: AGHT+IEvHWiiamHI2YL0nu7FrQXRGI9b+9uAHKwhYofoX/00SxGADpsMGve4Alurh5CQo9DD0pjeYA==
-X-Received: by 2002:a05:6a00:1493:b0:76b:fe5e:3994 with SMTP id d2e1a72fcca58-76e0df22a4dmr203276b3a.20.1754928496899;
-        Mon, 11 Aug 2025 09:08:16 -0700 (PDT)
-Received: from smtpclient.apple (awork062197.netvigator.com. [203.198.28.197])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76c5d73eb9dsm6932218b3a.3.2025.08.11.09.08.15
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Aug 2025 09:08:16 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AeDXGz3k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fm/MuRwJ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6B1B67A0055;
+	Mon, 11 Aug 2025 12:13:29 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 11 Aug 2025 12:13:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754928809; x=1755015209; bh=PUXMV8QSUZ
+	rtNj4WhRbQ8GJUlkMf7x7iDNPllGeuOco=; b=AeDXGz3krtQPOIaSiXtoFnfdm0
+	lAzlp8OAoE9biPnQBxNiiqi8O03i4RJlaWZoIuV58E5NAdWUfufMVKiC+uQ0nTAa
+	e1WEilczWf6TJmcPGi2V3Nf4zWWk+32FE6Ur00+dwX6kj3kC21v0jMJKChy8eCO0
+	oTu3pt/7fGfaYlDyrgys+eeljVxk0flAEOR/s7Q746hVhdwrldnpqczl7y08GOnv
+	6ZYpOBSZghuzbrqPmFHl/wTyAQAOXYRI5w6jW6bTKOZ89Tgs/9T6J29J0jn0MeCr
+	c/gcY4+8IaBaeZX+gfZdylzDIVSwI/JUn/KA84xCVqfElcXUtfyHMmgKCEag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754928809; x=1755015209; bh=PUXMV8QSUZrtNj4WhRbQ8GJUlkMf7x7iDNP
+	llGeuOco=; b=Fm/MuRwJ+U4nehwJLeqt1MArX7hmbHS//zNrSM8gcfN5zX0YPmy
+	Bufs2EsnZ8Su/7llzMDmZ5yIuMgsczjS2aDm8sWwLQcGhZrH4jPIDNz+WXQp2JmY
+	yFLy5zW6xlp58PkM2Ws36Xiy2q71OKaFb+VpxteyELvrzv6Q5lkpffdn3Qsu5qlK
+	wHywobMLYOG4P6JclCSzbjgTKWKKDMaLc5fk1Lvqz+WAOLEsrhOseHPLUieU55zY
+	55SMwO01aD0WYkv8FqJjgvl2YqDXIw0vmwFQXqLNQcyqscEsWsq/aasAPm+e8LpP
+	5YQmotGwwjP4Bx5X6Y/NCIfabAF09lPyOIA==
+X-ME-Sender: <xms:qRaaaPgiZrcF2L7Q5bFdCcKKJWOQQZ0D0tpfkQuoBj2_izJX3WsRGQ>
+    <xme:qRaaaEcOS2-zi6PVts0A_Ab7ZykvhpZtSOmfdmShNa22j9SbUhKZgCUZj2Mwoqmni
+    X5wHT_QjU6t_VnUwA>
+X-ME-Received: <xmr:qRaaaPhNKnHIh12BKx7wz6AcnTJC4rDsZXZU4fDKw4PSKxCdS1Ns1SLmweiXPBI9620vtawzw0OUPcr4ezCCdCR2IRfOTR7_i3TWquY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvledtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehs
+    hhihrghmthhhrghkkhgrrhdttddusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:qRaaaMzRJYh1oclco2L75ciNX9JvLw9izqIDQrtbV9zNKXjkzaBNDQ>
+    <xmx:qRaaaLO619F0zT8nwCatqQwGBeajQQ_CylLVm4hVV5r8usCkWb3Oiw>
+    <xmx:qRaaaNXGo49AyN5bOwJAb-MpEnib_UOE5c8ash6DnpNKZkGQKUcoqw>
+    <xmx:qRaaaP0KiU6k5W2Iizx4kqUes7Hx1_pun7RnIvXmx5QxT4PutzNCqA>
+    <xmx:qRaaaKHssocTu4fYzFh548Jf6PptNUNWwM9t1X1KFDpkA513f8_f69AW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Aug 2025 12:13:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Ayush Chandekar <ayu.chandekar@gmail.com>,  christian.couder@gmail.com,
+  git@vger.kernel.org,  shyamthakkar001@gmail.com
+Subject: Re: [GSOC PATCH v2 1/2] environment: remove the global variable
+ 'merge_log_config'
+In-Reply-To: <076c19ae-58fc-4823-9679-1d5fe6e46211@gmail.com> (Phillip Wood's
+	message of "Mon, 11 Aug 2025 15:42:48 +0100")
+References: <cover.1754868681.git.ayu.chandekar@gmail.com>
+	<3aa014ed46d14e31ea0c2f6b7631e7e4cbbd3943.1754868681.git.ayu.chandekar@gmail.com>
+	<076c19ae-58fc-4823-9679-1d5fe6e46211@gmail.com>
+Date: Mon, 11 Aug 2025 09:13:27 -0700
+Message-ID: <xmqqikit3kgo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH v5] bloom: enable bloom filter with wildcard pathspec in
- revision traversal
-From: Lidong Yan <yldhome2d2@gmail.com>
-In-Reply-To: <xmqqy0rp3l8s.fsf@gitster.g>
-Date: Tue, 12 Aug 2025 00:08:03 +0800
-Cc: git@vger.kernel.org,
- stolee@gmail.com,
- ttaylorr@github.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B5A8897E-3D20-487D-9774-444463F81DA4@gmail.com>
-References: <20250809042236.72695-1-yldhome2d2@gmail.com>
- <20250811060137.75135-1-yldhome2d2@gmail.com> <xmqqy0rp3l8s.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
->=20
-> Lidong Yan <yldhome2d2@gmail.com> writes:
->=20
->> Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
->> [jc: avoid allocating zero length path in
->> convert_pathspec_to_bloom_keyvec()]
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->=20
-> Instead just do
->=20
->        Helped-by: Junio C Hamano <gitster@pobox.com>
->        Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
->=20
-> here.  [who: comment] followed by a sign-off from that person is
-> done by the person who is signing off the tweak, not by the original
-> author.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-I see =E2=80=94 when someone makes additions to another person=E2=80=99s
-commit, they=E2=80=99ll also modify the log message in the process.
+> Hi Ayush
+>
+> On 11/08/2025 00:45, Ayush Chandekar wrote:
+>> The global variable 'merge_log_config', set via the "merge.log" or
+>> "merge.summary" settings, is only used in 'cmd_fmt_merge_msg()' and
+>> 'cmd_merge()' to adjust the 'shortlog_len' variable.
+>> Remove 'merge_log_config' globally and localize it in
+>> 'cmd_fmt_merge_msg()' and 'cmd_merge()'. Set its value by passing it in
+>> 'fmt_merge_msg_config()' by passing its pointer to the function via the
+>> callback parameter.
+>
+> This looks like a good solution
 
-Thanks,
-Lidong
+When fmt_merge_msg_config() needs to read more stuff, the callback
+parameter may have to be updated, but this will do for now.
 
+Thanks.
