@@ -1,105 +1,104 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB36C2E1C69
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 18:25:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551602E2DC3
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 18:53:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754936750; cv=none; b=dEv817+NN10ihGNarGwyBdWM416Kr9rJ25qSQ4O1jYIpS5ZrltoRz7ajevUrbPWj6nW4AZirPKziLoZAAoEJpQPbzmkIO6WJb+Xxke0zMRgYw/FIPeyzHI1tALtiCUZVprKhQLRS3t5qsRriOBFzptK+ORMyF056BhtAfY6FW50=
+	t=1754938441; cv=none; b=SQa6bxZ70/CdjrZ+FrV6x7bFOS2pUMZjM0aYJdimG8LdUXIqWrE4ERoN+9wBPk/mhmevgaYgxzd5fD2hK81WyNG+axJpX0uE1zeMx3mTjzHRVkCDFBT74ZkxfGkr9tztG+mXLvarR7AvBUdoSGfba/okIUcsHSIvShMRIbf4hdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754936750; c=relaxed/simple;
-	bh=7M92JqUZN3kmtcS2OeR4nDtY/hfklguOcXoDGVs5tGE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D/IZLle5Wy3nplxAm1tCN1gtvyuzXoKn1hChuM/vHuLP28S73qbvfvqkANZPd2uWaynvBj4+Gd/xy+PVlbXeCFdX4GrKbqUb4XshsicYvgIa77O3JjprYlHYlWHitIB477tXq86ZOeuwLU7+lNXvbTSNa7Hyfo/N8avSawxiQds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z3BJ+0eC; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754938441; c=relaxed/simple;
+	bh=VLc3s3L14DQw1RjEDo+1Vo2u685KMS8GUCrZewA2XEg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aA+hlXMdvVX/3gPzKJXHoUzM3v0/fD3WFSVFvuVpujtzQ/F06GWas0C+ZonjErJnpn15gsF9FGYTcU+hpAHNlNby1MlSYZpnrvkohq5ILjmD+6slorSx80nXtfvmLSVl9+VHzPohsY8NHYz4OSU2S4MnW5CmJAqBFyAC+onnuQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L3n+A7nX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JZXkX7qV; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3BJ+0eC"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-242d3ba2b44so15476365ad.3
-        for <git@vger.kernel.org>; Mon, 11 Aug 2025 11:25:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754936748; x=1755541548; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7M92JqUZN3kmtcS2OeR4nDtY/hfklguOcXoDGVs5tGE=;
-        b=Z3BJ+0eCjBVqoPSWfXTjZwzLUC8uy3qodlQ/2Kto6xzwjiA84Rhx2BpnuzRYWSpswA
-         1mk2a51WizheXezY/g/B71BgPlm5IqzYoJRu+ma/RCAsier6NBh/7KJWyfkZyJbkIleB
-         PSid0KYx8KNTIk0rsIYnMvPK2vCpgYBq+yCHpqktkZYS4QurPdlDoKEAFw4IEdVQYbDH
-         m23mVvxJ5Tt4gjjK8KObfMw+o8RCK55JVpulqbrPAZidTuyJwTq00axl7dKEev54ywv2
-         GIOFcfHA4isHXZGV0kp/Rbscmoh02Pw4FSEMkbk3QbclIiHVA1q7KLHVXysHMO2Hx3lM
-         8m6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754936748; x=1755541548;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7M92JqUZN3kmtcS2OeR4nDtY/hfklguOcXoDGVs5tGE=;
-        b=voIhIP4ybCHppp8rtBeWDws8fnBON+QE16ZQbsSZ9BfGfiNm0WieaPtq14qPY9a9Pn
-         haIPMkOHHTe+sX2oOQWUp57cNN64DbGOwme99JllUQ3aIo5WiypqSP/u2Zj7OO+sXOCz
-         Fb0LTP3MduAfJ88K5ZdbTYdlNMQaj4A07qsK7Ds6SZK0th/C6fNKimpIggEpVd6wDBTv
-         jEocWORa87gmhsZ8wGSvTt1ovZ10rySBVS63N5Ucum4610/QGTS3l+9vQr9DhjSOaY1w
-         DguLDXV9X6/oHf5t7Tfb9dJX+e2zwtNlv/fGSTafBZumb0TC8us5gfG6/38+CU9AGJN6
-         EXjA==
-X-Forwarded-Encrypted: i=1; AJvYcCVVsy86ya3mrQXpsMFy6O3wUN0RhtdiEw5IojqgW8bGQeQcn131wFnpSvFLIKMAFXdnwdk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMEG7dTTPgPEqFpberzsHSNQ/qhuy2M3RbNoXiW3e3pW9UBQiR
-	9rsj5/bI1fTN8dUbhh0S3ZMgKKTBmtmx48dDrRgBATQ3ejgolBUDG08gLQdFqEgCvm5xhQVCWNv
-	csmr3dlM/EKVfYdfXAfMkQBqjVz6QWiE=
-X-Gm-Gg: ASbGncvFATRdxhcacMMUF+qhn6TiH/d23PcmgzmROdWA6T/6onZ0WvwQba1hqWiaAQM
-	r8aZ85zB9olfG3aEvzNHBl0oa1MKKnkpqUwYdcE1tMA5yObi7jym4bMTLS694iZUedKFvRLdLIH
-	vhbSQaVbpDXTUAB+om7dnS7CEj3ZBVE972y2xZPRjmeWXQAy6rxLSA5/Ef+wOkJyKjanchnHfcw
-	Yn7qzsa
-X-Google-Smtp-Source: AGHT+IENUkfBjEyuEOtaSuWzLVp5BIYq/6Ex/cUN63mIXp671ZA9G+xFLYObKaw6nYJhk1CE5LLt1LN51OBwh0AoiZk=
-X-Received: by 2002:a17:902:ebc6:b0:242:9bbc:3644 with SMTP id
- d9443c01a7336-242c225a177mr184326895ad.54.1754936747955; Mon, 11 Aug 2025
- 11:25:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L3n+A7nX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JZXkX7qV"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 689FF140006B;
+	Mon, 11 Aug 2025 14:53:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 11 Aug 2025 14:53:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1754938438; x=1755024838; bh=TMrgd6j/Gc
+	Tje6KO+MJJb5Ky2RVKzFCVJikX443rcTg=; b=L3n+A7nXU9J9oECE6NGdNRdyM7
+	usadM6QLAyznWcOlnNRTrI5ZYn1zMxApD9nIupcfpeMPRVwtiCkEgTJDXhDjbD3H
+	w89W5XROef4b364lKmAXqZkBWLYJRhR58b/iYKjm4kYmeTDKuw77uxeEutpgx+wH
+	Bfa7CUneMqRTDUDbYJNVHxchlZqnA8/iB1rRk3xwwTEZOtx7HH9KLPkacdNaiNWp
+	AzOwroBeXeqoksg+kuQhGAYg1nGW/5zRO02li9jqtNRA1YQAlxXxKrs+eBi5EkH6
+	ymt3DGyoclPXsM4iW17YN0ow48XRgD5nfpprpi72XuHsdfiqeZovqYs0X87g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1754938438; x=1755024838; bh=TMrgd6j/GcTje6KO+MJJb5Ky2RVKzFCVJik
+	X443rcTg=; b=JZXkX7qVgaIPfKPzlsCCC16knvVbnqhNlPxqRVuTC4IvDzFAKmB
+	j0vm2DNt1GJ8fHLSNyb6jC4UFqAE5iISqRDUa5wARNR8FwRi1JI2w/dpkBMez39T
+	HlkOddGpA4BOD2aK2uRaYzpPQqwkKGuW85NbqPT2pufkJXiB4xe/RdilFhb3VtAH
+	qUpQbUgtUrr+RFRY/ycLBRRMhUiXsj45zie5IVk28rZMMJsCuswPqWyOHcCNYFP5
+	qfDo6dkAgBpwba3TZ7yLD8x5qAh1UsR2Xxx65ILQDr1kOuHN04Xa1dYrJRO8hmpg
+	wEsCVSbqXprGg0H6LV1Tam3qh8jf1HkGl4g==
+X-ME-Sender: <xms:RjyaaGWUIUs03DkeZD6Z2wiO_QTlWkiGyCLyEiqA7ryYsQYPaQS7Qg>
+    <xme:RjyaaNL6pPkN_yFGJSGm7PVbpJun00SKd0UDc962WgsXreEQq4diO4cVZ2pIh4zBQ
+    FmG3X_NiayVLf-RIQ>
+X-ME-Received: <xmr:RjyaaG-FT7NItPU2rzo0OErEW7SRiPqQJ-p2o3NNtZgAu4S4W0fBtNaeI4mfzrlsqlo4AIyI-yHiLB-0TFcJtH-MqPv07KBO8kk-S9o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeefvddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehnohgsohiiohesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgv
+    vgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:RjyaaALAUrymSG2iC0Mw1PN_5z377a-L8dkCgj3S7ezRXLMX66jqug>
+    <xmx:RjyaaLnaK5SZcegdSsTwzblro0VRHiFkARJj_CQ-pXCZUibBmdEt0g>
+    <xmx:RjyaaENqpRVsA7qbRT_0trjFHe1H2FerTwL-FmJ7hE3_1eV34CBc7A>
+    <xmx:RjyaaB1X1_8T9mQgRxgD2cpKB3T0ek5h84TTVssmgKmAJLDAlOQgSQ>
+    <xmx:RjyaaPkzYyl7mHdEuDaG5kYVIFr8TxpFHV8Or9JcugLbmyYZusJeu7EH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Aug 2025 14:53:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Jon Forrest <nobozo@gmail.com>,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] abbrev: allow extending beyond 20 chars to disambiguate
+In-Reply-To: <xmqqfrdx517b.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	11 Aug 2025 08:26:32 -0700")
+References: <xmqqfrdx517b.fsf@gitster.g>
+Date: Mon, 11 Aug 2025 11:53:56 -0700
+Message-ID: <xmqq5xet3d17.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1754868681.git.ayu.chandekar@gmail.com> <3aa014ed46d14e31ea0c2f6b7631e7e4cbbd3943.1754868681.git.ayu.chandekar@gmail.com>
- <076c19ae-58fc-4823-9679-1d5fe6e46211@gmail.com> <xmqqikit3kgo.fsf@gitster.g>
-In-Reply-To: <xmqqikit3kgo.fsf@gitster.g>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Mon, 11 Aug 2025 23:55:34 +0530
-X-Gm-Features: Ac12FXzWkSRQIKJQRdr_4D-lPWreCeBvWRvaYkGJ3cbvnJq5SCM_f170NuySaOw
-Message-ID: <CAE7as+YdYmmUvVxzY+CeA2vNU01av_QtvsmcUTy=FibqVRrudA@mail.gmail.com>
-Subject: Re: [GSOC PATCH v2 1/2] environment: remove the global variable 'merge_log_config'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, christian.couder@gmail.com, 
-	git@vger.kernel.org, shyamthakkar001@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Aug 11, 2025 at 9:43=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> > Hi Ayush
-> >
-> > On 11/08/2025 00:45, Ayush Chandekar wrote:
-> >> The global variable 'merge_log_config', set via the "merge.log" or
-> >> "merge.summary" settings, is only used in 'cmd_fmt_merge_msg()' and
-> >> 'cmd_merge()' to adjust the 'shortlog_len' variable.
-> >> Remove 'merge_log_config' globally and localize it in
-> >> 'cmd_fmt_merge_msg()' and 'cmd_merge()'. Set its value by passing it i=
-n
-> >> 'fmt_merge_msg_config()' by passing its pointer to the function via th=
-e
-> >> callback parameter.
-> >
-> > This looks like a good solution
->
-> When fmt_merge_msg_config() needs to read more stuff, the callback
-> parameter may have to be updated, but this will do for now.
->
-> Thanks.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yes, then we can create a struct and pass the struct instead, maybe.
+> keeps extending the abbreviation.  The loop stops at GIT_MAX_RAWSZ,
+> which is counted as the number of bytes, since 5b20ace6 (sha1_name:
+> unroll len loop in find_unique_abbrev_r(), 2017-10-08); before that
+> change, it extended up to GIT_MAX_HEXSZ, which is the correct limit
+> because the loop is adding one output letter per iteration.
 
-Thanks,
-Ayush
+This is half a truth.  It is correct that the loop used to terminate
+at GIT_SHA1_HEXSZ, and replacing it with GIT_MAX_HEXSZ is wrong, as
+MAX_HEXSZ can be much larger than the max hexsz for the hash function
+in use in the repository.
+
+I'll be sending a reworked version that takes the current hash
+function into account.
+
