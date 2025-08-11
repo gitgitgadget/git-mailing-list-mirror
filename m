@@ -1,142 +1,224 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6561A314B
-	for <git@vger.kernel.org>; Sun, 10 Aug 2025 23:46:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A928C2673BF
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 05:13:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754869585; cv=none; b=M+hI9UEL47jlwoMFLjWiZWalr/BhpVBpx0GT5dGxTU6ahHsuPV8tQxNavBeJvq1MjUXMsgVwPdYOlEcW8EKIwh+4LeaA4edlg88u2ZGinnvoYYGH4vedZigrTqyEDrBlHqx4UYm/nwj5h435ziy3NfEQuaYyIqG/rmlf8Rr8AFk=
+	t=1754889187; cv=none; b=cqsuyHdKclmzzGyRZhyA2IEY2dTmSmFZ9TQVnFi/umpDfQsUpxBmAEO+YTA6BWIEPlABBrXwqKdIacXEuIr08+lVcusravWrRmklIv7S488hCEuWmdh9wp+etkNjS5e+YhcKZ3Q6+n3VuIRW383nAMvLnSXN2C6jetIXrGkdXw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754869585; c=relaxed/simple;
-	bh=ScI+mKc0SJafG50VJKPW7jDZSKJLkH5fvSSI3019M7A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pJoAP7l36qg5QKDZhRRDCsVYIkiNjkyXo4ciyUrdOqbGJMCst45LNEsCs40u4d1J/LgBavBFX78109ig0L5x+KMleenU692tee93cEFjuoq/NFDyaEG+8uGoiaPo4MfpRKQ4sIAmmOPQnzEqcR1HKsaQfKPu0blgV9/NJmZ5fs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PYT2i6cI; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1754889187; c=relaxed/simple;
+	bh=5oTXqgZuYA6i0HfGCqyviLb4erv14wZrxKiyQJhKc1A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UQt2ayGoMj2KJOCiPAivMR9uKyURtpNy5DwwBeGWz+TqxxAQJn7bPjRj1OCMNcOS3tGx7n+RQvSw8Zf1zEZMp1Hi58U0ueiuHd3BFVb1xTR6nAWg1+7Vtpti9/TIFQ7LpBDygoq2EzAeaVrq41UAnonV6RWHzhTRvx27wqpj1E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PYT2i6cI"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-321265ae417so4306692a91.2
-        for <git@vger.kernel.org>; Sun, 10 Aug 2025 16:46:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754869583; x=1755474383; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7zmTgpVTBo82qROTtT3XcYrUfNseMiYDlhdSKKhqYD4=;
-        b=PYT2i6cIksDUmsyijZwjTTRsReMPcPCVRlpwpv2VBMXMK7F3ytoo95lrfaLnqGz8az
-         q6NjxHkVsQMZHm+MHRDa2R+B6/Z851B3KhAhzeKBJYzXRLuNEgiFHp06vS+GDOF+uhFB
-         SiFlCaUm/kpUQz+zncyX1xWIK13x+i2O1n3HC+vetvlpjsXSstGwXsP77pBHP3iWgemf
-         a5GgSQRzshYoKftFH5X5r1b04awZePsdYGY2nEJghjs4XIghTxDNwxmwYhD73u1NbxHJ
-         F9WBmEuu7FFURrj+wUq65/X4f6LEw/MP0HE4xC3IOFC3Cdm3YGHdvnpJm9RvNIiHTRzp
-         xpig==
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4af1a5aff6eso5950041cf.2
+        for <git@vger.kernel.org>; Sun, 10 Aug 2025 22:13:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754869583; x=1755474383;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1754889183; x=1755493983;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7zmTgpVTBo82qROTtT3XcYrUfNseMiYDlhdSKKhqYD4=;
-        b=DsD+OAQvUuHfFCCuD5EfptmZ8xbimuS1U2rlHFJPGr2+8nEu/hxXCV3+QW2uulWSEj
-         wze2zTv3qTeTVAT2w1d8kiKqT56HU3zbnIpT8m7FwyDpXSncKubglJJ0ch2QZgPRN4xF
-         52wm6GvSzdCgQxk60SjRMXyhu2YXO6JNt4UR0NffBxvuA1JC4b4OxcWCSW3Xp4AfFcph
-         b9RqS5aEzXKVTSPoWP2a7NTBU0ZwCrpmZLXg/OVklveEaePJbHFqfzaw5ye1C9KDiFNh
-         5Lsmtj0UNn4Y2yHkkPoXW22nocT4boXaun0aYed38Hq36IK9D7zLPk6631uWd93hCs9Z
-         xPDA==
-X-Forwarded-Encrypted: i=1; AJvYcCU3Tq50Y0qy0q33RWz3hMrsfkgOzxQZHLQsESleHg/c6g2QZ7kZiR9KX3jnigDSSDzlC1o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxnbHiCz3DbAOfKRaRtQIlCy2Th91Hoe4jagaLZI4ajSw9Mj3tt
-	zLp+GmFSg4N99r63YugXfcHkXiHxz/hipCN2dSyh+NKhqp0TANbJQYLoqqWiNSzA
-X-Gm-Gg: ASbGncs+q8QrNERuluqkrQWUxEhQ/FSTjTtaIHVEn6yk7SDignRu68EJNUsM2pRdoyX
-	3saJGaSiJKLCERf/6jXt7IhtLpu19kJsThwbWDWz1mm+Y5k6BliPBtwKZRyrynLPUbNedI4VkHx
-	5pSasF0bc5EqP+pcVk7Cf3tftOBsi+mj2PpSbzr+4grrcQGkkZxbDi2NAnvzgJ39rzny6g7hFoz
-	RnwBdphPBvCLNkmEBjzMizgXgT1OxuZHggMd9yiFHIDmButDQ4pUVW13JwWv6EcM8GLeq6cD4HO
-	zkZuFpgb1RulRFpJeorma6KzPhxUMRaSOJjiPmMdjP1dLoqMC/W90Y2bfnyauLfhXZmMunnR501
-	5YUh3Pr1JruYJUwtzJ/yPAzFE8WSlVBUeNtyI/4CsFPXpbtQRRtSxNmQ=
-X-Google-Smtp-Source: AGHT+IFnHbpPAjek7xXl5pnY65R/eS/LeOEb1uP5dJ8Nde4ghw+E23REKgRFqSMS/+2kOKhVX0NfNA==
-X-Received: by 2002:a17:90b:48d1:b0:311:9c1f:8516 with SMTP id 98e67ed59e1d1-321839fde25mr17662595a91.15.1754869583430;
-        Sun, 10 Aug 2025 16:46:23 -0700 (PDT)
-Received: from thinku.tailbd49c4.ts.net ([103.37.200.208])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32102b9022fsm12349173a91.4.2025.08.10.16.46.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Aug 2025 16:46:23 -0700 (PDT)
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-To: ayu.chandekar@gmail.com
-Cc: christian.couder@gmail.com,
-	git@vger.kernel.org,
-	shyamthakkar001@gmail.com,
-	gitster@pobox.com,
-	phillip.wood123@gmail.com
-Subject: [GSOC PATCH v2 2/2] builtin/fmt-merge-msg: stop depending on 'the_repository'
-Date: Mon, 11 Aug 2025 05:15:46 +0530
-Message-ID: <8e55516cdae9e8dc0ea85e2cd7b72ddc93790997.1754868681.git.ayu.chandekar@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1754868681.git.ayu.chandekar@gmail.com>
-References: <cover.1754868681.git.ayu.chandekar@gmail.com>
+        bh=3m/HQfmplf9Kh8q8XHm0FWdAo6mJBipynPIhc/gmNHU=;
+        b=nkcrCnIbge5HoFlQuCH5whG4S3AS4xxwhNfZ8dWZ+Q+yfjuUROectAL1pYd//B5nrt
+         JdWxntzmj28oWMXK+0o4NHOvZafvbpwpC67+vc9PydKjCuOfkFizmRaUOMmb4p19ra7V
+         Fo3Nqhsko1qqbee321FWPo59JMCrV16lwHnjBuu2crDxMUOXdlth7buy9efhx/55QNpR
+         CdsYMpdGjAtocRU4sO2Rz7XjRDLMnvPnf6oG1erJiKewkCKh9vGvC1ThLJeYYLjt+Mr7
+         56iizncMfWbxawZ5MOJhaYgeN3LRQpxJVwiAQ9cJN0TL2LvDsKxf6QmZMf5ACuQRFjSV
+         x49w==
+X-Gm-Message-State: AOJu0YzSezgkqGUucIj/xwhe5EIHROrXc0W60PkmhRkHDkEBVaXZqkVU
+	pClunuz8SPHxjqnDh9e5yMm3SDk+JZQQsdDhy2PpLytnqn8ehEBLKXgLuO4dGDh939vZbQdoB9B
+	GT2WqpluyAMkqfogZlM88yA4cm9VAXFfdZ090
+X-Gm-Gg: ASbGnctXvkSioEv6HGTVt2Ab/a1e9dY11brrHf+eKg+EV2fRp6MYiMPImFHiFMMoPcw
+	6u6nTsZ3TffhkpKvJsZWf3N6uhJMesHUuLt7SOudv8Ykh7j+VhGD5pZIF8RsGRtwag7RuZSDmbb
+	Je7dAvIUPwRnRoqA6XHCGOG/y8tUU8Jrb3mpBjsivnuT7GPKImpD6vW5xf70ohlz988hfprs8ST
+	WkgMZegP8B43bf+wqXfu3BFUz2aD5sdPBEhUgDE
+X-Google-Smtp-Source: AGHT+IHhbeH4mLePKCeBG2CpdxrSiIa6ncUyDbrsjnYqR6v37Tys0zOtibe5TgQnn37+PgMXlY7C6vOHtWUu9z+vjdc=
+X-Received: by 2002:ad4:5f45:0:b0:709:8dee:52bb with SMTP id
+ 6a1803df08f44-709ac2fda81mr45692336d6.7.1754889183356; Sun, 10 Aug 2025
+ 22:13:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250807150239.6987-1-lucasseikioshiro@gmail.com> <20250807150239.6987-3-lucasseikioshiro@gmail.com>
+In-Reply-To: <20250807150239.6987-3-lucasseikioshiro@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 11 Aug 2025 01:12:51 -0400
+X-Gm-Features: Ac12FXwTdH0aLuAg6xsKgRXCZe3WpVyPKxrlbNrBO6ee02CXlh2LvF403bl0HRs
+Message-ID: <CAPig+cTA=UKbHd+BdCQUdTjvz1AzCNHi2XTREPhfUJfz_2Ny_A@mail.gmail.com>
+Subject: Re: [GSoC PATCH v9 2/5] repo: add the field references.format
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, oswald.buddenhagen@gmx.de, ps@pks.im, 
+	karthik.188@gmail.com, ben.knoble@gmail.com, gitster@pobox.com, 
+	phillip.wood@dunelm.org.uk, jltobler@gmail.com, jn.avila@free.fr
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Refactor builtin/fmt-merge-msg.c to remove the dependancy on the global
-'the_repository'. Remove the 'UNUSED' macro from the 'struct repository'
-parameter and replace 'git_config()' with 'repo_config()' so that
-configuration is read from the passed repository. Also, add a test to
-make sure that "git fmt-merge-msg -h" can be called outside a
-repository.
+On Thu, Aug 7, 2025 at 11:04=E2=80=AFAM Lucas Seiki Oshiro
+<lucasseikioshiro@gmail.com> wrote:
+> This commit is part of the series that introduces the new subcommand
+> git-repo-info.
+>
+> The flag `--show-ref-format` from git-rev-parse is used for retrieving
+> the reference format (i.e. `files` or `reftable`). This way, it is
+> used for querying repository metadata, fitting in the purpose of
+> git-repo-info.
+>
+> Add a new field `references.format` to the repo-info subcommand
+> containing that information.
+>
+> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+> ---
+> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> @@ -22,6 +22,25 @@ COMMANDS
+>         Retrieve metadata-related information about the current repositor=
+y. Only
+>         the requested data will be returned based on their keys (see "INF=
+O KEYS"
+>         section below).
+> ++
+> +The returned data is lexicographically sorted by the keys.
+> ++
+> +The output format consists of key-value pairs one per line using the `=
+=3D`
+> +character as the delimiter between the key and the value. Values contain=
+ing
+> +"unusual" characters are quoted as explained for the configuration varia=
+ble
+> +`core.quotePath` (see linkgit:git-config[1]). This is the default.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
----
- builtin/fmt-merge-msg.c | 5 ++---
- t/t1517-outside-repo.sh | 7 +++++++
- 2 files changed, 9 insertions(+), 3 deletions(-)
+I don't see any alternative formats presented, so what does "This is
+the default" mean here?
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 4b24de32fb..cf4273a52c 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -1,4 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
- #include "builtin.h"
- #include "config.h"
- #include "fmt-merge-msg.h"
-@@ -13,7 +12,7 @@ static const char * const fmt_merge_msg_usage[] = {
- int cmd_fmt_merge_msg(int argc,
- 		      const char **argv,
- 		      const char *prefix,
--		      struct repository *repo UNUSED)
-+		      struct repository *repo)
- {
- 	char *inpath = NULL;
- 	const char *message = NULL;
-@@ -54,7 +53,7 @@ int cmd_fmt_merge_msg(int argc,
- 	int ret;
- 	struct fmt_merge_msg_opts opts;
- 
--	git_config(fmt_merge_msg_config, &merge_log_config);
-+	repo_config(repo, fmt_merge_msg_config, &merge_log_config);
- 	argc = parse_options(argc, argv, prefix, options, fmt_merge_msg_usage,
- 			     0);
- 	if (argc > 0)
-diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index 8f59b867f2..4b4e645860 100755
---- a/t/t1517-outside-repo.sh
-+++ b/t/t1517-outside-repo.sh
-@@ -121,4 +121,11 @@ test_expect_success 'prune does not crash with -h' '
- 	test_grep "[Uu]sage: git prune " usage
+(I'm guessing that it might gain meaning in a later patch when NUL
+output format is added, but lacking such context in this patch, the
+sentence is more than a bit confusing.)
+
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> @@ -1,17 +1,102 @@
+> +/* repo_info_fields keys should be in lexicographical order */
+> +static const struct field repo_info_fields[] =3D {
+> +       { "references.format", get_references_format },
+> +};
+
+The comment ought to be more assertive: s/should/must/
+
+> +static int print_fields(int argc, const char **argv, struct repository *=
+repo)
+> +{
+> +       struct strbuf valbuf =3D STRBUF_INIT;
+> +       struct strbuf quotbuf =3D STRBUF_INIT;
+> +
+> +       for (int i =3D 0; i < argc; i++) {
+> +               get_value_fn *get_value;
+> +               const char *key =3D argv[i];
+> +
+> +               strbuf_reset(&valbuf);
+> +               strbuf_reset(&quotbuf);
+> +
+> +               if (!strcmp(key, last))
+> +                       continue;
+> +
+> +               last =3D key;
+> +               get_value =3D get_value_fn_for_key(key);
+> +
+> +               if (!get_value) {
+> +                       ret =3D error(_("key '%s' not found"), key);
+> +                       continue;
+> +               }
+> +
+> +               get_value(repo, &valbuf);
+> +               quote_c_style(valbuf.buf, &quotbuf, NULL, 0);
+> +               printf("%s=3D%s\n", key, quotbuf.buf);
+> +       }
+
+Nit: To avoid unnecessary work in the two `continue` cases, I would
+have placed the strbuf_reset() calls just before the call to
+get_value() as illustrated in my earlier review[1]. Subjective and not
+worth a reroll, though.
+
+> diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
+> @@ -0,0 +1,57 @@
+> +# Test whether a key-value pair is correctly returned
+> +#
+> +# Usage: test_repo_info <label> <init command> <key> <expected value>
+> +#
+> +# Arguments:
+> +#   label: the label of the test
+> +#   init_command: a command which creates a repository
+> +#   repo_name: the name of the repository that will be created in init_c=
+ommand
+> +#   key: the key of the field that is being tested
+> +#   expected_value: the value that the field should contain
+
+The "Usage" is still wrong (as mentioned earlier[1]). It shows only
+four arguments despite the function taking five.
+
+> +test_repo_info () {
+> +       label=3D$1
+> +       init_command=3D$2
+> +       repo_name=3D$3
+> +       key=3D$4
+> +       expected_value=3D$5
+> +
+> +       test_expect_success "$label" '
+> +               eval "$init_command $repo_name" &&
+> +               echo "$key=3D$expected_value" >expected &&
+> +               git -C $repo_name repo info "$key" >actual &&
+> +               test_cmp expected actual
+> +       '
+> +}
+> +
+> +test_repo_info 'ref format files is retrieved correctly' '
+> +       git init --ref-format=3Dfiles' 'format-files' 'references.format'=
+ 'files'
+> +
+> +test_repo_info 'ref format reftable is retrieved correctly' '
+> +       git init --ref-format=3Dreftable' 'format-reftable' 'references.f=
+ormat' 'reftable'
+
+The quote placement used in these calls to `test_repo_info` is still
+unusual and confusing, as mentioned previously[2]. Calling the
+function in the more traditional way would be preferable:
+
+    test_repo_info 'ref format files is retrieved correctly' \
+        'git init --ref-format=3Dfiles' 'format-files' 'references.format' =
+'files'
+
+> +test_expect_success 'git-repo-info fails if an invalid key is requested'=
  '
- 
-+test_expect_success 'fmt-merge-msg does not crash with -h' '
-+	test_expect_code 129 git fmt-merge-msg -h >usage &&
-+	test_grep "[Uu]sage: git fmt-merge-msg " usage &&
-+	test_expect_code 129 nongit git fmt-merge-msg -h >usage &&
-+	test_grep "[Uu]sage: git fmt-merge-msg " usage
-+'
-+
- test_done
--- 
-2.49.0
+> +       echo "error: key ${SQ}foo${SQ} not found" >expected_err &&
+> +       test_must_fail git repo info foo 2>actual_err &&
+> +       test_cmp expected_err actual_err
+> +'
+> +
+> +test_expect_success 'git-repo-info outputs data even if there is an inva=
+lid field' '
+> +       echo "references.format=3D$(test_detect_ref_format)" >expected &&
+> +       test_must_fail git repo info foo references.format bar >actual &&
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'only one value is returned if the same key is reque=
+sted twice' '
+> +       val=3D$(git rev-parse --show-ref-format) &&
+> +       echo "references.format=3D$val" >expect &&
+> +       git repo info references.format references.format >actual &&
+> +       test_cmp expect actual
+> +'
 
+In my previous review[1], I identified a problem in which the logic
+would/could present a poor user-experience by emitting "key '%s' not
+found" multiple times for a given unknown key, but I don't see a test
+verifying that this problem has been fixed.
+
+[1]: https://lore.kernel.org/git/CAPig+cTxNUPayO2SdCL-BPtjb2rfr3e3RK=3DBsQx=
+AiiEAtpBaRg@mail.gmail.com/
+[2]: https://lore.kernel.org/git/CAPig+cR=3DvRu7GwGx_wpS_GZNdX7giosDK12K+qQ=
+dOW1va-6oWw@mail.gmail.com/
