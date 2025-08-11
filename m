@@ -1,55 +1,55 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E453918DB35
-	for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:46:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878D01E492D
+	for <git@vger.kernel.org>; Mon, 11 Aug 2025 13:47:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754920021; cv=none; b=EJ5bAnfO1lxfWAoWikA2b4rOn3Jwcf3hWFTde7X44OEx3h9DOkumXWEmTHcylazN2/nWetYDhfyq8xuvcFq2TmcbB7MGHLkjcqCEYnuPleO6QiwIGi9GUC6juFZNxBooqPT4/5UCqvH/VzGmjvgpDybBm8veNuHBOloH90wTK4A=
+	t=1754920024; cv=none; b=n28Wxzucgs8lxw6VkXV376P5KWX5vyAgWYX/B26XbooraPnadvRBlwvPNcRFE9x/bGPHDjEgdWUY1RHQ+eDpDF2qnFUAW4C6odxZjK4YspuDLackF7yvIBaT6fteKgO0BlpQuoMxBQxEwBdtVIvq9x+dz6Vw66A3cYC6vCqN/wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754920021; c=relaxed/simple;
-	bh=pFevP/WRep6rfl0zspGiytbEmq0UWGhcNQUNVqEoujk=;
+	s=arc-20240116; t=1754920024; c=relaxed/simple;
+	bh=WmwDTwI3MFJlL2OKAD7MQDzvJ3z1mOpxMyhp5qxJgO0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kIOH+CbiWwkM2ykNwh/ckYSsGSvHf7b0rsJjiytXl8jjCyNuX0tyoBqQRGpjL0sU65vgYgh4SMbFd4CLchUVPN2tskFx1j4P5X4kc/Ddah7oA75WcAb41KU81QbrUh4/tzK+qEwepuZIut1uq6jssnCLi5Mfm52SR9HLxVH4r/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jZtS5ILv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=epMwy/As; arc=none smtp.client-ip=202.12.124.152
+	 In-Reply-To:To:Cc; b=jzNlGpQwOZEP4tkp/iXAt4JAPXJ3t+97qsfWk5nwtuS8DrjoaYLFSbgcKW2ldwZubp0m2sKhKgF0tKGfUNxIuL2tBMvfBZqHe06Vq61vkM1z2oRuNhp2cldgWD8aGQJOrsZDcZ9uQe4kMiFbuzFdpvscuOPtkwfiTWLMLD0RKe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Vt/JzmL7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=etVpLivi; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jZtS5ILv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="epMwy/As"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 08D2F7A00AF;
-	Mon, 11 Aug 2025 09:46:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Vt/JzmL7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="etVpLivi"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8BB3E1D0005F;
+	Mon, 11 Aug 2025 09:47:01 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 11 Aug 2025 09:46:59 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 11 Aug 2025 09:47:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754920018;
-	 x=1755006418; bh=T2crL0vQy1HTkoKGt/YUmP2sY1lJtdf2OzXcysofr5A=; b=
-	jZtS5ILv/7WdnGRrrJnAYXhkk9DkgDU5A4KTQy0Uu2pDkSDLL8o/gva5tqUgSCDP
-	lXAhKQ+KoR+V7/4AOEgiK2p1+h/e/n5y7UqXT3zs6C6qSM70fxiaO8jO3xGqU7ar
-	NQx3z2V71PUwhlQO1XLOOf3UfSzSU4xYjQip49qMhNb5VuPLSRqK/Xa9WkcAycMe
-	yJtZAPm7EsbSWqlNnAxaqeDuBAtrBXLK7g2oZ6jtRfIXU1GCap4CPYxpZfaVfA2Y
-	I6X40UhWESCfvEZOzPVJze6zpwPTSY27Q+CltlJz5W/5A5B12v6mCtYtK0ayCSoc
-	xPbChmio/LB+4MxabwTK3Q==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754920021;
+	 x=1755006421; bh=Rv8ktnZtwKqqVpe2l2DhMfYv8HNbqiAv5iBgU9bNxN0=; b=
+	Vt/JzmL7eDXg4ecIE9V3uElqgKdgP8kmI+uBmYAsQJUpSerKdD/hyip4kEl/iHa9
+	ZI21UHY1ngb9V09PNHXgowBgrKa/vlVSyzMdiI6pvfd6OAHwpuAznssMnAC9wKvN
+	xN0rRhAr9wfQ3mV405BRh50oCfbtIIh4GWGe2p9LanxyBThUQH8jGQjndOJS0r+i
+	zgxUfS7uM7XHR86k9n9K87oS7PnGul4g4dAlJAAKhiNEv1P2St+8obyNKYSTBXUO
+	jXFqy+6+uWZNPE95zr/h6MKWqu6hNUx/m8G3smsoow9rdy54MjPvl5TMIh+AZ/9Y
+	Q94Grr6ve10CWKRUvP9tvQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754920018; x=
-	1755006418; bh=T2crL0vQy1HTkoKGt/YUmP2sY1lJtdf2OzXcysofr5A=; b=e
-	pMwy/AsvTvW3WBOEZnMH4Ub/kEWKY0H1ZYZKce3oAfrTMwn7wFKGDkPwwdm3Cc3s
-	JvfzzVVQniaXrpTceXG9zJceHIaq1RA7jdlume2l5sA890Ub32IIVZdzz2tN7nht
-	R4aLjhkZcuJMDOoPvzichOUcWPGo61vItdtNmzs7s+PrvqcU/9lKouRuAjhXvDct
-	Qh6EMFw9vDc9z+sQE2mik97+/lZibxiXObVDxN0yORHaArZjXem5PUU+CvAu14hu
-	9L5QZKgEQln1hzfD41KR5r83EsBlaSPl+bPzRMn6UGx0B/Uo9aNw3e46oQRT8p1w
-	QLBJTxv7tS1cRNZL5qTAg==
-X-ME-Sender: <xms:UvSZaLV-tT-w9ZWSHeR_a3ke1ldwHleJIegIhasJB_4GJsVNa2lHrQ>
-    <xme:UvSZaPEjDJjs-LBvQCP5RcrehHUYeJypv_1zaZBUi2Ym4qQJYX9rdBn3QhVaXEe_G
-    VYJnr-OEjG0kZHj_A>
-X-ME-Received: <xmr:UvSZaN39QkvDCLj7s66T9bIqE4OOAnddpR_t009wF4zo0_eNnyPUpdakbSlrlgC9tbJdJSWaGQPHbdsbaAj56RX3TkzoW5araxvDBgPjnbQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754920021; x=
+	1755006421; bh=Rv8ktnZtwKqqVpe2l2DhMfYv8HNbqiAv5iBgU9bNxN0=; b=e
+	tVpLivil2ZDpdEvFFJxNUrAE0B/6gRoJSExiztmD7glJ+MnddzUlha3H1o64Cal/
+	msxKnwgxZ/eghb3ipJmyQv+SS9f8rroAIV9v/Nt6ADZxIJVY5O9IRi/gS7y/AUbA
+	dA9hb8l2qkIqd5+51dZHim35uCeJXiKZcQdHElIAXjofooQhIUIqH/6Aub6hUUEv
+	Jwc3mV6SxQaNOsQ7KaPNr0jnWhk5nShhnbZMUVui6eXtTg8VjE9cREoA6H1QOXsC
+	/NaxHhc7WERfL32Agv7yUwOZ6nI0QfEkNzktZpgc2IyfMcB4Ad9yqSpSgXp/Hc/F
+	sQGr/8UWvo3qxHzK/zb6w==
+X-ME-Sender: <xms:VfSZaHLcTLPTx1S61_JWZH4AXhIpFT-msX9hjfb8A3B6glk2xi1Pmg>
+    <xme:VfSZaGrb8h2ZeWP5FsSVSn8_QGyGj56JxPkouLk3LClsysmHIYr4Cz9XWmZ-2MLGr
+    _IQo2F9H_eBPhqraw>
+X-ME-Received: <xmr:VfSZaGLS4airIM2Kl9SW-Xp2noC3t0efxKgfACYQWHmMv5OA_ln7XmxnNdvr296FcmDQZ0k56WZfGt43QyR0e39rronF1fQcPN37XEQbOSg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvieduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,25 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvieduucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrdduke
-    eksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hmvgesthhtrgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:UvSZaBNibB6ciOzZWBWMQVsqC7fOUTe9gWhutOsycr0a1rmVd13ZRA>
-    <xmx:UvSZaM4twztXbwl6tHKBPRa6I2QmdNrFThGc7_Ekbn-YIoQ29rm6XQ>
-    <xmx:UvSZaL3cYgHCTNaVvfILyRkd3Z_PLyOe3qqrmgKYTWzpbiE5jsiY6g>
-    <xmx:UvSZaNwLF8VP7yrwb_9ZJmvNPQQIyCqLTdZoiMNgcrINLq-5_FztPA>
-    <xmx:UvSZaPKYG32L6ONt9WPkz0CFbXsjSRR77RbQt8G-95imMuEGH59pYkJ1>
+    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvse
+    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepsh
+    htohhlvggvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:VfSZaLRcmO4T5_CXsBnhHXzlGpLxhckxgSuIxpFYUk_vNI-s8rzJ8A>
+    <xmx:VfSZaFuKFQxwrVBsGkp4Bzd1FUDZovOUKug5cXsam6de-FvuI8o1rQ>
+    <xmx:VfSZaMbylksu40gLBeuOwNt0OpExylMjAZRE5oJYPsPhza9QlNJX2w>
+    <xmx:VfSZaLGDXEcRddApkverRg4vCZ1mlnlmC17EvPWRbq-RX3O4qAHZpw>
+    <xmx:VfSZaHPWDOX-DHHFSnzcbAs3nm1tOX85iTG21AAgsi03UpaLFuLLIAGF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Aug 2025 09:46:57 -0400 (EDT)
+ 11 Aug 2025 09:47:00 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d18f00e9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 11 Aug 2025 13:46:56 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id e29fce97 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 11 Aug 2025 13:46:59 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 11 Aug 2025 15:46:43 +0200
-Subject: [PATCH v3 03/10] odb: consistently use "dir" to refer to
- alternate's directory
+Date: Mon, 11 Aug 2025 15:46:44 +0200
+Subject: [PATCH v3 04/10] odb: return newly created in-memory sources
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250811-b4-pks-midx-deduplicate-source-info-v3-3-e442bdf2b4ad@pks.im>
+Message-Id: <20250811-b4-pks-midx-deduplicate-source-info-v3-4-e442bdf2b4ad@pks.im>
 References: <20250811-b4-pks-midx-deduplicate-source-info-v3-0-e442bdf2b4ad@pks.im>
 In-Reply-To: <20250811-b4-pks-midx-deduplicate-source-info-v3-0-e442bdf2b4ad@pks.im>
 To: git@vger.kernel.org
@@ -93,126 +92,102 @@ Cc: Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>,
  Derrick Stolee <stolee@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.2
 
-The functions that add an alternate object directory to the object
-database are somewhat inconsistent in how they call the paramater that
-refers to the directory path: in our headers we refer to it as "dir",
-whereas in the implementation we often call it "reference" or "entry".
+Callers have no trivial way to obtain the newly created object database
+source when adding it to the in-memory list of alternates. While not yet
+needed anywhere, a subsequent commit will want to obtain that pointer.
 
-Unify this and consistently call the parameter "dir". While at it,
-refactor `link_alt_odb_entry()` to accept a C string instead of a
-`struct strbuf` as parameter to clarify that we really only need the
-path and nothing else.
+Refactor the function to return the source to make it easily accessible.
 
-Suggested-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb.c | 30 ++++++++++++++----------------
- 1 file changed, 14 insertions(+), 16 deletions(-)
+ odb.c | 30 ++++++++++++++++++------------
+ odb.h |  4 ++--
+ 2 files changed, 20 insertions(+), 14 deletions(-)
 
 diff --git a/odb.c b/odb.c
-index 4e7f14be4a..e41e3952ea 100644
+index e41e3952ea..0c808bb288 100644
 --- a/odb.c
 +++ b/odb.c
-@@ -140,7 +140,7 @@ static void read_info_alternates(struct object_database *odb,
+@@ -139,17 +139,16 @@ static void read_info_alternates(struct object_database *odb,
+ 				 const char *relative_base,
  				 int depth);
  
- static int link_alt_odb_entry(struct object_database *odb,
--			      const struct strbuf *entry,
-+			      const char *dir,
- 			      const char *relative_base,
- 			      int depth,
- 			      const char *normalized_objdir)
-@@ -151,11 +151,11 @@ static int link_alt_odb_entry(struct object_database *odb,
+-static int link_alt_odb_entry(struct object_database *odb,
+-			      const char *dir,
+-			      const char *relative_base,
+-			      int depth,
+-			      const char *normalized_objdir)
++static struct odb_source *link_alt_odb_entry(struct object_database *odb,
++					     const char *dir,
++					     const char *relative_base,
++					     int depth,
++					     const char *normalized_objdir)
+ {
+-	struct odb_source *alternate;
++	struct odb_source *alternate = NULL;
+ 	struct strbuf pathbuf = STRBUF_INIT;
+ 	struct strbuf tmp = STRBUF_INIT;
  	khiter_t pos;
- 	int ret = -1;
+-	int ret = -1;
  
--	if (!is_absolute_path(entry->buf) && relative_base) {
-+	if (!is_absolute_path(dir) && relative_base) {
+ 	if (!is_absolute_path(dir) && relative_base) {
  		strbuf_realpath(&pathbuf, relative_base, 1);
- 		strbuf_addch(&pathbuf, '/');
- 	}
--	strbuf_addbuf(&pathbuf, entry);
-+	strbuf_addstr(&pathbuf, dir);
+@@ -189,11 +188,11 @@ static int link_alt_odb_entry(struct object_database *odb,
  
- 	if (!strbuf_realpath(&tmp, pathbuf.buf, 0)) {
- 		error(_("unable to normalize alternate object path: %s"),
-@@ -229,7 +229,7 @@ static void link_alt_odb_entries(struct object_database *odb, const char *alt,
- 				 int sep, const char *relative_base, int depth)
- {
- 	struct strbuf objdirbuf = STRBUF_INIT;
--	struct strbuf entry = STRBUF_INIT;
-+	struct strbuf dir = STRBUF_INIT;
- 
- 	if (!alt || !*alt)
- 		return;
-@@ -243,13 +243,13 @@ static void link_alt_odb_entries(struct object_database *odb, const char *alt,
- 	strbuf_realpath(&objdirbuf, odb->sources->path, 1);
- 
- 	while (*alt) {
--		alt = parse_alt_odb_entry(alt, sep, &entry);
--		if (!entry.len)
-+		alt = parse_alt_odb_entry(alt, sep, &dir);
-+		if (!dir.len)
- 			continue;
--		link_alt_odb_entry(odb, &entry,
-+		link_alt_odb_entry(odb, dir.buf,
- 				   relative_base, depth, objdirbuf.buf);
- 	}
--	strbuf_release(&entry);
-+	strbuf_release(&dir);
- 	strbuf_release(&objdirbuf);
+ 	/* recursively add alternates */
+ 	read_info_alternates(odb, alternate->path, depth + 1);
+-	ret = 0;
++
+  error:
+ 	strbuf_release(&tmp);
+ 	strbuf_release(&pathbuf);
+-	return ret;
++	return alternate;
  }
  
-@@ -273,7 +273,7 @@ static void read_info_alternates(struct object_database *odb,
- }
- 
- void odb_add_to_alternates_file(struct object_database *odb,
--				const char *reference)
-+				const char *dir)
- {
- 	struct lock_file lock = LOCK_INIT;
- 	char *alts = repo_git_path(odb->repo, "objects/info/alternates");
-@@ -290,7 +290,7 @@ void odb_add_to_alternates_file(struct object_database *odb,
- 		struct strbuf line = STRBUF_INIT;
- 
- 		while (strbuf_getline(&line, in) != EOF) {
--			if (!strcmp(reference, line.buf)) {
-+			if (!strcmp(dir, line.buf)) {
- 				found = 1;
- 				break;
- 			}
-@@ -306,18 +306,17 @@ void odb_add_to_alternates_file(struct object_database *odb,
- 	if (found) {
- 		rollback_lock_file(&lock);
- 	} else {
--		fprintf_or_die(out, "%s\n", reference);
-+		fprintf_or_die(out, "%s\n", dir);
- 		if (commit_lock_file(&lock))
- 			die_errno(_("unable to move new alternates file into place"));
- 		if (odb->loaded_alternates)
--			link_alt_odb_entries(odb, reference,
--					     '\n', NULL, 0);
-+			link_alt_odb_entries(odb, dir, '\n', NULL, 0);
- 	}
+ static const char *parse_alt_odb_entry(const char *string,
+@@ -315,16 +314,23 @@ void odb_add_to_alternates_file(struct object_database *odb,
  	free(alts);
  }
  
- void odb_add_to_alternates_memory(struct object_database *odb,
--				  const char *reference)
-+				  const char *dir)
+-void odb_add_to_alternates_memory(struct object_database *odb,
+-				  const char *dir)
++struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
++						const char *dir)
  {
++	struct odb_source *alternate;
++	char *objdir;
++
  	/*
  	 * Make sure alternates are initialized, or else our entry may be
-@@ -325,8 +324,7 @@ void odb_add_to_alternates_memory(struct object_database *odb,
+ 	 * overwritten when they are.
  	 */
  	odb_prepare_alternates(odb);
  
--	link_alt_odb_entries(odb, reference,
--			     '\n', NULL, 0);
-+	link_alt_odb_entries(odb, dir, '\n', NULL, 0);
+-	link_alt_odb_entries(odb, dir, '\n', NULL, 0);
++	objdir = real_pathdup(odb->sources->path, 1);
++	alternate = link_alt_odb_entry(odb, dir, NULL, 0, objdir);
++
++	free(objdir);
++	return alternate;
  }
  
  struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
+diff --git a/odb.h b/odb.h
+index 312921077b..d769132699 100644
+--- a/odb.h
++++ b/odb.h
+@@ -268,8 +268,8 @@ void odb_add_to_alternates_file(struct object_database *odb,
+  * recursive alternates it points to), but do not modify the on-disk alternates
+  * file.
+  */
+-void odb_add_to_alternates_memory(struct object_database *odb,
+-				  const char *dir);
++struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
++						const char *dir);
+ 
+ /*
+  * Read an object from the database. Returns the object data and assigns object
 
 -- 
 2.51.0.rc1.163.g2494970778.dirty
