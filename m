@@ -1,109 +1,166 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D36629994A
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 17:13:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75DE2FE564
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 17:36:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755018815; cv=none; b=tb/jXJKQdLcIJiBSVhVxHTR6tR+6OmBWRRjRtZ5IRnyhLMzApWLtQx7VPbnzNToSVDHQxrfvYWMMnXSeLMEUE89bw3uqSx9YU1S2274RbzDtg/Vd7qyNYD6HWN+sXNidxeTWmD0QAmG8+Lp4g9RKBYAmwGvRkpHl9syjpQ9Xo/Y=
+	t=1755020167; cv=none; b=F5x/57frF7lDdmDDAJaHaYUN35oaaW+w5dIguu/sTBYFGBwfDUiKmr1uhZncyNsTdDbxntreQtaVMSHeCJhlBW0kGfhT7mmZIHrdyrrksjzdb4/uFmhtBeqq66oEGukp38MUzAREq8C0Lo+8CdFdhTA/lsct5WXUjqn5xhzU5s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755018815; c=relaxed/simple;
-	bh=0ZEonjQjzC724v++IsvhFxmFD7fZ1aLdVOOegJuMsfM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JX629kvA2jVhRkigkSq4rniQa+UY1/RAm2Rdx3oP+KKbV7/VIElmH2ovggWY4KGca06ylH5s1XqeMnLEajhzQdVPHH6NQE4asSIMTmOoLcYgKCoZ+YOcThsw202zasRXOHBZkw7FvAW0511N96LetDVgqFjBHTyWm0G606y6pJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-7096f5c5bc0so13162336d6.1
-        for <git@vger.kernel.org>; Tue, 12 Aug 2025 10:13:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755018812; x=1755623612;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gLdGLKupuxAIods8+K0cjbLXOj1uGW1awjk/y1aLn3k=;
-        b=Jawz57wIuQUPkQKOntEyPcmm07027Uon4zhhB2NP7nvw947FPG6hl4/LgCdiVhjW4G
-         9tQJaQesG+4yjHEN5ar9T2+mcGafCOXsiX5gO9kKpj9k7aXwUvK5WpGPV74AsEW70l4o
-         wgHrgmnCErQXNtLS0MDTeam4wV3u8QCH/Q+sK57dFOJVDqp5PRSU1zs8AB/8wPWl3VHB
-         NoS9DlyEOBlJgzuQiYEa25xJIgyOA9UxOHdCmuWewfX5s+KNETBmLdLC7YZMsTrjP6ct
-         KRUAMjwn75PKW66mHQwoq4ukEKFnkwAK7c9svhsoBEWuyZtPn2LR4kDkTNqFNeL2waCd
-         8/Pw==
-X-Gm-Message-State: AOJu0Yy5DQRXeOIaY/0VQyS1HNnlPmZ0JuXh17D6TKTY7QuXLi/Nx9U4
-	HYJiwY3VXFOwtcDwY4N/HdMZdeWvn0TWS6MeENV4J7xMCmYspKWaCXy/13EPXUJQfJmy/w5jNXy
-	rln9yD9tUdL7xes4ETlwIbZTDrMCzK6I=
-X-Gm-Gg: ASbGncv4AWAp5mwSiN6VRDmbldp4Sq4Zpk8WXm//X58BznyTASNsnfeca++sal6zHJf
-	rtw+d3f5e1Si3f+15Uz/VeVsPrb/MtyfDiWkkRFr8//99MIR69sM2X2cjrkQ5gkfaRQ5UU0sj7l
-	veHhwUWcV3NGDevRFd6rv3yp7l+tsoGM1A8OUkyPSeQGE5QMDyHaoqjRbbxdRya2oyrAmbblJXY
-	w+NBNOUfNa8FUhNa11/Y0jnyKZWgSuKJzSzLS7JZ1RPAzTiFg==
-X-Google-Smtp-Source: AGHT+IF2psJtTnbdnI6rbXLcUVMX2Tyqwnwu+4y7XX+y6lvuIL4KcXiuMQsJ5nOhIHz+/oI5svNTx7G3i98Eq/RzhQc=
-X-Received: by 2002:a05:6214:dc5:b0:709:8751:2ab8 with SMTP id
- 6a1803df08f44-709e221ebb8mr12936386d6.1.1755018812375; Tue, 12 Aug 2025
- 10:13:32 -0700 (PDT)
+	s=arc-20240116; t=1755020167; c=relaxed/simple;
+	bh=qhL14prUcflfp8ffb0wH0CyXeTCZUGlMMQV+TbyjYcE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=U0DtM3E5I2Dql8/0a+X5Ie/5H+JM1ir9EmzFQ+srw02HOdSWPX9KGu4Rs6NrDuBA52dXAEdc3tFGLfq+OZW+0JDN7LYw4OMv/Czqabh9jt9n4v8rlg4SsVTOr4aWaziNOY3cZlZCMlTsMmh8x7daKhvGlSvUjel48ICQIcY01PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ndg6w+8c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BJ8iWLXT; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ndg6w+8c";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BJ8iWLXT"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 03431EC017D;
+	Tue, 12 Aug 2025 13:36:01 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 12 Aug 2025 13:36:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1755020160;
+	 x=1755106560; bh=2nwUXqnRcCqyvPpT9p9d3QuEsqglchcx9calTNZJ1sE=; b=
+	Ndg6w+8c+AX8OEwx3Cg5DB1UwEIyCfvF3d/F+ovHighkCFKo0LDL+8qq8apV3yFW
+	r7W/u4S2LUfUrnjvno1FqpUD9mxpzBEnvXc59PPsz09LSSgjaGDbTWVt19cFMwBA
+	3oKbRBXHKojm846DuNywzl3f2IrK6rsmz9jmAT0UNpInuzY7p7izve/iEjSDE4VN
+	URa4Z5WYuTu2Q0+p2CMgvgKCJQ1y4Mtr5WJbea3IRH5DbmTUDLiXJ8bOk8IPEnc0
+	2fa8Q/5YMIpExQnTAOLBsZp9c95txPJNufJEmgieTys0dHbelampyq02uMtOfxZM
+	KyDNlxoMIe23EUoJuc3qZg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755020160; x=
+	1755106560; bh=2nwUXqnRcCqyvPpT9p9d3QuEsqglchcx9calTNZJ1sE=; b=B
+	J8iWLXToK/3kPJbVHfL+bqzmF5l8kB8DrcnbauxIpNz6n22ahWIt3/kxQOpFOBKZ
+	QJAGiOZosAnyQ9QVWHgVnI6n+qMs3Mlg4O6Xf1H5OL4n9NfGeYXUeBzjQfFrzs0e
+	NgAZUms/C5dOkV5g2wAEUPehL977v4+ydnGi7Ecb4sQs1O9x0iENVNu0UdcT5MsZ
+	9583t3DTwrUmfOXsfFmMU6/t+r8Mx/UX3pika4MgsTKFYoyk5dzWKR4dUn70t8qa
+	DnMCVvHtg8itIWT2TW5z6NURK3gE43ec9j8XZgAzrDdorFM9PhwyiBz5IvaOfZWP
+	s8fs2le1yoGIKhop0u4IA==
+X-ME-Sender: <xms:gHubaDjKDj4VudKv-zeGBvVKEjIzCqFW_7AWwHWRhK8nUnr1oG6PPQ>
+    <xme:gHubaNlF3py6iKDoAhe1Kpapwwjs9z8PX3pWNeB9o0g5vMQwxszm7yn1PDpJX_75H
+    iFrnzKTWV3mtlPvQg>
+X-ME-Received: <xmr:gHubaJghIJ4Y0mAlMu5-iN7QrvqcbrD4PZV4AJ3GMmQvMpMhXoDD2qUvu5Rr5UphgcL1y53XRXugM4Lzj_Kaccu2V9Iv0p8ZNEEJev4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeehleehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeetvdefudfhgfefhffgkedtjefgteffgefgueegieelvdelieduleffhfek
+    tefggeenucffohhmrghinhepmhgrkhdruggvvhdptghotggtihgpghgvnhgprghllhdrsg
+    huihhlugdptghotggtihgpghhlohgsrdgsuhhilhgunecuvehluhhsthgvrhfuihiivgep
+    tdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomh
+    dpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhu
+    nhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopegsvghnrdhknh
+    hosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhi
+    thhhuhgssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhl
+    lhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:gHubaB2ysUHOFrBHLDmSwNo3gku3A-vt9gMV19JmkZI7lysEqkQHyA>
+    <xmx:gHubaCJEuElltg1TMPx2m8hP-bzHmh9r0APUNvDu6uDnck90NXUKNA>
+    <xmx:gHubaBzq3a9yJr8MpozZXPjb1SoSJeXwkXUFCKSRU_lLt1cj8lvo9Q>
+    <xmx:gHubaAXRCuoZnZLyy7R18GMESot5wxygn64QJAiOETrqEhbfz-_oVw>
+    <xmx:gHubaDesXqbIHQ1GcbkrMVqjv1xbxhZarcTS0m2c4_kieev40vRkM5UT>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 Aug 2025 13:36:00 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Ben Knoble <ben.knoble@gmail.com>,  "D. Ben Knoble"
+ <ben.knoble+github@gmail.com>,  git@vger.kernel.org,  Patrick Steinhardt
+ <ps@pks.im>,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 0/4] clean up some code around editors
+In-Reply-To: <CAPig+cTpMFfg8iTncgekq6wyfHOPidhHposLi11D3fXyfnNQRw@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 11 Aug 2025 20:16:45 -0400")
+References: <20250811221706.67168-1-ben.knoble+github@gmail.com>
+	<6BCA1E93-7409-41FA-81FB-0CB75A3A55FB@gmail.com>
+	<CAPig+cTpMFfg8iTncgekq6wyfHOPidhHposLi11D3fXyfnNQRw@mail.gmail.com>
+Date: Tue, 12 Aug 2025 10:35:59 -0700
+Message-ID: <xmqq1ppgv3wg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250810160323.49372-1-ben.knoble+github@gmail.com>
- <20250811221706.67168-4-ben.knoble+github@gmail.com> <CAPig+cThhm8b2vE=vAHYc5cEA9n232Lwi1c+p=LV9hK4hz=0Hw@mail.gmail.com>
- <CALnO6CDaHZuC0=_Saccj3DuW-vaWs30PmwXf9dw1+AfsC34wWg@mail.gmail.com>
-In-Reply-To: <CALnO6CDaHZuC0=_Saccj3DuW-vaWs30PmwXf9dw1+AfsC34wWg@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 12 Aug 2025 13:13:21 -0400
-X-Gm-Features: Ac12FXxq3cO9kWDxNtf1xv5FJhc1cUDhoJF4qntJ_z5AxPmviebaiqxj_aJGnCk
-Message-ID: <CAPig+cRRBDqewrqUZGS=EPJgSkYmX-zD_qrqbRXzXq59Ub2m_g@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] t7005: sanitize test environment for subsequent tests
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 12, 2025 at 12:41=E2=80=AFPM D. Ben Knoble
-<ben.knoble+github@gmail.com> wrote:
-> On Mon, Aug 11, 2025 at 6:34=E2=80=AFPM Eric Sunshine <sunshine@sunshinec=
-o.com> wrote:
-> > On Mon, Aug 11, 2025 at 6:17=E2=80=AFPM D. Ben Knoble
-> > <ben.knoble+github@gmail.com> wrote:
-> > > +       TERM=3Ddumb test_must_fail git commit --amend
-> >
-> > Don't use one-shot environment variable assignments when calling shell
-> > functions. Instead, you can do this:
-> >
-> >     test_env TERM=3Ddumb test_must_fail git commit --amend
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+> On Mon, Aug 11, 2025 at 6:59 PM Ben Knoble <ben.knoble@gmail.com> wrote:
+>> > Le 11 août 2025 à 18:17, D. Ben Knoble <ben.knoble+github@gmail.com> a écrit :
+>> > ﻿Changes from v2:
+>> > - shuffle setup code and use more helpers in 1/4
+>> > - insert 2/4 to stop abusing --exec-path
+>> > - improve environment-cleansing idioms in {2 => 3}/4
+>>
+>> Some of this shuffling turned out to be unportable, which CI caught (but running the test locally didn’t??). Fortunately it pointed me at test_env and I’ll either use it or go back to the subshells.
 >
-> Yep ;) I had the latter, switched (see range-diff, I think), and then
-> CI caught me. Why doesn't the local test run catch it, though?
+> To catch it locally, you can run:
+>
+>     make test-lint-shell-syntax
+>
+> in the "t" directory. Alternatively, `make test-lint`, `make test` or
+> `make prove` would also have caught the problem.
 
-Although the `chainlint` linter gets wired into each test script, thus
-is invoked automatically when manually running any individual test
-script, the `check-non-portable-shell` linter does not get wired into
-each test script, thus does not get run automatically when manually
-running a test script.
+Among these three `make test` can be run from the top-level.  The
+other two cannot.
 
-Almost all of the "lints" performed by `check-non-portable`
-could/should eventually be folded into `chainlint`, thus eliminating
-this difference in behavior, but the
-"shell-function-one-shot-variable-assignment" lint is an outlier
-because it can't be easily localized. Specifically, whereas all the
-other lints can operate just by consulting local context, that one
-lint can't because it can't know what command names are in fact shell
-functions without looking at other test scripts, as well. Hence, the
-operation of check-non-portable-shell.sh is two-phase: (1) it first
-scans all scripts to find all shell function definitions, and then (2)
-it "lints" each test script individually, in the process consulting
-the table of function names compiled in step 1.
+"make test" is a bit too heavy-weight to use as an initial sanity
+check for tests that are being newly developed, and I am wondering
+if something like this can be added as a first-line sanity checking
+tool.  The idea is a simple "make" to build, while DEVELOPER=Yes is
+set, would trigger the common linting any developer who is working
+on new things needs to pay attention to.
 
-When you run a test script manually, the script triggers a run of
-`chainlint`, but `chainlint` only knows about that one script it's
-checking, thus it can't compile a table of shell functions which might
-be defined in other scripts. Obviously, there is no technical reason
-that this couldn't be implemented directly in `chainlint`; for
-instance, `chainlint` could detect other scripts which are pulled in
-by the script it is testing and compile a table of names of shell
-functions defined in those scripts. Eventually, I think it would be
-nice for `chainlint` to subsume all the checks performed by
-`check-non-portable-shell`, thus eliminating the latter script and
-(hopefully) speeding up linting altogether (at least a bit) but the
-work to do so simply hasn't been done yet.
+
+
+ Makefile | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git c/Makefile w/Makefile
+index e11340c1ae..7f21afeaf9 100644
+--- c/Makefile
++++ w/Makefile
+@@ -1471,6 +1471,7 @@ include config.mak.uname
+ 
+ ifdef DEVELOPER
+ include config.mak.dev
++all:: check-developer
+ endif
+ 
+ GIT-VERSION-FILE: FORCE
+@@ -3350,6 +3351,10 @@ check:
+ 		exit 1; \
+ 	fi
+ 
++# We may want to take over 'make check' for this, but for now...
++.PHONY: check-developer
++check-developer: check-docs check-tests check-builtins check-headers
++
+ COCCI_GEN_ALL = .build/contrib/coccinelle/ALL.cocci
+ COCCI_GLOB = $(wildcard contrib/coccinelle/*.cocci)
+ COCCI_RULES_TRACKED = $(COCCI_GLOB:%=.build/%)
+@@ -3942,6 +3947,10 @@ build-unit-tests: $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG)
+ unit-tests: $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG) t/helper/test-tool$X
+ 	$(MAKE) -C t/ unit-tests
+ 
++.PHONY: check-tests
++check-tests:
++	$(MAKE) -C t/ test-lint
++
+ .PHONY: libgit-sys libgit-rs
+ libgit-sys libgit-rs:
+ 	$(QUIET)(\
