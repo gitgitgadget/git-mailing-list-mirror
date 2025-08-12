@@ -1,141 +1,152 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932712F0661
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 21:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9937081F
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 21:40:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755034591; cv=none; b=EFgqrK/u0tI6SnALoXTENxK/Ubuy2aSbVN/D6W3aIWtYyhnn0/Qxo3KnVKZUvJ9D+HoRGySos4fJthjeu3DwZmLRpbzfF3dfXnEilirBwxcwT0e/PYGR5/N7KlIBx6WxYKjxahImCr0DoSL7V0mhyr0NMP886SyrQyWA4BOsOBE=
+	t=1755034844; cv=none; b=daoGrJnqxVxnUpdg9V2qUgBFyXoAOxcwYcwgxkCyeNkRkMeRw9lW1RUEZ2hg0BxIwkTd7Ly+xHbTEFtUjgRI2liomPgXds0SDIr3YKFlz8q420xQx73CFXOjiiGxFxinHlmVQQdMaDmqM4FriKkWBlriIrbybu2N7gK/shXtHU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755034591; c=relaxed/simple;
-	bh=KqqnRbcKxmp5i4yY7aQ0q4SFT2+OvGHHNcmtvHYk9y8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ShjyjWUy6CjcGb+ZHIE4hGdcxgjWn12RstjRPF6hZ6QOnwU7/5I6OpbnyVKay5+LSKbKNshyaZylaOI4xRYzQrY73Bw8ns2TEWfGkSyzogWUA2Ee1jvbzrQiTpebaYXr1WxTQBUU4Cr+kcU6p3p0Qb7esmwKIR+fdTCOhY2iaOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=emPDO3j3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Na5xGast; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755034844; c=relaxed/simple;
+	bh=fZC4B1CkPTs139iPOUqcruG/NE9sa4isTmWnuXEuXwk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=fnx6+Zf87R6cSgFg4pK+vKmR1N0u2bDwk2OeVBn48Gu3xQJ0iYl8uRDcYa6TLZ8223Iy/87pvnT4CQcd8C6lKt/jF9WzalNSW3GfgHe9hUhSpHR6ITY/IPIE7QwfsvEoWVb3r1+j8Gu6YNu+O0pRBEfURjoLN+SP9rATruiGo9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=FUUgCeZK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E3nLmazN; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="emPDO3j3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Na5xGast"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9DE071D000EE;
-	Tue, 12 Aug 2025 17:36:28 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 12 Aug 2025 17:36:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1755034588;
-	 x=1755120988; bh=q1EPjMaUc+hn1lMDXmTnfURB1aaU8UYExdYOLuIPqL0=; b=
-	emPDO3j36kFhNcXnJBR5MaONuIFnM8V0fVYUs8uXM28hxND+lHmqEYw/Qfyoshkn
-	tl151NJmfKXwd+2bJ0h+swVeLjcz38OoJeg9yZd6artCsCkJ441it3f8IMYXicf+
-	EDfUJx6mLmI1AvIuZuR2CZPCRxdPAPFbUWZ2dNi4K3ISMNUJmS35NgKru6GzQ5GX
-	FYwwIZEt88VuXITtTU+Q6BUh6YonUjz4gD+9j4bnQV/EjMk2KNZJnQMA3mNIxJRW
-	WDt+c9qTgFoY1DCd24KRL25roXweorLlViEj528odNB8J2HXvhTyWCKMgTc0NN8T
-	bmONKx2ZQpWaWF9Xq4zvvQ==
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="FUUgCeZK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E3nLmazN"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id A8947EC04CF;
+	Tue, 12 Aug 2025 17:40:40 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Tue, 12 Aug 2025 17:40:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755034840;
+	 x=1755121240; bh=II8sB9DXAwxxV9qcJsk0Gvr3ELSqrTZCpjvHpMLcG/c=; b=
+	FUUgCeZKauO+Se2s2YLrhF+KFMrGvzZNNHkrzPg6XE9N6ww+tDoKB/i4Jy5cAKWX
+	zaHp74f/NhlwiL5rAaFbiMPa9WDEuAKY7AOwwyD3D6mI9zqU06DtonMu1izxlbxP
+	f7bXOzJxjd0HHO9aUgj39Q/0QT+5CJt5LvsB5JzHdhdZ8FgTRwVV1Vd97Y+2527f
+	13LDjiDlHA9g3PrYA6jZaQzQklq6wHVqAdP49MZ6WHRTuPbQGqO1HeTlujXC5cXt
+	IXGywYjPB08OUShLOoCmNWdVQYxck1v4AREdOk8ea+OBnmPIVxUcu4Vh6Jr0LQ9d
+	+E7j05jEsCjZyonNmq194Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755034588; x=
-	1755120988; bh=q1EPjMaUc+hn1lMDXmTnfURB1aaU8UYExdYOLuIPqL0=; b=N
-	a5xGastzOkdtxZDOh0WHB0Us8my11e3AAaO7xyCKO9hhyA846wAukUBRXiioLcTJ
-	nag+xzLAqltQmjnDBPQW/TCAskBvYfzHCDidbhr3Izw75P1G9K7ShRKodA79PKYr
-	AEfnuLFefqzZxiwwZ4ri+SLO7NXHa1EOtBpiXkix2qn4cahteokvw54fG+kAYfBG
-	xWpbL4YozUWd4FkL5ZnneIFpmDaB/vD2WL2tpOv8/VUTQgRnjq+ChdFXk4GCn+D9
-	bgUVM5nYuV5aelSfQnQUNyl6Uvw/tkhI1Bn+FWfo0ibyXN+3+Xxi+EDpQEh+i09F
-	aYnqaejgcPFIQVMmgJ+ew==
-X-ME-Sender: <xms:3LObaBoAlwVDhHGNU3Og9Ux4rWbSp-ldOrnhkSo5l_UoZ95p5c_OxA>
-    <xme:3LObaPL5bFKPKVPr4-qzpoNTI7zB7dXMoB-4x0j0MW8stNL9zwwL9Lo7MgdRzK7uG
-    Tei10JUOvUo4J1mgg>
-X-ME-Received: <xmr:3LObaEoCr83ayCaa-_XTi_8upP3YxFXKw5KxHorw1mSHO-zkVeHhHO4ugHsw1RcQOta11A63ZCWoMLmjCa664x4VlfkKj23gW2rOBXg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeeigeefucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755034840; x=
+	1755121240; bh=II8sB9DXAwxxV9qcJsk0Gvr3ELSqrTZCpjvHpMLcG/c=; b=E
+	3nLmazNggsiO4uiPN1tP6clSJeABfGKljRIitqoOJSmf5aQp/giArZ66lpJyFMK6
+	ZW92SJoJ6g/sIGmnLRw8xytfXR3UEbOJ4Zz50J6c09EJNQDEeHJ5dVkE809Q6vUZ
+	skinnFjkrvHf/ZipvArtJlEz4csXdJSEzOntndrldLLP7iQ41xrPuuLRas/gLsok
+	s/qhUVMpt1qykegaJ0AERQWstL6DdB8PusSmTnQwF1dzXR1nG3c4Lw7HovpxzD49
+	lT59hUSv3UPk7OlgeRpf0XpiUDD/leR1IsouCB7mtZa6wMuD/RbEt/JNsYBRlli0
+	258sqpDn1pvuOhSIpL5Nw==
+X-ME-Sender: <xms:2LSbaFrZRcRWjvLDF4bsgmvswIvJ6MhjAQoGtdY2dAQPTFazmsd_HQ>
+    <xme:2LSbaHqD8gX4qvVzuYd5CXml8JG-LGE3JyXXhXjh8HTyN-gJ4BZS9eNYCM8PPy1gF
+    sh8btxpcByrywlqq0c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeeigeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjuhhlih
-    grsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:3LObaHwy4EwmjPgToDzc6J-vLGOjICw9HsUHcpf7kBxbCM5IY0eewQ>
-    <xmx:3LObaINAHT9hvp1weIMrSO2zJid6KcIhpzdf8Gr_ed5mc-zsT_Iddg>
-    <xmx:3LObaM5xZ5DRYRqcdy1K_8eE8vfywSUCg9hhIP_6YXRTBE4sEa9IWw>
-    <xmx:3LObaBnKo_GHwZak718uLrEc-B55PydWstFjDjYVzEVl_4ociz77yw>
-    <xmx:3LObaPLme8uVeDnFQbd0lMXsNQ4U89kuHG0LbT0YCed9WxVp_sXocfQF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Aug 2025 17:36:27 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chris Torek <chris.torek@gmail.com>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 5/5] doc: git-add: explain inconsistent terminology
-In-Reply-To: <CAPx1GveEX_r8thqpux0jcbEsEyLpNOvRWEvogUp4m_cNC5=dbw@mail.gmail.com>
-	(Chris Torek's message of "Tue, 12 Aug 2025 13:51:20 -0700")
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
-	<f7e8e4c63a1205740c2d54368d7bcdd686882680.1755029249.git.gitgitgadget@gmail.com>
-	<CAPx1GveEX_r8thqpux0jcbEsEyLpNOvRWEvogUp4m_cNC5=dbw@mail.gmail.com>
-Date: Tue, 12 Aug 2025 14:36:25 -0700
-Message-ID: <xmqqpld0ql2e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthejre
+    dtredttdenucfhrhhomhepfdfluhhlihgrucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhn
+    shdrtggrqeenucggtffrrghtthgvrhhnpefgveekudeviedvveeuhefhvdetgefgffdufe
+    eguddtkeegtdeltdevhfdtuddttdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehjuhhlihgrsehjvhhnshdrtggrpdhnsggprhgtphhtthhope
+    efpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:2LSbaExut3wsX3X9PochMvDW0bsC6fNjpilY3xAMbBBSu44P8H3aqA>
+    <xmx:2LSbaPK5o-eQevufbR8SUQzLq5wbU5HJwQeHMDA8NOTYcXjxIGLNjA>
+    <xmx:2LSbaDQZbwuOvIuYE6It0aDYMHuYMU1zhNwpWmNsk93LhXFqHKq-XA>
+    <xmx:2LSbaPp8tXB0eG2RBvvVnlY3thASIkNtvoKvt-LH0lwYqf5BSMbXpA>
+    <xmx:2LSbaFx13aNuPzOVWP1A7_S8Wfi6vLxI8r0-o1q8_ToEp9zdQAX-NlTA>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 69D667840B0; Tue, 12 Aug 2025 17:40:40 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-ThreadId: T445d42a894a29bdd
+Date: Tue, 12 Aug 2025 17:40:19 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <152d47a3-7744-476a-8ab8-43b7b52b67ea@app.fastmail.com>
+In-Reply-To: <xmqqbjoks19f.fsf@gitster.g>
+References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
+ <310d2c1d8f7f68ae52ddd29f0ccb0a0364aba1a2.1755029249.git.gitgitgadget@gmail.com>
+ <xmqqbjoks19f.fsf@gitster.g>
+Subject: Re: [PATCH 2/5] doc: git-add: start man page with an example
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Chris Torek <chris.torek@gmail.com> writes:
+> But isn't it the source of the most end-user confusion that they
+> cannot wean themselves off of the diff/patch worldview?
 
-> On Tue, Aug 12, 2025 at 1:35 PM Julia Evans via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> +TERMINOLOGY NOTE
->> +----------------
+To me it feels very contextual! My impression is that what's important for Git
+users is to be able to think about commits as diffs in some contexts, and as
+snapshots in other contexts. For example with `git rebase` I'm usually thinking
+of my commits as diffs, but it's very helpful to me to think of a merge commit
+as a snapshot, because the merge commit does not have to be a "combination" of
+the two sides of the merge, it can have arbitrary extra content.
+
+> Wouldn't "add file X" confuse folks who still remember how other
+> SCMs before Git operated (i.e. "file X is now known, so if I make
+> further changes to X next 'commit' command will record it") into
+> thinking that Git would do the same?
+
+The point about Subversion is interesting: I would expect that most
+people learning about Git's data model in 2025 have never used
+Subversion.
+
+So while I think it's extremely important to make accurate statements
+while talking about Git (and I think it's very possible that this description
+is not accurate enough!), I do not think it's so important to specifically
+target misconceptions that users coming from Subversion/CVS
+may have.
+
+>> +By default, `git commit` only commits changes that you've added to the
+>> +index. For example, if you've edited `file.c` and want to commit your
+>> +changes, you can run:
 >> +
->> +Git uses the terms "staging area", "index" and "cache" interchangeably
->> +for historical reasons. Many commands have flags like `--staged`,
->> +`--index`, or `--cached`, and they all refer to the index.
->> +
+>> +   git add file.c
+>> +   git commit
 >
-> I think this is also a good idea. Unfortunately, `git apply` has two
-> different meanings for `--index` vs `--cached` (I believe it's the
-> *only* exception to the "means the same thing" rule...).
+> What happens when you did "edit && add && edit && add"?  It commits
+> the two changes you added to the index?  I do not think it is
+> productive to hide the fact that you are preparing a snapshot of the
+> "next commit" in the index (or "staging the contents for the next
+> commit in the staging area") with various forms "git add", including
+> "git add -p".
 
-Yes, I think the first sentence is an excellent addition, even
-though I do not know if "git add" is the best place to teach it.
+It could! It's easy for me to imagine a world where the index
+stores an ordered list of diffs, which are applied as patches in
+series when I commit. I guess you'd need some sort of
+patch + patch + patch + diff workflow to generate the final diff,
+but to me that doesn't feel so different from what Git is actually doing in
+practice.
 
-However, it will be disservice to users to say "they all refer to
-the index" here.  Yes, it is technically correct that they all refer
-to the index, but that much any intelligent readers can infer after
-reading the first sentance that historically these three words were
-used to refer to the same "index".  And what I think is bad in that
-second sentence is that it implies they may mean the same thing
-without saying that.  It is perfectly fine to say that these three
-words express some operation around the index (sometimes called the
-staging area).  It also is fine to say that "--staged" is sometimes
-used as synonym for `--cached`.
+In any case, I'll think more about whether I think this is really
+an accurate description. I'm always especially interested in the practical
+consequences of having misconceptions about Git: for example (and maybe I'm
+convincing myself to change my position here!) with `git mv` I think it can
+become relevant pretty quickly that commits are snapshots, because if
+you move a file and edit it then Git can't always accurately guess that you
+intended to "move" the file rather than delete the file and create a new one.
 
-But at least `--cached` and `--index` mean quite different things.
-
-As "git help cli" explains, an operation that can affect only the
-index would use "--cached" and both the index and the working tree
-would use "--index".
-
-It may be that "apply" is currently the only exception (I did not
-check), but it certainly is not guaranteed to stay to be the only
-exception.  If a command wants to work on both the contents in the
-index and in the working tree, such a command is very much welcomed
-to use the option "--index" to trigger such a mode of operation.
-
-Conclusion?  I would rather see "Many commands have ..." sentence
-struck out.  After all, that does not need to be taught to those who
-came here to learn about "git add".
-
-Thanks.
+I'd like to be able to have a similarly practical example of why it's important
+to think of commits as snapshots in the context of `git add` but I haven't quite
+found the right one yet. I've noticed that people will often sort of "reject"
+information that does not fit their mental models, and I think "commits are
+snapshots, this is important in this context because of
+<specific practical consequence>" is much more convincing than just
+"commits are snapshots".
