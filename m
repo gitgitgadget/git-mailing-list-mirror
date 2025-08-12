@@ -1,138 +1,113 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D106A3596B
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 14:36:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8448E2EB5D8
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 14:37:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755009393; cv=none; b=pmwqE4apWlgj3LbpJSxWhpLiv0Zsb8Np42nF7+ymZDEA3xPWdIA+Z0wuU88NZRTJDizIBO/okLmv0B3Gl/j8nEussF11fA2S+2BQ8bWVwAsFnIVpK6ZoLAHiWEit0QSoyReoFWlsl6GWdeMtb2gjIyZMlimrvXcjAtgw3ap9LWY=
+	t=1755009443; cv=none; b=X0OEKond0Y0AjNQZlpmJGe4pyCuSoquo3Fbfnvl1WBCf7COWYCTb2cX3J3wFB4B5xVVr0osCrHZZBYw6X0DU/VGR9aNAcLwRw+0+KxQIwUfP6P3eUFCdSJp1rTHRu/h44Hz6Rz6kTjQd9sFlIKezPYv9o2wNij1fCoLiQzJWy8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755009393; c=relaxed/simple;
-	bh=Wz8hgAoXzy955Qyjc+m6HSL8zTKpcP74ROar3WaugXM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hN8Kr9MZ9Ks5Xlxtyx2eXfh+RUGV8EE+VZ9eMVnmI2iqK8Q5xIMJBi7gXRvkmJobrNiSWISRp4k4kprQplcXcmkuiX0Mwiut3xibgBtSniT2dAVwED0ZS3Us2VihkfcPgajq3avCCez+iZEu8BDlwiLxGPKWo4fFH8V18cE7N1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FK9QPfPG; arc=none smtp.client-ip=209.85.221.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755009443; c=relaxed/simple;
+	bh=hit6nN8HzYTlBmspDHFg4rku0bzinMY9x0CwjwNA8B0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lfqyibpeUK3hOIg7HBcQqJfLUc8uXJkvaAO+gDaxBpiQ7A5aTuoGNQkKoIHjHgdNcnKT4vVIKtE1ua2lZhfzt1iRO4hXoyjTVkrABt0Vx+vijLR/hc3vBYcBIfmr3gc26dqcSbxhZ+EEbdIKlHliOaU+3pQM4j0+3odtcUP/cmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kWs7Hd7A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D3Cbp9tg; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FK9QPfPG"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-53939ecca0bso706692e0c.0
-        for <git@vger.kernel.org>; Tue, 12 Aug 2025 07:36:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755009391; x=1755614191; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PKPO1REzjG/k8ZB4RFL7LageVYknxZp/7XVZcpQEfNQ=;
-        b=FK9QPfPGSDBT08l3ysm2P95XHlQuodv9qUTlfhKXFOAYsry6eEdjhTJVgGxxvYz4XX
-         4sRV47jQF5GuD+Lt1eqhdaNO1dPz7QQLFtdwPmzXlNQ1lhblTnzw/8Lq4p/HhPTce91I
-         v5hZiSneGlNK5IViprAe36MV/H0jPpNgIzi4OZ7dGGc++N8BLYUf8uFyUEoISc9E1Ss4
-         aL7l5Uo5jWj9OUW92jjooagV769TZ4H21/8+ETDsdajjpBCDwpFYRUI1aOC3+Ec66pWv
-         vIdZkI0mB/adFkv8BKPM6kTCUn9aA3EC9YBfuCx7XJccNeZIs8ifHt3D+8LaUWTe5CW9
-         f2fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755009391; x=1755614191;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PKPO1REzjG/k8ZB4RFL7LageVYknxZp/7XVZcpQEfNQ=;
-        b=dWQe+jyP1JVoOMb2OzXX+N7jAPnm9Cl12mAH5P2o82Z9r6rdruz1EGnnFFDQZZ8Lgj
-         jyG9COpjSBIsiCa9Rc9XW5aOwL/KzHqzHHiEBrTKgMUCTbn3N01Ixkokjoi/+LP5hd0k
-         EH/ruS88ugSIXHgAbssisCBMoj5WxFnx2C+2O8FM+DIAjliMe/NAkkLZWkODos+br09A
-         NduozIwp9jEQyW7eYMBx2c/8av0A511YsJW46MLVIcz+v72g9vncpEAlBhhqsifCmURm
-         ggt+kLJLkJQW9o0hFHByl3gN9BJ4GfBuhFPBn4zjslcmc4w7kGmK228fZiwL7vv0EOlO
-         lHkw==
-X-Forwarded-Encrypted: i=1; AJvYcCXDJmV/DWdGDF4izKhtTwl4n3uBsTHr2WeEVlxJaGVXVAdhWXCRW6ylX9U+NQLmGMqprBs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFb3rojq60vq/0nRJw9HXlvKsrFmJRH2Jzsv4+SW8sVbasYDrd
-	NeTwNg9W6cifjX8d1gcu9Eyo+1zx8m9me5iC0EkUntXAa5oqHCzp51WWHPaAKqjiC+PNAN/xG/T
-	A7XG8sOvkOiylwM2CI1ywowyzQb5YmQM=
-X-Gm-Gg: ASbGncsWYy97u6GO0ICiwDXoZs1/8CpTVkZ7VGSEkYXpsuuhXBfv0SUPLBmLA97FkFG
-	uvxOgYub4dyxkjqiB3NJDpIqPyclpkT7FIaEVPgrt4Z2lAfKPkJNDrjcKjb2EHT996GgfMnq0Ma
-	aUoo71M41crVV/0YvFYxo1qajMuDED92h4f55n3ZbP9MhVMhl2+7luv7dxUgVfWEfmsFSmMZZDq
-	vHGsstu
-X-Google-Smtp-Source: AGHT+IH+oman7NpsVCj8FGlYJgJdIhOvAuKBMi3NxegoyY3t/0eB6vL+urPkAcTnzBZ+RP8oE/rVBUxGYgkdudWPT8Q=
-X-Received: by 2002:a05:6122:1694:b0:539:1154:d149 with SMTP id
- 71dfb90a1353d-53b08e0d107mr6039e0c.9.1755009390578; Tue, 12 Aug 2025 07:36:30
- -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 12 Aug 2025 07:36:29 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 12 Aug 2025 07:36:29 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq349wy5hg.fsf@gitster.g>
-References: <1a32a666-fcf4-4f05-a468-2afa07fa0e2d@web.de> <CAOLa=ZQqY8MDTs846mkVsxXrmOmC5O_sv6BxUHqYjGk1Ag+Osw@mail.gmail.com>
- <xmqqtt2d3l3c.fsf@gitster.g> <CAOLa=ZQGaZA=Yynv5JkYpSbYBczfVnemwmzABrqB6er19Utfeg@mail.gmail.com>
- <xmqq349wy5hg.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kWs7Hd7A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D3Cbp9tg"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7FBCB1400171;
+	Tue, 12 Aug 2025 10:37:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Tue, 12 Aug 2025 10:37:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755009440; x=1755095840; bh=+oXOp6Fs5N
+	0dSeepwLoeV7wUTx8ge+KHKNtM3dCCQOU=; b=kWs7Hd7AZBXXwwaDbbs2zC77sr
+	tZKGmnY6qSvvokqemNFYda52eKiyDZCGPf2dYaW6vBpDqr3JkzhDCXKx0RSY8hLg
+	7x7B8XsMwzCfFA6NIVJ3j/+AlmwOlxOBOLIUrhov9MJj9SLlQxwrxmhizq7tXNtu
+	K+Lx5OYVRVaFYtDDFRkNj2sC3vHAfz8V+0v60EZKz1Ramm9hHsZJLCRoItPCudMe
+	+1sP2FXoyAAmrHajCcpoNrJcJKDxR6Igk8lUaPi9P+vh9YkvCe5JBTkMSRRwRc+F
+	ti+kptogfri383pi5xaEg77wkLu89NUK5jTHqpbkUBX9qEVbXmZ4JRilEFeA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755009440; x=1755095840; bh=+oXOp6Fs5N0dSeepwLoeV7wUTx8ge+KHKNt
+	M3dCCQOU=; b=D3Cbp9tg7x57Ty9QfC0JdiNluHKcaxSXzXP2L6ZJhMq2Mt0ErCk
+	esIr7zLjA43ZuxbzD3i4TP2H29rrcVrQzO7LbyTDdaMv9WRsdJ51Z2vVWrsZ9RXP
+	UjT+ZGhcPpUGL3TCnjms5W6XCJqFkYkozbMnywweVELLZMdF1LPwvEeQ05XVj21M
+	WmVUJp+U6EJXQ9q0fwhP3MTVBQpjOKJ1OpPo01LxyJbT0MVNzC9hV+Qusolpl55m
+	K+XeVvpXCWTX6aK3euTBHtm6+HJhOdKsBRqGWARs6P0nMR3RhWNyYtsSQdeyUgDu
+	TEWGdUfGZD3OLffLujOIIEb9swYMGmaKQRg==
+X-ME-Sender: <xms:oFGbaBjVBL-PS4Rt6whF8hGc5J_etBgw3ybpQKIYvHS3o6xk0OGhpg>
+    <xme:oFGbaBjetJGPf2bFXh1-BGA4AGwFh_0IMIo5RK78zKOSPLNxNr8MZzqZLb6GvQLQx
+    Nu2UpNcs1uLDwXYxg>
+X-ME-Received: <xmr:oFGbaHhKTZ1n5D5qZiYqQMcNQL6RiIqscOIukObStkQ_bsV6D6UhF3RH7jjj8Px7TvI26ovmi3z5EI3s2rljNwJ-3YVqrfSl83YI2tc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeehheelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopegtrghrvg
+    hnrghssehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhh
+    ihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:oFGbaBJChlZaYesfDxZRvbmXuK43k9xsxYtXr5rX2roW7oZal4jdmw>
+    <xmx:oFGbaGGnGv8ccaJ18o7hWYWfNg5AYMFiPD3NCeg4baIBr6X2AMldLA>
+    <xmx:oFGbaFSyX1IoFk20Dn8M244Xxueyy0HZELRjvxePF5nfnN4Jg3Scsw>
+    <xmx:oFGbaCen10E38SeeS0RJpj927ruXAtIB_hD1QlY34-rF5Fxlcl8x4Q>
+    <xmx:oFGbaEfCmP0ZiO3YuUGxYSzWMMaamQPM-0BSqa9sIFGWtToizlQXmTe6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 Aug 2025 10:37:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Carlo Arenas <carenas@gmail.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 3/5] reftable/stack: fix compiler warning due to missing
+ braces
+In-Reply-To: <aJsJE3UzKIVeg3di@pks.im> (Patrick Steinhardt's message of "Tue,
+	12 Aug 2025 11:27:47 +0200")
+References: <20250801-pks-reftable-fixes-for-libgit2-v1-0-f446e1c33cb9@pks.im>
+	<20250801-pks-reftable-fixes-for-libgit2-v1-3-f446e1c33cb9@pks.im>
+	<CAPig+cSeYUenjTm54higv6ANCOw0RJsF1hevS_p71=sH3c+E+Q@mail.gmail.com>
+	<aJBNHzE3RQBZZTcU@pks.im> <xmqqwm7i527l.fsf@gitster.g>
+	<aJGNaQwnd6_A0Ppw@pks.im>
+	<qruwf2zjl2uvf33mp4ajklvgx7wq7ctghu53rxzbgndfojudvh@ylr4otznu2og>
+	<aJsJE3UzKIVeg3di@pks.im>
+Date: Tue, 12 Aug 2025 07:37:18 -0700
+Message-ID: <xmqqwm78wqqp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 12 Aug 2025 07:36:29 -0700
-X-Gm-Features: Ac12FXyvBn4Ct3DLJYB6XMTNnUDaIWeYkTUeJfo4j8L9RML-PLAuUYEJOBeMnis
-Message-ID: <CAOLa=ZR_ACey173CvkMPQ5DXwGKei+2L-JEWqGueX3NhDXk=5Q@mail.gmail.com>
-Subject: Re: [PATCH] for-each-ref: call --start-after argument "marker"
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Git List <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="0000000000004db088063c2bf745"
+Content-Type: text/plain
 
---0000000000004db088063c2bf745
-Content-Type: text/plain; charset="UTF-8"
+Patrick Steinhardt <ps@pks.im> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Karthik Nayak <karthik.188@gmail.com> writes:
+>> I think the suggestion for using a shim layer solution is relevant, because
+>> additionally to the compatibility issues of the zero initializer, you also
+>> need to take into consideration that the proposed solution will still trigger
+>> warnings when compiled as C++ (where {0} should be instead {}).
 >
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Karthik Nayak <karthik.188@gmail.com> writes:
->>>
->>>>> -		OPT_STRING(  0 , "start-after", &filter.start_after, N_("start-after"), N_("start iteration after the provided marker")),
->>>>> +		OPT_STRING(  0 , "start-after", &filter.start_after, N_("marker"), N_("start iteration after the provided marker")),
->>>>>
->>>>
->>>> Ah! I did fix a typo here, but your fix is better. Thanks.
->>>
->>> Here where?  Is that "fix a typo" something I should go around and
->>> make sure I do not miss?
->>
->> I meant my earlier patch fa0f4e46f5 (for-each-ref: reword the
->> documentation for '--start-after', 2025-07-28) which is merged to master
->> now.
->
-> Hmph, so what does mentioning of your earlier typofix add to review
-> of this new patch?  We should revert your earlier change and replace
-> it with this one?  Or there were two typos, you fixed only one, and
-> this patch ties a loose end left by it (but then that is not what
-> I'd describe "yours is better", so I am still puzzled)?
->
+> Do we even support compiling Git as C++?
 
-I was referring to the fact that I made the change from "start-start" to
-"start-after", but "marker" would've been the better replacement, so my
-review was concluding that while I was here and made a change it still
-was lacking.
+There was an earlier effort to rename variables like "new", but I
+think the motivation was more like some folks wanted to try building
+with C++ compilers.  I do not know what the outcome of it was.
 
-"yours is better" is poor choice of words.
-
-> Thanks.
-
---0000000000004db088063c2bf745
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 9a2ca4a895fcfe16_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pYlVXd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNEcxQy85U3lmaDlmTkVCMjhpN04zWWNCSFBkVjlWRQpvckNRUmRWS1F4
-bG1qMFV0MEZVMFhtQ00zeVJmRTNaZnFGMHBXODFsUm82VWIyNk92WUthVkMwTzZjYUNPT01NCmVF
-VlU3YWx2OEI5dURFSHRxZ2lQMmE4TS8xbzFTR1VIZy9SdHhpTU5scnJTazN3Z2tFeGYrNXM3bzFi
-bGZXL3UKai9rZzVHYjRKWUFjV1RlNnk3NHZBZVhKdUtzZUcvcExvWkkwTG53aHhkYWVOQ0hFNEJ2
-NjhKWmRPNk5KVS9oeQp3SDFkNnpqZEtqM1h5OEE1dU1jUVlHbkxIc0pNQnIzZ0IwQlFMbEs3TmUv
-MW1KUGltd2FtOEE4bmgzQWdBSjR4CnkwdU5QQkF3RTQzYk5wN3NES3BzTk9rZ3kxeXZlb25sWUVH
-d0FMbDcyR3Job2Z4MFVsUC9pVVZmTXJ3ckdiQU4KQzduQS8xeGI0TG9FRFRJZDNVcDFjMEg3U2JV
-YzZucHlHOTBzUThSemRXYlZQSFo0SWhod21HWVFBRkFyVi80cApCZWVOb3hLbkxVQXdXTFFtcVYw
-Snd2RlpMWkY3NVdWWi9jOXdSWUxDQXdXK0xMWHJIZE9BaThhNmN4dENPVktUCmJoSmNWWWNNblJ5
-enNYYTVwUnVlcnM4Y2s3amdGWWVmbDRFbm8zWT0KPThOZHgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004db088063c2bf745--
+But people like to disect and include pieces of useful and/or
+popular software in their programs within the limitation of how the
+original is licensed.  Especially a part well libified like reftable
+may be a good candidate.
