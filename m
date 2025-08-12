@@ -1,118 +1,103 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B332FA0CE
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 16:41:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA0B2F6571
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 16:42:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755016871; cv=none; b=Ajc0Xv7dOtJzGvDgwOLDxglVxHERx0NvJWbJ6GRllaPsEbNe8ElNGuNuQ1mCe5/JEgjCIx3m4rd4v6YImq7/7dHyasKiXnyg2w78bZf/4HNCiRc2kHS7DmzX9J7BG3NU3Z5176e7ccL9Wd8eMgm0WFPvcRHme3f/5vGMTGfje6o=
+	t=1755016965; cv=none; b=QaDL43pV5+k+cl/ARr84pKYA0hOvTKe5GCGUnLZa0RRVEDINjKucdR7tfFHpRoc50x15JptwVYHr8xfdc7XduCQ9Qsbdv1T9AbqRkFGnnKheoWHnGeUZADYTqivhpxLx8nw3z7Zb8Wx26Oh2X7UxCs7gaBrpE2APt07nEnS0dM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755016871; c=relaxed/simple;
-	bh=dv+9ts1msjc62zpOX8wiW6ElXMKvKRHLB4U8F9a4Gcw=;
+	s=arc-20240116; t=1755016965; c=relaxed/simple;
+	bh=nYNquAlVj5YL7pFvfX3OjmIRyBHaH6LyHHYtNSj1Y7s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GFXrtHV/reGemrleL6c8GSSa79T3AMqu+xXn8MRhNbmB1kWedO/+noM52UWr1jEVPHHw5F4c+AIaXBqVLMRNM8pV2lcvXVCdqqKxg2+vtFU1cq5XYo59acWork2PqO/bEmvPuYS4JYMVhPNuQdqBICaE1L9ESIcO8x/c0uRK5Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mnFNylOf; arc=none smtp.client-ip=209.85.208.42
+	 To:Cc:Content-Type; b=NsL0Rn58MY0gdq7LSZ7QelAXLM7sTB9H1Hi1na+0CrzCEglKHmstyMkjYLNpxJa30XqUiMFIFObp4LzWoORitl1nOXwtIQPvAsJyK50ERHGxJEjBMsdDyKJME6hdrpXv0IZekm1zpj18TMTSqhGFkPumFFzYWcJdKenLDHWYLmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MwXrfzvH; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mnFNylOf"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6154655c8aeso7905258a12.3
-        for <git@vger.kernel.org>; Tue, 12 Aug 2025 09:41:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MwXrfzvH"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-615756b1e99so7736071a12.0
+        for <git@vger.kernel.org>; Tue, 12 Aug 2025 09:42:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755016868; x=1755621668; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755016961; x=1755621761; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HN2Lun84RNz3Dx7kgw7+BRqlv3BHCugJNmDwRNpFlgY=;
-        b=mnFNylOfJgPxn4XBDHU31hfacKMdmesQjVSN5zJ+AIyTcSAfii4kKXP5euoVH6Cv3h
-         aYvN5BbsCs85M8ka77IQyTZUNZMMMYoslgxvTh16seYuyMEzBMj/9kRZvyxZq0sI4eAp
-         Q+aj7MzMM9tCzPc6iV1QHFkxW4S3OskdIn3uQxO1ccuIHDuwtNnNUA6fNZKjP5coBEgY
-         581gLGT+DShHgBbnkr/2hUFhvmDscmQ938valJmn70+5gINDuXouWMj/0M0HKdAUdPVm
-         qVumChCVJJBzlj/B+lCbYAcZi4zOUT1dGWV7usl0auuPKQtNnVDJivA40sVleKUcEjLX
-         XDkw==
+        bh=RQegTtoqL/oA1vL0yCbEVUPP/1xocQsw57UlB8p+/1Y=;
+        b=MwXrfzvHZLhJNLmnGqlcONazR09KNDwk5hXiCEnZyJidcZNok8dBKTW9HRlgmWxcte
+         4+6qSLrETW1XK0+yWdwN99EB+iutAIVw//LTHEdAFZOqRGuIMzBbrVhXFt/i63vYn5XR
+         MSu4tnM486O1yaQX2DwHc8VD8Kc74n/c+lUIIPXaHIA5n2cRlxBfbvAvvWQNRX1LzykW
+         iTAWPfMSePBv4jLof6r1GyxyBBOciO1Tl3fikWOBBEuvPos+VQuB0PgLBT/SkLDVAhGA
+         DyVh6gzj8aibK9kbos3XSJQ3fd3x1EAfWOaHF5MGAIeBzak9+dBjVHR3PvYs3B/v9Q24
+         8PQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755016868; x=1755621668;
+        d=1e100.net; s=20230601; t=1755016961; x=1755621761;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HN2Lun84RNz3Dx7kgw7+BRqlv3BHCugJNmDwRNpFlgY=;
-        b=mfRy7gEvjSsmrUD+LDtVMEHmgSXoXxiR83gycVGGnjC1GKeASY6U6ViNh5DkFhAiBo
-         ihONwyicPchFsTu6+WjYBFxTKFko3dH7VdlKhyMscA3US2YyxurTvZXKJNO7ooGLm7kD
-         JMpTy5snaWqmKHbfFD9LS62ORuYmDCOBewwb1jtDeZGUlHsdCtRjrgVZ0ufKTvt/estu
-         FXZa9ZqNy17k2udJFU0ZIafdc/sbg+rBoGJhk/nrm731kTv9oa1YPD/nDbq8R3l/IbzK
-         AGNvIBICuZKGuuz1F7N+03qWg2qewGSuLMy2QGQR0dl5BVdvOzm7qWNXI9SaU1d6HRAf
-         j8hQ==
-X-Gm-Message-State: AOJu0Ywea2hpiA44W+AX0FfMI2VziA9XuSw8ZSFXDzuepvemCWAJ5Mxb
-	jFO1qRWroE/aWnyo0FHI7k+HRmUVlwt0oJ18vTf6tQLlxcvQvKHP6doWJyzyHWhSuwG/8RBwhu6
-	mEEY1XhpDjzx14bEn8a5nBOF8mXMJNyqqk1CP
-X-Gm-Gg: ASbGncux+rxrgSii1M5yqrQ5ml2pOvLv3OmRJl8atjatwbxAelFCyuIn8NGfPINxaAC
-	For+ObPb6+anAFwDdYDP4+iS3lLxhMnevGnSoYKTPkhO7Yi/jGCna8PLmLOZJmjlYBLAVhRxJSP
-	NvFS4eFsLAwxFhMkDiljMCMssFUmrtVKjQYC9iXaphLQUWzPLcWwPd7CZ3WTG6u1bkaVK03pKKm
-	0mLBwRsalSosyJG5uAJ7aWOZPYvwfvRkcd8rgQ=
-X-Google-Smtp-Source: AGHT+IE6sSP5iH5HG3HvfWQeqhRkhqUbSncc0gc+Kf4rIHt9FA12bM8gLLqna8g/Zz8IDT9qBOO/JX1VANbYI3UKWN4=
-X-Received: by 2002:a17:907:9444:b0:af8:f7be:ab8d with SMTP id
- a640c23a62f3a-afca3a2a287mr36121366b.36.1755016868086; Tue, 12 Aug 2025
- 09:41:08 -0700 (PDT)
+        bh=RQegTtoqL/oA1vL0yCbEVUPP/1xocQsw57UlB8p+/1Y=;
+        b=MunSyjQtPxOis4LvZAmiSK8Efc72Q26a5Bj2E20oZ7ZB80xBZVizPXj23jWYPyxvHT
+         hdb+GX+b6vSdHY179/tDTBMo1CFxnTEIJNu5kHtDHZvz9qFaWG6Uk/Qlq91ytOrfauvZ
+         oD9mDsQxIjblKkZNUAG4/3QF0YWV8NHF79cE2E/Fk6AKM+oEf8jku1Uc71TkiNDztdxR
+         8ddfZKfqj7XPogafySKfpd+M//nnB/O9badXOYjdFa4UdQ1jM5dXhKYLs/lE/ElRMIwT
+         DJ1+rSQq6XUmyTJJu67yAeYg7UWJLk429RJnyXUXJBwYZnU1pPcOM+3RB6qtoOKpHH10
+         AyEw==
+X-Gm-Message-State: AOJu0YyFl8IpcKUSIGtqe5KcQrGgpaRRl4nbpfNwSoWKUKG4OQEQVLVi
+	3hCS4l+T3NnrO0vHQDwFeOC9/+7bxj+zY9OILRATl2jfat2zKTzIG8Qh9f3PW7w3n8NBrRgFDe3
+	d85BqRnTT+F9P0j9+C6iTTudRDYAYrj3yp3Xc
+X-Gm-Gg: ASbGnctASLlQLCx6KnvEztFLWiI6/NW+cfJU1xldhxMYStNgiYaAHAlI041+KqoxwEN
+	HhgdjbVNDj3vbrYjpaeWzWhjoPHjTcJHokMX9pTI4gF/sJ7d5lizN4/+iUVIhxAXOgo0isxYrbR
+	6oZYEeYISkNwL4WpPXFpMcQQdHsV16bViN8nAGXkyOikYiZBfPD9ZL7Aij3VssH6s0DLiljZE8W
+	Lk4ecMI24g132NzdenimkrOd1h9CTctAlqsR1I=
+X-Google-Smtp-Source: AGHT+IFP+kwfAyvQpPrVgcssk1unvduzdk+4rb6Eua7WbbHIC1p/llEmWLMAPsZytJrK0mc/s1Sc056NfEe8f+y41XE=
+X-Received: by 2002:a17:906:f5a8:b0:af9:3f90:12a0 with SMTP id
+ a640c23a62f3a-afca3919058mr38456866b.16.1755016961383; Tue, 12 Aug 2025
+ 09:42:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250810160323.49372-1-ben.knoble+github@gmail.com>
- <20250811221706.67168-4-ben.knoble+github@gmail.com> <CAPig+cThhm8b2vE=vAHYc5cEA9n232Lwi1c+p=LV9hK4hz=0Hw@mail.gmail.com>
-In-Reply-To: <CAPig+cThhm8b2vE=vAHYc5cEA9n232Lwi1c+p=LV9hK4hz=0Hw@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Tue, 12 Aug 2025 12:40:57 -0400
-X-Gm-Features: Ac12FXy2qbumnC1WZ0Y3kdgWw80U_wPBMpNXHOgEZj3XMjpmTq3OIMWAPwB1ue8
-Message-ID: <CALnO6CDaHZuC0=_Saccj3DuW-vaWs30PmwXf9dw1+AfsC34wWg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] t7005: sanitize test environment for subsequent tests
+References: <20250811221706.67168-1-ben.knoble+github@gmail.com>
+ <6BCA1E93-7409-41FA-81FB-0CB75A3A55FB@gmail.com> <CAPig+cTpMFfg8iTncgekq6wyfHOPidhHposLi11D3fXyfnNQRw@mail.gmail.com>
+In-Reply-To: <CAPig+cTpMFfg8iTncgekq6wyfHOPidhHposLi11D3fXyfnNQRw@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 12 Aug 2025 12:42:28 -0400
+X-Gm-Features: Ac12FXxqXPw0usWkF0d5uTVtCh57SOJgF1GSHoq_tkEn2gS94Tl084xORJXKGtg
+Message-ID: <CALnO6CApnHgakYf_ihVOxkmOq9_Rph5hkK_9aC6vrecFhgjaTA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/4] clean up some code around editors
 To: Eric Sunshine <sunshine@sunshineco.com>
 Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
 	Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 11, 2025 at 6:34=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
+On Mon, Aug 11, 2025 at 8:16=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
 com> wrote:
 >
-> On Mon, Aug 11, 2025 at 6:17=E2=80=AFPM D. Ben Knoble
-> <ben.knoble+github@gmail.com> wrote:
-> > Some of the editor tests manipulate the environment or config in ways
-> > that affect future tests, but those modifications are visible to future
-> > tests and create a footgun for them.
+> On Mon, Aug 11, 2025 at 6:59=E2=80=AFPM Ben Knoble <ben.knoble@gmail.com>=
+ wrote:
+> > > Le 11 ao=C3=BBt 2025 =C3=A0 18:17, D. Ben Knoble <ben.knoble+github@g=
+mail.com> a =C3=A9crit :
+> > > =EF=BB=BFChanges from v2:
+> > > - shuffle setup code and use more helpers in 1/4
+> > > - insert 2/4 to stop abusing --exec-path
+> > > - improve environment-cleansing idioms in {2 =3D> 3}/4
 > >
-> > Use test_config, subshells, single-command environment overrides, and
-> > test helpers to automatically undo environment and config modifications
-> > once finished.
-> >
-> > Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> > ---
-> > diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
-> > @@ -34,61 +34,57 @@
-> > -TERM=3Ddumb
-> > -export TERM
-> >  test_expect_success 'dumb should error out when falling back on vi' '
-> > -       test_must_fail git commit --amend
-> > +       TERM=3Ddumb test_must_fail git commit --amend
-> >  '
+> > Some of this shuffling turned out to be unportable, which CI caught (bu=
+t running the test locally didn=E2=80=99t??). Fortunately it pointed me at =
+test_env and I=E2=80=99ll either use it or go back to the subshells.
 >
-> Don't use one-shot environment variable assignments when calling shell
-> functions. Instead, you can do this:
+> To catch it locally, you can run:
 >
->     test_env TERM=3Ddumb test_must_fail git commit --amend
+>     make test-lint-shell-syntax
 >
-> or employ the standard assignment/export boilerplate:
->
->     TERM=3Ddumb &&
->     export TERM &&
->     test_must_fail git commit --amend
->
-> References:
-> https://lore.kernel.org/git/20240727053509.34339-1-ericsunshine@charter.n=
-et/T/#u
-> https://lore.kernel.org/git/20180713055205.32351-1-sunshine@sunshineco.co=
-m/T/#u
+> in the "t" directory. Alternatively, `make test-lint`, `make test` or
+> `make prove` would also have caught the problem.
 
-Yep ;) I had the latter, switched (see range-diff, I think), and then
-CI caught me. Why doesn't the local test run catch it, though?
+Ah, thanks. I was particularly confused because running the test file
+directly does run the chainlint check, I think, but not this lint.
+
+--=20
+D. Ben Knoble
