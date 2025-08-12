@@ -1,55 +1,55 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F27D2D978A
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 09:54:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210012EA72A
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 09:54:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754992476; cv=none; b=fmF94lc+jpAJurWgowZc6OaGsTVfaHGiFa7XsyTqoJTyUUbfxyaW4BMzi1wntot0AOWYKmLPG38R4+nT3cshCak5Dx+UqJNB63EX3/tmF7jPncTyUs4d30geOkKolLHVf7ngGRKEQBrVOEWuO0YsZcPmsuuVPaKblmSoVCKMpis=
+	t=1754992478; cv=none; b=E4+JzBUQFeVjoGlp00/IrWjERy8s8VbLQeFRKJ7n3U5amx1jV0Rw3y81F+jRU4DKEc57+WABGpoeW5AlQ8VhXRkw8oKNOCHwC2q7THDE/rEoMxjkaHDBcQeDlVxeasFL+eotLvf/y8E9uZoWIF5EKEaFkryr0ftHxyKirx5u2i4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754992476; c=relaxed/simple;
-	bh=dx0l58wW5npGXm2XvbgrbPPuVN5WHM27SE5B99iQ1dU=;
+	s=arc-20240116; t=1754992478; c=relaxed/simple;
+	bh=uYmFTKrJ09TgO1xkAskgOKjzP7NLQnkhn7Yl3e55WWw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iAyTZ3nwslEYxisYI9rShgfMceMPByF8Q13j/lQlNQHvGb8ltdsGhB2/MAs62XRhktIhOGgzZ5Ft9+gTEp2w19WOWHCEZM/ANV6FNUCOxi6JKYadCE9ZWgfkbaUYuT2bhSOrF9OgmAsLqq+e2seg0FKVHmzLBOgFRIcfJj4C2CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XnISiR/1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lxsHZcmO; arc=none smtp.client-ip=103.168.172.158
+	 In-Reply-To:To:Cc; b=Z2gDK9X3EarEm8JOKZyo0QqqG0DNLqBy4Ljnbsz29cpZIChTSd4YVh4y5it8iXbiIR67i4rdZ+gRCvO4X/O5nlBuhRbbwNMYnd1avzabJdOnzrjHdfpvdctAcJuZcsf4N+jSAIeDAA8LjGLckYFXEVAy72D6KdVa440cHUSm1Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TE5TrHk6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DayMTWCG; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XnISiR/1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lxsHZcmO"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C503F1400111;
-	Tue, 12 Aug 2025 05:54:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TE5TrHk6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DayMTWCG"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 16B65EC01A9;
+	Tue, 12 Aug 2025 05:54:36 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 12 Aug 2025 05:54:33 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 12 Aug 2025 05:54:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1754992473;
-	 x=1755078873; bh=DlQk5U808mvEq9DlssG1NdjPdTPf/DC7oS51ulF8Ots=; b=
-	XnISiR/1+Rp61bX5CijWC45perwNw1XNa9IgmuthGkQXTxy7tMamj4mQIJzcXzEW
-	NohHKs7vVQK4b0V72Ef/By1oXrwdHI+voWXoutTbUDB8SabaDyxG0XzcRi7MTnIX
-	uT/1Q3awb+9HbnhbJHbwaeBDsLxj3vj/v1dTPkaADanyH/hinhg028Ta6ej1y7+K
-	7cuDKwURx6VdrwDvoxoRJCXf3hBNeUhXatobSCF8lk4x9vf0vWr2W8rvxF3hdDDo
-	aJkVAwefwnKU294IhppjHsQkJLkJGCoVap91WOppYuKG2W//oqzXWHMqQkJ2ZVPE
-	8cFJOLHe8j9RgdqHsxhYqQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1754992476;
+	 x=1755078876; bh=ze0rvJ8P0DkPG5W3HKuxA2Y1seEcGXBlV5hchY2+XwE=; b=
+	TE5TrHk6nrStev/0dUXmTOrahQstgDh1gymO6IukaZhrPjHYFIFNA5YIV7T/QP5M
+	tHUPjzrs5DTiLkUVJfOqc5Js//hWAeDLDUfbudHA4n5mrty8N2q7oiXfE5H6Wf53
+	2MrdfDsu7I0HuABgJV3pgt8/YLRwZMMYYz2f7jb0c8etSzQwyQ0l1OtvLhRD65tU
+	XqHfQBsMbJNdurX10gGO0xvr6WVG9Q0j481OVQIMoPKLx+YCd2HnKzK4RuzGXEMF
+	+o2vi+THD4ER+tef4R7VNIx0naGpSHkT28km5RRNC0kk3dGdmiB+jtPN4T0oqqQG
+	gmVwrwdzUD1Pg/1AM5TcOw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754992473; x=
-	1755078873; bh=DlQk5U808mvEq9DlssG1NdjPdTPf/DC7oS51ulF8Ots=; b=l
-	xsHZcmORjwIUfM42G9PqjH9FZmJoxwepnfEchoMS/Us8Nvm/kjFh89bxzLNxYGLn
-	PteW0I2Ed9WyGEa3VlQoW42dI84od72pnOcIaAgBDwmiUNOGUJstsBHnamOpsl42
-	k60Z10BV06YKS9ly08dpiu2RxtwJ028j9eQ6wNetTyeSpuuCTjMzOukeWmLUHLuk
-	mXII/ZVzJIkNZt8w+i5eRVAZqy64Ap3r4vsZAQXwy9vZswnBKg4XUAFhVS5kqqe1
-	6gARBiem7alURs+zuzNh46YCP6rEGwE2duzE8zgj7IBulKY7IFH0AD84lpliZBpz
-	XIp4SbrA4QQdW6yWc9luA==
-X-ME-Sender: <xms:WQ-baCe39Bs4c_Aif3i0BASvHrefXwIkzKX9OD6-IKbZ9SnOStYLTA>
-    <xme:WQ-baHuYxRDV9ocgWom8MLbb2yOC8nA6ugI6ytLQx7_Nxkvp51SARMfwyiGexHygi
-    Q2HS51ery37jrPhcQ>
-X-ME-Received: <xmr:WQ-baJ-YJWzhEHpRLL_aWIo8VNmRhIhU65XmxUZMZDYXbNebxm34VY1jlOtKRknLBpm33Oi8tYEZa2YPhmmMEfXyl3K4n4101lH7LGkv>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1754992476; x=
+	1755078876; bh=ze0rvJ8P0DkPG5W3HKuxA2Y1seEcGXBlV5hchY2+XwE=; b=D
+	ayMTWCG7fg975wFOFN4Kvdafj4S5CFecdDBb0YKc11j4wiZ75pZw85WWvYBIEUTw
+	/g2ruFbhaWpUHgyI2xCPDekmq+Ys/h1Tol2HtmTQF73I5KZ0LKoM7bYN8zRkVrgR
+	jkq+rmU6+LHq4Vkzvd+VrZeNXMGIngR6wNT18qeRw541Fp6B+aXXuy7Jv6a3gXvE
+	aADY9NN7RGl9Z+/VvaixgJZokLhaDTtT5xAtOagWUG+mxloA9Pp2qf/of2kd2Nmw
+	FHxw0qJKQQL75a2Cf19SKPR2YI18/5sQbSSwfGgp9Asz5vdd2cpcZ1o10MmqkEdA
+	QqgzVPM0G9A0ODHtk/TLA==
+X-ME-Sender: <xms:Ww-baJj-C_cS2_Grnuq9w4HfsKulDKZ-rbNx5lxLlfSgFF5kcs5qeA>
+    <xme:Ww-baJiJCh7nELnVPrwJ_zPC-TthltpbYweeK0-QS9Vt2ZbjjBTPsfk1SPhjGfOXc
+    lJiHYxSM2wcuA7zig>
+X-ME-Received: <xmr:Ww-baPhP3G9FscIK34Pt55g-dTtnAxyj7FuKSAU47Na7pVOM31Lci4x__98HGjgEPR1zvaIZ_RO2JOCIco1Z0pnHNtQkf-6Bc-bD038Z>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeehtdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,25 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeehtdefucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhih
-    hnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtoheptggrrhgvnhgrshesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:WQ-baK2SypwxRE27FKQI_MEX8LiTg52iJfJF9XzhLkfy04HRJ3fxhQ>
-    <xmx:WQ-baGA7gANh9WlCflkigC0FRAcB-_8GfzYQYVujXA6vKO4GS80O_Q>
-    <xmx:WQ-baOfPqgUQmvU5voCn3wZM4DbfzVcs3xTtMgbWCdplFpburuQ0Wg>
-    <xmx:WQ-baL5Q6dKcgBnh9po8ujN1S0fgoAclM8jMhg2TC4aw9ULy57e2aQ>
-    <xmx:WQ-baLLDxG-Z4hl0nz7BCIT-mDxHig5EkC67_7vqBMCZzvIbw_09WksH>
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhi
+    nhgvtghordgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:Ww-baJKZXI5lA9iVW0a6hvFLfOfBGKfQyR4506gRGk98oPKbNt_sNw>
+    <xmx:Ww-baOHo-gGbPn7cr_dARDno6EXcN61XOfHj5vZmkQUAWH0C4ART0Q>
+    <xmx:Ww-baNSVtGhVXb-iq3K3UAu1DAeOlQ3FdmFBkV39uSY9NPdr6SLuLg>
+    <xmx:Ww-baKeEYcKncx1-q2PrfULXRw1G7JEk-tm5Wr1wGhTV7Y6kvjdIvA>
+    <xmx:XA-baMfhURuE-FCiQ8XXMzO8aEcmVPjGvNSi-02OfcMY__kayczP1W8P>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Aug 2025 05:54:32 -0400 (EDT)
+ 12 Aug 2025 05:54:34 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 322e39ee (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 12 Aug 2025 09:54:31 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 2aabc6bc (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 12 Aug 2025 09:54:34 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 12 Aug 2025 11:54:15 +0200
-Subject: [PATCH v3 1/8] reftable/writer: fix type used for number of
- records
+Date: Tue, 12 Aug 2025 11:54:16 +0200
+Subject: [PATCH v3 2/8] reftable/writer: drop Git-specific `QSORT()` macro
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250812-pks-reftable-fixes-for-libgit2-v3-1-cf3b2267867e@pks.im>
+Message-Id: <20250812-pks-reftable-fixes-for-libgit2-v3-2-cf3b2267867e@pks.im>
 References: <20250812-pks-reftable-fixes-for-libgit2-v3-0-cf3b2267867e@pks.im>
 In-Reply-To: <20250812-pks-reftable-fixes-for-libgit2-v3-0-cf3b2267867e@pks.im>
 To: git@vger.kernel.org
@@ -94,88 +93,41 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
  Carlo Arenas <carenas@gmail.com>
 X-Mailer: b4 0.14.2
 
-Both `reftable_writer_add_refs()` and `reftable_writer_add_logs()`
-accept an array of records that should be added to the new table.
-Callers of this function are expected to also pass the number of such
-records to the function to tell it how many such records it is supposed
-to write.
+The reftable writer accidentally uses the Git-specific `QSORT()` macro.
+This macro removes the need for the caller to provide the element size,
+but other than that it's mostly equivalent to `qsort()`.
 
-But while all callers pass in a `size_t`, which is a sensible choice,
-the function in fact accepts an `int` as argument, which is less so. Fix
-this.
+Replace the macro accordingly to make the library usable outside of Git.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/reftable-writer.h |  4 ++--
- reftable/writer.c          | 17 +++++++++--------
- 2 files changed, 11 insertions(+), 10 deletions(-)
+ reftable/writer.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
-index 0fbeff17f4..1e7003cd69 100644
---- a/reftable/reftable-writer.h
-+++ b/reftable/reftable-writer.h
-@@ -156,7 +156,7 @@ int reftable_writer_add_ref(struct reftable_writer *w,
-   the records before adding them, reordering the records array passed in.
- */
- int reftable_writer_add_refs(struct reftable_writer *w,
--			     struct reftable_ref_record *refs, int n);
-+			     struct reftable_ref_record *refs, size_t n);
- 
- /*
-   adds reftable_log_records. Log records are keyed by (refname, decreasing
-@@ -171,7 +171,7 @@ int reftable_writer_add_log(struct reftable_writer *w,
-   the records before adding them, reordering records array passed in.
- */
- int reftable_writer_add_logs(struct reftable_writer *w,
--			     struct reftable_log_record *logs, int n);
-+			     struct reftable_log_record *logs, size_t n);
- 
- /* reftable_writer_close finalizes the reftable. The writer is retained so
-  * statistics can be inspected. */
 diff --git a/reftable/writer.c b/reftable/writer.c
-index 3b4ebdd6dc..5bad130c7e 100644
+index 5bad130c7e..0133b64975 100644
 --- a/reftable/writer.c
 +++ b/reftable/writer.c
-@@ -395,14 +395,15 @@ int reftable_writer_add_ref(struct reftable_writer *w,
- }
- 
- int reftable_writer_add_refs(struct reftable_writer *w,
--			     struct reftable_ref_record *refs, int n)
-+			     struct reftable_ref_record *refs, size_t n)
+@@ -399,7 +399,8 @@ int reftable_writer_add_refs(struct reftable_writer *w,
  {
  	int err = 0;
--	int i = 0;
-+
- 	QSORT(refs, n, reftable_ref_record_compare_name);
--	for (i = 0; err == 0 && i < n; i++) {
-+
-+	for (size_t i = 0; err == 0 && i < n; i++)
+ 
+-	QSORT(refs, n, reftable_ref_record_compare_name);
++	if (n)
++		qsort(refs, n, sizeof(*refs), reftable_ref_record_compare_name);
+ 
+ 	for (size_t i = 0; err == 0 && i < n; i++)
  		err = reftable_writer_add_ref(w, &refs[i]);
--	}
-+
- 	return err;
- }
- 
-@@ -486,15 +487,15 @@ int reftable_writer_add_log(struct reftable_writer *w,
- }
- 
- int reftable_writer_add_logs(struct reftable_writer *w,
--			     struct reftable_log_record *logs, int n)
-+			     struct reftable_log_record *logs, size_t n)
+@@ -491,7 +492,8 @@ int reftable_writer_add_logs(struct reftable_writer *w,
  {
  	int err = 0;
--	int i = 0;
-+
- 	QSORT(logs, n, reftable_log_record_compare_key);
  
--	for (i = 0; err == 0 && i < n; i++) {
-+	for (size_t i = 0; err == 0 && i < n; i++)
+-	QSORT(logs, n, reftable_log_record_compare_key);
++	if (n)
++		qsort(logs, n, sizeof(*logs), reftable_log_record_compare_key);
+ 
+ 	for (size_t i = 0; err == 0 && i < n; i++)
  		err = reftable_writer_add_log(w, &logs[i]);
--	}
-+
- 	return err;
- }
- 
 
 -- 
 2.51.0.rc1.163.g2494970778.dirty
