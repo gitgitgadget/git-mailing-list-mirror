@@ -1,166 +1,75 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75DE2FE564
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 17:36:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C53268C73
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 17:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020167; cv=none; b=F5x/57frF7lDdmDDAJaHaYUN35oaaW+w5dIguu/sTBYFGBwfDUiKmr1uhZncyNsTdDbxntreQtaVMSHeCJhlBW0kGfhT7mmZIHrdyrrksjzdb4/uFmhtBeqq66oEGukp38MUzAREq8C0Lo+8CdFdhTA/lsct5WXUjqn5xhzU5s4=
+	t=1755021410; cv=none; b=NtGtXVqEWTpYlX4uhEXTiHC308bnYh/+UJnDRrXrR3B4jDycLy8E6b8OPDEgjqW4Y/fflbtGBdM2ig0L/kIdkiDVksG81NE+4/v0CdOtBv3fWTeMvlXlFvYfBevRcrbiqXO5dSlps/tjpEl56niE8NEwDD8DakrvI2ECh7oS9qY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020167; c=relaxed/simple;
-	bh=qhL14prUcflfp8ffb0wH0CyXeTCZUGlMMQV+TbyjYcE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U0DtM3E5I2Dql8/0a+X5Ie/5H+JM1ir9EmzFQ+srw02HOdSWPX9KGu4Rs6NrDuBA52dXAEdc3tFGLfq+OZW+0JDN7LYw4OMv/Czqabh9jt9n4v8rlg4SsVTOr4aWaziNOY3cZlZCMlTsMmh8x7daKhvGlSvUjel48ICQIcY01PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ndg6w+8c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BJ8iWLXT; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755021410; c=relaxed/simple;
+	bh=Yuy8a3JUzvAE8PcgbZyueCqn9YL+4NwzIXCl99UGLoA=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=rvNZtiUIeNORpatl/DY8YdX7CuJHlHZ1awcB8IMXaFolYFqzoJnL9hOAM/eh6YCkLunSknWYli8XBbuHrD73mEq82H8YeZ818QB8vs6otgfAG/UsNuAd7Nk00o734aqn4fg9cPLmMKAP4WqL18hwCMKA8+zGzAgILC4Ojq7eVl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=QDiH8goO; arc=none smtp.client-ip=83.149.199.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ndg6w+8c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BJ8iWLXT"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 03431EC017D;
-	Tue, 12 Aug 2025 13:36:01 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 12 Aug 2025 13:36:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1755020160;
-	 x=1755106560; bh=2nwUXqnRcCqyvPpT9p9d3QuEsqglchcx9calTNZJ1sE=; b=
-	Ndg6w+8c+AX8OEwx3Cg5DB1UwEIyCfvF3d/F+ovHighkCFKo0LDL+8qq8apV3yFW
-	r7W/u4S2LUfUrnjvno1FqpUD9mxpzBEnvXc59PPsz09LSSgjaGDbTWVt19cFMwBA
-	3oKbRBXHKojm846DuNywzl3f2IrK6rsmz9jmAT0UNpInuzY7p7izve/iEjSDE4VN
-	URa4Z5WYuTu2Q0+p2CMgvgKCJQ1y4Mtr5WJbea3IRH5DbmTUDLiXJ8bOk8IPEnc0
-	2fa8Q/5YMIpExQnTAOLBsZp9c95txPJNufJEmgieTys0dHbelampyq02uMtOfxZM
-	KyDNlxoMIe23EUoJuc3qZg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755020160; x=
-	1755106560; bh=2nwUXqnRcCqyvPpT9p9d3QuEsqglchcx9calTNZJ1sE=; b=B
-	J8iWLXToK/3kPJbVHfL+bqzmF5l8kB8DrcnbauxIpNz6n22ahWIt3/kxQOpFOBKZ
-	QJAGiOZosAnyQ9QVWHgVnI6n+qMs3Mlg4O6Xf1H5OL4n9NfGeYXUeBzjQfFrzs0e
-	NgAZUms/C5dOkV5g2wAEUPehL977v4+ydnGi7Ecb4sQs1O9x0iENVNu0UdcT5MsZ
-	9583t3DTwrUmfOXsfFmMU6/t+r8Mx/UX3pika4MgsTKFYoyk5dzWKR4dUn70t8qa
-	DnMCVvHtg8itIWT2TW5z6NURK3gE43ec9j8XZgAzrDdorFM9PhwyiBz5IvaOfZWP
-	s8fs2le1yoGIKhop0u4IA==
-X-ME-Sender: <xms:gHubaDjKDj4VudKv-zeGBvVKEjIzCqFW_7AWwHWRhK8nUnr1oG6PPQ>
-    <xme:gHubaNlF3py6iKDoAhe1Kpapwwjs9z8PX3pWNeB9o0g5vMQwxszm7yn1PDpJX_75H
-    iFrnzKTWV3mtlPvQg>
-X-ME-Received: <xmr:gHubaJghIJ4Y0mAlMu5-iN7QrvqcbrD4PZV4AJ3GMmQvMpMhXoDD2qUvu5Rr5UphgcL1y53XRXugM4Lzj_Kaccu2V9Iv0p8ZNEEJev4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeehleehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeetvdefudfhgfefhffgkedtjefgteffgefgueegieelvdelieduleffhfek
-    tefggeenucffohhmrghinhepmhgrkhdruggvvhdptghotggtihgpghgvnhgprghllhdrsg
-    huihhlugdptghotggtihgpghhlohgsrdgsuhhilhgunecuvehluhhsthgvrhfuihiivgep
-    tdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomh
-    dpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhu
-    nhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopegsvghnrdhknh
-    hosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhi
-    thhhuhgssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhl
-    lhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:gHubaB2ysUHOFrBHLDmSwNo3gku3A-vt9gMV19JmkZI7lysEqkQHyA>
-    <xmx:gHubaCJEuElltg1TMPx2m8hP-bzHmh9r0APUNvDu6uDnck90NXUKNA>
-    <xmx:gHubaBzq3a9yJr8MpozZXPjb1SoSJeXwkXUFCKSRU_lLt1cj8lvo9Q>
-    <xmx:gHubaAXRCuoZnZLyy7R18GMESot5wxygn64QJAiOETrqEhbfz-_oVw>
-    <xmx:gHubaDesXqbIHQ1GcbkrMVqjv1xbxhZarcTS0m2c4_kieev40vRkM5UT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Aug 2025 13:36:00 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Ben Knoble <ben.knoble@gmail.com>,  "D. Ben Knoble"
- <ben.knoble+github@gmail.com>,  git@vger.kernel.org,  Patrick Steinhardt
- <ps@pks.im>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 0/4] clean up some code around editors
-In-Reply-To: <CAPig+cTpMFfg8iTncgekq6wyfHOPidhHposLi11D3fXyfnNQRw@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 11 Aug 2025 20:16:45 -0400")
-References: <20250811221706.67168-1-ben.knoble+github@gmail.com>
-	<6BCA1E93-7409-41FA-81FB-0CB75A3A55FB@gmail.com>
-	<CAPig+cTpMFfg8iTncgekq6wyfHOPidhHposLi11D3fXyfnNQRw@mail.gmail.com>
-Date: Tue, 12 Aug 2025 10:35:59 -0700
-Message-ID: <xmqq1ppgv3wg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="QDiH8goO"
+Received: from monopod.intra.ispras.ru (unknown [10.10.3.121])
+	by mail.ispras.ru (Postfix) with ESMTPSA id 97DAA40A3272;
+	Tue, 12 Aug 2025 17:56:37 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 97DAA40A3272
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+	s=default; t=1755021397;
+	bh=LKQsq8UeRx1/iQuYcVTSuu8It9I9/gFBo6O+NRNqzsQ=;
+	h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+	b=QDiH8goOKW8oQSPCRH3U9hZIS06FvYcEDMtEideXqfHaXzBAf77dN/3yFGUXFTWuj
+	 fgAlJ3jLVZK1y1G2U2KqjSPGgUSO73/AWLiLrhT8ucPPwKsPKH15uZN7cpA2ZeLQz+
+	 /V27dN33JU+MpMptRCTG6xSuvxeQCr8XChTyd4+I=
+Date: Tue, 12 Aug 2025 20:56:37 +0300 (MSK)
+From: Alexander Monakov <amonakov@ispras.ru>
+To: Phillip Wood <phillip.wood@dunelm.org.uk>
+cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] xdiff: optimize xdl_hash_record_verbatim
+In-Reply-To: <c2fe3b69-8436-af46-c47d-dde5bb037227@ispras.ru>
+Message-ID: <0379ba2d-837b-761e-9d5a-d65ca9d051d6@ispras.ru>
+References: <20250728190520.10962-1-amonakov@ispras.ru> <20250728190520.10962-3-amonakov@ispras.ru> <aedb1be1-3151-421e-94ce-27bc77d80b83@gmail.com> <353c7865-d9b5-2a1c-4d71-cd1136581f01@ispras.ru> <5cf47722-7073-4761-8698-090af840d0c4@gmail.com>
+ <c2fe3b69-8436-af46-c47d-dde5bb037227@ispras.ru>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+> On Mon, 11 Aug 2025, Phillip Wood wrote:
+> 
+> > > That's what the 'cycles' column in the table gives (6.21/5.8 = 1.070...)
+> > 
+> > It would be helpful to add a column with those calculations in it rather than
+> > forcing the reader to calculate the speed up for themselves.
+> 
+> Ok, will change it to
+> 
+> version | speedup over (A) | cycles, bn | instructions, bn
+> ----------------------------------------------------------
+> A                            6.38         11.3
+> B         1.027              6.21         10.89
+> C         1.1                5.80          9.95
+> D         1.094              5.83          8.74
+> ----------------------------------------------------------
 
-> On Mon, Aug 11, 2025 at 6:59 PM Ben Knoble <ben.knoble@gmail.com> wrote:
->> > Le 11 août 2025 à 18:17, D. Ben Knoble <ben.knoble+github@gmail.com> a écrit :
->> > ﻿Changes from v2:
->> > - shuffle setup code and use more helpers in 1/4
->> > - insert 2/4 to stop abusing --exec-path
->> > - improve environment-cleansing idioms in {2 => 3}/4
->>
->> Some of this shuffling turned out to be unportable, which CI caught (but running the test locally didn’t??). Fortunately it pointed me at test_env and I’ll either use it or go back to the subshells.
->
-> To catch it locally, you can run:
->
->     make test-lint-shell-syntax
->
-> in the "t" directory. Alternatively, `make test-lint`, `make test` or
-> `make prove` would also have caught the problem.
+On my Skylake:
 
-Among these three `make test` can be run from the top-level.  The
-other two cannot.
+version | speedup over (A) | cycles, bn | instructions, bn
+----------------------------------------------------------
+A                            5.77         10.96
+B         1.076              5.36         10.60
+C         1.12               5.16          9.66
+----------------------------------------------------------
 
-"make test" is a bit too heavy-weight to use as an initial sanity
-check for tests that are being newly developed, and I am wondering
-if something like this can be added as a first-line sanity checking
-tool.  The idea is a simple "make" to build, while DEVELOPER=Yes is
-set, would trigger the common linting any developer who is working
-on new things needs to pay attention to.
+A is today's master, B and C are patch 1 and 1+2 like before.
 
-
-
- Makefile | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git c/Makefile w/Makefile
-index e11340c1ae..7f21afeaf9 100644
---- c/Makefile
-+++ w/Makefile
-@@ -1471,6 +1471,7 @@ include config.mak.uname
- 
- ifdef DEVELOPER
- include config.mak.dev
-+all:: check-developer
- endif
- 
- GIT-VERSION-FILE: FORCE
-@@ -3350,6 +3351,10 @@ check:
- 		exit 1; \
- 	fi
- 
-+# We may want to take over 'make check' for this, but for now...
-+.PHONY: check-developer
-+check-developer: check-docs check-tests check-builtins check-headers
-+
- COCCI_GEN_ALL = .build/contrib/coccinelle/ALL.cocci
- COCCI_GLOB = $(wildcard contrib/coccinelle/*.cocci)
- COCCI_RULES_TRACKED = $(COCCI_GLOB:%=.build/%)
-@@ -3942,6 +3947,10 @@ build-unit-tests: $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG)
- unit-tests: $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG) t/helper/test-tool$X
- 	$(MAKE) -C t/ unit-tests
- 
-+.PHONY: check-tests
-+check-tests:
-+	$(MAKE) -C t/ test-lint
-+
- .PHONY: libgit-sys libgit-rs
- libgit-sys libgit-rs:
- 	$(QUIET)(\
+Alexander
