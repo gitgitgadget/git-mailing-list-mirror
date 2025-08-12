@@ -1,145 +1,83 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1030532C85
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 15:18:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976692F532B
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 15:25:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755011883; cv=none; b=dJsPuNCwZFFCp6RR/IVAV1vfeVq4FMC0xmbwjmDnSIda6ogxnUyogDl9YKNd2c0SKNZA/0nKerKqqwYJraEG/ibVJM/cKEjatKmlPgwGVlP+oy7BKzlDmVG2UL0pKCxDHQkY4pKoe+Kr++rRvquScPMKRg7M/J5znkhqVXNlqKM=
+	t=1755012315; cv=none; b=eqyku9rNWY1jtU5dEncgfYN/3qPRNnyDbcCtZUYk7OQZl3UnkSfbRxRkQ7frBFQsal/iV5jRymwHLfCifqkSae0otVPAATuDnoc94nZPShvKD+Bd+/johGkvjrCYvkJRecXKK068jfIBZuMl+DeG2J1aKRy9hu3VEMe4zSFHCPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755011883; c=relaxed/simple;
-	bh=sTbWJOJkxg1VQSJI5gUHcIG/ssX8aHI2qphZO081TBM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YHbRTeslABCuIfHtiYwiOJbdzWe+ERZrLV6bKEAMNbpNxClzKIhuljawED0oROUM/juh9Z9XRLfWI4q0pmhvCe8JZ6eQwN13vSXng4/RPO9UoTfUA4wlG9Z5EzA72FjpWBwERONi9MskUVB1tX0ReU2d/sGwd4TPdfoyrsN6GXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZKixPcSL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SXQ7bNbH; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755012315; c=relaxed/simple;
+	bh=RTbm6jLpYRq/3Mi4wauUHSva5mztUUNnh5YLuXqSywc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Subject:From; b=PsQpM7fmCbZlWD9P+jMqgio+tTJHKT2/3O9N/UynIWSJ1qP8rpp46sqYkr0tr+IUL8es3+rpYIyeWPPOw0LaNp52jmMn0nsyAOMJAT2sAD1hTsUlXFH8ByQnQ0oWy0/SIA1UbzSphEKZib3VmnDH5GSpiFZjExZXgPcs7YRrIao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=none smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=kKSKcwrw; arc=none smtp.client-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZKixPcSL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SXQ7bNbH"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 22B1F140011B;
-	Tue, 12 Aug 2025 11:18:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 12 Aug 2025 11:18:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1755011880;
-	 x=1755098280; bh=uDPxCti/IHvselVfpoMbae4lXq4YT6AIYhVPh+epe6s=; b=
-	ZKixPcSL6+oHVWAAMLAXt9u3DmwqlIqNtuN7L8WniSjVOm6IXqJU0qji54zg3BNK
-	RcbqUW3ki66m0NoVwKE7DPhqG2DlsTjKis5eX3aG3F1uqhiqtefM0ROhAnBsGvtp
-	IbU+9IqRqUG9IZbB2pzYpL3NV08Q6qx77w8WTUIS8tIJRI5rKW3tqa49VYFblW3B
-	Md93ZgZJ/VfrcZBqiXAg+vQCmRP5l4ucugznYjVsXn+2XcaV8FoQIbBYBGDwQ8io
-	CkG1DGQyL0OKu/6hDXparQIlDJ5FrtYGWU0Um0/6g7Z/BA29w2E5NOGs0iCyUo9G
-	9zp+Q8URdquImE0Hrwmb5A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755011880; x=
-	1755098280; bh=uDPxCti/IHvselVfpoMbae4lXq4YT6AIYhVPh+epe6s=; b=S
-	XQ7bNbHPWU1mo2vPBN4gaulTJTvX4+E2zv7yzcbBnWto1k07F9NgIwLHCX3R7ugu
-	4W2wtpbM0rl5sC2ILdLVM271s7SmtDCd1/tABokTxt6GK0NAQ098wdrbDQIZnBiZ
-	YmNz/2/fW2CEe2eyBW8B5ROx0ZxnvGrNgr0hUfPbPM3gIAUoD7sbggHpXckEbUmq
-	j0Ngbh5FQSlpHIPcBSY7CHAVgUgFbBacTrQiCAZsC2+y7gE/rW1gFR2GCk2PDefr
-	YHI9zlQEjrSpIvMIWBbz4b3CLsmibV0cEyg0yHEWD2GmGTdfXAl0t6nkmTzDQ4KC
-	QOxbnTyJA75Uc72+KqM7g==
-X-ME-Sender: <xms:J1ubaAop6HBFH-ZK6RUnu9uddXtb5KT-4AtQDqA7Tr5wpbPOtR0WKg>
-    <xme:J1ubaCIIA8xbPZ5FZiZV_TWWRRlvexMqZbE8H365-QDuw0yPagKRTH15LQzKGpXin
-    G0P-48V2_Yfd3IIuw>
-X-ME-Received: <xmr:J1ubaLoskhfPwDc3KjB6uvdUPtK3VuK0joL5i7Liwm9C1undOO14J3tEfCVqCKawCdAtlZUMN5wFWeeGb5Hg_XBEkwagsBO9cLAgrp0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeehieejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpefgteehudejvdeufedttdekhedvvefgkeelveetvdeuveevfeduuedvuddu
-    ueffveenucffohhmrghinhepohgsjhgvtghtqdhnrghmvgdrtgifnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehnohgsohiiohesghhmrghilhdrtghomhdprhgtph
-    htthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:J1ubaCzk-RlMRl25unBPnuKmGnx7zi_yOUb5-akRfFy_p7Bk-mqAQg>
-    <xmx:J1ubaHMI8hYQrO3flPCvZFCk2YT9znUjBuyKhALHqdcm7m2dc8thcQ>
-    <xmx:J1ubaP4y4hKm85XBOG66oVa2VO-2h1CkrHyRNxBYpeceM0eVUIxt1Q>
-    <xmx:J1ubaIkruYFuWe1pQGuFhWnDpxgKomuq70kNY-sXQZCT0fcbc044fA>
-    <xmx:KFubaMGlvgqEoJxhByV83AgV_PknmMQd7KqYx6vKvQjh5aS7X4WCuQvB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Aug 2025 11:17:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: git@vger.kernel.org,  Jon Forrest <nobozo@gmail.com>,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH v2] abbrev: allow extending beyond 20 chars to disambiguate
-In-Reply-To: <9ae4a718-b00d-4435-8739-cf87b2c9df7d@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Tue, 12 Aug 2025 16:58:14 +0200")
-References: <xmqqfrdx517b.fsf@gitster.g> <xmqqzfc51xvk.fsf@gitster.g>
-	<9ae4a718-b00d-4435-8739-cf87b2c9df7d@web.de>
-Date: Tue, 12 Aug 2025 08:17:58 -0700
-Message-ID: <xmqqwm78vaah.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="kKSKcwrw"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:From:Subject:To:Message-Id:Date:
+	Content-Type:Mime-Version:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=RTbm6jLpYRq/3Mi4wauUHSva5mztUUNnh5YLuXqSywc=; b=kKSKcwrwUxXuft8xWvuu5hheE5
+	OE0XqXJly3yzFEFn95rkvXQ4cW0fH74BXccF0hy/ngmLkzXU4ClByR2Lc6ubw7Emg5RpV0qxpGD6O
+	krOPvlEdUOpoNWNIcGWuNmgNLD/aMKIauBFOT+VxjTA4QC9yrDOkFkfjBjwFSkS87xTnEyttAB6Py
+	E6+l/Te7aICV1UfS8skE3Uh9Dx1FIuzud/dl8mpZDag6ZHKg1Vg2Ke8skjH0owCSTcY1Ua/GKu1dc
+	YPztKUBH8R4NTzwfwHEBgQHa/AwzQAFQA3sXJJl5AiK4rVf7iC1Oy8qo/+sLJpkTZuL6G9LxqjwRB
+	sx5oA7xg==;
+Received: from authenticated user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
+	(Exim 4.94.2)
+	(envelope-from <tachi@debian.org>)
+	id 1ulqlh-002Isb-N9
+	for git@vger.kernel.org; Tue, 12 Aug 2025 15:18:31 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=6e200f4a421b4ce4637e0d7f385ff265428406fea0ec7001ebc4020fbe02;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Tue, 12 Aug 2025 17:18:19 +0200
+Message-Id: <DC0JSOC14W8U.3UCX8TG6X7W5O@debian.org>
+To: <git@vger.kernel.org>
+Subject: Signing commits and tags differently
+From: "Andrea Pappacoda" <tachi@debian.org>
+X-Mailer: aerc 0.20.0
+X-Debian-User: tachi
 
-René Scharfe <l.s.r@web.de> writes:
+--6e200f4a421b4ce4637e0d7f385ff265428406fea0ec7001ebc4020fbe02
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8; format=Flowed
 
->>  	while (mad->hex[i] && mad->hex[i] == get_hex_char_from_oid(oid, i))
->>  		i++;
->>  
->> -	if (i < GIT_MAX_RAWSZ && i >= mad->cur_len)
->> +	if (mad->cur_len <= i && i < mad->max_len)
->>  		mad->cur_len = i + 1;
->
-> This combines two checks: Whether we can increment and whether the new
-> length is greater than the old one.  Only if both are true we take the
-> new length.  Shouldn't they be separate, though?  Why reject a new
-> length that happens to be the maximum?  And max_len is not explicitly
-> needed for the first check:
->
-> 	/* One more to disambiguate, if possible. */
-> 	if (mad->hex[i])
-> 		i++;
->
-> 	/* New record? */
-> 	if (i > mad->cur_len)
-> 		mad->cur_len = i;
->
-> René
+Hi all!
 
-Great.
+I would like to configure Git to automatically sign commits using SSH=20
+keys, while using OpenPGP when creating signed tags. As far as I can=20
+tell, this isn't currently possible.
 
-Your observation resolves my puzzlement about the first while() loop
-that has been bugging me ever since I started looking at this code.
-The mad->hex[] array is NUL terminated, and the loop can terminate
-correctly without being told about hexsz at all, and we ought to be
-able to use the same information to make sure we stop incrementing
-the .cur_len member without running beyond the end of the string.
+What I was thinking about were a couple of options like=20
+commit.gpg.format and tag.gpg.format, as we already have commit.gpgSign=20
+and tag.gpgSign. Of course, differently namespaced options like=20
+gpg.tag.format would work too.
 
-In other words, wouldn't this be what we want, without any of the
-max_len crap?
+What do you think? Does this make any sense to you? Let me know!
 
-diff --git c/object-name.c w/object-name.c
-index 11aa0e6afc..4cd1d38778 100644
---- c/object-name.c
-+++ w/object-name.c
-@@ -704,7 +704,7 @@ static int extend_abbrev_len(const struct object_id *oid, void *cb_data)
- 	while (mad->hex[i] && mad->hex[i] == get_hex_char_from_oid(oid, i))
- 		i++;
- 
--	if (i < GIT_MAX_RAWSZ && i >= mad->cur_len)
-+	if (mad->hex[i] && i >= mad->cur_len)
- 		mad->cur_len = i + 1;
- 
- 	return 0;
+Bye :)
+
+P.S. please keep me CC'd; I'm not subscribed
+
+--6e200f4a421b4ce4637e0d7f385ff265428406fea0ec7001ebc4020fbe02
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iIcEABYKAC8WIQS6VuNIvZRFHt7JcAdKkgiiRVB3pwUCaJtbRBEcdGFjaGlAZGVi
+aWFuLm9yZwAKCRBKkgiiRVB3pyQmAP9U/+yVVk7PjWYqVKxmA7XWU5+0L8D419ax
+YnvFp5XA5gEAqotIQ5PdU1htM5nMgVdRTGauVZOW8rNolrILd1VEqQE=
+=eor9
+-----END PGP SIGNATURE-----
+
+--6e200f4a421b4ce4637e0d7f385ff265428406fea0ec7001ebc4020fbe02--
