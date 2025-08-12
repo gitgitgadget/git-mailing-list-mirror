@@ -1,94 +1,136 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE13F27FB27
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 15:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614E92F2903
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 15:55:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755012666; cv=none; b=dKaAK584tnAm6NFCwCZgwyOD0Ixwf9sS+f4DdM/U9dwvbRMw4RiAHOh/dHh6AAHFcReqkJ+B/DGAY4oXSHwF1eDc6MCOyExHAf3QlNV2UvHKMiF1Vjj1WNTaMYiw103zz6UfoLoxzHZ9huBp6G2A7e5mDHHW1l2MuWeoiyX3q5I=
+	t=1755014135; cv=none; b=VznXEt7d9fGhwcw7FP15780piQYothmCyqGNx/0gI/gdbSq08XZSgk7y3iZJjKVPhLDPt7XyQUbwhi4dyIdbqlyf5oCjeVWSf8fvsrZoH3RPVwjwsIUfPm3srcHlxpepC0nchosNRE9IhdbYYharlf0v5yqgx6S9bpoUBO+YI30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755012666; c=relaxed/simple;
-	bh=9ZJ6PmIPuE/OEoWdgyGLQTt09Ft5akmP/GDJUqbYpSg=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kQK0ymptEJB3kz/5WJY/UgLMr21u359EO1e0VZu0y/bcPhXmM6sapBsjYqZj8HjvPbZKfy4NSskSv48UJ3Iju/Bt7g1HkJr9/skYEPloosChZhWs1qqvcGrwfRB4Aier5DNXE+Nu4DvB/NDMzA+huCwJnl5atpk3qnAAOU3CSac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=n5/Nt5xh; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1755014135; c=relaxed/simple;
+	bh=Ojap79N2sUVsRuPyjacPd44yEA2161r5kwWoyVOkhlo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MN0rC1zFrWL/C/wq8B2gOBcRXhov90jN9+idKCi5uOG50tTB+YWWbPypNDNaX7UdLzyzPGZFfCBjRi96s8RvxtUZII2wttluYT3Ideh/0ACKbBaL9bvApAhC7Y4MGLaBAZmBhcwlM/H/DAZPBnL7jCW7NHUGxjhjzIWzwyBIqq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xk8cqzwt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZaMbablE; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="n5/Nt5xh"
-Received: from smtp6-g21.free.fr (smtp6-g21.free.fr [212.27.42.6])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 529A74C9A8
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 17:24:25 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:77b6:e827:4bb:cf69])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp6-g21.free.fr (Postfix) with ESMTPSA id CCD58780371;
-	Tue, 12 Aug 2025 17:24:16 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1755012257;
-	bh=9ZJ6PmIPuE/OEoWdgyGLQTt09Ft5akmP/GDJUqbYpSg=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=n5/Nt5xhrd+8BUDJXsP6xwcriGmWGgoEdrVU/II3kxQLjaSRdqGLBEWJsF+GEEVJ2
-	 9fJ3xYE2BJuNVs8Xrs5PH+01irJ9Z9Xw4qWCymPaOqjkhDtB2vJtZ4kEILnYFvC4wg
-	 PsMf+FiwujNnnPkSlYabR/x8L+swcPhxWj/ptZqPGtuNH4uVDTAP3uwCmMG/jMjZCe
-	 n43w0fhhUVEUengfJ8D6Hw3KvM5AEa2jfE6ezlG1O/F3mtsXPtWDcMiowPaR6smpLO
-	 g1f9Oq9vWU1bugq1q3Thr7HfDZGoyZ3iD8/5TB6xI6ffGr/7Ng/N6JtH7XRMp0ZDQS
-	 MzM5GwOctUFuA==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Aug 2025, #05; Mon, 11)
-Date: Tue, 12 Aug 2025 17:24:16 +0200
-Message-ID: <5032416.31r3eYUQgx@cayenne>
-In-Reply-To: <xmqqwm79x7ra.fsf@gitster.g>
-References: <xmqqwm79x7ra.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xk8cqzwt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZaMbablE"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 53D9BEC00DB;
+	Tue, 12 Aug 2025 11:55:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 12 Aug 2025 11:55:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755014132; x=1755100532; bh=RBsQrWkorX
+	cgqv5p/qQln6W0oOKRMFFNLlzO47eIY4w=; b=Xk8cqzwtwDatmeZL3YTYlWeilJ
+	hTbWKY06PQL3sonayzRuAsmNa2VedvSsvIkS+HIkkZL+dSxWM19bYWfUk/pLaS5R
+	TH3ByhVV4Nyg7Ceu0qmbTQgo55T7fMZvR3Vu0oX39CvB+bmnltsxZrSYNSy/dLo1
+	H+o5R6l0Lzw2YqkSgwTBXtIg+i/LEEFbpQNUk8N4926JE4fMO2+qiFpf1r8ACnmy
+	CUSXwOpgGTJKMchTEF8Gd57in8M/q0jgMDC4XaRdhheQawzJWOa8CmbOvmXV4JP3
+	cUlkIn327CSY/qGuGGUT787W+0NODpeFapFeo7U3P//6CUHVzQPvBFsNiK5A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755014132; x=1755100532; bh=RBsQrWkorXcgqv5p/qQln6W0oOKRMFFNLlz
+	O47eIY4w=; b=ZaMbablE+6sa0gUjZzN9CaFtA4ZnKNuKtxWuv9UrZOOuj/rpyNu
+	i84bGIoiBx1ExlC8IwMNza57dLcRm4fS1Rn8TIYxTdDcZNeYKwomAUBCMyQ748Wm
+	d7qRuCTs+QMCOT1JuH1zSAiZ1RteDL51zmft9a39ukdZJobeS/2S6s0RG2dtj7Mq
+	tJyCOhzB+SJGz1pPhMJoEEVgsgCq72YhE0U8xyeuMKIn89U9t18c73Cg5CBb3N/4
+	BvLaG3uURjc9hgkJzRhPchAmo3djKvuCMZsmKvkPfK5J8pbnaGi+pDQRNcMN4np6
+	8UMXYzP9Hqko3lrxWnddLqneGmY/QecolbA==
+X-ME-Sender: <xms:9GObaA-Z4a4Afln1-EwN8X3JLY8nFaOeDV2ueNcTpGPHdZUCImhErw>
+    <xme:9GObaDSzT6_Du8Mn0X6APtfRpbqccR9UB7xUBRVv-310Mlwxr-hjYRB-HDcFQMMNu
+    eRyDbUBnVDa7YKaRA>
+X-ME-Received: <xmr:9GObaCkTAGXBb6CZuP6He5f0NOG7D_on86P4gr6MFOyz1RBCw4Ev2U1w8pCYFRe-3ZyQwlHsUyLMLja6z-xluoKB5WjX2rgtTJ-P4Wk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeehjeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegvqdhkqdhnuhhtsehhohhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:9GObaDQ0TPeFrlW6EBn7xt96o3Ny5gaV729-tYyxfv2fjWlyQPBFzQ>
+    <xmx:9GObaANA30ipom75fiQHCidbUWfWUIZELLykna5-4SMZZlBToRRkxg>
+    <xmx:9GObaMUGQL9_1LT47IjvAXAaxrg9es0lRMvdcKCEf4_aGweL2mibRg>
+    <xmx:9GObaHfGICMEYbYEPLcin2ZzLTXIC42bhFvhze6TfNmDgpjjn5N6Kw>
+    <xmx:9GObaGEWZgGgHRKKIC-xS0k2pRu_EI-4l_-nlj2MzYp4Z41UHi1_A8bF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 Aug 2025 11:55:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Knut Harald Ryager via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Knut Harald Ryager <e-k-nut@hotmail.com>
+Subject: Re: [PATCH v3] docs: remove stray bracket from git-clone synopsis
+In-Reply-To: <pull.2023.v3.git.git.1754949872593.gitgitgadget@gmail.com> (Knut
+	Harald Ryager via GitGitGadget's message of "Mon, 11 Aug 2025 22:04:32
+	+0000")
+References: <pull.2023.v2.git.git.1754861423787.gitgitgadget@gmail.com>
+	<pull.2023.v3.git.git.1754949872593.gitgitgadget@gmail.com>
+Date: Tue, 12 Aug 2025 08:55:29 -0700
+Message-ID: <xmqqms84v8jy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain
 
-On Tuesday, 12 August 2025 10:29:45 CEST Junio C Hamano wrote:
-> Here are the topics that have been cooking in my tree.  Commits
-> prefixed with '+' are in 'next' (being in 'next' is a sign that a
-> topic is stable enough to be used and are candidate to be in a
-> future release).  Commits prefixed with '-' are only in 'seen', and
-> aren't considered "accepted" at all and may be annotated with an URL
-> to a message that raises issues but they are no means exhaustive.  A
-> topic without enough support may be discarded after a long period of
-> no activity (of course they can be resubmit when new interests
-> arise).
->=20
-> Copies of the source code to Git live in many repositories, and the
-> following is a list of the ones I push into or their mirrors.  Some
-> repositories have only a subset of branches.
->=20
-> * ja/doc-lint-sections-and-synopsis (2025-08-11) 6 commits
->  - doc lint: check that synopsis manpages have synopsis inlines
->  - doc:git-for-each-ref: fix styling and typos
->  - doc: check for absence of the form --[no-]parameter
->  - doc: check for absence of multiple terms in each entry of desc list
->  - doc: check well-formedness of delimited sections
->  - doc: test linkgit macros for well-formedness
->=20
->  Doc lint updates to encourage the newer and easier-to-use
->  `synopsis` format, with fixes to a handful of existing uses.
->=20
->  Will merge to 'next'?
->  source: <pull.1945.v3.git.1754945600.gitgitgadget@gmail.com>
->=20
->=20
+"Knut Harald Ryager via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-These patches are designed to not raise false positives, trading it for=20
-letting true positives pass through. For instance, the "synopsis" patch can=
-not=20
-catch keywords which are just one word.
+> From: Knut Harald Ryager <e-k-nut@hotmail.com>
+>
+> Remove the extra and incorrect closing bracket, so that the line reads:
+>
+>     [--filter=<filter> [--also-filter-submodules]]
+>
+> instead of
+>
+>     [--filter=<filter>] [--also-filter-submodules]]
+>
+> Note: Both filter options were grouped when --also-filter-submodules
+> was added by commit f05da2b4. The extra bracket was added
+> later by commit 76880f05.
+>
+> Signed-off-by: Knut Harald Ryager <e-k-nut@hotmail.com>
+> ---
 
- If possible, I'd like to see how they behave against upcoming documentatio=
-n=20
-changes described in this "cooking". This is in order to not have to revert=
-=20
-them at some point.
+Thanks.  Let me rewrite the proposed log message thusly:
 
-Jean-No=C3=ABl
+--- >8 ---
+Subject: docs: remove stray bracket from git-clone synopsis
 
+The synopsis section has an extra closing bracket, like this:
 
+    [--filter=<filter>] [--also-filter-submodules]]
+
+The extra one is not the one at the end of this line; it is the one
+after "...=<filter>".
+
+The "--also-filter-submodules" option was added by f05da2b4 (clone,
+submodule: pass partial clone filters to submodules, 2022-02-04).
+Because it makes sense only when used with the "--filter=<filter>"
+option, these two options are enclosed in a pair of brackets.  The
+extra one was added by 76880f05 (doc: git-clone: apply new
+documentation formatting guidelines, 2024-03-29) by mistake.
+
+Remove the extra and incorrect closing bracket, so that the line
+reads:
+
+    [--filter=<filter> [--also-filter-submodules]]
+
+Signed-off-by: Knut Harald Ryager <e-k-nut@hotmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
