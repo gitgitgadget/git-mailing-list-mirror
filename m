@@ -1,122 +1,141 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F952F068B
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 21:16:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932712F0661
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 21:36:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755033375; cv=none; b=TM/SV85UeMcyC/U7vQhHcu0r3YL6dqEggAS2BdQiERW3B0YH8Dx7X0OCcnbmeEwZCsjKmULniV7uXf5bElmmnAQBA+R6kx1W5qD0dbykY2aKjOXcLsjiBff/zwsjZ6QvMxPOhyq0ra1UDkN52KOzctdOTfthrMtLrG4XePMSTCY=
+	t=1755034591; cv=none; b=EFgqrK/u0tI6SnALoXTENxK/Ubuy2aSbVN/D6W3aIWtYyhnn0/Qxo3KnVKZUvJ9D+HoRGySos4fJthjeu3DwZmLRpbzfF3dfXnEilirBwxcwT0e/PYGR5/N7KlIBx6WxYKjxahImCr0DoSL7V0mhyr0NMP886SyrQyWA4BOsOBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755033375; c=relaxed/simple;
-	bh=a9134ResrZWG+j2l4m2+Pb3xKU1SKXYxy5GssGJbIrA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=brVzrELZhe+4ZnpG1+AMFl+DRmJt6DJBGXMy+exwtsPGtMhn5byU0uDfDd+G4dGiS6VZR31mlEmwiOjQXhidqbJstXzccvkyq8w9qePpAXK4y+40asXxN3ryVA1iGfVtKMyFjB5RplWtyC5OIP+8ts8HRsJ/m/xRAQacdiQJ3yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ZU1Ij19p; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1755034591; c=relaxed/simple;
+	bh=KqqnRbcKxmp5i4yY7aQ0q4SFT2+OvGHHNcmtvHYk9y8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ShjyjWUy6CjcGb+ZHIE4hGdcxgjWn12RstjRPF6hZ6QOnwU7/5I6OpbnyVKay5+LSKbKNshyaZylaOI4xRYzQrY73Bw8ns2TEWfGkSyzogWUA2Ee1jvbzrQiTpebaYXr1WxTQBUU4Cr+kcU6p3p0Qb7esmwKIR+fdTCOhY2iaOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=emPDO3j3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Na5xGast; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZU1Ij19p"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1755033371;
-	bh=a9134ResrZWG+j2l4m2+Pb3xKU1SKXYxy5GssGJbIrA=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ZU1Ij19pDyvVuu7eI/YbsC7MX+Lj9qL7yd+CzxOMcJxySgpwvKBc9o5zNOOPLv5BF
-	 rvV2k7OtD+RZaf39kL+3Y0jO6NyYeQvsv2ii+ZuHJiDaQDA7lPXOwIUzECagDCylMr
-	 BwznsrF3u0t8hjPAbHD6pPKGv7jyOQeDICaCCwoEIb/QpeD7EIS/UQ+VSK5810w8vr
-	 aF7mlgSbdJ30ofjOhGE5NsKSVuAKLjSRi+CjoqY7segpkQkmhBtbPAbz1dQXMq/pIF
-	 /fKi0O5s0DMB4gbGEX3b9tUf3ZF968IDqV0a8UBitw+Uo97a7UlCXhhIm0b0tjAR7v
-	 1gqYqEtJyArPvG08vId8IR6PA9r5777NE/jqhDu1rZtkKEwSixpZuOseZldHbOSdoh
-	 8CeGR14vwEpHh5LZdBeTI88u26flfCIZMgdQCTTi/bZsr4DbHjNOhLWyYfEfGuOb6S
-	 5JMbi43xm+sJ0zn/nI7dGnA9LepIFcW7NL36OuJ55HN/OHPzUw5
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7bdb:5a3:7014:f6fa])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8D409200B4;
-	Tue, 12 Aug 2025 21:16:11 +0000 (UTC)
-Date: Tue, 12 Aug 2025 21:16:10 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Andrea Pappacoda <tachi@debian.org>
-Cc: git@vger.kernel.org
-Subject: Re: Signing commits and tags differently
-Message-ID: <aJuvGtiZ8ll_SeIv@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Andrea Pappacoda <tachi@debian.org>, git@vger.kernel.org
-References: <DC0JSOC14W8U.3UCX8TG6X7W5O@debian.org>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="emPDO3j3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Na5xGast"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9DE071D000EE;
+	Tue, 12 Aug 2025 17:36:28 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 12 Aug 2025 17:36:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1755034588;
+	 x=1755120988; bh=q1EPjMaUc+hn1lMDXmTnfURB1aaU8UYExdYOLuIPqL0=; b=
+	emPDO3j36kFhNcXnJBR5MaONuIFnM8V0fVYUs8uXM28hxND+lHmqEYw/Qfyoshkn
+	tl151NJmfKXwd+2bJ0h+swVeLjcz38OoJeg9yZd6artCsCkJ441it3f8IMYXicf+
+	EDfUJx6mLmI1AvIuZuR2CZPCRxdPAPFbUWZ2dNi4K3ISMNUJmS35NgKru6GzQ5GX
+	FYwwIZEt88VuXITtTU+Q6BUh6YonUjz4gD+9j4bnQV/EjMk2KNZJnQMA3mNIxJRW
+	WDt+c9qTgFoY1DCd24KRL25roXweorLlViEj528odNB8J2HXvhTyWCKMgTc0NN8T
+	bmONKx2ZQpWaWF9Xq4zvvQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755034588; x=
+	1755120988; bh=q1EPjMaUc+hn1lMDXmTnfURB1aaU8UYExdYOLuIPqL0=; b=N
+	a5xGastzOkdtxZDOh0WHB0Us8my11e3AAaO7xyCKO9hhyA846wAukUBRXiioLcTJ
+	nag+xzLAqltQmjnDBPQW/TCAskBvYfzHCDidbhr3Izw75P1G9K7ShRKodA79PKYr
+	AEfnuLFefqzZxiwwZ4ri+SLO7NXHa1EOtBpiXkix2qn4cahteokvw54fG+kAYfBG
+	xWpbL4YozUWd4FkL5ZnneIFpmDaB/vD2WL2tpOv8/VUTQgRnjq+ChdFXk4GCn+D9
+	bgUVM5nYuV5aelSfQnQUNyl6Uvw/tkhI1Bn+FWfo0ibyXN+3+Xxi+EDpQEh+i09F
+	aYnqaejgcPFIQVMmgJ+ew==
+X-ME-Sender: <xms:3LObaBoAlwVDhHGNU3Og9Ux4rWbSp-ldOrnhkSo5l_UoZ95p5c_OxA>
+    <xme:3LObaPL5bFKPKVPr4-qzpoNTI7zB7dXMoB-4x0j0MW8stNL9zwwL9Lo7MgdRzK7uG
+    Tei10JUOvUo4J1mgg>
+X-ME-Received: <xmr:3LObaEoCr83ayCaa-_XTi_8upP3YxFXKw5KxHorw1mSHO-zkVeHhHO4ugHsw1RcQOta11A63ZCWoMLmjCa664x4VlfkKj23gW2rOBXg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeeigeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjuhhlih
+    grsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:3LObaHwy4EwmjPgToDzc6J-vLGOjICw9HsUHcpf7kBxbCM5IY0eewQ>
+    <xmx:3LObaINAHT9hvp1weIMrSO2zJid6KcIhpzdf8Gr_ed5mc-zsT_Iddg>
+    <xmx:3LObaM5xZ5DRYRqcdy1K_8eE8vfywSUCg9hhIP_6YXRTBE4sEa9IWw>
+    <xmx:3LObaBnKo_GHwZak718uLrEc-B55PydWstFjDjYVzEVl_4ociz77yw>
+    <xmx:3LObaPLme8uVeDnFQbd0lMXsNQ4U89kuHG0LbT0YCed9WxVp_sXocfQF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 Aug 2025 17:36:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Chris Torek <chris.torek@gmail.com>
+Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH 5/5] doc: git-add: explain inconsistent terminology
+In-Reply-To: <CAPx1GveEX_r8thqpux0jcbEsEyLpNOvRWEvogUp4m_cNC5=dbw@mail.gmail.com>
+	(Chris Torek's message of "Tue, 12 Aug 2025 13:51:20 -0700")
+References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
+	<f7e8e4c63a1205740c2d54368d7bcdd686882680.1755029249.git.gitgitgadget@gmail.com>
+	<CAPx1GveEX_r8thqpux0jcbEsEyLpNOvRWEvogUp4m_cNC5=dbw@mail.gmail.com>
+Date: Tue, 12 Aug 2025 14:36:25 -0700
+Message-ID: <xmqqpld0ql2e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wqA9ZF2iwFVcBAxM"
-Content-Disposition: inline
-In-Reply-To: <DC0JSOC14W8U.3UCX8TG6X7W5O@debian.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---wqA9ZF2iwFVcBAxM
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On 2025-08-12 at 15:18:19, Andrea Pappacoda wrote:
-> Hi all!
+Chris Torek <chris.torek@gmail.com> writes:
 
-Hi,
+> On Tue, Aug 12, 2025 at 1:35 PM Julia Evans via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> +TERMINOLOGY NOTE
+>> +----------------
+>> +
+>> +Git uses the terms "staging area", "index" and "cache" interchangeably
+>> +for historical reasons. Many commands have flags like `--staged`,
+>> +`--index`, or `--cached`, and they all refer to the index.
+>> +
+>
+> I think this is also a good idea. Unfortunately, `git apply` has two
+> different meanings for `--index` vs `--cached` (I believe it's the
+> *only* exception to the "means the same thing" rule...).
 
-> I would like to configure Git to automatically sign commits using SSH key=
-s,
-> while using OpenPGP when creating signed tags. As far as I can tell, this
-> isn't currently possible.
+Yes, I think the first sentence is an excellent addition, even
+though I do not know if "git add" is the best place to teach it.
 
-I agree this isn't possible with the default commands, although you
-could solve with with an alias (such as `alias.signed-tag=3D"!f() { git -c
-gpg.format=3Dopenpgp tag "$@"; };f"`).
+However, it will be disservice to users to say "they all refer to
+the index" here.  Yes, it is technically correct that they all refer
+to the index, but that much any intelligent readers can infer after
+reading the first sentance that historically these three words were
+used to refer to the same "index".  And what I think is bad in that
+second sentence is that it implies they may mean the same thing
+without saying that.  It is perfectly fine to say that these three
+words express some operation around the index (sometimes called the
+staging area).  It also is fine to say that "--staged" is sometimes
+used as synonym for `--cached`.
 
-I'm interested to hear more about your use case for this split, since
-it's the first time I've heard about someone wanting to do this.
+But at least `--cached` and `--index` mean quite different things.
 
-> What I was thinking about were a couple of options like commit.gpg.format
-> and tag.gpg.format, as we already have commit.gpgSign and tag.gpgSign. Of
-> course, differently namespaced options like gpg.tag.format would work too.
->=20
-> What do you think? Does this make any sense to you? Let me know!
+As "git help cli" explains, an operation that can affect only the
+index would use "--cached" and both the index and the working tree
+would use "--index".
 
-I don't have a strong opinion about adding this feature or not
-(especially since I don't know about your use case), but I think if this
-feature were implemented we'd need to have the format options default to
-the current config option to not regress functionality for existing
-users.
+It may be that "apply" is currently the only exception (I did not
+check), but it certainly is not guaranteed to stay to be the only
+exception.  If a command wants to work on both the contents in the
+index and in the working tree, such a command is very much welcomed
+to use the option "--index" to trigger such a mode of operation.
 
-There's also the issue that this makes verification more difficult.
-After all, you sign the data once, but presumably the data is verified
-many times by many different users (or software acting on their behalf,
-such as a forge).  That means that we'd either need to autodetect the
-signature and invoke the right tool (which we may already do) or every
-individual user would need to have the appropriate configuration set up
-for both.
+Conclusion?  I would rather see "Many commands have ..." sentence
+struck out.  After all, that does not need to be taught to those who
+came here to learn about "git add".
 
-Again, no strong opinions here, just thoughts about what an
-implementation might look like.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---wqA9ZF2iwFVcBAxM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaJuvGQAKCRB8DEliiIei
-gYajAQCCxsT58gV3GmoPS9H7DybWCeoWo1YsuraPE/i3ijF+VAD7BOQ2zs7fRy+j
-oMuqCGhRkDXwWII2MtRDOb8F3IjChAg=
-=HYVE
------END PGP SIGNATURE-----
-
---wqA9ZF2iwFVcBAxM--
+Thanks.
