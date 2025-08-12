@@ -1,228 +1,118 @@
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C1C305E08
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 17:05:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844731A9FB7
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 17:08:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755018328; cv=none; b=mGP50fYCP/gnpBQeHI2RhpTkiIwq+hPhrE4Mu2R5+C8NHUr3mStiY9n7C14TBnyYconJAl2M5bqtS0yV/4b/fjJkVWGB4XvAgB5rQCQLRqQjOY0ZxcrNvYCKjLezottu4pHlvBQ3GWnb48HyChEgQpsxfgZUE9eQKgcPgIjNsKQ=
+	t=1755018483; cv=none; b=O2ZylAEB5q7Dd8XHW2nUmvyfs5QnuPB3djyywLWEjiDPOjUHR3Tv90Grx586RHN9IWH1tnEOL8Xr3oU5F1xgmhn5yFlnRKG/614VLPoqgynkdNr+8PQeWH0BzsAg91VdSBfamAwptotMSa+PYtgTCcrnVBM3gjP/Jciw0du0R7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755018328; c=relaxed/simple;
-	bh=1p2i5KRi7eQ3ESJMbPY/V9HUqQNGg29TBycIUtNfAf8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uuF9bW8UtgB7h8J6NQgU5iiz07R57W2G4xHRfOf+sHZIMDX1HQJpXynWtj6fFPllzgt7JMsgQ7hOl1MSmBfvAjZNagvQ9xKhYXiESG/+c/3bTJsy81fPJMq66reQM9J98WHAkb9oxh5TXbZXcaNc4ojNhTXECAqDfFTvfRuQNCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iIwhlUPv; arc=none smtp.client-ip=209.85.161.49
+	s=arc-20240116; t=1755018483; c=relaxed/simple;
+	bh=rUKaiipHbgo1gMNFwSfP9YFrRtKakFiQOjuLpTG3tQA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=a6FxmVknYKV/E/bAJ06hrSLVv5nJwjAcHJtNE9YdUb/VWiR2noVwVNc53duFZScDzAeYgu5Yh+rUz5JIAib7ccES5p6TU+ojhGSQI8/bavdrMj8h1Oa8AJNSUSDlOZ8ykoBGTV4nJ1kVrwvELOmJRujF9wGcPz5VOGp2N2lms4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZpjxXW+9; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iIwhlUPv"
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-61b50eddbc8so2397674eaf.3
-        for <git@vger.kernel.org>; Tue, 12 Aug 2025 10:05:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZpjxXW+9"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-af968aa2de4so1027693366b.1
+        for <git@vger.kernel.org>; Tue, 12 Aug 2025 10:08:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755018326; x=1755623126; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cj60eioOa23D9i7DaY57jJ1ZJaTusVYEQR48zZJAmaw=;
-        b=iIwhlUPv07uO6AeyjMWeofwBpWFdzh0Hb4JPV5Rn5D11/GNuFSE1Bi+P+lmsks7HbA
-         913usuCT3ybxQdBr0ZO8ZVeJF2x+gMDpxOP2QGCb4p8F4qP5hljZgMvqUL2sBSd4ls3f
-         /bkazZ77tYdQHDqHW3RBzncFw3HPUrM0Xslc0kEPOKSPw+7I/qdz7qVDoonliUNC5b6r
-         R8kVJQdaiMne9PF27mOV/eOfZGefB/bEwqHl7TbwnbWQdUsyo4TogOVW5eq8AMcPADL7
-         5jpU50LOcOw1qS8CXxHdnVXKVfkXtN2Bjs9XUDfAAT2uwRxoGVsSTSlG4oDuQb7y6OPg
-         HCcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755018326; x=1755623126;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1755018480; x=1755623280; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Cj60eioOa23D9i7DaY57jJ1ZJaTusVYEQR48zZJAmaw=;
-        b=IIk/5oFukc5Hc5sa4g+IqgF2nW5TU+tF4Ch4QI3a7qXAzfCCRG75mxcyaYG94JRied
-         ZyoG5Gw2QshtHWnRhDqTtlEyXnf/dA6YWZHDR9FU5n/badnAhidGh8D8lot6BbfrlhK4
-         gumOGPT9xOEudzW0ez8cY/ZLorvjcy6/sMu8T5P6QJqeKuxkj/QJDJRZ8Pv0DuSkeWb7
-         wMP1B9oa7dJ2Dp60rjbeMA0FzA1AXBtXMdbZTsli4IM2ep7awxATzbdcXzeQuVs3Rib/
-         wwrBoJT5A0QyVdpWNC8RK0U1QYIlLV635RS1cgnxE3JSBaQU32LEdRdd6RGvH1Hij41S
-         5iSg==
-X-Gm-Message-State: AOJu0YxssKNLCmNpnn73nSPxlAVoXH15tHiQc0Lgujd5zVb4H5xRgTjO
-	HK5LxeRiI1QL/rov2L2lXALLHUrM5SN3jG8e8eyOarwOiXa7nbiEjnDb
-X-Gm-Gg: ASbGncur9pNP5BUbMXTiuNVq1FmAGerM8qZckMDniD1WD5T19LJJ509/9ARRe5S2dBv
-	gFow3FJ9jGeZ1fqtQxeVngxiSTwXmrlb7ckcDJKg/7IcJVl9RCTUWoXcqYVxJMHluY3XolI2a20
-	nXZklATIYw1SLFFKlEUhoRmLl4OMjfNz62Fngjji5nG0Z6ZljOUGyp4MQs4h4nNZ35j2jEkOalO
-	BnEroTlpbREHJJnnosUOuaTp9qHtd6E4H6W3cREpwpn5wE0BgXcr6vtqD32TJ3YGgKIzkT4JLCc
-	gNooLEKU5To9qBe4FFjOPgKYMCEmlOXDxxPJ6KQZvrgHrXQacCNvq9sXtNb44n5UEmbMDDCokKz
-	YYquagTM0eNbPwLs=
-X-Google-Smtp-Source: AGHT+IHTrbWBhSuUdVmaWkCJ5HYwaF01ViSYAGLxB0Of3T2jCrtm7isShHGts813WzChpjFxUpoi7w==
-X-Received: by 2002:a05:6820:16aa:b0:61b:931a:a9a5 with SMTP id 006d021491bc7-61bc45ffe0bmr339501eaf.4.1755018325990;
-        Tue, 12 Aug 2025 10:05:25 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-61b7caa0a42sm1343596eaf.24.2025.08.12.10.05.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Aug 2025 10:05:25 -0700 (PDT)
-Date: Tue, 12 Aug 2025 12:05:25 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>, 
-	Junio C Hamano <gitster@pobox.com>, Carlo Arenas <carenas@gmail.com>
-Subject: Re: [PATCH v3 7/8] reftable: don't second-guess errors from flock
- interface
-Message-ID: <ckadsyx65an4seplaytey5fd3mdfwc3pnbtlpkslulod76l3s4@56mra6ydeg2p>
-References: <20250812-pks-reftable-fixes-for-libgit2-v3-0-cf3b2267867e@pks.im>
- <20250812-pks-reftable-fixes-for-libgit2-v3-7-cf3b2267867e@pks.im>
+        bh=FX8AoDuwAc/Qbn/y4q0SVZYMABD8HNIV2yYFEYZFuW8=;
+        b=ZpjxXW+9/cxFdG9JyOMV3MaOsAC3vvA2vj6rH18J3fWqZTr6CGRjXyuohGoR0AMORs
+         u2AS1vdI4XjadcJ+KNqyZYdBRmGsuPzcAoSji+vQFZ6/JXeCako76Lg6i4QgkiP8XdXL
+         ZzV/i/lhGKkCn9ZTrYFm/Polu3AcIzJuaI/Up59zQz8hbfwYToR+hcrAlOUBd6bxs11a
+         7ecPJ6F/oSzPV6IPpgxG6AAE4LgB4rX2GyLkNBWnpiomgUEX8zc1fG83lKzPYU6buFY1
+         XJ4SEYKTyJhd2WI3IKrtT3iWCdz4RuV7sQbg/WpKTStXRun1qKulSGF7RgIgZTa6F+60
+         fjbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755018480; x=1755623280;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FX8AoDuwAc/Qbn/y4q0SVZYMABD8HNIV2yYFEYZFuW8=;
+        b=nwMBUN2XLTKsZIfnbQiPI0eq0Nj/TpePiuWXdE6bvTozcW/eRy+uInqnrsipmvfmHJ
+         af+olyqQ48Dm1BD7lgfRPYImVfAsCB3s7TqSrMnxjW741bZSMprhZLEhzRR4Hch/+DQw
+         dhD3gvr/EGm3F2/9g59Qa3dDBPL41RLfjvSpkTjsmSB9kG2EljENWVYBgU8AYzGSMX1Z
+         QjGKgogIK4VE5AZyuDMK2yvVpQ3gnDxKas8t8clrQqsU8744z2j7a3s7hvKxkPoVSYVW
+         UbtXItJHR7AsMyT9lCjisWdG00fynRGnTnSRcpP4kX6ejIq2kwU0HLNWDqT2by/P19X7
+         qjIw==
+X-Forwarded-Encrypted: i=1; AJvYcCXzfO15TjjnFh2YZpKBIZRwS0SB13BvhwzKYGgsFp7xYsXRAoFFoowsOW521OAc25/SEZU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPVM3pI/dkQ1WmktJTFP25Fx7K0fX78KELmh59P88Imlix0sS0
+	ax227FguQsVoowtc9tZj8C/ebPwz9LxnFMCMD8L8kEYVSW05I0Y+eqDUeyzzyDbEzpTqwFvDBUw
+	0IGHH68t9RvZsZ5IC+J42PVppbocMMF8=
+X-Gm-Gg: ASbGnctSEnq7cUGhuJu56P3wZSDX152jpu1OAkysAI1419vrHPyjOwyI2UE/xxXhFv8
+	lFEhiTH3MK/iBlfKZeB1+gavRHkWol0nsRBBPzoi3WDliwpUFr/n2OL4268E4HDidOAA3nc6qbv
+	IV5jTItGrcypc7bCGLh+Hhq1BHSy+GkH0VdOxx/tPadU1iOs+A54aTT+ShWTADGeidc1tGRx8dU
+	OqEcVb575Vry04umragvOSz8DC5M30KH3AOGe8=
+X-Google-Smtp-Source: AGHT+IHE/Z8ndAKr4KhJLhELuiUuYC9xwHw1ne+dZi/4tNLEMRJm98Hs0IiR7Egs1Mc4DDbfucwqa/xt03HFNO5ub+w=
+X-Received: by 2002:a17:907:6ea2:b0:ae9:c365:7f1f with SMTP id
+ a640c23a62f3a-afca4f0ad84mr4755666b.56.1755018479647; Tue, 12 Aug 2025
+ 10:07:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250812-pks-reftable-fixes-for-libgit2-v3-7-cf3b2267867e@pks.im>
+References: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
+ <pull.1949.v4.git.1754702057.gitgitgadget@gmail.com> <07a4bdb7ce5eb456bd81972c350d0c4f298ebd46.1754702057.git.gitgitgadget@gmail.com>
+ <CAOLa=ZSTaAaWJWeXBkoxPx46g_Equo-sHWgCESE9G6vk3HZeqA@mail.gmail.com>
+ <84258154-322c-4ef0-9ebb-44858a5d58fc@gmail.com> <CAOLa=ZQwwcfEQNbZqp3o6YfTWMhUr=s0Vw5jP87pUELsktLRaw@mail.gmail.com>
+In-Reply-To: <CAOLa=ZQwwcfEQNbZqp3o6YfTWMhUr=s0Vw5jP87pUELsktLRaw@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 12 Aug 2025 13:07:48 -0400
+X-Gm-Features: Ac12FXyfq75qZTcsW6HnY9ImHEbhPWkNMZxQH8wOfvdU8Rkk1DpYoP1NSSih31A
+Message-ID: <CALnO6CBqChfU62TJuk9mBd=gSbPKDEyBKv8r-rCygsRDD2yALQ@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] doc: git-rebase: start with an example
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, 
+	Julia Evans via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Julia Evans <julia@jvns.ca>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25/08/12 11:54AM, Patrick Steinhardt wrote:
-> The `flock` interface is implemented as part of "reftable/system.c" and
-> thus needs to be implemented by the integrator between the reftable
-> library and its parent code base. As such, we cannot rely on any
-> specific implementation thereof.
-> 
-> Regardless of that, users of the `flock` subsystem rely on `errno` being
-> set to specific values. This is fragile and not documented anywhere and
-> doesn't really make for a good interface.
-> 
-> Refactor the code so that the implementations themselves are expected to
-> return reftable-specific error codes. Our implementation of the `flock`
-> subsystem already knows to do this for all error paths except one.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  reftable/stack.c  | 37 ++++++++-----------------------------
->  reftable/system.c |  2 +-
->  reftable/system.h |  4 +++-
->  3 files changed, 12 insertions(+), 31 deletions(-)
-> 
-> diff --git a/reftable/stack.c b/reftable/stack.c
-> index af0f94d882..f91ce50bcd 100644
-> --- a/reftable/stack.c
-> +++ b/reftable/stack.c
-> @@ -698,14 +698,9 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
->  
->  	err = flock_acquire(&add->tables_list_lock, st->list_file,
->  			    st->opts.lock_timeout_ms);
-> -	if (err < 0) {
-> -		if (errno == EEXIST) {
-> -			err = REFTABLE_LOCK_ERROR;
-> -		} else {
-> -			err = REFTABLE_IO_ERROR;
-> -		}
-> +	if (err < 0)
->  		goto done;
-> -	}
-> +
->  	if (st->opts.default_permissions) {
->  		if (chmod(add->tables_list_lock.path,
->  			  st->opts.default_permissions) < 0) {
-> @@ -1212,13 +1207,8 @@ static int stack_compact_range(struct reftable_stack *st,
->  	 * which are part of the user-specified range.
->  	 */
->  	err = flock_acquire(&tables_list_lock, st->list_file, st->opts.lock_timeout_ms);
-> -	if (err < 0) {
-> -		if (errno == EEXIST)
-> -			err = REFTABLE_LOCK_ERROR;
-> -		else
-> -			err = REFTABLE_IO_ERROR;
-> +	if (err < 0)
->  		goto done;
-> -	}
->  
->  	/*
->  	 * Check whether the stack is up-to-date. We unfortunately cannot
-> @@ -1272,7 +1262,7 @@ static int stack_compact_range(struct reftable_stack *st,
->  			 * tables, otherwise there would be nothing to compact.
->  			 * In that case, we return a lock error to our caller.
->  			 */
-> -			if (errno == EEXIST && last - (i - 1) >= 2 &&
-> +			if (err == REFTABLE_LOCK_ERROR && last - (i - 1) >= 2 &&
->  			    flags & STACK_COMPACT_RANGE_BEST_EFFORT) {
->  				err = 0;
->  				/*
-> @@ -1284,13 +1274,9 @@ static int stack_compact_range(struct reftable_stack *st,
->  				 */
->  				first = (i - 1) + 1;
->  				break;
-> -			} else if (errno == EEXIST) {
-> -				err = REFTABLE_LOCK_ERROR;
-> -				goto done;
-> -			} else {
-> -				err = REFTABLE_IO_ERROR;
-> -				goto done;
->  			}
-> +
-> +			goto done;
->  		}
->  
->  		/*
-> @@ -1299,10 +1285,8 @@ static int stack_compact_range(struct reftable_stack *st,
->  		 * of tables.
->  		 */
->  		err = flock_close(&table_locks[nlocks++]);
-> -		if (err < 0) {
-> -			err = REFTABLE_IO_ERROR;
-> +		if (err < 0)
->  			goto done;
-> -		}
->  	}
->  
->  	/*
-> @@ -1334,13 +1318,8 @@ static int stack_compact_range(struct reftable_stack *st,
->  	 * the new table.
->  	 */
->  	err = flock_acquire(&tables_list_lock, st->list_file, st->opts.lock_timeout_ms);
-> -	if (err < 0) {
-> -		if (errno == EEXIST)
-> -			err = REFTABLE_LOCK_ERROR;
-> -		else
-> -			err = REFTABLE_IO_ERROR;
-> +	if (err < 0)
+On Tue, Aug 12, 2025 at 5:11=E2=80=AFAM Karthik Nayak <karthik.188@gmail.co=
+m> wrote:
+>
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+> > On 11/08/2025 10:13, Karthik Nayak wrote:
+> >> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >>> +
+> >>> +You want to transplant the commits you made on `topic` since it dive=
+rged from
+> >>> +`master` (i.e. A, B, and C), on top of the current `master`.  You ca=
+n do this
+> >>> +by running `git rebase master` while the `topic` branch is checked o=
+ut.  If you
+> >>> +want to rebase `topic` while on another branch, `git rebase master t=
+opic` is a
+> >>> +shortcut for `git checkout topic && git rebase master`.
+> >>> +
+> >>
+> >> Nit: now that `git-switch(1)` is no longer experimental, we should sta=
+rt
+> >> recommending it over `git-checkout(1)` as necessary. So perhaps, we
+> >> could s/checkout/switch here?
+> >
+> > Junio has already expressed a preference for "checkout" here c.f.
+> > <xmqqldnte6h3.fsf@gitster.g>. I think that is technically correct as
+> > "topic" can be a commitish and "git switch <object-id>" fails without
+> > "--detach". Also rebase does not do any of the extra checks that "git
+> > switch" does before switching branches (I'm not saying that is
+> > necessarily a good thing).
+> >
+>
+> I missed that, but since we do mention that `topic` is a branch, it
+> still makes sense to use 'git switch'. But either way this is okay.
 
-Now we no longer rely on errno to determine the correct err to return.
-Nice.
+In the general case, it may not be a branch though. (Of course, that's
+too confusing a detail for this section anyway.)
 
->  		goto done;
-> -	}
->  
->  	if (st->opts.default_permissions) {
->  		if (chmod(tables_list_lock.path,
-> diff --git a/reftable/system.c b/reftable/system.c
-> index 1ee268b125..725a25844e 100644
-> --- a/reftable/system.c
-> +++ b/reftable/system.c
-> @@ -72,7 +72,7 @@ int flock_acquire(struct reftable_flock *l, const char *target_path,
->  		reftable_free(lockfile);
->  		if (errno == EEXIST)
->  			return REFTABLE_LOCK_ERROR;
-> -		return -1;
-> +		return REFTABLE_IO_ERROR;
->  	}
->  
->  	l->fd = get_lock_file_fd(lockfile);
-> diff --git a/reftable/system.h b/reftable/system.h
-> index beb9d2431f..c54ed4cad6 100644
-> --- a/reftable/system.h
-> +++ b/reftable/system.h
-> @@ -81,7 +81,9 @@ struct reftable_flock {
->   * to acquire the lock. If `timeout_ms` is 0 we don't wait, if it is negative
->   * we block indefinitely.
->   *
-> - * Retrun 0 on success, a reftable error code on error.
-> + * Retrun 0 on success, a reftable error code on error. Specifically,
-
-Not a new typo, but we could fix it:
-
-s/Retrun/Return/
-
-> + * `REFTABLE_LOCK_ERROR` should be returned in case the target path is already
-> + * locked.
->   */
->  int flock_acquire(struct reftable_flock *l, const char *target_path,
->  		  long timeout_ms);
-> 
-> -- 
-> 2.51.0.rc1.163.g2494970778.dirty
-> 
+--=20
+D. Ben Knoble
