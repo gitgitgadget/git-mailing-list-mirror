@@ -1,162 +1,122 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157FA2F0696
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 21:01:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F952F068B
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 21:16:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755032482; cv=none; b=AUKRHolJ8vOH/JKiXVWXRKpoAqVQn7QfCnpGKC4d/GsDqakL7MfSH4izRrZm+DnI7yC6tAPVG5hMOlGJHDyjiCeUh4dX8uWNvbdSonvQ3nnCrEmG8jgAvygjHRmFJ6cKa0k7qyINCiyr//XTo7SoTWz9jOQeNPHgmYMKOnE/+Oo=
+	t=1755033375; cv=none; b=TM/SV85UeMcyC/U7vQhHcu0r3YL6dqEggAS2BdQiERW3B0YH8Dx7X0OCcnbmeEwZCsjKmULniV7uXf5bElmmnAQBA+R6kx1W5qD0dbykY2aKjOXcLsjiBff/zwsjZ6QvMxPOhyq0ra1UDkN52KOzctdOTfthrMtLrG4XePMSTCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755032482; c=relaxed/simple;
-	bh=eMgAYEnIVwT9GuGUJ2pCXFg9sukUjbAzgxTB+/GVP4A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H0X2Pvy7cu3fCUTYLuVJLmED+x7SdQpuScYu6i/a99VAGpN4I19WUSbWfax+aUghH6snuySOwWef9Qi47SJ9hJ/1i0OhPdipKGQ/oYorI7n3aROQW7aCSYDscoKn9aTpZOcukhJTGkRtNEmLBtTnfdmz5B2G205oTSgq48qHAhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BGe6XlJH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GhvO+uET; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755033375; c=relaxed/simple;
+	bh=a9134ResrZWG+j2l4m2+Pb3xKU1SKXYxy5GssGJbIrA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=brVzrELZhe+4ZnpG1+AMFl+DRmJt6DJBGXMy+exwtsPGtMhn5byU0uDfDd+G4dGiS6VZR31mlEmwiOjQXhidqbJstXzccvkyq8w9qePpAXK4y+40asXxN3ryVA1iGfVtKMyFjB5RplWtyC5OIP+8ts8HRsJ/m/xRAQacdiQJ3yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ZU1Ij19p; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BGe6XlJH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GhvO+uET"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 21D167A00E6;
-	Tue, 12 Aug 2025 17:01:18 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 12 Aug 2025 17:01:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755032477; x=1755118877; bh=ByX6+LE0K3
-	ntnkYVeewBpmounbnFLTqID+D8KuZaYds=; b=BGe6XlJHoDQnVkNcWF2HU9mRDJ
-	8VUZMeEdtji7Pm3BQ9omTPB91/vCxxGmXuh9pilbgkiGnOD0+o69lN5e4LCpfGxe
-	Jg28cNssqsg2kbTXCbxsFL99Ip1IbQQVu6pT0Ip86LCEVugMZp9WWiYuQKZfqyeq
-	f3hgnCiiJbPamVZED20aYREJw9YgHK22WgaXECAjjHb47w0SZ/9zNwg9z5SA5cdE
-	iDTZ8SlyJYI48ntceHNHd/qsJcD1yjqKaoJbs86+8IvrkGgvKZpWQDBzkexpAeQm
-	wUu3isHpy8++YI6W2JVL/fgxGgtQHb2gDjo97NHVtwF+Z0paM+vOg+hR+uFA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755032477; x=1755118877; bh=ByX6+LE0K3ntnkYVeewBpmounbnFLTqID+D
-	8KuZaYds=; b=GhvO+uETNqXJBEK8sNQGN/wkm62rghk6oybEHOvjIPj/jpQa/hW
-	3rARSYhg466l3wLSCWvGf+UgbQGvauycCKXi1+75ZQ+mRjs7W9l/6t+/6FPtE+VC
-	glN3jctXbQ1+PuE+bznaELCpqbJ6UhE1+4FWGT3HfZYW4TF2GLqj+ER8Lw+lvh1K
-	JUBit5yh+WHFoDkpU8z+TrBV7tZNJ6E1Xcm8XCQb14mEG455Ii+ckMdB+Mt4y12G
-	ReNwJKasuvujCTlrX9t/A4pl++cMPASJR7szPK4aoE7CDc9sUA2pgMyEnftfrYya
-	+AZhy19EusRx8njSu1UcDYCz5GsXRnOzYeA==
-X-ME-Sender: <xms:naubaGIHxvXvn3mo4y2IsLh6wa1RHQysLkjyTAdguS_nckdsMQJ__w>
-    <xme:naubaIs-NcgOqcGISqqibzRQSCbVMVB5BlTeLf5cdrKx-ICOdq8RwKrYR1IknXRA6
-    vNe-0anvQMOOCp3Eg>
-X-ME-Received: <xmr:naubaDSRICByZ6DVipiikW81O5WJFYbxaKbF_oIo1PFCXa-rRaaeFuTG8q_b2LqMvt1uCozS7H6SMyAss-tQ6yFwYrNOk5cfi9StQQ8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeeifeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:naubaOPAg5EWxHq8ie1DMZz5wO0Kulo6oYC3Akp-oI4fGWkWUMGMTg>
-    <xmx:naubaIZgP05CWZpgXShC5q8xzxVNKVB_Mnhg-SOWGBU1dCC3FtXByg>
-    <xmx:naubaIyQJ_nJgs5diDlPT6-7AcHZVJMMSvWUS233fqLordSfxwU72Q>
-    <xmx:naubaDI682Wpuso8AUoZVSSOZhybIUZY6aEcetqJ5CSO_B46B7mJew>
-    <xmx:naubaP7HqZC7owNqGRC8JryV61MLHrhXHoSP2EJPGyqUYmaIybNSeBmw>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Aug 2025 17:01:17 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 2/5] doc: git-add: start man page with an example
-In-Reply-To: <310d2c1d8f7f68ae52ddd29f0ccb0a0364aba1a2.1755029249.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Tue, 12 Aug 2025 20:07:26
-	+0000")
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
-	<310d2c1d8f7f68ae52ddd29f0ccb0a0364aba1a2.1755029249.git.gitgitgadget@gmail.com>
-Date: Tue, 12 Aug 2025 14:01:16 -0700
-Message-ID: <xmqqbjoks19f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZU1Ij19p"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1755033371;
+	bh=a9134ResrZWG+j2l4m2+Pb3xKU1SKXYxy5GssGJbIrA=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=ZU1Ij19pDyvVuu7eI/YbsC7MX+Lj9qL7yd+CzxOMcJxySgpwvKBc9o5zNOOPLv5BF
+	 rvV2k7OtD+RZaf39kL+3Y0jO6NyYeQvsv2ii+ZuHJiDaQDA7lPXOwIUzECagDCylMr
+	 BwznsrF3u0t8hjPAbHD6pPKGv7jyOQeDICaCCwoEIb/QpeD7EIS/UQ+VSK5810w8vr
+	 aF7mlgSbdJ30ofjOhGE5NsKSVuAKLjSRi+CjoqY7segpkQkmhBtbPAbz1dQXMq/pIF
+	 /fKi0O5s0DMB4gbGEX3b9tUf3ZF968IDqV0a8UBitw+Uo97a7UlCXhhIm0b0tjAR7v
+	 1gqYqEtJyArPvG08vId8IR6PA9r5777NE/jqhDu1rZtkKEwSixpZuOseZldHbOSdoh
+	 8CeGR14vwEpHh5LZdBeTI88u26flfCIZMgdQCTTi/bZsr4DbHjNOhLWyYfEfGuOb6S
+	 5JMbi43xm+sJ0zn/nI7dGnA9LepIFcW7NL36OuJ55HN/OHPzUw5
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7bdb:5a3:7014:f6fa])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8D409200B4;
+	Tue, 12 Aug 2025 21:16:11 +0000 (UTC)
+Date: Tue, 12 Aug 2025 21:16:10 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Andrea Pappacoda <tachi@debian.org>
+Cc: git@vger.kernel.org
+Subject: Re: Signing commits and tags differently
+Message-ID: <aJuvGtiZ8ll_SeIv@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Andrea Pappacoda <tachi@debian.org>, git@vger.kernel.org
+References: <DC0JSOC14W8U.3UCX8TG6X7W5O@debian.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="wqA9ZF2iwFVcBAxM"
+Content-Disposition: inline
+In-Reply-To: <DC0JSOC14W8U.3UCX8TG6X7W5O@debian.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> - Remove the snapshot-based explanation of the index and replace it with
->   a diff-based explanation because I don't feel that it's useful in this
->   context to emphasize that git uses a snapshot-based model: the main
->   way most git users interact with the index is through `git diff` or
->   `git status`, which is a completely diff-based view of the index.
+--wqA9ZF2iwFVcBAxM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-But isn't it the source of the most end-user confusion that they
-cannot wean themselves off of the diff/patch worldview?
+On 2025-08-12 at 15:18:19, Andrea Pappacoda wrote:
+> Hi all!
 
-How would you explain what the users would see in their "git diff",
-"git diff --cached", and "git commit" after doing "edit && add &&
-edit", if you explain "add" to be storing the "diff" made by the
-first edit?  Does their "git diff" after the second "edit" take that
-previously stored "diff" and another "diff" made by the second
-"edit" and magically combine them together to present a single
-"diff"?
+Hi,
 
-> -git-add - Add file contents to the index
-> +git-add - Add new or changed files to the index
+> I would like to configure Git to automatically sign commits using SSH key=
+s,
+> while using OpenPGP when creating signed tags. As far as I can tell, this
+> isn't currently possible.
 
-In other words, I do think "new or changed" is a good thing to say,
-but the word "contents" is fundamental here.  "Add contents of new
-or changed files to the index" would be good.
+I agree this isn't possible with the default commands, although you
+could solve with with an alias (such as `alias.signed-tag=3D"!f() { git -c
+gpg.format=3Dopenpgp tag "$@"; };f"`).
 
-> +Add new or changed files to the index (also known as "staging area") to
-> +prepare for a commit.
+I'm interested to hear more about your use case for this split, since
+it's the first time I've heard about someone wanting to do this.
 
-OK, but saying "files" here adds another kind of confusion.  What is
-"added" is not the fact that these paths are kept track of by Git.
-Instead we add the snapshot of the contents at the time of 'git add'.
+> What I was thinking about were a couple of options like commit.gpg.format
+> and tag.gpg.format, as we already have commit.gpgSign and tag.gpgSign. Of
+> course, differently namespaced options like gpg.tag.format would work too.
+>=20
+> What do you think? Does this make any sense to you? Let me know!
 
-Wouldn't "add file X" confuse folks who still remember how other
-SCMs before Git operated (i.e. "file X is now known, so if I make
-further changes to X next 'commit' command will record it") into
-thinking that Git would do the same?
+I don't have a strong opinion about adding this feature or not
+(especially since I don't know about your use case), but I think if this
+feature were implemented we'd need to have the format options default to
+the current config option to not regress functionality for existing
+users.
 
-> +By default, `git commit` only commits changes that you've added to the
-> +index. For example, if you've edited `file.c` and want to commit your
-> +changes, you can run:
-> +
-> +   git add file.c
-> +   git commit
+There's also the issue that this makes verification more difficult.
+After all, you sign the data once, but presumably the data is verified
+many times by many different users (or software acting on their behalf,
+such as a forge).  That means that we'd either need to autodetect the
+signature and invoke the right tool (which we may already do) or every
+individual user would need to have the appropriate configuration set up
+for both.
 
-What happens when you did "edit && add && edit && add"?  It commits
-the two changes you added to the index?  I do not think it is
-productive to hide the fact that you are preparing a snapshot of the
-"next commit" in the index (or "staging the contents for the next
-commit in the staging area") with various forms "git add", including
-"git add -p".
+Again, no strong opinions here, just thoughts about what an
+implementation might look like.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-And to help form that mental model, it would help to avoid phrasing
-"commit your changes" (as if you are somehow dealing with "diff/patch")
-and instead saying "commit the result of your changes" (stressing
-that the "state" matters), I would think.
+--wqA9ZF2iwFVcBAxM
+Content-Type: application/pgp-signature; name="signature.asc"
 
-De-stressing the fact that we are taking a snapshot should probably
-be considered a documentation regression here.  Thanks to "git add"
-taking a snapshot, users can further make experimental changes in
-the working tree files freely and then come back to the exact
-contents back by checking the path out of the index with "git
-checkout -- <path>".  Thanks to "git commit" taking a snapshot,
-users can even go back to the last commit by taking the exact
-contents back by checking the path out of the HEAD with "git
-checkout HEAD -- <path>".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
-I'll stop here and let others express their opinions without further
-commenting for now.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaJuvGQAKCRB8DEliiIei
+gYajAQCCxsT58gV3GmoPS9H7DybWCeoWo1YsuraPE/i3ijF+VAD7BOQ2zs7fRy+j
+oMuqCGhRkDXwWII2MtRDOb8F3IjChAg=
+=HYVE
+-----END PGP SIGNATURE-----
 
-Thanks for working on these updates.
-
+--wqA9ZF2iwFVcBAxM--
