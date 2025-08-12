@@ -1,132 +1,128 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C06E2E7658
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 09:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E9B2E7658
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 09:08:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754989643; cv=none; b=Up8SJ14IEnEHQhPGSVdlEPRLki1k5TcJ0RVwxI1b/sPq3Z9xzU2LJsktnCmkRYqnbCLqYQdDhZwyWA1BW5SvMwZVcxD6WRGFuHBcjqivm0CC7pC14dhkYD0OOGnuxd+72ti628bv4JxylinJ6SsfmO00SI/XVDtfgkYUZ4G6RGg=
+	t=1754989738; cv=none; b=I4NFGUbBJ4i5hDtaQEy/MN9u40NzvzZ0mq+dIQ3DslI7GJNmYpv5G4Lw4MxVTVkFNaDVEv1ywznEvNaaWZUo2HLDDaXWH3vzwXOo/z78toGOBC8zRJDiFSH5YpBvdlL0x62vZKMtjLFUw1ipPfXnUZ/2Eq7YZjQS8vHrKMVL7cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754989643; c=relaxed/simple;
-	bh=sWpplqUIQC2qWbaNA6sEQ1CtBs12RB0N2f1YaeEu0pk=;
+	s=arc-20240116; t=1754989738; c=relaxed/simple;
+	bh=4De2VPZ2KGK7hdPfQMWcCElFtCtUaJOTDe59XwxPHoc=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z1p0xIa7ND1wiunZYMxdZEZ4CFiFSQSPuc5/1iRh4+kuDWq5Gu6Xre8sbKZsvCw6+zWDlmZTuKfIhCue4MlYkblVqaNfDCam0H3t3IqdQR8X2Wb7SpW6kGzsWIMkoMUqP5q7DIR59NDcHwG7W3tlH7GcR7frMe+uRY4FZtCWREY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vlxf/mbl; arc=none smtp.client-ip=209.85.217.50
+	 To:Cc:Content-Type; b=kBAuXTUx3yRmGdUD6TsJQbWfkiYM9UpmXkWmdAsfyRIAUeGGHM5hPe0+pJaVYWJF/boJb4S2ULMajOWuln6/mUHOMU2rOnTjELofMRFw3AQHpb5wHzFUP4f558vW3SrTeK1I7ahrGBcDwXNGWCXgi9V9BbbvTR7Z2Fdtw7rgiZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bQApd40u; arc=none smtp.client-ip=209.85.222.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vlxf/mbl"
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4fc9db52e02so1602586137.2
-        for <git@vger.kernel.org>; Tue, 12 Aug 2025 02:07:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bQApd40u"
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-88e54605501so106541241.1
+        for <git@vger.kernel.org>; Tue, 12 Aug 2025 02:08:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754989641; x=1755594441; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1754989736; x=1755594536; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=V4asfmlLWq4BltP/LBuQXFxJDHyKofaRBt//XgRKUQ4=;
-        b=Vlxf/mblHKoUhCaqtgcSFLMM6HVJ5aP+JeHAU4wEXiiHUd/d83O0XiPRTjQssUo1k7
-         wp6S0mUFCPTrtFRZTLcK/oapNIeudmI6xxZFjaxn5CsJClhZKUeLB61OrcJ9Yp5JITEX
-         svxBkiOBnOLW1VzQ2CELvK+2sM0uT5qto98DP8BES1tpXGAPs/VS/Kjv7jo6M5L2WfGf
-         fLHFCPkPmccU4AwximUO3MLdYaJLr+IAROMH8JgAowsv9r6bLPKHb3o+08ajcQqFiZqK
-         lbbkiaLIDtTBAp23p1tMkMuaEvWYw1wSzAkbXLFI8pw9eZu1CXpiSijC8GK5y+04Sml5
-         nlQw==
+        bh=STWeUnQqm4pie0v+c4NqgGhM2JVbzSUSUni6fYUWfBE=;
+        b=bQApd40uj/60RrYiiDJaCTRg6dI5r4V2e1RFQF9rVijEfrI2T0SGee1AnEveP+1ha/
+         9vdyiVY50qA5fPjnYi50PuOfZ+Q+K+FaZ7OxnN4FLFdMuX8746ahg6rkwtyCzfc371gL
+         he7NzttSYJfh0bOattoRfLeVx3KWIlcSdJNhgsgXexFCMKbm1TgBf7pLQvyUbwxSJIuV
+         gqWRAyhRkjv0Ipzqdm2+wQ2WIKa5AqmGZqMvWqvrwkccJPzfvoWbnEWSuS089ce0/pbo
+         yqsfAS8zFoVl2IbjezH4nih070Ich5+nd+B4RyUBNIbhEDNNGKIlj9roRgRUZNoaiIsC
+         UFjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754989641; x=1755594441;
+        d=1e100.net; s=20230601; t=1754989736; x=1755594536;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V4asfmlLWq4BltP/LBuQXFxJDHyKofaRBt//XgRKUQ4=;
-        b=xE7eVJ3plexHXt+IJQPZ6lgcG0nZlwH9xZ11+PkjYwOdboHDiufikWXGBNc0+rOJpk
-         Li8RgVC5kHUJ9VPdGCYhfV5EVIGDqtfEOqTpkHO4tF8hbwMDLSAyrA5nH908oEHKvZ9B
-         JQkDtd6IZhP1Am5ZWAOVBDDr4tgbsSnr+QpNOnHupKuaUypYxm9Gk3YVg+X5nQLZyHJL
-         EveAN0qLX7cLvSDV4P8KB0If9AVZwHtbuOM2dZmDi8MlumJCbn9Q2g9uIDNmNlR4CAIp
-         CgozE/vjAsn3mET+qkZPUi5WvS0jrnHIbfsB6a+Y10IFlo7+I5ZrIAjDD/eNhxm9JUEB
-         E6fw==
-X-Forwarded-Encrypted: i=1; AJvYcCUxU9pZr8y7Os25AdlrMEvWwsjNqzK0QeENShsJVGQ8IT5fJqCvFL5x1HSVc63JYzctmZQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YytsReMmTdXdx7sk0gePtx4f+5KG+3D377f0otBLAOGwsoxaJ7T
-	uffd+iwmy1C+JhfsyU8WNfER/oxubXi4nC3Ww8CBY9wtXGT3W8FnyBVqhEx8tF6eQSHG4Y0yIVR
-	UjTIgDHnmx0Eti2uXIxU64V4nqyPdo7Y=
-X-Gm-Gg: ASbGncs5GtCx9O/BqbUBBblAfxo07MRA9wwSYr8WZuNNA/ELoCWsfvmlZeAxOYlb+iL
-	933oRNJADBQDgBBiHXhdlaeeXkqf/EutowcKG6FTEr++lpXOmHdixvygM470s5dQ3zCNyx113CW
-	1G394PFBnQTseO1iKh9HQ6b1KXszi8xV/KGLXbqteCVXYv5Md3uKM5HxL0qwg1hUxFvkanG9qlT
-	U9ezIU=
-X-Google-Smtp-Source: AGHT+IFtBA7/WC9HlpuJ+e0uKnR0E8GgkCSgiyw6IW+LVrM6xEdmjM2jp00yxvxrpfe1dmtHXsNSAJQZrj9LDLlE2hA=
-X-Received: by 2002:a05:6102:e11:b0:4e9:b0d4:1133 with SMTP id
- ada2fe7eead31-5060f0cddc8mr5537469137.20.1754989641238; Tue, 12 Aug 2025
- 02:07:21 -0700 (PDT)
+        bh=STWeUnQqm4pie0v+c4NqgGhM2JVbzSUSUni6fYUWfBE=;
+        b=AMA+yJylQItPVfroZTnBipu1TARGK9IuoHaiNxv7UVf0tPYToZe5qOvIgNJaZIT8F3
+         ddpm4sleYiBMIzW8rb7lOATbqgM3/XsTeJ/XxLWRvQffVGSGa8GWONE9s6fu91Go3Uhv
+         YjESwAIGh6alHLnftIr7pOYMiIk57xGA9CLMIHBPiSH5bPcPnU7QjDeZ0XxV2kbsf11X
+         3z3+5onXEtcqbGRkwza4zKPLuSIFTQ+HHapWwD745poDUsuqUD7iKhetH+hw5gmV4OsU
+         013/SXgRZyV/RdVRIytu56Gzb4myVLWAHyEDJEPz/XczzmweSXPJ780mucwVDTaByhc/
+         CgMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV2vmKGPZfi4RfVtK+1/JOLS5+8VubzG3B0mxFngCJ0L8eDioeOY9u8xMRlTWBDj15Iyxk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkpEyq8ZiVbNXzvBS1TnnuY8LzSj8oPzpPWaoq97jgvVrYfLTi
+	U/Z5JKa7eiYRz5SndjK9H5MUVf6MrOdfgPjpLkWvW0lhnET4ZqBEy6y9fqlO01EzAT3mRnG17IZ
+	EdcZNPMNQAUKzUk4kNdYo31o3fzJJwAQ=
+X-Gm-Gg: ASbGncteoI+TNnvHbEwqzJAst3wJs3g6E+T0DRJjFOfoxdAx9Ly477SC6wRMLDQPN19
+	mNRNeuVVC+nkwNLHbM8GHAGQWad4T1SFaPfE7wmSKtVwjgjI0JVppvEoLu8OCR0r1+Eko+/emdn
+	qWnrWEt1ZBazox0B4hs3PSNzPOn7r9HUqv665kmWngTLoe9BHhEWLKSEzIF/2R3hOldCK4rzQdM
+	69c6u8=
+X-Google-Smtp-Source: AGHT+IHzwVIESEtQdP30oBrGslIrVk6WVEs5tVMiMnYqJx9Cw7vo8fDrABgNi83hJkaALTbK6ttrln3J8wG469p6EBs=
+X-Received: by 2002:a05:6102:2910:b0:4fd:5c41:bfbf with SMTP id
+ ada2fe7eead31-50cbd4cbfdcmr1203515137.7.1754989736120; Tue, 12 Aug 2025
+ 02:08:56 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 12 Aug 2025 02:07:20 -0700
+ HTTPREST; Tue, 12 Aug 2025 02:08:55 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 12 Aug 2025 02:07:20 -0700
+ HTTPREST; Tue, 12 Aug 2025 02:08:55 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <84258154-322c-4ef0-9ebb-44858a5d58fc@gmail.com>
-References: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
- <pull.1949.v4.git.1754702057.gitgitgadget@gmail.com> <07a4bdb7ce5eb456bd81972c350d0c4f298ebd46.1754702057.git.gitgitgadget@gmail.com>
- <CAOLa=ZSTaAaWJWeXBkoxPx46g_Equo-sHWgCESE9G6vk3HZeqA@mail.gmail.com> <84258154-322c-4ef0-9ebb-44858a5d58fc@gmail.com>
+In-Reply-To: <xmqqtt2d3l3c.fsf@gitster.g>
+References: <1a32a666-fcf4-4f05-a468-2afa07fa0e2d@web.de> <CAOLa=ZQqY8MDTs846mkVsxXrmOmC5O_sv6BxUHqYjGk1Ag+Osw@mail.gmail.com>
+ <xmqqtt2d3l3c.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 12 Aug 2025 02:07:20 -0700
-X-Gm-Features: Ac12FXzMoJf8L3lHd1y_B2jN13P8ZFpTFh6KVWyDs-9FVcPKojUHVko87naoKs0
-Message-ID: <CAOLa=ZQwwcfEQNbZqp3o6YfTWMhUr=s0Vw5jP87pUELsktLRaw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/5] doc: git-rebase: start with an example
-To: Phillip Wood <phillip.wood123@gmail.com>, 
-	Julia Evans via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>
-Content-Type: multipart/mixed; boundary="00000000000026a630063c275ec3"
+Date: Tue, 12 Aug 2025 02:08:55 -0700
+X-Gm-Features: Ac12FXyAok-OnD6AefuaZ38H5RfoXRhmn9kjI78HJ49-1iTaCBxR3aktMKcqfCk
+Message-ID: <CAOLa=ZQGaZA=Yynv5JkYpSbYBczfVnemwmzABrqB6er19Utfeg@mail.gmail.com>
+Subject: Re: [PATCH] for-each-ref: call --start-after argument "marker"
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	Git List <git@vger.kernel.org>
+Content-Type: multipart/mixed; boundary="000000000000ce7221063c27638e"
 
---00000000000026a630063c275ec3
+--000000000000ce7221063c27638e
 Content-Type: text/plain; charset="UTF-8"
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 11/08/2025 10:13, Karthik Nayak wrote:
->> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>> +
->>> +You want to transplant the commits you made on `topic` since it diverged from
->>> +`master` (i.e. A, B, and C), on top of the current `master`.  You can do this
->>> +by running `git rebase master` while the `topic` branch is checked out.  If you
->>> +want to rebase `topic` while on another branch, `git rebase master topic` is a
->>> +shortcut for `git checkout topic && git rebase master`.
->>> +
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>>> -		OPT_STRING(  0 , "start-after", &filter.start_after, N_("start-after"), N_("start iteration after the provided marker")),
+>>> +		OPT_STRING(  0 , "start-after", &filter.start_after, N_("marker"), N_("start iteration after the provided marker")),
+>>>
 >>
->> Nit: now that `git-switch(1)` is no longer experimental, we should start
->> recommending it over `git-checkout(1)` as necessary. So perhaps, we
->> could s/checkout/switch here?
+>> Ah! I did fix a typo here, but your fix is better. Thanks.
 >
-> Junio has already expressed a preference for "checkout" here c.f.
-> <xmqqldnte6h3.fsf@gitster.g>. I think that is technically correct as
-> "topic" can be a commitish and "git switch <object-id>" fails without
-> "--detach". Also rebase does not do any of the extra checks that "git
-> switch" does before switching branches (I'm not saying that is
-> necessarily a good thing).
+> Here where?  Is that "fix a typo" something I should go around and
+> make sure I do not miss?
 >
 
-I missed that, but since we do mention that `topic` is a branch, it
-still makes sense to use 'git switch'. But either way this is okay.
+I meant my earlier patch fa0f4e46f5 (for-each-ref: reword the
+documentation for '--start-after', 2025-07-28) which is merged to master
+now.
 
-> Thanks
+
+> Thanks.
 >
-> Phillip
+>>
+>>>  		OPT__COLOR(&format.use_color, N_("respect format colors")),
+>>>  		OPT_REF_FILTER_EXCLUDE(&filter),
+>>>  		OPT_REF_SORT(&sorting_options),
+>>> --
+>>> 2.50.1
 
---00000000000026a630063c275ec3
+--000000000000ce7221063c27638e
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 67fbfd23cd3504de_0.1
+X-Attachment-Id: 6eed39b6e4f6b958_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pYkJFY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meXhzQy9vRGRRQ1J4Wmd1bllDTTd2TmlZSVlzbWgzNApjd1BxV3VhZk5P
-YjFxZWVpQWdOUW1YdUxUMlhZelQ0TGQ2RjZYbEd5dHBNamVwdVFlV25xd1VLZjJtQ2JBU3RtCkE4
-VnlKZkhNcnhIVTlpUWtkODNBZy9ZZktOaXJwdmtzekV4UWthVlNkdFM4dWpyK1RhMy9nU3EvWmJO
-UDI3WVUKSEkzMFVMTmlsUjhCeDNvZSs0LzZYNFBQYlZLSjFTOEdXeGZnK1NGUkUxN0lJRm1QOWha
-V0lpSWh2M0JvVjYveQpUcHk1KzlKdDJaZUtpdFlIeXhtUDNsb09rVytZRmdLRi9YUnlMMkdOMkJs
-Q21CZjQzSGpEY3RRVU5VQmp4K2cvCmVqWU1UU0M2Zzl4VCtwVFlmUlNTYTk4Yms3ZmpuY3hvRHVa
-cFBTOEx1cW00aHFQL3V0VFhGSVp5c1IzQ0Q3cGcKUkdEZWZLRitFdjFuR0VrVXdpOGllOW9RMlRu
-WVVCRFRKVitUTzJZeUNmMnl3N2swYUZGTFZJRVEyTGxnTjg3NAo2VVVLeDI0cGY0WG5hZzYxWi9l
-bzI0elZISjZZQlFwQ3VMZlpYdTgxTG9pMWVxWjBVU0tBK3lVL0hrbWFNempVClVaZ3NlY1ZZQWxo
-VDViS01ma3pZVlp1cm1XaHE3ZGV4dTZmVHZGdz0KPUJMZ3MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pYkJLVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md3VrQy85MDBBd09IcWlYME5SSTlvK016enpERXVkYwo2RmxiSWpsbG5S
+aDB5aFFNTGhyME4zMThGRUtVWXhSdXcrdiszMTlGd1FCcm5keUtheDhNVXowNWxSVVNOWnJ6Cnh2
+d3kzNkQwN1VSZGgwa0Z6OUZ5UVFnaFRLUmErbUtsQzJlU2haTURNeXpETG5NLzF6VVdGMWpPRWpV
+OG1VY0sKMVNGY2RhNWFtS2RnOU1mU05Pb3BIclhFb2U1dW4xZHJoMHozQjUvYlA1Ulo3L3JRSmJ2
+Yk1QdmI2L1dHcFZWMApqcEpjYWV1bXNPVmM3VkxCYzVydDJBZmdCdGQrUEI1YjNGb2RraWNLVWxI
+dnJ6cmNPV20xNmF5NjBYQjlGeHRKCnBITVJmOEZRSmU1TnJ3WjJ1SExMQUdpck4wUWxSa2Q3ZUFN
+SjR6MVZmME1QekRpVkJDaTV5bWw4cHNXWlpiT1kKYUhSLzlUR09yQmFEa215RlFEbFcvOEx1dVlZ
+VXNobEV6RUdrYmFVY2lNK3kxeHkxaEZwL1h6NS9zUDIxVWZrdApzR20reUoyRHBIVStVZmhUMDJ4
+aUxSVnZGVFpyOTdobEFXQXYyeTZLR1lvYWxIdzVCajRYaVJKdTh3Q2hrdFVRCnplOURjcEt5U0Er
+SUZXQWYwNGFoTjgyTERwMDZKQWJ2SHpvUUpPQT0KPWZ4bGgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000026a630063c275ec3--
+--000000000000ce7221063c27638e--
