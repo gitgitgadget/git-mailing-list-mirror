@@ -1,113 +1,66 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from outbound.mr.icloud.com (p-west2-cluster6-host7-snip4-1.eps.apple.com [57.103.70.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8448E2EB5D8
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 14:37:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2118510E3
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 14:37:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.70.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755009443; cv=none; b=X0OEKond0Y0AjNQZlpmJGe4pyCuSoquo3Fbfnvl1WBCf7COWYCTb2cX3J3wFB4B5xVVr0osCrHZZBYw6X0DU/VGR9aNAcLwRw+0+KxQIwUfP6P3eUFCdSJp1rTHRu/h44Hz6Rz6kTjQd9sFlIKezPYv9o2wNij1fCoLiQzJWy8I=
+	t=1755009476; cv=none; b=gxbDP3dvC6JIOhPCo18MMcPbkU2Fjmfkmm4bXgmq2Cz5ugZ+YKNBI4skGGkHEPtP1nqNwVQnw01QqRKpStiA8ZvMrb4PA/ZDAIt47kwLfgrvJbfIP1OAVWVk2bPA4aN3Y8yDygumPbWMPgxEbmTswI4g9UPfUriV0CxKOBWmIJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755009443; c=relaxed/simple;
-	bh=hit6nN8HzYTlBmspDHFg4rku0bzinMY9x0CwjwNA8B0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lfqyibpeUK3hOIg7HBcQqJfLUc8uXJkvaAO+gDaxBpiQ7A5aTuoGNQkKoIHjHgdNcnKT4vVIKtE1ua2lZhfzt1iRO4hXoyjTVkrABt0Vx+vijLR/hc3vBYcBIfmr3gc26dqcSbxhZ+EEbdIKlHliOaU+3pQM4j0+3odtcUP/cmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kWs7Hd7A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D3Cbp9tg; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755009476; c=relaxed/simple;
+	bh=c2ZHajZr17Lc69PhfGcQiro5y2HUemG4jqz48M1Ij4c=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=qYwGFp4Vjv526i01zPBEPBUAi03ICIwIAGu++91fiMITipEpNGZ4Gg3o9JdcilSfQjAiJAAkYIbvNYTOCGo6Zr6SVUq4s8bpYh7OHNkKNnUDaeOavArg81au8N7QF0fdoBjua6GrhtgtSQC1o0ZyPlSSOvMjpk81SUHmEt9DhXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gregoirege.is; spf=pass smtp.mailfrom=gregoirege.is; dkim=pass (2048-bit key) header.d=gregoirege.is header.i=@gregoirege.is header.b=Jx/czzPE; arc=none smtp.client-ip=57.103.70.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gregoirege.is
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gregoirege.is
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kWs7Hd7A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D3Cbp9tg"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7FBCB1400171;
-	Tue, 12 Aug 2025 10:37:20 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Tue, 12 Aug 2025 10:37:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755009440; x=1755095840; bh=+oXOp6Fs5N
-	0dSeepwLoeV7wUTx8ge+KHKNtM3dCCQOU=; b=kWs7Hd7AZBXXwwaDbbs2zC77sr
-	tZKGmnY6qSvvokqemNFYda52eKiyDZCGPf2dYaW6vBpDqr3JkzhDCXKx0RSY8hLg
-	7x7B8XsMwzCfFA6NIVJ3j/+AlmwOlxOBOLIUrhov9MJj9SLlQxwrxmhizq7tXNtu
-	K+Lx5OYVRVaFYtDDFRkNj2sC3vHAfz8V+0v60EZKz1Ramm9hHsZJLCRoItPCudMe
-	+1sP2FXoyAAmrHajCcpoNrJcJKDxR6Igk8lUaPi9P+vh9YkvCe5JBTkMSRRwRc+F
-	ti+kptogfri383pi5xaEg77wkLu89NUK5jTHqpbkUBX9qEVbXmZ4JRilEFeA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755009440; x=1755095840; bh=+oXOp6Fs5N0dSeepwLoeV7wUTx8ge+KHKNt
-	M3dCCQOU=; b=D3Cbp9tg7x57Ty9QfC0JdiNluHKcaxSXzXP2L6ZJhMq2Mt0ErCk
-	esIr7zLjA43ZuxbzD3i4TP2H29rrcVrQzO7LbyTDdaMv9WRsdJ51Z2vVWrsZ9RXP
-	UjT+ZGhcPpUGL3TCnjms5W6XCJqFkYkozbMnywweVELLZMdF1LPwvEeQ05XVj21M
-	WmVUJp+U6EJXQ9q0fwhP3MTVBQpjOKJ1OpPo01LxyJbT0MVNzC9hV+Qusolpl55m
-	K+XeVvpXCWTX6aK3euTBHtm6+HJhOdKsBRqGWARs6P0nMR3RhWNyYtsSQdeyUgDu
-	TEWGdUfGZD3OLffLujOIIEb9swYMGmaKQRg==
-X-ME-Sender: <xms:oFGbaBjVBL-PS4Rt6whF8hGc5J_etBgw3ybpQKIYvHS3o6xk0OGhpg>
-    <xme:oFGbaBjetJGPf2bFXh1-BGA4AGwFh_0IMIo5RK78zKOSPLNxNr8MZzqZLb6GvQLQx
-    Nu2UpNcs1uLDwXYxg>
-X-ME-Received: <xmr:oFGbaHhKTZ1n5D5qZiYqQMcNQL6RiIqscOIukObStkQ_bsV6D6UhF3RH7jjj8Px7TvI26ovmi3z5EI3s2rljNwJ-3YVqrfSl83YI2tc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeehheelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopegtrghrvg
-    hnrghssehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhh
-    ihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:oFGbaBJChlZaYesfDxZRvbmXuK43k9xsxYtXr5rX2roW7oZal4jdmw>
-    <xmx:oFGbaGGnGv8ccaJ18o7hWYWfNg5AYMFiPD3NCeg4baIBr6X2AMldLA>
-    <xmx:oFGbaFSyX1IoFk20Dn8M244Xxueyy0HZELRjvxePF5nfnN4Jg3Scsw>
-    <xmx:oFGbaCen10E38SeeS0RJpj927ruXAtIB_hD1QlY34-rF5Fxlcl8x4Q>
-    <xmx:oFGbaEfCmP0ZiO3YuUGxYSzWMMaamQPM-0BSqa9sIFGWtToizlQXmTe6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Aug 2025 10:37:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Carlo Arenas <carenas@gmail.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 3/5] reftable/stack: fix compiler warning due to missing
- braces
-In-Reply-To: <aJsJE3UzKIVeg3di@pks.im> (Patrick Steinhardt's message of "Tue,
-	12 Aug 2025 11:27:47 +0200")
-References: <20250801-pks-reftable-fixes-for-libgit2-v1-0-f446e1c33cb9@pks.im>
-	<20250801-pks-reftable-fixes-for-libgit2-v1-3-f446e1c33cb9@pks.im>
-	<CAPig+cSeYUenjTm54higv6ANCOw0RJsF1hevS_p71=sH3c+E+Q@mail.gmail.com>
-	<aJBNHzE3RQBZZTcU@pks.im> <xmqqwm7i527l.fsf@gitster.g>
-	<aJGNaQwnd6_A0Ppw@pks.im>
-	<qruwf2zjl2uvf33mp4ajklvgx7wq7ctghu53rxzbgndfojudvh@ylr4otznu2og>
-	<aJsJE3UzKIVeg3di@pks.im>
-Date: Tue, 12 Aug 2025 07:37:18 -0700
-Message-ID: <xmqqwm78wqqp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gregoirege.is header.i=@gregoirege.is header.b="Jx/czzPE"
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPS id 0EFE218001C1;
+	Tue, 12 Aug 2025 14:37:52 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gregoirege.is; s=sig1; bh=c2ZHajZr17Lc69PhfGcQiro5y2HUemG4jqz48M1Ij4c=; h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme; b=Jx/czzPEQ8xfPENbaUpfD3GJQuwGzKmrdcCHFgABY4wmiJCIKaRO7iJ9uPylPzBQB6RBnlNjNx+TRPlLv6KhtCwUuzIiexGhNxiNHmL0uKAwZg5wkrUtzO/pLIkX6ofMffShbA/hQV4DxoymmoSunN+T8CGI3b6YkAKo0xIKT9Q/y+BFW+o5uLk/ksOj7/dnPHb9gg+fSS3MiuKJJhXmyS7Vlqvon6rEkc0r5EQC205KrN52dNHXREeXnzvpGvsrNEfsikBiwvozHrfysPU1ToP+9//ajkQCCiKvjAq1S66PW1S+sce4zQ7Zx5A8Otc+kn9KYC8FgfE1UFPulotNPA==
+X-Client-IP: 118.221.50.200
+Received: from smtpclient.apple (mr-asmtp-me-k8s.p00.prod.me.com [17.57.152.38])
+	by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPSA id C883B1800135;
+	Tue, 12 Aug 2025 14:37:51 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [PATCH v2] diff: --no-index should ignore the worktree
+From: opensource@gregoirege.is
+In-Reply-To: <xmqq1ppk58ob.fsf@gitster.g>
+Date: Tue, 12 Aug 2025 23:37:39 +0900
+Cc: git@vger.kernel.org,
+ Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <B90C049E-677E-449A-A899-B6071F852298@gregoirege.is>
+References: <xmqq1ppk58ob.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.700.81)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEyMDE0MSBTYWx0ZWRfX+ansKhnBDlJw
+ A2bMR7YSLbpnf6oHQ2WGDaxXGzviFyXa1TFjHTJQ90uunww5m+G9z1bCje7HLH4Huaeh5XgzTLD
+ ZVKlo4V/1CrbpNuFyItNWR39Cv+FtFdi0Fs6UbrarSGJR7twwWT4Co5on4FRfTOeU3o8FECu+e0
+ tB4bKcsVDFdP9z7WZjQw1/eE0h79hDj/brR+5X8vFCgHAJMdS2R+kl0F8VmHAocFsHNuC5DZeJ+
+ pO6fvrV/wB5eObxpbStINlEJm/IH/q1nBYziwtnfnA+S/cdHVEaleUuT/I0D3trLj+n6HBnik=
+X-Proofpoint-ORIG-GUID: C_NPJRhp1Y1fltmDK4QD5mUS_d2yklKg
+X-Proofpoint-GUID: C_NPJRhp1Y1fltmDK4QD5mUS_d2yklKg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-12_07,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ malwarescore=0 mlxlogscore=999 spamscore=0 suspectscore=0 bulkscore=0
+ clxscore=1030 adultscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2508120141
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hey,
 
->> I think the suggestion for using a shim layer solution is relevant, because
->> additionally to the compatibility issues of the zero initializer, you also
->> need to take into consideration that the proposed solution will still trigger
->> warnings when compiled as C++ (where {0} should be instead {}).
->
-> Do we even support compiling Git as C++?
-
-There was an earlier effort to rename variables like "new", but I
-think the motivation was more like some folks wanted to try building
-with C++ compilers.  I do not know what the outcome of it was.
-
-But people like to disect and include pieces of useful and/or
-popular software in their programs within the limitation of how the
-original is licensed.  Especially a part well libified like reftable
-may be a good candidate.
+I don't know how the review process goes at this point as you took
+over the patch. The handling of the chdir failure in v2 LGTM. I ran
+the t*-diff*.sh tests again and tried a couple of commands, and
+everything seems to work.
