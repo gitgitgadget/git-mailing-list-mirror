@@ -1,69 +1,68 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC88C2F0670
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 20:07:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EAB2F0681
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 20:07:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755029256; cv=none; b=m7qCXGFtsJfx9SwGCTJJf2mEM94MbM+v0h8BH4Z0O8MDwEKzv5LVs/SxO3rUATG1K4s0x6a342GS0OuSQxDMgFER6iSrNx/Q0UdIOC1tFMxyJnJik8SsuXV3Jfr1Tl09rBiY1Qnxb8/1/gsYm6EAjUNLx+pAGiIbQqB8s6mMX3k=
+	t=1755029257; cv=none; b=ZxLVps3xYKZ+CgALQBq3NawC5med/zpVWyWro9DGeCYjQhTnlsuRsI9+BY28Z9tvPwLy5XNt6GDO9kJShjguGygMtHjDy94OS7pBdLJ15cioRo2IuRiYJpEmpuu7742BKAO2kg2dq4ytiZIcichkQmrHvi+32HpZeNki7U4mZSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755029256; c=relaxed/simple;
-	bh=r1G/glWMI+BuYrTzJCpYz08HU3USZ374DshuBfVwShY=;
+	s=arc-20240116; t=1755029257; c=relaxed/simple;
+	bh=awV2yBlnTdIXe0T5n7J9Hv6osLnt7OW0d8XiD8pjxlE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=chqLsp8CF/2k7LgBUpSev+voZLLkYZZiQQuRygwd0ZBgm2kMqo3++MEcxHCpmKdYB5/hhYlPDE8vRNe0MLEH29a7q1Ws1FjrzXHElYV8MujHZb4LyxUnSNJwXvNM33mQkF3c8GrnPRb6VkbPI/PdNWhT0eLiWbymyuN4ciFf7W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BiI5Qwum; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version:To:Cc; b=Njwy1xIRyGIfQgLLmKuaf7O5+JCufRVJkNlndDHenD0Yf9m2lGw8SvZVBUgqYlzHV2dTl/e7GDF+SzfL4RZQ+JAzAtN+m0rhawcg1ZmKhVM8Do2XTRXNtFxjOYGHiXHCIbLQwcQMMi2H5LuDIGc1iVRKmW4FGZG+VusV91wdnVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JpYYAjiJ; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BiI5Qwum"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3b7892609a5so3509408f8f.1
-        for <git@vger.kernel.org>; Tue, 12 Aug 2025 13:07:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JpYYAjiJ"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3b9170db547so104151f8f.1
+        for <git@vger.kernel.org>; Tue, 12 Aug 2025 13:07:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755029253; x=1755634053; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755029254; x=1755634054; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ORK6OzOPn0khU/G6bIg21pYbQ9GiV06U/h/5A7CaVXk=;
-        b=BiI5QwumYWt3/F4MXl4ndQ78vIa6WXWzQL6KyKg+6kxBhTbsIscGTVRoebTlXELE5C
-         C2a66bzya+pJLsmPzqbmbhsK63NiSwJkv/BjbfPHLo7aAsCgWA6GQYey+6sdOigjBfpH
-         I20mDyV8yt5jku3f1xa4kYH3TGcwWq2X2ZviP7MF6zMItrXiyrgzkrZtQrY01V9g7Ax5
-         7hejDxnbvr/5dpUchgEhqkILjaXLjwQi17eaG5JPiHPxpjXV+VDpnpi3J4+Jd4HEFG8s
-         quwnggcFOQ5aehki2nRFZ04sEYj9jNfQBbW8UjkDJfYxq0pfcLpm9LDXytlvuqPv6mlb
-         PSHw==
+        bh=TOBCvD2LVrl764D9p67V+jeDTKx0VxtxCT23k5zDDbs=;
+        b=JpYYAjiJ983Bm3kQGzf1m9H4F59Xi7beDpo8o7pfd+idjehB9VG9o+iG2pfWT1QfEh
+         UsLmpFyUFXRZl7UX77Ek72+K5w9+ZbbQEb1Ux2xBq8p/t+u8/WXwjDQt+ejSNs6us1NI
+         6+NkOXBYIBhThNnkMoPD4Ha9bkWRdiZqXdn+bW1stIl2ylE/Q9i9/tAmHCkXzXrmj+xX
+         BeuxhQz6VN0fUDWE8Lw+2IHnP35NBJqlf4lKy9MpMlwyoSVpP7icsDCkx+4kp2wU+iIY
+         4LhAqYIuJrfFqy+/Y0X9r88MBO52cwbOEPu+fXrhyOCV8DXvLmjejCCHlQZWKRFhNxKw
+         y/qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755029253; x=1755634053;
+        d=1e100.net; s=20230601; t=1755029254; x=1755634054;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ORK6OzOPn0khU/G6bIg21pYbQ9GiV06U/h/5A7CaVXk=;
-        b=fu4aP4mXWOlDChmwA/xlQ7BtdwuU0wjXOZBwWagX4H1yMLP+zkDCEtQMqXFTxu2OaQ
-         hKTWiLIbgHulSAgdFGM8ektGRL0gP5wLsIXykGEeTlhgxP+VwZ/xjI8stg7IGHb9lEV0
-         /YOHrTE7ZqybODNtbGf0ZMF180AMvbwqb6LxvKrhBUWuVnDndkwJSWBI/a142FDkzHSX
-         TV4aj4RrxZTscy2z3aLtvSUUwVqcYjI1WhbccT9GMoJIS5PY5jcTGBPzvTOERWrzJ/Vn
-         wynim/BB9DUoXIjgNM4pYoR52nqcT41IR2ANV/goneomdCvL8FnbOJeMGiFrGg5QrF9n
-         NLcA==
-X-Gm-Message-State: AOJu0YwR1LrTTco5PFo4+trchPnmO7/pamRj5Izcm9EY6wlRz/44r2cw
-	1FUxfTW/znFJPdorshWkCjGnBQKsS1H8FG2y6ix/LTxeqF9EvFpAwW+oLYtvIg==
-X-Gm-Gg: ASbGncsvGNFSJaPzWHKEVDheDJQDBAbc8upuXoAhaTtXIPU85G3ibFMJFF3CICJmGyi
-	C7I5/wDxqRwmP/wGiqxde+bbOUglHr8Dm7EJHUhNgINAvHxX8kUyuzJhkUHPial9RhgFwaBthoU
-	yxvuYAKPDR+ndQT7uu0kQ1CrhWW86eaBxf25srDjH6Kgod5nkWFpl4HNjM2TDiu3g/qGSvDC3/W
-	GusPwCN1DQCT83iCRcDIhQ02DLxbm21GxpIv/nVD8dSG2xR4Dly9WdFqx+WwBM0An/Ke1xL3gNM
-	mS8OvVsfW2PNEI/8hXNO+xLTm1Yq4nrq2Kvd4omRQ5Ro1i1bDeA2egmEhBddg240vJXgM/0DYCN
-	MVbaQrGKalb5PnesYBzeXa4A=
-X-Google-Smtp-Source: AGHT+IEcymNlJYVxFMmpDF5elyxSj7sovNZovldVmJ6flhenAtwPiDR4lcwK7MgJstKoDkK6hhl1Fw==
-X-Received: by 2002:a05:6000:2909:b0:3b8:d893:5230 with SMTP id ffacd0b85a97d-3b917eb573fmr203930f8f.47.1755029252786;
-        Tue, 12 Aug 2025 13:07:32 -0700 (PDT)
+        bh=TOBCvD2LVrl764D9p67V+jeDTKx0VxtxCT23k5zDDbs=;
+        b=izO2egnCAvLUio/1phqx+Rm/Lw1mwgcNqxkNlTXj51DOyMNGKqITnib1qeyJD0FVIE
+         QPSjx4dc6zhJdZtfTNt5A5IZmqtlJfxf+NjPMjgjE1nXqQMcrWxqpZIS4+G6Mabm294y
+         MWX4/KvzV3bOKTlmTorYdo/KBr7LAgeE71OEic7ZEEzX0jQnTJqmBiYl2fp5r0vDue/2
+         m6YQLM8LB9hpQb3p5wT37OQgIbUHkDca2Gzcd8gIyeE88Ueq6tTY9nG3kVCUDhyxaZPN
+         uPewAsEI0QJs4aaj7X1MqTvlIUKiwep0U9NB4opcgLsqQBMhvwzClAQ+FigH5BKyGLMH
+         1IBQ==
+X-Gm-Message-State: AOJu0YwtEfJNEXVH6iU6oo8SHpeyE5EXaOgGk5SSyYDb0zsFAURgXrOJ
+	JOwAzTcXKfx6LOgbd6Q29oxhDshyXBHzlbukDAFu1Kfo0gpw+ByzQ4yPOVG5NQ==
+X-Gm-Gg: ASbGncvUsmahWPkWvAl6Qp7+6XNfMdCQF7HJxjAGeJK11ecqawOMjusS0o+IpuoT0ux
+	LQxQ5K6bDKwgfDKQ03pLHDEHh37jqTbB4XjmR8094eiRcmIOlkyq0ZnYYh+8IgpxJ8F5CRsQ3LQ
+	7JqOEYCwhB5LFvbHb+BYOwMcpCk/FCEkHPI/U4uu9ctYmdImXI+QhZsYFh4itVBEJjSdMz3Jw7S
+	w1k9a+6QAQ3y/Z4DuK0RTVa58BK9utuI21DGJ/21T6FgSwU0eMDrOTVa94wdqWGsjSkkPQpM5mN
+	814qQ9zuMfWUjhWwNkZQphQuMW+bn5B2DLucbc+z2bqaoRg/N4K0P3k/t3Urf83/LG2mO4L8Sfh
+	eNArDL+htLnfFi0OmOLtrvXw=
+X-Google-Smtp-Source: AGHT+IEtsyiRskkOV9cR2c3g4LK3fy+VcBke1ARGXbavbztAYhLXUw07CHECa1G2eae8QpNd4v3/Kw==
+X-Received: by 2002:a5d:5f88:0:b0:3b8:f864:9a19 with SMTP id ffacd0b85a97d-3b917205b0dmr522644f8f.22.1755029253878;
+        Tue, 12 Aug 2025 13:07:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a16dcbd55sm446935e9.2.2025.08.12.13.07.32
-        for <git@vger.kernel.org>
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c46ee84sm44188921f8f.57.2025.08.12.13.07.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Aug 2025 13:07:32 -0700 (PDT)
-Message-Id: <3f4ab6150692418757c84db64cf6d3d79a654453.1755029249.git.gitgitgadget@gmail.com>
+        Tue, 12 Aug 2025 13:07:33 -0700 (PDT)
+Message-Id: <34b09deb61abfee8146cbbd6e1583c1c43fda197.1755029249.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
 References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 12 Aug 2025 20:07:27 +0000
-Subject: [PATCH 3/5] doc: git-add: simplify discussion of ignored files
+Date: Tue, 12 Aug 2025 20:07:28 +0000
+Subject: [PATCH 4/5] doc: git-add: make explanation less dry
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,40 +78,47 @@ Cc: Julia Evans <julia@jvns.ca>,
 
 From: Julia Evans <julia@jvns.ca>
 
-- Mention the --force option earlier
-- Remove the explanation of shell globbing vs git's internal glob
-  system, it's a common gotcha but I don't think this is an appropriate
-  place to explain that concept. There's some discussion of the gotchas
-  around globbing and `git add` in the EXAMPLES section which I think
-  is clearer.
+- use examples
+- mention `git diff --staged`
+- link to git diff man page
 
 Signed-off-by: Julia Evans <julia@jvns.ca>
 ---
- Documentation/git-add.adoc | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ Documentation/git-add.adoc | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
-index 99ca2d0f7e21..0c4ca1794c91 100644
+index 0c4ca1794c91..77cadbfee8e3 100644
 --- a/Documentation/git-add.adoc
 +++ b/Documentation/git-add.adoc
-@@ -34,12 +34,11 @@ you must run `git add` again to add the new content to the index.
- The `git status` command can be used to obtain a summary of which
- files have changes that are staged for the next commit.
+@@ -26,13 +26,13 @@ You can also add only part of your changes to a file with `git add -p`.
+ Please see linkgit:git-commit[1] for alternative ways to add content to
+ a commit.
  
--The `git add` command will not add ignored files by default.  If any
--ignored files were explicitly specified on the command line, `git add`
--will fail with a list of ignored files.  Ignored files reached by
--directory recursion or filename globbing performed by Git (quote your
--globs before the shell) will be silently ignored.  The `git add` command can
--be used to add ignored files with the `-f` (force) option.
-+`git add` will not add ignored files by default. You can use the
-+`--force` option to add ignored files. If you explicitly specify the
-+exact filename of an ignored file (e.g. `git add ignored.txt`), `git
-+add` will fail with a list of ignored files. Otherwise it will silently
-+ignore the file.
+-This command can be performed multiple times before a commit.  It only
+-adds the content of the specified file(s) at the time the add command is
+-run; if you want subsequent changes included in the next commit, then
+-you must run `git add` again to add the new content to the index.
++`git add` only adds the changes at the time that you run it. If you edit
++`file.c` after adding it, you need to run `git add file.c` again before
++committing.
  
- OPTIONS
- -------
+-The `git status` command can be used to obtain a summary of which
+-files have changes that are staged for the next commit.
++If you want to check which changes have been added, you can run
++`git status` to print out a summary of the changes that will be committed
++or run `git diff --staged` to see the full diff.
+ 
+ `git add` will not add ignored files by default. You can use the
+ `--force` option to add ignored files. If you explicitly specify the
+@@ -443,6 +443,7 @@ linkgit:git-rm[1]
+ linkgit:git-reset[1]
+ linkgit:git-mv[1]
+ linkgit:git-commit[1]
++linkgit:git-diff[1]
+ linkgit:git-update-index[1]
+ 
+ GIT
 -- 
 gitgitgadget
 
