@@ -1,128 +1,98 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84822F83A1
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 18:07:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2D92D46B3
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 18:13:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022047; cv=none; b=Lkg/e8+rQJEuTHmT45xUqeDJyG+y0nvW7z/BHuUuTv1FREVIDNK5VnF5Wx6SQhcXAKJPI+rHqvO68jPyUeTrzkJNfE1DyPpJWQwzWJNxjZmSKuoG0o8KWyhop0ooFudKQbxgyqyUUT0Y+erl5t5Anz3RklBQKCulNHsyWmlbURY=
+	t=1755022396; cv=none; b=dy4Qy709yZ62u+LKjvdmhY6AN4HnF5rLTG+BrpC5JGaM1ADEX3FK0H1ePN/pmfQsGBAxS5Zjo7IR97LtoPX9CKdzaRhLsT6n0z5mqshqLZ7M7gcZMmIMKEQPlhsggHWveC8uRzFPqBC0JDh9w1W/Dspi7AXKq5S9WugOstfIA8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022047; c=relaxed/simple;
-	bh=dSY+V6n258a91lERPft2qLUaaWgjnhudHGzR7+M6oc0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mQwjHP1E1sUEr8VpwV0mZTDMKgYt5SiQGsZ6sZeZCLC51OMust9H9gUahu9FVsfM1znwLuo0T6vCnPUJrktQrxXTLXalMonkxlyP/zKBmVLdFkSjLIursbQAvJLKxZC28FyOhm4VjDyzlIyVRh8q6aa8o1bP3fKDCYYLcGYvQtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xu8J2CuP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SZveKJS+; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xu8J2CuP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SZveKJS+"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id C96CB1D000DC;
-	Tue, 12 Aug 2025 14:07:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 12 Aug 2025 14:07:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755022043; x=1755108443; bh=P0rjnRnVw4
-	ahHKgB+DXyt8gIedH5gpGPxzvUnM0dqdc=; b=Xu8J2CuPw6g04pL2FTwcgS8Ond
-	D8ElGJKUHKfMWnDf7lqPEoVU6pKzaAtq7T/dxJ+MmuoJb1fOdePLh/TbOWz7zJlS
-	GluD13U6UkhLmWZMPJjoQdaM6uwuJuN6LDqTuTeQjHGETZBZgsOpCuBK2smvJSgP
-	YYYh+lugl5oX/DRNpXPRRHmp4uawwVeKnAJWAAbhZeEytYiFtoIYBzJNXsYVJ5rJ
-	i2Pg5atiyLsXA17r77caqVovSXAQ+6lyhWmmQKSfv+fmxYpAXs1/bCjVYWjRLjLG
-	mghn8b/PTTbZOf8g7zwABxHHCfY3hfB9yzP8lshJu+nSdElQ7NVtO2NdXOeQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755022043; x=1755108443; bh=P0rjnRnVw4ahHKgB+DXyt8gIedH5gpGPxzv
-	UnM0dqdc=; b=SZveKJS+U5eSBSW8pgglrwwOF8nWdaNarWySR80JscpDnRClmnI
-	8wS4bvggAD1kQdR+5AYq/ZKiHmgYdic4xeoOWYFuNZ7F66JDGPvtqG8qbWD/eGUr
-	JABj6Z2zWvi1Ng0XMJfAfVXHTgHWljAEhbO5YiC+7kDuKij7f/Oq6oz46gtk2XIm
-	dzqCUx8EImpfyj8BeeBttsFw6df+5rNVeAmDdxmEOFBmNvlf4/mBw4815gckXa3M
-	jrtT96XJwNYcYiV7fLjEfv4glrvx3wengPeVunVS9AnXvUDRZM2CaempLPEXdvNY
-	oqvLHnzZB3nnl/HqhgqqHdgmLbikYmpPbMA==
-X-ME-Sender: <xms:24KbaK2QZCpIB8Ja48B7_aWPcnQUX3fPPWxfJmoBjnKjdyXj59M88A>
-    <xme:24KbaNx1-FrTttIHzyNAxSqd5y7BnLVSUPBotPoBdiK8WwgL8esb7xjL0DETjGc5G
-    OfHyaC3CuxhObFJAA>
-X-ME-Received: <xmr:24KbaBGrMqzRYVEddx_F4-8FmMqVKrdCwhUSe3pXrVmR04RMMFZKQ15ktKUjgRn6kudk8Su5vQADO04z9Dr2RkLxrtkpcuUUVNVPRg4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeeitdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthho
-    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjuhhlihgrsehjvhhnshdrtggrpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:24KbaAZ8PZuKC2BihqUafHfnaHe0LiG1WBLFzUnNaWKONY6j29tlOQ>
-    <xmx:24KbaDCO_VNpRL3leASMwkO-7qRFy72N9RaasduSkP2lMCCmD7V9eA>
-    <xmx:24KbaImlXdMSheIudgXX8M0JUBvDn-uYsZn9bY3t7jTtRfvK1qW8RQ>
-    <xmx:24KbaExPcR3qqvJcqQTY7Glr5ym2maFcsHfPW8h6gsq7EFRL3NARxg>
-    <xmx:24KbaMYPY5Y4T3Bw3-6UuyDAUVe8gn8J1iA1ZV8veTBq6XxIhEgNvR5Y>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Aug 2025 14:07:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Julia Evans via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Julia Evans
- <julia@jvns.ca>
-Subject: Re: [PATCH v4 1/5] doc: git-rebase: start with an example
-In-Reply-To: <CALnO6CBqChfU62TJuk9mBd=gSbPKDEyBKv8r-rCygsRDD2yALQ@mail.gmail.com>
-	(D. Ben Knoble's message of "Tue, 12 Aug 2025 13:07:48 -0400")
-References: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
-	<pull.1949.v4.git.1754702057.gitgitgadget@gmail.com>
-	<07a4bdb7ce5eb456bd81972c350d0c4f298ebd46.1754702057.git.gitgitgadget@gmail.com>
-	<CAOLa=ZSTaAaWJWeXBkoxPx46g_Equo-sHWgCESE9G6vk3HZeqA@mail.gmail.com>
-	<84258154-322c-4ef0-9ebb-44858a5d58fc@gmail.com>
-	<CAOLa=ZQwwcfEQNbZqp3o6YfTWMhUr=s0Vw5jP87pUELsktLRaw@mail.gmail.com>
-	<CALnO6CBqChfU62TJuk9mBd=gSbPKDEyBKv8r-rCygsRDD2yALQ@mail.gmail.com>
-Date: Tue, 12 Aug 2025 11:07:21 -0700
-Message-ID: <xmqqfrdwtnvq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1755022396; c=relaxed/simple;
+	bh=QXh4tKmzPbOPWMbmwAiNaiXlSLtCWNKsHjwFLT7hxtM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KzMtINmWsJWvctkkz50j78tQW/YvxzJ+EmS/H7iuvGoCihjXdJoUPrvq717TTX554jSgPTnqbYeonCbeP71bXTOmaT9cOMtwnBnVVPCX0e7GJ7jpN9Gy0J0209uJd1zbDlxxuOf9JlfFCXQa88dpB+sSvYhBU1mB3SPqNh2OMew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7e826840e1eso44206085a.3
+        for <git@vger.kernel.org>; Tue, 12 Aug 2025 11:13:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755022393; x=1755627193;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lTzluLPsMX7Lu8ehkRPmQSS3GGA4JYOsQJ0HrfK9TJ4=;
+        b=Rbuz9TuSt/f97mt3xDd1iPfNPIoBrjy9mh0fFy5msdgy0kM11IhmZ6Lt6rQx0y4Say
+         L6ESit0MNTehgpMEhbjIZzTacUUdNt8nX4SCOszC8VTW5JAbmLuK14C/n2K+Heuz/nWl
+         Cjcjreh9NA0YwNE+Xyg0i1Dingz2+57OJNRN3ntOid8zedm0ghZcVKN1SkHiJPfcudMe
+         eAt8+oSHPBVjmqwVjdOqK0PkU9dV+PQCtwRgaZ84QKAqLNam9RP0WgighuyusuxMUgE7
+         KqoD4z7LVCTJBmgfUgRXIibw5IbHERebRCxaev19pzK1npiDYL0UQ5PdYGFmSDX5MqHk
+         jocQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW2FfJFlbiHWAH3v1etvZ5ClvNj0Ts3rnwW2ux/fFZ+GKQ6cQgu/BMpzBOQAorUL7fI38U=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzn6meHp5urOomsCOwJ0115PhzNv/uicGzUqpws7B9Lk0C6qx9H
+	XjYWelx5nouILk1oWDsq/P96Eqj1LhHPYgBGvO4X9WIjvPXgDHw438eRAHDuz2xdbJ7fj/Tt1om
+	IpHMYaFPtb5I/taGmAK4Zw5N0hrgITLIkDg==
+X-Gm-Gg: ASbGncvrXe/Q7bnA3bpC1cx2xPFK1rO7Sj9HLQHfdUIPpUdcvQTCSmVUd+YQWg+5wq2
+	enSoypJNBt5x1bOMrEqofVsdr3HaIbi3JF57fo4r+B3/Z4oNsmhV+43eNDYheBvUJlMzvh7k40S
+	GhPVszaHlfM9JUZqps1w3Y2NKcvwhq0wQKCsp3rxseEY3QsXwiie5ttuqo8EABjSNGkFc6Yo4Dh
+	MQd0zqV2ZN49USiPGsGxnS15gmH1Quf4PMFIsY=
+X-Google-Smtp-Source: AGHT+IFWvPTgOwjP/VYb/b9kuLoC8fTVEIrdtWeEFQodtgie9jnkBDg64sodtp7k2H+F6GF4/ZGYQhrHZ0XVKv/2Pgk=
+X-Received: by 2002:a05:6214:763:b0:707:48a3:f833 with SMTP id
+ 6a1803df08f44-709e87c94a4mr558056d6.1.1755022393174; Tue, 12 Aug 2025
+ 11:13:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250811221706.67168-1-ben.knoble+github@gmail.com>
+ <6BCA1E93-7409-41FA-81FB-0CB75A3A55FB@gmail.com> <CAPig+cTpMFfg8iTncgekq6wyfHOPidhHposLi11D3fXyfnNQRw@mail.gmail.com>
+ <xmqq1ppgv3wg.fsf@gitster.g>
+In-Reply-To: <xmqq1ppgv3wg.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 12 Aug 2025 14:13:01 -0400
+X-Gm-Features: Ac12FXySJD1hojiix31BXVaL7U6Pf_OjMxz9JIyxZKg59tfupfdWQ8O7FNheF44
+Message-ID: <CAPig+cQMa32G0pqi1UU6hqRAB5709Zcif0pd5uWifqB8d9o6rg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/4] clean up some code around editors
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ben Knoble <ben.knoble@gmail.com>, "D. Ben Knoble" <ben.knoble+github@gmail.com>, 
+	git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+On Tue, Aug 12, 2025 at 1:36=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > To catch it locally, you can run:
+> >     make test-lint-shell-syntax
+> > in the "t" directory. Alternatively, `make test-lint`, `make test` or
+> > `make prove` would also have caught the problem.
+>
+> "make test" is a bit too heavy-weight to use as an initial sanity
+> check for tests that are being newly developed, and I am wondering
+> if something like this can be added as a first-line sanity checking
+> tool.  The idea is a simple "make" to build, while DEVELOPER=3DYes is
+> set, would trigger the common linting any developer who is working
+> on new things needs to pay attention to.
+>
+>  ifdef DEVELOPER
+>  include config.mak.dev
+> +all:: check-developer
+>  endif
+>
+> +check-developer: check-docs check-tests check-builtins check-headers
+>
+> +.PHONY: check-tests
+> +check-tests:
+> +       $(MAKE) -C t/ test-lint
 
->> > Junio has already expressed a preference for "checkout" here c.f.
->> > <xmqqldnte6h3.fsf@gitster.g>. I think that is technically correct as
->> > "topic" can be a commitish and "git switch <object-id>" fails without
->> > "--detach".
+Not a bad idea, though I don't think we need to hide the target behind
+DEVELOPER.
 
-I wanted the new documentation text to use what was already used in
-the parts of the document that are not touched; otherwise we end up
-with text that uses checkout in some places and switch in others,
-which would invite confusions among uninitiated readers, who
-rightfully would wonder what criteria were used to decide which one
-among these two different commands to use.  And teaching that these
-two commands are quasi-equivalent with possibly subtle differences
-is not what the documentation of "git rebase" needs to do---it is a
-distraction.
-
-I do not mind a new proposal to do a documentation sweep, aiming for
-Git 3.0 timeframe, to examine all mentions of "git checkout" in the
-documentation and replace them with "git switch" or "git restore"
-when appropriate (there are of course ones that are not for obvious
-reasons, like the ones in "git checkout" documentation itself, and
-possibly in "git switch" and "git restore" documentation pages that
-may say things like "'git switch X' is similar to 'git checkout Y'").
-
-But let's leave that outside this topic.
-
-Thanks.
-
+The "first-line sanity checking" phrasing you used above suggested the
+name "make check-sanity" to me as being more meaningful and obvious
+than "make check-developer". However, upon reflection, "sanity" is
+perhaps too generic, thus might not convey that these checks are for
+code newly-developed (or changed) by developers, so perhaps "make
+check-developer" is indeed the better name choice.
