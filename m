@@ -1,115 +1,207 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from mail4.engw.org (astra5088.startdedicated.net [62.138.8.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C2A2F0661
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 22:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B041367
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 23:46:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.138.8.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755038756; cv=none; b=SrgQ+vzvJKXLD5KMSRp+0170tqamZjkExJFxRiWh/K2SOXkaMrkh1Nfxzp5B1H7/AznBf8w/JFuVF6D0gyXucLw0xTztjDCTcT78t/ZSvCwGIKPIYw/ItWFv0k3gwl5WqqG5tT2NHIfheVA3CGeLGPBMK0sWI8O7+lVXmkrDohc=
+	t=1755042380; cv=none; b=WShI5vkPEg07h9kzqWfMk6PuD5dwAC0lpmGyvlUC6oNp6VoazabXUZ2uAyZm1ym/SHoDKBPWF0k40ZxAd0yMXms6iuvugJOaQXJhQ3oThUUvQ9q6XGM/f8PxhjSDlDj2dxQaUO5kPNBwOJr2PbQIhSAFvtwEjeXvMCE3YsDvwE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755038756; c=relaxed/simple;
-	bh=hfX5Kg/08JvhEutS2dHiYY/5jjjot026sov3ydYhNLs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=QvL3WFdjVwINJZMiL+MQmy7y/ZNSDUGqu5mYH/y+Al5JzLpcSNaZgf5Gq9O3KQlvbx+I8T6wBHr0M4U41/6O4GsCROVhMubJGwcHjLP+25Q6grTQsqBBCRpJQVL7Li3TYkg8Qm0eb9YDSBMc3LsaaMG6GCkmVcF5A82Ql8v73aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=WyIQquPj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qdw0qHvU; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="WyIQquPj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qdw0qHvU"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2C706EC00B0;
-	Tue, 12 Aug 2025 18:45:53 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Tue, 12 Aug 2025 18:45:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755038753;
-	 x=1755125153; bh=PDNG5lngMucWv/jK+VnO+/Kj7usFl2EEqiYTtCydEHU=; b=
-	WyIQquPj2GZeimySwLKKmFnLegkV7UxSAI6JbI8d2oyj3aP9sH1deYVsT3zjaFPn
-	9JWvJvRFVA+8UyytVzXlB/EtuA7+bvwe15WlxWJz1TsG39DYN/HRyGec/Na/FIZ/
-	rWY2CC7wWuR7A4mCvxuJ45UR3+YzMAoLBpKbrPv2DIxcE2WcDS5q8ZJt6UIPlYwN
-	vmT3RbouUisMFNtwKIyAt3INY52htXsXoc0WhXyGBOOyWy5ImBxpfldR5KqouZvP
-	rerrwKWl53bkEdRNW4bO9oeNSE5vZvrbADXB9LKxHiMJR2ppMIJBE7y2Y3wWVu0M
-	YUwFpXZU196WVW6IndVDUA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755038753; x=
-	1755125153; bh=PDNG5lngMucWv/jK+VnO+/Kj7usFl2EEqiYTtCydEHU=; b=Q
-	dw0qHvU89de+zMgrk7Xrcs4PsL8474ZGCnit9NNrmSgqD7WSDaEBK8QJ2/HITKyO
-	TTSuwRz/GtCSndyC4h1htMxWRqqxdORarEZdaK4FYET8KCWJcx2FiPLUwKRUEPV+
-	vwFkDg7UsSAOQmj+eN3PnLYfnf0TB0D2Ls/0d4WsDGuiVHNYtLU/GjKu9864vaa5
-	OxPOQn9QVAk9cmNezAlCOCNmzj0Ub+PuHHjroTA1mouVCu5sS7cAzfaBNRMnSNOI
-	jk92OB3lHTGbq686R1hndngEBPH8rzuFj9Vhbs9vqwhTKpA2J9Sd9u00x1RKvA27
-	MQrVJeitbSj+NpREhux8Q==
-X-ME-Sender: <xms:IMSbaLgKA4Eemc1F1Pv30cslbCXjrlwA1PifNSNe0QWNEDJeMx3mWw>
-    <xme:IMSbaID8gmPjIDjadwA0UnJ_RQvcI9mFsesFM4Peg4aMqhR-Eevko6iZWjsiutTxb
-    h2vPJy-dh_3vqpOeeg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeeiheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthejre
-    dtredttdenucfhrhhomhepfdfluhhlihgrucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhn
-    shdrtggrqeenucggtffrrghtthgvrhhnpeelgfevveevtddvheefjeehhfejkeeijedvie
-    ekudegveduveevgeeltdehtdfgleenucffohhmrghinhepjhhvnhhsrdgtrgenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjuhhlihgrsehjvh
-    hnshdrtggrpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrgh
-X-ME-Proxy: <xmx:IMSbaDo8GXx-pzpY_d3v2vLQyRDgUJcipPzVDXXO-17AwMVlqu53QQ>
-    <xmx:IMSbaEg8tL7i2faqDUOzJ75g-3UFr5PEOFNCi1qGU3TcGr2_4aCvCw>
-    <xmx:IMSbaNLb1y1hu4kj-D4SCzh1ozu8ktCqW71ISyjBlD7tVAYqx4WO1w>
-    <xmx:IMSbaEBO0qNnQkVCtdknUv4qIaWCLm6wyO01ODaqAwWnsubLtv9y7g>
-    <xmx:IcSbaJqD2Ael3SsziwCyon_W3WgQB9XabqPQducJtxDA9Q1xUC2MBboQ>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id CB88F7840B2; Tue, 12 Aug 2025 18:45:52 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1755042380; c=relaxed/simple;
+	bh=k+Z1atFZgM/fI9ZEsF2MVZhxXZJy+wCDmQsSPHEO9TI=;
+	h=From:To:Subject:Mime-Version:Content-Type:Date:Message-Id; b=Y2aPL0YD9gMe0Epvk/0mdz4MTdC3rP2e4jNvl4+9Xp7veX4ZzxqLfShh092X1sr+HQmpT65Bl5DDz4E1yqCn3FJBQ6ghxdNVSMclXhLCnVPCkGuO043PDRIamULNHLrQY0Hs+HsqoPzok6PKrpaptWBnCeo1nnK2bk1SscGiQFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mcsi-conf.org; spf=none smtp.mailfrom=mcsi-conf.org; arc=none smtp.client-ip=62.138.8.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mcsi-conf.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=mcsi-conf.org
+Received: from localhost (localhost [127.0.0.1])
+	by mail4.engw.org (Postfix) with ESMTP id 458344FC4168
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 20:23:54 +0200 (CEST)
+Received: from mail4.engw.org ([127.0.0.1])
+ by localhost (mail4.engw.org [127.0.0.1]) (amavis, port 10032) with ESMTP
+ id bzC3O3l_lkkB for <git@vger.kernel.org>;
+ Tue, 12 Aug 2025 20:23:54 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mail4.engw.org (Postfix) with ESMTP id B42D64FC1C70
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 17:54:52 +0200 (CEST)
+X-Virus-Scanned: amavis at engw.org
+Received: from mail4.engw.org ([127.0.0.1])
+ by localhost (mail4.engw.org [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id I2msop_kQhEA for <git@vger.kernel.org>;
+ Tue, 12 Aug 2025 17:54:52 +0200 (CEST)
+Received: from 10.0.2.15 (mail4.engw.org [62.138.8.142])
+	by mail4.engw.org (Postfix) with SMTP id 634B44FCB050
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 17:06:39 +0200 (CEST)
+From: "DIMITRIS CHATZIPAVLOU" <dimitris.chatzipavlou@mcsi-conf.org>
+To: <git@vger.kernel.org>
+Subject: MCSI 2025.     Rhodes Island (Rodos Island), Greece, August 22-24, 2025.
+Sender: "DIMITRIS CHATZIPAVLOU" <dimitris.chatzipavlou@mcsi-conf.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-ThreadId: T445d42a894a29bdd
-Date: Tue, 12 Aug 2025 18:45:32 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Message-Id: <4d922dbf-ad97-42da-be19-905de5bd18de@app.fastmail.com>
-In-Reply-To: <xmqqwm78p4uh.fsf@gitster.g>
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
- <310d2c1d8f7f68ae52ddd29f0ccb0a0364aba1a2.1755029249.git.gitgitgadget@gmail.com>
- <xmqqbjoks19f.fsf@gitster.g>
- <152d47a3-7744-476a-8ab8-43b7b52b67ea@app.fastmail.com>
- <xmqqwm78p4uh.fsf@gitster.g>
-Subject: Re: [PATCH 2/5] doc: git-add: start man page with an example
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
+Date: Tue, 12 Aug 2025 18:06:40 +0300
+Reply-To: "DIMITRIS CHATZIPAVLOU" <icnls.conference@gmail.com>
+Message-Id: <20250812150640.634B44FCB050@mail4.engw.org>
+Content-Transfer-Encoding: quoted-printable
 
-> Yes, I have heard that for recent crop of developers especially
-> newgrads, Git is the only SCM they've ever touched.  If we can
-> assume that the data and mental model of Git is natural for our
-> intended audiences, that is great (we can also forget about the
-> diff/patch based world view, which comes from how CVS/RCS stored
-> their revision data, and assume that the snapshot based world view
-> is natural to our readers).
+Dear Professor
+=20
+We would like to invite you to present a Lecture in the
+10th International Conference on Mathematics and Computers in Sciences an=
+d
+Industry (MCSI),  Rhodes Island (Rodos Island), Greece, August 22-24, 202=
+5.
+    www.mcsi-conf.org
+=09
+	A complimentary copy of a relevant journal of IEEE (hard-copy) will be
+given to you in the conference.
 
-Git is certainly the only version control system I've ever used: I started using
-it when I was a new grad 15 years ago. Everything I know about Subversion or CVS
-(almost nothing) I know from reading explanations of Git aimed at their users
-or from trying to understand the origin of some of Git's terminology choices :)
+Accepted papers of MCSI 2025 will be published in various Scopus indexed
+Journals or Springer Verlag Volumes or IEEECPS / IEEE Xplore as in 2024.
 
-re whether the snapshot based world view is "natural" or not to Git users: 
-I did some very unscientific polls about people's mental models of Git
-a while back at https://jvns.ca/blog/2024/03/28/git-poll-results/#commits
+Upload the title (and the Abstract) of your Lecture via the
+ web site www.mcsi-conf.org until August 20
 
-That one says that 42% of folks who responded think of commits as "snapshots"
-and 50% as "diffs", which feels encouraging to me: after all, the poll doesn't
-ask how Git represents commits internally, and many people replied in the
-comments to say that they think of commits in both ways depending on the
-situation.
+The Proceedings of MCSI 2024 have been published by IEEE CPS and can be
+found in IEEEXplore here:
+https://ieeexplore.ieee.org/xpl/conhome/10817652/proceeding
+
+The Proceedings of MCSI 2023 have been published by IEEE CPS and can be
+found in IEEEXplore here:
+https://ieeexplore.ieee.org/xpl/conhome/10438514/proceeding
+indexed in ISI, Scopus, EI Compendex, DBLP, ACM, Computer Society Digital
+Library (CSDL)
+
+
+
+
+
+Accepted papers can be also published in one of our Volumes in Springer
+Verlag. See for example
+https://link.springer.com/book/10.1007/978-3-031-78416-3
+
+or in the Journals that you can find on the web
+
+Plenary Speakers
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Prof. Yingxu Wang
+President, International Institute of Cognitive Informatics and Cognitive
+Computing (ICIC)
+Director, Laboratory for Computational Intelligence, Cognitive Systems, a=
+nd
+Software Science
+Dept. of Electrical and Computer Engineering
+Schulich School of Engineering and Hotchkiss Brain Institute
+University of Calgary
+Canada
+
+
+Prof. Minghua Chen
+TPC Co-Chair, General Chair, and Steering Committee Chair of ACM e-Energy
+City University of Hong Kong,
+Kowloon Tong, Kowloon, Hong Kong=20
+
+Prof. Javier F Rosenblueth
+Institute National Autonomous University of Mexico,
+Mexico=20
+
+Prof. Elias C. Aifantis
+Mercator Fellow, Friedrich-Alexander University, Erlangen-Nuremberg,
+90762 F=FCrth, Germany
+
+
+Prof. Dimitrios A. Karras, PhD
+National and Kapodistrian University of Athens (NKUA),
+Dept. General, Greece=20
+
+Prof. Imre J. Rudas, IEEE Fellow
+Obuda University,
+Budapest, Hungary=20
+
+Prof. Ivan Ganchev
+University of Limerick, Limerick, Ireland=20
+
+Prof. Mohammed Chadli
+Universit=E9 Paris-Saclay, Paris, France=20
+
+
+Prof. Leri Nozadze
+Samtskhe-Javakheti State University, Georgia
+
+Prof. Eugenia N. Petropoulou
+University of Patras Patras, Greece
+
+Prof. Marat Akhmet
+Middle East Technial University, Ankara, T=FCrkiye
+
+
+
+Best Regards
+
+=20
+
+International Organizing Committee
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Prof. Nikos Bardis
+Hellenic Army Academy,
+Vari, Attica, Greece
+
+
+Prof. Nikolaos Mastorakis
+Technical University of Sofia,
+Sofia, Bulgaria
+
+Prof. Irina Astashova
+Moscow State University,
+Moscow, Russia
+
+
+Prof. Theodor D. Popescu
+National Institute for Research and Development in Informatics,
+Bucharest, Romania
+
+
+Prof. Tarek Saadawi
+City University of New York, USA
+
+Prof. John Tsiligkaridis=20
+Heritage University,
+Washington, USA Web Address
+
+
+
+Prof. Tadashi Watanabe
+University of Fukui,
+Fukui, Japan Web Address
+
+Prof. Nikolaos Karadimas
+Hellenic Military Academy,
+Vari, Attica, Greece =20
+
+Prof. Kittipong Tripetch
+Rajamangala University of Technology Suvarnabhumi, Nonthaburi, Thailand=20
+
+
+Prof. Radoslav Mavrevski
+South-West University "Neofit Rilski",
+Blagoevgrad, Bulgaria=20
+
+Prof. Ioannis F. Gonos
+School of Electrical and Computer Engineering, National Technical
+University of Athens
+Athens, Greece=20
+
+
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+Should you want to unsubscribe, send an email to=20
+icnls.conference@gmail.com
+with Subject:  << UNSUBSCRIBE git@vger.kernel.org >>
+=09
