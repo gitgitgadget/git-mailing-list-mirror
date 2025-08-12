@@ -1,170 +1,138 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A58545C0B
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 13:49:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBB22F3C2D
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 14:15:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755006578; cv=none; b=I7R9PYExa2AwUUqVteZx+LFautz5dGytupuRnDMc1rr8JRlRf5Zaf9szmh4JMtcfAdoAuZJ/8DE6VuPumW+hDR3EhHXYINjWimRqZTe5QKUg4+ennZSAzA6KHcEBiS6juHFlHsfNWY3HXvXzC/VdtWp04zLo0CrkyuPi7DKx46w=
+	t=1755008139; cv=none; b=JrnO5HJgkYhtaA8rpOEAeCJPfihvs27yFhX6xSPZ3RHZQbpwWaE8WMFppYM2kKYhypGqaf8PUusrp0JIJzKFZwVCXa+zMomvtav6JpvzCyaavClYo7DLCOqX2upHK1s3KM4OdOwqEJ3s98SGC/YOHMFJYusPZZRB+e7BiSH2orA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755006578; c=relaxed/simple;
-	bh=za/ukFKQGqA36EPz1/OuDEbzJFgoW9BziIJMv34+xwI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Mg/EuZdIqK24yYv+KkLT67zOCoLavc+NQiD7bkTpi9aia/3s3r7jI8wW82oTlByawf+xmPvcQXSRK5X0LnGGMs2V7MnHUBW0QhT5Qs3GX17At8xf1BisRFTEgfW4GSg3SOc+IFnOhvC8uJoNsB1pt9YJRFMcDpp3qJCiZY+j9pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILwBCLmE; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755008139; c=relaxed/simple;
+	bh=NKD0eLT3mlY27mcgHajlWN8s2F3N6z/Nv6woG4ulZHY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gMOqzoqL29Wv8sausvCyf7vgFzbDUeZVps9USYUepTfJLwQvEkVTkRn+PKtSySqjXFupY5ETF89FhQcNa+VTsNzFYmGxA9FhScf39fWVLpecHOy6eWG0JK5L8V3izG+kTG6MtVmZ6jplEVInRDoauOJBa4ZrWstcu4jQQkR48Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KYuelO5T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fdlSuuCh; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILwBCLmE"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3b9163ac059so75852f8f.0
-        for <git@vger.kernel.org>; Tue, 12 Aug 2025 06:49:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755006572; x=1755611372; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FxMO6H2NhV3OshelcB7U0Qq9bv/miJ2JN23nmRaw7LI=;
-        b=ILwBCLmErLv0cQrNXkFBhZecZpIeU48BJkHr1qmc+plCXA3zNooKsGRL5KJSlUKHjP
-         W9TKP/oUeBdndBqrD+HUOC+8VOxnApHDmslhINl/o8ZDKkbBRlI0UksjMr/xDQFcYVby
-         AEZ2J0SEtJscX16qhIfTTfqZFNOVemwJPypAYx5fKQn/stVpbVugV90PIypedziQFTX1
-         rUMIwkXqiKcOnnAST809MTLVxDqtzDeC2Ssp/9WapYnEWTzR6r6zNlu+2uXJtU6/P7sI
-         UCHHR5c6Kxxi8Grr1zG6M2P3Yua2sowfo3fQr8p0lqRlIM6mL9IXESCfLBCSvl6xMM3r
-         lCSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755006572; x=1755611372;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FxMO6H2NhV3OshelcB7U0Qq9bv/miJ2JN23nmRaw7LI=;
-        b=hVd8WWVKiCTSrIiEmP0SuazycK5b7N72T/KSwDRXhQgeyJc1ZAh5cHDor5N4edhWaN
-         yEDs5DxG//ijk/s/k5g4JIomkmg+PrAdnePMXWmuUk1kK0sta1tgextPrhuCesj0DSDN
-         LkMjqN7diLW0HtVvX1dQNztksm3tdT+mDe4/J60edgXTg5xQveQ9I7Y5zdvGzgXXUR7C
-         UXHt+cr9UeE395BIcXsduCy264bM+ZBgchAq2+jeu5f4Ok39vnKFJ+mR2lCUKQK4imOX
-         iI5OOh1D8ofgNmtEQywmEVgoAhMMWaFQBMg9wF8AV/ShB6+JMfYxu9ZXbGuOocD0b1Zp
-         Lriw==
-X-Gm-Message-State: AOJu0YwmFDJOV4my6wExC0wDu7XRDpNki2vdmAkOLxfEGdpHF/HdD+NO
-	/Rju+v2kngSAOdgclCBr3t9x6XXZWBmO/j8gb37FbG28fvwi2MFE4A1UcSmJ2A==
-X-Gm-Gg: ASbGncusMVY3cRTlsN2A6PGau2XrkCHOaYQ/8/IPxUM8WdPMde5dbjdL6pZAxiUZTdR
-	VWGtAm4LjPAUYN+ce7YeXe+9CuNfL/EHGhRn0eBI2Euq3bb+9SJQc0U+6t5hxmcChiTvKByNXBI
-	Jb2Ps3KfKG/UrpER9VtkxUo56KgHTO3jOU5p/kfqZYNIi0os3hNAGxT0O8eApr8EJqnrexrZdSO
-	F5N5xTphTZbQI0lhJ6ke1RFklJ09E1bQtWM7dgY5KrHPw/n29QD7MJKb0H6Gd91Frjn/35SFs9R
-	4VXx1sI+58p9PKrz8Wt5pnpjUJ0DvkKsSIVEOXkZzKjB01RaW397B0kQT3YzdQNQf3v8WWiNfW/
-	w24cVED/EhRB8URj3J/g0UhM=
-X-Google-Smtp-Source: AGHT+IEjT05OJqHJFbtTQ5k5nBKF86y4TCZLINA8pavOHQfxlFtnsJ3nF+sO7zeAPrfctxrBidqzfg==
-X-Received: by 2002:a05:6000:40cc:b0:3b7:905e:2a32 with SMTP id ffacd0b85a97d-3b910fce9b3mr2973426f8f.12.1755006571452;
-        Tue, 12 Aug 2025 06:49:31 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b916394937sm278067f8f.6.2025.08.12.06.49.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Aug 2025 06:49:31 -0700 (PDT)
-Message-Id: <ad63f69918df0130b6b0236d04e27f8529115cd4.1755006568.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1949.v7.git.1755006568.gitgitgadget@gmail.com>
-References: <pull.1949.v6.git.1754949075.gitgitgadget@gmail.com>
-	<pull.1949.v7.git.1755006568.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 12 Aug 2025 13:49:25 +0000
-Subject: [PATCH v7 2/5] doc: git rebase: dedup merge conflict discussion
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KYuelO5T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fdlSuuCh"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4661714000ED;
+	Tue, 12 Aug 2025 10:15:35 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 12 Aug 2025 10:15:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1755008135;
+	 x=1755094535; bh=aLBukXZ2PpWAlPpSjh0IVc2j8+ZeM/dsUtNhVFlghMA=; b=
+	KYuelO5TvOd2hwHFeyiTvo1T0C5kCa2PLTNvioMgXL+dYLd6k4IgVU8GxL36TQNy
+	2kTdGrpFva8KfZFPEPVnixXMwdCNWu507Zj4yY5sMd33vta7J942T8mRuArWzPnz
+	wJpaVDqdsY6YftEsxo8RjRFCMQIkQxjjb8KaYlRw8QRKZxWCpkfcJ0TI6l/GrBxr
+	pBju2S/dnXXmbqqNA9LJbF8ZHufkAXDIw9ZLzeDNSNc9xaFqrcz1IrFptJSD2ybC
+	Vh1g5WGsNQ+sieM4bBTcx6AvwwYBnjiveNEtTs2jSTYKVFLOUgi030X9sdmr6AAG
+	00m+noQc3U0cAOYTqwTBkw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755008135; x=
+	1755094535; bh=aLBukXZ2PpWAlPpSjh0IVc2j8+ZeM/dsUtNhVFlghMA=; b=f
+	dlSuuChV1RDWrfwXimmVEex+3lx8BpsUxsoKBpXernA2R5KAlJo10mv48clLqikt
+	Rd9L7CBZx9k0JiCPL5DSUDttWQmb/uFSVeSisn+b7IubFLz2CoDmn1cdVyV7Qmtx
+	bQ5vQEeYm3O8RCKCEEOoeco7UDMUkn7fx0yJZ8lacOMUd1SbOWxjtArjmbTtRTgV
+	KRkhSMW5JOpMUFDp+rKHLUeg0nRBMUDd0sqwitsqIAzkDlZl3HbZCwdxxg265TFo
+	ZdR6uMiHkaHDTcYJ5OvqoWak7yDI0H4ktIGi7qUnDoJSNsVA4BB6w+vi7jUkuQYR
+	T8VfGgqncsS6hB8e0OCeQ==
+X-ME-Sender: <xms:h0ybaHMHAFXB3O9egqt3glx7a_CeqKlrmUlWQAvqBKa_f8wJSzUVPw>
+    <xme:h0ybaPhZ_Lpy09RBVcdqgLIWFiEPgKf3FRDCyBj_OOf1uGdpGBiYUvfhq4hJVSzxa
+    e9RMazaY6sDSTWucw>
+X-ME-Received: <xmr:h0ybaMuMluWO6yY0vXrOnLHIPncxyN3wNpNuk9vQg36RJjWJFuR0fbPJtdIH3YgyWG_ZLLxm8jm-uaMlzLz1zSdPJgRUqbl8TeJzt60>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeehheehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepkhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthht
+    ohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurg
+    hlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:h0ybaNQocSAiMkNBUMzuoJTFMYD2JlZ84RqvFfzUKnEpAWcSCykjTA>
+    <xmx:h0ybaA06mkjLHAhcb8OQAVYSDXikJk0H-LBrBxsGYS-0pHLnTjeNKQ>
+    <xmx:h0ybaCvBqLeAP9o2dQw7IQyfTOUU2ewMwDJuxORzAz4ctm9debeb8Q>
+    <xmx:h0ybaGjcc7wcKAze1nZhZRsFFlmIdaoZ54gC8PrEAO7HlDryyQaA8A>
+    <xmx:h0ybaLAC-8IgenVgbTc2srZzYro9RSxSdavZgNfLKz_2D4aa3eGb94uz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 Aug 2025 10:15:34 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>,
+  "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v4 2/2] send-email: enable copying emails to IMAP folder
+ without actually sending them
+In-Reply-To: <PN3PR01MB95970565CA1F554E4B440C63B82BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Tue, 12 Aug 2025 06:27:43 +0000")
+References: <08528f201acc1038ebc5861321395d17516094fd.1753003385.git.gargaditya08@live.com>
+	<PN3PR01MB9597EC4C5DF97943587AEEB4B85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB95972CAE853F4079F0F62F0AB85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<xmqqv7mtzfuc.fsf@gitster.g>
+	<PN3PR01MB95977F0C73C909929400B3EEB82BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB95970565CA1F554E4B440C63B82BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Tue, 12 Aug 2025 07:15:33 -0700
+Message-ID: <xmqqpld0y6be.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Karthik Nayak <karthik.188@gmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-From: Julia Evans <julia@jvns.ca>
+Aditya Garg <gargaditya08@live.com> writes:
 
-Previously there were two explanations, this combines them both into a
-single explanation.
+>> On 12 Aug 2025, at 10:38 AM, Aditya Garg <gargaditya08@live.com> wrote:
+>> 
+>> ﻿
+>> 
+>>> On 12 August 2025 3:22:11 am IST, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Aditya Garg <gargaditya08@live.com> writes:
+>>> 
+>>>> +--[no-]use-imap-only::
+>>> 
+>>> This is better written on two separate lines, i.e.
+>>> 
+>>>    --use-imap-only::
+>>>    --no-use-imap-only::
+>>> 
+>> 
+>> There are many instances in the docs where the command line option has been written as --[no-]something. Do they also have to be changed?
+>
+> Nvm, looks like they have been changed by a recent commit.
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/git-rebase.adoc | 49 ++++++++++++++---------------------
- 1 file changed, 20 insertions(+), 29 deletions(-)
+Yes.
 
-diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index bb5a3ff7f828..e82ceb9cbfce 100644
---- a/Documentation/git-rebase.adoc
-+++ b/Documentation/git-rebase.adoc
-@@ -42,6 +42,26 @@ shortcut for `git checkout topic && git rebase master`.
- ------------
- 
- 
-+If there is a merge conflict during this process, `git rebase` will stop at the
-+first problematic commit and leave conflict markers. If this happens, you can do
-+one of these things:
-+
-+1. Resolve the conflict. You can use `git diff` to find the markers (<<<<<<)
-+   and make edits to resolve the conflict. For each file you edit, you need to
-+   tell Git that the conflict has been resolved. You can mark the conflict as
-+   resolved with  `git add <filename>`. After resolving all of the conflicts,
-+   you can continue the rebasing process with
-+
-+   git rebase --continue
-+
-+2. Stop the `git rebase` and return your branch to its original state with
-+
-+   git rebase --abort
-+
-+3. Skip the commit that caused the merge conflict with
-+
-+   git rebase --skip
-+
- If `<branch>` is specified, `git rebase` will perform an automatic
- `git switch <branch>` before doing anything else.  Otherwise
- it remains on the current branch.
-@@ -77,13 +97,6 @@ any commits in `HEAD` which introduce the same textual changes as a commit
- in `HEAD..<upstream>` are omitted (i.e., a patch already accepted upstream
- with a different commit message or timestamp will be skipped).
- 
--It is possible that a merge failure will prevent this process from being
--completely automatic.  You will have to resolve any such merge failure
--and run `git rebase --continue`.  Another option is to bypass the commit
--that caused the merge failure with `git rebase --skip`.  To check out the
--original `<branch>` and remove the `.git/rebase-apply` working files, use
--the command `git rebase --abort` instead.
--
- If the upstream branch already contains a change you have made (e.g.,
- because you mailed a patch which was applied upstream), then that commit
- will be skipped and warnings will be issued (if the 'merge' backend is
-@@ -186,28 +199,6 @@ This is useful if F and G were flawed in some way, or should not be
- part of topicA.  Note that the argument to `--onto` and the `<upstream>`
- parameter can be any valid commit-ish.
- 
--In case of conflict, `git rebase` will stop at the first problematic commit
--and leave conflict markers in the tree.  You can use `git diff` to locate
--the markers (<<<<<<) and make edits to resolve the conflict.  For each
--file you edit, you need to tell Git that the conflict has been resolved,
--typically this would be done with
--
--
--    git add <filename>
--
--
--After resolving the conflict manually and updating the index with the
--desired resolution, you can continue the rebasing process with
--
--
--    git rebase --continue
--
--
--Alternatively, you can undo the 'git rebase' with
--
--
--    git rebase --abort
--
- MODE OPTIONS
- ------------
- 
--- 
-gitgitgadget
+Others around you are also working to make the system better in
+other topics in flight concurrently with your topic.  You do not
+need to do everything yourself, but you'd need to be aware of their
+effort and avoid adding more instances of what they are fixing.
+
+And one of the jobs of the maintainer is to help contributors
+coordinate among themselves, which is what I tried to do with my
+message ;-)
+
+Thanks.
+
 
