@@ -1,83 +1,108 @@
-Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976692F532B
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 15:25:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98822EE607
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 15:26:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755012315; cv=none; b=eqyku9rNWY1jtU5dEncgfYN/3qPRNnyDbcCtZUYk7OQZl3UnkSfbRxRkQ7frBFQsal/iV5jRymwHLfCifqkSae0otVPAATuDnoc94nZPShvKD+Bd+/johGkvjrCYvkJRecXKK068jfIBZuMl+DeG2J1aKRy9hu3VEMe4zSFHCPc=
+	t=1755012396; cv=none; b=j8waaUkcEQHK4lj3gnnl3xHdeZrLh5eM8tlC5l9gfCJoFE1jXyjL+93jA0vNwvvPNOfayn9d+cyOwtJEa5WdJ74OVPquE8OTw9WI84ydvrH/ddqe2mpQeJL9dTqGehKfakmIXiOdLm+lLtGhMptGDMf5UJXlaXpYrLu+y9BMqgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755012315; c=relaxed/simple;
-	bh=RTbm6jLpYRq/3Mi4wauUHSva5mztUUNnh5YLuXqSywc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Subject:From; b=PsQpM7fmCbZlWD9P+jMqgio+tTJHKT2/3O9N/UynIWSJ1qP8rpp46sqYkr0tr+IUL8es3+rpYIyeWPPOw0LaNp52jmMn0nsyAOMJAT2sAD1hTsUlXFH8ByQnQ0oWy0/SIA1UbzSphEKZib3VmnDH5GSpiFZjExZXgPcs7YRrIao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=none smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=kKSKcwrw; arc=none smtp.client-ip=82.195.75.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=debian.org
+	s=arc-20240116; t=1755012396; c=relaxed/simple;
+	bh=Y/lxjO9LRhn36uGbP2U4ony2TnOVv5ECxKoib7hMY9A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Eu0uvC8Cj3tqX9x0uf2Qjo3MrYPRu5YVUzp2r2nWlgs2pmUbgWOonNZF5et/07OP1CdZd1U1KiH2lUU5qGkVhLu7KrclKApGto650hKj1UhW9Snm29lkRWKWg1TrlrjDX7flOnZ/w+9ZXOEO6WQWpMoZor1y7x+FlRJCoNeXiTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5rAnWa/; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="kKSKcwrw"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:From:Subject:To:Message-Id:Date:
-	Content-Type:Mime-Version:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-	Content-Description:In-Reply-To:References;
-	bh=RTbm6jLpYRq/3Mi4wauUHSva5mztUUNnh5YLuXqSywc=; b=kKSKcwrwUxXuft8xWvuu5hheE5
-	OE0XqXJly3yzFEFn95rkvXQ4cW0fH74BXccF0hy/ngmLkzXU4ClByR2Lc6ubw7Emg5RpV0qxpGD6O
-	krOPvlEdUOpoNWNIcGWuNmgNLD/aMKIauBFOT+VxjTA4QC9yrDOkFkfjBjwFSkS87xTnEyttAB6Py
-	E6+l/Te7aICV1UfS8skE3Uh9Dx1FIuzud/dl8mpZDag6ZHKg1Vg2Ke8skjH0owCSTcY1Ua/GKu1dc
-	YPztKUBH8R4NTzwfwHEBgQHa/AwzQAFQA3sXJJl5AiK4rVf7iC1Oy8qo/+sLJpkTZuL6G9LxqjwRB
-	sx5oA7xg==;
-Received: from authenticated user
-	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
-	(Exim 4.94.2)
-	(envelope-from <tachi@debian.org>)
-	id 1ulqlh-002Isb-N9
-	for git@vger.kernel.org; Tue, 12 Aug 2025 15:18:31 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5rAnWa/"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-76bd041c431so4994977b3a.2
+        for <git@vger.kernel.org>; Tue, 12 Aug 2025 08:26:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755012394; x=1755617194; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=6jeThsBDvjP5JHCh5fPWy1p5ClOh2WxfhCrYUzUGIqQ=;
+        b=C5rAnWa/IVdo7bb3RUHerl5Ennm84hux8xzSUaqPkEVePz49ghxjBp2UT5VllFqKH/
+         qtSA3eG6cPAhK/Cnuh6HvtXDa4iK9UGKAsoFd8JQkuXWren58Z6EGJeQytSv6EEoxDwa
+         gNAjnYYHZ/VlBwql/LlPlwv9QB/NSqDZPUvgBG6phXJ1Tf2tiDzr03nsCkgCxkqGw7ky
+         oeJY1Ow5l67WiBO0I0zrplX/hHLEGfDohhVyn3rvZO3q4wZ4wT5IHzCuSAS38XfNN3JC
+         Okwh+dHK1zhqUkfAShB0yQPLPCSJJqYwxtv0bxtEJb5Gcoz/lwZoYiET5XijKVYdWe6k
+         9+dA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755012394; x=1755617194;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6jeThsBDvjP5JHCh5fPWy1p5ClOh2WxfhCrYUzUGIqQ=;
+        b=nJ99jKEzZcBURFd7mGY8k2wT7FrmdUuprV1czP1vIERToXi24sW5gEOuq0//u+5DoO
+         NTaxWqgXhbOutHDTuX8GWNgMAZ9mDMAbusz1pFtz3iWhZ73Ol74WJvVMuxue3LE24olB
+         GwgsMl3SE1z9sXMcQeTBqP9ghxZVxHotreJ21Olkabz688890fugmkSfLtoVyGyizWv0
+         fJsFMmVGnzHhyQxXljI0oCAlEu45DsG2z/ryPq5SWLQKHGGKyd/LQE63vJXRRp0JHQHd
+         aZjKs/2hdz6ufFi/LW+sdaXCQXmbV6xrTyO78/XjBJ9JC51IwPmhslYfTDhyCQLKC/du
+         9dBA==
+X-Forwarded-Encrypted: i=1; AJvYcCVrWbvIqt/SOvlka/95aISQMvKcLfUM3OInNNY0XoNrl/vZf/9t2Ugc/7TiqvN8WAQNATk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxEe6sFFIPEp03Pgn6FtBT9VYZcqD9aI0rT0K6Lp9voHiLhoJSY
+	WlYh/qQOevyq4c6ECiM7uaUB1rnCQaiuI2EdulN3UmxcpNyqRZnuRgyc
+X-Gm-Gg: ASbGncsOidg1JPVwizUbmu4tEbGpH1RAnSHznmPbay4k738Vk+yksxKZ/3SxX5Ztv9n
+	O9MkgfYS+8/BdRW9nV/Quo2KgJxAG8us1bZ0vIPBka2TUx58Cb2fXKx3lqT2xkOlIsb6vSX4z35
+	GV/O7OXk2aHTDxGcvuXRZSuGqJD5t/NPtaJLOGs7ipcsE7c1/JDZiBOae5HEqM1Q4hZvJ298Jz3
+	1W9ubGFFIssqyVmDpq7l/9BvdS67AzVyOfZeHM4nsVs1WA+yZ0KqEiMzzsUFmw7Lelq3NfQFyvK
+	mqcCtxD7PkRCRznL1ZZApNl35rXxu7lN1PfQGAj28DF26mt3mRDqp/YjFH3Y/NEd2mYe8EZIKaD
+	4EqXtJsZefaoSdRdFT/Qer/gHbcnUfBDTxbVPacYsUX/3V1eRPu4Zgl1Hnw==
+X-Google-Smtp-Source: AGHT+IFmNtGWmNMFEVwOjttJXyVLEdE8FJENUAZnhYqqvZVYd0+dJIp9FhtfINSTSkfZN2K4ZYJN6w==
+X-Received: by 2002:a05:6a21:6da1:b0:23d:54bd:92e6 with SMTP id adf61e73a8af0-2409a97be24mr6279250637.29.1755012393921;
+        Tue, 12 Aug 2025 08:26:33 -0700 (PDT)
+Received: from [192.168.1.105] (23-93-88-48.fiber.dynamic.sonic.net. [23.93.88.48])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b422bac0391sm25095679a12.37.2025.08.12.08.26.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Aug 2025 08:26:33 -0700 (PDT)
+Message-ID: <e463481d-b6a6-4928-86e1-63677f5a88b2@gmail.com>
+Date: Tue, 12 Aug 2025 08:26:32 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=6e200f4a421b4ce4637e0d7f385ff265428406fea0ec7001ebc4020fbe02;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Tue, 12 Aug 2025 17:18:19 +0200
-Message-Id: <DC0JSOC14W8U.3UCX8TG6X7W5O@debian.org>
-To: <git@vger.kernel.org>
-Subject: Signing commits and tags differently
-From: "Andrea Pappacoda" <tachi@debian.org>
-X-Mailer: aerc 0.20.0
-X-Debian-User: tachi
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] abbrev: allow extending beyond 20 chars to disambiguate
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+ Derrick Stolee <stolee@gmail.com>
+References: <xmqqfrdx517b.fsf@gitster.g>
+ <aJpd2MYMWgEoxQWi@fruit.crustytoothpaste.net>
+Content-Language: en-US
+From: Jon Forrest <nobozo@gmail.com>
+In-Reply-To: <aJpd2MYMWgEoxQWi@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---6e200f4a421b4ce4637e0d7f385ff265428406fea0ec7001ebc4020fbe02
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8; format=Flowed
 
-Hi all!
 
-I would like to configure Git to automatically sign commits using SSH=20
-keys, while using OpenPGP when creating signed tags. As far as I can=20
-tell, this isn't currently possible.
+On 8/11/25 2:17 PM, brian m. carlson wrote:
 
-What I was thinking about were a couple of options like=20
-commit.gpg.format and tag.gpg.format, as we already have commit.gpgSign=20
-and tag.gpgSign. Of course, differently namespaced options like=20
-gpg.tag.format would work too.
+>> To see how many leading letters of a given full object name is
+>> sufficiently unambiguous, the algorithm starts from a initial
+>> length, guessed based on the estimated number of objects in the
+>> repository, and see if another object that shares the prefix, and
+>> keeps extending the abbreviation.  The loop stops at GIT_MAX_RAWSZ,
+>> which is counted as the number of bytes, since 5b20ace6 (sha1_name:
+>> unroll len loop in find_unique_abbrev_r(), 2017-10-08); before that
+>> change, it extended up to GIT_MAX_HEXSZ, which is the correct limit
+>> because the loop is adding one output letter per iteration.
 
-What do you think? Does this make any sense to you? Let me know!
+I'm new to all this but the way I did it is much simpler.
+What I did was to check all the files in the appropriate
+object store directory (e.g. .git/objects/XX, where XX are
+the first 2 letters of the object given on the command line.
+If any of the filenames in that directory start with the
+string given on the command line, minus the first 2 letters,
+then that's a match. If more than one filename matches then
+that's ambiguous.
 
-Bye :)
+What's wrong with this approach?
 
-P.S. please keep me CC'd; I'm not subscribed
+Jon
 
---6e200f4a421b4ce4637e0d7f385ff265428406fea0ec7001ebc4020fbe02
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iIcEABYKAC8WIQS6VuNIvZRFHt7JcAdKkgiiRVB3pwUCaJtbRBEcdGFjaGlAZGVi
-aWFuLm9yZwAKCRBKkgiiRVB3pyQmAP9U/+yVVk7PjWYqVKxmA7XWU5+0L8D419ax
-YnvFp5XA5gEAqotIQ5PdU1htM5nMgVdRTGauVZOW8rNolrILd1VEqQE=
-=eor9
------END PGP SIGNATURE-----
-
---6e200f4a421b4ce4637e0d7f385ff265428406fea0ec7001ebc4020fbe02--
