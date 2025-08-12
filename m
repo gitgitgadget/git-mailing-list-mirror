@@ -1,136 +1,178 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614E92F2903
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 15:55:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156222DEA7D
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 15:59:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755014135; cv=none; b=VznXEt7d9fGhwcw7FP15780piQYothmCyqGNx/0gI/gdbSq08XZSgk7y3iZJjKVPhLDPt7XyQUbwhi4dyIdbqlyf5oCjeVWSf8fvsrZoH3RPVwjwsIUfPm3srcHlxpepC0nchosNRE9IhdbYYharlf0v5yqgx6S9bpoUBO+YI30=
+	t=1755014402; cv=none; b=nwRNNdFuVv69ZYoAHaIkIKRJ/zl80jrc/Vw7YMgxHe37mCjtTEev6+kqtMKw/I4M5l5kM9rdVXWQfvPZXUyl8uqeQH4myOqzIZRtGaxV/XnBmvqL/BbG40YNr7wflC6RRmtce93CSqVu6pgXS5F/Susut0HiOiFpNFTu7jcnRZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755014135; c=relaxed/simple;
-	bh=Ojap79N2sUVsRuPyjacPd44yEA2161r5kwWoyVOkhlo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MN0rC1zFrWL/C/wq8B2gOBcRXhov90jN9+idKCi5uOG50tTB+YWWbPypNDNaX7UdLzyzPGZFfCBjRi96s8RvxtUZII2wttluYT3Ideh/0ACKbBaL9bvApAhC7Y4MGLaBAZmBhcwlM/H/DAZPBnL7jCW7NHUGxjhjzIWzwyBIqq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xk8cqzwt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZaMbablE; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755014402; c=relaxed/simple;
+	bh=hK2yiX0IeOZbrlhyxdeS8PqYQRmw4yfZh8V9+7y7dU8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PvzE/lvIW5nx4/feukBtZoDDZWmBn+CrJGHvz6qP3FCKxN9adJygH/bFYZOXGRL4OfhGkZQw0Yulkz3l/zCQxPvcrOCIOhu2br2dj8wchMNaySl9iDHzlKa/nRAg+jS6ax+LtpRdThCklAvh03mvTT4JksRsNAs8yCUws66U/kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=Ti0voEdC; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xk8cqzwt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZaMbablE"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 53D9BEC00DB;
-	Tue, 12 Aug 2025 11:55:32 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 12 Aug 2025 11:55:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755014132; x=1755100532; bh=RBsQrWkorX
-	cgqv5p/qQln6W0oOKRMFFNLlzO47eIY4w=; b=Xk8cqzwtwDatmeZL3YTYlWeilJ
-	hTbWKY06PQL3sonayzRuAsmNa2VedvSsvIkS+HIkkZL+dSxWM19bYWfUk/pLaS5R
-	TH3ByhVV4Nyg7Ceu0qmbTQgo55T7fMZvR3Vu0oX39CvB+bmnltsxZrSYNSy/dLo1
-	H+o5R6l0Lzw2YqkSgwTBXtIg+i/LEEFbpQNUk8N4926JE4fMO2+qiFpf1r8ACnmy
-	CUSXwOpgGTJKMchTEF8Gd57in8M/q0jgMDC4XaRdhheQawzJWOa8CmbOvmXV4JP3
-	cUlkIn327CSY/qGuGGUT787W+0NODpeFapFeo7U3P//6CUHVzQPvBFsNiK5A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755014132; x=1755100532; bh=RBsQrWkorXcgqv5p/qQln6W0oOKRMFFNLlz
-	O47eIY4w=; b=ZaMbablE+6sa0gUjZzN9CaFtA4ZnKNuKtxWuv9UrZOOuj/rpyNu
-	i84bGIoiBx1ExlC8IwMNza57dLcRm4fS1Rn8TIYxTdDcZNeYKwomAUBCMyQ748Wm
-	d7qRuCTs+QMCOT1JuH1zSAiZ1RteDL51zmft9a39ukdZJobeS/2S6s0RG2dtj7Mq
-	tJyCOhzB+SJGz1pPhMJoEEVgsgCq72YhE0U8xyeuMKIn89U9t18c73Cg5CBb3N/4
-	BvLaG3uURjc9hgkJzRhPchAmo3djKvuCMZsmKvkPfK5J8pbnaGi+pDQRNcMN4np6
-	8UMXYzP9Hqko3lrxWnddLqneGmY/QecolbA==
-X-ME-Sender: <xms:9GObaA-Z4a4Afln1-EwN8X3JLY8nFaOeDV2ueNcTpGPHdZUCImhErw>
-    <xme:9GObaDSzT6_Du8Mn0X6APtfRpbqccR9UB7xUBRVv-310Mlwxr-hjYRB-HDcFQMMNu
-    eRyDbUBnVDa7YKaRA>
-X-ME-Received: <xmr:9GObaCkTAGXBb6CZuP6He5f0NOG7D_on86P4gr6MFOyz1RBCw4Ev2U1w8pCYFRe-3ZyQwlHsUyLMLja6z-xluoKB5WjX2rgtTJ-P4Wk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeehjeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegvqdhkqdhnuhhtsehhohhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:9GObaDQ0TPeFrlW6EBn7xt96o3Ny5gaV729-tYyxfv2fjWlyQPBFzQ>
-    <xmx:9GObaANA30ipom75fiQHCidbUWfWUIZELLykna5-4SMZZlBToRRkxg>
-    <xmx:9GObaMUGQL9_1LT47IjvAXAaxrg9es0lRMvdcKCEf4_aGweL2mibRg>
-    <xmx:9GObaHfGICMEYbYEPLcin2ZzLTXIC42bhFvhze6TfNmDgpjjn5N6Kw>
-    <xmx:9GObaGEWZgGgHRKKIC-xS0k2pRu_EI-4l_-nlj2MzYp4Z41UHi1_A8bF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Aug 2025 11:55:31 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Knut Harald Ryager via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Knut Harald Ryager <e-k-nut@hotmail.com>
-Subject: Re: [PATCH v3] docs: remove stray bracket from git-clone synopsis
-In-Reply-To: <pull.2023.v3.git.git.1754949872593.gitgitgadget@gmail.com> (Knut
-	Harald Ryager via GitGitGadget's message of "Mon, 11 Aug 2025 22:04:32
-	+0000")
-References: <pull.2023.v2.git.git.1754861423787.gitgitgadget@gmail.com>
-	<pull.2023.v3.git.git.1754949872593.gitgitgadget@gmail.com>
-Date: Tue, 12 Aug 2025 08:55:29 -0700
-Message-ID: <xmqqms84v8jy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Ti0voEdC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1755014397; x=1755619197; i=l.s.r@web.de;
+	bh=Wvt/XpQlbaRoYZV7ZSTUrb1IC+IEIMTmZ6o9EOReyvY=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=Ti0voEdCFFT+ED/nApqjHi8IbJ1tYe59nEiQr8AgYrPIsyuAe7rwSnMGLVuNhVtm
+	 AJkcDTYHOxo9hTKha4DTc1ZSesLbU3AniY+VqgqWZT9SB4hc/YUsph4pH9io1PgMu
+	 k734JBFP99GoMvUO2f6aTBfsj3psGSf5PJTEcya8n2boLIIbShEr08aICbvleKU9l
+	 efCMSBDuay1Qzpvs+vM6kTuE3PkBf2w+DJt49hEQCOD0u7ch4pRTC2NhJu+xbGfm+
+	 ZVh3hzFsR6f2pqOXbFhJdTZhUHvWkI/FR4qgPd1blQAHy6+KQj7+4aWTlZC7kMTBj
+	 P3FoemLY1eFAQLFP4g==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([91.47.152.110]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MAtwr-1us9zw1Zhx-00DjDI; Tue, 12
+ Aug 2025 17:59:57 +0200
+Message-ID: <6d0631ed-9a28-4107-8c07-298a9424769b@web.de>
+Date: Tue, 12 Aug 2025 17:59:56 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] abbrev: allow extending beyond 20 chars to
+ disambiguate
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jon Forrest <nobozo@gmail.com>,
+ Derrick Stolee <stolee@gmail.com>
+References: <xmqqfrdx517b.fsf@gitster.g> <xmqqzfc51xvk.fsf@gitster.g>
+ <9ae4a718-b00d-4435-8739-cf87b2c9df7d@web.de> <xmqqwm78vaah.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqwm78vaah.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:KXLQhMXV3v8lsjj7J3mQudqWxICz5oJdmUwsaIPfki7aaD3GK0S
+ 7xKmhN58vQKw4lNoah+jfm1WWC+ACSf/QZ2yD4ujKRBq7PLIiI0mTatqSoEU6uBMW8YPWRe
+ 3aKgIzLUiAffQspXnNr4B8iXu+6hMz5sUalZT9vYt9hy18Xc0V8gec9Q+rBqeFdTmnIn/0k
+ WMS0DbYnEwYhfirGz8FZQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:ZkZpzKXi5Fo=;OCw42GdehPDz7yH1hnDgWJhafXs
+ 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
+ 6KZUS+NpMWQ==
 
-"Knut Harald Ryager via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Knut Harald Ryager <e-k-nut@hotmail.com>
->
-> Remove the extra and incorrect closing bracket, so that the line reads:
->
->     [--filter=<filter> [--also-filter-submodules]]
->
-> instead of
->
->     [--filter=<filter>] [--also-filter-submodules]]
->
-> Note: Both filter options were grouped when --also-filter-submodules
-> was added by commit f05da2b4. The extra bracket was added
-> later by commit 76880f05.
->
-> Signed-off-by: Knut Harald Ryager <e-k-nut@hotmail.com>
-> ---
 
-Thanks.  Let me rewrite the proposed log message thusly:
+On 8/12/25 5:17 PM, Junio C Hamano wrote:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+>>>  	while (mad->hex[i] && mad->hex[i] =3D=3D get_hex_char_from_oid(oid, =
+i))
+>>>  		i++;
+>>> =20
+>>> -	if (i < GIT_MAX_RAWSZ && i >=3D mad->cur_len)
+>>> +	if (mad->cur_len <=3D i && i < mad->max_len)
+>>>  		mad->cur_len =3D i + 1;
+>>
+>> This combines two checks: Whether we can increment and whether the new
+>> length is greater than the old one.  Only if both are true we take the
+>> new length.  Shouldn't they be separate, though?  Why reject a new
+>> length that happens to be the maximum?  And max_len is not explicitly
+>> needed for the first check:
+>>
+>> 	/* One more to disambiguate, if possible. */
+>> 	if (mad->hex[i])
+>> 		i++;
+>>
+>> 	/* New record? */
+>> 	if (i > mad->cur_len)
+>> 		mad->cur_len =3D i;
+>>
+>> Ren=C3=A9
+>=20
+> Great.
+>=20
+> Your observation resolves my puzzlement about the first while() loop
+> that has been bugging me ever since I started looking at this code.
+> The mad->hex[] array is NUL terminated, and the loop can terminate
+> correctly without being told about hexsz at all, and we ought to be
+> able to use the same information to make sure we stop incrementing
+> the .cur_len member without running beyond the end of the string.
+>=20
+> In other words, wouldn't this be what we want, without any of the
+> max_len crap?
+>=20
+> diff --git c/object-name.c w/object-name.c
+> index 11aa0e6afc..4cd1d38778 100644
+> --- c/object-name.c
+> +++ w/object-name.c
+> @@ -704,7 +704,7 @@ static int extend_abbrev_len(const struct object_id =
+*oid, void *cb_data)
+>  	while (mad->hex[i] && mad->hex[i] =3D=3D get_hex_char_from_oid(oid, i)=
+)
+>  		i++;
+> =20
+> -	if (i < GIT_MAX_RAWSZ && i >=3D mad->cur_len)
+> +	if (mad->hex[i] && i >=3D mad->cur_len)
+>  		mad->cur_len =3D i + 1;
+> =20
+>  	return 0;
 
---- >8 ---
-Subject: docs: remove stray bracket from git-clone synopsis
+This combines the two checks and I don't see why.  Why not update
+cur_len when oid and mad->oid are the same (mad->hex[i] =3D=3D '\0')?  Ah,
+to _ignore_ duplicates on purpose, when we have the same object loose
+and packed or in multiple packs, right?  We wouldn't want to let that
+affect abbreviations, makes sense.
 
-The synopsis section has an extra closing bracket, like this:
+Ren=C3=A9
 
-    [--filter=<filter>] [--also-filter-submodules]]
-
-The extra one is not the one at the end of this line; it is the one
-after "...=<filter>".
-
-The "--also-filter-submodules" option was added by f05da2b4 (clone,
-submodule: pass partial clone filters to submodules, 2022-02-04).
-Because it makes sense only when used with the "--filter=<filter>"
-option, these two options are enclosed in a pair of brackets.  The
-extra one was added by 76880f05 (doc: git-clone: apply new
-documentation formatting guidelines, 2024-03-29) by mistake.
-
-Remove the extra and incorrect closing bracket, so that the line
-reads:
-
-    [--filter=<filter> [--also-filter-submodules]]
-
-Signed-off-by: Knut Harald Ryager <e-k-nut@hotmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
