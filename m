@@ -1,161 +1,402 @@
-Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011025.outbound.protection.outlook.com [52.103.67.25])
+Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010014.outbound.protection.outlook.com [52.103.68.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147132D781B
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 06:27:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F37E4D599
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 06:45:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.14
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754980070; cv=fail; b=JXJ3V3fd3z0jkIW4bPQOfWTgY4K+zhTScC5lVyFajISZxEKxBucCYZEzGPEIjCR0rBke3aEYPV1MRcH98VUKLpnKWp48JN2lpsSL2vaUoyP5YIwdB3bs8akJz/yF6zr4+YXDFpLB6sLQ0SQc3RGhQ5wcwMgDDYlpH8nyQOoEmzs=
+	t=1754981111; cv=fail; b=pNFEbH2Ew1Kr/bl4D28aiXDvyv3Q3XYxqaOrj/lnHqNL88LbpqCHSQ8rNk6xc3l8wfiDtcOB7A1u0eVejTAZSDTPXUkv6IW4AZOrCp4w6KSJcQTtvxOQ9mRhDn84BJTuydZKNmOaDF8h/7AUtzKlFtTDahd46YsX3RdXjJJICqM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754980070; c=relaxed/simple;
-	bh=rfqbVBVsjpm48KJ3K7EG3mza2hB9K37LtusXN/2HMBM=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=FBl1Yl0dUUYFRDfLNa1wdRz95YdssNSB0nyNdKjAIGp1WgrN+Q2eGyJ7tNF5wKl8I/mqhfHnR/T8ZCHkE1iPPxhcKrC5c4OAuTkGUY0RgAcNOhhTAbWkCS7IQyzwJUZzGhvdD4VwIzDAoqcgZOeCe9NtdCzgr55KR8fi/1W/UL8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=GfOWEne5; arc=fail smtp.client-ip=52.103.67.25
+	s=arc-20240116; t=1754981111; c=relaxed/simple;
+	bh=AW5MWcah7VNyZsXoBDhldIJmlPphkeMRPLKcMAk9sE8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=BQ9IUOudwtsRxyOppuMHSFw3NDAhl+Bw2OyRHXScr/c/fAu3yfAUMdQXrWZ2Xf8FUpwXhIg8UMUW6y7+BoKB5ZQoP7wjhBSOmb/Vxi3+KZhHeKxsfZLbJW4/fZXBmyJX0d/o9ynjumvtqFa1tmd6ISM1N0cHS58gSJgmTvJh3Dc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=QmrTJ6ru; arc=fail smtp.client-ip=52.103.68.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="GfOWEne5"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="QmrTJ6ru"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pQ7uJ/Lw67ZiLBgzJTwIhevotRStMoeKQOnM0aYov/TnF/M1NKtK3aQxhJLuFoA4OHGRvPe9/ugmew9lpwtL/ROGt/sVrmZIjwk+pmL5PJOhIyFzoTM1qnav9OMv6wvg1QSKX4fQ610ZsaFQdJIBmmANjbFhUHF2nRCjVsXTCR6/P/dMM7QOKgyikAxKl9T4IWRm1b6fvHLB/l49SvKTPdqrdyJKTX2xi0lnuM6C+o7QyHfB07ExIkAzGLEWHItb5l4hRSk0Wvsw/U9fEBD7o43CXXaqxKN1ztayMXiHfCDPf/oAL1iF94Gmsk6T3uiMNhZM4Jz8TeHJDWWJeOO4Nw==
+ b=NQlAxOR/8wpQhwpITuj58Hty+bybZyZ432LVEWGQRrWUw4h5URb8VEDXepRrjJ9PzMV3ax9QQqBripmvc2LLV5Jvr+mp5w6J6BPX50h4Djz7v5WfwlsifRHWRlwgxELgu2xSBcO+W6qmj+0C7DDMeOIB/QWNmxUAuyif2lV/ba7i01OOr8u8m5bpKYBsi+dDuV8tOElWLH4NMpZI3IBsq+A4o1ICJeZjb8uuBp4I4VDTfekX54vhIbVkGWdiQbdyDuGLXnpNfJhAeZ/8ijlwjCZOrACZUa7mizk1IwkLDMVywop/YpIEBiZ1tL7nnVpNA8kIVY3vwyJVbnVM2+udrg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rfqbVBVsjpm48KJ3K7EG3mza2hB9K37LtusXN/2HMBM=;
- b=E7dWfD/hdtNAOV5o6DMDT4Yr1oRfFA43bITQjXVHfBx5PnjpbXXONfTNSASXUoMA8JTZXN5McjqrDniJUKW14N2Za8wBXx2TdHjP0zLafp60wW2vt1P7f/3Vdc0qWCnt1f+IGA0f/TiwD0j0a123Wh1w8b3Hb3ZtITezdsDoKdraBcHWYH+6UflQ9+RawPxNlUxX5GJQjCpzkfusPAdjl9zwhiYmEW9hsGn3ZglNusf6/M7H/IffIAgY9bmRsL0QfJG/GRXKtJ32zWYjdaqoH1CMtWxwvVk2r2laQSSn0GNAZNKHyX+KHK89SJRm294e6suZ6ZK3ytAYl3XBRh87WA==
+ bh=SPOQlGeivVeTP1JUDdOgw+2WQA7j2u/tsjOm0FzFNwk=;
+ b=xtmKnPKUeJQuXYuSluYt+u04kqYop26Fcwjb43EYRbxwt4Kq1aUzM8P4AW/5Vuzm5Fq4t5MSl0WBCwMknHeZREUkGXQNKYn23zZR+dt1eZATmaQzSS45L/Mo4XPDXh8BqoQNaKJijF4nhpV88J3zJLizp9JdpcpH09laxhmmc6rYNauQhqwf4GIt87v5hmmPTkCSc6/4UQLZX61Ucfuy5O8beSxJFlRzSDyVfDCSBSQGraaQmuSYKY9aSQQOgAizTBMslVH+l7B/8+XyIqVpM7CNYd6OFkqyyXJH8A+u6fXQqR54RxxigySYdMCZE3vRu74rPntBdjMvlj03d1cceQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rfqbVBVsjpm48KJ3K7EG3mza2hB9K37LtusXN/2HMBM=;
- b=GfOWEne5kZmIBUxY3wKnWJxcfAih3volJzvQv/+46Opr8kv6A8mxo5JCmTem2l4QHX75/amp8/uJcrs5mtnLKlLj/5W3Qka8UVz9aXa9SsUmSI7bcV3pOm/RfdEkwTGkmcGb7TBaLk/gDYAlYYKNQvkkK2ADR9FOI36mdIEyG9VMAFszRzbzZxVGGONJDCzuFL25oqe93GxYlbtDpyh8MW/OqAoU4zjfx6nJoMZFCLhKUUT3itf/xHhXACjXVb2Ijt8/EZtmI7WbGx6zht2QWpwX4xYOlxMhm/3rB/Z2eiPD4c6Sj+Sqo+4a4rJr2cIRzYuvOZZzubwYS2++w3V+Eg==
+ bh=SPOQlGeivVeTP1JUDdOgw+2WQA7j2u/tsjOm0FzFNwk=;
+ b=QmrTJ6ruEZCEPBTYx2aE88yM1wp8bkbboN8/xDcsTnFUOoK8+NA96Z9MIR/+fv/Tqomskm7hfNTiPj+dptRROuADIf8bQFjG5rpRcfbkjHw3p6PZYFf8mv/8pT3IicI3DDg0ok3mj9ABqt+/0kRpDxkduoH/+vK8mHfaV/xmtMS6mi1B6u0hmc0+V/hfq1zSTZDqTdOkYsioBXzpOiYvWSz3V0y7ExRKLskMV7yXTLg7eaZrBv9eMTvcypYAUuPCniWgI7iAMnU794BSXq2hJPy1Ft6pCTU30B95Q2QKyjv/A4XYwdIOuFF56OX6NOwXDMRvqyvN59vilG221UabrQ==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by PNXPR01MB7338.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:a1::12) with
+ by PN2PR01MB10175.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:1f8::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9009.22; Tue, 12 Aug
- 2025 06:27:43 +0000
+ 2025 06:45:03 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.9009.021; Tue, 12 Aug 2025
- 06:27:43 +0000
+ 06:45:03 +0000
 From: Aditya Garg <gargaditya08@live.com>
-To: Junio C Hamano <gitster@pobox.com>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>, Eric Sunshine
-	<sunshine@sunshineco.com>, Kristoffer Haugsbakk
-	<kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>, "brian
- m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v4 2/2] send-email: enable copying emails to IMAP folder
- without actually sending them
-Thread-Topic: [PATCH v4 2/2] send-email: enable copying emails to IMAP folder
- without actually sending them
-Thread-Index: AQHb+71dCRDKXsxRhEyzxpjO1f0evLReHPHQgAB5u4CAABZDdA==
-Date: Tue, 12 Aug 2025 06:27:43 +0000
+To: git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH v5 0/2] send-email: integrate with git imap-send
+Date: Tue, 12 Aug 2025 06:44:34 +0000
 Message-ID:
- <PN3PR01MB95970565CA1F554E4B440C63B82BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-References:
- <08528f201acc1038ebc5861321395d17516094fd.1753003385.git.gargaditya08@live.com>
- <PN3PR01MB9597EC4C5DF97943587AEEB4B85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB95972CAE853F4079F0F62F0AB85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <xmqqv7mtzfuc.fsf@gitster.g>
- <PN3PR01MB95977F0C73C909929400B3EEB82BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-In-Reply-To:
- <PN3PR01MB95977F0C73C909929400B3EEB82BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Accept-Language: en-IN, en-US
-Content-Language: en-IN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|PNXPR01MB7338:EE_
-x-ms-office365-filtering-correlation-id: 571209b0-4ea8-4d4c-9c38-08ddd9695876
-x-microsoft-antispam:
- BCL:0;ARA:14566002|461199028|31061999003|15080799012|8062599012|8060799015|19110799012|6072599003|40105399003|440099028|3412199025|102099032;
-x-microsoft-antispam-message-info:
- =?utf-8?B?emFvWjRJSk5NRHY0Zkk4UjVEd0tuTmQ4VmtPdUd3Mkt1MzBqYWlsYU9NTjM5?=
- =?utf-8?B?cEJmSW9MR2FybGtCU3JJd3ZoVVAxSXNwNVc2UVhjZEJBbVdwQ3VjK1ptQkVT?=
- =?utf-8?B?VmtqNFpUWnBHZW1uSU9jam9qWUY0anYwRUlKRnRVTCtBMVpEb3JoSThwZVZt?=
- =?utf-8?B?ZitqR2NSUzEvdUV2OERHVVZDSkVqaStWUkY0dUpSNmprakkydU5VUWFRZkI4?=
- =?utf-8?B?SHB2VFBER0RBYXkvSjBxVzJQU2tzR3JTVWhrVkxZUmZ1L0lDc0JWaFVPb1F3?=
- =?utf-8?B?RzFWdkpGWU9vL1llVVRTeDFiMm1UWjlEczJiWHNkYTZPVTNSc0ZaM3RGMDcy?=
- =?utf-8?B?QkcrUW9odHVOOVZIQnpyNUE0alUvcmdzaFZQOGdraVl6YkM4THFJUzRTcndI?=
- =?utf-8?B?WVB3eFhQc1ZiNmJFd1ZIUU1yMFQzSmlpbkI0NEpSQ2NEbVVuUm9tSHE0WDF0?=
- =?utf-8?B?aEt6MVYvdmVhenoxZHdxQ2dUUklmY0IvV0RFSTZqVGRVR2V6RXVmODlNSDBn?=
- =?utf-8?B?OGg1YndRZnFXZG0xNXI5a2MrakVXY2o3R1FqT2hnd3l4TFNsbGpLVEtlNVhP?=
- =?utf-8?B?dzNhOVpUNGxDNndtMXNoSExmTnpDUGFqVUNRVlR5NzQza2xtblk2QUFUUnZH?=
- =?utf-8?B?bjQvejJRSm91S1VWNy8wNzZ0cXd0RzlEL2U0K3MyZXlyazNmNm5hUlVVUGVk?=
- =?utf-8?B?TDUyaDFTWEt4NGdCK0Z3WFRINThLbnZMME1RT1pkKytuc1dWalRPWTVVNHR5?=
- =?utf-8?B?K0dGTWxaWFlQSXEzb1IvNUFHOXE0VzhjVlRjMmRWWkowQS8zQ2hBaXczbmJh?=
- =?utf-8?B?WGVMay84eTA0Zmp4Ni90QUZrVVhHaUxVQmUzRjNWNHNzenF3aklRUUpuUFJX?=
- =?utf-8?B?d1NrS0J0eU1ZejlqYmJMcTFQcnlhQUlVOElPVXFzNTNmbWZMb29rMHVPTXBO?=
- =?utf-8?B?b2pTU08xV3dVZC9WeFZOKzRBSG1KSlFsdEhYMStkTldPVmc3MUxOdjc1SkhR?=
- =?utf-8?B?UVpSaG1Qc09BcVJCekxSU0srREZoYUtxTjYrWTluVWJNY1dJUUpyWmpTRE5s?=
- =?utf-8?B?VnhmOXZYeEUreXEyUUwrRWduNWIxMnVabXlkc0RwNEliUzU1am9wRVRId3ls?=
- =?utf-8?B?RmRxT0NzOHk4ODJ4ZzM2Z0VXNEtGL0VJczVYclN6L2swbWZCVGFkWnoyT0hO?=
- =?utf-8?B?UUZHT0dxZmtCOFlSSFM3amRxdGlNRCtQS3h5S2RJWDc0bFJlZ2ROTGczTFlz?=
- =?utf-8?B?eWltN2t5S2pkQTRhWmpPOEFONXRadjNvMkdPcWdreHVFZkROTGRLVVdVSzBE?=
- =?utf-8?B?NDFIbEs0WHhWUXd6K3MwMVlQU3EydmNNNEZXd1VKTkhMbzl2VHpNbnNBcTU2?=
- =?utf-8?B?WTlEWnJ6d0gvS3FpZW9vUW9mS1U5R2lpTzd0V2lialhuSTVEckNBdDFKN3Fr?=
- =?utf-8?B?VExJYVJzbk9UcTdvVVVKWHdVbDd0N2ltWXdxQmthUjJZamFHL1RKdUhMemVo?=
- =?utf-8?B?UWM5eDZtVWN4bVFwOThHNW0yTGJ4WWNKOTVQK2NBL0tqaXZSSVdvZ05pUk01?=
- =?utf-8?Q?9gHcVQkWOBbpM9rzWd3Wc09xM=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?YUNsQ2gxcDI3L2pvRXdKSXBFbktSYndPS29jeEdMaTM3ZE5sbXRSVGdqci9P?=
- =?utf-8?B?elpTdHpOM0x2aUxjclNPWnpYcWZrLzRCeUpTUVJSb2RwaWhqWkhXRjFHcWty?=
- =?utf-8?B?SjhHQ0tNeklDTlB5QnJrVW5CUWlPZ05XdUtVa3pWYWM4cUVPZ2IyTHllRlhu?=
- =?utf-8?B?RVpJM0FPclRvNG11bkM2b1FvZFlEcjFIb09MNzczTlc3WGczcWxtdVBtcUhr?=
- =?utf-8?B?cnpJRzR5SDRqT1lzQzRwazhLeWFYUmhaL09SWFpZMk8zaEIzRmJaUTY4OENR?=
- =?utf-8?B?M3hqbXUrZnhYZERXU3JQbWtTRUV6eWVhNDVnWFViUVJPb2U2dW9XWjFDaXgz?=
- =?utf-8?B?Y0ZCT1FSbHpqSy90anBnRmNYb3ptamFYdkJlY3dCUWVZRnNrbGhwcklCODI5?=
- =?utf-8?B?RGpIVUZTSlhmZ3VwejVzN3pwWXlCaHNUbzExd3NxKzBVZ2JoMzFyTmJzR2pU?=
- =?utf-8?B?VzRtTGlYa1ZBYVJ0SVExd2RtVGVrYmZGc0JZSkVud2p3ZEZGZGJsTUF1MHNM?=
- =?utf-8?B?QUFhNXRMQTBsMkVDVE4waXJTS2JjSkp6VTMxWjZQN0dsUG84R2wzRkZWd0lN?=
- =?utf-8?B?Wi9XcUh3UUh2aDJwUkFBSWl6SjBTNXorNjdFTFVGeTN6UG9qWUVyOVZTa1VL?=
- =?utf-8?B?WGhSaS8rcDFSTU81MEE1TXBIZ05EOEZrbFJnVXZPMXluZks3QzBmV1hWSmRO?=
- =?utf-8?B?T0lwdVlQRXNIbmozdE44SXM5b3c2WWhzOWhxSmJQRTdVMHljT3J4QmpZV0dP?=
- =?utf-8?B?djk0QytlcUE3aUFxbVhVNmhaZDcxWFU3NXlLNUtDUFRqWDBnU0RqVUM3WFN2?=
- =?utf-8?B?N01Ya0tpaHVOOFBEL1FndzU0SEVzT09CQVdiakdWenVwdENTYXFZMmlYY2pn?=
- =?utf-8?B?T2w0em90SFBjRHM1WU1INUFoS2pUU0ZIeVQ2UEUvc24wdGxMb2RnTE51R080?=
- =?utf-8?B?SGNmZmpTL1Z1TmRocjQrb3RCcDNMYUZPb0VpNTd0VEFqTW9GRlVYRXYwWjEx?=
- =?utf-8?B?bFVrcWVKM1U1WEJqK01lMzhpNkIySURpOFpaaXFVQ2cxNUQ3ZXRmT1pheFVG?=
- =?utf-8?B?NUFuVFlMRnRGTCtUVS8yVjM0WDVTbVF0VndqazBHWFhrWXl5SHIzRkZobWYz?=
- =?utf-8?B?VEFlekdOZnhmZ0s5Vzh1Qzg1L3QyZkVCWGVWN1FNVWYyWDVnTElDMGFBcGNT?=
- =?utf-8?B?UXBzNmJTcCtncDF0eFpTYk5GRm1aMDErYXNvRldCUjZ5ZFlhWTgzcGV4a2JM?=
- =?utf-8?B?NEQxeXRhK2ZBcnpwQU55SG5uSkhURE5WRThpWkU5NmRPKzZHaXQ5RnFRSEtn?=
- =?utf-8?B?UnFMNkhiaEI0Qk5ENDFma2RXSkUybXYzMWQwWTE2OHVXMEUvakRUdm9uUU1s?=
- =?utf-8?B?SHhCWnEvWEVVSXNXUWhqMGMxdC9xT0pvODg4K2hZUGo4TlRXUlpxNzFvK05y?=
- =?utf-8?B?Kys3cnA4aEVxWGpqczdzam8rUEM3eHc0STJlSlNQRXhleUFreXZVYldqeWtR?=
- =?utf-8?B?dkNmYmZtY2pHL2J0dzdpWWFOQjR2RTk4RWZTMlJpREM4VExxVmd4M3cvWHlz?=
- =?utf-8?B?emhFRzNZdnUwcnZQWHdUd09iNnhPMGRvaVdxOXpPc0h3Ui84Yy9aak9mNitU?=
- =?utf-8?Q?AL0B0riQoLs6xuGicPBTrJqNsRlvtrx3u3J3OE/rD7Io=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ <PN3PR01MB9597E8E33868386C997D2563B82BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <08528f201acc1038ebc5861321395d17516094fd.1753003385.git.gargaditya08@live.com>
+References: <08528f201acc1038ebc5861321395d17516094fd.1753003385.git.gargaditya08@live.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PN3PR01CA0190.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:be::19) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:f7::14)
+X-Microsoft-Original-Message-ID: <20250812064436.9643-1-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN2PR01MB10175:EE_
+X-MS-Office365-Filtering-Correlation-Id: a54cd0c7-a901-418b-b506-08ddd96bc434
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|8060799015|19110799012|461199028|5072599009|41001999006|15080799012|3412199025|40105399003|440099028;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?RReEqFOLi3KRLrm3ZqaXcm7Em3pX2WrSlufKMgB/mD5x8DGWSj9ybZi8ML2B?=
+ =?us-ascii?Q?M0xk3vIz+wTdQkiq+6/yCvSae2XivJNXwEoGc0ZIdo0KImNAUmSb2YUyVj/+?=
+ =?us-ascii?Q?wfmlA2kyeW27in3ouCHnV29Wub6ZhKLoTdjk/sLyoRRTWBWzkuSY++HYj9Nl?=
+ =?us-ascii?Q?2nuCwS2s36VlzSQdVgV1V2ny2Htf5H6GiYXvkoQDOhELxPcbi1Gx8vtYe2v0?=
+ =?us-ascii?Q?/Gj5IKA8eo5CKVp+RXcIahS+U3ULsxXaF4HPmheLH48VhCN1vq9Oc+lO8sfv?=
+ =?us-ascii?Q?ea3ENqoSlNFJdg+FDCgSqsE5hyzfYdEatp1i4dAaKBq5TD2XxfACPze3eOcD?=
+ =?us-ascii?Q?/NbI5ujKfSyxYU5MwOVgPkGMO53NTYcbCfwgwuNCN2ozjp4TzD8p6woRVPFY?=
+ =?us-ascii?Q?pE9WRtEJLGHo/hzNt1r7YOVaLT9h6O+umTv40Yu1CpT00tJSoFHoUlOLvU8u?=
+ =?us-ascii?Q?DhNosLE91J+xOEOqfj7u1CzO6O9S9uTOM2+WnP1WhILJsln/57aVQiV9QGzG?=
+ =?us-ascii?Q?5utHJfiu2GDKHt35s+k+2ctA7oHlzjjChVVE+tDRLvWNieOo/ymxbWMZ8TNq?=
+ =?us-ascii?Q?1eTAkiEasOvnF0etOVg7yVWHdBxLTjS/3TacGj9g93Bvlcqx/r0gNqif/onE?=
+ =?us-ascii?Q?l+e2/WZwhK2L6KBYWQdziWMS4gTrRu+ESLpN8obKQlRBdGwNWr5BnD5sgMxZ?=
+ =?us-ascii?Q?dG8Df8rzSbG7J0nPHIxK4/wSledrEiGHCQBpQAUfBWAwJZkT6bW6OJprmhAu?=
+ =?us-ascii?Q?OTW3WVVEXXbq016KNZXYugbl9LAkzK4mysz7CwTBsU1vsSYzDmj/U+/kkmH2?=
+ =?us-ascii?Q?En52TBMluG36/AYmVh8Osi+VLE1L/0mXr3UMw2NNqLMkIMun6qo6eCqulI05?=
+ =?us-ascii?Q?sW/+skjurwNSfJSGWPH9A/vmPY1y0IhqHVGTTk6GffSyvJrLOH6zovSzBVRi?=
+ =?us-ascii?Q?Y571Zg96GMjgXTdKi0fb0USfWAbBqQUDnwh+6msPyxdYRu+BdEDoFK2+d4M0?=
+ =?us-ascii?Q?sAnSNdd4aUUbXaaNgm/LaRagzvlGTaQ9SWEkA/YL6HE2f3PdoVNvXy3J6WFt?=
+ =?us-ascii?Q?BfsP5+IBumrNbstjwG6HnqlJQ36l+/sy18l6HOcGgDm7HSsYkro3FjZUX/Kw?=
+ =?us-ascii?Q?booYPorB+xTsMkW1LJsUGderGn9Q1Qt1ww=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?g/Gx6RJcTygKjHzlUPu0nYcLGYaEv4IizhxZy6ibQKqnP2aXRXPcXNbwPIwt?=
+ =?us-ascii?Q?GzgtbbVD7TnHRdk3vQWlByGTPTSwXPlsw4vTRXdxaUKMOvFA5JuMfqfdzbmZ?=
+ =?us-ascii?Q?4z5+DZVBsgbZCvVAa5JzLwo1LfBqmq43KinmAeVALIdMe6aqo4gj39BwG2WF?=
+ =?us-ascii?Q?CZ6VD4Aiym8ynV36ew7cZuaQisTjliYJbaefKPwjnc15bKgP8PRoQKVb75V7?=
+ =?us-ascii?Q?2FvVWK/LCwycNFPXt/yeiO9i9l1E6E9MqsgbGMtTVCbrrsLJkKcKUU/9QlsX?=
+ =?us-ascii?Q?/B/e5XG1hBgJzFhLGjswJeygeeegGNf2wcrsWS/ToRA0lg2K2k0W/gfUGePu?=
+ =?us-ascii?Q?7CiABI0FXW4itB0N24gvQ847fmmaf869rXaMigU0h6ZePhs8PF/94rL8CzsH?=
+ =?us-ascii?Q?2VrcGm92O+V+fpIpsweJukdIXCk4iquLwUTKhnqJpr6/I73rUTYN/ulAf77L?=
+ =?us-ascii?Q?i18oqhSyR9GYxj03Xr+rC25aLslYsh546infJT183eU2KiJ0rCYUksfFp71B?=
+ =?us-ascii?Q?1Sc7h5lpjp8ayO+iaSwjQiL2Gi0cKl6DHl4WDbPdVUguBlZR+k+KNSEjXEqQ?=
+ =?us-ascii?Q?mp5RXKLIm6rvzWAErNTshXgHyBX+1+ApnPEr8MlrmrGhVpNj2CEw4orHLbqB?=
+ =?us-ascii?Q?zEqThmZ8hZIGUG4jXluczjrLdxukj5ImVSkIiFwtSVlhigB17c8Q/9DkAQPl?=
+ =?us-ascii?Q?x2bn1wbuswV8G1pO65Er2+eOQQlZ83zfWzflI9FhGeTiK1fQVCHQv/exDafd?=
+ =?us-ascii?Q?cXw8ssiZZam8QBYL+Z51R03+wXYzQeeXlZf1LPpEXIl0aqk8Vmt0wT0agnA7?=
+ =?us-ascii?Q?Bl9KL4N2Bv0shrKDgdmX3gt/U0uuooXnZl6k9pxO/n0l5NAmTpV0St6TiNl5?=
+ =?us-ascii?Q?8FuNmVKsr7+mXJzQn0B3FxmcK9UY25bT0Pgav/A96lejwSf4rgy++wCFu/cc?=
+ =?us-ascii?Q?/4ieauMdz5U6mpdov52S0OlF8angP/isO3TdoiyOBKq3lZ5LprYMNy7Au1hN?=
+ =?us-ascii?Q?+k4rpZy/j9/sKqEg4Yp7kQAnD7KrQAx9XOJasbDWUwa9tWYiqBuJ4E7ypP+q?=
+ =?us-ascii?Q?ULCWaJCQBj/jNtYRzCoBdYXvAx8Fl03yYex8o6jeJtkYGKdsGBBy067Zeast?=
+ =?us-ascii?Q?aqojw32tP+OGpFPqCMIuM3PyDFVa6+YSo3zl0jcb58pnbkB3Ql2JHmvlWxrS?=
+ =?us-ascii?Q?YKvZo22WALBZ4/jcGlZIYBWTDMnB1J5B6dgyXn6rxx176NjqZsP5Hk6ARUc?=
+ =?us-ascii?Q?=3D?=
 X-OriginatorOrg: sct-15-20-8880-26-msonline-outlook-ce67c.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-Network-Message-Id: a54cd0c7-a901-418b-b506-08ddd96bc434
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 571209b0-4ea8-4d4c-9c38-08ddd9695876
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Aug 2025 06:27:43.5262
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2025 06:45:03.6078
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNXPR01MB7338
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PR01MB10175
 
-DQoNCj4gT24gMTIgQXVnIDIwMjUsIGF0IDEwOjM44oCvQU0sIEFkaXR5YSBHYXJnIDxnYXJnYWRp
-dHlhMDhAbGl2ZS5jb20+IHdyb3RlOg0KPiANCj4g77u/DQo+IA0KPj4gT24gMTIgQXVndXN0IDIw
-MjUgMzoyMjoxMeKAr2FtIElTVCwgSnVuaW8gQyBIYW1hbm8gPGdpdHN0ZXJAcG9ib3guY29tPiB3
-cm90ZToNCj4+IEFkaXR5YSBHYXJnIDxnYXJnYWRpdHlhMDhAbGl2ZS5jb20+IHdyaXRlczoNCj4+
-IA0KPj4+ICstLVtuby1ddXNlLWltYXAtb25seTo6DQo+PiANCj4+IFRoaXMgaXMgYmV0dGVyIHdy
-aXR0ZW4gb24gdHdvIHNlcGFyYXRlIGxpbmVzLCBpLmUuDQo+PiANCj4+ICAgIC0tdXNlLWltYXAt
-b25seTo6DQo+PiAgICAtLW5vLXVzZS1pbWFwLW9ubHk6Og0KPj4gDQo+IA0KPiBUaGVyZSBhcmUg
-bWFueSBpbnN0YW5jZXMgaW4gdGhlIGRvY3Mgd2hlcmUgdGhlIGNvbW1hbmQgbGluZSBvcHRpb24g
-aGFzIGJlZW4gd3JpdHRlbiBhcyAtLVtuby1dc29tZXRoaW5nLiBEbyB0aGV5IGFsc28gaGF2ZSB0
-byBiZSBjaGFuZ2VkPw0KDQpOdm0sIGxvb2tzIGxpa2UgdGhleSBoYXZlIGJlZW4gY2hhbmdlZCBi
-eSBhIHJlY2VudCBjb21taXQuDQo=
+Hi all
+
+This patch series introduces integration of `git send-email` with `git imap-send`.
+
+The first patch adds the ability to send a copy of sent emails to an IMAP folder
+specified by the user, which is useful for email providers that do not support
+sending a copy of sent emails to the "Sent" folder via SMTP.
+
+The second patch allows users to copy emails to an IMAP folder without actually
+sending them.
+
+v2 - Fix indentation in patch for imap-send.c
+   - Minor edits to commit message
+
+v3 - Rename imap folder to imap sent folder
+   - Make an error message shorter by removing unecessary details
+
+v4 - Fix a bug causing emails to be copied to an IMAP folder even if
+     --dry-run is specified.
+   - Minor edits to commit messages and docs.
+   - Add another patch that enables copying emails to an IMAP folder
+     without actually sending them.
+
+v5 - Avoid using -[no-]parameter.
+
+Aditya Garg (2):
+  send-email: add ability to send a copy of sent emails to an IMAP
+    folder
+  send-email: enable copying emails to an IMAP folder without actually
+    sending them
+
+ Documentation/config/sendemail.adoc |  2 ++
+ Documentation/git-send-email.adoc   | 26 +++++++++++++++++++
+ git-send-email.perl                 | 40 +++++++++++++++++++++++++++--
+ imap-send.c                         | 26 +++++++++++++------
+ 4 files changed, 84 insertions(+), 10 deletions(-)
+
+Range-diff against v4:
+1:  2ad311502d ! 1:  27b5eb33bb send-email: enable copying emails to IMAP folder without actually sending them
+    @@ Metadata
+     Author: Aditya Garg <gargaditya08@live.com>
+     
+      ## Commit message ##
+    -    send-email: enable copying emails to IMAP folder without actually sending them
+    +    send-email: add ability to send a copy of sent emails to an IMAP folder
+     
+    -    `git imap-send` was built on the idea of copying emails to an IMAP folder
+    -    like drafts, and sending them later using an email client. Currently
+    -    the only way to do it is by piping output of `git format-patch` to IMAP
+    -    send.
+    +    Some email providers like Apple iCloud Mail do not support sending a copy
+    +    of sent emails to the "Sent" folder if SMTP server is used. As a
+    +    workaround, various email clients like Thunderbird which rely on SMTP,
+    +    use IMAP to send a copy of sent emails to the "Sent" folder. Something
+    +    similar can be done if sending emails via `git send-email`, by using
+    +    the `git imap-send` command to send a copy of the sent email to an IMAP
+    +    folder specified by the user.
+     
+    -    Add another way to do it by using `git send-email` with the
+    -    `--use-imap-only` or `sendmail.useImapOnly` option. This allows users to
+    -    use the advanced features of `git send-email` like tweaking Cc: list
+    -    programmatically, compose the cover letter, etc. and then send the well
+    -    formatted emails to an IMAP folder using `git imap-send`.
+    -
+    -    While at it, use `` instead of '' for --smtp-encryption ssl in help
+    -    section of `git send-email`.
+    +    Add this functionality to `git send-email` by introducing a new
+    +    configuration variable `sendemail.imapfolder` and command line option
+    +    `--imap-folder` which specifies the IMAP folder to send a copy of the
+    +    sent emails to. If specified, a copy of the sent emails will be sent
+    +    by piping the emails to `git imap-send` command, after all emails are
+    +    sent via SMTP and the SMTP server has been closed.
+     
+         Signed-off-by: Aditya Garg <gargaditya08@live.com>
+     
+      ## Documentation/config/sendemail.adoc ##
+    -@@ Documentation/config/sendemail.adoc: sendemail.smtpServerPort::
+    +@@ Documentation/config/sendemail.adoc: sendemail.smtpServer::
+    + sendemail.smtpServerPort::
+      sendemail.smtpServerOption::
+      sendemail.smtpUser::
+    - sendemail.imapSentFolder::
+    -+sendemail.useImapOnly::
+    ++sendemail.imapSentFolder::
+      sendemail.thread::
+      sendemail.transferEncoding::
+      sendemail.validate::
+     
+      ## Documentation/git-send-email.adoc ##
+     @@ Documentation/git-send-email.adoc: must be used for each option.
+    - This feature requires setting up `git imap-send`. See linkgit:git-imap-send[1]
+    - for instructions.
+    + 	commands and replies will be printed. Useful to debug TLS
+    + 	connection and authentication problems.
+      
+    -+--[no-]use-imap-only::
+    -+	If this is set, all emails will only be copied to the IMAP folder specified
+    -+	with `--imap-sent-folder` or `sendemail.imapSentFolder` and will not be sent
+    -+	to the recipients. Useful if you just want to create a draft of the emails
+    -+	and use another email client to send them.
+    -+	If disabled with `--no-use-imap-only`, the emails will be sent like usual.
+    -+	Disabled by default, but the `sendemail.useImapOnly` configuration
+    -+	variable can be used to enable it.
+    -+
+    ++--imap-sent-folder=<folder>::
+    ++	Some email providers (e.g. iCloud) do not send a copy of the emails sent
+    ++	using SMTP to the `Sent` folder or similar in your mailbox. Use this option
+    ++	to use `git imap-send` to send a copy of the emails to the folder specified
+    ++	using this option. You can run `git imap-send --list` to get a list of
+    ++	valid folder names, including the correct name of the `Sent` folder in
+    ++	your mailbox. You can also use this option to send emails to a dedicated
+    ++	IMAP folder of your choice.
+     ++
+     +This feature requires setting up `git imap-send`. See linkgit:git-imap-send[1]
+     +for instructions.
+    @@ Documentation/git-send-email.adoc: must be used for each option.
+     
+      ## git-send-email.perl ##
+     @@ git-send-email.perl: sub usage {
+    -     --smtp-user             <str>  * Username for SMTP-AUTH.
+    -     --smtp-pass             <str>  * Password for SMTP-AUTH; not necessary.
+    -     --smtp-encryption       <str>  * tls or ssl; anything else disables.
+    --    --smtp-ssl                     * Deprecated. Use '--smtp-encryption ssl'.
+    -+    --smtp-ssl                     * Deprecated. Use `--smtp-encryption ssl`.
+    -     --smtp-ssl-cert-path    <str>  * Path to ca-certificates (either directory or file).
+    -                                      Pass an empty string to disable certificate
+    -                                      verification.
+    -@@ git-send-email.perl: sub usage {
+    +     --no-smtp-auth                 * Disable SMTP authentication. Shorthand for
+    +                                      `--smtp-auth=none`
+          --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
+    -     --imap-sent-folder      <str>  * IMAP folder where a copy of the emails should be sent.
+    -                                      Make sure `git imap-send` is set up to use this feature.
+    -+    --[no-]use-imap-only           * Only copy emails to the IMAP folder specified by
+    -+                                     `--imap-sent-folder` instead of actually sending them.
+    ++    --imap-sent-folder      <str>  * IMAP folder where a copy of the emails should be sent.
+    ++                                     Make sure `git imap-send` is set up to use this feature.
+      
+          --batch-size            <int>  * send max <int> message per connection.
+          --relogin-delay         <int>  * delay <int> seconds between two successive login.
+    -@@ git-send-email.perl: sub do_edit {
+    - my $target_xfer_encoding = 'auto';
+    - my $forbid_sendmail_variables = 1;
+    - my $outlook_id_fix = 'auto';
+    -+my $use_imap_only = 0;
+    +@@ git-send-email.perl: sub format_2822_time {
+      
+    - my %config_bool_settings = (
+    -     "thread" => \$thread,
+    + # Variables we fill in automatically, or via prompting:
+    + my (@to,@cc,@xh,$envelope_sender,
+    +-	$initial_in_reply_to,$reply_to,$initial_subject,@files,
+    ++	$initial_in_reply_to,$reply_to,$initial_subject,@files,@imap_copy,
+    + 	$author,$sender,$smtp_authpass,$annotate,$compose,$time);
+    + # Things we either get from config, *or* are overridden on the
+    + # command-line.
+     @@ git-send-email.perl: sub do_edit {
+    -     "forbidsendmailvariables" => \$forbid_sendmail_variables,
+    -     "mailmap" => \$mailmap,
+    -     "outlookidfix" => \$outlook_id_fix,
+    -+    "useimaponly" => \$use_imap_only,
+    - );
+    - 
+    - my %config_settings = (
+    + my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
+    + my ($batch_size, $relogin_delay);
+    + my ($identity, $aliasfiletype, @alias_files, $smtp_domain, $smtp_auth);
+    ++my ($imap_sent_folder);
+    + my ($confirm);
+    + my (@suppress_cc);
+    + my ($auto_8bit_encoding);
+    +@@ git-send-email.perl: sub do_edit {
+    +     "smtpauth" => \$smtp_auth,
+    +     "smtpbatchsize" => \$batch_size,
+    +     "smtprelogindelay" => \$relogin_delay,
+    ++    "imapsentfolder" => \$imap_sent_folder,
+    +     "to" => \@config_to,
+    +     "tocmd" => \$to_cmd,
+    +     "cc" => \@config_cc,
+     @@ git-send-email.perl: sub config_regexp {
+    + 		    "smtp-domain:s" => \$smtp_domain,
+      		    "smtp-auth=s" => \$smtp_auth,
+      		    "no-smtp-auth" => sub {$smtp_auth = 'none'},
+    - 		    "imap-sent-folder=s" => \$imap_sent_folder,
+    -+		    "use-imap-only!" => \$use_imap_only,
+    ++		    "imap-sent-folder=s" => \$imap_sent_folder,
+      		    "annotate!" => \$annotate,
+      		    "compose" => \$compose,
+      		    "quiet" => \$quiet,
+     @@ git-send-email.perl: sub send_message {
+    + 		print "\n";
+    + 	}
+    + 
+    ++	if ($imap_sent_folder && !$dry_run) {
+    ++		my $imap_header = $header;
+    ++		if (@initial_bcc) {
+    ++			# Bcc is not a part of $header, so we add it here.
+    ++			# This is only for the IMAP copy, not for the actual email
+    ++			# sent to the recipients.
+    ++			$imap_header .= "Bcc: " . join(", ", @initial_bcc) . "\n";
+    ++		}
+    ++		push @imap_copy, "From git-send-email\n$imap_header\n$message";
+    ++	}
+    ++
+    + 	return 1;
+    + }
+    + 
+    +@@ git-send-email.perl: sub cleanup_compose_files {
+    + 
+    + $smtp->quit if $smtp;
+    + 
+    ++if ($imap_sent_folder && @imap_copy && !$dry_run) {
+    ++	my $imap_input = join("\n", @imap_copy);
+    ++	eval {
+    ++		print "\nStarting git imap-send...\n";
+    ++		my ($fh, $ctx) = Git::command_input_pipe(['imap-send', '-f', $imap_sent_folder]);
+    ++		print $fh $imap_input;
+    ++		Git::command_close_pipe($fh, $ctx);
+    ++		1;
+    ++	} or do {
+    ++		warn "Warning: failed to send messages to IMAP folder $imap_sent_folder: $@";
+    ++	};
+    ++}
+    ++
+    + sub apply_transfer_encoding {
+    + 	my $message = shift;
+    + 	my $from = shift;
+    +
+    + ## imap-send.c ##
+    +@@ imap-send.c: static int count_messages(struct strbuf *all_msgs)
+      
+    - 	if ($dry_run) {
+    - 		# We don't want to send the email.
+    -+	} elsif ($use_imap_only) {
+    -+		die __("The destination IMAP folder is not properly defined.") if !defined $imap_sent_folder;
+    - 	} elsif (defined $sendmail_cmd || file_name_is_absolute($smtp_server)) {
+    - 		my $pid = open my $sm, '|-';
+    - 		defined $pid or die $!;
+    + 	while (1) {
+    + 		if (starts_with(p, "From ")) {
+    +-			p = strstr(p+5, "\nFrom: ");
+    +-			if (!p) break;
+    +-			p = strstr(p+7, "\nDate: ");
+    +-			if (!p) break;
+    +-			p = strstr(p+7, "\nSubject: ");
+    +-			if (!p) break;
+    +-			p += 10;
+    +-			count++;
+    ++			if (starts_with(p, "From git-send-email")) {
+    ++				p = strstr(p+5, "\nFrom: ");
+    ++				if (!p) break;
+    ++				p += 7;
+    ++				p = strstr(p, "\nTo: ");
+    ++				if (!p) break;
+    ++				p += 5;
+    ++				count++;
+    ++			} else {
+    ++				p = strstr(p+5, "\nFrom: ");
+    ++				if (!p) break;
+    ++				p = strstr(p+7, "\nDate: ");
+    ++				if (!p) break;
+    ++				p = strstr(p+7, "\nSubject: ");
+    ++				if (!p) break;
+    ++				p += 10;
+    ++				count++;
+    ++			}
+    + 		}
+    + 		p = strstr(p+5, "\nFrom ");
+    + 		if (!p)
+-:  ---------- > 2:  1d74a857df send-email: enable copying emails to an IMAP folder without actually sending them
+-- 
+2.50.1
+
