@@ -1,122 +1,97 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C19280037
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 18:22:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C29D2FDC4F
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 18:30:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022980; cv=none; b=qHr4f2qgL5VV3fyPKIYr7VFMyaVa/EsNQf43GXncPvaN6SG7rwXvRvvPzpx6oIsT+kqb8/9Z8HQZQD29CPw0zJOhYnHh4zwMB4hlXrYF1Erp6Fm49ablo3jK7nQEOjLsR3ay13NefyZfJzMR0/YgcicGwyh4tr/SfIbhlWxqrPY=
+	t=1755023419; cv=none; b=RwRHfC1Ngv+Tjn8v1OtpfFZgsm/5rWq1mbvfA3nQyLuzBVTDXLsb1BcqNSoVenbl1sX1y828u2e3IAX6dCaA01Ppbfi6onRxUxzsJQ0tSUVgerIIN8w646BGlzZqJ2LzjcuX0ZVGRzR4ahhsBPjaclXBe0AcUDZgk+RZWRoNJfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022980; c=relaxed/simple;
-	bh=pI+Dfpl0cJxYNGXTZDXAJ+otpMal1TRt7y9wrmHAB3g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UUS+mq43PB7XMD5tq0VhQR+pKcocUB2vrsR0aCS0zONYMZgBTJGfhSUBPQ3N4ZgRhPC1vgOfPtm5NL1/UN+H6LW3GGCqqHPnVIDqywR3utz6nhBkxUZWELvWPRtQ4cg1O/9XD62LGbohHSNuDE1VLl8MKzfCVh8s9J+C+d2B+yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X7wG0JvT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PcWMej0B; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X7wG0JvT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PcWMej0B"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C90427A0182;
-	Tue, 12 Aug 2025 14:22:57 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 12 Aug 2025 14:22:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755022977; x=1755109377; bh=4cuFCQg1B5
-	sKg/ySI61jAhIGidZcUGqYj5a0IFzMCA0=; b=X7wG0JvTVmzdPbjpil1RCHfGF0
-	/mJTRQ0u4L7DbHyimbHVcCQ8DousNlClJay1M97HaLhWKG2UmcFavrUtYoAT85zN
-	hFHzeo2EYRKeTNeqNMC0HwDw9Yb9hQCh2NE8qPRGgegU2Zxa5nyKHZdTFhO36lXz
-	YmRypRbAp2m5Q3NvBdsHjk9fOWN2lvlPBtN08JHEv16TCa8WRDRs6rnqNLQf1iIP
-	R0pr0A9LVPNYIrX7blCuefGJ+8b2jugsk47Z0lSBsl444aPkQDbAPFfUayeXTBJ8
-	21RKGI4K0ejSLhH2ckhaXSoPC4o8l9XXMO095W7iINsKdm1GPB3JkJ7SZTCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755022977; x=1755109377; bh=4cuFCQg1B5sKg/ySI61jAhIGidZcUGqYj5a
-	0IFzMCA0=; b=PcWMej0BBKQhSZe6ohFvz3hMybfjREUdS1zxrSGLRDzUOxdAfGD
-	/gz4zWA2JsafhyXIIai87QSxWi4XOzJVZKHI2zolAaVJnZBuApdyVJc2EsYegtej
-	NH7vsEK1Jzt7w9rx4p5Iq6UnA7QqQVpDrPDfjSZKDalk364YA13YVVicT6yZsJA2
-	HDnT3VkOLg+geDFfEmwsdq6dHeI9thGE3fAFmWrUBpp53f2v8VoXTdBg8DvKS+/V
-	NmvL2K4ZjlZ27rtj+UJVnPllV6//hl+8o9qYi4BfTRYAQnLF+6li3iGpFR9KXnPQ
-	07hpTUd4W6LwpSCm0XGn3xYz8wj0y6R0x0g==
-X-ME-Sender: <xms:gYabaKDL51RC0ubIcL3vwaeuQjOKhYO-81KEE47tHXUP7f9sW_OI0Q>
-    <xme:gYabaCFPZ8owif0SxrBeedTgiFDFoyyuXrYmZW_d_wky2ZblbDUMcr7V-2Q52RMJh
-    ygqgLlGP-kBAkT1LQ>
-X-ME-Received: <xmr:gYabaEDFLx71kTIjUv05yz-XJLbE05yU4K8BT2T_Fs96K9Rau3CzMavYyZzDzSbaq3gScl6hDPYJB7A8odbZvy5HWM8ZxfybTeScKRk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeeitdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfefgvdefudetudekteetveehiefgvddtjefftdekfeejffeghffggfeggeef
-    feetnecuffhomhgrihhnpehmrghkrdguvghvnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgs
-    pghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhunhhshh
-    hinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghl
-    vgesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhhuh
-    gssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:gYabaKVQQ2SCTcglz8pTNvTaLeHKKfotwIAM0DejtgXhL0InIef4Uw>
-    <xmx:gYabaAr0huviNA66Gq7PKeYsk-vyasvaTq5PvPmbYLr_oTYbKkqQsw>
-    <xmx:gYabaOQ_yaAvQ7j-SBvQXxQfwjd5vE3hbwVnB47p41h8PNG97_G2JQ>
-    <xmx:gYabaC0HsHF6JQFMG0Bg5YqJiL0dly1P2P-xf94tM1g4w0YR9c5ymw>
-    <xmx:gYabaH-B8MSGoHrjeIGrq33CMCAnWr2NKgDjAyvIy3V6qHxwAGVOFyiT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Aug 2025 14:22:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Ben Knoble <ben.knoble@gmail.com>,  "D. Ben Knoble"
- <ben.knoble+github@gmail.com>,  git@vger.kernel.org,  Patrick Steinhardt
- <ps@pks.im>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 0/4] clean up some code around editors
-In-Reply-To: <CAPig+cQMa32G0pqi1UU6hqRAB5709Zcif0pd5uWifqB8d9o6rg@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 12 Aug 2025 14:13:01 -0400")
-References: <20250811221706.67168-1-ben.knoble+github@gmail.com>
-	<6BCA1E93-7409-41FA-81FB-0CB75A3A55FB@gmail.com>
-	<CAPig+cTpMFfg8iTncgekq6wyfHOPidhHposLi11D3fXyfnNQRw@mail.gmail.com>
-	<xmqq1ppgv3wg.fsf@gitster.g>
-	<CAPig+cQMa32G0pqi1UU6hqRAB5709Zcif0pd5uWifqB8d9o6rg@mail.gmail.com>
-Date: Tue, 12 Aug 2025 11:22:55 -0700
-Message-ID: <xmqq8qjotn5s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1755023419; c=relaxed/simple;
+	bh=v7UD5UDzy8R4Cppw66qiEhHdOfNN53eVpIOFYe1xolc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=E447so0ADeVwxY7g+BpSNU2BfPWiPzWScgMYZh8XRxHqq58d5OZrQigc07gRXeh6HUjlz3B/l2WFyh+pOmkRUMFE+ufh1nozrIN+fQSDZVfiM2wROUH5Amk4rT2QiYljbFdmtXtKv7TxEB3O80CKYW/ugv26cPtyM7n6rxYQkj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7e6984d694cso129982985a.1
+        for <git@vger.kernel.org>; Tue, 12 Aug 2025 11:30:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755023416; x=1755628216;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R224MtS05hxTHme5rUYixF13dukS0IDfmbXjVDWb6RE=;
+        b=BTLp5JlQ992vx1hUufOukDztNVTjmDKiQbzq2284jap7xerGJNw/whlJWmleMj0c+L
+         MWfS4e1gMRTUw4h4f9SeHnMZ/nQdbdgJ712x3j6IYDDozp9i7PVc6EoAhLdBcIxqu52H
+         rrIXP1Jlrra5wN9P2xvRtTtQrzBwSG1zkCMx4MO/vnrxrkgrmQaDL9aRPxWISiLa5Mgj
+         Voy34SQ9RximadwcelZ0cIEFKUUcv+FUUmlsWpd/0KDf0GAiM9HXkfwrsgrHwSWgUE+X
+         NYNwqaE8lKm3FY8P42IqBB3r5woecoYgR6w8IBHgfMon9sqqUsNiH/5x5wC8guEQ49Cj
+         zxng==
+X-Forwarded-Encrypted: i=1; AJvYcCXPUodTZhOxq/TcSdCIgTmN+BDzrwbRlkYS92Z1GBJLRCy5g4vvvt2TOutKC2FwErRZrIU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJ8RbGVUTxAVMPKqBdKrj2XwHCWOA6ebZD3kyY5tyO2sq+KfmY
+	yAA8ZyIC/y120nf53eBVozSEv+PL5v8cLN4ykrp6DX/DDNdi3h767/SjN0J+Py7qfEW/+fx+AlS
+	k6A/aexJwUKsPI5RKXmn5mIbEMDH1tTw=
+X-Gm-Gg: ASbGnctRl0VrO3H2FhO6uWJgc9Y0CK3wan0w/PYsaD7LSp/M4W0D3LURT2zgPpPcV8m
+	B6J6JOH/vvf+0VWt8UD/R+7IsJ24NroP6HdvhUncwHxz9zLR6Mj2fMdeKaSTSbMHB2wijP1DDMy
+	3OMJOZBv7j3FgK2B84p+BcmFHBVRl4tNDbY1IbtEIUChIvawB1eSVbANSp1PC4AI6BOARSi2y/m
+	1dJ6gysbte8cJ0upZ/J/yzkziwMdmenSe1ME8M=
+X-Google-Smtp-Source: AGHT+IEkPi55MkCL2IFq8a9WopKZ5/hhLaGJ9cISznWkCcVzlslyinUk/nia8z18o7dp62hA5SfZQK49CDvh4inO/EQ=
+X-Received: by 2002:ad4:5fc7:0:b0:707:4aa0:2f3 with SMTP id
+ 6a1803df08f44-709e8854841mr800426d6.2.1755023415834; Tue, 12 Aug 2025
+ 11:30:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250811221706.67168-1-ben.knoble+github@gmail.com>
+ <6BCA1E93-7409-41FA-81FB-0CB75A3A55FB@gmail.com> <CAPig+cTpMFfg8iTncgekq6wyfHOPidhHposLi11D3fXyfnNQRw@mail.gmail.com>
+ <xmqq1ppgv3wg.fsf@gitster.g> <CAPig+cQMa32G0pqi1UU6hqRAB5709Zcif0pd5uWifqB8d9o6rg@mail.gmail.com>
+ <xmqq8qjotn5s.fsf@gitster.g>
+In-Reply-To: <xmqq8qjotn5s.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 12 Aug 2025 14:30:02 -0400
+X-Gm-Features: Ac12FXwbfcYRVqDF02K_Zejymzqqx3xlg7ACjesedPRIOaBFhPudTCJAZRUHUAA
+Message-ID: <CAPig+cSuHoUesmnPkQ-VBXsZFtG_jmXV_DHB_jFHd=nT_D43ng@mail.gmail.com>
+Subject: Re: [PATCH v3 0/4] clean up some code around editors
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ben Knoble <ben.knoble@gmail.com>, "D. Ben Knoble" <ben.knoble+github@gmail.com>, 
+	git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Tue, Aug 12, 2025 at 2:22=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> >>  ifdef DEVELOPER
+> >>  include config.mak.dev
+> >> +all:: check-developer
+> >>  endif
+> >> ...
+> > Not a bad idea, though I don't think we need to hide the target behind
+> > DEVELOPER.
+>
+> This target is designed to be a collection of light-weight tests for
+> your uncooked code, so running it when somebody makes a production
+> build should *not* be too costly, but at the same time, it is more
+> or less pointless---if it catches somethig for a build engineer, it
+> is way too late.
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Ugh, I missed the bit where you had wired it into the "all" target; I
+misread it as defining the "check-developer" target only if DEVELOPER
+was set, so my response was bogus. Sorry for the noise.
 
->>  ifdef DEVELOPER
->>  include config.mak.dev
->> +all:: check-developer
->>  endif
->> ...
-> Not a bad idea, though I don't think we need to hide the target behind
-> DEVELOPER.
+> On the other hand, if you have only started to add a new command and
+> trying to see if your skeletal implementation even compiles, it may
+> be annoying to be told that you still have to write documentation.
+> You may already know you need to, but you are not ready to do so
+> yet.  Even though I on purpose made the checks run as part of "all"
+> to give the target more exposure, I am not sure if limiting to
+> developer is still too aggressive.
 
-This target is designed to be a collection of light-weight tests for
-your uncooked code, so running it when somebody makes a production
-build should *not* be too costly, but at the same time, it is more
-or less pointless---if it catches somethig for a build engineer, it
-is way too late.
-
-On the other hand, if you have only started to add a new command and
-trying to see if your skeletal implementation even compiles, it may
-be annoying to be told that you still have to write documentation.
-You may already know you need to, but you are not ready to do so
-yet.  Even though I on purpose made the checks run as part of "all"
-to give the target more exposure, I am not sure if limiting to
-developer is still too aggressive.
+Indeed, wiring it into "all" may be too aggressive. Because I missed
+that bit, I had thought that you just meant for developers to run
+"make check-developer" manually. Documenting it in SubmittingPatches
+may be the lesser evil.
