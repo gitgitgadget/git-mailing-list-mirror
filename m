@@ -1,64 +1,69 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DE42F0664
-	for <git@vger.kernel.org>; Tue, 12 Aug 2025 20:07:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE662F0660
+	for <git@vger.kernel.org>; Tue, 12 Aug 2025 20:07:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755029254; cv=none; b=NokmNFL7AVKtdD4/rA5bRaFTbr1ttXXyb4pzaI2DqHgENldxCLRWvJhkAaK+1or4BimskR/Y7tgyGgtimEK08OsWAsZqUUsrAG+UU3LCx2Xoi5P2VBBeDjAc4dA4bUJ7aUd5FjTBmy5JBtL4w+zDSfu2pn9NY8qJGq0ygAnMcns=
+	t=1755029255; cv=none; b=FyVWy1F8/JRmV2csKeD0fvv5JA7TnBxdOpMY4gOgJF5L7kwFcLF8xmKm7e38qy6bPvoHYC53fz9GptXNWY7NH9FFq3NiJ+hZYG0flMquNZTTgMCeCYi8Wp25NTjmxOL9US8YlYBYUo3D61uJF/okD0+VUgYltzoPvo8FveOkKoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755029254; c=relaxed/simple;
-	bh=Ejme0INTa7lfb+wmeCRR4ph4BYLp4cW9bi9nzfe2r5Y=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=nO4DI/o0P1Lq/hBwYw11NBAmV0G/UsMIMDxSwi8nwNCcQ0S/1QdsAhzEtQpw8nWgo3ZQ4Y7uZc9PphPrwPCt6RJBjRG2eJTGZAFHy99wsBObEgMRyY7yNwC5HMa0i/cph3u19X7AoUlDLO4jrKs5zNKSwVsoDTqeLFnPcY5uDBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=llcqTitz; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1755029255; c=relaxed/simple;
+	bh=+r4abG35Tq9pDxBLfjeUB+keHL3DFkhKfNCh7B9yYEQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=oxJj3gav2p7efBFjclI3e+B/SZspm2r3Bhr0kzi6q6XgzHVThixyEQDTvG0BZ6+XhJNqXGY/6JNXLze314LoBwfX40jIORWcEeF+8Cc9YGSXstj9u+nCIkOyb527OfTQXizbrOuqrephB1lZOkxLa461tuJZlQ+nXhcaTC+1roQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VDNZ2b4q; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="llcqTitz"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-459eb4ae596so53969005e9.1
-        for <git@vger.kernel.org>; Tue, 12 Aug 2025 13:07:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VDNZ2b4q"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-458b885d6eeso38053725e9.3
+        for <git@vger.kernel.org>; Tue, 12 Aug 2025 13:07:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1755029251; x=1755634051; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6O2Uii/MC6Q3ttDPz5TQs7QHyw8CjBynl3rRIqU31to=;
-        b=llcqTitzm99bsN6QeyAvCSXnf9Wtp6jxARfaqG0LS5ZH633WxXd1FdlbU+OAxv3HNC
-         IwbArGHT7r1coGPKeygrApAB0C0ofKhjijTCIlYIU/exnfl9wtNatHw/efiar03yn4Wm
-         wWsCi0ocnGY/RMITZd91iYrg1adI/VFHS+TzCqtXaup5bSLyCj+X82LeAS8kLSK4vyBS
-         VHyvVxhhSIzsqb1Xhm5goVBicFxF9/++HMVnKy6yUtsfsUVg/iLlaEiRL+p0q38ws4p4
-         nHD24s3bezCeh0n3WNBjQDTOFjZ7BY0IRenYw+WlS+3ZunYHrINJjQyAieYDNqM8VTi9
-         24Cg==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FIwEcyYutYD4dM+kSeLrLzTkMqSP7UvXpfXdkt0xOjY=;
+        b=VDNZ2b4qdWic5XNtBZap58pJFfWdfrAcAt3XUuNk8R9oUUbOtNzPXZ32S7NmGeFvoU
+         xKJfhEc66ZuMpzwfEdRJneieIvjaKPvd+4j5AkMdVZInMqj+In4kV8a53ioYYNkpqHOK
+         5ZbmYqOfYbqEwLXg9KVUR1El2ojmlLFF3ufLFVgla69J+GA7iPdG04mh/8z7lPaAQIVh
+         dpWh0KfVDC5KdnSos/l7YBaMwXyFwZGoQufmFfBkNaVkOUu5+Y1BtyB4iXfHbhBLF0tQ
+         Hec+UHyurI9TD1v2lAOe3a+gkoR6SpoXdifbMcSoPYlv5rkbkT5O6a7Q07qZvtFbP2Ss
+         B64Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1755029251; x=1755634051;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6O2Uii/MC6Q3ttDPz5TQs7QHyw8CjBynl3rRIqU31to=;
-        b=aHqFxsMbeBWiWBkWNYBKuNq4grVBHDRGR6fUici6RwBrxtJMm27eJh52WLFYb0kic+
-         /UB9F2NEmgwd4Zb6V6hnrjr79gzOx6CDcCKE9yWEik9H5Os13nHmn59TUhX2U1Fqg5qI
-         kobeBTIHEDlif9qZkTqtqjvF9OJB0HXId6glZUmqQzSa3FT3yLJZRUril3lmSV0NfaA+
-         xP/GOW+aK07pkEDtK8US4MDe21mStryvu1yWYcn+GKdvos6tgBXkAjdKsWJqjjrFO3vu
-         C1oVvTisiCW+vXv7UTGEmWcbM6PWgJ+b9o1xdQPylPBgoY0knccjG5xYS4jKi2fxh/rZ
-         YD+A==
-X-Gm-Message-State: AOJu0YyWZoWPljHruwW9kKZ3hspR7GTpiKQYRMc95l+X9bbMxBlZWplt
-	6SXbIyUi4+LcttH2Coz0gXF1ksn1PUVex5Ro1u7+CSM9R1OGUv3MR9C2MJpz1w==
-X-Gm-Gg: ASbGnctB2X7LYOv2OpTtPdm+++4bLGPlFU8JKHRpiiwfELMbv5tJlZGUv0VF9NKc9/0
-	szhPw34GaImfLNctGeQCHoGKbUcPfMJqniQO+NKxjB2ZUKSsMY7Rb4dpE+7GVT6VAhTDHjB2eVO
-	mQ/5is03TJKD6oyA/aT4sMiGIN5WZoqvcXNxpTw86TLUqvKk8B5pgDZueG1leJmtmhmV0k1jmXz
-	kdaJMeboixWtl1dR5/PnG3C6cyEIsGX929N1B12cz25jhqfEV5kkd7QnzA7mmtYp4mFxbPn5yZj
-	lNCBFSwaKxMZLpcdt+XrO03HZBSX7zB90cMoE2FmXZgKs3TJZX0roL6MFEo/RvSCBOzT8Y7ZjR6
-	PQvjeSxPFbO5xuF5ZzduRIc0=
-X-Google-Smtp-Source: AGHT+IHE6qmWgxrJ4u0rTp9KacjyOapfVMoeyknIFvsFxwPtAtwKVdVkxaP3WD1Oaap94o1r1QNDtA==
-X-Received: by 2002:a05:600c:a03:b0:458:bdd1:b7ef with SMTP id 5b1f17b1804b1-45a165fb20emr3407425e9.19.1755029250440;
-        Tue, 12 Aug 2025 13:07:30 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FIwEcyYutYD4dM+kSeLrLzTkMqSP7UvXpfXdkt0xOjY=;
+        b=e37ClgD88jYhk70mV8Rgb3iGIadZiI79sk4GSvcrf8/+XOzZUNn8GSgqhZoJcSG4I0
+         yoQa4RYZnqaz2Uv53DxT5zf7QQRvFt2oLk+hjE5yd3B91cBS9gBkjaKISpT+xcZrCpIb
+         P0O7ieAo1+WHpdYECkNn8Hbo0nklXPqb/M1DKt2v0h74BR5RkMKQVPqn5dMSOoA478Lh
+         H8Iqpx2SzSE+Uj26OATXSyjtBKZyv0ObvLtFmyX97aDHwgB+kTfjzZSsUzBtGPCi3xEn
+         CAhmpANE+rP25AP/24rSy/C2oWFb7ylukJGzUWNVHVrH+zTByQRLfDQfcilHXlEuw0h7
+         DP9w==
+X-Gm-Message-State: AOJu0Yw/xotwSkr2p/3SJbiJRSHkfPx1gnAoPi/3+dUDxzIpckxzDMQo
+	BAHkDse3dRbqksQP9RllOutAULgMfIj5TMNL9RzDiyqqq7RR11EKHiuo3zJQwQ==
+X-Gm-Gg: ASbGncv99xJtDZSuR23jtSmEMPgwD7+3tjAEXpq2lEcV+FU05Lgpc4NlTMJs9EHziY+
+	HtHLLNB5K769Lk8QHYRvaCs+eqBkKSD2QlhLDyCiJ2l53rzvT/V9HDzceVg6Q4dlEsEIVq72u7t
+	Tu144Y7dSXmdFsbBn9vHbw1+vCLTRYGLFSGz3ZiJzlOa3Cto7G1NKjg/xBlsAoX3G1I6fnYOX5y
+	fnLI2OGN/g60PBsA5MUds2tqiQjdZQpy1yQMBKrYh4+Ym2FKu+QinI+71UwhH2NHD68c6yJS4CG
+	225j6U+44uJIGahH3Q/SxPpZ2TMQ8upReBe1r9mpgTn2jmUt7LYGEhIv/21s0xsRrtbA1SjxeMx
+	nIphykeU7e5fMZFJ4na5llRY=
+X-Google-Smtp-Source: AGHT+IEuCv3U0gKt9p0mGSBk0opH95i4gchU2wAsET89UHgvyYIpIAVYnZuuIkbz/f+nkYQ+11zGoA==
+X-Received: by 2002:a05:600c:3b23:b0:456:eab:6344 with SMTP id 5b1f17b1804b1-45a165c4f74mr4466795e9.15.1755029251101;
+        Tue, 12 Aug 2025 13:07:31 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a16de5f27sm359165e9.13.2025.08.12.13.07.29
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a119eef59sm22482655e9.1.2025.08.12.13.07.30
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 12 Aug 2025 13:07:30 -0700 (PDT)
-Message-Id: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
+Message-Id: <3a2cc38b72fb0f6ccc0ec9cbefadb7576cd8b934.1755029249.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
+References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 12 Aug 2025 20:07:24 +0000
-Subject: [PATCH 0/5] doc: git-add: clarify DESCRIPTION section
+Date: Tue, 12 Aug 2025 20:07:25 +0000
+Subject: [PATCH 1/5] doc: git-add: remove options from SYNOPSIS
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,36 +74,48 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>
+Cc: Julia Evans <julia@jvns.ca>,
+    Julia Evans <julia@jvns.ca>
 
-This patch series aims to make the git add man page more accessible to Git
-users who are less familiar with git jargon like "working tree" or "index"
-while communicating the same information for advanced users.
+From: Julia Evans <julia@jvns.ca>
 
-Some notes:
+Motivations for this change:
 
- 1. I'm not sure about the SYNOPSIS changes, it seems useful to have a
-    reminder near the top of what some commonly used options are, like
-    [--patch | -p] but also I find listing all of the options at the
-    beginning really distracts me from the command's core syntax.
- 2. I know there's a longstanding discussion about the use of the terms
-    "index", "cache" and "staging area". I've tried to address that as best
-    as I could.
+1. Listing a huge number of options is visually overwhelming when
+   opening a man page for an unfamiliar command. It makes it harder
+   to understand the command's core syntax, like `git add <filename>`
+2. For options which can be passed independently of any other options,
+   including them in the SYNOPSIS does not add any information which you
+   can't already get from reading the OPTIONS section. `git add` has
+   some mutually exclusive options, namely:
+   [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]]
+   but personally I already find that line so hard to parse that
+   removing it doesn't remove a lot of information
+3. Some man pages already take this approach, like `git rebase` and
+   `git status`
 
-Julia Evans (5):
-  doc: git-add: remove options from SYNOPSIS
-  doc: git-add: start man page with an example
-  doc: git-add: simplify discussion of ignored files
-  doc: git-add: make explanation less dry
-  doc: git-add: explain inconsistent terminology
+Signed-off-by: Julia Evans <julia@jvns.ca>
+---
+ Documentation/git-add.adoc | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
- Documentation/git-add.adoc | 72 +++++++++++++++++++-------------------
- 1 file changed, 36 insertions(+), 36 deletions(-)
-
-
-base-commit: 2c2ba49d55ff26c1082b8137b1ec5eeccb4337d1
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1952%2Fjvns%2Fclarify-add-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1952/jvns/clarify-add-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1952
+diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+index b7a735824d6c..12afeead6637 100644
+--- a/Documentation/git-add.adoc
++++ b/Documentation/git-add.adoc
+@@ -8,11 +8,7 @@ git-add - Add file contents to the index
+ SYNOPSIS
+ --------
+ [synopsis]
+-git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
+-	[--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse]
+-	[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
+-	[--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+-	[--] [<pathspec>...]
++git add [<options>] [--] [<pathspec>...]
+ 
+ DESCRIPTION
+ -----------
 -- 
 gitgitgadget
+
