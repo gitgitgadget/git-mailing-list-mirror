@@ -1,61 +1,87 @@
-Received: from mail-m49248.qiye.163.com (mail-m49248.qiye.163.com [45.254.49.248])
+Received: from mail.aegee.org (mail.aegee.org [144.76.142.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6652D0C80
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 07:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.248
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14ED2DCF55
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 07:28:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.142.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755069203; cv=none; b=USUvAhetWuwCKmhml+lmZNFxJTbAj3V2RjsZS7D+t95Sn45titaVBTE2v3k0NhUk2te+7Fgjo3wyCgvFUBkB+f3SowPCHCcH1+KcFJkYe7QK2mlBRJu/HA7hSGj2q3QFA/F2bwgAk/IY99icSkMOfTBlVaTCOMUH656JKjfUU2U=
+	t=1755070131; cv=none; b=Q+rg+3LiGkwd/oEiAFLB5Xz6Pld6XjS5Q7sIEPxEDLtU+ZSUeJUhwmuwJs0rLyZEg31KT0EQoaqXhK68pvFoQ1XM5rRTbX5cLnoNTnu9y8L4111DVeYTKQFg2yMvyReliwE28/VudXsRVLSJIFvRhbcQlCh1GBPBlPoaCjfWeuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755069203; c=relaxed/simple;
-	bh=NIwZosGqXs/2Wcmd6zMXq8MCvzFvR096T1fwkVZksYE=;
-	h=Content-Type:Message-ID:To:Subject:MIME-Version:From:Date; b=TQwW1qcnUhpXdeaP5i6p2syV2mHRLQO4m7ucTHudfNmDn8JukwsarkVJtAnRa2DYrTVGfG66wgoDYtEJSXeKEA/xymQut7PkH30Wcl0G0Q0Bkr0Ft7VhC7KYfpWR6MysZFvm49P4qdgGjzA1V4fGFCrp0k6AxL0/BfOhyecb2/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=stu.pku.edu.cn; spf=pass smtp.mailfrom=stu.pku.edu.cn; dkim=pass (1024-bit key) header.d=stu.pku.edu.cn header.i=@stu.pku.edu.cn header.b=BKQC/EkP; arc=none smtp.client-ip=45.254.49.248
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=stu.pku.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=stu.pku.edu.cn
+	s=arc-20240116; t=1755070131; c=relaxed/simple;
+	bh=NYwzdt3rJUNfyQMBA+yatgd7knB4sMyY+HaUpEom+0k=;
+	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=HWQwscTTf7yrN/aEqX5U/YTQeY7E7jEay4MTvkyK5wB90ry1U+yO2XnERUWVqLDrRoT52QN7Xky6iv5UFKLbCsYaoMKEfdaScoOgm+i0Kd6ejwXYDQnlVHiOv10DF89aDTcRuxiEtsDq/tfYHCWXbr9drbZVCwqobnnYmTIuyIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org; spf=pass smtp.mailfrom=aegee.org; dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-tls@aegee.org header.b=Nh9sKQWQ; arc=none smtp.client-ip=144.76.142.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aegee.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=stu.pku.edu.cn header.i=@stu.pku.edu.cn header.b="BKQC/EkP"
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-Message-ID: <AAkArwD3JXZP4EIjvKF0Waow.1.1755044612233.Hmail.2201111603@stu.pku.edu.cn>
+	dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-tls@aegee.org header.b="Nh9sKQWQ"
+Authentication-Results: mail.aegee.org/57D7KEov2513876; auth=pass (PLAIN) smtp.auth=didopalauzov@aegee.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aegee.org; s=k4096;
+	t=1755069615; i=dkim+MSA-tls@aegee.org;
+	bh=NYwzdt3rJUNfyQMBA+yatgd7knB4sMyY+HaUpEom+0k=;
+	h=Subject:From:To:Date;
+	b=Nh9sKQWQSS6tJ+CFeb3gM0JovTlqo9n+iejGHkfbC24TVedLsA2wrx3vBylabGEXs
+	 ihm7WJVSB9RiyuiDEOmWqP/jDwpnhLlvQ0u72sa0DCWttNIs9wGlR4MzM96f+BnwYJ
+	 LZ8zfqBrwevKF2zxf/3dI81K6iR0O9SPOwC0qAo1Gbszu7xbdKirDrWXMbfJdUXpK8
+	 3ZNyPKO8dIjjvY86yvD3ZdPDmYZDdaamGxACIoq4Rm0VWZ4QXKkkL+mi/VMNyqOicw
+	 sfvI68Qjd2qNFVO8yFUiI6pckQU83uRVZ8v2fhIrLYtyoFEhydMQwUFvSyPxgDowZJ
+	 EmnJQK0TMy0btewxOnK3/cVTbQQVVNBFpWdCgtGcMQ0+HbCJ1qyslsNv7tax1N6BNh
+	 VxJ90n0paskc1WGDG2gW+XtdKJB6q/s8NmiOP5JZ+MD5LKWSov6XV86pEtiN1wDnVr
+	 vwqapJeBRfQhfA4djSwPy/DunrKJdSER+pRXVWCaAYMym2ml73DVSvaY8FyRuViqEq
+	 P00Vz47KQ/oCWncK32KVwnqwE/zKhdTvz8fB+TWcfySKtkXUAAVDtvCngK9LlxktWQ
+	 HzcQvWOm0VL3U5Bz99cPPC8no5QaCc5TA4xjredvRaf/1QT2zWUxpNai4Qom8w0thf
+	 Nl6Cne95seCBMFi8653xKJCs=
+Authentication-Results: mail.aegee.org/57D7KEov2513876; dkim=none
+Received: from [192.168.0.242] (95-43-114-153.ip.btc-net.bg [95.43.114.153])
+	(authenticated bits=0)
+	by mail.aegee.org (8.18.1/8.18.1) with ESMTPSA id 57D7KEov2513876
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 07:20:15 GMT
+Message-ID: <1b0d634286da16f32cd9faf541ee28c811d6c83f.camel@aegee.org>
+Subject: git diff shows twice =?UTF-8?Q?=E2=80=9C\?= No newline at end of
+ =?UTF-8?Q?file=E2=80=9D?= - no need for repetition
+From: =?UTF-8?Q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD_?=
+ =?UTF-8?Q?=D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2?=
+	 <dilyan.palauzov@aegee.org>
 To: git@vger.kernel.org
-Subject: =?UTF-8?B?UG90ZW50aWFsIE51bGwgUG9pbnRlciBEZXJlZmVyZW5jZSBkZXRlY3RlZCBieSBzdGF0aWMgYW5hbHlzaXMgdG9vbA==?=
-X-Priority: 3
-X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com web
+Date: Wed, 13 Aug 2025 10:20:13 +0300
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.57.3 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Received: from 2201111603@stu.pku.edu.cn( [240e:390:aa6:ea90:c055:732a:9666:d608] ) by ajax-webmail ( [127.0.0.1] ) ; Wed, 13 Aug 2025 08:23:32 +0800 (GMT+08:00)
-From: Cheng <prophecheng@stu.pku.edu.cn>
-Date: Wed, 13 Aug 2025 08:23:32 +0800 (GMT+08:00)
-X-HM-Tid: 0a98a0c89e5d09bfkunm3da3d4db8aea
-X-HM-MType: 1
-X-HM-NTES-SC: AL0_4z5B86Wr4Tz9jdMF+bhXMURCwdwWE/DTAMnERH6bvac1I1iAnZ4LwWs9TJ
-	UxGexNRaea+LDnGFX7Kndr+BuxjrnSA5SRmxnfP5KCkgAT0RqMCo5fn7MpWATHtUturr4rImPO53
-	khRp2kcaqgPlO4uZX+yQ3Ng+n9yL9lSrnsR/c=
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDT0xNVk9CQhlCSx4ZTk0ZSVYVFAkWGhdVEwETFh
-	oSFyQUDg9ZV1kYEgtZQVlJT0seQUhCS0EaGk1BHhpCS0EYS05OQUxISRpBQk1NTUEfTUtDWVdZFh
-	oPEhUdFFlBWUtVS1VLVUtZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=BKQC/EkP41IHtV069+OXtxAevrD30xkSOBLcPQXfosGyRTNQHv8FbC51K5E7Odg7ng47QpbhbxM+92rp8JGQYGHzWC2fAbgkc62//YYyY6r1ytWbww+nwe/4bxi/mlwJ7xJzPhvMc52lrzeWYf32wnyQUDyUtk0Ja7hOCYfh6oY=; s=default; c=relaxed/relaxed; d=stu.pku.edu.cn; v=1;
-	bh=NIwZosGqXs/2Wcmd6zMXq8MCvzFvR096T1fwkVZksYE=;
-	h=date:mime-version:subject:message-id:from;
 
-CgpsaW5lIDMyNiBpbiBidWlsdGluL2Rlc2NyaWJlLmNkZXNjcmliZS5jLCB3aGljaCBpcyBsb2Nh
-dGVkIGluIHRoZSBmdW5jdGlvbiBkZXNjcmliZV9jb21taXQuIEluIHRoZSBmb2xsb3dpbmcgY29k
-ZSwgY21pdMKgY291bGQgYmUgTlVMTCBwYXNzZWQgdG8gdGhlIGNhbGwsIHdoaWNoIHRoZW4gY2F1
-c2VzIGEgTlVMTCBkZXJlZmVyZW5jZS4gU2VlbXMgc2hvdWxkIGJlIHJlcGxhY2VkwqBsb29rdXBf
-Y29tbWl0X3JlZmVyZW5jZSB3aXRowqBsb29rdXBfY29tbWl0X29yX2RpZS4KCgpgYGBjcHAKY21p
-dCA9IGxvb2t1cF9jb21taXRfcmVmZXJlbmNlKHRoZV9yZXBvc2l0b3J5LCBvaWQpOwpuID0gZmlu
-ZF9jb21taXRfbmFtZSgmY21pdC0+b2JqZWN0Lm9pZCk7CmBgYAogICAgCgoKVGhlIE5VTEwgdmFs
-dWUgc2VlbXMgdG8gY29tZSBmcm9tIGZ1bmN0aW9uIGxvb2t1cF9jb21taXRfcmVmZXJlbmNlX2dl
-bnRsecKgd2hlcmU6CgotIDEuIGNhbGwgdG8gZGVyZWZfdGFnIG1heSByZXR1cm4gTlVMTC4KCi0g
-Mi4gY2FsbCB0byBvYmplY3RfYXNfdHlwZSBtYXkgcmV0dXJuIE5VTEwuCgoKSW4gdGhpcyByZXBv
-c2l0b3J5LCAgb3RoZXIgY2FsbHPCoMKgbG9va3VwX2NvbW1pdF9yZWZlcmVuY2UgYXJlIGZvbGxv
-d2VkIGJ5IGEgbnVsbCBjaGVjay4gU28gdGhpcyBzZWVtcyB0byBsZWFkIHRvIE5VTEwgZGVyZWZl
-cmVuY2UuIENhbiBJIGNvbmZpcm0gd2l0aCB5b3Ugd2hldGhlciB0aGlzIGlzIGEgdHJ1ZSBwb3Np
-dGl2ZSBidWcgcmVwb3J0PwoKCgoKCgoNCg0K
+Hello,
+
+when a file, which does not end in a new line, is modified, git diff shows =
+twice the text =E2=80=9C\ No newline at end of file=E2=80=9D. As this piece=
+ of the file is not modified, I think git diff should print it once.  In th=
+e example below the first =E2=80=9C\ No newline at end of file=E2=80=9D sho=
+uld be skipped.
+
+I am using git 2.50.0.
+
+As a matter of fact github also shows this information twice - https://gith=
+ub.com/alex-shpak/hugo-book/pull/755/files - which I find is bad.
+
+Greetings
+  =D0=94=D0=B8=D0=BB=D1=8F=D0=BD
+
+$ git diff=20
+diff --git a/layouts/_partials/docs/toc-show.html b/layouts/_partials/docs/=
+toc-show.html
+index 21122a1..c243ae5 100644
+--- a/layouts/_partials/docs/toc-show.html
++++ b/layouts/_partials/docs/toc-show.html
+@@ -2,4 +2,4 @@
+   and
+     (default .Site.Params.BookToC .Params.BookToC)
+     (not (eq .TableOfContents "<nav id=3D\"TableOfContents\"></nav>"))
+-) }}
+\ No newline at end of file
++}}
+\ No newline at end of file
