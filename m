@@ -1,115 +1,122 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE8D2500DF
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 15:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA79269CE5
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 15:33:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755099022; cv=none; b=agogwyJNnB85N3dZLu/f797aNSB62Cj9UA4ROMIgwz8xtNFXZSwxop3/h2EQIzzxiF+c899KGNfJeesQTZvvBT2nQ7JLuZG+Kj2ppiZlKCyzt5LZ6kcPCWkh40KxHNGhSfKeebUlz8HGY90D3jMZG07N1adQybwRkF7g8lrRl7A=
+	t=1755099215; cv=none; b=WUUbH3Nhiv6JXHjpn7Xp3FBpccp33/UfsBgnyFVsDZAEu+sPiVfgpObyAimRFoP15ahlxIgmdJlNi+DRLak5d4UYBwsSpx5uOzNu0tVZs7PQtWADxGziXfk7FO5PQ8wmRc02KMXCK8hNvrQfxLmqCLKBiBlrY0Kr/4URvE0RPAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755099022; c=relaxed/simple;
-	bh=a4zhnBD+LeoKHTudEJoseoYovpfdRBulQCNjKXBauHM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ePAg+Q+8YacvxKQDysuINxroy7tLhyWXFbkO+NY6Rcr1yyuWwVF/obO2WIuWyUKPqmOFPHGu3YgYyImR3GSoq9DPXP7J/xT8BsUIIptNMiHbzb/mRK3KdydrA7WsAgw8MIB5cFepst70OQawb663Vp9S9HizSXmU3C0rpOQeOh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=guYCun4I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vq3Cm5Ug; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755099215; c=relaxed/simple;
+	bh=3W1nkFNs73E0WYb/rtFcIYktIPtET8GSMraoG5u0qaw=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=lXbMRGTJnhMJn40kMZClT7NXOLxaDsoKXi4OKa3N3BkgAm7T1IMVsBuUms0Tr3W1LF8X6U4+DnGWGlZcUDeXjRedWs9vblGfrvpEmdevieT7QLBt5kHC8fs7xWmYwJEnX+niKFwciJjo3fEpfOGcu/PgNGdnQLwRskDiB/OEmHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=J4+sWYyu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xa7IKrvz; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="guYCun4I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vq3Cm5Ug"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 959827A013A;
-	Wed, 13 Aug 2025 11:30:18 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Wed, 13 Aug 2025 11:30:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755099018; x=1755185418; bh=T+UD0olYzX
-	OrtE2V+T19pmYyjL3/oOuQQETmmUzEzxs=; b=guYCun4IJ6n8aH3Xn5NDjLIYzp
-	dK3mfSyV5txaJzcv6bAqhEoWs2H3rM0OPxWHmk51VNdZOu6v2Snzu1fvBmSBb7rc
-	T/ta9a043nRo39pL58y0qsolF+0whKeyppbJtTMYzylec5WTJPbAc4PsWWGvB57L
-	eb1lLilO6sRX/lpGsWFmQrHtH197vfl4IryYKECaDtszBG3jXRnL4Dx0gwWv+lpO
-	kMt9o8SY74hX1oG3z00XvoNg1ONdxIZzZDz5/A0qMBSp1tZEwsUx0bzu1CQd8CZj
-	cbkg4iVPWtHR2TkmHHf5JZ8DMJbhnO3Vqc4rYgTjDgjzQDqApzQR8N8gMZSQ==
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="J4+sWYyu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xa7IKrvz"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BE7F214000D1;
+	Wed, 13 Aug 2025 11:33:32 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Wed, 13 Aug 2025 11:33:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755099212;
+	 x=1755185612; bh=E46lLCNtYkj2eRbx8gb+bcgLOIdIQexgsRoQ4jYTDPM=; b=
+	J4+sWYyu63nPBB5j9d30EGii6qGIsqNRghY3wI82C1fpUtoE+SUUZk/yMV9HXUqk
+	0KjgftPfEVht9FyF7Y7Aw+Bm17ZqqOm1tbs7fxixsH8IW/UGYwiEd4I2fx8wvHiU
+	mwjemrIzQcaH3CNS3f0mfFoxhn/2TgBBOuAJl3MX5jJQ3+ho4Xy+ozp3qubdptUR
+	KP4i47y6XSsIxZli817LHMrWuLOpkc4HVAgDbYhJvK4njBOODIncTeca+DpSToXr
+	XVSuWmI9GxkeKFgN4hj+qZqXCxULyJbKDbZ1r/tt39ZfLnVdAYKsDq6cHnd6jLAK
+	9Z4LGU2qbtJo1A6T9i3l7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755099018; x=1755185418; bh=T+UD0olYzXOrtE2V+T19pmYyjL3/oOuQQET
-	mmUzEzxs=; b=Vq3Cm5UgNr2rMfeJN4UHYD10I8TIZbUlSYB2a4FqZyTK4LOArAB
-	KGgjiT6GejJidW8b8Dm0HO+IMIhZk/IoTUItlzwy8fHJGca9cjDqHI6q/BOBdH89
-	7FFqbNIS8Y2BPHaarrbarJjN1/vS148SYESkG+svfkS7gLhlTY3blQro4oQPq01a
-	m7RjukXI1TMpQdoq3nAVoSL2TOoq0jGT2M0S384hXvExBVndHVjJt17xfAUTqrXX
-	LiOWmJZ8u3yHNZYac0Ly0rj99wha1o59yAA+48IKo4AAbKzEBysjCTXEjqsrD4CR
-	lb9WQDa1joPnlB8dVSMRjHv8jwJ8L3OjdDQ==
-X-ME-Sender: <xms:ia-caATWry1nDC13h-fXrlSbEgA7xeDPFIevS2YFvRtZwCqUoZXaEA>
-    <xme:ia-caBDAU2YbR8EHaYlGEgiwtV5TSUREEeSoh7OvoDZrFuzbgfoG3Qs6dvrLDkDj3
-    y_X9jsnBL25HGzvhw>
-X-ME-Received: <xmr:ia-caHSqwadox3e2kSZIQCIrL0w0Lcm6W8FrEYLh87LWbn8dQL1NVneOjylkzL2PPsiCxpenUGKowwrD5Gx5KbAk4sAl9z33LCbGakk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeekheejucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755099212; x=
+	1755185612; bh=E46lLCNtYkj2eRbx8gb+bcgLOIdIQexgsRoQ4jYTDPM=; b=X
+	a7IKrvzZANMeJJkaXNcJyqwTR0LJGmmubriqedSwtW4D+8DjgswvPwCzpubigb8g
+	1eCXpb0pkjdH/Yx7Fgj7C2iZ9dmwbeW3eIrjbakHKcoANW4Jk07yq0Vbulku2rzD
+	+m6luXdCDtAo/lJXcXe6Vw42Vf9jofxWiORHbTr6OEY7rIqo4iNDX+mYGcwoPywW
+	FKIZAE9X2ijCFBl+lKU2yaTUUDfOc1MKnM+6C0xBW01soHPaDUHETWZZ2mRxNfAs
+	eKQcky3rm6HIjyUrXCnNKpjRRp4myHDw1WGJn0AK9pc4T74gF/+r/fT5rjeKNhuY
+	Qo3mFykeXBCxV3cQkRDxA==
+X-ME-Sender: <xms:TLCcaLEnitpBubcKDbamzyO3IWgKIjYYGTXB8F5TzsppJAyzgVR8Kw>
+    <xme:TLCcaIUInok2u6EU0sEi9AAAhDbKV1sNEgc0SzSNxO0H3qjwwLoLTvm16IIA8Ry97
+    sb1JvPp496i2E5ZgZ0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeekheekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtrdhv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgseguvghtthifvggsrdguvgdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:ia-caPpG65Go3-sVgVcMQScoiybFYES32Pf9sHT4-_Unky2jejc1Bg>
-    <xmx:ia-caJxV-8cUg-wAfNQu3yUxqYeAAqjhpNfLA3Pau66F4Sotbk1wGA>
-    <xmx:ia-caEKlkJZlcOA3l44vZwhwicqpP3h9babbmnU0A0wnLUdxhJSF6w>
-    <xmx:ia-caLJpFgg50fuMocS2BHfasXAPV9bwzNJiK8s3T-0HhM_Eup46rw>
-    <xmx:iq-caERFrHE47SxEiZS-8_4Vm96mrp0xHrIPpZI8ZNjkTl2FQ09QfPgu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Aug 2025 11:30:17 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "J. Dettweiler" <git.vger.kernel.org@dettweb.de>
-Cc: git@vger.kernel.org
-Subject: Re: [FEATURE] Proposal: git stash --only-unstaged
-In-Reply-To: <12fe17735317215aa0de58a20055193a@dettweb.de> (J. Dettweiler's
-	message of "Wed, 13 Aug 2025 10:51:50 +0200")
-References: <12fe17735317215aa0de58a20055193a@dettweb.de>
-Date: Wed, 13 Aug 2025 08:30:16 -0700
-Message-ID: <xmqqjz37nss7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
+    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
+    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
+    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtg
+    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikh
+    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:TLCcaHPhibXWdzyZ8qhRe0YR5L26aLX3aipkDiEYGfyt8pvTUdX-EQ>
+    <xmx:TLCcaJXGTsq9C5Xtl0iRXQfDYJJbMhx9HvqGLL5HUhqDA1SJ-Kht6w>
+    <xmx:TLCcaL1vHjAPfiKeFDhWeDCG82ZcBuA2uUPDTxT_93aJAfVsmX1H8A>
+    <xmx:TLCcaHo92ahvyNBETnBDHbP-TdwqOeVPxTGXbgAs-7_V9jx-i97TsQ>
+    <xmx:TLCcaGeOCqRLH_NHdic4EGP5GANsDPRoBXzEqZmV4RSbXls7H4Pjg-Gi>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 27BF27840B0; Wed, 13 Aug 2025 11:33:32 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: T2b652b8f7554bba9
+Date: Wed, 13 Aug 2025 11:33:11 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: phillip.wood@dunelm.org.uk, "Julia Evans" <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, "Patrick Steinhardt" <ps@pks.im>,
+ "Karthik Nayak" <karthik.188@gmail.com>
+Message-Id: <aa1c2758-79f9-47f6-87d4-16b19fa5bd63@app.fastmail.com>
+In-Reply-To: <52504ef0-7d4c-4298-af11-10477673e9d0@gmail.com>
+References: <pull.1949.v5.git.1754943127.gitgitgadget@gmail.com>
+ <pull.1949.v6.git.1754949075.gitgitgadget@gmail.com>
+ <52504ef0-7d4c-4298-af11-10477673e9d0@gmail.com>
+Subject: Re: [PATCH v6 0/5] doc: git-rebase: clarify DESCRIPTION section
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-"J. Dettweiler" <git.vger.kernel.org@dettweb.de> writes:
+> The use case for --reapply-cherry-picks is mostly that it is faster to 
+> try picking a commit and then drop it if it results in a empty change 
+> than it is to do the patch-id comparisons to avoid picking the commit in 
+> the first place. This is especially true on partial clones where the 
+> cherry-pick detection is really slow.
 
-> **Proposed feature:**
-> A new option, for example: git stash push --only-unstaged
->
-> ---
->
-> This would:
-> - Save only the unstaged working tree changes to the stash.
-> - Leave the index both in the working directory and completely absent
->   from the stash object.
-> - Make `stash pop` safe even if the index has changed in the meantime.
->
-> ---
->
-> **Benefits:**
-> - Cleaner workflows for splitting commits during interactive rebases.
-> - Safer testing of staged changes in isolation.
-> - Avoids unnecessary conflicts on stash pop.
->
-> ---
+That makes sense, thank you!
 
-What is the downside?  If the users of "git stash --keep" can keep
-using the same workflow by switching to this new option, you
-wouldn't be proposing it as a separate option---rather you would be
-proposing an improvement to the "--keep" option.  So there must be
-something that the users would have to do differently if they switch
-to this new "feature", but it is unclear what that is.
+> I'm happy to leave it out but I 
+> wonder if we should drop the references to --fork-point and --root as 
+> well given they're also both pretty niche. I'd also be very happy to go 
+> with Junio's suggestion to replace steps 1 & 2 with a general 
+> description that does not mention 'git log' at all.
+
+I like the idea of leaving out `--fork-point` and `--root`.
+
+Now that I know the use case for `--reapply-cherry-picks`: what I like about
+leaving in the `git log` description is that I think it makes it easier for
+folks to build a mental model of why a `git rebase` might  be slow: there's a
+"fast step" (the `git log` step) and a "slow step" (the `git patch-id` step).
+Then even if we don't mention `--reapply-cherry-picks` in this section, a user
+could infer that there might be a way to speed up the "slow step", and find the
+`--reapply-cherry-picks` option to speed it up. Maybe we could mention that the
+`git patch-id` step can be slow in some cases.
+
+(also I might have misunderstood the "fast step" and the "slow step" thing,
+I'd be interested to know if so)
