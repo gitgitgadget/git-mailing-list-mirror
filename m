@@ -1,135 +1,86 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DCF1B87E8
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 14:33:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2859D157493
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 14:38:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755095597; cv=none; b=kzpvSTc+/uZhi4qW78OOw27QeDgM6w2R2fjwkh9I4GcJiTVm4+CZYEWl792rTROKHClDlN1ehGKlKCZJ0/q4VBKEcsGmVn748WvmCYQ7BQ0nSzuWMKbU5tf1bd2B2iYG2eAHcqLyosin/y0O3BoTStK1QXOKnFzuAhLPYCA7Nug=
+	t=1755095900; cv=none; b=sVfIZPiXqgQMwVqYZUD5r5tAl3gKry6jrtjrq/VGubRd4TKkJSFLrI5PkU+6TuOYZVbvCDiydTs2t5jINvG4jpJ3xeDVrGs5ptJ6rYyNvqoIRF7iLHxksnTbjpOIHpxSl2Gj8i8FJHAoNaRrp3Tchgg16lOFe1EPSNbHVob6Dts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755095597; c=relaxed/simple;
-	bh=VaCrpItujINQV75wQ1VHa3Oucua7HxNhfMsP392wp1c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HbDTet41V4qmoWCNRg8dkIft822tb8pdo23zZ8qKbFBxsZ57C5DkXA5arvsISIzLBKs2xZgVMcbOdDD+T1vv10JoN8FOY+awP7SJWSFQozoONF3e1auRROqh7sA3rkqGJvyGwVgmf6wIHLE0DPHX++XBoS3d6iMK5v2C3s8oj4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TuUiXz21; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YtuJQkF9; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755095900; c=relaxed/simple;
+	bh=m5oq5cRcu6zd7YI3lLxRM6hRR3+gMzRNSycEhHgHWSg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BjfysM1Jx3YAm/cOZFDDGyH6oU3bFGLc6cL88frThoHccHDeQ0mmY8/8Vidfik1IAxzUqrXyVpdpTCBPFgJifeC624MdF2o5kn7eZQ5cSRxvLTJOJ3/9DDwUqkXF3l80oBB4qRPqJFWKenF1/b+caqGLoCBAgH0Na/QQWOEjHdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iTxLrLvn; arc=none smtp.client-ip=209.85.161.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TuUiXz21";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YtuJQkF9"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8CEFE7A00A7;
-	Wed, 13 Aug 2025 10:33:13 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 13 Aug 2025 10:33:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755095593; x=1755181993; bh=B7/L2MuZMI
-	am+ukEy3eFsIFkyAG1mF2jQRrNtamb29k=; b=TuUiXz21yPQl9j2MtpaXKjODbg
-	0ebSI4iCzFZdeOaOgBgOAK2uvaKhxZs/kSYI/4BHH9VJ50Hrz/OsOJVM14RNF9Ul
-	EYuBUOpks50x4RhdmDVmstvjdPudnEfYLosixrS6B4j0x6QITYDkst/8yBp/9tbn
-	zVJeY73NP6ERNLIr8bK5fLZ8vzzwNxayr1E9SyicLnm2IicsYnMaunqizfY3e8JU
-	v/OS+qsfsGKa6TraqkyZM4aTzpDsgy51kBG4oWAS40TIb1xlBcIc/VhEzubdFvTF
-	PeAcK69Lu2NePI9dlowGWob3X46FhDvEIEnNTp2ZffOloITGIQ2Odq8UJNrg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755095593; x=1755181993; bh=B7/L2MuZMIam+ukEy3eFsIFkyAG1mF2jQRr
-	Ntamb29k=; b=YtuJQkF9JhocRxMtuL975WALv7hn8zZnR7QGxW0AXbVKTuR/7LZ
-	RsffqUfUbh7np7+LMjXFmObEW/I9zXgyFYxDgCWi0mtzDXnVMGod1EJQcS/y5Ktz
-	f+ZZjOMmFJmo6UWbvYrbgE6SUOoPAboiLiJ0OvUablRyo7u4x4dAWV0hOySxQWW8
-	8uskZYYOnddGeW2PFpAEwW7eAneWoGK0Eg4MSUUIvDhz1VksoLGDiYfFERP9cRMD
-	F6RcCVBjGFhM0qjiCvKBDWQw3mW3s5mneav/fRG1Yi6m1TP9c8G4vmP15RmaiYEJ
-	D6YXcEME/rEzPZzqqMLxz4CtLE3NzS+Vo/g==
-X-ME-Sender: <xms:KaKcaC2iOIUdjOK0ffV5oplRTX-lYlF4piBAotIzdhA2eq0TOEtHiw>
-    <xme:KaKcaPqIN5A_zjmWSYmTQsZUazFF2iaV2LCDM6EsJiZgLTw07jWJuAHI5r5P_sG-J
-    FZ6m2bx-yxzimNkIg>
-X-ME-Received: <xmr:KaKcaHf8TTjvJYHPMEzMmEOCK5kl-U_qy1ObkEFEWPbsiW-h9a8EiO4ip03AHhX_UlQcukeN_uWyurgDXzJ2ZhK-9N88bJtr1rx15Ds>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeekgeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepkeffiedugeetvdehffevffeuteelhefhieevffeuiedvvdekkeffffdvieeh
-    ffdunecuffhomhgrihhnpehgihhtqdhstghmrdgtohhmnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsh
-    hunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehtihhmuhhr
-    sehkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:KaKcaGqe_KYiRPsJ0c3Q9yCF0qJHTy46jKzPBraVGbrV7mZ5FRBaKw>
-    <xmx:KaKcaAH9MFQcAy3D0R3Pq3OcF03jJee7EO3ez89KkX8-ZDKe-8HpVw>
-    <xmx:KaKcaOuyAX8HM-K76KXjphFPhdy2k_iixu24m6uORZTU7nHMcz8mxA>
-    <xmx:KaKcaKU2SXBMhM2DPquJkHNMjAI0H9Pe45p6u9xcHPyiulhpCmf-KA>
-    <xmx:KaKcaG_-C5OlwolQCxxaYTOK1xxLjQfeykC6Cl82MhFKZhFvKEKUpy0B>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Aug 2025 10:33:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Timur Tabi <timur@kernel.org>,  git <git@vger.kernel.org>
-Subject: Re: [BUG] suppress-cc does not support multiple keywords
-In-Reply-To: <CAPig+cTvCLU3u5y23HSrbxovs8cjcJdOUj0e1G9Rg4F1AP0jAg@mail.gmail.com>
-	(Eric Sunshine's message of "Wed, 13 Aug 2025 02:34:45 -0400")
-References: <CAOZdJXWaC2U_YrwuDcA0x3iUeF_uJ658a93cTfdLftEXYRB52Q@mail.gmail.com>
-	<CAPig+cTvCLU3u5y23HSrbxovs8cjcJdOUj0e1G9Rg4F1AP0jAg@mail.gmail.com>
-Date: Wed, 13 Aug 2025 07:33:11 -0700
-Message-ID: <xmqqfrdvp9zs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iTxLrLvn"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-6196c753e66so1119243eaf.2
+        for <git@vger.kernel.org>; Wed, 13 Aug 2025 07:38:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755095898; x=1755700698; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qlp/FwMvBGKnNx7ZUzaBBK6GlWLsBG5YEN/L92dXFrM=;
+        b=iTxLrLvnaYox4MWkyvT+szK9vD+VuVtkC9thyE7rpkJeNp8SW2AP+qtlnekWkmuHWL
+         VfzEXmhvIBDITTcROQGMNgTOFS4iHzYPDvFDd6AIz744OPpZAVDTabWMQkHM0a5ivgG5
+         ikEKr40POnrTLwwvsmLpZB1TxZw1i/JJf09059nbWu7Q6c4IxO7u/02N834KYSLmE0TR
+         4a6Dar85sK7Y6pM2QtZBUpYP4bgoZAxNc82SFYbTJGV50J5zrOrzM22qesc1nnezlpoI
+         V/qJqAlk2eojm2vlbmq9BpXVez+cBs2LFpHHcTWuLYSFsNRoJF/y5l1hVSuvHb+Jq2oE
+         lkWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755095898; x=1755700698;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Qlp/FwMvBGKnNx7ZUzaBBK6GlWLsBG5YEN/L92dXFrM=;
+        b=co/nvSKBox8MGwO2MLhLRGDECQp5JK/ooIZ7YCmARGPpTdmQ6R4cMKNZDUUzEcNlNV
+         bZ1uYd9h/uvyx8QfpH7AEr16Fbg+Tr3OdWEMydHrx4PdRJpM25dqiMBetcL/6xTBVVTc
+         HctQG8dU5sym+JWlwGVBYJjQP8lYTs3Hg0O+woDD2OsYGZN+UwbtwC2QEHG4XSXY50bq
+         vjYE5g3Y8U54cCwOns6TbP6f5drKAhmmDPtmr9A/L3VNOfasu1Fz+m/W2xKdhUFlHDBg
+         EtpLPlNiOoixdIgkaMquahP/G6xMH3Qz2sWf4cwy/Pl3vViTOAe2p167A8d8XSG1Rqyy
+         6oow==
+X-Gm-Message-State: AOJu0YyPaXfor/4MfX4ew30j98vWfefUu3OmtY2R0+ngffjP1Fw1AMWR
+	MM1LQgM0ydQ/Pf3VZDWn9Nsj2MpdGoXfQZmVjZmumR2RbXt6muV86s8q
+X-Gm-Gg: ASbGncvYmSnJ4EsNWSNuLtGAwpLuxI6/5mofgLCKjac/u0UFIN90Wer2gb6OpOrrCmh
+	CS3RA8Fcee2UE9hAl/QreXeyrcXZU0cUxujak9U2VYjnDs93q+nylr9tvRexz2w7w4QSd4rJIgN
+	GZ3XYBD3rgZtU2Oo3Sk1HLYdaSVcvaIXMVE8zLvDrTteDVR0MRpproVlwCQYydXvukKFFervs42
+	4XVX3LRJNF8+KxXEf2iy9614pNCvgKVt+8QS+a6/w1Jeq+La1+FjEgP7lVLXLVtbkUHAP3szlIr
+	flboKC5ouILgnLndfd8nIk5kundodVYzcXHIOA1ajI0SCOIV14jnNkNdDVfkhRVb9XKleVYLBqa
+	NfCdByX39uzkG8kESOI3tBbRM8Q==
+X-Google-Smtp-Source: AGHT+IG8T9i3cYZaGVsSO4NZ/DF3wCwhZ6dQFYyexdwrNN/fuUpxxw7u7+Sj7PVWmBL2VTDQRuTSwQ==
+X-Received: by 2002:a05:6808:1905:b0:434:b6e:52a0 with SMTP id 5614622812f47-435d41fcf44mr2219315b6e.22.1755095898023;
+        Wed, 13 Aug 2025 07:38:18 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7436f96e057sm882997a34.31.2025.08.13.07.38.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Aug 2025 07:38:17 -0700 (PDT)
+Date: Wed, 13 Aug 2025 09:38:16 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>, 
+	Junio C Hamano <gitster@pobox.com>, Carlo Arenas <carenas@gmail.com>
+Subject: Re: [PATCH v4 0/8] reftable: a couple of improvements for libgit2
+Message-ID: <tea72qawkdmsqoualurcjbdaonjfwjjk2a3fehcm7nmt2rdmbk@xyhkwpapmwcw>
+References: <20250801-pks-reftable-fixes-for-libgit2-v1-0-f446e1c33cb9@pks.im>
+ <20250813-pks-reftable-fixes-for-libgit2-v4-0-42b5544c8e2a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250813-pks-reftable-fixes-for-libgit2-v4-0-42b5544c8e2a@pks.im>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On 25/08/13 08:25AM, Patrick Steinhardt wrote:
+> Changes in v4:
+>   - Adjust stale commit message.
+>   - Fix a typo while at it.
+>   - Link to v3: https://lore.kernel.org/r/20250812-pks-reftable-fixes-for-libgit2-v3-0-cf3b2267867e@pks.im
 
-> ... If there is any "bug", it's that the documentation does state
-> that you can specify --suppress-cc multiple times (even though you
-> obviously can).
->
-> [*]: https://git-scm.com/docs/git-send-email#Documentation/git-send-email.txt---suppress-cccategory
+After reviewing the range-diff, this version looks good to me.
 
-"does state"?  or "does not state" or "does state that you cannot"?
-
-I guess you meant the second one; some other options like --to
-explicitly say "multiple times", but many others, this one among
-them, does not.
-
-The existing text
-
-        --suppress-cc=<category>::
-                Specify an additional category of recipients to suppress the
-                auto-cc of:
-
-does make it clear that <category> given to a single instance of
-this option is a single category ("AN additional category").
-
-
-Perhaps a minimum fix would be something like this?
-
-
-
- Documentation/git-send-email.adoc | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git c/Documentation/git-send-email.adoc w/Documentation/git-send-email.adoc
-index 5335502d68..b959e39257 100644
---- c/Documentation/git-send-email.adoc
-+++ w/Documentation/git-send-email.adoc
-@@ -403,7 +403,9 @@ Automating
- - `all` will suppress all auto cc values.
- --
- +
--Default is the value of `sendemail.suppressCc` configuration value; if
-+Can be given more than once to suppress multiple categories.
-+Default is the value of `sendemail.suppressCc` configuration
-+variable (which can be given multiple times, one category at a time); if
- that is unspecified, default to `self` if `--suppress-from` is
- specified, as well as `body` if `--no-signed-off-cc` is specified.
- 
+-Justin
