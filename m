@@ -1,108 +1,143 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA63F3009D1
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 21:40:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38683009F0
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 21:46:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755121224; cv=none; b=nC/QZPw4gZ4P/IggoszyT5D/KWX9K62sDw+YQWLhLz56T6K0s6dgvukkazF5xD7N5VjvLo9t3UtkFP/n9Fjtaso5LYvaewo6GcuBwzlIfGeIqqb/+PMj51iv44ABESKWYjFyz1znWKjDgDk/aNB1fTgiDx/ZBS2bKa6Y1XESoKk=
+	t=1755121594; cv=none; b=CMqUtlGeU+k98flXdxbxwLdGvpcXiv1DUZRkWish9LO/IR9bnzu5zDLcSuCb5EGUlUmSO+DS5S/vxmNxZhxJzdsqBCbSuQoTdNGoDzCbFWPf57JOb5jSd/xrG3LWoMTye1q5LmMp9bFcjmc/lss67K2x2AJk5QK9EGd5615BWF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755121224; c=relaxed/simple;
-	bh=JgcKev+1gBpliyCC+upW4OtGP6YYYW4AlbaOvsT9k7c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nNbTPiVecot/l5MHSwOWhljREv9z2E7UzXCwrMPS8NGxkETv2yCRiDOIjWWORIYfmbNHLgSxkdFnjdsp2SzA3Q3wcvzdsfI/7gw+7ndcCnLJnRjaEkEHwQ4Vl9nbTMYDTfFWqJzZ947nQh0+LtjUIEfEyRTpewCowZziZNZP24Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eK2yiRAG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CVz8jND5; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eK2yiRAG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CVz8jND5"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AE5A57A012E;
-	Wed, 13 Aug 2025 17:40:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Wed, 13 Aug 2025 17:40:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755121220; x=1755207620; bh=2BUoRV11xE
-	h4O5XCE3skB94dLwcfgzn5paV/lqfawm4=; b=eK2yiRAG/oZA1bk7SiuerWBiho
-	nj5TdeYoz+rHf0/Tz1+u7Fj/IXxgn1FQhOCZMvh9/KnCPiUX4UDjAcoI6KJI/J6Y
-	LxXeb8ElA1p3m2W+oZsdVTV0hEXcNEGpR41ZSzDuoZDzOe35uxzRXRntLXm+RlJs
-	hRmzEk57XzUGpyokQdjsQ5sbYnNNDsoLKRHmqshYM2MFlKQL8QO2fHUZ2PURnoRd
-	Oc6Mvy1UZ8lorG+8g88YqY+ceL3MprIRZW4JGbn5YDBNdDoCGzxzQngz6DPO+u9w
-	J0WUGOmOvDm54LlAB4T96u6TEtguZYMKPOo9umPc4z3cwKVSnyaxRav1RWkA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755121220; x=1755207620; bh=2BUoRV11xEh4O5XCE3skB94dLwcfgzn5paV
-	/lqfawm4=; b=CVz8jND5tVLRYKONUqrnnxjiUFTFC3CJLmb2FeTkWzwSo/ueLSl
-	u/wb+XfANpCC96dXeTMa9Hvd/bqAv5L0xuo78lR8NQOrvJTBdDzqSiz3+IS5Y7vC
-	a37KR7NUCjFXTd74QcOWJwd+IPzTxroasWFPYoUvylHvODWftqDt7oX4IELW085V
-	dy5hVCcM6tkn9PjFphuuhFnzZHSV76PvMQg/VEDese5QQvMPcoRZei3yv26+BFAK
-	gtHpvnDGPvIsN4RapKoMOjzMFAlb3YdiAF3XnmLCFSwZcJQEv7oRI+Lkd94zdR9L
-	UpyzI0nvUZ3euInCbKT/Kl6JTiquufJh/jA==
-X-ME-Sender: <xms:QwadaNzUC0_Y1KDQDdBQvcvzlSGqwfwLF0KOdxJJqgGy3_UZGSqOEw>
-    <xme:QwadaOAYjbIUjoCzZelHGQV0RHqDFOAYKGKjlKjJSGalvra4tRrHFWwGQQ_2f5xOq
-    WcDcZChe6Kh5ydAKQ>
-X-ME-Received: <xmr:QwadaDf2HIgNvt36aoXmdC9cVi2sHl_Z54EFDEmrUdSpiCXDngZFS6_tRnq1e1tiEKEN302FWW1L1T1bylidh6zERbfcZidjFrrGGwo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeelfeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhr
-    tghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjuhhlihgrsehj
-    vhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:QwadaAm2RrSfXGohl98SdnhHaXNSGVMO8dT0mFkK4RIwXjDq0zDUgg>
-    <xmx:QwadaCGcweYGwfRnHM_lTLb81O3fB3sg3QxoCDAr1RDVFtJiLHmmxQ>
-    <xmx:QwadaA78ZKplF-VRkEli2MsJ1vfcwAUBxSQBxoGhAoJQeUuL9MlQlw>
-    <xmx:QwadaClUC1fuANEhTtQdYQGij28Va00ZDEgChX88fvluywHzLdJ4tw>
-    <xmx:RAadaAsDtV31cqvpt1V5fVgp-qtMv8Uj5vLXuS8ow0ZZ2_v1ncLl3ocG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Aug 2025 17:40:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,  Julia Evans via GitGitGadget
- <gitgitgadget@gmail.com>,  Git <git@vger.kernel.org>,  Julia Evans
- <julia@jvns.ca>
-Subject: Re: symmetric difference with --left-only vs. range notation
-In-Reply-To: <CALnO6CBOWTCd-cREfGYL8DPPd=S-s3Y6s0cgwvBzCJZr6E6hvA@mail.gmail.com>
-	(D. Ben Knoble's message of "Wed, 13 Aug 2025 14:55:30 -0400")
-References: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
-	<pull.1949.v4.git.1754702057.gitgitgadget@gmail.com>
-	<105a65e6e7121ac6a9a8a1d0b4f3217495a9f5e7.1754702057.git.gitgitgadget@gmail.com>
-	<10372e00-3bb1-453a-bb62-332aaa935b24@gmail.com>
-	<CALnO6CBOWTCd-cREfGYL8DPPd=S-s3Y6s0cgwvBzCJZr6E6hvA@mail.gmail.com>
-Date: Wed, 13 Aug 2025 14:40:17 -0700
-Message-ID: <xmqq8qjmc33y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1755121594; c=relaxed/simple;
+	bh=asIAgs4nBl5S/nobGQpSTxTgs1H8Gp3MvyOwl+/a9do=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fpXDB5ajTVGXLEJDP9ENAVE9xTjhS0hBmrCeyVNfrG1Srf4qBbwIx9kJksuCXKbsTsVvb3Y9KJS4cAhgZNILQJhkQVmKXjIndZzY3VfjopjsVMkYsibWYUg/yyDXfzzWEJYFxhdLiob5LJNQn6NTpFwZUAisbbrWyZaDDBr5dnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-70a928158a8so714366d6.1
+        for <git@vger.kernel.org>; Wed, 13 Aug 2025 14:46:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755121590; x=1755726390;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=asIAgs4nBl5S/nobGQpSTxTgs1H8Gp3MvyOwl+/a9do=;
+        b=hgwhevUC60JzTdvrX5VhyDGzpY1kusrhuHjws0I0BwcQ9/2xE4fGbjcnwucGIFJiGi
+         XqbpBGqh5AUDyRfaLbV1kEiVLfoUOeydchkOqP/jubTbTc8iBRiKJoOESRTjmpwt4aa0
+         7laMTGT0aE2sZl5arinqT1Hj5a2NWkEvW5YNTDxAmgn2E5z5ElkA8McwKKNCAhktSkal
+         cKHpmKyqhmdJofmL/4g7jytPq8oN/KAzc9ZHn31vtaS77udGhchA897X6Wh75unGbXGS
+         e/y0hKXZy6lBT282Wr8HBjisv0daAPv4qB9sVhkRf922Zviu5rsFjDoy7nmtdo1RTT7e
+         7X2A==
+X-Forwarded-Encrypted: i=1; AJvYcCX40Oaaqt3cvyQZfFAwCN1enbtbnfZo8lWIk8QF4C9rDsF8JG80wN2SHfyn+iU7dGAsR9E=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyaUeUKbrEpGDgRhMfslSY18kaCmGySVZPk35wmjT2wjLN91ak5
+	8HWxp79ntr8r5igMgEzb9de7JIMWVGC0wQIal3MQvgMKViaUe39u6wN6k2VS6dKyTAAQ8w2RRDW
+	LR7keadTeMlhlhMH37ax4lys1mOjrDyY=
+X-Gm-Gg: ASbGncu+xUroJ0//hTbjWdeTcXNF0dQP5LDU1RMwu7WSGy7NRG73rBabr2RjZVLcCOa
+	bh2OaKgAGTTW3bHxNHv59c4nE7WdN/rNgky0LsVbIAPmeyu26hBj7rCW2r0G90V7uBJcaV70aHF
+	fDqxtWCXoAe4q7d3HQTcSnZHzByxyJ8V/FeNaSeWiSajiq/4ft1+hOivpO4hxPbw+kRYnEdPW2R
+	1L/94QBRtCUFE3fKH6VedCmuRzdx+A6061x6jM=
+X-Google-Smtp-Source: AGHT+IEaua41YaSwh5s97XNM/jWOjS1AsbIYczeEjO/9lTjExiCTiMlUwk3qX8REnTET4chDWuhmWhzcwy8Q8RSZhvI=
+X-Received: by 2002:a05:6214:62e:b0:709:8842:56f5 with SMTP id
+ 6a1803df08f44-70ae7011913mr6158496d6.3.1755121589542; Wed, 13 Aug 2025
+ 14:46:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250807150239.6987-1-lucasseikioshiro@gmail.com> <20250807150239.6987-3-lucasseikioshiro@gmail.com>
+ <f97b712f-95a4-480b-8ed0-174e4f45ff81@gmail.com> <8A30D2A7-3290-4E7C-BBF5-A51AE5AD19F0@gmail.com>
+In-Reply-To: <8A30D2A7-3290-4E7C-BBF5-A51AE5AD19F0@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 13 Aug 2025 17:46:15 -0400
+X-Gm-Features: Ac12FXwMIl8_IwMq_M3Y9yzqzpRnyo_vYIfksxB3Zlq4gQwWnVQkvT7ACPWrKDk
+Message-ID: <CAPig+cQUuXxz2gMMA200D39dqWi6wpu6z43Wkr_trbCwuvTKSA@mail.gmail.com>
+Subject: Re: [GSoC PATCH v9 2/5] repo: add the field references.format
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org, oswald.buddenhagen@gmx.de, 
+	ps@pks.im, karthik.188@gmail.com, ben.knoble@gmail.com, gitster@pobox.com, 
+	jltobler@gmail.com, jn.avila@free.fr
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
-
->     git rev-list --count --left-only @{u}...
->     git rev-list --count ..@{u}
+On Wed, Aug 13, 2025 at 5:18=E2=80=AFPM Lucas Seiki Oshiro
+<lucasseikioshiro@gmail.com> wrote:
+> > What's the reason for this?
 >
-> In my estimation, since we're not using --cherry-pick here, the first
-> says "list (count) the commits on upstream but not in HEAD, since the
-> merge-base (which is reachable from both)" while the second says "list
-> (count) the commits on upstream but not in HEAD." Is there ever a
-> situation where those sets aren't the same?
+> Basically, filter out duplicated keys. This is also helpful for not
+> repeating the same "key not found" multiple times, as suggested by
+> Eric [1].
 
-I don't think of any; let us know when you find a case that the
-above does not hold true ;-).
+The suggestion you cite has relevance only as long as deduplication is
+the chosen implementation scheme, however, Phillip is arguing that the
+deduplication and key reordering logic should be dropped, hence, the
+cited reference isn't relevant in light of Phillip's suggestion.
+
+> > If I query three keys from a script then it is much easier to parse
+> > the output if I know the keys are going to appear in the same order
+> > that they were on the command line.
+>
+> This assumption would be a little bit broken as one can ask an invalid
+> key. In this case, this command will print the error to stderr, and
+> proceed to the next value.
+
+Yes and no. While it's true that a caller might ask for an invalid
+key, the primary (and useful) purpose of this command is to facilitate
+scripting. Once the script author has "debugged" the call to `git
+repo`, then the output will be predictable. Hence, although you make a
+fair point, it's not a strong argument against Phillip's
+recommendation to drop the deduplication and key re-ordering logic.
+
+> > If the command re-orders them my script now has to check the value of
+> > each key which results in a bunch of unnecessary string comparisons
+> > because it cannot determine the key from the position in the output.
+>
+> In cases where the client don't want to compare strings, it is still
+> possible to ask one key at time, just like other Git commands (e.g.
+> git var, git config). Since this command won't return too many values,
+> it would be ok even if the user requests all the possible keys.
+
+Generally speaking, process creation is slow. Process creation on
+Microsoft Windows is especially slow, excruciatingly so. Authors of
+tooling around Git often pay close attention to such matters because
+they don't want the functionality provided by their tooling to be
+slow, so we ought to be weary of a counterargument (such as the one
+above) which suggests simply running the command multiple times, once
+for each item.
+
+> > While we were producing json output there was a need to de-duplicate
+> > the keys when that output format was selected. However, we no-longer
+> > produce json and in any case de-duplication could have been achieved
+> > without sorting the input keys by using a hash table, or, as there is
+> > a small fixed number of keys, an array that records the keys we've
+> > already seen.
+>
+> I still think that it would over-engineer this command.
+
+I don't think that Phillip was suggesting dropping only the reordering
+while keeping the deduplication; he was merely giving an example of an
+alternative implementation which would accomplish the deduplication
+goal, so he wasn't asking to over-engineer. Instead, (according to my
+reading), he is suggesting dropping both deduplication and reordering.
+
+> If I follow
+> this path of returning the values in the same order they were in the
+> command line, I think it would be better to just allow duplicated keys
+> and multiple "key not found" errors for the same unknown key instead
+> of increasing the complexity of this command.
+>
+> What do you think?
+
+I think that's exactly what Phillip was suggesting: present output in
+order requested, no deduplication
+
+I had suggested the same back in [*], but I also said that I could
+formulate arguments in favor of either behavior, so I didn't have a
+strong opinion. However, Phillip has presented a good reason to prefer
+"output in order requested, no deduplication", and I do find his
+argument compelling.
+
+[*]: https://lore.kernel.org/git/CAPig+cTuiUy=3D+2Jf1Lrp1gaM03_zPf8EFMVSKmS=
+hqU05t-3aWQ@mail.gmail.com/
