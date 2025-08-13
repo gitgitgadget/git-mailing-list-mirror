@@ -1,81 +1,145 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D802D2385
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 06:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA502D4B68
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 07:06:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755066900; cv=none; b=PxNVDa6Ppe+Rz2/nFfBgfCa+syFKB5rHvqidaECpXO7zmGK4S/D3NwK8f++7Vs/Hpbb3NlJz3F6HEPJKu7YBHgVz7tPHSaHv/lGvtijukwhoDRMx+oY2/l8A5jmodZyfSeNbKvCxYDKNpNfxxjnIyM9hO/XYUn5oTbgCMovFhmM=
+	t=1755068802; cv=none; b=mhwOkLSVje6U2mt6s6/gnpDAKw85zNVA9hYr3Urh0aABvg7WMGIoQAfxZgAbom4KzJh4TaT0CGooK7VkD+iDglEAdw/lha7GBfCdH00MxGGUsS2ML4AXYM8kgRADwqZYnl/jVoO795lKPK5BcitMRhVFQ/BW3ruFb9bLrGw+ZNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755066900; c=relaxed/simple;
-	bh=sPjkE715ld6BL7GhJdhxWQxqa32TFbMLWt1FrqKTaTI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cxgC1y3JXO3FdAfHembGxSjTLJxgEjZnUTGxZmNV9Nb1oz+TTTNcxNTmtCqh4Ve6iL8O57szRmLrqCGoVkccVeS2cLSQa/XOW5azMyZ8E1o8+BwI2vNHR2QN9MFxIxxMoDLHeBhMApKTGRqWBRGRJf1tcM6yxdOn/5xzhxvPWyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-7074a9e498bso2081676d6.2
-        for <git@vger.kernel.org>; Tue, 12 Aug 2025 23:34:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755066897; x=1755671697;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lE+Zcz27Q07jUQPc90zYn8rVQThMX03FCs+F1bfSLwA=;
-        b=RrhXZlSI/Jf3RsHxCKJDuAMHajO6yZ4Rm6LHK5wMyklge9h8vaVpX9ifkKw3QfuK7d
-         7bS9OiaNF4PrwW7CuNRd2yaH6RdQ5uwY/Jr7Ua5R2eBnXTDs8piez4iJTP0JRNAXs9dG
-         s2xuacp2f/mNZCKSTslZHLPdirBP7sRuyuSShzv1Qt77zvYkotP6dkKQm1zrv7RLCm2k
-         1I3ZSNLM1vCzjtK2Zk1NMPwef0Zw+F7hEu2Zr4y70OS7urqDH1GBCTBbusPurpKvD8DH
-         U3V1R2KQgYhhptGbP0IymV0DRBXnJ51EUtI00qsYOoKlJV2G5nZdjAdydNzIAvzNIHPM
-         NGPA==
-X-Gm-Message-State: AOJu0Yw3o7mdUUyevfCdhqrvqLGaMvy9ec97HkM3BEgU7ZNqzDEM4jz9
-	suaw2QIvv2GYKzLKG1nOKtnjuOf/gT5k+HhY0G4rojQ85Jtg0xhkizvCfoYhk1HuQv7TaBYl8p6
-	kSKPK9xeNO1cOovPeSqY+9cpochDmKN8=
-X-Gm-Gg: ASbGncvGE2+hyjIclGIz7Wqa96bgEHu1tz9lJ9T5OekCLebV9lqd9nIGrJ9NQRVXbxY
-	iR0xeJUoGoxOiFJY8tBx/yXHNMZIdf1hVQ1ozg1yBRTPMP4iqePWB3wUCoz/dOemHBYEHl/Yvb8
-	d4SZj9hsxNFvIVxf1RSm/Q9wFAeEEy2VjpgQb9UTlBQBVEpTlrpuvwL+Xb56iqKYHjTKWpd37QJ
-	EAsAK4JN6mzt8IaP/P/QM1SHZ/fqlkx1I0KvEfdJb98ZfNGfAM=
-X-Google-Smtp-Source: AGHT+IE4x/vWpPSO1Mzj3tRuc7d5LYHHKlnLqreDQB6jC1+5Zgzjow6rzLXKHTYHWFpEx8FQsXqXERIUwac+mi7TjtY=
-X-Received: by 2002:ad4:5d41:0:b0:707:4d59:cc85 with SMTP id
- 6a1803df08f44-709e8992b45mr9638646d6.3.1755066897246; Tue, 12 Aug 2025
- 23:34:57 -0700 (PDT)
+	s=arc-20240116; t=1755068802; c=relaxed/simple;
+	bh=5F53e9O/gWzUyTUfo+4RHOmvynkoTHJ3k1QWYjt2iaw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OYr6APaMs2r/HFZb2fa6xHYLF2MLyUucnj58s/5LP6jN/2w3jxig5wjkzwgTuwzfdMa3YzkYLtquRj/gqIGkpVlL1Tq80rLCGyYNsMK/lJ2M0ii3b2KVhVfHuEvpWzMylZ6BPkq0hD/2rEHGv5rGHnlK811jaaSe+DKdy0yYKlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l6Ib8HHb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ac1zIblC; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l6Ib8HHb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ac1zIblC"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 808BB7A0126;
+	Wed, 13 Aug 2025 03:06:39 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Wed, 13 Aug 2025 03:06:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1755068799; x=1755155199; bh=HGuLSy5Ssl
+	3Gkx17hAB/Q4N0dE1glm+0AudGG7+sEMQ=; b=l6Ib8HHbEDwmR56MndFSJqcV9H
+	ABOc5S/4+AK7jsuDX2ydJkRjb+/ZUc7JA+q9OTt2sc81GVm7tyWmtZjatbMygN9l
+	ygz75wPidnbXs2PM+4zf36IFPEgVlpPsi88uPd7LhHlr5mTssCsF+xcaqO/eSnN0
+	YKl7Fq1WxA3M8KvRw0A83jMj8LvyhMDyB4YpbnAuICaovYH57hdG+mBbSSwh95kA
+	xfbXBMFB//+naEaS10L97xScYI7plfOvKLLBL9G+ZWj3ockKkmIxhGBNnmQUmzsu
+	GrmG2Bk00FYOefYX+coJpCP0T/lJmXvwp01gpI7BACBctooB7lczzWbXBy6g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755068799; x=1755155199; bh=HGuLSy5Ssl3Gkx17hAB/Q4N0dE1glm+0Aud
+	GG7+sEMQ=; b=ac1zIblCJ8je8m9Tj/tTC7tHEPNZdV3UrwlkapzMGzLDA/fLtaO
+	Z0OysPhI7IMb6b+Oryu+WR/Et3fqCJzuIJUt0rU7fqB0UTQvk8WNsH0n9XZo8gmV
+	yYVbDkGuoik3JjoAlvHbeTFpR13O4ryB8Q9WOnTW3hxw9VQOCBZUfJXDFidU3DyW
+	Uw0A6/Osc8P5YPXyOJnx3gjD7fNrw0eJEqpgfdyAl4XaG04iwubT+n+F6+YjqABi
+	XbQcIJGLuRj+swxsgw8+8JOJVJAEuWR+t7eKdRE+jBPlnhVQz4FGEqnvyUwEDsja
+	GFfPxx/7uTJX1UjOCb6oES7dR/psr/WPVbA==
+X-ME-Sender: <xms:fzmcaMKktV3BJlwLVwFg_SG13X_2JDK2vO7P_Ef9EX3erO-D2uinfA>
+    <xme:fzmcaPZ6s2v_r1_Xsyvkn33tXNmeB3kyhGlvBs_Wf6-iHMqd0Zdm-KFr66XgBGXKL
+    r_5awd9Fs11IWNSxA>
+X-ME-Received: <xmr:fzmcaGLidrPlNGXyFfdsS1tMT2cLcl18ze99z0scS4xKsAUWH5APGQ7Q2F7R__ui8tCgVF4W1zOynan_Rc9lY5KULW_AMQOaR98CVeB06jY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeejheejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:fzmcaFDru1FQz4SCTAgmW6sSbKc_N25i-kdgIAKConFfURF0zFSAWg>
+    <xmx:fzmcaDqSvvqWWh9rDkq_cHT_9fvIPzvJ1QIJzJ-_Aww5VfmBIK4qWw>
+    <xmx:fzmcaIhoz4Fxup0DQqQGXmPANhLxouCVvlMnoMhO93hvzpT285-Qdg>
+    <xmx:fzmcaIByyE0GltWI6HTKHQY5qwqWdnIClrkqC5voNrahSo7dDkAKKg>
+    <xmx:fzmcaAM_tVXI1C5FYS9SIQevhsmIZjKYt46fj1pyaShIvXVJ5c_N4QkP>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 13 Aug 2025 03:06:38 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 8a635fff (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 13 Aug 2025 07:06:36 +0000 (UTC)
+Date: Wed, 13 Aug 2025 09:06:33 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2025, #05; Mon, 11)
+Message-ID: <aJw5eenXu5CO5z2W@pks.im>
+References: <xmqqwm79x7ra.fsf@gitster.g>
+ <aJs5Gee3ZVCJX8dk@pks.im>
+ <aJtSqgJ7w02Ox74w@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOZdJXWaC2U_YrwuDcA0x3iUeF_uJ658a93cTfdLftEXYRB52Q@mail.gmail.com>
-In-Reply-To: <CAOZdJXWaC2U_YrwuDcA0x3iUeF_uJ658a93cTfdLftEXYRB52Q@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 13 Aug 2025 02:34:45 -0400
-X-Gm-Features: Ac12FXwVqq4xafh3sESm-60auXKFbKzbJIDmYdMnOLZIVRWqRoUved30bTjdJgo
-Message-ID: <CAPig+cTvCLU3u5y23HSrbxovs8cjcJdOUj0e1G9Rg4F1AP0jAg@mail.gmail.com>
-Subject: Re: [BUG] suppress-cc does not support multiple keywords
-To: Timur Tabi <timur@kernel.org>
-Cc: git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aJtSqgJ7w02Ox74w@nand.local>
 
-On Tue, Aug 12, 2025 at 8:06=E2=80=AFPM Timur Tabi <timur@kernel.org> wrote=
-:
-> I hope this isn't just some user error on my part, but whenever I use
-> the --suppress-cc option, and I specify more than one keyword (e.g.
-> --suppress-cc=3Dauthor,self ), git complains that it doesn't recognize
-> the keyword.  It seems that it treats all of the comma-separated
-> keywords as one big keyword with commas in it.
+On Tue, Aug 12, 2025 at 10:41:46AM -0400, Taylor Blau wrote:
+> On Tue, Aug 12, 2025 at 02:52:41PM +0200, Patrick Steinhardt wrote:
+> > > * ps/commit-graph-wo-globals (2025-08-07) 10 commits
+> > >  - commit-graph: stop passing in redundant repository
+> > >  - commit-graph: stop using `the_repository`
+> > >  - commit-graph: stop using `the_hash_algo`
+> > >  - commit-graph: refactor `parse_commit_graph()` to take a repository
+> > >  - commit-graph: store the hash algorithm instead of its length
+> > >  - commit-graph: stop using `the_hash_algo` via macros
+> > >  - commit-graph: fix sign comparison warnings
+> > >  - commit-graph: fix type for some write options
+> > >  - commit-graph: stop using signed integers to count Bloom filters
+> > >  - trace2: introduce function to trace unsigned integers
+> > >
+> > >  Remove dependency on the_repository and other globals from the
+> > >  commit-graph code, and other changes unrelated to de-globaling.
+> > >
+> > >  Will merge to 'next'?
+> > >  source: <20250807-b4-pks-commit-graph-wo-the-repository-v3-0-82edef830a1e@pks.im>
+> >
+> > I don't intend to reroll this series for now. As long as you are happy
+> > with the signedness-related patches I think this should be ready.
+> 
+> I am still not sold on the first four of these patches, and I share
+> Junio's concern[1] that the "int -> unsigned int" changes are not well
+> justified.
+> 
+> As a practical concern, the "max_commits" and "size_mult" values should
+> never come even close to INT_MAX, so I am not sure that the wider range
+> is giving us all that much. I am a little more convinced by the Bloom
+> filter changes, but since they are purely for debugging and also
+> exceedingly unlikely to exceed the signed INT_MAX, I do not think they
+> are absolutely necessary.
+> 
+> That said, I don't feel strongly enough about the lack of justification
+> here to hold up this series[^2], so I am fine with it moving forward if
+> both you and Junio are happy with it as-is. But I am left wanting a
+> stronger justification for the first half of the changes.
 
-It's probably a case of user error. As far as I can see, the
-documentation[*] does not in any way suggest that --suppress-cc
-accepts a comma-separated list of categories to suppress.
+Fair. I don't want to spend too much time on this signedness topic,
+either. So I'd go with either:
 
-> I was able to work around the problem by specifying --suppress-cc
-> multiple times, once for each keyword.
+  - Taking the signedness patches as-is. They don't regress the status
+    quo and allow us to warn about future unintentional signedness bugs,
+    even though the fixes are mostly of theoretical value.
 
-Indeed, consulting the source code, this behavior appears to be
-intentional. If there is any "bug", it's that the documentation does
-state that you can specify --suppress-cc multiple times (even though
-you obviously can).
+  - I drop the signedness-conversion patches altogether.
 
-[*]: https://git-scm.com/docs/git-send-email#Documentation/git-send-email.t=
-xt---suppress-cccategory
+The more important part for me is to get the second half of patches
+merged anyway. So while I think that the first half of patches are nice
+to have, I can live with dropping them.
+
+Let me know which of these options you prefer.
+
+Patrick
