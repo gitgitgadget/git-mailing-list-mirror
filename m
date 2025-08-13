@@ -1,82 +1,82 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030142D29AC
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 06:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415EA2D29D7
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 06:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755066356; cv=none; b=nXV6aH3FraBvzVWDGsFFVXhf5+Wf0J16ApDHFomzXcgYtJzkeII36cGJyMTQX6ZTiMmwQ7Oco5oAYTxFu9mRHbbUvyQb6KS/7PXUbNqsvl/bRhm6njHPyDCpTUZ5YkSJKcIL4FwCAar04Pf7mcwImR8kEaH312AL5BaEXHisYZ0=
+	t=1755066358; cv=none; b=TMMRWsfO46Rt1G55t/VWON4gq9nX6LvhRzeBIJGsztYe8vsRHs1ug2FfsfAYWYL5/BrcAZYTRnVUt//evEHDXcLls8EcWhPgQY35CwXMBINeWk/P3BY0cGNPaXxqr4UtDN1/l0Fv+JBZ2CzX9sqaHYYKguuYB1hiAzFDQfgXqWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755066356; c=relaxed/simple;
-	bh=jveQM3VHaNUtbydlkFR9cwgva5Zk4CwcET+zU+T5gP0=;
+	s=arc-20240116; t=1755066358; c=relaxed/simple;
+	bh=lVGN48HLJcezHshjEpXqQkvdCS40G0ayuyjzP5emQ5w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AI8LNmHkooE56MKOAN0dsFYcAz/LSIWe/2T20j0rktaFs9i67d3S1rX4RwxmHTfp2VNGrHOGxPan3bFSHNHqS6alrpRhINwdDs5zvnDzP68aE3TzVVLGafVqmnBVepxe6xB79X60bk1qSTiwhVkw8EG6X5yDt/0w/j2ezf7DMJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G24voUE2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Aq6qYa2v; arc=none smtp.client-ip=202.12.124.152
+	 In-Reply-To:To:Cc; b=FTaHNmwxhFb0i5xYx51bzHiZsWXvQdNrprB3GHJWuGu3HM8KJCYMVlAQsmZ5xlItmtdWKG4H3kDIq0MkbBbf7wnmwPPn4vzf02Qn1q5hMAe9g237/xxK1UM+drJ+l0nXNg+8/5Tm8BMOND0nouLAycwSuR+P6OJ+63/QoZjy9Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lylWYsY6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MP6+yioS; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G24voUE2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Aq6qYa2v"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D51407A0174;
-	Wed, 13 Aug 2025 02:25:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lylWYsY6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MP6+yioS"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6342F7A0116;
+	Wed, 13 Aug 2025 02:25:56 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 13 Aug 2025 02:25:53 -0400
+  by phl-compute-12.internal (MEProxy); Wed, 13 Aug 2025 02:25:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755066352;
-	 x=1755152752; bh=kjmdt/qxAeRDMGjbEG31Z6Ksa/TXTRWBbuxbawNeLaw=; b=
-	G24voUE2gBnpuDWjiDZNJJn/DVqr2lGB7JjVHqi1G5+GNRTU3Bncr9MsxyY8uZ1x
-	W4oN3YNhcx++KoahoVNZjjQTSDThGilXknKlc/MBZgQRf61B2RiJusTQjmC6aQX3
-	SI1vrkNDh5cFXj+aym1CylKFuyikGx2ocZEGVfWv4lzJ+nkqI7drRS2DX3nKyK/h
-	egYJ22w4NudNW0l+ftHj7sedaManLOQc4A4Yc18Fikpizj4/uprfjtbgcpoquK/S
-	8h/9+QyVVVFsuJ0xYdT+H+JU5kbynEymUn5QefWAqnW6sHhA5Sk/iL9EHwVJxeh4
-	hfaxBB23GP8Zp56E6bkWDA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755066356;
+	 x=1755152756; bh=yUNybHW16jZijYuT8hmJS2Z78Wtwsmq3+oCn6GK+coc=; b=
+	lylWYsY65piCxHO9z3JcIHHVddhn83zRtVvCpNQ18gqRWI89BhDYkebHFQBe3NWV
+	bRu9PsBX2PNGz0RRfASdbH0+j2PwRsD4w7kUOGWLlx52bdaW4anKipnFNVjlI8ZB
+	htaOPVI6pAifvkjeRVLx6TM19O2gjd2HFOx+dzS48wMcqd7iWrH8+m8JPJnblzST
+	iZ5tMCd2pI0nWrZsPQkCZ0zO6Ikx2OfRZfunkcGEiuNDu2T65QoWsCbxBAPbDf/C
+	AtUmr9adJlig54jLHkJiVF0D4iDyIatqYsw+FIsWcmIVA1A1bmgru1Bd5yjBl7y0
+	DK3dD02fyDHcoLO/psQa0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755066352; x=
-	1755152752; bh=kjmdt/qxAeRDMGjbEG31Z6Ksa/TXTRWBbuxbawNeLaw=; b=A
-	q6qYa2vR0grLWzo7fpSNfM0iLaSC75lMd90a5hPi8U6ILH2g4zf+UuvEIp0cbJwx
-	FESfZDPhVRGNw3AdB9xMDtiMZhyy2uvqf5kKQhHrOr9UVrbS+Sn/rwVxG0oh73ED
-	tLX4mT4NOTJHzCdqkzdvKDGcIUmumIqG5xDHKkBSNAxqBKkrPKOSjgk6eXSpikZm
-	+qNsFV4dHChMZljcyDuMPE81nd078MM0ez005z9njU0udjBIDTXE9+JTX7pdJl2v
-	VA1+szAukAUa7d+2cLQ4ZN80sguwH9nJV78BDnGXLaeO40D3g/Ollip9pZ8+Y8Mi
-	zK145aFMFxalnK8UGKBIQ==
-X-ME-Sender: <xms:8C-caMyhWkb2nFu62BftWUtv4VIvvpYtWpm49xL8nsVSUzTmukn86w>
-    <xme:8C-caLy-FhXjX4KIQ6L7C87mq1j5GzxZ-sd4Gh9W2U8ZYPT-_YzMh-K_wTa3yY7rb
-    ZWcH7P_vvwQ3HIuXw>
-X-ME-Received: <xmr:8C-caExI_cyigQiuzloFUVBwYmhCWOssax5ob1FVvBoWyUIeSwI7yMLESumZTFC4-fh084Q-_Y-FrfNR1sXTbo68E5oWULe3E8d51qM4YEY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeejgeelucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755066356; x=
+	1755152756; bh=yUNybHW16jZijYuT8hmJS2Z78Wtwsmq3+oCn6GK+coc=; b=M
+	P6+yioS7bw3CzXh9DqdwB/4pXA2qDYK5iyRvOPkqDo01Y96Rw9nUoeSSG9qkwOiv
+	3kr0lx5t4W0DdCEMj1uoTKxj2rSiDp5e4brKp4n2JDMnBwytpoKBvtrfGxB/PgA6
+	2ok1ZLxuJHaiYYAoNhiuCsB6v3tiQsKxlKaTL7qgl8H8hVjyIioRAmKYjQJ3rnQV
+	jrCS2jMTK9WLNsyE7Y0eYtjcB6N52ZYS2BaZjHm1Nq6cWSAVPXgxr4QuL8W53ude
+	5TimwZbaNZI7Zrs3FrjrCOBDUdS617RS0I4wK9DhylE7YEDDlpkdbpiGvGxaQeLa
+	Mqrtvjsfj+C8glLGKyFNg==
+X-ME-Sender: <xms:9C-caJblmfXBvimnGPZNVmWm95ZSIseHhqGx5I5aEzliU9F_UoEZBQ>
+    <xme:9C-caL4XJjSWX0xD5EjvtkANVYOjc5DPJYx4NVxlqcG1OOYT1wBiAf8AB1WuWY7Av
+    f43ylpW2KBNoWXJwg>
+X-ME-Received: <xmr:9C-caCb6VZppHSAE8zH4djJziG89lSJbK0WzE-WYLBQnK8D1HakklS2UmgHIZOoXnmrFS70SRrSYejwJVYLaQHfvpTsgwVAIBJhXwLZMs-8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeejgeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptggrrhgvnhgrsh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprh
-    gtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:8C-caFbN8ZkOL1gRxPFqRG8TO-wEYOFuHTvqtylHYlc3bm4w_2gwGQ>
-    <xmx:8C-caFULtK1N-G6xm57Ykgi7UI5ohPIe3evRLHOGEcm_i0vRPsIlJg>
-    <xmx:8C-caDh5bDYOEoG0osDHm2jVPqCaTs54n4o_9lYCH7Wylh5MeD-mVQ>
-    <xmx:8C-caDsuKegaEMTef7swKKvsdpnkwePPKb265ClAIerSof4S83K1Vw>
-    <xmx:8C-caEtX4vgItDgsypops2lv4ivSrouWTYLZTmRZZrO9vqOjRbEYAa46>
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtrghrvghnrghssehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
+X-ME-Proxy: <xmx:9C-caChjd7lGWDa4-30k0E2QHGCSCQCOsFwKY2bweBds-T4cSZhA8w>
+    <xmx:9C-caL-Bx1cMWVbe4YV0gG0-5JVmmwYEAXzDhZFfO7B3yk5sGxJSqg>
+    <xmx:9C-caFog0TJTOReyRqpTv5LZiioezxbIhSnCJyuWmep0u9Hq9xAhLQ>
+    <xmx:9C-caLXjhFyOr2eIBBkSNCZlcIg5dtbGoGJieRlV79p9z7Pz8mfWFg>
+    <xmx:9C-caP1WHpoUZf4C0Zgs3X6TnEm0kGJPUbZ-QpvbyXXmz8oPLxpW0wOL>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Aug 2025 02:25:51 -0400 (EDT)
+ 13 Aug 2025 02:25:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id da803e16 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 13 Aug 2025 06:25:51 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9cd9f500 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 13 Aug 2025 06:25:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 13 Aug 2025 08:25:30 +0200
-Subject: [PATCH v4 6/8] reftable/stack: handle outdated stacks when
- compacting
+Date: Wed, 13 Aug 2025 08:25:31 +0200
+Subject: [PATCH v4 7/8] reftable: don't second-guess errors from flock
+ interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250813-pks-reftable-fixes-for-libgit2-v4-6-42b5544c8e2a@pks.im>
+Message-Id: <20250813-pks-reftable-fixes-for-libgit2-v4-7-42b5544c8e2a@pks.im>
 References: <20250813-pks-reftable-fixes-for-libgit2-v4-0-42b5544c8e2a@pks.im>
 In-Reply-To: <20250813-pks-reftable-fixes-for-libgit2-v4-0-42b5544c8e2a@pks.im>
 To: git@vger.kernel.org
@@ -94,90 +94,142 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
  Carlo Arenas <carenas@gmail.com>
 X-Mailer: b4 0.14.2
 
-When we compact the reftable stack we first acquire the lock for the
-"tables.list" file and then reload the stack to check that it is still
-up-to-date. This is done by calling `stack_uptodate()`, which knows to
-return zero in case the stack is up-to-date, a positive value if it is
-not and a negative error code on unexpected conditions.
+The `flock` interface is implemented as part of "reftable/system.c" and
+thus needs to be implemented by the integrator between the reftable
+library and its parent code base. As such, we cannot rely on any
+specific implementation thereof.
 
-We don't do proper error checking though, but instead we only check
-whether the returned error code is non-zero. If so, we simply bubble it
-up the calling stack, which means that callers may see an unexpected
-positive value.
+Regardless of that, users of the `flock` subsystem rely on `errno` being
+set to specific values. This is fragile and not documented anywhere and
+doesn't really make for a good interface.
 
-Fix this issue by translating to `REFTABLE_OUTDATED_ERROR` instead.
-Handle this situation in `reftable_addition_commit()`, where we perform
-a best-effort auto-compaction.
-
-All other callsites of `stack_uptodate()` know to handle a positive
-return value and thus don't need to be fixed.
+Refactor the code so that the implementations themselves are expected to
+return reftable-specific error codes. Our implementation of the `flock`
+subsystem already knows to do this for all error paths except one.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c | 32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ reftable/stack.c  | 37 ++++++++-----------------------------
+ reftable/system.c |  2 +-
+ reftable/system.h |  4 +++-
+ 3 files changed, 12 insertions(+), 31 deletions(-)
 
 diff --git a/reftable/stack.c b/reftable/stack.c
-index 1ce4d90cb8..af0f94d882 100644
+index af0f94d882..f91ce50bcd 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -579,9 +579,11 @@ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
- 	return err;
- }
+@@ -698,14 +698,9 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
  
--/* -1 = error
-- 0 = up to date
-- 1 = changed. */
-+/*
-+ * Check whether the given stack is up-to-date with what we have in memory.
-+ * Returns 0 if so, 1 if the stack is out-of-date or a negative error code
-+ * otherwise.
-+ */
- static int stack_uptodate(struct reftable_stack *st)
- {
- 	char **names = NULL;
-@@ -850,10 +852,13 @@ int reftable_addition_commit(struct reftable_addition *add)
- 		 * control. It is possible that a concurrent writer is already
- 		 * trying to compact parts of the stack, which would lead to a
- 		 * `REFTABLE_LOCK_ERROR` because parts of the stack are locked
--		 * already. This is a benign error though, so we ignore it.
-+		 * already. Similarly, the stack may have been rewritten by a
-+		 * concurrent writer, which causes `REFTABLE_OUTDATED_ERROR`.
-+		 * Both of these errors are benign, so we simply ignore them.
- 		 */
- 		err = reftable_stack_auto_compact(add->stack);
--		if (err < 0 && err != REFTABLE_LOCK_ERROR)
-+		if (err < 0 && err != REFTABLE_LOCK_ERROR &&
-+		    err != REFTABLE_OUTDATED_ERROR)
- 			goto done;
- 		err = 0;
- 	}
-@@ -1215,9 +1220,24 @@ static int stack_compact_range(struct reftable_stack *st,
- 		goto done;
- 	}
- 
-+	/*
-+	 * Check whether the stack is up-to-date. We unfortunately cannot
-+	 * handle the situation gracefully in case it's _not_ up-to-date
-+	 * because the range of tables that the user has requested us to
-+	 * compact may have been changed. So instead we abort.
-+	 *
-+	 * We could in theory improve the situation by having the caller not
-+	 * pass in a range, but instead the list of tables to compact. If so,
-+	 * we could check that relevant tables still exist. But for now it's
-+	 * good enough to just abort.
-+	 */
- 	err = stack_uptodate(st);
--	if (err)
+ 	err = flock_acquire(&add->tables_list_lock, st->list_file,
+ 			    st->opts.lock_timeout_ms);
+-	if (err < 0) {
+-		if (errno == EEXIST) {
+-			err = REFTABLE_LOCK_ERROR;
+-		} else {
+-			err = REFTABLE_IO_ERROR;
+-		}
 +	if (err < 0)
  		goto done;
-+	if (err > 0) {
-+		err = REFTABLE_OUTDATED_ERROR;
-+		goto done;
-+	}
+-	}
++
+ 	if (st->opts.default_permissions) {
+ 		if (chmod(add->tables_list_lock.path,
+ 			  st->opts.default_permissions) < 0) {
+@@ -1212,13 +1207,8 @@ static int stack_compact_range(struct reftable_stack *st,
+ 	 * which are part of the user-specified range.
+ 	 */
+ 	err = flock_acquire(&tables_list_lock, st->list_file, st->opts.lock_timeout_ms);
+-	if (err < 0) {
+-		if (errno == EEXIST)
+-			err = REFTABLE_LOCK_ERROR;
+-		else
+-			err = REFTABLE_IO_ERROR;
++	if (err < 0)
+ 		goto done;
+-	}
  
  	/*
- 	 * Lock all tables in the user-provided range. This is the slice of our
+ 	 * Check whether the stack is up-to-date. We unfortunately cannot
+@@ -1272,7 +1262,7 @@ static int stack_compact_range(struct reftable_stack *st,
+ 			 * tables, otherwise there would be nothing to compact.
+ 			 * In that case, we return a lock error to our caller.
+ 			 */
+-			if (errno == EEXIST && last - (i - 1) >= 2 &&
++			if (err == REFTABLE_LOCK_ERROR && last - (i - 1) >= 2 &&
+ 			    flags & STACK_COMPACT_RANGE_BEST_EFFORT) {
+ 				err = 0;
+ 				/*
+@@ -1284,13 +1274,9 @@ static int stack_compact_range(struct reftable_stack *st,
+ 				 */
+ 				first = (i - 1) + 1;
+ 				break;
+-			} else if (errno == EEXIST) {
+-				err = REFTABLE_LOCK_ERROR;
+-				goto done;
+-			} else {
+-				err = REFTABLE_IO_ERROR;
+-				goto done;
+ 			}
++
++			goto done;
+ 		}
+ 
+ 		/*
+@@ -1299,10 +1285,8 @@ static int stack_compact_range(struct reftable_stack *st,
+ 		 * of tables.
+ 		 */
+ 		err = flock_close(&table_locks[nlocks++]);
+-		if (err < 0) {
+-			err = REFTABLE_IO_ERROR;
++		if (err < 0)
+ 			goto done;
+-		}
+ 	}
+ 
+ 	/*
+@@ -1334,13 +1318,8 @@ static int stack_compact_range(struct reftable_stack *st,
+ 	 * the new table.
+ 	 */
+ 	err = flock_acquire(&tables_list_lock, st->list_file, st->opts.lock_timeout_ms);
+-	if (err < 0) {
+-		if (errno == EEXIST)
+-			err = REFTABLE_LOCK_ERROR;
+-		else
+-			err = REFTABLE_IO_ERROR;
++	if (err < 0)
+ 		goto done;
+-	}
+ 
+ 	if (st->opts.default_permissions) {
+ 		if (chmod(tables_list_lock.path,
+diff --git a/reftable/system.c b/reftable/system.c
+index 1ee268b125..725a25844e 100644
+--- a/reftable/system.c
++++ b/reftable/system.c
+@@ -72,7 +72,7 @@ int flock_acquire(struct reftable_flock *l, const char *target_path,
+ 		reftable_free(lockfile);
+ 		if (errno == EEXIST)
+ 			return REFTABLE_LOCK_ERROR;
+-		return -1;
++		return REFTABLE_IO_ERROR;
+ 	}
+ 
+ 	l->fd = get_lock_file_fd(lockfile);
+diff --git a/reftable/system.h b/reftable/system.h
+index beb9d2431f..0c623617f0 100644
+--- a/reftable/system.h
++++ b/reftable/system.h
+@@ -81,7 +81,9 @@ struct reftable_flock {
+  * to acquire the lock. If `timeout_ms` is 0 we don't wait, if it is negative
+  * we block indefinitely.
+  *
+- * Retrun 0 on success, a reftable error code on error.
++ * Return 0 on success, a reftable error code on error. Specifically,
++ * `REFTABLE_LOCK_ERROR` should be returned in case the target path is already
++ * locked.
+  */
+ int flock_acquire(struct reftable_flock *l, const char *target_path,
+ 		  long timeout_ms);
 
 -- 
 2.51.0.rc1.215.g0f929dcec7.dirty
