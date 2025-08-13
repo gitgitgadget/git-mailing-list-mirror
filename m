@@ -1,92 +1,126 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035922571DC
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 15:38:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D4E27466C
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 15:45:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755099518; cv=none; b=hJoe3mXWnmJ3JEYKFmZju0CnB573gvL3IRsurzBhtjF4vHNeyPw0kaunBP8/gJyKLf85jMucNw7tcP3fJOUxUMwV3sxH98niIm+wpWGrzanGT02gb03SOWRS9A9uT6HY+DwlB4Izb/gPDrTVojpyrudt7zxZRm8m+aRFD2Awat0=
+	t=1755099956; cv=none; b=jSaMFaXC/jBaD3/JPu68+v8ob20h4nY78rGNTieT0xjzJVpZWCEIL3JBON1wpUWZL+6FgembZt0yEEb7xJq3hq0+fBUp3+AZOYYeuzrl5H6d8U04rmjIEc429wT5eIM+Bm++1HChJz6NEuD0eeEzRg9F3Yy+uDPyEQhrF+isiFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755099518; c=relaxed/simple;
-	bh=Q8fXQwIu/QpdL7LvWaMFKy+ZN1yJSMq6Ov985CdvRl4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MEmWE/tszZkLBxDAzFOI4DNtXX51b79Lna7Wm13ivQXVPe1Tz6g7wluivOIgutQuKlpY+SJiayiENEoGWUop+a7RgQ/QGWrTrsS9Ur6UPFM+B36CjxcKMCQQlGgAxTIBpcohDE+sZjPIcgSVycV43gfa5YSuuGMCVhOdBv01Rg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4af1a5aff6eso10430261cf.2
-        for <git@vger.kernel.org>; Wed, 13 Aug 2025 08:38:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755099516; x=1755704316;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ygNI+fZeKSuuhrnSLWrFdQj7yp8v/K4oOLfQkRJKjsk=;
-        b=qzrYdMURTGgJUAwt4m0Exi4D1JO1DrtqExkUl+FC6znDeVz2RcYaulFM2rk3pf9Cis
-         e/y5SmrUODYND1TZFqGTB4i9GuS5FqZul/W+tq0FhiVlBQTIOzJhh8mu/T9jP8YUgCL3
-         VgCTV0KnFtD0P2EDUP3lRK9lNdMX1zkDctMypmk5rY8HbCML+BC3UzSpI9DMow9xFEps
-         qVXa8JMahLFmoAK0+LXgaJdkrd8SNlpdIIUl3IiE9APmjxPBSiP2Nay4vUO0lrdC+bhW
-         tzn6OLG3Vps/bGOhutdEPI+lugs38N+tpgaMEft0Aoq3W5vf1IjLOzaLMmC4eqvPGgla
-         GVew==
-X-Forwarded-Encrypted: i=1; AJvYcCUdDiNnf6T27eymYkzYm0zKgwPXf7RKZAuVG3NbwGvJ8POanQBs3Uc0fjW1xFXoFxHDUm4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzcpikxQ1RZRa6FI3HHmHHZzmIu1DVXRIiSBPhCzj0h2DMhT2Xn
-	boU2GGw2OCE5FWoXAL5nB1cxzcK3aExaL9rfb82+9GvxnDJaluu08ULC3TP4utZWSOFOcR9nc08
-	REIx3z2/dM/bmrpJaSpJlyXJ59HQHACY=
-X-Gm-Gg: ASbGncuKHn2ISzlOvshoq7wyZB0TedcLvM7Hp2SO4Lqo5iHYCPQrml67zHw+KmdeG10
-	LzdrQ7+CaZRgkMHEfEkZ7+1goT9v7WlFR3ugMpBBrodYdLdsZPlZZzCkec8rRicN0360zS5eQ1/
-	HTuVC9cbLXNgP6PsV5VbIg2teJPY1bYQljMlk/MoTjc4pSfbslSd4P0RjqatUZVrclsaO8T+ujQ
-	VYOovcajyltBrxY
-X-Google-Smtp-Source: AGHT+IEwBldnn09DcOTHdZvNbEIRH2Bo2TKA4iHF9zuySH24dJXap46rPMlXQmIavonlpTXPY1o/sVsXeP/POIJ7Z6U=
-X-Received: by 2002:a05:622a:11:b0:4ab:56e5:f7a with SMTP id
- d75a77b69052e-4b0fc7cba31mr21955261cf.8.1755099515854; Wed, 13 Aug 2025
- 08:38:35 -0700 (PDT)
+	s=arc-20240116; t=1755099956; c=relaxed/simple;
+	bh=UOIl+TWSsnVKE/kELykK9xedNWSi1PemBtX6BUJu974=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KMxD5WvQTO8SFcE0ZBaskVO/DuEcfNtDnuGf6c4ty08EdPCVR9HW7pnKjlNzPZZZm2QOj30/i8NeSroNtD5TgEOZ+hXG9403kINld14NrDBPk6fgyDgHYNhb32bM0P5BDz5UcEEYO+qOcB5GibxpEWVLIals7AxZwAAovbmpNy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CDvcZ4s2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R6aT8neL; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CDvcZ4s2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R6aT8neL"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 61D411D000DE;
+	Wed, 13 Aug 2025 11:41:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 13 Aug 2025 11:41:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755099696; x=1755186096; bh=cR5SUikRSI
+	A42GlOJnK4k15y5CAL3khUgQ8FITQUST0=; b=CDvcZ4s2t6fw/xUIMcEia6SQkF
+	1eveKgyQVVbwOClWgZ6enAv0UDCVUNoQvm/5ZTBdnKv1TLWS1L5W5e6oL5gO24YE
+	8xHxvVO26HNWEhmWVwsQO2M3M1aVZmgiGtqz7r/UI0gTecThg9giLwmqJ76OdhzR
+	RcFYBMIZ5lzZjYOoSfrY5Or/5gNOPNYw4bhn7ueAEXpK/l7ytmeoQEC+S5vBa8wG
+	kHdTidnsJ8fdR1kN367ZUA7oUr635ZSNMGgwHVjDRvk9t02uKAsQzHwgiR+dIV29
+	RMVkbDFkIhH2gvxuSuwhppD7Vihhn8chF9j5X5oyF9HhbayuTKVx0fRgbH/A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755099696; x=1755186096; bh=cR5SUikRSIA42GlOJnK4k15y5CAL3khUgQ8
+	FITQUST0=; b=R6aT8neLSrK+BoeH/ahg3covKZawMXmMBXJaq8RZveta/cxzFhl
+	H8/vJ0frOKEdDMMlWpZOFWQ1axFHHZyLVlvUBAq/e6ZAkwSJ+h9Z8fyHtncg0Q2w
+	2HCbErZcpnX9QsTcmqe9KeCsInVrpyi/1og7Ypii3Kq3CWm6tMavq0TqoaC7Vm32
+	sqBwKhxNJptqGgsrQdkPXTEyRdljRDLTQB1GOtYpteNMQElviiO+tWuRy3Gn7q7a
+	EGKA2pj+NoOXGj+cBigKBQK9FkYI6uaevyV6k6bhJCyYnpXoZGk/guoPYkqtS4MD
+	Hu2u9SH3hvFRPKVZTaPUwOXEhf8oIqJDogQ==
+X-ME-Sender: <xms:L7KcaJp0w4a1JQx9UHbu7JBDjJ5TJ3IHk6-Z_N4XB1KtVvVnbK_SOA>
+    <xme:L7KcaEFctk7l8pFuvCyUb3XXjBHpd3LJU2lfvbiOH9C_9t8RTrXMovD8SWniMF6Ls
+    ZkyvYCzYLlU-Iv7Ig>
+X-ME-Received: <xmr:L7KcaGodYaiZC-gPBVT9lv8Bab6oqvhCbU3nYU43zNKlkU_N89ARoBGsjMurW-oyHbNQF-UNOIRcUzUNuhku0aPtwM-wbe4pHv0cYXs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeekiedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhh
+    ihhnvggtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:L7KcaFaR9GF6UCHy5JyNRF-QsC089dP9pchX9bOr8dD9_8g9pETimg>
+    <xmx:MLKcaHVELY6A2cc8nwwR8mxiCd9eWunoIsstgtQbCm-CyHTBZs4lqQ>
+    <xmx:MLKcaG-6q9QKn6rmkmsBgJJs9OofYCf3dig76fIXTCOen4gsgZVT_A>
+    <xmx:MLKcaI8fwPWJWBX8RXsRgVhE4FEDqz_qTJOY59LysnoNHNxgA6gUog>
+    <xmx:MLKcaKJ4llTzFmd6c6kWNOy2bRVMoQ3LogsQXBM2TM1WVYYYhPcZNr5v>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 13 Aug 2025 11:41:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,  git@vger.kernel.org,
+  Patrick Steinhardt <ps@pks.im>,  Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 0/3] clean up some code around editors
+In-Reply-To: <2250a8fd-62b8-4218-9858-23032d9c807d@gmail.com> (Phillip Wood's
+	message of "Wed, 13 Aug 2025 11:14:40 +0100")
+References: <20250811221706.67168-1-ben.knoble+github@gmail.com>
+	<20250812170256.71751-1-ben.knoble+github@gmail.com>
+	<2250a8fd-62b8-4218-9858-23032d9c807d@gmail.com>
+Date: Wed, 13 Aug 2025 08:41:34 -0700
+Message-ID: <xmqqfrdvns9d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOZdJXWaC2U_YrwuDcA0x3iUeF_uJ658a93cTfdLftEXYRB52Q@mail.gmail.com>
- <CAPig+cTvCLU3u5y23HSrbxovs8cjcJdOUj0e1G9Rg4F1AP0jAg@mail.gmail.com> <xmqqfrdvp9zs.fsf@gitster.g>
-In-Reply-To: <xmqqfrdvp9zs.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 13 Aug 2025 11:38:22 -0400
-X-Gm-Features: Ac12FXzoxuBj29-GwClV4NWye1brDeF88Bal1BxkJQJ1Kj0saqFQqjXCvOfgNMo
-Message-ID: <CAPig+cTr2e6wQ79VXpADuL6UGVwtHu0qkTfFz7sBdwM_MYk6Ow@mail.gmail.com>
-Subject: Re: [BUG] suppress-cc does not support multiple keywords
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Timur Tabi <timur@kernel.org>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Aug 13, 2025 at 10:33=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > ... If there is any "bug", it's that the documentation does state
-> > that you can specify --suppress-cc multiple times (even though you
-> > obviously can).
->
-> "does state"?  or "does not state" or "does state that you cannot"?
->
-> I guess you meant the second one
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Indeed, I did mean the second one. Don't know how I dropped the word
-"not". Sorry for any confusion, and thanks for the correction.
-
-> The existing text
->         --suppress-cc=3D<category>::
->                 Specify an additional category of recipients to suppress =
-the
->                 auto-cc of:
-> does make it clear that <category> given to a single instance of
-> this option is a single category ("AN additional category").
+> Hi Ben
 >
-> Perhaps a minimum fix would be something like this?
+> On 12/08/2025 18:02, D. Ben Knoble wrote:
+>> Changes from v3:
+>> - drop 4/4
+>> - use test_env (including a case our lint does not catch when the value
+>>    has spaces)
 >
-> -Default is the value of `sendemail.suppressCc` configuration value; if
-> +Can be given more than once to suppress multiple categories.
-> +Default is the value of `sendemail.suppressCc` configuration
-> +variable (which can be given multiple times, one category at a time); if
->  that is unspecified, default to `self` if `--suppress-from` is
+> It's not worth a re-roll but for future reference
+>
+> 	test_env FOO=bar git commit --amend
+>
+> uses an extra process compared to
+>
+> 	FOO=bar git commit --amend
+>
+> which slows the test suite down for no real gain. We should only need
+> to use test_env to set environment variables when calling a shell
+> function. In the special case of test_must_fail it supports
+>
+> 	test_must_fail env FOO=bar git commit --amend
+>
+> which is widely used in our test suite
 
-Yes, I think that would be a welcome change.
+If this were some feature series, the story may be different, but
+since the theme of the topic is "clean up", the above clean-up is
+something that ought to be part of an update.  A clean-up topic
+should not be adding things that need to be further cleaned up ;-)
+
+Thank you, both of you, for writing and reviewing the series.
+
+
