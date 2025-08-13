@@ -1,87 +1,131 @@
-Received: from mail.aegee.org (mail.aegee.org [144.76.142.78])
+Received: from smtp7.goneo.de (smtp7.goneo.de [85.220.189.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14ED2DCF55
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 07:28:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.142.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9632EF67D
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 08:59:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.220.189.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755070131; cv=none; b=Q+rg+3LiGkwd/oEiAFLB5Xz6Pld6XjS5Q7sIEPxEDLtU+ZSUeJUhwmuwJs0rLyZEg31KT0EQoaqXhK68pvFoQ1XM5rRTbX5cLnoNTnu9y8L4111DVeYTKQFg2yMvyReliwE28/VudXsRVLSJIFvRhbcQlCh1GBPBlPoaCjfWeuI=
+	t=1755075555; cv=none; b=Tr1V85sv4VZgML0LYjsHuPDzct5LkU9/RZB08SqCK7QpeHlGfQHOxPyqAVJGwi/8gjW0+sD5NhL3qaVkNVtu52bd82HserSoXKr0VxgwXpzqeYXA30cm4dQ8ZZnfCWpBdsQOAcz576LvP+Y/wQCnraKUNKolDfra0SKqFrQHBX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755070131; c=relaxed/simple;
-	bh=NYwzdt3rJUNfyQMBA+yatgd7knB4sMyY+HaUpEom+0k=;
-	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=HWQwscTTf7yrN/aEqX5U/YTQeY7E7jEay4MTvkyK5wB90ry1U+yO2XnERUWVqLDrRoT52QN7Xky6iv5UFKLbCsYaoMKEfdaScoOgm+i0Kd6ejwXYDQnlVHiOv10DF89aDTcRuxiEtsDq/tfYHCWXbr9drbZVCwqobnnYmTIuyIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org; spf=pass smtp.mailfrom=aegee.org; dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-tls@aegee.org header.b=Nh9sKQWQ; arc=none smtp.client-ip=144.76.142.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aegee.org
+	s=arc-20240116; t=1755075555; c=relaxed/simple;
+	bh=5ohOZ9zG+3IBmsvz5ZrN+CdtdAdY28WxaPfZIT4WzVA=;
+	h=MIME-Version:Date:From:To:Subject:Message-ID:Content-Type; b=VPSvwtKuLMq3OFqys/D+LzYpo53jgtJJC2CRF40UEd1xdY/Wu14+Yjg09MJJcW/buJGAGR0CdVCma4PU/XeNOXNAmR9jNxJQgFVO8DQh5/y6XSx7b5QewALLQqFLXktYn0dGFAneCRH3MnPxaNFKCFRlgknC1j6sznEatZguo+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dettweb.de; spf=pass smtp.mailfrom=dettweb.de; dkim=pass (2048-bit key) header.d=dettweb.de header.i=@dettweb.de header.b=h8AorpeP; arc=none smtp.client-ip=85.220.189.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dettweb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dettweb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-tls@aegee.org header.b="Nh9sKQWQ"
-Authentication-Results: mail.aegee.org/57D7KEov2513876; auth=pass (PLAIN) smtp.auth=didopalauzov@aegee.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aegee.org; s=k4096;
-	t=1755069615; i=dkim+MSA-tls@aegee.org;
-	bh=NYwzdt3rJUNfyQMBA+yatgd7knB4sMyY+HaUpEom+0k=;
-	h=Subject:From:To:Date;
-	b=Nh9sKQWQSS6tJ+CFeb3gM0JovTlqo9n+iejGHkfbC24TVedLsA2wrx3vBylabGEXs
-	 ihm7WJVSB9RiyuiDEOmWqP/jDwpnhLlvQ0u72sa0DCWttNIs9wGlR4MzM96f+BnwYJ
-	 LZ8zfqBrwevKF2zxf/3dI81K6iR0O9SPOwC0qAo1Gbszu7xbdKirDrWXMbfJdUXpK8
-	 3ZNyPKO8dIjjvY86yvD3ZdPDmYZDdaamGxACIoq4Rm0VWZ4QXKkkL+mi/VMNyqOicw
-	 sfvI68Qjd2qNFVO8yFUiI6pckQU83uRVZ8v2fhIrLYtyoFEhydMQwUFvSyPxgDowZJ
-	 EmnJQK0TMy0btewxOnK3/cVTbQQVVNBFpWdCgtGcMQ0+HbCJ1qyslsNv7tax1N6BNh
-	 VxJ90n0paskc1WGDG2gW+XtdKJB6q/s8NmiOP5JZ+MD5LKWSov6XV86pEtiN1wDnVr
-	 vwqapJeBRfQhfA4djSwPy/DunrKJdSER+pRXVWCaAYMym2ml73DVSvaY8FyRuViqEq
-	 P00Vz47KQ/oCWncK32KVwnqwE/zKhdTvz8fB+TWcfySKtkXUAAVDtvCngK9LlxktWQ
-	 HzcQvWOm0VL3U5Bz99cPPC8no5QaCc5TA4xjredvRaf/1QT2zWUxpNai4Qom8w0thf
-	 Nl6Cne95seCBMFi8653xKJCs=
-Authentication-Results: mail.aegee.org/57D7KEov2513876; dkim=none
-Received: from [192.168.0.242] (95-43-114-153.ip.btc-net.bg [95.43.114.153])
-	(authenticated bits=0)
-	by mail.aegee.org (8.18.1/8.18.1) with ESMTPSA id 57D7KEov2513876
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 07:20:15 GMT
-Message-ID: <1b0d634286da16f32cd9faf541ee28c811d6c83f.camel@aegee.org>
-Subject: git diff shows twice =?UTF-8?Q?=E2=80=9C\?= No newline at end of
- =?UTF-8?Q?file=E2=80=9D?= - no need for repetition
-From: =?UTF-8?Q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD_?=
- =?UTF-8?Q?=D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2?=
-	 <dilyan.palauzov@aegee.org>
-To: git@vger.kernel.org
-Date: Wed, 13 Aug 2025 10:20:13 +0300
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.57.3 
+	dkim=pass (2048-bit key) header.d=dettweb.de header.i=@dettweb.de header.b="h8AorpeP"
+Received: from hub2.goneo.de (hub2.goneo.de [85.220.129.53])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	(No client certificate requested)
+	by smtp7.goneo.de (Postfix) with ESMTPS id A3986241039
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 10:51:52 +0200 (CEST)
+Received: from hub2.goneo.de (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	(No client certificate requested)
+	by hub2.goneo.de (Postfix) with ESMTPS id 12D9E240116
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 10:51:51 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dettweb.de; s=DKIM001;
+	t=1755075111;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=2f7qlpakxa08G10IiutN6bJdSmFXXUGwpUhXP4L237Y=;
+	b=h8AorpePWmI0xQ8ATeJdgUUysy6iXn276g0ty4ysZ4kSzHYhmUxOKL5BvRWndWGWf5Dgkf
+	1OKOrpq4lpcAdTvONouS/uncZH2eY8G12tSkeiynZI/saS7hwI/2gLmndcxyKwpZIVUtKS
+	Ebszr9af2e3c0QmsFGrf7HjdTvUXAtAwcGNxddtSNVkTPuHwKFQrZ/yTw51HCAO2NW/iwk
+	/N1p5sHvAJrSM2r0qSeKG9vehCaSUwyFmSOgBqBjWLUItfApWKbQY6lyrIgcg8wELWjcs7
+	mOYnEEC6RlI2wBG12nnHvfXP+KSBN5Em9xzyxVYP2Ce6xuC6xhjtHBKDQ9GZ2Q==
+Received: from webmail.goneo.de (webmail.goneo.de [IPv6:2001:1640:5::2:12])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by hub2.goneo.de (Postfix) with ESMTPSA id E0E2424002B
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 10:51:50 +0200 (CEST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Wed, 13 Aug 2025 10:51:50 +0200
+From: "J. Dettweiler" <git.vger.kernel.org@dettweb.de>
+To: git@vger.kernel.org
+Subject: [FEATURE] Proposal: git stash --only-unstaged
+User-Agent: goneo Webmail
+Message-ID: <12fe17735317215aa0de58a20055193a@dettweb.de>
+X-Sender: git.vger.kernel.org@dettweb.de
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-UID: 7dcd9b
+X-Rspamd-UID: 62ddc1
 
-Hello,
+Hi all,
 
-when a file, which does not end in a new line, is modified, git diff shows =
-twice the text =E2=80=9C\ No newline at end of file=E2=80=9D. As this piece=
- of the file is not modified, I think git diff should print it once.  In th=
-e example below the first =E2=80=9C\ No newline at end of file=E2=80=9D sho=
-uld be skipped.
+I’ve run into a recurring workflow problem when splitting commits during 
+an interactive rebase, and I think Git could benefit from an option to 
+stash *only* the working tree (unstaged) changes, without saving or 
+restoring the index (staged changes) at all.
 
-I am using git 2.50.0.
+---
 
-As a matter of fact github also shows this information twice - https://gith=
-ub.com/alex-shpak/hugo-book/pull/755/files - which I find is bad.
+**Scenario:**
+- I have a commit that needs to be split.
+- I stage the part of the changes that will remain in the earlier commit 
+(this becomes the new, fixed commit).
+- The rest of the changes (which belong in a later commit) remain 
+unstaged in the working tree.
+- I want to test the staged commit in isolation before actually 
+committing it, without losing or committing the later changes.
+- After testing, I want to bring back the unstaged changes exactly as 
+they were.
 
-Greetings
-  =D0=94=D0=B8=D0=BB=D1=8F=D0=BD
+---
 
-$ git diff=20
-diff --git a/layouts/_partials/docs/toc-show.html b/layouts/_partials/docs/=
-toc-show.html
-index 21122a1..c243ae5 100644
---- a/layouts/_partials/docs/toc-show.html
-+++ b/layouts/_partials/docs/toc-show.html
-@@ -2,4 +2,4 @@
-   and
-     (default .Site.Params.BookToC .Params.BookToC)
-     (not (eq .TableOfContents "<nav id=3D\"TableOfContents\"></nav>"))
--) }}
-\ No newline at end of file
-+}}
-\ No newline at end of file
+**Current limitations:**
+- `git stash --keep-index` still saves the index in the stash object.
+- When I later `git stash pop`, Git tries to restore those staged 
+changes, often causing merge conflicts if I’ve modified them during the 
+test.
+- `git stash -p` and `git diff`+`git apply` can work as workarounds, but 
+they are clunky and error-prone in longer rebases.
+- The goal is essentially:
+   > “stash the working tree only, leave the index untouched and 
+unrecorded in the stash.”
+
+---
+
+**Proposed feature:**
+A new option, for example: git stash push --only-unstaged
+
+---
+
+This would:
+- Save only the unstaged working tree changes to the stash.
+- Leave the index both in the working directory and completely absent 
+from the stash object.
+- Make `stash pop` safe even if the index has changed in the meantime.
+
+---
+
+**Benefits:**
+- Cleaner workflows for splitting commits during interactive rebases.
+- Safer testing of staged changes in isolation.
+- Avoids unnecessary conflicts on stash pop.
+
+---
+
+I have not found an existing Git command that provides this exact 
+behavior, nor an option to `git stash` that prevents the index from 
+being stored in the stash object.
+
+Has this been considered before? Would there be interest in adding such 
+an option?
+
+Thanks for your time and for Git!
+
+J. Dettweiler
+
