@@ -1,145 +1,61 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from mail-m49248.qiye.163.com (mail-m49248.qiye.163.com [45.254.49.248])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA502D4B68
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 07:06:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6652D0C80
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 07:13:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.248
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755068802; cv=none; b=mhwOkLSVje6U2mt6s6/gnpDAKw85zNVA9hYr3Urh0aABvg7WMGIoQAfxZgAbom4KzJh4TaT0CGooK7VkD+iDglEAdw/lha7GBfCdH00MxGGUsS2ML4AXYM8kgRADwqZYnl/jVoO795lKPK5BcitMRhVFQ/BW3ruFb9bLrGw+ZNA=
+	t=1755069203; cv=none; b=USUvAhetWuwCKmhml+lmZNFxJTbAj3V2RjsZS7D+t95Sn45titaVBTE2v3k0NhUk2te+7Fgjo3wyCgvFUBkB+f3SowPCHCcH1+KcFJkYe7QK2mlBRJu/HA7hSGj2q3QFA/F2bwgAk/IY99icSkMOfTBlVaTCOMUH656JKjfUU2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755068802; c=relaxed/simple;
-	bh=5F53e9O/gWzUyTUfo+4RHOmvynkoTHJ3k1QWYjt2iaw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OYr6APaMs2r/HFZb2fa6xHYLF2MLyUucnj58s/5LP6jN/2w3jxig5wjkzwgTuwzfdMa3YzkYLtquRj/gqIGkpVlL1Tq80rLCGyYNsMK/lJ2M0ii3b2KVhVfHuEvpWzMylZ6BPkq0hD/2rEHGv5rGHnlK811jaaSe+DKdy0yYKlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l6Ib8HHb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ac1zIblC; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1755069203; c=relaxed/simple;
+	bh=NIwZosGqXs/2Wcmd6zMXq8MCvzFvR096T1fwkVZksYE=;
+	h=Content-Type:Message-ID:To:Subject:MIME-Version:From:Date; b=TQwW1qcnUhpXdeaP5i6p2syV2mHRLQO4m7ucTHudfNmDn8JukwsarkVJtAnRa2DYrTVGfG66wgoDYtEJSXeKEA/xymQut7PkH30Wcl0G0Q0Bkr0Ft7VhC7KYfpWR6MysZFvm49P4qdgGjzA1V4fGFCrp0k6AxL0/BfOhyecb2/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=stu.pku.edu.cn; spf=pass smtp.mailfrom=stu.pku.edu.cn; dkim=pass (1024-bit key) header.d=stu.pku.edu.cn header.i=@stu.pku.edu.cn header.b=BKQC/EkP; arc=none smtp.client-ip=45.254.49.248
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=stu.pku.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=stu.pku.edu.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l6Ib8HHb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ac1zIblC"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 808BB7A0126;
-	Wed, 13 Aug 2025 03:06:39 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 13 Aug 2025 03:06:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1755068799; x=1755155199; bh=HGuLSy5Ssl
-	3Gkx17hAB/Q4N0dE1glm+0AudGG7+sEMQ=; b=l6Ib8HHbEDwmR56MndFSJqcV9H
-	ABOc5S/4+AK7jsuDX2ydJkRjb+/ZUc7JA+q9OTt2sc81GVm7tyWmtZjatbMygN9l
-	ygz75wPidnbXs2PM+4zf36IFPEgVlpPsi88uPd7LhHlr5mTssCsF+xcaqO/eSnN0
-	YKl7Fq1WxA3M8KvRw0A83jMj8LvyhMDyB4YpbnAuICaovYH57hdG+mBbSSwh95kA
-	xfbXBMFB//+naEaS10L97xScYI7plfOvKLLBL9G+ZWj3ockKkmIxhGBNnmQUmzsu
-	GrmG2Bk00FYOefYX+coJpCP0T/lJmXvwp01gpI7BACBctooB7lczzWbXBy6g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755068799; x=1755155199; bh=HGuLSy5Ssl3Gkx17hAB/Q4N0dE1glm+0Aud
-	GG7+sEMQ=; b=ac1zIblCJ8je8m9Tj/tTC7tHEPNZdV3UrwlkapzMGzLDA/fLtaO
-	Z0OysPhI7IMb6b+Oryu+WR/Et3fqCJzuIJUt0rU7fqB0UTQvk8WNsH0n9XZo8gmV
-	yYVbDkGuoik3JjoAlvHbeTFpR13O4ryB8Q9WOnTW3hxw9VQOCBZUfJXDFidU3DyW
-	Uw0A6/Osc8P5YPXyOJnx3gjD7fNrw0eJEqpgfdyAl4XaG04iwubT+n+F6+YjqABi
-	XbQcIJGLuRj+swxsgw8+8JOJVJAEuWR+t7eKdRE+jBPlnhVQz4FGEqnvyUwEDsja
-	GFfPxx/7uTJX1UjOCb6oES7dR/psr/WPVbA==
-X-ME-Sender: <xms:fzmcaMKktV3BJlwLVwFg_SG13X_2JDK2vO7P_Ef9EX3erO-D2uinfA>
-    <xme:fzmcaPZ6s2v_r1_Xsyvkn33tXNmeB3kyhGlvBs_Wf6-iHMqd0Zdm-KFr66XgBGXKL
-    r_5awd9Fs11IWNSxA>
-X-ME-Received: <xmr:fzmcaGLidrPlNGXyFfdsS1tMT2cLcl18ze99z0scS4xKsAUWH5APGQ7Q2F7R__ui8tCgVF4W1zOynan_Rc9lY5KULW_AMQOaR98CVeB06jY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeejheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:fzmcaFDru1FQz4SCTAgmW6sSbKc_N25i-kdgIAKConFfURF0zFSAWg>
-    <xmx:fzmcaDqSvvqWWh9rDkq_cHT_9fvIPzvJ1QIJzJ-_Aww5VfmBIK4qWw>
-    <xmx:fzmcaIhoz4Fxup0DQqQGXmPANhLxouCVvlMnoMhO93hvzpT285-Qdg>
-    <xmx:fzmcaIByyE0GltWI6HTKHQY5qwqWdnIClrkqC5voNrahSo7dDkAKKg>
-    <xmx:fzmcaAM_tVXI1C5FYS9SIQevhsmIZjKYt46fj1pyaShIvXVJ5c_N4QkP>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Aug 2025 03:06:38 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8a635fff (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 13 Aug 2025 07:06:36 +0000 (UTC)
-Date: Wed, 13 Aug 2025 09:06:33 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2025, #05; Mon, 11)
-Message-ID: <aJw5eenXu5CO5z2W@pks.im>
-References: <xmqqwm79x7ra.fsf@gitster.g>
- <aJs5Gee3ZVCJX8dk@pks.im>
- <aJtSqgJ7w02Ox74w@nand.local>
+	dkim=pass (1024-bit key) header.d=stu.pku.edu.cn header.i=@stu.pku.edu.cn header.b="BKQC/EkP"
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+Message-ID: <AAkArwD3JXZP4EIjvKF0Waow.1.1755044612233.Hmail.2201111603@stu.pku.edu.cn>
+To: git@vger.kernel.org
+Subject: =?UTF-8?B?UG90ZW50aWFsIE51bGwgUG9pbnRlciBEZXJlZmVyZW5jZSBkZXRlY3RlZCBieSBzdGF0aWMgYW5hbHlzaXMgdG9vbA==?=
+X-Priority: 3
+X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com web
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aJtSqgJ7w02Ox74w@nand.local>
+Received: from 2201111603@stu.pku.edu.cn( [240e:390:aa6:ea90:c055:732a:9666:d608] ) by ajax-webmail ( [127.0.0.1] ) ; Wed, 13 Aug 2025 08:23:32 +0800 (GMT+08:00)
+From: Cheng <prophecheng@stu.pku.edu.cn>
+Date: Wed, 13 Aug 2025 08:23:32 +0800 (GMT+08:00)
+X-HM-Tid: 0a98a0c89e5d09bfkunm3da3d4db8aea
+X-HM-MType: 1
+X-HM-NTES-SC: AL0_4z5B86Wr4Tz9jdMF+bhXMURCwdwWE/DTAMnERH6bvac1I1iAnZ4LwWs9TJ
+	UxGexNRaea+LDnGFX7Kndr+BuxjrnSA5SRmxnfP5KCkgAT0RqMCo5fn7MpWATHtUturr4rImPO53
+	khRp2kcaqgPlO4uZX+yQ3Ng+n9yL9lSrnsR/c=
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDT0xNVk9CQhlCSx4ZTk0ZSVYVFAkWGhdVEwETFh
+	oSFyQUDg9ZV1kYEgtZQVlJT0seQUhCS0EaGk1BHhpCS0EYS05OQUxISRpBQk1NTUEfTUtDWVdZFh
+	oPEhUdFFlBWUtVS1VLVUtZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=BKQC/EkP41IHtV069+OXtxAevrD30xkSOBLcPQXfosGyRTNQHv8FbC51K5E7Odg7ng47QpbhbxM+92rp8JGQYGHzWC2fAbgkc62//YYyY6r1ytWbww+nwe/4bxi/mlwJ7xJzPhvMc52lrzeWYf32wnyQUDyUtk0Ja7hOCYfh6oY=; s=default; c=relaxed/relaxed; d=stu.pku.edu.cn; v=1;
+	bh=NIwZosGqXs/2Wcmd6zMXq8MCvzFvR096T1fwkVZksYE=;
+	h=date:mime-version:subject:message-id:from;
 
-On Tue, Aug 12, 2025 at 10:41:46AM -0400, Taylor Blau wrote:
-> On Tue, Aug 12, 2025 at 02:52:41PM +0200, Patrick Steinhardt wrote:
-> > > * ps/commit-graph-wo-globals (2025-08-07) 10 commits
-> > >  - commit-graph: stop passing in redundant repository
-> > >  - commit-graph: stop using `the_repository`
-> > >  - commit-graph: stop using `the_hash_algo`
-> > >  - commit-graph: refactor `parse_commit_graph()` to take a repository
-> > >  - commit-graph: store the hash algorithm instead of its length
-> > >  - commit-graph: stop using `the_hash_algo` via macros
-> > >  - commit-graph: fix sign comparison warnings
-> > >  - commit-graph: fix type for some write options
-> > >  - commit-graph: stop using signed integers to count Bloom filters
-> > >  - trace2: introduce function to trace unsigned integers
-> > >
-> > >  Remove dependency on the_repository and other globals from the
-> > >  commit-graph code, and other changes unrelated to de-globaling.
-> > >
-> > >  Will merge to 'next'?
-> > >  source: <20250807-b4-pks-commit-graph-wo-the-repository-v3-0-82edef830a1e@pks.im>
-> >
-> > I don't intend to reroll this series for now. As long as you are happy
-> > with the signedness-related patches I think this should be ready.
-> 
-> I am still not sold on the first four of these patches, and I share
-> Junio's concern[1] that the "int -> unsigned int" changes are not well
-> justified.
-> 
-> As a practical concern, the "max_commits" and "size_mult" values should
-> never come even close to INT_MAX, so I am not sure that the wider range
-> is giving us all that much. I am a little more convinced by the Bloom
-> filter changes, but since they are purely for debugging and also
-> exceedingly unlikely to exceed the signed INT_MAX, I do not think they
-> are absolutely necessary.
-> 
-> That said, I don't feel strongly enough about the lack of justification
-> here to hold up this series[^2], so I am fine with it moving forward if
-> both you and Junio are happy with it as-is. But I am left wanting a
-> stronger justification for the first half of the changes.
-
-Fair. I don't want to spend too much time on this signedness topic,
-either. So I'd go with either:
-
-  - Taking the signedness patches as-is. They don't regress the status
-    quo and allow us to warn about future unintentional signedness bugs,
-    even though the fixes are mostly of theoretical value.
-
-  - I drop the signedness-conversion patches altogether.
-
-The more important part for me is to get the second half of patches
-merged anyway. So while I think that the first half of patches are nice
-to have, I can live with dropping them.
-
-Let me know which of these options you prefer.
-
-Patrick
+CgpsaW5lIDMyNiBpbiBidWlsdGluL2Rlc2NyaWJlLmNkZXNjcmliZS5jLCB3aGljaCBpcyBsb2Nh
+dGVkIGluIHRoZSBmdW5jdGlvbiBkZXNjcmliZV9jb21taXQuIEluIHRoZSBmb2xsb3dpbmcgY29k
+ZSwgY21pdMKgY291bGQgYmUgTlVMTCBwYXNzZWQgdG8gdGhlIGNhbGwsIHdoaWNoIHRoZW4gY2F1
+c2VzIGEgTlVMTCBkZXJlZmVyZW5jZS4gU2VlbXMgc2hvdWxkIGJlIHJlcGxhY2VkwqBsb29rdXBf
+Y29tbWl0X3JlZmVyZW5jZSB3aXRowqBsb29rdXBfY29tbWl0X29yX2RpZS4KCgpgYGBjcHAKY21p
+dCA9IGxvb2t1cF9jb21taXRfcmVmZXJlbmNlKHRoZV9yZXBvc2l0b3J5LCBvaWQpOwpuID0gZmlu
+ZF9jb21taXRfbmFtZSgmY21pdC0+b2JqZWN0Lm9pZCk7CmBgYAogICAgCgoKVGhlIE5VTEwgdmFs
+dWUgc2VlbXMgdG8gY29tZSBmcm9tIGZ1bmN0aW9uIGxvb2t1cF9jb21taXRfcmVmZXJlbmNlX2dl
+bnRsecKgd2hlcmU6CgotIDEuIGNhbGwgdG8gZGVyZWZfdGFnIG1heSByZXR1cm4gTlVMTC4KCi0g
+Mi4gY2FsbCB0byBvYmplY3RfYXNfdHlwZSBtYXkgcmV0dXJuIE5VTEwuCgoKSW4gdGhpcyByZXBv
+c2l0b3J5LCAgb3RoZXIgY2FsbHPCoMKgbG9va3VwX2NvbW1pdF9yZWZlcmVuY2UgYXJlIGZvbGxv
+d2VkIGJ5IGEgbnVsbCBjaGVjay4gU28gdGhpcyBzZWVtcyB0byBsZWFkIHRvIE5VTEwgZGVyZWZl
+cmVuY2UuIENhbiBJIGNvbmZpcm0gd2l0aCB5b3Ugd2hldGhlciB0aGlzIGlzIGEgdHJ1ZSBwb3Np
+dGl2ZSBidWcgcmVwb3J0PwoKCgoKCgoNCg0K
