@@ -1,122 +1,92 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA79269CE5
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 15:33:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035922571DC
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 15:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755099215; cv=none; b=WUUbH3Nhiv6JXHjpn7Xp3FBpccp33/UfsBgnyFVsDZAEu+sPiVfgpObyAimRFoP15ahlxIgmdJlNi+DRLak5d4UYBwsSpx5uOzNu0tVZs7PQtWADxGziXfk7FO5PQ8wmRc02KMXCK8hNvrQfxLmqCLKBiBlrY0Kr/4URvE0RPAo=
+	t=1755099518; cv=none; b=hJoe3mXWnmJ3JEYKFmZju0CnB573gvL3IRsurzBhtjF4vHNeyPw0kaunBP8/gJyKLf85jMucNw7tcP3fJOUxUMwV3sxH98niIm+wpWGrzanGT02gb03SOWRS9A9uT6HY+DwlB4Izb/gPDrTVojpyrudt7zxZRm8m+aRFD2Awat0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755099215; c=relaxed/simple;
-	bh=3W1nkFNs73E0WYb/rtFcIYktIPtET8GSMraoG5u0qaw=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=lXbMRGTJnhMJn40kMZClT7NXOLxaDsoKXi4OKa3N3BkgAm7T1IMVsBuUms0Tr3W1LF8X6U4+DnGWGlZcUDeXjRedWs9vblGfrvpEmdevieT7QLBt5kHC8fs7xWmYwJEnX+niKFwciJjo3fEpfOGcu/PgNGdnQLwRskDiB/OEmHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=J4+sWYyu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xa7IKrvz; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="J4+sWYyu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xa7IKrvz"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BE7F214000D1;
-	Wed, 13 Aug 2025 11:33:32 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Wed, 13 Aug 2025 11:33:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755099212;
-	 x=1755185612; bh=E46lLCNtYkj2eRbx8gb+bcgLOIdIQexgsRoQ4jYTDPM=; b=
-	J4+sWYyu63nPBB5j9d30EGii6qGIsqNRghY3wI82C1fpUtoE+SUUZk/yMV9HXUqk
-	0KjgftPfEVht9FyF7Y7Aw+Bm17ZqqOm1tbs7fxixsH8IW/UGYwiEd4I2fx8wvHiU
-	mwjemrIzQcaH3CNS3f0mfFoxhn/2TgBBOuAJl3MX5jJQ3+ho4Xy+ozp3qubdptUR
-	KP4i47y6XSsIxZli817LHMrWuLOpkc4HVAgDbYhJvK4njBOODIncTeca+DpSToXr
-	XVSuWmI9GxkeKFgN4hj+qZqXCxULyJbKDbZ1r/tt39ZfLnVdAYKsDq6cHnd6jLAK
-	9Z4LGU2qbtJo1A6T9i3l7A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755099212; x=
-	1755185612; bh=E46lLCNtYkj2eRbx8gb+bcgLOIdIQexgsRoQ4jYTDPM=; b=X
-	a7IKrvzZANMeJJkaXNcJyqwTR0LJGmmubriqedSwtW4D+8DjgswvPwCzpubigb8g
-	1eCXpb0pkjdH/Yx7Fgj7C2iZ9dmwbeW3eIrjbakHKcoANW4Jk07yq0Vbulku2rzD
-	+m6luXdCDtAo/lJXcXe6Vw42Vf9jofxWiORHbTr6OEY7rIqo4iNDX+mYGcwoPywW
-	FKIZAE9X2ijCFBl+lKU2yaTUUDfOc1MKnM+6C0xBW01soHPaDUHETWZZ2mRxNfAs
-	eKQcky3rm6HIjyUrXCnNKpjRRp4myHDw1WGJn0AK9pc4T74gF/+r/fT5rjeKNhuY
-	Qo3mFykeXBCxV3cQkRDxA==
-X-ME-Sender: <xms:TLCcaLEnitpBubcKDbamzyO3IWgKIjYYGTXB8F5TzsppJAyzgVR8Kw>
-    <xme:TLCcaIUInok2u6EU0sEi9AAAhDbKV1sNEgc0SzSNxO0H3qjwwLoLTvm16IIA8Ry97
-    sb1JvPp496i2E5ZgZ0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeekheekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
-    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
-    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
-    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtg
-    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:TLCcaHPhibXWdzyZ8qhRe0YR5L26aLX3aipkDiEYGfyt8pvTUdX-EQ>
-    <xmx:TLCcaJXGTsq9C5Xtl0iRXQfDYJJbMhx9HvqGLL5HUhqDA1SJ-Kht6w>
-    <xmx:TLCcaL1vHjAPfiKeFDhWeDCG82ZcBuA2uUPDTxT_93aJAfVsmX1H8A>
-    <xmx:TLCcaHo92ahvyNBETnBDHbP-TdwqOeVPxTGXbgAs-7_V9jx-i97TsQ>
-    <xmx:TLCcaGeOCqRLH_NHdic4EGP5GANsDPRoBXzEqZmV4RSbXls7H4Pjg-Gi>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 27BF27840B0; Wed, 13 Aug 2025 11:33:32 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1755099518; c=relaxed/simple;
+	bh=Q8fXQwIu/QpdL7LvWaMFKy+ZN1yJSMq6Ov985CdvRl4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MEmWE/tszZkLBxDAzFOI4DNtXX51b79Lna7Wm13ivQXVPe1Tz6g7wluivOIgutQuKlpY+SJiayiENEoGWUop+a7RgQ/QGWrTrsS9Ur6UPFM+B36CjxcKMCQQlGgAxTIBpcohDE+sZjPIcgSVycV43gfa5YSuuGMCVhOdBv01Rg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4af1a5aff6eso10430261cf.2
+        for <git@vger.kernel.org>; Wed, 13 Aug 2025 08:38:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755099516; x=1755704316;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ygNI+fZeKSuuhrnSLWrFdQj7yp8v/K4oOLfQkRJKjsk=;
+        b=qzrYdMURTGgJUAwt4m0Exi4D1JO1DrtqExkUl+FC6znDeVz2RcYaulFM2rk3pf9Cis
+         e/y5SmrUODYND1TZFqGTB4i9GuS5FqZul/W+tq0FhiVlBQTIOzJhh8mu/T9jP8YUgCL3
+         VgCTV0KnFtD0P2EDUP3lRK9lNdMX1zkDctMypmk5rY8HbCML+BC3UzSpI9DMow9xFEps
+         qVXa8JMahLFmoAK0+LXgaJdkrd8SNlpdIIUl3IiE9APmjxPBSiP2Nay4vUO0lrdC+bhW
+         tzn6OLG3Vps/bGOhutdEPI+lugs38N+tpgaMEft0Aoq3W5vf1IjLOzaLMmC4eqvPGgla
+         GVew==
+X-Forwarded-Encrypted: i=1; AJvYcCUdDiNnf6T27eymYkzYm0zKgwPXf7RKZAuVG3NbwGvJ8POanQBs3Uc0fjW1xFXoFxHDUm4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzcpikxQ1RZRa6FI3HHmHHZzmIu1DVXRIiSBPhCzj0h2DMhT2Xn
+	boU2GGw2OCE5FWoXAL5nB1cxzcK3aExaL9rfb82+9GvxnDJaluu08ULC3TP4utZWSOFOcR9nc08
+	REIx3z2/dM/bmrpJaSpJlyXJ59HQHACY=
+X-Gm-Gg: ASbGncuKHn2ISzlOvshoq7wyZB0TedcLvM7Hp2SO4Lqo5iHYCPQrml67zHw+KmdeG10
+	LzdrQ7+CaZRgkMHEfEkZ7+1goT9v7WlFR3ugMpBBrodYdLdsZPlZZzCkec8rRicN0360zS5eQ1/
+	HTuVC9cbLXNgP6PsV5VbIg2teJPY1bYQljMlk/MoTjc4pSfbslSd4P0RjqatUZVrclsaO8T+ujQ
+	VYOovcajyltBrxY
+X-Google-Smtp-Source: AGHT+IEwBldnn09DcOTHdZvNbEIRH2Bo2TKA4iHF9zuySH24dJXap46rPMlXQmIavonlpTXPY1o/sVsXeP/POIJ7Z6U=
+X-Received: by 2002:a05:622a:11:b0:4ab:56e5:f7a with SMTP id
+ d75a77b69052e-4b0fc7cba31mr21955261cf.8.1755099515854; Wed, 13 Aug 2025
+ 08:38:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T2b652b8f7554bba9
-Date: Wed, 13 Aug 2025 11:33:11 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: phillip.wood@dunelm.org.uk, "Julia Evans" <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, "Patrick Steinhardt" <ps@pks.im>,
- "Karthik Nayak" <karthik.188@gmail.com>
-Message-Id: <aa1c2758-79f9-47f6-87d4-16b19fa5bd63@app.fastmail.com>
-In-Reply-To: <52504ef0-7d4c-4298-af11-10477673e9d0@gmail.com>
-References: <pull.1949.v5.git.1754943127.gitgitgadget@gmail.com>
- <pull.1949.v6.git.1754949075.gitgitgadget@gmail.com>
- <52504ef0-7d4c-4298-af11-10477673e9d0@gmail.com>
-Subject: Re: [PATCH v6 0/5] doc: git-rebase: clarify DESCRIPTION section
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <CAOZdJXWaC2U_YrwuDcA0x3iUeF_uJ658a93cTfdLftEXYRB52Q@mail.gmail.com>
+ <CAPig+cTvCLU3u5y23HSrbxovs8cjcJdOUj0e1G9Rg4F1AP0jAg@mail.gmail.com> <xmqqfrdvp9zs.fsf@gitster.g>
+In-Reply-To: <xmqqfrdvp9zs.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 13 Aug 2025 11:38:22 -0400
+X-Gm-Features: Ac12FXzoxuBj29-GwClV4NWye1brDeF88Bal1BxkJQJ1Kj0saqFQqjXCvOfgNMo
+Message-ID: <CAPig+cTr2e6wQ79VXpADuL6UGVwtHu0qkTfFz7sBdwM_MYk6Ow@mail.gmail.com>
+Subject: Re: [BUG] suppress-cc does not support multiple keywords
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Timur Tabi <timur@kernel.org>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> The use case for --reapply-cherry-picks is mostly that it is faster to 
-> try picking a commit and then drop it if it results in a empty change 
-> than it is to do the patch-id comparisons to avoid picking the commit in 
-> the first place. This is especially true on partial clones where the 
-> cherry-pick detection is really slow.
+On Wed, Aug 13, 2025 at 10:33=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > ... If there is any "bug", it's that the documentation does state
+> > that you can specify --suppress-cc multiple times (even though you
+> > obviously can).
+>
+> "does state"?  or "does not state" or "does state that you cannot"?
+>
+> I guess you meant the second one
 
-That makes sense, thank you!
+Indeed, I did mean the second one. Don't know how I dropped the word
+"not". Sorry for any confusion, and thanks for the correction.
 
-> I'm happy to leave it out but I 
-> wonder if we should drop the references to --fork-point and --root as 
-> well given they're also both pretty niche. I'd also be very happy to go 
-> with Junio's suggestion to replace steps 1 & 2 with a general 
-> description that does not mention 'git log' at all.
+> The existing text
+>         --suppress-cc=3D<category>::
+>                 Specify an additional category of recipients to suppress =
+the
+>                 auto-cc of:
+> does make it clear that <category> given to a single instance of
+> this option is a single category ("AN additional category").
+>
+> Perhaps a minimum fix would be something like this?
+>
+> -Default is the value of `sendemail.suppressCc` configuration value; if
+> +Can be given more than once to suppress multiple categories.
+> +Default is the value of `sendemail.suppressCc` configuration
+> +variable (which can be given multiple times, one category at a time); if
+>  that is unspecified, default to `self` if `--suppress-from` is
 
-I like the idea of leaving out `--fork-point` and `--root`.
-
-Now that I know the use case for `--reapply-cherry-picks`: what I like about
-leaving in the `git log` description is that I think it makes it easier for
-folks to build a mental model of why a `git rebase` might  be slow: there's a
-"fast step" (the `git log` step) and a "slow step" (the `git patch-id` step).
-Then even if we don't mention `--reapply-cherry-picks` in this section, a user
-could infer that there might be a way to speed up the "slow step", and find the
-`--reapply-cherry-picks` option to speed it up. Maybe we could mention that the
-`git patch-id` step can be slow in some cases.
-
-(also I might have misunderstood the "fast step" and the "slow step" thing,
-I'd be interested to know if so)
+Yes, I think that would be a welcome change.
