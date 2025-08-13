@@ -1,139 +1,107 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7C751F3B9E
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 20:47:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AA92BE05E
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 21:09:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755118079; cv=none; b=U74cQOXUF4gXOfesReu0IpuIySZiRkp7fM+V9u0IWw0ndh+5af9dA4MZE3HTtUtTDcIpXmTF8LhYMiErniYlX2mZ6x3QrogGwKg4hLqmHa6tj+z2dLdkclhEEaKu3KA0cuTMhVhodU1AK5CEMxiEIDFbPRMCp27ynN91LbaKf6k=
+	t=1755119394; cv=none; b=J0Ky6sMh5VTIWH1dOKre5jMePeOvfq+kXrCQEuLV2fIbnBSf5o2P7mnbQEnhn/irZNjVK7xBr3tcBgTnbon+Ehj8Rcl+woPlBqrructZ8Maouk9/i4IekUPGuEo9O1V0C8bmPrS/S4JqN0GXVdx73rH1AHncc/CbGD3LpL4oPIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755118079; c=relaxed/simple;
-	bh=uMUnpp0ovMMP/RyuxjMKZWvANsoRCsJu2ZyPYWH+y9g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jjY+KSnmM9edTwplJZMik8IcjJnY8ZNwJH+wf9k1Q3rzkzCP3k4yGz6LvtXF5KyZbByLHxpNO4gAvwFXiIomp2AbeSiHBCeBD5mpWEpLRef/DR1UmWgb61Fz0900PKTVkIF4vrjGQ6N1msISVp4GvR/pqyOeO4nJlksj0y3psKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=PTdVH129; arc=none smtp.client-ip=212.27.42.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1755119394; c=relaxed/simple;
+	bh=9d/m4Z7iLD+boWFqE/WGTbA9myJXmmPpYuUzI+l3Y5Y=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=SWYcoTzlu1sgejkutSfXb+JBIZQU4hSj47i3kh7kbbpthsarGkrdmYnepGqxN3qOvMPJv/kpDjRRv9vDagG+PZFKCIAwzpvU/epuPd+KTjM01BvxdfpVoaj79InXklS/GZ+Q3ga18kQznflw6Lephg1F5TEwIR5UXNaaoP3eEhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OPBfr7MF; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="PTdVH129"
-Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 7E750DF830F
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 22:47:46 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:8ab3:7400:5489:5bd6])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp1-g21.free.fr (Postfix) with ESMTPSA id B7646B0055E;
-	Wed, 13 Aug 2025 22:47:36 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1755118058;
-	bh=uMUnpp0ovMMP/RyuxjMKZWvANsoRCsJu2ZyPYWH+y9g=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PTdVH12987TVmJkdl6zMy5XpubqP1U2TooF71VuJ3CjhLsefFUrkjvwFErCpohVZq
-	 mS5F+0nSNhk4ESQ+nTDLrvyXPhjt+pU9hGKZn2NLf2cyCGCzs9yEL0NHialP1sv/EU
-	 diCdnNiGytWw/WZ5kbk4DKECzE4+NEU5Z8PA7suL+l1/c3Gi92jFRAVzQS08fk03jh
-	 zX8x4Hmoj5c1PBn3AZyy9G1cNiOmtxO2w03zfjUkr6cDwiUzhxCAB3iQRxSAi3fbsB
-	 T4nik1WTJgjM//SAOzNkdf1cj6QWxOctlA/nWMPT6gtzqVKv0omOGPxXc+kw2iItJu
-	 EfEqB21qF12ug==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: git@vger.kernel.org, Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
-Cc: Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 1/5] doc: git-add: remove options from SYNOPSIS
-Date: Wed, 13 Aug 2025 22:47:36 +0200
-Message-ID: <2319022.iZASKD2KPV@cayenne>
-In-Reply-To:
- <3a2cc38b72fb0f6ccc0ec9cbefadb7576cd8b934.1755029249.git.gitgitgadget@gmail.com>
-References:
- <pull.1952.git.1755029249.gitgitgadget@gmail.com>
- <3a2cc38b72fb0f6ccc0ec9cbefadb7576cd8b934.1755029249.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OPBfr7MF"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7e87061a6d5so26912385a.2
+        for <git@vger.kernel.org>; Wed, 13 Aug 2025 14:09:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755119392; x=1755724192; darn=vger.kernel.org;
+        h=mime-version:content-transfer-encoding:msip_labels:content-language
+         :accept-language:message-id:date:thread-index:thread-topic:subject
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9d/m4Z7iLD+boWFqE/WGTbA9myJXmmPpYuUzI+l3Y5Y=;
+        b=OPBfr7MFIYoH2EHq+L2Nle//TRAdc253tKolHRwbR3w9SFJGgh7GP1YReJFrm7AVvT
+         MuUd3Sme9fMMz9hVsbKpQ6Ear/yZDoiv+LUo21q09U8VJ/0nlBSgncX/ChHZa75nh8Ir
+         bWdgT7DoM6XhvZw0RBibuumOHnAwkN03KbogplN63x7zwuTgILIYK3FsbWDBsLN3l3oz
+         WhgZILjDVU48V/PFTqB6PQVw4gtgAstr+FeUj1jy16JhxkYDJmfPoLBseZU6ytHx+bjj
+         ACtqvssI7yuF24ggAb8qjw+l/CwQzolVIHPPqs7/jLCYQ+2qKyyvpB36IRKxwX0MXO6G
+         QV3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755119392; x=1755724192;
+        h=mime-version:content-transfer-encoding:msip_labels:content-language
+         :accept-language:message-id:date:thread-index:thread-topic:subject
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9d/m4Z7iLD+boWFqE/WGTbA9myJXmmPpYuUzI+l3Y5Y=;
+        b=h2i5jW6rOjPE19Ygb4OpEzRCxJIsE+dzQqBlW5D+RrtNoruXqZdh2U0wNO/ABAgmPc
+         9RWfvrFVcaU9EOog3v95hT1YEg1nus3qzNQLOFA86bOd7/v4JQ4ITlwRelnAa2CDdqjE
+         c1hiLBcicDNhcMAGeOmPgpDj/y9ncat4mIJsMj+FExa86ijUOZ7EqD3ObMDJVfYaCiQK
+         9hc0mPQ5zyOcm0XdiygbE3gi2ijRkIx8afgLOl0jcQUopkSoOG4uLj8t2q9H1gPzxPoC
+         tKukN5bpN1FuyxEl3+wgRRQblibJR5IaZZOHdRcioSWaxIGiOa2zyOxzMyipi4l9P0fB
+         ULUA==
+X-Gm-Message-State: AOJu0YyR73MaL+SrBpKX6XIZ9j2P8jpad2quHEZZAewHRK7zQHobxHlk
+	o915FO9/ShbMiAPD3t/R0GmvZnXLODLque6oWAIJ9HtOEWfd2J1j8amRs6m5lg==
+X-Gm-Gg: ASbGnctbyp40K0Ty5P6BtqWihgPURgXSXrZ35tUuW1eB6P3U5VJMHUVn1Gw3Nv1B35T
+	4P0QZaNumrGx0As/LWin5wGXceJx5SS9WWYTmPnFThcRaWQe3FmF9yBGCB2bwKHAWEMPtBZKnP8
+	bxqMOQsvbn0N9akcSAnXsZgMQEg2Vjh4jk7iLOWcaMGwFmmV2/Ysj6dUvqmOYR+7gQYFoa0UH15
+	4Qd8g/kp6hthel00xaOanSaNGnePNZOgzh/vjLL91Elu3Xq3tWwYD5QHUSO+UfF0dbuiQtlWbdV
+	Z3CY0oy/X2XVCVGyy6HnKoIKVLlBm3LpYAYyY6kpxh92YGbeRRcKAllSKvu3rKnuNiFYF+a6CVi
+	EkTaeNEiv93c6h6fgtjAh+q/so9FrAxfL2yEAklVJx/Lu0qpvHTR/Vf9LGbNhTVd6MjLJNl0eaM
+	Edwrts2V7KeXT1sskXxVpEEgPuzkCP4qg=
+X-Google-Smtp-Source: AGHT+IFmQy/u8ju5ftY97OZkxoUXiz8o+7prZjDFepyzi6VDkX5pRpVjNoyZNhiB6BCOrciLFpMr8A==
+X-Received: by 2002:a05:620a:44c5:b0:7e8:c77:52cb with SMTP id af79cd13be357-7e871a44766mr22422285a.26.1755119392041;
+        Wed, 13 Aug 2025 14:09:52 -0700 (PDT)
+Received: from LV8P220MB2017.NAMP220.PROD.OUTLOOK.COM ([2603:1036:303:4456::5])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e816a6c420sm1282940885a.83.2025.08.13.14.09.51
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Aug 2025 14:09:51 -0700 (PDT)
+From: Ryan Johnson <rj.amdphreak@gmail.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Implement feature to link/include other gitignore files in gitignore
+Thread-Topic: Implement feature to link/include other gitignore files in
+ gitignore
+Thread-Index: AQHcDJaK96K/2JQC90WHIaDj3Jqa3g==
+X-MS-Exchange-MessageSentRepresentingType: 1
+Date: Wed, 13 Aug 2025 21:09:50 +0000
+Message-ID:
+	<LV8P220MB2017EA88974F2311DCFB7665F52AA@LV8P220MB2017.NAMP220.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-Exchange-Organization-SCL: -1
+X-MS-TNEF-Correlator:
+X-MS-Exchange-Organization-RecordReviewCfmType: 0
+msip_labels:
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
 
-On Tuesday, 12 August 2025 22:07:25 CEST Julia Evans via GitGitGadget wrote:
-> From: Julia Evans <julia@jvns.ca>
->=20
-> Motivations for this change:
->=20
-> 1. Listing a huge number of options is visually overwhelming when
->    opening a man page for an unfamiliar command. It makes it harder
->    to understand the command's core syntax, like `git add <filename>`
-> 2. For options which can be passed independently of any other options,
->    including them in the SYNOPSIS does not add any information which you
->    can't already get from reading the OPTIONS section. `git add` has
->    some mutually exclusive options, namely:
->    [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]]
->    but personally I already find that line so hard to parse that
->    removing it doesn't remove a lot of information
-> 3. Some man pages already take this approach, like `git rebase` and
->    `git status`
->=20
-> Signed-off-by: Julia Evans <julia@jvns.ca>
-> ---
->  Documentation/git-add.adoc | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
->=20
-> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
-> index b7a735824d6c..12afeead6637 100644
-> --- a/Documentation/git-add.adoc
-> +++ b/Documentation/git-add.adoc
-> @@ -8,11 +8,7 @@ git-add - Add file contents to the index
->  SYNOPSIS
->  --------
->  [synopsis]
-> -git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive =
-| -
-i]
-> [--patch | -p] -	[--edit | -e] [--[no-]all | -A | --[no-]ignore-removal |
-> [--update | -u]] [--sparse] -	[--intent-to-add | -N] [--refresh] [--
-ignore-errors]
-> [--ignore-missing] [--renormalize] -	[--chmod=3D(+|-)x] [--pathspec-from-
-file=3D<file>
-> [--pathspec-file-nul]]
-> -	[--] [<pathspec>...]
-> +git add [<options>] [--] [<pathspec>...]
->=20
->  DESCRIPTION
->  -----------
-
-
-Hello,
-
-I'm not crazy about this change. In its new form, it is almost useless and=
-=20
-formally wrong: according to it, `git add` is a valid invocation. The quest=
-ion=20
-is about how this synopsis section is supposed to be used. For me, this is =
-a=20
-quick refresher of the available options, their exact name and how they can=
- be=20
-combined, a kind of compact overview.
-
-I'm not saying that the current form is good. For instance, I would expect =
-to=20
-see alternative forms such as `git add -u` appear on their own line whereas=
-=20
-other forms require <pathspec>. There are common options that could be hidd=
-en=20
-into the [<options>] stuff, even if it kills a bit the "compact summary"=20
-feature of the synopsis, but as you said, these are independent and can be=
-=20
-found under the 'OPTIONS' section.
-
-The design of the man pages predates some more modern approaches to organiz=
-ing=20
-technical documentation e.g. https://diataxis.fr/ and https://help.adobe.co=
-m/
-en_US/framemaker/2019/using/using-framemaker-2019/user-guide/
-frm_structauthdita_sd_dita-topics.html. Thus they are mixing different aims/
-approaches in a single document. Anyway, we can agree to classify some of t=
-he=20
-manual page sections into the more modern typing. For instance, I think=20
-SYNOPSIS falls under the "reference" type, and as such should be as=20
-comprehensive as possible.
-
-Jean-No=C3=ABl
-
-
-
+Feature request:=0A=
+=0A=
+Let .gitignore file link/include other gitignore files:=0A=
+=0A=
+```=0A=
+include .gitignore.python=0A=
+```=0A=
+=0A=
+Why would this help? https://github.com/github/gitignore/blob/main/Python.g=
+itignore Look at how long that Python gitignore is. If I am developing a pr=
+oject with multiple languages, imagine how long and how many duplicates wil=
+l show up when I copy templates from these other languages: https://github.=
+com/github/gitignore=A0. Now imagine a team of people adding new gitignore =
+patterns. They will inevitably add them somewhere I don't want, like in the=
+ middle of templates. I don't want people editing the templates, because it=
+'s too difficult to see their changes vs the template. I want the templates=
+ to be linked so that we can tell people to copy updated gitignore template=
+s, without having to analyze the file for lines that are custom-made.=0A=
+=0A=
+Respectfully, consider adding this easy effective idea.=0A=
