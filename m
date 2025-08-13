@@ -1,180 +1,120 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B0F303C8A
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 17:22:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FF3303C86
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 17:24:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755105770; cv=none; b=tlLRiqpFokKQ+s70VbW80YB+0tq6hITEunBXxa/x68XEUgLx+YDFIpt19LUoqZp55HxdWr2CIJF26Wt3uYG8AMf9smvpL0Ri+AoR7ChG6OQnkiQgf7u1HTUyo+RWqO4eiZsQ6G/a12ZZQZ8/UOXfjNW9j2DzL8v1Vqr9QOtATD8=
+	t=1755105889; cv=none; b=IvLZYhRk/w/He56IEbm2rWcVqBUIAN4tDwtFMXdolEOwpfdPKKcqM9shHc1MGmyaVYPNNJ5S7SASF/xYuYLUC+V56zYAwShv7bZ4pn1Ab/nCYYUzel8feuYCK9sDHgovZM10sIxulUEQTXKy2H2V+o8mQpJkY+vTVgsXNrKxlIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755105770; c=relaxed/simple;
-	bh=9FXm2+kMROzx+N868IFjI3co44f/61F0fm6UJAyG0Ac=;
+	s=arc-20240116; t=1755105889; c=relaxed/simple;
+	bh=q9mYJthdKbJh7lqdd/+J//K9u0qlk3+0C8fTtcguEe4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UJSEfv+aLY5Y9h/WonNyH3RPL7ePVMhye92iDFPlRlJxhajGSGO0kZ/D2p5a0UJcr8rb3zSnqu6GPO8iUFx1PjRNXZYHIH4C/c5gCNCXaujuXiIcf6IZGo4Jc6R4HWfpX++lLtdKJK4HuzDJgj7rnk+5AA31NudaFeyJoLLqVP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mjhvn/aP; arc=none smtp.client-ip=209.85.218.42
+	 To:Cc:Content-Type; b=QS2PiTqYVkXUHbSP2r8RcVrclNQ7RXC4RsesIKS9YsXK9EuVueKJdj8yD0pXcAmQrztNxP1GHGTUGuc92oXNuAtXCHR2igmK/OxS+aKsezke+SEFaB4EA+tnAM9/6+ciZ2iwMeqM5lIhHIq8Aj17q74ntQJOiGfcQJ7xlVbHbdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iNrkeeW1; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mjhvn/aP"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-afcb7a3a085so12322966b.2
-        for <git@vger.kernel.org>; Wed, 13 Aug 2025 10:22:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iNrkeeW1"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-afcb79db329so11127966b.2
+        for <git@vger.kernel.org>; Wed, 13 Aug 2025 10:24:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755105767; x=1755710567; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755105886; x=1755710686; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kkRHStzuIbDMKyr7wZxWphNJ+JIhls64eoscP5WdUlg=;
-        b=Mjhvn/aP9O5zxfWuWW1dyye1E2y2mqOFdvGl6xfJHG6gDoBbh5zagIva4S3z9/exUg
-         FwzqO7uDuH54vGonlkTH/G4d53O3f6TwjThlpmm+UbtHFTTCGzKJe1zC/zFba0QoDfJt
-         3iukI5tRN69Q/EEdqb32tx9n2SwKg2z/+YiCndYqdcSjSxa6koWI4gjmOnNBKVkUetAN
-         u7gASl4tHxorDVy6+9k7GHQ3VDKy+6weD/0LMeYS93gJlq8accnT6qfKH6r1Fzbf17F7
-         Mjow9GsJK9FCdtsjKJD982IAWSrYWj8PlY6yN9b2JhrYkfNFaU+VXsssJfk+ZPBmBvu4
-         D5XA==
+        bh=exNAoVRXG7LQRuOHntq7wPwRrveHmsLK5KiEuGEhEjM=;
+        b=iNrkeeW1Fvwf9bXBsdwbAJ+38fcvOWu+QhPQFZ/9h6FNgqwZZ2dNcIMot/Zxdd1HtX
+         Jf02MyjjPT2VW7XISS62Lx1c5XWnV8mDEpgMW5/RsDAYpztmvF6ZYrJZnHY7d8JW4rbb
+         MMgMt77ywDEVjDG1UCXGK3AWkhLrrQbtu+Og76ARRY/VdJeVtzUia4up1lLU7wRtLheh
+         uI70KkHWcj3oFwcjv3BPP+CxPT47laKP6FuohyL5oydEqzpFwylg0qifT75sEFO39Ntl
+         KyaJF/+zE9WXCFcJV2gTwnX7q3GBouM35rMCaygIUAfeVNDEmFUFfvfBEyxDyrSohKia
+         K9ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755105767; x=1755710567;
+        d=1e100.net; s=20230601; t=1755105886; x=1755710686;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kkRHStzuIbDMKyr7wZxWphNJ+JIhls64eoscP5WdUlg=;
-        b=HROL5XYekMgDQ0HkmF2bmrQwH0LWcWWTL01PSTzTx1rFmfMma4RZrCvcH7SXSf9ypq
-         QqIqn08iAO6ZgxdbA83gT7EMOjLxrz/V939EuK+T0jA5CAr7vcKScizUrtdR+BhDoDA6
-         N3saU5wJynVaCjJC/eFZgbVa6Joq8omBb3L361A9uUy2YxA+B5bjuzMCg9liynr7ypte
-         oIN47sZB3i8hOv1eSsxe3hQp0qP48ZQUaDanm6bYSPDgtA/xgsp3Gzo4a4KakFVrt6rg
-         0GSpCnVht4Utm5wXojHvdQn+9yOxZY7V3O1Gw6/rPZR6ZFkaAvJ2oRekBSgvCDaTyVsU
-         /arg==
-X-Forwarded-Encrypted: i=1; AJvYcCWgQ58en859eZ+jfSzimCj9sdXZtgND8wjW+w004P1OeGeZ3BjnWzszgJ8pjDNFRB/fCZY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVkNyJyxr9FWZLdHVoYu+jfVQFKz1l9oMfVwez3gKdeF+mv20K
-	mDMAuiETYriStxDGvQYPGpYs+co1CfZIzwe0jAOuAWmlFBHumslYqEquCarEwM+ZxQhP7+aP2bx
-	lfvlzNXp96nMDyJXZr7CkwGRy2vSRHrGMsjOHUy8=
-X-Gm-Gg: ASbGncvm8sfTLUoHNhc3tB3xilNikykK4pnZiiuSqUproC+LxJXisfsc8oBfF/FPflO
-	3I4EYW1kqrEjCFqHBmjIgJHD76I19yy/Aw0BkaM5IswgHHzOKXjlhJSRj49YeMOA84jc1FKqQvs
-	ochhVAr3aiqKUjdjK98L0w9OMoy2oDEUWpUbD+3h+kRaXXiYA768JGzKDBX2IXi05fhgxKotmEk
-	zOshqqkaM95uC1OZ02t+5Q3sOTrPy39fAFbb3BiFQ==
-X-Google-Smtp-Source: AGHT+IGkgunGjPedNJxeqhgeaRWF71SqAtzTrTwFEXraosbrpJ9HZ46oX8WCVP6LhoPRYVAfua7cy8hkMVBhF1y0u3g=
-X-Received: by 2002:a17:907:940c:b0:ae3:7058:7b48 with SMTP id
- a640c23a62f3a-afcb97d430fmr1273166b.25.1755105766303; Wed, 13 Aug 2025
- 10:22:46 -0700 (PDT)
+        bh=exNAoVRXG7LQRuOHntq7wPwRrveHmsLK5KiEuGEhEjM=;
+        b=Sy6K+P0cJddU7ggksyi0IKOb8tKpuzOuFhdfOHWEgB1VMOi+uVjk8q3KdtkZQyGdx3
+         GURWucWZzYroGhfGZns+n9OshWsea4OsIQfZnHIvjqdPu/MBTLYZIBZ5e8oSVzgzqkRA
+         +x0SQegS1d+oevu5VMX4RmL+9Ai4Dke3qjnNKMB1oYQ2WG291ASFdLuHdAIAnbPSt7Ja
+         YI7fENpN51WmB9P5+O5SvIzsTNFCJo8YVYYKVI5xbjHfHCXcGw/MsLXvhFfjNiPsJLP2
+         Ku6R+EfPUCoKlvL/5ktNpPhOGwnz+1KCLP3HxQUbk5/0OoZRZG1KIzw2f/dYjAnRk7s8
+         ozoA==
+X-Gm-Message-State: AOJu0YzUe4wK6n8ZZ5yREBruouiT3jT0z8RkgFYB2RstG8NxuuUA8QNR
+	26i/f9nYJwyctwFUOynuFl/DGIfCLEQnWWTJMkBgh27iZSqE6os7FOZVnmccYsa4moPcd3R+3eZ
+	t97HPE1s1hO9f0MDY3zn54pLCkjLGkRc=
+X-Gm-Gg: ASbGnctzZqAbuWATyI4/DcdRkhtV9vDD4SNIsy1+hipC/uoK1ybqvZ9e6+WvfnmGNhR
+	f35MDJIeZN4UCj0IXnQvaVIB8SVdEBGM2UbUBVv5jmtSCqX1jO7iojx2KlITlPHoG4vXaR53msH
+	UNA1+5oqjfp85MUSDhmHHqR/QaCvQaXHf7g12QTiJBE1cRuM/Prr7lyRvIkHiIldpHdbzXYEne/
+	9f28JwGJGegNbfHlEYIDnoY+6SgAtxdMPMajqMgYGUrGggCBaca
+X-Google-Smtp-Source: AGHT+IHPX7L2DPHyfsE1w9Qd2y6/UhE0kocpuJqI+EhEhDSewuXLx+C1szizKoBUZWzcvQx7DskW3vwKDAv01tHDQ7Y=
+X-Received: by 2002:a17:906:6a0b:b0:adf:f8f4:2001 with SMTP id
+ a640c23a62f3a-afca4e5ef00mr375480666b.49.1755105885805; Wed, 13 Aug 2025
+ 10:24:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
- <310d2c1d8f7f68ae52ddd29f0ccb0a0364aba1a2.1755029249.git.gitgitgadget@gmail.com>
- <xmqqbjoks19f.fsf@gitster.g> <152d47a3-7744-476a-8ab8-43b7b52b67ea@app.fastmail.com>
-In-Reply-To: <152d47a3-7744-476a-8ab8-43b7b52b67ea@app.fastmail.com>
+References: <pull.1952.git.1755029249.gitgitgadget@gmail.com> <3f4ab6150692418757c84db64cf6d3d79a654453.1755029249.git.gitgitgadget@gmail.com>
+In-Reply-To: <3f4ab6150692418757c84db64cf6d3d79a654453.1755029249.git.gitgitgadget@gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 13 Aug 2025 13:22:34 -0400
-X-Gm-Features: Ac12FXwUcwZzYM7OSDRe2UgTO-SpiXHAJehcflybjoDG--35vIb9NdmT4nw98oQ
-Message-ID: <CALnO6CCjW=W4A7d4se8fCe7gzuDLc-SyGv7JbVqbtSSkSM1bNg@mail.gmail.com>
-Subject: Re: [PATCH 2/5] doc: git-add: start man page with an example
-To: Julia Evans <julia@jvns.ca>
-Cc: Junio C Hamano <gitster@pobox.com>, Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org
+Date: Wed, 13 Aug 2025 13:24:34 -0400
+X-Gm-Features: Ac12FXw7gxymXZNBpCiIZxeY8juv249rbzqvmvLkDRe7pWEGAEFTO5VDh2M6sWw
+Message-ID: <CALnO6CDpv_Mess+vmvrLFODZq2Ls-v92FEsoP02At+BP1tgXDQ@mail.gmail.com>
+Subject: Re: [PATCH 3/5] doc: git-add: simplify discussion of ignored files
+To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Julia Evans <julia@jvns.ca>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 12, 2025 at 5:40=E2=80=AFPM Julia Evans <julia@jvns.ca> wrote:
+On Tue, Aug 12, 2025 at 4:10=E2=80=AFPM Julia Evans via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> > But isn't it the source of the most end-user confusion that they
-> > cannot wean themselves off of the diff/patch worldview?
+> From: Julia Evans <julia@jvns.ca>
 >
-> To me it feels very contextual! My impression is that what's important fo=
-r Git
-> users is to be able to think about commits as diffs in some contexts, and=
- as
-> snapshots in other contexts. For example with `git rebase` I'm usually th=
-inking
-> of my commits as diffs, but it's very helpful to me to think of a merge c=
-ommit
-> as a snapshot, because the merge commit does not have to be a "combinatio=
-n" of
-> the two sides of the merge, it can have arbitrary extra content.
+> - Mention the --force option earlier
+> - Remove the explanation of shell globbing vs git's internal glob
+>   system, it's a common gotcha but I don't think this is an appropriate
+>   place to explain that concept. There's some discussion of the gotchas
+>   around globbing and `git add` in the EXAMPLES section which I think
+>   is clearer.
 >
-[snip]
+> Signed-off-by: Julia Evans <julia@jvns.ca>
+> ---
+>  Documentation/git-add.adoc | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
 >
-> >> +By default, `git commit` only commits changes that you've added to th=
-e
-> >> +index. For example, if you've edited `file.c` and want to commit your
-> >> +changes, you can run:
-> >> +
-> >> +   git add file.c
-> >> +   git commit
-> >
-> > What happens when you did "edit && add && edit && add"?  It commits
-> > the two changes you added to the index?  I do not think it is
-> > productive to hide the fact that you are preparing a snapshot of the
-> > "next commit" in the index (or "staging the contents for the next
-> > commit in the staging area") with various forms "git add", including
-> > "git add -p".
+> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+> index 99ca2d0f7e21..0c4ca1794c91 100644
+> --- a/Documentation/git-add.adoc
+> +++ b/Documentation/git-add.adoc
+> @@ -34,12 +34,11 @@ you must run `git add` again to add the new content t=
+o the index.
+>  The `git status` command can be used to obtain a summary of which
+>  files have changes that are staged for the next commit.
 >
-> It could! It's easy for me to imagine a world where the index
-> stores an ordered list of diffs, which are applied as patches in
-> series when I commit. I guess you'd need some sort of
-> patch + patch + patch + diff workflow to generate the final diff,
-> but to me that doesn't feel so different from what Git is actually doing =
-in
-> practice.
->
-> In any case, I'll think more about whether I think this is really
-> an accurate description. I'm always especially interested in the practica=
-l
-> consequences of having misconceptions about Git: for example (and maybe I=
-'m
-> convincing myself to change my position here!) with `git mv` I think it c=
-an
-> become relevant pretty quickly that commits are snapshots, because if
-> you move a file and edit it then Git can't always accurately guess that y=
-ou
-> intended to "move" the file rather than delete the file and create a new =
-one.
->
-> I'd like to be able to have a similarly practical example of why it's imp=
-ortant
-> to think of commits as snapshots in the context of `git add` but I haven'=
-t quite
-> found the right one yet. I've noticed that people will often sort of "rej=
-ect"
-> information that does not fit their mental models, and I think "commits a=
-re
-> snapshots, this is important in this context because of
-> <specific practical consequence>" is much more convincing than just
-> "commits are snapshots".
+> -The `git add` command will not add ignored files by default.  If any
+> -ignored files were explicitly specified on the command line, `git add`
+> -will fail with a list of ignored files.  Ignored files reached by
+> -directory recursion or filename globbing performed by Git (quote your
+> -globs before the shell) will be silently ignored.  The `git add` command=
+ can
+> -be used to add ignored files with the `-f` (force) option.
+> +`git add` will not add ignored files by default. You can use the
+> +`--force` option to add ignored files. If you explicitly specify the
+> +exact filename of an ignored file (e.g. `git add ignored.txt`), `git
+> +add` will fail with a list of ignored files. Otherwise it will silently
+> +ignore the file.
 
-Less a comment on this patch or diff ;) and more a meta-note: I happen
-to have several links saved on the idea of "Snapshot vs. Patch" aka
-"commit duality", so I figured I'd share. They reinforce to me, at
-least, that the contextual mode of thinking is useful in practice,
-even if the snapshot model is the (semantic) storage model [*].
-Knowing about snapshots does make it far easier to interact with
-objects directly, which also frequently helps me better understand how
-to use particular commands.
+This reads more clearly to me, although I think it's worth trying to
+keep the style "The `git add` command" command to avoid strange
+punctuation/capitalization at the start of a sentence.
 
-- https://www.thirtythreeforty.net/posts/2020/01/the-wave-particle-duality-=
-of-git-commits/
-- https://roadrunnertwice.dreamwidth.org/596185.html (which references
-Julia's work)
-- of course, https://jvns.ca/blog/2024/01/05/do-we-think-of-git-commits-as-=
-diffs--snapshots--or-histories/
-;)
-- https://stackoverflow.com/q/40617288/4400820,
-https://stackoverflow.com/q/73646342/4400820,
-https://stackoverflow.com/a/27760319/4400820
-- https://github.blog/open-source/git/commits-are-snapshots-not-diffs/
-- https://lore.kernel.org/git/alpine.LFD.0.98.0705090856220.4062@woody.linu=
-x-foundation.org/
-
-What I find is that, while we keep trying to reinforce the snapshot
-mentality, there are situations where thinking in diffs is a
-reasonable approximation. In the particular case of git-add, most
-interactions I observe with the index are diff-based (git diff, git
-diff --cached, etc.), but I'm not sure how to usefully clarify the
-relationship between those things and the underlying trees involved
-(working tree, HEAD, index :0:) in a manual section targeted primarily
-at newcomers.
-
-[*]: "Semantic" because deltas in packfiles muddy the _actual_ storage
-model somewhat :)
+Thanks for working on these :)
 
 --=20
 D. Ben Knoble
