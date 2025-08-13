@@ -1,117 +1,216 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BED21254C
-	for <git@vger.kernel.org>; Wed, 13 Aug 2025 17:37:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFEF1F428F
+	for <git@vger.kernel.org>; Wed, 13 Aug 2025 17:51:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755106623; cv=none; b=TKuWIdKuAx04ZWbsxSLl1btkD/ahyTo2jlnrokZ4cCjNrtOO+ERViX4aGCbL8cypaNMD7UzBsaAqHJVGbsEXmtMK1SvIa4XO3ZcewcM8FetZycFuznO3svThHqtNPt7sjZAK5XRwh1dUFa8sKeS0GwwPA6wVFPxmw2a6zCSRUqg=
+	t=1755107482; cv=none; b=KI+ME/EGCU/x2fTjssbmzSSVHeFFW8ZY06mfGA5uiPsXhs0fnH3nLezXQyEbUWQqVssPgxro9aCQrdw531TA+y3fNdf7dl1XkY49XKkHrHB+v1aZwYpBOz0xtRrsp63TYLiPZSBjkwcbUwGbyZulXAHkyr6U9DsldXADqhvndwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755106623; c=relaxed/simple;
-	bh=AVZqzRKi2LOW3ZTOS3jl66zQYuHK2FjwqouC5SElTtg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P6T50o5nDwNrN7rytkrwbZoUuu2LF2rxcyhn+/Nw1kZ9CCEQ9+g40nhiS1KK4P5lrf5Ux0OkMM33xiZIZ7kK7b49v5g8TkxuLhKt7KtuqxGDtSgtmGFbYtz2TemxAmCqkKsimuHvc5lEFWry0WlGPtLdR4+43lXDUFDw3lJsf8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XercloSl; arc=none smtp.client-ip=209.85.218.46
+	s=arc-20240116; t=1755107482; c=relaxed/simple;
+	bh=YOMcCC4MTridN8TzXXe8oys87WlSpIH/uqIQG6vkE2w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PBaU+zIqSDz94XMb7ZmZl6RzswLRBRJRMXXCsmmRsUVFWIp02x/kXyCFZn45yEUEhlK7z605yTkVGbYi03cPC0rDhab2KYe9ayjHvCxv86Y5hZ2Ayrqh2sAJ6CqJyeGTKgvq9BYeLydJDwz8jvx0EZJLbblha1Ep+ncPgmeuqXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lQ/ssfqy; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XercloSl"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-afcb7a0550cso16046666b.2
-        for <git@vger.kernel.org>; Wed, 13 Aug 2025 10:37:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lQ/ssfqy"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-71d60110772so1618427b3.0
+        for <git@vger.kernel.org>; Wed, 13 Aug 2025 10:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755106619; x=1755711419; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1755107479; x=1755712279; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JUi9IFwizcPvVV+hlonCVBngxxVgUTSEZpzhJdEMfNY=;
-        b=XercloSlEySPTnJ/MVA3FpXn7NZJGKqAbKLlQV0QfLMPaLcBJGe9lDqNWXeyll0tG6
-         18tBkCCmy4PkkxAGnvZfHlV//z/d4HY7wo5DQkvoU771sI1q4ooaMLvuQz3/ASB3Jtl5
-         RA+xzKkhA+SomC0wPwPwsw/p/3WM39qOA7l/D9YvSg2H4NERaAgdxSbfHf0eWnN2reJB
-         iDDZMjy3IS/M+267fvzBQtANwFYraBYKrq0QY8LKloEKex+TIn7pATPhE8vCDJBPM2cj
-         dvSzOsB0yMRP+4k22LLOusgHFwxRtvsWPDbV8h+hMTJzOWic80HTU6dA3nrIReLhfRa1
-         zjdQ==
+        bh=4Dh1QflHOymZgEtMjaDm2rdqQip1fNB/4MxPM2RRlp0=;
+        b=lQ/ssfqyeXMPwz08Y8BSOmSJV3qQw1qLWQ7Q57aFInFhZbokfwjfrDaaS4KhTgRu0d
+         eSkmNd4vnXtxerIgkMvO2wyhz/X+JdpLeoHIt7hClDmDy3pkIucEG8+D+ZRi6Vroaqby
+         /N12xIa3uE8r/HLwpyeLErkpVqvzZ4vxXIvXM5ao5oWpZcpmqal7CpN0OIOAgCl4FRNu
+         W87jPG4A7Je1eSEm16C9TbKlOzg3x7vN2VR6ZV51prtV6qDQqZveOpkikQQivK4qFWem
+         zLG2H9oPbaCfakjWPYH9s8NqQoNVK07evr5bOWhTLZChbGuZeybaxloui9Iga9EQLj8/
+         bElQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755106619; x=1755711419;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JUi9IFwizcPvVV+hlonCVBngxxVgUTSEZpzhJdEMfNY=;
-        b=DqlleFltDvmIz/tfpEUqnKArACd06NdAUVdftzuRP0u1eAPr3dIN69/yvf+YcVLiE2
-         3McHUyM1/PZBTuHJfUSCMFhQYf4TUqMUG93BSdWUNutKBJCaddStnoUta+p+LAMQ3GW2
-         Hu0ZT2nhyJIbk2IIXwjF9D8g5OJIZffFPmqmS07BFCMfCBeC93sQrwCc5T4ETLMLICvs
-         Ii8LDiQZQk6+zApRK3bbgZ2cRTyynSvk/6vGMiYWGYKOoMOcr6172wAw16SKun6K20Aa
-         0jAh8sZntUMyUVP833lF0Z7lTu4BSiwnGJsrj8fn2Nkq+7CJtdvJ/9e8RBKyb4xGoAp8
-         NY3w==
-X-Forwarded-Encrypted: i=1; AJvYcCXq0jL5SYWXnegMwtYYD1IuuZR7/UjOobSbQJQ7rUFZH3MUeONnsD2gSI/2SRwdtj7g4vc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz9U3TNNxOKTtg/UXgvpvlMtf0E36qyMEm60qUSk7p6qCabv+Lr
-	yO25fIVsUxSsiD2D3Z3EeGrUw7rHvlCycDBxdIGC/icF+P5J9Ki6EHfNPlNcnVocVUAiBqimm6k
-	TVgAqwuf0wFWTpPcy1klyhmP2j9o43es=
-X-Gm-Gg: ASbGncvFQoEcpcWKGI2XCvi8GVmiF140oEIxUZIDn6QwLW9zjGJadm73AEn/1eUr3W2
-	s1IldBHQmlYPaplyMct4vtIlAr9uZc+11wLRD2in8sRg1hBkhJ1KLZspaPQtB5585ZlDy46/AsY
-	grgCruoxKG6boGmGnJSroxNbTiNDiAc6PGFyQRKolKz0GeTAyjt4MG/ibajmmlB49ZlZFjTUtdk
-	PKfCrSp0PHVh4/wykWKi9VK/5hf6pICF9+sYYBHfg==
-X-Google-Smtp-Source: AGHT+IEdHvE3rh9cMfqar2KCmkZEBnHGR6Ks1Tod0H+00J/7KVWBltIKwX+WJxuAzHDjHgtLKvRXI8Alqe0AyU5CkIY=
-X-Received: by 2002:a17:907:7f14:b0:add:ede0:b9d4 with SMTP id
- a640c23a62f3a-afcb91d8a02mr9320466b.0.1755106619322; Wed, 13 Aug 2025
- 10:36:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755107479; x=1755712279;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=4Dh1QflHOymZgEtMjaDm2rdqQip1fNB/4MxPM2RRlp0=;
+        b=QVEZOjCf4l7xWlLc2ZwpyNvKvHXX/SvFA41csieSafWc/dBEvSBNHmudS/mpBnhIye
+         opVG7p8WrrrgY1htyvqkMcuIUsCDb7VRfJslJQzTY8xEy3IbtmyVHe1NLEPHLi8yv9C8
+         hq37D3X+F4OO7l+cOexux/QcNkhfgt76w9yfJDhmRVEGIF0g4LzEovPDtJzi85D5ts8S
+         ZzUKKVqTHZho4/vScxoHvbf9ssiSh7Zn0rpFdnglGLitOvZ+lEs4KNQuWjBD56YDKc3D
+         CihNgd/Bk/Z37/fvXF+3bJmITt8TXz/Bpr2zxWvnvZCRmzluIkzpTokEPvuP+B1QT655
+         I3dw==
+X-Gm-Message-State: AOJu0Yyhk9bW848CGrfLVD/HTuZcx1RA6v05fd4WT5Yh+u1tOpN/tzUH
+	PeMyrnsZOlmlmUXhF4VZXOp8HQP5o/wkMwoOusEuW4HUlhcSZcHvTe1RGLsbzKki
+X-Gm-Gg: ASbGncug3ojIM1OClM1bN1+6u6O+gxBXysBBIgpKJgHutgZZ5BmgUkDiqJBDA105KNv
+	CUOUpyQC4vOH+r7H2dBwjPtS+ofLzd2P0+dB0EQpP07nOh9lS0wdi0xqfDByGU05nCkxVicrkIR
+	czyy9Rxa5qkasDovjhYR7Jqc0R4qVRvy0cZeorgbE/bzF+dRFHnK+oUQWzUepQLGxKmxA1UhG4G
+	VV/jmehBTfY36H039x43Dv6liTLDIabIBqfkxPhMX/utquQxWqpfkSDIkVpktei62rSI2upyV1b
+	NbZ6V/b9jYvnkri0K5H4Q8CWtAohQss+qeTIFXmCIdtkMXqjxDuBpapJO2rbYiK+TFyw0ohH6u1
+	9qhYmGpIOL8NLhWbRE2cc6ju4wUCY5x7LbBElWijYKIjQrEYMbtzZJqwwgaCjlPjQXjVUX95U
+X-Google-Smtp-Source: AGHT+IHZrK3vmDj4yn48hxvqYdfwv+4qGeabtE6xCIQXMs/IwQ8g+siGCEx6QHqpT6os8x1cN5b43w==
+X-Received: by 2002:a05:690c:a86:b0:71d:4b52:6f77 with SMTP id 00721157ae682-71d4e3f6146mr53546707b3.9.1755107474679;
+        Wed, 13 Aug 2025 10:51:14 -0700 (PDT)
+Received: from localhost.localdomain ([2605:a601:90a8:8b00:1c37:18b4:a0bf:d7d3])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-71d60fe1936sm439957b3.38.2025.08.13.10.51.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Aug 2025 10:51:14 -0700 (PDT)
+Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v5 0/3] clean up some code around editors
+Date: Wed, 13 Aug 2025 13:50:02 -0400
+Message-ID: <20250813175112.88435-1-ben.knoble+github@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250812170256.71751-1-ben.knoble+github@gmail.com>
+References: <20250812170256.71751-1-ben.knoble+github@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250811221706.67168-1-ben.knoble+github@gmail.com>
- <20250812170256.71751-1-ben.knoble+github@gmail.com> <2250a8fd-62b8-4218-9858-23032d9c807d@gmail.com>
- <xmqqfrdvns9d.fsf@gitster.g>
-In-Reply-To: <xmqqfrdvns9d.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Wed, 13 Aug 2025 13:36:48 -0400
-X-Gm-Features: Ac12FXwwegEijtxmREhjLq-DKBhI1liDqw3s38bsIMeGaDywr2eB-PGB6QTEYwE
-Message-ID: <CALnO6CCUAHvi3oC1A3czRLsuGNGUQMeRomB8A8sF=2ULWcmszg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/3] clean up some code around editors
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 13, 2025 at 11:45=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> > Hi Ben
-> >
-> > On 12/08/2025 18:02, D. Ben Knoble wrote:
-> >> Changes from v3:
-> >> - drop 4/4
-> >> - use test_env (including a case our lint does not catch when the valu=
-e
-> >>    has spaces)
-> >
-> > It's not worth a re-roll but for future reference
-> >
-> >       test_env FOO=3Dbar git commit --amend
-> >
-> > uses an extra process compared to
-> >
-> >       FOO=3Dbar git commit --amend
-> >
-> > which slows the test suite down for no real gain. We should only need
-> > to use test_env to set environment variables when calling a shell
-> > function. In the special case of test_must_fail it supports
-> >
-> >       test_must_fail env FOO=3Dbar git commit --amend
-> >
-> > which is widely used in our test suite
+Changes from v4:
+- revert use of test_env: fix the one instance that needs adjusted for
+  VAR=val cmd syntax by using test_must_fail env VAR=val cmd.
 
-Aha, I learned something new (again)=E2=80=94although that still means my
-diagnosis for this about the space in the value is wrong :) It's not
-flagged because it's not a shell function. Great!
+Changes from v3:
+- drop 4/4
+- use test_env (including a case our lint does not catch when the value
+  has spaces)
 
-> If this were some feature series, the story may be different, but
-> since the theme of the topic is "clean up", the above clean-up is
-> something that ought to be part of an update.  A clean-up topic
-> should not be adding things that need to be further cleaned up ;-)
+Changes from v2:
+- shuffle setup code and use more helpers in 1/4
+- insert 2/4 to stop abusing --exec-path
+- improve environment-cleansing idioms in {2 => 3}/4
 
-Agreed; I don't want to add more problems here ;)
+Thanks especially to Phillip's encyclopaedic knowledge of test helpers ;)
+
+Changes from v1:
+- add a prep patch with style fixes to t7005
+- rework the environment munging to use subshells, per Phillip Wood's
+  suggestion
+
+These patches clean up some old code in the editor tests that does not use our
+modern idioms.
+
+Also, this version is (still) based on a later master 112648dd6b (Merge
+branch 'master' of https://github.com/j6t/git-gui, 2025-08-04) than the
+original from May.
+
+v1: https://lore.kernel.org/git/20250520193506.95199-1-ben.knoble+github@gmail.com/
+v2: https://lore.kernel.org/git/20250810160323.49372-1-ben.knoble+github@gmail.com/
+v3: https://lore.kernel.org/git/20250811221706.67168-1-ben.knoble+github@gmail.com/
+v4: https://lore.kernel.org/git/20250812170256.71751-1-ben.knoble+github@gmail.com/
+Published-as: https://github.com/benknoble/tree/editor-cleanup
+
+D. Ben Knoble (3):
+  t7005: use modern test style
+  t7005: stop abusing --exec-path
+  t7005: sanitize test environment for subsequent tests
+
+ t/t7005-editor.sh | 147 +++++++++++++++++++---------------------------
+ 1 file changed, 59 insertions(+), 88 deletions(-)
+
+Diff-intervalle contre v4 :
+1:  8ad2904a18 = 1:  8ad2904a18 t7005: use modern test style
+2:  44a6fd8eb3 ! 2:  5a35889571 t7005: stop abusing --exec-path
+    @@ t/t7005-editor.sh
+      	esac
+      	test_expect_success "Using $i" '
+     -		git --exec-path=. commit --amend &&
+    -+		test_env PATH="$PWD:$PATH" git commit --amend &&
+    ++		PATH="$PWD:$PATH" git commit --amend &&
+      		test_commit_message HEAD expect
+      	'
+      done
+    @@ t/t7005-editor.sh
+      	esac
+      	test_expect_success "Using $i (override)" '
+     -		git --exec-path=. commit --amend &&
+    -+		test_env PATH="$PWD:$PATH" git commit --amend &&
+    ++		PATH="$PWD:$PATH" git commit --amend &&
+      		test_commit_message HEAD expect
+      	'
+      done
+3:  135d4368d6 ! 3:  e6e31ab98c t7005: sanitize test environment for subsequent tests
+    @@ t/t7005-editor.sh
+     -export TERM
+      test_expect_success 'dumb should error out when falling back on vi' '
+     -	test_must_fail git commit --amend
+    -+	test_env TERM=dumb test_must_fail git commit --amend
+    ++	test_must_fail env TERM=dumb git commit --amend
+      '
+      
+      test_expect_success 'dumb should prefer EDITOR to VISUAL' '
+    @@ t/t7005-editor.sh
+     -	VISUAL=./e-VISUAL.sh &&
+     -	export EDITOR VISUAL &&
+     -	git commit --amend &&
+    -+	test_env TERM=dumb EDITOR=./e-EDITOR.sh VISUAL=./e-VISUAL.sh \
+    ++	TERM=dumb EDITOR=./e-EDITOR.sh VISUAL=./e-VISUAL.sh \
+     +		git commit --amend &&
+      	test_commit_message HEAD -m "Edited by EDITOR"
+      '
+    @@ t/t7005-editor.sh
+     -		;;
+     -	esac
+      	test_expect_success "Using $i" '
+    --		test_env PATH="$PWD:$PATH" git commit --amend &&
+    +-		PATH="$PWD:$PATH" git commit --amend &&
+     -		test_commit_message HEAD expect
+     +		if test "$i" = core_editor
+     +		then
+    @@ t/t7005-editor.sh
+     +				export $i
+     +				;;
+     +			esac &&
+    -+			test_env PATH="$PWD:$PATH" TERM=vt100 git commit --amend
+    ++			PATH="$PWD:$PATH" TERM=vt100 git commit --amend
+     +		) &&
+     +		test_commit_message HEAD -m "Edited by $i"
+      	'
+    @@ t/t7005-editor.sh
+     -		;;
+     -	esac
+     -	test_expect_success "Using $i (override)" '
+    --		test_env PATH="$PWD:$PATH" git commit --amend &&
+    +-		PATH="$PWD:$PATH" git commit --amend &&
+     -		test_commit_message HEAD expect
+     -	'
+     -done
+    @@ t/t7005-editor.sh
+     +				export $i
+     +				;;
+     +			esac &&
+    -+			test_env PATH="$PWD:$PATH" git commit --amend &&
+    ++			PATH="$PWD:$PATH" git commit --amend &&
+     +			test_commit_message HEAD expect || exit 1
+     +		done
+     +	)
+    @@ t/t7005-editor.sh
+      
+      test_expect_success 'editor with a space' '
+      	echo "echo space >\"\$1\"" >"e space.sh" &&
+    - 	chmod a+x "e space.sh" &&
+    --	GIT_EDITOR="./e\ space.sh" git commit --amend &&
+    -+	test_env GIT_EDITOR="./e\ space.sh" git commit --amend &&
+    +@@
+      	test_commit_message HEAD -m space
+      '
+      
+
+base-commit: 112648dd6bdd8e4f485cd0ae11636807959d48be
+-- 
+2.48.1
+
