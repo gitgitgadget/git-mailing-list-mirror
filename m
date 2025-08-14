@@ -1,155 +1,132 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C491678F4B
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 22:06:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6259327FB1E
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 22:10:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755209193; cv=none; b=gIGP6seOxH3+eo73LXl0j4OwA5lChx3PHwHhy8T0UA50KR3Sspnn9KMA9O09vtThNiyo7ksPagMY++2zai/ix4wIxGt3fUZIfcWLLcARIjEW3M1zRH6phh1KX4Ffm9moaxhP9H8/6CQdtFRUnq1uW83WHfrkIabpk69qqnnE72Y=
+	t=1755209451; cv=none; b=b8L7MjnGwZFWi6nVyUDcUM5Z7equ5WRuAaNxOEwIAzQYxdozD+W4bgtQ7z+KYcIzJPTdUoGCXsPsTnbt75vYCjTrcJykW/2t3rAiVhhND4LhT0Lzk8IFauYDX/WBDSBNDc+HkzwYAmZeEGb3fTJsbiHX2yTe05eEaqb5FiJEwT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755209193; c=relaxed/simple;
-	bh=l+cu/UUzgk5mGd1vAL4hIjzwPCGY361HnFDxcIweb+g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W9rb99n56CUbX3cX4NaW1DiU3GEHdNa/ApPaLf+x7ISoz3AeVOapGwnHOgZsy7VVnb6ntoqd/u2Kg8ZO3asQawYsm0/uiF0iwAVcfdB6qJtlpB4mWq1fh1ZYpt23kM2kgkh7YwKluPjtXCrDq6WdRlo2bvFQDXjM0zXpebUt51c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=l+a9hM4D; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1755209451; c=relaxed/simple;
+	bh=dKXBnwkGCREGuwY3vw0Xs70WEEJ41DNum3VWDuyeqOw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Y44qgU/OPROaT3vJs28e4C32XrQZLRauZ5xEsifgNa9xDkr5lIQ4fnpCb1LxCCGR1Wo89aA1dQeAHKlHFn2jKvg2P6XfyCBCe2pHURVadrrlAB0DYgeBqAdYrIz9UfhRC6KyTP/jO5CL6nyy2SyTqoi8j/b2I9x5GowcqvDAxh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V11pxczB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JDiqiAs5; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="l+a9hM4D"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1755209183;
-	bh=l+cu/UUzgk5mGd1vAL4hIjzwPCGY361HnFDxcIweb+g=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=l+a9hM4DaxxOcbdCw6bk2Np0GkOis866sEepUA6H/OZQHcAdDxH9B4kKBC3iXzN9E
-	 7Uan5tTDgOVgM1C5GOaNrXVXWKjw0I/9sKwAR0JW8isxyrKXXT3kM+SPY1zQFFt3QT
-	 yAtkY9XyjuP9S3xZOV/RNgp15NzcAXBrKx626N23x9AW0xo0tZY4Kf7zrfn/CYhNbW
-	 PyBaaE4DGSPfUYdhMXwt3j4yzmejmtwDx+cOVHx/UBEeLJYSPCjRpZIzM1F8quxXl8
-	 kWyZabrw19v+wYKWCR5v82tu5lG22Z8Epi3bn7HJP3rZ9sq2QJ6zmQArn0njQbqNcI
-	 md9/Dc3hiVUTaERZROPUHecAsr6BqJqQ07Ly303YRczS1S/5firyjaJ0sdGkJ+lv0V
-	 ApEldVMgJTf4CT4aQ3QBAKLhpJ7i2KDV/B53n7bF6jFglETbbcrWP5BrScX//W+8eZ
-	 GlT/1+uu7knR1rjKWJVbxl04FSnllzXXnb3NCsOwOZnUmxW8uD+
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8756:2fa2:aa23:19b4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 66392200B4;
-	Thu, 14 Aug 2025 22:06:23 +0000 (UTC)
-Date: Thu, 14 Aug 2025 22:06:22 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Efficiently storing =?utf-8?Q?SHA-1_?= =?utf-8?B?4oaU?= SHA-256
- mappings in compatibility mode
-Message-ID: <aJ5d3tvrm2S1ZTR9@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Jonathan Nieder <jrnieder@gmail.com>
-References: <aJ03RTHaE_JvHA1t@fruit.crustytoothpaste.net>
- <xmqq1ppe9e5h.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V11pxczB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JDiqiAs5"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 56A511400209;
+	Thu, 14 Aug 2025 18:10:48 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Thu, 14 Aug 2025 18:10:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755209448; x=1755295848; bh=PAYWytalPk
+	jPmRWN2aEoeFuCoXi2N+w8LMsns0oUoxE=; b=V11pxczBFHX706g8ssIVAd2n9Q
+	tBNtDkQEk4fFyGlIffU9EcGShyYmakuocZi8vk0wdfp7S5fU/Wbbzbh5vBNLogf8
+	vB1qrp4zSi1hGWpCq8/USM3TQ/PSaezVattNmOieMAN+pfdzAZbyu//ph8chFW4E
+	vLQKOlC+f0xE4kUqlvV0Wx8nW/vUSAop29k+nnQCUyL4JNrl0DdK8M5KADBY/q8m
+	SPW5WMt6DdrlhdMifsb9p64gVEZXYx7Jt4OO0/yXCmBKV4y55fIUmqAEEnQZ4M3+
+	Hx1B/Ew1vQR2UR1QKDX9LX0cWBACtSvcUFETt679QJQicOd0v6xuX4m4XVsg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755209448; x=1755295848; bh=PAYWytalPkjPmRWN2aEoeFuCoXi2N+w8LMs
+	ns0oUoxE=; b=JDiqiAs5wQsVetxnw+47fU7+ZaCz6Y2lH2DlF1sKUYp+8RDZuIy
+	u7HcJ8GdupRCwsrmoVUWD5VMwVXilY2SzLBm+ZAgfQTeO3vlCDb6p6X0P6pAG6ID
+	fL8s9qpSzDRDjNGiT6HXzA7ABqsOqU01oJU5a8wD5qiDOUWJ+VyKACvLgNEDZcLw
+	nd0M3/qJARW0Y2o5eKK2/xoos7PSYhvMhHPemQX5rCT2J7JRLWqdpjWZiqBvO3Th
+	Ur61npT935sVRQ/HAp/RSKSZ7mYIBP1GiBzzDa5v9oZ/8rTbea1XRp/IdrYM87gC
+	hq++lbXfVzfsoEgxVd1HgjTiDkxK0NVV5HA==
+X-ME-Sender: <xms:6F6eaPveTnPj7Rd8rGhUmguLixSxHYeObAkCqM6qHyYhSSSxJP-GOQ>
+    <xme:6F6eaOBOkhklh1frJPNMgXpCbbuElWpFT3ETZolSTZDvQgfgusGyH3lXzOzweRgHI
+    9iBjCYETgFU7hKujA>
+X-ME-Received: <xmr:6F6eaJNDWNv6xEjUKQG9MvulQBzTkveX5Xb1YLQGLNZOaVF8d0GNtKzFAJEmwjcUxRxokNgiWtHIlPVnw6ddgzuqIsUFEXpCQgRlkrI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvvdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkh
+    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgv
+    vgdrfhhrpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:6F6eaPyrg76ffluDvzLBqn4RSik-RhsJ8qy20SJCiQW4x6EA3OBTJQ>
+    <xmx:6F6eaBUCMtG3hwqcEKIYYb9lTdDZNGHHXE18cxz0_QQVELg-h_vYpg>
+    <xmx:6F6eaJMcYJVYzEVYfY2OEj9ItGn6RnKYFM5ShuzTli3rYqI98axBCA>
+    <xmx:6F6eaLA3hVOo_ms2p_GMYHCKlyt-PSAB9rjh7AW7L0-WaeEfM3f_rg>
+    <xmx:6F6eaL4jyIdf1DJaWwEPoQ-2tekWq_yR_68jhIDhEF8l9B7WUcLTGBga>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 14 Aug 2025 18:10:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Chris Torek <chris.torek@gmail.com>,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
+ <jn.avila@free.fr>,
+  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v2 2/4] doc: git-add: simplify discussion of ignored files
+In-Reply-To: <63c9e0361dc02c15afeea3cad1656e1631637f60.1755127218.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Wed, 13 Aug 2025 23:20:16
+	+0000")
+References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
+	<pull.1952.v2.git.1755127218.gitgitgadget@gmail.com>
+	<63c9e0361dc02c15afeea3cad1656e1631637f60.1755127218.git.gitgitgadget@gmail.com>
+Date: Thu, 14 Aug 2025 15:10:46 -0700
+Message-ID: <xmqqbjohy2op.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mqO8j1wlquXKLvQy"
-Content-Disposition: inline
-In-Reply-To: <xmqq1ppe9e5h.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> -The `git add` command will not add ignored files by default.  If any
+> -ignored files were explicitly specified on the command line, `git add`
+> -will fail with a list of ignored files.  Ignored files reached by
+> -directory recursion or filename globbing performed by Git (quote your
+> -globs before the shell) will be silently ignored.  The `git add` command can
+> -be used to add ignored files with the `-f` (force) option.
 
 
---mqO8j1wlquXKLvQy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +`git add` will not add ignored files by default. You can use the
+> +`--force` option to add ignored files. If you explicitly specify the
+> +exact filename of an ignored file (e.g. `git add ignored.txt`), `git
+> +add` will fail with a list of ignored files. Otherwise it will silently
+> +ignore the file.
 
-On 2025-08-14 at 14:22:18, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> I do not know if you want my input (as I wasn't CC'ed), but anyway...
->=20
-> > ...  We can store them in the
-> > `loose-object-idx`, but since it's not sorted or easily searchable, it's
-> > going to perform really terribly when we store enough of them.  Right
-> > now, we read the entire file into two hashmaps (one in each direction)
-> > and we sometimes need to re-read it when other processes add items, so
-> > it won't take much to make it be slow and take a lot of memory.
-> >
-> > For these reasons, I think we need a different datastore for this and
-> > I'd like to solicit opinions on what that should look like.  Here are
-> > some things that come to mind:
->=20
-> I do not see why loose-object-idx is not sorted in the first place,
-> but to account for new objects getting into the object store, it
-> would not be a viable way forward to maintain a single sorted file.
-> We obviously do not want to keep rewriting it in its entirety all
-> the time,
+I think we no longer need to say "explicitly" now that we added
+"exact".
 
-It's not sorted because there's no way to do so and efficiently handle
-both lookups.  If we sorted it in SHA-256 order, then we would still
-have to look up items in SHA-1 order with a linear search, and vice
-versa.
+The earlier text used "explicitly" because it wanted to say that
+"git add t/ 'ig*.txt'" silently ignores "t/ignored-file.txt" and
+"ignored-file.txt" because these files are not explicitly named
+(they were only implicitly named via recursion or globbing).  Your
+new wording "exact filename" already covers these cases.
 
-What we do for pack index v3 is a sorted table of abbreviated names, a
-mapping of that order to pack order, and then full object names in pack
-order, with a set for each algorithm.  The abbreviated names all use the
-same prefix size, which is just long enough to be unambiguous.  This
-means that we can easily look up an object, find its index into pack
-order, and then find the full object ID in any algorithm.
+Do we discuss that "git add t/" attempts to add everything that is
+not ignored under the t/ directory elsewhere in this document after
+these patches?  If we do, then I am 100% OK with the decision to
+stop talking about globs and recursion in this paragraph.  Otherwise,
+I would want to see some mention of this "naming directory names its
+contents recursively" somewhere in the document (it does not have to
+be, but can naturally be, in this paragraph).
 
-We could probably write some sort of data file that contains these
-same mappings except that since we don't have a pack order, we could
-just use a sorted order in the main algorithm and omit the main
-algorithm's mapping table.  We could then have a single table for the
-necessary object metadata.
+Thanks.
 
-> If there aren't any radically novel idea, I would imagine that our
-> design would default to have a big base file that is optimized for
-> reading and searching, plus another format that is easier and
-> quicker to write that would overlay, possibly in a way similar to
-> packed and loose refs work?
 
-Yeah, that could be an option.  Or we could have a base file and some
-incrementals, with a `git gc` when we hit 50 items, just like when we
-hit 50 packfiles.
-
-> As there are some objects for which we need to carry dynamic
-> information, e.g. "we expect not to have this in our object store
-> and that is fine", which may be set for objects immediately behind
-> the shallow-clone boundary, may need to be cleared when the depth of
-> shallowness changes.  Would it make sense to store these auxiliary
-> pieces of information in separate place(s)?  I suspect that the
-> objects that need these extra bits of information form a small
-> subset of all objects that we need to have the conversion data, so a
-> separate table that is indexed into using the order in the main
-> table may not be a bad way to go.
-
-My plan is to just wire this up to `git gc`.  We'd know what entries are
-potentially disposable (such as shallows) and omit the unneeded entries
-when repacking.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---mqO8j1wlquXKLvQy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaJ5d3QAKCRB8DEliiIei
-gaDpAP9dO71F5VIP8pblZ1pxviwV4RPvMp+fk7buSCMfoAsa1AD/TWisunYBF8l6
-jHXz50ttO333ZOfRo87650yr+9WmMQk=
-=kni4
------END PGP SIGNATURE-----
-
---mqO8j1wlquXKLvQy--
