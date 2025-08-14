@@ -1,154 +1,130 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0322A321425
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 14:22:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5790B1ACECE
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 14:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755181344; cv=none; b=FQA/eIf135U5YmNLjAZRkSfmTzPRdT1ycIbbqJoYZvEJ0sO3XYBtqR1OqLj7N73ZV8a55ZFFDcxJoylbTl1fMOBtRcB8ukCxF7Atd8uO8NN3J92r9lbR6a7+iZaPZDah6v2Ee9/ImSVeh/V2w2IcHJOozA6QRLzxwVsNKiipaiY=
+	t=1755182040; cv=none; b=AHr0ByxJKcx1z4V9sM/NgFjdOqVsxiLuEMzgAk47xsmZ7veWKxZ9sP2qGZImCumM7kuxOLHI2VG4LwltrYV2wWvMPxiClA0iCC2oPz6q6RQQDsCFUTvIoD1xb61GkMOUGFtN2UXDHh7KdX9YBBrSM38aMrTGjsI38qLPqiYc8TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755181344; c=relaxed/simple;
-	bh=+BmdJKiv3dciw79gD3W8HawbMQtJxe2wLnCthI8u7QI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iU5hhkha5y5oRDwXJ6rU3b5yv7x3eI9ABDmdsOlwjliq6mW/QS0EhtVhjoaqviP+dU/qSSVM5KJzef+18URrKdnkcHN5gdiVgK8BT7av+yQ2Y6cOGOUfLDyslPac+EhfHLNvvPPa/6CZXQ/k4x+pHlj2C+6COyRyWNBKE24H25o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TVacqDPz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Psye5rE/; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755182040; c=relaxed/simple;
+	bh=ILDJ4hqZKegw7rdYhrQTzKN1OR90xoIBgJSCh+vbw5U=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=roiwbtcNgPVDaBdyqBngzN4fPELikDKD5uy1DmunUEjxnF/8rQ3MifhqFV7BiW+5H6llq++NOR5dY3mMewqVSsHZ9Sem5FCaFB3R3PeWK4KgSDho3tZn1B8nm5goIPilVxlGop+fWBAHyr7bJKAeP01gbowNortoc6IV14nBp84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TUKBISQ9; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TVacqDPz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Psye5rE/"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0F8EA1400149;
-	Thu, 14 Aug 2025 10:22:21 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 14 Aug 2025 10:22:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755181341; x=1755267741; bh=avIteoU/YK
-	IpYCx15j8QdxwnBOZSt0xyhU/HNgPeRNY=; b=TVacqDPzh6DTbhThgXlIFGVTH8
-	MYf9Rbkkf+l2+r8vstD9PGzbq7yMcIGo2oEcDgUbtHAAW6KB9hIsShGLTXM6AZXA
-	QsoIYs4CSTUCXpH2mDK4t6IkEHCFT4vnMVx9/MZFwZGDV3j2yE9ZyMeD4tiIrzte
-	14tIQWMkA02/wrkTBoHCFJ1Ps10MykZ5JiL+eQeoPKT4MXhvWATnCR/ObXwdQPp3
-	Z9y63wtli7b1MgJ0gCm+Kzd5dalyZ/9lwiG0sjhbpu3ryexAt8f1Di7pd6m3ytv5
-	z0zXfrglVqLgDx0hmvMtHz2cKdBbiTrKnkCaH00gd2w+yEXkWhHGx04wDx+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755181341; x=1755267741; bh=avIteoU/YKIpYCx15j8QdxwnBOZSt0xyhU/
-	HNgPeRNY=; b=Psye5rE/zRWmJKVnHNbgToQgqxv7iUAusYzlaK5ANvYKEnlE7vt
-	RPgmT57j5HxRj4TaVi1ZzJ7Lwsw1Mvs8WkIMeJn/b6wMowF3CVN+4IdEA2ULrrq7
-	Ubt88BA/vjqtHXaY1vyBcc7CXKC6/NJLT+X5yqquaQQVTr+JL1M28oJnYpT2Z+U/
-	uX6r/arrWQl2bTzmS/mwiJwA2HlaqyDA7HRQg3yw5rxtmxomOUIvAUwah1SVvIot
-	59q3fMiV+G42q+3OvGYPzhoOug2a69jqxFphVGAntc+//jozyLXURNFQ+aDiPkVg
-	JXJ1ogYru8h23tuWLif/dLASod328SgQPIQ==
-X-ME-Sender: <xms:HPGdaJSrYqXPeuFed4_8PhZZvvkhRpf193AM1flWa5Ah6hAoyYa3JQ>
-    <xme:HPGdaPvDJik2hZZLv3LmdADPJqY4vKpJvXKwSbhx4g-gcNksfEX3AkdzQsVl0-p97
-    PSGAKnNZbwGtFq7wg>
-X-ME-Received: <xmr:HPGdaKcR4iOOvP2anMpn_UPrUWL7JDJPbt6oSDBQ-NfP_x2-8pzNh1oPBkWpZ5uScguxNabJsdPqnYs94efaOdwVB2TjvCFDCESLcbw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedufeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepgfetheeukeejkeffheduhffglefgvdevhfelleduudduffejjefgteeltdei
-    ueeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
-    hsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhi
-    hlohhrrhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgt
-    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhrnhhivgguvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:HPGdaJYcUKPfBYLDKI0AV4IsW3ONzQJp0JURZ83qY940pxrr68YeOQ>
-    <xmx:HPGdaMbtytGDtpiK6lLXE_rY-xdIvMno518E_aCf6Ki_nubaPv3lrg>
-    <xmx:HPGdaOJxUg5skn0pkO_S2C3sl5z5nESol1TEczbSHvrJokIfHI-VUA>
-    <xmx:HPGdaItpd1bqevoFSDTxUNZYDTnvoFiogtsQti8glK2Nhi2mgRmhTg>
-    <xmx:HfGdaJSBRAscNqrk953Mm00GfsV4O89Wfe_xeV6qv03h06yIJv-bBF9N>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Aug 2025 10:22:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
- <me@ttaylorr.com>,  Derrick Stolee <stolee@gmail.com>,  Patrick Steinhardt
- <ps@pks.im>,  Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Efficiently storing SHA-1 =?utf-8?Q?=E2=86=94?= SHA-256
- mappings in compatibility mode
-In-Reply-To: <aJ03RTHaE_JvHA1t@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Thu, 14 Aug 2025 01:09:25 +0000")
-References: <aJ03RTHaE_JvHA1t@fruit.crustytoothpaste.net>
-Date: Thu, 14 Aug 2025 07:22:18 -0700
-Message-ID: <xmqq1ppe9e5h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TUKBISQ9"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-afcb7abfc5cso179610166b.3
+        for <git@vger.kernel.org>; Thu, 14 Aug 2025 07:33:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755182036; x=1755786836; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kzfLdxTZjvWjpjIyiTZ0FrFoQbgrC11GlO+xNgXiCjw=;
+        b=TUKBISQ9UlheC9uyLZCZRwo2ZgTZ7+GHpinLOI0a489U9nRnXIxeuJTsvZuY9f6Q9W
+         KqOXum2CMfh5789jf1sgD3ErUWSJcxhwA9RiIVKsCDbTf25tlv1Iq9DQGSuLgNJ/4aa2
+         g8anniGN1PdCzABfimpR2TBcOIGYlkrrYtgWa9ggcZCTDWv/FtGVqt0dQHij+hZUfHIB
+         PlACSwm1UdG4R3xvAJyp0E4avPLLpQbg+PvMrQVkYAaaOXvA8Qp7FrAoA/xpvoujGSwN
+         2+VzOUlHsh09+p/nUsTGob7cam1iN2f7QfMp8cYJIP8cEyib+H2/SabS9KPVp7KpCZRq
+         h1Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755182036; x=1755786836;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kzfLdxTZjvWjpjIyiTZ0FrFoQbgrC11GlO+xNgXiCjw=;
+        b=WzuGs0Wn6ZkNRVqk6T98N7do0Q/GJ1OrT0wgaaQuENDYoPwVnDN/zVA9zLmTqWaNqo
+         KRpRc69JpKmxD3Wg/HARrEgXehkmcJI+GrhvOUUpJ8N83YBUFHeykoQjl9s809C6Y/nq
+         JVY2JMvekFfCwqUtZKdS5vyLnmPLI3jJJ5RXzuSK1z3mwLE5+aMICp5ZM9nMTmtegQYZ
+         oV+lPhCp2jhdrrgw7K9wRG0meAeo8W0ezvhl84s1sZRYt/SmWDF2zpsrpXYyXoiezMRO
+         TeC+jdXS0mXeNsnIeoq2LphvetOGtNHu+FHu37WQdV7As7gDEzuE43dVkDlWFIqSk3UT
+         Yi8w==
+X-Gm-Message-State: AOJu0YwX/WkizYinF2dgbRj/TR0fAfmZPaDrFxZyU6D40qgF1bHGtUgP
+	GJlzUTcBh7qxbh7cE0Va9leA5WBmUha+/Yj6iEBxvqQCmxVeAKeGJJa/n+0smw==
+X-Gm-Gg: ASbGncuw58KKCujq/z50Y3ACUIAfw0LGx/rFZDFKe2SWvBRKsesmCwr9+9OVii07yXR
+	1l483MipteRm870J+UBCA0OTUC9X27CpCrV+ZZINaXTBPO0Le1eVCH3W9yPR3JpVHtAqbtIEkyt
+	Dd5UUxxVSKgxzbfPjzO5PuyydPFoTJq7kzsf4r+Nk1lWCoNIq89OFvSL8TockJN4jQwUNZ3NEpH
+	2TveEUrmv4lh3FHDnbNd9pir8M+xphEPM/jhVZu3h+x5GbQyHFtjIPSpkppeoVe0MvQNlI/A5rv
+	h2dpU0zonSpbA0YdcJI1EjkGpUpTwuZQcDGrh/1LyRMxU7ZzQC/FtzUQ/xzD2hulNCHFGhWXDD1
+	JnrXxwFt52YWq5jP7wcMPMS47Y2DG2qbXhQ==
+X-Google-Smtp-Source: AGHT+IFW9ZZGkj0FOPkvOTHEOapBz/a2uMWmskxDw+b/w+uJ+KQOzlcDDXXwed556HjLNPQ6XBvfqg==
+X-Received: by 2002:a17:907:3d9e:b0:af9:b4e9:8680 with SMTP id a640c23a62f3a-afcb98c17efmr322338666b.28.1755182036036;
+        Thu, 14 Aug 2025 07:33:56 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a0761f2sm2613454266b.11.2025.08.14.07.33.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Aug 2025 07:33:55 -0700 (PDT)
+Message-Id: <pull.2031.v3.git.git.1755182034719.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2031.v2.git.git.1755177382349.gitgitgadget@gmail.com>
+References: <pull.2031.v2.git.git.1755177382349.gitgitgadget@gmail.com>
+From: "Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 14 Aug 2025 14:33:54 +0000
+Subject: [PATCH v3] count-objects: document count-objects pack
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Daniele Sassoli <danielesassoli@gmail.com>,
+    Daniele Sassoli <danielesassoli@gmail.com>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+From: Daniele Sassoli <danielesassoli@gmail.com>
 
-I do not know if you want my input (as I wasn't CC'ed), but anyway...
+0bdaa12169b (git-count-objects.txt: describe each line in -v output,
+2013-02-08) forgot to include `packs`.
 
-> ...  We can store them in the
-> `loose-object-idx`, but since it's not sorted or easily searchable, it's
-> going to perform really terribly when we store enough of them.  Right
-> now, we read the entire file into two hashmaps (one in each direction)
-> and we sometimes need to re-read it when other processes add items, so
-> it won't take much to make it be slow and take a lot of memory.
->
-> For these reasons, I think we need a different datastore for this and
-> I'd like to solicit opinions on what that should look like.  Here are
-> some things that come to mind:
+Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
+---
+    Document count-objects -v - packs output
+    
+    https://github.com/DanieleSassoli/git/commit/0bdaa12169bca5d69f2c58f96cc92d51280e9e26
+    (git-count-objects.txt: describe each line in -v output, 2013-02-08)
+    forgot to include packs.
 
-I do not see why loose-object-idx is not sorted in the first place,
-but to account for new objects getting into the object store, it
-would not be a viable way forward to maintain a single sorted file.
-We obviously do not want to keep rewriting it in its entirety all
-the time,
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2031%2FDanieleSassoli%2Fmaster-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2031/DanieleSassoli/master-v3
+Pull-Request: https://github.com/git/git/pull/2031
 
-> Some rough ideas of what this could look like:
->
-> * We could repurpose the top-bit of the pack order value in pack index
->   v3 to indicate an object that's not in the pack (this would limit us
->   to 2^31 items per pack).
+Range-diff vs v2:
 
-Nice to see an effort to see if we can do with a small incremental
-change, but would a single bit be sufficient to cover all the needs?
+ 1:  6f0394651c9 ! 1:  ab90af2b6a0 Document count-objects pack
+     @@ Metadata
+      Author: Daniele Sassoli <danielesassoli@gmail.com>
+      
+       ## Commit message ##
+     -    Document count-objects pack
+     +    count-objects: document count-objects pack
+      
+          0bdaa12169b (git-count-objects.txt: describe each line in -v output,
+          2013-02-08) forgot to include `packs`.
 
-I suspect that the answer is no, in which case the v3 pack .idx
-format would need to be further tweaked, but in that case we do not
-have to resort to such a trick of stealing a single bit from here
-and abusing it for other purposes.  We should just make sure that
-the new .idx file format can have extensions, unlike older format
-that has fixed sections in fixed order.
 
-If there aren't any radically novel idea, I would imagine that our
-design would default to have a big base file that is optimized for
-reading and searching, plus another format that is easier and
-quicker to write that would overlay, possibly in a way similar to
-packed and loose refs work?
+ Documentation/git-count-objects.adoc | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> * We could write some sort of quadratic rollup format like reftable.
+diff --git a/Documentation/git-count-objects.adoc b/Documentation/git-count-objects.adoc
+index 97f9f126101..eeee6b9f7f4 100644
+--- a/Documentation/git-count-objects.adoc
++++ b/Documentation/git-count-objects.adoc
+@@ -28,6 +28,8 @@ size: disk space consumed by loose objects, in KiB (unless -H is specified)
+ +
+ in-pack: the number of in-pack objects
+ +
++packs: the number of pack files
+++
+ size-pack: disk space consumed by the packs, in KiB (unless -H is specified)
+ +
+ prune-packable: the number of loose objects that are also present in
 
-The mapping between two hash formats is stable and once computed can
-be cast in stone.  Other attributes like the type of each object may
-fall into the same category.  Multi-level roll-up may be overkill
-for such static data items, especially if consolidation would be a
-simple "merge two sorted files into one sorted file" operation.
-
-As there are some objects for which we need to carry dynamic
-information, e.g. "we expect not to have this in our object store
-and that is fine", which may be set for objects immediately behind
-the shallow-clone boundary, may need to be cleared when the depth of
-shallowness changes.  Would it make sense to store these auxiliary
-pieces of information in separate place(s)?  I suspect that the
-objects that need these extra bits of information form a small
-subset of all objects that we need to have the conversion data, so a
-separate table that is indexed into using the order in the main
-table may not be a bad way to go.
+base-commit: 2c2ba49d55ff26c1082b8137b1ec5eeccb4337d1
+-- 
+gitgitgadget
