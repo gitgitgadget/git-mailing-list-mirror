@@ -1,54 +1,54 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7EA14A60F
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 22:22:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E36C274B46
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 22:49:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755210156; cv=none; b=Nb5jwwp2AlE5bZOU66BIZ/eEFDCrbHivDnBcYIk/YUbRRFQ57HI51bAkNHEmpsAIdx/6zb/f0FO2vA9UM70vUGy7MCEf+arjr6RE3lKU2GjTZOcqeAmHOLgsUO30MH1ADQ8mNnxmW2pc5+W/lB3ymtqKGZgkiBubJNIcAOX62DQ=
+	t=1755211759; cv=none; b=YIzmLt57ln0a0TvK948/vpgeShvVZfsMIL3M6ZpvomrUPQyCDf3eUyxesqEhGhcZgvBLOw+dDxC5ZHfDLAK81Ot0mqTC3DtY2CLyiAenFJN6G/2BdMgmpD8Taok1o+KnFM6BYUyPon1TewraqSYOmNjANx48V7+9afjOgPtrkig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755210156; c=relaxed/simple;
-	bh=RRkPiK1iD6S60HbEIPalNY1DI3tAKuyu57pGBsTttpA=;
+	s=arc-20240116; t=1755211759; c=relaxed/simple;
+	bh=Uw9c8KoLPbPe+W5LX/v80WD+QC4yeuVfc+5eRdedErc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hNFgue4O5OITA+8H48qR+d9iEjIsGU1qkKe5QljfrL7+iVy1pcq+z1p7h38QbmpLWsHqAStQsYNCT57cU24pQ7MuVilbYZOHp6S0jZtd4vQ43riETBr5lib+UKVLIejAr6n/YilpQ7UY8XAP5tEW7KTMFiEqo87u24yeqW/0CpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d5SA+qMe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z03+z0fp; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=qL0DIaE9dQEdwlpMyV+zuhRjITJixJ37NDb4yNjarvL2N1Do1WQWmy1ECpJFvyb1z8bibI4mAyBLeMp7xY5eLzqZfqkq5o1LFk/bZA/jYDswRVz/wqgC/zP+0MOb7cT33n9ImiSyX8Ok5YUB+GLTqhyJKHDg+EQ0t4xyZFJiwuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ouozk9za; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GpCKC9ka; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d5SA+qMe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z03+z0fp"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A4B5A14001AE;
-	Thu, 14 Aug 2025 18:22:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ouozk9za";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GpCKC9ka"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 54C91EC0201;
+	Thu, 14 Aug 2025 18:49:16 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 14 Aug 2025 18:22:32 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 14 Aug 2025 18:49:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755210152; x=1755296552; bh=1KK1X1BcmY
-	ffAObnqNyNTcwm7Q35R7ENZOv8ZNYJGWI=; b=d5SA+qMeLLLhgsrgonYomv9bjr
-	VZblaa3SZOQhRl2GmSNlqp032Rg6nrqR2gdZrudyGtvJGQr4aKqgvydLu0quMhhk
-	gC3vgm+YOXX+YRse3zSj0YVOpMKvF/E99BAOm1/s18QVNOzyKfnZLVW+Ul4fwDdS
-	f0bAc0be3+AK9OyJ8ThSPS6m6/sny55SeEAp9A5IKeYZ6FAk5XJb5X/490TcDq/T
-	sF/2q4BboZeBjUH5dpOv+llIR3id9tkacbkyeCnV9iNUDvBOE7FMUDSYc9STS64H
-	3nG6KEFmZVqKOU3upschgXug1AC/1NMTI+4Q2uGyPs78lfEoNHWmvYh0GwhA==
+	:subject:to:to; s=fm2; t=1755211756; x=1755298156; bh=c8Nn0rKmm7
+	s1ODVDWtH51CdMrS4apWFeiskBFkEFI0Q=; b=Ouozk9za35PjJWJraDAFUg8svy
+	XW+8oUJA37PaIjv1ODCvl4KQ4bpfv9W2ijnl1wjlrMxtpHsEpE/BbMKZArKLaj4X
+	FO4Hs4NG6WLxpEmpqD11Vam6R5sVs3NRzC2qQThiG8rPgQL1eB6F6QpfBhKwcxsI
+	OufaoBum9aodWuqhRAFdtO4837vXyLd0vyokihFcO9akCX17WQr2WL+Q6wgSqg1v
+	lGFVs4X/Gp86SP8PK2O5wlnwDutVZPqogYOb5dEowVTtkA61oCkozQB0SuZROact
+	w7UjBJBp0TljTzUHClwn76UbrqEpDW4HFWh8nIto9rox5dUiOfUhD2tFF6Cw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755210152; x=1755296552; bh=1KK1X1BcmYffAObnqNyNTcwm7Q35R7ENZOv
-	8ZNYJGWI=; b=Z03+z0fpMSs6GlJ2FkoeealEqeZLaCm9Kj5iCB7mZ9qLwqk7wId
-	Iv+p60ScQaffoNaZ1C2rnkEVehwTD/lhLYPzx+BNJeM/qcpveFVO6z+enhOdgv4a
-	IZYuB6xnBTTvwbUDbNILFpozeCRxVYYurCD+EEOMOQQfcPB8WmjDV6Zr0A5PcEue
-	+94G/AxziFzeWisU2CVdGij2+9dL0OXcxN4mhEtRQVKBbAKgiRKPDJDrshhWVf6Y
-	LrfFdSQJpxJ3iVx7XvJxYiVkBzLHs+aHOSu+XDuOkVNFwKnkOsTYJHSF3py+Gqdg
-	/XmGpyv2PXUS5pU8Vm+m2p9yilYAUyyJ8VA==
-X-ME-Sender: <xms:qGGeaKSEAbrtyKPLyZ8iTCzjFlFXHmsdpxHie8W6_-eAYEZiHBZKbA>
-    <xme:qGGeaNWtRPopPu0Pq1vuYC6Y4hLysdwALf7KGraQVquPAqPdWGqaAIEM3AeiOlrlc
-    HAf3dqEaOgvItjnZg>
-X-ME-Received: <xmr:qGGeaOTPdsg_imEufohepWqDYBD6IdZVTcrSrzRENSC32Ls4hmNVyE0A20s9Ym95Xu51NNzSetpgUpNf-HKftyV3QDlePfIJ6Yv3aK8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvvdejucetufdoteggodetrf
+	1755211756; x=1755298156; bh=c8Nn0rKmm7s1ODVDWtH51CdMrS4apWFeisk
+	BFkEFI0Q=; b=GpCKC9kai64gdoot+D0rVangASdV/pzCYm5ufB/3GvH307/yYIL
+	tV+TPdQA46D+T9rOSXEFbEFCVDWuiAUNlKG6cOPDoeXh5tJiEEQhQbJsK1+fuGpj
+	EQr0mp41VzAFs+uHnakIrzileQQX/cyMyWkFqGb0fN8GFdLs9sbxx/3XbDFhUktm
+	WLe5gQvDyj9kZf+3QIDfe0FyOvgnz1oPNMRAfqw+UpvdRhLXxCFR7KNz+i3SKwn9
+	p9XIyQNdEHgyymvL0Pc0awryByrMe9/Bot0bbeN6WAJnYq2sEo+AP45wzOJowuuC
+	YRmvNJMwVCXwhwKJrt4BiI6REbJ7fub0INA==
+X-ME-Sender: <xms:7GeeaEgFEgSwZrpqX3WIxDRlyu8HicOMdfyYI1B7OiX15fGZKFuXBA>
+    <xme:7GeeaKnLDiYOqiZPftyt7Zpr1PwkqBpb8WDcyiNV7hBOf93YwPDceCBpVigDWu2Y2
+    uC9b1SpevvRkqtx6g>
+X-ME-Received: <xmr:7GeeaCj7wVsJdIN7zYZnO8wH0WtpBnKVPY5aggFZUW3EoQFJnklLQHWIh5dWlVsjyp1XyuUqHi9TwJu0ZmwJAxQAYw3NJGl3CkogQXI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvfedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -62,29 +62,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvvdejucetufdote
     hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgv
     vgdrfhhrpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgih
     htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qGGeaHkwQr-4ytHK_CaEKCeESH5g-ccohRnKlDvTxOjyS3mPFV5E4w>
-    <xmx:qGGeaE65lNYcQ667yq7_FqfZ51ZmAq-qats5UvIapqN8jN-2yVk2CA>
-    <xmx:qGGeaNhVkeeV9xwwxruPXd4FtqKnUDIWywEav2oS_wqryYYZwUvCeQ>
-    <xmx:qGGeaBGYii1-0d4UGeaNC7ANUUOIjeGuy4C3Y_5EsSC0RHNorI8ivg>
-    <xmx:qGGeaLIEiNw1gKBiINNkNp1hCoQmqWzHY9xzY4DLeHLY4mP2wIfc25wE>
+X-ME-Proxy: <xmx:7GeeaG200tkitw3sdaCle7bmD7o6R9vvsBib_1mDlvKN7NPfoRCh6A>
+    <xmx:7GeeaDIgmjlotOUXteim5Y7UauvPP9QYiNm-nezsN8hvLxJr1JR8JQ>
+    <xmx:7GeeaOz8fn3YT_5E7D1NBmlWssFsROqszClHgSx89ZD0YRdb4zVONg>
+    <xmx:7GeeaJWzRubEynX1eFaWwLbeJdwtvWUKuzHTx_4vkSODHXZT9pbMtg>
+    <xmx:7GeeaPYFN3QaWA8LbcysBhO96a_E5SSFsiqWgtgZDUm0FcXZV-o9t8oG>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Aug 2025 18:22:32 -0400 (EDT)
+ 14 Aug 2025 18:49:15 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Chris Torek <chris.torek@gmail.com>,  "D. Ben
  Knoble" <ben.knoble@gmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
  <jn.avila@free.fr>,
   Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v2 3/4] doc: git-add: make explanation less dry
-In-Reply-To: <ce1eafb02860b390da9359f92fcf098b7cdd3a94.1755127218.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Wed, 13 Aug 2025 23:20:17
+Subject: Re: [PATCH v2 4/4] doc: git-add: explain inconsistent terminology
+In-Reply-To: <9e595f9ad59776d74a431731824410c7b73795dd.1755127218.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Wed, 13 Aug 2025 23:20:18
 	+0000")
 References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
 	<pull.1952.v2.git.1755127218.gitgitgadget@gmail.com>
-	<ce1eafb02860b390da9359f92fcf098b7cdd3a94.1755127218.git.gitgitgadget@gmail.com>
-Date: Thu, 14 Aug 2025 15:22:31 -0700
-Message-ID: <xmqq349ty254.fsf@gitster.g>
+	<9e595f9ad59776d74a431731824410c7b73795dd.1755127218.git.gitgitgadget@gmail.com>
+Date: Thu, 14 Aug 2025 15:49:14 -0700
+Message-ID: <xmqqldnlwmc5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,37 +96,81 @@ Content-Type: text/plain
 
 "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> -This command can be performed multiple times before a commit.  It only
-> -adds the content of the specified file(s) at the time the add command is
-> -run; if you want subsequent changes included in the next commit, then
-> -you must run `git add` again to add the new content to the index.
-> +The `git add` command only adds the changes at the time that you run it.
-> +If you edit `file.c` after adding it, you need to run `git add file.c`
-> +again before committing.
+> From: Julia Evans <julia@jvns.ca>
+>
+> I think the fact that git uses these three terms interchangeably is
+> extremely confusing and that it deserves to be noted.
 
-I somehow find the text before this change easier to understand
-(except for one thing).  "If you edit `file.c` after adding it" in
-the new text says the same thing as "if you want subsequent ... in
-the next commit" in the original but in a much better way.
+We tend to avoid saying "I think" in our proposed log messages, as
+we do not churn the code and documentation merely to match personal
+preferences.
 
-> -The `git status` command can be used to obtain a summary of which
-> -files have changes that are staged for the next commit.
-> +If you want to check which changes have been added, you can run
-> +`git status` to print out a summary of the changes that will be committed
-> +or run `git diff --staged` to see the full diff.
+I do not necessarily think "git add --help" is an appropriate place
+to leave this note, by the way.  We should start from teaching "git
+help glossary", which does not mention "staging area" at all, which
+is a sign that it is somewhat outdated.  It does not use the verb
+'to stage' even once, either.
 
-Rewrite "diff --staged" to "diff --cached", simply because that is
-how "git diff -h" shows.  After all, "--staged" is explained as a
-"synonym" (and by definition, a synonym is something that you do not
-have to use, as you can use the real thing).
+Here is my attempt to improve the situation by giving a definition
+of "staging area" in the glossary.  Luckily, "cache" already has its
+own entry, describing it as an old synonym to the 'index', so I
+didn't have to do anything there.  Also the description of 'index'
+has a bit too much implementation detail, which I toned down.
 
-"status" gives paths in two groups, "changes to be committed" and
-"changes not staged for commit".  Explaining the use of "diff
---cached" to inspect what the user will be committing is a great
-addition here, as it is a sensible way to sanity-check the result of
-your index manipulations.  In addition, we also should talk about
-"diff" to inspect what the user will be leaving out---in other
-words, what the user might have forgotten to add, which is equally
-if not more useful sanity-check you can do before you commit.
+---
+Subject: glossary: talk about "staging area"
 
-Thanks.
+Surprisingly, "git help glossary" does not mention the 'staging
+area' synonym for the index, or the verb 'to stage'.  As "git
+status" output uses the latter (i.e. "Changes not staged for
+commit"), we should not leave it undefined what the verb means.
+
+Rewrite the definition of the `index` somewhat to reduce the level
+of implementation detail exposed, and focus more on the fact that it
+is a mapping from pathnames to the contents at these paths.  And
+mention the `staging area` there, as well as giving its own glossary
+entry.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/glossary-content.adoc | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
+
+diff --git c/Documentation/glossary-content.adoc w/Documentation/glossary-content.adoc
+index e423e4765b..10f0c21e88 100644
+--- c/Documentation/glossary-content.adoc
++++ w/Documentation/glossary-content.adoc
+@@ -247,11 +247,15 @@ for a more flexible and robust system to do the same thing.
+ 	of Git you had to make them executable.
+ 
+ [[def_index]]index::
+-	A collection of files with stat information, whose contents are stored
+-	as objects. The index is a stored version of your
+-	<<def_working_tree,working tree>>. Truth be told, it can also contain a second, and even
+-	a third version of a working tree, which are used
+-	when <<def_merge,merging>>.
++	The index stores the mapping from filenames to their contents
++	to prepare the contents of the next commit by updating the
++	object recorded for each path (for this reason, people often
++	say that the index is "like the staging area" when explaining
++	the concept), together with other information to detect which
++	working tree files are modified efficiently.
++	During a conflicted <<def_merge,merge>>, the index can have
++	multiple versions of contents at higher stages for the same
++	path.
+ 
+ [[def_index_entry]]index entry::
+ 	The information regarding a particular file, stored in the
+@@ -650,6 +654,12 @@ the `refs/tags/` hierarchy is used to represent local tags..
+ 	is created by giving the `--depth` option to linkgit:git-clone[1], and
+ 	its history can be later deepened with linkgit:git-fetch[1].
+ 
++[[def_stage]]staging area::
++	A synonym for <<def_index,index>>.  Adding contents to the
++	index to update the mapping from the filename to its contents
++	is often called "to stage" (verb), as people explain the index
++	is like a staging area to prepare for the next commit.
++
+ [[def_stash]]stash entry::
+ 	An <<def_object,object>> used to temporarily store the contents of a
+ 	<<def_dirty,dirty>> working directory and the index for future reuse.
