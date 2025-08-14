@@ -1,119 +1,132 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7382C1A9F8F
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 07:31:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B37024293B
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 13:16:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755156677; cv=none; b=gJh0uK8Wm9YN0lOKqOgTUkNv1O4DmqbjmfZteSccHdvLu0q97HDOGwiyAyfnbCDsIC2aUOGv5AvYONiMOd+O3utRFBs41zc/eGNeFfyfBYRcqiTSFniz7dIkkCP7A9umZEBRVDaojLf/ZQq8Mvk68QIqvkd2XFHrtYgyaGlwQ/o=
+	t=1755177387; cv=none; b=Rlp28bnsc8ggwDoK6DM3qZJHVpP81HYd9y4f7ri2+OstwbOxqHLb549VmhlqPIC6ZP0XhgqBo9AyXNX9qDRVF6tfq7EETpOPKjXLc4cvvqMDTUlh5gaukT1tqSbwLjhm4gLfoEG13sTjwg48X/Ltp4O2XfhOK/iKsP4w6PBxZhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755156677; c=relaxed/simple;
-	bh=mAV2tcG7Gf2rnv1aQLReZIQx2lkEdPPv89ItXxTrbFc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=eAZqfE8ueRt/7jPmkARSoxy51YqFKNkQKXdFY7lFUzRvetgNUOjiZy7SdCdpXlqtsNJZEI6optiHyX9h4h3i4lxJYsQWK0QMhi8KwZESvDvF1X+bHPN8EyOjKiryf7vT9LehI7RIqetjJefymHkZXaZ8Wf4TkdD5xXwgVaZZXSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=PsexpbRq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iwcN9MNh; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1755177387; c=relaxed/simple;
+	bh=Am47+42ayxLjIlzeYQbqaKyhlQndEJ+Fqsl5pRF4r/0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=NuLDsK3k8ZYHWj2upO5Lc41DaobN3YGv7Avz/gtshoNs9y51qxW1x05AaQacLDkVZQLf2piAPvajng1oEpnuXIqxJe1og+y2FNeym3EnNH7EXzW99/Ckznj3b05JhvVIlu0I+0G4EfzOMrPiAM7qmRuRqpL8luRGX/uy6+fQn+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fRDJqvgk; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="PsexpbRq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iwcN9MNh"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4B8587A0183;
-	Thu, 14 Aug 2025 03:31:12 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Thu, 14 Aug 2025 03:31:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755156672;
-	 x=1755243072; bh=tCRj0dPrPObUHcAeUOIeP86qkilzEOqs/j8wQLnwQVc=; b=
-	PsexpbRq/A7voGJbiUFT2Gt5erBcw4qUVaFksEyqMcT//OkjrdFayC6xHQM7XBJj
-	l3mn2kdI0dPIkmLjDGzTMPt6Ssg1CYgYMn7hbDEb31T5ru5f3QH2bUAzKldHOrhK
-	+QyAtqmQFPflr70SH83qDZ9T4kudBYjYA1ldPCiz5d8AQuNF+xwe5Wpip77pjpeF
-	fxOLhNp+D+GVGWQRw9lqOS5qtYFb1TfgWM4S5NZ3MfjiC3/hnAMGq7L82N2GlAWL
-	e8IVN4hQkCXBJeq5N0Ub21MjHBvuDjdDBUkG2ja4C/By8L1MFY9ydXgBP2KS7OLh
-	+DaVNpFneM1RsP2HCRDF4g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755156672; x=
-	1755243072; bh=tCRj0dPrPObUHcAeUOIeP86qkilzEOqs/j8wQLnwQVc=; b=i
-	wcN9MNhIXLJLJTCiM3AtZD59csjnKO4Q8+RUz6FlbjyfKqKM63U5kTHwBtfrThMu
-	pX+adFt+jMRtVbFieL/csbfCdWHx3JDDFqnrHF/ZyNWiGpkyfUVgVdJ7ciNI7Oho
-	ekbNYUgG7I0ki3ztxAhPpb9p+MvF876bmUAaCbrd3ldhBxEdywtl9G9ytpNEz1+0
-	i45LmzISWSWFWjTn+fFbp/XVH6RyTkWYIPG9aAzp+2F14X11E/IMvdzuLzHCKr8+
-	+oO8T2Ake9McASyVhHrIs5grh6OMElHM6V+vGCVqAwS5wZOAR3muI6m1UQgoHjcr
-	XvCcITtP2IGkNJaW8bRhw==
-X-ME-Sender: <xms:v5CdaDKP-ZYpORsYP7s6-GGWa_rnb8OshwQN_jW_8ioWQnN8SHGQpHI>
-    <xme:v5CdaHIA9yRnE4WYHS80Y0udxpC24kXb1urpZRcIg6E-YbuUD3b3wopLyYlAIgYdv
-    -Jv5MEnueDE_0uXpQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedtgeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopegurghnihgvlhgvshgrshhsohhlihesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:v5CdaGQrG-th37P91dsSKABJa7x78EVSYYU_J6gl3qrtFeus0Y2u7w>
-    <xmx:v5CdaCrNHqYSWZtpZN-p5R0qwSXO0D9goPQgUpqW6h-ktMBr08FHBQ>
-    <xmx:v5CdaAyYugAkmr0_hX75lV2GlLgsGin8bMYQOfMSgv6k7WSBA-aQTA>
-    <xmx:v5CdaPKO8PTMkueZBVGA3rL_ueWOmJjGSukBV610eO0VjLwyDan8Dw>
-    <xmx:wJCdaPugjTFceWdoNDHJeOuRn6Au0zy_A9ktz-JtMq1Vgie4XDKHtuwM>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id CF8751EA0066; Thu, 14 Aug 2025 03:31:11 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fRDJqvgk"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-45a1b0cbbbaso6292515e9.3
+        for <git@vger.kernel.org>; Thu, 14 Aug 2025 06:16:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755177384; x=1755782184; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nNS6S3V8eA4l89MgR4u+XUQN2RzvuZRrPOfUY6ZkfHw=;
+        b=fRDJqvgkkTwjX2hjIHot/zYmth/nkiilHlXYBO2NFT1EW/TzB2eY1M/n/TMTtdZjNe
+         BhwtPWuzWflIBq7bt9QcCZjDThuPgFCIeYGxGlPjFiiXPZM4/Cyt0BWMtAHcvOfBpd7T
+         cS59GzqDSZUl9bXAtVYq73imkX5Y577TfXsnslaCW4d87oq3JFkJxYn2n3eMkFm44Ena
+         Bi527L+d37xIo9i2dwvWf/rOdqnYeqV8oCJUg6qzr7lw7JsrK/2/QjlImFvnrOnOMEdS
+         73pqpIAaHNFrBTlddleqT94t8WCQlqXUYg0PzVMYUJCZB4nygiUkld+DveblG5fE/TKi
+         ntTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755177384; x=1755782184;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nNS6S3V8eA4l89MgR4u+XUQN2RzvuZRrPOfUY6ZkfHw=;
+        b=Opr+50hGRXEab0gNZlSvEzviymmJscXEG3n5GnSiKGqdBhIePIbt9oPeJpSBC+WPRv
+         gbUYpZEUphh9HF9XmCOGa4T4Vcx2kEUSZH4cu04uoYzMhYJ1WhrsrTx83zM4t8OabIpB
+         DkM8OuAMersHYlhZEGfc4pTP3+5AurkNpr4COe1YtLqPeLYjVtlILKyyGT0jYeKC+FgK
+         UabcQ+G6w811/jAD43Va1B5lvgrWt5Jvo+1x1OnbfkmAEVOF1Em1cx1fW9ZZ+YvvLVmx
+         zJ1TLlplaD0x0UQtS7U66iOWEH09LLKwMdAoyM+2v94kCn7ljmAtyj7kfZGMEYDWFqgp
+         Jt3g==
+X-Gm-Message-State: AOJu0YyaO0xGJsoF379AkBsJvJRuMEjvWBE8Zzp4BXXp6/wsuhXMoQNU
+	uBQSuHI9mWGbvA92XfkH6BZQ2g41vh7cB9AxcCBOG9jrpUx0jGBuRsJMbc81vg==
+X-Gm-Gg: ASbGncu5QnR0uXN2362/+KMq9mlYqd5wUEU75dh8qjkUA+Nt8DpXyGaAYG/bgUxdWFx
+	p58Gb7Clrw/pE+XBGmCL+u62wCYZKHIT+/10dcqLYJX0w83Z9PeuEEK0P80EMbvKLxvzVnLNq9D
+	S0m4NNzA6pmfRQWd3+4DtlnLDgF2eqrHIHeCQ2ezPqMb9VUaWvVS5IfMrZ6U8jLAcuwVoWSHDRc
+	rEa2pHulQfpZEhORpZI2Vzv0ocixHMem1pZFbvVAMY0RLsPdvesREe811QbZse0LPucut8lw1Dz
+	5MbHVe0z9J7GJAw6veDo2CHn/Dyrv2TKDdMKur288zKSdipYocp3d3hRmZEGHnlWoKZAXPYV+Ql
+	hbW3iOiplz2WmE5FD7zkfKOutF7yLVThdsA==
+X-Google-Smtp-Source: AGHT+IGyTFu2dQIuwwjDAzR8mkM+pJEUVRFYfflI6hc4j/5J3C4nXg80o+T2REgjXu2bIMUD8tvc3Q==
+X-Received: by 2002:a05:600c:138d:b0:43c:e70d:44f0 with SMTP id 5b1f17b1804b1-45a1b6697d0mr22070875e9.19.1755177384067;
+        Thu, 14 Aug 2025 06:16:24 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c453ab0sm51204872f8f.44.2025.08.14.06.16.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Aug 2025 06:16:23 -0700 (PDT)
+Message-Id: <pull.2031.v2.git.git.1755177382349.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2031.git.git.1755078045397.gitgitgadget@gmail.com>
+References: <pull.2031.git.git.1755078045397.gitgitgadget@gmail.com>
+From: "Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 14 Aug 2025 13:16:22 +0000
+Subject: [PATCH v2] Document count-objects pack
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AMTlAUTgAFnV
-Date: Thu, 14 Aug 2025 09:30:51 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "Daniele Sassoli" <danielesassoli@gmail.com>
-Message-Id: <8147cec2-f898-40d7-ac3b-763920eb7947@app.fastmail.com>
-In-Reply-To: <pull.2031.git.git.1755078045397.gitgitgadget@gmail.com>
-References: <pull.2031.git.git.1755078045397.gitgitgadget@gmail.com>
-Subject: Re: [PATCH] Document count-objects pack
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Daniele Sassoli <danielesassoli@gmail.com>,
+    Daniele Sassoli <danielesassoli@gmail.com>
 
-On Wed, Aug 13, 2025, at 11:40, Daniele Sassoli via GitGitGadget wrote:
-> From: Daniele Sassoli <danielesassoli@gmail.com>
->
-> Juno added the printing of "packs" with ae72f685418b.
-> When 0bdaa1216 refactored the docs for the -v option, this was missed.
+From: Daniele Sassoli <danielesassoli@gmail.com>
 
-s/Juno/Junio/
+0bdaa12169b (git-count-objects.txt: describe each line in -v output,
+2013-02-08) forgot to include `packs`.
 
-But commits are usually just listed as-is without mentioning authors or
-other metadata.  Something like this:[1]
-
-    ae72f685418 (count-objects -v: show number of packs as well.,
-    2006-12-27) added `packs` to the output of `-v`.  0bdaa12169b
+Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
+---
+    Document count-objects -v - packs output
+    
+    https://github.com/DanieleSassoli/git/commit/0bdaa12169bca5d69f2c58f96cc92d51280e9e26
     (git-count-objects.txt: describe each line in -v output, 2013-02-08)
-    forgot to include `packs`.
+    forgot to include packs.
 
-The text above is a bit more terse around the commit references since
-the subject line for the second commit says what the intent was.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2031%2FDanieleSassoli%2Fmaster-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2031/DanieleSassoli/master-v2
+Pull-Request: https://github.com/git/git/pull/2031
 
-Alternatively, just referencing the second commit:
+Range-diff vs v1:
 
-    0bdaa12169b (git-count-objects.txt: describe each line in -v output,
-    2013-02-08) forgot to include `packs`.
+ 1:  85bcb142b55 ! 1:  6f0394651c9 Document count-objects pack
+     @@ Metadata
+       ## Commit message ##
+          Document count-objects pack
+      
+     -    Juno added the printing of "packs" with ae72f685418b.
+     -    When 0bdaa1216 refactored the docs for the -v option, this was missed.
+     +    0bdaa12169b (git-count-objects.txt: describe each line in -v output,
+     +    2013-02-08) forgot to include `packs`.
+      
+          Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
+      
 
-=E2=80=A0 1: using =E2=80=9Ccommit-reference=E2=80=9D from Documentation=
-/SubmittingPatches
 
->
-> Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
+ Documentation/git-count-objects.adoc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/git-count-objects.adoc b/Documentation/git-count-objects.adoc
+index 97f9f126101..eeee6b9f7f4 100644
+--- a/Documentation/git-count-objects.adoc
++++ b/Documentation/git-count-objects.adoc
+@@ -28,6 +28,8 @@ size: disk space consumed by loose objects, in KiB (unless -H is specified)
+ +
+ in-pack: the number of in-pack objects
+ +
++packs: the number of pack files
+++
+ size-pack: disk space consumed by the packs, in KiB (unless -H is specified)
+ +
+ prune-packable: the number of loose objects that are also present in
+
+base-commit: 2c2ba49d55ff26c1082b8137b1ec5eeccb4337d1
+-- 
+gitgitgadget
