@@ -1,101 +1,114 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356171A3164
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 22:16:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A311F9F7A
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 22:18:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755209789; cv=none; b=B027uJcN8SyH3BWT0GjNCQ6EAIrkEkmvhuA4X9xQGIj7G06XOLeQ43wyEtO1Qiy5YnKx88thBWpSd2AebKCk5nUwAmV3BwbfeG5l/TrwR0PxWyPIL4P+/eudh0++7G/skNC/uH0T9XRl7u3E2ZoeFijtrp/kO2Uv9f4eXzYuxgE=
+	t=1755209931; cv=none; b=TsJ0E0Qxuzgcp1QflwPskV4GMaerc/tD1dl6OdEAtxvF9gbAO8lzWI8ktx+1y9QbbKrw06VW+p5WSba8Q5imyOOvI5AZffXJ2wLPNe9UAO4CEWKhwaQ9RGICuUUJIW3bs8cZA10KvHnZJz3eT5DkghZFtKtvey1ju+CMNXZsnHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755209789; c=relaxed/simple;
-	bh=dkCmgnMz2GvQtGqM3VdNMnySrsRkNk2EJxpYIM2nobE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n2vx3j8msbV8s/JAeWpFWuv9+WmBWCMOXzU076jBaK51DUiE43MBgk4Q3Ka1mwaJ8Nj+yR2C0vmjnWCW6k3/VR6Dct/bL0AySyXzOXUzw7QFn4P0NeiF2TwJcauBSJtKcelKu73N0pJGrvypSEp8J/HlOs2JiJ6iqii6Ffg3/T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=uYkiWP/h; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1755209931; c=relaxed/simple;
+	bh=MNPyApaotcGnmLXe0VSdsor++eYtzxM7+xXGzRIQU4g=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=LzN5EV44ygiGyAY0Nl9mNaCXRWYi2y4vkVfegsxS70z/UlxruIGhXjm7I/tpSnlp1tunYKl8wPOLyMa/PtX6DcyaU2MsMok3x5V9LeWUVy34Xp/Hoe2IAA1ms/3AWk3OMVfdy59MLddcgPg01QJmirFZNSYWcEnNy0sKy859mfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C98yB380; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uYkiWP/h"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1755209785;
-	bh=dkCmgnMz2GvQtGqM3VdNMnySrsRkNk2EJxpYIM2nobE=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=uYkiWP/hyN+6/f4E7rUmjbf8ZRXnVcGJe792JzGZasUi8EgTHX9AAPUedQnFPY+Go
-	 kREIwDA74l+S9KBVX8tPCxBSJH1vuvy5OmuLe8FMJpFReUVgtggJdLa02MkDIozVNc
-	 TwELIFat/fltR8ZN8Z0zupcYMrDUgZ+kBaOVV08xI92uePptblpaIzTV0bXSE6ZKvp
-	 U6EddcuEeoNkHgvAqTaVns6+liITZDJsJhSduz8SU+EYYxjVyJ3yee4RGxCg5I4F6r
-	 88wkqirXQjHgvtznPrYf06Noyr6PMRDOPt9CdsEjfPwMg0aJdV21vmKuvmnCyD0VEN
-	 u0g3swrcac9ojDv0VQlP3VQhyInLs2zxSon/JVnEEdOH4K0Drt/Afk5Yhb92viFiN0
-	 3MOYE5x+Rdl1h2kfeI9ivA4d++hb79ow32KK9UUzUVA7UZPpsacQOoeitCGFQ5WOK0
-	 u4Kzy4LVEeImUqKVt8QC3yMYOhG+391SYDU9dBxVM6aVZ88tZZg
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8756:2fa2:aa23:19b4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id DE72A200B4;
-	Thu, 14 Aug 2025 22:16:25 +0000 (UTC)
-Date: Thu, 14 Aug 2025 22:16:24 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Michael Schroeder <mls@suse.de>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] submodule: truncate the oid when fetchig commits
-Message-ID: <aJ5gOPQ9oologqj-@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Michael Schroeder <mls@suse.de>, git@vger.kernel.org,
-	gitster@pobox.com
-References: <aJ37eHEGMw6RgmZC@suse.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C98yB380"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-32326e5a623so1360374a91.3
+        for <git@vger.kernel.org>; Thu, 14 Aug 2025 15:18:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755209929; x=1755814729; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=btHX0ihGkUaZag27UQKrvl8KR1f6W62KK4sOz1Sa29g=;
+        b=C98yB3802isBi8+Tm1fTiULldUcIFf0F0g82wEtueCp7ZM7gGEnVgFdTvJDqTUUdRY
+         hy21AqXBl4dQlHkyNMo1BJlrIeWN23jBhs0d5t2fWL8AB3roS+W44iEIdDF/JxYz7LBW
+         mwmh/DgAcLqN9fPOB1J+198TY0YECylrKBPV8PzSU2ZjrrkT1LWFm5lUqMfe842X3Bjq
+         t2CkXuxqFFxLNc3Noa/5vWwNe6UGA8tuEjgON+McXymL/QpuUPUZdACSkMMTJVVdI+Ew
+         TXx8YyiH8O1Hlz9bgwJKUmqe8Y+b40Jd+CdvJUudEs3G/h6/lSR3+NPM5WlzP2dDTckA
+         1Vsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755209929; x=1755814729;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=btHX0ihGkUaZag27UQKrvl8KR1f6W62KK4sOz1Sa29g=;
+        b=PX+J6R/S1S6hLlk6F14CNXlbybFG+p4E/DyIq9+gfoExXSMA72aJY+bHIH/TPIsjFK
+         NxPUqIEIBTDKgExMN++5p/I5eF8/wZo3vHrv+ZUpqsY4wQ0Y+Nr6UWn7LhJDpVB1SbqU
+         SU+VwwtYzqMsWhEYJIO7AcUdjR4lWtBVfX0Ab7aMi6zuJMUOtfAte5V0VB2EpZOrKXT1
+         BqhuPiexyZWrAP6IJPhId9oTBq7vaJjnyN4Yc/H30Hgf42cJBVdSg5Yo0XzBLnYQD3Qs
+         jGDobjgnu7dz774BhLtcV2ZkT5+BP7u4PO419LVJ0f15uOPRJTBpWcDdOpB3EkIknR8o
+         sP8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCW0O/9q+A0/AxAcYyMtUZqWqAFdeJe0uMe9Jsm5SgTNrNS5AMyVx91AeXdALjDXeZWxBSk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzwpwL1NYmIhAgJ9GpY1B8eFgmpmA/CQgbkkc2Tr3sUpHSUmGP8
+	9aDOOWisiWWwi/DKQlx1TzUMKeXlToVmyMxM7/VSTLcxO+EHiwvGnO4H0FruGQ==
+X-Gm-Gg: ASbGncsWPyomPuP2lgL5/pwqmMVlwlvxMX6zfKj2sgpvrgnzf7/J4RpoK8rEnKTUBUp
+	JZ2Z9aQIZmpE7GbzdK3YfHEU2mqAhdAlEORH9xai9TzpCxqI2l3Ig8SUnqrPSjN0D37uDI2uUnP
+	ncP/QNoakRKqiDpJ7L0nP3OrnCrYXjzWuMRtXeTD8UIrrzcVHtsu22N3fBddXuTCsp+dN0/f6ts
+	ucJ3rkEPlpkEEWg+qOHXBk0J/v5SwFu6duNWXPk/qBOQdN/XFOgTMsfJG0RgAqFbtMEqPddDX5i
+	o/DuchAhG3HAK8vN0MAqqqpKWxaGckca/RK8Jqw/Q8PNhPl4U7hF8p4z+av5v0Y9v5kjWRGe+kG
+	uHLxjxx0h5c2CjKIV/TahE5I9JE5Y6d2ESfQfNXe1VluIJqG8EyCz18r9
+X-Google-Smtp-Source: AGHT+IEj3ET9jeDJXs0hfj5A/zU0oux8euRau+KD4E+7FUOI/tmWaX5BFuP2GWRCLcxM+vrZl3ZNpA==
+X-Received: by 2002:a17:90b:4e90:b0:31f:a4:8bfe with SMTP id 98e67ed59e1d1-32327a79925mr6893897a91.7.1755209929191;
+        Thu, 14 Aug 2025 15:18:49 -0700 (PDT)
+Received: from smtpclient.apple (nat.ime.usp.br. [143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32330f835f7sm2925037a91.1.2025.08.14.15.18.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 14 Aug 2025 15:18:48 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ruAOxFXUC4GxhLDD"
-Content-Disposition: inline
-In-Reply-To: <aJ37eHEGMw6RgmZC@suse.de>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [GSoC PATCH v9 3/5] repo: add the field layout.bare
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <xmqqfrdt3feh.fsf@gitster.g>
+Date: Thu, 14 Aug 2025 19:18:28 -0300
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+ git@vger.kernel.org,
+ oswald.buddenhagen@gmx.de,
+ ps@pks.im,
+ karthik.188@gmail.com,
+ ben.knoble@gmail.com,
+ phillip.wood@dunelm.org.uk,
+ jltobler@gmail.com,
+ jn.avila@free.fr
+Content-Transfer-Encoding: 7bit
+Message-Id: <1ABC1E05-BEE9-4E17-8C6C-8BB4127378BF@gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250807150239.6987-1-lucasseikioshiro@gmail.com>
+ <20250807150239.6987-4-lucasseikioshiro@gmail.com>
+ <CAPig+cSBg6oQC4Y81ieH25-A9cHRTfbqC5i+22RSBcbyVo_qtA@mail.gmail.com>
+ <BCCE25CF-8546-4320-AB44-9B729C3D6DE6@gmail.com>
+ <CAPig+cTQdEDZduG_UmdHn1JNfj7iTw0=jwdkX+VPJ11Jo0jUGA@mail.gmail.com>
+ <xmqqfrdt3feh.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.700.81)
 
 
---ruAOxFXUC4GxhLDD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I also care about future-proofing, though.  When Git is built with
+> WITH_BREAKING_CHANGES=YesPlease, this test would break as the
+> default reference backend will be reftable in that alternate world,
+> wouldn't it?
 
-On 2025-08-14 at 15:06:32, Michael Schroeder wrote:
-> If a submodule uses a different hash algorithm than used in
-> the main repository, the recorded submodule commit is padded
-> with zeros. This is usually not a problem as the default is to
-> do submodule clones non-shallow and the commit can be found
-> in the local objects.
+To be honest, it wouldn't matter what are the keys selected for
+testing this behavior. I'm only using references.format because it
+was the first that I implemented. But given that, I can also change
+their order to something like:
 
-This should not even work at all.  It may currently behave as you
-suggest when the main repository is SHA-256 and the submodule is SHA-1,
-but it will corrupt the data if the submodule is SHA-256 and the main
-repository is SHA-1, since then the data will be truncated.
+[1/5] repo: declare the repo command
+[2/5] repo: add the field layout.bare
+[3/5] repo: add the field layout.shallow
+[2/5] repo: add the field references.format
+[5/5] repo: add the --format flag
 
-The proper way for this to work is that the SHA-1 version of the
-repository stores submodules in their SHA-1 states and the SHA-256
-version of the repository stores submodules in their SHA-256 states.
-Yes, this means that you have to convert submodules to the same
-algorithm, but that's required because trees are binary and not text.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+This way, this tests could be placed in 3/5 and using layout.bare and
+layout.shallow as keys.
 
---ruAOxFXUC4GxhLDD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaJ5gOAAKCRB8DEliiIei
-gSEGAQDlpQwnuIukqxeucA61ps8Mh23aZ20eaCsAnKzH3V7U0gEAxr2pXA5hLPwA
-/5TluSCXIrCDl4e4/aXY0xsOgfAUoQo=
-=2OUC
------END PGP SIGNATURE-----
-
---ruAOxFXUC4GxhLDD--
+Thanks!
