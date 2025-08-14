@@ -1,201 +1,139 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FEC321444
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 15:06:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0771ADFFB
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 15:09:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755184000; cv=none; b=Fob1k7dge7KUabdB6LH69Jus1E+wi3yHMq490IfaGiq5BHLLbTaqCQgJbEPf1gJHJfz1GXe89cQYyec7knaRXhoQmp3NLVMvlBcaZLNUtn2vCLGVF0hsKKm4+WW0HDrX6h1gsvD8OEUu3WH/12wj2iOfKr9WzINUnrXxh8Td8GI=
+	t=1755184162; cv=none; b=cbaZiXjOl2OxHA1rG+EWCQkvQVjXI4KPMP2Amt83p9qyMmjwbIV+vNLCh3kcfO7biIOjp4LkOz6H3RRthK7hK8XIMs7rP0VV7dzWaxjEkHB2cbYqkgzcy1ozNp8bjciSl7aBWq4OmIcvdeFTz64DXNN25w3B4VteHQBe78yI1c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755184000; c=relaxed/simple;
-	bh=RN9myqOyGcXagzK/6z8/mstuzTcjQYX4yY0l8WPN+fw=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=jrQBnEDvXCw6vgpGitGrKjJGxvudipyrz1D1+SaWVm9CuWGnJAgxlrKgnL6++pq3H9o8RuDAFXBxPk18Zh+HGxiUmyxKgDuuGBG6V7+oQYFZMMaw6FKeG6Ax4C8r1Kn9+VyGjYYeP2eJU43YJ8sj9poLYVRYq8DsWDdCW6QjTLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=EI1s1PyB; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=HsXEL0ky; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=EI1s1PyB; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=HsXEL0ky; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1755184162; c=relaxed/simple;
+	bh=++jSLhspqpUbeEWHBUyaZCjGfmNM03BFW+DlbAvzyJU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RpRfEWa5/c9ROcC4Bkiz+AnnSL7F/AmrxkkvRe3AwyFYN2LMyw5Y7V+WxXpRp3vSniJd9i6uKmI0STUjrS0bQ6IjaJmaJNS/yBAFf417bDAq2Z577jX3rH/X+dKi/KKhIxBLuS04SVmvNFEeCYLfb/WFvPWzAFpm4crJ0a0FOFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fg70dJJR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QDjqimd/; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="EI1s1PyB";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="HsXEL0ky";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="EI1s1PyB";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="HsXEL0ky"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 22CAB1F7FE;
-	Thu, 14 Aug 2025 15:06:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1755183994; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=tdIzwZscnu4VsRTpvaaCBqMVfYGzKVO4Tto5JGlTd98=;
-	b=EI1s1PyBSYwXCidDemPpuKP3e69sX/aePgEU2p9u/utSlB6lRJWV0HOnXjNWrTqNU4HYQ/
-	G8cwd0mt32sNMfG5FWbTI4fF3dCIx7Xrq/xyzXzCvtE4Zr4WwRqo4X/2LUSJP3dcbyEBNz
-	qOwzoK7K/4yJmdduP1OBSJ2fb8nL5aQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1755183994;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=tdIzwZscnu4VsRTpvaaCBqMVfYGzKVO4Tto5JGlTd98=;
-	b=HsXEL0kyVp4d0iN7Idcwz2xN6PRRstc9VcJKHq9wMFazDPJwQ/oRbWjdhnhwD5Pzt9mKB5
-	6k/VyEvnTKLkA1DA==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=EI1s1PyB;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=HsXEL0ky
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1755183994; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=tdIzwZscnu4VsRTpvaaCBqMVfYGzKVO4Tto5JGlTd98=;
-	b=EI1s1PyBSYwXCidDemPpuKP3e69sX/aePgEU2p9u/utSlB6lRJWV0HOnXjNWrTqNU4HYQ/
-	G8cwd0mt32sNMfG5FWbTI4fF3dCIx7Xrq/xyzXzCvtE4Zr4WwRqo4X/2LUSJP3dcbyEBNz
-	qOwzoK7K/4yJmdduP1OBSJ2fb8nL5aQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1755183994;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=tdIzwZscnu4VsRTpvaaCBqMVfYGzKVO4Tto5JGlTd98=;
-	b=HsXEL0kyVp4d0iN7Idcwz2xN6PRRstc9VcJKHq9wMFazDPJwQ/oRbWjdhnhwD5Pzt9mKB5
-	6k/VyEvnTKLkA1DA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 178701368C;
-	Thu, 14 Aug 2025 15:06:34 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id mu1fBXr7nWj1BwAAD6G6ig
-	(envelope-from <mls@suse.de>); Thu, 14 Aug 2025 15:06:34 +0000
-Date: Thu, 14 Aug 2025 17:06:32 +0200
-From: Michael Schroeder <mls@suse.de>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fg70dJJR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QDjqimd/"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5242BEC0128;
+	Thu, 14 Aug 2025 11:09:19 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 14 Aug 2025 11:09:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1755184159;
+	 x=1755270559; bh=vDsmR0xwXc5wKP9Pnz8XBrVuuIokRthjkUI4H45Sbo8=; b=
+	Fg70dJJRZhBDcdJrMegWyUou1MZ1Y8jX0CFNPBgHRMAu6tl4VtuMEB6x97MtJzwt
+	kwl5iVXVkMc1X8uug3+GXR/hge5OhNSMt/LPg3fTqjj7y8uQEj+lIRCvRlPksHo3
+	XEVpyfBQJDVWPMd6Dnk0WPYRcHOD6NaiRJ39xu1mNbk9Ws41hRX+2CZNoWxeOAP3
+	UqsAU/2kjX12Eaox2V+r0vIDcis48YkYLLgCjZjUIYZ5ERoyysshPeHUk54Z5ay0
+	5kXHXySnR7RnMhDobGY8EZ0Gc+SpPw/zmdeBNVCTjAC999/UziIyMLIuQ6gTsOGP
+	2BYeMkaWtsppiARGecX17Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755184159; x=
+	1755270559; bh=vDsmR0xwXc5wKP9Pnz8XBrVuuIokRthjkUI4H45Sbo8=; b=Q
+	Djqimd/aTB2kKPgIOxbxuRWSACVV1mhWiFgE9INpjbou+VI8rLkHtPfl/1PG1rHl
+	DYUpTmvAOFyxQWTeMYV0ml1SQkp1+kvXGrcWx1f52wbiXpoRKN0eARy7PWB76jGT
+	EY4nlnETkKeArr9sPeyHp321hKYK0p9ARFG4BCshiTy3sxHu70Lo5rQXxHXrnAfb
+	w0Tp5VwdpjSPE+B8T6n8jTpQ4XGLNAEluzbcy/W+KYb3WOxTy1jfp8hEiVx+M9nu
+	AHG2SyVSwVdHEqLtQV2Qxqf5VDzrOZTgAR5erWwJYmoUtC3YBL97MtMZXUYTqAON
+	QZtSNjgd+Bs2NSK5vqcTw==
+X-ME-Sender: <xms:H_ydaFQMeHNDzbozimYcVxQMXR-1vKhARP5zTf4YCNeEYpyMGMkVXw>
+    <xme:H_ydaKRKs92yMFB6FpQEBq70UZlJQEXSOa0QkMoMnRM2LCLE3_mvMLGcLI4MdX523
+    NmX20vmn2IJdbJWNA>
+X-ME-Received: <xmr:H_ydaBRKNwehghMh94Tj-EiO4B2fKUw8l8GqDna97lWqspH2oCUA4zNPaFc0X_nGWZLuSvl8goW23Jgzy99lL1hHdHMQGPTgF93jtBg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedugeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepnhhosghoiihosehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhl
+    vggvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:H_ydaH4_npbVWYF7IOmHZTtXAaaNFxL1F-JSyJaWJaMgNZXO1K3IbA>
+    <xmx:H_ydaF2WkB5lfQ_kXlCy50dohk91492zPd2TLNp-mkcIKnSGMeaGjA>
+    <xmx:H_ydaKDbnIQeAdFsoqahAMhshNomMbdEukU0vU3QlIMCs0zl9hc7tw>
+    <xmx:H_ydaIOEDJPzOoZY-BoNSX75xlKL5qY33hdEDxsjCZP0NYtCYuCd-w>
+    <xmx:H_ydaPNSjtHXu3QSM1XbNE14imqwgjZCW7nZGF4k716yvrX8Jq3VISIE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 14 Aug 2025 11:09:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Subject: [PATCH] submodule: truncate the oid when fetchig commits
-Message-ID: <aJ37eHEGMw6RgmZC@suse.de>
+Cc: Jon Forrest <nobozo@gmail.com>,  Derrick Stolee <stolee@gmail.com>,
+    =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: [PATCH v3] abbrev: allow extending beyond 32 chars to disambiguate
+In-Reply-To: <xmqqzfc51xvk.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	11 Aug 2025 12:06:39 -0700")
+References: <xmqqfrdx517b.fsf@gitster.g> <xmqqzfc51xvk.fsf@gitster.g>
+Date: Thu, 14 Aug 2025 08:09:17 -0700
+Message-ID: <xmqqh5ya6iua.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RCVD_TLS_ALL(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
-	MISSING_XM_UA(0.00)[];
-	ARC_NA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email];
-	RCPT_COUNT_TWO(0.00)[2];
-	MIME_TRACE(0.00)[0:+];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	TO_DN_NONE(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 22CAB1F7FE
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -4.51
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-If a submodule uses a different hash algorithm than used in
-the main repository, the recorded submodule commit is padded
-with zeros. This is usually not a problem as the default is to
-do submodule clones non-shallow and the commit can be found
-in the local objects.
+When you have two or more objects with object names that share more
+than 32 letters in an SHA-1 repository, find_unique_abbrev() fails
+to show disambiguation.
 
-But this is not true if the --shallow-submodules clone option is
-used (or the --depth option in the submodule update call).
-In this case, the commit is often not reachable and a fetch of the
-specific commit is done. But the fetch cannot deal with the zero
-padding and interprets the commit as a name. Because of this,
-the checkout will fail.
+To see how many leading letters of a given full object name is
+sufficiently unambiguous, the algorithm starts from a initial
+length, guessed based on the estimated number of objects in the
+repository, and see if another object that shares the prefix, and
+keeps extending the abbreviation.  The loop stops at GIT_MAX_RAWSZ,
+which is counted as the number of bytes, since 5b20ace6 (sha1_name:
+unroll len loop in find_unique_abbrev_r(), 2017-10-08); before that
+change, it extended up to GIT_SHA1_HEXSZ, which meant to stop at the
+end of hexadecimal SHA-1 object name.
 
-Implement truncation of the recorded commit to the correct size
-corresponding to the hash algorithm used in the submodule.
+Because the hexadecimal object name passed to the function is
+NUL-terminated, and this fact is used to correctly terminate the
+loop that scans for the first difference earlier in the function,
+use it to make sure we do not increment the .cur_len member beyond
+the end of the string.
 
-Signed-off-by: Michael Schroeder <mls@suse.de>
+Noticed-by: Jon Forrest <nobozo@gmail.com>
+Helped-by: René Scharfe <l.s.r@web.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/submodule--helper.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 07a1935cbe..ef21eb42b8 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -72,7 +72,7 @@ static char *resolve_relative_url(const char *rel_url, const char *up_path, int
- 	return resolved_url;
- }
+ * To tie the loose ends, here is what is in 'seen'.  We may want to
+   merge it down once 2.51 final gets tagged.
+
+ object-name.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/object-name.c b/object-name.c
+index 11aa0e6afc..4cd1d38778 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -704,7 +704,7 @@ static int extend_abbrev_len(const struct object_id *oid, void *cb_data)
+ 	while (mad->hex[i] && mad->hex[i] == get_hex_char_from_oid(oid, i))
+ 		i++;
  
--static int get_default_remote_submodule(const char *module_path, char **default_remote)
-+static int get_default_remote_submodule(const char *module_path, char **default_remote, const struct git_hash_algo **hash_algo)
- {
- 	const struct submodule *sub;
- 	struct repository subrepo;
-@@ -106,6 +106,9 @@ static int get_default_remote_submodule(const char *module_path, char **default_
+-	if (i < GIT_MAX_RAWSZ && i >= mad->cur_len)
++	if (mad->hex[i] && i >= mad->cur_len)
+ 		mad->cur_len = i + 1;
  
- 	*default_remote = xstrdup(remote_name);
- 
-+	if (hash_algo)
-+		*hash_algo = subrepo.hash_algo;
-+
- 	repo_clear(&subrepo);
- 	free(url);
- 
-@@ -1272,7 +1275,7 @@ static void sync_submodule(const char *path, const char *prefix,
- 		goto cleanup;
- 
- 	strbuf_reset(&sb);
--	code = get_default_remote_submodule(path, &default_remote);
-+	code = get_default_remote_submodule(path, &default_remote, NULL);
- 	if (code)
- 		exit(code);
- 
-@@ -2319,16 +2322,19 @@ static int fetch_in_submodule(const char *module_path, int depth, int quiet,
- 	if (depth)
- 		strvec_pushf(&cp.args, "--depth=%d", depth);
- 	if (oid) {
--		char *hex = oid_to_hex(oid);
-+		char hexbuffer[GIT_MAX_HEXSZ + 1];
-+		char *hex = oid_to_hex_r(hexbuffer, oid);
- 		char *remote;
-+		const struct git_hash_algo *hash_algo = NULL;
- 		int code;
- 
--		code = get_default_remote_submodule(module_path, &remote);
-+		code = get_default_remote_submodule(module_path, &remote, &hash_algo);
- 		if (code) {
- 			child_process_clear(&cp);
- 			return code;
- 		}
--
-+		if (hash_algo)
-+			hex[hash_algo->hexsz] = 0;	/* truncate to correct size */
- 		strvec_pushl(&cp.args, remote, hex, NULL);
- 		free(remote);
- 	}
-@@ -2635,7 +2641,7 @@ static int update_submodule(struct update_data *update_data)
- 		char *remote_ref;
- 		int code;
- 
--		code = get_default_remote_submodule(update_data->sm_path, &remote_name);
-+		code = get_default_remote_submodule(update_data->sm_path, &remote_name, NULL);
- 		if (code)
- 			return code;
- 		code = remote_submodule_branch(update_data->sm_path, &branch);
+ 	return 0;
 -- 
-2.50.0
+2.51.0-rc2-158-gf97fc618fa
 
