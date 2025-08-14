@@ -1,128 +1,140 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347BC2FF663
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 03:00:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD147347DD
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 07:23:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755140421; cv=none; b=Py2moFbnNMs5lZPaZTuAvbS9CYwpW8zdDPkAwuHthooJhfYkShYtbf127gK6gq0a10jjVGCiwCF6G+N1J+0t6Cl2h+hqSPd2ORBgsPht1J/ChcPYBgoIbxyxO2F30KCKhlviOrEA8T9/JTnuefJD8Y5z8rG1lxW94s3Qm/ZWpdM=
+	t=1755156218; cv=none; b=UHRID8OzyaGEVVXT5qFR7JRrPYCCN/j+pgYWoyCRCivhJj0nXueadIL3AhCZpZro+jf30rvQuQR/kA1EEZB9GjjCO8k8HjZrY1GAV5dMuhZEiLfppkBhyQKNa24EA8xoNI9iRgf2jEjgfUSLScQIRfqmhaOlH4FDspakMfsh7ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755140421; c=relaxed/simple;
-	bh=uLojdr5rE0MzkqrPl/JEAPy3xoaHV8QooRfP51hhalw=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Cd+eY9C+sBiTPnxeeiGujvqiFWJDq1aSCzq3FaEusgfngkvmqgKj35/sO5zfgtgdvm4bhGcJXGge6RucmeoTncPzO1wPoYtDdkpU7AEdG0Vx4OX/ysgPNp6YChlCQrZ1KSkvBT9ceW7UUGs+7z7RAoxfO3THxukPwV6glhRu3QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=f4dOAFyS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jow+JdKQ; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1755156218; c=relaxed/simple;
+	bh=+aE2iAacP5W7rBKFXC3x150fGQAbRDtSQdVbNfaQPaw=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FEB5RSRA9ET3EOIoyGNH8ORfg+4FAW3FgmfzhnKGs2NOt1LhbLQAGSuBXnvQ17Eb7o9w/uQkRI+D4g2hFguO2DHv0hXO1O8aMszfZDhyYRP0miGkLZJm6dr683ckHAgU2cD6CRUOEbT+Oe8GOeCgo/vuR/1zYepzGdoi0gz6LMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BxMOVBVs; arc=none smtp.client-ip=209.85.222.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="f4dOAFyS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jow+JdKQ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1C0B67A007D;
-	Wed, 13 Aug 2025 23:00:17 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Wed, 13 Aug 2025 23:00:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755140416;
-	 x=1755226816; bh=kTdTIg5aIL4yuLvy4MdVzrVOpxuReHy98EHTw+1YX/A=; b=
-	f4dOAFySRJFNBvAY73/XfeYjn8e2g3DjxorDntOKnjOKOYhuN42XH4Z7vGSDrznq
-	HTZpXbYVROZgskgOqpkBzCM5WUVSIPv8Uy5c+KANbxNUWFIHZlMK/ZxbQYEib/iG
-	wyNDk9TFpsMzmAINM48J+ML2eY7NM+xhgNIklCNwPPeG9j7iZz0EnD8RXRw10fcu
-	KJ4T3XceZP72tpfZYYs4r3ekAYVegymBPM0rgPSYpKx4pVMlpnEqTdxvhDraUsaC
-	oN+0Cfend/39khQe4svczt/Pd+AUSziqo5YKDHn/1hr6+7k7cxR13sNlyIyP1PWX
-	LCmvQ00PnRlZkjFQcSdwLw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755140416; x=
-	1755226816; bh=kTdTIg5aIL4yuLvy4MdVzrVOpxuReHy98EHTw+1YX/A=; b=j
-	ow+JdKQO2ig6u1uQUKTJvoAGiT925w6hhuoSfUAAfWGTqwCm4l5ZGC4D0gMOW4Bf
-	VC2rBpqhGnLg94H17TZl5xRm8s/Hg6ul/RwiIURf/DA22L3rCkEzAUbUcFu/geeH
-	/biTSsNxfxLEDFQ19TkNt9+MJLhqiAMowB0uVCL12q8vRi8g/UO6YE1uuBem3Ln2
-	UfBIAMuEjKjsCrzZUgqaBTEQF0RKpPc5nA6t3q5krWadsz7flzxlGNITqraiA+t2
-	z9+GiwPlWJYEy3IKp3mwXuIcJyv28eCjQa6oqSwn5Wd83Xic7I+NCTH6nc1Jh+Qk
-	qiFuP8P/x+Uy3eWwyT5kQ==
-X-ME-Sender: <xms:QFGdaHq3BF8bicuEjctqT0BXMpGymgiX5CAZfrmMpfcVuyQmrh1UzQ>
-    <xme:QFGdaBrXR-oGPXPrq3WBw3HBE2auz41bEs0pqufbM-G0-wNBnoy_dn6S4FawVh3uS
-    AKrlkL3ArFU3lZhyXg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeelleehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqre
-    dtredtjeenucfhrhhomhepfdfluhhlihgrucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhn
-    shdrtggrqeenucggtffrrghtthgvrhhnpeefieeigeegtdefkeejgfdvteejfffhveeuud
-    dttedvjefggeevfffhleegvddvudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehjuhhlihgrsehjvhhnshdrtggrpdhnsggprhgtphhtthhope
-    efpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:QFGdaGzj-fHieMxPl3dOy_T8EDpX0YvCC8q6W38lT8sbcxCAiD8lXQ>
-    <xmx:QFGdaJJYqkN3ZppMer2F3jbWSXSr3kQTjECoonHwTetoGzdf1VRC0Q>
-    <xmx:QFGdaFRjRCiQodGazotbvlovNC_BQafRJczp3ozUUYiswvEHFrBJvQ>
-    <xmx:QFGdaJrMnm3098dlv7a-6zohWSe3wvCpS8N3PIK1OBZuiaVy6AqLMQ>
-    <xmx:QFGdaHzFZ0S90dySFZm6TkCRWsz85NHJuJgJ39OfbiuG_g_pQkkfjyFS>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 9786B7840B0; Wed, 13 Aug 2025 23:00:16 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BxMOVBVs"
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-89018fd51a1so380374241.1
+        for <git@vger.kernel.org>; Thu, 14 Aug 2025 00:23:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755156214; x=1755761014; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qCzbAUT8u+l8HAe8KKPCeXm7wPatOHqWbeqYS6XpfgM=;
+        b=BxMOVBVsIVQ+r8lCMbUS7+oL87BUYkPftW2HAzEzZ9hksEGirZy4K0q+/4+n3oFgvK
+         ln0oqBU6j8MIh9zTsDXVGNK1QmuOsmNUw5E+bT3yPQSjprQ+WzuTieqPgfT20INzKvig
+         Ppms8gAHJrmG59iT5S7ztdzgb4PQJ/TyevHRYFjVkEX15ahUqxhaov0E5EYT3fiuwuFg
+         CD2Z6ln+zdkpTdutez/vhPQmjmSgCTIji6gkCr0uXgU937MXBLLRfHC4StlDsnBcWCQm
+         qKeI2Fyq2p8xFIgtdGLkXpiGPijcrdnyaybEmZgNSvwpZz9NWsrZCYJQO3O/ye/vjshG
+         IUow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755156214; x=1755761014;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qCzbAUT8u+l8HAe8KKPCeXm7wPatOHqWbeqYS6XpfgM=;
+        b=tyPf9l/NCG/Y87fZqCrJK3WoJMK5rVD18g5ZV2k629l6lG9NXn4m0wuzGscxEsEM+G
+         ihAuVCTdP+su0QCMOsxB3XRfQBsePV8HTGKoEOhmOBIuRxnqHnVo/lIYnAvWLMI05Qxx
+         DB7rcmAiFqb/6eQwdnFtAWIAtmY21YwlkP8YKNIDHeMzTxk761BArpbYLLsO/bj1CzsR
+         r0UwZTGuXgPQ0lZ55yLemZUONuqfX95dZOFnOoKWKp+GyxuFI5AkRUkeXxrbzBENjfK1
+         9rnLjICF1U9+AhjZWg7/3oi0oz0o6x8x4esOooinm63Q9Op3TVarQruJRZCt6JBqRoo9
+         7znw==
+X-Forwarded-Encrypted: i=1; AJvYcCX3U81pD9Lo0BnFZh6StJxNhS3WpDv5Qb/MJzamXjKwSE68G38/pDq4lwPDUrQslfRU50Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxnsg+Kz1CKY3lTKolxDQzfNT/lukXCki5Sd+oY9ZsG7kbtLiIp
+	GnudQN2jDocR8yLkMsWPd0IMREnD2sk5GDr8Pr+605LaXWTqOWaTkPpalZmjizHtRgjL7k8kZ9h
+	2aukcraRnMqxrclduxaobktfPawF7xUg=
+X-Gm-Gg: ASbGncv7bMlXD8mhQxlrGISg4rzvqhJCqeM53098VxhBxo6wG3f5tMiA34CwSZ5ezjQ
+	f15stjD0R8etBdOALg/ELW/HOmrjGDjHw+fv+oJQapkPddWv35s1b/5T1CD0NsRKJE63Y4dX9rl
+	/jEvq9hswgsfsZ8nWoJ1SJgsULw1lYIcbG/rjIkWv0LShxnXyxMnz5JEkPHmAjyCmcK8iMPFGDl
+	iobBc5iLq8btwxO
+X-Google-Smtp-Source: AGHT+IEs3fOqVz3QuTMLtidGq6K9Hwrpj4V9YxONkkGjjGdCMCDAZGgrwG8DlAirSLsXpYpxdRz0AzvVQ8dSqBRND/I=
+X-Received: by 2002:a05:6102:3912:b0:4fc:156e:1046 with SMTP id
+ ada2fe7eead31-50fea4b4338mr680659137.20.1755156214424; Thu, 14 Aug 2025
+ 00:23:34 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 14 Aug 2025 00:23:33 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 14 Aug 2025 00:23:33 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqfrdwtnvq.fsf@gitster.g>
+References: <pull.1949.v3.git.1754693552.gitgitgadget@gmail.com>
+ <pull.1949.v4.git.1754702057.gitgitgadget@gmail.com> <07a4bdb7ce5eb456bd81972c350d0c4f298ebd46.1754702057.git.gitgitgadget@gmail.com>
+ <CAOLa=ZSTaAaWJWeXBkoxPx46g_Equo-sHWgCESE9G6vk3HZeqA@mail.gmail.com>
+ <84258154-322c-4ef0-9ebb-44858a5d58fc@gmail.com> <CAOLa=ZQwwcfEQNbZqp3o6YfTWMhUr=s0Vw5jP87pUELsktLRaw@mail.gmail.com>
+ <CALnO6CBqChfU62TJuk9mBd=gSbPKDEyBKv8r-rCygsRDD2yALQ@mail.gmail.com> <xmqqfrdwtnvq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T445d42a894a29bdd
-Date: Wed, 13 Aug 2025 22:59:18 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Message-Id: <e1c9f388-f72c-4bb4-b05d-b5b183501456@app.fastmail.com>
-In-Reply-To: <xmqq4iuabup7.fsf@gitster.g>
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
- <310d2c1d8f7f68ae52ddd29f0ccb0a0364aba1a2.1755029249.git.gitgitgadget@gmail.com>
- <xmqqbjoks19f.fsf@gitster.g>
- <152d47a3-7744-476a-8ab8-43b7b52b67ea@app.fastmail.com>
- <xmqq4iuabup7.fsf@gitster.g>
-Subject: Re: [PATCH 2/5] doc: git-add: start man page with an example
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Date: Thu, 14 Aug 2025 00:23:33 -0700
+X-Gm-Features: Ac12FXz4dUJNxdC5MLpWYplF09S4pCzM-q8pGCaqv9V6SPxALiHovLigRWlFn0U
+Message-ID: <CAOLa=ZQa9pNsTasx6oxN54Xiz37_o+qjikZVOJpyyBr9c16gAw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] doc: git-rebase: start with an example
+To: Junio C Hamano <gitster@pobox.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, 
+	Julia Evans via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Julia Evans <julia@jvns.ca>
+Content-Type: multipart/mixed; boundary="000000000000afc493063c4e26ac"
 
-> There is an easier-to-understand example.  If you pretend that you
-> "add" series of "diff/patch" to the index as you repeat "edit &&
-> add" three times, in the mental model of the users, there would be
-> three set of patches stored in the index somehow.  It would be a
-> fair wish for the users to have to be able to revert only the change
-> you added with your second "git add" while keeping the first one and
-> the third (latest) one.  You cannot explain why you fundamentally
-> cannot give them such a new "feature", until you admit that what is
-> recorded is the latest snapshot and earlier snapshots are discarded.
+--000000000000afc493063c4e26ac
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks, I think this is the perfect example and it gets at something abo=
-ut git
-add that i=E2=80=99ve never totally understood: why are the earlier snap=
-shots discarded?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Naively, one might think that:
+> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+>
+>>> > Junio has already expressed a preference for "checkout" here c.f.
+>>> > <xmqqldnte6h3.fsf@gitster.g>. I think that is technically correct as
+>>> > "topic" can be a commitish and "git switch <object-id>" fails without
+>>> > "--detach".
+>
+> I wanted the new documentation text to use what was already used in
+> the parts of the document that are not touched; otherwise we end up
+> with text that uses checkout in some places and switch in others,
+> which would invite confusions among uninitiated readers, who
+> rightfully would wonder what criteria were used to decide which one
+> among these two different commands to use.  And teaching that these
+> two commands are quasi-equivalent with possibly subtle differences
+> is not what the documentation of "git rebase" needs to do---it is a
+> distraction.
+>
+> I do not mind a new proposal to do a documentation sweep, aiming for
+> Git 3.0 timeframe, to examine all mentions of "git checkout" in the
+> documentation and replace them with "git switch" or "git restore"
+> when appropriate (there are of course ones that are not for obvious
+> reasons, like the ones in "git checkout" documentation itself, and
+> possibly in "git switch" and "git restore" documentation pages that
+> may say things like "'git switch X' is similar to 'git checkout Y'").
+>
 
-1. the git index is just a tree object
-2. when you commit, Git takes that tree object, attaches a
-   message, and makes a commit with it
-3. git maintains some sort of history (like the reflog) for the past "in=
-dex"
-   tree objects
+I think this is the best way to tackle this.
 
-If Git worked that way, I imagine it would be possible to implement the =
-feature
-you describe, and I feel like there's some sort of obvious reason (somet=
-hing
-to do with performance?) for why the index isn't implemented this way th=
-at
-I've never learned.
+> But let's leave that outside this topic.
+>
 
-This example makes me think that if we want people to understand the
-limitations of the index, it's important to communicate that the past
-index snapshots are *discarded* and not just that the index is a snapsho=
-t.
+Agreed.
+
+> Thanks.
+
+--000000000000afc493063c4e26ac
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: a9bc7f7b3599e120_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pZGp2UVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOURqREFDZnA2bDNzZjltdkw0ZitIMGhJY04xUVJLSwpFZXlvbkd4Vjcx
+YVNWdEpaa0x0V2R1V05xaUQ5YXJpQWNUd0Vka0Uyc1VqenZORmtYVnhxSXBMaE0yK1U2QlVmClI0
+OU91OHlYaFY4VmZKNkt2WUpkU25qblNja0xialR1blBsZ25EK1RlK1p5ck1zT0lRUWhEaGh0dlNo
+VjV6KzUKZXc4NEZmamh1UE5uTmJsbUgrNXoyaHhwc3RVcTdhM3hVTGlwS2pVTjF4Nmo4dkszRXhG
+RS9VN3puMGl4VVUrcAo3MDJiQnhISVBZUnVqbUtxd0FxKzBwTUFHRDZFaHJ6b0ZONmFhVE9GZTZP
+RWN4eUhnRkxiRWNlejZNQzZyZTZFCkFPcnF6eGFqZDErc0dHSithbjM5TmVKL3ZMVmk1MHZFK3Bm
+RXBQWUJyVldacmcrbUJuK2FaYkt0RjRuZ2pscWsKZDZVSjJYWkhJendzRXV0a2t1bnlVLysrOHhF
+d2tzT3pmZ09hcUhqb0FRMCtqamoyKy9IeTYrWEhkYWVGWSs3aQpKNUhtaXRmMTJzZzBUalVYaTlR
+VEx6Y3d4bWc4cGxqc0h5cW9BTEc3Z3FreTZRMjZLUHNRc1JoOERTVXA2NlNJCktvVEt1bXR5bnZ5
+S2Rra1hmS3NCYkgvb1VOeDZ3SmM2LzhxTll2UT0KPStaaEIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000afc493063c4e26ac--
