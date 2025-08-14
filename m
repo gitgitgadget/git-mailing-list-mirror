@@ -1,132 +1,101 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6259327FB1E
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 22:10:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356171A3164
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 22:16:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755209451; cv=none; b=b8L7MjnGwZFWi6nVyUDcUM5Z7equ5WRuAaNxOEwIAzQYxdozD+W4bgtQ7z+KYcIzJPTdUoGCXsPsTnbt75vYCjTrcJykW/2t3rAiVhhND4LhT0Lzk8IFauYDX/WBDSBNDc+HkzwYAmZeEGb3fTJsbiHX2yTe05eEaqb5FiJEwT8=
+	t=1755209789; cv=none; b=B027uJcN8SyH3BWT0GjNCQ6EAIrkEkmvhuA4X9xQGIj7G06XOLeQ43wyEtO1Qiy5YnKx88thBWpSd2AebKCk5nUwAmV3BwbfeG5l/TrwR0PxWyPIL4P+/eudh0++7G/skNC/uH0T9XRl7u3E2ZoeFijtrp/kO2Uv9f4eXzYuxgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755209451; c=relaxed/simple;
-	bh=dKXBnwkGCREGuwY3vw0Xs70WEEJ41DNum3VWDuyeqOw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Y44qgU/OPROaT3vJs28e4C32XrQZLRauZ5xEsifgNa9xDkr5lIQ4fnpCb1LxCCGR1Wo89aA1dQeAHKlHFn2jKvg2P6XfyCBCe2pHURVadrrlAB0DYgeBqAdYrIz9UfhRC6KyTP/jO5CL6nyy2SyTqoi8j/b2I9x5GowcqvDAxh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V11pxczB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JDiqiAs5; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755209789; c=relaxed/simple;
+	bh=dkCmgnMz2GvQtGqM3VdNMnySrsRkNk2EJxpYIM2nobE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n2vx3j8msbV8s/JAeWpFWuv9+WmBWCMOXzU076jBaK51DUiE43MBgk4Q3Ka1mwaJ8Nj+yR2C0vmjnWCW6k3/VR6Dct/bL0AySyXzOXUzw7QFn4P0NeiF2TwJcauBSJtKcelKu73N0pJGrvypSEp8J/HlOs2JiJ6iqii6Ffg3/T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=uYkiWP/h; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V11pxczB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JDiqiAs5"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 56A511400209;
-	Thu, 14 Aug 2025 18:10:48 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 14 Aug 2025 18:10:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755209448; x=1755295848; bh=PAYWytalPk
-	jPmRWN2aEoeFuCoXi2N+w8LMsns0oUoxE=; b=V11pxczBFHX706g8ssIVAd2n9Q
-	tBNtDkQEk4fFyGlIffU9EcGShyYmakuocZi8vk0wdfp7S5fU/Wbbzbh5vBNLogf8
-	vB1qrp4zSi1hGWpCq8/USM3TQ/PSaezVattNmOieMAN+pfdzAZbyu//ph8chFW4E
-	vLQKOlC+f0xE4kUqlvV0Wx8nW/vUSAop29k+nnQCUyL4JNrl0DdK8M5KADBY/q8m
-	SPW5WMt6DdrlhdMifsb9p64gVEZXYx7Jt4OO0/yXCmBKV4y55fIUmqAEEnQZ4M3+
-	Hx1B/Ew1vQR2UR1QKDX9LX0cWBACtSvcUFETt679QJQicOd0v6xuX4m4XVsg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755209448; x=1755295848; bh=PAYWytalPkjPmRWN2aEoeFuCoXi2N+w8LMs
-	ns0oUoxE=; b=JDiqiAs5wQsVetxnw+47fU7+ZaCz6Y2lH2DlF1sKUYp+8RDZuIy
-	u7HcJ8GdupRCwsrmoVUWD5VMwVXilY2SzLBm+ZAgfQTeO3vlCDb6p6X0P6pAG6ID
-	fL8s9qpSzDRDjNGiT6HXzA7ABqsOqU01oJU5a8wD5qiDOUWJ+VyKACvLgNEDZcLw
-	nd0M3/qJARW0Y2o5eKK2/xoos7PSYhvMhHPemQX5rCT2J7JRLWqdpjWZiqBvO3Th
-	Ur61npT935sVRQ/HAp/RSKSZ7mYIBP1GiBzzDa5v9oZ/8rTbea1XRp/IdrYM87gC
-	hq++lbXfVzfsoEgxVd1HgjTiDkxK0NVV5HA==
-X-ME-Sender: <xms:6F6eaPveTnPj7Rd8rGhUmguLixSxHYeObAkCqM6qHyYhSSSxJP-GOQ>
-    <xme:6F6eaOBOkhklh1frJPNMgXpCbbuElWpFT3ETZolSTZDvQgfgusGyH3lXzOzweRgHI
-    9iBjCYETgFU7hKujA>
-X-ME-Received: <xmr:6F6eaJNDWNv6xEjUKQG9MvulQBzTkveX5Xb1YLQGLNZOaVF8d0GNtKzFAJEmwjcUxRxokNgiWtHIlPVnw6ddgzuqIsUFEXpCQgRlkrI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkh
-    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgv
-    vgdrfhhrpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:6F6eaPyrg76ffluDvzLBqn4RSik-RhsJ8qy20SJCiQW4x6EA3OBTJQ>
-    <xmx:6F6eaBUCMtG3hwqcEKIYYb9lTdDZNGHHXE18cxz0_QQVELg-h_vYpg>
-    <xmx:6F6eaJMcYJVYzEVYfY2OEj9ItGn6RnKYFM5ShuzTli3rYqI98axBCA>
-    <xmx:6F6eaLA3hVOo_ms2p_GMYHCKlyt-PSAB9rjh7AW7L0-WaeEfM3f_rg>
-    <xmx:6F6eaL4jyIdf1DJaWwEPoQ-2tekWq_yR_68jhIDhEF8l9B7WUcLTGBga>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Aug 2025 18:10:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Chris Torek <chris.torek@gmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
- <jn.avila@free.fr>,
-  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v2 2/4] doc: git-add: simplify discussion of ignored files
-In-Reply-To: <63c9e0361dc02c15afeea3cad1656e1631637f60.1755127218.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Wed, 13 Aug 2025 23:20:16
-	+0000")
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
-	<pull.1952.v2.git.1755127218.gitgitgadget@gmail.com>
-	<63c9e0361dc02c15afeea3cad1656e1631637f60.1755127218.git.gitgitgadget@gmail.com>
-Date: Thu, 14 Aug 2025 15:10:46 -0700
-Message-ID: <xmqqbjohy2op.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uYkiWP/h"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1755209785;
+	bh=dkCmgnMz2GvQtGqM3VdNMnySrsRkNk2EJxpYIM2nobE=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=uYkiWP/hyN+6/f4E7rUmjbf8ZRXnVcGJe792JzGZasUi8EgTHX9AAPUedQnFPY+Go
+	 kREIwDA74l+S9KBVX8tPCxBSJH1vuvy5OmuLe8FMJpFReUVgtggJdLa02MkDIozVNc
+	 TwELIFat/fltR8ZN8Z0zupcYMrDUgZ+kBaOVV08xI92uePptblpaIzTV0bXSE6ZKvp
+	 U6EddcuEeoNkHgvAqTaVns6+liITZDJsJhSduz8SU+EYYxjVyJ3yee4RGxCg5I4F6r
+	 88wkqirXQjHgvtznPrYf06Noyr6PMRDOPt9CdsEjfPwMg0aJdV21vmKuvmnCyD0VEN
+	 u0g3swrcac9ojDv0VQlP3VQhyInLs2zxSon/JVnEEdOH4K0Drt/Afk5Yhb92viFiN0
+	 3MOYE5x+Rdl1h2kfeI9ivA4d++hb79ow32KK9UUzUVA7UZPpsacQOoeitCGFQ5WOK0
+	 u4Kzy4LVEeImUqKVt8QC3yMYOhG+391SYDU9dBxVM6aVZ88tZZg
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8756:2fa2:aa23:19b4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id DE72A200B4;
+	Thu, 14 Aug 2025 22:16:25 +0000 (UTC)
+Date: Thu, 14 Aug 2025 22:16:24 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Michael Schroeder <mls@suse.de>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] submodule: truncate the oid when fetchig commits
+Message-ID: <aJ5gOPQ9oologqj-@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Michael Schroeder <mls@suse.de>, git@vger.kernel.org,
+	gitster@pobox.com
+References: <aJ37eHEGMw6RgmZC@suse.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> -The `git add` command will not add ignored files by default.  If any
-> -ignored files were explicitly specified on the command line, `git add`
-> -will fail with a list of ignored files.  Ignored files reached by
-> -directory recursion or filename globbing performed by Git (quote your
-> -globs before the shell) will be silently ignored.  The `git add` command can
-> -be used to add ignored files with the `-f` (force) option.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ruAOxFXUC4GxhLDD"
+Content-Disposition: inline
+In-Reply-To: <aJ37eHEGMw6RgmZC@suse.de>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-> +`git add` will not add ignored files by default. You can use the
-> +`--force` option to add ignored files. If you explicitly specify the
-> +exact filename of an ignored file (e.g. `git add ignored.txt`), `git
-> +add` will fail with a list of ignored files. Otherwise it will silently
-> +ignore the file.
+--ruAOxFXUC4GxhLDD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think we no longer need to say "explicitly" now that we added
-"exact".
+On 2025-08-14 at 15:06:32, Michael Schroeder wrote:
+> If a submodule uses a different hash algorithm than used in
+> the main repository, the recorded submodule commit is padded
+> with zeros. This is usually not a problem as the default is to
+> do submodule clones non-shallow and the commit can be found
+> in the local objects.
 
-The earlier text used "explicitly" because it wanted to say that
-"git add t/ 'ig*.txt'" silently ignores "t/ignored-file.txt" and
-"ignored-file.txt" because these files are not explicitly named
-(they were only implicitly named via recursion or globbing).  Your
-new wording "exact filename" already covers these cases.
+This should not even work at all.  It may currently behave as you
+suggest when the main repository is SHA-256 and the submodule is SHA-1,
+but it will corrupt the data if the submodule is SHA-256 and the main
+repository is SHA-1, since then the data will be truncated.
 
-Do we discuss that "git add t/" attempts to add everything that is
-not ignored under the t/ directory elsewhere in this document after
-these patches?  If we do, then I am 100% OK with the decision to
-stop talking about globs and recursion in this paragraph.  Otherwise,
-I would want to see some mention of this "naming directory names its
-contents recursively" somewhere in the document (it does not have to
-be, but can naturally be, in this paragraph).
+The proper way for this to work is that the SHA-1 version of the
+repository stores submodules in their SHA-1 states and the SHA-256
+version of the repository stores submodules in their SHA-256 states.
+Yes, this means that you have to convert submodules to the same
+algorithm, but that's required because trees are binary and not text.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Thanks.
+--ruAOxFXUC4GxhLDD
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaJ5gOAAKCRB8DEliiIei
+gSEGAQDlpQwnuIukqxeucA61ps8Mh23aZ20eaCsAnKzH3V7U0gEAxr2pXA5hLPwA
+/5TluSCXIrCDl4e4/aXY0xsOgfAUoQo=
+=2OUC
+-----END PGP SIGNATURE-----
+
+--ruAOxFXUC4GxhLDD--
