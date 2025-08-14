@@ -1,94 +1,90 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47AF319866
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 18:51:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5EB26C3AA
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 21:18:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755197516; cv=none; b=CHbQl4qX4nu07U8gNg345dLwHBfY8LnweyVir4UVYeKikcLDHFIcYAUUPi3OkckoYsQ1EUFYnKcfGfGnhSNje1gM0dlbw4su7kaCAjoTQ8olFH2IPFfWZ6FeRp2q2fomaJp3/7+5Lrv/loAi9UQh6xLdGoEJRa050zEtjbAyuw0=
+	t=1755206331; cv=none; b=HOPyFuLqvUH+tqBHqRKOpkqtjyAOW54yAMSHlhuJuUeM0AFmRrwAJJSejkz5OrjDhq1dhmKmd5opQZbS/vFqub3QtkU95srsrod2XHXgxL70ltSxuqTkq++ZFzJj181Oxf4Od2Bl68VDuKJMlizMJ9rzC2yXgOT3lCWT1t3X79o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755197516; c=relaxed/simple;
-	bh=zX2hwgAUMEuRbrosjhCk9brnZNoWZ2FST/+K34ika+c=;
+	s=arc-20240116; t=1755206331; c=relaxed/simple;
+	bh=PayPu+foKkrBYeqvKMtKpi/LdoFCZe8LUhp9IE/k5gM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dHVTE40KgXNP7vgfahhGwvT8+mteBAYu8e/RbkqWo4dOBoBC1+3B+leiz61CNtUqGCumtzATrzkHpyXwIRnQOwyQfvMD4tgSIf/uI2GibfLpgG05mA2bXDrz5WqZpfXovFkPLbcCJfKJ69IOMcekXchSLugsLNBdn0/qdy7yte0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X4XiJYVp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cD23NMpq; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=BesBhq68AUtk6yzKB3c9GgAlDOwNxzx04eKnPpXE51ZztwpNiSv79nvpuqET07kIVNXX5MwyL2X5+mz6nsoBHB/eCCdd8a0MJaTMPZ92tpGc5sVi3NvMbLr9eHYSZv01Yw6vQMrJE8ddlNRcAX+Tb/mNinChMnDDkOGH2hWM0Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DwBiZizj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gJqQDRsP; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X4XiJYVp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cD23NMpq"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DwBiZizj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gJqQDRsP"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id CCC7DEC00CC;
-	Thu, 14 Aug 2025 14:51:52 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0326F140022E;
+	Thu, 14 Aug 2025 17:18:48 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 14 Aug 2025 14:51:52 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 14 Aug 2025 17:18:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755197512; x=1755283912; bh=VeubV3aZiW
-	saEKEclAO4XJJuVwOwf7WDB1ywuHwIkCs=; b=X4XiJYVpe2oKKL1fUE08v8VSwT
-	MfXXXidHIoeTuMRI/O0+wMbqsXFh0MsqWIQUyaHdFi5GYo+l1kU2DZNKp3poHJUY
-	WKWxxMFhakj306HKsybanLIFAd2p1uaateMTguECiKPeULhgdJZWCoO2CXfebcNn
-	Kh2cDZJCVtHmdjRe19S4jrpwiXk/MZ1qTUpvC+aZKS7CAZKn/nKYc57BOpSIO5p+
-	Wq+2FuWbvc+eUpRZt1TJ594YVTtnOdHTFuoLL6dbkcW7nbt/EG5DNPKDstMb+6ld
-	xzVHg1cJ0A8O2fbggUyuD3Ps0RpeSk8w2BtNX50eyRwBYpg/RGPvmL7JtGdA==
+	:subject:to:to; s=fm2; t=1755206327; x=1755292727; bh=a82UYD9/+4
+	+uYiwb3M88RzjjetwPmRFJUZTU8lVEVfk=; b=DwBiZizjlAsNKrJue00/I1XWZ4
+	jWfhbk+e6kpO2pTcdvfniyvqwKyeY4TvRODBigaRb0NpqZ1k3hjkuuBA8Cw7KdZC
+	qEwqODcK9abFQeIJmBInbcXQ1xvpz/qJyBslei3aYm1LhO64XUjAa61JoJS+e4Ax
+	dQwOxlJfM2lxHVYMRp/ZNLXwQxyALsxheczU1Ekrt0q11+5KRlFZWVmr2D3kxKjI
+	SeXMzTu944SqzeouR2G5+PDPmyB0Ecy1DONW39CvqnTGW7otQLGlgLwIqcXmStEU
+	arYrASRus52wDkhGVNWghfYy7ZIGi3AyLk2UlQCD+T8wJy5StQoCNkGIJO5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755197512; x=1755283912; bh=VeubV3aZiWsaEKEclAO4XJJuVwOwf7WDB1y
-	wuHwIkCs=; b=cD23NMpqTkdjvGEATFEao6G8vyKr+lT5S4vOLw6t0g8PfAs196E
-	IAIZSfrjUn/oLXJKMQ0PrYf2wSI6ADuTtrNYC4zraY3HvhoFnv2az+HmYeSgWEiX
-	+LDh/qhxw2KlV11ouVIWjGRc5S9k+sM+M4ofwa76TaQFDU9tVdU417+T3IhXQd69
-	qpPNOEZoRHmsMjXE56gLaNlS8yVQSNIYYwNanTsv5q/iDmgLHQHjBBc4B4y3d63l
-	903cHwgTwaJYfC48uNjs1VAptL8VtNnVu2acxZRsVlezGp4itj95Ka64kHB5g9z6
-	QpS2Bhh3pqAZvav0/3qB3X5UB5V2xNrfX5Q==
-X-ME-Sender: <xms:RzCeaH7I1ensTXSW6qn1OSIPcFQ8Yhlbq-3pu-lLzVFq18KmQBjG8A>
-    <xme:RzCeaFjVnbHbEuQHJakM3b2fSfvjeA-3Qx9cJAyGPTGyVG1G5an5d0eJ9FADQiSBX
-    dv8QnaiqG_o8QcMcw>
-X-ME-Received: <xmr:RzCeaF655WEwEld05hVJpFPNEEW8wCUv1SZDiTwX56MFD5L2Q17vpYOT98TSIr8H6-hAwlR75UNTXf3qB6ZM4HAqhJchZM6AYe64yiM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedukeehucetufdoteggodetrf
+	1755206327; x=1755292727; bh=a82UYD9/+4+uYiwb3M88RzjjetwPmRFJUZT
+	U8lVEVfk=; b=gJqQDRsPwimT1XGgEz2GTQwYyzGu9FSX25inz91ZjoWbk6HiSKr
+	RQwnnDflAc0xBReSMkRuD3JE+xIIVklY9h/Tj32qYJdbllZO0oRIXlhwMSo2HfZ4
+	yaS48KDDxiv/rM1ByxPzywKk819m6/lRBS2f31jPiyVm296c90TyIPFSaeinTh7r
+	2bnnZmog+o3pv2wWIrOcGBVAygUbFfyT9y6EnUUbcgocNkAecAM2TZJQtjSDPUBE
+	Cp+m6kxRtS6Mx9UCkCzVaG3ySi4jYe+j/E88kvz+G30sZ3NHS856OixCLXFVyW5K
+	hCT9sP/pB50YfgJ3l1WtKb0MVYKe3ewTm8w==
+X-ME-Sender: <xms:t1KeaCjrgbZwdvm-pyn4LuaLLAXvzjDRvNF6VkpCSttOgNN6mxU_Ow>
+    <xme:t1KeaIOetQ_hYVDINqVQ8c5qrvRAkYKqJg9LYZ2oH2JLChEUtF-mbcrokEFX1QUOy
+    u4WFJdT6MpbFHn3Lg>
+X-ME-Received: <xmr:t1KeaK8tOnhD8Ze3Plt9m9HbavUpWyTeMAjBqyYBZ5BYhwVo2CVNmjZwqjWxeDzP31GcTq7G_ZQvCF0CAVzmaPf-CHs6f1JfR_99Mmw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvudegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
-    gtohhmpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
-    hopehoshifrghlugdrsghuugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohep
-    phhssehpkhhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpth
-    htohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:RzCeaCF8zUk3CerDH898la1MNkEr5NBJbTA4bovTpd3ZloPtvftzpQ>
-    <xmx:RzCeaPLqoNOOoeEQuxcbJp4ZsYqxuJDwKguRI9I5GpUvGujEuyl1jA>
-    <xmx:RzCeaHiuAupnyNbZMg-SPGN8bX-zIT2P0PMjJacDFN5HUUINXXQ2hQ>
-    <xmx:RzCeaFlWMiX562SV8tQo9tSdAH4jhXFy1qwOXxvvJQzrrNxzgG4PgA>
-    <xmx:SDCeaOU8tLVG4JUi4FYG3xs03ulg4vsU26DDJyyuJ_3ktthW2A6KJEWz>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
+    hphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehg
+    ihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehkrghrth
+    hhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:t1KeaBf-59ef8IEUDatKzSkRd8iAhWDxKM8qLDqNdbWGn1YSDeDwWg>
+    <xmx:t1KeaBy6970Ru898XZXgIAd1Hw9OH8jAqyIjh1u_C3-z4JDLJv36uA>
+    <xmx:t1KeaOI6ndRPgwrZZVwPPky4Me3bNmt028XRbw9Yuzs_MJwD3TvOsg>
+    <xmx:t1KeaLHTvRsETv7jKVVgh7jsXEr_miB0hnwvf_jN2EyNMggDkIHUfQ>
+    <xmx:t1KeaM8qCwKGs-2SOMAfw_Mz9KRqQAwJsyBU_UbcGLeVKEX4Aqjzhxzj>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Aug 2025 14:51:51 -0400 (EDT)
+ 14 Aug 2025 17:18:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
-  oswald.buddenhagen@gmx.de,  ps@pks.im,  karthik.188@gmail.com,
-  ben.knoble@gmail.com,  phillip.wood@dunelm.org.uk,  jltobler@gmail.com,
-  jn.avila@free.fr
-Subject: Re: [GSoC PATCH v9 3/5] repo: add the field layout.bare
-In-Reply-To: <CAPig+cTQdEDZduG_UmdHn1JNfj7iTw0=jwdkX+VPJ11Jo0jUGA@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 14 Aug 2025 14:32:27 -0400")
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
-	<20250807150239.6987-1-lucasseikioshiro@gmail.com>
-	<20250807150239.6987-4-lucasseikioshiro@gmail.com>
-	<CAPig+cSBg6oQC4Y81ieH25-A9cHRTfbqC5i+22RSBcbyVo_qtA@mail.gmail.com>
-	<BCCE25CF-8546-4320-AB44-9B729C3D6DE6@gmail.com>
-	<CAPig+cTQdEDZduG_UmdHn1JNfj7iTw0=jwdkX+VPJ11Jo0jUGA@mail.gmail.com>
-Date: Thu, 14 Aug 2025 11:51:50 -0700
-Message-ID: <xmqqfrdt3feh.fsf@gitster.g>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: phillip.wood@dunelm.org.uk,  "Julia Evans" <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  "Patrick
+ Steinhardt" <ps@pks.im>,  "Karthik Nayak" <karthik.188@gmail.com>
+Subject: Re: [PATCH v6 0/5] doc: git-rebase: clarify DESCRIPTION section
+In-Reply-To: <aa1c2758-79f9-47f6-87d4-16b19fa5bd63@app.fastmail.com> (Julia
+	Evans's message of "Wed, 13 Aug 2025 11:33:11 -0400")
+References: <pull.1949.v5.git.1754943127.gitgitgadget@gmail.com>
+	<pull.1949.v6.git.1754949075.gitgitgadget@gmail.com>
+	<52504ef0-7d4c-4298-af11-10477673e9d0@gmail.com>
+	<aa1c2758-79f9-47f6-87d4-16b19fa5bd63@app.fastmail.com>
+Date: Thu, 14 Aug 2025 14:18:45 -0700
+Message-ID: <xmqq5xepzjnu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,41 +94,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+"Julia Evans" <julia@jvns.ca> writes:
 
->> test_expect_success 'the values are returned in the same order they were requested' '
->>         printf "references.format=files\nlayout.bare=false\n" >expected1 &&
->>         printf "layout.bare=false\nreferences.format=files\n" >expected2 &&
->>         git init --ref-format=files same-order &&
->>         git -C same-order repo info references.format layout.bare >actual1 &&
->>         git -C same-order repo info layout.bare references.format >actual2 &&
->>         test_cmp expected1 actual1 &&
->>         test_cmp expected2 actual2
->> '
+>> well given they're also both pretty niche. I'd also be very happy to go 
+>> with Junio's suggestion to replace steps 1 & 2 with a general 
+>> description that does not mention 'git log' at all.
 >
-> Rather than the above, I think a more satisfactory and meaningful test would be:
+> I like the idea of leaving out `--fork-point` and `--root`.
 >
->     test_expect_success 'values returned in order requested' '
->         cat >expect <<-\EOF &&
->         layout.bare=false
->         references.format=files
->         layout.bare=false
->         EOF
->         git init --ref-format=files ordered &&
->         git -C ordered repo info layout.bare references.format
-> layout.bare >actual &&
->         test_cmp expect actual
->     '
+> Now that I know the use case for `--reapply-cherry-picks`: what I like about
+> leaving in the `git log` description is that I think it makes it easier for
+> folks to build a mental model of why a `git rebase` might be slow: there's a
+> "fast step" (the `git log` step) and a "slow step" (the `git patch-id` step).
 
-I do not think the second "layout.bare" should be line-wrapped.
+But that is not what goes on, is it?  What you wrote as if they were
+two separate steps (1 to enumerate, 2 to filter) is not what happens
+in practice.  Whether it is done via the "format-patch --stdout | am"
+pipeline in run_am(), or via the "rev-list --reverse | xargs -n1
+cherry-pick" pipeline in run_sequencer_rebase(), the upstream of
+these conceptual pipelines that enumerates what is to be replayed is
+run just once, i.e. there is only one step that "enumerates what is
+to be replayed", without a separate filtering step.
 
-Your point that it is more obvious when the expectations are shown
-in HERE-doc may be valid.  Overly long printf with \n indeed is
-harder to follow.  Even though there is no reason for a real user to
-do so, asking for the same piece of information twice would
-demonstrate that there is no deduplication.
+In other words, there is no "a fast step followed by a slow step".
 
-I also care about future-proofing, though.  When Git is built with
-WITH_BREAKING_CHANGES=YesPlease, this test would break as the
-default reference backend will be reftable in that alternate world,
-wouldn't it?
+Perhaps squashing the first two steps into one and phrasing them as
+a single step is sufficient to give a conceptual overview (what you
+have in v7 as "a simplified description of what the command does").
+
+ 1. Make a list of all commits on your current branch since it
+    branched off from `<upstream>` that do not have equivalent
+    change in `<upstream>`.
+
+If you want to keep 1 & 2 separate, then rephrase the introductory
+sentence to clarify that we are giving a white lie for the sake of
+easier understanding, e.g.
+
+    Here is what conceptually happens in "git rebase":
+
+or something.
