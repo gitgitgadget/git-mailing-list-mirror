@@ -1,115 +1,155 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAEB78F4B
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 22:05:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C491678F4B
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 22:06:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755209151; cv=none; b=o4g3fqR6xss9IWPDkuKW/r654nzCUOv1bD3bf+apH+LZyFMOy+G4MEcethUz4p3Y/ODbAFSANntxYpowNdHEmatdKzs5vtHRPOxgveE3EdyZEqIwA+TfmAIOqJf+HyN8cGsrCBw9djnBFpCYwjBZfsUVveCNdpjWS6z5QVKvafg=
+	t=1755209193; cv=none; b=gIGP6seOxH3+eo73LXl0j4OwA5lChx3PHwHhy8T0UA50KR3Sspnn9KMA9O09vtThNiyo7ksPagMY++2zai/ix4wIxGt3fUZIfcWLLcARIjEW3M1zRH6phh1KX4Ffm9moaxhP9H8/6CQdtFRUnq1uW83WHfrkIabpk69qqnnE72Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755209151; c=relaxed/simple;
-	bh=5KpcqLszGJvP7paOtkBnp3UL+0jLsW5Yc5AqZ3JFM0o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Jk4O6PYkaCRRm1helpoP57SUDfV33z25s3tV3RSLyrfrxXV5CVMiGmuuFGk/OSXJjkFm2qvIy+I+kmDjRZIeaNUTFELN5nzgXnGd15PZ+3Ocbb9KG+6jDUehL+e1wWYArQ1OIeItJj5gBMk+Ev5+RxOCGM+d0Tk2DrIc3n4YV3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7e8706fbf6cso17817285a.3
-        for <git@vger.kernel.org>; Thu, 14 Aug 2025 15:05:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755209148; x=1755813948;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lNiiE0H2xHFbjbOjMRjrNhairCVQ3E1YYfs3ok1/pgE=;
-        b=a1Of3Pg9RHmlFwLSPZm0bkB06Ov7lWRhvEg+cPvYCq9rS+z25DwTH5D/rR7kQ+D41z
-         XzKgZYm2KQJ99KIaovuwW6++9ELLxe+aG1SS5TMddXfPhU+yHK2cRhtTId2RtpLB1Qk2
-         Vcz1080T88PmgWXhevXVh7Q6RLy8XmaJm4OJsbFd+RI8LlREtU5OtV0kQl16ktoInr6i
-         tvZXX0J0CkjDeVEUYs8iqjt2FRJBy6Ejci/37xYA6ni7oRZ914Ehy9V3lgcLo8Z9jOZg
-         SRkvAb1xNUFUvkGxq3m9AxKdGaEeKf5lcrprHAXICfh0Z35xMWPM6eBuu/uZ0AbaKtRE
-         /pCg==
-X-Forwarded-Encrypted: i=1; AJvYcCVXTIBKDyuQTWei0UAfP7jJEqX7YfkZrsqWe+HEga4USVq+dHQoTNkJPnfQhYHJccGuD3I=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfqBTh/+HBQp7ECGpC1VmRCOQMrRU6APTfLEnCU/VHUC/pNbn1
-	C06lzj3aujxjWppt+8nvnjp4pWEslUbXPhk85hXqz2piRoPW15UDaTUI7DUqWTSzS+oeuKfZZLH
-	coX/PvjI5R9fU7zLtJePWtFgqVbgQzfA=
-X-Gm-Gg: ASbGncseaedl3fOpZ9UOind6rsPpjCqsBp03F2n/s7iPo3fqT9mamRPLL4zTuO3ep8f
-	1+gyvNmrR6+SHgmJDJ3L4pJuCCPah4fM1lZVJuMsWc4b4x0P0G98dqXQG1Y6+Piu4TRW/xmhRs5
-	gmJONmMrdyjqjZtt2MrYnIkoDmFErUyzrMR0YVvdzEY/VCNiDHRST3AfJFi2gP21KTU4HmVm8YZ
-	iKixF40UgdL8E6uJxyo1F8ZQVTzCVKr1Gm6VQSLB9Z3xWmR7ic2T6gFc3lC7A==
-X-Google-Smtp-Source: AGHT+IHNWv/ja0NoTJyUlWc3v30TJZCDn4QPs2xlw/K29SYkokpYJJ1yPFRtD8ETAkmPqQtabs2A8PyvcK21nu5E04c=
-X-Received: by 2002:ac8:5d55:0:b0:4ab:23fe:a743 with SMTP id
- d75a77b69052e-4b10ab09629mr37974351cf.9.1755209147937; Thu, 14 Aug 2025
- 15:05:47 -0700 (PDT)
+	s=arc-20240116; t=1755209193; c=relaxed/simple;
+	bh=l+cu/UUzgk5mGd1vAL4hIjzwPCGY361HnFDxcIweb+g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W9rb99n56CUbX3cX4NaW1DiU3GEHdNa/ApPaLf+x7ISoz3AeVOapGwnHOgZsy7VVnb6ntoqd/u2Kg8ZO3asQawYsm0/uiF0iwAVcfdB6qJtlpB4mWq1fh1ZYpt23kM2kgkh7YwKluPjtXCrDq6WdRlo2bvFQDXjM0zXpebUt51c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=l+a9hM4D; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="l+a9hM4D"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1755209183;
+	bh=l+cu/UUzgk5mGd1vAL4hIjzwPCGY361HnFDxcIweb+g=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=l+a9hM4DaxxOcbdCw6bk2Np0GkOis866sEepUA6H/OZQHcAdDxH9B4kKBC3iXzN9E
+	 7Uan5tTDgOVgM1C5GOaNrXVXWKjw0I/9sKwAR0JW8isxyrKXXT3kM+SPY1zQFFt3QT
+	 yAtkY9XyjuP9S3xZOV/RNgp15NzcAXBrKx626N23x9AW0xo0tZY4Kf7zrfn/CYhNbW
+	 PyBaaE4DGSPfUYdhMXwt3j4yzmejmtwDx+cOVHx/UBEeLJYSPCjRpZIzM1F8quxXl8
+	 kWyZabrw19v+wYKWCR5v82tu5lG22Z8Epi3bn7HJP3rZ9sq2QJ6zmQArn0njQbqNcI
+	 md9/Dc3hiVUTaERZROPUHecAsr6BqJqQ07Ly303YRczS1S/5firyjaJ0sdGkJ+lv0V
+	 ApEldVMgJTf4CT4aQ3QBAKLhpJ7i2KDV/B53n7bF6jFglETbbcrWP5BrScX//W+8eZ
+	 GlT/1+uu7knR1rjKWJVbxl04FSnllzXXnb3NCsOwOZnUmxW8uD+
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8756:2fa2:aa23:19b4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 66392200B4;
+	Thu, 14 Aug 2025 22:06:23 +0000 (UTC)
+Date: Thu, 14 Aug 2025 22:06:22 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Efficiently storing =?utf-8?Q?SHA-1_?= =?utf-8?B?4oaU?= SHA-256
+ mappings in compatibility mode
+Message-ID: <aJ5d3tvrm2S1ZTR9@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	Jonathan Nieder <jrnieder@gmail.com>
+References: <aJ03RTHaE_JvHA1t@fruit.crustytoothpaste.net>
+ <xmqq1ppe9e5h.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250807150239.6987-1-lucasseikioshiro@gmail.com> <20250807150239.6987-4-lucasseikioshiro@gmail.com>
- <CAPig+cSBg6oQC4Y81ieH25-A9cHRTfbqC5i+22RSBcbyVo_qtA@mail.gmail.com>
- <BCCE25CF-8546-4320-AB44-9B729C3D6DE6@gmail.com> <CAPig+cTQdEDZduG_UmdHn1JNfj7iTw0=jwdkX+VPJ11Jo0jUGA@mail.gmail.com>
- <xmqqfrdt3feh.fsf@gitster.g>
-In-Reply-To: <xmqqfrdt3feh.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 14 Aug 2025 18:05:36 -0400
-X-Gm-Features: Ac12FXxO_45w9J2uAXltCy794FaurIcW0QcmpUHDH-3d-YHeyxo78R_rUMRjGSU
-Message-ID: <CAPig+cSZnfG7NDCGDDnFvtwS4hpcGkmVKA0hPhLALmXj=0Zbbw@mail.gmail.com>
-Subject: Re: [GSoC PATCH v9 3/5] repo: add the field layout.bare
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, 
-	oswald.buddenhagen@gmx.de, ps@pks.im, karthik.188@gmail.com, 
-	ben.knoble@gmail.com, phillip.wood@dunelm.org.uk, jltobler@gmail.com, 
-	jn.avila@free.fr
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="mqO8j1wlquXKLvQy"
+Content-Disposition: inline
+In-Reply-To: <xmqq1ppe9e5h.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--mqO8j1wlquXKLvQy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 14, 2025 at 2:51=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > Rather than the above, I think a more satisfactory and meaningful test =
-would be:
+On 2025-08-14 at 14:22:18, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> I do not know if you want my input (as I wasn't CC'ed), but anyway...
+>=20
+> > ...  We can store them in the
+> > `loose-object-idx`, but since it's not sorted or easily searchable, it's
+> > going to perform really terribly when we store enough of them.  Right
+> > now, we read the entire file into two hashmaps (one in each direction)
+> > and we sometimes need to re-read it when other processes add items, so
+> > it won't take much to make it be slow and take a lot of memory.
 > >
-> >     test_expect_success 'values returned in order requested' '
-> >         cat >expect <<-\EOF &&
-> >         layout.bare=3Dfalse
-> >         references.format=3Dfiles
-> >         layout.bare=3Dfalse
-> >         EOF
-> >         git init --ref-format=3Dfiles ordered &&
-> >         git -C ordered repo info layout.bare references.format
-> > layout.bare >actual &&
-> >         test_cmp expect actual
-> >     '
->
-> I do not think the second "layout.bare" should be line-wrapped.
+> > For these reasons, I think we need a different datastore for this and
+> > I'd like to solicit opinions on what that should look like.  Here are
+> > some things that come to mind:
+>=20
+> I do not see why loose-object-idx is not sorted in the first place,
+> but to account for new objects getting into the object store, it
+> would not be a viable way forward to maintain a single sorted file.
+> We obviously do not want to keep rewriting it in its entirety all
+> the time,
 
-I typed that command all one one line; Gmail wrapped the line.
+It's not sorted because there's no way to do so and efficiently handle
+both lookups.  If we sorted it in SHA-256 order, then we would still
+have to look up items in SHA-1 order with a linear search, and vice
+versa.
 
-> Your point that it is more obvious when the expectations are shown
-> in HERE-doc may be valid.  Overly long printf with \n indeed is
-> harder to follow.  Even though there is no reason for a real user to
-> do so, asking for the same piece of information twice would
-> demonstrate that there is no deduplication.
+What we do for pack index v3 is a sorted table of abbreviated names, a
+mapping of that order to pack order, and then full object names in pack
+order, with a set for each algorithm.  The abbreviated names all use the
+same prefix size, which is just long enough to be unambiguous.  This
+means that we can easily look up an object, find its index into pack
+order, and then find the full object ID in any algorithm.
 
-Yes, part of the point of the illustrated test was indeed to
-demonstrate lack of deduplication.
+We could probably write some sort of data file that contains these
+same mappings except that since we don't have a pack order, we could
+just use a sorted order in the main algorithm and omit the main
+algorithm's mapping table.  We could then have a single table for the
+necessary object metadata.
 
-By the way, as a real-world developer/user, I do periodically find
-myself in situations in which it *is* convenient to ask for the same
-piece of information twice (or thrice) because it simplifies
-downstream scripting in ad hoc (and not so ad hoc) situations when I
-need to manipulate the same value in different ways. In such cases,
-asking for the information more than once saves me the trouble of
-having to assign the value to a variable, which is handy when the
-downstream language or tool doesn't provide variables.
+> If there aren't any radically novel idea, I would imagine that our
+> design would default to have a big base file that is optimized for
+> reading and searching, plus another format that is easier and
+> quicker to write that would overlay, possibly in a way similar to
+> packed and loose refs work?
 
-> I also care about future-proofing, though.  When Git is built with
-> WITH_BREAKING_CHANGES=3DYesPlease, this test would break as the
-> default reference backend will be reftable in that alternate world,
-> wouldn't it?
+Yeah, that could be an option.  Or we could have a base file and some
+incrementals, with a `git gc` when we hit 50 items, just like when we
+hit 50 packfiles.
 
-I think Lucas already future-proofed this (and my example copied his
-future-proofing) by using `--ref-format=3Dfiles` with the git-init
-invocation.
+> As there are some objects for which we need to carry dynamic
+> information, e.g. "we expect not to have this in our object store
+> and that is fine", which may be set for objects immediately behind
+> the shallow-clone boundary, may need to be cleared when the depth of
+> shallowness changes.  Would it make sense to store these auxiliary
+> pieces of information in separate place(s)?  I suspect that the
+> objects that need these extra bits of information form a small
+> subset of all objects that we need to have the conversion data, so a
+> separate table that is indexed into using the order in the main
+> table may not be a bad way to go.
+
+My plan is to just wire this up to `git gc`.  We'd know what entries are
+potentially disposable (such as shallows) and omit the unneeded entries
+when repacking.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--mqO8j1wlquXKLvQy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaJ5d3QAKCRB8DEliiIei
+gaDpAP9dO71F5VIP8pblZ1pxviwV4RPvMp+fk7buSCMfoAsa1AD/TWisunYBF8l6
+jHXz50ttO333ZOfRo87650yr+9WmMQk=
+=kni4
+-----END PGP SIGNATURE-----
+
+--mqO8j1wlquXKLvQy--
