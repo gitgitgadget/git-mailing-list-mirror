@@ -1,118 +1,180 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F851552FD
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 01:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C032723B0
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 01:09:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755133211; cv=none; b=t2O+PZimG5CB0nK7+Cmp2jDFCbOy+C/kbid+5thqCWMm4PxY/Weg3Yv4V4pJKlxgPAnfQoQPPtdloP8MiBN+l3R+0fz1iOcMkfkXufCz9KqQI2mzuJC/jyDgcqznvm8nanuB4Etn33kADS756PZKAon5fIh8U3YFta9sIxkEDZM=
+	t=1755133771; cv=none; b=M80w7cBkLv2vrcat2utyCxMIQUHBBHWZWxguIo8xd+bE/B/0G2Q5N/ia5GZVe2M5mboic0QlIefEeHogt+NFlFnkAk4uQtQwLQv8+6iqgbHlmHCjftZB9FOPWGgxTi+lrkMaIj5ZU/RkS6pJq9+XILUiCoIcE15sDWtHQybjE3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755133211; c=relaxed/simple;
-	bh=Hefc3c890X1UoYnsrwv9Qv2e0Zs0y9WMlnYFmml8790=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gbhO0w09U5B659Ee6KxGdoHUteglTphchFvgu85x2kfgXt4yccBMaUqDGhgQcutpNepSVpreUTfTqBENmJxhEYsFcWDT0zYmUA5tRboaPxkAEnhLw5yHDTh0UTEH062t2aXU4cjGfX+mWaQzd5lS8TBxD77jteWXMUIxzbPXcII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L3m69Rnh; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755133771; c=relaxed/simple;
+	bh=cCwiV4fxVzwDhM7x+fQboWdCcvuqGF2imtulc5CtDEw=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=EE0Qq9Qn1QIX/t+Y2BkNrgcy5/bNV/z9IX2NWey4kEOVEBhMOQS3OmwFnhT6+3wAH3dQuw5AlbXbJZo/MeaL3pTeYeP4zrpfyEu8o5PNKzkuvRX7AnQLvx4woRdK0azcsAQcX0K19yoYoYK+P3vqdK23sMWS/nRNCEUoMvdZ2Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=kIbkjbqC; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L3m69Rnh"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6188b5ad4f0so600974a12.0
-        for <git@vger.kernel.org>; Wed, 13 Aug 2025 18:00:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755133207; x=1755738007; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cuLgARRzGB0bRMu7KClyMxKaHj5rupoq+pjQchEB1sw=;
-        b=L3m69Rnh8/RaIxsMwkcCwlqGccOWuPNpRl6TAD5urcnnVRF5iT8P8462lGD1x9ediH
-         X2IuRApiYTMDauo85aArOinsVz47zyFNB/ffHY/FB1AfsQZVsUC/KYcmWrFT1+c1iibn
-         epOECbyFZl5ByrpvmkV3S2v0ZkKHMCIHHKIDanrV/DpBd40YBRhYv74R+JDW/6nGPPuC
-         mdH4ETeugTQHQ3M4vpzyN1jY2gSD0qayFaIBPgkr+6/9DYKf+AZarxEZq5ViNo5VbTZc
-         EPlBqxFiPluri9pmjNoThTfxOhTX4yEuNT3FtCIhHIj0BH2bmRrhAlMe+IS//HPDENoB
-         0H6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755133207; x=1755738007;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cuLgARRzGB0bRMu7KClyMxKaHj5rupoq+pjQchEB1sw=;
-        b=nXsHNKL5Fqsi2OtH/kjFiqJmKRpiwowoGc7H4otjTTh3zr9gID+sH2u27rekdKhuZL
-         uqwVz9Wips1Lg09Kv9kkP0RIiuZyZqsw1oYGrMNROo6oH7FdgWK7OglsgNDa/0l8iTLZ
-         d9QNVP5ouNCAaBowdF+xXaRvahahHOYeDcpWoM+Z3j5S3Q20Iat/mVj/jc7zLoWkUnF1
-         Q2dn+a4/+fNFXSp7NOijlttBFNh5ZK89JBU7eZOr0gik9ZwHTqbzOxw4EqyMqW5cimWg
-         F7/pJ+195pcnl88AGi+WUj1IOWLda/E3vf6N3gcD+anGeaLN0/xVCZtZZRuCgQvkyxdS
-         b0Bw==
-X-Gm-Message-State: AOJu0YxqGz2jbaom/iyNciZU5ls6hnoruuHjjsyrdMtxYcPBjp+/Wq2G
-	ZUnA0l7vTUOW26KK3hKGkTMOEI2uGysHnepiqSHkHRZqEzcTLrvfKFqX1sQ2kCOcmyGmXq15Q/6
-	9gCP93JCIDpDXsKQJ9PoL5v8HdzH3kE/XGlm2
-X-Gm-Gg: ASbGncvCbVk22VUqVDuLjVY34qKdnPH3A6sy08QAp/1kF+hzeFteNZijrhJ2LQNCKGg
-	mnxU7PPex/gSBnqpSLcLEsKxRj/bWqzwDO2c+aqNi3QfoZHnfRut/6x3CdWl+gTd3NrVIdUY91X
-	wvhRx4/W6tBnz2OfZJ0C/ez//GHthckFJMPRSLUicPbXIn8Ws248R7YkhyJIQlRmHH4MahGOIsF
-	0RE9xI2NqFXv6jy4C7FjaKF5MyGycv+5SwnbeYeNw==
-X-Google-Smtp-Source: AGHT+IExOQHHxlxMYwVWd/gcPwvd1cvZF2sNZ4IU8/3tTYsbcVq5GbjmtxjExWD1rOiCQw/+BmicsOWUfWXHk6b8sbc=
-X-Received: by 2002:a17:907:7213:b0:ae3:b22c:2ee8 with SMTP id
- a640c23a62f3a-afcb98e198bmr94708266b.37.1755133207275; Wed, 13 Aug 2025
- 18:00:07 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kIbkjbqC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1755133767;
+	bh=cCwiV4fxVzwDhM7x+fQboWdCcvuqGF2imtulc5CtDEw=;
+	h=Date:From:To:Cc:Subject:Content-Type:Content-Disposition:From:
+	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+	b=kIbkjbqCNWKDCe6R+WRhN+gQzK/nHqeV/9cucsirIkXPzN2As0wXgDf0aqBN7Iaow
+	 KL2fKe8RCIMUuVCGmg4Ux1yIs7hVZlaIYC2dA/982Nq2qpBemlPSUEQOMXHuES6roX
+	 rSq/dHFrngytAOAdzHyEN5o7/Fbu7lKdPnDq/DkiuV7l11KN8wbPVeSGmHTZBztQqE
+	 a+qBz4Vx8g6Ypl6o6b/yQuZwDcFae8rNjiaFJsY8PPt5iFqBSN/SdesEuledkbC4ED
+	 2ZQ7UzvQcvV17u3dC0/cTfE/awwI4/Ul89K/45Q6oCXPMiIpXnV+WgTc0mvM/50H/H
+	 vb6NdoEvPaPLL7V8+tY+jXI56MjQ/ln4kvGUEKslh7ZaBcQo4G9BDsjWY1o40CZM/K
+	 8D0w+gFUP+ggEMBvCpuM2fRyZpIz3DbLJkaruZbWbht+g0NOTzjiqkWhPV/DVRn01n
+	 ytYYmA2ZOoGLMneLpnQLa5lJ6TZtBx9ttDFKtQIl/VImcglCiz1
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:dcf7:b1e8:faac:b3aa])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 52E46200B7;
+	Thu, 14 Aug 2025 01:09:27 +0000 (UTC)
+Date: Thu, 14 Aug 2025 01:09:25 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	Jonathan Nieder <jrnieder@gmail.com>
+Subject: Efficiently storing SHA-1 =?utf-8?B?4oaU?= =?utf-8?Q?_SHA-256?=
+ mappings in compatibility mode
+Message-ID: <aJ03RTHaE_JvHA1t@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Jonathan Nieder <jrnieder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
- <pull.1952.v2.git.1755127218.gitgitgadget@gmail.com> <63c9e0361dc02c15afeea3cad1656e1631637f60.1755127218.git.gitgitgadget@gmail.com>
-In-Reply-To: <63c9e0361dc02c15afeea3cad1656e1631637f60.1755127218.git.gitgitgadget@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 13 Aug 2025 20:59:54 -0400
-X-Gm-Features: Ac12FXx6hIUVd8emkBd9Yn-dg11UQc2-TK_bc-LDH1mJ2lOmsyLn6cJAyTXT3zI
-Message-ID: <CALnO6CA2bv0CHcEW-n=VU0xZXHgSrpXV_Dc3Q+HAGV7=Mr-_8Q@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] doc: git-add: simplify discussion of ignored files
-To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>, 
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
-	Julia Evans <julia@jvns.ca>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ljCcHdgvTCLMGBDH"
+Content-Disposition: inline
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--ljCcHdgvTCLMGBDH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 13, 2025 at 7:20=E2=80=AFPM Julia Evans via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Julia Evans <julia@jvns.ca>
->
-> - Mention the --force option earlier
-> - Remove the explanation of shell globbing vs git's internal glob
->   system, it's a common gotcha but I don't think this is an appropriate
->   place to explain that concept. There's some discussion of the gotchas
->   around globbing and `git add` in the EXAMPLES section which I think
->   is clearer.
->
-> Signed-off-by: Julia Evans <julia@jvns.ca>
-> ---
->  Documentation/git-add.adoc | 11 +++++------
->  1 file changed, 5 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
-> index 949b016e6fa2..75e223f6b1ea 100644
-> --- a/Documentation/git-add.adoc
-> +++ b/Documentation/git-add.adoc
-> @@ -39,12 +39,11 @@ you must run `git add` again to add the new content t=
-o the index.
->  The `git status` command can be used to obtain a summary of which
->  files have changes that are staged for the next commit.
->
-> -The `git add` command will not add ignored files by default.  If any
-> -ignored files were explicitly specified on the command line, `git add`
-> -will fail with a list of ignored files.  Ignored files reached by
-> -directory recursion or filename globbing performed by Git (quote your
-> -globs before the shell) will be silently ignored.  The `git add` command=
- can
-> -be used to add ignored files with the `-f` (force) option.
-> +`git add` will not add ignored files by default. You can use the
+TL;DR: We need a different datastore than a flat file for storing
+mappings between SHA-1 and SHA-256 in compatibility mode.  Advice and
+opinions sought.
 
-Not worth a re-roll on its own, but this is another instance where
-starting a sentence with `git add` seems odd to me.
+As I've mentioned earlier on the list, I'm working on some of the code
+for interoperability between SHA-1 and SHA-256.  The good news is that
+it's relatively advanced so far.
 
-The range-diff in v2 looked good to me overall.
+Right now, we have pack index v3 (so we can store both loose and packed
+objects) and it's possible to clone and fetch from and push to a
+single-algorithm server if the client repository supports both
+algorithms and there are no shallow clones, partial clones, or
+submodules involved.  Those who are interested can look at my
+`sha256-interop` branch[0], learn more at my talk at Git Merge (which
+I'll be giving remotely), or talk to me at the Contributor Summit.
 
+Our approach for mapping object IDs between algorithms uses data in pack
+index v3 (outlined in the transition document), plus a flat file called
+`loose-object-idx` for loose objects.  However, we didn't anticipate
+that we'd need to handle mappings long-term for data that is neither a
+loose object nor a packed object.
+
+For instance, with shallow clones, we must store a mapping for the
+shallows the server has sent us[1], since we lack the history to convert
+objects otherwise.  Similarly, if there are submodules or we're using a
+partial clone, we must store those mappings as well, since we cannot
+convert trees without them.  We can store them in the
+`loose-object-idx`, but since it's not sorted or easily searchable, it's
+going to perform really terribly when we store enough of them.  Right
+now, we read the entire file into two hashmaps (one in each direction)
+and we sometimes need to re-read it when other processes add items, so
+it won't take much to make it be slow and take a lot of memory.
+
+For these reasons, I think we need a different datastore for this and
+I'd like to solicit opinions on what that should look like.  Here are
+some things that come to mind:
+
+* The format should be fast to read and relatively fast to write.
+* We need to efficiently read and map objects in both directions.  This
+  is required for many reasons, including efficient fetches and pushes.
+* We still require an in-memory store because we stuff entries in their
+  without writing them during pack indexing and other operations, but
+  that doesn't mean we need to load data from the data files into the
+  in-memory structure (in fact, we probably should try to avoid it).
+* We want to be able to write small updates to the data without having
+  to re-write the entire thing (e.g., `git add`).  We often know that
+  we'll be writing a whole batch at once, such as with shallows or
+  submodules from a clone or fetch, so many places in the code will be
+  able to start a batch and then write, but we shouldn't assume that
+  will always be the case.  (In other words, we will write more
+  frequently than we do packs or indexes.)
+* It would be helpful if we can determine the type of object being
+  stored.  For instance, if we've stored an object mapping because of a
+  shallow, `git gc` could remove that mapping if the shallows have been
+  updated and the mapping is no longer useful.
+* We should try not to assume only two hash algorithms.  Pack index v3
+  allows for effectively an arbitrary number and while much of the
+  compatibility code assumes one main and one compatibility algorithm,
+  we should try to minimize that if possible.[2]
+* Being able to mmap it would be convenient, so if we can make it
+  relatively small, that's nice.
+
+Some rough ideas of what this could look like:
+
+* We could repurpose the top-bit of the pack order value in pack index
+  v3 to indicate an object that's not in the pack (this would limit us
+  to 2^31 items per pack).
+* We could put this in new entries in multi-pack index and require that
+  (although I'm not sure that I love the idea of requiring multi-pack
+  index in all repositories and I have yet to implement compatibility
+  mode there).
+* We could write some sort of quadratic rollup format like reftable.
+
+I would recommend reading the pack index v3 format documentation in
+`Documentation/technical/hash-function-transition.adoc`, since I think
+it's helpful to understand what we have now.  I have implemented a small
+variant on it (documented in my branch) and will send some documentation
+updates before code, although the differences are minor and not relevant
+here.
+
+I've taken the liberty of CCing some people who have worked deeply with
+our existing formats (packs, indexes, reftable, and so on), but I've
+almost certainly missed some people and I'd love thoughts from anyone
+about this.  Once we have an approach that we think is useful, I'm happy
+to write up a document for it and send it out.
+
+[0] Available from https://github.com/bk2204/git.git.
+[1] This assumes that the server also supports both algorithms to
+generate and send the mapping.  I am implementing that work now and it
+has yet to be pushed to the branch (because it presently doesn't work).
+[2] We might find that SHA-256 becomes weak well before SHA-1 is
+completely dead and we need to deal with a third algorithm suddenly, so
+we should not mortgage our future unnecessarily.  Cryptographic attacks
+only ever get better.
 --=20
-D. Ben Knoble
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--ljCcHdgvTCLMGBDH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaJ03RQAKCRB8DEliiIei
+gU1sAP4zQWyrDQL66EEXdmUiZjT+IpkekL+3X51f6O6lyKQ7wwD/dADOX+a2udA9
+68ibKCpgIKENhDBH8KvGYwHDxxbywQU=
+=gZe8
+-----END PGP SIGNATURE-----
+
+--ljCcHdgvTCLMGBDH--
