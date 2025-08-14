@@ -1,119 +1,115 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A10266B59
-	for <git@vger.kernel.org>; Thu, 14 Aug 2025 21:40:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAEB78F4B
+	for <git@vger.kernel.org>; Thu, 14 Aug 2025 22:05:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755207615; cv=none; b=XQHz4xC1+C/OJumeU9efy5U3XlrCvPefLfPqX5NRzxrjO67vc3NALwwe6TVNqH6Yo3aH46WkMUAuws//wqsrFEVCyHEW2a4Vg/J0Nogp3e4hN3GBcV89qZE42Z0I2Hr+MqO6ut7r6qqmLrbKLpSS2ZtbIs8bs0XSJppO02xFVL8=
+	t=1755209151; cv=none; b=o4g3fqR6xss9IWPDkuKW/r654nzCUOv1bD3bf+apH+LZyFMOy+G4MEcethUz4p3Y/ODbAFSANntxYpowNdHEmatdKzs5vtHRPOxgveE3EdyZEqIwA+TfmAIOqJf+HyN8cGsrCBw9djnBFpCYwjBZfsUVveCNdpjWS6z5QVKvafg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755207615; c=relaxed/simple;
-	bh=kS++VPKVsCgiS2A5bdRPVtXvH4YQThi183vnO70JlVU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RlLmI0qoWiZ9NDB+Xw0sXoRg6vUiUY6e8lWzah6kAdUtPi0TL/m1fvHuAmrPZWvOajgXTaDZqnj3VBkMJRXWgiyg/akStoFNY+AmCf8o51p5ExxbuA4kuO6hPMuXLfbEO5cWq+o/0nxqVVnCUu2xyYrzx70pEmseffgv20mOMfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iFNimIEJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lq3lri9O; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iFNimIEJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lq3lri9O"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 20C5914001E2;
-	Thu, 14 Aug 2025 17:40:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 14 Aug 2025 17:40:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755207612; x=1755294012; bh=5VST+aP/IW
-	uxYhkus/uy+AzJjt94WVgX6KF0jc+gE9A=; b=iFNimIEJUWZpIYlCgNWRT9Ash5
-	1hXCKIwuAXZdj5NjiV8IIjLEJkXJ7JXlSkH2E1fGsFiBXAc4Gtw2/G7HcZS/GZAf
-	JKjNuNvEDJnlEkeq0KjAaZxdobOA34zZOwhOPumpfPNDsIn9QNQshiD3d7L1N9Wl
-	UOevAhU+sqLiVWjNxH6S0zym08s7gbnBQCda3dV7RQe9dpqPRNAtmfw4ntIM6Hv5
-	LsSeJBoNXInHt1bUV6M51xAd1s4ii/M+9gIre2OpMskecj1E09dYWC9z37OUSugh
-	oq/tym9qJz3+ixrFS5K+r7OsXV8LW15wUDMWDjgdHsamTIxmtbPTWH8/lFMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755207612; x=1755294012; bh=5VST+aP/IWuxYhkus/uy+AzJjt94WVgX6KF
-	0jc+gE9A=; b=lq3lri9OMJomdCYA7kwGx7R8v7spLMeRldODxkZOBhDDxo+MW58
-	x0Mcb/5nAUCv8gLJoLpbz9wf5g62nrjKLam66P3sGqTfJS1crN4xORaF+cqeZ8RO
-	REBRscwfzvKtWAI5i4RdF71QpLWaCspQ4kC5SIV8+6l/8ARm3Qfw+2SzQ4uqBPS3
-	scBzCSDfHg3QC5vyv0P8WExOo8wQ3KlfWarPXdLChs0DsoQeJIkYt8BBFH1hPn9k
-	hGR+PF0b/6R6fFwe2Q+TEIW2u3dokSfXzO76I8OTcONXhVfkNp08WTythD0FtlhS
-	7gd2H5SLsPoS9CYBeYthOMwBt674MMm/A4A==
-X-ME-Sender: <xms:u1eeaBr6RaDHyymNP1ypqFDcscUX4Iliv2h5s5AZ6rxZFuIg0ZWfpA>
-    <xme:u1eeaPJridsnZ5YijQMYGTnMSJjjdM25uJaUbMrdNmXotolu_TyPqngqirihVO7gx
-    kTiM-RAb1n7r0gpTw>
-X-ME-Received: <xmr:u1eeaEqMN9UY6icN7Nb5r43qFA-kgbP2VhC0LMTCed_KOj7kMxy6ymbMFIKG6hx-tYItZUPEjPec2aKLPfmO1Rpf8smosp4uPOD_5fc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvudelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopegurghnihgvlhgvshgrshhsohhlihesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:u1eeaHz0_mXhHa-GnmEhcSznhBsq9EwMBE5qqNZUhq-hJvqJHDhFcA>
-    <xmx:u1eeaIPagWuujGS4VKLI__egcqZyvDtwQRfgM-55IUL0Xcew6On1_A>
-    <xmx:u1eeaM4DmdG7g9rgOlSGnjkxyTM5CT_bzIB7E1PmO3lvdP4aWZ5afA>
-    <xmx:u1eeaBn06tQ_5OBGhsPcuy40b36B7Brpn8Perlc24WJvFQJoEwGqJA>
-    <xmx:vFeeaPIo4fOur6JZxbKvSAq1MA1kNNpDUEDSNML-ULdfKCBRIAj3Kadt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Aug 2025 17:40:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Daniele Sassoli
- <danielesassoli@gmail.com>
-Subject: Re: [PATCH v3] count-objects: document count-objects pack
-In-Reply-To: <pull.2031.v3.git.git.1755182034719.gitgitgadget@gmail.com>
-	(Daniele Sassoli via GitGitGadget's message of "Thu, 14 Aug 2025
-	14:33:54 +0000")
-References: <pull.2031.v2.git.git.1755177382349.gitgitgadget@gmail.com>
-	<pull.2031.v3.git.git.1755182034719.gitgitgadget@gmail.com>
-Date: Thu, 14 Aug 2025 14:40:10 -0700
-Message-ID: <xmqqwm75y43p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1755209151; c=relaxed/simple;
+	bh=5KpcqLszGJvP7paOtkBnp3UL+0jLsW5Yc5AqZ3JFM0o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Jk4O6PYkaCRRm1helpoP57SUDfV33z25s3tV3RSLyrfrxXV5CVMiGmuuFGk/OSXJjkFm2qvIy+I+kmDjRZIeaNUTFELN5nzgXnGd15PZ+3Ocbb9KG+6jDUehL+e1wWYArQ1OIeItJj5gBMk+Ev5+RxOCGM+d0Tk2DrIc3n4YV3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7e8706fbf6cso17817285a.3
+        for <git@vger.kernel.org>; Thu, 14 Aug 2025 15:05:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755209148; x=1755813948;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lNiiE0H2xHFbjbOjMRjrNhairCVQ3E1YYfs3ok1/pgE=;
+        b=a1Of3Pg9RHmlFwLSPZm0bkB06Ov7lWRhvEg+cPvYCq9rS+z25DwTH5D/rR7kQ+D41z
+         XzKgZYm2KQJ99KIaovuwW6++9ELLxe+aG1SS5TMddXfPhU+yHK2cRhtTId2RtpLB1Qk2
+         Vcz1080T88PmgWXhevXVh7Q6RLy8XmaJm4OJsbFd+RI8LlREtU5OtV0kQl16ktoInr6i
+         tvZXX0J0CkjDeVEUYs8iqjt2FRJBy6Ejci/37xYA6ni7oRZ914Ehy9V3lgcLo8Z9jOZg
+         SRkvAb1xNUFUvkGxq3m9AxKdGaEeKf5lcrprHAXICfh0Z35xMWPM6eBuu/uZ0AbaKtRE
+         /pCg==
+X-Forwarded-Encrypted: i=1; AJvYcCVXTIBKDyuQTWei0UAfP7jJEqX7YfkZrsqWe+HEga4USVq+dHQoTNkJPnfQhYHJccGuD3I=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyfqBTh/+HBQp7ECGpC1VmRCOQMrRU6APTfLEnCU/VHUC/pNbn1
+	C06lzj3aujxjWppt+8nvnjp4pWEslUbXPhk85hXqz2piRoPW15UDaTUI7DUqWTSzS+oeuKfZZLH
+	coX/PvjI5R9fU7zLtJePWtFgqVbgQzfA=
+X-Gm-Gg: ASbGncseaedl3fOpZ9UOind6rsPpjCqsBp03F2n/s7iPo3fqT9mamRPLL4zTuO3ep8f
+	1+gyvNmrR6+SHgmJDJ3L4pJuCCPah4fM1lZVJuMsWc4b4x0P0G98dqXQG1Y6+Piu4TRW/xmhRs5
+	gmJONmMrdyjqjZtt2MrYnIkoDmFErUyzrMR0YVvdzEY/VCNiDHRST3AfJFi2gP21KTU4HmVm8YZ
+	iKixF40UgdL8E6uJxyo1F8ZQVTzCVKr1Gm6VQSLB9Z3xWmR7ic2T6gFc3lC7A==
+X-Google-Smtp-Source: AGHT+IHNWv/ja0NoTJyUlWc3v30TJZCDn4QPs2xlw/K29SYkokpYJJ1yPFRtD8ETAkmPqQtabs2A8PyvcK21nu5E04c=
+X-Received: by 2002:ac8:5d55:0:b0:4ab:23fe:a743 with SMTP id
+ d75a77b69052e-4b10ab09629mr37974351cf.9.1755209147937; Thu, 14 Aug 2025
+ 15:05:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250807150239.6987-1-lucasseikioshiro@gmail.com> <20250807150239.6987-4-lucasseikioshiro@gmail.com>
+ <CAPig+cSBg6oQC4Y81ieH25-A9cHRTfbqC5i+22RSBcbyVo_qtA@mail.gmail.com>
+ <BCCE25CF-8546-4320-AB44-9B729C3D6DE6@gmail.com> <CAPig+cTQdEDZduG_UmdHn1JNfj7iTw0=jwdkX+VPJ11Jo0jUGA@mail.gmail.com>
+ <xmqqfrdt3feh.fsf@gitster.g>
+In-Reply-To: <xmqqfrdt3feh.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 14 Aug 2025 18:05:36 -0400
+X-Gm-Features: Ac12FXxO_45w9J2uAXltCy794FaurIcW0QcmpUHDH-3d-YHeyxo78R_rUMRjGSU
+Message-ID: <CAPig+cSZnfG7NDCGDDnFvtwS4hpcGkmVKA0hPhLALmXj=0Zbbw@mail.gmail.com>
+Subject: Re: [GSoC PATCH v9 3/5] repo: add the field layout.bare
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, 
+	oswald.buddenhagen@gmx.de, ps@pks.im, karthik.188@gmail.com, 
+	ben.knoble@gmail.com, phillip.wood@dunelm.org.uk, jltobler@gmail.com, 
+	jn.avila@free.fr
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Aug 14, 2025 at 2:51=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > Rather than the above, I think a more satisfactory and meaningful test =
+would be:
+> >
+> >     test_expect_success 'values returned in order requested' '
+> >         cat >expect <<-\EOF &&
+> >         layout.bare=3Dfalse
+> >         references.format=3Dfiles
+> >         layout.bare=3Dfalse
+> >         EOF
+> >         git init --ref-format=3Dfiles ordered &&
+> >         git -C ordered repo info layout.bare references.format
+> > layout.bare >actual &&
+> >         test_cmp expect actual
+> >     '
+>
+> I do not think the second "layout.bare" should be line-wrapped.
 
-> From: Daniele Sassoli <danielesassoli@gmail.com>
->
-> 0bdaa12169b (git-count-objects.txt: describe each line in -v output,
-> 2013-02-08) forgot to include `packs`.
->
-> Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
-> ---
-> diff --git a/Documentation/git-count-objects.adoc b/Documentation/git-count-objects.adoc
-> index 97f9f126101..eeee6b9f7f4 100644
-> --- a/Documentation/git-count-objects.adoc
-> +++ b/Documentation/git-count-objects.adoc
-> @@ -28,6 +28,8 @@ size: disk space consumed by loose objects, in KiB (unless -H is specified)
->  +
->  in-pack: the number of in-pack objects
->  +
-> +packs: the number of pack files
-> ++
->  size-pack: disk space consumed by the packs, in KiB (unless -H is specified)
->  +
->  prune-packable: the number of loose objects that are also present in
->
-> base-commit: 2c2ba49d55ff26c1082b8137b1ec5eeccb4337d1
+I typed that command all one one line; Gmail wrapped the line.
 
-Looks good.  Thanks.  Will queue.
+> Your point that it is more obvious when the expectations are shown
+> in HERE-doc may be valid.  Overly long printf with \n indeed is
+> harder to follow.  Even though there is no reason for a real user to
+> do so, asking for the same piece of information twice would
+> demonstrate that there is no deduplication.
+
+Yes, part of the point of the illustrated test was indeed to
+demonstrate lack of deduplication.
+
+By the way, as a real-world developer/user, I do periodically find
+myself in situations in which it *is* convenient to ask for the same
+piece of information twice (or thrice) because it simplifies
+downstream scripting in ad hoc (and not so ad hoc) situations when I
+need to manipulate the same value in different ways. In such cases,
+asking for the information more than once saves me the trouble of
+having to assign the value to a variable, which is handy when the
+downstream language or tool doesn't provide variables.
+
+> I also care about future-proofing, though.  When Git is built with
+> WITH_BREAKING_CHANGES=3DYesPlease, this test would break as the
+> default reference backend will be reftable in that alternate world,
+> wouldn't it?
+
+I think Lucas already future-proofed this (and my example copied his
+future-proofing) by using `--ref-format=3Dfiles` with the git-init
+invocation.
