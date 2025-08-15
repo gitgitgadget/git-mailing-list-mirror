@@ -1,112 +1,128 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28801A9F9D
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 03:38:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781D2149C7B
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 04:04:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755229131; cv=none; b=fMHtewqNeR1wV1M+TCXZa9WRL6Z87hICXpLbASWFh85YdoYOF462MrJjvXgSOEKSIzrVwsKO7S2se1FI0bORhiZ0pV6bh7IVQH24lF9jXgUDszKg0AT/Mr/RnVX+fjPDoCnVo6U08KfLzocQT0pbZ0K0i1aKQKNr18EKzUC8SEA=
+	t=1755230657; cv=none; b=BAFHDY0OLLWF7RLjF3IhECZtqu3meFgJLeaV7Wpf7cXsgVCejzQ1zTGSPQFFJsU1M4aK0fXSNLqmwsy+AhYaDRr7lmwchRyh7EYNbnVOWDLuYUkBgh7nnLlTynrraW7CT56xODGVfoA1OuqRe6vI82Gp40a4IWyrCA4VelkGvYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755229131; c=relaxed/simple;
-	bh=8+Lhtx4n2aBuFN2efsWKuo0c48hoFoNv2inin9YNwZQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eAkc9IRIStep+GvYaTCwUIRslRtQi7JMu1ZHsOc5Y85lNeb411/D5S5OQPTuL50TIhVx84/mqQLbuGBLdR6wncFVkCHlCBt/dqvUqvOYmiXJNQtHs0pG/s0iDrBSMucZMb/Z/+SWODY8YzoNLmKWFFfny7+9+1AE8vdcSBmLYqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ENUiWeWp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M4FbEKJ9; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755230657; c=relaxed/simple;
+	bh=D8x6/wYw+nj1PNIVrnAMhoLcdS9M57l0WtHmZdLfn/I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rOBoj+O6Vb8CrM7GmGCZ7eMA5XJ36fnN0K8NTSvJcDpksXpZvs+ko5SIw4/qRR0EewBADharHmSP4zUuY5LYE0lr+3Qhe/3yFGT9huHixIUeZquEh1aWbhp1ZnQmHZ4ekddtVmDPctb28C0GU5Ztf6vYg/W/l7F1uzYeEFMau3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VirPoRjZ; arc=none smtp.client-ip=209.85.166.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ENUiWeWp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M4FbEKJ9"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id C8CE0EC01A9;
-	Thu, 14 Aug 2025 23:38:47 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 14 Aug 2025 23:38:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755229127; x=1755315527; bh=zDCEJ8gEEu
-	gTLqE0yiRDwHFv/RRupDjfC0IbH5vuB2c=; b=ENUiWeWpH2UTYdH3mhc9V3hEXw
-	BumqcgDhSJZASuGxrsC+QPcMLdORD90B5s6tv5WIIfAYFPWyMu+NwXtzLZCaZy93
-	IOSUWNHFN9F3kGLRDk7Hhwd3iXXxdHVCnC/CUHDyDqQ+ZE0MaNBPttcuWZDN7nMI
-	4vnqsufDY5VFqrHtgVEamRZDoXBJXmBTwT5nOdRqDIP2bUF3WeJFRN5yEBMf38mL
-	kUDdOBoVlhUWvvHcz7ggTHz6Of1HdoMimYPh5cNrwkto7lSi+zPBYtEnc6JZCyiT
-	HPMeat7f7R8M95zpJjnG4+ffpz+eanh0L1bC21pk1dofqdzHEhINC6qvZkVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755229127; x=1755315527; bh=zDCEJ8gEEugTLqE0yiRDwHFv/RRupDjfC0I
-	bH5vuB2c=; b=M4FbEKJ9RTLf5PN4/NT+svHbCJk/JdwBMKDEWJkDqL4SP9aNQOb
-	+fVcQSmudJ2lijURdTo2g1/G+Yb5pnkxajfhB9HiBT9x7ys6KPE3fnTap/lDmm1k
-	HcDJnQbC6gmMXpkbkbJi/CXqdFOl8gVVXIwwfy6dgR6fchpcckmFuZRMofbpzdn3
-	ypJ2oKqY2TMiGcf+p9SmC1L6UXENzFOPK8VidJm08rGsSzquPHp49afK+YfDl/dv
-	QlnqHVg66NLWELxBp7+kKHONPuJt2TzrSFx2BUVlA+1sFfWvCsyDHdRZCVIaYcCw
-	/w1Yor4ShNr8wgyZkNZNSpeBMqDXdN4bYsw==
-X-ME-Sender: <xms:x6ueaKxejX3Wkw2QBA_u5_wNbdxwteMD1WrhojE2IrFnNKBR7vYqNg>
-    <xme:x6ueaD2zE9J2y5LiRXABil6DHjV1WTUZjGc-Zc2nLsr9sdoZxCwPyK6ZYBDNB2H-p
-    CQM_wqmqFAH1Bklvg>
-X-ME-Received: <xmr:x6ueaCyNV9ZVYN-CghKnX5YjRaR13jMUiMV2fCkb44k3ARTAq0B91HtSeytBd73nRENyvobHunDJVK5poOkZJzIw1B4IKJT3-8NBIsA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvledtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohep
-    shhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
-    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlh
-    hssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:x6ueaCF4YYA5EG3G_0BcRDUZZvlj6c3i7o6nadJORul619leWZc1Bw>
-    <xmx:x6ueaNYrJ-rDy2bEVq8-G8iGbR63N_tlbGhRV0-lkVzc1rrKC1r-xw>
-    <xmx:x6ueaMBJMlVcMzhnqQselCTwj8ZLj62u5CTsyW8s--eVIyLxPQn7bw>
-    <xmx:x6ueaNnhFIDFuWkocD4PnoxG5I4CWef5s_2YYFVR-Zkr81WT91wLPA>
-    <xmx:x6ueaLXqfzw_uCcHK9UENJ6zNgyFOdQyUoiymqm3hnZujOr0eePqM0fy>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Aug 2025 23:38:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Aditya Garg <gargaditya08@live.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>,
-  "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v5 0/2] send-email: integrate with git imap-send
-In-Reply-To: <PN3PR01MB9597E8E33868386C997D2563B82BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Tue, 12 Aug 2025 06:44:34 +0000")
-References: <08528f201acc1038ebc5861321395d17516094fd.1753003385.git.gargaditya08@live.com>
-	<PN3PR01MB9597E8E33868386C997D2563B82BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 14 Aug 2025 20:38:45 -0700
-Message-ID: <xmqq349tuud6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VirPoRjZ"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-3e571d40088so8740215ab.1
+        for <git@vger.kernel.org>; Thu, 14 Aug 2025 21:04:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755230654; x=1755835454; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nz2Io2N7ruKmhNoqSuTs3+hFqjluDVsHMRjGsYrT2aA=;
+        b=VirPoRjZOGLOl1codNTDq9kdlLWkMEKYYWk1y47BPn+Lwk6f8ef8FwBcD2dGKq6+2C
+         8rNLMtycivErhHs24nEcm0h81gqXYDUJ/pKx/ZzBPYZNu3/5E5fZhr2EbewT2Zzdgf/S
+         ldM+Ww87OEddIaS0QG+3FNu8bvdgDwzlMq5g4FAMWRcmCNCTnYTT3+U0OQdRRv6WolHt
+         /0QMk7WZRergCPAyw4hsRh1BDQDlLlm6GKmsdOhpTcbjFPsIJa4eBi2IFeeyy48baSL1
+         BeLsRMdZJ0vBRMt3FimUzzUE+QO+dJjxv8uuuzrrlzN/2F6LReqlfquqKNzRYl8iXLAH
+         ZC7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755230654; x=1755835454;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nz2Io2N7ruKmhNoqSuTs3+hFqjluDVsHMRjGsYrT2aA=;
+        b=JQvjR2qMnJMaOfevnO86djd6oJXxD/LVGVRpCmIzAYf3HPLv1adcRzSsNoBLUTDr/E
+         eMgXV2IuUQy/fzdbRj0iVjC54SqHUCdHu+5PWiGYNa3lc7oANkPgC6RLRJlcL3U9OUDV
+         X7Evj0kQesvYYP/pezB9RBrR4FvxayqIpuYRyUfiK0dIak+NZEHujOXZz02reOvg7ONg
+         EPQC00iWrBnmS9L1LtB7k7Rm0EryYvE3Es7yKVt/jDjyuzUKX81QiH3ttEMwOEoYK79u
+         X5pSNLQcl9DL9JolSyR0ERIjMT10EMY13j8NFXzjgK4BaX8VVhZ2p3hKP85tdchxUWLk
+         RTLA==
+X-Forwarded-Encrypted: i=1; AJvYcCWq1hRNzZTNfHHsh1Neey1ZmZX+OUQg9aYKMHPzKfBxjsu0XCQ7sg8+7nD862Qxfrs/ogI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzhANzsVp+2kpXYw2VDFld454+cmNfxTXSnGcKx2TZ7Ztv4kc6X
+	lKH0Fl8vEamt7IHsd1VHs+t1lokHF04+eCVya4QjVlkb9WtxBjUx4TB0ThCPCOsevnyZZyof1eM
+	bqUWXwqdAE8GXilgctLfk+1/MCvR+DnKVQyKb
+X-Gm-Gg: ASbGncunCayOKssMp0Fg5MW7Y0zIj6TA+jWo+P6C7zSbHgCfUSwinPk3cm7gch5bITl
+	+WJJBreGdu35HXu6QVKQwEAup7oDAnIk2sgf1EndSh2WLxlV44VJTWvLmvrOVR4FEMZMqnLV0y1
+	lMKrj8zWSrrNhbSgJK9tA4IMzT92T3kiDYNMw7dSlOn1aBXEz+4zM42kDmimuTKbHQLjSkVHmPi
+	tpGMOIhLnfkijZJZd3TFXfxcaqJ9lTUq9z+foE=
+X-Google-Smtp-Source: AGHT+IGSU7vLRuVikt2lgLkLqnjVUILkQPt3Iz2tWMp4N6au+ZquQkn7mnOYTBOeaH08Ur7vcY+o8MOY9doac7rJfSo=
+X-Received: by 2002:a92:cd89:0:b0:3e5:4ca1:b4ba with SMTP id
+ e9e14a558f8ab-3e57e9cb862mr11701015ab.21.1755230654375; Thu, 14 Aug 2025
+ 21:04:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <a24d0d237b9f57535c768da4c00d72bad68cf411.camel@scientia.org>
+ <xmqq7bz5v0mq.fsf@gitster.g> <16220ca65f1ae9883a2fa103e842cf0ffff43236.camel@scientia.org>
+In-Reply-To: <16220ca65f1ae9883a2fa103e842cf0ffff43236.camel@scientia.org>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 14 Aug 2025 21:04:03 -0700
+X-Gm-Features: Ac12FXwj1GIdx05VvakhbE8V1D_l4GMOs1IsJDPfDNW4WBoNV6rJ_Tp4ECLc9Ro
+Message-ID: <CABPp-BHt80YD9bzWeC+r5qxJ0Vp+zRsJZsKDU_GA39CXmuYe5A@mail.gmail.com>
+Subject: Re: why can't one alias `git stash`?
+To: Christoph Anton Mitterer <calestyo@scientia.org>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Aditya Garg <gargaditya08@live.com> writes:
+On Thu, Aug 14, 2025 at 7:15=E2=80=AFPM Christoph Anton Mitterer
+<calestyo@scientia.org> wrote:
+>
+> Hey.
+>
+> On Thu, 2025-08-14 at 18:23 -0700, Junio C Hamano wrote:
+> > Look for "alias.*" in "git help config".
+> >
+> >         To avoid
+> >       confusion and troubles with script usage, aliases that
+> >       hide existing Git commands are ignored.
+>
+> Can't one add some kind of override for this?
 
-> v2 - Fix indentation in patch for imap-send.c
->    - Minor edits to commit message
->
-> v3 - Rename imap folder to imap sent folder
->    - Make an error message shorter by removing unecessary details
->
-> v4 - Fix a bug causing emails to be copied to an IMAP folder even if
->      --dry-run is specified.
->    - Minor edits to commit messages and docs.
->    - Add another patch that enables copying emails to an IMAP folder
->      without actually sending them.
->
-> v5 - Avoid using -[no-]parameter.
+No.  And there won't be one in the future either; see e.g.
+https://lore.kernel.org/git/alpine.DEB.1.00.0903070407480.10279@pacific.mpi=
+-cbg.de/
 
-We haven't seen any further comments; shall we mark it for 'next'?
+> Cause AFAIU, my command
+> from below would not hide the other commands, or would it?
+
+The documentation you are responding to didn't talk about "other"
+commands, it talked about "existing" commands.  Your alias, meant to
+invoke `git stash` with different arguments, would hide the existing
+`git stash` command.
+
+It might also be an infinite loop of sorts, since your `git stash`
+alias invokes `git stash ...` which is...itself.
+
+And it'd mean that other folks who use git commands in their scripts
+now can't rely on any git commands doing what their documentation
+claims.
+
+> >       If the alias expansion is prefixed with an exclamation
+> >         point, it will be treated as a shell command.
+>
+> Well I kinda thought that... still wouldn't though if it was detailed
+> what exactly happens :-)
+
+Doesn't it detail what happens already?
+
+           If the alias expansion is prefixed with an exclamation
+point, it will be treated as a shell command. For example, defining
+alias.new =3D !gitk --all --not
+           ORIG_HEAD, the invocation git new is equivalent to running
+the shell command gitk --all --not ORIG_HEAD. Note that shell commands
+will be executed from the
+           top-level directory of a repository, which may not
+necessarily be the current directory.  GIT_PREFIX is set as returned
+by running git rev-parse --show-prefix
+           from the original current directory. See git-rev-parse(1).
+
+What is missing from this explanation?
