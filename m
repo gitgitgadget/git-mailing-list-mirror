@@ -1,77 +1,78 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4551D7E0FF
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 01:22:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA851448E0
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 01:22:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755220980; cv=none; b=gaOiIEEvFQ3x8sQF5tLZYx4gXMFBgIAPj3voq4RmneCsfAU+rt4aZ6lBv8yDiyIhFrPov5gAfS2MmyRVmMqJtzYRFsvOk4ii0O/tRCUA502p6B0NSlnH85BPgpQRzjWpb1hfcsS1ZUa0vdjbA/uCnVr3BgZw1kYJfXsbu3bDV4M=
+	t=1755220980; cv=none; b=FEWZ65Oh+WmZLY1MGrGEuXvro+PgoGf1t4jErT2kEWnjKH3PDUIwV7CqgQ/8lQ04fMplqZsjht+f7AmYU0EIuTPDA0F2EswpbatdNPzGGV13oxE5to3HUy8iaIZSE08SMuxqz5NZE3eBRidNugetBUUJy06pNF6o0FK2Jqnu/bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1755220980; c=relaxed/simple;
-	bh=NpLACLyPqLUA1VA9v40QqrBOOJmR8N2x80mTCJN39O4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=VHbjvuhs6ogS84mRpmA2jPQKj9sGhEaC6faWuzbje6PfQWnSAU0GeYtyUyWeyFwBivFrspzXZwooFvVV0eQuIHzDREmv9D7uZqTVfSqnHYi+W+AGqc6SRk5SIdGDxLRGF10ctm4+lK7PdAr9Ew7z3vnMGCDcSMGTCSCr9SNwarY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hcZPGRiS; arc=none smtp.client-ip=209.85.128.47
+	bh=+6HY2/oeH9j5LYIRHMroeuUv2dq90ZyCsnGwrS3zDks=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=uO4L6C9F9L41UX5pNlfCQF070opwsmw82Imzi+loCzZ12C2p3C6I9nsPAVdx8pkapX27KeaXVrJ/TZbotZl4nOlM32XkvNG7wcBxqxEY90b64F5UH/jWVeUAx/MQpiVRKSPqCgKZN5bZiSl1TIqpkBqN/DsVt6eCx4szykNqFcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KLeQF1wN; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hcZPGRiS"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45a1b04f8b5so7746075e9.1
-        for <git@vger.kernel.org>; Thu, 14 Aug 2025 18:22:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KLeQF1wN"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3b916fda762so1232190f8f.0
+        for <git@vger.kernel.org>; Thu, 14 Aug 2025 18:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755220975; x=1755825775; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        d=gmail.com; s=20230601; t=1755220977; x=1755825777; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QUNfPXvn23ec1XSQSwRYOwlDxEkUlSap0fKMXZF0CSI=;
-        b=hcZPGRiSObmYGSsiWcVkznWwTu+9LjKr9JbcbL+Rr/4ij4gaoMcXJj59fwil9wVUvj
-         JCREnpF8SIq6e5RRfw8a2sqA+De+OLuEt2Qg5BxFyf4K6/lOFryR40g+9CV6vdhCNOsD
-         PqgEqQ97RpO67zv6YeV1+eS8nBxgm8/hjbRTlTIeiBCFAtQcjQCobbDMzozKP419QizD
-         6aqxmVCqxMuhtipoHV9L3pSujrOiSJ2CtKRKsndsi9qRJfXuCcY7xi9IigaHAAgAySzS
-         W1foouSJXY3s5n9uszcmDHCKnDpxo0cGhlXQTAj13y5VQc/LcWGA8a+ATluTNShec1aZ
-         VbxA==
+        bh=ZBK4AovKEIcsh5G1PJwgviDIExbPfBRO9qD70WeIHrI=;
+        b=KLeQF1wNtavDvnBQ5y772YvMZo781vS2gW9yDLObgzgx8NuVyhI+EwvvJB0jv/fjqB
+         G39IOocUxZ23qMUZRwMyLA+I+OMjONYPr9wl9LBeQxl4RucB79bcetiAcFIYtIEhjtzn
+         j4U7sPq8E9jfknow91f3GfHfC+cy3Mepi+GrCq84ZCr6rxicQSoaAWmlNc3OWJLNI5pX
+         qBk+G+KTYS/TI4WDHvA8lSwILBwbPkSJQozPAD56moO5WZS8lvy32rZZE6ZRkPCeLalP
+         8mPT2fu84HBCp+IkS0ju1e8NePH0uF0lLam6lZcD3jYihektKJu7nQ1k0NClP5iQz2dF
+         eNFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755220975; x=1755825775;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        d=1e100.net; s=20230601; t=1755220977; x=1755825777;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QUNfPXvn23ec1XSQSwRYOwlDxEkUlSap0fKMXZF0CSI=;
-        b=bMsDC6yemb9sWtIwFwiGpbuM+t796tFBYeYY+pTPbC1YGS+ahYkkGxL1D/H/J6TZdM
-         3iMzSksS4ZabYmTajswIQtE1mqDEKozV4Z+tEIU2QCjE+fv2hJQdrUuO9aABNPZT6emR
-         +xyl0PMQzkO0sK/57ik9DceOHMD0XZIKIZ7BVd1TBxRKuvrxb4prhluoNcfM8EOvf2lL
-         TTK3MtQMUt9D4rE3zfqtrF9dWdBb4EdDoS7iAuGX8S5ILEbvHUncw9c95vD27lPLGSbL
-         IZhonep1wjV5IvqBbHGMnnFPeq1rjObTi5XCFLrbE4dgXWQnm1o5vhyG/0lU3B63mukD
-         nbXw==
-X-Gm-Message-State: AOJu0Ywf9LzG2z9l9+WD9gtQdwVSnhErdJNPVVjS+W5OYbu8Lj8CM/rG
-	MIDwUsRAbWJWlL808cyX3576CArkCjZbD03Nm6pUp7AauBJ3oXBfXczOOSr6yQ==
-X-Gm-Gg: ASbGncvTkdDBIO1BJbFKgckeqe1OQniNCkn/jGcHvo3YBexIkXoaHL7k49NuNvJGBns
-	6KlCQDjW0sZ+/fJmRF1GhZUfCA7kjAs8QJLw3C9eOK1flTJpfRj5d0YW62aFyZgK/XLz+chLgwd
-	4gIqD99wpIG2hKVpPeEK2LAUmpvp3ANdp/YE0ntVqCWWNAnfwM7UrbtGk1G92k6wE5fy/1Jsamx
-	rItv3LPiflOtRDrNdpjY+bfI/VlX62MKK38hOB2yPKcOLExvWSH0Dvivov0gMdqx0342lRSK7tt
-	p65R/pTTGJ1/Z9nKkR2FzrDmtnQfX5n4PhhJUPotb6OXuVqNqTKxA+zpClTnFQBz9q8ivJkX/WR
-	wVagRMjROxVg3qWMBoWREgRAwP17atb03nQ==
-X-Google-Smtp-Source: AGHT+IExaOeVwAcMKJmLMmih2h5M8IQiwZPNvQeBZz55Gn3H9n1bOFnPZScU2zmbl/s54+I8tAGCKw==
-X-Received: by 2002:a05:600c:3594:b0:456:191b:9e8d with SMTP id 5b1f17b1804b1-45a217ed6f9mr2823525e9.11.1755220974820;
-        Thu, 14 Aug 2025 18:22:54 -0700 (PDT)
+        bh=ZBK4AovKEIcsh5G1PJwgviDIExbPfBRO9qD70WeIHrI=;
+        b=DmgWM3fnrPOoFmQGvSR7hJVyeW5Cyv+r9lqRHYJp3RkkUlcDRQJiWys35YLbzM2nxt
+         9utyWeKpGYLuqrdNkqBAh/cR7sGmWhHZKepZFUq88QYIymK61SU/SGAxB/wjEXtoccD3
+         utDl/rb2FYA+VMIXpmN1ruRuUSEWQg11Swgej3PEZll9hng9Tcw/LuaRqjaHYf0TrYDf
+         Ihknpwmd5I2tzzQAC6UD2N0bBF9d/KkWzaSc38e9DiYLRnkvpFIWNnDfoPP5SDFRd8pR
+         MVZj34SWzhafVuUWiU+Ew5icESqYOo1ZFoig1iYIdPzyEnqe5QQVwetdxm1XQ1FLl9JI
+         oMuQ==
+X-Gm-Message-State: AOJu0Yyd28l/1t2ek/QEJUgAR1bowxQyTUuNWmNWOCueiHpWyNFhyi/T
+	FCMYZ8gDMff1yHWD1fL4jEvDUbLquMSEOcO68faxmrO9hs8ycdshKRN7PpxhOw==
+X-Gm-Gg: ASbGncuUuXqasWGdGV4soa9FlY/TylNQfkTg9ghWA3xW6GNtT4ZFZs5lCCHaA9y0eE+
+	pKPp/UDNPmZQi4nTHu0t3U51+NxaX9qlnvQy0KQtIpm65aNsr85yOmU2KcVDjz3Gfy26qqaz9i0
+	PWRc6w+c1lvnaYo7UZBO1LGL+Tnvy/X343SRlTbnOglFZdFnH5oHNthU5n91QRJjzIw7Cvacrt0
+	9KYhcQ1IY9ppMDzbgc30tFKFrVmOkBPeXoON4bJY6lxOc5l6lmsFv0l56FW2hKkfQPNQiYGjAeV
+	brTRRjlKNBjEc5T2UTi1Q7CaJecHD3Jb0HdkfY3tuoxyBmgZw2TQBiYaZp1gITMhrty662yzORY
+	+UhuKGXWNI3aLywxeCM1GDa4=
+X-Google-Smtp-Source: AGHT+IH4O7xVH7Tym9TP1DK8YOWYx3axraOTku4CV0L6JOP+XqlHeyNzjYmGggnYDrT2O8SyUAg0nQ==
+X-Received: by 2002:a05:6000:24ca:b0:3b8:de54:6e64 with SMTP id ffacd0b85a97d-3bb4d23f605mr272283f8f.26.1755220976487;
+        Thu, 14 Aug 2025 18:22:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1b1d4212sm26315905e9.0.2025.08.14.18.22.54
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3bb676c96dasm108604f8f.43.2025.08.14.18.22.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Aug 2025 18:22:54 -0700 (PDT)
-Message-Id: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+        Thu, 14 Aug 2025 18:22:55 -0700 (PDT)
+Message-Id: <7709e5eddba671db0e772724c0c71516d18f2cb2.1755220973.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
 References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+	<pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 15 Aug 2025 01:22:35 +0000
-Subject: [PATCH v2 00/17] RFC: Accelerate xdiff and begin its rustification
+Date: Fri, 15 Aug 2025 01:22:37 +0000
+Subject: [PATCH v2 02/17] xdiff: introduce rust
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>,
     "brian m. carlson" <sandals@crustytoothpaste.net>,
@@ -88,285 +89,241 @@ Cc: Elijah Newren <newren@gmail.com>,
     Mike Hommey <mh@glandium.org>,
     Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
     Ben Knoble <ben.knoble@gmail.com>,
+    Ezekiel Newren <ezekielnewren@gmail.com>,
     Ezekiel Newren <ezekielnewren@gmail.com>
 
-Changes in this second round of this RFC:
+From: Ezekiel Newren <ezekielnewren@gmail.com>
 
- * Now builds and passes tests on all platforms (example run:
-   https://github.com/ezekielnewren/git/actions/runs/16974821401). Special
-   thanks to Johannes Schindelin for patches to things for Windows and
-   linux32.
- * Includes brian’s rust-support documentation as the new 1st patch
- * Removed the Cargo.lock file from version control, but now CI will upload
-   these files as build artifacts so we can audit dependencies and notice
-   if/when new dependencies cause issues.
- * Added handling of whitespace flags. These are slower; see below
+Upcoming patches will accelerate and simplify xdiff, while also
+porting parts of it to Rust. In preparation, add some stubs and setup
+the Rust build. For now, it is easier to let cargo build rust and
+have make or meson merely link against the static library that cargo
+builds. In line with ongoing libification efforts, use multiple
+crates to allow more modularity on the Rust side. xdiff is the crate
+that this series will focus on, but we also introduce the interop
+crate for future patch series.
 
-Particular points I’m interested in feedback on:
+In order to facilitate interoperability between C and Rust, introduce
+C definitions for Rust primitive types in git-compat-util.h.
 
- * Code style: Should we adopt a Rust code style of some sort? Perhaps have
-   the code always be formatted by rustfmt in its default configuration?
- * Rust version: We are not using the same Rust version on all platforms in
-   CI; 32-bit builds and Windows builds require a newer Rust version to
-   successfully build.
- * Performance with whitepsace flags: I originally intended to leave out the
-   whitespace handling because I knew it was slower, and I think it’d be
-   difficult to fix that until more of xdiff is converted to Rust, but since
-   Junio requested it, I have an implementation here. I made sure that both
-   –ignore-cr-at-eol (the default on Windows) and no whitespace flags remain
-   fast (or are faster), but other whitespace flag combinations are
-   currently significantly slower. Are folks okay with merging this, since
-   it’ll only affect those that specify some special flag, should we perhaps
-   only convert the code path with no whitespace flags for now, or something
-   else?
- * Types/Aliases/Data passing: The discussion between Phillip on I on
-   types/translation; this longer series has examples with e.g.
-   xdl_line_hash() and line_hash() which might give us more to talk about,
-   though I think we can’t fully address that discussion until we have an
-   example which I’m planning with a later series with an IVec type.
- * There was lots of feedback on v1, and I might have missed some; let me
-   know if there’s something I need to still look at.
-
-==Original cover letter==
-
-This series accelerates xdiff by 5-19%.
-
-It also introduces Rust as a hard dependency.
-
-…and it doesn’t yet pass a couple of the github workflows; hints from
-Windows experts, and opinions on ambiguous primitives would be appreciated
-(see below).
-
-This is just the beginning of many patches that I have to convert portions
-of, maybe eventually all of, xdiff to Rust. While working on that
-conversion, I found several ways to clarify the code, along with some
-optimizations.
-
-So...
-
-This obviously raises the question of whether we are ready to accept a hard
-dependency on Rust. Previous discussions on the mailing list and at Git
-Merge 2024 have not answered that question. If not now, will we be willing
-to accept such a hard dependency later? And what route do we want to take to
-get there?
-
-About the optimizations in this series:
-
-1. xdiff currently uses DJB2a for hashing (even though it is not explicitly named as such). This is an older hashing algorithm, and modern alternatives are superior. I chose xxhash because it’s faster, more collision resistant, and designed to be a standard. Other hash algorithms like aHash, MurMurHash, SipHash, and Fnv1a were considered, but my local testing made me feel like xxhash was the best choice for usage in xdiff.
-
-2. In support of switching to xxhash, parsing and hashing were split into separate steps. And it turns out that memchr() is faster for parsing than character-by-character iteration.
-
-
-About the workflow builds/tests that aren’t working with this series:
-
-1. Windows fails to build. I don’t know which rust toolchain is even correct for this or if multiple are needed.  Example failed build: https://github.com/git/git/actions/runs/16353209191
-
-2. I386/ubuntu:focal will build, but fails the tests. The kernel reports the bitness as 64 despite the container being 32. I believe the issue is that C uses ambiguous primitives (which differ in size between platforms). The new code should use unambiguous primitives from Rust (u32, u64, etc.) rather than perpetuating ambiguous primitive types.  Since the current xdiff API hardcodes the ambiguous types, though, those places will need to be migrated to unambiguous primitives. Much of the C code needs a slight refactor to be compatible with the Rust FFI and usually requires converting ambiguous to unambiguous types. What does this community think of this approach?
-
-
-My brother (Elijah, cc’ed) has been guiding and reviewing my work here.
-
-Ezekiel Newren (13):
-  xdiff: introduce rust
-  xdiff/xprepare: remove superfluous forward declarations
-  xdiff: delete unnecessary fields from xrecord_t and xdfile_t
-  xdiff: make fields of xrecord_t Rust friendly
-  xdiff: separate parsing lines from hashing them
-  xdiff: conditionally use Rust's implementation of xxhash
-  github workflows: install rust
-  github workflows: define rust versions and targets in the same place
-  github workflows: upload Cargo.lock
-  xdiff: implement a white space iterator in Rust
-  xdiff: create line_hash() and line_equal()
-  xdiff: optimize case where --ignore-cr-at-eol is the only whitespace
-    flag
-  xdiff: use rust's version of whitespace processing
-
-Johannes Schindelin (3):
-  Do support Windows again after requiring Rust
-  win+Meson: allow for xdiff to be compiled with MSVC
-  win+Meson: do allow linking with the Rust-built xdiff
-
-brian m. carlson (1):
-  doc: add a policy for using Rust
-
- .github/workflows/main.yml                    |  61 +++
- .gitignore                                    |   3 +
- Documentation/Makefile                        |   1 +
- Documentation/technical/platform-support.adoc |   2 +
- Documentation/technical/rust-support.adoc     | 119 ++++++
- Makefile                                      |  60 ++-
- build_rust.sh                                 |  59 +++
- ci/install-dependencies.sh                    |  14 +-
- ci/install-rust.sh                            |  37 ++
- ci/lib.sh                                     |   1 +
- ci/make-test-artifacts.sh                     |   7 +
- ci/run-build-and-tests.sh                     |  12 +
- config.mak.uname                              |   9 +
- git-compat-util.h                             |  17 +
- meson.build                                   |  48 ++-
- rust/Cargo.toml                               |   6 +
- rust/interop/Cargo.toml                       |  14 +
- rust/interop/src/lib.rs                       |   0
- rust/xdiff/Cargo.toml                         |  16 +
- rust/xdiff/src/lib.rs                         |  30 ++
- rust/xdiff/src/xutils.rs                      | 354 ++++++++++++++++++
- xdiff-interface.c                             |   4 +-
- xdiff/xdiffi.c                                |   8 +-
- xdiff/xemit.c                                 |   2 +-
- xdiff/xmerge.c                                |  10 +-
- xdiff/xpatience.c                             |   2 +-
- xdiff/xprepare.c                              | 219 +++++------
- xdiff/xtypes.h                                |   9 +-
- xdiff/xutils.c                                | 162 +-------
- xdiff/xutils.h                                |   4 +-
- 30 files changed, 961 insertions(+), 329 deletions(-)
- create mode 100644 Documentation/technical/rust-support.adoc
- create mode 100755 build_rust.sh
- create mode 100755 ci/install-rust.sh
+Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+---
+ .gitignore              |  3 +++
+ Makefile                | 20 +++++++++++++++++++-
+ git-compat-util.h       | 17 +++++++++++++++++
+ meson.build             | 32 ++++++++++++++++++++++++++++++++
+ rust/Cargo.toml         |  6 ++++++
+ rust/interop/Cargo.toml | 14 ++++++++++++++
+ rust/interop/src/lib.rs |  0
+ rust/xdiff/Cargo.toml   | 15 +++++++++++++++
+ rust/xdiff/src/lib.rs   |  0
+ 9 files changed, 106 insertions(+), 1 deletion(-)
  create mode 100644 rust/Cargo.toml
  create mode 100644 rust/interop/Cargo.toml
  create mode 100644 rust/interop/src/lib.rs
  create mode 100644 rust/xdiff/Cargo.toml
  create mode 100644 rust/xdiff/src/lib.rs
- create mode 100644 rust/xdiff/src/xutils.rs
 
-
-base-commit: 16bd9f20a403117f2e0d9bcda6c6e621d3763e77
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1980%2Fezekielnewren%2Fxdiff_rust_speedup-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1980/ezekielnewren/xdiff_rust_speedup-v2
-Pull-Request: https://github.com/git/git/pull/1980
-
-Range-diff vs v1:
-
-  -:  ----------- >  1:  75dfb40ead3 doc: add a policy for using Rust
-  1:  2a1f4be13df !  2:  7709e5eddba xdiff: introduce rust
-     @@ Commit message
-      
-          Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-      
-     + ## .gitignore ##
-     +@@ .gitignore: Release/
-     + /contrib/buildsystems/out
-     + /contrib/libgit-rs/target
-     + /contrib/libgit-sys/target
-     ++/.idea/
-     ++/rust/target/
-     ++/rust/Cargo.lock
-     +
-       ## Makefile ##
-      @@ Makefile: TEST_SHELL_PATH = $(SHELL_PATH)
-       
-     @@ meson.build: version_def_h = custom_target(
-         link_with: static_library('git',
-           sources: libgit_sources,
-      
-     - ## rust/Cargo.lock (new) ##
-     -@@
-     -+# This file is automatically @generated by Cargo.
-     -+# It is not intended for manual editing.
-     -+version = 4
-     -+
-     -+[[package]]
-     -+name = "interop"
-     -+version = "0.1.0"
-     -+
-     -+[[package]]
-     -+name = "xdiff"
-     -+version = "0.1.0"
-     -+dependencies = [
-     -+ "interop",
-     -+]
-     -
-       ## rust/Cargo.toml (new) ##
-      @@
-      +[workspace]
-  2:  b0b744b9acf =  3:  56c96d35554 xdiff/xprepare: remove superfluous forward declarations
-  3:  cc05150d6e1 =  4:  ebec3689dce xdiff: delete unnecessary fields from xrecord_t and xdfile_t
-  4:  6df9f50a8f4 !  5:  769d1a5b9d2 xdiff: make fields of xrecord_t Rust friendly
-     @@ Commit message
-          few variables to use these types. Which, for now, will
-          require adding some casts.
-      
-     +    Also change xdlclass_t::ha to be u64 to match xrecord_t::ha, as
-     +    pointed out by Johannes.
-     +
-     +    Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-          Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-      
-       ## xdiff/xdiffi.c ##
-     @@ xdiff/xpatience.c: static void insert_record(xpparam_t const *xpp, int line, str
-       	if (map->last) {
-      
-       ## xdiff/xprepare.c ##
-     +@@
-     + 
-     + typedef struct s_xdlclass {
-     + 	struct s_xdlclass *next;
-     +-	unsigned long ha;
-     ++	u64 ha;
-     + 	char const *line;
-     + 	long size;
-     + 	long idx;
-      @@ xdiff/xprepare.c: static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
-       	char const *line;
-       	xdlclass_t *rcrec;
-  5:  2db30cc739e =  6:  87623495994 xdiff: separate parsing lines from hashing them
-  6:  5a959c9bdad !  7:  d74fd4ef67a xdiff: conditionally use Rust's implementation of xxhash
-     @@ Commit message
-      
-          Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-      
-     - ## rust/Cargo.lock ##
-     -@@ rust/Cargo.lock: name = "xdiff"
-     - version = "0.1.0"
-     - dependencies = [
-     -  "interop",
-     -+ "xxhash-rust",
-     - ]
-     -+
-     -+[[package]]
-     -+name = "xxhash-rust"
-     -+version = "0.8.15"
-     -+source = "registry+https://github.com/rust-lang/crates.io-index"
-     -+checksum = "fdd20c5420375476fbd4394763288da7eb0cc0b8c11deed431a91562af7335d3"
-     -
-       ## rust/xdiff/Cargo.toml ##
-      @@ rust/xdiff/Cargo.toml: crate-type = ["staticlib", "rlib"]
-       
-  7:  0de0867ab44 !  8:  7dc241e6682 github_workflows: install rust
-     @@ Metadata
-      Author: Ezekiel Newren <ezekielnewren@gmail.com>
-      
-       ## Commit message ##
-     -    github_workflows: install rust
-     +    github workflows: install rust
-      
-          Since we have introduced rust, it needs to be installed for the
-          continuous integration build targets. Create an install script
-     @@ .github/workflows/main.yml: on: [push, pull_request]
-       # If more than one workflow run is triggered for the very same commit hash
-       # (which happens when multiple branches pointing to the same commit), only
-      
-     - ## .gitignore ##
-     -@@ .gitignore: Release/
-     - /contrib/buildsystems/out
-     - /contrib/libgit-rs/target
-     - /contrib/libgit-sys/target
-     -+/rust/target
-     -
-       ## Makefile ##
-      @@ Makefile: TEST_SHELL_PATH = $(SHELL_PATH)
-       
-  -:  ----------- >  9:  96041a10d54 Do support Windows again after requiring Rust
-  -:  ----------- > 10:  1194de3f39c win+Meson: allow for xdiff to be compiled with MSVC
-  -:  ----------- > 11:  382067a09e3 win+Meson: do allow linking with the Rust-built xdiff
-  -:  ----------- > 12:  fffdb326710 github workflows: define rust versions and targets in the same place
-  -:  ----------- > 13:  44784f0d672 github workflows: upload Cargo.lock
-  -:  ----------- > 14:  f20efdff7aa xdiff: implement a white space iterator in Rust
-  -:  ----------- > 15:  c8d41173274 xdiff: create line_hash() and line_equal()
-  -:  ----------- > 16:  f7829c55871 xdiff: optimize case where --ignore-cr-at-eol is the only whitespace flag
-  -:  ----------- > 17:  395609aff4b xdiff: use rust's version of whitespace processing
-
+diff --git a/.gitignore b/.gitignore
+index 04c444404e4b..ff81e3580c4e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -254,3 +254,6 @@ Release/
+ /contrib/buildsystems/out
+ /contrib/libgit-rs/target
+ /contrib/libgit-sys/target
++/.idea/
++/rust/target/
++/rust/Cargo.lock
+diff --git a/Makefile b/Makefile
+index 70d1543b6b86..db39e6e1c28e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -919,6 +919,11 @@ TEST_SHELL_PATH = $(SHELL_PATH)
+ 
+ LIB_FILE = libgit.a
+ XDIFF_LIB = xdiff/lib.a
++ifeq ($(DEBUG), 1)
++RUST_LIB = rust/target/debug/libxdiff.a
++else
++RUST_LIB = rust/target/release/libxdiff.a
++endif
+ REFTABLE_LIB = reftable/libreftable.a
+ 
+ GENERATED_H += command-list.h
+@@ -1392,6 +1397,8 @@ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
+ GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
+ EXTLIBS =
+ 
++GITLIBS += $(RUST_LIB)
++
+ GIT_USER_AGENT = git/$(GIT_VERSION)
+ 
+ ifeq ($(wildcard sha1collisiondetection/lib/sha1.h),sha1collisiondetection/lib/sha1.h)
+@@ -2925,6 +2932,14 @@ $(LIB_FILE): $(LIB_OBJS)
+ $(XDIFF_LIB): $(XDIFF_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
++.PHONY: $(RUST_LIB)
++$(RUST_LIB):
++ifeq ($(DEBUG), 1)
++	cd rust && RUSTFLAGS="-Aunused_imports -Adead_code" cargo build --verbose
++else
++	cd rust && RUSTFLAGS="-Aunused_imports -Adead_code" cargo build --verbose --release
++endif
++
+ $(REFTABLE_LIB): $(REFTABLE_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
+@@ -3756,7 +3771,10 @@ cocciclean:
+ 	$(RM) -r .build/contrib/coccinelle
+ 	$(RM) contrib/coccinelle/*.cocci.patch
+ 
+-clean: profile-clean coverage-clean cocciclean
++rustclean:
++	cd rust && cargo clean
++
++clean: profile-clean coverage-clean cocciclean rustclean
+ 	$(RM) -r .build $(UNIT_TEST_BIN)
+ 	$(RM) GIT-TEST-SUITES
+ 	$(RM) po/git.pot po/git-core.pot
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 4678e21c4cb8..82dc99764ac0 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -196,6 +196,23 @@ static inline int is_xplatform_dir_sep(int c)
+ #include "compat/msvc.h"
+ #endif
+ 
++/* rust types */
++typedef uint8_t   u8;
++typedef uint16_t  u16;
++typedef uint32_t  u32;
++typedef uint64_t  u64;
++
++typedef int8_t    i8;
++typedef int16_t   i16;
++typedef int32_t   i32;
++typedef int64_t   i64;
++
++typedef float     f32;
++typedef double    f64;
++
++typedef size_t    usize;
++typedef ptrdiff_t isize;
++
+ /* used on Mac OS X */
+ #ifdef PRECOMPOSE_UNICODE
+ #include "compat/precompose_utf8.h"
+diff --git a/meson.build b/meson.build
+index 596f5ac7110e..2d8da17f6515 100644
+--- a/meson.build
++++ b/meson.build
+@@ -267,6 +267,36 @@ version_gen_environment.set('GIT_DATE', get_option('build_date'))
+ version_gen_environment.set('GIT_USER_AGENT', get_option('user_agent'))
+ version_gen_environment.set('GIT_VERSION', get_option('version'))
+ 
++if get_option('optimization') in ['2', '3', 's', 'z']
++  rust_target = 'release'
++  rust_args = ['--release']
++  rustflags = '-Aunused_imports -Adead_code'
++else
++  rust_target = 'debug'
++  rust_args = []
++  rustflags = '-Aunused_imports -Adead_code -C debuginfo=2 -C opt-level=1 -C force-frame-pointers=yes'
++endif
++
++
++rust_leaf = custom_target('rust_leaf',
++  output: 'libxdiff.a',
++  build_by_default: true,
++  build_always_stale: true,
++  command: ['cargo', 'build',
++            '--manifest-path', meson.project_source_root() / 'rust/Cargo.toml'
++  ] + rust_args,
++  env: {
++    'RUSTFLAGS': rustflags,
++  },
++  install: false,
++)
++
++rust_xdiff_dep = declare_dependency(
++  link_args: ['-L' + meson.project_source_root() / 'rust/target' / rust_target, '-lxdiff'],
++#  include_directories: include_directories('xdiff/include'),  # Adjust if you expose headers
++)
++
++
+ compiler = meson.get_compiler('c')
+ 
+ libgit_sources = [
+@@ -1677,6 +1707,8 @@ version_def_h = custom_target(
+ )
+ libgit_sources += version_def_h
+ 
++libgit_dependencies += rust_xdiff_dep
++
+ libgit = declare_dependency(
+   link_with: static_library('git',
+     sources: libgit_sources,
+diff --git a/rust/Cargo.toml b/rust/Cargo.toml
+new file mode 100644
+index 000000000000..ed3d79d7f827
+--- /dev/null
++++ b/rust/Cargo.toml
+@@ -0,0 +1,6 @@
++[workspace]
++members = [
++    "xdiff",
++    "interop",
++]
++resolver = "2"
+diff --git a/rust/interop/Cargo.toml b/rust/interop/Cargo.toml
+new file mode 100644
+index 000000000000..045e3b01cfad
+--- /dev/null
++++ b/rust/interop/Cargo.toml
+@@ -0,0 +1,14 @@
++[package]
++name = "interop"
++version = "0.1.0"
++edition = "2021"
++
++[lib]
++name = "interop"
++path = "src/lib.rs"
++## staticlib to generate xdiff.a for use by gcc
++## cdylib (optional) to generate xdiff.so for use by gcc
++## rlib is required by the rust unit tests
++crate-type = ["staticlib", "rlib"]
++
++[dependencies]
+diff --git a/rust/interop/src/lib.rs b/rust/interop/src/lib.rs
+new file mode 100644
+index 000000000000..e69de29bb2d1
+diff --git a/rust/xdiff/Cargo.toml b/rust/xdiff/Cargo.toml
+new file mode 100644
+index 000000000000..eb7966aada64
+--- /dev/null
++++ b/rust/xdiff/Cargo.toml
+@@ -0,0 +1,15 @@
++[package]
++name = "xdiff"
++version = "0.1.0"
++edition = "2021"
++
++[lib]
++name = "xdiff"
++path = "src/lib.rs"
++## staticlib to generate xdiff.a for use by gcc
++## cdylib (optional) to generate xdiff.so for use by gcc
++## rlib is required by the rust unit tests
++crate-type = ["staticlib", "rlib"]
++
++[dependencies]
++interop = { path = "../interop" }
+diff --git a/rust/xdiff/src/lib.rs b/rust/xdiff/src/lib.rs
+new file mode 100644
+index 000000000000..e69de29bb2d1
 -- 
 gitgitgadget
+
