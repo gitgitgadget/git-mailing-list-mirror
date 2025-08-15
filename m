@@ -1,177 +1,118 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA013176E2
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 18:44:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1090118FC91
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 19:12:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755283455; cv=none; b=k5F8wEhvWRpF0Z734Ld5EZVTVB23n0agfV2eE9pQVe7YZr3nNSQ7N3oWcfDXSAvOqVO1xX4r27yrcvwpqISk9o7UmdflljNG1VNyNMfkWpQ8L48GchnBHltJaaLgzriZINQado2cNLXvx9uTwhqCa4eh/WrD/haNK7lZfZEdj6w=
+	t=1755285153; cv=none; b=d+Lmxf+lv77zJdEt9072fL9bC6H3iSh8tpG3YnPcErppBO8iKS7sF4+lJgUNQHXqgHOFmIGoW35MRObnrJdHAgK8WZStJireCN+mBcTSqVCO5gfJ7NMz/uc914aWWnMo+WngZ9PXTHXIFOn4FLQ4Vy+MM7/6S1MQyiaGLEWujzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755283455; c=relaxed/simple;
-	bh=kf4LLYZsTszPHoS4mgadA6wyKR9ROC3YzSlQkrBESjQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WytYOV40QNbbju4kBB0v1mKuXikL0dc70VR5xa8rQBBAehXZAJOXuouCDYfKRei8l9sbKtudifFeTm2gew8y7wZCAudBxTRi9tEE3eLPxE/4S5Ye9bNTFWPNg8lD2W+dPS7Zsv7P45ppiIXnOO/dCyEarbiyHEJHEfLqLTvV08U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PW9Df20E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OtMGDIxc; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755285153; c=relaxed/simple;
+	bh=+TX+30ahre+Hrs+2FD6mdsqxsj3+N0avjIuO1UXBKnM=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=VFzi7Ml+HWciUpBFrWyrM9xuXI5AEYR98tH9JDZtOt5QXWWsOtr9eQbIqK1HMbu5u/SeoDGfxWydYnlHf+V8LkKFRWdHgtP/p4Mknn6vpleLFYBTVveNq3wx6KRoqBCI+Kao3Ab+okeYcqeUZqygJQh/gbHEAAnFvkdBUv1Cv3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JnMNYJZJ; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PW9Df20E";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OtMGDIxc"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1ACCD140012B;
-	Fri, 15 Aug 2025 14:40:09 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Fri, 15 Aug 2025 14:40:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755283209; x=1755369609; bh=KfVj44W2bY
-	BxsDJCe0GLPwtvZ/MW6QC8Bso04+rl1eg=; b=PW9Df20EtaaIg6g2FxRXGZ+GCO
-	wXBFH/bzY9XyvbKoGabyJEmPZDEOzSH67judmz41IGwjc6rNbBO16SkfF4nd+dpe
-	IePXmQnszg5ti1t0fkPL72sUdTLRHHTjNVLqxp8X9l2XXpQf+UMrUP8CuUScmYQL
-	uKVCPxp5nIgWtEv47i7s+MkOLR8T1JP8S5gLh+fQYtOYDiAuVbdG7c7E8skeBEwb
-	P7thR3pRWnOIDmDG6Hj9xqASZd8AgifjEssYBy5Ti1IVm379RqceZh/w+2Jy/sEn
-	qQLbtJ/9/gI/gFfBceL6uSagDVuao6jIXHIvxzwL5bmLFvrqBqslBzNhFjwA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755283209; x=1755369609; bh=KfVj44W2bYBxsDJCe0GLPwtvZ/MW6QC8Bso
-	04+rl1eg=; b=OtMGDIxcZIG7HRo5VScNFtOIEXFHE5Phk/Qd4CQ7jCMS65VxacF
-	45MXAj9vzVUFDefS2TmGvnUNzWaf+kXx8LUc157tjcEgQaQMoWZ/MllTpCVLrnHA
-	uXcz2y2qSaqhQx9Nth4jKxC4j9F8Pdb9seJm6ELp40KRabRxglrktYNBCgmHS4su
-	wuS18iZgWdimiGHsYpc3AtzahDne6wcarHTR5TEEA/egL9jLof7zvwEJQK1AQ7gv
-	UYnO2DO5j7n+eu8gke0qcgTRr3S6+vZo+LFF7+lKUCoyOrE7zqUKJmtWZzKgaWcL
-	hEWgFCsZ3/BE8ieDB8/u1ow9N+RJde/dnhg==
-X-ME-Sender: <xms:B3-faJ42YGGVS-JERQeOx_P0rWUji5riOmLuL03J0ORAAwY98f9WJQ>
-    <xme:B3-faPh4_zu1OuS8wAsUj6K3P56FnzsRimJRPaq1ezUTH8Wo8g79i83KnDqvi65Nr
-    DxrmtQud_pHuxmXlg>
-X-ME-Received: <xmr:B3-faH4k-p2aaYXoJGx-qK-fJhI00G_u_Y8krfrp5symwkqYkfVANEvVXc2_3jc7buj5eGcL9W-J0NjEtcEYqmqg6IseXNPzaYM-KkA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeegjedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehluhgtrghsshgvihhkihhoshhhihhrohesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepohhsfigrlhgurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvgdprhgtph
-    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
-    rghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdp
-    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjnh
-    drrghvihhlrgesfhhrvggvrdhfrh
-X-ME-Proxy: <xmx:CH-faMHYPbimLAyDFGBsNtm9mYwCUc0LK6GfO0unA4RAD9WgiI5VCQ>
-    <xmx:CH-faBIbMPBdV29hjhLyvPNlP3tUIGKvyh4stZIiLTX6EwBz5CtP0w>
-    <xmx:CH-faBjsttWczld-SDHKkMCC72_swqvTVLI5_LPvwPwLWgvwl3UzTQ>
-    <xmx:CH-faHlTzv87ltI5ArRbSyjkXlfqv6qcdl96RsaKZTxeeWGTQZjcYg>
-    <xmx:CX-faJ9n-TEfFM8zMMXJ9MQatpuuFFPSVNm-0wBzWB_BTlccN7TTipEy>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 Aug 2025 14:40:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org,  oswald.buddenhagen@gmx.de,  ps@pks.im,
-  karthik.188@gmail.com,  ben.knoble@gmail.com,
-  phillip.wood@dunelm.org.uk,  jltobler@gmail.com,  jn.avila@free.fr,
-  sunshine@sunshineco.com
-Subject: Re: [GSoC PATCH v10 2/5] repo: add the field references.format
-In-Reply-To: <20250815135521.44044-3-lucasseikioshiro@gmail.com> (Lucas Seiki
-	Oshiro's message of "Fri, 15 Aug 2025 10:55:18 -0300")
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
-	<20250815135521.44044-1-lucasseikioshiro@gmail.com>
-	<20250815135521.44044-3-lucasseikioshiro@gmail.com>
-Date: Fri, 15 Aug 2025 11:40:06 -0700
-Message-ID: <xmqqfrdsqvi1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JnMNYJZJ"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-76e2e614b84so2351008b3a.0
+        for <git@vger.kernel.org>; Fri, 15 Aug 2025 12:12:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755285151; x=1755889951; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+TX+30ahre+Hrs+2FD6mdsqxsj3+N0avjIuO1UXBKnM=;
+        b=JnMNYJZJ+5rBhwljmLhpuHZT90yXp026bYeUkMeq1J8h/SwAQyuo6FG9zI+M9qpY3f
+         UwndcVo21nPh3I/UOkuHBqDmrEgc1bdTGCRyfBc4JXba2HwdoNglfSXgSV11v08BhtGz
+         vyNxQil+uKe/V5YvZ9O1wHRd2sWQ11NzcEv7Gz/5Vi10YfFGsCCShnKWbU5eV2nla9Cg
+         Cp8fWaZFpewYSb+tiRD67dVAcjr8UEwqMzs+sTEWXFvVY0MlKz81g6/YekREDRW5wMcu
+         a8dP1X5YdHA44VouJ3REYUgTolhyU9iAQTe8wnHCWMqLF26NjIkgughsWFP7dGW1cqwx
+         S+2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755285151; x=1755889951;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+TX+30ahre+Hrs+2FD6mdsqxsj3+N0avjIuO1UXBKnM=;
+        b=pgqpm7agrRHc16IY3bHZrhxa9vSWzQ7hQGtsXNQenT4ADixb0pI8boorh9IpvotuLY
+         xzFDhBFT115Hgg1BQjM2+MgjtLIxMhBICgrDDOdft3Ox92b9URh93kTcs1gX4bwT9RX7
+         sMF2gfy7liVhWWpoy+wNQ+XWc8jzlUiFp73pcCXEAhUizLH9S40P63h5Rf8QW9649mSo
+         mymwQ/I6pBMoT1gsEJEhOBrW3jckLw+FAmausxCbEHjRryJuQDi0yLzFg9ePRMJbE+Bp
+         outGlMe2XyRdLdtYfKULwUFBiBW2axzT+CjWGFhvWOsIsWW56KFDWgWR+2xS21na9np2
+         5i6A==
+X-Gm-Message-State: AOJu0YzF9FfyHOaTttFg9FwfrSJYzhW1kWEdaiO+fDTM35ugQVXoM0q/
+	d9fZlgv7OXD5t6UB9QXPt2p5UnH2DLaDG/Rv7skf90SniHAUZPEyeOGVc65ltg==
+X-Gm-Gg: ASbGnctAygfaYRZ3vHQMf79u1S518DssxGj1ZOB3iUPnFcALJUhDAed+H1EiZtEAedv
+	OAcK0j9sCQnKNl2y3UsDtT9OxLa2BD7J8aY8BUQAX8hxKq+NU0OuL+LnHjCoTeFxUbX7riRIQ3b
+	5Q7qz5b0TyH5Vib2aLWcc7SKKj0zxvUBfuWFBm89Xqs1WXNfSxlywnPIauYBm08qSxf9Tn8/n6y
+	+f+A3PgXBDHLoUrdNOVgWlpDikmZYiwi2uxQXOQFImaKgr+6/bOG7wr6tJm5JukkKgoBD7eenDM
+	SWsZPFNnwPeVDEiz6mo3irI8lKrKmucrROde5kCy37+1g154M+51YCqX6gew08wXMnw1cVH70+4
+	fw9vsXPdr0BqoWuNvPkp6LCdWvDc0LymaW7t6p8D0cxqxmWaGP5udP7wxc6GsJgfQaw==
+X-Google-Smtp-Source: AGHT+IFescR5TZcocVUCoYZFqlBpDR4qna7oJQSEmuVsc4EX0NpB7PoDrzlER8cpGAhP6AUK9lwq4Q==
+X-Received: by 2002:a05:6a20:3ca6:b0:240:252a:157c with SMTP id adf61e73a8af0-240d2e5b6afmr5282916637.11.1755285151217;
+        Fri, 15 Aug 2025 12:12:31 -0700 (PDT)
+Received: from smtpclient.apple ([2804:14c:32:8e83:7089:f932:3359:f50e])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e45565617sm1664399b3a.65.2025.08.15.12.12.26
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 15 Aug 2025 12:12:30 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [GSoC PATCH v10 2/5] repo: add the field references.format
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <xmqqfrdsqvi1.fsf@gitster.g>
+Date: Fri, 15 Aug 2025 16:12:13 -0300
+Cc: git@vger.kernel.org,
+ oswald.buddenhagen@gmx.de,
+ ps@pks.im,
+ karthik.188@gmail.com,
+ ben.knoble@gmail.com,
+ phillip.wood@dunelm.org.uk,
+ jltobler@gmail.com,
+ jn.avila@free.fr,
+ sunshine@sunshineco.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <5F0AC8F9-8B0A-457E-80D9-0AAC07D6CB41@gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250815135521.44044-1-lucasseikioshiro@gmail.com>
+ <20250815135521.44044-3-lucasseikioshiro@gmail.com>
+ <xmqqfrdsqvi1.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.700.81)
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-> diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-> new file mode 100755
-> index 0000000000..dca4023a00
-> --- /dev/null
-> +++ b/t/t1900-repo.sh
-> @@ -0,0 +1,50 @@
-> +#!/bin/sh
-> +
-> +test_description='test git repo-info'
-> +
-> +. ./test-lib.sh
-> +
-> +# Test whether a key-value pair is correctly returned
-> +#
-> +# Usage: test_repo_info <label> <init command> <repo_name> <key> <expected value>
-> +#
-> +# Arguments:
-> +#   label: the label of the test
-> +#   init_command: a command which creates a repository
-> +#   repo_name: the name of the repository that will be created in init_command
-> +#   key: the key of the field that is being tested
-> +#   expected_value: the value that the field should contain
-> +test_repo_info () {
-> +	label=$1
-> +	init_command=$2
-> +	repo_name=$3
-> +	key=$4
-> +	expected_value=$5
-> +
-> +	test_expect_success "$label" '
-> +		eval "$init_command $repo_name" &&
-> +		echo "$key=$expected_value" >expected &&
-> +		git -C $repo_name repo info "$key" >actual &&
+> I know it is tempting to write a helper function like this that
+> looks overly generic, but I've seen that we end up either tests that
+> are too hard to modify (because such helpers are not flexible enough)
+> or we end up adding more helpers to cover different cases, and
+> either case the presense of the helper does not help the resulting
+> tests easier to read or modify.
 
-Most tests compare "expect" and "actual" by convention, so this is a
-bit unusual, but I'll let it go.
+I understand... But in this case, most of the tests would look almost
+the same and there will be a lot of code duplication, since I'm
+testing both output formats (not in this patch, but in 5/5).
 
-I know it is tempting to write a helper function like this that
-looks overly generic, but I've seen that we end up either tests that
-are too hard to modify (because such helpers are not flexible enough)
-or we end up adding more helpers to cover different cases, and
-either case the presense of the helper does not help the resulting
-tests easier to read or modify.
+> If this were "test repo-info for ref.format only" that takes a
+> single parameter (format), that might have been more palatable, but
+> I'll withhold my judgement until we have tests to handle more keys
+> in later steps.
 
-If this were "test repo-info for ref.format only" that takes a
-single parameter (format), that might have been more palatable, but
-I'll withhold my judgement until we have tests to handle more keys
-in later steps.
+I have already done objects.format here, which follows the same
+structure.
 
-> +		test_cmp expected actual
-> +	'
-> +}
-> +
-> +test_repo_info 'ref format files is retrieved correctly' \
-> +	'git init --ref-format=files' 'format-files' 'references.format' 'files'
-> +
-> +test_repo_info 'ref format reftable is retrieved correctly' \
-> +	'git init --ref-format=reftable' 'format-reftable' 'references.format' 'reftable'
-> +
-> +test_expect_success 'git-repo-info fails if an invalid key is requested' '
-> +	echo "error: key ${SQ}foo${SQ} not found" >expected_err &&
-> +	test_must_fail git repo info foo 2>actual_err &&
-> +	test_cmp expected_err actual_err
-> +'
+> Also, unless we capture both standard output (in actual) and
+> standard error (in actual_err) from the command being tested, and
+> instead are interested in testing only what comes out of the error
+> stream, it is more common to use the usual "expect vs actual".
 
-Also, unless we capture both standard output (in actual) and
-standard error (in actual_err) from the command being tested, and
-instead are interested in testing only what comes out of the error
-stream, it is more common to use the usual "expect vs actual".
+Ok. Should I send a v11 or is it ok to keep it like this by now?
 
-> +
-> +test_expect_success 'git-repo-info outputs data even if there is an invalid field' '
-> +	echo "references.format=$(test_detect_ref_format)" >expected &&
-> +	test_must_fail git repo info foo references.format bar >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_done
+Thanks!
+
