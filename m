@@ -1,69 +1,69 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA61199E89
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 01:23:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8986C1D416C
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 01:23:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755220992; cv=none; b=dShwBraowlCMaGlCODQ0ze+u9BnQWnSnmMSK39mdGdCuf+4DG2lpL2oXdL3NwUEgVbbdw/qil/2kYBRApjdccYrfxpND8Nc8oMai9w7w4cXhtuB51Jw1rh4FFy5MZzbSg/79jlxkuE1044TCatWfKVK9/aLD6UQphMboZlz5/tQ=
+	t=1755220992; cv=none; b=reJdWNLKsg8rSm+dsm6FzzddtcP9ERMVpj1hLIkkjx5OTA6xBB1ZRovy/W9TG9nol15KPJl1y/Vi6Sl3lCZ6HAfNTs0TqCMrpN9nY8GDWUsBKW9t6vlKjw50IOQNj/LmWBz9KiJ/w7CMfJdz8FGCheV2FbIgDSqunHeI32IyE/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1755220992; c=relaxed/simple;
-	bh=n/jPsDgmLxN2S6FK2v/KXqCTq9/KfaL+MdrOdTeJe0Y=;
+	bh=ZZwcrA+CLA4kcb09L9wR0QzxlYlEe9tzrvet8CzoFOI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ClWwbbMfXNHxJfVPuFSMUvQ9jJXgYwWswRa2eWOS3q1GljYZ8tsqj3EtDAJBrBSL0r/sO3v97n+UIXp/GG1Bl5J5o/SiBkLktafVGhv8ek05qN58UHHAxg3AcWX47ke0oQpAsms7IF4WhIe46koa1z9vxpmC35HMBFDaEK5r/XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bltf0byo; arc=none smtp.client-ip=209.85.221.49
+	 MIME-Version:To:Cc; b=k7D3Qqk0QTB1Frr5uFUPvUX+BGPCv+gFtyN0mS+zHtlIp+cXXhA8Xqp0C30pGWhoXTNz+QqlsD3/6D6NyZdYvz6bDP/eHO8tFRUaViEA8JOPdUK75/81I0gPwzzaU7jrBFwkGJlb6ylx2x2fMEaSYmzugAVWrShrXDLj4FnZ7co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SmQgIp98; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bltf0byo"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3b9e411c820so815567f8f.1
-        for <git@vger.kernel.org>; Thu, 14 Aug 2025 18:23:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SmQgIp98"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3b916fda762so1232235f8f.0
+        for <git@vger.kernel.org>; Thu, 14 Aug 2025 18:23:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1755220988; x=1755825788; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iFLWQrX/LolS+zwFqWLu+O1K3ykf+TN+Y7Suabqmqds=;
-        b=bltf0byoP0qflQBYlJAX8fIHyjdR0iKmoonXrIcDhknBH2W7CAg/bp9w+I+kUxjTfV
-         BtF1cTtz8Z0A8frf9HQWdv86ZMUeo07y7RUBvnZXJVKDEg8vagcoLMN140LhhnAHdWdO
-         gEKZwl8S58w//TlSc8sU5/IeVsWFTveCAxoCyb6FmV9TAXWJefqM99W63tVm0hdnSit7
-         dfDlnqS9A9nAMM3NEjY5ps1oIvOvYOf/8FpwTPNpaFwAb6of2zFmWtVAuQ35WFqjJGbF
-         Oo8zyExSaPfmbApKY/7ClNP2Q1HvXRn+zSxSE8kKwrRThfqgthjNC+n8ZMwls6xvTyTk
-         P7hQ==
+        bh=k3KEs3WT7c+uKiGRMDvOeCFORLCQowTzKv0PRx84Dow=;
+        b=SmQgIp98GiWtEyYi3t6Ns1ZeUgVbc0rXf0CRp9Eas5Flt2jreHOiPs4bXQf/r/rXCm
+         QoNa23R8fEsTOYdhVw77byNERMeRRDxrQK4NGrZgFi5mbMLWnkBOHhjrs5hoq0LC8Ssz
+         ck6DFa82eoQ2DtWDmaMhQTYFiDzpth26WI5WvdfCAPCfNNO38MC9XElKZgbe4dx8NjvZ
+         qFzEnFAhWcc78WVlCZcfEoTaLSzvEYb+95+EYSwD7NshKaY6V8hMyC3TuEYnk2oeIssc
+         YtumEXgXmRPk7cOsGglNXTspFxhyv8PqsWz5vQvqdQ3TEo31iZpVpCcqVlx2MSTO7Zmn
+         hfhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1755220988; x=1755825788;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iFLWQrX/LolS+zwFqWLu+O1K3ykf+TN+Y7Suabqmqds=;
-        b=xGCUBOuEuC0b1CguBGP3R26OhakK71PJPVJSgIFrAHz0QKfDJ8lZoICBTlawFyrGCZ
-         w4jGKVC/cMK0Vz0+eNdn4GWMgWW94yVaj9ZxVGArsYzfBwb0rpdxTyOJoXq99diNPmLV
-         suUCwGcS+08PUVfKp+SlISbN/4FdKh+XqVmw/tvXCMJTCBBNq03fgJsZRUHXHj88SIK0
-         fKKZUksZXhQuA+u7DwU90zGyvXHoonC6fs9OGBNGfr4Nw35fh+ZIEtLmb1HfLuxHkCnZ
-         4sfnlm3TGRaoEGGuOuCN6PymI9btJgq9o+Tqb8MMuBvty8dMGaD1vmzESw86eF8cGLh+
-         8tOg==
-X-Gm-Message-State: AOJu0YwR5N/3+fOVsxxHVI4ro58YvX/bsZbaRxRN+2Wj00erM9cPFDI9
-	kqzkZszu4PX+ZBPW9/Omxdy9bhJSbbsx5H0DD+IxnbsKP91DuW90g9Ep48InKQ==
-X-Gm-Gg: ASbGncu/VNJlS/5aGw0/w8N7J/F6RbWz3GMgP/OPtCyOeD1lXgR+gBS41wddNkNNU/y
-	ysz4FEw5iRFIeWD31NxfGKKnedcO7qOlCPbo9OeB7Zp0e51m3JCPJtEDUGENMF6QIPpxXrZUIkQ
-	rTqHzQcBubu8Q31nVjhHcYRR4k41rR1XJpIJNnCxdC5O7kZMsCcE6AgE9KcyOl4d/pMXFpBl6D2
-	smsK4cXxRD9KDxwzeTEFwNh2gDFF58BQvFZs+0U2fsbHQX6/dnvX0D/Bu8JyK+qoHFQ2We7PdFF
-	wlD/l4wAQcRETE1gJ2dJDRInXQ7uA9u8goCJi3/U/uSLB4bfC3lHIOI0TbqRZkLvWRsWay7cfVH
-	zabmssTZVpAKgXeTC+UK9tzE=
-X-Google-Smtp-Source: AGHT+IEMcHH2RS2hFE2TrToVhPf7Zn1RWTBW5IppSeqn7wqQ23J1E6Ie+uWfo8jS6dUizSP5IbvYzg==
-X-Received: by 2002:a05:6000:3111:b0:3b7:8832:fdd5 with SMTP id ffacd0b85a97d-3bb67007aa5mr77883f8f.16.1755220988453;
-        Thu, 14 Aug 2025 18:23:08 -0700 (PDT)
+        bh=k3KEs3WT7c+uKiGRMDvOeCFORLCQowTzKv0PRx84Dow=;
+        b=O0NLRh0eHW3s6ubhjltlNTNze4VAmR1gqD20fM/+vur0yf54tcbtesjz7NkD04myBI
+         qhtKStUq5GT8nIx0oLonZTjPvy5ayRAcjtikhCZzHtlrrvFfKg4q5qoSa8I3rFQ1XWba
+         mtlDU7yoZCv7BRI9SG4ePm4INjqB0lolMjrYP3pH8rjufrC3SCuE8ccqEHoBUuqHzf9O
+         ofnsQLWzS0IV2qxIjZJVxLsCaScZfv1Vp4wPMNI0T2TvKVJ8BzaM+0/VFEIHEnfLeF1t
+         n/UGd2QeS+7SahZ/ZnVQG9ZALm931Ieh2SsLJvGZNNO/6yI372w5nsYEI9PqK6DDAd6B
+         f+vQ==
+X-Gm-Message-State: AOJu0YxRhDdaRnOVPgGVRC/TeFOwb3Gy5bxyx4jq9xjkh+BmBVjlDrfK
+	djWgZEq6oDQIXEWYhq9YWx8q8tG3UWm7N8kZAwKeMmfybpBEIB4Cby0DeL43Zw==
+X-Gm-Gg: ASbGnctlQTVenix+pTocBTIyWtRYYARAy8I/VpZVS2RMoCE/9b7HPNKFEwyWPkqWuIo
+	Seqv6P9N/aMrkFwp6zzgFiVEJ1rJK5ZFv5tcjyOlxPG8aoUTDaIiZGrIlhs9uJ/XQoWetzU7NyE
+	pJqj+z6zvyceH/IiEEwQNH809nnlFI1xozUGBIzGvlmWivUB1ZddqTZsCc0W2bvPf6sutr4EAe4
+	FvicPRjznZo8bU/BFPIOuFEX6svmKedLG7Zz+9GRl1JGUF2XKMajxSNfKLUfRTL84eC9ONsxvJT
+	KuGwRZ0he3vysmoGeSAP/bs82l75sjXDUJrx9bDfK0hHHM4IttHCRtqKeCNAgLLMekGI6b+G6xp
+	Han37FC8qax6WOQizMUufMUSNSLQHWf9YsQ==
+X-Google-Smtp-Source: AGHT+IEYMlU5jbyH0FHL7Gv/SNL9ugULkKhpjRZ9xqpSs8KmScpco7YkAzCu8+o5LH9GxPuGt7ueaw==
+X-Received: by 2002:a05:6000:4029:b0:3b7:95ac:6f55 with SMTP id ffacd0b85a97d-3bb4cc79c25mr279899f8f.20.1755220987718;
+        Thu, 14 Aug 2025 18:23:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c790689sm41824235e9.28.2025.08.14.18.23.08
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3bb676c9b1csm106566f8f.45.2025.08.14.18.23.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Aug 2025 18:23:08 -0700 (PDT)
-Message-Id: <c8d411732742d774d2ce6418369170b9d1e9c0fc.1755220973.git.gitgitgadget@gmail.com>
+        Thu, 14 Aug 2025 18:23:07 -0700 (PDT)
+Message-Id: <f20efdff7aa0a02ca2585de0cd9de21bbff22d58.1755220973.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
 References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
 	<pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 15 Aug 2025 01:22:50 +0000
-Subject: [PATCH v2 15/17] xdiff: create line_hash() and line_equal()
+Date: Fri, 15 Aug 2025 01:22:49 +0000
+Subject: [PATCH v2 14/17] xdiff: implement a white space iterator in Rust
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -94,90 +94,335 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-These functions use the whitespace iterator, when applicable, to hash,
-and compare lines.
+Xdiff has traditionally implemented the logic for iterating over
+whitespace in every location that needed to do so. Create a consolidated
+iterator in Rust that we can call from each location. Write Rust unit
+tests to ensure the correctness of the Rust whitespace iterator and the
+chunked_iter_equal() function.
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- rust/xdiff/src/lib.rs    | 19 +++++++++++++++++++
- rust/xdiff/src/xutils.rs | 28 ++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
+ rust/xdiff/src/lib.rs    |  10 ++
+ rust/xdiff/src/xutils.rs | 292 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 302 insertions(+)
+ create mode 100644 rust/xdiff/src/xutils.rs
 
 diff --git a/rust/xdiff/src/lib.rs b/rust/xdiff/src/lib.rs
-index 9cf0462bcdb9..809c5573c6e7 100644
+index 96975975a1ba..9cf0462bcdb9 100644
 --- a/rust/xdiff/src/lib.rs
 +++ b/rust/xdiff/src/lib.rs
-@@ -1,3 +1,7 @@
-+use std::hash::Hasher;
-+use xxhash_rust::xxh3::Xxh3Default;
-+use crate::xutils::*;
+@@ -1,3 +1,13 @@
++pub mod xutils;
 +
- pub mod xutils;
++pub const XDF_IGNORE_WHITESPACE: u64 = 1 << 1;
++pub const XDF_IGNORE_WHITESPACE_CHANGE: u64 = 1 << 2;
++pub const XDF_IGNORE_WHITESPACE_AT_EOL: u64 = 1 << 3;
++pub const XDF_IGNORE_CR_AT_EOL: u64 = 1 << 4;
++pub const XDF_WHITESPACE_FLAGS: u64 = XDF_IGNORE_WHITESPACE |
++    XDF_IGNORE_WHITESPACE_CHANGE |
++    XDF_IGNORE_WHITESPACE_AT_EOL |
++    XDF_IGNORE_CR_AT_EOL;
  
- pub const XDF_IGNORE_WHITESPACE: u64 = 1 << 1;
-@@ -15,3 +19,18 @@ unsafe extern "C" fn xxh3_64(ptr: *const u8, size: usize) -> u64 {
-     let slice = std::slice::from_raw_parts(ptr, size);
-     xxhash_rust::xxh3::xxh3_64(slice)
- }
-+
-+#[no_mangle]
-+unsafe extern "C" fn xdl_line_hash(ptr: *const u8, size: usize, flags: u64) -> u64 {
-+    let line = std::slice::from_raw_parts(ptr, size);
-+
-+    line_hash(line, flags)
-+}
-+
-+#[no_mangle]
-+unsafe extern "C" fn xdl_line_equal(lhs: *const u8, lhs_len: usize, rhs: *const u8, rhs_len: usize, flags: u64) -> bool {
-+    let lhs_line = std::slice::from_raw_parts(lhs, lhs_len);
-+    let rhs_line = std::slice::from_raw_parts(rhs, rhs_len);
-+
-+    line_equal(lhs_line, rhs_line, flags)
-+}
+ 
+ #[no_mangle]
 diff --git a/rust/xdiff/src/xutils.rs b/rust/xdiff/src/xutils.rs
-index 38126b47292f..796a5708b6bf 100644
---- a/rust/xdiff/src/xutils.rs
+new file mode 100644
+index 000000000000..38126b47292f
+--- /dev/null
 +++ b/rust/xdiff/src/xutils.rs
-@@ -1,4 +1,5 @@
- use crate::*;
-+use xxhash_rust::xxh3::xxh3_64;
- 
- pub(crate) fn xdl_isspace(v: u8) -> bool {
-     match v {
-@@ -151,6 +152,33 @@ where
-     run_option0.is_none() && run_option1.is_none()
- }
- 
+@@ -0,0 +1,292 @@
++use crate::*;
 +
-+pub fn line_hash(line: &[u8], flags: u64) -> u64 {
-+    if (flags & XDF_WHITESPACE_FLAGS) == 0 {
-+        return xxh3_64(line);
++pub(crate) fn xdl_isspace(v: u8) -> bool {
++    match v {
++        b'\t' | b'\n' | b'\r' | b' ' => true,
++        _ => false,
 +    }
++}
 +
-+    let mut hasher = Xxh3Default::new();
-+    for chunk in WhitespaceIter::new(line, flags) {
-+        hasher.update(chunk);
-+    }
-+
-+    hasher.finish()
++pub struct WhitespaceIter<'a> {
++    line: &'a [u8],
++    index: usize,
++    flags: u64,
 +}
 +
 +
-+pub fn line_equal(lhs: &[u8], rhs: &[u8], flags: u64) -> bool {
-+    if (flags & XDF_WHITESPACE_FLAGS) == 0 {
-+        return lhs == rhs;
++impl<'a> WhitespaceIter<'a> {
++    pub fn new(line: &'a [u8], flags: u64) -> Self {
++        Self {
++            line,
++            index: 0,
++            flags,
++        }
 +    }
-+
-+    let lhs_it = WhitespaceIter::new(lhs, flags);
-+    let rhs_it = WhitespaceIter::new(rhs, flags);
-+
-+    chunked_iter_equal(lhs_it, rhs_it)
 +}
 +
++impl<'a> Iterator for WhitespaceIter<'a> {
++    type Item = &'a [u8];
 +
- #[cfg(test)]
- mod tests {
-     use crate::*;
++    fn next(&mut self) -> Option<Self::Item> {
++        if self.index >= self.line.len() {
++            return None;
++        }
++
++        loop {
++            let start = self.index;
++            if self.index == self.line.len() {
++                return None;
++            }
++
++            /* return contiguous run of not space bytes */
++            while self.index < self.line.len() {
++                if xdl_isspace(self.line[self.index]) {
++                    break;
++                }
++                self.index += 1;
++            }
++            if self.index > start {
++                return Some(&self.line[start..self.index]);
++            }
++            /* the current byte had better be a space */
++            if !xdl_isspace(self.line[self.index]) {
++                panic!("xdl_line_iter_next xdl_isspace() is false")
++            }
++
++            while self.index < self.line.len() && xdl_isspace(self.line[self.index]) {
++                self.index += 1;
++            }
++
++
++            if self.index <= start {
++                panic!("xdl_isspace() cannot simultaneously be true and false");
++            }
++
++            if (self.flags & XDF_IGNORE_WHITESPACE_AT_EOL) != 0
++                && self.index == self.line.len()
++            {
++                return None;
++            }
++            if (self.flags & XDF_IGNORE_WHITESPACE) != 0 {
++                continue;
++            }
++            if (self.flags & XDF_IGNORE_WHITESPACE_CHANGE) != 0 {
++                if self.index == self.line.len() {
++                    continue;
++                }
++                return Some(" ".as_bytes());
++            }
++            if (self.flags & XDF_IGNORE_CR_AT_EOL) != 0 {
++                if start < self.line.len() && self.index == self.line.len() {
++                    let mut end = self.line.len();
++                    if end > 0 && self.line[end - 1] == b'\n' {
++                        if end - start == 1 {
++                            return Some(&self.line[start..end]);
++                        } else {
++                            end -= 1;
++                        }
++                        if end > 0 && self.line[end - 1] == b'\r' {
++                            self.index = end;
++                            end -= 1;
++                            if end - start == 0 {
++                                continue;
++                            }
++                            return Some(&self.line[start..end]);
++                        }
++                    }
++                }
++            }
++            return Some(&self.line[start..self.index]);
++        }
++    }
++}
++
++pub fn chunked_iter_equal<'a, T, IT0, IT1>(mut it0: IT0, mut it1: IT1) -> bool
++where
++    T: Eq + 'a,
++    IT0: Iterator<Item = &'a [T]>,
++    IT1: Iterator<Item = &'a [T]>,
++{
++    let mut run_option0: Option<&[T]> = it0.next();
++    let mut run_option1: Option<&[T]> = it1.next();
++    let mut i0 = 0;
++    let mut i1 = 0;
++
++    while let (Some(run0), Some(run1)) = (run_option0, run_option1) {
++        while i0 < run0.len() && i1 < run1.len() {
++            if run0[i0] != run1[i1] {
++                return false;
++            }
++
++            i0 += 1;
++            i1 += 1;
++        }
++
++        if i0 == run0.len() {
++            i0 = 0;
++            run_option0 = it0.next();
++        }
++        if i1 == run1.len() {
++            i1 = 0;
++            run_option1 = it1.next();
++        }
++    }
++
++    while let Some(run0) = run_option0 {
++        if run0.len() == 0 {
++            run_option0 = it0.next();
++        } else {
++            break;
++        }
++    }
++
++    while let Some(run1) = run_option1 {
++        if run1.len() == 0 {
++            run_option1 = it1.next();
++        } else {
++            break;
++        }
++    }
++
++    run_option0.is_none() && run_option1.is_none()
++}
++
++#[cfg(test)]
++mod tests {
++    use crate::*;
++    use crate::xutils::{chunked_iter_equal, WhitespaceIter};
++
++    fn extract_string<'a>(line: &[u8], flags: u64, buffer: &'a mut Vec<u8>) -> &'a str {
++        let it = WhitespaceIter::new(line, flags);
++        buffer.clear();
++        for run in it {
++            #[cfg(test)]
++            let _view = unsafe { std::str::from_utf8_unchecked(run) };
++            buffer.extend_from_slice(run);
++        }
++        unsafe { std::str::from_utf8_unchecked(buffer.as_slice()) }
++    }
++
++    fn get_str_it<'a>(slice: &'a [&'a str]) -> impl Iterator<Item = &'a [u8]> + 'a {
++        slice.iter().map(|v| (*v).as_bytes())
++    }
++
++    #[test]
++    fn test_ignore_space() {
++        let tv_individual = vec![
++            ("ab\r", "ab\r", XDF_IGNORE_CR_AT_EOL),
++            ("ab \r", "ab \r", XDF_IGNORE_CR_AT_EOL),
++            ("\r \t a \r", "\r \t a \r", XDF_IGNORE_CR_AT_EOL),
++            ("\r a \r", "\r a \r", XDF_IGNORE_CR_AT_EOL),
++            ("\r", "\r", XDF_IGNORE_CR_AT_EOL),
++            ("", "", XDF_IGNORE_CR_AT_EOL),
++            ("\r a \r", "\r a \r", XDF_IGNORE_CR_AT_EOL),
++
++            ("\r \t a \n", "\r \t a \r\n", XDF_IGNORE_CR_AT_EOL),
++            ("\r a \n", "\r a \r\n", XDF_IGNORE_CR_AT_EOL),
++            ("\n", "\r\n", XDF_IGNORE_CR_AT_EOL),
++            ("\n", "\n", XDF_IGNORE_CR_AT_EOL),
++            ("\r a \n", "\r a \n", XDF_IGNORE_CR_AT_EOL),
++
++            ("1\n", "1\r\n", XDF_IGNORE_CR_AT_EOL),
++            ("1", "1\r\n", XDF_IGNORE_WHITESPACE_CHANGE),
++
++            ("\r \t a \r\n", "\r \t a \r\n", 0),
++            ("\r a \r\n", "\r a \r\n", 0),
++            ("\r\n", "\r\n", 0),
++            ("\n", "\n", 0),
++            ("\r a \n", "\r a \n", 0),
++            ("     \n", "     \n", 0),
++            ("a     \n", "a     \n", 0),
++            ("  a  \t  asdf  \t \r\n", "  a  \t  asdf  \t \r\n", 0),
++            ("\t a  b  \t \n", "\t a  b  \t \n", 0),
++            ("  a b \t \r\n", "  a b \t \r\n", 0),
++            ("\t  a \n", "\t  a \n", 0),
++            ("\t\t\ta\t\n", "\t\t\ta\t\n", 0),
++            ("a\n", "a\n", 0),
++            ("\ta\n", "\ta\n", 0),
++
++            ("a", "\r \t a \r\n", XDF_IGNORE_WHITESPACE),
++            ("a", "\r a \r\n", XDF_IGNORE_WHITESPACE),
++            ("", "\r\n", XDF_IGNORE_WHITESPACE),
++            ("", "\n", XDF_IGNORE_WHITESPACE),
++            ("a", "\r a \n", XDF_IGNORE_WHITESPACE),
++            ("", "     \n", XDF_IGNORE_WHITESPACE),
++            ("a", "a     \n", XDF_IGNORE_WHITESPACE),
++            ("aasdf", "  a  \t  asdf  \t \r\n", XDF_IGNORE_WHITESPACE),
++            ("ab", "\t a  b  \t \n", XDF_IGNORE_WHITESPACE),
++            ("ab", "  a b \t \r\n", XDF_IGNORE_WHITESPACE),
++            ("a", "\t  a \n", XDF_IGNORE_WHITESPACE),
++            ("a", "\t\t\ta\t\n", XDF_IGNORE_WHITESPACE),
++            ("a", "a\n", XDF_IGNORE_WHITESPACE),
++            ("a", "\ta\n", XDF_IGNORE_WHITESPACE),
++
++            ("", "     \n", XDF_IGNORE_WHITESPACE_AT_EOL),
++            ("a", "a     \n", XDF_IGNORE_WHITESPACE_AT_EOL),
++            ("  a  \t  asdf", "  a  \t  asdf  \t \r\n", XDF_IGNORE_WHITESPACE_AT_EOL),
++            ("\t a  b", "\t a  b  \t \n", XDF_IGNORE_WHITESPACE_AT_EOL),
++
++            (" a b", "  a b \t \r\n", XDF_IGNORE_WHITESPACE_CHANGE),
++            (" a", "\t  a \n", XDF_IGNORE_WHITESPACE_CHANGE),
++            (" a", "\t\t\ta\t\n", XDF_IGNORE_WHITESPACE_CHANGE),
++            ("a", "a\n", XDF_IGNORE_WHITESPACE_CHANGE),
++            (" a", "\ta\n", XDF_IGNORE_WHITESPACE_CHANGE),
++
++            ("ab", "  a b \t \r\n", XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE),
++            ("a", "\t  a \n", XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE),
++            ("a", "\t\t\ta\t\n", XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE),
++            ("a", "a\n", XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE),
++            ("a", "\ta\n", XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE),
++        ];
++
++        let mut buffer = Vec::<u8>::new();
++        for (expected, input, flags) in tv_individual {
++            let actual = extract_string(input.as_bytes(), flags, &mut buffer);
++            assert_eq!(expected, actual, "input: {:?} flags: 0x{:x}", input, flags);
++        }
++    }
++
++    #[test]
++    fn test_chunked_iter_equal() {
++        let tv_str: Vec<(Vec<&str>, Vec<&str>)> = vec![
++            /* equal cases */
++            (vec!["", "", "abc"],         vec!["", "abc"]),
++            (vec!["c", "", "a"],          vec!["c", "a"]),
++            (vec!["a", "", "b", "", "c"], vec!["a", "b", "c"]),
++            (vec!["", "", "a"],           vec!["a"]),
++            (vec!["", "a"],               vec!["a"]),
++            (vec![""],                    vec![]),
++            (vec!["", ""],                vec![""]),
++            (vec!["a"],                   vec!["", "", "a"]),
++            (vec!["a"],                   vec!["", "a"]),
++            (vec![],                      vec![""]),
++            (vec![""],                    vec!["", ""]),
++            (vec!["hello ", "world"],     vec!["hel", "lo wo", "rld"]),
++            (vec!["hel", "lo wo", "rld"], vec!["hello ", "world"]),
++            (vec!["hello world"],         vec!["hello world"]),
++            (vec!["abc", "def"],          vec!["def", "abc"]),
++            (vec![],                      vec![]),
++
++            /* different cases */
++            (vec!["abc"],       vec![]),
++            (vec!["", "", ""],  vec!["", "a"]),
++            (vec!["", "a"],     vec!["b", ""]),
++            (vec!["abc"],       vec!["abc", "de"]),
++            (vec!["abc", "de"], vec!["abc"]),
++            (vec![],            vec!["a"]),
++            (vec!["a"],         vec![]),
++            (vec!["abc", "kj"], vec!["abc", "de"]),
++        ];
++
++        for (lhs, rhs) in tv_str.iter() {
++            let a: Vec<u8> = get_str_it(lhs).flatten().copied().collect();
++            let b: Vec<u8> = get_str_it(rhs).flatten().copied().collect();
++            let expected = a.as_slice() == b.as_slice();
++
++            let it0 = get_str_it(lhs);
++            let it1 = get_str_it(rhs);
++            let actual = chunked_iter_equal(it0, it1);
++            assert_eq!(expected, actual);
++        }
++    }
++}
 -- 
 gitgitgadget
 
