@@ -1,138 +1,254 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8022FD1CD
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 10:25:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321941114
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 11:10:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755253530; cv=none; b=gQYMSv9EDaNfjqA00Th+TBQTylydaovkuQtaMMFwCeP1Kvg4FeVWo+RU+jkg2UxbH0rXj+s1AvqyIVAzhfZA5lEw7DorRvt+WPt7jAKpdZgY+K7GOipRssK4xA1Dz24nCsaGDbj3OBFzhnvaw4UIRwaoyULXS1+eqZ1nmDbN7rI=
+	t=1755256249; cv=none; b=Vt/C21LXKlzDEEnEESW54jPmuodrYOI9D8L1kdudtibCPPnqhL/SWd34066Aiq+wwgHJUlp7/BsByUO4xDrHxSXauZzWJXafpDjvQ2IJA3Guo3ioRYdzA3oNQleNu/hJ/Jq+EeqECQNSZ3FCP/iGzUVpVqmO4ZXNsmsyVPg7IRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755253530; c=relaxed/simple;
-	bh=d3x2yAgaczxvu4lFQ+kTZOG4gfi5f6OIJ2hcD8dVxMM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=u7VcJ6HY0TCLSJjjr3aAXZ0RrvICCnM9dokWx4spCekDXnH2W/8mOjfdV9PfYQvDrgPbrTeSnhZGXj4a5aiQzzky2bJ/mGEKmYHHmfVxCzQWQYcBkz5YiZX8GpgQ5BMmo94/fS93rOoURSYiJaO14mbdM1u+5PtS40g4Y0w9JDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zv4wz1hG; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755256249; c=relaxed/simple;
+	bh=T1ss0yXEDPcb3f8tgsuuQLf7QWL3LWZoGcFvALtGbqE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bVyP1q6us2+X4fOA+LKVYmeGQ9dzXV2D9WuyKLrVre8sW6USVzrZq8XFsa36MF8QIkFIM+21LOa6VCnhwYWz65uK8OFDakugrrKZVkrnvyxyYNN8T81/8HTDV+8oYbOCBxP6EvVRPLeAFnPi6qFJCw268Nai6iyTCMCwDc6PbCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=XmWVq9am; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X4RibAVB; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zv4wz1hG"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3b9dc5c6521so1050152f8f.1
-        for <git@vger.kernel.org>; Fri, 15 Aug 2025 03:25:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755253527; x=1755858327; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OxHAdJwv6xNybabUPRdu6A0XL03OnPSMRG00NnbUNCc=;
-        b=Zv4wz1hGgu20CDBiR69hXMDAvh8MRtV3QvQHb6vb5nEUnXrWedzpJZESv4WjZlTKl6
-         7U8sxdZgEnziVtnE3RpDkDSb4vnUjKXSHEiqyWlgkLEKCmLwJr52VwMVVkmvudwdx43D
-         m3HgvJOfltgHVbvGYCSNNSxAR30W1JoVH3SimEqA8PB4P6jtqDPe4gCJbOUZEFtDkRfd
-         dzol6ypwK9oKmndPYT/jZMJeY3A6AuAAXtwDubuVarygDF4V4h+MpRpEzelfj7FUZCJA
-         26s+r53ebO8AfWEufVDXSjy22fKmvOCpJlWbGNrLvWwZHqz+L8vEj8H6327sqe5+S167
-         YJrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755253527; x=1755858327;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OxHAdJwv6xNybabUPRdu6A0XL03OnPSMRG00NnbUNCc=;
-        b=sNw3n/7hSCq0Vo31/KUPdScnj6YSN7PL2DB3xGxgMmUr0blUXmn2UXKJe+qIDNh3Dz
-         uRnpU0G/UZdVxD5GN40gV0X/XQ4EXtQCWs2XsAngiaoSBFtgXwLewQLhq1Bpq85wUCpt
-         3eFX1zxWs7mtzlxBCnk2yqTDI8Ogmyt/3zqpl7O2HFEIzVSIVi9URgDSGjjFPFAbnjBa
-         sUjnDdeoZJ5KPl+iSHcCJprjGTaMWB6zl8iRDd2DroBOZVHP4ytg+5FF1C9SZXHQZx4S
-         p0m21kTVLGHbPqNzD05tXRd/z48a0SrN3g6pU0Uu6D48/QzLW064VfmTmJKmPC4qKll5
-         wBog==
-X-Forwarded-Encrypted: i=1; AJvYcCWZLetjm6GjQ0KFtufUbva0GF7+Eei/my9aWG4aIlnjexCyZP+RaAYpZGYQnDqfC892Vx0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQDka/93iPZCUN5TjXNsE14bUS7XlsZ4aaHzlbcU1CLHBDV+0u
-	13RaCFAqWUslHByV+2gnRpjl266oc/YiFZeud2LpgoQXVHk2bY4fQm2z
-X-Gm-Gg: ASbGncvchmagqpV/Wd7HxePEcytqqBDeFhkv5Z/B4sYlI5KbiFR2JzM4nT9kvmO0KZN
-	Z7MrTkeyv5onpNjrl86kloAW0R/W1wA0zRZC038Q+Q/puqE2atYRqOPABJrdmXMfqpzcY3y9SdI
-	MlrPFhcXkQyJNyOT5ynE3Lfh4/F4g1kkJRYsYCoUIJFzFOQe+/bwJ307q2mPzUK38mWedxAh7c+
-	42cDBixvP4Z++9n4mRlNxzGyn13g/OttOUGDmF5xNv9LLG+VLUKUHti9sUHrFjjmjXy5fyoQkBk
-	YkRvwWsIdHfMC80VvZdwiEeIo4JEbquidReXwsfQQfMwchKZ+k54UJo+egAQolcFlH1DfJS3w8j
-	05YKtAs9CoUAOf5yDl7QPNrs1EhKXCounyQsTopTJ+Ri44lE7ovcY4Z13hA==
-X-Google-Smtp-Source: AGHT+IH52F7K2mQpk6oWQqE3MGS2A0TF5qkm+nU/0oHnSBVBY/D/YodindO5yHSR21SVPG05dMrMOA==
-X-Received: by 2002:a05:6000:26c6:b0:3b9:7c00:b6a8 with SMTP id ffacd0b85a97d-3bb68cf8f00mr1073188f8f.41.1755253527121;
-        Fri, 15 Aug 2025 03:25:27 -0700 (PDT)
-Received: from [192.168.1.194] ([90.254.76.86])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3bb68079341sm1378853f8f.50.2025.08.15.03.25.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Aug 2025 03:25:26 -0700 (PDT)
-Message-ID: <c9a4d7ef-8cdf-4d5b-b0af-f43ffc6b7450@gmail.com>
-Date: Fri, 15 Aug 2025 11:25:13 +0100
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="XmWVq9am";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X4RibAVB"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 349291D000DA;
+	Fri, 15 Aug 2025 07:10:46 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Fri, 15 Aug 2025 07:10:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755256246;
+	 x=1755342646; bh=KsYddCEdzGnUXcEH5MhzVHtirjP+8cXMSecm7o+k1IE=; b=
+	XmWVq9amfsD/5N1c/cAeK+hsBDJOmNjyUPhJcA+zLpxlXKyHX5xPe63acPP1VQdC
+	pkV6cSeQZLtH5FHvniECUoKRXlAkkHKqjRqnMQsZiVjAvCdakV1GHHnZTCs4qs7r
+	FWvSuHXcypY7cLj8yB41OFO4FEa36BlbBLhb0HNpPGbhjtlLM8X8Rr4JMfdmfdwS
+	kCEk/CfFmPR7ZHuIYH/rhufp1fKQRx6Iu3i7Kzr3M4to1xgRUaHIa51wVqULM+hK
+	o1Wlb/JWlqbsC6KONgAcA1jTuFTR4Lnj2OJUT2JVeGg53ev4sl7zKsYqaQLaPcYV
+	G2xecZEaRN7Rwpc9LLXCQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755256246; x=
+	1755342646; bh=KsYddCEdzGnUXcEH5MhzVHtirjP+8cXMSecm7o+k1IE=; b=X
+	4RibAVB0sZt3AKXck0MvPwqvB+0Bq0NLRXqui+a/MczSNETFqFTp1zZ6mF+8Q82T
+	KJZ7UdbmwNgVfijOJVIhYCUM85JSqrqfWMXIO5SYUNrRmqGRJolD6HABZi1WyOvi
+	VTJLHNktJZpHal3ZSFFa0tOlVmf8knmkTjSVD644Q+rpNrlhh6WvVxvNdZoVRsll
+	iwm7Peit0ZHcrbZf3jjlbkYbaNlYqXMbdO1d3LDFgrOsQtbNFHuENTyMvl34wd9Y
+	bspIqYGp+AKZVJIG5HzICYpXh23XDHWg/ZrVjSamhcyfzTkW/qQwUT+k/q058Q8J
+	hzlB3S8Q+wQwnSY1nbkAQ==
+X-ME-Sender: <xms:tRWfaEvIlSOE6BJ3huHtvDiOCx0UHfHvbj_SkIRN0iZLpeHcGVpVhlw>
+    <xme:tRWfaEuyW5xtLURkYhvbuu3OE-KJX1W9RUGQqiGd-esQLIPPzRXa5CBR8NrsCr4AC
+    Fpgjv3bo41KT5WjEw>
+X-ME-Received: <xmr:tRWfaJPPKEWyE0ShKfhhNkOEQ8VKTH9dIvH631WzV1_ODaeZL-UgOFVU7U32k7gdyhxJEhPnn1P9fj67VU6jNplJ8m1oWRpE_-gztKE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeefkeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfgggtgfesthekre
+    dtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetie
+    ehgeeftdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    eptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepfhgvlhhiphgv
+    rdgtohhnthhrvghrrghssehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:tRWfaC3vw1z_0dZgDAzqXeSdQhNVlLi8zLYnh1liBwjRXKJRDt6kTw>
+    <xmx:tRWfaFPFXBZ7uMLpFMPlRUkYzZAun0G3Q6KKstpVbtzmWMwfQBh8lQ>
+    <xmx:tRWfaC2gHy9iXg8gZfhV_ShOAjfhGmNxUczf3ct3kVSUnwrKqeBsQw>
+    <xmx:tRWfaMFhCo0sZuUkeeW8PXzOuLMu4SxrG3NFiQI_Nba72tqLvbBZxQ>
+    <xmx:thWfaJXSnnr9l9SCLK_MIisv7DrqVo63bZXKmfTva06bB_aI_055WBje>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 15 Aug 2025 07:10:44 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH v2] bugreport: use quoted line prefixes
+Date: Fri, 15 Aug 2025 13:10:15 +0200
+Message-ID: <52a6177e706d8653251c61bc660f10b703ea6a9e.1755256099.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.51.0.rc2
+In-Reply-To: <20210723175950.64955-1-felipe.contreras@gmail.com>
+References: <20210723175950.64955-1-felipe.contreras@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/5] doc: git-rebase: clarify DESCRIPTION section
-To: Junio C Hamano <gitster@pobox.com>, Julia Evans <julia@jvns.ca>
-Cc: phillip.wood@dunelm.org.uk, Julia Evans <gitgitgadget@gmail.com>,
- git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
- Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
-References: <pull.1949.v5.git.1754943127.gitgitgadget@gmail.com>
- <pull.1949.v6.git.1754949075.gitgitgadget@gmail.com>
- <52504ef0-7d4c-4298-af11-10477673e9d0@gmail.com>
- <aa1c2758-79f9-47f6-87d4-16b19fa5bd63@app.fastmail.com>
- <xmqq5xepzjnu.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqq5xepzjnu.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 14/08/2025 22:18, Junio C Hamano wrote:
-> "Julia Evans" <julia@jvns.ca> writes:
-> 
->>> well given they're also both pretty niche. I'd also be very happy to go
->>> with Junio's suggestion to replace steps 1 & 2 with a general
->>> description that does not mention 'git log' at all.
->>
->> I like the idea of leaving out `--fork-point` and `--root`.
->>
->> Now that I know the use case for `--reapply-cherry-picks`: what I like about
->> leaving in the `git log` description is that I think it makes it easier for
->> folks to build a mental model of why a `git rebase` might be slow: there's a
->> "fast step" (the `git log` step) and a "slow step" (the `git patch-id` step).
- >
-> But that is not what goes on, is it?  What you wrote as if they were
-> two separate steps (1 to enumerate, 2 to filter) is not what happens
-> in practice.  Whether it is done via the "format-patch --stdout | am"
-> pipeline in run_am(), or via the "rev-list --reverse | xargs -n1
-> cherry-pick" pipeline in run_sequencer_rebase(), the upstream of
-> these conceptual pipelines that enumerates what is to be replayed is
-> run just once, i.e. there is only one step that "enumerates what is
-> to be replayed", without a separate filtering step.
-> 
-> In other words, there is no "a fast step followed by a slow step".
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Although the cherry-pick detection happens inside "git log" that command 
-has a fast step (find the commits on both sides of the merge base) and a 
-slow step (detect cherry-picks) so I think it depends where one draws 
-the step boundaries. The cherry-pick detection is known to be slow when 
-there are a lot of new upstream commits which was the motivation for 
-adding --reapply-cherry-picks in 0fcb4f6b62 (rebase --merge: optionally 
-skip upstreamed commits, 2020-04-11)
+Quoted line prefixes make it easier to distinguish between the questions
+and the answers, both for the reporter and for the readers.
 
-> Perhaps squashing the first two steps into one and phrasing them as
-> a single step is sufficient to give a conceptual overview (what you
-> have in v7 as "a simplified description of what the command does").
-> 
->   1. Make a list of all commits on your current branch since it
->      branched off from `<upstream>` that do not have equivalent
->      change in `<upstream>`.
-> 
-> If you want to keep 1 & 2 separate, then rephrase the introductory
-> sentence to clarify that we are giving a white lie for the sake of
-> easier understanding, e.g.
-> 
->      Here is what conceptually happens in "git rebase":
+Based-on-patch-by: Felipe Contreras <felipe.contreras@gmail.com>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-Either of those sounds reasonable to me
+Notes (series):
+    § Changes in v2
+    
+    • Update test which wasn’t there when v1 was made
+    • Rewrite commit message to one single sentence
+    • “use” in the subject is slightly more declarative than “add” (?)
 
-Thanks
+ builtin/bugreport.c  | 18 +++++++++---------
+ t/t0091-bugreport.sh | 18 +++++++++---------
+ 2 files changed, 18 insertions(+), 18 deletions(-)
 
-Phillip
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index f78c3f2aed6..44be7eb4859 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -65,21 +65,21 @@ static const char * const bugreport_usage[] = {
+ static int get_bug_template(struct strbuf *template)
+ {
+ 	const char template_text[] = N_(
+-"Thank you for filling out a Git bug report!\n"
+-"Please answer the following questions to help us understand your issue.\n"
++"> Thank you for filling out a Git bug report!\n"
++"> Please answer the following questions to help us understand your issue.\n"
+ "\n"
+-"What did you do before the bug happened? (Steps to reproduce your issue)\n"
++"> What did you do before the bug happened? (Steps to reproduce your issue)\n"
+ "\n"
+-"What did you expect to happen? (Expected behavior)\n"
++"> What did you expect to happen? (Expected behavior)\n"
+ "\n"
+-"What happened instead? (Actual behavior)\n"
++"> What happened instead? (Actual behavior)\n"
+ "\n"
+-"What's different between what you expected and what actually happened?\n"
++"> What's different between what you expected and what actually happened?\n"
+ "\n"
+-"Anything else you want to add:\n"
++"> Anything else you want to add:\n"
+ "\n"
+-"Please review the rest of the bug report below.\n"
+-"You can delete any lines you don't wish to share.\n");
++"> Please review the rest of the bug report below.\n"
++"> You can delete any lines you don't wish to share.\n");
+ 
+ 	strbuf_addstr(template, _(template_text));
+ 	return 0;
+diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+index e38ca7a9018..9d7008f3592 100755
+--- a/t/t0091-bugreport.sh
++++ b/t/t0091-bugreport.sh
+@@ -12,21 +12,21 @@ test_expect_success 'create a report' '
+ test_expect_success 'report contains wanted template (before first section)' '
+ 	sed -ne "/^\[/q;p" git-bugreport-format.txt >actual &&
+ 	cat >expect <<-\EOF &&
+-	Thank you for filling out a Git bug report!
+-	Please answer the following questions to help us understand your issue.
++	> Thank you for filling out a Git bug report!
++	> Please answer the following questions to help us understand your issue.
+ 
+-	What did you do before the bug happened? (Steps to reproduce your issue)
++	> What did you do before the bug happened? (Steps to reproduce your issue)
+ 
+-	What did you expect to happen? (Expected behavior)
++	> What did you expect to happen? (Expected behavior)
+ 
+-	What happened instead? (Actual behavior)
++	> What happened instead? (Actual behavior)
+ 
+-	What'\''s different between what you expected and what actually happened?
++	> What'\''s different between what you expected and what actually happened?
+ 
+-	Anything else you want to add:
++	> Anything else you want to add:
+ 
+-	Please review the rest of the bug report below.
+-	You can delete any lines you don'\''t wish to share.
++	> Please review the rest of the bug report below.
++	> You can delete any lines you don'\''t wish to share.
+ 
+ 
+ 	EOF
+
+Range-diff against v1:
+1:  ef7a1cbd9d4 ! 1:  52a6177e706 bugreport: add quoted line prefixes
+    @@
+      ## Metadata ##
+    -Author: Felipe Contreras <felipe.contreras@gmail.com>
+    +Author: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+      ## Commit message ##
+    -    bugreport: add quoted line prefixes
+    +    bugreport: use quoted line prefixes
+     
+    -    With quoted line prefixes it's easier to distinguish what are the
+    -    standard questions, and what are the user responses.
+    +    Quoted line prefixes make it easier to distinguish between the questions
+    +    and the answers, both for the reporter and for the readers.
+     
+    -    Additionally it's easier for the reporter to visualize what has she
+    -    responded.
+    +    Based-on-patch-by: Felipe Contreras <felipe.contreras@gmail.com>
+    +    Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+    -    Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+    +
+    + ## Notes (series) ##
+    +    § Changes in v2
+    +
+    +    • Update test which wasn’t there when v1 was made
+    +    • Rewrite commit message to one single sentence
+    +    • “use” in the subject is slightly more declarative than “add” (?)
+     
+      ## builtin/bugreport.c ##
+     @@ builtin/bugreport.c: static const char * const bugreport_usage[] = {
+    @@ builtin/bugreport.c: static const char * const bugreport_usage[] = {
+      
+      	strbuf_addstr(template, _(template_text));
+      	return 0;
+    +
+    + ## t/t0091-bugreport.sh ##
+    +@@ t/t0091-bugreport.sh: test_expect_success 'create a report' '
+    + test_expect_success 'report contains wanted template (before first section)' '
+    + 	sed -ne "/^\[/q;p" git-bugreport-format.txt >actual &&
+    + 	cat >expect <<-\EOF &&
+    +-	Thank you for filling out a Git bug report!
+    +-	Please answer the following questions to help us understand your issue.
+    ++	> Thank you for filling out a Git bug report!
+    ++	> Please answer the following questions to help us understand your issue.
+    + 
+    +-	What did you do before the bug happened? (Steps to reproduce your issue)
+    ++	> What did you do before the bug happened? (Steps to reproduce your issue)
+    + 
+    +-	What did you expect to happen? (Expected behavior)
+    ++	> What did you expect to happen? (Expected behavior)
+    + 
+    +-	What happened instead? (Actual behavior)
+    ++	> What happened instead? (Actual behavior)
+    + 
+    +-	What'\''s different between what you expected and what actually happened?
+    ++	> What'\''s different between what you expected and what actually happened?
+    + 
+    +-	Anything else you want to add:
+    ++	> Anything else you want to add:
+    + 
+    +-	Please review the rest of the bug report below.
+    +-	You can delete any lines you don'\''t wish to share.
+    ++	> Please review the rest of the bug report below.
+    ++	> You can delete any lines you don'\''t wish to share.
+    + 
+    + 
+    + 	EOF
+
+base-commit: 724518f3884d8707c5f51428ba98c115818229b8
+-- 
+2.50.1
 
