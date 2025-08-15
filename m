@@ -1,118 +1,189 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB52C188000
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 15:45:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1980421256E
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 15:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755272757; cv=none; b=UQP32IBREeWsDRsuZfTlzuG8a824vfOUNp5VFf+ghce37az1kJWcc5Gc4kPLvolnI2yErzlOG4E6I+TjKWswDTjVVKEi/h+QjDT0AWnnqoGrXTpRxdYgoMJTGUvAy1bn9kkAzsJbai7qHPRZzJ2fBMBseohqrWBfhOnNN2+4w5o=
+	t=1755272958; cv=none; b=d8lgl/KRY0YiYkJ0cDIQpoCwzzfmy5oFHZdIAG580Ogn18TlzKjkD2Y8IrAPEmC0iamYZ1QFQovU9ecUMKRpV8LaBo/ewo/nmidrur9Ivg3cUNSQwvQ+8FDKPYbReSNCV/45/2BthC9nOr4OJKGIr38bWtSPLXVL7t4y4MiTqWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755272757; c=relaxed/simple;
-	bh=NR3RZYFBq/Jlvd1cL0yPl0ZQrutm0aeQsTIjeMIFmyk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MBESXz/pK7hiQAAuWcsMgcyjfL+1kefUMvwyJ1cWWRPlAvL7uYQRBxwtdJyporCCDnh9GQU35fAvxBqVkgMPezVRY5pbJkbB5e2oZQBDIylHQ28bIFQrf8DKk2yVjD7LV2yVnzJFIEc35MuSY+d/IKOIblbQ+LY1v8zFZagUVg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FmvgSClD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=geRgFcNN; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755272958; c=relaxed/simple;
+	bh=AVcbc6Xs5I4kRIvBXKV/ehm6cRzPkJTvOjSuj4XhsCE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=KpewKToCIbL4yUihABs5mNFrJylhTAV5Leb0O03NvGPpTSf3WDx/KCec84+LrOaRbbGyflXgsCHZUgQirPBrud/zEBsyA044biRfNsUBN15O8mS+GbWVuaK52LM86AEMi/fOOoFx+teJ17I6TXFasli1YD/zZYHyjF7DCkQNpm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UBlOWtta; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FmvgSClD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="geRgFcNN"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C3E0A7A0186;
-	Fri, 15 Aug 2025 11:45:54 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 15 Aug 2025 11:45:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755272754; x=1755359154; bh=/q+0gAK024
-	A/GzGtdlKxp1lXNy5LPE21qNXqxWC9wZg=; b=FmvgSClDDwKp2vQ43VtelLLvw6
-	QI7RbAhezSz5L7J3EyoZvimVUJddywujg67147T3RldDinzVGKCI5WMNqQvGue8E
-	rF1HSxDJzROlCsaug+jnUgniH7riSX3MqNWFoAv+Y6F5yefm0yi5ly7AYa/+GOZz
-	MIww90qUO7cCBnE6Nr5OV/eLMIJCxiWfUwxw8mBT22tmEA2HElTL7qUAoUffqsU6
-	O+J4eusbw+5oh265SUJfAQ5EI0XgwHGoEb98H3Mh+prbDMO/Bxzfkf+v4vkTJxaB
-	s4ybKgCTNw11HfRnr+7eJsvAtbFkK1IpW4g3VfSz3xEXEj/5wGbjYinOJ9hA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755272754; x=1755359154; bh=/q+0gAK024A/GzGtdlKxp1lXNy5LPE21qNX
-	qxWC9wZg=; b=geRgFcNNbS/AINU/b08ZXfcniTSqDJNZzn5mlXiTD8ZCPCiq+a9
-	MbhM84KiKct8/5mnatODORZ326+dniC28Qd67UGC/0/Daf8vJlQ8+9c+lVlUk68N
-	JthljQ5yCnd+p5PoXeogk7bFUEOrY1AsMRK8gs7MGdhlb/vsR2zn7QSD2LZU7UZ9
-	30gLKrWHoku95bWRbkVJrTAYWKaecsi6mxPdGwheHVtzfZ9WdSYmV+CXfllwBlaQ
-	VJguK9OUMfQt5fvlqAG1KI1RxxW3lj4oBgjj0TAblbU832lTPBxkv9xM1w9SCrAz
-	hxMLcUxWK5FLtpgxQJGAU55mQDhW1PH/Bkw==
-X-ME-Sender: <xms:MVafaCJ833V3H3c_83Sw4Y840OSqSLIlXbMcUa_9UmTgc2dyhuHjjg>
-    <xme:MVafaEyWhmbnv91bj1jhIIBlgfeWGc3kL85tz_0UdHzPys0gHCaElRdeif573h1TR
-    y3pRQOlAoMn1IQLOQ>
-X-ME-Received: <xmr:MVafaIv8BxoZsBOC_SBLW5nI7ok3dyDjP3D3taTwXIZ9qjUjbgfO69SlUBJfNY4olhkLKHgEOvlyKY1phUY-ZeZunHZXfhfhDqB-aa4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeegfeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepphhh
-    ihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhith
-    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilh
-    drtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhi
-    khdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:MVafaHBldmXugOMrDH2UrnEIQtAzFD5w_9p-UhQxvM5Nmgde4Z3Sqw>
-    <xmx:MVafaKG3l620Dy002VBeUD6eP7LlWXQL_9xkZCuTr0Jg_taSHKveuQ>
-    <xmx:MVafaHAOppLvgIAnufMN6N15ysnwuwKe4Zu01nPGCRQrd4aE6se7Kw>
-    <xmx:MVafaAnHYUHQXbNXGlJMnRAGCjClDWVFm9Km9IMMwWxBwif4Vxt-NA>
-    <xmx:MlafaByYgEbzByRGd1AqcNOLPCknJRqMZvSolVkuEs6dmLn8dNeM8BCF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 Aug 2025 11:45:52 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Julia Evans <julia@jvns.ca>,  phillip.wood@dunelm.org.uk,  Julia Evans
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
- <karthik.188@gmail.com>
-Subject: Re: [PATCH v6 0/5] doc: git-rebase: clarify DESCRIPTION section
-In-Reply-To: <c9a4d7ef-8cdf-4d5b-b0af-f43ffc6b7450@gmail.com> (Phillip Wood's
-	message of "Fri, 15 Aug 2025 11:25:13 +0100")
-References: <pull.1949.v5.git.1754943127.gitgitgadget@gmail.com>
-	<pull.1949.v6.git.1754949075.gitgitgadget@gmail.com>
-	<52504ef0-7d4c-4298-af11-10477673e9d0@gmail.com>
-	<aa1c2758-79f9-47f6-87d4-16b19fa5bd63@app.fastmail.com>
-	<xmqq5xepzjnu.fsf@gitster.g>
-	<c9a4d7ef-8cdf-4d5b-b0af-f43ffc6b7450@gmail.com>
-Date: Fri, 15 Aug 2025 08:45:51 -0700
-Message-ID: <xmqqa540twpc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UBlOWtta"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-45a1b065d59so10937795e9.1
+        for <git@vger.kernel.org>; Fri, 15 Aug 2025 08:49:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755272954; x=1755877754; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:reply-to:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZITHrwo7Gjcu9FpeSVxJycfTLK0MBeZIOULenjdYT8A=;
+        b=UBlOWttag44W3rts4UL5PrwfdpX21KZ/wwxwZOV5r+81vW9ru+o6JjMtgPAdbQvkk8
+         Dv0ap/3zY+T5EMQgc7LGmFqf2g09s4VJHEL2/OJOehJl+b49B4VGiazSi0AYnSk8+mCx
+         RhS5sDpTUPrq4meGpz5YYtjGxhcGB6uoO8wHhSRowck1YDSlmcMyxF8J3aE8VUZgvDd1
+         b5Ld71DzidZb2LpQjRy0SNtw14tbqJt30pEfDw3/EZSsbKpghU9yWlKZi/W3eLYpY0fL
+         9EN/vGJhV+p5VtiHeYNYALHeBnukpfHxgro/XfmjxUj5FblLCEdfjWHuJij+rgjM/dkU
+         UHdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755272954; x=1755877754;
+        h=content-transfer-encoding:in-reply-to:reply-to:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZITHrwo7Gjcu9FpeSVxJycfTLK0MBeZIOULenjdYT8A=;
+        b=WlnHgCzBVyNi9726BjbzdSJGjWmkrVhGhV2dxeUoP2Q5V6Wy086BqVDg4NPFJc8+U6
+         fKH2NhnYOOtXpcL3RY1vnI0kc7UGKoLUhoG3fj1YHLg9CnieLO6tu/QyBG6KCIU//Mpg
+         M5OlgQV8n8U8Gfg0Pj5ZxKp44+bMlT2Camy21faaLAZO5MeE786qa562t1JI+v9gF9vF
+         CTxs+LAj8J+mJiP/XYhQimW235QmBEN5Ls6dpTh0JEaIxBel0MOBDGhXc4NhqhQHXpLC
+         /D8Du2kAvD9r6OmiIvDfh9fjRaKUMG9SHY18d08Xvh3vnNRfDUoIYZe1W39wH76fBRa1
+         cyiw==
+X-Forwarded-Encrypted: i=1; AJvYcCUcXSmv+ixz3x/8/RjMSllWSgq6gJOBSyAnaskrV0nSv7ANufdq3IMObjW/e9Nks7pwlnY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx21U2zGgOR2VHgA7Paqt+HRq2+pzyhpyiNmguCvTsOWMWwQIxs
+	HxmhPvSfZHmQT79J0xcIRpijuIQawz6gqsQdDjRfyPZQtfPp/ztlh+1v
+X-Gm-Gg: ASbGncsDuiv++2PxZauGhZ9weJ5wC4lZav9Gkhj/9xLi1zqyW+F2l3i8Iprh6P1ZZBg
+	qnlKKucV57Yxd46ndy7b50zRLKs4NQey+q53FwvVFKtLEsokt/Kbvuir8opWLclbjKef0zPwX+I
+	m8rehv0qdQZYuIyePcDGFZ+lUCjYtMGFCEYoIvse0EEw/oF6SSyw9m3dcXXddEUmNYmGISfM+UF
+	+wTRLLEeiScU5ohI/mMJswAuoX46sJdZIQvd6+nDskC9pujAytjGKk2YFM/AuHVDNlk0GAiCKAL
+	lfA7+cXKe85vgB2/Ew5dQE/5Ber7TQK0ySErrw764oxK6w9S1zYWNZZxixsdNW2FvJ0KDbuS9BA
+	tG3M4/XtSqzJvoc4TvfKSadk6wQJN0BlhbPqMte47tnvAVE3LZvqK8eFPgf/pXlf+ndlObrH1eq
+	rj829w2j0H+UE=
+X-Google-Smtp-Source: AGHT+IGfrvL0x1N2yK006sTEvDIWy4XRYfHamNJsJAdKth2MHAODgrTuaioae7Li5ka8DYkmFG0knw==
+X-Received: by 2002:a05:600c:4451:b0:456:1824:4808 with SMTP id 5b1f17b1804b1-45a21867837mr21028135e9.32.1755272954023;
+        Fri, 15 Aug 2025 08:49:14 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c78c221sm66872645e9.26.2025.08.15.08.49.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Aug 2025 08:49:13 -0700 (PDT)
+Message-ID: <2560a90d-4015-4087-97f1-3733a58261e4@gmail.com>
+Date: Fri, 15 Aug 2025 16:49:12 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: Potential Null Pointer Dereference detected by static analysis
+ tool
+To: Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk
+Cc: Cheng <prophecheng@stu.pku.edu.cn>, git@vger.kernel.org
+References: <AAkArwD3JXZP4EIjvKF0Waow.1.1755044612233.Hmail.2201111603@stu.pku.edu.cn>
+ <5303c45e-d95b-4bc8-9cd1-bf4efe6bfbae@gmail.com>
+ <20250814232644.GC2937@coredump.intra.peff.net>
+Content-Language: en-US
+Reply-To: phillip.wood@dunelm.org.uk
+In-Reply-To: <20250814232644.GC2937@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Hi Peff
 
-> Although the cherry-pick detection happens inside "git log" that
-> command has a fast step (find the commits on both sides of the merge
-> base) and a slow step (detect cherry-picks) so I think it depends
-> where one draws the step boundaries. The cherry-pick detection is
-> known to be slow when there are a lot of new upstream commits which
-> was the motivation for adding --reapply-cherry-picks in 0fcb4f6b62
-> (rebase --merge: optionally skip upstreamed commits, 2020-04-11)
+On 15/08/2025 00:26, Jeff King wrote:
+> On Wed, Aug 13, 2025 at 02:19:14PM +0100, Phillip Wood wrote:
+> 
+>> I had a quick look at the callers of describe_commit() and they all seem to
+>> use an oid that they get from looking up a commit so I'm not sure under what
+>> circumstances this call to lookup_commit_reference() can fail.
+> 
+> I wonder if it would make sense for describe_commit() to just take a
+> "struct commit" pointer. Then it could skip the call to turn the oid
+> into a commit entirely, and the compiler would make sure we always have
+> a commit. :)
 
-Correct, in the description of "reapply-cherry-picks", it may need
-to be discussed to guide the readers decide when to use the option.
+I think that's a good idea, it would be clearer to the reader that we've 
+already looked up the commit before calling describe_commit() as well.
 
-But would it really help understanding of readers to give such level
-of detail in "here is roughly how it works" description?  I am not
-sure about that.
+Thanks
 
+Phillip
+
+> Something like this (totally untested, and not something I'm planning to
+> follow up on, but maybe inspirational):
+> 
+> diff --git a/builtin/describe.c b/builtin/describe.c
+> index 32f5bf513f..3e8691a4c4 100644
+> --- a/builtin/describe.c
+> +++ b/builtin/describe.c
+> @@ -352,26 +352,24 @@ static void append_suffix(int depth, const struct object_id *oid, struct strbuf
+>   		    repo_find_unique_abbrev(the_repository, oid, abbrev));
+>   }
+>   
+> -static void describe_commit(struct object_id *oid, struct strbuf *dst)
+> +static void describe_commit(struct commit *cmit, struct strbuf *dst)
+>   {
+> -	struct commit *cmit, *gave_up_on = NULL;
+> +	struct commit *gave_up_on = NULL;
+>   	struct lazy_queue queue = LAZY_QUEUE_INIT;
+>   	struct commit_name *n;
+>   	struct possible_tag all_matches[MAX_TAGS];
+>   	unsigned int match_cnt = 0, annotated_cnt = 0, cur_match;
+>   	unsigned long seen_commits = 0;
+>   	unsigned int unannotated_cnt = 0;
+>   
+> -	cmit = lookup_commit_reference(the_repository, oid);
+> -
+>   	n = find_commit_name(&cmit->object.oid);
+>   	if (n && (tags || all || n->prio == 2)) {
+>   		/*
+>   		 * Exact match to an existing ref.
+>   		 */
+>   		append_name(n, dst);
+>   		if (n->misnamed || longformat)
+> -			append_suffix(0, n->tag ? get_tagged_oid(n->tag) : oid, dst);
+> +			append_suffix(0, n->tag ? get_tagged_oid(n->tag) : &cmit->object.oid, dst);
+>   		if (suffix)
+>   			strbuf_addstr(dst, suffix);
+>   		return;
+> @@ -528,7 +526,7 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
+>   }
+>   
+>   struct process_commit_data {
+> -	struct object_id current_commit;
+> +	struct commit *current_commit;
+>   	struct object_id looking_for;
+>   	struct strbuf *dst;
+>   	struct rev_info *revs;
+> @@ -537,7 +535,7 @@ struct process_commit_data {
+>   static void process_commit(struct commit *commit, void *data)
+>   {
+>   	struct process_commit_data *pcd = data;
+> -	pcd->current_commit = commit->object.oid;
+> +	pcd->current_commit = commit;
+>   }
+>   
+>   static void process_object(struct object *obj, const char *path, void *data)
+> @@ -546,7 +544,7 @@ static void process_object(struct object *obj, const char *path, void *data)
+>   
+>   	if (oideq(&pcd->looking_for, &obj->oid) && !pcd->dst->len) {
+>   		reset_revision_walk();
+> -		describe_commit(&pcd->current_commit, pcd->dst);
+> +		describe_commit(pcd->current_commit, pcd->dst);
+>   		strbuf_addf(pcd->dst, ":%s", path);
+>   		clear_prio_queue(&pcd->revs->commits);
+>   	}
+> @@ -556,7 +554,7 @@ static void describe_blob(struct object_id oid, struct strbuf *dst)
+>   {
+>   	struct rev_info revs;
+>   	struct strvec args = STRVEC_INIT;
+> -	struct process_commit_data pcd = { *null_oid(the_hash_algo), oid, dst, &revs};
+> +	struct process_commit_data pcd = { NULL, oid, dst, &revs};
+>   
+>   	strvec_pushl(&args, "internal: The first arg is not parsed",
+>   		     "--objects", "--in-commit-order", "--reverse", "HEAD",
+> @@ -589,7 +587,7 @@ static void describe(const char *arg, int last_one)
+>   	cmit = lookup_commit_reference_gently(the_repository, &oid, 1);
+>   
+>   	if (cmit)
+> -		describe_commit(&oid, &sb);
+> +		describe_commit(cmit, &sb);
+>   	else if (odb_read_object_info(the_repository->objects,
+>   				      &oid, NULL) == OBJ_BLOB)
+>   		describe_blob(oid, &sb);
 
