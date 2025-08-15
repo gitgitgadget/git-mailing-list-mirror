@@ -1,144 +1,127 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C04F2C0F91
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 15:27:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D05D2C374E
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 15:27:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755271670; cv=none; b=uhhNXtFM/vYVVmNv82BmSfcU3AFGmVSgLScELQIpCDkSLHsBctzt83jxxFz3/sETbEHurGcQ/evGBkVkwrdJA4YlsFHux/bklurFL454H9wbRUHI2VB60r5m5FFgKOc2v0R2G2KFr/JxNmehcG9/N7uhRpTmGF16We62E5Tu3c4=
+	t=1755271673; cv=none; b=EAo9nFg51ZZmGCkzmd/0NvSdheTl5I8vTYzPrCfMjdgwG2QDtSms/M+Ypk+0s+tWAHOjL2gdmJ59rfaPtSO7NxYnQsnpaw8rCKMcAqoZDjHNyfPdGCVLVvUaFnfYmDVVVfyzAam25gtnMhgPmeZWACdeNc+qDxqFmg8eQLzKZZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755271670; c=relaxed/simple;
-	bh=R6W59BSv1Txvfwn+JeGhJWHuv8xabY2t2ns+DI9jktM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=QLVkJsIxeFm1T029b7sPq2BIsiv2cSD8fy7Fck5rLBUPQkg6/gjeIQHGMGK34TR+byCgsLC5HQ2DGnMMeBwqLLx8acNznssQ2JWOhxpxWrsvmhx6XvHiAILAv2lgR/JGeGk4cwqeX1GAOdL9WyjQYkkhMb+5bIFCXuzFMPelCVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Iqpf8UEW; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755271673; c=relaxed/simple;
+	bh=fFFRGw4vOofwjl/8JY8aJg57FJGBhQ5iDOeeGJsLuyI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iJRZWN4crM23LozlPFCI5o5zPiSrFxc24ZBpLSrQX44qxoOa9rXNH1FAxhIAJXtScyJ9lUBpM5hBhnCzY0jb9yeEhfSLljV08qjwMhxwExqwv2yU1ZpnI7kNk7aLW1NLiWsOG5e9V9LpNXl52BBHy6/oomkWlt/Mq5JvVuVCAQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NcRlHrTW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZNL0EsCM; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Iqpf8UEW"
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-70a9f15f15fso17347286d6.2
-        for <git@vger.kernel.org>; Fri, 15 Aug 2025 08:27:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755271667; x=1755876467; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=2NtdAvRw+K760xOghtixOoeKWCRNaRIvjPXPT+mr2kk=;
-        b=Iqpf8UEWrP1i+3CsLGO//+leLRcHUbNeMCT6C3TtRXR5AG+8Bqiw5TK48xIg//53Da
-         b7xujbqprDtQdltaC2tY+dqy+DELP/fYz4wlAPy7zo9a3GR22MMGt9tcFa8I5RTM3X3J
-         2Vol1K52t1lisaMOI6jJn4hS8ZxpmH9OjObvEhYVk4wQNgQ9ZXcpXPkM3QkUnubuSL+m
-         Ub8wh6xwpnVzBrRyXkBZklCsY2ccuDIG/MOR9tDdRDKcH6/Ol9JtlUEaSXuZTAPxU3jy
-         vvneQWgnNqJ/oHE7LVbDSh/qYNPWMHTRoOHcI0FIZwvTcqQOCXNz/2d19uwR+J1NS0z+
-         mqig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755271667; x=1755876467;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2NtdAvRw+K760xOghtixOoeKWCRNaRIvjPXPT+mr2kk=;
-        b=UWTZIAby6Gk6twWF5nZ5w1j+J5NvPVJXbKPJTgCLa0eFANDSizATvtOaEzPY0LVnDE
-         w/ZHCn03bebmn8kMFHQf3bWi4Ga+ndkYNI3gzq+iuhWY2dvOn0i2IitrUP9IiT8GL3d6
-         v66hFYlAC/BhGg6wITCBkIuhW0pKyrsp6oCYUVgRJOzh/o+gPbla6Z06hf8ZcXDc77ju
-         vA0HqgV+cLO34onkSdY8IyyrFpfjx4kQ89nfTF0/VL1iNn0X6yS1bM3l5cw0sDoy/+F2
-         T/GFh5uWBYOM7UvpBxbKcFz6wZKmbCio1k/aeAWrAaqOsQHhtCK4S5hrcgcKM3vbVBFa
-         qO4w==
-X-Forwarded-Encrypted: i=1; AJvYcCWe7zMkykHSkRLBsTSE3v/dY4SwHItpq/DVXBewqYacZaT/SHhWpsxeUf3fi+CF9Ta14ok=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUPqC/5S+qhRGJQMomMMyNreNGnV0iyHyXA5sOjXbQww4b8JEV
-	FtSdGTU0P1P612oPBc/HdWCqSTXlvquZDlIuTownAEwuuL6TfPCsyuA5
-X-Gm-Gg: ASbGncuVcdzRn0e6giJDAkKOL+gfBwstj6Cb9DpeuKwfEvvxvr7Lb7uroNcQchRcg4o
-	FkB+YzVdH7g++YxOrBifgWVUdbmdsqLFBpp7RdmeH7khN/323ZGvi27CGdUYCukss9YZf6YGi67
-	qwV1jGXYT+XD2wLzZMZtV0lPUO/mIctZIB6g0tCe8owhNf6DJSX0rNU0tECuaXrozgCb9PPARGE
-	dteJbLCs+gYCv1LoD+wRANcQtU1npE9gKs0NQFU40YrhtZKTCmdAlaDHgr4jBe+QNvEcyXB8umC
-	cFi1aE70Fxf/fA42972deL1iZtRU/+gO85rP96xeN8Lff8xF326kbvYlN8rq6okDymYc2Qh10+o
-	yZZT4sSzxeHscN5mAHeUKvm8g783moshU/wE=
-X-Google-Smtp-Source: AGHT+IGQvzWpqjcyKn2I34oKWOnJjFHKJ75k+DOzkZrncCBe5lndPxbq8x7WH/zrogJdJJ6yA5YWEA==
-X-Received: by 2002:a05:6214:ac7:b0:709:b92d:e84 with SMTP id 6a1803df08f44-70ba7ae80c1mr31162156d6.16.1755271667211;
-        Fri, 15 Aug 2025 08:27:47 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.70.92])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70ba92f924bsm9406156d6.46.2025.08.15.08.27.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Aug 2025 08:27:46 -0700 (PDT)
-Message-ID: <f61c4070-3d29-465e-8dbf-55c4562c0342@gmail.com>
-Date: Fri, 15 Aug 2025 11:27:45 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NcRlHrTW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZNL0EsCM"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 529327A00E5;
+	Fri, 15 Aug 2025 11:27:49 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 15 Aug 2025 11:27:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755271669; x=1755358069; bh=urhi1yD1P3
+	YYfS1JjT6bG6Ny66FGcQ+VaXaPhTlDvvo=; b=NcRlHrTWOn8GBa9FviFtWQxJEa
+	lyaE2jcXBofDqRY8oKY6MoY1a+0sjip3lbzzdg4Qq8FW9RqclAbvOizNsWgY8NHe
+	S8PwmLSSFnoEfPSLQvXR8FicWRAjBGSBrLtiOsXbFAbyDX+ao6bP2HVa3kzesWSV
+	SMnmKjFNKKHrTeFBIMgK6cva4HQKZWvWQfRMuNB78oeb78HVNg0oUpf/EZf8riMM
+	oBuG4EZgoUtWPwTAeXFf8hYDmewgzXuEt2f06Eent3k4xDPYlePBL4HBIsBjMbgi
+	Ktt5WdE6nBc2bliXZocUBfaz4HwD6IA+lm3W8rTVeY1MMVeCNYFNQojsc8wA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755271669; x=1755358069; bh=urhi1yD1P3YYfS1JjT6bG6Ny66FGcQ+VaXa
+	PhTlDvvo=; b=ZNL0EsCMarUdBI10nINEpyAk0MqmQbjb5UiXdpwcI4Pjdz2hkMe
+	1W1Cm3T5xZ9JNw9E0HUAHoBbiMhk4gboJNEW8PGjj7yBo4Lp5QC7ddAnuozynjEy
+	LnJyyaPDYeeMwLK+u/7PjV1HTMdX8dgsZX/KnUvDTJSzK5Oro20kR+Wv8+17ATWT
+	yZNg+0iO1yG87cTFynJnoYMdhgFHVttMHJwxn1yff01pGEY9BFLmEW2ehtYmwo27
+	1Z9R78O4OBcPQTvw1dRopk+39Imu7czDb4sKvFNPlFPFdEom4yvuHWPw18a3Tbws
+	0Kn/W3VsfzqfR8qj4zLjtA+2hOnAYR6WOJg==
+X-ME-Sender: <xms:9FGfaA3gSEz8jHf5qaVNZHjyRff9gW_zTb-ga4X35NDJfRSYPB17Mw>
+    <xme:9FGfaFohOTTH_gdcIXGrmPW1l4RVVEi4G5DkfvWnqOhIj9hBdsb-K4KW3Le8nor6B
+    VF7LL7DKPt1h29JkQ>
+X-ME-Received: <xmr:9FGfaFcdYjRJIxJl-9R98erlAjWCvPnXVfbWGrxS9M57erakT2bmUgPbvi6Jjv0vjdpFXQY5GRiDeJUOZDkyMT4hokmnYXvBOKaVwRg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeegfedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpth
+    htoheptggrlhgvshhthihosehstghivghnthhirgdrohhrghdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:9FGfaMrdl5-fQyn9pNlwW3MNUSwkPYKSJbidjmqfFgE2sIsaBqYh6g>
+    <xmx:9FGfaOE4u1WB-Ed8PYFzuXyDdl4mihLvtoZ5_vyK5Kf0hUKfqN8Sjw>
+    <xmx:9FGfaEtxKMt_raAu4VO63rLzfR8IUAqeaFXe_UN7r0m0wUK560ObBQ>
+    <xmx:9FGfaIWFUmwL2Zd1TaKLjJTpEzOH3Pyvde1Wm2rdQlLWA6Kwve98Lg>
+    <xmx:9VGfaKGlDgxKEdZSOjrjysT1vdXVY2QatCkzBdHSMeT0KCs7TF5BJirD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 15 Aug 2025 11:27:48 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Christoph Anton Mitterer <calestyo@scientia.org>,  git@vger.kernel.org
+Subject: Re: why can't one alias `git stash`?
+In-Reply-To: <CABPp-BHt80YD9bzWeC+r5qxJ0Vp+zRsJZsKDU_GA39CXmuYe5A@mail.gmail.com>
+	(Elijah Newren's message of "Thu, 14 Aug 2025 21:04:03 -0700")
+References: <a24d0d237b9f57535c768da4c00d72bad68cf411.camel@scientia.org>
+	<xmqq7bz5v0mq.fsf@gitster.g>
+	<16220ca65f1ae9883a2fa103e842cf0ffff43236.camel@scientia.org>
+	<CABPp-BHt80YD9bzWeC+r5qxJ0Vp+zRsJZsKDU_GA39CXmuYe5A@mail.gmail.com>
+Date: Fri, 15 Aug 2025 08:27:47 -0700
+Message-ID: <xmqqjz34txjg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_Efficiently_storing_SHA-1_=E2=86=94_SHA-256_mapping?=
- =?UTF-8?Q?s_in_compatibility_mode?=
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
- Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
- Patrick Steinhardt <ps@pks.im>, Jonathan Nieder <jrnieder@gmail.com>
-References: <aJ03RTHaE_JvHA1t@fruit.crustytoothpaste.net>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <aJ03RTHaE_JvHA1t@fruit.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 8/13/2025 9:09 PM, brian m. carlson wrote:
-> TL;DR: We need a different datastore than a flat file for storing
-> mappings between SHA-1 and SHA-256 in compatibility mode.  Advice and
-> opinions sought.
-...> Our approach for mapping object IDs between algorithms uses data in pack
-> index v3 (outlined in the transition document), plus a flat file called
-> `loose-object-idx` for loose objects.  However, we didn't anticipate
-> that we'd need to handle mappings long-term for data that is neither a
-> loose object nor a packed object.
+Elijah Newren <newren@gmail.com> writes:
 
-I'm generally not a fan of this approach to (ab)use the pack index format
-for this, especially when the translation needs to expand beyond "objects
-in the local repo".
+> The documentation you are responding to didn't talk about "other"
+> commands, it talked about "existing" commands.  Your alias, meant to
+> invoke `git stash` with different arguments, would hide the existing
+> `git stash` command.
 
-The requirements, as I see them, are:
+Correct.
 
-1. Given an OID in Hash1, load its mapped OID in Hash2 in O(log N) time.
-2. Given an OID in Hash2, load its mapped OID in Hash1 in O(log N) time.
-3. As OID pairs are discovered, add them to the data structure in ~O(new)
-   time.
+> It might also be an infinite loop of sorts, since your `git stash`
+> alias invokes `git stash ...` which is...itself.
 
-> Some rough ideas of what this could look like:
-> 
-> * We could repurpose the top-bit of the pack order value in pack index
->   v3 to indicate an object that's not in the pack (this would limit us
->   to 2^31 items per pack).
-> * We could put this in new entries in multi-pack index and require that
->   (although I'm not sure that I love the idea of requiring multi-pack
->   index in all repositories and I have yet to implement compatibility
->   mode there).
-> * We could write some sort of quadratic rollup format like reftable.
+True.  But we do not do a very good job preventing this to happen.
 
-My thought is that the last option is going to be best. It does require
-starting a new file format from scratch, but it doesn't need to be
-complicated:
+    $ git -c alias.loop='loop foo' loop foo
+    fatal: recursive alias: loop
+    $ git -c alias.loop='!git loop foo' alias foo ;# does not come back
+    ^C
 
-* Header information includes:
-	- file version info.
-	- hash versions in mapping.
-	- the number of OIDs in the format
-	- the previous mapping file(s) in the chain
-	- offsets to the Hash1 and Hash2 tables.
-	- room for expansion to other data being added to the format,
-	  as necessary in the future.
-* Hash1 table has a lex-ordered list of Hash1 OIDs and int IDs to do
-  lookups of the mapped Hash2 OIDs from the second table (by position).
-* Hash2 table has a lex-ordered list of Hash2 OIDs and int IDs to do
-  lookups of the mapped Hash1 OIDs from the first table (by position).
+To be honest, I do not offhand see a foolproof way to "fix" the
+latter.
 
-Lookup time would be O(L * log N) where L is the number of layers in
-the collection of files. Writing time could be as low as the size of
-a new layer on top, with squashing of layers handled in the background
-or in the foreground (opportunistically for small layers or as needed
-if background maintenance is not available).
+> And it'd mean that other folks who use git commands in their scripts
+> now can't rely on any git commands doing what their documentation
+> claims.
 
-I'm sure that things are more complicated than I'm making it out to
-be in this email. I haven't looked at your branch to see the subtle
-details around this. Hopefully this just gives you ideas that you
-can use as you compare options.
+It is true that it would break common expectations for script
+writers (to help other Git users) and those who help other Git users
+at their keyboards if we allowed to alias the basic command away and
+to change its behaviour radically.  But with so many configuration
+variable to alter behaviour for Porcelain commands, I am not sure
+how much it is helping the latter helpers these days.  For the
+former helpers, those who write their scripts with Porcelain
+commands are beyond salvation X-<.
 
-Thanks,
--Stolee
-
+Thanks.
