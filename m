@@ -1,92 +1,90 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E17850276
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 20:01:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC56DF71
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 21:05:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755288119; cv=none; b=S/6Jru8O0wEPoyOFNyq2kNj3eKJUQGe4nZBat5d749kTPrOp0ABHRvnIxBjfD+mwa9vPrVRoXuuN7ETBhHN4BPTvTPDo+qs8nFV23xhQk4o7ZW7CgRWz9Tkb+yI0CllmvVmn3+BqV099gFYqnWMSnP6St1GlXZ963OIyNSY2qO0=
+	t=1755291934; cv=none; b=An23hnx5N0tuGU2zTY1G/a6x9HJyuGneNvfzlIAI4eixXFJOWUJVwIPjQdYb8YRS6snaKEmW2Gg7Rmu8UoQaflQb9v1YKna7lVppHdZgTx5sw8NxaVpKTBZaYzVOhJ4E9s6DQp79sWGK9dlUqXOT1P6jO2R4+Oz9wLe3WoU+LQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755288119; c=relaxed/simple;
-	bh=46ATkKQ11XL7nIz5xYziGePWa/C/mgANYN/rjxwgGsY=;
+	s=arc-20240116; t=1755291934; c=relaxed/simple;
+	bh=h1z4h3wcomwG7olSCL3/324/ILjh0kYWsgG14Tkpm/A=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uCVpSh1N57JJftSRGuglkHLnp3g0TJzyMAGP7H033gJGjdrGhom3nWOFCd935OD+JzK7KReYiApRZPjCze5tg6hOaKFJ1Xz1YWZNR1cUk0XcBjPUlvzHr/WcMwybd6WnP+jEFLTvnBOeA13SxGpDtZj6utbPNotg/3o0sGZc4fU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ey9MOG94; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GVyYSS+G; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=LHUOqhSj1yufZqs0TP/hTq33cEXXdNLvUjWgUvTz797q0hm3YpLpPYS3zA1TYXhduuEmySbhwhXf9tXrelLPlgpz3sMCeM4UMsUErP6KzCD9XnpSUYHnW1Dsq61Tde7kB0MP90H7JzTXmFSS4YzNmDVZOXqxnB5BUYLjIl59ZGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IVUxiNHM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L2HsNVok; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ey9MOG94";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GVyYSS+G"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 389D4EC00AD;
-	Fri, 15 Aug 2025 16:01:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IVUxiNHM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L2HsNVok"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3ACFBEC0143;
+	Fri, 15 Aug 2025 17:05:30 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Fri, 15 Aug 2025 16:01:56 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 15 Aug 2025 17:05:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755288116; x=1755374516; bh=lmBDLcM1j2
-	tEMEX0TKsrwdV3JjoYU+SXWa2ZtjV2bow=; b=ey9MOG94c3cqLVrVKaWrM/Cd9y
-	UN73EhbnU2bAeAPO6fd6fWQ6LupZJ5FxbY1I12WpaJEk6O6h2C9rhqwc0CTb/C9X
-	JxCst8qk94g9IF+FHGbx38co1K5PWbg/U1vJQ8J5X2K0Z01bYW0rqjYHsHqKpwq9
-	JwbpB8q3S/QaDWGU4iZ4Mlxth/F2VqyCxWHTgxR35/DoUCmTc2m13wXxpH7StsI9
-	xDbgDkBDrwdiItt/IjcfhOEpeELVKw4HIUroq46oLWG+62OCbIWdCpFNVeFQzK+H
-	DGhFyzQ/orCikaP2/Iluo2rTXUWzYD3jmTnXiRutUHXpLpjGAhPHIMHSnmkg==
+	:subject:to:to; s=fm2; t=1755291930; x=1755378330; bh=nX0A+6iKet
+	iyyF7GYL/gwxhEu3OQBAIEq7a6/+ZeT1w=; b=IVUxiNHMwtlSJFXnV+q5oJYozk
+	HnXnMFKU947AP1Wn5EnqfgxzTTCexhlz19Fat7ATLmoK2X1aRO0LXG+uHAD9TeT4
+	MdnYhvB+OdLFhq84mJ8obHhLu+aZq88IMHHliU4au10H2gsKCSh81Scnm/65HLxY
+	OgZfOCIk8zy2bbX7iJMbTy/2oqJV7zOkVpGpfWzvL7IYfQiU9UtXcSya8cAuATGo
+	ro/amuGXSCodxJujnJnG03csrpx0urB8QurVs5UjbkyEKzuL9iGjjSPczpjiLWg5
+	wWCsLWa+DpL7POIrEjjZR3RvqYWOax0rkZLR6QaYEEn/a5Uy0NBC4W3Wri6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755288116; x=1755374516; bh=lmBDLcM1j2tEMEX0TKsrwdV3JjoYU+SXWa2
-	ZtjV2bow=; b=GVyYSS+GHn5RiJtQ0queY8e2IjtnCNyEFs87e/cpZARy5mvMe41
-	2mZHvkGhyv8BoXGxtvXPR+hVHCJgi1GKwU7ZB8YNO8VCSF8N552f1bS5Dms/omuy
-	FLJODiB5g/PHqPDzsjn/EMAo69fsBwf+e/WAqMIqdCjMIhdW5VzylUdzKyNZm9BI
-	rl1Rk1DgfiYEHE8jzmKUdq3JcQS7DvIqGg2DJjzLyE4DOwYdJ1qNc53TpH7F4u2E
-	T+ORfppPphb3wtV1tCf32e3/hjCikY7s86PtHQLLpbk9ZcR5o9Tea75/8lxI5RX9
-	YDHY+IP8ucdM5/P/5oM7VfpswGriOSPA3gA==
-X-ME-Sender: <xms:M5KfaMdiQyKOLY_Na_KFQVZPmon1dPfeSDM0p-Eqk_amW99lZ33y9Q>
-    <xme:M5KfaLy0J67Bqn3enzZDVz2TN6rRfqLDDeZx12FC3Y1-nIFfQqfBzjFu5vCS-qXK9
-    QxjNTrkoz3EdBzDDA>
-X-ME-Received: <xmr:M5KfaD9KSAcpH8dIkWp3omeyNFzDliNdg43E9AjBEzVaHmCpxar5EN7djvl5XeJXvn-dOqC1284h-yVGqIB_rl6EG6HzmkdPyT04ax8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeegkeejucetufdoteggodetrf
+	1755291930; x=1755378330; bh=nX0A+6iKetiyyF7GYL/gwxhEu3OQBAIEq7a
+	6/+ZeT1w=; b=L2HsNVok0vK7x/zPQZfrJbN0b22QkFdyakyQw1l8RJ4oKmJvptr
+	Qd+/aMvemqnIJJkrwQ0y6QGzTGyN+vzZIBSDI78HKDhG7j4I5NZ6sM29ObKkcu3n
+	QcaNO8LIf7nbeH+RXrJ91AywjSJtRHm+IduVPneXxDyTrGGWxhI9BZ4HXi0ymY4g
+	DKL027u5h20T7zh3XOlrbh/0kufAwlfwiavDTaiF0lKx/lhMMW0seaSG9iwhrbq3
+	u1zRd5frfBQxx71XAQtMHxJ1/NCD/p5+ISg5ObndTeiktodGy8PbRGOXhIJvTo8v
+	H7L2YEeUIG8uVlM8GkddlkmncU/dW0yROfw==
+X-ME-Sender: <xms:GaGfaJ_4rwhkdWzt0ETK-sF8ue3EcLswsuGYec74iXJ0UdLnKW-Nvw>
+    <xme:GaGfaKpzbHQklQVXBYtchfFdGa-k54Np7CgoH5txBDLfUWQ8ygvDGjCg4Zmfu8iV2
+    iyuG-2M4hp4DOGTtQ>
+X-ME-Received: <xmr:GaGfaCoZuYM8sJANUwnC1KME0j374FM1dGJbFoifvJ4d3i2VhfoouH1ucHt0YDsbagsTsZNfb8NOUgFI6Fvmaa_Glc1SpiM_VtKbDGI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeegleelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtghhithhg
-    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishdrthhorhgvkhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:M5KfaDgLRWjBB44gtiN8sR3-Ae6YxnrjWhJMtHE2Ejy9aRPmB5ZpnQ>
-    <xmx:M5KfaKF2Z6f8DHZx7toHO3Tg_-lkxu9LHtT--OM8N-wQ86V5WChQxg>
-    <xmx:M5KfaC-E6Kky4mQ49g1sp54egztM1fYZyPEJb7nZfmU3xTV9zcxX0g>
-    <xmx:M5KfaBx9f2qfQaepvXP_bOqaMoIl6lOBxProD77eQrnj6dZB0zdajw>
-    <xmx:NJKfaJrjDvXTSZgfOWi--QXrToqrM7SVkhXyD3sQk7DO6keHve7pvt5K>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:GaGfaF0BYikeVkDUwxIflLU6h2X8akZCUJbJiHSG7pQL6U-IaINGeQ>
+    <xmx:GaGfaIEgaHRMjGMiD1RD77EGMcW8GRwHbyA1RK7zG1OvgHK8bhpGSw>
+    <xmx:GaGfaIENOXXm61eiEDP9Ju0We-wljgU04kYWQYg-iYAIT3WcZ_GSyQ>
+    <xmx:GaGfaD6GDK9T6Ymu_mOokW3hVolNJscePxfNPz2geCcxP01Hai5vIw>
+    <xmx:GqGfaKOSzO6JKE_v9edvm8y0QdZYEuqMlVsE95mmwizjFs9taoiWsE0c>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 Aug 2025 16:01:55 -0400 (EDT)
+ 15 Aug 2025 17:05:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Julia Evans <julia@jvns.ca>,  Julia Evans <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Chris Torek <chris.torek@gmail.com>,  =?utf-8?Q?Je?=
- =?utf-8?Q?an-No=C3=ABl?=
- AVILA <jn.avila@free.fr>
-Subject: Re: [PATCH v2 3/4] doc: git-add: make explanation less dry
-In-Reply-To: <CALnO6CCvL_wc9tkjHCa-9wp7fJMVDt-WHvHZnuOai5HzZb_j8w@mail.gmail.com>
-	(D. Ben Knoble's message of "Fri, 15 Aug 2025 14:25:50 -0400")
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
-	<pull.1952.v2.git.1755127218.gitgitgadget@gmail.com>
-	<ce1eafb02860b390da9359f92fcf098b7cdd3a94.1755127218.git.gitgitgadget@gmail.com>
-	<xmqq349ty254.fsf@gitster.g>
-	<886787d2-26b5-4451-a105-9ab522e38ad6@app.fastmail.com>
-	<CALnO6CCvL_wc9tkjHCa-9wp7fJMVDt-WHvHZnuOai5HzZb_j8w@mail.gmail.com>
-Date: Fri, 15 Aug 2025 13:01:53 -0700
-Message-ID: <xmqqbjogpd5a.fsf@gitster.g>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  Karthik Nayak <karthik.188@gmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v8 4/5] doc: git-rebase: move --onto explanation down
+In-Reply-To: <4686417b28e4ab386983ad68e4d4d4798a467811.1755276751.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Fri, 15 Aug 2025 16:52:29
+	+0000")
+References: <pull.1949.v7.git.1755006568.gitgitgadget@gmail.com>
+	<pull.1949.v8.git.1755276750.gitgitgadget@gmail.com>
+	<4686417b28e4ab386983ad68e4d4d4798a467811.1755276751.git.gitgitgadget@gmail.com>
+Date: Fri, 15 Aug 2025 14:05:28 -0700
+Message-ID: <xmqqh5y8nvmv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,36 +94,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> As Junio likes to say, a mistake being old is no good reason to carry
-> it forward into the future (or replicate it).
+> From: Julia Evans <julia@jvns.ca>
+>
+> There's a very clear explanation with examples of using --onto which is
+> currently buried in the very long DESCRIPTION section. This moves it to
+> its own section, so that we can reference the explanation from the
+> `--onto` option by name.
+>
+> Signed-off-by: Julia Evans <julia@jvns.ca>
+> ---
+>  Documentation/git-rebase.adoc | 168 ++++++++++++++++++----------------
+>  1 file changed, 87 insertions(+), 81 deletions(-)
 
-I say no such thing, though.  What I say about past mistakes is that
-you shouldn't use it as an excuse to make similar ones in the
-future.
+Deduplicating is very good idea.
 
-I'd prefer to let a sleeping dog lie.
+I gave a read-through over the result of the entire series,
+including the parts that did not change, to see if the new
+organization is easy to read and coherently tells the story
+we want to tell, and what I saw was mostly very pleasing, except for
+one thing.
 
-But in the context of this discussion, I think what we carefully and
-honestly need to look at are not past mistakes.  It is importance to
-adjust to the new world we live in.
+The new location of this section on "--onto" felt a bit off.
+Perhaps it is just me, but in case others have different opinions,
+I'd raise it here.
 
-In early days of Git, people from older SCM systems did not grok the
-index very well, so our explanation of the concept of index and
-adding content to it may have focused on teaching the difference
-between our system and the back-then-major SCM systems.  Unless you
-have used Bitkeeper, the "you can commit and your doing so would not
-bother anybody else" plus "you can rewrite your private history
-until you can pretend to be a super developer who came to the best
-solution with a single attempt" freedom were something quite new,
-and we needed to educate folks the way to think and work well in the
-distributed world.  Earlier in one of my messages, I said "making a
-commit and switching to another commit is cheap", and that comment
-came out of habit, but that is only understood by folks who have
-used older SCM systems we displaced.
+The overall structure of the document with these patches becomes:
 
-But with so many new users who haven't even touched anything other
-than Git, none of the above examples certainly may not be the best
-way to teach these things to these new crop of users.
+ - description that gives a simplified "what is achieved".
 
+ - "mode options" that control what to do during a rebase once the
+   user is given control back
+
+ - "options" that is given upfront
+
+ - notes about incompatible options
+
+ - discussions about apply/merge backends and how they differ
+
+ - overall notes on advanced topics
+
+   - interactive mode basics
+
+   - splitting commits
+
+   - use of --onto
+
+   - dealing with rebased upstream
+
+   - rebasing merges
+
+Is it so exotic to use "--onto" to replay a topic to somewhere other
+than the direct descendant of the fork point, to make it a part of
+advanced topics?  I somehow doubt it.  It is a very basic and common
+thing to do while correcting a mistake of choosing a wrong base
+commit.  You often realize that your topic is basically good but has
+to work well with a different base commit.
+
+I wonder if it gives the same understanding with a much shorter text
+and illustration if we get rid of that section, and mention --onto
+as a part of the early examples in the description section.  That
+way, we can reuse the "set up" of user's brain and context we
+already made with the existing example.
+
+For example, after showing the rebase of A..C on top of G, we can
+mention that the range can be transplanted on top of commit other
+than G, say D.  Perhaps we can say that 'D' is still part of the
+maintenance track, and the topic being a fix for a bug that happened
+before D, it should not have forked from E that is a feature
+enhancement commit that is not eligible for being on the maintenance
+track.  That would be a good reason why the user may want to move
+A..C on top of D instead of E.
