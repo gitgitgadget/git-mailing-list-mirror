@@ -1,78 +1,79 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200498821
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 01:23:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2702C1C5F23
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 01:23:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755220984; cv=none; b=aShFaYs227keJRA84R3xSkxXnZRr55ZMjuvYKvEDG5c1vJZuDVOFXHyzmVou3r2Ic/0Jjwzgs84rdbJdXxeD+JqhwTK1YzADlVhrut1YbN/1WF9aQdwFGqTBvJmPM0VhYp5Gza9DmgGyCv9sshJ4kKbXl8LamP00dIPsN9D3pAc=
+	t=1755220985; cv=none; b=WW6vFUv4R0gjwJnveJMxWyi7nO8mMs93JV2H+3dl+lwpcADf81xPrABb9DXIgYbtq5VqYN/eJCayv8dNmdYSlhbI0F0j0Ak6kRSNdgg/uldtIlxWB4+ix8eMLKLV2LJFP2egEGNK+mhTtj50MYnEtekVbahqu6z2x1Rz/w7vUBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755220984; c=relaxed/simple;
-	bh=qpbwRDmWTrU/iMeZlM7UNvGXfjE8tjAS0dE623MraWo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=WQ9yDZjznLupadAtLJxQWlkMH1aK119vR7ERaEPaIKr5u/aApxJTfNLy3Cq6FqaGvATg36QtLhCVpjEv6rINqs5qW2N0bymCwnNH27b5nAyYo2bpUBDwvdqLIB8ZbQvYfT7HIgVu3gRc3sQnQ//bZlsfZmyXQpaX6fm93NrD6tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MLiDfhqF; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1755220985; c=relaxed/simple;
+	bh=oIPEtVLCXDmtznHcf1E97QMnrm1OGhtHEzf05RF8/x0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=o8MV+vzp2X3pkfggbcdjilgTzskfGM87H71QxgRIym9onU475axmgF/xv5+mxkYho+DGDwkWQz9yNeCqzdm82ax1hPK1YsKvlZNNfAiqNgoVzwUwo3xHiuD3zDYVV5AOdrkKlTt+d6+ho/eYaau7MjDIFA5LWOQsAt584zv8Z+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fdg1gC7/; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MLiDfhqF"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3b9e414252dso785934f8f.3
-        for <git@vger.kernel.org>; Thu, 14 Aug 2025 18:23:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fdg1gC7/"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45a1b0c82eeso10572675e9.3
+        for <git@vger.kernel.org>; Thu, 14 Aug 2025 18:23:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755220980; x=1755825780; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        d=gmail.com; s=20230601; t=1755220981; x=1755825781; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5pYephi1PsUS9lGpl+zaJ9ZM/EPzW72T/FVD04OP6/c=;
-        b=MLiDfhqFhVqFkoGVICuyFkt3VEXWulHqMAQ5oSh45k51QK5pa19dGEK3imXGDb6SW9
-         6fYmb/xyDlmCJTJZYfnCn8N2+gz08TyfrejZFyOa4S6TnFZTABKYYpP1HYSK2pIwhMzv
-         +/hiUeAdIYwDIKELhN7kBCVKptXTciyXgrxEa5RF49e51ROkelHOqs1MUCKIs1hTX/Sc
-         9w8ugCqDj47sv6BatN2ZcnDbWJHU0uQg6qdsQG8Xmv/3tivU6/if08vDCW6y59oNNx1Q
-         wgrF5X2nrhoLTIvYrYfAplRirWJjlq/8/MtkOTUZ5dTvuwmlzdHZRFiKkBPE6G3TqMCn
-         7ufg==
+        bh=/gqSZrzwmAhY1ycbZZvFyGq9/InariMvI+QQ39U/1nY=;
+        b=fdg1gC7/5Q1/DUJJXWPbM/7geinnT3G0Xq2h7QGUIyFx3ipIiqV6OGblJFtWo/7vLS
+         W7m3Xtclv+nPWFOTXyFSlVx8Nw4CW9HD1KB4y8PS0XyjrMnxnQWG/lb6eK/eULngO3SS
+         leYUM6AAV1PIi8lvD2Y7Jo5fjdSEgx8GRH30CtYBvPywWOeV3e/8+Gcka4Ks4ScHCaRB
+         SZjeWLi2s8T9QEw3+v7J44QBnkKcXz38ETejIKN3iuUktovar1FQPnxmB3W13H1azqbG
+         xcgrnqNT9wQ1GpnDDa+vnHAbeHl9VjcRWZNIQRM9xFb+pegrAirerO9zYi8LDZyRZGdu
+         7klg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755220980; x=1755825780;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        d=1e100.net; s=20230601; t=1755220981; x=1755825781;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5pYephi1PsUS9lGpl+zaJ9ZM/EPzW72T/FVD04OP6/c=;
-        b=KfxeUi3NVRLcl07RnmA29JJmxnxLZD3ObhEBRyyxQ+lV29BYPTmHre49PUqeC5tB3w
-         Wt+yP+2TKyFpHHrXHqXTDRHCeI0EqjLFgprBMA6zXUoiVwdavigYhinpAmoyj70hEBFD
-         OXjPdPkowJZiTGPGhYTLx/4bIJ3Y/4R9HxcePWTfVuRRZrM3hrnl1vQRVtOZNmYQcz2Y
-         BbLM66lHUqYbM3fnmwWeTDkfSDSHadXKl8MTJ9iXu1013kDUfpfHpWJNY7ZLVuM05+ft
-         oQZSsY6Xz6RXrP3u+QkeKhRc1Jv5I/c60rqG1ZeA8XP+3CV5igmP1d1+fTBerL9CVEPI
-         dy2w==
-X-Gm-Message-State: AOJu0Yyu9oULYdwVF0u0UOXW/IUY2cpBQodxM9LF5dd2meNBqz467vqT
-	b406qs9KyOpPZu1zj4Jmpn0ouR6bIKUknz0rj1wXHYrELSY4GB40ePFOo6q5qA==
-X-Gm-Gg: ASbGncsfcMk3ujDi4RnxMYhEomGElQZOv30B2+7KYicIp/eiZYQ6ion+FCB4PsHuYwY
-	MlSrSMdcyxC+hCX8QFTX/tlfFN+TfKam8wbZXGvMAovA+tk2WipxfTZKL8E0sw1zNljvC2hKoTb
-	b3fQz18jYg0ltTgN9U0FZBlKYKlwTQGiwS5YfegIL17plzleyS64Zmm5X7p6WGW8jSKGfFX6Zmi
-	5mvyBzIqpt7+tubAT8EFoCROx5yTIEVXBYR0xOUxbzpfaY8Nlo792+QJbNa2wU6jmyl+o7P/+vH
-	Pz5jCGD1CE8Jfl4cDdcS6GAx7K7ox6c+7L/Y1R7vJeA7TTU7SsX5wz9p/PsTGGFiPG+PWtWHCd7
-	6JIN8wa/3q9bBx8dFXmhHQb4=
-X-Google-Smtp-Source: AGHT+IHaqqcTMBeczF68/n9BHKTYxIjRcgSi7SQytpBXFWWL5p05bygdUHFp5MrIdg0tBUwz1n1dLg==
-X-Received: by 2002:a05:6000:430b:b0:3a4:eed9:755d with SMTP id ffacd0b85a97d-3bb6665cef3mr95470f8f.3.1755220980036;
-        Thu, 14 Aug 2025 18:23:00 -0700 (PDT)
+        bh=/gqSZrzwmAhY1ycbZZvFyGq9/InariMvI+QQ39U/1nY=;
+        b=W+lQXmhjDYdQHndn0kzljH1P96lWHhAbVplZxeiNpvfg5nTixcEG/j15NDg+2gn0D8
+         Pkg3BO187lOkder0a/JQoMiIaRXh4+/m3CTU+wJxwa2iGjAgCs1IBoU1N1v/BYWPNVuE
+         bFA5RnxMjFSgyxBzTIr3ngDtK3FV1MGldhyw6beIBtB47h63JhNu/gPWq657oVMLd8bP
+         eSPqIN7v2jAfTjeF+dAcQC5sIpeHSRAcod6o1kBNub8goKtinHpygzYrwmINW043Ozi3
+         xLtdy4pyuuohJKZCADhFrjxNWUp0pCd/bZL0bCy8ksLNSxvabje8RZW7bgmzSDC9/z6u
+         5d/w==
+X-Gm-Message-State: AOJu0Yxlt3ekCjNjDnf1o72AVrP35qs5IBj/6Nx/zTsjPXpDlkCa1Fjk
+	rFPMIT/Y7Vj4z/8xt10MQ+JisXj6ScGqNUlqPe3W/AzC+EmBRDpXRgq7zBRvJw==
+X-Gm-Gg: ASbGncsbgvf6KQaQyX5y61KMVNEtJavsU7+ItU8ChcGiXphbkQNYMTjxVhwk+ZbM1Vs
+	SSqxqjQeKq/nwnd6xhh3j3ka894Zn+Gb8+D1jk9TsjCgntA6n1kJu/s2avqUpyZIwTYKSkOQ4BV
+	3nqO3xJdIQ6e7OKwABz7SYWYU0bap4OydxZzbGjeOjlmXneKAnBfYnNKBbT4raWCd9Rmf+4zsl0
+	seSET/UFTkZZTRTR03kJt2zjtmlbi6/F2mt5HZ8oNAMU/p8TcznALhEd7wOH2vh4PW3q+WVXeHy
+	uBd8oC/VVwBy74RPeY7PMyuHSw7sSeDTFo0E8P61bybPGKzqFdAaWh4esD+c47nLBQiXrMH/idR
+	Y+Kx7QIKj2KwOhI31ztReD0EMQWegk0zizA==
+X-Google-Smtp-Source: AGHT+IH3laeXcQY6HezuxhE6us5yfgLKuiivjtXeP/0q5tlb5jJx3RFwLwkAw2RDmPYlX4aRpCP2jw==
+X-Received: by 2002:a05:600c:3513:b0:459:dd34:52fb with SMTP id 5b1f17b1804b1-45a2180557emr3005085e9.12.1755220981061;
+        Thu, 14 Aug 2025 18:23:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3bb6816ef48sm100615f8f.58.2025.08.14.18.22.59
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c6cec65sm41103505e9.11.2025.08.14.18.23.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Aug 2025 18:22:59 -0700 (PDT)
-Message-Id: <8762349599411de6ce85347c74f2fcaf129124cd.1755220973.git.gitgitgadget@gmail.com>
+        Thu, 14 Aug 2025 18:23:00 -0700 (PDT)
+Message-Id: <d74fd4ef67a35fe453cbddab4641dfbef161c9c0.1755220973.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
 References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
 	<pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 15 Aug 2025 01:22:41 +0000
-Subject: [PATCH v2 06/17] xdiff: separate parsing lines from hashing them
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Fri, 15 Aug 2025 01:22:42 +0000
+Subject: [PATCH v2 07/17] xdiff: conditionally use Rust's implementation of
+ xxhash
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>,
     "brian m. carlson" <sandals@crustytoothpaste.net>,
@@ -94,138 +95,132 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-We want to use xxhash for faster hashing. To facilitate that
-and to simplify the code. Separate the concerns of parsing
-and hashing into discrete steps. This makes swapping the hash
-function much easier. Since xdl_hash_record() both parses and
-hashses lines, this requires some slight code restructuring.
+When no whitespace flags are present use xxhash, for faster
+hashing, otherwise use DJB2a (which is what xdiff has been
+using all along).
+
+The benchmark below compares my series with version v2.49.0
+(built in build_release/ and build_v2.49.0/ respectively),
+running log commands on linux kernel with 3 different machines.
+
+$ BASE=/path/to/git/root
+
+    // laptop
+    // CPU: 6-core Intel Core i7-8750H (-MT MCP-) speed/min/max: 726/800/4100 MHz
+    $ hyperfine --warmup 3 -L exe $BASE/build_release/git,$BASE/build_v2.49.0/git '{exe} log --oneline --shortstat v6.8..v6.9 >/dev/null'
+    Benchmark 1: /home/ezekiel/development/work/git/build_release/git log --oneline --shortstat v6.8..v6.9 >/dev/null
+      Time (mean ± σ):     10.419 s ±  0.166 s    [User: 10.097 s, System: 0.284 s]
+      Range (min … max):   10.215 s … 10.680 s    10 runs
+
+    Benchmark 2: /home/ezekiel/development/work/git/build_v2.49.0/git log --oneline --shortstat v6.8..v6.9 >/dev/null
+      Time (mean ± σ):     10.980 s ±  0.137 s    [User: 10.633 s, System: 0.308 s]
+      Range (min … max):   10.791 s … 11.178 s    10 runs
+
+    Summary
+      /home/ezekiel/development/work/git/build_release/git log --oneline --shortstat v6.8..v6.9 >/dev/null ran
+        1.05 ± 0.02 times faster than /home/ezekiel/development/work/git/build_v2.49.0/git log --oneline --shortstat v6.8..v6.9 >/dev/null
+
+    // desktop
+    // CPU: 8-core Intel Core i7-9700 (-MCP-) speed/min/max: 800/800/4700 MHz
+    $ hyperfine --warmup 3 -L exe $BASE/build_release/git,$BASE/build_v2.49.0/git '{exe} log --oneline --shortstat v6.8..v6.9 >/dev/null'
+    Benchmark 1: /home/steamuser/dev/git/build_release/git log --oneline --shortstat v6.8..v6.9 >/dev/null
+      Time (mean ± σ):      6.823 s ±  0.020 s    [User: 6.624 s, System: 0.180 s]
+      Range (min … max):    6.801 s …  6.858 s    10 runs
+
+    Benchmark 2: /home/steamuser/dev/git/build_v2.49.0/git log --oneline --shortstat v6.8..v6.9 >/dev/null
+      Time (mean ± σ):      8.151 s ±  0.024 s    [User: 7.928 s, System: 0.198 s]
+      Range (min … max):    8.105 s …  8.184 s    10 runs
+
+    Summary
+      /home/steamuser/dev/git/build_release/git log --oneline --shortstat v6.8..v6.9 >/dev/null ran
+        1.19 ± 0.01 times faster than /home/steamuser/dev/git/build_v2.49.0/git log --oneline --shortstat v6.8..v6.9 >/dev/null
+
+    // router
+    // CPU: dual core Intel Celeron 3965U (-MCP-) speed/min/max: 1300/400/2200 MHz
+    $ hyperfine --warmup 3 -L exe $BASE/build_release/git,$BASE/build_v2.49.0/git '{exe} log --oneline --shortstat v6.8..v6.9 >/dev/null'
+    Benchmark 1: /home/metal/dev/git/build_release/git log --oneline --shortstat v6.8..v6.9 >/dev/null
+      Time (mean ± σ):     21.209 s ±  0.054 s    [User: 20.341 s, System: 0.605 s]
+      Range (min … max):   21.135 s … 21.309 s    10 runs
+
+    Benchmark 2: /home/metal/dev/git/build_v2.49.0/git log --oneline --shortstat v6.8..v6.9 >/dev/null
+      Time (mean ± σ):     23.683 s ±  0.060 s    [User: 22.735 s, System: 0.672 s]
+      Range (min … max):   23.566 s … 23.751 s    10 runs
+
+    Summary
+      /home/metal/dev/git/build_release/git log --oneline --shortstat v6.8..v6.9 >/dev/null ran
+        1.12 ± 0.00 times faster than /home/metal/dev/git/build_v2.49.0/git log --oneline --shortstat v6.8..v6.9 >/dev/null
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- xdiff/xprepare.c | 75 ++++++++++++++++++++++++++++--------------------
- 1 file changed, 44 insertions(+), 31 deletions(-)
+ rust/xdiff/Cargo.toml |  1 +
+ rust/xdiff/src/lib.rs |  7 +++++++
+ xdiff/xprepare.c      | 19 +++++++++++++++++--
+ 3 files changed, 25 insertions(+), 2 deletions(-)
 
+diff --git a/rust/xdiff/Cargo.toml b/rust/xdiff/Cargo.toml
+index eb7966aada64..1516e829db18 100644
+--- a/rust/xdiff/Cargo.toml
++++ b/rust/xdiff/Cargo.toml
+@@ -13,3 +13,4 @@ crate-type = ["staticlib", "rlib"]
+ 
+ [dependencies]
+ interop = { path = "../interop" }
++xxhash-rust = { version = "0.8.15", features = ["xxh3"] }
+diff --git a/rust/xdiff/src/lib.rs b/rust/xdiff/src/lib.rs
+index e69de29bb2d1..96975975a1ba 100644
+--- a/rust/xdiff/src/lib.rs
++++ b/rust/xdiff/src/lib.rs
+@@ -0,0 +1,7 @@
++
++
++#[no_mangle]
++unsafe extern "C" fn xxh3_64(ptr: *const u8, size: usize) -> u64 {
++    let slice = std::slice::from_raw_parts(ptr, size);
++    xxhash_rust::xxh3::xxh3_64(slice)
++}
 diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index 00cdf7d8a038..031c1752cc1a 100644
+index 031c1752cc1a..c0463bacd94b 100644
 --- a/xdiff/xprepare.c
 +++ b/xdiff/xprepare.c
-@@ -129,13 +129,39 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
+@@ -160,6 +160,9 @@ static void xdl_parse_lines(mmfile_t *mf, long narec, xdfile_t *xdf) {
  }
  
  
-+static void xdl_parse_lines(mmfile_t *mf, long narec, xdfile_t *xdf) {
-+	u8 const* ptr = (u8 const*) mf->ptr;
-+	usize len = (usize) mf->size;
-+
-+	xdf->recs = NULL;
-+	xdf->nrec = 0;
-+	XDL_ALLOC_ARRAY(xdf->recs, narec);
-+
-+	while (len > 0) {
-+		xrecord_t *rec = NULL;
-+		usize length;
-+		u8 const* result = memchr(ptr, '\n', len);
-+		if (result) {
-+			length = result - ptr + 1;
-+		} else {
-+			length = len;
-+		}
-+		if (XDL_ALLOC_GROW(xdf->recs, xdf->nrec + 1, narec))
-+			die("XDL_ALLOC_GROW failed");
-+		rec = xdl_cha_alloc(&xdf->rcha);
-+		rec->ptr = ptr;
-+		rec->size = length;
-+		rec->ha = 0;
-+		xdf->recs[xdf->nrec++] = rec;
-+		ptr += length;
-+		len -= length;
-+	}
-+
-+}
++extern u64 xxh3_64(u8 const* ptr, usize size);
 +
 +
  static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_t const *xpp,
  			   xdlclassifier_t *cf, xdfile_t *xdf) {
--	long nrec, bsize;
--	unsigned long hav;
--	char const *blk, *cur, *top, *prev;
--	xrecord_t *crec;
--	xrecord_t **recs;
  	unsigned long *ha;
- 	char *rchg;
- 	long *rindex;
-@@ -143,50 +169,37 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 	ha = NULL;
- 	rindex = NULL;
- 	rchg = NULL;
--	recs = NULL;
+@@ -175,14 +178,26 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
  
- 	if (xdl_cha_init(&xdf->rcha, sizeof(xrecord_t), narec / 4 + 1) < 0)
- 		goto abort;
--	if (!XDL_ALLOC_ARRAY(recs, narec))
--		goto abort;
+ 	xdl_parse_lines(mf, narec, xdf);
  
--	nrec = 0;
--	if ((cur = blk = xdl_mmfile_first(mf, &bsize))) {
--		for (top = blk + bsize; cur < top; ) {
--			prev = cur;
--			hav = xdl_hash_record(&cur, top, xpp->flags);
--			if (XDL_ALLOC_GROW(recs, nrec + 1, narec))
--				goto abort;
--			if (!(crec = xdl_cha_alloc(&xdf->rcha)))
--				goto abort;
--			crec->ptr = (u8 const*) prev;
--			crec->size = (long) (cur - prev);
--			crec->ha = hav;
--			recs[nrec++] = crec;
--			if (xdl_classify_record(pass, cf, crec) < 0)
--				goto abort;
--		}
-+	xdl_parse_lines(mf, narec, xdf);
++	if ((xpp->flags & XDF_WHITESPACE_FLAGS) == 0) {
++		for (usize i = 0; i < (usize) xdf->nrec; i++) {
++			xrecord_t *rec = xdf->recs[i];
++			rec->ha = xxh3_64(rec->ptr, rec->size);
++		}
++	} else {
++		for (usize i = 0; i < (usize) xdf->nrec; i++) {
++			xrecord_t *rec = xdf->recs[i];
++			char const* dump = (char const*) rec->ptr;
++			rec->ha = xdl_hash_record(&dump, (char const*) (rec->ptr + rec->size), xpp->flags);
++		}
++	}
 +
-+	for (usize i = 0; i < (usize) xdf->nrec; i++) {
-+		xrecord_t *rec = xdf->recs[i];
-+		char const* dump = (char const*) rec->ptr;
-+		rec->ha = xdl_hash_record(&dump, (char const*) (rec->ptr + rec->size), xpp->flags);
-+		xdl_classify_record(pass, cf, rec);
+ 	for (usize i = 0; i < (usize) xdf->nrec; i++) {
+ 		xrecord_t *rec = xdf->recs[i];
+-		char const* dump = (char const*) rec->ptr;
+-		rec->ha = xdl_hash_record(&dump, (char const*) (rec->ptr + rec->size), xpp->flags);
+ 		xdl_classify_record(pass, cf, rec);
  	}
  
--	if (!XDL_CALLOC_ARRAY(rchg, nrec + 2))
+ 
 +
-+	if (!XDL_CALLOC_ARRAY(rchg, xdf->nrec + 2))
+ 	if (!XDL_CALLOC_ARRAY(rchg, xdf->nrec + 2))
  		goto abort;
  
- 	if ((XDF_DIFF_ALG(xpp->flags) != XDF_PATIENCE_DIFF) &&
- 	    (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF)) {
--		if (!XDL_ALLOC_ARRAY(rindex, nrec + 1))
-+		if (!XDL_ALLOC_ARRAY(rindex, xdf->nrec + 1))
- 			goto abort;
--		if (!XDL_ALLOC_ARRAY(ha, nrec + 1))
-+		if (!XDL_ALLOC_ARRAY(ha, xdf->nrec + 1))
- 			goto abort;
- 	}
- 
--	xdf->nrec = nrec;
--	xdf->recs = recs;
- 	xdf->rchg = rchg + 1;
- 	xdf->rindex = rindex;
- 	xdf->nreff = 0;
- 	xdf->ha = ha;
- 	xdf->dstart = 0;
--	xdf->dend = nrec - 1;
-+	xdf->dend = xdf->nrec - 1;
- 
- 	return 0;
- 
-@@ -194,7 +207,7 @@ abort:
- 	xdl_free(ha);
- 	xdl_free(rindex);
- 	xdl_free(rchg);
--	xdl_free(recs);
-+	xdl_free(xdf->recs);
- 	xdl_cha_free(&xdf->rcha);
- 	return -1;
- }
 -- 
 gitgitgadget
 
