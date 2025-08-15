@@ -1,90 +1,102 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC56DF71
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 21:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CD3201113
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 21:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755291934; cv=none; b=An23hnx5N0tuGU2zTY1G/a6x9HJyuGneNvfzlIAI4eixXFJOWUJVwIPjQdYb8YRS6snaKEmW2Gg7Rmu8UoQaflQb9v1YKna7lVppHdZgTx5sw8NxaVpKTBZaYzVOhJ4E9s6DQp79sWGK9dlUqXOT1P6jO2R4+Oz9wLe3WoU+LQw=
+	t=1755293469; cv=none; b=h7nXPLk5eH/bHDI9L7WQIicfUOKxilqngTJxT6L/6ZGvCTTkqBQjFbaGcD0xOshyDqC/9h27mguY+6oK4exADUCFhZSYsOhy/C/svqvmXOnQe5jrGN3upDhIuzIE4cBx8n+Up1PmLzJcWhQMao73GlUZguRUwMrrBjdJgRl8O+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755291934; c=relaxed/simple;
-	bh=h1z4h3wcomwG7olSCL3/324/ILjh0kYWsgG14Tkpm/A=;
+	s=arc-20240116; t=1755293469; c=relaxed/simple;
+	bh=eYWbWzeQ2s8K7FfXZnxDu4+po8NROZ97phnYBdERHW0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LHUOqhSj1yufZqs0TP/hTq33cEXXdNLvUjWgUvTz797q0hm3YpLpPYS3zA1TYXhduuEmySbhwhXf9tXrelLPlgpz3sMCeM4UMsUErP6KzCD9XnpSUYHnW1Dsq61Tde7kB0MP90H7JzTXmFSS4YzNmDVZOXqxnB5BUYLjIl59ZGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IVUxiNHM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L2HsNVok; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=I32I+OhZJ38dA4AfWSpXJubAbbpVnpHzg2r+n5zKdWVDFxTmiFXnso5n8RvKiTkCmrFc89jniBl3/1rbRDj7DKUOAcTzcAZ0vcud7QGC3HtBBywuoYoV/rvJw3I3oBvy8AU/8P2eLlpv4fuxSpuUG7ERkiRFNgJzJM7IBJV/df0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XbwqFifh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WMGSNk6m; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IVUxiNHM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L2HsNVok"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3ACFBEC0143;
-	Fri, 15 Aug 2025 17:05:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XbwqFifh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WMGSNk6m"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id EDC2AEC01B2;
+	Fri, 15 Aug 2025 17:31:04 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 15 Aug 2025 17:05:30 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 15 Aug 2025 17:31:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755291930; x=1755378330; bh=nX0A+6iKet
-	iyyF7GYL/gwxhEu3OQBAIEq7a6/+ZeT1w=; b=IVUxiNHMwtlSJFXnV+q5oJYozk
-	HnXnMFKU947AP1Wn5EnqfgxzTTCexhlz19Fat7ATLmoK2X1aRO0LXG+uHAD9TeT4
-	MdnYhvB+OdLFhq84mJ8obHhLu+aZq88IMHHliU4au10H2gsKCSh81Scnm/65HLxY
-	OgZfOCIk8zy2bbX7iJMbTy/2oqJV7zOkVpGpfWzvL7IYfQiU9UtXcSya8cAuATGo
-	ro/amuGXSCodxJujnJnG03csrpx0urB8QurVs5UjbkyEKzuL9iGjjSPczpjiLWg5
-	wWCsLWa+DpL7POIrEjjZR3RvqYWOax0rkZLR6QaYEEn/a5Uy0NBC4W3Wri6g==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1755293464;
+	 x=1755379864; bh=0G6DQdNprAI2W8ehNYIf68B5Z52lLBXMhr6oWXdfPfI=; b=
+	XbwqFifhM3xbi0hu2EHfMgZMZtnqwNCBuEAAvbtb+86iutG1BHmpOJEZEu84G4/p
+	DhoLS7n69fUDgv7u5DTkWtsoOFsT3yaQdoX1lZlwEG0pIM/k3MY+RkO/JU3aUczN
+	/0QItWUCLpwnjsejjXM29GyHryMmcAHm9gMkK12+K5xWzRvxSpsWfozh/HvR6Jjg
+	TLDtgj21M7geGmH2R5UdnCwFBA3Hz2TuxkVkhI669eKGyVuLOiAyzSivjSLom5cV
+	zBIkeKYOuL6NhdNcTman7zzX/s/WfHkjIaYbGEyFzd4TtWBgmIXPfaQmYRuyqWpA
+	pcJozauTWBc+RMTK3BJbTQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755291930; x=1755378330; bh=nX0A+6iKetiyyF7GYL/gwxhEu3OQBAIEq7a
-	6/+ZeT1w=; b=L2HsNVok0vK7x/zPQZfrJbN0b22QkFdyakyQw1l8RJ4oKmJvptr
-	Qd+/aMvemqnIJJkrwQ0y6QGzTGyN+vzZIBSDI78HKDhG7j4I5NZ6sM29ObKkcu3n
-	QcaNO8LIf7nbeH+RXrJ91AywjSJtRHm+IduVPneXxDyTrGGWxhI9BZ4HXi0ymY4g
-	DKL027u5h20T7zh3XOlrbh/0kufAwlfwiavDTaiF0lKx/lhMMW0seaSG9iwhrbq3
-	u1zRd5frfBQxx71XAQtMHxJ1/NCD/p5+ISg5ObndTeiktodGy8PbRGOXhIJvTo8v
-	H7L2YEeUIG8uVlM8GkddlkmncU/dW0yROfw==
-X-ME-Sender: <xms:GaGfaJ_4rwhkdWzt0ETK-sF8ue3EcLswsuGYec74iXJ0UdLnKW-Nvw>
-    <xme:GaGfaKpzbHQklQVXBYtchfFdGa-k54Np7CgoH5txBDLfUWQ8ygvDGjCg4Zmfu8iV2
-    iyuG-2M4hp4DOGTtQ>
-X-ME-Received: <xmr:GaGfaCoZuYM8sJANUwnC1KME0j374FM1dGJbFoifvJ4d3i2VhfoouH1ucHt0YDsbagsTsZNfb8NOUgFI6Fvmaa_Glc1SpiM_VtKbDGI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeegleelucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755293464; x=
+	1755379864; bh=0G6DQdNprAI2W8ehNYIf68B5Z52lLBXMhr6oWXdfPfI=; b=W
+	MGSNk6mNimeuXcNBX+tkf3KrwTbzm5cadTMql81mYmHyBn1NBMcQJwF+AsjdGvR+
+	o1VJ8nYpI9+YRUJWyP4dTJNQRXVhz7ny3v1pgF8/rsIOJNQILIx1pssyDNmfRlwU
+	Q5i7afkZXB7FksFVNiBgznWbbZPj3tBG24DxpzxAep7ZyYiLLLOPiqbvEUtWaNx8
+	A1inIxZdQxE2QV5fTyP4+3EDq5JKQyjoGBdkb5dhhTCzF7BgOWfmP2zP2N+LtMWV
+	rXSahtaZeoRA8jebg7gci34uWQJPkxBdTfCiBYwyi6y50vUce4p1/9bVZj2qGJ1y
+	BaVaeiTKKJtKCKYKFSVGw==
+X-ME-Sender: <xms:F6efaLysZ2bldRfGDo4m6PhtSrIl253FCWhQbM7WyoU4J1v_Hj7ALw>
+    <xme:F6efaIyTRE9vfwj4yu0-n00V6rcohksGX2YTGT99lTu6R_ij1QfOocTDJBjkv-gnh
+    GIRKZZWYg0EPJXxHA>
+X-ME-Received: <xmr:F6efaNox7Sv0PLyJauh5SZJdUZUql_C7kDrzaID_OdcSjrWlGoldpIbvQnXrXNzQpR5ZgimoQZg5qoVErvCplPcAzxo5NSSH3UmvR1M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeehtdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlih
-    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
-    mhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:GaGfaF0BYikeVkDUwxIflLU6h2X8akZCUJbJiHSG7pQL6U-IaINGeQ>
-    <xmx:GaGfaIEgaHRMjGMiD1RD77EGMcW8GRwHbyA1RK7zG1OvgHK8bhpGSw>
-    <xmx:GaGfaIENOXXm61eiEDP9Ju0We-wljgU04kYWQYg-iYAIT3WcZ_GSyQ>
-    <xmx:GaGfaD6GDK9T6Ymu_mOokW3hVolNJscePxfNPz2geCcxP01Hai5vIw>
-    <xmx:GqGfaKOSzO6JKE_v9edvm8y0QdZYEuqMlVsE95mmwizjFs9taoiWsE0c>
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduledpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepmhhhrgduleelfeeslhhivhgvrdguvgdprhgtph
+    htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhp
+    rghsthgvrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtph
+    htthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfiho
+    ohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthhifrghrthiisehgvg
+    hnthhoohdrohhrgh
+X-ME-Proxy: <xmx:F6efaDnVdmv9f38Ft2SUMkazKPxpmGjPYlJfca5f5qEPIT3ITYUfOQ>
+    <xmx:F6efaOy1rIcMbpNpjhYXg-q3eEBIKqZk_YtiZJCh_y7zSUfZz2dt9Q>
+    <xmx:F6efaA2HMWPCBUfgX3he443F-_YjphbPfLxVJlcGVkwlErpm06NFyA>
+    <xmx:F6efaCCMS5Yfh25o0cp_C_KvR3uGAx_1YmgEhleYDrzJbVyTU6xcbQ>
+    <xmx:GKefaKyZAQ8IEm6-idDDvBJDlELcxpBAJwUVht0PecctkPRqfSrUB4q2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 Aug 2025 17:05:29 -0400 (EDT)
+ 15 Aug 2025 17:31:03 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Phillip
- Wood <phillip.wood123@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
-  Karthik Nayak <karthik.188@gmail.com>,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v8 4/5] doc: git-rebase: move --onto explanation down
-In-Reply-To: <4686417b28e4ab386983ad68e4d4d4798a467811.1755276751.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Fri, 15 Aug 2025 16:52:29
-	+0000")
-References: <pull.1949.v7.git.1755006568.gitgitgadget@gmail.com>
-	<pull.1949.v8.git.1755276750.gitgitgadget@gmail.com>
-	<4686417b28e4ab386983ad68e4d4d4798a467811.1755276751.git.gitgitgadget@gmail.com>
-Date: Fri, 15 Aug 2025 14:05:28 -0700
-Message-ID: <xmqqh5y8nvmv.fsf@gitster.g>
+To: Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>
+Cc: "brian m. carlson via GitGitGadget" <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>,  Taylor Blau <me@ttaylorr.com>,
+  Christian Brabandt <cb@256bit.org>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,
+  "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,  Sam James
+ <sam@gentoo.org>,  Collin Funk <collin.funk1@gmail.com>,  Mike Hommey
+ <mh@glandium.org>,  Pierre-Emmanuel Patry
+ <pierre-emmanuel.patry@embecosm.com>,  Ben Knoble <ben.knoble@gmail.com>,
+  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v2 01/17] doc: add a policy for using Rust
+In-Reply-To: <DB9P250MB06923B01AACB69F02170B1E3A534A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
+	("Matthias =?utf-8?Q?A=C3=9Fhauer=22's?= message of "Fri, 15 Aug 2025
+ 19:03:17 +0200")
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+	<pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
+	<75dfb40ead370e80dda423998f8220ac19c2ff46.1755220973.git.gitgitgadget@gmail.com>
+	<DB9P250MB06923B01AACB69F02170B1E3A534A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
+Date: Fri, 15 Aug 2025 14:31:01 -0700
+Message-ID: <xmqqcy8wnuga.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,77 +104,33 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Matthias Aßhauer <mha1993@live.de> writes:
 
-> From: Julia Evans <julia@jvns.ca>
+>> diff --git a/Documentation/technical/platform-support.adoc b/Documentation/technical/platform-support.adoc
+>> index 0a2fb28d6277..42b04b186105 100644
+>> --- a/Documentation/technical/platform-support.adoc
+>> +++ b/Documentation/technical/platform-support.adoc
+>> @@ -33,6 +33,8 @@ meet the following minimum requirements:
+>>
+>> * Has active security support (taking security releases of dependencies, etc)
+>>
+>> +* Supports Rust and the toolchain version specified in link:rust-support.txt[].
 >
-> There's a very clear explanation with examples of using --onto which is
-> currently buried in the very long DESCRIPTION section. This moves it to
-> its own section, so that we can reference the explanation from the
-> `--onto` option by name.
->
-> Signed-off-by: Julia Evans <julia@jvns.ca>
-> ---
->  Documentation/git-rebase.adoc | 168 ++++++++++++++++++----------------
->  1 file changed, 87 insertions(+), 81 deletions(-)
+> s/rust-support.txt/rust-support.adoc/
 
-Deduplicating is very good idea.
+Your review is very much appreciated, but ...
 
-I gave a read-through over the result of the entire series,
-including the parts that did not change, to see if the new
-organization is easy to read and coherently tells the story
-we want to tell, and what I saw was mostly very pleasing, except for
-one thing.
+>> +
+>> These requirements are a starting point, and not sufficient on their own for the
+>> Git community to be enthusiastic about supporting your platform. Maintainers of
+>> platforms which do meet these requirements can follow the steps below to make it
 
-The new location of this section on "--onto" felt a bit off.
-Perhaps it is just me, but in case others have different opinions,
-I'd raise it here.
+...could you trim your quotes to relevant parts that is needed to
+help readers understand the point?  It is a bit brutal to force
+readers wade through 200 lines of text only to find this "you got
+.txt suffix for a document with .adoc suffix" comment.
 
-The overall structure of the document with these patches becomes:
-
- - description that gives a simplified "what is achieved".
-
- - "mode options" that control what to do during a rebase once the
-   user is given control back
-
- - "options" that is given upfront
-
- - notes about incompatible options
-
- - discussions about apply/merge backends and how they differ
-
- - overall notes on advanced topics
-
-   - interactive mode basics
-
-   - splitting commits
-
-   - use of --onto
-
-   - dealing with rebased upstream
-
-   - rebasing merges
-
-Is it so exotic to use "--onto" to replay a topic to somewhere other
-than the direct descendant of the fork point, to make it a part of
-advanced topics?  I somehow doubt it.  It is a very basic and common
-thing to do while correcting a mistake of choosing a wrong base
-commit.  You often realize that your topic is basically good but has
-to work well with a different base commit.
-
-I wonder if it gives the same understanding with a much shorter text
-and illustration if we get rid of that section, and mention --onto
-as a part of the early examples in the description section.  That
-way, we can reuse the "set up" of user's brain and context we
-already made with the existing example.
-
-For example, after showing the rebase of A..C on top of G, we can
-mention that the range can be transplanted on top of commit other
-than G, say D.  Perhaps we can say that 'D' is still part of the
-maintenance track, and the topic being a fix for a bug that happened
-before D, it should not have forked from E that is a feature
-enhancement commit that is not eligible for being on the maintenance
-track.  That would be a good reason why the user may want to move
-A..C on top of D instead of E.
+Thanks.
