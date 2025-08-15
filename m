@@ -1,137 +1,178 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9242C21C8
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 16:10:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A7F307AF6
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 16:12:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755274246; cv=none; b=Mp7HK/5dxWCOes3OC1kyo3IstfZfqnzs/dkTeSGhYP4StI0wYNd6A6iKrLwwbUZhrfO7qPq+0OaVrGf+jqWAEgJWceFuNRr8HVgZvsya4XgAJV6CgO7PtuTo4itL4AMnYSeB3kumD8wsZdkILW5MTdOt1Cao10/M8JLX3BXdYyg=
+	t=1755274380; cv=none; b=Ce2gspllF9JW4jNih995WhKPYe1n9OaXWle5fQ2MwWBXMfdffC7QIBNTMf0cBRj3wpkSRoVDNTGYElRhKDcMuAmheYgGD8aj8+worBNgiV1n/ENUPWmGA6KHBIjdlxLGjD9Kro4/uEWsqopJA1Bgjrx34Rp28AVEzpVZ9fTxzkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755274246; c=relaxed/simple;
-	bh=Al29wh4480GKXgsET3n2BWoidLKk7oUdQroo94In4yg=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=qO7gEajQsQfzkHEGX3Tnxx5Mpch6CAL7Qoo8haEOfPIWiMgp7RAjydDDyHJk01OOzgSCFu2uqiQWyzNk6gYtTkGhaxizwyp0r80TdrFjcJeGO4zuSttzJSe0MLztFK8LPKf1qalFAIIRIhN03EEHNqkqTIP/3hrEcrdnlJcxT2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=n3tidNwZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cmLBPZM2; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1755274380; c=relaxed/simple;
+	bh=7bu2IQIlMpZz9Kqe1anGsXa8JDYI4At0Wll6JNfyNBQ=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=qQk5laXrX1JqhwF5yIMzFawr+9ZsoyI58hgtuWyjzZ7sw0KY8uzf9uMIzcGGjfiqgYkMpFBuRtua2GPPW/X/lf63x6mypAenBgqwQ9LpeBYubI4KuTKYy0Neu07JSEsaM2HVKxy2+iBicrtiWKAYmSQrX7Dgrm13Zy3i3SGyR14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OOlq9v7n; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="n3tidNwZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cmLBPZM2"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E68C07A015D;
-	Fri, 15 Aug 2025 12:10:43 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Fri, 15 Aug 2025 12:10:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755274243;
-	 x=1755360643; bh=vdrrRwb3UQm4WJlqJKSRJ6srA2t35Mcq7Xv+yJWM2is=; b=
-	n3tidNwZKk5gTEs0gRhbYKkHUjAjRnIIcykZY/2w1SqJ0KtfhvDrUMX4jKhHuxeZ
-	e3KNQxOH21vf7EwriA70DGkJwoLGZZyir9/fTz2Oc6WYAJFHIA2fsm3BAZCy23Qy
-	9qSrfSGwLI/MIe3XwL8zyPEFblwi/bbfwd512zQb6fDc385Eeke69d9jDWNxWWEO
-	43iD6ypx7hTF1yidDrBEGnFIwuhJwKHM48254Rbo9DocvyhlLnr/tepWCOObcZwa
-	DElmEmUbhpkviLhO3IQ8LFcHoVA2bHEx0R4p6CHpw5jG841VmlXH+Iv3Q193kxJz
-	1TFzUtJu0PiU2+rE6rZwhQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755274243; x=
-	1755360643; bh=vdrrRwb3UQm4WJlqJKSRJ6srA2t35Mcq7Xv+yJWM2is=; b=c
-	mLBPZM28HB9nkW6iuQWYdSSZHToak/cgI5wYNB85DJLCZXPI4WPkZrcv0m1NK4SF
-	4eRGlG0D7kY3oSUIa6S+OhGvj8CUny3VamXAY0Lq2uxNya1mrp89rRC3OZH17dnh
-	RuV+W8xC3JeqiMWTxv85hx7uDOO9qi3Nqs61Q3IPp2IZI0NYR3lzcROQIl1LBMCl
-	M7MGOO2e7KWupyOjWL3C2OCaK+sC+s3lUSKNkRLlQ/0jnGi41w8NHJHEBnaZ4V6E
-	bfQ8jK8ZITCJONC6p6agHxGgzw9virPolmM7ny3ugdRXSciL5RGt8ZeqyU/qR4WI
-	JbXFAF7J1ympddyY/l4MA==
-X-ME-Sender: <xms:A1yfaN6QskuWIHZ-7szF45FdsA7nGf_huWj-qlOPUzW3tNI-CYQmhQ>
-    <xme:A1yfaK4-zQHnS-pyp27cuvYBKM7Pq30nCTa38e9JsuCzWGyQqtKfosPfQx3NyUOUk
-    bYYqrnMO9zqpLxFoPY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeeggedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
-    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
-    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
-    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepsggvnhdrkh
-    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishdrthhorhgvkhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:A1yfaAVT_piE88ipc_8PtN1Eed30kR9hkWTS_jNzPXlXIIaXHQLKMw>
-    <xmx:A1yfaFWm8edNDD3dlFbGzFPnDHNUZoRiv8SdfMJzk_U9wY-9hSx3pw>
-    <xmx:A1yfaAhP4HhA0LBueNfCYYqjjd1ijm5OuhT3f7KkML4x6Sg4jAriLQ>
-    <xmx:A1yfaAZN69fFsHBkIwacdA8Z7CJxKQ4Dq8dB414iBy2ARTCYdx9TiA>
-    <xmx:A1yfaFPLvokiADNnD0bX5qE4wxObCLWQ2DZFjqEP1rfhP0xZcjFLLIqk>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 5DA597840B2; Fri, 15 Aug 2025 12:10:43 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OOlq9v7n"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-45a1b04f8b5so10914275e9.1
+        for <git@vger.kernel.org>; Fri, 15 Aug 2025 09:12:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755274376; x=1755879176; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Dsx6rxOUIcfpFdZZGX/ra97tF8txrv+EKs8kg2P3M/U=;
+        b=OOlq9v7nUNfdu+sJW9+xos5Qict4yMTYUWkFiExYH578EXWaa4qkIrf+6IiOwHORph
+         D42bEIhuC3L3/PRP1UUsDbDwQU4uu+VbvUwRaotGQTTG5RRZXwhGE9ZAMpaYC7SAeLdH
+         4vjBYVhdVC1I0VH/NvXzcDXuIKnsZtQJNIL9+9B0WlqubcQ75FMLoGI9HpThXcibCjKc
+         DLh8lZ33pvrW20Qjcl/vvK80dGOaXY4BEAdOlrkhd4KFL5bGrut0S8OR5ESDSoruikoM
+         O60Ub+fJrXNviE59bTNdnFY+Q/y2sUuYTkpDvwB8sk/hJHYTvgn8WTKjDDssix42JOav
+         g8HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755274376; x=1755879176;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Dsx6rxOUIcfpFdZZGX/ra97tF8txrv+EKs8kg2P3M/U=;
+        b=ZYrKERz+t4cn7PnblBlzZOH8Tqi6wYQnGHZixeoHV0wQ6QzUyz4LPJ3UFNWA3T+jNm
+         MVywy2GPulK0lGWYYvyYA0ijdrwZJ5zjoM14dHwVO/iKDE1kERSwxAUXW0jheB6lLaIR
+         HaXEOfPMELketJbeFK7BM/3y94XkGUtRb2KfbRJIgsRk6TK/1AA0CT/Z16IBXTykEXeL
+         P5XjqROFAL3hpSmTtZ2gAJMtnlVUBuEjniIkMvj5aF1+WbnUSj+/zUgpx/+xXEJUHeIQ
+         jqwG07kWaX3HO4/Cb5l233GVDdUeamU/Q46/Hgqt86k01QsLo4rxcJ8ANIkd7hV4A3Pi
+         PI1g==
+X-Gm-Message-State: AOJu0YzmgDt/YZJ5S+5CYrPy6P+3mZTg2kaqnLBfm8+m+l/uASytMmgL
+	JehsAn09Sfokh1+f34L+Xpmib4IsiVRf+f8o1ylr/of9dGrxLkn28rbfgdsewQ==
+X-Gm-Gg: ASbGncvTnCgMBALi7u64QJs52xrqTyo6x7vPVtBF0JsPNSjiEC2eJgjBn6LMGpCWI6k
+	ciRKuNUxIc7Du9LfhiNZaRBjYkSwhYZwJavQ2K9QFujIcZywMuXEac/X/cAfRQRu3UAJ5+tstN9
+	zGVWCy0/xdbQv3jgchLtTihFoh5E3g4OKE8/ccpSKdEZ6OyVQ0DzNelPabU6BcNgtHZSitr+B6S
+	8gC0OyGIbS47asjtOv2XkOS0I0HgKut/7VAbulcpJARGnPQnvL7YecJBzv6yNVZrDeJctRX4rAd
+	Lq5A8aSO1VY83iKLwqjAWuUB76zdK9+fQlfUUUE/b77chz2JANccqJG3UC5vHNfmt9UPJC0IMeV
+	JXLSdQR6erqFVKUUEArvR41Cf2h8q75fsQw==
+X-Google-Smtp-Source: AGHT+IGfxvEeO4MsOhRhw4O9uGRPxESRiaW2b2XDd9ztfdpdfQ32fRh8t3dXSY4Pby5z2hecoQhziw==
+X-Received: by 2002:a05:600c:c8a:b0:450:d37d:7c with SMTP id 5b1f17b1804b1-45a2181d555mr23659365e9.21.1755274375694;
+        Fri, 15 Aug 2025 09:12:55 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1b7f6e36sm37207525e9.4.2025.08.15.09.12.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Aug 2025 09:12:55 -0700 (PDT)
+Message-Id: <pull.1955.git.1755274373717.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 15 Aug 2025 16:12:53 +0000
+Subject: [PATCH] ls-files: conditionally leave index sparse
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AOSFC39IWGa7
-Date: Fri, 15 Aug 2025 12:10:23 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "Chris Torek" <chris.torek@gmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Message-Id: <886787d2-26b5-4451-a105-9ab522e38ad6@app.fastmail.com>
-In-Reply-To: <xmqq349ty254.fsf@gitster.g>
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
- <pull.1952.v2.git.1755127218.gitgitgadget@gmail.com>
- <ce1eafb02860b390da9359f92fcf098b7cdd3a94.1755127218.git.gitgitgadget@gmail.com>
- <xmqq349ty254.fsf@gitster.g>
-Subject: Re: [PATCH v2 3/4] doc: git-add: make explanation less dry
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    Derrick Stolee <stolee@gmail.com>,
+    Derrick Stolee <stolee@gmail.com>
 
-Hi,
+From: Derrick Stolee <stolee@gmail.com>
 
-> I somehow find the text before this change easier to understand
-> (except for one thing).  "If you edit `file.c` after adding it" in
-> the new text says the same thing as "if you want subsequent ... in
-> the next commit" in the original but in a much better way.
+When running 'git ls-files' with a pathspec, the index entries get
+filtered according to that pathspec before iterating over them in
+show_files().  In 78087097b8 (ls-files: add --sparse option,
+2021-12-22), this iteration was prefixed with a check for the '--sparse'
+option which allows the command to output directory entries; this
+created a pre-loop call to ensure_full_index().
 
-I really appreciate all of this feedback. It makes me wonder if there would
-be a better way to approach this man page. Usually when I'm revising a technical
-explanation, I find people who are currently users of the software but who have
-trouble understanding how it works. Then I ask them to give feedback on what's
-confusing to them about the explanation or what questions they have.
+However, when a user runs 'git ls-files' where the pathspec matches
+directories that are recursively matched in the sparse-checkout, there
+are not any sparse directories that match the pathspec so they would not
+be written to the output. The expansion in this case is just a
+performance drop for no behavior difference.
 
-I do this because I find that often people who are extremely comfortable
-with using the software (including me, which is why I usually spend so much
-time collecting feedback like this!) can lose sight of what's confusing to an
-"average user". And every time I'm part of a discussion about documentation for
-an open source project it seems a bit strange to me for a group of people who
-all already understand the concept to be discussing what would be clearest to an
-"average user": surely the users themselves should be the judge of what's clear
-to them!
+Replace this global check to expand the index with a check inside the
+loop for a matched sparse directory. If we see one, then expand the
+index and continue from the current location. This is safe since the
+previous entries in the index did not have any sparse directories and
+thus would remain stable in this expansion.
 
-I'm still pretty new to writing open source documentation so I don't know if
-collecting user feedback like this is a normal part of the process, but I always
-learn a lot from this type of feedback and it's pretty easy for me to collect
-it.
+A test in t1092 confirms that this changes the behavior.
 
-> Rewrite "diff --staged" to "diff --cached"
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+    ls-files: conditionally leave index sparse
+    
+    Here's a small sparse index performance update based on a user report.
+    
+    Thanks, -Stolee
 
-Will use `diff --cached`.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1955%2Fderrickstolee%2Fls-files-sparse-index-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1955/derrickstolee/ls-files-sparse-index-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1955
 
-> In addition, we also should talk about
-> "diff" to inspect what the user will be leaving out---in other
-> words, what the user might have forgotten to add, which is equally
-> if not more useful sanity-check you can do before you commit.
+ builtin/ls-files.c                       | 13 ++++++++++---
+ t/t1092-sparse-checkout-compatibility.sh | 13 +++++++++++++
+ 2 files changed, 23 insertions(+), 3 deletions(-)
 
-That makes sense to me.
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index c06a6f33e41..b148607f7a1 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -414,14 +414,21 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 	if (!(show_cached || show_stage || show_deleted || show_modified))
+ 		return;
+ 
+-	if (!show_sparse_dirs)
+-		ensure_full_index(repo->index);
+-
+ 	for (i = 0; i < repo->index->cache_nr; i++) {
+ 		const struct cache_entry *ce = repo->index->cache[i];
+ 		struct stat st;
+ 		int stat_err;
+ 
++		if (S_ISSPARSEDIR(ce->ce_mode) && !show_sparse_dirs) {
++			/*
++			 * This is the first time we've hit a sparse dir,
++			 * so expansion will leave the first 'i' entries
++			 * alone.
++			 */
++			ensure_full_index(repo->index);
++			ce = repo->index->cache[i];
++		}
++
+ 		construct_fullname(&fullname, repo, ce);
+ 
+ 		if ((dir->flags & DIR_SHOW_IGNORED) &&
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index d8101139b40..b0f691c151a 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -1506,6 +1506,8 @@ test_expect_success 'sparse-index is not expanded' '
+ 	ensure_not_expanded reset --hard &&
+ 	ensure_not_expanded restore -s rename-out-to-out -- deep/deeper1 &&
+ 
++	ensure_not_expanded ls-files deep/deeper1 &&
++
+ 	echo >>sparse-index/README.md &&
+ 	ensure_not_expanded add -A &&
+ 	echo >>sparse-index/extra.txt &&
+@@ -1607,6 +1609,17 @@ test_expect_success 'describe tested on all' '
+ 	test_all_match git describe --dirty
+ '
+ 
++test_expect_success 'ls-files filtering and expansion' '
++	init_repos &&
++
++	# This filtering will hit a sparse directory midway
++	# through the iteration.
++	test_all_match git ls-files deep &&
++
++	# This pathspec will filter the index to only a sparse
++	# directory.
++	test_all_match git ls-files folder1
++'
+ 
+ test_expect_success 'sparse-index is not expanded: describe' '
+ 	init_repos &&
 
-best,
-Julia
+base-commit: 724518f3884d8707c5f51428ba98c115818229b8
+-- 
+gitgitgadget
