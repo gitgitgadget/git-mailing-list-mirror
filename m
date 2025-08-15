@@ -1,69 +1,69 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9607E1AB52D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B969145B3F
 	for <git@vger.kernel.org>; Fri, 15 Aug 2025 01:23:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755220987; cv=none; b=g/ZkKipbBSfQz6Cu4YaGsCgVgbG1XbC8NBUdCzcgQzMhPyooJerPlnMUEdcFAiTQ9WbYC7ZOmRsUDWd9tFuFQV6Au/GAtPrNczKF/cZ5HtH277RatiW9cdb2FWRCLeJSrSQCOo0JQNnrY48OACPwoPjTcbYGtXZbwZVT7FoUodw=
+	t=1755220987; cv=none; b=HkcN1sie2zHwj7Xtv0whbEKq3CbuHIei080y//6GLu5nqxJw/hhZ1x66HApMxlfwWUK/GUmbNm1cdLN1h7/xCyKEHUDOASjlvZdBvgEgfK/casnA7sW49exw+xzUOHFbvL2BCWHJUP43+5ZNe8AS/BxD15xhYyS/xKvn+yjdHpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1755220987; c=relaxed/simple;
-	bh=wYfOH9XoHvt4hkUcW7d4UDm0OpVGXBkpUVHpwr7uqsE=;
+	bh=7GE5cPvWoMNlfvRGW4PufIVGj8vETRSB9DgkbfnuLKc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=RtGD4uH3LPsvA5exxBhFq7FaLjRUR3CBebjpy60wSXeDNwufXU7B8N2htvRNy61u2aoJFJfGEppHXaxnoAQGG70BV3ZEzroqHffFzrs5T5JEHxLjpVsWmgy3dQTlyEdBzqLVKc3hrACnpDA35Z8OJ7WaFhSEqrjB+WWetvNsicw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fqDs6Ydt; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version:To:Cc; b=cwi3+MrCoqZB7RhQs7m4CMm9WsVto1wIniPoM9B/I62NVwuIDKmLAJ9YuksnKr8NJB9+DzLGsIegj8OdHd7HN4D0KmEnz6Ji/PchKiH4dLo9zbAPoI47XiT8a8+/N4/6NGuYdXn6iCeA3A2Pm854tkidLasWo/5tupFSWWr3Qzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fdv+VgrT; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fqDs6Ydt"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-45a1b05ac1eso6663715e9.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fdv+VgrT"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-45a1b0b6ac4so7563655e9.2
         for <git@vger.kernel.org>; Thu, 14 Aug 2025 18:23:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755220983; x=1755825783; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755220984; x=1755825784; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/mPOxDZJbsjOWWJOD5GMOFvrPe2E7QpdzowDL1jMGMg=;
-        b=fqDs6YdtgueW2PlvNQhEzr5Fv4g6/ETOJPkGYUy6ywp8eFDm+XqBSa8ltCtyZ+Qg3f
-         2sV/NnczRO5V4cE1EliYr7nizr3Yjrl6EKKkshrwEeQ6uDZ9QW8DLeJhlwwvS3QbtKxB
-         por04huCuah1Cr4qCxqiJENUgaFct5t96wurdi7pOKq6Xvpfhbu83ZcQjaWnMRv/K85X
-         27r/DhwDaOLP4fzERX/cQwBX3HtO0QCZHQMa2AEpzWJnuqV1KmhXc8CDyFp27X6ECidy
-         /UhwOGUeKcU37v2kk7G3UxhFs6+Z2Iq/guhiXDvQOdmBMlTs1yVgum/N9jrDvdZoHgjU
-         L4bw==
+        bh=NYpfhp1f818tAWgVi0NaYGL52I1NZwmsvlDDItIZFGI=;
+        b=Fdv+VgrTmTnEz5e4zphH224alhyLeCsF4zqoz+E0HlVZ153bLeUkMRM84nGXjSSnhM
+         x97n+NICtWK4rpPH1EQYKgWonX665fcq8Oi7n+PTJ6+7wBgpBAAxDUWenIrT3vTohndD
+         f1CeTpzoR6ve/aOyfzBqbcE8ROvgrmkJ/dSl2zrecrtnH92+wcFkQt9zKLdjKGTpoxzI
+         I2LdQX6lTst3a/9euLJJeYLt/ykhyXeAQeutHX5CqJxoDFUsCnZB6C5J1xt+81WFLdE/
+         JTIEaNv0SUSooaLR5YcW4PQyj70nt2NjzVeWWSRrWROIAe8jO/eMLGAURprGRXqYzBet
+         h7Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755220983; x=1755825783;
+        d=1e100.net; s=20230601; t=1755220984; x=1755825784;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/mPOxDZJbsjOWWJOD5GMOFvrPe2E7QpdzowDL1jMGMg=;
-        b=XD1yjPCXk1Np/cjZsS56nwdGYZnnLhkNwTcy3sn2QPKJNsKaqFG/TJfjAxHcs9i1Cz
-         dqYNV0z7Lj4I9jkq0QG2ExHepsgA2w2SZlswObRwzseMNmfBAvvz61av9P/t3F4+szMT
-         g25JtdekQDDsyhte1wgvcV+JhGLhbbxeXb1SShxONmtN6u44EHSmUTUE1R7+bMer0I9c
-         /Fa/G1SyFx10o2HmQ8TskgFHlTeULVe2ZDRCmyHrlwPcW795NmoWEfykOwn7PnS1Ef/M
-         o7df75ZtsxEZq/TdYBTmtUKZlxYw4EqDei/JdSCMggVBcXtdQDF2GS43G2026wu/L3XG
-         sOpw==
-X-Gm-Message-State: AOJu0YxK5z3ZRx7m13ofWRteL+Lom1HUbOdE20FI1CM/wuShl5mUVdm8
-	z2WFT/aYPqoLiU77LpC8e+HzK98YAHT4nCb+nFpbcQcHsTnRPhghIOYRmb5Mog==
-X-Gm-Gg: ASbGncuWpyIYvi/P8cMrqxoydDBVJadGYdLPqbRzpJ8fjvWXWHl4B6nvqkq7e+ttebE
-	jGBcVZ2nQbjowyNRQwasguUo6JmiJkw4lXfvi88yDBebS3+PD2UT5AfwFlquUMz+S1+Hf2IQZYj
-	qPQrPuEYyUxWuvWymPWWJbC0Y01YfBLW2eE77DRealQoEDd9j9f1g8CKAhpItBVhRanvc/L4RIf
-	F16+E9kNdEkDoSD1nsCrDk3Ek6quWklB54DE0mPMgNVSSKC4rcixtyxpOp4JPC+GGX4oObkrZmT
-	834i+YzgXYqc0jmGizBjMa7ZNjewYgMD9xb8coe348zA2MML0NBucF43kI3FFuzbtWeWToO5Qlt
-	q9V0GUiTSUvVaX9f0iaiAZKw=
-X-Google-Smtp-Source: AGHT+IF62NXlqNxZpsOeLPYSK8Lky8bPrPqXdE0hWDH45911hnYL1SFF7Zgt+NPDgeZirDSNDTyHKQ==
-X-Received: by 2002:a05:600c:138f:b0:456:8eb:a35c with SMTP id 5b1f17b1804b1-45a2186353dmr3076365e9.31.1755220983263;
-        Thu, 14 Aug 2025 18:23:03 -0700 (PDT)
+        bh=NYpfhp1f818tAWgVi0NaYGL52I1NZwmsvlDDItIZFGI=;
+        b=LpYT1dV2Qrdw0D1IiROOYiyd6JKndmGzy6C0kbiCgzpPwaROA+A2YoZ0pePNm4LAln
+         NiTwjjC9+43dZm9sVjP59Jl1/lpfcB+MYQOkWI5lJwSt4EBAYrqPYAfwcps96MSZb4kX
+         MkjgKEa5Iwz5r0Gg+RdavSMVDSBoY8mjZmDaom8bElhC6mouIGNIO+B5/tnFyNIDAgFa
+         Zb+opeBAskXC/ePord3sx6jqodJOPlNi4RTAVZo+FvRz97nlMOnJvcwbPcl+hmIxLD3z
+         vmZAvV46KklOPXjgSFbE/YVEw5E3yMGhRuV0SLcvVsDWQmq4tuE4E8TRTX7loy8dTPU+
+         hATQ==
+X-Gm-Message-State: AOJu0YyWZBaUNOSn8ojf1Do2mEdFlaCXsaLBnoKjTMoMugLNMoWmsaZj
+	be15I0JuWBjhxOFD/JqEp/VQO6EfC20STpvYd+LHj+T+46D/GBvNMIsgD/9Epw==
+X-Gm-Gg: ASbGncu4cCLPKZjveMVvKhDpaZBCZ7izTgaFDUOzbiFC7HAFjRPHvCRWVnVFknItK/b
+	MSPsVi9xpZKyl1M0TO21AYK9GukXWDkF+ASDdFHXnFZ5TOeOhEBiXDn24T7Nl4CCiZr6borpYCe
+	b8K7w+DrUcvwA5BUwjvIyMS62bQnw0c9UViQs6GWlsPNmOQ3dH7iQuA051n224iGnqwlzleRndl
+	UNnvWer+TOWMg9ph2uKjMYoMtp2NAjrgLQhuUWreIUTyWdSXfUVhj8be4OyafklfoTAT44XKDnE
+	4LAudq6QeOfzC7a25vbDj1JANJqTvl/lZw7kbq2gbFirmDuEvlISmuko/A1jzT+cC7mj//T2nu0
+	O3OuzuhBoZn0+kMWd/5e43BA=
+X-Google-Smtp-Source: AGHT+IH5lqjmqLkzBJl6DajAv68/CofZawL8Za1FQPJ0KC+rhEW8XgecAQSq508Frmnb8+NDbGa41Q==
+X-Received: by 2002:a05:600c:b99:b0:458:bbed:a81a with SMTP id 5b1f17b1804b1-45a218095b4mr3590225e9.10.1755220984047;
+        Thu, 14 Aug 2025 18:23:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a221445b2sm242635e9.23.2025.08.14.18.23.02
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c6bc85csm39330405e9.5.2025.08.14.18.23.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Aug 2025 18:23:02 -0700 (PDT)
-Message-Id: <96041a10d545e0e431d05b93544771c6bdfc06f1.1755220973.git.gitgitgadget@gmail.com>
+        Thu, 14 Aug 2025 18:23:03 -0700 (PDT)
+Message-Id: <1194de3f39c76da76b7cbf045162c9c9c8cd5be4.1755220973.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
 References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
 	<pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 15 Aug 2025 01:22:44 +0000
-Subject: [PATCH v2 09/17] Do support Windows again after requiring Rust
+Date: Fri, 15 Aug 2025 01:22:45 +0000
+Subject: [PATCH v2 10/17] win+Meson: allow for xdiff to be compiled with MSVC
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -94,75 +94,70 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-By default, Rust wants to build MS Visual C-compatible libraries on
-Windows, because that is _the_ native C compiler.
+The `build_rust.sh` script is quite opinionated about the naming scheme
+of the C compiler: It assumes that the xdiff library file will be named
+`libxdiff.a`.
 
-Git is historically lacking in its MSVC support, and the official Git
-for Windows versions are built using GCC instead. As a consequence, a
-(subset of a) GCC toolchain is installed as part of the `windows-build`
-job of every CI build.
+However, MS Visual C generates `xdiff.lib` files instead; This naming
+scheme has been in use in a very, very long time.
 
-Naturally, this requires adjustments in how Rust is called, most
-importantly it requires installing support for a GCC-compatible build
-target.
-
-Let's make the necessary adjustment both in the CI-specific code that
-installs Rust as well as in the Windows-specific configuration in
-`config.mak.uname`.
+Let's allow for that.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-[en: Moved lib userenv handling to a later patch]
-Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- ci/install-rust.sh | 3 +++
- config.mak.uname   | 7 +++++++
- 2 files changed, 10 insertions(+)
+ build_rust.sh |  7 ++++++-
+ meson.build   | 12 +++++++++---
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/ci/install-rust.sh b/ci/install-rust.sh
-index 141ceddb17cf..c22baa629ceb 100644
---- a/ci/install-rust.sh
-+++ b/ci/install-rust.sh
-@@ -28,6 +28,9 @@ if [ "$BITNESS" = "32" ]; then
-   $CARGO_HOME/bin/rustup default --force-non-host $RUST_VERSION || exit $?
- else
-   $CARGO_HOME/bin/rustup default $RUST_VERSION || exit $?
-+  if [ "$CI_OS_NAME" = "windows" ]; then
-+    $CARGO_HOME/bin/rustup target add x86_64-pc-windows-gnu || exit $?
-+  fi
- fi
+diff --git a/build_rust.sh b/build_rust.sh
+index 4c12135cd205..694d48d857a5 100755
+--- a/build_rust.sh
++++ b/build_rust.sh
+@@ -44,7 +44,12 @@ fi
  
- . $CARGO_HOME/env
-diff --git a/config.mak.uname b/config.mak.uname
-index 3e26bb074a4b..a22703284b56 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -727,19 +727,26 @@ ifeq ($(uname_S),MINGW)
- 		prefix = /mingw32
- 		HOST_CPU = i686
- 		BASIC_LDFLAGS += -Wl,--pic-executable,-e,_mainCRTStartup
-+		CARGO_BUILD_TARGET = i686-pc-windows-gnu
-         endif
-         ifeq (MINGW64,$(MSYSTEM))
- 		prefix = /mingw64
- 		HOST_CPU = x86_64
- 		BASIC_LDFLAGS += -Wl,--pic-executable,-e,mainCRTStartup
-+		CARGO_BUILD_TARGET = x86_64-pc-windows-gnu
-         else ifeq (CLANGARM64,$(MSYSTEM))
- 		prefix = /clangarm64
- 		HOST_CPU = aarch64
- 		BASIC_LDFLAGS += -Wl,--pic-executable,-e,mainCRTStartup
-+		CARGO_BUILD_TARGET = aarch64-pc-windows-gnu
-         else
- 		COMPAT_CFLAGS += -D_USE_32BIT_TIME_T
- 		BASIC_LDFLAGS += -Wl,--large-address-aware
-         endif
+ cd $dir_rust && cargo clean && pwd && cargo build -p $crate $rust_args; cd ..
+ 
+-libfile="lib${crate}.a"
++if grep x86_64-pc-windows-msvc rust/target/.rustc_info.json
++then
++  libfile="${crate}.lib"
++else
++  libfile="lib${crate}.a"
++fi
+ dst=$dir_build/$libfile
+ 
+ if [ "$dir_git_root" != "$dir_build" ]; then
+diff --git a/meson.build b/meson.build
+index 047d7e5b6630..5e89a5dd0e00 100644
+--- a/meson.build
++++ b/meson.build
+@@ -277,8 +277,16 @@ else
+   rustflags = '-Aunused_imports -Adead_code -C debuginfo=2 -C opt-level=1 -C force-frame-pointers=yes'
+ endif
+ 
++compiler = meson.get_compiler('c')
 +
-+	export CARGO_BUILD_TARGET
-+	RUST_TARGET_DIR = rust/target/$(CARGO_BUILD_TARGET)/$(RUST_BUILD_MODE)
++if compiler.get_id() == 'msvc'
++  xdiff_lib_filename = 'xdiff.lib'
++else
++  xdiff_lib_filename = 'libxdiff.a'
++endif
 +
- 	CC = gcc
- 	COMPAT_CFLAGS += -D__USE_MINGW_ANSI_STDIO=0 -DDETECT_MSYS_TTY \
- 		-fstack-protector-strong
+ rust_build_xdiff = custom_target('rust_build_xdiff',
+-  output: 'libxdiff.a',
++  output: xdiff_lib_filename,
+   build_by_default: true,
+   build_always_stale: true,
+   command: [
+@@ -288,8 +296,6 @@ rust_build_xdiff = custom_target('rust_build_xdiff',
+   install: false,
+ )
+ 
+-compiler = meson.get_compiler('c')
+-
+ libgit_sources = [
+   'abspath.c',
+   'add-interactive.c',
 -- 
 gitgitgadget
 
