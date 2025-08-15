@@ -1,145 +1,231 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F8D278E7E
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 05:38:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181641DE3BB
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 05:49:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755236330; cv=none; b=hqdYtB0rq95GIASm1NVmo3+Ktobm+3lv/OBEAwaX6feEcTy803hSwVLGZWfuB05Z+y233KDzU1VHw+1BLvGh8MkoYF5asC5R4VxCs8K3ZvpZgYjFVtxCOAAw1kDnl99e4O43LpFGdh6Rn05ZMmuE5X8DQ/2CU7WYjhUuHFRRapM=
+	t=1755236997; cv=none; b=fo1KqETsc2BfVl/xvZSuToGIyLC3dBdZf/zDnQOP9hKFDX5Bch9VtdcDz8NFCawkwAIiRZS0OxI5z4ZkXtJw8we6S5uxMzKPxm1NAPmVodWcWwSB0D6w0ZLXwFS047XDA/Tzy1R2JXmnvflqWNus/6ZfINhfjzSk590BeAgDJtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755236330; c=relaxed/simple;
-	bh=VD54/oqnZeAVll9XaqB3jYyR8oPyk43OU6eWtws0rpk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o8cAqg23o/OysUpzSxbl2+IYiERE6bBF2ItNriYXqWi81iEo3BC35iRV1F+KT6jP58OaSuVkOzIS3x5beRtKVqNDPU89PtxfkV8GPfDUe4IB4RVN0s2Y/ZpfTxyGuP7aEbRwehFFf2mo9sRBaHhuWUQcnk7VFcFgHcrlnIB0C2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Pi391R7A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GM6Qjb0s; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755236997; c=relaxed/simple;
+	bh=jDJXn6D2/wRrdvP2mv2K7Q9XKvaRP38Cqo/wLeMu9Qw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=B+lk36Fq+dhP90eHjq6cCW9dziRr5XOc0lnCpcZERx8PreIpNezJj2JlsA4+zd0lnG4G9TRuNU2wDRZzlshccGAbAjlrVnfan+VOAXbMvkZVgFihVuSZvYR3lSn/rVk5bmwMz42rdjvVAjS38UJwOWEVQjGLGGJ3RZ8GNsAZc1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Kg8R8q4B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aRbYXzB+; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Pi391R7A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GM6Qjb0s"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 375B5EC0169;
-	Fri, 15 Aug 2025 01:38:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 15 Aug 2025 01:38:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755236327; x=1755322727; bh=oRJH26vVaC
-	3CgZ/6ym4MMdRdXXatObmF/xDiRSobhmE=; b=Pi391R7A6uYMcqJyQ/TJ3CklCn
-	IfLHFCrdP4tDP+ljicrEk4N+Um+BPQlXBSH9+pUs1Z/WCCS7+Tpxc79f54aaZQqQ
-	zP4hRNFcTaiMAprOf9AS0jlTiVGmyXrNJaRKzT4GJ0M5FMx7epEg7TqLYCISpiO0
-	PwEPdMh7jTOr0qaBRnmfUCWnR5KmavupMUgBMulSvo4onOL2OSYz7u4QzFwCJePB
-	glw1qEE4O1S5YrYCSGqzJfLOtJpmqQbSHJyzU2POX7xy7DpxXJMzRI5/iN4KcZrB
-	zxPi7bl3VuJe2gsvA6QW2ecbtYMmmP+UopaHck6PGomRqTXLqYuAhM7EBejg==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Kg8R8q4B";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aRbYXzB+"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 149F714000DA;
+	Fri, 15 Aug 2025 01:49:54 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 15 Aug 2025 01:49:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755236994;
+	 x=1755323394; bh=S8M9NE2qZ89NRebE30xWC1pyf1K2yjHGlgBVTbGmSEM=; b=
+	Kg8R8q4BQCDl1Y7mtHdTY2d8Pi0n4lAi7QRh1fEpC+YeDfugeY6vAHO0wcMySLyV
+	B9YJ3Un/joAaz5Y9IbnH7Cy3zQ4nYSPU0tD24N3HV4x67i+0u5yP0UC1/P4o3QAo
+	pCeRt8TIkr1tleuvhfQJP3+KkNauGGWCCGFyG4NbBMYNvbOCtdXcnuDWjz1VlOb9
+	d0kPI7DGFIl9OCeUwmg1YNgZDcDJs45BF+qkvg0qCtI0mLY3LxB4/J2Wz8dFqsgx
+	iyfcJXf5KSM+gnasr5L38YV4eX1ACOkGfBZDx6T0qsMcPfFSiRe2Ioa1WybKyJwl
+	Qv/dB1Tm5Dwz/JcazZjSBA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755236327; x=1755322727; bh=oRJH26vVaC3CgZ/6ym4MMdRdXXatObmF/xD
-	iRSobhmE=; b=GM6Qjb0sFZoQztRYKi8XX3BCuHp1/EdlKzV5q7L/Bu8wPYEYyBI
-	lSM6hjhiPCup9uaW5KbpFfyz77MYHSXgIjtdDDdIEp06Kz9IJ2XfxagxvizG8Rpm
-	q2hppsJxJ/SjkH7R0UzGmEQHxwDp8SkWThKmeBSvEnSyHeJzGWvxAYMqNH7zvTRj
-	mtPrrWPbJYodgZwGxIdIf6F3sBu/X+UUmchoKxivU4GwQcjl8+/Ye94GM6EeBol7
-	UTRN8ZeS4JkNem7hB112qLVu2NavfDbwTHKNjsIs7daVkjyvZym3TF7jvBk9GvZ4
-	6JTY7FgdUtF2RaVhHr7zhEqQmrtK8FLhqow==
-X-ME-Sender: <xms:58eeaHP_IZU6ZaJyQe2Cmt_ri0t3J3iJw2-y0xI_2jojqW_XvCj0hg>
-    <xme:58eeaMgj6bD3fzhXOPZdzIbod2g9E585DY5RHA4fBtLieFjOKVdj20D_mTz-dxslm
-    oV1YIKZp4em-XSxKg>
-X-ME-Received: <xmr:58eeaC366Q6dQqM-H1rLzJDR3Sg_BHjMee9WvHxVfA4R61eG98RQY6cNdKnmT8SWNfp8IgTrjKN7Fu0jtmUI2_bsRx9u1BKQqNWKNF8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeefudegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755236994; x=
+	1755323394; bh=S8M9NE2qZ89NRebE30xWC1pyf1K2yjHGlgBVTbGmSEM=; b=a
+	RbYXzB+PB/rhgTqF1nx/wGNBHBz4wKlVBE+jN0074wGzNbY6iOvp8wUGeGgRkdcp
+	jTkNnYX/l+24+icNJDNzKeAXs+jx7bMtojZhRy0X+NpIoQkTCnI2gQK2kPjqYydp
+	KtC0Hzt2j0n/3eik2Gj9HinZBinf2h08C2KK/jvEtSNHIo7LdXufXEimTUyI/JrW
+	5tk4NwMnYSL1a5AdsJsE7LE0VUApCXBLpldUx6v1p6FqmhPmXscDxQxGwJGWHlPZ
+	AyGVMV5L1r0IL3KdbS2MfHeR7oqLrxnUydAEPLhv2hfv31qvFm07Bsf6PpU/vPzt
+	dzov2OVCspYdNcdYLrsuA==
+X-ME-Sender: <xms:gcqeaOmUxMJjyIfCFWHy1tcYEoGZdaey58AMNO8ywB01AoCppDmSXw>
+    <xme:gcqeaBVQW4NCj11g9Ln4HwY4CHyfofiFiKvfuWSnftZ8zp8pV3D14yT45stQixFwi
+    PnSYYoINLyLJRpZnA>
+X-ME-Received: <xmr:gcqeaDEh0YZKxo6Vzq6FhdwJFdxDnwDVM9YDkUuKeZrqfiWdwtQnI-n3l8RuHBhmMyU1kUIowqrzzhvdwHXvcBJvYMYcjeeQXbrbIsr5pA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeefudejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
-    hgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:58eeaOgoIeUMuhPMWlXkSQfsid1ypJTFCZsYtRTImysOkdWYKyfKfg>
-    <xmx:58eeaKcoVY7gb_9N9F42V2sv6rGOXEfEhO7BM9SILwwriVyjf66lFw>
-    <xmx:58eeaJlsp_Do7bFTuUpRl-bmQ30cSaZhEGbgXlR-ob6ZK2ohzQva7Q>
-    <xmx:58eeaLuZE8ktrsC7fCAN_4QkC0XeyQU93Ogh3_VsfGlx-2fbRw1kyQ>
-    <xmx:58eeaDfCWftQcDljHPZx4zRX0CTx-4lpeZwZdam68gZdwbs4B-6lVfKi>
-Feedback-ID: if26b431b:Fastmail
+    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheefhfegffevgeegtdfhheeuvden
+    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
+    hedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomhdprhgtphhtthhopehoshifrghlugdrsghuugguvghnhhgrghgvnhes
+    ghhmgidruggv
+X-ME-Proxy: <xmx:gcqeaNfkHpcYopHtCSPtGsHa6D5a4n1YQzxTuclBGaUmRaJ6iikY7g>
+    <xmx:gcqeaELz8IVrLMZ9MiPPZ8LBImQJ6VeCC3o37sr8yPlEN_yj8tQzZA>
+    <xmx:gcqeaCEnNlXy2YTQXP7-46euQVhMoMjaEwi_I6BRhrHMW8tWAv3aQA>
+    <xmx:gcqeaHCQE5eP4_xE_hQjmOW_2MupH1RWkcF3drQf8ndcklf_S3wTrA>
+    <xmx:gsqeaCRH_W0Hyk0AHBoWulMSZYdmWeMLjTJL_kXt8HyJGhJx0-XuEDRV>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 Aug 2025 01:38:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/5] doc: git-add: start man page with an example
-In-Reply-To: <e1c9f388-f72c-4bb4-b05d-b5b183501456@app.fastmail.com> (Julia
-	Evans's message of "Wed, 13 Aug 2025 22:59:18 -0400")
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
-	<310d2c1d8f7f68ae52ddd29f0ccb0a0364aba1a2.1755029249.git.gitgitgadget@gmail.com>
-	<xmqqbjoks19f.fsf@gitster.g>
-	<152d47a3-7744-476a-8ab8-43b7b52b67ea@app.fastmail.com>
-	<xmqq4iuabup7.fsf@gitster.g>
-	<e1c9f388-f72c-4bb4-b05d-b5b183501456@app.fastmail.com>
-Date: Thu, 14 Aug 2025 22:38:45 -0700
-Message-ID: <xmqqy0rlta8q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 15 Aug 2025 01:49:52 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b3d41440 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 15 Aug 2025 05:49:51 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v4 0/6] commit-graph: remove reliance on global state
+Date: Fri, 15 Aug 2025 07:49:46 +0200
+Message-Id: <20250815-b4-pks-commit-graph-wo-the-repository-v4-0-b6b651178cce@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHrKnmgC/43QTQ6CMBAF4KuQrh3THyzVlfcwLkoZYGKwpCVVY
+ 7i7RROjO5Zv0vnepE8WMRBGdiieLGCiSP6aQ7kpmOvttUOgJmcmudzxSlRQlzBeIjg/DDRBF+z
+ Yw83D1CMEHH2kyYcHiMZJZ13tDCqWrTFgS/d3z+mcc09xefeuTWKZfhoML1c2JAEczI43WmqsJ
+ ZpjXtrSwBY+yV9SryVlJvdC1Ba1MqjFH6l+ybX/kNRypcQGW6O4Ffgl53l+AaWRyFt9AQAA
+X-Change-ID: 20250717-b4-pks-commit-graph-wo-the-repository-1dc2cacbc8e3
+In-Reply-To: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
+References: <20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>, 
+ Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, 
+ Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.2
 
-"Julia Evans" <julia@jvns.ca> writes:
+Hi,
 
-> This example makes me think that if we want people to understand the
-> limitations of the index, it's important to communicate that the past
-> index snapshots are *discarded* and not just that the index is a snapshot.
+this patch series is another step on our long road towards not having
+global state. In addition to that, as commit-graphs are part of the
+object database layer, this is also another step towards pluggable
+object databases.
 
-I suspect that you need to look at the whole thing backwards.  I
-realize that it is another way to say that you are looking at the
-whole thing backwards, so take your pick ;-).
+Changes in v2:
+  - Use `unsigned` instead of `size_t` to count number of Bloom filters.
+  - Use `uint32_t` instead of `size_t` for number of commit graphs,
+    as this type is also used to iterate through this count already.
+  - Refactor `parse_commit_graph()` to take a repository instead of both
+    repo settings and a hash algo.
+  - Link to v1: https://lore.kernel.org/r/20250804-b4-pks-commit-graph-wo-the-repository-v1-0-850d626eb2e8@pks.im
 
-Nobody stops you from extending the system to store more than one
-snapshots in the index and allow your users to roll back to one of
-these snapshots kept in the index.  The reason why we haven't done
-so is because there has not been motivating any use case for such a
-feature (and coming up with a reasonable UI for it would also be
-more work).  After all, if you want to keep a set of good points to
-go back to [*], that is what commits are for in the world view of
-Git, where creating commits and moving around in history are cheap.
-If it were something worth going back to, you'd do so at the commit
-level.  "git stash" and its index operations (like the "--keep"
-option that allows you to test with only what is in the index) are
-implemented as (temporary) commits internally exactly for this
-reason.
+Changes in v3:
+  - Use `unsigned` for commit-graph options instead of `size_t`.
+  - Link to v2: https://lore.kernel.org/r/20250806-b4-pks-commit-graph-wo-the-repository-v2-0-911bae638e61@pks.im
 
-Having said that, there is a focused support to record the previous
-state before a snapshot records a resolution for a conflicted path
-[**].  This was added because of a concrete motivating use case to
-allow you to recover from a botched conflict resolution (aka "gee, I
-thought this resolution was OK but I did 'git add' way too early,
-before I actually tested the result!"), where "you can commit to
-mark the place to later go back" principle does not cleanly apply,
-since commits in Git do not record conflicted state.
+Changes in v4:
+  - Drop the patches that fix `-Wsign-compare` warnings.
+  - Link to v3: https://lore.kernel.org/r/20250807-b4-pks-commit-graph-wo-the-repository-v3-0-82edef830a1e@pks.im
 
-Please don't keep asking "why" on this point (i.e. "why not record
-conflicts in commit?") and other things---at some point, the answers
-will become a series of "that is how it is, and it has been good
-enough for us", and then it becomes a waste of time to further ask
-"why".  Until "here is the change I made to do things differently;
-please see how well it works" materializes, that is.
+Thanks!
 
+Patrick
 
-[Footnote]
+---
+Patrick Steinhardt (6):
+      commit-graph: stop using `the_hash_algo` via macros
+      commit-graph: store the hash algorithm instead of its length
+      commit-graph: refactor `parse_commit_graph()` to take a repository
+      commit-graph: stop using `the_hash_algo`
+      commit-graph: stop using `the_repository`
+      commit-graph: stop passing in redundant repository
 
- * This is another example why the snapshot worldview gives clear
-   workflow.  After you pile on several drunken-walk experimental
-   commits on top of a good commit and realize that this particular
-   line of effort is leading nowhere, you "jump back" to that known
-   good point (i.e. "git reset --hard HEAD~7").  You do not have to
-   apply these changes in reverse direction (i.e. "git apply -R") in
-   reverse order (i.e. "git rev-list --reverse HEAD~7..".
+ builtin/commit-graph.c       |   9 +-
+ builtin/commit.c             |   2 +-
+ builtin/merge.c              |   2 +-
+ commit-graph.c               | 283 +++++++++++++++++++++----------------------
+ commit-graph.h               |  21 ++--
+ oss-fuzz/fuzz-commit-graph.c |   6 +-
+ t/helper/test-read-graph.c   |   2 +-
+ 7 files changed, 157 insertions(+), 168 deletions(-)
 
-** Read about "Resolve undo" in the documentation.
+Range-diff versus v3:
+
+ 1:  26daf74e02 <  -:  ---------- trace2: introduce function to trace unsigned integers
+ 2:  646805924e <  -:  ---------- commit-graph: stop using signed integers to count Bloom filters
+ 3:  01e38f39cf <  -:  ---------- commit-graph: fix type for some write options
+ 4:  a362f63472 <  -:  ---------- commit-graph: fix sign comparison warnings
+ 5:  041d9c07a0 =  1:  f7083b7e3b commit-graph: stop using `the_hash_algo` via macros
+ 6:  6c1fa6be4f =  2:  336e35e93b commit-graph: store the hash algorithm instead of its length
+ 7:  ed04f7b787 =  3:  1446e1d66f commit-graph: refactor `parse_commit_graph()` to take a repository
+ 8:  1eb6316e8d !  4:  368e5ada3e commit-graph: stop using `the_hash_algo`
+    @@ commit-graph.c: int open_commit_graph_chain(const char *chain_file,
+      		close(*fd);
+      		return 0;
+      	}
+    --	if (st->st_size < (ssize_t) the_hash_algo->hexsz) {
+    -+	if (st->st_size < (ssize_t) hash_algo->hexsz) {
+    +-	if (st->st_size < the_hash_algo->hexsz) {
+    ++	if (st->st_size < hash_algo->hexsz) {
+      		close(*fd);
+      		if (!st->st_size) {
+      			/* treat empty files the same as missing */
+     @@ commit-graph.c: struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
+    + 	int i = 0, valid = 1, count;
+      	FILE *fp = xfdopen(fd, "r");
+    - 	size_t count;
+      
+     -	count = st->st_size / (the_hash_algo->hexsz + 1);
+     +	count = st->st_size / (r->hash_algo->hexsz + 1);
+    @@ commit-graph.c: static struct tree *load_tree_for_commit(struct repository *r,
+      
+      	oidread(&oid, commit_data, the_repository->hash_algo);
+     @@ commit-graph.c: static int write_graph_chunk_oids(struct hashfile *f,
+    - 
+    + 	int count;
+      	for (count = 0; count < ctx->commits.nr; count++, list++) {
+      		display_progress(ctx->progress, ++ctx->progress_cnt);
+     -		hashwrite(f, (*list)->object.oid.hash, the_hash_algo->rawsz);
+    @@ commit-graph.c: static int write_graph_chunk_data(struct hashfile *f,
+      
+      		parent = (*list)->parents;
+      
+    -@@ commit-graph.c: static size_t write_graph_chunk_base_1(struct hashfile *f,
+    +@@ commit-graph.c: static int write_graph_chunk_base_1(struct hashfile *f,
+      		return 0;
+      
+      	num = write_graph_chunk_base_1(f, g->base_graph);
+ 9:  8d599f5a37 !  5:  a51cccec0d commit-graph: stop using `the_repository`
+    @@ builtin/merge.c: int cmd_merge(int argc,
+      ## commit-graph.c ##
+     @@
+     -#define USE_THE_REPOSITORY_VARIABLE
+    --
+    + #define DISABLE_SIGN_COMPARE_WARNINGS
+    + 
+      #include "git-compat-util.h"
+    - #include "config.h"
+    - #include "csum-file.h"
+     @@
+      #include "tree.h"
+      #include "chunk-format.h"
+10:  41ccdd6da1 !  6:  841d280105 commit-graph: stop passing in redundant repository
+    @@ commit-graph.c: int open_commit_graph_chain(const char *chain_file,
+      						   int *incomplete_chain)
+      {
+     @@ commit-graph.c: struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
+    + 	int i = 0, valid = 1, count;
+      	FILE *fp = xfdopen(fd, "r");
+    - 	size_t count;
+      
+     -	count = st->st_size / (r->hash_algo->hexsz + 1);
+     +	count = st->st_size / (odb->repo->hash_algo->hexsz + 1);
+    @@ commit-graph.c: struct commit_graph *load_commit_graph_chain_fd_st(struct reposi
+     -	odb_prepare_alternates(r->objects);
+     +	odb_prepare_alternates(odb);
+      
+    - 	for (size_t i = 0; i < count; i++) {
+    + 	for (i = 0; i < count; i++) {
+      		struct odb_source *source;
+     @@ commit-graph.c: struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
+      		if (strbuf_getline_lf(&line, fp) == EOF)
+
+---
+base-commit: e813a0200a7121b97fec535f0d0b460b0a33356c
+change-id: 20250717-b4-pks-commit-graph-wo-the-repository-1dc2cacbc8e3
+
