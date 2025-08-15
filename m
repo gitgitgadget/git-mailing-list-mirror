@@ -1,176 +1,136 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967A218A6A7
-	for <git@vger.kernel.org>; Fri, 15 Aug 2025 16:33:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725D62E5D01
+	for <git@vger.kernel.org>; Fri, 15 Aug 2025 16:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755275633; cv=none; b=pRw6pJo7hA6hB8/3P1DM5AT42shOyP2jbMeG6IIyC8Fg6mZ1sBkJRZg38dwRt/OII56Tr+qfsfntXin+GbEms8XQ7ZslgjnMqlmVHuA7I1kSTmcHmtyJAS4QPKCWciozfngodFqv0l4VGtojW5BAJO6aY9MOiGl7h86OZ1oQfbo=
+	t=1755276756; cv=none; b=hnxJ9AibVvd+cQ514+DpFoXevZcqevhiTph+ESoEpJXFdqs9uTeGDIuo5hPyDlIGQQwzqTZqEBlF+SQWFC2qG82yZtS84WIUafoxWlri9VbuRkqac2p+6xTIYO6M+2heeFp6Tgn8ZHFOjN0rzqfsZcnyQqfDvQv8X8tVu3JBPSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755275633; c=relaxed/simple;
-	bh=7FBXyCkUNxh0yDJiPzXOHQ8VrWurBq8fOt6WsZozBpQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sxko9YCDi6MvVHDoOyrg5Wd/Wn0DyYJ74RrDzsnC/FayNAKVaOfhb1p17DZmgtJCjDNmCnjKahPan7aTS7DWpJ0n+EmpbZhQLWGgemHsxLg1BTwX47q48BOlIFGbj/1aa4rhCzQ+uy2YQk6/wizqCtY3lRLV02Y9QTeL4ky7/E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A6lv8aL5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iP45cLU3; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755276756; c=relaxed/simple;
+	bh=6TTElZk0wcQ2m9kkf3avdATQtY21Xfja5TlWfEBYVLs=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=FNt6naCQCm6rIxQxYB9XKWCgMVfHcwArRrWAbKqXx1up97cgFv6HhyFaXxCGYnsKswMqT53gxkvhUC3Q2vUVQ5ZtPIHJBuRdlL6BsrhMsIJAxncR9xOnHZtjWtN1VOUNxc+/NPiLzMUO6Iv2pzLUv6RcMxKlM47ZAO9/oa+N5I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lytlEpRU; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A6lv8aL5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iP45cLU3"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 969571D000B1;
-	Fri, 15 Aug 2025 12:33:49 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 15 Aug 2025 12:33:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1755275629;
-	 x=1755362029; bh=miw1te6uBxkgYYuFzHByN0hri0zWTVUPUXwfcDJ322I=; b=
-	A6lv8aL5rXQN+A1P/O53dVk1jK/3JImHek59mZDK76gtxCFEnh3Z0wEjyg1TWeyd
-	P4CDIZfO2m4P0J+wuVNmuZaTDl0eLfdsdU2W1NwBwVFkdz0Jy1xSuumAR3tloFqM
-	PMNY1rjgV3616iKfVJ/4MGbpHXmzb6GxgYjAvsC50MSUNCapvmiqmNZHjNu96MLR
-	WQfbB6ogQRu4PP57xNHGjfBjsASx1rVHPV7B7mUqv/zl4QzjZ/NqLEKiD5Fc2tJO
-	blb/xmsPJKPkzUcJjmHDaXZhL9Lj+d5m8uS3IiiFEj2Hn/U/QjweP3d87rcnY5N0
-	tjvS5j9RopGUqqYEFZmb/w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755275629; x=
-	1755362029; bh=miw1te6uBxkgYYuFzHByN0hri0zWTVUPUXwfcDJ322I=; b=i
-	P45cLU3BaV8/vbzEwtYnU/AzLDVRL2g7vI02wo8dmSGEMDLUimzEb+7W/6Hi2uD+
-	ygtK5RsOh9rh/A4BdqNNbqRaE6qmlHPQCm1ted3hMpM89/dSIS4C7X7G4oirRc8x
-	TG/ZC+vCoOBWhSUSP2I5eqsk4Z8K1KeJN8jkLBh0pZQPYM2Fi8pSWzgSeQnCxSqt
-	U6ATm7WXav5qHenzakgWU3JQvp5sY1Z7bjvFnwMSsiSB8b/jxkYt7PxYQU/Dc0tA
-	LXwKlqX+bHDLXkyJdkDs8RECud34Hfwg6mWrbAlgHvS2QlAa6Ea0hy6HJX1tTa1I
-	JfnSifnkuEJOgfsV40pZA==
-X-ME-Sender: <xms:bWGfaPTBVmhpPsqlXDJ-Vm8acYhM7vQq6zxHfe2m_PSqVFbdIzex5g>
-    <xme:bWGfaOWoZa_3brUQx-6ypbq61m-nzt7AUEsmnMe7WVOa2plVAHYqD6-YQPSKOG_Jg
-    KfJb22YEvz6YO9sww>
-X-ME-Received: <xmr:bWGfaLQV0tvdUDKCUQVDkkL_GssVualJbdMi4UT93ZsNwQ3tRjdsCseDoGxBPxnPxbH1irUDSygE-AO9CvUWwbhUjkNhenrixcmWjl4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeeggeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtph
-    htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishdrthhorh
-    gvkhesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:bWGfaAnKl7nOzVwBSAKR5v0Vu9yse6349yKZi921a2vFfQoHHhml2g>
-    <xmx:bWGfaJ57vsWZ5NscWaz58lQ6OkDyERUQ3nv29vMCLS3FEMYqIujZIg>
-    <xmx:bWGfaOjxrMLc3-4zyXYM8i_Vmf46ydyPMlPVEjCQMfPdzq_-Hiuf5A>
-    <xmx:bWGfaOFqQgWSMuCJiof8vnQLHLmmOr1hStc2WzIOdlwezaq8KIcysQ>
-    <xmx:bWGfaENxXnAB3FjuuFbNh8oafAXc7HTjPtkRYGouSiT8Ir9ohh78eNDI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 Aug 2025 12:33:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Chris Torek <chris.torek@gmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v2 1/4] doc: git-add: start man page with an example
-In-Reply-To: <5004213.GXAFRqVoOG@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-	"Fri, 15 Aug 2025 15:34:41 +0200")
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
-	<d041d09589b51734a8cc257f80cdaf210c6676e7.1755127218.git.gitgitgadget@gmail.com>
-	<xmqqikipv2p6.fsf@gitster.g> <5004213.GXAFRqVoOG@cayenne>
-Date: Fri, 15 Aug 2025 09:33:47 -0700
-Message-ID: <xmqqqzxcr1ck.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lytlEpRU"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3b9e414252dso1159328f8f.3
+        for <git@vger.kernel.org>; Fri, 15 Aug 2025 09:52:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755276752; x=1755881552; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZppFj+FUiGgxRIDdqw/UW3Za4CN9LHDJO197Yte92G0=;
+        b=lytlEpRUfDPEURtgP4k6vx1bvAk8IkcQ5x/sR+TQu/mAvLFczfTijyi0QcKSQclPtz
+         zl+ngqtqG+8AnoSR8o+n6cl27vz+n2pwa4WQh6ksVq82TbcWdS9CbMh+07gbqFNAbs3i
+         abNVZwz7tHxNMubyYEfo+rUiP+1DchIgsDf25JVcSj8PLVGUhacOF7+oJmRK+6lU3QeQ
+         Unj8OCJSvVGlh+flWTBdLoul2KmYc5M3a8x/vHYmg9XpWts7YYTojbSfjpQ/I0Q2JTwg
+         vwxpioCtT9Wg2cTIn+XQo8ZJ5AoQumr+DQkUR6jIVFDElISk2MQJXKUwZdqFMAtDNcpj
+         g3PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755276752; x=1755881552;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZppFj+FUiGgxRIDdqw/UW3Za4CN9LHDJO197Yte92G0=;
+        b=lo2mbqPuq6ZQsEwZE4xUWFdp0w3lo0dQej2+e8eehmGpJBjpNgS5rX9D4ZsLsTSPE3
+         ifiZLOoAOChpqADsGUssAyfqddaydrSBLajAMv20IplYEWv5asOp3OjgHYRPbBjvEE1P
+         GwajoObQUIrmV4oDbac1VQ7pekh4S0OX8vR7jcNS/3mCNp3IQQBtLzAIQk2E8EY8rcym
+         xra5khcnFXHBlTmOAocmOJ2ba5XSXOPgSzyyDdIVFo2mETciYFznLZuiRUGwOuuwbJY8
+         UcmVZlKXOpQK1+HW616d+S4AyanGTPBO6cRm6JHlihInSdpAJlUsJxQ+3VQj2a0t3pEv
+         lAPw==
+X-Gm-Message-State: AOJu0Ywc9RZterkSnxKwKkYepG7y38QWQlKTcsH6RmbTKS6JVKfexLBU
+	wZsWQ8Q1htoyHHpxxwaGTOC6TzF7k8tvCZUdPC1FM+JqiilUKyMZOeeCN9hXAQ==
+X-Gm-Gg: ASbGnctNXgB/lJNdNEAarbdjtFwHwX/wXGUBeohJl6nLaj8M5smICl97raQMal0dlGR
+	t9eFoytnwFftFu6te1HjNZxjVZriop49ksZwN1MB0Aszn/yVUxxvrRky6uRg2Y/9Aj38rObGxOC
+	/R/xQuabuCbQ2SIUGtqm4gUz+LrOUCJ7ixUuwlypbIsCzGjNPkafOBkNpHCiawlvl5T84RS9QEQ
+	W5439bStSv93oq9QYyIk9U3Ch2GKUaZWbhQBQFQAcQOVYfIxeeT5Wfkvm5FYdJxUtcvrwQRtRoT
+	OOXrp2blT3demk/GUuqt1aun+WXqnjyZ9FwIjw+s9XXnfAkXl0p88hEE/THaE25Qf5mvlzT8TD1
+	P2fOeAsk64dkFpEbmts1HcXY=
+X-Google-Smtp-Source: AGHT+IHa69XHBOZN9I0bQbBdb0eSsn1fZwZlnslfeGBtQrrCHPei8Rp9XjZa92KBeu2NOfMOOmHytg==
+X-Received: by 2002:a5d:5d11:0:b0:3b8:ef61:bab7 with SMTP id ffacd0b85a97d-3bb68a16a3cmr2453135f8f.27.1755276752238;
+        Fri, 15 Aug 2025 09:52:32 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c790689sm68699205e9.28.2025.08.15.09.52.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Aug 2025 09:52:31 -0700 (PDT)
+Message-Id: <pull.1949.v8.git.1755276750.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1949.v7.git.1755006568.gitgitgadget@gmail.com>
+References: <pull.1949.v7.git.1755006568.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 15 Aug 2025 16:52:25 +0000
+Subject: [PATCH v8 0/5] doc: git-rebase: clarify DESCRIPTION section
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Karthik Nayak <karthik.188@gmail.com>,
+    Julia Evans <julia@jvns.ca>
 
-Jean-Noël AVILA <jn.avila@free.fr> writes:
+Combine point 1 and 2 in "a simplified description of what git rebase
+<upstream> does:" into a shorter summary.
 
-> On Friday, 15 August 2025 02:38:45 CEST Junio C Hamano wrote:
->> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> ...
->> > +By default, `git commit` only commits changes that you've added to the
->> > +index.
->
-> I do not understand this addition. I may not be missing knowledge, but this 
-> behavior is not only "by default", it's the only behavior of git: commits are 
-> made with the content of the index. Let's not make it more complicated than it 
-> is already.
+Julia Evans (5):
+  doc: git-rebase: start with an example
+  doc: git rebase: dedup merge conflict discussion
+  doc: git rebase: clarify arguments syntax
+  doc: git-rebase: move --onto explanation down
+  doc: git-rebase: update discussion of internals
 
-I'll only react to "the only behaviour" part, without "more
-complicated" part.
+ Documentation/git-rebase.adoc | 298 +++++++++++++++-------------------
+ 1 file changed, 133 insertions(+), 165 deletions(-)
 
-I think Julia is referring to the fact that you can record the state
-that is different from what is in the index (or, what has been
-accumulated in the index by the past use of "git add" command that
-is being discussed here) with "git commit [-i] <pathspec>".  You can
-do
 
-    $ edit fileA fileB ;# assume both are tracked
-    $ git add fileA
-    $ git commit fileB
+base-commit: 2c2ba49d55ff26c1082b8137b1ec5eeccb4337d1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1949%2Fjvns%2Fclarify-rebase-v8
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1949/jvns/clarify-rebase-v8
+Pull-Request: https://github.com/gitgitgadget/git/pull/1949
 
-and the resulting commit will record the contents for fileA found in
-its parent (i.e. the result of "git add fileA" is not reflected).
-If the last step were
+Range-diff vs v7:
 
-    $ git commit -i fileB
+ 1:  e7a8fbbe53c = 1:  e7a8fbbe53c doc: git-rebase: start with an example
+ 2:  ad63f69918d = 2:  ad63f69918d doc: git rebase: dedup merge conflict discussion
+ 3:  7ee6b0afe88 = 3:  7ee6b0afe88 doc: git rebase: clarify arguments syntax
+ 4:  4686417b28e = 4:  4686417b28e doc: git-rebase: move --onto explanation down
+ 5:  79f29ad1e68 ! 5:  cb85642bb9d doc: git-rebase: update discussion of internals
+     @@ Documentation/git-rebase.adoc: linkgit:git-config[1] for details) and the `--for
+      -to point at the tip of the branch before the reset.
+      +Here is a simplified description of what `git rebase <upstream>` does:
+      +
+     -+1. Make a list of all new commits on your current branch since it branched
+     -+   off from `<upstream>`. This is the same set of commits that would be shown
+     -+   by `git log  <upstream>..HEAD`. You can use `--fork-point` or  `--root` to
+     -+   change how this list of commits is constructed.
+     -+2. Check whether any of those commits contain the same changes (according to
+     -+   `git patch-id`) as a commit already in `<upstream>` and remove them from
+     -+   the list.
+     -+3. Check out `<upstream>` with the equivalent of
+     ++1. Make a list of all commits on your current branch since it branched
+     ++   off from `<upstream>` that do not have an equivalent commit in
+     ++   `<upstream>`.
+     ++2. Check out `<upstream>` with the equivalent of
+      +   `git checkout --detach <upstream>`.
+     -+4. Replay the commits, one by one, in order. This is similar to running
+     ++3. Replay the commits, one by one, in order. This is similar to running
+      +   `git cherry-pick <commit>` for each commit. See REBASING MERGES for how merges
+      +   are handled.
+     -+5. Update your branch to point to the final commit with the equivalent
+     ++4. Update your branch to point to the final commit with the equivalent
+      +   of `git checkout -B <branch>`.
+       
+       [NOTE]
 
-then the resulting commit will record the contents for both fileA
-you added with the last "git add" on it, and contents for fileB
-found in the working tree at the time of "git commit -i" was run
-(i.e. "git add fileB" was not required)..
-
-By default, after the edit of fileA&B and the add of fileA, "git
-commit" would not be aware of what is currently in fileB in the
-working tree, and records the same contents as its parent for all
-paths except for fileA, which would record what was last added with
-"git add" to the index.
-
->> > For example, if you've edited `file.c` and want to commit your
->> 
->> > +changes, you can run:
->> Likewise.  "and want to record the resulting contents".
->> 
->> > ...
->> > -Please see linkgit:git-commit[1] for alternative ways to add content to a
->> > -commit.
->> 
->> In the original, this comment does look a bit out of place (as the
->> text around there does not talk about `git commit`), but as you said
->> that by default 'git commit' makes an as-is commit above, it may be
->> a good idea to move this sentence there.  `git commit <pathspec>` is
->> a handy thing to know even for beginners, and making your next commit
->> is what the user is working towards by using "git add".
-
-And this relates to "more complicated" part of your comment.
-
-I think keeping "by default" above and also keeping this comment
-that hints about non-as-is commits made with "git commit <pathspec>"
-is slightly more preferrable than dropping both of them altogether.
-With only four additional lines, we cover basic "edit && add && commit"
-cycle fairly completely.
-
-I am also fine to drop the mention of 'git commit' altogether, but
-it feels somewhat incomplete to not talk about commit when teaching
-add.  After all, add is one of the primary ways to prepare for the
-next commit---putting it the other way around, you want to learn add
-primarily because you eventually would want to make a commit.
-
-In any case, only having one (i.e. "by default") and dropping the
-other ("see linkgit:git-commit"), like the patch did, did not make
-much sense to me.
-
-Thanks.
+-- 
+gitgitgadget
