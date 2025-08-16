@@ -1,62 +1,62 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAA5317713
-	for <git@vger.kernel.org>; Sat, 16 Aug 2025 22:46:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA33317713
+	for <git@vger.kernel.org>; Sat, 16 Aug 2025 22:46:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755384392; cv=none; b=U3IrtV3g8mBqnGIUCnVFYcKCnELDjayvuJwAQWcPK92wpgV7me+KgCY5Lj0trQLDUWmbMSvwzQDgZ6EBkqzZIYMyGQSVolsSj7pWCv2l6ppRnL0WOyEFZdWYzSt6ZMWkwywxOX0+YOOHwaOwO+ElB+UR3jGjcGHQliUtGVTknmg=
+	t=1755384398; cv=none; b=ZuI/U9OsTgC/4mgA0atbi4Cb6tqPORQVUq1PGeA0f+loVGgtE2BlYGTzKEe00mI2r/WF4dzWRTGGLeRS688rBdnacCx9734IjJA3qFX8D+VFZlWXDYTIIaDah8HLQObOlY2ZOEG/VAvwnC7mbK38uf9fU4hcLFtVNMTmYd+pJcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755384392; c=relaxed/simple;
-	bh=2H9+mXRdqSALaKcxxJn6CrnaBnTpzBwMI/dbLHsXvgM=;
+	s=arc-20240116; t=1755384398; c=relaxed/simple;
+	bh=wvClg+WRCLLxUp55dWLwWW7AJGyFP+BGnw/Uuqa3KVc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=PqjxJKm+J4jrXtdg9qAk3DMx0lmSKYOdbJkIh9jWfAtGQM6meUkhoDo/cRZpaQb+fw3OhA2W5ZIi8Ch8ZIiTuMdfETL7kDtxhiu4OkgpUh0OAF6+xrgkWHW7cPHQXKANXyRceWyGBArlGYdsRJT0LQkesyO2sWKVPsTknje8ORU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DnnAYspp; arc=none smtp.client-ip=209.85.210.173
+	 MIME-Version; b=gOgjucmFs5anIN6n9KQlSyTNG3JvvIkYmmyeLVvhDeMvCN12+3AvMM4Fu28x3nrWjGXRC/JoWLPi29GS2cMKVCVg09vLqMDBNiWdW570eUUwZ1c05xy9yagg7bntc1XQK8OaxKyzXhavMkYE8lnlHZryrZzZq+PnzwLJ31GjESA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AlH+zEF2; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DnnAYspp"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-76e2eb3726cso1812225b3a.3
-        for <git@vger.kernel.org>; Sat, 16 Aug 2025 15:46:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AlH+zEF2"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-323267bc0a8so4019925a91.1
+        for <git@vger.kernel.org>; Sat, 16 Aug 2025 15:46:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755384390; x=1755989190; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755384394; x=1755989194; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0PGcaaLLpmxb8tjzwGIKmwo5hynHY+IPfZtJmKDbGVo=;
-        b=DnnAYsppZ1V0AlpwP+ZmDpJ7SZq/GJ7Uo8U0qBuYf4Zr4QkX5jBtfdRnQM/OuF9dsM
-         KXAwPCnXybgdWL0JzYaJtgtol0PhZXtHsNFTRMyTdlPw4iafaZyPKZ0m5a8HQlUcfjna
-         S0edGnOi/jBJ49cfREMfoPzcJOw43y3tRfyi+UGX3RlM11UDrLnmaRmVxzZn4Bw50Ek6
-         RsprTNBmwRPHhoDs6Xxt9OuuEpdFW9P9E38k10TMbQCUJj0Ny8BTWBlobiZ77GG4X9uF
-         qT/te9T/hSHSxLPRm7tw9W/3JSDiNuMQpo+rI+Ni6hfBco7UhfE3rCT8P0AXdTiUo/n2
-         Lthw==
+        bh=hmdKslSkemJZT1zT2CS2vDgkEnYmH9VeGghTnXuqmRk=;
+        b=AlH+zEF2q7+3T0uiRAM90KaX6hfqyH5OBWzBXfnaU7QK/3BC4Nik1lXYkGrY+8hpdE
+         c3yOzOToz5f7ppsBcLKadKY+ZbxW5fle1R6rbJL3z3ipcsX7U57bTfPn5+2t69X1a6fO
+         7zz40GGaos+BmaqISXdsqbVxDjr2mwI1zwf1IaOdJ9rFySMJsdY0EzR3rJP9mEM2xzHr
+         JIumHj1/6cggfh+JCc8qRg1h8Y1MAndWNPL/QP9jQ6fdmRYzaOdF6pbW9kDzmETIbjWW
+         s7lB+WtzgEuH9m0+YMWsBReoyLpZtwdAcmAqlV3IhttCwt3yHn6y1XB2ZOYS0gxpfHs2
+         8bfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755384390; x=1755989190;
+        d=1e100.net; s=20230601; t=1755384394; x=1755989194;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0PGcaaLLpmxb8tjzwGIKmwo5hynHY+IPfZtJmKDbGVo=;
-        b=JSSSG6je/LEtDM4QMY0G6Qw9o53ED8fh5n0GkTwrBdEyrNDi9biyHjyPRY64F7okeb
-         gXONK4Ib53oDy6oZ3xldS1uTQXkhJjIsQ2CDnt5sRKX27Ig/imnXLCa1If5x9ZRI9QOZ
-         xtggA7urebNO/DbRAJCnjrWKHmjTFYlgX1qmS9INn3/y6d0Q6JfjcTHWBaxFRXT+G+e1
-         MulS35+djhM9/hnLT1/33gGpwQiAO+fLjrSMliP7USIXelecx1Ew9VqC/Nd6MMGGILLE
-         IAIJ+fM79tIRLsJrSoxMSGcBaPZKNLw14bSDOdhhqdi6oXq0n1p05orf86bd1IscaOMi
-         dtzw==
-X-Gm-Message-State: AOJu0YzyZ1zEqi3j0CpyVpeyGTHEWyZ6r/pZT/uC2ZVYqtDHltRjwVaB
-	1JkC6Tzg1MavINLkEDHxDDT0bwDrU9FmK/xKsfA7uz1XtM7SZlqTzejN6XkIBg==
-X-Gm-Gg: ASbGnct3skxSRTC2O7tcmXqUU0sRSqaeX/bCgdZzZ3VEBTumcET4j1qyIgxbPD1UF+R
-	JHW+DeejhoCaZ0gnvQQ/SHdA3PfilsdPRfAO4T5XQ4nVGzcfhRDZ/jlXzcjrYRGdSP8/Uqmv7od
-	ySKkyK+svL6Hxlv9sgnIfQtWGtYAry2hEOOck4/otAGnANY1xpTRbUTCORhmIu3yWl1vR0dTXli
-	tuzUJpibzOKXh6yLezDj6C0LL6jDvBamarq/GMHNhz9niSgjB83g2fEpQiBul+H52VkXiIym09t
-	FsuiW/PTjDbkp6Dorm94aCX7ozGEO/aa+4wopxgY+rUZx+9Hs6NgeEikHOh8nSyP8hEBhTaBLhC
-	KWYs2AhrTkUyK/+FdU75toSwVxJ9mjIGJacpwdKylhlA0cRbOz4kZqHlqD+cCrw==
-X-Google-Smtp-Source: AGHT+IGRJQmIw6etJwzpMaEdq7dr56VbniqM+QF82wNZqAgKsAEHZkJhZuZ04Tg/b5HcP++m9Ua5xw==
-X-Received: by 2002:a05:6a21:999c:b0:232:4a42:dfd1 with SMTP id adf61e73a8af0-240d2ff67b2mr10708940637.36.1755384390128;
-        Sat, 16 Aug 2025 15:46:30 -0700 (PDT)
+        bh=hmdKslSkemJZT1zT2CS2vDgkEnYmH9VeGghTnXuqmRk=;
+        b=lY2lbwTKDWVGJ6UPZxR5Lx3YScB8ozAW0z44mVE3YoIhCiTSVbdWygFxvUSdx8DbKr
+         oRzJ0KvnL0lN4VwO/BpqrG1CHWccdZ42VuPeynfo+oKqG8j+Fr5Eim7qRGDFV5BsOnqu
+         YOdr3q1Z1A9M7JQirLVLjTiVCipntad50a2eu8LqAl8GV1aJX++3H87Fol45LhRFL8uW
+         l1qvJrip/KJjBhE7fTBSinw8Sb/AkMVKydCAWeWeAka9L5jaoffx4JChkW6Z7uuMPH/Q
+         idXJjF/i+uIeAoQSlzwefi3xXbjDiEaCYHePI5hebaq3i90aAHE/4LMsPGbsWcuBqYRD
+         iM/A==
+X-Gm-Message-State: AOJu0YymGtIE3Mml8KLaJSV77aePkER8Tg5tVXVHz0U8bb5ZPny+pApe
+	kUJOlorkJ1HaZ2DlTWy7FKs3bDUXLgBA+9VKpiXo6nyN/VZuQHGgh2MRBpxJ+Q==
+X-Gm-Gg: ASbGnct/hOIzj/+LAawYMZJWOlBe/mE385wxVLzzjr2QzIdvC4F48JiZFoAE8L6rptD
+	bCqucgiwbO9wbWKiMMhnEaB3ertixtSSHwRaclBCmmHkfte+nW/zh9Yv+3sFhHNx+djSY8SsIFC
+	IOi3qzCfsFF8I2VbbV6z//TbVol0PI9T86qxWlODrDEIKJjZuHsMcOWpNt1+DICvF/3jCp8tZrg
+	Gm5Yjw7RQ1J6YrS0cGNDr8IvPj+hmdYKjUjcn5EivC5vurzMneP3HE8fRaNe62AntPgV2z1Z8Hx
+	tPzu3/svE37VVqvHmwPzIW+UFsgoRlwkDao8gfIQDMRMj0XCeyNLNRHHyKu9a080de+LG30mrdc
+	XzadQfVTME/b0mmTRLrV2JRk6uMxBMtBowZqzcd32dW3wYmUtx70Qlmr2Uz3Q6Q==
+X-Google-Smtp-Source: AGHT+IGBDW7H3ShuUbVcdYyyHr2kvTAxyL4gY0Im5WyQO/Zk+dMXlrZwkJFb3MCGYlVjyewqXA3/eQ==
+X-Received: by 2002:a17:90b:3d92:b0:321:9549:66cf with SMTP id 98e67ed59e1d1-32341e0e960mr10054604a91.12.1755384393897;
+        Sat, 16 Aug 2025 15:46:33 -0700 (PDT)
 Received: from localhost.localdomain ([2804:14c:32:8e83:e855:1cad:1392:e988])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b472d5ad0f7sm4617280a12.2.2025.08.16.15.46.26
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b472d5ad0f7sm4617280a12.2.2025.08.16.15.46.30
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 16 Aug 2025 15:46:29 -0700 (PDT)
+        Sat, 16 Aug 2025 15:46:33 -0700 (PDT)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: oswald.buddenhagen@gmx.de,
@@ -69,12 +69,13 @@ Cc: oswald.buddenhagen@gmx.de,
 	jn.avila@free.fr,
 	sunshine@sunshineco.com,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH v11 0/5] repo: declare the repo command
-Date: Sat, 16 Aug 2025 19:45:58 -0300
-Message-Id: <20250816224603.3307-1-lucasseikioshiro@gmail.com>
+Subject: [GSoC PATCH v11 1/5] repo: declare the repo command
+Date: Sat, 16 Aug 2025 19:45:59 -0300
+Message-Id: <20250816224603.3307-2-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+In-Reply-To: <20250816224603.3307-1-lucasseikioshiro@gmail.com>
 References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250816224603.3307-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,238 +84,199 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi!
+Currently, `git rev-parse` covers a wide range of functionality not
+directly related to parsing revisions, as its name suggests. Over time,
+many features like parsing datestrings, options, paths, and others
+were added to it because there wasn't a more appropriate command
+to place them.
 
-This v11 addresses the minor issues pointed by Junio in v10. They are mostly
-spelling changes:
+Create a new Git command called `repo`. `git repo` will be the main
+command for obtaining the information about a repository (such as
+metadata and metrics).
 
-- using "expect" and "actual" in all test_cmp calls, even when we're capturing
-  stderr
+Also declare a subcommand for `repo` called `info`. `git repo info`
+will bring the functionality of retrieving repository-related
+information currently returned by `rev-parse`.
 
-- indent list items in the documentation
+Add the required documentation and build changes to enable usage of
+this subcommand.
 
-- use a nested description list when describing the possible values of --format
-
-- spelling: "NUL characters" instead of "null characters"
-
-- initialize the repository in `test_repo_info` outside the test cases,
-  creating a single repository for both keyvalue and nul formats
-
-Here's the rangediff versus v10:
-
-1:  6767028da3 = 1:  6767028da3 repo: declare the repo command
-2:  c44e2d1619 ! 2:  1a3fa8e12f repo: add the field references.format
-    @@ Documentation/git-repo.adoc: COMMANDS
-     +values that they return:
-     +
-     +`references.format`::
-    -+The reference storage format. The valid values are:
-    ++	The reference storage format. The valid values are:
-     ++
-     +include::ref-storage-format.adoc[]
-
-    @@ t/t1900-repo.sh (new)
-     +	key=$4
-     +	expected_value=$5
-     +
-    ++	test_expect_success "setup: $label" '
-    ++		eval "$init_command $repo_name"
-    ++	'
-    ++
-     +	test_expect_success "$label" '
-    -+		eval "$init_command $repo_name" &&
-    -+		echo "$key=$expected_value" >expected &&
-    ++		echo "$key=$expected_value" >expect &&
-     +		git -C $repo_name repo info "$key" >actual &&
-    -+		test_cmp expected actual
-    ++		test_cmp expect actual
-     +	'
-     +}
-     +
-    @@ t/t1900-repo.sh (new)
-     +	'git init --ref-format=reftable' 'format-reftable' 'references.format' 'reftable'
-     +
-     +test_expect_success 'git-repo-info fails if an invalid key is requested' '
-    -+	echo "error: key ${SQ}foo${SQ} not found" >expected_err &&
-    -+	test_must_fail git repo info foo 2>actual_err &&
-    -+	test_cmp expected_err actual_err
-    ++	echo "error: key ${SQ}foo${SQ} not found" >expect &&
-    ++	test_must_fail git repo info foo 2>actual &&
-    ++	test_cmp expect actual
-     +'
-     +
-     +test_expect_success 'git-repo-info outputs data even if there is an invalid field' '
-    -+	echo "references.format=$(test_detect_ref_format)" >expected &&
-    ++	echo "references.format=$(test_detect_ref_format)" >expect &&
-     +	test_must_fail git repo info foo references.format bar >actual &&
-    -+	test_cmp expected actual
-    ++	test_cmp expect actual
-     +'
-     +
-     +test_done
-3:  e3009a85e1 ! 3:  a3b05def63 repo: add the field layout.bare
-    @@ Documentation/git-repo.adoc: In order to obtain a set of values from `git repo i
-      values that they return:
-
-     +`layout.bare`::
-    -+`true` if this is a bare repository, otherwise `false`.
-    ++	`true` if this is a bare repository, otherwise `false`.
-     +
-      `references.format`::
-    - The reference storage format. The valid values are:
-    + 	The reference storage format. The valid values are:
-      +
-
-      ## builtin/repo.c ##
-    @@ t/t1900-repo.sh: test_repo_info 'ref format files is retrieved correctly' \
-     +'
-     +
-      test_expect_success 'git-repo-info fails if an invalid key is requested' '
-    - 	echo "error: key ${SQ}foo${SQ} not found" >expected_err &&
-    - 	test_must_fail git repo info foo 2>actual_err &&
-    + 	echo "error: key ${SQ}foo${SQ} not found" >expect &&
-    + 	test_must_fail git repo info foo 2>actual &&
-4:  3837899c32 ! 4:  034dd414e5 repo: add the field layout.shallow
-    @@ Commit message
-      ## Documentation/git-repo.adoc ##
-     @@ Documentation/git-repo.adoc: values that they return:
-      `layout.bare`::
-    - `true` if this is a bare repository, otherwise `false`.
-    + 	`true` if this is a bare repository, otherwise `false`.
-
-     +`layout.shallow`::
-    -+`true` if this is a shallow repository, otherwise `false`.
-    ++	`true` if this is a shallow repository, otherwise `false`.
-     +
-      `references.format`::
-    - The reference storage format. The valid values are:
-    + 	The reference storage format. The valid values are:
-      +
-
-      ## builtin/repo.c ##
-5:  19fdfce646 ! 5:  442a3b7afa repo: add the --format flag
-    @@ Commit message
-         - keyvalue, where the retrieved data is printed one per line, using =
-           for delimiting the key and the value. This is the default format,
-           targeted for end users.
-    -    - nul, where the retrieved data is separated by null characters, using
-    +    - nul, where the retrieved data is separated by NUL characters, using
-           the newline character for delimiting the key and the value. This
-           format is targeted for being read by machines.
-
-    @@ Documentation/git-repo.adoc: COMMANDS
-     +The output format can be chosen through the flag `--format`. Two formats are
-     +supported:
-     ++
-    -+* `keyvalue`: output key-value pairs one per line using the `=` character as
-    -+the delimiter between the key and the value. Values containing "unusual"
-    -+characters are quoted as explained for the configuration variable
-    -+`core.quotePath` (see linkgit:git-config[1]). This is the default.
-    ++`keyvalue`:::
-    ++	output key-value pairs one per line using the `=` character as
-    ++	the delimiter between the key and the value. Values containing "unusual"
-    ++	characters are quoted as explained for the configuration variable
-    ++	`core.quotePath` (see linkgit:git-config[1]). This is the default.
-     +
-    -+* `nul`: similar to `keyvalue`, but using a newline character as the delimiter
-    -+between the key and the value and using a null character after each value.
-    -+This format is better suited for being parsed by another applications than
-    -+`keyvalue`. Unlike in the `keyvalue` format, the values are never quoted.
-    ++`nul`:::
-    ++	similar to `keyvalue`, but using a newline character as the delimiter
-    ++	between the key and the value and using a NUL character after each value.
-    ++	This format is better suited for being parsed by another applications than
-    ++	`keyvalue`. Unlike in the `keyvalue` format, the values are never quoted.
-
-      INFO KEYS
-      ---------
-    @@ Documentation/git-repo.adoc: COMMANDS
-      In order to obtain a set of values from `git repo info`, you should provide
-      the keys that identify them. Here's a list of the available keys and the
-      values that they return:
-    -@@ Documentation/git-repo.adoc: The reference storage format. The valid values are:
-    +@@ Documentation/git-repo.adoc: values that they return:
-      +
-      include::ref-storage-format.adoc[]
-
-    @@ builtin/repo.c: static int print_fields(int argc, const char **argv, struct repo
-
-      ## t/t1900-repo.sh ##
-     @@ t/t1900-repo.sh: test_repo_info () {
-    - 	key=$4
-    - 	expected_value=$5
-    + 		eval "$init_command $repo_name"
-    + 	'
-
-     -	test_expect_success "$label" '
-    --		eval "$init_command $repo_name" &&
-    --		echo "$key=$expected_value" >expected &&
-    +-		echo "$key=$expected_value" >expect &&
-     -		git -C $repo_name repo info "$key" >actual &&
-    -+	repo_name_keyvalue="$repo_name"-keyvalue
-    -+	repo_name_nul="$repo_name"-nul
-    -+
-     +	test_expect_success "keyvalue: $label" '
-    -+		eval "$init_command $repo_name_keyvalue" &&
-    -+		echo "$key=$expected_value" > expected &&
-    -+		git -C "$repo_name_keyvalue" repo info "$key" >actual &&
-    - 		test_cmp expected actual
-    ++		echo "$key=$expected_value" > expect &&
-    ++		git -C "$repo_name" repo info "$key" >actual &&
-    + 		test_cmp expect actual
-      	'
-     +
-     +	test_expect_success "nul: $label" '
-    -+		eval "$init_command $repo_name_nul" &&
-    -+		printf "%s\n%s\0" "$key" "$expected_value" >expected &&
-    -+		git -C "$repo_name_nul" repo info --format=nul "$key" >actual &&
-    -+		test_cmp_bin expected actual
-    ++		printf "%s\n%s\0" "$key" "$expected_value" >expect &&
-    ++		git -C "$repo_name" repo info --format=nul "$key" >actual &&
-    ++		test_cmp_bin expect actual
-     +	'
-      }
-
-      test_repo_info 'ref format files is retrieved correctly' \
-     @@ t/t1900-repo.sh: test_expect_success 'git-repo-info outputs data even if there is an invalid fiel
-    - 	test_cmp expected actual
-    + 	test_cmp expect actual
-      '
-
-     +test_expect_success 'git-repo-info aborts when requesting an invalid format' '
-    -+	echo "fatal: invalid format ${SQ}foo${SQ}" >expected &&
-    -+	test_must_fail git repo info --format=foo 2>err &&
-    -+	test_cmp expected err
-    ++	echo "fatal: invalid format ${SQ}foo${SQ}" >expect &&
-    ++	test_must_fail git repo info --format=foo 2>actual &&
-    ++	test_cmp expect actual
-     +'
-     +
-      test_done
-
-Lucas Seiki Oshiro (5):
-  repo: declare the repo command
-  repo: add the field references.format
-  repo: add the field layout.bare
-  repo: add the field layout.shallow
-  repo: add the --format flag
-
- .gitignore                  |   1 +
- Documentation/git-repo.adoc |  84 ++++++++++++++++++++
- Documentation/meson.build   |   1 +
- Makefile                    |   1 +
- builtin.h                   |   1 +
- builtin/repo.c              | 150 ++++++++++++++++++++++++++++++++++++
- command-list.txt            |   1 +
- git.c                       |   1 +
- meson.build                 |   1 +
- t/meson.build               |   1 +
- t/t1900-repo.sh             |  95 +++++++++++++++++++++++
- 11 files changed, 337 insertions(+)
+Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Justin Tobler <jltobler@gmail.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+---
+ .gitignore                  |  1 +
+ Documentation/git-repo.adoc | 32 ++++++++++++++++++++++++++++++++
+ Documentation/meson.build   |  1 +
+ Makefile                    |  1 +
+ builtin.h                   |  1 +
+ builtin/repo.c              | 27 +++++++++++++++++++++++++++
+ command-list.txt            |  1 +
+ git.c                       |  1 +
+ meson.build                 |  1 +
+ 9 files changed, 66 insertions(+)
  create mode 100644 Documentation/git-repo.adoc
  create mode 100644 builtin/repo.c
- create mode 100755 t/t1900-repo.sh
 
+diff --git a/.gitignore b/.gitignore
+index 04c444404e..1803023427 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -139,6 +139,7 @@
+ /git-repack
+ /git-replace
+ /git-replay
++/git-repo
+ /git-request-pull
+ /git-rerere
+ /git-reset
+diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+new file mode 100644
+index 0000000000..68c706f5a0
+--- /dev/null
++++ b/Documentation/git-repo.adoc
+@@ -0,0 +1,32 @@
++git-repo(1)
++===========
++
++NAME
++----
++git-repo - Retrieve information about the repository
++
++SYNOPSIS
++--------
++[synopsis]
++git repo info [<key>...]
++
++DESCRIPTION
++-----------
++Retrieve information about the repository.
++
++THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
++
++COMMANDS
++--------
++`info [<key>...]`::
++	Retrieve metadata-related information about the current repository. Only
++	the requested data will be returned based on their keys (see "INFO KEYS"
++	section below).
++
++SEE ALSO
++--------
++linkgit:git-rev-parse[1]
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index 4404c623f0..41f43e0336 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -116,6 +116,7 @@ manpages = {
+   'git-repack.adoc' : 1,
+   'git-replace.adoc' : 1,
+   'git-replay.adoc' : 1,
++  'git-repo.adoc' : 1,
+   'git-request-pull.adoc' : 1,
+   'git-rerere.adoc' : 1,
+   'git-reset.adoc' : 1,
+diff --git a/Makefile b/Makefile
+index e11340c1ae..ec7ac58980 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1306,6 +1306,7 @@ BUILTIN_OBJS += builtin/remote.o
+ BUILTIN_OBJS += builtin/repack.o
+ BUILTIN_OBJS += builtin/replace.o
+ BUILTIN_OBJS += builtin/replay.o
++BUILTIN_OBJS += builtin/repo.o
+ BUILTIN_OBJS += builtin/rerere.o
+ BUILTIN_OBJS += builtin/reset.o
+ BUILTIN_OBJS += builtin/rev-list.o
+diff --git a/builtin.h b/builtin.h
+index bff13e3069..e6458e6fb9 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -216,6 +216,7 @@ int cmd_remote_ext(int argc, const char **argv, const char *prefix, struct repos
+ int cmd_remote_fd(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_repack(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_replay(int argc, const char **argv, const char *prefix, struct repository *repo);
++int cmd_repo(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_rerere(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_reset(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_restore(int argc, const char **argv, const char *prefix, struct repository *repo);
+diff --git a/builtin/repo.c b/builtin/repo.c
+new file mode 100644
+index 0000000000..fd2a9b4216
+--- /dev/null
++++ b/builtin/repo.c
+@@ -0,0 +1,27 @@
++#include "builtin.h"
++#include "parse-options.h"
++
++static const char *const repo_usage[] = {
++	"git repo info [<key>...]",
++	NULL
++};
++
++static int repo_info(int argc UNUSED, const char **argv UNUSED,
++		     const char *prefix UNUSED, struct repository *repo UNUSED)
++{
++	return 0;
++}
++
++int cmd_repo(int argc, const char **argv, const char *prefix,
++	     struct repository *repo)
++{
++	parse_opt_subcommand_fn *fn = NULL;
++	struct option options[] = {
++		OPT_SUBCOMMAND("info", &fn, repo_info),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
++
++	return fn(argc, argv, prefix, repo);
++}
+diff --git a/command-list.txt b/command-list.txt
+index b7ade3ab9f..1b0bdee00d 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -164,6 +164,7 @@ git-remote                              ancillarymanipulators           complete
+ git-repack                              ancillarymanipulators           complete
+ git-replace                             ancillarymanipulators           complete
+ git-replay                              plumbingmanipulators
++git-repo                                plumbinginterrogators
+ git-request-pull                        foreignscminterface             complete
+ git-rerere                              ancillaryinterrogators
+ git-reset                               mainporcelain           history
+diff --git a/git.c b/git.c
+index 83eac0aeab..d4ff4d5517 100644
+--- a/git.c
++++ b/git.c
+@@ -611,6 +611,7 @@ static struct cmd_struct commands[] = {
+ 	{ "repack", cmd_repack, RUN_SETUP },
+ 	{ "replace", cmd_replace, RUN_SETUP },
+ 	{ "replay", cmd_replay, RUN_SETUP },
++	{ "repo", cmd_repo, RUN_SETUP },
+ 	{ "rerere", cmd_rerere, RUN_SETUP },
+ 	{ "reset", cmd_reset, RUN_SETUP },
+ 	{ "restore", cmd_restore, RUN_SETUP | NEED_WORK_TREE },
+diff --git a/meson.build b/meson.build
+index 5dd299b496..e8ec0eca16 100644
+--- a/meson.build
++++ b/meson.build
+@@ -645,6 +645,7 @@ builtin_sources = [
+   'builtin/repack.c',
+   'builtin/replace.c',
+   'builtin/replay.c',
++  'builtin/repo.c',
+   'builtin/rerere.c',
+   'builtin/reset.c',
+   'builtin/rev-list.c',
 -- 
 2.39.5 (Apple Git-154)
 
