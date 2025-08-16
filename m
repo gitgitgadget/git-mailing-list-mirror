@@ -1,81 +1,80 @@
-Received: from purple.birch.relay.mailchannels.net (purple.birch.relay.mailchannels.net [23.83.209.150])
+Received: from panther.cherry.relay.mailchannels.net (panther.cherry.relay.mailchannels.net [23.83.223.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC126F510
-	for <git@vger.kernel.org>; Sat, 16 Aug 2025 02:04:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.209.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F69F1A0B0E
+	for <git@vger.kernel.org>; Sat, 16 Aug 2025 02:21:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.141
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755309850; cv=pass; b=qnrjFCB0nJUjqrreM1ZCQjtl2llmcgOtjwS5jrP2u/gmFFpP8M6KpTblfTze/pjXeq45TKtPhhbeNKFiUHSBrE+lfhtfRmVSqIOBiS9kHU/JGDOgslnPj57aOYDXg924xCQUot4NRdA/wgCvRVyMZbMbd3DgCh8AjNQxc9fooqA=
+	t=1755310869; cv=pass; b=f5+McqCu1GUtgHhnH0/Fs7+A6BgialhHibQwnoAJAE0UoK1TjITMKo5mUFBrYtou6Ynwc2+wEFlWaNcbX+2GGBH6nv/Fn0h0mO0fimDCo+e1jIF/oBmbN/7W30WWA2ttY0CWIikLOCC2d72nUTRxz3OmtYLCsbqCXGxCGhq9Zoo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755309850; c=relaxed/simple;
-	bh=qP5SzhaSWwomI6hTgfc2cZ1aKZn8tuGwR6czcMawUCk=;
+	s=arc-20240116; t=1755310869; c=relaxed/simple;
+	bh=tQDITk9cGXpfoAjjiEQlo4qM9duJRHt6LdLdiB+Ekck=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=nTol6o4UjcJcR4WVAayKyTMYfcNeTBU5jLts9bn59tHL87KFypHkvLO0mGHNDzCCVxgNFx8sliw/D9fIZgjsapV2RwGRCxqCkYNQeRXkx6HokhggeV/ZxnQPAZqgwPEP97UMWI8QDgdtkVHLn+I0B9+I2Rs4ImuN1G137Z3Blvk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org; spf=pass smtp.mailfrom=scientia.org; arc=pass smtp.client-ip=23.83.209.150
+	 Content-Type:MIME-Version; b=HrSmsp+nt02u4XsMqsO4Cz0Hut7fkqVkzifDZEpT7cWn5AEKVP1X+WfO8K0Z8EmqYR1ilUljX6D4KT8Cord6dOZ88m+d4FO3+hHjMFuczyfrGI/5gpQd50Lwk1aN6hir4a0FfGiYSfLLDpB/UGr7qeeM6zNxb2ibsenbz3zpQ90=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org; spf=pass smtp.mailfrom=scientia.org; arc=pass smtp.client-ip=23.83.223.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scientia.org
 X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 3DC24845F69;
-	Sat, 16 Aug 2025 02:04:01 +0000 (UTC)
-Received: from cpanel-007-fra.hostingww.com (trex-blue-8.trex.outbound.svc.cluster.local [100.96.56.14])
+	by relay.mailchannels.net (Postfix) with ESMTP id BC1BC8A46FD;
+	Sat, 16 Aug 2025 02:11:24 +0000 (UTC)
+Received: from cpanel-007-fra.hostingww.com (trex-blue-0.trex.outbound.svc.cluster.local [100.96.51.170])
 	(Authenticated sender: instrampxe0y3a)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 2A614845F48;
-	Sat, 16 Aug 2025 02:04:00 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1755309840; a=rsa-sha256;
+	by relay.mailchannels.net (Postfix) with ESMTPA id BDF378A43AE;
+	Sat, 16 Aug 2025 02:11:23 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1755310284; a=rsa-sha256;
 	cv=none;
-	b=c7dyZX+wA7A7WqfoexFKagGfMcCsbv+EFhp+LRHCGwiJB6a86vO7jMvAO9GmTxvNOexC9s
-	kbPVtkZTH47WOdglO9slQccbHYC5fAuBjBxOJJCGEMHVlKAjnYfOqONC0pqrhdBhAgM5y6
-	h628PzaFLfxfdaOHR0OuOYEsrqcMRuyepAlpsKR1FMPY1wL6nLA3hACge0Du3L64DH3uJf
-	eVIb9quJw22wi5bXbpTqcH83g4KXh6GDO2qZXk+OT5kBViRjEh1srROUbAMDjqJrD0FOjO
-	diTChHzPDzFJVNe521ec7JlVR7XueO8yTIoN2C2IMeu1ncOHZaTWsQDHwi9GCg==
+	b=C7hx7FkzLvH0DCFYFEI7lTC6Chm88KmglKoE8lllgpr1euWqt6LnQju57+wZNEjZkjfgxF
+	766XOfBTK0hdzBt/EXzx0lwxIeLv+bx3kuPihw/RFkB3Dv/V6RTomd3Na+o4wlnvi8MyVc
+	mFR7kGfnHGj60xbI7lllhRiCcYU6g4LGcjzeNpnv4yH78AQpmK5j1fOq+zT5D+uTCmaO/F
+	gMUiKcs2DkV7AWC6KRUDinFMWJT/58RnDNto2KMn+sHO7jRY6vV2xzNxNMkc3CuY+atCy+
+	6GvCYOqeFjjzuDX99uGmslJX5fXRmmsGxyGSBY9H+08nPdFtfM3jZ5r7D8yKWw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mailchannels.net;
-	s=arc-2022; t=1755309840;
+	s=arc-2022; t=1755310284;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=4b/IuxfbNQEptzZUffobte0b/MPQJPvgt6aazbbHKKI=;
-	b=EhTP6DrojjbAwUMoKJwxugni2HdoQHTSJR1D1AL8Zq5GSQhfk1JuY3BMPHFxZZJHy/A+lq
-	+eFNck44zxzL6Gq+DZEdiG/EYDwz8OBh7Q5uhAtA1L8RPrR+2xP27yIvM5oGBe9Bxv3DRr
-	iipK0W9UcnPrYmofKLP7ZP7OzJVRAR7KhFIDBOKB8L188gS+Pt0KhGpBz8D2YiTNn9FN+a
-	XiwjQw19iRpkKhZ3pXI1QsLyEASLla4/7YF03weprlmElN0cy4eNtdynrlgThtIxfUNICH
-	1qM5YppIvn8cjXHpaCtTKZhxWi/HtdX0tCBmZ2gk1TgIQR+eJTF/TKlgmVUUcg==
+	bh=tQDITk9cGXpfoAjjiEQlo4qM9duJRHt6LdLdiB+Ekck=;
+	b=xCzpvByp/Kfn9Jb1VtZ5inGLpVB31iclTdihPzq4uAdRw5TIt/hhonc79k+sKodkDb9mWs
+	NdqSM+HNNi+5rE+Z7X/2PF52zYapmkkOng0JV8w2GVpCitUmS2RD+AoiqIUs6mngKe7WJG
+	WAmJ6ltNJ6ZJi6/B1M6JBbYKCqLgF/toVDSPfG3ZDlEMF5Qvzlh8B/UeQRiVKB69gzRezu
+	EkJW3rsTcqaNqoy98ttik5/BkGLqGWyR0eXFY+Svor/Mz6r93s9VvZAxuSvCmSzqb33e86
+	i3C6Eoh/2YqATAK3ac59bMDYPZVmnvPMADBihEcRadsh1+/PbaKwFNEN2o7zLg==
 ARC-Authentication-Results: i=1;
-	rspamd-865b9ccc6c-mzdjc;
+	rspamd-865b9ccc6c-bxjb2;
 	auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
 X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
 X-MC-Relay: Neutral
-X-MC-Copy: stored-urls
 X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
 X-MailChannels-Auth-Id: instrampxe0y3a
-X-Language-Cooing: 09489c9e5b7cffc1_1755309841108_1787318368
-X-MC-Loop-Signature: 1755309841108:3805917978
-X-MC-Ingress-Time: 1755309841108
+X-Decisive-Relation: 2fc1d9ec2ca4959e_1755310284565_574654885
+X-MC-Loop-Signature: 1755310284565:2332928330
+X-MC-Ingress-Time: 1755310284565
 Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
  [3.69.87.180])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.96.56.14 (trex/7.1.3);
-	Sat, 16 Aug 2025 02:04:01 +0000
-Received: from [79.127.207.171] (port=46661 helo=[10.2.0.2])
+	by 100.96.51.170 (trex/7.1.3);
+	Sat, 16 Aug 2025 02:11:24 +0000
+Received: from [79.127.207.171] (port=56512 helo=[10.2.0.2])
 	by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <calestyo@scientia.org>)
-	id 1un6H2-0000000Bze0-43la;
-	Sat, 16 Aug 2025 02:03:58 +0000
-Message-ID: <46840dddbb8a1647539e1b2cd3838167600fcb14.camel@scientia.org>
+	id 1un6OC-0000000C15U-3YZB;
+	Sat, 16 Aug 2025 02:11:22 +0000
+Message-ID: <d8b279098a41949eef06f26d3f09c3950486380b.camel@scientia.org>
 Subject: Re: why can't one alias `git stash`?
 From: Christoph Anton Mitterer <calestyo@scientia.org>
-To: rsbecker@nexbridge.com, 'Elijah Newren' <newren@gmail.com>
-Cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
-Date: Sat, 16 Aug 2025 04:03:56 +0200
-In-Reply-To: <00ec01dc0dd6$f4e31f00$dea95d00$@nexbridge.com>
+To: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org
+Date: Sat, 16 Aug 2025 04:11:20 +0200
+In-Reply-To: <xmqqjz34txjg.fsf@gitster.g>
 References: <a24d0d237b9f57535c768da4c00d72bad68cf411.camel@scientia.org>
-	 <xmqq7bz5v0mq.fsf@gitster.g>
-	 <16220ca65f1ae9883a2fa103e842cf0ffff43236.camel@scientia.org>
-	 <CABPp-BHt80YD9bzWeC+r5qxJ0Vp+zRsJZsKDU_GA39CXmuYe5A@mail.gmail.com>
-	 <00ec01dc0dd6$f4e31f00$dea95d00$@nexbridge.com>
+		<xmqq7bz5v0mq.fsf@gitster.g>
+		<16220ca65f1ae9883a2fa103e842cf0ffff43236.camel@scientia.org>
+		<CABPp-BHt80YD9bzWeC+r5qxJ0Vp+zRsJZsKDU_GA39CXmuYe5A@mail.gmail.com>
+	 <xmqqjz34txjg.fsf@gitster.g>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.56.1-1 
@@ -87,86 +86,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-AuthUser: calestyo@scientia.org
 
-On Fri, 2025-08-15 at 07:22 -0400, rsbecker@nexbridge.com wrote:
-> >=20
-> Aside from the above, hiding an existing command would potentially
-> allow a
-> man-in-the-middle attack. Imagine changing git clone to be something
-> else,
-> like cloning a hostile repository. Hiding existing commands could
-> result in a
-> HIGH severity CVE in git - I would consider it as such. Please ensure
-> that no
-> fix/enhancement is done to support this request.
+On Fri, 2025-08-15 at 08:27 -0700, Junio C Hamano wrote:
+> =C2=A0=C2=A0=C2=A0 $ git -c alias.loop=3D'!git loop foo' alias foo ;# doe=
+s not come
+> back
+> =C2=A0=C2=A0=C2=A0 ^C
+>=20
+> To be honest, I do not offhand see a foolproof way to "fix" the
+> latter.
 
-This I don't understand.
+I assume every aliasing step causes a new invocation of git - or are
+aliases resolved in one process?
 
-I mean I hopefully never get a remote git config file e.g. just by
-cloning some remote repo[0].
+If the former, what about:
+For every aliasing you append to some special env var the name of the
+alias, and if the same is encountered again (or some maximum env var
+size has been reached) you bail out with an error?
 
-So - if git aliases were to be only applied when called from
-interactive shells - how exactly could there be a MitM without the
-attacker having already compromised at least one=E2=80=99s user account?
+It's of course still not 100% foolproof, e.g. if users manually clear
+the var or somehow else uses it.
+And it requires that at least one char (that can be held by an env var)
+is not allowed as an alias name, to be used as separator.
 
 
-Cheers,
+> It is true that it would break common expectations for script
+> writers (to help other Git users) and those who help other Git users
+> at their keyboards if we allowed to alias the basic command away and
+> to change its behaviour radically.
+
+As mentioned in the other thread, IMO it sounds rather brittle if
+aliases are considered at all in scripting.
+
+
+> But with so many configuration
+> variable to alter behaviour for Porcelain commands, I am not sure
+> how much it is helping the latter helpers these days.=C2=A0 For the
+> former helpers, those who write their scripts with Porcelain
+> commands are beyond salvation X-<.
+
+Well I'd also be happy with a special porcelain option that allows be
+to override the default of git stash O:-)
+
+
+Thanks,
 Chris.
-
-
-[0] Perhaps a bit off topic (my apologies for that) but I had wanted to
-ask this for a long time - or maybe I've had even brought it up back
-then, but there was no outcome):
-
-I vaguely remember the CVE that cause the introduction of
-safe.bareRepository, which AFAICS was CVE-2022-24765.
-
-I'm not an expert but even back then I had already some doubts whether
-this really *fully* fixed the issue (for all niche cases), did it?
-
-I mean when I do a plain
-  git clone http://hackerz.com/rogue/repo.git
-then the resulting repo/.git/config cannot contain any configs from an
-attacker (e.g. rogue alises).
-
-
-What if repo.git itself contained e.g. a ./x/.git subdir with configs?
-My understanding was, that with safe.bareRepository =3D explicit, such
-subrepo .git would never get cloned, so that would be safe.
-Right?
-
-
-But what if I untar such rogue repo... or perhaps more likely, stumble
-over it on some network mount?
-To many users it may not be obvious, that this is a risk. And I guess
-it might even be exploitable by just cd-ing into the wrong directory
-(if e.g. git prompt is used).
-
-It's also not really clear to me whether any 3rd party git utils/libs
-(libgit2, etc. pp.) may fall for such attack?
-
-And IMO that is different from downloading some untrusted binary and
-executing it, as e.g. already a cd could cause troubles.
-
-
-Is that the situation as assumed? Are there any plans about doing
-something against it?
-
-One could e.g. keep a central list of pathname of directories that are
-actually considered repositories... and things like aliases/etc. would
-only get executed if they belong to these.
-A git clone could automatically add the new repo to that list (but e.g.
-un-taring some repo wouldn't cause it to be used as that).
-
-Or, in order to allow moving the repo to another pathname without
-having to re-register it, any "allowed/trusted" repo could get some
-magic cookie in it's .git dir, which is signed by some key from the
-user.
-Could even allow more than one such cookie, so that multiple users
-could work on a shared repo.
-
-Of course this would only fully protect, if all other interfaces/libs
-to git would also adhere to that.
-
-And of course, one could make it configurable, i.e. safe.ignore-
-untrusted-repos ... for all those who think the whole thing is annoying
-and rubbish.
