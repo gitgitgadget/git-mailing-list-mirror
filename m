@@ -1,71 +1,60 @@
-Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05olkn2030.outbound.protection.outlook.com [40.92.89.30])
+Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05olkn2067.outbound.protection.outlook.com [40.92.89.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E511E25E3
-	for <git@vger.kernel.org>; Sat, 16 Aug 2025 08:54:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.89.30
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5503242058
+	for <git@vger.kernel.org>; Sat, 16 Aug 2025 09:15:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.89.67
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755334451; cv=fail; b=BxS6mLWkqHJFXbF82itHD0s35DKATQufWkABbMF3aMYqV3f4M54a7SR7W82ttFAElhz1yLCeAtRmhQFZgMTpLK6rWlGs6kAWligk9XL0ntEiaBxsu69Lu0k5g9xJCpfTqRqGsMirju5Iuabyp1D7kFOK3Sten08xaH2XPTc3U6Y=
+	t=1755335728; cv=fail; b=lDnqJ11YQ7H/08W76Q5T0UIlMSKNRbvslhV/9LKwqnWJREl7yFPyhSZ0of7e05Pg9O5AkDbBO8EL4LVDH2uy9adRcjiczhHrQIlcDzST8ikV0qAraM9D93b4PcA3ZLR8fvTBDSH9bZQ6nBBx+Xvor7Nat6rznXJBheLuxD/bowY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755334451; c=relaxed/simple;
-	bh=NEiP++DH404IXJEwczctX7vU/tbEM9HBntqFfU9/lIU=;
+	s=arc-20240116; t=1755335728; c=relaxed/simple;
+	bh=gBOi4dIVjoMZekAtpKWtXq8fL19CAjGINLSUF8Hy0iw=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 Content-Type:MIME-Version; b=j1XeOPp9B12E2xTbDdRXeORpP3CK8dN2KaTYRDxwqaMTfLEfo6LPKA5+MavSwiklX8c4G0NqW6dUfQjL57RsY1fC61HfMHkCzO/Cp2dAbBd6z4twf4sq/wmgKogbqmLL8m/jqDZcEf7Y4ctVXJRxH3fxTvHDKuv1qJaPMoPYdck=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.de; spf=pass smtp.mailfrom=live.de; dkim=pass (2048-bit key) header.d=LIVE.DE header.i=@LIVE.DE header.b=qSOSwpUm; arc=fail smtp.client-ip=40.92.89.30
+	 Content-Type:MIME-Version; b=gRY/QhuVlx0+RIZOFHqZjlPcl1nJoHITBpqLd32tXpGee3vzSSAFcIxuRn8zp53hsj10ou6yrWal1qXD6A0QxKMeTdE85TY0BfcQLzY2OcAtLO1gJONBZY9hJ7ceuZwuelvUXrEgvYkHeoO+Did5rdo+20MVtJo92vvIFyfUrSQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.de; spf=pass smtp.mailfrom=live.de; dkim=pass (2048-bit key) header.d=LIVE.DE header.i=@LIVE.DE header.b=YECvUXOc; arc=fail smtp.client-ip=40.92.89.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=LIVE.DE header.i=@LIVE.DE header.b="qSOSwpUm"
+	dkim=pass (2048-bit key) header.d=LIVE.DE header.i=@LIVE.DE header.b="YECvUXOc"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sgppvF9FnU1imWGfFoONB+fn8CmRtSOugqVVd6QU+NKY4A8ltOfEKqPDxjyxJcn0ww7JJFeeep9w4RDxpKu1Kd80hDDVc0f2LgDfBAdk5flmpGqi+wL4MHjr2EcUaJrDIqDwonTCCFMnE215/NyY0wekgc+kynFuGTIzshvodqnbtQdfhQh2W8MUu5jQWWmjSox/cV6dhLAGSTy4PGOV7d6G4nHhtHiqXNbkgydX3LAGVYBufWzHdM4CMNiVfIC4V/vcfYegPTiZNrNt1ZkS+DX15+rbI6TGyYWqTKlZoImeQup8DiatZLcAt6jD+Jzfe9s6hGIErRUPwzN11uzcvw==
+ b=y6V2e0BfBq2SQrHeFiQ+qIxhEj3L759iVTHCkHJRRjv4njLiAyuxEr1qGbT1mQBrE4+TYqao2cgt0vZT7v9qqL2/kuVzUzOx0FWi7AeLDFR49T2iYUu4+DZtCsASaH/Gw4O+E0lAl8A1MGmxoPCl9Yu7OAkrwYSl68Sn8+TVY4mbHGDB/Ol7+uckxwSrKWd7YEqjFoXXRuHr9UrOiGLqm4RfWhm+gGkDwQNgY07tHfiZmdcaYDM89aKXPjw/3gTClKvDXr/duGYRs/VbYa3EvP/S3jLXiiwqxOlVIie/74iunCk6L5tdC4L2L74vRB2Jv/SR2X7WRMyJXiVi6fHeLg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Kp9RVgNnaIiKE/8bwPLaOG1gQiQOOJbLFehaCz7QkKU=;
- b=LDYCDRWgcdOK5yOZNSsddI6vqRq3wYeVM9/vx0afL6fk9UhrPJeoqld00gD91s5dx0QJ5wjlAyupz6N7DN/nsA3EYTDFn2CaXb0tV+CfouR3tid3sOoJ3278qWEqnfiJMItq5fYDNwmMkUS4Xqw9FQ/3tt2pHCh6xWvnHT6QrM4maFzxAELbmjKYiXPNubdn5PRlmBSUh/uwoZ2mI2/NPTJvaI2JbzV2sEq6vENYPIPVHgRDfJ8H7OgmoqziQ1FiymVi93/dEpFddRGnjArYwfNjUYVhNNc3c44nd7/AUuTepqXKRWj0dNf1ZoE0Nw8VEjWDLdFOCxR3eCnvHwU2bA==
+ bh=sjLPJWOJyy7lBriQ/TLk0tvD2EN+qdWA6+wwcugdhYM=;
+ b=EGQx5FUrSEnzpH1FeS2qNtVXh0Ukqw9K1g2u9S3lEER85+vZLmwVkfJjRDuITqQqUpjMJ6BL2Lf0fMAdWpu7KfFMJGiUbiAZmmzmKgRf4FLeCC/t+1sRmUct5q8HLeZX6/7MJT7PSreCpX0GM0Rrw35Z+fIj85ZHsYA/9l0sYVeVUEu3D1tZzMU0gAyr0yUw6MFWJC6mma5hchViJiThLphILD+KyK7CelySE2f22/pGToUrfPT/jwfbXDZ8QPt7k4tlweWp1GtNZjglG4clH1XzYc/HDtHimh0gCXP037CwGV4vRqc7HIRQ0gsUtZjORH9C1g+GjPkFZjP0gMOXYQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=LIVE.DE; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Kp9RVgNnaIiKE/8bwPLaOG1gQiQOOJbLFehaCz7QkKU=;
- b=qSOSwpUms5z7295D5yDOmYXbh6TIqQWVSgI71yPBndkhclTZ0hbhp1F7hpZaTOwnfEDOVI4S7uK/BaEUhMYf993SWRwUlnu1tTfc2vsXqWbK22bCK3BG0PU2pGM7VhT8s27jGMPz7YuYinhx04VSRr625+DLTxtcD5/xrXhp7BJmTg7/rpiSRaP1SzhTDho+GngvgsZXBcnCIx1qnh9+JVseujwMCC3bWqqXVmdQptLRkwmG+vcwubI1SGlvRorK6f2MOLcZAiHjfUq9N+WehykuTbNZuZUBxAfzZf/5U/HPyanpehsKs/q3ry7U1Ut1FGexeaY1On3KFN3lT39wpA==
+ bh=sjLPJWOJyy7lBriQ/TLk0tvD2EN+qdWA6+wwcugdhYM=;
+ b=YECvUXOcF8G4NyfOLX8Q7tqPICwicC0xQUh8V3Wkvah31djfN8xQrf+OaFPft+7PhII5YWk1U+gSctfiM5Lf4kX6pBS/p3vD0Zx8zlVhXAsxWcrCPn926EdUyA3lKHGLf1QZg37qSCZYENdWwxImbdFoU5usjq0FgyIQoPaWwjc+aZ6ZrEfNwOiHE2epcULoBJUZ2k5weD5sb3zvMpvcSAzGNjs4BbQLnBjFqt19tCtVLRuP6AK7aixijWWw4YGIWItFfVI/z9lK0wPyCbuAgtmju1L3LMBUorBhOJMI/3QiM6UY1ndifg0FEi/2LlIaaVjxun8MoDNh6jsy8OOqag==
 Received: from DB9P250MB0692.EURP250.PROD.OUTLOOK.COM (2603:10a6:10:332::19)
- by AS8P250MB0166.EURP250.PROD.OUTLOOK.COM (2603:10a6:20b:375::15) with
+ by DU0P250MB0552.EURP250.PROD.OUTLOOK.COM (2603:10a6:10:34f::5) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9009.21; Sat, 16 Aug
- 2025 08:54:06 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.19; Sat, 16 Aug
+ 2025 09:15:25 +0000
 Received: from DB9P250MB0692.EURP250.PROD.OUTLOOK.COM
  ([fe80::af97:29c5:7cd5:4af1]) by DB9P250MB0692.EURP250.PROD.OUTLOOK.COM
  ([fe80::af97:29c5:7cd5:4af1%7]) with mapi id 15.20.9031.012; Sat, 16 Aug 2025
- 08:54:06 +0000
-Date: Sat, 16 Aug 2025 10:53:59 +0200
+ 09:15:24 +0000
+Date: Sat, 16 Aug 2025 11:15:17 +0200
 From: =?ISO-8859-15?Q?Matthias_A=DFhauer?= <mha1993@live.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, Elijah Newren <newren@gmail.com>, 
-    "brian m. carlson" <sandals@crustytoothpaste.net>, 
-    Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>, 
-    Phillip Wood <phillip.wood123@gmail.com>, 
-    Eli Schwartz <eschwartz@gentoo.org>, 
-    "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, 
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-    Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>, 
-    Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>, 
-    Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, 
-    Ben Knoble <ben.knoble@gmail.com>, 
-    Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v2 09/17] Do support Windows again after requiring Rust
-In-Reply-To: <xmqq349sntms.fsf@gitster.g>
+To: Christoph Anton Mitterer <calestyo@scientia.org>
+cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
+    git@vger.kernel.org
+Subject: Re: why can't one alias `git stash`?
+In-Reply-To: <d8b279098a41949eef06f26d3f09c3950486380b.camel@scientia.org>
 Message-ID:
- <DB9P250MB0692F39EA259A4B31845C6B2A537A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com> <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com> <96041a10d545e0e431d05b93544771c6bdfc06f1.1755220973.git.gitgitgadget@gmail.com> <DB9P250MB0692900F30A3E71E4F01DFFFA534A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
- <xmqq349sntms.fsf@gitster.g>
-Content-Type: multipart/mixed; boundary="770480705-15427-1755334445=:17988"
-X-ClientProxiedBy: FR0P281CA0087.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:1e::12) To DB9P250MB0692.EURP250.PROD.OUTLOOK.COM
+ <DB9P250MB06920D87A02A7FE81F88C034A537A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
+References: <a24d0d237b9f57535c768da4c00d72bad68cf411.camel@scientia.org>  <xmqq7bz5v0mq.fsf@gitster.g>  <16220ca65f1ae9883a2fa103e842cf0ffff43236.camel@scientia.org>  <CABPp-BHt80YD9bzWeC+r5qxJ0Vp+zRsJZsKDU_GA39CXmuYe5A@mail.gmail.com>  <xmqqjz34txjg.fsf@gitster.g>
+ <d8b279098a41949eef06f26d3f09c3950486380b.camel@scientia.org>
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-ClientProxiedBy: FR4P281CA0246.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:f5::15) To DB9P250MB0692.EURP250.PROD.OUTLOOK.COM
  (2603:10a6:10:332::19)
 X-Microsoft-Original-Message-ID:
- <7609d93a-592d-4a92-92ff-9f767bc11fe4@live.de>
+ <69c9be52-30f9-e8eb-5fba-f50f5013a510@live.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,157 +63,81 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DB9P250MB0692:EE_|AS8P250MB0166:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2c9bcd84-93a3-49c6-1c5a-08dddca274e7
+X-MS-TrafficTypeDiagnostic: DB9P250MB0692:EE_|DU0P250MB0552:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6e3131c9-7fc9-43b3-5324-08dddca56ede
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|8060799015|5072599009|23021999003|15080799012|19110799012|461199028|40105399003|440099028|3412199025|10035399007|26104999006;
+	BCL:0;ARA:14566002|6090799003|8060799015|19110799012|15080799012|461199028|23021999003|5072599009|3412199025|440099028|51005399003|40105399003|26104999006;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?S3plOHpiSEZyaHg4MnlDYmltdDM5bU5NRzZOQTY1anlKWSt5YWVJTUFDbXk3?=
- =?utf-8?B?Zkowd1A2N3R5eWlSTUZEU3pGS3BEWEZZTHU4dmNRUGZYTURiQjYvSGg1Y2Fy?=
- =?utf-8?B?YnVrZ3REZUUzSUhWVVNlZUZXd2RwMllJaFpkVTE2M3FSUDloditOZU5vdG9J?=
- =?utf-8?B?Q3JQVDZwNC9jaEtNdHN5MVExakZvUjNEV3FSelVncjVRSFdzTHpNRDY4ZUxr?=
- =?utf-8?B?OHpLYkY0YkZmNXRFeXVWL3d0eENSOHZOUWljUTEwVi9FaEhPeklZckV5Yk5F?=
- =?utf-8?B?d0ZXNEJHNUlKS2F5ZHBWRmhxNC9BSjBsaCtwQnFIeUdyanNjZGxQQjhiNElF?=
- =?utf-8?B?ZXRYVmxVNE0rd044VEpJSzZQVG5CQ1FXUlJ1cGRkbDM0VDNIdUltYzMybGJY?=
- =?utf-8?B?VnlNVTVQaEtqV1BseW9WWkE2NU4xMEJSWjVaQWNuaVE2NFFZZnFSeCtmbmJa?=
- =?utf-8?B?c3QwSjVDdDRxRUpqbWFDb2NUT1BrY3FXNjF4L2hxVHplMlRrbHRRVkpXcE81?=
- =?utf-8?B?YzRneXU0QTl3Zjh4UW5TRXA5RUozUkNTb3VqcFJid05SWTdEWWxjR2dPQ3dh?=
- =?utf-8?B?MUMyT2lxUTBrNzNaSG96UldJeFVGOWdpZjdBcFFJVHB0SWlsazZJWGpjcGVG?=
- =?utf-8?B?WnNpNzg4cTF5eE5IYmhoSjcwM0h2MEdtdkJKa0FLK2dxcFAzVDVYOWlNNTQ3?=
- =?utf-8?B?bHEzajhPeTlxb1FNeWdvdUxLazF0YmM1d29DV05LazV0QkxyNUo2MlBYUldo?=
- =?utf-8?B?eXdKaTI5bkZ0QTBuSDIwWlJiMGdNaHIrLzBpSk51UG54TlhCR2Vvb05Tajc5?=
- =?utf-8?B?eVBpbmQ4REcydmR1L3VoV1FNTXZ5WjdjVDNHYktWa3d5NEh0cSsvelNvRkdE?=
- =?utf-8?B?ZUNDQTN6L3oyczN1d1pMZGY5bjJReTlkL2g5Qys0UVUxeDcwMlBWbWJxbXRS?=
- =?utf-8?B?ZUthMmNBNUg2THkwUVVkdUszTDIvOEh5WTBPeVl3NjR3dXpkdDljZzZSenB4?=
- =?utf-8?B?NzQ2bUxhOWVXaEtlL0w3UisvZ1VzZzl6N082TVcyeHdXOGNaRjJVd29TbDd4?=
- =?utf-8?B?NThEWURzcGZxNWlkMTArSmFwckpWVEZDVWV5V3JtMlBwRjY1bWpHV2krTXdq?=
- =?utf-8?B?SENncjR1WVQ0YkRueC9QUDAyemtQNjdyeURKV2lMeGc3akMxei95eFpSOGth?=
- =?utf-8?B?ZjVieXFWZHU3MG1sMWhMSjgvYzJ4aldUZVJ2MVZPc0VIcjA1a05Qem1SSmZk?=
- =?utf-8?B?UXAyUVQxRzRNczZnK3IxMmZZYkJPYjdGbmM3RVpwd0k2L25PZzRqRi94dlVn?=
- =?utf-8?B?YVZka3lSR2RvdUZtcmRvL3RVRmpCL1V2ZUhBcFRPK0ZDL3JlUDIxSXRlT3Vj?=
- =?utf-8?B?SjRzUHpJL1JhT1N6ZkhQLzJSYVFkYytEeFN1NFlHZEkwL3lMemFqT0YyVmNK?=
- =?utf-8?B?aGlwQ0hJUCs0T2ZuNUh4eUp0LzZFL0djcncxSk1zQkJ5Y3lkaXNiWVRwWmtQ?=
- =?utf-8?B?d2NOQnVKS3dhaHpta0RWUHo5VFNwRVBiV29kM0dTYU9GbDJRcW11SHp5Zlgw?=
- =?utf-8?B?YUVxTEZiWmtxRG1YODRETVRKK1o5UHFZS25TY093RHdGK0FyQ20yWmNqWTZR?=
- =?utf-8?B?ck54S1lBU1UyNm51eUtpVFZxV0ZLd1E9PQ==?=
+	=?us-ascii?Q?6MXQ2XTAbmSJVaXd5r6zIDBTvHapTgaWDn+3wFmeEgfBFw5US91e2Hi9sckX?=
+ =?us-ascii?Q?vi/RjKF81p4tjnz7BnQzblG97U0UmU/sBpeswz57zK690Qhzc+XNoWbFAAdk?=
+ =?us-ascii?Q?jJTHBgpRV5rkvYeYMuLXCzhnsNsdqnbrokR9i9u6P8TB/u0RrscFYJSqzOh3?=
+ =?us-ascii?Q?yYkpqrb91h191rPLHkILqxeixJv+89W1gLXiwrTUNdnv6Qk92RGe1Ab/bXjE?=
+ =?us-ascii?Q?gq6nRe83W0sgs+6SOBvc1tWBUlGF+iqzfFfjsquirdDqdf9E+nnksjnrixiC?=
+ =?us-ascii?Q?GRFaDrq0lFHhS53mNWTn/1sSD4JO5M/iBFOPMOYQnmzVVUbDglVxWKFI1Q+p?=
+ =?us-ascii?Q?k1+wGZXeDb3t9la4JeAHs2y+WPtziAGPUf/0Zihxp5zoY8Y2HfLcm1WGQfXz?=
+ =?us-ascii?Q?XS9AcQqqHGkqkApy0Q7nfDLHFr56CylBgu1j//HocZUSg62PT+DLYKHw4DA1?=
+ =?us-ascii?Q?+aEXQJgdamDuqPtZ3V9ZLZBoePZrtYomSlK/ejqROlinMtkPA65ofDwAdogo?=
+ =?us-ascii?Q?lJhMWaGefXbkPdMO+LaxWmhfltPLiGRjWTf42LYb7sKU3qPmzO4yL7HE9PAM?=
+ =?us-ascii?Q?J1g/WaLxFwayrDquD+rLhmDYQKUsaFZ8+8VM2xVtmz4MosaAhKqq0A10IJBU?=
+ =?us-ascii?Q?QKdQRfvAlXEoxgClEAv5oY+QmPBHkqdvaV0UcnBdzBkTP/yrgaO+l9pLGZ5H?=
+ =?us-ascii?Q?PIVg5pGa55BJlAX4dPnEHX+qMvzFhdcQQNkmkx9c0yADBlvV3ePpIvDVdovI?=
+ =?us-ascii?Q?QOyi+V2BF4ZVqroBrig/PfjmyMwR8fl7O1ze8nmcIvHvZj50UB6umpltb+7C?=
+ =?us-ascii?Q?54pIY/X2ekVPqbKZylEkxHDZYmd9zkoFkbettkd+afTp+Zsab0l6SPIOO5q/?=
+ =?us-ascii?Q?WAN21dlU7uEOM6lmEscvJzfTV+EBO+4BG8YyLS0E0xf9RzX/WXQwT4D0jnZA?=
+ =?us-ascii?Q?/BxS3ISGzyGgxKnu3AHr/psu5qNInJVvNUGTZxxnXihoLvjSyQ39F7sA/EYy?=
+ =?us-ascii?Q?JfOYkeCJp9f7Q+1QTJnzwVOhlievESHts9EqiDwzC812ZytjWO9PZEbKqSsb?=
+ =?us-ascii?Q?O/8ubZ10LewJqdLK+sC19yRFFgrnD3d9ZrzU7X2MdDc/AIRElM1o5gDjUuYi?=
+ =?us-ascii?Q?vL1gPNktYJZZanFrqw3WMJqOLLqCxaytTW6xw/G9w1DNfZ8x6444wtdZMnS/?=
+ =?us-ascii?Q?ttIZuSbDPCFkzKsztceDHBCfp+7MqafFMAiEQobMipXbJ+B6+8z+we0yiXI?=
+ =?us-ascii?Q?=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?dUgrcGtKNXE4QXR4bXYxd29DSkVua3l1NURLRzlBUlFpd0U3SnVETHB3cGVs?=
- =?utf-8?B?L1BJZ09FVUljMHpUemxNdzVLMDhqMjRzanVmcFphcENCOGpBVkFwVGJoSEhu?=
- =?utf-8?B?Z0FmTVdSSzhhNlFIS05mQW5IUnNKTGsrMmczQTdDb1BzMUNuNks3RE1WbDN1?=
- =?utf-8?B?ekVUNHU3ODE4NzBIakprR0dudEdzYjloMFdiaWlpSkthSW1OYnJ0QWVCQ0JO?=
- =?utf-8?B?ZUdNRGViK3pwWHVjVCtFK0NsYUcxcDVQZjFqRm9yckhxOS8xK2xLYUhzY24r?=
- =?utf-8?B?NWM4ZW1kTUt4R0doT09MLy9oS3lFRmpLVHkrMS9CWU52T015aktJanhTd3lu?=
- =?utf-8?B?V2dvcFRibW9XNitMekNPOGxTWGJFQVJnUnhjYlNIYkJpZVdiRzhyV0dBbWp4?=
- =?utf-8?B?dlRXaTVLdzFlZzRxNlQ3aVBDYjhwL2x3YjNKT2RBbHluRzY1UzZFVmgvRHBU?=
- =?utf-8?B?a1RBUFBVWHdnUmg1L0pFOHFDZDFFUTEvOW1uM3Y4WW5ndU9xQUdLQUh1d2c2?=
- =?utf-8?B?SGY5UVJFL2tZTW5xY0w0bldVZE5wSVpIckVjQi92VmRsQy9QMGdCS251S1Rh?=
- =?utf-8?B?VzJ5MUJXT2pmS0lZV3BMSDg5Z3ZPNWRBc0tkbnU0cUdldXkvS0pQN3dGT2h5?=
- =?utf-8?B?OEZ0YkxNVFVpc0RhWndwa3ZYVm1icWxabmZWWXJrcytEeFZ5VTJ2NjhUY0VD?=
- =?utf-8?B?Y2lRaG1XenRLYnBrU1hud3JJalNDaHJ6NEt5U041ejRsakdNRVNORFpUbFFU?=
- =?utf-8?B?WGxWeEJ6bTFRTENEbW9ISGJSUlRxQ1BIcEs1TjBYYXlXV24zWVVmTDBVVW1t?=
- =?utf-8?B?SWQyTFNNcVBKR0hxUTM1ajc4bzJLTWQxNHI5cEJYejFlT2NGbTkvb20ySlJZ?=
- =?utf-8?B?Y0xGYjFtRWM1SzdXRnhQV0xQMkJpUzBJQXhvYVNjVC85eGtqVHlpTVJPVmZ1?=
- =?utf-8?B?eDcwT0FVVDZheCtaOHBHbHhJR3hOOFVqc3kzcDJPdHYrbThaSTk4UE0vVmRi?=
- =?utf-8?B?ZlBEUmh6OVNBRGNVclV0K1FGY3pnNVhoYUtHeG5TVVdhMy9QQVRia0U4Y3J6?=
- =?utf-8?B?MUZHdWRUTE9WaUpNTXV0Y1F2dHRmYk9CSFlpQW05VTZlNmg4c0NOSHpWSXdu?=
- =?utf-8?B?amtodEx5emEyaXhkTmZxMXNqT1M0N1VJZUVIZExxYWZ3RkpvdmkxQlJwK2RH?=
- =?utf-8?B?Y2ZRMUIvTXZjUVpXeG9UK2JyNHNlLzhQcjloUk5uTEc1MHRyNU80T1RpTXk4?=
- =?utf-8?B?ekZxckwzdDlZODM0NkxqOTRiUlNURG5rcWt5Rm5pdTMvbjhnY3FCNWFHTDBE?=
- =?utf-8?B?SE5tTlJrUEVoazdmM2g4UDY5ZTRqc2FBREJUT0F5Y1pVZkxJZzNjeWtnd050?=
- =?utf-8?B?ODdCUGUxM2QzWmo3dkdTVkhkTmRsRWpxcEFqQURCaWRjMWdaZGJCZ3ZQQVdr?=
- =?utf-8?B?R0g4RC9uVnVlOVVpbkRFWk1iM21wcVVFdE9yNU45MTM3aEgxS1l5NEFOdHlZ?=
- =?utf-8?B?ZE1rVXJsSk5MNGVHemZya0NuaXhOYTBMUWxLeVl2NzRNTFB2eVNvQzFXaXpG?=
- =?utf-8?B?ZHFPN0d0YysvSGJ3NHA1YlVjdC9SVDJkWUZWN29obHl4eXppSXVheVJzY0Jp?=
- =?utf-8?Q?H0zDbVu+m/djfFHu6Noj4R1KCxVe5z+HH2evOrUfI8Wo=3D?=
+	=?us-ascii?Q?SUymrOUudWP7UpyEZTOr7UZ6EO7lvljNKsi9uoz8wwGzUBa/NBisPXJun0mr?=
+ =?us-ascii?Q?UsnYYQW6gEJxeYRBzX5M/Lx9hCO+nXdRiK3MsPkRPE43WbyQFqmwjTbg8ZgR?=
+ =?us-ascii?Q?50iJXlp8ToUSuSjs3Yb9aGhE13SAX3fL8IhvxwPy/DpGNGxRPcBHqv0gvL2g?=
+ =?us-ascii?Q?ESopmto8RdvVVmB34xznskIGpL4oK02TnuoIPh3oI6rsiyjiZ86r6zYsIcke?=
+ =?us-ascii?Q?RYigMFvqqObb4tBC/xzih3TQD23DGLf4eXA4Ylv/7JXkGdOPF7fAKFt8z2VA?=
+ =?us-ascii?Q?Zxqgc7ttpvsN0QOU0uxEtrEWyUBxFFHAInlEny28jekfN2lC5tTEaGl4/MD4?=
+ =?us-ascii?Q?PSqeDX2UMKnwiaNZ/Bc6XAPZBS+WIRrmuo4qz12BFwytaJlGanQePPew9/hf?=
+ =?us-ascii?Q?AcULXsGJbCAYw6ZcMZQl/thk9I4nJ/NNSiWc1T7GW8Gcxl34+mL9Hf/QIe81?=
+ =?us-ascii?Q?mlkfapy3dqiG4fRBqFpNNc+maaRzMOmIqOfr9pzj6vkA/xmQO2OLVFyin0gQ?=
+ =?us-ascii?Q?J3OxZ2kaKa7sj3ZagBkMDd/nIK5OJ12xHnA24ZargvxZnLgeqzoic+WLKhy7?=
+ =?us-ascii?Q?Ff3woqnuGK6ejmmy9gPDQkRrSbo69NEtEt5PAxtm3uXob4dmRTAjqCwRtc1p?=
+ =?us-ascii?Q?GydOa+Vkvjbm8Gtz93egQr83S7xoeFPe97oo9d3oYovAXq3/aSj6aUw3qBFX?=
+ =?us-ascii?Q?riguSRYkX9ka1IbO3E5vvMzb+/R17If4QIzMhHdh6Lj00DozP+p+Z1CKlfBZ?=
+ =?us-ascii?Q?qXU1LxvCBypEx/jB4PBat0ps2Vg9O/Tn80swDfC456eOBPY3A6D0MojGCmEm?=
+ =?us-ascii?Q?MduRAemf+pF3+lEm9slmRGb77qmM+oO5byT/tQFoZDRPAE8LaRzNbJ0eF09b?=
+ =?us-ascii?Q?H9bJ90El2j6RRVc9W3m0mHvznZXclwRoEE6ZO90sHtiq42I7DpsA2KNHXd5l?=
+ =?us-ascii?Q?ez9OZUTUS2WRK+LlT7P8atzmpIJODZJMiCYkh2YaD7qx0JYI6bxEuL9+RIG/?=
+ =?us-ascii?Q?9ytpnjh+fVkSq97ZI7qLsUkf5dDcRGbFiyo74SecygKMYmr92kkTFSKf0fE5?=
+ =?us-ascii?Q?Bi1EVCPve4qLuTxKc0MjkhUFX4kwbzturfbbQLJRyK6MP0j/QE1u8mlEF36x?=
+ =?us-ascii?Q?gdztpxL4i/PdwA+60jha8kmYsMVDjyL6rWPNxWqQA6Dnb/04qWH4BdAqlmAC?=
+ =?us-ascii?Q?s/BbmQkBRhBO9q9VkdH68yDSMsI4VEPoRjj24KIewrBdx6CguJ6QpkI3LKs?=
+ =?us-ascii?Q?=3D?=
 X-OriginatorOrg: sct-15-20-8534-15-msonline-outlook-5f066.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2c9bcd84-93a3-49c6-1c5a-08dddca274e7
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6e3131c9-7fc9-43b3-5324-08dddca56ede
 X-MS-Exchange-CrossTenant-AuthSource: DB9P250MB0692.EURP250.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2025 08:54:06.5697
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2025 09:15:24.8146
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8P250MB0166
-
---770480705-15427-1755334445=:17988
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0P250MB0552
 
 
 
-On Fri, 15 Aug 2025, Junio C Hamano wrote:
+On Sat, 16 Aug 2025, Christoph Anton Mitterer wrote:
 
-> Matthias Aßhauer <mha1993@live.de> writes:
->
->>>         ifeq (MINGW64,$(MSYSTEM))
->>> 		prefix = /mingw64
->>> 		HOST_CPU = x86_64
->>> 		BASIC_LDFLAGS += -Wl,--pic-executable,-e,mainCRTStartup
->>> +		CARGO_BUILD_TARGET = x86_64-pc-windows-gnu
->>
->> I've said it when Johannes originally sent this patch[1], but it bears
->> repeating: The *-pc-windows-gnu targets will pass CI, but would mean
->> raising the required Windows version from 8.1 to 10. We'd want to use
->> the *-win7-windows-gnu targets[2] to keep Windows 8.1 supported.
->
-> It seems that Dscho did not respond on the list to your initial
-> objection in the discussion you cited.
+> As mentioned in the other thread, IMO it sounds rather brittle if
+> aliases are considered at all in scripting.
 
-He didn't, but from various interactions surrounding Git for Windows, I do 
-think he's currently in favour of keeping Windows 8.1 supported in Git for 
-Windows.
-
-> I do not think we spell out which releases of various platforms are
-> still supported by us (we do list requirements for platforms in the
-> Platform Support Policy document, though),
-
-We don't do that in git.git, no. Git for Windows very explicitly spells 
-out which versions of Windows are supported (though usually we just 
-mention the Desktop versions and imply the corresponding Windows Server 
-versions). Since 2.47.0 that is Windows 8.1 and newer Desktop releases [1] 
-(Windows 11 on ARM64). We even tend to announce in advance when we intend 
-to drop support for a Windows version.
-
-[1] 
-https://gitforwindows.org/faq.html#which-versions-of-windows-are-supported
-
-> but in general we should not be attempting to give extended support to
-> systems that the vendor no longer supports.  As Windows 8.1 is no longer
-> supported by Microsoft since Jan 2023, and Windows 10 will go out of
-> support in a few month after Oct 2025, if I am reading the table correctly,
-
-Git for Windows has historically supported Windows Versions beyond this 
-date.
-
-* XP was supported for 2 years beyond the official extended EOL. [1][2]
-* Vista was supported for 5 years beyond the official extended EOL [1][3]
-* 7 was supported for 4 years beyond the official extended EOL [1][4]
-* 8 was supported for 8 years beyond the official extended EOL [1][5]
-
-git.git has historically roughly followed Git for Windows in this.
-
-You're reading the tables correctly, but there are so called LTSC releases 
-of Windows 10 with support until 2026/2029. [6]
-
-[2] https://learn.microsoft.com/en-us/lifecycle/products/windows-xp
-[3] https://learn.microsoft.com/en-us/lifecycle/products/windows-vista
-[4] https://learn.microsoft.com/en-us/lifecycle/products/windows-7
-[5] https://learn.microsoft.com/en-us/lifecycle/products/windows-8
-[6] 
-https://learn.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2021#lifecycle
-
-> so as long as we document our intention of dropping a commercial system
-> that is no longer supported by its vender clearly, I do not mind the
-> above that discards 8.1 [*].
-
-I'm not completely opposed, but I do think it should be a concious 
-decision and not an unintended side effect of some change that our CI
-didn't catch.
+How would they not be considered? There is no --ignore-aliases option 
+(because it would currently do nothing usefull), so git doesn't know if 
+its called from a script. And if we where to add such an option, existing 
+scripts wouldn't use it.
 
 Best regards
 
 Matthias
---770480705-15427-1755334445=:17988--
