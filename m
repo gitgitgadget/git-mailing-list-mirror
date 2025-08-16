@@ -1,104 +1,153 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97ED1482E7
-	for <git@vger.kernel.org>; Sat, 16 Aug 2025 14:15:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E313F1D618E
+	for <git@vger.kernel.org>; Sat, 16 Aug 2025 16:12:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755353721; cv=none; b=lZI+SxbjlJbL0LjIDR7wl37t5uLUzW0q/jK5NhNVYG8AfXE6Y53EBftZUn6/3UW5l8bFCfnaK/hjMbPxnDxNyYfRArY3K4uQNb6Fyq4DiYr9/eVGfhXyrC6crsfuD7FaQRzoZiUCqcGN2M/PFDgOBamH/Pa9nFuAOm1e9it9ITI=
+	t=1755360773; cv=none; b=rcv/E2q5q6ET4Zdfl2UoFvucWGeUz7Qs9e3qYodzocbtADkX2qo3BqVwjk8p/rdPnb1eO6haIMsIWvSK8HU6QBwktbOwuuDt0YrwVAEds0mW+s6ALKP3ygB4VfQYoeFrsp9B+jKAhIMSuJZc4ybDBnDiR8wAYqvGbTnnmYQFPXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755353721; c=relaxed/simple;
-	bh=prDcqwLIZzrwHEVYJrLAoIyOWs6hQtYrRmu9XLUjbR0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cPW3EhsSdtvJnzJTIVJOT1UI9e5yFqvSnjOwdKWR9KKjFc++2x3GfRH8iGdQ6KHYi9qYwBCzG7swUdoxrDe2TSagpZ4mkzIqyIKDSA5KSCiFEEyef2xJZvH9bGJW72OXuIO5mFu1M4jycLYGpcYVkUlOn4hJG6T//mYRBO+I2e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J0mwkZao; arc=none smtp.client-ip=209.85.208.45
+	s=arc-20240116; t=1755360773; c=relaxed/simple;
+	bh=bKZi42E100FGI+OGT8fWHhWGAyTxLQ/mnHuyL9GUYNA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=n3uHnRGsjtgG2H8QXNyd3EvOC1r92LCDtIW4KA0jvvPTa5Vflx2LiP65MnJGxd+97BXHD3fAnQSuGopcfUkMqNYGBmpLUDfe987RB6o6vAQC9Bzb06hrID3+uErJX4qPWCnwXt6jN9D6B1lOHU72B8Di3yqgvYBtDGunxjHyXFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jzpw/RH4; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J0mwkZao"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-618896b3ff9so5750545a12.1
-        for <git@vger.kernel.org>; Sat, 16 Aug 2025 07:15:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jzpw/RH4"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3b9d41cd38dso2115835f8f.0
+        for <git@vger.kernel.org>; Sat, 16 Aug 2025 09:12:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755353718; x=1755958518; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kHgOsMxaz8UTLn7cVoW9ety7lMIJ1OObClZDHLeHHvg=;
-        b=J0mwkZao4RXvoVilfmq2Qz0RDu2DOCEXO2e1FT6M1F0qGLHuITQlRWcI7Ueeq8asMQ
-         ot6OgiFXkVx6LI0R90tmDg+w5+cFQXszOcryV3TQUsMdtT4HEEWbT+RspFqKxfQt8DCW
-         r3qps1TBOUCN7upWtWvoLW6kf1qsK7zkrb02zVBGR//ORWbDdWOWUhvMy+gvk8nBB7Os
-         3OhLuY7bYwwDXqT7Tbhel+6pW0Bq7jxtU0iVU/61VNoGpYbRWrWuGxfNkBe7H8v8/aLd
-         BPlaCZotY3ECHlP3bjzWV7seHJSFluoG+iwYZw5dqBZ5UiwJJPip74x0cx271htBRO1O
-         9/Dg==
+        d=gmail.com; s=20230601; t=1755360770; x=1755965570; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zgTsqDgrbl05hgvt8YsCDBQIKJuoKTntmzgfmXKf+IU=;
+        b=jzpw/RH427OVEFE0CpdL1yW/zrq07pA9FKUztvkJTQA4uyh+38Q41urwaaKN72Y0vv
+         83kFYIRtejaF9ONeEHN7jz2kbYlcNYbrg5GUdJwmgej+bVX+2KpMs95/bOndOyUV0ZNr
+         8U2A6xX7uWFDrAbFDsIAgLok9kFerMk7Ifpws0Hdfs3y9nnoek+0mBU/80zvMK5EcunD
+         lUISiBkZNphxfG1uA6BQgLs9HD9gCW5z2I1CmcFiB06hYZ3ie5+nU/FQrzk16MPDCruT
+         Em6SafXOtkwev41B3rgEeJWEoILWdhSfZagr/J/q9dnTMWVRxMjUxUzrc+4BEoKMb42a
+         56DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755353718; x=1755958518;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kHgOsMxaz8UTLn7cVoW9ety7lMIJ1OObClZDHLeHHvg=;
-        b=gxPqFAwnejnw1LbHzCipl2EGx+7bxZO5eJFZ3WRsy2W02gcyEZqE2Rbbjv3uzSyjk7
-         8B9Z1cklXNCh8JkIV4ywutUK24AywWAB9UvPOPrYsO+UVp26Z845v0AsC3MKKdWylpsb
-         c6SYF3WXd33hSnZCAvezeY0RnrX6sIaZN76YEpb1hbomm/DoyFfVynM29zsa5lg6vQsv
-         qtmBtfNEl5h1fVMPSE3qINlv7Dv3FxcKF3ZMTmMqDtrdCvephGGcZq6UEzXTKd4Wp7C6
-         y0U7cm716/jxplVUqHZY6qCqFfkQTrTVRcWtzBuLouNc8q5ibI+R4y97qHcFilDOP51S
-         OAbA==
-X-Forwarded-Encrypted: i=1; AJvYcCV5LAqQilw/xtB5GwIJxB5WiEoXkcBEIMBHknREMsOh2WIH5FeXIkZpqGnL/Fjd9CeNCHQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPUiwWxvKrDv+3Si3DV16JsNfyWywrb+yCn+Qh5gVZW19TS0oM
-	armfOotgVZzN/vgR7yJPO3CJGLUP4M/cjtx5pKITCQatioIkBea7DxjC16WX8a4DUalTIN/P9E2
-	BYjEHM3Mi2VmRpdAW8pXpeT7PKmsdtwg=
-X-Gm-Gg: ASbGncuddcbVOF1rk9V/0Jz4FbcQgZxzQs2QtH6P9d54FVKp+iJYcZ8u2EkfrjkuBq8
-	oeu2ceBtCM2b46x59+1zw9khdbYkoa++D17q/hSbhmwrpChjyYYiKbNp1TIap++GrV1iLn/9sNj
-	vIrNjaRuMruO2F9cR82qgKo8vPXkJvM1a2lbqs9o0AFUqx0Eou8g0UcGmNpjdvOrSadN9nUxeXh
-	5bB14HV4+DKJhyT6QmjamLw1t0xXYgCOXLSHgpL9FJxt4SPhmIs
-X-Google-Smtp-Source: AGHT+IGhfBq/SZQakiRsWF8b5QGEGj5eLnEkHYbrwzu/AhMax3KFOd7A6+fDyz00lh3lJz46eVuXnMUpln7HHbpAzTk=
-X-Received: by 2002:a05:6402:90c:b0:615:5f47:8873 with SMTP id
- 4fb4d7f45d1cf-618aed1f8admr5064049a12.14.1755353717987; Sat, 16 Aug 2025
- 07:15:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755360770; x=1755965570;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zgTsqDgrbl05hgvt8YsCDBQIKJuoKTntmzgfmXKf+IU=;
+        b=GAaWKJQXd+8bol9iy/kwsi4YabCvc+8CGLlc0P734pc6+kSaypEnfLRf+YQmhp8d2c
+         qQXjo/Xqg6N4FCy0OthAj5tQLde05fk7+4dQvr6l3M+FaJTtNwMKaYbMAuVaKZFSF/II
+         ED6vFKl4T1+GizIFFwRci3Tnjb8l2sh5bswedyx7RRuAciVLHxVjVHirlDV2GjFWhuWN
+         k3hma84QzTa3mxT5jmKZQFepgm1TwQ2bPnmplhFCvYL8Nw1vquFKoeLlXGls7zs5QcT7
+         1qYgAgPtKD2qBp2gvTd8Kg9NQs39Z6vQW2+9Dhk4z367dQ9VlFJA2SMXazA7x76yWUAJ
+         UUpg==
+X-Forwarded-Encrypted: i=1; AJvYcCXXqRwnTRf5aprfgZeQfQJlu/uhvMgZsDn6jx1LAza7IoICSEzfnIH4HxZH8amaMtDQiis=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyalm05U9W0WdYmWZBKKZqGcHCAjVGjYXKPUwySzeGOwCXs9GQh
+	leIAEY84EuUma9vUJT2x2CqEtPfFT4ZR15mf8T3xH15kzIGY9l8b0cbG
+X-Gm-Gg: ASbGncsWpdUNi6t2wCFhjBtdjQgrFRfsQnMNqRJLQHu3P52/bWL5M773gEK7ur/6UOm
+	fTCgGJ6lB4DzhZMiYf8bTnTEsU+ZXpRe6FVG581eDh93y0MfqyN4AVFmhTs/KtBAHLpaqLGCJjk
+	TnP1rE+aJFUIbEHFynGXgCMVmS5TwU17HuPEWo2ZeTCfpb2Genm7qSsNi7gdimjP0FR8+bXdEbf
+	jBxnOmvj2pFp+u97ZAWSAFAmzIeBfZfO/rmn9DX3+5qEcBwMxDkB3ZWRt18W8Xi8rZFEqGDZX19
+	99Nprl00azPWH3GFJo+dvRZrzZ653w1TtG2kJoADdo6aA2AJ2/Q6dNpJ0CEnuWCIxUY9DgaZPiK
+	GgRFPZJl2D+7ZvcH+qhpD9f3RpSoY7WAuKes+M9fNDuxANSV6edb3saqX8cYH/UDbhdQlksvuDb
+	h5Wxq/qac1ALj5qBze7g==
+X-Google-Smtp-Source: AGHT+IGtVKFHAWLyz7iQDjxwlQQEwNXnFWx6RkezM5AjGdTi7Ucd7kxMs/6IRSKvS0eQFrX+1fpv0Q==
+X-Received: by 2002:a05:600c:4586:b0:43d:563:6fef with SMTP id 5b1f17b1804b1-45a218399fdmr47931585e9.21.1755360770033;
+        Sat, 16 Aug 2025 09:12:50 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7a5:4701:9bd8:62f6:3085:6ee3? ([2a0a:ef40:7a5:4701:9bd8:62f6:3085:6ee3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c6cd044sm105396295e9.9.2025.08.16.09.12.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 16 Aug 2025 09:12:49 -0700 (PDT)
+Message-ID: <60f38225-2bcb-4383-be40-36c7b02cf38c@gmail.com>
+Date: Sat, 16 Aug 2025 17:12:47 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
- <pull.1952.v2.git.1755127218.gitgitgadget@gmail.com> <ce1eafb02860b390da9359f92fcf098b7cdd3a94.1755127218.git.gitgitgadget@gmail.com>
- <xmqq349ty254.fsf@gitster.g> <886787d2-26b5-4451-a105-9ab522e38ad6@app.fastmail.com>
- <CALnO6CCvL_wc9tkjHCa-9wp7fJMVDt-WHvHZnuOai5HzZb_j8w@mail.gmail.com> <xmqqbjogpd5a.fsf@gitster.g>
-In-Reply-To: <xmqqbjogpd5a.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 16 Aug 2025 10:15:04 -0400
-X-Gm-Features: Ac12FXy2qzs0h2rYHfaMqcFMxh8S4XUZ0S4wm3zqudVE97ENNpxZ9pO74MoBiZY
-Message-ID: <CALnO6CBNius_WJS=wrTHDHaQEeAd=tRHqFC6_MSJye7sOgr93A@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] doc: git-add: make explanation less dry
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Julia Evans <julia@jvns.ca>, Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Chris Torek <chris.torek@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [FEATURE] Proposal: git stash --only-unstaged
+Reply-To: phillip.wood@dunelm.org.uk
+To: "J. Dettweiler" <git.vger.kernel.org@dettweb.de>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+References: <12fe17735317215aa0de58a20055193a@dettweb.de>
+Content-Language: en-US
+In-Reply-To: <12fe17735317215aa0de58a20055193a@dettweb.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, Aug 15, 2025 at 4:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
->
-> > As Junio likes to say, a mistake being old is no good reason to carry
-> > it forward into the future (or replicate it).
->
-> I say no such thing, though.  What I say about past mistakes is that
-> you shouldn't use it as an excuse to make similar ones in the
-> future.
+On 13/08/2025 09:51, J. Dettweiler wrote:
+> 
+> **Current limitations:**
+> - `git stash --keep-index` still saves the index in the stash object.
+> - When I later `git stash pop`, Git tries to restore those staged 
+> changes, often causing merge conflicts if I’ve modified them during the 
+> test.
 
-Fair; my apologies for misrepresenting your position :)
+As the index and the worktree are saved in the stash we can restore the
+unstaged changes with a three-way merge between the stashed index, HEAD
+and the stashed worktree. The (lightly tested) script below does that
+and updates the worktree without changing the index unless there are
+conflicts. There will only be conflicts when a staged line that is
+adjacent to an unstaged line is changed. Changes to staged lines that
+are not next to unstaged lines should not create conflicts as they are
+only modified on one side of the merge.
 
+To use it create your stash with "git stash push --keep-index" and then
+use the script to pop the unstaged changes rather than using "git stash
+pop". If the script proves to be useful then perhaps we could add an
+"--unstaged" option to "git stash pop"
 
-> I'd prefer to let a sleeping dog lie.
->
-> But in the context of this discussion, I think what we carefully and
-> honestly need to look at are not past mistakes.  It is importance to
-> adjust to the new world we live in.
+Thanks
 
-Agreed, and I could have made this clearer.
+Phillip
 
+---- 8< ----
+#!/bin/sh
 
---=20
-D. Ben Knoble
+USAGE="${0##*/} [<stash>]"
+SUBDIRECTORY_OK=1
+. "$(git --exec-path)/git-sh-setup"
+cd_to_toplevel
+require_clean_work_tree stash-pop-unstaged
+
+LF='
+'
+stash="${1:-stash@{0}}"
+if ! stash_oid="$(git rev-parse --verify --quiet "$stash")" ||
+    ! oid1="$(git rev-parse --verify --quiet $stash_oid^1)" ||
+    ! oid2="$(git rev-parse $stash_oid^2^@ 2>/dev/null)" ||
+    test "$oid1" != "$oid2"
+then
+     die "error: '$stash' does not look like a stash commit"
+fi
+merge_output="$(git merge-tree --merge-base=$stash_oid^2: HEAD: $stash_oid:)"
+status=$?
+if test $status = 0
+then
+     tree=$merge_output
+     conflict_info=
+     messages=
+elif test $status = 1
+then
+     merge_output="$merge_output$LF"
+     tree="${merge_output%%$LF*}"
+     conflict_info="${merge_output%%$LF$LF*}"
+     conflict_info="${conflict_info#*$LF}"
+     messages="${merge_output#*$LF$LF}"
+else
+     exit 128
+fi
+git read-tree --index-output="$GIT_DIR/stash-pop-index" -m -u HEAD $tree &&
+rm "$GIT_DIR/stash-pop-index" &&
+if test -n "$conflict_info"
+then
+     printf '%s' "$messages" >&2
+     printf '%s\n' "$conflict_info" | git update-index --index-info
+else
+     git stash drop "$stash"
+fi
+
