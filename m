@@ -1,62 +1,62 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB3723F405
-	for <git@vger.kernel.org>; Sat, 16 Aug 2025 22:46:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DE41EB5FE
+	for <git@vger.kernel.org>; Sat, 16 Aug 2025 22:46:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755384403; cv=none; b=ch9CT5UXPvzON9cWzAm4BMIlzD9dGBFvgY0JsjWX1/uENKeI9hB9mt1PXhULkAbunRLFraiC+N0GD1QJb+7xc3SW48T8v4yWyxgRxdmUszxmXSiM7qANzj8CyYV8ayIQKu55WT0Q2QA46AmcctjnYC4CVyjWwChqNYNYI/7VDEI=
+	t=1755384407; cv=none; b=ps3JuoTidbeMikenKXb918EEG8LmiQR2N36b2z3YdRzJ8rgj4/TxLSPE3I1p2JOt5ny3lz78VCenvTUOp4n4VgnAjkBNb1oxSvtlxqUVf6sH6AW4qVKpFMTqngDatzxt6t7WzxOz549z17XyiR9ct7AxTCLXS6l5gLmn4mU+hK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755384403; c=relaxed/simple;
-	bh=dxeDNu+nuu4rPweKsQxcYRgWLkYV/Pqy2vxwFnTVY+A=;
+	s=arc-20240116; t=1755384407; c=relaxed/simple;
+	bh=FzCulLbtybr0Nun3QYMSdCOFPlRjIRGxTr9PLQCz1KA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dzLLZ/MmYdOO7ktbPQhRGtI+OK29mlIlOmRROGkfKB4XX0/DI+363Lr3M1KnZ/tktkeUtZ1p+qYzbxyfgb9EHJuniIVMZmzAacVRVgWsitmV/VFKebJ6oZeM6NP/CNASlbPlisNlivm2aWnQeL5KPzhCTOahO+PprOzHjZM4eo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HEGTUh57; arc=none smtp.client-ip=209.85.216.46
+	 MIME-Version; b=KUqilNREAKhUJnXlzkPAUvc6YvES/j9GPMNGcfgK2y/eJkdh6tUVLySx6Nx7U5ivJoKFfoxLFggyIJFrbFU5u8+X1u8jZaK7EI5ZNBrZSPeaclrc1wdMkSoWZG0qfD/sqVLF14izA/kMR1hcwBueBL1Ei/pjEJWjznZ5CXoiF18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mx+w6KMk; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HEGTUh57"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-32326bd4f4dso2701108a91.1
-        for <git@vger.kernel.org>; Sat, 16 Aug 2025 15:46:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mx+w6KMk"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b472f0106feso1198369a12.2
+        for <git@vger.kernel.org>; Sat, 16 Aug 2025 15:46:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755384401; x=1755989201; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755384405; x=1755989205; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8etdjZ14VGXsEDn3r0PiGIJ3sT7aO/fU0u43Y9cDMmE=;
-        b=HEGTUh57hSaphLcscRz/UUYCb5ZNuWkZ44TBLJYvYFlAloThO/NHFZPpKgmUgCThdq
-         6CQ7xaYSz1Yfno958RaVWaejgo8R72ePsVEkVxM5zAaKeb9hNrnTEplhjnQ4TvhQKazk
-         7VDqcWeyDkDH/qDoRrrAElBhfW8+Y/u/UZ2cN4zwcgQs8NvAvEzjhyi2qQqo/jJZDKbr
-         gJptMRaqu+N7Gle0KnUR+V89HqLbSXAHaior9+tfh0Z8swvmuGrx1ZWDyKpcBlAM2cPh
-         uyl0uuqUZuNg8cDtdmgWSXLtsHUXX0/6VC9nGNC5ezFjeHYo9/tGSO9lZRy/rVvjiS6U
-         2FzQ==
+        bh=QRtPyPqFNUDKXJxGCs5tGI3mgsfmcD6XcvO9yvcRkHw=;
+        b=Mx+w6KMkYdbInW9aRcRiF1JpU0t+Be/gW/G4Jxu6DueK4SUplLWg+BSW1vWKLuApAk
+         fTp5hLlWWfYzgmtbcJZEEz/Zf9O+MpBagNTf0OdcLKfBMdPSeERFn/xykmAtN8qC99Z/
+         XlESjNC27py4o2DqOyVwm+q812Jg01d4GGIe+YZtwV3SvjbdsnNpgL0uyxv+GwiTeZuJ
+         gNdSjQhiGPY5QNwlQSXgDHnaRlESarKZ//605fro3nnV2gsfl0xfwSbg+jmCBM+DSAq7
+         MAmkdmF57Fh+Ogl5k9BYDZyhIzAGk3Yp6m2fQ6llrGNok6RXAxtdhIxgfJUCb7m84G6o
+         kgig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755384401; x=1755989201;
+        d=1e100.net; s=20230601; t=1755384405; x=1755989205;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8etdjZ14VGXsEDn3r0PiGIJ3sT7aO/fU0u43Y9cDMmE=;
-        b=sKrS9Tdp8M9kZ7MgSWD/3wlC7Y2I4iZ8h49yXUJAyWgUS3SrRR1BPXWXs8CUIvyoy/
-         xG5DvWXv4nhovKYBURaQb+k8tn+qBg19DbEjCoYIljhpC9JWOABtgpMpnkhioeDZvFaf
-         CgypwPQjazB7WAV6RGTWZZWDFxjWkKEhar8D8XRn/yZdu05Ae0/kLHLn4Iv+P9kUXca/
-         6C0X4ydXk6qWTFhFqCpPWaAtxB0ofvm6H+9msWfMSOV5Mg/G4vAbg+b6mKwzSo6Z0raO
-         cCNaZMGSG3YsglpEAOpqUDZAjWx+xD8lDZzNRKWV0hiBG44tSGV2SXwbC+8LbHj2Pm47
-         6nwg==
-X-Gm-Message-State: AOJu0Yxl/xX5tY+2dkNEvOzXA3W0OUck0o3RbLKlsyxhdzhgHZ4E8y+N
-	A9AIDjJ3eY2OVRUxMAvgn1h2ObXFxNw+7uVYY0blN5Q0p5r+xyWemQD08UBO0g==
-X-Gm-Gg: ASbGncsx2jFQZ1f+9BUN81pFJLcnmbF4aO4WrBIRbHoo0sd2KPruG9RTZd0Cd6i160S
-	5KRmz3gkHlAkd6vdtICYK75LAANYtc3EDldYlR0vv5QmHcvWYzM3eAGhHaXoMsPQD4IvZcXu2+S
-	MlSybr/Fs9PhmNT5tXV13YjOQvoCAylh1ThlBIkcCqqR8cgSLi2NgTe9c4fAe94vOSEF/VZM8m5
-	jQk7xitzYVXiHiSUga+zAjBJjX5yNCC0yN6k3N2pSZ6zNomSsqMib4gbxiARU4xHIaXwzU3gGH4
-	ueNRxFAtywlhiXfq2rxf/zZQqVhwaECmLI4NECENikv7LKDa0drI0IpGKd+iM4NuM2WFakKzw/S
-	9MspkS/8wFdX/8F3S7hlwazOgSh/1XQ/VnHyEf0yFJLgQoCv5GzPNR5bwtzPfmYHwwNary6eI
-X-Google-Smtp-Source: AGHT+IEboCBVT0MlomHynO2zOgwBUI+KO1sj7ba7nQfFJMQAmbZRWSzinnxxcrbvPswwzQkzNEoM5A==
-X-Received: by 2002:a17:90b:390f:b0:313:d361:73d7 with SMTP id 98e67ed59e1d1-323407b701fmr9876231a91.13.1755384401322;
-        Sat, 16 Aug 2025 15:46:41 -0700 (PDT)
+        bh=QRtPyPqFNUDKXJxGCs5tGI3mgsfmcD6XcvO9yvcRkHw=;
+        b=Zhn9QTByZsNO5hzNuO6bnyNONtaqYFmf5Dd5w5X+iFmFDTXHSp9zyKM71F2FwYMVk1
+         ifqyENLTRZPxi100y8n7UA52sxiGLHyNNjunSmgZFrKt2iSitJefwv4tadawQkpJWOi9
+         bbrfn4ll7H0DJGMwurpxU2zNzyKQriuTvKsuf8dNUF/8VfW1yVSqUW2vSUPCGT7uOIz0
+         VzYz5QDKg4aCI31yOVKgQOwjcCRxLIyZTUtpG42L3EEdWnfMwoDAGicChQ56Q8/COjI7
+         LM1CFiDfstfC/caXqLH5CqBgk5TjKPYee9hRNso2YZItgl4/3ha32zzEYkNXxqqAPFB4
+         az8g==
+X-Gm-Message-State: AOJu0YwF9+m+9FB2WFP2exNc+ec1AD/D1w6mgAeeqVlXYtsXE2G3+V9h
+	TEx3X1wBVBIZBV8v2qjM5FnVwGGCIvAvWR8C6FvP+X4LqRqHlloac4OOuziEpg==
+X-Gm-Gg: ASbGncvo+jFXOCRN80O5APYpZdG0ACyEhZOlkrqpJiIOyIge7xy5ABjnSBK4IQk7nI3
+	dN0A4u2PrtcJjho6d4q/CWflgv0W/Jr6kFXaqT1rRmAYlNAKWYR74eyHKEkesC0fttBz13/2h8z
+	Ezwcbnyy02ShRmE7pUVA1gAZEv+1sqVmY6v+XB+z2ulo6tdH9XMbG2EONp2C6D38hpYryZY8Jy6
+	GbenP4juycjjM0StetSkFUQ9N1pj7QIZuTN6Au6uPY4LYBtf89fcvJJF63YWiXxMNaxfVuqhl4A
+	hEwm9hO0kEt790YhFK3wpMzgVYIm1qaLivxXUoPDUABNZgCPqO/irG6SevaHxMWcUoch+bEbN4b
+	NTqZbtBksQszfiN3vjgOEfF5JxHShBFgiXyzoikpAs7v2LtKWNFajc60gF7Ac1w==
+X-Google-Smtp-Source: AGHT+IGPJvDDQK/gWdQ/J3hkhDwDQTI0WpSihWF3Stp5v1zdtnpUNt5eATHQJQUUgj6zRd/X172Otg==
+X-Received: by 2002:a17:90b:278a:b0:323:28ac:3c59 with SMTP id 98e67ed59e1d1-32341ec4ad6mr7130515a91.13.1755384405019;
+        Sat, 16 Aug 2025 15:46:45 -0700 (PDT)
 Received: from localhost.localdomain ([2804:14c:32:8e83:e855:1cad:1392:e988])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b472d5ad0f7sm4617280a12.2.2025.08.16.15.46.37
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b472d5ad0f7sm4617280a12.2.2025.08.16.15.46.41
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 16 Aug 2025 15:46:40 -0700 (PDT)
+        Sat, 16 Aug 2025 15:46:44 -0700 (PDT)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: oswald.buddenhagen@gmx.de,
@@ -69,9 +69,9 @@ Cc: oswald.buddenhagen@gmx.de,
 	jn.avila@free.fr,
 	sunshine@sunshineco.com,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH v11 3/5] repo: add the field layout.bare
-Date: Sat, 16 Aug 2025 19:46:01 -0300
-Message-Id: <20250816224603.3307-4-lucasseikioshiro@gmail.com>
+Subject: [GSoC PATCH v11 4/5] repo: add the field layout.shallow
+Date: Sat, 16 Aug 2025 19:46:02 -0300
+Message-Id: <20250816224603.3307-5-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250816224603.3307-1-lucasseikioshiro@gmail.com>
 References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
@@ -87,11 +87,11 @@ Content-Transfer-Encoding: 8bit
 This commit is part of the series that introduces the new subcommand
 git-repo-info.
 
-The flag --is-bare-repository from git-rev-parse is used for retrieving
-whether the current repository is bare. This way, it is used for
+The flag `--is-shallow-repository` from git-rev-parse is used for
+retrieving whether the repository is shallow. This way, it is used for
 querying repository metadata, fitting in the purpose of git-repo-info.
 
-Then, add a new field layout.bare to the git-repo-info subcommand
+Then, add a new field `layout.shallow` to the git-repo-info subcommand
 containing that information.
 
 Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
@@ -103,85 +103,82 @@ Mentored-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
  Documentation/git-repo.adoc |  3 +++
- builtin/repo.c              | 10 ++++++++++
- t/t1900-repo.sh             | 17 +++++++++++++++++
- 3 files changed, 30 insertions(+)
+ builtin/repo.c              |  9 +++++++++
+ t/t1900-repo.sh             | 13 +++++++++++++
+ 3 files changed, 25 insertions(+)
 
 diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 2779a6d995..932b08c26f 100644
+index 932b08c26f..01b7f9c95e 100644
 --- a/Documentation/git-repo.adoc
 +++ b/Documentation/git-repo.adoc
-@@ -38,6 +38,9 @@ In order to obtain a set of values from `git repo info`, you should provide
- the keys that identify them. Here's a list of the available keys and the
- values that they return:
+@@ -41,6 +41,9 @@ values that they return:
+ `layout.bare`::
+ 	`true` if this is a bare repository, otherwise `false`.
  
-+`layout.bare`::
-+	`true` if this is a bare repository, otherwise `false`.
++`layout.shallow`::
++	`true` if this is a shallow repository, otherwise `false`.
 +
  `references.format`::
  	The reference storage format. The valid values are:
  +
 diff --git a/builtin/repo.c b/builtin/repo.c
-index 73d4e27a16..aada476e1c 100644
+index aada476e1c..3c9140593b 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -1,4 +1,7 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "builtin.h"
-+#include "environment.h"
- #include "parse-options.h"
+@@ -6,6 +6,7 @@
  #include "quote.h"
  #include "refs.h"
-@@ -16,6 +19,12 @@ struct field {
- 	get_value_fn *get_value;
- };
+ #include "strbuf.h"
++#include "shallow.h"
  
-+static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf)
+ static const char *const repo_usage[] = {
+ 	"git repo info [<key>...]",
+@@ -25,6 +26,13 @@ static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf)
+ 	return 0;
+ }
+ 
++static int get_layout_shallow(struct repository *repo, struct strbuf *buf)
 +{
-+	strbuf_addstr(buf, is_bare_repository() ? "true" : "false");
++	strbuf_addstr(buf,
++		      is_repository_shallow(repo) ? "true" : "false");
 +	return 0;
 +}
 +
  static int get_references_format(struct repository *repo, struct strbuf *buf)
  {
  	strbuf_addstr(buf,
-@@ -25,6 +34,7 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
- 
+@@ -35,6 +43,7 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
  /* repo_info_fields keys must be in lexicographical order */
  static const struct field repo_info_fields[] = {
-+	{ "layout.bare", get_layout_bare },
+ 	{ "layout.bare", get_layout_bare },
++	{ "layout.shallow", get_layout_shallow },
  	{ "references.format", get_references_format },
  };
  
 diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-index be8a4b2499..b0438d276e 100755
+index b0438d276e..6a9cbf3d47 100755
 --- a/t/t1900-repo.sh
 +++ b/t/t1900-repo.sh
-@@ -38,6 +38,23 @@ test_repo_info 'ref format files is retrieved correctly' \
- test_repo_info 'ref format reftable is retrieved correctly' \
- 	'git init --ref-format=reftable' 'format-reftable' 'references.format' 'reftable'
+@@ -44,6 +44,19 @@ test_repo_info 'bare repository = false is retrieved correctly' \
+ test_repo_info 'bare repository = true is retrieved correctly' \
+ 	'git init --bare' 'bare' 'layout.bare' 'true'
  
-+test_repo_info 'bare repository = false is retrieved correctly' \
-+	'git init' 'nonbare' 'layout.bare' 'false'
++test_repo_info 'shallow repository = false is retrieved correctly' \
++	'git init' 'nonshallow' 'layout.shallow' 'false'
 +
-+test_repo_info 'bare repository = true is retrieved correctly' \
-+	'git init --bare' 'bare' 'layout.bare' 'true'
-+
-+test_expect_success 'values returned in order requested' '
-+	cat >expect <<-\EOF &&
-+	layout.bare=false
-+	references.format=files
-+	layout.bare=false
-+	EOF
-+	git init --ref-format=files ordered &&
-+	git -C ordered repo info layout.bare references.format layout.bare >actual &&
-+	test_cmp expect actual
++test_expect_success 'setup remote' '
++	git init remote &&
++	echo x >remote/x &&
++	git -C remote add x &&
++	git -C remote commit -m x
 +'
 +
- test_expect_success 'git-repo-info fails if an invalid key is requested' '
- 	echo "error: key ${SQ}foo${SQ} not found" >expect &&
- 	test_must_fail git repo info foo 2>actual &&
++test_repo_info 'shallow repository = true is retrieved correctly' \
++	'git clone --depth 1 "file://$PWD/remote"' 'shallow' 'layout.shallow' 'true'
++
+ test_expect_success 'values returned in order requested' '
+ 	cat >expect <<-\EOF &&
+ 	layout.bare=false
 -- 
 2.39.5 (Apple Git-154)
 
