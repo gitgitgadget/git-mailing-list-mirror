@@ -1,106 +1,177 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B467229B0
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 21:28:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B3A29B0
+	for <git@vger.kernel.org>; Sun, 17 Aug 2025 21:29:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755466110; cv=none; b=T6Aup1/2kM1Fi2bR4aXqmz2sebtjlvX0oYa+cie1HnyuAI0vOrqM+RJ+2gD0D6GLbKDuNDEK9yRVLEyuOf2UDxa9BGE0yngVGdTaUrCddtpEEPSdAL2IzQM8TY6QPsGjYTrN9zzoCAz3ZdZq7a5hrPfwpm+4FmPT3tD1WZ+FMn8=
+	t=1755466168; cv=none; b=UN+Fy6Ca01+9NGxTeVPBf9E68x38aZHz47+ZF0VmNCmkU6uGFsh3e/Mix0Sj+T6xioQ2nAMAai1KXQz4qOPIqYh64U2ST+ntfUOOZYWN9mYvP1l23czKANrH6nuIfmyGQLWnL9JB73t+dGiR+yKxled5C19uN6ElZ8rlj91cORU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755466110; c=relaxed/simple;
-	bh=ETYDRQggeU9kHimWrVINAGJ2RjilecGqZoZRt+3DSM4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RxEaqBXFMeXAJq1jbHumyFFCaXI6/UOmdIFZJV5f6QG7rC2tkwGSWdVraYhuPBPQwY4NS2+L0zMzIERFrz3H9MQJ2HhvNNv3V7+WuDbyrnpXTXdTkbUluJpHcrU397f7sDCtB4VktAjOIfJF12+ztiSZRmqpXw7orqIy8auj6r0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JlF7QlcT; arc=none smtp.client-ip=209.85.208.45
+	s=arc-20240116; t=1755466168; c=relaxed/simple;
+	bh=dM9y9AqXrJDXAyn5BkSaJloQjxtejaF32Q4gHhh28yk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Dkrv8KHmHbZa2065EE9oxLFk7eQUHIU6PDtJdPuJ2o0w8HtKVUvGH9S0mSsn0xwZAuOYmrqfw0RQmPLAiAi76vlDgADV8mOFbVcxsew0Wr++SrcQzS3yJIgXX8and9Rfm9NkfFohfUKhB5Ms3/S3tO9RgoDySfff6kJUWu6jKK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H0gSCChq; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JlF7QlcT"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6188b5b11b2so4380266a12.0
-        for <git@vger.kernel.org>; Sun, 17 Aug 2025 14:28:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H0gSCChq"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45a1b0becf5so17104085e9.2
+        for <git@vger.kernel.org>; Sun, 17 Aug 2025 14:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755466107; x=1756070907; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=efROf3aJTw05IpW6TgSdBbfZ8XLs/BaSvPFKdeLIZB0=;
-        b=JlF7QlcT2jUug4Hqj+EZ0tXJO76fJ6XdrkZZzJOGZH8mbbMYLgJcQeiqtNXkcFGVfy
-         8kvJDsm1fR0ktpNgWw/z4VerIoaMCT8qIgzioB1lHoeNDkXjbjUwJR84F0J4L4fsJNn3
-         lkYq+zkfetgvmJ0/4SPQw7IxVbr6pkonIwMjGrRTKrhT1MYH91++2U3WAr1wT1b5XcBF
-         XQ7x/2hZmELvCvJayALdMkqh+tV7qpCCLw7247m2GUc88V5sUxXJIrcmAqT/vyZjMf+H
-         HTemTTjqdlBoykcdQ/P5OdBsO6ap1RDJPMYJKJfIlzlu9wYgwHFGQ473qBcONQ2Y0VXP
-         g+zQ==
+        d=gmail.com; s=20230601; t=1755466165; x=1756070965; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=rb2WG9+Mx3HjrQm4eL4Zo39Km6Ls67tVTd1UJTwf7NA=;
+        b=H0gSCChq3iH9yXy3yQYFR/lUAFJnzuaCBUHVHSXPDH1ZvhIcpzo5ORgyWzOe+F0iDC
+         XnGkUe2w1czs0D206y6rc53EzzLXITbMs/61Mo52NaVgniChlJE2QPCOzAJMUXfURVCo
+         XX9AvfyVHyKmXT9APBVA0OtAPxfmzPCLd6p6DNGT3xrhKc2xaXLQIgyBazkxqvqrt+9k
+         fkFY3urH7HtDDyHGWZ6gNSPTcSjv02T+u8QGwvNcT1PiSx/wNkdxOjpiNvKz10SCIJWt
+         iAuSWBvdksAEZCpmx6u3APSOMr/AdPA+zAS2zjjBJ668OcVm8gyBx5mFSpBdpoiTenN/
+         Z6yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755466107; x=1756070907;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=efROf3aJTw05IpW6TgSdBbfZ8XLs/BaSvPFKdeLIZB0=;
-        b=fo4FIBO1N7177w3i86nT+N0btbUvKFHNg29d+qWke2QwWlJaTYNOFCL4800wLzv1tE
-         tGDYQp0H0hmwlGxYz+Euy6pVFa3nYdOOpKqd3GvH5iJd33AauMStBoBvYK6Nvb2gPxxw
-         +yaYGmVEGF/VPatfetoR3dplasb4Awlv1viqWko8NcTHu688xciRgUMw0XER+vaA0p9o
-         8nx3DE3ievqAXdZzxKyPpiZL3ljRJIrPtOjvBg2BepvcU3D5u3qgAepF0aBbFEXkSJyr
-         57UvATJ/49UqkIrw6qGnTfIZTOrlkr2SS+IfNNUXZuAXhNyLkZCnbaQKIMiY1KrqlJJ9
-         OOhw==
-X-Forwarded-Encrypted: i=1; AJvYcCUBsat4B/N1++Nvaqjt+Hn2pFAE7f8SdZx0o7XiSh4BDydY4h5uzugWZggGgSJqMd/LHnc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKwgw0qrBdgNU6qv+qIlG3c6qwYFS0iTm2sivw6jfzAj33qGaH
-	3lKFNGjJMsZUN1EAAYBVeCTaekZjx2agENzgnh8a+PwdQmn7P+vcdEEfMAfj25X0sa6ocIbKNQZ
-	2L0h9GEo++1GUVSgdWu3YeHpfmq333W3IfXYrnEs=
-X-Gm-Gg: ASbGncser2QKM7mm8ALdLGQCtnHr28oeOTjzQ6+g9qctQlJkC0o66pZ509ZG0AKy6BR
-	SZl19+YqYFhPh+PfgfsZ/Tz6UyzfWuEQ88MGVKIDpcK6ikHsBsD1JQ6KH0xqEaP7oB2vrYnRSTE
-	ybU/up0zyj6/RCsWbTgHC+lUh3skyisJz8bhRHaQaiQ1rxyph/Z8ka8yuomK3iuy0TNKoE4o+PS
-	2BhaRtIsVH2Jaz8YSJLSZ+Wc0OelHUEEq8yUx+Dxw==
-X-Google-Smtp-Source: AGHT+IFeeKdQWRLn5f/fwmV8Af0aOgHh89yY26COf66OnwJ4JGa+NFDMOuq3/LLGgUhyO+tkuVZqhJgww7Z7FKCmD9s=
-X-Received: by 2002:a17:906:c155:b0:af9:a4de:f092 with SMTP id
- a640c23a62f3a-afceae8f7e3mr665254566b.55.1755466106792; Sun, 17 Aug 2025
- 14:28:26 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755466165; x=1756070965;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rb2WG9+Mx3HjrQm4eL4Zo39Km6Ls67tVTd1UJTwf7NA=;
+        b=mAYpayVXRPn0F2M23eGwy9/VFMm6NmXeigkT34dmAwsxvb6EEH1pJA+OuLg0slGcTE
+         pSzlTiObehk4s+YMf85QWDWY1f4UVmttiCPCtk/sCpgvthWglk5aCAmrrMEvMC/m65G6
+         D9QJ6jTyp+FzFuQeZN6md2MqQ7ruNqQxHr4hO2dVDt+fmQGGDZmI3lzejaNuGZM4Mfj0
+         DibRz6/moOzRQmX2KJphrVr9l+KIjBy2278MY9YbaP5PmG+O68Y64h+4a7Bz+H2oZgoc
+         aNT2nkHdBO0nVGwYANNPpqacQNgqYodidA4J/seEzlJ1iHEgBWN93xVpvSkiA7E0a+/Q
+         BWNQ==
+X-Gm-Message-State: AOJu0YwuGwKKitUX1+GN7eAVkSuiQEszYmhU0hMxzqc+cPHTc0xKZcFj
+	bZpSoymZB7h+3Q6WySeqIz+2Sawy36qYOkiIURwFCODEVSVvXkBMUeBC
+X-Gm-Gg: ASbGncsOe5PWnxuFv/tKdmFm+xpjCbuv1TFhDnMTwpDYJbT9kHHxms+FZX+H5tfcmQO
+	DQmcOsB559vNAJBJCnkBTQFkr2DQE91+H3dCH8HfsMwqfzMkWtJcGH0Y5Z+O+JmjbhqugmqyHd0
+	2i4YtwYBqgn6BUNjIcEFFmtZmpf6TezVf4OQ1xMK7PInzwzo2SblAs0spfHC7XaX6V77T++ba+A
+	ylqmFchVV9feSwIwVR2OxdecSBaibYY09GjGRp/g0Grige9olB7cEKFiRti7UygVNiD4f3EbCyS
+	fJbuZLzrFFPV7rvoS3eVZgsD5CXWxBNv9h1XfhWjIFQWOwAJ+tJZhOkk4Ust02jGrb1Q/q1eH+S
+	PukeyHuO1HYvg3hv7RWwVlK6DPArpaMWFPu0G+Vdg+ZvEt2gM0g==
+X-Google-Smtp-Source: AGHT+IFtG/K3h/4cQ0s9mzOjtgaJSVtJRUa8YgiDZ1KElO7SYON/KGkzooqVNYtrtGsYebtJJ6OB/g==
+X-Received: by 2002:a05:600c:3147:b0:43c:fe5e:f040 with SMTP id 5b1f17b1804b1-45a21857fa8mr51952935e9.23.1755466164906;
+        Sun, 17 Aug 2025 14:29:24 -0700 (PDT)
+Received: from localhost (94-21-29-168.pool.digikabel.hu. [94.21.29.168])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c790689sm152159315e9.28.2025.08.17.14.29.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Aug 2025 14:29:24 -0700 (PDT)
+Date: Sun, 17 Aug 2025 23:29:23 +0200
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH v3 7/9] doc: git-log: convert pretty formats to new doc
+ format
+Message-ID: <aKJJs7OkBIg7Y9J0@szeder.dev>
+References: <pull.1933.v2.git.1751203241.gitgitgadget@gmail.com>
+ <pull.1933.v3.git.1751914412.gitgitgadget@gmail.com>
+ <0d461544c9d720e379a867a9713998bf09136885.1751914412.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGW8g7mV6az3ybYf3uzHYQTGLDwc34eebZnha1EQ3Sb6B8E-fQ@mail.gmail.com>
- <67621563-9441-4ae9-a23b-51af7d3ce666@app.fastmail.com>
-In-Reply-To: <67621563-9441-4ae9-a23b-51af7d3ce666@app.fastmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sun, 17 Aug 2025 17:28:15 -0400
-X-Gm-Features: Ac12FXy_Eqvsfl8MnUea1MAMHOyPyUE2aYzQ4JK1C8RM_H1Mk0qFbWpdlWvAH04
-Message-ID: <CALnO6CAkTt0brPbnKDu9rOAHeLRtk2hm3xJT5+HvZOfHSL-Szg@mail.gmail.com>
-Subject: Re: [RFE] Add JSON output to git log commands
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Ron Ziroby Romero <ziroby@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0d461544c9d720e379a867a9713998bf09136885.1751914412.git.gitgitgadget@gmail.com>
 
-On Sun, Aug 17, 2025 at 5:09=E2=80=AFPM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
->
-> On Sun, Aug 17, 2025, at 22:17, Ron Ziroby Romero wrote:
-> > I would like to add JSON output to the git log command.
->
-> Previously: https://lore.kernel.org/git/CAGW8g7=3D21pPAgCixjpayEvmw_ns-hc=
-B4e59NP476TKtCRXHPXQ@mail.gmail.com/
+On Mon, Jul 07, 2025 at 06:53:30PM +0000, Jean-Noël Avila via GitGitGadget wrote:
+> From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+> 
+> - Use _<placeholder>_ instead of <placeholder> in the description
+> - Use `backticks` for keywords and more complex option
+> descriptions. The new rendering engine will apply synopsis rules to
+> these spans.
+> 
+> For all the formats in the form of %(foo), the formatting needs to be
+> heavier because we not want the parentheses to be rendered as syntax
+> elements,but as keywords, i.e. we need to circumvent the syntax highlighting
+> of synopsis.  In this particular case, this requires the heavy escaping of
+> the parts that contain parentheses with ++.
+> 
+> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+> ---
+>  Documentation/pretty-formats.adoc | 283 +++++++++++++++---------------
+>  1 file changed, 143 insertions(+), 140 deletions(-)
+> 
+> diff --git a/Documentation/pretty-formats.adoc b/Documentation/pretty-formats.adoc
+> index 07475de8c337..9ed0417fc811 100644
+> --- a/Documentation/pretty-formats.adoc
+> +++ b/Documentation/pretty-formats.adoc
 
-In particular, I would guess that deciding how to handle "raw bytes"
-(e.g., paths that are not necessarily UTF-8 strings) is important.
-JSON uses Unicode characters:
+> +++%(decorate++`[:<option>,...]`++)++::
+>  ref names with custom decorations. The `decorate` string may be followed by a
+>  colon and zero or more comma-separated options. Option values may contain
+>  literal formatting codes. These must be used for commas (`%x2C`) and closing
+>  parentheses (`%x29`), due to their role in the option syntax.
+>  +
+> -** 'prefix=<value>': Shown before the list of ref names.  Defaults to "{nbsp}`(`".
+> -** 'suffix=<value>': Shown after the list of ref names.  Defaults to "`)`".
+> -** 'separator=<value>': Shown between ref names.  Defaults to "`,`{nbsp}".
+> -** 'pointer=<value>': Shown between HEAD and the branch it points to, if any.
+> -		      Defaults to "{nbsp}`->`{nbsp}".
+> -** 'tag=<value>': Shown before tag names. Defaults to "`tag:`{nbsp}".
+> +** `prefix=<value>`: Shown before the list of ref names.  Defaults to "{nbsp}+(+".
+> +** `suffix=<value>`: Shown after the list of ref names.  Defaults to "+)+".
+> +** `separator=<value>`: Shown between ref names.  Defaults to "+,+{nbsp}".
+> +** `pointer=<value>`: Shown between HEAD and the branch it points to, if any.
+> +		      Defaults to "{nbsp}+->+{nbsp}".
+> +** `tag=<value>`: Shown before tag names. Defaults to "`tag:`{nbsp}".
+>  
+>  +
+>  For example, to produce decorations with no wrapping
+>  or tag annotations, and spaces as separators:
+>  +
+> -`%(decorate:prefix=,suffix=,tag=,separator= )`
+> +++%(decorate:prefix=,suffix=,tag=,separator= )++
 
-     A string is a sequence of zero or more Unicode characters,
-wrapped in double quotes, using backslash escapes. A character is
-represented as a single character string. A string is very much like a
-C or Java string.
+This section now looks like this when the man page is built with
+Asciidoctor:
 
-https://www.json.org/json-en.html
+               %(decorate[:<option>,...])
+                   ref names with custom decorations. The decorate string may
+                   be followed by a colon and zero or more comma-separated
+                   options. Option values may contain literal formatting
+                   codes. These must be used for commas (%x2C) and closing
+                   parentheses (%x29), due to their role in the option syntax.
+                   parentheses (%x29), due to their role in the option syntax.
 
-(even though the railroad diagram says "codepoints"; I find the whole
-thing a bit muddy=E2=80=94what exactly is representable in JSON strings?
+                   •   prefix=<value>: Shown before the list of ref names.
+                       Defaults to " +(+".
 
-    Excepting a few encoding details, that completely describes the languag=
-e.
+                   •   suffix=<value>: Shown after the list of ref names.
+                       Defaults to ")".
 
-??? which details?)
+                   •   separator=<value>: Shown between ref names. Defaults to
+                       ", ".
 
+                   •   pointer=<value>: Shown between HEAD and the branch it
+                       points to, if any. Defaults to " +→+ ".
 
---=20
-D. Ben Knoble
+                   •   tag=<value>: Shown before tag names. Defaults to
+                       "tag: ".
+
+           For example, to produce decorations with no wrapping or tag
+           annotations, and spaces as separators:
+
+           + %(decorate:prefix=,suffix=,tag=,separator= )
+
+Note the unnecessary + characters in the default values for 'prefix'
+and 'pointer', and in the latter the "ASCII art" arrow ("->") is now
+replaced with a unicode arrow character.
+
+Also note that the last three lines are not aligned properly and the
+example format string starts with a + character as well, but this was
+the case even before this patch.
+
+I use the distro packaged version of Asciidoctor:
+
+  $ asciidoctor --version
+  Asciidoctor 2.0.16 [https://asciidoctor.org]
+  Runtime Environment (ruby 3.0.2p107 (2021-07-07 revision 0db68f0233) [x86_64-linux-gnu]) (lc:UTF-8 fs:UTF-8 in:UTF-8 ex:UTF-8)
+
