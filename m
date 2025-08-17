@@ -1,89 +1,165 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7612746C
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 13:01:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755435688; cv=pass; b=U4okHzm5dDbdyjlXUYdY0UZGRx/EZSbT1a/gfLvv6GR1ue8sRuE0l/io53MJntGbH7SZWNcYjg5xrLWahpOjpkrLE//jC+flTDXiBm9ZyeeGiq8aVteMB+mmOq8uw/6edl2rztJDsSEk07dF+17o5D108wRLr66grDknQJdYer4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755435688; c=relaxed/simple;
-	bh=NxhJNisMCLBqKvcGj9kdJWUPnpE4aGHpD+YOWHD+eM0=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=AGCNwADJN5xOkZ+A+GJ+Nry7QqwTr1xdeMZATztRFb3udG7ZGBdc3SMJp67W48ZlvFH5wY4jGpccLM/m9Z1XN30GPe8WLbPuje6m4IqPsByA0Dkr+olzvZSSGNfm6JqEiYdfG4jtfkaI47KjEPuVvcuSirB0qfTckdKGCspFdFw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=LCevyPHw; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C034D291C20
+	for <git@vger.kernel.org>; Sun, 17 Aug 2025 13:54:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755438865; cv=none; b=ihzdYvYvwXlQVIZ1fQRsTjRX9gIfCQdXys6UcaqxYJxuhmu53Yh8T/D+1rz5nWJ3X20W41BcOQVz315J3l3eqAd3nSsuktXZJhhfEn2WBvMg47N6n7o3R4Ds4kQNxS24DeNy7sx/5rJ+CDyTSEWcvg8HURvxfTg1B3y8/+0MPi0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755438865; c=relaxed/simple;
+	bh=00+YjW4/K0gpKjGr+kE3McBTvXoTZBgOG1fqhWnodJ8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=TEy7dwhsgKOp+Ue/NdYHrXG1epoeL4T7gvM90FSsEXuzxOGN5rpJyDminulAIEBibcFeLDSOOaa2rUgdNHxyfQp0LFHo410PQUGkV25wua+AU7wuNErJJ75uEHI+cdQJgVCP33Vjbpt0Qrkl6ymGuufsCm1dtKdddKlAGl0+rK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kNPOAMUf; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="LCevyPHw"
-ARC-Seal: i=1; a=rsa-sha256; t=1755435667; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=EwMCMgfGMSO/6fj6ALZ+x1ZaFnBrjJ+rLCdW745YsrIN42kDTaE4w9zNhhg1rMynRTSNTTNoQ0JScdIszUOPZ1zwdUJnjPgvjaeFUjXOtSecc7AxyPgH1cmEWZoXzlIE17DCR2H7ODYULFk7fA9Wnopv0j1B3zkJkVNQhLB2Ubw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1755435667; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=hp5rtW0kIc8dJNM04bED6LSZ0DQzw+VxmaS39VirW+Q=; 
-	b=jBdPqpKsW4w9Ha8CYlJRK3qqY3rCtwKsL+/uZKKk5wgHV85eH1xMRjsOZ/ef4bWG8qBtMdc2xZZRGce7/a5zYjZCy9y6/7V2VBQxubBprp+EVA9wtLz+fJvG+NSeCO0+uF8ygsDSzMkhpePTa34NaEj8xZM6U5G3raydg8/unoI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1755435667;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=hp5rtW0kIc8dJNM04bED6LSZ0DQzw+VxmaS39VirW+Q=;
-	b=LCevyPHwNqh8p8MPSLHCFbnNbi4jddH9Pe9GqLMIJrYn54sz2rLGgZJ9wzA3xgyp
-	8BtTuuWu8wW3hDFLOkcb9CYnVG4qPPmtKoMFPPHcct/BWHlchSMvCVBceDrcpLNO7Gz
-	wElYdh23uD8VGM4LtaFEzdqdyJskfmfnC8Y4HWxs=
-Received: from mail.zoho.com by mx.zohomail.com
-	with SMTP id 1755435664500376.2084194044497; Sun, 17 Aug 2025 06:01:04 -0700 (PDT)
-Date: Sun, 17 Aug 2025 16:01:04 +0300
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: "git" <git@vger.kernel.org>
-Cc: "Emily Shaffer" <emilyshaffer@google.com>,
-	"Rodrigo Damazio Bovendorp" <rdamazio@google.com>,
-	"Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>,
-	"Aaron Schrab" <aaron@schrab.com>,
-	"Jonathan Nieder" <jrnieder@gmail.com>,
-	"Stefan Beller" <sbeller@google.com>,
-	"Patrick Steinhardt" <ps@pks.im>
-Message-ID: <198b81e845f.3d0b85c81892243.3876804306135930880@collabora.com>
-In-Reply-To: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
-Subject: Re: [PATCH 0/9] Encode submodule gitdir names to avoid conflicts
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kNPOAMUf"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-71d603f13abso29036097b3.0
+        for <git@vger.kernel.org>; Sun, 17 Aug 2025 06:54:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755438863; x=1756043663; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Em4C1llYk57wWRLab71BiYMAt5jMl+DfOrVb0atH3JQ=;
+        b=kNPOAMUfzd+fWNXJO/VQ7aTCzBCqYN/8wdHBHCQYLoy/hdfkyXjQXHyu+Vtn5yl/Ih
+         uLDVuQO3hFx56rkevd9dXV1e4JzcR9waEsR0zKvbDR9X6IFl3xK4DvKo4TCvEvJLd0BS
+         9+BeAAD8of3JRh8pLcYDG80fOeNTOhMUNT5wVLFVBrCXW6+D71cq7/A2lTj3XHjxfd3d
+         0uUg7SYrQT2zAvmC+wYF1SuilICtZlyc97isR6SBn4ft+qRy19pn6e/cnKnHbVsZv8BP
+         apT/gbR3Fm6/vTbqOtLFUq8LE9Yk+vlOp42E6N+Gp/aZ5Yi6gNpi+mOayVBEphbEp6Q8
+         Rnrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755438863; x=1756043663;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Em4C1llYk57wWRLab71BiYMAt5jMl+DfOrVb0atH3JQ=;
+        b=veO6eZ3k0N2fUc6jqDeyXOy3bcsIlCeWbtIHjqWzFCl/qLdQOuMSCWu6dsu0Pcj+TO
+         PQABIdkrlSPTCpRPBqHWqCzFEjhsodCXbtSlqd+XWgxjDPO8tPyc7Z4bLC+VDX2PAUUz
+         LikLCcWhEC6CDO/faK5MhvZANsOs1DrFb2u7fdSxqVZzODQqzkKmfLlqjOwrLXWYYJ3b
+         ljdBuMafEvyXEQzuh2eE++IIlZZwpMKjop1LngeuXGwDOlXspUCHu54Ybvxl9PTSAbs9
+         PfEc9aFXEd7KbxXKzEntb0rdTlB3nmY6yVekvQuCK+a+HtvLMr06LqBeuc4Xsh1URb4x
+         VP9A==
+X-Forwarded-Encrypted: i=1; AJvYcCXpr7UVKem3SZPzaohbHunEYHHcfLFrhXth+qMKZzjaHQLeO5cLWoa2dvkcjcdC+B8IXYA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzip0s4UEbvTl3DqOUHDTn+dWgEmOjv2YBvO96UJwb4CDf//nV7
+	RGa4MdsTcoWcQfklpLt6GHVQuzNJhmxxj2R5jKKsYS7hFxDs11J5Ljjr
+X-Gm-Gg: ASbGncuVMdR6kLPxEp2vXbqP01Ut//GDXnflIusveROUQW1ehmM6SbKlAZ2LvYwiauz
+	ImljTBpZSOO8nqG0lnNWJGaOI08uq/UXvsN2sEIfuCJrpCBGkRKT2HUFiiKfzR4bPbLRlvjJzLN
+	c97e6Nv67wiFPpWqBiBAYtv6dg6PAaxXy5pY+ETts7rso0oJW7F/OD2utfVC2brPgg6Jm6VzAyH
+	oUH+dqnIagqr0e+SN4BgwhrIb609IBgsiM0iQ9zOq46sbGvCO24XIHAtXu+7kw9VbVG81lrezUR
+	ILE2FPAd7HoJDkRFQCph4TT/sPdBXOh643RRRL8A/sxIFrmMGTOO6L2JY67pupk+41lNxWpcdY6
+	qpDIiik3TL4IqjtnrwrLL4YVJYTJHUwZUQEVW+jrCihceDJ/fpXHnVa3kTJhlrrqrlJTjOVtRb2
+	6a0ixlxbDj7dficiYjftc=
+X-Google-Smtp-Source: AGHT+IHHSrxz+1QQEVtRW8nQYdI/tEx+I6DqUdOxmrBtuDkvsy/kpvEskQ9AuQHNQtaDVysSZ+GwTQ==
+X-Received: by 2002:a05:690c:3388:b0:71a:2d5f:49bd with SMTP id 00721157ae682-71e6ddeaf10mr114996347b3.22.1755438862594;
+        Sun, 17 Aug 2025 06:54:22 -0700 (PDT)
+Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-71e6e0a9a26sm16216097b3.55.2025.08.17.06.54.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Aug 2025 06:54:22 -0700 (PDT)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Git l10n discussion group <git-l10n@googlegroups.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Mikel Forcada <mikel.forcada@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Emir SARI <bitigchi@me.com>,
+	Emir SARI <emir_sari@icloud.com>,
+	Arkadii Yakovets <ark@cho.red>,
+	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.51.0
+Date: Sun, 17 Aug 2025 09:54:10 -0400
+Message-ID: <20250817135414.431459-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.51.0.rc2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
- ---- On Sun, 17 Aug 2025 00:36:33 +0300  Adrian Ratiu <adrian.ratiu@collabora.com> wrote --- 
- > Hello,
- > 
- > This is a continuation of work done back in 2018 [1], so a big thank you to
- > everyone who participated in the initial thread, especially Brandon on whose
- > code this is partially based upon. Hope you are still around and doing well. :)
- > 
- > It's mostly a rewrite from scratch addressig open feedback. I decided to
- > iterate upen Brandon's url-encoding design instead of pursuing alternatives
- > like a custom encoding, name hashing or round-trip encoding/decoding using
- > an in-memory git mapping (we'd still have to encode/hash the paths to avoid
- > colflicts so IIUC this last one is more complicated for little gain).
- > 
- > I tried to organize and explain the commits in a logical way which is also
- > easy to review, keeping the encoding parts, new tests, code moving around
- > and path update churn as clearly separated as possible.
- > 
- > This is based on master and I've merged and succesfully run all tests in
- > both the next and seen branches.
+Hi Junio,
 
-I also ran the GitHub CI pipeline and noticed there are failures on Win + Mac.
+Please pull the following l10n updates for Git 2.51.0.
 
-I will address those in v2.
+The following changes since commit 724518f3884d8707c5f51428ba98c115818229b8:
 
-In the meantime I'll leave v1 for a while on the ML to gather more feedback.
+  Git 2.51-rc2 (2025-08-13 07:57:49 -0700)
+
+are available in the Git repository at:
+
+  git@github.com:git-l10n/git-po.git tags/l10n-2.51.0-2
+
+for you to fetch changes up to 79ee0dce2a61b7552f9b5c73f0cf2d974a20a029:
+
+  l10n: Update Catalan Translation for Git 2.51-rc2 (2025-08-17 09:25:36 -0400)
+
+----------------------------------------------------------------
+l10n-2.51.0-2
+
+----------------------------------------------------------------
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (5856t)
+
+Arkadii Yakovets (1):
+      l10n: uk: add 2.51 translation
+
+Bagas Sanjaya (1):
+      l10n: po-id for 2.51
+
+Emir SARI (1):
+      l10n: tr: Update Turkish translations for 2.51.0
+
+Jean-Noël Avila (1):
+      l10n: fr translation update for v2.51.0
+
+Jiang Xin (9):
+      Merge branch 'vi-2.51' of github.com:Nekosha/git-po
+      Merge branch 'master' of github.com:nafmo/git-l10n-sv
+      Merge branch 'master' of github.com:alshopov/git-po
+      Merge branch 'l10n/zh-TW/2025-08-08' of github.com:l10n-tw/git-po
+      Merge branch 'tr-l10n' of github.com:bitigchi/git-po
+      Merge branch 'po-id' of github.com:bagasme/git-po
+      Merge branch 'fr_v2.51.0' of github.com:jnavila/git
+      Merge branch '2.51-uk-update' of github.com:arkid15r/git-ukrainian-l10n
+      Merge branch 'jx/zh_CN-2.51' of github.com:jiangxin/git
+
+Mikel Forcada (1):
+      l10n: Update Catalan Translation for Git 2.51-rc2
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation
+
+Teng Long (1):
+      l10n: zh_CN: updated translation for 2.51
+
+Vũ Tiến Hưng (1):
+      l10n: Updated translation for vi-2.51
+
+Yi-Jyun Pan (1):
+      l10n: zh_TW: Git 2.51
+
+ po/bg.po    |  597 +++++++-----
+ po/ca.po    | 3036 +++++++++++++++++++++++++++++++++++++----------------------
+ po/fr.po    |  808 +++++++---------
+ po/id.po    |  666 ++++++++-----
+ po/sv.po    | 1114 +++++++++++-----------
+ po/tr.po    |  505 ++++++----
+ po/uk.po    |  528 +++++++----
+ po/vi.po    | 1592 +++++++++++++++++++------------
+ po/zh_CN.po |  692 +++++++++-----
+ po/zh_TW.po | 1010 ++++++++++++--------
+ 10 files changed, 6371 insertions(+), 4177 deletions(-)
+
+--
+Jiang Xin
