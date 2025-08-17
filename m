@@ -1,85 +1,68 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24849B652
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 01:32:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C695A945
+	for <git@vger.kernel.org>; Sun, 17 Aug 2025 01:50:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755394353; cv=none; b=pnGGWKyJO2xhq7cg6X1U6Ug1ixj/6hGD4nDewr04m73oHDa7lF7r4vNKPT0pTavaeDmPQ2xnuC00Vl+ruLT6TCICznE3gQl2H/jkjyzUOKZBqwrYKzpm46nJU3r6NOPvTgKtSMHYwk7lmJdRhAEKq136+IPLLZBfVxyKTjtPTFE=
+	t=1755395423; cv=none; b=BpjA85wCdIcwXpX7LYbwWDpoMA+iMZd8wOMcQ6r49oy3i7gMGqI4ccQWE7iWnv/G1ZV2vlxsNf+qxKIUy1z9okyChlkkXWmYQXiY8MYunkJnNQ8OGTbvtFhZflxlISFUdv+vf1s/jimojdRzpBaKHw2O2xN+wBFD0YZ48cxXpMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755394353; c=relaxed/simple;
-	bh=jJToyimYP6dxGBmkhsV8KyVvMZHZVPKpsFvbMjINUzg=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=SXlSOKNrEX5IbU5I1NK7b1hVDl0g1UFOaPFrr43lspzwvZxRq9Yaom7nreRpT6ctG5OiTCo6qRHl0qlbNZbF6hk6fYJ1v+bFtoOGMYDAM9O2RHpAvU1EsLdu0EhcoLMZSCf2C80mlRYORDnuU7QOdZUoeWTipeEuCbakDSfDlkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gO7H/v7v; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755395423; c=relaxed/simple;
+	bh=6adRuYcGg93KR4P3mNG44vm+r74cwM9jBO450At7mIM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=afKj/sCh6WAaq3TzQcECA9eLHNZobRYDYFN7OcKoSYRIgEA3bMMGG8tnWoKcGS3mFx79uZMqjy7+Pn+cBOU9cCplFFSQs7R4QN2MHlZU64k5shyEEhSN8Zwh8PcumSZaRpkPRBXIhm0pLNkt3hFpMot+pXhvqdw3jL4zfnjRY8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eGNOWNJq; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gO7H/v7v"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b47156b3b79so2351366a12.0
-        for <git@vger.kernel.org>; Sat, 16 Aug 2025 18:32:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755394351; x=1755999151; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jJToyimYP6dxGBmkhsV8KyVvMZHZVPKpsFvbMjINUzg=;
-        b=gO7H/v7vWbsUBOZQ27b1vhpVgRlfj0bkXIhOJgRMvxAVTPtS6dRXTnscG7ZAe0tk1V
-         6JXjGBBtoKo4mnLSm7LDD7xVMrc1+tqj9XblSYmLJ8UszFHcm7jCu0AhHWxf7KhOEUJm
-         +9ORsJWNv/A8YeS5T9izBHzGgFNhZCiZwEOdQCKCHvZgKeH/E8wHf7m2eERkVqGExfzK
-         dLkSYdxTTx0/B5oQ2GZX5Ej0O5lktOYCMpqZMtfzXNAfk0/cDKDAHp46VeyUITlq0TSa
-         4Qg6eWAVhasp35x0W6x3zyDORIlkypraBLI4koZd7Z0X1kE/zmJ1cZmSI/atxp6wHodm
-         uNtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755394351; x=1755999151;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=jJToyimYP6dxGBmkhsV8KyVvMZHZVPKpsFvbMjINUzg=;
-        b=OYBLjDC3Y5M+psmAW+MhWW8bGGJDKJdoTl00+qoCBu3UGPVOjttkRbBORUrWLyjqa4
-         +uvsKlpNGPdIzIGfkmikaFNse1gBd69Nua/Ajqz+FMOmaq4x9PTkHH0vRoKYUZos4eTX
-         HxU/u5rxYVGKQamlIwlEfZIs0zy91BZEefy15+VTvYSn45OqXcLCvA0iTCPQO09A0dpe
-         nCe7NXZ/vpz0LK9aimfK3L+QFXM9ENKdrJ6mz98dseK8xfCj1LvKUW7U8XQBmLDax5KJ
-         r0zbErzpSvNGeSv9Ol1ZbwNVx/KjA48wMngbNwku0YOa7Hnvpmrz/wA9VEsld40NG9HP
-         v+3Q==
-X-Gm-Message-State: AOJu0YyOiHvWqTa5FffucZheFRQM+qICZLK/WJps5TEbSqYWSAUkNE6d
-	Qn3hiKTD0sQ3uq43b+EQyPuXru944FK2EX38esXUij9YQEqPpgHPrg6jyLXbBvmW
-X-Gm-Gg: ASbGncuMIdNiLlhTe1k6EVui3mLqUS3CCwSEOnhTNNIej4cKYfM3a9WhMGW9uffHUkW
-	W+kkWh6ALvPjx4zegzWBGqeHna33aFGi0EYJ1xZLINcrfTaYo1b5dHuEl4tzDSbk4AKoSBKJHt6
-	3QL2/DvVe1pRGd4YmE7Y84XVAgIYXLzZTUiiVPFKAWja6jbTOgjh7fnciySc6CpuUi0QKXGYCXV
-	x2FETUMqFFMGSI9iVSpzyWvq7kz3xawJPMKdXBfZNP0HqR0l+1SlYnrCpZY1KMdsDFa8m9ddOTi
-	2b11Uz3ECiFN+I/dWTaV2NkY1tqjCpCIHqltvamLofLGl8J6XZ/8x7qehwDmBac/94msgrssA3j
-	CXOSY/KG+RcF8rFtWd0F+Aornfka96IyRRjoYE7vZ/BF9qwOdaanfH1wG/++sWFLRiGmvKrd8od
-	e9BQs=
-X-Google-Smtp-Source: AGHT+IH1FrmCvqJgLhDkZGAD3WDdN2+XkOgTJ8jFQo6AUDbJ5c1faSQTqpijf82K5eIuzgnwNXzVSQ==
-X-Received: by 2002:a17:903:8d0:b0:240:ac96:e054 with SMTP id d9443c01a7336-2446bdf53f4mr95143885ad.23.1755394351230;
-        Sat, 16 Aug 2025 18:32:31 -0700 (PDT)
-Received: from [192.168.1.105] (23-93-88-48.fiber.dynamic.sonic.net. [23.93.88.48])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2446d50f8easm44669585ad.97.2025.08.16.18.32.30
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 Aug 2025 18:32:30 -0700 (PDT)
-Message-ID: <76ee89b3-39cf-4218-bbb6-1cc3c6e16ddf@gmail.com>
-Date: Sat, 16 Aug 2025 18:32:30 -0700
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eGNOWNJq"
+Received: (qmail 7752 invoked by uid 109); 17 Aug 2025 01:50:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6adRuYcGg93KR4P3mNG44vm+r74cwM9jBO450At7mIM=; b=eGNOWNJqbP9kaMvyChmg6YEqD6gnqKSnlBqVuGyB3BkjNykbX/z7vHeiI5slSfoAuJANRODhDK9kOQARlEYqLCId3bOMhn5CL6bX9V99Z9GN8hoJ1xoLHzsbISfRrC1/sy4jU9cyhoaWhNjnW+v/Kye26hLOrmkZqpRIG/n3UsgCSTNkaK0UIpMWAhnFpG4pWNBNNPHkszvfTnO078mFAq3viQ8jcKoR6dZOxzkbRkokN083aWF+CvgIajiEQZ8TlAEnFZ1X57dRjaU3gKCHclo8sE/Ru0jirn0xif/zppGSXuAjMNyz3kx9Yg/mvcE8aTo8RbBvAQ/K1IuG9rjHDA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 17 Aug 2025 01:50:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15410 invoked by uid 111); 17 Aug 2025 01:50:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 16 Aug 2025 21:50:16 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 16 Aug 2025 21:50:13 -0400
+From: Jeff King <peff@peff.net>
+To: Jon Forrest <nobozo@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: How To See Index File Checksum?
+Message-ID: <20250817015013.GA6012@coredump.intra.peff.net>
+References: <76ee89b3-39cf-4218-bbb6-1cc3c6e16ddf@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org
-From: Jon Forrest <nobozo@gmail.com>
-Subject: How To See Index File Checksum?
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <76ee89b3-39cf-4218-bbb6-1cc3c6e16ddf@gmail.com>
 
-I know how to see the checksums of the files in an index
-file. But, I can't find a git command that shows the
-checksum at the end of an index file.
+On Sat, Aug 16, 2025 at 06:32:30PM -0700, Jon Forrest wrote:
 
-Any ideas?
+> I know how to see the checksums of the files in an index
+> file. But, I can't find a git command that shows the
+> checksum at the end of an index file.
 
-Cordially,
-Jon Forrest
+I don't think that there's a command to do so (likewise for other
+checksum'd files like pack idx, etc). We'd usually check those during
+fsck but I don't know of any specific command to print them. I'd usually
+do something like:
 
+   fn=.git/index
+   size=$(stat --format=%s $fn)
+   # offset of hash; use 32 in a sha256 repo!
+   hash=$((size - 20))
+   # the computed hash
+   dd if=$fn bs=1 count=$hash | sha1sum
+   # what the file records
+   dd if=$fn bs=1 skip=$hash | od -A none -t x1 | tr -d ' \n'
+
+Which admittedly is kind of horrible, but this isn't generally needed
+much outside of debugging.
+
+-Peff
