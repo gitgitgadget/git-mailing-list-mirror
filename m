@@ -1,96 +1,106 @@
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [185.244.194.184])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2838EEA8
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 21:10:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.244.194.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B467229B0
+	for <git@vger.kernel.org>; Sun, 17 Aug 2025 21:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755465023; cv=none; b=QS84SLZ7nvExTKSlxMcUCmSLpSGv1DeVdyZkR8X4b0KsbozjKmajC16rFVhHpyWkgofAoDwILrM88FS14sWN/I5X8YoWIYfX/VT2BxC+cSjMNDwVtYcL+Ms8O+4FjyhX58cakC0ugDCv6UHlN+eXMUGApyroXnSwRUqFyT9nRLc=
+	t=1755466110; cv=none; b=T6Aup1/2kM1Fi2bR4aXqmz2sebtjlvX0oYa+cie1HnyuAI0vOrqM+RJ+2gD0D6GLbKDuNDEK9yRVLEyuOf2UDxa9BGE0yngVGdTaUrCddtpEEPSdAL2IzQM8TY6QPsGjYTrN9zzoCAz3ZdZq7a5hrPfwpm+4FmPT3tD1WZ+FMn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755465023; c=relaxed/simple;
-	bh=qxsl5qJjYPlI4YJp/h9jqmLuHnyIO4JTgn8+jLWDkL0=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=rs6rvYciL/ys2VDDZ3EJgcSxGI3r+RnzMme6yGS8GZHY2wOUY1rcL0zsXuL4z0kOdvMWoqB37BU9YKYIB1tInXAMLQse1E/HYSQaWVJfM0LEO8P1uIg5y4Ct3f7fNhNyMJagIepJBqnzoL8qtLeN3bd3kkh0xEFcvNkJD6ucVa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de; spf=pass smtp.mailfrom=rd10.de; dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b=VekXlywa; arc=none smtp.client-ip=185.244.194.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rd10.de
+	s=arc-20240116; t=1755466110; c=relaxed/simple;
+	bh=ETYDRQggeU9kHimWrVINAGJ2RjilecGqZoZRt+3DSM4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RxEaqBXFMeXAJq1jbHumyFFCaXI6/UOmdIFZJV5f6QG7rC2tkwGSWdVraYhuPBPQwY4NS2+L0zMzIERFrz3H9MQJ2HhvNNv3V7+WuDbyrnpXTXdTkbUluJpHcrU397f7sDCtB4VktAjOIfJF12+ztiSZRmqpXw7orqIy8auj6r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JlF7QlcT; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b="VekXlywa"
-Received: from relay01-mors.netcup.net (localhost [127.0.0.1])
-	by relay01-mors.netcup.net (Postfix) with ESMTPS id 4c4pGC2bkQz94vx
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 23:02:59 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rd10.de; s=key2;
-	t=1755464579; bh=qxsl5qJjYPlI4YJp/h9jqmLuHnyIO4JTgn8+jLWDkL0=;
-	h=Date:From:To:Subject:From;
-	b=VekXlywaUDv1Itmva43x0Bkb8CtWQmQp9MzZ/V1YZ1KPU5HzKvyMNxflEfnPB42Xx
-	 9mZgBH0PRNM0ekFTtScr7Idp1QqEQ16+UXkueOjvh2SnyHW/2wfos4xUJt7fhW8WLC
-	 Qf5fCXosCRIms4Asb1gk6qTf9eAjNeF0sykoptPWkSGINfx5sMTL3mcMiszzDify7s
-	 jxI4drFJ2tDJPO0agwhzLQAA2oZv14kO7TNu6FNJxuy8b/AC5dnONXNZDqO4blsMWg
-	 B0PE8YQsaHx7s8ufoxD/wO1lEQvi/zfTJMLFcmYKlcPkXfFFT0egW/i0Djq2TH5Zji
-	 FISM/hmMUmXQg==
-Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
-	by relay01-mors.netcup.net (Postfix) with ESMTPS id 4c4pGC1v7Gz7wfY
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 23:02:59 +0200 (CEST)
-Received: from mx2eb1.netcup.net (unknown [10.243.12.53])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4c4pGC0MsWz8scg
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 23:02:59 +0200 (CEST)
-Received: from [IPV6:2a02:3102:8e00:2060:29c6:3163:3c04:c7fe] (dynamic-2a02-3102-8e00-2060-29c6-3163-3c04-c7fe.310.pool.telefonica.de [IPv6:2a02:3102:8e00:2060:29c6:3163:3c04:c7fe])
-	by mx2eb1.netcup.net (Postfix) with ESMTPSA id 83258100207
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 23:02:54 +0200 (CEST)
-Authentication-Results: mx2eb1;
-        spf=pass (sender IP is 2a02:3102:8e00:2060:29c6:3163:3c04:c7fe) smtp.mailfrom=rdiez-2006@rd10.de smtp.helo=[IPV6:2a02:3102:8e00:2060:29c6:3163:3c04:c7fe]
-Received-SPF: pass (mx2eb1: connection is authenticated)
-Message-ID: <4398af77-3183-4ac5-9a25-aca6289d8c8f@rd10.de>
-Date: Sun, 17 Aug 2025 23:02:53 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JlF7QlcT"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6188b5b11b2so4380266a12.0
+        for <git@vger.kernel.org>; Sun, 17 Aug 2025 14:28:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755466107; x=1756070907; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=efROf3aJTw05IpW6TgSdBbfZ8XLs/BaSvPFKdeLIZB0=;
+        b=JlF7QlcT2jUug4Hqj+EZ0tXJO76fJ6XdrkZZzJOGZH8mbbMYLgJcQeiqtNXkcFGVfy
+         8kvJDsm1fR0ktpNgWw/z4VerIoaMCT8qIgzioB1lHoeNDkXjbjUwJR84F0J4L4fsJNn3
+         lkYq+zkfetgvmJ0/4SPQw7IxVbr6pkonIwMjGrRTKrhT1MYH91++2U3WAr1wT1b5XcBF
+         XQ7x/2hZmELvCvJayALdMkqh+tV7qpCCLw7247m2GUc88V5sUxXJIrcmAqT/vyZjMf+H
+         HTemTTjqdlBoykcdQ/P5OdBsO6ap1RDJPMYJKJfIlzlu9wYgwHFGQ473qBcONQ2Y0VXP
+         g+zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755466107; x=1756070907;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=efROf3aJTw05IpW6TgSdBbfZ8XLs/BaSvPFKdeLIZB0=;
+        b=fo4FIBO1N7177w3i86nT+N0btbUvKFHNg29d+qWke2QwWlJaTYNOFCL4800wLzv1tE
+         tGDYQp0H0hmwlGxYz+Euy6pVFa3nYdOOpKqd3GvH5iJd33AauMStBoBvYK6Nvb2gPxxw
+         +yaYGmVEGF/VPatfetoR3dplasb4Awlv1viqWko8NcTHu688xciRgUMw0XER+vaA0p9o
+         8nx3DE3ievqAXdZzxKyPpiZL3ljRJIrPtOjvBg2BepvcU3D5u3qgAepF0aBbFEXkSJyr
+         57UvATJ/49UqkIrw6qGnTfIZTOrlkr2SS+IfNNUXZuAXhNyLkZCnbaQKIMiY1KrqlJJ9
+         OOhw==
+X-Forwarded-Encrypted: i=1; AJvYcCUBsat4B/N1++Nvaqjt+Hn2pFAE7f8SdZx0o7XiSh4BDydY4h5uzugWZggGgSJqMd/LHnc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKwgw0qrBdgNU6qv+qIlG3c6qwYFS0iTm2sivw6jfzAj33qGaH
+	3lKFNGjJMsZUN1EAAYBVeCTaekZjx2agENzgnh8a+PwdQmn7P+vcdEEfMAfj25X0sa6ocIbKNQZ
+	2L0h9GEo++1GUVSgdWu3YeHpfmq333W3IfXYrnEs=
+X-Gm-Gg: ASbGncser2QKM7mm8ALdLGQCtnHr28oeOTjzQ6+g9qctQlJkC0o66pZ509ZG0AKy6BR
+	SZl19+YqYFhPh+PfgfsZ/Tz6UyzfWuEQ88MGVKIDpcK6ikHsBsD1JQ6KH0xqEaP7oB2vrYnRSTE
+	ybU/up0zyj6/RCsWbTgHC+lUh3skyisJz8bhRHaQaiQ1rxyph/Z8ka8yuomK3iuy0TNKoE4o+PS
+	2BhaRtIsVH2Jaz8YSJLSZ+Wc0OelHUEEq8yUx+Dxw==
+X-Google-Smtp-Source: AGHT+IFeeKdQWRLn5f/fwmV8Af0aOgHh89yY26COf66OnwJ4JGa+NFDMOuq3/LLGgUhyO+tkuVZqhJgww7Z7FKCmD9s=
+X-Received: by 2002:a17:906:c155:b0:af9:a4de:f092 with SMTP id
+ a640c23a62f3a-afceae8f7e3mr665254566b.55.1755466106792; Sun, 17 Aug 2025
+ 14:28:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: "R. Diez" <rdiez-2006@rd10.de>
-Content-Language: en-GB
-To: git@vger.kernel.org
-Subject: Graphical tool to merge and reorder commits
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-PPP-Message-ID: <175546457473.30031.13798634689934687344@mx2eb1.netcup.net>
-X-Rspamd-Server: rspamd-worker-8404
-X-Rspamd-Queue-Id: 83258100207
-X-NC-CID: T/2b4q0+2uB0xao8Amy6pzPbIIWKA38BhjQzwGi4
+References: <CAGW8g7mV6az3ybYf3uzHYQTGLDwc34eebZnha1EQ3Sb6B8E-fQ@mail.gmail.com>
+ <67621563-9441-4ae9-a23b-51af7d3ce666@app.fastmail.com>
+In-Reply-To: <67621563-9441-4ae9-a23b-51af7d3ce666@app.fastmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Sun, 17 Aug 2025 17:28:15 -0400
+X-Gm-Features: Ac12FXy_Eqvsfl8MnUea1MAMHOyPyUE2aYzQ4JK1C8RM_H1Mk0qFbWpdlWvAH04
+Message-ID: <CALnO6CAkTt0brPbnKDu9rOAHeLRtk2hm3xJT5+HvZOfHSL-Szg@mail.gmail.com>
+Subject: Re: [RFE] Add JSON output to git log commands
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Ron Ziroby Romero <ziroby@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi all:
+On Sun, Aug 17, 2025 at 5:09=E2=80=AFPM Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
+>
+> On Sun, Aug 17, 2025, at 22:17, Ron Ziroby Romero wrote:
+> > I would like to add JSON output to the git log command.
+>
+> Previously: https://lore.kernel.org/git/CAGW8g7=3D21pPAgCixjpayEvmw_ns-hc=
+B4e59NP476TKtCRXHPXQ@mail.gmail.com/
 
-I find merging and rewriting the commit history with Git difficult.
+In particular, I would guess that deciding how to handle "raw bytes"
+(e.g., paths that are not necessarily UTF-8 strings) is important.
+JSON uses Unicode characters:
 
-Is there some graphical tool to merge and reorder commits with the mouse? Or failing that, a good terminal interface with menus and the like which allows merging and reordering in an easy, visual fashion.
+     A string is a sequence of zero or more Unicode characters,
+wrapped in double quotes, using backslash escapes. A character is
+represented as a single character string. A string is very much like a
+C or Java string.
 
-Here are more details about what I mean. Say I have this commit history:
+https://www.json.org/json-en.html
 
-  A - B - C [master]
+(even though the railroad diagram says "codepoints"; I find the whole
+thing a bit muddy=E2=80=94what exactly is representable in JSON strings?
 
-I want to visually create a test branch first, by dragging commits B and C together (merging them), and then appending commit A afterwards:
+    Excepting a few encoding details, that completely describes the languag=
+e.
 
-  A - B - C [master]
-  BC - A [test]
+??? which details?)
 
-Maybe I need to manually merge or fix some commit in the middle of the test branch. I can do that with the normal Git tools and commands I already know. Then I want to keep visually adding commits to the test branch.
 
-That is, I want to build the test branch mostly interactively with the mouse. While doing that, I would like to click on the nodes and see the commit messages and patches, like with git-gui.
-
-If I manage to complete the test branch (and it compiles cleanly), I then want the test branch to become master, like this:
-
-  A - B - C - D [now orphaned]
-  BC - A [master]
-
-Ideally, I could drag the tag, or right-click on one node and assign a tag.
-
-I know I can probably find out all the relevant commit hashes by hand and do all the merging and rearranging with the command line, but even though I am normally a console and command-line fan, I find it especially hard with Git.
-
-I have tried or investigated numerous Git tools: git-gui, gitk, Gittyup, GitUI, GitButler, SourceGit, git-cola, Guitar, gitg, tig, giggle, qgit, RabbitVCS, Magit, lazygit, ... They are all fine for normal commits and the like. However, most fall short fairly quickly. For example, the ability to highlight character or word-based changes inside a text line is rare. And none of them really appealed to me when merging, let alone rearrange commits visually.
-
-Thanks in advance,
-   rdiez
+--=20
+D. Ben Knoble
