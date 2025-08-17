@@ -1,191 +1,81 @@
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic321-23.consmr.mail.ne1.yahoo.com (sonic321-23.consmr.mail.ne1.yahoo.com [66.163.185.204])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC831A254E
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 18:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE13328399
+	for <git@vger.kernel.org>; Sun, 17 Aug 2025 18:59:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.163.185.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755455867; cv=none; b=QDuAvIOYO7QCLXdJhYdrU7NEO+gRu85mRdyiOqq6MqfgABvWNYdFSXr5trFc9Rot5LqqV5hQdZwHQgpKpQIh4ZpBCFw0ml5T+B1vX5E0isld8J93k/pj54x0DZPoPBtcDakg+VyAr/B+LC6gBmFP2uESj4f8ruPixP/hyTlQON8=
+	t=1755457170; cv=none; b=OEy9HjAn3DjS1/rvqtv1NVoPSzD6UjZUF7+6/yJ1tnDogUvJA/AtDMczdIPPnVygl6n+MG7kZmx6Fsk+uo9pKP5F9QU+UvoDRFQm0wtJul1JNVZ31Zd8X5AStfbtgjHj7+aYerO64wozKRNko5DsLZJ6EXXH07MHQKfIAv5S2dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755455867; c=relaxed/simple;
-	bh=4EJD06KH4wy6FwyBPfrf1niNl1NDQufKI4d8qsRF0nc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MTGsBl4drmPhdfM0iv2FixlXfkcXZNulSOpPoWad8GbSOilmh/l9yyanZPjpNdBLpCXH1JuWyUIyVD2SJbLOyhDHQmb/pjyUS3V2O1V1nxwJGM+3fkepwfWNgSu7590qih6ddhMMxI5K4Pcgs8N2Yl/7308vbTEfTAIdRk0nS/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=HjUVBQKx; arc=none smtp.client-ip=212.27.42.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1755457170; c=relaxed/simple;
+	bh=YZ8s746LHNGnkrvi3dQmbJMPFbbOQ12uL5Un8J8KEng=;
+	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:
+	 References; b=Ya47NwU8CYAFtuii+dxHDjau6Dd5IGHA6YKW2pHnTVv18b0TjImZwT3wJRilrFcJvdFXqc5yYMvCre8bJXk7+fM1x1bdJxDsVJMkQlLDSf0gWXM5Pt1sIoJSJuhyPTF5JPcy7nAgnWEMnzUAWNVjTqPaNJG7ECRZ+M7DodV+eYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=R5f+WE2Z; arc=none smtp.client-ip=66.163.185.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="HjUVBQKx"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:e7d2:e88f:af07:5d6])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 4C56119F5C2;
-	Sun, 17 Aug 2025 20:37:32 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1755455857;
-	bh=4EJD06KH4wy6FwyBPfrf1niNl1NDQufKI4d8qsRF0nc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HjUVBQKxABsHagCLKS2PPvB2jlKOv3WGRMNqeU6gjbsfd9w9OSYl2rLv+4lkAIcng
-	 1/0vwGkHD0zh6YtqznusvniJnp3ZNnkQ27bW/8dQBQqyUTOddT5zpvxAUzGWf09RuK
-	 cmv5NP8FmzhKNxQP15oLhxPz6NaytmA7XRZpsrCixwK/1DaK7wYTw/GV9vr1aQir4h
-	 /m8ctL3+vPQ11RiI3yo4Gp9AWU5z/+FQbB8huT9VReC6BE4XeU2GqN2OWzAECqS79A
-	 Fs1bFDPcZbugOCADuGB0XB0aOV8cq6cgdcOJ4rWByj1HCq/vD8knt9Bciwb9FQ1802
-	 cSZN5xc226CBQ==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>, Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v2 1/4] doc: git-add: start man page with an example
-Date: Sun, 17 Aug 2025 20:37:32 +0200
-Message-ID: <3896226.kQq0lBPeGt@cayenne>
-In-Reply-To: <xmqqqzxcr1ck.fsf@gitster.g>
-References:
- <pull.1952.git.1755029249.gitgitgadget@gmail.com>
- <5004213.GXAFRqVoOG@cayenne> <xmqqqzxcr1ck.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="R5f+WE2Z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1755457167; bh=IWw0gDQT5NmZArMzP5kSx2VsrA9Zh0HPnHr0n9ymDhs=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=R5f+WE2Zr4fRzacQQUz5PkK0zzUiVLwD/h5VVj76h9BkWjMLIqdmygKLRK8JDancqOoRbvE3Q0dvOTDIubp5cd2PamQ/8DxMW7YmgCo6JnPW3IBr+ISj0zKTt0ufRANjz5Z5Z5Jj1eqJiv2z8SwZiHEFTZT1mX7RwqK4eW6GVTufeHfkz7cLAMD8iEyXO50ypEf69UAT+TZSCXdr1fm2LZzAernqD/Zaz1cVUrs0hUyGVE5kaccJXX+nh6JRh4GRN4Fh5CPUtmZEK2TIDf1LQPaVg1jQYhfh5ZzqOzCMT79LduwV/F2SmGo/5eGnQpcIrlTwdFi/WTnHudyrSMjX3A==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1755457167; bh=pX+QJnv/YU70x6w0ybOaZDMLo1/1cx9NFRFt6I2uoPg=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=tIZ9Vkubj2HQfXY59df7YRy6s41BP1ncKV1inGFrIJTznqV6rGTk3o4FnVLjjORSwEfmQsAtWSnkxvQSJOjrYyv9Wl7oosqOJ9s/u/5icP6+a/AEn/vUIVxWf4USllEWLWZBbRKh0hVquYf7c2xr02c7zWU8qTcS/L92mIdqrW3VRlH7xqLCW6Cl7w5aOJONqe5n5LQG8ursWZEVKPAq5qoXV0kRyYcQb4x7foeUKdazWz4MRpYzFyNKbMV8PFHrb4345bPnpZ6eFTUgihtG7d+Oij3yypao0eWoPIQCn/lvJivN3StoZ4iGg7qt/rSZ+IdyDNzMTEAL84mL+Cn8Tg==
+X-YMail-OSG: 6UD9IjcVM1kIfW40FBoLMo.pWQMFvSnmwX8glcReK5IlFL1qDH8q7FwxMMEfF51
+ SrgUFG6W5U2co7saM84Tf1HaKkyohbWuqC6LGGb1pRRuvlpmBF5XGnKzzA1Gfmgu9jEeNAuggb4R
+ L1v9B0N4iCs8ezIj46IqsTAuNJzi_hOuip5QdQJnf3eEsNTN4Qh2UTaZVSGVoiyzeZDdXFCPMuoE
+ _OQpBdP99R5PU5yR9nlukXk82JUkW0QCnwZx_W3RQeZFog9MoPF8ppQi5mVmHfBpsFCrP_.Gr1VM
+ 1CkqapjH0Zth3cxVfjHki9uTIxJulf.9JM52ID1P6VvyT8dWeJwupsKN89sqDuDVVsnnjXhq5ZZS
+ AWkT9n_wlH2TnZGdLTSqXUhKg6DFlmySw0TcOGc3jLc0lRtz.sNE5fChov7KhSAmilrc_1QKkVpo
+ n_0xYF2kHtv9aaTLdGgZsjeBU1bt7VfeiIrRpWCWNw22t.TCPfNFOpIAUUJLo86VqfHQNR1LsL3i
+ Plh6OOw515JkBaEgUbOyaXH7f.v3XiUZao0ShYlqBHNn6dmyMboUvg7GvAmwmQ5yO0bNj7fG9Ve6
+ pRoPCDz5pmTbHi6iSxEtqzAb0k.GrczssQK_y27Yw8betPwH8YoHEbJPhEmZPRKoXAHbtoB5Wc6G
+ 9SNxjXSiiKZb00M7ddBjjOzwk4hepLyoRPEP8Wmhb6Zu_lSZ1yg7AIZ6vb5FfR_nZ8vjilYgsYVM
+ UyBV4VLpK4BnP0CrcjabzogpolG8vAYnqdxT_9mZlmzqlhPHZ9WZ.5pmzsLu167c81JqHEMekoD6
+ CEvJYwCfaNccD_duyerWFsWbZw2GfZNUHq4eiDZb0A2psfpoQB069o79jJoZf83GDJOPd.KutmF8
+ cgsTnS1jKPfH.dLkGqOCkkEQtq4TvRe1vmh81Bg9HMhtiIJgVTgwNhD97a7vIUpRipHBnqt2i9vC
+ gZLz.QQNBwuqeFNL5h2B9.uawm11Pbr3SDFu5aR8UypPu3k.3vu7hWOApYGXLiSrYa0y1hfKGkmv
+ PreYLYuSmkM2uwBmCYIk2lLdQi_lgU5jZstioAP40wY8NI72DZkYEI0XIAPZJHuSO2JTBwPamwEW
+ fCT5sYc8U84OU6BCYitKXxpKbd38OdPq2Yl3UyIvoQkMK1PRRM.p9uF9YEYa8q2FXRFjdlOa.pJh
+ seff7nzd4ulJgs2UjSXAiRvDtN_d5f7WRAu5XYMhkVBzAeg87pJEL5OFdiNlL2tMyhpXJItcLJQD
+ m3et.JiYNnCwbGL3m8jWefUnI3YqhTOfRI2V0FID8YjXTQeBEISn22_d_z8FQz6dx6KulNskqy1B
+ mNoPF4PRrzJCS.x8Mk8GFk1H1EUCQsTEFTVdzIMQFVdfW.02hLcnJ4FTC4m8O.LwCJOkNrTyQrXt
+ WFapcVlurD1oECE7_HvsytGv1XaMh5WbHeuwRL0P.rUVtdDArl8a7prpDo0_h2MC5Y9egkKYlU9X
+ XKotU5ZKBT8iqFqLIZAnJY85O5sH0JhoXquoU5ui1og4YGOSv0pkV976Q19.DXFisFR4AVPpKIA0
+ SanwwrlqQolv8d.zWlgj3qXLHdYa9PiQU5mNT_KBJH.ih8lsIfzptu0vEGhOdXHnGofOPE0Ni2sj
+ 62vVPTvlvmhFcuo9aeL8kZY1r1hV_6tK6GCpU0Waj_mnZw3MffysFPJR7NG6Hx26Gu7AevLtLo_D
+ PkXAargQi9SAfjSsvuykVTaxNg34Atyq6sGqEzJXIegbzzb740zfR6vwCiDPoyBdb961ZiDAjx.X
+ 9eEFZ1P2vYYplMmUAHN2iQYXL.HfG7drTciBA844RAv3zIn0xPTXSrk6E0r6orwq31A3Wzs02J.x
+ J_ndE7j4aDmPOEeQS8paENBt0WNm3ucwGvevxIyUIOGxT7c75ylqyrgsx9MKcn_np2Qz2bKuNBvJ
+ DQl1sXw2KPiT_BGwpjbL_mYJ5ohL.yqJ2wXq0rjcVlx6gSv5jHz_JAfTTOH2N6_8tnLVUg6gpewu
+ iQ65rYN4h2eoklur6ApxwUU7rNsbK77tCDusKd5.7f.pg_f9MHwLWXMQIoa1ZRkfG6khiiBzEl6O
+ Y4yDjJEKA6cGuqdYDbf8bb_bIbuhd4agKB64K.9oAOafKaSuaWR5.o_SXC8X2l6avNOy09G6Xchw
+ dFHiTGF3hvd.irnWeIlSyEu9c0S0Ov10uYEieJkEBD9ik6Am5qCGLU2Vm16mRPFgT0DTEpDJUAC5
+ 6.Lc4Z_veVXUvWnHL3x9pskOSN.ugyPCDNCoQ
+X-Sonic-MF: <keith_smile@yahoo.com>
+X-Sonic-ID: f9aa702f-6d70-4276-8a57-59b52b441755
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic321.consmr.mail.ne1.yahoo.com with HTTP; Sun, 17 Aug 2025 18:59:27 +0000
+Date: Sun, 17 Aug 2025 18:59:27 +0000 (UTC)
+From: Keith <keith_smile@yahoo.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <1679622008.808432.1755457167024@mail.yahoo.com>
+Subject: Gitweb advanced
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+References: <1679622008.808432.1755457167024.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.24338 YMailNovation
 
-On Friday, 15 August 2025 18:33:47 CEST Junio C Hamano wrote:
-> Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
-> > On Friday, 15 August 2025 02:38:45 CEST Junio C Hamano wrote:
-> >> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >> ...
-> >>=20
-> >> > +By default, `git commit` only commits changes that you've added to =
-the
-> >> > +index.
-> >=20
-> > I do not understand this addition. I may not be missing knowledge, but=
-=20
-this
-> > behavior is not only "by default", it's the only behavior of git: commi=
-ts=20
-are
-> > made with the content of the index. Let's not make it more complicated=
-=20
-than it
-> > is already.
->=20
-> I'll only react to "the only behaviour" part, without "more
-> complicated" part.
->=20
-> I think Julia is referring to the fact that you can record the state
-> that is different from what is in the index (or, what has been
-> accumulated in the index by the past use of "git add" command that
-> is being discussed here) with "git commit [-i] <pathspec>".  You can
-> do
->=20
->     $ edit fileA fileB ;# assume both are tracked
->     $ git add fileA
->     $ git commit fileB
->=20
-> and the resulting commit will record the contents for fileA found in
-> its parent (i.e. the result of "git add fileA" is not reflected).
-> If the last step were
->=20
->     $ git commit -i fileB
->=20
-> then the resulting commit will record the contents for both fileA
-> you added with the last "git add" on it, and contents for fileB
-> found in the working tree at the time of "git commit -i" was run
-> (i.e. "git add fileB" was not required)..
->=20
-> By default, after the edit of fileA&B and the add of fileA, "git
-> commit" would not be aware of what is currently in fileB in the
-> working tree, and records the same contents as its parent for all
-> paths except for fileA, which would record what was last added with
-> "git add" to the index.
->=20
+I have tried everything on git-scm dot com/docs/gitweb#_advanced_web_server_setup to get files from:
+localip/~user/
+to work and nothing I have tried has worked.
+I know, the local IP is the actual 192.168.... and the <user> is my username
+If i put a public_git folder under my user it never shows the repo there, only the ones under 
+/pub/git/
 
-Thanks for the explanation, I had forgotten this form of git commit. For th=
-e=20
-record, when I teach about add/commit, I never talk about the direct commit=
-=20
-form, to present things in the most repeatable/unambiguous form.
-
-The `git commit <pathspec>` form may be of use for old-timers who were doin=
-g=20
-so with previous SCMs. But as stated elsewhere, young newcomers do not have=
- to=20
-fight against finger memory. The explanation that you provided describes a=
-=20
-quite complicated process with options, so this feature seems to be reserve=
-d=20
-to advanced users.
-=20
-The manual pages in section 1 are mostly reference stuff for a given comman=
-d,=20
-and this way of referring here to alternate usage of git commit is a bit of=
-f-
-topic to me. For how to organize workflows, there are some pages in section=
- 7.
-
-My stance is as follow: yes, being complete is important in a reference pie=
-ce=20
-of documentation, but throwing a "by default" on `git commit` here, without=
-=20
-further explanation, sends the reader in an unsure state, which is detrimen=
-tal=20
-to understanding at this early stage of the documentation.
-
-Otherwise, the idea of the simple example as an introduction is a good=20
-addition before delving into more formal and comprehensive explanation. The=
-=20
-only caveat is to not introduce wrong concepts that may need to be reverted=
-=20
-later.
-=20
-
-> >> > For example, if you've edited `file.c` and want to commit your
-> >>=20
-> >> > +changes, you can run:
-> >> Likewise.  "and want to record the resulting contents".
-> >>=20
-> >> > ...
-> >> > -Please see linkgit:git-commit[1] for alternative ways to add conten=
-t=20
-to a
-> >> > -commit.
-> >>=20
-> >> In the original, this comment does look a bit out of place (as the
-> >> text around there does not talk about `git commit`), but as you said
-> >> that by default 'git commit' makes an as-is commit above, it may be
-> >> a good idea to move this sentence there.  `git commit <pathspec>` is
-> >> a handy thing to know even for beginners, and making your next commit
-> >> is what the user is working towards by using "git add".
->=20
-> And this relates to "more complicated" part of your comment.
->=20
-> I think keeping "by default" above and also keeping this comment
-> that hints about non-as-is commits made with "git commit <pathspec>"
-> is slightly more preferrable than dropping both of them altogether.
-> With only four additional lines, we cover basic "edit && add && commit"
-> cycle fairly completely.
->=20
-> I am also fine to drop the mention of 'git commit' altogether, but
-> it feels somewhat incomplete to not talk about commit when teaching
-> add.  After all, add is one of the primary ways to prepare for the
-> next commit---putting it the other way around, you want to learn add
-> primarily because you eventually would want to make a commit.
->=20
-> In any case, only having one (i.e. "by default") and dropping the
-> other ("see linkgit:git-commit"), like the patch did, did not make
-> much sense to me.
->=20
-> Thanks.
-
-I'm not for dropping them, but for deferring the mention of this special=20
-workflow later in the explanation, with the reference to `git commit`.
-
-BR
-
-Jean-No=C3=ABl
-
-
-
+it will not show the repo's on users. always shows 404 no projects
+does show projects under /pub/git and /pub/scm
+Thanks
+Keith
