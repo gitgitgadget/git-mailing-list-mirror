@@ -1,81 +1,206 @@
-Received: from sonic321-23.consmr.mail.ne1.yahoo.com (sonic321-23.consmr.mail.ne1.yahoo.com [66.163.185.204])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE13328399
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 18:59:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.163.185.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD8B1448E0
+	for <git@vger.kernel.org>; Sun, 17 Aug 2025 20:17:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755457170; cv=none; b=OEy9HjAn3DjS1/rvqtv1NVoPSzD6UjZUF7+6/yJ1tnDogUvJA/AtDMczdIPPnVygl6n+MG7kZmx6Fsk+uo9pKP5F9QU+UvoDRFQm0wtJul1JNVZ31Zd8X5AStfbtgjHj7+aYerO64wozKRNko5DsLZJ6EXXH07MHQKfIAv5S2dA=
+	t=1755461881; cv=none; b=Vpj5ysljibzl0dmeS0G0hJH1xjqO1E/SzV1NR3Tpoqii5qnLJcfQQMuvqflSTklzNVUmoHvz7diiZBd/LRzWyC/NZok2kuTBeKGNroN4kuTHezeAlQjk8lPDS2EKCYHlN2eHiTJ0Yvi0jOq3xt2vmKXBPwMmt/u41QtqHHJOC00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755457170; c=relaxed/simple;
-	bh=YZ8s746LHNGnkrvi3dQmbJMPFbbOQ12uL5Un8J8KEng=;
-	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:
-	 References; b=Ya47NwU8CYAFtuii+dxHDjau6Dd5IGHA6YKW2pHnTVv18b0TjImZwT3wJRilrFcJvdFXqc5yYMvCre8bJXk7+fM1x1bdJxDsVJMkQlLDSf0gWXM5Pt1sIoJSJuhyPTF5JPcy7nAgnWEMnzUAWNVjTqPaNJG7ECRZ+M7DodV+eYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=R5f+WE2Z; arc=none smtp.client-ip=66.163.185.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1755461881; c=relaxed/simple;
+	bh=elyYAy23ejuX1CUfXSEkRRaCNAZeOpGku/Z6875Qq4E=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=qg63nvLl5N+dLC4XPZPPfDMn7dj4C2LZvABvDcw9lfytUGImrJS6AgBy4Lfa4eN3OftPG8/MfzOQyWR1h9NCTGXVVH1ccDnuorEKnvUjAjcUjtC7t2ptnbFbEbZjRv4LCSCCY2oPE3/eWF4O2Lxl72S0iF7zi5oZ7jJGUPEhy7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SnI27TYy; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="R5f+WE2Z"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1755457167; bh=IWw0gDQT5NmZArMzP5kSx2VsrA9Zh0HPnHr0n9ymDhs=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=R5f+WE2Zr4fRzacQQUz5PkK0zzUiVLwD/h5VVj76h9BkWjMLIqdmygKLRK8JDancqOoRbvE3Q0dvOTDIubp5cd2PamQ/8DxMW7YmgCo6JnPW3IBr+ISj0zKTt0ufRANjz5Z5Z5Jj1eqJiv2z8SwZiHEFTZT1mX7RwqK4eW6GVTufeHfkz7cLAMD8iEyXO50ypEf69UAT+TZSCXdr1fm2LZzAernqD/Zaz1cVUrs0hUyGVE5kaccJXX+nh6JRh4GRN4Fh5CPUtmZEK2TIDf1LQPaVg1jQYhfh5ZzqOzCMT79LduwV/F2SmGo/5eGnQpcIrlTwdFi/WTnHudyrSMjX3A==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1755457167; bh=pX+QJnv/YU70x6w0ybOaZDMLo1/1cx9NFRFt6I2uoPg=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=tIZ9Vkubj2HQfXY59df7YRy6s41BP1ncKV1inGFrIJTznqV6rGTk3o4FnVLjjORSwEfmQsAtWSnkxvQSJOjrYyv9Wl7oosqOJ9s/u/5icP6+a/AEn/vUIVxWf4USllEWLWZBbRKh0hVquYf7c2xr02c7zWU8qTcS/L92mIdqrW3VRlH7xqLCW6Cl7w5aOJONqe5n5LQG8ursWZEVKPAq5qoXV0kRyYcQb4x7foeUKdazWz4MRpYzFyNKbMV8PFHrb4345bPnpZ6eFTUgihtG7d+Oij3yypao0eWoPIQCn/lvJivN3StoZ4iGg7qt/rSZ+IdyDNzMTEAL84mL+Cn8Tg==
-X-YMail-OSG: 6UD9IjcVM1kIfW40FBoLMo.pWQMFvSnmwX8glcReK5IlFL1qDH8q7FwxMMEfF51
- SrgUFG6W5U2co7saM84Tf1HaKkyohbWuqC6LGGb1pRRuvlpmBF5XGnKzzA1Gfmgu9jEeNAuggb4R
- L1v9B0N4iCs8ezIj46IqsTAuNJzi_hOuip5QdQJnf3eEsNTN4Qh2UTaZVSGVoiyzeZDdXFCPMuoE
- _OQpBdP99R5PU5yR9nlukXk82JUkW0QCnwZx_W3RQeZFog9MoPF8ppQi5mVmHfBpsFCrP_.Gr1VM
- 1CkqapjH0Zth3cxVfjHki9uTIxJulf.9JM52ID1P6VvyT8dWeJwupsKN89sqDuDVVsnnjXhq5ZZS
- AWkT9n_wlH2TnZGdLTSqXUhKg6DFlmySw0TcOGc3jLc0lRtz.sNE5fChov7KhSAmilrc_1QKkVpo
- n_0xYF2kHtv9aaTLdGgZsjeBU1bt7VfeiIrRpWCWNw22t.TCPfNFOpIAUUJLo86VqfHQNR1LsL3i
- Plh6OOw515JkBaEgUbOyaXH7f.v3XiUZao0ShYlqBHNn6dmyMboUvg7GvAmwmQ5yO0bNj7fG9Ve6
- pRoPCDz5pmTbHi6iSxEtqzAb0k.GrczssQK_y27Yw8betPwH8YoHEbJPhEmZPRKoXAHbtoB5Wc6G
- 9SNxjXSiiKZb00M7ddBjjOzwk4hepLyoRPEP8Wmhb6Zu_lSZ1yg7AIZ6vb5FfR_nZ8vjilYgsYVM
- UyBV4VLpK4BnP0CrcjabzogpolG8vAYnqdxT_9mZlmzqlhPHZ9WZ.5pmzsLu167c81JqHEMekoD6
- CEvJYwCfaNccD_duyerWFsWbZw2GfZNUHq4eiDZb0A2psfpoQB069o79jJoZf83GDJOPd.KutmF8
- cgsTnS1jKPfH.dLkGqOCkkEQtq4TvRe1vmh81Bg9HMhtiIJgVTgwNhD97a7vIUpRipHBnqt2i9vC
- gZLz.QQNBwuqeFNL5h2B9.uawm11Pbr3SDFu5aR8UypPu3k.3vu7hWOApYGXLiSrYa0y1hfKGkmv
- PreYLYuSmkM2uwBmCYIk2lLdQi_lgU5jZstioAP40wY8NI72DZkYEI0XIAPZJHuSO2JTBwPamwEW
- fCT5sYc8U84OU6BCYitKXxpKbd38OdPq2Yl3UyIvoQkMK1PRRM.p9uF9YEYa8q2FXRFjdlOa.pJh
- seff7nzd4ulJgs2UjSXAiRvDtN_d5f7WRAu5XYMhkVBzAeg87pJEL5OFdiNlL2tMyhpXJItcLJQD
- m3et.JiYNnCwbGL3m8jWefUnI3YqhTOfRI2V0FID8YjXTQeBEISn22_d_z8FQz6dx6KulNskqy1B
- mNoPF4PRrzJCS.x8Mk8GFk1H1EUCQsTEFTVdzIMQFVdfW.02hLcnJ4FTC4m8O.LwCJOkNrTyQrXt
- WFapcVlurD1oECE7_HvsytGv1XaMh5WbHeuwRL0P.rUVtdDArl8a7prpDo0_h2MC5Y9egkKYlU9X
- XKotU5ZKBT8iqFqLIZAnJY85O5sH0JhoXquoU5ui1og4YGOSv0pkV976Q19.DXFisFR4AVPpKIA0
- SanwwrlqQolv8d.zWlgj3qXLHdYa9PiQU5mNT_KBJH.ih8lsIfzptu0vEGhOdXHnGofOPE0Ni2sj
- 62vVPTvlvmhFcuo9aeL8kZY1r1hV_6tK6GCpU0Waj_mnZw3MffysFPJR7NG6Hx26Gu7AevLtLo_D
- PkXAargQi9SAfjSsvuykVTaxNg34Atyq6sGqEzJXIegbzzb740zfR6vwCiDPoyBdb961ZiDAjx.X
- 9eEFZ1P2vYYplMmUAHN2iQYXL.HfG7drTciBA844RAv3zIn0xPTXSrk6E0r6orwq31A3Wzs02J.x
- J_ndE7j4aDmPOEeQS8paENBt0WNm3ucwGvevxIyUIOGxT7c75ylqyrgsx9MKcn_np2Qz2bKuNBvJ
- DQl1sXw2KPiT_BGwpjbL_mYJ5ohL.yqJ2wXq0rjcVlx6gSv5jHz_JAfTTOH2N6_8tnLVUg6gpewu
- iQ65rYN4h2eoklur6ApxwUU7rNsbK77tCDusKd5.7f.pg_f9MHwLWXMQIoa1ZRkfG6khiiBzEl6O
- Y4yDjJEKA6cGuqdYDbf8bb_bIbuhd4agKB64K.9oAOafKaSuaWR5.o_SXC8X2l6avNOy09G6Xchw
- dFHiTGF3hvd.irnWeIlSyEu9c0S0Ov10uYEieJkEBD9ik6Am5qCGLU2Vm16mRPFgT0DTEpDJUAC5
- 6.Lc4Z_veVXUvWnHL3x9pskOSN.ugyPCDNCoQ
-X-Sonic-MF: <keith_smile@yahoo.com>
-X-Sonic-ID: f9aa702f-6d70-4276-8a57-59b52b441755
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic321.consmr.mail.ne1.yahoo.com with HTTP; Sun, 17 Aug 2025 18:59:27 +0000
-Date: Sun, 17 Aug 2025 18:59:27 +0000 (UTC)
-From: Keith <keith_smile@yahoo.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <1679622008.808432.1755457167024@mail.yahoo.com>
-Subject: Gitweb advanced
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SnI27TYy"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-333f92b4072so26201331fa.3
+        for <git@vger.kernel.org>; Sun, 17 Aug 2025 13:17:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755461877; x=1756066677; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cXXBtiHOavyOR1G05oscZHmkrm2xaVd0JotVuDJGDx8=;
+        b=SnI27TYya6wHa4lTjGllVPSCNMFfhNZ1uorXlo/frT4qyDjFuBWTXcZdIKD58m+xqZ
+         tdNpXEggG5gBCL996VD3HvLKZcGSPIl8gsc6MwvnNElzQpm1lDgv9eW35I1KgHCtbJN5
+         tb95UVvBvaaRluk0qtZQ3X+j65yJhzfjVFcNm+pD+BRm2brHy/S4HuHTDzllc632GWyR
+         lHJUJltsTs2Qgij8PyTU5afu2v1Klw2j3dacfmuSZnroIyXwv9MxOvbl65bSOs1I0x31
+         JhfI+dM2qn7oN3hXfkaQgfgg0ytT3RiiVYyeYzPW9tNT85A+aXhh9BBPf9aKWfKbRtVm
+         RBDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755461878; x=1756066678;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cXXBtiHOavyOR1G05oscZHmkrm2xaVd0JotVuDJGDx8=;
+        b=nQ5I2npAW9L1gUxqqU9qvJ/0+0awsrY0vBkUusoETSoR3Sn9VEhGF657TdKsizkU6j
+         3Ip0bhox3Dmv1zKOVodetMxK5ycmCIgpjh/86gAg3w9yI/zxLeHtUYYjN+kQ0MiC/mIS
+         B3Ed3Vm1EI0yOuIKqtbqgza4YBS+kQhLepSlKwZH8nstNIUh1CkewquFRqW1lM8ORWPn
+         CKo9wzqG7zA4yoqE+S1FZXCKMIwlFCgDWN9n6hfB6ln6PUjvbVT+783loHkI0/PVJkKJ
+         T+pwWK/FDedYkvMfMIuuiaDJ5qOEt1oL1anHeFwLqbCJ95X24e71J73nvijqhCZujXyc
+         X3Xw==
+X-Gm-Message-State: AOJu0Yy8ic/3eVQEszc7REpWyIncC/TV76kWnDiBzWjl+dQXwlo/M+TT
+	OlQaVfI3BE/Bc3bT55hTiSpwekGF3fO4V2mw9B5x/FsXwDkEk9FVbf/fi2d+Z0pim+4mWZW+HPV
+	fRN0aDVhBvuGw2OGizOzCAXuOpN69WlYAVhdo
+X-Gm-Gg: ASbGncuXX0AjgFL/BKj5lXDedAIbFnl1Wv+SGatqygS3tT6DVctvqEIUHGo3IcduX9K
+	y23Ogc8JRyV+xizqVdMukI0wKdLJhJrjNNVpATSu7HtKChMt/foCcLckuKM/rVDj4PniVHo+Kfj
+	6ln2/qsklmkl0NWq+l+FfMByisQ/qcwZTIGzW4YQGKUvttiUVvBHNPdVNPJSdMsD9cpVyvdk+1v
+	PxHHDYxpvG9AcHbzmJTLw3E4IzRKZ6MUGvbQy12HRfZR3So+fM=
+X-Google-Smtp-Source: AGHT+IGgd+4mYFSQZaDVYwVSNufUwbZME4LcFW8D7mMt4AEHWhs6ZXtDW8sKs4gKSXeXjjsoqX9IO+naLE1WzkyzJkk=
+X-Received: by 2002:a05:651c:699:b0:334:905:e438 with SMTP id
+ 38308e7fff4ca-334099fe976mr17921631fa.40.1755461877257; Sun, 17 Aug 2025
+ 13:17:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-References: <1679622008.808432.1755457167024.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.24338 YMailNovation
+From: Ron Ziroby Romero <ziroby@gmail.com>
+Date: Sun, 17 Aug 2025 21:17:46 +0100
+X-Gm-Features: Ac12FXwEUtgSn2L6huDk5LYaeY7OWTRDcPJcHNqmSrCznjVdqFo8l9ENAp-8Wq4
+Message-ID: <CAGW8g7mV6az3ybYf3uzHYQTGLDwc34eebZnha1EQ3Sb6B8E-fQ@mail.gmail.com>
+Subject: [RFE] Add JSON output to git log commands
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I have tried everything on git-scm dot com/docs/gitweb#_advanced_web_server_setup to get files from:
-localip/~user/
-to work and nothing I have tried has worked.
-I know, the local IP is the actual 192.168.... and the <user> is my username
-If i put a public_git folder under my user it never shows the repo there, only the ones under 
-/pub/git/
+I would like to add JSON output to the git log command.
 
-it will not show the repo's on users. always shows 404 no projects
-does show projects under /pub/git and /pub/scm
-Thanks
-Keith
+## Motivation
+
+Machine parsing of git log output is prevalent, but git only provides
+human-readable output. Having git output JSON directly solves problems
+with the format option or third-party tools. Git has the information
+in a machine-readable format. It should output in a machine-readable
+format. JSON is ubiquitous and easy to generate, and therefore, it
+makes sense to output JSON.
+
+The author of one of the third-party tools says that JSON output is
+the natural evolution of the Unix philosophy and should be done
+natively for all tools[4].
+
+## Current behaviour
+
+Git log can output human-readable output in several ways. However,
+outputting in JSON requires third-party tools or hacking pretty
+output.
+
+## Proposed enhancement
+
+Add a =E2=80=93pretty=3Djson flag to output logs in JSON format.
+
+## Alternatives
+
+### Why natively?
+
+The `jc` command parses git log output to convert to JSON[3]. However,
+it post processes and has some difficulty with time zones in dates.
+Also, the author considers it to be a stopgap until Unix tools can be
+adopted to output JSON natively[4], which is what I'm proposing.
+
+In a TIL post[2], Simon Willison showcases a method using pretty
+output with nulls piped to jq. This method uses the pretty command to
+get delimited output. However, this script doesn't handle all the
+output from git log.
+
+Tools like git-log2json[1] parse git output post-hoc, rather than
+producing structured output from git.
+
+Providing git log in JSON format will allow us to go to the source,
+where we have the log output in machine readable form, and output
+directly in machine readable form directly, without going through an
+intermediate format
+
+### Why JSON?
+
+JSON is a sufficient and popular output format. It is sufficient in
+that it can represent all the fields of git log in a way that allows
+for special characters like quotes, newlines, and control characters.
+It is also popular. Every language has libraries to parse JSON,
+including the command-line utility jq, which can read and mutate JSON.
+
+## Use cases
+
+The JSON can be used by tools or piped into jq to extract and
+manipulate the data. Scripts can be written to work with the JSON
+output.
+
+## Design outline
+
+* Add a `PRETTY_JSON` constant.
+* Create a pretty-json.c file to output JSON log information
+* Modify pretty.c to call pretty-json to output JSON when the flag is set.
+* Use existing utility functions written in the existing source to
+output the JSON.
+
+## Example output
+
+Here=E2=80=99s a sample with two commits:
+
+```JSON
+{
+  "commits": [
+    {
+      "commit": "3857aae53f3633b7de63ad640737c657387ae0c6",
+      "refs": [
+        "HEAD",
+        "refs/remotes/origin/main",
+        "refs/remotes/origin/HEAD"
+      ],
+      "author": {
+        "name": "Somebody J. Example",
+        "email": "somebody@example.com",
+        "date": "2024-09-25T18:23:49-07:00",
+        "timestamp": "1727313829"
+      },
+      "committer": {
+        "name": "Somebody Else",
+        "email": "somebody.else@example.org",
+        "date": "2024-09-25T18:24:52-07:00",
+        "timestamp": "1727313892"
+      },
+      "message": "Do a thing\n"
+    },
+    {
+      "commit": "1522467d13a8fe29eb32209f175722df41e224b6",
+      "merge": [
+        "f92c61aef0190641e01294dad3b891b28113e1d5",
+        "7ffcbafbf32185da7dccb4b3f49b871f24ab58c4"
+      ],
+      "author": {
+        "name": "Somebody J. Example",
+        "email": "somebody@example.com",
+        "date": "2024-09-25T18:24:52-07:00",
+        "timestamp": "1727313892"
+      },
+      "committer": {
+        "name": "Somebody Else",
+        "email": "somebody.else@example.org",
+        "date": "2024-09-25T18:24:52-07:00",
+        "timestamp": "1727313892"
+      },
+      "message": "Merge something\n\n* This,\n* That, and\n* The other\n"
+    }
+  ]
+}
+```
+
+## References
+
+> [1] Context-Driven Testing Toolkit, git-log2json: Convert git log to JSON=
+, GitHub repository, https://github.com/context-driven-testing-toolkit/git-=
+log2json
+
+> [2] Simon Willison, =E2=80=9CConvert git log output to JSON using jq,=E2=
+=80=9D til.simonwillison.net, March=E2=80=AF22=E2=80=AF2023. https://til.si=
+monwillison.net/jq/git-log-json
+
+> [3] Kelly Brazil, jc.parsers.git_log: JSON parser for git log, jc documen=
+tation, version 1.5. Retrieved via GitHub Pages, https://kellyjonbrazil.git=
+hub.io/jc/docs/parsers/git_log.html
+
+> [4] Kelly Brazil, Bringing the Unix Philosophy to the 21st Century, Brazi=
+l=E2=80=99s Blog, November=E2=80=AF26=E2=80=AF2019. https://blog.kellybrazi=
+l.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/
