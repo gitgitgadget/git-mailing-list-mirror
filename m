@@ -1,177 +1,142 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B3A29B0
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 21:29:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D155A3C01
+	for <git@vger.kernel.org>; Sun, 17 Aug 2025 22:11:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755466168; cv=none; b=UN+Fy6Ca01+9NGxTeVPBf9E68x38aZHz47+ZF0VmNCmkU6uGFsh3e/Mix0Sj+T6xioQ2nAMAai1KXQz4qOPIqYh64U2ST+ntfUOOZYWN9mYvP1l23czKANrH6nuIfmyGQLWnL9JB73t+dGiR+yKxled5C19uN6ElZ8rlj91cORU=
+	t=1755468720; cv=none; b=DEA6omInsD6qkXuDL0/ghkVIvJNaRL/0k1aoFbT3KiUp+Xv4Wr6e9J4DhQnUAJOfjgfrMtAHkemssYlTHzWFvbLB2ujBHmCUDUZePO8gxKNXRrIwwbvuc7BRsGAWOOBXJaSJSfPMSKjWKiNpsiVTptmjDV0AMgAwCvHjM6A0XTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755466168; c=relaxed/simple;
-	bh=dM9y9AqXrJDXAyn5BkSaJloQjxtejaF32Q4gHhh28yk=;
+	s=arc-20240116; t=1755468720; c=relaxed/simple;
+	bh=wq9gsRTNsnJSwu9vj6DgilYPrSPh+XNoB7nvWvc7kBk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dkrv8KHmHbZa2065EE9oxLFk7eQUHIU6PDtJdPuJ2o0w8HtKVUvGH9S0mSsn0xwZAuOYmrqfw0RQmPLAiAi76vlDgADV8mOFbVcxsew0Wr++SrcQzS3yJIgXX8and9Rfm9NkfFohfUKhB5Ms3/S3tO9RgoDySfff6kJUWu6jKK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H0gSCChq; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=b33+lpgbYzmeed/iCUkfDMROulaznByLaFWb5NbS/lYLDVzXNdmLFmrolm2B5I33ooDBFryeTMc60jOg+jiVN6xp439ODs95Jzeu395bU3GX+CWi7jVJe0lVa04YTc/6nZWKLJNhcxqRDoxwWv9ZoYl9ngWfo046aRLureh5VWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=CboZIXo9; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H0gSCChq"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45a1b0becf5so17104085e9.2
-        for <git@vger.kernel.org>; Sun, 17 Aug 2025 14:29:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755466165; x=1756070965; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rb2WG9+Mx3HjrQm4eL4Zo39Km6Ls67tVTd1UJTwf7NA=;
-        b=H0gSCChq3iH9yXy3yQYFR/lUAFJnzuaCBUHVHSXPDH1ZvhIcpzo5ORgyWzOe+F0iDC
-         XnGkUe2w1czs0D206y6rc53EzzLXITbMs/61Mo52NaVgniChlJE2QPCOzAJMUXfURVCo
-         XX9AvfyVHyKmXT9APBVA0OtAPxfmzPCLd6p6DNGT3xrhKc2xaXLQIgyBazkxqvqrt+9k
-         fkFY3urH7HtDDyHGWZ6gNSPTcSjv02T+u8QGwvNcT1PiSx/wNkdxOjpiNvKz10SCIJWt
-         iAuSWBvdksAEZCpmx6u3APSOMr/AdPA+zAS2zjjBJ668OcVm8gyBx5mFSpBdpoiTenN/
-         Z6yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755466165; x=1756070965;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rb2WG9+Mx3HjrQm4eL4Zo39Km6Ls67tVTd1UJTwf7NA=;
-        b=mAYpayVXRPn0F2M23eGwy9/VFMm6NmXeigkT34dmAwsxvb6EEH1pJA+OuLg0slGcTE
-         pSzlTiObehk4s+YMf85QWDWY1f4UVmttiCPCtk/sCpgvthWglk5aCAmrrMEvMC/m65G6
-         D9QJ6jTyp+FzFuQeZN6md2MqQ7ruNqQxHr4hO2dVDt+fmQGGDZmI3lzejaNuGZM4Mfj0
-         DibRz6/moOzRQmX2KJphrVr9l+KIjBy2278MY9YbaP5PmG+O68Y64h+4a7Bz+H2oZgoc
-         aNT2nkHdBO0nVGwYANNPpqacQNgqYodidA4J/seEzlJ1iHEgBWN93xVpvSkiA7E0a+/Q
-         BWNQ==
-X-Gm-Message-State: AOJu0YwuGwKKitUX1+GN7eAVkSuiQEszYmhU0hMxzqc+cPHTc0xKZcFj
-	bZpSoymZB7h+3Q6WySeqIz+2Sawy36qYOkiIURwFCODEVSVvXkBMUeBC
-X-Gm-Gg: ASbGncsOe5PWnxuFv/tKdmFm+xpjCbuv1TFhDnMTwpDYJbT9kHHxms+FZX+H5tfcmQO
-	DQmcOsB559vNAJBJCnkBTQFkr2DQE91+H3dCH8HfsMwqfzMkWtJcGH0Y5Z+O+JmjbhqugmqyHd0
-	2i4YtwYBqgn6BUNjIcEFFmtZmpf6TezVf4OQ1xMK7PInzwzo2SblAs0spfHC7XaX6V77T++ba+A
-	ylqmFchVV9feSwIwVR2OxdecSBaibYY09GjGRp/g0Grige9olB7cEKFiRti7UygVNiD4f3EbCyS
-	fJbuZLzrFFPV7rvoS3eVZgsD5CXWxBNv9h1XfhWjIFQWOwAJ+tJZhOkk4Ust02jGrb1Q/q1eH+S
-	PukeyHuO1HYvg3hv7RWwVlK6DPArpaMWFPu0G+Vdg+ZvEt2gM0g==
-X-Google-Smtp-Source: AGHT+IFtG/K3h/4cQ0s9mzOjtgaJSVtJRUa8YgiDZ1KElO7SYON/KGkzooqVNYtrtGsYebtJJ6OB/g==
-X-Received: by 2002:a05:600c:3147:b0:43c:fe5e:f040 with SMTP id 5b1f17b1804b1-45a21857fa8mr51952935e9.23.1755466164906;
-        Sun, 17 Aug 2025 14:29:24 -0700 (PDT)
-Received: from localhost (94-21-29-168.pool.digikabel.hu. [94.21.29.168])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c790689sm152159315e9.28.2025.08.17.14.29.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Aug 2025 14:29:24 -0700 (PDT)
-Date: Sun, 17 Aug 2025 23:29:23 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH v3 7/9] doc: git-log: convert pretty formats to new doc
- format
-Message-ID: <aKJJs7OkBIg7Y9J0@szeder.dev>
-References: <pull.1933.v2.git.1751203241.gitgitgadget@gmail.com>
- <pull.1933.v3.git.1751914412.gitgitgadget@gmail.com>
- <0d461544c9d720e379a867a9713998bf09136885.1751914412.git.gitgitgadget@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="CboZIXo9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1755468709;
+	bh=wq9gsRTNsnJSwu9vj6DgilYPrSPh+XNoB7nvWvc7kBk=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=CboZIXo9lXlzYU9qluaoAIt29/JLHtIS714hbY+TLTdJxEt+GjT66uKIqxQmyfRLv
+	 zm7JfNS5+oc6eQCe6U+TjGFI199bEc1EoroHoQ8biCT68pzVtsLsAnma+IXquslZZB
+	 P3CepJ/hNsKDY1fK857a9LjubDy4mi95iWoKJWUbDJgJetGpnGvzOdKO656BnQsCOO
+	 btCG8MqS9zyneYeNbMFfvvDCl+7bbdLdyoKxnYLBZeRRxSBLHvj9K4F8/mFgm863J+
+	 Qlsy35Nt9e1Ci/Npcbs5OnlbpPL5Zjgxd5AUeZ6cjWy0RYZyJF6tvacd8HKag21xmP
+	 E8N9ofyUZfzmFIb0NGcY0elR9sLhg5978//FHgQ1dZVAkniJwmps0nFqhjmraqgGDh
+	 nvvPRChZlUvTIqZNMMnM0JacB+ZH269KdQajbRro5PLMPehNxrYoO7kv/c39PdzqtV
+	 4zzZo6Q5E3llo9/jYCUQ1IGfDOrBcqoi2yYQDlG4rBPyNGm5d01
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:4838:5608:ba70:40d3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 92350200B4;
+	Sun, 17 Aug 2025 22:11:49 +0000 (UTC)
+Date: Sun, 17 Aug 2025 22:11:48 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ron Ziroby Romero <ziroby@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [RFE] Add JSON output to git log commands
+Message-ID: <aKJTpJL3kEyqDA6P@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ron Ziroby Romero <ziroby@gmail.com>, git@vger.kernel.org
+References: <CAGW8g7mV6az3ybYf3uzHYQTGLDwc34eebZnha1EQ3Sb6B8E-fQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="570JNeSCqkbzSSbB"
+Content-Disposition: inline
+In-Reply-To: <CAGW8g7mV6az3ybYf3uzHYQTGLDwc34eebZnha1EQ3Sb6B8E-fQ@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--570JNeSCqkbzSSbB
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0d461544c9d720e379a867a9713998bf09136885.1751914412.git.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jul 07, 2025 at 06:53:30PM +0000, Jean-Noël Avila via GitGitGadget wrote:
-> From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-> 
-> - Use _<placeholder>_ instead of <placeholder> in the description
-> - Use `backticks` for keywords and more complex option
-> descriptions. The new rendering engine will apply synopsis rules to
-> these spans.
-> 
-> For all the formats in the form of %(foo), the formatting needs to be
-> heavier because we not want the parentheses to be rendered as syntax
-> elements,but as keywords, i.e. we need to circumvent the syntax highlighting
-> of synopsis.  In this particular case, this requires the heavy escaping of
-> the parts that contain parentheses with ++.
-> 
-> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-> ---
->  Documentation/pretty-formats.adoc | 283 +++++++++++++++---------------
->  1 file changed, 143 insertions(+), 140 deletions(-)
-> 
-> diff --git a/Documentation/pretty-formats.adoc b/Documentation/pretty-formats.adoc
-> index 07475de8c337..9ed0417fc811 100644
-> --- a/Documentation/pretty-formats.adoc
-> +++ b/Documentation/pretty-formats.adoc
+On 2025-08-17 at 20:17:46, Ron Ziroby Romero wrote:
+> I would like to add JSON output to the git log command.
+>=20
+> ## Motivation
+>=20
+> Machine parsing of git log output is prevalent, but git only provides
+> human-readable output. Having git output JSON directly solves problems
+> with the format option or third-party tools. Git has the information
+> in a machine-readable format. It should output in a machine-readable
+> format. JSON is ubiquitous and easy to generate, and therefore, it
+> makes sense to output JSON.
 
-> +++%(decorate++`[:<option>,...]`++)++::
->  ref names with custom decorations. The `decorate` string may be followed by a
->  colon and zero or more comma-separated options. Option values may contain
->  literal formatting codes. These must be used for commas (`%x2C`) and closing
->  parentheses (`%x29`), due to their role in the option syntax.
->  +
-> -** 'prefix=<value>': Shown before the list of ref names.  Defaults to "{nbsp}`(`".
-> -** 'suffix=<value>': Shown after the list of ref names.  Defaults to "`)`".
-> -** 'separator=<value>': Shown between ref names.  Defaults to "`,`{nbsp}".
-> -** 'pointer=<value>': Shown between HEAD and the branch it points to, if any.
-> -		      Defaults to "{nbsp}`->`{nbsp}".
-> -** 'tag=<value>': Shown before tag names. Defaults to "`tag:`{nbsp}".
-> +** `prefix=<value>`: Shown before the list of ref names.  Defaults to "{nbsp}+(+".
-> +** `suffix=<value>`: Shown after the list of ref names.  Defaults to "+)+".
-> +** `separator=<value>`: Shown between ref names.  Defaults to "+,+{nbsp}".
-> +** `pointer=<value>`: Shown between HEAD and the branch it points to, if any.
-> +		      Defaults to "{nbsp}+->+{nbsp}".
-> +** `tag=<value>`: Shown before tag names. Defaults to "`tag:`{nbsp}".
->  
->  +
->  For example, to produce decorations with no wrapping
->  or tag annotations, and spaces as separators:
->  +
-> -`%(decorate:prefix=,suffix=,tag=,separator= )`
-> +++%(decorate:prefix=,suffix=,tag=,separator= )++
+Git provides plenty of machine-readable formats, to be clear.  They're
+not typically structured in a standard way like JSON or CBOR, but many
+forges and other tools do successfully parse Git output with a variety
+of tools.
 
-This section now looks like this when the man page is built with
-Asciidoctor:
+> The author of one of the third-party tools says that JSON output is
+> the natural evolution of the Unix philosophy and should be done
+> natively for all tools[4].
+>=20
+> ## Current behaviour
+>=20
+> Git log can output human-readable output in several ways. However,
+> outputting in JSON requires third-party tools or hacking pretty
+> output.
+>=20
+> ## Proposed enhancement
+>=20
+> Add a =E2=80=93pretty=3Djson flag to output logs in JSON format.
 
-               %(decorate[:<option>,...])
-                   ref names with custom decorations. The decorate string may
-                   be followed by a colon and zero or more comma-separated
-                   options. Option values may contain literal formatting
-                   codes. These must be used for commas (%x2C) and closing
-                   parentheses (%x29), due to their role in the option syntax.
-                   parentheses (%x29), due to their role in the option syntax.
+I'd like to hear how you plan to deal with non-UTF-8 byte strings since
+JSON must always be valid Unicode.  Most data in Git is only by
+convention UTF-8 and can actually be in other encodings or no encoding
+at all: refs, commit messages[0], and author and committer idents.
 
-                   •   prefix=<value>: Shown before the list of ref names.
-                       Defaults to " +(+".
+What would be a good idea is to add a byte string entry to the JSON
+writer and use it for these formats.  If the data is not valid UTF-8, or
+if it contains a % sign, then you URL-encode it.  Other encodings are
+possible as well, but not JSON escapes[1].
 
-                   •   suffix=<value>: Shown after the list of ref names.
-                       Defaults to ")".
+Other good options would be to use CBOR instead, since it provides
+native byte strings.
 
-                   •   separator=<value>: Shown between ref names. Defaults to
-                       ", ".
+Bad options would be to use U+FFFD, since that makes the output useless
+when you hit one of these cases (and I can tell you from $DAYJOB that
+they're not that uncommon) and to just shovel bytes into the output and
+let the reader be sad (which will definitely make the output useless as
+well as result in angry bug reports to the list).
 
-                   •   pointer=<value>: Shown between HEAD and the branch it
-                       points to, if any. Defaults to " +→+ ".
+As a note, I think you want `--pretty`, not `-pretty` (we use two dashes
+for long options).
 
-                   •   tag=<value>: Shown before tag names. Defaults to
-                       "tag: ".
+[0] Yes, they declare an encoding, but it isn't always correct and the
+encoding someone used is not always available on every system.  I saw
+someone in the Linux kernel history write "latin1", which is not a valid
+encoding according to Ruby, which I was using to parse it.
+[1] `\u00ff` represents U+00FF, which is equivalent to the byte sequence
+0xc3 0xbf, not 0xff.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-           For example, to produce decorations with no wrapping or tag
-           annotations, and spaces as separators:
+--570JNeSCqkbzSSbB
+Content-Type: application/pgp-signature; name="signature.asc"
 
-           + %(decorate:prefix=,suffix=,tag=,separator= )
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
-Note the unnecessary + characters in the default values for 'prefix'
-and 'pointer', and in the latter the "ASCII art" arrow ("->") is now
-replaced with a unicode arrow character.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaKJTowAKCRB8DEliiIei
+gaLFAQDA2KscJ9MB4g1LdUJhq0wZgDyW0J0ptixqtGmxWVlbywEAx1iUr+e08+fN
+v00caZXI3QzV6ZzdIlMSKGAai158oQQ=
+=3w5k
+-----END PGP SIGNATURE-----
 
-Also note that the last three lines are not aligned properly and the
-example format string starts with a + character as well, but this was
-the case even before this patch.
-
-I use the distro packaged version of Asciidoctor:
-
-  $ asciidoctor --version
-  Asciidoctor 2.0.16 [https://asciidoctor.org]
-  Runtime Environment (ruby 3.0.2p107 (2021-07-07 revision 0db68f0233) [x86_64-linux-gnu]) (lc:UTF-8 fs:UTF-8 in:UTF-8 ex:UTF-8)
-
+--570JNeSCqkbzSSbB--
