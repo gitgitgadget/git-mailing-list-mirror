@@ -1,89 +1,98 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16E81EC01D
-	for <git@vger.kernel.org>; Mon, 18 Aug 2025 22:07:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878DC1F12E0
+	for <git@vger.kernel.org>; Mon, 18 Aug 2025 22:31:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755554825; cv=none; b=XVInF28VSmPq3LxNtTjXULgxiEXwLujCWWpBl37wBDlD0Bx2Yt7kB9OhiTHPIhCVpFfvxw/9VH+JMcrQg//vvGR1wUy7hztEEn4wD65td1l896YtzfaTKty+Ntl8O8II3/FegqrMT6gbgZVlrRaSEBhwyONyCs4NMIxRtz6aJ1c=
+	t=1755556303; cv=none; b=M/QcSgFXuicsmTwvgqmlU3kzTrM7AvU9kwvHiqWMoyIOTPqDIFtGoad1Q+EidFNf1Lu7W/t2CM3px2oinBPwCiKDKuIEm9sPiqXqeioUbHgut2qXLRMOQplYq6HPxvIgSNDAQ1afOA8gZBEhoXZwoE17V9R5p5o8hfLlwle9ww0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755554825; c=relaxed/simple;
-	bh=vuwaKrVZ7udI+ylsakWUX0K04PIfCJz8R51UuuNS8Vw=;
+	s=arc-20240116; t=1755556303; c=relaxed/simple;
+	bh=N8G10C7kskVvLyWARvRxq79Jruc7EwSHc4nDR/oNvJA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EagHUzKtx9Z0ikQbQodRkiVo+cwK7wvzNujUd8R23w+gvbeymbnc9Gty402lGMy8V9NQ384iNcfxzF/5jtR0aTU09vIhwDE7Hz0eKsqbyV6XR7dZat30GblVfZxVYB8+KvFHLmU2bBunP88JEjwgOMJPJLXOelMHQqEhgwxZKeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IpInWoYF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hWfB/cTH; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=fIycXgxl7gIvKDDZVvnVgmwkbTarECq5bg9HYhzBOipA9ltvTPR+9g7PKNqHGhSPpPAfHT2Fs7dgu5DtdmXG3NmSJvLh58GAho4+E+L/e1RL4V8aXSc0DvVH5JnlybzjTJYZyQj1tbVfD8imwG4NhtwZc6facaD2xnCKtItkY0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HkXcsmPn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CqaXtUQ3; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IpInWoYF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hWfB/cTH"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HkXcsmPn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CqaXtUQ3"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 580661D00071;
-	Mon, 18 Aug 2025 18:07:01 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 13F661D001CA;
+	Mon, 18 Aug 2025 18:31:40 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Mon, 18 Aug 2025 18:07:01 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 18 Aug 2025 18:31:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755554821; x=1755641221; bh=DF93BO7EL5
-	EdAMGYsCvuKjimpM4iMIi+p5UPSeP1V9I=; b=IpInWoYFsXAyzuarbe6BLlD1ny
-	0miu8TDwBNwI5njMlT46m31vRf56fPK3F0jHpHKAeyXP0oltH89BqcHNcbkBlY1u
-	dpQNnD8lVpsOKJqw9MJ+Kw0kfhLqhP6akQ7lLS1DmoOvmNG7+zI8n7tUjngJ+M80
-	17LXGURGJgKML5l+Z7vVqS9ZJgsq+Bedwof5UL3eL0fspwARmQ+Y9vIFSeUEZ3CY
-	kdGFiELFOXXqPK9knwBAy6G3aWpwxL0peX7o6SR69nILqmAW/XrcdjGH86xrBbb/
-	0U2J0ElN7qaRSO4XWzK7Rma8Hg+VDdhucn+RnGc3c8pobuIdPbQp5NLdH1fw==
+	:subject:to:to; s=fm2; t=1755556299; x=1755642699; bh=qclz9Nh+Ux
+	D15cPGzVq4Yksgx5sBt7Bz/jtYZiM7ssg=; b=HkXcsmPnfJiEFrT4Ylas/yKp7k
+	fkl2TWKUxhPEL+2wjl57qOurAidMomcEJH3ZMpHkzT1Oil6qJE2jFe8d1M1Ai0WR
+	dw5R2CBX3LXZUxHagkbLC4286HFtMhyCGm2kDCXQGUDt1RysmXw+BqAX+ZtNX1NX
+	0BgT75/VVZHfGQpAo8aOMuzmf+BygA9CFNEjE/MfOooHULCQ1MDtkeEr2Xqkz8h1
+	vPROjMlSCc3k4icgpviw6YWWJTq6Nvej4FXZ3WltMHqyTH8aO7B0GKLCrfJ9WI2A
+	E+HzuvTn4sRC+1SyzZixPqnYEqgxRBVk4Km2j/NFDzcHWwbsaKiIDtwhon+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755554821; x=1755641221; bh=DF93BO7EL5EdAMGYsCvuKjimpM4iMIi+p5U
-	PSeP1V9I=; b=hWfB/cTHoJNZsAvuTpsq07esbhljPfEPVQoUcCn2m52S0arxr24
-	gRDHvEl049E0dwsN/NqbRyK2oyLAbjvFAxomEupPP42hSX/j48d3weLd1vT8xJdE
-	dkAaUYLeCZ9DV28dPELsFCIlPUG/MvAWSXdFwqt3h5muSXxrqCNnDBmL5bHbsVY0
-	/R3jA6OlURmaFF15QTvw09z6tXX6BewLNK7txppEVTZuCtxN62NKhc53l/fmxXnh
-	HQOo8fmaddHhTlCvPVXijWao2pDrJFwb3Z77trQbX8BrYZXq0ZOquziy9cXCso/A
-	J9SsV+m4xoDXiMHYL0hYbfljW7mgqMVYtVw==
-X-ME-Sender: <xms:BKSjaKQp3lmE50IlfTcINwoyQwb1lTR6vt_JwSuEk9Ml2YGK4X_A9g>
-    <xme:BKSjaLdL1-vbz7E143nMZgp7nhy6zQeI6g4TNqkWMsuvjxP_Nqt9ePBIXO4tag_wi
-    wP9xiMPHboN7cinwQ>
-X-ME-Received: <xmr:BKSjaESo2oef4-zQLlIpy4hjCjR5fg3w8XGZmdo5G_FCTksdajbLC8CD3lFj0r35loLLU7tKF4eHFrAm8bD_GYxHQzsALAUu_rO-HK8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheefjeeiucetufdoteggodetrf
+	1755556299; x=1755642699; bh=qclz9Nh+UxD15cPGzVq4Yksgx5sBt7Bz/jt
+	YZiM7ssg=; b=CqaXtUQ3WNFOEgwjBIcfOQkIzOaZpwvobGbEcQmQws1jfyc/M6N
+	uauIqjl9rSnxe2FuoSHJyx6psLICJM52nO4zYt9KAKBRhJTyQ9eODtT9nYsdbYGn
+	Z5nrB9YL50m9SI7N7Inhme8V2CSVJi1vn7suzsiNzEterKIEGC68yzR+xglVDzQy
+	GeCJtW2pimdMtF9Xae4WGu33OQ+5Wh38VrAFgfi69ogsVrqZ5s+ZcCbESbP2SFHY
+	6ZdkzwIochv4P9kmxQ2yl+lBnL7pdhkszZw9XzYsCix8yawD7CpB6vjXV64O2peP
+	nSeBwIzHMYv4TkjAjmjKFKEVVpRHqyGri8g==
+X-ME-Sender: <xms:yqmjaGxP8nzzPfJrOJN4m1KAzUg_BRtzAeTShTAxQq7aCACmkXQLSA>
+    <xme:yqmjaDpwMSiNR-B9rbB80WXv1c7hWnlYPGxpujwl3JUYbugVpraCzeWYH3uSLDo3r
+    N2phPXPqjeCZUtf2A>
+X-ME-Received: <xmr:yqmjaBmkD-XEl1-O7e0_5b4Bkdp-t_0nb0LcdxIQXZTQAjijXCVzdhEIOxMRDnmGwNDSR7UXJZCiXUaVzI6Xy94QiQ9-I98irF4pThQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheefkeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsoh
-    hrrgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtth
-    hopehruggrmhgriihiohesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopegrrghrohhnsehstghhrhgrsgdrtghomhdprhgtph
-    htthhopehjrhhnihgvuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehssggvlhhl
-    vghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:BKSjaPKUFL67OvqrKHYdnRU-FWEvlxvHYBeR5DCJhr-hspXsssskqw>
-    <xmx:BKSjaJJOr3CZFBAjxHfm6hqobsb5jRPzd2xzb2fsaeRGCkEy4FHvzg>
-    <xmx:BKSjaCgJlBks9Y0GZbZZH4D_EtNEkVIidPixKUwKNyuroLVV23zA-g>
-    <xmx:BKSjaLPmk8dS9crP8-qr7iUQRoxMZdpQgPHUxhcGGdj4qdhhtVFVvw>
-    <xmx:BaSjaB9ff9YMqfdFzN_yHRd4_AmSnJh8hK-lRGpG03KJMB9XB5Kpf_Gs>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudelpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestg
+    hruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihl
+    ohhrrhdrtghomhdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtoh
+    epphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegv
+    shgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegtohhnthgrtghtse
+    hhrggtkhhtihhvihhsrdhmvg
+X-ME-Proxy: <xmx:yqmjaEwLGo7PzgHXGjRRRQEKNyYTb16CsS5Kol2lVhj2hJqWt4a2HA>
+    <xmx:yqmjaO0g804O42L2RREt1X0rFt31ZHc3kspd51GJsdyYrWP-WTykbw>
+    <xmx:yqmjaIBQeQI7d3vSr3_4XA86JunM1Tsgu87pfQrF24_s9mzNSpUE8w>
+    <xmx:yqmjaL-Y6fOR75W6E7_oieTJTnQLKcSzX6QnWGKk2XQWJuYpB20NYg>
+    <xmx:y6mjaMginw53ajCwYEtoLr-SQITe8kCe7sGNzwbxWGLCfprgxInJAY0A>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Aug 2025 18:07:00 -0400 (EDT)
+ 18 Aug 2025 18:31:37 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Rodrigo
- Damazio Bovendorp <rdamazio@google.com>,  Jeff King <peff@peff.net>,
-  Aaron Schrab <aaron@schrab.com>,  Jonathan Nieder <jrnieder@gmail.com>,
-  Stefan Beller <sbeller@google.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 9/9] t: add gitdir encoding tests
-In-Reply-To: <20250816213642.3517822-10-adrian.ratiu@collabora.com> (Adrian
-	Ratiu's message of "Sun, 17 Aug 2025 00:36:42 +0300")
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
-	<20250816213642.3517822-10-adrian.ratiu@collabora.com>
-Date: Mon, 18 Aug 2025 15:06:59 -0700
-Message-ID: <xmqqplcsgu7w.fsf@gitster.g>
+To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>,  Taylor Blau <me@ttaylorr.com>,
+  Christian Brabandt <cb@256bit.org>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,
+  "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Matthias =?utf-8?Q?A=C3=9Fhauer?=
+ <mha1993@live.de>,
+  Patrick Steinhardt <ps@pks.im>,  Sam James <sam@gentoo.org>,  Collin Funk
+ <collin.funk1@gmail.com>,  Mike Hommey <mh@glandium.org>,  Pierre-Emmanuel
+ Patry <pierre-emmanuel.patry@embecosm.com>,  Ben Knoble
+ <ben.knoble@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v2 00/17] RFC: Accelerate xdiff and begin its rustification
+In-Reply-To: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com> (Ezekiel
+	Newren via GitGitGadget's message of "Fri, 15 Aug 2025 01:22:35
+	+0000")
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+	<pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
+Date: Mon, 18 Aug 2025 15:31:36 -0700
+Message-ID: <xmqqldnggt2v.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,36 +102,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Add some tests to further exercise the gitdir encoding functionality
-> alongside the existing mixed directory and nested gitdir tests.
->
-> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-> ---
->  t/t7425-submodule-mixed-gitdir-paths.sh | 52 +++++++++++++++++++++++++
->  1 file changed, 52 insertions(+)
->
-> diff --git a/t/t7425-submodule-mixed-gitdir-paths.sh b/t/t7425-submodule-mixed-gitdir-paths.sh
-> index 902b2560ca..cfdf487a56 100755
-> --- a/t/t7425-submodule-mixed-gitdir-paths.sh
-> +++ b/t/t7425-submodule-mixed-gitdir-paths.sh
-> @@ -152,4 +152,56 @@ test_expect_success 'checkout -f --recurse-submodules must corectly handle neste
-> ...
-> +		longname=$(printf "%%%0.s" $(seq 1 $count)) &&
+>  * Code style: Should we adopt a Rust code style of some sort? Perhaps have
+>    the code always be formatted by rustfmt in its default configuration?
 
-Use of 'seq' gets complaint from
+Sounds sensible.  I'll let folks with more Rust inclination to
+figure out what _the_ style should be, but having _a_ style we all
+stick to is good.
 
-    $ make -C t test-lint-shell-syntax
+>  * Rust version: We are not using the same Rust version on all platforms in
+>    CI; 32-bit builds and Windows builds require a newer Rust version to
+>    successfully build.
 
-See the commit message of d17cf5f3 (tests: Introduce test_seq,
-2012-08-04) and b32c7ec0 (test-lib: teach test_seq the -f option,
-2025-06-23).  I think you should be able to do something like
+As long as we do not have to bend backwards on the code with "if
+using version X or older, use this alternative codepath" all over
+the place, "pick a version that works on each platform" that results
+in "due to the quality of ports, some platform's older port is
+unusable and newer version is required" is not too bad, especially
+for a system that is still rapidly getting improved and a bit on the
+unstable side, I think.
 
-	longname=$(test_seq -f "%%%0.s" 1 $count) &&
+>  * Performance with whitepsace flags: I originally intended to leave out the
+>    whitespace handling because I knew it was slower,...
 
-but I haven't even run the test with such a fix, so take it with a
-grain of salt, please.
+If the Rust guinea pig were different from how each line is hashed
+in xdiff, which is targetted by am/xdiff-hash-tweak topic, then we
+can leave out the whitespace-ignoring hashing from this topic
+altogether.
 
+Quite honestly, I do not like throwing away the other optimization
+efforts that can be reviewed and integrated trivially, but it is
+practically impossible to do so while still have a "let's start
+playing with Rust" topic that targets exactly the same area.  Yes,
+this topic licked the same corner of the cake first, but still,
+I was hoping that the second iteration of this series would use a
+different code paths as a Rust guinea pig.
 
+After all, the primary objective of our first Rust topic is to set
+the framework right (like the platform and version support policies,
+how foreign interfaces like type systems get impedance-matched, what
+the impact to our build infrature looks like, etc.).  It would be a
+huge plus if it can at the same time demonstrate how much safer code
+we can write with less effort if we switched writing some (and
+gradually larger, posibly) parts in the language.
 
+The result this cover letter has in its title, 'accelerate xdiff',
+is not primarily due to use of Rust, is it?  As the other topic
+demonstrates, it is to use an implementation of a faster hash
+function (we can consider it to be an impressive technology
+demonstration that a rust reimplementation of original C code can be
+done in a very performant way).  And nobody is expecting that we
+would be using Rust for speed anyway, no?
