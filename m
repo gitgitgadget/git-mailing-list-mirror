@@ -1,110 +1,108 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0727A1A23A0
-	for <git@vger.kernel.org>; Sun, 17 Aug 2025 22:54:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2903C26461F
+	for <git@vger.kernel.org>; Mon, 18 Aug 2025 04:48:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755471268; cv=none; b=VkIwpUysMCMObYWDDneF7gQ4Yc1N9dSZq22iADQgyVpmAsBBxvaYL/fKvud2ChfwEWv4BSl9IxPg+Bbha4OVfZrf06/Pnm1Ac/NXF222/QvIqV8sqddDlf9WuXoPOgTTLpP0ZXjCtcKkrQwEXuMhlYRDtKaWlCdVWFwS79oowwI=
+	t=1755492499; cv=none; b=Mu8RzVehSqw3QGsBr5RY73JeJ/ToQqgZg+hDktORcb0gptfM7iA2p3eu18kOZ3kJ4/5PtmGTJ99J1VSRdHEk6MfXQGUGLCqosJIIvm9qPNd5Ewj9UaWfijInF5tMwCqseORIXCCiinGjsvLsGgJe0MuZStM5sDBn6Ck2CrHjRUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755471268; c=relaxed/simple;
-	bh=YkUUwtiiR3wacKvV/FNAq6c8TiHwUq6i/8T59odMrCk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tefn0njU8jQo3Cg2p44eAOvxYTd6J8EByy4pgeG/aQ7h2VIZAAz3YE72nfn3xR6rfGlU2rUNJfXoV6r0yP4cvOxUFsjnGybRVBLOj3tax16ofcOEw7VDRx6qGJjJdgRcFWfdd3c6vJ4+O6rZ/bkD9To/QmpD38HjndCKlKjMsIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=URRZQ7J/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kghsr2En; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755492499; c=relaxed/simple;
+	bh=c/E32jDlvoqXxKYTyiOi494fnXOMEDUSCCdJ8/mlO+8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=STzZniUOzgS9Q7iHj4Wpa52g08mr+00cBUxqRQo9UZtlTifDxelT9teaxrpt8qVLtZ6Uo/k85OgBXki00Brz9tIKLgmNElz057LDvfFlz6pkxBlFW1VhQJOosSFn5OWmjRR1KEtcil9TJXw1kZusZWdZzm/o9sxcY+3g+KtwdYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CVy3FE+G; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="URRZQ7J/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kghsr2En"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E3B567A0048;
-	Sun, 17 Aug 2025 18:54:24 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sun, 17 Aug 2025 18:54:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755471264; x=1755557664; bh=YkUUwtiiR3
-	wacKvV/FNAq6c8TiHwUq6i/8T59odMrCk=; b=URRZQ7J/ZVFHAe4HRePHSzpLcx
-	tkbQtjqf9RKsQPGFDdgQlMUOA177zKvd8why4aXLf6tamrp2t4Gm5HCgn7rkAuIi
-	d8UvD8sezdXTA9/PQII1yqo3GzukmvbCxxLDtundRXAhgxBrbvgSYWsLoGfG9gbR
-	Tlp0QnVE1/smX/Ij0ZUXzSbItRkYxtKw8eJogYUK4VK/M2e54MGut+7grOtrvCLH
-	rCZxSwAqMpSBojY3T+FjAwMaSvb7I24yywp/ZKEzNr4p5VmzeZhwKgFHqowpY684
-	xzunFTGZJksuMgDXv69dQMGoVpvadO1Nv6G9PJmzwoD7tTyl2zy6xzigzecA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755471264; x=1755557664; bh=YkUUwtiiR3wacKvV/FNAq6c8TiHwUq6i/8T
-	59odMrCk=; b=Kghsr2Ent5uZLaVhmX5yfv01ukwLOuDUU34qFHStWhwC+YNvyPE
-	jmOrmIhwTKx1gYCXtPsCEzF9nqmnf1ZKRt00sPfDDOhdoOVQNLTrdjLyf73V/LQ0
-	wG5vsvstKzg9/6PcjIWuhTvgSgmyf9eKg90v9A2z+5zyj+KwnJHJMpbwKjMrApi0
-	0gco26UC0tDosfqyDW82t/ZzTxKaNl2uD/Zj0vALfqu45ii+7Ugb+W8KrO00vm+9
-	kmeLiYEm+UesApKlvFt3X4vgK47PuXf9YMWM3DFpt5d9yZ7sXVIPj0gFH2HwRkK2
-	AqEbaHO0v1fmoxXp77zWJ+ERBw6mmVfXGJA==
-X-ME-Sender: <xms:oF2iaOfHG5mRwOHJWCyHtkiVMtEsJrHwI0MvxO7PPsuu7uJpIenT1w>
-    <xme:oF2iaLev3_WcDCByHVJXX4j2JNhiWTGLzw4_2dpAEMKT2Yi9_m6i550aX4vHiHJBC
-    9UHRrcfIFCPJP0CaA>
-X-ME-Received: <xmr:oF2iaI--mj-80RAn0WkYsq6t-ttyOL1U7z0-HCc_39_1iE8mnW8y1btynY5jWb25lyy2kuz5vmL_opeB4yF5LoUS7-hDhTLP7owS6E0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduhedtleekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepiihirhhosgihsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:oF2iaHkYTTR8czdf499IoVUZo1BSYrKL1Bsdy0tV1bjUK0nldNMXCw>
-    <xmx:oF2iaK-i7RDkDhg2niGoNgQWyDbvnOonX1LVFgrxE9F8-7ZylWMEyA>
-    <xmx:oF2iaFmIft6Npu1ejVWfxYt-rAxxFzhtB4p7LZaUnnWbqexZHtDuog>
-    <xmx:oF2iaH3Emq0pz45YGpBtydgGgE6isu50wkN3_B6gu1GoIC01ZUO_RA>
-    <xmx:oF2iaAFPEaklvl1AIkMS55n6WkRa8Kibf38RdFZlZrdmiXuFie8D5Qx_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 17 Aug 2025 18:54:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ron Ziroby Romero <ziroby@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFE] Add JSON output to git log commands
-In-Reply-To: <CAGW8g7mV6az3ybYf3uzHYQTGLDwc34eebZnha1EQ3Sb6B8E-fQ@mail.gmail.com>
-	(Ron Ziroby Romero's message of "Sun, 17 Aug 2025 21:17:46 +0100")
-References: <CAGW8g7mV6az3ybYf3uzHYQTGLDwc34eebZnha1EQ3Sb6B8E-fQ@mail.gmail.com>
-Date: Sun, 17 Aug 2025 15:54:22 -0700
-Message-ID: <xmqqqzx9k19d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CVy3FE+G"
+Received: (qmail 16499 invoked by uid 109); 18 Aug 2025 04:48:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=c/E32jDlvoqXxKYTyiOi494fnXOMEDUSCCdJ8/mlO+8=; b=CVy3FE+GrjbNkO34No678Nue442x8EcUQlp1h9/4Zt24MY+V5QMx5PONdhYSYaT+zhoxH0PSIFl7NqGv/7rzibBiSGdA1i6nvgt3YCQczEwAu/lZi8b+irVbV6dVbTStFeFTL6jg1J6IOmOn9cTKd/wPPZFxyGL2S3pz/aQyKS1IrenhlTKaUx/a+36MtWgIzuw9u091YFSjUViHiSJG9bxOEnSF88g/oanAeGdJsQSxmpXwKc4hEzRgajZJ/g56Y2j9xLpdWSe5pqSGztbiHj3EaDN6tzxHf1nlFIuIpy90naAIBGsweh3CdzvgqdcatIpN5k5iPF1TyJv2QW87Tw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 18 Aug 2025 04:48:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19397 invoked by uid 111); 18 Aug 2025 04:48:07 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Aug 2025 00:48:07 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 18 Aug 2025 00:48:07 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: phillip.wood@dunelm.org.uk, Cheng <prophecheng@stu.pku.edu.cn>,
+	git@vger.kernel.org
+Subject: Re: Potential Null Pointer Dereference detected by static analysis
+ tool
+Message-ID: <20250818044807.GA51803@coredump.intra.peff.net>
+References: <AAkArwD3JXZP4EIjvKF0Waow.1.1755044612233.Hmail.2201111603@stu.pku.edu.cn>
+ <5303c45e-d95b-4bc8-9cd1-bf4efe6bfbae@gmail.com>
+ <20250814232644.GC2937@coredump.intra.peff.net>
+ <7f289d4f-0a9d-480d-a5a9-7f4d4d24626b@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7f289d4f-0a9d-480d-a5a9-7f4d4d24626b@web.de>
 
-Ron Ziroby Romero <ziroby@gmail.com> writes:
+On Sun, Aug 17, 2025 at 11:27:12AM +0200, René Scharfe wrote:
 
-> ## Design outline
->
-> * Add a `PRETTY_JSON` constant.
-> * Create a pretty-json.c file to output JSON log information
-> * Modify pretty.c to call pretty-json to output JSON when the flag is set.
-> * Use existing utility functions written in the existing source to
-> output the JSON.
+> > @@ -546,7 +544,7 @@ static void process_object(struct object *obj, const char *path, void *data)
+> >  
+> >  	if (oideq(&pcd->looking_for, &obj->oid) && !pcd->dst->len) {
+> >  		reset_revision_walk();
+> > -		describe_commit(&pcd->current_commit, pcd->dst);
+> > +		describe_commit(pcd->current_commit, pcd->dst);
+> 
+> pcd->current_commit is initialized to NULL below, but
+> traverse_commit_list() without a filter must have set it via our
+> process_commit() callback before we get to the describe_commit() call.
+> 
+> Or are there weird repositories (e.g., just a blob, just a tag) that can
+> cause traverse_commit_list() to call its show_object() callback without
+> ever calling its show_commit() callback?  I don't see how, but may be
+> missing some way.
 
-Is this limited to only giving another serialization format to what
-is in `git cat-file commit` output for sequence of commits, which is
-what I see in the example below?
+If there are, then I think the current code would segfault, too. It
+initializes &pcd->current_commit to the null oid, and then
+describe_commit() resolves that via lookup_commit_reference(). That
+would return NULL, and the next line dereferencing the result would
+segfault.
 
-Within that limited scope, I am curious what your plan is to deal
-with header elements like "encoding", "gpgsig", "mergetag", etc.
+And it would be a counter-example to the claim that the call to
+lookup_commit_reference() in describe_commit() never fails. ;)
 
-And outside that scope, I am not sure what the most useful output
-would be for things outside what is in each of the commit object.
-E.g., various "diff" output, e.g. --stat, -p, --name-status...
+I think your intuition is right that we could get the traversal code to
+call show_object() without show_commit() in general. E.g. just:
 
-Leaving that outside the scope would be a very clean way out to
-avoid confusing design issues ;-)
+  git init
+  git tag foo $(echo bar | git hash-object -w --stdin)
+  git rev-list --all --objects
+
+would do so. But in this code our traversal always starts from HEAD,
+which must be a commit (and this is enforced by the refs code). So you'd
+have to corrupt your repository like:
+
+  # do this in two steps since redirecting to .git/HEAD breaks the
+  # repository for a moment!
+  tag=$(git rev-parse foo)
+  echo $tag >.git/HEAD
+
+And indeed, the current code does then segfault on "git describe foo" at
+the spot I mentioned. Even though the repository state here is
+unexpected and corrupt, I do think we should probably be more defensive
+and avoid the segfault.
+
+I also find it a bit funny that describing a blob only walks from HEAD
+(and not say, all refs or ones matching --match/--exclude, etc).  It is
+documented that way, though. Actually, I find the whole feature a bit
+pointless now that we have the diff "--find-object" option. Reading
+15af58c1ad (diffcore: add a pickaxe option to find a specific blob,
+2018-01-04), I think the git-describe behavior is mostly considered a
+mistake (which we have to keep around for historical reasons). I guess
+another possible candidate for removing in Git 3.0. :)
+
+-Peff
