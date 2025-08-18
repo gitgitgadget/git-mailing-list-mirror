@@ -1,67 +1,66 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9DB251795
-	for <git@vger.kernel.org>; Mon, 18 Aug 2025 15:14:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB07924E4C3
+	for <git@vger.kernel.org>; Mon, 18 Aug 2025 15:14:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755530046; cv=none; b=A32Lio/+zGKxM0lcYC8GdSAlSOBoRq3hKehRIC+gILXqVLbTj0zPaWdomUPt8UQNQSPWHMkZbM1Rajx+nwRRi89aGZV9JbhShuNlyxvBcPE1tdiPNMo/tmMk6sdgz3ZiQ4EHxbTH6PLM3E23wkotG35EevTyyzaM4e3IFNS1W0k=
+	t=1755530058; cv=none; b=pD2IzsBwQYlsu7DX6DnOEFkFugcjfgVTBd1Nuy6syxg1/5ZGi3LDzOvBnhTYvGeA7XclPV3SuNuO3ce54rQc1G3TPLg8rJwap2Fiq5J6/UHLSDPfj2SaFZ1OfI2WYKB2gNPV2RntjXelBvOJKPO/NKf/7zwg3QhRhU0hYYdv6YE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755530046; c=relaxed/simple;
-	bh=owRurxGwr7x8jOftFmNWN8WVdBu1AV7JGER2bMQjKuQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=NEFPWHWk27ib3fWBuhLZ/npilo+cOMPbaY3qSk7jeVNcj3aEVZuMgANk9N+rDNWUPBZ8ZBagwsRHQUTMDHReUD20oVdS4VL5X/a1TVWl2dSWdzo/xC65ImlH7mBWdCY7704YQLPJPt7Tp+BCl7Utm80w8zqEXKtv7hYCJrz8r2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TZNh97AR; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1755530058; c=relaxed/simple;
+	bh=3oXJRU4hsCeivSK+E+2aDAgiSJuBj1OyU3NVb6U5lKU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=UkqCi81ZdvovK8RPebGxzsuATHahCcx7MEvzufNpaG1SLXkV0SFCwegskUxW9NvmTUjcu7SzOxDEzYf/cHuk7QpMDLj915pq1VxJQ/5A5VVILPuFvw72Cc3ejemVmxbYIfRrTMpB99KbhRxXrSLYZYoAl+etL965AlRX/pf5+X0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TtSDY4C4; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TZNh97AR"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-45a1b0c82eeso34524295e9.3
-        for <git@vger.kernel.org>; Mon, 18 Aug 2025 08:14:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TtSDY4C4"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-45a1b066b5eso21019025e9.1
+        for <git@vger.kernel.org>; Mon, 18 Aug 2025 08:14:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755530043; x=1756134843; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=vLuluzLrcv3jrON/HpoJfpkfjn/Uq8roSnFSw3Cqj5o=;
-        b=TZNh97ARfiYI60oAi0zBs5Xo9xmQJzLEOSFo5W3ihXPcY+e7tw3dLiHvHjcXoaU9sA
-         Oc+w/wq+PJGmSMP5yAuGD8xng2XE/dInMQba9g6dOTTGjc5Gs2MMneHFKxr/nYoLgBOJ
-         Rii/FFQli3aVXC4XGfNYACcIfoMZLk8NG/jMOASrx6goHJfKzJOmSv6m2q7vt2V1dQRj
-         Sadwgrls/ZRYprAuzGUvCfLNPsrhuydCxogF3xJmRFE7vDJqPhyzzmKPv/XiIsGXfLAA
-         KvnDkSqoGVMlAlNYRvsghTrts9HE+1dfKEWqp+/Wkxb0eVRqc/R5/yuxkKgUPkS1Z/Z4
-         bVIw==
+        d=gmail.com; s=20230601; t=1755530055; x=1756134855; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JvsMJxOlfhtNv7AxfFTwK3EfFrW+hG1b918QWnH5kJE=;
+        b=TtSDY4C4C6RwlslRFgRgiwbce+kySjSM0AcQtnvh4lSI3deHYSrDuomXUCwos6/YUY
+         HvuDtiGzDTIyRv0cr5EiNW+UqrUvI6Z/8nsoxEOOUu5kb58RJRsnEn2J0c7wmCz0j/CQ
+         SZ9QYyh4HIEFtki9Gvl1JjxDazudsgDlA2a4eexfDIaIfcZxlSQo/QN1LnkupU1j/wAW
+         NQEiLebyBImsHT4AupEkz2C/Fx4OjjAcvjpdZrMVRBNiy2DIILkfAo8IuzejyQAjchol
+         NTB/PXnyAJfGwvZSZPDTBq/vxlZIpOnmQewu4qqdy9o2ZQYAp39wl2irOCo4wYTGW39z
+         RqPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755530043; x=1756134843;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vLuluzLrcv3jrON/HpoJfpkfjn/Uq8roSnFSw3Cqj5o=;
-        b=dYRVJsPZA+oVcH6bTatqL/d2uKntnLEB59NpXzGv+LJvInSU7xDLrL0VRV5pXfRR6S
-         BG9YPW8Z+NYQC70UxZ2eqH1FlhnoiQnmbtCOhuztXSZqg358WAh8kG2GY/gYvSx2Oa5Y
-         OTjfTqV4fDubgi8Qg02Ed52G2zivkQfrYpcEe01bDSry1Kdfu1AgIaOlyKZtcyXGodMZ
-         fdKreitpEpLCVkxkQ2qkXV6wPivaj+HVw5+L32z/GgKJHXVbN4rcLVVlq6U/3R9MDIM3
-         deZWXea5bjKFMAj6Ut4NS8oSU/2R3zFdaQ6qFxW3s0YEOedIG4Llcq1b7CcE2+aHoh9o
-         IK/g==
-X-Forwarded-Encrypted: i=1; AJvYcCU2vAeRPPZem6oF+szl2ihtMcndFNfCctHIcKTHpQXD5/e8qiGNbIB2Ri2hq7yjJHZuP50=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYCa26hbO1NatV6wT/wQizMbPftMGovp7zUCu+X9NoW4w9cc+D
-	wk2Ra23ZNEJmUoGrkHWIB2qdx1mVstyQDpq8/Rv3I94qBqPOfpoUL40A
-X-Gm-Gg: ASbGnctBFh5u2t1rFULY3zSYXV+TRSFTyqOSR8dceSTNOkb0zVuaEOWUVsid319oa9E
-	Ng6X2a3utebFBrj8/VbG6EH0oFqEl3MQq4KyCtMHCxjjqS4AnS94vhoUripfiNMVeDT3OR0OySG
-	wzJh8PH6ZcWB1tsQI6dVY1pgtW0CJptP62CtJ/ThQJsA7u555h7u9CoU/FEoQq7U4orMGK2PA/C
-	fBGpdSR4NeKu9I8Jb6iZEehM6JEPVZ8lB5d5dnvmEFJ5gS4iJwaIFSptofRndj8ro9W6pWMTEkn
-	3MHmPx2Hl4a+R8l/tZ0k3mrgvMbsWK3PYXKr+nm2YAHZtCPHD/+9HAP4Baq7wB3jUYmCHmdZAHc
-	BOI8+lsLO/pgdoKkRZ5x//IQi9kuBcTlNGa+a/4V33T0DzMvK8uJBzUexRzFQ15Q+9ICmfDgoW4
-	eQIQ==
-X-Google-Smtp-Source: AGHT+IGtMuzzKNCk2ARD+D31P6PqtHZV/vTbNOHkeMBM00yxQmW3wn875OSFDjvu9n4KDQQ0qmezLQ==
-X-Received: by 2002:a05:600c:4755:b0:450:d01f:de6f with SMTP id 5b1f17b1804b1-45a2674e40amr89752455e9.15.1755530042710;
-        Mon, 18 Aug 2025 08:14:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755530055; x=1756134855;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JvsMJxOlfhtNv7AxfFTwK3EfFrW+hG1b918QWnH5kJE=;
+        b=FclLNXlOa5iBZoyrCqy/YXC1xbDk0B7KZOT6wjM6vB78G/sKKFmPUysEwCUKAkQrms
+         YExg8qLj4V0Oq1utvhgGk5eQgEjeIeKe1lzxmeSbnPh388bn+Qb3WEVwyeZp+KjY4xUU
+         x1rxqcie3HT/NVRtx282V9b+9rv13zfyp828tAB1Z8gXM05gSWxUPGDc+rQey+2duf9R
+         3M8vfp2DcrpAA95UH8mUa7X55UUkx1w9/0cjwaRcMKO7jYK2sDZJ/PjoW+99b/CItOdJ
+         xooTyDQc1kO6w4KFhhTEMDI1cerER/A1uur5VAek6YtA3u7ptE98ktqwZ0Z1eLdKRzqK
+         Mplg==
+X-Forwarded-Encrypted: i=1; AJvYcCVoFrOsrJXITfuLUYH9ldWEmuA33XDsHgx+FaLYBrTNdckwZguNELNiesyN+QVy3HgRglQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxyIXsqmKEm8WQhPYbaYt2crRcOBS+zINVevYsoxtiQMrs81iw
+	W9y+v05Dp8zb2KFEC7MO3Ia5y9z3WZAIbmIT8CddDAnWrLa9WXg8P0JQm1lukw==
+X-Gm-Gg: ASbGncs+UOWilzQeeTi1h0+5XhHK0JOrAGnAyDtVY+QnZ+IVoDkBcKDA1LBmvB9gXeZ
+	gGeCcf/E8NigpvlcmfLubRj2ngKQ3i3twGcQC+XiGfAvr4DL8FF+/SxSs/6BSVLnSLev84wOqlo
+	KHWv5R1fth4iWUuMbvv2JqTnzapmeju6oAzwKfTdZ51iu1ELp0BYXRvus/dn+/pRpIWeJY0kPuX
+	rM9Z6RywTbo4Mld7V4XP7V7EyfwgLAvAWS4znt2+r/wH+0vq9lKA5HlXd61cE0MCpJ+QI3KOObZ
+	CAw4XBPqbXC3z4N4xXBV1BzunaKytXcc5CAMzqF7JfcMMxDWFG+dctKQlCk1FuBWq2jZML6SezF
+	6NZDNLgvWi+iX22Mzr1AJpRJkevdTiAZl54U+8gRE++RQF+HhelSfxfNdNL0P+OXo4BziEaYKyt
+	fTjWFLwinGzebZ
+X-Google-Smtp-Source: AGHT+IFUpQRuOoKRBtDNvzhk6sGsOsCmmInyj098znyxWMOeXro5YZRGHj6quPbpvp6Ev1If0QXOSQ==
+X-Received: by 2002:a05:600c:458d:b0:456:1a69:94fd with SMTP id 5b1f17b1804b1-45a217793f0mr122293985e9.0.1755530055035;
+        Mon, 18 Aug 2025 08:14:15 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3bb64664171sm13963927f8f.10.2025.08.18.08.14.01
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45a1c6be10esm188501825e9.3.2025.08.18.08.14.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Aug 2025 08:14:02 -0700 (PDT)
-Message-ID: <63e7901f-4210-438e-9389-8117d5fb83b6@gmail.com>
-Date: Mon, 18 Aug 2025 16:14:00 +0100
+        Mon, 18 Aug 2025 08:14:14 -0700 (PDT)
+Message-ID: <89394e50-9077-4a7b-b30e-afd1be1a40e8@gmail.com>
+Date: Mon, 18 Aug 2025 16:14:13 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,113 +68,93 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [Bug] commit cleanup does not happen during autosquash rebase
-To: Simon Cheng <cyqsimon@gmail.com>, git@vger.kernel.org
-References: <CA+itcS3DxbgpFy2aPRvHQvTAYE=dU0kfeDdidVwWLU=rBAWR4w@mail.gmail.com>
-Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-In-Reply-To: <CA+itcS3DxbgpFy2aPRvHQvTAYE=dU0kfeDdidVwWLU=rBAWR4w@mail.gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [FEATURE] Proposal: git stash --only-unstaged
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "J. Dettweiler" <git.vger.kernel.org@dettweb.de>, git@vger.kernel.org,
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+References: <12fe17735317215aa0de58a20055193a@dettweb.de>
+ <60f38225-2bcb-4383-be40-36c7b02cf38c@gmail.com> <xmqqfrdqkk1l.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqfrdqkk1l.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Simon
-
-On 13/08/2025 12:39, Simon Cheng wrote:
+On 17/08/2025 17:08, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> What did you do before the bug happened? (Steps to reproduce your issue)
+>> To use it create your stash with "git stash push --keep-index" and then
+>> use the script to pop the unstaged changes rather than using "git stash
+>> pop". If the script proves to be useful then perhaps we could add an
+>> "--unstaged" option to "git stash pop"
 > 
-> 1. Initialize a git repo with `git init`
-> 2. Install a custom `prepare-commit-msg` hook that injects some comments
->    - Intention: inject the output of `git log --oneline -n10` during
-> interactive commit, so I can see past commits
-> 3. Run `git config commit.cleanup strip`
->    - Intention: strip the injected comments too in non-interactive mode
-> (e.g. `git cherry-pick` & `git rebase`)
-> 4. Run `touch foo && git add -A && git commit -m "Initial commit"`
-> 5. Run `touch bar && git add -A && git commit --fixup=@`
-> 6. Run `git rebase --root --autosquash`
+> Hmph, would the behaviour useful enough that it should be always
+> enabled, without any new option?  I strongly suspect that those who
+> worked on adding "--keep-index" option did not expect the user to be
+> mucking with the working tree files while "testing the staged stuff
+> by updating the working tree files to match it and nothing else",
+> and as long as the end-user stays within that originally designed
+> use case, nothing changes for them, no?
 
-Thanks for providing a simple way to reproduce this
-
-> What did you expect to happen? (Expected behavior)
-> 
-> Git would perform the autosquash, while keeping the commit message of
-> the squash target unchanged.
-> 
-> What happened instead? (Actual behavior)
-> 
-> Git performed the autosquash, but the commit message of the squash
-> target is now clobbered with my injected comments.
-
-It looks like this stems from f7d42ceec52 (rebase -i: do leave commit 
-message intact in fixup! chains, 2021-01-28) which was added in response 
-to a bug report[1]. That commit switched from always cleaning up the 
-fixup message to never cleaning it up. I wonder if instead we should be 
-respecting the user's commit.cleanup setting. The commit message says 
-that should not respect commit.cleanup because we want to use the 
-message verbatim but that is not what we do with "pick" commands which 
-respect commit.cleanup if it is set. Given that we call the 
-prepare-commit-msg hook we cannot be sure that we're reusing the 
-original commit message verbatim anyway so I think we should probably 
-change "fixup" commands to use the same cleanup flags as "pick" commands.
-
-I'm going to be off the list for a week from tomorrow but I'll try and 
-look at this again when I'm back if no one else has picked it up in the 
-meantime.
+Yes it probably would make sense if we knew that the stash had been 
+created with "--keep-index". At the moment I don't think there is 
+anywhere to tell from looking at the stash if that's the case but we 
+could add a trailer to the commit message when we create the stash to 
+record that it was created with "--keep-index" and apply only the 
+unstaged changes when we see that trailer.
 
 Thanks
 
 Phillip
 
-[1] 
-https://lore.kernel.org/git/CANVGpwZGbzYLMeMze64e_OU9p3bjyEgzC5thmNBr6LttBt+YGw@mail.gmail.com/
-
-> What's different between what you expected and what actually happened?
+> Thanks.
 > 
-> I expected commit cleanup to happen during the autosquash. It seems
-> like that didn't happen.
+> (the script left for reference without comments below).
 > 
-> Anything else you want to add:
-> 
-> Here is my `prepare-commit-msg` script. But I expect this issue to be
-> replicable with anything that injects comments.
-> 
-> ```
-> #!/usr/bin/env bash
-> {
->    echo '# Last 10 commits:'
->    git log --oneline -n 10 --decorate=short | sed 's/^/#   /'
->    echo '#'
-> } >> "$1"
-> ```
-> 
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
-> 
-> 
-> [System Info]
-> git version:
-> git version 2.50.1
-> cpu: x86_64
-> built from commit: d82adb61ba2fd11d8f2587fca1b6bd7925ce4044
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> libcurl: 8.14.1
-> OpenSSL: OpenSSL 3.5.1 1 Jul 2025
-> zlib-ng: 2.2.4
-> SHA-1: SHA1_DC
-> SHA-256: SHA256_BLK
-> uname: Linux 6.12.41-1-lts #1 SMP PREEMPT_DYNAMIC Fri, 01 Aug 2025
-> 20:42:03 +0000 x86_64
-> compiler info: gnuc: 15.1
-> libc info: glibc: 2.42
-> $SHELL (typically, interactive shell): /bin/bash
-> 
-> 
-> [Enabled Hooks]
-> prepare-commit-msg
-> 
+>> ---- 8< ----
+>> #!/bin/sh
+>>
+>> USAGE="${0##*/} [<stash>]"
+>> SUBDIRECTORY_OK=1
+>> . "$(git --exec-path)/git-sh-setup"
+>> cd_to_toplevel
+>> require_clean_work_tree stash-pop-unstaged
+>>
+>> LF='
+>> '
+>> stash="${1:-stash@{0}}"
+>> if ! stash_oid="$(git rev-parse --verify --quiet "$stash")" ||
+>>     ! oid1="$(git rev-parse --verify --quiet $stash_oid^1)" ||
+>>     ! oid2="$(git rev-parse $stash_oid^2^@ 2>/dev/null)" ||
+>>     test "$oid1" != "$oid2"
+>> then
+>>      die "error: '$stash' does not look like a stash commit"
+>> fi
+>> merge_output="$(git merge-tree --merge-base=$stash_oid^2: HEAD: $stash_oid:)"
+>> status=$?
+>> if test $status = 0
+>> then
+>>      tree=$merge_output
+>>      conflict_info=
+>>      messages=
+>> elif test $status = 1
+>> then
+>>      merge_output="$merge_output$LF"
+>>      tree="${merge_output%%$LF*}"
+>>      conflict_info="${merge_output%%$LF$LF*}"
+>>      conflict_info="${conflict_info#*$LF}"
+>>      messages="${merge_output#*$LF$LF}"
+>> else
+>>      exit 128
+>> fi
+>> git read-tree --index-output="$GIT_DIR/stash-pop-index" -m -u HEAD $tree &&
+>> rm "$GIT_DIR/stash-pop-index" &&
+>> if test -n "$conflict_info"
+>> then
+>>      printf '%s' "$messages" >&2
+>>      printf '%s\n' "$conflict_info" | git update-index --index-info
+>> else
+>>      git stash drop "$stash"
+>> fi
 
