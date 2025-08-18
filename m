@@ -1,83 +1,109 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205282C859
-	for <git@vger.kernel.org>; Mon, 18 Aug 2025 23:45:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2BE1482F2
+	for <git@vger.kernel.org>; Mon, 18 Aug 2025 23:52:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755560740; cv=none; b=jnvTaKAQ17JIBMuXbIxT+6a80E0zkFhSRrVadPjb4v7LtaU5z/qA6hZrwU/DeJJBD4clxTzt5lRh5w3z9m5CYSvunirLs7jO21QiS75o8dBg64hZQb9hIP4FgONGgFQ7CHpYqUIFbf97GPUJuuNse3Qu8MsvwAKV7gz76XlWuZA=
+	t=1755561147; cv=none; b=SSheBj9KLfbq9weTO9bZ9PTbi8qfHBA9iYKsWaP2Am1Q5jP5+GtVvPIxjhEzIJVyE+xZVpruUmjpnICqeB7Tj8x3lHgZygUn3Dk/60VSwf4Xkqa4+2OO0/wB/EDTMCuO7JwG9eF7IMgd8+/hhY7yAAUZYx4cV0iEsGp1QtokqJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755560740; c=relaxed/simple;
-	bh=mxWIYMGtp8769Fp9TVrRT8gyVI8E0wpQdiJoRFKX0HY=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=LhByiC81/JFOVGxUcdkuTA43BexrBD3MqU70srwZ1AekWXJc2V4OEk9M+E2MdX0I0IhIlTR07bDuGQC+ayuOTELJTuDbBaKHSh+fIUyh8CMOgXreIK+94EugKGv6y2cI3KczP94NmxNwXLPxP5AL8vWOG+nT1EJ1xlIzeGRvORE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g1d9/u+F; arc=none smtp.client-ip=209.85.208.46
+	s=arc-20240116; t=1755561147; c=relaxed/simple;
+	bh=YR7J9kVEPQTiVHaHzlDhV87r+vd9BDODYj4famHM9c8=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=e6yQ6q4cPQ3kqs00vtDgCo+0GxRUkun5xkvFBiL5OOReZWUOI0wO0SkxtrHcRedOc5EB4k8F2CfxtoVyT6QsWCFgIqqwur0qV/7mnKhyXz1erZeg4oCVg4ZkIhwPTQOtcR6Hh6K6TBWQstI2g4W224nI6KXVAuJ2khKpbuZUzQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GYaQUZq8; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g1d9/u+F"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-618896b3ff9so9222396a12.1
-        for <git@vger.kernel.org>; Mon, 18 Aug 2025 16:45:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GYaQUZq8"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e94dfbf7ba1so723765276.3
+        for <git@vger.kernel.org>; Mon, 18 Aug 2025 16:52:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755560737; x=1756165537; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=O1S4PAvWX3NjKh5NcbtKHl76wzVGBLJBfEi51rypGN8=;
-        b=g1d9/u+FUE+E3s7etqp/LjM+WQd5IuQlJ/G9cnUtWDoSGPUd2p67AtdDm49kE1Sh6V
-         CEW5oIsBMJTHq6qTtoNQI9sG1pGIp6n0z9TPlcsX/2Fq+hMSMK3c1dXXLOLW76JYE2VM
-         Y/wE0g7WBDtki0sLUV0kRc3CDaaW54J49kDYWU1CfplyOUERSWxoIdrcYPbO9AWdmWUm
-         1jv10au4m72FgQ+mG6gL83iIqPSrjTQBnPeLU+AH3vYjKhlGlHVs6jbzLf3Ro2IjwCov
-         vrVWTeiKsB6IK3xexTiNkams7QEbD5rDDBVGRTUaDbA82Hq/RPZDTUhF6zy6MLAOpcj0
-         1tDw==
+        d=gmail.com; s=20230601; t=1755561145; x=1756165945; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RJA6O6LflzKzpOUlZYxHRsvfsVIXTz1q0+nG6dQp6tk=;
+        b=GYaQUZq8NN8JDCZ0cTkhsq1ePplR1OiWDqSHXap1uAMLMNi5juN7zmN3SHlkduvA7b
+         e3tgnm4KYOzYAt+AfoF1B2vi9mKCDi6fQ8+oY0QSQOIy0lYP/RCm7KsQ1c9jU5l0dRYQ
+         Y98MJzbueWUlM4RjDLuZucPAvmZH/e6HXEVlshGLNs+WTdsSh/SLvKpKa8I06PaMiTqk
+         GA04e3/QBcr6R9qW1qNoiNNRpZq8l2UNsqKx6Ad7HseeviGhVTpohBEBAgDl68kRuqiZ
+         tb9FfiPn6t79B2udq3ydyi30E8YUrjThTPUc9cAjsT2ycyo+lZxyGvPH6IKOdQrHlfml
+         XxyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755560737; x=1756165537;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=O1S4PAvWX3NjKh5NcbtKHl76wzVGBLJBfEi51rypGN8=;
-        b=gsJrANDq3JyRJclAoPptgzFSFXG0T1gdRs+qY+m91+alVF02qzaDcC9KzK9Y+8v4bL
-         GIijiCn6cxMVRTHRlFu6JuF0FMowqWZnJ2VaDu5McSZLQIBGJrljAEJjlkzYbfFzlNjA
-         gsFT2y6BnFzkyJIxcPA/YGwucAQXhBeJSMI3eDq+6rbsr/9Tkjw9ZdPxlbT6RFPTf8v4
-         LzJ8KVzEh+yTnFrX7fRAKgLwEvklUiw+e4dbk/JnhfoIu5m727/sIvhnCydrHZ2bbQxX
-         wNEMh8SWy8PlRzHZcScua1WnzX7Q5O2M/0Oii+lv3EXoWbqRO4/+uCqjfn0wIU3ne0vS
-         jEnQ==
-X-Gm-Message-State: AOJu0Yzfz3+rJYER+tTQ/mm+jf1tgFKlKxenxJ2t+HoUiXbhImE937sI
-	RCoGZalitg4KsGJdgd/ZQZEREK2nGavX9YFNpetMFSpzjRS4XjFLk8Oduoav+eZ4T1ph/oNof+Y
-	8xbt0nq5AVns9njqoOYa4Rm3MnObmKpsPTKBfcgo=
-X-Gm-Gg: ASbGncsObydyUeF8IZQ+LoBeQVCJlV2fhMG7GyEiKiD55DyGJHLupDm57zrlQ+jYf/q
-	TGaS0VYOhauW3E0obxkVRJSVwM0pik7HIpjmmvIpcD1b6FlvoCQoGv26yEl2hBcTCh4pinWfdSg
-	vyLfb64txd0d2IOGFp8U2yoiFqloUP3aTN+9XO7cAKsTpGhpm1Kf1vFiBzli0JImHARA7KlrsN5
-	lQ0//n3DqS7vTF+aaU=
-X-Google-Smtp-Source: AGHT+IHkwkIhl+qbtVM+g4WeXbYdv52fxJwh2YQ1KpauuiY7/H6Q73rqh+tdYZlz6ckwX21MSgOYLrjeIHYGax1DUJ4=
-X-Received: by 2002:a05:6402:35c8:b0:618:ad7d:cbe0 with SMTP id
- 4fb4d7f45d1cf-61a7e9b5332mr270003a12.10.1755560736983; Mon, 18 Aug 2025
- 16:45:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755561145; x=1756165945;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RJA6O6LflzKzpOUlZYxHRsvfsVIXTz1q0+nG6dQp6tk=;
+        b=Px2taf9Spg4hyrJc5m3YcsRKgdnOmpu3xial4U8/SkCjyMdeix8Lt1IwqZaRAKxcGj
+         TgApj21pNgVZ2nt2EzdJWK7HTXltLazb0hdH3jedIyTiLTqtt1YwZeEpU5nLLn/OZ+yC
+         ZE+yL8zXoP4Fcs6t55A/TMmc6JBb3YiDCcIlMJw8W1xOMwmEy3aLf5JPtG+eVEREd/IM
+         vbfMoayxgDxx+rbZNlkTdS4VNDzCvZWm6lDiYmNMfbFOXttKgRKKDqwhRpBpRhE8/dSI
+         vp0dAR0iivFTrl3hZmxjjYWO8mrLtoHfQdG2sxOIu7syb4ehD7J0Tg7LgXScFFNZQxQz
+         4ofw==
+X-Forwarded-Encrypted: i=1; AJvYcCVgwjerlDmurqdt8iUVjC8Tuf3Fecj+n8q497Mplz7GQLk7siHl6CbDBU5IZ5ktn1KkdIg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyrNSaH6slMAvWvzdssOSkOz2/s3jdwByqm3pC2YDAsprbcQDMk
+	v2hSYaVq/O0tSLcCJtJQalBY9D4w9e3Km96YnChdE22BDOTVY1qpHW94
+X-Gm-Gg: ASbGncvEAfXWUBjJsiLSTf5BVflV+QSrM+iOGk6ZmgjUsGlJZHpFlO8CUvCUZY7h9t2
+	oiOAIXV8A/sbKsaOHdRcBRUElcnQH0YqS+qGi9Rb5ULicTWgSdwUmET4tUq66JTZ3TQAcc/nt0l
+	cnIkznz80YxGEVARZ6HHD5u+5reYaBNeiCy7oiTG+B3W/6kS1yx9qL/oktS1p/U0FV53/HUIwsA
+	TG910refUOdXzq3N5gWstZSRFJWsQDV3yanOmwsPRnr9s0/WtDYozbedUdTPhLrT4GNKA8xjYp1
+	tOoby6r6Gvu1K/Dbm44HiqejuH6UkbAkWfgVSgX1y5m0nbE0BbABFN9/Rf1dKx5YxVsARaxeFjx
+	xObvUhjKEMxdhzPLChro8Fty6TE38tfsBquaALlRF0z/TRqn3ulUEQ5mkTnggvQ==
+X-Google-Smtp-Source: AGHT+IGkN+xs9MOy/NOCiyJAzXDZ1AtDkAj6HPL43lR/SuN5dSzhGkPdtp2hEniSfTHMhZVn61rstA==
+X-Received: by 2002:a05:6902:4006:b0:e94:e44d:aac1 with SMTP id 3f1490d57ef6-e94e6349099mr949942276.37.1755561144801;
+        Mon, 18 Aug 2025 16:52:24 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:f9bc:536f:8d5e:1c8c])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e93328849ccsm3620716276.34.2025.08.18.16.52.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Aug 2025 16:52:24 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-From: Mark Waite <mark.earl.waite@gmail.com>
-Date: Mon, 18 Aug 2025 17:45:26 -0600
-X-Gm-Features: Ac12FXzt_1T8VNR-fEU6RJrD1yGpuuR-IfRHeSGeBU-KfiWvI5kjOkZmhZNZbKo
-Message-ID: <CAO49JtHLs0yCAmNX-2VO=0mC-u4JKPWw86Lg+xe1pV6Dr6YZWw@mail.gmail.com>
-Subject: Jenkins still uses 'git whatchanged'
-To: Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v2 00/17] RFC: Accelerate xdiff and begin its rustification
+Date: Mon, 18 Aug 2025 19:52:13 -0400
+Message-Id: <2FE193EB-125F-443E-926C-E9460A1CD5BD@gmail.com>
+References: <xmqqldnggt2v.fsf@gitster.g>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ Eli Schwartz <eschwartz@gentoo.org>,
+ "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+ Johannes Schindelin <johannes.schindelin@gmx.de>,
+ =?utf-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>,
+ Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>,
+ Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>,
+ Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+ Ezekiel Newren <ezekielnewren@gmail.com>
+In-Reply-To: <xmqqldnggt2v.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (21F90)
 
-Git 2.51.0 has deprecated the 'whatchanged' command.  The git client
-plugin for Jenkins still uses the "git whatchanged" command to generate
-its changelog.
 
-I hope to release a replacement soon, but am only starting the
-implementation now.
+> Le 18 ao=C3=BBt 2025 =C3=A0 18:31, Junio C Hamano <gitster@pobox.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BF"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes=
+:
+>=20
+>> * Code style: Should we adopt a Rust code style of some sort? Perhaps hav=
+e
+>>   the code always be formatted by rustfmt in its default configuration?
+>=20
+> Sounds sensible.  I'll let folks with more Rust inclination to
+> figure out what _the_ style should be, but having _a_ style we all
+> stick to is good.
 
-Mark Waite
-
-Message sent as requested by git 2.51.0
-
-'git whatchanged' is nominated for removal.
-If you still use this command, please add an extra
-option, '--i-still-use-this', on the command line
-and let us know you still use it by sending an e-mail
-to <git@vger.kernel.org>.  Thanks.
-fatal: refusing to run without --i-still-use-this
+While there can be room for configuring the formatter if we have particularl=
+y idiosyncratic needs, I=E2=80=99d second going with cargo fmt / rustfmt in d=
+efault configurations to start (the former is a shortcut for the latter over=
+ a whole crate AIUI).=
