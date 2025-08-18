@@ -1,95 +1,681 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0938257459
-	for <git@vger.kernel.org>; Mon, 18 Aug 2025 05:05:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337501E008B
+	for <git@vger.kernel.org>; Mon, 18 Aug 2025 07:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755493549; cv=none; b=baDFSnZFstUAkM1s7OafSRWqtlTkS5N29T4hglUhAXDJexUXTE99ZzdlYhcHdiWBFPX1as4Q0Fdxslr5afehe6DKWUY6OuvIqF5TVkeNPXRkAQ6ee0NbBBw18hdakBpgwYJUOoXPqFyeZ7qUp3R1edlcbBUywoXY+du+iafU6iQ=
+	t=1755501134; cv=none; b=W9Z+usm5L+CiWlOsH5Ktb68QXwHRA9ka/nJ312CzjfDXwz7Ri8wX5snUUYXPDfL7UQY3m4lA2rtbuNIsQMdWHvzeU2Cc/vieweB231w6MVo6Qbl1q02WCimkTM86WCvf6jVFaFPlt314NlTGzHUQGfrmK0ICcIZ4KZjZusgLiDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755493549; c=relaxed/simple;
-	bh=gh6QDLxSXIPjYunJnli5fUvE0Q/bPhHq193Q4RZTaA4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O4/H1HzMlA0iGOEgOAml83CyDkaFpkiUr4bHXgh1/K13hkCkcG18nJYeqHZv2aJebepSeO1eplAmbUuiombqlTNxoenA91YsboT4kGCJdz1tLCccEc4OofwRnXAqEz1nYdhHeGw1EpbNeD1RJwlW2r9WlfEp7fpVg0UBb6ghA7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZWkcGgAU; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1755501134; c=relaxed/simple;
+	bh=SNg+tNHP8rrL04Sf7qLLI5qBrQP5BeUICwr/VJcz3IY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZxAieXFaxZZ7YBpLZ4C8+Zb+d11IydRhdDuAbTd5e0mogQZ5s+POKwEeQ/dPYqYwi01++Voy1JZEWfEU0L8KaeCZwZtW838U1hn91xPSmCyzWvM9PHM4yOEBQ6f3vLWLHxEOcsiskDvS2U/uwXbn816T5KQ9kICBAU+jp4PEEQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VBN0JfNB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VitIwmB/; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZWkcGgAU"
-Received: (qmail 16607 invoked by uid 109); 18 Aug 2025 05:05:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=gh6QDLxSXIPjYunJnli5fUvE0Q/bPhHq193Q4RZTaA4=; b=ZWkcGgAU4peW2wvObG+Zs9GGGj/N1MKc5xmiLUOsz37NzTA2ObGn03t1IQgMTDnRBBdMSYKCW5xbdh80eyz+Q71RlLahChkW9ZpELpMrICw1N32TMoCrgxDKlxVAoVt3touEvHuf7WbvNQ7EipAJyPWMxcD6gew/JFLe71L6DIGLfo6lOkSqnspzwiXBinUnZDXEMEKtpRaew6Or6ZuKS6bcpeceWlmHBLC7rLRFiPSR05L4CxFA1X3oH/hMHdkmZxPh9dMOHhX/zl/kpcUwnc2IzgN4YGBCGFFN0ZdeHDWFBIwLYFLnCuACiklCug49a5TqHJoV4zLPhxwtXjKL3w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 18 Aug 2025 05:05:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19549 invoked by uid 111); 18 Aug 2025 05:05:46 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Aug 2025 01:05:46 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 18 Aug 2025 01:05:45 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: phillip.wood@dunelm.org.uk, Cheng <prophecheng@stu.pku.edu.cn>,
-	git@vger.kernel.org
-Subject: Re: Potential Null Pointer Dereference detected by static analysis
- tool
-Message-ID: <20250818050545.GA62231@coredump.intra.peff.net>
-References: <AAkArwD3JXZP4EIjvKF0Waow.1.1755044612233.Hmail.2201111603@stu.pku.edu.cn>
- <5303c45e-d95b-4bc8-9cd1-bf4efe6bfbae@gmail.com>
- <20250814232644.GC2937@coredump.intra.peff.net>
- <7f289d4f-0a9d-480d-a5a9-7f4d4d24626b@web.de>
- <20250818044807.GA51803@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VBN0JfNB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VitIwmB/"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 46553EC008B;
+	Mon, 18 Aug 2025 03:12:10 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 18 Aug 2025 03:12:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1755501130; x=1755587530; bh=8qfRYiMHbB7NPJFHU31GSFcuaBPMSaH/
+	NM0zzRJt70E=; b=VBN0JfNBg0Az7LYOE8ls/dF6WOEWFbSDHeqFB+2AHiIQV/sB
+	nHFNUaalIlghRHIlxnuA5fxcj4duSDz4uH/XNPrtJ4K4mmmfJ36lIBmSxPP5yTWv
+	sVnViCcopN0l9JGus96yqb6+/Z6uIBD7pNlDx043yXiSFB20JxV3WdVeXiJdivkw
+	/aoHEhkvp0niV9aEu07ZpNeeLrzYcj3rvbF9+rdMZVRUh03sv2pU+dY08ZSBpaf0
+	+v3a1YgRehDNBz42PoTmAZOpBlmy2ZnlUPZj/BmsboXKg0kBfhJBA+50vfeh243q
+	83dTP9aUR5v8ijvjXBWb5dTr/M8ve18gDsERnA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755501130; x=
+	1755587530; bh=8qfRYiMHbB7NPJFHU31GSFcuaBPMSaH/NM0zzRJt70E=; b=V
+	itIwmB/JzmN/uY6PTgielOmg2du73La/onAWuYITHm011V+xL5IW2iZJWHP+RKqm
+	sueDQ0ZQV2zQE7OccUwuKJbk4VQoqWWEfzAXcwkfRhEyyjtFwvxCCX+EZtMJiCqk
+	vjVovNnkYW3OtrazhPX4CDLjkYn4yPXjMFY658YGOGNhVcqfxXE6tE3kn6VWV4Ll
+	USDbs/Fw01Zbo3xiF+uENxoD1VzLPwF83Y9FGcXJKBSVlNmIW+ASptcAfKod63Ya
+	N9uuineFJr1R6yxADqPumM8ZMhTkrUSsVUT61rf0r8vNra53nXy48eRuQ49rLQeq
+	V2LR/DASw2ByDqd4raOUg==
+X-ME-Sender: <xms:StKiaL_3Pf1uzcjLGj160Wjc02oOKTurgfY_wPnBF4hu5Z7Ibqz3tg>
+    <xme:StKiaK8eiropKsFqZwvMXl20-9KHosjIpym9rXPrJgdG0ZvuHmAtFBWvalzANz9mR
+    3UgOSLuFFrrz8L7Sg>
+X-ME-Received: <xmr:StKiaCfOfngJ6PwOAg-ddnPAXkW82v9q-H2bKs8S_YfzZMYljyCEF0lABiaXbvYMzxO0dOPxEMXvcl0pt8JJLtAl4tlTa56f4Xz2H0w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheduleejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
+    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
+    gidrtghomheqnecuggftrfgrthhtvghrnheptddtvdffleejvefhjeeigfelffefjefgfe
+    egjeelheekffegiedvkedvkeeiledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdp
+    ohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpdhgihhthhhusgdrtghomhdpgh
+    hithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfe
+    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehlfihnsehlfihnrdhnvghtpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:StKiaDFMioMGaZ4p2poqKVvi42y_RlKDhUIed5lnrrqod_zsbj1Jnw>
+    <xmx:StKiaAf4EwiEZrNs39NPZHi0hT8K67YDOh-5EWGC_2J2td6hzhjHHQ>
+    <xmx:StKiaNHunYdE0sCvbK4Dwp8ULIm8mF0IJb9KdALFZndnpompfIUcCw>
+    <xmx:StKiaJU1qWxhew_GI7ySQAtw10E4TYfchUzhMnXLnj3sWhMIpTreXQ>
+    <xmx:StKiaKx5ADxUqD3u4mTz9h35RBpx5POGeGtJRJrA_pXFkegzb8GHcsIe>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 18 Aug 2025 03:12:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (Aug 2025, #07; Sun, 17)
+X-master-at: e5ab6b3e5a3f0a94a429526e0fe6f491955ac053
+X-next-at: 8c5e2ae05d41c0752c436e7e1fc78ff5fcd3ab81
+Date: Mon, 18 Aug 2025 00:12:08 -0700
+Message-ID: <xmqqsehpm7cn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250818044807.GA51803@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Mon, Aug 18, 2025 at 12:48:07AM -0400, Jeff King wrote:
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-> And indeed, the current code does then segfault on "git describe foo" at
-> the spot I mentioned. Even though the repository state here is
-> unexpected and corrupt, I do think we should probably be more defensive
-> and avoid the segfault.
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-So you almost nerd-sniped me into making a series. But the more I dug
-into the rabbit-hole, the more I turned away in disgust. :)
+With maint, master, next, seen, todo:
 
-The set of problems I found are:
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
 
-  1. What should happen when traversing from HEAD does not find the blob
-     in question? Right now we print a blank line, which is...weird.
-     Probably we should either print nothing, or return an error. If we
-     return an error, should we respect --always? Are we stuck with the
-     current dumb behavior because it's a plumbing command?
+With all the integration branches and topics broken out:
 
-  2. When we are on an unborn branch, we print a confusing message:
+	https://github.com/gitster/git/
 
-       $ git init
-       $ git commit --allow-empty -m foo
-       $ git tag foo
-       $ git symbolic-ref HEAD refs/heads/unborn
-       $ git describe $(echo blob | git hash-object -w --stdin)
-       fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
-       Use '--' to separate paths from revisions, like this:
-       'git <command> [<revision>...] -- [<file>...]'
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-     We should probably resolve HEAD ourselves and either bail with an
-     empty output or an error (depending on what we do for (1) above).
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
-  3. When we do traverse, if process_object() sees that we didn't find a
-     commit, we should detect that and either return an empty result or
-     an error (again, depending on the behavior of (2) above). This is
-     done by checking is_null_oid(&pcd->current_commit) there.
+Release tarballs are available at:
 
-  4. Then we can teach describe_commit() to take a commit rather than an
-     oid (and the is_null_oid() check becomes a NULL check).
+	https://www.kernel.org/pub/software/scm/git/
 
-So it all depends on what to do with (1), and for a feature that IMHO
-should not even exist in the first place, I had trouble summoning the
-will-power to make this 4-patch series.
+--------------------------------------------------
+[New Topics]
 
--Peff
+* ds/doc-count-objects-fix (2025-08-14) 1 commit
+  (merged to 'next' on 2025-08-17 at 1740ef34dd)
+ + count-objects: document count-objects pack
+
+ Docfix.
+
+ Will cook in 'next'.
+ source: <pull.2031.v3.git.git.1755182034719.gitgitgadget@gmail.com>
+
+
+* ad/t1517-short-help-tests-fix (2025-08-16) 1 commit
+  (merged to 'next' on 2025-08-17 at b38fb9afd3)
+ + t/t1517: mark tests that fail with GIT_TEST_INSTALLED
+ (this branch uses ua/t1517-short-help-tests.)
+
+ Test fix.
+
+ Will merge to 'next'?
+ source: <20250808010651.591906-1-usmanakinyemi202@gmail.com>
+
+--------------------------------------------------
+[Cooking]
+
+* dk/t7005-editor-updates (2025-08-13) 3 commits
+  (merged to 'next' on 2025-08-17 at ad0ab2e2a9)
+ + t7005: sanitize test environment for subsequent tests
+ + t7005: stop abusing --exec-path
+ + t7005: use modern test style
+
+ Test clean-up.
+
+ Will cook in 'next'.
+ source: <20250812170256.71751-1-ben.knoble+github@gmail.com>
+
+
+* kr/clone-synopsis-fix (2025-08-11) 1 commit
+  (merged to 'next' on 2025-08-13 at b0d634ef29)
+ + docs: remove stray bracket from git-clone synopsis
+
+ Doc fix.
+
+ Will cook in 'next'.
+ source: <pull.2023.v3.git.git.1754949872593.gitgitgadget@gmail.com>
+
+
+* ac/deglobal-fmt-merge-log-config (2025-08-10) 2 commits
+  (merged to 'next' on 2025-08-13 at c6c74fb8f0)
+ + builtin/fmt-merge-msg: stop depending on 'the_repository'
+ + environment: remove the global variable 'merge_log_config'
+
+ Code clean-up.
+
+ Will cook in 'next'.
+ source: <cover.1754868681.git.ayu.chandekar@gmail.com>
+
+
+* jc/longer-disambiguation-fix (2025-08-14) 1 commit
+ - abbrev: allow extending beyond 32 chars to disambiguate
+
+ "git rev-parse --short" and friends failed to disambiguate two
+ objects with object names that share common prefix longer than 32
+ characters.
+
+ Will merge to 'next'?
+ source: <xmqqh5ya6iua.fsf_-_@gitster.g>
+
+
+* dl/push-missing-object-error (2025-08-08) 3 commits
+  (merged to 'next' on 2025-08-11 at ad69d77794)
+ + remote.c: convert if-else ladder to switch
+ + remote.c: remove BUG in show_push_unqualified_ref_name_error()
+ + t5516: remove surrounding empty lines in test bodies
+
+ "git push" had a code path that led to BUG() but it should have
+ been a die(), as it is a response to a usual but invalid end-user
+ action to attempt pushing an object that does not exist.
+
+ Will cook in 'next'.
+ cf. <xmqqo6spiyqp.fsf@gitster.g>
+ source: <cover.1754637849.git.liu.denton@gmail.com>
+
+
+* ja/doc-lint-sections-and-synopsis (2025-08-11) 6 commits
+  (merged to 'next' on 2025-08-17 at 413ff100cd)
+ + doc lint: check that synopsis manpages have synopsis inlines
+ + doc:git-for-each-ref: fix styling and typos
+ + doc: check for absence of the form --[no-]parameter
+ + doc: check for absence of multiple terms in each entry of desc list
+ + doc: check well-formedness of delimited sections
+ + doc: test linkgit macros for well-formedness
+
+ Doc lint updates to encourage the newer and easier-to-use
+ `synopsis` format, with fixes to a handful of existing uses.
+
+ Will cook in 'next'.
+ source: <pull.1945.v3.git.1754945600.gitgitgadget@gmail.com>
+
+
+* js/rebase-i-allow-drop-on-a-merge (2025-08-06) 1 commit
+  (merged to 'next' on 2025-08-07 at bc44e9dc1b)
+ + rebase -i: permit 'drop' of a merge commit
+
+ During interactive rebase, using 'drop' on a merge commit lead to
+ an error, which was incorrect.
+
+ Will cook in 'next'.
+ source: <37f6e34c-91aa-4e55-88e1-019d2e042df3@kdbg.org>
+
+
+* ms/refs-list (2025-08-05) 6 commits
+  (merged to 'next' on 2025-08-13 at 3f0791145b)
+ + t: add test for git refs list subcommand
+ + t6300: refactor tests to be shareable
+ + builtin/refs: add list subcommand
+ + builtin/for-each-ref: factor out core logic into a helper
+ + builtin/for-each-ref: align usage string with the man page
+ + doc: factor out common option
+
+ The "list" subcommand of "git refs" acts as a front-end for
+ "git for-each-ref".
+
+ Will cook in 'next'.
+ source: <20250805092758.5321-1-meetsoni3017@gmail.com>
+
+
+* kh/doc-git-log-markup-fix (2025-08-08) 1 commit
+  (merged to 'next' on 2025-08-12 at 1336146ed4)
+ + doc: git-log: fix description list
+
+ Doc update.
+
+ Will cook in 'next'.
+ source: <aaa1734189ec8bab7cfa0965132e3d8e5909b1af.1754660514.git.code@khaugsbakk.name>
+
+
+* ly/changed-path-traversal-with-magic-pathspec (2025-08-10) 1 commit
+  (merged to 'next' on 2025-08-12 at 0f929dcec7)
+ + bloom: enable bloom filter with wildcard pathspec in revision traversal
+
+ Revision traversal limited with pathspec, like "git log dir/*",
+ used to ignore changed-paths Bloom filter when the pathspec
+ contained wildcards; now they take advantage of the filter when
+ they can.
+
+ Will cook in 'next'.
+ source: <20250811060137.75135-1-yldhome2d2@gmail.com>
+
+
+* ps/commit-graph-wo-globals (2025-08-14) 6 commits
+  (merged to 'next' on 2025-08-17 at e2889596be)
+ + commit-graph: stop passing in redundant repository
+ + commit-graph: stop using `the_repository`
+ + commit-graph: stop using `the_hash_algo`
+ + commit-graph: refactor `parse_commit_graph()` to take a repository
+ + commit-graph: store the hash algorithm instead of its length
+ + commit-graph: stop using `the_hash_algo` via macros
+
+ Remove dependency on the_repository and other globals from the
+ commit-graph code, and other changes unrelated to de-globaling.
+
+ Will cook in 'next'.
+ source: <20250815-b4-pks-commit-graph-wo-the-repository-v4-0-b6b651178cce@pks.im>
+
+
+* tc/t0450-harden (2025-08-12) 3 commits
+ - fixup! t0450: add allowlist for builtins with missing .adoc
+ - t0450: add allowlist for builtins with missing .adoc
+ - t0450: fix test for out-of-tree builds
+
+ Test updates.
+
+ Expecting a reroll after 2.51 final.
+ source: <20250804073002.1586332-1-toon@iotcl.com>
+
+
+* gh/git-jump-pathname-with-sp (2025-08-11) 1 commit
+  (merged to 'next' on 2025-08-13 at a99311e231)
+ + git-jump: make `diff` work with filenames containing spaces
+
+ "git jump" (in contrib/) fails to parse the diff header correctly
+ when a file has a space in its name, which has been corrected.
+
+ Will cook in 'next'.
+ source: <pull.1950.v2.git.1754913323810.gitgitgadget@gmail.com>
+
+
+* jc/diff-no-index-in-subdir (2025-08-09) 1 commit
+  (merged to 'next' on 2025-08-13 at 956899dc16)
+ + diff: --no-index should ignore the worktree
+
+ "git diff --no-index" run inside a subdirectory under control of a
+ Git repository operated at the top of the working tree and stripped
+ the prefix from the output, and oddballs like "-" (stdin) did not
+ work correctly because of it.  Correct the set-up by undoing what
+ the set-up sequence did to cwd and prefix.
+
+ Will cook in 'next'.
+ source: <xmqq1ppk58ob.fsf@gitster.g>
+
+
+* je/doc-rebase (2025-08-15) 5 commits
+ - doc: git-rebase: update discussion of internals
+ - doc: git-rebase: move --onto explanation down
+ - doc: git rebase: clarify arguments syntax
+ - doc: git rebase: dedup merge conflict discussion
+ - doc: git-rebase: start with an example
+
+ Documentation for "git rebase" has been updated.
+
+ Will merge to 'next'?
+ source: <pull.1949.v8.git.1755276750.gitgitgadget@gmail.com>
+
+
+* rj/t6137-cygwin-fix (2025-08-08) 1 commit
+  (merged to 'next' on 2025-08-12 at f5acbbb35a)
+ + t6137-*.sh: fix test failure on cygwin
+
+ Test fix for breakage introduced in Git 2.50.
+
+ Will cook in 'next'.
+ source: <5514f2fd-3307-42c8-97ac-bc2147a7ba41@ramsayjones.plus.com>
+
+
+* ps/reftable-libgit2-cleanup (2025-08-12) 8 commits
+ - refs/reftable: always reload stacks when creating lock
+ - reftable: don't second-guess errors from flock interface
+ - reftable/stack: handle outdated stacks when compacting
+ - reftable/stack: allow passing flags to `reftable_stack_add()`
+ - reftable/stack: fix compiler warning due to missing braces
+ - reftable/stack: reorder code to avoid forward declarations
+ - reftable/writer: drop Git-specific `QSORT()` macro
+ - reftable/writer: fix type used for number of records
+
+ Code clean-ups.
+
+ Will merge to 'next'?
+ source: <20250812-pks-reftable-fixes-for-libgit2-v3-0-cf3b2267867e@pks.im>
+
+
+* tc/diff-tree-max-depth (2025-08-07) 3 commits
+  (merged to 'next' on 2025-08-15 at dddb2275d4)
+ + diff: teach tree-diff a max-depth parameter
+ + within_depth: fix return for empty path
+ + combine-diff: zero memory used for callback filepairs
+
+ "git diff-tree" learned "--max-depth" option.
+
+ Will cook in 'next'.
+ source: <20250807-toon-max-depth-v2-0-50b7e5c81665@iotcl.com>
+
+
+* dk/help-all (2025-08-03) 3 commits
+  (merged to 'next' on 2025-08-13 at 6dce87c0b5)
+ + builtin: also setup gently for --help-all
+ + parse-options: refactor flags for usage_with_options_internal
+ + Merge branch 'ua/t1517-short-help-tests' into dk/help-all
+ (this branch uses ua/t1517-short-help-tests.)
+
+ "git cmd --help-all" outside repository.
+
+ Will cook in 'next'.
+ source: <20250803012613.54086-1-ben.knoble+github@gmail.com>
+
+
+* lc/rebase-trailer (2025-08-03) 2 commits
+ - rebase: support --trailer
+ - trailer: append trailers in-process and drop the fork to `interpret-trailers`
+
+ Expecting a reroll.
+ cf. <198826af571.62b85cb31711042.2415806544948206668@linux.beauty>
+ source: <20250803150059.402017-1-me@linux.beauty>
+
+
+* ly/diff-name-only-with-diff-from-content (2025-08-07) 1 commit
+  (merged to 'next' on 2025-08-13 at 662b1ed5c5)
+ + diff: ensure consistent diff behavior with ignore options
+
+ Various options to "git diff" that makes comparison ignore certain
+ aspects of the differences (like "space changes are ignored",
+ "differences in lines that match these regular expressions are
+ ignored") did not work well with "--name-only" and friends.
+
+ Will cook in 'next'.
+ source: <20250808033019.78817-1-yldhome2d2@gmail.com>
+
+
+* rs/describe-with-prio-queue (2025-08-03) 2 commits
+  (merged to 'next' on 2025-08-07 at 5ebcaaf8b8)
+ + describe: use prio_queue_replace()
+ + describe: use prio_queue
+
+ "git describe" has been optimized by using better data structure.
+
+ Will cook in 'next'.
+ source: <36d5b59a-a99a-4a6f-b637-dfb0b760660f@web.de>
+
+
+* ps/object-store-midx-dedup-info (2025-08-11) 11 commits
+ - midx: compute paths via their source
+ - midx: stop duplicating info redundant with its owning source
+ - midx: write multi-pack indices via their source
+ - midx: load multi-pack indices via their source
+ - midx: drop redundant `struct repository` parameter
+ - odb: simplify calling `link_alt_odb_entry()`
+ - odb: return newly created in-memory sources
+ - odb: consistently use "dir" to refer to alternate's directory
+ - odb: allow `odb_find_source()` to fail
+ - odb: store locality in object database sources
+ - Merge branch 'ps/object-store-midx' into ps/object-store-midx-dedup-info
+
+ Further code clean-up for multi-pack-index code paths.
+
+ Will merge to 'next'?
+ source: <20250811-b4-pks-midx-deduplicate-source-info-v3-0-e442bdf2b4ad@pks.im>
+
+
+* jc/strbuf-split (2025-07-31) 13 commits
+  (merged to 'next' on 2025-08-11 at ddf662f7e9)
+ + trace2: do not use strbuf_split*()
+ + trace2: trim_trailing_newline followed by trim is a no-op
+ + sub-process: do not use strbuf_split*()
+ + environment: do not use strbuf_split*()
+ + config: do not use strbuf_split()
+ + notes: do not use strbuf_split*()
+ + merge-tree: do not use strbuf_split*()
+ + clean: do not use strbuf_split*() [part 2]
+ + clean: do not pass the whole structure when it is not necessary
+ + clean: do not use strbuf_split*() [part 1]
+ + clean: do not pass strbuf by value
+ + wt-status: avoid strbuf_split*()
+ + Merge branch 'jc/string-list-split' into jc/strbuf-split
+ (this branch uses jc/string-list-split.)
+
+ Arrays of strbuf is often a wrong data structure to use, and
+ strbuf_split*() family of functions that create them often have
+ better alternatives.
+
+ Update several code paths and replace strbuf_split*().
+
+ Will cook in 'next'.
+ source: <20250731225433.4028872-1-gitster@pobox.com>
+
+
+* jc/string-list-split (2025-08-01) 7 commits
+  (merged to 'next' on 2025-08-11 at 160ff9d174)
+ + string-list: split-then-remove-empty can be done while splitting
+ + string-list: optionally omit empty string pieces in string_list_split*()
+ + diff: simplify parsing of diff.colormovedws
+ + string-list: optionally trim string pieces split by string_list_split*()
+ + string-list: unify string_list_split* functions
+ + string-list: align string_list_split() with its _in_place() counterpart
+ + string-list: report programming error with BUG
+ (this branch is used by jc/strbuf-split.)
+
+ string_list_split*() family of functions have been extended to
+ simplify common use cases.
+
+ Will cook in 'next'.
+ source: <20250801220423.1230969-1-gitster@pobox.com>
+
+
+* am/xdiff-hash-tweak (2025-07-28) 3 commits
+ - fixup! xdiff: optimize xdl_hash_record_verbatim
+ - xdiff: optimize xdl_hash_record_verbatim
+ - xdiff: refactor xdl_hash_record()
+
+ Inspired by Ezekiel's recent effort to showcase Rust interface, the
+ hash function implementation used to hash lines have been updated
+ to the one used for ELF symbol lookup by Glibc.
+
+ Still being discussed (AUG13)
+ cf. <b118903c-a50a-4ae4-b41e-1c47c37218c4@gmail.com>
+ source: <20250728190520.10962-1-amonakov@ispras.ru>
+
+
+* ps/remote-rename-fix (2025-07-31) 7 commits
+  (merged to 'next' on 2025-08-07 at 227d2faf29)
+ + builtin/remote: only iterate through refs that are to be renamed
+ + builtin/remote: rework how remote refs get renamed
+ + builtin/remote: determine whether refs need renaming early on
+ + builtin/remote: fix sign comparison warnings
+ + refs: simplify logic when migrating reflog entries
+ + refs: pass refname when invoking reflog entry callback
+ + Merge branch 'ps/reflog-migrate-fixes' into ps/remote-rename-fix
+ (this branch uses ps/reflog-migrate-fixes.)
+
+ "git remote rename origin upstream" failed to move origin/HEAD to
+ upstream/HEAD when origin/HEAD is unborn and performed other
+ renames extremely inefficiently, which has been corrected.
+
+ Will cook in 'next'.
+ source: <20250731-pks-remote-rename-improvements-v2-0-dda6f083674d@pks.im>
+
+
+* ag/send-email-imap-sent (2025-08-11) 2 commits
+ - send-email: enable copying emails to an IMAP folder without actually sending them
+ - send-email: add ability to send a copy of sent emails to an IMAP folder
+
+ "git send-email" learned to drive "git imap-send" to store already
+ sent e-mails in an IMAP folder.
+
+ Will merge to 'next'?
+ source: <PN3PR01MB9597E8E33868386C997D2563B82BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+
+
+* en/ort-rename-fixes (2025-08-06) 7 commits
+  (merged to 'next' on 2025-08-12 at 02536ed675)
+ + merge-ort: fix directory rename on top of source of other rename/delete
+ + merge-ort: fix incorrect file handling
+ + merge-ort: clarify the interning of strings in opt->priv->path
+ + t6423: fix missed staging of file in testcases 12i,12j,12k
+ + t6423: document two bugs with rename-to-self testcases
+ + merge-ort: drop unnecessary temporary in check_for_directory_rename()
+ + merge-ort: update comments to modern testfile location
+
+ Various bugs about rename handling in "ort" merge strategy have
+ been fixed.
+
+ Will cook in 'next'.
+ source: <pull.1943.v3.git.1754522122.gitgitgadget@gmail.com>
+
+
+* ps/reflog-migrate-fixes (2025-08-05) 9 commits
+  (merged to 'next' on 2025-08-07 at 8068e2ad68)
+ + refs: fix invalid old object IDs when migrating reflogs
+ + refs: stop unsetting REF_HAVE_OLD for log-only updates
+ + refs/files: detect race when generating reflog entry for HEAD
+ + refs: fix identity for migrated reflogs
+ + ident: fix type of string length parameter
+ + builtin/reflog: implement subcommand to write new entries
+ + refs: export `ref_transaction_update_reflog()`
+ + builtin/reflog: improve grouping of subcommands
+ + Documentation/git-reflog: convert to use synopsis type
+ (this branch is used by ps/remote-rename-fix.)
+
+ "git refs migrate" to migrate the reflog entries from a refs
+ backend to another had a handful of bugs squashed.
+
+ Will cook in 'next'.
+ source: <20250806-pks-reflog-append-v6-0-a50839653766@pks.im>
+
+
+* ds/sparse-checkout-clean (2025-07-16) 9 commits
+ - sparse-checkout: make 'clean' clear more files
+ - t: expand tests around sparse merges and clean
+ - sparse-index: point users to new 'clean' action
+ - sparse-checkout: add --verbose option to 'clean'
+ - dir: add generic "walk all files" helper
+ - sparse-checkout: match some 'clean' behavior
+ - sparse-checkout: add basics of 'clean' command
+ - sparse-checkout: remove use of the_repository
+ - Merge branch 'ac/deglobal-sparse-variables' into ds/sparse-checkout-clean
+ (this branch uses ac/deglobal-sparse-variables.)
+
+ "git sparse-checkout" subcommand learned a new "clean" action to
+ prune otherwise unused working-tree files that are outside the
+ areas of interest.
+
+ Needs to wait for the base topic to solidify.
+ source: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
+
+
+* pw/3.0-commentchar-auto-deprecation (2025-07-31) 4 commits
+ - commit: print advice when core.commentString=auto
+ - config: warn on core.commentString=auto
+ - breaking-changes: deprecate support for core.commentString=auto
+ - Merge branch 'ps/config-wo-the-repository' into pw/3.0-commentchar-auto-deprecation
+
+ Proposes to deprecate "core.commentChar=auto" that attempts to
+ dynamically pick a suitable comment character, as it is too much
+ trouble to support for little benefit.
+
+ Will merge to 'next'?
+ source: <cover.1753975294.git.phillip.wood@dunelm.org.uk>
+
+
+* ua/t1517-short-help-tests (2025-08-07) 3 commits
+  (merged to 'next' on 2025-08-12 at 55d20e1985)
+ + t5304: move `prune -h` test from t1517
+ + t5200: move `update-server-info -h` test from t1517
+ + t/t1517: automate `git subcmd -h` tests outside a repository
+ (this branch is used by ad/t1517-short-help-tests-fix and dk/help-all.)
+
+ Test shuffling.
+
+ Will cook in 'next'.
+ source: <20250808010651.591906-1-usmanakinyemi202@gmail.com>
+
+
+* tc/last-modified (2025-08-05) 4 commits
+ - fixup! last-modified: new subcommand to show when files were last modified
+ - last-modified: use Bloom filters when available
+ - t/perf: add last-modified perf script
+ - last-modified: new subcommand to show when files were last modified
+
+ A new command "git last-modified" is proposed to show the closest
+ ancestor commit that touched each path.
+ source: <20250730175510.987383-1-toon@iotcl.com>
+
+
+* lo/repo-info (2025-08-16) 5 commits
+ - repo: add the --format flag
+ - repo: add the field layout.shallow
+ - repo: add the field layout.bare
+ - repo: add the field references.format
+ - repo: declare the repo command
+
+ A new subcommand "git repo" gives users a way to grab various
+ repository characteristics.
+
+ Will merge to 'next'?
+ source: <20250816224603.3307-1-lucasseikioshiro@gmail.com>
+
+
+* ac/deglobal-sparse-variables (2025-07-18) 3 commits
+ - environment: remove the global variable 'sparse_expect_files_outside_of_patterns'
+ - environment: move access to "core.sparsecheckoutcone" into repo_settings
+ - environment: move access to "core.sparsecheckout" into repo_settings
+ (this branch is used by ds/sparse-checkout-clean.)
+
+ Two global variables related to sparse checkout have been moved to
+ the repository settings structure.
+
+ Expecting a reroll.
+ cf. <CAE7as+bnG6KgA8X_n36pqP15bmyM6re+xEb1MOXKvZSUdJ8Arg@mail.gmail.com>
+ source: <cover.1752882401.git.ayu.chandekar@gmail.com>
+
+
+* tb/prepare-midx-pack-cleanup (2025-05-28) 5 commits
+ - midx: return a `packed_git` pointer from `prepare_midx_pack()`
+ - midx-write.c: extract inner loop from fill_packs_from_midx()
+ - midx-write.c: guard against incremental MIDXs in want_included_pack()
+ - midx: access pack names through `nth_midxed_pack_name()`
+ - Merge branch 'ps/midx-negative-packfile-cache' into tb/prepare-midx-pack-cleanup
+
+ Improvement on Multi-pack-index API.
+
+ Expecting a reroll.
+ cf. <20250530065034.GC1321283@coredump.intra.peff.net>
+ source: <cover.1748473122.git.me@ttaylorr.com>
+
+
+* cc/promisor-remote-capability (2025-07-31) 5 commits
+ - promisor-remote: use string constants for 'name' and 'url' too
+ - promisor-remote: allow a client to check fields
+ - promisor-remote: refactor how we parse advertised fields
+ - promisor-remote: allow a server to advertise more fields
+ - promisor-remote: refactor to get rid of 'struct strvec'
+
+ The "promisor-remote" capability mechanism has been updated to
+ allow the "partialCloneFilter" settings and the "token" value to be
+ communicated from the server side.
+
+ Expecting a reroll.
+ source: <20250731072401.3817074-1-christian.couder@gmail.com>
