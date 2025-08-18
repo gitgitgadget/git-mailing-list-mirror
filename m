@@ -1,45 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6B222173A
-	for <git@vger.kernel.org>; Mon, 18 Aug 2025 20:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8F4147C9B
+	for <git@vger.kernel.org>; Mon, 18 Aug 2025 20:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755550695; cv=none; b=rz6xne/aBnTppCrRuFT2ZQWSAe8hHrwFKS5X45VOEjWcvaAKU1R+tb1qxD5+1U76KgcKxDmlAMqOF6tGWjnAnQvLD/qEuIKO11VOlk6QfBmsOvTpJXDm+Q1sDwdb+58uikwaSRaBZ4Pb4RmWm5Jv1j+cfknwI1pq1h2KbblAPkI=
+	t=1755550772; cv=none; b=BIP5J5YxBHEj0Mtq/mkg5vsYj4Ztu1K5M6gIZCLIKVw3vDUQBL9QeV4hM0wkV8FSTNJk9iGgUy2HKbqXCxMK+sA4hg33CTMfyBlwT7pyReVSURxx+/ucI2LjynuoYqzOgZRtqqPkcs3X/Em6JCYUBXABf24GxmhgYj5IfdB4by4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755550695; c=relaxed/simple;
-	bh=P4tCR4orzzxiR/k3DshM7mG/cNm1jmBJb9maR6hQ42w=;
+	s=arc-20240116; t=1755550772; c=relaxed/simple;
+	bh=hp1Kg5m2FT4ilQ7fy44pe9/+7ZhwF4iO4zPTpjeQ0fI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NhPQmZA3Ocl3CBQahbu5QIMPzjD4J1ADOqiIfWwUWsYexxof+uBV+YeDtV29mY8r3FG8xggcgBVSXRnrKrCVeWzw8/DwlA2Rfh+WGqb+cI9Uqb651SYHnDQqH6b54au0M1qDlmEFvus0b3nEvDq7Jt+JXFvgsMje/epQza0HBDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MVHDGe7y; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=LZ/oZFDdmXrR9N1p/+luAi/0NL2LO9+zvVyCcGDCtLKWyTBFIKnU61nFbeklKMvTknFGvCVNWodtU9L/InDfM0zX5k+SDZHQU2ZwdjOkf/glOmsF+yViD7oieBldFUY3REWJkZylhdnpYIkeVyslvWxJQWvu/N5LYfj6YNmhfig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FAYJ3JmH; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MVHDGe7y"
-Received: (qmail 23247 invoked by uid 109); 18 Aug 2025 20:58:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=P4tCR4orzzxiR/k3DshM7mG/cNm1jmBJb9maR6hQ42w=; b=MVHDGe7y/9+agpUqAHsXRvpwoifvJcoyRhyTLP7r/DlmEOuTqFPv8+5PhhMtSvuRRFTaNLb6Z6aYpZLA3q3LTvE6tmF6uK15uQOuTJFudShmxY+dRC+YeIRxOih5/zs1TaloIoX84DFnfGkm22mytX5q70dwVQflkM5INy/wrVTYI/1PLw4/D5EgXt7hpoZJDyUGNJANQtL6x01ucdIEZ5ey46yMb89HjhILxsh/m/WDM6REjV6XB3/kZhW8TWp4eDwI8+5HQR3rQIFjqzp3uuIEoOOtUsD7IKMw5i3Sw9b0u4ABEHquL+ZSzV4sj/mBZ9KqFxn8JUCh77gQWJ7xLA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FAYJ3JmH"
+Received: (qmail 23264 invoked by uid 109); 18 Aug 2025 20:59:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=hp1Kg5m2FT4ilQ7fy44pe9/+7ZhwF4iO4zPTpjeQ0fI=; b=FAYJ3JmHg6zQMBENnzfH5PAVHKvXiunfkitpk2DVf2Gsk8QpjmPXtNdgYoxxKm3e41N/32/KOIEhV88ooOOaHVdlgsbADBAzw7/XhwaY4Cu4e/7A5AP7KoEBvyHMuzptMGhfG7z8EUZ44j5ef53W+7grXQr0JhNfB53eYpQ7lNeWhaMdbscXjKrGZ12eSpo5SLScpCSNOtcYKLbk+pjhsmTuQXRMi3wols/wysph7ponfFX7pJufXDDbz5xFwQ2IrxEoQHTDqAZaFdu9vk63FPR1iUWrKpZY+z3B+ZyBecw76W9x4DVIl2Ro2d1jjYzaFgeWz8Htwax5EM96MwEf+Q==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 18 Aug 2025 20:58:13 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 18 Aug 2025 20:59:30 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30242 invoked by uid 111); 18 Aug 2025 20:58:12 -0000
+Received: (qmail 30268 invoked by uid 111); 18 Aug 2025 20:59:29 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Aug 2025 16:58:12 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Aug 2025 16:59:29 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 18 Aug 2025 16:58:12 -0400
+Date: Mon, 18 Aug 2025 16:59:29 -0400
 From: Jeff King <peff@peff.net>
 To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc: phillip.wood@dunelm.org.uk, Cheng <prophecheng@stu.pku.edu.cn>,
 	git@vger.kernel.org
-Subject: [PATCH 0/5] fix segfault and other oddities describing blobs
-Message-ID: <20250818205812.GA1018043@coredump.intra.peff.net>
-References: <AAkArwD3JXZP4EIjvKF0Waow.1.1755044612233.Hmail.2201111603@stu.pku.edu.cn>
- <5303c45e-d95b-4bc8-9cd1-bf4efe6bfbae@gmail.com>
- <20250814232644.GC2937@coredump.intra.peff.net>
- <7f289d4f-0a9d-480d-a5a9-7f4d4d24626b@web.de>
- <20250818044807.GA51803@coredump.intra.peff.net>
- <20250818050545.GA62231@coredump.intra.peff.net>
- <194415e5-2adc-4b3f-98d3-0fde4a288b5c@web.de>
- <20250818202140.GA1014353@coredump.intra.peff.net>
+Subject: [PATCH 1/5] describe: pass oid struct by const pointer
+Message-ID: <20250818205929.GA1024556@coredump.intra.peff.net>
+References: <20250818205812.GA1018043@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,23 +41,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250818202140.GA1014353@coredump.intra.peff.net>
+In-Reply-To: <20250818205812.GA1018043@coredump.intra.peff.net>
 
-On Mon, Aug 18, 2025 at 04:21:40PM -0400, Jeff King wrote:
+We pass a "struct object_id" to describe_blob() by value. This isn't
+wrong, as an oid is composed only of copy-able values. But it's unusual;
+typically we pass structs by const pointer, including object_ids. Let's
+do so.
 
-> I'll send out a few patches in a moment (I guess I summoned some
-> willpower in the interim).
+It similarly makes sense for us to hold that pointer in the callback
+data (rather than yet another copy of the oid).
 
-Here's what I came up with.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Not strictly related, but I noticed while in the area and remembered a
+recent discussion in this direction.
 
-  [1/5]: describe: pass oid struct by const pointer
-  [2/5]: describe: error if blob not found
-  [3/5]: describe: catch unborn branch in describe_blob()
-  [4/5]: describe: handle blob traversal with no commits
-  [5/5]: describe: pass commit to describe_commit()
+ builtin/describe.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
- builtin/describe.c  | 41 +++++++++++++++++++++++++----------------
- t/t6120-describe.sh | 14 ++++++++++++++
- 2 files changed, 39 insertions(+), 16 deletions(-)
+diff --git a/builtin/describe.c b/builtin/describe.c
+index d7dd8139de..383d3e6b9a 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -490,7 +490,7 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
+ 
+ struct process_commit_data {
+ 	struct object_id current_commit;
+-	struct object_id looking_for;
++	const struct object_id *looking_for;
+ 	struct strbuf *dst;
+ 	struct rev_info *revs;
+ };
+@@ -505,7 +505,7 @@ static void process_object(struct object *obj, const char *path, void *data)
+ {
+ 	struct process_commit_data *pcd = data;
+ 
+-	if (oideq(&pcd->looking_for, &obj->oid) && !pcd->dst->len) {
++	if (oideq(pcd->looking_for, &obj->oid) && !pcd->dst->len) {
+ 		reset_revision_walk();
+ 		describe_commit(&pcd->current_commit, pcd->dst);
+ 		strbuf_addf(pcd->dst, ":%s", path);
+@@ -514,7 +514,7 @@ static void process_object(struct object *obj, const char *path, void *data)
+ 	}
+ }
+ 
+-static void describe_blob(struct object_id oid, struct strbuf *dst)
++static void describe_blob(const struct object_id *oid, struct strbuf *dst)
+ {
+ 	struct rev_info revs;
+ 	struct strvec args = STRVEC_INIT;
+@@ -554,7 +554,7 @@ static void describe(const char *arg, int last_one)
+ 		describe_commit(&oid, &sb);
+ 	else if (odb_read_object_info(the_repository->objects,
+ 				      &oid, NULL) == OBJ_BLOB)
+-		describe_blob(oid, &sb);
++		describe_blob(&oid, &sb);
+ 	else
+ 		die(_("%s is neither a commit nor blob"), arg);
+ 
+-- 
+2.51.0.326.gecbb38d78e
 
--Peff
