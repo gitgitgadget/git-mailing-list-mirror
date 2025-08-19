@@ -1,239 +1,109 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from sender4-pp-o95.zoho.com (sender4-pp-o95.zoho.com [136.143.188.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F8D338F29
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 12:57:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755608251; cv=none; b=oYVSUgtroFw7LD8k7mP1ZU1nyQTG5XjraTL855XRBSbuW8KUB4usY4Kv2zM78rcQAFcY85EeRNC1rbHD9WG1HRowSUhj/MBQ03oieoOQvLHV2WqbkeH6cxFxmd9fMcC6x/9yNLeTC7ZJAfiip6MRrB90qseU3f+u+/ylJt0XLDU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755608251; c=relaxed/simple;
-	bh=a+f4Q4rUZ/o6d0IoXS3bpwkI/cC4iC48Y8SEk+Fhd7Y=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=rafrass0zGHcTWODaqX5E6mdIjj5eRseqgg8p/aJ2Y38PN+13KTjXJ/+2ZPMQfLMPQViMLvJRAf36Qg9t/11hMXvesaQItXLCMAaJddGMWlcZ9vxXPr/eUSKnIr7udUxlfaXx75nHbVnLKm6v2qOy4cg7ZvO0c8d4/Glb1p2dOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=pNvJ2OGo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cIaZtgNZ; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734D6340DAE;
+	Tue, 19 Aug 2025 13:57:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.95
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755611859; cv=pass; b=twW3ib36TdZYNbgp+iW4+EZVTy0bKij+gGLSWdD5F2cfg/TBxXs6aHKghl2rFTlUUF4uk9U1e/uGdvr2CHjHE3L7yQ1+RYiXQVJ7BuKLWJa5HCxQTOTCfcavB1tyfOBNpp4WpO3LeiWGaQzkTrqtu2mGfKt77e1/Cmn5xk+G98Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755611859; c=relaxed/simple;
+	bh=/u5Ee+2oMY6FMONv07SJaZVrVSz86ClpSDAzVozXbMA=;
+	h=Date:From:To:Message-ID:In-Reply-To:Subject:MIME-Version:
+	 Content-Type; b=qJQgeajvlHLL3fFO8d0J02lLmIHuMX33jEDws7IGuiPlai6vUH7WEqMSZBMvLskiNUjLV5vB1cMb7S3cqm+CzlhIRflm1qnNJFFoGo262WouhKRi6DFSYPuPEUlJGuB+Iasc9Fgn7t0mrZAnBzU/3/Rvunnu/RvWmIWhBhtpX3c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com; spf=pass smtp.mailfrom=zohomail.com; dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b=NdKKkhb9; arc=pass smtp.client-ip=136.143.188.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zohomail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="pNvJ2OGo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cIaZtgNZ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id B198BEC05F7;
-	Tue, 19 Aug 2025 08:57:27 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Tue, 19 Aug 2025 08:57:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755608247;
-	 x=1755694647; bh=LKXy++V02eTfoMBXFpYWJ24L9co59xI7iXkkl5XjtRc=; b=
-	pNvJ2OGokuoiKciWbA0rIbT2llcJv76tu/PvKSqlhMWp0dmbG2Fs1QHl8Nc9RfXT
-	wVJ9w7mYZTc8MISzZrM8wCWAWN59nE6tDecYGcHw1va1GY7GfD/abDjRmMKv1i1S
-	sVWDcH86YAhOfZgZiV4eI9mbsioadYHMOlX/fJfK0ZotkVlOE9RQTA9L/rH3DtVT
-	/kbznYkyrRHYhMHNvSUnV0iE87W8y7C+Svocy3zSOz7EOoBcTI6fViWerxCqPnQh
-	eWF6ph2hANj4OQ+Uf+2lm6e3FiCIUcA/EPCppa1qBjpQ4FklQICStyHfhTa5hIN+
-	zwY8zJxRhvnzbWrXeLmU/A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755608247; x=
-	1755694647; bh=LKXy++V02eTfoMBXFpYWJ24L9co59xI7iXkkl5XjtRc=; b=c
-	IaZtgNZqvrpktI+YbG+KBIOYjUDSHl5FKdY64EYf4ZgQ/U+nqFvtCf86UoXD434P
-	lzCDlcvzOSHpWF6X7567Ksyi7birD99j44NSDA0ZmLhtzDwgb6YRnfynzlUTwyXw
-	TaLGi6gg+j4JPOQ6XyMTUT9L2LQYJ1e6EJHB8CBa+7A+/x9o/tKgZ9K22LA5YADw
-	7QWJXAS9cduHZxzTaQYEt/1Nxmn9mdhrEZcSfOrkX6aFoxC1A8T3kAFrdi3VV6Mw
-	5Y6ko2hhTNYa+5U8uacOi27Cy4Ry1acYjFiEDKjDN82puZdX4TSdxQukvW2g/0LI
-	5ea3SPHo3lBroc+IxQRLA==
-X-ME-Sender: <xms:t3SkaOx9rp3rJQ8qmqX3S5qxDnG9KC65te8s1zI5fGlSlZE-luUhdA>
-    <xme:t3SkaKTB8-1cimOqwwbR7-xD-UVAzmMzBjfWSE7WyB94cs4l0XwuMW0zT-eQIdsnP
-    mrzYyS5nKC8E1ymS2k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheehheegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedflfhulhhi
-    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
-    epgfefteefteduudelffehueefgefhjeejffetudektdevtdfggedvgeeukeffuefhnecu
-    ffhomhgrihhnpeifihiirghrugiiihhnvghsrdgtohhmnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirgesjhhvnhhsrdgtrgdpnhgs
-    pghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvh
-    hilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtoheptghhrhhishdrthhorhgvkhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:t3SkaNMSICFEytUxdvzefAn5_DVkgforoIcDrddaYGkC8zhYj83Yaw>
-    <xmx:t3SkaAtli6Yh-k6vl9rLMJyX3-Mo6Z89VTxrwda1tgGBxFMJDpK9BQ>
-    <xmx:t3SkaIYGdmUesslsmliUzn1zdQ45IuPjBWqZLibAYV60EdWNUjus7A>
-    <xmx:t3SkaKyhrYK3PgUBMQ0f1bf08u_CDxn8-M25ItU03dfTCTOy6_djhg>
-    <xmx:t3SkaKlTi8wgmhm9F8VvmMKw1jfBa-jaQ6lrzEXkYiLU8mdHCWRiDgnH>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 6A1ED7840B3; Tue, 19 Aug 2025 08:57:27 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b="NdKKkhb9"
+ARC-Seal: i=1; a=rsa-sha256; t=1755611829; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=KLJKOj7wNcVYwJ/KY8Ac53Dn4ayb8EzsNRhSExYL/FYVLidzB13YmCjzhSyYJl5CdnlbfRF48Uxy9Jw/C5nX1d6ipzgrH+PeErOHZl+h1blquFyINajYPb+WDA9NaEvRTZtskHQBpJXAG7D9kDnfguwG/SazJ/9ohSYgjjH1ATw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1755611829; h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=/u5Ee+2oMY6FMONv07SJaZVrVSz86ClpSDAzVozXbMA=; 
+	b=RoKm2StobtTXHs6nKP8OYaKvvvIgurA9bkUtFG5TRzdnQm/Goc6fzy2I0IUrRB8Yw9KYtBtW1ah1HOGLr9p25KUuhcHVaL1E20zBwKk6y1Sx8GbvWxU97xQfLNlolui12Kju2tLdwYp6zHk9IoYp+dpUaXP05xLJXt8bUx/utvk=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zohomail.com;
+	spf=pass  smtp.mailfrom=safinaskar@zohomail.com;
+	dmarc=pass header.from=<safinaskar@zohomail.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1755611829;
+	s=zm2022; d=zohomail.com; i=safinaskar@zohomail.com;
+	h=Date:Date:From:From:To:To:Message-ID:In-Reply-To:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To:Cc;
+	bh=/u5Ee+2oMY6FMONv07SJaZVrVSz86ClpSDAzVozXbMA=;
+	b=NdKKkhb9GDqr3pl6WielOVJs2gA5Q/zXnXUA9iFOGyvNd6Y8b7d4e72NhN342iGf
+	nVXRPJYX42q4WJclxFsV53N6RyzECE06La366hYV3oPaAa4uFq6quwI1M/gqcksFPnd
+	5UFne8KTabPEmlGdlx+S95saxuWmGTgVPyNfAqP8=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1755611828327196.99370704706973; Tue, 19 Aug 2025 06:57:08 -0700 (PDT)
+Received: from  [212.73.77.104] by mail.zoho.com
+	with HTTP;Tue, 19 Aug 2025 06:57:08 -0700 (PDT)
+Date: Tue, 19 Aug 2025 17:57:08 +0400
+From: Askar Safin <safinaskar@zohomail.com>
+To: "git" <git@vger.kernel.org>, "gitster" <gitster@pobox.com>,
+	"helpdesk" <helpdesk@kernel.org>,
+	"kernelnewbies" <kernelnewbies@kernelnewbies.org>,
+	"kernel-janitors" <kernel-janitors@vger.kernel.org>,
+	"linux-doc" <linux-doc@vger.kernel.org>
+Message-ID: <198c29e9058.119e3a5c065010.5888624019176274871@zohomail.com>
+In-Reply-To: 
+Subject: git: list of my complaints about future graft removal
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AOSFC39IWGa7
-Date: Tue, 19 Aug 2025 08:57:07 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
- "Chris Torek" <chris.torek@gmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Message-Id: <007dd7bb-352e-4682-8ca2-8256d9a47e07@app.fastmail.com>
-In-Reply-To: <xmqqsehspdtr.fsf@gitster.g>
-References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
- <pull.1952.v2.git.1755127218.gitgitgadget@gmail.com>
- <ce1eafb02860b390da9359f92fcf098b7cdd3a94.1755127218.git.gitgitgadget@gmail.com>
- <xmqq349ty254.fsf@gitster.g>
- <886787d2-26b5-4451-a105-9ab522e38ad6@app.fastmail.com>
- <xmqqsehspdtr.fsf@gitster.g>
-Subject: Re: [PATCH v2 3/4] doc: git-add: make explanation less dry
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Feedback-ID: rr08011227f3b7956650712fa76dd750ec000041389be543ffda8140eb467d40bd94f0665362ddbc9c02225b:zu08011227b3f45efc54d3316da1dc20db00003685f09e47a9bc1a98f3e666c7e1b3fc9ee97412dc08315d7e:rf0801122c39bd46176ce042e9e17b1f02000053356318c787fe63794ac9cbd4949f841d80c0a8c17808e0303302435f41:ZohoMail
 
-> Yes, you can lose your novice status and it is hard to take it back
-> ;-)  I agree with you that the next best thing you can do is to see
-> how well folks who still have that status do.
+Hi.
 
-I've returned with some data! I got feedback on the `git-add` man page f=
-rom
-13 Git users. It's a group of pretty experienced users: half of them hav=
-e been
-using Git for 5-10 years, and about half for 10+ years. Even though ther=
-e are
-no "novices" here, they still provided useful feedback about what's conf=
-using.
+I just have read in https://github.com/git/git/blob/v2.51.0/Documentation/BreakingChanges.adoc that
+git grafts will be removed in git 3.0.
 
-Here's what I took away from the feedback and a summary of the comments.=20
-First, what I took away:
+Let me share my list of complaints/objections/thoughts about this.
 
-* The term "index" is hard to understand even for very experienced Git u=
-sers,
-  and even for some users who say that they are extremely comfortable wi=
-th Git.
-* The second sentence in the man page is too long and hard to parse.
-* The "(quote your globs before the shell)" phrasing is confusing.
-* I thought mentioning that you can use `git reset` to undo a `git add` =
-was a
-  good idea.
-* Leaving something similar to the existing phrasing around "snapshot" s=
-eems
-  fine, nobody in this group was confused, though of course this is a gr=
-oup
-  of people who already understand how `git add` works.
+(And also some info for kernel.org admins.)
 
-Here's my summary of the comments on the existing man page. I collected =
-them
-using this little tool I built: https://text-feedback.wizardzines.com/gi=
-t-add/.
-I'm happy to also figure out how to best share the "raw" comments if fol=
-ks would
-find that helpful. I've quoted the current man page text for context.
+* As well as I understand, Linux history repo
+( https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/ )
+relies on grafts. It is supposed that whoever clones that repo,
+should manually graft latest commit of history repo with earliest commit
+of main Linux history. Also that person should graft two other commits of history
+repo (as well as I understand).
 
-> This command updates the index using the current content found in the =
-working
-> tree, to prepare the content staged for the next commit. It typically =
-adds the
-> current content of existing paths as a whole, but with some options it=
- can also
-> be used to add content with only part of the changes made to the worki=
-ng tree
-> files applied, or remove paths that do not exist in the working tree a=
-nymore.
+So, git and/or kernel.org people, please, ensure that this history repo
+will continue to work after removal of grafts.
 
-This was the paragraph with the most "this is confusing" comments. Here =
-are the
-main themes:
+Also, currently this is very hard to discover how to get full Linux
+history. If we type "how to get unified linux kernel git history"
+to Google, we will get this answer:
+https://stackoverflow.com/a/8130239 ,
+which also points to this link:
+https://archive.org/details/git-history-of-linux .
 
-1. 7 people (more than half) said that they find the term "index" confus=
-ing. A
-   few example quotes:
-   * "updates the index" sounds like it increments something"
-   * "Is the index not just the content that is staged for commit? Do I =
-as an
-	 end user need to care about the difference? I've not heard the staged
-	 content referred to as the index before, even in git command outputs."
-2. 3 people said the second sentence is too long and hard to parse
-3. 2 people said that "It *typically* adds the current content of existi=
-ng
-   paths" is confusing (What's meant by "typically"? When does it not do=
- that?
-   is this referring to git add -A?)
+Both these links rely on grafts.
+So, please, make sure that whoever types "how to get unified linux kernel git history"
+into Google will get modern instructions in top links,
+which do not rely on grafts.
 
-> The "index" holds a snapshot of the content of the working tree, and i=
-t is
-> this snapshot that is taken as the contents of the next commit. Thus a=
-fter
-> making any changes to the working tree, and before running the commit
-> command, you must use the add command to add any new or modified
-> files to the index.
+Again: I strongly think that we should not remove graft support
+until https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/
+is made compatible with "git replace".
+history.git is valuable repo, and I think a lot of people use history.git .
 
-Nobody said they were confused by this, other than continued confusion a=
-round
-the term "index", like:
+Git release notes for 3.0 should mention how to get history.git
+working without grafts.
 
-* "Why quotes around "index" here but not when I first encounter the word
-  index?"
-* "I'm guessing index is used through git man pages and staging area is =
-a newer
-  way of saying this =F0=9F=A4=94"
-* "Can we just say staging area? I don't think of adding changes to the =
-"index""
+* As well as I understand, "git clone --depth=1" rely on grafts, too.
+I hope "git clone --depth=1" will continue to work.
 
-Comments not related to the term "index":
+--
+Askar Safin
+https://types.pl/@safinaskar
 
-* "Would prefer something more direct like "git lets you gradually build=
- the
-  contents of the next commit by adding things to the staging area...""
-* "I wish this came first in the description."
-* One person said they appreciated "you must use the add command [after =
-making
-  any changes]", since that confused them when they started using git
-
-> This command can be performed multiple times before a commit. It only =
-adds the
-> content of the specified file(s) at the time the add command is run; i=
-f you
-> want subsequent changes included in the next commit, then you must run=
- git add
-> again to add the new content to the index.
-
-No comments other than "Can be improved to be more clear."
-
-> Ignored files reached by directory recursion or filename globbing perf=
-ormed
-> by Git (quote your globs before the shell)
-
-4 people did not understand what "(quote your globs before the shell)" m=
-eant.
-("Does it mean that I need to escape glob quotation marks?").
-
-> The git status command can be used to obtain a summary of which files =
-have
-> changes that are staged for the next commit.
-
-Nobody said they were confused by this. One person said they were happy =
-it was
-mentioned, and one person suggested replacing "obtain" with "get".
-
-Things people said they learned from the man page:
-
-1. "I did not know that the globs would be treated potentially different=
-ly if
-   expanded by the shell before getting to git."
-2. "I never knew git could do globbing."
-3. "I didn't know you could remove paths with add"
-
-Things people suggested adding:
-
-1. "This should also document how to undo the effects of "git add". I'm =
-always
-   confused between how best to do so between "git restore" and "git res=
-et"."
