@@ -1,147 +1,97 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA13B353347
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 22:03:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9537353365
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 22:28:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755641037; cv=none; b=G2SsOSRLdinF2Kqz4LpuKoMSj7xWYK0mtP3NWYoEmgp6QyUM58e/Ev8X5YxnoOrynVgBLlA0y+9/EaoZZWZEgI8O/SwWcBeCmrk95gE7DFVcdkLYjJs91fVnZVjhSL3QDIOYB6pRgT5DNlMqCeaN5rbfXwbDvwbP+9ApUWmYtWc=
+	t=1755642497; cv=none; b=f/cnfjJ6PhRjhXzicuHwt3u+ecidgShHShIz2Nj3Z7msiq6oYoa48y85vSQAtJ27kFym+7XpgwfJzECtwuCUilJmssHWmi6mKNuv2ZBrAgqyqY8/JhYtBVLMdpC0c1QDKLDLdITnWmsucrsHsH2SLaDUySlgmKIY64sa8Woe+e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755641037; c=relaxed/simple;
-	bh=vBIccZzzwFbXHMPYzVxFBnWiPqg0bFCrN2UFvuPjc94=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=U+O0v7IED/qqbrKdno51fOyI7dhdK4FO7jtk8P2dYbGmhGlfOSq0FakIS6O1glh+37Lg64Qp+3NfqCqV3o+JirXlHmtnA/xdB3kh/WYJ4GlwCD1/49IvdvTy7B6C8I9pQS43dj0geAFpwcCsqXyIoVfRZITCh9OE8LLMLmY7Z9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MXBBfz8E; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755642497; c=relaxed/simple;
+	bh=ZKoW/xQvXxH1a2x4j9ANPXE+fAidX4Q5AhMHyN27EH4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mPDaFYQhlg9qRJ0bnHRjAlfMdo38jjCrQNzzC43aN9Zp8peOlqLq5n36YkbjwW9p0P4OKeNNKgRiisL40/ldxEzBCmGUdqV3KDVFXRxZyDk4MTJJ0uO2CwLg3YPwatG9uXIRL0X2xUZk7Xw2/UN9csuJy1uhDo8m9hldteB+TGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=Yyk5fmWM; arc=none smtp.client-ip=212.159.14.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MXBBfz8E"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-45a1b0cd668so31115325e9.3
-        for <git@vger.kernel.org>; Tue, 19 Aug 2025 15:03:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755641034; x=1756245834; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=A15Y5RcLKbBuRSra8NHjFYZVBfqQ3BRTv6nBg7jBKHw=;
-        b=MXBBfz8EvEjWoCJMu7ar3EKzT1kRNoCukT/v0yIl9dK27wxM7fuzBiRDbqF80haqw0
-         2fmz2mdPzk8uD6kOzP/HBZbx2WzpiDVqtW0z5g0AlcVg+5Bz0WVFd/X2Xn+nNsipLQZJ
-         nRnRWXIZKZqwibR/TSh4FlAmbRldv98PdzquNcIxbIbsHjWEBVqpue0rwsC5oq0XOBdS
-         Ap7oit31BfgIdWwzQ9Ns5c+6ypDaMptKM0JWiX1ohObVorlgDYtQ7yF1+hyJZrxKqa/S
-         pV6pHnUwF7gPN6Mt3E4PEiPNDuLMIY8JbVww7iMr+n2ktulQQSpcsQajiNuf76djmVqN
-         r7sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755641034; x=1756245834;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A15Y5RcLKbBuRSra8NHjFYZVBfqQ3BRTv6nBg7jBKHw=;
-        b=MBtnbvkwbvxcKuVRokIp5ABJWwcqXlOqBqPQp4bnHWLzRZ5flSdhzLf7gMus61ElTM
-         52QS7ypxDARzoGaI78rKDfE5P+YLmDotOKS43vh3Ka0eCpc1s8weWktZbPZHl3qX7qPv
-         WOau9KuVTkhqws+3R7irK5em+FBt/GYMfelKEWAK3Ek6/29u6aR00vXNqnIfTyoxKnFB
-         rRC814Id9/6tazgGgXww96DQS4rNrSZbf1BcmxNTv19O0+BFdW2im3NiUc1m8cgrPmn/
-         B1Mnm36+G0MvQJVfJxaoVB23nkrNfXeWIMaToIIoOjKlT/hjld7v+S9uScb0/7XGEeoQ
-         1Gyg==
-X-Gm-Message-State: AOJu0YydbuuD75tAjyiijaj+gr+wZsx1OIm9JuNPAspEOKBTEC6vd7WH
-	ASx7BozoqGxtJqd2FUtfqYNe+9FNPf7Dg4VEuycRb7oDiykZNB3P1cDZVQ+xf+wr
-X-Gm-Gg: ASbGncv87LM7Yvzynz7t820bSrUZ2WFEehI7P5/dQ4Q3BCjSzUyM6MdSblLKY9vZnoX
-	oES08CU5ML6MUjjClIZzLXBqkO+11yHE2no+MlgpmIGwoH64Crv3iGxpRWYANJfL/+MztArfFMG
-	JKKdxYb3ZcCcobJdbo7LEIEsdUBMw9uSB5YGEtNAvMIsIWIK7dYVEHf2yA3Ts4QYF4N/Yk+SNQa
-	gewT+jlDbzyLRNresbJ4jjiPc6oQVOb94m244yEksTMCtTSQ2wlv5h/1McGKGeqkqtD9VNJ/oYG
-	Aj31e7Fjyfwn3nSSf8v5Dk5m2H7cYelb3NeNP/1bwNHMR/or5keghRNOlVQ7HsQUrEOobaK6hwO
-	3O5/rdGlY0fUJTqbiAcHOum2t2xbZwPc73g==
-X-Google-Smtp-Source: AGHT+IFM+Q74E4K11B+u9Ew8wv8r/Or1CFNLW9u+r+wR69q8r6zbGYsZFTzdH5jGMSmf+McfH4qtKA==
-X-Received: by 2002:a05:600c:3b09:b0:459:e440:61c7 with SMTP id 5b1f17b1804b1-45b47a09c5dmr3817705e9.31.1755641033427;
-        Tue, 19 Aug 2025 15:03:53 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b47c6d857sm3211715e9.26.2025.08.19.15.03.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Aug 2025 15:03:53 -0700 (PDT)
-Message-Id: <pull.2033.v2.git.git.1755641032154.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2033.git.git.1755630128134.gitgitgadget@gmail.com>
-References: <pull.2033.git.git.1755630128134.gitgitgadget@gmail.com>
-From: "Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 19 Aug 2025 22:03:51 +0000
-Subject: [PATCH v2] doc: add discord to ways of getting help
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Yyk5fmWM"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id oUlKu3s6qwzI9oUlLuDDS2; Tue, 19 Aug 2025 23:25:04 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1755642304; bh=VKEIOBM/ukjCu87wF557eKuRKp4LyRogIz8lqv3xSNs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Yyk5fmWMgMseehzSN3M78PtcRA/uxXApHjQyDmB2S8CySEALHcdC74MpznFfn3awV
+	 IY4S+9p9uVTnUmcxPQXYHaFP+d4zLSUsCSnRkyHibP6FrEWky6vtZXt7pC3F0nnqB7
+	 vb9B+EowRMMEy0zk3W2zvWRIwzKDI+1Ls3zn8XscNiYsV91DcxI9XjDZAP/TuqiQ02
+	 x20xbn2TION/tKlsulmgtxvhY/xWl/uGPXCSA43s+2ZKmyuUqVc2XrhYjNSXicC1Uj
+	 LQ9z4QE/G3JRyF4e02aTzc1tctKEQ1LwvnU6CuevPVrjM2j4tb5K+MB/NJK5I6hutw
+	 pNJayivSE7ODA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=QbvFvdbv c=1 sm=1 tr=0 ts=68a4f9c0
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8 a=EBOSESyhAAAA:8 a=zZUV6f2MH4c7RsnI3j8A:9
+ a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <3571209f-2f4d-4549-978b-ad262ab3b274@ramsayjones.plus.com>
+Date: Tue, 19 Aug 2025 23:25:02 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Daniele Sassoli <danielesassoli@gmail.com>,
-    Daniele Sassoli <danielesassoli@gmail.com>
-
-From: Daniele Sassoli <danielesassoli@gmail.com>
-
-Discord is a great way of receiving help for members of the community
-that are not on the mailing list or not familiar with Libera.
-
-Adding it to the official documentation will aid discoverability of it.
-
-The link is the same as the one at https://git-scm.com/community.
-
-Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
----
-    doc: add discord to ways of getting help
-    
-    cc: Collin Funk collin.funk1@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2033%2FDanieleSassoli%2Fmaster-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2033/DanieleSassoli/master-v2
-Pull-Request: https://github.com/git/git/pull/2033
-
-Range-diff vs v1:
-
- 1:  922c291fc5b ! 1:  ed4fef87be7 doc: add discord to ways of getting help
-     @@ Commit message
-      
-          Adding it to the official documentation will aid discoverability of it.
-      
-     -    The joining link was generated with a never expire policy.
-     +    The link is the same as the one at https://git-scm.com/community.
-      
-          Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
-      
-     @@ Documentation/MyFirstContribution.adoc: respond to you. It's better to ask your
-       conversation.
-       
-      +==== https://discord.gg/dxGanGcBSP[#discord] on Discord
-     -+This is the unofficial Git Discord server for everyone, from people just
-     ++This is an unofficial Git Discord server for everyone, from people just
-      +starting out with Git to those who develop it. It's a great place to ask
-      +questions, share tips, and connect with the broader Git community in real time.
-      +
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] meson: wire up gitk and git-gui
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>
+References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfJblUkKSwO9XFaT4X5Qm6PWsfMZ2Q3xXP5AwgaRM1joREK0ENY0hVjGL3WC7z79AfLp1V892BEK+CKewS+HcoT/AF8lVFq6zgp5Cq9Mv9qqvy5ZffIAX
+ dJdUak3CRdIU2/ORWf+pmCfEhlYWRsUOGqvikOMRR4Mpvf+f7zE7aMcM+/V0SzMEeRfs790dni2EqfO1ufx4qgBM2vOwtP/0W+I=
 
 
- Documentation/MyFirstContribution.adoc | 9 +++++++++
- 1 file changed, 9 insertions(+)
 
-diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index aca7212cfe2..35f18ab9f7e 100644
---- a/Documentation/MyFirstContribution.adoc
-+++ b/Documentation/MyFirstContribution.adoc
-@@ -52,6 +52,15 @@ respond to you. It's better to ask your questions in the channel so that you
- can be answered if you disconnect and so that others can learn from the
- conversation.
- 
-+==== https://discord.gg/dxGanGcBSP[#discord] on Discord
-+This is an unofficial Git Discord server for everyone, from people just
-+starting out with Git to those who develop it. It's a great place to ask
-+questions, share tips, and connect with the broader Git community in real time.
-+
-+The server has channels for general discussions and specific channels for those
-+who use Git and those who develop it. The server's search functionality also
-+allows you to find previous conversations and answers to common questions.
-+
- [[getting-started]]
- == Getting Started
- 
+On 19/08/2025 09:18, Patrick Steinhardt wrote:
+> Hi,
+> 
+> I have upstreamed support for Meson into both gitk [1] and git-gui [2].
+> This small patch series wires up support in Git.
 
-base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
--- 
-gitgitgadget
+Just a quick FYI, but I think git-gui needs some changes equivalent to
+commit 586919c3b2 ("meson: fix installation when -Dlibexexdir is set",
+2025-07-16).
+
+[I don't understand the difference between subdir() and subproject(), so
+I'm not quite sure how to proceed, but I guess git-gui is a separate
+project root and 'options' will be passed as-is with a new context?]
+
+gitk doesn't install anything in the libexecdir, so should not need a
+similar change.
+
+> To the best of my knowledge this is the last missing piece for feature
+> compatibility with our Makefile. As such, from my point of view, I think
+> that we can stop treating the Meson build system as experimental and
+> instead officially endorse it. Once merged I'll thus send another patch
+> series that updates our documentation in various different places to
+> also mention how to build Git with Meson.
+
+Hmm, that seems a little soon to me. ;) I still have quite a few 'misc build
+updates (part #3)' patches to send to the list (yes, I have been a bit tardy;
+sorry about that).
+
+Also, let's not forget the 'quoting nightmare' [0], which has still not been
+addressed.
+
+ATB,
+Ramsay Jones
+
+[0] https://public-inbox.org/git/a5795bfa-cc02-4c9a-b7d2-4924a94cd0db@ramsayjones.plus.com/
+
+
