@@ -1,107 +1,111 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3356C1E0B9C
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 19:57:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BED15D5B6
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 20:02:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755633475; cv=none; b=hlLAPp3C65PT+rKyzydQgpAsd6lqVY4SJPeHkjpcNGXtQ+FugiGmG+yiYy5zf0sgmy4tKdKbWThYydRLnFPVEXKbnk2+9wBO5tpwTiq7NDWtNsCGLdW0u6OjiYnMeseAIhX6tbBIBhQM19l2N0MsNjhqotMJvRrJFi/KSQKHPVQ=
+	t=1755633726; cv=none; b=frw6ZtzbLKefeKTFPlO0HJwVxxhal9yV5g072GOAMHft/mmSfI7k8TFn3Is8aKiFfzs6KDTdBE0esew18bG7fB9cwuGC1lkaPB0cMRJH13qHKHtmClMuSwBafERURZPxBeG0SuchI75eNYLZghWIKIVHU1I0wwiPwTNEka67nt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755633475; c=relaxed/simple;
-	bh=L3nM/m5PwE+KTAeSzA8GC0d+BFJiIb9L61b3zWSK87g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HW7p5puhPQnRykf8g3UI2o4UGhjDFBhEZ+Juf6Mul3qaiVWE+RejlBGCs3QUJBs4idTCqBKtfHeYWuo6nDIJKI0dfikG/uA9CNAC3p0TYpZVgEBfSBKt83rR5Vg/Ciaff8HE0b6rN6rv33qmP+NWR3/sSI9KYtInt9+UaM3Jn3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YzMHJXMy; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755633726; c=relaxed/simple;
+	bh=nr8Q7R8jEbWMSinYnIEJXS8+dHf99HH8IPSISx2Fvt4=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=gAsQESExO8hyiM/t2rJOjrsBQBu9jDuZoP/Ex/fidInxEnOLKIUhf2+0svGn5S2aWX/WGMakiONicL3GgBYZhhJj65swXEeKaMAsJCE1L/vdakZAc7/i7INMml9x9t/A29jMo+ag7zWdNwvxQvkep2/qpKeSla3i1NrVPY1y6y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=cS4lH+Mb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UXH1GThn; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YzMHJXMy"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2445826fd9dso67539255ad.3
-        for <git@vger.kernel.org>; Tue, 19 Aug 2025 12:57:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755633473; x=1756238273; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=74rnLyAwk8WzBn8egLR5DG3CecBjeDTJRDgNQurZP6E=;
-        b=YzMHJXMyDteBC1OalKKalaxcZNlSydbYhSMejlwSB527DaeAcJdLBJE0yYbGlzICQ+
-         AeSMxcz/l+uvjRxKnvmQfvISOxsVXxiOw/uzkLshtgeVPNlBHd+L6zag9JHvmfwcwuuF
-         SdGEG2APTnUTMSJ3JAURhd3jPOgBf2zUxZO2PLe5SnCqDmDZ9DKAaW7FxRtWBPKXXiFt
-         OM8os6YU3FJ2UUm+TOZTzeZQJnkG7G3M7NQ76c0pmhK9SFTeA+ISrz71PcbuWWrsCfHN
-         w1G9kfDSr/5KPsf9SSt+F6+qw4uSrGcfMHhmSmAOiQo7MqMG/1UD5QgclLTza1KGQeWi
-         +Tbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755633473; x=1756238273;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=74rnLyAwk8WzBn8egLR5DG3CecBjeDTJRDgNQurZP6E=;
-        b=j1ZIOQX0QoME/HdxK5sl83Owgz+dcgiikgNoMrPkmfWtRAfIBWqABfu31NCImvasq4
-         KHGeSyzAdgcTDTWacZ24+TWfOXRlfz/a+C+hLxT1tIgdHEAHbOzJwo+xLH8ej9FjQyuI
-         7qu26pxfBwWAZnlV3naExrDxOkW9VeS+LM5CkABaosYoYVghxuA4klknWvtE+cYy+/9f
-         hAzhNyd0SEtBYQEypzujXWlkuB+/PRk9Dn+C/AAFqHq27YCJY1msL9Rzj7GhM7aH/6RX
-         HHLAAekPdV4Gjz5X2QLf00fb4VXyA31VsHuN8YJkoDUX9sE9m6MCSgni+EoTkJZ7jdJr
-         omKA==
-X-Forwarded-Encrypted: i=1; AJvYcCVf/igqVq4mGWppexOxddaniJwgyc8iA7SLzpTxPXosWc8Fqyr1pIU+IY+bIldAvOnIvOI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxibFczHTxwurome5DrMQElehKcieySfIYuv7qhqaU2o3Mjwggj
-	knFxzb4VyM6/QoCf/bMib32FWbUFYDXyN/2UyMD9XUXlNXgSazFwTVb2
-X-Gm-Gg: ASbGncuIBtF8r5RGnK5l8DY8YTuedyvNzcxwqQkTbEZq4j1XpNUveaQNaZd5yI5NXZj
-	t7Jxr01+Cvv1M9SbRyUeGVd9BuCe0Bw4z1Tx4mWubX6kpPH/Vpa7W0N8x/yJip/Wn5rwnTWduoI
-	RXxCtlxn9YZDw9oVXg1WT/NCiNMv63l5tHNARrEfS77ABGYKR9rb79rCp0ivF8zhUT7pTdSgm7w
-	ro5HakAuReaDcuPx+CWyEmK3KGFoqCKrAmsZApq6wx96JImEp8oM96ocJ89KhYztsvld4bLwHhO
-	zDiRaERkqlUz0VaP71tYAp6wMjKHXv/GNWgZj9wWl8ztD5TmwxVvR3ucQn+pVWJapGx04SHQ/Sz
-	m8uc=
-X-Google-Smtp-Source: AGHT+IFDouERkC+Xp1ix9ohq3VfPa4z3KfO9QX5BqVXnJ5HLk0fyd31aYXldrJyb1THDYT72JGEH0Q==
-X-Received: by 2002:a17:903:4b24:b0:240:1850:cb18 with SMTP id d9443c01a7336-245ef286179mr1907005ad.53.1755633473412;
-        Tue, 19 Aug 2025 12:57:53 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::e9a2])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed4c7489sm5110925ad.70.2025.08.19.12.57.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Aug 2025 12:57:53 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Daniele Sassoli <danielesassoli@gmail.com>
-Subject: Re: [PATCH] doc: add discord to ways of getting help
-In-Reply-To: <xmqqsehnccro.fsf@gitster.g>
-References: <pull.2033.git.git.1755630128134.gitgitgadget@gmail.com>
-	<xmqqsehnccro.fsf@gitster.g>
-Date: Tue, 19 Aug 2025 12:57:52 -0700
-Message-ID: <871pp73wzj.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="cS4lH+Mb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UXH1GThn"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 71F74EC0339;
+	Tue, 19 Aug 2025 16:02:03 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Tue, 19 Aug 2025 16:02:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755633723;
+	 x=1755720123; bh=Gs+dx0gW04Jpfbihf/VieAWjt1YdlIp+t8s/PiBwOR0=; b=
+	cS4lH+MbdAckZ8rnoiDiIzB85Kh84+ciZnwY17nJCSnr+RRdH2nd04dLroaA3SMj
+	l/7m4DbFxm6DMKNyw1DrnI2YcCMKyG06R4PDgYloCt36A3ZH3CF4KL/UYnZrsft4
+	OLXIwQvBKFCrGwV6LEc/fwUAvKLCWQKGE+sZtz36biGhfhFlwpQJftL7aON3P2q/
+	Rt7SkPjxF5ER64brNikTFp3wugfhpcss21Kl+iZFwSHg7htlALBLA2ppFLyo2Quo
+	zPY3VR+jpYMnaEaxdtaTwrzbKeO3/asFBM+DRoKdcNVYfKsHE0oIN3K/s/Qc7hQL
+	LQ7kRnMMPM/JEWvWUrXXDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755633723; x=
+	1755720123; bh=Gs+dx0gW04Jpfbihf/VieAWjt1YdlIp+t8s/PiBwOR0=; b=U
+	XH1GThnlKyYzz+qgVsfAi3WE7EmQAucFMZc7RUDKH3ZklJSYYz3c5ng65QN0nOQk
+	1olLi/LkeDUFAkqO+wg92F9yQVQKWLp+kev3IU1XP/Q0KQRlUqOwN4uXVOklnDzw
+	wTjSzUhzUKPtsmUIInaIWzmX9ITX/3ok50FICXzOmrCtRR9t9X+pX4DQcxHAxlcr
+	eTNYyyKQoQ0FpgV+DE3gAoEcgv553MWnhGilybUIkiT77mkMLmiGOxtlMf68l0Ze
+	wj8AGt3ReHpyFtfdlXBtBz6Gci7Hb0clkO7QjyyJFWdczn0aHfVqYjgUAUbodpyu
+	bUlS75nBAw2GTqMoARlrQ==
+X-ME-Sender: <xms:O9ikaE1QbHSWe-SfbFIDfsQkUzkQAqPYM0vfijGa1a7J-K5-dLnE7A>
+    <xme:O9ikaPF6NfeNjnofN1W35A8XcQBikj2kDiDx-nEBHY9lrVgWRWWfkYxF3Cii4QJ92
+    bPBzOnU-0frugpx7Kc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheeifeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
+    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
+    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
+    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepsggvnhdrkh
+    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishdrthhorhgvkhes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:O9ikaNREsV1fT4M-xYXNX1_eu3figSN6tWnyABrmF-sR27m9kQi81A>
+    <xmx:O9ikaHiVNtrwnXRN2dtIGz3qeTqvbE44ewgzSPuB8nV8-yDhBWagcQ>
+    <xmx:O9ikaO-SV118Fg921KLjTwnS2UAogIs3zPm6ozX5uBcERJ36bCzYxw>
+    <xmx:O9ikaGHAqDA6_SgNmeKBPtbZow6zf3jJSVl59AAvlGCRpsrYibaOJA>
+    <xmx:O9ikaMb-CjEx44bolsQ9SbIE-ZZDSIvtMOV9fLmXhvcwqoPohTefI1N7>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 25CDE7840B2; Tue, 19 Aug 2025 16:02:03 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: AG4p1e8HXaxo
+Date: Tue, 19 Aug 2025 16:01:42 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
+ "Junio C Hamano" <gitster@pobox.com>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "Chris Torek" <chris.torek@gmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+Message-Id: <44ae4747-e9f5-4d46-8793-9c57dd184f91@app.fastmail.com>
+In-Reply-To: <3896226.kQq0lBPeGt@cayenne>
+References: <pull.1952.git.1755029249.gitgitgadget@gmail.com>
+ <5004213.GXAFRqVoOG@cayenne> <xmqqqzxcr1ck.fsf@gitster.g>
+ <3896226.kQq0lBPeGt@cayenne>
+Subject: Re: [PATCH v2 1/4] doc: git-add: start man page with an example
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+>> I think Julia is referring to the fact that you can record the state
+>> that is different from what is in the index (or, what has been
+>> accumulated in the index by the past use of "git add" command that
+>> is being discussed here) with "git commit [-i] <pathspec>".  You can
+>> do
+>> 
+>>     $ edit fileA fileB ;# assume both are tracked
+>>     $ git add fileA
+>>     $ git commit fileB
 
->> The joining link was generated with a never expire policy.
->
-> Now we cannot take it back as the link is already in the list
-> archive, even if we wanted to retract it?  Then there is no extra
-> harm done if I applied this patch to my tree and the documentation
-> update becomes part of a release in the future ;-)
+I was actually thinking of `git commit -a`, but it amounts to the same thing.
 
-It may be better to use the link already shared on
-https://git-scm.com/community .
-
->> +==== https://discord.gg/dxGanGcBSP[#discord] on Discord
->> +This is the unofficial Git Discord server for everyone, from people just
->> +starting out with Git to those who develop it. It's a great place to ask
->> +questions, share tips, and connect with the broader Git community in real time.
->> +
->> +The server has channels for general discussions and specific channels for those
->> +who use Git and those who develop it. The server's search functionality also
->> +allows you to find previous conversations and answers to common questions.
->> +
->
-> "the unofficial" -> "an unofficial", perhaps, as by definition an
-> unofficial thing is not something the project _endorsed_ to be the
-> one and only one?
-
-+1 for that wording.
-
-Collin
+I'm going to remove the "By default": I agree it introduces some
+unnecessary confusion, similar to the "It typically adds..." in the current
+version of the man page. I'll instead be more explicit:
+"When you run `git commit` without any other arguments.."
