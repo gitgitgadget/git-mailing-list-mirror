@@ -1,109 +1,141 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2BE1482F2
-	for <git@vger.kernel.org>; Mon, 18 Aug 2025 23:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A26D515
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 00:45:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755561147; cv=none; b=SSheBj9KLfbq9weTO9bZ9PTbi8qfHBA9iYKsWaP2Am1Q5jP5+GtVvPIxjhEzIJVyE+xZVpruUmjpnICqeB7Tj8x3lHgZygUn3Dk/60VSwf4Xkqa4+2OO0/wB/EDTMCuO7JwG9eF7IMgd8+/hhY7yAAUZYx4cV0iEsGp1QtokqJQ=
+	t=1755564351; cv=none; b=DTrQX4HhW4KK5OjLDdrafCnGDBtzxk7Nd5MK9/CCyNddAfLZH+4F/vdw/RYmNhjpkABL1xZ5zwC/WwMF2Yn1sVjvYGYzv0WZlkG/JACah/JzusKsc8UDVh9tunBTwsV0v0MBGI/R3QHndAeggKbOt0WQ2xOJ20LOaly8RvILyEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755561147; c=relaxed/simple;
-	bh=YR7J9kVEPQTiVHaHzlDhV87r+vd9BDODYj4famHM9c8=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=e6yQ6q4cPQ3kqs00vtDgCo+0GxRUkun5xkvFBiL5OOReZWUOI0wO0SkxtrHcRedOc5EB4k8F2CfxtoVyT6QsWCFgIqqwur0qV/7mnKhyXz1erZeg4oCVg4ZkIhwPTQOtcR6Hh6K6TBWQstI2g4W224nI6KXVAuJ2khKpbuZUzQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GYaQUZq8; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755564351; c=relaxed/simple;
+	bh=6TmEFNSf9GJv48zGPSjnEDtyiFhTq4uUOFOwq+Tg3cU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UzppJmybU3awVWJHoLZ1P3ucT8vZ4HZtiIhQHufnp3NS9clN8UwkS70ooRi9aYFKmZrEZTHIHG50YGVrookULkKD5ExWs8xPIq8eATxUjqBjqbwj7qbTqlyo+XmGItS5ryPwyvqIfhdyxwAZa7tHvXX2uveyiG3e39JZktuNdXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=SDo5wdxd; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GYaQUZq8"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e94dfbf7ba1so723765276.3
-        for <git@vger.kernel.org>; Mon, 18 Aug 2025 16:52:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755561145; x=1756165945; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RJA6O6LflzKzpOUlZYxHRsvfsVIXTz1q0+nG6dQp6tk=;
-        b=GYaQUZq8NN8JDCZ0cTkhsq1ePplR1OiWDqSHXap1uAMLMNi5juN7zmN3SHlkduvA7b
-         e3tgnm4KYOzYAt+AfoF1B2vi9mKCDi6fQ8+oY0QSQOIy0lYP/RCm7KsQ1c9jU5l0dRYQ
-         Y98MJzbueWUlM4RjDLuZucPAvmZH/e6HXEVlshGLNs+WTdsSh/SLvKpKa8I06PaMiTqk
-         GA04e3/QBcr6R9qW1qNoiNNRpZq8l2UNsqKx6Ad7HseeviGhVTpohBEBAgDl68kRuqiZ
-         tb9FfiPn6t79B2udq3ydyi30E8YUrjThTPUc9cAjsT2ycyo+lZxyGvPH6IKOdQrHlfml
-         XxyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755561145; x=1756165945;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RJA6O6LflzKzpOUlZYxHRsvfsVIXTz1q0+nG6dQp6tk=;
-        b=Px2taf9Spg4hyrJc5m3YcsRKgdnOmpu3xial4U8/SkCjyMdeix8Lt1IwqZaRAKxcGj
-         TgApj21pNgVZ2nt2EzdJWK7HTXltLazb0hdH3jedIyTiLTqtt1YwZeEpU5nLLn/OZ+yC
-         ZE+yL8zXoP4Fcs6t55A/TMmc6JBb3YiDCcIlMJw8W1xOMwmEy3aLf5JPtG+eVEREd/IM
-         vbfMoayxgDxx+rbZNlkTdS4VNDzCvZWm6lDiYmNMfbFOXttKgRKKDqwhRpBpRhE8/dSI
-         vp0dAR0iivFTrl3hZmxjjYWO8mrLtoHfQdG2sxOIu7syb4ehD7J0Tg7LgXScFFNZQxQz
-         4ofw==
-X-Forwarded-Encrypted: i=1; AJvYcCVgwjerlDmurqdt8iUVjC8Tuf3Fecj+n8q497Mplz7GQLk7siHl6CbDBU5IZ5ktn1KkdIg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyrNSaH6slMAvWvzdssOSkOz2/s3jdwByqm3pC2YDAsprbcQDMk
-	v2hSYaVq/O0tSLcCJtJQalBY9D4w9e3Km96YnChdE22BDOTVY1qpHW94
-X-Gm-Gg: ASbGncvEAfXWUBjJsiLSTf5BVflV+QSrM+iOGk6ZmgjUsGlJZHpFlO8CUvCUZY7h9t2
-	oiOAIXV8A/sbKsaOHdRcBRUElcnQH0YqS+qGi9Rb5ULicTWgSdwUmET4tUq66JTZ3TQAcc/nt0l
-	cnIkznz80YxGEVARZ6HHD5u+5reYaBNeiCy7oiTG+B3W/6kS1yx9qL/oktS1p/U0FV53/HUIwsA
-	TG910refUOdXzq3N5gWstZSRFJWsQDV3yanOmwsPRnr9s0/WtDYozbedUdTPhLrT4GNKA8xjYp1
-	tOoby6r6Gvu1K/Dbm44HiqejuH6UkbAkWfgVSgX1y5m0nbE0BbABFN9/Rf1dKx5YxVsARaxeFjx
-	xObvUhjKEMxdhzPLChro8Fty6TE38tfsBquaALlRF0z/TRqn3ulUEQ5mkTnggvQ==
-X-Google-Smtp-Source: AGHT+IGkN+xs9MOy/NOCiyJAzXDZ1AtDkAj6HPL43lR/SuN5dSzhGkPdtp2hEniSfTHMhZVn61rstA==
-X-Received: by 2002:a05:6902:4006:b0:e94:e44d:aac1 with SMTP id 3f1490d57ef6-e94e6349099mr949942276.37.1755561144801;
-        Mon, 18 Aug 2025 16:52:24 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:f9bc:536f:8d5e:1c8c])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e93328849ccsm3620716276.34.2025.08.18.16.52.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Aug 2025 16:52:24 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="SDo5wdxd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1755564341;
+	bh=6TmEFNSf9GJv48zGPSjnEDtyiFhTq4uUOFOwq+Tg3cU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=SDo5wdxdUOG97BxvdrPIsCA9LSBX3/WyuZHDxuj+CwFhKJpYIGjIeM6ufnAfT0Cq7
+	 XIhiI7WEV0t96lRf3l3/oy/R92cz2BcelDQwq0ZovkdKy7rwgk9jKZJLtuCidkmdD7
+	 jK+smJ14/fK1rer7PnbfvNVQdHHyOhV1Kt+MNUDqHhkbCuA1m0SRdhS0WC3cQj60oy
+	 BkrGC7gcsZh56dNERkYT8nBAOQOtbDgP3Clf5eLCG8SEd49Q2X5f/Y8T39LUrlybOa
+	 aEwwrhZsiZh2nJP2+2P4z3fjmODFQ7Eyg8oDFqhPI0GcY+u9xg6Quhpve63ZzLHvCp
+	 pRecIvELXD+pznoNAAMhth/pTnjjrKGrCf5eBh3DnxMf1e+5C8aH3Hu65oeL1nygEB
+	 oy/Cxh9mUjjSBIe1vplsNkYXJnUTY1d0MlFDnAO0nqjmGt24E7oyWJJHuZUrRTzcuL
+	 5fbynVg7RZPz8H1Aeqk652ULDwcE9T5aIAWmfRRBKNXxPCVTWPX
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5aed:d873:1a82:271e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B0915200B4;
+	Tue, 19 Aug 2025 00:45:41 +0000 (UTC)
+Date: Tue, 19 Aug 2025 00:45:40 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Michael Schroeder <mls@suse.de>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] submodule: truncate the oid when fetchig commits
+Message-ID: <aKPJNNWMW9gtueEK@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Michael Schroeder <mls@suse.de>, git@vger.kernel.org,
+	gitster@pobox.com
+References: <aJ37eHEGMw6RgmZC@suse.de>
+ <aJ5gOPQ9oologqj-@fruit.crustytoothpaste.net>
+ <aKLyy8nwGQCT-jvB@suse.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v2 00/17] RFC: Accelerate xdiff and begin its rustification
-Date: Mon, 18 Aug 2025 19:52:13 -0400
-Message-Id: <2FE193EB-125F-443E-926C-E9460A1CD5BD@gmail.com>
-References: <xmqqldnggt2v.fsf@gitster.g>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Eli Schwartz <eschwartz@gentoo.org>,
- "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
- Johannes Schindelin <johannes.schindelin@gmx.de>,
- =?utf-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>,
- Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>,
- Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>,
- Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>
-In-Reply-To: <xmqqldnggt2v.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="JOAs1rdkt8oSoIB1"
+Content-Disposition: inline
+In-Reply-To: <aKLyy8nwGQCT-jvB@suse.de>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-> Le 18 ao=C3=BBt 2025 =C3=A0 18:31, Junio C Hamano <gitster@pobox.com> a =C3=
-=A9crit :
->=20
-> =EF=BB=BF"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes=
-:
->=20
->> * Code style: Should we adopt a Rust code style of some sort? Perhaps hav=
-e
->>   the code always be formatted by rustfmt in its default configuration?
->=20
-> Sounds sensible.  I'll let folks with more Rust inclination to
-> figure out what _the_ style should be, but having _a_ style we all
-> stick to is good.
+--JOAs1rdkt8oSoIB1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-While there can be room for configuring the formatter if we have particularl=
-y idiosyncratic needs, I=E2=80=99d second going with cargo fmt / rustfmt in d=
-efault configurations to start (the former is a shortcut for the latter over=
- a whole crate AIUI).=
+On 2025-08-18 at 09:30:51, Michael Schroeder wrote:
+> On Thu, Aug 14, 2025 at 10:16:24PM +0000, brian m. carlson wrote:
+> > On 2025-08-14 at 15:06:32, Michael Schroeder wrote:
+> > > If a submodule uses a different hash algorithm than used in
+> > > the main repository, the recorded submodule commit is padded
+> > > with zeros. This is usually not a problem as the default is to
+> > > do submodule clones non-shallow and the commit can be found
+> > > in the local objects.
+> >=20
+> > This should not even work at all.  It may currently behave as you
+> > suggest when the main repository is SHA-256 and the submodule is SHA-1,
+> > but it will corrupt the data if the submodule is SHA-256 and the main
+> > repository is SHA-1, since then the data will be truncated.
+>=20
+> But it works, and I'm pretty sure people already use it. If you
+> have a sha1 main repo and a sha256 submodule, git will truncate
+> the commit when recording the gitlink. The checkout done by
+> git submodule update will work as it does the normal prefix matching.
+
+Unfortunately, that will break with the interoperability work.  The
+protocol will learn to convert the object ID on the server side by
+announcing the mapping and when the object ID doesn't exist, the client
+will die because it can't remap the object and the process will fail.
+By doing that, you'll end up with a repository that you can never use
+interoperability code on, ever, without rewriting history.  There's no
+way around this problem because we don't keep the object format in
+trees, so we can't distinguish between a SHA-256 submodule that happens
+to end in 24 zeros and a SHA-1 submodule.
+
+The entire hash function transition has mandated exactly one object
+format on disk and in data structures from the very beginning:
+
+    This affects both object names and object content -- both the names
+    of objects and all references to other objects within an object are
+    switched to the new hash function.
+
+I apologize that I didn't think about this problem and make the code die
+on this case earlier, but it's not a supported configuration and it will
+absolutely break in the future.  Sorry to be the bearer of bad news.
+
+> > The proper way for this to work is that the SHA-1 version of the
+> > repository stores submodules in their SHA-1 states and the SHA-256
+> > version of the repository stores submodules in their SHA-256 states.
+>=20
+> You mean by using "compatObjectFormat"? I couldn't make that work,
+> but maybe I missed something. Anyway, I think this also will not
+> work for shallow clones.
+
+There is interoperability code only for loose objects now.  The code
+that handles packs and interoperability between repositories is in a
+branch on my remote.  It's work that I'm doing for a talk at Git Merge
+and I will send it upstream when it's ready.
+
+Right now, I'm working on shallow clones at the moment and then
+submodules are next.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--JOAs1rdkt8oSoIB1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaKPJMwAKCRB8DEliiIei
+gZtEAP0S2mZTaTmGD7DAtubZEPrvItSCfivrQmfQK8CegHmkuQD/behpBCeXN8HU
+N9r52AiC9nKJY2RZDZCTl47EtU9LEQc=
+=SjR7
+-----END PGP SIGNATURE-----
+
+--JOAs1rdkt8oSoIB1--
