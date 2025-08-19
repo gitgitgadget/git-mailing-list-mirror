@@ -1,61 +1,63 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4978340DAD
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 20:53:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FADF34321D
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 20:58:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755636823; cv=none; b=XUygUwF0ngntZoLJCXXwJKpIGm4XKRWb/KCFwxTfyl0w/NTGwK1HEiKeKy63Sq3J1z+xvlHe1VW5vRXplgKItrHjtQkOBbAq0ilpQXFquXOA043sGNBiVokCrzAZ1AYp3iXbYPzIYdQAKzgBbwjOsfxWTwh7dfZMd3oXBf243NA=
+	t=1755637091; cv=none; b=gNjaPHb+CwYouLXhsiHCm6x200wGXBVBAfEo4vSnAtvD5o6hA32oYo132f6n6MP+y5pm5TJolIN+QRrigxQb1M5wA1o5WacuMvk1WumRdPTAydgD0WMjYxDRyEcw6D29H+iF3Cq6fT/ge1qLA76S4fvjFEE8HhHZVHcFDzG/6u4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755636823; c=relaxed/simple;
-	bh=B4wmsJwADnfsDG9P1Yb85XVE0KJUUvdqecDstdplIe0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LfcZ1z8wFGZ0Gv7meB7uHisNMliR1PTM8C189BWeA7E50s2M2R7HWLr751icah8YrJkbVx33MxA2qIBg9F6zjTagJEXwNjspXoqb1MJ/B/CvYmv7FzkW+CuO3Hh6EJ9XgCrD0Ez6IUCSLpXTTdvHilUlLF+4OnkP+v2iIVgupiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DcB3265r; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DcB3265r"
-Received: (qmail 31695 invoked by uid 109); 19 Aug 2025 20:53:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=B4wmsJwADnfsDG9P1Yb85XVE0KJUUvdqecDstdplIe0=; b=DcB3265rUBmsMa21qmKcPV5xegHVV+qBJJ1EO3YNBrP5xH8iH4/EoZInON3liZWMS96fAgRQzA3rqjrqA8/yIJc60WDPgjRide+8toMiGN1SG895naUzOUGQErqK8KgLBguXrmWW8SPSApk/ctAEzorQKx2q2fNpuBEUHOlTdkXQxBdAO4fsvoYmbDrZfWeYZtqaOXIU/8mTTkmd5Liqp5ceHRJV7x6AaEL+2OuIr8Hjb7dZhkLmxBXKzW3VJco7NEuc/bYdbTv8AOCAuSYhe00PebeQESOFoq6fxTL1VFGo3tNJ5svH52r2mc7j4YIc4+EJcq+xfddVQXvXxyBXGw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Aug 2025 20:53:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 47628 invoked by uid 111); 19 Aug 2025 20:53:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Aug 2025 16:53:38 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 19 Aug 2025 16:53:38 -0400
-From: Jeff King <peff@peff.net>
-To: Eric Sunshine <ericsunshine@charter.net>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 1/4] t5510: make confusing config cleanup more explicit
-Message-ID: <20250819205338.GA1071667@coredump.intra.peff.net>
-References: <20250819192004.GA1058857@coredump.intra.peff.net>
- <20250819192455.GA1059295@coredump.intra.peff.net>
- <8797c495-8277-4f65-845b-167542b82949@charter.net>
+	s=arc-20240116; t=1755637091; c=relaxed/simple;
+	bh=e1NDJuShAsJgKhLenndWIOhLXKDPYKOU1oZvFBQrQ+0=;
+	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XwcQ8alJ7/bi+psabHPhsqeTqKPYHOhawl/hbEHKuhe81m/R/dMTctQb/MSAbqIsvqUTh+JNx0nXwngXZ3idbirEpmq1bdONe9WSl+v0z3+Z5/tckY6D7mCVUCUZRIn98WvqJK3vKmaNk3awOHlgDuZ2oLsOBWMGKVxJLWE7iTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 57JKw0c32451561
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Aug 2025 20:58:01 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Chris Judkins-Fisher'" <chris.judkins-fisher@donorschoose.org>,
+        <git@vger.kernel.org>
+References: <CAAn3O_2n75RGpvxv1o14BE3KFdwiJW9OOKaHp6_c0rd_MqxC2Q@mail.gmail.com>
+In-Reply-To: <CAAn3O_2n75RGpvxv1o14BE3KFdwiJW9OOKaHp6_c0rd_MqxC2Q@mail.gmail.com>
+Subject: RE: git whatchanged
+Date: Tue, 19 Aug 2025 16:57:56 -0400
+Organization: Nexbridge Inc.
+Message-ID: <011801dc114b$f38bb130$daa31390$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8797c495-8277-4f65-845b-167542b82949@charter.net>
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHsFvP7gX54FcGLOe//MIdKXIkh5rRKaMAQ
+X-Antivirus: Norton (VPS 250819-6, 8/19/2025), Outbound message
+X-Antivirus-Status: Clean
 
-On Tue, Aug 19, 2025 at 04:03:23PM -0400, Eric Sunshine wrote:
+On August 19, 2025 1:51 PM, Chris Judkins-Fisher wrote:
+>I still use git whatchanged
 
-> > diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> > @@ -119,7 +119,7 @@ test_expect_success "fetch test remote HEAD change" '
-> > -	test_when_finished "git config unset remote.origin.followRemoteHEAD" &&
-> > +	test_when_finished "git -C \"$D/two\" config unset remote.origin.followRemoteHEAD" &&
-> 
-> For what it's worth, I have an unsent patch from a much larger unsent series
-> which cleans up the t5510 messiness differently. (The below patch is
-> probably whitespace damaged by the MUA.)
+I did too. However, now that git log --since has basically the same =
+functionality,
+Perhaps setting up a git alias might do the trick for you:
 
-See my patch 2, which does this part. I split this out because it got
-complicated to explain why that patch wasn't breaking these lines. ;)
+git config --global alias.whatchanged 'log'
 
--Peff
+so
+
+git whatchanged --since=3D"2 week"
+
+or something like that should continue to work after the command is
+removed.
+
