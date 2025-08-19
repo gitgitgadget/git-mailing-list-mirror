@@ -1,73 +1,112 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB9D30F7E1
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 21:06:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F6442065
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 21:18:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755637595; cv=none; b=FEM9m+SnDjVS8Dyns/kdY/tK0bStTjXPkyZX8xwbL+yp2TAy4p+pNX5/VOEOiee2i8ojYth8ZtdUIPO0WuFPAwmZi79ZnKdEEJpK2PeAyNnbt1VUdQC5JLcmVTMHXKUL2QwgaRnH4qOBYk4J62cH2/tjtCMCUIfY6d9MGtsMzJ4=
+	t=1755638306; cv=none; b=pcQmJbQ5tevxj6DPEPKxaxae7R3G03FP785cmgnD/R7zs67D2FuRRXNYFuDKLE29lXaWIijP7QRwCXIqsYc4KUkNQlWGOBtTIAhyQcHxDJ+ODhoLn6oF1mTQguB5PkGzyuRc9nzTGB+UWQGTAfBScFoSFvZ/zXVrt92A+soTc0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755637595; c=relaxed/simple;
-	bh=dawlRyW2/NwxXrFFHNKyFAXFEYU45ZEDix+0fdHsBZI=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RO8vgEK1H+EpSXlZmSy/9Oda8hONhWHLbAh32cXYURKlTwAAHfonOHqcweP8z2ZCBCgBObqDoc791Vx0KVm8QxaU0CIccpT4E2JP1bOvgVOvG81rlka3+0AJxuCxu8uDg4WbJf3iEEERaoGW53/hYmxmy3cyYq3Z1lkisLLDGvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 57JL6Obo2453205
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Aug 2025 21:06:25 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano via GitGitGadget'" <gitgitgadget@gmail.com>,
-        <git@vger.kernel.org>
-Cc: "'Chris Torek'" <chris.torek@gmail.com>,
-        "'D. Ben Knoble'" <ben.knoble@gmail.com>,
-        "=?utf-8?Q?'Jean-No=C3=ABl_AVILA'?=" <jn.avila@free.fr>,
-        "'Julia Evans'" <julia@jvns.ca>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-References: <pull.1952.v2.git.1755127218.gitgitgadget@gmail.com>	<pull.1952.v3.git.1755636370.gitgitgadget@gmail.com> <c44beea485f0f2feaf460e2ac87fdd5608d63cf0.1755636370.git.gitgitgadget@gmail.com>
-In-Reply-To: <c44beea485f0f2feaf460e2ac87fdd5608d63cf0.1755636370.git.gitgitgadget@gmail.com>
-Subject: RE: [PATCH v3 1/3] Git 2.51
-Date: Tue, 19 Aug 2025 17:06:20 -0400
-Organization: Nexbridge Inc.
-Message-ID: <011b01dc114d$201c45b0$6054d110$@nexbridge.com>
+	s=arc-20240116; t=1755638306; c=relaxed/simple;
+	bh=oMrzAPLlzCTBEg0D/CIF8m5apTchcKE49oKMANeZGnU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rrviya6miYZsrhTfsEKyni1FgtwRoHP2F83b0ZdajVybtOyn+Iiy0so4qH5ZzP3yhUEHEgBSeseDWsEy43WW38HwQX8eJiciUTCfVb3HkFShTQjunVGfrtMBCN1NNeMzItZc4CzqYyesXRWKD2eoAuWefZZbls/rGVzcP5YEkS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=A177ICwb; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="A177ICwb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1755638302;
+	bh=oMrzAPLlzCTBEg0D/CIF8m5apTchcKE49oKMANeZGnU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=A177ICwbK5VNR0dVjjkj0jc0jZayHAJ6X4a9YGhFudVko/sS1jm/c8rUX7rLUSdnv
+	 AShce5yw2PS2m0MkFFaHjUdeqGVeuvP3xrdnv9wXHXaFLyATHen34HmZ80Zo5Zi6k8
+	 7s9ueDYQfWJoB6j1fZnO/XIMy87MCfIvhWCAEHtZgBW5x0iVGFk8uYlgI5b+10bW57
+	 DABiwiT+fxZxVECrJH88eVbK7pGG9VF05TFt/HL4ZUVcGrVqgE82o5s22MslhaF6nC
+	 N/4XoLS3gwaa4mFWA2B7vxZcMUOrvBpUXLJeHGD3lBWanyz2NF1uQMeWL62PmSCmzx
+	 AKBxDNZXEZQs1Wi06/iCB4GQHUHKfIYNW9j9Ds/ONCKqBzteNEwEQ+cxwNsF0yOifU
+	 NgPdtHZ10SfNIcm0g06kE7063opPnVcz9E/ckoZ9VSbDY0Y5KmZKl9/8rqXoG615dD
+	 mANTNZCxrp+lktwcoWMXQV/aQ/d+GMijs0sQQ6WxbpYvy3zr4aF
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ea9b:126d:b7c6:bc48])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CC617200B4;
+	Tue, 19 Aug 2025 21:18:22 +0000 (UTC)
+Date: Tue, 19 Aug 2025 21:18:21 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Askar Safin <safinaskar@zohomail.com>
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: git: prepare to regularly change hashsums
+Message-ID: <aKTqHTnOMp1LFNLD@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Askar Safin <safinaskar@zohomail.com>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+References: <198c2b87f70.ff0fbb4065293.4919681043907358329@zohomail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQKdp5ENx7tSBkCH7zZAMPyaQM65SwErhmREAeX5Bsmyzr7WEA==
-X-Antivirus: Norton (VPS 250819-6, 8/19/2025), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jTfUO5jzoD5au4Mf"
+Content-Disposition: inline
+In-Reply-To: <198c2b87f70.ff0fbb4065293.4919681043907358329@zohomail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On August 19, 2025 4:46 PM, Junio C Hamano wrote:
->Signed-off-by: Junio C Hamano <gitster@pobox.com>
->---
-> GIT-VERSION-GEN | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
->diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN index
->be801415bddc..64cbc5833536 100755
->--- a/GIT-VERSION-GEN
->+++ b/GIT-VERSION-GEN
->@@ -1,6 +1,6 @@
-> #!/bin/sh
->
->-DEF_VER=v2.51.0-rc2
->+DEF_VER=v2.51.0
->
-> LF='
-> '
 
-Will this cause a re-roll of the git 2.51.0 release?
+--jTfUO5jzoD5au4Mf
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On 2025-08-19 at 14:25:27, Askar Safin wrote:
+> Hi, git people. I just noticed that you plan to change default hashsum in=
+ git 3.0.
+> Cool!
+
+Thanks, I'm glad you're excited about it.  I am, too.
+
+> Please, prepare for regular change of hashsum.
+> No hash is forever. Be prepared to change hashsum algorithm once in 10 ye=
+ars.
+> See here for details, i. e. why no hash is forever: https://valerieaurora=
+=2Eorg/hash.html
+
+Yes, this was a goal of the project when I did that work.
+
+There are many fewer places where we have hard-coded hash values in the
+tests and a lot more places where we compute values (for instance, if
+what the test wants to know is that we're three commits before HEAD,
+then we write `HEAD~3` instead of a specific object ID).  Instead of
+lots of hard-coded 20- and 40-based constants throughout the code, we
+have a few #define constants and a hash algorithm abstraction.
+
+If we need to change the hash algorithm again, it will require
+substantially less work, and we'll have only 40 test files to change
+this time (which is a major improvement over last time).
+
+I hope people also feel that the refactoring we did has made our
+codebase easier to understand and more maintainable.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--jTfUO5jzoD5au4Mf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaKTqHAAKCRB8DEliiIei
+gX1eAQD8fvyKAfcdIYx6/vipser+uSLRxzV46CHLSGPFWrNHWgD/V7Estk9Lzj3N
+8ir0sigt/SmNoveyY7YXVrwYkZsPsA8=
+=avjI
+-----END PGP SIGNATURE-----
+
+--jTfUO5jzoD5au4Mf--
