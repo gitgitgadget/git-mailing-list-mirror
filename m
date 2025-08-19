@@ -1,132 +1,118 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF6030C35E
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 18:56:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF40124A069
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 19:02:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755629820; cv=none; b=qXqP5JeOGW2PzvCPKiRJlUXNKf6JJX9InxjO3uKYrmtM2u/0wgC3fCkPLDKePjWLsHixRMdD4RA2UN57i3nWRa6v+AUfbjqEDDEQCiCp3awuEWLK9czORpFuzqelblckj7HSwY7mRmmc5Fc7hPfT0fSPDwk2QM9SvxoNLHpR2EA=
+	t=1755630133; cv=none; b=JWb85Hlcnfcdv3ZIVR7WmVqim0Fi58bOmee6lPfn88oxFnOtMH9GunyVrJV6WJKFUU4U0R6q0rsKls2nq809wnTgYTW5gcbcO4qjjy1vtHyAesAcBspNnWe5GZLNO6r7KVd4PC1wQuBWLYRV/zUEHK4Vae58RUte4kkbCD3Ps7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755629820; c=relaxed/simple;
-	bh=eqnBSvj3/ohNJq19gGlAsqPPMtKypbVKmacq5NrCdBs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t6xX6DzrwgVtsbiX/cAHlPqdQwZd2StBtJjSyrxBRbVIp1X+fKnTO7lrFMxUkaOiHD/94CgmrxfgGyGmVAw+L4RUjhxPC/1Ka+MvvnYZEbrWo6oj4lzqYRxweEFcZ1N8sjS1fgO+95qKVPbnv4iiOODb4+v1oE8C57P0hKJbFnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TIqPJ9CN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NpTPXGja; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755630133; c=relaxed/simple;
+	bh=+VERXH6CXTXjJMP5aoAQvsgnEfaIEQzdrJ82Jfvt/ec=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=jYmgBW/bx6Yu4dTtmtj2j8JNtjR7PaE+7WpupQDPULdjtB8LaurheshaEXRHR5Mx83vEYpKEoVJ7124vM63viLenmu7gDMnzQ4rLdISr++sQH0G8qzvXfZ3xk3zwJxDTPj+r74lMjQwfa4ygIsYVhcgX+9qmNKqC8sGAZmFC8nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e5D1zWvu; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TIqPJ9CN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NpTPXGja"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BE8CB14001A2;
-	Tue, 19 Aug 2025 14:56:56 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 19 Aug 2025 14:56:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755629816; x=1755716216; bh=ThmbUCccOj
-	oetLVyMFc+GS6OPmfQ4DC0xfRHv8A1loU=; b=TIqPJ9CNQUIBjcUpzIFwckxxTh
-	TwlAjSiWWawP6Wfa1Yg8JtRPLWQQMDxeiPeuZIN36chejrBp1PWOzlUiFyrmvcGf
-	w05U9EI5JMdDDTxJnvrIiHmiU/pxhJNmUnvitlANY1w+IgFyBSe5ZB8qH0oHXgsC
-	FfyrnG79kw1x6c1IlfNqMLEFum5UqBOSS9TQAZgkimiglGncsX+3K5y90cW2ZLFE
-	0ibS7wTfLGiVN7u0ClgqVcNaxUal9hxA3e4tu3LwcXkvKKMuJiYE8eA7nApx4oX5
-	5udCke40LLZbULUE0572nqycULS/B99AIJ4sXIlXB9WMrCuqQGEzmPvLKtuQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755629816; x=1755716216; bh=ThmbUCccOjoetLVyMFc+GS6OPmfQ4DC0xfR
-	Hv8A1loU=; b=NpTPXGjaA1Echh+4CEZ8X9d4Ecx+yjXwngahJ6cGdI1+saTMqQ7
-	BFLHUdDSW7+rIJUAYNpXu74V3fjzc5tRN+Qm85BKMBHoC/TqCdxa18uSlVAg6CBO
-	Diy/MFceLys9cmUjPWT/n0rAwPCxie7Sb1TNGjefFFXapg+d7vexoZXK3CRTe0TZ
-	Iyh+UQ2zvgn+eiUuU19afTBjYIizrTwHEzElI5aulv1Exc4uzCJl/HtfoIlYsou5
-	XGKwMde91oA0VX/Nnnn5lFlGVFvx/jrsSKLRYkDtg/oYLR3finYe23Mob/0BQ/ME
-	HO3euxTd2Eg15fJCgRWx5HoNQABaovDPCQQ==
-X-ME-Sender: <xms:-MikaLzvpnMkn0LG2OhlYpfVz9nFFUA4S6BE-5WdRvR08ZsVZEkECA>
-    <xme:-MikaGgDRXf14atJPaN6mZIwVhQn_FH9KckDMMCnxWuuV-dQ1XUhdvbgwsHeZpJdG
-    r524l4mKwEmNcuuHg>
-X-ME-Received: <xmr:-MikaOxmHAZmf1hAFEKio3KkzfUMRRJHdgPCEvkoz30Cj_4HMvWVb4KWa_WtUNgpVxg6jWf-HV_HSPmDWWhYM7T_X2KLS4Ra0Ye98nY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheeivdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:-MikaBJWgRKMOyy-IFXv_DeCGlHX0-T7Iqxnp5B5J04PoLVgQrWk9w>
-    <xmx:-MikaNRSjxOaix5ApJ6igzXjcQ_OVInOLDqoclolm59qeYyUnqkLjw>
-    <xmx:-MikaBrGs7kvF0tuQjrLVLDrVbSSsTY8pUJp73kxAmt1cVr9rXb1qg>
-    <xmx:-MikaKp1rSQbBRXE_56TPBRgzp7utsnTEOS8n41F8nKk29-jFxBEGQ>
-    <xmx:-MikaGGiN7QEi4YHt6WxecrEqpZ4-IRe0xupOW_k4_lxAhPYpvZCdU1V>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Aug 2025 14:56:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 06/16] odb: move kept cache into `struct packfile_store`
-In-Reply-To: <20250819-b4-pks-packfiles-store-v1-6-1660842e125a@pks.im>
-	(Patrick Steinhardt's message of "Tue, 19 Aug 2025 10:19:35 +0200")
-References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im>
-	<20250819-b4-pks-packfiles-store-v1-6-1660842e125a@pks.im>
-Date: Tue, 19 Aug 2025 11:56:54 -0700
-Message-ID: <xmqq8qjfdts9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e5D1zWvu"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45b46a332a5so2879015e9.3
+        for <git@vger.kernel.org>; Tue, 19 Aug 2025 12:02:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755630130; x=1756234930; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=6QnrKGNDNKFhsPtbSgAb3c43h8zNstoxtep0YNl0skA=;
+        b=e5D1zWvum776HwhpBe8s9e6nIGrNXP46hYfWzsOMCS9yNiHDXCUHatIgY5sxfueSqz
+         +BrH2Hu77Nvr3aRD0hZGwIIxpAdDYb4tmWy6sbwY3hG5QzZ1/t8uDO+MIPeD1lL3Urht
+         1WYMYP2r6rXY/qNdL2U0zFm93DKyqotbNAp1sIB91gRdil1A9xnEs7vLXkvspj3VbtId
+         WrS9k+j/8RX6yktvD210AOxe48s+vDq/I4acyBY7GZKmujN55/QHjGe/leCLeZ2ROZEi
+         f8IvqTpGRDfqrrtCzdTp67a/lpTwNeF3Ltvad5u6kbUO7uPyz6+FiEn4TT8UAD/u7IKc
+         4nvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755630130; x=1756234930;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6QnrKGNDNKFhsPtbSgAb3c43h8zNstoxtep0YNl0skA=;
+        b=mrVVcq92b00Ualt/IOyUobyvCNDQzxyoKZPHGlj+se4UQI5tglkJmMYFNZ4zLa0BZk
+         WnDJrBLVNKDsbxvuBV5eqLx/nF0I63r6UGLWSjvmFqTu3qhv9TIfJmRJDaHX2q8489iD
+         hui+CJhpCKIURbV8054iTcsDCOiMKg4GY0MbuWXYh7KcjTCAq6PS32eMxig1p7x562yx
+         cCpKUbgk+/Jo79bBWB/g8ZtvlsAgoVvV+N3OIx6WmIJrngbGEliDxd8ZaTLxsgwxz5WV
+         /pwQJcbL5Dv2Y6IhG6qFzjsmoyKzMDt1DBOCwpxSYiutS+FLRZbmMSmXLH3cfSBZL6ay
+         LAvA==
+X-Gm-Message-State: AOJu0Yzg9RS9SklDe7D7qGX4flLyJXtpV/uFn7bjpl3b/TYzdH7Abdyt
+	561F/kU8vF4iS8OFDKFkkyL6wnRb4jtrtF693+hbeN3YO3ANO91eVV28NMJDeu80
+X-Gm-Gg: ASbGncvX6RZvSnpS5sJzIJFpB1V3ew3KbEg7nSfxSmo2MYv2SDZP7QysbXPMoIbnnmW
+	w8U0/60kMNPqbAfJb2MngNMEnfB87GQKcYnOLodLn7lAO84L9p+tUT96ejkAnsPCZ5W/3SuP3mi
+	UoBKjVBZxavMv/dgRxZSCAc+osSTG4J/isBOS+GlflaeOa1ee9AIoEMEqf+P3Hn94rF5b6xd5Qc
+	aIvEd94ACQy8FDzz6/1F16vi+A5w57Dk1sQT5nYFFcxIar1KT3LWgayZhwuAS+r2BGJG/LXENEk
+	bfYl3glncUZjsSAIDAV1f11DehJNDqCa1phgguG5E0TWERwrCGaOT2/BmSErE8ovC91nY9XQ+eR
+	cO2qSa5Y0YzUht654YxMK9BiEssQBsAuI3X4tezmtDXAZ
+X-Google-Smtp-Source: AGHT+IH1DbGNNMckeaayMfA2W9AiGF5xJ52/9P1xMFVMAZ1Hmjc1qr336UdkO1FWZJ+kpNuw9S8/5A==
+X-Received: by 2002:a05:6000:40e0:b0:3b7:9b4d:70e9 with SMTP id ffacd0b85a97d-3c32fb2fb8dmr64892f8f.43.1755630129490;
+        Tue, 19 Aug 2025 12:02:09 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c077788df7sm4737330f8f.48.2025.08.19.12.02.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Aug 2025 12:02:09 -0700 (PDT)
+Message-Id: <pull.2033.git.git.1755630128134.gitgitgadget@gmail.com>
+From: "Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 19 Aug 2025 19:02:07 +0000
+Subject: [PATCH] doc: add discord to ways of getting help
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Daniele Sassoli <danielesassoli@gmail.com>,
+    Daniele Sassoli <danielesassoli@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: Daniele Sassoli <danielesassoli@gmail.com>
 
-> The object database tracks a cache of "kept" packfiles, which is used by
-> git-pack-objects(1) to handle cruft objects. With the introduction of
-> the `struct packfile_store` we have a better place to host this cache
-> though.
->
-> Move the cache accordingly.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb.h      |  9 +--------
->  packfile.c | 16 ++++++++--------
->  packfile.h |  5 +++++
->  3 files changed, 14 insertions(+), 16 deletions(-)
->
-> diff --git a/odb.h b/odb.h
-> index 2dc3bdc79d..f1736b067c 100644
-> --- a/odb.h
-> +++ b/odb.h
-> @@ -124,17 +124,10 @@ struct object_database {
->  	unsigned commit_graph_attempted : 1; /* if loading has been attempted */
->  
->  	/*
-> -	 * private data
-> -	 *
-> -	 * should only be accessed directly by packfile.c
-> +	 * Should only be accessed directly by packfile.c
->  	 */
+Discord is a great way of receiving help for members of the community
+that are not on the mailing list or not familiar with Libera.
 
-Hmph, would this be better done in the step [01/16]?  Or did the
-removal of kept_pack_cache make the last piece of "private data"
-disappear with this step?
+Adding it to the official documentation will aid discoverability of it.
 
->  	struct packfile_store *packfiles;
->  
-> -	struct {
-> -		struct packed_git **packs;
-> -		unsigned flags;
-> -	} kept_pack_cache;
-> -
->  	/*
->  	 * This is meant to hold a *small* number of objects that you would
->  	 * want odb_read_object() to be able to return, but yet you do not want
+The joining link was generated with a never expire policy.
+
+Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
+---
+    doc: add discord to ways of getting help
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2033%2FDanieleSassoli%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2033/DanieleSassoli/master-v1
+Pull-Request: https://github.com/git/git/pull/2033
+
+ Documentation/MyFirstContribution.adoc | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+index aca7212cfe2..0293a410289 100644
+--- a/Documentation/MyFirstContribution.adoc
++++ b/Documentation/MyFirstContribution.adoc
+@@ -52,6 +52,15 @@ respond to you. It's better to ask your questions in the channel so that you
+ can be answered if you disconnect and so that others can learn from the
+ conversation.
+ 
++==== https://discord.gg/dxGanGcBSP[#discord] on Discord
++This is the unofficial Git Discord server for everyone, from people just
++starting out with Git to those who develop it. It's a great place to ask
++questions, share tips, and connect with the broader Git community in real time.
++
++The server has channels for general discussions and specific channels for those
++who use Git and those who develop it. The server's search functionality also
++allows you to find previous conversations and answers to common questions.
++
+ [[getting-started]]
+ == Getting Started
+ 
+
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+-- 
+gitgitgadget
