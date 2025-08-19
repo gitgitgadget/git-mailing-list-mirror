@@ -1,93 +1,137 @@
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [194.59.206.189])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9878311941
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 11:25:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.59.206.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDAD26FA5B
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 12:08:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755602733; cv=none; b=d0TWy0BP53tg0mbwfrwPD/oWcX/qYFD4fIEyQhH7/5BkKvewCeHwleXgX1AL9NRnp4ZHb0UvJ/BleeZHN8ze8iK6vpp9q4Og1ZziRxyPpUDxmiXipyVUShlHZsHGRQTiIiR4IQ+flnutZygpN91hvsr9f9Neuz7+aNEkWsE5QEg=
+	t=1755605340; cv=none; b=AJ6iBPkZ6XQR73tlzZKVGvgKb2x96O5dCv/2SvleQsYrYaUOov85pqLGnIr3/Pw7RMsWe8aE3FGsOYKUxYFMD3R1KI0IZZayCNbBkJnekr10y+KY0wmiOb9lJ2D3vakJtgqF6up9/Npsvhgj3cB79GRXIveWkBSZgrv+LGNjUik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755602733; c=relaxed/simple;
-	bh=YMw/3+0oBaYSzR0Z+aGmYl7ZMX8XRUJWi5f2sADCjNg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lh6lRdzdnnayq9rxRMXnCdLDR6QCHrZOfNFGSTSY9R7OlIM6MHyutVyFeqaVKmxQoXAPmZJ4kZRJ7CgZxiF1V8rhFfasWHYQyvWWA/j4Nw+jc+BOtqNlwe4N75VODturB8tDLWIqvuMG8CUmqzGkHnmUADIqDqOOMyNtSxKyxBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de; spf=pass smtp.mailfrom=rd10.de; dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b=eflh9O6c; arc=none smtp.client-ip=194.59.206.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rd10.de
+	s=arc-20240116; t=1755605340; c=relaxed/simple;
+	bh=Nd9qyNm1YuGVqQwX9HU2DMPxlL9tsd0S2oEiuEIS3uA=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=sA+Ok1MZTLc0PzzQ7fDHRoKpqsMDtTiSs7Ta3wzOmlbk66Lt6D6ur1v/ayV5SoXPhUNaXfT3Z9T5JiCQy97G2qIci98jFNG+xukJr3RF/EyLl/ypTDPq0BWe79c2HrbHqVcEYrgx3BkSddqimnZ8n9UAoVPYO/KwNTA544if80M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ewWyKy/X; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b="eflh9O6c"
-Received: from relay02-mors.netcup.net (localhost [127.0.0.1])
-	by relay02-mors.netcup.net (Postfix) with ESMTPS id 4c5n7B2Cbbz3wxB;
-	Tue, 19 Aug 2025 13:15:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rd10.de; s=key2;
-	t=1755602118; bh=YMw/3+0oBaYSzR0Z+aGmYl7ZMX8XRUJWi5f2sADCjNg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=eflh9O6cy5Y//IrmLWgVUNorvy6xuyf6Q7Dm5mkQTshYMbT3E04f+MzCKkHM4eSla
-	 fk4QtS6JU5jii5H2DKx1sYArbvDpCkKcf5IkFKpx9JVf/52IIxixJu1wXccH9DY0Un
-	 3LLGIEoCDV6GwpopeG0k+RoJ5Bm3jlrUnuu8LFv6yOnSbF0uNNB0EtgpVj7juxovSi
-	 fsVE/NUraXEUq24eoDOBGZ7WXYjMwyqJXoI7W2P+tBYRVGltOUVKLeTpZBZzjhzzJA
-	 2hfwM0m7qxA6t3TkddkmLh/ETlxwURBOAuK510f+Z2spF32IiL6juA7KK5FymsPtog
-	 OrSo0TG1tx3sg==
-Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
-	by relay02-mors.netcup.net (Postfix) with ESMTPS id 4c5n7B0cQHz7ycR;
-	Tue, 19 Aug 2025 13:15:04 +0200 (CEST)
-Received: from mx2eb1.netcup.net (unknown [10.243.12.53])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4c5n6w39BBz8svc;
-	Tue, 19 Aug 2025 13:15:04 +0200 (CEST)
-Received: from [IPV6:2003:cf:cf29:c500:2af1:2c6e:b5fc:f414] (p200300cfcf29c5002af12c6eb5fcf414.dip0.t-ipconnect.de [IPv6:2003:cf:cf29:c500:2af1:2c6e:b5fc:f414])
-	by mx2eb1.netcup.net (Postfix) with ESMTPSA id B3D24100272;
-	Tue, 19 Aug 2025 13:14:59 +0200 (CEST)
-Authentication-Results: mx2eb1;
-        spf=pass (sender IP is 2003:cf:cf29:c500:2af1:2c6e:b5fc:f414) smtp.mailfrom=rdiez-2006@rd10.de smtp.helo=[IPV6:2003:cf:cf29:c500:2af1:2c6e:b5fc:f414]
-Received-SPF: pass (mx2eb1: connection is authenticated)
-Message-ID: <f2977c6a-b588-4e30-b7bb-dfa6d4b8b45b@rd10.de>
-Date: Tue, 19 Aug 2025 13:14:59 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ewWyKy/X"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e931c71a1baso5235994276.0
+        for <git@vger.kernel.org>; Tue, 19 Aug 2025 05:08:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755605338; x=1756210138; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Nd9qyNm1YuGVqQwX9HU2DMPxlL9tsd0S2oEiuEIS3uA=;
+        b=ewWyKy/XEBSG/SZv+2dc+FQVK1rL9ct1MbNSZsjnF15e4lZ8Jcad2UWROsvuBMCWJT
+         vz2FaBETBW9IjpFzfy1DwXEBExt3a7Loud6DqkWz6WBiPaWsZWrWx/6C5RfxtlhakInq
+         Mf5Cz0E4bfgH0HBNcDfgyoO7qimvfM+9JoYTvaR/JqAd6WeFggWn/Q6jm2PPtutJkMi0
+         W+Ip8yCRADULS1QMQl/0EMhUWnCebdr+SJFX6ImMCJZOoVgZee4rv5vM1MSh7hOV4EH2
+         gGqfZBjajSx4kzAEGY5I0bEQXY7oXtitTp7wnQOR/WGHEa+jglQWoyCgwjZ8NYjIVcgn
+         qpwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755605338; x=1756210138;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Nd9qyNm1YuGVqQwX9HU2DMPxlL9tsd0S2oEiuEIS3uA=;
+        b=WsWsF48CcvKwZQ0paJTggvD3NZHbed8AEzRPMlMzvQo/hH+UBfMh7+AigYZkrtxrvB
+         e2FpDx4ejtEsmpeheok7Aek/FuViAq+xRh1+aAtpTkFADGdD6CL66PBpFuQC+6qUQSuD
+         9ZqvVgqPOx+f0CNAcx0L1XedeewRr7dv5oHOdKGJnXE36GxNM4vPt/bsp94RFJYIa3oO
+         P/EUo7B/hMtrgf7IArM8YfInGbocXaQul39/KJFBY+GY1n6B1a307ESPTHeHJvsyvIaa
+         jw+KzSP/mIaj6tHJ5YwcKaTnUrNfQJF6HS0tc3HRbk4pxIw73g6/ga6OX0Pcy+VFzugn
+         Q7ng==
+X-Forwarded-Encrypted: i=1; AJvYcCXkmSaXx7WQECKas5fk7Ohhpx7wJGA/3V7hPwyNZ0yelCBkFlFL48PHdP7u3XUPvCluq2s=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLX+hrmrqiGUks4hkjz/0GyuoKAvqCF47VixopIUqq9RIeXF55
+	cizv2i2ZSr9XemKv/5v91yikEGAqITxvpcjylS4RqCMTmQ9bSXGWtbIrkIAz2pKn
+X-Gm-Gg: ASbGnct+orwMfXS9gsmq6rkcEdjo8unBrHRBQIn/ZezUWA0TOOIn4XT0F/NyrMSTzjq
+	8AtPwwdTYsnCNp1qECmenBWBltJvWsBX1qIg8ONdaUbxxcbKV/fIWHZJ+NL71eMn1GIvGUOgE8v
+	6oaQ2QYYCaudCypZtcFXaonQVQXLw8BAwTbokIyth/sAIjEJRsK0z9o4z+js8TBo9fLpleu9gwr
+	YNo9tJeCOh7hlvhlhuruILjHFjiI6QNm9/U4PemydMo9yZn94c4A09upDTAhl7aqg50ml//7nqe
+	EuxUtI8c3i+646cw8z0gxz5BDgHsAVTkJKIBqiCDNbWIauJqB1wRpEK4321mCE4cr0Y6r9BxdB/
+	1AWzRmAoD/HDOjSoISiU4Cg6ws+mNcjk4QQOElOyKH9r++mzLzb4=
+X-Google-Smtp-Source: AGHT+IHCPGduJwOr50GhfgQVV1Bm6oHotlHtX9u67A9e7m7WW/gXNoHG4qAwveNC80vldOYmLuO/ew==
+X-Received: by 2002:a05:6902:1001:b0:e93:468e:dcce with SMTP id 3f1490d57ef6-e94e619edafmr2671474276.12.1755605337471;
+        Tue, 19 Aug 2025 05:08:57 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:3425:d86b:b13a:793b])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e94e6749b90sm620073276.2.2025.08.19.05.08.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Aug 2025 05:08:56 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Mime-Version: 1.0 (1.0)
 Subject: Re: Graphical tool to merge and reorder commits
-To: Bernd Petrovitsch <bernd@petrovitsch.priv.at>
-Cc: git@vger.kernel.org
-References: <4398af77-3183-4ac5-9a25-aca6289d8c8f@rd10.de>
- <xmqqplcsiimq.fsf@gitster.g> <aKQws631-giQS5Qr@pks.im>
- <aeb06554-77b5-4f07-a659-7b6825d6f3e4@rd10.de>
- <260a97ce-2ab0-4920-9cea-078369c42f74@petrovitsch.priv.at>
-From: "R. Diez" <rdiez-2006@rd10.de>
-Content-Language: de-DE, en-GB
-In-Reply-To: <260a97ce-2ab0-4920-9cea-078369c42f74@petrovitsch.priv.at>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-PPP-Message-ID: <175560210003.19408.2270802354914662793@mx2eb1.netcup.net>
-X-Rspamd-Server: rspamd-worker-8404
-X-Rspamd-Queue-Id: B3D24100272
-X-NC-CID: /Xte63qIXjFjMnyBSw9O1ExvYhY4u9huyNx9p1WO
+Date: Tue, 19 Aug 2025 08:08:45 -0400
+Message-Id: <A6B4BDD1-844C-492A-96A9-40F09F2DBD3D@gmail.com>
+References: <f2977c6a-b588-4e30-b7bb-dfa6d4b8b45b@rd10.de>
+Cc: Bernd Petrovitsch <bernd@petrovitsch.priv.at>, git@vger.kernel.org
+In-Reply-To: <f2977c6a-b588-4e30-b7bb-dfa6d4b8b45b@rd10.de>
+To: "R. Diez" <rdiez-2006@rd10.de>
+X-Mailer: iPhone Mail (21F90)
 
 
-> - `git rebase -i HEAD~11` (or so;-)
-> - move fixA1 and fixA2 under A and change "pick" to "fixup" for fixA1 and fixA2
-> - save and exit the editor
+> Le 19 ao=C3=BBt 2025 =C3=A0 07:28, R. Diez <rdiez-2006@rd10.de> a =C3=A9cr=
+it :
+>=20
+> =EF=BB=BF
+>> - `git rebase -i HEAD~11` (or so;-)
+>> - move fixA1 and fixA2 under A and change "pick" to "fixup" for fixA1 and=
+ fixA2
+>> - save and exit the editor
+>=20
+> I actually did not want to count commits or look at hashes, I wanted to co=
+mfortably click around to see the diffs etc. while I make the decisions.
+>=20
+> After such posts, I wish people like you had to buy their next online plan=
+e or train ticket with curl. }8-)
+>=20
+> But let's stay on the command line. I could learn new tricks.
+>=20
+>=20
+>> And done.
+>=20
+> OK, git rebase was happy, everything is done.
+>=20
+> And now it does not compile anymore.
 
-I actually did not want to count commits or look at hashes, I wanted to comfortably click around to see the diffs etc. while I make the decisions.
+Perhaps there were conflicts? Reordering patches doesn=E2=80=99t guarantee a=
+ny semantics about the code :)
 
-After such posts, I wish people like you had to buy their next online plane or train ticket with curl. }8-)
+>=20
+> You'd want to go back to the initial commit sequence and try another appro=
+ach. But now it's gone, or at least it does not come up anymore in your git-=
+gui. Or is it really gone? Maybe I can dig up the old commit sequence if I f=
+ind the right Git commands... But that is what I wanted to avoid in the firs=
+t place!
 
-But let's stay on the command line. I could learn new tricks.
+Try =E2=80=9Cgit reflog <branch>=E2=80=9D: it will show you that old commit.=
 
 
-> And done.
+> So I guess I should branch beforehand, just in case. And then move the hea=
+d back, and rebase the commits there. Or the like. And don't squash yet, jus=
+t in case. And then squash later, after everything compiles. My keyboard is o=
+n fire.
 
-OK, git rebase was happy, everything is done.
+Exactly: this is what I call =E2=80=9Cdefensive Git.=E2=80=9D The objects ar=
+e immutable, so when you spoke of duplicating head to attempt upthread, the b=
+est way to do so is to write down the commit hash (e.g., by labelling it wit=
+h a branch). That=E2=80=99s =E2=80=9Call=E2=80=9D you have to do to duplicat=
+e.
 
-And now it does not compile anymore.
+Then you can rebase or perform some other history rewrite, which creates a b=
+rand new set of objects. If happy, abandon the old hash (e.g., delete the br=
+anch, which notably does not immediately delete the objects). Or if not, res=
+et to the old commit and try again.
 
-You'd want to go back to the initial commit sequence and try another approach. But now it's gone, or at least it does not come up anymore in your git-gui. Or is it really gone? Maybe I can dig up the old commit sequence if I find the right Git commands... But that is what I wanted to avoid in the first place!
-
-So I guess I should branch beforehand, just in case. And then move the head back, and rebase the commits there. Or the like. And don't squash yet, just in case. And then squash later, after everything compiles. My keyboard is on fire.
-
+PS Have you tried using something like =E2=80=9Ccommit --fixup/squash=E2=80=9D=
+ and =E2=80=9Crebase --autosquash [@{upstream}]=E2=80=9D (or possibly =E2=80=
+=9C@{push}=E2=80=9D=E2=80=94upstream is the default)? For me that automates m=
+ost of the typical reordering I would do, although again conflicts are a pos=
+sibility.=20=
