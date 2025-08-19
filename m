@@ -1,138 +1,128 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE0A31AF27
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 09:47:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDE23451AB
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 09:57:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755596865; cv=none; b=eBDLO/OCMD8m0qazomzKE1iSh0r6TXgGuoF/wooAgaeYIIlr78R0EfTGQ3jJgmK0hCldOWp+v5Qnis3gJsctWGaWnTyABpnzOXreZy3J13tH6jVoFNms+Ce1fETzSRNszKSmRUm++YWJph8JKdIdI7e7awKs0m8h15JcNnYZ2Dg=
+	t=1755597477; cv=none; b=Fgm41qeHP4CmcIkfSj6T6C781jFjg6Fo2251Nr85VLFQj8baDhxW0+Mh/yRIJQTvQNnPnoYC48Fcke7YDLppqTU21TDQxPWNX1rjg+po8LfOmz8A6WT0dpO8KP3YSFYtFtXUPdHwB4KidMoiw+BKBFQfMBp0bVx4JAbDm9dCTiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755596865; c=relaxed/simple;
-	bh=iJDT0RQyxCm/rBPxxxaP21tdlP2wUcq9LL20FwF2JmE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=G9/uLPkHng5c5GFZOMiIt9JnjXXEnIzuAuOmSRIPDNV/AVF7ICNqiM2EQ4E6DVeb+aEVAQIzxvpHTKHUgxoDDDO3eKKL+l3gLgCm1CQRFto1luTwCPUvVhw8THVttz/IcbzyqZGDBq2DWmi0JiCMlJQ1fUx2vulhHIemRjU/fIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I/7nyy9V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eJjnJwb8; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755597477; c=relaxed/simple;
+	bh=8/I41jj2X0J3yptUEFAaBHUVN3QDe5mbremC6z/Fj5s=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=dUDFT4FPkQ0bwbkC81HwC41/QdJf4L++5sgWLyoINisIdVQOMbqqHK4dcnz+kfG2mh9LxopiS7uIO0Au2opHKFDWHDTosreXpdbeGPV9lbmImy2wi1qIWliQ7LXQroMVHyAImhDvNCkVmP5rTdT4+0fgoSGa/4XyMcEePv1WWow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hqHmL5RE; arc=none smtp.client-ip=209.85.217.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I/7nyy9V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eJjnJwb8"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9E0D97A026E;
-	Tue, 19 Aug 2025 05:47:40 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 19 Aug 2025 05:47:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755596860; x=1755683260; bh=ybmV/zd2Xe
-	dmGT2mH6UnRYAOXvGfCpdgF1vayvSAPuA=; b=I/7nyy9Vdc3r7n66x/l+gurdVf
-	JF88qsbYxfcNyMj3yKHSORDazeqgurE1d3TcO7UMgJb9KvXoNIpZHdN0Mla5phO0
-	Q46KvCa7wYyP7OvXnJK48GhjSpazQgi9fOKusdjq/kDwmXB+s8Tp2IVEPRjKmR3C
-	rI4SMNTqJyEOy7DJuf/ZnvCHsROBx6xkuuuOGIaiNvYisiT90HS8Zudo/QzCj7fj
-	7Exd/JCe32IJ9bkizCtt1j/5Vl/nOFFzyOn6r13HpYrANeKX8S3c6VziqAZmFC+L
-	D3ARZz18KrYrhD5tkOmwk6j5Nthtfjs024pKhk7Ip7Fj/aX8toQj+vYdcjfQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755596860; x=1755683260; bh=ybmV/zd2XedmGT2mH6UnRYAOXvGfCpdgF1v
-	ayvSAPuA=; b=eJjnJwb8voqAYaDN2nzl1LEa2RScroGMQi7smYAWAv0hbWte0pE
-	fmbcYVdh0EMemYwOUAF8BFYgn0z1D3xOCFsjaaGu8Pc1/bsI0psKQyWzrjbN+LWU
-	8F6Ij9JbBRNFk2uyP4/E7W1Fdc22MdOlTxbGZtRtbeJiQEW6LTl+VQLmAHhD533w
-	tekIQgU9ZQ8Qk4v1rK6pAqPhGxDX6gITrDxb3e8o21Jy8rztEdRbW7rAQEdxiuDK
-	HvQ/mgly/sSEAT40wgSCNxkrWssHFbkNN7djra6Smu1izBqIimNTW40brjukTbl5
-	23zOMjAqaQOLxPsU5hPx4R8q8rEzR5EXLPA==
-X-ME-Sender: <xms:O0ikaCnT4avSOlSRO_Ea3cAXE9rAeQ9gCj3jp_p4bifWBDD108a5aA>
-    <xme:O0ikaPXdSJXgpEWLG6cEdnGtJARFh4IeBf2aa1_CpKtiZZTaHh9cXEoaiqKtPvr_L
-    gW74l38pmYYMpe0Yw>
-X-ME-Received: <xmr:O0ikaI82Z326M7iNkoAXPgGdnV-WSVaGKPyBpRvwIE3TmIm02f8nkQPDZY16Q-rkns4s-dXMwL0sqKrtD6w3AtJsW60uSzBSen2Bgvo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheehudejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudelpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestg
-    hruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihl
-    ohhrrhdrtghomhdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtoh
-    epphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegv
-    shgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegtohhnthgrtghtse
-    hhrggtkhhtihhvihhsrdhmvg
-X-ME-Proxy: <xmx:O0ikaEp0gQliqGpxV4OVFWQ4CatH5JbG4jLUMI-zR65wv3Fgs_Wc4w>
-    <xmx:O0ikaCm2x74JKjLyybyyOmlhgtkpcPHr2xJrMjKwUInzBKdG6i6d0w>
-    <xmx:O0ikaAZvIzqxPJBaanLsDYviYbSoAlF9Xj7SpKhzP_OxAeWqiUOSgA>
-    <xmx:O0ikaCUHQTmAOvrpYEBdrzHXDnfiQijF_w3zPANojnQuN1bhPwOHiw>
-    <xmx:PEikaO3WcgiJUmgEZYHiOqYJF1Dt8d5_8YQFEQhI45zFryPbMoMQkURn>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Aug 2025 05:47:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Taylor Blau <me@ttaylorr.com>,  Christian Brabandt <cb@256bit.org>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Eli Schwartz
- <eschwartz@gentoo.org>,  "Haelwenn (lanodan) Monnier"
- <contact@hacktivis.me>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,  Patrick Steinhardt
- <ps@pks.im>,  Sam
- James <sam@gentoo.org>,  Collin Funk <collin.funk1@gmail.com>,  Mike
- Hommey <mh@glandium.org>,  Pierre-Emmanuel Patry
- <pierre-emmanuel.patry@embecosm.com>,  Ben Knoble <ben.knoble@gmail.com>,
-  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v2 00/17] RFC: Accelerate xdiff and begin its rustification
-In-Reply-To: <CABPp-BGvQdrft62S_0_-pdReZCV_rdy=2X0Uebi4oa+-emW6mw@mail.gmail.com>
-	(Elijah Newren's message of "Mon, 18 Aug 2025 18:52:06 -0700")
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
-	<pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
-	<xmqqldnggt2v.fsf@gitster.g>
-	<CABPp-BGvQdrft62S_0_-pdReZCV_rdy=2X0Uebi4oa+-emW6mw@mail.gmail.com>
-Date: Tue, 19 Aug 2025 02:47:37 -0700
-Message-ID: <xmqqzfbvfxs6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hqHmL5RE"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-50f8b94c6adso1234219137.3
+        for <git@vger.kernel.org>; Tue, 19 Aug 2025 02:57:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755597475; x=1756202275; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IYz5R+H14mMqVefzj2Z8/LodVDgksvlrk/jQc4nMIyQ=;
+        b=hqHmL5REaY1e2oCNnQMXAQTXLP0GLNR30CnO0jH6Y3/0DK5ae/MSlLyhYvtJi3vkkp
+         IEj8reFHB+mfd9givjMOSbM7uYsmCUmH2hw9ul8HvNFXJXW3V8o0zv1g9ahfNjFYYn1X
+         kQ/8hQnVf0cXLN9UjIsKaIZ55xYSonj7hMenhGudok3w223geBcm29sV5O8/30qsY3AH
+         qCXkMTj71b10kjrs8bDd3DniOS+OnCyZnV3AccqZaJ/I0k7XQbTbLGHiRZW+OeBEiEBi
+         yFpK3RrfLb1tRZKaxeLwPIiJKq/ngoLD9Z404M9Z8ysxCJKDY/gI+uGV/BEgURoag3MZ
+         gDYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755597475; x=1756202275;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IYz5R+H14mMqVefzj2Z8/LodVDgksvlrk/jQc4nMIyQ=;
+        b=JHTYlehK/pu5AbDS37hhABSfizvffaghF7N11C4BD17ARlVQdltubUDiz9UepY3VHz
+         HwzXRe3V+iJiRkzaZT5gXmthO/0SykfAoodA7PrMqKZYu3/JXePH85GnvlXjmdmaHIx7
+         /3wK0TyR0FXVBSLA6N8CspnWp64CjJovkKAN40rKuoIcWt/g75SZc+jN2hUc+sXODgbG
+         7Zy8zeBgsmxAIwuxJTzZDgTY23GKBtUpa9AmuCpqrTLuunf23Sw0FCoEfpbHmJZTkJpz
+         nt/3wS1SXe5UEUE+baZe+sQBdSKW1J//3mfqO0CMwLUZySZquGc3WtV83mCciMTY3QfU
+         ZDIw==
+X-Forwarded-Encrypted: i=1; AJvYcCWuzhXhbHLBefwQpEpnwPV9RaW8v3TwkLBjDkJRhRvR6CqbZHfXBURZXOUOqN1v14RLugs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzldoWsePwhwaa0SPlqvE64hqGPXEYKYFqc4rhnZRhVTQcsBodc
+	CHW1oir9VUjW9UOdCpXWsrX+rnVXxrrQdOIK3uJvdb6Tq5mTsjxAT0tFrXd2Lm4moj5cQ1vn4hJ
+	n9F95hozfJ+HMcW9QsYVUgobFWN8wBzw/8g==
+X-Gm-Gg: ASbGnctI5HHx+XEWT61WwyTzOOVSg2rsA5BR270vmcZB77lBxsJ5os5XSQxxLvtYmYd
+	zbOpsvFBVTV5nRzZdNoJWYHuYC/So+Drn/LnlYVkAtYx4hT6F3NPRXnZ5h/tA/tMEdoJSKd1hd3
+	szDFLn2v6iH5ETg+TWj1TUqcEeOpapEsncgU26v280umOytwgbJmKoehH3PvczDHJXT8KVTjvwS
+	H+lX5JyaqQ6GJQ7ZQ4=
+X-Google-Smtp-Source: AGHT+IEk9VWLf3LBjPJxwI2BfFHabLoh30yqSn5XB3bpToS8Yo4skIHEpIswtaQQap4x30efiAkInZiWO6j20YbpypQ=
+X-Received: by 2002:a05:6102:38ce:b0:4c5:1c2e:79f5 with SMTP id
+ ada2fe7eead31-51923a263b0mr507147137.16.1755597475164; Tue, 19 Aug 2025
+ 02:57:55 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 19 Aug 2025 02:57:54 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 19 Aug 2025 02:57:54 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250819-b4-pks-packfiles-store-v1-3-1660842e125a@pks.im>
+References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im> <20250819-b4-pks-packfiles-store-v1-3-1660842e125a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Tue, 19 Aug 2025 02:57:54 -0700
+X-Gm-Features: Ac12FXxMHwYkmCb7ZUnoEMoPJXnoL8W1Gkk6wOEuBxpwAZ9WsU34CjvwBdHWcdk
+Message-ID: <CAOLa=ZS4vBPp=2=X98DwEk48qgFMHvM4BecUPayGAK1Wasd3=A@mail.gmail.com>
+Subject: Re: [PATCH 03/16] odb: move initialization bit into `struct packfile_store`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000e054d3063cb4e3d4"
 
-Elijah Newren <newren@gmail.com> writes:
+--000000000000e054d3063cb4e3d4
+Content-Type: text/plain; charset="UTF-8"
 
-> What if Ezekiel rebased his series on am/xdiff-hash-tweak, and then
-> instead of further modifying the hashing in the first series, he:
->   - introduced brian's patch with the platform support
->   - setup the CI builds to test building with Rust (including Johannes' patches)
->   - started working on transitioning xdfile_t data structure to be FFI friendly
+Patrick Steinhardt <ps@pks.im> writes:
 
-Yup, that matches my understanding of what our first Rust topic
-would want to achieve, i.e. get the framework right.
+> diff --git a/packfile.h b/packfile.h
+> index 1404b80917..573564b19e 100644
+> --- a/packfile.h
+> +++ b/packfile.h
+> @@ -64,6 +64,12 @@ struct packfile_store {
+>  	 * list.
+>  	 */
+>  	struct packed_git *packs;
+> +
+> +	/*
+> +	 * Whether packfiles have already been populated with this store's
+> +	 * packs.
+> +	 */
+> +	unsigned initialized : 1;
+>  };
+>
 
-> One issue here is that it probably wouldn't be too long before we'd
-> want to rip out the xdlclassifier struct (mostly a glorified
-> hashtable), which is kind of tied up in a knot with the hashing and
-> line equality, so it would probably only be a few more series down the
-> road before we'd want to start tweaking the code in
-> am/xdiff-hash-tweak to make use of the new data structures.
+Nit: I know this is moved from existing code, but might be nice to
+adhere to our format rules here and remove spaces around the bit field.
 
-I understand that at this point we do not expect to import any
-(security or otherwise) fixes to xdiff code from "upstream", as we
-are practically the upstream for other folks?  For our consumption,
-that would allow us to take a quite different stance from our
-historical attitude, which was to keep the modification to the
-minimum, and apply whatever clean-ups and optimizations only to suit
-our needs.  So what you outline does make certain sense to me.
+Tangent: Also this is something that is only mentioned in the
+'.clang-format' but not in any of our documentation, should we add it to
+the documentation? Usage seems to be around the same for both types.
 
-I am however not sure if we owe anything to our downstream projects,
-though (e.g., I understand that libgit2 extracted xdiff part from
-our source, so if we have serious security fixes in ours, they would
-want to be able to import them?).
+>  /*
+>
+> --
+> 2.51.0.261.g7ce5a0a67e.dirty
 
-Thanks.  
+--000000000000e054d3063cb4e3d4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 8a608f1eb9f8d1a0_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pa1NxRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN0J2REFDSHJ6aWRVN1lLQWNDUDhHVHFZVlJlVFp3VAp6YUYzN2ZUZkQ2
+S2t4RWNYa3NjWmEyTzNRdTQzSTFMZG5OelBiMFFNcUNXWnIrSTVhTHRBeFdwV3h2TElJS2ppCjFq
+MjMvQzl0U0tzTzJCdWNIcUY1OEt5d0RHb01mcUhDMnRnWjkza2FLbWlIMHI0R1luWmJIU3EyMWJJ
+WmxhSDgKU3hlVkpGRExpTlRXWDlFMUtzbytDRmpsNlBPeGtwSEJUeXBycEhmTk1MUC9JWUlGbGdX
+OVlUSXVOemMwTXhJOQpmWmZ2Z1hkNkQ1L0JDendZckIvSk5DaFhGdE5ESndGYkJxcStoZEJ5U3Zo
+MVNDTkZSVFpSc1p1aGlXK0FpS0ZaCkhWOWxLSE0vZGxHSjNoNUc0OHdYb1JPeXJXdDArNGJCT2s0
+ay9NaXh0Z2R1bUpWaUYxTTB6aHA1MCtkVVdoRVkKRlQ0dHFzTS9zRGRKUUNVTkIxaWNZaWcrWUhJ
+YUgrZG9zYTg0VUV1L1MxVWNlMEZXdkxIN3FETjRnU2crWFZKeQpwUHk1UnloNTltRGtKWjBVNjl0
+NzV6bjlrOCtBK0Q4cmcwY0p5SGhXcmlmc0tpcHhpOVB0WlRKY0VkOUhHUmhsCnNXUXFud0s5Mmh1
+ZkJaa1pYSlhjY1RhNUs4NkxiNmszRWFtbStIYz0KPWpOY1MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000e054d3063cb4e3d4--
