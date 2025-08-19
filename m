@@ -1,85 +1,83 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB3D3112B0
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 08:05:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F058F241679
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 08:07:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755590733; cv=none; b=HOT4UWvhgLCpDHaowp2ktQQLnMip0X2Ci91fIcEM3yRjWWX+bYpdnI1niOQnj1eBVo0g29WHCGyBNcdOHOYUnTw9vOG823w5Ss2BCS5RTHMjMT6JoUG7+WHFJpoQ+S+khS5C4cBjjxHnzlK47H/IRGufiev1okLhfLJX1eKAEs4=
+	t=1755590843; cv=none; b=G0qXJazZppUO4+UupUQr7ixCTN1orrGRydEIVLBmqowVaYjFP1swdGrMT7ey9xBijyVeRudaa0l2K2QCi7HVifDRNPgTT55jtsn+Sov1qDBRA57cB2XPdSsnFFKntSU2O2RDaOakiIYwIZispyJBxx6J+yrbzyNU7xUUHYqvcTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755590733; c=relaxed/simple;
-	bh=pp4nt1jrDqaMDKW1E1fAPg33IvAZClcQFDYvjiCj4/Y=;
+	s=arc-20240116; t=1755590843; c=relaxed/simple;
+	bh=+eAGIsiBBKEJ097B8JICCizFygONH4z0Bgo5xUHs7ws=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pBmnU1s/rmGEaFpXhWC8FDFqv2Xjrmy71Si1TbNnhajLQHACSK465FgYON/LaHO7+Se0XB3FuGQ4b5wPTQFXr4JVPSTGpsfjBCKUAddqAr0mygx1lRQitar75avnFbzQbBq8d4bVgPEfVR8/he+Zr86MW5QfyxtLrK+Lcla5jr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KSRGEQfW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D49RwJTx; arc=none smtp.client-ip=202.12.124.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q0xHAd8nNxttvN1MIYQ3FFnh8YelYGf+4ZUb+U5FglaqwKRa5L3DTNCwazWBeQc3KfdnlwjcXjXeGONVaoUVSgrES/IUYeStGVUCkCYyDcL+N9nvJ2/MkBIDsMAt6MS+EGa5n//dgCMiYvAcDk48l+s7ejPwZbRAfw0fIuqnG/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E/uU+vCa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gHJsKto+; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KSRGEQfW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D49RwJTx"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E/uU+vCa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gHJsKto+"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4573B1D0021F;
-	Tue, 19 Aug 2025 04:05:30 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 19 Aug 2025 04:05:30 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EEA447A027D;
+	Tue, 19 Aug 2025 04:07:20 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 19 Aug 2025 04:07:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1755590730; x=1755677130; bh=dzLgtYzlqf
-	QnrKWY9TnM4IkVokBNQWkl+wvj0AEz2ac=; b=KSRGEQfWagskxvOaB6bXP/AGFh
-	pDwiDWCbH2hseAmk0aDNlY3oYy5RV2F8XMCBq24e1GyVk6st/dZLSma5s/TfKlEB
-	zTmyyaVCai54t/LTEk3BSgQiZ0US1fB18KU7+mO9nf9nvlownf8oa/v5FpshOFZA
-	nBWIFnSrrW9QRcw078tjY5r/XgkSAzKE0KERjTkTzXUvvGIUX4N9uKDBGWg1n04E
-	JBl0zIP7PGqvIHNyHY+DEDVDOlVeKq5DMnX+CWYP4t0Hhik4nbHz5uYJszvsWJWP
-	tcayC2vbmltOzNeJQBzgnot6jcd1UP58j+ai4Kg+zU5hkQZ5OmPeD1N2PRJw==
+	:subject:to:to; s=fm3; t=1755590840; x=1755677240; bh=PMwtdhA4aB
+	/2drukbLOVkE7Jcc/uHEb9GFD6HcCf0B0=; b=E/uU+vCacNL3Wn6A8K9ZyQmcOw
+	OTcMqbtIBxyUybweiVVSN6svgVwq8s4VBdwpvatUO+C5Dx5Qv2j0Jk46vAUbTGBN
+	Lwi2tBaA0skaG+3RAiCdmQ+YQsO02b2RD1EdvTGm9WVI/lashkiY7SIO+X7dGorR
+	nxAe01eii8frIBAy1XrEF1o5X6/xfdWRLMV26emd8/oj3ES+HF+UnKjeOXx/BmWO
+	ypYaEtqMVxH7eEA0lbMqyIMoMMRDHIu8IkPREhjspwuAUa2C3mFmjc35h21jDV8B
+	ZyOXTwrYfqEhQN/YmVPbrkqzCh2PKc9YFl82mEd1mECPzFZZSEipQh8Ww6ww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755590730; x=1755677130; bh=dzLgtYzlqfQnrKWY9TnM4IkVokBNQWkl+wv
-	j0AEz2ac=; b=D49RwJTxWmqKhzZFkCB9dBFIEthNOaaw5ZHMPf82QsXmQvRaA8e
-	MiyXaTlzLJ2V4g4aQkl35k6V/JlOqty2y74duX9FUTo8s9SmaKmF59/CcRhWZnez
-	P+h2J8NNKt00mSP4BdPduoPUQzma6T5ZgGu3tBhTh80AhWgnUVftxDoiz1Uc/84i
-	JUCoHx1L4KcBstErMp/0axOjVL/1TnyPhuVYPsblTEIDi/hYZ6NE9LI2IQXqcE6z
-	KLYn4AuzfG+d5OcEYUH5Tu5ivuHT20/hw7nBiwoNN6Lkl1iovbn8+a3FDq2LMsX9
-	gtMuHYdjNmB2PM0ePgJUVPeRilRAhaX841A==
-X-ME-Sender: <xms:STCkaETcjflj25eMFam9kXKydOB20CatKBVasywwgd7khCf2zISbKQ>
-    <xme:STCkaKM7vwQwxGxaO41oc8qxmKv0Qg3Y8KxU3yhU0JCsLxHE3D3fNKs9RhFpm0B-V
-    psTsUIrFKS9JkKjgg>
-X-ME-Received: <xmr:STCkaCRGMg0eCNfuDK8Kf2w6JAJC18SEy9U1OHj4DpGTsrFZwCPYBGU01qLDqqhPIBiYUmN-I7Lq6B-YCUc-3NJ-_Tl0i5zgpSiT1OPO6qrW>
+	1755590840; x=1755677240; bh=PMwtdhA4aB/2drukbLOVkE7Jcc/uHEb9GFD
+	6HcCf0B0=; b=gHJsKto+iHM09FDftNEnUZkcE8w2yWwL9ovUboVTSn0zfm+q4md
+	uOAExf2rZqx7hbAWmI0EBQMHQdHuGlrIq1vNwa8zvvBovKabKjj1LmpsW850cXCg
+	hdX5v3RQB8abhHEZI1HzUt8KgdVQRCWkICY1PvtUcSCgO+p2kWmDO4ROskBpdpT6
+	63Wojq0yVXJVZf8rRzaRU1K9G4YgTXJkExjv4BiyKfrWiePM1pzM6KbvgI0nDFIE
+	0nQOiLPphnfmLreLIA3Ni4Ic4EUM4sWeQdVX+/nP5OPDAhNQDNEnJjof4/tE246T
+	FBpQpHKw1LJMFS0oSZ885kaEG1NqiYtX16Q==
+X-ME-Sender: <xms:uDCkaO-Fjvh3WsyPFPqBSEyEtOVknykjLSvVqC37zGr6edVc9GHdHg>
+    <xme:uDCkaB_J1c9HAFTf5OVy3aKr_hLONMFt8KEsgzYWKc9KmtX76gKwETL4lwU_M8YtU
+    BhX0vaQ7nA5XW6t3Q>
+X-ME-Received: <xmr:uDCkaNf_FsQWTaGECSMeA3LGOYEJ0iaY9xfB4A_rgOLaKSCv3dazXzhsV1XnKEBgfyaVCQcHK9CnsqrIqeRn1JNIuID4aPSZF2V4W6XUpKOG>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheegleejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehprhhophhhvggthhgvnhhgsehsthhurdhp
-    khhurdgvughurdgtnhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlrdhsrdhr
-    seifvggsrdguvgdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrd
-    horhhgrdhukh
-X-ME-Proxy: <xmx:STCkaIgEEhFM-BCULPj6T7vLkDo-H7DYpYqy_kuKyWOwarOhWtZBXw>
-    <xmx:STCkaL88TiFW0WuaCnlwyE-aGGZk8ZQCcMuVR6ilmsKk16gFPI5UGA>
-    <xmx:STCkaPHt_yjFSMVnTEMbGKNGTqoTNBKiE_6UR6-_8TU_ihvkkYQ12Q>
-    <xmx:STCkaOnZuLuerFYWR7MZL8IF9sFxkmIYJCDxuidLnP6f-salDs1sGQ>
-    <xmx:SjCkaB2nFpsGy_HhBHyPrgiXIazFQBGiwMy4dn06q5lAOatL1qY0iXaK>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehrughivgiiqd
+    dvtddtieesrhguuddtrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:uDCkaCGUO94NBOjai5ZzPCq5Lk-PyBdcmp7vRNM0lDYe0mtTGw5lxA>
+    <xmx:uDCkaDc5cV0RP4-QXenaZMOjJ_H-4yGg6mjTAqLTXkVDlY-lCkK41Q>
+    <xmx:uDCkaEHQI2EcM0y2lAA1d8JX6zRs6MTJyRikbmRr0l0-qJAs8m67Jg>
+    <xmx:uDCkaEXSdEZIMI5qWmA5JBkXgg9skZ4VOGtOEJZDRP_gu-BQr9MTzQ>
+    <xmx:uDCkaKOMCsSyih1LsoXry7lR1ytkPsJZLo5Zi4MhbyYALASm246o6VoP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Aug 2025 04:05:28 -0400 (EDT)
+ 19 Aug 2025 04:07:19 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 83c7cb46 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 19 Aug 2025 08:05:28 +0000 (UTC)
-Date: Tue, 19 Aug 2025 10:05:25 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 6625ee44 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 19 Aug 2025 08:07:18 +0000 (UTC)
+Date: Tue, 19 Aug 2025 10:07:15 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, phillip.wood@dunelm.org.uk,
-	Cheng <prophecheng@stu.pku.edu.cn>, git@vger.kernel.org
-Subject: Re: [PATCH 5/5] describe: pass commit to describe_commit()
-Message-ID: <aKQwRaX94uwTwiQP@pks.im>
-References: <20250818205812.GA1018043@coredump.intra.peff.net>
- <20250818210417.GE1024556@coredump.intra.peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "R. Diez" <rdiez-2006@rd10.de>, git@vger.kernel.org
+Subject: Re: Graphical tool to merge and reorder commits
+Message-ID: <aKQws631-giQS5Qr@pks.im>
+References: <4398af77-3183-4ac5-9a25-aca6289d8c8f@rd10.de>
+ <xmqqplcsiimq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,24 +86,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250818210417.GE1024556@coredump.intra.peff.net>
+In-Reply-To: <xmqqplcsiimq.fsf@gitster.g>
 
-On Mon, Aug 18, 2025 at 05:04:17PM -0400, Jeff King wrote:
-> There's a call in describe_commit() to lookup_commit_reference(), but we
-> don't check the return value. If it returns NULL, we'll segfault as we
-> immediately dereference the result.
+On Mon, Aug 18, 2025 at 11:34:21AM -0700, Junio C Hamano wrote:
+> "R. Diez" <rdiez-2006@rd10.de> writes:
 > 
-> In practice this can never happen, since all callers pass an oid which
-> came from a "struct commit" already. So we can make this more obvious
-> by just taking that commit struct in the first place.
+> > Is there some graphical tool to merge and reorder commits with the
+> > mouse? Or failing that, a good terminal interface with menus and
+> > the like which allows merging and reordering in an easy, visual
+> > fashion.
+> > ...
+> > I have tried or investigated numerous Git tools: git-gui, gitk,
+> > Gittyup, GitUI, GitButler, SourceGit, git-cola, Guitar, gitg, tig,
+> > giggle, qgit, RabbitVCS, Magit, lazygit, ... They are all fine for
+> > normal commits and the like. However, most fall short fairly
+> > quickly. For example, the ability to highlight character or
+> > word-based changes inside a text line is rare. And none of them
+> > really appealed to me when merging, let alone rearrange commits
+> > visually.
+> 
+> It would be a fun little project to write a GUI front-end that emits
+> "rebase -i" todo file and drives the interaction, if there is none
+> already (which your research seems to indicate).
+> 
+> Sounds like you found a good starter project for the next GSoC or
+> Outreachy students, I guess ;-)
 
-I was wondering a bit about commit-graphs. We had the case in the past
-where it was possible to look up commits via the graph even though they
-don't exist in the ODB. So we might actually end up with a missing
-object if `GIT_COMMIT_GRAPH_PARANOIA=false`, which is the default value.
-But that might be fine? No idea without digging further.
+I might have something related to that: I've got a patch series cooking
+that introduces a `git history` command. With this you can say:
 
-In any case, the refactoring makes sense regardless from my point of
-view.
+  $ git history reorder $COMMIT_A --(before|after) $COMMIT_B
+  $ git history drop $COMMIT
+  $ git history split $COMMIT
+
+It's only intended as a starting point, and there's additional commands
+we can eventually think about. I'll probably send an initial version of
+this series later today.
 
 Patrick
