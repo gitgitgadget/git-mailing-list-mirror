@@ -1,290 +1,129 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71C931CA6A
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 19:29:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006C6246761
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 19:45:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755631777; cv=none; b=svhmF5k8jr/YfbkgZWwTqCQK3BdOFsj9Z6YobpHcBq7cMHAusuEorXw2+MnSd+fhYCWzoajhGjEZlELXy3WAZY4rHcCNjR4v3Hsglhg5kxgBKzW9Ur5DmnhGgFNKvK4IwUVP0S8Wlx3wibJTrWhvpIonN2wFLg86dnRZk0TRaDo=
+	t=1755632760; cv=none; b=i+NW2IUA3yNH6PvNKieaze4FOA1Ajj3YSz8JLTqV7Y2+F1tXa4FlzBjpg8XHnYhbxjjzFD0pW81+X0EJsaXEKh6AxkJlHfwbItX+6kCWXeovPTNsNVgc8fss0l1blU8mUoscsUr1BNONZBrP7MMW+89rzrZ0pIqN3Vi5P9BRXMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755631777; c=relaxed/simple;
-	bh=HX4O/Xa8tRWe1t4l6Q0LmN0zBEOsVg7UHpyfwLYQxqY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c9d/XVJld6xZYD2RTYfaWi5Olo+RSo21v+INkuZV7ZXmPoROr1LcWx7JBZbjRxOdHNKQS5bfVucPc2CP4JxpLQOB1CX5wei2G3yD6FUqrcoZhHYgaVLz0QRGSRi56FPQP8QzvPAB510MBeljR1qwuns+4AVcFapbFFeO9BTawCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Leb40RmZ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1755632760; c=relaxed/simple;
+	bh=ni8cLZaC+j9ZqUKoF57hFYyZtRlgWzuiWYJXMUL5WvY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FSBDvdz/saHq9FFXF/kUAl/0RGJ2xTUv9smNrFyj9mHps8hEhgX7vcHfjoIqJaSIO7KjwMSD6bIvQdVqsMxSpaML2RDKq4ObM8mTGf0SCddIL+MOTKFHn/MnCmm4gtJhBR1vAQvqm0vSveFLu/c5koOpUjxw51GFYRMyWX0e6Kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PwkpA4Lg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MkTd9JmA; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Leb40RmZ"
-Received: (qmail 31214 invoked by uid 109); 19 Aug 2025 19:29:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HX4O/Xa8tRWe1t4l6Q0LmN0zBEOsVg7UHpyfwLYQxqY=; b=Leb40RmZsnzv6t/YJ6RZF1YkOwERsRjTHnDPuz1Fe/1DIWkQNJ8IkgjhN62YejxB5/5s2nMB9wC+c0+8bZs6in00V2Ct4IcOZCMPyBBqYgtUwjZzSZ8MHg8X+vLOY+D1JUeRGIgB0Oz6g9XbrDTQ00Y4pH7KDTFO/Q1W1qXWBP6n/ns/4qiYTwb/6OVYzPdW0I3R30NV1ebUrx2BbI4LEE+Hd8jTqbMVPg1FfG5vM8anx5Z1+IodQZdj/5UNc5Lid7Rj7Ryc1OpzaICI+oI+tT8eVrZJ10QbgyGTuRgOhApFDHhWzylBoNShINlJjoeSPpf6UKJpA1RVp7rgFAA9Fw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Aug 2025 19:29:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 46458 invoked by uid 111); 19 Aug 2025 19:29:34 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Aug 2025 15:29:34 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 19 Aug 2025 15:29:34 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 4/4] refs: do not clobber dangling symrefs
-Message-ID: <20250819192934.GD1059295@coredump.intra.peff.net>
-References: <20250819192004.GA1058857@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PwkpA4Lg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MkTd9JmA"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1A928140017A;
+	Tue, 19 Aug 2025 15:45:57 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 19 Aug 2025 15:45:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755632757; x=1755719157; bh=PwaROquKQw
+	AzRsCsbLRBOQibfIMAe2cDyTu13yMzD5M=; b=PwkpA4LgsFI342HyKTDU7JGxjI
+	lYLzq++MZ8ZIadykNZKhgpP30SavpbXTzp9/2jyoHhM5vIdl+ohEAwDK26Rw4V+0
+	7iiZGV9k+MkTKb0F3hkyo+8+VBECf12+269UetRN4jrvUXBHpx780+NbmXMe3XNG
+	ljM0/Zm+uQem2HpZZfG40F1wk44YJpz/D0AWXgY6KidjsKSACLC53lRC4ogbBfe6
+	vp+Av+o2A+f331pgoZWNvQLk+y7Zk7+hQ4YX7q2XobLctXh2eT5lqXzj0jBbq7ur
+	JSOJn75wJ0q0kaUhhaa2xg+HlkZ3vNnEm+YVQ7ced5v+owbuae4JX6/uC18g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755632757; x=1755719157; bh=PwaROquKQwAzRsCsbLRBOQibfIMAe2cDyTu
+	13yMzD5M=; b=MkTd9JmANbVLghJrL1h3RnRAwp1UEHZYvfGcpSDwpVVUXpcV1uS
+	WObyzXQg1xS5vIYXkoxtjw5+pgwPag31JRn8uG7exYCAg8NIDVkche+uUdyhPgKx
+	Dty2iLw5BQMalBSADUiZR0zoI/94VpyiakhGqs0zdITyVkwabVw1ECmMXpXSyQ4Z
+	XbmTGUpoM+hFMGOPAaDn9UrVQqH4ALr0vZnM2inQeBI6sMa1B5IiiNUWJVJE+l32
+	QZKdAg4ICoS9wIU1tN9zm7SiuF+F9ze1Ug+jXMJO3fMrTjZuBfl1wxikf1Oz2Hei
+	7/2FVfeEpEUudVBSj7wvZ0AAKYMt+XHxVFA==
+X-ME-Sender: <xms:dNSkaBiPOBX5tZKESf6LaKaHl1FOrXwHc7o6oDGPwO57Iu7jik83TA>
+    <xme:dNSkaC87USfVpM0UogSO8orfBKbf1VSr_tzzRKr7EWDvd9D_sLpFl5fbhrY-Z7JnH
+    PoGE1wzgdtGD_Aw6w>
+X-ME-Received: <xmr:dNSkaMuK_34Rbk98Zq5V9LsJXmR6q1jP9X8iv91JZf-h7Ix7IdhqzKaht9ruWpH0x-7_lBRX2yoBXX3hy9gWMPhrnQOUvPF1VR2qXjU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheeifeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
+    hphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthh
+    hikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:dNSkaOoI486uPfkq5KxOI7m_G0jeY7SGSHUM7-oTjqgVrpFiL4GWjA>
+    <xmx:dNSkaIoFHRUp8h8m2gVPY9EGWHwU2x4drjTyE6poz5hApaC95T1-rQ>
+    <xmx:dNSkaFaoUFr3ONHwmi_lw-u7idKb9HV8g8Izs_ElDzmH9F1OFUNTrA>
+    <xmx:dNSkaO_QkOFvPxFGOPCnf6Vgzp9U6mXt00S5h7ttjsQkDORoIte7pA>
+    <xmx:ddSkaJTERRrWk0m-eTbazoQ1Fu1Zev24zWgNKd3XXwuBFrQXPcU-vcHr>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 19 Aug 2025 15:45:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>,  "Julia Evans"
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>,  "Patrick Steinhardt" <ps@pks.im>,  "Karthik
+ Nayak" <karthik.188@gmail.com>
+Subject: Re: [PATCH v8 4/5] doc: git-rebase: move --onto explanation down
+In-Reply-To: <106c4a6c-9239-4c67-8bed-5ec2c0987f21@app.fastmail.com> (Julia
+	Evans's message of "Tue, 19 Aug 2025 11:03:36 -0400")
+References: <pull.1949.v7.git.1755006568.gitgitgadget@gmail.com>
+	<pull.1949.v8.git.1755276750.gitgitgadget@gmail.com>
+	<4686417b28e4ab386983ad68e4d4d4798a467811.1755276751.git.gitgitgadget@gmail.com>
+	<xmqqh5y8nvmv.fsf@gitster.g>
+	<51468411-8251-4f13-90f2-5cd5184d7c52@gmail.com>
+	<xmqq4iu4k18z.fsf@gitster.g>
+	<106c4a6c-9239-4c67-8bed-5ec2c0987f21@app.fastmail.com>
+Date: Tue, 19 Aug 2025 12:45:55 -0700
+Message-ID: <xmqqwm6zccy4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250819192004.GA1058857@coredump.intra.peff.net>
+Content-Type: text/plain
 
-When given an expected "before" state, the ref-writing code will avoid
-overwriting any ref that does not match that expected state. We use the
-null oid as a sentinel value for "nothing should exist", and likewise
-that is the sentinel value we get when trying to read a ref that does
-not exist.
+"Julia Evans" <julia@jvns.ca> writes:
 
-But there's one corner case where this is ambiguous: dangling symrefs.
-Trying to read them will yield the null oid, but there is potentially
-something of value there: the dangling symref itself.
+>>> The existing
+>>> examples are all good reasons why one might want to use "--onto" so
+>>> I'm slightly wary of replacing them with a single example in the
+>>> description.
+>>
+>> Then perhaps we should find a better place to put it.  The section
+>> on advanced topics notes are mostly about operations using sequencer
+>> machinery, except for the onto section.  Perhaps immediately after
+>> the apply/merge comparison?
+>
+> I'm happy to move it anywhere: I couldn't figure out how the sections
+> were meant to be organized (I didn't know that "operations about 
+> sequencer machinery" was meant to be a theme) so I chose where
+> to put it pretty arbitrarily.
 
-For a normal recursive write, this is OK. Imagine we have a symref
-"FOO_HEAD" that points to a ref "refs/heads/bar" that does not exist,
-and we try to write to it with a create operation like:
+I do not think it was meant to be a theme, but the topics there
+ended up being around it as they were placed there organically.
 
-  oid=$(git rev-parse HEAD) ;# or whatever
-  git symbolic-ref FOO_HEAD refs/heads/bar
-  echo "create FOO_HEAD $oid" | git update-ref --stdin
+If we were moving it, how about somewhere fairly early, like before
+we start talking about mode options, where we teach the very basic
+concept "rebase is to transplant a range history on top of a commit
+that is different from where that history currently builds on"?  The
+primary difference with and without "--onto" is if you explicitly
+specify where to transplant your history, independent from how you
+specify the range of history to be transplanted, or a single
+<upstream> implicitly specifies both.
 
-The attempt to resolve FOO_HEAD will actually resolve "bar", yielding
-the null oid. That matches our expectation, and the write proceeds. This
-is correct, because we are not writing FOO_HEAD at all, but writing its
-destination "bar", which in fact does not exist.
-
-But what if the operation asked not to dereference symrefs? Like this:
-
-  echo "create FOO_HEAD $oid" | git update-ref --no-deref --stdin
-
-Resolving FOO_HEAD would still result in a null oid, and the write will
-proceed. But it will overwrite FOO_HEAD itself, removing the fact that
-it ever pointed to "bar".
-
-This case is a little esoteric; we are clobbering a symref with a
-no-deref write of a regular ref value. But the same problem occurs when
-writing symrefs. For example:
-
-  echo "symref-create FOO_HEAD refs/heads/other" |
-  git update-ref --no-deref --stdin
-
-The "create" operation asked us to create FOO_HEAD only if it did not
-exist. But we silently overwrite the existing value.
-
-You can trigger this without using update-ref via the fetch
-followRemoteHEAD code. In "create" mode, it should not overwrite an
-existing value. But if you manually create a symref pointing to a value
-that does not yet exist (either via symbolic-ref or with "remote add
--m"), create mode will happily overwrite it.
-
-Instead, we should detect this case and refuse to write. The correct
-specification to overwrite FOO_HEAD in this case is to provide an
-expected target ref value, like:
-
-  echo "symref-update FOO_HEAD refs/heads/other ref refs/heads/bar" |
-  git update-ref --no-deref --stdin
-
-Note that the non-symref "update" directive does not allow you to do
-this (you can only specify an oid). This is a weakness in the update-ref
-interface, and you'd have to overwrite unconditionally, like:
-
-  echo "update FOO_HEAD $oid" | git update-ref --no-deref --stdin
-
-Likewise other symref operations like symref-delete do not accept the
-"ref" keyword. You should be able to do:
-
-  echo "symref-delete FOO_HEAD ref refs/heads/bar"
-
-but cannot (and can only delete unconditionally). This patch doesn't
-address those gaps. We may want to do so in a future patch for
-completeness, but it's not clear if anybody actually wants to perform
-those operations. The symref update case (specifically, via
-followRemoteHEAD) is what I ran into in the wild.
-
-The code for the fix is relatively straight-forward given the discussion
-above. But note that we have to implement it independently for the files
-and reftable backends. The "old oid" checks happen as part of the
-locking process, which is implemented separately for each system. We may
-want to factor this out somehow, but it's beyond the scope of this
-patch. (Another curiosity is that the messages in the reftable code are
-marked for translation, but the ones in the files backend are not. I
-followed local convention in each case, but we may want to harmonize
-this at some point).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs/files-backend.c    | 34 ++++++++++++++++++++++++++++++----
- refs/reftable-backend.c | 30 +++++++++++++++++++++++++++---
- t/t1400-update-ref.sh   | 21 +++++++++++++++++++++
- t/t5510-fetch.sh        |  9 +++++++++
- 4 files changed, 87 insertions(+), 7 deletions(-)
-
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 905555365b..a4419ef62d 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2512,13 +2512,37 @@ static enum ref_transaction_error split_symref_update(struct ref_update *update,
-  */
- static enum ref_transaction_error check_old_oid(struct ref_update *update,
- 						struct object_id *oid,
-+						struct strbuf *referent,
- 						struct strbuf *err)
- {
- 	if (update->flags & REF_LOG_ONLY ||
--	    !(update->flags & REF_HAVE_OLD) ||
--	    oideq(oid, &update->old_oid))
-+	    !(update->flags & REF_HAVE_OLD))
- 		return 0;
- 
-+	if (oideq(oid, &update->old_oid)) {
-+		/*
-+		 * Normally matching the expected old oid is enough. Either we
-+		 * found the ref at the expected state, or we are creating and
-+		 * expect the null oid (and likewise found nothing).
-+		 *
-+		 * But there is one exception for the null oid: if we found a
-+		 * symref pointing to nothing we'll also get the null oid. In
-+		 * regular recursive mode, that's good (we'll write to what the
-+		 * symref points to, which doesn't exist). But in no-deref
-+		 * mode, it means we'll clobber the symref, even though the
-+		 * caller asked for this to be a creation event. So flag
-+		 * that case to preserve the dangling symref.
-+		 */
-+		if ((update->flags & REF_NO_DEREF) && referent->len &&
-+		    is_null_oid(oid)) {
-+			strbuf_addf(err, "cannot lock ref '%s': "
-+				    "dangling symref already exists",
-+				    ref_update_original_update_refname(update));
-+			return REF_TRANSACTION_ERROR_CREATE_EXISTS;
-+		}
-+		return 0;
-+	}
-+
- 	if (is_null_oid(&update->old_oid)) {
- 		strbuf_addf(err, "cannot lock ref '%s': "
- 			    "reference already exists",
-@@ -2658,7 +2682,8 @@ static enum ref_transaction_error lock_ref_for_update(struct files_ref_store *re
- 			if (update->old_target)
- 				ret = ref_update_check_old_target(referent.buf, update, err);
- 			else
--				ret = check_old_oid(update, &lock->old_oid, err);
-+				ret = check_old_oid(update, &lock->old_oid,
-+						    &referent, err);
- 			if (ret)
- 				goto out;
- 		} else {
-@@ -2690,7 +2715,8 @@ static enum ref_transaction_error lock_ref_for_update(struct files_ref_store *re
- 			ret = REF_TRANSACTION_ERROR_EXPECTED_SYMREF;
- 			goto out;
- 		} else {
--			ret = check_old_oid(update, &lock->old_oid, err);
-+			ret = check_old_oid(update, &lock->old_oid,
-+					    &referent, err);
- 			if  (ret) {
- 				goto out;
- 			}
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 99fafd75eb..ef98584bf9 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1272,9 +1272,33 @@ static enum ref_transaction_error prepare_single_update(struct reftable_ref_stor
- 		ret = ref_update_check_old_target(referent->buf, u, err);
- 		if (ret)
- 			return ret;
--	} else if ((u->flags & (REF_LOG_ONLY | REF_HAVE_OLD)) == REF_HAVE_OLD &&
--		   !oideq(&current_oid, &u->old_oid)) {
--		if (is_null_oid(&u->old_oid)) {
-+	} else if ((u->flags & (REF_LOG_ONLY | REF_HAVE_OLD)) == REF_HAVE_OLD) {
-+		if (oideq(&current_oid, &u->old_oid)) {
-+			/*
-+			 * Normally matching the expected old oid is enough. Either we
-+			 * found the ref at the expected state, or we are creating and
-+			 * expect the null oid (and likewise found nothing).
-+			 *
-+			 * But there is one exception for the null oid: if we found a
-+			 * symref pointing to nothing we'll also get the null oid. In
-+			 * regular recursive mode, that's good (we'll write to what the
-+			 * symref points to, which doesn't exist). But in no-deref
-+			 * mode, it means we'll clobber the symref, even though the
-+			 * caller asked for this to be a creation event. So flag
-+			 * that case to preserve the dangling symref.
-+			 *
-+			 * Everything else is OK and we can fall through to the
-+			 * end of the conditional chain.
-+			 */
-+			if ((u->flags & REF_NO_DEREF) &&
-+			    referent->len &&
-+			    is_null_oid(&u->old_oid)) {
-+				strbuf_addf(err, _("cannot lock ref '%s': "
-+					    "dangling symref already exists"),
-+					    ref_update_original_update_refname(u));
-+				return REF_TRANSACTION_ERROR_CREATE_EXISTS;
-+			}
-+		} else if (is_null_oid(&u->old_oid)) {
- 			strbuf_addf(err, _("cannot lock ref '%s': "
- 					   "reference already exists"),
- 				    ref_update_original_update_refname(u));
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index d29d23cb89..29b31e3b9b 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -2310,4 +2310,25 @@ test_expect_success 'update-ref should also create reflog for HEAD' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'dangling symref not overwritten by creation' '
-+	test_when_finished "git update-ref -d refs/heads/dangling" &&
-+	git symbolic-ref refs/heads/dangling refs/heads/does-not-exist &&
-+	test_must_fail git update-ref --no-deref --stdin 2>err <<-\EOF &&
-+	create refs/heads/dangling HEAD
-+	EOF
-+	test_grep "cannot lock.*dangling symref already exists" err &&
-+	test_must_fail git rev-parse --verify refs/heads/dangling &&
-+	test_must_fail git rev-parse --verify refs/heads/does-not-exist
-+'
-+
-+test_expect_success 'dangling symref overwritten without old oid' '
-+	test_when_finished "git update-ref -d refs/heads/dangling" &&
-+	git symbolic-ref refs/heads/dangling refs/heads/does-not-exist &&
-+	git update-ref --no-deref --stdin <<-\EOF &&
-+	update refs/heads/dangling HEAD
-+	EOF
-+	git rev-parse --verify refs/heads/dangling &&
-+	test_must_fail git rev-parse --verify refs/heads/does-not-exist
-+'
-+
- test_done
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 24379ec7aa..83d1aadf9f 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -232,6 +232,15 @@ test_expect_success 'followRemoteHEAD does not kick in with refspecs' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'followRemoteHEAD create does not overwrite dangling symref' '
-+	git -C two remote add -m does-not-exist custom-head ../one &&
-+	test_config -C two remote.custom-head.followRemoteHEAD create &&
-+	git -C two fetch custom-head &&
-+	echo refs/remotes/custom-head/does-not-exist >expect &&
-+	git -C two symbolic-ref refs/remotes/custom-head/HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'fetch --prune on its own works as expected' '
- 	git clone . prune &&
- 	(
--- 
-2.51.0.326.gecbb38d78e
