@@ -1,122 +1,123 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from buffalo.tulip.relay.mailchannels.net (buffalo.tulip.relay.mailchannels.net [23.83.218.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512D724C68B
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 21:44:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755639900; cv=none; b=TPOyO7zZxr5SgmWCXrg/pOjP2IsexSdhq8llUbBNtHStGVaFImguHEUpe9lb/kLEdOaRizkJpVACPcrQKlROiV5rFzYM6w5PMHTDGxNYeNWKaL3VK+675DvOVVLKLkofPSXVg+pYoo2g5vSzmyU6oSKXy0m3lS0jkS87s6jC+eI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755639900; c=relaxed/simple;
-	bh=8NeRCTJqEFllOYyZNM7UFwRpvA0DqQzNgQNsieVObwY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BGOZ76JarHDUjdKotIPsVHIOzjpdc0y/R8LfGKN+Pp3E6p2Lew/ygHZ7cEAvWkbhTkdEhYYP9cEXLHD+4SLm2/pqrnUwedcI72iOhHtvT2oQKWzEHkMkppHhmzWP5zojx2fR0trr+gRkxgjjQwqcawzfx1Kxj9DWTbKGLZtvDzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UqxeCXui; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UqxeCXui"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-afcb78da8a7so935277066b.1
-        for <git@vger.kernel.org>; Tue, 19 Aug 2025 14:44:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755639895; x=1756244695; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=23v33muqUGusrOWC7rB7QCW98x6JJB2sMkOLzp6OSa0=;
-        b=UqxeCXui7x99HVAui5YYfBlHEc4Te3CVqFUq5LwDol/IkJwElSisHyCLqhTRe7TjWC
-         N+0XQx37g+BXntEjN0Q7v34cOzyNf8n8yb4dfFz986GGvHkJbyb889mlLws6pi7eBPce
-         8+e/jpEk/LaYxp7gjV0jx1VRyjnkcXxV2KaINTmkYTwqfnfIdTjO53lv8DK+DPdvcHlK
-         EuGxq/ze8nFOOUi9X3Hwv0xDW7IuGM6bUMdN/1657ouPvd4ZBvLHaMCPCEnTWi1Mfjpk
-         GXZfH55/ElZ8gQWCtP2g3FEfe/o/wWGQySvYywPpYcVYgTZkffG3qXyq531fow24A519
-         GRtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755639895; x=1756244695;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=23v33muqUGusrOWC7rB7QCW98x6JJB2sMkOLzp6OSa0=;
-        b=jvG2inrCuMhcPKcBLD0mkymtDXKcQNUi7WVEfQDwHmZqN0xKUS4IvRjXS2nvk+CwLJ
-         o+Gk3fe1vHSf3UvtBn1hbs/7UTuX7Ua2y2gBdp4hvf96BcP6Xi8x+riErnQjWmPERZWX
-         Iy3AJhT1BVRgV4bee60PoD4tuaFWp4b5aYnZmRzkxY+OdlLumN4wp8pc4hSOPIOFa3Gy
-         mZv3buj7PzNzoee24NKyv/vwrMxGV7qBns8rGqPy76vYdrPIsqrC4EEa4Eq33KooqQ04
-         Mmi88cDDLFSnW85+UmojiOLWZDnXFV+21OF5YdFrXq4WaR5mRaYzmgK/KTY/VI7bPrwd
-         73Bg==
-X-Forwarded-Encrypted: i=1; AJvYcCUt+3FVY4Pma7JLSWcd+XspKw1d/K2ycxw36cV0GAWCP5kPWAX4AofTFLw3Mp+lT2UwHL0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBuuh/gf4rI0OrpSYea3YOSBV4alPm9te9icYGR3sNkVi3+UMf
-	GiDssi8QsWI7h0I7a+2Mw+iVVZytgbhQoz0mopQutbextStwM06QY1I79JbVBCNfgIti1Z9wXUZ
-	DBeXGPPkUN3X87omlGDrgVHxwp19t6K4=
-X-Gm-Gg: ASbGncu8zURAlWPwpZpMlJDwTXIwEis5fOJImPd1INmFUuaL5GXr9+nQKBJ0aYmGGHT
-	xMlinWoLZEDvOgBG112mOxBYDA/zVS0/hQ2wzeqsyZeShSuNdRhKUMrRAAoOoXfVwV80nXjAt0F
-	z82Awmglw9ISfRB1se8psBU5cClmjODIJNrcKuVmJgN3wtRlEWJOe5RwliJDb4QKhnFkndg+PI6
-	QAhajH2C9WPqkPY8HPxIBspp8KdY4LzRzjo5sgoTqpjNQaSC8Cb
-X-Google-Smtp-Source: AGHT+IGsyJI2nh4j0GF4nruBhLfU0m44KVK3UwSlgILXmUjA0xZ+mDhLAI+qW0Kz2h3Ea2OKCLY22GcHM2AJHXnHR14=
-X-Received: by 2002:a17:906:9fd0:b0:aec:64bf:a393 with SMTP id
- a640c23a62f3a-afdf01c5451mr31207766b.38.1755639895490; Tue, 19 Aug 2025
- 14:44:55 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D3025A2DA
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 21:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.24
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755640102; cv=pass; b=sHBdJXp3gR8k8oQowvcQOBHGoQ9oFJ7csjXPMwnxpDzKpQWklYCsrCJ67n4KPod32SMXzC71UuHv/OB8YAiC4O3WQj51OnagC0VtbmU2KLz1kdzvCQNSxFwF+CsCw3T2Xadjy9rKlPN7nW5V4chVvcl7i0h+tIV1iGuhI9KNaEU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755640102; c=relaxed/simple;
+	bh=v8xUqR6GMJYFMJeV4p7Yi+58rqc3gaxy3aXCtphAVlo=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=LmcRxBqScFtg488gTukEX6pSRgrd4YzYACvW/VbSBbpgsk4Sdjglux/6gnfbJ2I2nCLEXagVzDZHjlxcfx7Ce51vlSFlmSo/HHM7UID0kGyu7++yXMOa9j00fJeICuCigpYqcWKbhhI2C8RD5+03feyO1cD5b3fuOegB2QoOM4s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org; spf=pass smtp.mailfrom=scientia.org; arc=pass smtp.client-ip=23.83.218.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id B7C8F164CBB;
+	Tue, 19 Aug 2025 21:38:42 +0000 (UTC)
+Received: from cpanel-007-fra.hostingww.com (trex-blue-4.trex.outbound.svc.cluster.local [100.99.47.133])
+	(Authenticated sender: instrampxe0y3a)
+	by relay.mailchannels.net (Postfix) with ESMTPA id A818716440F;
+	Tue, 19 Aug 2025 21:38:40 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1755639521; a=rsa-sha256;
+	cv=none;
+	b=P2E18dd9w+xlQnMXxf1Ep5H6WsC5tWKPkB5g4GslEVzTt0MO4f0s4ofvrrgCjOVSOaAWe0
+	JctnSLvju8xW1bLe+3frTYryzcBhFb1A5CN3WCuZr5ndwnfd6og86XGRM2gwVwUMlyIENm
+	tMPhTG6OdB34Mv/McEyHDSFr8qgUV5WgWztIpIKOfvIRPwT3UmjTf87nT6Qj2U3SgzTkAB
+	RdOQ5HrtfR/U9FyzJijUQzwfYOC8Xi8N2JA5K8gb+5CjC8NdpOxyy2x/CDPvfmF6LcEH3L
+	1/+8s0h9BcX0NefP4cV+4A0h4YSJbiS0vtpV9gcLNY8fSFAjL2sdsHChT2H2FA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1755639521;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=v8xUqR6GMJYFMJeV4p7Yi+58rqc3gaxy3aXCtphAVlo=;
+	b=qpM87wreNtoiUVf2EAVO3SRNO+oPhj3wMPh6A/Gy9o+R7+A8NSv/Mi7vHpi/1Qqzz3x3U/
+	J/AMEoRMZ74Lh31ZPhqnZjPFMM92imzc47SSw7stMRkO9z2Kyxb9KHrpsAxJACv+QcPP8+
+	ptzjX4FLdH55UNxlJkoViJbTv0z6bhMSZfjVbl/A+enq8rW7Oy3P+jRsmusoZSlhFG90JZ
+	xBmjWjoUQWZtypA+Ew2f3EVZTShTUytWgMhbu55A5J14OWkAt6Qjf1ENr/zs2vyalQpTXX
+	2SK80E58knj2w+5xaJUPtGgPgI+8baW8MjaPPBxfYVNcv5s3lOZa6yxHiUTIcg==
+ARC-Authentication-Results: i=1;
+	rspamd-7dcc9cf4b4-sswr5;
+	auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Power-Versed: 1e54b66d5a52b68b_1755639521333_4090938867
+X-MC-Loop-Signature: 1755639521333:1097599458
+X-MC-Ingress-Time: 1755639521333
+Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
+ [3.69.87.180])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.99.47.133 (trex/7.1.3);
+	Tue, 19 Aug 2025 21:38:41 +0000
+Received: from [79.127.207.171] (port=16159 helo=[10.2.0.2])
+	by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <calestyo@scientia.org>)
+	id 1uoU2Q-00000002eE0-3aka;
+	Tue, 19 Aug 2025 21:38:39 +0000
+Message-ID: <67090cec91d92af5616651de29950ecb3e8810f6.camel@scientia.org>
+Subject: Re: why can't one alias `git stash`?
+From: Christoph Anton Mitterer <calestyo@scientia.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Date: Tue, 19 Aug 2025 23:38:35 +0200
+In-Reply-To: <xmqqh5y4gm4v.fsf@gitster.g>
+References: <a24d0d237b9f57535c768da4c00d72bad68cf411.camel@scientia.org>
+		<xmqq7bz5v0mq.fsf@gitster.g>
+		<16220ca65f1ae9883a2fa103e842cf0ffff43236.camel@scientia.org>
+		<CABPp-BHt80YD9bzWeC+r5qxJ0Vp+zRsJZsKDU_GA39CXmuYe5A@mail.gmail.com>
+		<xmqqjz34txjg.fsf@gitster.g>
+		<d8b279098a41949eef06f26d3f09c3950486380b.camel@scientia.org>
+	 <xmqqh5y4gm4v.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-2 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1952.v2.git.1755127218.gitgitgadget@gmail.com>
- <pull.1952.v3.git.1755636370.gitgitgadget@gmail.com> <c44beea485f0f2feaf460e2ac87fdd5608d63cf0.1755636370.git.gitgitgadget@gmail.com>
- <011b01dc114d$201c45b0$6054d110$@nexbridge.com> <xmqqfrdnc7s2.fsf@gitster.g>
-In-Reply-To: <xmqqfrdnc7s2.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 19 Aug 2025 17:44:44 -0400
-X-Gm-Features: Ac12FXw0wZWUrGWbOK4YASwQIqPG0EZKr70gK_UMU_dv4vQraX8hBRKGgoaSeCI
-Message-ID: <CALnO6CDh1PYb40UxPWj=HZgrQh6tj-PgzVqzi2eMimQrn-Ajxg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] Git 2.51
-To: Junio C Hamano <gitster@pobox.com>
-Cc: rsbecker@nexbridge.com, 
-	Junio C Hamano via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Chris Torek <chris.torek@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
-	Julia Evans <julia@jvns.ca>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-AuthUser: calestyo@scientia.org
 
-On Tue, Aug 19, 2025 at 5:37=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> <rsbecker@nexbridge.com> writes:
->
-> > On August 19, 2025 4:46 PM, Junio C Hamano wrote:
-> >>Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> >>---
-> >> GIT-VERSION-GEN | 2 +-
-> >> 1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >>diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN index
-> >>be801415bddc..64cbc5833536 100755
-> >>--- a/GIT-VERSION-GEN
-> >>+++ b/GIT-VERSION-GEN
-> >>@@ -1,6 +1,6 @@
-> >> #!/bin/sh
-> >>
-> >>-DEF_VER=3Dv2.51.0-rc2
-> >>+DEF_VER=3Dv2.51.0
-> >>
-> >> LF=3D'
-> >> '
-> >
-> > Will this cause a re-roll of the git 2.51.0 release?
->
-> I don't know.  This is not something I did.
+On Mon, 2025-08-18 at 18:01 -0700, Junio C Hamano wrote:
+> As a program, how would you tell when you are run by a script?
+>=20
+> If you are a shell, you go into "interactive" mode when you are
+> taking your command stream from a tty, and otherwise assume you are
+> not interactive.=C2=A0 The same trick would not work at all for programs
+> started by a shell, would it?
 
-I also don't see any such PRs at GitGitGadget:
-https://github.com/gitgitgadget/git/pulls?q=3D2.51.0
+Not for all, but it might still give enough "teaching" to prevent
+people from using aliases in scripts.
 
-But when triple-checking the lore archive, I realized that I think
-this is a result of Julia's PR getting rebased on top of 2.51.0?
-https://github.com/gitgitgadget/git/pull/1952/commits
+Checking whether the parent process is a well known shell would
+probably not help, as it would also be for the interactive case, where
+aliasing is wanted.
 
-Perhaps Julia didn't use `--keep-base`, which I often forget to do
-when rebasing for contribution to Git (it's common in my other
-projects to omit it when working on the next version of a series).
-Indeed, fetching the published branch shows it's sitting on top of the
-v2.51.0 tag.
 
---=20
-D. Ben Knoble
+> Asking script writers to pass "--no-alias" option to all of their
+> "git" invocation will probably not be a viable way forward, either.
+
+Again at least not a safe one. And doing the opposite, i.e. requring --
+enable-aliasing (which people would then have to set as shell alias),
+would probably end up in generating quite a few annoyed people. ;-)
+
+It could be made optional. E.g. some gitconf option that per default
+enables aliasing always but allows to require a --aliasing option
+(which then again is intended to be set via a shell alias) in order for
+git aliasing to be enabled.
+
+Whether it's worth the effort is of course another question.
+
+
+Cheers,
+Chris.
