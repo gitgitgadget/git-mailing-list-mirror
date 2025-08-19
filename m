@@ -1,64 +1,64 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF40124A069
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 19:02:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA875267B92
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 19:14:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755630133; cv=none; b=JWb85Hlcnfcdv3ZIVR7WmVqim0Fi58bOmee6lPfn88oxFnOtMH9GunyVrJV6WJKFUU4U0R6q0rsKls2nq809wnTgYTW5gcbcO4qjjy1vtHyAesAcBspNnWe5GZLNO6r7KVd4PC1wQuBWLYRV/zUEHK4Vae58RUte4kkbCD3Ps7k=
+	t=1755630887; cv=none; b=RmQXQ+kRzvnzr8Kg3RNkwSvps05Hxt0pMStzL8G7N2V/KGGGoIBf9iPD0I1DR7Gq3twxgsXBOb45wx7rod3GIqlgN0K8gISWACdIuLo0iJoAlG2Q353u3rIPiGeqDt974S7OZzOOdoChyQQuilw5E/23Za6waByIKhbeIrfPUEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755630133; c=relaxed/simple;
-	bh=+VERXH6CXTXjJMP5aoAQvsgnEfaIEQzdrJ82Jfvt/ec=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=jYmgBW/bx6Yu4dTtmtj2j8JNtjR7PaE+7WpupQDPULdjtB8LaurheshaEXRHR5Mx83vEYpKEoVJ7124vM63viLenmu7gDMnzQ4rLdISr++sQH0G8qzvXfZ3xk3zwJxDTPj+r74lMjQwfa4ygIsYVhcgX+9qmNKqC8sGAZmFC8nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e5D1zWvu; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1755630887; c=relaxed/simple;
+	bh=FBDDOfeDYzXmoq9AksPeGn0wcepRyD9R/1Ir/w3QTaM=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=VJ6QxtFhLSjZwkTfc+qh+lx/q33uo7CAjcOWXw/yvqG6OpXTVe5KeUxNDKgY7DyepKonlgKtPBolM+ynoaOvWyVtQKN+yI2bHGd2yjgTpwbmEPnYb4MWy1N90stV8ivvQcLss28b/Nfj8CSPadGsc17WHxYEjHVPweJpMF/4wWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ais8EkH1; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e5D1zWvu"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45b46a332a5so2879015e9.3
-        for <git@vger.kernel.org>; Tue, 19 Aug 2025 12:02:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ais8EkH1"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3b9e4148134so2865940f8f.2
+        for <git@vger.kernel.org>; Tue, 19 Aug 2025 12:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755630130; x=1756234930; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755630884; x=1756235684; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6QnrKGNDNKFhsPtbSgAb3c43h8zNstoxtep0YNl0skA=;
-        b=e5D1zWvum776HwhpBe8s9e6nIGrNXP46hYfWzsOMCS9yNiHDXCUHatIgY5sxfueSqz
-         +BrH2Hu77Nvr3aRD0hZGwIIxpAdDYb4tmWy6sbwY3hG5QzZ1/t8uDO+MIPeD1lL3Urht
-         1WYMYP2r6rXY/qNdL2U0zFm93DKyqotbNAp1sIB91gRdil1A9xnEs7vLXkvspj3VbtId
-         WrS9k+j/8RX6yktvD210AOxe48s+vDq/I4acyBY7GZKmujN55/QHjGe/leCLeZ2ROZEi
-         f8IvqTpGRDfqrrtCzdTp67a/lpTwNeF3Ltvad5u6kbUO7uPyz6+FiEn4TT8UAD/u7IKc
-         4nvw==
+        bh=vZTbV6CSY+xL7e34BJZHoQD5BZegTr9r8ntWZabdngY=;
+        b=ais8EkH1FmBHonbysd4dMXs++RzE0QcZNX7PbJbyFieDb/4CLYlqOQOgjdIPbeM4W2
+         G7dd0s6kzVD/gFcsMYyn0yDZxcT8WvzhOfYmDULsvCETLdRXagllRCM9+kGHYNdQFxne
+         UdG6DDFpiL8c+RDTmJXFPJ9EDIjAtwyPqeD6xepABZqJtCmzDN69mjsLpHdZFTLi/KqH
+         LFKdlUua+Eb9Mgdj06Y6H/Cl3arjNQqp7MYjAVRF5Eit3UK0V/GVceGD9XZdUk06rn3/
+         VZ/pJLHAF2z2j6LwajKQugxTJLhRbPL9BsAl01rNaAjJXAV8P3ABt5o/E+z58rerGfWI
+         8XKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755630130; x=1756234930;
+        d=1e100.net; s=20230601; t=1755630884; x=1756235684;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6QnrKGNDNKFhsPtbSgAb3c43h8zNstoxtep0YNl0skA=;
-        b=mrVVcq92b00Ualt/IOyUobyvCNDQzxyoKZPHGlj+se4UQI5tglkJmMYFNZ4zLa0BZk
-         WnDJrBLVNKDsbxvuBV5eqLx/nF0I63r6UGLWSjvmFqTu3qhv9TIfJmRJDaHX2q8489iD
-         hui+CJhpCKIURbV8054iTcsDCOiMKg4GY0MbuWXYh7KcjTCAq6PS32eMxig1p7x562yx
-         cCpKUbgk+/Jo79bBWB/g8ZtvlsAgoVvV+N3OIx6WmIJrngbGEliDxd8ZaTLxsgwxz5WV
-         /pwQJcbL5Dv2Y6IhG6qFzjsmoyKzMDt1DBOCwpxSYiutS+FLRZbmMSmXLH3cfSBZL6ay
-         LAvA==
-X-Gm-Message-State: AOJu0Yzg9RS9SklDe7D7qGX4flLyJXtpV/uFn7bjpl3b/TYzdH7Abdyt
-	561F/kU8vF4iS8OFDKFkkyL6wnRb4jtrtF693+hbeN3YO3ANO91eVV28NMJDeu80
-X-Gm-Gg: ASbGncvX6RZvSnpS5sJzIJFpB1V3ew3KbEg7nSfxSmo2MYv2SDZP7QysbXPMoIbnnmW
-	w8U0/60kMNPqbAfJb2MngNMEnfB87GQKcYnOLodLn7lAO84L9p+tUT96ejkAnsPCZ5W/3SuP3mi
-	UoBKjVBZxavMv/dgRxZSCAc+osSTG4J/isBOS+GlflaeOa1ee9AIoEMEqf+P3Hn94rF5b6xd5Qc
-	aIvEd94ACQy8FDzz6/1F16vi+A5w57Dk1sQT5nYFFcxIar1KT3LWgayZhwuAS+r2BGJG/LXENEk
-	bfYl3glncUZjsSAIDAV1f11DehJNDqCa1phgguG5E0TWERwrCGaOT2/BmSErE8ovC91nY9XQ+eR
-	cO2qSa5Y0YzUht654YxMK9BiEssQBsAuI3X4tezmtDXAZ
-X-Google-Smtp-Source: AGHT+IH1DbGNNMckeaayMfA2W9AiGF5xJ52/9P1xMFVMAZ1Hmjc1qr336UdkO1FWZJ+kpNuw9S8/5A==
-X-Received: by 2002:a05:6000:40e0:b0:3b7:9b4d:70e9 with SMTP id ffacd0b85a97d-3c32fb2fb8dmr64892f8f.43.1755630129490;
-        Tue, 19 Aug 2025 12:02:09 -0700 (PDT)
+        bh=vZTbV6CSY+xL7e34BJZHoQD5BZegTr9r8ntWZabdngY=;
+        b=u/uw6Wh2v9WHPX+wK11/jRMLauEqIMRVeuJ8Avr8/BjPDTGgu/NMkrctkqdn8m5Ja8
+         KC69rA+iiaLxBbHT7oibqjpcNt67HUZ8iVg6bZO7taq7XjYPl+j+IOGw9KfbQOOOuEAC
+         c7vqTL+l40ZgJNrOLGxouRGiiVSBZtHBMc11AolPLY0NXbSXcYzyv58kBEFYzcVL901J
+         Y/P/s9dUKp2onYUnmRwWRbENrf9a1j/5bH2MlZAZIkY2DgrHxo/5MxxG8gsZItw47DF3
+         f3dqRsH6/QagSsnQ5I87wC6v4V9w3uJytrmgpi7iFanH5DAMkRuVzY6fBPzfecJobybB
+         y4xA==
+X-Gm-Message-State: AOJu0Yw4N2m3OWfss8D3ed7VnIONDl8ozbiK43bJ4G2/SOx5p3ZoH1A6
+	KZVYu049hctr4YoP4dcbE0A5oNE9RQ4/PJVblJnkDaGpuQSiwC4Y6yIRNdtVL0+d
+X-Gm-Gg: ASbGncsO5VO5zuN3pJLTNynxkzxvaw1Y3sUFvjlrC1Z5DzL6BwoNFie2PeCqwSa1Et0
+	2u2WwrigTcKf71CtInBNuFVUf+GjcHe1n8BFKFJCPboGq1s0C+nyhQAjuH5meB/X/nRcY+kiRbA
+	xKCawzxkt218/lkW3UHZEiPeD3v+eMeMo5kHhq8gxRvbr1QhpXS+GAGTJfNOc9dSG/WDCK/UWH+
+	7IzFG3e1AR31vZVmnb773wmthdyOJyDYbPs4bml7fsrx7yZgHobhoPl4+uj+6lDp5Uk76ytvRzW
+	/OFNOrItr4w6hyHQE7dF+e9Ly267wJJL8HEt7pF30wCqkumHExkLVdmcKic1OokXmXdPS+JSP2h
+	6gPqAfEY8BITUwdRImCm/G/Ee0mNyayHbVQ==
+X-Google-Smtp-Source: AGHT+IE81rIevHRNkCoUR/g/AmrCghU1C86kNYL3HgG6j/5adyafr2S+253nkmPffDryEPPBikBW6w==
+X-Received: by 2002:a05:6000:2482:b0:3c0:77a6:9c96 with SMTP id ffacd0b85a97d-3c32fe1a23fmr90004f8f.50.1755630883471;
+        Tue, 19 Aug 2025 12:14:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c077788df7sm4737330f8f.48.2025.08.19.12.02.08
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c074d43956sm4853960f8f.19.2025.08.19.12.14.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Aug 2025 12:02:09 -0700 (PDT)
-Message-Id: <pull.2033.git.git.1755630128134.gitgitgadget@gmail.com>
+        Tue, 19 Aug 2025 12:14:43 -0700 (PDT)
+Message-Id: <pull.2034.git.git.1755630882418.gitgitgadget@gmail.com>
 From: "Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 19 Aug 2025 19:02:07 +0000
-Subject: [PATCH] doc: add discord to ways of getting help
+Date: Tue, 19 Aug 2025 19:14:42 +0000
+Subject: [PATCH] doc:clarify which remotes can be used when contributing
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,44 +74,47 @@ Cc: Daniele Sassoli <danielesassoli@gmail.com>,
 
 From: Daniele Sassoli <danielesassoli@gmail.com>
 
-Discord is a great way of receiving help for members of the community
-that are not on the mailing list or not familiar with Libera.
+The docs mostly point to using git/git as one's remote, however, when it
+comes to Sending a PR to GitGitGadget section, the reader is told to use
+gitgitgadget/git, with no mention of git/git, potentially leading to
+some confusion.
 
-Adding it to the official documentation will aid discoverability of it.
-
-The joining link was generated with a never expire policy.
+Clarify that both gitgitgadget/git and git/git can be used, albeit with
+some differences.
 
 Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
 ---
-    doc: add discord to ways of getting help
+    doc:clarify which remotes can be used when contributing
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2033%2FDanieleSassoli%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2033/DanieleSassoli/master-v1
-Pull-Request: https://github.com/git/git/pull/2033
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2034%2FDanieleSassoli%2Fclarify-remote-to-use-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2034/DanieleSassoli/clarify-remote-to-use-v1
+Pull-Request: https://github.com/git/git/pull/2034
 
- Documentation/MyFirstContribution.adoc | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ Documentation/MyFirstContribution.adoc | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index aca7212cfe2..0293a410289 100644
+index aca7212cfe2..d014c5c36e1 100644
 --- a/Documentation/MyFirstContribution.adoc
 +++ b/Documentation/MyFirstContribution.adoc
-@@ -52,6 +52,15 @@ respond to you. It's better to ask your questions in the channel so that you
- can be answered if you disconnect and so that others can learn from the
- conversation.
+@@ -908,10 +908,16 @@ Now you should be able to go and check out your newly created branch on GitHub.
+ === Sending a PR to GitGitGadget
  
-+==== https://discord.gg/dxGanGcBSP[#discord] on Discord
-+This is the unofficial Git Discord server for everyone, from people just
-+starting out with Git to those who develop it. It's a great place to ask
-+questions, share tips, and connect with the broader Git community in real time.
+ In order to have your code tested and formatted for review, you need to start by
+-opening a Pull Request against `gitgitgadget/git`. Head to
++opening a Pull Request against either `gitgitgadget/git` or `git/git`, depending
++on which mirror you initially cloned from. Head to
+ https://github.com/gitgitgadget/git and open a PR either with the "New pull
+ request" button or the convenient "Compare & pull request" button that may
+ appear with the name of your newly pushed branch.
++If you're using https://github.com/git/git as your remote, you will need to
++open the pull-request from your fork, selecting `git/git` as base.
 +
-+The server has channels for general discussions and specific channels for those
-+who use Git and those who develop it. The server's search functionality also
-+allows you to find previous conversations and answers to common questions.
-+
- [[getting-started]]
- == Getting Started
++The differences between using `gitgitgadget/git` and `git/git` as your base can
++be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
  
+ Review the PR's title and description, as they're used by GitGitGadget
+ respectively as the subject and body of the cover letter for your change. Refer
 
 base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
 -- 
