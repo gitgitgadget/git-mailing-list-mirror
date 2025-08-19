@@ -1,96 +1,74 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C4531B114
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 19:18:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8354C2E2295
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 19:20:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755631126; cv=none; b=d5eyz4TrYP1s762aUJ//zHHGrQrcecrci55QgN8xHxhKSlQAIhz/sKooL/Zg805Sd0NlJIqMIgOrteV0fhRaBYx6jn0yBFfTozNy3fTrsS9U3gT+fo1rtFkJoZGmgIOPj4ymiQH7ARWl9R2ZGpC8/11k9y3Kvfte3niRcqlLnt0=
+	t=1755631208; cv=none; b=RZulQhCWU1rgn+MCfGBdPTzQRURpMn7Og7IVSzxmaVqe07MC4T3DWN9sCbB1DHniioADysMTdQsToVRSVe293gQsOfrnDh+jye99aA9QRyInw9CfMa4Mm+Fk25FXW+vqY+tojHwzn1PmY6f08OttxsjKcMJuv7v6Ca4TLrftnX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755631126; c=relaxed/simple;
-	bh=kxBEK4lAqr+jpwoAz5jQrA3Ibw///JqEG/BVBpsVAGQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jYPpB/UTj3mYFKSbTz6NPyOuma65bxtT8zLbGm7mbZH69nxCU+HGoiPACsWf1uKCofC2W+66/Nl6ZTluroTpyhFVs5QVi+TbSRXFvaEM1SoaLPEuqopAfiZNrphLGYklM1u3wk/FPHbbLCJCIlgX7QVEJ2B0HOjk/J43M+pY9KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LEPPbAVF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HzHjWsk1; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755631208; c=relaxed/simple;
+	bh=W2DJUXMxYKGZ20/e+7vVNoshKZ3wKHcyP6F+2lJmkfs=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=SFQri2Nx0E0ofCK0lWYw64TGjSyXh6Y4DpBekskWTbatyOhxHGuOx6hyEkt79f7GAXOpqEJ2vyUFC7RXFslbxcTUY38bbScqT2qI5jlokS24uYgUnWKBY6PWn9c/PMOtgTN8hlm4Vevni8fYH7HiGhRFh9CBYxMSl0N9nBGR6iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Qdqc6T3K; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LEPPbAVF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HzHjWsk1"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 89D01EC0399;
-	Tue, 19 Aug 2025 15:18:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 19 Aug 2025 15:18:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755631122; x=1755717522; bh=kxBEK4lAqr
-	+jpwoAz5jQrA3Ibw///JqEG/BVBpsVAGQ=; b=LEPPbAVF6gufelTCNYBTiPrBVd
-	jF6zH5qjKXZD3ujOiNnIGARLf/3vuL0Sh6zdGiW/RDgelwCS7Fg5fxu0oUehkru0
-	FWAZgynsAMA97tiiBuy8LIwG9JkgmfHG+Ify+cNE6Xc+xKOm8XN5brbptRT89sMZ
-	k6p2Ddkn+ZbcMV6clyXy1c8vIoChLAeTdsa/5xQgSw76StfC0fr6h+7d3fASzdce
-	8nAhOyteN8HvAw3FbX5ZNC+HAknIX/Xrk5h44lCQOTe7+41Svt7QI2jeia0pGcBr
-	HvwL7wfL1uVTloHgtGFz4uer8y6W0v+/FBdQkUjpsDSUIRPvLMdv3XQRWXcw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755631122; x=1755717522; bh=kxBEK4lAqr+jpwoAz5jQrA3Ibw///JqEG/B
-	VBpsVAGQ=; b=HzHjWsk1e0+ASlkSDJrVgs4Q3TRcUwOC//+5/Uod4jM4oKUEVMs
-	AmutK61qiH9CPwf1H4tGbgrBOS9ZCgBAsEtaNm1OsU8gmZbD3eIcZILYeTDGA2Ab
-	Jhlz5gPzh1hz9ulGZ+CL0Q+jdrQZpEsnlCbvbG+cPBpIdVOH/UNw/tv8RUQD1bEt
-	G1QUvErM2Y6taZodVD90jc5S40bODohxMTAC1yI4yYNg0AKjFWpt9d51CrNE5ZUR
-	3E0QmTv9KTaHB8xwyIGQGkpLpdfaS9TJKImnWypGHqXSRXUX7D/JcaMHgPyDh+yo
-	1ieiMzywmUvayhT9B0IyGSqJsRS8PQJNTzg==
-X-ME-Sender: <xms:Es6kaEpOaWsoMMfH0Ll9OLFDM5idNN2JeHWUfQJUjCddqBX6ZBPGQw>
-    <xme:Es6kaN7Z4uSatsIRfbm6iX2_m51GVox9OZCAFoLLsheIqWYYi_6q6ElmjDJ3vtt0L
-    p_jkS9ERfSFt76HEQ>
-X-ME-Received: <xmr:Es6kaCq7xok7pl6Sk_mssyThmoKsuE3BCEaIDKa-HUBpArSrXJpsBzn95LNCig5ohNsiN4RAs8j42kcuWMiRu3WUGXicR1BGAA230ao>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheeifedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:Es6kaHjo3pagAznqQTkV_7Bt0gX920MIhW3rGfolLKmQ-rP5PVPwNQ>
-    <xmx:Es6kaEJM9uqhcVRFRoBI2tPcPuD8kHP8RA-FhNxqkqxU4LFfBib8tw>
-    <xmx:Es6kaPDNDErULGm3DAQJpC6Wro4xoA1PpZMGIyTQKNBrggMfjhTu3A>
-    <xmx:Es6kaMgP6GT3MfLEdwV6zx4grYhi2ZYWqZ5kiRo77DVNEFzJjsh4QQ>
-    <xmx:Es6kaHOShvikqHgBBTZT0wgWp7rVvOnPbs8aiX7Oq1MXu59su0ZY6Eur>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Aug 2025 15:18:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 07/16] packfile: reorder functions to avoid function
- declaration
-In-Reply-To: <20250819-b4-pks-packfiles-store-v1-7-1660842e125a@pks.im>
-	(Patrick Steinhardt's message of "Tue, 19 Aug 2025 10:19:36 +0200")
-References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im>
-	<20250819-b4-pks-packfiles-store-v1-7-1660842e125a@pks.im>
-Date: Tue, 19 Aug 2025 12:18:41 -0700
-Message-ID: <xmqq4iu3dsry.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Qdqc6T3K"
+Received: (qmail 31166 invoked by uid 109); 19 Aug 2025 19:20:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=W2DJUXMxYKGZ20/e+7vVNoshKZ3wKHcyP6F+2lJmkfs=; b=Qdqc6T3KwgZ/KRHJzc3XUSGlk5GjoS17QnK6TiiGaFijtjSoQCKKrKRV3i/VD1+1WiO85+rxfSj1f2siNUrjQBX6TPH1j4UK3oRPe+w6Dk2JtYdZ5o+CpHYAOK+E7GTG6Lzdbegdon+P2id3E7vHoDkwmDsDF71vNXi5TRD8qQ6lzyY68/Z91vqtn3OwLQjBbElHNU14h18BcfRPs/D6QdTxTkiMkw93sbYD8/A5qDoAhw1qPhIDte/faGBMLNvnDCS6g+5TIfvet9SEYmZf5nEXuadAEpeF9prqSW2BW81D6Gus1nCEoouYUkfgN0S1W1BtR+w+bOg5PFtOjCcUzg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Aug 2025 19:20:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 46338 invoked by uid 111); 19 Aug 2025 19:20:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Aug 2025 15:20:04 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 19 Aug 2025 15:20:04 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/4] dangling symrefs and fetchRemoteHEAD=create
+Message-ID: <20250819192004.GA1058857@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Patrick Steinhardt <ps@pks.im> writes:
+This fixes a bug I found while investigating another semi-related bug
+(that has already been fixed by Patrick), mentioned in the "PS" here:
 
-> Reorder functions so that we can avoid an extra declaration of
-> `prepare_packed_git()`.
+  https://lore.kernel.org/git/20250724104536.GA1316505@coredump.intra.peff.net/
 
-Makes sense.
-We usually call that "forward declaration" instead, though.
+The issue is that:
+
+  git remote add -m does-not-exist origin <url>
+  git config remote.origin.followRemoteHEAD create
+  git fetch
+
+will overwrite the refs/remotes/origin/HEAD we created, even though we
+asked it to do so only on creation. The issue is actually in the refs
+code, and how it perceives dangling symrefs with respect to creation
+events. And so this actually affects "update-ref", as well.
+
+A fix is in the final patch, along with a detailed explanation. The
+earlier patches are just cleanup of the related test script before we
+add our new test there.
+
+  [1/4]: t5510: make confusing config cleanup more explicit
+  [2/4]: t5510: stop changing top-level working directory
+  [3/4]: t5510: prefer "git -C" to subshell for followRemoteHEAD tests
+  [4/4]: refs: do not clobber dangling symrefs
+
+ refs/files-backend.c    |  34 ++-
+ refs/reftable-backend.c |  30 ++-
+ t/t1400-update-ref.sh   |  21 ++
+ t/t5510-fetch.sh        | 543 ++++++++++++++++++----------------------
+ 4 files changed, 319 insertions(+), 309 deletions(-)
+
+-Peff
