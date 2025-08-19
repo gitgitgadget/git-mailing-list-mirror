@@ -1,78 +1,77 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF16B3115A9
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 08:18:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950EC311587
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 08:19:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755591533; cv=none; b=DBO+LSfEARYzMAVIATZgwXfVdTFaYzs4mBjTOI20lFm+zSTbfGPPdJ5G7RyBkwCWlwZuSct/VHPw286ucQwfvBa1l8xmi/PJfxh/qYObwlBsIplhxzRGIY4D5LFkUVIk/72sxNazBQZq1hRhGHSiT/U9NcXA6OZROTp4xY/fG6w=
+	t=1755591580; cv=none; b=DgnyczgN/UEdDVYyOP+qJNUwCRjAqt9dtU6xCtokduOuOhxDyrIPH5KOOqPC6hVPGVZnh8edRDUPdwSe+TvPUNr2tboR6MH177LL7fgfLjyAmji2T9YtpE9vB4hurQ3VG218v6+YI4dFs7lutcJMoLMBDXfwPWpxtdZBP/zHjC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755591533; c=relaxed/simple;
-	bh=AbCGLH/1rigBgM6S2FfSxF2gcMqUD4i6bI6RC5thanE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hb8ahkaTJQkF/5yfL5LV9xdErhEZ8uv6B03Gu1B/k25gQkePo/8pY05TpZApXhABlJDFG0S/DNd+3zdqqMq75Op/ObeC3uoW2tlzXzBqFG8sxvnISw924yAzLN9bPLwCxMrg4JjdCwqetz8HZq9+cJ0lPt7lVGQXO7dS23yPNro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OCp/34pj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fwGL0eBF; arc=none smtp.client-ip=202.12.124.150
+	s=arc-20240116; t=1755591580; c=relaxed/simple;
+	bh=MxUZQcxacGnspCkzLbaykPYoZuDc/QJeZ4WpYkWYPSI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MpO7UVbLxN8g8tIR69AiQZX+asS6aYb4W/DXLnOHdHozQkxlXRQOLWSmx8cl78m1upaRbBsOQQVHIMwupvKgWRLStpSNuOItwj4sz+2FBtHirTu3Tb0hncICrytBtSVYktpsU6hNx6a9vL84hhdtq0jwd0nZ/XOn8zSCmHloIdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A36C/x0P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=asQLQ8vJ; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OCp/34pj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fwGL0eBF"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9AABE1D00261;
-	Tue, 19 Aug 2025 04:18:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A36C/x0P";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="asQLQ8vJ"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 956877A027D
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 04:19:35 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Tue, 19 Aug 2025 04:18:50 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 19 Aug 2025 04:19:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755591530;
-	 x=1755677930; bh=yFpt9+E41H8WD+g7+6OEdzqwnBHw++OGzQMGY3ouXCo=; b=
-	OCp/34pjvn/O8T6PxvJVIwuNAEUeZ87XMAadS1aIhigJxWosXQGLrdUmlrkbVVcI
-	/C6ZO59cdz9BSP31NDUPoJlBH7zWwPY0vqSaO35gfl5QzVDhr4q8d2OG0ximY1mF
-	3MH1C6L4QHp0kvu3yFIuGTb50z7VJpVtjoOcqaGjjpu6vv1IMzOStfV62j9SIaiC
-	KAhBnPLHFleU4Gc5U9m+GQD6LjtsatUrrBqXHJoHL6iwJ8cwTrpzUAw0duloYk/w
-	DFi4xal1TUSfWADSwdpdL0TxF6KtggQUjc4CY26zVZnFoB3RIRWZnrJc/mMHnIAR
-	TGAWTXdACQBpufOGxhBXAA==
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1755591575; x=1755677975; bh=rRajbdnGhC
+	dZ9uMge9C5paU9IRuncp6H79Ea24nvv3Y=; b=A36C/x0P1/2lp5mlglXZnH4k1i
+	4BjP/J2lzP3fB3Xy2qY6ubifc0tr198tglZk0MaQvr90yTMG0Ud627YLpooZPAFj
+	Sv2DzbRcdOtwMcsMvfxIB+YRCknoPQv0xvQNqTD35FJX67Y6VnlPsIQJ8fBghTuG
+	IzPlkt40tuIeuCgIQoMOgZhQOTfJ2GtGeepM4RE1eT9rUolpnpB7aFe4C1B+Z0k6
+	IbLul4g17xq8sN8sWQ1KTpv1cmfdTPHUDME7q5KptKDZaoh+aRccv1E8A/BSI+wt
+	EqQ8RQM3G6NospAeap2l2tz4r6m9IhKcIRvp0YXUYm3JyrBsVNi77QftkFow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755591530; x=
-	1755677930; bh=yFpt9+E41H8WD+g7+6OEdzqwnBHw++OGzQMGY3ouXCo=; b=f
-	wGL0eBFaV0gsO2jZ5lVdFyJ+Gr7XSmvS5Kd5EL86N65PnqmGw7YJQfnNAbsUjWhu
-	iF+QIWgmt4Dt+t7ucdZpRhcDItYAXt4G3tvHD7UBWUwm+6Ywsxcu9X8snXpt0JHl
-	K15eKB/e8XWfVFp67lBUnhr//3XbagDQvbDpvc8DiacQvFYyDGg9FnxUk1HnI3FP
-	rUh6tH6dRvELF+F1BwYmgtA9Y5392EdPH5etOqVJtBK+O3RltddjPu1j+wVds4Ww
-	z6KiZu9SNhpOdajMS7vWSIw27UWGGVuqbahmoOPqDvcsSy4B/uLaJQBn1wB7GESF
-	7jvAxqKy3bVjV3/9Mvl6g==
-X-ME-Sender: <xms:ajOkaOR1Enq8_lesc9ESc0D-GRHnwityiBnSsFuOVnq8xtE1Ds5ZEA>
-    <xme:ajOkaD8AQCpCDlqilHqNpMT3qcbRQeyZ1vCL-p-gjYYvnEekSW8xpESKvwt8lt5-8
-    y1KDDq8fnTVFWNZBg>
-X-ME-Received: <xmr:ajOkaNr9ZoF9SqjJLW9p6kMHu_9vdaR850oCiHDRHlcfMZEx3bJKsNXQb8ZgEb-CCj95jxuwhN0CuLNIK_nCRx_UKnROXhW7wyZ00Z2oB5QV>
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1755591575; x=1755677975; bh=rRajbdnGhCdZ9uMge9C5paU9IRun
+	cp6H79Ea24nvv3Y=; b=asQLQ8vJjOZa5EYEDDcxBt15ld8tQiNrcfDsEQI74uDm
+	ZwDk3kbH3cXPkUKCOemjemcaOWe3hSpNyQhilOLt8vOsgMqfSeAGPSi94lIdpmFX
+	RKny08ycROwx9T/5/55WkaHn5IXifyzxyjrp3GJsKLAZO7rFG73PMBskbORM/Vcl
+	wmRbdqB8jgzLS9iSMJwF3iZK6qFkGtgR5NxMKU5FTojc8GUXq2OFrxlXWq4nft2U
+	H8s5tng4hLFNmrZIBs1ZdA/d9cmT8vz/GpRTEoyjiojgnXYedaCngqGTlFgpzrAW
+	Vvr5EpAlM9LCuDCaLDFvJBWZ3QJMl4200R3Ez3swqA==
+X-ME-Sender: <xms:lzOkaHbnEYxXyPQiKXtEajO5JW5TS7KyX4MecG3XUKcCloTmcIg9Iw>
+    <xme:lzOkaIb8feqRgXewbQbNLbsgyrXidQ5NrhHmiWo-GavaJEtS-NPZdrUywdS3Dbgnh
+    z2FjQlw-W7y9ZAgAg>
+X-ME-Received: <xmr:lzOkaDVqgnDdL2sPBMSGw_-zPFTxCELoOhg1CoK-3_5PsyP-dRBVhfwsNfbxKOdl1RhXhEJI9fS6_Ib-oWzw8GBIQOYdkv5zA4EmyIIfplcE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheegleelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
-    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehjiehtsehkuggsghdrohhrgh
-X-ME-Proxy: <xmx:ajOkaIlvqptk7rSfi35GFYWzqVCFTawCW5JbBd2ILKD1BFy5K-xF7A>
-    <xmx:ajOkaMJ-qqWif5-H_uDVeq0T2umhngT4hL3a_Latn_AgHE0Xl2M1Tg>
-    <xmx:ajOkaFz35qn62SwUdR0xqpRYRZ28FAOKXnW76aR7ABWhSLvGlCJA0g>
-    <xmx:ajOkaMvxNVwIYH1FIl3OFCFYmOI6_yrwfn_rUHOB6ISBdytNafU3AA>
-    <xmx:ajOkaGDwrvTOg8G56w_D9rFqCixZDBT7W0JZamnLoCqqbCHdVhGwIagf>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhufffkfggtgfgvfevofesthejredtre
+    dtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetieegjeeuheeuudfgveelfeevhe
+    euhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    gh
+X-ME-Proxy: <xmx:lzOkaP3L85JObRmADunztmxwWVr9qW_-_2-OHM5UbrEdcP0Ims0Fow>
+    <xmx:lzOkaKYV-s8JT5bhRe88Md5WJWKeW37wtAoghvMJx1dHi6fMOvyzRw>
+    <xmx:lzOkaCpl9TQQYu5UzVYwUvwA4J-SgeCnf3qMpsPR3mpRCs9O5QZayw>
+    <xmx:lzOkaGpuq4y2Cqng-Z6WtswYizUQYNGOG8pXX8ZRlTZVDiJGhoDxaA>
+    <xmx:lzOkaCzqTVg41jiol4OYDUsK2aW0lhIDozpf3yeoi8Fp80dCB-xID7M6>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Aug 2025 04:18:49 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 19 Aug 2025 04:19:34 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fd830395 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 19 Aug 2025 08:18:48 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9f743096 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	for <git@vger.kernel.org>;
+	Tue, 19 Aug 2025 08:19:33 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 19 Aug 2025 10:18:37 +0200
-Subject: [PATCH 3/3] meson: wire up gitk and git-gui
+Subject: [PATCH 00/16] packfile: carve out a new packfile store
+Date: Tue, 19 Aug 2025 10:19:29 +0200
+Message-Id: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,79 +80,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250819-b4-pks-meson-tcl-tk-v1-3-6bcaff0bc0a0@pks.im>
-References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
-In-Reply-To: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
+X-B4-Tracking: v=1; b=H4sIAJEzpGgC/x3MwQrCMAyA4VcpOS8Qay3TVxk7xJppmLSlGSKMv
+ bvF43f4/x1MmorBze3Q5KOmJXecBgfpxfkpqI9u8OQvNFLEe8C6GlZO66JvMbStNEEOgSONic/
+ XCD2uTRb9/sfTfBw/xW0M32gAAAA=
+X-Change-ID: 20250806-b4-pks-packfiles-store-a44a608ca396
 To: git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>
+Cc: 
 X-Mailer: b4 0.14.2
 
-Wire up both gitk and git-gui in Meson as subprojects. These two
-programs should be the last missing pieces for feature compatibility
-with our Makefile.
+Hi,
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+information about a object database's packfiles is currently distributed
+across two different structures:
+
+  - `struct packed_git` contains the `next` pointer as well as the
+    `mru_head`, both of which serve to store the list of packfiles.
+
+  - `struct object_database` contains several fields that relate to the
+    packfiles.
+
+So we don't really have a central data structure that tracks our
+packfiles, and consequently responsibilities aren't always clear cut.
+A consequence for the upcoming pluggable object databases is that this
+makes it very hard to move management of packfiles from the object
+database level down into the object database source.
+
+This patch series introduces a new `struct packfile_store`, which is
+about to become the single source of truth for managing packfiles, and
+carves out the packfile store subsystem.
+
+This is the first step to make packfiles work with pluggable object
+databases. Next steps will be to:
+
+  - Move the `struct packed_git::next` and `struct packed::mru_head`
+    pointers into the packfile store so that `struct packed_git` only
+    tracks a single packfile.
+
+  - Push the `struct packfile_store` down one level so that it's not
+    hosted by the object database anymore, but instead by the object
+    database source.
+
+Thanks!
+
+Patrick
+
 ---
- meson.build       | 14 ++++++++++++++
- meson_options.txt |  4 ++++
- 2 files changed, 18 insertions(+)
+Patrick Steinhardt (16):
+      packfile: introduce a new `struct packfile_store`
+      odb: move list of packfiles into `struct packfile_store`
+      odb: move initialization bit into `struct packfile_store`
+      odb: move packfile map into `struct packfile_store`
+      odb: move MRU list of packfiles into `struct packfile_store`
+      odb: move kept cache into `struct packfile_store`
+      packfile: reorder functions to avoid function declaration
+      packfile: refactor `prepare_packed_git()` to work on packfile store
+      packfile: split up responsibilities of `reprepare_packed_git()`
+      packfile: refactor `install_packed_git()` to work on packfile store
+      packfile: always add packfiles to MRU when adding a pack
+      packfile: introduce function to load and add packfiles
+      packfile: move `get_multi_pack_index()` into "midx.c"
+      packfile: remove `get_packed_git()`
+      packfile: refactor `get_all_packs()` to work on packfile store
+      packfile: refactor `get_packed_git_mru()` to work on packfile store
 
-diff --git a/meson.build b/meson.build
-index 5dd299b496..edf7b69a00 100644
---- a/meson.build
-+++ b/meson.build
-@@ -239,7 +239,9 @@ git = find_program('git', dirs: program_path, native: true, required: false)
- sed = find_program('sed', dirs: program_path, native: true)
- shell = find_program('sh', dirs: program_path, native: true)
- tar = find_program('tar', dirs: program_path, native: true)
-+tclsh = find_program('tclsh', required: get_option('git_gui'), native: false)
- time = find_program('time', dirs: program_path, required: get_option('benchmarks'))
-+wish = find_program('wish', required: get_option('git_gui').enabled() or get_option('gitk').enabled(), native: false)
- 
- # Detect the target shell that is used by Git at runtime. Note that we prefer
- # "/bin/sh" over a PATH-based lookup, which provides a working shell on most
-@@ -2207,6 +2209,16 @@ configure_file(
-   configuration: build_options_config,
- )
- 
-+gitk_option = get_option('gitk').disable_auto_if(not wish.found())
-+if gitk_option.allowed()
-+  subproject('gitk')
-+endif
-+
-+git_gui_option = get_option('git_gui').disable_auto_if(not tclsh.found() or not wish.found())
-+if git_gui_option.allowed()
-+  subproject('git-gui')
-+endif
-+
- # Development environments can be used via `meson devenv -C <builddir>`. This
- # allows you to execute test scripts directly with the built Git version and
- # puts the built version of Git in your PATH.
-@@ -2233,6 +2245,8 @@ summary({
-   'curl': curl,
-   'expat': expat,
-   'gettext': intl,
-+  'gitk': gitk_option.allowed(),
-+  'git-gui': git_gui_option.allowed(),
-   'gitweb': gitweb_option.allowed(),
-   'iconv': iconv,
-   'pcre2': pcre2,
-diff --git a/meson_options.txt b/meson_options.txt
-index 1668f260a1..8fa330771b 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -41,6 +41,10 @@ option('expat', type: 'feature', value: 'enabled',
-   description: 'Build helpers used to push to remotes with the HTTP transport.')
- option('gettext', type: 'feature', value: 'auto',
-   description: 'Build translation files.')
-+option('gitk', type: 'feature', value: 'auto',
-+  description: 'Build the Gitk graphical repository browser. Requires Tcl/Tk.')
-+option('git_gui', type: 'feature', value: 'auto',
-+  description: 'Build the git-gui graphical user interface for Git. Requires Tcl/Tk.')
- option('gitweb', type: 'feature', value: 'auto',
-   description: 'Build Git web interface. Requires Perl.')
- option('iconv', type: 'feature', value: 'auto',
+ builtin/backfill.c          |   2 +-
+ builtin/cat-file.c          |   2 +-
+ builtin/count-objects.c     |   2 +-
+ builtin/fast-import.c       |   8 +-
+ builtin/fsck.c              |   8 +-
+ builtin/gc.c                |  12 +-
+ builtin/grep.c              |   2 +-
+ builtin/index-pack.c        |  10 +-
+ builtin/pack-objects.c      |  22 ++--
+ builtin/pack-redundant.c    |   4 +-
+ builtin/receive-pack.c      |   2 +-
+ builtin/repack.c            |   8 +-
+ bulk-checkin.c              |   2 +-
+ connected.c                 |   4 +-
+ fetch-pack.c                |   4 +-
+ http-backend.c              |   4 +-
+ http.c                      |   4 +-
+ http.h                      |   2 +-
+ midx.c                      |  26 ++--
+ midx.h                      |   2 +
+ object-name.c               |   6 +-
+ odb.c                       |  37 ++++--
+ odb.h                       |  34 ++---
+ pack-bitmap.c               |   4 +-
+ pack-objects.c              |   2 +-
+ packfile.c                  | 293 ++++++++++++++++++++++++--------------------
+ packfile.h                  | 111 ++++++++++++++---
+ server-info.c               |   2 +-
+ t/helper/test-find-pack.c   |   2 +-
+ t/helper/test-pack-mtimes.c |   2 +-
+ transport-helper.c          |   2 +-
+ 31 files changed, 354 insertions(+), 271 deletions(-)
 
--- 
-2.51.0.261.g7ce5a0a67e.dirty
+
+---
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+change-id: 20250806-b4-pks-packfiles-store-a44a608ca396
 
