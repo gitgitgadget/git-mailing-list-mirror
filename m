@@ -1,59 +1,59 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E166516F288
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 02:07:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970AE4A35
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 02:22:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755569222; cv=none; b=jI4yXem1nf5+MV23K1+6poUvMy68bUGX5pmsWTWI+ddRuHOwiaZoNBbNSSZD3zjJI6a5SZ8FfFguXlz5DvO4UZyoQsKzuNb7WNvyE1IGsZcFBZcrAFDGBEUK6Z40CJ5ynWLwT+PBBIeUNwbF5V8Fjh9uBb1myJbY6UmH5h/BZj4=
+	t=1755570165; cv=none; b=eIOVAP9jZpn2pvjGYg07VqSCTYt9sZPb47IscXUz6dTN/Tys7zPmlx91BYXgda+25DfqGdNy8/C/pQPMB/iZQ4hKknzdXDav07R0BgpKKa/MPV6csbvf/uDjudzxcFLDClu+FFQYsi/yJsNSfnR33i635ahGnuU/dRDYrU6ND6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755569222; c=relaxed/simple;
-	bh=l8uPr57TyTTCnT+AZ68vvCW5rPJRnJZAd9oMzit69Tg=;
+	s=arc-20240116; t=1755570165; c=relaxed/simple;
+	bh=Eks7k2DdsBO8kLcJe78b1IlVreDlcRr0qIqrM5BCWQw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oHpiHTKZCs66swYLDuFhk8uSOs/ziSvuGLIoXQKg5BWfGBLy6ApTwsaRDkPLAES83HT0k1lAsfbL14Fc1b+bwyQfIP7/rO9tCEQpIvSNlyBsU/utAopS5xFaPpoZphVJManxebenpfmmUDUelropNzssNvA7otYTy6r9IQ2Jd/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ddUgDJJi; arc=none smtp.client-ip=209.85.208.172
+	 To:Cc:Content-Type; b=LX1AdAqG3WwSJPY5uGQYC6h4w4XeBqgZ4xKNQ1pLRA3mIk5GkFnZ5isc4J4JvPsbvCc0CT+BuhXJ9weozPbp22Ajviguwws/CixnB3zATv6+gJLw5kVxg3tOdnfAGdLfOcqvFVIw6KJEUk9+kESQDSyKbRB+L9g5Jh2I8WHGMpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E1aW0YVY; arc=none smtp.client-ip=209.85.208.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ddUgDJJi"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-333f8f2d6c2so39375021fa.1
-        for <git@vger.kernel.org>; Mon, 18 Aug 2025 19:07:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E1aW0YVY"
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-333f8d1ecffso36692891fa.0
+        for <git@vger.kernel.org>; Mon, 18 Aug 2025 19:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755569219; x=1756174019; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755570162; x=1756174962; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=l8uPr57TyTTCnT+AZ68vvCW5rPJRnJZAd9oMzit69Tg=;
-        b=ddUgDJJi++5t8rkhdbPyG0Q5GnZvsrvk+UL6R5gQN4pDtkBf7dr4B//WEsXopRoXhy
-         vS7kWagGJQVs5KmHWftOELGrditBIa7VDT9RPXi5YHmNj7Pq7pgIe+HZBpD7szQ3wfxb
-         LX63uyRJW86V/Dy93IwprexgnKyRBQmsAE02aV6CsZNuzDB3bx5+XhLgKYXNhXvsaR1N
-         N8bp3lWs9wlKLHDeIiDZi53YvSuITDw8NMj61i6BndCQq6cd4Rqz/FyvtbKJfUEqN76g
-         9ty7lz717VlZNoJtyn9qsP5eMwHK9s9Z9EXWICzBHGRsBd8MC9DmB2jIzcfbox8dWdRM
-         SNPg==
+        bh=0r8b2dXtOB51Zu6uoioGPMPkg9Kjx3FL/kYw6FqCj5E=;
+        b=E1aW0YVYCz/I8r5xC8FvDrQZHPQaU6UmBIeik9WPR+n7vprYN+hD4QRUwJkDFKAs4F
+         lpui2TS61JObSQkDgvF8+iienfDR89MRjDA/UVUqVeoNKxRNJOXjrHQLQGBYHw3QzV6m
+         37SlsbHDF9iKekSZ9dnvmL/ejv+spuz7DGSXUldgw8A8f1+50+b5PQFT+M+FtOpOmmhr
+         Vc0CxMODAm0Gxmx20ue++HGnqqNyKRm5wdjLEgPuRiPPMOhOYhrIrbX9bwYc17Q0h/ZO
+         9h/EcM49DbG/kHoMqy80aY67acPYdz37aizShMq+pRQJPQuRhqOoSAONQVHVKEY1wsU1
+         IWdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755569219; x=1756174019;
+        d=1e100.net; s=20230601; t=1755570162; x=1756174962;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=l8uPr57TyTTCnT+AZ68vvCW5rPJRnJZAd9oMzit69Tg=;
-        b=NOARy9enZXfXkErINx8uBlCph3hp3HDngSGuFXvbQqQ9fn6fVHXcYaXfoVmXFFwVnf
-         euEQaJfEpOHDHwWbHIWh4u+n4un3SvNxGjORdIImITM6xWwtUDHwhFEJuj3OkgWDLudb
-         OVBz6Sdnsubq9j+V2yA+bLuv/3XJnGiUvq+eOgUbK9bfhn1qb2I6hW8inEy151DK5JfX
-         S3nN3Z4ql+HHv8SVagBxTx9upkkXneMcKGLXykfzTCxq/kwXdovOSG/Gtd8uVlaNj1Qp
-         xAB3XR8C6OnbDaLoYFX8n48P5gQw6WuH99o0zDC2B7owkz9/4cqPgVN0L6M5FtQKAXdC
-         yXXA==
-X-Forwarded-Encrypted: i=1; AJvYcCVgEw13YUaNnjQidillwih1ivQU46tZDdT6Xh1WotCgIoPk4yMq73oPwoqFV8cc05/wZRE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyf/Tg1jNvLx0rLjbhey04EkKAN3Xnzf/38XetLuSoNVqumR7dI
-	Qug0geZgbkE+4h+ZJAEN7GOkjjRA9VW4A+55rYKNRkZoK1FWo5SwgwPBdbQUD1Qx98QZJNd1xka
-	hVL8hPwWPYe3VWIuwHfs1FkDsWK24AcQ=
-X-Gm-Gg: ASbGncsuxx4bCDz2hBo0rqlEDNZPyVvHbRkA2Ul98G4dqnhg0MGBCJz+l11BIVERrkF
-	teSxbxpfAgj3O8eM+LjB9woQSt1CI1k9NuDv0H/2htapJd8nK05jzMT8jciM+VUo8/9c2rd0Knv
-	MawGFZHqnPcPB4kcM+56evQOwePHLNoe+rsThVN+TuZFSh5GEBhOPmJjJ6h2YURX5HjvRT9UNjC
-	drURVOz
-X-Google-Smtp-Source: AGHT+IGJ6wlhOSp+IpXK75DxLO3lMxt7tiRGzhGELr5AS/RZTBWIl8yrDbQYmDGR59WhH81rGa3KEFyryqGsJXlCpdU=
-X-Received: by 2002:a2e:a98b:0:b0:332:1720:2eb3 with SMTP id
- 38308e7fff4ca-3353029f7d1mr1829401fa.0.1755569218633; Mon, 18 Aug 2025
- 19:06:58 -0700 (PDT)
+        bh=0r8b2dXtOB51Zu6uoioGPMPkg9Kjx3FL/kYw6FqCj5E=;
+        b=h52rEsYPbDVeB6VDUuNgsKFnlnXVFnKM2pu89Um7kZ01qGrDDbEvpaUswniEzCsI/D
+         rfwMjnrQEqVwC9yLeeJGVZJdjcpbUVFFyw0ShWnKl0UEmoxtHeY20JlrYHve1usrUi+5
+         vKiaEHI4/VryUNSFSsFIlG4vfz/zXdjg2gtw+85dDtVXD4vcDwYlItN+0TyrUjosNS3S
+         xuIIaPYk3G7rCMauX5rKg0uO9edrr/3jEDsGRdY0iV7ANtHTv1Nf2l1buH73w2cqL/Cm
+         l2ops06c1FQryUAVOxaTXXmsQUPgK2N3xxdHNTCIgl9VJFnHi432Np/gXGtkORlJAfQw
+         cnhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXF/E7FGnDAnB3T8Bp4ILYzkq2GBCpx0i76pPXVxjBkVNxyTet3Ti6OXTLHsZbPA3s/C/U=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5x6fPsE+8WXQ/SLLVAdBXEIo/hzKcNmlYHrY3gsWWARlHatb/
+	ij+yzJN9izRLfcOEc2yFKoMsvqD5KZ04hCjzB5LLRZSduGrhq6fn1/LC5wfaCffZyAJd6jLe92H
+	GbV96VUG69nt5715x78VzS1TaiqHKHU0=
+X-Gm-Gg: ASbGncvui5dftE/D4H3sOIS+gDsXhaN9VDxUZvAWjzKo1lwxw01QCLodtQLHh3UvgQi
+	+3qJZbE+uwdGIwvXXzx7bXciMI2ZRa9tk28hHwv5EQreS5ZvHZwLsr97pEpqh+31kpp8qjWtwgl
+	cVv91pNLJqXskOk4b7Fu9bQviyZFRGei4PwfFgUiUc4HN0HArnFfBPde2BOSvH/T6P15uYjOt6G
+	hXSPHes
+X-Google-Smtp-Source: AGHT+IHxqaqX4/NSdOEGLOifFYXEaVtFgBXfGEuF2JwBz/b3GC42f0zh/5UF6Zt2K7BLjV+GmrDg5Sk4MTQAS6+XZkI=
+X-Received: by 2002:a05:651c:198d:b0:333:f936:da4 with SMTP id
+ 38308e7fff4ca-335304ee169mr2192391fa.10.1755570161405; Mon, 18 Aug 2025
+ 19:22:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,16 +61,16 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com> <75dfb40ead370e80dda423998f8220ac19c2ff46.1755220973.git.gitgitgadget@gmail.com>
- <DB9P250MB06923B01AACB69F02170B1E3A534A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-In-Reply-To: <DB9P250MB06923B01AACB69F02170B1E3A534A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
+ <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com> <96041a10d545e0e431d05b93544771c6bdfc06f1.1755220973.git.gitgitgadget@gmail.com>
+ <DB9P250MB0692900F30A3E71E4F01DFFFA534A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
+In-Reply-To: <DB9P250MB0692900F30A3E71E4F01DFFFA534A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
 From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Mon, 18 Aug 2025 20:06:47 -0600
-X-Gm-Features: Ac12FXywx7HY29C5mSXLwDVtAITqeszUQHMHB-fzzDj1yffQjo-Au5QwpGivJeE
-Message-ID: <CAH=ZcbBmFGt3hVoPe2NSp=4Ew+kFF0-PWFQFey0fXhYBXB6Yrw@mail.gmail.com>
-Subject: Re: [PATCH v2 01/17] doc: add a policy for using Rust
+Date: Mon, 18 Aug 2025 20:22:30 -0600
+X-Gm-Features: Ac12FXwbmslmtI5HVzGdS2CvM6IlFBUlw_nYKTJ6Uuk2ls12e2Dz7zZTgFZexAY
+Message-ID: <CAH=ZcbDc+Hi28Cu2roE1gezwPWbarxBj6JOjTb2ytnrYS72uTQ@mail.gmail.com>
+Subject: Re: [PATCH v2 09/17] Do support Windows again after requiring Rust
 To: =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>
-Cc: "brian m. carlson via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
 	Elijah Newren <newren@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
 	Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>, 
 	Phillip Wood <phillip.wood123@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
@@ -81,12 +81,61 @@ Cc: "brian m. carlson via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kerne
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 15, 2025 at 11:03=E2=80=AFAM Matthias A=C3=9Fhauer <mha1993@liv=
+On Fri, Aug 15, 2025 at 11:13=E2=80=AFAM Matthias A=C3=9Fhauer <mha1993@liv=
 e.de> wrote:
+> > diff --git a/ci/install-rust.sh b/ci/install-rust.sh
+> > index 141ceddb17cf..c22baa629ceb 100644
+> > --- a/ci/install-rust.sh
+> > +++ b/ci/install-rust.sh
+> > @@ -28,6 +28,9 @@ if [ "$BITNESS" =3D "32" ]; then
+> >   $CARGO_HOME/bin/rustup default --force-non-host $RUST_VERSION || exit=
+ $?
+> > else
+> >   $CARGO_HOME/bin/rustup default $RUST_VERSION || exit $?
+> > +  if [ "$CI_OS_NAME" =3D "windows" ]; then
+> > +    $CARGO_HOME/bin/rustup target add x86_64-pc-windows-gnu || exit $?
+> > +  fi
+> > fi
+> >
+> > . $CARGO_HOME/env
+> > diff --git a/config.mak.uname b/config.mak.uname
+> > index 3e26bb074a4b..a22703284b56 100644
+> > --- a/config.mak.uname
+> > +++ b/config.mak.uname
+> > @@ -727,19 +727,26 @@ ifeq ($(uname_S),MINGW)
+> >               prefix =3D /mingw32
+> >               HOST_CPU =3D i686
+> >               BASIC_LDFLAGS +=3D -Wl,--pic-executable,-e,_mainCRTStartu=
+p
+> > +             CARGO_BUILD_TARGET =3D i686-pc-windows-gnu
+> >         endif
+> >         ifeq (MINGW64,$(MSYSTEM))
+> >               prefix =3D /mingw64
+> >               HOST_CPU =3D x86_64
+> >               BASIC_LDFLAGS +=3D -Wl,--pic-executable,-e,mainCRTStartup
+> > +             CARGO_BUILD_TARGET =3D x86_64-pc-windows-gnu
 >
->> +* Supports Rust and the toolchain version specified in link:rust-suppor=
-t.txt[].
+> I've said it when Johannes originally sent this patch[1], but it bears
+> repeating: The *-pc-windows-gnu targets will pass CI, but would mean
+> raising the required Windows version from 8.1 to 10. We'd want to use
+> the *-win7-windows-gnu targets[2] to keep Windows 8.1 supported.
 >
-> s/rust-support.txt/rust-support.adoc/
+> [1]
+> https://lore.kernel.org/git/pull.1980.git.git.1752784344.gitgitgadget@gma=
+il.com/T/#ma10be2ed0a0e776b0af2fdd0de63d51ba51609e4
+> [2]
+> https://doc.rust-lang.org/nightly/rustc/platform-support/win7-windows-gnu=
+.html
+>
+> >         else ifeq (CLANGARM64,$(MSYSTEM))
+> >               prefix =3D /clangarm64
+> >               HOST_CPU =3D aarch64
+> >               BASIC_LDFLAGS +=3D -Wl,--pic-executable,-e,mainCRTStartup
+> > +             CARGO_BUILD_TARGET =3D aarch64-pc-windows-gnu
+>
+> As I've also mentioned before [1], this target doesn't seem to exist. The
+> correct target seems to be aarch64-pc-windows-gnullvm. [3]
+>
+> [3] https://doc.rust-lang.org/rustc/platform-support/windows-gnullvm.html
 
-Thanks for spotting that, I'll fix it up.
+I'll be happy to make that change for the next round.
