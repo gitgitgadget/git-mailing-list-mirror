@@ -1,64 +1,65 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFEB33CEB2
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 12:21:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F4B340DB8
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 12:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755606073; cv=none; b=JjNCXOf6D9cYgvjM2HzyUeOH/gcVDVW2ViqxvP5hOHpopSgzplEHx/WOUiBPrDJT2nC+YR4J/F6DKus6aui7bydjrbpFWpRA76jZg9xYORPRHcDO/bytITqv/0PPdQyqmiyKVOJM6d4xInxkVEZZTiYQuzXPKx2GeYcipqD0zUY=
+	t=1755606073; cv=none; b=OBB0KbQDQQXmdVwp79Its5tZm5NgSNyk8ylkh7cgabGv6KJ9HKAT7/b6l1C4fcPLsiHJnV2RJSsr9QspYZBrOUEkXeADEoNVv+nIWuoALsl9YpbARnqqtLo8jXW4EbRGSY2Cqf9WcldI20KIOzmmrT3krsLu14FP1eu8WYqGWbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1755606073; c=relaxed/simple;
-	bh=oyjHiB35F6wOAwuUTT2nIBMa+EPj6p9QBM+GYhrIwuc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dZJXIr/dbtLoMwcfrzg038jvwdFcoVHdiCyHhH/PSgXD/huk3R4JjL5ZnqLKMyng+zhIkb9q83RpXFXoL93iW+XPIff7mpEjaOolTPU1KFHOu8mZGvFeryv/+7dC03rFmrjj+hGbE0h7Z7cyET2qj9310j7f+A+PrJjvECJNnH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m1YIb3NV; arc=none smtp.client-ip=209.85.128.49
+	bh=mdOVCnYhc8iRJZxX5nwUv2T6y7i0YUVzfGhVZ4wRL8c=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Wr4jCcuwq2YdzwRphwiWIZSVd3BLALiylLB37suDcGsfF1hcPkLptxXKoNe1537rwPY1mi/eOCoDM3VhOusfZFr7LIqDn8BTwyUqx2owB0OPuXgw6Hcd4r2b7t8c1c5YzGJ4MUzF5QlGRpt+QJGulocqrdPLGs9SG3nacTlBNUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V8eK4Nez; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m1YIb3NV"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-45a1b00e4a1so35743155e9.0
-        for <git@vger.kernel.org>; Tue, 19 Aug 2025 05:21:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V8eK4Nez"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3b9e7437908so5054063f8f.3
+        for <git@vger.kernel.org>; Tue, 19 Aug 2025 05:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1755606069; x=1756210869; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=U/fqjEZDsam5R/zmTttUQ8TtGPpanmPOLlftejm2S3o=;
-        b=m1YIb3NVLgpD09BMK+TgQYwiaK7C66iAyQ7DzSGUqoSRUOKYrzn0HA5PjLZJMPAAeU
-         T9q4Dg5Xgoq10shY9wSgGPiaTaxcOEfOiEZfYqcKHAb30xW+NnG/G5BCg8c7+K1XPuFJ
-         +0I7t3I53qqPA6yj/gR1UDgv1OhsjqoWHUY2B6L+nbNpCkQcU5inP4TuvnlyIcQ74iqH
-         XrdcCPOVSduHjMP1VspLiczw89q9P49CpKxODNDqZtpG6VwitIixjPfYb8mGiT/y2dr9
-         W4lpi9g8EUQWt3YNNy7sWIP+F4NocJ6JKpYxRu4gNfd7emGwg9bgbDW2ahnAhFirzX0p
-         veXQ==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zxKOV5fxUmFFpXzY9Tdv52EfPWvwJkJBQEXJshqhADQ=;
+        b=V8eK4NezYeLMGi+p9BlzSH8BedE/LlMblCKALgptQq7b021mkj36yEil0ifJrB9Bhi
+         BA4guZnTpgzUCWYSJ1+ZAtJViNhTiw7k050zWLs3ohDfJqZTzwHmrZq0V9Ol1rRB8E4q
+         JfSANpKbrnzTeKNb1iSo9/dP6AYipcXTN/7Eyzx8yVUqdLmm2fxCLLHg4en23eNhWsM6
+         OmXpfnpXdTHon7FYMBJJbgmxt6X4wQPOjBuW2y9PTXyEVCJSj9NzHENS6cK7UV3L9MTu
+         zItOrFLI8bOz2+DO0QvmsJKVmcO/GnvhjOFlYCBoXATOXvhCCgGTdsUc07Vjpox+D9gT
+         06Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1755606069; x=1756210869;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=U/fqjEZDsam5R/zmTttUQ8TtGPpanmPOLlftejm2S3o=;
-        b=fcHOAyQdDYDc/VVY9epDUqSTCy/R2Ka1WEeHQa4H1L7qKorcgi+qXTVxh32OJUryqF
-         N8N9JTN6ZLHIEBSsA77tk05b/c5UeYrKo1s6iunIMo7RM+HkuoXkMf0NRWl7lEoNInwA
-         Zw5tuHUX3Yhhy6ixu+a9cppnj42GIje8WMXRYGQQIlPOhBGGEHozdvgaRQnmvx2icp87
-         eWF6XmMQWBEzhELwFwwGntRrQN7FhJd/Aj4OINfYw001+mW11YR6joXfcAj+tWUc+547
-         Vxf0GRqdT0lzFWRjGNwib+ekv2rTQvH887t3DQT1Ol1suw77xaFvdpOjd4nR26xyet8U
-         jc1Q==
-X-Gm-Message-State: AOJu0Yw7/EYPHqkp/d2Yxq4q47fIS9xVK9eS9w4jLpqfhG98DUHrrKH9
-	izZN04pX1EAnWBKpBHH/uHgzTA0JwrftQerRu22Q5fXHPC5Ksf97OwZBcnIoFw==
-X-Gm-Gg: ASbGncuDPxGve1PFVC6gKkIvcfvtd3ZD/iyBLAZN++gmksXO3iqoapu4E8fL+2OCKdu
-	tBKJFK/e4VewEhruYNj7bzMs59NFRsKlZEd4ModEHKc6xPWbxq95aRSPbGI5x6onL0yaSW9fi5q
-	G/SBspc2vYFfPX8osN0jdh1F8O09aUGCBqDw3cuTfvt/JsWFzz7t4iqmnuoJYai/fcVRLz2PqY1
-	TXfu1tHLYMoL9nENOQ07yf8A/KfUbY36bN7IpfBvdRt4ywQcVEfWrR8HpDo/+jVdE1ZOF0dLZeD
-	zOlW3NtTk5ktWDtmmt9O8XmkcNaXKAOXhzn0b9MKxPwTY7xbnAgLbJbbBXzzoKpqONf4Y+Et+uh
-	AlLIPB76NQq/oXOTG17ovxDR1nZVPxLQmo9E=
-X-Google-Smtp-Source: AGHT+IFj8H/daIj8BavSYo5XPNtpJuzI+/CDJoNLdik0VkpB7ulEqVlKOTunyWnNHuGnzO6bd8CBPA==
-X-Received: by 2002:a05:6000:290d:b0:3b9:16e9:2cc2 with SMTP id ffacd0b85a97d-3c0e2c8974amr1952971f8f.14.1755606068681;
-        Tue, 19 Aug 2025 05:21:08 -0700 (PDT)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zxKOV5fxUmFFpXzY9Tdv52EfPWvwJkJBQEXJshqhADQ=;
+        b=uY5PloW0LQ9tT7PNFqE6wsXZEP+96ipMe5j4QjyQfRPgG7+fnqTQkT/ypkP7XaWU1/
+         S+dEgV4HF5chMf5V7xVivE7MBvYu4o1O1JYM6UN/Jl4qzG9L9nkpnSlOWbXtXssQLGnf
+         iBc2XbrEVh01iQs5L/yLwuA6zG3XxoLpDQCPRWYexMuQYqxOkGuCBxmgGgiXEVrEv2F7
+         ctf25BAynHGNF8AMGHtGLmhAmgtrHITzMgrNS/MYVxY7lZgaliebCEbXq8Cjo2+UJZ5/
+         RKoyj4nEh2eSYQAO08tXzZ4EJqDl8H+KzEnrwnJx7B1ocyrLnBLanUlNSA3ZPjc6hiwj
+         mQ3g==
+X-Gm-Message-State: AOJu0YwmDfs3bbjwTduWbZjSzheebyMuXVk4MSlDDyvcAIQCcGXOrGVG
+	84S1wb51hAb5REZjvJPPVuuJFe0HED0gdhxTVXd6qzQHQxNnF0jsEYr4sgtqRw==
+X-Gm-Gg: ASbGnctY9ZNOITLAvjTGYgYK7DUQl9PNYv32gJTDOkq+hdz9lXUXLgE1BgEDFP+MSFH
+	dxdhnlurEGUlYKT157sDLYAIpniYmomyOhQM/zdUTsL6mr2dWmS8IvwGAq06M51dGrTi8n7qe0Q
+	OoZnY6D5Ju6sZxXJMJ9CSxPzKXKsPTQ4v+EWx+zkTo3WsNg7xot74fn7e+bkOf0QO5EjtrN6UlW
+	ZOzVFnbo/MnG3xYaifqDEm0ySAw/ntGGoPhhzpUAVajFGgejbrpu+F7GMejuN5g+8GDbo9BlfM9
+	TxxT6nJvvRCEwLOlwh0mlrtNTREoTzIWyssND5EbxDHEf2PcfTgpawuJc6cU96Nx7jfWUg+UHnE
+	wmRZ05uxsVxaZhm4Lo2bJ+0fNnGAtzuVJJVg=
+X-Google-Smtp-Source: AGHT+IFCH2gWQKCUJu1EOPU0v6Cws2dlqTaTzfBnzf811Oo7DkIEk+iGx/dfPZI9//dm1FYCme4UcQ==
+X-Received: by 2002:a05:6000:40c7:b0:3b8:d271:cdc5 with SMTP id ffacd0b85a97d-3c0ec09e23amr1692715f8f.34.1755606069446;
+        Tue, 19 Aug 2025 05:21:09 -0700 (PDT)
 Received: from [127.0.0.2] ([82.163.216.130])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c0771c1a97sm3501954f8f.31.2025.08.19.05.21.07
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c0771c1a97sm3501954f8f.31.2025.08.19.05.21.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Aug 2025 05:21:08 -0700 (PDT)
+        Tue, 19 Aug 2025 05:21:09 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 0/5] refs/reftable: add fsck checks
-Date: Tue, 19 Aug 2025 14:20:59 +0200
-Message-Id: <20250819-228-reftable-introduce-consistency-checks-v1-0-8b8f6879fa9e@gmail.com>
+Date: Tue, 19 Aug 2025 14:21:00 +0200
+Subject: [PATCH 1/5] fsck: order 'fsck_msg_type' alphabetically
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,78 +68,218 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACtspGgC/x2NQQrCQAxFr1KyNtBOp9R6FemiZqINSkYmoyild
- ze4fHzefxsYF2GDU7NB4beYZHXoDg3QuuiNUZIzhDYM7dhFDOGIha91uTx801pyehEjZTWxykp
- fpJXpbtiPU+I09TTECP73dE0+/9Z53vcf16oK63sAAAA=
-X-Change-ID: 20250714-228-reftable-introduce-consistency-checks-379ded93c544
+Message-Id: <20250819-228-reftable-introduce-consistency-checks-v1-1-8b8f6879fa9e@gmail.com>
+References: <20250819-228-reftable-introduce-consistency-checks-v1-0-8b8f6879fa9e@gmail.com>
+In-Reply-To: <20250819-228-reftable-introduce-consistency-checks-v1-0-8b8f6879fa9e@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2266; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=oyjHiB35F6wOAwuUTT2nIBMa+EPj6p9QBM+GYhrIwuc=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGikbDMBPL+AFTOzK0zNtoidOnHVtx+FRVITW
- GUBofpusX7OGokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJopGwzAAoJED7VnySO
- Rox/JVQL/15KAsjHwpKaFgp4B/SWXQtqzmeq6wt7nRweb25t4r+gA4ARzYcPEP0zXp4sD5X0Q41
- 0kptKzBu0CigN77x6YIEf/H8ndmJFZG2Ia2RjRWoFXb5J7euFIUsJNcdrKQ//tPor1dV9yJ+0wQ
- 0EDHRJhMTk2eMhDsC509tes2kNoToLAfBWVwYVJdLazH5J/tu1CGv7/MD8b9fTB/3ud3FlPDlom
- 6c3JQ2AOVfXaw01baIoDXuEMoyCp4eIea3ukT3UBnwKV2M/A6ddzxh7Oweeznh7S//L+awNHZnY
- V8ygyDTfXS7NpVmy15pPNW5GZkTNPhjii49u6nLBekoXLt/VXb4FjkaggQ017UVf4J4IkBJkRaf
- Lluc17Pf0eClnvcVxtaKLBLP9/YUPdohpIAON6kSelzx/NcqGl6CUAW0u4gKz2Ri3qT4b+hQKAS
- c6NsFcBQ7lWUz59zVPVpXgdMl3oQoT6ikFeYY8ECcnxwTiYtZ5sq1I9DzsjmiFpLjxidQSwEe83
- U8=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8717; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=mdOVCnYhc8iRJZxX5nwUv2T6y7i0YUVzfGhVZ4wRL8c=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGikbDP6IO12lSsOczrOZJsGORcYoCl+fXVMJ
+ c/qQ7w7+Wm3JokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJopGwzAAoJED7VnySO
+ Rox/PE8L/jHBQK2szwc5fYz9F5qs3tOg86OCp0qdwde0WwCqnaA2mE+JUqH2lbZ2kfbitpLbVIH
+ Rx6fJTxWndoEyDMOMaA/PiaB3EomG4vuWAAYp/qiJyTDi6wzqswqbyBzjyhN+SsKdtUKNSBlKgB
+ Vmxo7bzNj+qhgehJHD581F9LIzHl/yejrmkoKjxA1gzEucixAr6km2b4J3d0cXCIL7Yksg/9rHD
+ WmJ/Mo3qvCIxEke2JiwDi8nzXAeUQEbqR4+2MgPG4S8t2dK5bZArBwokIdmpPfXK+iwINRBsE6z
+ kxfHsWvw94MHEE/NBH5huJ0QwXmtUwviEUWWdCBqsQkrO0AiMjgaLO72R2g8edppai5Se+1nQFJ
+ ixm+jv30an49EYxRPyst8H5460NmJrb1afNWh3rOKyE+PjI5/M9CBObkWBcfVAwf3oiSytHgdG/
+ 5IwIt5fiuRLWvrg8vN3TJRtobdugY2SOlyrwOiokxmRrJwKXuaDtASLSqr0LFDtcZp1hFbdiyJ5
+ lw=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-This series adds the required infrastructure and also some fsck checks
-for the reftable backend.
+The list of 'fsck_msg_type' seem to be alphabetically ordered, but there
+are a few small misses. Fix this by sorting the sub-sections of the
+list to maintain alphabetical ordering. Also fix a clang-format issue
+where the escaped newlines are not aligned.
 
-Since the reftable backend is treated as a library within the Git
-codebase, we don't want to spillover our internal fsck implementation
-into the library. At the same time, the fsck checks need to access
-internal structures of the reftable library which aren't exposed outside
-the library.
-
-So we solve this by adding a 'reftable/fsck.[ch]' which implements and
-exposes a checker for the reftable library and returns specific errors
-as defined by the library. We then add glue code within
-'refs/reftable-backend.c' to map these errors to errors which Git's fsck
-implementation would understand. This allows us to separate concerns.
-
-This series then adds some checks on the stack ('reftable/tables.list')
-level of reftable, namely:
-1. The table name is as per the spec
-2. The number of tables are consistent
-3. The tables.list has a newline at the end of file
-4. The table names follow correct index sequences
-
-I also plan to send in follow up series's which will implement further
-checks and go into deeper layers (tables, block, references).
+While here, remove a duplicate instance of 'gitmodulesLarge' in the
+'fsck-msgids' documentation.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/fsck-msgids.adoc |  15 +++-
- Makefile                       |   1 +
- fsck.h                         | 154 +++++++++++++++++++++--------------------
- meson.build                    |   1 +
- refs/reftable-backend.c        |  70 +++++++++++++++++--
- reftable/fsck.c                | 132 +++++++++++++++++++++++++++++++++++
- reftable/reftable-fsck.h       |  44 ++++++++++++
- t/meson.build                  |   3 +-
- t/t0614-reftable-fsck.sh       | 138 ++++++++++++++++++++++++++++++++++++
- 9 files changed, 473 insertions(+), 85 deletions(-)
+ Documentation/fsck-msgids.adoc |   3 -
+ fsck.h                         | 150 ++++++++++++++++++++---------------------
+ 2 files changed, 75 insertions(+), 78 deletions(-)
 
-Karthik Nayak (5):
-      fsck: order 'fsck_msg_type' alphabetically
-      refs/reftable: add fsck check for checking the table name
-      refs/reftable: add fsck check for number of tables
-      refs/reftable: add fsck check for trailing newline
-      refs/reftable: add fsck check for incorrect update index
+diff --git a/Documentation/fsck-msgids.adoc b/Documentation/fsck-msgids.adoc
+index 0ba4f9a27e..1c912615f9 100644
+--- a/Documentation/fsck-msgids.adoc
++++ b/Documentation/fsck-msgids.adoc
+@@ -104,9 +104,6 @@
+ `gitmodulesParse`::
+ 	(INFO) Could not parse `.gitmodules` blob.
+ 
+-`gitmodulesLarge`;
+-	(ERROR) `.gitmodules` blob is too large to parse.
+-
+ `gitmodulesPath`::
+ 	(ERROR) `.gitmodules` path is invalid.
+ 
+diff --git a/fsck.h b/fsck.h
+index dd7df3d5b3..559ad57807 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -20,82 +20,82 @@ enum fsck_msg_type {
+  * two in sync.
+  */
+ 
+-#define FOREACH_FSCK_MSG_ID(FUNC) \
+-	/* fatal errors */ \
+-	FUNC(NUL_IN_HEADER, FATAL) \
+-	FUNC(UNTERMINATED_HEADER, FATAL) \
+-	/* errors */ \
+-	FUNC(BAD_DATE, ERROR) \
+-	FUNC(BAD_DATE_OVERFLOW, ERROR) \
+-	FUNC(BAD_EMAIL, ERROR) \
+-	FUNC(BAD_NAME, ERROR) \
+-	FUNC(BAD_OBJECT_SHA1, ERROR) \
+-	FUNC(BAD_PACKED_REF_ENTRY, ERROR) \
+-	FUNC(BAD_PACKED_REF_HEADER, ERROR) \
+-	FUNC(BAD_PARENT_SHA1, ERROR) \
+-	FUNC(BAD_REF_CONTENT, ERROR) \
+-	FUNC(BAD_REF_FILETYPE, ERROR) \
+-	FUNC(BAD_REF_NAME, ERROR) \
+-	FUNC(BAD_REFERENT_NAME, ERROR) \
+-	FUNC(BAD_TIMEZONE, ERROR) \
+-	FUNC(BAD_TREE, ERROR) \
+-	FUNC(BAD_TREE_SHA1, ERROR) \
+-	FUNC(BAD_TYPE, ERROR) \
+-	FUNC(DUPLICATE_ENTRIES, ERROR) \
+-	FUNC(MISSING_AUTHOR, ERROR) \
+-	FUNC(MISSING_COMMITTER, ERROR) \
+-	FUNC(MISSING_EMAIL, ERROR) \
+-	FUNC(MISSING_NAME_BEFORE_EMAIL, ERROR) \
+-	FUNC(MISSING_OBJECT, ERROR) \
+-	FUNC(MISSING_SPACE_BEFORE_DATE, ERROR) \
+-	FUNC(MISSING_SPACE_BEFORE_EMAIL, ERROR) \
+-	FUNC(MISSING_TAG, ERROR) \
+-	FUNC(MISSING_TAG_ENTRY, ERROR) \
+-	FUNC(MISSING_TREE, ERROR) \
+-	FUNC(MISSING_TYPE, ERROR) \
+-	FUNC(MISSING_TYPE_ENTRY, ERROR) \
+-	FUNC(MULTIPLE_AUTHORS, ERROR) \
+-	FUNC(PACKED_REF_ENTRY_NOT_TERMINATED, ERROR) \
+-	FUNC(PACKED_REF_UNSORTED, ERROR) \
+-	FUNC(TREE_NOT_SORTED, ERROR) \
+-	FUNC(UNKNOWN_TYPE, ERROR) \
+-	FUNC(ZERO_PADDED_DATE, ERROR) \
+-	FUNC(GITMODULES_MISSING, ERROR) \
+-	FUNC(GITMODULES_BLOB, ERROR) \
+-	FUNC(GITMODULES_LARGE, ERROR) \
+-	FUNC(GITMODULES_NAME, ERROR) \
+-	FUNC(GITMODULES_SYMLINK, ERROR) \
+-	FUNC(GITMODULES_URL, ERROR) \
+-	FUNC(GITMODULES_PATH, ERROR) \
+-	FUNC(GITMODULES_UPDATE, ERROR) \
+-	FUNC(GITATTRIBUTES_MISSING, ERROR) \
+-	FUNC(GITATTRIBUTES_LARGE, ERROR) \
+-	FUNC(GITATTRIBUTES_LINE_LENGTH, ERROR) \
+-	FUNC(GITATTRIBUTES_BLOB, ERROR) \
+-	/* warnings */ \
+-	FUNC(EMPTY_NAME, WARN) \
+-	FUNC(FULL_PATHNAME, WARN) \
+-	FUNC(HAS_DOT, WARN) \
+-	FUNC(HAS_DOTDOT, WARN) \
+-	FUNC(HAS_DOTGIT, WARN) \
+-	FUNC(NULL_SHA1, WARN) \
+-	FUNC(ZERO_PADDED_FILEMODE, WARN) \
+-	FUNC(NUL_IN_COMMIT, WARN) \
+-	FUNC(LARGE_PATHNAME, WARN) \
++#define FOREACH_FSCK_MSG_ID(FUNC)                                  \
++	/* fatal errors */                                         \
++	FUNC(NUL_IN_HEADER, FATAL)                                 \
++	FUNC(UNTERMINATED_HEADER, FATAL)                           \
++	/* errors */                                               \
++	FUNC(BAD_DATE, ERROR)                                      \
++	FUNC(BAD_DATE_OVERFLOW, ERROR)                             \
++	FUNC(BAD_EMAIL, ERROR)                                     \
++	FUNC(BAD_NAME, ERROR)                                      \
++	FUNC(BAD_OBJECT_SHA1, ERROR)                               \
++	FUNC(BAD_PACKED_REF_ENTRY, ERROR)                          \
++	FUNC(BAD_PACKED_REF_HEADER, ERROR)                         \
++	FUNC(BAD_PARENT_SHA1, ERROR)                               \
++	FUNC(BAD_REFERENT_NAME, ERROR)                             \
++	FUNC(BAD_REF_CONTENT, ERROR)                               \
++	FUNC(BAD_REF_FILETYPE, ERROR)                              \
++	FUNC(BAD_REF_NAME, ERROR)                                  \
++	FUNC(BAD_TIMEZONE, ERROR)                                  \
++	FUNC(BAD_TREE, ERROR)                                      \
++	FUNC(BAD_TREE_SHA1, ERROR)                                 \
++	FUNC(BAD_TYPE, ERROR)                                      \
++	FUNC(DUPLICATE_ENTRIES, ERROR)                             \
++	FUNC(GITATTRIBUTES_BLOB, ERROR)                            \
++	FUNC(GITATTRIBUTES_LARGE, ERROR)                           \
++	FUNC(GITATTRIBUTES_LINE_LENGTH, ERROR)                     \
++	FUNC(GITATTRIBUTES_MISSING, ERROR)                         \
++	FUNC(GITMODULES_BLOB, ERROR)                               \
++	FUNC(GITMODULES_LARGE, ERROR)                              \
++	FUNC(GITMODULES_MISSING, ERROR)                            \
++	FUNC(GITMODULES_NAME, ERROR)                               \
++	FUNC(GITMODULES_PATH, ERROR)                               \
++	FUNC(GITMODULES_SYMLINK, ERROR)                            \
++	FUNC(GITMODULES_UPDATE, ERROR)                             \
++	FUNC(GITMODULES_URL, ERROR)                                \
++	FUNC(MISSING_AUTHOR, ERROR)                                \
++	FUNC(MISSING_COMMITTER, ERROR)                             \
++	FUNC(MISSING_EMAIL, ERROR)                                 \
++	FUNC(MISSING_NAME_BEFORE_EMAIL, ERROR)                     \
++	FUNC(MISSING_OBJECT, ERROR)                                \
++	FUNC(MISSING_SPACE_BEFORE_DATE, ERROR)                     \
++	FUNC(MISSING_SPACE_BEFORE_EMAIL, ERROR)                    \
++	FUNC(MISSING_TAG, ERROR)                                   \
++	FUNC(MISSING_TAG_ENTRY, ERROR)                             \
++	FUNC(MISSING_TREE, ERROR)                                  \
++	FUNC(MISSING_TYPE, ERROR)                                  \
++	FUNC(MISSING_TYPE_ENTRY, ERROR)                            \
++	FUNC(MULTIPLE_AUTHORS, ERROR)                              \
++	FUNC(PACKED_REF_ENTRY_NOT_TERMINATED, ERROR)               \
++	FUNC(PACKED_REF_UNSORTED, ERROR)                           \
++	FUNC(TREE_NOT_SORTED, ERROR)                               \
++	FUNC(UNKNOWN_TYPE, ERROR)                                  \
++	FUNC(ZERO_PADDED_DATE, ERROR)                              \
++	/* warnings */                                             \
++	FUNC(EMPTY_NAME, WARN)                                     \
++	FUNC(FULL_PATHNAME, WARN)                                  \
++	FUNC(HAS_DOT, WARN)                                        \
++	FUNC(HAS_DOTDOT, WARN)                                     \
++	FUNC(HAS_DOTGIT, WARN)                                     \
++	FUNC(LARGE_PATHNAME, WARN)                                 \
++	FUNC(NULL_SHA1, WARN)                                      \
++	FUNC(NUL_IN_COMMIT, WARN)                                  \
++	FUNC(ZERO_PADDED_FILEMODE, WARN)                           \
+ 	/* infos (reported as warnings, but ignored by default) */ \
+-	FUNC(BAD_FILEMODE, INFO) \
+-	FUNC(EMPTY_PACKED_REFS_FILE, INFO) \
+-	FUNC(GITMODULES_PARSE, INFO) \
+-	FUNC(GITIGNORE_SYMLINK, INFO) \
+-	FUNC(GITATTRIBUTES_SYMLINK, INFO) \
+-	FUNC(MAILMAP_SYMLINK, INFO) \
+-	FUNC(BAD_TAG_NAME, INFO) \
+-	FUNC(MISSING_TAGGER_ENTRY, INFO) \
+-	FUNC(SYMLINK_REF, INFO) \
+-	FUNC(REF_MISSING_NEWLINE, INFO) \
+-	FUNC(SYMREF_TARGET_IS_NOT_A_REF, INFO) \
+-	FUNC(TRAILING_REF_CONTENT, INFO) \
+-	/* ignored (elevated when requested) */ \
++	FUNC(BAD_FILEMODE, INFO)                                   \
++	FUNC(BAD_TAG_NAME, INFO)                                   \
++	FUNC(EMPTY_PACKED_REFS_FILE, INFO)                         \
++	FUNC(GITATTRIBUTES_SYMLINK, INFO)                          \
++	FUNC(GITIGNORE_SYMLINK, INFO)                              \
++	FUNC(GITMODULES_PARSE, INFO)                               \
++	FUNC(MAILMAP_SYMLINK, INFO)                                \
++	FUNC(MISSING_TAGGER_ENTRY, INFO)                           \
++	FUNC(REF_MISSING_NEWLINE, INFO)                            \
++	FUNC(SYMLINK_REF, INFO)                                    \
++	FUNC(SYMREF_TARGET_IS_NOT_A_REF, INFO)                     \
++	FUNC(TRAILING_REF_CONTENT, INFO)                           \
++	/* ignored (elevated when requested) */                    \
+ 	FUNC(EXTRA_HEADER_ENTRY, IGNORE)
+ 
+ #define MSG_ID(id, msg_type) FSCK_MSG_##id,
 
-
-
-base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
-change-id: 20250714-228-reftable-introduce-consistency-checks-379ded93c544
-
-Thanks
-- Karthik
+-- 
+2.50.1
 
