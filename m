@@ -1,72 +1,90 @@
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419D03112BE
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 21:24:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC157343D94
+	for <git@vger.kernel.org>; Tue, 19 Aug 2025 21:29:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755638676; cv=none; b=Ij9P40rV+x22SXPgRwHxhrv00zwF8i+q3Bpl6HkZZzp0LlnYDt3uUQclKFEAwaY6QpK3GddoOKJ+b0wJX7aplYTuUEWHBBKz6SZCLA7sTigf1mER0fEGmCZh/IlDV9iM7KQGk9zSBE7wSIR02/FT7cc9g+oQ+KfzOuu7POXME7s=
+	t=1755638943; cv=none; b=Ps1rpNRJXhhlUJ7JCb5s6DNHzOWFdqpTRYvr5Q81AH1yckE7a0Iv6Alzfa9gFUJbajzz1RPIWhA6MW/xNyuEY1j6QtiUhIbGKqE5BlweBDcZrMDWujfh+EIeSpQEedlt8JxLUzrRZJCDDYoXSFXOXcf3SyIqUzAWJokZmQw9E1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755638676; c=relaxed/simple;
-	bh=nWXDhHRzerft292sR9k4QmSjfPh135cKCb2lwsc801o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W1+13dCidx8GjnzttuN3a0Bayo1sWKL8wr+OCMT/t5kZcBVMkVCT4z97+f/HkT+0NIaHczYBtYr4OjZeScywZVXG9T6y7rWANdSSn3S+Uj7OXak81cb/XE2byKaDJbhqpLKb2/bHzJqGb5Mn9ALZf2sv3FLWJ7rf86+ceo/8ZvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; arc=none smtp.client-ip=212.27.42.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
-Received: from cayenne (unknown [IPv6:2a01:e0a:d1:f360:a197:5391:9e0e:3dd2])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 1BB7213F861;
-	Tue, 19 Aug 2025 23:24:23 +0200 (CEST)
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-To: git@vger.kernel.org,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH] doc: fix asciidoc format compatibility in pretty-formats.adoc
-Date: Tue, 19 Aug 2025 23:22:33 +0200
-Message-ID: <20250819212340.73886-1-jn.avila@free.fr>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <aKJJs7OkBIg7Y9J0@szeder.dev>
-References: <aKJJs7OkBIg7Y9J0@szeder.dev>
+	s=arc-20240116; t=1755638943; c=relaxed/simple;
+	bh=01vOeCBg3ZPa+YCj9I4psWoApLMscbOSwDREypeByHk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KO93FPrURBBaIxJ3n0rAJosu4G+9+UPaFQWSqPiXTZSRkbaRMKDBRpFijd9+vxxhkoGW+pY+yxOVh78jQg2I1jbxQvS0nStPktbOix8O9tuEGZl1dvhMhpJYVIp3jS/TFT7s6k5LYAaEyBvas8nSO6Fu0yumM/3+weM08Gvj5Hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SmRLjQQp; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SmRLjQQp"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-afcb79db329so795217466b.2
+        for <git@vger.kernel.org>; Tue, 19 Aug 2025 14:29:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755638940; x=1756243740; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=01vOeCBg3ZPa+YCj9I4psWoApLMscbOSwDREypeByHk=;
+        b=SmRLjQQpmVCsfp4evUAjF99cixP4SOnGyuOl8UjSqQRuGl3FQmhkVA0zwJXVgTYWSD
+         zLZW1mzh3XXlIX3kpf6c6t5RJ2mpeoWVJU/I0QIwJNNfKzWOgnZT4FYNdhobbQFypYZ7
+         imrxLMYPudmtA4gsDewiRQNgHXtppOTLnt+3wfPiXID5sCVq0kDdus097eLZdvzztMb8
+         CdGwxELmHZIQlOSJyNRoFAw1K/un95AtMQYoM1BERZHdr4Q/oyTc+BBB2AlF/eNefyMP
+         9st91LhSPp136y9VouQON1/cRGRG7Sx+kZ2zuE+oJPUbR1skyVJoocApHUPsnE+44m9v
+         uWDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755638940; x=1756243740;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=01vOeCBg3ZPa+YCj9I4psWoApLMscbOSwDREypeByHk=;
+        b=jYCUzYijO1hTHKwnFhnxaDWapMi2bdb18rQu88OaSMJE+zth0w5JKiBH1/be2TcD8V
+         1+ei1L3Bx2HTYhL6ga7LXDjX82OF07KBUnB2MWcqUmsmVdqV0w/eWoKOC0KP7KHZtH4u
+         1bM76iJJrNQZE77LDmCV1D/nX0p9FM0kNW5L8HRBIzEI8T3shLjiDpgKofI6q8HlG+WG
+         RsV2uY/TlaHbHNvvp17jtVwotfvajD0au2AV8jVNN+V5EmdMC5M5LXDKKDITW3vZ+v0D
+         BcDLgzWWJpVnCNjDr9Q4yGrwtBsPg47swp4jPeM+eGwsV+ZGEPzTcz+ANR/97AlHXctk
+         NQPQ==
+X-Gm-Message-State: AOJu0YxQU4ND3youdAXTzduseRwNk0hcb0y2D5FpoGY7NpkL0bnzAlvP
+	nkwkjUOsEPkXgVjxQBw55WutNB9GWFLdb0y0Telf5x18IpauXgV8936/qAQoRsBnj0UbEDtFTeL
+	Mm77s49Fms0t2mHAzvHdR/DKus1ehzDY=
+X-Gm-Gg: ASbGnct8ZylqE73qWK9bBkkQhc2ZF7MqNF9wH0m2Fl1mXT95X9Szi0MXhis0d4bhoir
+	YhD1rJJyogjOnsw8z2Wx6eQIz1dy3TfVwg2Kv+XXuNmxnra0oaR8d++C2P9Qs3nNsyK88k6DRD4
+	RMZmKpC5XkRiHGkNMF6m7LjpjFBnt7ZZTkdh0LHLUDaPKdtOQsL+3YOVrvVXQhsQUXv7rij5RyF
+	C2qDwGIZtVmRvQnI9XJhsqloFv3JchErFPS3O4Wrg==
+X-Google-Smtp-Source: AGHT+IH1xchg+3zWe8fhX2fzzNkLpqNHmHpLEAxmYfsyZ9jMuPWietW7corr2EpR7kD2iaWpUlnlCQfI8kcJ9cZYIjY=
+X-Received: by 2002:a17:906:c381:b0:af9:566c:4cd1 with SMTP id
+ a640c23a62f3a-afdf014c324mr28746366b.24.1755638940042; Tue, 19 Aug 2025
+ 14:29:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+In-Reply-To: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 19 Aug 2025 17:28:48 -0400
+X-Gm-Features: Ac12FXztcnqTkUd6Bko6w2P74yoVGvAZJqQ3px291kLmHEsPBHqqjR-WWBtM9Qs
+Message-ID: <CALnO6CBDu14P8chvJ=1QfZ2apVg78E5P+d+P+4=8Whpu_EMi_g@mail.gmail.com>
+Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy
+ history editing
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Asciidoc.py and Asciidoctor do not process the same '+' verbatim syntax in
-the same way. For most usages, Asciidoctor requires a double '+'.
+On Tue, Aug 19, 2025 at 6:57=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> Hi,
+>
+> over recent months I've been playing around with Jujutsu quite
+> frequently. While I still prefer using Git, there's been a couple
+> features in it that I really like and that I'd like to have in Git, as
+> well.
 
-Unfortunately, the postprocessing of verbatim synopsis in asciidoctor cannot
-be bypassed and formatting of the parentheses is forced in syntax sign
-instead of keywords, unless a proper grammar analyzer is used.
+Excellent! I'm looking forward to reading this series and playing with it.
 
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
----
- Documentation/pretty-formats.adoc | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/pretty-formats.adoc b/Documentation/pretty-formats.adoc
-index 9ed0417fc8..618ddc4a0c 100644
---- a/Documentation/pretty-formats.adoc
-+++ b/Documentation/pretty-formats.adoc
-@@ -233,11 +233,11 @@ colon and zero or more comma-separated options. Option values may contain
- literal formatting codes. These must be used for commas (`%x2C`) and closing
- parentheses (`%x29`), due to their role in the option syntax.
- +
--** `prefix=<value>`: Shown before the list of ref names.  Defaults to "{nbsp}+(+".
-+** `prefix=<value>`: Shown before the list of ref names.  Defaults to "{nbsp}++(++".
- ** `suffix=<value>`: Shown after the list of ref names.  Defaults to "+)+".
- ** `separator=<value>`: Shown between ref names.  Defaults to "+,+{nbsp}".
- ** `pointer=<value>`: Shown between HEAD and the branch it points to, if any.
--		      Defaults to "{nbsp}+->+{nbsp}".
-+		      Defaults to "{nbsp}++->++{nbsp}".
- ** `tag=<value>`: Shown before tag names. Defaults to "`tag:`{nbsp}".
- 
- +
--- 
-2.51.0
-
+Unfortunately, patches 8=E2=80=9311 got dropped on their way to me (but I s=
+ee
+the lore archive has them). Odd. (Not in spam or deleted messages,
+either.)
