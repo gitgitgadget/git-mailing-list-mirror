@@ -1,100 +1,138 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0CF24DD0E
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 21:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF4B3314A5
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 21:34:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755725607; cv=none; b=e115jCDEKQoETJ9PlIXVidbyQwaHhp1bM/vPldlbG7ubUdC3fN6c0t49zj0FNs0vHWBPS5K8TtYi1Zo17jYzpVdR88RvC1OGkiZgoFwCbEXlEbSPJ6Rjmgvfh66tiNMEKOtIT789VnZNOGoSJh7xGD1Z8oG1MECyIo2MRzjlcaE=
+	t=1755725697; cv=none; b=G3i+Euo4910pPyQAbenSzgBeOxZgvwNgW1rqHsm8zhnj0k402ENLd3+VJcnppH1JKS++ANGsME1RbIEPIDF7d40i03JkcRHfoukxhMfR0/AG9xKOvNu5wVkdGdchLleK38EywvmA8SOoyvvVkvV5q5w+/HOKVrD9vIfcN9F+Dbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755725607; c=relaxed/simple;
-	bh=Zh/cP5JbcO1Wg3ytmi9hqKEOOCkn07tCGRtcuQW996A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J3IVyq8BGNuz1HMXPZKztT1/d+elO9aGXJPDI6AE5bQh2R8dGvp+aUK5URGn5o/FV0sUI7MHIkvQlUdlhvrokNnGI12OiesLuOXBgblsqvSfMbXLyNSyUK2MbPMKroWm6BodRvOwovotS2LmZwfZYFIrn/hEC4VgVnT2eQI4jKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=IeVf+7xt; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1755725697; c=relaxed/simple;
+	bh=r3+D1B1/K2gNIt0BmpTdveNZEQ4cz2+fn8cics9ANQQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=r0Td7GwZs5L5DgdYWRT2m7CcCI2/raxr/rZxfEKcbfnQ2RpYujyzluFQQEUyQqDwo4dOfjn/5uag1qOrNWUuofCH3dfBYVSZJ+l3sE6qG7ddqHm7jDs5e3CAu5LCa9TtgVs+pdyRDTbrzIkx2naqU6UNs12f/PfM2Vo4s8kYBZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WXFVpnTB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UEYGT5Bj; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="IeVf+7xt"
-Received: (qmail 39407 invoked by uid 109); 20 Aug 2025 21:33:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Zh/cP5JbcO1Wg3ytmi9hqKEOOCkn07tCGRtcuQW996A=; b=IeVf+7xtTOsW8+B2o3+Cvxzt5hfFg+VbEcn+vzn6N9CpckFvN8QvKyWZbs04cC+OYifv569jH0QXCBHcEEvLphzVo62XBB/YvftGoQCSxFs0dCppltJdv2e8/ZSK9lh9Yc1OMtY/yevp4Yjzf7eYlj7xSqnM8XC6PcpW3F5yiMpT3yfduFe/IdLPnRl28zOcsfw5wOEENWBOx4/Ha3lrmFcbZ6Xb+G5WBfBSs+aTHPQ5Qw9JQA6loklYmA9DcIAfyJ2D4zbw/3QxfZh3xvTaMLBkr8KHRhaS2MEYY+w87t4g4ZITabwOHiIP+sgRhu0lAM9tyLhnhRxkgevuOnct4A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 20 Aug 2025 21:33:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 64951 invoked by uid 111); 20 Aug 2025 21:33:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 20 Aug 2025 17:33:24 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 20 Aug 2025 17:33:23 -0400
-From: Jeff King <peff@peff.net>
-To: Joe Drew <joe.drew@indexexchange.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: "lock file exists" when fetching in bare clone of repository
-Message-ID: <20250820213323.GA1667633@coredump.intra.peff.net>
-References: <YQXPR01MB3046197EF39296549EE6DD669A33A@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WXFVpnTB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UEYGT5Bj"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BA0DE7A01E6;
+	Wed, 20 Aug 2025 17:34:54 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 20 Aug 2025 17:34:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755725694; x=1755812094; bh=lWzFhrPjsc
+	pa0FtcRrHrD0QveaK0fw1bqE7UBi43uiA=; b=WXFVpnTBQcUxdqBsSz3sKuTsxV
+	I9GicyRIq2N0yjrTWfGeoVB47rpQQyYA34sUe5bc+YEopt0gTDHtqnsGzx+2fCO0
+	Mdty3Qrg3lzc2QUh4XEzX9Ttf+4nFx4qMX6b7ysM6UZ4U7BVb898cb4RkkC5Ncmr
+	Q5uZ2kDoNWjZGOoqnWhQVeAdjwU/lBs9bE2Wti5uxEwFH+8kXNgNdt3Hd3zhJ+2F
+	eD3sY7EZ/8GrmMPbUzky7Lj82wlef4ouboJRFV2ldjJP4F7qd7RF7DrZS4qBq2vh
+	Jowj6hWHKRRev8bWwiVdyqbRkwjhYNtZMOwqW+w9ylh4ijvOLGwYInmPnsuQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755725694; x=1755812094; bh=lWzFhrPjscpa0FtcRrHrD0QveaK0fw1bqE7
+	UBi43uiA=; b=UEYGT5BjGPBlv4Ba/Bdt+aFGAq9kFXx2cSMRXlRqpzD9yv9DHtr
+	+eNnsw3LGdZeL0s73Uwjeii39rx/GZtepwpG7Y91Ktgadokxix1hPZIhXwIB1rue
+	zhl9w4N5SGOsT08Bf8sH5aGvN9jsM4AV5pfxMGzYrmuSVpuJlDLHOq6Nrqt9Xedl
+	yhHqYeKhqYU7lyEkVn0lpcg0Bo7FlkyklKVjY/fdKXvW9rJ4im2+PAuUb/o+6YBJ
+	41NWX3nBCRlUGG+bM/KbkAQQpEvRPyu6XcvEgpuPKwn200/4fFOqvxGXwCg7acj8
+	69rymjXVos6eyljbPfamjfODOijUhgjajoA==
+X-ME-Sender: <xms:fT-maCcFQlnXKbnGlYcvV4Hw7atRyofZyObOuuvUq1AwhS1nlgdZaA>
+    <xme:fT-maFpx8pAK3S9BzdqjE2f7L5cvJBG_1Wi68EbXBrvV5q7pdqSd7Bioyaazg2mFN
+    TtDAHILS85OhL0Hmw>
+X-ME-Received: <xmr:fT-maDFtn2K_tFMMHoxDdb5N4LIH_TueOk9AXknWeMBN0BRSGO9v02vpEJaIqHXx-Xn1ptBIhHWkIm1PPhztc4OgNTNE7FYP2547Oww>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheelgeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrmh
+    honhgrkhhovhesihhsphhrrghsrdhruhdprhgtphhtthhopehphhhilhhlihhprdifohho
+    ugesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:fT-maFuXEumI6tCgZB1IeL9XDum_My4_0Z48KYZiTczn715BjyX3Sg>
+    <xmx:fT-maFUa933MOYQRXltYh3HWaseckU5CEpdNndyc9uiWmZDvTn1gkw>
+    <xmx:fT-maBEnTUNIeEUD4y0apELCBQtonvVHYUSpJvlb93w8PYeN8TK7wA>
+    <xmx:fT-maH0SQECRrOc1f81YT7adYmS9lPy8XVp-QHH-HwX5xR22nRPa3A>
+    <xmx:fj-maMJdkrGob8m85FWiFB5cpfIha0yHSR_oNiwyOE14s8IHzGc4a8F2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 20 Aug 2025 17:34:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Alexander Monakov <amonakov@ispras.ru>
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,  git@vger.kernel.org
+Subject: Re: [PATCH 2/2] xdiff: optimize xdl_hash_record_verbatim
+In-Reply-To: <0379ba2d-837b-761e-9d5a-d65ca9d051d6@ispras.ru> (Alexander
+	Monakov's message of "Tue, 12 Aug 2025 20:56:37 +0300 (MSK)")
+References: <20250728190520.10962-1-amonakov@ispras.ru>
+	<20250728190520.10962-3-amonakov@ispras.ru>
+	<aedb1be1-3151-421e-94ce-27bc77d80b83@gmail.com>
+	<353c7865-d9b5-2a1c-4d71-cd1136581f01@ispras.ru>
+	<5cf47722-7073-4761-8698-090af840d0c4@gmail.com>
+	<c2fe3b69-8436-af46-c47d-dde5bb037227@ispras.ru>
+	<0379ba2d-837b-761e-9d5a-d65ca9d051d6@ispras.ru>
+Date: Wed, 20 Aug 2025 14:34:52 -0700
+Message-ID: <xmqq7byx8yo3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YQXPR01MB3046197EF39296549EE6DD669A33A@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
+Content-Type: text/plain
 
-On Wed, Aug 20, 2025 at 08:54:37PM +0000, Joe Drew wrote:
+Alexander Monakov <amonakov@ispras.ru> writes:
 
-> The fetch fails, returning status 255, with the below error message:
-> 
->         remote: Enumerating objects: 18733, done.
->         remote: Counting objects: 100% (562/562), done.
->         remote: Compressing objects: 100% (448/448), done.
->         remote: Total 18733 (delta 399), reused 144 (delta 112), pack-reused 18171
->         Receiving objects: 100% (18733/18733), 25.32 MiB | 7.93 MiB/s, done.
->         Resolving deltas: 100% (14608/14608), done.
->         From <VALID-URL>
-> 
->         [.... quite a number of branches and tags .....]
-> 
->         error: cannot lock ref 'refs/heads/ptv-2164': Unable to create '/Users/joe.drew/tmp/./refs/heads/ptv-2164.lock': File exists.
+>> On Mon, 11 Aug 2025, Phillip Wood wrote:
+>> 
+>> > > That's what the 'cycles' column in the table gives (6.21/5.8 = 1.070...)
+>> > 
+>> > It would be helpful to add a column with those calculations in it rather than
+>> > forcing the reader to calculate the speed up for themselves.
+>> 
+>> Ok, will change it to
+>> 
+>> version | speedup over (A) | cycles, bn | instructions, bn
+>> ----------------------------------------------------------
+>> A                            6.38         11.3
+>> B         1.027              6.21         10.89
+>> C         1.1                5.80          9.95
+>> D         1.094              5.83          8.74
+>> ----------------------------------------------------------
+>
+> On my Skylake:
+>
+> version | speedup over (A) | cycles, bn | instructions, bn
+> ----------------------------------------------------------
+> A                            5.77         10.96
+> B         1.076              5.36         10.60
+> C         1.12               5.16          9.66
+> ----------------------------------------------------------
+>
+> A is today's master, B and C are patch 1 and 1+2 like before.
 
-> 
->         Another git process seems to be running in this repository, e.g.
->         an editor opened by 'git commit'. Please make sure all processes
->         are terminated then try again. If it still fails, a git process
->         may have crashed in this repository earlier:
->         remove the file manually to continue.
-> 
-> This file doesn't exist; in fact, no such files exist:
-> 
->         $ ls refs/heads
->         $
-> 
-> However, the branch _does_ exist on the remote.
+The thread has gone quiet.  I assume everybody is happy with the
+result?  Can we have a hopefully final v2 iteration of these
+patches, to address the updated to the table (this thread), to
+squelch the __asm__() issue [*asm*], and a reword you mentioned
+[*reword*] against Phillip's review?
 
-This is a wild guess, but: are there any case collisions with that
-branch name (e.g., PTV-2164 or something) in the upstream repo?
+Thanks.
 
-If so, and assuming you're on a case-insensitive filesystem, then the
-lock files would collide. You wouldn't see anything after the fact
-because git-fetch itself would create the colliding lockfile, and then
-clean it up after hitting the fatal error.
 
-If that is the case, you can try using the reftables backend in v2.51.0.
-It doesn't use the filesystem for its ref storage or locking. Something
-like:
+*asm*
+https://lore.kernel.org/git/3405f274-cef1-b361-7424-840dc55b48a1@ispras.ru/
 
-  git init --bare --ref-format=reftable
-
-> This error _does not_ happen in the Apple-supplied version of git:
-> `git version 2.39.5 (Apple Git-154)`, but does in 2.51.0, which I
-> installed with homebrew. (If this is a packaging error, I'll happily
-> report to homebrew.)
-
-That is definitely weird, and not something I'd expect if it's just a
-case collision. Is it possible for you to build Git from source? If so,
-and the problem happens with your build of 2.51.0 but not v2.39.5, it
-would be very enlightening to see the results of "git bisect". We can
-provide more guidance if you need with that process.
-
--Peff
+*reword*
+https://lore.kernel.org/git/353c7865-d9b5-2a1c-4d71-cd1136581f01@ispras.ru/
