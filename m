@@ -1,61 +1,61 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0370417A309
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 13:50:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496961A9F81
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 13:51:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755697808; cv=none; b=JiwNKal0+Av4oH1NUcCqUqpd331whq0TD5Sljn7OPNYPPIwdMlgvLthUmAl2/2i7pU+ZclngA3emm3hjShxoxrY8E/qg0GMNqEzEgk/BFlgn+qgxyjCDOdBUaScvU7fe6lUJ+f9J26hNp7FTnpRyH1ufraw+ik3uE0caCRZ1Fec=
+	t=1755697918; cv=none; b=p8MdnAA/YH2mXpNoaLWI97jUx6GKEzNKlPcsNfz67pnSYuEfztX3QRTobyOBti/3LBEWjl/mhU0tWM6fUYIBMNDqRZHyMjlOZPsmPPEKuCE2vv/S26u+bLGuFstH3iJF6LW0EhD4+Cs4Cam0FNMvx2JyyomSSzEtAQ3OZpjyTCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755697808; c=relaxed/simple;
-	bh=3ymWl1oYgHgQy6LMgwLM61pH+m7XSIAOIdcDx3gVVt4=;
+	s=arc-20240116; t=1755697918; c=relaxed/simple;
+	bh=HCI6b8EGaB32+rFXM3EjQ+fihx8ao26wPD47SoUDji8=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=X2Hzxaky353+IVUQtJP7qaZspOAWC1qdfJA39zLB4useeMFhluXc4lX4qXay4bCdOozslZR8MwDJ57SQned08ldQ+E2uOkGuHJ4kmypJ7q/RVn0pP4RpHJ6toAnmKmfHBYxrxTtvMIdT/rSawYkpDoXmwI7vkHKpADwrQV2F+7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fZ2Dhvrj; arc=none smtp.client-ip=209.85.217.49
+	 To:Content-Type; b=Vz2GI1TwyMHrBo3y/iMDnW+ZXUdmaZ9gQ7kgYP48NBZFbcjqcwOH4Os+4aZxYqZgPwno7HfA9E5ouq9MGSRFeun1VvytoWWlOMP/Nvgg7C50JYfnLUUF5Y8fcjV0+dvC7hqk+FVHPilce3mtqsNOWXkqo35hQ8uponV+6nFY9Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RG52sJ0K; arc=none smtp.client-ip=209.85.222.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fZ2Dhvrj"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-50f88cd722bso1951399137.1
-        for <git@vger.kernel.org>; Wed, 20 Aug 2025 06:50:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RG52sJ0K"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-89018eb083eso3795506241.0
+        for <git@vger.kernel.org>; Wed, 20 Aug 2025 06:51:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755697806; x=1756302606; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755697916; x=1756302716; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=uN41PtxqUKUPlMKKQia0YmSDHfvJkcaSl0/4kPps9gY=;
-        b=fZ2DhvrjLK7xibDLkIGLCI328xOsfaBUL0BUPQ1Wmrx096W4o0qopGuTZeqH4pCPPq
-         CcwQ+BrbLCFojVRYnqzjg/TSzqN0CIAm+t3gLe278K3DQci3dZNDhvScXdKv3EuXAFzq
-         P3J2GzEKop+g8jMFJCSE4Rtj5G091xfMXOpPoYEds7oHw9kQDDf6xZDThuxKaT8DzGN9
-         cfzZnl+Acrjf21pH6KhPLGO1VKNcLSn0IZWCWUk3BQFmEKbV6f2wVHZzhUySskZkOvC7
-         ukHVemXrlGQshB1xgtsetLLBLFsTt2igpXVAOa/dMciPxyHdbG5rmYCskJXkH3DL74Bs
-         zIjg==
+        bh=3FhfcRE+PFCFoK8n9IN4JjIatLphsV8dtDEp1fBblLM=;
+        b=RG52sJ0KbVh1EByHNpGjjnO5bwkqJwuI7oHeb6yuZ5nHTRSy/cvrYoyHs6Tm1NiHn6
+         vzjgBwmL3+m6okaZnz1HYa/bAZO4tHF43aKOYYBtScZanceQoNd/RnHclPz7pEWRM53z
+         F+32dX5E9Vb0ekDcIzPKhoDC3hq9tD6V3fiG+zEx9rqWZ8hhTsD04sKnMJSB3luRQTnz
+         zZb8FtRQHnacXzlcfEHTm3RX7AK10yCxBUbGBsc/h96G+GiqtqrKkcWy+udyTulS8nq8
+         nBs5/ppe08tpShMGc9O9ospomoCsYHv+7Lufr9/BqmDVBgl17hMbVtfDsOK0pXgzEHiw
+         Znaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755697806; x=1756302606;
+        d=1e100.net; s=20230601; t=1755697916; x=1756302716;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uN41PtxqUKUPlMKKQia0YmSDHfvJkcaSl0/4kPps9gY=;
-        b=gG03NjK1zaUQu4lNVleQIZYWz3LlfmujKJTR6NUbRe52md7/FzjGsNYKPM8+RWuKoM
-         PP2GsrHW+CaYWOhNpK31KoqgwoJHeKGstv0WRegk9JlAIxBH6NpvdZhn1fQob4L5/ggA
-         zMkXk0rUOzznAsiKWVStbEZYXyYeiPgmNTzrsMo3M10y2q0R7IH+/J6LutkcgSFUtQLH
-         pOXpdu7fdxIsX/5311qXZlWn7FE6mLaz2M1UR02LCeQNCVVC6R6fOwCNGBBh4iBL2a9c
-         ERzxsQN6Tm5M2oyCBd4I72wINu47EjZgw6MTnJDiitctbzIxH58bnPD1B8SyUfql56JC
-         5szg==
-X-Forwarded-Encrypted: i=1; AJvYcCVbq7vpWYGFXv6qe+ENZHUA3FhGIR4Kv+k+z3NBbRWg1psMTImdAjFCro1wT6mt0gbGEwA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwrMKsyFfbX8Cn4mlmLmrVCOOAFMh4OyhOtKYVAgdJG4utq5MzR
-	199vVqZ2dyYAwp9oYnYouX9RyFwonIhGSyQm4zqyURpCcgArO+qjl6Jd5QlBzTgi+UqkDH5rctY
-	pF4XVDnXIHxsatKn/9KkRYyTBcppcwATbzw==
-X-Gm-Gg: ASbGncstD9t2ldsZDC4QlGKO0RMyV7JX+M5hxmB7+hZ/2g5JnDjljB92hQy1tVdGiju
-	1wL+jkJRFb4ht/xUEnKPq+7mVOyrbohGidQ6vQiP8MNSOSOB2kRiglO4ZRjAJOSDgAo4M/P0mSl
-	XzdLTV7Tlc24WlWIG2/lj4pzE1JQPkP+uu4Vmw+PoMpju3Xk5gcYBlLPgukcE7zjUiFfMRhz7Y9
-	eFVnuhSMou3mfZ5
-X-Google-Smtp-Source: AGHT+IFAnsvk1aVHUIpmVVQqYSXJKuG0jxdBjI7aOAvHnTLYjpGY82anuax2m4sB8P1SnyrETHaWnNXsM0tjfmU8JSU=
-X-Received: by 2002:a05:6102:2c84:b0:4e6:d784:3f7 with SMTP id
- ada2fe7eead31-51a50c775damr779326137.15.1755697805676; Wed, 20 Aug 2025
- 06:50:05 -0700 (PDT)
+        bh=3FhfcRE+PFCFoK8n9IN4JjIatLphsV8dtDEp1fBblLM=;
+        b=e/uzT1H3IhVNX7taVRt2uyGMSWGKdGaglE5VM8rGzfqviEdsIG5kCiGHST6Q4LEpxF
+         QdXf3sEeXVh77quSY8ijV7eGwgHTgh0zfJHPGOY1G4KsxGxETRq3Gr+WfXuMzsGgyfgb
+         ZN/nC3h75OqtKJVXPfKPeIoiUCf+SQQtIdq3YIHkDkZuKgGarE/k8B3pBBVvf5IJjaMj
+         gIXNrfJiSDQ0iwccMXjupLsV/qNdfcMQGwd5mi3tXr7sKLLF6IbSORPPsB/PxTcgik+E
+         sFT2GGYQ6Zbz+AKhHMoUExjUqScCxvk5TQux3ONJOSOGPa9G0dyp/A3JbI3GCd2WecPN
+         hPUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/xt/ZE5/nuS7H7DUFKFUCIJ0/+Z9DoR+YgdYZ9wCVmBHWzcTRC63HrTw87+H+EQpzy18=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywh4ZVU/DPXiCm7iutbfDHAjnNUouUTfMNbCqnIgyGEggj5mBFD
+	etzO3mjzja6wFCjEzbJfdO7WM3tMOxcqVZaim+V4CPviK4+Gb90nqT5x96SQyJ8BgLur6s0R9V7
+	e2aF32/8SRxM5QbQL+iokShICikcn41c=
+X-Gm-Gg: ASbGncsgU7qcSw0NNJuTdIVEe3FX4Zl7RHvu0x0Q4FPwjzYtXzbw7y1SjqB1ZT1jM2z
+	43kUaCrOfm3wjLIukhV4GFIWnY7Sgjr4u2MC9avEeQ2OWZO8z7gqIMPyDE/GBgMsk8ur6UnSNVb
+	buyPeVzXIbVcUjJcotMpx5uwNqlsqjgOtrd560H6EuMeGeIngbD+U39cF85JMFjurXdO2HSKZVC
+	rUGLLbk4RxUuVLd
+X-Google-Smtp-Source: AGHT+IG4vnfMWir8BQ2gn2/MuCXBzQJX8TVt5C6rFVL1nYhjbFD819Jy1Vf/4pIoSimyIxXBxjHmKQRTLtUix3l1pBE=
+X-Received: by 2002:a05:6102:32c5:b0:4f7:c5ed:209c with SMTP id
+ ada2fe7eead31-51a4ee33078mr929460137.7.1755697916061; Wed, 20 Aug 2025
+ 06:51:56 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 20 Aug 2025 06:50:05 -0700
+ HTTPREST; Wed, 20 Aug 2025 06:51:54 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 20 Aug 2025 06:50:05 -0700
+ HTTPREST; Wed, 20 Aug 2025 06:51:54 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
 In-Reply-To: <20250819-b4-pks-packfiles-store-v1-14-1660842e125a@pks.im>
 References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im> <20250819-b4-pks-packfiles-store-v1-14-1660842e125a@pks.im>
@@ -65,78 +65,55 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 20 Aug 2025 06:50:05 -0700
-X-Gm-Features: Ac12FXyaLX8GPZUY45B1DDKqHKYOcQhfY4m3aJphUBsVBKiRDtf6PPliacmIRAg
-Message-ID: <CAOLa=ZR7eXDAsrRifyvxzTt9RwSR1TcQFs4KLaV7n6byxQM0zA@mail.gmail.com>
+Date: Wed, 20 Aug 2025 06:51:54 -0700
+X-Gm-Features: Ac12FXwrBaxfTZ0G5na9h7GQAE1UTpS_jHJTdfY3cv-GiQ_W6cECGP-xX_mJ3TI
+Message-ID: <CAOLa=ZSzgZdqB2OuS=Vi7M-ZCHDzjBCpCdW99co+xdPAB0HMHw@mail.gmail.com>
 Subject: Re: [PATCH 14/16] packfile: remove `get_packed_git()`
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000000a710a063ccc40e7"
+Content-Type: multipart/mixed; boundary="0000000000009edb66063ccc46fe"
 
---0000000000000a710a063ccc40e7
+--0000000000009edb66063ccc46fe
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> We have two different functions to retrieve packfiles for a packfile
-> store:
->
->   - `get_packed_git()` returns the list of packfiles directly.
->
->   - `get_all_packs()` does more work and also prepares packfiles that
->     are being indexed by a multi-pack-index.
->
+[snip]
 
-Question, under what situation would a packfile not returned by
-`get_packed_git()` but be indexed by a multi-pack-index.
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 1d30d1af2c..565afda51f 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -1422,7 +1422,7 @@ static int incremental_repack_auto_condition(struct gc_config *cfg UNUSED)
+>  	if (incremental_repack_auto_limit < 0)
+>  		return 1;
+>
+> -	for (p = get_packed_git(the_repository);
+> +	for (p = get_all_packs(the_repository);
+>  	     count < incremental_repack_auto_limit && p;
+>  	     p = p->next) {
+>  		if (!p->multi_pack_index)
 
-> The distinction is not immediately obvious. Furthermore, to make the
-> situation even worse, `get_packed_git()` would return the same result as
-> `get_all_packs()` once the latter has been called once as they both
-> refer to the same list.
->
-> As it turns out, the distinction isn't necessary. We only have a couple
-> of callers of `get_packed_git()`, and all of those callers are prepared
-> to call `get_all_packs()` instead:
->
->   - "builtin/gc.c": We explicitly check how many packfiles aren't
->     contained in the multi-pack-index, so loading extra packfiles that
->     are indexed by it won't change the result.
->
->   - "builtin/grep.c": We only care `get_packed_git()` to prepare eagerly
->     load packfiles. In the preceding commit we have started to expose
-
-Nit: the first sentence reads a bit weird.
-
->     `packfile_store_prepare()`, which is a more direct way of achieving
->     the same result.
->
->   - "object-name.c": `find_abbrev_len_for_pack()` and `unique_in_pack()`
->     exit early in case the multi-pack index is set, so both callsites of
->     `get_packed_git()` know to handle packs loaded via the MIDX already.
->
-> Convert all of these sites to use `get_all_packs()` instead and remove
-> `get_packed_git()`.
->
+Nit: We can get rid of the curly braces here
 
 [snip]
 
---0000000000000a710a063ccc40e7
+--0000000000009edb66063ccc46fe
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: d4642cc6ef54d64e_0.1
+X-Attachment-Id: fa2289b32cc18e9e_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pbDBvc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNkpvQy85NDZCN3NTTW1zZ201VFBWSDBjMUt1aVNhOQpub2lHalZpa2hr
-OW5QamxBbjduUzZiRGhpcGhpT2pLRVdPdTVMSFU2NmZoQnNhdXIxbjV4NlNQc2M3UzFva3ZoCmhF
-NEhTT3d0WUM1citRWkw3UlhDVi9pSWc4M3ZiRnFETDlsbGR5K1VYQ2lFazhGS0VVelprcUQwWUpE
-aGRmMVAKSVoxdU5iRFFWSlpSUDZwYTg1bFp1MUIyZ3RvRGlTS1FlMm4wR2E1dDU4QjV4Rm9PSDMw
-NU9kSHpqNlF1aE9NaQp3NDJCbVdUcklQeUR0RGN4anhQSzkvb1lYa05FUDdDZklNa1E5b1dJYnpP
-aWl4dEhNdFA5ajlSTEd5UUhxcm05Ci91QzZycVR3VGhKSE11Zk5VRVUvTllJM3JkTnhRbXR0OWIw
-d2JFUHlkeVNOVnBNUjFCdTZtbXM3am5Ec3ZLcTcKZlc3L2VEV2tJOWg1UVlLWjdKQjdCaERPTTho
-aG1qN0lMOXlUZFRYQ3pNWUNZTWJxTTZiNGgxbkJmS3dTeGpTUQpqVGthTWI1VDcyQnRtdFNjYzcx
-b3VOdDNXeVJUWVJma1hNQWc2dS9GTW1nRnlXOGlBV2srbStkbjlxWUZPaGhCCjVuVUdnd3Ixek1Q
-MzAwSUw4NWNwTWg4ejNIRHM1VTFjY3huck9pND0KPVIxM0EKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pbDB2a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNkptQy85TnZ3emZLcHBodmRKSm1tY24yenhtZ0lhbwoyS3FVcEZJOVAz
+RVhuQXR6V1BCYm5XZTZVdThrRllZZE93RzMxNzQyTlhMK1p0WTlnRklobWtLUVNnaFlWMWI5CnNq
+TWhsYUZjYzlWeUdtYWUwemt2K0pQTlBhT0FRck9TdTFqMzBTZFRkdHQ2WXpTa29KbmkxNW5vY0pJ
+Y3pyOEkKdkVwWHVwbThoK3NkbWdMSTBLOExjcDBTS1lQcW1MNzIxcDZEaWxLQm1hR29OR1ZwRGEy
+dkt2bFZrY2hCSk9HRQpKa1lyS2ZrL1BFNGpQMDc5aVVXVlhxcTVPbGFDV2NCVkF4TXREd3ZaL0dr
+ekZ0b216UFI0RkZvQmNDTDljam5sCjB4ODJWdk9tdlY1enVFa3o4U3lLZEVlcnp4YkxvS0RoL1pm
+Nzgxc2p3WkN3NUpIbTQvczg1U0NCdDEvYzRvcFEKSldmTnlMMHhxOEhpb1ZjNUlZSUx3Uk0xaUVk
+c2RRY3dtV2FFcFg0MlBUYXRsMStVVFpseG4yckRwWXc3MEJIbwpTWldWeVRHdFk0YXg5OEtKSG1L
+RXIwOExIeTZSbFlPMDdUOXJia1JSRDJqQml0MWt5bXhwdlZuT1p3ZFdBaHJxCkREWjRXZ0U1VjBy
+akxwZXdNQ1AwekdvNXBWUEpFRDBoNHE3Slh1MD0KPXFoMzIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000000a710a063ccc40e7--
+--0000000000009edb66063ccc46fe--
