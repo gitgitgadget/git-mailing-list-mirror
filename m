@@ -1,180 +1,114 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461DC2116E0
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 20:39:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B85323BD17
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 20:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755722388; cv=none; b=kr+bihaF/FIm1OpmxhEo+W4gvmHDiq/6a0PSe+6plz0W/SeG8gjYF+/aKJYG5YeN7Hf1fz/+jOCphvrEBPOmgv1kTmhqSg8amsj/K7eJy9P71blDtLxuwLMRy+zihBJJ6PYrW2Z48cXZI8qJua2/E0cRhUhVo+zdRzudjnP35gQ=
+	t=1755722812; cv=none; b=HRzJIG41d4OEAeaB32gyUL7lYYJaBKyfZI5OIfqGyS9jgYAm/pTCGWbhnqmw5kudihWFQGub86cVmRr2YLZ67eLqhoZ6zvJ89qQ799IP4cBQVNVb3/99LjyHTuFdXLCSAni4ri8Oz/FiFMQH3OTqXN639RzcOY0Fuj+nmz0IsKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755722388; c=relaxed/simple;
-	bh=Dgng/Cg5YYgN2LC8V68CCJwA2wiESG+3oW8uFHfN1vA=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=twGU2swY2Ygkh2jxPVq0EbcmFtrVF5jrKiuAesg6CbD0tI30er1Wio18JNcdlwVGJsgHQixTxelbjztkvUzEMFjcHY6Zr6NP7hZtQy6OsBHUARPRaPddYDLP1RXX7WlS+QAzaAYFIERE08LO1aBQ9Ks1cpVr+C/K21nvkRzFbwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SZYFEgm5; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755722812; c=relaxed/simple;
+	bh=5vNIHcO5PVj0IOmAxA6p8aeEv2oLVaiByckp1lP5OSg=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Oqu7GtE7eV/iwASLEY95WPMFRkTG++OCM3tzgHDFbczE3Q0vWpWkK9w4AX47rVZ9n78n0Cu5j/+Ixsw9EEvqAayIyRwK3bIyQnRd+YsWYb6/xFgUEkzKb7x11m1TRQv5tADk9G2rr9QLNsEqOtk41rZ3wpJL7gJUbFXrJ2Yk+Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LPUNChjT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JMBubT9H; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SZYFEgm5"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-71d71bcab69so2423007b3.0
-        for <git@vger.kernel.org>; Wed, 20 Aug 2025 13:39:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755722386; x=1756327186; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/MESt08ep9qouuxI7anqRNDcJrGxn1DUCcgNX4gNAZc=;
-        b=SZYFEgm5Rqdd1Sl3axULkAf+nGA/A2/wwjN6N8ejdr4b8E1t9pcyGXiBRa615p1CBp
-         TVeL3u4HD9lOFyX2sDj5QEEPAJPAhbhTQLjN+9h1YewfuLI1PJY9uo6CYIoMHkv4Mee8
-         /ZyS6iURzEurF0R6mqhu4XMaqVqTpdD5LjscTuhxRJvd8S8fh/10RgfDWEVBwwa0nYCE
-         kuyA85woak8Rd7n2AKQwLY/GaCmIfD4sqsp9ZdEeP0+Lcn8W9cO8TXk/N0GjVOI67VLB
-         QjBWxkzl+TSyALcXpVbf/y9HB0JcmEgGvoD7pSIVJWzwCBlKlVMRG4MDnCM/jk04QhpR
-         rhGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755722386; x=1756327186;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/MESt08ep9qouuxI7anqRNDcJrGxn1DUCcgNX4gNAZc=;
-        b=xQweSrqi9yDL7Ce5ot6UhNCWSto28m+gKrKnb3dG5JsFOwBaCPSZJWXwZFz4UtH5+8
-         k9UN05VLVz8heYsjsdtA2liGvGF2khUeL0RcBM9pJ0ef0qz6+xXpHFF/K2R/w2dxXaxL
-         +c7o0wbmYHXggVwbhfBJDGDAe/QxQzrFKjZJlTiPY31Bgn5Sh15rabfVcwVke4yv+5Lb
-         DxTxnLtMLYie9s6fqBRQdf8RTUA8vrq26Q+63Cjg4EW1Yj2tIXumiGTY/qOjWI3pE3tk
-         +2O0SwUwkgjuqYj8B0kbNOP2U/VB4E4jpODjfffw4B1xEJyddr9zt7kByNKc6iEC0txt
-         qnNQ==
-X-Gm-Message-State: AOJu0YyK+RWylXxEBcbhh73htxEjhs++p8hSwsoNVK27Vh//Ghz8nNdY
-	2YfJ9yxm+lt1JDzWpbvyyFzlvIr5u11CleyR6I+7PUe4n8eB3V0A/Ys3on4Tv1K7
-X-Gm-Gg: ASbGncslW4VlndsOrcx76NmOL9OMpAFkVAaulwGkmfBEDh8dufFlUi6SemTExkTRC46
-	LtxXVp2CPQL3QpyNMGK+9/rCMo2UIFLhdmeSz/lELdpHxVYlyNXNECvLPYJlLjKANAzhAWnRNUr
-	FODCS3+7YJpMXHQj4vNZFIkwEqVujEHD+1uvA4p0/3PkVxFnHE/6kyp6XG/z1lp7RdGpW+ZovmC
-	EeWQXWiNb9h8QQnJj17FBdPEoQr9tk7aeSRxMjadcHf4m/DHA/xFGlCHIwGoelV/eFgQA3zptuU
-	/o6L6KTn/F98lmKhDqpJzKmZenC5Rv9o02+d7TPT+5spH8LNOOH1gnUN6hutrTQe3YVqlm/TFQd
-	SxQauT3M00rAyCjQwNBqbLKSakHxsMdgI+FBEW0ogM7VzQacraqcaqROsB5krkg==
-X-Google-Smtp-Source: AGHT+IFkJK1M/B1PsShx2MembTAfLU+jlcu4brBC78hWa+q1oGqPMNCs92DiLsNDQu6Su+lPsGGkuw==
-X-Received: by 2002:a05:690c:e18:b0:71e:719c:491c with SMTP id 00721157ae682-71fc8930f1dmr2897407b3.18.1755722385897;
-        Wed, 20 Aug 2025 13:39:45 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:98b8:ef87:b2ce:efc8])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-71e6e0be8b0sm38791777b3.66.2025.08.20.13.39.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Aug 2025 13:39:44 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LPUNChjT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JMBubT9H"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 171CE7A01C4;
+	Wed, 20 Aug 2025 16:46:49 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 20 Aug 2025 16:46:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755722808;
+	 x=1755809208; bh=jhILGNNS+B5oMnoPY2tS9RaUYB4puA2FcTkNGSHV7oA=; b=
+	LPUNChjTWJs/hGMTCww9EwnsbCesJAPc1RNKOE0UuHMtPJcKcQ6PNHClcJmfDVT0
+	8hzqxB92swyTGW4PRR6uhJItoE5+xqm95eBO3enTqtc6Bnu4Re+8L4MIIn6Ur4EN
+	J/yDSzjcfoUkPYqVmrGsD9sPCqw0GUDX1KrAK4HsyUvYa6aCN+hRpRYp+uKghHId
+	EHWXZ3UGOYo196+O1JUDzf5+RPWFaoc6ZPNA4qbKH63HG6ZpH+Wn95HDRZeD/f5o
+	AU7/pDTOB5YIjdu8CdRTiQO/SPr7eIm0cas/5GbPu9JefZ0HruBLm0V01gU5wzaP
+	tJYqrgh8eWVyopOrXCGcKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1755722808; x=1755809208; bh=j
+	hILGNNS+B5oMnoPY2tS9RaUYB4puA2FcTkNGSHV7oA=; b=JMBubT9H8CrVXD+mA
+	DlBwg8g9UDP7tB53dEkjtXTszTIQRzXVvP1jcgF+UrV8/5PouqemvTvrFeMuvQ1H
+	H0XXIIe2r811KkQmtTc3m9xsWwdDsiMGIiW5LpKNr7Uj3Jc6ZfMk3IHQ/XhUTn6P
+	Fdm8ejPRuZyrD9A2qAMi7iZEB5f4qkZlnonADtjUI30InRqrqLbY/6O3D+yNOfa/
+	2sT7ikC8CAsDPoEakIAkq5jLyyXrrzjqiOxEyMkGfsrHFxdrhz9aSxugNvwlx7zs
+	KFujCvV0E2oIUjoTgjcRQ2Q+RvLvfHVR/4T3JhEKt59xUFFjYyOg6rXCqX5qyM3T
+	aQvnQ==
+X-ME-Sender: <xms:ODSmaGe381nIzKqoaB2dxdCklffWCTq_W137lytB1Y9ATD5Gpw43XbA>
+    <xme:ODSmaAO9dfCzEfHUBV0nSNpa0ah6PvQI_lo1Q_it7y9WFEzwTASvcOcgymDL6QsyA
+    5JGk03GVHPhEryGXA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheelfeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvffkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedvieegtdfgteeg
+    hfffteetleduveehteefkeffheehfeeihedukeevleevfffhjeenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepuggrnhgrlhhlvghngeeisehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ODSmaGjEaSRSyvW-Obfom3FKdqUTCNfqkkP-mNsRTHkaiFA_pPCYyg>
+    <xmx:ODSmaP-NJLHgnr121qfHkVhXpamtvboKrrz5MdMEBH5vFT5eoY6YwQ>
+    <xmx:ODSmaAB7z-oV1AS6SRwQ7OmU_UDbqQ1wE0oht1YMtgPVJWcK4G-0Hg>
+    <xmx:ODSmaMIRbqIjTgKQsZ3wbmeq6nRN9MSuZIaKqZzOo71WzLxBjs-GtA>
+    <xmx:ODSmaH5qC2_T_lkQwhCeyzSKJTuotv4t_jDxpn7Z_Vqx3WLDy4NKtT0H>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id AD41A1EA0066; Wed, 20 Aug 2025 16:46:48 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH RFC 05/11] builtin/history: implement "drop" subcommand
-Date: Wed, 20 Aug 2025 16:39:34 -0400
-Message-Id: <F0D09FB0-5978-4BFA-87D1-BE5FA49EA839@gmail.com>
-References: <20250819-b4-pks-history-builtin-v1-5-9b77c32688fe@pks.im>
-Cc: git@vger.kernel.org
-In-Reply-To: <20250819-b4-pks-history-builtin-v1-5-9b77c32688fe@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+X-ThreadId: AgTgWjfOuUnV
+Date: Wed, 20 Aug 2025 22:46:26 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Dan Allen" <danallen46@gmail.com>, git@vger.kernel.org
+Message-Id: <868d0df4-992e-41a7-901e-288a4ff8527d@app.fastmail.com>
+In-Reply-To: <83241BDE-1E0D-489A-9181-C608E9FCC17B@gmail.com>
+References: <83241BDE-1E0D-489A-9181-C608E9FCC17B@gmail.com>
+Subject: Re: I use whatchanged!
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
+On Wed, Aug 20, 2025, at 21:20, Dan Allen wrote:
+> I just updated to git 2.51 and got the spam about whatchanged being
+> nominated for removal.
+>
+> I run an important python script that uses this to set file times to
+> the dates of the actual git commits, so as I browse the files I can see
+> their last modified date, and not the date that the file was last
+> synced.
+>
+> Now, if there is a different way of setting a git repository's files'
+> mod dates to their actual date and time of last commit, please let me
+> know!
+>
+> The exact usage in the script is:
+>
+>     git whatchanged --pretty=%at
 
-> Le 19 ao=C3=BBt 2025 =C3=A0 06:57, Patrick Steinhardt <ps@pks.im> a =C3=A9=
-crit :
->=20
-> =EF=BB=BFIt is a fairly common operation to perform an interactive rebase s=
-o that
-> one of the commits can be dropped from history.
+According to git-whatchanged(1)
 
+    replace: git whatchanged <opts>
+    with:    git log <opts> --raw --no-merges
 
-> diff --git a/builtin/history.c b/builtin/history.c
-> index d1a40368e0..183ab9d5f7 100644
-> --- a/builtin/history.c
-> +++ b/builtin/history.c
-> @@ -1,20 +1,311 @@
-> #include "builtin.h"
-> +#include "commit.h"
-> +#include "commit-reach.h"
-> +#include "config.h"
-> +#include "environment.h"
-> #include "gettext.h"
-> +#include "hex.h"
-> +#include "object-name.h"
-> #include "parse-options.h"
-> +#include "refs.h"
-> +#include "reset.h"
-> +#include "revision.h"
-> +#include "sequencer.h"
-> +
-> +static int collect_commits(struct repository *repo,
-> +               struct commit *old_commit,
-> +               struct commit *new_commit,
-> +               struct strvec *out)
-> +{
-> +    struct setup_revision_opt revision_opts =3D {
-> +        .assume_dashdash =3D 1,
-> +    };
-> +    struct strvec revisions =3D STRVEC_INIT;
-> +    struct commit_list *from_list =3D NULL;
-> +    struct commit *child;
-> +    struct rev_info rev =3D { 0 };
-> +    int ret;
-> +
-> +    /*
-> +     * Check that the old actually is an ancestor of HEAD. If not
+Should be enough.
 
-The =E2=80=9Cold commit=E2=80=9D perhaps?
-
-> +     * the whole request becomes nonsensical.
-> +    */
-> +    if (old_commit) {
-> +        commit_list_insert(old_commit, &from_list);
-> +        if (!repo_is_descendant_of(repo, new_commit, from_list)) {
-> +            ret =3D error(_("commit must be reachable from current HEAD c=
-ommit"));
-> +            goto out;
-> +        }
-> +    }
-> +
-> +    repo_init_revisions(repo, &rev, NULL);
-> +    strvec_push(&revisions, "");
-> +    strvec_push(&revisions, oid_to_hex(&new_commit->object.oid));
-> +    if (old_commit)
-> +        strvec_pushf(&revisions, "^%s", oid_to_hex(&old_commit->object.oi=
-d));
-> +    if (setup_revisions(revisions.nr, revisions.v, &rev, &revision_opts) !=
-=3D 1 ||
-> +        prepare_revision_walk(&rev)) {
-> +        ret =3D error(_("revision walk setup failed"));
-> +        goto out;
-> +    }
-> +
-> +    while ((child =3D get_revision(&rev))) {
-> +        if (old_commit && !child->parents)
-> +            BUG("revision walk did not find child commit");
-> +        if (child->parents && child->parents->next) {
-> +            ret =3D error(_("cannot rearrange commit history with merges"=
-));
-> +            goto out;
-> +        }
-> +
-> +        strvec_push(out, oid_to_hex(&child->object.oid));
-> +
-> +        if (child->parents && old_commit &&
-> +            commit_list_contains(old_commit, child->parents))
-> +            break;
-> +    }
-> +
-> +    /*
-> +     * Revisions are in newest-order-first. We have to reverse the
-> +     * array though so that we pick the oldest commits first. Note
-> +     * that we keep the first string untouched, as it is the
-> +     * equivalent of `argv[0]` to `setup_revisions()`.
-> +     */
-> +    for (size_t i =3D 0, j =3D out->nr - 1; i < j; i++, j--)
-> +        SWAP(out->v[i], out->v[j]);
-> +
-
-But doesn=E2=80=99t this swap out->v[0] on first iteration? I only skimmed t=
-he code that built it up, but it doesn=E2=80=99t look the comment is right =F0=
-=9F=A4=94
-
-Rest looked reasonable, but I don=E2=80=99t know the sequencer APIs very wel=
-l.=20=
+-- 
+semantic drift
