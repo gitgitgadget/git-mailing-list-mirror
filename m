@@ -1,138 +1,98 @@
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271EF1E7C05
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 21:00:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3260F27FD56
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 21:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755723622; cv=none; b=RY3KaWea5uyZMPxHZxBJzy7QZLee6VG5xCV/RkK9Vd2UQFuOKgKJiXD6f6aExhacWHF/C2EPOGjwFOas2QYXLrH9+5UCnCnFjZnTt2Axt9gAoi8tIEv8dqfuM48dDVbiY+kuDwkTE7kYaBISL0RHhJkAbxcj7LejkvW7ZVieoQI=
+	t=1755723783; cv=none; b=jEA5sJrEjqk8fAUOgp7qlFi5GcWr4eBzWCN7wNV59NZrShoC8KAWlgdneD90JzsRp3LGcmwlDsC9WMtsN5H0DS6ZzlgeXICU44D7EGyB6NJzOuKD7keCl4FUq8JEiQhMBWh8Ibtlkl6ddGPQZO/e/4SvPrFIWXpL32UHNijV9GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755723622; c=relaxed/simple;
-	bh=xbJaTZIYvrkQkSxzZN86Ak7JBEVDH1+g+i0Cp1sxTYY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U76L08RnLhA1BEEomzv4H2LU05dE7ep0hrQnWtgSdg8A0f5falIUCMp8wGRL4DjhFlp4NcqDAsiv+ryInaoI9xkprP2c5S5be4hvbMXMuAsG4uudhlsx9qjdlksHm1rbPAaW5SAM6uGrNo8oLEDpImY9Wv8RdggmcN/4iTwuH68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=ULXGxF9w; arc=none smtp.client-ip=212.27.42.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1755723783; c=relaxed/simple;
+	bh=gjcY/m186ZwslSGwLMj7OHbKBSXaLSMHbX4F8FYrwOU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F25+r3jjPDgo6VRQYXUHavvcNu/AhndLpvmM4bUZP8hSWRaTV5yU+sDgxzxVgv4/8eh26e9kcdH6iZBILLO+ExaPWm2EMSmPstJijXP45nhg05DIj2OSKXpi0NidKLH7i1mZ+ZRQfLCtpoxgTH6W6SU1loGGMdNYtBT/Gu6Tcuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iZkEgA4O; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="ULXGxF9w"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:76fa:3ccb:8c02:b888])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 4310813F879;
-	Wed, 20 Aug 2025 23:00:14 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1755723617;
-	bh=xbJaTZIYvrkQkSxzZN86Ak7JBEVDH1+g+i0Cp1sxTYY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULXGxF9wOYq1vmLcuMhafBe73Sv994vas/hGTEukNuCcfCMwa9Bkc54i0vUJn+1Gh
-	 bM7sDM0Wz/qHtEswyFS+n+ovBeSKezKzQz4MK/DtDox2hGUWwfVmxSTVyV0LlzyauJ
-	 J7Wiiol86cq7mtGMupsgEL9WcuNGuRlbop3ao1Pzv8aZCoz3oHtq+OS9Nm612wUGG4
-	 vI6f3jzwjSv846lZF6D02JJY9WJh3tGbpwZgTyxnPILp2Fz9SgmmefFzdyywyhTCai
-	 WjT5Nz7Hv61r0mNUKw7A+Q8F0eR3YkGjnA3oKcFGsEbv/aSI1Ij5Q1q0lfWhA431uz
-	 IKbtAtmlOLNQA==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- SZEDER =?UTF-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject:
- Re: [PATCH] doc: fix asciidoc format compatibility in pretty-formats.adoc
-Date: Wed, 20 Aug 2025 23:00:13 +0200
-Message-ID: <4673610.LvFx2qVVIh@cayenne>
-In-Reply-To: <xmqqa53vc77z.fsf@gitster.g>
-References:
- <aKJJs7OkBIg7Y9J0@szeder.dev> <20250819212340.73886-1-jn.avila@free.fr>
- <xmqqa53vc77z.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iZkEgA4O"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-333f8f02afaso2871711fa.1
+        for <git@vger.kernel.org>; Wed, 20 Aug 2025 14:03:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755723780; x=1756328580; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SZBlM07IXZUNNkQ4fGMwvNshvjJGrwqxo8vLrMSzoOI=;
+        b=iZkEgA4OxUUyu3NbgKk1yW0HsHT/0vvZbCzNnRdlNjf+/L+jti58Gk7X04kmUwBf9d
+         BwMHtSDVJTVXS6J+Oiflz5frC51haawi679k/fntQ51rmrd705Snr7m2Dd9k8No2Al7W
+         LL6rRaAE/oKAS5XBjkIp+WXqn4ichY+n4NnMLQX4j9ve/yCABXnrkqWFf+glVLdjXvBQ
+         KrKPO9dAUnAruAwJVsFtZDA2UGoiSZVavTgF33etjAK+IKOOy53G5+Smfxv1NTxQqkUd
+         IT/u9XQQhh9gHL8Xt26DPBG9XLCUlxd/q9osfob+mtCr17llY9tE+Y6KMvjXrP2awDsA
+         PHxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755723780; x=1756328580;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SZBlM07IXZUNNkQ4fGMwvNshvjJGrwqxo8vLrMSzoOI=;
+        b=MM3AXbJqenbN4DYsbza7NyYP5ZKoTwIOJE3cX7BAGdNH7EVAwI0S4NKUy7UeGJSnQU
+         faXsAoszejYbWWGzTS6rxIAJYJOWHbVp3Qjh/Sr9qC3wqn7CcIXf4n0I0Yxr/mXbI0Wn
+         6r6UmuVJ/HzeC6WWCE45+zcI1tlnd9I1ve1Z0ty5bxoc1Ndj7hEnDzauce1+RIGX/KXP
+         kVq5HFz6YxAjH0NQso8MjIt9vH0WcqldaMz9Ovy6BeK4ythVZ+lYRhogBjPuuyAfnFiz
+         BPoeNjZ92dtqouv7Ic9Qy+BATUC2OsFvKj4AWf4/LblYm2PTjJ8mJEepUA4wVImgvnzB
+         KlkA==
+X-Gm-Message-State: AOJu0Yy33i/i1cLsi3WrnsM/IB2Nha4iFXBktbkwGS9vOSyvSWT8laa/
+	Y6vphQdMIWZrQTF2xDrqp263c4qHg64imliMTis9BdeHsFba2x8Y8Pt5WMWrUj3eNts2NU7SsGj
+	jXuS5DO4/LDARnnUCBJ2CMRCHGozqKy8=
+X-Gm-Gg: ASbGncvhlHUJllLXXhTz3N5+bLzkixnRcNWR0RFfUJex8vdiqkh+xJPZKYyVZ7lDKU4
+	QknwApPB5FtRk86TadMWjQGaE0TJEjnA04lZ9JG9wbq32yxfG4DpIMz1P4zXgbnh53G96QHft2I
+	FFc5PjAjmww0bsbmDTjeL5M3JOr2jSykpGXVrXAMWZfVv4nmTtpgQi5jtfQ9RiBjMjZbE75F3Au
+	BKx+5kBfw9lBLe9/w==
+X-Google-Smtp-Source: AGHT+IGcM8m0cx40MBQJeqSePMjAb0HnFFHqiIOO7WsqRS532/hsCI9QYihD8v43FNbmnYOOY4NA7fRzM8mTNcWBeK4=
+X-Received: by 2002:a2e:a541:0:b0:32b:a9a4:cd4b with SMTP id
+ 38308e7fff4ca-33549e1dc28mr164261fa.4.1755723779845; Wed, 20 Aug 2025
+ 14:02:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <20250820195229.45943-1-rappazzo@gmail.com> <xmqq349laeyb.fsf@gitster.g>
+In-Reply-To: <xmqq349laeyb.fsf@gitster.g>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Date: Wed, 20 Aug 2025 17:02:47 -0400
+X-Gm-Features: Ac12FXyCK9Zhxcn3A_I9IPCx1mL5WYfVzvhLKf3lAitTQC0ONQE_HZiSDEgW2d0
+Message-ID: <CANoM8SVTROfaQpRNBfwxU9opjXFPLzxN1W-xXTrA2bhx9KJ0LQ@mail.gmail.com>
+Subject: Re: [PATCH gitk] gitk: add README.md with contribution guidelines
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, j6t@kdbg.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
 
-On Tuesday, 19 August 2025 23:49:36 CEST Junio C Hamano wrote:
-> Jean-No=C3=ABl Avila <jn.avila@free.fr> writes:
-> > Asciidoc.py and Asciidoctor do not process the same '+' verbatim syntax=
- in
-> > the same way. For most usages, Asciidoctor requires a double '+'.
->=20
-> The word "same" on the first line is probably unwanted?
->=20
+On Wed, Aug 20, 2025 at 4:57=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Michael Rappazzo <rappazzo@gmail.com> writes:
+>
+> > +#### Creating and Sending Patches
+> > +After committing your changes:
+> > +```bash
+> > +git format-patch -1 --subject-prefix=3D"PATCH gitk"
+> > +git send-email --to=3Dgit@vger.kernel.org --cc=3Dj6t@kdbg.org *.patch
+> > +```
+>
+> Just being curious, but does the project strongly discourage a
+> multi-patch topic?
 
-Definitely. Rerolled in V2.
+I don't believe so.  I think most people know how to submit a github
+PR, but J6t has mentioned that he prefers the mailing list (as noted
+in the readme).  So I wrote a simple example to show that patching by
+email doesn't have to be scary.
 
-> > Unfortunately, the postprocessing of verbatim synopsis in asciidoctor=20
-cannot
-> > be bypassed and formatting of the parentheses is forced in syntax sign
-> > instead of keywords, unless a proper grammar analyzer is used.
->=20
-> Sorry, I've read the above three times, but it would not explain why
-> the change is needed for the "prefix" line, but no change is needed
-> for the "suffix" line or for the "separator" line, even though they
-> look quite similar.  Is open-parenthesis somehow special?  And '>'
-> also special in the same way?
+>
+> It would be really nice if you add "review them here before you run
+> send-email" step between these two commands ;-).
 
-The detection of opening of spans in Asciidoc is driven by a span markup=20
-character (here '+') preceded by a non-word character. The condition is=20
-symmetrical for closing of spans. I haven't dug into the source code, but i=
-t=20
-seems that asciidoc.py considers '{nbsp}' as a non-word character, whereas=
-=20
-Asciidoctor does not.
-
-Using double markup characters creates 'unconstrained' spans, which do not=
-=20
-need the non-word character condition.
-
-Note also that this "feature" is very centric on roman based languages (lik=
-e=20
-many of light markup design decisions) and is a pain in other writing syste=
-ms=20
-which do not require space between words.
-
->=20
-> > Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
-> > ---
-> >=20
-> >  Documentation/pretty-formats.adoc | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/Documentation/pretty-formats.adoc
-> > b/Documentation/pretty-formats.adoc
-> > index 9ed0417fc8..618ddc4a0c 100644
-> > --- a/Documentation/pretty-formats.adoc
-> > +++ b/Documentation/pretty-formats.adoc
-> > @@ -233,11 +233,11 @@ colon and zero or more comma-separated options.=20
-Option
-> > values may contain>=20
-> >  literal formatting codes. These must be used for commas (`%x2C`) and=20
-closing
-> >  parentheses (`%x29`), due to their role in the option syntax.
-> >  +
-> >=20
-> > -** `prefix=3D<value>`: Shown before the list of ref names.  Defaults to
-> > "{nbsp}+(+". +** `prefix=3D<value>`: Shown before the list of ref names=
-=2E =20
-Defaults
-> > to "{nbsp}++(++".>=20
-> >  ** `suffix=3D<value>`: Shown after the list of ref names.  Defaults to=
- "+)
-+".
-> >  ** `separator=3D<value>`: Shown between ref names.  Defaults to "+,+
-{nbsp}".
-> >  ** `pointer=3D<value>`: Shown between HEAD and the branch it points to=
-, if=20
-any.
-> >=20
-> > -		      Defaults to "{nbsp}+->+{nbsp}".
-> > +		      Defaults to "{nbsp}++->++{nbsp}".
-> >=20
-> >  ** `tag=3D<value>`: Shown before tag names. Defaults to "`tag:`{nbsp}".
-> > =20
-> >  +
-
-
-
-
+I can revise.  I will wait for more comments before sending a v2.
