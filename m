@@ -1,93 +1,89 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AB136CE01
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 19:21:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D80C2566D9
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 19:29:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755717671; cv=none; b=Jx3PIaSTNTPv63bgyVJO5ruX4DEvfJW5WgW3JC62fvfbiLnsgLC9gXrHMZHao+2Sw36GxAqIBeIiKkWrYkBF4oAKtyUE1CUU3Vv/TsA98ZnZWpgvjtMzleCPwuGiJrY+qkO4X7C44+RBrrAUbORGUsnVi6nCGBXQcBBygYTAkCc=
+	t=1755718191; cv=none; b=uHQuD52OHK0TSWwLHrxYwrm2JykNXM0e9BZxK7rD4JFiPt7Ap/EblCOS0Re3HI9xfDh+af9AeywfgSOm8sibPFWTLb0zM1Zod4t+0LD+EOHNMkoFXQwqKGk03eACRrPpTAxLd0n0YFIf0KBMlzthvONDx8fForakzVGFMHnhLY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755717671; c=relaxed/simple;
-	bh=aEqia7q6zhlLl8brWZIJY2ChjRNiJqtwIpBdVkPyJOk=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=WgfHvc1426p/ao/91XLUpddK59KBlAfTxJmxluRFaL+HnJYqAmi01DJcUINg0gjDhR9KsseQfiVGVNscTUAXqGunFqC2jO3yYa+et2GkULvc53xK7Nrvo9N7qlJfB905XMN8YWm/zyNA/VwPn0kliQvL9sQtaYszHlg3a1jFAq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i1bJWQP7; arc=none smtp.client-ip=209.85.215.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755718191; c=relaxed/simple;
+	bh=YWq6TpH46HeY9nE2NH+Hsws5mFJSMG5krRXGyYSGGjg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P3ZIU9jp1BuDhajmqsi+XqRpR/BWJpFx/MiUY5DimEeUhRzAZzAowp6UFVEj//26yHNuA9dTGW9kf7NpXEioMYu4bPZxKs89/5NqBOz34ErH5R9FgAoeoeQt54dG28vCc1G9S7UYckVJRNbJBLbP+fR7GClSxmr575DvKOpWmcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YYfzEQvR; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i1bJWQP7"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b474e8d6d01so129439a12.0
-        for <git@vger.kernel.org>; Wed, 20 Aug 2025 12:21:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755717670; x=1756322470; darn=vger.kernel.org;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9OCqK/I62XYMEM+d2+UBLf0Ls79ndgGuzNTT5xLdk+A=;
-        b=i1bJWQP7nBFMbXdFGdbCRX8j/44msSNhDHFa6GzynJt72SlbxMv223Bm+HcDjx2iEm
-         8H93XZEi3U/HTRSG3PKuzAud3kUzbk2o735si3Z4DPzKarMz6OmbWC1wyDAjwRb2ee0b
-         5c25RFsv9LZkeknmPjrEUkmmObjJ6Qse7xVjjsC5A2hP4suPHrWtTplZ79TzocgzCr1b
-         EKzwl8oH1iF0WiSmbVYNrny4AJtXBDLrPfl19hh/jBnkWWVN3gyyy3HG1WOm+c4ccbQW
-         1QFpsbVQKqMwGOTHAOyOrKCaF9CxYpUf9CivvFGjlkmrR0Fyo3vbbrEjHfBF3WqBhOY7
-         XxhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755717670; x=1756322470;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9OCqK/I62XYMEM+d2+UBLf0Ls79ndgGuzNTT5xLdk+A=;
-        b=oLqscqVJ2ZL7d/TSnY6ZrXqD8SyrMs7EKAQEmySlJOasFbL3Zci48DqHaqaAvXLyJz
-         w1ElLGwxDji9wJLT81TCwa3bId78mjpvu15FGT+cZezwDbR4Co0z7gliKP41yrWeequo
-         jK6ADPFOaQ7vzhxLL2VHWqEBCPknyR3l5gi4JjNsJ/h0zTP3k3bsKRyanRoI/wg0Z909
-         AidwVewo5FZTbwMgZjKWTQRq6+i72zoEY37gNSM6U73Pczz/G+WTMNCWuewagFVor8oK
-         ZAeoXwrjv4a514/u1zjfTEhNL6HiOkmzS2lJdQFmAuaFpPbixvXc6UTnBLFZCHRqkWZT
-         TeBQ==
-X-Gm-Message-State: AOJu0YyX/RKY0pUe0qL0X8Em6Mzj9axkHh3i/3K0ljHZLWunvkr3kCxr
-	Z6pHTfmnBecLKRQAWAHC9AuEYlrp8do9b2e0/IK1FxcDJk319+s/J+Gs65EA7g==
-X-Gm-Gg: ASbGncsmUZY4tycbL+AO361QdT/hASoXLuLRVHqZSgIeY4Cxhrkf9n45NqBf/mhdL6k
-	yk93as4vh8lEmhJzBvmanXrjWrBWxh4J8iN7S8m0GpgabtDGat181Wa1JW8Ap3/Yi0u3pCPeD/6
-	YNbDcPkrJ61na1vFFkpAjAjxehsziuYiZ7jf+HLvHBDwA4pKCetckGCh6JSV4SUopDTtX/TvzMt
-	/WUow24n603wPonKO7d27BJIJvmpM4VpSwjWZvzbCIwC/OGS4/lxx1jRj60Q3N6dOKhbsahhK92
-	XMREm1w2MSOeMI8jaNZ/ZOyh6EdLyBa6enP8Bhisa1Jrt0if6Sa03Q309XuniFQe7SF1SFgSqve
-	3WAOOzkZTiKvwgWkRw5+GLymv1wT8/CVTtMtq1WoyB3DZ9aB4HcI5qXre
-X-Google-Smtp-Source: AGHT+IFHTLx76H0W/1ZNcdn6EEFDH/pRLaZXd+bN+A8DsNGpXHVynp2xIwy7JZeBZITIhfnixgE++A==
-X-Received: by 2002:a17:902:ccd2:b0:245:f7f3:6760 with SMTP id d9443c01a7336-245f7f36a94mr25323335ad.55.1755717669550;
-        Wed, 20 Aug 2025 12:21:09 -0700 (PDT)
-Received: from smtpclient.apple ([65.129.145.184])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed21c104sm34255475ad.0.2025.08.20.12.21.09
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Aug 2025 12:21:09 -0700 (PDT)
-From: Dan Allen <danallen46@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YYfzEQvR"
+Received: (qmail 38272 invoked by uid 109); 20 Aug 2025 19:29:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=YWq6TpH46HeY9nE2NH+Hsws5mFJSMG5krRXGyYSGGjg=; b=YYfzEQvR69YKIfoRwWnhjBfW3gAkV0At9R806NCMVYnvFyVr0q/hOf0Qu6wxcffHtLllrlPZDC4tRYAgv0516oy6Kt0o7ErosB+9TniRxcTk3oNOB6mIXRGUErPqIchBc58FihXzQXVGDmA8/yVQnGfPpw6aEHbDSFInlZ6gRuN6b0nlV27Gb4Vg8OUh/LbY1IbS+Y4XA9vGwMYv6pmveUpPqTZkZre6yTgS1pDzZRoZIdpicBPVIem4KTVP6yo/utvuugC7H9KRt0vK4cmk+Ffz3LRWWEdZI4+Sy1PxfrK9LAc4KnW0LTjDSS+unlM8JCR/6au0wChMtNea0Sq8/Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 20 Aug 2025 19:29:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 63315 invoked by uid 111); 20 Aug 2025 19:29:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 20 Aug 2025 15:29:48 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 20 Aug 2025 15:29:47 -0400
+From: Jeff King <peff@peff.net>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+	Junio C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Stefan Beller <sbeller@google.com>, Patrick Steinhardt <ps@pks.im>,
+	Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH 6/9] submodule: encode gitdir paths to avoid conflicts
+Message-ID: <20250820192947.GA1663047@coredump.intra.peff.net>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20250816213642.3517822-7-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: I use whatchanged!
-Message-Id: <83241BDE-1E0D-489A-9181-C608E9FCC17B@gmail.com>
-Date: Wed, 20 Aug 2025 13:20:58 -0600
-To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250816213642.3517822-7-adrian.ratiu@collabora.com>
 
-I just updated to git 2.51 and got the spam about whatchanged being =
-nominated for removal.
+On Sun, Aug 17, 2025 at 12:36:39AM +0300, Adrian Ratiu wrote:
 
-I run an important python script that uses this to set file times to the =
-dates of the actual git commits, so as I browse the files I can see =
-their last modified date, and not the date that the file was last =
-synced.
+> @@ -2632,5 +2633,23 @@ void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
+>  	/* New style (encoded) paths go under submodules/<encoded>. */
+>  	strbuf_reset(buf);
+>  	repo_git_path_append(r, buf, "submodules/");
+> -	strbuf_addstr(buf, submodule_name);
+> +	base_len = buf->len;
+> +
+> +	/* URL-encode then case case-encode A to _a, B to _b and so on */
+> +	strbuf_addstr_urlencode(&tmp, submodule_name, is_rfc3986_unreserved);
+> +	strbuf_addstr_case_encode(&encoded_sub_name, tmp.buf);
+> +	strbuf_release(&tmp);
+> +	strbuf_addbuf(buf, &encoded_sub_name);
+> +
+> +	/* Ensure final path length is below NAME_MAX after encoding */
+> +	name_max = pathconf(buf->buf, _PC_NAME_MAX);
+> +	if (name_max == -1)
+> +		name_max = NAME_MAX;
 
-Now, if there is a different way of setting a git repository's files' =
-mod dates to their actual date and time of last commit, please let me =
-know!
+This patch seems to break the Windows CI builds, as they don't have
+pathconf() there. I guess we'd need a compat wrapper that returns -1 in
+this case. And likewise protects _PC_NAME_MAX from being seen on systems
+that don't have it.
 
-The exact usage in the script is:
+> +	encoded_len = buf->len - base_len;
+> +	if (encoded_len >= name_max)
+> +		die(_("encoded submodule name '%s' is too long (%zu bytes, limit is %ld)"),
+> +		    encoded_sub_name.buf, encoded_len, name_max);
 
-    git whatchanged --pretty=3D%at
+It also complained about %z here. I think you have to use PRIuMAX
+instead. Likewise size_t is a "long long" on Windows (LLP64). So "%ld"
+probably also needs to be PRIuMAX.
 
-Thanks!
+I also saw failures on the osx jobs for t7527.62 (submodule
+absorbgitdirs implicitly starts daemon). I didn't dig in, but I can
+guess they may be related to this series.
 
-Dan Allen
-Idaho Falls, ID=
+-Peff
