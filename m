@@ -1,83 +1,82 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4F4224B0E
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 04:58:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56464224B0E
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 04:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755665906; cv=none; b=BK2d9F2BAn/R7NPH0PWj/F/Heymd7adiZRh/mxbOWh/aU01ZzBXg2LY2/TFyGUX1Dk88WX0H7VCph3SfBXjzlsgA5L0aGwkpqec/Iwcj3mZji/1vaILtj80/thb1E+G7PtBBHrcVshVXCzEBV4zFmJ5b0fIfQGwGn6O9h+p5zMw=
+	t=1755665912; cv=none; b=m2g5vMmNIR4bIciFioabYVwMEe5syw8ZKwOd6veUCmhxtcE+iA/uHqm7QzJz99Z2pamFrCw3JZ4+MOZmMcp/BBsLNESjq0EgRTkCJYu1Kp7PXYTDlD3ZNkgJvD9RQBXaoExPKzZLicK0M0Ox/cOG3R5aoZ/8NA1/zR7hTp8lj/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755665906; c=relaxed/simple;
-	bh=o+Ny7o20qXxTu7p7UosnRlg3OtrgHDDg39QpEwyW5DQ=;
+	s=arc-20240116; t=1755665912; c=relaxed/simple;
+	bh=u9dzhfvYo9gGKrMmdkd9iERHOSgtu5lYaIDjS10fRn4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rwlsrzYk15h1KNQmrr8dxfjYx6HFz8WnAP5cU0KtHYWZuaM4If/qPSjATD36vIQTAC1XmVYlIgEpEtRFLJ4C+a3Bd0cHv0c+dIByQbmzAK7yvOdBZMm4Gtdx6lRzyhmEzTPjDwIGNxfpJ9TlBccQxFi/9W4GUdl+NpEz9nhm3oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FfOcNcAg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ND7Bv7yj; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=ipXpNlM04xf84HMn8McxeY2SBJzdomCdRDAZA6APOuetEc/XJgO1OqOqoBGFQX9bvuDd92r35B6L2QdfqB5lvp3qTsIDG5YQQwLjZoKEBAwXi3KrLItEjdxP08hu17Omj1Fdb5jvTurBgT2fBP5/S+ItVzZEjkkQ1hNJ4iftnng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YmHthSWW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KSegrEVc; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FfOcNcAg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ND7Bv7yj"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5ECFD1400396;
-	Wed, 20 Aug 2025 00:58:23 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YmHthSWW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KSegrEVc"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 52ED4EC05DB;
+	Wed, 20 Aug 2025 00:58:29 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Wed, 20 Aug 2025 00:58:23 -0400
+  by phl-compute-09.internal (MEProxy); Wed, 20 Aug 2025 00:58:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1755665903; x=1755752303; bh=CY3TdUf/9M
-	l9kxPW0lY5Hh+8fQFBtefdciJZInH0i/s=; b=FfOcNcAghVbcvpd/vqYZaWVTvF
-	o5sYTDALopOAJPlea1PYBkjPH9xq4u44+I5XcScBvRqM5hjZ30k1b0oIWS8kMb2c
-	fZVbMnYWOCZOs0Lvc3GU71Y81O9At3PvQdyRrqq5qqGposR9nS+VWC/IsD5FLJr8
-	s8sUKIjRsSI3hcbB9C8o34NKruaeMPEpNugg3vcLunc00fRUb/4qOXi/RrbpdJoV
-	ivPeg/wJ37nkPobE82oUq3EoFb9HS+ZOG5K+hhAvuwvw48okxy9zT1w58uPGULri
-	hT4hTf4NdRAnfRa1+BGG/F/V80obKl7Aii9yViVU1LPxKvpmRu2ZVTjVjJnw==
+	:subject:to:to; s=fm3; t=1755665909; x=1755752309; bh=IT7oqtBOwF
+	29t5oQS6XFNuzHl+MQbr3I89v8hTWlQDg=; b=YmHthSWWr8ChoWs71hCollT1Zx
+	fgm7nyPb+HBmGVS8tsip1DwLebrTzgBx7jtKzRUiP6uP3o6Kq+cPeWarXm4qEIBp
+	TyVa0/cS8ro5L2DjT2rJhYVkZwiw/K34q8yboqbYkkBV/K1OvpsUznqUS/mw4A3n
+	odWqUQ6NVCY4kBeCfgd/TPIUTz2WcEsPbbPENBuB/RLVZ90KCipfObhB01v8+gjs
+	bO13XeNqAp2tyKUO/wSSpdl5l7aKXas7GFeCFj7e2sm85xlENW3Ox4WtDdiiYUAw
+	2BERsPdKrq1tn1XaNtpCvCGdUkOk+z4+fKgAA6lrLwrP/GtlqZ67sDdo1BqQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755665903; x=1755752303; bh=CY3TdUf/9Ml9kxPW0lY5Hh+8fQFBtefdciJ
-	ZInH0i/s=; b=ND7Bv7yjh2c8vlrpl4/RW/S8L62SbmPv7Rfyh3l2+cTXC6NYdqi
-	AFQhIF6RYPjvCpFOYKKwgKtTBOSWQbfImFAhsGPPh10adWdkEe+uK7UXsQm9TJT0
-	YaVVULROh9z5zf4aHsH/Rjy0uyoEEyrdVPinN44ehexvWBVh1vFVo5T77VvvzYyr
-	tYDO6vM0A5EzoAzYoMOiCE2w/a9FVan86d6xb0wU7++rjIBay2GlC+9DjdPwHIdQ
-	Z+Bo3WTN+tXQHb1/mo50ZFty2hQWkOzCfdH1bPlsL0HFjSHHFAsbA2uLLjApMmWO
-	Fi+VTj3UdocLmyxYEfvtkOulZA7PTpuEtZg==
-X-ME-Sender: <xms:71WlaNuhI4NdRJTIDjFXed6MJMD_NcFL3sMrSlUC9oG7rjTZfuT98w>
-    <xme:71WlaGqiwy2ZUJEkrhtNjCZSMN1J7fAR5Pic2SnybhxQymSfEHfAZkoQXqEfw2FZo
-    oA9yx0pC45fw-Ysww>
-X-ME-Received: <xmr:71WlaCmsyQ0v_1HN_2Af46oeQL_Zmg6KIDfKgq1fXl4XGU0vVZQNiyoPWPbO2-uOnGMZEYt5GLfrQLfRufYy_136ThQcWIQfEdlq6zhsfNk6>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheejgeejucetufdoteggodetrf
+	1755665909; x=1755752309; bh=IT7oqtBOwF29t5oQS6XFNuzHl+MQbr3I89v
+	8hTWlQDg=; b=KSegrEVcl5iL7qBUtfp0NuBwN4s9KSXwXGfgKqD/9aaR0i38WDy
+	dIVqd9/YqtXbC/1HBkXlMpI/xLSD5yPDUi+Fs3MsYbLEAhDn1XHOYznAyjmG8BwD
+	4NkfH95CJ0c1ki11zNFDPb0rzF0wsRB2TXjE820oUJRf/yjc5GXMGQCsJ+oCGXsf
+	tl/O9uNgSPNssip4h+22dFBjwSfbDHVKL2JlIfNcAInVViaB/AuzDlKKYnw5RPK9
+	eiykXddl5t512w+mXRkEY2Ye8STtLBRDRqXqsGK02HvYxhEmZLrF6b7ozUrunaxI
+	VKaCoQMO5Qref5OTaAq2eOcxZmqXCrs5LNA==
+X-ME-Sender: <xms:9VWlaPXXk0EGtjF4xvlbEAoHvG4U9vXVNGftFvA-NaHNUbmWKbFaZA>
+    <xme:9VWlaHwHHoDdtS6R1HDNoPYiVlWxOjV1YhHfnmvvDnjZVJXnbmuciqzT8KVL6fDxP
+    FzrzGSnOWjNe8NByA>
+X-ME-Received: <xmr:9VWlaNPgrB2ZB7Zwya9bG5AzCZ5rfKXxfbxp3T6lMFULTtY0ukW1EdNuUOvfmuuTKMv2m8M5nFTORHmqpuUtKIrmb6k3Emac--o2DiSkZ9u1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheejgeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
-    hkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:71WlaCyhHT28sePBfuUbn8Ov40agPQSiSnrSTnwWtMez3cHdADdILg>
-    <xmx:71WlaCkTk_7fCFlibCnOfP7d6i7HYEbkAO1LxnmKm4ZQJK1pYuiqog>
-    <xmx:71WlaDexNpvgq_SoIxf_t55vYiNADFpmOxQX95_DTBX7LO892TjNZQ>
-    <xmx:71WlaArWBvzC47_aawFP_Xnj-ZtGCpcqfwRMCC-L_QhA079kzHU5Cw>
-    <xmx:71WlaF-Uefzq5HMjA_MvqgSLR-63E6i2AHBlUlJO6AyomA0WCbG9gtvd>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:9VWlaI7J4xoJp2Ugu8n2LtrkQuq4cdS-xPqHNM-wtP8u0ZyBG_YpAg>
+    <xmx:9VWlaONQkqp2U6t996dBKjDAK6Nfu0g5_dhFp1Wm-wxE6-MHLjriiw>
+    <xmx:9VWlaGkV0VurwYaNPYVjgbRGYmrGlxBUXunKnfpb4_ReN52APx3W-Q>
+    <xmx:9VWlaFRr4G177JSwITLw-1j5WPyI3Xab7QhdECC-nOkn9gFn_ZHDeQ>
+    <xmx:9VWlaB7y4OXwvZDbIaBDRQz_TdrgNkhzlcPCyeCr6wSXXEO6K4KdDXzC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Aug 2025 00:58:22 -0400 (EDT)
+ 20 Aug 2025 00:58:28 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 13bf0077 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 20 Aug 2025 04:58:20 +0000 (UTC)
-Date: Wed, 20 Aug 2025 06:58:17 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 79f251d2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 20 Aug 2025 04:58:27 +0000 (UTC)
+Date: Wed, 20 Aug 2025 06:58:24 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Subject: Re: [PATCH 01/16] packfile: introduce a new `struct packfile_store`
-Message-ID: <aKVV6fuLuQnOoUoc@pks.im>
+Message-ID: <aKVV8FoZQQB39VKu@pks.im>
 References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im>
  <20250819-b4-pks-packfiles-store-v1-1-1660842e125a@pks.im>
- <CAOLa=ZTd3JTfkkxuuD51CbvJH1B+ag56LWKCgD55AzmWvi4XhA@mail.gmail.com>
+ <xmqqect7dxp7.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,26 +85,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTd3JTfkkxuuD51CbvJH1B+ag56LWKCgD55AzmWvi4XhA@mail.gmail.com>
+In-Reply-To: <xmqqect7dxp7.fsf@gitster.g>
 
-On Tue, Aug 19, 2025 at 02:47:32AM -0700, Karthik Nayak wrote:
+On Tue, Aug 19, 2025 at 10:32:20AM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/odb.h b/odb.h
-> > index 3dfc66d75a..026ba9386d 100644
-> > --- a/odb.h
-> > +++ b/odb.h
+> 
+> >  	memset(o, 0, sizeof(*o));
+> >  	o->repo = repo;
+> > +	o->packfiles = packfile_store_new(o);
+> 
+> Shouldn't this be called o->packfile_store?  It is not like a
+> packfile_store is merely an array of packfile struct, is it?
+
+I was mostly aiming for brevity as there's going to be a bunch of sites
+that access the variable. But if you feel strongly about it I can adapt.
+
 > > @@ -128,6 +129,7 @@ struct object_database {
 > >  	 *
 > >  	 * should only be accessed directly by packfile.c
 > >  	 */
 > > +	struct packfile_store *packfiles;
-> >
 > 
-> Nit: The newline spacing makes it seem like the comment above only
-> applies to `struct packfile_store` while actually it also applies to
-> `struct packed_git`.
+> So odb has a pointer to packfile_store, which in turn has a pointer
+> to a(nother) odb?
 
-Fair. The remaining structs will go away over subsequent commits anyway,
-but we can still make this more obvious in this first step.
+The ODB has a pointer to a packfile store, and that store has a pointer
+to its owning ODB.
+
+> Hmph.  It is unclear what this step has achieved (in other words,
+> there is no obvious thing that the information stored in the new
+> structure is used to achieve at this step).  Let me read on.
+
+Well, this series really only cares about encapsulating access to
+packfiles so that it becomes easier in subsequent patch series to move
+the data structures around. So next to carving out the subsystem we
+don't achieve much, but it's a necessary prerequisite.
 
 Patrick
