@@ -1,153 +1,112 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DD936CE0C
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 19:37:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F931CCEE0
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 19:42:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755718664; cv=none; b=ru7qTNu7PO6AvT5j4obZEJyQQ7bbtj3gIsyABx6MSF5hZXMYtErdbmWgQge2c81lsTwhNkF+NncLfuArHT6rSET/xhFbvRg2cZSFi+KBP6o5ZhvdvZAtkCzUHrsrt8Xa+4yCcvz50VIVvESOdSzTNVJQPHV6jH4oi7Uuz5XgSO4=
+	t=1755718956; cv=none; b=RJgNQYhs+Zhn06kV6J/aK0A9Ni5U6X54ciuwEvjWl/YJC8MJavmH/JkwOMdWbYsWTGHdSHONCwTYEJK0a4LPHTGRr0QlfM67lRJ+J2YQ+CBZ/SIeDNaUT2R3EPZI2lrTBcglGp6MjJqpyDmbVpbWZ9YUtpEJqSj05MyXnqXxVn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755718664; c=relaxed/simple;
-	bh=blP8nsTkE078e1rIAQpfE9aJq2F5tMrJJmFlLFd9VWA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bR8Zf+nzYJGrbAywV1C78IQzg2dLI4+WaoEVQjU8jKqaQvkEgRBU5PBgaoBj+HT15pOUer0KNRMsnXmBIsbbFX+WxAAfGDKYC0eliCbUF1MTF6WK5wkKon4/ezyC/iJyG8UWf008ZZYN5hrrYneaWD0XnoH46PnIl2+3PrrImpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=w3zl6MOR; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1755718956; c=relaxed/simple;
+	bh=2Eyp7rBIsn95tG0LfeGHSnLsHqarp+QevB14BDJ6FuU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IJXyru7Rlm1N8zcWT+/IjxVTK/tR0uISM7niUarW8eOysCNamGbvEQfvLxMdK+DspaN4IlPaRkFacJ9TrUZHYSheFCMrQe9K+dEybujV2MBHyqJG8U9Q9mU7LoFsUYKjDYM2/1relTtIx0/PxabUEufVrDlIhEii7nCk24R+rGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h0jc/VOp; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="w3zl6MOR"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-242d3be6484so2745ad.1
-        for <git@vger.kernel.org>; Wed, 20 Aug 2025 12:37:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h0jc/VOp"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4b1098f9e9eso4538531cf.0
+        for <git@vger.kernel.org>; Wed, 20 Aug 2025 12:42:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1755718663; x=1756323463; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vwluMFxuEC4DlV9GyQCjapNPDPV4YkzO+GkPJEGzW+E=;
-        b=w3zl6MORDq1RZykYbhcerNTcM3ptDiOJxaJkhTxmO5q3xkq6NZJyAzSoSwCF9pQ5k/
-         EYkjXa2j9no8l3Q37/en0AGiPhfbOBDQwcJXDQlYr5UPQ6vsuOaN3IlrVgk4uB1K8eAw
-         G0iC7c4ppeUMBWlHQnq7/zZpP9N05fOMybqQpnXD+HTfbZ+XjEo6K0W0oPzpBH12QhVV
-         6EFxuHRduXjnwWAqCX1oOc+CL9e93/33+9v/HXo8dJTMjH/ADpi5onpdiUA4zURUnLc7
-         5yEjQ0xdr8luam7/sWTerULmJmphEiM7np//FREinNBsred5hw8hOyno5HKSBEQHyZSF
-         eCcw==
+        d=gmail.com; s=20230601; t=1755718954; x=1756323754; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nsZfDQfAJX0fqoy6+pTGZ4LATQVjI8xjYGpruAEt69k=;
+        b=h0jc/VOpqZOND0px6VVVkzhO6lmQoaO4qQby43WaSnf2CZfSu0tA3DH6QiG46Q9RtZ
+         o1bI2Uv9LZD2SPsjT1EbVDjbmWDfkan08rj4O2SNNYfjc1YRLLi425MzhDf1Out+Q2D/
+         J18GGKL0P3zkNq5/iXgPCmFOLghLCZcpRHhlXilxKMemJgK2TKI9QnSvQUhPdOQVCI9l
+         xdAxbDKzqnhy/0fAqX4I8HkcplhfeiekAyPe1e3EjGsP4BLN+NHtZTFFbo/iChjxNaM2
+         Iw0VWtCQBe3N3yZOQdRLaESq1XEpMlFA/AQVRkHxMog/84aWcgk9i2yNfknbGErYLDRc
+         y/gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755718663; x=1756323463;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1755718954; x=1756323754;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vwluMFxuEC4DlV9GyQCjapNPDPV4YkzO+GkPJEGzW+E=;
-        b=P0MlsKxkfsqrBNnjbkt0WP+Ier9Do3OXAi57HzR68Z3riYZQ4aJLO01gd5LxoRsyu8
-         ulmYuPExmXZIWzSt6sQn4SX1zjR4Tf4LSxx517YKl9Y5zR3rF9+kJH88izDqiiaGPNm7
-         3F6zAnsx50UYW+Ryi+bA1AuQATVxdilKHT19T0A7xK93TcK6LqXdlumSCfSnbgDUEfwz
-         DQWK7+kBIqLlNThVAnZayQySd45KnwKdDFiBhGooGb7w+fGmc/s8CpNlqjLRVQ0uzANB
-         bQ9tjGRpS4dfNfvlXL6IXfNCedmaU4SaqmIrWg+1k8Ih2d6mPzS3K2R9KVkwDV1hytIC
-         PZ5Q==
-X-Gm-Message-State: AOJu0Yw0szF4RrCoMZXLewVrMoax4FVT4lCl1sYNy9aXDWhUvqGj1XeQ
-	kGk6QT4F97nmSgeh+3NIfF4nGzDF3vK/++H/M6g9hluy+rNFhLxV6o76ThOtdN55kg==
-X-Gm-Gg: ASbGnctLprqbmzHMu1488JkPhHlpfCJx2TVxtxsLrAmd9VDK4fTbJ/L6KqEvbiAyQ7W
-	YWWIDcemCL5ve4QhcpoaAAIzHZg4+ZlcWgrwt1s3U4s5sQm/pG8wLmry3ZmzW1Z+Rnn91CRiIjq
-	3I1uRtD7tWuBYGnDA988UOXvqG56YfvSZVmvvIcsbOgEk+MjrOBzu88mNhRZJSDFX1at8VGHvCt
-	OoRou/YIltZvJx+ufDo30YrbaNwzkkoZh0xK/53gx+EMnii4AVQ13hqpf6vJi1MxbYzqY+aHB/y
-	cf1eDRGHArzao4jRT+DseQ68cQL/JbuptZUF9npA5fpV/YiW/b1iIrN3LgcZ41vsFrSQx9D4xEr
-	vJuPfdfAt02jmiPU1/BBtvt3ik00=
-X-Google-Smtp-Source: AGHT+IEPdOTpr8aRyUDAahCbEir9jZNeMY1WukLyl5CNEqvgqYNjy5UQ7Q3nvoj8PRkuB/WqvTlQJQ==
-X-Received: by 2002:a17:903:238e:b0:234:afcf:d9e8 with SMTP id d9443c01a7336-245fdcc1b9dmr799315ad.7.1755718662460;
-        Wed, 20 Aug 2025 12:37:42 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:23b5:65e6:69f5:ee81])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed5406e4sm33757565ad.165.2025.08.20.12.37.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 12:37:41 -0700 (PDT)
-Date: Wed, 20 Aug 2025 12:37:36 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, 
-	Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	Aaron Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, 
-	Stefan Beller <sbeller@google.com>, Patrick Steinhardt <ps@pks.im>, 
-	Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH 3/9] submodule: add gitdir path config override
-Message-ID: <l4bmyst4qtew7kv7sdgzw5hibwor34zrh3c4jib7i6vlsniey6@jtku24uffrmo>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Adrian Ratiu <adrian.ratiu@collabora.com>, git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, 
-	Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	Aaron Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, 
-	Stefan Beller <sbeller@google.com>, Patrick Steinhardt <ps@pks.im>, 
-	Brandon Williams <bmwill@google.com>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20250816213642.3517822-4-adrian.ratiu@collabora.com>
+        bh=nsZfDQfAJX0fqoy6+pTGZ4LATQVjI8xjYGpruAEt69k=;
+        b=SqgfQvss66dfVYYdDdTmZ2L5Q4NqZxRyaZDGsOmJSj61E00z/M7bAT+gpMZKGEzkn0
+         x6LAoSSjzRbYLRxprDyvPwsILd/bfEwIrvniy8S1SFPv/mbq8wFw6fb6dBnOPerNRMT3
+         Q2KEmrmjuP4OWa0ggyp5wE6kjArsF7iddm81Vfv4VIk6/45nPQ0ebhT4p+wFMbVsuOPm
+         rdDVkY51SmyHaLPBXxAT1TO/lva5hexlk9PNtlYnuPB50sZMXBe+yXhHMnFK42TPmPGI
+         Ggxoz6Fv1j7vF2WP+ynBsCN0+oad9WbN74M5NHymYNHDkUab17eZqYVoRqfcqOoyOzXo
+         86Bg==
+X-Gm-Message-State: AOJu0YwAQMruzrFiIzD4WCK6BRTprMaRXr0JfMKB1umecdEuafaXveor
+	zw3x4Bj5g4CvwN8bhJMDX8VLySkmSZIkr986fLtJL5b+tJlYvB04neU5
+X-Gm-Gg: ASbGnctlPFVdxbDomPD8V/YQqPsVuz/LZSzZpw0XnqKPK5V4o6MbgToNfRNCptcoosG
+	Mr/ZjYTrPGoeFa1ZKt4e+fLXSPVLpOBTVPCBjmAmKHMn5w82jmhuL/qDqq/iR2AeLsvYYTLXEbg
+	nydCJxcgGgFyogebtFLHNgpHYDKNOccXQeKKKwGeHx7Uw7cPSJZEgHIW1G8Yhf8W/iCZ9nf/nvP
+	0JLoUOMgRwGkrQN+dg8hKNo55dbzSpJ4nAb4Cg7hSjej66k/QaV3n7gr/Tzy+l3DdKYUuQxHqCk
+	7KQPE+neaq+j7ruTZosMHZRZ+cejjTT4YnWBhprXiiwNSlfikUxYAo0HTMMUrahW/MGPPcGkDI6
+	aRUGC+dszBm/o79vc9U13eBjrwO7acJenaSc=
+X-Google-Smtp-Source: AGHT+IEBQtAmT5FD0J82OB3SRIMbj4bvBwl7nhruXTHMapNJ2ouHX3LA7YEtIEWScPiK4gErut8ObA==
+X-Received: by 2002:a05:622a:5c0d:b0:4b2:8ac5:27bc with SMTP id d75a77b69052e-4b291bf69a9mr50954051cf.71.1755718953735;
+        Wed, 20 Aug 2025 12:42:33 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.70.92])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e87e1926b3sm980699285a.53.2025.08.20.12.42.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Aug 2025 12:42:33 -0700 (PDT)
+Message-ID: <c6ab0985-2a74-406b-9685-cc65f8748515@gmail.com>
+Date: Wed, 20 Aug 2025 15:42:11 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250816213642.3517822-4-adrian.ratiu@collabora.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] path-walk: fix setup of pending objects
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+ johannes.schindelin@gmx.de, johncai86@gmail.com, jonathantanmy@google.com,
+ karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com, me@ttaylorr.com,
+ newren@gmail.com, peff@peff.net, ps@pks.im
+References: <pull.1956.git.1755715196.gitgitgadget@gmail.com>
+ <0dc4a6323e66598070b403d286ee1918e6a9b791.1755715196.git.gitgitgadget@gmail.com>
+ <xmqqh5y1ak9o.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqh5y1ak9o.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 2025.08.17 00:36, Adrian Ratiu wrote:
-[snip]
-> diff --git a/t/lib-verify-submodule-gitdir-path.sh b/t/lib-verify-submodule-gitdir-path.sh
-> new file mode 100644
-> index 0000000000..fb5cb8eea4
-> --- /dev/null
-> +++ b/t/lib-verify-submodule-gitdir-path.sh
-> @@ -0,0 +1,15 @@
-> +# Helper to verify if repo $1 contains a submodule named $2 with gitdir in path $3
-
-This comment is a bit inaccurate, right? If I'm reading correctly, we
-only verify that the submodule's gitdir actually exists in the "legacy"
-.git/modules/$path case. If we don't see anything there, we fall through
-to .git/submodules/$encoded_path, but we never verify it actually
-exists.
-
-
-> +
-> +verify_submodule_gitdir_path() {
-> +	repo="$1" &&
-> +	name="$2" &&
-> +	path="$3" &&
-> +	(
-> +		cd "$repo" &&
-> +		cat >expect <<-EOF &&
-> +			$(git rev-parse --git-common-dir)/$path
-> +		EOF
-> +		git submodule--helper gitdir "$name" >actual &&
-> +		test_cmp expect actual
-> +	)
-> +}
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index 178c386212..f4d4fb8397 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -13,6 +13,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->  
->  . ./test-lib.sh
-> +. "$TEST_DIRECTORY"/lib-verify-submodule-gitdir-path.sh
->  
->  test_expect_success 'setup - enable local submodules' '
->  	git config --global protocol.file.allow always
-> @@ -1505,4 +1506,18 @@ test_expect_success 'submodule add fails when name is reused' '
->  	)
->  '
->  
-> +test_expect_success 'submodule helper gitdir config overrides' '
-> +	verify_submodule_gitdir_path test-submodule child submodules/child &&
-> +	(
-> +		cd test-submodule &&
-> +		git config submodule.child.gitdirpath ".git/submodules/custom-child"
-> +	) &&
-> +	verify_submodule_gitdir_path test-submodule child submodules/custom-child &&
-> +	(
-> +		cd test-submodule &&
-> +		git config --unset submodule.child.gitdirpath
-> +	) &&
-> +	verify_submodule_gitdir_path test-submodule child submodules/child
-> +'
-> +
->  test_done
-> -- 
-> 2.50.1.679.gbf363a8fbb.dirty
+On 8/20/2025 3:02 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
+>> The core problem here is that the "maybe_interesting" member of 'struct
+>> type_and_oid_list' is not initialized to '1'. This member was added in
+>> 6333e7ae0b (path-walk: mark trees and blobs as UNINTERESTING,
+>> 2024-12-20) in a way to help when creating packfiles for a small commit
+>> range using the sparse path algorithm (enabled by pack.useSparse=true).
 > 
+> OK, in other words, the bug is fairly contained within the path-walk
+> traversal.  We treat things as reachable not just from ref tips and
+> reflogs (where path-walk code can use the tree object to compute on
+> what pathname each blob comes from) and the main index array (that
+> has paths, even though it needs separate way to compute than those
+> for trees), but also from places like REUC and TREE extensions that
+> make associations between pathnames and objects.  Are they also OK?
+
+The key integration point is the "pending" list operating a bit
+different from walking directly from tags or commits. I was trying
+to reproduce the issue from all of those other sources before unlocking
+the "singleton" nature of the problem, and failed to do so.
+
+The resolve-undo cache (REUC) is something that I had not tested
+previously. Adding "git rm --cached x/y" to the test in the previous
+case leads to the 'git fsck' call giving a "dangling blob" warning,
+so that could be an interesting way to strengthen the test. Thanks,
+-Stolee
+
