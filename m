@@ -1,68 +1,68 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB98279DCD
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 18:40:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D9427A91D
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 18:40:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755715204; cv=none; b=khQXEe7xlnws2h9UUOmgEkNjWVixZNfGWcQREOg1ZjI0FvS0E9N8x1pDYp+UD6qMoVF3gsxuPtKOGhMTTPVrMNvZXZbSF+iJz6jFCYVj2la6ROLTRiCJ4Z1vgq4Rwu40mNGIZqy9acOBronz13HS+qaNIcnIudWuNEoI08njwS0=
+	t=1755715204; cv=none; b=jfCwLDSEdLzap8WZR7LV028QU4zEMm/GwqazKcwAJZnqPaEfGLMKh8+U+mCvUWxh/Y8czjgyYrJk3SWRFtS2VzFY872hfMZ8g0brgKx7ogXcn4B83xamgV+MbvF3AD42bhtI3mQa0/PykOu5U5wKETYtEOhsEW6WtpwaFdz7kNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1755715204; c=relaxed/simple;
-	bh=Vq5F4RmEumjvKE0ID3Ng7KFzMCgowK4+Wij2BXllYnI=;
+	bh=6XNFoJBhG1TdKWdt8nsZDm5DzFahc3wzMV4/CTt0Nu0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=uNEyK0JQetzlrVqbZW1bwaEzOnEgbiw0AaM2djUYcVLGv13osKo8ZR7r9LlrqPYDSoBgORww7ODkM75TE6IRhhcCHleez90DWh3OY5L98ZR+fA0N8lBBJmpbqsO3bdIT/I37o1cOZEhAY3MrgRQmLouF+GiqIxoWBpSzDZI99Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cXiJ8JXr; arc=none smtp.client-ip=209.85.128.46
+	 MIME-Version:To:Cc; b=TESUSAe2aFjzjY2UUWidrMmH8aF7eyqaFXs/JddrEQ+i87gFIII0ocRRTnnwxF5mGw2x6c3MGKA9dxIIA16GBrSgeXTg71E1YwjJfP8kxwUIauYP8ltoERWZLrvtsWQaZLtBwNzkyCYPk3Ag9DzCsNlUyaHFpcLWl4wXz+0i22k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PxssOp7q; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cXiJ8JXr"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-45a1b00f23eso1166405e9.0
-        for <git@vger.kernel.org>; Wed, 20 Aug 2025 11:40:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PxssOp7q"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3b9d41c1149so137927f8f.0
+        for <git@vger.kernel.org>; Wed, 20 Aug 2025 11:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755715200; x=1756320000; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755715199; x=1756319999; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6FyQIcATPbM+XyVKfKEiCSoerS/xJQAj9cFgCMxc5NU=;
-        b=cXiJ8JXre/wG++rpWA6NF+YURmahtHnRhl8kgcdt30cTsF+2/L3kLYt07Fup99H5Ut
-         FARJrBzpKm6P33qLH/1PR9f5EP0RP1Q3W34u5d95EvxmygHuHGFDkBRtDwupOO+qoVME
-         xDCk8/SJvAL9w/gQ4XvU+NPi/3SL/NfkHDDmBxQ163xQLSsxPdpYlsSrivTVwoZRmLXi
-         f7li1I3fdNAgE/+GNPsSoOeyRzga9qm/6m6DLfhB7Ovy+s2FmJHWgPjTMsvEkg7Q8nKj
-         HUcRjrpasiAW2d1w27uDgqOdyEoGiJxKPTkkEzg8AU+UmbBYId4tVGrdTQ/5gs7lnzxH
-         V+9w==
+        bh=k+YPoNkFFmX102pti6i/rDHcIqFWDfGDdlWmx+CQ968=;
+        b=PxssOp7qUEM3BbdoN2NYgmdLLiKKxPjzByOV7H3L4baWD1GejJucGUCXP8DYU0u3fN
+         1s+riLQ4C4rTWrhfi9CTwqI61b7J5zyK0nzHFvqijV9bTdQMyBDvyRipCOb4Fhoz8cq3
+         Q6sbjU1ifbHq00ZUxTexyyOoNjRBVFvaxrrS7Os2PI5KQPvrWOzhRFNp25i8yXJgLy0n
+         kQBYSScNL15zr6ISWOVvFPN2MV9kdCCFx+1Bm14fI9Mwg/ahVJJBO4fWmdR8H1eR1Ufn
+         JwRianv/anx3ckj6fcopsZWLEC4k22kyrOLWaOVlHgWiwByS64Lv0J2iwZuSsV53ol48
+         Fo4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755715200; x=1756320000;
+        d=1e100.net; s=20230601; t=1755715199; x=1756319999;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6FyQIcATPbM+XyVKfKEiCSoerS/xJQAj9cFgCMxc5NU=;
-        b=V3tSF8OIQz9ibY1bfjRM1AAHxsPal3dG+gqw26uyONAlhddFd9ohi8mNb8ZkcXHnRZ
-         anpu07HggYvoWkGLIx2UPv8kn6kIer1Wd3qUiSqdOKI7Oq1hT1swseylHRTG/BR/X8A+
-         ZxY7mCfcvapG7juNgSpOysvYy7pYRYbURVQVISseQU/yBBqtYXLpeT8aA0b9g7TU82sY
-         q/EZ9j6EBwvZn9MckMyFo97v14R/FMtE+9Rq9XXN8LNvYvrMj4xoHFbIQh2RvSsyrrEk
-         tTAVpOm/78Mqhq8e+1YbJ+zCFqy//HI/DmOLMW+XB56EMmd2GGowtIk99hlhPwD0DruL
-         BorA==
-X-Gm-Message-State: AOJu0YxOil5STCycl5PlQPL75v5RYvAuEgnajgLaOfjhnYgSRKyzYTeD
-	T5Uv9bTRcuuuWLAVQilMDhiit8Aghy5F4xXtC8NGrpkeKa0r+MHT2FgNUyrNDg==
-X-Gm-Gg: ASbGncuYyrnzfhRvMmM07bkZaJe6fxAbYjyvNkUIHc1TEqzjE55PU2ydqkrLrUGbuOc
-	nLD6GLSTmykEi2LE/0Pylm1jsukos58MiKq8dEV7H0H0M+u9tuOxm0S4bGXPe++MlQjYjGrm0sr
-	uNy4dgkm0OsNwi89LNE1thm5GCHjfA8yq4XuCIIWKX24ScE0oyQICfPy1O/41uDCWzWLEetVwCW
-	wb+8g4EILqhEmDz9Tfye3OtL8pxlWplf6ImFZkYr6IB0d6P47dryiR2WPMC9KTgqJMogWxmM5kK
-	eTPbr/DaRd6utiTJ9KsuUIURP+31EXfN6ePMiii29yMTccxBp0wvk459P9nqUOijfk0z/LVkxC1
-	Ce5oJyoW2FitSx9c5LdwrO8uwBfsLAIkO5irkAA==
-X-Google-Smtp-Source: AGHT+IE22D++Q/DSlCjKkchKvznG1XtGjervru/geoMaRFcrYTSuBreGS7nyqoW/Pvjmm0dvJ72gDg==
-X-Received: by 2002:a05:600c:4586:b0:453:78f:fa9f with SMTP id 5b1f17b1804b1-45b479b5545mr32840895e9.11.1755715200047;
-        Wed, 20 Aug 2025 11:40:00 -0700 (PDT)
+        bh=k+YPoNkFFmX102pti6i/rDHcIqFWDfGDdlWmx+CQ968=;
+        b=nURgOYefVDjMB6FuI90m9KnpnVpThVA1Mzlsto+QqGzROcF1prX8iHwfvgpa7rgGtz
+         X3JXwv/ef2tboJRlU5h3T+5v06eviWXrL+E67Mlb5ubylqDC1qhXMU27Ih8k5YF8k5hn
+         YNTBXHAJUBLsjC3CxLivFsAXaCwsAFc96ezkHkLz51R3jrkI2SuTzksQJrw5W2NMAN1b
+         Yur7xtC6nGf7GHkEO7aD758aNCAwi/RDXOGxyqoMDnoOi9F/KgHtgPsWCqQQTGoJxNN1
+         NSKWizkm/NvoTrKyo5WzXw8ZYx+Q/JMSkoDDv1/0QBnlld3hS4167Lpwiz4u8B+YKvbJ
+         bZyw==
+X-Gm-Message-State: AOJu0YxS1KmK4WQLtJLG1erf6HIxCvTWjpB6vzZgfsrRevmn7YJAVRAN
+	LQDjAn611/vzKY+vPTmMyDkGV19cVw6H9Io0fNPvAmh2WEbNP8IGRwehCiz4SA==
+X-Gm-Gg: ASbGncshRm22Y0jXdg9QM4Ac7nIcMjHODXBuQY3Qx4Ixl534LLnA3/bMkSNsLzhbGu6
+	j7TFJsqExyTy50ld6gKsRtrYLYrlOEmWiFaDaeR8/GDEWEA0RDr/nVWwgs4goXf8mT85LVFREKI
+	GMQUHTEh+AUY8AsBzA24ef5CGqSCNMoW8x5CGcDaKpbbmINytaP/+MoXzPcDjsj/6axVjnHTlIX
+	/LEUSlwbTQ3Iic7NKzhWn2k1zuzUYw+RvhoTZyihgElgi2JE8ILFw7Uy5UDGzXUWF/61vOhDuNq
+	mnz/mqnhfihXGNOQsUAzcK3I+tWR12LIQGz9OPXWQBUyP2Ki5TV+FLjWztC02h0Ap7V9UhM7Q+r
+	jrWdD0U9lvR1m7ke2SBDx0z/lXa4=
+X-Google-Smtp-Source: AGHT+IHk79WbKIa/pMwFLGukW9Q3exaT+z5TmpUGg/F3UfMQ4tSlDoN3QHgaR2T8J/EtKGDrqRP8tA==
+X-Received: by 2002:a5d:5d0c:0:b0:3b9:a346:6e78 with SMTP id ffacd0b85a97d-3c32e6fb420mr3149493f8f.53.1755715199383;
+        Wed, 20 Aug 2025 11:39:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b47c28644sm48907395e9.5.2025.08.20.11.39.59
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c0748797acsm8318274f8f.10.2025.08.20.11.39.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 20 Aug 2025 11:39:59 -0700 (PDT)
-Message-Id: <dd458e043548a8ed33070657cc98128efb606847.1755715196.git.gitgitgadget@gmail.com>
+Message-Id: <0dc4a6323e66598070b403d286ee1918e6a9b791.1755715196.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1956.git.1755715196.gitgitgadget@gmail.com>
 References: <pull.1956.git.1755715196.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 20 Aug 2025 18:39:56 +0000
-Subject: [PATCH 3/3] path-walk: create initializer for path lists
+Date: Wed, 20 Aug 2025 18:39:55 +0000
+Subject: [PATCH 2/3] path-walk: fix setup of pending objects
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -89,132 +89,70 @@ Cc: christian.couder@gmail.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-The previous change fixed a bug in 'git repack -adf --path-walk' that
-was due to an update to how path lists are initialized and missing some
-important cases when processing the pending objects.
+The previous change established a buggy instance of 'git repack -adf
+--path-walk' when there exist paths that are tracked in the index and
+that is the only instance of those paths in the history of the
+repository. This change fixes that bug.
 
-This change takes the three critical places where path lists are
-initialized and combines them into a static method. This simplifies the
-callers somewhat while also helping to avoid a missed update in the
-future.
+The core problem here is that the "maybe_interesting" member of 'struct
+type_and_oid_list' is not initialized to '1'. This member was added in
+6333e7ae0b (path-walk: mark trees and blobs as UNINTERESTING,
+2024-12-20) in a way to help when creating packfiles for a small commit
+range using the sparse path algorithm (enabled by pack.useSparse=true).
 
-The other places where a path list (struct type_and_oid_list) is
-initialized is for the following "fixed" lists:
+The idea here is that the list is marked as "maybe_interesting" if an
+object is added that does not have the UNINITERSTING flag on it. Later,
+this is checked again in case all objects in the list were marked
+UNINTERESTING after that point in time. In this case, the algorithm
+skips the list as there is no reason to visit it.
 
- * Tag objects.
- * Commit objects.
- * Root trees.
- * Tagged trees.
- * Tagged blobs.
+This leads to the problem where the "maybe_interesting" member was not
+appropriately initialized when the list is created from pending objects.
+This is the fix for now.
 
-These lists are created and consumed in different ways, with only the
-root trees being passed into the logic that cares about the
-"maybe_interesting" bit. It is appropriate to keep these uses separate.
+To help avoid this from happening in the future, a follow-up change will
+make initializing lists use a shared method instead of allowing for an
+update to this initialization process to miss some existing copies.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- path-walk.c | 57 +++++++++++++++++++++++------------------------------
- 1 file changed, 25 insertions(+), 32 deletions(-)
+ path-walk.c       | 2 ++
+ t/t7700-repack.sh | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/path-walk.c b/path-walk.c
-index 1215ed398f4f..f1ceed99e94c 100644
+index 2d4ddbadd50f..1215ed398f4f 100644
 --- a/path-walk.c
 +++ b/path-walk.c
-@@ -105,6 +105,24 @@ static void push_to_stack(struct path_walk_context *ctx,
- 	prio_queue_put(&ctx->path_stack, xstrdup(path));
- }
- 
-+static void add_path_to_list(struct path_walk_context *ctx,
-+			     const char *path,
-+			     enum object_type type,
-+			     struct object_id *oid,
-+			     int interesting)
-+{
-+	struct type_and_oid_list *list = strmap_get(&ctx->paths_to_lists, path);
-+
-+	if (!list) {
-+		CALLOC_ARRAY(list, 1);
-+		list->type = type;
-+		strmap_put(&ctx->paths_to_lists, path, list);
-+	}
-+
-+	list->maybe_interesting |= interesting;
-+	oid_array_append(&list->oids, oid);
-+}
-+
- static int add_tree_entries(struct path_walk_context *ctx,
- 			    const char *base_path,
- 			    struct object_id *oid)
-@@ -129,7 +147,6 @@ static int add_tree_entries(struct path_walk_context *ctx,
- 
- 	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
- 	while (tree_entry(&desc, &entry)) {
--		struct type_and_oid_list *list;
- 		struct object *o;
- 		/* Not actually true, but we will ignore submodules later. */
- 		enum object_type type = S_ISDIR(entry.mode) ? OBJ_TREE : OBJ_BLOB;
-@@ -190,17 +207,10 @@ static int add_tree_entries(struct path_walk_context *ctx,
- 				continue;
- 		}
- 
--		if (!(list = strmap_get(&ctx->paths_to_lists, path.buf))) {
--			CALLOC_ARRAY(list, 1);
--			list->type = type;
--			strmap_put(&ctx->paths_to_lists, path.buf, list);
--		}
--		push_to_stack(ctx, path.buf);
--
--		if (!(o->flags & UNINTERESTING))
--			list->maybe_interesting = 1;
-+		add_path_to_list(ctx, path.buf, type, &entry.oid,
-+				 !(o->flags & UNINTERESTING));
- 
--		oid_array_append(&list->oids, &entry.oid);
-+		push_to_stack(ctx, path.buf);
- 	}
- 
- 	free_tree_buffer(tree);
-@@ -377,16 +387,9 @@ static int setup_pending_objects(struct path_walk_info *info,
- 			if (!info->trees)
- 				continue;
- 			if (pending->path) {
--				struct type_and_oid_list *list;
- 				char *path = *pending->path ? xstrfmt("%s/", pending->path)
- 							    : xstrdup("");
--				if (!(list = strmap_get(&ctx->paths_to_lists, path))) {
--					CALLOC_ARRAY(list, 1);
--					list->type = OBJ_TREE;
--					strmap_put(&ctx->paths_to_lists, path, list);
--				}
--				list->maybe_interesting = 1;
--				oid_array_append(&list->oids, &obj->oid);
-+				add_path_to_list(ctx, path, OBJ_TREE, &obj->oid, 1);
+@@ -385,6 +385,7 @@ static int setup_pending_objects(struct path_walk_info *info,
+ 					list->type = OBJ_TREE;
+ 					strmap_put(&ctx->paths_to_lists, path, list);
+ 				}
++				list->maybe_interesting = 1;
+ 				oid_array_append(&list->oids, &obj->oid);
  				free(path);
  			} else {
+@@ -404,6 +405,7 @@ static int setup_pending_objects(struct path_walk_info *info,
+ 					list->type = OBJ_BLOB;
+ 					strmap_put(&ctx->paths_to_lists, path, list);
+ 				}
++				list->maybe_interesting = 1;
+ 				oid_array_append(&list->oids, &obj->oid);
+ 			} else {
  				/* assume a root tree, such as a lightweight tag. */
-@@ -397,20 +400,10 @@ static int setup_pending_objects(struct path_walk_info *info,
- 		case OBJ_BLOB:
- 			if (!info->blobs)
- 				continue;
--			if (pending->path) {
--				struct type_and_oid_list *list;
--				char *path = pending->path;
--				if (!(list = strmap_get(&ctx->paths_to_lists, path))) {
--					CALLOC_ARRAY(list, 1);
--					list->type = OBJ_BLOB;
--					strmap_put(&ctx->paths_to_lists, path, list);
--				}
--				list->maybe_interesting = 1;
--				oid_array_append(&list->oids, &obj->oid);
--			} else {
--				/* assume a root tree, such as a lightweight tag. */
-+			if (pending->path)
-+				add_path_to_list(ctx, pending->path, OBJ_BLOB, &obj->oid, 1);
-+			else
- 				oid_array_append(&tagged_blobs->oids, &obj->oid);
--			}
- 			break;
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 1998d9bf291c..030e9e5b2dc7 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -838,7 +838,7 @@ test_expect_success '-n overrides repack.updateServerInfo=true' '
+ 	test_server_info_missing
+ '
  
- 		case OBJ_COMMIT:
+-test_expect_failure 'pending objects are repacked appropriately' '
++test_expect_success 'pending objects are repacked appropriately' '
+ 	git init pending &&
+ 
+ 	(
 -- 
 gitgitgadget
+
