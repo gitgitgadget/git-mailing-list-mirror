@@ -1,111 +1,122 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29EC334382
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 17:00:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E6C10F2
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 17:06:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755709206; cv=none; b=lj+fMO5Yxep0nM1vrr5Os3hVk08Huf5bLZCsvKqS89L01i32JI33DNdpcxWujiu/W6p/icwQHUFYaX7hYamPyENUFdQDY7s+aS64QA0kWe9FWCOl99ScocLIkIbWvZp/xuRV6n6dwsx/zyFMZY6nssyDiOU+h3tWDi6KU3/qvZ4=
+	t=1755709572; cv=none; b=En2f2YTzbJJrVwYxDhQtgGJ72Y+ZZOpgIaPtDgxcLpMcC11s2Q26Q4WDc7kE0SczfozVLgGaexeV4x/iFRzqJIeMWMyxqnnAo/orBEwNCLgInjVXPLXAuPrIqZBFooPTl+JKBZ9IhxvvPVDigGB8T3v/19gIbFZrNIoJ6zTOn3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755709206; c=relaxed/simple;
-	bh=76l2pU5VbTG5we20uquCqm9llyBqC7rNbEzxJ/tcbFc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZcQB6RjdQlGjMQM7PVL77IgBzTMn6zJdiTZpRFhspYXQCrhn2KqzSckNN6H4oBXaoxh5L5zbxUoA/xDAaEnNg4RyVtGNXY7LCHGhFnGcGNRjaAICmpjOEExL/yrYsVWRj4diN73SxEVEjHmjGmcDc/RiEvMM78BalGJqBKeUKH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HPwbyCnZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SGXrIffx; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755709572; c=relaxed/simple;
+	bh=5j1V5WyzXyuGD3rqqYgJvbrL9j2Oq1raRk+3WHYNf7E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rk40UNoLEk5OQMM3etrreMbjTMvLvkwlFbJwil3bLBAfj/QnZ970sNh1QJagPIvvqDjroOdF0szSCAjyQLLUD0piOzGJKgVBMm9/emH6T1G6iSYfqbVTDbVKSN2kUcL9MPjEeLzujHmQVK84qzg5NdJecVGDH1i78yXx1tlPl6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=donorschoose.org; spf=pass smtp.mailfrom=donorschoose.org; dkim=pass (1024-bit key) header.d=donorschoose.org header.i=@donorschoose.org header.b=2oOAvJxg; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=donorschoose.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=donorschoose.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HPwbyCnZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SGXrIffx"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id ABC3A1D00197;
-	Wed, 20 Aug 2025 13:00:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 20 Aug 2025 13:00:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755709203; x=1755795603; bh=/05VTGuTLu
-	PMP8y8QehHrPrtYPUXZ9jwYYlELBKqfKE=; b=HPwbyCnZ1T87f15DqKxF9GZU9C
-	XP1yVPMVs0uhxEbO5l4ZKJ2BOtnogOXX1fCqMBiQcwV/aUYEMJzr78KYC8VK/bs/
-	0lHKehTvd+/jqXJuXS7y187gGSaHOQW/XU+vAePGJf8sU0aF7DoKNE8MRm3QKBTy
-	ER7/CwbWm/Rx5v8K2ANz7izoNpYxdW3sHD3H5HGMpzL8JUQx8h0HUa6kTOL26iaL
-	TXcUonDd3jIfzcP95y5VE/L0c26VTa2Sps6wg788JxSVthOef9tIaEENZQhUj4Q0
-	damhgGeAPCEU5weevO//Dr5iASGZnWGBV3pD6ruEStg6k4mMnkXthioceKEw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755709203; x=1755795603; bh=/05VTGuTLuPMP8y8QehHrPrtYPUXZ9jwYYl
-	ELBKqfKE=; b=SGXrIffxacU9WGrVGNgKmeosbZ3ZJSXR28J9FmRnYYMWWBx3Lv8
-	jdz3XjGl2aW55W2NVr5gt8Wuk3y0L76eFZPejpC0lhs5+Q2BB09cZGtLbJm7hn8W
-	JEAGrbo3F5Bmt6pRWGNuUexnZIH621VOnUtXz7n78RWYBH65STnOXcxhy6+0HO8O
-	ltGYzZOT68iGYhUg806HDf7OxmOACvYmAa/SP/LYcVEGssQK0w7gN3+c4uxxu+04
-	pgq7Rzhn9NP7j9E4OhMN73fto/Hz3N5hHwBF4vCw/ukph/q231qPjPhHGbNu32/U
-	jno+T2jGVJePQqxWlBPDHq+RTySmyINbx0Q==
-X-ME-Sender: <xms:E_-laBH5tyKN5oHy284cYC2HHWo6Tqv-qrSqmoB1joUVfk4OZV5WHA>
-    <xme:E_-laA5gsNmStU8XTxKy1PVrwpGVkbKAJodTpk3pzG78TA4ns4Oy6adxLQqQhB6ri
-    ZEXIbQ83RHjfanvag>
-X-ME-Received: <xmr:E_-laPuHbbCw9c34t3fVV6ij1f3bAjxaJSG9r_tiqTTat3zJJpl0FtjznZ963bdjc8iiK4_33VBzWZv44SoBmrK6LKV_9gj9662Xn-Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheekleduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepkeffiedugeetvdehffevffeuteelhefhieevffeuiedvvdekkeffffdvieeh
-    ffdunecuffhomhgrihhnpehgihhtqdhstghmrdgtohhmnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegurghnihgvlhgvshgrshhsohhlih
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:E_-laJ6dczmyOhe59cHE9MAFNExZndyDiZpddqde8Pafekt88gNnwQ>
-    <xmx:E_-laCVeFPbzxD3ySn_IJsoOmCByZVEdYDw4Sk-QqcbPrqDtCbNfmw>
-    <xmx:E_-laD9nSHvi5eQnEBz_yFTjG6-hi4JsIVHxlA8naWgXuHDkS7qOpg>
-    <xmx:E_-laGl213XRbmMEac3tMUmS2A2EHSZtoD7dUiwik0Zgvw74WBorSQ>
-    <xmx:E_-laIVdHUXDdrC7K2TBtfBqsFFhtz3TJ9OsZ_ySxF1jCZRv2lw3wqJu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Aug 2025 13:00:01 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Daniele Sassoli <danielesassoli@gmail.com>
-Subject: Re: [PATCH v3] doc: add discord to ways of getting help
-In-Reply-To: <pull.2033.v3.git.git.1755679018997.gitgitgadget@gmail.com>
-	(Daniele Sassoli via GitGitGadget's message of "Wed, 20 Aug 2025
-	08:36:58 +0000")
-References: <pull.2033.v2.git.git.1755641032154.gitgitgadget@gmail.com>
-	<pull.2033.v3.git.git.1755679018997.gitgitgadget@gmail.com>
-Date: Wed, 20 Aug 2025 10:00:00 -0700
-Message-ID: <xmqq5xeiapyn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=donorschoose.org header.i=@donorschoose.org header.b="2oOAvJxg"
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-55ce528a0f5so21696e87.3
+        for <git@vger.kernel.org>; Wed, 20 Aug 2025 10:06:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=donorschoose.org; s=google; t=1755709567; x=1756314367; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0pWCTC4f2gVXzEgF8asDDlzsYJ9box3Mx+UaHsICiQg=;
+        b=2oOAvJxgqAF5EwV72Uejvg4BMA2LOLCDrSBHssc4/ugeq1J34hLwAgGQzKulaLhI0+
+         I6UbCruHwP4snDYLDExycJhssfbqhb2Ov4NEED4hl6mCqrHLJedaYVGBftm81GJYPhwa
+         yjfvgDe9nLyJee6ijewxOq5yoNVk9qogtrch8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755709567; x=1756314367;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0pWCTC4f2gVXzEgF8asDDlzsYJ9box3Mx+UaHsICiQg=;
+        b=skdl9d3gzuqXHhAIaAZ9Lt74vJ6Hpr4QiYlpt35hK3SDcplLsIzXPVbEOTfcgSUWcM
+         Qh0KSfPjAUEpSIFWZff/KySnYBHy/IkqWvexac4G8NaJQKLi8gL9a6aI1bDjwOgkjptT
+         IogLP8o46VSn2G7s3PwkusD2F1Q10s0rOER4fU9a3iQfkKnlMBQov6t20q2q7TvSWHNd
+         i4SK0a6UwwUeXBU58tLl/SmAPSw+EqRoBPu7IPdIKJ1S+cd/m8x+taHkL6u0Br5l1MV2
+         9xh1+W81+D69oAOXAGHBR44xNaUIHbjnSVroYjsP+LTr8yuk39pfNLP9Dcz0JEXx302g
+         JOhA==
+X-Forwarded-Encrypted: i=1; AJvYcCXKupj5THmRzWbxViVn1JScLZiKEKbQ54EsSWorXmyRjgB1lQsUeEBujKEaizdV1l9+CFs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzThxmhUYckc8i5z0oDka3Mo0r/zFIXaOl2Lsy9hDk9IZwVffui
+	sgHw0H/7j5Uvbd2Y2M7Hag0cSs0Ej2oUNG/GP7r7fH5UhPYC0/PREinrseBoq+FwHtePdQRsz2a
+	CZnVvcwHbN3sylCicLmDe23froYCq6p4upMkqrxN1
+X-Gm-Gg: ASbGnctrNGVx9uNZm01n+rDNX4jTRAMWgOQIW/8A05DGfavlxB8JqGqe87ac+JeJfMM
+	V4kw+YKZ5AL/kQcb6r04YKocZ/NZDTRqdZdxd6G75KMZcoSmLOBmXmJ+vI/dYpcBP2MQseajZhj
+	dUBuWv9gAsuDgXvRJJ/jSkN9zJF2JE+Tqm122WSUpfGktvt42x/+R+HQvOqulihPluW3mrOObwb
+	AuTGH6V
+X-Google-Smtp-Source: AGHT+IEhLG2IyUxtsLm5oh3fW9NYCZ8dnLx8EUdo32oOrJSc5WgX2GZbdj9i+lKxfeOxMxoAbmKoT+9HyqUlGrbop0g=
+X-Received: by 2002:a05:6512:2113:b0:55b:8328:d2b6 with SMTP id
+ 2adb3069b0e04-55e06b96194mr782298e87.37.1755709565972; Wed, 20 Aug 2025
+ 10:06:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAAn3O_2n75RGpvxv1o14BE3KFdwiJW9OOKaHp6_c0rd_MqxC2Q@mail.gmail.com>
+ <011801dc114b$f38bb130$daa31390$@nexbridge.com> <37da14fb-fead-448b-b6a0-853c9fbea653@app.fastmail.com>
+ <xmqqfrdmaqg4.fsf@gitster.g>
+In-Reply-To: <xmqqfrdmaqg4.fsf@gitster.g>
+From: Chris Judkins-Fisher <chris.judkins-fisher@donorschoose.org>
+Date: Wed, 20 Aug 2025 12:05:54 -0500
+X-Gm-Features: Ac12FXy21WQtSqa7b38Avq2fWsxf9mbk8RKTykF-8lSZeRrXwkocFQU4gP9-xT4
+Message-ID: <CAAn3O_2iHVt5TctvwLLSXm5Nw2wS8e9Xk0is1=k=-qRS=gHVMQ@mail.gmail.com>
+Subject: Re: git whatchanged
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, rsbecker <rsbecker@nexbridge.com>, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com> writes:
+What I actually type is "git wh<tab>". That does result in less typing
+for me than "git log --raw" would. For now I've added the following
+alias, which takes precedence over the full "whatchanged" completion:
+whatchange =3D "log --raw"
 
-> From: Daniele Sassoli <danielesassoli@gmail.com>
->
-> Discord is a great way of receiving help for members of the community
-> that are not on the mailing list or not familiar with Libera.
->
-> Adding it to the official documentation will aid discoverability of it.
->
-> The link is the same as the one at https://git-scm.com/community.
->
-> Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
-> ---
->     doc: add discord to ways of getting help
->     
->     cc: Collin Funk collin.funk1@gmail.com
 
-This matches the result of my local fixup (you could have just said
-YesPlease when I said that I'll locally fix-up).  Will replace.
-
-Thanks.
+On Wed, Aug 20, 2025 at 11:49=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+>
+> > On Tue, Aug 19, 2025, at 22:57, rsbecker@nexbridge.com wrote:
+> >> On August 19, 2025 1:51 PM, Chris Judkins-Fisher wrote:
+> >>>I still use git whatchanged
+> >>
+> >> I did too. However, now that git log --since has basically the same
+> >> functionality,
+> >> Perhaps setting up a git alias might do the trick for you:
+> >>
+> >> git config --global alias.whatchanged 'log'
+> >>
+> >> so
+> >>
+> >> git whatchanged --since=3D"2 week"
+> >>
+> >> or something like that should continue to work after the command is
+> >> removed.
+> >
+> > You can=E2=80=99t alias core commands.  So this will fail in the report=
+ed way
+> > before Git 3.0.  Then from that point out it will work as an alias.
+>
+> Not quite.
+>
+>   $ git -c alias.whatchanged=3D'!echo bar' \
+>         whatchanged --i-still-use-this -2 --oneline
+>   7c10e48e81 describe: pass commit to describe_commit()
+>   :100644 100644 72b2e1162c 04df89d56b M        builtin/describe.c
+>   8cfd4ac215 describe: handle blob traversal with no commits
+>   :100644 100644 f7bea3c8c5 72b2e1162c M        builtin/describe.c
+>   :100755 100755 feec57bcbc 2c70cc561a M        t/t6120-describe.sh
+>
+> Your alias with the same name as a real command is silently ignored,
+> and when the real command disappears, it will start working.
+>
+> Having said that, as "log --raw" is even shorter to type than
+> "whatchanged", these people are really better off without such an
+> alias.
