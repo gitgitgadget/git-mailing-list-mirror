@@ -1,128 +1,122 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE18236451
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 21:16:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7C41E49F
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 21:20:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755724566; cv=none; b=oth058b5cKogHsiW1JWoKezJId2rIFgEef0eWFiKNRsIP9H5spLJ0V2v1JygUsXF+4HKgl7uhS+bOsCbyg042xYi73ONvpOKYSueYHh8dzlLUxvZHuXt3kYpj+bmJGUZcS4/QDpENOgt8IAhziFpRt0RG59y/5T4c38hc4RfV7Q=
+	t=1755724836; cv=none; b=fFANLWTI3YnRfSnBwcknb4wws4LdulfKx26aH1mJOEKTdQ0OTPIeuwrA4yRhWA9PPZ+N9Os2Ym2UNZab01juSE/S82Sqf1E+rXfnP/psa8WDSerDfacb2LAzZKhUfFvPYFxvwXGy0jHucCGkqRILZoim0widOpp4C6agNjmcKMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755724566; c=relaxed/simple;
-	bh=RlUxLd0j3PLpokjQZ4ZebF1lw5HW5C9LnZ2UBT0ia2Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DHrwt3qKTQvJ7KXFmnnREzPnjxnW4sPqHDRMFI+povC0ljjHKrU9k25n5z2STYpyedRahqbl+cNtNGv5BmQT3AByVBkniIPrkJD5Kg3oEUZdjXEJZ6AKcHFe24szvqIHOYenSAlevhaYycQxPGUji9XjG5y8/0eVZPlbYnTRQ7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kJrBdS/j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H5/RBWqt; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755724836; c=relaxed/simple;
+	bh=4xhJKS1n7YIjcRnCVKq4n/YWHk5eTqk3nRvSi8dk3Z0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NeObjt03ZVuQaeh6S+N2y+2oJH8yh0/N7Nudg+21jn0tUqEd5EdQvbGntO/2MvLzEMX+YO9VZ3Q90l7QLdEpAO3l4MnMJmzwESWNutnh1oO8+4Ve9mUccqEsK7q6WiZeFy9tuo8nXlL5j20ICtpGw14A7+PtDWkJ9wxGCH66WLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZxR4Vl2b; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kJrBdS/j";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H5/RBWqt"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C2F697A014D;
-	Wed, 20 Aug 2025 17:16:03 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 20 Aug 2025 17:16:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755724563; x=1755810963; bh=BWgyKfHqcn
-	e+T3/Lw/BBdpNA5hVU/WRpsDKwUiRt3Zo=; b=kJrBdS/jWcyOrezjwPm2Ztib4C
-	4SvUD0UJB6YOnr/bmmFKXft1yGZR56gJnrkfTrxav8vUpaQAq1qWldnau8uVrzyv
-	w3LUAhlHkh+78TmWhF7fJ0LwpQZZI0CskADzWntUsZb2Co9SqIeu3hqnRNgQVgGa
-	JbGcrI+Q2n5WbpRm9LgUxhjAPM+obl8RenUAhcA57MVzDhjgZlcHLwaRkwy6GCMC
-	KCywNVGSDzlqhBGsVLKH5AJILdB+zV0m2KHyhTYRHNH1/7Ok4HKMzC1lj0m0KZ1t
-	FJEpwLWp2ZxN5zaOCDi7uyZaJ9jqeLh6nuTIerGOr5oYR/euIWRKUEZjmMYg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755724563; x=1755810963; bh=BWgyKfHqcne+T3/Lw/BBdpNA5hVU/WRpsDK
-	wUiRt3Zo=; b=H5/RBWqtdwsXdY/5RSt4TZUVgkyckj9tqU6aNML0DdDBf/09nZL
-	hzkJutMWC6mV+YOwCv2qHeYaYXh2tpZ5/tDCreLw+wAz2jJFlZylaQrB/vffgFUx
-	NgKhzNTPUOSqA55QZAUZFB5NpCSr5oyFR5fJX62TN7u5tKCS47sK0AF3hKbYsW30
-	9wsaxYKjIdUv5CvklUxtNW0sfJKJ7Lr8WdQa8rnyHD5ZOTJ7Il8EFthHKVeTnwfG
-	9hvgNd6iczbSbsdZ10dnELtExPhglaLFZIn0bv/bSvKyGg77V/naOnaX8F2RdeDn
-	cYwLJIpP8tc+qHV6mgcPw0bDYehNnh29SEQ==
-X-ME-Sender: <xms:EzumaFGHK5kEPb6bbRG6jC26stjx4m9vBs7ZBzwrAv0pElQyio1iTQ>
-    <xme:EzumaE5xsb3aEmMd_PLXWqZfck87P5Ecn7xGnLLBNBYHSWWinh_RV9_yRpVlDmpkx
-    QSLxcOElERNz_uCxg>
-X-ME-Received: <xmr:EzumaDtgYSEdHTct8liPyeLkzSqTd9SGD-T6V184W1R11biOrI8CXi7BLBsJ9zQBscJLU667aX-mF72AtPuoRAzQUlhlj7Cl6KmoT_w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheelgeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegouf
-    hushhpvggtthffohhmrghinhculdegledmnecujfgurhephffvvefujghffffkfgggtges
-    thdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsth
-    gvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepgfevvdefjeehtedtgfff
-    fefhtdfgheettdekheejieekgefgteejgfekieefkeffnecuffhomhgrihhnpehgihhthh
-    husgdrtghomhdpghhithhhuhgsrdhiohenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
-    gtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegurghnihgvlhgv
-    shgrshhsohhlihesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggugh
-    gvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:EzumaN4wkEAiN8P0x0-jvS283fhtdkm_qULd7xPF-a8xzL0lBfYwSg>
-    <xmx:EzumaGWQiugdmZ7GOy9W3CPk3G1p4l6dwFfbx6mDIIxhAc6VWYCu6g>
-    <xmx:EzumaH9MwbsybYdO8kpHYuZJG9ZzxpC3hnvOLQb_-Jd4ratifPfAHg>
-    <xmx:EzumaKmSSF7K1ztBdvGG9hd4SCqQtfDbtei03CmlJwI0PTCPSXUszQ>
-    <xmx:EzumaMUF-nvgo6J3b4iZ351kkVxsfCh3nGqizZE81eRuHLC6ipdG_fmY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Aug 2025 17:16:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Daniele Sassoli <danielesassoli@gmail.com>
-Cc: Daniele Sassoli via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] doc:clarify which remotes can be used when contributing
-In-Reply-To: <363ac6d1-8444-4d48-a66b-51ea139f4e87@gmail.com> (Daniele
-	Sassoli's message of "Wed, 20 Aug 2025 15:07:36 +0100")
-References: <pull.2034.git.git.1755630882418.gitgitgadget@gmail.com>
-	<xmqqms7vc8mo.fsf@gitster.g>
-	<363ac6d1-8444-4d48-a66b-51ea139f4e87@gmail.com>
-Date: Wed, 20 Aug 2025 14:16:02 -0700
-Message-ID: <xmqqbjo98zjh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZxR4Vl2b"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-333f8f02afaso2976051fa.1
+        for <git@vger.kernel.org>; Wed, 20 Aug 2025 14:20:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755724832; x=1756329632; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=65BWbcctfonXrjPGTuRI8rdW24enA7uBCSAOCoqLEss=;
+        b=ZxR4Vl2bsOJ7P/sbpyMLum4jVMoeg+v1bJ6Tj42aYBpiudBWE9ubt5ALaxJVhrXbBS
+         la97Hd0Hd6NLttb7htBTzhkdk7Y05DVH8bzi15wrSYEzx06crv2Qk+d+pwQLoxlgO598
+         AKucyaJfHkYfPCMeR4wIaXGCPfIFgo+2s4drxKQOMpSwUakm3TTwjtSXWzn6nx4n0wSt
+         Au347BpbNWS8DvNAHRO52bQnWSxteZE5MNhPMSbex01ryt4rIZiREAp+toQ6fkwhXG2b
+         wltrnWB7UOQC7DAG3gzxaUTn9sojII8o7Hy+c0rzHnlop8VwpZJFRFoXApOZ1KpCE+ji
+         M5jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755724832; x=1756329632;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=65BWbcctfonXrjPGTuRI8rdW24enA7uBCSAOCoqLEss=;
+        b=lYPRJUsTuw6s5Xd1eXYyoUVpVIlu0oMb+vGmy2iGdoWsFCLnYxogfgXi2ee71vNl9v
+         TGZbaNAg0I1cFW1LBt4QcFkSjvk4LO6WlOan5nW6+OyhH3DaBRaKiN5rMzyP1y6Xx9eX
+         j92O5+HNOzPIOmut2l4wpBFcOASLiDKh4cJiJjOARXEiTAx/oMWnuZyxkn38nslHHsfT
+         Z+MLhL34XxmhqTvXsKMh3GT76ynJizYEl17if4aWZfyK4oHtx9/y2t8YOqyYcGM6fGQb
+         LbCFjDw3TZepJe+zzi124asoxBtQyG9msChUQztIt1OjVvfPXRETmIaghM4r+5wVAikt
+         x3Pg==
+X-Gm-Message-State: AOJu0YzCcNZXVV8ZLdKNCadwqrXVVJl1jGA3LFWJzJ2XrLvJvKbMno5O
+	2YfCzWeOgmwgwRhZtfkACoI/DkT/AyTApPU9OL3+uez5fM7T5FUe/mmzqu+NRLNku7fIKjRM6Uu
+	cKhpxRjXu9EUjyhLWfYh43TA6P1a5L6s=
+X-Gm-Gg: ASbGncvphSvaFbCs/TQjY2RsSPPFWLbe7v+25mCWL+IPplqql2XBjxYcSwbVsdvmh+K
+	BOsBQDNFwO13UCAqqvxhy5VYP1PFcVf5EQLdsScNFhbtsCHZpUGzaE/JvSGM6mJ+LW3+pthG/pE
+	dMCOQIGTsK2W0wwRfB9OI4/T9EkPuw2beH2xV8g6nYTJThK52KHllkn3wS5XzgmXhDtQd4uFlTy
+	gB54RE=
+X-Google-Smtp-Source: AGHT+IHcS3z8poRgrQ6DUiXECHSXJ7/22/UpOQDsponeogjDleGFEW7V9gM54SSz2j2pqRGqHkl96OCkhJW/44NWKzo=
+X-Received: by 2002:a2e:a584:0:b0:333:f936:d9a with SMTP id
+ 38308e7fff4ca-33549f755bfmr228281fa.32.1755724832237; Wed, 20 Aug 2025
+ 14:20:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250820195229.45943-1-rappazzo@gmail.com> <xmqq349laeyb.fsf@gitster.g>
+ <CANoM8SVTROfaQpRNBfwxU9opjXFPLzxN1W-xXTrA2bhx9KJ0LQ@mail.gmail.com> <xmqqldnd8zpc.fsf@gitster.g>
+In-Reply-To: <xmqqldnd8zpc.fsf@gitster.g>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Date: Wed, 20 Aug 2025 17:20:20 -0400
+X-Gm-Features: Ac12FXzTqQQDA48I4Tg9mA3UJSxkNcT2mcOteRdFs-5kC72PHAh-pbgXrGIEn-s
+Message-ID: <CANoM8SX7_uQV-ZRAim55UaiHYCKTgKN0AO6zB1O7Ux4deiCNaw@mail.gmail.com>
+Subject: Re: [PATCH gitk] gitk: add README.md with contribution guidelines
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, j6t@kdbg.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Daniele Sassoli <danielesassoli@gmail.com> writes:
-
-> On 19/08/2025 22:19, Junio C Hamano wrote:
->> "Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>>   https://github.com/gitgitgadget/git and open a PR either with the "New pull
->>>   request" button or the convenient "Compare & pull request" button that may
->>>   appear with the name of your newly pushed branch.
->>> +If you're using https://github.com/git/git as your remote, you will need to
->>> +open the pull-request from your fork, selecting `git/git` as base.
->>> +
->>> +The differences between using `gitgitgadget/git` and `git/git` as your base can
->>> +be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
->> Looking at the table, there is no advantage to use git/git at all.
+On Wed, Aug 20, 2025 at 5:12=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Most of the document, including the "Getting Started" section, points to cloning
-> from git/git. It's only when it comes to the gitgitgadget section that we
-> mention gitgitgadget/git.
+> Mike Rappazzo <rappazzo@gmail.com> writes:
 >
-> It's true that there are no advantages of using git/git over gitgitgadget/git,
-> but I would argue that the disadvantages are quite minor and definitely don't
-> impact someone at their first contribution?
+> > On Wed, Aug 20, 2025 at 4:57=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
+om> wrote:
+> >>
+> >> Michael Rappazzo <rappazzo@gmail.com> writes:
+> >>
+> >> > +#### Creating and Sending Patches
+> >> > +After committing your changes:
+> >> > +```bash
+> >> > +git format-patch -1 --subject-prefix=3D"PATCH gitk"
+> >> > +git send-email --to=3Dgit@vger.kernel.org --cc=3Dj6t@kdbg.org *.pat=
+ch
+> >> > +```
+> >>
+> >> Just being curious, but does the project strongly discourage a
+> >> multi-patch topic?
+> >
+> > I don't believe so.  I think most people know how to submit a github
+> > PR, but J6t has mentioned that he prefers the mailing list (as noted
+> > in the readme).  So I wrote a simple example to show that patching by
+> > email doesn't have to be scary.
+>
+> As the original assumes that you are on the branch where you are
+> taking the patch(es) from, perhaps
+>
+>     $ git format-patch --subject-prefix=3D'PATCH gitk' @{u}..
+>
+> would work?  I was mostly reacting to the "-1" on the command line.
 
-Even the disabled things may be rather advanced features, wouldn't
-it still impact them for them to stay to be on git/git?
+`@{u}..` is funny, because that seems to assume that you haven't
+pushed your changes to its upstream yet.  I could say `master..` but
+that assumes that you named the branch that (as opposed to `main` or
+something).  I will try a few different ways and see how they feel.
+As I said, I just wanted an example to demystify patching by email.  I
+think if I add something above to clarify that this is just an example
+and not verbose instructions it could help too.
 
-Those started from git/git have to learn what different things they
-need to do to use GGG by reading this extra piece of documentation,
-and then if they plan to keep using GGG, they will have to do this
-extra thing each and every time until the end of time (since your
-preference is not to teach switching to GGG/git from git/git).
-
-I have no strong opinions as I wouldn't be the one who is doing
-something extra every time, but I'd rather see our new contributors
-having to spend less time to get their work published and more time
-to polish their work into reviewable state.
-
+>
+> >> It would be really nice if you add "review them here before you run
+> >> send-email" step between these two commands ;-).
+> >
+> > I can revise.  I will wait for more comments before sending a v2.
+>
+> Thanks.
