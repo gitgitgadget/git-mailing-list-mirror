@@ -1,105 +1,140 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0C22BEC27
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 21:50:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC336FBF
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 22:04:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755726640; cv=none; b=DlQTKm75Kly7f/x6ZiF8O+bNSEjBew572rqnWXFZAuN+pC7ikbO+vKmZhGDOdW0S6YY0ehNhEAUEo7E6839c6MD/IYX2auv0QOOEzjNEeXZEHE2B3PPUavI9F8pOOYlcuanJPns8FwMWV9JREbuvdW5xZdYKBYRASqeZ592MeDM=
+	t=1755727485; cv=none; b=pWUxSFwuxfMxg6P9DZk/kyPU8Czv9PVONMOisTVPzgVUIy33+YCp80v9zVMGWX3krUQ3tzyZZeZSk/lJd0EyXrYj+Fj7ujyVCL6tlR6YkIz+znfhbHCH5MSFWCDjdXeTXSf+Ko2YiQlc3hc0GwxiqDOIQJpqE5sPbjPvwxc2+I4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755726640; c=relaxed/simple;
-	bh=23MT01YOqB360krtyIvrCyRdJ0QBi5W69J2LKE0XNzg=;
+	s=arc-20240116; t=1755727485; c=relaxed/simple;
+	bh=0kemD6Q6ap7HEx2gCU0JE/Zaozx3UCWH2RuICrcYpgE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VaK+sdz641pbQUCBr/eA9rBKzML2SlwhooDUe0UhYoFhAAnI1oI2s/kHGU377uorcFMrJaD4meuO4ES1/0E1yE990fbx4YvXVtkbj/tIEMC1gCFo+B2iurRgfV4KMhbzRyNZte60eqAZe1AfLFLmeoMvv1fVIPFiEYjbPD8z4Qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nDd/euP8; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=ns54jbPztXcwSBzFPupxXpWRXy/mlMnbPM/I5DOX1SWG2rOuy3iE1BK7Wp6DcFhOpT4uQNeb+KlD3SzyfqwKSP9xgyPTmz5OsDZFd52kZFxKTy9Nfq7VKs8u4FaQmnCDf7gDV+cDI7CdUzX2/gsHJyz5XFh+Ct3TMbHAAyzDGXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=hIa90k30; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nDd/euP8"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-242d3be5bdfso23195ad.1
-        for <git@vger.kernel.org>; Wed, 20 Aug 2025 14:50:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1755726638; x=1756331438; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iblgXQqldfLzWCJ/jKHNbwhlNg1Xo0e4KQivW+3bHJU=;
-        b=nDd/euP8wQr+JVCoqhYqS/tFaU1vwQSVxqynho2OTTADktjqfnTraECItccXdRo6te
-         +ITjXFPdE+1KJYFe33ebGkAPmMt8paJ3QDRm9bu2GBtxO7RD2liJ2lPuGuK350RA/SIy
-         3rmDeYYhQ8sgJlWMyPW6IjRbyfzW3r11S7FBDyffIATWltisH6KEaNujMB4o/+LIxZyq
-         Hm/Q2dnPP9YMWk9jTyEDQw8WKVUkgEMztR4UGadtwfvMlvdAqBCgVgndDXWuDwMOZ1pe
-         z8Jyj7l2dA1SS6vmxSEmY7D43leZQ4SygKsCtbmLGjMhDFO/xxvgTmgEkjSCP22SAVC2
-         Lygg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755726638; x=1756331438;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iblgXQqldfLzWCJ/jKHNbwhlNg1Xo0e4KQivW+3bHJU=;
-        b=wet5j9as9yoHJdjXKE2lYBGsbknFRwEBOGmeB5ZTGukhwIp0cgAOq2EgnmQlg9RH6k
-         x63yFsJZbouwwZsW2YZU8NaO9D3ZJjnuomOjlq8lSK+UkBRF78zNfqF8tQUogTncfUt2
-         t0HD04qR06kC9nHn4mRcH2kgGFaB5w7Gv9QUjw+XlFre9OdYWlxfSME7imVwmRXEBwtS
-         +9TlumzkSFAlwWzL18sE4jsjdpNAemzA3GfO8uaiFSEINIU/oNVveCxGPpuQp/zwkZqe
-         UggUNqXIJ/BtK0hAwG7lyq6FS+auhvO/9A7EQfpDI3MdcuTsXu9KhqnIwLESx5iriS5v
-         5yaw==
-X-Gm-Message-State: AOJu0YwVlSYPM79TLdiMVXwS9fYohjErk3cqXoU3F6Kc52a5VPhXKt0y
-	2pUvx++7UJo1LvXaVWHTkzGWzcfNaxAoX2vLHkvyY7/7uatrQ91JBm4M2HWOwF8vSg==
-X-Gm-Gg: ASbGnctK4INkZ3Hc6gFTAKfcpShZIMnt5CJ2pIWO8PpTwATndsIEzThZx7EAR4RrOdu
-	SLINOl6SrFfU2bSHk3sWeF6MiH/JPKnCP+7MbEp/O9n79ni7KXBRVzRxL5o/K6jWvdJSRiPQQ43
-	AhYM9CztyGM8i0WlCc51PztQrmlD7MsE40PS8PRur9UBwAktvdUasG1Fgmoum3ebYIFaxOQ/WPb
-	bufdmyvfpfCcv8Q9M3qgPMmEbdfT70l9eXTd4V9FuFw4y/xfQ+YzO4CQ4ozHRD9olHWDkCJ3mm1
-	7iwQLyqc6sLti9DWSG1CVIryGhKD0Foh/6ZqKFcP7MXdhd/htvEojWYkuSU8IecVojmnEtfX3yd
-	BJWy71YirsHCGcfVQpA+FgRiE3Ro=
-X-Google-Smtp-Source: AGHT+IHPsX/BwRs+lsA9Qj11r7AhK7YhZe9r1NeC0athBxG9O7DKjJBfxV5SOFB46xV3pamzvkjScA==
-X-Received: by 2002:a17:902:cece:b0:236:7079:fb10 with SMTP id d9443c01a7336-246022813dcmr305935ad.3.1755726637768;
-        Wed, 20 Aug 2025 14:50:37 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:23b5:65e6:69f5:ee81])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e843bb510sm5302294b3a.53.2025.08.20.14.50.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 14:50:37 -0700 (PDT)
-Date: Wed, 20 Aug 2025 14:50:31 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, 
-	Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	Aaron Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 3/9] submodule: add gitdir path config override
-Message-ID: <km4qhwxpmwld2qw4ihmzjtk7o5yeblfhhm6hqsh4nmzdbkdyyc@mwqb7a76liop>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Adrian Ratiu <adrian.ratiu@collabora.com>, git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, 
-	Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	Aaron Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20250816213642.3517822-4-adrian.ratiu@collabora.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="hIa90k30"
+Received: (qmail 39641 invoked by uid 109); 20 Aug 2025 22:04:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=0kemD6Q6ap7HEx2gCU0JE/Zaozx3UCWH2RuICrcYpgE=; b=hIa90k30U7Xj2GOdvuheEXZm7VYiDXdw55mGE3nQUbXrrre0WyjqhaJP0JD3CMhwA2rKkomF6qpq5VON3bg/fdDHLnjUDeXCilQSPkbaCYlMsyZYTezMj0nes7/dUrKriyrwZ1UtXsr66dLB9mMWDfTpkfX5xSp4T6Mer7ckNbKkZJgd3UMFrlTRLNTtpKALUDj1WWK3MBur/lZ2v1+YtSCb25vum30tsRUg4TYT7sbBAmUmK4hMspZ1XU2bX+w9l5fu6Ti7qSkjj8sbQObGDnTIKR3iFZtdQqTWiQy7BKaEavq5Z/IqItOSofGiSB3PoICni/vZHZs7QPjEGBN5dw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 20 Aug 2025 22:04:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 65408 invoked by uid 111); 20 Aug 2025 22:04:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 20 Aug 2025 18:04:40 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 20 Aug 2025 18:04:39 -0400
+From: Jeff King <peff@peff.net>
+To: Isaac Oscar Gariano <isaacoscar@live.com.au>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [BUG] Some subcommands ignore color.diff and color.ui in --patch
+ mode
+Message-ID: <20250820220439.GA1668511@coredump.intra.peff.net>
+References: <SYBP282MB296329544B33E3C16DD99FD28C33A@SYBP282MB2963.AUSP282.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250816213642.3517822-4-adrian.ratiu@collabora.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <SYBP282MB296329544B33E3C16DD99FD28C33A@SYBP282MB2963.AUSP282.PROD.OUTLOOK.COM>
 
-On 2025.08.17 00:36, Adrian Ratiu wrote:
-> This adds an ability to override gitdir paths via config files
-> (not .gitmodules), such that any encoding scheme can be changed
-> and JGit & co don't need to exactly match the default encoding.
-> 
-> A new test and a helper are added. The helper will be used by
-> further tests exercising gitdir paths & encodings.
-> 
-> Based-on-patch-by: Brandon Williams <bmwill@google.com>
-> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-> ---
->  builtin/submodule--helper.c           | 17 +++++++++++++++++
->  submodule.c                           | 11 +++++++++++
->  t/lib-verify-submodule-gitdir-path.sh | 15 +++++++++++++++
->  t/t7400-submodule-basic.sh            | 15 +++++++++++++++
->  4 files changed, 58 insertions(+)
->  create mode 100644 t/lib-verify-submodule-gitdir-path.sh
+On Wed, Aug 20, 2025 at 11:05:53AM +0000, Isaac Oscar Gariano wrote:
 
-Sorry to keep sending piecemeal feedback. You should also document the
-new config option in `Documentation/config/submodule.adoc`
+> Bassically the colouring behaviour of the interactive --patch option
+> to the various commands differ.
+> I'll call "commit, add, and stash the "good commands" (as they behave
+> as I expect), and stash push, stash save, checkout, reset, and restore
+> the "bad commands" (which are bugged).
+
+I think this is a regression in the conversion of the interactive-patch
+code from a perl script to a C builtin. Bisecting points to 0527ccb1b5
+(add -i: default to the built-in implementation, 2021-11-30).
+
+Without digging too deeply, I'd guess the issue is that the original
+perl script loaded all config itself. But now that the code runs
+in-process, it is depending on the outer command to have loaded the
+color.ui setting. And indeed, the code here:
+
+  $ git grep -A3 color.interactive add-interactive.c
+  add-interactive.c:      if (repo_config_get_value(r, "color.interactive", &value))
+  add-interactive.c-              s->use_color = -1;
+  add-interactive.c-      else
+  add-interactive.c-              s->use_color =
+  add-interactive.c:                      git_config_colorbool("color.interactive", value);
+  add-interactive.c-      s->use_color = want_color(s->use_color);
+
+shows that we consult color.interactive correctly, but then depend on
+want_color() to do any fallback to color.ui. And that is just looking at
+a pre-set variable:
+
+  
+  int want_color_fd(int fd, int var)
+  {
+  [...]
+          if (var < 0)
+                  var = git_use_color_default;
+  [...]
+  }
+
+which is expected to be set by the outer command loading the color
+config via git_color_config(). And that's why it works for "git add",
+but not "git checkout".  Either "checkout" (and other commands) should
+learn to call git_color_config(), or the interactive code should itself
+learn to handle the fallback.
+
+I'd expect something like this:
+
+diff --git a/add-interactive.c b/add-interactive.c
+index 3e692b47ec..ad8b4907e1 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -50,6 +50,8 @@ void init_add_i_state(struct add_i_state *s, struct repository *r,
+ 	else
+ 		s->use_color =
+ 			git_config_colorbool("color.interactive", value);
++	if (s->use_color < 0 && !repo_config_get_value(r, "color.ui", &value))
++		s->use_color = git_config_colorbool("color.ui", value);
+ 	s->use_color = want_color(s->use_color);
+ 
+ 	init_color(r, s, "interactive.header", s->header_color, GIT_COLOR_BOLD);
+
+to work, but it doesn't seem to. Maybe the diff code is independently
+looking at git_use_color_default, and we really do need to set the
+variable?
+
+At any rate, I think there may be a simpler workaround for you...
+
+> As for why I care, I was trying to pipe git restore through
+> diff-highlight (this functionality should really be inbuilt into git
+> diff)
+
+Have you tried setting interactive.diffFilter to "diff-highlight"?
+That's what it was designed for.
+
+> A related issue, that is probably not a 'bug': all the --patch options
+> ignore the diff config options (e.g. diff.wordRegex).
+
+The interactive patch options use the diff plumbing under the hood,
+because they have certain requirements from the output. For example, you
+can't apply a word-diff (or a colorized one for that matter; the color
+is handled specially by generating the diff twice, once with color and
+once without, and assuming that the lines correspond between them).
+
+So the interactive code has to manually interpret any diff options that
+it thinks are OK and pass them along to the underlying diff command.
+There are undoubtedly some that would make sense for it to handle, but
+nobody has cared enough yet to teach it (I think it just learned about
+diff.context in the latest release).
+
+I'm not sure if diff.wordRegex is such a case, though. You can't apply a
+word diff (and it does not have line-to-line correspondence with a
+non-word diff, so you can't show one and apply the other). But there may
+be spots where we'd use it for generating a normal unified diff.
+
+-Peff
