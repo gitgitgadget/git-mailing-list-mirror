@@ -1,146 +1,138 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964B03FE7
-	for <git@vger.kernel.org>; Tue, 19 Aug 2025 23:00:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89E4235BE2
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 04:34:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755644425; cv=none; b=JM5Lro758bbKS7Fu33Ed8+N6s6yTCIbY4KTzU4Al7JZVzIVRyD2d7AzTiiCTHzMBu2MTs+a3nMQ81aazCtbdUfEx29Nn7LjWKAPx+Zy4bGQxjKZao79ZGLPyNsQBOHCV9d0RKTOvidio+7sKfU2UnL8R4vO0AlR3woz3xS2P2rI=
+	t=1755664468; cv=none; b=XdAnXa9byIIXnfHx6XQ6EyzDpuRT/gUY1HAo87xEuEO4EZ2iR43VuJweA+25M00NVIxeTywNcjYxHr7Eh+ssyPzyDV1L/DEECK1vbnyv9kUE3DgII8RRGn1RazYuknT6WFNIltYKZaqMX05V2wqlty3BdVIjEU10lrJkH8R9KCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755644425; c=relaxed/simple;
-	bh=7Iv2xAX/ZdQyoGg+lzDjVl3kgUmn2KMoYkdTXC6fClk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tT+qGuCLvvGFT/2X3lkX5kWdBm04G3cH7EfwmCia3gVgO8oQM4gvyqzsPOrFva560IdahmMY3xZgZlspFSqTDAXPHbHaobZuMx/1hi4rmp2AQ2bErkDVPUzdLFG2Xx4efvySz14dNJhoriDUnXLNaNyPJTB7fX5qqmbQKb7nczA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KT1YTWXR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I14hCeO1; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755664468; c=relaxed/simple;
+	bh=UT5KkLHGzFcLJ+1zr2H12Pf1qKdvUcXm5rspCv00hEc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gClW5MIw4P+0eYevTzKB7Rha7CZtdTH89m1U2WC4yRTNgqm7yQA0wXZQKKbPAa2qq/owtg4a0LlKu1BTsehjrEyeMa1gec2AoCNUdO3aGJAXXhIhBkUeX78fbHUwdD6u4ytjZeSmtPI33HGkbuEZ8/FGOK5LpcbNb5CGFTzydn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hX1lxwpl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HcjBueKX; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KT1YTWXR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I14hCeO1"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ABCE71400098;
-	Tue, 19 Aug 2025 19:00:21 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 19 Aug 2025 19:00:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hX1lxwpl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HcjBueKX"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D7B6714002FA;
+	Wed, 20 Aug 2025 00:34:24 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Wed, 20 Aug 2025 00:34:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755644421; x=1755730821; bh=aYGPpwW33h
-	E40f9ZPQoHZovvr3cW7IE43mEMmUbKjX8=; b=KT1YTWXRu49TlP8B2Gg7glU4ql
-	QeHmCQJe+eMe20T0IFrVnizyrR5ytwDm/sJoiRaTBqhppofnNQ4VULGmyimO5boi
-	s6eXUC2IiQrzPkFjbTTY3ua1dNPM/PdFOuhVuG9NMZEA9Io2QT+KyZwxyR4JTVsj
-	5MFkvzSRSj6OHs2EbTYaX8KxR+DosEG0Z0RFNRtN+Mc+cJ1TzAWN3LRZvEdE+AHF
-	Fc9db4Zn6RhNE4GbGZtHIdRnLFiNHsmmHqzedrT1T0thVazHFbOQud3Yj3+d5b33
-	Ms4+zB6uLr2uY7/LiKb+UwKQaKMj9r/R0tIL3gEWik77+v7fvP/c7XYxoReQ==
+	:subject:to:to; s=fm3; t=1755664464; x=1755750864; bh=rilzwC1gqt
+	yhXabAZR+idnrHQjW6tqrkxNyFx8I/MaQ=; b=hX1lxwplhF2Q3bw/qybQqpB+lL
+	LwCZlaxNmcnwV73qYUbtNqXEuwNPrJc4TXKzQ76Va5BUveoB0rHhcbOEf78acdIZ
+	dVcfCbY2B4bDVQGkMJWVwUWx2MLIEw+FO7i0LSzCozZUdqDkTuUAhm+4STvsx+54
+	yUDzlQnXclTWZ6pZUFovj3C6nbOkUOVctyHZKaSByvhr8CZxviyI2IHmdw8ZvlRu
+	cZSuCit+TfmR181MAzaY2bQg19LR3UXhVq+kbORzmaduH8PRQQsYRcgl246XX4Qp
+	bnrw1UadYdRaycg7QC5RqEuFRpWUaVDmzmEQf/gEfnIk2HHtlr/LhYJYl13w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755644421; x=1755730821; bh=aYGPpwW33hE40f9ZPQoHZovvr3cW7IE43mE
-	MmUbKjX8=; b=I14hCeO16/YDQx2GzYuXtEQiTUEB+KBPX1kgg2ZRmOSIcaYb9Vb
-	d7ihRX+4UL9jTwB/zROGjghoGWjYQgotBzqYMLr6iZXJu0TCeF1PnJuZ2BDbE+9v
-	J7RKwc5cmxXU1GzT0Ui476ze12jar5UbyU86GTFnmLUg9heKBQQpKJ7U0YvsOMS2
-	7ceXTWe7kTtYrryIVNboobEsx8cskt4eDj3Qpw8TalWOBVfr+fdIKTqhGYC9cOik
-	blZKki6lkLLlARYxBlpgUDcz6rurwMpZTeZ/Fy+diPiNQkdkmW/lDG8xVw9ZTaoO
-	lwqN8DYrEIb7tiGvOTx9NUGBTxNVuwGswlw==
-X-ME-Sender: <xms:BQKlaH3pY_HjDxkqVeAlINkIoDldNNoH42R-0pk3CAIX3pVsqgSOhw>
-    <xme:BQKlaArGdp5qo-oXbcl0N-cL-_lWUx6NCD1wMcf6GQ71WCRa3hupTVlMBkCr1IqYX
-    mdrQDN6fR3iznioXg>
-X-ME-Received: <xmr:BQKlaEdc10S09JfQA9VbNILunndn4-641-ZgLLckFjMYokjB7Tm_VD9D-hdFhDy2dx-wZhIS0I6YUoUde70uV7GqNetcOfaCWVqTz6w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheeijeehucetufdoteggodetrf
+	1755664464; x=1755750864; bh=rilzwC1gqtyhXabAZR+idnrHQjW6tqrkxNy
+	Fx8I/MaQ=; b=HcjBueKXltJiW01mP/3m8hyjq5ggRsFpCyb3TNfLMQHhcx67vJI
+	KGMrtYafKP3E5vUBifmvegTDuJIytIF4y0dQLETJABLweCNVghVkNvEjNPo7Tf8d
+	6YKJG6/DsDnVWot7MuLKP632Q0g/gyTtdsqk88pWxqsdMho8LbHvqjoqlu/HpWU+
+	spfZOwWwk0iZhjxtq3LnMc0t2EhDdlxruFDfNxEpk8Bvk2zUmTa7dLZA1TX/sGa0
+	jbvloX6ud5/KEYgQuppaUeO8czE/zTHq+JvUSiJOw7HG26ItgQI2GuY8QDrNyn8Z
+	1r77OkrkZaO52bJnvufighYzAO/BdmeHL/A==
+X-ME-Sender: <xms:T1ClaPeP9W2GHwGL8ZR8rECPE7xlNQPEyl3DDKCYSEtqURwqu-_ksw>
+    <xme:T1ClaNqQXaMS7DRDE5sFPsQmrQzCObFgx8RM6iQxWAQDrOd-EJekGc3zgzXefZQIE
+    SYpTcqOU64vSepjdw>
+X-ME-Received: <xmr:T1ClaI_43xcC1y5TRMfy2u-7F04be3DTTgou7m1reiveg7grNfFQL8_cA5hGsjuv-9kD9ZINBqgvt5VjIhKYhiB2TTR0uztjAvTh_DktFwEg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheejgedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepgeetieegveeiveekhfehjeetvdffvefhjeefveejfeegffffudevieehjeej
-    feehnecuffhomhgrihhnpehgihhtqdhstghmrdgtohhmpdguihhstghorhgurdhgghenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpoh
-    huthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepuggrnh
-    hivghlvghsrghsshholhhisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:BQKlaPpJTx2pxxnXoGbkq_nFCq7BSX65JP-GBhVWBSMfifMA9wCYzA>
-    <xmx:BQKlaFFpRwT1JHdTynDp7c84fNGYDfhfPNWPzpuSfeGtxMqqPbvn0A>
-    <xmx:BQKlaPuwndcsd1fOxg-NTLKlIWSp8Ka_Dm_OYD3kltdyXECx7DnddQ>
-    <xmx:BQKlaHXDtmdwOi2hMp0Mn8plwQ0JT8HbeDZKthVeLE59WsnYSfAW7w>
-    <xmx:BQKlaNEIszS59dgSlOxLo-8jZIReXVCameciBcvf2qvTxFpa0cLZQ-r6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Aug 2025 19:00:21 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Daniele Sassoli <danielesassoli@gmail.com>
-Subject: Re: [PATCH v2] doc: add discord to ways of getting help
-In-Reply-To: <pull.2033.v2.git.git.1755641032154.gitgitgadget@gmail.com>
-	(Daniele Sassoli via GitGitGadget's message of "Tue, 19 Aug 2025
-	22:03:51 +0000")
-References: <pull.2033.git.git.1755630128134.gitgitgadget@gmail.com>
-	<pull.2033.v2.git.git.1755641032154.gitgitgadget@gmail.com>
-Date: Tue, 19 Aug 2025 16:00:19 -0700
-Message-ID: <xmqq4iu2diik.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgv
+    lhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepphhrohhphhgvtghhvghnghesshhtuhdrphhkuhdrvgguuhdrtghn
+    pdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvth
+X-ME-Proxy: <xmx:T1ClaBce9---1N3WQsibkjUcmCAngeeloXrEPskKVzqYaTUMrUbo_Q>
+    <xmx:T1ClaKKYpG-ltNJozXI0IaLKMs74-2d3Dy8l9sQRbv-ovQCUaIBRbA>
+    <xmx:T1ClaJj_lql6uYqtP3WRnKsjhevoKRk0SZevzyfw4icL6-01pPzRsg>
+    <xmx:T1ClaARo201jWgmPhXKAI2qFtD2TLLO0MQwxjexvz2E2jGEHt85XCw>
+    <xmx:UFClaHyyGaLx5DIZnYkJEXieCRpl7ryIOXc-8zrGMu_8QdklJH0Kputi>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 20 Aug 2025 00:34:22 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ae3c942c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 20 Aug 2025 04:34:20 +0000 (UTC)
+Date: Wed, 20 Aug 2025 06:34:16 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, phillip.wood@dunelm.org.uk,
+	Cheng <prophecheng@stu.pku.edu.cn>, git@vger.kernel.org
+Subject: Re: [PATCH 4/5] describe: handle blob traversal with no commits
+Message-ID: <aKVQSNgYgt2RO8hd@pks.im>
+References: <20250818205812.GA1018043@coredump.intra.peff.net>
+ <20250818210312.GD1024556@coredump.intra.peff.net>
+ <aKQwP01nulsquhzi@pks.im>
+ <20250819165947.GA1050577@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250819165947.GA1050577@coredump.intra.peff.net>
 
-"Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Aug 19, 2025 at 12:59:47PM -0400, Jeff King wrote:
+> On Tue, Aug 19, 2025 at 10:05:19AM +0200, Patrick Steinhardt wrote:
+> 
+> > > I didn't include a test here because it requires corrupting the
+> > > repository in a way that is only easy to do using the files ref backend.
+> > > It doesn't seem worth carrying a REFFILES test just for this oddity.
+> > 
+> > True:
+> > 
+> >     $ git update-ref HEAD HEAD^{tree}
+> >     fatal: update_ref failed for ref 'HEAD': trying to write non-commit object 4b825dc642cb6eb9a060e54bf8d69288fbee4904 to branch 'HEAD'
+> > 
+> > But:
+> > 
+> >     $ git update-ref refs/some/tree HEAD^{tree}
+> >     $ git symbolic-ref HEAD refs/some/tree
+> >     $ git show
+> >     tree HEAD
+> > 
+> > So that should allow you to write a test, right?
+> 
+> Hrm, that seems like a bug. I thought we insisted that HEAD point at
+> refs/heads.
+> 
+> Ah, no. We did that in b229d18a80 (validate_headref: tighten
+> ref-matching to just branches, 2009-01-29), but had to revert it in
+> e9cc02f0e4 (symbolic-ref: allow refs/<whatever> in HEAD, 2009-02-13) to
+> keep compatibility for topgit. :(
 
-> From: Daniele Sassoli <danielesassoli@gmail.com>
->
-> Discord is a great way of receiving help for members of the community
-> that are not on the mailing list or not familiar with Libera.
->
-> Adding it to the official documentation will aid discoverability of it.
->
-> The link is the same as the one at https://git-scm.com/community.
->
-> Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
-> ---
->        
->       +==== https://discord.gg/dxGanGcBSP[#discord] on Discord
->      -+This is the unofficial Git Discord server for everyone, from people just
->      ++This is an unofficial Git Discord server for everyone, from people just
+Well, that's certainly from before my time in the Git project :) I guess
+changing semantics now would be quite risky. Reintroducing this change
+feels out of the picture, but an alternative one could think about is to
+validate that HEAD always points to a commit(-ish?).
 
-Forgot to commit the update of the link?  Shall I amend it to point
-at
+But ultimately I'm not sure it's even worth it. If people really want to
+shoot themselves into the foot they'll find a way to do so.
 
-	https://discord.gg/GRFVkzgxRd
+> Still, I'm not sure it's something I'd want to base a test on. Maybe if
+> there is a big comment that says "It is OK to invalidate and remove this
+> test if we ever tighten symbolic-ref" it would be OK?
 
-locally?
+That sounds reasonable to me, yeah.
 
->       +starting out with Git to those who develop it. It's a great place to ask
->       +questions, share tips, and connect with the broader Git community in real time.
->       +
->
->
->  Documentation/MyFirstContribution.adoc | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-> index aca7212cfe2..35f18ab9f7e 100644
-> --- a/Documentation/MyFirstContribution.adoc
-> +++ b/Documentation/MyFirstContribution.adoc
-> @@ -52,6 +52,15 @@ respond to you. It's better to ask your questions in the channel so that you
->  can be answered if you disconnect and so that others can learn from the
->  conversation.
->  
-> +==== https://discord.gg/dxGanGcBSP[#discord] on Discord
-> +This is an unofficial Git Discord server for everyone, from people just
-> +starting out with Git to those who develop it. It's a great place to ask
-> +questions, share tips, and connect with the broader Git community in real time.
-> +
-> +The server has channels for general discussions and specific channels for those
-> +who use Git and those who develop it. The server's search functionality also
-> +allows you to find previous conversations and answers to common questions.
-> +
->  [[getting-started]]
->  == Getting Started
->  
->
-> base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+Patrick
