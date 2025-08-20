@@ -1,102 +1,117 @@
-Received: from mx.freebitcoin.gay (mx.freebitcoin.gay [92.65.121.143])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CE82D3A77
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 07:36:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.65.121.143
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31032C11EC
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 07:53:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755675402; cv=none; b=V7+lV8SptLZoB9KZJbDZxKHVMq7VKS0Vcedm6MwuToIB/0oKmCQsc81RLcMVGmu7M9XS485WyC5jvJlSFFPR1t9e+t0mauP1dYA3xAvYhWib1PSz6Y2MmEQfpu5Bdn7Erjj1w/NuXtLuchfZqxorE0IQ/B7i3+jB6eB4+uBXlpM=
+	t=1755676386; cv=none; b=bYWDbyu7y3BHjTgyBEAzkWB29LBggUg3RUA82YlN63Hfkdl5oQ02/B6KnK86tlQK3oDy1lkTAFZ+Oe6BnVSZxdFEYtaPzz+VxwSrJMiAFI9H1KkSBEPDUNGZ4a6DgFEsMotDMUClPflepwpclDREdWgfKjmzFB3JTubJRGD1fao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755675402; c=relaxed/simple;
-	bh=7lOqvzuUMCDbeb+fJ/VGqMtuXTO1ix2CCHvOFoSG1+Q=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=ffDljP9/SNbRIHz/HEp3v1LbNUiEwQcfkAsLZoQRuHvl2+0d2fQqTv6G0KZA3ZR3BxRuSWjZ0unMIvYyAzdXnXdZU121SOJdm9CuYAT+GZI2dPTDhXYP1hspM2PMxxbF7nHyvohHSNBvSuRK+i4x7eNbjk1vxOiJzOh6ptdkmjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ddevault.org; spf=pass smtp.mailfrom=ddevault.org; dkim=pass (1024-bit key) header.d=ddevault.org header.i=@ddevault.org header.b=uK/yxG57; arc=none smtp.client-ip=92.65.121.143
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ddevault.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ddevault.org
+	s=arc-20240116; t=1755676386; c=relaxed/simple;
+	bh=UzN2FpZ6FrdpaOnGaz1MBYLlwDOH4eVCkwo9gtg/pXk=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=b3tRD4PtFDrto753sv0X6HG8uJTb7wLrWHr5J06J8AnjExHBo9tCAiM4tIg46aYj9wozSA35lhW0Eoqdm0RX/F1WmYhN5sDsBeiyumX08OEBydC1A7G313pqtugvOKHvTJiOm3brQIHxFwkJKwhgWtA424vbP1x8A6f8DtgnHlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Tkx3M96Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K0lAi9s8; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ddevault.org header.i=@ddevault.org header.b="uK/yxG57"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ddevault.org;
-	s=_bikeshed; t=1755674931;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7lOqvzuUMCDbeb+fJ/VGqMtuXTO1ix2CCHvOFoSG1+Q=;
-	b=uK/yxG574cSLu8zkzxElbBhWW7odMepVxF/9LBhoO597/2P2O+PhE5dqGk+SHcXAI7F3D9
-	zEiAYNBpG09M40E0tnvW2ZdnVpKXMfYSGakQ8stZJVD5G4qEmAIhENvG3CiqQnZSAxmzlN
-	Kq5t53nGBuToZfFegtDypPB5ykMcU0E=
-Received: from taiga (mx.freebitcoin.gay [92.65.121.143])
-	by mail.freebitcoin.gay (OpenSMTPD) with ESMTPSA id 002cabcd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 20 Aug 2025 09:28:51 +0200 (CEST)
-Received: by taiga (Postfix, from userid 1000)
-	id 0120B70206FA; Wed, 20 Aug 2025 09:29:58 +0200 (CEST)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Tkx3M96Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K0lAi9s8"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 03342EC05D4;
+	Wed, 20 Aug 2025 03:53:03 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 20 Aug 2025 03:53:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755676383;
+	 x=1755762783; bh=h+As+eYBmaDDxWH7AvSUE8XJ1mimcX/hqrF2LSjJYvE=; b=
+	Tkx3M96YNkTu0Au0yAccU3dLdj+klhGc2/eNYw+mGlWwA2cVy2VhCkoBglWQevWn
+	51z8GAz2v49XWPaD4st3LJ74MeXBkjkyWuD6oZWMz1mDpVYA2lRwg8VLoKa7Tqrj
+	3bC5tT2XabO0FxlNhtDM1DeIljfd1ioalKKkPXWi9r/IFiehK3sXr0DqXKTQlQKJ
+	+lkaPHXm4a9CrJfhqshVCnP7gAUerG7cfjJXvRuvWZcCsEZlgaD/kOGIksSCYhFv
+	y8TWS2fqQAljm3oKFiEzt9BS8RQ8taG2ola4bIaaj2RDsBmNjFwqZgbuHUrU+XSS
+	tq1m4cBCV2hPHt36B0WSzQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1755676383; x=1755762783; bh=h
+	+As+eYBmaDDxWH7AvSUE8XJ1mimcX/hqrF2LSjJYvE=; b=K0lAi9s8i3bvSTdPp
+	6aYQhDvt17/+oDTARFRkzkrcvklmq6MGuL6h+ElTn9e/Xc3CsiaMKg4pDaTkkiN8
+	6N8SQDFcCtH2CkLA4L3sNwG9g+q9GWTnv6ArsVDRs2JQbXfdBKJaVTB8IGizMfjO
+	TwkuFiHSbxhmwxtXC+xJbJwM24lmR+79rlGGK267obaLWIcEMoixWsSX1ZqyypZ9
+	U/MoIAQXUsV4sNKEYC08d1CxJSanl/65pKGWtJUmZzKIXkpPBBV3e3ds/T/Sc4Fy
+	uIVH/Ao8dQ3C0Pua/ZUtZ1At23M3Kd8Jxqytk4i3kukXydO0amTq6vlC7CkjnQeL
+	gWpgw==
+X-ME-Sender: <xms:3n6laBwRUpPUNjxnYdsxpD5lEyt2fpDIxzha2wMzjs767hpTDvV02QA>
+    <xme:3n6laBSNFssVewTFFHCsqC68M0RcGFzBqe19MyNDVC115JsRJf-xxfUc7qn50otSP
+    ghd7zmtu3QgeolPAw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheejkeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtgfffteetudel
+    hfefkeehtefggeefjeevieekfeefieekkefhveeiledtkefgueenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishdrjhhuughkihhnshdqfhhishhh
+    vghrseguohhnohhrshgthhhoohhsvgdrohhrghdprhgtphhtthhopehrshgsvggtkhgvrh
+    esnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhg
+X-ME-Proxy: <xmx:3n6laH4IeZ03bwAa8Q0aGKW59VcT9RbW9qSMcluV5FbllpgOywDJng>
+    <xmx:3n6laDxNs0wB-0MJBAgi7kM-cUjK4-PqKB0zbzmyVC4nreDZzMab_w>
+    <xmx:3n6laLZLnQV-CKceBX2MEmGfNFsPG7J1eJy3L_0y405fOO_zNdkcYw>
+    <xmx:3n6laFTKmcMPFHpzVp7K0DbhX4uODtBHfvXciVPpq3H3gbwQcSWzYg>
+    <xmx:3n6laLHkXMPJatu_TuRNsSdXH3Id2nPPfo2BkvawUBCRPbSnv-9sLBt9>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A05D21EA0066; Wed, 20 Aug 2025 03:53:02 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=4d7559904e8f1420b0822895ca466becdbb12f2236cafa72b1bd907bfe9d;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Wed, 20 Aug 2025 09:29:56 +0200
-Message-Id: <DC72UF1IMIUF.2F7CNYOHYDGVJ@ddevault.org>
-Cc: "Martin von Zweigbergk" <martinvonz@google.com>, "Patrick Steinhardt"
- <ps@pks.im>, "Andy Koppe" <andy.koppe@gmail.com>
-Subject: Re: [PATCH v2 1/2] pretty: add X-Change-ID to mail formats
-From: "Drew DeVault" <drew@ddevault.org>
-To: "Remo Senekowitsch" <remo@buenzli.dev>, <git@vger.kernel.org>
-X-Mailer: aerc 0.20.1-112-gd31995f1e20b-dirty
-References: <20250703113505.11889-1-drew@ddevault.org>
- <DC6LB8FINRXH.1TMZPB1XKPQWQ@buenzli.dev>
-In-Reply-To: <DC6LB8FINRXH.1TMZPB1XKPQWQ@buenzli.dev>
-
---4d7559904e8f1420b0822895ca466becdbb12f2236cafa72b1bd907bfe9d
-Content-Type: multipart/mixed;
- boundary=a3b0d04151a771ac6405898e0bf777c852151c2b11446527b9564f084455
-
---a3b0d04151a771ac6405898e0bf777c852151c2b11446527b9564f084455
-Content-Type: multipart/alternative;
- boundary=1b110bd2c0228ce158e06a047eaf3b394e1409c9f7c0afd30957a7c09dce
-
---1b110bd2c0228ce158e06a047eaf3b394e1409c9f7c0afd30957a7c09dce
+MIME-Version: 1.0
+X-ThreadId: ATa01O-RMF1w
+Date: Wed, 20 Aug 2025 09:52:35 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: rsbecker <rsbecker@nexbridge.com>,
+ "'Chris Judkins-Fisher'" <chris.judkins-fisher@donorschoose.org>,
+ git@vger.kernel.org
+Message-Id: <37da14fb-fead-448b-b6a0-853c9fbea653@app.fastmail.com>
+In-Reply-To: <011801dc114b$f38bb130$daa31390$@nexbridge.com>
+References: 
+ <CAAn3O_2n75RGpvxv1o14BE3KFdwiJW9OOKaHp6_c0rd_MqxC2Q@mail.gmail.com>
+ <011801dc114b$f38bb130$daa31390$@nexbridge.com>
+Subject: Re: git whatchanged
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-Content-Type: text/plain; charset=UTF-8
 
-Hey Remo! I haven't gotten much actionable feedback on this patch yet,
-so there's not much to do here but wait for more reviewers.
+On Tue, Aug 19, 2025, at 22:57, rsbecker@nexbridge.com wrote:
+> On August 19, 2025 1:51 PM, Chris Judkins-Fisher wrote:
+>>I still use git whatchanged
+>
+> I did too. However, now that git log --since has basically the same
+> functionality,
+> Perhaps setting up a git alias might do the trick for you:
+>
+> git config --global alias.whatchanged 'log'
+>
+> so
+>
+> git whatchanged --since=3D"2 week"
+>
+> or something like that should continue to work after the command is
+> removed.
 
---1b110bd2c0228ce158e06a047eaf3b394e1409c9f7c0afd30957a7c09dce--
+You can=E2=80=99t alias core commands.  So this will fail in the reporte=
+d way
+before Git 3.0.  Then from that point out it will work as an alias.
 
---a3b0d04151a771ac6405898e0bf777c852151c2b11446527b9564f084455
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=42F3F1862E3CC4B8.asc
-Content-Type: application/pgp-keys; charset=UTF-8
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptRE1FWjdZOWt4WUpLd1lCQkFI
-YVJ3OEJBUWRBL3BQeTZYK25OTDVUMlFhSktFTTA4eE4vS3o3d0ZUQVpvSDVZCnJpVjl4MW0wSUVS
-eVpYY2dSR1ZXWVhWc2RDQThaSEpsZDBCa1pHVjJZWFZzZEM1dmNtYytpSk1FRXhZS0FEc0MKR3dN
-RkN3a0lCd0lDSWdJR0ZRb0pDQXNDQkJZQ0F3RUNIZ2NDRjRBV0lRU2Z0ZWMzM0NXeW5ZN3NScEZD
-OC9HRwpManpFdUFVQ1o3WTl3d0FLQ1JCQzgvR0dManpFdU1FRUFQOURIKzFMZ3ZUcVpETFo4YmFi
-QjVDZHA1eTBaVytRClR4NzhtaDFMOGpKZDZnRUFzc21nc0ltY3JadjRhZFAyVVc1UlU1QkhDZTlL
-VWR4MER5VjgzUXdsRkFTNE9BUm4KdGoyVEVnb3JCZ0VFQVpkVkFRVUJBUWRBR0FIOWRsYUNPTm9Y
-cG1RZ0hvUWdZSTJ0UytWTTNtelU4STJQeVZZUQoxR1VEQVFnSGlIZ0VHQllLQUNBQ0d3d1dJUVNm
-dGVjMzNDV3luWTdzUnBGQzgvR0dManpFdUFVQ1o3WTkxZ0FLCkNSQkM4L0dHTGp6RXVIY25BUDR5
-ak9pTTB5cWtTVDZ5WHpEVVd6ZTdCOUltMjRGOEhWeCt3TnFjRGFEdGNBRC8KZktRaHowU0NQaWJs
-TzZsYzdNRlV2bGFPejJ2ODdVcFVZUmh6UGRnUXF3az0KPWVtcmIKLS0tLS1FTkQgUEdQIFBVQkxJ
-QyBLRVkgQkxPQ0stLS0tLQo=
---a3b0d04151a771ac6405898e0bf777c852151c2b11446527b9564f084455--
-
---4d7559904e8f1420b0822895ca466becdbb12f2236cafa72b1bd907bfe9d
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSftec33CWynY7sRpFC8/GGLjzEuAUCaKV5dAAKCRBC8/GGLjzE
-uLFjAPsHESbjt0bAoodY8u3qP2IBqYOTzj5petRNj2pSM0G35QEAsGAuujPNucM2
-0dWma9+S0ZBY+5d3yvv1DGRhv9AT9AY=
-=8ENb
------END PGP SIGNATURE-----
-
---4d7559904e8f1420b0822895ca466becdbb12f2236cafa72b1bd907bfe9d--
+--=20
+Kristoffer Haugsbakk
