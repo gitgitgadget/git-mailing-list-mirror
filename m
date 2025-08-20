@@ -1,161 +1,145 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E2C36CDEB
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 19:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865771BC4E
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 19:04:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755716586; cv=none; b=tWeEq/Mz9++YVgqRbjO3x5/hsA8SnImFKe2R3yJFzVOPx4VvbvosOC9uXL78u27dTUUvz24Vcf3+jCRQyOJAZGLf7bDSpxbXra6e65qvQvmgmrH6T0G50AD1ju4g731fenkFJ4ld7+ydcN7YDXMoyXgI05+WpkMDOGLod+7SRMk=
+	t=1755716668; cv=none; b=fDwMxF1xxe/XQjiHLOQu9h5Wju3xoBh/zqc/dx/euvQ1zLYQwwR3+/dS3O2AdCtUmz2090Qd3r76p9s5KPfFf71uuODJGhh/CmldQaoN3r0bIYBFlURt/w8XZK78uwukdH6GUmmcpZtIvteAutXHLy4Je+06rScVopeUtAlU0Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755716586; c=relaxed/simple;
-	bh=e7/Eo7xBfF5Alm8LNo0M+O780QO9TnF454iC/IR7fks=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N/NX11cXPWYePrkyjQFTrvnjReA7y/JNMBOpFyonCD0CeNo6LfI9sRE9jz8tldsUBD7p+kOEdPztM1HJY/z3zRJcN6B8qtMSn1pf0CE65bV0VNp2FXCguFqlcOmtEckwiH8syd7W82A0k0Uy+4OglN9FzAfo3zyAjE3UbGwSEH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DS1h0TLi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QU0o9oZh; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755716668; c=relaxed/simple;
+	bh=UCUBDjB/hVNijuqEYXBx8u6vTtwhg5bGpifubBegYU8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mJiNjTkDi6NfYOqmBmg7Mk7xDenwJOPy9rk+vzbJU7UXL/ErO8OsoJMvUdP4H8EQcvuCkb2seB8h73vGxW38DLQJ8wWM6Tf6KE2A+IbVfBd4A73kdCf99Xntx0n7yCgT+OemIZRfTqeqNpe6sbZ/9PvTFaG81fHZYZvQUaJsFKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=RPzh9/Sy; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DS1h0TLi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QU0o9oZh"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 575A61D0009B;
-	Wed, 20 Aug 2025 15:03:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Wed, 20 Aug 2025 15:03:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755716582; x=1755802982; bh=OnDUfFjwqR
-	3wWMc5Z7eaLOqij546dRVvaE9wFmZTjlA=; b=DS1h0TLiDtNzJNoGAKN+bJVzTF
-	USLiF97OZeT00MbQp3phEh06kGS8rBFvh3lPJxp40EJdlSGScXZ2LfHYjXsTvTuT
-	+CMnpMhinogYn6QgX7WT1K7z+qnzBT0HQKkP7F/ZWu83plmct2Ab8aUDCdchACc5
-	cSaB/hrBqjaGBbBiCT50rB+YSjmlYXSTqiMur7LiaMg9x9eFA4juW/VY3ICPbDeX
-	aEOprovgUNsIXbZ/fxpIh+KzyRUIGFm9i/pPpghtcfDby1H61yrHRa6AE8afVWyk
-	WMcfUbLaGGV6AXTsnlmY2b0Gt/GjIuxB45nix2J6hQGjKsXGcS6UIT0ldmLQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755716582; x=1755802982; bh=OnDUfFjwqR3wWMc5Z7eaLOqij546dRVvaE9
-	wFmZTjlA=; b=QU0o9oZh0R6WMIhQwq8L9WF9naXMAxSA7Su2jVsujr0jeSKy8zS
-	CAvCQYUuLfoHz1FBlTRAWwAxQ0bc+Z/zP9MJHYB0unKC/lHBrwivrV/lc9v2cTEi
-	aUYsB8VwyPWNx1/h/joh2aNpcwMwkD7OBzTBV7ZUUyRHdEUFhR5CK6Yna5iSS0Iv
-	fGRV/BXn3KrglFkmSH96vGdeY404XlD3y2VLXob7ZpPHTXczRVNKpLTEVgIky3SF
-	QyHjd7txubSapMNLvRcaLq/NuZnmsHM0vP+UZdR6Q9RlUikGFDgrwvshtcUi8b5m
-	WiI875ztiRhajXIIGtoMzKY1xuoOgEmXaHA==
-X-ME-Sender: <xms:5RumaHRoYIwzO4ALoRO_MR9FBqCYjwinjqt_lKBZwboGumHH-R7oGQ>
-    <xme:5RumaAD_Sw278kCovXTyuu-ef1H58uEJInxAscoO538iBJbiKFv-TtCq1FHD1tPHx
-    HupKPtDKxpdLlNHpA>
-X-ME-Received: <xmr:5RumaHva9TSE4e1RmNLHqhserQnCqNVXCRUiVNMHxIZQE3GwZB3U_eHK1axbjDMySAStkXQKzhSl_pZ3USmatNm6XuVFkQfIohlCyqc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheeludehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    oheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohep
-    jhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthhopehjohhnrghthhgrnh
-    htrghnmhihsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeek
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdr
-    tghomh
-X-ME-Proxy: <xmx:5RumaG8Qx6HPsMk1gkShm6Q485I9_F-S7erBLKbcLQI_tCa58114-A>
-    <xmx:5RumaGT498BZcP1KKoPGzwQXZ6zlxvqxqu7CVaV82OkjSuSuuxG10Q>
-    <xmx:5RumaAUuaonLwTzGcbI2tNSuAf8IytiOdFYDkhXYmAgOm1X9x99n3A>
-    <xmx:5RumaA-WCuuunXN44SvHKOwntuyj-w-cmzrg98dKXX6R57fjAFaASA>
-    <xmx:5humaHULiTDIv3FRMk5b7n36bJi8pZacqEVD8d5loZWnssC785As6Sag>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Aug 2025 15:03:01 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  johannes.schindelin@gmx.de,  johncai86@gmail.com,
-  jonathantanmy@google.com,  karthik.188@gmail.com,
-  kristofferhaugsbakk@fastmail.com,  me@ttaylorr.com,  newren@gmail.com,
-  peff@peff.net,  ps@pks.im,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 2/3] path-walk: fix setup of pending objects
-In-Reply-To: <0dc4a6323e66598070b403d286ee1918e6a9b791.1755715196.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Wed, 20 Aug 2025
-	18:39:55 +0000")
-References: <pull.1956.git.1755715196.gitgitgadget@gmail.com>
-	<0dc4a6323e66598070b403d286ee1918e6a9b791.1755715196.git.gitgitgadget@gmail.com>
-Date: Wed, 20 Aug 2025 12:02:59 -0700
-Message-ID: <xmqqh5y1ak9o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="RPzh9/Sy"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-242d1e9c6b4so40475ad.0
+        for <git@vger.kernel.org>; Wed, 20 Aug 2025 12:04:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1755716666; x=1756321466; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=V1OavN0+s+D58FeN5PXJJ6g5De4qkS1aoJv4ZaIjyr4=;
+        b=RPzh9/SyRMR3QAjqSBq5xYMPPfYf8/Tbc1AkHstUQJAGgq51GvMogqcwfiU0wAZOLm
+         gTVHfeo3I8bziBGn0bgCNebT4Dj+h61vSf+2Tl/kMjpt0/+ZX1P1NiPyVXx8dy52wJSk
+         NtJbaMg1gSmKdqAS6YU5Q8kmqclgJUWxxLRLlm1PCgR0GsfGBFTQRO0EFko02XQ8hCfL
+         UfDZ/Kd1diEOHxcvqVGdzO4Y9u42v+ck8nk52NTNVuIydoWC5erTaIKV9rmn7xnztzt3
+         xqaQddzrugf2sWtZFLl9NliUy7QFWCCFPeeMvIoD5rz6UqtsNHC0bnX5JitHjMX42OC5
+         905w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755716666; x=1756321466;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=V1OavN0+s+D58FeN5PXJJ6g5De4qkS1aoJv4ZaIjyr4=;
+        b=hXK3P6NMhnQLkWAI89CCpWAFY0dgdXSCGWgGlRhJhr8F+U4qG7hGeASf30LBfZ/VuI
+         OJXe6geXYLV2RF0h3q1CLbE9FcdETxg9TAF+MqwXVqU8Olqn1qkMHQO9f32PPzfT+Tfr
+         5Zw+I602Ns0h26IUc1cFUTNtmVf2P8fB6P5imuGUGABWSQLkZ+xCsKbJ4tFKbexNn9nO
+         d/J1P1FmFhgFwBTwZKHc7PBEmAPigtmFNaI+PKdKxJARNSL6Ger7HlAFNNunJyTZX3pt
+         qytN/mIKliLOsYJzlNtP/cZ1mCAPT2qMRuS+UUg5GIQ9Zf2Z4CuMlzstHXibMFqcveQ5
+         XqXg==
+X-Gm-Message-State: AOJu0Yxk6cmuUJ091o+CEJSx119S+bORWIjti+QEVHznt8GLya+eqlDV
+	wzBlp23A+JSBQ8XkEIbMa6cwW1KdnvU65q69aEHMTbiNftPHQQ8vMvrORj05Jd6pdw==
+X-Gm-Gg: ASbGnctunuG0cHtdhQCYcp6nprXcKlXY5dGXprHknHoU+WgB8kItVTbVBO6hDnuv7HV
+	7xFbSHJ2brMK1IyP/ISHPkBvg/knbqhXmKKjV3F2eB3W4sm/lJWbhFG3biEY5S/n9TJeLYt4mam
+	butAj7T90jV93VM4uAAsZraimeQ2FEooXJS3xMVSjWgfHb19O3w6ZZLzHHp2I5bIu7dkSFKJFwd
+	y3+ruJx3waE9lTZFRWK3CrNu0cG4ONsETNGuWY38KiD6CIpOsJdFqeHv7Lmu9V41gRSBG6Yk+am
+	+uFakqxkwXuK6UBEksrYONsCb2QVjjDe5tuKktcmHk7efUzp5IAnZtcssm6sJx1/mEfUR+k6vtd
+	3NMQr6wOrq/QKuoxWUT1gdfAHdho=
+X-Google-Smtp-Source: AGHT+IGpZY11GF3e2ag9OWYbFZlTdc7FTtRi3QRi252/rOBjlC14QqXgFpVrZXBJWWaSTulFmYfTFg==
+X-Received: by 2002:a17:902:f690:b0:240:86b2:aee0 with SMTP id d9443c01a7336-245fda5e06dmr611555ad.1.1755716665386;
+        Wed, 20 Aug 2025 12:04:25 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:23b5:65e6:69f5:ee81])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b47640d5013sm2898834a12.54.2025.08.20.12.04.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Aug 2025 12:04:23 -0700 (PDT)
+Date: Wed, 20 Aug 2025 12:04:16 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, 
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
+	Aaron Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, 
+	Stefan Beller <sbeller@google.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/9] submodule--helper: use submodule_name_to_gitdir in
+ add_submodule
+Message-ID: <qcpwoggznb2hj4kegtnouh3ty2sepuhmqlhhzfbpvm7d2yt33y@6vnui5pnnl7x>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Adrian Ratiu <adrian.ratiu@collabora.com>, git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, 
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
+	Aaron Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, 
+	Stefan Beller <sbeller@google.com>, Patrick Steinhardt <ps@pks.im>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20250816213642.3517822-2-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250816213642.3517822-2-adrian.ratiu@collabora.com>
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> The core problem here is that the "maybe_interesting" member of 'struct
-> type_and_oid_list' is not initialized to '1'. This member was added in
-> 6333e7ae0b (path-walk: mark trees and blobs as UNINTERESTING,
-> 2024-12-20) in a way to help when creating packfiles for a small commit
-> range using the sparse path algorithm (enabled by pack.useSparse=true).
-
-OK, in other words, the bug is fairly contained within the path-walk
-traversal.  We treat things as reachable not just from ref tips and
-reflogs (where path-walk code can use the tree object to compute on
-what pathname each blob comes from) and the main index array (that
-has paths, even though it needs separate way to compute than those
-for trees), but also from places like REUC and TREE extensions that
-make associations between pathnames and objects.  Are they also OK?
-
-> To help avoid this from happening in the future, a follow-up change will
-> make initializing lists use a shared method instead of allowing for an
-> update to this initialization process to miss some existing copies.
-
-Great.  Future-proofing is 100 times better than just a bugfix.
-
->
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+On 2025.08.17 00:36, Adrian Ratiu wrote:
+> While testing submodule gitdir path encoding, I noticed submodule--helper
+> is still using a hardcoded name-based path leading to test failures, so
+> convert it to the common helper function introduced by commit ce125d431a
+> ("submodule: extract path to submodule gitdir func") and used in other
+> locations accross the source tree.
+> 
+> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 > ---
->  path-walk.c       | 2 ++
->  t/t7700-repack.sh | 2 +-
->  2 files changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/path-walk.c b/path-walk.c
-> index 2d4ddbadd50f..1215ed398f4f 100644
-> --- a/path-walk.c
-> +++ b/path-walk.c
-> @@ -385,6 +385,7 @@ static int setup_pending_objects(struct path_walk_info *info,
->  					list->type = OBJ_TREE;
->  					strmap_put(&ctx->paths_to_lists, path, list);
->  				}
-> +				list->maybe_interesting = 1;
->  				oid_array_append(&list->oids, &obj->oid);
->  				free(path);
->  			} else {
-> @@ -404,6 +405,7 @@ static int setup_pending_objects(struct path_walk_info *info,
->  					list->type = OBJ_BLOB;
->  					strmap_put(&ctx->paths_to_lists, path, list);
->  				}
-> +				list->maybe_interesting = 1;
->  				oid_array_append(&list->oids, &obj->oid);
->  			} else {
->  				/* assume a root tree, such as a lightweight tag. */
-> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-> index 1998d9bf291c..030e9e5b2dc7 100755
-> --- a/t/t7700-repack.sh
-> +++ b/t/t7700-repack.sh
-> @@ -838,7 +838,7 @@ test_expect_success '-n overrides repack.updateServerInfo=true' '
->  	test_server_info_missing
->  '
+>  builtin/submodule--helper.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+> 
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 07a1935cbe..7243429c6f 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -3213,10 +3213,11 @@ static int add_submodule(const struct add_data *add_data)
+>  		free(submod_gitdir_path);
+>  	} else {
+>  		struct child_process cp = CHILD_PROCESS_INIT;
+> +		struct strbuf submod_gitdir = STRBUF_INIT;
 >  
-> -test_expect_failure 'pending objects are repacked appropriately' '
-> +test_expect_success 'pending objects are repacked appropriately' '
->  	git init pending &&
+> -		submod_gitdir_path = xstrfmt(".git/modules/%s", add_data->sm_name);
+> +		submodule_name_to_gitdir(&submod_gitdir, the_repository, add_data->sm_name);
+
+I believe submod_gitdir_path is now only used in the `if (...) {...}`
+side corresponding to this `else` branch, so perhaps we should make it
+local to that block?
+
+
+> -		if (is_directory(submod_gitdir_path)) {
+> +		if (is_directory(submod_gitdir.buf)) {
+>  			if (!add_data->force) {
+>  				struct strbuf msg = STRBUF_INIT;
+>  				char *die_msg;
+> @@ -3225,8 +3226,8 @@ static int add_submodule(const struct add_data *add_data)
+>  						    "locally with remote(s):\n"),
+>  					    add_data->sm_name);
 >  
->  	(
+> -				append_fetch_remotes(&msg, submod_gitdir_path);
+> -				free(submod_gitdir_path);
+> +				append_fetch_remotes(&msg, submod_gitdir.buf);
+> +				strbuf_release(&submod_gitdir);
+>  
+>  				strbuf_addf(&msg, _("If you want to reuse this local git "
+>  						    "directory instead of cloning again from\n"
+> @@ -3244,7 +3245,7 @@ static int add_submodule(const struct add_data *add_data)
+>  					 "submodule '%s'\n"), add_data->sm_name);
+>  			}
+>  		}
+> -		free(submod_gitdir_path);
+> +		strbuf_release(&submod_gitdir);
+>  
+>  		clone_data.prefix = add_data->prefix;
+>  		clone_data.path = add_data->sm_path;
+> -- 
+> 2.50.1.679.gbf363a8fbb.dirty
+> 
+> 
