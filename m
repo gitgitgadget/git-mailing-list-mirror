@@ -1,136 +1,106 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE98213E6D
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 15:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5362E8B64
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 15:41:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755704071; cv=none; b=FC7z4jtBGLpFh3maI9xeOAS1FtU5zTAp4OOz7F2n5ZT3+Nwr+F7M/UsSfC/pzP2BK31oGlKlJ4IDDX/d26zU3Hs2AgPMN4fPsTqT3eqL0XveCJhyCpQbAMg2Mhc9scyW8Yu5MZs4fcqDGr5qoxOgWXDeSHG3y8l8/7WSID+NuKM=
+	t=1755704515; cv=none; b=GO+D6p2rK8OPFjLEuioSKGZI9uajabtYS/pWUumMqzxFDOm8sD+nhcAySw+9SVhf85uepUnpKUo0My1L0q3NU4jHHuxpnrCvfwMpFshErM5RRqnU44v5i1rFnH7tRFCDp8ha858mq51Loo02kHIfIDueM3kBXAKskbwXOMZM+G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755704071; c=relaxed/simple;
-	bh=vAoV7haBgdPQhyEfCwzg6CYW3ZXItIdgtf4dxWU2Ljw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QGSjnbE4p/FPYOsfauWXoMh9gRIRo9kqLX/phKrNyiQXYgC8hEvT+pkDf+38wEY34NVyqKFRHjkjkZHLolaQoIRZneVYSMm6hGtjSYl5XS/ulgC00XebxR7yu9yT5JattqCTucLOI1kjdNGEoHfUmac08YXfSlfUHAl+UOpn9kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jx9BiklU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fAwa/cj9; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755704515; c=relaxed/simple;
+	bh=kIyb/Zged6EQ5aYy6T7lnIhrmmyS/lUWjLwmw5kj4uo=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=WhVBGb270N5oVvZblQ3mVQE2ZjJKGXCzufZQmg0ULlWARYVu6VlVuxQ+QuHdfYbBMXwm1j+wUsDxMH6Ut/nKtx1uFJIVpMC7SXanSIYl4GmQfSgluPaGKEe4dSd3Tk6YYWudJzL1EopgJM4rB6kkeOfGbs7olCatzZIgq2LUrZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=upbPKfd3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e4VXmhdG; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jx9BiklU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fAwa/cj9"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8998E7A004A;
-	Wed, 20 Aug 2025 11:34:27 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 20 Aug 2025 11:34:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755704067; x=1755790467; bh=t0YITEXSyl
-	Z+lL3hKpY+lJlpZNCTryXh7zo9NpwccRU=; b=Jx9BiklUnk3zJHXG7ee7jTaoOR
-	c2ywKILbP9/MOgJ3SzwcEjvI9lNvoaZxeVCbX9+3UL1Vus4oZX1Foro1lbunNuxY
-	0ksW75oEV+Z8kC4AVy12iwF2BeC9aHoXDorI8SLUF/Sy8krAw3iyAsBJOkr3QZzB
-	N+KJ90vi0It8xeokkkqfaOUKB52nPzAxXmvZ8fAZOugHXxrfA9KFthgF3hFbLsWj
-	v4j9yDSeCkFDCj0vtxa5T57uq6Sba16T1fYFHelykICZsj0AusTVbpOMM3Ogep73
-	Dh0yFBQiIdSXUxgJ9xf3PPFpC6vdVgj7lSKKjC9HDcHV/7DC+IvRI+eWAGhg==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="upbPKfd3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e4VXmhdG"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5F023EC05A2;
+	Wed, 20 Aug 2025 11:41:52 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 20 Aug 2025 11:41:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755704512;
+	 x=1755790912; bh=ytFBpQYvnYkJQfEKUYdkjf2jtBA7Oe8nbygnYdU2hKQ=; b=
+	upbPKfd3eDlec3XbhFW4KcBJovZvfmDEQXadpnn3HK2aiyXqjnNoRUYhkKB8OxJK
+	8HstTREesHsni3kiQzeIDv8NCGLct3WrC07AJS7q3QWWcRndrTFqO7q0NHNKJ2+M
+	0OjfEBZxHBoE22C5oVwMnNpe4orLQTyPf42kYmlvG5cEKNngKveeCIEy3h3sHo0c
+	UEvwvHzIy/NXC8Er4QEZvwENhJpt+/o3T4TN72EDJ2mQlv8Z2M4pvZx7gI6TWc/M
+	8tDUEPXwyLtzroBSBC8FPZZtIc2X8ZckpkqeFI2YJ90Mcek+C7/PqxU7mP0ZsjmM
+	iDj8CVqWrBwOpyi4D0bBnw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755704067; x=1755790467; bh=t0YITEXSylZ+lL3hKpY+lJlpZNCTryXh7zo
-	9NpwccRU=; b=fAwa/cj9eg1UxoSXQA7Ye9VlJz0b7zwImY+spa7vWlGwblX9yBI
-	hkXXTVHb69jFjznZLjI8Ydc8aZvq9QyvILJBJPRjDZuYlp3jKLiiL4Tmxq52d7VR
-	/QPPbNeqaGsvjjtdIUvwaMbq+Op7dddB6v61c4Hdk4KsKU7keozgmAL2jdAbqe0T
-	WBFCT1QH32Ej3xeKUc7/8RXVkoGnP2JGXH49KN1KDblLy8qg79XWRfRxGwNoFmMa
-	2u6bh5lZlASQzar7bXAT5gr9Xm8maHdOUuRFqr2p6T4g3xik+E1UFathLKbfZA8b
-	+LkuqvRpeM5wi8pHDzk3m+puVAwNozQanWg==
-X-ME-Sender: <xms:AuulaJc4P13e4W0k8najQe37PROYpRFz3OJVvCA3tlT0jZGEeZwanw>
-    <xme:AuulaBzQ4AvnCQoykrHBky_Jx8BN5Bp9ynU7iEetHiLatY2nSfDJkZFv6nLfMg2kF
-    LkUYMc9DDuftCmJYA>
-X-ME-Received: <xmr:AuulaPHRoQR_fNemAd3zgOd13KQoyyczjjoLMMyCDLdycZyTwzPHX8Lvz9EKYaF_sMSMKm7_J9TcmE3mxZ2yv0E2s6ywkIsg_myAJr4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheekjeegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755704512; x=
+	1755790912; bh=ytFBpQYvnYkJQfEKUYdkjf2jtBA7Oe8nbygnYdU2hKQ=; b=e
+	4VXmhdGoTCqYjCiG4DM1PmyVf8OpqT96LZXRQ2PZs5g0zake9NYGk/HlkUQpABYF
+	c95qYCcL3F4sycMKgWLAhr0dP1KqC7cK0EWY4GoK1OMUAJ+kB7KScV+zEME+nzKt
+	gb/r8wzemK/ROXVtS5VXKVFD65rLCSeYN3lfxHdaHkCNE26wsVDqtiuC2V34T7LU
+	7wtl3T0G1XWZwMe2sLDI6ErlqZq21jnXBTG83W1UrTwPbISxAFi0wWaJDvNhVyI9
+	LN07wnWz5Yx7fd1N0ztoOa8DiuppxEqcPdRrNtzTaa6jhSmblRXLLEXYVLYTI+Mg
+	DjDUggMgwZljMbUMeTZCQ==
+X-ME-Sender: <xms:wOylaK69MZpFZbnvDH58d31s3NInnxTJ7xUGJ-GUM2utKoun7LqEVNU>
+    <xme:wOylaD4z9l_iBbeyRl4JtcJRL2yfgijr0ycphnzgIHMUAswYjR-xEVsg-YUPqHk5F
+    GmaZPx8LB4Utmd-OQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheekjeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepudffkeefueetgfduveeiuddugefgtdetudeukeelveekvdejgeduueegkeej
-    fffgnecuffhomhgrihhnpehoiihlrggsshdrohhrghdpghhithhhuhgsrdgtohhmnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
-    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:AuulaFwf8pCuOgB0Jy-EpI3tBq1dBwLu861doraHShCiyXPvkMAUzg>
-    <xmx:AuulaAtQqj59l4yz_CNNJfxyGsq_xd-5lPZsokFPQhdsKf8FBAWeCg>
-    <xmx:AuulaC0KfY6ghXObcVfFkQ8JKfHV6ghW7hsnAgwdOZcsPKAKncPnCA>
-    <xmx:AuulaL-pCoVDDlMBgpsfLWceAAXjaJflFlO24QGuUEcsjhvyT7a8yQ>
-    <xmx:A-ulaIGaOUSXSh1zjahxV9055is8KklZUZa_oM1aSScnMckxHzVY1q2F>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Aug 2025 11:34:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2] doc/gitk: update reference to the external project
-In-Reply-To: <249056e7-1332-4e6f-8d07-16c80fd4913e@kdbg.org> (Johannes Sixt's
-	message of "Wed, 20 Aug 2025 08:16:05 +0200")
-References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
-	<20250819-b4-pks-meson-tcl-tk-v1-2-6bcaff0bc0a0@pks.im>
-	<77fd0332-cc46-44b5-bbf2-94f326d5d754@kdbg.org>
-	<249056e7-1332-4e6f-8d07-16c80fd4913e@kdbg.org>
-Date: Wed, 20 Aug 2025 08:34:25 -0700
-Message-ID: <xmqqv7miatxa.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
+    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehmlhgvvhgvuggrhhhlsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:wOylaAAlWyTFNGwnIHMdDS9pj-NCETgir-6At4O5MU3FRTCjUJlELQ>
+    <xmx:wOylaJY8buTc6rwPXhPrflrXG2h2fD1934WInyFH79n2i8f2gAPIAw>
+    <xmx:wOylaAgROEbIHUu4XnkcJGjLKw8JfWvHMYiXJdi1er_yOLjffD0fRQ>
+    <xmx:wOylaD56X1YVDUmjWyHY7Wmp8sUXfA86RsjAFk8Ygzo8Jppb25_brQ>
+    <xmx:wOylaHPhRoZXzbBfSE7P72UOVoFNLf6GB2f8F85oRNhpgUBKO7VVBEAM>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 1FA251EA0066; Wed, 20 Aug 2025 11:41:52 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: ARGNH4DJB7Yw
+Date: Wed, 20 Aug 2025 17:41:31 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Mark Levedahl" <mlevedahl@gmail.com>, git@vger.kernel.org
+Cc: "Johannes Sixt" <j6t@kdbg.org>
+Message-Id: <61c4ba41-9ef1-41a8-ac5f-a334dd951add@app.fastmail.com>
+In-Reply-To: <20250820152451.20872-1-mlevedahl@gmail.com>
+References: <20250820152451.20872-1-mlevedahl@gmail.com>
+Subject: Re: [PATCH] git-gui: simplify using nice
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Johannes Sixt <j6t@kdbg.org> writes:
+> Re: [PATCH] git-gui: simplify using nice
 
-> Gitk is now maintained by Johannes Sixt and the repository can be
-> cloned from a new URL. b59358100c20 (Update the official repo of
-> gitk, 2024-12-24) could have updated this instance in the manual,
-> too, but the opportunity was missed. Update it now. Do give credit
-> to Paul Mackerras as the inventor of the program.
+s/using nice/using nice(1)/ ?
+
+On Wed, Aug 20, 2025, at 17:24, Mark Levedahl wrote:
+> git-gui invokes some long running commands using "nice git $cmd" if nice
+> is found and works, otherwise just "git $cmd".  The current code is more
+> complex than needed, lets simplify it.
+
+s/, lets simplify it/; let's simplify it/
+
 >
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
+> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
 
-Thanks for the update.  This is long overdue.  I forgot that this
-manual page was carried in my tree.
-
->  I just noticed that I would have removed the last user-visible
->  mention of Paul. Don't do that.
->
->  Documentation/gitk.adoc | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/gitk.adoc b/Documentation/gitk.adoc
-> index 58ce40ddb1..5b34dcd077 100644
-> --- a/Documentation/gitk.adoc
-> +++ b/Documentation/gitk.adoc
-> @@ -163,16 +163,16 @@ used by default. If '$XDG_CONFIG_HOME' is not set it defaults to
->  
->  History
->  -------
-> -Gitk was the first graphical repository browser. It's written in
-> -tcl/tk.
-> +Gitk was the first graphical repository browser, written by
-> +Paul Mackerras in Tcl/Tk.
->  
->  'gitk' is actually maintained as an independent project, but stable
->  versions are distributed as part of the Git suite for the convenience
->  of end users.
->  
-> -gitk-git/ comes from Paul Mackerras's gitk project:
-> +`gitk-git/` comes from Johannes Sixt's gitk project:
->  
-> -	git://ozlabs.org/~paulus/gitk
-> +	https://github.com/j6t/gitk
->  
->  SEE ALSO
->  --------
+-- 
+Kristoffer Haugsbakk
