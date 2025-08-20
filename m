@@ -1,78 +1,76 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D79C25D536
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 21:39:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0C22BEC27
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 21:50:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755725944; cv=none; b=nXqjX46Q0AG10teJPmlS6rYGC9zPGGJfWDIPbjFqRCa9ToFuzMVLtc+zE+mOQLpzvulQEI0gIGDxnmLOtEa2xRG51ca9i1QSf4skBRRt+hOg6BglD+5by0lQ8BZJFgcQUU8QGOQd0y7mH4TYgMWD5MOff9cczLq6NBCQMc26ULM=
+	t=1755726640; cv=none; b=DlQTKm75Kly7f/x6ZiF8O+bNSEjBew572rqnWXFZAuN+pC7ikbO+vKmZhGDOdW0S6YY0ehNhEAUEo7E6839c6MD/IYX2auv0QOOEzjNEeXZEHE2B3PPUavI9F8pOOYlcuanJPns8FwMWV9JREbuvdW5xZdYKBYRASqeZ592MeDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755725944; c=relaxed/simple;
-	bh=YG6Yvkw6wY1bWiUVvpX1eVNm+UY1Q9zeanVwPCD3nqI=;
+	s=arc-20240116; t=1755726640; c=relaxed/simple;
+	bh=23MT01YOqB360krtyIvrCyRdJ0QBi5W69J2LKE0XNzg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gXqeKlS8jEHx2h9JkbBaWHDr3f8O4ZF0cTsutMezKLulNZvFQhJDpRB0fWZmxo0g7KZRHioy57hYjBL/MrIbbO34uDroSB9YHqrQn04EVrxr7BTn9a0VyVVzv3l1YkcZtCya0C48T1XqGXbJCF04LrkSJrR17ZxN9TLPqX9VKCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZyBIPwgw; arc=none smtp.client-ip=209.85.214.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=VaK+sdz641pbQUCBr/eA9rBKzML2SlwhooDUe0UhYoFhAAnI1oI2s/kHGU377uorcFMrJaD4meuO4ES1/0E1yE990fbx4YvXVtkbj/tIEMC1gCFo+B2iurRgfV4KMhbzRyNZte60eqAZe1AfLFLmeoMvv1fVIPFiEYjbPD8z4Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nDd/euP8; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZyBIPwgw"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-242d3be5bdfso21785ad.1
-        for <git@vger.kernel.org>; Wed, 20 Aug 2025 14:39:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nDd/euP8"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-242d3be5bdfso23195ad.1
+        for <git@vger.kernel.org>; Wed, 20 Aug 2025 14:50:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1755725942; x=1756330742; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1755726638; x=1756331438; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kW9nLR8ZjZryFIcneAeP3wyzlPPlNQntIJGzgeHO240=;
-        b=ZyBIPwgwVOnv1Hnq+JDTJLMBCD33eoKNN0DQZgKXoEVSr+FRu4/ZBWLx2WBjLtfzXS
-         9O7CU2ibruRdnd59R08ZYTAHxIuok01mGjSCdK8A05ESZ0QsGEPy41x90u5g8QjGw70x
-         I3MwvDgOG9+XXpFyWLySIrTAklJLH8lO7yUbUwrptF58PnqnJTTKbOtwxf8HHtc//omJ
-         8hEzVGp+5RT4eFlICKuMtYCqoHdMgIoa99FfO51GT8V7uow8VKqWvuBRQ3ZPWUCRrft7
-         jjQl15f78LzzmzDS5oKk6xREaiXh1v6a3IH7ocU8ryHYiPKAYB84e1UG8cFj/qvFf3i9
-         gDeg==
+        bh=iblgXQqldfLzWCJ/jKHNbwhlNg1Xo0e4KQivW+3bHJU=;
+        b=nDd/euP8wQr+JVCoqhYqS/tFaU1vwQSVxqynho2OTTADktjqfnTraECItccXdRo6te
+         +ITjXFPdE+1KJYFe33ebGkAPmMt8paJ3QDRm9bu2GBtxO7RD2liJ2lPuGuK350RA/SIy
+         3rmDeYYhQ8sgJlWMyPW6IjRbyfzW3r11S7FBDyffIATWltisH6KEaNujMB4o/+LIxZyq
+         Hm/Q2dnPP9YMWk9jTyEDQw8WKVUkgEMztR4UGadtwfvMlvdAqBCgVgndDXWuDwMOZ1pe
+         z8Jyj7l2dA1SS6vmxSEmY7D43leZQ4SygKsCtbmLGjMhDFO/xxvgTmgEkjSCP22SAVC2
+         Lygg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755725942; x=1756330742;
+        d=1e100.net; s=20230601; t=1755726638; x=1756331438;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kW9nLR8ZjZryFIcneAeP3wyzlPPlNQntIJGzgeHO240=;
-        b=fYJZHsAgDGb8U9OJ0asFNgveyyW2I9siARyRUgvWouZu0DK9XCgBEGbqbEH/8deu4L
-         yd887HnXGIII5ndGtSazQVnYmARcFY73aJkWA/auazPXM4OQEXq0o7X6ZG/kfJeN56rU
-         hvpZg3eLpD+bWtWDncQS/tPJsVowemCD7uHrbHGsrP7Lo0JVVGWMNXUkF9SxOIZ2ZZ1k
-         8FgInMvlr+ghqb7XxSc8XRoBxFTq2Frx1Dq3rfnzXXA1Gisccr84B5ggc3zY9mzXsp6J
-         Hsv1wuRRlYCetnWozLWlfk5hF4P565BYa/eGRgCpgZc0trixkz7cdqo36ip7InBcpUm+
-         nwGw==
-X-Gm-Message-State: AOJu0YyhY5SnB+QpD1nqyCG7q4h+ZmeFhsTbxXDPveRSDV7PCxh8VScQ
-	F+euNqwkzLJnvOkW6m+RBSQtpQzzMlwhTYwV57+rBksjulB2u3zR9FseI5C9WthSfw==
-X-Gm-Gg: ASbGncsgSCE/csq3omYQ6YLnXfZIzGY0x6CblWEIOJDUGq+pwbMz1CByhjJcfFd1OBd
-	IveSbtpa33bsG2+J1qu306z+w1/sFdRSHfbH4JhPA7irLXVKuqqbXHF8js2Pb6hgtzclP3yVYyY
-	mOFeFOG5FY1Xh4J2xLGst5zJnl/mFhtA0/Rmc3T6C2tRbrhbrohLmvBZzavey4rqE0T7MeQppth
-	WyMli/PISKk/VAJ5+toWiW+4YGMGVcStBGIg3lSTfo+HXeZVKQWHG+Eb4XX1DmQIfIubAUqatsm
-	Swp0c1XP0LiG7/9oojzRXJ2XmC3kfYd7wMZyNy5/QqpPPjN1DSRadYTnlf6a6m/KpsI/GPEY7aw
-	Ee6fA4pLh3P1hNn9J1ruAc5ufPu/+cJsZwVpdeA==
-X-Google-Smtp-Source: AGHT+IGiTXqtevFf0Km+Kn3ZG5eetV66dZcMBez6Lsi2ow1mV1XiB5C/0urv1UyaxuUD32JpciCGHw==
-X-Received: by 2002:a17:902:ec8b:b0:243:afef:cd88 with SMTP id d9443c01a7336-24602316936mr207115ad.11.1755725942140;
-        Wed, 20 Aug 2025 14:39:02 -0700 (PDT)
+        bh=iblgXQqldfLzWCJ/jKHNbwhlNg1Xo0e4KQivW+3bHJU=;
+        b=wet5j9as9yoHJdjXKE2lYBGsbknFRwEBOGmeB5ZTGukhwIp0cgAOq2EgnmQlg9RH6k
+         x63yFsJZbouwwZsW2YZU8NaO9D3ZJjnuomOjlq8lSK+UkBRF78zNfqF8tQUogTncfUt2
+         t0HD04qR06kC9nHn4mRcH2kgGFaB5w7Gv9QUjw+XlFre9OdYWlxfSME7imVwmRXEBwtS
+         +9TlumzkSFAlwWzL18sE4jsjdpNAemzA3GfO8uaiFSEINIU/oNVveCxGPpuQp/zwkZqe
+         UggUNqXIJ/BtK0hAwG7lyq6FS+auhvO/9A7EQfpDI3MdcuTsXu9KhqnIwLESx5iriS5v
+         5yaw==
+X-Gm-Message-State: AOJu0YwVlSYPM79TLdiMVXwS9fYohjErk3cqXoU3F6Kc52a5VPhXKt0y
+	2pUvx++7UJo1LvXaVWHTkzGWzcfNaxAoX2vLHkvyY7/7uatrQ91JBm4M2HWOwF8vSg==
+X-Gm-Gg: ASbGnctK4INkZ3Hc6gFTAKfcpShZIMnt5CJ2pIWO8PpTwATndsIEzThZx7EAR4RrOdu
+	SLINOl6SrFfU2bSHk3sWeF6MiH/JPKnCP+7MbEp/O9n79ni7KXBRVzRxL5o/K6jWvdJSRiPQQ43
+	AhYM9CztyGM8i0WlCc51PztQrmlD7MsE40PS8PRur9UBwAktvdUasG1Fgmoum3ebYIFaxOQ/WPb
+	bufdmyvfpfCcv8Q9M3qgPMmEbdfT70l9eXTd4V9FuFw4y/xfQ+YzO4CQ4ozHRD9olHWDkCJ3mm1
+	7iwQLyqc6sLti9DWSG1CVIryGhKD0Foh/6ZqKFcP7MXdhd/htvEojWYkuSU8IecVojmnEtfX3yd
+	BJWy71YirsHCGcfVQpA+FgRiE3Ro=
+X-Google-Smtp-Source: AGHT+IHPsX/BwRs+lsA9Qj11r7AhK7YhZe9r1NeC0athBxG9O7DKjJBfxV5SOFB46xV3pamzvkjScA==
+X-Received: by 2002:a17:902:cece:b0:236:7079:fb10 with SMTP id d9443c01a7336-246022813dcmr305935ad.3.1755726637768;
+        Wed, 20 Aug 2025 14:50:37 -0700 (PDT)
 Received: from google.com ([2620:15c:2d3:204:23b5:65e6:69f5:ee81])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e7d14e531sm6196337b3a.50.2025.08.20.14.39.00
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e843bb510sm5302294b3a.53.2025.08.20.14.50.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 14:39:01 -0700 (PDT)
-Date: Wed, 20 Aug 2025 14:38:56 -0700
+        Wed, 20 Aug 2025 14:50:37 -0700 (PDT)
+Date: Wed, 20 Aug 2025 14:50:31 -0700
 From: Josh Steadmon <steadmon@google.com>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, 
 	Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
 	Aaron Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, 
-	Stefan Beller <sbeller@google.com>, Patrick Steinhardt <ps@pks.im>, 
-	Brandon Williams <bmwill@google.com>
+	Patrick Steinhardt <ps@pks.im>
 Subject: Re: [PATCH 3/9] submodule: add gitdir path config override
-Message-ID: <3hzj6k4yxfcvpt33jkblcafljhbj5npjia2u7sprqbkfcxoxwa@6qmaqwj3x7hc>
+Message-ID: <km4qhwxpmwld2qw4ihmzjtk7o5yeblfhhm6hqsh4nmzdbkdyyc@mwqb7a76liop>
 Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
 	Adrian Ratiu <adrian.ratiu@collabora.com>, git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, 
 	Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
 	Aaron Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, 
-	Stefan Beller <sbeller@google.com>, Patrick Steinhardt <ps@pks.im>, 
-	Brandon Williams <bmwill@google.com>
+	Patrick Steinhardt <ps@pks.im>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
  <20250816213642.3517822-4-adrian.ratiu@collabora.com>
 Precedence: bulk
@@ -86,38 +84,22 @@ Content-Disposition: inline
 In-Reply-To: <20250816213642.3517822-4-adrian.ratiu@collabora.com>
 
 On 2025.08.17 00:36, Adrian Ratiu wrote:
-[snip]
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index 178c386212..f4d4fb8397 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -13,6 +13,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->  
->  . ./test-lib.sh
-> +. "$TEST_DIRECTORY"/lib-verify-submodule-gitdir-path.sh
->  
->  test_expect_success 'setup - enable local submodules' '
->  	git config --global protocol.file.allow always
-> @@ -1505,4 +1506,18 @@ test_expect_success 'submodule add fails when name is reused' '
->  	)
->  '
->  
-> +test_expect_success 'submodule helper gitdir config overrides' '
-> +	verify_submodule_gitdir_path test-submodule child submodules/child &&
-> +	(
-> +		cd test-submodule &&
-> +		git config submodule.child.gitdirpath ".git/submodules/custom-child"
-> +	) &&
-> +	verify_submodule_gitdir_path test-submodule child submodules/custom-child &&
-> +	(
-> +		cd test-submodule &&
-> +		git config --unset submodule.child.gitdirpath
-> +	) &&
-> +	verify_submodule_gitdir_path test-submodule child submodules/child
-> +'
-> +
+> This adds an ability to override gitdir paths via config files
+> (not .gitmodules), such that any encoding scheme can be changed
+> and JGit & co don't need to exactly match the default encoding.
+> 
+> A new test and a helper are added. The helper will be used by
+> further tests exercising gitdir paths & encodings.
+> 
+> Based-on-patch-by: Brandon Williams <bmwill@google.com>
+> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+> ---
+>  builtin/submodule--helper.c           | 17 +++++++++++++++++
+>  submodule.c                           | 11 +++++++++++
+>  t/lib-verify-submodule-gitdir-path.sh | 15 +++++++++++++++
+>  t/t7400-submodule-basic.sh            | 15 +++++++++++++++
+>  4 files changed, 58 insertions(+)
+>  create mode 100644 t/lib-verify-submodule-gitdir-path.sh
 
-Rather than `( cd test-submodule && git config ... )` here, you should
-use `test_config -C test-submodule ...` and `test_unconfig -C
-test-submodule ...`
+Sorry to keep sending piecemeal feedback. You should also document the
+new config option in `Documentation/config/submodule.adoc`
