@@ -1,189 +1,149 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62088156F45
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 13:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AB71F4174
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 13:55:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755698020; cv=none; b=rBGiQKPtJq6Rn/xMx8UUfe5DDsECmaE1EwjrpzMm2WFB5zK6O/Br+VIVokVcTUM1DKOx2LwYsOTzRSSbxioUQzr+d9h9Fu2QhNwnfJqfe0j+UvZreXIJAenHLe9BTAtvqIpypsG8AMyod5q7rD9hsJ3GFI5M2DhuJmM0w0G8UjY=
+	t=1755698149; cv=none; b=d61rno/4YTFu5X4Zy+Lvc5d0c91uYGr+rZCpIL9tRnTRAWGun1+rg+k5vRKDuRpzjSbs27jX4OfZWHtWgcLPuhCQp5cxy6IEDtFQfE7ZgNJ869sdO+beaxGQSD0S16yyNUWqWC1O9138QzphegVjytBO7Ho6ei83tEHr6Q+sDTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755698020; c=relaxed/simple;
-	bh=nan3WV+1EtYevF9wmrP7LvkWfS3bB3fquB1a/MbdydQ=;
+	s=arc-20240116; t=1755698149; c=relaxed/simple;
+	bh=oaCInsfpaVAU3RwgBki9OD1+cv7ChQxvyCfCGjS+Y4Y=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=LBUMf9/Sjyvr8iOe9WoAiVpX/UWJYjNFlpAqN18NCZm5IPGl/bYHif8alaE6iG0VKhRW58CiKzz7bIy6sRdc0pf/UtaPhGW11KxgAhJetZmIpfT2jGol7pK9jRX1qKEPzpzxSm/xS2S+X0wqjFeABpk8MvpJwOMNkqrJhEeQ2Qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OMrg7Biq; arc=none smtp.client-ip=209.85.217.48
+	 To:Content-Type; b=eaVWilXXCGXQE9pVlkf1vbNltkRRfDF7P1Q5y8Uk8Db1BOcBnFIbN1xXOXwWxw54QOat8KPBocAbWGiJ7PcamCHrxO5a2klsXCdynz6Mna636SC99B7KPHFcWAU/Ms4gqWJxTEsUOj2z4iOr6Uc5Q341ZPJ6GitZy956ghJDNHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Od+phUyY; arc=none smtp.client-ip=209.85.217.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OMrg7Biq"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-50e2e0ce5f3so719219137.1
-        for <git@vger.kernel.org>; Wed, 20 Aug 2025 06:53:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Od+phUyY"
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-50f8ad2176eso3820816137.2
+        for <git@vger.kernel.org>; Wed, 20 Aug 2025 06:55:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755698015; x=1756302815; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755698147; x=1756302947; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AWFl+/GElgbhR+2wabBOuKDv8EtXRsHFP8uALPuesc4=;
-        b=OMrg7Biqx5UgwdqnsJpfD+4rINTqRZAQfRODW4LxzXqiwBAP1pJwIdc2Q2WYtaTSeT
-         O457ZQheBo6v1g3U7uITNA6C7mx6WHwLVSHJcI8oV+mBPGRcM7bdeF3tP9cvKAEOHOZ0
-         +Mq5YSjYMwyUd0n0sytKMTFxP83wB45N3OFQ693bIqUz9sKDCRyj1JEApH8pKzlnhrz8
-         EVhUbrU36tR6NI3tzxz8rLu0r5HTOtT4F8ISRvhjd0l2gHI+95HcW8Zf8QdvyzgMDj9J
-         cP+Pdrd/BoEWLSvKEy6aHT/EnxIXIjjMNG/eOSYsZ2BhzQ2Gt0YPW4XwIOSRW0qwVlbf
-         thTg==
+        bh=BtjecCmwSHMjmakPYOBlZnblhgClxQ3DlOv6VtlsDfo=;
+        b=Od+phUyYQU3TYYS05CxeTcLcuLqe4jI8Y21ibZHKvslRXbP7k94dGYDZVKTNQpi7wK
+         YvWQOgsVn+t6H9B1NA/wD2RG8oShNN3SDWZ3JiZNG30A/5yPE6CNpI44PNbFgvGozAAY
+         Dcc4xEFkEJnLo8H+3JRJFmES77gEL4u+FbZLowJC/R5cw4bBmP1jtZeOl3syZLM4XlyO
+         xJ3e4fK6ZNmUJyYlcdWTSC/FCMVZP/lNe8wyE0Z8xttNg01o44nNqiOgSMA2FINUQ+CY
+         Zeuq1n0aoHBREcARUNfRuyUvbyDwihU0VGtmVu59uezJiqA3yNrCD4TLyQYCcJRuktTs
+         /MQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755698015; x=1756302815;
+        d=1e100.net; s=20230601; t=1755698147; x=1756302947;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AWFl+/GElgbhR+2wabBOuKDv8EtXRsHFP8uALPuesc4=;
-        b=IddUxJklasKELflPIV20QlvkB46iTA6Tp6ZnTcTwVw6yExkly6Ip1BaGgH/qeZJlKe
-         42KY9nM8hkoIuJ7NUvRCphB9DRvMMQ1BmFjLNGBrdsUydLFoo5rrZuDL7VkmWV9XMxpX
-         gMGAZeGWGah83VcKikidpcSTuu/vsgzPutdSMVUhGT0pVnxjID7NnIN4fb8hzGVpYXSy
-         n/OdcMiXNlpV9w1lkgYfE9l1bUFceZAKBpLVOHg56/mvWAAwdVy4egNj38pRbVTEW/k+
-         EYXouS29VD6Ze8TEnd9j8dTkHgSdKyqTkQxM/1mF0zjDaq+QiMn/BZDzYBik1EOkoKqi
-         zM7w==
-X-Forwarded-Encrypted: i=1; AJvYcCUlZFRC3HTrV6TbMHEOH25IVKMVqwqwo2ouB6EzagYfxSnPU6E87/0YNEyRY+/fOoHN2ts=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBkrJQmnF/aui6D65Qhd+b+0qXAD7hqV9R+XS0TG4OR0hAe1Ha
-	90U+k4SWy1dtrzt/NxIK6b+zj69xelcMfSfF4GLcvIOff//CwZHCf8p8A8Gy52ZxTvnPAVrz57m
-	xBWmdhrf9uvhTm1slh+ITlK4NZpcFgNfO5g==
-X-Gm-Gg: ASbGncvIb7s+n08/E2VJa22WQoyrzj9Nayh5wHgj5rlROfJ5MvUxGtB9bKTU96XRh2G
-	BX+TtKHLO13NROLRD9nD99ZnbX8Ea5A80zNnZehXYiXHOIIUQttEUBAz0vbQOyeEm5BdcQmkzZo
-	MstADuNORsv9wj93Zg12ROGaqFX33LM+K+brGMfjWQbZNQPjMHBsPJ8jJzkhu1hcJ6EbwzMfUIC
-	uQJrVJFezi7rXLM
-X-Google-Smtp-Source: AGHT+IE9o8sGJy9HOFBFuk0LWSSWa+Yqo82w90YgXoQBWQF4wvfw4duzg+bIb+u7khJ7tg/ghtJiN/Z50/kkJE7pN8k=
-X-Received: by 2002:a05:6102:94d:b0:519:534a:6c1b with SMTP id
- ada2fe7eead31-51a48c5b213mr1052758137.15.1755698015104; Wed, 20 Aug 2025
- 06:53:35 -0700 (PDT)
+        bh=BtjecCmwSHMjmakPYOBlZnblhgClxQ3DlOv6VtlsDfo=;
+        b=d7IqYLQpXffWces/QUjS2Q3Ka3ITnyvoPHlbLA5ip/Vg2NRJSof5u6h9FF2liBAXxR
+         gXmoIyBVR2L53Qnn3+JegNh2IRoYqviKtOR6HDSwGDN0VuSQV6U3MDYXHH9vPc7GOlWE
+         m6j5/hHUYqoiQahY+7zers0LtSRfI2dHVVE9jkh8A5/0U5vnZkR3/4hlFHyNhgroTOXn
+         VKF8xg9wS8g78Pr8I7befirQAoT/cDe7IjULeYTzjQHkL5GAQjmdXXuMg3iIaslp9EO+
+         E7LPdK6FpGBAowc4Xkp0gye0yH2JHZ4/1g/ustBXK3WLgOoEVpiskeGC4pGKxnSzhmT/
+         mF4w==
+X-Forwarded-Encrypted: i=1; AJvYcCX/1EHOHbzp7/+Bpzl16HXNS2JghMjpbMq7fw7SMUmfq6kwb9s0SYmJIr2W+TdB522EcUE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhBirmHSlmvqBo1IDgiWrnEKTb0eUl6EeOQDPsIwk8BA97pErD
+	m3mSrz5s6rihdWUFyKBFgj6Kd686N+PNG2AinsNp79+02BXo93XtMeHNOSR0DYaWd1lqVwEM50i
+	Jd1UQ3+LVZX0SyzCRDhuyI3aiQaIZioaX0A==
+X-Gm-Gg: ASbGncvy0BlmEacNG8NZbON5+fsjCY5DvAjgxRoNjJ33RDqWMUp8cqYn5NWYGt4/hNL
+	RCKPrF1Zyo6J8T8UXlgnh/d7l3pr/6o4l+cXSeKjoUKezuwn0/9jlEt2WFbBCWm2uJqlQzuri5b
+	ZfTSq4KLK4kwRK8XHSTtJDpCVFGc6xsniLc0/C21WtuWHOsTx2i5BVMoPsFjEuT/LUxuramSN/l
+	eQFLU6AU5C+PIdK
+X-Google-Smtp-Source: AGHT+IEqmGS37GFScfZaffgCDj3Q4BS8GgfBupWyi5dtqFADZYu+THElJk1hugyB8/nYTzT7Ab+EW97ALK0tB3Rx0M4=
+X-Received: by 2002:a05:6102:358d:b0:4f3:36bc:554e with SMTP id
+ ada2fe7eead31-51a50c81da1mr949409137.16.1755698146913; Wed, 20 Aug 2025
+ 06:55:46 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 20 Aug 2025 06:53:34 -0700
+ HTTPREST; Wed, 20 Aug 2025 06:55:46 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 20 Aug 2025 06:53:34 -0700
+ HTTPREST; Wed, 20 Aug 2025 06:55:46 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250819-b4-pks-packfiles-store-v1-15-1660842e125a@pks.im>
-References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im> <20250819-b4-pks-packfiles-store-v1-15-1660842e125a@pks.im>
+In-Reply-To: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im>
+References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 20 Aug 2025 06:53:34 -0700
-X-Gm-Features: Ac12FXyJuuItLvMepW2NZJW9RyiJ6CGTU_6GUgsWDsCKRqGEN3QNTUbJsJ9m80g
-Message-ID: <CAOLa=ZTZzomWcCObMoBtNzFzNrC-OCWuzTqkTUB5+xnJ5VoV1g@mail.gmail.com>
-Subject: Re: [PATCH 15/16] packfile: refactor `get_all_packs()` to work on
- packfile store
+Date: Wed, 20 Aug 2025 06:55:46 -0700
+X-Gm-Features: Ac12FXzxGX9GK-GQJVq6x4y1sNImwLJ1XNySiIEqenDr2mlMnX_0XF-2og2c488
+Message-ID: <CAOLa=ZS9n6cnrH5OOQL+7ZTjAqxLdkBOSHhQShkRTtJ5jr+_RQ@mail.gmail.com>
+Subject: Re: [PATCH 00/16] packfile: carve out a new packfile store
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000860fcc063ccc4c78"
+Content-Type: multipart/mixed; boundary="00000000000061a4e7063ccc5451"
 
---000000000000860fcc063ccc4c78
+--00000000000061a4e7063ccc5451
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The `get_all_packs()` function prepares the packfile store and then
-> returns its packfiles. Refactor it to accept a packfile store instead of
-> a repository to clarify its scope.
+> Hi,
 >
+> information about a object database's packfiles is currently distributed
+> across two different structures:
+>
+>   - `struct packed_git` contains the `next` pointer as well as the
+>     `mru_head`, both of which serve to store the list of packfiles.
+>
+>   - `struct object_database` contains several fields that relate to the
+>     packfiles.
+>
+> So we don't really have a central data structure that tracks our
+> packfiles, and consequently responsibilities aren't always clear cut.
+> A consequence for the upcoming pluggable object databases is that this
+> makes it very hard to move management of packfiles from the object
+> database level down into the object database source.
+>
+> This patch series introduces a new `struct packfile_store`, which is
+> about to become the single source of truth for managing packfiles, and
+> carves out the packfile store subsystem.
+>
+> This is the first step to make packfiles work with pluggable object
+> databases. Next steps will be to:
+>
+>   - Move the `struct packed_git::next` and `struct packed::mru_head`
+>     pointers into the packfile store so that `struct packed_git` only
+>     tracks a single packfile.
+>
+>   - Push the `struct packfile_store` down one level so that it's not
+>     hosted by the object database anymore, but instead by the object
+>     database source.
+>
+> Thanks!
+>
+> Patrick
+>
+
+Hello Patrick,
+
+I took some time to read through your patches and comment on them. I
+only had some small nits.
+
+Overall they look good to me, but I must say I don't know much about
+this part of the codebase.
+
+Thanks,
+Karthik
 
 [snip]
 
-Nit: From running the clang formatter, small cleanups:
-
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 030d0b0c77..41433b31ed 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1424,10 +1424,9 @@ static int
-incremental_repack_auto_condition(struct gc_config *cfg UNUSED)
-
- 	for (p = packfile_store_get_packs(the_repository->objects->packfiles);
- 	     count < incremental_repack_auto_limit && p;
--	     p = p->next) {
-+	     p = p->next)
- 		if (!p->multi_pack_index)
- 			count++;
--	}
-
- 	return count >= incremental_repack_auto_limit;
- }
-@@ -1491,13 +1490,12 @@ static off_t get_auto_pack_size(void)
- 	struct repository *r = the_repository;
-
- 	odb_reprepare(r->objects);
--	for (p = packfile_store_get_packs(r->objects->packfiles); p; p = p->next) {
-+	for (p = packfile_store_get_packs(r->objects->packfiles); p; p = p->next)
- 		if (p->pack_size > max_size) {
- 			second_largest_size = max_size;
- 			max_size = p->pack_size;
- 		} else if (p->pack_size > second_largest_size)
- 			second_largest_size = p->pack_size;
--	}
-
- 	result_size = second_largest_size + 1;
-
-diff --git a/http-backend.c b/http-backend.c
-index be4d8263a5..c5779db79d 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -608,16 +608,14 @@ static void get_info_packs(struct strbuf *hdr,
-char *arg UNUSED)
- 	size_t cnt = 0;
-
- 	select_getanyfile(hdr);
--	for (p = packfile_store_get_packs(the_repository->objects->packfiles);
-p; p = p->next) {
-+	for (p = packfile_store_get_packs(the_repository->objects->packfiles);
-p; p = p->next)
- 		if (p->pack_local)
- 			cnt++;
--	}
-
- 	strbuf_grow(&buf, cnt * 53 + 2);
--	for (p = packfile_store_get_packs(the_repository->objects->packfiles);
-p; p = p->next) {
-+	for (p = packfile_store_get_packs(the_repository->objects->packfiles);
-p; p = p->next)
- 		if (p->pack_local)
- 			strbuf_addf(&buf, "P %s\n", p->pack_name + objdirlen + 6);
--	}
- 	strbuf_addch(&buf, '\n');
-
- 	hdr_nocache(hdr);
-diff --git a/http.c b/http.c
-index 16a1ab54f3..bf8711d6f8 100644
---- a/http.c
-+++ b/http.c
-@@ -2416,10 +2416,9 @@ static int fetch_and_setup_pack_index(struct
-packed_git **packs_head,
- 	 * If we already have the pack locally, no need to fetch its index or
- 	 * even add it to list; we already have all of its objects.
- 	 */
--	for (p = packfile_store_get_packs(the_repository->objects->packfiles);
-p; p = p->next) {
-+	for (p = packfile_store_get_packs(the_repository->objects->packfiles);
-p; p = p->next)
- 		if (hasheq(p->hash, sha1, the_repository->hash_algo))
- 			return 0;
--	}
-
- 	tmp_idx = fetch_pack_index(sha1, base_url);
- 	if (!tmp_idx)
-
---000000000000860fcc063ccc4c78
+--00000000000061a4e7063ccc5451
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: a8df4054849074c9_0.1
+X-Attachment-Id: cd89b963cdd1b29b_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pbDAxd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMGM4Qy80bEVwT3BrY3lpQmE0dzBDWnBsVHVpenNVVgp0Sm5jMDdEa0FT
-cGhWRTBna3JvaWZoQlVpQmRabzlWOXZMTVpYQmdhMnFqSnN6RHBsYnhaVGpLQy9xZzA3RjBUCkV1
-dkhOcklvQnNSa0RGWU55ay90RnA0V3dNZmI1VCsyWDhYN29MOUM0YUx5TWplSkVyc1M2WUpDWmhl
-bm1aeGUKdDJhaGk0VHZLWXd2eXVZYXc0ZExBQTRGY0x5c2E0QWZsamFZemdOWGM1NWZQL293cFJy
-VmVDb2xSQTJ0dUR1OApSTDBRamhxenVQREtHUGUzbGxIc2V5R1Y4YkZPcTM4a1Z4NUIrYmNQU0tO
-L1R2NXNQMFoxSG82TTBrVktXL0wyCkNJQUprNnRNeXBvazhYM0NhNStQTzljSTZyamo5MjNCUFJm
-MmZ5cWJvSGlHb3JldjF0ZE42aW1ncEdTMXFNVWgKeXhRYXNLTit5YmlMY09JYVZXNHo3S25Bdm9p
-ZGZtZ0UyOTd4VFlxcmErcUNQTU9EUTRyM3QxZEwxbGRialhBUwo3Yzc5MExKSFRicGZpZUZJRmJy
-dWhTbmsxenUzVnNLSFB0R3YrLzlXWkhSMW1BNjZzMDhKblVFNUlhUkEzRG91ClA1UFE3SnVaY3lw
-YytYN0xDRFhWZzdLM2tFQjA4K0crOGY2STVtYz0KPW9hTE8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pbDArQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMk5IQy9zRVhVMWxQdEIwRWVicHZ2UTZvM1k5WXF0cgo1dlljU0l3NFZm
+dGpCS1FvbkFVK1NKek9WempVcEZXbFdYRWR2TzRldkZQREw5NEtPQS9JZUdTdUxJekJxWGQ0CmUz
+OGRsTzIza2pIdUFKVEh5MjdsMXZtUndpT0dITGgxRTZDemtxQm5wdUhPNDNIQXVHNkNIcjJITEJR
+RkxhdmQKUGVwZ2V2N1FhVEdzY3Q0L1ZaVWw0QVVPdkNFVXZ2MUtnMWhBUU9GSlVKY0dXcENOak9a
+d2oyM3I4YXpPWHRDZwptNDlyRkVIUjlhTGNUYTZVQ3pMMytQaWI3cXBGRWN0UFRpZzdESHF3ZmdY
+THVWcTNuYzVCV3ltQlhLZm1oV2pvClhhMVZjeXhmZFhGYm5QUHk1Y00wNnBPZlIrY1M1R2xpNk5C
+L1dkWmtlanIvVnFic29COWJvUmV1K0tWOFgzWDAKOXMxaFptUUVvRHY5K1VrSmRRc2lKUGxoTmR6
+cG9IdVNMRjE5RFJUU2Y2M21pMmpSOXpndStTU1JEK0FYZnNlagpaTER5RlhlbVNpVHQ3N0w0TXJv
+VG9oK1l0blAzQkRUTFNlQWV2NGlJOEY4WjRBd1JZcE9ZdmNNcTEvR1NBYkJFClhRUTI1RlE0Wkhp
+UGtJTnZqbDljcjVodVl0MFVISkRDZkduOHlXbz0KPTgvRDEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000860fcc063ccc4c78--
+--00000000000061a4e7063ccc5451--
