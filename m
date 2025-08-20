@@ -1,116 +1,88 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9012D224B0E
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 04:58:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A3921CA0C
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 05:50:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755665934; cv=none; b=l7ukUIH31YSRawLT0AFI4NLlAkSGHWr9sqCUcaiB+cp6Ip/LzOJNpsvDfRpqgILooj68lRaoidNu5QXFrTXX3uuNHTbaBUq8f9CTCeLJLiUjMX1mWODKDBSv1ql7v8tQ4iFzCGXGb0kfSSTz9eIOHt2mQ5yLDWH8Q6Zbcdf5Mxs=
+	t=1755669006; cv=none; b=HNZCqBx6ihv5u+jTxRP6UkAhC0vh8PueXc5+ohFv7uyoJQH3P01XveA4VOqHqd89/YvgSTrEvJakuuqANU67JrVPawW3M8iNthe6rqMi/BD8VgIeJkcXUubp4f7XAfDxlE9JmI1GlKBUfyljwcSC106Fa+GBRWB/hiRbswXwYqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755665934; c=relaxed/simple;
-	bh=2bAi/qLLCrX2Q2zEwal6h+rh/EVmyHAKBMsVwQ1Sk4Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oTykdvEiiqpWAyXV23r0OgIqh1D3rtY22ysWTKVyAebZZUSF4mu9SIaGyn7QTRauh2TaPIH44jKW33grb5hqEpg7G7fT1okb4kwmZ0G8rDfiQHz4nvJohmrg8Kp5JHz1LqOj0ShDrCQyL5sS5UPpqRAliiDLPyPG3+TSAfDKwQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XznKeiCv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JJCoA4XH; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XznKeiCv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JJCoA4XH"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CF3D11400394;
-	Wed, 20 Aug 2025 00:58:51 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 20 Aug 2025 00:58:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1755665931; x=1755752331; bh=Ayfue2yQge
-	Ntzy2yWBHNn75ESKA7qpDm6RjyWq/X1gw=; b=XznKeiCvP7gdBr087YKiFlvl2t
-	+uBDHQUqAsCbrIob7CjeNJ2Sddg/p02wt6IkWNtng6W166uKwjK9P+58K/MZond+
-	2O7h0l5fo4DIDHWSax5GJt5UOrfdrQXPWrSQX9ahENXc2XPDJ6bo54+xGstUFgMH
-	cJwKh8f39CmqZfpSdRe0YRAWhhWHYBbNHn/yrzBV7Nb+1QUkhFuGfWEkH1nGL3Ji
-	ZVUikci7xH3XU84igqwRF9IJp5iZ8IWo3d54p1vmehETg5rsbnTh9fVPViKORTdz
-	9DlRYYbrB9JZJe0B+1OYAz2KvzA00rdrHzg49yHHGQLXJb1q2D4PAqizImFw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755665931; x=1755752331; bh=Ayfue2yQgeNtzy2yWBHNn75ESKA7qpDm6Rj
-	yWq/X1gw=; b=JJCoA4XHtyyEj3Sw4r9r4RuyryOn/8VpT0Yug6jKF4dK3tJ6wFW
-	LtLH+uxt0rFKA5iZ/zxtCy8HBJiKxYe5GBmhQ0leCD30V5+rPfo13Dh+9DHZAz7y
-	jwJkLxVIu2KBNOu2tKqTBrnPwEseLVeEYcAd7+hjvb3oRn92DzfffsdNkSv6aQfg
-	bCsQAVDWEzgv/fo4uaOpuS1+tkXHE9wTlgmjzUEhMl+pDDThGzThLBiv1/r75JTT
-	qaFfGVB2U6J+WlTunPtLxJw8NO0fzBZHJnnZffdrtXlqJXHAsyWydMAr+iubSLQA
-	+bvMHbknOqRzaGWR7K7Fvy7Wfa3HVWIc6Pw==
-X-ME-Sender: <xms:C1alaLaLYY3TzXxxR6zIA68RsEKbgr_v5freDkz8zXhYALlE9NCniQ>
-    <xme:C1alaKn2Hqqmvh4v1-BLa9bNTvJjdcYo5lt9tTavvy9LcyuuEkhOXLEoA5FDbvXc3
-    a6xUSXG_sZTAYZblg>
-X-ME-Received: <xmr:C1alaPwkcVogPf9TcoP1Qq68tBAgZMke4czKhAPzmUbUCBSLajT1QuLFf5fSPZEyGXoh0IoVjHasHG_Zowg3qpfm2rnpKQcQYzk_7VLv-Nnf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheejgeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:C1alaAOlfbO7-XIuPeDRRC6m_xdfRTwt36rOMUO5iR5aQqGDkmV42A>
-    <xmx:C1alaLTfG6U7XJPEOLXSo0lbj3YBb6_sEsIYvkZ9SPZRrZCOai6Z5A>
-    <xmx:C1alaGaqXoUQvMXnfJwxtvQbHkrPShoeR5jR0Tl2MDPaJoBhUlTL4w>
-    <xmx:C1alaA0pQBIkl6Z9jLDVv2EBYljcnKsAMplms9en-D08kticPU16gA>
-    <xmx:C1alaF-aQN63j5bjtr3z0K9fG-itCH527oXCad8B00l85rXNcRWmu-vE>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Aug 2025 00:58:51 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fef02af3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 20 Aug 2025 04:58:50 +0000 (UTC)
-Date: Wed, 20 Aug 2025 06:58:47 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 06/16] odb: move kept cache into `struct packfile_store`
-Message-ID: <aKVWB0YAJlhbEUe8@pks.im>
-References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im>
- <20250819-b4-pks-packfiles-store-v1-6-1660842e125a@pks.im>
- <xmqq8qjfdts9.fsf@gitster.g>
+	s=arc-20240116; t=1755669006; c=relaxed/simple;
+	bh=m8REl53eZv/CF3RV5vIubqSoJab8MHO8+zQsQBuZDxE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=fnK6gq3coy2RYBzr9iirjIrBZx26CvI5vkT/SK4AM3HK/Dq0e/5QxDw1rTve/j7rpzvQ+3zl2AlsIeiB3JJ0c0PIDXP2uWn57gd3GTOVirOkwK4Y0W3w+nMUgpl5MeHWAD8miDUeKEIb9p3dEuAajif9YDxTPfKMNfaABxBrN1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp2.bon.at (unknown [192.168.181.105])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4c6FsQ4scLz7Qq9F
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 07:50:02 +0200 (CEST)
+Received: from [192.168.1.102] (089144220182.atnat0029.highway.webapn.at [89.144.220.182])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4c6FsG1B6JzRmx2;
+	Wed, 20 Aug 2025 07:49:53 +0200 (CEST)
+Message-ID: <77fd0332-cc46-44b5-bbf2-94f326d5d754@kdbg.org>
+Date: Wed, 20 Aug 2025 07:49:53 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8qjfdts9.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH] doc/gitk: update reference to the external project
+To: git@vger.kernel.org
+References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
+ <20250819-b4-pks-meson-tcl-tk-v1-2-6bcaff0bc0a0@pks.im>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: Patrick Steinhardt <ps@pks.im>
+In-Reply-To: <20250819-b4-pks-meson-tcl-tk-v1-2-6bcaff0bc0a0@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Aug 19, 2025 at 11:56:54AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/odb.h b/odb.h
-> > index 2dc3bdc79d..f1736b067c 100644
-> > --- a/odb.h
-> > +++ b/odb.h
-> > @@ -124,17 +124,10 @@ struct object_database {
-> >  	unsigned commit_graph_attempted : 1; /* if loading has been attempted */
-> >  
-> >  	/*
-> > -	 * private data
-> > -	 *
-> > -	 * should only be accessed directly by packfile.c
-> > +	 * Should only be accessed directly by packfile.c
-> >  	 */
-> 
-> Hmph, would this be better done in the step [01/16]?  Or did the
-> removal of kept_pack_cache make the last piece of "private data"
-> disappear with this step?
+Gitk is now maintained by Johannes Sixt and the repository can be
+cloned from a new URL. b59358100c20 (Update the official repo of
+gitk, 2024-12-24) could have updated this instance in the manual,
+too, but the opportunity was missed. Update it now.
 
-Yeah, the latter. All packfile-related private data is now encapsulated
-in `struct packfile_store`, so I felt like the comment became redundant
-with this commit here.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
 
-I'll mention this in the commit message.
+Am 19.08.25 um 10:18 schrieb Patrick Steinhardt:
+> +++ b/Documentation/SubmittingPatches
 
-Patrick
+> -- `gitk-git/` comes from the gitk project, maintained by Johannes Sixt:
+> +- `subprojects/gitk/` comes from the gitk project, maintained by Johannes Sixt:
+>  
+>  	https://github.com/j6t/gitk
+
+> +++ b/Documentation/gitk.adoc
+
+> -gitk-git/ comes from Paul Mackerras's gitk project:
+> +subprojects/gitk/ comes from Paul Mackerras's gitk project:
+>  
+>  	git://ozlabs.org/~paulus/gitk
+Let's fix this outdated reference!
+
+ Documentation/gitk.adoc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/gitk.adoc b/Documentation/gitk.adoc
+index 58ce40ddb1..33a5648ab8 100644
+--- a/Documentation/gitk.adoc
++++ b/Documentation/gitk.adoc
+@@ -170,9 +170,9 @@ tcl/tk.
+ versions are distributed as part of the Git suite for the convenience
+ of end users.
+ 
+-gitk-git/ comes from Paul Mackerras's gitk project:
++`gitk-git/` comes from Johannes Sixt's gitk project:
+ 
+-	git://ozlabs.org/~paulus/gitk
++	https://github.com/j6t/gitk
+ 
+ SEE ALSO
+ --------
+-- 
+2.51.0.205.g9a02ae2892
+
