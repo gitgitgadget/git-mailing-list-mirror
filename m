@@ -1,68 +1,67 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD092C21C3
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 15:25:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC7C182D2
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 15:31:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755703515; cv=none; b=u00o4cE/FKTVo+nA6VQZqkoqH9QV3bzkMrZKuc1DGypy3KDWMRCPjq/5VEoRted5yi8DoU/0erc+M4ZtJBE/wyYgwREbRLL3Hpa5J9jwWd97o5AjtrC3qpQMHDgoy1rGP/17jm5fpH1m6AIPD1IYyhXFkBYd/FS8XPY9pBbhdnM=
+	t=1755703913; cv=none; b=gV6fL8SDWK2eBIlbn/0Cgv8+TQ02SERA3T6EV3zJK7umalVZSwUXQvIIgRt2dzNs8e0RN9ld6F1mkwVBHOZprya1bBglVXVv9D2qwFhkMEVkrYIKhaJc6E1EY2XZ4YXTCOg1lFiK4FzHlz9eUfq5oBhj6Yul+Hg1dBY+mH0SHOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755703515; c=relaxed/simple;
-	bh=KHbD69Wmnb5FbCUiepbUVB4gpkV2/gqmmAPo+lkiq8w=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Pl05QVzihX7gZUnVeEs84fQFH0tX7iVTsMxhK7hDOBvcTG4Ds4qD1wSNr5T7N7xIt4Pzs+MvuMTsJp+UsAUC6HSkF6KvCOmGLGNsNM6wAfAJu6EzqWuZL0ExD7GsgGRADEbs+bFXwXaRcqNshnxiOjqEa3/Ptt6FTJ9JprgidXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J37elK34; arc=none smtp.client-ip=209.85.222.171
+	s=arc-20240116; t=1755703913; c=relaxed/simple;
+	bh=VugqTynD0gqWQIzRUVe9nEHYMUJygeCAIBedVnF7lJc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CYOoZYsa05GT9JuogztdXnmOtmlkqbKCMKMYjc7AC5XeNcWAAi4/Y3jhOTiPYGub6XUlj4Ojmn0aMyQaltqNswKIJRjMxWdWl/Yxl+a9f5FZapaO123WVt2zdg2OOszg3AcFzyWYoq9erEw6iSZ/m4/rK0e+swVWN9YzlilA0eM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nQP9M6ku; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J37elK34"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7e87031f560so920385085a.0
-        for <git@vger.kernel.org>; Wed, 20 Aug 2025 08:25:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nQP9M6ku"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7e8704b7a3dso725241385a.1
+        for <git@vger.kernel.org>; Wed, 20 Aug 2025 08:31:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755703512; x=1756308312; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755703910; x=1756308710; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PrSI+whi/taJoVw9hlFdDg0QVWshFM5XMPW/nyoHIGs=;
-        b=J37elK34Yjuz5EtV4Y/uh9oPuat/mfVzGVjcX4iLDuLbjR5IlBxr5N36XalvQW+Ybh
-         YrpZ8LBjhcPw1PePtUpGtKRJW7KAJHTuoUQr+MUKwh7GkfWXgnvTGTOtd4qQx7U0e9m0
-         gajWCf5yOgvElCS5ICzuTIXTZCZEzf5qrgDbIzwlAr+KVEqvvIKT+808sS++lDpod6A3
-         8IBi2m6s1LT+ThnBREjWNPB01LrX7N1tQGHn+k6tMg5HvZkmfKv2bC3IyHCSjN0iJILN
-         jsAIjSfu0oTupEJ0rArx1zpvmqH/+priEJxj9ROqTctGSjVUkQvlThqSnQlLyPDhC5qk
-         HT1Q==
+        bh=X9Sdyapb9MQMlBDKGYE0yEzDh6uRsCPCm1l1zQIiQ5Q=;
+        b=nQP9M6ku7E3KyKlhpGqWvB5wUFveRjz8XCfiQP5qFHkduBRIB4X8AZ+A9jqvUH1OqM
+         ForaDJqxVMWrKzHG37kOmb+mDDOqFXRrOY+etPR7XtMBLxbqXVyTGHrhPp2OfG9xOQZL
+         LF5GW4RxBgWTEBSbV12Nv5B3CjNLhsxbSKEwR+E/bntJWBVUZG05p3L3wE1ynbDcRV/9
+         NiyQ9MyMd04Yz7dD7cke4oWCOhL/jL/Q0YxSgEuFcIicY7G/9TE3ywX4ox1rMqQYOghQ
+         W7GxGsNlYswA7kbIw0oXTqWwaAA1CvxE2OJmR4s3qtFi4PiReiKgO6ATEz+cCNHhxk/r
+         7xXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755703512; x=1756308312;
+        d=1e100.net; s=20230601; t=1755703910; x=1756308710;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PrSI+whi/taJoVw9hlFdDg0QVWshFM5XMPW/nyoHIGs=;
-        b=I547NFbWjHoUvTHUlb9vbOx3kgSGczMVGxW221O1j3TI6YtWAVcMGxdrSh+R0uMRPs
-         rAtIdDBJHywHoppuCgO6K9ZtVgMvAWTRKqOve1kHD36xo26W6XzLOgHOmoQ3A1MswWN2
-         XdQEDB6mCEUzuk0XNgwWt5RhhcrKLGTosUfipDxtKHsLTt4UrufMss8Kh5v29+0eOn21
-         0GJtdiuf1cKo9vj6XGmbwtXd7Sc6SOpI9hPm1/CXNv0OPQ9U5aivaBIM1tRx1n7/xxkQ
-         PMhRsTAp8TcBu7HTsO8le46WSXnmVT7XBcy24CHZB76MI9v/Sk/EmP2yXjd5YDOQQq5c
-         OvkA==
-X-Gm-Message-State: AOJu0YwLBCAlgQuSDipojbSnzAyvYAFfXdDYmdixUgF8H8izkeR3sFk3
-	iJ+7cuW1IuZaQU7+O/Y5dvT3GcEZNbC8yMyhRsFFVZH0EXCjPaW2f19+jxSkKN0vjt4=
-X-Gm-Gg: ASbGncsTBfCin+AMHRBOG8HtcS6/WKzDkdt2HVJcR5bfwloQanEYmWRhaviPwMavkPg
-	BvSgAY6QnxhPhYE2xXolZSJKLen2PSpVANexbB0iXDRPaoYvV+gKkdiK7k6dJZbh1C0JEK+uU8a
-	zTMdrh3ZilV1MrUTLqWPAh8EFTI3rffnSLxZmAIi4nu7GKInQ15vJNBkA7d/3ROPTuEh9eeTGMG
-	fw/ErmZxxe0VFae/Ga8xIF4B27KvXwuaA3i5BScyAw77Otwn57iAZNNrbT4VXsdiu+rZ10MEyvE
-	hZ3pabtqk+qnj/SftlDxmEvXWbA9xsFeXDdNxuhSLfoLaSt0KFT3JcH0V09GyMO2poTAuL51DPZ
-	4sMZArtW8XwX9K6oxhHyMFZ6rk7I8d5dBKmfp0kr20bSm/BsKEXwUzzYbuI53Ox7Yj3qyhIk81j
-	AfdSQ=
-X-Google-Smtp-Source: AGHT+IH3iDjcJsK9u/r226K9il5P6sAghHENZsSs0Bpr+cawe9Q/z0SlYU2g/beGxQ6KcHPXj15TWw==
-X-Received: by 2002:a05:620a:7084:b0:7e2:9c28:c308 with SMTP id af79cd13be357-7e9fcadbf8emr405384585a.18.1755703512062;
-        Wed, 20 Aug 2025 08:25:12 -0700 (PDT)
+        bh=X9Sdyapb9MQMlBDKGYE0yEzDh6uRsCPCm1l1zQIiQ5Q=;
+        b=XOkfuebyANbHU/scQWH6ylCtIJ55XwBo7NS8ABflRGYC8OdzRTR8qwsMMGk1ne2YiR
+         xheEPc0J76hl3GVEMJXL7/5pLQiXaCqodrzdpJbB21eOQcUVY57xbjipS+1pPG7f73hI
+         q3EsBdVFZC+eLuybMJ/S7M4wLIIHU5vAEjddkuc2lN2LoHerS6NpHMLT4navH4tNt4qO
+         B5AePu9x6n9UeERJELHQq5sCvBmWwZnLYri3EPMB/LE3VDqKC1lBPHrQugloqIPLCYXq
+         soW0Ucq1YimdGM6yLiYkCtbNDrRHW2JLfQGPAuzSIPP5v/dq+DF2VjuxByQde0hVqwev
+         CNrw==
+X-Gm-Message-State: AOJu0YwoP+LcugL60AuozD2QdTkXj0JsKX+cLO6e08E/o9g5tladaj3Q
+	dI+OavmP+CNuEKbgF5jEortOA09gJXfqsXzWwl5cN2uBasOEYa6c1ayrrz1LSGC7I5g=
+X-Gm-Gg: ASbGnctGnnleAIrtTKgGEqTH/AWFXGVxaCOD8IDpm4xtD82RAqE2MuiC/fVJPJAARPi
+	L9OJ7QHzuCFO7RFHU160nleVZ34UHSbDMdVjod9vGjy210maLB7NLKIy5ZUYtAj5WdYKZpJeDUy
+	Mg/qIUfiZZH6J8V5YZ121Y2g6QeVTlTIm/qdQPYPsiRdZeyF3FcAsyku9VMopfXBtsZgARI2FXJ
+	KsQh19y+SNJlvlkjsDMTJvvy97OzrwGBDBmG6iij9UxHW77mSx13Ny8urm19C38OtK9B9ffLsSB
+	WyBkwstW96SExgVbV/17cPET7J0sqRzml1r1UkE48rBWJ/VfvU8RTWxCqcHwg9hKLmBRetePd2F
+	V15UWDAl+8hhp4ddlVsOUY63Z7ODmWpF6ttwlXGb3UJCNADGQ1DW61KS7s+i6wpLyeDT4
+X-Google-Smtp-Source: AGHT+IHhxW3VQNDQoeKDSwQbkY8BYJMTJCG78w4nqTfeBZYVScwU8BiLlDSS+HQKO+zdrks5yVPiLA==
+X-Received: by 2002:a05:620a:370d:b0:7e8:4337:8ffe with SMTP id af79cd13be357-7e9fcb0bc33mr387408585a.47.1755703910401;
+        Wed, 20 Aug 2025 08:31:50 -0700 (PDT)
 Received: from markl5i.lan (pool-173-73-185-17.washdc.fios.verizon.net. [173.73.185.17])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e87e0757c7sm948732385a.32.2025.08.20.08.25.11
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e87e0216a9sm967939385a.4.2025.08.20.08.31.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 08:25:11 -0700 (PDT)
+        Wed, 20 Aug 2025 08:31:50 -0700 (PDT)
 From: Mark Levedahl <mlevedahl@gmail.com>
 To: git@vger.kernel.org
 Cc: j6t@kdbg.org,
 	Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] git-gui: simplify using nice
-Date: Wed, 20 Aug 2025 11:24:51 -0400
-Message-ID: <20250820152451.20872-1-mlevedahl@gmail.com>
+Subject: [PATCH] git-gui: simplify PATH de-duplication
+Date: Wed, 20 Aug 2025 11:31:43 -0400
+Message-ID: <20250820153143.21181-1-mlevedahl@gmail.com>
 X-Mailer: git-send-email 2.51.0.99.15
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -72,64 +71,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-git-gui invokes some long running commands using "nice git $cmd" if nice
-is found and works, otherwise just "git $cmd".  The current code is more
-complex than needed, lets simplify it.
+git-gui since 8fe7861c51 ("git-gui: assure PATH has only absolute
+elements.", 2025-04-11) uses a list to maintain order and a dict to
+detect duplicated elements without quadratic complexity.  But, Tcl's
+dict explicitly maintains keys in the order first added, thus the list
+is not needed.  Simplify the code.
 
 Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
 ---
- git-gui.sh | 30 +++++++-----------------------
- 1 file changed, 7 insertions(+), 23 deletions(-)
+ git-gui.sh | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/git-gui.sh b/git-gui.sh
-index 4528b22..5ee08d5 100755
+index b64d065..4528b22 100755
 --- a/git-gui.sh
 +++ b/git-gui.sh
-@@ -578,21 +578,6 @@ proc open_cmd_pipe {cmd path} {
- 	return [open |$run r]
+@@ -103,21 +103,16 @@ if {[is_Windows]} {
+ 	set _path_sep {:}
  }
  
--proc _lappend_nice {cmd_var} {
--	global _nice
--	upvar $cmd_var cmd
--
--	if {![info exists _nice]} {
--		set _nice [_which nice]
--		if {[catch {safe_exec [list $_nice git version]}]} {
--			set _nice {}
--		}
+-set _search_path {}
+ set _path_seen [dict create]
+ foreach p [split $env(PATH) $_path_sep] {
+ 	# Keep only absolute paths, getting rid of ., empty, etc.
+ 	if {[file pathtype $p] ne {absolute}} {
+ 		continue
+ 	}
+-	# Keep only the first occurence of any duplicates.
+ 	set norm_p [file normalize $p]
+-	if {[dict exists $_path_seen $norm_p]} {
+-		continue
 -	}
--	if {$_nice ne {}} {
--		lappend cmd $_nice
--	}
--}
--
- proc git {args} {
- 	git_redir $args {}
+ 	dict set _path_seen $norm_p 1
+-	lappend _search_path $norm_p
  }
-@@ -626,15 +611,14 @@ proc git_read {cmd {redir {}}} {
- 	return [safe_open_command $cmdp $redir]
- }
++set _search_path [dict keys $_path_seen]
+ unset _path_seen
  
--proc git_read_nice {cmd} {
--	global _git
--	set opt [list]
--
--	_lappend_nice opt
--
--	set cmdp [concat [list $_git] $cmd]
-+set _nice [_which nice]
-+if {[catch {safe_exec [list $_nice git version]}]} {
-+	set _nice {}
-+}
- 
--	return [safe_open_command [concat $opt $cmdp]]
-+proc git_read_nice {cmd} {
-+	set cmdp [list {*}$::_nice $::_git {*}$cmd]
-+	return [safe_open_command $cmdp]
- }
- 
- proc git_write {cmd} {
+ set env(PATH) [join $_search_path $_path_sep]
 -- 
 2.51.0.99.15
 
