@@ -1,127 +1,125 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E142A347D0
-	for <git@vger.kernel.org>; Wed, 20 Aug 2025 17:36:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FFA266B6B
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 17:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755711402; cv=none; b=CdGCCYQX7MnML2n9fBQWE2ybUS8lXlFcGpbEodxtylnrBBpfAAgxNJKeSBJyFSJ0VwpvF2LAzfL6qE8qyRzQVFBWVwrnf5pfLT8IayMvnIRjApleL6umrIDShsRbda0UoooTlq0MITyvK1lrYiLwdDGpTONm1ppvHHP2H4ZlJyY=
+	t=1755712195; cv=none; b=QAVX0YXyQr8EeceszEuhdCzUJJFNzxQR/rrNDvWr2Mv3yJLCV8UwBksEok+cxo9GuoXWMN4/ycTBm1qDD2uhLGCOzCoIW6AhpIQ0t0HjwKppu3uvfDTvzjWJo2WCUH9k1o2Lbmx7Zb3FJV8GB99XM6ifNWEnbLUzgvnOKXxX+RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755711402; c=relaxed/simple;
-	bh=T86sVZQEuLkT+hVvrjtEVU9ObUKcXuIyvTWqIHaY/+Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EaShalk2ROpXuaj+kCqtn+Nwm8/0g3fT9iszSF2Of/OaBXQIM4/HbYsvys+4hRAszoXePfQxHTgOZ8kPuq7NRCO5DBQnlNZtOs4j3Mpo4vPx2vwMapAClt1kilZDTfm4Fq4+LKYBP1s4nOeHqgiP2XfLWJhPndZEjkjG6h2aiIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BuNylbZI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i/l/Xmzs; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755712195; c=relaxed/simple;
+	bh=JZj38OKJGz5g63Dy7dIznOGdtdXn2ET2xp0XO3h8E3A=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=WghAqTBTaejS89yUkm6ItnBjpw6dtakHR1pa0VK3EIqFPWfKxSCM5WV78ssVQhdv7L05vSuxqDaD0pGO/+0G3hzeskszhigqqKiLa9xBZvd2zQN68rAyW1gqQfjIFZso7wfiyvhgY3huLSN1smX1mR0HC5NMHy2Mh3LEt9aZzxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l7UhuDrp; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BuNylbZI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i/l/Xmzs"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DF1BD7A01A6;
-	Wed, 20 Aug 2025 13:36:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Wed, 20 Aug 2025 13:36:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755711396; x=1755797796; bh=Qa2bYhitL0
-	CtosV1OClPPZDMchNdvY+lOyuqJ/5E4IY=; b=BuNylbZI1Z2G/6RLpHd56XRfei
-	NI0s0tRUJmRYh0wLyFfxSnQloSPgJ7pPJXVkxxsSAqo/BDg45q51ENVDnGHUONtb
-	vu5B8eY/52vwz4oLRgIqEA+8TGKhur5C65CQcpPukyAE2gW/+B36KhmEKxJRmpVi
-	ngfnNVHnMYa2owu8JBpJIssCEvGZZAtoF8QnFAYfyhgADHjtYrc4CcmwLDOgIpDE
-	GYJK0D8TOmUU6swyIN03csu6Knwm4Arf3zoxozXSeJCmLdXgbnxm1wyKU8uiPXjt
-	tmZm1YZDbDpAIMZWtuykv4/qRdQSqAqHNThI0oedeqZLgPHpze80Qi3fk9bQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755711396; x=1755797796; bh=Qa2bYhitL0CtosV1OClPPZDMchNdvY+lOyu
-	qJ/5E4IY=; b=i/l/XmzsMQikv8aILKd2zwIdGofIUrZn9KrRjorcyz0j3/ai1i3
-	ZtB4os6U89/sOeJr6kPUnw7RzplIMZWPGZZaXoeAheVtftHlT2ERtDZrVLJqyyEe
-	XSDRF9QWMaTVK2cNrpwqHINpSaWsC1pJ1jV4b35knpf3GLO2sGnUs8VZsFiAa/xh
-	OdUgoxQbVwyBdO5OjzmYbcNqLR+aoQGRmnohQ/Cf6Z7L1LqcOWiPitRiRh77D0H5
-	uLARxcNMe9AbFRHgJdhxHacZVYl1nJSIyXrTzbUhdmKviLTKWsu4Lp0BkoW/XQO3
-	lM9rSgK8o3CqFNA3X2zU31d0gEiwvJ3gK1g==
-X-ME-Sender: <xms:pAemaAMpGJiVFJ-xiodQmDiyHmydKQfyjW1KUAWdvtOIrHCT8xhmoA>
-    <xme:pAemaKMwZBQmGafvJA0DzKMU5hIHcxeGDBqXm5hULI97WVNHP4i0gufcJKqLi1MH1
-    4anYjjLZB_p4oKfWQ>
-X-ME-Received: <xmr:pAemaAuractRHiUj4feb9_AbWmlrYTm7GZFvDqRDs65dLKttKF9AcAG8026FCqnEk2RgSPTyqFtmoQvMd4OojdWSby7jSARPLP4nNUY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheekleekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:pAemaEUxLy6xKbgmn1Kc4EgW3WV8GxnpWhcWn5Y42pRRK-BJiGh4Eg>
-    <xmx:pAemaIt5iVwH-YDOs1zyLaClE5P7auAuXsO-GX6HYsFt4mZ9swY9OA>
-    <xmx:pAemaAWssu3QbjDuuVZRJGvWTdCe-jt-P6Nqm150ZUAnT0QDWBD0_A>
-    <xmx:pAemaLl8agliLSwmOhbNAcnML_6JfdJVEf_tQQzipqdVzzu0okadHg>
-    <xmx:pAemaBwJFb4UF_QCg4ztW2CsRIRTWoT9OxbcptdCBvtHIiP4-dtZ5vKa>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Aug 2025 13:36:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy
- history editing
-In-Reply-To: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
-	(Patrick Steinhardt's message of "Tue, 19 Aug 2025 12:55:56 +0200")
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
-Date: Wed, 20 Aug 2025 10:36:35 -0700
-Message-ID: <xmqqms7tao9o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l7UhuDrp"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-71d5fe46572so1942667b3.1
+        for <git@vger.kernel.org>; Wed, 20 Aug 2025 10:49:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755712193; x=1756316993; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GfQnNbDQHkhUIqOCqbq+A97JuvHBHg3EJRCqqZGvH4g=;
+        b=l7UhuDrpwtj1ipUeN7egFfV01pamXeGi7i4JfIpnk7BEitYW2AVVdFylk/RWu3xWEF
+         KhV6N79tjG0BBd1Lgd6N3tb92Jz59REZjifCd0pYcYQz3RAXF2fIhZJLpOL+GYzF+mvc
+         1Bfn/qAtPNUbkHhfGhdk9FpaWGiEY9ZQR/exf6HHrLTOibo1jdZWevHHEDzEZzIm/AYi
+         fNQlXh84dA7g8hQXOGvwBc+74HXUmWNDDFI/TcytYlFaNScXcFjyAqbcaloeXcPwR0HH
+         Tl+BF06KHNWYeupW30DEvjqwIEcQCDB1HZasXlbd4X0voHwdYtt2Fdyda+7sGLVsI3Ef
+         HdAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755712193; x=1756316993;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GfQnNbDQHkhUIqOCqbq+A97JuvHBHg3EJRCqqZGvH4g=;
+        b=k8/5b/RwzJPj4HYLf366VpLtc7k98n5cEMrJhIPy2O4WqnkE1jZ+CKY+lAsDfQfnYF
+         crX0tIwAv2r48LBtJc9PvihPpY+e9UptgBdLI9RED9Brxi9ffvqowIn57+8M6zbNuHRx
+         T0mXqIjtLZpsYVhyUIydTFjAnHGxB8OVfkiw40G3wdXRt1A4hTVLhQcKi7qwau3cxFAQ
+         OJN9pAqaxin6BAQKb8JMJUIhkAqeU+SQmQoffgfp8+/JHTkbHHyP1Hrd5PBxNKjaxhuZ
+         97YRrUKC5b/PwF7+zpvOaWEsT/Brr+zH61lu8aojcN53ekfEu0xnW8azTsX+f1udVy81
+         HAXw==
+X-Forwarded-Encrypted: i=1; AJvYcCURbxQHnG7GsDda3tR3JZt6KYwzBObP3bcR9VulZwHQ2OdDgUJw/5IqHJf3M9EMMsvLbPs=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxj1pGO9/8UBD6B6egpkYTAU+bB0BYEjrECDFnjjTbVUg2/d59d
+	QVKg4Wq+TksIpy0EXdh6GRXJ4m5OOYu/G/+XYwoXiOMUzmwNdgZdbtcAo/6VISSf
+X-Gm-Gg: ASbGncsQkhuiwZAfnyDPxmQXWD6GGwCU3B51IjQD0EqLopOoGFX1Nb1beEvI9o29lsU
+	4pYA2StkKoPJmPQy0SVdvBiDYB9zi8tuR1TXis+oF50k0IhAgG3My/LqeODqHNYkRu/mv7rplkx
+	bGodF7bzuKxo3TRlflYhppR1twNN1rjk7iVsjKhHLhAtSyhlrVR+rifuyfH8K8V94lwrr0w1Ym8
+	MvAkExmSQVPYmtW7/Ux20SDeCsI2+G6iIR+4R8Y/wBhXSuFPzRviqEbHCUon9ZsSeodZJmDNvxh
+	gRaU3l5tQTEteEuwymUml0V/H/wZI1/xuOzV/GjseaqK4k7YINYO6EMPK95T8LPZO3oRaDc/rqX
+	/MuM/l56iBmB8LHMJScr9bkDY4oSk9pLW1o/9v/VEMWd0lq6S+HU=
+X-Google-Smtp-Source: AGHT+IHFFYQhqXsjLjWLMRGXMdIcpgxMNv/u9/8tixiKKYrgbpGHMw9k3Ff4gxSbMOfMdF2JIEXi8Q==
+X-Received: by 2002:a05:690c:a0a5:10b0:71b:7126:65a with SMTP id 00721157ae682-71fc61cd1d3mr4654677b3.2.1755712192415;
+        Wed, 20 Aug 2025 10:49:52 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:c001:1fba:b48d:e9d8])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-71fab5bdc20sm10384377b3.8.2025.08.20.10.49.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Aug 2025 10:49:51 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-
-Patrick Steinhardt <ps@pks.im> writes:
-
-> In the end, I'd like us to learn from what people like about Jujutsu and
-> apply those learnings to Git. We won't be able to apply all learnings
-> from Jujutsu, as the workflow is quite different there due to the lack
-> of the index. But other things we certainly can apply to Git directly.
->
-> Note: This patch series currently builds on the cherry-pick infra.
-> As such, when one hits a merge conflict one needs to `git cherry-pick
-> --continue`, which is quite suboptimal. I didn't want to overpolish this
-> series before getting some feedback, but it is something I'll fix in
-> subsequent versions. Furthermore, the command for now bails out in the
-> case where there's any merge commits in the history that is being
-> rewritten. This is another restriction that can be lifted in the future.
-
-Two comments.
-
- - You would want to honor notes.rewriteref yourself, as cherry-pick
-   does not and that is deliberate [*].
-
- - It is a sensible design decision to limit it to linear single
-   strand of pearls history.  "history reword <commit>" when
-   <commit> can be reached from many branches along linear history
-   that rewrites all these commits on these branches would be handy.
-   There may need some way to say "these branches are protected, if
-   'history reword <commit>' needs to touch commits on any of these,
-   abort" and things like that.
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy history editing
+Date: Wed, 20 Aug 2025 13:49:40 -0400
+Message-Id: <3600D877-4999-4EE3-8C1C-893E12D35B6A@gmail.com>
+References: <xmqqms7tao9o.fsf@gitster.g>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+In-Reply-To: <xmqqms7tao9o.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (21F90)
 
 
-[Footnote]
+> Le 20 ao=C3=BBt 2025 =C3=A0 13:39, Junio C Hamano <gitster@pobox.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BFPatrick Steinhardt <ps@pks.im> writes:
+>=20
+>> In the end, I'd like us to learn from what people like about Jujutsu and
+>> apply those learnings to Git. We won't be able to apply all learnings
+>> from Jujutsu, as the workflow is quite different there due to the lack
+>> of the index. But other things we certainly can apply to Git directly.
+>>=20
+>> Note: This patch series currently builds on the cherry-pick infra.
+>> As such, when one hits a merge conflict one needs to `git cherry-pick
+>> --continue`, which is quite suboptimal. I didn't want to overpolish this
+>> series before getting some feedback, but it is something I'll fix in
+>> subsequent versions. Furthermore, the command for now bails out in the
+>> case where there's any merge commits in the history that is being
+>> rewritten. This is another restriction that can be lifted in the future.
+>=20
+> Two comments.
+>=20
+> - You would want to honor notes.rewriteref yourself, as cherry-pick
+>   does not and that is deliberate [*].
 
- * "history edit" (aka "rebase") is an operation that "edits" the
-   history, once the edit finishes, the result is *the* history you
-   want, and the previous one is to be discarded (except for in
-   reflog).  "cherry-pick" on the other hand is "I have this good
-   thing on this development track, I want an equivalent _copy_ of
-   it on _another_ track"---it merely is an easier and quicker way
-   than typing the same thing yourself on top of the other track,
-   and does not duplicate notes.
+Seconded
+
+> - It is a sensible design decision to limit it to linear single
+>   strand of pearls history.  "history reword <commit>" when
+>   <commit> can be reached from many branches along linear history
+>   that rewrites all these commits on these branches would be handy.
+>   There may need some way to say "these branches are protected, if
+>   'history reword <commit>' needs to touch commits on any of these,
+>   abort" and things like that.
+
+This reminds me of looking at rebase=E2=80=99s update-refs through a mirror,=
+ and I think is similar to what jj actually does. In particular, editing a c=
+ommit that is reachable from multiple non-overlapping branches could update a=
+ll of them.
+
+A reasonable heuristic for safety is =E2=80=9Cpushed,=E2=80=9D but I would a=
+lso want to be able to edit something in @{u}.. even if it=E2=80=99s in @{pu=
+sh} so that I can force-push a new version. I suspect jj might also have heu=
+ristics we can borrow.
+
+PS thanks all for being willing to borrow improvements! Reminds me of Neovim=
+ inspiring improvements in Vim, which I get to benefit from without switchin=
+g :)=
