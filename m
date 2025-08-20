@@ -1,112 +1,100 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2009627145F;
-	Wed, 20 Aug 2025 21:31:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0CF24DD0E
+	for <git@vger.kernel.org>; Wed, 20 Aug 2025 21:33:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755725521; cv=none; b=NahwMDPj4QfILKR2x4WQ3rlZGdhP5sAIqcn54icNAdeGexZ/vWb28enfcmmkMzz1fCi8cS0j+6lIehXjGngQ65N8sde2WOJCW+9CcrA2BavuxM2VbZhDXGN5YnSJu90wrmG7l3UCvY/ZUwO67dsY4zGs/Hmx3othTE+VV2ehji0=
+	t=1755725607; cv=none; b=e115jCDEKQoETJ9PlIXVidbyQwaHhp1bM/vPldlbG7ubUdC3fN6c0t49zj0FNs0vHWBPS5K8TtYi1Zo17jYzpVdR88RvC1OGkiZgoFwCbEXlEbSPJ6Rjmgvfh66tiNMEKOtIT789VnZNOGoSJh7xGD1Z8oG1MECyIo2MRzjlcaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755725521; c=relaxed/simple;
-	bh=KI3LaQ1fw0o6+rBDig54tr9HE7QIF3H1XxcVNFHc0Tw=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KX3DT/lRJX28JcAGvkGjJn4dCZ9G96SqqemUNgtC/e82VRNI0ojmKQK20Fl9bbBk6PGLBCpvetCNgMlqBx9jlc5GjFJOYdJq0TEnp7Py8qEPUZy9eMec0xMbbGiFw063QyLqyWcyiocPLeXwpJ9W5EYW8WJZNTx5Wf1bfK9ch3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hpJP7hlJ; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755725607; c=relaxed/simple;
+	bh=Zh/cP5JbcO1Wg3ytmi9hqKEOOCkn07tCGRtcuQW996A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J3IVyq8BGNuz1HMXPZKztT1/d+elO9aGXJPDI6AE5bQh2R8dGvp+aUK5URGn5o/FV0sUI7MHIkvQlUdlhvrokNnGI12OiesLuOXBgblsqvSfMbXLyNSyUK2MbPMKroWm6BodRvOwovotS2LmZwfZYFIrn/hEC4VgVnT2eQI4jKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=IeVf+7xt; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hpJP7hlJ"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2445806d44fso2531475ad.1;
-        Wed, 20 Aug 2025 14:31:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755725519; x=1756330319; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KI3LaQ1fw0o6+rBDig54tr9HE7QIF3H1XxcVNFHc0Tw=;
-        b=hpJP7hlJ55vGS5bIssWWxUtV2NU8ed88UVuFVw3sM1XIkbe3PugLRyi4p7UzbjuyRM
-         emR6IuD+794vfgk3aTnTQ1eFQ/QDoFyvJADoulO4uwxWvmQHKIWfSYp6cHQqDVRJlAkO
-         ru79xbCMLH2wJrAU3OZkl6CLITHtckrxuFK7MjbCeJTspnPut512moE3QK2fNpx/ZaKz
-         8wbmupJtgiDpQy33t0x/HH5SZ9vVMe9xdrDNRycuDCWV+O/zur/zGjndOCVHBOn9wQWm
-         /oOhDmOc03+k8XGF5rFms5VliJXItFpqbGwA96UCeW1cYN3hdbDeKjCa0aWFHUgBo7Yh
-         as2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755725519; x=1756330319;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KI3LaQ1fw0o6+rBDig54tr9HE7QIF3H1XxcVNFHc0Tw=;
-        b=i7ExXqv8yaYfopT1ag0lGNpJlbD50/NlcIkmSVGP+mwcxxg2lqBfhluixuQlqKu29d
-         SuYq9HQg1ZI3VBiJu4j4DjS7onz8vWI5OgblwLJhFSjaL62dnm29vP/cr2/dJauRL1Pr
-         CCVbs7kNpURM2WCT6cBnPc2HUq43FwmZZad7CRgX8nTeLS4IBlHH1PTWZqmQxZDGZk/w
-         iYTpn5fEYRibfD6WrS8OvQYM5MYabZVdfBTu8/Kwt8U+yPlqvCSZtRedy9+BYoXo2NM1
-         xsBr29fJr7GULv4gWM8iD9kz+TILtxhdsW51osOc1ihOjvNoB5hRm7atUbgdW6Y5mTbx
-         JmAA==
-X-Forwarded-Encrypted: i=1; AJvYcCVxKlGQ399gHlDVjKZIoBstEXzjjSTnE02/skZchSqhaHqv9rnJRONMKiJ/3QXkEwpkH9GnLiE3Rcgv@vger.kernel.org, AJvYcCWhDEEZkRPdis+Hbh91Qlsa0928NfZbazOhqujzcCYJRaPlzF60Qo9+FxfD8rcLOfrpec1cVRQXRkRgOUESO0ui@vger.kernel.org, AJvYcCXc01nzVFU5WDXCzCy1NZBrZJt0k93nocQCBk1aTNLzJjdRZNlcC04gS6q1Qh9bMpz3SGU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWJtG/h3arV9fi9tCT9Xwg39BU6k992H4B5/McbtFPk+FQbjVz
-	YVht2i94eNN+BCPqKuWhdEDs1gA5Dwk3xI+MSVqnTrOSTJ3qXPiNaoie
-X-Gm-Gg: ASbGncv7AuOckceL961IYoUVk/PZlI5Rc90QPdM7+vUm3hMljcsufC0DI4IR8Pv+tLt
-	ruLeq9kSDyXqT/vyHH3yWi52dUgmYKBlvPFTM8VnQ2jLxZ5ow6MJZvVrBf2Ilji2sKslNuJ2BYd
-	1M7dcrt330Sknol6s5ZUsNKepRiR1wKXr8GfGYKlxQsMtencPVEeIkuX5zFtEbaKrz0h3650dId
-	tTUratgtCDqooNAgFZsZtOgiedzxag06bqV7GI9ZPvVGJ7DGyZCuM8PMkbzlU3fKn/+vdlI21im
-	c19b1raTFq87Ynojc7eNC6QAJOEuUicNzFJuVqDMYwD0SYBsO3ouN1KcsaC0OQBD3Ry1icmtNF0
-	vtkVI1gpRsEzKAJ0rfR5/Vw==
-X-Google-Smtp-Source: AGHT+IHXnQkA6v146KKoCafbiFWO3366g7ibhUgcVzoSqTmRJ3fVK75TlT5LmFWMHbk3AuodFVDgyg==
-X-Received: by 2002:a17:902:e84d:b0:243:597:a2d6 with SMTP id d9443c01a7336-245febec9d1mr3977275ad.1.1755725519058;
-        Wed, 20 Aug 2025 14:31:59 -0700 (PDT)
-Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed361422sm35848205ad.52.2025.08.20.14.31.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 14:31:57 -0700 (PDT)
-Received: by archie.me (Postfix, from userid 1000)
-	id C493D4207D14; Wed, 20 Aug 2025 21:11:30 +0700 (WIB)
-Date: Wed, 20 Aug 2025 21:11:30 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Askar Safin <safinaskar@zohomail.com>, git <git@vger.kernel.org>,
-	gitster <gitster@pobox.com>, helpdesk <helpdesk@kernel.org>,
-	kernelnewbies <kernelnewbies@kernelnewbies.org>,
-	kernel-janitors <kernel-janitors@vger.kernel.org>,
-	linux-doc <linux-doc@vger.kernel.org>
-Subject: Re: git: list of my complaints about future graft removal
-Message-ID: <aKXXkvAOhStlS2_m@archie.me>
-References: <198c29e9058.119e3a5c065010.5888624019176274871@zohomail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="IeVf+7xt"
+Received: (qmail 39407 invoked by uid 109); 20 Aug 2025 21:33:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Zh/cP5JbcO1Wg3ytmi9hqKEOOCkn07tCGRtcuQW996A=; b=IeVf+7xtTOsW8+B2o3+Cvxzt5hfFg+VbEcn+vzn6N9CpckFvN8QvKyWZbs04cC+OYifv569jH0QXCBHcEEvLphzVo62XBB/YvftGoQCSxFs0dCppltJdv2e8/ZSK9lh9Yc1OMtY/yevp4Yjzf7eYlj7xSqnM8XC6PcpW3F5yiMpT3yfduFe/IdLPnRl28zOcsfw5wOEENWBOx4/Ha3lrmFcbZ6Xb+G5WBfBSs+aTHPQ5Qw9JQA6loklYmA9DcIAfyJ2D4zbw/3QxfZh3xvTaMLBkr8KHRhaS2MEYY+w87t4g4ZITabwOHiIP+sgRhu0lAM9tyLhnhRxkgevuOnct4A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 20 Aug 2025 21:33:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 64951 invoked by uid 111); 20 Aug 2025 21:33:24 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 20 Aug 2025 17:33:24 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 20 Aug 2025 17:33:23 -0400
+From: Jeff King <peff@peff.net>
+To: Joe Drew <joe.drew@indexexchange.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: "lock file exists" when fetching in bare clone of repository
+Message-ID: <20250820213323.GA1667633@coredump.intra.peff.net>
+References: <YQXPR01MB3046197EF39296549EE6DD669A33A@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0n+dSVK2aIu7RrRW"
-Content-Disposition: inline
-In-Reply-To: <198c29e9058.119e3a5c065010.5888624019176274871@zohomail.com>
-
-
---0n+dSVK2aIu7RrRW
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <YQXPR01MB3046197EF39296549EE6DD669A33A@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
 
-On Tue, Aug 19, 2025 at 05:57:08PM +0400, Askar Safin wrote:
-> * As well as I understand, "git clone --depth=3D1" rely on grafts, too.
-> I hope "git clone --depth=3D1" will continue to work.
+On Wed, Aug 20, 2025 at 08:54:37PM +0000, Joe Drew wrote:
 
-So shallow clones should use git-replace(1) under the hood (both on initial
-clone, deepening with --shallow-since and --unshallow), right?
+> The fetch fails, returning status 255, with the below error message:
+> 
+>         remote: Enumerating objects: 18733, done.
+>         remote: Counting objects: 100% (562/562), done.
+>         remote: Compressing objects: 100% (448/448), done.
+>         remote: Total 18733 (delta 399), reused 144 (delta 112), pack-reused 18171
+>         Receiving objects: 100% (18733/18733), 25.32 MiB | 7.93 MiB/s, done.
+>         Resolving deltas: 100% (14608/14608), done.
+>         From <VALID-URL>
+> 
+>         [.... quite a number of branches and tags .....]
+> 
+>         error: cannot lock ref 'refs/heads/ptv-2164': Unable to create '/Users/joe.drew/tmp/./refs/heads/ptv-2164.lock': File exists.
 
-Thanks.
+> 
+>         Another git process seems to be running in this repository, e.g.
+>         an editor opened by 'git commit'. Please make sure all processes
+>         are terminated then try again. If it still fails, a git process
+>         may have crashed in this repository earlier:
+>         remove the file manually to continue.
+> 
+> This file doesn't exist; in fact, no such files exist:
+> 
+>         $ ls refs/heads
+>         $
+> 
+> However, the branch _does_ exist on the remote.
 
---=20
-An old man doll... just what I always wanted! - Clara
+This is a wild guess, but: are there any case collisions with that
+branch name (e.g., PTV-2164 or something) in the upstream repo?
 
---0n+dSVK2aIu7RrRW
-Content-Type: application/pgp-signature; name=signature.asc
+If so, and assuming you're on a case-insensitive filesystem, then the
+lock files would collide. You wouldn't see anything after the fact
+because git-fetch itself would create the colliding lockfile, and then
+clean it up after hitting the fatal error.
 
------BEGIN PGP SIGNATURE-----
+If that is the case, you can try using the reftables backend in v2.51.0.
+It doesn't use the filesystem for its ref storage or locking. Something
+like:
 
-iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCaKXXjAAKCRB7tWyQc2rT
-CP5vAQCVKbnTs4dGZkVn+48GVLHMgTTCrhBdAf5SGiuxFxCxqwD/RZwArnIcVMLF
-rewkM9vMJB/bzQxt81QyHh4mA+m8gwA=
-=mSTU
------END PGP SIGNATURE-----
+  git init --bare --ref-format=reftable
 
---0n+dSVK2aIu7RrRW--
+> This error _does not_ happen in the Apple-supplied version of git:
+> `git version 2.39.5 (Apple Git-154)`, but does in 2.51.0, which I
+> installed with homebrew. (If this is a packaging error, I'll happily
+> report to homebrew.)
+
+That is definitely weird, and not something I'd expect if it's just a
+case collision. Is it possible for you to build Git from source? If so,
+and the problem happens with your build of 2.51.0 but not v2.39.5, it
+would be very enlightening to see the results of "git bisect". We can
+provide more guidance if you need with that process.
+
+-Peff
