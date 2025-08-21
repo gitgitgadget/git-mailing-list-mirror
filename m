@@ -1,139 +1,122 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FCE2EA148
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 08:01:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0453D2EB10
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 08:28:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755763285; cv=none; b=rLh+dpXTRmOdbv5eGwYFJLLxqyehCA68ZHCTXIyBUHaLC6+K7oLga+K6PaY3pePs2RkQnH+mNxwwOtZOMaoWjbm49Lc/Zyi39lDqGQdWax2DpqkfWnihkgxX/Hwf+yJSXcNqxytpmLgCr33bFdfXdnrC1ueag7k8A7f5l6HXOrg=
+	t=1755764936; cv=none; b=fR4yv3OYFt9SHMpxXN29R5UJLM+0IqeZWCXO+y9JT3l29yRUl4x3j4XvdMMrHb+kmpzdtle83NnqEu+sX3BTrZST/xWxinU/mUBxSwp3Jzj5QBd2oHnLAKGfiLjGbP/bLw6Z5sfSYyqtD8Gg8e9v2FE6aTCRhdIgpph2+uhyIWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755763285; c=relaxed/simple;
-	bh=HZPdkBqdP2DHDAPpLpk/wvtWOkLSrJ+LBG170m7NhGc=;
+	s=arc-20240116; t=1755764936; c=relaxed/simple;
+	bh=lspvOEWb3bstyV/1O1IEJJx8skzWrxr1c2FbZ54FscU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Uytopt5ALmXH4bAeKzRuOERaA0Y3Nmxq+ygvWH7u6yzCeLs8jMMQp0EeiJL4dPaHQK9KbtduR3gRdEELlzYTaFuFMbMp5BRgwRgM/WN50KeDfZS450v9pNYKiq9odTvBHQmmyXr5DqYT5P/4RBRG3yJ0dkU+QEp5K5eLzJZQraU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=imGePRn7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n6T/NPE2; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=RVX4HFw+o5/aXpYUlfKJ8MU3bMvNg2UstxGnorm6pftD9mo0kSsIsG5iC2dbBMKkMF+mN2TtIM8HIH/UO4+gUdmDTa+N9do1FVZFGcgz++vFGHhMRBFXuVOpTfUxjDd1gq/KsBVMLd7QXxzYECk+OBP91keS0t1+GyD1BBvFfK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=hbQulD8x; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="imGePRn7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n6T/NPE2"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 28E28EC00BB;
-	Thu, 21 Aug 2025 04:01:23 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 21 Aug 2025 04:01:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1755763283; x=1755849683; bh=F6Ct5w3eCp
-	4mVmWjRSw0tzkK8d7m6DwdY9pNzndBfm0=; b=imGePRn7mPzZ1PN35J/BMz8VtK
-	Flgt1YVJ8zVAISgrJd1wJ0iPWs7msBM0ZMJNEW5W7GsqvmhcNbijrotQvsvFd3QB
-	K0VDgQWy/wXKh3uVZdu+FkxhOcXdFfFUPbLfyPPIJgdrbBDNqrSjihHpq7lbAy+9
-	n0tMOjpUsxrPCghUI4isDFcWBKmEeHccQKz6nSzJ+PNjxy/NrgMkpgRwZ/OhheRW
-	naHrrb14th/2o6nfSYW9uU0xsJUo3LjwMz4QsHrTArbyMm33xha9Mnq2IDEPSR5A
-	Uxx3lOB6XO6kv5eMtwSMGgh2cEFakeb51Vx+szUm1ZLh8pz6x18avUhsuMwg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755763283; x=1755849683; bh=F6Ct5w3eCp4mVmWjRSw0tzkK8d7m6DwdY9p
-	NzndBfm0=; b=n6T/NPE2iWLMbFmPO4C5EaQVxsca4PqDFGOZSBMt21DG8Pw+Del
-	YsTSxU7tEhZBwzUF33g23W4kR4XeDK4Ug0GEzuqZ4YeES7hgNc0yc17fG7vu5Vb5
-	NJmUcZv7zHsVcY/+0CFOEoOpXqS6atQc7Ap3+FPiMH6hiNPwl9zrCOgUvZ+SxMDl
-	r6b022OG1XQPLyy9ZgtH6OadH7cmcFlOQsTk9NqjTx3/rPQPPF5iKsODeWFLIe9C
-	Zcb1gxEZqntkFG6M7DpcF/nrttz2sNEa+zp9UK7Ew71CKLBfZo/oMaZTqmJgXKfN
-	exlIwdo+Ail3hvz0aX5eUhNJJhEEi65u1FA==
-X-ME-Sender: <xms:UtKmaEgy9WLEWQqskew5p7AHi3DzFpUBvf-xPcmN0pnRv8sGW84TMQ>
-    <xme:UtKmaC8647SDdgSRHlIyM6cu5qO99Jjm_k7eic5RDntegp8-rHCQb0K5_0c-b4mUl
-    lymgrGIS01Gm-FyGw>
-X-ME-Received: <xmr:UtKmaJOfx_Wl65LNHdVIh-E1fvVzheLatDiC_Luy9U3PezBbt-ttCG9FtqWYQozZsVC_Vm0Jtyfe0QrzuzcWhk-JyUATGuKPNeAPRkb3jA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedtjedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepudefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthho
-    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhonhgrthhh
-    rghnthgrnhhmhiesghhoohhglhgvrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmh
-    grihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomhdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:UtKmaGAOyy1LPmJzYsx9cJ6kTqQO50oNnSK8NeWmIdjM-YsZgtILRw>
-    <xmx:UtKmaNOqiXwaZ8uCyG0YcBh9OiLUuP8rO5aHBLhNUKb-9XC10KX2pA>
-    <xmx:UtKmaNcwiaTbtjvuO68VGyQATMmAmGfm74xYz330zKg7mKZ609-k4Q>
-    <xmx:UtKmaO7oRGbEs6xqH0Q0jtm4IVuZCxStV850AG1lVLOdWupvWN4_3Q>
-    <xmx:U9KmaK0xoRyFfuo2JvKYJajXSiLOK_z9y_GlILdpk8dYmyut7tkNMtF3>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Aug 2025 04:01:21 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3d5cd548 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 21 Aug 2025 08:01:20 +0000 (UTC)
-Date: Thu, 21 Aug 2025 10:01:16 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, christian.couder@gmail.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	jonathantanmy@google.com, karthik.188@gmail.com,
-	kristofferhaugsbakk@fastmail.com, me@ttaylorr.com, newren@gmail.com,
-	peff@peff.net
-Subject: Re: [PATCH 2/3] path-walk: fix setup of pending objects
-Message-ID: <aKbSTN-rfGzadPsm@pks.im>
-References: <pull.1956.git.1755715196.gitgitgadget@gmail.com>
- <0dc4a6323e66598070b403d286ee1918e6a9b791.1755715196.git.gitgitgadget@gmail.com>
- <xmqqh5y1ak9o.fsf@gitster.g>
- <c6ab0985-2a74-406b-9685-cc65f8748515@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hbQulD8x"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1755764926;
+	bh=lspvOEWb3bstyV/1O1IEJJx8skzWrxr1c2FbZ54FscU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=hbQulD8xQ4JPj1b31dE2VO8YSczhjOqIInmV/zEV3mJ7Egd6DGcId/uTCNe9ZRVZw
+	 YPgsMNsDJB8u2tpjAf6VOKF5RVmXPjqCvdsii8Q/78L1VpLhD157E4UTfHhIKIM0zZ
+	 rDKKJ5URJssuVFWq1Ais7SULSg2D5eaegxqTpgG835XTZ0qFDw/USbTObrxRDM4llQ
+	 C/ieTlGj5opQ4c5W1717xWHeAGnei6IoFMpw3GNNSDJe/6+PE3AZRQqpamwKeRlVK4
+	 yTEAnlsCKEpFtW8oX1yUCdMJABhaoMaL7a+tyM9n7ojQE8qZWq2pDC3lSsTpspuMsE
+	 7UZDuHDhVBonkldtmRhY+fFaIv8LLh5wxUwoC8SzR18nVlGwAgnr8+/JVpaXatFpXJ
+	 zfAy/XRtAtmZP7kVKaHUT50u4kdLNPIk0+cZNC435dr+o5JJSyVdZy2SglePx89oPR
+	 HtBavqgXokTk3Z7Mr6QTaQVda9Kq6dzMoJlTNQQR/JtV/88ul+y
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:cf30:27f6:1b7b:28f6])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4AC70200C0;
+	Thu, 21 Aug 2025 08:28:46 +0000 (UTC)
+Date: Thu, 21 Aug 2025 08:28:45 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Simon Richter <Simon.Richter@hogyros.de>
+Cc: git <git@vger.kernel.org>
+Subject: Re: git: prepare to regularly change hashsums
+Message-ID: <aKbYvbWWL0FGXpG7@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Simon Richter <Simon.Richter@hogyros.de>, git <git@vger.kernel.org>
+References: <198c2b87f70.ff0fbb4065293.4919681043907358329@zohomail.com>
+ <aKTqHTnOMp1LFNLD@fruit.crustytoothpaste.net>
+ <e069a7ca-fba4-432a-9a05-a68b2b6ddbc7@hogyros.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gg3sE78BDtGgqBuT"
 Content-Disposition: inline
-In-Reply-To: <c6ab0985-2a74-406b-9685-cc65f8748515@gmail.com>
+In-Reply-To: <e069a7ca-fba4-432a-9a05-a68b2b6ddbc7@hogyros.de>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Wed, Aug 20, 2025 at 03:42:11PM -0400, Derrick Stolee wrote:
-> On 8/20/2025 3:02 PM, Junio C Hamano wrote:
-> > "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > 
-> >> The core problem here is that the "maybe_interesting" member of 'struct
-> >> type_and_oid_list' is not initialized to '1'. This member was added in
-> >> 6333e7ae0b (path-walk: mark trees and blobs as UNINTERESTING,
-> >> 2024-12-20) in a way to help when creating packfiles for a small commit
-> >> range using the sparse path algorithm (enabled by pack.useSparse=true).
-> > 
-> > OK, in other words, the bug is fairly contained within the path-walk
-> > traversal.  We treat things as reachable not just from ref tips and
-> > reflogs (where path-walk code can use the tree object to compute on
-> > what pathname each blob comes from) and the main index array (that
-> > has paths, even though it needs separate way to compute than those
-> > for trees), but also from places like REUC and TREE extensions that
-> > make associations between pathnames and objects.  Are they also OK?
-> 
-> The key integration point is the "pending" list operating a bit
-> different from walking directly from tags or commits. I was trying
-> to reproduce the issue from all of those other sources before unlocking
-> the "singleton" nature of the problem, and failed to do so.
-> 
-> The resolve-undo cache (REUC) is something that I had not tested
-> previously. Adding "git rm --cached x/y" to the test in the previous
-> case leads to the 'git fsck' call giving a "dangling blob" warning,
-> so that could be an interesting way to strengthen the test. Thanks,
 
-I also wonder a bit about the future -- if we ever add a new source for
-pending objects, would the author have to amend "path-walk.c" to take
-this new pending source into account?
+--gg3sE78BDtGgqBuT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I guess the answer is "yes", which does make me feel a bit uneasy as
-it is very easy to now corrupt the repository.
+On 2025-08-20 at 05:55:43, Simon Richter wrote:
+> On 8/20/25 6:18 AM, brian m. carlson wrote:
+>=20
+> > There are many fewer places where we have hard-coded hash values in the
+> > tests and a lot more places where we compute values (for instance, if
+> > what the test wants to know is that we're three commits before HEAD,
+> > then we write `HEAD~3` instead of a specific object ID).  Instead of
+> > lots of hard-coded 20- and 40-based constants throughout the code, we
+> > have a few #define constants and a hash algorithm abstraction.
+>=20
+> For me it would be great to still be able to use commit IDs in this way in
+> the future.
 
-Patrick
+You can continue to do use object IDs for this purpose: we're not
+removing them or deprecating them in any way.  It's merely that for our
+testsuite we're relying less on object IDs to make it less brittle.
+
+> So if the hash algorithm changes I need to either still be able to make
+> ancestor tests using the old IDs, or a quick way to convert them.
+
+Existing repositories will continue to use SHA-1 unless you actively
+convert them.  The change is simply that _new_ repositories will use
+SHA-256 by default (again, you can say that you want to use SHA-1 for a
+new repository, just as you can say you want to use SHA-256 now).
+
+I am working on code for interoperability between the two algorithms
+which will allow you to convert a repository simply by cloning into a
+repository using both hash algorithms.  That is, the remote might be
+SHA-1, but your repository will have SHA-256 with SHA-1 compatibility
+enabled, and then you'll have both algorithms.  You'll be able to look
+up SHA-1 object IDs in that repository very similarly to SHA-256 object
+IDs and convert the two.
+
+That code already exists and works if your repositories are not using
+shallow clone, partial clone, or submodules.  It just has yet to be sent
+upstream.  I need to improve a few things in the current status quo
+before I can send out the series.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--gg3sE78BDtGgqBuT
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaKbYvAAKCRB8DEliiIei
+gXJEAQCgevmQJK6jOiM7GTfrYiIET7DgZRN+Gve4FGq8iOhJtAD/VF9FlYDnIDvu
+uYWvaU+U292begGOEraoysbD01iPsAk=
+=H8rk
+-----END PGP SIGNATURE-----
+
+--gg3sE78BDtGgqBuT--
