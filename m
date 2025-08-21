@@ -1,112 +1,119 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4A938239F
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 20:09:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AE0352FF3
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 20:26:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755806967; cv=none; b=LSgqa7TrUGFDvgn1214tbMKjIOgwSXPLfm3TjLQtOFNWeKMIiXsRMg6h71KBboNswrK/k6DPp8nO69U3GsADCr4ixUynD7L2CKpb02QAAvI4fNAOW4RDx9nYNVAJcikuWahR6E/4b00uI4U2GFRuI3F+TKjHpIdB+1AR/YwAFqs=
+	t=1755808001; cv=none; b=dP/TyQoXpt0d2+75LKGX4xOi4iR4Zr6Mf9MCOtxGiikreN8GhMvd0D8ygrhcrtz7tzLZPWFg7Dw2L1/D7O+wa6n8mhtqXj/CPQ4klpKfo7A4HcDpjnDbiRE7Ao1GR+ViyJfzK+pVaW94vWVopiPYmAkioqwK5U9LyrQwSoLCTSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755806967; c=relaxed/simple;
-	bh=7Qm8KJQ4l6S+4F79tXRArvBj9wcdro5/m0nqWhm1380=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MlYU4OPQXXJjsO24OLwJSV2uwj7z/gbO9gqmOGNAT0jr/73zpLy5pEH2uNQ3n9q5EXHpQMd0ofvC+PurPH0z2QucyzQu1awl6872SlTBVLDsTYxEI/s2ESiXoZdYEQaCP65AlPgAGyvDV1AJ1kzETgx6GbhhB5AawK1uwe0O1pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CWM4aeMf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=At679MWg; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755808001; c=relaxed/simple;
+	bh=pqDj8PgoAiy8PvQkN+ztp1HuVyO7iipvfaEuUcb+d0Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iLzAOcJQ7WNwPXN0ibvKnD60ztMx0AtqaThGy/GQt6F4qBp7FZzd6SYq9y/NAAAmgSPDcoyXOkgfpbT744I8AWCiW3yXwL40sULF2pkrXwOuqlxo8YSEqlcHxCgDuD1tVnGpzjfNtrCke94WnoywccnFAUnjoT61/CRMuNVpDyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qh+9LsQs; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CWM4aeMf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="At679MWg"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2F0531D001C3;
-	Thu, 21 Aug 2025 16:09:24 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 21 Aug 2025 16:09:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755806963; x=1755893363; bh=C85GQE/C0J
-	eP1NtTn06ZlT/Qk7QoO3Iir2Ajye9ze20=; b=CWM4aeMfo7ocxqZRkxC3M4qsfq
-	1GH9yFlh90x4lCykkVqAk2+8wgYO6/mwvSkbzIjzLfIWSsU95o/lTjn4i4N+1z0Y
-	OaX8d/rfuIw4oQlhwl7Qo4wNVWaHf5LWraDCIdMCKNwUDXw8RcuBode/WIZzPbjK
-	WHWm9E3kh8M1qeyTJ9YvVuZkKdQc8bFPcUjIh9oq4ouCD+TRUtnHq/g4BOCDlgey
-	JYPejY5FF1gc68L7rhP/73pz4Bsb1Y2kTTzNfG0PzpQRsOHRpv3J+pvP/OqLuLdI
-	qEnwA+a1pBucIb+ufxHXHZBNAUDSBBGwhLdLIGvjz/pSd08fNWcXIgpJq/Yg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755806963; x=1755893363; bh=C85GQE/C0JeP1NtTn06ZlT/Qk7QoO3Iir2A
-	jye9ze20=; b=At679MWgvNyzkE7J0vK7aLgX46ervn5NFRPC6ENVpifVvJfQliQ
-	hoogIxzh9CM1pe6lLUDaU/bE30Bk3oxNaRqEQyWNiaOo7jHiUxL5amcjTQbWzNwY
-	rfYQNtuuGQuPxboUzSdspGxfE6T6yb9APO7U4wRsTJjaIxLnxeFZKflMn+f3JjEr
-	MvcX3HABySPwT+3PbfbH0aHOiCMTCx3SzoWfLMkmuYjb0bmhz61R3FJWZCIOQmHt
-	xu1Z/3AN5cAW+ul7Pa3X8G7Hu5/o8oF1rIROIq9fSPxcWrN0U12LptGMcKzSlLzl
-	bJUHFlI7RjxF7CmE0jHCtft5wrJjclgrFVQ==
-X-ME-Sender: <xms:83ynaLdRFVHe8Mp9FrzkWw4CfM5Prz_PHY3hfQGly890rqX1ttyodA>
-    <xme:83ynaOwQdp-dXrmc_g6VwIPl49TFq786E32RuKGj1weicYhokunx0VWpay1nbVJMk
-    SD5CJJ8epB78QE-tQ>
-X-ME-Received: <xmr:83ynaK-quMjjln_Ip16wHi3cQGVvCad1fVjl4-gfEzeeUTbKEFkxtnMXBat0okgLZpmxpaobvGOUpI_dqBVvFHG84GWbULn9sRA1bO0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedvudeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkh
-    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgv
-    vgdrfhhrpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:83ynaOi6AsMiHqf908xGDyWDPLPfkbUYwOBp9XK0J7XKjRbZNtlB_Q>
-    <xmx:83ynaJFkQ0wHK7DbgC4PjrJIkHXYyO7590e_XOfwZSxvBOXNQsNqdg>
-    <xmx:83ynaF9zkuyZYZ3zVMn3In-s8F7tEPisxh_O5H9sfIq7PbGpCNbVCQ>
-    <xmx:83ynaIx0_5nWuBxY3txrVmoKIH6rpCitMfnWSZBmsJLQQjK8xGYrvw>
-    <xmx:83ynaP3jQgHxX71GCHwlYbq8tiTUlozhOioYuVwfwpEcejC-IJ1FudP4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Aug 2025 16:09:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Chris Torek <chris.torek@gmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
- <jn.avila@free.fr>,
-  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v3 3/3] doc: git-add: simplify discussion of ignored files
-In-Reply-To: <fc2ec305a9eb267b7705c34c1b3bcdfa26207af8.1755636370.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Tue, 19 Aug 2025 20:46:10
-	+0000")
-References: <pull.1952.v2.git.1755127218.gitgitgadget@gmail.com>
-	<pull.1952.v3.git.1755636370.gitgitgadget@gmail.com>
-	<fc2ec305a9eb267b7705c34c1b3bcdfa26207af8.1755636370.git.gitgitgadget@gmail.com>
-Date: Thu, 21 Aug 2025 13:09:21 -0700
-Message-ID: <xmqqqzx4zbbi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qh+9LsQs"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-74382015df5so330920a34.3
+        for <git@vger.kernel.org>; Thu, 21 Aug 2025 13:26:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755807996; x=1756412796; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pqDj8PgoAiy8PvQkN+ztp1HuVyO7iipvfaEuUcb+d0Q=;
+        b=Qh+9LsQsOpEOrpoTK1/A5i0MXNZCx9Nkur524t47bTckRr/hkGgc5NEZb6xqzMcv5K
+         rif8PiD4aR6FelglEoSVKohbX/JWHqxq1zyF2vYm0TwP4R1zKJOgJflUdzNgqdjrqL/6
+         TG3uZRpQUPhBpGNYLkCn+LpaLEMlol9Zyyol3mjlqRum75uQKDZMSmCfgNPQtzHpbigG
+         XufPzmSzh/qtQJBX81ugzeH1awil7htCuOwXxFh/PdY/K4YV9WZAw13jHynYbCKokfWn
+         A5Z+slFnCpgtwNq8f23OWZkk8lgQIpx0XKuKxlZtgImVb5ngepLodhgJ2In9dUQTeuU/
+         k8tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755807996; x=1756412796;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pqDj8PgoAiy8PvQkN+ztp1HuVyO7iipvfaEuUcb+d0Q=;
+        b=RyydC/6fUlub+/Fasl1FD694VBPYcvj3aPuWa0ePp1BpO1TZv33+OHU4dQxfhnSeiz
+         kv+grxmU867Fwc4gg2JRGxyn1ma6Q7toqi7mtZ38cugLw+W03D0/ImTwQWYlv4KWlx9b
+         jzCnqg2TsDvYgQb8WWiye8RXrh+Z16enUf6jwnA2/x+5Tj+dX9/teINm0GKAImHCzQJ1
+         NH+DGkvA+fSOqt7MdgzkrgIZmEmoi2D1N+ZEMbZeT+kxapjAVk0v0bU7PTT18iDeWViL
+         jgaWQeFMVStOYN9kqpdF7h31v6kb/BGx+IWS4rl41q9FyZl0Z4sh5d58QsiWHD/z2adR
+         ZOjQ==
+X-Gm-Message-State: AOJu0Yy6pPCuVwF9L1JJL67EDNR5QvkrJnNpQ/w30k2tp4cZDdUv/5L6
+	lcseF+g3HqLX5QeCJmSHaC/g1uKNGaVZ+ewaB9LJ+XwxB1sZtCbyTO0ERfrxk0F6
+X-Gm-Gg: ASbGnctmOzGyShB9r3c09oPH/44MpMMsdtvfpFwUbo3Rf7x1wn9IUZsLf7/1/CukNKh
+	lcpw6ghvD9VshUMY2ZY6jFtb/eNTbpGcwOB6h6/aPoup2qZlw5SlqfWyraQI0oGQr6raEW44l9X
+	l7tow2u13/cllPm1VixtWJK3EBLfmXMQZiJ4FAvelG0CiCzyR/rwSrv+TfQlM4E5+LUNYTn+BZb
+	N6rejr3Cn/dnefwSwJk4SDaGrl1aN20Bp/Nb9vSRECfUpw47FIrskUOUz8Drzx69G/TiBmwuBkh
+	B1J/Xx91vsCPmyETd4MXq6MJUM+E8/Lq8yuH6H1sc2xCOqpM+CCrudmxEPQmNNZ2IxO54UXH0iI
+	45bJjLPyl+qXovA5o
+X-Google-Smtp-Source: AGHT+IFhu+UA1G1cUas82lyjyr/rgvZJqd4AR+Sm55wDDj1uEtZub1i3fmPUNLjG1/++tY2rWO5WCg==
+X-Received: by 2002:a05:6808:318f:b0:434:689:6c10 with SMTP id 5614622812f47-4378534272cmr456605b6e.37.1755807996506;
+        Thu, 21 Aug 2025 13:26:36 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-435ed0fd98esm3521414b6e.6.2025.08.21.13.26.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Aug 2025 13:26:36 -0700 (PDT)
+Date: Thu, 21 Aug 2025 15:26:35 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH 3/3] bulk-checkin: wire repository variable
+Message-ID: <rhkhmaozjaogm34xfwagagy2qifsq5p4fbtb23nhdu7jfg2627@qkrv57gg2k3u>
+References: <20250820225531.1212935-1-jltobler@gmail.com>
+ <20250820225531.1212935-4-jltobler@gmail.com>
+ <xmqq8qjd7coe.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8qjd7coe.fsf@gitster.g>
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 25/08/20 05:15PM, Junio C Hamano wrote:
+> I somehow expected that odb would know what repository it was
+> instanciated to work with, or in the worst case where in-core odb is
+> in theory sharable among multiple in-core repositories, at least
+> begin_odb_transaction() would take <repository, odb> pair and the
+> transaction would know for which repository the transaction is
+> working for.
 
-> -The `git add` command will not add ignored files by default.  If any
-> -ignored files were explicitly specified on the command line, `git add`
-> -will fail with a list of ignored files.  Ignored files reached by
-> -directory recursion or filename globbing performed by Git (quote your
-> -globs before the shell) will be silently ignored.  The `git add` command can
-> -be used to add ignored files with the `-f` (force) option.
-> +The `git add` command will not add ignored files by default. You can
-> +use the `--force` option to add ignored files. If you specify the exact
-> +filename of an ignored file, `git add` will fail with a list of ignored
-> +files. Otherwise it will silently ignore the file.
+The `struct odb_transaction` maintains a pointer to its parent `struct
+object_database`. This ODB also has a pointer to the `struct
+repository`. Thus, from an ongoing transaction we should be able to get
+the repository we want.
 
-Nice.  Much simplified, yet still teaches the same thing.
+For `begin_odb_transaction()` we should only have to provide `struct
+object_database` and from that the transaction can access the
+corresponding repository. In the general cases, this is exactly what we
+do, but this doesn't work for `index_blob_bulk_checkin()` and its
+accompanying internal functions as they may be invoked from outside of a
+transaction.
 
-Thanks.
+> Do we need bulk_checkin_packfile as a separate structure and pass it
+> around, or would these internal functions be better off passing an
+> instance of odb_transaction around and learn the repository from
+> odb->repo?
+
+In its current form, the bulk-checkin mechanism for packfiles may be
+used outside of transactions. For example when calling
+`index_blob_bulk_checkin()` without a transaction, the single object is
+written to the packfile moved into the primary ODB. With a transaction,
+multiple objects may be written to a single packfile. This whole setup
+is rather awkward though.
+
+Thinking about this more, we should probably just require
+`index_blob_bulk_checkin()` be provided a transaction. Callers will need
+to ensure a transaction is running so that a `struct
+bulk_checkin_packfile` gets set up, but this shouldn't be a big deal.
+With this we could easily just propagate the transaction for all these
+function as you suggested.
+
+I'll do this in the next version. Thanks!
+
+-Justin
