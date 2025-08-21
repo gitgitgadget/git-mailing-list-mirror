@@ -1,82 +1,82 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C85124A06D
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 10:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF821D6195
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 10:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755771713; cv=none; b=g75vqzKRJ/xrXLWyEwsl61XydJZ5LDmrZAstU0nQBSPiVjG2HMT1Vr31/KqnSn5L1zuWpdES1aD6XozQoSj9/9OgpUJnbsWgA2jglOvh0rP8Z3KTx8AZUOcPNAqkCINSJvdU4e2uXFNrTib5KnU2dtjUBwdnj+LBsFyVFjMPpM0=
+	t=1755772169; cv=none; b=MR4sJ+x/bHqAZAIFQjN9DaeCw+qvSSuEmw1SVABy7F25WGppXOT6U1RUph9IOagJCG4D/W6VHuZhDIWb46j1A80R+4+D+6QUZXn4Qa2o1D+qXWhAZV7eW5fB8/BVhVyuBCZfwR2cSJ1OJpLVtXar37/qn2X0WSXxrD1ahc7GxCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755771713; c=relaxed/simple;
-	bh=gETAuZZsHxXebFGASRiGpePdmDa687xVWdorP6ra2uw=;
+	s=arc-20240116; t=1755772169; c=relaxed/simple;
+	bh=94cG8eOYv2E5ZsNO3m1uEJRigu7JiHVzLpS1dcG5zew=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DIFu1AzXU1FhEyaeBRNMvHL7AXDc8e3J1eXwq+3ksdbrii9twWubgbrd5HzHkT6WAwMvdV7/ssdV7UzrgpZm2jSdK7JcsZF/uyVqNcfZfV/Znh+FLQT+3LY5yhdGlaD+4uPTCE24TtlpiPclfAAr2TIj60zv9nSWOhO8X+WJoos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e8lUyrah; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QiygV6Oz; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nvrq0NHDP0DBU6pC4/hU/FeMBDb+LEmiC0zddW0p7WSFKVqt4MGxJk3OmHIoh1ePkvQDGvRynT0AICrwSNMLrLhuJHTu7Z0s/3HQMT3cBjcH+nHTRZeH6sSTAZxdjGlhHXLQBj70jLbARKCxNwa9GKj9ZtV4KUbemlbcU7vo5mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kfmpsaAy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JRrBFoHB; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e8lUyrah";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QiygV6Oz"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C57B1140005C;
-	Thu, 21 Aug 2025 06:21:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kfmpsaAy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JRrBFoHB"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9580014000D0;
+	Thu, 21 Aug 2025 06:29:26 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 21 Aug 2025 06:21:50 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 21 Aug 2025 06:29:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1755771710; x=1755858110; bh=/Ca2ayuZfu
-	Tw3x177ghIqoP/4LYGfvMSJ/D1PTZUrSY=; b=e8lUyrahjotQ0ao+2fMZymp38g
-	ZYP9MQcsoM4Ysxj0kHJVGnn2/qZu7TUn2xSlfXS4lrwecv7oJerg2UX0l3MoDWgX
-	DJz3dmkc/wQ0ZzXDguvxuoPLps9mt5GZOklAktSlLAhGBAUP/sdmCvqK5v/vInEb
-	2qeUKRb3kBgiYMRBUUyzr4/umvo6ISqtGyYltnB3+dsUjwSU438HiMP8S95uk7mH
-	d7EraYubhejCBn89XKYcJqJhaDcw4IAd18WRk7jf6Ptcy9yr98e6PtoPMLfQkOqS
-	igKYLnmSZdhCB/DuSSHa9lmvjCABOJrOanKnXsPSxIHyk6t+uUvNTCm8PzMQ==
+	:subject:to:to; s=fm3; t=1755772166; x=1755858566; bh=si8RULNsq2
+	87/hjAUaqa3WFTZwL72ca2EeHc5Wk7Vng=; b=kfmpsaAy/74BagnHfca/iTKNUa
+	bUZ2mCKcLDU/Fotsqtm7AI/poNSyDFkXIbyIHmb59hv94+t/Zkosd4jQHtYX6fAj
+	iqrc7YjSLzflF8w8f+1DIfwIvWmtPBTxtUrnnCr+Kn2U4cBaJcEH/zBWVzDfqZhm
+	nz2XqW6lW2w3sI612Vnlu7C//15E7Ui8nTvvaG1kR4vygpJZrkGKM1QtIlbKMYjE
+	elDMW9jp8fwYEQ2vOXSmk+sL/j106Tw12v4HcyU0Rl8gGOzypALu06tXlC2V1KXn
+	ME/j06jBpgpffmozrzkPJ5EJVy1BPUgGgRIME+5Jc6hE8BkTWufMnVenl2zQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755771710; x=1755858110; bh=/Ca2ayuZfuTw3x177ghIqoP/4LYGfvMSJ/D
-	1PTZUrSY=; b=QiygV6Oz7Z3ooQzBdkKTtM4NMHiuOofyk5cTpfV1J1s3rNr8J+P
-	p0/PsTxfcEb9CpgP5JzEXqcyQuWd9sWEGFDpKcza0xxZxt2t+pdpNoUwGmPKm0x3
-	gqxbvQH4dW29I7s1OSTlfIbS3B3xSefzHL36Vqx5C11dSM7cokYsAruA+CNGD9M5
-	nAKAdlZNfHFhYt2LXQ6E7QgFdrDTrAG+UM56628/WSqdeC+qTKgfzf4aar75suOk
-	5AbSzzD0Bso/LMgoIhw3MMUoS8hLxGLDcjeUATrkVrOCxSKHnl8ti2k+Ye/i+t47
-	8Ji4nkERrdoVSYrq+BU0S37OWbVtSxK7dYg==
-X-ME-Sender: <xms:PvOmaIOu9GFfeyPWXXdEHZT9tZXhDHy8s_b1TCVi_qbtHttVruQ-6w>
-    <xme:PvOmaCMIOjk6y7aCwXW5VfFUs4f4CMeryi_iRppL80lkH_fLqh5pQYrgLIi2c4sed
-    6dSdKWYjPu6-qcLog>
-X-ME-Received: <xmr:PvOmaItsE0QiGl22JQDvCZ67fLsj7REEgtXePZvVpLu66lr-K3yTyfyj-vjI20R8UOEVZd2pDHqfkMVF2qExaPBZuOxIAu77GvscHybWFg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedtleelucetufdoteggodetrf
+	1755772166; x=1755858566; bh=si8RULNsq287/hjAUaqa3WFTZwL72ca2EeH
+	c5Wk7Vng=; b=JRrBFoHBIBk/lDFOkHIgAImcnGZXbbG5QVRgOsbGbsDbo++802f
+	Mbe+fA89q4Bm45hcpmCEpLTdoWub8iY8oiO82BmWBkCRCTqX17Dm0FA9m3N1Ednc
+	UsbOS7elJAuOeN195t6RJ6p1c8I8YqOA82+P2nQmHV1YdxFzerjKyqL6NcBiOHIn
+	hB192alxe+34ZzeRUdlftADIhvC5JdKtmyM/c6CuISN67vS+C2toQsJ3L4Prd33R
+	AXre6uCIvaz1HfDRxi/opuDT4o77oL7gWpc0C9lnZi9jws3b1Tm5+wlrcAVL4L4K
+	GZ9ZbnbDcRLW1UIOP7ysevkaYxX2U0od6UA==
+X-ME-Sender: <xms:BvWmaNYu1v8xJB17Aa04M-Waka-mOhANNhCsDt6D5ZLWt0gI3eK-DQ>
+    <xme:BvWmaHo9DFI3U1O_hU5eP65M0OQAJfNvBWnO9W0RVKRFNSUJtXtM6C-25j4Ux_3CS
+    Kot6Km8vTdLrgdpwg>
+X-ME-Received: <xmr:BvWmaJZMtE-9oglzvD9twIP8cuUwYR3wMnfQRocVJ4BMjLwtiZ0AZJvXjAbvmngFF07ZZUjf8dCDt4HqU0PfBNfPTl4emw3OipnHShAx1Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedutddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepmhgvvghtshhonhhifedtudejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhgvjhhirghluhhosehg
-    mhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:PvOmaMWUT3SXQ8eI7EEkR-4-h_Rg8_RxayyQUqhZH68usNineB1IHA>
-    <xmx:PvOmaAvXuAu3WQEKDPMAYTFRwOev3wXoJ1WaDgYDsT-YIuepLbHYMw>
-    <xmx:PvOmaIV73kTYtmdOixXnMW8SDuNq2yUUtiDk_i9fKRWTRr31-_vfWA>
-    <xmx:PvOmaDnWfs3_T4btTuxQlLV124t8jvGrqM1U8TuCxi82E1Pu_l3ElQ>
-    <xmx:PvOmaHsek9RLUEOrstmWDapVmUCPp2kcETH5csUBgQySA5vJjzJJ4MW8>
+    epjeevudeggfffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeef
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:BvWmaHTbPAUrCziabeE7AbhNCuP8RI7wT1Y2nLPNPdkdw0BNaLasnQ>
+    <xmx:BvWmaI4pldlVGL-Uh1xfkgVvOUUrSIpMRr0cv_Sz5ArkbybeOqWnqw>
+    <xmx:BvWmaExPk4jj1_gBBAyuyEI0FdNv0phvxyeH_1hIFdVmwzdI8QbswA>
+    <xmx:BvWmaPTLNeVZOyiUzsNq06w1CkRFAEvJtHmdL-zrBCF5Jhi5ilk6qg>
+    <xmx:BvWmaEk_kcFadXhKb0ufwpB3Cdk_UpDv2aGaxYP6mXT_kzkr1vvWlG5f>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Aug 2025 06:21:49 -0400 (EDT)
+ 21 Aug 2025 06:29:25 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c53531ed (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 21 Aug 2025 10:21:49 +0000 (UTC)
-Date: Thu, 21 Aug 2025 12:21:46 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 5e17e180 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 21 Aug 2025 10:29:24 +0000 (UTC)
+Date: Thu, 21 Aug 2025 12:29:21 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org, shejialuo@gmail.com
-Subject: Re: [GSoC][PATCH 0/2] Add refs exists subcommand
-Message-ID: <aKbzOuB0wL17Jhxb@pks.im>
-References: <20250821085246.929307-1-meetsoni3017@gmail.com>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com
+Subject: Re: [GSoC PATCH 0/2] repo: add -z and objects.format
+Message-ID: <aKb1AfeIWB_SfJiI@pks.im>
+References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,51 +85,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250821085246.929307-1-meetsoni3017@gmail.com>
+In-Reply-To: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
 
-On Thu, Aug 21, 2025 at 02:22:44PM +0530, Meet Soni wrote:
-> This series introduces `git refs exists` as a modern replacement for
-> `git show-ref --exists`, continuing the effort to consolidate commands
-> under the `git refs` namespace.
+On Wed, Aug 20, 2025 at 11:42:45AM -0300, Lucas Seiki Oshiro wrote:
+> Hi!
 > 
-> The two patches are as follows:
+> This patchset adds two features to `git repo info`. They are unrelated,
+> but I preferred to send them together to avoid merge conflicts and
+> because they are small.
 > 
-> 1. The first implements the `exists` subcommand. The small amount of
->    logic is duplicated from `show-ref` to avoid unnecessary abstraction.
+> - The first patch adds the `-z` as an alias for `--format=null`, as
+>   requested in [1]
 > 
-> 2. The second adds tests by refactoring the `show-ref --exists` tests
->    into a shareable helper, ensuring both commands are tested for
->    identical behavior.
+> - The second patch adds `objects.format`, which retrieves the same value
+>   as `git rev-parse --show-object-format`
+>   
+> Thanks!
 > 
-> Meet Soni (2):
->   builtin/refs: add 'exists' subcommand
->   t: add test for git refs exists subcommand
-> 
->  Documentation/git-refs.adoc |  7 ++++
->  builtin/refs.c              | 48 +++++++++++++++++++++++++++
->  t/meson.build               |  3 +-
->  t/show-ref-exists-tests.sh  | 66 +++++++++++++++++++++++++++++++++++++
->  t/t1403-show-ref.sh         | 66 +------------------------------------
->  t/t1462-refs-exists.sh      | 22 +++++++++++++
->  6 files changed, 146 insertions(+), 66 deletions(-)
->  create mode 100644 t/show-ref-exists-tests.sh
->  create mode 100755 t/t1462-refs-exists.sh
-> 
-> 
-> base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
-> prerequisite-patch-id: 235cc677f372e9571dade4313f8cfed4eab65f7f
-> prerequisite-patch-id: d0cb9932dcf233b3a26e413514375191ede93c73
-> prerequisite-patch-id: 9cb324ad34a786af110e9d3d47e4ca8aec240971
-> prerequisite-patch-id: 0d74ac673c285c334adcc19b9ca2d4919563e804
-> prerequisite-patch-id: 04c6d989f4130a063bc80f7dc9ce9a16d3459665
-> prerequisite-patch-id: 95dafb2692da02d79c59cc2742258a915da25e88
-> prerequisite-patch-id: f14c9a47038305eb3cfe8e9b649fa64065ada9cd
-...
+> [1] https://lore.kernel.org/git/mgdervgp34m6ipfbodsfn7cztcl7gdeggzemfgivzvuyk7qtba@wdijebkuioxg/
 
-Feels like something went wrong here :)
-
-What the cover letter doesn't mention explicitly is what the base of
-this topic is. I assume it's probably v2.51.0 with ms/refs-list merged
-into it?
+What this cover letter doesn't mention is the base of the topic. I
+assume it's v2.51.0 with lo/repo-info merged into it?
 
 Patrick
