@@ -1,97 +1,120 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D6B157A48
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 19:19:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40F434DCC5
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 19:44:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755803973; cv=none; b=LEES+KTooFEY/hU/7wx6xsspZFLBwoCVG5/xNXMh+DwfVTveUr6FZPoSlEasHwgf1eB3tzJsK3NA26TiyAaS0go6Uk0uQY0dkxP6mx/RzsbdQgk2wPKVYgdBAEwDd5mzDn2W/Oz4+GTmbUAGaRDKLlypTicXkovmGKILwm2I7F4=
+	t=1755805446; cv=none; b=OJPCCKM89Ig+w7M24mGT9hx7cruSLSceiyrRJojpegw9vM2z0tQtPRkPq4vy0tVuwGA27A5lozPYkHNOvVoupty7h4NPZZuGukjqeWN0BmbTwxj82n4UBkRcm/sN1OyzBxAcSyrtOx2tBYUTMQHDY6M+q7TiQIpL11VoK2WiR28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755803973; c=relaxed/simple;
-	bh=AVEgebiBlIvXallX648YHKGs4BLCzMSGv9lVR6JRRCg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Rzk5etsCIoy4cT6EzjqBmJJhc9yOxmCC8nsf6YPsISnTNq5aTKV0bP1Bt34posAvx265IhVNHSudGAN8oCBOdy2qOnrlo6315TaxxxdFKfvpXHi6fPdWsCUJZWpZKSohuc6ciAquMBYMaaam2Fw6lNE/DnHJRMhhsLxP1D4+GZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l1xfUhm7; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755805446; c=relaxed/simple;
+	bh=4615DZXq0UgApuRJPEQE6Lqy6NDXG9vCf9AXa1wENaY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=U3Z3paQgo5Ccx1ZnSUrUT5amn6Wd0wgdH5uJQhYx6/nN74kEz40jufiU8Kb2v8hE/3u4OUbL3Mo98i6/GuP9vXzzeYPGjJ4h5Km/5IvfDrPCgo3LZo/bAevWGVUvS5kyKjtQZVyjw2n7BmRFgpi3+/ZQim3Mi44eFDI6LI3SC2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LhbqA907; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A3sgKnR/; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l1xfUhm7"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-70a88de7d4fso12130396d6.0
-        for <git@vger.kernel.org>; Thu, 21 Aug 2025 12:19:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755803970; x=1756408770; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AVEgebiBlIvXallX648YHKGs4BLCzMSGv9lVR6JRRCg=;
-        b=l1xfUhm7dR5MbuoK0hi4SKpE0KVcMA2SRlw79bzFUuvqCzH8Y63FSi8HkLmGgwLUyJ
-         IPJVv568/+aHbsuKzSzQQDqAhSCA10FeFTCGcrtifxaUBCcI1rPkvm+57bxqgxuXGwul
-         VejLqYe5Yy9k3WknpiTeIiAhN87UVuWnGfNFZa1tWmM0LaIDell8TybK7jovhdax8oXf
-         8b1MlEHc9aaaDuBPJvZg3ove077ybQ/HBbxrLdqmhSqgCLot0XmOcSKEQiETrrqoUVQP
-         cn8o5lGxvJyzVfuonsqAS4BVVcJg/ICqXMwu8li8gNBmw3zJkrqiWrYnXtStyKJAtq3C
-         zNxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755803970; x=1756408770;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AVEgebiBlIvXallX648YHKGs4BLCzMSGv9lVR6JRRCg=;
-        b=dT/tyalvNv1AcP1yTMu+i9ZUGus0WX+od5ht5iXh3YSid7v1i2SpGsTBTYiFzpZpBH
-         8j95BnXuDbxNkytpQ/6O1tpCegVNP528Wi7pG3gwv196NyTIJ/4ccrlaf2Fo7rLOHyAx
-         FvXJoBd76I+Y00ICqZuOvXsCnl53n+nz+APlADGAzFtTcxxS1vMM7fWb9fu+VMI79ZO0
-         Mxw+zXxbDhLerGc3hk6F8O8FyKkuuw6JmFreQQv2CTlJ5JGj8rve6mlJcym6xHHVPnDl
-         0Ll569pUQz0LihJ9BLnfAlRgPmfcEgxkFAy5Nfkfr2pnYcdZXufEW62JtB1VDiwpFz4i
-         pYAw==
-X-Forwarded-Encrypted: i=1; AJvYcCVsTcq2xktBrHwRj6n/SefW9Rz4UX6GIA/XlSwNqUaqmx+FP+BQYwEQcnx4vgrNTCYiCX0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yykonh6Pil6RgQi5IHxSb2UKUG5BHqZ0ST3rrT0XYLDZHhDbh2P
-	tnMLe/G7Po3rqRtqRXG7Sn/quQtwp7x/abZAIaLPEAJJ0bwjqJ8ZvvcH
-X-Gm-Gg: ASbGncsmdfRn5v4u7B3nW2N/+vyuI6ianpWYb81N8oTjVtOwwU7bvSy6VGjWGueJtRw
-	OkoNuUvMQjJElzflM1vozSSaOswJx8lkrIwCh+fGC7Vnc+2rBkx7TrNEGClwMeCJ7ntO3fslbL2
-	Ng/ocm7ONko36zErq/nwwgn2C9lS1bzrSnFa3m3BK1TJaI60E97u8fypl4rhKSyrMAH9VtPvSqD
-	75AMdLA48gICnR9DTXJyuUcVJsQrdA+bo6ACUd3JPuD8PRvyS7VLntdpjepS4C/+AyttZJk2ggd
-	GDAFPev0M0LncFN5OEyP2D9STiCnDpj1dIbwlDw5ePyE2wcPPDAqCXa+AEUD9z5nBUkMjdY2En5
-	x4YYdzxcxjdouyXMJ/lc0ni+rbQU8OejLvGTaDuv+Gp7M6FEmhyEiuBbS5c/EYeoH7FVlk5lxXg
-	==
-X-Google-Smtp-Source: AGHT+IFE8gsIO3XDvTq5gT29fG1miHuFxD8fFnWnF2b5H7/q/BAVIB9tpXKP9H1Gr1GvV4BDCljGLQ==
-X-Received: by 2002:a05:6214:f25:b0:707:4b37:f6c5 with SMTP id 6a1803df08f44-70d971e5a14mr7905346d6.35.1755803969977;
-        Thu, 21 Aug 2025 12:19:29 -0700 (PDT)
-Received: from [192.168.8.183] (pool-173-73-185-17.washdc.fios.verizon.net. [173.73.185.17])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70ba9300edesm109189806d6.43.2025.08.21.12.19.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Aug 2025 12:19:29 -0700 (PDT)
-Message-ID: <e3e52b89-8f4a-4efd-a29f-3967d52440ef@gmail.com>
-Date: Thu, 21 Aug 2025 15:19:28 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LhbqA907";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A3sgKnR/"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7BD0B1D000DA;
+	Thu, 21 Aug 2025 15:44:02 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 21 Aug 2025 15:44:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755805442; x=1755891842; bh=i2hcuAWhGd
+	vPsDVArPfgsxDHFn1xFzJPzTmbGgVHg8E=; b=LhbqA907M7+iViyWqbiTiXCobt
+	kDBAw9YxcrcbjG1os2XOrI5Dc+anaK4uOjS4Nitl8rMqi/JvE0glebUF8lk5jF3f
+	QTOkBMjhq/DopgjzKQb5urvM3Vo0V1pO8y7dSU1PThZe7XWs2JwxG19Yn4bTTIjC
+	0XenvoP+1DBjMLnLQEnjwpqUiZYMriR5w3mcUDJ9hcQCs8NFnFnKo9jgfoAl8E/e
+	wz2M6ax6wVy4ubse84U56CiYkP4uRWj6SFC+kO0uIVllg0k3wWcC5GyczeoDwDrR
+	7VvOu6NgfvRRofkN08U2EcXssOCQ62cyJDFeiCV1Qn/xeJzKdh6Lch4tV7yw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755805442; x=1755891842; bh=i2hcuAWhGdvPsDVArPfgsxDHFn1xFzJPzTm
+	bGgVHg8E=; b=A3sgKnR/TMYYKQYIR6TnMTQrPHCdr0F/vo1D2iNsMyftJ7q0NRN
+	VDO1sRQpilaoI85P+DrYv4xlRauOUQf8V9jQj+fae1MAkYKsxqvVufrn6zOccJFG
+	7HIcmDb5Moexx3M8glPn79KyEavMD/JrJh95dqejmQVqA03GN9pTrpL0aKmx+P37
+	+C6avV4N6RjKW2MRey3Mogzh3AnQD07gXvxzhtXI/J3/5VcdV05fwWz+IU7sgLdm
+	j9EUed3kl3cQp9LDUDkW3WJIty76ehB08VCnKUXGEI25vrYDUrA+hGpl3OeSnqPL
+	S878KvPznSJHIDU51v6RIEANPERTLN4MPZQ==
+X-ME-Sender: <xms:AnenaMjtxtoNmXY_GeAwx5Bq-ZjbhLt3hGq2HZ6zb5hpKQ20mAe1Fg>
+    <xme:AnenaAiBxye_yigWmeL8uzwZAC-UWRpShCq81DdDH_M-UAdTt7JTs5R6Cw1Jer778
+    tbTokdzlTBG2YGmgw>
+X-ME-Received: <xmr:AnenaKhK4Ja0vRhpbav-MgP0Dm8g1WW7tf1dLSxSty3zpV8b8g0wqNAKHJreJxMFJVSwkv93tsbFONQBj0_BKGxXy-pypyp1OazEBfY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedvuddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:AnenaIJ2iHgVQXb8TKmhTNooLdvc7IKb_Zjc-_bn05TuxCY_7POXPQ>
+    <xmx:AnenaBGbZ-xfvvKCeqWhqRw8kJV-soiNzO13UNlAoK3y7L_tEVfAWQ>
+    <xmx:AnenaESUU8Upvj14eHBcaFOi538uhh7MgxQfEf5EIlAyjZe7JSBl3w>
+    <xmx:AnenaFd67Ln130LITcr7XIc5z0LQIdRnlEzZEk0MRQsONSGXILqQiw>
+    <xmx:AnenaHgu2e5pzVXOaLVkmvInrLvQE6VgMGrrwUNzjoZw_fzGrlkgY4Oc>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 Aug 2025 15:44:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  karthik.188@gmail.com
+Subject: Re: [GSoC PATCH 2/2] repo: add the field objects.format
+In-Reply-To: <20250820144247.79197-3-lucasseikioshiro@gmail.com> (Lucas Seiki
+	Oshiro's message of "Wed, 20 Aug 2025 11:42:47 -0300")
+References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
+	<20250820144247.79197-3-lucasseikioshiro@gmail.com>
+Date: Thu, 21 Aug 2025 12:44:00 -0700
+Message-ID: <xmqqh5y01mv3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] git-gui: simplify using nice(1)
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
-References: <20250820152451.20872-1-mlevedahl@gmail.com>
- <20250820165021.24604-1-mlevedahl@gmail.com>
- <27f95ac2-380c-4334-8783-4b3b9ce38e24@kdbg.org>
-From: Mark Levedahl <mlevedahl@gmail.com>
-Content-Language: en-US
-In-Reply-To: <27f95ac2-380c-4334-8783-4b3b9ce38e24@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
+Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-On 8/21/25 2:59 PM, Johannes Sixt wrote:
-> Thank you, that saves quite a few lines. A difference is that `nice` was
-> looked up only when needed and now it's on every startup. Personally, I
-> don't mind this change. It should not have a noticable effect on the
-> responsiveness.
->
-> Queued with an apostrophe in "let's".
->
-> -- Hannes
->
-And, nice was always looked up on startup if a diff on anything was needed, or if running
-git-blame was asked for, which for me means always so I see no difference in startup.
+> The flag `--show-object-format` from git-rev-parse is used for
+> retrieving the object storage format. This way, it is used for
+> querying repository metadata, fitting in the purpose of git-repo-info.
 
-Mark
+Yes, and extensions.objectFormat specifies the hash algorithm used
+in the repository, extensions.compatObjectFormat specifies a
+compatibility algorithm to use.  So objectFormat is a good name to
+call this new "repository metadata".
+
+> Add a new field `objects.format` to the git-repo-info subcommand
+> containing that information.
+
+Perhaps drop "s" from "objects.format" before it becomes too late?
+We may also want to reconsider references.format as that is not in
+line with either extensions.refStorage or --ref-format (taken by
+'git init' and 'git clone').
+
+Do these keys always have to be two words separated by dots?  I am
+asking if there are other keys that would plausibly fit next to this
+object.format thing.  object.count to report how many objects there
+are in the repository, or things like that, perhaps?
+
+> @@ -49,6 +55,7 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
+>  static const struct field repo_info_fields[] = {
+>  	{ "layout.bare", get_layout_bare },
+>  	{ "layout.shallow", get_layout_shallow },
+> +	{ "objects.format", get_objects_format},
+>  	{ "references.format", get_references_format },
+>  };
