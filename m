@@ -1,93 +1,174 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117503054E0
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 11:26:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755775618; cv=pass; b=TipjsIiu3gYxET47ssyfzczmG4Ij/VB2fNBvSFy6U8ppprqzrSo5jXnMlZWuq5cDJxM4TZYKs7rkY4d2YUs9YeFIBHdhzEUxoXi0DIbH7mWxu8gEwuf0QfZS/Lc/GEiM3dTNrLaIdZK7kGGdCyTZcucrZYfmiOUw7XAybJev+NQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755775618; c=relaxed/simple;
-	bh=Wc3E7AJ4DBAw/BKQmFwyzYzbvw1fyl3TNg/r+b2TkBo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AGel67TX6yzvxeHNkjzyzJwFzqPDwD7rHIkiXFxFEvARZEqQPAtcCxAmS7oUpOnlnk4UC8icBkonfDFtzpjQvT7h5utNVMCysE6Tdst8lgi+DmkhfVmd0qcKjM58JiJ6S+9U4sJjvRNxVSmY9YxhaSU4hhMhHGtz8PLZi3PunxQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=YEx9Unkr; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5457D20D50B
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 12:04:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755777857; cv=none; b=bg6R75NZte3LdqvG8Fst3DxSxcCmumNj1daFLfdRMn74CaR0Ayd2VzAqaizVLt8HhU3ERFJn0Ac3t+45IQUQhIUTgfAxSGkan8RDTfcMgvvpAq593z5vDy5QzsROUqLlo6hU+sdFzhKC8lOqyXp46kGhUkvwQoKEe1hsKQqLiYQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755777857; c=relaxed/simple;
+	bh=GJysM8of32DssOFVH+kjHqfsCvxPBbvjArPTx4U3000=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CkLtLyKmHU3sYiTqTomAVgeCUrpog0IFwIa6Y7MvctFSrRLHkwaWxb1rO0dA/0v85/fQ1eoOeQewgvA0cxYI2lRZY1PXpWuNxAFSgNc9vNPb0+IDpe5FWmVPIztmivxVpZ2nqDkhQcfWQtGdPd19H80xHbzif55sTZmT8CRe+sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=baZkqp0p; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="YEx9Unkr"
-ARC-Seal: i=1; a=rsa-sha256; t=1755775589; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=jABIo5rKnsicPMzyO1RRfc0/1Uj0hW7jSuc6oQbqHc5ZsGHUjAZZJMtrKqfQ+3xU9Ath3X0VxrhvXWazeHQBxh6VJ/OxYJihyKjypm6WT1z6HeI05ncDDx7ZYasA8C25hbbZtI6OTLyvwLXky1nTkR2R/pRz/ZY9oS78NyGIBsU=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1755775589; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=RPW+5tE63rOVrprUVrtspBGgwOyv9QnBEkp6Hme1LRI=; 
-	b=jDI7uwrDoNTINWnLwLMQX6zDcxGYxYX3Ob8Vl3KmyYX/TExZFyV0wo45IxnkRwc8Wu3A55OSd6nsP2SnBDg1npaE1WDZ+b86SXh2wx6Ls7RwD3WW8tYi5/1HLkqArlA5WyGqBB/3Io0ROcOwHPJnSZclBdQ6iVeCHftAR6JOZ3g=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1755775589;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=RPW+5tE63rOVrprUVrtspBGgwOyv9QnBEkp6Hme1LRI=;
-	b=YEx9UnkrNm0o+UpHI54poJXPaPmoy+O0HC0HzeEM3K1TY6uknKXsIxV+HxcmPTHq
-	kPulrGKw1Kxtp29wM217mj1o6vtcnH3fx4HRqoG/KD8FOUWE1EOrt1OsqqjsMWfnw4z
-	lOI+t78nkpOZvueHGS/N5S/RF3p+7PkL8rGqQqDc=
-Received: by mx.zohomail.com with SMTPS id 1755775587192196.93363919153137;
-	Thu, 21 Aug 2025 04:26:27 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
- C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
- Nieder <jrnieder@gmail.com>, Stefan Beller <sbeller@google.com>, Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 1/9] submodule--helper: use submodule_name_to_gitdir in
- add_submodule
-In-Reply-To: <qcpwoggznb2hj4kegtnouh3ty2sepuhmqlhhzfbpvm7d2yt33y@6vnui5pnnl7x>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20250816213642.3517822-2-adrian.ratiu@collabora.com>
- <qcpwoggznb2hj4kegtnouh3ty2sepuhmqlhhzfbpvm7d2yt33y@6vnui5pnnl7x>
-Date: Thu, 21 Aug 2025 14:26:22 +0300
-Message-ID: <877byw9aqp.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="baZkqp0p"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e934c8f9757so841059276.2
+        for <git@vger.kernel.org>; Thu, 21 Aug 2025 05:04:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755777855; x=1756382655; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AylpGyRQVKEluT2VJMK2TkLtWYwRvWSi+CYNhBXtWkQ=;
+        b=baZkqp0p6jHU2NU47EMqrFPi5LEWqB/LWkBsU4X6QdGm08r6NPft3pegjvuYfXx79n
+         UDLGXw/eL6i4ixAiXBBdHHga6yZ8XSXoRhx9xGywwibGUtY/eh40hHTPjl4yMoot52c7
+         vlg95v8x8hkqsRGxkO2opbL1qWWTeN1TwA3N90ep9w/xanbCo/BMj05siL4Ry3b67uCI
+         HnNinm0kfohvTmkzaJv4NCHZaqzFQZI53yeHi5x3UMvXDPfs8Z1bQvZlVJUcgDS8CLhn
+         hZVC8xnFoIMy5dRObyVnqa/IKJNdsUc1F1g9uIt35tAfLjgUf4ji3e5vqP0qJEsySDI4
+         XYKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755777855; x=1756382655;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AylpGyRQVKEluT2VJMK2TkLtWYwRvWSi+CYNhBXtWkQ=;
+        b=qj3NccnSH//qNKf+8pYw+p1vqPjA365OOQEHflP224WQxsdepGYwqgrRkZVqj+qSmi
+         qoM9+jE7xz1/+4b/op1ugRxQqrPyBNunNkZVKqafG5rSJvavM3mQTPPl/UiQH/XkvpJE
+         du1tras+bGpyLyl0O+gXJGDiRvpGw2auk3pwysRem1bimWtKXTvxLKPFARgUemXYiFig
+         ZCIoJlYQc9M+TGWdVy5epLTl/gg5sbCKXbtLBaV94bGvHC0uyTZSflrEzVAoVw+UdDpi
+         nOmmwkMu3hAz/Uupvkw4c2eE+I34/kT1G9vH9jxfOcA++Rsil+GYlSSIx0nDBBM5/Al9
+         4uEg==
+X-Gm-Message-State: AOJu0YzJo4Fdd8lNVVA5YCPJZMDGAFYGugXF2uwmjNgFvCOWtVCtdVWd
+	OzSdqyTy3pC6I3BY+6XLed0HWWJ8YFRnI7GnyFo5OSHsno2sPR/o+KN2tzuKsLCmw/PhsLv+iWE
+	Udn4ny1BFeCUNZLxUmuQm9xjpiU+cgf53i1fRrgcfmCPY
+X-Gm-Gg: ASbGncvwjaoDIl1orqWTK1RhtMv/of77+JvVPzpFZATWq8CS+P5d7c3E0zoiM1bFGYx
+	dAby+XxI/t/Q74eOGxnJ1aiC4t7tRPO7mcQavZxR5TNpOidQLUw9ENinUi78aIKsqFAdHzFHlQt
+	fNhXcHcUMTiFB+3kZixyjRgAIF6+f6ugyBnFDCJ2hZO5qBCohpLzZVSJWKWTi5AKWLaAoyO0R/k
+	jxWJD9v
+X-Google-Smtp-Source: AGHT+IEmKi1lrKuBL29Abkos2DWjKDD4zhVBjn9M0g7Sy3fwbKJ2RCEzBP0wc2p2Gn8Rb+O8NtEie3NCQb2meggzGMk=
+X-Received: by 2002:a05:6902:460f:b0:e95:1a34:1fbf with SMTP id
+ 3f1490d57ef6-e951a3420dbmr39590276.16.1755777854527; Thu, 21 Aug 2025
+ 05:04:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-ZohoMailClient: External
+References: <CAGedMtd_atWTAQXOPSJThB_tpHiOSY=PUhrfFxFZOEkgUtHf1w@mail.gmail.com>
+ <xmqqfrdok1g6.fsf@gitster.g>
+In-Reply-To: <xmqqfrdok1g6.fsf@gitster.g>
+From: Seyi Kuforiji <kuforiji98@gmail.com>
+Date: Thu, 21 Aug 2025 13:04:02 +0100
+X-Gm-Features: Ac12FXyeGuaDsaWRXc8wzDiZ-6wyvzpGYbmFQF-RNBIzT-4KtcwwqSmfS6vlMGc
+Message-ID: <CAGedMtf2CW_L8uSc1KRqmAoJ=2Sw4t5AL2AC0uKQJb5keX63ZA@mail.gmail.com>
+Subject: Re: [FEATURE] Proposal: git format-patch with `--with-line-numbers` flag
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>, Taylor Blau <me@ttaylorr.com>, 
+	Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 20 Aug 2025, Josh Steadmon <steadmon@google.com> wrote:
-> On 2025.08.17 00:36, Adrian Ratiu wrote:
->> While testing submodule gitdir path encoding, I noticed submodule--helper
->> is still using a hardcoded name-based path leading to test failures, so
->> convert it to the common helper function introduced by commit ce125d431a
->> ("submodule: extract path to submodule gitdir func") and used in other
->> locations accross the source tree.
->> 
->> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
->> ---
->>  builtin/submodule--helper.c | 11 ++++++-----
->>  1 file changed, 6 insertions(+), 5 deletions(-)
->> 
->> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->> index 07a1935cbe..7243429c6f 100644
->> --- a/builtin/submodule--helper.c
->> +++ b/builtin/submodule--helper.c
->> @@ -3213,10 +3213,11 @@ static int add_submodule(const struct add_data *add_data)
->>  		free(submod_gitdir_path);
->>  	} else {
->>  		struct child_process cp = CHILD_PROCESS_INIT;
->> +		struct strbuf submod_gitdir = STRBUF_INIT;
->>  
->> -		submod_gitdir_path = xstrfmt(".git/modules/%s", add_data->sm_name);
->> +		submodule_name_to_gitdir(&submod_gitdir, the_repository, add_data->sm_name);
+Hi Junio,
+
+On Mon, 18 Aug 2025 at 18:02, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I believe submod_gitdir_path is now only used in the `if (...) {...}`
-> side corresponding to this `else` branch, so perhaps we should make it
-> local to that block?
+> Seyi Kuforiji <kuforiji98@gmail.com> writes:
+>
+> > While working on converting unit tests and sending patches, I ran into =
+a
+> > pain point during review. The reviews by Junio, Patrick, and others poi=
+nted out
+> > issues in my patches, but without line numbers in the emailed code
+> > context, it was sometimes hard to know exactly which line was being
+> > referenced. I had to manually count through the diff hunks, which slowe=
+d
+> > things down.
+>
+> Count through?  I do not usually see a review that talks line
+> numbers (e.g. "your change to line 772 is wrong and should look like
+> this"), so I am not sure which review comment against which patch
+> you had trouble with.  Can you give us an example or two?  URL into
+> the lore archive would be good.
+>
+> One things I try in my reviews is, even though I trim my quotes
+> heavily and leave only the part I comment on, I try to leave the
+> filename part (i.e. "diff --git" line) and the hunk header (i.e. "@@
+> -L,K +M,N @@" line) in.  See
+>
+>     https://lore.kernel.org/git/xmqqikla86id.fsf@gitster.g/
+>
+> for an example.
+>
+Ah, thanks for the clarification; that makes sense now. Up until this
+point, I didn't know the hunk headers "(@@ -L,K +M,N @@ lines)"
+provided enough context in terms of the lines the changes were made. I
+just never read them and usually just jump to the reviews on the code
+changes, and I try to locate the changes locally :(. I agree this
+already provides sufficient context, and I've definitely learned
+something new here :). I am wondering if a description of this is
+covered in our documentation. If not, maybe I could add it, since I
+imagine others might have the same question.
 
-Yes, I'll move it in v2. Thanks!
+> > To address this, I=E2=80=99d like to propose adding an option to `git
+> > format-patch` (e.g., `--with-line-numbers`) that would include line num=
+bers
+> > numbers alongside context lines in the generated patch. This would not
+> > affect patch application (`git am` / `git apply`), but would be a visua=
+l
+> > aid for mailing list readers.
+>
+> "This would not affect" how?  If you show something like below, it
+> would break it so badly that the patch would not apply at all, so
+> you may have something else in mind, but I do not know what it would
+> be.
+>
+> diff --git a/t/t0450-txt-doc-vs-help.sh b/t/t0450-txt-doc-vs-help.sh
+> index 980130be78..e12e18f97f 100755
+> --- a/t/t0450-txt-doc-vs-help.sh
+> +++ b/t/t0450-txt-doc-vs-help.sh
+> @@ -112,16 +112,19 @@ do
+> 112     adoc=3D"$(builtin_to_adoc "$builtin")" &&
+> 113     preq=3D"$(echo BUILTIN_ADOC_$builtin | tr '[:lower:]-' '[:upper:]=
+_')" &&
+> 114
+> 115-    # if and only if *.adoc is missing, builtin shall be listed in t0=
+450/adoc-missing
+> 116-    result=3Dsuccess
+> 117+    # If and only if *.adoc is missing, builtin shall be listed in t0=
+450/adoc-missing.
+> 118     if grep -q "^$builtin$" "$TEST_DIRECTORY"/t0450/adoc-missing
+> 119     then
+> 120+            test_expect_success "$builtin appropriately marked as not=
+ having .adoc" '
+> 121+                    ! test -f "$adoc"
+> 122+            '
+> 123+    else
+> 124             test_set_prereq "$preq"
+> 125-            result=3Dfailure
+> 126-    fi &&
+> 127-    test_expect_$result "$builtin appropriately marked as having miss=
+ing .adoc" '
+> 128-            test -f "$adoc"
+> 129-    '
+> 130+
+> 131+            test_expect_success "$builtin appropriately marked as hav=
+ing .adoc" '
+> 132+                    test -f "$adoc"
+> 133+            '
+> 134+    fi
+> 135
+> 136     # *.adoc output assertions
+> 137     test_expect_success "$preq" "$builtin *.adoc SYNOPSIS has dashed =
+labels" '
+
+There isn't a need anymore for my proposed changes to the way `git
+format-patch` operates.
+
+Best regards,
+Seyi Kuforiji
