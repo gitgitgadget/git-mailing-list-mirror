@@ -1,134 +1,64 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+Received: from out30-70.freemail.mail.aliyun.com (out30-70.freemail.mail.aliyun.com [115.124.30.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D8625DCE0
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 03:51:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D402D9EDA
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 04:30:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755748324; cv=none; b=U15E0GK0B7kg1S9TUGiE3BnDmSvR7YWTZlrhrxnY3o9jZL1KWp+Gd5Y+PX/sKeG77/YmhA9gBoSEHuNdA1wABRPfe8WYOLVx+mSr22Tkq4AxYqK8ymLECQNcXi3hW8WUi6Hyf30FJHkpdgyrI2YYHGZRf8mhnlctOO9DVwbPnYw=
+	t=1755750602; cv=none; b=cgRwBHrO9WmhYPuux3Vnpk05wmGRc9c6DhEf5HS/Ij5L+bziCmcO3sXBTASzpUXCruOpThJgHcYwj8P6VtdsxVC9ZcHshabu4Xy/iFe0yy6/CFw+4r0LqVWqNLzc0WejYTDjiQatVHvh+sjy62qNfq20jcT7QW0yNTi2x3tnCAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755748324; c=relaxed/simple;
-	bh=8PLWip+POp7NOCDsC44lOpJZwFVWB52OIgwK6RUEO9s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I55ZQNMC5TDxp8YyYK5vpqrKi/dbEg9L3NmreSVUi7QY8kXThvzi+ChvhSrSjjnJeFV0BSiZuggbzK/uFuuxgZFU2UxmEZhrvyeC3oxLI+W9qPbr8POWlTulHcI424XhbvK4CgnV4WfRarVNhQ+d2wEwdp8hPYqr27oz/0psfxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=DVlgdxoV; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1755750602; c=relaxed/simple;
+	bh=gxCr/Npy/A92ModIWPOSZ4sCdgR6rmk+YX0jXANR/CY=;
+	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type; b=s+sdVVuYfHPiglCGWZNTsiHsC0NnkAnA4b13BFx/I35DuwH2nYDoJGiyDtat6KPcRJFRxNgHetiw+/H+SBIvxdc8R0wSNIyBobOsce6qzl6gr7AzBPXZSLyzb94YyZ3nbs8ysNJGOiiv7v/Z5HBfHSyHg66JGKwq6RIc3Th72sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliyun.com; spf=pass smtp.mailfrom=aliyun.com; dkim=pass (1024-bit key) header.d=aliyun.com header.i=@aliyun.com header.b=GEKEhse2; arc=none smtp.client-ip=115.124.30.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliyun.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aliyun.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="DVlgdxoV"
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1uovki-006OQq-JJ; Thu, 21 Aug 2025 05:14:12 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector1; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
-	bh=Bzqa/iZ32qeBV9/b7HtN2oNPdzp4M4REWi/2CcTnRxs=; b=DVlgdxoVraVDbRm2wpVrRRZMd1
-	1d0wUqFYrRW0lSy08N5mhZVWGRN//4rnk2E1KnU8ISwuiAaUsba0WSpG7Y8QX9MpwA31mxA8Tqayv
-	05eZFKexnMvL70OiywHFkR/k0eBJnaFO9alF7ZG+t7XrJaTj4yRxQZY1pHnQaEBwxNWwGY73yVBE3
-	v2NcQ0rrImOxyFHqtR/fcyRCwopTuAsKchjb81PJdER8yLq2p/bB2IDd3BPLQXvHK9wVSc0KB3Wo5
-	7BNefaUmcsugTG22F05DcV+j4YTM4lB5VwrooPwEMrM+/0vEmgGWTm/QSjSqkaI7ax4qdWQ+/aS/J
-	YrhgUZyQ==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1uovki-0003no-8X; Thu, 21 Aug 2025 05:14:12 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1uovkS-00EvWB-U2; Thu, 21 Aug 2025 05:13:57 +0200
-Message-ID: <c9e8f54f-2594-4092-ae41-f1da73e97f6e@howdoi.land>
-Date: Wed, 20 Aug 2025 22:13:53 -0500
+	dkim=pass (1024-bit key) header.d=aliyun.com header.i=@aliyun.com header.b="GEKEhse2"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=aliyun.com; s=s1024;
+	t=1755750598; h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type;
+	bh=gxCr/Npy/A92ModIWPOSZ4sCdgR6rmk+YX0jXANR/CY=;
+	b=GEKEhse2PXAHcu4pdfd8ze+IFF8g7gVQ0ZdSrLHhUeFIMPIj2FP7HzOBUdl2bJ+DR6sVXlUyqRpfzWSGBtDW0BCJBFkW+l9sg0HJ+ztV7DdsChPSUXQh2xMoUSlEEl8kAzgIdZoZyBA+4pzf8EnjkXJze3G4C+9MOGf5NcYcYPM=
+X-Alimail-AntiSpam:AC=CONTINUE;BC=0.09398892|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_enroll_verification|0.0908519-0.00448094-0.904667;FP=15960465879084943845|0|0|0|0|-1|-1|-1;HT=maildocker-contentspam011083043147;MF=engdoc@aliyun.com;NM=1;PH=DW;RN=1;RT=1;SR=0;TI=W4_0.2.3_v5ForWebDing_212DE4D4_1755750597866_o7001c221r;
+Received: from WS-web (engdoc@aliyun.com[W4_0.2.3_v5ForWebDing_212DE4D4_1755750597866_o7001c221r] cluster:ay36) at Thu, 21 Aug 2025 12:29:57 +0800
+Date: Thu, 21 Aug 2025 12:29:57 +0800
+From: "engdoc" <engdoc@aliyun.com>
+To: "git" <git@vger.kernel.org>
+Reply-To: "engdoc" <engdoc@aliyun.com>
+Message-ID: <a903afc8-9bf6-4ba8-bdab-87a76adf631e.engdoc@aliyun.com>
+Subject: =?UTF-8?B?W1JGQ10gQWxsb3cgaW5jbHVkZUlmLmhhc2NvbmZpZyB0byB0YWtlIHByZWNlZGVuY2Ugb3Zl?=
+  =?UTF-8?B?ciBpbmNsdWRlSWYuZ2l0ZGly?=
+X-Mailer: [Alimail-Mailagent][W4_0.2.3][v5ForWebDing][Chrome]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: subtree: [v2.44 regression] split may produce different history
-To: Zach FettersMoore <zach.fetters@apollographql.com>,
- Zach FettersMoore via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>
-References: <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
- <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Colin Stagner <ask+git@howdoi.land>
-In-Reply-To: <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+x-aliyun-im-through: {"version":"v1.0"}
+x-aliyun-mail-creator: W4_0.2.3_v5ForWebDing_KEtTW96aWxsYS81LjAgKFgxMTsgTGludXggeDg2XzY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTI3LjAuMC4wIFNhZmFyaS81MzcuMzY=zY
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-98ba49ccc247 likely introduces a regression in "git subtree split" [1] 
-[2]. For some inputs, the split history is incomplete and does not match 
-previous git versions.
-
-For
-
-     git subtree split -P somedir
-
-if the history of `somedir` also contains *squashed* subtree *merges*, 
-the split history may be incomplete. MWE follows:
-
-```bash
-git init mwe && cd mwe
-
-# create history we will subtree merge later
-git checkout --orphan deeper
-touch two_deep && git add two_deep
-git commit -m 'deeper: a nested subtree'
-
-# create top-level project history with one
-# subproject in a directory sub/
-git checkout --orphan main
-git reset --hard
-echo 'A test for git-subtree'>README.txt
-mkdir sub && touch sub/README.sub.txt
-git add .
-git commit -m 'Initial commit'
-
-# add "deeper" branch as sub/deeper
-#   the --squash is important here since it omits
-#   "git-subtree-mainline:", which 98ba49ccc247
-#   looks for in `should_ignore_subtree_split_commit()`
-git subtree add --squash -P sub/deeper deeper
-```
-
-Now `git ls-tree --name-only -r main` looks like this:
-
-     README.txt
-     sub/README.sub.txt
-     sub/deeper/two_deep
-
-We can split `sub` off as its own top-level history.
-
-```bash
-git ls-tree -r --name-only -- \
-   "$(git subtree.sh split -P sub)"
-```
-
-Before the patch, that looks like:
-
-     README.sub.txt
-     deeper/two_deep
-
-Which is correct. After the patch, there is only:
-
-     README.sub.txt
-
-which is missing the entire `deeper/` directory. (The hash output from 
-`split` is also different.)
-
-I suspect the test in `should_ignore_subtree_split_commit ()` 
-inadvertently rejects commits that should be kept.
-
-I tested with Git binaries from v2.43 on Ubuntu [3].
-
-[1]: 
-https://git.kernel.org/pub/scm/git/git.git/commit/?id=98ba49ccc247c3521659aa3d43c970e8978922c5
-
-[2]: 
-https://lore.kernel.org/all/pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com/
-
-[3]: 
-http://archive.ubuntu.com/ubuntu/pool/main/g/git/git_2.43.0-1ubuntu7.3_amd64.deb
+CgpIZWxsbyBHaXQgZGV2ZWxvcGVycywKSSB3b3VsZCBsaWtlIHRvIHJlcXVlc3QgYSBmZWF0dXJl
+IHJlZ2FyZGluZyB0aGUgcHJpb3JpdHkgb2YgY29uZGl0aW9uYWwgaW5jbHVkZXMgaW4gR2l0IGNv
+bmZpZ3VyYXRpb24uCgoKQmFja2dyb3VuZDoKQ3VycmVudGx5LCB3aGVuIGJvdGjCoGluY2x1ZGVJ
+Zi5naXRkaXLCoGFuZMKgaW5jbHVkZUlmLmhhc2NvbmZpZ8KgY29uZGl0aW9ucyBtYXRjaCBmb3Ig
+YSByZXBvc2l0b3J5LCBHaXQgYWx3YXlzIHByb2Nlc3NlcyBnaXRkaXIgZmlyc3QsIHJlZ2FyZGxl
+c3Mgb2YgdGhlIG9yZGVyIGluIHRoZSBjb25maWcgZmlsZS7CoFRoaXMgYmVoYXZpb3IgaXMgaGFy
+ZGNvZGVkIGFuZCBjYW5ub3QgYmUgY2hhbmdlZCBieSB1c2Vycy4KCgpNeSB1c2UgY2FzZToKSW4g
+bXkgd29ya2Zsb3csIGR1ZSB0byB0aGUgY3VycmVudCBwcmlvcml0eSBvcmRlciwgdGhlIGdpdGRp
+ciBpbmNsdWRlIGFsd2F5cyB0YWtlcyBwcmVjZWRlbmNlLCBtYWtpbmcgaXQgaW1wb3NzaWJsZSB0
+byBvdmVycmlkZSBpdCB3aXRoIGhhc2NvbmZpZyB3aGVuIGJvdGggbWF0Y2guCgoKUmVxdWVzdDoK
+SSB3b3VsZCBsaWtlIHRvIGhhdmUgYSB3YXkgdG8gbWFrZcKgaW5jbHVkZUlmLmhhc2NvbmZpZ8Kg
+dGFrZSBwcmVjZWRlbmNlIG92ZXLCoGluY2x1ZGVJZi5naXRkaXIsIGVpdGhlciBieToKQWxsb3dp
+bmcgdXNlcnMgdG8gc3BlY2lmeSB0aGUgcHJpb3JpdHkvb3JkZXIgb2YgY29uZGl0aW9uYWwgaW5j
+bHVkZXMsIG9yCgpBbHdheXMgcHJvY2Vzc2luZyBoYXNjb25maWcgYmVmb3JlIGdpdGRpciwgb3IK
+ClByb3ZpZGluZyBhIGNvbmZpZ3VyYXRpb24gb3B0aW9uIHRvIGNvbnRyb2wgdGhpcyBiZWhhdmlv
+ci4KCgoKTW90aXZhdGlvbjoKVGhpcyB3b3VsZCBhbGxvdyBtb3JlIGZsZXhpYmxlIGFuZCBjb250
+ZXh0LWF3YXJlIGNvbmZpZ3VyYXRpb24gc2V0dXBzLCBlc3BlY2lhbGx5IGZvciB0ZWFtcyBvciB1
+c2VycyB3aG8gd2FudCB0byBoYXZlIHBlci1yZXBvc2l0b3J5IG92ZXJyaWRlcyBiYXNlZCBvbiB0
+aGUgcHJlc2VuY2Ugb2YgY2VydGFpbiBjb25maWcgZmlsZXMsIHdpdGhvdXQgYmVpbmcgY29uc3Ry
+YWluZWQgYnkgdGhlIHJlcG9zaXRvcnkgcGF0aC4KCgpUaGFuayB5b3UgZm9yIGNvbnNpZGVyaW5n
+IHRoaXMgZmVhdHVyZSByZXF1ZXN0IQoKCkJlc3QgcmVnYXJkcwoKCgoK
