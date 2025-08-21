@@ -1,107 +1,93 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBEB2FE562
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 10:29:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755772181; cv=none; b=Qa09USWEi2Zq6ktmIszmvdO5vAnSlrpclYD+7v9/bBSmTN+yp1IaLpOra1YCXgGuIWc8JbNDqRPmrXJaHDQyjeC6ltmDrNuSepZ/8RGwiIEJ3xu2rj+Q6ogYmtezF1l5zSdnJbR2Ef+koxSC/LdYwDCsZ0EV9HfXT2MUHthIEJ8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755772181; c=relaxed/simple;
-	bh=K4jxtTetuIEXnDdp2SpIsYw+aMmyp55cbgePSTW+5Ic=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N6UQbT7M7rL5GgLvpZAcp0AHFw5t50Z+M0ydxyCLgUbcxuxamI7EM5L2bREHVOTc6ChNGjpf4ti6BFWR0tyg2bLzLL18Izkhyjtg94ipd8BV/S0zdF9taE4XmALxQwkCCob7YDm0xRN+vUIh7CYf1JwavHw4O9pZxiEF6260IC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Qcm6KLZj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XyPvtwy2; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117503054E0
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 11:26:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755775618; cv=pass; b=TipjsIiu3gYxET47ssyfzczmG4Ij/VB2fNBvSFy6U8ppprqzrSo5jXnMlZWuq5cDJxM4TZYKs7rkY4d2YUs9YeFIBHdhzEUxoXi0DIbH7mWxu8gEwuf0QfZS/Lc/GEiM3dTNrLaIdZK7kGGdCyTZcucrZYfmiOUw7XAybJev+NQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755775618; c=relaxed/simple;
+	bh=Wc3E7AJ4DBAw/BKQmFwyzYzbvw1fyl3TNg/r+b2TkBo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AGel67TX6yzvxeHNkjzyzJwFzqPDwD7rHIkiXFxFEvARZEqQPAtcCxAmS7oUpOnlnk4UC8icBkonfDFtzpjQvT7h5utNVMCysE6Tdst8lgi+DmkhfVmd0qcKjM58JiJ6S+9U4sJjvRNxVSmY9YxhaSU4hhMhHGtz8PLZi3PunxQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=YEx9Unkr; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Qcm6KLZj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XyPvtwy2"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9EA3DEC0170;
-	Thu, 21 Aug 2025 06:29:35 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 21 Aug 2025 06:29:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1755772175; x=1755858575; bh=v1Hfd0EjF/
-	0vvgkmoAJD5rvjsPDFirLgaOoaiBrNWbs=; b=Qcm6KLZjklwmVi5Rmw0Z7o+7O7
-	QAHkyiQnXIz5ATrq6FyN+OfMp49wNXXXReSXc5ISB1dwNmmnQAEIxt4+52s880kD
-	asnaK2/d/2Fcs8Bn5a5yXiqX5GfFPqewvIDNSToFObxjdN0aaFlpQGmVf3BpV0Yc
-	YWZXd2ZuUco2rC5X36SaoE7A+VkyCW/DXnup9ZyP/iGGYPhm8nktM0UwSGV5QOmG
-	KJnFXpHtbFGZR76iumP01ERlVgasoCPYuPhH+QNgr+n+e7nrh1IPjJbcNtRrZ3yz
-	9s1ssRC6XlH+jtFpHUw3/aofIBO0BrzM93WJxOnCzbX4Z1OcfSXB2V1aAtew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755772175; x=1755858575; bh=v1Hfd0EjF/0vvgkmoAJD5rvjsPDFirLgaOo
-	aiBrNWbs=; b=XyPvtwy27kZ5VYzewBMOXXisBsdcQhufOXMIMv8hNaMtFu8+3iN
-	nuQl6h6EEhrZD2p7qUrm02xC5HMIrsTEVoteOeZv0IVLktgaUKM4McLhennKDQR1
-	9zdm8rR1k4JIQmk+FUr+0iXONfHLbxE8OLjfm8hR8hL88akwjxT3i/CLXurIyomt
-	Fn6LHk/sFirSboqx63ghaQw9INf9RzgVm3BXDAZY4GRzzenlBJZ9lpoo7eNQgw9c
-	QeTFIMpOf9+FuSxYJ/kGs2318whHAN4Y6cG6718u/8g+5z5I+A/C0DI3TWn7RFFE
-	obyZtX571k0iUf2NQUTLkc7JBw1d6pv3oYw==
-X-ME-Sender: <xms:D_WmaP5oRaamU0_Fd-JtvXXWDVrZ3qtAwb_ZJP-w3n4_bBLUA6VS6Q>
-    <xme:D_WmaILwh2rZV9U_cwncMO4DWJljgJqwa2qdyXJhveQgw7taDWwG-HVAPg7bbPDqN
-    44Uam8pBU-8ZrSwOQ>
-X-ME-Received: <xmr:D_WmaP62mNrhXTBXke8cMW19onTIiN_uTi58Yac37RDBsWjtExZui3vK7Pm9aCkamfI742VJFwbky0m3b6JvsPUJu3lUayRtBpq5PvDA9A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedutddtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehluhgtrg
-    hsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:D_WmaLyZ96dpUs8m1X522j7o5yWMQgDnQmkBR3NmDzKsh2TqzMPcOw>
-    <xmx:D_WmaDbebMSDSjkoanpE2rSfwu9mm8JMKdFDAv62-58-6ovxX_xWZw>
-    <xmx:D_WmaNQqmo3QGmKmmMNMJHFnHjazakLnsh2E3oIzpNjSl2mCsJmi8g>
-    <xmx:D_WmaNx0vYNx7h3NcYg_E1XGUOJc9URASsBRGNRwdXVWZMLad2MVWQ>
-    <xmx:D_WmaNHikgNkFjhYSjyZtLe1WP2uafrfSgmBN7WvO3vuodvYYVNfMual>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Aug 2025 06:29:34 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0e7b525e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 21 Aug 2025 10:29:34 +0000 (UTC)
-Date: Thu, 21 Aug 2025 12:29:31 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com
-Subject: Re: [GSoC PATCH 2/2] repo: add the field objects.format
-Message-ID: <aKb1Cw-SuS2t0CqG@pks.im>
-References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
- <20250820144247.79197-3-lucasseikioshiro@gmail.com>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="YEx9Unkr"
+ARC-Seal: i=1; a=rsa-sha256; t=1755775589; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=jABIo5rKnsicPMzyO1RRfc0/1Uj0hW7jSuc6oQbqHc5ZsGHUjAZZJMtrKqfQ+3xU9Ath3X0VxrhvXWazeHQBxh6VJ/OxYJihyKjypm6WT1z6HeI05ncDDx7ZYasA8C25hbbZtI6OTLyvwLXky1nTkR2R/pRz/ZY9oS78NyGIBsU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1755775589; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=RPW+5tE63rOVrprUVrtspBGgwOyv9QnBEkp6Hme1LRI=; 
+	b=jDI7uwrDoNTINWnLwLMQX6zDcxGYxYX3Ob8Vl3KmyYX/TExZFyV0wo45IxnkRwc8Wu3A55OSd6nsP2SnBDg1npaE1WDZ+b86SXh2wx6Ls7RwD3WW8tYi5/1HLkqArlA5WyGqBB/3Io0ROcOwHPJnSZclBdQ6iVeCHftAR6JOZ3g=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1755775589;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=RPW+5tE63rOVrprUVrtspBGgwOyv9QnBEkp6Hme1LRI=;
+	b=YEx9UnkrNm0o+UpHI54poJXPaPmoy+O0HC0HzeEM3K1TY6uknKXsIxV+HxcmPTHq
+	kPulrGKw1Kxtp29wM217mj1o6vtcnH3fx4HRqoG/KD8FOUWE1EOrt1OsqqjsMWfnw4z
+	lOI+t78nkpOZvueHGS/N5S/RF3p+7PkL8rGqQqDc=
+Received: by mx.zohomail.com with SMTPS id 1755775587192196.93363919153137;
+	Thu, 21 Aug 2025 04:26:27 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
+ C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
+ Nieder <jrnieder@gmail.com>, Stefan Beller <sbeller@google.com>, Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/9] submodule--helper: use submodule_name_to_gitdir in
+ add_submodule
+In-Reply-To: <qcpwoggznb2hj4kegtnouh3ty2sepuhmqlhhzfbpvm7d2yt33y@6vnui5pnnl7x>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20250816213642.3517822-2-adrian.ratiu@collabora.com>
+ <qcpwoggznb2hj4kegtnouh3ty2sepuhmqlhhzfbpvm7d2yt33y@6vnui5pnnl7x>
+Date: Thu, 21 Aug 2025 14:26:22 +0300
+Message-ID: <877byw9aqp.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250820144247.79197-3-lucasseikioshiro@gmail.com>
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-On Wed, Aug 20, 2025 at 11:42:47AM -0300, Lucas Seiki Oshiro wrote:
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index b2ec66e454..71ddc5e8c6 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -49,6 +55,7 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
->  static const struct field repo_info_fields[] = {
->  	{ "layout.bare", get_layout_bare },
->  	{ "layout.shallow", get_layout_shallow },
-> +	{ "objects.format", get_objects_format},
+On Wed, 20 Aug 2025, Josh Steadmon <steadmon@google.com> wrote:
+> On 2025.08.17 00:36, Adrian Ratiu wrote:
+>> While testing submodule gitdir path encoding, I noticed submodule--helper
+>> is still using a hardcoded name-based path leading to test failures, so
+>> convert it to the common helper function introduced by commit ce125d431a
+>> ("submodule: extract path to submodule gitdir func") and used in other
+>> locations accross the source tree.
+>> 
+>> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+>> ---
+>>  builtin/submodule--helper.c | 11 ++++++-----
+>>  1 file changed, 6 insertions(+), 5 deletions(-)
+>> 
+>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>> index 07a1935cbe..7243429c6f 100644
+>> --- a/builtin/submodule--helper.c
+>> +++ b/builtin/submodule--helper.c
+>> @@ -3213,10 +3213,11 @@ static int add_submodule(const struct add_data *add_data)
+>>  		free(submod_gitdir_path);
+>>  	} else {
+>>  		struct child_process cp = CHILD_PROCESS_INIT;
+>> +		struct strbuf submod_gitdir = STRBUF_INIT;
+>>  
+>> -		submod_gitdir_path = xstrfmt(".git/modules/%s", add_data->sm_name);
+>> +		submodule_name_to_gitdir(&submod_gitdir, the_repository, add_data->sm_name);
+>
+> I believe submod_gitdir_path is now only used in the `if (...) {...}`
+> side corresponding to this `else` branch, so perhaps we should make it
+> local to that block?
 
-There's a missing space here before the closing curly brace. Other than
-that this patch looks good to me.
-
-Thanks!
-
-Patrick
+Yes, I'll move it in v2. Thanks!
