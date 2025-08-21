@@ -1,119 +1,106 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AE0352FF3
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 20:26:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4EA2DEA7B
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 20:32:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755808001; cv=none; b=dP/TyQoXpt0d2+75LKGX4xOi4iR4Zr6Mf9MCOtxGiikreN8GhMvd0D8ygrhcrtz7tzLZPWFg7Dw2L1/D7O+wa6n8mhtqXj/CPQ4klpKfo7A4HcDpjnDbiRE7Ao1GR+ViyJfzK+pVaW94vWVopiPYmAkioqwK5U9LyrQwSoLCTSQ=
+	t=1755808347; cv=none; b=V5KajIbhsXWNMkhyPK4GbxM4D+r/cpkQDbmmiiSc5WxK5Pi/pTlDME6pNzBUGYJk7lAwJ+5jhAkKI2xpfNQg4z3j1lWA/iSfpHSUKaoo9fJxVM98AMbQ7xKd+f4D9x9GkiLpO3CPHm1UTBu/zqRz39QK/8gCSA8gz3jD8/QG3zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755808001; c=relaxed/simple;
-	bh=pqDj8PgoAiy8PvQkN+ztp1HuVyO7iipvfaEuUcb+d0Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iLzAOcJQ7WNwPXN0ibvKnD60ztMx0AtqaThGy/GQt6F4qBp7FZzd6SYq9y/NAAAmgSPDcoyXOkgfpbT744I8AWCiW3yXwL40sULF2pkrXwOuqlxo8YSEqlcHxCgDuD1tVnGpzjfNtrCke94WnoywccnFAUnjoT61/CRMuNVpDyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qh+9LsQs; arc=none smtp.client-ip=209.85.210.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755808347; c=relaxed/simple;
+	bh=c/xZzs2K72AdjfVBHv9wrp57mahofFWIXgLoLIQcjm0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sgMjYKon1le8+Z4G7HvAWUPhF7Mv8kpFSDB5KEfg1IwJeUK3ecIW49/c/67iqnLCE3cb9xeZIb4a2KmMD11biSO93mV+46RMZC9AsvZCRbHBcHgUSG5ZdrBPn1toc8YB85h1rqyBo5aVYlMskIRsfsaw52Mztz7amgeysJDSZ2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IF06uYX8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fY8V6kis; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qh+9LsQs"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-74382015df5so330920a34.3
-        for <git@vger.kernel.org>; Thu, 21 Aug 2025 13:26:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755807996; x=1756412796; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pqDj8PgoAiy8PvQkN+ztp1HuVyO7iipvfaEuUcb+d0Q=;
-        b=Qh+9LsQsOpEOrpoTK1/A5i0MXNZCx9Nkur524t47bTckRr/hkGgc5NEZb6xqzMcv5K
-         rif8PiD4aR6FelglEoSVKohbX/JWHqxq1zyF2vYm0TwP4R1zKJOgJflUdzNgqdjrqL/6
-         TG3uZRpQUPhBpGNYLkCn+LpaLEMlol9Zyyol3mjlqRum75uQKDZMSmCfgNPQtzHpbigG
-         XufPzmSzh/qtQJBX81ugzeH1awil7htCuOwXxFh/PdY/K4YV9WZAw13jHynYbCKokfWn
-         A5Z+slFnCpgtwNq8f23OWZkk8lgQIpx0XKuKxlZtgImVb5ngepLodhgJ2In9dUQTeuU/
-         k8tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755807996; x=1756412796;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pqDj8PgoAiy8PvQkN+ztp1HuVyO7iipvfaEuUcb+d0Q=;
-        b=RyydC/6fUlub+/Fasl1FD694VBPYcvj3aPuWa0ePp1BpO1TZv33+OHU4dQxfhnSeiz
-         kv+grxmU867Fwc4gg2JRGxyn1ma6Q7toqi7mtZ38cugLw+W03D0/ImTwQWYlv4KWlx9b
-         jzCnqg2TsDvYgQb8WWiye8RXrh+Z16enUf6jwnA2/x+5Tj+dX9/teINm0GKAImHCzQJ1
-         NH+DGkvA+fSOqt7MdgzkrgIZmEmoi2D1N+ZEMbZeT+kxapjAVk0v0bU7PTT18iDeWViL
-         jgaWQeFMVStOYN9kqpdF7h31v6kb/BGx+IWS4rl41q9FyZl0Z4sh5d58QsiWHD/z2adR
-         ZOjQ==
-X-Gm-Message-State: AOJu0Yy6pPCuVwF9L1JJL67EDNR5QvkrJnNpQ/w30k2tp4cZDdUv/5L6
-	lcseF+g3HqLX5QeCJmSHaC/g1uKNGaVZ+ewaB9LJ+XwxB1sZtCbyTO0ERfrxk0F6
-X-Gm-Gg: ASbGnctmOzGyShB9r3c09oPH/44MpMMsdtvfpFwUbo3Rf7x1wn9IUZsLf7/1/CukNKh
-	lcpw6ghvD9VshUMY2ZY6jFtb/eNTbpGcwOB6h6/aPoup2qZlw5SlqfWyraQI0oGQr6raEW44l9X
-	l7tow2u13/cllPm1VixtWJK3EBLfmXMQZiJ4FAvelG0CiCzyR/rwSrv+TfQlM4E5+LUNYTn+BZb
-	N6rejr3Cn/dnefwSwJk4SDaGrl1aN20Bp/Nb9vSRECfUpw47FIrskUOUz8Drzx69G/TiBmwuBkh
-	B1J/Xx91vsCPmyETd4MXq6MJUM+E8/Lq8yuH6H1sc2xCOqpM+CCrudmxEPQmNNZ2IxO54UXH0iI
-	45bJjLPyl+qXovA5o
-X-Google-Smtp-Source: AGHT+IFhu+UA1G1cUas82lyjyr/rgvZJqd4AR+Sm55wDDj1uEtZub1i3fmPUNLjG1/++tY2rWO5WCg==
-X-Received: by 2002:a05:6808:318f:b0:434:689:6c10 with SMTP id 5614622812f47-4378534272cmr456605b6e.37.1755807996506;
-        Thu, 21 Aug 2025 13:26:36 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-435ed0fd98esm3521414b6e.6.2025.08.21.13.26.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Aug 2025 13:26:36 -0700 (PDT)
-Date: Thu, 21 Aug 2025 15:26:35 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IF06uYX8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fY8V6kis"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6D5BF7A0150;
+	Thu, 21 Aug 2025 16:32:24 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Thu, 21 Aug 2025 16:32:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755808344; x=1755894744; bh=tsW+sEIFFI
+	BtOukKE2bAr3nu5eRbnyoqRy28ZUNmFnY=; b=IF06uYX8lD+Qj8fggjryqDcToZ
+	+JKGiNgbnvIUvFTGE0gdugRZvXFxE9qTPSDi1VPpFX0Gw74XleC9ZubXPUG6jnvT
+	8F7eOV/7MV8C9bIut59ccgJcyzoyv1Xr99R0edNeGPCVm2UwfvbECTBrdqCnGbOz
+	R2HJBjlI/setgNCGcWVTOgrADEXtj03TxICnXE6oClXNhlRSRiRWH6HMW/wRePTt
+	QI4epZsrrwfIMI9DQT6/aTGrLSGWC/4PSy9a1UKNZVuCCajQjZN8nqd148yGgjJa
+	7AsmxYQ4mryCV8r1+SkaE4dz0K+EVJ+LFsjyFwqelVp6saX75IJK2gYsZNKg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755808344; x=1755894744; bh=tsW+sEIFFIBtOukKE2bAr3nu5eRbnyoqRy2
+	8ZUNmFnY=; b=fY8V6kis1BBYWlBDHlU585jvmaWRit0OEOwL7AgG89M9/8cV4xO
+	F7da61KtpHJKijUeTUEh3mBC2nAxLtJtXSSr8A+9bMLAF0IH/aOb74IO3WXA6MqG
+	WJpfywECG4BckfnKydNSWgVni0o9J41NxJ1wx3HaB+tgZEqdfXB+YZu9gV93GYN5
+	Ht1cJdoRwR+T7tdcBlyCkagre0OyvwLaqa89GWEbGMBOA5+kbRMRpp9hWFKp1Yaz
+	mWShbnywS3G6x0mcMcy/KEfvGS8wwqdoVjp9DFp5v0wtYGhipys3ov4Ix84NPvOz
+	LqXodEwP6AxpMOvLemZx+vB8L3XEz4Cxk8w==
+X-ME-Sender: <xms:WIKnaC_iAWOn-qNvKcJKSUM5sz-LuS3yU8kKQutT0bSx2dPiZ5iL0g>
+    <xme:WIKnaNSVQYyye5KwVJnDHRsUOH0Fteo4_yF3IAATsWjfE_EhYiPoo-T051G0sB9tg
+    nCEw7XUXdGBnmyImA>
+X-ME-Received: <xmr:WIKnaElRGXWavdYdP1gxtx1Y-c0dSvkwMeSeR9u7AmTnA_XYoRgPK0g-zjwTriwQ9Cf0ccIplT31I0uPH4iRP19atLQlxssRxKLybN4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedvudelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshes
+    phhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:WIKnaNRnXIWwcmypv7Cx-ryrUF4G1-p2s4DmW5M3n94UUsnbnZuE8A>
+    <xmx:WIKnaCP7pqt7RXjSmQikcBs2tCllh7Frg4WPuL7Y8L85-yNjj_jxjw>
+    <xmx:WIKnaGVz6YFtGDWbF4fb1S5f9Z0ZWm9pKQO_Y6vKY5yA6rnpYZ8XDw>
+    <xmx:WIKnaJfGWyCWUN5R6xOQKvkTgGgoM6gyS8kcHeY3i-l96v0M74Kd4w>
+    <xmx:WIKnaFOU1rQp8cn4RUcauo28bFD79G43qIqbwmE8OiCVsXZB5Obj6-vf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 Aug 2025 16:32:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
 Subject: Re: [PATCH 3/3] bulk-checkin: wire repository variable
-Message-ID: <rhkhmaozjaogm34xfwagagy2qifsq5p4fbtb23nhdu7jfg2627@qkrv57gg2k3u>
+In-Reply-To: <rhkhmaozjaogm34xfwagagy2qifsq5p4fbtb23nhdu7jfg2627@qkrv57gg2k3u>
+	(Justin Tobler's message of "Thu, 21 Aug 2025 15:26:35 -0500")
 References: <20250820225531.1212935-1-jltobler@gmail.com>
- <20250820225531.1212935-4-jltobler@gmail.com>
- <xmqq8qjd7coe.fsf@gitster.g>
+	<20250820225531.1212935-4-jltobler@gmail.com>
+	<xmqq8qjd7coe.fsf@gitster.g>
+	<rhkhmaozjaogm34xfwagagy2qifsq5p4fbtb23nhdu7jfg2627@qkrv57gg2k3u>
+Date: Thu, 21 Aug 2025 13:32:22 -0700
+Message-ID: <xmqqms7sza95.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8qjd7coe.fsf@gitster.g>
+Content-Type: text/plain
 
-On 25/08/20 05:15PM, Junio C Hamano wrote:
-> I somehow expected that odb would know what repository it was
-> instanciated to work with, or in the worst case where in-core odb is
-> in theory sharable among multiple in-core repositories, at least
-> begin_odb_transaction() would take <repository, odb> pair and the
-> transaction would know for which repository the transaction is
-> working for.
+Justin Tobler <jltobler@gmail.com> writes:
 
-The `struct odb_transaction` maintains a pointer to its parent `struct
-object_database`. This ODB also has a pointer to the `struct
-repository`. Thus, from an ongoing transaction we should be able to get
-the repository we want.
+> Thinking about this more, we should probably just require
+> `index_blob_bulk_checkin()` be provided a transaction. Callers will need
+> to ensure a transaction is running so that a `struct
+> bulk_checkin_packfile` gets set up, but this shouldn't be a big deal.
 
-For `begin_odb_transaction()` we should only have to provide `struct
-object_database` and from that the transaction can access the
-corresponding repository. In the general cases, this is exactly what we
-do, but this doesn't work for `index_blob_bulk_checkin()` and its
-accompanying internal functions as they may be invoked from outside of a
-transaction.
+Thanks for thinking this through.  I think reducing the number of
+oddball callers-from-sideways leads us to good code hygiene.
 
-> Do we need bulk_checkin_packfile as a separate structure and pass it
-> around, or would these internal functions be better off passing an
-> instance of odb_transaction around and learn the repository from
-> odb->repo?
-
-In its current form, the bulk-checkin mechanism for packfiles may be
-used outside of transactions. For example when calling
-`index_blob_bulk_checkin()` without a transaction, the single object is
-written to the packfile moved into the primary ODB. With a transaction,
-multiple objects may be written to a single packfile. This whole setup
-is rather awkward though.
-
-Thinking about this more, we should probably just require
-`index_blob_bulk_checkin()` be provided a transaction. Callers will need
-to ensure a transaction is running so that a `struct
-bulk_checkin_packfile` gets set up, but this shouldn't be a big deal.
-With this we could easily just propagate the transaction for all these
-function as you suggested.
-
-I'll do this in the next version. Thanks!
-
--Justin
+> With this we could easily just propagate the transaction for all these
+> function as you suggested.
+>
+> I'll do this in the next version. Thanks!
+>
+> -Justin
