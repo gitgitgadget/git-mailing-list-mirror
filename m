@@ -1,154 +1,145 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6EAEAE7
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 07:15:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63BD54764
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 07:15:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755760522; cv=none; b=rE7ZgPpLJZ2PLzHWXt6+AbtJJcd/YLRz8x4KOTUyvF6ahIpbF4lxszFbCmY+2Df8gyeKyCzcRssmREu47ERopFX5T08KzAyWtGmW4cEi+I0UHxmKcpNcNtIW5IyG5DHB40o1jcHW2E3iZC5eHXHtJgIYWBhJdsEufLcsMuyCzME=
+	t=1755760524; cv=none; b=pElin5N723xlQnf3GvYvMWIMlyS452CXrY4vt5QC8pClIyBOzGIqiktx8BxdREuPs8SyF0AHMBduWpn8kb1VGOd8iC1ZkCQkyYrFrJqqgj0CqnGfP/x1dpdeh4Nuh08nK6H+qBdIkohGYZVvCM9JU+eGCzDBr+2NPljV81iNyUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755760522; c=relaxed/simple;
-	bh=HgNAgTskANCFwt+MPnB7eB2RRD1UDYZaembg9Adc6LE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cH2P1Kaa8G1PZ8aRh++Curw2hpl/kWJUZrkTu9riKKOb5I0WLrivzCkVNP2WN+mq8e9Nlm4cmt6tIPRl3TaXDH4nIsW2sGKoEDmqOBQTpR/X+9Wiwdx7a1h7tAEzGrPDgYus51a2JaJnZqwFSb10r2ZVSM4YxmEZEEybv3aOfEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eZbpigzA; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eZbpigzA"
-Received: (qmail 42104 invoked by uid 109); 21 Aug 2025 07:15:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HgNAgTskANCFwt+MPnB7eB2RRD1UDYZaembg9Adc6LE=; b=eZbpigzACa4mAL6HZOTl84JlqsMK0est7HMKMIJPYQyJxEtnPfrf3IsBLaW3RwKRHF349dyVPDvPN1aAxXYnaV8H5M09/7nNIFxOmStfOnwcR86aVpsJqnY4y6m1+EJySRbB3p5G/9hU0JO95JHdwz1uuYpmniJQBUvpd0xJa0tq79atL1bGyXkr3Tgom2CiU+fbu2NvCWvl4AVrsk7M9IDzA8xSnf777Fne/gbOOF77DGuOTDUOrFaZp9PlhN5dHawuLjGqBy0LN2rBkOwuLHctj41k7dNYanJq6tl2Bf3IfuOvEVcEAFeBSNuB7UULAUNu7LHyqTTNckXOGCw4nA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Aug 2025 07:15:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 72218 invoked by uid 111); 21 Aug 2025 07:15:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Aug 2025 03:15:18 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 21 Aug 2025 03:15:17 -0400
-From: Jeff King <peff@peff.net>
-To: Isaac Oscar Gariano <isaacoscar@live.com.au>
-Cc: git@vger.kernel.org
-Subject: [PATCH 1/4] stash: pass --no-color to diff-tree child processes
-Message-ID: <20250821071517.GA1839835@coredump.intra.peff.net>
-References: <20250821070740.GA3356411@coredump.intra.peff.net>
+	s=arc-20240116; t=1755760524; c=relaxed/simple;
+	bh=sovI0ieWcyT1X5EO4OfzgYDTjnag0xGdaEs8d5gBhXM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=qvCS31oWQry2an7YX326MrjU9DNDntqWZoV0JjXsNfRc+7nolsercOlDlCBs7qjMctNHWAiku9q68KNS+T+lvf8PAwGzkbg5gpNA5IJZ/F87QvWxhHNzyXaz3TXfwTLG8+jZLWCQAt6tzP8VNU2Ik1eJj0h1GOT/W7J1hqlw4GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp.bon.at (unknown [192.168.181.102])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4c6vjF5pDsz7QfkD
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 09:15:13 +0200 (CEST)
+Received: from [192.168.1.102] (089144220182.atnat0029.highway.webapn.at [89.144.220.182])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4c6vj46JQxzRmxB;
+	Thu, 21 Aug 2025 09:15:04 +0200 (CEST)
+Message-ID: <0e7cacac-b113-49de-be4b-a689e81815fb@kdbg.org>
+Date: Thu, 21 Aug 2025 09:15:03 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250821070740.GA3356411@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH gitk] gitk: add README.md with contribution guidelines
+Content-Language: en-US
+To: Michael Rappazzo <rappazzo@gmail.com>
+References: <20250820195229.45943-1-rappazzo@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <20250820195229.45943-1-rappazzo@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-After a partial stash, we may clear out the working tree by capturing
-the output of diff-tree and piping it into git-apply. So we most
-definitely do not want color diff output from that diff-tree process.
-And it normally would not produce any, since its stdout is not going to
-a tty, and the default value of color.ui is "auto".
+Thank you. However, I hate to say that this isn't the text that I would
+expect on the front page of the repository.
 
-However, if GIT_PAGER_IN_USE is set in the environment, that overrides
-the tty check, and we'll produce a colorized diff that chokes git-apply:
+An important part is missing: first-time visitors are not addressed at
+all. We should state what this software is about and show examples how
+to use it effectively, perhaps include a link to the manual
+(https://git-scm.com/docs/gitk).
 
-  $ echo y | GIT_PAGER_IN_USE=1 git stash -p
-  [...]
-  Saved working directory and index state WIP on main: 4f2e2bb foo
-  error: No valid patches in input (allow with "--allow-empty")
-  Cannot remove worktree changes
+I would prefer not to have format-patch+send-email tutorial in this text
+nor how to make Github PRs. It is OK to have links to tutorials. The
+prefix [PATCH gitk] hasn't been used in the past, but we do have the
+convention that commit summaries have the prefix 'gitk:'. This alone
+distinguishes submissions sufficiently (and then also simplifies using
+'git format-patch' a bit).
 
-Setting this variable is a relatively silly thing to do, and not
-something most users would run into. But we sometimes do it in our tests
-to stimulate color. And it is a user-visible bug, so let's fix it rather
-than work around it in the tests.
+Do not say that "this is the official repository". Remember that every
+clone would say that, too. That would be confusing. In the Git world,
+this status isn't achieved by proclamation, but by convention.
 
-The root issue here is that diff-tree (and other diff plumbing) should
-probably not ever produce color by default. It does so not by parsing
-color.ui, but because of the baked-in "auto" default from 4c7f1819b3
-(make color.ui default to 'auto', 2013-06-10). But changing that is
-risky; we've had discussions back and forth on the topic over the years.
-E.g.:
+I wouldn't include the details how Gitk is also shipped with the Git
+repository, but at most that it is. It is not even necessary to
+discourage people from making patches in the gitk-git/ directory. `git
+am -3` can cope with such patches quite well. Allowing such
+contributions lowers the entry barrier.
 
-  https://lore.kernel.org/git/86D0A377-8AFD-460D-A90E-6327C6934DFC@gmail.com/.
 
-So let's accept that as the status quo for now and protect ourselves by
-passing --no-color to the child processes. This is the same thing we did
-for add-interactive itself in 1c6ffb546b (add--interactive.perl: specify
---no-color explicitly, 2020-09-07).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I ran into this while writing tests for the subsequent patches.
-
-Reading that referenced thread again, Junio was in favor of reverting
-4c7f1819b3 and replacing it with something that didn't kick in for
-plumbing (thus fixing the root issue). I argued against it somewhat
-there, but now I think I was foolish and agree with 2017-Junio. ;) I do
-think that fixing it now carries some risk of people complaining,
-though. So I'd rather do this immediate fix and worry about the larger
-problem separately.
-
-I also had another patch long ago that would have helped here:
-
-  https://lore.kernel.org/git/20150810052353.GB15441@sigill.intra.peff.net/
-
-The general idea is for GIT_PAGER_IN_USE to actually identify the pipe
-to the pager, so that sub-processes that are not going directly to the
-pager know to ignore it. I think I didn't pursue it because I never
-worked out the portability issues for Windows.
-
- builtin/stash.c        |  4 +++-
- t/t3904-stash-patch.sh | 10 ++++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 1977e50df2..c55628aafc 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -377,7 +377,7 @@ static int diff_tree_binary(struct strbuf *out, struct object_id *w_commit)
- 	 * however it should be done together with apply_cached.
- 	 */
- 	cp.git_cmd = 1;
--	strvec_pushl(&cp.args, "diff-tree", "--binary", NULL);
-+	strvec_pushl(&cp.args, "diff-tree", "--binary", "--no-color", NULL);
- 	strvec_pushf(&cp.args, "%s^2^..%s^2", w_commit_hex, w_commit_hex);
- 
- 	return pipe_command(&cp, NULL, 0, out, 0, NULL, 0);
-@@ -1283,6 +1283,7 @@ static int stash_staged(struct stash_info *info, struct strbuf *out_patch,
- 
- 	cp_diff_tree.git_cmd = 1;
- 	strvec_pushl(&cp_diff_tree.args, "diff-tree", "-p", "--binary",
-+		     "--no-color",
- 		     "-U1", "HEAD", oid_to_hex(&info->w_tree), "--", NULL);
- 	if (pipe_command(&cp_diff_tree, NULL, 0, out_patch, 0, NULL, 0)) {
- 		ret = -1;
-@@ -1345,6 +1346,7 @@ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
- 
- 	cp_diff_tree.git_cmd = 1;
- 	strvec_pushl(&cp_diff_tree.args, "diff-tree", "-p", "-U1", "HEAD",
-+		     "--no-color",
- 		     oid_to_hex(&info->w_tree), "--", NULL);
- 	if (pipe_command(&cp_diff_tree, NULL, 0, out_patch, 0, NULL, 0)) {
- 		ret = -1;
-diff --git a/t/t3904-stash-patch.sh b/t/t3904-stash-patch.sh
-index ae313e3c70..0bddbce504 100755
---- a/t/t3904-stash-patch.sh
-+++ b/t/t3904-stash-patch.sh
-@@ -107,4 +107,14 @@ test_expect_success 'stash -p with split hunk' '
- 	! grep "added line 2" test
- '
- 
-+test_expect_success 'stash -p not confused by GIT_PAGER_IN_USE' '
-+	echo to-stash >test &&
-+	# Set both GIT_PAGER_IN_USE and TERM. Our goal is entice any
-+	# diff subprocesses into thinking that they could output
-+	# color, even though their stdout is not going into a tty.
-+	echo y |
-+	GIT_PAGER_IN_USE=1 TERM=vt100 git stash -p &&
-+	git diff --exit-code
-+'
-+
- test_done
--- 
-2.51.0.356.g99d8374de0
+Am 20.08.25 um 21:52 schrieb Michael Rappazzo:
+> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+> ---
+>  README.md | 63 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 63 insertions(+)
+>  create mode 100644 README.md
+> 
+> diff --git a/README.md b/README.md
+> new file mode 100644
+> index 0000000000..adf7a0ba85
+> --- /dev/null
+> +++ b/README.md
+> @@ -0,0 +1,63 @@
+> +# gitk - The Git Repository Browser
+> +
+> +This is the official repository for gitk, a graphical Git repository browser.
+> +
+> +## Repository Status
+> +
+> +- **Official Repository**: https://github.com/j6t/gitk
+> +- **Integration**: This repository is regularly merged into the main Git repository (git.git) via subtree merges into the `gitk-git/` subdirectory
+> +
+> +## Contributing
+> +
+> +Contributions are welcome! The preferred method for submitting patches is via email to the Git mailing list, as this allows for more thorough review and broader community feedback. However, GitHub pull requests are also accepted.
+> +
+> +All commits must be signed off (use `git commit --signoff`).
+> +
+> +### Email Patches
+> +- Create patches from this repository (github.com/j6t/gitk), not from the `gitk-git/` subdirectory in git.git
+> +- Send patches to the Git mailing list: git@vger.kernel.org and CC the maintainer: j6t@kdbg.org
+> +- Follow the Git project's patch submission guidelines
+> +- Include `[PATCH gitk]` in the subject line
+> +
+> +#### Creating and Sending Patches
+> +After committing your changes:
+> +```bash
+> +git format-patch -1 --subject-prefix="PATCH gitk"
+> +git send-email --to=git@vger.kernel.org --cc=j6t@kdbg.org *.patch
+> +```
+> +
+> +For `git send-email` configuration, see the [documentation](https://git-scm.com/docs/git-send-email) (search for "Examples of SMTP Servers").
+> +
+> +For information about subscribing to the Git mailing list, see [subscription info](https://git.wiki.kernel.org/index.php/GitCommunity). Note that subscription is not required to participate in patch discussions.
+> +
+> +### GitHub Pull Requests
+> +- Fork this repository and create a feature branch
+> +- Submit a pull request with a clear description of your changes
+> +
+> +## Building
+> +
+> +gitk is a Tcl/Tk application. It requires Tcl/Tk to be installed on your system.
+> +
+> +### Running directly
+> +```bash
+> +./gitk
+> +```
+> +
+> +### Installation
+> +To install system-wide, you can use either `make` or `meson`:
+> +
+> +```bash
+> +# Using Make
+> +make install
+> +
+> +# Using Meson
+> +meson setup builddir
+> +meson compile -C builddir
+> +meson install -C builddir
+> +```
+> +
+> +Both build systems will handle setting the correct Tcl/Tk interpreter path and installing translation files.
+> +
+> +## License
+> +
+> +gitk is distributed under the GNU General Public License, either version 2, or (at your option) any later version.
+> \ No newline at end of file
 
