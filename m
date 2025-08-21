@@ -1,122 +1,122 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from mx.freebitcoin.gay (mx.freebitcoin.gay [92.65.121.143])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0453D2EB10
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 08:28:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17612ECE87
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 08:52:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.65.121.143
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755764936; cv=none; b=fR4yv3OYFt9SHMpxXN29R5UJLM+0IqeZWCXO+y9JT3l29yRUl4x3j4XvdMMrHb+kmpzdtle83NnqEu+sX3BTrZST/xWxinU/mUBxSwp3Jzj5QBd2oHnLAKGfiLjGbP/bLw6Z5sfSYyqtD8Gg8e9v2FE6aTCRhdIgpph2+uhyIWQ=
+	t=1755766347; cv=none; b=D2v73FJoWseBYYXSTCAJRuu2Sy2gn5XteINZafKgg7gjGBQmWoh79O9MCsVp/Qi4zHEKunMSqtsjWSZc6tpIhgNl3tI2mw3SRCg07YaYK8AtDl446ZwHV/KF9G4SsFirJj+qncNBNtG7HV2iaQwxQIm1fzVpCc3L0GBpUErSBNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755764936; c=relaxed/simple;
-	bh=lspvOEWb3bstyV/1O1IEJJx8skzWrxr1c2FbZ54FscU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RVX4HFw+o5/aXpYUlfKJ8MU3bMvNg2UstxGnorm6pftD9mo0kSsIsG5iC2dbBMKkMF+mN2TtIM8HIH/UO4+gUdmDTa+N9do1FVZFGcgz++vFGHhMRBFXuVOpTfUxjDd1gq/KsBVMLd7QXxzYECk+OBP91keS0t1+GyD1BBvFfK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=hbQulD8x; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1755766347; c=relaxed/simple;
+	bh=Vw7AGpEj3eKUflku3QAb1uh1PtCMCLzi9eH8qrSBwyw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Sh8O53E74AB5x6wz1nOlWnts0RfNp3HFKeX9PsyKG5/3YGbCOYA4QckkQ6lhJLamFi9+AMhyQCuNtVi4drT9eLJIdZoRnR530ihV4khjwsgqlzeKWPKEZeDfPNzYWt5PKNEcsnDSYBwE18Bfuol+Ey94b+LsOuWHmcmsLzLivAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ddevault.org; spf=pass smtp.mailfrom=ddevault.org; dkim=pass (1024-bit key) header.d=ddevault.org header.i=@ddevault.org header.b=gRUjpCtv; arc=none smtp.client-ip=92.65.121.143
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ddevault.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ddevault.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hbQulD8x"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1755764926;
-	bh=lspvOEWb3bstyV/1O1IEJJx8skzWrxr1c2FbZ54FscU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=hbQulD8xQ4JPj1b31dE2VO8YSczhjOqIInmV/zEV3mJ7Egd6DGcId/uTCNe9ZRVZw
-	 YPgsMNsDJB8u2tpjAf6VOKF5RVmXPjqCvdsii8Q/78L1VpLhD157E4UTfHhIKIM0zZ
-	 rDKKJ5URJssuVFWq1Ais7SULSg2D5eaegxqTpgG835XTZ0qFDw/USbTObrxRDM4llQ
-	 C/ieTlGj5opQ4c5W1717xWHeAGnei6IoFMpw3GNNSDJe/6+PE3AZRQqpamwKeRlVK4
-	 yTEAnlsCKEpFtW8oX1yUCdMJABhaoMaL7a+tyM9n7ojQE8qZWq2pDC3lSsTpspuMsE
-	 7UZDuHDhVBonkldtmRhY+fFaIv8LLh5wxUwoC8SzR18nVlGwAgnr8+/JVpaXatFpXJ
-	 zfAy/XRtAtmZP7kVKaHUT50u4kdLNPIk0+cZNC435dr+o5JJSyVdZy2SglePx89oPR
-	 HtBavqgXokTk3Z7Mr6QTaQVda9Kq6dzMoJlTNQQR/JtV/88ul+y
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:cf30:27f6:1b7b:28f6])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4AC70200C0;
-	Thu, 21 Aug 2025 08:28:46 +0000 (UTC)
-Date: Thu, 21 Aug 2025 08:28:45 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Simon Richter <Simon.Richter@hogyros.de>
-Cc: git <git@vger.kernel.org>
-Subject: Re: git: prepare to regularly change hashsums
-Message-ID: <aKbYvbWWL0FGXpG7@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Simon Richter <Simon.Richter@hogyros.de>, git <git@vger.kernel.org>
-References: <198c2b87f70.ff0fbb4065293.4919681043907358329@zohomail.com>
- <aKTqHTnOMp1LFNLD@fruit.crustytoothpaste.net>
- <e069a7ca-fba4-432a-9a05-a68b2b6ddbc7@hogyros.de>
+	dkim=pass (1024-bit key) header.d=ddevault.org header.i=@ddevault.org header.b="gRUjpCtv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ddevault.org;
+	s=_bikeshed; t=1755766267;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=I8LavPImY2zBxHCoPZLTev9dxQXdh9ThWkVmS1pZJ4I=;
+	b=gRUjpCtv3+8YfhMPfD2KRpqTUNMjI4GiuJNGzHGLt/nnA+ReESgkDNplfzkl8xbkk3BPb+
+	zDuhlhB3iAP5Svx0YadRfOQWy2EYmjCr8FPt0cLe4kWaPgj8hFI+bXlsS3sFLDSc1fsRhx
+	Ajj5KmeII9M+d7lCzopWgfHJRriVT5A=
+Received: from taiga (mx.freebitcoin.gay [92.65.121.143])
+	by mail.freebitcoin.gay (OpenSMTPD) with ESMTPSA id 36d022d6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 21 Aug 2025 10:51:07 +0200 (CEST)
+Received: by taiga (Postfix, from userid 1000)
+	id 6E50B70206FB; Thu, 21 Aug 2025 10:52:16 +0200 (CEST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gg3sE78BDtGgqBuT"
-Content-Disposition: inline
-In-Reply-To: <e069a7ca-fba4-432a-9a05-a68b2b6ddbc7@hogyros.de>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=e89601a6e9be5fbae7e1277c8481bf1fb8de6343330e56ebdf72728cebb5;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Thu, 21 Aug 2025 10:52:14 +0200
+Message-Id: <DC7Z7YVT66NC.3RUJ7HXX2HSLW@ddevault.org>
+Cc: "Remo Senekowitsch" <remo@buenzli.dev>, <git@vger.kernel.org>, "Martin
+ von Zweigbergk" <martinvonz@google.com>, "Patrick Steinhardt" <ps@pks.im>,
+ "Andy Koppe" <andy.koppe@gmail.com>
+Subject: Re: [PATCH v2 1/2] pretty: add X-Change-ID to mail formats
+From: "Drew DeVault" <drew@ddevault.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-Mailer: aerc 0.20.1-112-gd31995f1e20b-dirty
+References: <20250703113505.11889-1-drew@ddevault.org>
+ <DC6LB8FINRXH.1TMZPB1XKPQWQ@buenzli.dev>
+ <DC72UF1IMIUF.2F7CNYOHYDGVJ@ddevault.org> <xmqq4iu17b1y.fsf@gitster.g>
+In-Reply-To: <xmqq4iu17b1y.fsf@gitster.g>
 
+--e89601a6e9be5fbae7e1277c8481bf1fb8de6343330e56ebdf72728cebb5
+Content-Type: multipart/mixed;
+ boundary=ddabda2fd67ae83b1f589606720c1f0797fdb443b738efdda5d01391b015
 
---gg3sE78BDtGgqBuT
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--ddabda2fd67ae83b1f589606720c1f0797fdb443b738efdda5d01391b015
+Content-Type: multipart/alternative;
+ boundary=bc46b4a07fc0d2da5a281fd14abcca183988d340138f8ce1fa0a33d0e8db
+
+--bc46b4a07fc0d2da5a281fd14abcca183988d340138f8ce1fa0a33d0e8db
 Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 
-On 2025-08-20 at 05:55:43, Simon Richter wrote:
-> On 8/20/25 6:18 AM, brian m. carlson wrote:
->=20
-> > There are many fewer places where we have hard-coded hash values in the
-> > tests and a lot more places where we compute values (for instance, if
-> > what the test wants to know is that we're three commits before HEAD,
-> > then we write `HEAD~3` instead of a specific object ID).  Instead of
-> > lots of hard-coded 20- and 40-based constants throughout the code, we
-> > have a few #define constants and a hash algorithm abstraction.
->=20
-> For me it would be great to still be able to use commit IDs in this way in
-> the future.
+On Thu Aug 21, 2025 at 2:50 AM CEST, Junio C Hamano wrote:
+> For a topic that is older than 6 weeks, I am afraid that is a losing
+> strategy.  People who might have cared about the topic said all they
+> wanted to say, new people are less likely to discover the topic than
+> it was fresh, and unless you make an action (e.g., posting the "next
+> patch version" you mentioned in [*1*]), it is highly unlikely for
+> anything to happen while you are passive.  Even a small update that
+> addresses all the little feedback would serve as a "ping" to reignite
+> interests.
+>
+> You seem to have liked the approach to generalize and encode all the
+> commit object headers (except for of course the object name and
+> author and committer ident, which already have place to be in the
+> format-patch output) on an e-mail header in [*2*].  That should be
+> sufficient for a small update that tries to reignite interests.
 
-You can continue to do use object IDs for this purpose: we're not
-removing them or deprecating them in any way.  It's merely that for our
-testsuite we're relying less on object IDs to make it less brittle.
+Oh, of course. For some reason I had had the notion that I had already
+written a v3 based on this feedback and it was awaiting further
+comments. But in fact I have done no such thing. I'll put this back on
+my todo list and get a v3 out in the foreseeable future.
 
-> So if the hash algorithm changes I need to either still be able to make
-> ancestor tests using the old IDs, or a quick way to convert them.
+--bc46b4a07fc0d2da5a281fd14abcca183988d340138f8ce1fa0a33d0e8db--
 
-Existing repositories will continue to use SHA-1 unless you actively
-convert them.  The change is simply that _new_ repositories will use
-SHA-256 by default (again, you can say that you want to use SHA-1 for a
-new repository, just as you can say you want to use SHA-256 now).
+--ddabda2fd67ae83b1f589606720c1f0797fdb443b738efdda5d01391b015
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=42F3F1862E3CC4B8.asc
+Content-Type: application/pgp-keys; charset=UTF-8
 
-I am working on code for interoperability between the two algorithms
-which will allow you to convert a repository simply by cloning into a
-repository using both hash algorithms.  That is, the remote might be
-SHA-1, but your repository will have SHA-256 with SHA-1 compatibility
-enabled, and then you'll have both algorithms.  You'll be able to look
-up SHA-1 object IDs in that repository very similarly to SHA-256 object
-IDs and convert the two.
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptRE1FWjdZOWt4WUpLd1lCQkFI
+YVJ3OEJBUWRBL3BQeTZYK25OTDVUMlFhSktFTTA4eE4vS3o3d0ZUQVpvSDVZCnJpVjl4MW0wSUVS
+eVpYY2dSR1ZXWVhWc2RDQThaSEpsZDBCa1pHVjJZWFZzZEM1dmNtYytpSk1FRXhZS0FEc0MKR3dN
+RkN3a0lCd0lDSWdJR0ZRb0pDQXNDQkJZQ0F3RUNIZ2NDRjRBV0lRU2Z0ZWMzM0NXeW5ZN3NScEZD
+OC9HRwpManpFdUFVQ1o3WTl3d0FLQ1JCQzgvR0dManpFdU1FRUFQOURIKzFMZ3ZUcVpETFo4YmFi
+QjVDZHA1eTBaVytRClR4NzhtaDFMOGpKZDZnRUFzc21nc0ltY3JadjRhZFAyVVc1UlU1QkhDZTlL
+VWR4MER5VjgzUXdsRkFTNE9BUm4KdGoyVEVnb3JCZ0VFQVpkVkFRVUJBUWRBR0FIOWRsYUNPTm9Y
+cG1RZ0hvUWdZSTJ0UytWTTNtelU4STJQeVZZUQoxR1VEQVFnSGlIZ0VHQllLQUNBQ0d3d1dJUVNm
+dGVjMzNDV3luWTdzUnBGQzgvR0dManpFdUFVQ1o3WTkxZ0FLCkNSQkM4L0dHTGp6RXVIY25BUDR5
+ak9pTTB5cWtTVDZ5WHpEVVd6ZTdCOUltMjRGOEhWeCt3TnFjRGFEdGNBRC8KZktRaHowU0NQaWJs
+TzZsYzdNRlV2bGFPejJ2ODdVcFVZUmh6UGRnUXF3az0KPWVtcmIKLS0tLS1FTkQgUEdQIFBVQkxJ
+QyBLRVkgQkxPQ0stLS0tLQo=
+--ddabda2fd67ae83b1f589606720c1f0797fdb443b738efdda5d01391b015--
 
-That code already exists and works if your repositories are not using
-shallow clone, partial clone, or submodules.  It just has yet to be sent
-upstream.  I need to improve a few things in the current status quo
-before I can send out the series.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---gg3sE78BDtGgqBuT
+--e89601a6e9be5fbae7e1277c8481bf1fb8de6343330e56ebdf72728cebb5
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaKbYvAAKCRB8DEliiIei
-gXJEAQCgevmQJK6jOiM7GTfrYiIET7DgZRN+Gve4FGq8iOhJtAD/VF9FlYDnIDvu
-uYWvaU+U292begGOEraoysbD01iPsAk=
-=H8rk
+iHUEABYKAB0WIQSftec33CWynY7sRpFC8/GGLjzEuAUCaKbePgAKCRBC8/GGLjzE
+uB2cAQCWt5DjdXg7LeUchMQkAe/ID8JIuEJ2dHYbYPBnXH7ZQgD+PKSNmeGQvbvX
+3UwHiZIzYe+RTQyNJkQoQHKnqPgT/AI=
+=RGSn
 -----END PGP SIGNATURE-----
 
---gg3sE78BDtGgqBuT--
+--e89601a6e9be5fbae7e1277c8481bf1fb8de6343330e56ebdf72728cebb5--
