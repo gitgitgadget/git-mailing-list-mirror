@@ -1,107 +1,140 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958C42DC322
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 14:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A332267729
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 15:06:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755788131; cv=none; b=TeV908VU7o4E8NEXwqMmOlU37zcTMbL9IBGR5VDFaJGZSnJWXostIYYgqWjtsYRmvVZVAH1sZmXBBLjbz50UhsPYVvDdKNFuGoH/kxC91Ht6RqalbIjhRSOUzcv6p22FTFTpE4g2j0VDXWEOgUGbuHGZwUYhmz2Tt3aujJR6g6o=
+	t=1755788818; cv=none; b=gq+7gpdl797O0b8YJ1iBxIlXKpR+Ii3/OU60z8KvcY2wVSJMjRIE0KNgQVsaMqWkHd0yx9QPCjBJbrR7fMrVYsziRBiXbl0QXMVH/iVUH4EHLjnu+GEwQwSA+R0pUIwczvIl/KKZ4ZDH8IQBtIH09z15KwaTCecb9oG4vkWahGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755788131; c=relaxed/simple;
-	bh=Kj2T4pXK7sYLrSiqX5IanVH1zztK31h/inMPIUzwXmA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YMLHpjoWpodq/MNmRpmww1SVgQ1cEG12sWH1/H2raN2AZWFLBqQ+KKWtyEYe79Qn8wvGNeJsonGTC7Nv7QV9DCKHHGnnyDD3jOyhU9gHEsnApk9VdQjv2fhnI3+bO/EOOziQimnZoMRLOPQD/YEHKRAYv+dnTvDQGPfVQuYcX04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HBs22SXM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L4wikxDu; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1755788818; c=relaxed/simple;
+	bh=9m+AsLwo3beQgZpKxBpguzTWmbg7n5rkN20QJjFQDik=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cSvAi4qP25QxzAbPXPIMMh9Z5vjvo0WnP61XV6VQD+9lDO5/ptK5nq4P4MzAAmrgYI9axuVJ7WKHDt0yxIxxiJistFLExVOItPIvFk+3vAnHN4lm/9Q/7wlSdJuKPs6gkpoAsNbZa4ax/HegDGKBtwhyUiv+W0gyGifBYhqwcyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KUSgK6e9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NvhQJLTM; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HBs22SXM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L4wikxDu"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 937DD7A019A;
-	Thu, 21 Aug 2025 10:55:27 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Thu, 21 Aug 2025 10:55:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1755788127; x=1755874527; bh=GLnPQRQiv0
-	+pUWztnkYS2m9BWzZRE8DZfH1Ys1osmTc=; b=HBs22SXMgTAAff1MKNkM1zSaqv
-	6FdS53Sd7XF/eTXXhdsZQwX8/eHeBFRKAZLI0H1eDMs82pRLgdHmkizywGb1esi6
-	HValH/s6/KpeIp5wtVdilzeHve5IDn9gcgqR6fbjbWb/SxTPluayG/ule6BUJ70y
-	HxI0Hfsgnggmilio9LhL5eqVNDnDZ5etUkhUWXFhgikpfJEmZKFIbdBYoMJWbF7v
-	vF2WyuvSjEV8HsDqnwCOSCIZoDy3UMb4lMCJIBHvyuZjJ7UeJqFFwjQ7AX5+aFLx
-	R9Ma0JyVy6A2L52mXYiWoasSMeiB2Gt2xLvK3vPSqzADXUN/R90+3aMCdOEg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KUSgK6e9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NvhQJLTM"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1E5511D0006E;
+	Thu, 21 Aug 2025 11:06:55 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 21 Aug 2025 11:06:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1755788814; x=1755875214; bh=uYvQK+QT4JkIuuEbrh+u99EMJh+cQKEr
+	WupGWC23rIc=; b=KUSgK6e95k+jNe43rJsgucHDrSl7hRxYS0t6iUbvafstU2KF
+	8zwT2mVsO3LVdJkrP6mjRQbIFbxFpoQYSLZrwA5UW4xTAikfQBp8m1oVpG/LnKbP
+	luF760ml9wYD3MIrrZk+3y0/7BRNKX85fi88TNQjlLZOb2/QaYJeMiVVT5HpBqj2
+	XGwfl00HBelIQyvCuOW7Xx4bkqkHT5qd8o5UlklqQQ3llxusvnIFXJLC+HPq2Jt2
+	x6wRYH5uzZDTUTnjeOZNgOiVVSfDTB6wfUuluEDk9b1RA10PnmBZahNHDfJAEYCr
+	s8y8V38MOo1eYcRDRP0NRE/i8UdlZ94rfPX1Bw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755788127; x=1755874527; bh=GLnPQRQiv0+pUWztnkYS2m9BWzZRE8DZfH1
-	Ys1osmTc=; b=L4wikxDuDP2hBtvhi5Y53ckAEuYsqBqQlRXgZMnXAUGLYtB0dnB
-	Uwm2zALz4Eu/+MDWAjxhotdRdIiDu517xty8H1ApPzDCkkgdbBElSKwvew5Yv2Yh
-	i/VLd2hiBQ6cPJJfaWGrCrdeh4HM5/LoRlYPIA8CYHPkFZhEEsAsEXZ8qAr8J4tB
-	hMSzhRveiK5xXomfnceqtVjZ042iu/bYAdqQ7FTa1PY7LZOfC5WVmabut50mJaaF
-	RSs5hwGUPcS01lcuayfxhOPr0ASVkPW/4eCU0kt24oAr5uvtbm/FYAMQrqpK5+1q
-	vZQGprfz1cl5LLiY6vYrpXRgZ+zcHIgiZ0w==
-X-ME-Sender: <xms:XzOnaOpwXTYxsG590xIymQRMulGG96fAH2zPs_5g1a6Itxeoz9_dXg>
-    <xme:XzOnaP5XcVHHHTugVimGPNEeJIiXGcbSbH3NFur8ATBHkbKLsyU4V30MeluuczGz_
-    II5gSL3D-flaF8WZg>
-X-ME-Received: <xmr:XzOnaMouQ82Gz-2yZBfX35FZHEhQTq57GZy-XsUnOBkRQJjALR6EUApRRRPAVfwZhcXJOdcxkZbG4LtGBPr6XIWXcW38vr4pgB5wkwmteA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieduheefucetufdoteggodetrf
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755788814; x=
+	1755875214; bh=uYvQK+QT4JkIuuEbrh+u99EMJh+cQKErWupGWC23rIc=; b=N
+	vhQJLTM4ZBcghNtDkhw0xHk7TwI7lZATEpzBTKu+kghRfHo/33+nqKgJ9X2CtYqg
+	/X0dHbXG8jaXwsNvqLvbpqKNrCDPpxiY3f1KJ0aj7GUkQKVBx6ttPTataD4Lm32P
+	oepyFKqdUFFVpsO3yfrNKjRRERsWMwsvZYzssIJoyYFSCU3b1wA5y5Oi9eJZDwXa
+	jVCKkq092AZY4grxGnh5PIzxFwum7618ykC4O/3cy+j2/dKGmoWYq2CYOYWIVmJF
+	5bnClo4D63X0I2GLgcQzpnGPrNyh2HtXVkbWxcMsyfnkpy6fZtROdK2RnQW2hL2r
+	r94JC9jVNQqsG6Bu1jadw==
+X-ME-Sender: <xms:DjanaNAANn7VlKXiZOj40C1I9wA85RQ2_5UrAiIBRS5LYUS0OiBdAw>
+    <xme:DjanaOxA95W7QNQ5nDhcVTml8_pkOY212XVDn8sd_1wY8SeicXyYo0EuC9mgS9FfP
+    KAjGgyOkWOzZ_vG2A>
+X-ME-Received: <xmr:DjanaCAw9WjzirfsnzgqF8T5SNhW2d_QpFhOK-d9AivhzO9SukDcY0lcuwAqhaHdKN9aTcZcxrvj4cc04QoimI1dYUmPcAiboMAJ3h0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieduheeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehluhgtrg
-    hsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:XzOnaJjjPXp7tEBq_hTiegdlqe_L7aelFsef88sGjmhAt1XHoZnrVQ>
-    <xmx:XzOnaOL4hVElH_rwKsFifbOyvBCuT-FxgAaJiy9lCAIGVarV7kmC9A>
-    <xmx:XzOnaBAO0e0eP1pClsCrRdUo01zWsS7VWWdI1TKV2WivpAkId8lgBQ>
-    <xmx:XzOnaGgdlE42L9DfiQ_TwmhQdrGpEb3Pxb0VcfgVBu4AAHszIMHwmA>
-    <xmx:XzOnaA1ihY6TFm3OSW3a6q5YfHogTIhN97NveKS_4EvaZuTREheZm_OW>
-Feedback-ID: i197146af:Fastmail
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkfgfgggtsehttdertddtre
+    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeejhffgfedvkeeftdfhjeegffeiveeiie
+    efgeeuiefhjeelueefffejteekffffjeenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
+    gtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesgh
+    hoohhglhgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:DjanaDa5g4HCPRynHXslMoGutE8XmT5Sqxmtf9x8HWha_Zx0-gTg6A>
+    <xmx:DjanaCjh1Rkh4PrYEEiWw0c64OSQPBJQTnCgeka3A9Y-IoOyrGrTYg>
+    <xmx:DjanaN7XDdfjQc55qs5DJcBMr6KI777qAKt8fYi7LSngsPUmbEOTiA>
+    <xmx:DjanaB4erej2vVgJZcliShuoZ1vrEUQ-2YBTxDG7yM9XvYQ_uKhcWA>
+    <xmx:DjanaIFgBVgcgbYbcN4OcnHrCvfHtQ4yUJlU6BUxsP7bvFtfmNshxfy4>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Aug 2025 10:55:26 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 547b6ec7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 21 Aug 2025 14:55:24 +0000 (UTC)
-Date: Thu, 21 Aug 2025 16:55:21 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com
-Subject: Re: [GSoC PATCH 0/2] repo: add -z and objects.format
-Message-ID: <aKczWVw1HafaKZNW@pks.im>
-References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
- <aKb1AfeIWB_SfJiI@pks.im>
- <2AE1A298-97D9-411A-A3B4-AB0A48D71536@gmail.com>
+ 21 Aug 2025 11:06:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH] config: document includeIf conditions consistently
+Date: Thu, 21 Aug 2025 08:06:52 -0700
+Message-ID: <xmqqldnc4stv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2AE1A298-97D9-411A-A3B4-AB0A48D71536@gmail.com>
+Content-Type: text/plain
 
-On Thu, Aug 21, 2025 at 10:23:29AM -0300, Lucas Seiki Oshiro wrote:
-> 
-> > What this cover letter doesn't mention is the base of the topic. I
-> > assume it's v2.51.0 with lo/repo-info merged into it?
-> 
-> I was assuming next, but I'll make it more clear in the next
-> version.
+When 399b1984 (config: include file if remote URL matches a glob,
+2022-01-18) added the 'hasconfig:remote.*.url:<URL>' condition to be
+used in the "includeIf.<condition>.path" configuration, the keyword
+was added with an extra colon in the documentation.
 
-You shouldn't base your patch series on next, as next may be rewritten
-under your feet and it would hold any patch series that you built on
-hostage.
+The section that documents these condition begins with this preamble:
 
-So the recommendation is rather to build on `master` with the specific
-patch series you depend on merged into it.
+    The condition starts with a keyword followed by a colon and some data
+    whose format and meaning depends on the keyword. Supported keywords
+    are:
 
-Patrick
+which makes it clear that the colon that comes between the condition
+keyword (e.g. "gitdir") and the parameter (aka "some data") is not
+a part of the keyword.
+
+Lose the extra colon.  Also rewrite description of all keywords to
+clarify that "some data" does not directly follow "keyword", and the
+colon is not a part of keyword.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/config.adoc | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git c/Documentation/config.adoc w/Documentation/config.adoc
+index cc769251be..05f1ca7293 100644
+--- c/Documentation/config.adoc
++++ w/Documentation/config.adoc
+@@ -114,8 +114,7 @@ whose format and meaning depends on the keyword. Supported keywords
+ are:
+ 
+ `gitdir`::
+-
+-	The data that follows the keyword `gitdir:` is used as a glob
++	The data that follows the keyword `gitdir` and a colon is used as a glob
+ 	pattern. If the location of the .git directory matches the
+ 	pattern, the include condition is met.
+ +
+@@ -148,7 +147,7 @@ refer to linkgit:gitignore[5] for details. For convenience:
+ 	case-insensitively (e.g. on case-insensitive file systems)
+ 
+ `onbranch`::
+-	The data that follows the keyword `onbranch:` is taken to be a
++	The data that follows the keyword `onbranch` and a colon is taken to be a
+ 	pattern with standard globbing wildcards and two additional
+ 	ones, `**/` and `/**`, that can match multiple path components.
+ 	If we are in a worktree where the name of the branch that is
+@@ -161,8 +160,8 @@ all branches that begin with `foo/`. This is useful if your branches are
+ organized hierarchically and you would like to apply a configuration to
+ all the branches in that hierarchy.
+ 
+-`hasconfig:remote.*.url:`::
+-	The data that follows this keyword is taken to
++`hasconfig:remote.*.url`::
++	The data that follows this keyword and a colon is taken to
+ 	be a pattern with standard globbing wildcards and two
+ 	additional ones, `**/` and `/**`, that can match multiple
+ 	components. The first time this keyword is seen, the rest of
