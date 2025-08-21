@@ -1,95 +1,74 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C542C11E7
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 16:22:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72882E1F01
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 16:27:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755793370; cv=none; b=EbrJe4l78Gv3g0p6yoMwxsM7fOispBVdZFgpj9Sr93WL3mJak6EL0pvvoK+Cy3QL+NNUQ5nMcXmGPO9KV7au6mNaKgOo/322pSaGO6E56Zfstgv0IoQrWBQHy+9UAu8H+PeB+zX/H/HrnRZD4wZHDzOsMyONXTJ0Ta/OQG4jKO4=
+	t=1755793622; cv=none; b=FBa9LtH/Y+yc8avIAFJtmtJXT5Uscpk0/xuPcZsa2MnBukBuDDqCD8jmhIJjeruLuvto9cFaffX04WTGUmzqZx1q7RI++Ums1LzUZ0WAD13jvBmTy23jJbu8vJ0xbHKxSCl6zryc4kA6XrLm507QykCF+I711VhGftgDlWjJxXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755793370; c=relaxed/simple;
-	bh=MYE/A63nHlbx6lkiK0kodWmxqVGPQlPwLazn4DnFWRM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mehuPK135X7KPnIYzYfNCWsPaNg2jQhE9ThEEiZHJguFy0TURDRRTygcfkDstRXqgsMFN5oMqHkvXyTgltyKf5ZB2jIpOrQ3/iUGZDw1keaC7yLd6oJgO6aQdlBPUbcKBFqJE9YaQQ8Cj+xEvB7/2kPglrxJ7NRrm9X6bbX3rRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OXUGVQh4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OHbgZKvO; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755793622; c=relaxed/simple;
+	bh=67KQ9O37NXN7xIVN51ONDNtwGzfqH3uG39iwNP1Upr4=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=I7dLHKUR04Ui6aDlgIpmPFfpv+yRwdZGLu2gJAhVV5WDQRKAJLOAPDO/0J81uuGOWg5znRQ4kQ1hzdLwtMd97barD4tjMeemUXXNlK3sQnXYyHTVpu2aXrz+I0h1Pg539/PDWwM9ZXwI59vajcVYm/pXccY1SWNYgMtz0fsW/6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eAD9pVdf; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OXUGVQh4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OHbgZKvO"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8346F7A0197;
-	Thu, 21 Aug 2025 12:22:47 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 21 Aug 2025 12:22:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755793367; x=1755879767; bh=4eaoJggXwY
-	nClAOTygCoxeRzldexJYyNq+kwoN9rnZU=; b=OXUGVQh4a39vNXmZEjOmsj3MT0
-	wDIkmz+K4v14HbXrf9813/VdN1YchmkLXUjJwDBQ2rbMpkjOj5Q0sET4DW2+QXCN
-	zNqAlfcmOTeKgcAfdvSAY0F92TQmAI8hVz/y1RjLVmw9hFmMZ9QpAGkOEI6ERDHt
-	6WAr+iO4O6a6J40yA9xIzTlNjCie7TrYwey4Ds6PSs2lVJkDft9Optnmx9h+ONLy
-	x3cvMnWii9wzNyQOR9zCF8elKS2HwsW/di4yl105DFLfX7kjsKlcBqsRKNujNlhh
-	X1766tcqoJ2DWBg4WAqeqkz2SAGcyiT+7whpQT/b0mPYkO/uZZAe/OxeLaKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755793367; x=1755879767; bh=4eaoJggXwYnClAOTygCoxeRzldexJYyNq+k
-	woN9rnZU=; b=OHbgZKvOkIdeSKwkb9FHWDcSYzEq7mheijO8vBUyhG1m5xIOSS9
-	ItjNIDKTAKF6bZVNSlK0XoOReb/EMAHdZNNfVkiZzSy12j+Ux7QsBexCnRChl9YM
-	Wv/Tch8CQ2MmMIvkyoWvsgRJkOOAkZfn4ubmGs3765GZCkwHhSpjGLxoM2eCo9jC
-	wMXkPbLJWYYtrzpxCTkvoq2ncu8MpmftyPoRQDz+/tIhJ9ce+2jempHoCBoVmb30
-	m3vVrCZy5nEWKdLzGGq7FV0Lo++MEjLhCGE+QUhNVOWPc2K5jL7NYKs5+z62ZrV/
-	j7A94QlFy34dyfm1bmV6YdUI72d8dl+QTrQ==
-X-ME-Sender: <xms:10enaAEHcqvNVe3HnPsYNFXCH37sK-hzrtEmzhXvBl4GUyQNOojNqw>
-    <xme:10enaAkvO4wp5t7ntThyfnQlt2ILeft-VQ3fbvaeDcBqIkBA1d_UNBWsoi29BNg9Y
-    iUgWDdAyETYD4wB6w>
-X-ME-Received: <xmr:10enaFBkQTzTXadOS6nei5AWE4pexfAYa1cEOK5PvQpMgCZkENE2jd93wiagz3teB3S26QFxQ4BM_At9eEbFAhcXaoYGNLusKPPAZFs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedujedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtph
-    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprh
-    gtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhho
-    nhgrthhhrghnthgrnhhmhiesghhoohhglhgvrdgtohhmpdhrtghpthhtohepkhgrrhhthh
-    hikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:10enaCAeImHJOF12aXNuQ-Axyg88aPtaisYIghGfk6M1FsIsBsoNQA>
-    <xmx:10enaMHSNSYf9r8Z9RxBIlOSIKf5VgdxLXzck7zvO6RTlL_iedAXRw>
-    <xmx:10enaJ61qyo2Fp0ClgYh0plGiJvX4hKUCCUaYDoGHa7xu1KF4mBeqQ>
-    <xmx:10enaDTI0CJxNcIbnCR3C1hYr6A172hOqNHUeMd_ghFbrbVQELSnzQ>
-    <xmx:10enaMrd1cxXooxR5Ja2xKZxEooyH6GrH2Vj8Ea-o5bQeCKt5cTf8O6k>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Aug 2025 12:22:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Derrick Stolee via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,
-  christian.couder@gmail.com,  johannes.schindelin@gmx.de,
-  johncai86@gmail.com,  jonathantanmy@google.com,  karthik.188@gmail.com,
-  kristofferhaugsbakk@fastmail.com,  me@ttaylorr.com,  newren@gmail.com,
-  peff@peff.net
-Subject: Re: [PATCH 1/3] t7700: add failing --path-walk test
-In-Reply-To: <d9f69281-6aa3-4ef7-b52f-9660bc60a46d@gmail.com> (Derrick
-	Stolee's message of "Thu, 21 Aug 2025 08:42:58 -0400")
-References: <pull.1956.git.1755715196.gitgitgadget@gmail.com>
-	<5b19173c03da676b3e1effda7ba6d2ef5666cad6.1755715196.git.gitgitgadget@gmail.com>
-	<aKbSObIzXwUtjAdE@pks.im>
-	<d9f69281-6aa3-4ef7-b52f-9660bc60a46d@gmail.com>
-Date: Thu, 21 Aug 2025 09:22:45 -0700
-Message-ID: <xmqqfrdk3aqy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eAD9pVdf"
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-333f901b2d2so9917711fa.2
+        for <git@vger.kernel.org>; Thu, 21 Aug 2025 09:27:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755793618; x=1756398418; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yXqkYOY+binxI/Ctcdd0HwqteQT88vQracm+/CFIXbg=;
+        b=eAD9pVdfVtUpEN+6Zvn4iP3bCLpyvE6eo4vzUztTYiqHjYaFXxp61Cdnvpjem4gAw7
+         yUDnpRzWV14GBSKeeYZIsYLQJA7FBMU1doT4Rd4+dGN26kHKwnXtG0inhlbV8+KXTt9k
+         axa1sonnDMQX/9WgXZC7ZVgD58IfygKF4G352bVlJuZO5lz5iTGXl56Y/es5sXE8nmAH
+         SCsY7SCtSGQp4R4lleaAk8pxzcUURaBpcu2c4mZXhtK/un5bblAu7oFD3hYzbT8lCGO4
+         k8eZeEZg59XGhLeLSDK8kxme5maPOlbwNOc7QjU+6CMG2FWI4ZOx6L4trljpzFAehD41
+         HEgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755793618; x=1756398418;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yXqkYOY+binxI/Ctcdd0HwqteQT88vQracm+/CFIXbg=;
+        b=wAFbOgbuIzqDvLAc+eb7dvmYQO8CnBNmY4F9aWszpMDx/gN0slD8k3EFQ1T6reABFl
+         TrBe8iJHgFIu9UGkENvsXSZnYeF/qHnlHhjhoYW0v0C7DvkkyLHrX/mtKuun+u5BzjQu
+         gnFi7jD4ogXAdGR5PLzljoT/MqWyOgl3zvl6dHy5l/LvPYB7CMWK5EqxoiP0mWyBIX3l
+         tlnUjt0Oxk0/2nIJysMaRBfgfjsNcUq+Uuo8ou+rqWaS6qU9uDQzLA4qNNl7GshuMVuT
+         sa9BFrl1DnNK2sxsTZ1yA5+1k6e+GG4mUn6Ttr28Pt/cc0WmZe9cLX5TXlMMbEN6fTOq
+         qQEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVm7U+oBFrCiHzSrX2HCVISPq0W6TSwUHWHyOIOLTqKQDQtMpCqJ7S0UIPHsh7DMYZG1Mo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxKVigITSmrXLBusMJ/8RhbkmhjlhK468+vlp80HtIx3LgVzxei
+	iXofJjQbFSE0o0zujGCPZxjWsic7AZ5N8hu7wbc/QuO+fQjj2M0VBvbTrWy2sw==
+X-Gm-Gg: ASbGncvmwbCniz1laB/tLePU0K19aFIGmXc3+bJZa08L4wgVoiX194J+FWYOztces+g
+	FVim8j93OyYoR0tPbZC9xEjNxoreLCAyCmiiJ3CAYY0Bpu3hBNbPlGrA2/aeV9KJS61tCw1hB1+
+	EDKjSIOD67ddGJXV0p5dI3A3OtATIDSoGqtKdSoncBUodWr70gSgW2N3AHYhu0LYjRJAngZwV1e
+	XNgb0W2lOA0nInsVmPKwsCRVS5Nz6gMHW6nceNUBfj1yvd7hp5fu5XzHtA2+JOYNa4QI1Lx2VSI
+	BTDfT3Bo05RPOa8RuWb+wQtKPC8a4BRiZoZF5HeIOCJkacdBALk0KzMMiYtPQE6vQ5Zv9K2JuAg
+	f1obPxBTpbJNybs3gFiMqoCovvA==
+X-Google-Smtp-Source: AGHT+IFS6uDDsZWR4VP/Fz5P01H7ZXQjWfhy+iHjJisGLsbu/IcZ2dzsPekDHMkyn1KsaGhzt0RRoQ==
+X-Received: by 2002:a2e:a282:0:b0:32f:1c10:fa with SMTP id 38308e7fff4ca-33549f798edmr9725641fa.28.1755793618118;
+        Thu, 21 Aug 2025 09:26:58 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3364e5bab44sm454531fa.46.2025.08.21.09.26.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Aug 2025 09:26:57 -0700 (PDT)
+From: Sergey Organov <sorganov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy
+ history editing
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+	<xmqqms7tao9o.fsf@gitster.g>
+Date: Thu, 21 Aug 2025 19:26:57 +0300
+In-Reply-To: <xmqqms7tao9o.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	20 Aug 2025 10:36:35 -0700")
+Message-ID: <87a53sr67i.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -98,41 +77,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Derrick Stolee <stolee@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 8/21/2025 4:00 AM, Patrick Steinhardt wrote:
->> On Wed, Aug 20, 2025 at 06:39:54PM +0000, Derrick Stolee via GitGitGadget wrote:
->>> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
->>> index 611755cc139b..1998d9bf291c 100755
->>> --- a/t/t7700-repack.sh
->>> +++ b/t/t7700-repack.sh
->>> @@ -838,4 +838,47 @@ test_expect_success '-n overrides repack.updateServerInfo=true' '
->> 
->> Tiny nit: I would've probably squashed this patch into the second patch,
->> as we usually don't use the add-failing-test-and-then-fix-it-later
->> dance. On the other hand though it gives some nice context, so I
->> ultimately don't mind it all that much. So please feel free to ignore
->> this nit.
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> I'm probably the person who is always asking folks to create a test
-> that either fails or demonstrates the "before" behavior before making
-> the actual change that updates the case. This allows the ability to
-> "test the test" by checking it in place to confirm that it is indeed
-> failing.
-> Using test_expect_failure allows us to avoid breaking bisect. 
+>> In the end, I'd like us to learn from what people like about Jujutsu and
+>> apply those learnings to Git. We won't be able to apply all learnings
+>> from Jujutsu, as the workflow is quite different there due to the lack
+>> of the index. But other things we certainly can apply to Git directly.
+>>
+>> Note: This patch series currently builds on the cherry-pick infra.
+>> As such, when one hits a merge conflict one needs to `git cherry-pick
+>> --continue`, which is quite suboptimal. I didn't want to overpolish this
+>> series before getting some feedback, but it is something I'll fix in
+>> subsequent versions. Furthermore, the command for now bails out in the
+>> case where there's any merge commits in the history that is being
+>> rewritten. This is another restriction that can be lifted in the future.
+>
+> Two comments.
+>
+>  - You would want to honor notes.rewriteref yourself, as cherry-pick
+>    does not and that is deliberate [*].
+>
+>  - It is a sensible design decision to limit it to linear single
+>    strand of pearls history.  "history reword <commit>" when
+>    <commit> can be reached from many branches along linear history
+>    that rewrites all these commits on these branches would be handy.
+>    There may need some way to say "these branches are protected, if
+>    'history reword <commit>' needs to touch commits on any of these,
+>    abort" and things like that.
+>
+>
+> [Footnote]
+>
+>  * "history edit" (aka "rebase") is an operation that "edits" the
+>    history, once the edit finishes, the result is *the* history you
+>    want, and the previous one is to be discarded (except for in
+>    reflog).  "cherry-pick" on the other hand is "I have this good
+>    thing on this development track, I want an equivalent _copy_ of
+>    it on _another_ track"---it merely is an easier and quicker way
+>    than typing the same thing yourself on top of the other track,
+>    and does not duplicate notes.
 
-Yes, you can develop that way, but on the reviewing and receiving
-end, the second patch that shows only the change from expect_failure
-to expect_success pushes the more important "what behaviour was this
-thing testing?" out of the hunk context, if you split them into two.
+Unless I'm ignorant, "git rebase" (aka "history edit") lacks essential
+feature though: in addition to saying: get "this" history and rebase it
+"there", one should be able to say: get "that" history, and rebase it
+"here" (aka cherry-pick on steroids), that also would eliminate the need
+for 'git cherry-pick <range>' that (poorly) duplicates rebase
+functionality.
 
-If we really wanted to verify the claim that without the fix this
-was broken and we have a test to demonstrate a failure on the
-receiving end, we can "checkout" paths touched by that commit
-outside t/ from HEAD^ to build to see how the system behaved without
-the code change just fine, so such a split does not buy us much.
+If not to implement this as, say, "git rebase --pick", I'd like to see
+this feature in the new "git history" command, but then it'd eventually
+become yet another "git rebase"? Or will Git then aim to eventually
+factor-out a lot of "git rebase" functionality into new "git history
+rebase <what> <where>", or something like this?
 
-Unless there is a strong reason not to, please always present such
-test in the same patch as the code change to fix that breakage.
-
-Thanks.
+Thanks,
+Sergey Organov
