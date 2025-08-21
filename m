@@ -1,299 +1,154 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E392EE610
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 08:52:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72CDF241136
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 10:09:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755766380; cv=none; b=J0yEDKJ2sVkYxkf+xeYlTmJ8pe8zzoXwJPcDaz9yMYceLc5ewl/y6ftczGmwuTcWewC2eF55iIW9cEBo5jtiz0mlZdmXsfw+nNkvBTyH+3xLN0g1oYHJSv3sdXTRHVbp5w/NcWY5gX3dexrF0BXj8I0PiVoZ1RIJcJ9UE5G/Jhw=
+	t=1755770994; cv=none; b=kAAJr7RIlwLAfk+cAbGdLZrF+BAgFibjsRu0BBHx24u7H5K3pVVk/V13KRnVR5r6x2UbyOm/NV0qUp7dRFtJ6HKaKTtOpBzGkqkz5xa8pn68nj15AaBziEDeJlHaQJ+Agig3Z+7pCCWgBLF5Pw6X/Xrqe0tt/DraQ1+Sofn0Mp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755766380; c=relaxed/simple;
-	bh=sy9p5K2F+64LJdJTFooSw3SIVZUvyv9y+Cq0GhgQxhY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=akjydPw7UHTdgHfag/IxRR7PCCOv4uU0vf221n0eGV+H6+NeY2XIFoDUw43B8bFpNrXV2WiEk2Y7H7IdXXO4sCQkPGRj0PZHktoThMIl42mNzssAu1Ecjba50g4xMIr6I3GcRuNhI/c0bp5q00owMPKUFuLxZ8MhyAmG00gWris=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QIz/Kgu+; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755770994; c=relaxed/simple;
+	bh=N63wfeMdJ3H/Eymhzwn/o7g7wkDNx9yjaLx2irYUJHU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E+6CfitvqsZ0LU+FR9iMOnDPFjPOuwt1odUpuf7LV9RBL7cP3WvOGhksiJydeKYVlnarOXT+BpqylVjsjKGT9GuIoLAcRHHMhAohSA1UtK21lMreqKx/LCkpV1+Cej1s7HG0+WLWmfi5qINsZv3oPndVR1ySHrfUxKSUQ0l3CMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YyW+Am5W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jKgXnOgT; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QIz/Kgu+"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-b4746fd4793so613758a12.1
-        for <git@vger.kernel.org>; Thu, 21 Aug 2025 01:52:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755766378; x=1756371178; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vO4lYYDyDYihGiwWPpdEPAyFxDEZQuaWfJuxpdUVhVQ=;
-        b=QIz/Kgu+gT2iLu3eZ0TwmSXYdWRTDOYWDpIaFwbvdlHsZp7nYWVciVRG0w+vQ3Uly5
-         RqCPvy/e5XQVasn9MDjKWhg4QMa4ph0CBgn09AxyCpWnAEUp3rrbsbiuBn67cPIg+uFF
-         frJ6h6gDqYVEsdk2UlUoSWeM+IR0fn009gdKTZS6O8RkxI8D9J7QjwUaEMrBvEibCP4G
-         E0OA4DaxCf3XWANef8R0DJdyxyLQzSDNJU8JYOXybOFOxs2zl3J30sTtmxLt2LM0VOVH
-         5+v8MI9i80XDkPoysAReW//Nz/TF881rn24Li1DVEBrcWY7wUKBAUiQUTm6Vb4op5chm
-         vnmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755766378; x=1756371178;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vO4lYYDyDYihGiwWPpdEPAyFxDEZQuaWfJuxpdUVhVQ=;
-        b=ky8C6TjYK2u8431duAXO7OvsHeincLezMXNhioMw/fXknqor+am4QaEa5+bnXUMzta
-         OtIPWH4NbR7Z3+WaiXfNpaAfLV2k5zK6uxQK7nrK/5mrmcuJ5k20aL71U5XVGfSkiJ4E
-         7eR+HVQBdbn4l6ucOIWcgWTTxItAgCKdSp4fCo9pUp32DSWvDXIYgQP4wCSqM9l2VdeX
-         qG+4NCoZ5uaCA1XmO3x5JWlCZtXWVoIfUfWTbG2etmBJMcGq2o7mn3pVbSwRw7PcwnND
-         STL6T7HLZCujn/7i58Y2W0Ata04fR4BEa6wgmtCNimgapfS7qLwT/XmUS6pyTVfQvvMB
-         Pj2w==
-X-Gm-Message-State: AOJu0YxTBwuRw03aKwrc6BjNgy6HQYhxM803e31lfOK+SYWhJqVQzkoV
-	98Vsn+D1oGecTeixYS5sL6RrLBFL9+tS2jw6WKOKJ604dEf7IpdoT2PQ7P5XSQ==
-X-Gm-Gg: ASbGncs+XwqL4cMhK8y9IyGYPSz+r3c71m8TMp4cKrNzIxVbcNywMxO7m0cuFakzv9G
-	u2aqFX4Nhmm85dn8BJbS8caEIm9URh7FFSeCASSqpK0jZTZiuKaC3vS5i7FXICpZELGgauhjc9H
-	mRnjB8+UTWQFQZe1VYC7QMqzQzQpLd6XFy8aLZ0Ns6dTyVSItyWWH42p0OUSHgRmrtzXsCqTGFh
-	t4J/6ZdQ1qq/vsnrmyphnQG0R4gJsD/rH9kvGNM+WlEUmEEcvGcGCeOfGrdBTqzLiMaFsUPK51G
-	UuqYPbuiTkhsKKJ29HgGAhhb/s6Io4KpuFt24nNMIY7jy5i4cFt6rf+GLUdi6Fi/GDSvbe2MGoQ
-	zJhRYezeHv6LX1pV7qgr6CpavyNl6oA==
-X-Google-Smtp-Source: AGHT+IFukN1tnAcHn9vVdh25TuijgVfn76iCuazPc57O8SLcAMbCKlRPaYcv/YFL7QQiI2KE36N5Tg==
-X-Received: by 2002:a17:903:246:b0:235:eefe:68f4 with SMTP id d9443c01a7336-245fedb418emr22547445ad.29.1755766377500;
-        Thu, 21 Aug 2025 01:52:57 -0700 (PDT)
-Received: from meet.. ([103.176.11.198])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed4c7d7fsm48949525ad.80.2025.08.21.01.52.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Aug 2025 01:52:57 -0700 (PDT)
-From: Meet Soni <meetsoni3017@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	shejialuo@gmail.com,
-	Meet Soni <meetsoni3017@gmail.com>
-Subject: [GSoC][PATCH 2/2] t: add test for git refs exists subcommand
-Date: Thu, 21 Aug 2025 14:22:46 +0530
-Message-Id: <20250821085246.929307-3-meetsoni3017@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250821085246.929307-1-meetsoni3017@gmail.com>
-References: <20250821085246.929307-1-meetsoni3017@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YyW+Am5W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jKgXnOgT"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8ECCE140008C;
+	Thu, 21 Aug 2025 06:09:51 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Thu, 21 Aug 2025 06:09:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1755770991; x=1755857391; bh=Ga0Pzosb97
+	429Czso/EULHfDpSfE2dc+z6AYfcCl2ck=; b=YyW+Am5WbvRI+VrH2l+TIWqVxX
+	CpEcjq8GNW9+MOB2WDl3Qc2jEWiSDxNIno9rWdoGWtyAfhLUuhqUTaSXmAwgL30F
+	W95d3bl0Vw7O8HBp4bHyxFPY7iHoSUYX20LT1NWiA8X6d9PM8DNQPhVkqzk8KNKl
+	ho1NvwNwwqj1sc2r6fNAOd1G2TqHRt/3VDQpDz89bCvg76jba84op5KtnfbINgOQ
+	H9o0fH04u07oG9XgL6a0urAY3XJwfqFk+HPXhlVY7PBSxBrKvyLagk3uCJCta2wK
+	hwAgYgLYalKlzBGWNwZ798MtfZiE9WLZ33bs8aGGjm5jVB86zF4MR4VT8LyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755770991; x=1755857391; bh=Ga0Pzosb97429Czso/EULHfDpSfE2dc+z6A
+	YfcCl2ck=; b=jKgXnOgTYLKZPoYQA5EfNnTYMJv98xQxWf97G9nUe6OxwNFa+Sh
+	3rggCFw/zaxEvXsDdTurPoypuriIv9D7ZnALXqi0piDyxQ+8R3EumbNUgwZ3lW5i
+	2zEaIKFS8SGcw6wcEcwRjeKyqjNZ07+LyZeIGZgOk4K8bLdVkQYAEf9dwUfa99HG
+	hFJzvVVxkXUzg7spW8mCHMzGUOJ9x9rRyEHJKwpeae9XcDRFLqKjGMVHdscE1dnC
+	bQKLLP0IMLBWLVbTff2tVhaZmdBJHm//jLWTqgr9SjeAYBGWzC/EAjzO1HFxlLbL
+	FSdjGuhr1JPNdbrdRjCVS1gAFwjBTJhQlbw==
+X-ME-Sender: <xms:b_CmaLkvN7M0MXGa8fpgRODAYlQM14ozJjYZ1L9SCP4xvs2297AcHA>
+    <xme:b_CmaJaV1b0PEQCsHKnP6rJ-sck3uENZqPdbOQbgibMoZ1QL2IEqWauAyMTe6ldad
+    Q1eGBrqBkYbRt9wDw>
+X-ME-Received: <xmr:b_CmaOOCvYszbYiqxcZYIXVbKmn_N4xlFdVXbK9FmZyDx-cN_rN33BmQ2vjrW4yY3fLQJLtIm_0OyUu50sv9vxbUEHVASCodOuVE3J3B9Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedtleeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhovgdrughrvgifsehinhguvgigvgigtghhrghnghgvrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhk
+    rddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:b_CmaGbizfOgPKVFrr7K0J2pcCF2LNBH07_bw5eU28DSlTlsNqQa8A>
+    <xmx:b_CmaE1Xr0CsGXC3Dip7W_DPgsJnITv_G0UESOytm0ydGTXQYYtPhw>
+    <xmx:b_CmaEdt_tup9gNQZ8ytg3auRW0fjdTbFPfjueI7h5wAmheX0XWTuw>
+    <xmx:b_CmaNE3I6zmVxX3waaa02D6b1viS38dPmgPN5_1_iag41GQTthp-g>
+    <xmx:b_CmaM1tHaugOzPXGT_HA9JgypVvVqFZ5c96GzXUgnX52aBrl6bImYO8>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 Aug 2025 06:09:50 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3865af22 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 21 Aug 2025 10:09:48 +0000 (UTC)
+Date: Thu, 21 Aug 2025 12:09:45 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Joe Drew <joe.drew@indexexchange.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: "lock file exists" when fetching in bare clone of repository
+Message-ID: <aKbwabLZiWasYoBC@pks.im>
+References: <YQXPR01MB3046197EF39296549EE6DD669A33A@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
+ <20250820213323.GA1667633@coredump.intra.peff.net>
+ <aKbHozlmDIqfgkg4@pks.im>
+ <20250821072706.GA2390046@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250821072706.GA2390046@coredump.intra.peff.net>
 
-The new `git refs exists` subcommand must have identical behavior to its
-predecessor, `git show-ref --exists`. To avoid duplicating the entire
-test suite, refactor the existing tests into a shareable helper script.
+On Thu, Aug 21, 2025 at 03:27:06AM -0400, Jeff King wrote:
+> On Thu, Aug 21, 2025 at 09:15:47AM +0200, Patrick Steinhardt wrote:
+> 
+> > > > This error _does not_ happen in the Apple-supplied version of git:
+> > > > `git version 2.39.5 (Apple Git-154)`, but does in 2.51.0, which I
+> > > > installed with homebrew. (If this is a packaging error, I'll happily
+> > > > report to homebrew.)
+> > > 
+> > > That is definitely weird, and not something I'd expect if it's just a
+> > > case collision. Is it possible for you to build Git from source? If so,
+> > > and the problem happens with your build of 2.51.0 but not v2.39.5, it
+> > > would be very enlightening to see the results of "git bisect". We can
+> > > provide more guidance if you need with that process.
+> > 
+> > Curious indeed. Another relevant part could be the new batched mode that
+> > we have recently introduced in git-fetch(1). Previously we would've
+> > updated refs one by one, and potentially that led to us writing the same
+> > ref multiple times due to case-insensitivity? The result would be quite
+> > broken in that case, but at least the fetch would've finished. Does make
+> > me wonder though what subsequent fetches did, and whether we always tend
+> > to flip-flop the value of such a ref.
+> 
+> Ah, good catch. That would explain the behavior change perfectly. My money is
+> on a case collision, then. :)
+> 
+> > But with batched transactions that's not possible anymore, as we would
+> > indeed try to lock the same ref twice. Assuming that this really is the
+> > case, I wonder whether we should detect this case, tell the user that
+> > it's impossible to store all refs on their system, and then continue
+> > regardless while ejecting that specific ref from the transaction.
+> 
+> Maybe it is too optimistic to think that they will just start using
+> reftable in Git 3.0, and we can avoid extra code to detect this?
 
-Extract the tests for the `--exists` flag from `t1403-show-ref.sh` into
-a new `show-ref-exists-tests.sh` helper. The command under test is
-parameterized using the `$git_show_ref_exists` variable.
+Probably, yeah. I also think it shouldn't be too involved to have the
+logic in Git. We can mark transactions as allowing for failures now, so
+in the best case we'd just do that and then check whether we have any
+errors.
 
-Source new helper to both `t1403-show-ref.sh` and the new test file,
-`t1462-refs-exists.sh`, ensuring both commands are verified against the
-same comprehensive test suite.
+We could also think about generating a hint that tells the user exactly
+what's going on. E.g. something like this:
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: shejialuo <shejialuo@gmail.com>
-Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
----
- t/meson.build              |  3 +-
- t/show-ref-exists-tests.sh | 66 ++++++++++++++++++++++++++++++++++++++
- t/t1403-show-ref.sh        | 66 +-------------------------------------
- t/t1462-refs-exists.sh     | 22 +++++++++++++
- 4 files changed, 91 insertions(+), 66 deletions(-)
- create mode 100644 t/show-ref-exists-tests.sh
- create mode 100755 t/t1462-refs-exists.sh
+    You're on a case-insensitive filesystem, and the remote you are
+    trying to fetch from has references that only differ in casing. It
+    is impossible to store such references with the "files" backend. You
+    can either accept this as-is, in which case you won't be able to
+    store all remote references on disk. Or you can alternatively
+    migrate your repository to use the "reftable" backend with the
+    following command:
 
-diff --git a/t/meson.build b/t/meson.build
-index baeeba2ce6..eed812a9b9 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -211,6 +211,7 @@ integration_tests = [
-   't1451-fsck-buffer.sh',
-   't1460-refs-migrate.sh',
-   't1461-refs-list.sh',
-+  't1462-refs-exists.sh',
-   't1500-rev-parse.sh',
-   't1501-work-tree.sh',
-   't1502-rev-parse-parseopt.sh',
-@@ -1219,4 +1220,4 @@ if perl.found() and time.found()
-       timeout: 0,
-     )
-   endforeach
--endif
-\ No newline at end of file
-+endif
-diff --git a/t/show-ref-exists-tests.sh b/t/show-ref-exists-tests.sh
-new file mode 100644
-index 0000000000..23b941d386
---- /dev/null
-+++ b/t/show-ref-exists-tests.sh
-@@ -0,0 +1,66 @@
-+git_show_ref_exists=${git_show_ref_exists:-git show-ref --exists}
-+
-+test_expect_success '--exists with existing reference' '
-+	${git_show_ref_exists} refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+'
-+
-+test_expect_success '--exists with missing reference' '
-+	test_expect_code 2 ${git_show_ref_exists} refs/heads/does-not-exist
-+'
-+
-+test_expect_success '--exists does not use DWIM' '
-+	test_expect_code 2 ${git_show_ref_exists} $GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME 2>err &&
-+	grep "reference does not exist" err
-+'
-+
-+test_expect_success '--exists with HEAD' '
-+	${git_show_ref_exists} HEAD
-+'
-+
-+test_expect_success '--exists with bad reference name' '
-+	test_when_finished "git update-ref -d refs/heads/bad...name" &&
-+	new_oid=$(git rev-parse HEAD) &&
-+	test-tool ref-store main update-ref msg refs/heads/bad...name $new_oid $ZERO_OID REF_SKIP_REFNAME_VERIFICATION &&
-+	${git_show_ref_exists} refs/heads/bad...name
-+'
-+
-+test_expect_success '--exists with arbitrary symref' '
-+	test_when_finished "git symbolic-ref -d refs/symref" &&
-+	git symbolic-ref refs/symref refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME &&
-+	${git_show_ref_exists} refs/symref
-+'
-+
-+test_expect_success '--exists with dangling symref' '
-+	test_when_finished "git symbolic-ref -d refs/heads/dangling" &&
-+	git symbolic-ref refs/heads/dangling refs/heads/does-not-exist &&
-+	${git_show_ref_exists} refs/heads/dangling
-+'
-+
-+test_expect_success '--exists with nonexistent object ID' '
-+	test-tool ref-store main update-ref msg refs/heads/missing-oid $(test_oid 001) $ZERO_OID REF_SKIP_OID_VERIFICATION &&
-+	${git_show_ref_exists} refs/heads/missing-oid
-+'
-+
-+test_expect_success '--exists with non-commit object' '
-+	tree_oid=$(git rev-parse HEAD^{tree}) &&
-+	test-tool ref-store main update-ref msg refs/heads/tree ${tree_oid} $ZERO_OID REF_SKIP_OID_VERIFICATION &&
-+	${git_show_ref_exists} refs/heads/tree
-+'
-+
-+test_expect_success '--exists with directory fails with generic error' '
-+	cat >expect <<-EOF &&
-+	error: reference does not exist
-+	EOF
-+	test_expect_code 2 ${git_show_ref_exists} refs/heads 2>err &&
-+	test_cmp expect err
-+'
-+
-+test_expect_success '--exists with non-existent special ref' '
-+	test_expect_code 2 ${git_show_ref_exists} FETCH_HEAD
-+'
-+
-+test_expect_success '--exists with existing special ref' '
-+	test_when_finished "rm .git/FETCH_HEAD" &&
-+	git rev-parse HEAD >.git/FETCH_HEAD &&
-+	${git_show_ref_exists} FETCH_HEAD
-+'
-diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-index 9da3650e91..dbae82384b 100755
---- a/t/t1403-show-ref.sh
-+++ b/t/t1403-show-ref.sh
-@@ -228,69 +228,5 @@ test_expect_success 'show-ref sub-modes are mutually exclusive' '
- 	grep "cannot be used together" err
- '
- 
--test_expect_success '--exists with existing reference' '
--	git show-ref --exists refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
--'
--
--test_expect_success '--exists with missing reference' '
--	test_expect_code 2 git show-ref --exists refs/heads/does-not-exist
--'
--
--test_expect_success '--exists does not use DWIM' '
--	test_expect_code 2 git show-ref --exists $GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME 2>err &&
--	grep "reference does not exist" err
--'
--
--test_expect_success '--exists with HEAD' '
--	git show-ref --exists HEAD
--'
--
--test_expect_success '--exists with bad reference name' '
--	test_when_finished "git update-ref -d refs/heads/bad...name" &&
--	new_oid=$(git rev-parse HEAD) &&
--	test-tool ref-store main update-ref msg refs/heads/bad...name $new_oid $ZERO_OID REF_SKIP_REFNAME_VERIFICATION &&
--	git show-ref --exists refs/heads/bad...name
--'
--
--test_expect_success '--exists with arbitrary symref' '
--	test_when_finished "git symbolic-ref -d refs/symref" &&
--	git symbolic-ref refs/symref refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME &&
--	git show-ref --exists refs/symref
--'
--
--test_expect_success '--exists with dangling symref' '
--	test_when_finished "git symbolic-ref -d refs/heads/dangling" &&
--	git symbolic-ref refs/heads/dangling refs/heads/does-not-exist &&
--	git show-ref --exists refs/heads/dangling
--'
--
--test_expect_success '--exists with nonexistent object ID' '
--	test-tool ref-store main update-ref msg refs/heads/missing-oid $(test_oid 001) $ZERO_OID REF_SKIP_OID_VERIFICATION &&
--	git show-ref --exists refs/heads/missing-oid
--'
--
--test_expect_success '--exists with non-commit object' '
--	tree_oid=$(git rev-parse HEAD^{tree}) &&
--	test-tool ref-store main update-ref msg refs/heads/tree ${tree_oid} $ZERO_OID REF_SKIP_OID_VERIFICATION &&
--	git show-ref --exists refs/heads/tree
--'
--
--test_expect_success '--exists with directory fails with generic error' '
--	cat >expect <<-EOF &&
--	error: reference does not exist
--	EOF
--	test_expect_code 2 git show-ref --exists refs/heads 2>err &&
--	test_cmp expect err
--'
--
--test_expect_success '--exists with non-existent special ref' '
--	test_expect_code 2 git show-ref --exists FETCH_HEAD
--'
--
--test_expect_success '--exists with existing special ref' '
--	test_when_finished "rm .git/FETCH_HEAD" &&
--	git rev-parse HEAD >.git/FETCH_HEAD &&
--	git show-ref --exists FETCH_HEAD
--'
--
-+. "$TEST_DIRECTORY"/show-ref-exists-tests.sh
- test_done
-diff --git a/t/t1462-refs-exists.sh b/t/t1462-refs-exists.sh
-new file mode 100755
-index 0000000000..c00d76cc9e
---- /dev/null
-+++ b/t/t1462-refs-exists.sh
-@@ -0,0 +1,22 @@
-+#!/bin/sh
-+
-+test_description='refs exists'
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+git_show_ref_exists='git refs exists'
-+
-+test_expect_success setup '
-+	test_commit --annotate A &&
-+	git checkout -b side &&
-+	test_commit --annotate B &&
-+	git checkout main &&
-+	test_commit C &&
-+	git branch B A^0
-+'
-+
-+. "$TEST_DIRECTORY"/show-ref-exists-tests.sh
-+
-+test_done
--- 
-2.34.1
+        git refs migrate --ref-format=reftable
 
+    Please keep in mind that not all implementations of Git support this
+    new format yet. So if you use tools other than Git to access this
+    repository it may not be an option to migrate to reftables.
+
+The last part is what I'm working on right now. libgit2 is fully
+functional now, but what is still lacking is reviews.
+
+Patrick
