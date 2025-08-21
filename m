@@ -1,60 +1,134 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19291347D0
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 07:00:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F15627E1DC
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 07:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755759657; cv=none; b=FHKtEuZipYFr1cGrRjOQPx16vmHboc0aLJGy6Kuyccq1OP+0j/WFDoDhkK/ffhJ5CIR/vbevLFNKUwzQ9VMQHaa7EwYX3hTXdIq0dflHzTf2s5wlxcVvZbRk/w+x9IQoPlBPUVpSo5xdNgqi2/bvFEIDk7Tmg1+Trzb6m15EjMg=
+	t=1755759935; cv=none; b=fBFFwDM8p+89NyffCIxQxwaU25xyJsTOTSEwnjwbeKk6x8bDpD5WTME29DbVABW7T8juQ9P0AN+pu6pm2OGWeknojbu2q8MAwtdiPniDbm1zNU6r2kinlUrSgYOW3yZUqLJyVFPV1KnK33ZKrSfkAx2fcys+j2tMesys0EZXPD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755759657; c=relaxed/simple;
-	bh=kr+xRDU91sb8L2T4v2fm5uiMQkJMIgpvadDIiyZax20=;
+	s=arc-20240116; t=1755759935; c=relaxed/simple;
+	bh=Swh+mzyf5Fxc4m6SiKmOWHR63vh4XIo7Z0YLdS/3qno=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UKZQwUEvaoizmtAXaNMszc1Y7WAfGyUNeZGs7f3DpgueNsjhjq99zNfSgqZGEPCd8enQt5tnu49UeidN9AwPfmVWSUyBeSFgIpJVdm6yiuxLFnwesUVXj81UNA6X4NXx+YO8JLmq+ft2sYy/zq3GJ5IOdQ8QxNl0nCTvdDRHHc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Woa321xJ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=pqU1SN2KPFTYckNaymey7gypIDmjJL5FhzdarSerub1RF+/dkkrGWnccQp4XF4/RzLlEuS/HRGpaJ+og6hvB1loSaDus54nA0t5kq1AvRVTHrx/ACknQr+To2tmvDycd+6DU7B2beYVQUSUG/o9G9y0oYMZf4Y/kXBrKNBs+lSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=laVwS7gD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZqRtwLoZ; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Woa321xJ"
-Received: (qmail 42063 invoked by uid 109); 21 Aug 2025 07:00:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=kr+xRDU91sb8L2T4v2fm5uiMQkJMIgpvadDIiyZax20=; b=Woa321xJK9VEOvjfDzKXhdh7SL2htDScsis3vJ+PvDhF+Mwg/pfWJb6fAXi8/QTD2cl2arK7ocYBUaNyhlWczk6p9Frw3+185otDamuGGOvGKgK8R096nYq4yYxFTGUkqZfMZ0NFi+SbvjMaMv+57n6fpqYVh+EVSM9SSY0/3cz4qbS80cAkukvvftnK3pH0xpd3dcVeBSCk/sUBEdh7JBoqM2+muNlNqisUwX3u6kD2xJ3py8tw8W/vN2xcrt8qpfJ/lXSCst8O3JODpQOpCRAHngJn1zCN1rHi0lxs9za4kMrd2sPUWFnp6WY0V0cEtPdt/6+SCrgSSyhSIryWkw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Aug 2025 07:00:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 71944 invoked by uid 111); 21 Aug 2025 07:00:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Aug 2025 03:00:50 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 21 Aug 2025 03:00:50 -0400
-From: Jeff King <peff@peff.net>
-To: Isaac Oscar Gariano <IsaacOscar@live.com.au>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [BUG] Some subcommands ignore color.diff and color.ui in --patch
- mode
-Message-ID: <20250821070050.GA3905042@coredump.intra.peff.net>
-References: <SYBP282MB296329544B33E3C16DD99FD28C33A@SYBP282MB2963.AUSP282.PROD.OUTLOOK.COM>
- <20250820220439.GA1668511@coredump.intra.peff.net>
- <SY4P282MB2965003F2D5DF18C6252978A8C33A@SY4P282MB2965.AUSP282.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="laVwS7gD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZqRtwLoZ"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3C40814000A2;
+	Thu, 21 Aug 2025 03:05:33 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Thu, 21 Aug 2025 03:05:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1755759933; x=1755846333; bh=x0EpIRcUoc
+	LyywZh2ZRBJqIwdHTC6TIWGJm7mhjWW94=; b=laVwS7gDiKPYEItiV+DEMaCVBb
+	lSIc57bHFHh7h6sTf8Gq5my0oZlCXLEGjB5v9zDU6cBnS0eE6gx00iMgHO6/Re3E
+	o1QLjyaXHhkEnyUslVN8e0OpxRW6ke5YvimShu6gvThDEjJA26EcNUXi+shtT6S6
+	w35N9JVpemWXv8PtbXgfArRE9IbN9qy4GlZv1OV9Ib+vrLNqcY4GdnOBffb8SPaF
+	JnllnxjyAq1w34hnOJjlww5ADtw5337BE1Sh66lQOnVQg2EcTlV1h1pOFkj1gQK+
+	EslfJ6nD98DSJ9nod9W0reudLQQyDkD8EZ/WD7ALuZdwVoDoIeFGEeVQYsUQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755759933; x=1755846333; bh=x0EpIRcUocLyywZh2ZRBJqIwdHTC6TIWGJm
+	7mhjWW94=; b=ZqRtwLoZKU/9+IQEk+L4+52jYUX03N8kqiOCY2a7bEhZdJKX5yE
+	FocRm08I9i5zzVVvY2qR4O4Z9ZENn1dcRE+o7HPDCnF2PnliE8XQCty+bR3HM9/S
+	ESHH+phS+9Uk7yHF+sOZB4xNwL5NladOA1rRYNqEJLPGjVP3jWki0P++bvA24uGJ
+	q2ga3BqNzYfFDVvTrta028TfVkmbSFqDyTRHSXefwzACwMo2EeO1SbiUrdSAdPXA
+	rgR2zdWw23ZGXUgFWvAxjvwVsWhDFb/t5HXwjzuUhS/ffFx56JjOmt1k95vjDOg4
+	+MSfFfmpY8MHzuN3YTLVZ1rgyOaCEVk13cA==
+X-ME-Sender: <xms:PcWmaG7ZMoP5fWzgHBhRwE1kSkteOxOr1pHnmRUZTgvnhgw22XxY-w>
+    <xme:PcWmaDJw5ZXCseiWCB1Bu9pK2hN7l__ztKPYdaWXpxlsBgE79E3xyzV4HEEaBPJtT
+    emnTzfaYL9OVFqovg>
+X-ME-Received: <xmr:PcWmaO40YKhkZF1DoFtETphUcyh46XjPCOlhdlvW8exrZYqjQdzRKWC4lXzoOXypn9VZLCadcpsPA0FOVTqQ4ubTFIh4_nTInHXNkrJB0Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedtheelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epheegvdduvdettedvhffgudekleelieetfedvjeeitdekieeigfdtvdffleefvdegnecu
+    ffhomhgrihhnpehjuhhsthhinhdrphhsnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:PcWmaOzYTbrhBC_g4R1F23esm3LVOUkPp1UhymcYsXIedqUHLFJBwQ>
+    <xmx:PcWmaKblKvCU_7VXypyK1s-J-CJ2UJKinBTATLfNEbghzqVYvhnu0A>
+    <xmx:PcWmaIT1ceN_GMOJO1DI1oPBNlU_3d9_3bZUoo1kHdzGZn2ym42TyQ>
+    <xmx:PcWmaMzh-GoRgMF-L65H0tsEr_9zALo2raJ7rerTuIrg-xlLcDU26Q>
+    <xmx:PcWmaDxXQz4LMGx8zzhcf9YQpRHPQMoISr_nAaCiiI4pjaoTRNX1Yt8d>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 Aug 2025 03:05:32 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f057c4ab (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 21 Aug 2025 07:05:30 +0000 (UTC)
+Date: Thu, 21 Aug 2025 09:05:26 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2025, #09; Wed, 20)
+Message-ID: <aKbFNq_pLasQGjbc@pks.im>
+References: <xmqqo6s97e3t.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <SY4P282MB2965003F2D5DF18C6252978A8C33A@SY4P282MB2965.AUSP282.PROD.OUTLOOK.COM>
+In-Reply-To: <xmqqo6s97e3t.fsf@gitster.g>
 
-On Wed, Aug 20, 2025 at 11:48:36PM +0000, Isaac Oscar Gariano wrote:
+On Wed, Aug 20, 2025 at 04:44:22PM -0700, Junio C Hamano wrote:
+> * ps/reftable-libgit2-cleanup (2025-08-12) 8 commits
+>  - refs/reftable: always reload stacks when creating lock
+>  - reftable: don't second-guess errors from flock interface
+>  - reftable/stack: handle outdated stacks when compacting
+>  - reftable/stack: allow passing flags to `reftable_stack_add()`
+>  - reftable/stack: fix compiler warning due to missing braces
+>  - reftable/stack: reorder code to avoid forward declarations
+>  - reftable/writer: drop Git-specific `QSORT()` macro
+>  - reftable/writer: fix type used for number of records
+> 
+>  Code clean-ups.
+> 
+>  Will merge to 'next'?
+>  source: <20250812-pks-reftable-fixes-for-libgit2-v3-0-cf3b2267867e@pks.im>
 
-> > Have you tried setting interactive.diffFilter to "diff-highlight"?
-> > That's what it was designed for.
-> Wow thanks! that worked perfectly. You really should put that in the
-> Readme (it only tells you to set pager.<cmd>).
+Yeah, let's merge it down. There's been a couple of reviews for previous
+versions, all of which only required minor changes, and the current
+version was ACK'd by Justin.
 
-Yes, I suspect that README hasn't been touched since well before the
-config option was introduced. ;)
+> * ps/object-store-midx-dedup-info (2025-08-11) 11 commits
+>  - midx: compute paths via their source
+>  - midx: stop duplicating info redundant with its owning source
+>  - midx: write multi-pack indices via their source
+>  - midx: load multi-pack indices via their source
+>  - midx: drop redundant `struct repository` parameter
+>  - odb: simplify calling `link_alt_odb_entry()`
+>  - odb: return newly created in-memory sources
+>  - odb: consistently use "dir" to refer to alternate's directory
+>  - odb: allow `odb_find_source()` to fail
+>  - odb: store locality in object database sources
+>  - Merge branch 'ps/object-store-midx' into ps/object-store-midx-dedup-info
+> 
+>  Further code clean-up for multi-pack-index code paths.
+> 
+>  Will merge to 'next'?
+>  source: <20250811-b4-pks-midx-deduplicate-source-info-v3-0-e442bdf2b4ad@pks.im>
 
-I'm preparing a few patches and will include that.
+There's still an outstanding question for Stolee [1] regarding the
+`--object-dir` option of git-multi-pack-index(1). It would be nice to
+give him a copule of days more to chime in. I've Cc'd him now.
 
--Peff
+[1]: <aJUn0qeliNQ/nnWr@nand.local>
+
+Patrick
