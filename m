@@ -1,185 +1,95 @@
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EF8341AA5
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 20:36:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8102FC006
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 20:57:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755808603; cv=none; b=msEigRgTaIrC+3S7LFps+hNW1HUBt9x5ruPnLbcSe6YW3cFkISv1+VDfxAVaEtYVW7O6OWle8piDddfD+UGnjYb539Af4/88nCB5lrnT0sKrglAVcnyiZmg5X0lsGlaNp6bXUi9oz5mZE6/k7UqRmmPjYL5BhObtmwmSgN/a7GM=
+	t=1755809841; cv=none; b=W0CNPOiK+7m4VN6vkUeyYewQisqk6Xd97l9qMBQ6QN27PxlTB1G5bc/1/z3X9fVKCRPUwhwwmGrs4qpwNXPmziU6ZUsoLVhqxWVXSDotDIvj9wlo0BrXPwozdBEgc1iTnGdFn74KMD4WBy321KZ4k3NK6P6OOWGAtEk07e9LyEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755808603; c=relaxed/simple;
-	bh=rbf/i90KMKyuLx8TSMvA2r/8Zm5dwcKL06Mx8TqXFHI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kZJ+NLc3tnnGmXlgE+ZxxZw1bDrL4IsF6JY7kMdmiEG6J4iDlZu/WbVCNnnOpoRGtKzS4njPTlcO8sAgKNlwsZnmsdvi+GPWJ8F6+9bhLY15RboA5+2fHZ5v8SdT8qoXeDxcQ6cMHPMI6q3S8QzduMSrtKGP2Bw4USlkmSgWQIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=XGvaIH7u; arc=none smtp.client-ip=212.27.42.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1755809841; c=relaxed/simple;
+	bh=zieCYKD33rOUkabCAS9BAKHYZWxxeLMfOL8Vw7R1lTQ=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=I4QhFq2K/IJIOMQYTcZeLm10xvSzcF+jzOQ0TfRhCl6/2fzCbwfG8/cXjbrhIkBBNZn6RAlT781wajy6sMUmUkCZkPk0GwKPcVWJbdwQA7m5rc8mcbH20mzU1eU5xGga9BZ+wqmD/r1fnfF1JLRlE6e6acjRZPZP+KvIJlFIC8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DtiJ81RN; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="XGvaIH7u"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:a2fe:cac3:5774:9094])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 9855460128;
-	Thu, 21 Aug 2025 22:36:30 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1755808595;
-	bh=rbf/i90KMKyuLx8TSMvA2r/8Zm5dwcKL06Mx8TqXFHI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XGvaIH7uhlk3NBvYwTIcaTRJUeSve7JGYGZNE4FUCvFMoEjhPFcRQyh2vcIXHPbB1
-	 9r9tEzPyi1zzPC8FbzGa+KLJwJjKRDKZomshOQ74g9hDOkbMsbnvU3WbaETI/+6UAe
-	 6ACY9080SrBE13dZ43cmZnfamt2718qUSAvTSWjI3GXaHoywLZXdK9HWyFB4CeiBAj
-	 uf8ZjLX7xqSihv0snNwZCOIVYoiI2IJs6aYrVW2Sj/o8gJZVwQiMn6h8iWHGysyRMY
-	 RzDWimmkbmF+WZwF8ZKUI4QB9k9z0BBmBzioSXr/2r6QqTZFa+HrylT7V1fMx1Hln5
-	 StPilFi1jrk7Q==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: Junio C Hamano <gitster@pobox.com>, Julia Evans <julia@jvns.ca>
-Cc: Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Chris Torek <chris.torek@gmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2 3/4] doc: git-add: make explanation less dry
-Date: Thu, 21 Aug 2025 22:36:30 +0200
-Message-ID: <2320029.iZASKD2KPV@cayenne>
-In-Reply-To: <007dd7bb-352e-4682-8ca2-8256d9a47e07@app.fastmail.com>
-References:
- <pull.1952.git.1755029249.gitgitgadget@gmail.com>
- <xmqqsehspdtr.fsf@gitster.g>
- <007dd7bb-352e-4682-8ca2-8256d9a47e07@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DtiJ81RN"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2445811e19dso12341705ad.1
+        for <git@vger.kernel.org>; Thu, 21 Aug 2025 13:57:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755809838; x=1756414638; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BsYbre3c+DFRANcbQFGZxqjhOXI8rAmBgdVEaMOb3F0=;
+        b=DtiJ81RNN3VyZ5/JEZRo7Ydutg9oYYggEGUzgH4BCH2f7eXvtBBMnQliqxjwmFiout
+         cJCkqMmgW5GSe76PHfje9TUuzjgGtY8maH33q/x/EyCNEQwlp6UDXf1j23Pg1vhMiP4o
+         NlORwlMqiiy16UQ+3xZMY9+/hZ9aJ/bXxcPAo8iH6mmRkk6JIqIFX9KFT8MpNTWse4j2
+         mYVFsXRxZ6fUvQV29mXJZTBPyQ5XUED7oZHnjVcqwI2aBnahSX/lKGaNCaXMDPl6BXZ6
+         Sv1GbGKfSo4lGI1xCcCX/BdlmNmDMsX1qGYX4OcTz97VChsk3JydexeyGWR5pW8RDMqR
+         MSpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755809838; x=1756414638;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BsYbre3c+DFRANcbQFGZxqjhOXI8rAmBgdVEaMOb3F0=;
+        b=goH9n7kPOfYKRfl8PF7zZleBx7yS+hYaAj66TDG5UIWLcI/n0z1+X7oQJ8o6+Z3QLT
+         zHh+yyNbCLMYgizm0ar7c8AkEsYk3NoGkSQNa0PInhQMhnW+Aw81P5C6viEx8MSRBOIx
+         QXxCoUlKWVR0kD8YGUzIxVBeWAA2jUMEMr8vTn9Xzv+XVsKY04kej22XlDqHwfjsD+OO
+         fPF7FXxUCG44A/eLdjsK/30Bgngork3Iln7w4IAB47CDa/r+jFA3G+eoMGD1kD5g38pI
+         xQEu/4QGGYYWW81I/Cg9+IO32WaJuzBmja+MaAl2pZ2wv7Z27Ho4WkqZ/yy5BKdzMnni
+         kFEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVweTpYq2nuIFHxsZ2pT7LwVkWXIhTJrAuTuy64SxeIgfLoV3rwSPqAfmHVtMA9P/TYwuE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzwmYdeW424lbfIEfcu6LXNOnfj1KR6a795SE02u11wewYJLPD0
+	4KwNBYUSDOo90hpX3yM5r5jghVMGY/H48QpSLhnbg90wL58hAYcu3Naw
+X-Gm-Gg: ASbGncvIfIDx/6S5XuxGryQfdPc7YyvxunzByZd/8lLKfJEcTHOuTailvA6hwjAi2uo
+	YStKRaPR0+RomloLuDM7D8TUDcT3SH2AADDluL9tWKA5jpwWt2Ha9PF1C7eD7HunRBOiKbx1Aie
+	UvgRqUFqx4AZ5nw7ZTaaehqZZEkQfQIkB5xncNA4BpXPfAhRcmq6VsfywehaAZKufCtqdzxRbC5
+	P33E01J4xiTRvHXEHGiqoQ5hWAn1iaPgA7FLD+MJrUo7Ja0UtSRwh+8gTg2bOOSyNgVfb1v5Xsu
+	H3PJhyAqvSVFPS70dcj5RA9tOtxRu8U1zqQcXAAG77dxg+rBxra+/RAuIm2+bu2YNdsOCygdfje
+	cHA8mXD0bS07ODykLcsedcK9+VOigeXAKoCaXhPXQSdhybrqqAL9fFcB8
+X-Google-Smtp-Source: AGHT+IG6Um2OuMKEVj443L5KSf3UvW8MYPtshg+xj11nYpxUrE/EYHoyxofQTlnK//94ZScW4TtXVQ==
+X-Received: by 2002:a17:902:d4d0:b0:246:3267:70da with SMTP id d9443c01a7336-2463267750dmr6709735ad.52.1755809837559;
+        Thu, 21 Aug 2025 13:57:17 -0700 (PDT)
+Received: from smtpclient.apple (nat.ime.usp.br. [143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed33a7fesm64076785ad.7.2025.08.21.13.57.15
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Aug 2025 13:57:17 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-
-On Tuesday, 19 August 2025 14:57:07 CEST Julia Evans wrote:
-> > Yes, you can lose your novice status and it is hard to take it back
-> > ;-)  I agree with you that the next best thing you can do is to see
-> > how well folks who still have that status do.
->=20
-> I've returned with some data! I got feedback on the `git-add` man page fr=
-om
-> 13 Git users. It's a group of pretty experienced users: half of them have=
-=20
-been
-> using Git for 5-10 years, and about half for 10+ years. Even though there=
-=20
-are
-> no "novices" here, they still provided useful feedback about what's=20
-confusing.
->=20
-> Here's what I took away from the feedback and a summary of the comments.
-> First, what I took away:
->=20
-> * The term "index" is hard to understand even for very experienced Git=20
-users,
->   and even for some users who say that they are extremely comfortable wit=
-h=20
-Git.
-> * The second sentence in the man page is too long and hard to parse.
-> * The "(quote your globs before the shell)" phrasing is confusing.
-> * I thought mentioning that you can use `git reset` to undo a `git add` w=
-as=20
-a
->   good idea.
-> * Leaving something similar to the existing phrasing around "snapshot" se=
-ems
->   fine, nobody in this group was confused, though of course this is a gro=
-up
->   of people who already understand how `git add` works.
->=20
-> Here's my summary of the comments on the existing man page. I collected t=
-hem
-> using this little tool I built: https://text-feedback.wizardzines.com/git=
-=2Dadd/.
-> I'm happy to also figure out how to best share the "raw" comments if folk=
-s=20
-would
-> find that helpful. I've quoted the current man page text for context.
->=20
-> > This command updates the index using the current content found in the=20
-working
-> > tree, to prepare the content staged for the next commit. It typically a=
-dds=20
-the
-> > current content of existing paths as a whole, but with some options it =
-can=20
-also
-> > be used to add content with only part of the changes made to the workin=
-g=20
-tree
-> > files applied, or remove paths that do not exist in the working tree=20
-anymore.
->=20
-> This was the paragraph with the most "this is confusing" comments. Here a=
-re=20
-the
-> main themes:
->=20
-> 1. 7 people (more than half) said that they find the term "index" confusi=
-ng.=20
-A
->    few example quotes:
->    * "updates the index" sounds like it increments something"
->    * "Is the index not just the content that is staged for commit? Do I a=
-s=20
-an
-> 	 end user need to care about the difference? I've not heard the=20
-staged
-> 	 content referred to as the index before, even in git command=20
-outputs."
-> 2. 3 people said the second sentence is too long and hard to parse
-> 3. 2 people said that "It *typically* adds the current content of existing
->    paths" is confusing (What's meant by "typically"? When does it not do=
-=20
-that?
->    is this referring to git add -A?)
->=20
-> > The "index" holds a snapshot of the content of the working tree, and it=
- is
-> > this snapshot that is taken as the contents of the next commit. Thus af=
-ter
-> > making any changes to the working tree, and before running the commit
-> > command, you must use the add command to add any new or modified
-> > files to the index.
->=20
-> Nobody said they were confused by this, other than continued confusion=20
-around
-> the term "index", like:
->=20
-> * "Why quotes around "index" here but not when I first encounter the word
->   index?"
-> * "I'm guessing index is used through git man pages and staging area is a=
-=20
-newer
->   way of saying this =F0=9F=A4=94"
-> * "Can we just say staging area? I don't think of adding changes to the=20
-"index""
->=20
-
-=46or the term index, the glossary-contents.adoc file says:
-[[def_index]]index::
-	A collection of files with stat information, whose contents are=20
-stored
-	as objects. The index is a stored version of your
-	<<def_working_tree,working tree>>. Truth be told, it can also=20
-contain a second, and even
-	a third version of a working tree, which are used
-	when <<def_merge,merging>>.
-
-"Truth to be told", this definition of the index makes things even muddier =
-to=20
-me.=20
-
-If I understand correctly the first ages of git, it seems that the index wa=
-s a=20
-file containing the list of the staged files (deletion included) with their=
-=20
-stat information and hash, the actual file contents being stored in the cac=
-he.=20
-So it was like an index for a book, keeping track of the name of changed fi=
-les=20
-with pointers to the contents of modified ones.
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [GSoC PATCH 1/2] repo: add the flag -z as an alias for
+ --format=nul
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <xmqq4iu037p1.fsf@gitster.g>
+Date: Thu, 21 Aug 2025 17:57:04 -0300
+Cc: Patrick Steinhardt <ps@pks.im>,
+ git@vger.kernel.org,
+ karthik.188@gmail.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <7E449BB1-224F-4B15-BB0B-357E4FB79429@gmail.com>
+References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
+ <20250820144247.79197-2-lucasseikioshiro@gmail.com> <aKb1BjPfmjBvHrm0@pks.im>
+ <65E661E9-B926-4EC1-B0EC-CDE2CD1557E5@gmail.com> <xmqq4iu037p1.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.700.81)
 
 
+>> But I don't have any strong opinion about that. I'm open to suggestions.
+> 
+> Don't ask for suggestions before consulting CodingGuidelines,
+> perhaps?
 
-
+I think that Patrick was unsure about adding the external parentheses
+to make it look like [(--format=(keyvalue|nul) | -z)]. CodingGuideLines
+is not explicit about that specific case of having alternate flags
+with nested alternate arguments, but I don't see a reason for using
+parentheses as it isn't ambiguous...
