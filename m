@@ -1,24 +1,66 @@
-Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4972253FC
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 18:59:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D6B157A48
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 19:19:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755802794; cv=none; b=XrxlT/66iHB+MuheMoaYF9IX5wrrFVqjOaCvSijlXFWpoZ4fapkmrjq7HigTolD+1iwarpnzMJwrgR4YezLZp+ubqoQ6ymXNQPega2i2XVQWqiG0uZyoyaYxn4bO4nCK0R5GNonP3/DxnPq9XzelEd5uvcB8HFQXszIPfiPLPG0=
+	t=1755803973; cv=none; b=LEES+KTooFEY/hU/7wx6xsspZFLBwoCVG5/xNXMh+DwfVTveUr6FZPoSlEasHwgf1eB3tzJsK3NA26TiyAaS0go6Uk0uQY0dkxP6mx/RzsbdQgk2wPKVYgdBAEwDd5mzDn2W/Oz4+GTmbUAGaRDKLlypTicXkovmGKILwm2I7F4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755802794; c=relaxed/simple;
-	bh=9MDVbPX/z5Un5yV7PonA84gy3ion4ZX5lYnPmy4A9BM=;
+	s=arc-20240116; t=1755803973; c=relaxed/simple;
+	bh=AVEgebiBlIvXallX648YHKGs4BLCzMSGv9lVR6JRRCg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=epROnjaICNyPsRM84/bOf2jSkCAYQeXxVqaR6KOTvThJOcd3ddnaNKp0s0MHk571IFRWON4BIbOIVJ16jzqjWWgSbWdDpRgGMDAYYbEUG9FRYrh0Wp7NEI1QU+P6JMO6vmak/YJNPTdwmD/myu4FsJJYoyZpI28IfXd++nCKmpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.1.102] (089144220182.atnat0029.highway.webapn.at [89.144.220.182])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4c7CL76FQpzRpL2;
-	Thu, 21 Aug 2025 20:59:43 +0200 (CEST)
-Message-ID: <27f95ac2-380c-4334-8783-4b3b9ce38e24@kdbg.org>
-Date: Thu, 21 Aug 2025 20:59:43 +0200
+	 In-Reply-To:Content-Type; b=Rzk5etsCIoy4cT6EzjqBmJJhc9yOxmCC8nsf6YPsISnTNq5aTKV0bP1Bt34posAvx265IhVNHSudGAN8oCBOdy2qOnrlo6315TaxxxdFKfvpXHi6fPdWsCUJZWpZKSohuc6ciAquMBYMaaam2Fw6lNE/DnHJRMhhsLxP1D4+GZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l1xfUhm7; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l1xfUhm7"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-70a88de7d4fso12130396d6.0
+        for <git@vger.kernel.org>; Thu, 21 Aug 2025 12:19:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755803970; x=1756408770; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AVEgebiBlIvXallX648YHKGs4BLCzMSGv9lVR6JRRCg=;
+        b=l1xfUhm7dR5MbuoK0hi4SKpE0KVcMA2SRlw79bzFUuvqCzH8Y63FSi8HkLmGgwLUyJ
+         IPJVv568/+aHbsuKzSzQQDqAhSCA10FeFTCGcrtifxaUBCcI1rPkvm+57bxqgxuXGwul
+         VejLqYe5Yy9k3WknpiTeIiAhN87UVuWnGfNFZa1tWmM0LaIDell8TybK7jovhdax8oXf
+         8b1MlEHc9aaaDuBPJvZg3ove077ybQ/HBbxrLdqmhSqgCLot0XmOcSKEQiETrrqoUVQP
+         cn8o5lGxvJyzVfuonsqAS4BVVcJg/ICqXMwu8li8gNBmw3zJkrqiWrYnXtStyKJAtq3C
+         zNxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755803970; x=1756408770;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AVEgebiBlIvXallX648YHKGs4BLCzMSGv9lVR6JRRCg=;
+        b=dT/tyalvNv1AcP1yTMu+i9ZUGus0WX+od5ht5iXh3YSid7v1i2SpGsTBTYiFzpZpBH
+         8j95BnXuDbxNkytpQ/6O1tpCegVNP528Wi7pG3gwv196NyTIJ/4ccrlaf2Fo7rLOHyAx
+         FvXJoBd76I+Y00ICqZuOvXsCnl53n+nz+APlADGAzFtTcxxS1vMM7fWb9fu+VMI79ZO0
+         Mxw+zXxbDhLerGc3hk6F8O8FyKkuuw6JmFreQQv2CTlJ5JGj8rve6mlJcym6xHHVPnDl
+         0Ll569pUQz0LihJ9BLnfAlRgPmfcEgxkFAy5Nfkfr2pnYcdZXufEW62JtB1VDiwpFz4i
+         pYAw==
+X-Forwarded-Encrypted: i=1; AJvYcCVsTcq2xktBrHwRj6n/SefW9Rz4UX6GIA/XlSwNqUaqmx+FP+BQYwEQcnx4vgrNTCYiCX0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yykonh6Pil6RgQi5IHxSb2UKUG5BHqZ0ST3rrT0XYLDZHhDbh2P
+	tnMLe/G7Po3rqRtqRXG7Sn/quQtwp7x/abZAIaLPEAJJ0bwjqJ8ZvvcH
+X-Gm-Gg: ASbGncsmdfRn5v4u7B3nW2N/+vyuI6ianpWYb81N8oTjVtOwwU7bvSy6VGjWGueJtRw
+	OkoNuUvMQjJElzflM1vozSSaOswJx8lkrIwCh+fGC7Vnc+2rBkx7TrNEGClwMeCJ7ntO3fslbL2
+	Ng/ocm7ONko36zErq/nwwgn2C9lS1bzrSnFa3m3BK1TJaI60E97u8fypl4rhKSyrMAH9VtPvSqD
+	75AMdLA48gICnR9DTXJyuUcVJsQrdA+bo6ACUd3JPuD8PRvyS7VLntdpjepS4C/+AyttZJk2ggd
+	GDAFPev0M0LncFN5OEyP2D9STiCnDpj1dIbwlDw5ePyE2wcPPDAqCXa+AEUD9z5nBUkMjdY2En5
+	x4YYdzxcxjdouyXMJ/lc0ni+rbQU8OejLvGTaDuv+Gp7M6FEmhyEiuBbS5c/EYeoH7FVlk5lxXg
+	==
+X-Google-Smtp-Source: AGHT+IFE8gsIO3XDvTq5gT29fG1miHuFxD8fFnWnF2b5H7/q/BAVIB9tpXKP9H1Gr1GvV4BDCljGLQ==
+X-Received: by 2002:a05:6214:f25:b0:707:4b37:f6c5 with SMTP id 6a1803df08f44-70d971e5a14mr7905346d6.35.1755803969977;
+        Thu, 21 Aug 2025 12:19:29 -0700 (PDT)
+Received: from [192.168.8.183] (pool-173-73-185-17.washdc.fios.verizon.net. [173.73.185.17])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70ba9300edesm109189806d6.43.2025.08.21.12.19.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Aug 2025 12:19:29 -0700 (PDT)
+Message-ID: <e3e52b89-8f4a-4efd-a29f-3967d52440ef@gmail.com>
+Date: Thu, 21 Aug 2025 15:19:28 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -27,87 +69,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] git-gui: simplify using nice(1)
-Content-Language: en-US
-To: Mark Levedahl <mlevedahl@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
 Cc: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
 References: <20250820152451.20872-1-mlevedahl@gmail.com>
  <20250820165021.24604-1-mlevedahl@gmail.com>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20250820165021.24604-1-mlevedahl@gmail.com>
+ <27f95ac2-380c-4334-8783-4b3b9ce38e24@kdbg.org>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Content-Language: en-US
+In-Reply-To: <27f95ac2-380c-4334-8783-4b3b9ce38e24@kdbg.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Am 20.08.25 um 18:50 schrieb Mark Levedahl:
-> git-gui invokes some long running commands using "nice git $cmd" if nice
-> is found and works, otherwise just "git $cmd".  The current code is more
-> complex than needed; lets simplify it.
-> 
-> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
-> ---
-> updates from v1:
-> - _which does not return a list, _nice must be a list to handle path
->   with spaces  (should have been in v1, was in another patch - oops)
-> - Address Kristoffer Haugsbakk's comments
-> 
->  git-gui.sh | 30 +++++++-----------------------
->  1 file changed, 7 insertions(+), 23 deletions(-)
-> 
-> diff --git a/git-gui.sh b/git-gui.sh
-> index 4528b22..be0b8d9 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -578,21 +578,6 @@ proc open_cmd_pipe {cmd path} {
->  	return [open |$run r]
->  }
->  
-> -proc _lappend_nice {cmd_var} {
-> -	global _nice
-> -	upvar $cmd_var cmd
-> -
-> -	if {![info exists _nice]} {
-> -		set _nice [_which nice]
-> -		if {[catch {safe_exec [list $_nice git version]}]} {
-> -			set _nice {}
-> -		}
-> -	}
-> -	if {$_nice ne {}} {
-> -		lappend cmd $_nice
-> -	}
-> -}
-> -
->  proc git {args} {
->  	git_redir $args {}
->  }
-> @@ -626,15 +611,14 @@ proc git_read {cmd {redir {}}} {
->  	return [safe_open_command $cmdp $redir]
->  }
->  
-> -proc git_read_nice {cmd} {
-> -	global _git
-> -	set opt [list]
-> -
-> -	_lappend_nice opt
-> -
-> -	set cmdp [concat [list $_git] $cmd]
-> +set _nice [list [_which nice]]
-> +if {[catch {safe_exec [list {*}$_nice git version]}]} {
-> +	set _nice {}
-> +}
->  
-> -	return [safe_open_command [concat $opt $cmdp]]
-> +proc git_read_nice {cmd} {
-> +	set cmdp [list {*}$::_nice $::_git {*}$cmd]
-> +	return [safe_open_command $cmdp]
->  }
->  
->  proc git_write {cmd} {
 
-Thank you, that saves quite a few lines. A difference is that `nice` was
-looked up only when needed and now it's on every startup. Personally, I
-don't mind this change. It should not have a noticable effect on the
-responsiveness.
+On 8/21/25 2:59 PM, Johannes Sixt wrote:
+> Thank you, that saves quite a few lines. A difference is that `nice` was
+> looked up only when needed and now it's on every startup. Personally, I
+> don't mind this change. It should not have a noticable effect on the
+> responsiveness.
+>
+> Queued with an apostrophe in "let's".
+>
+> -- Hannes
+>
+And, nice was always looked up on startup if a diff on anything was needed, or if running
+git-blame was asked for, which for me means always so I see no difference in startup.
 
-Queued with an apostrophe in "let's".
-
--- Hannes
-
+Mark
