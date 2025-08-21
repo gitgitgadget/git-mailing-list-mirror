@@ -1,102 +1,81 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA52634F48D
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 18:24:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB01525A352
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 18:39:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755800662; cv=none; b=lr/wIq+CWXrcibggyK3m1ioent3XviHM4p0KWD0OI1tkgLjlrsoCfg6JFwKRfBi8COtvRRpwfgiuCgzDYJ6ccHaKqLlCYWvfDOsS7fJtsQg/tOpOjOi3jUeFML6BYko/8MJa7UR64jO5ETepeViV4l3XZxR/Mrju0/g88DXe8hw=
+	t=1755801569; cv=none; b=S73f3KzQgVoQMpJaYWfNLsNCMtVxzKBa48Zu0+4OcvIlVDqVqznaskLxgq9XCt2Dp/UZAnP/nCbVVi6LUad390PMhkijVGpvjh/rgVHnASLrev4ADcn/XHupN+AYzU4WK9wN2qFzRBuk5CcFrAkGHbMiVe9mFTrgx/Spmt7EbVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755800662; c=relaxed/simple;
-	bh=ipojMDePC16pksMwtc+vLZeAy06HFlNGWYlF8ffawuA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WtMZx2UMaxtBmsmm86qVR2JcuCvBlgVEYkAraXzTutdnXfWOL6U8ttCQfEFaueBQSrP4Pjf75VckqMQK863j/b+rRdYPnKCiFNtmWEbBj7RZ5EOVlsomFtWDi8gIwHMB+OUJ7KVWHAaVKFfboxmoar/x8qSdmcq4lTbXH1jVTqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=kimAPKZQ; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="kimAPKZQ"
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 5BDA34CDE9
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 20:24:10 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:a2fe:cac3:5774:9094])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 05B3260128;
-	Thu, 21 Aug 2025 20:23:58 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1755800643;
-	bh=ipojMDePC16pksMwtc+vLZeAy06HFlNGWYlF8ffawuA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kimAPKZQ9wRzr8Be0Fv9mjVu2Kn8nlXF7JelpSq2a3kN/pELKxaq8eRcr2ZuVovvt
-	 Ve5SVH78M2zm0RI6VP4XcwT+/sMOmmPVXA+NSpMcDUchI9asCdaAV1mlSd2MFGRPpn
-	 EUiG2TOr2gPRqhOwFayDdrfCNApbot3EY/rFr5qQsVNEjRROWvkcVrp+qDEzKFEUPH
-	 GTW/5jzOxFVce//huzr3sjbI/MSxdgee0LPFaHh0ONxDiEDkJp/CvnrAta2NQuPn9N
-	 mwRfSH+hl5pGEnBthVvbFiAW8+cFsNPaiXPvgwtjoo5fJSwIpPy0uNieHHG9T9+OM3
-	 yEzHZGhSmU99A==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: git@vger.kernel.org, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: ps@pks.im, karthik.188@gmail.com,
- Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject:
- Re: [GSoC PATCH 1/2] repo: add the flag -z as an alias for --format=nul
-Date: Thu, 21 Aug 2025 20:23:58 +0200
-Message-ID: <6186055.lOV4Wx5bFT@cayenne>
-In-Reply-To: <20250820144247.79197-2-lucasseikioshiro@gmail.com>
-References:
- <20250820144247.79197-1-lucasseikioshiro@gmail.com>
- <20250820144247.79197-2-lucasseikioshiro@gmail.com>
+	s=arc-20240116; t=1755801569; c=relaxed/simple;
+	bh=ibj7Aae3G3EkRM7I+Jk1AWTCFrVEgzyrRVaBW+gdnJM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=S8xvvU7ij8h8i8PhfWAmykVSLnYocyYG84brdjbU03zoCcaZxaONbmQ1oaX9QlyO0DvmMaLIbdFlcp0FAPjQ+uIPC9lScH+gDOyFunSyGobIh+VhW8q26bDqXeAV5iW9EiKHzTDJ1vO/AHKFM+nc8L+48aJjtmyHV7tzoMEqRy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.1.102] (089144220182.atnat0029.highway.webapn.at [89.144.220.182])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4c7BtZ2Q46zRmx1;
+	Thu, 21 Aug 2025 20:39:18 +0200 (CEST)
+Message-ID: <db481d03-1ebb-4e85-8b82-21ff3945289d@kdbg.org>
+Date: Thu, 21 Aug 2025 20:39:17 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] git-gui: simplify PATH de-duplication
+Content-Language: en-US
+To: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
+References: <20250820153143.21181-1-mlevedahl@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <20250820153143.21181-1-mlevedahl@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wednesday, 20 August 2025 16:42:46 CEST Lucas Seiki Oshiro wrote:
-> Other Git commands that have nul-terminated output (e.g. git-config,
-> git-status, git-ls-files) have a flag `-z` for using the null character
-> as the record separator.
+Am 20.08.25 um 17:31 schrieb Mark Levedahl:
+> git-gui since 8fe7861c51 ("git-gui: assure PATH has only absolute
+> elements.", 2025-04-11) uses a list to maintain order and a dict to
+> detect duplicated elements without quadratic complexity.  But, Tcl's
+> dict explicitly maintains keys in the order first added, thus the list
+> is not needed.  Simplify the code.
 > 
-> Add the `-z` flag to git-repo-info as an alias for `--format=nul`,
-> making it consistent with the behavior of the other commands.
-> 
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
 > ---
->  Documentation/git-repo.adoc |  6 ++++--
->  builtin/repo.c              | 17 ++++++++++++-----
->  t/t1900-repo.sh             | 12 ++++++++++++
->  3 files changed, 28 insertions(+), 7 deletions(-)
+>  git-gui.sh | 7 +------
+>  1 file changed, 1 insertion(+), 6 deletions(-)
 > 
-> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-> index 2870828d93..f2dc71193c 100644
-> --- a/Documentation/git-repo.adoc
-> +++ b/Documentation/git-repo.adoc
-> @@ -8,7 +8,7 @@ git-repo - Retrieve information about the repository
->  SYNOPSIS
->  --------
->  [synopsis]
-> -git repo info [--format=(keyvalue|nul)] [<key>...]
-> +git repo info [--format=(keyvalue|nul)|-z] [<key>...]
-> 
+> diff --git a/git-gui.sh b/git-gui.sh
+> index b64d065..4528b22 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -103,21 +103,16 @@ if {[is_Windows]} {
+>  	set _path_sep {:}
+>  }
+>  
+> -set _search_path {}
+>  set _path_seen [dict create]
+>  foreach p [split $env(PATH) $_path_sep] {
+>  	# Keep only absolute paths, getting rid of ., empty, etc.
+>  	if {[file pathtype $p] ne {absolute}} {
+>  		continue
+>  	}
+> -	# Keep only the first occurence of any duplicates.
+>  	set norm_p [file normalize $p]
+> -	if {[dict exists $_path_seen $norm_p]} {
+> -		continue
+> -	}
+>  	dict set _path_seen $norm_p 1
+> -	lappend _search_path $norm_p
+>  }
+> +set _search_path [dict keys $_path_seen]
+>  unset _path_seen
+>  
+>  set env(PATH) [join $_search_path $_path_sep]
 
-In fact the correct formatting is:
+Thanks, this looks good; queued. I tweaked it to keep the comment.
 
-[--format=(keyvalue|nul) | -z] [<key>...]
-
-As stated in "CodingGuidelines:
-
- Use spacing around "|" token(s), but not immediately after opening or
- before closing a [] or () pair:
-   Do: [-q | --quiet]
-   Don't: [-q|--quiet]
-
- Don't use spacing around "|" tokens when they're used to separate the
- alternate arguments of an option:
-    Do: --track[=(direct|inherit)]
-    Don't: --track[=(direct | inherit)]
-
-
-
+-- Hannes
 
