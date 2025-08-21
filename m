@@ -1,83 +1,89 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D5B1A76D4
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 16:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1146927AC37
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 16:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755792067; cv=none; b=cF3OHmQmykyxKG4OD3N5ABH71oIuhLeVFHFQHJbQgQcuG8sBMWjANCo05E1faKKcz8RHaNLbb5YSeyNAZHnkQCDVQq6EOWiRR4pxTCLgZwfgUcP/PK3FhD0M7biv4R/qloT+U80B389BGOMEXiaxZzv2z1WP0Rf9o8uVwHwmS1k=
+	t=1755792335; cv=none; b=YmivLHosXSDMmr6G08WQNTK8zUIHfO3IbK+CZB92KxGUFfLmb/HsZFH5WAPKvrnPAxQfxBYWyhCtnO0PXOD61RcSE3xPaThZvcGTKMPehFpzpB54yyegVeRkgx+Y/i3S+pbMGwzU7t5R84D8L7WBY8wLuh2hdN+xm4eQbu0aCLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755792067; c=relaxed/simple;
-	bh=LbsByRk4vKz06HoxLkvFFDArqPjKz2To0Vjo4ThHHIc=;
+	s=arc-20240116; t=1755792335; c=relaxed/simple;
+	bh=GFuUTsDRxA5troMje66LEOJzGdqFgefegYLOLnkfraE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oCdVEwwE+m2EreCH10npVBumZUzq2gIiJYjXfQbRcXLKTeKN4hINJVbw0uJAaU4IZhgjTVSARyb8MsH5vhOhjaylit4aIUhpt11fAamJZzmmlBqbf9ADQmy3aVOcIRizxMQUJF5rpN8DEamaRMvJIivh2BCKm8+Ev2wADM3i39Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dgW1rgnp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T6S0VgYJ; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=AVZp8tQ1QxeQ4Sz5KdV69xdBlUdZIsnysAYASCLczsiUV+qVJpnLOxjlTvim+QID8knURXiaFlVzwJKxJgwRM3DzDYws4kceiNz64IOqI4cZ1c50a1nHeHpHc6DVPxtghkoTr6sfDDEln3kSaM2EO5aXyJnq2t8SbAPcBUp2Ql4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KB69eSnH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NxkFHPWP; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dgW1rgnp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T6S0VgYJ"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KB69eSnH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NxkFHPWP"
 Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3075B7A01E6;
-	Thu, 21 Aug 2025 12:01:04 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Thu, 21 Aug 2025 12:01:04 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 103F77A014A;
+	Thu, 21 Aug 2025 12:05:33 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Thu, 21 Aug 2025 12:05:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755792064; x=1755878464; bh=9GR8LhSoT8
-	YxOV79TCaQEuRngqtuqLnq9bfijGQOiYo=; b=dgW1rgnp9Rq6iZahjTcTxkj15o
-	QNbSCtdrL1e8GjzwyOtvJAwQiI88ysyHfA/IiY8mUcDBjOKybmbhh/t4spfJDr2b
-	PLF3UTUPn5/dveYKvXCKofklCiPya/ce6hwh1X+ibsvYb5ip/djCaSVZHzUp3+WO
-	kFMwBpyl5lS3k/5u3XLDFoABwqSBnP4lgcOmREsG0DczPfghNroWfof2d7foCjlD
-	KkwvPFj6o6jb9nybK9viYsPIEFhVU9MHq+/xGA63a3K6+Fw8hFDmR6hVWEy8cHDP
-	vARAsNLZOqibSj0Q486F10byhJTgdsaC+knkwrzFggrW9iHCmoWIKkUAoQkw==
+	:subject:to:to; s=fm2; t=1755792332; x=1755878732; bh=F+jecWdlLa
+	rIXKOhWy98k6UuweVDNNezTygnrrgEAPY=; b=KB69eSnH1SNwlLjnx97sI/YlHR
+	q2WpjZw0vGExg3cP1iELvCRi7HB9n+xc2WOevnGe4WEG3mJPFRcDKF/0LJe+4uoo
+	8vw/b+MoorxUB4AvC6c7KwBIyxaZhtHuzxofrwiiLWbqmkl79stV05d6HQbqnDlB
+	7pf8c30gNXoyVuNyxaBABZWVKfxcGaAQ3NSc+t1p9ZYmTsf+CTgpI1nNqkKjCIr1
+	ZVwYkLG3MOuYgvNaemI8IkK5xoYQxkZzcmGL6tx2CljashHdeJRMfCyyjKr3IqEW
+	DpZZoKe6eZDvkLHvZ9EHNFLkov8YMaeqCWOmfkrEVTtIWe64PKf951HmfQQg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755792064; x=1755878464; bh=9GR8LhSoT8YxOV79TCaQEuRngqtuqLnq9bf
-	ijGQOiYo=; b=T6S0VgYJEzJwNh4RjSQZ2l+Gji6mJ2DQegN2NZ88YflvyAY1Nzw
-	1t+wb7Nh176IgWCQv9Rm6E8a1ZXP3rrhF3A4RVrtf8r7NAbkPhK7zxd4tDh4jOwN
-	EC6Zd3Bh4JqSmpeD0vv4SJeiu/PubngaxB5BDDz+E8wsyfZrrosVq8ejBU6P/vVf
-	dxKJU+8vrVsZn8DvCBeBJlvN/AvlQw9Ru2sFkLCFm+H6rWQb3mDj93T+5tHvpFxO
-	7dCJdzSq7SsbBGBH3Ku20EIAVZWaEvOfxK1NqQBuLP3s8TXNU4EhFptVTgpeXDdO
-	xBI2nQYgDBnCJGmt/VXvogqIDEDREZrm/ow==
-X-ME-Sender: <xms:v0KnaAQWFtlJM80zRkTlTRQ551BKvuFPrXCoHZvTXzlpyUpwfSmN5w>
-    <xme:v0KnaJSK8ay2wq39-1mRRpHkqbxknupjTbr94CF-oQH2bjcYdsH5ghkpIz_HzqWB5
-    xyJIfaoBIRFBopqkg>
-X-ME-Received: <xmr:v0KnaEQjakM1x2daUZtRh_9nWbMvHZ_dA9qSvPfcgULsxEify69dDCtANEbJZIH8RIIduPf5iawtryNah01b6EHhbHXvehgB0tFw67U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieduieeiucetufdoteggodetrf
+	1755792332; x=1755878732; bh=F+jecWdlLarIXKOhWy98k6UuweVDNNezTyg
+	nrrgEAPY=; b=NxkFHPWPtHB2Qdb+s+ymbcxp9ktAHKnGqRlf9rud3RYnHipMNpQ
+	+m5neZjoygd6i+kz520emDr138ZWxtmk9YzSmqs3lfmbqgkxjRoWCL4rJDspsuXG
+	opjVLUmhIlqV/vXAAV6EgmoAX1WX69dPrqzM8+K9l91G0YSNFV/vZ0i3DFJlMh/A
+	n+v4PleCpX6OwG+O41Q7lvPSz+bc+wmIw2eIPpqEU0DOd8lNvfAmqSVH+QyFEyJq
+	BJ4qPNy3/E4FbYlPzKlkG9lflrqNpIw5FxIBeiAiRhOmbeFCdKCPJ/4f+QdQQQWi
+	9aUSjG+i/Op/9/ijkSjuhd0RL4sMuDycVvQ==
+X-ME-Sender: <xms:zEOnaI4H3GapNC1FbVCgLAtm7HfLNxH7CME7qMRHMDUbJirjYzbt2A>
+    <xme:zEOnaCUmJN66BmS3uqrvpnBqFpFf5SEV_k68O_2VrcMv6YEBT2PeOhR15558O6o27
+    hXSfeASwE6qLKU-oQ>
+X-ME-Received: <xmr:zEOnaH7rsjMbGNQIv5BXhbYffSV7-pbu4deX2hsLyryZo3HyKPhGXlfXRzloKU0m0jiUxuG0fm2P1vkwYA_wO0haeCz9tXK07VLKgWo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieduieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvg
-    gvthhsohhniheftddujeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
-    hopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:v0KnaO7Ypb99ATlB0vpz4GJoEM_C1uasg64BY7I_uinXUzSArHqntg>
-    <xmx:v0KnaA2L5_1ygakPu4vtIT8tSODSTPyovfcUCO6W3PgABptL4y_S6A>
-    <xmx:v0KnaJAque6dwY5zwNnnr2llq7XH9AjPcjXv8C_-M1lEecwJzmXfyQ>
-    <xmx:v0KnaLPARRXceSDWsoTNfMFBb7AWMC_x1iJ2Ih6YoCeXSwumTyTliQ>
-    <xmx:wEKnaORPtf3VleFRNHjMYtjiYtHEVEPs8XfOmrfm3yvbqJv7M9tNrQIw>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffh
+    esphgvfhhfrdhnvghtpdhrtghpthhtohepjhhovgdrughrvgifsehinhguvgigvgigtghh
+    rghnghgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:zEOnaNpHX4XmwGMr5zGPoiklRBrDFyhV5nkzM4CR2wx1LcfxKuDEuA>
+    <xmx:zEOnaKmSRzxQsav9TFzwOdZoNY3H5UfQcLx5gytSU9eBtasxQ94H1g>
+    <xmx:zEOnaJO-EcjbOgaFsRiKK0KXfsAdaJIFipLwE3aHNH_WTFjdTZ6NDw>
+    <xmx:zEOnaOM6GEn3_5JH8AG9OsJy5eIQMhzxwQ4Dj0xapiRrNU-5HvNZHg>
+    <xmx:zEOnaD2u5wIMSO5wOg-4De3xK9iaaiWV27wIZwJWZxo2vDsYhODn-I5v>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Aug 2025 12:01:03 -0400 (EDT)
+ 21 Aug 2025 12:05:32 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  shejialuo@gmail.com
-Subject: Re: [GSoC][PATCH 0/2] Add refs exists subcommand
-In-Reply-To: <20250821085246.929307-1-meetsoni3017@gmail.com> (Meet Soni's
-	message of "Thu, 21 Aug 2025 14:22:44 +0530")
-References: <20250821085246.929307-1-meetsoni3017@gmail.com>
-Date: Thu, 21 Aug 2025 09:01:02 -0700
-Message-ID: <xmqq7byw4qbl.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>,  Joe Drew <joe.drew@indexexchange.com>,
+  "git@vger.kernel.org" <git@vger.kernel.org>,  Karthik Nayak
+ <karthik.188@gmail.com>
+Subject: Re: "lock file exists" when fetching in bare clone of repository
+In-Reply-To: <aKbwabLZiWasYoBC@pks.im> (Patrick Steinhardt's message of "Thu,
+	21 Aug 2025 12:09:45 +0200")
+References: <YQXPR01MB3046197EF39296549EE6DD669A33A@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
+	<20250820213323.GA1667633@coredump.intra.peff.net>
+	<aKbHozlmDIqfgkg4@pks.im>
+	<20250821072706.GA2390046@coredump.intra.peff.net>
+	<aKbwabLZiWasYoBC@pks.im>
+Date: Thu, 21 Aug 2025 09:05:30 -0700
+Message-ID: <xmqqwm6w3bjp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,29 +93,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Meet Soni <meetsoni3017@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
-> prerequisite-patch-id: 235cc677f372e9571dade4313f8cfed4eab65f7f
-> ... (~100 lines of crap omitted)
-> prerequisite-patch-id: 553adfe23223a427db3f93e23dfb603c55cc5aae
+>     You're on a case-insensitive filesystem, and the remote you are
+>     trying to fetch from has references that only differ in casing. It
+>     is impossible to store such references with the "files" backend. You
 
-Please don't force others to go hunt to find so many patches before
-being able to even recreate what you based your changes on.
+"backend." -> "backend on your system."
 
-Learn the way how it is usually done by looking at:
+>     can either accept this as-is, in which case you won't be able to
+>     store all remote references on disk. Or you can alternatively
 
-https://lore.kernel.org/git/20250106-b4-pks-object-file-racy-collision-check-v2-0-8b3984ecbb18@pks.im/
+I do not see the former as a viable choice, though.  When this
+happens, the clone or fetch fails and the user cannot catch up to
+the upstream development, no?  You have to futz with the fetch
+refspec to cause refs your filesystem cannot store ignored in order
+to make progress on other refs, but that is making the user do more
+than accepting this as-is.
 
-Basically you would want to say
-
-    This is built on top of <commit> with <topic*> merged into it.
-
-where <commit> is a commit on 'master' (or 'maint' or an even older
-maintenance track, if the topic is about fixing a bug in a released
-version of Git), and <topic*> are topic branches in flight that can
-be merged to the same integration target ('master', or an older
-maintenance tracks you chose <commit> from).  And keep the number of
-<topic*> to an absolute minimum in order for your changes to work.
-
-Thanks.
+>     migrate your repository to use the "reftable" backend with the
+>     following command:
+>
+>         git refs migrate --ref-format=reftable
+>
+>     Please keep in mind that not all implementations of Git support this
+>     new format yet. So if you use tools other than Git to access this
+>     repository it may not be an option to migrate to reftables.
+>
+> The last part is what I'm working on right now. libgit2 is fully
+> functional now, but what is still lacking is reviews.
+>
+> Patrick
