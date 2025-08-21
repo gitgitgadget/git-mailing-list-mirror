@@ -1,81 +1,80 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0782E92C7
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 08:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B997A2F4A
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 08:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755763269; cv=none; b=bnwuDhKkvuLmhXA735QGUpVXxuXtKlWxWECVRX7okeaT0Kboa2xg+4+fgapcoLBKSa8YrTQQ5PGlE74q+p1IdWLIL2OyJLeeopuk6FZEuSqqmCkSmME4ELSl04g8hiuUb4Mi27lsoelPxApVQbpy7dd69RgayxBaMNl3YHV3zow=
+	t=1755763278; cv=none; b=RDnAeOylUOCMWyJzHtN+XMPhobEz1LdBPf83lhLcjRmKTNtYkArXAd8AoOa7X4C6mxx+Jc9MYgo056lQevoHQNc/2/kihbSNhBfw/g4C/cSFwZy9Zhuh4AxuP86RewFAY273V/Qydjhcu17PWW+0l0FMNT5ui6zQn+exjneIo3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755763269; c=relaxed/simple;
-	bh=Ox1eC/1pDHLysHgM+bGRlMlhz230qrWPpK87KtOErFo=;
+	s=arc-20240116; t=1755763278; c=relaxed/simple;
+	bh=8Q5Baq4HLglVHFyIxcJFxLu5DmMhnuu8/7sq2SjAXDw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dx0L+4vl6yglmJtqT5trimPn1tX4Qq82FF5MPd4dW4vbcz/4IehtrJJCIkkKrfd8cyVbg/AYH8C5CSKbdysZKwQFRzlWQqAIPRWMGV3Rf+zyBlmyoFMnrF75ZtvgbOslz/RI/VeUYFRUNCxyb3IXRqTg8v1JEi1bC0MYEJKk8Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VA6y4YAr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dCUJRpBT; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=EuKjrcLeD3/MR6H7VoG5NVIjTfJHsBon4l8SlOC/FXYjGaxGqu+g3WbSeqUAkOEAdW2EZAYP0Dky7/sobNdQTkW8cFbuFKcwlWQOh318zYMz4xZI2H0klP3qNJ8AIVA25qu67oNM453sDny7pBxBpORg8Y0kCcHifbrU6ysrMdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LwaH6xpt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bbtHhvdm; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VA6y4YAr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dCUJRpBT"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LwaH6xpt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bbtHhvdm"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C800E14000BD;
-	Thu, 21 Aug 2025 04:01:04 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E460E14000B7;
+	Thu, 21 Aug 2025 04:01:15 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 21 Aug 2025 04:01:04 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 21 Aug 2025 04:01:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1755763264; x=1755849664; bh=N0Bn5tvIBo
-	RRrfRnOXFBTOafV+dlKIPGnFqVYgVoE6U=; b=VA6y4YArxUeYcFnIIFgKpkb0c2
-	77uoU1j+KaB9E5y5W+eEtmrb5pIZjiAB4crMDVaqm+4z4YfuMvTVcmuJleSZHsDE
-	296jAjVllWfYc57TKHdd6DHDXD+MwJ/+oEf3ib+p4MSY0/QuLvBDm3jZ98sFhkHB
-	refv4Pp10MtQi1/GcJf1X9tli6l+gzCu8Xn2hT1Yz01385JnAn9mgElpZxCHYxJL
-	MA0eYwklviTbyBgpNU0Djo0L7FYS+/BL8fQ7RN+AvZGzVoKrfUzpJMPtoAc7M633
-	xszAHqSX+dAygeqyu5SIVk5qwce6W5sD70UsYdz45W8kb3MQtgBEk5PMZX6g==
+	:subject:to:to; s=fm3; t=1755763275; x=1755849675; bh=vsXtAfLd17
+	wYhKSLgqojVCpi7BSrzim/h8W4h+QVS0c=; b=LwaH6xpt9el71/ABxBo5cFIJtV
+	HZgY7Azz/dvznDvWnSCsLbFeYQyYHOTm+rPU+RmOKlcOq9aWyq39FCHJwt6BocI2
+	/lq0G2QBajVl0NclZw3SwBYIyWk1wxYe9yAZYu0jL5UHfwYM+iYK4C8ZVXBvjEfu
+	a806sQSeByfjEKCKUfdtLTibFD6BERv1b+Yu451xQThPnheEFVNgCCDazr/pTozy
+	TPAEZvfYAE6ZmqurKucLXmeH3p3RjyQbRSzQIIl+BCv2V92dO6r/oaGTH7CtAmgJ
+	t+E7QqCnNneCWmO9FfzZ0afDG8jBzeWbf86pZyQ46h2lGqxq/1JIOLLc0Msg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755763264; x=1755849664; bh=N0Bn5tvIBoRRrfRnOXFBTOafV+dlKIPGnFq
-	VYgVoE6U=; b=dCUJRpBT8GPtWv4rHrSlOaNajqO2RjM9WuyvoYTn04dHOBtn0iN
-	uUCe5DCsGivGzXjFyjambsDkW+onZbsVJNBIzVrCcgZGz1l315Joz61bN5ly0MCs
-	+fBIZGGNnWwWaxMEm6bazLi5EYTgrUwp2fI2mdEs7QDDWBzL/sNj6wHbzUA045N0
-	g+jfylN8FxnpE4ypQ6r7qb8WAY1ompsWW7rk2lL+DE9h1olgpBlW7H0KeoGOA0qA
-	8FhVvIhT5AGrtmH0wscS6YzX9Rz1TodVZk0dTDlOWE5yXUCqNmedbmLOpWa3uQlV
-	bJscO22lCu8Y0bEfpE/fh/js7JwAl5PZHQg==
-X-ME-Sender: <xms:QNKmaFjkCLdP82FFczGYmi7qoBDusR-y5qfw2W1JuVcoEn4vP6YClw>
-    <xme:QNKmaP9qADqvjASOf6b68IxpUwRRFvvUgUcGdeb3dnid-OZuPKKMY51AiiFFbRC5r
-    9BkR-1md3iKqFdbLg>
-X-ME-Received: <xmr:QNKmaCNI0Dwe49-0b_zoouuTA41lZjpn9xfYEaK6jJdDrM7IDmcV_YI3ycjhiJswpd8_B9gPx6FXh3y_MZKMk-T_P-Affh6cKx8GjCCqSg>
+	1755763275; x=1755849675; bh=vsXtAfLd17wYhKSLgqojVCpi7BSrzim/h8W
+	4h+QVS0c=; b=bbtHhvdmpGQmJZq6Kl73I3bDhNVu41yf28xDWedgAXsXhyZi1yq
+	PIRzbVn+lnulTKSRlcCnHp28V190RjIm4IvabjJiEKNzhHYMhmZlYyEESSF0F6V2
+	U52T5pl/MnXkevJMl/3VEMMYaYanxHaNsnwM6iqlOkzOAHjLJuI3w+6fFqNHSQEk
+	Yih2CpDsDSyBGqbxYM3+M7Ja2ctA5j47bVMXI0CVboWc7AmjsL50jOfNRB4M1byN
+	/UqXWXnQn5m67LIpjDZpuyb7RjqjN8iEOyiVT2xeQ2joBfzX4mVO/NTNNZWMoBZU
+	KrlkwaOSHYlKjvIkC9LwWNYxHPDDzWcE2kQ==
+X-ME-Sender: <xms:S9KmaJ2QTwtBWDNQdgbwKpDZhPZoLlZh_vn3LCzli50WnwQredcw_w>
+    <xme:S9KmaGDCeUCqJmlxQutXFdlJOr6LNmniXkMqTQD9FX_Z--sx2L1S-gXxLj64Laojv
+    __hARwA_9mA9O6QOA>
+X-ME-Received: <xmr:S9KmaHCiZ665lt_ms2lk_Wwn_J0aMaDwI7GJMKIkf0XKpC3pIMvsOHBELOSHlrcSdYsZcQEE8wzHx-Rl2XILL2rx5nSplXm26WZqRgnqug>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedtjeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepudefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhohhhntggrih
-    ekieesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
-    pdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
-    ohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvg
-    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihr
-    vghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrg
-    hilhdrtghomh
-X-ME-Proxy: <xmx:QNKmaLAzrHj-4OLTlET2-BSIYlCIYkciFAQPXe73trmxRAOwDfRKHg>
-    <xmx:QNKmaONtrGurrmdFzYNSQ2PzRNBcE7HGRygvoNK-v3MxxCRgDyz-1g>
-    <xmx:QNKmaKeeVmRghmF8f6qRNyXR4yhbdMG8CIHkySymIikDsBRWpOjw1A>
-    <xmx:QNKmaH6KJT1Hgc3RwyTAovSKc9m0hLqOXYE7h2Sdgm03BhnBjmLTtQ>
-    <xmx:QNKmaH2qIbcf8LSd6LvGK5s0hO7xmRN52chEXVoJGFrHb8zSen9tvIAG>
+    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeek
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtg
+    homhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehn
+    vgifrhgvnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:S9KmaHnUOtaaNTMN5dcuI51Y-XyP_vy57npel6ESx3hv1m5Osqqf1A>
+    <xmx:S9KmaHh5J-0BAEka-4XfNjWn_njMpdzA-oVdgbF6ZommEFIJVnehEg>
+    <xmx:S9KmaBhrfvU1Q6Fz9tNmDbJ_x2weAI-6ujk1Rgtj5Bcv1CtYBWiHBA>
+    <xmx:S9KmaJsc8UKZWJMTMllOOhkzCU-lmNganYMql2v8SzEVlFlwC4ejFw>
+    <xmx:S9KmaF7YMoicmwLBoO8IRFYIwMnau07gemkjHDW4meXbU4q1eA7GX37o>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Aug 2025 04:01:02 -0400 (EDT)
+ 21 Aug 2025 04:01:13 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id efbac8a0 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 21 Aug 2025 08:01:00 +0000 (UTC)
-Date: Thu, 21 Aug 2025 10:00:57 +0200
+	by mail (OpenSMTPD) with ESMTPSA id c2eec211 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 21 Aug 2025 08:01:13 +0000 (UTC)
+Date: Thu, 21 Aug 2025 10:01:09 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
@@ -83,10 +82,10 @@ Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
 	jonathantanmy@google.com, karthik.188@gmail.com,
 	kristofferhaugsbakk@fastmail.com, me@ttaylorr.com, newren@gmail.com,
 	peff@peff.net, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 1/3] t7700: add failing --path-walk test
-Message-ID: <aKbSObIzXwUtjAdE@pks.im>
+Subject: Re: [PATCH 2/3] path-walk: fix setup of pending objects
+Message-ID: <aKbSRQJCPh3Lsew8@pks.im>
 References: <pull.1956.git.1755715196.gitgitgadget@gmail.com>
- <5b19173c03da676b3e1effda7ba6d2ef5666cad6.1755715196.git.gitgitgadget@gmail.com>
+ <0dc4a6323e66598070b403d286ee1918e6a9b791.1755715196.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,73 +94,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5b19173c03da676b3e1effda7ba6d2ef5666cad6.1755715196.git.gitgitgadget@gmail.com>
+In-Reply-To: <0dc4a6323e66598070b403d286ee1918e6a9b791.1755715196.git.gitgitgadget@gmail.com>
 
-On Wed, Aug 20, 2025 at 06:39:54PM +0000, Derrick Stolee via GitGitGadget wrote:
-> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-> index 611755cc139b..1998d9bf291c 100755
-> --- a/t/t7700-repack.sh
-> +++ b/t/t7700-repack.sh
-> @@ -838,4 +838,47 @@ test_expect_success '-n overrides repack.updateServerInfo=true' '
+On Wed, Aug 20, 2025 at 06:39:55PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <stolee@gmail.com>
+> 
+> The previous change established a buggy instance of 'git repack -adf
+> --path-walk' when there exist paths that are tracked in the index and
+> that is the only instance of those paths in the history of the
+> repository. This change fixes that bug.
+> 
+> The core problem here is that the "maybe_interesting" member of 'struct
+> type_and_oid_list' is not initialized to '1'. This member was added in
+> 6333e7ae0b (path-walk: mark trees and blobs as UNINTERESTING,
+> 2024-12-20) in a way to help when creating packfiles for a small commit
+> range using the sparse path algorithm (enabled by pack.useSparse=true).
+> 
+> The idea here is that the list is marked as "maybe_interesting" if an
+> object is added that does not have the UNINITERSTING flag on it. Later,
 
-Tiny nit: I would've probably squashed this patch into the second patch,
-as we usually don't use the add-failing-test-and-then-fix-it-later
-dance. On the other hand though it gives some nice context, so I
-ultimately don't mind it all that much. So please feel free to ignore
-this nit.
+s/UNINITERSTING/UNINTERESTING/
 
->  	test_server_info_missing
->  '
->  
-> +test_expect_failure 'pending objects are repacked appropriately' '
-> +	git init pending &&
+> this is checked again in case all objects in the list were marked
+> UNINTERESTING after that point in time. In this case, the algorithm
+> skips the list as there is no reason to visit it.
+> 
+> This leads to the problem where the "maybe_interesting" member was not
+> appropriately initialized when the list is created from pending objects.
+> This is the fix for now.
+> 
+> To help avoid this from happening in the future, a follow-up change will
+> make initializing lists use a shared method instead of allowing for an
+> update to this initialization process to miss some existing copies.
 
-We probably also want `test_when_finished "rm -rf pending"` before
-calling git-init(1).
+Yeah, I wanted to say that this feels quite fragile to me and very easy
+to miss. Does this mechanism buy us a lot of performance in the first
+place? Because if not we might as well just remove it entirely.
 
-> +
-> +	(
-> +		cd pending &&
-> +
-> +		mkdir -p a/b &&
-> +		echo singleton >file &&
-> +		echo stuff >a/b/c &&
-> +		echo more >a/d &&
-> +		git add file a &&
-> +		git commit -m "single blobs" &&
-> +
-> +		echo d >a/d &&
-> +		echo e >a/e &&
-> +		git add a &&
-> +		git commit -m "more blobs" &&
-> +
-> +		# This use of a sparse index helps to force
-> +		# test that the cache-tree is walked, too.
-> +		git sparse-checkout set --sparse-index a x &&
-> +
-> +		# Just _stage_ the changes.
-> +		echo f >a/d &&
-> +		echo h >a/e &&
-> +		echo i >a/i &&
-> +		mkdir x &&
-> +		echo y >x/y &&
-> +		git add a x &&
-
-Nit: I think I would've moved the explanations you have in the commit
-message into these hunks so that the test becomes a bit more
-self-explanatory.
-
-> +		# Bring the loose objects into a packfile to avoid
-> +		# leftovers in next test. Without this, the loose
-> +		# objects persist and the test succeeds for other
-> +		# reasons.
-> +		git repack -adf &&
-> +		git fsck &&
-> +
-> +		# Test path walk version with pack.useSparse.
-> +		git -c pack.useSparse=true repack -adf --path-walk &&
-> +		git fsck
-> +	)
-> +'
+But if the answer is "yes" then adding APIs around it feels like a good
+alternative.
 
 Patrick
