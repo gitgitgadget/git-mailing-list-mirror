@@ -1,233 +1,403 @@
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C311393DF2
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 23:22:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B295826F476
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 23:22:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755818535; cv=none; b=oa14S6pLo5vT8I/QaWrUriFPbNsq0QyrKRiO0CgkYUzEgLlgXO2WjoKNxec5sc7RWujySOXrcy00qgV/XXNlgRHLhYK7XpMTAa03DeO7IGgrh3UsOVFVxlBsGKBpKyJTWxd3kF8yLVUxB9wYUlwBo+bmUWTGUVfwIkBMhs3Nbt4=
+	t=1755818577; cv=none; b=pZuWmbtERvdHpHk6al9VwmPgpQxnSulsdPWHqEX26Ee1NDJguHMSqt2QkhkCewbamHyGdP0mZ8BJ1ryFIbzvyc7dU4jDgSUfGPizAzfErrN76yFtN26MctQFo1X6NS08QavmstTgMq3tRMwf9phk71M2LfJqnxzK2h4/75TcuPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755818535; c=relaxed/simple;
-	bh=2BvyIslzIiBfZwtPvHaqs9CYVw4F41ywAL7kfhQZaaI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dq/mz36uTCf5njzZUM60n2Bvb83IY0C0apSwIdgQC5xr55oNNofjKjK0lAKbGv/EOh3VeYuddoCYruIEO15E3AYHeJMZVHVy3ATAy8Se9x8xIjzT37G1HeiiIkIZAya3xHxBataH6QXm/feFcrJDI/6lV2lb6kZghH/ZF50Cdj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZIAL0TGr; arc=none smtp.client-ip=209.85.166.173
+	s=arc-20240116; t=1755818577; c=relaxed/simple;
+	bh=IHd/HmShgmsVOK6lB4O1fFiKpvaQCMlIQ7KQOrkAqyA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AWjU4HmkExupv01vBolAwmHnm+lxK9oclhB+5VvIJVFP8rTdlR5e7J/Y3mtdBCDIGeR9OpjcXl36JxStmou0IedGsh0LDgISZpCZMJn7LxfdjhJTeCOz7ZANC+chVdxTOA8zkylwzucI4AOgOx/kJeuOZx4+bn8/NGZmwczKisw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EgXJIQZX; arc=none smtp.client-ip=209.85.160.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZIAL0TGr"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3e56ff1f604so8205285ab.0
-        for <git@vger.kernel.org>; Thu, 21 Aug 2025 16:22:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EgXJIQZX"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-30ccebab736so1194583fac.3
+        for <git@vger.kernel.org>; Thu, 21 Aug 2025 16:22:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755818533; x=1756423333; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1755818574; x=1756423374; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DAifXgn8sMIwtvZqZXOCDakPEKIV4QKwRsmES8bWRe0=;
-        b=ZIAL0TGrTdjsU10oCvUBdaW5PHDUZyd97F3psIXxkimzrOiyeR3gmh8FDrOh/2Fush
-         lFOFFF42SrQEPxhNkyo1vD0w1ITmZQ0K+cPROZCWWpM/uPb5Iq6xZijiHHL00bXvOM/M
-         oWPk6LSt7j/NMUL3gxvzkH9wxEy7NgFFYe3DHVfom2pj1yN8/Qfqxnlgh2WYfXuENxrr
-         YGAWyLB72Rcuc6bhpmh4Cv0qSZC7lJlzofh/MKwZY9fcHhHk75FZ4kjQ0xGXuXtepYcU
-         VcHcskPNT15gCyEXVFhF7S8zueBEripaJAgvTXycD4cc/aXfporHvppFgVzEckW+i+va
-         VyVQ==
+        bh=00q7yCY2kGGtf+iO2exF+gJHw+Glc0PgRVoL1VsrNnc=;
+        b=EgXJIQZXgSo21rdfKIqMnMCx5bmXPKQxVCSaEcWavfvMY7ddcfRXyspVMRtx0Kr9LE
+         iYYQMGqI+NXNh2x7XNpH2TDI17iohZ2lKVvanfxcQxyIX7bjMciGpyLUzBjENxCQLeeO
+         A1LpCjmeb6akHloh8yFiUovot91rVqpB95uh5KU4538huH4n+wOoVIe4t4uAnzwM2lQG
+         CTuAmz4oXU7kHRllJkmnm8x0rXfqDLyNa4lQ3YRZtj1nM4klQ+7qGH9ZRwLEUSHzf0zm
+         n7Rd+ZXi4YUpD3V9vlBDuV1ghgsCLZdza/3dE8WIbcWtm1VBjkHhLPgUmhuHjsNeDdRF
+         Yg5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755818533; x=1756423333;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1755818574; x=1756423374;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DAifXgn8sMIwtvZqZXOCDakPEKIV4QKwRsmES8bWRe0=;
-        b=u6YFMlU7cjobfej7x2i4fTy8Nigd9TiAyYd+5F8glQTATKupWg06XofAbqS8sYz9I1
-         4idZG8d52vlIR0BvSibpIF0PNoC7Y8A1IL/of8JkKAXXoVzM/9erSzvquOik859gDxuw
-         AepVnOp1xddvWIXCSKjEt1gS7nI/J9ZU9RNafjbiZygZyWiP5JM+aVngUDI+D1atOHHF
-         TYj4JjSfOmf/XgWgQezUUuxqA4+PJPxZTx4qYAlt+fsdcJA9Sq773NAVPuXU/XzzX23b
-         tpvNo/WqD+62GNNRBECRMAB5v72086v5xEGINO9ZDV4UsNzThfUoGi2H14yfa76YSySO
-         pejA==
-X-Gm-Message-State: AOJu0YwQm/dlsYIWFrOBprJaivRFj3ilgLaA/O/H1LA4RwzJOHOScMGv
-	wr2NlNeV5ybmvwFqnSVsOzC833fVdAsJXfRRLtH4BoVMZPG/3m0hBcs/Q8yHpbf1sSSC35D2JJu
-	eF+b4miDXgC8oXroSfJ/fM4g4orHIA24=
-X-Gm-Gg: ASbGncu4wmgS0p+NyMMBQL6PPDHwXi8Lem/AjKVL4/v0vWtg9txJFl0c0EBMIuqCWuo
-	tmpKJbz/qut6v7FJg26f5BOu2utH3xj7Qu2hwFUqnlZucnNnh18GNE7/yGHZeKSqJnihy9vCaqx
-	Ay5e4U+Z19V+bMQGWriQES5sqpfvlwBXyXArDedMPe6P9xlRGeXjNNmW8GTqEjQ2EMXMD8+8anA
-	H4P46X0SiEzwZRZFA/u2Bl3Z0cWeUVh2GLNRTq8oRD6kuN1LC4=
-X-Google-Smtp-Source: AGHT+IH14qQsGWSrLqOxbuB2kl9tM3Dq4qyGkAYylnI4hNHcVbP/CQySw+1Sj8aE3IRgQXFzVDXxZu2SUpPPqx9aW+k=
-X-Received: by 2002:a92:c248:0:b0:3e3:fe52:e576 with SMTP id
- e9e14a558f8ab-3e9203e71edmr22023175ab.9.1755818533142; Thu, 21 Aug 2025
- 16:22:13 -0700 (PDT)
+        bh=00q7yCY2kGGtf+iO2exF+gJHw+Glc0PgRVoL1VsrNnc=;
+        b=Rt2Q6ZrtkqPzSJ9bcG0RCOzC1lG3Rqm+DloxzY+HVfJYJHoXo2HEQkES6OUs58eH2l
+         JDHzzNaM2JrZ/ik7DgEax0CqvN6n2pd5ZsGMDxckdUJH/o1yehnT2dzxulsMJ1icZ9/i
+         lDr2YEao4acZB6mYGaoFfQe0Sf8kNB/hcq1q2r8gHJe7U7iieWiQ7h2eTvawADdJME9l
+         7uo/LT+KomOODQTOSlj9sRCRkS6+Qt4N00aBWj3nA+crjfEn9mJtn7b40zetbcPlEedG
+         b304ylht7I8K+lLH6uMPwTqpgDuI+ZYMiLYt1XU/pBxjS45Ir7p6/WDfqt69s4JBB2lw
+         nJqA==
+X-Gm-Message-State: AOJu0YwIZvXa+8+cQAjOlu6qV6BB08yvjIFL3K8PkZDb3rhGLLasyKMq
+	o5z13VafWMy2vqJTB5MBDzirzOKXrmTG/utoTDwz+1HIN2loudoJw+W2aVbYPQ5O
+X-Gm-Gg: ASbGnctyjg7znRus4M2dYxTnWVzV2c0WECPnmbsBapXxqcy3S4bL6PqupWUfS3c9dBu
+	qlBIKtjCofS+qk+5Gdc26tCWbis48+eP7AIjc72pd4MaL6zaQHk59F+NTzU89F/Y6hYIGrau5N5
+	9W8p8ZhAdHh7QlvCnbg5luvQQhXk1zTG+hcX4RFBy5KMM/mfxSxo1xI/BILCDfXEaSzzLRIygn1
+	cVhPFigIyspt/URN88UUj165xnwlMH1DEiuekroAYehaAsTq3W0nwR+bO9Z5y/tJOedYIaD7QoL
+	4bMwRp7VwlVyoYO8kIali1hgdwpq1yAXWhts3wmcQr1qR1+IoRZcEJuDUsvo22leZLSm2gTZzVO
+	al3fgju05b1dnMfRNamiuFfXGccRodes=
+X-Google-Smtp-Source: AGHT+IHa2P+WKPtD63KXE74qeAhuhzWP+w8zAq7T57xRMdtvCdzqpPigSueVOSmESKNlG/Acv5Jq8g==
+X-Received: by 2002:a05:6871:8905:b0:2d5:4f4:e24d with SMTP id 586e51a60fabf-314dcad7d1amr501246fac.6.1755818574323;
+        Thu, 21 Aug 2025 16:22:54 -0700 (PDT)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7439204d621sm3759747a34.40.2025.08.21.16.22.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Aug 2025 16:22:53 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v2 0/4] bulk-checkin: remove global transaction state
+Date: Thu, 21 Aug 2025 18:22:45 -0500
+Message-ID: <20250821232249.319427-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250820225531.1212935-1-jltobler@gmail.com>
+References: <20250820225531.1212935-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1956.git.1755715196.gitgitgadget@gmail.com> <dd458e043548a8ed33070657cc98128efb606847.1755715196.git.gitgitgadget@gmail.com>
-In-Reply-To: <dd458e043548a8ed33070657cc98128efb606847.1755715196.git.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 21 Aug 2025 16:22:01 -0700
-X-Gm-Features: Ac12FXxfyrziZZqe81sUSLD2MjaHOPjcs4ieL-yyrBbSCwtrIKofF949IdwgR-c
-Message-ID: <CABPp-BEvFL8WYyn404u09y6UyTmbPbyrj6N=YvpMZZmpui0mvQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] path-walk: create initializer for path lists
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com, 
-	johannes.schindelin@gmx.de, johncai86@gmail.com, jonathantanmy@google.com, 
-	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com, me@ttaylorr.com, 
-	peff@peff.net, ps@pks.im, Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 20, 2025 at 11:40=E2=80=AFAM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <stolee@gmail.com>
->
-> The previous change fixed a bug in 'git repack -adf --path-walk' that
-> was due to an update to how path lists are initialized and missing some
-> important cases when processing the pending objects.
->
-> This change takes the three critical places where path lists are
-> initialized and combines them into a static method. This simplifies the
-> callers somewhat while also helping to avoid a missed update in the
-> future.
->
-> The other places where a path list (struct type_and_oid_list) is
-> initialized is for the following "fixed" lists:
->
->  * Tag objects.
->  * Commit objects.
->  * Root trees.
->  * Tagged trees.
->  * Tagged blobs.
->
-> These lists are created and consumed in different ways, with only the
-> root trees being passed into the logic that cares about the
-> "maybe_interesting" bit. It is appropriate to keep these uses separate.
->
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> ---
->  path-walk.c | 57 +++++++++++++++++++++++------------------------------
->  1 file changed, 25 insertions(+), 32 deletions(-)
->
-> diff --git a/path-walk.c b/path-walk.c
-> index 1215ed398f4f..f1ceed99e94c 100644
-> --- a/path-walk.c
-> +++ b/path-walk.c
-> @@ -105,6 +105,24 @@ static void push_to_stack(struct path_walk_context *=
-ctx,
->         prio_queue_put(&ctx->path_stack, xstrdup(path));
->  }
->
-> +static void add_path_to_list(struct path_walk_context *ctx,
-> +                            const char *path,
-> +                            enum object_type type,
-> +                            struct object_id *oid,
-> +                            int interesting)
-> +{
-> +       struct type_and_oid_list *list =3D strmap_get(&ctx->paths_to_list=
-s, path);
-> +
-> +       if (!list) {
-> +               CALLOC_ARRAY(list, 1);
-> +               list->type =3D type;
-> +               strmap_put(&ctx->paths_to_lists, path, list);
-> +       }
-> +
-> +       list->maybe_interesting |=3D interesting;
-> +       oid_array_append(&list->oids, oid);
-> +}
-> +
->  static int add_tree_entries(struct path_walk_context *ctx,
->                             const char *base_path,
->                             struct object_id *oid)
-> @@ -129,7 +147,6 @@ static int add_tree_entries(struct path_walk_context =
-*ctx,
->
->         init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size=
-);
->         while (tree_entry(&desc, &entry)) {
-> -               struct type_and_oid_list *list;
->                 struct object *o;
->                 /* Not actually true, but we will ignore submodules later=
-. */
->                 enum object_type type =3D S_ISDIR(entry.mode) ? OBJ_TREE =
-: OBJ_BLOB;
-> @@ -190,17 +207,10 @@ static int add_tree_entries(struct path_walk_contex=
-t *ctx,
->                                 continue;
->                 }
->
-> -               if (!(list =3D strmap_get(&ctx->paths_to_lists, path.buf)=
-)) {
-> -                       CALLOC_ARRAY(list, 1);
-> -                       list->type =3D type;
-> -                       strmap_put(&ctx->paths_to_lists, path.buf, list);
-> -               }
-> -               push_to_stack(ctx, path.buf);
-> -
-> -               if (!(o->flags & UNINTERESTING))
-> -                       list->maybe_interesting =3D 1;
-> +               add_path_to_list(ctx, path.buf, type, &entry.oid,
-> +                                !(o->flags & UNINTERESTING));
->
-> -               oid_array_append(&list->oids, &entry.oid);
-> +               push_to_stack(ctx, path.buf);
->         }
->
->         free_tree_buffer(tree);
-> @@ -377,16 +387,9 @@ static int setup_pending_objects(struct path_walk_in=
-fo *info,
->                         if (!info->trees)
->                                 continue;
->                         if (pending->path) {
-> -                               struct type_and_oid_list *list;
->                                 char *path =3D *pending->path ? xstrfmt("=
-%s/", pending->path)
->                                                             : xstrdup("")=
-;
-> -                               if (!(list =3D strmap_get(&ctx->paths_to_=
-lists, path))) {
-> -                                       CALLOC_ARRAY(list, 1);
-> -                                       list->type =3D OBJ_TREE;
-> -                                       strmap_put(&ctx->paths_to_lists, =
-path, list);
-> -                               }
-> -                               list->maybe_interesting =3D 1;
-> -                               oid_array_append(&list->oids, &obj->oid);
-> +                               add_path_to_list(ctx, path, OBJ_TREE, &ob=
-j->oid, 1);
->                                 free(path);
->                         } else {
->                                 /* assume a root tree, such as a lightwei=
-ght tag. */
-> @@ -397,20 +400,10 @@ static int setup_pending_objects(struct path_walk_i=
-nfo *info,
->                 case OBJ_BLOB:
->                         if (!info->blobs)
->                                 continue;
-> -                       if (pending->path) {
-> -                               struct type_and_oid_list *list;
-> -                               char *path =3D pending->path;
-> -                               if (!(list =3D strmap_get(&ctx->paths_to_=
-lists, path))) {
-> -                                       CALLOC_ARRAY(list, 1);
-> -                                       list->type =3D OBJ_BLOB;
-> -                                       strmap_put(&ctx->paths_to_lists, =
-path, list);
-> -                               }
-> -                               list->maybe_interesting =3D 1;
-> -                               oid_array_append(&list->oids, &obj->oid);
-> -                       } else {
-> -                               /* assume a root tree, such as a lightwei=
-ght tag. */
-> +                       if (pending->path)
-> +                               add_path_to_list(ctx, pending->path, OBJ_=
-BLOB, &obj->oid, 1);
-> +                       else
->                                 oid_array_append(&tagged_blobs->oids, &ob=
-j->oid);
-> -                       }
->                         break;
->
->                 case OBJ_COMMIT:
-> --
-> gitgitgadget
+Greetings,
 
-Looks like a straightforward collapsing of common code into a new function.
+The bulk-checkin subsystem provides an interface to write objects to the
+object database in a bulk transaction. The state of an ongoing
+transaction is stored across several global variables. This series aims
+to remove this global transaction state in favor of storing state in in
+`struct object_database`. This is done in preparation for a follow-up
+change where the goal is to eventually move these transaction interfaces
+into "odb.h".
+
+Changes since V1:
+
+- `index_blob_bulk_checkin()` now assumes that the caller always
+  provides a setup `struct odb_transaction`. Callers are adjusted to
+  ensure this.
+- Functions in bulk-checkin.c now consistently access the repository
+  through the provided `odb_transaction`.
+
+Thanks,
+-Justin
+
+Justin Tobler (4):
+  bulk-checkin: introduce object database transaction structure
+  bulk-checkin: remove global transaction state
+  bulk-checkin: require transaction for index_blob_bulk_checkin()
+  bulk-checkin: use repository variable from transaction
+
+ builtin/add.c            |   5 +-
+ builtin/unpack-objects.c |   5 +-
+ builtin/update-index.c   |   7 +-
+ bulk-checkin.c           | 153 +++++++++++++++++++++------------------
+ bulk-checkin.h           |  25 ++++---
+ cache-tree.c             |   5 +-
+ object-file.c            |  30 +++++---
+ odb.h                    |   8 ++
+ read-cache.c             |   5 +-
+ 9 files changed, 142 insertions(+), 101 deletions(-)
+
+Range-diff against v1:
+1:  5c9358e0b03 = 1:  5c9358e0b03 bulk-checkin: introduce object database transaction structure
+2:  4a1b80a6baf = 2:  4a1b80a6baf bulk-checkin: remove global transaction state
+-:  ----------- > 3:  ce329932fdd bulk-checkin: require transaction for index_blob_bulk_checkin()
+3:  2ca78c8d343 ! 4:  08e26647915 bulk-checkin: wire repository variable
+    @@ Metadata
+     Author: Justin Tobler <jltobler@gmail.com>
+     
+      ## Commit message ##
+    -    bulk-checkin: wire repository variable
+    +    bulk-checkin: use repository variable from transaction
+     
+         The bulk-checkin subsystem depends on `the_repository`. Adapt functions
+    -    and call sites to wire the repository variable where needed. The
+    -    `USE_THE_REPOSITORY_VARIBALE` is still required as the
+    +    and call sites to access the repository through `struct odb_transaction`
+    +    instead. The `USE_THE_REPOSITORY_VARIBALE` is still required as the
+         `pack_compression_level` and `pack_size_limit_cfg` globals are still
+         used.
+     
+    @@ bulk-checkin.c: struct odb_transaction {
+      };
+      
+     -static void finish_tmp_packfile(struct strbuf *basename,
+    -+static void finish_tmp_packfile(struct repository *repo,
+    +-				const char *pack_tmp_name,
+    +-				struct pack_idx_entry **written_list,
+    +-				uint32_t nr_written,
+    +-				struct pack_idx_option *pack_idx_opts,
+    ++static void finish_tmp_packfile(struct odb_transaction *transaction,
+     +				struct strbuf *basename,
+    - 				const char *pack_tmp_name,
+    - 				struct pack_idx_entry **written_list,
+    - 				uint32_t nr_written,
+    -@@ bulk-checkin.c: static void finish_tmp_packfile(struct strbuf *basename,
+    + 				unsigned char hash[])
+      {
+    ++	struct bulk_checkin_packfile *state = &transaction->packfile;
+    ++	struct repository *repo = transaction->odb->repo;
+      	char *idx_tmp_name = NULL;
+      
+     -	stage_tmp_packfiles(the_repository, basename, pack_tmp_name,
+    -+	stage_tmp_packfiles(repo, basename, pack_tmp_name,
+    - 			    written_list, nr_written, NULL, pack_idx_opts, hash,
+    - 			    &idx_tmp_name);
+    +-			    written_list, nr_written, NULL, pack_idx_opts, hash,
+    +-			    &idx_tmp_name);
+     -	rename_tmp_packfile_idx(the_repository, basename, &idx_tmp_name);
+    ++	stage_tmp_packfiles(repo, basename, state->pack_tmp_name,
+    ++			    state->written, state->nr_written, NULL,
+    ++			    &state->pack_idx_opts, hash, &idx_tmp_name);
+     +	rename_tmp_packfile_idx(repo, basename, &idx_tmp_name);
+      
+      	free(idx_tmp_name);
+      }
+      
+     -static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
+    -+static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state,
+    -+					struct repository *repo)
+    ++static void flush_bulk_checkin_packfile(struct odb_transaction *transaction)
+      {
+    ++	struct bulk_checkin_packfile *state = &transaction->packfile;
+    ++	struct repository *repo = transaction->odb->repo;
+      	unsigned char hash[GIT_MAX_RAWSZ];
+      	struct strbuf packname = STRBUF_INIT;
+    + 
+     @@ bulk-checkin.c: static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
+      				  CSUM_HASH_IN_STREAM | CSUM_FSYNC | CSUM_CLOSE);
+      	} else {
+    @@ bulk-checkin.c: static void flush_bulk_checkin_packfile(struct bulk_checkin_pack
+     -	strbuf_addf(&packname, "%s/pack/pack-%s.", repo_get_object_directory(the_repository),
+     -		    hash_to_hex(hash));
+     -	finish_tmp_packfile(&packname, state->pack_tmp_name,
+    -+	strbuf_addf(&packname, "%s/pack/pack-%s.", repo_get_object_directory(repo),
+    +-			    state->written, state->nr_written,
+    +-			    &state->pack_idx_opts, hash);
+    ++	strbuf_addf(&packname, "%s/pack/pack-%s.",
+    ++		    transaction->odb->sources->path,
+     +		    hash_to_hex_algop(hash, repo->hash_algo));
+    -+	finish_tmp_packfile(repo, &packname, state->pack_tmp_name,
+    - 			    state->written, state->nr_written,
+    - 			    &state->pack_idx_opts, hash);
+    ++
+    ++	finish_tmp_packfile(transaction, &packname, hash);
+      	for (uint32_t i = 0; i < state->nr_written; i++)
+    + 		free(state->written[i]);
+    + 
+     @@ bulk-checkin.c: static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
+      
+      	strbuf_release(&packname);
+    @@ bulk-checkin.c: static void flush_batch_fsync(struct odb_transaction *transactio
+      	 */
+     -	strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", repo_get_object_directory(the_repository));
+     +	strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX",
+    -+		    repo_get_object_directory(transaction->odb->repo));
+    ++		    transaction->odb->sources->path);
+      	temp = xmks_tempfile(temp_path.buf);
+      	fsync_or_die(get_tempfile_fd(temp), get_tempfile_path(temp));
+      	delete_tempfile(&temp);
+    @@ bulk-checkin.c: static void flush_batch_fsync(struct odb_transaction *transactio
+      }
+      
+     -static int already_written(struct bulk_checkin_packfile *state, struct object_id *oid)
+    -+static int already_written(struct bulk_checkin_packfile *state,
+    -+			   struct repository *repo, struct object_id *oid)
+    ++static int already_written(struct odb_transaction *transaction,
+    ++			   struct object_id *oid)
+      {
+      	/* The object may already exist in the repository */
+     -	if (odb_has_object(the_repository->objects, oid,
+    -+	if (odb_has_object(repo->objects, oid,
+    ++	if (odb_has_object(transaction->odb, oid,
+      			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+      		return 1;
+      
+    + 	/* Might want to keep the list sorted */
+    +-	for (uint32_t i = 0; i < state->nr_written; i++)
+    +-		if (oideq(&state->written[i]->oid, oid))
+    ++	for (uint32_t i = 0; i < transaction->packfile.nr_written; i++)
+    ++		if (oideq(&transaction->packfile.written[i]->oid, oid))
+    + 			return 1;
+    + 
+    + 	/* This is a new object we need to keep */
+     @@ bulk-checkin.c: static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
+    + }
+      
+      /* Lazily create backing packfile for the state */
+    - static void prepare_to_stream(struct bulk_checkin_packfile *state,
+    -+			      struct repository *repo,
+    +-static void prepare_to_stream(struct bulk_checkin_packfile *state,
+    ++static void prepare_to_stream(struct odb_transaction *transaction,
+      			      unsigned flags)
+      {
+    ++	struct bulk_checkin_packfile *state = &transaction->packfile;
+      	if (!(flags & INDEX_WRITE_OBJECT) || state->f)
+      		return;
+      
+     -	state->f = create_tmp_packfile(the_repository, &state->pack_tmp_name);
+    -+	state->f = create_tmp_packfile(repo, &state->pack_tmp_name);
+    ++	state->f = create_tmp_packfile(transaction->odb->repo,
+    ++				       &state->pack_tmp_name);
+      	reset_pack_idx_option(&state->pack_idx_opts);
+      
+      	/* Pretend we are going to write only one object */
+     @@ bulk-checkin.c: static void prepare_to_stream(struct bulk_checkin_packfile *state,
+    + 		die_errno("unable to write pack header");
+      }
+      
+    - static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
+    -+				struct repository *repo,
+    - 				struct object_id *result_oid,
+    - 				int fd, size_t size,
+    - 				const char *path, unsigned flags)
+    +-static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
+    +-				struct object_id *result_oid,
+    +-				int fd, size_t size,
+    +-				const char *path, unsigned flags)
+    ++int index_blob_bulk_checkin(struct odb_transaction *transaction,
+    ++			    struct object_id *result_oid,
+    ++			    int fd, size_t size,
+    ++			    const char *path, unsigned flags)
+    + {
+    ++	struct bulk_checkin_packfile *state = &transaction->packfile;
+    + 	off_t seekback, already_hashed_to;
+    + 	struct git_hash_ctx ctx;
+    + 	unsigned char obuf[16384];
+     @@ bulk-checkin.c: static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
+      
+      	header_len = format_object_header((char *)obuf, sizeof(obuf),
+      					  OBJ_BLOB, size);
+     -	the_hash_algo->init_fn(&ctx);
+    -+	repo->hash_algo->init_fn(&ctx);
+    ++	transaction->odb->repo->hash_algo->init_fn(&ctx);
+      	git_hash_update(&ctx, obuf, header_len);
+      
+      	/* Note: idx is non-NULL when we are writing */
+    @@ bulk-checkin.c: static int deflate_blob_to_pack(struct bulk_checkin_packfile *st
+      		CALLOC_ARRAY(idx, 1);
+      
+     -		prepare_to_stream(state, flags);
+    -+		prepare_to_stream(state, repo, flags);
+    ++		prepare_to_stream(transaction, flags);
+      		hashfile_checkpoint_init(state->f, &checkpoint);
+      	}
+      
+    @@ bulk-checkin.c: static int deflate_blob_to_pack(struct bulk_checkin_packfile *st
+      
+      	while (1) {
+     -		prepare_to_stream(state, flags);
+    -+		prepare_to_stream(state, repo, flags);
+    ++		prepare_to_stream(transaction, flags);
+      		if (idx) {
+      			hashfile_checkpoint(state->f, &checkpoint);
+      			idx->offset = state->offset;
+    @@ bulk-checkin.c: static int deflate_blob_to_pack(struct bulk_checkin_packfile *st
+      		hashfile_truncate(state->f, &checkpoint);
+      		state->offset = checkpoint.offset;
+     -		flush_bulk_checkin_packfile(state);
+    -+		flush_bulk_checkin_packfile(state, repo);
+    ++		flush_bulk_checkin_packfile(transaction);
+      		if (lseek(fd, seekback, SEEK_SET) == (off_t) -1)
+      			return error("cannot seek back");
+      	}
+    @@ bulk-checkin.c: static int deflate_blob_to_pack(struct bulk_checkin_packfile *st
+      
+      	idx->crc32 = crc32_end(state->f);
+     -	if (already_written(state, result_oid)) {
+    -+	if (already_written(state, repo, result_oid)) {
+    ++	if (already_written(transaction, result_oid)) {
+      		hashfile_truncate(state->f, &checkpoint);
+      		state->offset = checkpoint.offset;
+      		free(idx);
+    @@ bulk-checkin.c: void fsync_loose_object_bulk_checkin(struct odb_transaction *tra
+      }
+      
+     -int index_blob_bulk_checkin(struct odb_transaction *transaction,
+    -+int index_blob_bulk_checkin(struct repository *repo,
+    -+			    struct odb_transaction *transaction,
+    - 			    struct object_id *oid, int fd, size_t size,
+    - 			    const char *path, unsigned flags)
+    +-			    struct object_id *oid, int fd, size_t size,
+    +-			    const char *path, unsigned flags)
+    +-{
+    +-	return deflate_blob_to_pack(&transaction->packfile, oid, fd, size, path,
+    +-				    flags);
+    +-}
+    +-
+    + struct odb_transaction *begin_odb_transaction(struct object_database *odb)
+      {
+    - 	int status;
+    - 
+    - 	if (transaction) {
+    --		status = deflate_blob_to_pack(&transaction->packfile, oid, fd,
+    --					      size, path, flags);
+    -+		status = deflate_blob_to_pack(&transaction->packfile,
+    -+					      repo, oid, fd, size, path, flags);
+    - 	} else {
+    - 		struct bulk_checkin_packfile state = { 0 };
+    - 
+    --		status = deflate_blob_to_pack(&state, oid, fd, size, path, flags);
+    --		flush_bulk_checkin_packfile(&state);
+    -+		status = deflate_blob_to_pack(&state, repo, oid, fd, size, path, flags);
+    -+		flush_bulk_checkin_packfile(&state, repo);
+    - 	}
+    - 
+    - 	return status;
+    + 	if (!odb->transaction) {
+     @@ bulk-checkin.c: void flush_odb_transaction(struct odb_transaction *transaction)
+      		return;
+      
+      	flush_batch_fsync(transaction);
+     -	flush_bulk_checkin_packfile(&transaction->packfile);
+    -+	flush_bulk_checkin_packfile(&transaction->packfile,
+    -+				    transaction->odb->repo);
+    ++	flush_bulk_checkin_packfile(transaction);
+      }
+      
+      void end_odb_transaction(struct odb_transaction *transaction)
+    -
+    - ## bulk-checkin.h ##
+    -@@ bulk-checkin.h: void fsync_loose_object_bulk_checkin(struct odb_transaction *transaction,
+    -  * binary blobs, they generally do not want to get any conversion, and
+    -  * callers should avoid this code path when filters are requested.
+    -  */
+    --int index_blob_bulk_checkin(struct odb_transaction *transaction,
+    -+int index_blob_bulk_checkin(struct repository *repo,
+    -+			    struct odb_transaction *transaction,
+    - 			    struct object_id *oid, int fd, size_t size,
+    - 			    const char *path, unsigned flags);
+    - 
+    -
+    - ## object-file.c ##
+    -@@ object-file.c: int index_fd(struct index_state *istate, struct object_id *oid,
+    - 		ret = index_core(istate, oid, fd, xsize_t(st->st_size),
+    - 				 type, path, flags);
+    - 	else
+    --		ret = index_blob_bulk_checkin(the_repository->objects->transaction,
+    -+		ret = index_blob_bulk_checkin(the_repository,
+    -+					      the_repository->objects->transaction,
+    - 					      oid, fd, xsize_t(st->st_size),
+    - 					      path, flags);
+    - 	close(fd);
+
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+-- 
+2.51.0
+
