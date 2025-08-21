@@ -1,125 +1,161 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF66264F99
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 10:14:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FC0286410
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 10:21:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755771253; cv=none; b=BomJ0P89M+0NS8MYcGl5Cx2s9TtlQW8cBSqaCwtsI/beoJoDfPmJQZ0DtzHPP5tiRuzfMTVwZFylCB7+ANeofZwc/2/468ABFSoVGBnwXnq/+M8VdvNTpd62mwIfxb92mIZgQTQA16H64iZpVfQgHAbqE/LPgUpAWCI2yuXnHag=
+	t=1755771705; cv=none; b=WxhOCKjAyUm1NfM3djfitl/ck8ISuI6MwcKo0QZB2QCAFlKylesyPoOKM5qkp+9fnumzUZZdc8aiCN07PC7PmvlOYs0xqN+DnIv9WEUlcv4pdnAeHPvEEoGqLAwClOihpV0ryp4u3JFgwLaxdKc32je8odS4TONSGiKCrO4X8iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755771253; c=relaxed/simple;
-	bh=zPahBjiuy3ddS8ecclaaDaTTXvbMa8+KhcraJNIS/8M=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pJ1dkqILoI9P39OWKOcn6gTkv/OyTcxtP75jWp/xy6vY6YmBbMk9nLHsGyc4j42pStivCGj9ZuoDRVpc78Mt2lpgNJdC+51nVp0h0GS2jCIDGKTjSsb/fjAbkgxJRxy0YdMhg0A+sU1kMG4EkUDMAYB2RGYXoeq7m71h7TsRCTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MCQTckXz; arc=none smtp.client-ip=209.85.222.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755771705; c=relaxed/simple;
+	bh=EuTn6J+2A5ouTu2XYUEvk4q7aRC6bKw3B9+MCXCGVtA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dXg5wn7ZMHFDjG0S7jWWc+I6eGJkDqBwNp8O8/DlSIUMerEzDanx3KuLtt7zjLEO5D2rAr96Mn+d8iJ0411YqtJ14/v4Ay0sR8zRc1UnEnUlO6PTYKjNHGltnOD883025cNUWNGvT3Hl3tOiR9L0Wt4J70IXki74hgT8sg/ykdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S7eCgnHT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aGDb8qUG; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MCQTckXz"
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-8902ee514deso584278241.1
-        for <git@vger.kernel.org>; Thu, 21 Aug 2025 03:14:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755771251; x=1756376051; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9Jwjw6fxvbgqn8utbjupo3ht5s6BN2/pcLh8EXCgGYI=;
-        b=MCQTckXz0ulzmFKSR95UF6N/D/voHDRTx4uk8U19d+EodeH+lLQyRn+6OGuxmI5RoK
-         nk5/BxAvWUfyOknGAjlVvzJ+0Urhj+BVB0c/Z3NhwLvghDclNuL8ltonA0uCuKFuEgfP
-         u0Mnn8H9fCaz0vjTxP/t7nM431YENU8l97oZrFyMssZE5HY8JthNRAkoHErc3vwxt/Bi
-         8PIncI89dNWqC2sq3JQZ4UjrzMCaMgqsx4m9En88/1kdx4T/JvQqbGoGFQ5GzMuqWKa1
-         j8d4REKD5lwLtQ0cZVKpvue3K4gOUsL+ciYCGcvo7HW+/ULSJpY06+KXmd5PidQRZAl5
-         UtSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755771251; x=1756376051;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9Jwjw6fxvbgqn8utbjupo3ht5s6BN2/pcLh8EXCgGYI=;
-        b=mN/7qxVM43uSXRTLwogKdBXXYNGF5dhUuGnPetiaIyMw8IiT+Cpd1KM9vksvgggmMH
-         u3ufF3R2zXqzpIChkq9+Y0CO4+uSqk9fk47aWAHndXccm4rJah74CgesRcs6ViOFS/je
-         DZH5uD66kCauqNehUaV9lbxTEixx9kBTq5cgksnVgV5pXl8KtKsVm6herZMDzZilYOam
-         40hI6KKh40zZi6YgU/7ZfeLHz+qyvgJ2JH5HApetznoyiLVo5wuk0B9+VdYBHJmEsehX
-         Srt4Q/adkflPhRtnKxvWHGi7IrGVutKrGWd5gn8tqys1qGob6eY1efno3/jw74UBnTMZ
-         CpoA==
-X-Forwarded-Encrypted: i=1; AJvYcCU8LSy38r18fduFRWOxlDbCfKVLBfF5ChBNNnQ+mlk/FT2a6hdsIAnbiPtpAyy1Ua427ck=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxZQTcmm3GAgsHpMHcPfQg7v7FASC6tRzipr0176xNpZ5nwdQSE
-	fNVhqaSWmWS+FxNhrHCShTi/2SLnIeV/zN91CbzBLtSuti50NpMn/so3jT2OTcAMPXh0Y94dCyc
-	53WMuGtwWSa7wQItlasfdLygMyJGg7iY=
-X-Gm-Gg: ASbGncskDsNcxCkqEJoHApPgJ97vAOjXvCKyy64pvgpJsRkBBS2JQjtYyg8qx1Q3z8g
-	XUU9OiHY+MgBCat9wO7wY0mvdkfvYAdMdH68dkyGcMO1xl1Uf++cF9rpMdAxXbGxpATZ0s9lInG
-	+USutoLo6z4EB4iqn4EzH4tseJuDq+9SEc73TBLb5BvdsLiryI8rNWtYcaiG5aFOSSxy4RCYQcp
-	otXsJuBrjYrcu1Cy4rQIFpKJsuusyFB9G+zUmvNQpNg8xZC+zJM
-X-Google-Smtp-Source: AGHT+IEMFA+iVdRsWOjACCKcIr7pZsdBWEze2L0IYiJTukAVFWzd+LybZRROShXxAFlo6LMBjgJUKEGPKy4hDMA29go=
-X-Received: by 2002:a05:6102:374a:b0:4e2:83c4:9298 with SMTP id
- ada2fe7eead31-51bed71f2cemr525875137.3.1755771251162; Thu, 21 Aug 2025
- 03:14:11 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 21 Aug 2025 03:14:10 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 21 Aug 2025 03:14:10 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
-References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S7eCgnHT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aGDb8qUG"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id AB971EC0089;
+	Thu, 21 Aug 2025 06:21:40 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Thu, 21 Aug 2025 06:21:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1755771700; x=1755858100; bh=JY5VTwPOLL
+	lui4quusb0MdPJxAtInjZjGMxpnQ5k+zU=; b=S7eCgnHTUr/DttSFIItNA0n5BM
+	iZB4wZeccjlM+cYQSLboQBTmGBXwk1JMFJB+Lgn8STh73mebQpWTfY6y/E+DEpo7
+	KU4E1qLb5T5OwJBb/VUCOhKNrlOUyTLyUewqKK6mvTarwHxJVbdt/TaZr37J/O3e
+	vMxMPHpuQFRRUlwwIAR8NMorDvso1eNDbK4Byesh65yDLWxAXN/lZzVO3m08cXdq
+	yuKL/Sn+S1MG0DkO6s4C+FZcv61LLwmpCe/4jTN/5A9M8R5Hcs4fkNes9TNyNUD4
+	kgcNb5tAF30Vpub/HIx8q3KUuwLwuJbcnulCJOcCsokYrdmhU6OSF/4jHHXQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755771700; x=1755858100; bh=JY5VTwPOLLlui4quusb0MdPJxAtInjZjGMx
+	pnQ5k+zU=; b=aGDb8qUG06WzkTauMR/0p6uaX/ph257TmyQJEB7Qx5lXQeVdule
+	EjP//46tz/57Tc3eG63KhJgmhWaxGWrmCY+f9nOLh0N6x32DcsY3ogpybhyfYmBz
+	fUGD3ndGE1mBMMJFCYiZQlAxEsNZ2lYkd8awpWT7TaunMooQN9YjRVc9SP716tsk
+	cm9qBuXnV1BHg6vnNlDw6bNd3HoAUlUxk3xpatAhoWEsdj4/Mhg3jZ4Ps45h9VHV
+	HspegzD/0QLCAF2fhTnXsaNjs1JJhYifc0xbyz6plHpLop6NGH/MdUviJom1IoyN
+	BGWyDb/CME+LrBVY4NSA07ArYEKu2aFF13w==
+X-ME-Sender: <xms:NPOmaKOrFUmwgYhhfD62ck3M3i2iGcmxejF-ljN3NYJP2LFvXasZ5A>
+    <xme:NPOmaMOOMF_dUuGN2wJM7X5ZQfJ1iZXh5Ok2YIVPUCn2wyaJ9QC04l1Qj5_L1jmB3
+    LAlu8WTaRDZPOfcMg>
+X-ME-Received: <xmr:NPOmaKt-fsbLt6qpd6aCHpAQR0qIZcmqnHPDUEl63oGeGvQK4IBmTo9UAAIgMeDBcFqEDTuHdOfAFIlWrCYAkBBxaQFdHtc7T71SWuFq5w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedtleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehmvggvthhsoh
+    hniheftddujeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:NPOmaGUMr6OIbhN-9F7_pJxmfTkGXGbr9UKUcY_IdtqT_0SR5rLecQ>
+    <xmx:NPOmaCuGWASTjjBA9HtUFGmC-enEqDI2o4Rhuxi_BG00Hac_oCI0iw>
+    <xmx:NPOmaCXMssmeSCwMq2sLuomGuDLtG4EWXHjU7aXmka_WWzfsJSdRZg>
+    <xmx:NPOmaFnq1C8p_rfXUTfzWtLR2SlZzsCuhOQXSMrPQZ5hQMpZEkujBg>
+    <xmx:NPOmaCK9swvfgxhPaAx3ONL09VCzoI4nPPPpV49xg3GgTl9WOV6RpLYF>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 Aug 2025 06:21:39 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id dee381fb (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 21 Aug 2025 10:21:38 +0000 (UTC)
+Date: Thu, 21 Aug 2025 12:21:34 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org, shejialuo@gmail.com
+Subject: Re: [GSoC][PATCH 1/2] builtin/refs: add 'exists' subcommand
+Message-ID: <aKbzLhqryk5d-zgh@pks.im>
+References: <20250821085246.929307-1-meetsoni3017@gmail.com>
+ <20250821085246.929307-2-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 21 Aug 2025 03:14:10 -0700
-X-Gm-Features: Ac12FXz6ltk6taUS-k2v2A5KcPdSMUTVmoJdtDbMy8xKmeZHXMaBnayjA8gEHB0
-Message-ID: <CAOLa=ZQkV6FXCocVFdBoxbR_0eioQeY3hkOGOke+XWciLeZ+PA@mail.gmail.com>
-Subject: Re: [GSoC PATCH 0/2] repo: add -z and objects.format
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im
-Content-Type: multipart/mixed; boundary="000000000000bba7a3063cdd5997"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250821085246.929307-2-meetsoni3017@gmail.com>
 
---000000000000bba7a3063cdd5997
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Aug 21, 2025 at 02:22:45PM +0530, Meet Soni wrote:
+> As part of the ongoing effort to consolidate reference handling,
+> introduce a new `exists` subcommand. This command provides the same
+> functionality and exit-code behavior as `git show-ref --exists`, serving
+> as its modern replacement.
+> 
+> The logic for `show-ref --exists` is minimal. Rather than creating a
+> shared helper function which would be overkill for ~20 lines of code,
+> its implementation is intentionally duplicated here. This contrasts with
+> `git refs list`, where sharing the larger implementation of
+> `for-each-ref` was necessary.
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+I agree with this decision. It doesn't really feel worth it to share
+code for such trivial functionality.
 
-> Hi!
->
-> This patchset adds two features to `git repo info`. They are unrelated,
-> but I preferred to send them together to avoid merge conflicts and
-> because they are small.
->
-> - The first patch adds the `-z` as an alias for `--format=null`, as
->   requested in [1]
->
-> - The second patch adds `objects.format`, which retrieves the same value
->   as `git rev-parse --show-object-format`
->
-> Thanks!
->
+> diff --git a/builtin/refs.c b/builtin/refs.c
+> index 76224feba4..617d8ab138 100644
+> --- a/builtin/refs.c
+> +++ b/builtin/refs.c
+> @@ -113,6 +117,48 @@ static int cmd_refs_list(int argc, const char **argv, const char *prefix,
+>  	return for_each_ref_core(argc, argv, prefix, repo, refs_list_usage);
+>  }
+>  
+> +static int cmd_refs_exists(int argc, const char **argv, const char *prefix,
+> +			   struct repository *repo UNUSED)
+> +{
+> +	struct strbuf unused_referent = STRBUF_INIT;
+> +	struct object_id unused_oid;
+> +	unsigned int unused_type;
+> +	int failure_errno = 0;
+> +	const char *ref;
+> +
 
-Just a tip: It would be nice to mention which base branch this is based
-on top of and dependencies.
+Let's drop this empty newline.
 
-The patches themselves look good to me, just a small nit on the first
-commit.
+> +	const char * const exists_usage[] = {
+> +		REFS_EXISTS_USAGE,
+> +		NULL,
+> +	};
+> +	struct option options[] = {
+> +		OPT_END(),
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options, exists_usage, 0);
+> +	if (!argc)
+> +		die("'git refs exists' requires a reference");
+> +
+> +	ref = *argv++;
+> +	if (*argv)
+> +		die("'git refs exists' requires exactly one reference");
 
-Thanks!
+We can combine these two error messages to just say `if (argc != 1)`.
+Also, the strings should be marked for translation.
 
-[snip]
+> +	if (refs_read_raw_ref(get_main_ref_store(the_repository), ref,
+> +			      &unused_oid, &unused_referent, &unused_type,
+> +			      &failure_errno)) {
+> +		if (failure_errno == ENOENT || failure_errno == EISDIR) {
+> +			error(_("reference does not exist"));
+> +			return 2;
+> +		} else {
+> +			errno = failure_errno;
+> +			error_errno(_("failed to look up reference"));
+> +			return 1;
 
---000000000000bba7a3063cdd5997
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 3b8e3b58a65fba8e_0.1
+I'd personally prefer to se a common exit path and use `goto` so that
+one doesn't have to worry about whether or not the `struct strbuf` needs
+to be free'd in error cases. But I'll leave it up to you to decide
+whether you want to do this change.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pbThYRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOW1FQy80N2Z6eTU2eCtqcXAxaERZalVaWVBYTXloRgpyWGtXcDRKQUd1
-dkd2SEhuZUJnaWsxekJ4ODJGdDF6VXpGSUhydWI0N2kvSCtEUURRVno5MitOQUsrWmRsSUtUClpN
-ZjZpb3BKenpFNFZ5L2w3K3k5NldMcEhMYXl6UmtzVjJRNUhjQ3JPT0JGYk9aS3ZPU3RGV0t2b3Vv
-WEJUZEMKcWFkOFIxNGtHSnR2MWlwSXl1VXRFd0tCMU1YczZacG53M01CV2REK3VJd3owU0xEa3hR
-ZXBhR3MrUXNPUzZiVApqN2ZXQU1XRnh4dEdaTk1JZjdWUmI1UDlkTk1kQnd2WWhOWXFXblRvUzJG
-NW5LcTRQMWF3dHlNeVN2NVd5enpaClhONXJLM3VuaHBXYUUvRjUzQ1dnWnNQM01kdUJzZVVQN25Z
-WFkyQXJLSFBSdHFUMCs1OGY4bUMxaGhGbUJTNTkKR3ErZHFUeEVWZVF6MlQza2Z2eDVVZnBHRE1k
-UHhDOWI5ODE2UFNFeDJwdEF5bE1aY1oyaFZzTUpNaEJnS1MvYQpSZ0dHdnRzdW1xbzhEclNxYUZK
-bnFlUFk3aFZLVklwSnpTNEloUXNlZUk5a3gzb2lScXFqK243QllWMXdXc0xFClcwdmUwd1oyaWk5
-UU4wckFRa3JpVWE0dEMyVkZJU0FYa09jVWNyVT0KPU5UVi8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000bba7a3063cdd5997--
+Patrick
