@@ -1,53 +1,53 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1146927AC37
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 16:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96EF284696
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 16:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755792335; cv=none; b=YmivLHosXSDMmr6G08WQNTK8zUIHfO3IbK+CZB92KxGUFfLmb/HsZFH5WAPKvrnPAxQfxBYWyhCtnO0PXOD61RcSE3xPaThZvcGTKMPehFpzpB54yyegVeRkgx+Y/i3S+pbMGwzU7t5R84D8L7WBY8wLuh2hdN+xm4eQbu0aCLw=
+	t=1755792588; cv=none; b=HF4KOGc872GjEtXfqhSZ+KIX1CFtGGmuKrJZXlm+7a8ez/aRZ8VnG+1r4CGC2c27+S9TCr0bDXqWO70JKFXqXD5az5dwdv7KEzM9W78y98yQAOYkFDwW1Q9xdfdLzSdDL+Q8idPufEIQlialeQOQoimjkIaZGCumhagWmdB73cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755792335; c=relaxed/simple;
-	bh=GFuUTsDRxA5troMje66LEOJzGdqFgefegYLOLnkfraE=;
+	s=arc-20240116; t=1755792588; c=relaxed/simple;
+	bh=0F35BmRHxdKMXwK6qOaIvrBd30yIP42d8/0Zo+JtprU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AVZp8tQ1QxeQ4Sz5KdV69xdBlUdZIsnysAYASCLczsiUV+qVJpnLOxjlTvim+QID8knURXiaFlVzwJKxJgwRM3DzDYws4kceiNz64IOqI4cZ1c50a1nHeHpHc6DVPxtghkoTr6sfDDEln3kSaM2EO5aXyJnq2t8SbAPcBUp2Ql4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KB69eSnH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NxkFHPWP; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=RO2EH3bxQ/9DGTmrvDJqxeeeYQwjxz7IrETUScNneajuB/HLbxjEUOAxoYbaHe+4L+zzSbEHE6o5Itlf7g5oD+pqsZFEHqI0OVFrldQB8alBGfKz1/heVEYrv0JI03AzGUgURBMLt+NOm6uVzgCj8iqZiXbpFE7lp42UCYHREHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=alqZ6c2i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lNRk/2F9; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KB69eSnH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NxkFHPWP"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 103F77A014A;
-	Thu, 21 Aug 2025 12:05:33 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Thu, 21 Aug 2025 12:05:33 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="alqZ6c2i";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lNRk/2F9"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9C1CB7A018C;
+	Thu, 21 Aug 2025 12:09:44 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 21 Aug 2025 12:09:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755792332; x=1755878732; bh=F+jecWdlLa
-	rIXKOhWy98k6UuweVDNNezTygnrrgEAPY=; b=KB69eSnH1SNwlLjnx97sI/YlHR
-	q2WpjZw0vGExg3cP1iELvCRi7HB9n+xc2WOevnGe4WEG3mJPFRcDKF/0LJe+4uoo
-	8vw/b+MoorxUB4AvC6c7KwBIyxaZhtHuzxofrwiiLWbqmkl79stV05d6HQbqnDlB
-	7pf8c30gNXoyVuNyxaBABZWVKfxcGaAQ3NSc+t1p9ZYmTsf+CTgpI1nNqkKjCIr1
-	ZVwYkLG3MOuYgvNaemI8IkK5xoYQxkZzcmGL6tx2CljashHdeJRMfCyyjKr3IqEW
-	DpZZoKe6eZDvkLHvZ9EHNFLkov8YMaeqCWOmfkrEVTtIWe64PKf951HmfQQg==
+	:subject:to:to; s=fm2; t=1755792584; x=1755878984; bh=WFU5Wti041
+	doM449O6FmFMAYWn/R5nXI41oE4TL73z4=; b=alqZ6c2i/B85SIYoZuZUOA08ij
+	L4B3+D+4xKIyFjuppnhIOMioxpB2AdQPXuyMqJiDCZN1628cwqeTJVWzVui9FyMZ
+	GnFNtwJXtH55TXzCUI/Nn8ik9MfQUYsCOx+yFxx2suvSPiLoCiz9HainQ328NoOP
+	0uDKPjJp+yPMkQQrpvqi1kLT8o7LW+WNryGofMKDZqLDLfiX3PLNH/8TZycydoyC
+	3vh2EVO8oyAVjue4PDRLl+IUnc9N8kRRZyhft9K0gXq15qYSCnLIaIp+trq+uj4U
+	ZIT6yqf0mCbn1kT0rcbway5fbdnL+m9NADbz3QUd4s8oDC5xrjJQvycvzPiw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755792332; x=1755878732; bh=F+jecWdlLarIXKOhWy98k6UuweVDNNezTyg
-	nrrgEAPY=; b=NxkFHPWPtHB2Qdb+s+ymbcxp9ktAHKnGqRlf9rud3RYnHipMNpQ
-	+m5neZjoygd6i+kz520emDr138ZWxtmk9YzSmqs3lfmbqgkxjRoWCL4rJDspsuXG
-	opjVLUmhIlqV/vXAAV6EgmoAX1WX69dPrqzM8+K9l91G0YSNFV/vZ0i3DFJlMh/A
-	n+v4PleCpX6OwG+O41Q7lvPSz+bc+wmIw2eIPpqEU0DOd8lNvfAmqSVH+QyFEyJq
-	BJ4qPNy3/E4FbYlPzKlkG9lflrqNpIw5FxIBeiAiRhOmbeFCdKCPJ/4f+QdQQQWi
-	9aUSjG+i/Op/9/ijkSjuhd0RL4sMuDycVvQ==
-X-ME-Sender: <xms:zEOnaI4H3GapNC1FbVCgLAtm7HfLNxH7CME7qMRHMDUbJirjYzbt2A>
-    <xme:zEOnaCUmJN66BmS3uqrvpnBqFpFf5SEV_k68O_2VrcMv6YEBT2PeOhR15558O6o27
-    hXSfeASwE6qLKU-oQ>
-X-ME-Received: <xmr:zEOnaH7rsjMbGNQIv5BXhbYffSV7-pbu4deX2hsLyryZo3HyKPhGXlfXRzloKU0m0jiUxuG0fm2P1vkwYA_wO0haeCz9tXK07VLKgWo>
+	1755792584; x=1755878984; bh=WFU5Wti041doM449O6FmFMAYWn/R5nXI41o
+	E4TL73z4=; b=lNRk/2F9N7UrW2SuwR7B6mMrBeZk9RMV5gP/BtinD9sz6KmRIN6
+	uOANHwMsb4M+ch7owQwQlPugbhlc5WSSLdjynjrtlkI1txbdebh3HLZDLuCTOIo3
+	msTp7qfiGL1VOPE/Chpd+Yrgej89CVmwEApw/oNINTFrH6oaXUNdDNseKYfYItN4
+	rBXzbn0RMGO4OFNVwI6VYbfMPnM4ApZwbUyE4NA9+t0BifbGk2kQDOJXcJxPn18b
+	MnBZZOSS3+9oHFyUmBoQmHeghIemhwIDRgi2C+ZJ5Tk9/LmKQFJe1RAf8eUXJGV3
+	H6WJQHXsv1ZvzFvfm+7t9w3gnUpkcaYQMfg==
+X-ME-Sender: <xms:yESnaPe38ERCcgVw428QfTNove2c3f1cz-4OLJnAKiOYFTy7ISbY4Q>
+    <xme:yESnaAvRjAwGZTdd9A_zVg2AUzfLGJVpshmnDcszPKnwXAy7aSV8Cbf6DEM1mxT2D
+    Yb22Se5_03uSshU-A>
+X-ME-Received: <xmr:yESnaO8NiqGK4JNh0ChaNqVrM2hGb3fn_W3F6QeEXx0pXs29HzMekrWYW03NPLi3EwyHLzrPxBGxsxJSmvfD9lXotbCsfjFx9_8FJPU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieduieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -55,35 +55,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieduieekucetufdote
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepjhhovgdrughrvgifsehinhguvgigvgigtghh
-    rghnghgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:zEOnaNpHX4XmwGMr5zGPoiklRBrDFyhV5nkzM4CR2wx1LcfxKuDEuA>
-    <xmx:zEOnaKmSRzxQsav9TFzwOdZoNY3H5UfQcLx5gytSU9eBtasxQ94H1g>
-    <xmx:zEOnaJO-EcjbOgaFsRiKK0KXfsAdaJIFipLwE3aHNH_WTFjdTZ6NDw>
-    <xmx:zEOnaOM6GEn3_5JH8AG9OsJy5eIQMhzxwQ4Dj0xapiRrNU-5HvNZHg>
-    <xmx:zEOnaD2u5wIMSO5wOg-4De3xK9iaaiWV27wIZwJWZxo2vDsYhODn-I5v>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepph
+    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:yESnaL1lth9rscKPg6tidcNr8WA7FC-7bjhEI4fkqTv5vEWbkEMk2g>
+    <xmx:yESnaDB5SRSZmUOm1kJx5uHFh4vjjZGUnYESSyW7gPVkbTX9q-D-Eg>
+    <xmx:yESnaHcBo1SmJiTrfCKTEXKoUoPcek4NFoiMleHIGI0jsDvVUwYFmQ>
+    <xmx:yESnaA7L3f_GroTdSgR-mDqqYs0UrCGXKeTHev-2tk5mJryf8C3kvQ>
+    <xmx:yESnaHNV-RasSgdmOiHest9Z1s0XOXBx82uBJ_FpsMn7-rIJ6i_LnmHE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Aug 2025 12:05:32 -0400 (EDT)
+ 21 Aug 2025 12:09:43 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  Joe Drew <joe.drew@indexexchange.com>,
-  "git@vger.kernel.org" <git@vger.kernel.org>,  Karthik Nayak
- <karthik.188@gmail.com>
-Subject: Re: "lock file exists" when fetching in bare clone of repository
-In-Reply-To: <aKbwabLZiWasYoBC@pks.im> (Patrick Steinhardt's message of "Thu,
-	21 Aug 2025 12:09:45 +0200")
-References: <YQXPR01MB3046197EF39296549EE6DD669A33A@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
-	<20250820213323.GA1667633@coredump.intra.peff.net>
-	<aKbHozlmDIqfgkg4@pks.im>
-	<20250821072706.GA2390046@coredump.intra.peff.net>
-	<aKbwabLZiWasYoBC@pks.im>
-Date: Thu, 21 Aug 2025 09:05:30 -0700
-Message-ID: <xmqqwm6w3bjp.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
+  ps@pks.im
+Subject: Re: [GSoC PATCH 1/2] repo: add the flag -z as an alias for
+ --format=nul
+In-Reply-To: <CAOLa=ZQZCUsa7M0mh1oCq8hhBZS05=jw4y2Lr1r3rPe0-ajbhw@mail.gmail.com>
+	(Karthik Nayak's message of "Thu, 21 Aug 2025 03:12:17 -0700")
+References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
+	<20250820144247.79197-2-lucasseikioshiro@gmail.com>
+	<CAOLa=ZQZCUsa7M0mh1oCq8hhBZS05=jw4y2Lr1r3rPe0-ajbhw@mail.gmail.com>
+Date: Thu, 21 Aug 2025 09:09:42 -0700
+Message-ID: <xmqqsehk3bcp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,34 +90,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
->     You're on a case-insensitive filesystem, and the remote you are
->     trying to fetch from has references that only differ in casing. It
->     is impossible to store such references with the "files" backend. You
-
-"backend." -> "backend on your system."
-
->     can either accept this as-is, in which case you won't be able to
->     store all remote references on disk. Or you can alternatively
-
-I do not see the former as a viable choice, though.  When this
-happens, the clone or fetch fails and the user cannot catch up to
-the upstream development, no?  You have to futz with the fetch
-refspec to cause refs your filesystem cannot store ignored in order
-to make progress on other refs, but that is making the user do more
-than accepting this as-is.
-
->     migrate your repository to use the "reftable" backend with the
->     following command:
+>> -git repo info [--format=(keyvalue|nul)] [<key>...]
+>> +git repo info [--format=(keyvalue|nul)|-z] [<key>...]
+>>
 >
->         git refs migrate --ref-format=reftable
->
->     Please keep in mind that not all implementations of Git support this
->     new format yet. So if you use tools other than Git to access this
->     repository it may not be an option to migrate to reftables.
->
-> The last part is what I'm working on right now. libgit2 is fully
-> functional now, but what is still lacking is reviews.
->
-> Patrick
+> Nit: Perhaps we can leave a space around '|' to make it easier to read?
+
+Documentation/CodingGuidelines (Synopsis Syntax) has explicit
+guidelines about these things.
+
+     Don't use spacing around "|" tokens when they're used to separate the
+     alternate arguments of an option:
+        Do: --track[=(direct|inherit)]
+        Don't: --track[=(direct | inherit)]
+
