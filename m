@@ -1,85 +1,90 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7597631E116
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 13:00:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755781227; cv=none; b=QlSvpZ+uhFctS5tuLXJZ5Troebd7Kw/80bI5JJaOWuJu2DqUaO4PceVrO1Z9/QNyAe7REGgpFZBG31VNwWaSFEFqwO9EnwWgxvaCw9cE+ndQuhhtzLa0A3KYog8gqVYFMcT8ia2URsNzm+GflYpLZIxKB4vXvN+CozrgRe23Yik=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755781227; c=relaxed/simple;
-	bh=VWUmluPhzdLiks9cGcFRXUfN/vo4x2ZCjlzjvOv07/U=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=nddq9iNqgpBL7EGf5IdZrRa+W+ETuUtgWiTV4vUCE0Gy1nr/wM234zPotyuNDOkSxeZwMVf+ATDH8KTYhXBMVH9JqCV3VkppF8v/DO85x2N1DJng6fWaX3zFun1sw3yUI8G3wSZwed1g6nm6MY+MNcvwHPbJagE/zDHf6wAPv90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S3Y61rAh; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E73813A41F
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 13:04:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755781471; cv=pass; b=uptxJgbyby4Gkj1toMU+b+wRGZ5FwZ5pxy0yl1p/OfT7isde8+ogw7YSmhpZjxDRA//B/Oy6u6C8V4F4z6wYsyLKUZH6LtX2KYXLQnNGZOMYNJNw58lwJDt+U9MHbe3CzNaEjSN4vP0ZJA6HmjcCfDxBZZUmuvaDNNcOFdUUyg0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755781471; c=relaxed/simple;
+	bh=lPJMRISSqPKXlz/CCRgVZlG0dZ8XLvyWZgkp1Qg2VPE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Tj55zO7UPvds2fIkZ8w7OvYVkdUOHaxNc4TUhOsOdQqcAQBo0vh57TfdjcacAHHIbSMP6R2hOPR01kaM+e+/vwdQITx0B6U8SwzidDPePbM4l0enA4OWZFYp2SkKzVGdVe2u0YiWWo/5KNYae2ZNVhIo3D/Yw2eFXGmUtyEn60Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=T8/8x/A2; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S3Y61rAh"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-76e2ea79219so1192583b3a.2
-        for <git@vger.kernel.org>; Thu, 21 Aug 2025 06:00:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755781225; x=1756386025; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VWUmluPhzdLiks9cGcFRXUfN/vo4x2ZCjlzjvOv07/U=;
-        b=S3Y61rAhcDwziMQMFGk7rdlOyKjKkLQ79uGnfmsGUes9AutnRk46JA0FkfyEX+Aesn
-         OVIJLnDP3Ws+360z6euJ3u4KkkKLzax6BxJayJRTW9U1v2UZs6EQKswigkCJXlM532C1
-         mZrPRPJc9SFXhVYbvqcHzc8+ahGsYb2MId0AXvy5umvzFHehzWMejZMGPn3y9T7EHUCq
-         /auRQHQyuL/8d5yKtvMINBdaSwzqJlRIUxzj3kuom9U2lDXAp2W42LWLl5MEoWYxo10b
-         +yfBCUCpaoJvwbbCd3gXrywt+1kAbGOvSVmv/G7xUhZJ0TujUfv1HvE3gIlO4e/BrQv2
-         7zDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755781225; x=1756386025;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VWUmluPhzdLiks9cGcFRXUfN/vo4x2ZCjlzjvOv07/U=;
-        b=ECrI9i8bXnIUpJZXSOMB73PUTFajg9KJIM3H4vR/8TQtnoAxgHhhmfdqKe5Cdz8mh8
-         PYtmQnnbIud8xFfKpwZ0hQjUs+C4vl8ZLbtRYaoZkzuBUcJ9WgezHpJDUr4xNQ4PTCcj
-         D0sH7h2yG2vV2lTYBO76wFCGCGNL3TAUWCg9j8e7YLiuFLZrrl/RjW2XtflhPkiLZ0hJ
-         O8YYKvNwJcIoHc4tLA//nKrK/dVT9lHxxBmb0NXCtYl4eWP9sT8Gfdz5+gWyb0LLkfKf
-         HZVYtaqTpBSVdk5DQFh2yB6Pssj4ObtMPLly9H7GBvckDCpVe2ZkYDa+sC9zRduMlViZ
-         EZdA==
-X-Gm-Message-State: AOJu0YzuX5RMPBmPkcWrd35TtnoohKnJsy4otkPRQCXZJuYo7N1fcln+
-	OBAfEGtV6P5jVBKJ9VfBp9PoHFS/jjZRqXgtC02ULVFjOQdChRN1+LHba1sUMA==
-X-Gm-Gg: ASbGncuUJO6OKsSJg2VrKZixfehc2qc7ElwQM49bu11TPm0clY6vDzkLEFjsd/QPMiL
-	DavqKoIey5NpVwNhCOvRug2JPiAv8k5LywL5cUDVWWxdbgv59JnB69ZzBxj2PCgvYq5whhF1WBv
-	k1wKksHryK6Sfj0eQOMJTzkOQmRfkyM2pYDehdbz39Mxh5v9gDVCdRk2pH8oTH2I7uxEBBEMP9d
-	19zCn3E1oWmp3wMJSEbA0T+1oL/BQDjatD3R8htB7BBxTEeJkuw482ymNZ3/VRsTezd7/ArtE1j
-	VDSgu7x9CpzR8fr36FMmiLVN12nvgVCGI94GcTodbI93SKqXe7JIUD+0mUJK3giLion+eP2UrKM
-	ZxC/UJhRQUa6KaH3KLwjwb9xpNaa6D2Z3aBM83RX5qtILSRPmF3I4q8YxCxhn+je8UGk=
-X-Google-Smtp-Source: AGHT+IF8m5MGEyvXebT/Abk1SDRxOLbswr9eIzpR7Blj7vAAbTp12hoxzW5exgx0IeRPzvFA7FCNPA==
-X-Received: by 2002:a05:6a00:3911:b0:736:5664:53f3 with SMTP id d2e1a72fcca58-76ea324704emr3013438b3a.15.1755781225002;
-        Thu, 21 Aug 2025 06:00:25 -0700 (PDT)
-Received: from smtpclient.apple (nat.ime.usp.br. [143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e7d5242dasm8247387b3a.77.2025.08.21.06.00.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Aug 2025 06:00:24 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="T8/8x/A2"
+ARC-Seal: i=1; a=rsa-sha256; t=1755781450; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=e22alqWbyaEy1PwMWt3L4lsU8odipwBf/jvqkBWBJEWG1kCJW2VIJszq0RxjOVc+2r4taMKulqf07rKwwmKF1/jpQh6fH0gbREC4xSQNIEqdfhPrMbjDvRVnBN/7Ub3k8dY1/zIu5/Peq3BWJE/GIe8Ykfouopu/O/gM2yx5VrY=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1755781450; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=yaDY15M3XDp7qvN+io3AaChSrzulUp+ACkytJu0bNoQ=; 
+	b=fGuGRkJvFfoBys9Hd7hqeKGMICDwXYd0V4KDDO+q7bBqnQWv4f4VEaREkO/Uh+DEjgDDvnwCvXgCrpgevg5nE7eMHCy6Ms/j1xV8h3JCvPgrke+mNQUB3+7dzHGocHhNKDL0k22ALaWV5tpZtYSFYw0GWr60fa2J1oRuXOGZKAo=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1755781450;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=yaDY15M3XDp7qvN+io3AaChSrzulUp+ACkytJu0bNoQ=;
+	b=T8/8x/A2KMRFWhMZyI8uFHrCdk5/si2mTp2kAwpA8G+Fmiew4i7O5U1KQkfU7RMs
+	Mq1WPoAIDlIrFt4u4l5yJkRNkYfoQT+qZXsLvMOIU5NFzQbvKp3wV1lwVIyKm6Bv4fM
+	3Fo6RFS2xjvbFKHIkh+4oxoqj48AynBr1UGedB4Y=
+Received: by mx.zohomail.com with SMTPS id 1755781447596423.62264178874295;
+	Thu, 21 Aug 2025 06:04:07 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
+ C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
+ Nieder <jrnieder@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 3/9] submodule: add gitdir path config override
+In-Reply-To: <3hzj6k4yxfcvpt33jkblcafljhbj5npjia2u7sprqbkfcxoxwa@6qmaqwj3x7hc>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20250816213642.3517822-4-adrian.ratiu@collabora.com>
+ <3hzj6k4yxfcvpt33jkblcafljhbj5npjia2u7sprqbkfcxoxwa@6qmaqwj3x7hc>
+Date: Thu, 21 Aug 2025 16:04:03 +0300
+Message-ID: <871pp4967w.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [GSoC] Blog: Machine-Readable Repository Information Query Tool
- (week 11)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <A203C3BB-AEC9-457E-87B8-189B81C579BF@gmail.com>
-Date: Thu, 21 Aug 2025 10:00:10 -0300
-Cc: Karthik Nayak <karthik.188@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-Content-Transfer-Encoding: 7bit
-Message-Id: <86AA99EA-12CA-4F14-9240-1FF4FBE8D426@gmail.com>
-References: <A203C3BB-AEC9-457E-87B8-189B81C579BF@gmail.com>
-To: git <git@vger.kernel.org>
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-Hi!
+On Wed, 20 Aug 2025, Josh Steadmon <steadmon@google.com> wrote:
+> On 2025.08.17 00:36, Adrian Ratiu wrote: [snip] 
+>> diff --git a/t/t7400-submodule-basic.sh 
+>> b/t/t7400-submodule-basic.sh index 178c386212..f4d4fb8397 
+>> 100755 --- a/t/t7400-submodule-basic.sh +++ 
+>> b/t/t7400-submodule-basic.sh @@ -13,6 +13,7 @@ 
+>> GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main 
+>>  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME  . ./test-lib.sh 
+>> +. "$TEST_DIRECTORY"/lib-verify-submodule-gitdir-path.sh 
+>>   test_expect_success 'setup - enable local submodules' ' git 
+>>  config --global protocol.file.allow always 
+>> @@ -1505,4 +1506,18 @@ test_expect_success 'submodule add fails 
+>> when name is reused' ' 
+>>  	) '  
+>> +test_expect_success 'submodule helper gitdir config overrides' 
+>> ' +	verify_submodule_gitdir_path test-submodule child 
+>> submodules/child && +	( +		cd test-submodule 
+>> && +		git config submodule.child.gitdirpath 
+>> ".git/submodules/custom-child" +	) && + 
+>> verify_submodule_gitdir_path test-submodule child 
+>> submodules/custom-child && +	( +		cd test-submodule 
+>> && +		git config --unset submodule.child.gitdirpath +	) 
+>> && +	verify_submodule_gitdir_path test-submodule child 
+>> submodules/child +' + 
+> 
+> Rather than `( cd test-submodule && git config ... )` here, you 
+> should use `test_config -C test-submodule ...` and 
+> `test_unconfig -C test-submodule ...` 
 
-Here's the 11th update on my GSoC blog:
-
-https://lucasoshiro.github.io/gsoc-en/#week-11-ago-11th--ago-17th
+ack, will do in v2.
