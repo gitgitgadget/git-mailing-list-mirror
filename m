@@ -1,119 +1,134 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1A71DDA15
-	for <git@vger.kernel.org>; Thu, 21 Aug 2025 00:50:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D8625DCE0
+	for <git@vger.kernel.org>; Thu, 21 Aug 2025 03:51:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755737423; cv=none; b=vEy1knq9y7s1j4sS6JBgQEtpx34Jr300o18kskPFMjM93gRCtTgEfVg06cMJw17I01naISoxdS2XvwzfzuANW6LTrBckGRZhqLjiOzZNd0Ie0+eEj8xQv4Y2U9mLe2E+JWxGK2P4zLfa5pVp3tSIOAqb1jLh3MzyItPiNt1BWTQ=
+	t=1755748324; cv=none; b=U15E0GK0B7kg1S9TUGiE3BnDmSvR7YWTZlrhrxnY3o9jZL1KWp+Gd5Y+PX/sKeG77/YmhA9gBoSEHuNdA1wABRPfe8WYOLVx+mSr22Tkq4AxYqK8ymLECQNcXi3hW8WUi6Hyf30FJHkpdgyrI2YYHGZRf8mhnlctOO9DVwbPnYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755737423; c=relaxed/simple;
-	bh=/sHvEIgR1XIMULQOzgcHKx6dm1EoVOZWgO/8L+sgGnw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ioxr0ar17GEXe69qMC0eir7ZGmmjoA4Qf8xCB6yP48cAnG65L7pgYwbA9qXpw5rwUS/n6jrJZoi4wbj/t8we2+V+qPGKgtEYfhxXHNEyJ+KsLU3GZapsc/mpP1+Bc7DEa0yXtusEGRDS3+HYZfEarcKvbuhlLGvFpQDmGz8haeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E0t4DS+e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S+6yqNuD; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755748324; c=relaxed/simple;
+	bh=8PLWip+POp7NOCDsC44lOpJZwFVWB52OIgwK6RUEO9s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I55ZQNMC5TDxp8YyYK5vpqrKi/dbEg9L3NmreSVUi7QY8kXThvzi+ChvhSrSjjnJeFV0BSiZuggbzK/uFuuxgZFU2UxmEZhrvyeC3oxLI+W9qPbr8POWlTulHcI424XhbvK4CgnV4WfRarVNhQ+d2wEwdp8hPYqr27oz/0psfxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=DVlgdxoV; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E0t4DS+e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S+6yqNuD"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id C631A1D001A8;
-	Wed, 20 Aug 2025 20:50:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 20 Aug 2025 20:50:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755737419; x=1755823819; bh=Ewe15AsIMO
-	ZA5Ze3yVuNsBURGPO7RpeSNY4v8aGQa0I=; b=E0t4DS+eE9GiRFTgd/OqRsXbGn
-	4E0E7kjuW3le/DfC/tQacYM+0IN52svoByf5iOM846aL4EsTY0XXrtJdQdVYqy1L
-	Lf+DxtNw/RCsx9aMaEhmjceTNsv6EI5G2ihO2TN82ZgPzGdU+T+PFcjkcz4V//H9
-	hdEaLvAfbDFTvAHqtjIDOLmvUZ0+oEIPGjumEDfVEUTCVq4EdnhX8Bh2diLwbvan
-	iJcsmkiawM4owtuuh2XOyobheg0OmiSFLj4qSY7mbOEB5BEGxmqgJRbkmTqHR0bX
-	F7GC0Sucn5wq3tSk/0XuHxE7uRPWSweIgiD01NEuv51m3iL/rFDXyfNo7SDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755737419; x=1755823819; bh=Ewe15AsIMOZA5Ze3yVuNsBURGPO7RpeSNY4
-	v8aGQa0I=; b=S+6yqNuDkWFU6SsSx3x+Z/NVWQ88Yo1D4lp2ZvormnXBDuJ83pr
-	ihCAn0O60Ln5xZXSUJZxp2mBFPpLMeoV3m4UMadRNJ/c+QL2y6iH7SoRwGajleQ1
-	+/tLu5pIwTbceW6jEGyGRMFTYJnAfg2cCWc1A0gIjvus5CSO3Sm+ZZOuxq8ybhiM
-	mHDGVun7yL5s2uiRiBGwPihqzdcodKYFTEK/bPS/aUBP4s7T2RHXqNSMWai/hP2l
-	568EaSO//2WkWxDySC7p09NGuO/+enLgMr3Ao+rT0Q5jcqDs1biWQhsAPsDWbBAR
-	o+Efvn1SIz1BKeqtJlP0Gbs0wPq7UI4YB6A==
-X-ME-Sender: <xms:S22maDgDURyhulQXJ7jT8dDf5aP41mOkeER0cX2_HP1_lV8GHOwU2w>
-    <xme:S22maNmKRkoRTO4eIZXYbZ-x33C23Sph3vRzJeJxo8aUjWjwCUnlYP9V9kxXRfs6r
-    l7ygqOQy_nkHdetPw>
-X-ME-Received: <xmr:S22maJiCg70HkhcrWyRjQqTF4E_cb0BXFKBUgrbK4zP7bziZ3LsJIpUeO12bHxuTn2cZkkaSJDmyWylHTrum3sS6US4Qz2bNHDnuEjQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheelkeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegurh
-    gvfiesugguvghvrghulhhtrdhorhhgpdhrtghpthhtoheprhgvmhhosegsuhgvnhiilhhi
-    rdguvghvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehmrghrthhinhhvohhniiesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphhs
-    sehpkhhsrdhimhdprhgtphhtthhopegrnhguhidrkhhophhpvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:S22maB3_J1Q4Rh7eYVHwEmlpDiQMOyxy8bX0RCOL8CG__T5pcZfmKg>
-    <xmx:S22maCINRWv-QEUBewkCELbleq1HLMleuFdA21-k-R-7lRuu3kgskw>
-    <xmx:S22maBx_ZcGiz5Lsghrz8Aw57b3j-mcA3hN3stSHSXL7rPkOux3S9w>
-    <xmx:S22maAVCo4ycr1iQG7rWsEHyXbzYpuMZNZ5_D6j_ZjQlYQ9n2vR47A>
-    <xmx:S22maC8gdOS1WwGRpz5qAavzKf-uXVYvp1inwjGx-a-zW-VfNLc4R5An>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Aug 2025 20:50:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Drew DeVault" <drew@ddevault.org>
-Cc: "Remo Senekowitsch" <remo@buenzli.dev>,  <git@vger.kernel.org>,  "Martin
- von Zweigbergk" <martinvonz@google.com>,  "Patrick Steinhardt"
- <ps@pks.im>,  "Andy Koppe" <andy.koppe@gmail.com>
-Subject: Re: [PATCH v2 1/2] pretty: add X-Change-ID to mail formats
-In-Reply-To: <DC72UF1IMIUF.2F7CNYOHYDGVJ@ddevault.org> (Drew DeVault's message
-	of "Wed, 20 Aug 2025 09:29:56 +0200")
-References: <20250703113505.11889-1-drew@ddevault.org>
-	<DC6LB8FINRXH.1TMZPB1XKPQWQ@buenzli.dev>
-	<DC72UF1IMIUF.2F7CNYOHYDGVJ@ddevault.org>
-Date: Wed, 20 Aug 2025 17:50:17 -0700
-Message-ID: <xmqq4iu17b1y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="DVlgdxoV"
+Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1uovki-006OQq-JJ; Thu, 21 Aug 2025 05:14:12 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector1; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
+	bh=Bzqa/iZ32qeBV9/b7HtN2oNPdzp4M4REWi/2CcTnRxs=; b=DVlgdxoVraVDbRm2wpVrRRZMd1
+	1d0wUqFYrRW0lSy08N5mhZVWGRN//4rnk2E1KnU8ISwuiAaUsba0WSpG7Y8QX9MpwA31mxA8Tqayv
+	05eZFKexnMvL70OiywHFkR/k0eBJnaFO9alF7ZG+t7XrJaTj4yRxQZY1pHnQaEBwxNWwGY73yVBE3
+	v2NcQ0rrImOxyFHqtR/fcyRCwopTuAsKchjb81PJdER8yLq2p/bB2IDd3BPLQXvHK9wVSc0KB3Wo5
+	7BNefaUmcsugTG22F05DcV+j4YTM4lB5VwrooPwEMrM+/0vEmgGWTm/QSjSqkaI7ax4qdWQ+/aS/J
+	YrhgUZyQ==;
+Received: from [10.9.9.73] (helo=submission02.runbox)
+	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1uovki-0003no-8X; Thu, 21 Aug 2025 05:14:12 +0200
+Received: by submission02.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1uovkS-00EvWB-U2; Thu, 21 Aug 2025 05:13:57 +0200
+Message-ID: <c9e8f54f-2594-4092-ae41-f1da73e97f6e@howdoi.land>
+Date: Wed, 20 Aug 2025 22:13:53 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: subtree: [v2.44 regression] split may produce different history
+To: Zach FettersMoore <zach.fetters@apollographql.com>,
+ Zach FettersMoore via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Christian Couder <christian.couder@gmail.com>
+References: <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
+ <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Colin Stagner <ask+git@howdoi.land>
+In-Reply-To: <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-"Drew DeVault" <drew@ddevault.org> writes:
+98ba49ccc247 likely introduces a regression in "git subtree split" [1] 
+[2]. For some inputs, the split history is incomplete and does not match 
+previous git versions.
 
-> I haven't gotten much actionable feedback on this patch yet,
-> so there's not much to do here but wait for more reviewers.
+For
 
-For a topic that is older than 6 weeks, I am afraid that is a losing
-strategy.  People who might have cared about the topic said all they
-wanted to say, new people are less likely to discover the topic than
-it was fresh, and unless you make an action (e.g., posting the "next
-patch version" you mentioned in [*1*]), it is highly unlikely for
-anything to happen while you are passive.  Even a small update that
-addresses all the little feedback would serve as a "ping" to reignite
-interests.
+     git subtree split -P somedir
 
-You seem to have liked the approach to generalize and encode all the
-commit object headers (except for of course the object name and
-author and committer ident, which already have place to be in the
-format-patch output) on an e-mail header in [*2*].  That should be
-sufficient for a small update that tries to reignite interests.
+if the history of `somedir` also contains *squashed* subtree *merges*, 
+the split history may be incomplete. MWE follows:
 
+```bash
+git init mwe && cd mwe
 
-[References]
+# create history we will subtree merge later
+git checkout --orphan deeper
+touch two_deep && git add two_deep
+git commit -m 'deeper: a nested subtree'
 
-*1* https://lore.kernel.org/git/DB4WU136IYR2.3ELSGQUDD6QI8@ddevault.org/
-*2* https://lore.kernel.org/git/DB5MUUDPF6C0.3OR02N6JQB8H8@ddevault.org/
+# create top-level project history with one
+# subproject in a directory sub/
+git checkout --orphan main
+git reset --hard
+echo 'A test for git-subtree'>README.txt
+mkdir sub && touch sub/README.sub.txt
+git add .
+git commit -m 'Initial commit'
+
+# add "deeper" branch as sub/deeper
+#   the --squash is important here since it omits
+#   "git-subtree-mainline:", which 98ba49ccc247
+#   looks for in `should_ignore_subtree_split_commit()`
+git subtree add --squash -P sub/deeper deeper
+```
+
+Now `git ls-tree --name-only -r main` looks like this:
+
+     README.txt
+     sub/README.sub.txt
+     sub/deeper/two_deep
+
+We can split `sub` off as its own top-level history.
+
+```bash
+git ls-tree -r --name-only -- \
+   "$(git subtree.sh split -P sub)"
+```
+
+Before the patch, that looks like:
+
+     README.sub.txt
+     deeper/two_deep
+
+Which is correct. After the patch, there is only:
+
+     README.sub.txt
+
+which is missing the entire `deeper/` directory. (The hash output from 
+`split` is also different.)
+
+I suspect the test in `should_ignore_subtree_split_commit ()` 
+inadvertently rejects commits that should be kept.
+
+I tested with Git binaries from v2.43 on Ubuntu [3].
+
+[1]: 
+https://git.kernel.org/pub/scm/git/git.git/commit/?id=98ba49ccc247c3521659aa3d43c970e8978922c5
+
+[2]: 
+https://lore.kernel.org/all/pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com/
+
+[3]: 
+http://archive.ubuntu.com/ubuntu/pool/main/g/git/git_2.43.0-1ubuntu7.3_amd64.deb
