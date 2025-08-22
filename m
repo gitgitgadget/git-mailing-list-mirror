@@ -1,122 +1,120 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB39299A90
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 19:55:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7461DED5B
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 20:25:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755892525; cv=none; b=RSYwsb2b+ebQtIRPj1bhfPDAyvyvPmLh2RS4riTo/G9G5HYwGOTcFwV8D2/b0ESNclDmio9IK7ZeWif5ABN7AuOTh4yH41Ez6Q3OwyRkxY3pUFtiKAX9GVWLEZl1E380ZRCTnd2fQIHNumqhrw/bBuHQsbjB5tQEndf7bnAUjTU=
+	t=1755894320; cv=none; b=E0dm1xz1CwlPCIukt6IR88G8bv9C/2LDGJQqGx4JIltGW3HPatUUIe+rAuunMgvXJIrCwkPmh9Cb8yIFaI4Z573IUKEfiZmWnobmvwbmbtrL54OB098W8mXWB6fWT+zhiNte+q68kK1zSII4hv0euns2g5PtG233gfpfv0YNPKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755892525; c=relaxed/simple;
-	bh=wrKt8zo5U9YwylHbiNU2BmBZJeQbH/bFCehHKa5gmqA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=r1I5g1qMwxL6xpxE3NlrcSTk2GODMS6KZ0C+TdftOW88JuLwHHp+FYYhHYRzUr3MP2Ty2wceElxcakuH4KVjHB4CVe0yFIl3kT8EEWf5CBQvvUfQmgCrFjyQUjYOmDeGjt9u14kxO6RIFmPj/lYwK7Jz1roGQNra0XXCO5GcyFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dn1Pe6AN; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755894320; c=relaxed/simple;
+	bh=fdDV6mY4q0a/Bnwl5faQ6rHFmdNjp2WxFRfB1LxwKVc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nWbojbxmJfjLFppCOlJREwiRk3NgMGSG+gPbMjQno6GKfX9qB4HUoq3VJj4LsXTKLZCbgG+bJYLaDGqOyYX+pTnedCZU2riURvRshlVGEh49NVxaq1/6N208u5+vXyYYeV1iVkD+NfeNpw6YOrersdgi9L9j7SwIFv902mrX33A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BQHn3haF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OMVajic8; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dn1Pe6AN"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-55ce5253adcso2572520e87.2
-        for <git@vger.kernel.org>; Fri, 22 Aug 2025 12:55:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755892522; x=1756497322; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oF1IEgJDlqFgHl+HWuqpNSahierxIyAtKmqE1iAn0lQ=;
-        b=dn1Pe6AN3Wsmi3Ztazuf3IFinpMitvmjWg9seBFeJ2u26kZBvxsOOK+G4VbLuyWQSE
-         JNuIQXqSqNV3Xf2GdaqslSLt1BlEor0QyseoMkQrV2z1EFLyvMz0qF7R5XDmwcvCW8/L
-         kvK1BMUwWrFRlcBtljK3YYs71XVIP9GRBWzSeJGOulWBnBQwwCeo1COLQyzalBoPFJVo
-         cpDuxS64mfZQJJNJOPBkXSTv3gVYzck8Y8OUzsW3L+J1sX5CD58r1XqBhSYbdNkRT1eT
-         LE2ZNox2T1MxrUCd2KQlMJ0NoG2GlHsinOeweOqDvj05KTnIaxxPtyYgL/kQCp5EKkj1
-         2pkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755892522; x=1756497322;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oF1IEgJDlqFgHl+HWuqpNSahierxIyAtKmqE1iAn0lQ=;
-        b=nQfjJ126D2vAW5z4A1fAzVkfSvW8Fp7cDVIsGZPKRLS0d+2puMecSRbCpiWplQg0ja
-         bZQxkdSXrQlHIwWkYyImGYPzzHpDSAN50ANgd0+FlbDatq+FvVBBT+eZuCfKKEXwXpY+
-         BsovyS/44NgM1QtJK2MZxpvi4vgzHAeQa9gP5WjNMyZRrz9ty15M+mbM0j2icQhThwQQ
-         +y7on8biTUi9f6lcXONpdpehTePjeYIBJKLUuLUHAO3wBKsTNmc0LKfPfsQ9MSaKSTgF
-         osjTnIyGa1ZOATfqRD47UjDUEIr/Ah9mercQnF9vt45xMFaAyxS5/Ag6i+i76ohw2kda
-         j7lA==
-X-Gm-Message-State: AOJu0Yy6YWDWEYTw8NqytCNv9DZ3x1WK7mIZvlQaWWqBfYqMKm/5Gjrn
-	WbUMCj7dXpxNdDFL0dpuocUM1iwY5AUMmzE+nhppuUWjECXgE4GFLmaykkLcGVpyGgrdRfPTIv6
-	efws6M4ouhNjrHeBR9d/k2NYv4heygJcMTwDY
-X-Gm-Gg: ASbGncuzAsikwiZM3t+TF/HAEPnuwiyMdHVIaNpbxfdJcx/BryhJZQhH7sifvll2E36
-	+tBiGUlm5+Hpnfhrk7B4raWBXHRugrPLqKt15bs+sCbDmZ5SJICeh197bFWJM+ZAK77JkEBhrPT
-	KWmmMMZJCzvUEObCWuI1lLNiqYMpNFIbTLqVfyRV7OCFYYxozX2zeiLsaZgY5HlRGVJOOoazYN6
-	2n7sAA=
-X-Google-Smtp-Source: AGHT+IGQ2VS3vtdb3kXf5wTTik+cUV46QN0B6+NOkCjXprXiU3Ht38tU7WsdGazupw6is4NrtlCheMHtrYnCRaamO8A=
-X-Received: by 2002:a2e:be8d:0:b0:332:4fd9:c58c with SMTP id
- 38308e7fff4ca-33650f35e60mr15893461fa.27.1755892521478; Fri, 22 Aug 2025
- 12:55:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BQHn3haF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OMVajic8"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 247EA1D0015B;
+	Fri, 22 Aug 2025 16:25:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 22 Aug 2025 16:25:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755894315; x=1755980715; bh=fdDV6mY4q0
+	a/Bnwl5faQ6rHFmdNjp2WxFRfB1LxwKVc=; b=BQHn3haFBInkpNR4iG/CD8aXXJ
+	dDqoBY2jC9UjLJTkbDsRZUIM6kPR5Q6zOR8S67tbUkzEWRyguds/tcSnelCPifZW
+	s0RQJCs9/FqVgn+6MA2N/C3OJDCOe5mIifHyhCu4kd2ZilufZD110jt98jInt4/G
+	iqXe3B0DCiZQH4r1Ejfz30RYvgvqbitRhJwMhMhrcj/sM+vMyPFQMqIinjDU45TY
+	NaR3RC/qIuL4r5svECyqxBBgy5rkjvqgwDzRVJ+Zx+Ow8HULh9Jwob6YseX93zFZ
+	Yo9z/olG7c6ThJIcZC9W6b7djRaXWquHK5OxvYkZlLKa8dZZ/fju26YvTk4g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755894315; x=1755980715; bh=fdDV6mY4q0a/Bnwl5faQ6rHFmdNjp2WxFRf
+	B1LxwKVc=; b=OMVajic8kaWEqjJZBev1Ienotuaa2aBDHSH/abBN/J8zCGho66m
+	y46TS7s4C3pSjZlnLz6PnQNOLiMwhlVI8kS4BqAPw87wYXcbDz32egZf4qwWCkoS
+	X26jTRFK3zIxqS++QHY7KHNmhiUdWG48jEAOgs5PslRJeCf1YSynPW9w8QmkxC9Q
+	MWI2qdQzQ7MA9ydvnJ0xCaqV0aE5U8aQLqwTSGrnLlhay2/9qOGeNgwjx+Z3r/8f
+	Ag5qZgIoFJenAtDzEta5Z0AekrAYcb0uqwcmi79ne20w2JUJyfczBUayX4B6dDd5
+	hSL/XXHL4Xx1jzaeYU2l+v0pIuo1UXJIxLw==
+X-ME-Sender: <xms:K9KoaEtVc06-jdr5aj5M_VomNDygDtjHxt8_4jH_946jAjPWF7Mfkg>
+    <xme:K9KoaMDAyh5fUf2IipesVNfBpdCgdpnpBeMamGWS6vSruOdgnT67CXQ1Nmc8ED3oj
+    TceXuQA4mGDTlHg0A>
+X-ME-Received: <xmr:K9KoaMWfoE9jXyHn4atnx_NwuEMHdQPL9PgLjJX9_qkuDolPcmDnepHerBm7wpn3qaabfZy1e1g-Lg9L2x25Z1iWHxmj0nlA-KRuCO4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieegjeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshes
+    phhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:K9KoaKA6zAN_vHE5BUp9PVFTcO6c8v_oIqimtx00o3jG0TuL8hDfXA>
+    <xmx:K9KoaP8DtzT1nxDKdoP1-azAZRTUVfo3-l6d2LbB3wpyDPQK-yrKtg>
+    <xmx:K9KoaBHhgjhln4PNzsgi6VO-QOWEn8TPawxLn_D1zXAEz4bmJbscxg>
+    <xmx:K9KoaNMAyPq-WN1VHqyvobqbCseqUbTHhQ5Jpw6FRqXU9vyFdn8ZwA>
+    <xmx:K9KoaM9VJnCpHw8PWwM8x0ZPIwDgrNp2aAjRjSNeZdM5hVdxXxpAR4yS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 22 Aug 2025 16:25:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v2 2/4] bulk-checkin: remove global transaction state
+In-Reply-To: <njvcqkkcotesqznalieuwhzow7lxbejxlfw3knbhalmqjcb7cs@3vwea4r2zljl>
+	(Justin Tobler's message of "Fri, 22 Aug 2025 13:07:37 -0500")
+References: <20250820225531.1212935-1-jltobler@gmail.com>
+	<20250821232249.319427-1-jltobler@gmail.com>
+	<20250821232249.319427-3-jltobler@gmail.com>
+	<xmqqv7mfxqg2.fsf@gitster.g>
+	<njvcqkkcotesqznalieuwhzow7lxbejxlfw3knbhalmqjcb7cs@3vwea4r2zljl>
+Date: Fri, 22 Aug 2025 13:25:14 -0700
+Message-ID: <xmqqikifw1cl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250821222605.3993-1-rappazzo@gmail.com> <cef6487f-aab4-421e-ba04-a5613c12e552@kdbg.org>
-In-Reply-To: <cef6487f-aab4-421e-ba04-a5613c12e552@kdbg.org>
-From: Mike Rappazzo <rappazzo@gmail.com>
-Date: Fri, 22 Aug 2025 15:55:10 -0400
-X-Gm-Features: Ac12FXwerTXMspoad1HQmnik45ZrTRRc58_OEp5tjbsw1J0nSORC7Bnk45sQC0s
-Message-ID: <CANoM8SW_3dLtQBEcK=NgQWCezj2PNbokDyeaUvVMTN1ufYav_w@mail.gmail.com>
-Subject: Re: [PATCH v2] gitk: add README with usage, build, and contributing details
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Aug 22, 2025 at 2:27=E2=80=AFPM Johannes Sixt <j6t@kdbg.org> wrote:
-> > +
-> > +### Installation
-> > +To install system-wide, you can use either `make` or `meson`:
-> > +
-> > +```bash
-> > +# Using Make
-> > +make install
->
-> This doesn't install system-wide, but in $HOME/bin. I am unsure whether
-> we should encourage this. AFAIC, I would be upset if this works without
-> sudo *and* clutters my $HOME. (I pull Gitk into the Git repository,
-> which I have patched to install in /usr/local.)
->
-> How do Gitk contributors handle `make install`?
+Justin Tobler <jltobler@gmail.com> writes:
 
-Maybe I should expand on this section and add details:
-```
-# Install to default location ($HOME/bin)
-make install
+> If it is preferable, I can combine these two patches together. I kept
+> them separate as I thought it would better explain the steps, but maybe
+> that isn't the best way to structure the patch as we are largely undoing
+> the change in the next patch anyway.
 
-# Install to system-wide location
-sudo make install prefix=3D/usr/local
+This shouldn't make much difference, but I prefer the current
+"awkared but done as two steps" arrangement slightly better.
 
-# Install to custom location
-make install prefix=3D/opt/gitk
-```
+> I'm hoping for an eventual state where the transactional interfaces,
+> {begin,end}_odb_transaction(), are moved directly into odb.{h,c}.
 
+Yes.
 
->
-> > +
-> > +# Using Meson
-> > +meson setup builddir
-> > +meson compile -C builddir
-> > +meson install -C builddir
-> > +```
->
-> I haven't used the Meson infrastructure ever. I trust this procedure work=
-s.
->
+> The
+> current implementation of transaction handling is specific to the
+> current object database source. In a pluggable object database future
+> where we could have different types of object database sources,
+> transaction handling will likely have to implemented separately.
 
-Yes, I installed `meson` and ran these steps.  It replaced my
-previously installed version
+Yup.
 
+> With this in mind, we could move the current transaction implementation
+> into something like object-files.c. This is already where the vast
+> majority of its call sites are and would enable us to further simply the
+> interface we expose.
 
-I'll send a new revision in a day or two.
-
-Thanks for the look,
-_Mike
+Great.
