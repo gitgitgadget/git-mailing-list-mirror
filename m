@@ -1,67 +1,66 @@
-Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F4417BA3
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 08:35:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5B713A3F7
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 08:49:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755851736; cv=none; b=W8ji7VnhXxvdqfWqjmSBycBqFIilmQbeIQKdwfifyLS4ItvVtxQhkjwuD8vmd2bUvE5fM5KSmJTgtRfEIABz5jAamyqSYpy+3TXIwDF5WT7A+/3nm5VyzKQGr92TlKz6LegbE+6YGq7nbdWRWCn9hthtWi9pFqNti3CfgFSxJyg=
+	t=1755852559; cv=none; b=QgHg1a+Y1XTvCpoa0mJRolOQhqTfQYuWV5xDeQ5N3EUTfMzeX+4DdnWRMpzn8dBzlGMLStsYoYwiDtqMOXEpatk3VkCtndRGcr/zg34EOilSNFjG83SJQy+gr/yoPfrLyB7vRYZhqLGct4su0kefSiZ2XMQVqqVyJASECXMSKeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755851736; c=relaxed/simple;
+	s=arc-20240116; t=1755852559; c=relaxed/simple;
 	bh=aEzn0IKqVM6xY9ib7b3ZHZldvjnvDaD5hAz95NC6nv4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DE25K/2sF99usNTBm9MimhtbTr9ZkscatlJmXrB7pTXTX8GrGR1zHeNXuvjI/O7vTYA394NUlMi6OtTydD4uzI5Ky2MRYuwk1fCgDTxC3q1qugCWzIU2QWYgNjQm9Uv3mwJORsTrIu501MirxJNnfDbSgOvUZism6Ge+lg64M+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2lQwb7+; arc=none smtp.client-ip=209.85.214.196
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tuF/k9zbHASBAAVb9f0j3jZvJIHguHojwxwfhHQFy6tH4wCy1K5Hlv5+TywlK1LqPo2pJ5ooos3NeYd8qZ3R01tP8oLQBZ8HQRNJF8RSJoxo0zpkfc6VYtXYIO7Rmb/SPUXJ9Kpz0az2eK+Y908WnURGpH5qFWecKHu2g6RIiq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XNcOlN5s; arc=none smtp.client-ip=209.85.215.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2lQwb7+"
-Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-24456ce0b96so19450385ad.0
-        for <git@vger.kernel.org>; Fri, 22 Aug 2025 01:35:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XNcOlN5s"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b471754c159so1241872a12.3
+        for <git@vger.kernel.org>; Fri, 22 Aug 2025 01:49:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755851734; x=1756456534; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755852557; x=1756457357; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
         bh=4fNCT58k/my+QCdopiXS4QQfQM4qUwmIuE3uOP2SW2k=;
-        b=A2lQwb7+eZDcGxvXgdugXO7KdU5slpt9WFsVR2otesGy+1hbAOGRWcm5bFTuIAjd9D
-         pr/2Xbcu3WkNtPNoqVdQCkSsdlAud/IuPfFnLf8nZSUI/S4rv+7d4ntTwgX9ls3Gcdli
-         gyyGsiZHAPtBteBKi7EhjxgkI2NdpMaA+JW6KK5ZzLUG8Ius4eanuwT1iMLLNufNXOTq
-         UQm63rlzEc+1qdnbX/0mgAEEOS3nog0rApyDJ9FKQj9wctRfh6G2FcyADz1MyR1ZrcT+
-         W5iQtwFbueI/pyzJuIEAik0p47T9L0MiG6Dkmoyk2M07oVk6N0touQNpvAAQsvRJJ1W3
-         CBTg==
+        b=XNcOlN5sVEz+kHvX4LIVht1Bxf5KTEOe6DGtyfgWT4NWJOxXSnyy8vGGydS/v0ciO+
+         jE2GTl/eSCNivvPKcV69VChWRMcdZmOcb9PMYv3NVvzJQIiwjoYMZG6kzuconl7Pxxe7
+         TrSLrpe+a1eLhmBSrYKSFnBRqVubO0dKuhUDEbo/q6riVR5I6RXnNxz+mp4Yan7U9e/N
+         ZWXJv1D+BflbcvZXGCOZr4hocVeIkHtbP0MUdiZ+IhFA/Y5wzQy/kRll5H11jafF3sCS
+         ahzoOvaDDyg6yl9q9oBUOMdod5nKEsurvauashk76uSo9+8DxWYpM0InqVGg5NqyOi2Z
+         80eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755851734; x=1756456534;
+        d=1e100.net; s=20230601; t=1755852557; x=1756457357;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
         bh=4fNCT58k/my+QCdopiXS4QQfQM4qUwmIuE3uOP2SW2k=;
-        b=hJT3hKShCk3twIpO0LGIyodZ+PNdz9FlrUDE6K5lDqq2Ux7yhy1TOxYjtakNwju+iF
-         fBUAHSph06Kw0rW6wn4t2v5YvPO4XW8ljpHggFmi9fNwP2cOmuA+Xc78MESZBK7pqJaA
-         8QwIvtwL9DSyA3Al42usCv6Or1qXAFve+Qz1D43XS8nyt4f7Ae7rpPZN/bNe2ZRgPXEZ
-         2AVEP8DE+pKFTklN3e4VUcgx7/zlyvJlOHR96WkzmPzZJE6Ry0b6N+6+5S0Q5RJX6t9Q
-         qkYcior2giX8xffnPHbi6JicJEHLrrgyvdrVNw1bPxmL+k+TBbiX3s0W4tMpDPW7Ig4t
-         MT3g==
-X-Gm-Message-State: AOJu0Yx9jH14lNiKGx7mmfOT6vjSWws9cni+orp73sqv8sJaORIKCmWF
-	79RFdAjEq/kPkqEI8RyGlInXRT+Mf0PgEN9jyUo07Id2wTXZEenvxiBidZFoUX/q
-X-Gm-Gg: ASbGncsUrFkH2fDZwZZgr8MvQKbhS2yM4T06uwukiQArZVDgD7FJ9/Sqqf1ZVxg0v2T
-	5+YBwasUJU5NYc4pM7i3i/2NdLz+E9IsRz1Q8sKDxqOxtIZ220Jv5ozy0zappt8zuvX0tYxRwum
-	aOFjOYVV2XoA4DcTY2ygX/7BT9rtBxJiyRl8I5LCkEFbTB5K7JCyuwDtU/PuBfL+YQlNy7pglDW
-	y83ucyX7YLx4bDu7qn6qg2bnsCvSEPRjOrkDTOwaSBtOrZsYYX7aL6/QlXN4Bae9JwkmmbPfekY
-	DQWqZNsXoDoFby8c8asoOLxNVKc+BRSXBXvTV2uzquQxrSxg9f7TJTJlls0bt5nzaQEFQpejS0Q
-	pPxjQep7Wz8F81BBRgektC+QIfz+V133S/A==
-X-Google-Smtp-Source: AGHT+IHEKfmVyBTaa0HjmDfNi7MI+wt+q2UPfTJvFmrRUMukkUU0bDZ0Y1Q9lNrD5i6tKLC27cSKSQ==
-X-Received: by 2002:a17:902:e888:b0:240:4d19:8774 with SMTP id d9443c01a7336-24633d6a31amr26625315ad.24.1755851734128;
-        Fri, 22 Aug 2025 01:35:34 -0700 (PDT)
+        b=QamkmjF20RLFp/2kjan31IkELKnjBWC4/7A7v7CUJQebx5/UR5GZ4Ba7IfKhMJQpEA
+         7fVkKcW+jbGWZN8a0Vv6cMcLXzg0DPr2jn4mZe0oyNND5xJy+hn+0PAu8x1Giir/W1DR
+         vxymLzX1OR1eFeY4kls0AvocnTc18KxLGJ73t/X9o4lmZlQBTBRSjFI453ex0DvQfRTx
+         4ybKx7Wia4nBzLKe1a30XHwTx0wmdDJ/4+jXmH2851I4UThUv66FjG01mLfyYL6bcmzp
+         tNwfEJM/EWf2R22qcKqlBcantMhCo94EFHcjtrR60YucymK7iFQmqN8RdVdoLljxuDds
+         oAUg==
+X-Gm-Message-State: AOJu0YwxW0CzRD/bCLxnQ5i5/rlUCjHf41i0FMSwjDcQYbajb2xSjGVr
+	/le3tewt/rgH/SHZ1P0UnTdLwe6aAIDyc1rtIFYExGd8fOtCWur4zErb/5HuojHNa80=
+X-Gm-Gg: ASbGncv3kIvgBmKV73IqGr7QCYb+Yezl8kZ3i8JLr3hmjuMpdUtA+82UQvIQWGb4f+l
+	uQnfXNREZA7vbmXLVyfJegoTIHb/Z1CCGoQ2WgeD6BRaAyL0RAveH7i+wpB/fjd6BDVDDupyxRt
+	aEOUXI2JSKqwUjXGpjb57qQ0MKbnelxX/ME7oRw6cDMMyFfXD9/uuOj1cZ/osaumVr1UYMK2eQ7
+	rVVTFfz1hj3MEbfxI8T8X9/0TXSBjuoqecz1BTT2tSVNPl4xpoT8gb4usINzq3YFP3Edu9lTaVH
+	UGtUvVw/iBw4Zi5rEratmmJP+M15jy4TNm7Jf5egKO5cXcuo3oDFQB9tv/eE/FAvgAGJDx2L5+G
+	ypEq1cI/1BBqydfK5HF10dQH+Y4mJAg50kA==
+X-Google-Smtp-Source: AGHT+IHJfNqMLLHGqaMPjJfw2FvRMijPadJN5npGW4v89bcwGjf0O923DRfIhvMFPQx4aWQVgmzSug==
+X-Received: by 2002:a17:902:d4cd:b0:240:1ec4:61fe with SMTP id d9443c01a7336-2462ef4ca85mr30038975ad.28.1755852556654;
+        Fri, 22 Aug 2025 01:49:16 -0700 (PDT)
 Received: from ayush-sharma.. ([103.196.213.181])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed4c745dsm76740675ad.73.2025.08.22.01.35.32
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed33a79asm77740625ad.6.2025.08.22.01.49.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 01:35:33 -0700 (PDT)
-From: monarch <ayusharmagsoccontri@gmail.com>
-X-Google-Original-From: monarch <ayushoffinfo17@gmail.com>
+        Fri, 22 Aug 2025 01:49:16 -0700 (PDT)
+From: monarch <ayushoffinfo17@gmail.com>
 To: git@vger.kernel.org
 Cc: monarch <ayushoffinfo17@gmail.com>
 Subject: [PATCH] config: add "hostname" condition to includeIf
-Date: Fri, 22 Aug 2025 14:05:05 +0530
-Message-ID: <20250822083505.96187-1-ayushoffinfo17@gmail.com>
+Date: Fri, 22 Aug 2025 14:19:09 +0530
+Message-ID: <20250822084910.98308-1-ayushoffinfo17@gmail.com>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
