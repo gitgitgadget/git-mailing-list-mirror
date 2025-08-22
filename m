@@ -1,97 +1,160 @@
-Received: from mail.reprendre.net (mail.reprendre.net [193.23.30.35])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB91226165
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 15:16:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.23.30.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88331A9F90
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 15:21:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755875823; cv=none; b=cxZ1nfw8TTKJUlnlsFJMkhXB9fAKv0CQUxupnNNqJVEzD9geE4f2G1aofT8nxykuQ5DGXVtcr58/EttbeXcZkQgEjyKh+fVhPm0+4iANU80WgMYy1VSeaufwLFPvehYUQFFdrmI5JffwZtSokvrugX+ll3Qoi3NyCvhNOq4rZEU=
+	t=1755876065; cv=none; b=tXksmMlN4EjzQd/uoBJNE9xUSWXijZk3lHH2Z6tJ1iiPO1ISXmiuJ/OYLWO5G0eOwVhNIsAUzZV99OtMiac/pLjdj6evOIPjvCeIUFIXqi6q74ZN68kwQKhCfkFVvzVANVo895dvuv0x9fJ9c/2QeOrR97O6YGoeXvOC9RnDuks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755875823; c=relaxed/simple;
-	bh=2VNEkM1frcIOX4hhD+i3aMOfIdFrcacS8dSbfAJgaLk=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WhwScOrNDnSapJejh6Cjkh5mC4Wm+qly1BEuIoIXIblABqmGfIZwy6J1b8zVfMBJBgLGaeuHBaUAjCeKYHg8P19l842jkRJUT2LLm2+OnozuSTvp5Yd3zUajC/z+OW4p0v5bL01b5H+A9326TNsGic4NnhBje0sDA5zlKYTC+fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cassou.me; spf=pass smtp.mailfrom=cassou.me; dkim=pass (2048-bit key) header.d=cassou.me header.i=@cassou.me header.b=k6LNUT6y; arc=none smtp.client-ip=193.23.30.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cassou.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cassou.me
+	s=arc-20240116; t=1755876065; c=relaxed/simple;
+	bh=ZwGjw3Zd8ojTY1kef0l9cjKO2YOvLokMq24J0oM84+A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bOmD+A+VpSX6xk0xGL2kfUXI2u6SBLtdlvztap2oCKJCQoo8+XPEdJEvD3CQbqSpMCCn/DEvjWJS0Q5rO/hPW/dDOcWdzwOGf08TjRQg7GWm2AKEnscEHNS7ewy3JuvBWqPUVXkx2r1vPkMjOOeKCNSoZq+Ru3U9l+LqFJaSc+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=I/cR2mV4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=izXNvhWd; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cassou.me header.i=@cassou.me header.b="k6LNUT6y"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 452642CD3CC
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 17:10:49 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cassou.me; s=dkim;
-	t=1755875450;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=G5YDZZ4mBe6SWQEx3PZ0K9HhHB6WjD1SvPCxCZ5D/bM=;
-	b=k6LNUT6yb/RHT0/sFaoZs+PzqZdtouGdrb7ggWnb4ECp35ZWZ3eLI3Tq8GhV/FR258n5BG
-	rCfVlko/NmGa4pG/IsmPtjq1p54OK5PLt3C1yqsRPTUofXWFFCJCJp9cYulBGUV2Oo8lrD
-	VE81QF/HqsdbsB7n9FzGKKodQbRojlWsNG99TzlKx7YPP06eCUQvFvtNWopAN0SmoXDDv7
-	jHqIHW2rhvLT7z75mKSkF/han5UMEmkvJECSS4wLT1qPrd0/Jp2d0uBihK1Xu42EoTxyaR
-	jpoyH1MBpxGnX4qClEDCAJGta76OrFFeMu761VgOep94NY062fZJ0tFGPK7zCQ==
-From: Damien Cassou <damien@cassou.me>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="I/cR2mV4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="izXNvhWd"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id AECF8EC083C;
+	Fri, 22 Aug 2025 11:21:01 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 22 Aug 2025 11:21:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm3; t=1755876061; x=1755962461; bh=ga
+	PBiE8M9et8JuqOyd9p5gTqxa6eFzKfiyGiECkey/U=; b=I/cR2mV4ahno8RYyZe
+	/IUSj4tP760j2ZdDigkVZNWZxGX2OqN1AR7KDjv9PcHesmWte0SvgJctdHNNUuj8
+	/7ArnI9eHAzc03EsRk9DCS4IPOg4yD5vn4wYoFuSRwlcpvTDoaOk5zBFMiRizRO/
+	jM0VHZmH6QyIQmvDLEb3zaY/mX9JH/OVWWCUrneUpq2GA0X2zBYinXc3ebv/kfbu
+	bLuMGcb4EcPD7HpIDC19W2Jj1YQRDFLKcc/R6jPxO4j+qNCd6kJ47yjpFM6OmIFh
+	CvMFlzlVTXVwTgfbZ9pO94sONpdB2CwbSnnuXFJKHNaBXjwUPUTFHd/bsotSVNTq
+	eAoA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1755876061; x=1755962461; bh=gaPBiE8M9et8JuqOyd9p5gTqxa6e
+	FzKfiyGiECkey/U=; b=izXNvhWd1E7JueQMa6CJUaW00Kb+M+nNUlyzUp9FctFW
+	NSl291Sg1ggKz2TB6jWH/SXuAF+ap0hZK8WgEX6qz/hZXz+xvI7xjBDdJruTL2WT
+	xTc/8z4l73/ryrI0n9BtxqJq4B3DhwxyRIPyN8fHe6J/FQLvlrVfeBfE0iQuYgsL
+	V3X0Wuy1Dvte4+PUS+ccU8wzExPotYy+mjVBEXmHFvo21MJhcco/GWdDuEtUJBP4
+	BP3OkxL2e8i1+ZNU++i3nJ4mPpgUHsDN5N7yNKYIvA6SyGcf5P9V/9UGu0zC0ziz
+	tA6B2DmOL4kvsRZxHEZ25C0A3lsejhEMb3XLqdnLdQ==
+X-ME-Sender: <xms:3YqoaMKpPhvQgX_BCGTVDK_9aypUUVUelWAded3i0b1olg30T3dRv5E>
+    <xme:3YqoaMWJU9U7RIUhjRXkLiIgjGD0UfOq9BvNlHH9z6ff93jvTGUeTHRWhIKFHkZkd
+    20iJqvB-PHNdkBocA>
+X-ME-Received: <xmr:3YqoaOjvzuFAKntFO8ZNqVrUOTdgNRGayCaFqu-1g1PY8ZEAdrrXSXFmjXQunxFK2gn-ZJdrvo4Z7s-WfnlRTK3NMwZfD4z1XGx4B8w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieeguddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffogggtgfesthekredtre
+    dtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
+    ihhlrdgtohhmnecuggftrfgrthhtvghrnheptefgkeejffdufeefffegkeevgfevvdegff
+    eujeejleegudfhtdffieekleefhffgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
+    htmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptg
+    houggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:3YqoaH8TTVTRWmF0wvhPyUjHO1AcV1Z9SR1TvV16hEU8tZvE2ffczQ>
+    <xmx:3YqoaIBSAd1_id2umVecjatow6ALLlFu6rOMLicxXGpBMo9v84pDEg>
+    <xmx:3YqoaELTQzM7pnRasRcMoQyQzPmBtHJKGE-YOucJlvapqPjjAA5Rxw>
+    <xmx:3YqoaLk2WHKoKo7CdarJA16mfSetHOFP7eWvUA7fnLdNDTIq-Ip_OA>
+    <xmx:3YqoaGuuIeonx8qW4FiEZtBpwvBEpPqsonCH4QLvxhN5KwkDNEc6k2wO>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 22 Aug 2025 11:21:00 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
-Subject: git status shows a different result depending on how fast a file is
- changed
-Date: Fri, 22 Aug 2025 17:10:48 +0200
-Message-ID: <m0o6s7xuh3.fsf@cassou.me>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH] doc: interpret-trailers: close all pairs of single quotes
+Date: Fri, 22 Aug 2025 17:20:35 +0200
+Message-ID: <4eac944102a846695a9f61ead39a5a86361a0532.1755875970.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.51.0.11.g23cedd8a747
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
---=-=-=
-Content-Type: text/plain
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Hi,
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-The attached script has a commented "sleep 1s" line in the middle. If it
-is commented, "git status" at the end will not list your last changes to
-foo.txt (which I find a weird behavior). If you uncomment the line, "git
-status" will see your changes.
+Notes (series):
+    Demo:
+    
+        $ html2text <git-interpret-trailers.html | grep "'"
+        This means that the trimmed <key> and <value> will be separated by ': ' (one
+              $ git interpret-trailers --trailer 'sign: Alice <alice@example.com>' --
+              trailer 'sign: Bob <bob@example.com>' <msg.txt
+              $ git interpret-trailers --trailer 'Acked-by: Alice <alice@example.com>'
+              $ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --
+              trailer 'Reviewed-by: Bob <bob@example.com>' 0001-foo.patch >0001-
+            * Configure a sign trailer with a command to automatically add a 'Signed-
+              off-by: ' with the author information only if there is no 'Signed-off-by:
+              ' already, and show how it works:
+              $ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git
+              config user.email)>"'
+              $ sed -e 's/ Z$/ /' temp.txt > commit_template.txt
+    
+    And on ‘master’:
+    
+        $ html2text <git-interpret-trailers.html  |grep "'"
+        This means that the trimmed <key> and <value> will be separated by ': ' (one
+              exists. Upon encountering '--no-if-exists, clear the effect of any
+              previous use of '--if-exists, such that the relevant configuration
+              missing. Upon encountering '--no-if-missing, clear the effect of any
+              previous use of '--if-missing, such that the relevant configuration
+              $ git interpret-trailers --trailer 'sign: Alice <alice@example.com>' --
+              trailer 'sign: Bob <bob@example.com>' <msg.txt
+              $ git interpret-trailers --trailer 'Acked-by: Alice <alice@example.com>'
+              $ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --
+              trailer 'Reviewed-by: Bob <bob@example.com>' 0001-foo.patch >0001-
+            * Configure a sign trailer with a command to automatically add a 'Signed-
+              off-by: ' with the author information only if there is no 'Signed-off-by:
+              ' already, and show how it works:
+              $ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git
+              config user.email)>"'
+              $ sed -e 's/ Z$/ /' temp.txt > commit_template.txt
 
-My global Git configuration file ~/.config/git/config only contains
-settings for user.name and user.email. I can reproduce both on macOS and
-GNU/Linux. My Git version is 2.50.1.
+ Documentation/git-interpret-trailers.adoc | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-I realize that if the date of foo.txt at the end of the script is
-changed then "git status" will always detect the change. I also realize
-that if the size of foo.txt changes then "git status" will always
-detect the change.
+diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
+index 82c8780d932..fd335fe772a 100644
+--- a/Documentation/git-interpret-trailers.adoc
++++ b/Documentation/git-interpret-trailers.adoc
+@@ -142,8 +142,8 @@ OPTIONS
+ 	provided with '--if-exists' overrides the `trailer.ifExists` and any
+ 	applicable `trailer.<keyAlias>.ifExists` configuration variables
+ 	and applies to all '--trailer' options until the next occurrence of
+-	'--if-exists' or '--no-if-exists'. Upon encountering '--no-if-exists, clear the
+-	effect of any previous use of '--if-exists, such that the relevant configuration
++	'--if-exists' or '--no-if-exists'. Upon encountering '--no-if-exists', clear the
++	effect of any previous use of '--if-exists', such that the relevant configuration
+ 	variables are no longer overridden. Possible actions are `addIfDifferent`,
+ 	`addIfDifferentNeighbor`, `add`, `replace` and `doNothing`.
+ 
+@@ -154,8 +154,8 @@ OPTIONS
+ 	provided with '--if-missing' overrides the `trailer.ifMissing` and any
+ 	applicable `trailer.<keyAlias>.ifMissing` configuration variables
+ 	and applies to all '--trailer' options until the next occurrence of
+-	'--if-missing' or '--no-if-missing'. Upon encountering '--no-if-missing,
+-	clear the effect of any previous use of '--if-missing, such that the relevant
++	'--if-missing' or '--no-if-missing'. Upon encountering '--no-if-missing',
++	clear the effect of any previous use of '--if-missing', such that the relevant
+ 	configuration variables are no longer overridden. Possible actions are `doNothing`
+ 	or `add`.
+ 
 
-Can somebody explain me how the "delay 1s" command can change the
-behavior of "git status"? If you know where in the C code this behavior
-is implemented, I'm interested as well.
-
-Thank you very much
-
+base-commit: 954d33a9757fcfab723a824116902f1eb16e05f7
 -- 
-Damien Cassou
+2.50.1
 
-"Success is the ability to go from one failure to another without
-losing enthusiasm." --Winston Churchill
-
---=-=-=
-Content-Type: application/x-sh
-Content-Disposition: attachment; filename=git-use-cases.sh
-Content-Transfer-Encoding: base64
-
-IyEvdXNyL2Jpbi9lbnYgYmFzaAoKc2V0IC1lCgpybSAtcmYgL3RtcC9teS10ZXN0LXJlcG8KbWtk
-aXIgLXAgL3RtcC9teS10ZXN0LXJlcG8KY2QgL3RtcC9teS10ZXN0LXJlcG8KZ2l0IGluaXQgLS1v
-YmplY3QtZm9ybWF0PXNoYTEgLS1pbml0aWFsLWJyYW5jaD1tYWluCgpnaXQgY29uZmlnIGNvbW1p
-dC5ncGdTaWduIGZhbHNlCmdpdCBjb25maWcgY29yZS5mc21vbml0b3IgZmFsc2UKZ2l0IGNvbmZp
-ZyBjb3JlLnVudHJhY2tlZGNhY2hlIGZhbHNlCmdpdCBjb25maWcgY29yZS5wcmVsb2FkaW5kZXgg
-ZmFsc2UKCmVjaG8gIi0tLS0gQ3JlYXRpbmcgZm9vLnR4dCIKZWNobyAiRnJvbSBjb21taXQgMSIg
-PiBmb28udHh0CnRvdWNoIC0tZGF0ZT0nQDEyMzQ1Njc4OTAnIGZvby50eHQKZ2l0IGFkZCAtLXZl
-cmJvc2UgZm9vLnR4dAoKZWNobyAiLS0tLSBDb21taXR0aW5nIgpnaXQgY29tbWl0IC0tbWVzc2Fn
-ZT0iQWRkaW5nIGZvby50eHQiCgojIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQojIENvbW1lbnQvdW5jb21tZW50IHRoZSBm
-b2xsb3dpbmcgbGluZSB0byBzZWUgYSBkaWZmZXJlbnQgcmVzdWx0IGZvcgojIHRoZSAiZ2l0IHN0
-YXR1cyIgYXQgdGhlIGVuZDoKCnNsZWVwIDFzCgojIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKZWNobyAiLS0tLSBNb2Rp
-ZnlpbmcgdGhlIGNvbnRlbnQgb2YgZm9vLnR4dCIKZWNobyAiRnJvbSBjb21taXQgMiIgPiBmb28u
-dHh0CnRvdWNoIC0tZGF0ZT0nQDEyMzQ1Njc4OTAnIGZvby50eHQKCmVjaG8gIi0tLS0gU2hvd2lu
-ZyB0aGUgc3RhdHVzIgpnaXQgc3RhdHVzCg==
---=-=-=--
