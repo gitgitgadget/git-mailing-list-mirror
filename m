@@ -1,128 +1,127 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C073B7262F
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 04:59:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCC97262F
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 06:13:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755838799; cv=none; b=RhjaiKHU7PouUiZV/1sm1YyI48SHnIA8VzDN38nA658de+U6Obg8EVgcbbc7HymgidkPQ239zuAEtObLHSbN47ui/zWcaWQhPv6X/6SC/Up+pLCsJccwGR+Xijhz1Hdiay969TuypkHp+Fb9iyXNw0UWr/G/S2DjDfKe9gUl7TI=
+	t=1755843235; cv=none; b=jgYK9agMdiVA5wweapFhqfdqnAsGEA7yNsuSfX5XmHSSFuj0Ipw5pANGxuwUSkgI/5fqFqZBYpQMCaq/iNyaokJ24/HzaNcubjmwQldYbWRS7I+9XYNOzFDRin96/UDe9Gq+9k3A2yMbbn77hg4ydXzwBgiCK26Yg1S9Z/Bs6VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755838799; c=relaxed/simple;
-	bh=38iV3H8KpKSDOEjHtf7tS/RyIONeLRhl9dbnhCNZR3U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U+8gDzztWRWYwixxX4DUPq79fSZRrjSFs9pNpcFjf26OvED/7O21i3ObyQwatVKkfHKzeImnDn4E2YWn9rGN23wCEa+U8yBhPqIpI8LotWaCewrBn5w0ESgcSz11c3ss5mS81hRKu0MoSnN4RlX4p780q8Mbo5t+VDWRtc54siI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MHnxZ86f; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755843235; c=relaxed/simple;
+	bh=fCkY066KrKqrgq1hQHh1v/yEmaUsi/0zJVJ+Evbj2Uw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E/Od+HWg/6sU/Bd9z40y2vc9xnDQ3kt8GVAU9UeLznd4ccUIZlRNq43cShwuwUEjng0B1tBOuUcANRTPbFMRt2QiIg/du3NlQC+aeeyi60GT1cQw9V5MfX07bRu3gUgRzvMN4BrtCdK3t2s68gmc3IWbgTrMmwj6x0o4EkDetQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FOR7AMJJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E0j/3/hK; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MHnxZ86f"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-24457fe9704so16316565ad.0
-        for <git@vger.kernel.org>; Thu, 21 Aug 2025 21:59:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755838797; x=1756443597; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nmR6CyJuSSXbztyVc0m+5OuakG2ByieT1SRboR4GfdE=;
-        b=MHnxZ86fImmsgxXKodcp9DfYmydU5bTfzGN1qGYhpKOpHxmUrExn/fBDZCimyzMNGl
-         5k6uKFum/eD5X+DezzZgy3YNciTtYJJK5Go9vbtKZWoMwStU8VYWAlpqy6BS4K48fj9b
-         2Ro4J8c1FIy5xwNuQbC/AWK7fS+WGGUBbZmL3TckS7RnVMtJ08yPQur0uA39LhRaC85W
-         tNux393vxLaTVhEEPvvEM9z9qpitTYiq/QpFLmacQ82NqgcM7rNMJoF+bPjXnUWY/b/7
-         rgotitStAdflGfZq3Yre6EuiKP3x/H6qkZS09BsN1v1OqcT4dRshs6BzA0ZAeV8ILGWa
-         xmRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755838797; x=1756443597;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nmR6CyJuSSXbztyVc0m+5OuakG2ByieT1SRboR4GfdE=;
-        b=MlvxdCSVxGHuCpptiZmHw2+xxSrszAt1ylLRITAlXywc3pFvOu+UhLVmSUYrXgstXg
-         rRcAj8nYp6OtOr1wfNZBAik4TfO8acDY7q7qyo/4DFvM+3f8FVoeQjEDn1Cs4cndLWRc
-         Thpm1YSvnqS1RNvS0HLDMpRMk+8f7wLFu4FG3TuAPHpoKkqMrkl0pATu/3U25UHKVwdC
-         QcrJYCL52YhtcyYYNKH6Kn84qSPsSPDf4pkK4hns4T6ofWIS+WLpo2zuIaF79t1SqMob
-         GKXQw5ik5F3IxVjYFM8UvuN4fOO4vPAmue21630OZA5ENK3DweUAIjxo0+JPeplL5jXQ
-         GqXQ==
-X-Gm-Message-State: AOJu0YxRH3KXiMhd/bMZ8heeOwTHCdsFd7r0mamJRCTlIVKEMI4wA+tP
-	0vfb0JJSz1aBT7Um/luYR75nU3xW2Y+b8GD9JWeVsKKuUf5excpbEf6eJ5ID/7XhRM/ehCKvGpL
-	ljrW64QU9uNjXrIBwJVVeAjToeIdJGePvSkQo
-X-Gm-Gg: ASbGncukS2s+NQ5yyc/4/a/fo0AhELsM8HTwkA/ruzve80pNFCFEbIt1SMTjTcGKyZE
-	/6Y16A83onk2JTdn95iaks7Pyx7LXSHCZobh/SBqsU+rQUwiYZ0+wtoHxEfOqpwUycAj6TCKrXZ
-	ebAoHsCXBD0q0r5YPUpISM8Eu6DwMtrLA0lZcF1uxiQBo8hRiNkfKW8Qkcok2JzJuGg8kPxwwtN
-	cen54ju
-X-Google-Smtp-Source: AGHT+IHoBIJ1m2lXRtZVVbz/peZcOGom3CPT1Pq5jm70X87GwmT56zC/Pwf097FPa23+YSBZlm65Hs1LYfaXWLGWYyU=
-X-Received: by 2002:a17:903:124c:b0:240:84b:a11a with SMTP id
- d9443c01a7336-2462ee2bc6fmr27461805ad.17.1755838796855; Thu, 21 Aug 2025
- 21:59:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FOR7AMJJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E0j/3/hK"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B6E3E7A012E;
+	Fri, 22 Aug 2025 02:13:51 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Fri, 22 Aug 2025 02:13:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1755843231; x=1755929631; bh=c0GGNipVzi
+	oJnLJhPRPamfx1pLXwYcFbK8nFU4/R8QQ=; b=FOR7AMJJoPfnvxBDd+Sf6AkuWP
+	WheOFKB4e7NiDIZVcYu76rmasvVrvABxYsTfijDteC0CQFtIAfuosM0DckUbrViT
+	h2dUD13cWe/sZFPPYFCWEnodtmmmLvoNkW1d1ItZZa7NvUapqUZLwhidiyH6W2Qb
+	Y61q+KboCjbxaqEr1xTfNmUoEErvoGDR3NYlxC9FqZFbKSxlnz7LeR3jCH9/Xtfp
+	TLCKJH2r3OAGRQNJrDJIpJIUYFmItkClTT9mw3WcExkSabh9xGxJQwcvTNqCw+s/
+	0NaHdGH2nteKA5g0PcamFrfsCm0S4Og/SJEL1em7uA9CFXPvKFFX25Erdacw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755843231; x=1755929631; bh=c0GGNipVzioJnLJhPRPamfx1pLXwYcFbK8n
+	FU4/R8QQ=; b=E0j/3/hKApHO08BSwOsJiNzKHMACbYIGLDVcViDXPCbkh1xf7+r
+	ClumsaLjTGKqAeQFL+p4ERTyY+N4I2d7URQEKB3LcXpxfJb7LmJS1ZEv0ZyJcqlu
+	bffqGCYIshK7M/SZOw0UNE3NKl1Bux/7Ftf5AI/9qVcVVINZJEtmTsrIVUa/FHdO
+	n6rPHI9GWW80hMCmHZZD16kH0s/phQoLsTZyze74u+8DERRtbC62kEVu/M2EXzZg
+	K+7Z+1QIMmOAQfHkn59UBozoxG3ts4VMEDkoZn34OYkQ8UbAr2RE7mfDaWSNAgfB
+	JYcf+G3gLf24TkVqrvbR3/gkOc+z04PvBUw==
+X-ME-Sender: <xms:nwqoaEbLPIOgWXzBdf1LkcU3LAHJLH55U1mBYnd-KeD9rEGZ23sMZA>
+    <xme:nwqoaK4DHjs_UTiMOaSCfBxQu5kRLnWyZsrnS_5ddgSHtEr1D9FEtfTdvMfb9vtpU
+    1AaTX_U5O-mizP0Cw>
+X-ME-Received: <xmr:nwqoaFYPH_HYgRfWQaeXyQk21BDjKv0KWI2Q2JtKSs-ZuUvPnirKVIdSLgZlTSPzNLIX4oTonrlTfBBdN88nr79LGaXawy-WKuACWxC9>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieeftdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehjohgvrdgurhgvfiesihhnuggvgigvgigthhgrnhhgvgdrtghomhdprhgtph
+    htthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:nwqoaJiIXn724pmecKVeZZzI_usOPOEFHxviJS_gLUdoTN_hJtdy-g>
+    <xmx:nwqoaG8SFX3KZHIDhufcEYqi-rHOWbW2fKDsEGRMHH7P0TjLtJloXQ>
+    <xmx:nwqoaErbFcfEeZ0Zzm3Lr4J6r7Nh6Z6ajY1WQXdHm13XrQLjNR0NSg>
+    <xmx:nwqoaOUb_LJw1JFPt1TaIHX2JQe_3qrXzhFnt2GYr01MRPa3OBxvSA>
+    <xmx:nwqoaNu1fosvUxD8AHrEHLDfhTLnoYpUEwFhUuNGLNQPV6eguMN_-CCY>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 22 Aug 2025 02:13:50 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 20868abd (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 22 Aug 2025 06:13:48 +0000 (UTC)
+Date: Fri, 22 Aug 2025 08:13:44 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, Joe Drew <joe.drew@indexexchange.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: "lock file exists" when fetching in bare clone of repository
+Message-ID: <aKgKmLvaHAuueJeb@pks.im>
+References: <YQXPR01MB3046197EF39296549EE6DD669A33A@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
+ <20250820213323.GA1667633@coredump.intra.peff.net>
+ <aKbHozlmDIqfgkg4@pks.im>
+ <20250821072706.GA2390046@coredump.intra.peff.net>
+ <aKbwabLZiWasYoBC@pks.im>
+ <xmqqwm6w3bjp.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250821085246.929307-1-meetsoni3017@gmail.com>
- <20250821085246.929307-3-meetsoni3017@gmail.com> <aKbzNNcZZ-E0FVeI@pks.im>
-In-Reply-To: <aKbzNNcZZ-E0FVeI@pks.im>
-From: Meet Soni <meetsoni3017@gmail.com>
-Date: Fri, 22 Aug 2025 10:29:45 +0530
-X-Gm-Features: Ac12FXx6JR03pynlagGt6Pbs1J21HaYm58X-C16Okx7xhtwnkXDcilSRjJBgvGo
-Message-ID: <CAPhwyn0PAX12E_dmwE9UftcotKT5fyJq4xz5MTWkc7rz-qS-4g@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 2/2] t: add test for git refs exists subcommand
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, shejialuo@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwm6w3bjp.fsf@gitster.g>
 
-On Thu, 21 Aug 2025 at 15:51, Patrick Steinhardt <ps@pks.im> wrote:
->
-> On Thu, Aug 21, 2025 at 02:22:46PM +0530, Meet Soni wrote:
-> > The new `git refs exists` subcommand must have identical behavior to its
-> > predecessor, `git show-ref --exists`. To avoid duplicating the entire
-> > test suite, refactor the existing tests into a shareable helper script.
-> >
-> > Extract the tests for the `--exists` flag from `t1403-show-ref.sh` into
-> > a new `show-ref-exists-tests.sh` helper. The command under test is
-> > parameterized using the `$git_show_ref_exists` variable.
-> >
-> > Source new helper to both `t1403-show-ref.sh` and the new test file,
->
-> s/new/this/, otherwise this reads grammatically wrong to me.
->
-> >  test_done
-> > diff --git a/t/t1462-refs-exists.sh b/t/t1462-refs-exists.sh
-> > new file mode 100755
-> > index 0000000000..c00d76cc9e
-> > --- /dev/null
-> > +++ b/t/t1462-refs-exists.sh
-> > @@ -0,0 +1,22 @@
-> > +#!/bin/sh
-> > +
-> > +test_description='refs exists'
-> > +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-> > +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +git_show_ref_exists='git refs exists'
-> > +
-> > +test_expect_success setup '
-> > +     test_commit --annotate A &&
-> > +     git checkout -b side &&
-> > +     test_commit --annotate B &&
-> > +     git checkout main &&
-> > +     test_commit C &&
-> > +     git branch B A^0
-> > +'
->
-> It's a bit weird that this setup needs to be replicated. I guess it
-> comes from the fact that t1403 also has a bunch of other tests for
-> git-show-ref(1) that are irrelevant to existence checks.
->
-> How about we instead split out the existence-checks in t1403 into a
-> separate test suite first and then pull out the whole logic from it in a
-> subsequent commit so that we can also share the setup?
->
-Thanks for the review. You're right, splitting the test commit into two is
-cleaner. I'll make that change and send out a v2 shortly.
+On Thu, Aug 21, 2025 at 09:05:30AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> >     You're on a case-insensitive filesystem, and the remote you are
+> >     trying to fetch from has references that only differ in casing. It
+> >     is impossible to store such references with the "files" backend. You
+> 
+> "backend." -> "backend on your system."
+> 
+> >     can either accept this as-is, in which case you won't be able to
+> >     store all remote references on disk. Or you can alternatively
+> 
+> I do not see the former as a viable choice, though.  When this
+> happens, the clone or fetch fails and the user cannot catch up to
+> the upstream development, no?  You have to futz with the fetch
+> refspec to cause refs your filesystem cannot store ignored in order
+> to make progress on other refs, but that is making the user do more
+> than accepting this as-is.
 
-> Patrick
+Oh, yes, right now it's too involved. What I'm proposing is to mark the
+transaction as allowed-to-fail, and in that case we'd be able to fetch
+and store refs in this case again. The result would still be broken, but
+it would be broken in a similar way as before. There's one difference
+though: we'd accept the _first_ conflicting ref now, whereas before we
+accepted the _last_ conflicting ref.
 
-Thanks,
-Meet.
+In any case, I very much feel like we should know to warn about this
+case and guide readers towards a proper solution.
+
+Patrick
