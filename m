@@ -1,111 +1,159 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117371FF7D7
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 18:08:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71991298991
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 18:27:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755886106; cv=none; b=WWxCA4F4A4V+8nnApO0UggrFyWR3j2cbCcR82VoIYNx93UvpVcn+qH4kMfRfRRN/Sb3Ck8KTAIi5KLtWImTnFss45hpiozeaxu57P7OYoVyxGERCPo+aU23PHuFt6ckYU5XIT/wqW7EIPxO9r92C1QeeN0makCC8IrcJxh/njmw=
+	t=1755887264; cv=none; b=gx9wbGF2Iybvw18POMzQ2ZKwHHt2hTCOl7Azwhnos1ZozWL8aH5LnOZIM7BcfI4k1BxbsXBPshKWvRLAm12zXRnwmsuctskYFofGIvJSlx+rqpYNRTQWwzU09ggZVGsCZ3VJKJwscwNeROKqpX+/BaK4oL/E3PBYRqXXCFqEF9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755886106; c=relaxed/simple;
-	bh=WZ5gq9RIN2+g9BAAxtvDmBgTC0xSPJmpjRmUO3AFlTc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ajJNQ/k5ee9YSyWMC7/3Bs0jqtzRgPOB6Er+Qv6q41sH89sj2paFmpcE0wlzgejeiYVyHe6PxB08awCnwsBmobCkc2B9Gf4NXTtwlbSZ5mqfqupe5V/52mtysO6zeWiztztqp+FZyYDhsL8kVM7MOLsEnwdrRcBpv75cL+VxIsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XYl8DLTL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O88/UY7Q; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XYl8DLTL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O88/UY7Q"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B8B117A00E4;
-	Fri, 22 Aug 2025 14:08:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 22 Aug 2025 14:08:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755886103; x=1755972503; bh=N7SMsnqK3T
-	uegwqUu1DakQow6u7XoyFEW+MYCWdhkkE=; b=XYl8DLTLIGByR0A3ZVch2TlbM6
-	3oZJ3AXqzYB/Ti+Yp/PcMZi+qc/xJzsWB/EAlQ2GCxJoF/+kJwNjxocK+CJ5HUVu
-	8Mv6UHefoC0OVwI8wnbZKysyYgLBMod5DHKH1ymF5k+MlAXOaYeCEUnJr3jHmSi2
-	JzvSfmVIcl5vKJgw9YK/L5TL/YKjSBwkxrpuisfHLGhfAer9ewiqKZgZ4ynicJ5m
-	OCydoAI3PYHtLzHxCzA3DqqdSO4Gfck/ssX4EyVDhaVuxO2kRUmVOPk+r5dwusFI
-	gLi7uGVqeQ5JgfxOYn3FIxcPWGVE7OXFgFWc//8WJUlrFeB2I+kwUkTThshA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755886103; x=1755972503; bh=N7SMsnqK3TuegwqUu1DakQow6u7XoyFEW+M
-	YCWdhkkE=; b=O88/UY7QWnG6zB0GbhQqbqi3W6b17D8bSa1VyDRRnx2ezgensqS
-	9MW5XwfvHJ+k87AeG5qqprxashMx14sdSuoxXG09jUJL5z67CYFvu6FnTsf3DXVp
-	oK4MaFZ4QW5dv2tZyvTb1MzWPgZ7okDG0nulwDQ81jOvAW6V6fb9x7izkDXxKdMJ
-	dush5fx/LNXJzcJlDC7ADgJ7G41JAudkXKq0dxDpSCYZ6gIoYTGLmOvcc4nZW97g
-	34qRm9WdZmXrbH5LKsOvz7UNR9/+dR1hF4dXKI8PD/yCv4j/EHaYZpjWKLHqYd40
-	YVofVHAcGEBien7xJKWoHKYSnsyXLTocktg==
-X-ME-Sender: <xms:F7KoaBjn07tA4JTm4rgy4o8n6TEib0FQPx5eYDV7_McMaLjp3Y-7Ug>
-    <xme:F7KoaAkD46LOOWvWznyn32RoZpnXdbqdb6grFB4xQE_eqEdZOSzRiQKThYBrQ781T
-    xv1LIfrXcvcbWQXLg>
-X-ME-Received: <xmr:F7KoaNpuzsLc_UpZ1CvnQG5ryhmMKnvql8pyYYPLSsWXKSBwW2Pd9mB8J0Et1HdHeiROt8q_r3_whiYIe0ZnlyVsbDWUBswTIU0ObR4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieeggeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopegsvghnrd
-    hknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:F7KoaJFEtlOP0Y4OytUl62h2Z-R9rOBKX63Zq_oehmTntURvjGvKTw>
-    <xmx:F7KoaJzFd6iOtlm55BujFcu1xerYS0vEANsFNSiC3GN26mDoNZkeaw>
-    <xmx:F7KoaOpeRFLphHB9ilw7_gD-PRlniC8IuVTLA5TKIVd-AkQ8pXxh6Q>
-    <xmx:F7KoaDiMR_tmK64cgzFOORZ1frjMeMffRxFFqiXnX4l0FI-IPS6kpA>
-    <xmx:F7KoaCTx0DLmKJuob9iNlSHQ7lUpctu-wvIBTHS210r-A0Q39mVTEcwj>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 22 Aug 2025 14:08:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH RFC 11/11] builtin/history: implement "split" subcommand
-In-Reply-To: <aKhg8q-AAlsGDvFS@pks.im> (Patrick Steinhardt's message of "Fri,
-	22 Aug 2025 14:22:10 +0200")
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
-	<20250819-b4-pks-history-builtin-v1-11-9b77c32688fe@pks.im>
-	<CALnO6CBuwDVMZ-QTay+PUiXKsWMsABJcs1pAB=uUXf7-DJ4Mnw@mail.gmail.com>
-	<aKhg8q-AAlsGDvFS@pks.im>
-Date: Fri, 22 Aug 2025 11:08:22 -0700
-Message-ID: <xmqqplcnw7op.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1755887264; c=relaxed/simple;
+	bh=joMmimzjEM4FfK5vteJcjOHcy6nvdZypaxNNmUtnWj4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=EKsD70/mh9DsupCxKQSlqoXd64QUU5SawWl/hBzPwttPxFd6DBbEdNSehvHwxfVclDpZ4JY8BoN7nUfDkFxzZ0H/8phHRO9fD3+iUvyjmWbQDEdYGyP2elWByG7VtCw0MXIGyiBq/owjV52ITNhUXct2yVocLDliOMELZCuKw3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.1.102] (089144220182.atnat0029.highway.webapn.at [89.144.220.182])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4c7pZX61LdzRnmF;
+	Fri, 22 Aug 2025 20:27:32 +0200 (CEST)
+Message-ID: <cef6487f-aab4-421e-ba04-a5613c12e552@kdbg.org>
+Date: Fri, 22 Aug 2025 20:27:32 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] gitk: add README with usage, build, and contributing
+ details
+To: Michael Rappazzo <rappazzo@gmail.com>
+References: <20250821222605.3993-1-rappazzo@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <20250821222605.3993-1-rappazzo@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Am 22.08.25 um 00:25 schrieb Michael Rappazzo:
+> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+> ---
+> Changes from v1:
+>  - Added Usage section with basic gitk command examples
+>  - Simplified Contributing section by removing detailed patch workflow instructions
+>  - Removed repository status and integration details
 
->> Interesting. I can see using the original as the template for _both_,
->> or the first instead of the second. jj's split works a little
->> differently (especially with their notion of descriptions), so I can't
->> use them as a reference for the behavior.
->> 
->> I suppose this is one of those "everybody has their preference"
->> things, but I think giving the message in both new commits as the
->> template gives splitters the most information available when writing
->> the message. (Of course, in my editor, I can presumably do something
->> like ":Git show -s <split-commit-ish>" if I want.)
+Thank you very much, this looks a lot better!
 
-In other words, removing is easy, while remembering and retyping is
-harder.
+> 
+>  README.md | 61 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
+>  create mode 100644 README.md
+> 
+> diff --git a/README.md b/README.md
+> new file mode 100644
+> index 0000000000..fd249bc24d
+> --- /dev/null
+> +++ b/README.md
+> @@ -0,0 +1,61 @@
+> +# gitk - The Git Repository Browser
 
-When I split an existing commit, that is almost always because after
-doing too many things in a single commit and the time I realize it
-is when I am writing the commit message.  So I would suggest to give
-the same original message to both, to avoid losing information.
+Can we please write "Gitk" (uppercase "G") when we talk about the
+software, not the command?
+
+I would prefer an easy to read text file. Can we have underlined headers
+where possible:
+
+Gitk - The Git Repository Browser
+=================================
+
+Analogously for the subordinate headers below.
+
+> +
+> +gitk is a graphical Git repository browser. It displays the commit history of a Git repository as a graph, showing the relationships between commits, branches, and tags.
+Please wrap the lines so that they don't exceed, say, 70 positions.
+
+> +
+> +## Usage
+> +
+> +To view the history of the current repository:
+> +```bash
+> +gitk
+> +```
+> +
+> +To view the history of specific files or directories:
+> +```bash
+> +gitk path/to/file
+> +gitk path/to/directory
+> +```
+> +
+> +To view a specific branch or range of commits:
+> +```bash
+> +gitk branch-name
+> +gitk v1.0..v2.0
+> +```
+> +
+> +For more usage examples and options, see the [gitk manual](https://git-scm.com/docs/gitk).
+> +
+> +## Building
+> +
+> +gitk is a Tcl/Tk application. It requires Tcl/Tk to be installed on your system.
+> +
+> +### Running directly
+
+At this point we should insert:
+
+    Gitk can be run from the source directory without installation:
+
+> +```bash
+> +./gitk
+> +```
+
+    This is very convenient during development.
+
+> +
+> +### Installation
+> +To install system-wide, you can use either `make` or `meson`:
+> +
+> +```bash
+> +# Using Make
+> +make install
+
+This doesn't install system-wide, but in $HOME/bin. I am unsure whether
+we should encourage this. AFAIC, I would be upset if this works without
+sudo *and* clutters my $HOME. (I pull Gitk into the Git repository,
+which I have patched to install in /usr/local.)
+
+How do Gitk contributors handle `make install`?
+
+> +
+> +# Using Meson
+> +meson setup builddir
+> +meson compile -C builddir
+> +meson install -C builddir
+> +```
+
+I haven't used the Meson infrastructure ever. I trust this procedure works.
+
+> +
+> +Both build systems will handle setting the correct Tcl/Tk interpreter path and installing translation files.
+> +
+> +## Contributing
+> +
+> +Contributions are welcome! The preferred method for submitting patches is via email to the Git mailing list, as this allows for more thorough review and broader community feedback. However, GitHub pull requests are also accepted.
+> +
+> +All commits must be signed off (use `git commit --signoff`) and should have commit messages prefixed with `gitk:`.
+> +
+> +#### Email Patches
+> +Send patches to git@vger.kernel.org and CC j6t@kdbg.org. See the Git project's [patch submission guidelines](https://git-scm.com/docs/SubmittingPatches) for detailed instructions on creating and sending patches.
+> +
+> +## License
+> +
+> +gitk is distributed under the GNU General Public License, either version 2, or (at your option) any later version.
+
+Very good!
+
+-- Hannes
 
