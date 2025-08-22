@@ -1,159 +1,159 @@
-Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71991298991
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 18:27:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C652C0303
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 18:45:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755887264; cv=none; b=gx9wbGF2Iybvw18POMzQ2ZKwHHt2hTCOl7Azwhnos1ZozWL8aH5LnOZIM7BcfI4k1BxbsXBPshKWvRLAm12zXRnwmsuctskYFofGIvJSlx+rqpYNRTQWwzU09ggZVGsCZ3VJKJwscwNeROKqpX+/BaK4oL/E3PBYRqXXCFqEF9E=
+	t=1755888359; cv=none; b=GgaokVKX0dVCq8x4diHFDdSdOGcN0V8Rvt2ggoUgjdV7rExkjkvqh+gO//bqqbB3nN/5H2Q3TrzsHRIP2/ouudET5nMqxAfEf+SkfBsxZMUUiqlufOwZ20CM4CtyZQ/zqbjOu9k9EF+QlhkK5G7eObE/agQuE94oUe396O/jK34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755887264; c=relaxed/simple;
-	bh=joMmimzjEM4FfK5vteJcjOHcy6nvdZypaxNNmUtnWj4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=EKsD70/mh9DsupCxKQSlqoXd64QUU5SawWl/hBzPwttPxFd6DBbEdNSehvHwxfVclDpZ4JY8BoN7nUfDkFxzZ0H/8phHRO9fD3+iUvyjmWbQDEdYGyP2elWByG7VtCw0MXIGyiBq/owjV52ITNhUXct2yVocLDliOMELZCuKw3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.1.102] (089144220182.atnat0029.highway.webapn.at [89.144.220.182])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 4c7pZX61LdzRnmF;
-	Fri, 22 Aug 2025 20:27:32 +0200 (CEST)
-Message-ID: <cef6487f-aab4-421e-ba04-a5613c12e552@kdbg.org>
-Date: Fri, 22 Aug 2025 20:27:32 +0200
+	s=arc-20240116; t=1755888359; c=relaxed/simple;
+	bh=jmDmjJTDuvkLc+FyVeTRGzL+ZzYWxTPmOSkNb1dee4Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B53J2GqrGoR+6WI8Ch7B3x7hKRpzCERM313yc/JDAFnfc2lPv9gOs7dNPHTCNMt5sbVK4W09NEEV+4wWFaSRVWaHnZhhAav6HZ1YwjF34ZhCn+ZNFZdwgfbaUoXzjg6WvhfAONgwVQ3GhfgQH/pLdxa+ua+Ur0S6Cpah2rkfndc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F52L+o4g; arc=none smtp.client-ip=209.85.166.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F52L+o4g"
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3e94fc4de34so12188335ab.3
+        for <git@vger.kernel.org>; Fri, 22 Aug 2025 11:45:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755888357; x=1756493157; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Z6r6Q3u6uhHXBWprKy6vtR6cwIRr+SQd3iBfm4dTYkE=;
+        b=F52L+o4gXytyoCzzLoKkxgCpMBhMkHOxwYGANtU/YWzY2w69/6OSEnWGSgndii9G+0
+         9CtDddzoTDGb9E6eH2/Oga5vfGwNZ5oTxWiOi1T0QhUDN2ghQ3OyEe9ozZwMnnP0EeXG
+         ygQ+3H4pxgzkxGZMUOa8Og7ca7GPl43ZZiYxbRh+meJqTrfImXlxvja/TQ+qpfBz0jGn
+         QBbWHm9BFbPeWEUE8msmWWjRKXhTv8523vDMB0ZCbxcVU+fFRgY7a5Plu5rtkCcHApFZ
+         dccql13raWjWXvyrNwjMy5YFgKw2pBemwmldcAmoLxR5MVVxmwCrXgHsfU+Z6of/ITIj
+         cSFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755888357; x=1756493157;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Z6r6Q3u6uhHXBWprKy6vtR6cwIRr+SQd3iBfm4dTYkE=;
+        b=sIoxmwcnVQL6VXoNLDFQBbyvP9miNgDbpAWZB4xcx44cYNNfeN85TEiHTsAXM28gLq
+         oIHUHkxKfn/WQl2ro6fh9szZuZ6yyItfolEAPmvMaOck+i9W24eztiAQzJN+KxTc2rEc
+         +KVayv7W6B6hPir/lDzl5s89KY1wo/4grHTFygg72Dh4PGn98Pj5JB2ryChiaRQanxPP
+         y7/KsfWQGgfnd+JcizfU+vXvik3IBh5NWGHIomJGqDajx4diL0l7MM9mhOl+1g9hz6Rq
+         2T7tkqhKYVOpRcGJAcMZJ3iE0iE/90WKzJ8OkbxSoX+z2jEccUkNvLsh/yjftwj54AB2
+         PGbQ==
+X-Gm-Message-State: AOJu0YxmFGGMWzxfMf/lpG1vIGVMsmldzTVCvOeA3btfnUV5IeBhqBjr
+	tdtpYwOQAjCbzjBs1uWNNdOx8gMckI7XTflummi+lQcCvZ+6EPrJMxEXlJaCiAQCzgFEP5UFcj5
+	lwXhu6FR84iSbCEWekjI/2LUGSsbyOPg=
+X-Gm-Gg: ASbGncumixeNH7PSdaYWXQT5wEn8KKSMf3bPffvfDERbemtFxbVSjkvQb0RdjYtuSoR
+	ZH15P9ZKs+msYbxpFjOEdDzPuTXyKbx8c+QshQV/qWZrzE0R6hmedkBi8WmgcPk6NrNWY25ufaA
+	Afix3cx03cKQOdYqkQDszS149yc9sUOJ3QHnzdPnvQI5lEhSlhnNeaxXdLZSRrN52/e7Rni56zj
+	2JXju3kI1Ahgie7Z25/I+fqqCKeTDEj6nni9U8195sZvTp1uGA=
+X-Google-Smtp-Source: AGHT+IHJJtEFRP0A3AqjqTd9M388NbbGTYKUa0DsncPLLIoXYXhDuelltktzY04jL61TkANiNy+JO28MKx/Akjpbzww=
+X-Received: by 2002:a05:6e02:1c02:b0:3e5:58ba:d9ca with SMTP id
+ e9e14a558f8ab-3e91fb2dd94mr68949695ab.3.1755888357205; Fri, 22 Aug 2025
+ 11:45:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] gitk: add README with usage, build, and contributing
- details
-To: Michael Rappazzo <rappazzo@gmail.com>
-References: <20250821222605.3993-1-rappazzo@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-In-Reply-To: <20250821222605.3993-1-rappazzo@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <pull.2034.git.git.1755630882418.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2034.git.git.1755630882418.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 22 Aug 2025 11:45:46 -0700
+X-Gm-Features: Ac12FXxCQ5AF8zYYOhdgH2SjGs8ugWRQZz5ECCeuGtpixq6OaSNSrm07hCl_9ZU
+Message-ID: <CABPp-BEVzNDurd1h+Jw905RO9bg16eDacqg_Ee7GD66Muj0fSg@mail.gmail.com>
+Subject: Re: [PATCH] doc:clarify which remotes can be used when contributing
+To: Daniele Sassoli via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Daniele Sassoli <danielesassoli@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Am 22.08.25 um 00:25 schrieb Michael Rappazzo:
-> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+On Tue, Aug 19, 2025 at 12:14=E2=80=AFPM Daniele Sassoli via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Daniele Sassoli <danielesassoli@gmail.com>
+>
+> The docs mostly point to using git/git as one's remote, however, when it
+> comes to Sending a PR to GitGitGadget section, the reader is told to use
+> gitgitgadget/git, with no mention of git/git, potentially leading to
+> some confusion.
+>
+> Clarify that both gitgitgadget/git and git/git can be used, albeit with
+> some differences.
+>
+> Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
 > ---
-> Changes from v1:
->  - Added Usage section with basic gitk command examples
->  - Simplified Contributing section by removing detailed patch workflow instructions
->  - Removed repository status and integration details
+>     doc:clarify which remotes can be used when contributing
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-203=
+4%2FDanieleSassoli%2Fclarify-remote-to-use-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2034/D=
+anieleSassoli/clarify-remote-to-use-v1
+> Pull-Request: https://github.com/git/git/pull/2034
+>
+>  Documentation/MyFirstContribution.adoc | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFir=
+stContribution.adoc
+> index aca7212cfe2..d014c5c36e1 100644
+> --- a/Documentation/MyFirstContribution.adoc
+> +++ b/Documentation/MyFirstContribution.adoc
+> @@ -908,10 +908,16 @@ Now you should be able to go and check out your new=
+ly created branch on GitHub.
+>  =3D=3D=3D Sending a PR to GitGitGadget
+>
+>  In order to have your code tested and formatted for review, you need to =
+start by
+> -opening a Pull Request against `gitgitgadget/git`. Head to
+> +opening a Pull Request against either `gitgitgadget/git` or `git/git`, d=
+epending
+> +on which mirror you initially cloned from. Head to
 
-Thank you very much, this looks a lot better!
+I think mentioning that opening a PR in either project is fine is
+helpful...especially since the UI sometimes changes the target to
+git/git when I wanted to open against gitgitgadget/git, and I don't
+notice and I open yet another PR in the wrong place.  However, having
+it opened in the wrong place rarely makes any meaningful difference,
+so it would probably be helpful to let new users know that it's okay
+to open it in either place as you do here.
 
-> 
->  README.md | 61 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 61 insertions(+)
->  create mode 100644 README.md
-> 
-> diff --git a/README.md b/README.md
-> new file mode 100644
-> index 0000000000..fd249bc24d
-> --- /dev/null
-> +++ b/README.md
-> @@ -0,0 +1,61 @@
-> +# gitk - The Git Repository Browser
+However, where you cloned from doesn't matter when you open the pull
+request, so I'd strike the ", depending on which mirror you initially
+cloned from." part of this change.
 
-Can we please write "Gitk" (uppercase "G") when we talk about the
-software, not the command?
+>  https://github.com/gitgitgadget/git and open a PR either with the "New p=
+ull
+>  request" button or the convenient "Compare & pull request" button that m=
+ay
+>  appear with the name of your newly pushed branch.
+> +If you're using https://github.com/git/git as your remote, you will need=
+ to
+> +open the pull-request from your fork, selecting `git/git` as base.
 
-I would prefer an easy to read text file. Can we have underlined headers
-where possible:
+...and I think we should strike these two sentences as well, or at
+least reword them; your remote URL is immaterial.
 
-Gitk - The Git Repository Browser
-=================================
-
-Analogously for the subordinate headers below.
-
-> +
-> +gitk is a graphical Git repository browser. It displays the commit history of a Git repository as a graph, showing the relationships between commits, branches, and tags.
-Please wrap the lines so that they don't exceed, say, 70 positions.
-
-> +
-> +## Usage
-> +
-> +To view the history of the current repository:
-> +```bash
-> +gitk
-> +```
-> +
-> +To view the history of specific files or directories:
-> +```bash
-> +gitk path/to/file
-> +gitk path/to/directory
-> +```
-> +
-> +To view a specific branch or range of commits:
-> +```bash
-> +gitk branch-name
-> +gitk v1.0..v2.0
-> +```
-> +
-> +For more usage examples and options, see the [gitk manual](https://git-scm.com/docs/gitk).
-> +
-> +## Building
-> +
-> +gitk is a Tcl/Tk application. It requires Tcl/Tk to be installed on your system.
-> +
-> +### Running directly
-
-At this point we should insert:
-
-    Gitk can be run from the source directory without installation:
-
-> +```bash
-> +./gitk
-> +```
-
-    This is very convenient during development.
+(Not only have I opened up against both gitgitgadget/git and git/git
+in the past, my clone URL wasn't necessarily either one of these.)
 
 > +
-> +### Installation
-> +To install system-wide, you can use either `make` or `meson`:
-> +
-> +```bash
-> +# Using Make
-> +make install
+> +The differences between using `gitgitgadget/git` and `git/git` as your b=
+ase can
+> +be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadge=
+t-on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
 
-This doesn't install system-wide, but in $HOME/bin. I am unsure whether
-we should encourage this. AFAIC, I would be upset if this works without
-sudo *and* clutters my $HOME. (I pull Gitk into the Git repository,
-which I have patched to install in /usr/local.)
+I like this call out.
 
-How do Gitk contributors handle `make install`?
+>  Review the PR's title and description, as they're used by GitGitGadget
+>  respectively as the subject and body of the cover letter for your change=
+. Refer
+>
+> base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+> --
+> gitgitgadget
 
-> +
-> +# Using Meson
-> +meson setup builddir
-> +meson compile -C builddir
-> +meson install -C builddir
-> +```
-
-I haven't used the Meson infrastructure ever. I trust this procedure works.
-
-> +
-> +Both build systems will handle setting the correct Tcl/Tk interpreter path and installing translation files.
-> +
-> +## Contributing
-> +
-> +Contributions are welcome! The preferred method for submitting patches is via email to the Git mailing list, as this allows for more thorough review and broader community feedback. However, GitHub pull requests are also accepted.
-> +
-> +All commits must be signed off (use `git commit --signoff`) and should have commit messages prefixed with `gitk:`.
-> +
-> +#### Email Patches
-> +Send patches to git@vger.kernel.org and CC j6t@kdbg.org. See the Git project's [patch submission guidelines](https://git-scm.com/docs/SubmittingPatches) for detailed instructions on creating and sending patches.
-> +
-> +## License
-> +
-> +gitk is distributed under the GNU General Public License, either version 2, or (at your option) any later version.
-
-Very good!
-
--- Hannes
-
+Thanks for sending the patch in.
