@@ -1,55 +1,55 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE1028AB1E
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 12:21:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BA72E336F
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 12:21:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755865309; cv=none; b=UFdgvwLB4gLDcAqUG2HKEy6tioIO6Sb/XuA8b11N8Xk4ppovdA3FE+3Z/Em09N8e85bvxxjyk6FKZ6iT7KZvchPKpUF3pZFZVkxZ1JZUrL7E6+rl5oU3M2+ePBg9nFl/ovY/IbZFU1G4h0fpijORP8vKZrFZtwCyAPOLsXV++XY=
+	t=1755865316; cv=none; b=MYaRSagSEbVCydHpGc/e9Q/BG+JDzC23bBgGEhksM5hnrIY5Z+7PM8VF8enV3fb8gjcli/R4D7ioXuJLmJi+09WS0UqFYWZ93p05e/88LHVyeJvMNQvhav/HwqAJV9prwswHwR6FNsr6CoQ+UP+m4qiaRR6S7qYb5/n1s2OGfdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755865309; c=relaxed/simple;
-	bh=pYB+xQuxvxFxnNHhQLVgVs+J235n9q+SAET81Xwkg4A=;
+	s=arc-20240116; t=1755865316; c=relaxed/simple;
+	bh=baN20LmNfPhD8q5n0PGjxLqCJMt2hBiSSVDvF6pElfM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XKIpiGloXAFh5aYlx1AsOVRE445vSHe7c6pL7XrL7sYohxM1vAMaQhDR7aFrb/UgApvPPP5OFHlgTLf8ELSm2z/eGiaV/V6MrKPp7NIoWj6VSQ3nrNqzdeQhSn491T9AiG8I/wwp7HjG6xCd1o+ZUNYISR08BMNoy8SedKKSIos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H7hB1Lmm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W3aKWPAR; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=lcUtZ7M8ZC7AzTH+1VIsXEPiKkCB7R6H16G6Guud6zJ667YzT+9Ae7Sr/xBm3CP6gbL8xcuTCGnwR7WXA1mO4BYzRm2qoAYyoMHueXUs0lIlBxQNj2Wgo+xFtur5LUkA4RFkzlkYIfLrFLYEMMRQX4mBR3g55HBz4v4RMCpObAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DKq0FQWx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H2kb/OK/; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H7hB1Lmm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W3aKWPAR"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C68CD1400898;
-	Fri, 22 Aug 2025 08:21:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DKq0FQWx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H2kb/OK/"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id AE38BEC00CE;
+	Fri, 22 Aug 2025 08:21:53 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 22 Aug 2025 08:21:45 -0400
+  by phl-compute-12.internal (MEProxy); Fri, 22 Aug 2025 08:21:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755865305;
-	 x=1755951705; bh=AAHKl4JhSUkExZXbXnWFKmumZdstoZg/8SFc/lXLGc4=; b=
-	H7hB1LmmhN3P3btJTgY9PGR5SzvtVMTsRlhVij851xco7l8XvI0USea2xF5zXVSE
-	Kh2aN46dFwVCuiERe7vjKazIWcdOtWQCN9+mAAwy4SxY1JqxkI0MQ2Sg2cHbz9Hy
-	TEJXFth7rnhje5VkpS0ZrdRpHB0KLWr4QQO5rzaetsqxMnJr5phmgVWKkDoRa+B3
-	vXPzF8CBEtBButoVLjEQSl0FKgBC3AejqRUzJfUS8gEIEG+I+WLzSx1LJV4H38b2
-	W5AIWyrMPsn4ir1hTAhcCaRm2D5VaAj5OjkOM73McYtfSVN1PUggQ33xkUjNdSRJ
-	v/1/1fFodzWL1xzxcvaonA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755865313;
+	 x=1755951713; bh=GizrLkTCig4Ne7RcDdxgRsjVDRQG36VKZ0lrxQOBiEk=; b=
+	DKq0FQWxt3/aOPO1D+u5kQeXRp49Uea20Y8FEmeKN3KK2rBGeVRwv/fLg3HZmXyd
+	HpiwLQObthNETsyPODb22sTRU4mHTK1QexpK0dHzp9GtiZTW6doMcI5SpjQcPaFd
+	QcnKbrVAPhWINTgloNKr895fmzHJSfzf+R400PzQJwPUNtlUKUBYY0f/4BhNDHoK
+	oC+SFgu4khTEAyWMkyMnb5BRTqC7hT7lvKtpQlAvIR0Uzvc/zgd3AFRn0JjsTo3a
+	8wgBYkNqJMbAIA61XzS04eayysE8S5+4nBOXFSqIwU6o8ksmUw85OZcKkfySQAdv
+	S5I4wZobIVOg0w37R+FN2g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755865305; x=
-	1755951705; bh=AAHKl4JhSUkExZXbXnWFKmumZdstoZg/8SFc/lXLGc4=; b=W
-	3aKWPARpOUh6Womtox128nQI/tkno0qd/686i5+d+k/PJPz1khFUvH2mmR7D4Jhv
-	7CjS9+RSrAc4D0+Ct11b/ZQ4us2pTNi/1kXWvEAjftGn0Hb4Y65+yHOgdbxYsRd5
-	9+WPFMtrBmRfUJP9bvnGoPXUMnWMLCHjyJNS4qDvJCl/HZD48HXcLDOrxD4k3DYq
-	zoaShYsQlPRvek97yQOj6nuiCfOcO0eQcX7nkLC3zgRfutzZb/ZlhJ6YCKM2L4MW
-	JHFZPCpLJPcOwd+kfmf/LIPH4CxchE6agho7+P6Phmy38YQGpfhtlneFJRDomMLM
-	k4YTtloQvVwY54T0h7sRA==
-X-ME-Sender: <xms:2WCoaKtRuG2-AUf-BW2Ir0e5o6IvVidE0LsoPqXOQXH0sSO9y5reXg>
-    <xme:2WCoaCtw_BiFfcKsINiH27M-jb3bstS2OHx6erFZyi6yJkJRxbk_RG9RrOWLgHh_r
-    gNjCA17aSJOrRVYAA>
-X-ME-Received: <xmr:2WCoaPPnsAqL3Hb-nV1hnWLS00tDkuV_zcGPBCDxdzhKa7482RFcfZL4ybq43sP6exfN5KfQV_ul4eGItrFj92R2xxult9Px6TaEWvNw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755865313; x=
+	1755951713; bh=GizrLkTCig4Ne7RcDdxgRsjVDRQG36VKZ0lrxQOBiEk=; b=H
+	2kb/OK/B44vobQDDE0hSbRCPIionbPzJCrjbadzWbxRZ804e9NWmH2C2xR6zaIHd
+	8tC4MpcIF3JSU2nexY6uaOeoqC+U21aJRRGGA2tU1zO80KFTW4igCcypnh6S0OBd
+	shxtsbzEKgrHlHV8sd2zYfKvgvFzG3quktZwvsc93OyEJoDoA6xyDz8O6oMv2Vpf
+	wE83boDjB/9VjAf3a4ndP+VCCZOcOlCpXXs7qAtKQft6KUQu98KhYiRn6vbGMalk
+	j6KKHDQ/6DjhIJq+Qo4IX3SlVEDJlsQMo527/u7XzeTltbtufGD5+I2+5mXaeP4r
+	6BW9AW0jByhcODWiU77zQ==
+X-ME-Sender: <xms:4WCoaDozErVEvaeT1mE5NHxp-NV4-GzS8pHNSpgvwpWnpUpCPY8biQ>
+    <xme:4WCoaN3hhizraPxYwxLSk9pOfNH8G27qoTM6trXhVI4I3QiAHesc_AHZiOsb48Zx9
+    tk0HLBlfaswCQCNzg>
+X-ME-Received: <xmr:4WCoaCAC8Sn-N0HSgnI1aoKOe0j6USR2LR7ccq6cwQc0byqWXSJbCCVjj-gKnW1kuGCuA5xagzXfUEBYhxGMBLcWPm8-2cnLqkGdB_7s>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieefjeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -57,30 +57,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieefjeegucetufdote
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
-    lhdrtghomh
-X-ME-Proxy: <xmx:2WCoaA2QHHajR7wDSZqQqMRsYVzUBf44--mD2a-zih2l13nJpPq9eA>
-    <xmx:2WCoaLOEIhCeGZhRzeCqk2GS-eOPzbKuooylPdSkEdTUHNg2ZC802Q>
-    <xmx:2WCoaA1cwt7CqASKmKEPSH4BvYAkjNQObm2ZTvlPnjsA2OUcvTIdPA>
-    <xmx:2WCoaCGgn_w0tqRZVOwqw6SaBcTi-Qsf6wmDq9myUOgX1XjJYhyw4Q>
-    <xmx:2WCoaHWog5bb2fWlruqwydxw1T-vA8hjfqkVfGoBTgvvCcTnTY5FSy24>
+    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkh
+    hnohgslhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:4WCoaFclzQIAzml6hxZQWo8P0x6V5P9KS8lt9Y77oZ4u6woROX_l7g>
+    <xmx:4WCoaHj7sPzZE4Rr6EGCuv6CUapm8xAM1qLi8vZ2uMDG1jPJLXQfBg>
+    <xmx:4WCoaNqUfVfNDRdpwzVG3kpNknwc96wtqMBMcEZvB_67lvbZMgnQag>
+    <xmx:4WCoaHE0_gpdFpfvHkSUNKCFwN8rED64quXmfJqimobKVeSaUwuSkw>
+    <xmx:4WCoaK7jwck0K_XtRlBABH7nO3oIzU28bmK05IzE_iWyGhHKh69nr8l9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 22 Aug 2025 08:21:44 -0400 (EDT)
+ 22 Aug 2025 08:21:52 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cb630ef6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 22 Aug 2025 12:21:42 +0000 (UTC)
-Date: Fri, 22 Aug 2025 14:21:36 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 9487a77c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 22 Aug 2025 12:21:52 +0000 (UTC)
+Date: Fri, 22 Aug 2025 14:21:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy
- history editing
-Message-ID: <aKhg0NBb1usxw-dq@pks.im>
-References: <xmqqms7tao9o.fsf@gitster.g>
- <3600D877-4999-4EE3-8C1C-893E12D35B6A@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH RFC 05/11] builtin/history: implement "drop" subcommand
+Message-ID: <aKhg2WxKC_1fVJZW@pks.im>
+References: <20250819-b4-pks-history-builtin-v1-5-9b77c32688fe@pks.im>
+ <F0D09FB0-5978-4BFA-87D1-BE5FA49EA839@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,63 +88,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <3600D877-4999-4EE3-8C1C-893E12D35B6A@gmail.com>
+In-Reply-To: <F0D09FB0-5978-4BFA-87D1-BE5FA49EA839@gmail.com>
 
-On Wed, Aug 20, 2025 at 01:49:40PM -0400, Ben Knoble wrote:
+On Wed, Aug 20, 2025 at 04:39:34PM -0400, Ben Knoble wrote:
+> > diff --git a/builtin/history.c b/builtin/history.c
+> > index d1a40368e0..183ab9d5f7 100644
+> > --- a/builtin/history.c
+> > +++ b/builtin/history.c
+> > @@ -1,20 +1,311 @@
+> > #include "builtin.h"
+> > +#include "commit.h"
+> > +#include "commit-reach.h"
+> > +#include "config.h"
+> > +#include "environment.h"
+> > #include "gettext.h"
+> > +#include "hex.h"
+> > +#include "object-name.h"
+> > #include "parse-options.h"
+> > +#include "refs.h"
+> > +#include "reset.h"
+> > +#include "revision.h"
+> > +#include "sequencer.h"
+> > +
+> > +static int collect_commits(struct repository *repo,
+> > +               struct commit *old_commit,
+> > +               struct commit *new_commit,
+> > +               struct strvec *out)
+> > +{
+> > +    struct setup_revision_opt revision_opts = {
+> > +        .assume_dashdash = 1,
+> > +    };
+> > +    struct strvec revisions = STRVEC_INIT;
+> > +    struct commit_list *from_list = NULL;
+> > +    struct commit *child;
+> > +    struct rev_info rev = { 0 };
+> > +    int ret;
+> > +
+> > +    /*
+> > +     * Check that the old actually is an ancestor of HEAD. If not
 > 
-> > Le 20 août 2025 à 13:39, Junio C Hamano <gitster@pobox.com> a écrit :
-> > 
-> > ﻿Patrick Steinhardt <ps@pks.im> writes:
-> > 
-> >> In the end, I'd like us to learn from what people like about Jujutsu and
-> >> apply those learnings to Git. We won't be able to apply all learnings
-> >> from Jujutsu, as the workflow is quite different there due to the lack
-> >> of the index. But other things we certainly can apply to Git directly.
-> >> 
-> >> Note: This patch series currently builds on the cherry-pick infra.
-> >> As such, when one hits a merge conflict one needs to `git cherry-pick
-> >> --continue`, which is quite suboptimal. I didn't want to overpolish this
-> >> series before getting some feedback, but it is something I'll fix in
-> >> subsequent versions. Furthermore, the command for now bails out in the
-> >> case where there's any merge commits in the history that is being
-> >> rewritten. This is another restriction that can be lifted in the future.
-> > 
-> > Two comments.
-> > 
-> > - You would want to honor notes.rewriteref yourself, as cherry-pick
-> >   does not and that is deliberate [*].
-> 
-> Seconded
+> The “old commit” perhaps?
 
-Okay, I'll have a look at that. I'll probably not do that in v2 yet, but
-will try to get it into v3.
+Yup, indeed.
 
-> > - It is a sensible design decision to limit it to linear single
-> >   strand of pearls history.  "history reword <commit>" when
-> >   <commit> can be reached from many branches along linear history
-> >   that rewrites all these commits on these branches would be handy.
-> >   There may need some way to say "these branches are protected, if
-> >   'history reword <commit>' needs to touch commits on any of these,
-> >   abort" and things like that.
+> > +     * the whole request becomes nonsensical.
+> > +    */
+> > +    if (old_commit) {
+> > +        commit_list_insert(old_commit, &from_list);
+> > +        if (!repo_is_descendant_of(repo, new_commit, from_list)) {
+> > +            ret = error(_("commit must be reachable from current HEAD commit"));
+> > +            goto out;
+> > +        }
+> > +    }
+> > +
+> > +    repo_init_revisions(repo, &rev, NULL);
+> > +    strvec_push(&revisions, "");
+> > +    strvec_push(&revisions, oid_to_hex(&new_commit->object.oid));
+> > +    if (old_commit)
+> > +        strvec_pushf(&revisions, "^%s", oid_to_hex(&old_commit->object.oid));
+> > +    if (setup_revisions(revisions.nr, revisions.v, &rev, &revision_opts) != 1 ||
+> > +        prepare_revision_walk(&rev)) {
+> > +        ret = error(_("revision walk setup failed"));
+> > +        goto out;
+> > +    }
+> > +
+> > +    while ((child = get_revision(&rev))) {
+> > +        if (old_commit && !child->parents)
+> > +            BUG("revision walk did not find child commit");
+> > +        if (child->parents && child->parents->next) {
+> > +            ret = error(_("cannot rearrange commit history with merges"));
+> > +            goto out;
+> > +        }
+> > +
+> > +        strvec_push(out, oid_to_hex(&child->object.oid));
+> > +
+> > +        if (child->parents && old_commit &&
+> > +            commit_list_contains(old_commit, child->parents))
+> > +            break;
+> > +    }
+> > +
+> > +    /*
+> > +     * Revisions are in newest-order-first. We have to reverse the
+> > +     * array though so that we pick the oldest commits first. Note
+> > +     * that we keep the first string untouched, as it is the
+> > +     * equivalent of `argv[0]` to `setup_revisions()`.
+> > +     */
+> > +    for (size_t i = 0, j = out->nr - 1; i < j; i++, j--)
+> > +        SWAP(out->v[i], out->v[j]);
+> > +
 > 
-> This reminds me of looking at rebase’s update-refs through a mirror,
-> and I think is similar to what jj actually does. In particular,
-> editing a commit that is reachable from multiple non-overlapping
-> branches could update all of them.
-> 
-> A reasonable heuristic for safety is “pushed,” but I would also want
-> to be able to edit something in @{u}.. even if it’s in @{push} so that
-> I can force-push a new version. I suspect jj might also have
-> heuristics we can borrow.
-> 
-> PS thanks all for being willing to borrow improvements! Reminds me of
-> Neovim inspiring improvements in Vim, which I get to benefit from
-> without switching :)
+> But doesn’t this swap out->v[0] on first iteration? I only skimmed the
+> code that built it up, but it doesn’t look the comment is right 🤔
 
-At least initially I want to keep it simple, just to get this in at
-first. So I'm trying to be quite defensive overall and die in all kinds
-of situations that require more thought. That way it becomes way easier
-to eventually extend the different subcommands to maybe lift some of the
-current restrictions.
+Very true. This comment is indeed stale from a previous iteration, where
+`out->v[0]` was indeed `argv[0]`. Will fix.
+
+> Rest looked reasonable, but I don’t know the sequencer APIs very well.
+
+The sequencer API is quite complex overall, I cannot blame you :) Took
+me quite a while to get the hang of it.
 
 Patrick
