@@ -1,137 +1,86 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from sc-ord-mta120.mtasv.net (sc-ord-mta120.mtasv.net [50.31.156.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927D12D6619
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 20:37:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D644F3054D4
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 20:57:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=50.31.156.120
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755895066; cv=none; b=gQUzXAnBnG+pYMX+I0VqJfiBN4NhadX3ukNKxyGHhqoDl6qFanxBvem8T3nPC8WO9niMvIZ1FgcyyVokeBNiOh6oQVrdZPQ/fomyOTRy6BzLcZOZTF4L3NWR7aMpyizJiug7mOzp63ETicEkzaumbHrZ1qfuX7VGQurOvZs8CXI=
+	t=1755896270; cv=none; b=K1R1yms2JoSItkV/Y62q0GoIbYZAFwKyrzGg2UAmR6Wrevd8LkkLte6nFPtJ/qsIvBGaqI62xzHRUGQDYVs3k3gbJrw3yHU3/RDlKLoMjInmx2rhlvefbKZOk24lZaSe3CdD5gDOPyGlJ8uySZHLrfzDuPL+HuecWeUL1lyh8Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755895066; c=relaxed/simple;
-	bh=xIg9GsQgZdZ3gksts3Opasna+vuO9e4LXgUumYmgEdM=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=mozwhTOOKjdC13lcqXXhfuWPaYdhc0zTS7Pqmq3WwnCh8o8IX2tzG8EC5YE/fPosGBV/a4srPM4/9jGaX41hJmdRPNkX+NG4BgcvEsaskaIVQHncIp2seROkYvcOAsDCQrkyquf4cW17qpCFbX7vspDSEzWFSOeQmW2YZs4XdvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=UngHlvjF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ArphZxlA; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1755896270; c=relaxed/simple;
+	bh=wNQ3YyRIYBmdyIqANXRI5h6ls9gjQODl2Yk+8ZPjjVI=;
+	h=From:Date:Subject:Message-Id:To:MIME-Version:Content-Type; b=lVrPwI4890cpBIRT3q3piiQz3eAQLOfo7DsLVfd0VdQHxcrCEtOnsW/ne3uWJpu7YUGgS6iVGu4mcB/PPg3Qww8CfyNg22+It30wP3vs+ENWqSclfixsRy2qaURdrKFgS4RYdukFJ4yEDU8HEZIjH0difCIeEf09e6ny6x2FjeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tablerockacademy.com; spf=pass smtp.mailfrom=pm.mtasv.net; dkim=pass (2048-bit key) header.d=pm.mtasv.net header.i=@pm.mtasv.net header.b=A3644u7i; arc=none smtp.client-ip=50.31.156.120
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tablerockacademy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.mtasv.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="UngHlvjF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ArphZxlA"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 862EE1D000D9;
-	Fri, 22 Aug 2025 16:37:42 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Fri, 22 Aug 2025 16:37:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755895062;
-	 x=1755981462; bh=IBcNjy9zINIGFLNyXOhc7abMeFfLuCzg0zmqJ6DlRJU=; b=
-	UngHlvjFqYMGb9VJ7FerSItRUO9ePu5eFcmmDVA3SbYs/jxi1SKwA5VUZhTeQHoz
-	EzCVZpvxR+ADrwEnFd+43RUETM4hDzuZ+VYkYHeJLhNAs5FOEWzyvI4FS9YoifQr
-	I8UB6XGGLc0saPRTKrAdWSvb0mUFijzN/0SYklZ2IakYs+ATGE4IsaZfo1y2K+XJ
-	bycBnxK9PWdFQdr07s4m0CL6TV57KpThP9MmvpHpZboFlC6J9MaeOW8md9dHxzcV
-	ogP1Jfr4feFaKq8b0S1ohV70NK8Z9/kqca9lqm7UpG5mq87lVFNytQRRetnWbhyu
-	8Pb4mzc6RvYmlFbhQ2Opsg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755895062; x=
-	1755981462; bh=IBcNjy9zINIGFLNyXOhc7abMeFfLuCzg0zmqJ6DlRJU=; b=A
-	rphZxlAy0hQRhgxZegdDKwyj/8lVHpoKy5QHezqjL+QhKRFL4sg0YwgMoUI2xzvJ
-	G49cuISs0cBWkdgIsatev0cpkc9b2HRqp+IG89E4+4xL2Jh5R9dCZaroHPcZW49m
-	v/ble2c+hO76reGYHPapsyXE7GquVVuZa7y3SM/EFCC9DRD4puznaeBO8/EOhErf
-	MMsNuOp7CbNfRythmDgijM56suVGckp3W7CXkXFPbLAjrUPek11SELcfqZ6VU4tx
-	oxxZDi58R6iR11aCuL0XrOXh4xyHkb3vYaav69ZaGZb1c3y9JDSGWHGpCzc0oCJe
-	mqr7GW2wSjJgAjEkMjT2g==
-X-ME-Sender: <xms:FtWoaGuLGgBvn8GuYNv_Q4jN8XLY4EE_pAIQyz8aYbhvs0sgS12xFQ>
-    <xme:FtWoaLeaKX0xBfzf39wI29Jbog2TrYq2o2nxLlrPMdq67II1Qi2UvOsepq79TKoUA
-    L8hj_lfjiKlCZczyvI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieegjeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
-    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
-    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
-    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepsggvnhdrkh
-    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishdrthhorhgvkhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:FtWoaLJMbP9IsUazJrhD_KbpjTxktGXiyJludhV9WdfiMYhfwLaKIw>
-    <xmx:FtWoaP5ikoQ1geCmbbwJoQ6gP6g9g8BDSNiLacODQbJFn0Y0wvOQAg>
-    <xmx:FtWoaP14nAytgdDlCwV8yhtnRTnpMb5-XwYyqQCaHe3ohTQ8kJDupQ>
-    <xmx:FtWoaFdIl_B5KjG4MyhSkZlMy9OqcRY6LlmsC6c3zY3x6TFTxYKUYQ>
-    <xmx:FtWoaKrgALkctGlNtIdWUHu3ab5H4UKtez_jW3SRoh8bBj1fFXBvs5AC>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 287487840CC; Fri, 22 Aug 2025 16:37:42 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=pm.mtasv.net header.i=@pm.mtasv.net header.b="A3644u7i"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=pm20250324; d=pm.mtasv.net;
+ h=From:Date:Subject:Message-Id:Reply-To:To:MIME-Version:Content-Type:
+ Content-Transfer-Encoding:Date:From:Message-ID:Reply-To:Sender:Subject:To:CC;
+ t=1755896268; x=1755982668;
+ bh=wNQ3YyRIYBmdyIqANXRI5h6ls9gjQODl2Yk+8ZPjjVI=;
+ b=A3644u7iU/UvkQNLvIzuioynV6ikiTzHJvdTCrsFbJ3+WBPZMMDuNMnaEyB+hQ/B6yc/VpRACmwJ
+   yqG6HtsIIYPptZ6VRND8ZRguCRs2gdIEF5VQYXqAKPqcCSiKBf044XYwFkiB0umFA34qfPOmrWIo
+   TzJa7xfo8JEz9fu8SC+OIvcPi/n6uei1Tznixk8WtWTAy7BZ0eusKO36Q/Co2WNJ144jSS56lnQ4
+   oIiWCtjlnCTqayynLYyQObYB4m2vHA/VEmcIhGkKB/8jDGncKWp21C6gDSwc/OBOdZ0UQKefw40h
+   qh2stbHA5jBWTtPDHif2LSB0tBaQzkR34A3OJA==
+Received: by sc-ord-mta120.mtasv.net id hl3cso3b84kv for <git@vger.kernel.org>; Fri, 22 Aug 2025 16:47:42 -0400 (envelope-from <pm_bounces@pm.mtasv.net>)
+X-PM-IP: 50.31.156.120
+X-IADB-IP: 50.31.156.120
+X-IADB-IP-REVERSE: 120.156.31.50
+From: rich@tablerockacademy.com
+Date: Fri, 22 Aug 2025 20:47:42 +0000
+Subject: =?utf-8?b?8J+SrA==?= git - quick collaboration question
+Message-Id: <042551ad-c7ae-4aaf-9de9-b5721eaeb867@mtasv.net>
+Reply-To: rich@tablerockacademy.com
+To: git@vger.kernel.org
+Feedback-ID: s16634298-_:s16634298:a443464:postmark
+X-Complaints-To: abuse@postmarkapp.com
+X-PM-Message-Id: 042551ad-c7ae-4aaf-9de9-b5721eaeb867
+X-PM-RCPT: |bTB8NDQzNDY0fDE2NjM0Mjk4fGdpdEB2Z2VyLmtlcm5lbC5vcmc=|
+X-PM-Message-Options: v1;1.wKjH-yw4kSLi9X1SNzf33g.kg3yl4YbVbcfw4eqP72sWFuYarG34gGnf7De1IMJ32EQjgRuLGj3XCYtc-pAzVAOAGRhpheiEtLRQJZjEnmd6quGOdRkcYTVQ19yWSrgyDD4mIUA3TmaT2_ev4u67uTuiL3qbWJnDRarMX4XZ1yAMU8mR-cELZmwZEcYSX4aroZ7QtNWv0rCtFzsxKG28RmE
+X-PM-MTA-Pool: transactional-1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A1RQzAbj9jQc
-Date: Fri, 22 Aug 2025 16:37:21 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "Chris Torek" <chris.torek@gmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Message-Id: <b30fe574-146b-4b1b-8a88-07014c9cab9d@app.fastmail.com>
-In-Reply-To: <xmqqv7mgzbd5.fsf@gitster.g>
-References: <pull.1952.v2.git.1755127218.gitgitgadget@gmail.com>
- <pull.1952.v3.git.1755636370.gitgitgadget@gmail.com>
- <080720c059910c910161e250cd7eef54208c3fc6.1755636370.git.gitgitgadget@gmail.com>
- <xmqqv7mgzbd5.fsf@gitster.g>
-Subject: Re: [PATCH v3 2/3] doc: git-add: clarify intro & add an example
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-"what you use to prepare the contents for the next commit" sounds
-good to me, will make those changes.
+I noticed Git helps developers manage version control for projects of all s=
+izes. Your work on providing a free and open-source solution caught my atte=
+ntion.
 
-On Thu, Aug 21, 2025, at 4:08 PM, Junio C Hamano wrote:
-> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->>  DESCRIPTION
->>  -----------
->> -This command updates the index using the current content found in
->> -the working tree, to prepare the content staged for the next commit.
->> -It typically adds the current content of existing paths as a whole,
->> -but with some options it can also be used to add content with
->> -only part of the changes made to the working tree files applied, or
->> -remove paths that do not exist in the working tree anymore.
->> -
->> -The "index" holds a snapshot of the content of the working tree, and it
->> -is this snapshot that is taken as the contents of the next commit.  Thus
->> -after making any changes to the working tree, and before running
->> -the commit command, you must use the `add` command to add any new or
->> -modified files to the index.
->> +Add contents of new or changed files to the index. The "index" (also
->> +known as "staging area") is where Git stores the contents of the next
->> +commit.
->
-> Much nicer than the preimage text that is quite awkwardly phrased.
->
-> I however would not say "Git stores the contents", as it is you the
-> user who does the storing.  I may phrase it more like "... is what
-> you use to prepare the contents for the next commit." probably.
->
->> +When you run `git commit` without any other arguments, it will only
->> +commit staged changes. For example, if you've edited `file.c` and want
->> +to commit your changes to that file, you can run:
->> +
->> +   git add file.c
->> +   git commit
->> +
->> +You can also add only part of your changes to a file with `git add -p`.
->
-> Great.
+Quick question: Do any of your users ever mention challenges with collabora=
+tion or tracking changes, especially in large, distributed teams?
+
+We've built a chatbot solution specifically for software platforms to offer=
+ their users, and here's why I'm reaching out to you:
+
+- You make the introduction, we handle everything else
+- No technical work on your end=E2=80=94we do all demos, setup, and support
+- You earn recurring commissions for each user
+- Can be white-labeled as YOUR solution
+
+I actually created a working demo with your site to show what this looks li=
+ke in action: https://www.tablerockindustries.com/trichat/live/git-scmcom
+
+The math is simple=E2=80=94if the chatbot helps even one team collaborate m=
+ore efficiently per month, it pays for itself. Everything after that is inc=
+reased productivity for your users (and commissions for you).
+
+Worth a quick 12-minute call Monday or Tuesday to explore if this could enh=
+ance Git's offerings?
+
+If it's not relevant, just let me know=E2=80=94I'll mark it down and won't =
+follow up.
+
+Best,
+Richard Williams
+813.834.0715
+
+P.S. We're only partnering with one version control platform. Happy to disc=
+uss exclusive integration if you're interested.
