@@ -1,459 +1,202 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from YT6PR01CU002.outbound.protection.outlook.com (mail-canadacentralazon11022084.outbound.protection.outlook.com [40.107.193.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFA028AB1E
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 12:50:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755867023; cv=none; b=cZASqkXA9lVf28S+PL5M47FtPlISH6N+wXW1ptCy3HZFHW4ajrbcthUlcAhDHTPDVqN/YgvmaaedWzMfpzIvr/PO3Ga+8/zTIdFQA0CD5a6y0V55eAwpZwFWKbHdH1/QrK9nq7zlgIKeOJlRAmSQk9Of35UrTG1/klaGV+DBQXA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755867023; c=relaxed/simple;
-	bh=wMWQ6s1S/fOwPPKJ92dAk2iy4uirVWnglmUDIWXxZcU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tJZzbmaW7xWr3J+xWkvToSrfZ8hNw64FnNRTf40A9MsN+wdDiW8pPwqK55rv8AThN32Hielxfv26OQAvRVFuiy0o4rKDlvz6VIeOPu7+XkGKFkSKm0v3SZhcdTBZomIu+X9fNLaK97EOVHe8c+6cXDfLSst4MUFys/Ua0McjZz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=FnyR+tDM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j4665wL+; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED45D2D0274
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 13:28:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.193.84
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755869306; cv=fail; b=ktQU6sUW2PDBA4hLksvZw3j+J9UGHYphNGRBEHMOdO0igvWCioi2hf5T8RS3lhXx/f7x1eunMv7CSMSBwHQ2OyUS2uf1bSeTD3Xqis5IH9Z0OKKOzW3wJZQUAPbBl68fUoaQQoo3tVNIDN4Jv1D8SZ03XAN3Qv183myXIijjXD4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755869306; c=relaxed/simple;
+	bh=c10igA+Oe0b3RdFGfdGDSObzv/keiv+qXhbhws3dIHA=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=pgAPbCBIJ2y5arLqhRyf6BWGGhjrMCMGyfONzIyfROm44pbHxfFzCFwBuhI+5nHbGtwyrmq2eP3SqPRiQ0OHsixwL1yRU+3lp1q4bdQ99GhNoXB+eEbGQ4xQ7lRw68hWcSJev0K4CvzOe9+2JNYje6ymlthmZe/DJIyEfE/QQhw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=indexexchange.com; spf=fail smtp.mailfrom=indexexchange.com; dkim=pass (1024-bit key) header.d=indexexchange.com header.i=@indexexchange.com header.b=wwcGbeJW; arc=fail smtp.client-ip=40.107.193.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=indexexchange.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=indexexchange.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="FnyR+tDM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j4665wL+"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6F70BEC0109;
-	Fri, 22 Aug 2025 08:50:20 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 22 Aug 2025 08:50:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755867020;
-	 x=1755953420; bh=QXA4hHkahVsrbB49MxciyXRYAIubM37PmmvymWWhWRw=; b=
-	FnyR+tDMJaAF74YSOFqyqinuVSyY5UoqSW6E367GMqpUZevjVO1bl7nQiT63ndYK
-	Xf2x7DLAmZvyLeZQfKd7Fp0QY6xZPJemGrwQ91XiW6b8II2ZOtz8LyL0BIIGclj7
-	m2kKFr2/gimw8c+L2qCUKvAP5SXPrju1J+NEwROQZxG4uNpfpp4BJd1E8bNzW3bG
-	ZvOQlVv1D4DGA7ab7/2WXTrodeGPjj62O2utFhqYOaDkcAs6+INrakRaHZbgo6y5
-	5ZyXnqU/7qRs02W/jbfDPazs7IvNWQLve76kKFfBn9Gu3xGew4qVNM8If6JFz28C
-	KXSesa3+oStJLwfANo7CDw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755867020; x=
-	1755953420; bh=QXA4hHkahVsrbB49MxciyXRYAIubM37PmmvymWWhWRw=; b=j
-	4665wL+Kzl1zOUz8p+rqhkDGO/dhALfAFmaTZc0F0E8yTDzglbx6iiHwfhbaNtRg
-	qBFiiNAk+ReJurQh/x5p1q3W75otSb/dLstImXnUFVT0kvuPQiRsJS9rwXn9CWeP
-	Ro0MzxmPIc1HJBKVxegfSjk7Ff9/YosyhFIrdfCQ6lJn6nDCccPkHEJeEcPfH2hP
-	NUK76WpiY9KnPgKZlsR1570vbFKTPWRbIZck+v10LtLGJRCY46OLRw/wAV1N9FJo
-	2qmmOCSxLHgZUaOLRKdcnmkJaS3qnrDjSBE6qo3a/ma4MsmBIUrHtbBLKTW4IV3+
-	Wj1LRVT1BDZZ4qJbNvm2g==
-X-ME-Sender: <xms:jGeoaKl6FMLPzyzMGv86dpZ9kpzwTuPYhZD0GZApUG7wLLceaDPbx0A>
-    <xme:jGeoaFEYNt_xG1jzh30bvIveQkqQJRRtXPrDFIDgGMMY8iT4fMmnoO8v4gatigfxX
-    iwUb3094dwWCTaRJQ>
-X-ME-Received: <xmr:jGeoaCGkVzWzk7-p5cY4MBCxkmXTBQag5kHGf3i9Fbes2j9PtDOvXDTspRasjEUeHg7Ze6dRi31s-KX-UKSOemnJRqbCA3DEbo8xly8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieefkedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfgggtgfesthekre
-    dtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetie
-    ehgeeftdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    eptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepfhgvlhhiphgv
-    rdgtohhnthhrvghrrghssehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:jGeoaKMDlMoqNNbnAsxk7hptPjGEK7PtoGRgJ4Ikmj0JLqi-dvnOsw>
-    <xmx:jGeoaJF_H_u-fNEHLZdQTQU70XqJgMsaymIICYa_0aOqWY6q5blkHw>
-    <xmx:jGeoaJOghP6wV6-JEADuXzszGcPO3dLL8F69KwWOkhezRQhqdISamA>
-    <xmx:jGeoaC8xb2vY_91pLVxNNcfVX3TeNhKh1ZKEgi_OU3vg1ussR5L6MQ>
-    <xmx:jGeoaBu8bHr8qZtpTgBnHdg6bBIEJ2CU0eZOhq4mNBxqXWB1z9XAj-z->
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 22 Aug 2025 08:50:19 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v3] bugreport: use quoted line prefixes & more blank lines
-Date: Fri, 22 Aug 2025 14:49:58 +0200
-Message-ID: <3d00cdbe8535fda8f9e72b5243090e6d953c133e.1755866791.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.51.0.11.g23cedd8a747
-In-Reply-To: <52a6177e706d8653251c61bc660f10b703ea6a9e.1755256099.git.code@khaugsbakk.name>
-References: <52a6177e706d8653251c61bc660f10b703ea6a9e.1755256099.git.code@khaugsbakk.name>
+	dkim=pass (1024-bit key) header.d=indexexchange.com header.i=@indexexchange.com header.b="wwcGbeJW"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=lu8YcVXecYyb2gHpxWwc4F17Qe1KkubVBC+TDMAKq7K1Xpv6RAatgOMxp0hslxpCx4tf+5MCMgxsaWzyOBKF0z86Rh8qC1G8N3eK48ahcEqHPOdl8HPZn2uGPlThpr+R1XdkBMnZ5rgtSVz3+G9RmSxZGwWKi3rS+X50kA0jJOg4wGYbONtcH0AxpnW0wFj5mYWB1GQnMOrR/UzNW+0mZrK5YtvgPjZXtW0kZw6TUfMk0pKRme6WkUYCrqDDh6zMHk3b0m2R051qSGx6PJ9cyZeoOTqL8plm6xKoUoY6huHclpAhxdrDnSpkyYDY+JCMD5VR2yKWD65OTTpUvDAoUA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qMZtH/52gITELbnsBmcHF9cXLU48wqnu1k2NiOQBVBQ=;
+ b=sFAnsg/e4EOAq+cptZPcfeazdLM84uUyhzZCoW3IGgDr7SdC69vKFGk7XkiFSYRFVYy7or9B5v8CzHwzn+UHWL9+gIXWskvxy5UlqlclnIP/NAqk7/STOZ5+bBHwU4QfZiSmNw7vWaaayDEjN7eaoVk/g3GadIVX4YFDkeCIWnIiFCYz0U+YolAFGbyVSFLKwEmslaVFGVJe3vH+iiggbZojSxc9J0Q4WMln3fgGYnTWadqlHIVseZnzumeR1m9nP5ss8/Jz8uvlrPDtzCmNl5XefChLzAyrRSysdMrpQBAwAM01Api1e62EY37KINdNhbgEHG7sdKL/hjnShNkl8A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=indexexchange.com; dmarc=pass action=none
+ header.from=indexexchange.com; dkim=pass header.d=indexexchange.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=indexexchange.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qMZtH/52gITELbnsBmcHF9cXLU48wqnu1k2NiOQBVBQ=;
+ b=wwcGbeJWYb0uDafamWTiVOh5iw2Eg+L4f0EKQnpGJ7g8UKHjo96tRIuIjqeKvPM2wEFsSaXlppkjaLaNcS7FHENqzwtYdd6M2AcJFWVwon0+jQWn4aPu2q2J5Zg+7JCieJ/diS0Tm8nPlKwLCn9tzbEcwrH8B343Bi5Cp/HL2DA=
+Received: from YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:47::15)
+ by YT2PR01MB10260.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:af::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.19; Fri, 22 Aug
+ 2025 13:28:21 +0000
+Received: from YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::ace6:e900:b8e7:dd94]) by YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::ace6:e900:b8e7:dd94%7]) with mapi id 15.20.9052.014; Fri, 22 Aug 2025
+ 13:28:20 +0000
+From: Joe Drew <joe.drew@indexexchange.com>
+To: Jeff King <peff@peff.net>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: "lock file exists" when fetching in bare clone of repository
+Thread-Topic: "lock file exists" when fetching in bare clone of repository
+Thread-Index: AQHcEhN2fwzTQSiO/EKbIMzzkKWbq7RsD/WAgAKb+tY=
+Date: Fri, 22 Aug 2025 13:28:20 +0000
+Message-ID:
+ <YQXPR01MB3046646D7BF687D5533B41FC9A3DA@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
+References:
+ <YQXPR01MB3046197EF39296549EE6DD669A33A@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
+ <20250820213323.GA1667633@coredump.intra.peff.net>
+In-Reply-To: <20250820213323.GA1667633@coredump.intra.peff.net>
+Accept-Language: en-CA, en-US
+Content-Language: en-CA
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=indexexchange.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: YQXPR01MB3046:EE_|YT2PR01MB10260:EE_
+x-ms-office365-filtering-correlation-id: 5837e7dc-cd04-412d-1eea-08dde17fc318
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?HD+kPDag5FhRl1Hr/C6s1P0dhcFYgbuCM9TumqdkA+t8/X7XJEatEcXG4P?=
+ =?iso-8859-1?Q?UM8BA1Or6HOk5NSXfNJhe0pjaBAm/kFFch9DiTU1g/U6GR0pcqMiUTARK9?=
+ =?iso-8859-1?Q?As8gfCRvJwAZVzWGsQyb9wabr8ugUXCqdfu0TUTla+b4j7rfx6gy4PdUFK?=
+ =?iso-8859-1?Q?a4Vc+0Jy0H2EcbuZ8aDU/1h1DSOPW4ydxg9o5PZfdq0KRGJ1l91apPqxrQ?=
+ =?iso-8859-1?Q?hPENKHSR9f3J9gXLN+v7IYO5MKskIZ97xOLvy1a+b/ckIMYrNhcvgwfe8P?=
+ =?iso-8859-1?Q?eCRLIsNtf9kUxZ3VGOLUmGM3eGFZtwRuPWmNY1azJIrBuEJwtsrG71WSw9?=
+ =?iso-8859-1?Q?pxcxMaIBbrUoOudf/rj7Fqu2Y8dMxxkW1JhaNs7DX41kELdRK6EYXPvpOO?=
+ =?iso-8859-1?Q?zDoIV4zKkwGuR2DEcGMNaZ30fhAFq9VXvNOuKrI+zSY8UNuuW9eOoH7mDn?=
+ =?iso-8859-1?Q?I6ph6+smnJlZudsqrqgupI+3cgFRw4E6XnK8SaQdvBeY759W6yt4bqmen/?=
+ =?iso-8859-1?Q?h2O3p1ROSYQ1z1thwO4ttmiRvvNtZ7ak9E4Nm5/Yk24+TTqtw2jKBUD/Wl?=
+ =?iso-8859-1?Q?p4zyZVIlsBi4vIT3RszCT603MDnx0o6/POzoFZSRvCVDKSR2kuuocvFOeO?=
+ =?iso-8859-1?Q?9rQCV+cdB1uBORql4QRbD3T/zVA9kxQTdR10BLhxZiLV8ky33pKQxoXLjl?=
+ =?iso-8859-1?Q?uauxkGQDFwiipCNky66o1RQLqXvevah998sdIHBLxM8JGbtLmzIFm+GHJB?=
+ =?iso-8859-1?Q?qa3R4nmteyIKtiWfI4ClU5ij+2nvrcwXIWcKXb2Ine2Gn9KX8smorxb2B0?=
+ =?iso-8859-1?Q?ChT3QwyLjJrvkoPIdPfPUUT/4eiYWbtLF4bgEoLjJWvP1YBBbE5aU0P28F?=
+ =?iso-8859-1?Q?bmA9X0AFZgfY9JpUsp4uRY8l3wMcsDBEIhEghmTwZcOzx/A2N3wBn+1QxJ?=
+ =?iso-8859-1?Q?AyJvNl4ZdQJukXWXN2d84cC/MZHkwy66NW9+XN1fsE7/8qEUsMAo/3/xpN?=
+ =?iso-8859-1?Q?R2D1oOhPKrvkHMzn5SGARhy4hMfmBiuOIZlaiiDiEGkxDlDDbjuPCQftpr?=
+ =?iso-8859-1?Q?srNwZRtkRoH4WpYHWEq/kRujE2F1qNEZPl1o4DXp9ocXDXiiUr/0QGWrpH?=
+ =?iso-8859-1?Q?4a4+4sPm0MuJlOSwOlhDUPsb5y5cFu08mmsEi3mgSCJiNYiPEAifLrxFzx?=
+ =?iso-8859-1?Q?VS9gPXdZ4DvyzMJArgUj99DLDkisHUl+1kG8lKvbCt9Sq8HR3tbsEwHYkZ?=
+ =?iso-8859-1?Q?TwLqB18rkEk0OvuNdzpl7nloAqeB0dLOL/bkF7dYnErxLHMovh7ATnKlCA?=
+ =?iso-8859-1?Q?+G/XbFVIJRLnmu/xxtmZ2Ug/soner/PNQpxGsZhnL0MITcjRD8iBqEsb9p?=
+ =?iso-8859-1?Q?fXpMLaFdYIpQA7+xr94fBeS/uIrGnqGKkB0ttgQYL7SZDJlMPqZNYzCUiA?=
+ =?iso-8859-1?Q?d6jHatj2/5bqim5g/1TlimJ0/fBwiw03SJ0wpFaPRiZBk3SsQUyOzBzvcI?=
+ =?iso-8859-1?Q?TuX8HEgk6WWOW1PQM8yeg8e7alN9FKKBRkrjTC5wkfIg=3D=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(38070700018);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?CfdzURz8ycHbvXg2xeWzF8JdXOchNCmxL1PdTRQP3qwSpIlqZ8KJ7P99mN?=
+ =?iso-8859-1?Q?YxBK7uVXrl8jnHIMv5XAnHB85y8gMrbB26hxq03sU5yW/rQMB9105L/IWs?=
+ =?iso-8859-1?Q?JKKdWM8IGl97io4w8bL8OrU8ZOPymyVjlr0qA7RrYkeM0OLPxzlYO10cNg?=
+ =?iso-8859-1?Q?D7xH5uMeUV8T1/9AAXJ8zxJT81DysX+24MH8BoffmkvZWZM5UoQ7wo8D1x?=
+ =?iso-8859-1?Q?fs+sT2RDVzlZMCt1Mn0n3V2nn02nMN9gE92urmrZN6AxJhIBfZEP1B2+ot?=
+ =?iso-8859-1?Q?BTPMKaH9tgKTQzDsif7KlWTyLswjaUg4k6aslqi8TtRRzDNm+JUODhji/Y?=
+ =?iso-8859-1?Q?vnwtfzS0VBaT0E9bYVD/XrbNvcqRE4exKYfbflyNWJZ62n2o5rzFeOqS/q?=
+ =?iso-8859-1?Q?s1cV+ivXpPDco0tfxmjH5NUaYv7fNY1m15J7LjzINk03C+1ihocXnMeBh6?=
+ =?iso-8859-1?Q?j+4i7Bwwat3ZhU3v42MDSipdbmoVl/bT9AkbSRaoP7Pe+finkQ/Z3Wvckv?=
+ =?iso-8859-1?Q?kG1POLUDlH5Xw56x0oghKOZ88yKw4+Al7rv93iMcyGhRfwmFwI2mnyLVGQ?=
+ =?iso-8859-1?Q?6jjm4iZiLbvrAF3Ip0Q6aePM8C+YW5yaSKrEGxifahRGEDOHnkKAN3dSqv?=
+ =?iso-8859-1?Q?ni3fuxOng7y2Io0KvmToc9UGlQ8xCsjls9ckjOAJxdGPGTDZZI0V5Od4Te?=
+ =?iso-8859-1?Q?LZ2evg8/vn7dEy6TrT7m2vbHfZu3RDpXM7felox6XPvgVi1c2T2VECc0UF?=
+ =?iso-8859-1?Q?JQDWLAn1d0/vLBGSY9Qm/q22OKWadZszpy8xBf9yHOIi2IaDg/FvVfp8rL?=
+ =?iso-8859-1?Q?lkQF0ZqWht0LkzdmuIdVHEq6Is4gV0yU/asZV7hKnD8tLBAsRQfeRNQZmL?=
+ =?iso-8859-1?Q?JMW7M0SazWPxneG5bYA8HEgcWv5Wy+dWmeC7K4llOJcHsvDhyAAwp7UyL2?=
+ =?iso-8859-1?Q?lq8zXLJ0gX2Ga4jEQelV83Z3njSVs1myFo8xokOWJhbqYJzGw+VpMOQ6Bg?=
+ =?iso-8859-1?Q?h8qVFqM9X/rLKX5jUMfZPjcIeqbbZz6hcY2lWT2BIUSrMPVuR1oUFLpv5p?=
+ =?iso-8859-1?Q?Qc7ZmVj4e7l8As4+g+EmnWlW3J1yGaHVhxq2IKllooiDHAVOFtNBIZFSkd?=
+ =?iso-8859-1?Q?csSRu7P6r0koASycqWimf4lOoFcJIsJtdSebnfawSwr3OMyxFGjmtmWD5j?=
+ =?iso-8859-1?Q?mUnHajWIqzQ/iy+f5zyzlyDp3bdas1Tdy6t7VErIr2n/g/hfWk+fPfFmjI?=
+ =?iso-8859-1?Q?tA5FbU8e1eo6Qg0KcPIocT2tRGUbbhZfTMLmrD1XhKIw+AEI2AaF/ELXlP?=
+ =?iso-8859-1?Q?GHP99LJucyBdhaLTMA8F7PeShlmFJyEX/Mpk/w2/djWvDUHDFaBoGlIsJf?=
+ =?iso-8859-1?Q?byZGKG9FPv9VNYDQpCpBsNoyUznubKxM/NDgwQJd0TuP+XXVzdtY5/0ZHb?=
+ =?iso-8859-1?Q?dgGfFBSGdDAlrLb6GYsH7cB9R31oTeYLgDzq3CMg7mvoaFV8rQlxgBy1Pi?=
+ =?iso-8859-1?Q?uWPRyqRS4rYGI8F43EPC4EzzZtekbp5WJN222he9c9YpFSQJHP4kqb8o6b?=
+ =?iso-8859-1?Q?K1cIt6CRS9L8yI8QDtEKUnIOga1lE7cEsM8/VPUJU6AbnvaYBn6gS6ezRG?=
+ =?iso-8859-1?Q?2ZhZG1wpFNsh77JYT3r4kY8WAuM0Q3shbk?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: indexexchange.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5837e7dc-cd04-412d-1eea-08dde17fc318
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Aug 2025 13:28:20.6286
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b07c0690-22b8-4366-8d8d-7b845d088e18
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 1sS4n7W9WAOVeHS7ygU4SIq3MOHX5VQUCWjgRXoHKyxVuaBmnSatlx/8tFm+Z5pd+bEUj2Z40IJSefiU+MCF5IS6BcVsVsbMsPfCQyrQunk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT2PR01MB10260
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> This is a wild guess, but: are there any case collisions with that
+> branch name (e.g., PTV-2164 or something) in the upstream repo?
 
-Quoted line prefixes make it easier to distinguish between the questions
-and the answers, both for the reporter and for the readers.
+Yes, actually! The only difference is in case (ptv-2164 vs PTV-2164).
 
-Also try to nudge the user to submit a report with a blank line
-separating the end of the question, the answer, and the next
-question.[1]  (Or leave optional answers empty, i.e. with three
-blank lines.  That should be fine too.)
+> If that is the case, you can try using the reftables backend in v2.51.0.
+> It doesn't use the filesystem for its ref storage or locking. Something
+> like:
+>
+>  git init --bare --ref-format=3Dreftable
 
-[1]: Suggested by Junio
+Reftable does, in fact, solve this!
 
-Based-on-patch-by: Felipe Contreras <felipe.contreras@gmail.com>
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+>> This error _does not_ happen in the Apple-supplied version of git:
+>> `git version 2.39.5 (Apple Git-154)`, but does in 2.51.0, which I
+>> installed with homebrew. (If this is a packaging error, I'll happily
+>> report to homebrew.)
+>
+> That is definitely weird, and not something I'd expect if it's just a
+> case collision. Is it possible for you to build Git from source? If so,
+> and the problem happens with your build of 2.51.0 but not v2.39.5, it
+> would be very enlightening to see the results of "git bisect". We can
+> provide more guidance if you need with that process.
 
-Notes (series):
-    § Changes in v3
-    
-    • Don’t quote the introduction (not a question and not needed)
-    • Also try to nudge the user to leave enough blank lines
-    • Keep using one single patch for less test file churn even though these
-      are two changes in one
-    
-    I considered being cute with the footnote:
-    
-        ...
-        question.[1] ...
-    
-        Based-on-patch-by: Felipe Contreras <felipe.contreras@gmail.com>
-        [1]:
-        Suggested-by: Junio C Hamano <gitster@pobox.com>
-        Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-    
-    § Changes in v2
-    
-    • Update test which wasn’t there when v1 was made
-    • Rewrite commit message to one single sentence
-    • “use” in the subject is slightly more declarative than “add” (?)
+I bisected (git 2.39.5 built from source _also_ doesn't have this issue), a=
+nd found the first bad commit:
 
- builtin/bugreport.c  | 27 ++++++++++++++++++++-------
- t/t0091-bugreport.sh | 27 ++++++++++++++++++++-------
- 2 files changed, 40 insertions(+), 14 deletions(-)
+0e358de64a9e014575d11ef884bfc9beb931e37f is the first bad commit
+commit 0e358de64a9e014575d11ef884bfc9beb931e37f
+Author: Karthik Nayak <karthik.188@gmail.com>
+Date:   Mon May 19 11:58:07 2025 +0200
 
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index f78c3f2aed6..694ab85d8cb 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -67,19 +67,32 @@ static int get_bug_template(struct strbuf *template)
- 	const char template_text[] = N_(
- "Thank you for filling out a Git bug report!\n"
- "Please answer the following questions to help us understand your issue.\n"
-+"There are three blank lines after each question; please write your\n"
-+"response on the second line and keep a blank line betweeen the question\n"
-+"and the answer (beginning and end).\n"
- "\n"
--"What did you do before the bug happened? (Steps to reproduce your issue)\n"
-+"> What did you do before the bug happened? (Steps to reproduce your issue)\n"
- "\n"
--"What did you expect to happen? (Expected behavior)\n"
- "\n"
--"What happened instead? (Actual behavior)\n"
- "\n"
--"What's different between what you expected and what actually happened?\n"
-+"> What did you expect to happen? (Expected behavior)\n"
- "\n"
--"Anything else you want to add:\n"
- "\n"
--"Please review the rest of the bug report below.\n"
--"You can delete any lines you don't wish to share.\n");
-+"\n"
-+"> What happened instead? (Actual behavior)\n"
-+"\n"
-+"\n"
-+"\n"
-+"> What's different between what you expected and what actually happened?\n"
-+"\n"
-+"\n"
-+"\n"
-+"> Anything else you want to add:\n"
-+"\n"
-+"\n"
-+"\n"
-+"> Please review the rest of the bug report below.\n"
-+"> You can delete any lines you don't wish to share.\n");
- 
- 	strbuf_addstr(template, _(template_text));
- 	return 0;
-diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-index e38ca7a9018..facaf1a5373 100755
---- a/t/t0091-bugreport.sh
-+++ b/t/t0091-bugreport.sh
-@@ -14,19 +14,32 @@ test_expect_success 'report contains wanted template (before first section)' '
- 	cat >expect <<-\EOF &&
- 	Thank you for filling out a Git bug report!
- 	Please answer the following questions to help us understand your issue.
-+	There are three blank lines after each question; please write your
-+	response on the second line and keep a blank line betweeen the question
-+	and the answer (beginning and end).
- 
--	What did you do before the bug happened? (Steps to reproduce your issue)
-+	> What did you do before the bug happened? (Steps to reproduce your issue)
- 
--	What did you expect to happen? (Expected behavior)
- 
--	What happened instead? (Actual behavior)
- 
--	What'\''s different between what you expected and what actually happened?
-+	> What did you expect to happen? (Expected behavior)
- 
--	Anything else you want to add:
- 
--	Please review the rest of the bug report below.
--	You can delete any lines you don'\''t wish to share.
-+
-+	> What happened instead? (Actual behavior)
-+
-+
-+
-+	> What'\''s different between what you expected and what actually happened?
-+
-+
-+
-+	> Anything else you want to add:
-+
-+
-+
-+	> Please review the rest of the bug report below.
-+	> You can delete any lines you don'\''t wish to share.
- 
- 
- 	EOF
+    fetch: use batched reference updates
 
-Interdiff against v2:
-  diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-  index 44be7eb4859..694ab85d8cb 100644
-  --- a/builtin/bugreport.c
-  +++ b/builtin/bugreport.c
-  @@ -65,19 +65,32 @@ static const char * const bugreport_usage[] = {
-   static int get_bug_template(struct strbuf *template)
-   {
-   	const char template_text[] = N_(
-  -"> Thank you for filling out a Git bug report!\n"
-  -"> Please answer the following questions to help us understand your issue.\n"
-  +"Thank you for filling out a Git bug report!\n"
-  +"Please answer the following questions to help us understand your issue.\n"
-  +"There are three blank lines after each question; please write your\n"
-  +"response on the second line and keep a blank line betweeen the question\n"
-  +"and the answer (beginning and end).\n"
-   "\n"
-   "> What did you do before the bug happened? (Steps to reproduce your issue)\n"
-   "\n"
-  +"\n"
-  +"\n"
-   "> What did you expect to happen? (Expected behavior)\n"
-   "\n"
-  +"\n"
-  +"\n"
-   "> What happened instead? (Actual behavior)\n"
-   "\n"
-  +"\n"
-  +"\n"
-   "> What's different between what you expected and what actually happened?\n"
-   "\n"
-  +"\n"
-  +"\n"
-   "> Anything else you want to add:\n"
-   "\n"
-  +"\n"
-  +"\n"
-   "> Please review the rest of the bug report below.\n"
-   "> You can delete any lines you don't wish to share.\n");
-   
-  diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-  index 9d7008f3592..facaf1a5373 100755
-  --- a/t/t0091-bugreport.sh
-  +++ b/t/t0091-bugreport.sh
-  @@ -12,19 +12,32 @@ test_expect_success 'create a report' '
-   test_expect_success 'report contains wanted template (before first section)' '
-   	sed -ne "/^\[/q;p" git-bugreport-format.txt >actual &&
-   	cat >expect <<-\EOF &&
-  -	> Thank you for filling out a Git bug report!
-  -	> Please answer the following questions to help us understand your issue.
-  +	Thank you for filling out a Git bug report!
-  +	Please answer the following questions to help us understand your issue.
-  +	There are three blank lines after each question; please write your
-  +	response on the second line and keep a blank line betweeen the question
-  +	and the answer (beginning and end).
-   
-   	> What did you do before the bug happened? (Steps to reproduce your issue)
-   
-  +
-  +
-   	> What did you expect to happen? (Expected behavior)
-   
-  +
-  +
-   	> What happened instead? (Actual behavior)
-   
-  +
-  +
-   	> What'\''s different between what you expected and what actually happened?
-   
-  +
-  +
-   	> Anything else you want to add:
-   
-  +
-  +
-   	> Please review the rest of the bug report below.
-   	> You can delete any lines you don'\''t wish to share.
-   
+    The reference updates performed as a part of 'git-fetch(1)', take place
+    one at a time. For each reference update, a new transaction is created
+    and committed. This is necessary to ensure we can allow individual
+    updates to fail without failing the entire command. The command also
+    supports an '--atomic' mode, which uses a single transaction to update
+    all of the references. But this mode has an all-or-nothing approach,
+    where if a single update fails, all updates would fail.
 
-Range-diff against v2:
-1:  52a6177e706 ! 1:  3d00cdbe853 bugreport: use quoted line prefixes
-    @@ Metadata
-     Author: Kristoffer Haugsbakk <code@khaugsbakk.name>
-     
-      ## Commit message ##
-    -    bugreport: use quoted line prefixes
-    +    bugreport: use quoted line prefixes & more blank lines
-     
-         Quoted line prefixes make it easier to distinguish between the questions
-         and the answers, both for the reporter and for the readers.
-     
-    +    Also try to nudge the user to submit a report with a blank line
-    +    separating the end of the question, the answer, and the next
-    +    question.[1]  (Or leave optional answers empty, i.e. with three
-    +    blank lines.  That should be fine too.)
-    +
-    +    [1]: Suggested by Junio
-    +
-         Based-on-patch-by: Felipe Contreras <felipe.contreras@gmail.com>
-    +    Suggested-by: Junio C Hamano <gitster@pobox.com>
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-     
-     
-      ## Notes (series) ##
-    +    § Changes in v3
-    +
-    +    • Don’t quote the introduction (not a question and not needed)
-    +    • Also try to nudge the user to leave enough blank lines
-    +    • Keep using one single patch for less test file churn even though these
-    +      are two changes in one
-    +
-    +    I considered being cute with the footnote:
-    +
-    +        ...
-    +        question.[1] ...
-    +
-    +        Based-on-patch-by: Felipe Contreras <felipe.contreras@gmail.com>
-    +        [1]:
-    +        Suggested-by: Junio C Hamano <gitster@pobox.com>
-    +        Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-    +
-         § Changes in v2
-     
-         • Update test which wasn’t there when v1 was made
-    @@ Notes (series)
-         • “use” in the subject is slightly more declarative than “add” (?)
-     
-      ## builtin/bugreport.c ##
-    -@@ builtin/bugreport.c: static const char * const bugreport_usage[] = {
-    - static int get_bug_template(struct strbuf *template)
-    - {
-    +@@ builtin/bugreport.c: static int get_bug_template(struct strbuf *template)
-      	const char template_text[] = N_(
-    --"Thank you for filling out a Git bug report!\n"
-    --"Please answer the following questions to help us understand your issue.\n"
-    -+"> Thank you for filling out a Git bug report!\n"
-    -+"> Please answer the following questions to help us understand your issue.\n"
-    + "Thank you for filling out a Git bug report!\n"
-    + "Please answer the following questions to help us understand your issue.\n"
-    ++"There are three blank lines after each question; please write your\n"
-    ++"response on the second line and keep a blank line betweeen the question\n"
-    ++"and the answer (beginning and end).\n"
-      "\n"
-     -"What did you do before the bug happened? (Steps to reproduce your issue)\n"
-     +"> What did you do before the bug happened? (Steps to reproduce your issue)\n"
-      "\n"
-     -"What did you expect to happen? (Expected behavior)\n"
-    -+"> What did you expect to happen? (Expected behavior)\n"
-      "\n"
-     -"What happened instead? (Actual behavior)\n"
-    -+"> What happened instead? (Actual behavior)\n"
-      "\n"
-     -"What's different between what you expected and what actually happened?\n"
-    -+"> What's different between what you expected and what actually happened?\n"
-    ++"> What did you expect to happen? (Expected behavior)\n"
-      "\n"
-     -"Anything else you want to add:\n"
-    -+"> Anything else you want to add:\n"
-      "\n"
-     -"Please review the rest of the bug report below.\n"
-     -"You can delete any lines you don't wish to share.\n");
-    ++"\n"
-    ++"> What happened instead? (Actual behavior)\n"
-    ++"\n"
-    ++"\n"
-    ++"\n"
-    ++"> What's different between what you expected and what actually happened?\n"
-    ++"\n"
-    ++"\n"
-    ++"\n"
-    ++"> Anything else you want to add:\n"
-    ++"\n"
-    ++"\n"
-    ++"\n"
-     +"> Please review the rest of the bug report below.\n"
-     +"> You can delete any lines you don't wish to share.\n");
-      
-    @@ builtin/bugreport.c: static const char * const bugreport_usage[] = {
-      	return 0;
-     
-      ## t/t0091-bugreport.sh ##
-    -@@ t/t0091-bugreport.sh: test_expect_success 'create a report' '
-    - test_expect_success 'report contains wanted template (before first section)' '
-    - 	sed -ne "/^\[/q;p" git-bugreport-format.txt >actual &&
-    +@@ t/t0091-bugreport.sh: test_expect_success 'report contains wanted template (before first section)' '
-      	cat >expect <<-\EOF &&
-    --	Thank you for filling out a Git bug report!
-    --	Please answer the following questions to help us understand your issue.
-    -+	> Thank you for filling out a Git bug report!
-    -+	> Please answer the following questions to help us understand your issue.
-    + 	Thank you for filling out a Git bug report!
-    + 	Please answer the following questions to help us understand your issue.
-    ++	There are three blank lines after each question; please write your
-    ++	response on the second line and keep a blank line betweeen the question
-    ++	and the answer (beginning and end).
-      
-     -	What did you do before the bug happened? (Steps to reproduce your issue)
-     +	> What did you do before the bug happened? (Steps to reproduce your issue)
-      
-     -	What did you expect to happen? (Expected behavior)
-    -+	> What did you expect to happen? (Expected behavior)
-      
-     -	What happened instead? (Actual behavior)
-    -+	> What happened instead? (Actual behavior)
-      
-     -	What'\''s different between what you expected and what actually happened?
-    -+	> What'\''s different between what you expected and what actually happened?
-    ++	> What did you expect to happen? (Expected behavior)
-      
-     -	Anything else you want to add:
-    -+	> Anything else you want to add:
-      
-     -	Please review the rest of the bug report below.
-     -	You can delete any lines you don'\''t wish to share.
-    ++
-    ++	> What happened instead? (Actual behavior)
-    ++
-    ++
-    ++
-    ++	> What'\''s different between what you expected and what actually happened?
-    ++
-    ++
-    ++
-    ++	> Anything else you want to add:
-    ++
-    ++
-    ++
-     +	> Please review the rest of the bug report below.
-     +	> You can delete any lines you don'\''t wish to share.
-      
-
-base-commit: 724518f3884d8707c5f51428ba98c115818229b8
--- 
-2.50.1
-
+CONFIDENTIALITY NOTICE AND DISCLAIMER : This telecommunication, including a=
+ny and all attachments, contains confidential information intended only for=
+ the person(s) to whom it is addressed. Any dissemination, distribution, co=
+pying or disclosure is strictly prohibited and is not a waiver of confident=
+iality. If you have received this telecommunication in error, please notify=
+ the sender immediately by return electronic mail and delete the message fr=
+om your inbox and deleted items folders. This telecommunication does not co=
+nstitute an express or implied agreement to conduct transactions by electro=
+nic means, nor does it constitute a contract offer, a contract amendment or=
+ an acceptance of a contract offer. Contract terms contained in this teleco=
+mmunication are subject to legal review and the completion of formal docume=
+ntation and are not binding until same is confirmed in writing and has been=
+ signed by an authorized signatory.
