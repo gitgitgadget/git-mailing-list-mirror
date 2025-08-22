@@ -1,160 +1,193 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88331A9F90
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 15:21:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C8623D7D4
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 16:37:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755876065; cv=none; b=tXksmMlN4EjzQd/uoBJNE9xUSWXijZk3lHH2Z6tJ1iiPO1ISXmiuJ/OYLWO5G0eOwVhNIsAUzZV99OtMiac/pLjdj6evOIPjvCeIUFIXqi6q74ZN68kwQKhCfkFVvzVANVo895dvuv0x9fJ9c/2QeOrR97O6YGoeXvOC9RnDuks=
+	t=1755880674; cv=none; b=XfMcRrZ3cVMNOeOuwpDhYC8SK+q4AmKF/tJS333LC6Q2serln1dH636ASa83H90uymACY3VAvXO3h3mX0e8eupRrlQp+3lGQlicFY5VG8F3wTichUGvrw5jdXdwlH5SgqurSjZfsDmc5UnLsdBWaSdgp2jVY9VLIWycpj81ECSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755876065; c=relaxed/simple;
-	bh=ZwGjw3Zd8ojTY1kef0l9cjKO2YOvLokMq24J0oM84+A=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bOmD+A+VpSX6xk0xGL2kfUXI2u6SBLtdlvztap2oCKJCQoo8+XPEdJEvD3CQbqSpMCCn/DEvjWJS0Q5rO/hPW/dDOcWdzwOGf08TjRQg7GWm2AKEnscEHNS7ewy3JuvBWqPUVXkx2r1vPkMjOOeKCNSoZq+Ru3U9l+LqFJaSc+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=I/cR2mV4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=izXNvhWd; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1755880674; c=relaxed/simple;
+	bh=e7CC788Bw6hPwmyx9OvWJLLknsYQnGLsv1tKxhXRj68=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rqbf21yQ1zqakmeGbEseZeMGS2sgLfEsKPVxbDwxwmjLMZytkS0Tf8RrDlmS0AyiAiBbjWgv4OgvtjcF04giP7pyCgGFx/TEXZIHS0EASNF1aMWBVFbdcOYHN9xZda0+JSPIuU5dX3gQytLtdAB5pYKmYZN1SIrJO09l4+aZgQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y8gQ3/6/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ELo+DfCL; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="I/cR2mV4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="izXNvhWd"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id AECF8EC083C;
-	Fri, 22 Aug 2025 11:21:01 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 22 Aug 2025 11:21:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm3; t=1755876061; x=1755962461; bh=ga
-	PBiE8M9et8JuqOyd9p5gTqxa6eFzKfiyGiECkey/U=; b=I/cR2mV4ahno8RYyZe
-	/IUSj4tP760j2ZdDigkVZNWZxGX2OqN1AR7KDjv9PcHesmWte0SvgJctdHNNUuj8
-	/7ArnI9eHAzc03EsRk9DCS4IPOg4yD5vn4wYoFuSRwlcpvTDoaOk5zBFMiRizRO/
-	jM0VHZmH6QyIQmvDLEb3zaY/mX9JH/OVWWCUrneUpq2GA0X2zBYinXc3ebv/kfbu
-	bLuMGcb4EcPD7HpIDC19W2Jj1YQRDFLKcc/R6jPxO4j+qNCd6kJ47yjpFM6OmIFh
-	CvMFlzlVTXVwTgfbZ9pO94sONpdB2CwbSnnuXFJKHNaBXjwUPUTFHd/bsotSVNTq
-	eAoA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y8gQ3/6/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ELo+DfCL"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A62B914006B2;
+	Fri, 22 Aug 2025 12:37:51 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Fri, 22 Aug 2025 12:37:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755880671; x=1755967071; bh=TVnrgUMnF+
+	2FgON4koTlIIf/R6ybxyr+Olnm21p20lM=; b=Y8gQ3/6/Lk3yiQuXCQ9vYcxfkw
+	vTdEoY8xJyqCpXqQiT+LWN04SoxgYF4QUbxDbcTArjHASYwEwMWClIhf1GKZGxtE
+	A6LmI3fALiI+rjyMa2X/MR5mC0M0CgS1Dj+otVOnzMhSvDeZB2in8e2GmQ8e5XAG
+	He2hGeMEN3wGQKoZh/O7v+yw+3hWJlhyNbkaf3siogXL/n7jxSZazMneCCl6jf8n
+	mHqwUtf/DdKCCRm7MlucbyBjhbwSRFfOZoXLbvOiPfANoqTdAqEyTRXle+avVCDn
+	V9Xp5GOr6RZwC4Nn8pUMRuN4u6iajcjvzFMVd7IsYuL516SOegKRmWD7BlHw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1755876061; x=1755962461; bh=gaPBiE8M9et8JuqOyd9p5gTqxa6e
-	FzKfiyGiECkey/U=; b=izXNvhWd1E7JueQMa6CJUaW00Kb+M+nNUlyzUp9FctFW
-	NSl291Sg1ggKz2TB6jWH/SXuAF+ap0hZK8WgEX6qz/hZXz+xvI7xjBDdJruTL2WT
-	xTc/8z4l73/ryrI0n9BtxqJq4B3DhwxyRIPyN8fHe6J/FQLvlrVfeBfE0iQuYgsL
-	V3X0Wuy1Dvte4+PUS+ccU8wzExPotYy+mjVBEXmHFvo21MJhcco/GWdDuEtUJBP4
-	BP3OkxL2e8i1+ZNU++i3nJ4mPpgUHsDN5N7yNKYIvA6SyGcf5P9V/9UGu0zC0ziz
-	tA6B2DmOL4kvsRZxHEZ25C0A3lsejhEMb3XLqdnLdQ==
-X-ME-Sender: <xms:3YqoaMKpPhvQgX_BCGTVDK_9aypUUVUelWAded3i0b1olg30T3dRv5E>
-    <xme:3YqoaMWJU9U7RIUhjRXkLiIgjGD0UfOq9BvNlHH9z6ff93jvTGUeTHRWhIKFHkZkd
-    20iJqvB-PHNdkBocA>
-X-ME-Received: <xmr:3YqoaOjvzuFAKntFO8ZNqVrUOTdgNRGayCaFqu-1g1PY8ZEAdrrXSXFmjXQunxFK2gn-ZJdrvo4Z7s-WfnlRTK3NMwZfD4z1XGx4B8w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieeguddtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755880671; x=1755967071; bh=TVnrgUMnF+2FgON4koTlIIf/R6ybxyr+Oln
+	m21p20lM=; b=ELo+DfCLNSJ5rG6P8k2dPgZfj2qYS2k0UT52usbqFlbMSkDm0yf
+	ArJyOTh6fw4OuqMuJKH4Z/xyEAHyJhAMsLM/Knznao8r8wBjYl+12q5zQpKrhDU+
+	Zw2EQHC0oZVGnwtYVLmU1QiF+ajgxYHaCN1u+0owsNo3u8lGlwiifjGi+7b8OOfk
+	NjK3aK/S7VWKrbXlyZ9NjdtJnhoPmFfdN4fPCiMI5/qqcq8cQlN8ksEWyscg8awD
+	IMe5d4E6yfZRiPYgZSqHCIObAqLShuEC22qOwGRMOeQfxBtLiiHp55XOM6ibmktC
+	AzL1IZCjTX66qrFH2yd4581CaRVlDrLYwkg==
+X-ME-Sender: <xms:35yoaBYk5SX_PGsgNzYDWDuFCCL_fdsk27D1ghpkIrJHJ-mOnGIm8A>
+    <xme:35yoaC8vLsdVFkkAWWYSvfRg13z5-L7IseIbXfx6N0Axg8ITpMoT2qDBa8YnI0T8u
+    8pZHTYo9g3R6gcUnw>
+X-ME-Received: <xmr:35yoaAhfgmcQf1Npr8VpvtSTTUyEfnd_i0aZ5mVlojn6cN7ptoaZyZmW3Pp4dFKcc47t8eRFI15pmsW-FH6zzVPrCjKkMZSeJBXLFqY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieegvdeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffogggtgfesthekredtre
-    dtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
-    ihhlrdgtohhmnecuggftrfgrthhtvghrnheptefgkeejffdufeefffegkeevgfevvdegff
-    eujeejleegudfhtdffieekleefhffgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
-    htmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptg
-    houggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:3YqoaH8TTVTRWmF0wvhPyUjHO1AcV1Z9SR1TvV16hEU8tZvE2ffczQ>
-    <xmx:3YqoaIBSAd1_id2umVecjatow6ALLlFu6rOMLicxXGpBMo9v84pDEg>
-    <xmx:3YqoaELTQzM7pnRasRcMoQyQzPmBtHJKGE-YOucJlvapqPjjAA5Rxw>
-    <xmx:3YqoaLk2WHKoKo7CdarJA16mfSetHOFP7eWvUA7fnLdNDTIq-Ip_OA>
-    <xmx:3YqoaGuuIeonx8qW4FiEZtBpwvBEpPqsonCH4QLvxhN5KwkDNEc6k2wO>
-Feedback-ID: i8b11424c:Fastmail
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshes
+    phhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:35yoaCfchGzzz5XEEA-cWU7-ndK44s9dVUBcZ7ANc_v1_MYt75qWsQ>
+    <xmx:35yoaHoU56bzzK7uX-4mxT-KQ1lOoG41094lPrI-KJAj-217ShZwFQ>
+    <xmx:35yoaHBnLOF_DljCxNFtP9HUTryJ-9SU1i6E_6Ec1yT4j8k9NUSNUw>
+    <xmx:35yoaEaRQ1ue52U-QyAfeEgqkSJJlozycPawgw4EYPfShvs68Rhwqg>
+    <xmx:35yoaD25Q7JVZZZyFIL4tzTpejY-Z8TBRRJVmugX-MWJcNbIjci-PSmd>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 22 Aug 2025 11:21:00 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH] doc: interpret-trailers: close all pairs of single quotes
-Date: Fri, 22 Aug 2025 17:20:35 +0200
-Message-ID: <4eac944102a846695a9f61ead39a5a86361a0532.1755875970.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.51.0.11.g23cedd8a747
+ 22 Aug 2025 12:37:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v2 2/4] bulk-checkin: remove global transaction state
+In-Reply-To: <20250821232249.319427-3-jltobler@gmail.com> (Justin Tobler's
+	message of "Thu, 21 Aug 2025 18:22:47 -0500")
+References: <20250820225531.1212935-1-jltobler@gmail.com>
+	<20250821232249.319427-1-jltobler@gmail.com>
+	<20250821232249.319427-3-jltobler@gmail.com>
+Date: Fri, 22 Aug 2025 09:37:49 -0700
+Message-ID: <xmqqv7mfxqg2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Justin Tobler <jltobler@gmail.com> writes:
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+> diff --git a/bulk-checkin.c b/bulk-checkin.c
+> index 82a73da79e8..53a20a2d92f 100644
+> --- a/bulk-checkin.c
+> +++ b/bulk-checkin.c
+> @@ -30,11 +30,13 @@ struct bulk_checkin_packfile {
+>  	uint32_t nr_written;
+>  };
+>  
+> -static struct odb_transaction {
+> +struct odb_transaction {
+> +	struct object_database *odb;
+> +
+>  	int nesting;
+>  	struct tmp_objdir *objdir;
+>  	struct bulk_checkin_packfile packfile;
+> -} transaction;
+> +};
 
-Notes (series):
-    Demo:
-    
-        $ html2text <git-interpret-trailers.html | grep "'"
-        This means that the trimmed <key> and <value> will be separated by ': ' (one
-              $ git interpret-trailers --trailer 'sign: Alice <alice@example.com>' --
-              trailer 'sign: Bob <bob@example.com>' <msg.txt
-              $ git interpret-trailers --trailer 'Acked-by: Alice <alice@example.com>'
-              $ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --
-              trailer 'Reviewed-by: Bob <bob@example.com>' 0001-foo.patch >0001-
-            * Configure a sign trailer with a command to automatically add a 'Signed-
-              off-by: ' with the author information only if there is no 'Signed-off-by:
-              ' already, and show how it works:
-              $ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git
-              config user.email)>"'
-              $ sed -e 's/ Z$/ /' temp.txt > commit_template.txt
-    
-    And on ‘master’:
-    
-        $ html2text <git-interpret-trailers.html  |grep "'"
-        This means that the trimmed <key> and <value> will be separated by ': ' (one
-              exists. Upon encountering '--no-if-exists, clear the effect of any
-              previous use of '--if-exists, such that the relevant configuration
-              missing. Upon encountering '--no-if-missing, clear the effect of any
-              previous use of '--if-missing, such that the relevant configuration
-              $ git interpret-trailers --trailer 'sign: Alice <alice@example.com>' --
-              trailer 'sign: Bob <bob@example.com>' <msg.txt
-              $ git interpret-trailers --trailer 'Acked-by: Alice <alice@example.com>'
-              $ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --
-              trailer 'Reviewed-by: Bob <bob@example.com>' 0001-foo.patch >0001-
-            * Configure a sign trailer with a command to automatically add a 'Signed-
-              off-by: ' with the author information only if there is no 'Signed-off-by:
-              ' already, and show how it works:
-              $ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git
-              config user.email)>"'
-              $ sed -e 's/ Z$/ /' temp.txt > commit_template.txt
+Very nice to see that this singleton instance is now gone.  
 
- Documentation/git-interpret-trailers.adoc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+The singleton was really handy way to allow calls into this
+subsystem to lazily initialize bulk_checkin_packfile in the call
+chain starting from deflate_blob_to_pack() -> prepare_to_stream().
 
-diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-index 82c8780d932..fd335fe772a 100644
---- a/Documentation/git-interpret-trailers.adoc
-+++ b/Documentation/git-interpret-trailers.adoc
-@@ -142,8 +142,8 @@ OPTIONS
- 	provided with '--if-exists' overrides the `trailer.ifExists` and any
- 	applicable `trailer.<keyAlias>.ifExists` configuration variables
- 	and applies to all '--trailer' options until the next occurrence of
--	'--if-exists' or '--no-if-exists'. Upon encountering '--no-if-exists, clear the
--	effect of any previous use of '--if-exists, such that the relevant configuration
-+	'--if-exists' or '--no-if-exists'. Upon encountering '--no-if-exists', clear the
-+	effect of any previous use of '--if-exists', such that the relevant configuration
- 	variables are no longer overridden. Possible actions are `addIfDifferent`,
- 	`addIfDifferentNeighbor`, `add`, `replace` and `doNothing`.
- 
-@@ -154,8 +154,8 @@ OPTIONS
- 	provided with '--if-missing' overrides the `trailer.ifMissing` and any
- 	applicable `trailer.<keyAlias>.ifMissing` configuration variables
- 	and applies to all '--trailer' options until the next occurrence of
--	'--if-missing' or '--no-if-missing'. Upon encountering '--no-if-missing,
--	clear the effect of any previous use of '--if-missing, such that the relevant
-+	'--if-missing' or '--no-if-missing'. Upon encountering '--no-if-missing',
-+	clear the effect of any previous use of '--if-missing', such that the relevant
- 	configuration variables are no longer overridden. Possible actions are `doNothing`
- 	or `add`.
- 
+We now need to be a lot more careful to make sure that everybody has
+access to a valid bulk_checkin_packfile struct, which makes the
+implementation of index_blob_bulk_checkin() a bit awkward and we
+need to invent one bulk_checkin_packfile instance right there.
+Luckily it goes away in the next step, I guess?
 
-base-commit: 954d33a9757fcfab723a824116902f1eb16e05f7
--- 
-2.50.1
+> +int index_blob_bulk_checkin(struct odb_transaction *transaction,
+> +			    struct object_id *oid, int fd, size_t size,
+>  			    const char *path, unsigned flags)
+>  {
+> -	int status = deflate_blob_to_pack(&transaction.packfile, oid, fd, size,
+> -					  path, flags);
+> -	if (!transaction.nesting)
+> -		flush_bulk_checkin_packfile(&transaction.packfile);
+> +	int status;
+> +
+> +	if (transaction) {
+> +		status = deflate_blob_to_pack(&transaction->packfile, oid, fd,
+> +					      size, path, flags);
+> +	} else {
+> +		struct bulk_checkin_packfile state = { 0 };
+> +
+> +		status = deflate_blob_to_pack(&state, oid, fd, size, path, flags);
+> +		flush_bulk_checkin_packfile(&state);
+> +	}
+> +
+>  	return status;
+>  }
 
+OK.  If we do not have a transaction (i.e. if nobody called 
+begin_odb_transaction() more times than end_odb_transaction()
+got called), we let the underlying machinery do the right thing on
+an empty state and clean up after ourselves; otherwise we follow
+exactly the same code path as we used to.
+
+> diff --git a/cache-tree.c b/cache-tree.c
+> index 66ef2becbe0..d225554eedd 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -474,6 +474,7 @@ static int update_one(struct cache_tree *it,
+>  
+>  int cache_tree_update(struct index_state *istate, int flags)
+>  {
+> +	struct odb_transaction *transaction;
+>  	int skip, i;
+
+OK, doing the odb-transaction here would cover both this one and
+write_index_as_tree and its friends, that are public interfaces into
+the cache-tree subsystem.  
+
+> diff --git a/odb.h b/odb.h
+> index 3dfc66d75a3..a89b2143909 100644
+> --- a/odb.h
+> +++ b/odb.h
+> @@ -84,6 +84,7 @@ struct odb_source {
+>  
+>  struct packed_git;
+>  struct cached_object_entry;
+> +struct odb_transaction;
+>  
+>  /*
+>   * The object database encapsulates access to objects in a repository. It
+> @@ -94,6 +95,13 @@ struct object_database {
+>  	/* Repository that owns this database. */
+>  	struct repository *repo;
+>  
+> +	/*
+> +	 * State of current current object database transaction. Only one
+> +	 * transaction may be pending at a time. Is NULL when no transaction is
+> +	 * configured.
+> +	 */
+> +	struct odb_transaction *transaction;
+
+Once dust from this topic settles, we may want to rename the
+bulk-checkin.[ch] to have "odb" somewhere in its name, perhaps?  I
+usually do not like renaming file for the sake of renaming to make
+the result look "pretty" (people may use "consistent naming" ),
+though.  I dunno.
