@@ -1,179 +1,459 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553042765ED
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 12:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFA028AB1E
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 12:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755865341; cv=none; b=aft+HmLBqZCvPLulKGZfQj7FgHFJeO9teYEYwEqT6QPVnpDSv+RYzpEtQW/ZT4xsBSvxZ9OVQ7rFju0aFNiD0pLFqZ4nSQW6LK9lbPmeueFAGxNm7Ap3+1/g550Lz2QWPaqNtSg1xuCvOOcNaLskf27VVbQD/uiv08pRCadApR0=
+	t=1755867023; cv=none; b=cZASqkXA9lVf28S+PL5M47FtPlISH6N+wXW1ptCy3HZFHW4ajrbcthUlcAhDHTPDVqN/YgvmaaedWzMfpzIvr/PO3Ga+8/zTIdFQA0CD5a6y0V55eAwpZwFWKbHdH1/QrK9nq7zlgIKeOJlRAmSQk9Of35UrTG1/klaGV+DBQXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755865341; c=relaxed/simple;
-	bh=or9IWd8CWtjOIWYa5VEB7vXX+C1GaVO4GJ6nYkSsRZo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rM4QdNBq5CRsPYu32/0PQyTsYtLDpkhGDGzoVNe9NiOfw6pMdLERiAkeVUZMJ1RO4QKuc8W9asEuLOQY05qXkeT6SFXBc8ILBMGcDxxreUBlm96QUCH3f2KdmHDkfMLj8BSJ52EeYBy5HZgAz4ZKEckWpiAO8QoiXYIAnIIrZSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ol5XkYYY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bWD1FLmH; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1755867023; c=relaxed/simple;
+	bh=wMWQ6s1S/fOwPPKJ92dAk2iy4uirVWnglmUDIWXxZcU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=tJZzbmaW7xWr3J+xWkvToSrfZ8hNw64FnNRTf40A9MsN+wdDiW8pPwqK55rv8AThN32Hielxfv26OQAvRVFuiy0o4rKDlvz6VIeOPu7+XkGKFkSKm0v3SZhcdTBZomIu+X9fNLaK97EOVHe8c+6cXDfLSst4MUFys/Ua0McjZz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=FnyR+tDM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j4665wL+; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ol5XkYYY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bWD1FLmH"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 58384EC00CE;
-	Fri, 22 Aug 2025 08:22:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="FnyR+tDM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j4665wL+"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6F70BEC0109;
+	Fri, 22 Aug 2025 08:50:20 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Fri, 22 Aug 2025 08:22:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755865338;
-	 x=1755951738; bh=QReALSWvnt441DBDfYSqpMFcplt3D0Wdao9pEQu3W7g=; b=
-	Ol5XkYYYOo3VjXPFj2RDVFP6d0iAzG/KWumlXQOY3HJi5pEBTqXhwYiR3Dx7UNU/
-	Mm+GhEy7AAVP4rM6GBkqcyCgQ5wCtXT829KOpWL24SBLZMn6Q467YsEXN8fXIR+P
-	Opl+Phbg+cEGGVHHLLdC6oY6TQFkXtvoll5+v9+goEBtTGMjrrBSTpHDGmnDNkf4
-	vOYko2AEB13nPUHGsnjKfvLfQhfE5gLtjx0t54ozGWlKDlwfi+6VdMTYi95SqQXE
-	Htf4ryl/KCdDGQiiVQBzITPAWVv5pksXrdPEX3/zcWE+1IDt/7KLyDlouUCre71R
-	6b6UsruZH6iq2g8S67Oe3A==
+  by phl-compute-12.internal (MEProxy); Fri, 22 Aug 2025 08:50:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755867020;
+	 x=1755953420; bh=QXA4hHkahVsrbB49MxciyXRYAIubM37PmmvymWWhWRw=; b=
+	FnyR+tDMJaAF74YSOFqyqinuVSyY5UoqSW6E367GMqpUZevjVO1bl7nQiT63ndYK
+	Xf2x7DLAmZvyLeZQfKd7Fp0QY6xZPJemGrwQ91XiW6b8II2ZOtz8LyL0BIIGclj7
+	m2kKFr2/gimw8c+L2qCUKvAP5SXPrju1J+NEwROQZxG4uNpfpp4BJd1E8bNzW3bG
+	ZvOQlVv1D4DGA7ab7/2WXTrodeGPjj62O2utFhqYOaDkcAs6+INrakRaHZbgo6y5
+	5ZyXnqU/7qRs02W/jbfDPazs7IvNWQLve76kKFfBn9Gu3xGew4qVNM8If6JFz28C
+	KXSesa3+oStJLwfANo7CDw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755865338; x=
-	1755951738; bh=QReALSWvnt441DBDfYSqpMFcplt3D0Wdao9pEQu3W7g=; b=b
-	WD1FLmHP9hy1rlPDFJyQwk+1DVXBPDNtlofAX0E8ZHKaPiZHu5zqyU3G8rE3ycw2
-	nlaSs38G9vfWfQpBSUVd2tOT8nuh3FM7cblFcOCwJiVLkf/UiX+gw5kumTvk2kNn
-	TRJ9yJkmD/VbElFma1Ozh4ohpbUHSrzJGJaMdj7kXqmrBOah0lUQm+veAb9+Hh2M
-	GEG75q04Wu4dCuL07L5ZFTTcQuvrK23JV17ynPrYVch/tj61jpoZ8PyOBLaIKalq
-	Sa169pKF/C/zBpFyGWiRWGkAsFOik2ghZhe95q257cd3dLKMoZk2PiC1OzUM+SSj
-	476jGEH/05OV72NVKSYGw==
-X-ME-Sender: <xms:-mCoaG1RSKEyKLOG4HDKCyBb9Q6LphfG_VstCzcte77p0ubkaYliHQ>
-    <xme:-mCoaJSPt2_8Mb5_S8y8sGtLf2ZShJX3rOLQiHAlc4Z9YDz7SSSJc8kUDJWyXjUAk
-    SOKA5iX6nPLiBicZg>
-X-ME-Received: <xmr:-mCoaAtjcViqcSFbayvo5cYtnd3r-pZt-k-owsUjb55ElbGGjFG5sDHQuKoD4dFFYXLL-EXmW4bJM1q77KkQ0X_C71gGuCR_lB6YQ8CE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieefjeegucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755867020; x=
+	1755953420; bh=QXA4hHkahVsrbB49MxciyXRYAIubM37PmmvymWWhWRw=; b=j
+	4665wL+Kzl1zOUz8p+rqhkDGO/dhALfAFmaTZc0F0E8yTDzglbx6iiHwfhbaNtRg
+	qBFiiNAk+ReJurQh/x5p1q3W75otSb/dLstImXnUFVT0kvuPQiRsJS9rwXn9CWeP
+	Ro0MzxmPIc1HJBKVxegfSjk7Ff9/YosyhFIrdfCQ6lJn6nDCccPkHEJeEcPfH2hP
+	NUK76WpiY9KnPgKZlsR1570vbFKTPWRbIZck+v10LtLGJRCY46OLRw/wAV1N9FJo
+	2qmmOCSxLHgZUaOLRKdcnmkJaS3qnrDjSBE6qo3a/ma4MsmBIUrHtbBLKTW4IV3+
+	Wj1LRVT1BDZZ4qJbNvm2g==
+X-ME-Sender: <xms:jGeoaKl6FMLPzyzMGv86dpZ9kpzwTuPYhZD0GZApUG7wLLceaDPbx0A>
+    <xme:jGeoaFEYNt_xG1jzh30bvIveQkqQJRRtXPrDFIDgGMMY8iT4fMmnoO8v4gatigfxX
+    iwUb3094dwWCTaRJQ>
+X-ME-Received: <xmr:jGeoaCGkVzWzk7-p5cY4MBCxkmXTBQag5kHGf3i9Fbes2j9PtDOvXDTspRasjEUeHg7Ze6dRi31s-KX-UKSOemnJRqbCA3DEbo8xly8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieefkedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:-mCoaGaLLUmYSEWkVdtcqmsbycDmmTD2VASBeF0q9StfqLtvwshjeg>
-    <xmx:-mCoaNvpQaf6mcbKwFaTkBfeD5eLdVHHfQbA16kv1Uo89cRWFBnIXg>
-    <xmx:-mCoaAEHpMp2_xbj8d8CKO0QpwpgIwddqHEYThoUfGLpUSxMqWOCEg>
-    <xmx:-mCoaAzZ36q_WP6ZN-Iup7KIZybHoRQ6XO3O3a1FYZKLmU-CxWA2MQ>
-    <xmx:-mCoaAbBmDYdAigexW-Tkw_W_d0yYofJHzfrvB7uLQxA5JE3AqL1FDdC>
-Feedback-ID: i197146af:Fastmail
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfgggtgfesthekre
+    dtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetie
+    ehgeeftdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    eptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepfhgvlhhiphgv
+    rdgtohhnthhrvghrrghssehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:jGeoaKMDlMoqNNbnAsxk7hptPjGEK7PtoGRgJ4Ikmj0JLqi-dvnOsw>
+    <xmx:jGeoaJF_H_u-fNEHLZdQTQU70XqJgMsaymIICYa_0aOqWY6q5blkHw>
+    <xmx:jGeoaJOghP6wV6-JEADuXzszGcPO3dLL8F69KwWOkhezRQhqdISamA>
+    <xmx:jGeoaC8xb2vY_91pLVxNNcfVX3TeNhKh1ZKEgi_OU3vg1ussR5L6MQ>
+    <xmx:jGeoaBu8bHr8qZtpTgBnHdg6bBIEJ2CU0eZOhq4mNBxqXWB1z9XAj-z->
+Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 22 Aug 2025 08:22:17 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ecf7f131 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 22 Aug 2025 12:22:16 +0000 (UTC)
-Date: Fri, 22 Aug 2025 14:22:10 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH RFC 11/11] builtin/history: implement "split" subcommand
-Message-ID: <aKhg8q-AAlsGDvFS@pks.im>
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
- <20250819-b4-pks-history-builtin-v1-11-9b77c32688fe@pks.im>
- <CALnO6CBuwDVMZ-QTay+PUiXKsWMsABJcs1pAB=uUXf7-DJ4Mnw@mail.gmail.com>
+ 22 Aug 2025 08:50:19 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH v3] bugreport: use quoted line prefixes & more blank lines
+Date: Fri, 22 Aug 2025 14:49:58 +0200
+Message-ID: <3d00cdbe8535fda8f9e72b5243090e6d953c133e.1755866791.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.51.0.11.g23cedd8a747
+In-Reply-To: <52a6177e706d8653251c61bc660f10b703ea6a9e.1755256099.git.code@khaugsbakk.name>
+References: <52a6177e706d8653251c61bc660f10b703ea6a9e.1755256099.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CBuwDVMZ-QTay+PUiXKsWMsABJcs1pAB=uUXf7-DJ4Mnw@mail.gmail.com>
 
-On Wed, Aug 20, 2025 at 05:27:32PM -0400, D. Ben Knoble wrote:
-> On Wed, Aug 20, 2025 at 5:05 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-> > index 6e8b4e1326..f0f1f2a093 100644
-> > --- a/Documentation/git-history.adoc
-> > +++ b/Documentation/git-history.adoc
-> > @@ -47,6 +48,26 @@ reorder <revision> (--before=<revision>|--after=<revision>)::
-> >         commit. The commits must be related to one another and must be
-> >         reachable from the current `HEAD` commit.
-> >
-> > +split <revision> [--message=<message>] [--] [<pathspec>...]::
-> > +       Interactively split up the commit into two commits by choosing
-> > +       hunks introduced by it that will be moved into the new split-out
-> > +       commit. These hunks will then be written into a new commit that
-> > +       becomes the parent of the previous commit. The original commit
-> > +       stays intact, except that its parent will be the newly split-out
-> > +       commit.
-> > ++
-> > +The commit message of the new commit will be asked for by launching the
-> > +configured editor. Authorship of the commit will be the same as for the
-> > +original commit.
-> > ++
-> > +If passed, _<pathspec>_ can be used to limit which changes shall be split out
-> > +of the original commit. Files not matching any of the pathspecs will remain
-> > +part of the original commit. For more details about the _<pathspec>_ syntax,
-> > +see the 'pathspec' entry.
-> 
-> Glossary entry?
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Yup.
+Quoted line prefixes make it easier to distinguish between the questions
+and the answers, both for the reporter and for the readers.
 
-> > +       /*
-> > +        * But we do ask the user for a new commit message. This is in contrast
-> > +        * to the second commit, where we'll retain the original commit
-> > +        * message.
-> > +        */
-> 
-> Interesting. I can see using the original as the template for _both_,
-> or the first instead of the second. jj's split works a little
-> differently (especially with their notion of descriptions), so I can't
-> use them as a reference for the behavior.
-> 
-> I suppose this is one of those "everybody has their preference"
-> things, but I think giving the message in both new commits as the
-> template gives splitters the most information available when writing
-> the message. (Of course, in my editor, I can presumably do something
-> like ":Git show -s <split-commit-ish>" if I want.)
+Also try to nudge the user to submit a report with a blank line
+separating the end of the question, the answer, and the next
+question.[1]  (Or leave optional answers empty, i.e. with three
+blank lines.  That should be fine too.)
 
-I think giving only the split-out changes is a reasonable default, but I
-can totally see that we might eventually want to add a command line
-option to change the behaviour.
+[1]: Suggested by Junio
 
-> > +       if (!commit_message) {
-> > +               split_message_path = repo_git_path(repo, "SPLIT_MSG");
-> > +               strbuf_addch(&split_message, '\n');
-> > +               strbuf_commented_addf(&split_message, comment_line_str,
-> > +                                     _("Please enter a commit message for the split-out changes."));
-> > +               write_file_buf(split_message_path, split_message.buf, split_message.len);
-> 
-> I also noticed the commented template differs substantially from the
-> regular commit template, and my editor doesn't recognize "SPLIT_MSG"
-> as a commit message file.
-> 
-> The latter can be fixed elsewhere, but for the former: perhaps it's
-> worth using the usual template with the wording here prepended?
-> Respecting commit.verbose / commit.status, too.
+Based-on-patch-by: Felipe Contreras <felipe.contreras@gmail.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-Yeah, that's something I wanted to get around to, but haven't yet. I
-also noticed that it's not exactly easy to figure out what you're
-currently editing without that lack of context.
+Notes (series):
+    § Changes in v3
+    
+    • Don’t quote the introduction (not a question and not needed)
+    • Also try to nudge the user to leave enough blank lines
+    • Keep using one single patch for less test file churn even though these
+      are two changes in one
+    
+    I considered being cute with the footnote:
+    
+        ...
+        question.[1] ...
+    
+        Based-on-patch-by: Felipe Contreras <felipe.contreras@gmail.com>
+        [1]:
+        Suggested-by: Junio C Hamano <gitster@pobox.com>
+        Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+    
+    § Changes in v2
+    
+    • Update test which wasn’t there when v1 was made
+    • Rewrite commit message to one single sentence
+    • “use” in the subject is slightly more declarative than “add” (?)
 
-I'll include that in v2.
+ builtin/bugreport.c  | 27 ++++++++++++++++++++-------
+ t/t0091-bugreport.sh | 27 ++++++++++++++++++++-------
+ 2 files changed, 40 insertions(+), 14 deletions(-)
 
-> BTW, if I quit the editor with an error here, I'm left back where I
-> started. So I'd have to re-stage changes if I wanted to split again,
-> which is a bit different from how interactive rebase will leave me
-> with the partially staged changes. Obviously that's harder to do with
-> the in-memory index + automatic re-application of remaining patch when
-> finished, so maybe a note in the docs about this being "all or
-> nothing"?
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index f78c3f2aed6..694ab85d8cb 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -67,19 +67,32 @@ static int get_bug_template(struct strbuf *template)
+ 	const char template_text[] = N_(
+ "Thank you for filling out a Git bug report!\n"
+ "Please answer the following questions to help us understand your issue.\n"
++"There are three blank lines after each question; please write your\n"
++"response on the second line and keep a blank line betweeen the question\n"
++"and the answer (beginning and end).\n"
+ "\n"
+-"What did you do before the bug happened? (Steps to reproduce your issue)\n"
++"> What did you do before the bug happened? (Steps to reproduce your issue)\n"
+ "\n"
+-"What did you expect to happen? (Expected behavior)\n"
+ "\n"
+-"What happened instead? (Actual behavior)\n"
+ "\n"
+-"What's different between what you expected and what actually happened?\n"
++"> What did you expect to happen? (Expected behavior)\n"
+ "\n"
+-"Anything else you want to add:\n"
+ "\n"
+-"Please review the rest of the bug report below.\n"
+-"You can delete any lines you don't wish to share.\n");
++"\n"
++"> What happened instead? (Actual behavior)\n"
++"\n"
++"\n"
++"\n"
++"> What's different between what you expected and what actually happened?\n"
++"\n"
++"\n"
++"\n"
++"> Anything else you want to add:\n"
++"\n"
++"\n"
++"\n"
++"> Please review the rest of the bug report below.\n"
++"> You can delete any lines you don't wish to share.\n");
+ 
+ 	strbuf_addstr(template, _(template_text));
+ 	return 0;
+diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+index e38ca7a9018..facaf1a5373 100755
+--- a/t/t0091-bugreport.sh
++++ b/t/t0091-bugreport.sh
+@@ -14,19 +14,32 @@ test_expect_success 'report contains wanted template (before first section)' '
+ 	cat >expect <<-\EOF &&
+ 	Thank you for filling out a Git bug report!
+ 	Please answer the following questions to help us understand your issue.
++	There are three blank lines after each question; please write your
++	response on the second line and keep a blank line betweeen the question
++	and the answer (beginning and end).
+ 
+-	What did you do before the bug happened? (Steps to reproduce your issue)
++	> What did you do before the bug happened? (Steps to reproduce your issue)
+ 
+-	What did you expect to happen? (Expected behavior)
+ 
+-	What happened instead? (Actual behavior)
+ 
+-	What'\''s different between what you expected and what actually happened?
++	> What did you expect to happen? (Expected behavior)
+ 
+-	Anything else you want to add:
+ 
+-	Please review the rest of the bug report below.
+-	You can delete any lines you don'\''t wish to share.
++
++	> What happened instead? (Actual behavior)
++
++
++
++	> What'\''s different between what you expected and what actually happened?
++
++
++
++	> Anything else you want to add:
++
++
++
++	> Please review the rest of the bug report below.
++	> You can delete any lines you don'\''t wish to share.
+ 
+ 
+ 	EOF
 
-Yeah, fair. I guess adding a note for now is the best way to go about
-it, but this is certainly something we can and should iterate on in the
-future.
+Interdiff against v2:
+  diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+  index 44be7eb4859..694ab85d8cb 100644
+  --- a/builtin/bugreport.c
+  +++ b/builtin/bugreport.c
+  @@ -65,19 +65,32 @@ static const char * const bugreport_usage[] = {
+   static int get_bug_template(struct strbuf *template)
+   {
+   	const char template_text[] = N_(
+  -"> Thank you for filling out a Git bug report!\n"
+  -"> Please answer the following questions to help us understand your issue.\n"
+  +"Thank you for filling out a Git bug report!\n"
+  +"Please answer the following questions to help us understand your issue.\n"
+  +"There are three blank lines after each question; please write your\n"
+  +"response on the second line and keep a blank line betweeen the question\n"
+  +"and the answer (beginning and end).\n"
+   "\n"
+   "> What did you do before the bug happened? (Steps to reproduce your issue)\n"
+   "\n"
+  +"\n"
+  +"\n"
+   "> What did you expect to happen? (Expected behavior)\n"
+   "\n"
+  +"\n"
+  +"\n"
+   "> What happened instead? (Actual behavior)\n"
+   "\n"
+  +"\n"
+  +"\n"
+   "> What's different between what you expected and what actually happened?\n"
+   "\n"
+  +"\n"
+  +"\n"
+   "> Anything else you want to add:\n"
+   "\n"
+  +"\n"
+  +"\n"
+   "> Please review the rest of the bug report below.\n"
+   "> You can delete any lines you don't wish to share.\n");
+   
+  diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+  index 9d7008f3592..facaf1a5373 100755
+  --- a/t/t0091-bugreport.sh
+  +++ b/t/t0091-bugreport.sh
+  @@ -12,19 +12,32 @@ test_expect_success 'create a report' '
+   test_expect_success 'report contains wanted template (before first section)' '
+   	sed -ne "/^\[/q;p" git-bugreport-format.txt >actual &&
+   	cat >expect <<-\EOF &&
+  -	> Thank you for filling out a Git bug report!
+  -	> Please answer the following questions to help us understand your issue.
+  +	Thank you for filling out a Git bug report!
+  +	Please answer the following questions to help us understand your issue.
+  +	There are three blank lines after each question; please write your
+  +	response on the second line and keep a blank line betweeen the question
+  +	and the answer (beginning and end).
+   
+   	> What did you do before the bug happened? (Steps to reproduce your issue)
+   
+  +
+  +
+   	> What did you expect to happen? (Expected behavior)
+   
+  +
+  +
+   	> What happened instead? (Actual behavior)
+   
+  +
+  +
+   	> What'\''s different between what you expected and what actually happened?
+   
+  +
+  +
+   	> Anything else you want to add:
+   
+  +
+  +
+   	> Please review the rest of the bug report below.
+   	> You can delete any lines you don'\''t wish to share.
+   
 
-Patrick
+Range-diff against v2:
+1:  52a6177e706 ! 1:  3d00cdbe853 bugreport: use quoted line prefixes
+    @@ Metadata
+     Author: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+      ## Commit message ##
+    -    bugreport: use quoted line prefixes
+    +    bugreport: use quoted line prefixes & more blank lines
+     
+         Quoted line prefixes make it easier to distinguish between the questions
+         and the answers, both for the reporter and for the readers.
+     
+    +    Also try to nudge the user to submit a report with a blank line
+    +    separating the end of the question, the answer, and the next
+    +    question.[1]  (Or leave optional answers empty, i.e. with three
+    +    blank lines.  That should be fine too.)
+    +
+    +    [1]: Suggested by Junio
+    +
+         Based-on-patch-by: Felipe Contreras <felipe.contreras@gmail.com>
+    +    Suggested-by: Junio C Hamano <gitster@pobox.com>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+     
+      ## Notes (series) ##
+    +    § Changes in v3
+    +
+    +    • Don’t quote the introduction (not a question and not needed)
+    +    • Also try to nudge the user to leave enough blank lines
+    +    • Keep using one single patch for less test file churn even though these
+    +      are two changes in one
+    +
+    +    I considered being cute with the footnote:
+    +
+    +        ...
+    +        question.[1] ...
+    +
+    +        Based-on-patch-by: Felipe Contreras <felipe.contreras@gmail.com>
+    +        [1]:
+    +        Suggested-by: Junio C Hamano <gitster@pobox.com>
+    +        Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+    +
+         § Changes in v2
+     
+         • Update test which wasn’t there when v1 was made
+    @@ Notes (series)
+         • “use” in the subject is slightly more declarative than “add” (?)
+     
+      ## builtin/bugreport.c ##
+    -@@ builtin/bugreport.c: static const char * const bugreport_usage[] = {
+    - static int get_bug_template(struct strbuf *template)
+    - {
+    +@@ builtin/bugreport.c: static int get_bug_template(struct strbuf *template)
+      	const char template_text[] = N_(
+    --"Thank you for filling out a Git bug report!\n"
+    --"Please answer the following questions to help us understand your issue.\n"
+    -+"> Thank you for filling out a Git bug report!\n"
+    -+"> Please answer the following questions to help us understand your issue.\n"
+    + "Thank you for filling out a Git bug report!\n"
+    + "Please answer the following questions to help us understand your issue.\n"
+    ++"There are three blank lines after each question; please write your\n"
+    ++"response on the second line and keep a blank line betweeen the question\n"
+    ++"and the answer (beginning and end).\n"
+      "\n"
+     -"What did you do before the bug happened? (Steps to reproduce your issue)\n"
+     +"> What did you do before the bug happened? (Steps to reproduce your issue)\n"
+      "\n"
+     -"What did you expect to happen? (Expected behavior)\n"
+    -+"> What did you expect to happen? (Expected behavior)\n"
+      "\n"
+     -"What happened instead? (Actual behavior)\n"
+    -+"> What happened instead? (Actual behavior)\n"
+      "\n"
+     -"What's different between what you expected and what actually happened?\n"
+    -+"> What's different between what you expected and what actually happened?\n"
+    ++"> What did you expect to happen? (Expected behavior)\n"
+      "\n"
+     -"Anything else you want to add:\n"
+    -+"> Anything else you want to add:\n"
+      "\n"
+     -"Please review the rest of the bug report below.\n"
+     -"You can delete any lines you don't wish to share.\n");
+    ++"\n"
+    ++"> What happened instead? (Actual behavior)\n"
+    ++"\n"
+    ++"\n"
+    ++"\n"
+    ++"> What's different between what you expected and what actually happened?\n"
+    ++"\n"
+    ++"\n"
+    ++"\n"
+    ++"> Anything else you want to add:\n"
+    ++"\n"
+    ++"\n"
+    ++"\n"
+     +"> Please review the rest of the bug report below.\n"
+     +"> You can delete any lines you don't wish to share.\n");
+      
+    @@ builtin/bugreport.c: static const char * const bugreport_usage[] = {
+      	return 0;
+     
+      ## t/t0091-bugreport.sh ##
+    -@@ t/t0091-bugreport.sh: test_expect_success 'create a report' '
+    - test_expect_success 'report contains wanted template (before first section)' '
+    - 	sed -ne "/^\[/q;p" git-bugreport-format.txt >actual &&
+    +@@ t/t0091-bugreport.sh: test_expect_success 'report contains wanted template (before first section)' '
+      	cat >expect <<-\EOF &&
+    --	Thank you for filling out a Git bug report!
+    --	Please answer the following questions to help us understand your issue.
+    -+	> Thank you for filling out a Git bug report!
+    -+	> Please answer the following questions to help us understand your issue.
+    + 	Thank you for filling out a Git bug report!
+    + 	Please answer the following questions to help us understand your issue.
+    ++	There are three blank lines after each question; please write your
+    ++	response on the second line and keep a blank line betweeen the question
+    ++	and the answer (beginning and end).
+      
+     -	What did you do before the bug happened? (Steps to reproduce your issue)
+     +	> What did you do before the bug happened? (Steps to reproduce your issue)
+      
+     -	What did you expect to happen? (Expected behavior)
+    -+	> What did you expect to happen? (Expected behavior)
+      
+     -	What happened instead? (Actual behavior)
+    -+	> What happened instead? (Actual behavior)
+      
+     -	What'\''s different between what you expected and what actually happened?
+    -+	> What'\''s different between what you expected and what actually happened?
+    ++	> What did you expect to happen? (Expected behavior)
+      
+     -	Anything else you want to add:
+    -+	> Anything else you want to add:
+      
+     -	Please review the rest of the bug report below.
+     -	You can delete any lines you don'\''t wish to share.
+    ++
+    ++	> What happened instead? (Actual behavior)
+    ++
+    ++
+    ++
+    ++	> What'\''s different between what you expected and what actually happened?
+    ++
+    ++
+    ++
+    ++	> Anything else you want to add:
+    ++
+    ++
+    ++
+     +	> Please review the rest of the bug report below.
+     +	> You can delete any lines you don'\''t wish to share.
+      
+
+base-commit: 724518f3884d8707c5f51428ba98c115818229b8
+-- 
+2.50.1
+
