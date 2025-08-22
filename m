@@ -1,86 +1,85 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FF3B663
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 12:22:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553042765ED
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 12:22:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755865331; cv=none; b=tyXs7KvM78oXRo4zbXtDEMkpHveC6n+CCFe09SeNxoaUaLmWQulaXVIYebrsgGgy8mPpOwagIVLaFD+QMj4fsZcUYsU7IYi5/r2ph3dPmtu7/FSxicOHmKpFjWTgw5pRr35HvFIyxwjcnrDKY95N/HkeaMf/4v6cmVpDauKtxWE=
+	t=1755865341; cv=none; b=aft+HmLBqZCvPLulKGZfQj7FgHFJeO9teYEYwEqT6QPVnpDSv+RYzpEtQW/ZT4xsBSvxZ9OVQ7rFju0aFNiD0pLFqZ4nSQW6LK9lbPmeueFAGxNm7Ap3+1/g550Lz2QWPaqNtSg1xuCvOOcNaLskf27VVbQD/uiv08pRCadApR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755865331; c=relaxed/simple;
-	bh=3bgeCGEpgdEAAcPXz2eR2TsPl/crOO+w6qam73BYckk=;
+	s=arc-20240116; t=1755865341; c=relaxed/simple;
+	bh=or9IWd8CWtjOIWYa5VEB7vXX+C1GaVO4GJ6nYkSsRZo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WcuZq92/jtCIOdvBxrn2JtIQbEVEl+rc5B+zzynjbKchOAIRqKiVABWl3kvp6w5H0MUgm29OFfh36EuUWfq2TjGtd6uPd7d+0ulFJ90YPcpOxPx+12+1XAOmCNXbg1/IxtQAq5Tf/Li/JKKnhtmXjZqBVhVPySEqE9Z5M378ehE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QDsh1xbU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ET0xhq5D; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=rM4QdNBq5CRsPYu32/0PQyTsYtLDpkhGDGzoVNe9NiOfw6pMdLERiAkeVUZMJ1RO4QKuc8W9asEuLOQY05qXkeT6SFXBc8ILBMGcDxxreUBlm96QUCH3f2KdmHDkfMLj8BSJ52EeYBy5HZgAz4ZKEckWpiAO8QoiXYIAnIIrZSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ol5XkYYY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bWD1FLmH; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QDsh1xbU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ET0xhq5D"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 68D771400898;
-	Fri, 22 Aug 2025 08:22:08 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ol5XkYYY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bWD1FLmH"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 58384EC00CE;
+	Fri, 22 Aug 2025 08:22:18 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 22 Aug 2025 08:22:08 -0400
+  by phl-compute-09.internal (MEProxy); Fri, 22 Aug 2025 08:22:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1755865328;
-	 x=1755951728; bh=lM2p0Oc/h07gP3iCuPIY2ap/i84qVydtUfX7TJqBgT4=; b=
-	QDsh1xbUrbKn7+uepf/3HlK//3dRVETzkBausxWlM2i4X1qXjHSGo9pwMDz8oViW
-	CpalusPbhOumUCYI1bGiDi8IJZmFIbvNRckJt20XS7Nw9VSTh4CBNev1Z6wECBHt
-	9g+wMpyrhD4v/s7eXwQB9mUjBxaUpU26YFzHUstoArvT+F38sdrmNPhu+J8qDIos
-	EkQ5hgUzG1B4nkAb255qtJkYnvUZzN/4IlryHJrEHSVHT4Jm9ECJpIHNrvBABQH4
-	56xNqhJWPV5rHQvbA2V6QvpZZ7YFtfzSs4hq17z0lipVJY7aXzow8stmsC9aklIO
-	Uw0EkcNukYuN7iSq+oEBuw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1755865338;
+	 x=1755951738; bh=QReALSWvnt441DBDfYSqpMFcplt3D0Wdao9pEQu3W7g=; b=
+	Ol5XkYYYOo3VjXPFj2RDVFP6d0iAzG/KWumlXQOY3HJi5pEBTqXhwYiR3Dx7UNU/
+	Mm+GhEy7AAVP4rM6GBkqcyCgQ5wCtXT829KOpWL24SBLZMn6Q467YsEXN8fXIR+P
+	Opl+Phbg+cEGGVHHLLdC6oY6TQFkXtvoll5+v9+goEBtTGMjrrBSTpHDGmnDNkf4
+	vOYko2AEB13nPUHGsnjKfvLfQhfE5gLtjx0t54ozGWlKDlwfi+6VdMTYi95SqQXE
+	Htf4ryl/KCdDGQiiVQBzITPAWVv5pksXrdPEX3/zcWE+1IDt/7KLyDlouUCre71R
+	6b6UsruZH6iq2g8S67Oe3A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755865328; x=
-	1755951728; bh=lM2p0Oc/h07gP3iCuPIY2ap/i84qVydtUfX7TJqBgT4=; b=E
-	T0xhq5D4GskU21JaqYK1oT0w+DhTrBs28x8cS3ESOkfQ2h334ePfjZiWyTWSqoui
-	X/velsZaU4s7bsQhSLuo/LCDr0n1njqFu+3zsJLyf5leVja3pSUnee+shzCavbNr
-	yfcX+qccS5nm2Bo5oEB3go+ZJoKrL20KajcHGYWeNpdCw5peDwmxF+rBdWo8Keuj
-	QElCxONexR2PQmJP7PV5DAQrpWNZbwczF/oVrs+mxD6HslO9DpDpHnujzcT6yWwm
-	2HWWwbFw+vKVdH3RG768UDSmf0VlYELOLKtZmSKNMBlTcssdbZitrJj3EywJ05mO
-	ndh8gqam38PkrLM/5IEvg==
-X-ME-Sender: <xms:8GCoaK1emsq3EjFzsRsii8DzWFoGUYBpO3Jksp25pkz81v9VLeDHxQ>
-    <xme:8GCoaNSzjnZAB7IenucevXczP_966HDxvIixU0o7_LVoiLy8vGBnf8lUqNMEp82tM
-    4Co9ji3_HrweLaBOQ>
-X-ME-Received: <xmr:8GCoaEtSnXcZM9o4VCYl7DzOsdfjYbhoFtbE8VUAVs8HAXj8QmopC4ObAUhH1YnRt0N4QcTFVSANifsjI5eXZ0XeFSkL8IdYItu-rUgz>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755865338; x=
+	1755951738; bh=QReALSWvnt441DBDfYSqpMFcplt3D0Wdao9pEQu3W7g=; b=b
+	WD1FLmHP9hy1rlPDFJyQwk+1DVXBPDNtlofAX0E8ZHKaPiZHu5zqyU3G8rE3ycw2
+	nlaSs38G9vfWfQpBSUVd2tOT8nuh3FM7cblFcOCwJiVLkf/UiX+gw5kumTvk2kNn
+	TRJ9yJkmD/VbElFma1Ozh4ohpbUHSrzJGJaMdj7kXqmrBOah0lUQm+veAb9+Hh2M
+	GEG75q04Wu4dCuL07L5ZFTTcQuvrK23JV17ynPrYVch/tj61jpoZ8PyOBLaIKalq
+	Sa169pKF/C/zBpFyGWiRWGkAsFOik2ghZhe95q257cd3dLKMoZk2PiC1OzUM+SSj
+	476jGEH/05OV72NVKSYGw==
+X-ME-Sender: <xms:-mCoaG1RSKEyKLOG4HDKCyBb9Q6LphfG_VstCzcte77p0ubkaYliHQ>
+    <xme:-mCoaJSPt2_8Mb5_S8y8sGtLf2ZShJX3rOLQiHAlc4Z9YDz7SSSJc8kUDJWyXjUAk
+    SOKA5iX6nPLiBicZg>
+X-ME-Received: <xmr:-mCoaAtjcViqcSFbayvo5cYtnd3r-pZt-k-owsUjb55ElbGGjFG5sDHQuKoD4dFFYXLL-EXmW4bJM1q77KkQ0X_C71gGuCR_lB6YQ8CE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieefjeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
     thhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
     hvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:8GCoaKbp1RbWsAU4OAAqeXuUZnQGduiJsDQZ0CPoUiSE7pcdyblCbg>
-    <xmx:8GCoaBuLn9_nKEy-4l_3Zim1z7kHECSG_O6lGNrQPDMb73nGqYTvsg>
-    <xmx:8GCoaEEvYRAALtnnusx7TgBygUFSoxUjUDf6w1c1HqNM-3kSw3Ajkw>
-    <xmx:8GCoaEx8k-m4XfD-0-RG6IYSKL3jhHMUVHDxziaEECvGL4OpiqILHA>
-    <xmx:8GCoaFFO1Ftq3z338Z8082QqZueT27tDYbXPRZZWp3n1Qyzr54Ag9ND9>
+X-ME-Proxy: <xmx:-mCoaGaLLUmYSEWkVdtcqmsbycDmmTD2VASBeF0q9StfqLtvwshjeg>
+    <xmx:-mCoaNvpQaf6mcbKwFaTkBfeD5eLdVHHfQbA16kv1Uo89cRWFBnIXg>
+    <xmx:-mCoaAEHpMp2_xbj8d8CKO0QpwpgIwddqHEYThoUfGLpUSxMqWOCEg>
+    <xmx:-mCoaAzZ36q_WP6ZN-Iup7KIZybHoRQ6XO3O3a1FYZKLmU-CxWA2MQ>
+    <xmx:-mCoaAbBmDYdAigexW-Tkw_W_d0yYofJHzfrvB7uLQxA5JE3AqL1FDdC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 22 Aug 2025 08:22:07 -0400 (EDT)
+ 22 Aug 2025 08:22:17 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7a6dadc7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 22 Aug 2025 12:22:06 +0000 (UTC)
-Date: Fri, 22 Aug 2025 14:21:58 +0200
+	by mail (OpenSMTPD) with ESMTPSA id ecf7f131 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 22 Aug 2025 12:22:16 +0000 (UTC)
+Date: Fri, 22 Aug 2025 14:22:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: "D. Ben Knoble" <ben.knoble@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH RFC 10/11] add-patch: add support for in-memory index
- patching
-Message-ID: <aKhg5o-dwp2UDZ4y@pks.im>
+Subject: Re: [PATCH RFC 11/11] builtin/history: implement "split" subcommand
+Message-ID: <aKhg8q-AAlsGDvFS@pks.im>
 References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
- <20250819-b4-pks-history-builtin-v1-10-9b77c32688fe@pks.im>
- <CALnO6CAPugqDC8sGO1Si=5Wk-pz52BF84Ai7ZQjwb3vLMs6A=A@mail.gmail.com>
+ <20250819-b4-pks-history-builtin-v1-11-9b77c32688fe@pks.im>
+ <CALnO6CBuwDVMZ-QTay+PUiXKsWMsABJcs1pAB=uUXf7-DJ4Mnw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,109 +89,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CAPugqDC8sGO1Si=5Wk-pz52BF84Ai7ZQjwb3vLMs6A=A@mail.gmail.com>
+In-Reply-To: <CALnO6CBuwDVMZ-QTay+PUiXKsWMsABJcs1pAB=uUXf7-DJ4Mnw@mail.gmail.com>
 
-On Wed, Aug 20, 2025 at 05:15:03PM -0400, D. Ben Knoble wrote:
-> On Wed, Aug 20, 2025 at 4:17 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > diff --git a/add-patch.c b/add-patch.c
-> > index 1bcbc91de9..adef20c02b 100644
-> > --- a/add-patch.c
-> > +++ b/add-patch.c
-> > @@ -1849,9 +1853,12 @@ static int patch_update_file(struct add_p_state *s,
-> >                                          NULL, 0, NULL, 0))
-> >                                 error(_("'git apply' failed"));
-> >                 }
-> > -               if (repo_read_index(s->r) >= 0)
-> > +               read_index_from(s->index, s->index_file, s->r->gitdir);
-> > +               if (read_index_from(s->index, s->index_file, s->r->gitdir) >= 0 &&
-> > +                   s->index == s->r->index) {
-> >                         repo_refresh_and_write_index(s->r, REFRESH_QUIET, 0,
-> >                                                      1, NULL, NULL, NULL);
-> > +               }
-> >         }
+On Wed, Aug 20, 2025 at 05:27:32PM -0400, D. Ben Knoble wrote:
+> On Wed, Aug 20, 2025 at 5:05 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+> > index 6e8b4e1326..f0f1f2a093 100644
+> > --- a/Documentation/git-history.adoc
+> > +++ b/Documentation/git-history.adoc
+> > @@ -47,6 +48,26 @@ reorder <revision> (--before=<revision>|--after=<revision>)::
+> >         commit. The commits must be related to one another and must be
+> >         reachable from the current `HEAD` commit.
+> >
+> > +split <revision> [--message=<message>] [--] [<pathspec>...]::
+> > +       Interactively split up the commit into two commits by choosing
+> > +       hunks introduced by it that will be moved into the new split-out
+> > +       commit. These hunks will then be written into a new commit that
+> > +       becomes the parent of the previous commit. The original commit
+> > +       stays intact, except that its parent will be the newly split-out
+> > +       commit.
+> > ++
+> > +The commit message of the new commit will be asked for by launching the
+> > +configured editor. Authorship of the commit will be the same as for the
+> > +original commit.
+> > ++
+> > +If passed, _<pathspec>_ can be used to limit which changes shall be split out
+> > +of the original commit. Files not matching any of the pathspecs will remain
+> > +part of the original commit. For more details about the _<pathspec>_ syntax,
+> > +see the 'pathspec' entry.
 > 
-> Is this call to read_index_from duplicated? I don't see anything that
-> indicates that would be desirable here.
+> Glossary entry?
 
-Indeed, good catch!
+Yup.
 
-> > @@ -1922,3 +1931,99 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
-> >         add_p_state_clear(&s);
-> >         return 0;
-> >  }
-> > +
-> > +int run_add_p_index(struct repository *r,
-> > +                   struct index_state *index,
-> > +                   const char *index_file,
-> > +                   struct interactive_options *opts,
-> > +                   const char *revision,
-> > +                   const struct pathspec *ps)
-> > +{
-> > +       struct patch_mode mode = {
-> > +               .apply_args = { "--cached", NULL },
-> > +               .apply_check_args = { "--cached", NULL },
-> > +               .prompt_mode = {
-> > +                       N_("Stage mode change [y,n,q,a,d%s,?]? "),
-> > +                       N_("Stage deletion [y,n,q,a,d%s,?]? "),
-> > +                       N_("Stage addition [y,n,q,a,d%s,?]? "),
-> > +                       N_("Stage this hunk [y,n,q,a,d%s,?]? ")
-> > +               },
-> > +               .edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
-> > +                                    "will immediately be marked for staging."),
-> > +               .help_patch_text =
-> > +                       N_("y - stage this hunk\n"
-> > +                          "n - do not stage this hunk\n"
-> > +                          "q - quit; do not stage this hunk or any of the remaining "
-> > +                               "ones\n"
-> > +                          "a - stage this hunk and all later hunks in the file\n"
-> > +                          "d - do not stage this hunk or any of the later hunks in "
-> > +                               "the file\n"),
-> > +               .index_only = 1,
-> > +       };
-> > +       struct add_p_state s = {
-> > +               .r = r,
-> > +               .index = index,
-> > +               .index_file = index_file,
-> > +               .answer = STRBUF_INIT,
-> > +               .buf = STRBUF_INIT,
-> > +               .plain = STRBUF_INIT,
-> > +               .colored = STRBUF_INIT,
-> > +               .mode = &mode,
-> > +               .revision = revision,
-> > +       };
-> > +       struct strbuf parent_revision = STRBUF_INIT;
-> > +       char parent_tree_oid[GIT_MAX_HEXSZ + 1];
-> > +       size_t binary_count = 0;
-> > +       struct commit *commit;
-> > +       int ret;
-> > +
-> > +       commit = lookup_commit_reference_by_name(revision);
-> > +       if (!commit) {
-> > +               err(&s, _("Revision does not refer to a commit"));
-> > +               ret = -1;
-> > +               goto out;
-> > +       }
-> > +
-> > +       if (commit->parents)
-> > +               oid_to_hex_r(parent_tree_oid, get_commit_tree_oid(commit->parents->item));
-> > +       else
-> > +               oid_to_hex_r(parent_tree_oid, r->hash_algo->empty_tree);
-> > +
-> > +       strbuf_addf(&parent_revision, "%s~", revision);
-> > +       mode.diff_cmd[0] = "diff-tree";
-> > +       mode.diff_cmd[1] = "-r";
-> > +       mode.diff_cmd[2] = parent_tree_oid;
-> > +
-> > +       interactive_config_init(&s.cfg, r, opts);
-> > +
-> > +       if (parse_diff(&s, ps) < 0) {
+> > +       /*
+> > +        * But we do ask the user for a new commit message. This is in contrast
+> > +        * to the second commit, where we'll retain the original commit
+> > +        * message.
+> > +        */
 > 
-> I noticed run_add_p() calls discard_index() right before parse_diff()
-> [but it also reads/refreshes the index there]. Sounds like that's not
-> something we need for in-memory indices?
+> Interesting. I can see using the original as the template for _both_,
+> or the first instead of the second. jj's split works a little
+> differently (especially with their notion of descriptions), so I can't
+> use them as a reference for the behavior.
+> 
+> I suppose this is one of those "everybody has their preference"
+> things, but I think giving the message in both new commits as the
+> template gives splitters the most information available when writing
+> the message. (Of course, in my editor, I can presumably do something
+> like ":Git show -s <split-commit-ish>" if I want.)
 
-No. We don't want to discard contents, as it might even be that somebody
-has an index that we want to apply multiple revisions to. Discarding it
-is not sensible in that case.
+I think giving only the split-out changes is a reasonable default, but I
+can totally see that we might eventually want to add a command line
+option to change the behaviour.
+
+> > +       if (!commit_message) {
+> > +               split_message_path = repo_git_path(repo, "SPLIT_MSG");
+> > +               strbuf_addch(&split_message, '\n');
+> > +               strbuf_commented_addf(&split_message, comment_line_str,
+> > +                                     _("Please enter a commit message for the split-out changes."));
+> > +               write_file_buf(split_message_path, split_message.buf, split_message.len);
+> 
+> I also noticed the commented template differs substantially from the
+> regular commit template, and my editor doesn't recognize "SPLIT_MSG"
+> as a commit message file.
+> 
+> The latter can be fixed elsewhere, but for the former: perhaps it's
+> worth using the usual template with the wording here prepended?
+> Respecting commit.verbose / commit.status, too.
+
+Yeah, that's something I wanted to get around to, but haven't yet. I
+also noticed that it's not exactly easy to figure out what you're
+currently editing without that lack of context.
+
+I'll include that in v2.
+
+> BTW, if I quit the editor with an error here, I'm left back where I
+> started. So I'd have to re-stage changes if I wanted to split again,
+> which is a bit different from how interactive rebase will leave me
+> with the partially staged changes. Obviously that's harder to do with
+> the in-memory index + automatic re-application of remaining patch when
+> finished, so maybe a note in the docs about this being "all or
+> nothing"?
+
+Yeah, fair. I guess adding a note for now is the best way to go about
+it, but this is certainly something we can and should iterate on in the
+future.
 
 Patrick
