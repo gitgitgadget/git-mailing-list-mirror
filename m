@@ -1,68 +1,72 @@
-Received: from mail-pl1-f193.google.com (mail-pl1-f193.google.com [209.85.214.193])
+Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DDD21A92F
-	for <git@vger.kernel.org>; Fri, 22 Aug 2025 08:22:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C75321256B
+	for <git@vger.kernel.org>; Fri, 22 Aug 2025 08:23:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755850978; cv=none; b=XNMpTcLjn6lIh0j3OJPGojlkTyirQa64361n52BAtTgO0IqXn6I4WIb58cVJ8Mqno5h/hvvtg8aMqpjryUyLG6Pfk7Ty2YV4Q6TJYB0xZp36x2vfzzsClDWvV6ajK43n8EUM+2/tF4oT8iA0h+0ZC0/iWQ82FXm0nLu0HpIKi84=
+	t=1755850984; cv=none; b=meNDP6d0j0cVkQS0FLg6jeQRP5fcZIni1K6TalSZy6YiMQfJzNeMRR/WkjqeC+Ddco+njjp9evcxp7zySmge/xgOy3gtqWbBB4E28Pe+fC2rKIuL70mQYcjUcqEcuu8bP64ZtYVa/3E/+zf0FCBlscKqJv85pHAE5T3zSgBC33k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755850978; c=relaxed/simple;
-	bh=aEzn0IKqVM6xY9ib7b3ZHZldvjnvDaD5hAz95NC6nv4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CdEG2Ne1D0MoY1kPD4r+Qo3ApoQGzia0VqpvwyyBabe7VqTYeodKEgQ+/5MRK7ZLDeYg9iMkeqN2HpIusIL5S4xz2Eph3LuLuafvPd1P2eLPz10ZiirmlLq9E+hYBZgU9YDRiFgCWhYZC232U2nD9k/7AWUAnoU83o+vgZMg//w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YN2zIxHp; arc=none smtp.client-ip=209.85.214.193
+	s=arc-20240116; t=1755850984; c=relaxed/simple;
+	bh=gnokO4I1l0J2P7NhObxtrlsBDdErOU2RXyKdsg6Ybgw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=oe1/8FxROnaEj9gSsLLo0+gLKk5Q504lIeX+GJvQYvxWaTZL3dEh3VOngQFvf6SgezOiaOkMnlT62aYVrDE1cBMaP/KbvFM00ZBKaolDyh0PEg0SYZo/FuluQWr/8T9B0V6ofcrAPL77RP5UvrXRybPCQ5j4jZ0DuDXoMpBT/hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sxft0J8z; arc=none smtp.client-ip=209.85.214.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YN2zIxHp"
-Received: by mail-pl1-f193.google.com with SMTP id d9443c01a7336-2445806d44fso15357145ad.1
-        for <git@vger.kernel.org>; Fri, 22 Aug 2025 01:22:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sxft0J8z"
+Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-2461864f7f8so12068645ad.2
+        for <git@vger.kernel.org>; Fri, 22 Aug 2025 01:23:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755850976; x=1756455776; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4fNCT58k/my+QCdopiXS4QQfQM4qUwmIuE3uOP2SW2k=;
-        b=YN2zIxHprZIqK5x7J6FdVEviaHDvq+jnSs6q7wZVmju9nsy94zbDQnk3PnWj3s5iCo
-         IuBiEH5vcagNhMkq4J59IUriJisztZqEUUZOxEZ1ruSHPqgJsxk4JUctzrEdqfQ3zTMT
-         5bxef0INashf9KWj3dpdSOt2wgq0pWKSzL9xz1230Ghgm31BJVndl+YIyGknrDjcrJvZ
-         QCkgd6uaQQWSbuM2qtrCDWXyCwll35T0p3k/oE+peZeOHWlidn3gu3fJVZesRzno70pp
-         TS3VitVsRnQgS6KebcONPbUgYJxMVV3UHVJlmprgWzvAybDOcnj/eJb/DZZKPFOK0O9p
-         Hp2Q==
+        d=gmail.com; s=20230601; t=1755850982; x=1756455782; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DfArscDV86tdNAQeK76d1K6LVL7eobsjqgHQjwd0oQ4=;
+        b=Sxft0J8zsgWL/gcQ54x7fO0FktifYHdQIIdc6CogHPay3pUL9558ru1CQX6f/i5Ipa
+         Vz005TuKOixhGzbdfq3YIgF9cFv9kiXH8gMno405OfL33nkUTLv9P85VsTCOmTPB5por
+         3nD2jPvCbXWYFn6XlXmxJUrhePFu1vykdxXBpJCnz3FxRfEeU1FEptcpJmub2UnUuNn6
+         7NWzncZsuaEi1Q+ixxP5iw+QD00yLB4wNz0oKewwcpjbEEtAv3Hm5Kd5MHEA03aw/aGu
+         lOCAPfYfLArh3UR6OZQeKZhIiCy8cXuKQ5dIKXat8Jrcdhd5hpeDvoCCzvhb0ND7ORS0
+         XpDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755850976; x=1756455776;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4fNCT58k/my+QCdopiXS4QQfQM4qUwmIuE3uOP2SW2k=;
-        b=eXdzrScJMa6elAzInycGitzC9bixwAfxOHcrh+wizgdkPnLTRmWWO2PWJ4aLt7H0lD
-         OGd097A6QX5XIscOSGh9qZcOyXRZeY8bOOCFUKUStoLCccpr+SdHH0nhF0FDZSiBVjH+
-         8bPqff21eAK8bjqaIdgvAD8J+UiMsMVeBBd4nPtNxGEqVuifgv/pgkBxJNpAUnKnHw3s
-         dJ2gFwPfplMEZ+4LR58UOf7DcmaYnheXD3utOt4nkmmNAvvouBCllWzIrae0h4Rq2X3s
-         c6PViUGjQklfnsYPvd+goypWq4YPEpfsWfDcJQ6OWLLaA195rhEzeWUZp+zEpynxFKG3
-         Ny5A==
-X-Gm-Message-State: AOJu0YyGj4zKEtzIHmzWYsoTPQ0iC/DDtzvAR3J7cBU6KuNzqLkZaIND
-	wO6mzvf0L8JnaoMbAleqlB3kDC3C8vF4NKMpSetaVcF9hBRju5yCBAePxHSsZVej
-X-Gm-Gg: ASbGnctwf3bNgPHUWAOmBMsV2EbBOmxLToNRlV9LcJxwj5OOcGrqNcoAIMrU6qjVWEJ
-	CeuaOza7DIRxq1AMPTKwCop4nKUJ1CkT7Wej66En0Wl66tTYl1nangUssgeNCPrbsp/q9jsS8dN
-	vBNevWF2nXIhYrtORRya8WvfMKKXoedyCHs2qWp+bZnxCXeoCi93g1NfVU9TclbiMOauAjuBTVg
-	9DTWZ565GpRWga9j+Z07yIeHRvrG90lHtPnBtpCOvkN/3vMtg8dP1+Dpd44w1Z9OYVRGrFc+Xu7
-	lxGyhNWZ5nyksPemf1jp7QGh22aXc0FdVxahjAjVDd0/i09tsftm6gaBcG+z+1Iy0VZ42IMKVwW
-	E0tNrfHvT39qydVJ2DKUR8MQoTykNV+ytbA==
-X-Google-Smtp-Source: AGHT+IF1VMlawDOELnJEGFOp8ZdJNbG0L5JwsudedpEShctvAGl13nEsXmsCMH19ByjiNyKOdA4emQ==
-X-Received: by 2002:a17:902:c404:b0:246:464d:1194 with SMTP id d9443c01a7336-246464d13f7mr15803585ad.2.1755850975904;
-        Fri, 22 Aug 2025 01:22:55 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755850982; x=1756455782;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DfArscDV86tdNAQeK76d1K6LVL7eobsjqgHQjwd0oQ4=;
+        b=j5ONAw5n63sTWgMxQdTf7j4PdcsU2Gmui3GmA/hftlvU+wZGzU21FMPH5Yf3izCX4N
+         MkC437a5I5GWS5TorSpzGjBt4CRf7f/2p7ajRoQjlQZirXsjIbmNP/reVKHyK6n1BUTA
+         swqGA2jjiS1iW8PFOFBa9I86CZlgWIgxwxAj+3dFwDo97prUn0l1o5q/dUDpoZBE7Yzq
+         HsdWKSVD73CBv9vSlsM7TRftkghX7jocDN8gQYqpyt+4ak0Z9RX/rnwIORCkYAcYT2Lv
+         Q/ttTro5IoDLuubf7uPCTIQl7yREhMblS7pOXv614YJVitteMItRRYg+6I0YJiCaHLQb
+         TwfA==
+X-Gm-Message-State: AOJu0YyclZ+BpnNeG+UrfmO2MAGL7OQpk3CFJhOVw56DYebkMC5biq3N
+	xlIUmZhqHj5OKd4mNk7mvfB4sYu2ZYhza0zubRxIDCOkjhXVI6irmQJBL9ZPNydb
+X-Gm-Gg: ASbGncsHDU4lxe1G+1k/b37PldJBjPOT+liijdcprCdDYVUGNieaqf/Dtwxo74umznD
+	LC1/6Fh9TN4eo+kUZbbL7b/GFj52j+cUpjnEoXJYPCvCulbWGy0doAy71j+bjA/si3VFaVDnVul
+	9yVgRBsvqh5k4lQVzpPxGpW3qLVgyQ0kYdJ4ivxluvvcQ1frfoXbG9KUv0W9X/J+Y7tt4sOJBKy
+	XiR9n0AtOiRrlKFlQwLxdI3bAOFIfrJuMjhG9DKgS/lnBJTqjw5vof4d9QuzpvNb7qW9LF0zy/k
+	+4MPGxh8rt8yjoIOSGoUmwfmA1+Iz8UWgFkKFkljiS2/JSEC4UaMw8fUvoEJiRBEqxY61pwvoOr
+	iOprK74PDQOHUb3RohuBskIcm9cPlH8viFg==
+X-Google-Smtp-Source: AGHT+IFeeaq4djOc0LVP1tEL46pnS9vSqsJFVF14s17bGrjPS3ohedaM/aXzFfLr4ltn1Sqo+EX9mA==
+X-Received: by 2002:a17:902:ef01:b0:240:8ec:fe2 with SMTP id d9443c01a7336-2462ee0bcb8mr30633925ad.4.1755850981584;
+        Fri, 22 Aug 2025 01:23:01 -0700 (PDT)
 Received: from ayush-sharma.. ([103.196.213.181])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed4c749fsm76547925ad.91.2025.08.22.01.22.54
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed4c749fsm76547925ad.91.2025.08.22.01.23.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 01:22:55 -0700 (PDT)
+        Fri, 22 Aug 2025 01:23:01 -0700 (PDT)
 From: monarch <ayusharmagsoccontri@gmail.com>
 X-Google-Original-From: monarch <ayushoffinfo17@gmail.com>
 To: git@vger.kernel.org
-Cc: monarch <ayushoffinfo17@gmail.com>
-Subject: [PATCH] config: add "hostname" condition to includeIf
-Date: Fri, 22 Aug 2025 13:52:48 +0530
-Message-ID: <20250822082249.93127-1-ayushoffinfo17@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Start 2.52 cycle, the first batch
+Date: Fri, 22 Aug 2025 13:52:49 +0530
+Message-ID: <20250822082249.93127-2-ayushoffinfo17@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250822082249.93127-1-ayushoffinfo17@gmail.com>
+References: <20250822082249.93127-1-ayushoffinfo17@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,90 +75,101 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Teach "includeIf" to include configuration based on the machine's hostname,
-as returned by gethostname(2).
+From: Junio C Hamano <gitster@pobox.com>
 
-Example:
-
-    [includeIf "hostname:work-laptop"]
-        path = ~/.gitconfig.work
-
-    [includeIf "hostname:home-pc"]
-        path = ~/.gitconfig.home
-
-This allows users to write host-specific configuration without separate branches.
-
-Signed-off-by: monarch <ayushoffinfo17@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- config.c | 37 +++++++++++++++++++++++++++++++------
- 1 file changed, 31 insertions(+), 6 deletions(-)
+ Documentation/RelNotes/2.52.0.adoc | 58 ++++++++++++++++++++++++++++++
+ GIT-VERSION-GEN                    |  2 +-
+ RelNotes                           |  2 +-
+ 3 files changed, 60 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/RelNotes/2.52.0.adoc
 
-diff --git a/config.c b/config.c
-index e0ff35d426..dbc1a2bc75 100644
---- a/config.c
-+++ b/config.c
-@@ -7,6 +7,7 @@
-  */
+diff --git a/Documentation/RelNotes/2.52.0.adoc b/Documentation/RelNotes/2.52.0.adoc
+new file mode 100644
+index 0000000000..1919e039bd
+--- /dev/null
++++ b/Documentation/RelNotes/2.52.0.adoc
+@@ -0,0 +1,58 @@
++Git v2.52 Release Notes
++=======================
++
++UI, Workflows & Features
++------------------------
++
++
++Performance, Internal Implementation, Development Support etc.
++--------------------------------------------------------------
++
++ * string_list_split*() family of functions have been extended to
++   simplify common use cases.
++
++ * Arrays of strbuf is often a wrong data structure to use, and
++   strbuf_split*() family of functions that create them often have
++   better alternatives.  Update several code paths and replace
++   strbuf_split*().
++
++ * Revision traversal limited with pathspec, like "git log dir/*",
++   used to ignore changed-paths Bloom filter when the pathspec
++   contained wildcards; now they take advantage of the filter when
++   they can.
++
++Fixes since v2.51
++-----------------
++
++Unless otherwise noted, all the changes in 2.51.X maintenance track,
++including security updates, are included in this release.
++
++ * During interactive rebase, using 'drop' on a merge commit lead to
++   an error, which was incorrect.
++   (merge 4d491ade8f js/rebase-i-allow-drop-on-a-merge later to maint).
++
++ * "git refs migrate" to migrate the reflog entries from a refs
++   backend to another had a handful of bugs squashed.
++   (merge 465eff81de ps/reflog-migrate-fixes later to maint).
++
++ * "git remote rename origin upstream" failed to move origin/HEAD to
++   upstream/HEAD when origin/HEAD is unborn and performed other
++   renames extremely inefficiently, which has been corrected.
++   (merge 16c4fa26b9 ps/remote-rename-fix later to maint).
++
++ * "git describe" has been optimized by using better data structure.
++   (merge 08bb69d70f rs/describe-with-prio-queue later to maint).
++
++ * "git push" had a code path that led to BUG() but it should have
++   been a die(), as it is a response to a usual but invalid end-user
++   action to attempt pushing an object that does not exist.
++   (merge dfbfc2221b dl/push-missing-object-error later to maint).
++
++ * Various bugs about rename handling in "ort" merge strategy have
++   been fixed.
++   (merge f6ecb603ff en/ort-rename-fixes later to maint).
++
++ * Other code cleanup, docfix, build fix, etc.
++   (merge 823d537fa7 kh/doc-git-log-markup-fix later to maint).
++   (merge cf7efa4f33 rj/t6137-cygwin-fix later to maint).
++   (merge 529a60a885 ua/t1517-short-help-tests later to maint).
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index 64cbc58335..b16db85e77 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -1,6 +1,6 @@
+ #!/bin/sh
  
- #include "git-compat-util.h"
-+#include <unistd.h>
- #include "abspath.h"
- #include "date.h"
- #include "branch.h"
-@@ -391,23 +392,47 @@ static int include_by_remote_url(struct config_include_data *inc,
- 					     inc->remote_urls);
- }
+-DEF_VER=v2.51.0
++DEF_VER=v2.51.GIT
  
-+static int include_by_hostname(const char *cond, size_t cond_len)
-+{
-+    char actual_hostname[1024];
-+    struct strbuf target_hostname = STRBUF_INIT;
-+    int ret = 0;
-+
-+    // Make sure the call to gethostname is correct and its return value is checked.
-+    if (gethostname(actual_hostname, sizeof(actual_hostname)) != 0)
-+        return 0; // If it fails, the condition is false.
-+
-+    strbuf_add(&target_hostname, cond, cond_len);
-+
-+    // The core of the logic: strcmp returns 0 when strings are equal.
-+    if (strcmp(actual_hostname, target_hostname.buf) == 0)
-+        ret = 1; // Success, the hostnames match!
-+
-+    strbuf_release(&target_hostname);
-+    return ret;
-+}
-+
- static int include_condition_is_true(const struct key_value_info *kvi,
--				     struct config_include_data *inc,
--				     const char *cond, size_t cond_len)
-+	struct config_include_data *inc,
-+	const char *cond, size_t cond_len)
- {
--	const struct config_options *opts = inc->opts;
-+const struct config_options *opts = inc->opts;
-+
-+
- 
- 	if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len))
- 		return include_by_gitdir(kvi, opts, cond, cond_len, 0);
- 	else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_len))
- 		return include_by_gitdir(kvi, opts, cond, cond_len, 1);
--	else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, &cond_len))
-+	else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, cond_len))
- 		return include_by_branch(inc, cond, cond_len);
- 	else if (skip_prefix_mem(cond, cond_len, "hasconfig:remote.*.url:", &cond,
--				   &cond_len))
-+  &cond_len))
- 		return include_by_remote_url(inc, cond, cond_len);
-+	else if (skip_prefix_mem(cond, cond_len, "hostname:", &cond, &cond_len))
-+		return include_by_hostname(cond, cond_len);
- 
--	/* unknown conditionals are always false */
-+/* unknown conditionals are always false */
- 	return 0;
- }
- 
+ LF='
+ '
+diff --git a/RelNotes b/RelNotes
+index 48f15770a4..6d16c0077a 120000
+--- a/RelNotes
++++ b/RelNotes
+@@ -1 +1 @@
+-Documentation/RelNotes/2.51.0.adoc
+\ No newline at end of file
++Documentation/RelNotes/2.52.0.adoc
+\ No newline at end of file
 -- 
 2.43.0
 
