@@ -1,260 +1,188 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0919115530C
-	for <git@vger.kernel.org>; Sat, 23 Aug 2025 18:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4303B137C52
+	for <git@vger.kernel.org>; Sat, 23 Aug 2025 18:30:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755972356; cv=none; b=hx/ma2rouZoo0i4eutdOZzo2Qsy2G7sKO8WFlMPb48EMI2ZNC4WUU7IFcZ57g7TwOMY5sIZfbLs60fpFCHfdoQ4gWnHyuFUOhqQoyv6mT9rCoRe7BeUTKdnGkT0hUwjZr9Qcjmeb52efaV26zbb+qeMsmQqdvGSlsipPf9hnmf4=
+	t=1755973841; cv=none; b=LNbdaRGMy07VyOS9Q8Xf1uEnnaY90gQ59OUSBMfKBjnSsWJtDYdjx09I3abJkrlrzpSxGUJopS6CZfRg7ko4mA4E9oi0uejwsiQCTltyE245bHwWG1Q5Ss3vuU61xVWa5x3/69hCiaRlQAym52A6Wljr6JL6LA434Y9odW2tve0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755972356; c=relaxed/simple;
-	bh=IDwuLINxNnQkKM8HY3+faI6KMswhH5IJZhLBc6iR5+w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TKsK6IXuJ6kHUcA0nRoIJdLsLq0xHoI7VzYZGRbwkAlot6/UPZ0+F3QF+DoGrcKODrshzVGLh3slTj0T/aEEwA0GbBVZ5NI0rXklxcQf7k1b7zJ3QRg+/q6+i6T///K5KgoUq28Cqacz8/+1yG5E0GGlqve+Kom9GWNqvsYoQwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G7262BDZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jCzZaG5p; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755973841; c=relaxed/simple;
+	bh=liE7fuQzTOOlpvOXVjqelN2HB8nmNJPIpLaefTCFzVY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gBICY0zCwR/AdjFuIZilKcTf/TA/puv89qlMTt1zQvw8IO+kq42C12EZIqxh41L+1j67HFJssYt3Dtllp2zjBP9Uk3VZT4KzatL8V47uS3R2P8EJIyU9QGOw1uUMviLeZQxzFaw4lMGV6+Nzi3U58mo8FXxzcdj+J0K2x4XgUJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E1aZAhCk; arc=none smtp.client-ip=209.85.166.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G7262BDZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jCzZaG5p"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 43B451D00035;
-	Sat, 23 Aug 2025 14:05:52 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sat, 23 Aug 2025 14:05:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755972352; x=1756058752; bh=aUuHOjdPaP
-	Og92ZM/dQUhh4pRHcxND7442zyzw32Uso=; b=G7262BDZtTwV8gRZ3jGBBSh25O
-	kV7cdrY2xjn60ekmpwyaERBFBuk5Y7tz9ICPclguVgnnM8Nu9GjKC2WiHhQaylte
-	qOXrlqEtWWLeLTkJ52fDcDXpbV1tEkJAGKS+fMypMEGglTFfeopNkiQ1DxBD8FdN
-	ZS8qvIs7oxbFP169AuvhyvaMLi2HpWsWqEtrtsI//1JYtTwfTME19CA9lWhiJfTc
-	FNne9BuRBHpouHOP7X4smBATrhcHPBy58JmpKhLx57KBCMghhBY8eUOsFNPehAXa
-	iq3C5j9wKnCHAgtRFjgLTK8oHg66ysuQxbsUAQPvYJV6EQyCUvI/08CqfKsw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755972352; x=1756058752; bh=aUuHOjdPaPOg92ZM/dQUhh4pRHcxND7442z
-	yzw32Uso=; b=jCzZaG5pkxFMOQojw8URhzFfaHfaQOL8eLMzIK8zOoqyImh1M6b
-	WRwaAfdF79Q7W8RA11wK40Hm4BWXfnsd0Am4hjZFlcH38EuuYUll55eErr9Tu89V
-	Uhd9Gy1ZIFp/EiwwN7/vPhg4PRAWso5mWwVUdgeazVrWvNjWJikXAqZij5lE6o/C
-	3ke5RYup+PJ2hqPlHPfkvpMGXIlwG1F2KLQErVIvpusJeP+GZqex2PHZ5bXibnKm
-	DNx40cs3VpYKmslWwarXym0K+EFyz1xDJitP95fHPPCD4N/uHyoRUsJI0PdmX7H/
-	B1KXA4Ysy+NR/77r+9KObW07roJikXg2+OA==
-X-ME-Sender: <xms:_gKqaL25zkbWo61gxyZSyyHfjKiVzheFDKQ4-9cBebH0BF4Prau7PQ>
-    <xme:_gKqaPPXfxuVPLKVIenYIIY9vxz4sWbWY8BmQwPjTj0lg_fzXWJCz27L996sAcadT
-    JLoVsXbutBmJDu93w>
-X-ME-Received: <xmr:_gKqaO0bSdwqfB6iwDSM1qksYiUcPzPV2TGiCQo2EnpKXoXc82rFvBhfFSfzkoVSq1Moyq7G7DQLGVcsQfJQP3sx0-Dd94zOfxLfjc4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieejfeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffgffkfggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepteeijefgieduheffhfetgeeggedtvdefieeiuddvudetkeetgeefteejjefg
-    hfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepvddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestg
-    hruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihl
-    ohhrrhdrtghomhdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtoh
-    epphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegv
-    shgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegtohhnthgrtghtse
-    hhrggtkhhtihhvihhsrdhmvg
-X-ME-Proxy: <xmx:_gKqaG0aAPLBD1soQBkXrcm4QNlZAsC0c9yvoi8lRt6NDtpGJbtDBg>
-    <xmx:_gKqaE99SOCd7zVPZxggbl5uewfCghchd1onoNB5BJBXMaCQfKMFnw>
-    <xmx:_gKqaKY7Wq-zfVENMbXeteDpCHtgm2MppTd3ONmT25rPdCl7mxOf7Q>
-    <xmx:_gKqaLxzff-GN1hnRHW3OjzZ4Gg0RjTiIOnECd_aUyCvjlYxu8DMow>
-    <xmx:AAOqaD8j-Y02AFswpaO62bUoZukFCY87qvICOS2GpuB3PBBXD239zk5y>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 23 Aug 2025 14:05:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  "brian m.
- carlson" <sandals@crustytoothpaste.net>,  Taylor Blau <me@ttaylorr.com>,
-  Christian Brabandt <cb@256bit.org>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,
-  "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Matthias =?utf-8?Q?A=C3=9Fhauer?=
- <mha1993@live.de>,
-  Patrick Steinhardt <ps@pks.im>,  Sam James <sam@gentoo.org>,  Collin Funk
- <collin.funk1@gmail.com>,  Mike Hommey <mh@glandium.org>,  Pierre-Emmanuel
- Patry <pierre-emmanuel.patry@embecosm.com>,  Ben Knoble
- <ben.knoble@gmail.com>,  Ramsay Jones <ramsay@ramsayjones.plus.com>,
-  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v3 06/15] ivec: create a vector type that is
- interoperable between C and Rust
-In-Reply-To: <db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
-	(Ezekiel Newren via GitGitGadget's message of "Sat, 23 Aug 2025
-	03:55:47 +0000")
-References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
-	<pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
-	<db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Sat, 23 Aug 2025 11:05:48 -0700
-Message-ID: <xmqq8qj9vrpf.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E1aZAhCk"
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3e668360ec7so20398445ab.1
+        for <git@vger.kernel.org>; Sat, 23 Aug 2025 11:30:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755973838; x=1756578638; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZjxgvfopAz+a/F/berx3mASZnWo5La07sZXWVx27uKY=;
+        b=E1aZAhCkEOVPSRu+qiJ6Qej651631AbaRelAr97yUfLx2M6vK1HGre9LxhOkRhxxQG
+         W1EHSYYMtYJbhdtwTam91+P7bQhxtJLDE/Y6VgKYNomvgI2gVG0/dEpQ91t+Ju6rinzt
+         dVFcvjECWYQliFsgFZGSkLCTt1JKAPa0fKbb2TXy1kdyrD6chW+sSoJM6TPpJSxYx6W7
+         IyFuGt1wmsog5XVZFAvbu2iEEvyw2iOHmoGB4Lo9AgLUitfOdnx7meKszqFFUAaYp1WR
+         b3jB69Yex4HEE2/yXrwwfqHG3mYsVaINEC9nIrvIgqr/ig7TgJxIMTNHlh/yOL54RMMR
+         cNaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755973838; x=1756578638;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZjxgvfopAz+a/F/berx3mASZnWo5La07sZXWVx27uKY=;
+        b=FhLPq/33fXKxENpTwn9rlqKuy7VW2o6xzBqWKlulqVszD8PBJLWzOYe5zW7wrXjgUU
+         yjuoGCo4KM+q+EPgzK2wVzRpdW2T2Z60Eqy6Nxv6U92xCDB3qtK6qJbJd9zBLVcrtiTo
+         asAwHqKqk9FDxKB7O7sFSH2OlzaONg5i0vKcZVNZKqcnHMTul3foXAVpLQBhW1GTYTMk
+         5j2hUY1pKG7kIn//3Du3BpOwFiwNc7C5WEyqDZvCGqcjjRJ5zueiU3+BsiuaAhWGCbjC
+         zYqh1H/cIdmLTA4cHdmcEdD+VpExfMcia2CKDltgOdhqU7aRqm9lkJsW1+nmAtjdZR0Z
+         N1Sw==
+X-Forwarded-Encrypted: i=1; AJvYcCVmMre6rYKEIXvtb71N/MhWMhdjqLTJ8iVJAduodcKulsMKVfAH08LCBNVxl1yNqIfIaYw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywlwt9hmhlO/GJVBgoxGUayhTb5g9VO12hT4bcec+shik8/CK/i
+	PZ3ZlQqGNqiA0oVnd7NhFKu8C3vGGekdwxLVTKjo0ciSsf+eaQrOrarEQ1qpTiQnMweDZ++J2hQ
+	2JFXK1VnmX5mu4+A6C7RHDdSREBgFoYQ=
+X-Gm-Gg: ASbGnctM9EumHWyH3QlVLfK4Qn1g1e02kKgC1f0QqPquyGPCTE/UYD6DHkbezrgLViT
+	J6vlHusEQZ9OROCg44ghzNmHkCciCNE/zksnTzNM7wnf7i33LDwuADBSuBa5sLnZ8nvl860mEGb
+	2tr/+yCJIeiavZlnl5d3NOxrTHpnfmIpsJ6QDvmmffMjGdXrmmMNNM1qCmUE8YDjlCSOGpdxWml
+	9T4p6Jl7IPwWcuD3/DuptiJfgxQnqMCFyd/5Mhw
+X-Google-Smtp-Source: AGHT+IFtWPKEpzOt5k3BCMN7txRfuE6GVj2hly2VTkE8OGbY398Dtg6ZZ6U+L8e3d/EfQwUGB9BF/jfSDpRFT2xC8g8=
+X-Received: by 2002:a05:6e02:4801:b0:3e5:8113:35e1 with SMTP id
+ e9e14a558f8ab-3e6d6db51ddmr157561915ab.4.1755973837975; Sat, 23 Aug 2025
+ 11:30:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
+ <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com> <03939951256baaaec3fcc690cfa38ee12fb553ce.1755921357.git.gitgitgadget@gmail.com>
+ <030a01dc1433$ee3e2510$caba6f30$@nexbridge.com> <4dffd698-9d3c-41c8-9d3f-0d3750e683d3@app.fastmail.com>
+ <031601dc143f$7a9a25d0$6fce7170$@nexbridge.com>
+In-Reply-To: <031601dc143f$7a9a25d0$6fce7170$@nexbridge.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Sat, 23 Aug 2025 11:30:26 -0700
+X-Gm-Features: Ac12FXxPjtMGVa91v_brpeqyKFmrJWYhLMnY51tTJubsXoRc9WAXSNwX-0467c0
+Message-ID: <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
+Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
+To: rsbecker@nexbridge.com
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Josh Soref <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
+	Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>, 
+	Mike Hommey <mh@glandium.org>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, Ezekiel Newren <ezekielnewren@gmail.com>, 
+	Josh Steadmon <steadmon@google.com>, Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Randall,
 
-> From: Ezekiel Newren <ezekielnewren@gmail.com>
+On Sat, Aug 23, 2025 at 8:06=E2=80=AFAM <rsbecker@nexbridge.com> wrote:
 >
-> Trying to use Rust's Vec in C, or git's ALLOC_GROW() macros (via
-> wrapper functions) in Rust is painful because:
+> On August 23, 2025 10:26 AM, Kristoffer Haugsbakk wrote:
+> >On Sat, Aug 23, 2025, at 15:43, rsbecker@nexbridge.com wrote:
+[...]
+> >> Does this introduce Rust as a mandatory dependency for git? If so, it
+> >> cuts out numerous platforms.
+> >
+> >The proposed platform support policy is in patch 1.
+> >
+> >https://lore.kernel.org/git/6d065f550fe871cf010409f7bd2a63438cf52723.175=
+5
+> >921357.git.gitgitgadget@gmail.com/
 >
->   * C doing vector things the Rust way would require wrapper functions,
->     and Rust doing vector things the C way would require wrapper
->     ...
->   * Currently, Rust defines its own 'Vec' type that is generic, but its
->     memory allocator and struct layout weren't designed for
->     interoperability with C (or any language for that matter), meaning
->     ...
->   * Similarly, git defines ALLOC_GROW() and related macros in
->     git-compat-util.h. While we could add functions allowing Rust to
->     ...
+> It is a very disappointing policy to be honest. It kicks me off git becau=
+se Rust is
+> not available on my platform, representing tens of thousands of users in =
+North
+> American alone. Rust is not available, but may be in a few years, but the=
+re is no
+> guarantee that the hardware vendor (HPE) will provide support. I previous=
+ly
+> commented about the problem with Rust and was not taken seriously. This i=
+s
+> disappointing and exclusionary.
 
-All the good reasons any C (or any non-Rust language for that
-matter) projects would want to have an interoperability Shim
-for their dynamically allocated and grown array-like things.
+I don't think that's fair.  A quick reminder on the history: There was
+lots of excitement about potentially introducing Rust two years ago at
+our virtual Git contributors conference.  Taylor formally proposed
+adopting it on the mailing list a year and a half ago.  And at Git
+Merge last year, among those in attendance, there was broad
+significant interest in adopting Rust with unanimous support for
+letting it move forward among those that were present (which, yes, we
+know wasn't everyone).  And there's the three rounds so far of this
+patch series.  At every discussion where you weren't present, someone
+else would always bring up you and NonStop, and point out how you've
+been a very positive long-term member of the Git community and how
+Rust adoption would likely negatively affect you, which would be
+regrettable.  We waited years to adopt Rust precisely (and I believe
+solely) because of your objections.  Josh and Calvin even went the
+route of making optional not-even-built-by-default Rust libraries
+(libgit-rs and libgit-sys) when they wanted to add some Rust bindings.
+If years of deference by other community members isn't considered
+taking you seriously, I don't know what is.
 
-> To address these issue, introduce a new type, ivec -- short for
-> interoperable vector. (We refer to it as 'ivec' generally, though on
-> the Rust side the struct is called IVec to match Rust style.) 
+I agree that it is disappointing that there isn't a clear way to both
+gain the compelling advantages of Rust while also retaining the full
+current extent of our widespread platform support.  It's doubly
+unfortunate since you're such a positive contributing member of the
+community.  But not allowing us to ever gain the advantages of Rust is
+problematic too.  So, a decision has to be made, one way or the other.
 
-I however was hoping by now Rust getting used more widely, somebody
-has already created a generic "this is how you make C-array and Rust
-vectors interoperate" wrapper that latecomer projects like us can
-use without inventing our own.
+If it helps, here's the statements I've seen from long term community
+members on Ezekiel's proposal for a hard dependency so far, most of
+which call out the reduced platform support (whether in favor of the
+proposal or not):
+  * Randall: https://lore.kernel.org/git/031601dc143f$7a9a25d0$6fce7170$@ne=
+xbridge.com/
+  * brian: https://lore.kernel.org/git/aHlwZPbiKnakMN75@fruit.crustytoothpa=
+ste.net/
+  * Taylor: https://lore.kernel.org/git/aHl4U98BBvpA5eKF@nand.local/
+  * Patrick: https://lore.kernel.org/git/aH-CN0RYFmpm7fMt@pks.im/
+  * Phillip: https://lore.kernel.org/git/f439958d-64ce-417f-8175-720f69387d=
+48@gmail.com/
 
-> +INTEROP_OBJS += interop/ivec.o
-> +.PHONY: interop-objs
-> +interop-objs: $(INTEROP_OBJS)
+There's also been some emails that can be read as implicitly making a
+position statement on the topic from long term community members:
+  * Junio: https://lore.kernel.org/git/xmqqzfd12ujv.fsf@gitster.g/
+  * Johannes: https://lore.kernel.org/git/ac871bc4-df93-31f4-55f2-d6fc538a4=
+22d@gmx.de/
+  * Elijah: https://lore.kernel.org/git/pull.1980.git.git.1752784344.gitgit=
+gadget@gmail.com/
+(I figured my noted assistance of this series meant I didn't need to
+explicitly call out my support for it.)
 
-What is this phony target used for?  No other targets seem to depend
-on this one (I am wondering if we need the latter two lines).
+> The assertion in the policy that Rust is easily interoperable is incorrec=
+t.
 
-> diff --git a/interop/ivec.c b/interop/ivec.c
-> new file mode 100644
-> index 000000000000..9bc2258c04ad
-> --- /dev/null
-> +++ b/interop/ivec.c
-
-I am wondering if this needs a new hierarchy "interop"; shouldn't
-the existing "compat" be a good fit enough?  I dunno.
-
-Even though this is a shim to somebody else's code, it still is a
-part of our codebase, so our CodingGuidelines for C programs should
-apply.  
-
-> @@ -0,0 +1,151 @@
-> +#include "ivec.h"
-> +
-> +static void ivec_set_capacity(void* self, usize new_capacity) {
-> +	struct rawivec *this = self;
-
- - Asterisk sticks to the variable, not type.
-
- - The opening and closing {braces} for the function body are
-   written at the leftmost column on its own line.
-
- - There should be a blank line between the declarations and the
-   first statement.
-
-> +	if (new_capacity == 0)
-> +		FREE_AND_NULL(this->ptr);
-> +	else
-> +		this->ptr = xrealloc(this->ptr, new_capacity * this->element_size);
-> +	this->capacity = new_capacity;
-> +}
-> +
-> +void ivec_init(void* self, usize element_size) {
-> +	struct rawivec *this = self;
-> +	this->ptr = NULL;
-> +	this->length = 0;
-> +	this->capacity = 0;
-> +	this->element_size = element_size;
-> +}
-
-I notice that this reintroduces a variable named "this", which was
-eradicated in 585c0e2e (diff: rename 'this' variables, 2018-02-14).
-
-I do not think those who want to use C++ compilers on our C code
-would not mind "self", so how about doing something like...
+Are you mixing up interoperability with portability?  Without further
+context than your email provides, it appears so to me.  Rust code can
+call C code and vice-versa within the same process without huge
+amounts of serializing and deserializing of data structures, and
+without what amounts to something close to an operating system context
+switch in order to ensure call stacks are as expected for the language
+in question.  To me, that means we can call the two languages easily
+interoperable.  On the other hand, portability of those languages is
+about whether those languages have compilers supported on various
+hardware platforms.  The document explicitly calls out that fewer
+systems have a Rust compiler than have a C compiler, and that Rust
+adoption would thus reduce how portable Git is.  Are you referring to
+this lower portability that the document itself also calls out, or are
+you pointing out additional issues with interoperation between the
+languages on a platform where compilers for both languages exist?  If
+the latter, could you provide more details?
 
 
-	void ivec_init(void *self_, usize element_size)
-	{
-		struct rawivec *self = self;
-
-		self->ptr = NULL;
-		self->len = 0;
-		self->capacity = 0;
-		self->element_size = element_size;
-	}
-
-... perhaps?
-
-> diff --git a/interop/ivec.h b/interop/ivec.h
-> new file mode 100644
-> index 000000000000..98be4bbeb54a
-> --- /dev/null
-> +++ b/interop/ivec.h
-> @@ -0,0 +1,52 @@
-> +#ifndef IVEC_H
-> +#define IVEC_H
-> +
-> +#include "../git-compat-util.h"
-
-As we use -I. on the command line, there is no need to add "../"
-here; just writing
-
-	#include <git-compat-util.h>
-
-should be enough.  Also, if this file does not depend on the
-services compat-util header provides (and I do not think it does
-from a brief look at its contents), it is better not to include it.
-
-Instead, the sources (like ivec.c next door we just saw) should
-begin themselves with #include of git-compat-util.h header before
-including ivec.h.
-
-> diff --git a/rust/xdiff/src/lib.rs b/rust/xdiff/src/lib.rs
-> index e69de29bb2d1..8b137891791f 100644
-> --- a/rust/xdiff/src/lib.rs
-> +++ b/rust/xdiff/src/lib.rs
-> @@ -0,0 +1 @@
-> +
-
-If this empty line in an otherwise empty file is absolutely
-necessary to make Rust work, then please arrange .gitattributes to
-tell git that this file is excempt from the usual blank-at-eof
-whitespace rule we use.  If not, remove that unnecessary empty line.
-
-Or perhaps remove the file altogether if nobody looks at it???
-
-In any case, given that our top-level .gitattributes file starts
-with
-
-    * whitespace=!indent,trail,space
-    *.[ch] whitespace=indent,trail,space diff=cpp
-    *.sh whitespace=indent,trail,space text eol=lf
-    ...
-    *.bat text eol=crlf
-    CODE_OF_CONDUCT.md -whitespace
-    ...
-
-I think a new rule to cover "*.rs" and perhaps *.toml files right
-before rules for each specific file begin would be in order.
-
-Thanks.
-
+I know my email is probably disappointing to you, at a minimum.  I'm
+sorry about that.  I hope it's helpful, at least in having links to
+where various folks in the community stand if nothing else.
