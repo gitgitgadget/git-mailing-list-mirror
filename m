@@ -1,70 +1,69 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A8121C183
-	for <git@vger.kernel.org>; Sat, 23 Aug 2025 03:56:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C75921CC7B
+	for <git@vger.kernel.org>; Sat, 23 Aug 2025 03:56:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755921373; cv=none; b=OCa703gyA0nlaRQDtoGULygQNf8NTr4qxRahPv/DcrbXTvNrzhEEfu2ofgM6F/U0JmIGALgZyLjfPhnURy5GS+a2hMWKYkki9UYZFOcqnnL2pJR6D+YbH6aHp+DLjaeAiz/+T4SM7MoWnSGIyIyhXXubjwz9Ysr1vkDZWjqBpLY=
+	t=1755921374; cv=none; b=ZLcX6+DcKdkpg7ZLr3g/6Hw/msqorO4BwI88QKWCFTQN/cMtwQgY5B+FgssmzbZlwZAIVf52RH0l/tkOKrH5Q1uVmTgflSnwoQfkJnmOKTtWgYauoSOpfS9LrHqwC/HnVy27j7YfygZsJKdgxNqoFkAblRutrU2Eqt6QBvcPHog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755921373; c=relaxed/simple;
-	bh=mlkxe/Kwz5aUDN7TOIzYk3bwL7aKwXIIdAwzt/YLDI8=;
+	s=arc-20240116; t=1755921374; c=relaxed/simple;
+	bh=YIilIqca+n65mmS8J+ZdzxjRx7Cs2dxlrw/1lq6EKpM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=um8pY6L9d26blQQ+0wNBkXFS30L0rBQEtZYqOFqZ3hEBfhNjRt2Q06h19Ki8cj+7exBjENy4nDyCYtQKTIiQHuNHGlWVpy254dbCKEcq0BEqaNFjHbE0UiVHRkrWx3YLTMR9Ei0r6BhVHQhCckCUWQaJRWTjrgWOx0Jf0rmlm34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=holytRdw; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version:To:Cc; b=fDwidPElYrtEj0cA1wBMT2K8Z4tWEkEV0OoNKnYZ//5ycI+tkYLShSjkoCA82JW3udL2L698wPJrzRjDsPPGRmTCG1TxF8t9GSW2L2m48qGGrR2CIUkPlmB9lauJr/IL8CQCwvUaPNQ6YG+PL9GDRCj7TGahkyq1Cmb+C2m0a4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X4UJZ74k; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="holytRdw"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-45a1b0c52f3so16885705e9.3
-        for <git@vger.kernel.org>; Fri, 22 Aug 2025 20:56:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X4UJZ74k"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3c79f0a606fso41637f8f.0
+        for <git@vger.kernel.org>; Fri, 22 Aug 2025 20:56:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755921367; x=1756526167; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755921370; x=1756526170; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HEpDLiDMcCnW/Y7y70xjcOvTs8tWToNKwbLjQvCYgO4=;
-        b=holytRdwAAvmHo7ELwsENp6csEZZbVc2g5Xdbl3bGE4TFru04uJiwhQ4EWIgp0R0h6
-         uQlsHlj/8TVwyETHxI9J0M4yfnIHOvHDQiwfZrO/DaVk07sDwCtThUyAMfkUD9JiwOHb
-         ftJ4mAI9EQzW12Xaqq7zMeIGNJq/b2mPmJTvvHeDLxDJhv/qiUIg+bVBTd8+l7AqorrO
-         +/YwiUmMfcs70eO7X2bZuephirCkyBOkbxZ77auYA5HeAtwE7ZUDCwJdS1kwCij/GK9L
-         IUkugKlzNHVA4kOXC+dY906yCQ6hCzf4w0QbFJ+BTx3BonRxJMY4Jt++YDX0rmB6CtrJ
-         n0Og==
+        bh=ZIDXsU/xFaq4iC+H19Ui1PXwG74bqfF/kpe893jD03c=;
+        b=X4UJZ74kKkuPxzuUkMk6cwBaYlVfuuBX2VXNSbnIbdlXPoo8RBQi1E+e0BZ0RRXxDq
+         vxIfFMN7gHHix6J5Crnye+iMROLMvHdnhYoaT7X9YdUsjAqz7jxKYIwqUpjyELHKcG0D
+         Wf3d1nZzpzgXs9ysgTgS260BWQGjB9OjDaYdCjVttnM68SKOsyXeN2AVxy1QYM41Fk0x
+         yeuil2iuihqiw4VUGiD9AkrXC0K7oqsFTSzXS6bCpnYpxivoo6hKtgT7Giw9lpaEXmQA
+         QgGRZrfFNzoOJbFtZDCm7qFzjcorpN5SJuVALEm9SOvjAjpE7bKaOYu5Kb0b2MRCyl67
+         UnMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755921367; x=1756526167;
+        d=1e100.net; s=20230601; t=1755921370; x=1756526170;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HEpDLiDMcCnW/Y7y70xjcOvTs8tWToNKwbLjQvCYgO4=;
-        b=qKsw1TXwyspMNC5D9uWYFDt7qOVWlZt1dFgdPQUpjCPNvAGGBVcV1eTmWyl3Odc/AX
-         EhS288UCipmCe5i8OUt5Q5VSzwBCXFUfTweq5MgAaEeXYHXtU5+FF5kXIElK9vHGPBYt
-         kcBvYk2GYqC0ynNZXglU23oRfWnfZ8nqo9qlmS/wpL4jwNuodw0tWVdNk9NRjQQa6BJ8
-         kB59zoYmMvz/xsi8JDwgkLvcXfCrCFs+cEU3sJTEX8UBcOhXHwbT0gl1IsYhylcht4/l
-         jRzXZT8DY3/syFE1T/rETN1HmuCtTD1e292SbsXgempITD59g+SOTyxzOWdHE27hZ7dq
-         iVEA==
-X-Gm-Message-State: AOJu0YwJcRE2TX45eKetetYtj1U/5iV4GQODOZ6GSZPPMaLSGftwj4AK
-	LgCaWVGnHir8GcrX9Kv3NresDFRT9V7Crsponbq4sjQ0HZv5dGUiOs57CtEtww==
-X-Gm-Gg: ASbGncss7KCntxqZJwLNM7rkLJUtQvSPAW2atcUfwlp24mRJUOT/PTdV0DJ1WZ8pMdX
-	OsTaW3xh2bimLY0hRs77qgpy4C186rSW/1I6ZzIiCMKdtYfXDFzJx6cxdKUdG7YT8K4svHmEiXw
-	j7iGRBisfzeAKDMjo3pdedwUoUg92MG5RPZzdIVlHZov9XvXstpSy7hktaZi9hPgl090J9DCPHQ
-	/3gRGlGVOc/Mc7SJ5+7R8mWWVvoa4p8AH6KArs0IadpBE2CYTHsVkdf+UrzguZG817JPpUdjap5
-	CZhby6IBfkBEXJNTdkp6t5Ttt6cPOSC3KfhHdFNwSBLocjlFEL+x3jVDbcpC6Yx2hf/HR8lBSlg
-	wG+JRy5Om20/oAgxggLqGSTKkEHvzQE6XsHocqg==
-X-Google-Smtp-Source: AGHT+IFWhUT8W6Pe9LIAywB/AkiCumsUopIU6gQzM/oL38aVOvIqQS6rOmK7vogKoMveTmndEoHjrQ==
-X-Received: by 2002:a05:600c:3b95:b0:459:df07:6db7 with SMTP id 5b1f17b1804b1-45b5179b2a1mr44187995e9.6.1755921367309;
-        Fri, 22 Aug 2025 20:56:07 -0700 (PDT)
+        bh=ZIDXsU/xFaq4iC+H19Ui1PXwG74bqfF/kpe893jD03c=;
+        b=fNdcC8Y7EKoEQ+/JP5oBVKHk749z1jNeSU0p9EUt8Ilc5bZtyKaZ5Urs5vZfwSLQWM
+         pNTdiMJojnA+vb5Y01QG26euvOXB0pKYY9E57l/8ReY5ri6YSYH2TZ3Dtt2Uy5SUigFg
+         +dh8LA7fAXU4JNDiXMdmxVlDlFx/Em1HtlJ/plUQSqsiu4Uvb80Ct+H+5JrrRXNbS52t
+         kgadkYlfLWVjDcUn7x3IbreNu5AK9/EswNOY+WQdygCs1c9XHeMV4HK54rukUvGB8ZDL
+         ohssivHVlrgu5HOqsmTQPJZbgcq2A17QDxIG6LYp1EwSxUaT71kzs9xl/Px4hR3erGmK
+         4AyA==
+X-Gm-Message-State: AOJu0YyhfPQr3N2BtJJu0MMiA9VTSetEbO/jaWCWVAHnxwDi4roms6KB
+	WxJcSAe36ca5q6j+j27m3Sd0meumrCSXDzFBEuXkiFHdt0vW85YbiP4QQQuSWw==
+X-Gm-Gg: ASbGncsjkAaSs3AID1imsTRP1ErbEaKTtBbCMiL78Y6lqj1HyfhBsyIKASJkeKRi4Rh
+	1NMAPRCNQkKDnV42Gmjj/ARrS9F9exQeLGIfA4V5GL/2vhYTtOfEVqdPbHr4fjsOXuJNzTGhSqg
+	xPR5fuh/C1UTuj5xrv/G9CeybfOnLrmo1hJIVOit7BxxUuxSgOoiqfJP/ygY2jAl4dOe7XRQdiZ
+	WANOLp+I17+EPRzDeH9F06iWPQ6uXp0W3nhis1jGF4e5CDFbbm3KJhOWz5BxWY4ueQ8PJHQ164D
+	7e2uWyftSnECLQBE+s54OFXmzH34oy5fE7PiV1bVtYekVGNZ+PvsdpWCWIK4EW9FXPipC317Uk1
+	pxANxzj1DPD94CTd4HQb43/AAHBg=
+X-Google-Smtp-Source: AGHT+IE6QwvesnN+61Z3kERYvlUS4kCb7JeIo0vg4ehaykUUp9VEAml3v/i6gVWxKlfHHsGQ6Ivrng==
+X-Received: by 2002:a05:6000:230d:b0:3b9:5002:3b4d with SMTP id ffacd0b85a97d-3c5dbf68962mr2956156f8f.19.1755921370049;
+        Fri, 22 Aug 2025 20:56:10 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c70e4b9d30sm1884488f8f.13.2025.08.22.20.56.06
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c7117d5b10sm1830299f8f.47.2025.08.22.20.56.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 20:56:06 -0700 (PDT)
-Message-Id: <d4bed95463216668e7c024e6186ca4574c7114dc.1755921357.git.gitgitgadget@gmail.com>
+        Fri, 22 Aug 2025 20:56:09 -0700 (PDT)
+Message-Id: <21bfb9f08836898c6e46564c3a2ce65cdcfa4471.1755921357.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
 References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
 	<pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 23 Aug 2025 03:55:48 +0000
-Subject: [PATCH v3 07/15] xdiff/xprepare: remove superfluous forward
- declarations
+Date: Sat, 23 Aug 2025 03:55:51 +0000
+Subject: [PATCH v3 10/15] xdiff: use one definition for freeing xdfile_t
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -96,152 +95,129 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-Move xdl_prepare_env() later in the file to avoid the need
-for forward declarations.
+Simplify xdl_prepare_ctx() by using xdl_free_ctx() instead of using
+local variables with hand rolled memory management.
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- xdiff/xprepare.c | 116 ++++++++++++++++++++---------------------------
- 1 file changed, 50 insertions(+), 66 deletions(-)
+ xdiff/xprepare.c | 60 +++++++++++++++++++-----------------------------
+ 1 file changed, 24 insertions(+), 36 deletions(-)
 
 diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index e1d4017b2dde..a45c5ee208c8 100644
+index 00cdf7d8a038..55e1cc308756 100644
 --- a/xdiff/xprepare.c
 +++ b/xdiff/xprepare.c
-@@ -53,21 +53,6 @@ typedef struct s_xdlclassifier {
- 
- 
- 
--static int xdl_init_classifier(xdlclassifier_t *cf, long size, long flags);
--static void xdl_free_classifier(xdlclassifier_t *cf);
--static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t **rhash,
--			       unsigned int hbits, xrecord_t *rec);
--static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_t const *xpp,
--			   xdlclassifier_t *cf, xdfile_t *xdf);
--static void xdl_free_ctx(xdfile_t *xdf);
--static int xdl_clean_mmatch(char const *dis, long i, long s, long e);
--static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xdf2);
--static int xdl_trim_ends(xdfile_t *xdf1, xdfile_t *xdf2);
--static int xdl_optimize_ctxs(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xdf2);
--
--
--
--
- static int xdl_init_classifier(xdlclassifier_t *cf, long size, long flags) {
- 	cf->flags = flags;
- 
-@@ -242,57 +227,6 @@ static void xdl_free_ctx(xdfile_t *xdf) {
+@@ -129,86 +129,74 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
  }
  
  
--int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
--		    xdfenv_t *xe) {
--	long enl1, enl2, sample;
--	xdlclassifier_t cf;
--
--	memset(&cf, 0, sizeof(cf));
--
--	/*
--	 * For histogram diff, we can afford a smaller sample size and
--	 * thus a poorer estimate of the number of lines, as the hash
--	 * table (rhash) won't be filled up/grown. The number of lines
--	 * (nrecs) will be updated correctly anyway by
--	 * xdl_prepare_ctx().
--	 */
--	sample = (XDF_DIFF_ALG(xpp->flags) == XDF_HISTOGRAM_DIFF
--		  ? XDL_GUESS_NLINES2 : XDL_GUESS_NLINES1);
--
--	enl1 = xdl_guess_lines(mf1, sample) + 1;
--	enl2 = xdl_guess_lines(mf2, sample) + 1;
--
--	if (xdl_init_classifier(&cf, enl1 + enl2 + 1, xpp->flags) < 0)
--		return -1;
--
--	if (xdl_prepare_ctx(1, mf1, enl1, xpp, &cf, &xe->xdf1) < 0) {
--
--		xdl_free_classifier(&cf);
--		return -1;
--	}
--	if (xdl_prepare_ctx(2, mf2, enl2, xpp, &cf, &xe->xdf2) < 0) {
--
--		xdl_free_ctx(&xe->xdf1);
--		xdl_free_classifier(&cf);
--		return -1;
--	}
--
--	if ((XDF_DIFF_ALG(xpp->flags) != XDF_PATIENCE_DIFF) &&
--	    (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF) &&
--	    xdl_optimize_ctxs(&cf, &xe->xdf1, &xe->xdf2) < 0) {
--
--		xdl_free_ctx(&xe->xdf2);
--		xdl_free_ctx(&xe->xdf1);
--		xdl_free_classifier(&cf);
--		return -1;
--	}
--
--	xdl_free_classifier(&cf);
--
--	return 0;
++static void xdl_free_ctx(xdfile_t *xdf) {
++	xdl_free(xdf->rindex);
++	xdl_free(xdf->rchg - 1);
++	xdl_free(xdf->ha);
++	xdl_free(xdf->recs);
++	xdl_cha_free(&xdf->rcha);
++}
++
++
+ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_t const *xpp,
+ 			   xdlclassifier_t *cf, xdfile_t *xdf) {
+-	long nrec, bsize;
++	long bsize;
+ 	unsigned long hav;
+ 	char const *blk, *cur, *top, *prev;
+ 	xrecord_t *crec;
+-	xrecord_t **recs;
+-	unsigned long *ha;
+-	char *rchg;
+-	long *rindex;
+ 
+-	ha = NULL;
+-	rindex = NULL;
+-	rchg = NULL;
+-	recs = NULL;
++	xdf->ha = NULL;
++	xdf->rindex = NULL;
++	xdf->rchg = NULL;
++	xdf->recs = NULL;
++	xdf->nrec = 0;
+ 
+ 	if (xdl_cha_init(&xdf->rcha, sizeof(xrecord_t), narec / 4 + 1) < 0)
+ 		goto abort;
+-	if (!XDL_ALLOC_ARRAY(recs, narec))
++	if (!XDL_ALLOC_ARRAY(xdf->recs, narec))
+ 		goto abort;
+ 
+-	nrec = 0;
+ 	if ((cur = blk = xdl_mmfile_first(mf, &bsize))) {
+ 		for (top = blk + bsize; cur < top; ) {
+ 			prev = cur;
+ 			hav = xdl_hash_record(&cur, top, xpp->flags);
+-			if (XDL_ALLOC_GROW(recs, nrec + 1, narec))
++			if (XDL_ALLOC_GROW(xdf->recs, xdf->nrec + 1, narec))
+ 				goto abort;
+ 			if (!(crec = xdl_cha_alloc(&xdf->rcha)))
+ 				goto abort;
+ 			crec->ptr = (u8 const*) prev;
+ 			crec->size = (long) (cur - prev);
+ 			crec->ha = hav;
+-			recs[nrec++] = crec;
++			xdf->recs[xdf->nrec++] = crec;
+ 			if (xdl_classify_record(pass, cf, crec) < 0)
+ 				goto abort;
+ 		}
+ 	}
+ 
+-	if (!XDL_CALLOC_ARRAY(rchg, nrec + 2))
++	if (!XDL_CALLOC_ARRAY(xdf->rchg, xdf->nrec + 2))
+ 		goto abort;
+ 
+ 	if ((XDF_DIFF_ALG(xpp->flags) != XDF_PATIENCE_DIFF) &&
+ 	    (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF)) {
+-		if (!XDL_ALLOC_ARRAY(rindex, nrec + 1))
++		if (!XDL_ALLOC_ARRAY(xdf->rindex, xdf->nrec + 1))
+ 			goto abort;
+-		if (!XDL_ALLOC_ARRAY(ha, nrec + 1))
++		if (!XDL_ALLOC_ARRAY(xdf->ha, xdf->nrec + 1))
+ 			goto abort;
+ 	}
+ 
+-	xdf->nrec = nrec;
+-	xdf->recs = recs;
+-	xdf->rchg = rchg + 1;
+-	xdf->rindex = rindex;
++	xdf->rchg += 1;
+ 	xdf->nreff = 0;
+-	xdf->ha = ha;
+ 	xdf->dstart = 0;
+-	xdf->dend = nrec - 1;
++	xdf->dend = xdf->nrec - 1;
+ 
+ 	return 0;
+ 
+ abort:
+-	xdl_free(ha);
+-	xdl_free(rindex);
+-	xdl_free(rchg);
+-	xdl_free(recs);
+-	xdl_cha_free(&xdf->rcha);
++	xdl_free_ctx(xdf);
+ 	return -1;
+ }
+ 
+ 
+-static void xdl_free_ctx(xdfile_t *xdf) {
+-	xdl_free(xdf->rindex);
+-	xdl_free(xdf->rchg - 1);
+-	xdl_free(xdf->ha);
+-	xdl_free(xdf->recs);
+-	xdl_cha_free(&xdf->rcha);
 -}
 -
 -
  void xdl_free_env(xdfenv_t *xe) {
  
  	xdl_free_ctx(&xe->xdf2);
-@@ -460,3 +394,53 @@ static int xdl_optimize_ctxs(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xdf2
- 
- 	return 0;
- }
-+
-+int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
-+		    xdfenv_t *xe) {
-+	long enl1, enl2, sample;
-+	xdlclassifier_t cf;
-+
-+	memset(&cf, 0, sizeof(cf));
-+
-+	/*
-+	 * For histogram diff, we can afford a smaller sample size and
-+	 * thus a poorer estimate of the number of lines, as the hash
-+	 * table (rhash) won't be filled up/grown. The number of lines
-+	 * (nrecs) will be updated correctly anyway by
-+	 * xdl_prepare_ctx().
-+	 */
-+	sample = (XDF_DIFF_ALG(xpp->flags) == XDF_HISTOGRAM_DIFF
-+		  ? XDL_GUESS_NLINES2 : XDL_GUESS_NLINES1);
-+
-+	enl1 = xdl_guess_lines(mf1, sample) + 1;
-+	enl2 = xdl_guess_lines(mf2, sample) + 1;
-+
-+	if (xdl_init_classifier(&cf, enl1 + enl2 + 1, xpp->flags) < 0)
-+		return -1;
-+
-+	if (xdl_prepare_ctx(1, mf1, enl1, xpp, &cf, &xe->xdf1) < 0) {
-+
-+		xdl_free_classifier(&cf);
-+		return -1;
-+	}
-+	if (xdl_prepare_ctx(2, mf2, enl2, xpp, &cf, &xe->xdf2) < 0) {
-+
-+		xdl_free_ctx(&xe->xdf1);
-+		xdl_free_classifier(&cf);
-+		return -1;
-+	}
-+
-+	if ((XDF_DIFF_ALG(xpp->flags) != XDF_PATIENCE_DIFF) &&
-+	    (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF) &&
-+	    xdl_optimize_ctxs(&cf, &xe->xdf1, &xe->xdf2) < 0) {
-+
-+		xdl_free_ctx(&xe->xdf2);
-+		xdl_free_ctx(&xe->xdf1);
-+		xdl_free_classifier(&cf);
-+		return -1;
-+	    }
-+
-+	xdl_free_classifier(&cf);
-+
-+	return 0;
-+}
 -- 
 gitgitgadget
 
