@@ -1,69 +1,69 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1003C13AD05
-	for <git@vger.kernel.org>; Sat, 23 Aug 2025 00:43:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C471FCD1F
+	for <git@vger.kernel.org>; Sat, 23 Aug 2025 03:56:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755909793; cv=none; b=TxhB1aByh0yf3Uc+uki1UeZ+Z5z8Q/xYF5QLW0vnnglZQyaamK2KbsaCzVY58toenwhQ+yBNfiVpD1Yk6uMUNSfMkoDxElXrSVai5JvQ5CpwGu5SbXD3jj0jwtQW9Gh6Aj1+xkzz2pMUnZqvCKy+YHCA/CHz6UjSoMMJiXq4bZA=
+	t=1755921365; cv=none; b=K3P1CLJKHYu8IH4q/cJD8VJxzH4MtOliq5XMGikGumzgekxWhiJlGjQn0F0oT8pFVwR+XiyxARZPZP/9b7S753+UdrGD25DxEj62UEv0ZtUnO7IJzRW2USA52Y8t9mqYU790l9Pi/w1tRdxHGbd3D7XkBKGDnXvlss5DtsLoCkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755909793; c=relaxed/simple;
-	bh=Sh/KULAdddQlB3tqnqx/PsQHPremPA2fs32rvuYfQGc=;
+	s=arc-20240116; t=1755921365; c=relaxed/simple;
+	bh=5QreLwpsae7XfGisbQUhSGbHyDdwRGAZOPNmBHU/VFA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rCJoFe0Etp16NLLrdfsC61ilNbUMG4EIPsCGkbH+5cbPdpfZULn4jIqpDDmpNAD4uJK8Z3wofVkJ2HPBRTQHwq4SjwEMvtlBqqP7kYRXksJ3hUlLCBQeobs78tL2/FrQulPrtBWxnyAEH4EixONyXxubU6RPh2YD5WFdq+aZByM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gXDn3gRE; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version:To:Cc; b=GpGeHSayAnx37BWnJaDE02QGtSz0kqrxzvrNeXEKzMyEEekIGGoo879APMQW8ueH4CnNkJe9qoxd82P5wnGCIbkOwZKoO3vZleaNghhYpCr7NujLyxoP+01RSmE46gIHkEi+fvCHA/QOfHT92/wBntnED4o8fyf2dKcDQGRc85c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GqJG5bdM; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gXDn3gRE"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45b4a25ccceso15178855e9.3
-        for <git@vger.kernel.org>; Fri, 22 Aug 2025 17:43:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GqJG5bdM"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45a1b0c52f3so16885495e9.3
+        for <git@vger.kernel.org>; Fri, 22 Aug 2025 20:56:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755909788; x=1756514588; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755921361; x=1756526161; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3W543Et6o3hc1+axa5UTGDudJGILwDARThjxpSB7xec=;
-        b=gXDn3gREd5Vpwf1IZwr6d1GAsMGUAZnKvYz3jdsJEZSElIJ/yMrIcCkBvcYfs28B+Z
-         kkBR7ttH6nnxbpKa+FS7KSqZ7uBU7bw8a1Rm7ya3cBT9KcdNDUm7gvmxZJL6ChAUfJgs
-         NnYhcv2MXi9ijKdSfNnITDnyPvhUfyyX/Yw/HomlbvIUUPSH0miDrqQ5e9vVQD6Cb5Kr
-         C7uQ+v25ux2HG0Va0cjhoLQ5B7FOlhRDU1X5s/95Nwa/urVTvUvQFolhQ156d1X2wX4m
-         tfN+Ct96O3fQ8kjXcgiPNfMiFUVpgUaXa+yOATllb1DY1wnU7GbYEXJN+qQQW8DhnqfK
-         1ptA==
+        bh=HHRj3oRXjHnqgDFRuIqUSOQJyAXO/RVtIHQ0obNKpr8=;
+        b=GqJG5bdMzlaWVgHMHl9jA586jjIN+l8GcTt+JOmUhZOv0UUEaNtKjDUDmMWCrbUEF9
+         P3Lm4SXWINV7SFKPdy/M0cv2meZQJJvSVjyC526QomGyxJiEtWdsSfXw7G9eODWEu7+M
+         kd9aRuSMf40AOlYdb3ccBwlOyvMO9ynD99gjL5z6Yvta0laS6YG5PHfzygRJqcb80Aaw
+         xrAHjMn09krBhg5HRW/3TEt4c1g6xw9b8eaFbt240LhtlufC+MgWpnoqNvUZvHog8fbM
+         1ytn2OaQwZKGH9l4ohWXNxJaaZQbfrTeBvKl4W2eVSW/9r6Qz9KPPrd4xNouBS0q92rc
+         0zhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755909788; x=1756514588;
+        d=1e100.net; s=20230601; t=1755921361; x=1756526161;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3W543Et6o3hc1+axa5UTGDudJGILwDARThjxpSB7xec=;
-        b=BWdl3O7W0w4iP+W2vWhKaDAz45+k/v8oNb8ksPhEutO6qlQ4lkgezd3i9I8Ut3I1F6
-         O+jZnZG635XdqnfgUTfgtNbhKTrOFIj1kFh22SLgBKuQeTcNQTYHHtyPvAHomcPhX0JM
-         c3GZkdxEXUxEc9tVvYi4aq59Tk2M/dkGOCNNJcyupjDZtKL6f5oQRudPx6wdbg3OEqUV
-         4o/iot0DeTbQ7LiDJIAKxKKyMaekIx5z4LLzmZqjEI3q0X/AapK1QpFlLEgl2LACdaLi
-         5rfLG2XO2MjDodmaIcXZ/l232JqBqGjnRuH5PK3uOG8T9vYOKL3jsKJ3UgKUXPQnXrf4
-         sTAg==
-X-Gm-Message-State: AOJu0Yy/FF+wO/oRFumscsBM54j7EbNFKojSYS/5ASJmuw1jM7OW8mK3
-	Fd2464G3ypN4hOAfJ2EXaAdXuNwmMp4LpJ5JgktGdgQwhU7pR9W5/NszC3LYzA==
-X-Gm-Gg: ASbGnctDLm1pyBVz8CjYQtsYZRxM8eybwCSk/eWSwkmi1qjy1LLhQqrGgtP4AbFgOcv
-	Incpvw+keZe/SORXvUOdwpTwayUxAV3VoTvRzYw6C7Vf+PzZT7k1/QA2RUIHVX/Fa6DTGi+Sp10
-	5DaVkqyPKNUDk+SRZNXlyhKcuMNwmzrzZTJNreePRYzS/fldsKgDh6jV67z8F0V5/5IMxNeIlOz
-	Q+1HeTqUJVfYAb0CEj7D2LH1HVQqJ4HBa8ztFrRDcbb8q35uvRJDssiDd4HCYlLqvsFQVITifDI
-	eljys8JyzejeVOEUlAovPeJM4Y5iD/PQu0tO3W9NUzdZjopRXtqMmlMgpaGE7Na4yGJS5nPs+Nv
-	WBcLxkyV+uA1UMO9BWp6lVzb0W1+U5yiZrXA/DA==
-X-Google-Smtp-Source: AGHT+IHnqljj7h0ou+AajkTh98lPv36W0ngMrcYg18QgKhJ020lcL4VOGU02Z7lzQRtYl5AwwGU1wQ==
-X-Received: by 2002:a5d:5d81:0:b0:3c4:f63a:787c with SMTP id ffacd0b85a97d-3c5dc73124cmr3281623f8f.40.1755909787990;
-        Fri, 22 Aug 2025 17:43:07 -0700 (PDT)
+        bh=HHRj3oRXjHnqgDFRuIqUSOQJyAXO/RVtIHQ0obNKpr8=;
+        b=czQZDI/HbOdDrviYG04eSBrc1YjYCBAMq1bn9zocEKowC4Xb3vpfohSXnn+CoORXKb
+         7VXPM7on+JsW3k0VwGudjAB67vfypvOds/GcsOeKnM7w36kf+iarjOwo7TMqrkLIzeS1
+         KbAKs5fEIt8ZevKrRsuNVmUpSECwlakNsfKpTru8EmKBzGP9M4cwP2DofzRc/20An9Q9
+         xzWwYbOm+cugN4aBOqse2a1LP5+YlOomUAdvjIdWxQPxrlcweDWJGsmeK2269FXZZECD
+         1lXGi/RhTw/JSjntFg43nBjWCdaXLygkwzbgXfdZGU64Pqt7OdjrkVB8qOlZIq0jiAYt
+         dDPA==
+X-Gm-Message-State: AOJu0YwHx2fp6iivIbfElrT6yxpuNW+DBXdMFtP98UEmlYB9fVqiEsDN
+	3qvN+NkT0diF26XhS8BvpQvTNiaGFCybdSXmUyGPOgbUWrF9bRYDKwPEPDTMEw==
+X-Gm-Gg: ASbGncv0Md1R3HVxVHcMNX7z+2VWG5lT/xHMkX4ojhYTQmCk1TMO+udF4Fs2pve7Mu4
+	E2HPOh0cKAJGHL3lejJ482J9b2b7IuoUVIuD4dVLWnA/T/cIsftLqb1t5kS+eQyE6v33XyZrS4D
+	Af0VOxuR3N+Dhc0ka8kBLJNOe+Gkl6+g957HrlpsSK/yoYoEc1WeL/6MDvHu2DsE4cKlLa+eBle
+	GAMKHTyjLn+lY0kkQ9y5w/LkuQmajxdkkAgzjhsf1ysXnNjQiJqmt0YvCX5BH4zSDzJeq0YzXVr
+	y0bit0S8/5ziT2nkq80Ka058rjxJ35SaXCuKWDqsTLeK1V6BNTnKg68sWEv0+HEAPaxQnw3NTAV
+	F94uurarsMkJZi25Slu+cYtxLbx0=
+X-Google-Smtp-Source: AGHT+IH0sg9diE1bk639uCmJWaPfV4K0mbinDIdIdq+tcQ6+4n1pXasTzLeDOTM5ZeTGDRGOcyOURA==
+X-Received: by 2002:a05:600c:4e8f:b0:459:e370:d065 with SMTP id 5b1f17b1804b1-45b5179f623mr40271615e9.15.1755921361145;
+        Fri, 22 Aug 2025 20:56:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c711212871sm1338307f8f.43.2025.08.22.17.43.07
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b57444b2fsm21393945e9.5.2025.08.22.20.56.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 17:43:07 -0700 (PDT)
-Message-Id: <9c2a54ab9fa9b3dea47f4ab366fc5ff7c8946a3f.1755909782.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1949.v9.git.1755909782.gitgitgadget@gmail.com>
-References: <pull.1949.v8.git.1755276750.gitgitgadget@gmail.com>
-	<pull.1949.v9.git.1755909782.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 23 Aug 2025 00:43:01 +0000
-Subject: [PATCH v9 4/5] doc: git-rebase: move --onto explanation down
+        Fri, 22 Aug 2025 20:56:00 -0700 (PDT)
+Message-Id: <6d065f550fe871cf010409f7bd2a63438cf52723.1755921357.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
+References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
+	<pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
+From: "brian m. carlson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 23 Aug 2025 03:55:42 +0000
+Subject: [PATCH v3 01/15] doc: add a policy for using Rust
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,48 +74,236 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+Cc: Elijah Newren <newren@gmail.com>,
+    "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Taylor Blau <me@ttaylorr.com>,
+    Christian Brabandt <cb@256bit.org>,
     Phillip Wood <phillip.wood123@gmail.com>,
+    Eli Schwartz <eschwartz@gentoo.org>,
+    "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    Matthias =?UTF-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
     Patrick Steinhardt <ps@pks.im>,
-    Karthik Nayak <karthik.188@gmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+    Sam James <sam@gentoo.org>,
+    Collin Funk <collin.funk1@gmail.com>,
+    Mike Hommey <mh@glandium.org>,
+    Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+    Ben Knoble <ben.knoble@gmail.com>,
+    Ramsay Jones <ramsay@ramsayjones.plus.com>,
+    Ezekiel Newren <ezekielnewren@gmail.com>,
+    "brian m. carlson" <sandals@crustytoothpaste.net>
 
-From: Julia Evans <julia@jvns.ca>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 
-There's a very clear explanation with examples of using --onto which is
-currently buried in the very long DESCRIPTION section. This moves it to
-its own section, so that we can reference the explanation from the
-`--onto` option by name.
+Git has historically been written primarily in C, with some shell and
+Perl.  However, C is not memory safe, which makes it more likely that
+security vulnerabilities or other bugs will be introduced, and it is
+also more verbose and less ergonomic than other, more modern languages.
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
+One of the most common modern compiled languages which is easily
+interoperable with C is Rust.  It is popular (the most admired language
+on the 2024 Stack Overflow Developer Survey), efficient, portable, and
+robust.
+
+Introduce a document laying out the incremental introduction of Rust to
+Git and provide a detailed rationale for doing so, including the points
+above.  Propose a design for this approach that addresses the needs of
+downstreams and distributors, as well as contributors.
+
+Since we don't want to carry both a C and Rust version of code and want
+to be able to add new features only in Rust, mention that Rust is a
+required part of our platform support policy.
+
+It should be noted that a recent discussion at the Berlin Git Merge
+Contributor Summit found widespread support for the addition of Rust to
+Git.  While of course not all contributors were represented, the
+proposal appeared to have the support of a majority of active
+contributors.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+[en: Added some comments about types, and changed the recommondations
+     about cbindgen, bindgen, rustix, libc.]
+Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- Documentation/git-rebase.adoc | 5 +++++
- 1 file changed, 5 insertions(+)
+ Documentation/Makefile                        |   1 +
+ Documentation/technical/platform-support.adoc |   2 +
+ Documentation/technical/rust-support.adoc     | 142 ++++++++++++++++++
+ 3 files changed, 145 insertions(+)
+ create mode 100644 Documentation/technical/rust-support.adoc
 
-diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index 6d02648a9b3c..b3354e0e4f82 100644
---- a/Documentation/git-rebase.adoc
-+++ b/Documentation/git-rebase.adoc
-@@ -114,6 +114,9 @@ will result in:
-     D---E---A'---F master
- ------------
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index b109d25e9c80..066b761c01b9 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -127,6 +127,7 @@ TECH_DOCS += technical/parallel-checkout
+ TECH_DOCS += technical/partial-clone
+ TECH_DOCS += technical/platform-support
+ TECH_DOCS += technical/racy-git
++TECH_DOCS += technical/rust-support
+ TECH_DOCS += technical/reftable
+ TECH_DOCS += technical/scalar
+ TECH_DOCS += technical/send-pack-pipeline
+diff --git a/Documentation/technical/platform-support.adoc b/Documentation/technical/platform-support.adoc
+index 0a2fb28d6277..dc71672dcb57 100644
+--- a/Documentation/technical/platform-support.adoc
++++ b/Documentation/technical/platform-support.adoc
+@@ -33,6 +33,8 @@ meet the following minimum requirements:
  
-+TRANSPLANTING A TOPIC BRANCH WITH --ONTO
-+----------------------------------------
-+
- Here is how you would transplant a topic branch based on one
- branch to another, to pretend that you forked the topic branch
- from the latter branch, using `rebase --onto`.
-@@ -240,6 +243,8 @@ As a special case, you may use "A\...B" as a shortcut for the
- merge base of A and B if there is exactly one merge base. You can
- leave out at most one of A and B, in which case it defaults to HEAD.
+ * Has active security support (taking security releases of dependencies, etc)
  
-+See TRANSPLANTING A TOPIC BRANCH WITH --ONTO above for examples.
++* Supports Rust and the toolchain version specified in link:rust-support.adoc[].
 +
- --keep-base::
- 	Set the starting point at which to create the new commits to the
- 	merge base of `<upstream>` and `<branch>`. Running
+ These requirements are a starting point, and not sufficient on their own for the
+ Git community to be enthusiastic about supporting your platform. Maintainers of
+ platforms which do meet these requirements can follow the steps below to make it
+diff --git a/Documentation/technical/rust-support.adoc b/Documentation/technical/rust-support.adoc
+new file mode 100644
+index 000000000000..57a001fa2d7b
+--- /dev/null
++++ b/Documentation/technical/rust-support.adoc
+@@ -0,0 +1,142 @@
++Usage of Rust in Git
++====================
++
++Objective
++---------
++Introduce Rust into Git incrementally to improve security and maintainability.
++
++Background
++----------
++Git has historically been written primarily in C, with some portions in shell,
++Perl, or other languages.  At the time it was originally written, this was
++important for portability and was a logical choice for software development.
++
++:0: link:https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
++:1: link:https://www.cisa.gov/resources-tools/resources/product-security-bad-practices
++
++However, as time has progressed, we've seen an increased concern with memory
++safety vulnerabilities and the development of newer languages, such as Rust,
++that substantially limit or eliminate this class of vulnerabilities.
++Development in a variety of projects has found that memory safety
++vulnerabilities constitute about 70% of vulnerabilities of software in
++languages that are not memory safe.  For instance, {0}[one survey of Android]
++found that memory safety vulnerabilities decreased from 76% to 24% over six
++years due to an increase in memory safe code.  Similarly, the U.S. government
++is {1}[proposing to classify development in memory unsafe languages as a
++Product Security Bad Practice"].
++
++These risks are even more substantial when we consider the fact that Git is a
++network-facing service.  Many organizations run Git servers internally or use a
++cloud-based forge, and the risk of accidental exposure or compromise of user
++data is substantial.  It's important to ensure that Git, whether it's used
++locally or remotely, is robustly secure.
++
++In addition, C is a difficult language to write well and concisely.  While it
++is of course possible to do anything with C, it lacks built-in support for
++niceties found in modern languages, such as hash tables, generics, typed
++errors, and automatic destruction, and most modern language offer shorter, more
++ergonomic syntax for expressing code.  This is valuable functionality that can
++allow Git to be developed more rapidly, more easily, by more developers of a
++variety of levels, and with more confidence in the correctness of the code.
++
++For these reasons, adding Rust to Git is a sensible and prudent move that will
++allow us to improve the quality of the code and potentially attract new developers.
++
++Goals
++-----
++1. Git continues to build, run, and pass tests on a wide variety of operating
++   systems and architectures.
++2. Transition from C to Rust is incremental; that is, code can be ported as it
++   is convenient and Git does not need to transition all at once.
++3. Git continues to support older operating systems in conformance with the
++   platform support policy.
++
++Non-Goals
++---------
++1. Support for every possible operating system and architecture.  Git already
++   has a platform support policy which defines what is supported and we already
++   exclude some operating systems for various reasons (e.g., lacking enough POSIX
++   tools to pass the test suite).
++2. Implementing C-only versions of Rust code or compiling a C-only Git.  This
++   would be difficult to maintain and would not offer the ergonomic benefits we
++   desire.
++
++Design
++------
++Git will adopt Rust incrementally.  This transition will start with the
++creation of a static library that can be linked into the existing Git binaries.
++At some point, we may wish to expose a dynamic library and compile the Git
++binaries themselves using Rust.  Using an incremental approach allows us to
++determine as we go along how to structure our code in the best way for the
++project and avoids the need to make hard, potentially disruptive, transitions
++caused by porting a binary wholesale from one language to another that might
++introduce bugs.
++
++Crates like libc or rustix define types like c_long, but in ways that are not
++safe across platforms.
++From https://docs.rs/rustix/latest/rustix/ffi/type.c_long.html:
++
++    This type will always be i32 or i64.  Most notably, many Linux-based
++    systems assume an i64, but Windows assumes i32.  The C standard technically
++    only requires that this type be a signed integer that is at least 32 bits
++    and at least the size of an int, although in practice, no system would
++    have a long that is neither an i32 nor i64.
++
++Also, note that other locations, such as
++https://docs.rs/libc/latest/libc/type.c_long.html, just hardcode c_long as i64
++even though C may mean i32 on some platforms.
++
++As such, using the c_long type would give us portability issues, and
++perpetuate some of the bugs git has faced across platforms.  Avoid using C's
++types (long, unsigned, char, etc.), and switch to unambiguous types (e.g. i32
++or i64) before trying to make C and Rust interoperate.
++
++Crates like libc and rustix may have also traditionally aided interoperability
++with older versions of Rust (e.g.  when worrying about stat[64] system calls),
++but the Rust standard library in newer versions of Rust handle these concerns
++in a platform agnostic way.  There may arise cases where we need to consider
++these crates, but for now we omit them.
++
++Tools like bindgen and cbindgen create C-styled unsafe Rust code rather than
++idiomatic Rust; where possible, we prefer to switch to idiomatic Rust.  Any
++standard C library functions that are needed can be manually wrapped on the
++Rust side.
++
++Rust upstream releases every six weeks and only supports the latest stable
++release.  While it is nice that upstream is active, we would like our software
++releases to have a lifespan exceeding six weeks.  To allow compiling our code
++on a variety of systems, we will support the version of Rust in Debian stable,
++plus, for a year after a new Debian stable is released, the version in Debian
++oldstable.
++
++This provides an approximately three-year lifespan of support for a Rust
++release and allows us to support a variety of operating systems and
++architectures, including those for which Rust upstream does not build binaries.
++Debian stable is the benchmark distribution used by many Rust projects when
++determining supported Rust versions, and it is an extremely portable and
++popular free software operating system that is available to the public at no
++charge, which makes it a sensible choice for us as well.
++
++We may change this policy if the Rust project issues long-term support releases
++or the Rust community and distributors agree on releases to target as if they
++were long-term support releases.
++
++This version support policy necessitates that we be very careful about the
++dependencies we include, since many Rust projects support only the latest
++stable version.  However, we typically have been careful about dependencies in
++the first place, so this should not be a major departure from existing policy,
++although it may be a change for some existing Rust developers.
++
++We will avoid including the `Cargo.lock` file in the repository and instead
++specify minimum dependency versions in the `Cargo.toml` file.  We want to allow
++people to use newer versions of dependencies if necessary to support newer
++platforms without needing to force upgrades of dependencies on all users, and
++it provides additional flexibility for distribution maintainers.
++
++We do not plan to support beta or nightly versions of the Rust compiler.  These
++versions may change rapidly and especially parts of the toolchain such as
++Clippy, the lint tool, can have false positives or add additional warnings with
++too great of a frequency to be supportable by the project.  However, we do plan
++to support alternate compilers, such as the rust_codegen_gcc backend and gccrs
++when they are stable and support our desired release versions.  This will
++provide greater support for more operating systems and architectures.
 -- 
 gitgitgadget
 
