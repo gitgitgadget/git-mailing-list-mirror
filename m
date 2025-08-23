@@ -1,184 +1,118 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193691E51D
-	for <git@vger.kernel.org>; Sat, 23 Aug 2025 19:24:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42ED221B9CD
+	for <git@vger.kernel.org>; Sat, 23 Aug 2025 19:38:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755977078; cv=none; b=NXQEOm0GzXSc5TiphD7ymvuqK4tZQTBnx32NZ22YAuNM7UvO27oKWN6UoupvIzyVUF7HTmCGWoGQYU1ocpBLkEpedtTfoE+R37yKl/Ke/j6KlwZ+0FwLXDwwUGuliIqhUKc0A9Ht6soKd0UUgx4IXVioeGUgnY1a3qUSzVi0iLk=
+	t=1755977939; cv=none; b=G9PDugRekexj91VcdUoSl5HU1OpoUW6Fu245myWXP3LWgktRd0yduHlppRsHBlf/lUjioWcmvF2J0t3Y/FRMP1eOTbO83/yKl+i0X6Xm+zUGLatZhkntsSYRnEQFsfP7CvZxhf3lbjKCdvUl8eFzHWB7f574zerfjG/NwOmP6B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755977078; c=relaxed/simple;
-	bh=+P3fFrqNE+/6Pfq6BlBwrLZ7xMA1Pr2G5oVtnG+A+6M=;
+	s=arc-20240116; t=1755977939; c=relaxed/simple;
+	bh=f3geSHLQVNFneL5VN/QVwNuavkqbgjYFFgWyoU03jFE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YhsTeEJwBmDVDbS38Q5/yeFP+IUVnN2uaa4K27Fxy4ji6CXSCqqxkoH5wfPS2zo8tMv2AbiYiO+J6h+rSKTqqAkEXbCVRODze1g5oV8qvGNrqPgN2NkzofI3IIpcSiX6/4cji7wm3f/1l6dkGutK2yFBk1seHyfUZAYwjWlBKgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=c07DDUib; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=qZeuPQsJFSxbbjMy9xjdCJuoW5X7QTWmrt20xPUl/VDgSBrMS4DqfNUF8mzaCsXjJsLJ0bW8MJ8f53e+HVa1NmKdvJQgZu2TayQJ/BNDRGA5e7N6Zyl/oHAcOKT4XxrLnvb1iUbzUIOhEJ9FpA91Zvn1BPRS/Mr7MXLgs7bpqEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fIzT0lPx; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="c07DDUib"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1755977074;
-	bh=+P3fFrqNE+/6Pfq6BlBwrLZ7xMA1Pr2G5oVtnG+A+6M=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=c07DDUibDELyYirkPIBocUjhXbEPl6NckKE8t95J4fSgqX7kOcl6ylLXSUk6T+frO
-	 LVXAQ6Tnp1zsEymbssB7jmbHob5Eoh7eOgy3QMH/tuCLirWgP5MN1COh9dpYgAsCPc
-	 qoCbNn+w89zOjzYY7w1ogeR8t1AuHt5mRMUTlInarNPc4Lh+ewRzFK1BcQz14nk7Tt
-	 tp3RL/vSFDgdWndLIyLKw8BUMlbHXr05I9v80PvbhKQYV4cJu0+whTVSxyfn8D9jvV
-	 CQ3FfvtLmyruiOLhiXvSEvGezEYqUUbbJxFC9OBSslfAorAGf0JxpmO/k8jeQHSiZX
-	 ia1cJiok55KMtQR792Q2vre9w6Rplu7NTGKgo+hSDV2Yfkb90I9NOsjQws/C9mycmv
-	 AE8G5/bcwL8tm5KzAPeZxQeSXmOAcm0aORh3HzWLeN3y0QK8LOdpG8SXcmAbO1F1Pg
-	 ZNdEepsmefQQOFoJIxd1nAGbpvV2Q/WMiu3x6+2c4eCmuN/10PI
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:4bca:b344:de61:b896])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 6C041200B4;
-	Sat, 23 Aug 2025 19:24:34 +0000 (UTC)
-Date: Sat, 23 Aug 2025 19:24:33 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Elijah Newren <newren@gmail.com>
-Cc: rsbecker@nexbridge.com,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-	Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>,
-	Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
-Message-ID: <aKoVcVexWi212pAl@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>, rsbecker@nexbridge.com,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-	Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>,
-	Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Calvin Wan <calvinwan@google.com>
-References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
- <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
- <03939951256baaaec3fcc690cfa38ee12fb553ce.1755921357.git.gitgitgadget@gmail.com>
- <030a01dc1433$ee3e2510$caba6f30$@nexbridge.com>
- <4dffd698-9d3c-41c8-9d3f-0d3750e683d3@app.fastmail.com>
- <031601dc143f$7a9a25d0$6fce7170$@nexbridge.com>
- <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fIzT0lPx"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-76e4fc419a9so2834872b3a.0
+        for <git@vger.kernel.org>; Sat, 23 Aug 2025 12:38:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755977937; x=1756582737; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uBZPMhDos5CVDN8LiWrO9HKGIkFH6C9IPD5QJwVFndI=;
+        b=fIzT0lPxGyWu/HyKOQzctngFYVLaitGCAjkGMIHfkwnFVD4iWip7qUuxPXliu3ZeuS
+         PQiocUTwVHe4Dr5O6Qw78kZMDQVaIoy+xM/E1mDdIDE1KURvqBSFnSPihoydfJSOAU03
+         H5tEGApQP5zTMVhD+uRc9RczyS/iICjgGghc/pTzQEdONpGJPgYUgql2uwffIpMM5nbk
+         GJflJ2vsrhT+htE9YKdF9zn1+PyGV1/k8O0cX6Xhp3Wd4hH4AJ+Kx7kV81ytbEr4aaHl
+         tm2ThBWe6eCDHwBUR5buYsXZ0OX7RhmVfbScpwzdg6EvIxb+KPUeLBxhKjJfBofX1V2P
+         1mHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755977937; x=1756582737;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uBZPMhDos5CVDN8LiWrO9HKGIkFH6C9IPD5QJwVFndI=;
+        b=KTN8E0ZkMBiGjLbGAu5EqVmZrH6XzZA5jcg2Elpxg8wW1fjaX2xcdkP+g9QTc2tQaf
+         g1TMlTw1YVnfDYIAnJIRHPsyAiiTk+Y3/vOLbCeenO6vEbGXyWOpB+kicrjN7DJnlVkA
+         wQKzbTWsYppR/jyCd5m4Iz28M3F79yeoS968BGYdAiQpR7zzGVHh7WTroXatMuGVbpMq
+         BZKhRrWTf2qGp0IFV6MC54eVv3EfNGZqGJrljFtC8ZzIHQV+gUQb/q7FT+uQTWeoUv4o
+         PYb070zVOlmtNIKXsfi2T5amnJsAnGJxIjRdjGUlxNW/KaVQmXxDAlqo2a5BAkTLOE3b
+         yEDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXZxHXadBntOMd8+v44xmqT89/Fq4tVXz3jqUMpAJ394DHURnerES3mvjwxlppUPaaLKEk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyNVci8n6qEjuPIrPLfkQD71HSo5QzHXcX/4pbW8+Gew9zolHbp
+	V6miDTY5NdAtH3PBvGeWWPbbzm3LaT6L/MtaDWWSywB4lhCfPEQiLUrm
+X-Gm-Gg: ASbGncv8+NKr74o6I5mQ+mMnjL0V30NAexUS+Jgb2sGWfL4gHhnEeHQBlmQMoYbhnV9
+	PWk1/Krw8RbsnVyTJwCvk8i8z6wpGnbhJatoF1bl42I186Ly1KxNeLZMWy1sMuSwVgGbxme59hm
+	+1DGSQeqtaqDRUVkjpRh67BQEcWRx2wWr+LLzZOw9swZFYfgm9GVcd/wtoO+InSSipt6t+1crIx
+	wL/AnnObG7HlsMk9JQnfum5z+mpLJqC75V0MSCw3VFuhO3IYZkIun+wuKiQxyeh2Jy8Zpz2HmP4
+	yhymzyMxJCOEwTjugClLypP4kOjMaSw1KtUPVsgL5chvKgeoXtuwzmDUrr2sEgNlbRV1yIC2oMp
+	Y1R4EQ4QcHQz7ES7euIyFlA31IebpKFMNvMl59ZS8Pl5JDDK9+7IzuADw+u6ZEXUIYNNlYpjfKA
+	==
+X-Google-Smtp-Source: AGHT+IErho1QzJPvfcNlipOlADIAj/lhuA29V2e4eOy+j+78cxlUTwQHSDzzc4klceIuRXq+mAae6g==
+X-Received: by 2002:a05:6a20:a122:b0:23d:4777:49ca with SMTP id adf61e73a8af0-24340db08c3mr10177101637.34.1755977937324;
+        Sat, 23 Aug 2025 12:38:57 -0700 (PDT)
+Received: from Reys-MacBook-Air.local (c-73-70-17-6.hsd1.ca.comcast.net. [73.70.17.6])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7703ffb9d3bsm3153832b3a.23.2025.08.23.12.38.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Aug 2025 12:38:56 -0700 (PDT)
+Date: Sat, 23 Aug 2025 12:38:55 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>, 
+	Nicolas Pitre <nico@fluxnic.net>, 
+	Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/2] progress: replace setitimer() with alarm()
+Message-ID: <ubouc4oefkouvoikedo2lcui3wgjgjovbilxnf67g76gmrp75e@ujkfg5asyy76>
+References: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
+ <86bf04c7-6315-46ef-8297-42efc3ed322d@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="uVBnN1Km4Glj1vde"
-Content-Disposition: inline
-In-Reply-To: <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---uVBnN1Km4Glj1vde
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <86bf04c7-6315-46ef-8297-42efc3ed322d@kdbg.org>
 
-On 2025-08-23 at 18:30:26, Elijah Newren wrote:
-> I don't think that's fair.  A quick reminder on the history: There was
-> lots of excitement about potentially introducing Rust two years ago at
-> our virtual Git contributors conference.  Taylor formally proposed
-> adopting it on the mailing list a year and a half ago.  And at Git
-> Merge last year, among those in attendance, there was broad
-> significant interest in adopting Rust with unanimous support for
-> letting it move forward among those that were present (which, yes, we
-> know wasn't everyone).  And there's the three rounds so far of this
-> patch series.  At every discussion where you weren't present, someone
-> else would always bring up you and NonStop, and point out how you've
-> been a very positive long-term member of the Git community and how
-> Rust adoption would likely negatively affect you, which would be
-> regrettable.  We waited years to adopt Rust precisely (and I believe
-> solely) because of your objections.  Josh and Calvin even went the
-> route of making optional not-even-built-by-default Rust libraries
-> (libgit-rs and libgit-sys) when they wanted to add some Rust bindings.
-> If years of deference by other community members isn't considered
-> taking you seriously, I don't know what is.
->=20
-> I agree that it is disappointing that there isn't a clear way to both
-> gain the compelling advantages of Rust while also retaining the full
-> current extent of our widespread platform support.  It's doubly
-> unfortunate since you're such a positive contributing member of the
-> community.  But not allowing us to ever gain the advantages of Rust is
-> problematic too.  So, a decision has to be made, one way or the other.
+On Sat, Aug 23, 2025 at 06:24:57PM -0800, Johannes Sixt wrote:
+> Am 23.08.25 um 15:22 schrieb Carlo Marcelo Arenas Belón via GitGitGadget:
+> > The first patch does the minimum changes required to swap the underlying
+> > function, but introduce a race condition that is addressed in the second
+> > patch.
+> > 
+> > A third patch that does further changes to the Windows compatibility layer
+> > was punted.
+> > 
+> > Carlo Marcelo Arenas Belón (2): progress: replace setitimer() with alarm()
+> > progress: add a shutting down state to the SIGALRM handler
+> > 
+> After having looked at the progress code for a bit, see this:
+> 
+> We use SIGALRM to raise a flag that tells the progress code to act in
+> some way. The progress code does not act asynchronously, but only when
+> there is an opportunity to look at the flag, i.e., it acts synchronously
+> in response to a third party (SIGALRM) that told it that it's time to
+> act.
+> 
+> But we can change the progress code to do the time keeping itself.
+> Instead of looking whether a flag was raised, we can let it look at the
+> wall clock and check whether an interval has elapsed.
 
-I think it's worth saying that I do appreciate your (Randall's) positive
-contributions as well and I would love some way to continue to support
-NonStop as we adopt Rust.  To be clear, I care deeply about portability:
-I have owned PowerPC, UltraSPARC, MIPS, and ARM hardware, and I test
-many of my personal projects on at least Linux, FreeBSD, and NetBSD.
+This is an even better approach indeed, and will lead to an even nicer
+cleanup in the Windows emulation code.
 
-There is an alternative Rust compiler, mrustc[0], which is written in
-C++ and that I have played around with to see if it could meet our
-needs.  I've been very busy lately and haven't had the time to test it
-out fully, and although it will likely require some upstream changes for
-static libraries and a compatibility wrapper because its minicargo is
-very limited in functionality, it might be an option that we could
-leverage.  There will necessarily be work on Rust upstream as well, but
-I'm hoping that mrustc will at least open doors for us.
+> A prototype implementation looks like the patch below. It works quite
+> well for `git clone` on Linux. I have even lowered the interval to 1/8th
+> of a second to get more frequent updates. After a change like this, we
+> can remove all the creepy SIGALRM/alarm/setitimer stuff.
 
-I also think that Rust is becoming a more and more common language in
-technology because of its interoperability with C and its memory safety.
-The support policy I wrote up explains why there is an increasing push
-=66rom governments, security professionals, and the technology industry
-for memory-safe languages.  If Git is to continue its success and broad
-adoption, we don't want it to be labelled software that is using
-security anti-patterns, and we also don't want it to be a CVE factory
-like libxml2 or ImageMagick.  This is the reason I ultimately started
-work on the SHA-256 project many years ago: I knew we'd need to do it
-for security reasons and that without a more secure hash algorithm, Git
-would eventually be dropped.
+Would you mind cleaning it up and making it a patch I could rebase on?, or
+would you rather finish it off, since you also know the Windows parts better?
 
-My hope is that NonStop can find some way to support Rust because I
-think it's a compelling language and NonStop would greatly benefit from
-the wider variety of software available.  My sense of previous
-discussions was that we do very much want NonStop to continue to come
-along as we support Rust in Git and that if there are ways we make it
-easier for both, we'd want to do that.  That's certainly my view, at
-least.
-
-[0] https://github.com/thepowersgang/mrustc
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---uVBnN1Km4Glj1vde
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaKoVcAAKCRB8DEliiIei
-gQxtAQC0GqtiT09QetoQG6mg76ld9bY/dWPFYDXigPV9V/o+6QD+Mg8tmnpODD1Z
-VlBrrXLXnCpkQ6jnmuIfgoPUwfTZtQo=
-=HpXW
------END PGP SIGNATURE-----
-
---uVBnN1Km4Glj1vde--
+Carlo
