@@ -1,153 +1,117 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DCC157A48
-	for <git@vger.kernel.org>; Sat, 23 Aug 2025 09:12:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B98C1E9B37
+	for <git@vger.kernel.org>; Sat, 23 Aug 2025 09:29:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755940337; cv=none; b=orbWwATsVXo8yTxOftqiogax89Xy43owx76iYZa3mD/g/ORKWaNRF/a8b7yKfFuegxcKFMaR1kAUqUVMrp7DWRmySdzj/mjGUgmk6TJV7eqppWvaDy9P4UtrEmeR2HNWz0g/fg2uu2IDIhDdsrFFDAicxQT0OXu2gjMemKT/JfQ=
+	t=1755941357; cv=none; b=pBS8cGLEEv5LXj4BVZs5+pULzZPKZLCQwR9SyiCoZAC8GeuM92eVD9IS2nMQwlWqJiAMjN7y6/LVW8NGAz2saEgV4dDaBrzMai4xgpluTXmdSdVSzyw21P3Hv0G7UxU8vCDpJzijneppd/ovyzpNYz1S45GJW+mDSFbmdZwxayI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755940337; c=relaxed/simple;
-	bh=Mn4EcVr0vCQ1OWLC0z8bYRjOcr0uGG2FsLBmr0XFidw=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ltTAqYIBNK+UfDqStQRX9c+Pe0NC+2N0TVI6uwXJft9zg0X2qtJoN0tT2QtNTtikXxoFQ9bvpJm1cDby2mxN1FcIJmYCKXjsHhJNzCLdWCszNb9Ql51mOpVbyDc4LnPxrzn0qaaMYzv+4EXmVhkDTy9Fc1wU51a8VY7cOLxW9xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FfO+RHev; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1755941357; c=relaxed/simple;
+	bh=B7RPbEE1ZQYXyblG0NjgXRaOYP3BdT5PQSywilnkm38=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cSGPBMMCQ9kayIt+G3Hi2uksQru5Kh/s7cPe8hE4VLO+9kLRiA9b12UqMk2w+EhoQRjJTSkWRmgD+xz9AwTFiMDfdWd8hLviS7/cVeBdaXuGORylJlVfNylcSYnze468lypaxL+2PtODquW7s0k1TM3Kq/J+uMLQ/T9+o7fx0KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=guXUT8pQ; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FfO+RHev"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45a1b00e4a1so23199355e9.0
-        for <git@vger.kernel.org>; Sat, 23 Aug 2025 02:12:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="guXUT8pQ"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3354b208871so21292301fa.1
+        for <git@vger.kernel.org>; Sat, 23 Aug 2025 02:29:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755940333; x=1756545133; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1755941354; x=1756546154; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+3nPnaXt7uZ3oWD1GvshwYMdIoqQ42suKPLivKVeNsU=;
-        b=FfO+RHevK7Qlb1gSytan+hckCsWwBzG33ANdLZuO7qudKwxqBA+FUlnXxchhJBMO0x
-         GpaFleqNWcXImLK5685JmHINUQExtUWjh+QOMlJ09fj+F7jtZre0LRc/0rOSMiznXP4C
-         2bh4vYOSW3Oa/2IJ6E2HMpCSOu1RI4QPrVfl6e6Bdsj466i2OmN34Uq1A9hlarkKgzAF
-         oPLr5UlQrZpwVKXXm8Z2zu9IPmrQnZOEgzN6T0dOMrrP+0pzyU1gKRrfXSmMRDBCeMPX
-         kNf6pJptf7sZp4KA0g5MqfJQIIEbLrPl3Tj7oDLW9NXVBxcuW3YYSy2hj+huM8Q+UjNL
-         Tj6g==
+        bh=sExYj1Zu9HEkx5CrTNigciGyoVqO8L8xBO0IT2YYGEM=;
+        b=guXUT8pQoWac1jxdCrvngzklZdhdXNy3BhNQLIIJNgTfbeqZyCQxMbFH9UI+hdyR68
+         w4CsxP28kIHPH/dfSkqGhHS0i2Et0GADLp3cjFadMftrngKqhc/y2ksTR0xh6dkQ8SEJ
+         /oedxKArj/nkMBfGygeIElqU6/5PE4RIAe/0MHyoDjJa3J5UUtRF7y6E39dIORRpgZXs
+         AK1ZQ3dKSzE4Es0MQYOQ24+TEqHIJwwQxkRMtDSSQIIpfolueOwdiX0hXDXRolmLGXsu
+         T77nvQpTsm3i9oGGZN9vX6/AWw00nC3FvREV+U3JSYiWKtA2Doxh5HDJ5Gk9/arJuJV2
+         Sokw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755940333; x=1756545133;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1755941354; x=1756546154;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+3nPnaXt7uZ3oWD1GvshwYMdIoqQ42suKPLivKVeNsU=;
-        b=HLecBeCihGOiaBGgHBwExUyjVjkbsTj+x/NAsY/k9olM0FY9LFluE9JHaTllo/+FvM
-         jQldU09yYJ1W5fxkOQzTZfRji2KNfa98MR4J7Yh93EU2ywjFtqYb/4rVavtvz6l5ZlRo
-         RBe5TLbuUpvFUw2mLjpE4ze+B6q53eGKOr8/s6SNolMz4jjkXtYPJc/TyoFfxZAM5JjG
-         T8hf5Hw950XnXQVWMM8arLHN7MoweQLuTswwlthBH9DNmmloAq5bpPyXX5/DXwQZhkun
-         SchsLEUkZ+1s9kNLhASNl6i3RD7ZgkuUNnuw4h7Khv7dWUyQn6SpGopfE6c7tSehzBV0
-         DngA==
-X-Gm-Message-State: AOJu0YyJMVsWx44Fecn7kcKDQYaQWb+0T8B/337LDvtMbUFtbwPfbmrn
-	2v3JeYek3I/cQIqckVD4g2AgCGYxIgzQfftjo2c8B54F5XzldFGmF5Ss1x+JCQ==
-X-Gm-Gg: ASbGnctok8WV1O5eC4nwZazOTDTEMviLwD30doMWYTcTmuMF17wD11ZLMsyw12U6K0O
-	7xgNIoNHFMHLBOBSeGFrsth8/li12k9pBhGz+pzMQPLGsxHwC0W2PBnLZt4z9WUZ4IfOP9WG8ab
-	j//88UqPpq0OmfHSb3/2E2Cg21cW5NRBskfje6evrYGTiUm1DBNU+ajegau5g7ZJEMSay/rY8IT
-	7+3E/kPMi2o949D9nBMWvgoaKtbkYLG+QM6aQy1YwVgkZq4d0fB4reywfg3AW07l7LJOq4qBH6E
-	TMMQPbZBP9koK70s0rW0ULTom0ZL32RPJRChjKD3x3I3dSQZ5MYUw99PVesSzHCdV1mDC8ZPgiJ
-	Gg8FbzY9DU5ghTnZpebrPQ9Z7408=
-X-Google-Smtp-Source: AGHT+IENGJZIXvcfRs9Sd5Fu94mBp38lt8SitanYZ5Uvsf/19E1pABdqdA8BR106YgN156Z/Oq+yrg==
-X-Received: by 2002:a05:600c:3147:b0:459:d408:d890 with SMTP id 5b1f17b1804b1-45b517db8e6mr54901455e9.33.1755940332973;
-        Sat, 23 Aug 2025 02:12:12 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b4e2ba619sm53015045e9.4.2025.08.23.02.12.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Aug 2025 02:12:12 -0700 (PDT)
-Message-Id: <pull.2034.v2.git.git.1755940331248.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2034.git.git.1755630882418.gitgitgadget@gmail.com>
-References: <pull.2034.git.git.1755630882418.gitgitgadget@gmail.com>
-From: "Daniele Sassoli via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 23 Aug 2025 09:12:11 +0000
-Subject: [PATCH v2] doc:clarify which remotes can be used when contributing
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=sExYj1Zu9HEkx5CrTNigciGyoVqO8L8xBO0IT2YYGEM=;
+        b=gt24ez8qaewyoa+VDGwBejsIpHuNwryLyOSc/qXD2aycVXJtgYKCUbfRZA3wXbpqg7
+         ZUkkruPZh1CtFa/KTDPK5EZDbgfs2+Fk3eT4sZfKJ21brFXqRsFQ3FcLjjq9p2HBHtn2
+         DjD8Abq8zE5tLcA/9up9KhOmnx2aHa8x1AZ+TfsO4m+QO/iJoiVh9FeJE696F/RVUIzx
+         089fpZ71NLOOm0ChbhUmeZbwakDlfv3eCuedDxtw4w/9N5AlxMdGuDtQ2iu5QPoIQSFk
+         FVTqnBJ++nZe5lc3PPjDdAujqrBqOTb7bWhCs4QovpzaCXGPIAKSCRZ9aA/ZWdN6Jhf0
+         2/nA==
+X-Forwarded-Encrypted: i=1; AJvYcCUqKKwYsGU61Gf3JT9IYImjO2cBYElfZOnb8enL0XUREdeaOPiq9zw8Oc/xblZTimibJr4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzxhB4w69p/viGEuxflbFgyRkKEdUo818tPFGxf23w9T6WevPhe
+	8Bd2r9OFNqJepUWBcTcnwYtZoI0dPEMfP9nmMoPwkTYGxRCW/y9CeMCHX1S41qgt4lFU9H5Al+r
+	XT1JQ2bfz/1wJ4SIHqs3cUU8cajYRc78=
+X-Gm-Gg: ASbGncsmv/PhAGAYvfJ9XSC2IlN2F0R62MgNF03uj2uuugx9V/Plarm9R3vnF9Z69Oy
+	0g4tUy7EgwsgJqux+PTHD/d8ziBKnC+HbZqZok/NUoESVUH2AYPOagfXAflJ/38eES0e1IkhdIP
+	hnVQ/ZEfGx3jeEfbThclDuDccx5V+oZBmRAmsIRePosWmiYZV4Kkd1fiv9QdR0yNojKrqWTdjyA
+	xksSBku
+X-Google-Smtp-Source: AGHT+IFCVUoohjKzJOEq8i16jzARrNz2WaFS2KTEHy0Rb9R8NkthSCieIl+Me/TKV285SVFBCQMyj56OE0O5rLHEX80=
+X-Received: by 2002:a05:651c:23c8:20b0:336:51d4:16ba with SMTP id
+ 38308e7fff4ca-33651d41c26mr11069761fa.40.1755941354203; Sat, 23 Aug 2025
+ 02:29:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Daniele Sassoli <danielesassoli@gmail.com>,
-    Daniele Sassoli <danielesassoli@gmail.com>
+References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
+ <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com> <db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
+ <ed31658a-9241-4d75-a086-633448b711a4@app.fastmail.com>
+In-Reply-To: <ed31658a-9241-4d75-a086-633448b711a4@app.fastmail.com>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Sat, 23 Aug 2025 03:29:03 -0600
+X-Gm-Features: Ac12FXzTBFWt3mLqa33QA9FTQNyv88-dW25qmwwrP1_MxJVZlONddGfGBzidxoM
+Message-ID: <CAH=ZcbBCg8837kN9LjvdRtgVWL9vP=EDYw04wEPZxO6NLscbGg@mail.gmail.com>
+Subject: Re: [PATCH v3 06/15] ivec: create a vector type that is interoperable
+ between C and Rust
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
+	Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>, 
+	Mike Hommey <mh@glandium.org>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Daniele Sassoli <danielesassoli@gmail.com>
+On Sat, Aug 23, 2025 at 2:13=E2=80=AFAM Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
+>
+> On Sat, Aug 23, 2025, at 05:55, Ezekiel Newren via GitGitGadget wrote:
+> > From: Ezekiel Newren <ezekielnewren@gmail.com>
+> >
+> > Trying to use Rust's Vec in C, or git's ALLOC_GROW() macros (via
+> > wrapper functions) in Rust is painful because:
+>
+> nit: s/git's/Git's/
+>
+> > [snip]
+> > diff --git a/rust/interop/src/ivec.rs b/rust/interop/src/ivec.rs
+> > [snip]
+> > +        // assert_eq!(vec.capacity, vec.slice.len());
+>
+> Why are there three commented-out assertions? (all capacity/length)
+>
+> > +        assert_eq!(expected, vec.length);
+> > +        assert!(vec.capacity >=3D expected);
+> > +        for i in 0..vec.length {
+> > +            assert_eq!(default_value, vec[i]);
+> > +        }
+> > [snip]
+>
+> --
+> Kristoffer Haugsbakk
 
-The docs mostly point to using git/git as one's remote, however, when it
-comes to Sending a PR to GitGitGadget section, the reader is told to use
-gitgitgadget/git, with no mention of git/git, potentially leading to
-some confusion.
-
-Clarify that both gitgitgadget/git and git/git can be used, albeit with
-some differences.
-
-Signed-off-by: Daniele Sassoli <danielesassoli@gmail.com>
----
-    doc:clarify which remotes can be used when contributing
-    
-    cc: Elijah Newren newren@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2034%2FDanieleSassoli%2Fclarify-remote-to-use-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2034/DanieleSassoli/clarify-remote-to-use-v2
-Pull-Request: https://github.com/git/git/pull/2034
-
-Range-diff vs v1:
-
- 1:  850097696a4 ! 1:  b34070c03e3 doc:clarify which remotes can be used when contributing
-     @@ Documentation/MyFirstContribution.adoc: Now you should be able to go and check o
-       
-       In order to have your code tested and formatted for review, you need to start by
-      -opening a Pull Request against `gitgitgadget/git`. Head to
-     -+opening a Pull Request against either `gitgitgadget/git` or `git/git`, depending
-     -+on which mirror you initially cloned from. Head to
-     - https://github.com/gitgitgadget/git and open a PR either with the "New pull
-     - request" button or the convenient "Compare & pull request" button that may
-     - appear with the name of your newly pushed branch.
-     -+If you're using https://github.com/git/git as your remote, you will need to
-     -+open the pull-request from your fork, selecting `git/git` as base.
-     +-https://github.com/gitgitgadget/git and open a PR either with the "New pull
-     +-request" button or the convenient "Compare & pull request" button that may
-     +-appear with the name of your newly pushed branch.
-     ++opening a Pull Request against either `gitgitgadget/git` or `git/git`. Head to
-     ++https://github.com/gitgitgadget/git or https://github.com/git/git and open a PR
-     ++either with the "New pull request" button or the convenient "Compare & pull
-     ++request" button that may appear with the name of your newly pushed branch.
-      +
-      +The differences between using `gitgitgadget/git` and `git/git` as your base can
-      +be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
-
-
- Documentation/MyFirstContribution.adoc | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index aca7212cfe2..bbb7b45bd4a 100644
---- a/Documentation/MyFirstContribution.adoc
-+++ b/Documentation/MyFirstContribution.adoc
-@@ -908,10 +908,13 @@ Now you should be able to go and check out your newly created branch on GitHub.
- === Sending a PR to GitGitGadget
- 
- In order to have your code tested and formatted for review, you need to start by
--opening a Pull Request against `gitgitgadget/git`. Head to
--https://github.com/gitgitgadget/git and open a PR either with the "New pull
--request" button or the convenient "Compare & pull request" button that may
--appear with the name of your newly pushed branch.
-+opening a Pull Request against either `gitgitgadget/git` or `git/git`. Head to
-+https://github.com/gitgitgadget/git or https://github.com/git/git and open a PR
-+either with the "New pull request" button or the convenient "Compare & pull
-+request" button that may appear with the name of your newly pushed branch.
-+
-+The differences between using `gitgitgadget/git` and `git/git` as your base can
-+be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
- 
- Review the PR's title and description, as they're used by GitGitGadget
- respectively as the subject and body of the cover letter for your change. Refer
-
-base-commit: 1fa68948c3d76328236cac73d2adf33c905bd8e3
--- 
-gitgitgadget
+Good catch, I should have removed those commented out lines. Looking
+back through the code I also missed calling std::ptr::drop_in_place()
+if the IVec shrinks. I'll apply those changes in the next version.
