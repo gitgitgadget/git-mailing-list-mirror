@@ -1,69 +1,69 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C471FCD1F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D203205E26
 	for <git@vger.kernel.org>; Sat, 23 Aug 2025 03:56:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755921365; cv=none; b=K3P1CLJKHYu8IH4q/cJD8VJxzH4MtOliq5XMGikGumzgekxWhiJlGjQn0F0oT8pFVwR+XiyxARZPZP/9b7S753+UdrGD25DxEj62UEv0ZtUnO7IJzRW2USA52Y8t9mqYU790l9Pi/w1tRdxHGbd3D7XkBKGDnXvlss5DtsLoCkQ=
+	t=1755921366; cv=none; b=urPOMRu/K3kGD/7hYgx0fpiJjpuE+lXmcyfpvCa99hwSpjCDgtUxBsLJG7mxXIB/EUBqB3Us27Pyo6gu/kX5ui6sTJaRDwYm4F+FF0sDFot8iBO4DtETXE5FbCUwgio9XoGW4CE46F/bJC4tBgvpZYE8iwOs+3MkEay2ZB641Yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755921365; c=relaxed/simple;
-	bh=5QreLwpsae7XfGisbQUhSGbHyDdwRGAZOPNmBHU/VFA=;
+	s=arc-20240116; t=1755921366; c=relaxed/simple;
+	bh=72NjIrnZi7l6khB+RDjxUR3MI7LapWGWjlj6gTefHtM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=GpGeHSayAnx37BWnJaDE02QGtSz0kqrxzvrNeXEKzMyEEekIGGoo879APMQW8ueH4CnNkJe9qoxd82P5wnGCIbkOwZKoO3vZleaNghhYpCr7NujLyxoP+01RSmE46gIHkEi+fvCHA/QOfHT92/wBntnED4o8fyf2dKcDQGRc85c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GqJG5bdM; arc=none smtp.client-ip=209.85.128.44
+	 MIME-Version:To:Cc; b=VQlw01BLSKl2kMVASaE/148hy/huptRiwRPwywqEeaIweB2JATQEPoyBw2QAwhG+0JkVFJUBAaB9mPX7FEPU7TVBJswTkQK4h4/czClg/vucI446PUsx4ex3Afao9TgCml3ZlTI6e4+RLzJkFuZvlBe171D5AL3dBn1RiCfplNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BajHQPeC; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GqJG5bdM"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45a1b0c52f3so16885495e9.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BajHQPeC"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3c763484ccdso89489f8f.0
         for <git@vger.kernel.org>; Fri, 22 Aug 2025 20:56:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755921361; x=1756526161; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755921362; x=1756526162; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HHRj3oRXjHnqgDFRuIqUSOQJyAXO/RVtIHQ0obNKpr8=;
-        b=GqJG5bdMzlaWVgHMHl9jA586jjIN+l8GcTt+JOmUhZOv0UUEaNtKjDUDmMWCrbUEF9
-         P3Lm4SXWINV7SFKPdy/M0cv2meZQJJvSVjyC526QomGyxJiEtWdsSfXw7G9eODWEu7+M
-         kd9aRuSMf40AOlYdb3ccBwlOyvMO9ynD99gjL5z6Yvta0laS6YG5PHfzygRJqcb80Aaw
-         xrAHjMn09krBhg5HRW/3TEt4c1g6xw9b8eaFbt240LhtlufC+MgWpnoqNvUZvHog8fbM
-         1ytn2OaQwZKGH9l4ohWXNxJaaZQbfrTeBvKl4W2eVSW/9r6Qz9KPPrd4xNouBS0q92rc
-         0zhA==
+        bh=DPUPCZT4ujn8EGmaUAJ/YDQXZWRpAPu4aBjS2hFp69k=;
+        b=BajHQPeC7PW3ku79p2WNqRt1wDFJstAIFTnK8nacQJzpshqdeUuM1hE3hy0thbH5fQ
+         KalI5ExVfWzrTg4cDmwyHt2BM3WV+7gqBTa9tvmGY0p5yqLdaY7VrPTsp0HXe1IUNjnV
+         rpZ6EQakW4rxsAJKXpHoXpr12xaHLk9aLdyER6MfQxnRFH48kOmoHhPCLaqiY28VAmLA
+         Tx2Y/sbktCnWecx40jikCQ/BcsHYzxEMyy5W8OzKQBovZgh1IiFZznC1vrdyGkMaFzwo
+         sFVponoO0mgdmb5n59NZgaazqpw5DT4Xd24TZxMFy/GwVlCR/OzqeTcM1+2eYWZi1dsC
+         W8vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755921361; x=1756526161;
+        d=1e100.net; s=20230601; t=1755921362; x=1756526162;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HHRj3oRXjHnqgDFRuIqUSOQJyAXO/RVtIHQ0obNKpr8=;
-        b=czQZDI/HbOdDrviYG04eSBrc1YjYCBAMq1bn9zocEKowC4Xb3vpfohSXnn+CoORXKb
-         7VXPM7on+JsW3k0VwGudjAB67vfypvOds/GcsOeKnM7w36kf+iarjOwo7TMqrkLIzeS1
-         KbAKs5fEIt8ZevKrRsuNVmUpSECwlakNsfKpTru8EmKBzGP9M4cwP2DofzRc/20An9Q9
-         xzWwYbOm+cugN4aBOqse2a1LP5+YlOomUAdvjIdWxQPxrlcweDWJGsmeK2269FXZZECD
-         1lXGi/RhTw/JSjntFg43nBjWCdaXLygkwzbgXfdZGU64Pqt7OdjrkVB8qOlZIq0jiAYt
-         dDPA==
-X-Gm-Message-State: AOJu0YwHx2fp6iivIbfElrT6yxpuNW+DBXdMFtP98UEmlYB9fVqiEsDN
-	3qvN+NkT0diF26XhS8BvpQvTNiaGFCybdSXmUyGPOgbUWrF9bRYDKwPEPDTMEw==
-X-Gm-Gg: ASbGncv0Md1R3HVxVHcMNX7z+2VWG5lT/xHMkX4ojhYTQmCk1TMO+udF4Fs2pve7Mu4
-	E2HPOh0cKAJGHL3lejJ482J9b2b7IuoUVIuD4dVLWnA/T/cIsftLqb1t5kS+eQyE6v33XyZrS4D
-	Af0VOxuR3N+Dhc0ka8kBLJNOe+Gkl6+g957HrlpsSK/yoYoEc1WeL/6MDvHu2DsE4cKlLa+eBle
-	GAMKHTyjLn+lY0kkQ9y5w/LkuQmajxdkkAgzjhsf1ysXnNjQiJqmt0YvCX5BH4zSDzJeq0YzXVr
-	y0bit0S8/5ziT2nkq80Ka058rjxJ35SaXCuKWDqsTLeK1V6BNTnKg68sWEv0+HEAPaxQnw3NTAV
-	F94uurarsMkJZi25Slu+cYtxLbx0=
-X-Google-Smtp-Source: AGHT+IH0sg9diE1bk639uCmJWaPfV4K0mbinDIdIdq+tcQ6+4n1pXasTzLeDOTM5ZeTGDRGOcyOURA==
-X-Received: by 2002:a05:600c:4e8f:b0:459:e370:d065 with SMTP id 5b1f17b1804b1-45b5179f623mr40271615e9.15.1755921361145;
-        Fri, 22 Aug 2025 20:56:01 -0700 (PDT)
+        bh=DPUPCZT4ujn8EGmaUAJ/YDQXZWRpAPu4aBjS2hFp69k=;
+        b=iqh42J7vkpfoqFpFecP2/MeYhZPZ8LfTQE85r4PMjb3XMhO/tLvtwK1uKQcmPZNMBW
+         VwQFyCZfvdnGRFwTObQBcR97d1DA/NunZwHRlkzse6xICIlZpU7vgEOlHKiTl2msnkwA
+         Q0/xOkohwpkDLsK3YhJIy8UElfBlJmBtMu0OdqNxTATKvxlk0sblMcmM7YrlPu/xXOZk
+         LV5gbXq3lvIhaejPIC2vt7Kvd6niGVEtZydW8SnEG5ynOZFYSfL2SumUUn59LKec/chs
+         jP0ZnfApVOvE1WbulS869Ca+hNXMNWUcRIQ02UgqIS4dPemlEcmtnG5TMENJmdmAdgN8
+         /Tlw==
+X-Gm-Message-State: AOJu0YyoD89qtpfqnHzH1RWmid7ELbzXeEsTELfoA2toXcEAXQr8NcoF
+	g/JJIsoT6vLo5LdVDYBIdzmFUtABWK2J6eCHKXkHoaHzxzmk9mSoYFeoOU6BTw==
+X-Gm-Gg: ASbGncsEi4Rz9XY6/Oqk4Rjo3XUHh8Leqfag2T4hGfmrbUL01zIKJ57v0xVSTDRNT/i
+	wZuMPmBa6UZ3VbUDhCH5gYU3GcCosokbwgIzmCAegQPkWU8bhIbLn/0LZpa7oblyYN+Y7XO5nAS
+	jvkKtgJV71lkXWpSvzVdXVMMMyeSpyzK3P94HbUh7obmGlK8MCkLDftrRF28XypDAUgh4kqldnu
+	aWL+C5VRvkbfM8Vm8I/jSBB0/qMFnT7ZpCB177SkpuA1aTqC1RQDUGra3BYgT1bfu/LZrEVwuFZ
+	n6M/fBrkzQ7sRRcHehvoNA1mZ/pCULEn4BIoBl99RWgQkz6DdIpHadaC1P3O14MnF8XQmxdlBas
+	rMomWygQB1V9BmABM3m89Low3yBs=
+X-Google-Smtp-Source: AGHT+IE92tYuJ0325weEB8feqJkb0Kk2Pq1Bxbx+dHvDErh5XlpTk+r4NBAGGzWw2fTI+F5vSMlE7g==
+X-Received: by 2002:a05:6000:2509:b0:3a4:cec5:b59c with SMTP id ffacd0b85a97d-3c4b0c15702mr5501813f8f.25.1755921362035;
+        Fri, 22 Aug 2025 20:56:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b57444b2fsm21393945e9.5.2025.08.22.20.56.00
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c70ef568e5sm1814309f8f.25.2025.08.22.20.56.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 20:56:00 -0700 (PDT)
-Message-Id: <6d065f550fe871cf010409f7bd2a63438cf52723.1755921357.git.gitgitgadget@gmail.com>
+        Fri, 22 Aug 2025 20:56:01 -0700 (PDT)
+Message-Id: <03939951256baaaec3fcc690cfa38ee12fb553ce.1755921357.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
 References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
 	<pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
-From: "brian m. carlson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 23 Aug 2025 03:55:42 +0000
-Subject: [PATCH v3 01/15] doc: add a policy for using Rust
+From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 23 Aug 2025 03:55:43 +0000
+Subject: [PATCH v3 02/15] xdiff: introduce rust
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -91,219 +91,414 @@ Cc: Elijah Newren <newren@gmail.com>,
     Ben Knoble <ben.knoble@gmail.com>,
     Ramsay Jones <ramsay@ramsayjones.plus.com>,
     Ezekiel Newren <ezekielnewren@gmail.com>,
-    "brian m. carlson" <sandals@crustytoothpaste.net>
+    Ezekiel Newren <ezekielnewren@gmail.com>
 
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-Git has historically been written primarily in C, with some shell and
-Perl.  However, C is not memory safe, which makes it more likely that
-security vulnerabilities or other bugs will be introduced, and it is
-also more verbose and less ergonomic than other, more modern languages.
+Upcoming patches will simplify xdiff, while also porting parts of it to
+Rust. In preparation, add some stubs and setup the Rust build. For now,
+it is easier to let cargo build rust and have make or meson merely link
+against the static library that cargo builds. In line with ongoing
+libification efforts, use multiple crates to allow more modularity on
+the Rust side. xdiff is the crate that this series will focus on, but
+we also introduce the interop crate for future patch series.
 
-One of the most common modern compiled languages which is easily
-interoperable with C is Rust.  It is popular (the most admired language
-on the 2024 Stack Overflow Developer Survey), efficient, portable, and
-robust.
+In order to facilitate interoperability between C and Rust, introduce C
+definitions for Rust primitive types in git-compat-util.h.
 
-Introduce a document laying out the incremental introduction of Rust to
-Git and provide a detailed rationale for doing so, including the points
-above.  Propose a design for this approach that addresses the needs of
-downstreams and distributors, as well as contributors.
-
-Since we don't want to carry both a C and Rust version of code and want
-to be able to add new features only in Rust, mention that Rust is a
-required part of our platform support policy.
-
-It should be noted that a recent discussion at the Berlin Git Merge
-Contributor Summit found widespread support for the addition of Rust to
-Git.  While of course not all contributors were represented, the
-proposal appeared to have the support of a majority of active
-contributors.
-
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-[en: Added some comments about types, and changed the recommondations
-     about cbindgen, bindgen, rustix, libc.]
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- Documentation/Makefile                        |   1 +
- Documentation/technical/platform-support.adoc |   2 +
- Documentation/technical/rust-support.adoc     | 142 ++++++++++++++++++
- 3 files changed, 145 insertions(+)
- create mode 100644 Documentation/technical/rust-support.adoc
+ .gitignore              |  3 +++
+ Makefile                | 53 ++++++++++++++++++++++++++++----------
+ build_rust.sh           | 57 +++++++++++++++++++++++++++++++++++++++++
+ git-compat-util.h       | 17 ++++++++++++
+ meson.build             | 52 +++++++++++++++++++++++++++++++------
+ rust/Cargo.toml         |  6 +++++
+ rust/interop/Cargo.toml | 14 ++++++++++
+ rust/interop/src/lib.rs |  0
+ rust/xdiff/Cargo.toml   | 15 +++++++++++
+ rust/xdiff/src/lib.rs   |  0
+ 10 files changed, 196 insertions(+), 21 deletions(-)
+ create mode 100755 build_rust.sh
+ create mode 100644 rust/Cargo.toml
+ create mode 100644 rust/interop/Cargo.toml
+ create mode 100644 rust/interop/src/lib.rs
+ create mode 100644 rust/xdiff/Cargo.toml
+ create mode 100644 rust/xdiff/src/lib.rs
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index b109d25e9c80..066b761c01b9 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -127,6 +127,7 @@ TECH_DOCS += technical/parallel-checkout
- TECH_DOCS += technical/partial-clone
- TECH_DOCS += technical/platform-support
- TECH_DOCS += technical/racy-git
-+TECH_DOCS += technical/rust-support
- TECH_DOCS += technical/reftable
- TECH_DOCS += technical/scalar
- TECH_DOCS += technical/send-pack-pipeline
-diff --git a/Documentation/technical/platform-support.adoc b/Documentation/technical/platform-support.adoc
-index 0a2fb28d6277..dc71672dcb57 100644
---- a/Documentation/technical/platform-support.adoc
-+++ b/Documentation/technical/platform-support.adoc
-@@ -33,6 +33,8 @@ meet the following minimum requirements:
+diff --git a/.gitignore b/.gitignore
+index 04c444404e4b..ff81e3580c4e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -254,3 +254,6 @@ Release/
+ /contrib/buildsystems/out
+ /contrib/libgit-rs/target
+ /contrib/libgit-sys/target
++/.idea/
++/rust/target/
++/rust/Cargo.lock
+diff --git a/Makefile b/Makefile
+index 70d1543b6b86..1ec0c1ee6603 100644
+--- a/Makefile
++++ b/Makefile
+@@ -919,6 +919,29 @@ TEST_SHELL_PATH = $(SHELL_PATH)
  
- * Has active security support (taking security releases of dependencies, etc)
- 
-+* Supports Rust and the toolchain version specified in link:rust-support.adoc[].
+ LIB_FILE = libgit.a
+ XDIFF_LIB = xdiff/lib.a
 +
- These requirements are a starting point, and not sufficient on their own for the
- Git community to be enthusiastic about supporting your platform. Maintainers of
- platforms which do meet these requirements can follow the steps below to make it
-diff --git a/Documentation/technical/rust-support.adoc b/Documentation/technical/rust-support.adoc
-new file mode 100644
-index 000000000000..57a001fa2d7b
++EXTLIBS =
++
++ifeq ($(DEBUG), 1)
++  RUST_BUILD_MODE = debug
++else
++  RUST_BUILD_MODE = release
++endif
++
++RUST_TARGET_DIR = rust/target/$(RUST_BUILD_MODE)
++RUST_FLAGS_FOR_C = -L$(RUST_TARGET_DIR)
++
++.PHONY: compile_rust
++compile_rust:
++	./build_rust.sh . $(RUST_BUILD_MODE) xdiff
++
++EXTLIBS += ./$(RUST_TARGET_DIR)/libxdiff.a
++
++UNAME_S := $(shell uname -s)
++ifeq ($(UNAME_S),Linux)
++  EXTLIBS += -ldl
++endif
++
+ REFTABLE_LIB = reftable/libreftable.a
+ 
+ GENERATED_H += command-list.h
+@@ -1390,7 +1413,7 @@ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
+ 
+ # xdiff and reftable libs may in turn depend on what is in libgit.a
+ GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
+-EXTLIBS =
++
+ 
+ GIT_USER_AGENT = git/$(GIT_VERSION)
+ 
+@@ -2541,7 +2564,7 @@ git.sp git.s git.o: EXTRA_CPPFLAGS = \
+ 	'-DGIT_MAN_PATH="$(mandir_relative_SQ)"' \
+ 	'-DGIT_INFO_PATH="$(infodir_relative_SQ)"'
+ 
+-git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
++git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS) compile_rust
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+ 		$(filter %.o,$^) $(LIBS)
+ 
+@@ -2891,17 +2914,17 @@ headless-git.o: compat/win32/headless.c GIT-CFLAGS
+ headless-git$X: headless-git.o git.res GIT-LDFLAGS
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -mwindows -o $@ $< git.res
+ 
+-git-%$X: %.o GIT-LDFLAGS $(GITLIBS)
++git-%$X: %.o GIT-LDFLAGS $(GITLIBS) compile_rust
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
+ 
+-git-imap-send$X: imap-send.o $(IMAP_SEND_BUILDDEPS) GIT-LDFLAGS $(GITLIBS)
++git-imap-send$X: imap-send.o $(IMAP_SEND_BUILDDEPS) GIT-LDFLAGS $(GITLIBS) compile_rust
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(IMAP_SEND_LDFLAGS) $(LIBS)
+ 
+-git-http-fetch$X: http.o http-walker.o http-fetch.o GIT-LDFLAGS $(GITLIBS)
++git-http-fetch$X: http.o http-walker.o http-fetch.o GIT-LDFLAGS $(GITLIBS) compile_rust
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(CURL_LIBCURL) $(LIBS)
+-git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
++git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS) compile_rust
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
+ 
+@@ -2911,11 +2934,11 @@ $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
+ 	ln -s $< $@ 2>/dev/null || \
+ 	cp $< $@
+ 
+-$(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS)
++$(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS) compile_rust
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
+ 
+-scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
++scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS) compile_rust
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+ 		$(filter %.o,$^) $(LIBS)
+ 
+@@ -2925,6 +2948,7 @@ $(LIB_FILE): $(LIB_OBJS)
+ $(XDIFF_LIB): $(XDIFF_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
++
+ $(REFTABLE_LIB): $(REFTABLE_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
+@@ -3294,7 +3318,7 @@ perf: all
+ 
+ t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS)) $(UNIT_TEST_DIR)/test-lib.o
+ 
+-t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
++t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS) compile_rust
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+ 
+ check-sha1:: t/helper/test-tool$X
+@@ -3756,7 +3780,10 @@ cocciclean:
+ 	$(RM) -r .build/contrib/coccinelle
+ 	$(RM) contrib/coccinelle/*.cocci.patch
+ 
+-clean: profile-clean coverage-clean cocciclean
++rustclean:
++	cd rust && cargo clean
++
++clean: profile-clean coverage-clean cocciclean rustclean
+ 	$(RM) -r .build $(UNIT_TEST_BIN)
+ 	$(RM) GIT-TEST-SUITES
+ 	$(RM) po/git.pot po/git-core.pot
+@@ -3911,13 +3938,13 @@ FUZZ_CXXFLAGS ?= $(ALL_CFLAGS)
+ .PHONY: fuzz-all
+ fuzz-all: $(FUZZ_PROGRAMS)
+ 
+-$(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS) GIT-LDFLAGS
++$(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS) GIT-LDFLAGS compile_rust
+ 	$(QUIET_LINK)$(FUZZ_CXX) $(FUZZ_CXXFLAGS) -o $@ $(ALL_LDFLAGS) \
+ 		-Wl,--allow-multiple-definition \
+ 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS) $(LIB_FUZZING_ENGINE)
+ 
+ $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_OBJS) \
+-	$(GITLIBS) GIT-LDFLAGS
++	$(GITLIBS) GIT-LDFLAGS compile_rust
+ 	$(call mkdir_p_parent_template)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+ 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+@@ -3936,7 +3963,7 @@ $(UNIT_TEST_DIR)/clar.suite: $(UNIT_TEST_DIR)/clar-decls.h $(UNIT_TEST_DIR)/gene
+ $(UNIT_TEST_DIR)/clar/clar.o: $(UNIT_TEST_DIR)/clar.suite
+ $(CLAR_TEST_OBJS): $(UNIT_TEST_DIR)/clar-decls.h
+ $(CLAR_TEST_OBJS): EXTRA_CPPFLAGS = -I$(UNIT_TEST_DIR)
+-$(CLAR_TEST_PROG): $(UNIT_TEST_DIR)/clar.suite $(CLAR_TEST_OBJS) $(GITLIBS) GIT-LDFLAGS
++$(CLAR_TEST_PROG): $(UNIT_TEST_DIR)/clar.suite $(CLAR_TEST_OBJS) $(GITLIBS) GIT-LDFLAGS compile_rust
+ 	$(call mkdir_p_parent_template)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
+ 
+diff --git a/build_rust.sh b/build_rust.sh
+new file mode 100755
+index 000000000000..192385a1d961
 --- /dev/null
-+++ b/Documentation/technical/rust-support.adoc
-@@ -0,0 +1,142 @@
-+Usage of Rust in Git
-+====================
++++ b/build_rust.sh
+@@ -0,0 +1,57 @@
++#!/bin/sh
 +
-+Objective
-+---------
-+Introduce Rust into Git incrementally to improve security and maintainability.
 +
-+Background
-+----------
-+Git has historically been written primarily in C, with some portions in shell,
-+Perl, or other languages.  At the time it was originally written, this was
-+important for portability and was a logical choice for software development.
++rustc -vV || exit $?
++cargo --version || exit $?
 +
-+:0: link:https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
-+:1: link:https://www.cisa.gov/resources-tools/resources/product-security-bad-practices
++dir_git_root=${0%/*}
++dir_build=$1
++rust_build_profile=$2
++crate=$3
 +
-+However, as time has progressed, we've seen an increased concern with memory
-+safety vulnerabilities and the development of newer languages, such as Rust,
-+that substantially limit or eliminate this class of vulnerabilities.
-+Development in a variety of projects has found that memory safety
-+vulnerabilities constitute about 70% of vulnerabilities of software in
-+languages that are not memory safe.  For instance, {0}[one survey of Android]
-+found that memory safety vulnerabilities decreased from 76% to 24% over six
-+years due to an increase in memory safe code.  Similarly, the U.S. government
-+is {1}[proposing to classify development in memory unsafe languages as a
-+Product Security Bad Practice"].
++dir_rust=$dir_git_root/rust
 +
-+These risks are even more substantial when we consider the fact that Git is a
-+network-facing service.  Many organizations run Git servers internally or use a
-+cloud-based forge, and the risk of accidental exposure or compromise of user
-+data is substantial.  It's important to ensure that Git, whether it's used
-+locally or remotely, is robustly secure.
++if [ "$dir_git_root" = "" ]; then
++  echo "did not specify the directory for the root of git"
++  exit 1
++fi
 +
-+In addition, C is a difficult language to write well and concisely.  While it
-+is of course possible to do anything with C, it lacks built-in support for
-+niceties found in modern languages, such as hash tables, generics, typed
-+errors, and automatic destruction, and most modern language offer shorter, more
-+ergonomic syntax for expressing code.  This is valuable functionality that can
-+allow Git to be developed more rapidly, more easily, by more developers of a
-+variety of levels, and with more confidence in the correctness of the code.
++if [ "$dir_build" = "" ]; then
++  echo "did not specify the build directory"
++  exit 1
++fi
 +
-+For these reasons, adding Rust to Git is a sensible and prudent move that will
-+allow us to improve the quality of the code and potentially attract new developers.
++if [ "$rust_build_profile" = "" ]; then
++  echo "did not specify the rust_build_profile"
++  exit 1
++fi
 +
-+Goals
-+-----
-+1. Git continues to build, run, and pass tests on a wide variety of operating
-+   systems and architectures.
-+2. Transition from C to Rust is incremental; that is, code can be ported as it
-+   is convenient and Git does not need to transition all at once.
-+3. Git continues to support older operating systems in conformance with the
-+   platform support policy.
++if [ "$rust_build_profile" = "release" ]; then
++  rust_args="--release"
++  export RUSTFLAGS=''
++elif [ "$rust_build_profile" = "debug" ]; then
++  rust_args=""
++  export RUSTFLAGS='-C debuginfo=2 -C opt-level=1 -C force-frame-pointers=yes'
++else
++  echo "illegal rust_build_profile value $rust_build_profile"
++  exit 1
++fi
 +
-+Non-Goals
-+---------
-+1. Support for every possible operating system and architecture.  Git already
-+   has a platform support policy which defines what is supported and we already
-+   exclude some operating systems for various reasons (e.g., lacking enough POSIX
-+   tools to pass the test suite).
-+2. Implementing C-only versions of Rust code or compiling a C-only Git.  This
-+   would be difficult to maintain and would not offer the ergonomic benefits we
-+   desire.
++cd $dir_rust && cargo clean && pwd && cargo build -p $crate $rust_args; cd $dir_git_root
 +
-+Design
-+------
-+Git will adopt Rust incrementally.  This transition will start with the
-+creation of a static library that can be linked into the existing Git binaries.
-+At some point, we may wish to expose a dynamic library and compile the Git
-+binaries themselves using Rust.  Using an incremental approach allows us to
-+determine as we go along how to structure our code in the best way for the
-+project and avoids the need to make hard, potentially disruptive, transitions
-+caused by porting a binary wholesale from one language to another that might
-+introduce bugs.
++libfile="lib${crate}.a"
++if rustup show active-toolchain | grep windows-msvc; then
++  libfile="${crate}.lib"
++fi
++dst=$dir_build/$libfile
 +
-+Crates like libc or rustix define types like c_long, but in ways that are not
-+safe across platforms.
-+From https://docs.rs/rustix/latest/rustix/ffi/type.c_long.html:
++if [ "$dir_git_root" != "$dir_build" ]; then
++  src=$dir_rust/target/$rust_build_profile/$libfile
++  if [ ! -f $src ]; then
++    echo >&2 "::error:: cannot find path of static library $src is not a file or does not exist"
++    exit 5
++  fi
 +
-+    This type will always be i32 or i64.  Most notably, many Linux-based
-+    systems assume an i64, but Windows assumes i32.  The C standard technically
-+    only requires that this type be a signed integer that is at least 32 bits
-+    and at least the size of an int, although in practice, no system would
-+    have a long that is neither an i32 nor i64.
++  rm $dst 2>/dev/null
++  mv $src $dst
++fi
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 4678e21c4cb8..82dc99764ac0 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -196,6 +196,23 @@ static inline int is_xplatform_dir_sep(int c)
+ #include "compat/msvc.h"
+ #endif
+ 
++/* rust types */
++typedef uint8_t   u8;
++typedef uint16_t  u16;
++typedef uint32_t  u32;
++typedef uint64_t  u64;
 +
-+Also, note that other locations, such as
-+https://docs.rs/libc/latest/libc/type.c_long.html, just hardcode c_long as i64
-+even though C may mean i32 on some platforms.
++typedef int8_t    i8;
++typedef int16_t   i16;
++typedef int32_t   i32;
++typedef int64_t   i64;
 +
-+As such, using the c_long type would give us portability issues, and
-+perpetuate some of the bugs git has faced across platforms.  Avoid using C's
-+types (long, unsigned, char, etc.), and switch to unambiguous types (e.g. i32
-+or i64) before trying to make C and Rust interoperate.
++typedef float     f32;
++typedef double    f64;
 +
-+Crates like libc and rustix may have also traditionally aided interoperability
-+with older versions of Rust (e.g.  when worrying about stat[64] system calls),
-+but the Rust standard library in newer versions of Rust handle these concerns
-+in a platform agnostic way.  There may arise cases where we need to consider
-+these crates, but for now we omit them.
++typedef size_t    usize;
++typedef ptrdiff_t isize;
 +
-+Tools like bindgen and cbindgen create C-styled unsafe Rust code rather than
-+idiomatic Rust; where possible, we prefer to switch to idiomatic Rust.  Any
-+standard C library functions that are needed can be manually wrapped on the
-+Rust side.
+ /* used on Mac OS X */
+ #ifdef PRECOMPOSE_UNICODE
+ #include "compat/precompose_utf8.h"
+diff --git a/meson.build b/meson.build
+index 596f5ac7110e..324f968338b9 100644
+--- a/meson.build
++++ b/meson.build
+@@ -267,6 +267,40 @@ version_gen_environment.set('GIT_DATE', get_option('build_date'))
+ version_gen_environment.set('GIT_USER_AGENT', get_option('user_agent'))
+ version_gen_environment.set('GIT_VERSION', get_option('version'))
+ 
++if get_option('optimization') in ['2', '3', 's', 'z']
++  rust_build_profile = 'release'
++else
++  rust_build_profile = 'debug'
++endif
 +
-+Rust upstream releases every six weeks and only supports the latest stable
-+release.  While it is nice that upstream is active, we would like our software
-+releases to have a lifespan exceeding six weeks.  To allow compiling our code
-+on a variety of systems, we will support the version of Rust in Debian stable,
-+plus, for a year after a new Debian stable is released, the version in Debian
-+oldstable.
++# Run `rustup show active-toolchain` and capture output
++rustup_out = run_command('rustup', 'show', 'active-toolchain',
++                         check: true).stdout().strip()
 +
-+This provides an approximately three-year lifespan of support for a Rust
-+release and allows us to support a variety of operating systems and
-+architectures, including those for which Rust upstream does not build binaries.
-+Debian stable is the benchmark distribution used by many Rust projects when
-+determining supported Rust versions, and it is an extremely portable and
-+popular free software operating system that is available to the public at no
-+charge, which makes it a sensible choice for us as well.
++rust_crates = ['xdiff']
++rust_builds = []
 +
-+We may change this policy if the Rust project issues long-term support releases
-+or the Rust community and distributors agree on releases to target as if they
-+were long-term support releases.
++foreach crate : rust_crates
++  if rustup_out.contains('windows-msvc')
++    libfile = crate + '.lib'
++  else
++    libfile = 'lib' + crate + '.a'
++  endif
 +
-+This version support policy necessitates that we be very careful about the
-+dependencies we include, since many Rust projects support only the latest
-+stable version.  However, we typically have been careful about dependencies in
-+the first place, so this should not be a major departure from existing policy,
-+although it may be a change for some existing Rust developers.
++  rust_builds += custom_target(
++    'rust_build_'+crate,
++    output: libfile,
++    build_by_default: true,
++    build_always_stale: true,
++    command: [
++      meson.project_source_root() / 'build_rust.sh',
++      meson.current_build_dir(), rust_build_profile, crate,
++    ],
++    install: false,
++  )
++endforeach
 +
-+We will avoid including the `Cargo.lock` file in the repository and instead
-+specify minimum dependency versions in the `Cargo.toml` file.  We want to allow
-+people to use newer versions of dependencies if necessary to support newer
-+platforms without needing to force upgrades of dependencies on all users, and
-+it provides additional flexibility for distribution maintainers.
 +
-+We do not plan to support beta or nightly versions of the Rust compiler.  These
-+versions may change rapidly and especially parts of the toolchain such as
-+Clippy, the lint tool, can have false positives or add additional warnings with
-+too great of a frequency to be supportable by the project.  However, we do plan
-+to support alternate compilers, such as the rust_codegen_gcc backend and gccrs
-+when they are stable and support our desired release versions.  This will
-+provide greater support for more operating systems and architectures.
+ compiler = meson.get_compiler('c')
+ 
+ libgit_sources = [
+@@ -1678,14 +1712,16 @@ version_def_h = custom_target(
+ libgit_sources += version_def_h
+ 
+ libgit = declare_dependency(
+-  link_with: static_library('git',
+-    sources: libgit_sources,
+-    c_args: libgit_c_args + [
+-      '-DGIT_VERSION_H="' + version_def_h.full_path() + '"',
+-    ],
+-    dependencies: libgit_dependencies,
+-    include_directories: libgit_include_directories,
+-  ),
++  link_with: [
++    static_library('git',
++      sources: libgit_sources,
++      c_args: libgit_c_args + [
++        '-DGIT_VERSION_H="' + version_def_h.full_path() + '"',
++      ],
++      dependencies: libgit_dependencies,
++      include_directories: libgit_include_directories,
++    ),
++  ] + rust_builds,
+   compile_args: libgit_c_args,
+   dependencies: libgit_dependencies,
+   include_directories: libgit_include_directories,
+diff --git a/rust/Cargo.toml b/rust/Cargo.toml
+new file mode 100644
+index 000000000000..ed3d79d7f827
+--- /dev/null
++++ b/rust/Cargo.toml
+@@ -0,0 +1,6 @@
++[workspace]
++members = [
++    "xdiff",
++    "interop",
++]
++resolver = "2"
+diff --git a/rust/interop/Cargo.toml b/rust/interop/Cargo.toml
+new file mode 100644
+index 000000000000..045e3b01cfad
+--- /dev/null
++++ b/rust/interop/Cargo.toml
+@@ -0,0 +1,14 @@
++[package]
++name = "interop"
++version = "0.1.0"
++edition = "2021"
++
++[lib]
++name = "interop"
++path = "src/lib.rs"
++## staticlib to generate xdiff.a for use by gcc
++## cdylib (optional) to generate xdiff.so for use by gcc
++## rlib is required by the rust unit tests
++crate-type = ["staticlib", "rlib"]
++
++[dependencies]
+diff --git a/rust/interop/src/lib.rs b/rust/interop/src/lib.rs
+new file mode 100644
+index 000000000000..e69de29bb2d1
+diff --git a/rust/xdiff/Cargo.toml b/rust/xdiff/Cargo.toml
+new file mode 100644
+index 000000000000..eb7966aada64
+--- /dev/null
++++ b/rust/xdiff/Cargo.toml
+@@ -0,0 +1,15 @@
++[package]
++name = "xdiff"
++version = "0.1.0"
++edition = "2021"
++
++[lib]
++name = "xdiff"
++path = "src/lib.rs"
++## staticlib to generate xdiff.a for use by gcc
++## cdylib (optional) to generate xdiff.so for use by gcc
++## rlib is required by the rust unit tests
++crate-type = ["staticlib", "rlib"]
++
++[dependencies]
++interop = { path = "../interop" }
+diff --git a/rust/xdiff/src/lib.rs b/rust/xdiff/src/lib.rs
+new file mode 100644
+index 000000000000..e69de29bb2d1
 -- 
 gitgitgadget
 
