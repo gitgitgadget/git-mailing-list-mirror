@@ -1,68 +1,69 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AFE25CC73
-	for <git@vger.kernel.org>; Sat, 23 Aug 2025 13:23:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED6E25D55D
+	for <git@vger.kernel.org>; Sat, 23 Aug 2025 13:23:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755955384; cv=none; b=BBysjVO/C+iOHQGBcYb/4KOd79WdE72F/IyPq4Iq9GoxmLHiBvKRRWR6t0o5a0FqDBRPd55VSTmyeuj/VaKnt+LgT/OYoJaYCXVtQA7XJs+asbMqnfxyrSPNNAj9rtV2xPTGKdYPJti2us4niFUV9c+YanhiOUMlGGu3HmbAp9E=
+	t=1755955384; cv=none; b=MkDmQN1cBEUhkzJfdFpDJFBhXJx3pvLN7emRuzxfY7I0uZ5h5m3f97iIAfD7g+I0GbJiqDBQywsaaomNEg8uUaXfUdfv1ikY9GK+fIg9MriGn+6DtB+xWqftZqhwssKSjSdf+3RKTlNbsKjwK+AqQu9yMW4s7rVN+2Dv0XcIwD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1755955384; c=relaxed/simple;
-	bh=5ZFDHy2UtWp+nCrp7zmLw/h39N6fiKKnCmP8rHNhw0E=;
+	bh=YhoVqad8t7VoNKUGjp7QXL30shYCG/rtar23fosDV4w=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=qkiE7ZPw7oq692awfSMsVdWPeC9BSvc/FX4HWKpZkmmPBvGi29MOrwFgngb674j9G9eUpkwX5TZNLglaB88UDksXP3HWUreme3Jb6m8qxcPApDR6qGru7HLuvD+sToFjOglPIuHzad+5DYJCY0qarVNKCuu/RGYMHP5V9N5MRlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iN1VkJqE; arc=none smtp.client-ip=209.85.221.46
+	 Content-Type:To:Cc; b=sRZMZ6kyzGQY8e00b+Jg+vpS+YU6tAS9TUhluLI7q0I6oIO6wKLgGlsVhWaVBpt0fHBwEEaIHyIx30ZFeJi6eCnY9pVl83NKungkE12iJKEmxU2sRBZieDRWKoHSbjLC7tPQ+kpbf8pMIXdfKqta+Hug/o6oqCg/T1dmBhgrw7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KdhtDnvF; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iN1VkJqE"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3c7aa4ce823so129436f8f.0
-        for <git@vger.kernel.org>; Sat, 23 Aug 2025 06:23:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KdhtDnvF"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3c763484ccdso244831f8f.0
+        for <git@vger.kernel.org>; Sat, 23 Aug 2025 06:23:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755955380; x=1756560180; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1755955381; x=1756560181; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HHzS5Cybqhy1y3kjPn+/qk9QIk346Ybiky8YfPEQ43s=;
-        b=iN1VkJqEh1RSubfyWt8s85gPz4553MDvkBvRklQAff5r+PjVl5ET1bs5XHwP0vys18
-         yL8IXH0WOlCpkR+T+CH0j0hJuvrKIO4WUzDdpPmKRk4O0S2bV+1b9y08qrAwSgo+1GdP
-         p1VElmgWYaO5Jlc0vLerZZENiZ+ORq99tX3MQr7FaoTS4cWxI5rS5jhAfUltMTB4KAIi
-         arb7R9x+bfheqD8O78U767TGsOyuoakkJHGrpO+OmR302AjncffyvIEU0Op1dHpTTf9O
-         t1oMwxHZXyZ7eqUE+6oJWGkzyx/QV4oRIwI9wiWTy/Wfo4PA6YXfKDVX1LmVnUvDEO+6
-         DEzw==
+        bh=rThvs5b7M+o8S6DrEiB9D/WFJ6+bM/4UdQydABe8QL8=;
+        b=KdhtDnvFatk4HUr/pzK1u4/WflvJ1Fu3Dx9C9jjcHDwtwo/fix5uw7oxaHu/x9VT38
+         CGWaQ7OOghwkk/RXvM2sCbOy8GEJbRaUcuTQtAkecZi5XUFAxlHx/C7cURYHj0UcLTx3
+         y2Af/R+X5TG8xEVNpvUIKEseoUhYGbvQ22Nivy9lFOPUpnTgcnnQfkfrJVkYtJZLDuhT
+         5Hr3tTCJi1pGxUh2K27aez18Plq4RpN7nDJmFwDTWW/NojwDEdrhfLD9yMjg4HYSQ5sV
+         VvGk4KxsrTs32gwzOjc7i6UKCIKzfSRhoykIB6ZWoH+1QcbPoY8hNxds/e4xjZyyBVqI
+         aUcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755955380; x=1756560180;
+        d=1e100.net; s=20230601; t=1755955381; x=1756560181;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HHzS5Cybqhy1y3kjPn+/qk9QIk346Ybiky8YfPEQ43s=;
-        b=WxH8RAZtc23e4ha6HGLygFUAFQxA8Qy7my7KRJUM7+zYxX1RZ99vJHTqV80GInOtU0
-         +aiPMNerQyiBze8ioY2bJKcqmFrujdAEzuje31IblFcFayOTRq3CbZuF08O6ovRkfBai
-         efsYuf1VLN79L3frG9HSEYHufYvr/VexWPCEXoSSsYdT61LLHNwwgm1qw/boKE1+ukiF
-         1ojbmU1w2SsFo145jWTjVLqN8nlF486x6CombSln0Qj3gpfL6rCwzpxEwSyuobORfenz
-         7H2bjAgntmm11CDLLsbFXDzWBz2Fjl73LsqL04k6w8GnnW/VFgu9lXl8Ne/v49dH0eHO
-         SB7Q==
-X-Gm-Message-State: AOJu0YzBbm96Q5twHY/Kp8iqYbMKRpkYbU4bQZX1W+USm5ABfCqDWPuR
-	lBWderpNNfbZMHC5ntjBy5uopPCfzChyRnKRALrDtoz2kImJWxKm/fbMr3UFyA==
-X-Gm-Gg: ASbGncviB6aGeL3LFjs/qzDR6/7WUlE0gAvvoqGEPuKkJwMkcay9idI2GxHlKoMNUBi
-	zpiAAqb+8PhH//OuZZtfTSXOUHPfO0RVP17uGg1bhz6IfX6Zg8LXo4T2D5b9yVjqWOZOrTyPh3p
-	suC9+6XBQMZMFD2hl6+C5t55o7F0jyqCire5jbRfSdJEd9c9out+bBFaTw0E4b24kCK/8Z1Ma24
-	Y42yJuTAAQlD52nClIUl2/5RefG+7EWYLheVqdpW+rakqj3OArLJnkCrRJYamu69Cgn5QXROTBC
-	mah1Pqg1/ylICLDeQpb56GqL1oZpOvndxncI0RiLuEPueoFjEYGNag9zXGECnRc8yCfP4LBEkVq
-	xwG4cxaq3fNTyMeWDAgW6otJshfo=
-X-Google-Smtp-Source: AGHT+IEUGs7m56EnE3iN7S5wgnjSQ4DELCejLIGGS3AYN5UNCtcbNUj5udgAmirGcLb6PkhpE5SoWg==
-X-Received: by 2002:a05:6000:26c2:b0:3c3:ae31:7183 with SMTP id ffacd0b85a97d-3c5dc734292mr3570342f8f.34.1755955379865;
-        Sat, 23 Aug 2025 06:22:59 -0700 (PDT)
+        bh=rThvs5b7M+o8S6DrEiB9D/WFJ6+bM/4UdQydABe8QL8=;
+        b=Io5rf2w20g8rytMpbTLuzHNt5GEx1B9ABG1a6+VWblL58ZG6F4yJDGMzGDiobtSHtB
+         hUPCgAhlAZL6l+oGtt3dhVWWJ2JkZNsTN4GdMAdSa/LA/P+thK734LBnktHnRSAzzCOe
+         LgC6aOE4geNThirMm5Va3VHxr60KHhX6roz02QRsFxCY30kFnu140DZobgFOnFc7Mb9Q
+         riFqxuX9y88ONJEs9tMKB2Ge4kadejAISWFiqrARYFvcX/vaXIUb4fJMZO3YUezrlJtJ
+         oVM+ond96TGvO2qOjv/NjNnhTT1q5dhGkqt6FOaJ0BBZ1epUKWYQGUcl3TCKy2gep6Cr
+         AZuw==
+X-Gm-Message-State: AOJu0Yy0/kBXGL62uzlWtzdMVt6r7ozjfiF3uOf2ET8oGQg1rEGdzu8Y
+	KgsjsAqiS4txpVuUJ+8TmNVW5qa2F3QGPyRH/JsS+zDfFWtzZBA048T0x84GKw==
+X-Gm-Gg: ASbGncuuIY7rjtrl8YjzGPX8I9hBf3krGJP5Vljbfqo5s0788819st3mgWRT9JPAzBh
+	0vUoS0oyTHGB3XCnX25anDPxLTDH/hsLmKpA1FgU1euqvZq6QFSstrdYXP2kIfQJ8sYxcvR7+Q/
+	dc3VBLmzIniWf0ZseORweG+jns4Y6yo7YvahqUMxphfceVvM7yy6/MkdG08r/CYcSxst5mneQTc
+	CoSFsZ0a92JSKks9Qo+ShVRIeN7HJ6Os5piuH9MC2Y5zOgQjJFMwjaH4nhnvCz4RwNZmtDv7yYL
+	oFXm4BUyzM9wqCHDnoQikgJAgR/NTT+VwFj5UJeEe+9iNYWdxKhXjgEoPSMA1puOd9jywUVpIbu
+	EhdG/lh9D3X0pTmHwkoTiZVAPmAM=
+X-Google-Smtp-Source: AGHT+IH8qBlkdRhtWpCrtVDzRXiA1kTKWkR382Y3l9u8lIZEJngVHSTmSF5GsArlTaYMnhGRQuvSgg==
+X-Received: by 2002:a05:6000:4383:b0:3c2:9d64:125f with SMTP id ffacd0b85a97d-3c5d51badf6mr6581925f8f.28.1755955380629;
+        Sat, 23 Aug 2025 06:23:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b5757378dsm34883835e9.15.2025.08.23.06.22.59
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c711abd15asm3634634f8f.56.2025.08.23.06.23.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Aug 2025 06:22:59 -0700 (PDT)
-Message-Id: <493f69caddacea3f31e458fc5c5c1e151d28b6f3.1755955378.git.gitgitgadget@gmail.com>
+        Sat, 23 Aug 2025 06:23:00 -0700 (PDT)
+Message-Id: <0db98c3478e5e2f1aadcf6d773cf6519af482630.1755955378.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
 References: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 23 Aug 2025 13:22:56 +0000
-Subject: [PATCH 1/2] progress: replace setitimer() with alarm()
+Date: Sat, 23 Aug 2025 13:22:57 +0000
+Subject: [PATCH 2/2] progress: add a shutting down state to the SIGALRM
+ handler
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,304 +81,91 @@ Cc: Nicolas Pitre <nico@fluxnic.net>,
 
 From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
 
-setitimer() was marked obsolescent by IEEE Std 1003.1-2017 and is
-no longer available in the latest edition.
+In a previous commit, sigitimer() was replaced by alarm(), but to
+keep the timer active, an extra call to `alarm(1)` was added to
+the signal handler, opening a potential race condition whem the
+timer is being cleared.
 
-While other alternatives of high fidelity are available, its use
-in progress only requires whole second intervals, so it can be
-cleanly replaced by a simpler alarm(); do that.
-
-MinGW provided its own version of setitimer() so add an equivalent
-implementation for alarm(), but do the minimum changes required in
-the timer thread to adapt to the new interface.
-
-Remove the compatibility layer for setitimer() and its related
-struct that are no longer needed, and adjust the build system.
+To avoid that, add an extra state to set during shutdown and
+adjust the logic to flag the potential need to update progress
+into the first bit instead.
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- Makefile             | 12 ------------
- compat/mingw-posix.h |  9 +--------
- compat/mingw.c       | 46 ++++++++++++++++----------------------------
- compat/posix.h       | 17 ----------------
- configure.ac         | 13 -------------
- meson.build          | 16 ---------------
- progress.c           | 11 +++--------
- 7 files changed, 21 insertions(+), 103 deletions(-)
+ progress.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index e11340c1ae77..059382624c0e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -142,11 +142,6 @@ include shared.mak
- # Define NO_PREAD if you have a problem with pread() system call (e.g.
- # cygwin1.dll before v1.5.22).
- #
--# Define NO_SETITIMER if you don't have setitimer()
--#
--# Define NO_STRUCT_ITIMERVAL if you don't have struct itimerval
--# This also implies NO_SETITIMER
--#
- # Define NO_FAST_WORKING_DIRECTORY if accessing objects in pack files is
- # generally faster on your platform than accessing the working directory.
- #
-@@ -1888,13 +1883,6 @@ endif
- ifdef OBJECT_CREATION_USES_RENAMES
- 	COMPAT_CFLAGS += -DOBJECT_CREATION_MODE=1
- endif
--ifdef NO_STRUCT_ITIMERVAL
--	COMPAT_CFLAGS += -DNO_STRUCT_ITIMERVAL
--	NO_SETITIMER = YesPlease
--endif
--ifdef NO_SETITIMER
--	COMPAT_CFLAGS += -DNO_SETITIMER
--endif
- ifdef NO_PREAD
- 	COMPAT_CFLAGS += -DNO_PREAD
- 	COMPAT_OBJS += compat/pread.o
-diff --git a/compat/mingw-posix.h b/compat/mingw-posix.h
-index 631a20868489..7626fbe90172 100644
---- a/compat/mingw-posix.h
-+++ b/compat/mingw-posix.h
-@@ -98,11 +98,6 @@ struct sigaction {
- #define SA_RESTART 0
- #define SA_NOCLDSTOP 1
- 
--struct itimerval {
--	struct timeval it_value, it_interval;
--};
--#define ITIMER_REAL 0
--
- struct utsname {
- 	char sysname[16];
- 	char nodename[1];
-@@ -131,8 +126,6 @@ static inline int fchmod(int fildes UNUSED, mode_t mode UNUSED)
- static inline pid_t fork(void)
- { errno = ENOSYS; return -1; }
- #endif
--static inline unsigned int alarm(unsigned int seconds UNUSED)
--{ return 0; }
- static inline int fsync(int fd)
- { return _commit(fd); }
- static inline void sync(void)
-@@ -183,6 +176,7 @@ char *mingw_locate_in_PATH(const char *cmd);
-  * implementations of missing functions
-  */
- 
-+unsigned alarm(unsigned seconds);
- int pipe(int filedes[2]);
- unsigned int sleep (unsigned int seconds);
- int mkstemp(char *template);
-@@ -193,7 +187,6 @@ struct tm *localtime_r(const time_t *timep, struct tm *result);
- #endif
- int getpagesize(void);	/* defined in MinGW's libgcc.a */
- struct passwd *getpwuid(uid_t uid);
--int setitimer(int type, struct itimerval *in, struct itimerval *out);
- int sigaction(int sig, struct sigaction *in, struct sigaction *out);
- int link(const char *oldpath, const char *newpath);
- int uname(struct utsname *buf);
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 8538e3d1729d..199f68ca6d9a 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2432,15 +2432,17 @@ static sig_handler_t timer_fn = SIG_DFL, sigint_fn = SIG_DFL;
-  * the thread to terminate by setting the timer_event to the signalled
-  * state.
-  * But ticktack() interrupts the wait state after the timer's interval
-- * length to call the signal handler.
-+ * length to call the signal handler if it still set.
-  */
- 
- static unsigned __stdcall ticktack(void *dummy UNUSED)
- {
-+	sig_handler_t fn = timer_fn;
-+
- 	while (WaitForSingleObject(timer_event, timer_interval) == WAIT_TIMEOUT) {
--		mingw_raise(SIGALRM);
--		if (one_shot)
-+		if (one_shot || timer_fn != fn)
- 			break;
-+		mingw_raise(SIGALRM);
- 	}
- 	return 0;
- }
-@@ -2478,37 +2480,23 @@ static void stop_timer_thread(void)
- 	timer_thread = NULL;
- }
- 
--static inline int is_timeval_eq(const struct timeval *i1, const struct timeval *i2)
-+unsigned alarm(unsigned seconds)
- {
--	return i1->tv_sec == i2->tv_sec && i1->tv_usec == i2->tv_usec;
--}
--
--int setitimer(int type UNUSED, struct itimerval *in, struct itimerval *out)
--{
--	static const struct timeval zero;
--	static int atexit_done;
--
--	if (out)
--		return errno = EINVAL,
--			error("setitimer param 3 != NULL not implemented");
--	if (!is_timeval_eq(&in->it_interval, &zero) &&
--	    !is_timeval_eq(&in->it_interval, &in->it_value))
--		return errno = EINVAL,
--			error("setitimer: it_interval must be zero or eq it_value");
--
--	if (timer_thread)
--		stop_timer_thread();
-+	static bool atexit_done;
- 
--	if (is_timeval_eq(&in->it_value, &zero) &&
--	    is_timeval_eq(&in->it_interval, &zero))
--		return 0;
--
--	timer_interval = in->it_value.tv_sec * 1000 + in->it_value.tv_usec / 1000;
--	one_shot = is_timeval_eq(&in->it_interval, &zero);
- 	if (!atexit_done) {
- 		atexit(stop_timer_thread);
--		atexit_done = 1;
-+		atexit_done = true;
- 	}
-+
-+	timer_interval = seconds * 1000;
-+	one_shot = !seconds;
-+	if (timer_thread) {
-+		if (!seconds)
-+			stop_timer_thread();
-+		return 0;
-+	}
-+
- 	return start_timer_thread();
- }
- 
-diff --git a/compat/posix.h b/compat/posix.h
-index 067a00f33b83..83af92d820f2 100644
---- a/compat/posix.h
-+++ b/compat/posix.h
-@@ -198,23 +198,6 @@ static inline time_t git_time(time_t *tloc)
- }
- #define time git_time
- 
--#ifdef NO_STRUCT_ITIMERVAL
--struct itimerval {
--	struct timeval it_interval;
--	struct timeval it_value;
--};
--#endif
--
--#ifdef NO_SETITIMER
--static inline int git_setitimer(int which UNUSED,
--				const struct itimerval *value UNUSED,
--				struct itimerval *newvalue UNUSED) {
--	return 0; /* pretend success */
--}
--#undef setitimer
--#define setitimer(which,value,ovalue) git_setitimer(which,value,ovalue)
--#endif
--
- #ifndef NO_LIBGEN_H
- #include <libgen.h>
- #else
-diff --git a/configure.ac b/configure.ac
-index cfb50112bf81..6b04aa37a82c 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -872,13 +872,6 @@ case $ac_cv_type_socklen_t in
- esac
- GIT_CONF_SUBST([SOCKLEN_T])
- 
--#
--# Define NO_STRUCT_ITIMERVAL if you don't have struct itimerval.
--AC_CHECK_TYPES([struct itimerval],
--[NO_STRUCT_ITIMERVAL=],
--[NO_STRUCT_ITIMERVAL=UnfortunatelyYes],
--[#include <sys/time.h>])
--GIT_CONF_SUBST([NO_STRUCT_ITIMERVAL])
- #
- # Define USE_ST_TIMESPEC=YesPlease when stat.st_mtimespec.tv_nsec exists.
- # Define NO_NSEC=YesPlease when neither stat.st_mtim.tv_nsec nor
-@@ -1097,12 +1090,6 @@ GIT_CHECK_FUNC(sync_file_range,
- 	[HAVE_SYNC_FILE_RANGE=])
- GIT_CONF_SUBST([HAVE_SYNC_FILE_RANGE])
- 
--#
--# Define NO_SETITIMER if you don't have setitimer.
--GIT_CHECK_FUNC(setitimer,
--[NO_SETITIMER=],
--[NO_SETITIMER=YesPlease])
--GIT_CONF_SUBST([NO_SETITIMER])
- #
- # Define NO_STRCASESTR if you don't have strcasestr.
- GIT_CHECK_FUNC(strcasestr,
-diff --git a/meson.build b/meson.build
-index 5dd299b4962d..f33f20312511 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1348,22 +1348,6 @@ else
-     error('Native regex support requested but not found')
- endif
- 
--# setitimer and friends are provided by compat/mingw.c.
--if host_machine.system() != 'windows'
--  if not compiler.compiles('''
--    #include <sys/time.h>
--    void func(void)
--    {
--      struct itimerval value;
--    }
--  ''', name: 'struct itimerval')
--    libgit_c_args += '-DNO_STRUCT_ITIMERVAL'
--    libgit_c_args += '-DNO_SETITIMER'
--  elif not compiler.has_function('setitimer')
--    libgit_c_args += '-DNO_SETITIMER'
--  endif
--endif
--
- if compiler.has_member('struct stat', 'st_mtimespec.tv_nsec', prefix: '#include <sys/stat.h>')
-   libgit_c_args += '-DUSE_ST_TIMESPEC'
- elif not compiler.has_member('struct stat', 'st_mtim.tv_nsec', prefix: '#include <sys/stat.h>')
 diff --git a/progress.c b/progress.c
-index 8d5ae70f3a9e..71b305d1625d 100644
+index 71b305d1625d..49e58e094a3f 100644
 --- a/progress.c
 +++ b/progress.c
-@@ -67,12 +67,12 @@ void progress_test_force_update(void)
+@@ -50,6 +50,11 @@ struct progress {
+ 	int split;
+ };
+ 
++/*
++ * 0: no progress to report
++ * 1: potential update for progress to report
++ * 2: no more progress to report
++ */
+ static volatile sig_atomic_t progress_update;
+ 
+ /*
+@@ -66,8 +71,10 @@ void progress_test_force_update(void)
+ 
  static void progress_interval(int signum UNUSED)
  {
- 	progress_update = 1;
-+	alarm(1);
+-	progress_update = 1;
+-	alarm(1);
++	if (progress_update != 2) {
++		alarm(1);
++		progress_update = 1;
++	}
  }
  
  static void set_progress_signal(void)
- {
- 	struct sigaction sa;
--	struct itimerval v;
- 
- 	if (progress_testing)
- 		return;
-@@ -85,20 +85,15 @@ static void set_progress_signal(void)
- 	sa.sa_flags = SA_RESTART;
- 	sigaction(SIGALRM, &sa, NULL);
- 
--	v.it_interval.tv_sec = 1;
--	v.it_interval.tv_usec = 0;
--	v.it_value = v.it_interval;
--	setitimer(ITIMER_REAL, &v, NULL);
-+	alarm(1);
- }
- 
- static void clear_progress_signal(void)
- {
--	struct itimerval v = {{0,},};
--
+@@ -93,6 +100,7 @@ static void clear_progress_signal(void)
  	if (progress_testing)
  		return;
  
--	setitimer(ITIMER_REAL, &v, NULL);
-+	alarm(0);
++	progress_update = 2;
+ 	alarm(0);
  	signal(SIGALRM, SIG_IGN);
  	progress_update = 0;
+@@ -111,14 +119,14 @@ static void display(struct progress *progress, uint64_t n, const char *done)
+ 	int show_update = 0;
+ 	int last_count_len = counters_sb->len;
+ 
+-	if (progress->delay && (!progress_update || --progress->delay))
++	if (progress->delay && (!(progress_update & 1) || --progress->delay))
+ 		return;
+ 
+ 	progress->last_value = n;
+ 	tp = (progress->throughput) ? progress->throughput->display.buf : "";
+ 	if (progress->total) {
+ 		unsigned percent = n * 100 / progress->total;
+-		if (percent != progress->last_percent || progress_update) {
++		if (percent != progress->last_percent || (progress_update & 1)) {
+ 			progress->last_percent = percent;
+ 
+ 			strbuf_reset(counters_sb);
+@@ -128,7 +136,7 @@ static void display(struct progress *progress, uint64_t n, const char *done)
+ 				    tp);
+ 			show_update = 1;
+ 		}
+-	} else if (progress_update) {
++	} else if (progress_update & 1) {
+ 		strbuf_reset(counters_sb);
+ 		strbuf_addf(counters_sb, "%"PRIuMAX"%s", (uintmax_t)n, tp);
+ 		show_update = 1;
+@@ -239,7 +247,7 @@ void display_throughput(struct progress *progress, uint64_t total)
+ 	tp->idx = (tp->idx + 1) % TP_IDX_MAX;
+ 
+ 	throughput_string(&tp->display, total, rate);
+-	if (progress->last_value != -1 && progress_update)
++	if (progress->last_value != -1 && (progress_update & 1))
+ 		display(progress, progress->last_value, NULL);
  }
+ 
 -- 
 gitgitgadget
-
