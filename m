@@ -1,169 +1,120 @@
-Received: from cloudsdale.lanodan.eu (cloudsdale.lanodan.eu [138.201.117.120])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1CF163
-	for <git@vger.kernel.org>; Sat, 23 Aug 2025 21:24:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=138.201.117.120
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87157393DCC
+	for <git@vger.kernel.org>; Sat, 23 Aug 2025 21:33:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755984256; cv=none; b=qGT6Oa8jrPobz7IyIpnoM1PFqMeVDXd0KKLtFEv6YfuusDF2OGFGjoJjahUVo2fIAWYgDRrId/5fqlymk/kJpFp2u+NaeDbAp0jA/uZKodatuA7t+NWEcaS6AYWwRpLFu1I2KM19jfwozJ8xHUaeWEGX+25i3qjMpYjDbv2NGuA=
+	t=1755984790; cv=none; b=rOLs7/K2qa7RvWri3Bi9tzF0xwRzLqQeKqqjdxlORSjH2lBBnQE31VxrOvlPF91k6dxVODPMqE46sz+QgUscWp9s8S5xl18WM//e5FY8witzcXszFn7OCbf5q8W+M2X6UlrEZTeWl/ktgStN2MCfjfh3ckUOFZ19bJZVpWrR9wA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755984256; c=relaxed/simple;
-	bh=8IqwnMrQirt3YxhJaIBtAnhaUIrBVAxek9WjD0/Twko=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s3WQ9McGpPqYlOuX1lZeBjUL2+L4LfozAgnewnlZSIrZOOTG+Xi9UHaoHhLUKoHGWttZDQ7L0ddCvEwE2Rn3HpgE89G7P0+y7krXwyD5vPsmgo0aUQRt58W1aJcNHGKcm4KQkOwsjxLmeLSRyY8mLvl0QwBxLsx6mD6KFvBkEVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hacktivis.me; spf=pass smtp.mailfrom=hacktivis.me; arc=none smtp.client-ip=138.201.117.120
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hacktivis.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hacktivis.me
-Received: 
-	by cloudsdale.lanodan.eu (OpenSMTPD) with ESMTP id e38035c7;
-	Sat, 23 Aug 2025 21:17:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=hacktivis.me; h=date
-	:from:to:message-id:references:mime-version:content-type
-	:in-reply-to; s=20241213_132553; bh=8IqwnMrQirt3YxhJaIBtAnhaUIrB
-	VAxek9WjD0/Twko=; b=SfTtURfPTtg4G/d6yMpnf/CSE7v3xa10Iav2p0Ji+oDM
-	6WpRrzdHTPJ3gsf2ZXx8A7b2LQCncxbEi59uJuMabQezEQlc34lhPa8w/vv/z1vX
-	9z0vf3WXT2T1f6jND3MsI29k9DWDqPL0/sCdEw42QFSDY2whe82oLqsG9mXVp9TG
-	1ogvUJscrQGBswyjSFNvh+tQHpR2YhD1Gf27l+8aPSq+3zRo/pRHYVL9QKj+s83+
-	2CqWimeIEjlbmW7Be6HbR/ORi0q3kdCNBtkkjmaS6ZXxtsymDVMFFYa6bG3QYcfe
-	b34ajlGuCFsRfX/Fc7989hIomTrMjB6Kg5R+3S2RMWUc8blYb/+lOXX2uZFiyXXu
-	REYUbvun40PdiEeBUwJDihShSS1YHKIifDQt+SXAr+ZPcOH+IDKDnVY03+KxRmcL
-	bKKWpRx20OANMabgb4fpqVX3UZjt0a8n8VYJc/8/FOWHOhNUf09tw9xKZzmBXd3o
-	bWXnZxJAM0tDG3aTijXjX/RO/BmJNEWV3hfh8ikp1FDbgSGM0unly8F+T1fvaWKR
-	jPqlyt+AYSwtbcX0xVBiRgH8cUUOyJtmjbIdoNBoQzt7C79j0egEjKaSS0Un8ztq
-	LVEWcAYLHs2ckS7EChLF3Xt0Cx3jPpaUwLJnxD9HL4hULvL7g9gdl+1wiaw8dyc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=hacktivis.me; h=date:from:to
-	:message-id:references:mime-version:content-type:in-reply-to; q=
-	dns; s=20241213_132553; b=lcsHeNRN7ftOz7yUe/JBQhgXfsNo+r7KawJ+7Z
-	tsHJ7aWIS9hS0j8f3ZpvNjLj4A7ag6yi3FIZmdk649h9X8AOAzwHBvFPMRODuqXR
-	moDZFct5ApeBoYJXK8jcCDSY3pcWUVSehGmJfWxnZ979eyNXm7JixUyEL2DR5X1D
-	wAO8iaBAtdELddarlcnZRf2Bdssl7yM0vmVXaIakYQyUAJDIhBU9bx69KO+0SioF
-	frSblfZtsYue+wzudOnBwtap5dWsl/NEpnN/hy+pNsNATtsl94k34yUsi+pJ+ICM
-	aBBReBUAcYS2pTDt32aeSW3IwHZ8FCQygtLwBQ46JZH1eZPrH962Wd3nKpLxHhjY
-	5ilz9oTQhF5moS9ZvJx7PW+/zH6GnkboiPJML2E7kDyVeXlnaOfcNCmItWhBOWlz
-	FzM6vCJoAkYaPcU3qSs56AKfI+GzIfYY6UJ21A6i4mBLwwCIGTkMtGVoXwXAtEun
-	tiIcNCx+/K0uEdIEFhx0Mb24XxyF2iSs/GJg7q0mj9ki+T2J4XrZBoFf2X72JFby
-	gyRYSBKfNQ1IuPhcdi2J7LykuqOkTIIGje82sw6/jsrFQiwHQLdvkWCz7RGvqiwQ
-	C5T+IaPGl2AcsFPKnD7ntQYl85QTt0HEco2qvbyO3NfdwnSKN6IRa8ax8I8fLo4S
-	WJhOg=
-Received: from localhost (cloudsdale.lanodan.eu [local])
-	by cloudsdale.lanodan.eu (OpenSMTPD) with ESMTPA id 00171c7f;
-	Sat, 23 Aug 2025 21:17:30 +0000 (UTC)
-Date: Sat, 23 Aug 2025 23:17:30 +0200
-From: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>, rsbecker@nexbridge.com,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthias =?iso-8859-1?Q?A=DFhauer?= <mha1993@live.de>,
-	Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>,
-	Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
-Message-ID: <aKov6qwXzrn7TCH6@cloudsdale.lanodan.eu>
-References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
- <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
- <03939951256baaaec3fcc690cfa38ee12fb553ce.1755921357.git.gitgitgadget@gmail.com>
- <030a01dc1433$ee3e2510$caba6f30$@nexbridge.com>
- <4dffd698-9d3c-41c8-9d3f-0d3750e683d3@app.fastmail.com>
- <031601dc143f$7a9a25d0$6fce7170$@nexbridge.com>
- <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
- <aKoVcVexWi212pAl@fruit.crustytoothpaste.net>
+	s=arc-20240116; t=1755984790; c=relaxed/simple;
+	bh=tAcBQI2dkod8SokFjAGRGMtTjAb/g1LFONsFzOJGHjs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZDcRf00uqdKCaUJFHmm7hLcjV7s3dhebc5qGWZ0RqeX+KP8n2fGlUxVRaXKNiqvlLQKerYx1WP3T0z6Bfa0/g6Xmkd81LkXegZWyjPFfIN0RJYBWM1R7Tuku3xSUo0CZY/xM3TmZXVw99siOguWsfSYZ3oc3A6bneSuYb15ugHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XmMg4nUh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CQ+GnLmg; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XmMg4nUh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CQ+GnLmg"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 872A07A00AB;
+	Sat, 23 Aug 2025 17:33:06 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sat, 23 Aug 2025 17:33:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1755984786; x=1756071186; bh=SYoku9Bb4a
+	NE/rBsoKmM6lgeOqynytNnhleY63xTCiM=; b=XmMg4nUhg/XHeiMc55IKVWWURs
+	+NwnfstKZrAmuPuEWXjx1TwoJjoa2Gyssub8li0Pd7cqSLApR3AuRl6V4Ke7XMv/
+	YCmQqYd3kakLjslR4ksSEPx4VjEfUSw+B060WbTKkxf9MOZbRea0ofoylNxvzRy7
+	QZfFw6yal5XH633Uw3thR7F4/WWq9kqu+3JpMAR1AIKfr/Ox9z/tNEzsRE8rqTaL
+	2J1pSvIzsBd6V4FPBOjsSrNG9B4LRlHKhV/W7PSQNf3hn7JLSkhjgzOMG1JBd6uS
+	3DLGV3vwWgeEbBKj6nMrP5WLKqbWXi0fY7W7A7Oo0MLuXUXTVpRSOpdcSOhg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1755984786; x=1756071186; bh=SYoku9Bb4aNE/rBsoKmM6lgeOqynytNnhle
+	Y63xTCiM=; b=CQ+GnLmgpq5sUWWh11OAB9p2+rv0GCbuEaI9cwItSm1SyH0Ojpr
+	fELZMSWHSVcJm6axs2z8S6O2pKT6L/fU7uRpzWHiQm0Z9tx0j3tRl/ARPYHn7KBW
+	P53vRElYylq78V4PRkfpP4wiAl0hkX0AKnujUfD3Pu+oBAePQnCqDYcYmg205Kgw
+	qaGod9U1G/Wx0ZhFmaFaCXCOIbLTJyDzKhy5R+YZCAdYVc4owVdOQR0ESFbNO7YB
+	MOF6/KgpxSgMBLFz7YLOcuh1w2an13XOXKIdwv4C8yRm2hkjAHsNLNIdsGDeoT06
+	SwPBBwQ/ubQLAcpvCHKfE6pd7eOW1eKH0lQ==
+X-ME-Sender: <xms:kjOqaF-fWgY7_p5sC26O9HD6YyLROxtChjnao8QkaXoKR0Odn8-QNQ>
+    <xme:kjOqaCKQHLaYohGzRswJgXVHjd7vuf9M_rGp9woj4HQgX-LzRahFZFZcvZA6q2bWB
+    S61aZyUM3Mhcfy06w>
+X-ME-Received: <xmr:kjOqaDda7XIGZlv919O5Su4aBmDkJ-Gzr5oM4kmh130a7O1jwFAEjmu_ovFr4HJ4OLYbyjPzcOaIv9lrXhBPGbCC7VdCe48I2Z7R2Yo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieejjedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtoheptg
+    grrhgvnhgrshesghhmrghilhdrtghomhdprhgtphhtthhopehnihgtohesfhhluhignhhi
+    tgdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:kjOqaJ-iRnGHvpgCAPvDceKP_WuFGdmOwgP1imiUA_wOBdO7d6DUXg>
+    <xmx:kjOqaIo28gzgAGrvgesGLjtcX405msio0gnjYQH46k7iGXa8hkTQdg>
+    <xmx:kjOqaGCrYSF45gBeYe3wb1oG4njHW7ZYzzGA09fTDUOKq7lmkDlDmA>
+    <xmx:kjOqaCw83DELWic3Dyi_s4KvjUBTcLFxU37WrRAKQumjPK4tgvfG4w>
+    <xmx:kjOqaBndESo0SXvceYdfP1LyKxHzwyGnYY_fCnWI-2aBHMAycA3tDudl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 23 Aug 2025 17:33:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+  Nicolas Pitre
+ <nico@fluxnic.net>,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via
+ GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/2] progress: replace setitimer() with alarm()
+In-Reply-To: <86bf04c7-6315-46ef-8297-42efc3ed322d@kdbg.org> (Johannes Sixt's
+	message of "Sat, 23 Aug 2025 18:24:57 +0200")
+References: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
+	<86bf04c7-6315-46ef-8297-42efc3ed322d@kdbg.org>
+Date: Sat, 23 Aug 2025 14:33:04 -0700
+Message-ID: <xmqq4itxvi3z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <aKoVcVexWi212pAl@fruit.crustytoothpaste.net>
+Content-Type: text/plain
 
-[2025-08-23 19:24:33+0000] brian m. carlson:
->On 2025-08-23 at 18:30:26, Elijah Newren wrote:
->> I don't think that's fair.  A quick reminder on the history: There was
->> lots of excitement about potentially introducing Rust two years ago at
->> our virtual Git contributors conference.  Taylor formally proposed
->> adopting it on the mailing list a year and a half ago.  And at Git
->> Merge last year, among those in attendance, there was broad
->> significant interest in adopting Rust with unanimous support for
->> letting it move forward among those that were present (which, yes, we
->> know wasn't everyone).  And there's the three rounds so far of this
->> patch series.  At every discussion where you weren't present, someone
->> else would always bring up you and NonStop, and point out how you've
->> been a very positive long-term member of the Git community and how
->> Rust adoption would likely negatively affect you, which would be
->> regrettable.  We waited years to adopt Rust precisely (and I believe
->> solely) because of your objections.  Josh and Calvin even went the
->> route of making optional not-even-built-by-default Rust libraries
->> (libgit-rs and libgit-sys) when they wanted to add some Rust bindings.
->> If years of deference by other community members isn't considered
->> taking you seriously, I don't know what is.
->>
->> I agree that it is disappointing that there isn't a clear way to both
->> gain the compelling advantages of Rust while also retaining the full
->> current extent of our widespread platform support.  It's doubly
->> unfortunate since you're such a positive contributing member of the
->> community.  But not allowing us to ever gain the advantages of Rust is
->> problematic too.  So, a decision has to be made, one way or the other.
+Johannes Sixt <j6t@kdbg.org> writes:
+
+> We use SIGALRM to raise a flag that tells the progress code to act in
+> some way. The progress code does not act asynchronously, but only when
+> there is an opportunity to look at the flag, i.e., it acts synchronously
+> in response to a third party (SIGALRM) that told it that it's time to
+> act.
 >
->I think it's worth saying that I do appreciate your (Randall's) positive
->contributions as well and I would love some way to continue to support
->NonStop as we adopt Rust.  To be clear, I care deeply about portability:
->I have owned PowerPC, UltraSPARC, MIPS, and ARM hardware, and I test
->many of my personal projects on at least Linux, FreeBSD, and NetBSD.
->
->There is an alternative Rust compiler, mrustc[0], which is written in
->C++ and that I have played around with to see if it could meet our
->needs.  I've been very busy lately and haven't had the time to test it
->out fully, and although it will likely require some upstream changes for
->static libraries and a compatibility wrapper because its minicargo is
->very limited in functionality, it might be an option that we could
->leverage.  There will necessarily be work on Rust upstream as well, but
->I'm hoping that mrustc will at least open doors for us.
->
->I also think that Rust is becoming a more and more common language in
->technology because of its interoperability with C and its memory safety.
->The support policy I wrote up explains why there is an increasing push
->from governments, security professionals, and the technology industry
->for memory-safe languages.  If Git is to continue its success and broad
->adoption, we don't want it to be labelled software that is using
->security anti-patterns, and we also don't want it to be a CVE factory
->like libxml2 or ImageMagick.  This is the reason I ultimately started
->work on the SHA-256 project many years ago: I knew we'd need to do it
->for security reasons and that without a more secure hash algorithm, Git
->would eventually be dropped.
->
->My hope is that NonStop can find some way to support Rust because I
->think it's a compelling language and NonStop would greatly benefit from
->the wider variety of software available.  My sense of previous
->discussions was that we do very much want NonStop to continue to come
->along as we support Rust in Git and that if there are ways we make it
->easier for both, we'd want to do that.  That's certainly my view, at
->least.
->
->[0] https://github.com/thepowersgang/mrustc
->-- 
->brian m. carlson (they/them)
->Toronto, Ontario, CA
+> But we can change the progress code to do the time keeping itself.
+> Instead of looking whether a flag was raised, we can let it look at the
+> wall clock and check whether an interval has elapsed.
 
-Hello,
+Yes, the use of itimer to only change the flag without doing
+anything funky has been a very safe way to use signals, doing only
+absolutely minimal thing in the signal handler.  Having to rearm the
+signal in the signal handler in Carlo's patch made me feel dirtier.
 
-mrustc isn't really a alternative compiler, it only serves
-to bootstrap rustc+cargo from source code rather than binaries,
-you can't really use it to compile arbitrary Rust code.
+But looking at the wallclock once every iteration of a busy loop?  
 
-You'd still need to port LLVM and rustc.
+Operating system folks may have worked hard to minimize the cost of
+system calls to gettimeofday() in order to help applications that do
+so, but I somehow feel even dirtier to hear proposal to do so to
+replace a signal that we set and forget, to be reminded once every
+second.
 
-gccrs would more be the alternative compiler but it still seems
-to have a long road ahead of it: https://rust-gcc.github.io/
-
-Best regards
+I dunno.
