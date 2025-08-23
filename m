@@ -1,171 +1,514 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED6E25D55D
-	for <git@vger.kernel.org>; Sat, 23 Aug 2025 13:23:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7BB21CA10
+	for <git@vger.kernel.org>; Sat, 23 Aug 2025 13:44:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755955384; cv=none; b=MkDmQN1cBEUhkzJfdFpDJFBhXJx3pvLN7emRuzxfY7I0uZ5h5m3f97iIAfD7g+I0GbJiqDBQywsaaomNEg8uUaXfUdfv1ikY9GK+fIg9MriGn+6DtB+xWqftZqhwssKSjSdf+3RKTlNbsKjwK+AqQu9yMW4s7rVN+2Dv0XcIwD4=
+	t=1755956670; cv=none; b=Bks1O3FRCvNhFI7pX6MYUrnMJ5/F8ZkUkwc6WmMwM5C59RDRw8KSYykyPyJZxzP6FanpRJhhAL/05gOwB7RpIuS+HzviGlowA+/2/s3a90Muf00KMdBwuSbd24Q/ydUJR0ew+KN+i5pxtDvmCqSTOpE/0VS/U26SYT8AnzlW0No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755955384; c=relaxed/simple;
-	bh=YhoVqad8t7VoNKUGjp7QXL30shYCG/rtar23fosDV4w=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=sRZMZ6kyzGQY8e00b+Jg+vpS+YU6tAS9TUhluLI7q0I6oIO6wKLgGlsVhWaVBpt0fHBwEEaIHyIx30ZFeJi6eCnY9pVl83NKungkE12iJKEmxU2sRBZieDRWKoHSbjLC7tPQ+kpbf8pMIXdfKqta+Hug/o6oqCg/T1dmBhgrw7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KdhtDnvF; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KdhtDnvF"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3c763484ccdso244831f8f.0
-        for <git@vger.kernel.org>; Sat, 23 Aug 2025 06:23:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755955381; x=1756560181; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rThvs5b7M+o8S6DrEiB9D/WFJ6+bM/4UdQydABe8QL8=;
-        b=KdhtDnvFatk4HUr/pzK1u4/WflvJ1Fu3Dx9C9jjcHDwtwo/fix5uw7oxaHu/x9VT38
-         CGWaQ7OOghwkk/RXvM2sCbOy8GEJbRaUcuTQtAkecZi5XUFAxlHx/C7cURYHj0UcLTx3
-         y2Af/R+X5TG8xEVNpvUIKEseoUhYGbvQ22Nivy9lFOPUpnTgcnnQfkfrJVkYtJZLDuhT
-         5Hr3tTCJi1pGxUh2K27aez18Plq4RpN7nDJmFwDTWW/NojwDEdrhfLD9yMjg4HYSQ5sV
-         VvGk4KxsrTs32gwzOjc7i6UKCIKzfSRhoykIB6ZWoH+1QcbPoY8hNxds/e4xjZyyBVqI
-         aUcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755955381; x=1756560181;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rThvs5b7M+o8S6DrEiB9D/WFJ6+bM/4UdQydABe8QL8=;
-        b=Io5rf2w20g8rytMpbTLuzHNt5GEx1B9ABG1a6+VWblL58ZG6F4yJDGMzGDiobtSHtB
-         hUPCgAhlAZL6l+oGtt3dhVWWJ2JkZNsTN4GdMAdSa/LA/P+thK734LBnktHnRSAzzCOe
-         LgC6aOE4geNThirMm5Va3VHxr60KHhX6roz02QRsFxCY30kFnu140DZobgFOnFc7Mb9Q
-         riFqxuX9y88ONJEs9tMKB2Ge4kadejAISWFiqrARYFvcX/vaXIUb4fJMZO3YUezrlJtJ
-         oVM+ond96TGvO2qOjv/NjNnhTT1q5dhGkqt6FOaJ0BBZ1epUKWYQGUcl3TCKy2gep6Cr
-         AZuw==
-X-Gm-Message-State: AOJu0Yy0/kBXGL62uzlWtzdMVt6r7ozjfiF3uOf2ET8oGQg1rEGdzu8Y
-	KgsjsAqiS4txpVuUJ+8TmNVW5qa2F3QGPyRH/JsS+zDfFWtzZBA048T0x84GKw==
-X-Gm-Gg: ASbGncuuIY7rjtrl8YjzGPX8I9hBf3krGJP5Vljbfqo5s0788819st3mgWRT9JPAzBh
-	0vUoS0oyTHGB3XCnX25anDPxLTDH/hsLmKpA1FgU1euqvZq6QFSstrdYXP2kIfQJ8sYxcvR7+Q/
-	dc3VBLmzIniWf0ZseORweG+jns4Y6yo7YvahqUMxphfceVvM7yy6/MkdG08r/CYcSxst5mneQTc
-	CoSFsZ0a92JSKks9Qo+ShVRIeN7HJ6Os5piuH9MC2Y5zOgQjJFMwjaH4nhnvCz4RwNZmtDv7yYL
-	oFXm4BUyzM9wqCHDnoQikgJAgR/NTT+VwFj5UJeEe+9iNYWdxKhXjgEoPSMA1puOd9jywUVpIbu
-	EhdG/lh9D3X0pTmHwkoTiZVAPmAM=
-X-Google-Smtp-Source: AGHT+IH8qBlkdRhtWpCrtVDzRXiA1kTKWkR382Y3l9u8lIZEJngVHSTmSF5GsArlTaYMnhGRQuvSgg==
-X-Received: by 2002:a05:6000:4383:b0:3c2:9d64:125f with SMTP id ffacd0b85a97d-3c5d51badf6mr6581925f8f.28.1755955380629;
-        Sat, 23 Aug 2025 06:23:00 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c711abd15asm3634634f8f.56.2025.08.23.06.23.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Aug 2025 06:23:00 -0700 (PDT)
-Message-Id: <0db98c3478e5e2f1aadcf6d773cf6519af482630.1755955378.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
-References: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
-From: "=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 23 Aug 2025 13:22:57 +0000
-Subject: [PATCH 2/2] progress: add a shutting down state to the SIGALRM
- handler
+	s=arc-20240116; t=1755956670; c=relaxed/simple;
+	bh=PnAbHMGMwzbLuMiGA3is2NHUKHy1vxAc3nH+8g1egJc=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=J9v1W097pfRtsgf9TaU+E6wAqDfsuzOZpNWKyjtDqG0WGWPuC8its2BkKvOzvyKa73QEdZ36BJUQTYlneCarjqO7qCHHZ9WnHkeFvY8982U2So8t3t3fhhr41LFEevxfEYDbdCSBGzwHI7J396w/ZilrR5sopHZIf2kx/E3RmME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 57NDhYVU3391376
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 23 Aug 2025 13:43:34 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Ezekiel Newren via GitGitGadget'" <gitgitgadget@gmail.com>,
+        <git@vger.kernel.org>
+Cc: "'Elijah Newren'" <newren@gmail.com>,
+        "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        "'Taylor Blau'" <me@ttaylorr.com>,
+        "'Christian Brabandt'" <cb@256bit.org>,
+        "'Phillip Wood'" <phillip.wood123@gmail.com>,
+        "'Eli Schwartz'" <eschwartz@gentoo.org>,
+        "'Haelwenn \(lanodan\) Monnier'" <contact@hacktivis.me>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
+        "=?utf-8?Q?'Matthias_A=C3=9Fhauer'?=" <mha1993@live.de>,
+        "'Patrick Steinhardt'" <ps@pks.im>, "'Sam James'" <sam@gentoo.org>,
+        "'Collin Funk'" <collin.funk1@gmail.com>,
+        "'Mike Hommey'" <mh@glandium.org>,
+        "'Pierre-Emmanuel Patry'" <pierre-emmanuel.patry@embecosm.com>,
+        "'Ben Knoble'" <ben.knoble@gmail.com>,
+        "'Ramsay Jones'" <ramsay@ramsayjones.plus.com>,
+        "'Ezekiel Newren'" <ezekielnewren@gmail.com>,
+        "'Ezekiel Newren'" <ezekielnewren@gmail.com>
+References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>	<pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com> <03939951256baaaec3fcc690cfa38ee12fb553ce.1755921357.git.gitgitgadget@gmail.com>
+In-Reply-To: <03939951256baaaec3fcc690cfa38ee12fb553ce.1755921357.git.gitgitgadget@gmail.com>
+Subject: RE: [PATCH v3 02/15] xdiff: introduce rust
+Date: Sat, 23 Aug 2025 09:43:29 -0400
+Organization: Nexbridge Inc.
+Message-ID: <030a01dc1433$ee3e2510$caba6f30$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-    Johannes Sixt <j6t@kdbg.org>,
-    Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
-    =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHKaANAdlFqcOHeZ+UNw9ZV5fNZlgJjoZaSAeK73o60cWSXAA==
+X-Antivirus: Norton (VPS 250823-6, 8/23/2025), Outbound message
+X-Antivirus-Status: Clean
 
-From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+On August 22, 2025 11:56 PM, Ezekiel Newren wrote:
+>From: Ezekiel Newren <ezekielnewren@gmail.com>
+>
+>Upcoming patches will simplify xdiff, while also porting parts of it to =
+Rust. In
+>preparation, add some stubs and setup the Rust build. For now, it is =
+easier to let
+>cargo build rust and have make or meson merely link against the static =
+library that
+>cargo builds. In line with ongoing libification efforts, use multiple =
+crates to allow
+>more modularity on the Rust side. xdiff is the crate that this series =
+will focus on, but
+>we also introduce the interop crate for future patch series.
+>
+>In order to facilitate interoperability between C and Rust, introduce C =
+definitions for
+>Rust primitive types in git-compat-util.h.
+>
+>Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+>---
+> .gitignore              |  3 +++
+> Makefile                | 53 ++++++++++++++++++++++++++++----------
+> build_rust.sh           | 57 +++++++++++++++++++++++++++++++++++++++++
+> git-compat-util.h       | 17 ++++++++++++
+> meson.build             | 52 +++++++++++++++++++++++++++++++------
+> rust/Cargo.toml         |  6 +++++
+> rust/interop/Cargo.toml | 14 ++++++++++  rust/interop/src/lib.rs |  0
+> rust/xdiff/Cargo.toml   | 15 +++++++++++
+> rust/xdiff/src/lib.rs   |  0
+> 10 files changed, 196 insertions(+), 21 deletions(-)  create mode =
+100755
+>build_rust.sh  create mode 100644 rust/Cargo.toml  create mode 100644
+>rust/interop/Cargo.toml  create mode 100644 rust/interop/src/lib.rs  =
+create mode
+>100644 rust/xdiff/Cargo.toml  create mode 100644 rust/xdiff/src/lib.rs
+>
+>diff --git a/.gitignore b/.gitignore
+>index 04c444404e4b..ff81e3580c4e 100644
+>--- a/.gitignore
+>+++ b/.gitignore
+>@@ -254,3 +254,6 @@ Release/
+> /contrib/buildsystems/out
+> /contrib/libgit-rs/target
+> /contrib/libgit-sys/target
+>+/.idea/
+>+/rust/target/
+>+/rust/Cargo.lock
+>diff --git a/Makefile b/Makefile
+>index 70d1543b6b86..1ec0c1ee6603 100644
+>--- a/Makefile
+>+++ b/Makefile
+>@@ -919,6 +919,29 @@ TEST_SHELL_PATH =3D $(SHELL_PATH)
+>
+> LIB_FILE =3D libgit.a
+> XDIFF_LIB =3D xdiff/lib.a
+>+
+>+EXTLIBS =3D
+>+
+>+ifeq ($(DEBUG), 1)
+>+  RUST_BUILD_MODE =3D debug
+>+else
+>+  RUST_BUILD_MODE =3D release
+>+endif
+>+
+>+RUST_TARGET_DIR =3D rust/target/$(RUST_BUILD_MODE) RUST_FLAGS_FOR_C =
+=3D
+>+-L$(RUST_TARGET_DIR)
+>+
+>+.PHONY: compile_rust
+>+compile_rust:
+>+	./build_rust.sh . $(RUST_BUILD_MODE) xdiff
+>+
+>+EXTLIBS +=3D ./$(RUST_TARGET_DIR)/libxdiff.a
+>+
+>+UNAME_S :=3D $(shell uname -s)
+>+ifeq ($(UNAME_S),Linux)
+>+  EXTLIBS +=3D -ldl
+>+endif
+>+
+> REFTABLE_LIB =3D reftable/libreftable.a
+>
+> GENERATED_H +=3D command-list.h
+>@@ -1390,7 +1413,7 @@ UNIT_TEST_OBJS +=3D =
+$(UNIT_TEST_DIR)/lib-reftable.o
+>
+> # xdiff and reftable libs may in turn depend on what is in libgit.a  =
+GITLIBS =3D
+>common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE) =
+-EXTLIBS =3D
+>+
+>
+> GIT_USER_AGENT =3D git/$(GIT_VERSION)
+>
+>@@ -2541,7 +2564,7 @@ git.sp git.s git.o: EXTRA_CPPFLAGS =3D \
+> 	'-DGIT_MAN_PATH=3D"$(mandir_relative_SQ)"' \
+> 	'-DGIT_INFO_PATH=3D"$(infodir_relative_SQ)"'
+>
+>-git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
+>+git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS) compile_rust
+> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+> 		$(filter %.o,$^) $(LIBS)
+>
+>@@ -2891,17 +2914,17 @@ headless-git.o: compat/win32/headless.c GIT-
+>CFLAGS
+> headless-git$X: headless-git.o git.res GIT-LDFLAGS
+> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -mwindows -o $@
+>$< git.res
+>
+>-git-%$X: %.o GIT-LDFLAGS $(GITLIBS)
+>+git-%$X: %.o GIT-LDFLAGS $(GITLIBS) compile_rust
+> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter
+>%.o,$^) $(LIBS)
+>
+>-git-imap-send$X: imap-send.o $(IMAP_SEND_BUILDDEPS) GIT-LDFLAGS
+>$(GITLIBS)
+>+git-imap-send$X: imap-send.o $(IMAP_SEND_BUILDDEPS) GIT-LDFLAGS
+>+$(GITLIBS) compile_rust
+> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter
+>%.o,$^) \
+> 		$(IMAP_SEND_LDFLAGS) $(LIBS)
+>
+>-git-http-fetch$X: http.o http-walker.o http-fetch.o GIT-LDFLAGS =
+$(GITLIBS)
+>+git-http-fetch$X: http.o http-walker.o http-fetch.o GIT-LDFLAGS
+>+$(GITLIBS) compile_rust
+> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter
+>%.o,$^) \
+> 		$(CURL_LIBCURL) $(LIBS)
+>-git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
+>+git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS) =
+compile_rust
+> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter
+>%.o,$^) \
+> 		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
+>
+>@@ -2911,11 +2934,11 @@ $(REMOTE_CURL_ALIASES):
+>$(REMOTE_CURL_PRIMARY)
+> 	ln -s $< $@ 2>/dev/null || \
+> 	cp $< $@
+>
+>-$(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS
+>$(GITLIBS)
+>+$(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS
+>+$(GITLIBS) compile_rust
+> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter
+>%.o,$^) \
+> 		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
+>
+>-scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
+>+scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS) compile_rust
+> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+> 		$(filter %.o,$^) $(LIBS)
+>
+>@@ -2925,6 +2948,7 @@ $(LIB_FILE): $(LIB_OBJS)
+> $(XDIFF_LIB): $(XDIFF_OBJS)
+> 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+>
+>+
+> $(REFTABLE_LIB): $(REFTABLE_OBJS)
+> 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+>
+>@@ -3294,7 +3318,7 @@ perf: all
+>
+> t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
+>$(UNIT_TEST_DIR)/test-lib.o
+>
+>-t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
+>+t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
+>+compile_rust
+> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter
+>%.o,$^) $(filter %.a,$^) $(LIBS)
+>
+> check-sha1:: t/helper/test-tool$X
+>@@ -3756,7 +3780,10 @@ cocciclean:
+> 	$(RM) -r .build/contrib/coccinelle
+> 	$(RM) contrib/coccinelle/*.cocci.patch
+>
+>-clean: profile-clean coverage-clean cocciclean
+>+rustclean:
+>+	cd rust && cargo clean
+>+
+>+clean: profile-clean coverage-clean cocciclean rustclean
+> 	$(RM) -r .build $(UNIT_TEST_BIN)
+> 	$(RM) GIT-TEST-SUITES
+> 	$(RM) po/git.pot po/git-core.pot
+>@@ -3911,13 +3938,13 @@ FUZZ_CXXFLAGS ?=3D $(ALL_CFLAGS)
+> .PHONY: fuzz-all
+> fuzz-all: $(FUZZ_PROGRAMS)
+>
+>-$(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS) GIT-
+>LDFLAGS
+>+$(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS)
+>+GIT-LDFLAGS compile_rust
+> 	$(QUIET_LINK)$(FUZZ_CXX) $(FUZZ_CXXFLAGS) -o $@ $(ALL_LDFLAGS) \
+> 		-Wl,--allow-multiple-definition \
+> 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS) $(LIB_FUZZING_ENGINE)
+>
+> $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o
+>$(UNIT_TEST_OBJS) \
+>-	$(GITLIBS) GIT-LDFLAGS
+>+	$(GITLIBS) GIT-LDFLAGS compile_rust
+> 	$(call mkdir_p_parent_template)
+> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+> 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS) @@ -3936,7 +3963,7 @@
+>$(UNIT_TEST_DIR)/clar.suite: $(UNIT_TEST_DIR)/clar-decls.h
+>$(UNIT_TEST_DIR)/gene
+> $(UNIT_TEST_DIR)/clar/clar.o: $(UNIT_TEST_DIR)/clar.suite
+> $(CLAR_TEST_OBJS): $(UNIT_TEST_DIR)/clar-decls.h
+> $(CLAR_TEST_OBJS): EXTRA_CPPFLAGS =3D -I$(UNIT_TEST_DIR)
+>-$(CLAR_TEST_PROG): $(UNIT_TEST_DIR)/clar.suite $(CLAR_TEST_OBJS) =
+$(GITLIBS)
+>GIT-LDFLAGS
+>+$(CLAR_TEST_PROG): $(UNIT_TEST_DIR)/clar.suite $(CLAR_TEST_OBJS)
+>+$(GITLIBS) GIT-LDFLAGS compile_rust
+> 	$(call mkdir_p_parent_template)
+> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter
+>%.o,$^) $(LIBS)
+>
+>diff --git a/build_rust.sh b/build_rust.sh new file mode 100755 index
+>000000000000..192385a1d961
+>--- /dev/null
+>+++ b/build_rust.sh
+>@@ -0,0 +1,57 @@
+>+#!/bin/sh
+>+
+>+
+>+rustc -vV || exit $?
+>+cargo --version || exit $?
+>+
+>+dir_git_root=3D${0%/*}
+>+dir_build=3D$1
+>+rust_build_profile=3D$2
+>+crate=3D$3
+>+
+>+dir_rust=3D$dir_git_root/rust
+>+
+>+if [ "$dir_git_root" =3D "" ]; then
+>+  echo "did not specify the directory for the root of git"
+>+  exit 1
+>+fi
+>+
+>+if [ "$dir_build" =3D "" ]; then
+>+  echo "did not specify the build directory"
+>+  exit 1
+>+fi
+>+
+>+if [ "$rust_build_profile" =3D "" ]; then
+>+  echo "did not specify the rust_build_profile"
+>+  exit 1
+>+fi
+>+
+>+if [ "$rust_build_profile" =3D "release" ]; then
+>+  rust_args=3D"--release"
+>+  export RUSTFLAGS=3D''
+>+elif [ "$rust_build_profile" =3D "debug" ]; then
+>+  rust_args=3D""
+>+  export RUSTFLAGS=3D'-C debuginfo=3D2 -C opt-level=3D1 -C =
+force-frame-pointers=3Dyes'
+>+else
+>+  echo "illegal rust_build_profile value $rust_build_profile"
+>+  exit 1
+>+fi
+>+
+>+cd $dir_rust && cargo clean && pwd && cargo build -p $crate =
+$rust_args;
+>+cd $dir_git_root
+>+
+>+libfile=3D"lib${crate}.a"
+>+if rustup show active-toolchain | grep windows-msvc; then
+>+  libfile=3D"${crate}.lib"
+>+fi
+>+dst=3D$dir_build/$libfile
+>+
+>+if [ "$dir_git_root" !=3D "$dir_build" ]; then
+>+  src=3D$dir_rust/target/$rust_build_profile/$libfile
+>+  if [ ! -f $src ]; then
+>+    echo >&2 "::error:: cannot find path of static library $src is not =
+a file or does not
+>exist"
+>+    exit 5
+>+  fi
+>+
+>+  rm $dst 2>/dev/null
+>+  mv $src $dst
+>+fi
+>diff --git a/git-compat-util.h b/git-compat-util.h index
+>4678e21c4cb8..82dc99764ac0 100644
+>--- a/git-compat-util.h
+>+++ b/git-compat-util.h
+>@@ -196,6 +196,23 @@ static inline int is_xplatform_dir_sep(int c)  =
+#include
+>"compat/msvc.h"
+> #endif
+>
+>+/* rust types */
+>+typedef uint8_t   u8;
+>+typedef uint16_t  u16;
+>+typedef uint32_t  u32;
+>+typedef uint64_t  u64;
+>+
+>+typedef int8_t    i8;
+>+typedef int16_t   i16;
+>+typedef int32_t   i32;
+>+typedef int64_t   i64;
+>+
+>+typedef float     f32;
+>+typedef double    f64;
+>+
+>+typedef size_t    usize;
+>+typedef ptrdiff_t isize;
+>+
+> /* used on Mac OS X */
+> #ifdef PRECOMPOSE_UNICODE
+> #include "compat/precompose_utf8.h"
+>diff --git a/meson.build b/meson.build
+>index 596f5ac7110e..324f968338b9 100644
+>--- a/meson.build
+>+++ b/meson.build
+>@@ -267,6 +267,40 @@ version_gen_environment.set('GIT_DATE',
+>get_option('build_date'))  =
+version_gen_environment.set('GIT_USER_AGENT',
+>get_option('user_agent'))  version_gen_environment.set('GIT_VERSION',
+>get_option('version'))
+>
+>+if get_option('optimization') in ['2', '3', 's', 'z']
+>+  rust_build_profile =3D 'release'
+>+else
+>+  rust_build_profile =3D 'debug'
+>+endif
+>+
+>+# Run `rustup show active-toolchain` and capture output rustup_out =3D
+>+run_command('rustup', 'show', 'active-toolchain',
+>+                         check: true).stdout().strip()
+>+
+>+rust_crates =3D ['xdiff']
+>+rust_builds =3D []
+>+
+>+foreach crate : rust_crates
+>+  if rustup_out.contains('windows-msvc')
+>+    libfile =3D crate + '.lib'
+>+  else
+>+    libfile =3D 'lib' + crate + '.a'
+>+  endif
+>+
+>+  rust_builds +=3D custom_target(
+>+    'rust_build_'+crate,
+>+    output: libfile,
+>+    build_by_default: true,
+>+    build_always_stale: true,
+>+    command: [
+>+      meson.project_source_root() / 'build_rust.sh',
+>+      meson.current_build_dir(), rust_build_profile, crate,
+>+    ],
+>+    install: false,
+>+  )
+>+endforeach
+>+
+>+
+> compiler =3D meson.get_compiler('c')
+>
+> libgit_sources =3D [
+>@@ -1678,14 +1712,16 @@ version_def_h =3D custom_target(  =
+libgit_sources +=3D
+>version_def_h
+>
+> libgit =3D declare_dependency(
+>-  link_with: static_library('git',
+>-    sources: libgit_sources,
+>-    c_args: libgit_c_args + [
+>-      '-DGIT_VERSION_H=3D"' + version_def_h.full_path() + '"',
+>-    ],
+>-    dependencies: libgit_dependencies,
+>-    include_directories: libgit_include_directories,
+>-  ),
+>+  link_with: [
+>+    static_library('git',
+>+      sources: libgit_sources,
+>+      c_args: libgit_c_args + [
+>+        '-DGIT_VERSION_H=3D"' + version_def_h.full_path() + '"',
+>+      ],
+>+      dependencies: libgit_dependencies,
+>+      include_directories: libgit_include_directories,
+>+    ),
+>+  ] + rust_builds,
+>   compile_args: libgit_c_args,
+>   dependencies: libgit_dependencies,
+>   include_directories: libgit_include_directories, diff --git =
+a/rust/Cargo.toml
+>b/rust/Cargo.toml new file mode 100644 index 000000000000..ed3d79d7f827
+>--- /dev/null
+>+++ b/rust/Cargo.toml
+>@@ -0,0 +1,6 @@
+>+[workspace]
+>+members =3D [
+>+    "xdiff",
+>+    "interop",
+>+]
+>+resolver =3D "2"
+>diff --git a/rust/interop/Cargo.toml b/rust/interop/Cargo.toml new file =
+mode
+>100644 index 000000000000..045e3b01cfad
+>--- /dev/null
+>+++ b/rust/interop/Cargo.toml
+>@@ -0,0 +1,14 @@
+>+[package]
+>+name =3D "interop"
+>+version =3D "0.1.0"
+>+edition =3D "2021"
+>+
+>+[lib]
+>+name =3D "interop"
+>+path =3D "src/lib.rs"
+>+## staticlib to generate xdiff.a for use by gcc ## cdylib (optional) =
+to
+>+generate xdiff.so for use by gcc ## rlib is required by the rust unit
+>+tests crate-type =3D ["staticlib", "rlib"]
+>+
+>+[dependencies]
+>diff --git a/rust/interop/src/lib.rs b/rust/interop/src/lib.rs new file =
+mode 100644
+>index 000000000000..e69de29bb2d1 diff --git a/rust/xdiff/Cargo.toml
+>b/rust/xdiff/Cargo.toml new file mode 100644 index
+>000000000000..eb7966aada64
+>--- /dev/null
+>+++ b/rust/xdiff/Cargo.toml
+>@@ -0,0 +1,15 @@
+>+[package]
+>+name =3D "xdiff"
+>+version =3D "0.1.0"
+>+edition =3D "2021"
+>+
+>+[lib]
+>+name =3D "xdiff"
+>+path =3D "src/lib.rs"
+>+## staticlib to generate xdiff.a for use by gcc ## cdylib (optional) =
+to
+>+generate xdiff.so for use by gcc ## rlib is required by the rust unit
+>+tests crate-type =3D ["staticlib", "rlib"]
+>+
+>+[dependencies]
+>+interop =3D { path =3D "../interop" }
+>diff --git a/rust/xdiff/src/lib.rs b/rust/xdiff/src/lib.rs new file =
+mode 100644 index
+>000000000000..e69de29bb2d1
 
-In a previous commit, sigitimer() was replaced by alarm(), but to
-keep the timer active, an extra call to `alarm(1)` was added to
-the signal handler, opening a potential race condition whem the
-timer is being cleared.
+Does this introduce Rust as a mandatory dependency for git? If so, it =
+cuts out
+numerous platforms.
 
-To avoid that, add an extra state to set during shutdown and
-adjust the logic to flag the potential need to update progress
-into the first bit instead.
-
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- progress.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
-
-diff --git a/progress.c b/progress.c
-index 71b305d1625d..49e58e094a3f 100644
---- a/progress.c
-+++ b/progress.c
-@@ -50,6 +50,11 @@ struct progress {
- 	int split;
- };
- 
-+/*
-+ * 0: no progress to report
-+ * 1: potential update for progress to report
-+ * 2: no more progress to report
-+ */
- static volatile sig_atomic_t progress_update;
- 
- /*
-@@ -66,8 +71,10 @@ void progress_test_force_update(void)
- 
- static void progress_interval(int signum UNUSED)
- {
--	progress_update = 1;
--	alarm(1);
-+	if (progress_update != 2) {
-+		alarm(1);
-+		progress_update = 1;
-+	}
- }
- 
- static void set_progress_signal(void)
-@@ -93,6 +100,7 @@ static void clear_progress_signal(void)
- 	if (progress_testing)
- 		return;
- 
-+	progress_update = 2;
- 	alarm(0);
- 	signal(SIGALRM, SIG_IGN);
- 	progress_update = 0;
-@@ -111,14 +119,14 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 	int show_update = 0;
- 	int last_count_len = counters_sb->len;
- 
--	if (progress->delay && (!progress_update || --progress->delay))
-+	if (progress->delay && (!(progress_update & 1) || --progress->delay))
- 		return;
- 
- 	progress->last_value = n;
- 	tp = (progress->throughput) ? progress->throughput->display.buf : "";
- 	if (progress->total) {
- 		unsigned percent = n * 100 / progress->total;
--		if (percent != progress->last_percent || progress_update) {
-+		if (percent != progress->last_percent || (progress_update & 1)) {
- 			progress->last_percent = percent;
- 
- 			strbuf_reset(counters_sb);
-@@ -128,7 +136,7 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 				    tp);
- 			show_update = 1;
- 		}
--	} else if (progress_update) {
-+	} else if (progress_update & 1) {
- 		strbuf_reset(counters_sb);
- 		strbuf_addf(counters_sb, "%"PRIuMAX"%s", (uintmax_t)n, tp);
- 		show_update = 1;
-@@ -239,7 +247,7 @@ void display_throughput(struct progress *progress, uint64_t total)
- 	tp->idx = (tp->idx + 1) % TP_IDX_MAX;
- 
- 	throughput_string(&tp->display, total, rate);
--	if (progress->last_value != -1 && progress_update)
-+	if (progress->last_value != -1 && (progress_update & 1))
- 		display(progress, progress->last_value, NULL);
- }
- 
--- 
-gitgitgadget
