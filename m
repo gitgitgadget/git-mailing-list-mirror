@@ -1,105 +1,201 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp6-g21.free.fr (smtp6-g21.free.fr [212.27.42.6])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A4178F58
-	for <git@vger.kernel.org>; Sat, 23 Aug 2025 16:37:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2578C78F58
+	for <git@vger.kernel.org>; Sat, 23 Aug 2025 16:37:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.6
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755967043; cv=none; b=lkGB/8zFMbrAXTFfoc6KKzuCGWd/X0+fOeT87H4PXGlAF+GGegutyLRnMqvLs9YS8uTwnB+PEWrataETYhn+C70CkK4TX8RJxFQWXjJKXUdmiUU4kwQ/VyIHrC45kZnBzn5RwYObouCZLLLg+NWskPHsrNT9T1yLjYb5bRaYDHM=
+	t=1755967048; cv=none; b=alIskZmU/PyCmLDMDBjAWK7lyZGiEUCzSD3t1APh3CgxWSk0rFouO5orwWdfBJhX39Hzn35ojeb7dTRQx666uSlK0z0DsVA0+L6Dm/b5m6X1cvCM+HWRxJh+Wx19Dw4UQbLIUrAzrAtiBCBVWE+I4/0cPbd9jE7jLny1+/69Eqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755967043; c=relaxed/simple;
-	bh=m6WcQ3mracH0cM5y6zZ4XO9d0rzqejXwDz9R9Xg8ARY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VE4NWfHFdPc/6I43eWj3avHLxuVUZpanx90HcY1pddSqhTqIXx3I+3NW9qsugVTO6CH6WjnGIL+U2L4siU86Pg1gkT0FArXnm3iRPGHKJQghjEBkYSOZ0CGLsxjPOEAlbJPXLZUq38KtJdCB2wNjMNpnDG03miy10/imtzhKh1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gFdDc0eT; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755967048; c=relaxed/simple;
+	bh=1n33/a0kMTNTadpCYXAfnKUqFKs66dQQnQwlEX383sA=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nCWTqidX7pbB51jrzOumzEnSvhH561nE2/+S5xhKRnFjDY6VXyD3KHfXuCbpryErpFfwj72vmbqxV+ky3LRYeB9njTdvPsruGshC4UDaa4ew3n25WgwHL5ilElfOMS4L2fB3BsUEYStanS/pgNpSkEYmvKXRiXZVKHJkT7GCoVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=I2tavrDz; arc=none smtp.client-ip=212.27.42.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gFdDc0eT"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-333f8d1cbcdso25049761fa.0
-        for <git@vger.kernel.org>; Sat, 23 Aug 2025 09:37:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755967039; x=1756571839; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=faYPX/eZRphQOG+pLl+lsWePX0TIEjsK1DEb4Mv/MgM=;
-        b=gFdDc0eTTHjvpq0q6G3a9e+Pwk06+GKdue1uE5zjRuDGj7+BuvLPaZavxtxgFtuR1s
-         n8cx1YN9B8nnhGHDuNlbNtccxg/Ynv4XjSIFRPIk6pHXORktiBc3wMHr5ovTPVVkGGhI
-         J8CVqKs1womiDPFYCTighzT1n1bLlQ7t3SyZCsaNwt7kRedmAlyZf5qYrj26stZlXetf
-         9YW+im8gANaJNXLHPDW8UA3LfGdebZO/EkgXfpxX9GFQWEOWSNbCXqXB8nTwygvEIpVW
-         E0IJrSRUqW4JZdJDBZu9RNPkfF5Jn6gKG9Vhnx97LH3WUDmTrMSJbZlQPfZNhpa4VgW2
-         WfSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755967039; x=1756571839;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=faYPX/eZRphQOG+pLl+lsWePX0TIEjsK1DEb4Mv/MgM=;
-        b=XcH5CHD63yiADKRSCnK4Dkpt8lnN4VPJJ9wX5lI9i11dvJz94ApHSN2ZyDv7r7gUPN
-         GZhbceuqPyG5/rxAte4qIjMU4GBC5VeuuwGci3gmmVt18AHx4XRMn4j1mzeZ4wd+GA+P
-         zm69khcb8/C1hu+6YU9uaj/qWm0mkcvbhDfC8PDHJRx3REP9vRqe5n9YZWrCSMPc2G5n
-         MjfOuReBfL4kAr0Fv7J2Oicd7OStkDr7ue5tHwbV26horo3lZyK99cwMHzrUDpzD9DpS
-         fjGpPisIJ4uqckg8dkDjO7xYne12nvgqMQ1OYgKBg8ku/sJE8vbZMjaZwiLKSJjM4RMF
-         Aftw==
-X-Forwarded-Encrypted: i=1; AJvYcCWBLelR3ASfi5IC4mc4t/h4B5eEw4B/mkedNFwC9C+hCsz0RWVW3fyj7xmq0zUa5Xj6a08=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzgoOxCJ/XZiUkcjBwGLLUZdGwNNQakkOPk7V8/oznJTYa2Aw3Y
-	5z1s6Hvakwect8odKu4GvgGYOpjpyh0SXqT7qL80x51Mz2mBBCfQDIBHZ0gY0UuL8ZjmvqXv1ca
-	zhnsDHMWjMChWNmMiMqPIKT931elEwO8=
-X-Gm-Gg: ASbGncvVsKlay5VYTmlOVYNHY2Nln08HLn59GtGNdTPmtFPsXYIDT0S8meNsfeVWuRc
-	E9incZ9Im48Y2e5lAaf+cPdRTAVLwXuNjH+d7GUU+61/PW6rSmdPSyRC97RiGjJIChvo++bCp7D
-	AuYw3qceMc4Y78n8Zc09PfNn/lRL/5kLtBGTnoBQU78BaCiM6qQlQ4qcqL5B9xkFFIqr4Zjcr8d
-	j3U+nw1
-X-Google-Smtp-Source: AGHT+IFh6QNJ1N9GPdd64CTrYakZ0uxD5R8WslnEK/IIJU9WxBZfEOpOkjZ6HFuOgAUTgCkIJ80xFiZj9gYbdIctsiE=
-X-Received: by 2002:a05:651c:3059:b0:32b:2e45:c403 with SMTP id
- 38308e7fff4ca-33650fe7527mr17890841fa.39.1755967039271; Sat, 23 Aug 2025
- 09:37:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="I2tavrDz"
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:225b:cdf5:3223:8c9f])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp6-g21.free.fr (Postfix) with ESMTPSA id 494EE780368;
+	Sat, 23 Aug 2025 18:37:23 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1755967044;
+	bh=1n33/a0kMTNTadpCYXAfnKUqFKs66dQQnQwlEX383sA=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=I2tavrDz6TpfmsVIgiD3EhW2KCt4s7HTDqEEzionzvj1koSQw/EAKRWqpH1+/RTAt
+	 A1iftxF4MAA3cH28Mirp/4EIR9d/r/DKlNbG59Li/6K1SuaZ6CH2sw18lFuJeSbX9t
+	 3BQ8RJtpIcMaQZQAIuCzZF4DzI7Rgfk1aMo3xN2fY1KpK7A2BefUjYBG/l05eHGaOC
+	 Qaw5MEMITUG4bzEYLacutWaE2vK9Nc1h4oEtNnAllaZ2hSL7r9e2ESpjT4OamZEkGY
+	 7eoQonwvKD1Kk52ypuTNXFUOB8PCdzGG9a37nMNE1iBJjdXNvdsYLBp9DFzWGx05QZ
+	 +HgDcQONbZ9vw==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH RFC 11/11] builtin/history: implement "split" subcommand
+Date: Sat, 23 Aug 2025 18:37:23 +0200
+Message-ID: <3298210.5fSG56mABF@cayenne>
+In-Reply-To: <20250819-b4-pks-history-builtin-v1-11-9b77c32688fe@pks.im>
+References:
+ <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+ <20250819-b4-pks-history-builtin-v1-11-9b77c32688fe@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
- <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com> <db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
- <xmqqo6s6uia4.fsf@gitster.g>
-In-Reply-To: <xmqqo6s6uia4.fsf@gitster.g>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Sat, 23 Aug 2025 10:37:08 -0600
-X-Gm-Features: Ac12FXzgKhgQsjvurf0YQ-4ZKyH38RxtOx8m0V0mVN3hsPhYYpiepEh9URAUrRY
-Message-ID: <CAH=ZcbDuE9AJBWRvx65hfJwwbJ4qJoY7cZo0KcVrR+fWavnnFw@mail.gmail.com>
-Subject: Re: [PATCH v3 06/15] ivec: create a vector type that is interoperable
- between C and Rust
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Elijah Newren <newren@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
-	Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>, 
-	Mike Hommey <mh@glandium.org>, 
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Ben Knoble <ben.knoble@gmail.com>, 
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-On Sat, Aug 23, 2025 at 10:14=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > diff --git a/rust/xdiff/src/lib.rs b/rust/xdiff/src/lib.rs
-> > index e69de29bb2d1..8b137891791f 100644
-> > --- a/rust/xdiff/src/lib.rs
-> > +++ b/rust/xdiff/src/lib.rs
-> > @@ -0,0 +1 @@
-> > +
->
-> This triggers an "new blank line at EOF" whitespace error while
-> applying.  Intended?
+On Tuesday, 19 August 2025 12:56:07 CEST Patrick Steinhardt wrote:
+> It is quite a common use case that one wants to split up one commit into
+> multiple commits by moving parts of the changes of the original commit
+> out of it into a separate commit. This is quite an involved operation
+> though:
+> 
+>   1. Identify the commit in question that is to be dropped.
+> 
+>   2. Perform an interactive rebase on top of that commit's parent.
+> 
+>   3. Modify the instruction sheet to "edit" the commit that is to be
+>      split up.
+> 
+>   4. Drop the commit via "git reset HEAD~".
+> 
+>   5. Stage changes that should go into the first commit and commit it.
+> 
+>   6. Stage changes that should go into the second commit and commit it.
+> 
+>   7. Finalize the rebase.
+> 
+> This is quite complex, and overall I would claim that most people who
+> are not experts in Git would struggle with this flow.
+> 
+> Introduce a new "split" subcommand for git-history(1) to make this way
+> easier. All the user needs to do is to say `git history split $COMMIT`.
+> From hereon, Git asks the user which parts of the commit shall be moved
+> out into a separate commit and, once done, asks the user for the commit
+> message. Git then creates that split-out commit and applies the original
+> commit on top of it.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Documentation/git-history.adoc |  59 ++++++++
+>  builtin/history.c              | 245 +++++++++++++++++++++++++++++++++
+>  t/meson.build                  |   1 +
+>  t/t3452-history-split.sh       | 304 ++++++++++++++++++++++++++++++++++++++
++++
+>  4 files changed, 609 insertions(+)
+> 
+> diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+> index 6e8b4e1326..f0f1f2a093 100644
+> --- a/Documentation/git-history.adoc
+> +++ b/Documentation/git-history.adoc
+> @@ -10,6 +10,7 @@ SYNOPSIS
+>  [synopsis]
+>  git history drop [<options>] <revision>
+>  git history reorder [<options>] <revision> --(before|after)=<revision>
+> +git history split [<options>] <revision> [--] [<pathspec>...]
 
-"new blank line at EOF" is intentional, but it is showing up in the
-wrong place in this patch series. Cargo format automatically creates a
-blank line for empty files. These warnings should have shown up on the
-"xdiff: introduce rust" commit. I will fix this.
+I just realized that there are no other <options> available for the first two 
+commands! So maybe simplify the synopsis for the time being.
+
+The --message is specific to split, so maybe also cite is specifically here.
+I 
+> 
+>  DESCRIPTION
+>  -----------
+> @@ -47,6 +48,26 @@ reorder <revision> (--before=<revision>|--
+after=<revision>)::
+>  	commit. The commits must be related to one another and must be
+>  	reachable from the current `HEAD` commit.
+> 
+> +split <revision> [--message=<message>] [--] [<pathspec>...]::
+
+missing backticks. Also the order of options and <commit> are different from 
+the general synopsis. Is this order allowed?
+
+> +	Interactively split up the commit into two commits by choosing
+
+You can use the placeholder in this sentence: "Interactively split up 
+<commit>..."
+
+> +	hunks introduced by it that will be moved into the new split-out
+> +	commit. These hunks will then be written into a new commit that
+> +	becomes the parent of the previous commit. The original commit
+> +	stays intact, except that its parent will be the newly split-out
+> +	commit.
+> ++
+> +The commit message of the new commit will be asked for by launching the
+> +configured editor. Authorship of the commit will be the same as for the
+> +original commit.
+> ++
+
+I guess this only happens if --message is not passed?
+
+> +If passed, _<pathspec>_ can be used to limit which changes shall be split 
+out
+> +of the original commit. Files not matching any of the pathspecs will remain
+> +part of the original commit. For more details about the _<pathspec>_ 
+syntax,
+> +see the 'pathspec' entry.
+
+You may have meant: 
++
+For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
+
+> ++
+> +It is invalid to select either all or no hunks, as that would lead to
+> +one of the commits becoming empty.
+> +
+>  EXAMPLES
+>  --------
+> 
+> @@ -88,6 +109,44 @@ f44a46e third
+>  bf7438d first
+>  ----------
+> 
+> +* Split a commit.
+> ++
+> +----------
+> +$ git log --stat --oneline
+> +3f81232 (HEAD -> main) original
+> + bar | 1 +
+> + foo | 1 +
+> + 2 files changed, 2 insertions(+)
+> +
+> +$ git history split HEAD --message="split-out commit"
+> +diff --git a/bar b/bar
+> +new file mode 100644
+> +index 0000000..5716ca5
+> +--- /dev/null
+> ++++ b/bar
+> +@@ -0,0 +1 @@
+> ++bar
+> +(1/1) Stage addition [y,n,q,a,d,e,p,?]? y
+> +
+> +diff --git a/foo b/foo
+> +new file mode 100644
+> +index 0000000..257cc56
+> +--- /dev/null
+> ++++ b/foo
+> +@@ -0,0 +1 @@
+> ++foo
+> +(1/1) Stage addition [y,n,q,a,d,e,p,?]? n
+> +
+> +$ git log --stat --oneline
+> +7cebe64 (HEAD -> main) original
+> + foo | 1 +
+> + 1 file changed, 1 insertion(+)
+> +d1582f3 split-out commit
+> + bar | 1 +
+> + 1 file changed, 1 insertion(+)
+> +----------
+> +
+> +
+>  CONFIGURATION
+>  -------------
+
+
+
