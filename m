@@ -1,119 +1,151 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EBE2E413
-	for <git@vger.kernel.org>; Sat, 23 Aug 2025 16:14:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83DB01F5820
+	for <git@vger.kernel.org>; Sat, 23 Aug 2025 16:15:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755965691; cv=none; b=DOKsmBCVnbU8Y7q/d8qBkYlWLylp1B32QIDFutFJQaHjmEJNXXvCWr7oQvhujXGKe0MwXAEuS0U/M1DOu+qzV5+P0uT/EfyO1yHFRsGIG8s4TW5WWLRbhGNgiNpJgQCf5hVcaRRQi1njlZ+hBjTS6cFgUITBeuwcayr8kVtTuq8=
+	t=1755965729; cv=none; b=ZJKu9ObKOlgZ8eMijoYCEV5GRUPcQYhTW3gBhMI9Cf52q2fd6GaF5iHDZWrP03u9LKYnQT49URmujApx+WyteESLEgw24uyH9kDL41hixSniQdG0kQaa+zyZwLYDTRrMvMu6hroUlAP8Zkpa7fWcEc3rrJcIn5JKsMxNin7mYqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755965691; c=relaxed/simple;
-	bh=gsZKNhBQCa6DJSgVkXRof/ugswdytZfmh+gx42nwrrg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hdjy8CDawH913QAUID1bmow/oWitb9jSgZ1M3ItJoWnH1NUZCZnSRx1dMY+a+TiXmkdpGNpCAZS0NPQtA9ddZUngVH3dZynfyKk2vKsUNPoIn7FaWWhcrK9qgga49f8fiV4J0uP6bECafDsJzAkL922gB6cGeijDF+hyYytjBMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jL9n/JAQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S6+p2eYz; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1755965729; c=relaxed/simple;
+	bh=716nIKC9F+x4kY5CT8c6uGaZLQryZeOUJ/ieGah64Ko=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XzuOQq5eZUMVsBOhoxgVUeKYjnaf0qbMH+QyzThDZuSVWCfYjyaOFOojOnEZCcMLMym+4wHkxoVefA2E2RRVpmnrikVbcfyLLCrMao7EJ0NUhv5rZHlvNEfUTnTLkWuZj1IucbqoIjakWjeua9CnWGbqc44/zurhoTHJ+aCtj9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=nweHIh0j; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jL9n/JAQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S6+p2eYz"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 09A187A0077;
-	Sat, 23 Aug 2025 12:14:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 23 Aug 2025 12:14:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755965686; x=1756052086; bh=Gg108WfoCE
-	7fmuBrdbjFT1t4j1FdvlD0oH+vi52BR1s=; b=jL9n/JAQvHOgPUwyhX8Nbz5Qfw
-	lYOfc/YmJw2UY/CE+L3/U7iFrgJvOIXECvX2dffyA9pqdsnn8cY41C94vogfoqZV
-	/BF6+2ViY7P5mjL4TtPqtriXsU50zKpy1GZ6z5pOFBqlfvgKrKBCLljnWvSmtaGB
-	irRPaM3tOd9wleXrwX+C3Fc7QzzD9VjpX1WAvrCVRp4RD1JkSYTEHlCGejGSQcj3
-	HAeOSg/7b6Ty1SepiP7wi8hXxgAN1w28jqYrGAzu8EE9FvPKKzVSqqlX483rusfp
-	vQnWZxVDRHKi3t48qGMb0OrCuOkvuYrmdwcia6IQk38SFIVSuPgB/oP4/zGQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755965686; x=1756052086; bh=Gg108WfoCE7fmuBrdbjFT1t4j1FdvlD0oH+
-	vi52BR1s=; b=S6+p2eYzwCn/DWJBsZTjZf/XX4JuDInQCuClXo68SwyK5ojISR7
-	XhSbn+1G76mfamPkAdp3N/uy9T3K+PGbND/YcikpCm+2UwfINo4XiPK8Lf8LxUNC
-	NdkjkGjGF1trmRuCsaOGpm5wviSq4+5Z7hRB7Da57gvrVpMAXTV6fpKuJK0P1epe
-	Zobu06mCrUMEAhDTnrzcAYMzdbFf77M+3iHULpRKp6T9ALeMZxeBRMl6sjgOiDGE
-	OAEx7DJ/hoPklmlNTtT6YXPfxzxF1M+ElYPM9UPRSEb7Xil/hCLXwEj7a8IZIhgA
-	ElJrl1spRzRn57HT/s4+w3qOAutn7WZnP9Q==
-X-ME-Sender: <xms:9eipaNMmACwaSOBttCQuiHKaXbnqkaWU-vxHeJk2nTFyyry4SuBVmA>
-    <xme:9eipaFEO1b2HexYs_75xT3VUUGW7C6qxknw8-xkJ6FHV57GUfhrdycL0B1VQ2xq4K
-    9LiMoWGNlQj-OxY9Q>
-X-ME-Received: <xmr:9eipaPO1ESzFZIQEAH4btjmIly0YLkSKcRyYXmcwIk_k6do8jgPqZsGtdGROgTo-cXDplMl9iJQ8ulex2akvk7HayOXYUrXHJ7JmjIU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieejtdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepvddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestg
-    hruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihl
-    ohhrrhdrtghomhdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtoh
-    epphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegv
-    shgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegtohhnthgrtghtse
-    hhrggtkhhtihhvihhsrdhmvg
-X-ME-Proxy: <xmx:9eipaPsSU1Z-KI7uOzI1PrkmzCa48EkPQTWDgZUUUgGf5HAkG82F1Q>
-    <xmx:9eipaMXl02nFqEjEanoQ2B4gQiv2gPUdulmUQMnZUSzo5Q4JZYVEOw>
-    <xmx:9eipaOS5VyDp5od-jZrP3LJXWHHJ0ZnatpBviK0BqR-zqbCDQJbXpw>
-    <xmx:9eipaCLo__8kVKnNkyyzUDhjdej3kNdWLnWBaEHXWxyIXW8W1TROcg>
-    <xmx:9uipaJXQIcTju4Ya_pageYcPU-UYnDyWWa2jOdZlJ5S7QJwvE0NFFV-m>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 23 Aug 2025 12:14:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  "brian m.
- carlson" <sandals@crustytoothpaste.net>,  Taylor Blau <me@ttaylorr.com>,
-  Christian Brabandt <cb@256bit.org>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,
-  "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Matthias =?utf-8?Q?A=C3=9Fhauer?=
- <mha1993@live.de>,
-  Patrick Steinhardt <ps@pks.im>,  Sam James <sam@gentoo.org>,  Collin Funk
- <collin.funk1@gmail.com>,  Mike Hommey <mh@glandium.org>,  Pierre-Emmanuel
- Patry <pierre-emmanuel.patry@embecosm.com>,  Ben Knoble
- <ben.knoble@gmail.com>,  Ramsay Jones <ramsay@ramsayjones.plus.com>,
-  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v3 06/15] ivec: create a vector type that is
- interoperable between C and Rust
-In-Reply-To: <db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
-	(Ezekiel Newren via GitGitGadget's message of "Sat, 23 Aug 2025
-	03:55:47 +0000")
-References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
-	<pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
-	<db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
-Date: Sat, 23 Aug 2025 09:14:43 -0700
-Message-ID: <xmqqo6s6uia4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="nweHIh0j"
+Received: from smtp6-g21.free.fr (smtp6-g21.free.fr [212.27.42.6])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 75E644D284
+	for <git@vger.kernel.org>; Sat, 23 Aug 2025 18:15:17 +0200 (CEST)
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:225b:cdf5:3223:8c9f])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp6-g21.free.fr (Postfix) with ESMTPSA id CA101780505;
+	Sat, 23 Aug 2025 18:15:08 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1755965709;
+	bh=716nIKC9F+x4kY5CT8c6uGaZLQryZeOUJ/ieGah64Ko=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=nweHIh0j/9kSR6ibTfeG15NL2SHPG+PJdzDsyzbOsnfEXZAOGI3Zv27GIf4EdOL5I
+	 UPj26vA+iEVUJzpUepnGXaR9dBJtSs1E++/j219hHN8bbiVcoZDWwoQDmX8ivcKnMH
+	 I0mVMeD+NYMKSX4T2y48ocx9fB1eA1XXM3pgo+DcAxIqc5U5fAuCBIKKgPAEadoMOH
+	 cKpiku2WkEWnPGbYpxSpCRPlSymud0lCQCrBgN/pBSLVoIUwUBw+jot2bFpf01n3MM
+	 SPkBIykGgXrMbJw+gOYxX5e8arPij2eRK2jBw2VpS6Ynu3F41gdF9zO9gR+hUP6zFe
+	 LgNCxWO7l1OVQ==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH RFC 05/11] builtin/history: implement "drop" subcommand
+Date: Sat, 23 Aug 2025 18:15:08 +0200
+Message-ID: <3005363.e9J7NaK4W3@cayenne>
+In-Reply-To: <20250819-b4-pks-history-builtin-v1-5-9b77c32688fe@pks.im>
+References:
+ <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+ <20250819-b4-pks-history-builtin-v1-5-9b77c32688fe@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tuesday, 19 August 2025 12:56:01 CEST Patrick Steinhardt wrote:
+> It is a fairly common operation to perform an interactive rebase so that
+> one of the commits can be dropped from history. Doing this is not very
+> hard in general, but still requires the user to perform multiple steps:
+> 
+>   1. Identify the commit in question that is to be dropped.
+> 
+>   2. Perform an interactive rebase on top of that commit's parent.
+> 
+>   3. Edit the instruction sheet to drop that commit.
+> 
+> This is needlessly complex for such a supposedly-trivial operation.
+> Furthermore, the second step doesn't account for certain edge cases like
+> for example dropping the root commit.
+> 
+> Introduce a new "drop" subcommand to make this use case significantly
+> simpler: all the user needs to do is to say `git history drop $COMMIT`
+> and they're done.
+> 
+> Note that for now, this command only allows users to drop a single
+> commit at once. It should be easy enough though to expand the command at
+> a later point in time to support dropping whole commit ranges.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Documentation/git-history.adoc |  27 +++-
+>  builtin/history.c              | 297 ++++++++++++++++++++++++++++++++++++++
+++-
+>  t/meson.build                  |   3 +-
+>  t/t3450-history-drop.sh        | 127 ++++++++++++++++++
+>  4 files changed, 449 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+> index 9dafb8fc16..3012445ddc 100644
+> --- a/Documentation/git-history.adoc
+> +++ b/Documentation/git-history.adoc
+> @@ -8,7 +8,7 @@ git-history - Rewrite history of the current branch
+>  SYNOPSIS
+>  --------
+>  [synopsis]
+> -git history [<options>]
+> +git history drop [<options>] <revision>
+> 
 
-> diff --git a/rust/xdiff/src/lib.rs b/rust/xdiff/src/lib.rs
-> index e69de29bb2d1..8b137891791f 100644
-> --- a/rust/xdiff/src/lib.rs
-> +++ b/rust/xdiff/src/lib.rs
-> @@ -0,0 +1 @@
+Grepping through the documentation for the <revision> placeholder does not 
+yield a lot of matches. Can <revision> be replaced by <commit> or <commit-ish>  
+in this context; these ones seem widely used.
+
+
+>  DESCRIPTION
+>  -----------
+> @@ -31,6 +31,31 @@ COMMANDS
+>  This command requires a subcommand. Several subcommands are available to
+>  rewrite history in different ways.
+> 
+> +drop <revision>::
+
+My linting patch series[1] does not catch this kind of synopsis miss, but 
+here, backticks are missing because this is a part of synopsis:
+
+`drop <revision>`::
+
+
+> +	Drop a commit from the history and reapply all children of that
+> +	commit on top of the commit's parent. The commit that is to be
+> +	dropped must be reachable from the current `HEAD` commit.
+> ++
+> +Dropping the root commit converts the child of that commit into the new
+> +root commit. It is invalid to drop a root commit that does not have any
+> +child commits, as that would lead to an empty branch.
 > +
+> +EXAMPLES
+> +--------
+> +
+> +* Drop a commit from history.
+> ++
 
-This triggers an "new blank line at EOF" whitespace error while
-applying.  Intended?
+As the examples are quite long, it would make sense to declare each example as 
+a sub-section:
+
+Drop a commit from history
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+> +----------
+> +$ git log --oneline
+> +2d4cd6d third
+> +125a0f3 second
+> +e098c27 first
+> +$ git history drop HEAD~
+> +$ git log
+> +b1bc1bd third
+> +e098c27 first
+> +----------
+> +
+>  CONFIGURATION
+>  -------------
+> 
+
+
 
