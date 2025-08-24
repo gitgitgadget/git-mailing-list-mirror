@@ -1,108 +1,90 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E162E11D1
-	for <git@vger.kernel.org>; Sun, 24 Aug 2025 18:08:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163851BC2A
+	for <git@vger.kernel.org>; Sun, 24 Aug 2025 19:06:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756058916; cv=none; b=iBorwwxeANNLaAGX5C4GAKUzyvIy7b6/JCmoSxABgww7FZOpNS/tLI7u/GqDj4dZFNk8W5YTwiBOAX46dgE3/11k65RcuY166QlG9jnyFOH5WtVuINWn8Kk97OZVZ4X7T+4QpVH/Xtz4ysBNF3PAW55ftnmhCnOWYkyA/q+A8G0=
+	t=1756062418; cv=none; b=eXeTPylFxnyr6tV++OBKqqJFYHC2tbkmMlBc/8MZeUvJYwlV/YKIeH/nId6MdAfF1mYWo3GpprIGxUas5rLOSdkc7y23GWcdxdcKduf6mHouFBtTMUXjJUbs+OJMdLTm1c9jmoaoe2vkrqJyOx+UB4kb+WuAhtUA0/FFd93bnSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756058916; c=relaxed/simple;
-	bh=YdrSyHEJx5NmUo5M43rJP1TiLgZ3hFOonGVBL/A/D+0=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=okEhPIFqUJ99h4TzJE2ofTS6JBADMYe09NQ/sSQOkHRTltn20u3sEg8DrkY4Et5TSn/ZSlafgVMGLKnsr/o/r40mhAG9bGKyMa4ndWJxCGuxbr2SKdVRHswE6OURNGPPtE3IAPyfnCHiRpDU8CEThsbQaFYycVS8aDJDfzMvl9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=tzdDoS/y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hiVo6n1m; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1756062418; c=relaxed/simple;
+	bh=z0UWElBoisFPrs5CVTrWj0DdKR7Aqirg7MFdCBidQWw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=E5al3PaCXCuqmZLmf7jtJkP9AH//zKdEje+PQucBADZ/Z8cbTt4Iw0I4x5kRwNCja9lkJNlhbPDOb5PYKKq9FMWxGtNxzkQt6y0EOgF/Z0mzzzILhCmFY+UM6wAmnpb6ehm31bKmcLuFlT2aN5aRix7dM3uKsFh7wL5OWCh0j6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jUJp5wzu; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="tzdDoS/y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hiVo6n1m"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id E484CEC00FC;
-	Sun, 24 Aug 2025 14:08:33 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Sun, 24 Aug 2025 14:08:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1756058913;
-	 x=1756145313; bh=+jiAxI8mVJLEwbGqz7keAKzmZtpcq6OD2iL2jg/SaEw=; b=
-	tzdDoS/yoJQJ8tqQ31gjGstdKHphiG4WpwND0wOxbEePbG2IqIVjyMWnds42vDzA
-	hRdmSd2VR8wBPsDSOVBELcQgvsbQEiCKlNul1AErjQ2lbJ3Mdeu8zJfc1mXzGafy
-	VDM6rOPgm+K9y1wsGn1U2XZZM61Pn3Ttv31l/OJ4Gbw9PVXK9v+t7sSsZRlZ4ISQ
-	bW2OD6h/wQ+qy9OIfNQ01eCOHrjVJWVy5FBzl8k2bqYzGf+z2yHQyT1s+pZ/Pn3u
-	CN1FAgxLl4JVuCEiB74UkDe38wpbywe9OegyCAo/LPEuI3I6cossQRec3QF3zei0
-	Ny0Xf/u5GWGtMZ95GHBSGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1756058913; x=
-	1756145313; bh=+jiAxI8mVJLEwbGqz7keAKzmZtpcq6OD2iL2jg/SaEw=; b=h
-	iVo6n1mx9T6WT8HIst3YQ9Sj014asY6kDVoSYPQs0DeFKcPHIX2jF89i0wNfg6JL
-	eAFe32rHErE7gxl9xasYf3xb2nqYyGaS+LvllRrUuc5WYzPfA0peV90Zm4qf85Zo
-	vyo/ScyzXuBuUD9rofaxs1XRmkfXTbyLiue3/k/+zWrc0L88s7nuPiMTFIUGvWgH
-	r2euXJ2tlFr53ssvgcr/jDGzteU/0va/7m9Spteb5F+F3kAfaOYs/NUhug15FwMg
-	C0QkBYAqMQ9P8oEp7oGLOVKIXJWvkIaXuuSeY7m5fyxP0odBP33cAsdm8/qAOt1/
-	RqMDU3d37VrwWQwR0hjHw==
-X-ME-Sender: <xms:IVWraCpFsYmjaQBLHdf69RoKuqkbjY0uG4ASoQwHPN95dbl0PQFx6L8>
-    <xme:IVWraApLTFslHYRN0fco26mnROTRkP2_85tbbVZaeWfYWTDFPGFBQh5LxI9NQQW8T
-    zyiduSuoGCLCrl9DA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujedtudekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeejpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdp
-    rhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhope
-    hmrghrthhinhhvohhniiesghhmrghilhdrtghomhdprhgtphhtthhopehsohhrghgrnhho
-    vhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:IVWraHayygZFiYAWAOlANftkWMU0gj9hSEIIpaDkh7qdciUK1gdTCg>
-    <xmx:IVWraKPUICGPy5EfOXffyeuHt4Cl_k8TxMjFAYvbgXj0T_cDJbvlfQ>
-    <xmx:IVWraDBblkwknWd21OtsT00Vy4rvWcOGmD-Jg_r5yntVQHquzd_gjQ>
-    <xmx:IVWraBJPDNYeOUJ3_nTqoUPHXt0yYKjdN1O8ww7S03SYkiCig9Bavw>
-    <xmx:IVWraEBYN3DQBqiWCujmwvEJZzfRcMrGAcAQxea6Yi4nyuOHW7iRVYo_>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 99C6E1EA0068; Sun, 24 Aug 2025 14:08:33 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jUJp5wzu"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-45b4d892175so17074545e9.2
+        for <git@vger.kernel.org>; Sun, 24 Aug 2025 12:06:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756062415; x=1756667215; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iH9P8ofnUkNSSKkR0hyV1dY23F/l/zJ71XtjIpllrlU=;
+        b=jUJp5wzutbmcYphsxTC8WBSUBDvx5osiC7CPQ1mqy7wWyzsgMivVlE9MC8qJSYqeb4
+         hNfpV97LrO1008Qspj6AJBqdAx1b6XFeTgLwjUvF4MXYHTTwsIuLcg5MyYtP9btUvhkz
+         Qv84EeD9d05BntpXM5mmM+ProIaSa104IKhbAVFXLxWP2zWV2mqsCL+efTMu9kP8Y+7+
+         1WoDzdkHrz47FeQf0MzrV5nYxJlJC2NlTSdCL7LK7OVjr1U/uWYf9w29BCFDXig7DnB5
+         GLWcyB4Qx4/8BdgEv6jm/EbsHiP8/EsxmsTOXhko1+f0HxDe943lFzF/1rpTaLmEQjAx
+         v3YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756062415; x=1756667215;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iH9P8ofnUkNSSKkR0hyV1dY23F/l/zJ71XtjIpllrlU=;
+        b=Ntj7lHIHm7DNj28Sfau/vDr7ZC+H5Xgwz7xf0Jg0SpveWkwEia633jQ/fNtKiX7Phc
+         /Ascm3bk1/MxSOQ8gV36U70LZv+lX7JHYlb8ERxj86uazJwj+I+q83wqcDtjwY4LZUXY
+         qwi9bvi6Jf9YRwrL+N1w4nfSDzdtIBAe+dRKapqGeTJI7Zmv2LYIGIhYYu68iYGIQIA+
+         NIuE3zanNseKCg5gPrXmNjO6TUEWJ9ycedvAH1afJXM5J+Lu9EVb5fu8eHiBH+JVgOuC
+         h1J3Gdt47GAorcX4NnxWX7mQbNIolVRXmE7e8D1vtbAwT6BO2UNqZtj5U47LzhDyVbaU
+         iijA==
+X-Gm-Message-State: AOJu0YwWOL6hnhIdc4ssMa5uxPPyfCvh4RZp3Ocv7ePsRzYSDCL13/Fq
+	W9BhhwtT5qwrbSPTEBXjFQs6BqBVnrd7HXv+w+0HU/vyw43XBBwSI5q/B8FXjQ==
+X-Gm-Gg: ASbGnctF7rfySdShT6m/rruUkv7OKYM2PzxYG/hXDKnYsjJBYihYUNyyCGfeDfiWwli
+	8mdmElO/7UMTiB8L0XKg65ONc4EsnbtF+GwOEAeFtJ9aZdWlMOAIif3sToDOK2mNxBokmf8p2mT
+	jod+Cksgiwl9lwqn2/cC5sIDizVlnpYP7FtPm25+FUz7W18cac/Xat8q1MK7y3u0ZqtCIHs7mLo
+	vMgA0TEnuejCGTRADVmKPHvJ8S8qLvrUKJCB07UGHZo5ZyA9RbB5qPW/Wf6p2bGMlutMZ2vHbBf
+	4gbmn0LK56/rUXSmSoZNqmcQyjmm/fbc/7gG4HJ/Nsqnf1m1cVXj1Cin5IkS3NSs/0s3X0djpdC
+	52/FWvwyLnRjLCzkNoIxLDwjWQ6FwuDsk6fZMliKSzlQ2o47N587GGERtAPiDCjE=
+X-Google-Smtp-Source: AGHT+IGqYWtW1K2xqFVlcX/5xAKZv5ihX7HJU7gI5cqvyxFAmFdtuuMogWABTXoThysffhF+rn/i7g==
+X-Received: by 2002:a05:600c:3b25:b0:459:da89:b06 with SMTP id 5b1f17b1804b1-45b517b008dmr118328535e9.16.1756062415101;
+        Sun, 24 Aug 2025 12:06:55 -0700 (PDT)
+Received: from localhost (78-131-14-231.pool.digikabel.hu. [78.131.14.231])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c70e4b9e1fsm8917144f8f.14.2025.08.24.12.06.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 Aug 2025 12:06:54 -0700 (PDT)
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To: git@vger.kernel.org
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 0/4] line-log: optimize merge commit processing
+Date: Sun, 24 Aug 2025 21:06:40 +0200
+Message-ID: <20250824190644.2573279-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.51.0.433.g1a66b3fb12
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AaGeA4Zfr29s
-Date: Sun, 24 Aug 2025 20:08:07 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
- "Junio C Hamano" <gitster@pobox.com>, "Sergey Organov" <sorganov@gmail.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
- "Martin von Zweigbergk" <martinvonz@gmail.com>
-Message-Id: <5079326d-497c-4335-88d0-a248e0b8c6d1@app.fastmail.com>
-In-Reply-To: <20250824-b4-pks-history-builtin-v2-16-964ac12f65bd@pks.im>
-References: <20250824-b4-pks-history-builtin-v2-0-964ac12f65bd@pks.im>
- <20250824-b4-pks-history-builtin-v2-16-964ac12f65bd@pks.im>
-Subject: Re: [PATCH RFC v2 16/16] builtin/history: implement "reword" subcommand
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, Aug 24, 2025, at 19:42, Patrick Steinhardt wrote:
-> Implement a new "reword" subcommand for git-history(1). This subcommand
-> is essentially the same as if a user performed an interactive rebase
-> with a single commit changed to use the "reword" verb.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+The first patch is an optimization of the line-level log machinery.
+The rest are cleanups in the area that I subjectively consider slight
+improvements.
 
-I get a =E2=80=9Csplit=E2=80=9D error when I typo the commit to reword:
+SZEDER Gábor (4):
+  line-log: avoid unnecessary tree diffs when processing merge commits
+  line-log: get rid of the parents array in
+    process_ranges_merge_commit()
+  line-log: initialize diff queue in process_ranges_ordinary_commit()
+  line-log: simplify condition checking for merge commits
 
-    $ ./git history reword ./s2
-    error: commit to be split cannot be found: ./s2
+ line-log.c | 50 ++++++++++++++++++++------------------------------
+ 1 file changed, 20 insertions(+), 30 deletions(-)
+
+-- 
+2.51.0.433.g1a66b3fb12
+
