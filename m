@@ -1,350 +1,154 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9B918A6B0
-	for <git@vger.kernel.org>; Sun, 24 Aug 2025 19:41:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3C21F4161
+	for <git@vger.kernel.org>; Sun, 24 Aug 2025 19:47:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756064489; cv=none; b=G1VOrwzYG8d+PrwDl4S/wEplg15OslRNbopK+1Urr/4y8+uGY6No0tpJ9gIEKhSsR+gGUdfgOJm8TF6QgvwjbA1cOtRgDdViTxJSY9Z8x8CeLjKzuuGXHumLTOQQyA7QdFajc/vDDoaR62AJ8OF4EFTWiCy54gj/Ud/NCuqaHME=
+	t=1756064838; cv=none; b=aakPVUzdbnw1qhHugzsFC+23t6AEPz+8FWwWthqkC+1rARV6WirEQawJ5acusj9Q5eebIZRCJkoHbc/BIl2i1SFQXS9sNgU88XTIu9Z9qE9RrA/orq8jkDF5cg8cfRtGaKySRg6V7Mw+tEmYyX43QMSUi+ZoGesJGE4AKjaJbS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756064489; c=relaxed/simple;
-	bh=VtkdJULpHurcPe50w7LW9JlfBuOupTjWSvaCeBTsBOE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cuyIfPtzSWq3cG0zN17Q4zdiNEi2Wy+A1nnZi2xCcxgJadcaEfLkI99ZiJBQ1yVGElihNoTbz7sQYVHtyOVtBGtn2X9nF2XjSvrfT+6i4egIUCZFZbihkoTGG4zOvfn4CKmpAkumw71oxddazeJYJ7Jki7Dw+FfkrvhfdZTEj58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PaeLPuuX; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756064838; c=relaxed/simple;
+	bh=vE2VAGQXOHFRqT5R5VJrKn9n2ajLHgtf7ld1QguIfZY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LiD1nlVgN63AXPmj1Xs6z3jdfe1Y7T6YIRcjBelZmDqq4UBY8elOnooRlVUPM228JSQBK9QIniY+ib7c2sGdlCzR0jtPjK2spCETkl545wgMeFv45slr7dHwXx8btMOaNVCZkIrzo6g139UDGzGVkqS+s5ovVxDc0ELsMWsmYEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=HamN7W0L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BVP5Fp0/; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PaeLPuuX"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3c51f0158d8so2664403f8f.1
-        for <git@vger.kernel.org>; Sun, 24 Aug 2025 12:41:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756064485; x=1756669285; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/uz1XhdhLzcC/FBK4mF4X4CyHNG5obV3PY2hJZNugqk=;
-        b=PaeLPuuX8kFzuUaBhE00RC0FEwbTdTB5fzWYGfZBJYNzFPouAwhHYS2pw+DDVSkcK7
-         niw94RQnxs68OhKZ2hjPkJDprcGJhJ177K6Nzun57k3a+O1dTdgKeWKSxvTyl3VGo5eE
-         6bBA1/RA55987Pin2DpdfBrxe6up3eVivFXLOQSLsrBbB3koRTyxzHN8rtIUXq9/G6Np
-         xjcIytUnquL1KZ+vpHRni3uUzTkVuXk34j1rStiTTwymEzXkm6s6ZeixuXYbAUGLAP1K
-         hC7rLvDtR+Gn6m5oOvVqRBS2eZyPeQC238n0Mxy3jYY+To8ImFibbEsDrU+8LKSspQKC
-         qX8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756064485; x=1756669285;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/uz1XhdhLzcC/FBK4mF4X4CyHNG5obV3PY2hJZNugqk=;
-        b=D6zSMen1vhsDcaLhJTkLVx+yRsqzhwOjl95esEkqAAkF0rhOBkkRRq93t7/zEJHK+j
-         RdRPrhohg4AzpTp2//OzVoQPSm54s3qVu3hykVIMZJQijyfCfjBY/O6oPb01b/NPTfv3
-         LqkgOUN9DARZUpog349zdLaMXmkk2WqAcXsXgsyMrv9k71g+1harfi1XOHV3nTZA/fal
-         AIJf63qErrLHBJX8ewIddgRlFEQZxaUSySZPvwd6vad1p1Z1ni9hA4jkcxI81D37kVi1
-         od2742NeVTrsQJV/cHzN0XlOzefCvbzzEJZVHum69r72oAuoXaHhXUNjW0HWkwV66R1a
-         u38A==
-X-Gm-Message-State: AOJu0YyJQxkkzA+faYmN0aYwf6ATm6XQdpkK5goMjwR+z+V3HeofbxvU
-	l3MupasHEl/antylyRROjR4DNZI+zNX9vhL4XTqkgDwOhcsZLB/heuxp
-X-Gm-Gg: ASbGncvf0NfzEQfY0xP7w1pxzThuWBQBsSBU9HQ+wAuKATiC6+6ivpHQsbL+2Dxia40
-	bS8OtJ8aM4a13GRgtwjVe9T55bsCKJWN3fti6ch4Gmnd+zxNJJ/29h4fwbb0qxHD9evjlrOSTOY
-	9W5y/GNIzlZRLroPo3Yvlcgyd5e4HthCnG9/4ODR9CNRZfcNUGH0JhFI3jp07A1/dUFbWImO8oN
-	7gW4pjI8g+amKTk0y18V+EFjEQgpBilP/EQzJuSafeS3CZM5hxwJiZ4bZJp+eILU5nHkF2shc21
-	HhaQCUo7Aw/qaR6h/lRd9rlKJ4lkL+q9EtNdj5YVrSyO8KPih2NUs2jO+dyUhG3o5SGxSIZWxaN
-	9gDkeHp0/eOuOqLk7sdnhzm6MRwspzcvoq/JlsBsqGJTR50mQmaG1
-X-Google-Smtp-Source: AGHT+IF49K/JOyEARw3qk6rfRe3vXn5+nSJQ7VXcIwrpI7RVmD6hcegr/hcnnzGf7TuoPe5NQQ++DQ==
-X-Received: by 2002:a5d:5f8d:0:b0:3c8:89e9:6ab3 with SMTP id ffacd0b85a97d-3c889e96d40mr2037066f8f.46.1756064484723;
-        Sun, 24 Aug 2025 12:41:24 -0700 (PDT)
-Received: from localhost (78-131-14-231.pool.digikabel.hu. [78.131.14.231])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c70e4ba1eesm8884724f8f.2.2025.08.24.12.41.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Aug 2025 12:41:24 -0700 (PDT)
-Date: Sun, 24 Aug 2025 21:41:23 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 3/4] t5510: prefer "git -C" to subshell for
- followRemoteHEAD tests
-Message-ID: <aKtq47vmCrUZCUCF@szeder.dev>
-References: <20250819192004.GA1058857@coredump.intra.peff.net>
- <20250819192716.GC1059295@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="HamN7W0L";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BVP5Fp0/"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id F2474EC00D0;
+	Sun, 24 Aug 2025 15:47:14 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Sun, 24 Aug 2025 15:47:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm3; t=1756064834; x=1756151234; bh=Ty
+	dKxMTwom1vsIZUvBdhzsR22JUgUZAMjhfOxSXrlV4=; b=HamN7W0LhYs/JpmlBb
+	6eGwcDn7MBTc928a9IV12MjM02zOG9EpkdfzWfZiD2J9QB6gT9chvTLSXLETkpI1
+	m3oqTgtHGbgbwgqU1Q0cOJS1PNZTJzrkW6lRXsN0GfHtL5Vgf+Bmw4RfoobRvlM2
+	L0cC3hvTM1VUTGnEzcWj/vTLvSlUfUfVK8l0tfmWPlOT7xb4LDrTSHRPQybhdYc7
+	T48sEfl3kBrgPqeetGqodItm4F4XJKhYBnZd/W79fsogAO5CoQRW6D9467kuNxAZ
+	YHdzUCmPnRoUMYC22gpvUF7HsH+LuFGHmih6bYkAZ6MRUFcKyWo6KrMwkBlUZeX6
+	YFMw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1756064834; x=1756151234; bh=TydKxMTwom1vsIZUvBdhzsR22JUg
+	UZAMjhfOxSXrlV4=; b=BVP5Fp0/XN6TAR6CjN6AJFyPOKecuN5X+SKTw4fkYvrU
+	33dfYASm8lDILuRoVmeZsZx0cGrDQEurP4UpTYcEwS3wDxmbXaQivllhZqrz70h4
+	/YdJMWywkya6XGORGpzklWkWosO5HwkyRT0zosKOLj8UFtog7XRKTCFjBhwNRiCD
+	qQAANUghpx1WdGPrLmzwMsoPVZgB9DPmuTc2m6N0y1Et2C7iB/A8ogEsqHTlJKKx
+	/VKiGkyL9hdsuynuAnI5cPn+jb4+kmZcHqJm8Du/MAcJ1BiCqPF02C5xOtrUuleg
+	igAtx6aTMpAB7U+bNzUYIQ/8WM24kTqp5M0z2eZArQ==
+X-ME-Sender: <xms:QmyraF1iogVGSJKPR8RPHlMPD_fIbV0j4yImIhdL1bvRGLGB_YHpKw8>
+    <xme:QmyraPV3vdJvtvdU9_33CAhxALLjxjyBg-0dT2CPqdT_cT9ixNsnNVcoeY8ceO-9G
+    809tKTl3IeJXAnuaA>
+X-ME-Received: <xmr:QmyraPW0GOnMGCllX-il81SCQP3Bw-4LBcVV2H5DwRp8X1DiQjjzNE5eyRGAvxQQ6HJBvteDRde0GLRY1AAPm5_4YzoLiGnIqkqh2TFHNVsICa0JX73iujrVrA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujedtfeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhf
+    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrh
+    hnpeetgfekjeffudeffeffgeekvefgvedvgeffueejjeelgeduhfdtffeikeelfefhgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghp
+    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhn
+    rghmvgdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrh
+X-ME-Proxy: <xmx:QmyraOelViSN4HcfLrorvNe0Qkr2rWg2chWQFzieuIsKfVlQiZnKKQ>
+    <xmx:QmyraIWud59ZCqc9is2WhVH5bgc_onpqQMSPQCIF7f5ZU-YRqbZRxA>
+    <xmx:QmyraHfWLxPWWL5vs9exjq7hJnSmE-4T57CKAGZgr-7ArvxlR8ixJA>
+    <xmx:QmyraEP773BNhZLz44ZdxdR-snhSPwz3lJ1p7nPqrmm5nbRJPhQH6g>
+    <xmx:QmyraJmW9Rbh83LG0HCDQ1RU_T9S-ldjf9DNx3V5f-gBpN7YJE8kHQuV>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 24 Aug 2025 15:47:13 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [PATCH] doc: config: replace backtick with apostrophe for possessive
+Date: Sun, 24 Aug 2025 21:46:51 +0200
+Message-ID: <3ec6a00e3046166c7adb593f38c4099921d8ada3.1756064760.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.51.0.11.g23cedd8a747
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250819192716.GC1059295@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 19, 2025 at 03:27:16PM -0400, Jeff King wrote:
-> These tests set config within a sub-repo using (cd two && git config),
-> and then a separate test_when_finished outside the subshell to clean it
-> up. We can't use test_config to do this, because the cleanup command it
-> registers inside the subshell would be lost. Nor can we do it before
-> entering the subshell, because the config has to be set after some other
-> commands are run.
-> 
-> Let's switch these tests to use "git -C" for each command instead of a
-> subshell. That lets us use test_config (with -C also) at the appropriate
-> part of the test. And we no longer need the manual cleanup command.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> It is perhaps debatable whether this makes the result more readable.
-> It's fewer lines, but there is "-C" sprinkled everywhere. So if people
-> find this ugly we can drop it (and I'd rewrite patch 4 to use the
-> subshell form in its new test).
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-I for one think that the original is much more readable.
+Revert back to “Git's” which was used before d30c5cc4592 (doc: convert
+git-mergetool options to new synopsis style, 2025-05-25) accidentally
+changed it.
 
-With the subshell it's quite clear, even at a cursory glance, which
-commands are executed in a subdirectory, but when using '-C dir' all
-over we have to look closely.  Furthermore, when there is a command
-outside of the subshell, we can be fairly sure that it's intentional,
-but when a command without '-C dir' lurks among many others using '-C
-dir', then we can't be so sure, but have to investigate whether that
-was intentional or oversight.
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
->  t/t5510-fetch.sh | 202 +++++++++++++++++++----------------------------
->  1 file changed, 83 insertions(+), 119 deletions(-)
-> 
-> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> index 93e309e213..24379ec7aa 100755
-> --- a/t/t5510-fetch.sh
-> +++ b/t/t5510-fetch.sh
-> @@ -123,149 +123,113 @@ test_expect_success "fetch test remote HEAD change" '
->  '
->  
->  test_expect_success "fetch test followRemoteHEAD never" '
-> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
-> -	(
-> -		cd two &&
-> -		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
-> -		git config set remote.origin.followRemoteHEAD "never" &&
-> -		GIT_TRACE_PACKET=$PWD/trace.out git fetch &&
-> -		# Confirm that we do not even ask for HEAD when we are
-> -		# not going to act on it.
-> -		test_grep ! "ref-prefix HEAD" trace.out &&
-> -		test_must_fail git rev-parse --verify refs/remotes/origin/HEAD
-> -	)
-> +	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
-> +	test_config -C two remote.origin.followRemoteHEAD "never" &&
-> +	GIT_TRACE_PACKET=$PWD/trace.out git -C two fetch &&
-> +	# Confirm that we do not even ask for HEAD when we are
-> +	# not going to act on it.
-> +	test_grep ! "ref-prefix HEAD" trace.out &&
-> +	test_must_fail git -C two rev-parse --verify refs/remotes/origin/HEAD
->  '
->  
->  test_expect_success "fetch test followRemoteHEAD warn no change" '
-> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
-> -	(
-> -		cd two &&
-> -		git rev-parse --verify refs/remotes/origin/other &&
-> -		git remote set-head origin other &&
-> -		git rev-parse --verify refs/remotes/origin/HEAD &&
-> -		git rev-parse --verify refs/remotes/origin/main &&
-> -		git config set remote.origin.followRemoteHEAD "warn" &&
-> -		git fetch >output &&
-> -		echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
-> -			"but we have ${SQ}other${SQ} locally." >expect &&
-> -		test_cmp expect output &&
-> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
-> -		branch=$(git rev-parse refs/remotes/origin/other) &&
-> -		test "z$head" = "z$branch"
-> -	)
-> +	git -C two rev-parse --verify refs/remotes/origin/other &&
-> +	git -C two remote set-head origin other &&
-> +	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
-> +	git -C two rev-parse --verify refs/remotes/origin/main &&
-> +	test_config -C two remote.origin.followRemoteHEAD "warn" &&
-> +	git -C two fetch >output &&
-> +	echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
-> +		"but we have ${SQ}other${SQ} locally." >expect &&
-> +	test_cmp expect output &&
-> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
-> +	branch=$(git -C two rev-parse refs/remotes/origin/other) &&
-> +	test "z$head" = "z$branch"
->  '
->  
->  test_expect_success "fetch test followRemoteHEAD warn create" '
-> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
-> -	(
-> -		cd two &&
-> -		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
-> -		git config set remote.origin.followRemoteHEAD "warn" &&
-> -		git rev-parse --verify refs/remotes/origin/main &&
-> -		output=$(git fetch) &&
-> -		test "z" = "z$output" &&
-> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
-> -		branch=$(git rev-parse refs/remotes/origin/main) &&
-> -		test "z$head" = "z$branch"
-> -	)
-> +	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
-> +	test_config -C two remote.origin.followRemoteHEAD "warn" &&
-> +	git -C two rev-parse --verify refs/remotes/origin/main &&
-> +	output=$(git -C two fetch) &&
-> +	test "z" = "z$output" &&
-> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
-> +	branch=$(git -C two rev-parse refs/remotes/origin/main) &&
-> +	test "z$head" = "z$branch"
->  '
->  
->  test_expect_success "fetch test followRemoteHEAD warn detached" '
-> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
-> -	(
-> -		cd two &&
-> -		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
-> -		git update-ref refs/remotes/origin/HEAD HEAD &&
-> -		HEAD=$(git log --pretty="%H") &&
-> -		git config set remote.origin.followRemoteHEAD "warn" &&
-> -		git fetch >output &&
-> -		echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
-> -			"but we have a detached HEAD pointing to" \
-> -			"${SQ}${HEAD}${SQ} locally." >expect &&
-> -		test_cmp expect output
-> -	)
-> +	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
-> +	git -C two update-ref refs/remotes/origin/HEAD HEAD &&
-> +	HEAD=$(git -C two log --pretty="%H") &&
-> +	test_config -C two remote.origin.followRemoteHEAD "warn" &&
-> +	git -C two fetch >output &&
-> +	echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
-> +		"but we have a detached HEAD pointing to" \
-> +		"${SQ}${HEAD}${SQ} locally." >expect &&
-> +	test_cmp expect output
->  '
->  
->  test_expect_success "fetch test followRemoteHEAD warn quiet" '
-> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
-> -	(
-> -		cd two &&
-> -		git rev-parse --verify refs/remotes/origin/other &&
-> -		git remote set-head origin other &&
-> -		git rev-parse --verify refs/remotes/origin/HEAD &&
-> -		git rev-parse --verify refs/remotes/origin/main &&
-> -		git config set remote.origin.followRemoteHEAD "warn" &&
-> -		output=$(git fetch --quiet) &&
-> -		test "z" = "z$output" &&
-> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
-> -		branch=$(git rev-parse refs/remotes/origin/other) &&
-> -		test "z$head" = "z$branch"
-> -	)
-> +	git -C two rev-parse --verify refs/remotes/origin/other &&
-> +	git -C two remote set-head origin other &&
-> +	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
-> +	git -C two rev-parse --verify refs/remotes/origin/main &&
-> +	test_config -C two remote.origin.followRemoteHEAD "warn" &&
-> +	output=$(git -C two fetch --quiet) &&
-> +	test "z" = "z$output" &&
-> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
-> +	branch=$(git -C two rev-parse refs/remotes/origin/other) &&
-> +	test "z$head" = "z$branch"
->  '
->  
->  test_expect_success "fetch test followRemoteHEAD warn-if-not-branch branch is same" '
-> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
-> -	(
-> -		cd two &&
-> -		git rev-parse --verify refs/remotes/origin/other &&
-> -		git remote set-head origin other &&
-> -		git rev-parse --verify refs/remotes/origin/HEAD &&
-> -		git rev-parse --verify refs/remotes/origin/main &&
-> -		git config set remote.origin.followRemoteHEAD "warn-if-not-main" &&
-> -		actual=$(git fetch) &&
-> -		test "z" = "z$actual" &&
-> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
-> -		branch=$(git rev-parse refs/remotes/origin/other) &&
-> -		test "z$head" = "z$branch"
-> -	)
-> +	git -C two rev-parse --verify refs/remotes/origin/other &&
-> +	git -C two remote set-head origin other &&
-> +	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
-> +	git -C two rev-parse --verify refs/remotes/origin/main &&
-> +	test_config -C two remote.origin.followRemoteHEAD "warn-if-not-main" &&
-> +	actual=$(git -C two fetch) &&
-> +	test "z" = "z$actual" &&
-> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
-> +	branch=$(git -C two rev-parse refs/remotes/origin/other) &&
-> +	test "z$head" = "z$branch"
->  '
->  
->  test_expect_success "fetch test followRemoteHEAD warn-if-not-branch branch is different" '
-> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
-> -	(
-> -		cd two &&
-> -		git rev-parse --verify refs/remotes/origin/other &&
-> -		git remote set-head origin other &&
-> -		git rev-parse --verify refs/remotes/origin/HEAD &&
-> -		git rev-parse --verify refs/remotes/origin/main &&
-> -		git config set remote.origin.followRemoteHEAD "warn-if-not-some/different-branch" &&
-> -		git fetch >actual &&
-> -		echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
-> -			"but we have ${SQ}other${SQ} locally." >expect &&
-> -		test_cmp expect actual &&
-> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
-> -		branch=$(git rev-parse refs/remotes/origin/other) &&
-> -		test "z$head" = "z$branch"
-> -	)
-> +	git -C two rev-parse --verify refs/remotes/origin/other &&
-> +	git -C two remote set-head origin other &&
-> +	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
-> +	git -C two rev-parse --verify refs/remotes/origin/main &&
-> +	test_config -C two remote.origin.followRemoteHEAD "warn-if-not-some/different-branch" &&
-> +	git -C two fetch >actual &&
-> +	echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
-> +		"but we have ${SQ}other${SQ} locally." >expect &&
-> +	test_cmp expect actual &&
-> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
-> +	branch=$(git -C two rev-parse refs/remotes/origin/other) &&
-> +	test "z$head" = "z$branch"
->  '
->  
->  test_expect_success "fetch test followRemoteHEAD always" '
-> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
-> -	(
-> -		cd two &&
-> -		git rev-parse --verify refs/remotes/origin/other &&
-> -		git remote set-head origin other &&
-> -		git rev-parse --verify refs/remotes/origin/HEAD &&
-> -		git rev-parse --verify refs/remotes/origin/main &&
-> -		git config set remote.origin.followRemoteHEAD "always" &&
-> -		git fetch &&
-> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
-> -		branch=$(git rev-parse refs/remotes/origin/main) &&
-> -		test "z$head" = "z$branch"
-> -	)
-> +	git -C two rev-parse --verify refs/remotes/origin/other &&
-> +	git -C two remote set-head origin other &&
-> +	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
-> +	git -C two rev-parse --verify refs/remotes/origin/main &&
-> +	test_config -C two remote.origin.followRemoteHEAD "always" &&
-> +	git -C two fetch &&
-> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
-> +	branch=$(git -C two rev-parse refs/remotes/origin/main) &&
-> +	test "z$head" = "z$branch"
->  '
->  
->  test_expect_success 'followRemoteHEAD does not kick in with refspecs' '
-> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
-> -	(
-> -		cd two &&
-> -		git remote set-head origin other &&
-> -		git config set remote.origin.followRemoteHEAD always &&
-> -		git fetch origin refs/heads/main:refs/remotes/origin/main &&
-> -		echo refs/remotes/origin/other >expect &&
-> -		git symbolic-ref refs/remotes/origin/HEAD >actual &&
-> -		test_cmp expect actual
-> -	)
-> +	git -C two remote set-head origin other &&
-> +	test_config -C two remote.origin.followRemoteHEAD always &&
-> +	git -C two fetch origin refs/heads/main:refs/remotes/origin/main &&
-> +	echo refs/remotes/origin/other >expect &&
-> +	git -C two symbolic-ref refs/remotes/origin/HEAD >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success 'fetch --prune on its own works as expected' '
-> -- 
-> 2.51.0.326.gecbb38d78e
-> 
-> 
+Notes (series):
+    I didn’t find any other occurrences.
+    
+    Demo with this commit merged into ‘master’:
+    
+        $ git grep -e '`s\b' -e '`re\b'
+        Documentation/MyFirstObjectWalk.adoc:block under the `#include`s in `revision.h`. The most likely ones to be set in
+        Documentation/ReviewingGuidelines.adoc:cooking" emails & replies can be found using the query `s:"What's cooking"` on
+        Documentation/ReviewingGuidelines.adoc:like `s:"PATCH" -s:"Re:"`. You can browse these results for topics relevant to
+        Documentation/git-add.adoc:You also could say `s` or `sta` or `status` above as long as the
+        Documentation/git-mailinfo.adoc:*	Leading `Re:`, `re:`, and `:`.
+        add-interactive.c: * It is implemented in the form of a pair of `string_list`s, the first one
+        add-patch.c:			 * appended to the strbuf `s->plain`.
+        add-patch.c:				 * `s->buf` still contains the part of the
+        compat/regex/regexec.c:	string `s' and transit to `b':
+        reftable/record.h:/* Advance `s.buf` by `n`, and decrease length. */
+        t/t0013/shattered-1.pdf matches
+        t/t0040-parse-options.sh:	error: switch `s'\'' requires a value
+        t/t1092-sparse-checkout-compatibility.sh:	# The following `git reset`s result in updating the index on files with
+    
+    On ‘master’:
+    
+        $ git grep -e '`s\b' -e '`re\b'
+        Documentation/MyFirstObjectWalk.adoc:block under the `#include`s in `revision.h`. The most likely ones to be set in
+        Documentation/ReviewingGuidelines.adoc:cooking" emails & replies can be found using the query `s:"What's cooking"` on
+        Documentation/ReviewingGuidelines.adoc:like `s:"PATCH" -s:"Re:"`. You can browse these results for topics relevant to
+        Documentation/config/mergetool.adoc:	are the versions of the file from before Git`s conflict
+        Documentation/git-add.adoc:You also could say `s` or `sta` or `status` above as long as the
+        Documentation/git-mailinfo.adoc:*	Leading `Re:`, `re:`, and `:`.
+        add-interactive.c: * It is implemented in the form of a pair of `string_list`s, the first one
+        add-patch.c:			 * appended to the strbuf `s->plain`.
+        add-patch.c:				 * `s->buf` still contains the part of the
+        compat/regex/regexec.c:	string `s' and transit to `b':
+        reftable/record.h:/* Advance `s.buf` by `n`, and decrease length. */
+        Binary file t/t0013/shattered-1.pdf matches
+        t/t0040-parse-options.sh:	error: switch `s'\'' requires a value
+        t/t1092-sparse-checkout-compatibility.sh:	# The following `git reset`s result in updating the index on files with
+
+ Documentation/config/mergetool.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/config/mergetool.adoc b/Documentation/config/mergetool.adoc
+index 6be506145c1..7064f5a462c 100644
+--- a/Documentation/config/mergetool.adoc
++++ b/Documentation/config/mergetool.adoc
+@@ -65,7 +65,7 @@ endif::[]
+ 	During a merge, Git will automatically resolve as many conflicts as
+ 	possible and write the `$MERGED` file containing conflict markers around
+ 	any conflicts that it cannot resolve; `$LOCAL` and `$REMOTE` normally
+-	are the versions of the file from before Git`s conflict
++	are the versions of the file from before Git's conflict
+ 	resolution. This flag causes `$LOCAL` and `$REMOTE` to be overwritten so
+ 	that only the unresolved conflicts are presented to the merge tool. Can
+ 	be configured per-tool via the `mergetool.<tool>.hideResolved`
+
+base-commit: b983aaabc8b8cf406686f23689dda7e226f67e44
+-- 
+2.51.0.103.g04b6f1b0792
+
