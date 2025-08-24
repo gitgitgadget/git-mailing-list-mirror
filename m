@@ -1,171 +1,155 @@
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8022BAF9
-	for <git@vger.kernel.org>; Sun, 24 Aug 2025 15:31:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FE82CCC0
+	for <git@vger.kernel.org>; Sun, 24 Aug 2025 16:02:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756049485; cv=none; b=rVffMFEYnjZE2LhQYTZLZ2582GooC7vCtaw0MSmkU6T8WdV+AVSOuYCnKkpIyoT0OKH2k0m2WXqpHALKma/zslMt4/lRmV9pDVXxuCiP+flI/1Dypyr2ulk8ya+ClCGNzbXMDciUoblJwEdBDGWW+ezdxpUCgy158PNdMW22r+4=
+	t=1756051374; cv=none; b=CXQO6ExHJZ0eRRhBrpryfXDqL+iLyiKydSLdpi4xSbB00YvXe+U4zDrzy8F62MhcUz+5kgFynVN8Ih+bgDAps34iq54V7OGzH0OhKI1MEtQy+n4vBfXDeGiVXHeM0GlxSFjPexpPOYPtsMykIBTsApCQdNPSdiOQpd2oFulsQMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756049485; c=relaxed/simple;
-	bh=Z8DG0MgTUE0iU3d2B7uMbYiRIRygP4b32N0rlNeu/S4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=jflSnWwh1Q4LzGxFbVYtiGtMpKHjA0h8+xaI3H8d4XmtUbDOWIRZ5Ag5lFJbKHUqgNu5eAvYI6dlciqzclPDxrQ3QuPGExNfy9A8lPJKnanwt7oK82G0PcAIDtfsNTPRmbqq6N81IiY3p5k5vdM/CcC1PAXcfX7tmPEPdzSEDQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.1.102] (089144220182.atnat0029.highway.webapn.at [89.144.220.182])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4c8yZH33znzRq1l;
-	Sun, 24 Aug 2025 17:31:18 +0200 (CEST)
-Message-ID: <2d56de10-f829-4bc8-9c76-76eab6b137ae@kdbg.org>
-Date: Sun, 24 Aug 2025 17:31:18 +0200
+	s=arc-20240116; t=1756051374; c=relaxed/simple;
+	bh=LvyNtfvtK5CuQSrhM0qksHq90or1ACz3JJtXjIGrwn8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mCSOr9+CIMcN+oDOEchbXKqP9pLYRnVxIj891NJo941D8BnQwrLfeyT8Xq6zyrPP5hU170gfiZfuHBteVIpIi5YuP5adUHgEyhNrqJiEioHuxWl/G42UrqWcKQfXAAcBaOwUBrGHWRTYNJDWa21G2iYtJ+agBzP+97Dk0q5CEIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DOG2eWmS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=megq3ivS; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DOG2eWmS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="megq3ivS"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2928F7A00B9;
+	Sun, 24 Aug 2025 12:02:50 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Sun, 24 Aug 2025 12:02:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1756051370;
+	 x=1756137770; bh=vX2o6SesTPrYdntHeljExGQkTXSq+1xo6zjbjYwKeKE=; b=
+	DOG2eWmS+pWymtzl7VrBOM3NwJcAl+3Jz2JfpEozbcx0KAZ4yJKdnsFHzd3D9mkQ
+	V/OrVMlWJJQN/dkER33oW+VYLhn6Wz2yv94DdLp4UNEqaCql0n46vvQtHKjC1CFE
+	L6ES7nkrMnIbecyaC1FOlK8DrNqioZrPqpyEZ1d+WniQYi3fzo3XapGt0fa9MJTO
+	xzV/ODahTfjsrzU+UhE3T9KMUiJ3jGFv442Xz7FllOi3fbB5kOt+gyNkPrvBIDq/
+	fVCivwWam93DiQqstY3623sHtEYtOA8cNPAO4R69P2YsvCxj2HIYtipzY6GDEyPl
+	YUOkWPACXl1ffZk+8CATSg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1756051370; x=
+	1756137770; bh=vX2o6SesTPrYdntHeljExGQkTXSq+1xo6zjbjYwKeKE=; b=m
+	egq3ivSMMI+TWgRuLkG+RuNeuuwale6spy/ljIafejG3q9hiOvGHJvxQkh3Wg1uo
+	/JnkFtarPCAoNrT5GOMT8tVwCZegoX4TL3pJv1Bkl3d0A8rpyexOUw4IPxOWeRjN
+	E7vwXwNQhfWKm0CQjzccs4Y+iMCqAWzl4IPqc5BDFfO5kr/7UQSQLcwjgfJ2pD9G
+	BdZgTcBt1wkHeLgZ01IB0Ze/rHXSaZBqBuFirjfkyqQc+sYjHmGLh0SAYDZ891EQ
+	AivsMekP7ATaZRota7lSCGgIeh/ck7UAvOGBlt5AU/Mg+BVgWPujvdYk1e+RpH6L
+	N/BjY/tWE/54axKkKxACQ==
+X-ME-Sender: <xms:qTeraH-ymdNhhjXg0P24zIB2MPbjCfE64sc4O6QsT1MXRJJazAeCLA>
+    <xme:qTeraD4QLBKdX_kHoOAWB5DVL0rTuRjtpq8LY6cDfj8oMS48I8-MAaGZYr92p9sS6
+    LqUSdA-FNKkJOu1Qg>
+X-ME-Received: <xmr:qTeraG3nXDiC67YIIIW4xME1AYrnVg2TPeTin-n26zo15VQyxuH8YUFDphW0qTJYacknX_uSrr1unt5sAJrhygHSy8zPLt9dLRQNUnOh>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieelleefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:qTeraCD1vD8NPaz4Cu1Fs1pFTpV7C1KrBqAIQa9P2paelmpfOZ2huw>
+    <xmx:qTeraA0Kxz4ALEJmjfIfmC-2H4awOK71uDj6CDabjf5XKbscPO8gvA>
+    <xmx:qTeraEuoV_NaODfWI_LYR5_XeBZ-HLnEiBFnzUlpZmPyTHGXgbKBJg>
+    <xmx:qTeraI4BfD4Kp9Uwq7Sr8ImUtzloO_5HI27Ki-FTsU_gxAxabDhwaQ>
+    <xmx:qTeraKjZqCVqo_p62ASmBDhGErkHFyOHSRMmLP9ZY5WLM7LseGh__zB1>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 24 Aug 2025 12:02:49 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c5582b85 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Sun, 24 Aug 2025 16:02:47 +0000 (UTC)
+Date: Sun, 24 Aug 2025 18:02:35 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH RFC 05/11] builtin/history: implement "drop" subcommand
+Message-ID: <aKs3myBRRAiyIvpS@pks.im>
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+ <20250819-b4-pks-history-builtin-v1-5-9b77c32688fe@pks.im>
+ <3005363.e9J7NaK4W3@cayenne>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH] progress: pay attention to (customized) delay time
-From: Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Cc: Nicolas Pitre <nico@fluxnic.net>,
- =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
- <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
- <86bf04c7-6315-46ef-8297-42efc3ed322d@kdbg.org> <xmqq4itxvi3z.fsf@gitster.g>
- <08f405a6-fd2e-40d7-850a-574356b4009e@kdbg.org>
-Content-Language: en-US
-In-Reply-To: <08f405a6-fd2e-40d7-850a-574356b4009e@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3005363.e9J7NaK4W3@cayenne>
 
-Am 24.08.25 um 00:03 schrieb Johannes Sixt:
-> That said, I am not very happy about the new calls introduced in
-> display_progress(), either. I'll see whether I can produce some
-> performance measurements.
+On Sat, Aug 23, 2025 at 06:15:08PM +0200, Jean-Noël AVILA wrote:
+> On Tuesday, 19 August 2025 12:56:01 CEST Patrick Steinhardt wrote:
+> > diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+> > index 9dafb8fc16..3012445ddc 100644
+> > --- a/Documentation/git-history.adoc
+> > +++ b/Documentation/git-history.adoc
+> > @@ -8,7 +8,7 @@ git-history - Rewrite history of the current branch
+> >  SYNOPSIS
+> >  --------
+> >  [synopsis]
+> > -git history [<options>]
+> > +git history drop [<options>] <revision>
+> > 
+> 
+> Grepping through the documentation for the <revision> placeholder does not 
+> yield a lot of matches. Can <revision> be replaced by <commit> or <commit-ish>  
+> in this context; these ones seem widely used.
 
-I haven't made up my mind, yet, whether I want to persue the direction
-any further. Since we do not have a low-latency implementation of
-getnanotime() for all supported systems, calling the function tens of
-thousands of times per second could be too burdensome for some of them.
+Yup, makes sense.
 
-> I observe a behavior change with delayed progress indicators that I have
-> to understand and fix it before I can submit the cleaned up patches.
+> >  DESCRIPTION
+> >  -----------
+> > @@ -31,6 +31,31 @@ COMMANDS
+> >  This command requires a subcommand. Several subcommands are available to
+> >  rewrite history in different ways.
+> > 
+> > +drop <revision>::
+> 
+> My linting patch series[1] does not catch this kind of synopsis miss, but 
+> here, backticks are missing because this is a part of synopsis:
+> 
+> `drop <revision>`::
 
-But I found a bug in the delayed progress indicators: the initial delay
-time is always just one second instead of the configured time (two
-seconds by default).
+Okay.
 
-Below is a fix. This is a minimal patch. It could be extended to reduce
-the number of local flag variables in display() and perhaps also reduce
-indentation levels with some early returns.
+> > +	Drop a commit from the history and reapply all children of that
+> > +	commit on top of the commit's parent. The commit that is to be
+> > +	dropped must be reachable from the current `HEAD` commit.
+> > ++
+> > +Dropping the root commit converts the child of that commit into the new
+> > +root commit. It is invalid to drop a root commit that does not have any
+> > +child commits, as that would lead to an empty branch.
+> > +
+> > +EXAMPLES
+> > +--------
+> > +
+> > +* Drop a commit from history.
+> > ++
+> 
+> As the examples are quite long, it would make sense to declare each example as 
+> a sub-section:
+> 
+> Drop a commit from history
+> ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If Carlo wants to advance the original patches, this patch also provides
-an obvious point where the alarm clock can be re-armed outside the
-signal handler. It would be where we set progress_update = 0.
+Makes sense.
 
------ 8< -----
-Subject: [PATCH] progress: pay attention to (customized) delay time
+Thanks by the way for caring about our documentation and trying to make
+sure that we're being more consistent. I really appreciate this kind of
+work!
 
-Using one of the start_delayed_*() functions, clients of the progress
-API can request that a progress meter is only shown after some time.
-To do that, the implementation intends to count down the number of
-seconds stored in struct progress by observing flag progress_update,
-which the timer interrupt handler sets when a second has elapsed. This
-works during the first second of the delay. But the code forgets to
-reset the flag to zero, so that subsequent calls of display_progress()
-think that another second has elapsed and decrease the count again
-until zero is reached. Due to the frequency of the calls, this happens
-without an observable delay in practice, so that the effective delay is
-always just one second.
-
-This bug has been with us since the inception of the feature. Despite
-having been touched on various occasions, such as 8aade107dd84
-(progress: simplify "delayed" progress API), 9c5951cacf5c (progress:
-drop delay-threshold code), and 44a4693bfcec (progress: create
-GIT_PROGRESS_DELAY), the short delay went unnoticed.
-
-Copy the flag state into a local variable and reset the global flag
-right away so that we can detect the next clock tick correctly.
-
-Since we have not had any complaints that the delay of one second is
-too short nor that GIT_PROGRESS_DELAY is ignored, people seem to be
-comfortable with the status quo. Therefore, set the default to 1 to
-keep the current behavior.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- Documentation/git.adoc |  2 +-
- progress.c             | 12 +++++++-----
- 2 files changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 743b7b00e4..03e9e69d25 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -684,7 +684,7 @@ other
- 
- `GIT_PROGRESS_DELAY`::
- 	A number controlling how many seconds to delay before showing
--	optional progress indicators. Defaults to 2.
-+	optional progress indicators. Defaults to 1.
- 
- `GIT_EDITOR`::
- 	This environment variable overrides `$EDITOR` and `$VISUAL`.
-diff --git a/progress.c b/progress.c
-index 8d5ae70f3a..39a1101420 100644
---- a/progress.c
-+++ b/progress.c
-@@ -114,16 +114,19 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 	const char *tp;
- 	struct strbuf *counters_sb = &progress->counters_sb;
- 	int show_update = 0;
-+	sig_atomic_t update = progress_update;
- 	int last_count_len = counters_sb->len;
- 
--	if (progress->delay && (!progress_update || --progress->delay))
-+	progress_update = 0;
-+
-+	if (progress->delay && (!update || --progress->delay))
- 		return;
- 
- 	progress->last_value = n;
- 	tp = (progress->throughput) ? progress->throughput->display.buf : "";
- 	if (progress->total) {
- 		unsigned percent = n * 100 / progress->total;
--		if (percent != progress->last_percent || progress_update) {
-+		if (percent != progress->last_percent || update) {
- 			progress->last_percent = percent;
- 
- 			strbuf_reset(counters_sb);
-@@ -133,7 +136,7 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 				    tp);
- 			show_update = 1;
- 		}
--	} else if (progress_update) {
-+	} else if (update) {
- 		strbuf_reset(counters_sb);
- 		strbuf_addf(counters_sb, "%"PRIuMAX"%s", (uintmax_t)n, tp);
- 		show_update = 1;
-@@ -166,7 +169,6 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 			}
- 			fflush(stderr);
- 		}
--		progress_update = 0;
- 	}
- }
- 
-@@ -281,7 +283,7 @@ static int get_default_delay(void)
- 	static int delay_in_secs = -1;
- 
- 	if (delay_in_secs < 0)
--		delay_in_secs = git_env_ulong("GIT_PROGRESS_DELAY", 2);
-+		delay_in_secs = git_env_ulong("GIT_PROGRESS_DELAY", 1);
- 
- 	return delay_in_secs;
- }
--- 
-2.51.0.205.g9a02ae2892
-
+Patrick
