@@ -1,226 +1,156 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38EC1DFF0
-	for <git@vger.kernel.org>; Sun, 24 Aug 2025 01:25:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CB218DF62
+	for <git@vger.kernel.org>; Sun, 24 Aug 2025 05:00:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755998720; cv=none; b=ZwfPSJzRz//qTsNnNwedwhfYPIkeTjFaxALmbmg90JAD8MHNBWm0dwlhETZMb+3pZ2ZbUWB/1m1j6HBJIsiJk4lGRs94twbtokNvBEXg+BZJneWjrtQwENx17DVDJW28NgDsW5oBkhULSH5aZf6hYnfIylUGMWVnbpfH8wJeRXc=
+	t=1756011651; cv=none; b=igb9k3fGFW+5NhwK8awI3i5FVZ4PoK6B6MUc7WycRShaHTBkmlXioTFV2SOriF33iau0Dbef4T3agTHuYdCNEsY0fkxLVynyJ4Fz6sTDlRMCHTUV2uQMxQJIKNVFW/5VFBuoP1JpjS8wbysy8AzCSEXRoMD4Y4hI49tGbdsfN88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755998720; c=relaxed/simple;
-	bh=MVEaK7bchG9zT3m931iLV2m8W7coGK1Y3E8oiZamuIs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WpciALuWWESlNullFi/6kV+ZGVhmOmZDM/aMXaNR4gDkKXhNIqEX4+Br200WNvKCnVGv3tZvqH5ElS9JVPo/o6rgheMQJwBfDrFyiOovRmG8W64E2Ffn+HGdKXC5PLhoy1xrgGedWEdt08jt9TQwo/m7u56HH2MzmHzwI/E9zGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Flkm6/Dl; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756011651; c=relaxed/simple;
+	bh=O7S0vloV684b1u7kGtPrlALO5958snn/sRZWiaPAiHs=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=mdxwzdBh4BwmrFYmZRdZbIb8ISKOnni0KdDIXs1xCx3tiNitIiEAZsZTr47XlgJYOdVT2TvCoKEh70vqwlKUcgsETNehxpoiYaKTIJfTS7gK+1sYl1bzX62YeS4qbxgSjV88TToUh01t67SXB5CGU07DWY6I/qkbEsI4UvhQcNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HCDnQ34n; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Flkm6/Dl"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-770522b34d1so274214b3a.1
-        for <git@vger.kernel.org>; Sat, 23 Aug 2025 18:25:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755998718; x=1756603518; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1nQU/e3IbYVViDaOMDjRL8FsixkUwubdoDwsvM6Hllc=;
-        b=Flkm6/DlmZSYPkLFPXotjxzN+aKzdJR//GJ0IUJOJuOLphCdGOgS9MaAIf0B+NTTtf
-         rFrJL1l+qEUD33CexhGHVaFFds7uTEddsUGK6eadZRGOjo1koZw1DF3YnAwInp/LUoCm
-         d8QSy2jTwlaKQl/Zq1baORhr62efQ8noUC4O0WrXxOw9q1edwQ95L2S/J71u/C6Xg9Ri
-         S3OEhv5qaiOaPrIUCBZqM2+X95dl/W+NFcvEAJyGaCbUPzMdIUAKtTM6W0MWz7xyP/Nw
-         2F8KOcihu+34LuOMkouuC15PJGD1AqWi1IoRQzGencOLU7ChnrOrPNm//FgHMK/9Boec
-         FYGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755998718; x=1756603518;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1nQU/e3IbYVViDaOMDjRL8FsixkUwubdoDwsvM6Hllc=;
-        b=CZfW7ZTt5eJ/mcdcYH4MveZUY+xTN2cdZu09QB5fi9ZZu1CKN6a8rwJsfj3mZ+PHru
-         Ht2X6ITMxCrw3MH60GIb7htizSUM2RDLW4HBA4VuADx78ww+luvWqj9xzW/A9jjRuv5W
-         oDk/pL6E63z+Z3z95LrZvnW7I9kDUoritCe0xTQPSvTYMeDYFhLnrZW50hsHId2yd7ro
-         FbO6S0X2ox7M3BCNVwoSCT97b8qYeXdlwPYb1pZWfYQbIl+pQxbPbUFaChVCJArmiwt4
-         W8ZdxoYMdPzJSX3fMxoLzms/ji6EouyRmgWXdpoLWcHoz1qayB9OVHi0nd6UTDYqI0yR
-         llow==
-X-Gm-Message-State: AOJu0YxhdCZP3EVMpm6hSzxkZDnViq3J90QSlJVegymF7nSCHdftPZAZ
-	GhlIS0vM4fvX4D4f+i8SjpLrji8NpZXX1O8PnRtGbi2O4kxiZ4D9jfzUjwcbNO2WkRSVYTJ2A5j
-	4CpTQSheOXu4NT3VWNuOiCbq0MkWN6fIDyHM5
-X-Gm-Gg: ASbGncvg3JQPTfNZxnV89vHNurJJJ98jZJnLtbIKEW4FZybM8yuqpMHGpDFbXdJ4FTi
-	fYefJ8WrUWNeNuSZtHRdlWL4+3TslVxN7ddcoYXlmG4HXghrZVZyvtFsIRmg7J3/ZxA+Dv9hWzE
-	2kK3q6qJTJeOZYWCqPF9y1OO6JNiNCN5/scjDSRr8DxgKU7p7Dwp5lfRP3H631eqbsaOKdFkdoZ
-	ibYSbo=
-X-Google-Smtp-Source: AGHT+IFyAo2t59nt2tyoCPEGs8nV9t56xQJx160whxEj28czxjcLoMt5veUKX8ZUy20gUvufCVgygaQnLtdBSD1isvY=
-X-Received: by 2002:a05:6a20:3ca8:b0:240:7ed:4018 with SMTP id
- adf61e73a8af0-24340d8bbb7mr10866992637.15.1755998717928; Sat, 23 Aug 2025
- 18:25:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HCDnQ34n"
+Received: (qmail 65038 invoked by uid 109); 24 Aug 2025 05:00:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type:content-transfer-encoding; s=20240930; bh=O7S0vloV684b1u7kGtPrlALO5958snn/sRZWiaPAiHs=; b=HCDnQ34n/YpkCtK+Rd4wngYeiioNRdNTCUcfHMi01vX7HVX4HB9LcPLXvLc8Wn9iJWGZ9W0RjLsO+/GH+E2dGuZuo9iw4nZadGcGEKroVP0C6THB5KaQgYiJqTz2WlF4FXpWz/T5k4F6iOfrIKzOv6WWz4eB+3JoFKiNKk3cqjY75B9LEna9Mi6GTTuCevGaB7uFKe6sapU/yP7anzaUrfAKcGFsW6z6ArZCx1DwgqmElrsd13QwxG5gG4zwIJ/PrdPZk4EP+pclVQ5MGYMhSqv6A9j9MGGwCH+QeprgzLtESv3B5Agng0fJrRm0BlHK4Wang/ZEgzuvoUvOXIbDWg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 24 Aug 2025 05:00:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 128535 invoked by uid 111); 24 Aug 2025 05:00:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 24 Aug 2025 01:00:40 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sun, 24 Aug 2025 01:00:40 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: =?utf-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= <dilyan.palauzov@aegee.org>,
+	Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH] fetch-pack: re-scan when double-checking graph objects
+Message-ID: <20250824050040.GA228050@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
-In-Reply-To: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Date: Sat, 23 Aug 2025 18:25:06 -0700
-X-Gm-Features: Ac12FXwdqH02BAVlBbRwKYCLzoAHV3Cg2Y7N6S1-_4HwMuHA-rO13TX2nKSoHT0
-Message-ID: <CANiSa6gXbrZaMLVq-AAg38sm+7qgzn4w98WWowLtUHA2P+BdLw@mail.gmail.com>
-Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy
- history editing
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 19, 2025 at 3:57=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> Hi,
->
-> over recent months I've been playing around with Jujutsu quite
-> frequently. While I still prefer using Git, there's been a couple
-> features in it that I really like and that I'd like to have in Git, as
-> well.
->
-> A copule of these features relate to history editing. Most importantly,
-> I really dig the following commands:
->
->   - jj-abandon(1) to drop a specific commit from your history.
+The fetch code tries to avoid asking the remote side for an object we
+already have. It does this by traversing recent commits reachable from
+our refs looking for matches. Commit 5d4cc78f72 (fetch-pack: die if in
+commit graph but not obj db, 2024-11-05) introduced an extra check
+there: if we think we have an object because it's in the commit graph,
+we double-check that we actually have it in our object database with a
+call to odb_has_object().
 
-It also rebases all descendants on top of the parent(s) of the
-abandoned commit(s). Branches pointing to the rebased commits are also
-repointed. So is the working copy if it points to a rebased commit
-(the closest equivalent in Git would be HEAD). Do you plan to make all
-the `git history` commands behave that way too?
+But that call does not pass any flags, and so the function won't call
+reprepared_packed_git() if it does not find the object. That opens us up
+to the usual race against some other process repacking the odb:
 
->
->   - jj-absorb(1) to take some changes and automatically apply them to
->     commits in your history that last modified the respective hunks.
->
->   - jj-split(1) to split a commit into two.
->
->   - jj-new(1) to insert a new commit after or before a specific other
->     commit.
->
-> Not all of these commands can be ported directly into Git. jj-new(1) for
-> example doesn't really make a ton of sense for us, I'd claim. But some
-> of these commands _do_ make sense.
->
-> I thus had a look at implementing some of these commands in Git itself,
-> where the result is this patch series. Specifically, the following
-> commands are introduced by this patch series:
->
->   - `git history drop` to drop a specific commit. This is basically the
->     same as jj-abandon(1).
->
->   - `git history reorder` to reorder a specific commit before or after
->     another commit. This is inspired by jj-new(1).
+  1. We scan the list of packs in objects/pack but haven't yet opened them.
 
-It seems more similar to `jj rebase -r X -A/-B Y`, which rips X out of
-the graph and inserts it after/before Y. Just FYI; I'm not asking for
-any changes.
+  2. Somebody else packs the object into a new pack (which we don't know
+     about), and deletes the old pack it was in.
 
->
->   - `git history split` takes a commit and splits it into two. This is
->     basically the same as jj-split(1).
+  3. Our odb_has_object() calls tries to open that old pack, but finds it
+     is gone. We declare that we don't have the object.
 
-FYI, the default behavior of `jj split` is to split the commit into
-parent and child, but there's also `-A/-B X` to take the selected
-changes and insert them after/before X, or `-d X` to put them on top
-of X.
+And this causes us to erroneously complain and abort the fetch, thinking
+our commit-graph and object database are out of sync. Instead, we should
+pass HAS_OBJECT_RECHECK_PACKED, which will add a new step:
 
->
-> If this is something we want to have I think it'd be just a starting
-> point. There's other commands that I think are quite common and that
-> might make sense to introduce eventually:
->
->   - An equivalent to jj-absorb(1) would be awesome to have.
->
->   - `git history reword` to change only the commit message of a specific
->     commit.
+  4. We re-scan the pack directory again, find the new pack, and locate
+     the object.
 
-FYI, `jj describe` can also change the commit message of multiple
-commits at once (e.g. `jj describe main..@` to edit your current chain
-of commits). It concatenates each description with some separators
-between in that case so you can update them all at once in your
-$EDITOR.
+Often the fetch code tries to avoid these kinds of re-scans if it's
+likely that we won't have the object. If the other side has told us
+about object X and we want to know if we have it, we'll skip the re-scan
+(to avoid spending a lot of effort when there are many such objects). We
+can accept the racy false negative in that case because the worst case
+is that we ask the other side to send us the object.
 
-I'm letting you know these things in case it impacts planning for the
-CLI arguments.
+But this is not one of those cases. These are objects which are
+accessible from _our_ refs, and which we already found in the commit
+graph file. We should have them, and if we don't, we'll die()
+immediately. So the performance impact is negligible, and getting the
+right answer is important.
 
->
->   - `git history squash` to squash together multiple commits into one.
->
-> In the end, I'd like us to learn from what people like about Jujutsu and
-> apply those learnings to Git. We won't be able to apply all learnings
-> from Jujutsu, as the workflow is quite different there due to the lack
-> of the index. But other things we certainly can apply to Git directly.
+There's no test here because it's inherently racy. In fact, I had
+trouble even developing a minimal test. The problem seen in the wild can
+be produced like this:
 
-Perhaps the simplest thing to copy is revsets (which we copied from
-Mercurial). See https://jj-vcs.github.io/jj/latest/revsets/. It's not
-at all simple to implement, but I think it should be relatively simple
-from a UX point of view because it can probably be done in a mostly
-backwards compatible way.
+  # Any git.git mirror which supports partial clones; I think this
+  # should work with any repo that contains submodules, but note that
+  # $obj below is specific to this repo
+  url=https://github.com/git/git.git
 
->
-> Note: This patch series currently builds on the cherry-pick infra.
-> As such, when one hits a merge conflict one needs to `git cherry-pick
-> --continue`, which is quite suboptimal. I didn't want to overpolish this
-> series before getting some feedback, but it is something I'll fix in
-> subsequent versions. Furthermore, the command for now bails out in the
-> case where there's any merge commits in the history that is being
-> rewritten. This is another restriction that can be lifted in the future.
->
-> Thanks!
->
-> Patrick
->
-> ---
-> Patrick Steinhardt (11):
->       sequencer: optionally skip printing commit summary
->       sequencer: add option to rewind HEAD after picking commits
->       cache-tree: allow writing in-memory index as tree
->       builtin: add new "history" command
->       builtin/history: implement "drop" subcommand
->       builtin/history: implement "reorder" subcommand
->       add-patch: split out header from "add-interactive.h"
->       add-patch: split out `struct interactive_options`
->       add-patch: remove dependency on "add-interactive" subsystem
->       add-patch: add support for in-memory index patching
->       builtin/history: implement "split" subcommand
->
->  .gitignore                     |   1 +
->  Documentation/git-history.adoc | 159 ++++++++++
->  Documentation/meson.build      |   1 +
->  Makefile                       |   1 +
->  add-interactive.c              | 151 +++------
->  add-interactive.h              |  43 +--
->  add-patch.c                    | 271 ++++++++++++++--
->  add-patch.h                    |  61 ++++
->  builtin.h                      |   1 +
->  builtin/add.c                  |  22 +-
->  builtin/checkout.c             |   7 +-
->  builtin/commit.c               |  16 +-
->  builtin/history.c              | 691 +++++++++++++++++++++++++++++++++++=
-++++++
->  builtin/reset.c                |  16 +-
->  builtin/stash.c                |  46 +--
->  cache-tree.c                   |   5 +-
->  cache-tree.h                   |   3 +-
->  commit.h                       |   2 +-
->  git.c                          |   1 +
->  meson.build                    |   1 +
->  sequencer.c                    |  36 ++-
->  sequencer.h                    |   4 +
->  t/meson.build                  |   5 +-
->  t/t3450-history-drop.sh        | 127 ++++++++
->  t/t3451-history-reorder.sh     | 218 +++++++++++++
->  t/t3452-history-split.sh       | 304 ++++++++++++++++++
->  26 files changed, 1947 insertions(+), 246 deletions(-)
->
->
-> ---
-> base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
-> change-id: 20250819-b4-pks-history-builtin-83398f9a05f0
->
->
+  # This is a commit that is not at the tip of any branches (so after
+  # we have it, we'll still have some commits to fetch).
+  obj=cf6f63ea6bf35173e02e18bdc6a4ba41288acff9
+
+  git init
+  git fetch --filter=tree:0 $url $obj:refs/heads/foo
+  git checkout foo
+  git commit-graph write --reachable
+  git fetch $url
+
+What happens here is that the initial fetch grabs that older commit (and
+its ancestors) but no trees or blobs, and the subsequent checkout grabs
+the necessary trees and blobs just for that commit. The final fetch
+spawns a long sequence of child fetches due to fetch_submodules(), which
+wants to check whether there have been any gitlink modifications which
+should trigger a fetch of the related submodule (we'll leave aside the
+irony that we did not even check out any submodules yet).
+
+That series of fetches causes us to accumulate packs, which eventually
+triggers background maintenance to run. That repacks all-into-one, and
+the pack containing $obj goes away in favor of a new pack. And then the
+fetch eventually fails with:
+
+  fatal: You are attempting to fetch cf6f63ea6bf35173e02e18bdc6a4ba41288acff9, which is in the commit graph file but
+not in the object database.
+
+In the scenario above, the race becomes likely because of the long
+series of quick fetches. But I _think_ the bug is independent of partial
+clones entirely, and you could run into the same thing with a single
+fetch, some other process running "git repack" simultaneously, and a bit
+of bad luck. I haven't been able to reproduce, though. I'm not sure if
+that's because there's some mis-analysis above, or if the race window is
+just small enough that it's hard to trigger.
+
+At any rate, re-scanning here seems like an obviously correct thing to
+do with no downside, and it does fix the partial-clone case shown above.
+
+Reported-by: Дилян Палаузов <dilyan.palauzov@aegee.org>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Originally discussed in:
+
+  https://lore.kernel.org/git/e7a2fdff63d9a90ef4dc1341fa642fff5197b64a.camel@aegee.org/
+
+ fetch-pack.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 20e5533b21..6ed5662951 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -143,7 +143,8 @@ static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
+ 	commit = lookup_commit_in_graph(the_repository, oid);
+ 	if (commit) {
+ 		if (mark_tags_complete_and_check_obj_db) {
+-			if (!odb_has_object(the_repository->objects, oid, 0))
++			if (!odb_has_object(the_repository->objects, oid,
++					    HAS_OBJECT_RECHECK_PACKED))
+ 				die_in_commit_graph_only(oid);
+ 		}
+ 		return commit;
+-- 
+2.51.0.364.gbc6ae1dd20
