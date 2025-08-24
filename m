@@ -1,121 +1,199 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99182D73BB
-	for <git@vger.kernel.org>; Sun, 24 Aug 2025 17:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9653227D782
+	for <git@vger.kernel.org>; Sun, 24 Aug 2025 17:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756056337; cv=none; b=e6wVpHor4pTSOSS649KdR/6mYK1nln8v5rf6hkfoT0FGWj3gJxDtK0o4zlXjJeHRqiEOSj/0rfoB+aitzk7bY8Bu28UOcSDP8k4kT4dojH8nrIV8NJu0quAv5Ty1pbBhtIBrj1yR6HTyheG60Y0uoI0lNLNLFzjv9oV6tssqRJg=
+	t=1756056374; cv=none; b=piLo/MFUUCEk59F9ubTT+vHRDuuUtD2BG0H9g35Upi/FgoNgWNsI/40++Xps3gvW9RYKsNd/k173rKug3mIR5STjWeyOdUYlaTsZYJ33+iIek3GpvbHBfsG/LN/UKL+tqNYw0VkKt/fwHGKeg+MAgfdr1ZTiZtVcMyJAYVkNxk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756056337; c=relaxed/simple;
-	bh=Tsul5Ncj/ftUh2x+g70BaJSu3odE0UQaR0Dz7ivNzH8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dgnAJJ8O4/QTqPWop75LWdCglDBUeDLQ2VJvBNSDgxLWbLDTCf37eNDi/vXxMF3U2Mk9qkZ2NNBdMY8tmbRr6jTh6JMfid3MF2CMzo7zmJjt4Hccr8fZxteWGVJ11TBxr9G3+aM2oLlQ396IWhk3aIjH1B2V6B5ogONhUuu0hG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AJNEbEy/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OPIhgkDD; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1756056374; c=relaxed/simple;
+	bh=V6H7QPBFpf/3ZO45BeQJvtwUt7rwjIAfEaoMUW28vYw=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=necsYKyuysalrYZx3feqs54A5xXre8UMP6RmTBH9roTNJk+33YJ+mZSSvW0A2xX0EBAaGh8psxlJhDYvXHug+7rWLCbX8b+nq+ppj4SfynnvJeXFXiYfizXrl6G0XmnDkEZM2sy+EwlQjLIAGIHrt4B+I0PCw/T9nefwAhs0E9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=FIMjG8NJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ItgGCeZO; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AJNEbEy/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OPIhgkDD"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0E0951D00110;
-	Sun, 24 Aug 2025 13:25:35 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Sun, 24 Aug 2025 13:25:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756056334; x=1756142734; bh=8n7E9TafwA
-	LS2oKXNaBOJGo9nHXi/ykca57/Kubg51k=; b=AJNEbEy/X9oYDl5cDpok5FUClF
-	rsF7dNRuQ5RtoiMfomdwkHg1BkT/EKhvDDCLfrLL3RbIa7E/usicHIE80bLJbWmW
-	bgd6wyhXv0wTE4hHspCeKvtWrm+/5haWNcBrVwioyZcJ4/BJQuoB9njdlYbQmxbV
-	4cWqjrl39gA/0Dwpod4L06dHeM3XUlIelMZ0zrmaaazihdJsmxgpkmMUcqjzE4Dw
-	vKEq5Gi8r3UlOdIx7qYsZ3fnbOIoqU0jeUkREy/mbTeZcjEKfmn0H2XWsFVbN5Fx
-	3pnCyo/EMz1by3wxGDMSd48uMer0Mh3idxxvlHZMktWsT40sxMBiIBvHP6ag==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="FIMjG8NJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ItgGCeZO"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id A9E631D0005D;
+	Sun, 24 Aug 2025 13:26:10 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Sun, 24 Aug 2025 13:26:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1756056370;
+	 x=1756142770; bh=8yJj9EdBt+fwfpCoBgYVjTgXVGZdcUVdi0KZ1z6FvJc=; b=
+	FIMjG8NJAjwfwbGDDBCENbyDrvLfNtyG21qkRF/zt1bnJqrjUpHrRe0OdPFbORKl
+	9K7xeLcqfEeAPg+uVd41vNPkJZAhcmEgZduspwnywdHnV6qUbo81U+1yULJMRGjK
+	6n7gRNPaP/cCRtWnEaVoprUCBHdq/+nKjVIrlPYkqiLj3Z3cw9+ljF38MMXRe838
+	ncbPJzSbeHfR2bb5cE80MpUIbEHTaDTRkvp5t1CTnilgiAQp0tcnY5cBfBvUVs0+
+	yxztWBdb2shpMStjFlj3luoMarzcOsZPLpSWsHt4v3WX8rOpwttTiYdy9vrDl27R
+	QhSBmhhnMNNEbGGjRZtMDw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1756056334; x=1756142734; bh=8n7E9TafwALS2oKXNaBOJGo9nHXi/ykca57
-	/Kubg51k=; b=OPIhgkDDiLWe9s9fXpxmSA98srlcIbOgc+XCjlNnCbxZBIxqYjI
-	mVv5q5Rbwj0pcK9VeUXH0ieLM17gxvNcp57S2eSaAku8o5GGqbsaWgePebCUNAYO
-	CTNIO8+OXP90edx6HFkYqo2jVBg8h3AXhM6VoFd3oWA0at9RQzai6Ya9zkfgVdLq
-	Vs4zlooMZHBcaoOoVG7Gv3oe7cigGEd3JigASiTa1Jatr8CErz3cPccG4AvGjllP
-	c6xT16PhukDDvnF5gy7+D+Mp6vp0qEcUkdp9sbmyU+4wLJ+G7Z2O2xNd/p+UUfTK
-	wjtS7XUyu9/4E5QFoEm7VkrB/sePWPzuJhA==
-X-ME-Sender: <xms:DkuraGoTX8zs4l0URJQIiJfCTS-2UzUqdmVwsVIqaBZvYhL7n0GHtw>
-    <xme:DkuraH6IInYsN0XmyWzqM67SSZDk_QXcI7TlmI3Q_uNCkX6eriHHg6jkY5GJCpCH4
-    a6m9bxa8USeocFcfw>
-X-ME-Received: <xmr:DkuraErVR1SkYVb3Cddb6mWXSh-v9xOBYMxk8ocVSRYSMjSUHhUsuWN_tq8EsWxnAlEpSuPurTtyR0KUNV7VBW75haDHUU_Wk2dFZmew>
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1756056370; x=1756142770; bh=8
+	yJj9EdBt+fwfpCoBgYVjTgXVGZdcUVdi0KZ1z6FvJc=; b=ItgGCeZO9SQ4Vle/C
+	v89WeeCFCBuwHPsDBzmI9I847ohw22WChe7ISPoVArIeIyrggQVjsffPKQCyUc8i
+	sNCSueitElX9SZ8o5vHVfniOOeQX9IAHE0WtaeBW8xVA/MyHeM3ufRxoyVeuY75R
+	WlxSAaV5QHGgKQlMqSKakE0gY02Nccy5MWoSTWTbgVYtIzmUEfGrsol7KgjRdNsG
+	J+MHj6evTdgT3prBEOTpq0oGU3ZfWgs+DhKT0OPSiaRwvgXYpi1exPNxf05egvVx
+	oJztnN1NNDuH9e/MayZ72zixyZM+NjKmBFsdxSQmgFf27lG4l5E6a4J+LDEoAaTa
+	6QieA==
+X-ME-Sender: <xms:MkuraCwfHX7mfv2qKfrKy-cFb0qlm_RUPuXMALhogmTts2dQ7W0_eb4>
+    <xme:MkuraOTp7QjMk21whD3sm0dKTmDRPtDfQtea4Ux3Id0Lp0Iyj9uZVrQc-N_VlSd20
+    JRSiPIG0_bvi4EV1g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujedtuddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
-    hjiehtsehkuggsghdrohhrgh
-X-ME-Proxy: <xmx:DkuraBjIz6J10tfkHsC83RNxzoHhkH5fdijLkT4BxaV1gnJYolBO2Q>
-    <xmx:DkuraGJD71CQiV9ujohLcW7tItqgVelq83TnorS-IwyCOzEMPGWQyQ>
-    <xmx:DkuraJDGlPQ5W39FU_DV6i5zZWF_lO1TneFezFXxIXLYOCg8bV7m2Q>
-    <xmx:DkuraOirrB0oJRgPYiPkG5dxYTEVT4wXe_rTeIXmVr30yvRb1Ht4kg>
-    <xmx:DkuraIPk00eXI-WbSkqyTIY7Dj6LovD553fWt3zIHN_BRxZkNXgieNR4>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 24 Aug 2025 13:25:33 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 655fb7b6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Sun, 24 Aug 2025 17:25:33 +0000 (UTC)
-Date: Sun, 24 Aug 2025 19:25:28 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 0/3] meson: wire up gitk and git-gui
-Message-ID: <aKtLCAq9Y-59cIbc@pks.im>
-References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
- <xmqq7byzfh0w.fsf@gitster.g>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtgfffteetudel
+    hfefkeehtefggeefjeevieekfeefieekkefhveeiledtkefgueenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:MkuraG2nAIschspSA0axO_QqSKbTXyTQO-k9ynOMkGhDFnUGPNq_-A>
+    <xmx:MkuraCC19Y3IZTtwUAdIGzzD_XBL_C3ZNH7PYpZSk03pZlI_Y7mEmQ>
+    <xmx:MkuraA3KcIku5S3YHzOVW94igNIU3_W6h_098b1WcsYVkYRU85xIEw>
+    <xmx:MkuraEtoHkArV5JzKgEd-kt2It2PhtkaWcRhXGHPs6T7577tn-Njnw>
+    <xmx:MkuraCnUtOWVNeMPQmTjvGearSVaphw0SlEURr8uFPUV_QrJg2XNS5hM>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 46C061EA0066; Sun, 24 Aug 2025 13:26:10 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq7byzfh0w.fsf@gitster.g>
+X-ThreadId: A8xKGemTdluZ
+Date: Sun, 24 Aug 2025 19:25:48 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
+Message-Id: <f9f4a4d7-3111-4671-8b5f-43c96702f83e@app.fastmail.com>
+In-Reply-To: <20250819-b4-pks-history-builtin-v1-6-9b77c32688fe@pks.im>
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+ <20250819-b4-pks-history-builtin-v1-6-9b77c32688fe@pks.im>
+Subject: Re: [PATCH RFC 06/11] builtin/history: implement "reorder" subcommand
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 19, 2025 at 08:49:35AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> Having said that, I somehow feel that ...
-> 
-> >  {git-gui => subprojects/git-gui}/.gitattributes       |   0
-> > ...
-> >  {gitk-git => subprojects/gitk}/.gitignore             |   0
-> 
-> ... a move like this is bending the source to match the limitation
-> of the tool, making the people who use (write, read, and build from)
-> the source to pay for the price, which is backwards.  The tool, be
-> it Meson or Make or CMake, should be serving the project, not the
-> other way around.  In our current build system, we don't have to
-> have borrowed code (from gitk, git-gui, sha1dc, or xdiff) inside a
-> specific subdirectory.
-> 
-> But I may change my mind while reading the real patches, not the
-> diffstat.
+Disclaimer that I=E2=80=99ve never used Jujutsu.
 
-I'm not much of a fan of these changes either, and agree that this is a
-limitation of the tool. I think it isn't _too_ bad, but I would've
-preferred to not require this step.
+On Tue, Aug 19, 2025, at 12:56, Patrick Steinhardt wrote:
+> When working in projects where having nice commits matters it's quite
+> common that developers end up reordering commits a lot. Tihs is
 
-If this is proving to be a blocker we can also change upstream to not be
-a separate project. That'd have the downside that it cannot be used
-standalone, but the upside that we can just put these directories
-wherever we want and then include them via `subdir()`.
+s/Tihs/This/
 
-I think taking the pain once though and renaming is preferred so that
-both gitk and git-gui can also be used with Meson standalone.
+> typically done via interactive rebases, where they can then rearrange
+> commits in the instruction sheet.
+>
+> Still, this operation is a frequent-enough operation to provide a more
+> direct of doing this imperatively. As such, introduce a new "reorder"
 
-Patrick
+s/direct of/direct way of/
+
+What=E2=80=99s a use-case for doing this imperatively?  With a nice reba=
+se
+frontend you get to shuffle around some lines in your preferred editor.
+This seems like using Ex mode in Vim.  Which is legitimate but I don=E2=80=
+=99t
+quite see when you would do it.
+
+The thing with e.g. the Drop subcommand is that I might have some
+commits marked `TEMP` that I wanna quickly drop at some point.  That=E2=80=
+=99s
+sort of a semi-interactive use case; I might want to lightly script it,
+but I am always going to invoke it interactively.  Doing that light
+scripting on top of git-rebase(1) sounds like a hassle though.
+
+But in this case I don=E2=80=99t understand when this would save you tim=
+e over a
+nice Rebase frontend.  Because I don=E2=80=99t see when you want
+semi-interactive history reordering.
+
+> subcommand where users can reorder a commit A to come after or before
+> another commit B:
+>
+>     $ git log --oneline
+>     a978f73 fifth
+>     57594ee fourth
+>     04eb1c4 third
+>     d535e30 second
+>     bf7438d first
+>
+>     $ git history reorder :/fourth --before=3D:/second
+>     $ git log --oneline
+
+The `:/` notation makes sense here.  You=E2=80=99ve probably just made t=
+hese
+commits so you want to match the newest ones.
+
+Is this example meant to demonstrate how it works or to also demonstrate
+how you would use it (i.e. with revision syntax)?
+
+>     1610fe0 fifth
+>     444f97d third
+>     2f90797 second
+>     b0ae659 fourth
+>     bf7438d first
+>
+>     $ git history reorder :/fourth --after=3D:/second
+>     $ git log --oneline
+>     c48729d fifth
+>     f44a46e third
+>     26693b8 fourth
+>     8cb4171 second
+>     bf7438d first
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Documentation/git-history.adoc |  32 ++++++
+>  builtin/history.c              | 135 +++++++++++++++++++++++++
+>  t/meson.build                  |   1 +
+>  t/t3451-history-reorder.sh     | 218 ++++++++++++++++++++++++++++++++=
++++++++++
+>  4 files changed, 386 insertions(+)
+>
+> diff --git a/Documentation/git-history.adoc b/Documentation/git-histor=
+y.adoc
+> index 3012445ddc..6e8b4e1326 100644
+> --- a/Documentation/git-history.adoc
+> +++ b/Documentation/git-history.adoc
+> @@ -9,6 +9,7 @@ SYNOPSIS
+>  --------
+>  [synopsis]
+>  git history drop [<options>] <revision>
+> +git history reorder [<options>] <revision> --(before|after)=3D<revisi=
+on>
+>
+>  DESCRIPTION
+>  -----------
+> @@ -40,6 +41,12 @@ Dropping the root commit converts the child of that
+> commit into the new
+>  root commit. It is invalid to drop a root commit that does not have a=
+ny
+>  child commits, as that would lead to an empty branch.
+>
+> +reorder <revision> (--before=3D<revision>|--after=3D<revision>)::
+> +	Reorder the commit so that it becomes either the parent
+> +	(`--before=3D`) or child (`--after=3D`) of the other specified
+> +	commit. The commits must be related to one another and must be
+> +	reachable from the current `HEAD` commit.
+
+s/current `HEAD` commit/current commit/ ?
+
+> +
+>  EXAMPLES
+>  --------
+>[snip]
