@@ -1,97 +1,226 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F0D1D8E10
-	for <git@vger.kernel.org>; Sat, 23 Aug 2025 22:06:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38EC1DFF0
+	for <git@vger.kernel.org>; Sun, 24 Aug 2025 01:25:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755986768; cv=none; b=FAy6IEip8MzDDXf5wR8FeyEjvWQzehIs1mDJqebGdylL4aG+AmSruotOtUO8ZGe+YIORczkbekCgsV3nyT2x+MIJGSHM51LOxmHmGExVwmF6c/xYGRT46OWlCHJSWBzQqv99uTynPcREl+AyTDE4VMtJLDpGAkTtnnU6pW3msKs=
+	t=1755998720; cv=none; b=ZwfPSJzRz//qTsNnNwedwhfYPIkeTjFaxALmbmg90JAD8MHNBWm0dwlhETZMb+3pZ2ZbUWB/1m1j6HBJIsiJk4lGRs94twbtokNvBEXg+BZJneWjrtQwENx17DVDJW28NgDsW5oBkhULSH5aZf6hYnfIylUGMWVnbpfH8wJeRXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755986768; c=relaxed/simple;
-	bh=O8spWKLg/ji3SKF47Bg7sSO7q03PQj8T7QmO7EZ+dE4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qnPN40nzjrlf3KPbNTwiFQLUUlnHkSTW/SvhCqrw+QqqoF3Z85/dhNdGtEKMYh88T/fBpevnFTaZY4v60VlA+pkM4oq6cDV9OID4X547nMcn7HCbmDkV6hJ1S/fJcZUt95/oNHupAxcd9bMzxJGAvl9EpY8LzdDiZS2BYcZYGWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=pb8QCsQg; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1755998720; c=relaxed/simple;
+	bh=MVEaK7bchG9zT3m931iLV2m8W7coGK1Y3E8oiZamuIs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WpciALuWWESlNullFi/6kV+ZGVhmOmZDM/aMXaNR4gDkKXhNIqEX4+Br200WNvKCnVGv3tZvqH5ElS9JVPo/o6rgheMQJwBfDrFyiOovRmG8W64E2Ffn+HGdKXC5PLhoy1xrgGedWEdt08jt9TQwo/m7u56HH2MzmHzwI/E9zGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Flkm6/Dl; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pb8QCsQg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1755986764;
-	bh=O8spWKLg/ji3SKF47Bg7sSO7q03PQj8T7QmO7EZ+dE4=;
-	h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=pb8QCsQgA3rcMrWWUigQC6BAS5M2wEjp82pB+DROYKlRx7z7FmIYh93eT4Mnjxk35
-	 jhSRcyMHWKviQmbE1KOsT4SC9S2fW/FuLFBjuimD0dgoKF6+bBP36gz79dWMdthdB9
-	 +kEYrxCx86DAZG1QsajN6D9qhkbfwjR0sIC9FEjLzWTEAd1ecx9bktI/4IP+O2YUR0
-	 6NbikEep8+uUjrae1tyjVy8hgk2Gm/qW6NgaqnEEKrDdGVFT8p0tkFDnKBiqlOv+0j
-	 ySCq6J1rmpPZgBvqEbNPC/tiewDuuQmjfep0eCI5QZdGUA1XufaZOmlStkqIKeEyGJ
-	 qtdau3Tl9FUEPS9JMnvKEp8QEG1c9KdwCiaWCfagJo1JRFR4Z642wkSlRioY5iBHuD
-	 ANOuY+EFFTpdCB7H1g1l5IoiH1aEjviRkFDbDbXqgluc2PigZRwhJoqnRwM1M96pu1
-	 CurUgOPefD2mekwtZl4cFvj9Edkz//w/bOLLtUL8M9cDjYo3m6x
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:4bca:b344:de61:b896])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3E515200B4;
-	Sat, 23 Aug 2025 22:06:04 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] docs: note that extensions.compatobjectformat is experimental
-Date: Sat, 23 Aug 2025 22:06:01 +0000
-Message-ID: <20250823220601.336079-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.50.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Flkm6/Dl"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-770522b34d1so274214b3a.1
+        for <git@vger.kernel.org>; Sat, 23 Aug 2025 18:25:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755998718; x=1756603518; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1nQU/e3IbYVViDaOMDjRL8FsixkUwubdoDwsvM6Hllc=;
+        b=Flkm6/DlmZSYPkLFPXotjxzN+aKzdJR//GJ0IUJOJuOLphCdGOgS9MaAIf0B+NTTtf
+         rFrJL1l+qEUD33CexhGHVaFFds7uTEddsUGK6eadZRGOjo1koZw1DF3YnAwInp/LUoCm
+         d8QSy2jTwlaKQl/Zq1baORhr62efQ8noUC4O0WrXxOw9q1edwQ95L2S/J71u/C6Xg9Ri
+         S3OEhv5qaiOaPrIUCBZqM2+X95dl/W+NFcvEAJyGaCbUPzMdIUAKtTM6W0MWz7xyP/Nw
+         2F8KOcihu+34LuOMkouuC15PJGD1AqWi1IoRQzGencOLU7ChnrOrPNm//FgHMK/9Boec
+         FYGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755998718; x=1756603518;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1nQU/e3IbYVViDaOMDjRL8FsixkUwubdoDwsvM6Hllc=;
+        b=CZfW7ZTt5eJ/mcdcYH4MveZUY+xTN2cdZu09QB5fi9ZZu1CKN6a8rwJsfj3mZ+PHru
+         Ht2X6ITMxCrw3MH60GIb7htizSUM2RDLW4HBA4VuADx78ww+luvWqj9xzW/A9jjRuv5W
+         oDk/pL6E63z+Z3z95LrZvnW7I9kDUoritCe0xTQPSvTYMeDYFhLnrZW50hsHId2yd7ro
+         FbO6S0X2ox7M3BCNVwoSCT97b8qYeXdlwPYb1pZWfYQbIl+pQxbPbUFaChVCJArmiwt4
+         W8ZdxoYMdPzJSX3fMxoLzms/ji6EouyRmgWXdpoLWcHoz1qayB9OVHi0nd6UTDYqI0yR
+         llow==
+X-Gm-Message-State: AOJu0YxhdCZP3EVMpm6hSzxkZDnViq3J90QSlJVegymF7nSCHdftPZAZ
+	GhlIS0vM4fvX4D4f+i8SjpLrji8NpZXX1O8PnRtGbi2O4kxiZ4D9jfzUjwcbNO2WkRSVYTJ2A5j
+	4CpTQSheOXu4NT3VWNuOiCbq0MkWN6fIDyHM5
+X-Gm-Gg: ASbGncvg3JQPTfNZxnV89vHNurJJJ98jZJnLtbIKEW4FZybM8yuqpMHGpDFbXdJ4FTi
+	fYefJ8WrUWNeNuSZtHRdlWL4+3TslVxN7ddcoYXlmG4HXghrZVZyvtFsIRmg7J3/ZxA+Dv9hWzE
+	2kK3q6qJTJeOZYWCqPF9y1OO6JNiNCN5/scjDSRr8DxgKU7p7Dwp5lfRP3H631eqbsaOKdFkdoZ
+	ibYSbo=
+X-Google-Smtp-Source: AGHT+IFyAo2t59nt2tyoCPEGs8nV9t56xQJx160whxEj28czxjcLoMt5veUKX8ZUy20gUvufCVgygaQnLtdBSD1isvY=
+X-Received: by 2002:a05:6a20:3ca8:b0:240:7ed:4018 with SMTP id
+ adf61e73a8af0-24340d8bbb7mr10866992637.15.1755998717928; Sat, 23 Aug 2025
+ 18:25:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+In-Reply-To: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Date: Sat, 23 Aug 2025 18:25:06 -0700
+X-Gm-Features: Ac12FXwdqH02BAVlBbRwKYCLzoAHV3Cg2Y7N6S1-_4HwMuHA-rO13TX2nKSoHT0
+Message-ID: <CANiSa6gXbrZaMLVq-AAg38sm+7qgzn4w98WWowLtUHA2P+BdLw@mail.gmail.com>
+Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy
+ history editing
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The compatibility object format is only implemented for loose objects,
-not packed objects, so anyone attempting to push or fetch data into a
-repository with this option will likely not see it work as expected.  In
-addition, the underlying storage of loose object mapping is likely to
-change because the current format is inefficient and does not handle
-important mapping information such as that of submodules.
+On Tue, Aug 19, 2025 at 3:57=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> Hi,
+>
+> over recent months I've been playing around with Jujutsu quite
+> frequently. While I still prefer using Git, there's been a couple
+> features in it that I really like and that I'd like to have in Git, as
+> well.
+>
+> A copule of these features relate to history editing. Most importantly,
+> I really dig the following commands:
+>
+>   - jj-abandon(1) to drop a specific commit from your history.
 
-It would have been preferable to initially document that this was an
-experimental feature, but we did not do so.  We hinted at the fact that
-this functionality is incomplete in the description, but did not say so
-explicitly.  Let's do so now: indicate that this feature is
-experimental, incomplete, and subject to change.
+It also rebases all descendants on top of the parent(s) of the
+abandoned commit(s). Branches pointing to the rebased commits are also
+repointed. So is the working copy if it points to a rebased commit
+(the closest equivalent in Git would be HEAD). Do you plan to make all
+the `git history` commands behave that way too?
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
-This was spurred by the fact that I saw Gitolite had added SHA-256
-support and then that users were expecting extensions.compatobjectformat
-to work, when it clearly does not (and, in fact, in some cases breaks
-pushing into the repository).
+>
+>   - jj-absorb(1) to take some changes and automatically apply them to
+>     commits in your history that last modified the respective hunks.
+>
+>   - jj-split(1) to split a commit into two.
+>
+>   - jj-new(1) to insert a new commit after or before a specific other
+>     commit.
+>
+> Not all of these commands can be ported directly into Git. jj-new(1) for
+> example doesn't really make a ton of sense for us, I'd claim. But some
+> of these commands _do_ make sense.
+>
+> I thus had a look at implementing some of these commands in Git itself,
+> where the result is this patch series. Specifically, the following
+> commands are introduced by this patch series:
+>
+>   - `git history drop` to drop a specific commit. This is basically the
+>     same as jj-abandon(1).
+>
+>   - `git history reorder` to reorder a specific commit before or after
+>     another commit. This is inspired by jj-new(1).
 
-I know that some people will not appreciate this feature being
-retroactively marked as experimental, but it is definitively broken for
-real-world use cases without the rest of my sha256-interop branch.
-Technically someone could always insert loose objects and then pack
-them, and because the old loose object mapping was present, the mapping
-would work, but, as mentioned, this would perform pathologically with
-even small repositories, so it's not a useful configuration.
+It seems more similar to `jj rebase -r X -A/-B Y`, which rips X out of
+the graph and inserts it after/before Y. Just FYI; I'm not asking for
+any changes.
 
- Documentation/config/extensions.adoc | 3 +++
- 1 file changed, 3 insertions(+)
+>
+>   - `git history split` takes a commit and splits it into two. This is
+>     basically the same as jj-split(1).
 
-diff --git a/Documentation/config/extensions.adoc b/Documentation/config/extensions.adoc
-index 9e2f321a6d..292e95ddae 100644
---- a/Documentation/config/extensions.adoc
-+++ b/Documentation/config/extensions.adoc
-@@ -14,6 +14,9 @@ compatObjectFormat::
- 	compatObjectFormat.  As well as being able to use oids encoded in
- 	compatObjectFormat in addition to oids encoded with objectFormat to
- 	locally specify objects.
-++
-+Note that the functionality enabled by this option is experimental, incomplete,
-+and subject to change.
- 
- noop::
- 	This extension does not change git's behavior at all. It is useful only
+FYI, the default behavior of `jj split` is to split the commit into
+parent and child, but there's also `-A/-B X` to take the selected
+changes and insert them after/before X, or `-d X` to put them on top
+of X.
+
+>
+> If this is something we want to have I think it'd be just a starting
+> point. There's other commands that I think are quite common and that
+> might make sense to introduce eventually:
+>
+>   - An equivalent to jj-absorb(1) would be awesome to have.
+>
+>   - `git history reword` to change only the commit message of a specific
+>     commit.
+
+FYI, `jj describe` can also change the commit message of multiple
+commits at once (e.g. `jj describe main..@` to edit your current chain
+of commits). It concatenates each description with some separators
+between in that case so you can update them all at once in your
+$EDITOR.
+
+I'm letting you know these things in case it impacts planning for the
+CLI arguments.
+
+>
+>   - `git history squash` to squash together multiple commits into one.
+>
+> In the end, I'd like us to learn from what people like about Jujutsu and
+> apply those learnings to Git. We won't be able to apply all learnings
+> from Jujutsu, as the workflow is quite different there due to the lack
+> of the index. But other things we certainly can apply to Git directly.
+
+Perhaps the simplest thing to copy is revsets (which we copied from
+Mercurial). See https://jj-vcs.github.io/jj/latest/revsets/. It's not
+at all simple to implement, but I think it should be relatively simple
+from a UX point of view because it can probably be done in a mostly
+backwards compatible way.
+
+>
+> Note: This patch series currently builds on the cherry-pick infra.
+> As such, when one hits a merge conflict one needs to `git cherry-pick
+> --continue`, which is quite suboptimal. I didn't want to overpolish this
+> series before getting some feedback, but it is something I'll fix in
+> subsequent versions. Furthermore, the command for now bails out in the
+> case where there's any merge commits in the history that is being
+> rewritten. This is another restriction that can be lifted in the future.
+>
+> Thanks!
+>
+> Patrick
+>
+> ---
+> Patrick Steinhardt (11):
+>       sequencer: optionally skip printing commit summary
+>       sequencer: add option to rewind HEAD after picking commits
+>       cache-tree: allow writing in-memory index as tree
+>       builtin: add new "history" command
+>       builtin/history: implement "drop" subcommand
+>       builtin/history: implement "reorder" subcommand
+>       add-patch: split out header from "add-interactive.h"
+>       add-patch: split out `struct interactive_options`
+>       add-patch: remove dependency on "add-interactive" subsystem
+>       add-patch: add support for in-memory index patching
+>       builtin/history: implement "split" subcommand
+>
+>  .gitignore                     |   1 +
+>  Documentation/git-history.adoc | 159 ++++++++++
+>  Documentation/meson.build      |   1 +
+>  Makefile                       |   1 +
+>  add-interactive.c              | 151 +++------
+>  add-interactive.h              |  43 +--
+>  add-patch.c                    | 271 ++++++++++++++--
+>  add-patch.h                    |  61 ++++
+>  builtin.h                      |   1 +
+>  builtin/add.c                  |  22 +-
+>  builtin/checkout.c             |   7 +-
+>  builtin/commit.c               |  16 +-
+>  builtin/history.c              | 691 +++++++++++++++++++++++++++++++++++=
+++++++
+>  builtin/reset.c                |  16 +-
+>  builtin/stash.c                |  46 +--
+>  cache-tree.c                   |   5 +-
+>  cache-tree.h                   |   3 +-
+>  commit.h                       |   2 +-
+>  git.c                          |   1 +
+>  meson.build                    |   1 +
+>  sequencer.c                    |  36 ++-
+>  sequencer.h                    |   4 +
+>  t/meson.build                  |   5 +-
+>  t/t3450-history-drop.sh        | 127 ++++++++
+>  t/t3451-history-reorder.sh     | 218 +++++++++++++
+>  t/t3452-history-split.sh       | 304 ++++++++++++++++++
+>  26 files changed, 1947 insertions(+), 246 deletions(-)
+>
+>
+> ---
+> base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+> change-id: 20250819-b4-pks-history-builtin-83398f9a05f0
+>
+>
