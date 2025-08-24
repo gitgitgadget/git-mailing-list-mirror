@@ -1,222 +1,350 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B431E2838
-	for <git@vger.kernel.org>; Sun, 24 Aug 2025 19:11:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9B918A6B0
+	for <git@vger.kernel.org>; Sun, 24 Aug 2025 19:41:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756062725; cv=none; b=Rym4l5zbLlBN+ZqCno0LYnHn12DiJgo3o3P2RiUUGJ4wa/6ehq6xTdqOADQvVYrBKCX7XSLVfoXrTCLEe0Ov48CTeGSDIro3pWpB7Odi2CLJKlO/BOxBoYBphpC2Ntrnr0+/VslFsSM3tUntbJGzByOqjB8lK72I5c+0+C2n5YU=
+	t=1756064489; cv=none; b=G1VOrwzYG8d+PrwDl4S/wEplg15OslRNbopK+1Urr/4y8+uGY6No0tpJ9gIEKhSsR+gGUdfgOJm8TF6QgvwjbA1cOtRgDdViTxJSY9Z8x8CeLjKzuuGXHumLTOQQyA7QdFajc/vDDoaR62AJ8OF4EFTWiCy54gj/Ud/NCuqaHME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756062725; c=relaxed/simple;
-	bh=8w2rr32uaTIaUd5N6C22VvzA02Qr1Euy5Zz3vV0y2eI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jGIIcUkVQBORHnZEjVYtp3zwl3CwbBj6XyJsnBQC/TipYJ89tONWm/5S6soCcZndNMSZJjOfraNlojzm/NPAL4DjhCFvmbdlPt+qetdG48d/kqeG6a8UD5ePKfYD/wgIeJKvH1c6P5e3KhkCsvgL/Nad+Srn78ZViStnkGA2iJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=iww9EHKK; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1756064489; c=relaxed/simple;
+	bh=VtkdJULpHurcPe50w7LW9JlfBuOupTjWSvaCeBTsBOE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cuyIfPtzSWq3cG0zN17Q4zdiNEi2Wy+A1nnZi2xCcxgJadcaEfLkI99ZiJBQ1yVGElihNoTbz7sQYVHtyOVtBGtn2X9nF2XjSvrfT+6i4egIUCZFZbihkoTGG4zOvfn4CKmpAkumw71oxddazeJYJ7Jki7Dw+FfkrvhfdZTEj58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PaeLPuuX; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="iww9EHKK"
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1uqG87-00HMrA-JA; Sun, 24 Aug 2025 21:11:51 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector1; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
-	Subject:Cc:To:From; bh=haTaM7GV74opwtJKjfgtQfVojh/LXGxDF9XkE4h5Mlc=; b=iww9EH
-	KKmgKMyJ2YnE7AzJ72ykf4KL69fK44rvreAnpcLTtL0odSwlC8qHFpaYB9nwowRBBBnXcF9uTeVZz
-	fJVsz+pB206/Su5LDSDJz9F1BKjL5f7seeoPOlGWurcSjE1+u+iTjh4ZuCMVLux7seV1DIgAlAzf+
-	43bXjvzWLevbRPsX94zby95bte3KgA17EHS22t7704SrjPPBQ3FOwWrWhWJMk3kLLy6a3WqxcrJrj
-	tGeHB794+hAX/Yx6nuioMExWJfsLUnWdxuzeHXxf8I0g0vLIZ7p4U+C8NQk831KlTFyugE/hi768t
-	bVvYyC+u7zFCeeGGPTr5RxW79sFw==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1uqG87-0003zw-3j; Sun, 24 Aug 2025 21:11:51 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1uqG7n-006W3J-9C; Sun, 24 Aug 2025 21:11:31 +0200
-From: Colin Stagner <ask+git@howdoi.land>
-To: git@vger.kernel.org
-Cc: Zach FettersMoore <zach.fetters@apollographql.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Patrik Weiskircher <patrik@pspdfkit.com>,
-	Colin Stagner <ask+git@howdoi.land>
-Subject: [PATCH] contrib/subtree: fix split with squashed subtrees
-Date: Sun, 24 Aug 2025 14:10:48 -0500
-Message-ID: <20250824191048.1938340-1-ask+git@howdoi.land>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PaeLPuuX"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3c51f0158d8so2664403f8f.1
+        for <git@vger.kernel.org>; Sun, 24 Aug 2025 12:41:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756064485; x=1756669285; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/uz1XhdhLzcC/FBK4mF4X4CyHNG5obV3PY2hJZNugqk=;
+        b=PaeLPuuX8kFzuUaBhE00RC0FEwbTdTB5fzWYGfZBJYNzFPouAwhHYS2pw+DDVSkcK7
+         niw94RQnxs68OhKZ2hjPkJDprcGJhJ177K6Nzun57k3a+O1dTdgKeWKSxvTyl3VGo5eE
+         6bBA1/RA55987Pin2DpdfBrxe6up3eVivFXLOQSLsrBbB3koRTyxzHN8rtIUXq9/G6Np
+         xjcIytUnquL1KZ+vpHRni3uUzTkVuXk34j1rStiTTwymEzXkm6s6ZeixuXYbAUGLAP1K
+         hC7rLvDtR+Gn6m5oOvVqRBS2eZyPeQC238n0Mxy3jYY+To8ImFibbEsDrU+8LKSspQKC
+         qX8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756064485; x=1756669285;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/uz1XhdhLzcC/FBK4mF4X4CyHNG5obV3PY2hJZNugqk=;
+        b=D6zSMen1vhsDcaLhJTkLVx+yRsqzhwOjl95esEkqAAkF0rhOBkkRRq93t7/zEJHK+j
+         RdRPrhohg4AzpTp2//OzVoQPSm54s3qVu3hykVIMZJQijyfCfjBY/O6oPb01b/NPTfv3
+         LqkgOUN9DARZUpog349zdLaMXmkk2WqAcXsXgsyMrv9k71g+1harfi1XOHV3nTZA/fal
+         AIJf63qErrLHBJX8ewIddgRlFEQZxaUSySZPvwd6vad1p1Z1ni9hA4jkcxI81D37kVi1
+         od2742NeVTrsQJV/cHzN0XlOzefCvbzzEJZVHum69r72oAuoXaHhXUNjW0HWkwV66R1a
+         u38A==
+X-Gm-Message-State: AOJu0YyJQxkkzA+faYmN0aYwf6ATm6XQdpkK5goMjwR+z+V3HeofbxvU
+	l3MupasHEl/antylyRROjR4DNZI+zNX9vhL4XTqkgDwOhcsZLB/heuxp
+X-Gm-Gg: ASbGncvf0NfzEQfY0xP7w1pxzThuWBQBsSBU9HQ+wAuKATiC6+6ivpHQsbL+2Dxia40
+	bS8OtJ8aM4a13GRgtwjVe9T55bsCKJWN3fti6ch4Gmnd+zxNJJ/29h4fwbb0qxHD9evjlrOSTOY
+	9W5y/GNIzlZRLroPo3Yvlcgyd5e4HthCnG9/4ODR9CNRZfcNUGH0JhFI3jp07A1/dUFbWImO8oN
+	7gW4pjI8g+amKTk0y18V+EFjEQgpBilP/EQzJuSafeS3CZM5hxwJiZ4bZJp+eILU5nHkF2shc21
+	HhaQCUo7Aw/qaR6h/lRd9rlKJ4lkL+q9EtNdj5YVrSyO8KPih2NUs2jO+dyUhG3o5SGxSIZWxaN
+	9gDkeHp0/eOuOqLk7sdnhzm6MRwspzcvoq/JlsBsqGJTR50mQmaG1
+X-Google-Smtp-Source: AGHT+IF49K/JOyEARw3qk6rfRe3vXn5+nSJQ7VXcIwrpI7RVmD6hcegr/hcnnzGf7TuoPe5NQQ++DQ==
+X-Received: by 2002:a5d:5f8d:0:b0:3c8:89e9:6ab3 with SMTP id ffacd0b85a97d-3c889e96d40mr2037066f8f.46.1756064484723;
+        Sun, 24 Aug 2025 12:41:24 -0700 (PDT)
+Received: from localhost (78-131-14-231.pool.digikabel.hu. [78.131.14.231])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c70e4ba1eesm8884724f8f.2.2025.08.24.12.41.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 Aug 2025 12:41:24 -0700 (PDT)
+Date: Sun, 24 Aug 2025 21:41:23 +0200
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 3/4] t5510: prefer "git -C" to subshell for
+ followRemoteHEAD tests
+Message-ID: <aKtq47vmCrUZCUCF@szeder.dev>
+References: <20250819192004.GA1058857@coredump.intra.peff.net>
+ <20250819192716.GC1059295@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250819192716.GC1059295@coredump.intra.peff.net>
 
-98ba49ccc2 (subtree: fix split processing with multiple subtrees
-present, 2023-12-01) increases the performance of
+On Tue, Aug 19, 2025 at 03:27:16PM -0400, Jeff King wrote:
+> These tests set config within a sub-repo using (cd two && git config),
+> and then a separate test_when_finished outside the subshell to clean it
+> up. We can't use test_config to do this, because the cleanup command it
+> registers inside the subshell would be lost. Nor can we do it before
+> entering the subshell, because the config has to be set after some other
+> commands are run.
+> 
+> Let's switch these tests to use "git -C" for each command instead of a
+> subshell. That lets us use test_config (with -C also) at the appropriate
+> part of the test. And we no longer need the manual cleanup command.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> It is perhaps debatable whether this makes the result more readable.
+> It's fewer lines, but there is "-C" sprinkled everywhere. So if people
+> find this ugly we can drop it (and I'd rewrite patch 4 to use the
+> subshell form in its new test).
 
-    git subtree split --prefix=subA
+I for one think that the original is much more readable.
 
-by ignoring subtree merges which are outside of `subA/`. It also
-introduces a regression. Subtree merges that should be retained
-are incorrectly ignored if they:
+With the subshell it's quite clear, even at a cursory glance, which
+commands are executed in a subdirectory, but when using '-C dir' all
+over we have to look closely.  Furthermore, when there is a command
+outside of the subshell, we can be fairly sure that it's intentional,
+but when a command without '-C dir' lurks among many others using '-C
+dir', then we can't be so sure, but have to investigate whether that
+was intentional or oversight.
 
-1. are nested under `subA/`; and
-2. are merged with `--squash`.
-
-For example, a subtree merged like:
-
-    git subtree merge --squash --prefix=subA/subB "$rev"
-    #                 ^^^^^^^^          ^^^^
-
-is erroneously ignored during a split of `subA`. This causes
-missing tree files and different commit hashes starting in
-git v2.44.0-rc0.
-
-The method:
-
-    should_ignore_subtree_split_commit REV
-
-should test only if REV is a subtree commit, but the combination of
-
-    git log -1 --grep=...
-
-actually searches all *parent* commits until a `--grep` match is
-discovered. Limit these checks to the current REV only.
-
-Tests now cover nested subtrees.
-
-Signed-off-by: Colin Stagner <ask+git@howdoi.land>
----
-
-Notes:
-    The unit test changes in t7900-subtree.sh demonstrate the bug.
-    
-    See also:
-    
-    * <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
-    * <c9e8f54f-2594-4092-ae41-f1da73e97f6e@howdoi.land>
-
- contrib/subtree/git-subtree.sh     |  6 +--
- contrib/subtree/t/t7900-subtree.sh | 70 ++++++++++++++++++++++++++++++
- 2 files changed, 73 insertions(+), 3 deletions(-)
-
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 3fddba797c..139049351d 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -788,17 +788,17 @@ ensure_valid_ref_format () {
- # Usage: check if a commit from another subtree should be
- # ignored from processing for splits
- should_ignore_subtree_split_commit () {
- 	assert test $# = 1
- 	local rev="$1"
--	if test -n "$(git log -1 --grep="git-subtree-dir:" $rev)"
-+	if test -n "$(git log -1 --grep="git-subtree-dir:" "$rev^!")"
- 	then
--		if test -z "$(git log -1 --grep="git-subtree-mainline:" $rev)" &&
--			test -z "$(git log -1 --grep="git-subtree-dir: $arg_prefix$" $rev)"
-+		if test -z "$(git log -1 --grep="git-subtree-mainline:" "$rev^!")" &&
-+			test -z "$(git log -1 --grep="git-subtree-dir: $arg_prefix$" "$rev^!")"
- 		then
- 			return 0
- 		fi
- 	fi
- 	return 1
- }
- 
- # Usage: process_split_commit REV PARENTS
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 3edbb33af4..1ddc213621 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -68,6 +68,34 @@ test_create_pre2_32_repo () {
- 	git -C "$1-clone" replace HEAD^2 $new_commit
- }
- 
-+# test_create_subtree_add REPO ORPHAN PREFIX FILENAME ...
-+#
-+# Create a simple subtree on a new branch named ORPHAN in REPO.
-+# The subtree is then merged into the current branch of REPO,
-+# under PREFIX. The generated subtree has has one commit
-+# with subject and tag FILENAME with a single file "FILENAME.t"
-+#
-+# When this method returns:
-+# - the current branch of REPO will have file PREFIX/FILENAME.t
-+# - REPO will have a branch named ORPHAN with subtree history
-+#
-+# additional arguments are forwarded to "subtree add"
-+test_create_subtree_add () {
-+	(
-+		cd "$1" &&
-+		orphan="$2" &&
-+		prefix="$3" &&
-+		filename="$4" &&
-+		shift 4 &&
-+		last="$(git branch --show-current)" &&
-+		git checkout --orphan "$orphan" &&
-+		git rm -rf . &&
-+		test_commit "$filename" &&
-+		git checkout "$last" &&
-+		git subtree add --prefix="$prefix" "$@" "$orphan"
-+	)
-+}
-+
- test_expect_success 'shows short help text for -h' '
- 	test_expect_code 129 git subtree -h >out 2>err &&
- 	test_must_be_empty err &&
-@@ -426,6 +454,48 @@ test_expect_success 'split with multiple subtrees' '
- 		--squash --rejoin -d -m "Sub B Split 1" 2>&1 | grep -w "\[1\]")" = ""
- '
- 
-+# When subtree split-ing a directory that has other subtree
-+# *merges* underneath it, the split must include those subtrees.
-+# This test creates a nested subtree, `subA/subB`, and tests
-+# that the tree is correct after a subtree split of `subA/`.
-+# The test covers:
-+# - An initial `subtree add`; and
-+# - A follow-up `subtree merge`
-+# both with and without `--squashed`.
-+for is_squashed in '' 'y';
-+do
-+	test_expect_success "split keeps nested ${is_squashed:+--squash }subtrees that are part of the split" '
-+		subtree_test_create_repo "$test_count" &&
-+		(
-+			cd "$test_count" &&
-+			mkdir subA &&
-+			test_commit subA/file1 &&
-+			git branch -m main &&
-+			test_create_subtree_add \
-+				. mksubtree subA/subB file2 ${is_squashed:+--squash} &&
-+			test -e subA/file1.t &&
-+			test -e subA/subB/file2.t &&
-+			git subtree split --prefix=subA --branch=bsplit &&
-+			git checkout bsplit &&
-+			test -e file1.t &&
-+			test -e subB/file2.t &&
-+			git checkout mksubtree &&
-+			git branch -D bsplit &&
-+			test_commit file3 &&
-+			git checkout main &&
-+			git subtree merge \
-+				${is_squashed:+--squash} \
-+				--prefix=subA/subB mksubtree &&
-+			test -e subA/subB/file3.t &&
-+			git subtree split --prefix=subA --branch=bsplit &&
-+			git checkout bsplit &&
-+			test -e file1.t &&
-+			test -e subB/file2.t &&
-+			test -e subB/file3.t
-+		)
-+	'
-+done
-+
- test_expect_success 'split sub dir/ with --rejoin from scratch' '
- 	subtree_test_create_repo "$test_count" &&
- 	test_create_commit "$test_count" main1 &&
-
-base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
--- 
-2.43.0
-
+>  t/t5510-fetch.sh | 202 +++++++++++++++++++----------------------------
+>  1 file changed, 83 insertions(+), 119 deletions(-)
+> 
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index 93e309e213..24379ec7aa 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -123,149 +123,113 @@ test_expect_success "fetch test remote HEAD change" '
+>  '
+>  
+>  test_expect_success "fetch test followRemoteHEAD never" '
+> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
+> -	(
+> -		cd two &&
+> -		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
+> -		git config set remote.origin.followRemoteHEAD "never" &&
+> -		GIT_TRACE_PACKET=$PWD/trace.out git fetch &&
+> -		# Confirm that we do not even ask for HEAD when we are
+> -		# not going to act on it.
+> -		test_grep ! "ref-prefix HEAD" trace.out &&
+> -		test_must_fail git rev-parse --verify refs/remotes/origin/HEAD
+> -	)
+> +	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
+> +	test_config -C two remote.origin.followRemoteHEAD "never" &&
+> +	GIT_TRACE_PACKET=$PWD/trace.out git -C two fetch &&
+> +	# Confirm that we do not even ask for HEAD when we are
+> +	# not going to act on it.
+> +	test_grep ! "ref-prefix HEAD" trace.out &&
+> +	test_must_fail git -C two rev-parse --verify refs/remotes/origin/HEAD
+>  '
+>  
+>  test_expect_success "fetch test followRemoteHEAD warn no change" '
+> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
+> -	(
+> -		cd two &&
+> -		git rev-parse --verify refs/remotes/origin/other &&
+> -		git remote set-head origin other &&
+> -		git rev-parse --verify refs/remotes/origin/HEAD &&
+> -		git rev-parse --verify refs/remotes/origin/main &&
+> -		git config set remote.origin.followRemoteHEAD "warn" &&
+> -		git fetch >output &&
+> -		echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
+> -			"but we have ${SQ}other${SQ} locally." >expect &&
+> -		test_cmp expect output &&
+> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
+> -		branch=$(git rev-parse refs/remotes/origin/other) &&
+> -		test "z$head" = "z$branch"
+> -	)
+> +	git -C two rev-parse --verify refs/remotes/origin/other &&
+> +	git -C two remote set-head origin other &&
+> +	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
+> +	git -C two rev-parse --verify refs/remotes/origin/main &&
+> +	test_config -C two remote.origin.followRemoteHEAD "warn" &&
+> +	git -C two fetch >output &&
+> +	echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
+> +		"but we have ${SQ}other${SQ} locally." >expect &&
+> +	test_cmp expect output &&
+> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
+> +	branch=$(git -C two rev-parse refs/remotes/origin/other) &&
+> +	test "z$head" = "z$branch"
+>  '
+>  
+>  test_expect_success "fetch test followRemoteHEAD warn create" '
+> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
+> -	(
+> -		cd two &&
+> -		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
+> -		git config set remote.origin.followRemoteHEAD "warn" &&
+> -		git rev-parse --verify refs/remotes/origin/main &&
+> -		output=$(git fetch) &&
+> -		test "z" = "z$output" &&
+> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
+> -		branch=$(git rev-parse refs/remotes/origin/main) &&
+> -		test "z$head" = "z$branch"
+> -	)
+> +	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
+> +	test_config -C two remote.origin.followRemoteHEAD "warn" &&
+> +	git -C two rev-parse --verify refs/remotes/origin/main &&
+> +	output=$(git -C two fetch) &&
+> +	test "z" = "z$output" &&
+> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
+> +	branch=$(git -C two rev-parse refs/remotes/origin/main) &&
+> +	test "z$head" = "z$branch"
+>  '
+>  
+>  test_expect_success "fetch test followRemoteHEAD warn detached" '
+> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
+> -	(
+> -		cd two &&
+> -		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
+> -		git update-ref refs/remotes/origin/HEAD HEAD &&
+> -		HEAD=$(git log --pretty="%H") &&
+> -		git config set remote.origin.followRemoteHEAD "warn" &&
+> -		git fetch >output &&
+> -		echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
+> -			"but we have a detached HEAD pointing to" \
+> -			"${SQ}${HEAD}${SQ} locally." >expect &&
+> -		test_cmp expect output
+> -	)
+> +	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
+> +	git -C two update-ref refs/remotes/origin/HEAD HEAD &&
+> +	HEAD=$(git -C two log --pretty="%H") &&
+> +	test_config -C two remote.origin.followRemoteHEAD "warn" &&
+> +	git -C two fetch >output &&
+> +	echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
+> +		"but we have a detached HEAD pointing to" \
+> +		"${SQ}${HEAD}${SQ} locally." >expect &&
+> +	test_cmp expect output
+>  '
+>  
+>  test_expect_success "fetch test followRemoteHEAD warn quiet" '
+> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
+> -	(
+> -		cd two &&
+> -		git rev-parse --verify refs/remotes/origin/other &&
+> -		git remote set-head origin other &&
+> -		git rev-parse --verify refs/remotes/origin/HEAD &&
+> -		git rev-parse --verify refs/remotes/origin/main &&
+> -		git config set remote.origin.followRemoteHEAD "warn" &&
+> -		output=$(git fetch --quiet) &&
+> -		test "z" = "z$output" &&
+> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
+> -		branch=$(git rev-parse refs/remotes/origin/other) &&
+> -		test "z$head" = "z$branch"
+> -	)
+> +	git -C two rev-parse --verify refs/remotes/origin/other &&
+> +	git -C two remote set-head origin other &&
+> +	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
+> +	git -C two rev-parse --verify refs/remotes/origin/main &&
+> +	test_config -C two remote.origin.followRemoteHEAD "warn" &&
+> +	output=$(git -C two fetch --quiet) &&
+> +	test "z" = "z$output" &&
+> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
+> +	branch=$(git -C two rev-parse refs/remotes/origin/other) &&
+> +	test "z$head" = "z$branch"
+>  '
+>  
+>  test_expect_success "fetch test followRemoteHEAD warn-if-not-branch branch is same" '
+> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
+> -	(
+> -		cd two &&
+> -		git rev-parse --verify refs/remotes/origin/other &&
+> -		git remote set-head origin other &&
+> -		git rev-parse --verify refs/remotes/origin/HEAD &&
+> -		git rev-parse --verify refs/remotes/origin/main &&
+> -		git config set remote.origin.followRemoteHEAD "warn-if-not-main" &&
+> -		actual=$(git fetch) &&
+> -		test "z" = "z$actual" &&
+> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
+> -		branch=$(git rev-parse refs/remotes/origin/other) &&
+> -		test "z$head" = "z$branch"
+> -	)
+> +	git -C two rev-parse --verify refs/remotes/origin/other &&
+> +	git -C two remote set-head origin other &&
+> +	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
+> +	git -C two rev-parse --verify refs/remotes/origin/main &&
+> +	test_config -C two remote.origin.followRemoteHEAD "warn-if-not-main" &&
+> +	actual=$(git -C two fetch) &&
+> +	test "z" = "z$actual" &&
+> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
+> +	branch=$(git -C two rev-parse refs/remotes/origin/other) &&
+> +	test "z$head" = "z$branch"
+>  '
+>  
+>  test_expect_success "fetch test followRemoteHEAD warn-if-not-branch branch is different" '
+> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
+> -	(
+> -		cd two &&
+> -		git rev-parse --verify refs/remotes/origin/other &&
+> -		git remote set-head origin other &&
+> -		git rev-parse --verify refs/remotes/origin/HEAD &&
+> -		git rev-parse --verify refs/remotes/origin/main &&
+> -		git config set remote.origin.followRemoteHEAD "warn-if-not-some/different-branch" &&
+> -		git fetch >actual &&
+> -		echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
+> -			"but we have ${SQ}other${SQ} locally." >expect &&
+> -		test_cmp expect actual &&
+> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
+> -		branch=$(git rev-parse refs/remotes/origin/other) &&
+> -		test "z$head" = "z$branch"
+> -	)
+> +	git -C two rev-parse --verify refs/remotes/origin/other &&
+> +	git -C two remote set-head origin other &&
+> +	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
+> +	git -C two rev-parse --verify refs/remotes/origin/main &&
+> +	test_config -C two remote.origin.followRemoteHEAD "warn-if-not-some/different-branch" &&
+> +	git -C two fetch >actual &&
+> +	echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
+> +		"but we have ${SQ}other${SQ} locally." >expect &&
+> +	test_cmp expect actual &&
+> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
+> +	branch=$(git -C two rev-parse refs/remotes/origin/other) &&
+> +	test "z$head" = "z$branch"
+>  '
+>  
+>  test_expect_success "fetch test followRemoteHEAD always" '
+> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
+> -	(
+> -		cd two &&
+> -		git rev-parse --verify refs/remotes/origin/other &&
+> -		git remote set-head origin other &&
+> -		git rev-parse --verify refs/remotes/origin/HEAD &&
+> -		git rev-parse --verify refs/remotes/origin/main &&
+> -		git config set remote.origin.followRemoteHEAD "always" &&
+> -		git fetch &&
+> -		head=$(git rev-parse refs/remotes/origin/HEAD) &&
+> -		branch=$(git rev-parse refs/remotes/origin/main) &&
+> -		test "z$head" = "z$branch"
+> -	)
+> +	git -C two rev-parse --verify refs/remotes/origin/other &&
+> +	git -C two remote set-head origin other &&
+> +	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
+> +	git -C two rev-parse --verify refs/remotes/origin/main &&
+> +	test_config -C two remote.origin.followRemoteHEAD "always" &&
+> +	git -C two fetch &&
+> +	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
+> +	branch=$(git -C two rev-parse refs/remotes/origin/main) &&
+> +	test "z$head" = "z$branch"
+>  '
+>  
+>  test_expect_success 'followRemoteHEAD does not kick in with refspecs' '
+> -	test_when_finished "git -C two config unset remote.origin.followRemoteHEAD" &&
+> -	(
+> -		cd two &&
+> -		git remote set-head origin other &&
+> -		git config set remote.origin.followRemoteHEAD always &&
+> -		git fetch origin refs/heads/main:refs/remotes/origin/main &&
+> -		echo refs/remotes/origin/other >expect &&
+> -		git symbolic-ref refs/remotes/origin/HEAD >actual &&
+> -		test_cmp expect actual
+> -	)
+> +	git -C two remote set-head origin other &&
+> +	test_config -C two remote.origin.followRemoteHEAD always &&
+> +	git -C two fetch origin refs/heads/main:refs/remotes/origin/main &&
+> +	echo refs/remotes/origin/other >expect &&
+> +	git -C two symbolic-ref refs/remotes/origin/HEAD >actual &&
+> +	test_cmp expect actual
+>  '
+>  
+>  test_expect_success 'fetch --prune on its own works as expected' '
+> -- 
+> 2.51.0.326.gecbb38d78e
+> 
+> 
