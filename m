@@ -1,121 +1,123 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B274F85260
-	for <git@vger.kernel.org>; Sun, 24 Aug 2025 16:03:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0C31E5B72
+	for <git@vger.kernel.org>; Sun, 24 Aug 2025 16:11:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756051405; cv=none; b=iyxzMQMq9/qO+E+EuQ+lYOF4qwF3flBiIscxy5abJfbRpFbTHwsLCLPEUvrgEcwzBn6g2OZe3RzngpaPwDp7UHjTwJq4ZhnlnYzyyHPNa6Ho/OsRjwo2w7sepkXApj/Kw8ffR6DmYRKo5TTtzrt0DhIxWoDsQSHBmzcPXsjHXjk=
+	t=1756051911; cv=none; b=uBHAOn/ueXPgfKGbJCAEo4gxmZAqH/Qv3Dg3q2j/+DhVTI+3yJE8fEOHKH2PJf9ihmP61tc5KxJZvRaF/iibH9LqUr3AkgYOzGwDt2cJIbmE64V05qWy8Nn2CDT1pkJ42qMJD8qMRBjohDj6KJNNE2lMNJgMuHDJ06m7VkZdlvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756051405; c=relaxed/simple;
-	bh=9THX/HjpYlH4hFPntcMv2IYleQ70TnoF3uAsDpGAnkM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nf3dIE2d0ZBUm7mFCbGMc00aUnXmRN1LofJ8tUVP0YwLCm9pdkmXmFZuXbPzIO4aulD/fvP7qww03MDVolNZN/Av/aPITgF0pqeC2x6N9GimT6HLdaWwj4pysuNenRdVQqH9nFImRlQiYdKgH1qpiVrTvxKb4pjtUGIEBRkizs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c0ArH34V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YcCO1SrY; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1756051911; c=relaxed/simple;
+	bh=LE3+hrxDJtH4pQu6IjVBOYdt9MgXInQnLIKVL7As+Go=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NoCua0pXPUO7S97dPyA1yGdrBn+ezUv1dD9f+L2/Pwee+BlgItD96fImWoBS6ioAj3AEhantjwk6TNXmsM1tp8T+AUyfD7tbAXq3XZ/VHVT4GbCp4gQt4TRKJrJkio7D2M+X68YnYAqE1skQW+Fd5DXLQIGU9VsTlrHnGVUBMRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LHtzAfgJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HT365xZ2; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c0ArH34V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YcCO1SrY"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id CD3191D0010E;
-	Sun, 24 Aug 2025 12:03:22 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Sun, 24 Aug 2025 12:03:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LHtzAfgJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HT365xZ2"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 70F1614000B9;
+	Sun, 24 Aug 2025 12:11:48 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Sun, 24 Aug 2025 12:11:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756051402; x=1756137802; bh=VI6Rgxv3RZ
-	b1DzGeEjEdbsPKiqmaLbIzLa79d5rFFrA=; b=c0ArH34VdZN5W5UuSj6qXds7PO
-	VtmccO8Lstxr8Pvv66TzCiH15vGhcCCD+z1+4nOiCyr0XXFRJQleYh2waKwKrFuO
-	oDbAmttKIEkcU9DTKFZq/v2V3DEdLP3cnI1sfp2pamFJVCz40qOBC4/UfKDxw2+7
-	EbNFKIIoYBOGCmyg6RqYe7+EoI7mUP6YB0HvraHWpwc0KJda9kvqd1TgphprFHsX
-	Pk1/r3/zl87XocUvpKfddbKsbbAzCeXbZslxNEKAVga3H7K3vEzEX9pIULaeOZ9y
-	lG4MRTG9+k6/iYN+/q/HJLX96VdH2M1ZhFT5LLo6LMywZk5E1EnuRjNwLkdA==
+	:subject:to:to; s=fm2; t=1756051908; x=1756138308; bh=oHST1gblQ2
+	w3dSIAWxSlpfYw18fjaVdHng5MoAOz4zU=; b=LHtzAfgJPKVqXQdr1HYvi79UL/
+	OPsP+TQvEMba4eHQnZP672rNFyttqXEegfgFSMjn/ZBIQsxdTLWQUAPyIOsPkNRR
+	bLfcFfwX5MifHSeSZ6CrGIWrOJ/B6RFx4/nO0NE0ZwRogFZum90irRgiRqREm2IN
+	V8fcTU61yEnqGcqb8VQxHfVZ3FpO0rrUjtIwr5A0Vr3cb0+ilPhwU4EY+CUqO4Cl
+	vDMqDqa8xUEmHlelt+p7lwBZz8wwAtgs4koTSjVnh5wMbtx/fa/BQNG8P0osbjBX
+	+D+xCijmZzqhnTTQNO/XqkOjZJD48WUfp78jBHxGVyrjXF7MvVaaBEjkcNpQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1756051402; x=1756137802; bh=VI6Rgxv3RZb1DzGeEjEdbsPKiqmaLbIzLa7
-	9d5rFFrA=; b=YcCO1SrYX+2NI7me8QIyBzVQKJHQu5LTReeMxbfaBR7MDYA8/rJ
-	gk9U2QTon1yafmKPji5Vw6z3NJkkyCIXqk6yw4qiuos2wyuNOGVso2bF1Dcav55M
-	whdxfaeiCbMxjs6Yvqk2AaXbrhr2aln8tUosHj1HL+WXhqkYNy19T8EmN1I/HxoT
-	YkhAnwKWnLsiRtRnFWcB4kzPGb0+sKnWzhorsBucWT2BAkxFDCGl+QuK9fByRX3r
-	WTo/5xp/n9uOIySYy3lP1oL6fQg1vhwA1a8r1pdv+w7skyhRYl2Z2w4wHz4ky+ub
-	zw0h7GnAui1Qn216zCh8tUNBOx7ObQMaThA==
-X-ME-Sender: <xms:yjeraK89wbDFFHvcXJQR3eshBzSrwDm9xpjMKq_-Nge2SFP9KYLAXQ>
-    <xme:yjeraN-FhLPZjtC45xWhuUV02oZtSgN9C8xNkh-wpmmJdWApMzTw953B-j38Yjzpc
-    blQQ4EaLoCAptZIbg>
-X-ME-Received: <xmr:yjeraJfdETQDqoAv2q_VAHkkIknKfRFBWBjJh7qaT7gP7j1kkFPtF9wezhtPESa4Yu19EmGGi_4T-Sl8EKU3-w24aRNllYY_q81N8zJK>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieelleefucetufdoteggodetrf
+	1756051908; x=1756138308; bh=oHST1gblQ2w3dSIAWxSlpfYw18fjaVdHng5
+	MoAOz4zU=; b=HT365xZ2mwzh3mBQLnbn2Pu6OaznJaqExuMEyoTGTY/JsLoCnWA
+	bj/EqWN5UDYIGTVxAuZjj0G0RgtS4YE8iL8K8XvSSlrfKRVEGL8usfIJJhtsBFIR
+	7bAPhQH7jhk5PSpK8FyP7fAXJnnNATCkF1i1v0z4l+V/VORHdtiKK4kx0cTcx9om
+	RC+NDuaA+2CcVUDWJLbL5G/L1wxELk346iFVpJk1DUEf/laGL4w0fLjKIcmPJJXd
+	39wWECeXhzEHrGo9F6CllK7uBW5mnn+vone0UyHeZ6MnYA/x1vD2E5iKTIvH0iec
+	+qONETkIInlGi7G0i6jDqSaE1aZOMpkXgrg==
+X-ME-Sender: <xms:xDmraCrU3UOwxK6Ut5kGj6EHYOmw0DfbZ5iP4CVNlE6jL2b5frXVlA>
+    <xme:xDmraJFsjH0xBXzWjivtVJChv04x8VyBgciBkk-yCpDp_oJMuwmsBTxLKVNi20etb
+    IOjSpezmA3FiAIOow>
+X-ME-Received: <xmr:xDmraHrv7VXm9Wl02gUVBKqdf1SE4d-qtCyP54paQOVkQzEupyzs0hOR5kYxADXuP8M0EvoQLHrvziXgZSeFZIHDGnwTvdomt70y5SM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieelleeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhl
-    rdgtohhm
-X-ME-Proxy: <xmx:yjeraOF-RtzFEqlKTqCyZRPvAR1Bif2YTuEsoEMDxA0O4LZKubCQQw>
-    <xmx:yjeraPes_z-gxNVTENoDGLauq9i4favEWvvfYsJA4lOaOdHr29fLHw>
-    <xmx:yjeraAGZyQgHf8xKc7ovDEsdNh82XSudLI2IcvsIEBm8bmN-EMc4dw>
-    <xmx:yjeraAXMZyu65IH0QgYwrzg6XDsAf_7gqqzxy73TyYcNZF1dVbxxlA>
-    <xmx:yjeraClnqBWaOskjJxv06nTDwhkOcb71FjJvrFpuyl-cH14fnrSs9gm2>
-Feedback-ID: i197146af:Fastmail
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtoheptg
+    grrhgvnhgrshesghhmrghilhdrtghomhdprhgtphhtthhopehnihgtohesfhhluhignhhi
+    tgdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xDmraCZiZFLBQ7CK00MriZlPCqiULqLTTl65A28vrGw3zqTlnF-DCQ>
+    <xmx:xDmraAUNJEOdJlz2XPEmfeyYp21za_lGLOYefv4Dbtyq8F7DW2Sydw>
+    <xmx:xDmraL9_sF7WQ8ohLY5ajs69-uqZ4yq0-MVGyJMLa1sdbBTgPuS0wA>
+    <xmx:xDmraJ8Czkh3GkgiS3eAjYp2mQzkRt96UNlLuxFWbPR1gRhdw_i-OQ>
+    <xmx:xDmraDGsKuU9qdOiSgwGfj9p8L_P7nPg16w89GjPKay4PF4Uyr19N1ot>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 24 Aug 2025 12:03:21 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5ad8a778 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Sun, 24 Aug 2025 16:03:20 +0000 (UTC)
-Date: Sun, 24 Aug 2025 18:03:14 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH RFC 11/11] builtin/history: implement "split" subcommand
-Message-ID: <aKs3wnuzaObmf_PS@pks.im>
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
- <20250819-b4-pks-history-builtin-v1-11-9b77c32688fe@pks.im>
- <CALnO6CBuwDVMZ-QTay+PUiXKsWMsABJcs1pAB=uUXf7-DJ4Mnw@mail.gmail.com>
- <aKhg8q-AAlsGDvFS@pks.im>
- <xmqqplcnw7op.fsf@gitster.g>
+ 24 Aug 2025 12:11:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+  Nicolas Pitre
+ <nico@fluxnic.net>,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via
+ GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/2] progress: replace setitimer() with alarm()
+In-Reply-To: <08f405a6-fd2e-40d7-850a-574356b4009e@kdbg.org> (Johannes Sixt's
+	message of "Sun, 24 Aug 2025 00:03:29 +0200")
+References: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
+	<86bf04c7-6315-46ef-8297-42efc3ed322d@kdbg.org>
+	<xmqq4itxvi3z.fsf@gitster.g>
+	<08f405a6-fd2e-40d7-850a-574356b4009e@kdbg.org>
+Date: Sun, 24 Aug 2025 09:11:46 -0700
+Message-ID: <xmqqsehgu2bh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqplcnw7op.fsf@gitster.g>
+Content-Type: text/plain
 
-On Fri, Aug 22, 2025 at 11:08:22AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> >> Interesting. I can see using the original as the template for _both_,
-> >> or the first instead of the second. jj's split works a little
-> >> differently (especially with their notion of descriptions), so I can't
-> >> use them as a reference for the behavior.
-> >> 
-> >> I suppose this is one of those "everybody has their preference"
-> >> things, but I think giving the message in both new commits as the
-> >> template gives splitters the most information available when writing
-> >> the message. (Of course, in my editor, I can presumably do something
-> >> like ":Git show -s <split-commit-ish>" if I want.)
-> 
-> In other words, removing is easy, while remembering and retyping is
-> harder.
-> 
-> When I split an existing commit, that is almost always because after
-> doing too many things in a single commit and the time I realize it
-> is when I am writing the commit message.  So I would suggest to give
-> the same original message to both, to avoid losing information.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-For now I'll rework this a bit so that the editor will list all changes
-in the split-out commit, similar to how git-commit(1) does it. That at
-least makes it way easier to see what you're currently changing. I'll
-think about this some more though.
+>> Operating system folks may have worked hard to minimize the cost of
+>> system calls to gettimeofday() in order to help applications that do
+>> so, but I somehow feel even dirtier to hear proposal to do so to
+>> replace a signal that we set and forget, to be reminded once every
+>> second.
+>
+> I think that ship has sailed already. Look at display_throughput(). One
+> of the first things it does is to look at the wallclock a.k.a.
+> getnanotime().
 
-Patrick
+It can be fixed if we wanted to, though, no?  Instead of doing all
+the computation for the latest lap, and then decide not to show by
+looking at the progress_update flag (set by the interrupt), we can
+accumulate the total in the progress->throughput struct until we see
+the progress_update flag, at which time we can look at the wallclock
+time, compute the time difference, perform clever division, etc.
+
+> That said, I am not very happy about the new calls introduced in
+> display_progress(), either. I'll see whether I can produce some
+> performance measurements.
+>
+> I observe a behavior change with delayed progress indicators that I have
+> to understand and fix it before I can submit the cleaned up patches.
+
+Thanks.
