@@ -1,141 +1,171 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A80A21348
-	for <git@vger.kernel.org>; Sun, 24 Aug 2025 13:31:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8022BAF9
+	for <git@vger.kernel.org>; Sun, 24 Aug 2025 15:31:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756042296; cv=none; b=GKeWF/dN7IkSMxb68vSGtcMkcFVIsJhIOmHzPB8mwv9eEjvYghz3byAxJyJTtWg4ReNB7I8FOVxD+0s0I9saNXDaZ/TfTcqrk0Uk+xhMSUHOytQ5Na7S9RFYwXEgnArRm9oA5quIcnLpFRsqTTbr6qZY7TDIjlRXNQVBOA1H7JY=
+	t=1756049485; cv=none; b=rVffMFEYnjZE2LhQYTZLZ2582GooC7vCtaw0MSmkU6T8WdV+AVSOuYCnKkpIyoT0OKH2k0m2WXqpHALKma/zslMt4/lRmV9pDVXxuCiP+flI/1Dypyr2ulk8ya+ClCGNzbXMDciUoblJwEdBDGWW+ezdxpUCgy158PNdMW22r+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756042296; c=relaxed/simple;
-	bh=SjQ8aHu5KvHNikzgxtjGagWrTXTy6OgERhPkK0I5+M4=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=DyztiZ0Nj6q+RIJc9ASrpBV6mpzoyllr6vWcmZLXRd+LanCoGQ23cD9/++D0OgTfCr4SYDl/NKBc63x6OgWBbulgXMAG5ZDuA3JFpdawmfnemwSrtmNeRdQDD2+CFdMOXeH3Kv8j5LhJULI+5OyTyD1Pz2rOi3z+X/TAyy6iMo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iESkNNoO; arc=none smtp.client-ip=209.85.219.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iESkNNoO"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e953397c16eso662347276.0
-        for <git@vger.kernel.org>; Sun, 24 Aug 2025 06:31:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756042294; x=1756647094; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Uq6eUbmwTXnAp+GsvMkDYLRWNydy+w79MPrLr48oT8Y=;
-        b=iESkNNoOdCW4V/NhH9dafxZSSLOu0malTe3ZWmD52o3lGbgmu6SRXI+9XhQstTxMao
-         zjX2Cir1gzguDWpNKJz1wrTBvc/9Gvwpzp5joGMVbWeDkdGedtjl9kLrtHaEdHys6s6C
-         8d9x+MrKNwYwy7XdnrMYO1lDroobBDujJpGAG2cnVaTqeinxE0TAOMUpqeDX2q9TcOGE
-         hTJgG+3LXuWQUOlWlpaDgAUtrQ3dzXh8jcxi8awGY72Tik4acOF5U/KbUr2Firc6cvLQ
-         KRy37ekfI8MAI0N8ZeK7KOzdTi81GhWbVy8dsX4HNIb+EDxr5oti9wCLGGRA88zDyPVc
-         PExQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756042294; x=1756647094;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Uq6eUbmwTXnAp+GsvMkDYLRWNydy+w79MPrLr48oT8Y=;
-        b=TyOdH6LqohBD0gRuJMWB1GGHp62d+SsC+pdqsSC2grhdy2dv25RBExC1+WsoJIOjMB
-         DJnhNRYn6YUbZflrU5FulTZgl7rBlt+FYAqS94r777gAqXnkC5NdHoJO735b3fsmrzOm
-         cDB1wpTukA34CjAUFUkgilQCOt9yd0suI0jVTjHlNcOH5E7hHdNpiYchdLJ8E+pO/rJ2
-         4892eexV8tN25ETrCHWP64MQpkAWt7KIYvfDqXgeIuZJdlQ4DZkm558iE8m2iDnttMkQ
-         X3XG0rTB7bkC6aWjT+r+pDjiTkvd++uoX4808av7RcQrGElMCsIHb6C2CIm0w9U7GbKm
-         h10w==
-X-Gm-Message-State: AOJu0Yyr1VQSOGE/mRApf5ymyKMk+sBFbLB1iPsrdjK4NrinqBkgqYRf
-	c2eDgJpYfdKI4vvNUxXdX413MDGCIZ0GqfQcWhGsrPxo/yZLYUDS2SJb
-X-Gm-Gg: ASbGncvpUi1Psw0GCXPxiz9e3rdEbOASGcKhLC5r4UWZUIdsWp9mmYrOuDeVwr57F+q
-	rRPPM4bskhHEgeLw70lKw1kx4klBLfTwDVgkluzDHAO96GTFAAcvCgDncf07pAsjxtytE9CBTQN
-	1n90Nt+rvKC6gPihJ3EfBmkmqu22LECZ+cSOF6P5+3+RphRihukRDg/NISHk0I98EnJXjqjGZy9
-	aqihl0VnnhrqZ0KEFpoCaFte1r8XF74snEMznzq0yQGr91PCADDeE+SBt2Jjf7x3GER7qGQ19TM
-	YW5YL6Q+6QFUghLn01680pRLXr4ha1vw8k4abMWXyqSBUsucVAi90grs+VOb5MtfVEzaa8Ypu9h
-	mdNwvILry2CCKKnOij4qqbu1WpIhAfa83/6/rmYe0sihe5pFAuv8=
-X-Google-Smtp-Source: AGHT+IHGeP5/tgdU4mHvGkM67395GqM1Mb7SHZLpi1YpkS/nfkfzvAPX92NDoqX3GD1lNDyRoWxRug==
-X-Received: by 2002:a05:690c:450c:b0:71b:b928:74ed with SMTP id 00721157ae682-71fdc2f0d6bmr118292047b3.20.1756042294197;
-        Sun, 24 Aug 2025 06:31:34 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:9915:caa3:d40d:9850])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-71ff18aeb27sm11199557b3.52.2025.08.24.06.31.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Aug 2025 06:31:33 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	s=arc-20240116; t=1756049485; c=relaxed/simple;
+	bh=Z8DG0MgTUE0iU3d2B7uMbYiRIRygP4b32N0rlNeu/S4=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=jflSnWwh1Q4LzGxFbVYtiGtMpKHjA0h8+xaI3H8d4XmtUbDOWIRZ5Ag5lFJbKHUqgNu5eAvYI6dlciqzclPDxrQ3QuPGExNfy9A8lPJKnanwt7oK82G0PcAIDtfsNTPRmbqq6N81IiY3p5k5vdM/CcC1PAXcfX7tmPEPdzSEDQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.1.102] (089144220182.atnat0029.highway.webapn.at [89.144.220.182])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4c8yZH33znzRq1l;
+	Sun, 24 Aug 2025 17:31:18 +0200 (CEST)
+Message-ID: <2d56de10-f829-4bc8-9c76-76eab6b137ae@kdbg.org>
+Date: Sun, 24 Aug 2025 17:31:18 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v3 06/15] ivec: create a vector type that is interoperable between C and Rust
-Date: Sun, 24 Aug 2025 09:31:22 -0400
-Message-Id: <71B2DFE6-77E5-47FE-9FAC-AFC1B85DA0E2@gmail.com>
-References: <db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Eli Schwartz <eschwartz@gentoo.org>,
- "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
- Johannes Schindelin <johannes.schindelin@gmx.de>,
- =?utf-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>,
- Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>,
- Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>,
- Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
- Ramsay Jones <ramsay@ramsayjones.plus.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>
-In-Reply-To: <db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH] progress: pay attention to (customized) delay time
+From: Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+ =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
+ <86bf04c7-6315-46ef-8297-42efc3ed322d@kdbg.org> <xmqq4itxvi3z.fsf@gitster.g>
+ <08f405a6-fd2e-40d7-850a-574356b4009e@kdbg.org>
+Content-Language: en-US
+In-Reply-To: <08f405a6-fd2e-40d7-850a-574356b4009e@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+Am 24.08.25 um 00:03 schrieb Johannes Sixt:
+> That said, I am not very happy about the new calls introduced in
+> display_progress(), either. I'll see whether I can produce some
+> performance measurements.
 
-> Le 22 ao=C3=BBt 2025 =C3=A0 23:56, Ezekiel Newren via GitGitGadget <gitgit=
-gadget@gmail.com> a =C3=A9crit :
->=20
-> =EF=BB=BFFrom: Ezekiel Newren <ezekielnewren@gmail.com>
->=20
-> Trying to use Rust's Vec in C, or git's ALLOC_GROW() macros (via
-> wrapper functions) in Rust is painful because:
->=20
->  * C doing vector things the Rust way would require wrapper functions,
->    and Rust doing vector things the C way would require wrapper
->    functions, so ivec was created to ensure a consistent contract
->    between the 2 languages for how to manipulate a vector.
->  * Currently, Rust defines its own 'Vec' type that is generic, but its
->    memory allocator and struct layout weren't designed for
->    interoperability with C (or any language for that matter), meaning
->    that the C side cannot push to or expand a 'Vec' without defining
->    wrapper functions in Rust that C can call. Without special care,
->    the two languages might use different allocators (malloc/free on
->    the C side, and possibly something else in Rust), which would make
->    it difficult for a function in one language to free elements
->    allocated by a call from a function in the other language.
->  * Similarly, git defines ALLOC_GROW() and related macros in
->    git-compat-util.h. While we could add functions allowing Rust to
->    invoke something similar to those macros, passing three variables
->    (pointer, length, allocated_size) instead of a single variable
->    (vector) across the language boundary requires more cognitive
->    overhead for readers to keep track of and makes it easier to make
->    mistakes. Further, for low-level components that we want to
->    eventually convert to pure Rust, such triplets would feel very out
->    of place.
+I haven't made up my mind, yet, whether I want to persue the direction
+any further. Since we do not have a low-latency implementation of
+getnanotime() for all supported systems, calling the function tens of
+thousands of times per second could be too burdensome for some of them.
 
-I=E2=80=99m mildly surprised Vec isn=E2=80=99t a good fit: isn=E2=80=99t it a=
- pointer, length, capacity triple? But it sounds like the main issue is allo=
-cator interop=E2=80=A6 which I would also have thought was supported? At lea=
-st the current version is documented as being generic against an Allocator, t=
-oo.
+> I observe a behavior change with delayed progress indicators that I have
+> to understand and fix it before I can submit the cleaned up patches.
 
->=20
-> To address these issue, introduce a new type, ivec -- short for
-> interoperable vector. (We refer to it as 'ivec' generally, though on
-> the Rust side the struct is called IVec to match Rust style.)  This new
-> type is specifically designed for FFI purposes, so that both languages
-> handle the vector in the same way, though it could be used on either
-> side independently. This type is designed such that it can easily be
-> replaced by a standard Rust 'Vec' once interoperability is no longer a
-> concern.
+But I found a bug in the delayed progress indicators: the initial delay
+time is always just one second instead of the configured time (two
+seconds by default).
 
-Am I reading the patch correctly that the ivec implementation is primarily C=
-? I=E2=80=99m not familiar with too many FFI projects in Rust, but I might h=
-ave hoped we could write parts in Rust to gain any benefits from that, too. I=
-s that a fool=E2=80=99s errand I=E2=80=99m thinking of?=
+Below is a fix. This is a minimal patch. It could be extended to reduce
+the number of local flag variables in display() and perhaps also reduce
+indentation levels with some early returns.
+
+If Carlo wants to advance the original patches, this patch also provides
+an obvious point where the alarm clock can be re-armed outside the
+signal handler. It would be where we set progress_update = 0.
+
+----- 8< -----
+Subject: [PATCH] progress: pay attention to (customized) delay time
+
+Using one of the start_delayed_*() functions, clients of the progress
+API can request that a progress meter is only shown after some time.
+To do that, the implementation intends to count down the number of
+seconds stored in struct progress by observing flag progress_update,
+which the timer interrupt handler sets when a second has elapsed. This
+works during the first second of the delay. But the code forgets to
+reset the flag to zero, so that subsequent calls of display_progress()
+think that another second has elapsed and decrease the count again
+until zero is reached. Due to the frequency of the calls, this happens
+without an observable delay in practice, so that the effective delay is
+always just one second.
+
+This bug has been with us since the inception of the feature. Despite
+having been touched on various occasions, such as 8aade107dd84
+(progress: simplify "delayed" progress API), 9c5951cacf5c (progress:
+drop delay-threshold code), and 44a4693bfcec (progress: create
+GIT_PROGRESS_DELAY), the short delay went unnoticed.
+
+Copy the flag state into a local variable and reset the global flag
+right away so that we can detect the next clock tick correctly.
+
+Since we have not had any complaints that the delay of one second is
+too short nor that GIT_PROGRESS_DELAY is ignored, people seem to be
+comfortable with the status quo. Therefore, set the default to 1 to
+keep the current behavior.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ Documentation/git.adoc |  2 +-
+ progress.c             | 12 +++++++-----
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git.adoc b/Documentation/git.adoc
+index 743b7b00e4..03e9e69d25 100644
+--- a/Documentation/git.adoc
++++ b/Documentation/git.adoc
+@@ -684,7 +684,7 @@ other
+ 
+ `GIT_PROGRESS_DELAY`::
+ 	A number controlling how many seconds to delay before showing
+-	optional progress indicators. Defaults to 2.
++	optional progress indicators. Defaults to 1.
+ 
+ `GIT_EDITOR`::
+ 	This environment variable overrides `$EDITOR` and `$VISUAL`.
+diff --git a/progress.c b/progress.c
+index 8d5ae70f3a..39a1101420 100644
+--- a/progress.c
++++ b/progress.c
+@@ -114,16 +114,19 @@ static void display(struct progress *progress, uint64_t n, const char *done)
+ 	const char *tp;
+ 	struct strbuf *counters_sb = &progress->counters_sb;
+ 	int show_update = 0;
++	sig_atomic_t update = progress_update;
+ 	int last_count_len = counters_sb->len;
+ 
+-	if (progress->delay && (!progress_update || --progress->delay))
++	progress_update = 0;
++
++	if (progress->delay && (!update || --progress->delay))
+ 		return;
+ 
+ 	progress->last_value = n;
+ 	tp = (progress->throughput) ? progress->throughput->display.buf : "";
+ 	if (progress->total) {
+ 		unsigned percent = n * 100 / progress->total;
+-		if (percent != progress->last_percent || progress_update) {
++		if (percent != progress->last_percent || update) {
+ 			progress->last_percent = percent;
+ 
+ 			strbuf_reset(counters_sb);
+@@ -133,7 +136,7 @@ static void display(struct progress *progress, uint64_t n, const char *done)
+ 				    tp);
+ 			show_update = 1;
+ 		}
+-	} else if (progress_update) {
++	} else if (update) {
+ 		strbuf_reset(counters_sb);
+ 		strbuf_addf(counters_sb, "%"PRIuMAX"%s", (uintmax_t)n, tp);
+ 		show_update = 1;
+@@ -166,7 +169,6 @@ static void display(struct progress *progress, uint64_t n, const char *done)
+ 			}
+ 			fflush(stderr);
+ 		}
+-		progress_update = 0;
+ 	}
+ }
+ 
+@@ -281,7 +283,7 @@ static int get_default_delay(void)
+ 	static int delay_in_secs = -1;
+ 
+ 	if (delay_in_secs < 0)
+-		delay_in_secs = git_env_ulong("GIT_PROGRESS_DELAY", 2);
++		delay_in_secs = git_env_ulong("GIT_PROGRESS_DELAY", 1);
+ 
+ 	return delay_in_secs;
+ }
+-- 
+2.51.0.205.g9a02ae2892
+
