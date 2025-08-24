@@ -1,107 +1,222 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FADB236454
-	for <git@vger.kernel.org>; Sun, 24 Aug 2025 19:07:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B431E2838
+	for <git@vger.kernel.org>; Sun, 24 Aug 2025 19:11:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756062424; cv=none; b=GL81T6FP50EzRmqvuYHIiUH5Sx+JGA7Ek0Fn57wzNEDqeOzz8LOzYviP+XqEjh1KV+OrLBEg1jn8jxYfy/HBCVc7Y8uBRKxJfEEnp3UjRUMmcz0sDdHVcrCGI/I3Xhhxu8P+7Y4qzU/6WPsJcJ2ifA5+ciCyca1ujWiHmRqyXZg=
+	t=1756062725; cv=none; b=Rym4l5zbLlBN+ZqCno0LYnHn12DiJgo3o3P2RiUUGJ4wa/6ehq6xTdqOADQvVYrBKCX7XSLVfoXrTCLEe0Ov48CTeGSDIro3pWpB7Odi2CLJKlO/BOxBoYBphpC2Ntrnr0+/VslFsSM3tUntbJGzByOqjB8lK72I5c+0+C2n5YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756062424; c=relaxed/simple;
-	bh=4a0XYkk1QHtLx7bmTQ5Pi7iyHH9Sm6NdPd7SJVspuc4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C6pBGrqQcT7HrG1yFuDUB0VoVkS1XnxYN6YIoM76H1GKCQpLkzs5a9u33xX/l4W1ZLgxiNffPkqS5giDkQhu4Ahkc9xwfMYVjQgr4ze7hFloV82Td4fWNe0atPX57e2FDdZ206Sg+zD4t+1u2hmFoy3ORxYPr2KIJh65uUecxoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O818bThB; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756062725; c=relaxed/simple;
+	bh=8w2rr32uaTIaUd5N6C22VvzA02Qr1Euy5Zz3vV0y2eI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jGIIcUkVQBORHnZEjVYtp3zwl3CwbBj6XyJsnBQC/TipYJ89tONWm/5S6soCcZndNMSZJjOfraNlojzm/NPAL4DjhCFvmbdlPt+qetdG48d/kqeG6a8UD5ePKfYD/wgIeJKvH1c6P5e3KhkCsvgL/Nad+Srn78ZViStnkGA2iJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=iww9EHKK; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O818bThB"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-45b49f7aaf5so21763365e9.2
-        for <git@vger.kernel.org>; Sun, 24 Aug 2025 12:07:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756062421; x=1756667221; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aQ8fW/g2aEm9/ZdTizZrEAEZtciErqWeJyotMROTzPM=;
-        b=O818bThBzbjPlXNMOeVp85TX5XYt5ErIOyH/EpuTNXiUrkB/QidVact45ZZiJQU8lt
-         Epw0Z36u926mDJHWAQLNqN/zHrlv9VyCl4MCIfPrhm12JrR/uM7n8yyCD+941exJ9K0e
-         q5I/Nnk+zGy6uc9tb/06HKieiA71cv63YAUx8mwz7BaP7KxwLYJAX47fi3EHHm/CYTtj
-         Hc4nQGdi+Jk0JtkMZ/vL7TEETbDClwOyy2ina8JDxEyPGpDOrXO93abHwVV/0ssGxkrZ
-         1dwxBbpGOC8vgENwUjlYotAL7DcL7XwHwD9j7bwIgvI1tq7YWFKr92IHnL9ltENJw7M4
-         A4rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756062421; x=1756667221;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aQ8fW/g2aEm9/ZdTizZrEAEZtciErqWeJyotMROTzPM=;
-        b=L3fXbU6GaVG45knn07h7rw7ayd+z5FKoCTelN2POaReQzP5/CG8ViAQYtPsZcIbfs9
-         7RYd4xAU6FPK5b5fwNANRYWgDNWoLJkO9VUazTtkz1KJSmMtsh8VtIzT4g2LVJZVbx1E
-         W4N0Lxz3N0+BL6RjJ7UETbRes0xLG5zIObHe81OMIOJSWjUUgZNbllJ8KcGNSz3hOY6C
-         kttpkB7jzc6L/qHZrbz+l7DABrC8KIKUYSQDpye1SoIHiakpYsPrBTJXN1POH3pLPcbh
-         f3KoHFHD9pi5RVqYc88yMcH58Gjn+2kf4IiZPufbnDAlGz99W0Mi+w7Le/Vu08We9nRy
-         9e9A==
-X-Gm-Message-State: AOJu0Yy37zwwdaARJd/Z60+hc03MO54hCicoLto8Pa02qxY5YKzpSQX+
-	C0cqYB7kbZLUAMrXmDctRR36r+F4CEqwG/Mj9a/K4P+01acMit1V4zxTgjnr4Q==
-X-Gm-Gg: ASbGncuvdVPaiey0ORoDKHLyRI9Ad0Cmum0ZW3Ztv73H3rZO4nB1/izL91nMHNTB+Ig
-	hmiy4H6eW4UFwvXIfQLvqxdugyPz9fgtUL3NUNDDC0M7USRm1WNiaDhPmKvUkn2245KhqT2Hji5
-	ZX931r8qYxKJq+SbYtCUNhv90eRApw5nsrqH87RnVkXvnM7yvLUbawyISnDVgSONrb06yPdd62J
-	DOG77PCaLgwA5l1707HM9vU83EDpGpuskyim/MP4fXMACI9RyLnDqW9IuM9g3xU4x5PzcrMMWP2
-	4MSQF/sRtpZncqS39g3gPXgisDkE91/9FnEiCbrbVwJ7QLvF2N6GuHQjwkcP8ndw8PDRUPdGprp
-	+uIuyr8W13Q2U4ZoIX9S6cMpFN6m/FEfm+0w4v6GSENtuIuL0Axdv
-X-Google-Smtp-Source: AGHT+IH2Ck2gjrk1BQz10Gb9O8Nw6iaFlKFGN+48TXVpHO7CAQruZzd2YqGtgqLaO5e/eZw/msS/Kg==
-X-Received: by 2002:a05:600c:4695:b0:456:26a1:a0c1 with SMTP id 5b1f17b1804b1-45b517cb8e5mr103958355e9.17.1756062421431;
-        Sun, 24 Aug 2025 12:07:01 -0700 (PDT)
-Received: from localhost (78-131-14-231.pool.digikabel.hu. [78.131.14.231])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b57487910sm79104855e9.15.2025.08.24.12.07.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Aug 2025 12:07:01 -0700 (PDT)
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="iww9EHKK"
+Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1uqG87-00HMrA-JA; Sun, 24 Aug 2025 21:11:51 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector1; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+	Subject:Cc:To:From; bh=haTaM7GV74opwtJKjfgtQfVojh/LXGxDF9XkE4h5Mlc=; b=iww9EH
+	KKmgKMyJ2YnE7AzJ72ykf4KL69fK44rvreAnpcLTtL0odSwlC8qHFpaYB9nwowRBBBnXcF9uTeVZz
+	fJVsz+pB206/Su5LDSDJz9F1BKjL5f7seeoPOlGWurcSjE1+u+iTjh4ZuCMVLux7seV1DIgAlAzf+
+	43bXjvzWLevbRPsX94zby95bte3KgA17EHS22t7704SrjPPBQ3FOwWrWhWJMk3kLLy6a3WqxcrJrj
+	tGeHB794+hAX/Yx6nuioMExWJfsLUnWdxuzeHXxf8I0g0vLIZ7p4U+C8NQk831KlTFyugE/hi768t
+	bVvYyC+u7zFCeeGGPTr5RxW79sFw==;
+Received: from [10.9.9.73] (helo=submission02.runbox)
+	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1uqG87-0003zw-3j; Sun, 24 Aug 2025 21:11:51 +0200
+Received: by submission02.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1uqG7n-006W3J-9C; Sun, 24 Aug 2025 21:11:31 +0200
+From: Colin Stagner <ask+git@howdoi.land>
 To: git@vger.kernel.org
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 4/4] line-log: simplify condition checking for merge commits
-Date: Sun, 24 Aug 2025 21:06:44 +0200
-Message-ID: <20250824190644.2573279-5-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.51.0.433.g1a66b3fb12
-In-Reply-To: <20250824190644.2573279-1-szeder.dev@gmail.com>
-References: <20250824190644.2573279-1-szeder.dev@gmail.com>
+Cc: Zach FettersMoore <zach.fetters@apollographql.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Patrik Weiskircher <patrik@pspdfkit.com>,
+	Colin Stagner <ask+git@howdoi.land>
+Subject: [PATCH] contrib/subtree: fix split with squashed subtrees
+Date: Sun, 24 Aug 2025 14:10:48 -0500
+Message-ID: <20250824191048.1938340-1-ask+git@howdoi.land>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-In process_ranges_arbitrary_commit() the condition deciding whether
-the given commit is not a merge, i.e. that it doesn't have more than
-one parent, is head-scratchingly backwards, flip it.
+98ba49ccc2 (subtree: fix split processing with multiple subtrees
+present, 2023-12-01) increases the performance of
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+    git subtree split --prefix=subA
+
+by ignoring subtree merges which are outside of `subA/`. It also
+introduces a regression. Subtree merges that should be retained
+are incorrectly ignored if they:
+
+1. are nested under `subA/`; and
+2. are merged with `--squash`.
+
+For example, a subtree merged like:
+
+    git subtree merge --squash --prefix=subA/subB "$rev"
+    #                 ^^^^^^^^          ^^^^
+
+is erroneously ignored during a split of `subA`. This causes
+missing tree files and different commit hashes starting in
+git v2.44.0-rc0.
+
+The method:
+
+    should_ignore_subtree_split_commit REV
+
+should test only if REV is a subtree commit, but the combination of
+
+    git log -1 --grep=...
+
+actually searches all *parent* commits until a `--grep` match is
+discovered. Limit these checks to the current REV only.
+
+Tests now cover nested subtrees.
+
+Signed-off-by: Colin Stagner <ask+git@howdoi.land>
 ---
- line-log.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/line-log.c b/line-log.c
-index 71fa857ee8..188d387d40 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -1273,10 +1273,10 @@ int line_log_process_ranges_arbitrary_commit(struct rev_info *rev, struct commit
- 			struct line_log_data *prange = line_log_data_copy(range);
- 			add_line_range(rev, commit->parents->item, prange);
- 			clear_commit_line_range(rev, commit);
--		} else if (!commit->parents || !commit->parents->next)
--			changed = process_ranges_ordinary_commit(rev, commit, range);
--		else
-+		} else if (commit->parents && commit->parents->next)
- 			changed = process_ranges_merge_commit(rev, commit, range);
-+		else
-+			changed = process_ranges_ordinary_commit(rev, commit, range);
- 	}
+Notes:
+    The unit test changes in t7900-subtree.sh demonstrate the bug.
+    
+    See also:
+    
+    * <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
+    * <c9e8f54f-2594-4092-ae41-f1da73e97f6e@howdoi.land>
+
+ contrib/subtree/git-subtree.sh     |  6 +--
+ contrib/subtree/t/t7900-subtree.sh | 70 ++++++++++++++++++++++++++++++
+ 2 files changed, 73 insertions(+), 3 deletions(-)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 3fddba797c..139049351d 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -788,17 +788,17 @@ ensure_valid_ref_format () {
+ # Usage: check if a commit from another subtree should be
+ # ignored from processing for splits
+ should_ignore_subtree_split_commit () {
+ 	assert test $# = 1
+ 	local rev="$1"
+-	if test -n "$(git log -1 --grep="git-subtree-dir:" $rev)"
++	if test -n "$(git log -1 --grep="git-subtree-dir:" "$rev^!")"
+ 	then
+-		if test -z "$(git log -1 --grep="git-subtree-mainline:" $rev)" &&
+-			test -z "$(git log -1 --grep="git-subtree-dir: $arg_prefix$" $rev)"
++		if test -z "$(git log -1 --grep="git-subtree-mainline:" "$rev^!")" &&
++			test -z "$(git log -1 --grep="git-subtree-dir: $arg_prefix$" "$rev^!")"
+ 		then
+ 			return 0
+ 		fi
+ 	fi
+ 	return 1
+ }
  
- 	if (!changed)
+ # Usage: process_split_commit REV PARENTS
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 3edbb33af4..1ddc213621 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -68,6 +68,34 @@ test_create_pre2_32_repo () {
+ 	git -C "$1-clone" replace HEAD^2 $new_commit
+ }
+ 
++# test_create_subtree_add REPO ORPHAN PREFIX FILENAME ...
++#
++# Create a simple subtree on a new branch named ORPHAN in REPO.
++# The subtree is then merged into the current branch of REPO,
++# under PREFIX. The generated subtree has has one commit
++# with subject and tag FILENAME with a single file "FILENAME.t"
++#
++# When this method returns:
++# - the current branch of REPO will have file PREFIX/FILENAME.t
++# - REPO will have a branch named ORPHAN with subtree history
++#
++# additional arguments are forwarded to "subtree add"
++test_create_subtree_add () {
++	(
++		cd "$1" &&
++		orphan="$2" &&
++		prefix="$3" &&
++		filename="$4" &&
++		shift 4 &&
++		last="$(git branch --show-current)" &&
++		git checkout --orphan "$orphan" &&
++		git rm -rf . &&
++		test_commit "$filename" &&
++		git checkout "$last" &&
++		git subtree add --prefix="$prefix" "$@" "$orphan"
++	)
++}
++
+ test_expect_success 'shows short help text for -h' '
+ 	test_expect_code 129 git subtree -h >out 2>err &&
+ 	test_must_be_empty err &&
+@@ -426,6 +454,48 @@ test_expect_success 'split with multiple subtrees' '
+ 		--squash --rejoin -d -m "Sub B Split 1" 2>&1 | grep -w "\[1\]")" = ""
+ '
+ 
++# When subtree split-ing a directory that has other subtree
++# *merges* underneath it, the split must include those subtrees.
++# This test creates a nested subtree, `subA/subB`, and tests
++# that the tree is correct after a subtree split of `subA/`.
++# The test covers:
++# - An initial `subtree add`; and
++# - A follow-up `subtree merge`
++# both with and without `--squashed`.
++for is_squashed in '' 'y';
++do
++	test_expect_success "split keeps nested ${is_squashed:+--squash }subtrees that are part of the split" '
++		subtree_test_create_repo "$test_count" &&
++		(
++			cd "$test_count" &&
++			mkdir subA &&
++			test_commit subA/file1 &&
++			git branch -m main &&
++			test_create_subtree_add \
++				. mksubtree subA/subB file2 ${is_squashed:+--squash} &&
++			test -e subA/file1.t &&
++			test -e subA/subB/file2.t &&
++			git subtree split --prefix=subA --branch=bsplit &&
++			git checkout bsplit &&
++			test -e file1.t &&
++			test -e subB/file2.t &&
++			git checkout mksubtree &&
++			git branch -D bsplit &&
++			test_commit file3 &&
++			git checkout main &&
++			git subtree merge \
++				${is_squashed:+--squash} \
++				--prefix=subA/subB mksubtree &&
++			test -e subA/subB/file3.t &&
++			git subtree split --prefix=subA --branch=bsplit &&
++			git checkout bsplit &&
++			test -e file1.t &&
++			test -e subB/file2.t &&
++			test -e subB/file3.t
++		)
++	'
++done
++
+ test_expect_success 'split sub dir/ with --rejoin from scratch' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	test_create_commit "$test_count" main1 &&
+
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
 -- 
-2.51.0.433.g1a66b3fb12
+2.43.0
 
