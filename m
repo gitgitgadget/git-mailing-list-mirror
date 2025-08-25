@@ -1,147 +1,153 @@
-Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F221F5619
-	for <git@vger.kernel.org>; Mon, 25 Aug 2025 19:16:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5450F42AA6
+	for <git@vger.kernel.org>; Mon, 25 Aug 2025 19:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756149399; cv=none; b=Eg6ycaXf47gLGMWx2sA3hg2ZqWYi0wqWDIwmvsjHVXEpUQDs5laHjg7b4uYbkbBklSNBRsUl6rMeCo4LBKpiyN3A4jsCaFWLY+25S/V6QlwGXZQE0hZdF2GNPURfC6itxtrKXRZJc1LN+iWKe/dkN0a2baIwAvd+1am9pucdNtE=
+	t=1756150822; cv=none; b=LX/ZlC8DiIGgnlEqispUbIW6ZcIrR/YDEQsyUdlKq4U14LAB2wQ+zVG9oYu/rcyzNnMomgq1Sh16f6DZ87XYg5c1TDU+stXYM1Bi5VwJ9arJ/oHPF1ZoV6kAqYX/ENoUkkstthJFdfjQIbfVICeNReXPc5V1S7HCL+NxNX3PtqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756149399; c=relaxed/simple;
-	bh=YYKo+ED/QAvz3na657FvzuwqG5936VhA4LZ4XeHHkXA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rknXjTEGOIQTYwzmOU7Xvh7V8EbPiklpNRU4XBwCS1RBiXawubfMRt3SPT1IabZIA+7vEHjoU1Nm2akq4g1Bd8G44eRUTKEhFlRjH/i7FzCoU/4jI1y5SiT7+jsR/7LygSHahd8+OHWxEOfZW4n22vIrvQrEVK9Yen4dqZtOv44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rhw0yEl3; arc=none smtp.client-ip=209.85.166.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756150822; c=relaxed/simple;
+	bh=0gMe6Pr5rdMr3/U/7B7egtB9q+vkDF/OWYcHlX1dsMw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DPNpuSgRMC6kFJMq3wNhiaF+W8iC1WWZzLpZCSrPiarcPkdVWY+yAuCsf4nQB31CsrDo6T0be0OdyHnjypCmamlJQP83X3MBUSQi1IGarhuv5/j0ZwdaiHBWSfr841CErO3L2FJSnpZH8QidQv/z0fzpIlIYcrpDagy4aVuQCqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hUydVTIm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JOMG/17Y; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rhw0yEl3"
-Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-3e854d14bdaso46926805ab.1
-        for <git@vger.kernel.org>; Mon, 25 Aug 2025 12:16:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756149396; x=1756754196; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/rvHWKUf3JZQ14uuIpngysybWXBGrMYPWoefeD6KZoo=;
-        b=Rhw0yEl37LhdqyusDiXiRHI7FExFtMQflzvDJuESiJwpmhjulVMJQ/XZ7NA3qyG0DL
-         iRr3nlWd/JWRVfhpQr+I5UGj8AEfBb4j2a4RGihBpWgsKPzksk0OKYxU2UuanpR7Fvst
-         dKwg7jjSNBM201NY/Uo/PXN9OSoB8cMBmv4i3l429Hq4lfpNMprQeYn1DdJnDSmiob5h
-         snZ9yQUnM15uYmP9aQfDb7lulQZbh3Kony3CdHavGuZ5+twMhWHZBiY1sfveZDlORr/4
-         mCT96vKU8A4kiUeuntMsHEXVkwqDKoyK9R8UDCWtWolgkQBytuQ7k0GmpGpGdfGdq6j/
-         SCow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756149396; x=1756754196;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/rvHWKUf3JZQ14uuIpngysybWXBGrMYPWoefeD6KZoo=;
-        b=gauDwjZyMWzNw57rabYsmtJsHPeH/fh4QXo8PtPfoyKN4Dol8It9ut9Vp3dgVeSZpt
-         ZY0Cd/sYAPwrrBGxP3KLeleOiUXpHoVKNb9fF79+EqeFaktyLur35Qme1a/c1ygKCVWY
-         HiTw5GPH7cPrO84RtZxVnZWAPTPMvlz9LpA0+XcY7Dqb/LjZDmlUHoebXiM9WdXC8p0h
-         heemCHnjuPTp6vf7UV9kbqCTsoo/vXltEY8guCBNWby4obCIcqZlYkBcXOk5TdumtJd0
-         rKVmcQu+QFm8nTTMJrKDeqY8Q6dBDu1DHYajg5a9noJvAHlGY1A5AUXLGjO9GzCFKtoI
-         q5bQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXiCFv2239UhEDHtUTY2BKGLITCmVZCCblhBfe6O0CkY4C9WgBodY6oLBydaS/JJH0YvC8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwGN5B3aPQz9gout+5F0mbK3kqDHF5B6impIzq+hIrASPR8t/uK
-	vuuUpkrWoqkfP9xBVoTNMzAOeU8hMahP7795EiV9tanHGL1ZKG/KsJnYuZCmWIPbzdrpdWnQiFA
-	Z+PgRKwODIP7ilgjDuiqYhtZFJ10CaxM=
-X-Gm-Gg: ASbGncvf9RCtkzf2kBDrTf83tlzubYfqFt6jpcYz43+ky5gda4sxlHxELsRxJiEFbSP
-	ukWuTR6WO4NkEKl48sfKnsX+PTfb/xi9IAHrdyks2aMrWCloDWDGEiSGnz58ii+hXv0eAozcXHh
-	rA04FWoRGlzA5MVx/N02hoN/u2MtNOlMdFPQXB9NAyxDbdaZgaH6b/kty+WeD6n8BgBbT3D0gIj
-	trhKahNx1NaxM2VwDFPrWjP5lm0kPcA074SVhE=
-X-Google-Smtp-Source: AGHT+IG5fwnahC054VwOtp0QJHl9asvGxvOs8DrFaQIn4qhZmfzq9GdNQEjyWFtNgobLu/IyW2epv/RZHEAFIqM2qyk=
-X-Received: by 2002:a05:6e02:258b:b0:3e9:eec4:9b53 with SMTP id
- e9e14a558f8ab-3e9eec49f04mr165195565ab.26.1756149395983; Mon, 25 Aug 2025
- 12:16:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hUydVTIm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JOMG/17Y"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7433EEC03ED;
+	Mon, 25 Aug 2025 15:40:19 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 25 Aug 2025 15:40:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1756150819; x=1756237219; bh=6jeFAMJkbw
+	8xiH88DzSCJgtDLr19a7P3zlI4MLhrqbc=; b=hUydVTImIQV9aUoDKKA1kOHTi2
+	WUnSDjhVqwh57xgymeqeDPP0lveAherEF44PJw4fUXn4XirjefkMIlWGDJBxobFT
+	b7v0DZWrMc0JLL64nSbw0xkOHogQXI4uxr+vDvawtXP2NZgzEVlA+aPfOnDaGrMX
+	xUg6zN9QuX3di/2o2Bzm+aniez0O91d4gPpiYlhuzgLPjQsosk5lVywMRkS7EuIM
+	3xdnVob4HWcKyMVD2K2ZOOhx3XF9vwzguew4MFK504lFjotGHMGodEqNnvVR3byI
+	ojEWpN/3feS2XwZ4BqdtWEiAUkJsut2GViv411AuQqlkw14Z8LoipK0Noi+w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1756150819; x=1756237219; bh=6jeFAMJkbw8xiH88DzSCJgtDLr19a7P3zlI
+	4MLhrqbc=; b=JOMG/17YGqcYB5/3+V5dA6ED63qOp4vECHiW5GGPO7NsJxjrZAJ
+	oa7zHqmH/7sp+/MX5MbCEOrUTnI5B64Wqdp79OAvHEvloRM6xvN7/xwhVTiffVDU
+	X94FY2CZhSjWOHmG3SyZLlRvqsOfj+iXOgQBMVcwusBM3MHOByjK012fBZkEUuCb
+	e7zs4ZDG12lgzUcAE6tyvLRWWSGXIsb6ZIjgign32mvU+GxZXC5WH+T9/GN7ZUJQ
+	M0jDA7AFDSvu65lGxE3c4MG55Y0/5Qv5/nSt4WoTDqo9QmiGlK+FV0uT3MOSOKMq
+	bel8xtay1Gj2GgytQowshcZiQwJfsz697xw==
+X-ME-Sender: <xms:I7ysaMICyVR4DBubmXaDs9Ss0rWnaOccSX_jFJouz_MFWcvnZ5yUww>
+    <xme:I7ysaPaAZq10nt-T14U3ug3b0ExfUD8uADZciREcPTEv1jla34sNup37Caqjr03ss
+    fpewHf_Gx4qOcpmSA>
+X-ME-Received: <xmr:I7ysaGJwFAxgsh2vxMzWwaANct3sSKlvEF05bF7kYntTACb2GYspp_aviG_9TIFybxeWzkrp0yxwUSvDwNUAroO7jiDV9CXycHLVBV8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeefvdeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegvnhhgugho
+    tgesrghlihihuhhnrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:I7ysaFBhZYKrZbwFdhwjmRzrNie84DZmhu5Dfmmhnj-BsDxv7wOVqQ>
+    <xmx:I7ysaDrQ6bqs6Bcg7WaY21t_-NDWuIuNCwWDju6HWfuDxryF70xGvA>
+    <xmx:I7ysaIjO7FXoUvbr8qjZrDAHPgO87KLnBakQabom4FBpLoGvXjX1wA>
+    <xmx:I7ysaIDg8A_90stwHkyKfTlsTPw6y0BPplJzUPPRkI5DgPRQmmwXNg>
+    <xmx:I7ysaHdLXOQ6mgjjIFo11qOIx_uCr-kYwtAvx-R075Hdj5_-v5OowPfa>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Aug 2025 15:40:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "engdoc" <engdoc@aliyun.com>
+Cc: "git" <git@vger.kernel.org>
+Subject: Re: [RFC] Allow includeIf.hasconfig to take precedence over
+ includeIf.gitdir
+In-Reply-To: <a903afc8-9bf6-4ba8-bdab-87a76adf631e.engdoc@aliyun.com>
+	(engdoc@aliyun.com's message of "Thu, 21 Aug 2025 12:29:57 +0800")
+References: <a903afc8-9bf6-4ba8-bdab-87a76adf631e.engdoc@aliyun.com>
+Date: Mon, 25 Aug 2025 12:40:17 -0700
+Message-ID: <xmqq1pozqjfi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
- <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com> <db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
- <xmqq8qj9vrpf.fsf@gitster.g>
-In-Reply-To: <xmqq8qj9vrpf.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 25 Aug 2025 12:16:24 -0700
-X-Gm-Features: Ac12FXwwiC-87vmfUJ_XU-kB52b3mzZY8Hhc4YxiVqL9v4B9XSUyGmGWG08S4c8
-Message-ID: <CABPp-BF44xgh5uJhCKXE8aSN5otyHOAJYNqB_bfLj1Z7_FANCw@mail.gmail.com>
-Subject: Re: [PATCH v3 06/15] ivec: create a vector type that is interoperable
- between C and Rust
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, Taylor Blau <me@ttaylorr.com>, 
-	Christian Brabandt <cb@256bit.org>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Eli Schwartz <eschwartz@gentoo.org>, "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
-	Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>, 
-	Mike Hommey <mh@glandium.org>, 
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Ben Knoble <ben.knoble@gmail.com>, 
-	Ramsay Jones <ramsay@ramsayjones.plus.com>, Ezekiel Newren <ezekielnewren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sat, Aug 23, 2025 at 11:05=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> > diff --git a/interop/ivec.c b/interop/ivec.c
-> > new file mode 100644
-> > index 000000000000..9bc2258c04ad
-> > --- /dev/null
-> > +++ b/interop/ivec.c
+"engdoc" <engdoc@aliyun.com> writes:
+
+[administrivia: please wrap overly long lines]
+
+> Background:
 >
-> Even though this is a shim to somebody else's code, it still is a
-> part of our codebase, so our CodingGuidelines for C programs should
-> apply.
+> Currently, when both includeIf.gitdir and includeIf.hasconfig
+> conditions match for a repository, Git always processes gitdir
+> first, regardless of the order in the config file.
 
-Sorry, I should have caught these in my preliminary review before he
-sent this off to the list.  One question, though...
+Is that true?  I created an empty repository in /var/tmp/x/includeIf
+and added this in its .git/config file:
 
-> > diff --git a/interop/ivec.h b/interop/ivec.h
-> > new file mode 100644
-> > index 000000000000..98be4bbeb54a
-> > --- /dev/null
-> > +++ b/interop/ivec.h
-> > @@ -0,0 +1,52 @@
-> > +#ifndef IVEC_H
-> > +#define IVEC_H
-> > +
-> > +#include "../git-compat-util.h"
->
-> As we use -I. on the command line, there is no need to add "../"
-> here; just writing
->
->         #include <git-compat-util.h>
->
-> should be enough.  Also, if this file does not depend on the
-> services compat-util header provides (and I do not think it does
-> from a brief look at its contents), it is better not to include it.
+        [core]
+                repositoryformatversion = 0
+                filemode = true
+                bare = false
+                logallrefupdates = true
 
-Should this rather be
+        [includeIf "hasconfig:remote.*.url:*"]
+                path = /var/tmp/x/includeIf/.git/hasRemote
 
-   #include "git-compat-util.h"
+        [includeIf "gitdir:/var/tmp/x/includeIf/.git"]
+                path = /var/tmp/x/includeIf/.git/Here
 
-with quotes rather than angle brackets?  In particular:
+        [remote "this"]
+                url = .
 
-$ git grep include.*git-compat-util -- '*.[ch]' | wc -l
-362
-$ git grep include.*git-compat-util -- '*/*.[ch]' | wc -l
-125
+where hasRemote and Here each have a single line
 
-So, we have 362 includes of git-compat-util.h in our codebase, 125
-from subdirectories.  Of those:
+	[jch] included = hasRemote  # in hasRemote
+	[jch] included = Here       # in Here
 
-$ git grep include.*git-compat-util -- '*.[ch]' | grep '"' | wc -l
-361
-$ git grep include.*git-compat-util -- '*.[ch]' | grep '<' | wc -l
-1
+With that preparation done, I tried
 
-Only one of these include statements uses angle brackets -- the
-compiler-tricks/not-constant.c file (which appears to be a temporary
-hack that we'll eventually delete).  I had always assumed <> were for
-system includes and "" for project includes, but a quick Google search
-shows the actual situation is quite a bit murkier than I'd realized.
-Still, our current project practice appears to be double quotes; is
-that fine here or are you suggesting you'd like the current project
-practice to be changed?
+    $ git config list --local --includes
+    core.repositoryformatversion=0
+    core.filemode=true
+    core.bare=false
+    core.logallrefupdates=true
+    includeif.hasconfig:remote.*.url:*.path=/var/tmp/x/includeIf/.git/hasRemote
+    jch.included=hasRemote
+    includeif.gitdir:/var/tmp/x/includeIf/.git.path=/var/tmp/x/includeIf/.git/Here
+    jch.included=Here
+    remote.this.url=.
+
+Notice that the multi-valued configuration variable jch.included
+gets hasRemote first and then Here second.
+
+Then I swapped the two includeIf in the .git/config file and ran the
+experiment again.
+
+    $ git config list --local --includes
+    core.repositoryformatversion=0
+    core.filemode=true
+    core.bare=false
+    core.logallrefupdates=true
+    includeif.gitdir:/var/tmp/x/includeIf/.git.path=/var/tmp/x/includeIf/.git/Here
+    jch.included=Here
+    includeif.hasconfig:remote.*.url:*.path=/var/tmp/x/includeIf/.git/hasRemote
+    jch.included=hasRemote
+    remote.this.url=.
+
+I do not doubt that you are having some problem, but it does not
+look to me that your description above points to the source of the
+problem.
