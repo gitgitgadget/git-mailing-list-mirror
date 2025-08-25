@@ -1,151 +1,147 @@
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE01C27FD44
-	for <git@vger.kernel.org>; Mon, 25 Aug 2025 19:16:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F221F5619
+	for <git@vger.kernel.org>; Mon, 25 Aug 2025 19:16:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756149384; cv=none; b=jcriJorI+ZK2awtl6bpEJUqx8v308Rk8NUWkJQ9iLTlfPnSkY51ChTtDMhcDvuJwGBNVyMMOkoXDqLvUvVe8S1K2T0eaBlqdTsxtjVxos/qqFDNr05r0+PGb3uzmd58BH4mKJYYX25BSJS6o/GZs90s4KbDq9yOLlxs9T1N/2Tw=
+	t=1756149399; cv=none; b=Eg6ycaXf47gLGMWx2sA3hg2ZqWYi0wqWDIwmvsjHVXEpUQDs5laHjg7b4uYbkbBklSNBRsUl6rMeCo4LBKpiyN3A4jsCaFWLY+25S/V6QlwGXZQE0hZdF2GNPURfC6itxtrKXRZJc1LN+iWKe/dkN0a2baIwAvd+1am9pucdNtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756149384; c=relaxed/simple;
-	bh=m/NZVyLt1Ek8Y2DaIok2IRjm5n+BAF5Y/Ophm+oDV0c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gQ9GNJbYUuvq1Gd6ljDnkC92l6if1ODLhxlRIeSSm6Kk/2sF4CcbmACKli3IIVC6nkizQEZTUU+gGjdXTqOb67lvpApk8QBE1hLCrFvwg2n0409eKJ7/DQVJkDfQQdQwdd6joSs8bHAo6g5hrgfPZcfWglaURyY0zmu91Psx+Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.104] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4c9gWJ5y7yzRq1w;
-	Mon, 25 Aug 2025 21:16:12 +0200 (CEST)
-Message-ID: <7b848623-ce64-4679-9b5e-9d91d947b269@kdbg.org>
-Date: Mon, 25 Aug 2025 21:16:12 +0200
+	s=arc-20240116; t=1756149399; c=relaxed/simple;
+	bh=YYKo+ED/QAvz3na657FvzuwqG5936VhA4LZ4XeHHkXA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rknXjTEGOIQTYwzmOU7Xvh7V8EbPiklpNRU4XBwCS1RBiXawubfMRt3SPT1IabZIA+7vEHjoU1Nm2akq4g1Bd8G44eRUTKEhFlRjH/i7FzCoU/4jI1y5SiT7+jsR/7LygSHahd8+OHWxEOfZW4n22vIrvQrEVK9Yen4dqZtOv44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rhw0yEl3; arc=none smtp.client-ip=209.85.166.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rhw0yEl3"
+Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-3e854d14bdaso46926805ab.1
+        for <git@vger.kernel.org>; Mon, 25 Aug 2025 12:16:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756149396; x=1756754196; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/rvHWKUf3JZQ14uuIpngysybWXBGrMYPWoefeD6KZoo=;
+        b=Rhw0yEl37LhdqyusDiXiRHI7FExFtMQflzvDJuESiJwpmhjulVMJQ/XZ7NA3qyG0DL
+         iRr3nlWd/JWRVfhpQr+I5UGj8AEfBb4j2a4RGihBpWgsKPzksk0OKYxU2UuanpR7Fvst
+         dKwg7jjSNBM201NY/Uo/PXN9OSoB8cMBmv4i3l429Hq4lfpNMprQeYn1DdJnDSmiob5h
+         snZ9yQUnM15uYmP9aQfDb7lulQZbh3Kony3CdHavGuZ5+twMhWHZBiY1sfveZDlORr/4
+         mCT96vKU8A4kiUeuntMsHEXVkwqDKoyK9R8UDCWtWolgkQBytuQ7k0GmpGpGdfGdq6j/
+         SCow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756149396; x=1756754196;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/rvHWKUf3JZQ14uuIpngysybWXBGrMYPWoefeD6KZoo=;
+        b=gauDwjZyMWzNw57rabYsmtJsHPeH/fh4QXo8PtPfoyKN4Dol8It9ut9Vp3dgVeSZpt
+         ZY0Cd/sYAPwrrBGxP3KLeleOiUXpHoVKNb9fF79+EqeFaktyLur35Qme1a/c1ygKCVWY
+         HiTw5GPH7cPrO84RtZxVnZWAPTPMvlz9LpA0+XcY7Dqb/LjZDmlUHoebXiM9WdXC8p0h
+         heemCHnjuPTp6vf7UV9kbqCTsoo/vXltEY8guCBNWby4obCIcqZlYkBcXOk5TdumtJd0
+         rKVmcQu+QFm8nTTMJrKDeqY8Q6dBDu1DHYajg5a9noJvAHlGY1A5AUXLGjO9GzCFKtoI
+         q5bQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXiCFv2239UhEDHtUTY2BKGLITCmVZCCblhBfe6O0CkY4C9WgBodY6oLBydaS/JJH0YvC8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwGN5B3aPQz9gout+5F0mbK3kqDHF5B6impIzq+hIrASPR8t/uK
+	vuuUpkrWoqkfP9xBVoTNMzAOeU8hMahP7795EiV9tanHGL1ZKG/KsJnYuZCmWIPbzdrpdWnQiFA
+	Z+PgRKwODIP7ilgjDuiqYhtZFJ10CaxM=
+X-Gm-Gg: ASbGncvf9RCtkzf2kBDrTf83tlzubYfqFt6jpcYz43+ky5gda4sxlHxELsRxJiEFbSP
+	ukWuTR6WO4NkEKl48sfKnsX+PTfb/xi9IAHrdyks2aMrWCloDWDGEiSGnz58ii+hXv0eAozcXHh
+	rA04FWoRGlzA5MVx/N02hoN/u2MtNOlMdFPQXB9NAyxDbdaZgaH6b/kty+WeD6n8BgBbT3D0gIj
+	trhKahNx1NaxM2VwDFPrWjP5lm0kPcA074SVhE=
+X-Google-Smtp-Source: AGHT+IG5fwnahC054VwOtp0QJHl9asvGxvOs8DrFaQIn4qhZmfzq9GdNQEjyWFtNgobLu/IyW2epv/RZHEAFIqM2qyk=
+X-Received: by 2002:a05:6e02:258b:b0:3e9:eec4:9b53 with SMTP id
+ e9e14a558f8ab-3e9eec49f04mr165195565ab.26.1756149395983; Mon, 25 Aug 2025
+ 12:16:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2] progress: pay attention to (customized) delay time
-To: Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Cc: Nicolas Pitre <nico@fluxnic.net>,
- =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
- <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
- <86bf04c7-6315-46ef-8297-42efc3ed322d@kdbg.org> <xmqq4itxvi3z.fsf@gitster.g>
- <08f405a6-fd2e-40d7-850a-574356b4009e@kdbg.org>
- <2d56de10-f829-4bc8-9c76-76eab6b137ae@kdbg.org> <xmqq349fs5ee.fsf@gitster.g>
- <jq5ul4zwdex6peuub3upwzxz3d5zcnuh7adseyg6wa6dpiu4ci@fuwe2t2vbguo>
- <xmqq8qj7qlqf.fsf@gitster.g>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <xmqq8qj7qlqf.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
+ <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com> <db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
+ <xmqq8qj9vrpf.fsf@gitster.g>
+In-Reply-To: <xmqq8qj9vrpf.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 25 Aug 2025 12:16:24 -0700
+X-Gm-Features: Ac12FXwwiC-87vmfUJ_XU-kB52b3mzZY8Hhc4YxiVqL9v4B9XSUyGmGWG08S4c8
+Message-ID: <CABPp-BF44xgh5uJhCKXE8aSN5otyHOAJYNqB_bfLj1Z7_FANCw@mail.gmail.com>
+Subject: Re: [PATCH v3 06/15] ivec: create a vector type that is interoperable
+ between C and Rust
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Taylor Blau <me@ttaylorr.com>, 
+	Christian Brabandt <cb@256bit.org>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Eli Schwartz <eschwartz@gentoo.org>, "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
+	Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>, 
+	Mike Hommey <mh@glandium.org>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Ben Knoble <ben.knoble@gmail.com>, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, Ezekiel Newren <ezekielnewren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Using one of the start_delayed_*() functions, clients of the progress
-API can request that a progress meter is only shown after some time.
-To do that, the implementation intends to count down the number of
-seconds stored in struct progress by observing flag progress_update,
-which the timer interrupt handler sets when a second has elapsed. This
-works during the first second of the delay. But the code forgets to
-reset the flag to zero, so that subsequent calls of display_progress()
-think that another second has elapsed and decrease the count again
-until zero is reached. Due to the frequency of the calls, this happens
-without an observable delay in practice, so that the effective delay is
-always just one second.
+On Sat, Aug 23, 2025 at 11:05=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+> > diff --git a/interop/ivec.c b/interop/ivec.c
+> > new file mode 100644
+> > index 000000000000..9bc2258c04ad
+> > --- /dev/null
+> > +++ b/interop/ivec.c
+>
+> Even though this is a shim to somebody else's code, it still is a
+> part of our codebase, so our CodingGuidelines for C programs should
+> apply.
 
-This bug has been with us since the inception of the feature. Despite
-having been touched on various occasions, such as 8aade107dd84
-(progress: simplify "delayed" progress API), 9c5951cacf5c (progress:
-drop delay-threshold code), and 44a4693bfcec (progress: create
-GIT_PROGRESS_DELAY), the short delay went unnoticed.
+Sorry, I should have caught these in my preliminary review before he
+sent this off to the list.  One question, though...
 
-Copy the flag state into a local variable and reset the global flag
-right away so that we can detect the next clock tick correctly.
+> > diff --git a/interop/ivec.h b/interop/ivec.h
+> > new file mode 100644
+> > index 000000000000..98be4bbeb54a
+> > --- /dev/null
+> > +++ b/interop/ivec.h
+> > @@ -0,0 +1,52 @@
+> > +#ifndef IVEC_H
+> > +#define IVEC_H
+> > +
+> > +#include "../git-compat-util.h"
+>
+> As we use -I. on the command line, there is no need to add "../"
+> here; just writing
+>
+>         #include <git-compat-util.h>
+>
+> should be enough.  Also, if this file does not depend on the
+> services compat-util header provides (and I do not think it does
+> from a brief look at its contents), it is better not to include it.
 
-Since we have not had any complaints that the delay of one second is
-too short nor that GIT_PROGRESS_DELAY is ignored, people seem to be
-comfortable with the status quo. Therefore, set the default to 1 to
-keep the current behavior.
+Should this rather be
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- Compared to the first round, this replaces sig_atomic_t by int. I
- didn't use bool just in case the patch goes on top of a maintenance
- track that does not have the "bool is allowed" policy.
+   #include "git-compat-util.h"
 
- Documentation/git.adoc |  2 +-
- progress.c             | 12 +++++++-----
- 2 files changed, 8 insertions(+), 6 deletions(-)
+with quotes rather than angle brackets?  In particular:
 
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 743b7b00e4..03e9e69d25 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -684,7 +684,7 @@ other
- 
- `GIT_PROGRESS_DELAY`::
- 	A number controlling how many seconds to delay before showing
--	optional progress indicators. Defaults to 2.
-+	optional progress indicators. Defaults to 1.
- 
- `GIT_EDITOR`::
- 	This environment variable overrides `$EDITOR` and `$VISUAL`.
-diff --git a/progress.c b/progress.c
-index 8d5ae70f3a..8315bdc3d4 100644
---- a/progress.c
-+++ b/progress.c
-@@ -114,16 +114,19 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 	const char *tp;
- 	struct strbuf *counters_sb = &progress->counters_sb;
- 	int show_update = 0;
-+	int update = !!progress_update;
- 	int last_count_len = counters_sb->len;
- 
--	if (progress->delay && (!progress_update || --progress->delay))
-+	progress_update = 0;
-+
-+	if (progress->delay && (!update || --progress->delay))
- 		return;
- 
- 	progress->last_value = n;
- 	tp = (progress->throughput) ? progress->throughput->display.buf : "";
- 	if (progress->total) {
- 		unsigned percent = n * 100 / progress->total;
--		if (percent != progress->last_percent || progress_update) {
-+		if (percent != progress->last_percent || update) {
- 			progress->last_percent = percent;
- 
- 			strbuf_reset(counters_sb);
-@@ -133,7 +136,7 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 				    tp);
- 			show_update = 1;
- 		}
--	} else if (progress_update) {
-+	} else if (update) {
- 		strbuf_reset(counters_sb);
- 		strbuf_addf(counters_sb, "%"PRIuMAX"%s", (uintmax_t)n, tp);
- 		show_update = 1;
-@@ -166,7 +169,6 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 			}
- 			fflush(stderr);
- 		}
--		progress_update = 0;
- 	}
- }
- 
-@@ -281,7 +283,7 @@ static int get_default_delay(void)
- 	static int delay_in_secs = -1;
- 
- 	if (delay_in_secs < 0)
--		delay_in_secs = git_env_ulong("GIT_PROGRESS_DELAY", 2);
-+		delay_in_secs = git_env_ulong("GIT_PROGRESS_DELAY", 1);
- 
- 	return delay_in_secs;
- }
--- 
-2.51.0.205.g9a02ae2892
+$ git grep include.*git-compat-util -- '*.[ch]' | wc -l
+362
+$ git grep include.*git-compat-util -- '*/*.[ch]' | wc -l
+125
 
+So, we have 362 includes of git-compat-util.h in our codebase, 125
+from subdirectories.  Of those:
 
+$ git grep include.*git-compat-util -- '*.[ch]' | grep '"' | wc -l
+361
+$ git grep include.*git-compat-util -- '*.[ch]' | grep '<' | wc -l
+1
+
+Only one of these include statements uses angle brackets -- the
+compiler-tricks/not-constant.c file (which appears to be a temporary
+hack that we'll eventually delete).  I had always assumed <> were for
+system includes and "" for project includes, but a quick Google search
+shows the actual situation is quite a bit murkier than I'd realized.
+Still, our current project practice appears to be double quotes; is
+that fine here or are you suggesting you'd like the current project
+practice to be changed?
