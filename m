@@ -1,169 +1,315 @@
-Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010012.outbound.protection.outlook.com [52.103.68.12])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55781286D50
-	for <git@vger.kernel.org>; Mon, 25 Aug 2025 06:55:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756104937; cv=fail; b=ri0AWitL5AkcDmdSb1XouIWOSl8nb0cwnPuoXmdBZo/mGNVy7efl05u7iaJfX1mV6N0QAlXrwBY1RmyXi/heurVtO0RIMVy8rzxy2BHWfEg++2mkDXyGRpr29IJil8Y8Yb9NTbYB4F2tSWeGbIjEbL1xLtzne5qQtiwrnpj4Op8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756104937; c=relaxed/simple;
-	bh=YpFsqHzk7TUx3XYfcTO+TfyzJQbZrLiGUin8RAmOdF4=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=K9UW+PBIEm+yJrX2jmJ2YeGhVWAuz9xXaAenob/6rdCMOqvURa8RRwScgmimeLqMouYmIOGABWXMTsLWUAciu1osPE/+Ex9S0yI4Uq54RYMwiQ0a+VhjQa0d6YcgVAuH/bl9MX2NuVRcQ5xdSJf+N5VYSJm/knyS8VjRVf/4x9c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=J9wwD4/v; arc=fail smtp.client-ip=52.103.68.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5590522A4E5
+	for <git@vger.kernel.org>; Mon, 25 Aug 2025 07:34:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756107256; cv=none; b=fKGjSkvQlsqb1Ql1UPkOkqTdkQsPZ+DLFfQiyKXEfnINxzxA0BcWES6lP8YaPZatNxX44ihZ+56mcKygHbgpcT8dwrEsxD5n5v0f5OH9HT/BKIFUazK53xaSfCaZb4cfj5sHwy6ce51or6TkV6aaPdDs+fqQrjf5LEnoWn7H028=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756107256; c=relaxed/simple;
+	bh=vvzepqtYL4/FI1Iwm6D0N8yKuUoRKUEuCOCZW1liZjQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qsb/3vFatDIW2yOFpN1yFI4Y+ijyg6EjLWndNVjp2TIEFFShYAR2du7tZ8TiM64ybavzhhTVGEFpL1u9DIAhAK7vqdesrs5mmjIyn7ovOhlsbR+vqke+oMmIgb3Lfxvsewzsfdc6seLC/16lEjBBtNKIctybYbQkOs4HZE6TQLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=A+UKzUW5; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="J9wwD4/v"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PH2FoSwzxdhEQFqCd3BRam1r56PWOVrFhxmwvEG/8a+amDu1Yiwu37LoYKcJPv2tlI6OiMN8GKtqGiEo3qLykp3BsZvu9M2joZkNki2sExX02W9/Ao9eGA3avv3STP/ltAWWx00MLMD3It2V0WRBaZ7tmfLG6FLNgkjteLW88qxkfAegjm87CZpeUwqOFayDS4yXqkmf5XSssHyeuFIsSReF+d48DNYu1vvG9wgR3Ibo5FN7KgFnCHu6K0NpG+yyzX8sv7QVR7RV+4eHZB5pvgc2Yi4N6oZGCuPPR+1riSfs7VCP/QcmKFpvd5cwiNIfsT2yHEuJVEEvYoARiSjxHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3pGncp8N/6pOXoQ6UG6LnZN0UPFI0c/4qN2TR29kRXA=;
- b=iYaByWMHFgZqkz/gOrTc26Agx1FOtmfofM7zw3+X3oNlWI6E7I767AaDLRhTlnra5Q+Z724+uEf33DbiX+IImyYu91EUDETyWlpC5ySowUOEwMJt0jsb47UNdR/y4BfWfTLyI8JriFQ8ixUnpCHIblnKw/83NrjubErUD5OReKTLNTs13EB0YvtB+/XeCmPdLfoIcd9WExJ21ATBkq7b8F2I1cBIT/HbHlVPfARJ/xFY5mbqMQV/FFn2YiqFYvjCHxBVJuJB6/ZsXQe5MkeG7PgLDzcnsOuqLD1KCJ4QICo/4jIZeCDegGGr5SnQcfY7KAjYcKfT/l/McvAWv8ZvMw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3pGncp8N/6pOXoQ6UG6LnZN0UPFI0c/4qN2TR29kRXA=;
- b=J9wwD4/v3E1OxGuoYk145e4MFl4m780krI3U4lGGuOdiv6RaygU9pJ/1nAGxONmSZEjkBKHmF3ccjRbtJdtd1Pzwh8IsZvBRZvp2/UDOgYGtfMpm9BnK0gcnLdvIrQ0L/Ve6VWA4WHA/BDZwgSjILKr8sM2urZH94Yi1NEoJQcmuAnUiiTylnWaBnXqogPT1xOIMkLxgKf0ahTaaFrN2s8AiaHLM2nxLCdcry1D6QfJhqd5uwVHV2XDYBI2Il1VG0MPaTYW9Nbn2cAybzMe2DDdvrtWWn8rlzKoHXRH82408oqRMC02oa0N0/afm1GhpT55q8BIZmfrMSu85++jBCA==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by PNXPR01MB7371.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:a3::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.19; Mon, 25 Aug
- 2025 06:55:31 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.9052.019; Mon, 25 Aug 2025
- 06:55:31 +0000
-From: Aditya Garg <gargaditya08@live.com>
-To: git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH] docs: update sendmail docs to use more secure SMTP server for Gmail
-Date: Mon, 25 Aug 2025 12:25:15 +0530
-Message-ID:
- <PN3PR01MB95973B72C16F68D63BE2B410B83EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.51.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PN4P287CA0122.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:2b2::11) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:f7::14)
-X-Microsoft-Original-Message-ID: <20250825065515.7808-1-gargaditya08@live.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="A+UKzUW5"
+Received: (qmail 73252 invoked by uid 109); 25 Aug 2025 07:34:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=vvzepqtYL4/FI1Iwm6D0N8yKuUoRKUEuCOCZW1liZjQ=; b=A+UKzUW5I7/tK18Zv4PZJxW8UPq7miMjJLQaVQLXasqVdtYaQmN8Bb4lyNW6j6OrhuHI/9g+pfiWlwZ5aX753VSBJXOgJbfaiP2Txxjx9fU0Qvwqxt5XxPquH/BG9iF0OLdCTSwUOvWpmc5WN9UNm0dKQU9dVBMgUtby+884NnRfmQ+UVPuQo1Xef29JYlmtg6VrwSV+DrpGPsli7/okNx1JzNq7md4C3QBRw5AC/78t+z0i3LAar3JDlluEakfAp7J/xPWrMyUQQ7vrNNgfrXCzHpXl2iMWW2x1bz3xLC5Ut39QiH/G6iUrXqwwi3rswlTcJsS2FQjhyaAkMlDLZQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 25 Aug 2025 07:34:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 149962 invoked by uid 111); 25 Aug 2025 07:34:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 25 Aug 2025 03:34:04 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 25 Aug 2025 03:34:03 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] describe: use khash in finish_depth_computation()
+Message-ID: <20250825073403.GA332447@coredump.intra.peff.net>
+References: <9110f085-aec0-42e9-9774-b153ece6284f@web.de>
+ <20250824103117.GA250458@coredump.intra.peff.net>
+ <6402268d-bc80-4bfe-abb8-edec9e1b8417@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PNXPR01MB7371:EE_
-X-MS-Office365-Filtering-Correlation-Id: d50ea07b-75ae-413b-d712-08dde3a4617e
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5062599005|8060799015|19110799012|5072599009|461199028|15080799012|23021999003|21061999006|440099028|3412199025|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?0v+UVbvyKGqa7VMiPiZQktlQ5EVsZtg4sGivZcutezVz5cXfQghFRUE8Qvmp?=
- =?us-ascii?Q?W6PdjZJo7tiQ0V9w7YgHfYwigDuGNa6cqiq0bmVcIic5phBMYvXlOpkdkK08?=
- =?us-ascii?Q?E2JlIAcqz5F49SuaIpm75BCHyCwDdEromqZMbHdo6fL/0xgEFMGKGjj8jzME?=
- =?us-ascii?Q?YLAnnEjEPGENb+gEoSGatWt19h/uDLNVLKdlBurHV2zlvMJtajzMwtOZLcnX?=
- =?us-ascii?Q?AYwlkSavRPCfjn+1UJKNPG90vGghw80bhWcnTQaIaaU0o505NBRvJHR9DULN?=
- =?us-ascii?Q?7uq/AtZePJjmLrXONjN4aQXQtfDf9WwxFV9Eo1q/a27cj1x3nBQUES3EAlxM?=
- =?us-ascii?Q?SEdnR35Xam5GaQgUxhPkh8LsL1559JEiRFZIJ3M5skQDG5nYrBb45247X3IG?=
- =?us-ascii?Q?FBjlmGnpQSO1u2OxpZ1BHVH8+QUEqigFasRAJA4bgPa0E9n5YNbtORNQGD5U?=
- =?us-ascii?Q?DSn4FcE3qkNNTHTTKGMNSkSa0UBH9/4PwtB2GhnN0cXqMd6B+rA2LIZ06X+H?=
- =?us-ascii?Q?dX9oEflOs083hcdzTMzILtXnowzBmG5llFDKJ6zAoaL7zfzJWjG6tEfhB5sq?=
- =?us-ascii?Q?KmYoRAjIbETAhcI97j8fPj1mlHrQxsmlnpwOPZnKdzt6PBosYOawqtRpFRGi?=
- =?us-ascii?Q?fBZjlxMyfpjcfPQMmnRhnoquXFFWjv7GaWH9zJKuseF8X5vPnfjs5yZFCeAo?=
- =?us-ascii?Q?JI1UKOt6x+qhkc8qsLnYyz9dbKKf7OtT72qD6FYhxtXpNa47JMuLe83RsR8A?=
- =?us-ascii?Q?hGSs8FlJvfSB9OZh338T5xlWX7reaFxHwkT1CjZCVgJTiXYT+EtGDmkfTWUu?=
- =?us-ascii?Q?efOlmr8DwQ5bEKjUVIpn+cgYXLX/xkjh09PUqEG8Tzfa4Mly8uoc04tKtXOX?=
- =?us-ascii?Q?p7jxNE4oOn7DVjtY+0EQh4/N8QUrY5MytiyvtE2ZfQDxkTu2K2xcRUbzlEER?=
- =?us-ascii?Q?/ewNR9VTGxlsr8F+/aD+5HmwHzO9AKTG2N0ooD55orlTjkihQt2z64q4OBJg?=
- =?us-ascii?Q?hHZSyfnHea+yVV0mrCUy2sLNivcdJrtHor9O8241JhrE0m7hIX3BKh/dmIVe?=
- =?us-ascii?Q?RFo5pyiT8NDwpsF5JcyAF9Hzzh99PinxXd039wrRcFD0GgPjLfGH9FNwhtgD?=
- =?us-ascii?Q?+2S+iI81uiXBtIc/lLMqK1smJ4VXkQ2APkaSZLCG530CRHiWaxzwph4GTzDy?=
- =?us-ascii?Q?q9al0inAtdQ4K2SJCPdzAT4YTaGVezGrMrC68Q=3D=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?HAapMEE3pgxknLMTB8YwfecZMG+EpxqPgtM131sgTwbMwZiUXdl1fHhsSTvY?=
- =?us-ascii?Q?YZJLNS8T9ZimeMNmdezujqhGLepSDHXXNKvB2EwifdOgA4Y8hYVwBHiQ0zPy?=
- =?us-ascii?Q?aIg2U+EJiWQlq/LvUo4gQZocruRzax5ABsI1HQCmSIDk3CTmAUlfoWPNOhrK?=
- =?us-ascii?Q?AhBvbrrp92RKbuYJBRmit55j2AHs1dLAKhFzwHRv5U8v+kSAig+Ki7n3KGqS?=
- =?us-ascii?Q?qfl2zLY8XifHW7tFFuI5qoyS0fk+Sdl0LzOjpJaQvaJoFvNGHX1kZAzEIwaa?=
- =?us-ascii?Q?BD0mrznGAb5znGRSUk13BqIPe4emQTeS+PQEMdeIou/ZoYNoxX1Bz9NmOMAh?=
- =?us-ascii?Q?LFXDjGJI2+5uUJUUsJrsHkqkD/xkgpuUGsb6gO6CnJ4uFVECexpbPZ3zQ3/g?=
- =?us-ascii?Q?3/iS3t+dZjM0geGXKAMhQscn3V1WQNJiSnpp7stfkTil7EdwiDDqNKnKVCu3?=
- =?us-ascii?Q?L2/Pio9VR7lBkaVsICFkgCRk5O+Ztl75/wwBYEADGadfdqg/2ZbFj4dlQbe3?=
- =?us-ascii?Q?YmuoF7bnvR68IfzBaGaFcdh8Hs69+rxhQpc5hvEbXw7wyV+1xT6HT+vRR0VS?=
- =?us-ascii?Q?0+z66G1mqV6gYIOJDr6oCIDQXpAjI+fAYe+Min3+3m59QPxqc9Y4vHBUwtES?=
- =?us-ascii?Q?L53MdCJZWH/OZZM4hwq4/0MbRqXrPBNmyapcqSGo/pgPLA9nFVAdsSPfhv1v?=
- =?us-ascii?Q?XbIuaWF8qVuu+5KXf61NiITiWU49MJTYgBTUqwg4p3dHb02v3RjNXqe5jzb5?=
- =?us-ascii?Q?0pvEganefbMslvWpmOOMRcX1icf24YP3zgU5wRpJTNvQkVVL5jCgRbCT+A7H?=
- =?us-ascii?Q?M3mV/Ic3FuMtsiHbZzJ/r0gPIxmVthvr58sLhL7wEmOLZpwtX3seag0rZoJc?=
- =?us-ascii?Q?/vBhvm+ktOgkX7lqOBjAmEmEKlrHX8rmirsTtlkznVjN3/XX2ZewiH4y2fVq?=
- =?us-ascii?Q?YM4+zVcD7APaw+gHchWp5iRktz/oxHxT9FLbWfO9W+oqLEjB6pN5GQMNUftv?=
- =?us-ascii?Q?nV3ZtbCqhu3DNXYX3ETEHeSvACJaSS86LDPYY42mKqTH5BX5wJ7jqgDbYbqu?=
- =?us-ascii?Q?R3XOXlV2nKbnJre4wHiuY984rx2kaa5WKEbj65j4CTtmyzQkgAHF1qd54VRk?=
- =?us-ascii?Q?MEnvRysrJ8lilBUSMzT4dTrHdjNDE7ENQT745yCwtYGJlMIAU7t5qP4g/Kim?=
- =?us-ascii?Q?Z7rj3Z1I0HcdK/DKbEjVwb8nVLzS/QZVJsu8rkTFjTQps0dyXKtAwnpZrUFs?=
- =?us-ascii?Q?uVkS8cQAnBnGi5ZZK7d5//XecyQJyX07pApBpaEZ/DvlUIrfnrWlTKplSLcY?=
- =?us-ascii?Q?Qx0=3D?=
-X-OriginatorOrg: sct-15-20-8880-26-msonline-outlook-ce67c.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: d50ea07b-75ae-413b-d712-08dde3a4617e
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2025 06:55:31.0608
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNXPR01MB7371
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6402268d-bc80-4bfe-abb8-edec9e1b8417@web.de>
 
-Gmail's SMTP server also has a port 465 with SSL/TLS encryption. It is
-more secure than port 587 with STARTTLS encryption. Update the docs to
-reflect this change.
+On Sun, Aug 24, 2025 at 06:32:47PM +0200, René Scharfe wrote:
 
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
----
- Documentation/git-send-email.adoc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+> >> Use the commit index value as a hash because it is unique, has the
+> >> right size and needs no computation.  We could also derive the hash
+> >> directly from the pointer value, but that requires slightly more effort.
+> > 
+> > Interesting. This is exactly what commit-slabs were created for (and are
+> > why the convenient index value is there in the first place!).
+> 
+> Kinda -- they have a payload value, while a khash set only stores keys.
+> A commit slab with an int payload would still be smaller than a khash
+> set with 64-bit pointers as keys -- IF we were to add all commits.  Here
+> we typically add just a few, but a pathological history could add a lot;
+> not sure if there's a boundary.  Hmm.  So you might be able to find
+> examples where commit-slabs win.
 
-diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
-index 5335502d68..c610909a92 100644
---- a/Documentation/git-send-email.adoc
-+++ b/Documentation/git-send-email.adoc
-@@ -521,10 +521,10 @@ edit `~/.gitconfig` to specify your account settings:
- 
- ----
- [sendemail]
--	smtpEncryption = tls
-+	smtpEncryption = ssl
- 	smtpServer = smtp.gmail.com
- 	smtpUser = yourname@gmail.com
--	smtpServerPort = 587
-+	smtpServerPort = 465
- ----
- 
- Gmail does not allow using your regular password for `git send-email`.
-@@ -542,10 +542,10 @@ if you want to use `OAUTHBEARER`, edit your `~/.gitconfig` file and add
- 
- ----
- [sendemail]
--	smtpEncryption = tls
-+	smtpEncryption = ssl
- 	smtpServer = smtp.gmail.com
- 	smtpUser = yourname@gmail.com
--	smtpServerPort = 587
-+	smtpServerPort = 465
- 	smtpAuth = OAUTHBEARER
- ----
- 
--- 
-2.51.0
+A khash set doesn't have a "vals" array, but I think it does always keep
+the flags array, which is a uint32_t per bucket. That's how it knows
+which buckets have a value in them (since it does not otherwise assume
+there is a sentinel value like NULL). So even though its API is that of
+a set, you can think of it as a mapping of keys to flags. So a mapping
+to an int (or even a char) should cost the same.
 
+> > The idea of commit-slab was to have a zero-cost lookup, which is done by
+> > indexing into an array (well, really an array-of-arrays). The biggest
+> > downside of commit-slabs is that they allocate one element per commit.
+> > So for a sparse set you end up over-allocating and possibly suffering
+> > cache woes due to requests being far apart.
+> 
+> Right, and it doesn't support removal.
+
+True. And I think that is the big downfall for what I was suggesting
+earlier (backing a slab with a hash table). If you have a slab that
+holds only a few items at one time, but which cycles through a larger
+set of items, it will grow to match that larger set. That is a waste of
+memory with a traditional slab, but if you back the slab with a hash
+table you also waste computation doing lookups on a hash table with lots
+of elements, when most of them are not interesting (but the slab code
+has no way to say "this is not interesting any more"; you can only
+take the address and assign to it).
+
+So probably the slab API is not so great for many cases. But what I was
+mostly getting at is: should we be using hashes in more places if their
+access time is cost-competitive with the slab arrays?
+
+More on that in a moment...
+
+> > +define_commit_slab(commit_counter, int);
+> 
+> We only need one bit, so a uint8_t or char would suffice.
+
+True, though that doesn't seem to change timings much for me (I used
+"int" because that's what your khash used, but I think the type is a
+dummy value in "set" mode).
+
+> I didn't even consider them a contender due to the memory overhead.  The
+> difference is surprisingly small.  I also got 3%:
+> 
+> Benchmark 1: ./git_khash describe $(git rev-list v2.41.0..v2.47.0)
+>   Time (mean ± σ):     608.4 ms ±   0.6 ms    [User: 544.6 ms, System: 49.2 ms]
+>   Range (min … max):   607.5 ms … 609.3 ms    10 runs
+> 
+> Benchmark 2: ./git_slab describe $(git rev-list v2.41.0..v2.47.0)
+>   Time (mean ± σ):     624.4 ms ±   1.0 ms    [User: 560.6 ms, System: 49.3 ms]
+>   Range (min … max):   623.3 ms … 626.5 ms    10 runs
+> 
+> Summary
+>   ./git_khash describe $(git rev-list v2.41.0..v2.47.0) ran
+>     1.03 ± 0.00 times faster than ./git_slab describe $(git rev-list v2.41.0..v2.47.0)
+> 
+> I guess hash tables are just fast, even the slower ones.  Provided they
+> fit into memory.
+
+Yeah. Thinking on it more, how much benefit are we getting from the use
+of commit->index in your patch? In other contexts where we store oids or
+objects in hash tables, we use the low bits of the oid directly. So it's
+similarly cheap. If I do this tweak on top of your patch:
+
+diff --git a/builtin/describe.c b/builtin/describe.c
+index edb4dec79d..e024feb080 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -289,7 +289,7 @@ static void lazy_queue_clear(struct lazy_queue *queue)
+ 
+ static inline unsigned int commit_index(const struct commit *commit)
+ {
+-	return commit->index;
++	return oidhash(&commit->object.oid);
+ }
+ 
+ static inline int ptr_eq(const void *a, const void *b)
+
+I get similar results (actually faster, but I think within the noise).
+
+Which made me think more (always a danger). We already have an oidset
+data structure, which is backed by a khash. It's not _quite_ the same
+thing, because it's going to store an actual 36-byte oid struct as the
+hash key, rather than an 8-byte pointer to a "struct object" (which
+contains that same oid). And likewise when we do a lookup, the bucket
+search requires a larger memcmp() than the pointer equality. But how
+much difference does that make?
+
+If I instead do this on top of your patch:
+
+diff --git a/builtin/describe.c b/builtin/describe.c
+index edb4dec79d..38ce0c1978 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -287,41 +287,16 @@ static void lazy_queue_clear(struct lazy_queue *queue)
+ 	queue->get_pending = false;
+ }
+ 
+-static inline unsigned int commit_index(const struct commit *commit)
+-{
+-	return commit->index;
+-}
+-
+-static inline int ptr_eq(const void *a, const void *b)
+-{
+-	return a == b;
+-}
+-
+-KHASH_INIT(commit_set, struct commit *, int, 0, commit_index, ptr_eq)
+-
+-static void commit_set_insert(kh_commit_set_t *set, struct commit *commit)
+-{
+-	int added;
+-	kh_put_commit_set(set, commit, &added);
+-}
+-
+-static void commit_set_remove(kh_commit_set_t *set, struct commit *commit)
+-{
+-	khiter_t pos = kh_get_commit_set(set, commit);
+-	if (pos != kh_end(set))
+-		kh_del_commit_set(set, pos);
+-}
+-
+ static unsigned long finish_depth_computation(struct lazy_queue *queue,
+ 					      struct possible_tag *best)
+ {
+ 	unsigned long seen_commits = 0;
+-	kh_commit_set_t unflagged = { 0 };
++	struct oidset unflagged = OIDSET_INIT;
+ 
+ 	for (size_t i = queue->get_pending ? 1 : 0; i < queue->queue.nr; i++) {
+ 		struct commit *commit = queue->queue.array[i].data;
+ 		if (!(commit->object.flags & best->flag_within))
+-			commit_set_insert(&unflagged, commit);
++			oidset_insert(&unflagged, &commit->object.oid);
+ 	}
+ 
+ 	while (!lazy_queue_empty(queue)) {
+@@ -330,10 +305,10 @@ static unsigned long finish_depth_computation(struct lazy_queue *queue,
+ 
+ 		seen_commits++;
+ 		if (c->object.flags & best->flag_within) {
+-			if (!kh_size(&unflagged))
++			if (!oidset_size(&unflagged))
+ 				break;
+ 		} else {
+-			commit_set_remove(&unflagged, c);
++			oidset_remove(&unflagged, &c->object.oid);
+ 			best->depth++;
+ 		}
+ 		while (parents) {
+@@ -348,13 +323,13 @@ static unsigned long finish_depth_computation(struct lazy_queue *queue,
+ 			p->object.flags |= c->object.flags;
+ 			flag_after = p->object.flags & best->flag_within;
+ 			if (!seen && !flag_after)
+-				commit_set_insert(&unflagged, p);
++				oidset_insert(&unflagged, &p->object.oid);
+ 			if (seen && !flag_before && flag_after)
+-				commit_set_remove(&unflagged, p);
++				oidset_remove(&unflagged, &p->object.oid);
+ 			parents = parents->next;
+ 		}
+ 	}
+-	kh_release_commit_set(&unflagged);
++	oidset_clear(&unflagged);
+ 	return seen_commits;
+ }
+ 
+
+then I likewise get very similar timings. Your version seems to be
+consistently a little bit faster, but within the run-to-run noise of
+~1%. But the bonus here is that we didn't need to define a new hash
+type, nor do any tricks with the commit->index field.
+
+Now if we really are worried about those extra bytes in storing a fresh
+oid, is there room for new data types? I.e., A "struct objset" that
+stores object pointers, hashes based on the oid, and uses pointer
+equality to find a match?  And likewise a "struct objmap" that could
+perhaps compete with commit-slab (but be more pleasant to use).
+
+> >   1. Does the hash always perform better? For a dense set, might the
+> >      commit-slab do better (probably something like topo-sort would be a
+> >      good test there).
+> 
+> With dense you mean that most commits get some data value assigned that
+> is kept for longer?  That's when commit-slabs should shine.
+
+Yes, that's what I meant. And yeah, I'd expect commit slabs to be more
+competitive with hashes in those cases. But I wonder if a good hash
+table could come close enough to obsolete slabs.
+
+> >   2. Can the hash version handle strides of different sizes? One of the
+> >      points of commit-slab is that the fixed size of the value type can
+> >      be set at runtime (so you could have a slab of 32 bits per commit,
+> >      or 132, depending on your traversal needs).
+> 
+> Dynamic value sizes require an indirection via a pointer, or at least I
+> don't see any other way.  What would be a possible use case?  (Don't see
+> any in-tree.)
+
+The value isn't totally dynamic; it's static for a single instantiation
+of a slab. I don't think khash supports that (it has a value type and
+lets the compiler take care of indexing into an array of that value).
+But you could imagine a world where khash (or some custom hash code)
+only knows that it's storing N bytes per item, and does the indexing
+multiplication itself.
+
+But yes, I don't think we are even using that feature of commit-slab
+currently. I used it in a series for fast --contains long ago:
+
+  https://lore.kernel.org/git/20140625233429.GA20457@sigill.intra.peff.net/
+
+but can't remember why I never got back to it. It would also be useful
+for show-branch, which wants to paint down for each starting tip. But
+given that we haven't used it, it may just not be that useful a feature.
+
+> >   3. How does it perform if we swap the commit->index field for using
+> >      the pointer? If it's similar or faster, we could get rid of the
+> >      commit->index field entirely. Besides saving a few bytes and being
+> >      simpler, that would also mean that we could start to use the same
+> >      slab techniques for non-commit objects. There are several cases
+> >      where we use a few custom bits in object.flags because we need to
+> >      cover both commits and other objects. But those are error prone if
+> >      two sub-systems of Git use the same bits and happen to run at the
+> >      same time without clearing in between. It would be great if each
+> >      algorithm could declare its own unique flag space (and discard them
+> >      in one action without iterating yet again to clear the bits).
+> With "commit" being the pointer, returning "(uintptr_t)commit / 8" in the
+> hash function for the khash set gets me the same performance.  This
+> assumes an eight-byte alignment and that pointer values are flat indexes
+> into memory, which might be too much.  A portable solution would probably
+> have to mix and spread out all bits evenly?
+
+I'd think there would be more entropy in the low bits in general, so
+just "(uintptr_t)commit & 0xffffffff". But probably just using oidhash()
+is better still.
+
+> The nice thing about commit-slabs is the lack of required maintenance.
+> They just allocate as needed and never give anything back, never need to
+> rehash.  And they don't need to store the keys anywhere.  They should be
+> good alternatives to object flags used during full history traversal
+> without flagging non-commits.
+> 
+> Off-the-shelf hash tables like khash might be slower in these cases,
+> though not far off, I expect.
+
+Yeah, maybe. I've never really loved the drawbacks of commit-slab, and
+your numbers made me wonder if we could be getting away with hashes in
+more places. Though one of the drawbacks I find with commit-slab is the
+grossness of instantiating a giant mess of macros. That is not much
+better with khash. ;) And certainly oidmap, though it does not use
+macros, is no picnic to use either.
+
+-Peff
