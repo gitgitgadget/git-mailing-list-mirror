@@ -1,134 +1,102 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB0E1D5ABF
-	for <git@vger.kernel.org>; Mon, 25 Aug 2025 17:26:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A445E3090D5
+	for <git@vger.kernel.org>; Mon, 25 Aug 2025 18:11:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756142764; cv=none; b=KEOnF17dW3QXWwRbn0Ydh3/DwT0ygLc15wVNR4CCgLKcka+Lwzx+3UUYjiYaUHVsIdsJC5ooM2gxrAy/sg0TMBZ9Qiog+/F6TZfzWXWJjkbrjIVPqkW/2wE5dPDrJS0ijMKsGM6cBCsHxtWirrA+lW0LEapJg1i4NoZXDEk4sDE=
+	t=1756145486; cv=none; b=McrtP/HPx0cOQK8QYId7mwc9BUov/aMBovzJ9NNqsLWNH9epZs1sp5nErLuRXslRZlcUr2Ej+k/F1mUsAVWc3J1aDMsdGVf79EyF4vMJ+0VbcaltxT68BsExLsqIencd3D5+c3a18LxAPv8E/aTgEDOnd2ZGPuks8cTXxvffLzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756142764; c=relaxed/simple;
-	bh=NqOVZfaJloIkCF4od6Rsgw6d+3Y4N5UZkk/qyx//CWo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EFxB7zuRgb1zkUQHVj65/UR8RTyIuiC8Y8xLc8ysBIa3ugVKB/3wkFjQo3wDLC1idvw8TegYjzhUKo0KVq5oY6e/3xsjmi422W6/F/6TxJSaWNBWBFgsi8CTUkFQRlJ1miYkPbJmC9PIpqmq4TG3DdhX6w3EhYCtrtUx6KvNuEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JFEHrJ3/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gxkrqOXG; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756145486; c=relaxed/simple;
+	bh=Xh69z7VBl2TxqOXyI2G19xqGIkMyrQnL38iW7mUAw8M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZSlNk2qVxzEE6geI5/c0BRnDUgZmTiUTWXbQRhS7wcavHe7Jr0p6cUGO2Dd23VxCHsm8GYrSoFAN0FdRcrgwjsIZP9tpNeb0Nmpn+ABCIsAnAoRWc/9JHLmAaDIeOUeZ8dmOBaH5HenZfCmFUz6mycj8fcqTS+WVbwPlaUAXbsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HrbFSqRr; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JFEHrJ3/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gxkrqOXG"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2B39D1D0015C;
-	Mon, 25 Aug 2025 13:26:00 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 25 Aug 2025 13:26:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1756142760; x=1756229160; bh=8gCtRIyZOd
-	IYbqYqZUEQIvfqrChRVpZc6keB9hwipAU=; b=JFEHrJ3/hVII6fhj67Fooho68t
-	mQKe5ckTXmOE9tejO0FVOxlhTLIXURq+wH71rxY99beK7UpsCCAVa9UfvL8znWHk
-	E1fU6W+kPRs5RjsjcFwE8d926OIRasPMC0coQRdZaCO6cDNgw0DrH9nua0AaVqFE
-	cO2ErTZNmmbJh2yr9P+p3gDX34V1pqPsRlL5sPAkzm8Mg1jL0pa6AfQNY/hmDoNK
-	0p+TuSVRbLbW+ZrRYk6ZuE/X4gJDvOkimJk7EmWai29s1xNUiDi9HQsKbKITHnsL
-	dl5wWVqn4FPjIr0Po8dNTtYbXdBioLHIvvF/gmap6IX0ZRmgSU3HFLKcmQeg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1756142760; x=1756229160; bh=8gCtRIyZOdIYbqYqZUEQIvfqrChRVpZc6ke
-	B9hwipAU=; b=gxkrqOXGGK3+sYdcfjc3yt91k8k6iebehCNvuCM7HCCN1b6BjHo
-	CylSRM7ZJbnJyQUwlI4jOiU5tOz58Ugyia+8VRsp39fTFJRwYJFVNUP1D1ZsNOtH
-	g2rli32mwFdPeAt53XMmbK9yPdfOR5nCHnm3Q5gDRsYsAEijuvyGq0cDkoaWsUpD
-	6QiKCQ4UK2riTuGTO0ISFhuqlbX6SOzFUUPV66R7r/qYS3rDEZ9XNo4hfLXBHkit
-	TnlSmflAzUpJSaPquuJU9De5zSHUihZd/Ae9+hRE5RVwJ4rf6TJS8fHFEZDmHB26
-	TzEqAGuZJ4LmEHvjFhXcHzL7KhTEzHPfYtg==
-X-ME-Sender: <xms:p5ysaGHF7rGUJkJhhzbF4CfHPdm134xQkf2l6EM-8n3yt8u8nqf5Eg>
-    <xme:p5ysaKk46Y82_L2jq6lTguZ4MBczADJO8WIqg2YTBmRRJFGhW-8UoXuB0OPpupX5f
-    4Lc2Rlei9obBK5lDQ>
-X-ME-Received: <xmr:p5ysaJl5y4FsjtS4g7Q7v7Cc0sjRGfY-yYeTdJ7FlbKTSMWQXdOtGXtMGF8xKaNr5mtFcZ9kgICJzq32_EE1pf11AOEg2i5OOdVqbZY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujedvleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggr
-    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:p5ysaLu3T0QXHjqHsFaVi1Bw7tQESjGeTH4zCvXLEaelh7-S1vI2wQ>
-    <xmx:p5ysaMm9-EnbCODCHKmlC4Adv2J84tOTGVlv_-MXyJTmka1cRbvfpA>
-    <xmx:p5ysaGtuiqqx7ZCzKN2pFk-aekp4gJha13pC64JG0g4XVnTvDtCVYw>
-    <xmx:p5ysaCfm9_PFSvpA4ec_mGt0sHmsRTX8XnGhlF_exa2gv64Fp0au_A>
-    <xmx:p5ysaNYw1x_piNXaFcwDgJHhR6JgncCQbnMdMdN5il0DA7Eq5asuzXYB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Aug 2025 13:25:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH] docs: note that extensions.compatobjectformat is
- experimental
-In-Reply-To: <20250823220601.336079-1-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Sat, 23 Aug 2025 22:06:01 +0000")
-References: <20250823220601.336079-1-sandals@crustytoothpaste.net>
-Date: Mon, 25 Aug 2025 10:25:57 -0700
-Message-ID: <xmqqo6s3qpne.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HrbFSqRr"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-246151aefaaso31471285ad.1
+        for <git@vger.kernel.org>; Mon, 25 Aug 2025 11:11:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756145484; x=1756750284; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mgozqbUWrMRSEIUREFfcaxcXYm2hyIyo9WdqN10GJK4=;
+        b=HrbFSqRrgMmJVpeQ3hNsCMZfEKy3JbJ5LAE/skGe6xxwGWABZmX96Ebzz9UxQ6WsPR
+         v18h6x8FS/7gAyP9Bfv5W6Y5CSvWjxvMPvRawz4aL35FJZpAMwCbqk0aFED7rt7uzOFg
+         khbX95lPB71Bx9/udKcICoHxlJbACknorRCAzMx4oezlOFKrkNtbceFjbKFh1xFgRAzz
+         waA+6oZBsaL8LDUL72BbLFZ8Dxdzo0G9hY0UNxudE1DMOBx7gzgrLQjJRBCDz33gO74l
+         jBnCC+pAPlY/kKqBHJ62jFUlIt5UeVFpW2Y+z9bDx5KmK04LLdUgS9qtgi6hkptVwjN4
+         Uf8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756145484; x=1756750284;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mgozqbUWrMRSEIUREFfcaxcXYm2hyIyo9WdqN10GJK4=;
+        b=FbcWUDnCL6OqcBTSjYnak2c8RprwL80fbMqIcCQeg+u+McUsr3+YI9lF3JFKBCm0su
+         vG1Oqo4bKY6JDDc6u3XUvH8pTrYnRhHMVTeuBQKUtUF1+W3WCDBAMPL5L8av41axZr7m
+         ikSxsrZYqVgNMEpKjV6rfg0ZgDDSuS8hRDHQYjqaLknhgg/eMvQnW1sXVhb2BvraIWre
+         yeON7TQMArbVOLdNq0gIRDfb6JkCxkQxp0wz64XowkxevkjQNGRxer7QJNlrvdaJGlTN
+         FLHAzav18G2VbGNEDzPYsJT/IXux6knOtQ2cyPZIcMuP+hC3uN8z2H19VlDzDIJd6tmi
+         YTGA==
+X-Forwarded-Encrypted: i=1; AJvYcCXkUcVAZshdCHHDjurYxv5YgxVgRsdDlu5ZMReL6wOMuFXUu/iXI7jq1ekqmC+9cagFTD4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwtrwAVD6n0ZziUoYoQ8ef3QVHTC36Dh1kJeApwRFUUBiF8FYhs
+	xyXGCfdm4GwKhWTov0UcieTqIdYeE++SHHNqwJYQKSdyy/z+e80j9pU2
+X-Gm-Gg: ASbGncv/Ax4SaCKe7pW404T8Gxformjusb7J2E570Qqn1NYL5MLjCoBYzou4qZ40Fiz
+	A9JTiFBQoeHKGZVZartfAwGj7+YaaMdmafXp9HhosQxcJaPQsMwR9ku/M8J3zQKd39r7790UvcC
+	ZvRlSkx5npbliI9Zayft0ylFrdIoNosCMZvN+60afwQN4u2i4dsBJwvHXuEiYiC/t8F8xGNa7yt
+	jmtgJVWQk0cHuvD2NP0sZjxWVHgIz3dog9spsUGZCT3JAqG4xdjiSBwmg3zyNXi8uMGOEVc6+4g
+	qJ6Cns3ZGiDt4Lk2EKvS/48VVfyIcMuuXserhjtiWliyCyNN4Zk0Hq8T6bY3N7B5riSOq4JYiID
+	MqOYdDC9yoyctsoBtbFLBVHRZLq4daLA5xHm5UIsUsE19TwyzfvFSqRiYWVKhucIT+jUC9Bmviw
+	==
+X-Google-Smtp-Source: AGHT+IHXCM27MHdyb6lzlQ6qttAzojzrWt8yZgcZxd3FCCepByoT9/hFNpdHdBu89IwBSpwc8ABONg==
+X-Received: by 2002:a17:902:d584:b0:244:9912:8353 with SMTP id d9443c01a7336-2483deee807mr5242875ad.6.1756145483766;
+        Mon, 25 Aug 2025 11:11:23 -0700 (PDT)
+Received: from Reys-MacBook-Air.local (c-73-70-17-6.hsd1.ca.comcast.net. [73.70.17.6])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24668880a99sm73687345ad.121.2025.08.25.11.11.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Aug 2025 11:11:23 -0700 (PDT)
+Date: Mon, 25 Aug 2025 11:11:21 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Sixt <j6t@kdbg.org>, Nicolas Pitre <nico@fluxnic.net>, 
+	Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] progress: pay attention to (customized) delay time
+Message-ID: <jq5ul4zwdex6peuub3upwzxz3d5zcnuh7adseyg6wa6dpiu4ci@fuwe2t2vbguo>
+References: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
+ <86bf04c7-6315-46ef-8297-42efc3ed322d@kdbg.org>
+ <xmqq4itxvi3z.fsf@gitster.g>
+ <08f405a6-fd2e-40d7-850a-574356b4009e@kdbg.org>
+ <2d56de10-f829-4bc8-9c76-76eab6b137ae@kdbg.org>
+ <xmqq349fs5ee.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq349fs5ee.fsf@gitster.g>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Mon, Aug 25, 2025 at 10:00:25AM -0800, Junio C Hamano wrote:
+> 
+> >  	struct strbuf *counters_sb = &progress->counters_sb;
+> >  	int show_update = 0;
+> > +	sig_atomic_t update = progress_update;
+> 
+> It is somewhat misleading to use sig_atomic_t for "update", which is
+> never updated via the signal handler.  It confused me a bit during
+> my initial reading.  If it were
+> 
+> 	int update = !!progress_update;
+> 
+> it would have made it more obvious what is going on, at least to me.
 
-> The compatibility object format is only implemented for loose objects,
-> not packed objects, so anyone attempting to push or fetch data into a
-> repository with this option will likely not see it work as expected.  In
-> addition, the underlying storage of loose object mapping is likely to
-> change because the current format is inefficient and does not handle
-> important mapping information such as that of submodules.
+In that case, I would suggest doing instead:
 
-It is "experimental" in the sense that a developer who is interested
-in making the feature work end-to-end for the first time can use the
-code behind the flag to prepare loose objects to prepare what is to
-be transferred; it sounds more like this one is "not working yet" ...
+  bool update = !!progress_update;
 
-> diff --git a/Documentation/config/extensions.adoc b/Documentation/config/extensions.adoc
-> index 9e2f321a6d..292e95ddae 100644
-> --- a/Documentation/config/extensions.adoc
-> +++ b/Documentation/config/extensions.adoc
-> @@ -14,6 +14,9 @@ compatObjectFormat::
->  	compatObjectFormat.  As well as being able to use oids encoded in
->  	compatObjectFormat in addition to oids encoded with objectFormat to
->  	locally specify objects.
-> ++
-> +Note that the functionality enabled by this option is experimental, incomplete,
-> +and subject to change.
-
-... as the only end-user-perceivable purpose the compat format
-serves is to exchange data between two repositories that use
-different hash functions, no?
-
-The word "experimental" to me implies that it at least lets you
-complete a minimum end-user journey of the feature end-to-end.
-
-There are different degree of experimental in this project and we
-may want to do something about it, but in any case this is a welcome
-change in the right direction to steer those with mere curiosity
-away from hurting themselves.
-
-    Note that the functionality hidden behind this extension is
-    incomplete and the extension exists solely to allow us to
-    continue developping it further.
-
-might give them a stronger discouragement?
-
->  noop::
->  	This extension does not change git's behavior at all. It is useful only
+Carlo
