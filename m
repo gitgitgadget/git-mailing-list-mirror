@@ -1,104 +1,126 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73C3299949
-	for <git@vger.kernel.org>; Mon, 25 Aug 2025 21:43:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E562628C
+	for <git@vger.kernel.org>; Mon, 25 Aug 2025 21:57:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756158215; cv=none; b=nI4nI/qwQkjyUdIgPnQv0XV5JJMyCLCSJBsAQDzAV9jPABmjqJhilKKvYhHuNyGWZnggX+QfA5oVu+g1kTgjBMQqVOMj2lKJX1TLzn+ftfOuuOp78Zu1p2vSU6ph05Xh5Fg8d0+gY/ugSi2HRKCeBuhyYAJqJZbndNr9fy0qBXk=
+	t=1756159043; cv=none; b=XtznHT6TX1xvqTR3PmAn9ZCpiwTljhUvsG++IwEDPoZ8yGnzqEnDWx1NilYvghBwCwQ/e/TnQe3AnwGTkwHHfDGpQe3awgTW+TbmIJYiiCvAUPd6gQ4zX8ftoSImY5kWJYQA+wUpxN3s20uInXxz85D8qlmEz/2/RMJqbdw/uPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756158215; c=relaxed/simple;
-	bh=zo5oaaPFGN5OjzGCNNe7FIIdUHJQ1GquEO96zBN4xVc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YQmubd69B9HSA5CF84OwriAnBIxavtx4ieqHzDCuahib9V1VieVL8kYLCmnWKXKpz5+0qRHWFYhyVTKqCLd0h2W0SrVFhWYLuMGnGKqnk/hbmGjv05OAUk1QtR1deE31hjpgbWn6HzSe57shzjX950X+GozUF0/mtKoOtERjm2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gpRZdGy8; arc=none smtp.client-ip=209.85.160.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756159043; c=relaxed/simple;
+	bh=m9/+IIIuxLavT9JHO4SxepLSTugNNUkib53jKmnbYWE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=G+f7GHVBTo1aOF6hR2hFAB/GJbqSBxtCe/VYMqtZ987TrHAy9wjtsKu0i13GULpnoRPYK56Fb1ZHHYERr0egF6p4QgWtvpnq99wAi64J8tTe49Tj9htyKEBdYAyu4TtFguVjOAzeVmIhN4qsx5OCGTm3MqNo+YjJ4b+a3Fx1MWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=THHskYV4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AHh9qlNb; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gpRZdGy8"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4b297962b20so46869851cf.2
-        for <git@vger.kernel.org>; Mon, 25 Aug 2025 14:43:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756158213; x=1756763013; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3l7geW8Q4xvCEqypsHnbyJkCD1HIS6djsO6xLZ/mncc=;
-        b=gpRZdGy8bEQOuQcIT7fV3RP9gk3b/+Klr+MiUqA7Fdub3DNFx5bVsHpgRn40SekB+0
-         d+65hLcKXLUaAJF+/RG77J5JLhmrkpCW29mm7DLBOXDgucp5XpJfZ4xDziEo4FUdCQ2+
-         S4P+TuOqMgLCcy2Pd4MeUIH4pyEY7fXE+il2dGkNlujQ+v+U8YfQPHYUu4GL0LGCJo/O
-         1R5igCs6E3RudYKuzRdbB8RaCJcY8hOtJuSJmnRaevyuQnWlpD3TGVYTH8cpkUQu0yvE
-         bSDavzdzziVNcMBSP1GsGnD6jPNOZvrEhAXUcv0hR1NrlTbiz09vajZTDYOd2hySY1F4
-         BbXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756158213; x=1756763013;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3l7geW8Q4xvCEqypsHnbyJkCD1HIS6djsO6xLZ/mncc=;
-        b=lA4wvLjrg7C6ApbHZN/M2AdJzmuW8vn1J8oqe4dWrBhS3zMwVWTyZcTGhKhH8/bZ2k
-         1AblHv+1UzY2vnge/VmByvAnTJ/HkTWOrHQSPDHHM+ibKzgTMIfn/6MgPLml8XDfdzf3
-         nmQ2RYg8w3DnaAjPJ4yA4qXi/C+Og2HahdV9GxJ3hAeb7XvMDbjJyLGMPwfJv1zBq95H
-         FH4L5UivC+Q47PeqY5fnTSmmujOma9GOeMvFfbqU5rsjvgH0AazflfeqjpLv8yFsfydi
-         0BLq3p4nsCAdcfD/4GBp5ykug91erQ7cBRPhWnQMchY4b8DZH5JuCBxyDcXqVB8Xp/sm
-         ESjw==
-X-Gm-Message-State: AOJu0Yz5YaXgkGeq+eZlA6e/yERsTOgASBtIn/hAAvQZQZPNpHlX/47b
-	5D5IDV/P7iu6oYmKSDGu7tV/yRtP4AHAJNNvhQvPGQbGJxsj06oh3UBv
-X-Gm-Gg: ASbGncty8FJp+CAD0+36RTmf+cqdcHfhKgsgyk793UjpUmT0YqZSdBkldd8FAW72h3n
-	X810FB1n8vRaHGdyP6j26FHMuHuBm6uExLsIcCqR5BaYD1Df+SxH4BeOWZ/hj/ABnD0zWkIVA5l
-	OjOSvDbkKkBuLhpEyT4li9bYXdtXpubx1O2vn2m+I+HukGQeGNa8oGJjj+Ut2zp9g3i13Qr3l34
-	SpMdeDUXrZU4dxrfmWkYStf8h4SjuL9q2rruI8C5xv5wDKFxfdNRdG3yWEjen/hvx0dHyoLH/iD
-	Kft0jqeVbUDHAuo76s9NWlk04CcNQr9E3Ma/0lLOn/LR2P57f1Np6OlelJYIlPdTB7yl4P5ATRu
-	/Ge9+sxrB1cLQr642nOiq1mNm0PDjvmPgZEE=
-X-Google-Smtp-Source: AGHT+IGJb6bzF96PzRqyaVVg0+BRD91S5fq6nzfHY4aixDv8MzYTKZ4rt1laf7CTvHic+iIcOjH6Jw==
-X-Received: by 2002:ac8:7fc6:0:b0:4ae:cc29:82a2 with SMTP id d75a77b69052e-4b2aab5b78cmr141495281cf.59.1756158212599;
-        Mon, 25 Aug 2025 14:43:32 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.70.92])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b2b8c631b8sm61120141cf.3.2025.08.25.14.43.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Aug 2025 14:43:32 -0700 (PDT)
-Message-ID: <f98f3db4-cd36-4a24-903f-7aebf6af3d51@gmail.com>
-Date: Mon, 25 Aug 2025 17:43:10 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="THHskYV4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AHh9qlNb"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AB16B14001C0;
+	Mon, 25 Aug 2025 17:57:19 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 25 Aug 2025 17:57:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1756159039; x=1756245439; bh=YHZgR9jn+j
+	mGuQ30AlOfK4YJ6EvUPKohxmEWUE4WRVo=; b=THHskYV4S/1X9OEjO7MTVsEFen
+	H/gYc/39m3te+gBe4rwOgKV+4hcnRompzaK8yZ6FPm049bfaJoLHPHyRYgd0CL4X
+	O1MKlSEsBDMbY/8X/0n8FrhUcHzvohWdLV6jdvEFGNWPBhmvUL4OMpqSej2/WpP3
+	MLFQ35jHL+Zip6pdc/DDO8NQ91DExXnKOHjiFwSjn/sUwHjEMrQiHipoZ8wzv3Z+
+	ZgeB0mL5MPmXKrfWn1zG8NeXmKXHtxMSkLHFYw8Z1d+wBPmMxsNCN75TG8SJ4mP6
+	OxW4TBL804L2j2vA1DJD3g6+q/YAP1kj9BY6znEQe2oXZCXP2gjMI90E/U8w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1756159039; x=1756245439; bh=YHZgR9jn+jmGuQ30AlOfK4YJ6EvUPKohxmE
+	WUE4WRVo=; b=AHh9qlNbMoco9LtmYJuxKoiWR6Wxz067rFGYVMDoxQi9trydw9g
+	lewoVb5wRDHi05iW8MDWPnUzph8npxoRYGDZ4UjFWo08gP3ywvRjSlP+OjnMdipu
+	U9cSmh3Fn+myv4wmJFcginWF3DHWjdpblLR/2zwgn8YdcZIS2eco3wjvEZ6GeCrw
+	G+NebNa6D+foxHZnUhsNeHT028nB8stLNuYx1m/eCHIc8LFxFSMV/6JKBZDQsllh
+	wHtudVa7HfpoJjLDJMdib/lYEWhRkLX6JP31EIH+0A2wEjX0ru/a2xxOfzJaIon7
+	c6BZCgPLwgze2VNCUPDXo0C5b9TvWhVL8Tw==
+X-ME-Sender: <xms:P9ysaHqS9wfA23J3V3heNTcAxRJTZkvdagpq0VoARd7uerjGDz8ERg>
+    <xme:P9ysaMMHZRTcuBh-khxdIH5aWVliSc4Iev04ddiaebmhmD9USADzEcUV1nykwtIcw
+    1rymHnrFDLOZQQZ8w>
+X-ME-Received: <xmr:P9ysaAyO4Y6NSmSIEOk0k_ayjKJETc9QWvnYyxvrrNMEaVYR9-w1GB-TJp4kd2y7Rkdfumxa-xxuPQJst0CRLxHeGXjoUyPSVddcBtI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeefheefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:P9ysaNt4-YNVysiaGYhmGGlzcpcTc5xkZVtW5Fj5g2V3iQ311vJ7Ag>
+    <xmx:P9ysaB6FR_ZTYRWIxsHM2T9rYkZrALyz3sI9-XvoMWO0_ILi4FSAuw>
+    <xmx:P9ysaES1n2F6uR-1DmefUUmp1pYC3bDw0vC16JeSToI3J8r1rLBSRg>
+    <xmx:P9ysaIosuDuUsDqkPB3rCU1reTvszP1Kv0X44e0DLostV4TLiVlXeQ>
+    <xmx:P9ysaNZC3uc-FXuq7LxKrXh4-yqbqpUPL17lvVHtsL8BFIFroKc2zpg2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Aug 2025 17:57:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH 4/4] line-log: simplify condition checking for merge
+ commits
+In-Reply-To: <f98f3db4-cd36-4a24-903f-7aebf6af3d51@gmail.com> (Derrick
+	Stolee's message of "Mon, 25 Aug 2025 17:43:10 -0400")
+References: <20250824190644.2573279-1-szeder.dev@gmail.com>
+	<20250824190644.2573279-5-szeder.dev@gmail.com>
+	<xmqq4itvp19r.fsf@gitster.g>
+	<f98f3db4-cd36-4a24-903f-7aebf6af3d51@gmail.com>
+Date: Mon, 25 Aug 2025 14:57:17 -0700
+Message-ID: <xmqqqzwznjya.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] line-log: simplify condition checking for merge
- commits
-To: Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?=
- <szeder.dev@gmail.com>
-Cc: git@vger.kernel.org
-References: <20250824190644.2573279-1-szeder.dev@gmail.com>
- <20250824190644.2573279-5-szeder.dev@gmail.com> <xmqq4itvp19r.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq4itvp19r.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 8/25/2025 4:57 PM, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
->> In process_ranges_arbitrary_commit() the condition deciding whether
->> the given commit is not a merge, i.e. that it doesn't have more than
->> one parent, is head-scratchingly backwards, flip it.
-> 
-> Hmph, the condition is about "is it a root commit?  or is it a
-> single-parent commit?", which does not sound overly complicated to
-> me.
+Derrick Stolee <stolee@gmail.com> writes:
 
-It is something that one can interpret carefully by thinking about
-it, but the negation and OR condition made me need to pause and
-think about it, while the positive of "does it have a parent and
-a second parent?" was something that flowed naturally when I read
-it.
+> ... but the negation and OR condition made me need to pause and
+> think about it, while the positive of "does it have a parent and
+> a second parent?" was something that flowed naturally when I read
+> it.
 
-Definitely a taste thing, so I could see you wanting to skip this
-one on a pure "don't touch what's not broken" policy.
+Yeah, that I 100% agree with.  If it were
 
-Thanks,
--Stolee
+	if (!(c->parent && c->parent->next))
+		handle_ordinary_commit();
+	else
+		handle_merge_commit();
 
+that would have been very easy to grok.  I do not have a strong
+preference between that and
+
+	if (c->parent && c->parent->next)
+		handle_merge_commit();
+	else
+		handle_ordinary_commit();
+
+myself, but I always felt that handling ordinary commits was the
+primary thing in this code path, which made me react to the swapping
+of orders of these two calls.
+
+> Definitely a taste thing, so I could see you wanting to skip this
+> one on a pure "don't touch what's not broken" policy.
+
+True, too, but the code that fails to be in a readable shape too
+falls into the "broken" category, so in that sense I do not mind
+queuing the patch, either (and indeed tonight's 'seen' will include
+this step in the topic).
+
+Thanks.
