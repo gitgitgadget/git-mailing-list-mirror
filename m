@@ -1,89 +1,108 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1B123A9AE
-	for <git@vger.kernel.org>; Mon, 25 Aug 2025 22:11:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6E4277C8C
+	for <git@vger.kernel.org>; Mon, 25 Aug 2025 22:46:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756159871; cv=none; b=TskH8axfNUi9NYt+BnvDPa4UBJXAB+lW0gZ76DRKAerkoeeHQGZ5tPM+Dpbh/3WQe1/IJ7dq6OYVle3hmyxj6dWT8/fhRK/kKfurzwfvqZD/Y2cBZa2wS+BxpMwfWYf18INao8YsT806A6GyMD0OU/GGby1m9SOUFJVhZhgRwA4=
+	t=1756161991; cv=none; b=CRYzx04xrMgZkMiihwzyF8ozVRLUWJ79lEzEdUGMQTtbAmHGoJuayR5g/4sQ/i9Vpuf6dJoP/vgCwbP4mGL0UgCSoDqshBl2Hs55y6PEWDnsH+2ZbRQc52hA8653UNN897i3QFJtErwjLW7IuOGbSoxKr5ChwDG7SdirR46X8Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756159871; c=relaxed/simple;
-	bh=lR6wOlhHdDiTbfOPtk6EgvGvvnrYk8dqxVv/uPYhVFo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPFd5WZ3efWEwRBz2DXwqW5j7Blk/nKNDFCYKrFjWU9gJWt29OTVL7b0D/IxJSGtLnTdyHVRIGKCiEXWzegI2t2BDbnzvR+H+zCyPmjGK7Pp4J8lhHKQeAQ6PwQnqvLE5zlOmH01pRZoUQIxw58KinyCyChVh0C3+HKuev3xLQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=nPGlIHXT; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1756161991; c=relaxed/simple;
+	bh=2K3xvYjHKv12lv8d8rFC9tkeerp/i/7QenKurA6yDhI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jdpbAmslEv+KmM4bdLGaOUCzLx26M4kkbu9U/0MDqkwgk5rmFE812L7a4jIN7p3yAlHbiSRT+DgxZVru76RnDLE/6Jtg6dn5uacV6DsC5ROuEien41m/zZrL2p5Phwgm2oo/DMoDFVRo/aM2aoYuceimgMm1Yh83ZkuOvN5kx2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MR+1ZH5R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IesPwot5; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="nPGlIHXT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1756159867;
-	bh=lR6wOlhHdDiTbfOPtk6EgvGvvnrYk8dqxVv/uPYhVFo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=nPGlIHXTug9prq2RbSBNu5Y/XNnT9zq2hjPi2Kp6wN8majdLFu/GrfO60Rg55l8Yl
-	 vtrc/MylAi/iZm3dHvRYOePtm5cXy9RXLtAIv3ol7FrnGfUr3Zka1ONjb1LQkx+Nxy
-	 V3RJrWH8/Z+xY6bh3dkfcHI7IoBNO3zhivRt5KPZjIlgK3XznFZxev62DT2RkmSwhu
-	 EmApbYvkZuJS9hG1fzUHBaxoK7PGGIx2od0gp3w+7V70KF1bmynvoxPNpxyTjFvg6e
-	 STbcZ2aX51WY2wqIH8E3b6lS5ln4outBiTR389Oq1uUfL6SkEbQhpQ2OUevA0AFLj1
-	 0PaiKmRgztx2PiNUG+5UHLAUKb1Ac4ZHrnUkdhcPma8EK3PSD2oVS4BT9HgPZ9CO6p
-	 58ePCTG65KEBTSpVSzgogyzdI/iUBQ/LfozGn4bZ9bT+kgqf6WNxMGN+IDZdVssNKv
-	 eCwzOvAS71WYwnW11XuOhhO7Zo9HHktx6v2cSExa+8RN9EhFxBJ
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5044:243e:8019:42f0])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C0E9B200C3;
-	Mon, 25 Aug 2025 22:11:07 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] docs: note that extensions.compatobjectformat is incomplete
-Date: Mon, 25 Aug 2025 22:11:01 +0000
-Message-ID: <20250825221101.611876-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250823220601.336079-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MR+1ZH5R";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IesPwot5"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id B98C9EC0443;
+	Mon, 25 Aug 2025 18:46:28 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Mon, 25 Aug 2025 18:46:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1756161988; x=1756248388; bh=QDMmJX2GRN
+	EKmU14VQWi6Pk2RNcib2fMPtHFjLjlLA8=; b=MR+1ZH5RFX9qE9WzO3GXCNqsaj
+	OM3aq4thN14k3NjzpOB/XHAn+YwZ+mphSN4yPHB3X5/6JiTYtlsn8IIcgM1xb7ds
+	5+HAw1V7JIwMiJHFPJ9UbB4HgonEoi/IO35ntc3Waif223UNOrnaDPLUId8Om2gi
+	KRzA1fGyRLCs7OBj2OxkNGueshBn6Tj6u0NeXKLguyBn3y25xVSHQrARAt4ZcIny
+	iTjlXAAfSIpzRYDLcvU85oFCnSyaHGYnSIcvkpxJiL13ZwSEY2i+wd6+egL0cmPl
+	HKgE6liHSJDh+nNvAH7zOXBk7GqAg8p64UYakbPpYVtw7qdK10i2r8bfI2SQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1756161988; x=1756248388; bh=QDMmJX2GRNEKmU14VQWi6Pk2RNcib2fMPtH
+	FjLjlLA8=; b=IesPwot5NgT2ck/Ct19ynrNgQevLAqsfj6ef4aUUoqHbEh7uHDT
+	x0fALfQ7+YNfOtKjPQG8n5Jbt1QZ03GChHgvQI3n+gLbxUuup4kqfsa6U4daDbUM
+	sPI9d9yNwBV+wyKs1P+SF77VJdYpxlpC06S+E5hTmwkaGuNjFlgApFSS+nIO5R05
+	fAdWqUva4SZ7N4jnuDpTg71G2P+abdTn9cbHxp1XGwDKL1B86uREMB09z2kCGq3e
+	/xkvrXdFON//1cLJOonVh83lGbq6n4VqXzqSa9fHJCwzzb1Jvdrj3TvSW4rNQ7j5
+	ILjdBHZVQftSvIhdVSb8QPTuNYJaUN8t3Qw==
+X-ME-Sender: <xms:xOesaAvppS1z7M2RZ8pzVkqMoe9XBa15KSuh0SneD1N4izu9OS6r-w>
+    <xme:xOesaAskphP9ByOGY9KCoMMuZ-CEKpapfpOA-y5-lbM5pcfc0toKJKCyNKCF_M-Dd
+    wzIR4IVrqeOTBhnrw>
+X-ME-Received: <xmr:xOesaFO-DU8_LegSQxICuELsDj56yILrSVXjQ-DJ6aV9YYxDusGR19tPNU2SjBcDwgRaLinFuQLyCoxXkyI8ZPeqjZRnvfcx2T3Qh-U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeefiedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggr
+    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:xOesaO0WvtoSn-O1_zfoYS7WrXiiJUPV3AilXpaZlMSP2Nr9fP9VkA>
+    <xmx:xOesaBMylp4PDqTxFqELw0V2IdR_OhIRseq1j7s0DyhjwOjy1cvAMQ>
+    <xmx:xOesaO1tR4hYscgGxr8dKmgMGxluU4UYQJcjbGOQ3nbDZCYG8aRMPg>
+    <xmx:xOesaIF813IAsFpPIxrUl4JXA_f3YqiZa7Q8OQoIm5-fUadOKwSmMw>
+    <xmx:xOesaCiid6qMfTUL-_Qq3dh0KwpF7lLLwdHMD4Fkrp326pv5D4S2Xsh3>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Aug 2025 18:46:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>
+Subject: Re: [PATCH v2] docs: note that extensions.compatobjectformat is
+ incomplete
+In-Reply-To: <20250825221101.611876-1-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Mon, 25 Aug 2025 22:11:01 +0000")
 References: <20250823220601.336079-1-sandals@crustytoothpaste.net>
+	<20250825221101.611876-1-sandals@crustytoothpaste.net>
+Date: Mon, 25 Aug 2025 15:46:26 -0700
+Message-ID: <xmqqms7nnhod.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The compatibility object format is only implemented for loose objects,
-not packed objects, so anyone attempting to push or fetch data into a
-repository with this option will likely not see it work as expected.  In
-addition, the underlying storage of loose object mapping is likely to
-change because the current format is inefficient and does not handle
-important mapping information such as that of submodules.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-It would have been preferable to initially document that this was not
-yet ready for prime time, but we did not do so.  We hinted at the fact
-that this functionality is incomplete in the description, but did not
-say so explicitly.  Let's do so now: indicate that this feature is
-incomplete and subject to change and that the option is not designed to
-be used by end users.
+> diff --git a/Documentation/config/extensions.adoc b/Documentation/config/extensions.adoc
+> index 9e2f321a6d..df448da813 100644
+> --- a/Documentation/config/extensions.adoc
+> +++ b/Documentation/config/extensions.adoc
+> @@ -14,6 +14,10 @@ compatObjectFormat::
+>  	compatObjectFormat.  As well as being able to use oids encoded in
+>  	compatObjectFormat in addition to oids encoded with objectFormat to
+>  	locally specify objects.
+> ++
+> +Note that the functionality enabled by this option is incomplete and subject to
+> +change.  This option currently exists only to allow development and testing of
+> +the underlying feature and is not designed to be enabled by end users.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/config/extensions.adoc | 4 ++++
- 1 file changed, 4 insertions(+)
+Much better.  Let's further do "This option" -> "This extension", as
+all the others described in this document call themselves as such.
 
-diff --git a/Documentation/config/extensions.adoc b/Documentation/config/extensions.adoc
-index 9e2f321a6d..df448da813 100644
---- a/Documentation/config/extensions.adoc
-+++ b/Documentation/config/extensions.adoc
-@@ -14,6 +14,10 @@ compatObjectFormat::
- 	compatObjectFormat.  As well as being able to use oids encoded in
- 	compatObjectFormat in addition to oids encoded with objectFormat to
- 	locally specify objects.
-++
-+Note that the functionality enabled by this option is incomplete and subject to
-+change.  This option currently exists only to allow development and testing of
-+the underlying feature and is not designed to be enabled by end users.
- 
- noop::
- 	This extension does not change git's behavior at all. It is useful only
+Thanks.
