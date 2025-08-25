@@ -1,125 +1,159 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAD5287273
-	for <git@vger.kernel.org>; Mon, 25 Aug 2025 20:25:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A1123D7F8
+	for <git@vger.kernel.org>; Mon, 25 Aug 2025 20:40:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756153523; cv=none; b=G3BDlpsX8UjUbbi1OII694zOzu9f6DsH9Z/tPowtBaoAbwv4WcC1lzVtu7b7nl+/QWPXUHU8na37RG53E5rAdbSjzyUE9cbLCU/IaQFC1/YVGGu+mKoa6GdB1WCL+r2F12BCx+DutE7nSamB9tS5Sf5aXJx7i9birRCA1WXNbBU=
+	t=1756154435; cv=none; b=r/K2BLJH1EE3ch0txYrJuyj4C3QXanHJLAev3TBJLGE+u41LvqxYKNoQHxus3WNDneDFsJwRo4zHn5PYN911emhr3gb58ylAwGVoWfdQqVlgBMuulkS873oRXzQPkXpoGrKkaY/boumrjzev9MgnPDf+pwRJY1tXlaTjzCCbnuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756153523; c=relaxed/simple;
-	bh=hY9iiza0XbKfnqsVEfMpdZlmj+15bxlhkUuImvCgFyQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eNkRLRorp4aPEGSyuM9TQJc2RZ1IKskh5TD5srVUjuN2R+WVMLqtVLq5TY2xyr8IbwcdN0vSAm2981rkjl2gE7ragBYjDpP6icfn4JriqUk9jIgSj3AFWwa98srX3kr05eGM2D1kHO0XPwBJ+oLWPDzWRK+V+LmxZNKyGpycGXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZwQ0T5eO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RX1fA4Lj; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756154435; c=relaxed/simple;
+	bh=9L2+rEPswf4Q065mhyAUxUevmyCDVE7a8uEnJ5F8OFg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FDvve2bhTp8YddFBnoU2bZe1FJEEs0kSLRg6b4CZNrdTP071+qVVU20YfoQIA6Oxct+PKA5a4Qjrlitng0cAxT/uoqeXV3PK+HawkYq3wz/e/KsCONYZUfBlq9XAByePI5LFz4p39IFhaex1SBY744Vioh2V0u9VtgkI1EtuOuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iULH491G; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZwQ0T5eO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RX1fA4Lj"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A252714000A2;
-	Mon, 25 Aug 2025 16:25:20 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 25 Aug 2025 16:25:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1756153520; x=1756239920; bh=kozoNPL87b
-	gn9SE1M1Ief7LGtg60Ry2X+QEvxY7QlpY=; b=ZwQ0T5eOz+VzxvzjBjQFDlU/z/
-	6UTbh7fFyj038kEMY7URY6K94QiieLgvvJaOooCyiNTZoa92J3o1KheYLvTSmNrd
-	uTPi4q9+Xcg/iSEUH88k5pJgemTzba4VkR97mAuZJX9LVfXJOqT3sNiL6R0TEfdR
-	GJ4By4fuBFYO8w3GRgbeYf9PXFN0cZtRr5P4x4UQ55fjLSqpkqv6Gv5209Iz/PJQ
-	9vNKBQGRfLtMPfJRRm1hzZHYG2lItO9GiFqY3AN2zGppVspjCQuhIV11O4ZnkkEy
-	Wmpzt8ixBw26d5N+JdiOyOG0DZUcyLNRsewXc2qjnz7SK/pctgero4SzcrjQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1756153520; x=1756239920; bh=kozoNPL87bgn9SE1M1Ief7LGtg60Ry2X+QE
-	vxY7QlpY=; b=RX1fA4Lja2h3MkWmkDzF969SlZU2RKHdIT4P6fH09EfYMLihfa3
-	0HTNW6KxDK5ak2m+OSzGr8GbserTk4ME2W71+P368/epWNlGJ7C7ERS6z4Rd+mq6
-	R4rfSHOD2xS23uAskCqtr9nkv9rdg5UG6maBM9yMT+tyvA+AaxszdR2BMhW3Aprp
-	2jp4CdGzimPVA0xVkCZN1LjcGlJAyKrjakjtllDlf2WxY0EYM64DEIH6WpgFSvX1
-	oslQxO54GidOGAg5caMOzUt8aG7xt6oaJqwMJKk8vHrbs+DUp40ktbWSHsOWC8IF
-	7YE+wJet4YcTyKV0ksclOnd/G6pYmWTxl+g==
-X-ME-Sender: <xms:sMasaD3AqIaUm-lPcCnWyKR15zvGBWlDTweT8mGyk3ZhDPiDO4JOsQ>
-    <xme:sMasaMq1tn7NhlE6b5hG_eUX2453IlriFvTZ5CH_4IC-BhYBoYYXwZHFCvJw8uvvH
-    LUAcaT4A3swucx8Qg>
-X-ME-Received: <xmr:sMasaAfxdraJzZz6CRSe9iz2a1Kn6Fup0YqPS-P5x8LsUgxBc4GTWIxQLJSnojrqusX7yAcJSO4g_yrVogRP_yr4iz823ocW-azqIMo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeeffeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshes
-    phhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:sMasaLof5n7MvXbBGpwRG1hBhjaN9fLHbQEef3Gvre4jaSd5yl96Sg>
-    <xmx:sMasaBHsiqIWKNcj90txuxXLAWxTg_CIfVPocASGpMiYEgo0FWvnvQ>
-    <xmx:sMasaLvc1OoUzAOra9lai2onEuoU3DmyNwuYA2D1Fo93Fq-8iyLDNw>
-    <xmx:sMasaDXkgvycKOrjw3YOvKhiATNwE5-E946VQSEd_C3DMdI9TXyrwA>
-    <xmx:sMasaJENFAUe2troT-qsu7s59ZFnapqm-JUrObGfObXi7-BHw7HVoLUn>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Aug 2025 16:25:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v3 0/4] bulk-checkin: remove global transaction state
-In-Reply-To: <20250822213500.1488064-1-jltobler@gmail.com> (Justin Tobler's
-	message of "Fri, 22 Aug 2025 16:34:56 -0500")
-References: <20250821232249.319427-1-jltobler@gmail.com>
-	<20250822213500.1488064-1-jltobler@gmail.com>
-Date: Mon, 25 Aug 2025 13:25:18 -0700
-Message-ID: <xmqqsehfp2s1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iULH491G"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-55f3e4dfcf6so2312430e87.2
+        for <git@vger.kernel.org>; Mon, 25 Aug 2025 13:40:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756154431; x=1756759231; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Sd1Gr2Q9ZyOiqRzhJeZSWOfncd15RvFHV0Ijmx37jNw=;
+        b=iULH491GCYTAcvq6HbnP6xslSchvAN88zo1fWZ4XjODxl7zz90ByjmAu5PQl07jZCN
+         +vrL2ZYqqm1PEEPpBqAdITEHzFucSfSS4aTxztZgCT6ETO1GMVEt0Utu9Fkn2vV2fK88
+         xtsinMHcZD8W/0yZoEzYPOcf5XxNMpjLweGdtg4T2RxesTpD4UDw4VgHHXPE2cX5PY2T
+         6qYDntXdckesldoY4D/nPqlVcYyI3wI0Jq5iTUYK4dxx7QpqZ+D5fXSnl0Tn+tG/gbAn
+         3PohsM4hCigEln7gPasPeNn9nySU7pq291IBIAQ7AuzEQUl5i2ADdWMSCtYe4JI3+6SB
+         Vg9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756154431; x=1756759231;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Sd1Gr2Q9ZyOiqRzhJeZSWOfncd15RvFHV0Ijmx37jNw=;
+        b=k5eGii5gOf1/DkQtLvxtY7bjRHvOkDjQ45xTHGJzvlAGQDLVdel5CQvvHAyYZ1xB+A
+         6P6tHUCT2DJovt7zSGNMF/Dd0Hgy1s09yq8T+7+6d3nRGuShivyUkaKxdFnOFa1c+S7w
+         Ez6EeJyupAtFZDtKZpaac/XZZumDthF3Qct9sxBeL/69YIBp6Cm5WQ05JZXMqUcoq094
+         P2o8aykGP+g57nLfqQJwqHyrveJRHcQgKIh42ggu9Xt/arORSi+J3EsWr6vIkUUvzg6h
+         eVrRAXfUP82KhUuooifErrMxjTa3yhbd6GYOLH0PxC7Wg9A1Paj7lIk0KS9FjNczLQnH
+         l3sA==
+X-Forwarded-Encrypted: i=1; AJvYcCXSMacLAHw8WGKSbmS+IFJQ2VwZb+gUZ4iK7c65cuPvgPHZVKKlYuISwYtoQs2I/yU+4HQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyFlgo6p/c6WNbTU9aGOWfjQLNHWny9cxDyJyleNWFC5XzM1CPg
+	siRYxNWDTrFxreg87LZQiKdcrq6OqFpwGHFOTNXv/ydE4ZZKsgrrd+Uh+KTrFnaBgDoyx1ZCoz7
+	rYW75lF5MiFNeqiVmuchMX2Z2gt50gqc=
+X-Gm-Gg: ASbGncsZkzjcyTc0eeB124SlbTw8Hci6cvBFm+DZjc0+wvXFZa8U5UdW2b9SZCUA+Kd
+	D0p4x4rPmZih1VxyRk2XsE4u1MDWasvurdskym41MLXq+Ow6t21Igjqv+lgNMKMwcfyRzDDQ4Pk
+	NIJf9tip1y4bDwGMx8MBDvoMJ9njnwkEiuZfpq+G+sVNpKHqDlNLXv9REdrCLcZDqTRG0O+w122
+	QO4zQYe45urSMdSuss=
+X-Google-Smtp-Source: AGHT+IErFux4+ociUflO5Ni48MFSKzaSdP4bO/ApwKadYG6tUhoJC5dHmD3qpYasjUJX9gtyayJxeZ63MKxBn2dtHdk=
+X-Received: by 2002:a05:6512:260c:b0:55f:4b01:3095 with SMTP id
+ 2adb3069b0e04-55f4b014131mr612223e87.0.1756154431216; Mon, 25 Aug 2025
+ 13:40:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
+ <71B2DFE6-77E5-47FE-9FAC-AFC1B85DA0E2@gmail.com>
+In-Reply-To: <71B2DFE6-77E5-47FE-9FAC-AFC1B85DA0E2@gmail.com>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Mon, 25 Aug 2025 14:40:19 -0600
+X-Gm-Features: Ac12FXwVZMfh7tPC7-hylrM82zPTmFNbltxJzssm2Nmwh0n8JnVF9xYUy6tB49c
+Message-ID: <CAH=ZcbA=-iEFnJ-TecAZL_EX-f3pAShDhdq=S2XWkQHYgRZV7Q@mail.gmail.com>
+Subject: Re: [PATCH v3 06/15] ivec: create a vector type that is interoperable
+ between C and Rust
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, Johannes Schindelin <johannes.schindelin@gmx.de>, 
+	=?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
+	Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>, 
+	Mike Hommey <mh@glandium.org>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Justin Tobler <jltobler@gmail.com> writes:
+On Sun, Aug 24, 2025 at 7:31=E2=80=AFAM Ben Knoble <ben.knoble@gmail.com> w=
+rote:
+> I=E2=80=99m mildly surprised Vec isn=E2=80=99t a good fit: isn=E2=80=99t =
+it a pointer, length, capacity triple? But it sounds like the main issue is=
+ allocator interop=E2=80=A6 which I would also have thought was supported? =
+At least the current version is documented as being generic against an Allo=
+cator, too.
 
-> Changes since V2:
->
-> - `index_blob_bulk_checkin()` is combined with
->   `deflate_blob_bulk_checkin()` in patch 3 instead of 4.
-> - Continue to use `repo_get_object_directory()` instead of open coding.
->
-> Changes since V1:
->
-> - `index_blob_bulk_checkin()` now assumes that the caller always
->   provides a setup `struct odb_transaction`. Callers are adjusted to
->   ensure this.
-> - Functions in bulk-checkin.c now consistently access the repository
->   through the provided `odb_transaction`.
->
-> Thanks,
-> -Justin
->
-> Justin Tobler (4):
->   bulk-checkin: introduce object database transaction structure
->   bulk-checkin: remove global transaction state
->   bulk-checkin: require transaction for index_blob_bulk_checkin()
->   bulk-checkin: use repository variable from transaction
->
->  builtin/add.c            |   5 +-
->  builtin/unpack-objects.c |   5 +-
->  builtin/update-index.c   |   7 +-
->  bulk-checkin.c           | 152 +++++++++++++++++++++------------------
->  bulk-checkin.h           |  25 ++++---
->  cache-tree.c             |   5 +-
->  object-file.c            |  30 +++++---
->  odb.h                    |   8 +++
->  read-cache.c             |   5 +-
->  9 files changed, 141 insertions(+), 101 deletions(-)
+Conceptually yes, semantically and syntactically no. On top of Vec<T>
+not being defined with #[repr(C)] (which ensures field order, C ABI
+layout, padding, etc...) the struct definition for Vec isn't constant
+between Rust versions. I'd be open to suggestions for an alternative
+to my ivec type.
 
-Looking good.  Will queue.  Thanks.
+=3D=3D=3D Rust version 1.61.0 =3D=3D=3D
+from: https://doc.rust-lang.org/1.61.0/src/alloc/vec/mod.rs.html#400
+#[stable(feature =3D "rust1", since =3D "1.0.0")]
+#[cfg_attr(not(test), rustc_diagnostic_item =3D "Vec")]
+#[rustc_insignificant_dtor]
+pub struct Vec<T, #[unstable(feature =3D "allocator_api", issue =3D
+"32838")] A: Allocator =3D Global> {
+    buf: RawVec<T, A>,
+    len: usize,
+}
+
+from: https://doc.rust-lang.org/1.61.0/src/alloc/raw_vec.rs.html#52
+#[allow(missing_debug_implementations)]
+pub(crate) struct RawVec<T, A: Allocator =3D Global> {
+    ptr: Unique<T>,
+    cap: usize,
+    alloc: A,
+}
+
+=3D=3D=3D Rust version 1.89.0 =3D=3D=3D
+from: https://doc.rust-lang.org/1.89.0/src/alloc/vec/mod.rs.html#414
+#[stable(feature =3D "rust1", since =3D "1.0.0")]
+#[rustc_diagnostic_item =3D "Vec"]
+#[rustc_insignificant_dtor]
+pub struct Vec<T, #[unstable(feature =3D "allocator_api", issue =3D
+"32838")] A: Allocator =3D Global> {
+    buf: RawVec<T, A>,
+    len: usize,
+}
+
+from: https://doc.rust-lang.org/1.89.0/src/alloc/raw_vec/mod.rs.html#74
+#[allow(missing_debug_implementations)]
+pub(crate) struct RawVec<T, A: Allocator =3D Global> {
+    inner: RawVecInner<A>,
+    _marker: PhantomData<T>,
+}
+
+from: https://doc.rust-lang.org/1.89.0/src/alloc/raw_vec/mod.rs.html#86
+#[allow(missing_debug_implementations)]
+struct RawVecInner<A: Allocator =3D Global> {
+    ptr: Unique<u8>,
+    /// Never used for ZSTs; it's `capacity()`'s responsibility to
+return usize::MAX in that case.
+    ///
+    /// # Safety
+    ///
+    /// `cap` must be in the `0..=3Disize::MAX` range.
+    cap: Cap,
+    alloc: A,
+}
+
+> Am I reading the patch correctly that the ivec implementation is primaril=
+y C? I=E2=80=99m not familiar with too many FFI projects in Rust, but I mig=
+ht have hoped we could write parts in Rust to gain any benefits from that, =
+too. Is that a fool=E2=80=99s errand I=E2=80=99m thinking of?
+
+The ivec type is defined and implemented in C (interop/ivec.[ch]) and
+Rust (rust/interop/src/ivec.rs). When I started writing the ivec type
+I didn't know if the Git community would accept a hard dependency on
+Rust, so I made ivec usable in C without needing Rust.
