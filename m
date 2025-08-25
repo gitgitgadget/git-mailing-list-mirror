@@ -1,132 +1,128 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A999134CB
-	for <git@vger.kernel.org>; Mon, 25 Aug 2025 18:49:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3492A200112
+	for <git@vger.kernel.org>; Mon, 25 Aug 2025 18:50:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756147795; cv=none; b=e2uyTOszBzNMh9T6bPTKKqjwsab8NcF/T8WXgE7SDItIHKdz5DhUmmz4pCPS7mcYlCEPekVDQo0W1QFlFe38YZtxoUkYzplrmwTEa0dNiikGe3eNDn9wvkTIvAzuk0TeuQPSPMbs5C9Xo8qL29y9mqoPXzCEoJfJBY0oyJGJ0uo=
+	t=1756147838; cv=none; b=nok6USq7DdsYjiaL5CfOYDq8C0PGfuEFnoSWrVwf9qt82DCiVFhVTQlp401vDz+2eHWO+FFILPOS5eX5VJM0sQTOx0fuZSZGDCto9ZO2HEXCOaMQRIG/zPqN9HYH5/sqBDU0SOE3tb0VdM/2tFbHKCFmpHc1FjrEVvR9uhfoxc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756147795; c=relaxed/simple;
-	bh=89F/CuNo1X7LobTXrGBRlto/QUQotSPouLjKH7RCVHI=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Ihu/kbYI2yRxVNjVvIr3/NgXFZA4jMyRzj5yubEPra4CJPew8bLDc8igPcaUzayuOFz+aiLGKW6Mpwhwagn+/GWl62SLLqOFC+9y8Y5Vg4UqS9XMWvmiF9WX375WghaEfq+jUPppWTnkcOxjVU/2fO6tBcpvuGAg5YDJM4YJdLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CD/z9zLr; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756147838; c=relaxed/simple;
+	bh=b2OoLT4Zz5g8FilhtFkvBeb3yAtG9DrLfLIWgZIeQLY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tZ3DLx4+U2rfCuTcbhaxRJsTQ5N4AvV3IUT8DukRqKFKQrtYFNcGRG/+uHPsKokzww/BqObBYw7GkytBpQSpd/86/UXeXZMoBDSEibdD01FuPEUYrI6AKElJkA/5stxNZt5bu31v1OBCK9KTrOHRduJiBrPZdLkmhFQsWaogmhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=enc+DYEL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CcAX0KT8; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CD/z9zLr"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45a1b004a31so36733185e9.0
-        for <git@vger.kernel.org>; Mon, 25 Aug 2025 11:49:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756147791; x=1756752591; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=kvpNAOk1VeZrlCeuXgVlYWRwGpASVs0oxmg9QKqWwpc=;
-        b=CD/z9zLrnYIyLx5tF8ULUAKAUn8t524x5F3uJmAZNOjV+kvSlXD+5oBrsflogNlFup
-         +YNyD7ClXzYyUjeqD9xtcuN7EHCuWpJVEWqQbBUj1NilmQRYYrNikYaF5IYMuAJk1snw
-         DIy9jNfpvFqFazon0ic3cmdXwaOHeHC4TpdVyXI02qStzw1IjtoH37TvwAh5xrkPWFAi
-         HlR4JSe537sS4g029eFs+R0Xtw0ry4VblJLFksk/+pdLg1dfJqIMy3A6Jiz1mGHBd4Ay
-         skRwNoJsTx+Hk14BDP+Yxp0PX2Xn6MBj1qvd1wHXEIeLiaoCdLpjjXc0clB4URIHAK9S
-         reeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756147791; x=1756752591;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kvpNAOk1VeZrlCeuXgVlYWRwGpASVs0oxmg9QKqWwpc=;
-        b=hfQ6si45/0MPkk8HUDlpKceNliIju/L+4Ubqd+0NfGPeqZj55wl4kYrLQJoURqo73R
-         Ze+nVPyvyeuoXlwI9tXBy7PvsAIGL7iO8xI5i4J0uacLvzOtgisNqcbW/TrohCSC4OX0
-         hStiG/GrJoUcXcagHn0APY2wJn0oll8fvGim6jssrq0saNrfDwiE3LKxrCs75QUsgz3r
-         4eoDTifldppLYizmn9qmdUKZicSA24m5b67bRrfeI12jIEN0XYkToYCIcFqUJAVmEagm
-         VgeaoOnXeBD2e3ukujrqyy6WeiB+l8L6WbCcGTrtoj/uuy+V7ByQVkSqDjPCrosLtxcp
-         chOg==
-X-Gm-Message-State: AOJu0YzB5aGvucE93Fc1Gn0yGF4n9o7UUHPNeDYWPL1DSM+ql8E8veF3
-	ol2mfMUbYnyeAxvldu/fMBKHGYx2cUL/wjL4SIhEwTZHUS04TgjHGz0I3ucm5Q==
-X-Gm-Gg: ASbGncuQ7laFC+mcVaaL3JHUIpJi03kYiBpA/EA4gt5/XPbTMISao9e5XQWFb044dIO
-	NDarFytvXvggWtrRCLY+16Shl/CX6VF0D8TiYeB2fwoJSZzOsw5JGU3QMv+BM+Sicas8axlRHAN
-	iCOd+zEBYqmvsgOrNjX245Fyk6mym4axZ7qhvH3rSqDpLjfwLurMfbOTv3ffgG4IsBRzycCuQd8
-	0Qn/tGuW4FwE5/0mGxkyf0vSSHpfM8B+LaILxPMM1f7lW+zODrCcUFD0+cnc0bilRL+tDaSQqfW
-	6FoG9oCAXfFe815kL81EMrimyDhi4w+qneV9tYUMDpN6eWMEn/jHb9CON+XeiqprYuwtn6n/yTt
-	f9z03l6rii9NESeA/zcnqb6TdKM0=
-X-Google-Smtp-Source: AGHT+IEPX7UnHyQuq+THQwAgiSzjxvmw/n2X1JTWkpx3ThcLM41495syou/jhC8yOyPbkj8JJJzrKA==
-X-Received: by 2002:a05:600c:3b9e:b0:459:dc35:dc05 with SMTP id 5b1f17b1804b1-45b517a05e5mr115346635e9.9.1756147791056;
-        Mon, 25 Aug 2025 11:49:51 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c70ef55bddsm12359334f8f.22.2025.08.25.11.49.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Aug 2025 11:49:50 -0700 (PDT)
-Message-Id: <pull.2037.git.git.1756147789443.gitgitgadget@gmail.com>
-From: "Julien Jerphanion via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 25 Aug 2025 18:49:48 +0000
-Subject: [PATCH] Add `-u` short option for `git pull`
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="enc+DYEL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CcAX0KT8"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2E16FEC0390;
+	Mon, 25 Aug 2025 14:50:34 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Mon, 25 Aug 2025 14:50:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1756147834;
+	 x=1756234234; bh=XAsz9KHwtHvYfV2Oqt6xwHkZm3yZNYIf2emvTtoVaIE=; b=
+	enc+DYEL6WlhjRr/8csY7nhsYePGPVb0pxBGBtNcixP3/lcLY/sb5NJ/Syx9irsU
+	CCPH9328oTXnvRTRB1IF2KaVHWB3vI4uUg2BksUoDg51B7CnyKd63/Nc+aqXp4eK
+	9zo/wmlzxO2gYQ2xTLgduDRRx76cFucFPtQvb4rz7UQj6bLcdk7lZhjOfYJBzRMv
+	uNyg2C3b+SjnqNrt6I1C7ugT0Bp2QbevX3w+m73Va7qjmb0oElbv4eXtzMt8+rHq
+	d2W108k4qgNpKtcuLnVGAuQeTNlpHTtPYNyvk83EMJwHnRfho+2uuqkvsmccb8/S
+	ZNCZQIIA2LeCb581aBsZ3w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1756147834; x=
+	1756234234; bh=XAsz9KHwtHvYfV2Oqt6xwHkZm3yZNYIf2emvTtoVaIE=; b=C
+	cAX0KT8eIXDLdK/+UVaez+Ul4dlA4S2UNinqJWH2M798D+6kuZAlrwjQ5HeRe4Lu
+	p+j5daIptMxacqU7V/cPC8+/2+rQ1h4/cQl53FcZ+m3FUHne++eYcevAMlls/1ee
+	1fmlKIpt6HQKKUW5RXy1mLgUiPb+ejZUCLSLQsqGKip+hBE9AXQkmONRz1T9E7ay
+	fZLQFTlsehkluxH3X0blHgRAkgxQ+OkJ70Uh8En/4aHnsoeYMxL/IqEv0dSetWRV
+	tt14pb4u5icOHZkZrV91aAV9l8DI836X8//DAFyc+8p3jPC5lHXLJVhUtYwuw7mG
+	vo2LRAUpzumgapOajrCcA==
+X-ME-Sender: <xms:ebCsaOxkXiO71xfodpCBFRj-pzYDXcIKFCfJ9CvXficgU79icqm7ZQ>
+    <xme:ebCsaCtbMNg9G7alaWYdY7VKQ8LIZAjd9nbyG9WbtNZ4Md8aVWyD9Y14rWUZ3Cs7G
+    cnfPHbuJJqwtMpHnA>
+X-ME-Received: <xmr:ebCsaAzjELhWq9-i55z7lrN1uT7Xl-RxL-2W_SbHKF7sowdpE6wFIUlK_0N_ntmLIRrTp0kxnHzlQ9OZ5dD5j07afPoHClBEjbNUJKg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeefudehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepnhhitghosehflhhugihn
+    ihgtrdhnvghtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ebCsaFBDs6iO9PIFcuE4YBYW0_bXQOymYc6v2FVD0X4io64QBWs3Ng>
+    <xmx:ebCsaOenvd_AqniVsuM6WFVGcGnIb7Ohww76CvswHzvsQ5Yoqx98jw>
+    <xmx:ebCsaPl9ltF4fAQb6PWGYXZHpKwTL8zAHXB_C7S3j4sDzh1xV2uL4g>
+    <xmx:ebCsaFFdm4BQsPnwX1JAakQHnW0_yOcbAG4rGhbrdgc_dvlPGVFVmA>
+    <xmx:erCsaM6PJfCHbjweqPibw7W_3kbVaqUaxA5wpXmi--dCTtST0G0c8PPN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Aug 2025 14:50:33 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc: Johannes Sixt <j6t@kdbg.org>,  Nicolas Pitre <nico@fluxnic.net>,  Carlo
+ Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget
+ <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] progress: pay attention to (customized) delay time
+In-Reply-To: <jq5ul4zwdex6peuub3upwzxz3d5zcnuh7adseyg6wa6dpiu4ci@fuwe2t2vbguo>
+	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Mon, 25 Aug
+ 2025 11:11:21
+	-0700")
+References: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
+	<86bf04c7-6315-46ef-8297-42efc3ed322d@kdbg.org>
+	<xmqq4itxvi3z.fsf@gitster.g>
+	<08f405a6-fd2e-40d7-850a-574356b4009e@kdbg.org>
+	<2d56de10-f829-4bc8-9c76-76eab6b137ae@kdbg.org>
+	<xmqq349fs5ee.fsf@gitster.g>
+	<jq5ul4zwdex6peuub3upwzxz3d5zcnuh7adseyg6wa6dpiu4ci@fuwe2t2vbguo>
+Date: Mon, 25 Aug 2025 11:50:32 -0700
+Message-ID: <xmqq8qj7qlqf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Julien Jerphanion <git@jjerphan.xyz>,
-    Julien Jerphanion <git@jjerphan.xyz>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-From: Julien Jerphanion <git@jjerphan.xyz>
+Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
 
-Add the short form `-u` as an alias for `--set-upstream`
-in `git pull`, similarly to `git push` which supports both forms.
+> On Mon, Aug 25, 2025 at 10:00:25AM -0800, Junio C Hamano wrote:
+>> 
+>> >  	struct strbuf *counters_sb = &progress->counters_sb;
+>> >  	int show_update = 0;
+>> > +	sig_atomic_t update = progress_update;
+>> 
+>> It is somewhat misleading to use sig_atomic_t for "update", which is
+>> never updated via the signal handler.  It confused me a bit during
+>> my initial reading.  If it were
+>> 
+>> 	int update = !!progress_update;
+>> 
+>> it would have made it more obvious what is going on, at least to me.
+>
+> In that case, I would suggest doing instead:
+>
+>   bool update = !!progress_update;
 
-This allows users to use `git pull -u <remote> <branch>` as a
-shorter alternative to `git pull --set-upstream <remote> <branch>`.
+Any conventional type we would use for "is it set or not?" that is
+not sig_atomic_t is good enough in this context.
 
-One test is included to verify that the short form works
-correctly and set the upstream configuration as expected.
-
-Signed-off-by: Julien Jerphanion <git@jjerphan.xyz>
----
-    Add -u short option for git pull
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2037%2Fjjerphan%2Fpull%2Fset-upstream-short-option-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2037/jjerphan/pull/set-upstream-short-option-v1
-Pull-Request: https://github.com/git/git/pull/2037
-
- builtin/pull.c          | 2 +-
- t/t5553-set-upstream.sh | 7 +++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 5ebd5296207..e09f2963f78 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -254,7 +254,7 @@ static struct option pull_options[] = {
- 		0),
- 	OPT_BOOL(0, "show-forced-updates", &opt_show_forced_updates,
- 		 N_("check for forced-updates on all updated branches")),
--	OPT_PASSTHRU(0, "set-upstream", &set_upstream, NULL,
-+	OPT_PASSTHRU('u', "set-upstream", &set_upstream, NULL,
- 		N_("set upstream for git pull/fetch"),
- 		PARSE_OPT_NOARG),
- 
-diff --git a/t/t5553-set-upstream.sh b/t/t5553-set-upstream.sh
-index 70e3376d31b..b4dd7c62ce9 100755
---- a/t/t5553-set-upstream.sh
-+++ b/t/t5553-set-upstream.sh
-@@ -124,6 +124,13 @@ test_expect_success 'pull --set-upstream upstream main sets branch main but not
- 	check_config_missing other
- '
- 
-+test_expect_success 'pull -u upstream main sets branch main but not other' '
-+	clear_config main other &&
-+	git pull --no-rebase -u upstream main &&
-+	check_config main upstream refs/heads/main &&
-+	check_config_missing other
-+'
-+
- test_expect_success 'pull --set-upstream main:other2 does not set the branch other2' '
- 	clear_config other2 &&
- 	git pull --no-rebase --set-upstream upstream main:other2 &&
-
-base-commit: 1fa68948c3d76328236cac73d2adf33c905bd8e3
--- 
-gitgitgadget
+The fact that we started adopting "bool" in new code is orthogonal
+and a bit off the point.
