@@ -1,91 +1,113 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5ACF1DAC95
-	for <git@vger.kernel.org>; Mon, 25 Aug 2025 22:50:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A8CAD2C
+	for <git@vger.kernel.org>; Mon, 25 Aug 2025 22:52:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756162252; cv=none; b=IlaBpPwQNVNTniEswPuvMP2djByKviWnn59F6kbx8jvLtV1A27w5zmPTHZ9m+eZidriputetebHcS88i5a3GN7RCBPfJszxuTyo8nQHoPk+uv6aDzRsBcYqMpZAJp/VnH8tmnHZCkWBOkIzXa6eCjH2c2ArXf9dFx8zxfzBzLqU=
+	t=1756162343; cv=none; b=dF8U0pAl1oR5BMF0xs8nmTCtOwEgxbLO88pFJaYnMYe2hCC53xLTWkJcE7/Hl5j8uZBycbIfTS1ZBnpaJrOhLo23zl1WSY1fEdBYB1fjbC37hQXNMZ579Wv2WrQucB5XFcNWDYd7Mhdm57mNuz/NV/JSjsxfSvw5trEwzsKPBNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756162252; c=relaxed/simple;
-	bh=tmSkOl1g6KoLA9tKA9FXpLXeSToW0OQIILCDS9J3MLY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TLc+eaafR4VmT8ybStH+8CO8a79tz2vig+A1wEwbPA2FIsQeLZh1jOoAfVr39wccvpPbXlcx4NO6pFtfMXTEo1G2U+NX6HobahHb90xp/TTEMzQA1GssURP36R8m9dXXFYoeEoSEMChvS0IViaHiAFDbOfMdodonSyfDJZdOUlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=QaGF8jOz; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1756162343; c=relaxed/simple;
+	bh=nfWJrhhlqEAdwnQiq0Yo0qVUWT5TML/+V1duhJ0sTq8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X0GR8v/4nUi2yIJ4VDEd4WmN8ji/wS6xF4SbVT+joTWgf+zcn/rI5aFt3pRh6z/SsAN/LaT9Yx5tUbCn2ZdHuwQb3fgHjkF2zFL2Mi3Y1ZaBKXjG8oHNRjT/idK4Rl6P+LhrarhEVmZFTSIJp7DOMuTUH57Gyfdpboi6ZYRx1rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fSB7ZU+I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oxxdgz4O; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="QaGF8jOz"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1756162250;
-	bh=tmSkOl1g6KoLA9tKA9FXpLXeSToW0OQIILCDS9J3MLY=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=QaGF8jOz8gjZcnZ+oVsIAP/z6VcxfV/KxBYircZA/6crPEIukjecx0lkG1nzQRKUB
-	 EaK/HmlPBJ0BnPa9/2AJkWZxy6iDvJDIHYEiM1hOE4gbf9K4IutIycOj5sJVOoX00x
-	 L1DCZqa86a/bukSyw6E2QL4LUlq8Ehweo6vYkzh93jWCGbfM/vF7BUofSq7LfwOp7u
-	 VJKE9EMdHkAsEDEKs4XFjnBquf2xWKrQukgWtbwbDVO17bo/dahQaoJNH6F0kFVt/2
-	 fYPCkUebWnoYlUzffgifXlvRNbO6M6O4hKoGP1suOfbhyUDZRsRfXmsCK0t/MtPVRh
-	 VRPkWuBQDqMyZponfDwHuG1DdzSA/APeE1JH7Hi1qZHa1jXZs/3zXEcUhEUA9Aa/xG
-	 Dvn7jr88IXd8HgYKq9agCJBMVljQIQoXrq3Lin7u1UZJt2/ZHnIgXZG1U8E4IiugVo
-	 /oTRavgjqeroaI9NyuzsXrITQLMmhM71nFtgaH8ww3fsTY8e/H7
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5044:243e:8019:42f0])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 26B1D200C3;
-	Mon, 25 Aug 2025 22:50:50 +0000 (UTC)
-Date: Mon, 25 Aug 2025 22:50:48 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] docs: note that extensions.compatobjectformat is
- incomplete
-Message-ID: <aKzoyFbdohhpiEzK@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20250823220601.336079-1-sandals@crustytoothpaste.net>
- <20250825221101.611876-1-sandals@crustytoothpaste.net>
- <xmqqms7nnhod.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fSB7ZU+I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oxxdgz4O"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3AD1CEC042E;
+	Mon, 25 Aug 2025 18:52:21 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Mon, 25 Aug 2025 18:52:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1756162341; x=1756248741; bh=Q19WHiaJMy
+	/iNCUG8LUq22eC/JrRs904I9AUQ+qCbpA=; b=fSB7ZU+I6/8aHDaB29hYzU9Fkh
+	oM33nhvdGdha8qsiv5VTDjzzuFzYP/0euRPV7D82J42TJlkIEePpjOSvoB3zKQ9l
+	wA8/RWl7ZzRlWyvclqeZiGYV/hHyejTB7GkE7waKklm06xDIrcn5SfHFBk9qo6QL
+	lgmnwQ/k0qvBV2F49LJEaXqIlyeDA/Mnkd/fGHugmmH3j2Xag6bWdwY7rnOkucS7
+	uL7dUv27oHmP/+eyKFxQxK0V165DCRNlVlbZdyqfh7nOc+zD6Ewx3wKHmGVYOYm8
+	M5JXk++lIaeEVdl2jR2QARUpMbUnYei18LDsKtwoK7CqgKmWpLhyarNZC9Ow==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1756162341; x=1756248741; bh=Q19WHiaJMy/iNCUG8LUq22eC/JrRs904I9A
+	UQ+qCbpA=; b=Oxxdgz4O/kb7AHA8KwFBXdiHqHHjpYMu9hTYf8uIb2k0iNxvTKW
+	CPs43MW0+JnIjt4i6tc+G0Ol8vXmhUOLT+C+Orbk+layziaK3++Q5v+z21388ZOs
+	63NQ12T6YbKPsOlZBlL6w6r7OZJoJ1NV8PaYdKpt+fp5JcPfACgH5eTYyQF/fiJ5
+	iAHaOu/nJdPA3TEV4OX1Y6FFe2HEX82qGiXOsf8J1HmGIm4sfE8ie+Se+j7XTqaA
+	KE830TETnMLN9HJ442PPykt/9JW3h8g+6zWsywQYQexQRzv0lwqyC8fiDW5vtYd3
+	RIr6dOa1NkKJEpZ9O4Gfqw6uG/fTz6JbekQ==
+X-ME-Sender: <xms:JemsaFanciC3zyxNIklqpoVLchoR4VxXMyha__oqNcBwee5-xIdhMg>
+    <xme:JemsaE3eM_NnyqUUw8_u1tAnzoxyWLVawcPd2R8b8ZUY6yD5m8CHUXDxf_11T1Poq
+    yfsWjl6vMR7uONZqg>
+X-ME-Received: <xmr:JemsaIZEuL99aoqIN_8VrL4VqxITyHBDzEb29gAah9N-BG-dKAierfBG394NEB91_BVwXNpa1aHIJRlH9PFZa4Hp1KXmlx5OnBy_FjA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeefieefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtoheptg
+    grrhgvnhgrshesghhmrghilhdrtghomhdprhgtphhtthhopehnihgtohesfhhluhignhhi
+    tgdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:JemsaEJgA_Xlw9yxmIMmC5OMde4-XDSPjWz6XVeZM7XUGL3Rgs__Bg>
+    <xmx:JemsaPFm8-I8r06q9J-E9BolQ-I_1Ngz93oKi_XyFwK93HYO6TtvVw>
+    <xmx:JemsaDvRU0IpAc7S26pHH8hMfRm3SU38w9S1sopjhcrdxcQC027eRg>
+    <xmx:JemsaGsc3ZZm7ekF-CLcz0DJW_Cp7AezrOE6Fqued1ohl09BHOlHww>
+    <xmx:JemsaAjTNdNBWqBPa0eSg5dUpm3-r_hR37ksc5ueffeGLDPdPRZhklsP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Aug 2025 18:52:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+  Nicolas Pitre
+ <nico@fluxnic.net>,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via
+ GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v2] progress: pay attention to (customized) delay time
+In-Reply-To: <7b848623-ce64-4679-9b5e-9d91d947b269@kdbg.org> (Johannes Sixt's
+	message of "Mon, 25 Aug 2025 21:16:12 +0200")
+References: <pull.1960.git.1755955377.gitgitgadget@gmail.com>
+	<86bf04c7-6315-46ef-8297-42efc3ed322d@kdbg.org>
+	<xmqq4itxvi3z.fsf@gitster.g>
+	<08f405a6-fd2e-40d7-850a-574356b4009e@kdbg.org>
+	<2d56de10-f829-4bc8-9c76-76eab6b137ae@kdbg.org>
+	<xmqq349fs5ee.fsf@gitster.g>
+	<jq5ul4zwdex6peuub3upwzxz3d5zcnuh7adseyg6wa6dpiu4ci@fuwe2t2vbguo>
+	<xmqq8qj7qlqf.fsf@gitster.g>
+	<7b848623-ce64-4679-9b5e-9d91d947b269@kdbg.org>
+Date: Mon, 25 Aug 2025 15:52:19 -0700
+Message-ID: <xmqqh5xvnhek.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6JgH7LrvvKjn3jUB"
-Content-Disposition: inline
-In-Reply-To: <xmqqms7nnhod.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Johannes Sixt <j6t@kdbg.org> writes:
 
---6JgH7LrvvKjn3jUB
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>  Compared to the first round, this replaces sig_atomic_t by int. I
+>  didn't use bool just in case the patch goes on top of a maintenance
+>  track that does not have the "bool is allowed" policy.
 
-On 2025-08-25 at 22:46:26, Junio C Hamano wrote:
-> Much better.  Let's further do "This option" -> "This extension", as
-> all the others described in this document call themselves as such.
+That's fair.  I happened to have chosen v2.51.0 as the base for v1
+during today's integration, but as a fix-up topic, you are correct
+to point out that I should apply this on top of maint-2.50 or even
+older.
 
-Great, I've just sent a v3 that does that.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---6JgH7LrvvKjn3jUB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaKzoyAAKCRB8DEliiIei
-gYLyAQCn66phYh8qBL88kWBMIJ+ToBf8rKvjXQFwS5lj7xn9HAD9HloL8mYqeuIS
-xMsuoI85grCPsxcdhVmnIA9LqvCUug4=
-=Ewjt
------END PGP SIGNATURE-----
-
---6JgH7LrvvKjn3jUB--
+Thanks, will requeue.
