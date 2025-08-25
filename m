@@ -1,81 +1,88 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5450F42AA6
-	for <git@vger.kernel.org>; Mon, 25 Aug 2025 19:40:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18D1221723
+	for <git@vger.kernel.org>; Mon, 25 Aug 2025 20:21:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756150822; cv=none; b=LX/ZlC8DiIGgnlEqispUbIW6ZcIrR/YDEQsyUdlKq4U14LAB2wQ+zVG9oYu/rcyzNnMomgq1Sh16f6DZ87XYg5c1TDU+stXYM1Bi5VwJ9arJ/oHPF1ZoV6kAqYX/ENoUkkstthJFdfjQIbfVICeNReXPc5V1S7HCL+NxNX3PtqA=
+	t=1756153305; cv=none; b=GOAL3HHVAOqjmT6K3K2K+oGzPIXDIwYLBasbXmTZTg+QbufJpIsCUGPj2J7B/7sJqSkLqzQcFtu5D5L1GtzUk6b0KVEG9wZsSPa/D/bK2W8KKXnVaZLje93lNOpw3EtzQBkZDSKZPp83A0LefTUHDrd1R7Q4UEYTwdzxG8H+nD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756150822; c=relaxed/simple;
-	bh=0gMe6Pr5rdMr3/U/7B7egtB9q+vkDF/OWYcHlX1dsMw=;
+	s=arc-20240116; t=1756153305; c=relaxed/simple;
+	bh=XmsWc+f5fvAv3tIODTnRQQPmKsUmd7xqLxg6EYyb6QY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DPNpuSgRMC6kFJMq3wNhiaF+W8iC1WWZzLpZCSrPiarcPkdVWY+yAuCsf4nQB31CsrDo6T0be0OdyHnjypCmamlJQP83X3MBUSQi1IGarhuv5/j0ZwdaiHBWSfr841CErO3L2FJSnpZH8QidQv/z0fzpIlIYcrpDagy4aVuQCqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hUydVTIm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JOMG/17Y; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=qzOlXPeiHRmASGFfnzCzf3ypMKFE3xmTLAxNJGtD1LgiqyWLfE9NqUk18cyGzOpQ/wGLkUf3baUoiiKGwVLMyuKgWzZ0CTD9Tc3Jf9zM4shVuJwe8f1czRS7xEJSBEMCgXDyGnh2OQZ21u/BH8EuSvPYyUQL7fBi7nEhHhAfki4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=clEhFhAd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HoeGm81w; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hUydVTIm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JOMG/17Y"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7433EEC03ED;
-	Mon, 25 Aug 2025 15:40:19 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 25 Aug 2025 15:40:19 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="clEhFhAd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HoeGm81w"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id C65E7EC0407;
+	Mon, 25 Aug 2025 16:21:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Mon, 25 Aug 2025 16:21:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1756150819; x=1756237219; bh=6jeFAMJkbw
-	8xiH88DzSCJgtDLr19a7P3zlI4MLhrqbc=; b=hUydVTImIQV9aUoDKKA1kOHTi2
-	WUnSDjhVqwh57xgymeqeDPP0lveAherEF44PJw4fUXn4XirjefkMIlWGDJBxobFT
-	b7v0DZWrMc0JLL64nSbw0xkOHogQXI4uxr+vDvawtXP2NZgzEVlA+aPfOnDaGrMX
-	xUg6zN9QuX3di/2o2Bzm+aniez0O91d4gPpiYlhuzgLPjQsosk5lVywMRkS7EuIM
-	3xdnVob4HWcKyMVD2K2ZOOhx3XF9vwzguew4MFK504lFjotGHMGodEqNnvVR3byI
-	ojEWpN/3feS2XwZ4BqdtWEiAUkJsut2GViv411AuQqlkw14Z8LoipK0Noi+w==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1756153301;
+	 x=1756239701; bh=5mTQc2I+qG2xowXK/q0IxfPyE6iJON6qbBY1Sp4p8Mk=; b=
+	clEhFhAdRn9v95KAb0MTtY/gwKqNj9EG7Iz/6vsyaL+pU/kvTxuKHjXXF0vsS7II
+	OPrkhJbUR1fGXXKkk4qm7LTOdIAKqBINEGCLoOaMfV6NY6uAdM/VoJq5Tdo+hwSK
+	CyMzSEJbmFSzkWrxCQ3bFW0GBbxuTUN6Tm0bqc/QmzMEelCneNF2TXZXszla3aEG
+	trsLZwUW/QMtKM4kmnHO7byd3ELJnvgzG8xgWMmKMFGVwYEVMW+jhIYhSfO0223Z
+	skOEbpcHG5y7x3Uvb1MWjLOKVcjm6UIx9IbFPwA0A0tGrs0z2NTgKhv8GcV2me8p
+	sScykYP70sxH/yvrknjL7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1756150819; x=1756237219; bh=6jeFAMJkbw8xiH88DzSCJgtDLr19a7P3zlI
-	4MLhrqbc=; b=JOMG/17YGqcYB5/3+V5dA6ED63qOp4vECHiW5GGPO7NsJxjrZAJ
-	oa7zHqmH/7sp+/MX5MbCEOrUTnI5B64Wqdp79OAvHEvloRM6xvN7/xwhVTiffVDU
-	X94FY2CZhSjWOHmG3SyZLlRvqsOfj+iXOgQBMVcwusBM3MHOByjK012fBZkEUuCb
-	e7zs4ZDG12lgzUcAE6tyvLRWWSGXIsb6ZIjgign32mvU+GxZXC5WH+T9/GN7ZUJQ
-	M0jDA7AFDSvu65lGxE3c4MG55Y0/5Qv5/nSt4WoTDqo9QmiGlK+FV0uT3MOSOKMq
-	bel8xtay1Gj2GgytQowshcZiQwJfsz697xw==
-X-ME-Sender: <xms:I7ysaMICyVR4DBubmXaDs9Ss0rWnaOccSX_jFJouz_MFWcvnZ5yUww>
-    <xme:I7ysaPaAZq10nt-T14U3ug3b0ExfUD8uADZciREcPTEv1jla34sNup37Caqjr03ss
-    fpewHf_Gx4qOcpmSA>
-X-ME-Received: <xmr:I7ysaGJwFAxgsh2vxMzWwaANct3sSKlvEF05bF7kYntTACb2GYspp_aviG_9TIFybxeWzkrp0yxwUSvDwNUAroO7jiDV9CXycHLVBV8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeefvdeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1756153301; x=
+	1756239701; bh=5mTQc2I+qG2xowXK/q0IxfPyE6iJON6qbBY1Sp4p8Mk=; b=H
+	oeGm81wCrbMrQo3dYdEbXXDXJGSkvK9uKkkO/zgCrPhu7CbFPx5LWxEdF8C5NLnd
+	cf7FJ+g8D0ABsfrgmIofyOV54yOvolvKPLDyDbV9qi+bl/eXxC2Y4LO5r1qu9/Ui
+	/YtrzWqVXmcBMkB3YIXABoMmyPQvxsszeAVn43vBZ7eJ0ulO+YZFV/xx3V3zUg5c
+	Aa+HsX25atWjVYEscXEW8CpxIZIZnJ46cQSJtyBMHk6CMefGVR/BVMbyrL6LEYym
+	M6wyP5lNqq5aOXLNKwASkGYzhY2aChlpuIrSaLIYtiyCO/l3Dg0QTxuKNiAt0Y+5
+	fNtVsOWvmZ3A5JmWVjOWw==
+X-ME-Sender: <xms:1cWsaJRZiBvbiot_5AUPb1ag7x_wqtf-Ny7Cg7ohfpWkyF7eab3RUg>
+    <xme:1cWsaOSuC8mGMw_DTtN03OyJDOL3dimDcUrGMvlIYFHZJQx-doiXeLVBCQIPOKmer
+    T5dS8oDRKK8kE7JkA>
+X-ME-Received: <xmr:1cWsaFR565Bh3jlaUcv7M3NOKHk1geq1i43dB_coG01GoqPzI0KQlodtQHZNzYZsV4PwK2PanUQ5ohMRUQn4EubJhTEYcIUgDyOl-P8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeeffeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegvnhhgugho
-    tgesrghlihihuhhnrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:I7ysaFBhZYKrZbwFdhwjmRzrNie84DZmhu5Dfmmhnj-BsDxv7wOVqQ>
-    <xmx:I7ysaDrQ6bqs6Bcg7WaY21t_-NDWuIuNCwWDju6HWfuDxryF70xGvA>
-    <xmx:I7ysaIjO7FXoUvbr8qjZrDAHPgO87KLnBakQabom4FBpLoGvXjX1wA>
-    <xmx:I7ysaIDg8A_90stwHkyKfTlsTPw6y0BPplJzUPPRkI5DgPRQmmwXNg>
-    <xmx:I7ysaHdLXOQ6mgjjIFo11qOIx_uCr-kYwtAvx-R075Hdj5_-v5OowPfa>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtg
+    hpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:1cWsaL7dySnn0n1VtOB83PIBdkJuASBezfSBWVwFLJ73vEqQbxwdUw>
+    <xmx:1cWsaJ13UFsLUEGko-0XDS9V7-AqW8Ioh1oKCCR1Am9tGX6igDFE1g>
+    <xmx:1cWsaOBDr-1eg1RkotvlSuVg2-AeRFv3FQEtSXtUL7qZxbqUR6HhHQ>
+    <xmx:1cWsaMNnjHQyjlkwKYgUrjahoTbfTFgPRcHSgJRaQDcx8MvPI5Q32g>
+    <xmx:1cWsaBr1oP4pPgopg58j-VlvX6MY2-8o8nQ5vrVAkmTAtRLHayXrW5xT>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Aug 2025 15:40:18 -0400 (EDT)
+ 25 Aug 2025 16:21:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "engdoc" <engdoc@aliyun.com>
-Cc: "git" <git@vger.kernel.org>
-Subject: Re: [RFC] Allow includeIf.hasconfig to take precedence over
- includeIf.gitdir
-In-Reply-To: <a903afc8-9bf6-4ba8-bdab-87a76adf631e.engdoc@aliyun.com>
-	(engdoc@aliyun.com's message of "Thu, 21 Aug 2025 12:29:57 +0800")
-References: <a903afc8-9bf6-4ba8-bdab-87a76adf631e.engdoc@aliyun.com>
-Date: Mon, 25 Aug 2025 12:40:17 -0700
-Message-ID: <xmqq1pozqjfi.fsf@gitster.g>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] doc: config: replace backtick with apostrophe for
+ possessive
+In-Reply-To: <3ec6a00e3046166c7adb593f38c4099921d8ada3.1756064760.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Sun, 24 Aug 2025
+	21:46:51 +0200")
+References: <3ec6a00e3046166c7adb593f38c4099921d8ada3.1756064760.git.code@khaugsbakk.name>
+Date: Mon, 25 Aug 2025 13:21:39 -0700
+Message-ID: <xmqqwm6rp2y4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,71 +90,31 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"engdoc" <engdoc@aliyun.com> writes:
+kristofferhaugsbakk@fastmail.com writes:
 
-[administrivia: please wrap overly long lines]
-
-> Background:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> Currently, when both includeIf.gitdir and includeIf.hasconfig
-> conditions match for a repository, Git always processes gitdir
-> first, regardless of the order in the config file.
+> Revert back to “Git's” which was used before d30c5cc4592 (doc: convert
+> git-mergetool options to new synopsis style, 2025-05-25) accidentally
+> changed it.
+>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
+> diff --git a/Documentation/config/mergetool.adoc b/Documentation/config/mergetool.adoc
+> index 6be506145c1..7064f5a462c 100644
+> --- a/Documentation/config/mergetool.adoc
+> +++ b/Documentation/config/mergetool.adoc
+> @@ -65,7 +65,7 @@ endif::[]
+>  	During a merge, Git will automatically resolve as many conflicts as
+>  	possible and write the `$MERGED` file containing conflict markers around
+>  	any conflicts that it cannot resolve; `$LOCAL` and `$REMOTE` normally
+> -	are the versions of the file from before Git`s conflict
+> +	are the versions of the file from before Git's conflict
+>  	resolution. This flag causes `$LOCAL` and `$REMOTE` to be overwritten so
+>  	that only the unresolved conflicts are presented to the merge tool. Can
+>  	be configured per-tool via the `mergetool.<tool>.hideResolved`
 
-Is that true?  I created an empty repository in /var/tmp/x/includeIf
-and added this in its .git/config file:
-
-        [core]
-                repositoryformatversion = 0
-                filemode = true
-                bare = false
-                logallrefupdates = true
-
-        [includeIf "hasconfig:remote.*.url:*"]
-                path = /var/tmp/x/includeIf/.git/hasRemote
-
-        [includeIf "gitdir:/var/tmp/x/includeIf/.git"]
-                path = /var/tmp/x/includeIf/.git/Here
-
-        [remote "this"]
-                url = .
-
-where hasRemote and Here each have a single line
-
-	[jch] included = hasRemote  # in hasRemote
-	[jch] included = Here       # in Here
-
-With that preparation done, I tried
-
-    $ git config list --local --includes
-    core.repositoryformatversion=0
-    core.filemode=true
-    core.bare=false
-    core.logallrefupdates=true
-    includeif.hasconfig:remote.*.url:*.path=/var/tmp/x/includeIf/.git/hasRemote
-    jch.included=hasRemote
-    includeif.gitdir:/var/tmp/x/includeIf/.git.path=/var/tmp/x/includeIf/.git/Here
-    jch.included=Here
-    remote.this.url=.
-
-Notice that the multi-valued configuration variable jch.included
-gets hasRemote first and then Here second.
-
-Then I swapped the two includeIf in the .git/config file and ran the
-experiment again.
-
-    $ git config list --local --includes
-    core.repositoryformatversion=0
-    core.filemode=true
-    core.bare=false
-    core.logallrefupdates=true
-    includeif.gitdir:/var/tmp/x/includeIf/.git.path=/var/tmp/x/includeIf/.git/Here
-    jch.included=Here
-    includeif.hasconfig:remote.*.url:*.path=/var/tmp/x/includeIf/.git/hasRemote
-    jch.included=hasRemote
-    remote.this.url=.
-
-I do not doubt that you are having some problem, but it does not
-look to me that your description above points to the source of the
-problem.
+Obviously correct.  Thanks.
