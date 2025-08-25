@@ -1,69 +1,68 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4ADF1C6B4
-	for <git@vger.kernel.org>; Mon, 25 Aug 2025 12:50:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDFC1E7C08
+	for <git@vger.kernel.org>; Mon, 25 Aug 2025 12:50:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756126204; cv=none; b=ouooJQYaq7EsfREF51yYulsxEuyswDvsVFCxMZ/okM782CG5vx3W48UrpxXq8+PsDqWc5vObWWf9+E2iQd6StWihlji653lMRgVRJjutiULGaeskYWn3i0YlwHpdxnTXpI0wmXzYJP3yrQgmdsSTXJd38gCy6Kswg6Amqrim6eE=
+	t=1756126204; cv=none; b=J17xR4NgKNTcLkMYSK/bqYUkGEYGOCUZEmP+fYjbBUW5wi/femZpmR8vd4hJOcVWURU3iKo/1lzqXKeTs+n3Eyi4ixS03ssSAVen0XJaKb8E02oIYkU3i1mYwIjasnKmIbXgE3pC9Gq9OhmvbSyvGL2VKtt8sTeisMjjLDMsYnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756126204; c=relaxed/simple;
-	bh=xzbMCsIaJ8VusIxEbrxBuX/PE4p0sQQE+hDN7wZTCAY=;
+	bh=Z4ftYsw5NDhBrKmj9B/p6qTJwu7e4xeO2kRTft0zAv0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ewS4WKRg7yJIax/ZnXzFcHkKJcqDkO+gPOuURZCBI63kuTJWpkrBoEm6E3SaOuYePJoHfI4tHC+a8p2n9XrkPQWMOXUMfx3bnvEoh+BNqAM4vh7M9700mJxCRqN+5H56w3ZN4L2+fsAeLkWG4UURAb9nF58iwYnqeeQd/lxiau4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CtmJLnzM; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version:To:Cc; b=akFwvq83UIJzyPFPZNAH9SaNClJw6RQOWuF/kMfDBI8MzK21iUuYaSOBF5YBNy+NCX5/iaON0RukpajGECceu7NfpfNCdn+eY8i5tYlFb6EEIFPqEQ2W0Hkh/jfb2MPOU9NWYx/KtkPwhZvLJeIKsHvjuLwJRs9Jsm4SDYd7lXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YMuWfu8c; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CtmJLnzM"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45b4e5c3d0fso8882205e9.2
-        for <git@vger.kernel.org>; Mon, 25 Aug 2025 05:50:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YMuWfu8c"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-45b629c8035so3567195e9.3
+        for <git@vger.kernel.org>; Mon, 25 Aug 2025 05:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756126201; x=1756731001; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756126200; x=1756731000; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=76sFxLSev78gwOyDn6sqomYESJMsXQsfpEPl1dutXqA=;
-        b=CtmJLnzMJVQqKu60/1wvf575hQ0iejYl5/bfyxgmhPHcqs+CCzax9GepcbHyotwi9d
-         5p8iC1jds5UNUFWJTkejTItVXa7S3rxFqc34/J/Wb6Kh4zWlPan1EEAZeQmQnKgBdjfq
-         WzlxL7Ug21SGTpeTSCoxzYaGECpdE3xm9fAZEPgI0fIzVDz+Tv2HDt5kiPKeZpSuskkg
-         CkZUVbbG5DNM93GZ6NX9p1Mod3mxfXmKFm65LX4Q7Z98l9EoHdJiLVZYRHw5ab3/gJvI
-         munUxk8R9rnA7+zpLEiQTxhP61YrBc1yFjXP9FNco5pahBcAevGzgu0ALo4hUYf781e8
-         58pg==
+        bh=a8dymknT0UChMitRISuCw5vSkB1Stj2szNi2pxPLjsU=;
+        b=YMuWfu8cSFB8Pri4z8IMheJDmbvPXQXvoNQTgLR1XmvNlaOtkZEiyGiWDC3G0AYZXy
+         DIsaIdBFcrwQ1S9cIP3gUAWGhtctIGqu9nsvjGr0dA7d2HalkZPwTQZY24s3raDYx/dM
+         BAoDwz2naTk4zMkLx7fM1E0/i6Yz2R9p6akiE8nVThYyRxmhcMzjx2iLHuujHCZ9wAIB
+         H/IeFXEKmHa1g/Gpw3SI5a+cXeKyTnZOjS4NcJLmBhYAOG7FKiDVE0570j/0tb8Zm+DL
+         sbZWZP3+acIvkWpO4EtrLCDv/UWqQvHNGGtG3OT7KMGCK+pR56KlVpZ9jkk1teVgCRxd
+         JjxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756126201; x=1756731001;
+        d=1e100.net; s=20230601; t=1756126200; x=1756731000;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=76sFxLSev78gwOyDn6sqomYESJMsXQsfpEPl1dutXqA=;
-        b=VqyMTm0foQoylqpEpuWVHJ5cYUV5Ujp5NiLsmxaTFBA+qWGVOB77DmHVy0fJCSJN/a
-         o/c+6R/ebMqAXjakLVvhY3eFOwUPmsZvKtQzkRDR45vgdfLshOr2n6k96yDxisIfDRUC
-         KQuLl7nDbsHzKJXmGlToDbXEQdXuJQn7+N/wFxDmsSK3X/aR+crCojILptZcbonCHZtp
-         J0Rrth8bytDsI55At1zN4ZdYCVW9wmZQUKVNUsrJJc0iv2hkSeZ+FH4prcMQR9ToqVxh
-         1WdLZlDAtrcUkB3eQDXQEn5wR571UrtH+09PEoqAxEI6ZZpyAajquKd6iVDxGwi07rmk
-         BYkg==
-X-Gm-Message-State: AOJu0Yx4W8gF7sSD7SpzXztp0HEDD+b2xfG8YAiR3a7O+r4CjFN0wfDK
-	7vjFFhkKyedUlhtvaQHhMkPDXySBc24r71xyoSbWmCD4RX5V9RmQrPa19Mx7rDCR
-X-Gm-Gg: ASbGncsTaLpYOFnu/toQXDuhR0rcnESOsCSZjfZiO2+DmjfB+x7tu+8Sv+qGs6/kUVN
-	j+Q0U1VFuW/KvhqVw8YZnnSqWot7FjdC7x5YLfit2ghaWTecTqG1JiDkhmsj2ACD03kJtRI7wGk
-	9ZkEYPnlnA+SbE6KHkLiPitIWiuByG8RrrAPK9PRJh/la/jFgf1miL/pnGjhUc/dA8w+SkbeYn5
-	s/HS2pGgZ6DTE7BIpLlaAvVbF+jczmdiSf7HlkG15jf8PtoxMU9ocC7759SKUwIDnh3Wd3zTX/A
-	QBzkqf8X3dno+UYH+dgpKmOPDeMuRf2cjtjV8xQRwGok86SnQwyYvexRaJJ5RuPlHlak98PdJmq
-	cDOTBsYkhjnbPZbjf56yXU8e1nTae62noVQ==
-X-Google-Smtp-Source: AGHT+IGpgv0muxSVqg2uYw1Sk2V7aRLnrmKXUgcX56Kxrd9V1gx3OR9XJ6PpRkdhA/MU/+rIpGxM4w==
-X-Received: by 2002:a05:600c:3b18:b0:459:db5a:b0b9 with SMTP id 5b1f17b1804b1-45b517cfb8cmr92387465e9.28.1756126200383;
-        Mon, 25 Aug 2025 05:50:00 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b575736f1sm107611945e9.13.2025.08.25.05.49.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=a8dymknT0UChMitRISuCw5vSkB1Stj2szNi2pxPLjsU=;
+        b=K0pjLquGzVP4TXjtargpC2MrTP/5aDmKIsyOBcX1hoQ76K938zZAw66k0k3eUnRic9
+         8ttqUOtLgALyTOKBM2NR9BzEhxVQUDp5gXB5j+eaP3dAwx3v2o5ITLyrYlds97ZxXIVS
+         lDHSUChi3eQdidmNpQX/RYiu1wFfxWmwgx0kQJLHixqgdpZm09mzDNaHbI4EGCJGU1Rw
+         Iz9qlzA5lpX6hCFtlYT+b9sgtrAVbAaaRpjrEOclZtDcj2jAG5vYhIdl5lNjqs9m1cWj
+         a7S10AIScgm0Xc77nJYdrMhHCiyn+68FgwwL1xWliqS8vKHqqbZfs+JTiqnQgcC/M0Jp
+         /uLA==
+X-Gm-Message-State: AOJu0Yxwzs9oJ9snQwVtKkZiOM8tDMjx5UZB9W0xeswf3d5kPm/Aujjy
+	WPkiGLpfuA1mHCKtuyl2Rxu2ibyRdrQRNIJoNZK7H2Uivx7HTM2JeZZON7SSPrsG
+X-Gm-Gg: ASbGnctKZ5qHx8BYQdwyuNZvC6XHomsQiM27x5iRdbMDGBAbDyiLl6KfYqwq+hUPMpF
+	yQZYZ9pAZOlC2TZm2Po5hw9T0TO+32lFRlIa3Dm7RobwM3zhwpR7L/9LLaSIDzpH90uuqi5Tebc
+	I1hvcd8T0svdyitoZla6l/Q76SMiZgUFgeZVgf0zml3bLJ/U1UFOELXniAXr0wvzeX6MlPxQweK
+	ctMXl8o+7dbx+NCOPC/2Wk5X1YSTwiI/776Q+QyVt/Wi6RFUvl4lkXQr3sa1dr7h+zEJTwLZaKU
+	XtVUmlDFq7jBhQMtlXZMVzh4z4uxT7PfAJd6+2QHKpn34rHCZgZhEXwnZepVtfBKIfA35z2PlCs
+	PwMJuhqmYOKB4FV/K7GLQd4imP8Dq67wiUw==
+X-Google-Smtp-Source: AGHT+IHxI7jGmD1WchuRFLvCqCkjfrjfMdn2uXMQgGYw8wc5lo6TcJZiygwmrfpxoLDAgIM1jWqf9g==
+X-Received: by 2002:a05:600c:1388:b0:459:d451:3364 with SMTP id 5b1f17b1804b1-45b517d40f2mr118086655e9.24.1756126199527;
         Mon, 25 Aug 2025 05:49:59 -0700 (PDT)
-Message-Id: <2feedf5a1ee3cf7d7d4e06c088a2e43ccb841dcc.1756126197.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1956.v2.git.1756126197.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c70e4ba486sm11488537f8f.7.2025.08.25.05.49.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Aug 2025 05:49:58 -0700 (PDT)
+Message-Id: <pull.1956.v2.git.1756126197.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1956.git.1755715196.gitgitgadget@gmail.com>
 References: <pull.1956.git.1755715196.gitgitgadget@gmail.com>
-	<pull.1956.v2.git.1756126197.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 25 Aug 2025 12:49:56 +0000
-Subject: [PATCH v2 1/2] path-walk: fix setup of pending objects
+Date: Mon, 25 Aug 2025 12:49:55 +0000
+Subject: [PATCH v2 0/2] [2.51.0 Bug] Missing singleton objects in 'git repack -adf --path-walk'
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,179 +84,211 @@ Cc: christian.couder@gmail.com,
     newren@gmail.com,
     peff@peff.net,
     ps@pks.im,
-    Derrick Stolee <stolee@gmail.com>,
     Derrick Stolee <stolee@gmail.com>
 
-From: Derrick Stolee <stolee@gmail.com>
+Now that the --path-walk feature for git repack is out in the wild and
+getting more visibility than it did in the Git for Windows fork, the
+following issue was brought to my attention:
 
-Users reported an issue where objects were missing from their local
-repositories after a full repack using 'git repack -adf --path-walk'.
-This was alarming and took a while to create a reproducer. Here, we fix
-the bug and include a test case that would fail without this fix.
+Some folks would report missing objects after git repack -adf --path-walk!
 
-The root cause is that certain objects existed in the index and had no
-second versions. These objects are usually blobs, though trees can be
-included if a cache-tree exists. The issue is that the revision walk
-adds these objects to the "pending" list and the path-walk API forgets
-to mark the lists it creates at this point as "maybe_interesting". If
-these paths only ever have a single version in the history of the repo
-(including the current staged version) then the parent directory never
-tries to add a new object to the list and mark the list as
-"maybe_interesting". Thus, when walking the list later, the group is
-skipped as it is expected that no objects are interesting. This happens
-even when there are actually no UNINTERESTING objects at all! This is
-based on the optimization enabled by the pack.useSparse=true config
-option, which is the default.
+It turns out that this snuck through the cracks because it was pretty
+difficult to create a reproducing test case (patch 1) but it boils down to:
 
-Thus, we create a test case that demonstrates the many cases of this
-issue for reproducibility:
+ 1. A path has exactly one version across all of the history being repacked.
+ 2. That path is in the index.
+ 3. The object at that path is not a loose object.
+ 4. pack.useSparse=true in the config (this is the default)
 
- 1. File a/b/c has only one committed version.
- 2. Files a/i and x/y only exist as staged changes.
- 3. Tree x/ only exists in the cache-tree.
+It is also something where users don't necessarily notice the missing
+objects until they fetch and a missing object is used as a delta base. Doing
+normal checkouts doesn't cause changes to these files, so they are never
+opened by Git. Users hitting this issue can usually recover using git fetch
+--refetch to repopulate the missing objects from a remote (unless they never
+had a remote at all).
 
-After performing a non-path-walk repack to force all loose objects into
-packfiles, run a --path-walk repack followed by 'git fsck'. This fsck is
-what fails with the following errors:
+Patch 1 introduces the fix for this issue, which is related to forgetting to
+initialize a struct indicator when walking the pending objects.
 
-  error: invalid object 100644 f2e41136... for 'a/b/c'
+When reflecting on the ways that I missed this when building the feature, I
+think the core issue was an overreliance on using bare repos in testing. I
+also think that the way that the UNINTERESTING object exploration was
+implemented was particularly fragile to missing updates to the
+initialization of the struct, so patch 2 adds a new initializer to reduce
+duplicate code and to help avoid this mistake in the future.
 
-    This is the dropped instance of the single-versioned a/b/c file.
 
-  broken link from    tree cfda31d8...
-                to    tree 3f725fcd...
+Updates in v2
+=============
 
-    This is the missing tree for the single-versioned a/b/ directory.
+Thank you for the quick and careful review of these patches.
 
-  missing blob 0ddf2bae... (a/i)
-  missing blob 975fbec8... (x/y)
-  missing blob a60d869d... (file)
-  missing blob f2e41136... (a/b/c)
+ * The test and bug fix are now in the same patch.
+ * Several commit message typos/grammar edits.
 
-  missing tree 3f725fcd... (a/b/)
+Thanks, -Stolee
 
-  dangling tree 5896d7e... (staged root tree)
+P.S. CC'ing all original reviewers of the series.
 
-Note that since the staged root tree is missing, the fsck output cannot
-even report that the staged x/ tree is missing as well.
+Derrick Stolee (2):
+  path-walk: fix setup of pending objects
+  path-walk: create initializer for path lists
 
-The core problem here is that the "maybe_interesting" member of 'struct
-type_and_oid_list' is not initialized to '1'. This member was added in
-6333e7ae0b (path-walk: mark trees and blobs as UNINTERESTING,
-2024-12-20) in a way to help when creating packfiles for a small commit
-range using the sparse path algorithm (enabled by pack.useSparse=true).
-
-The idea here is that the list is marked as "maybe_interesting" if an
-object is added that does not have the UNINTERESTING flag on it. Later,
-this is checked again in case all objects in the list were marked
-UNINTERESTING after that point in time. In this case, the algorithm
-skips the list as there is no reason to visit it.
-
-This leads to the problem where the "maybe_interesting" member was not
-appropriately initialized when the list is created from pending objects.
-Initializing this in the correct places fixes the bug.
-
-To reduce risk of similar bugs around initializing this structure, a
-follow-up change will make initializing lists use a shared method.
-
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- path-walk.c       |  2 ++
+ path-walk.c       | 55 +++++++++++++++++++----------------------
  t/t7700-repack.sh | 63 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 65 insertions(+)
+ 2 files changed, 88 insertions(+), 30 deletions(-)
 
-diff --git a/path-walk.c b/path-walk.c
-index 2d4ddbadd50f..1215ed398f4f 100644
---- a/path-walk.c
-+++ b/path-walk.c
-@@ -385,6 +385,7 @@ static int setup_pending_objects(struct path_walk_info *info,
- 					list->type = OBJ_TREE;
- 					strmap_put(&ctx->paths_to_lists, path, list);
- 				}
-+				list->maybe_interesting = 1;
- 				oid_array_append(&list->oids, &obj->oid);
- 				free(path);
- 			} else {
-@@ -404,6 +405,7 @@ static int setup_pending_objects(struct path_walk_info *info,
- 					list->type = OBJ_BLOB;
- 					strmap_put(&ctx->paths_to_lists, path, list);
- 				}
-+				list->maybe_interesting = 1;
- 				oid_array_append(&list->oids, &obj->oid);
- 			} else {
- 				/* assume a root tree, such as a lightweight tag. */
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 611755cc139b..73b78bdd887d 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -838,4 +838,67 @@ test_expect_success '-n overrides repack.updateServerInfo=true' '
- 	test_server_info_missing
- '
- 
-+test_expect_success 'pending objects are repacked appropriately' '
-+	test_when_finished rm -rf pending &&
-+	git init pending &&
-+
-+	(
-+		cd pending &&
-+
-+		# Commit file, a/b/c and never change them.
-+		mkdir -p a/b &&
-+		echo singleton >file &&
-+		echo stuff >a/b/c &&
-+		echo more >a/d &&
-+		git add file a &&
-+		git commit -m "single blobs" &&
-+
-+		# Files a/d and a/e will not be singletons.
-+		echo d >a/d &&
-+		echo e >a/e &&
-+		git add a &&
-+		git commit -m "more blobs" &&
-+
-+		# This use of a sparse index helps to force
-+		# test that the cache-tree is walked, too.
-+		git sparse-checkout set --sparse-index a x &&
-+
-+		# Create staged changes:
-+		# * a/e now has multiple versions.
-+		# * a/i now has only one version.
-+		echo f >a/d &&
-+		echo h >a/e &&
-+		echo i >a/i &&
-+		git add a &&
-+
-+		# Stage and unstage a change to make use of
-+		# resolve-undo cache and how that impacts fsck.
-+		mkdir x &&
-+		echo y >x/y &&
-+		git add x &&
-+		xy=$(git rev-parse :x/y) &&
-+		git rm --cached x/y &&
-+
-+		# The blob for x/y must persist through repacks,
-+		# but fsck currently ignores the REUC extension
-+		# for finding links to the blob.
-+		cat >expect <<-EOF &&
-+		dangling blob $xy
-+		EOF
-+
-+		# Bring the loose objects into a packfile to avoid
-+		# leftovers in next test. Without this, the loose
-+		# objects persist and the test succeeds for other
-+		# reasons.
-+		git repack -adf &&
-+		git fsck >out &&
-+		test_cmp expect out &&
-+
-+		# Test path walk version with pack.useSparse.
-+		git -c pack.useSparse=true repack -adf --path-walk &&
-+		git fsck >out &&
-+		test_cmp expect out
-+	)
-+'
-+
- test_done
+
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1956%2Fderrickstolee%2Fpath-walk-missing-objects-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1956/derrickstolee/path-walk-missing-objects-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1956
+
+Range-diff vs v1:
+
+ 1:  5b19173c03d ! 1:  2feedf5a1ee t7700: add failing --path-walk test
+     @@ Metadata
+      Author: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## Commit message ##
+     -    t7700: add failing --path-walk test
+     +    path-walk: fix setup of pending objects
+      
+          Users reported an issue where objects were missing from their local
+     -    enlistments after a full repack using 'git repack -adf --path-walk'.
+     -    This was alarming, but took a while to create a reproducer.
+     +    repositories after a full repack using 'git repack -adf --path-walk'.
+     +    This was alarming and took a while to create a reproducer. Here, we fix
+     +    the bug and include a test case that would fail without this fix.
+      
+          The root cause is that certain objects existed in the index and had no
+          second versions. These objects are usually blobs, though trees can be
+     @@ Commit message
+          issue for reproducibility:
+      
+           1. File a/b/c has only one committed version.
+     -     2. Files a/i and x/y only exists as staged changes.
+     +     2. Files a/i and x/y only exist as staged changes.
+           3. Tree x/ only exists in the cache-tree.
+      
+          After performing a non-path-walk repack to force all loose objects into
+     @@ Commit message
+          Note that since the staged root tree is missing, the fsck output cannot
+          even report that the staged x/ tree is missing as well.
+      
+     -    This bug will be fixed in the next change.
+     +    The core problem here is that the "maybe_interesting" member of 'struct
+     +    type_and_oid_list' is not initialized to '1'. This member was added in
+     +    6333e7ae0b (path-walk: mark trees and blobs as UNINTERESTING,
+     +    2024-12-20) in a way to help when creating packfiles for a small commit
+     +    range using the sparse path algorithm (enabled by pack.useSparse=true).
+     +
+     +    The idea here is that the list is marked as "maybe_interesting" if an
+     +    object is added that does not have the UNINTERESTING flag on it. Later,
+     +    this is checked again in case all objects in the list were marked
+     +    UNINTERESTING after that point in time. In this case, the algorithm
+     +    skips the list as there is no reason to visit it.
+     +
+     +    This leads to the problem where the "maybe_interesting" member was not
+     +    appropriately initialized when the list is created from pending objects.
+     +    Initializing this in the correct places fixes the bug.
+     +
+     +    To reduce risk of similar bugs around initializing this structure, a
+     +    follow-up change will make initializing lists use a shared method.
+      
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+     + ## path-walk.c ##
+     +@@ path-walk.c: static int setup_pending_objects(struct path_walk_info *info,
+     + 					list->type = OBJ_TREE;
+     + 					strmap_put(&ctx->paths_to_lists, path, list);
+     + 				}
+     ++				list->maybe_interesting = 1;
+     + 				oid_array_append(&list->oids, &obj->oid);
+     + 				free(path);
+     + 			} else {
+     +@@ path-walk.c: static int setup_pending_objects(struct path_walk_info *info,
+     + 					list->type = OBJ_BLOB;
+     + 					strmap_put(&ctx->paths_to_lists, path, list);
+     + 				}
+     ++				list->maybe_interesting = 1;
+     + 				oid_array_append(&list->oids, &obj->oid);
+     + 			} else {
+     + 				/* assume a root tree, such as a lightweight tag. */
+     +
+       ## t/t7700-repack.sh ##
+      @@ t/t7700-repack.sh: test_expect_success '-n overrides repack.updateServerInfo=true' '
+       	test_server_info_missing
+       '
+       
+     -+test_expect_failure 'pending objects are repacked appropriately' '
+     ++test_expect_success 'pending objects are repacked appropriately' '
+     ++	test_when_finished rm -rf pending &&
+      +	git init pending &&
+      +
+      +	(
+      +		cd pending &&
+      +
+     ++		# Commit file, a/b/c and never change them.
+      +		mkdir -p a/b &&
+      +		echo singleton >file &&
+      +		echo stuff >a/b/c &&
+     @@ t/t7700-repack.sh: test_expect_success '-n overrides repack.updateServerInfo=tru
+      +		git add file a &&
+      +		git commit -m "single blobs" &&
+      +
+     ++		# Files a/d and a/e will not be singletons.
+      +		echo d >a/d &&
+      +		echo e >a/e &&
+      +		git add a &&
+     @@ t/t7700-repack.sh: test_expect_success '-n overrides repack.updateServerInfo=tru
+      +		# test that the cache-tree is walked, too.
+      +		git sparse-checkout set --sparse-index a x &&
+      +
+     -+		# Just _stage_ the changes.
+     ++		# Create staged changes:
+     ++		# * a/e now has multiple versions.
+     ++		# * a/i now has only one version.
+      +		echo f >a/d &&
+      +		echo h >a/e &&
+      +		echo i >a/i &&
+     ++		git add a &&
+     ++
+     ++		# Stage and unstage a change to make use of
+     ++		# resolve-undo cache and how that impacts fsck.
+      +		mkdir x &&
+      +		echo y >x/y &&
+     -+		git add a x &&
+     ++		git add x &&
+     ++		xy=$(git rev-parse :x/y) &&
+     ++		git rm --cached x/y &&
+     ++
+     ++		# The blob for x/y must persist through repacks,
+     ++		# but fsck currently ignores the REUC extension
+     ++		# for finding links to the blob.
+     ++		cat >expect <<-EOF &&
+     ++		dangling blob $xy
+     ++		EOF
+      +
+      +		# Bring the loose objects into a packfile to avoid
+      +		# leftovers in next test. Without this, the loose
+      +		# objects persist and the test succeeds for other
+      +		# reasons.
+      +		git repack -adf &&
+     -+		git fsck &&
+     ++		git fsck >out &&
+     ++		test_cmp expect out &&
+      +
+      +		# Test path walk version with pack.useSparse.
+      +		git -c pack.useSparse=true repack -adf --path-walk &&
+     -+		git fsck
+     ++		git fsck >out &&
+     ++		test_cmp expect out
+      +	)
+      +'
+      +
+ 2:  0dc4a6323e6 < -:  ----------- path-walk: fix setup of pending objects
+ 3:  dd458e04354 = 2:  fc2c171f52d path-walk: create initializer for path lists
+
 -- 
 gitgitgadget
-
