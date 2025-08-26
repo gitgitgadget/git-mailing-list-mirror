@@ -1,99 +1,125 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12E5196C7C
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 16:44:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A3031A57D
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 16:46:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756226662; cv=none; b=q+YUu6REvXsYh/6sSth/4b/uK1PipKIiVrLIREEABV5zeK7L0nFva/ZIizdT8dGuS/LwESE3/0W4raC4Ca0YuFD8yd57sKIdVR7aEJiS0sh7C6tY6hKLoGh5iXycHYRoUyDBYkhFdqwhBfxEZZa6U+JpMtRbW+pBW9cgCt9PcRQ=
+	t=1756226800; cv=none; b=iOhvCr0dyMMujG5L8QFElEtBdIwXl8ujfzCO6k0nJV6taUEjA1W4Ak4gkFHpqJrmHxDjbEoBVdvGVWtfUveUcu7kyeOXIEDuOB3UD3vQzLVqnapzzDEfNkqdq7qK++veRJp2OiyJg7bg6ShaN19hlCtaC8HT0qlHjjO2pwaDkSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756226662; c=relaxed/simple;
-	bh=ru9ivsfGomk/YY/EkSN4YufKHL2qX8L4cYXrmYRVW0w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q/NhyGVUdeGX2+7AtafWNgTHxdCVVMudGDuwW0eT0UY+y+5/v/P8CXCegfJJiTOZiUmo+NnLEm4+Hqq3ri1SdjUvrOZ6hCVkBs+7wKI52NNMdRSb58WkIqQLbokR93iSFryfQjHh8mOAzE9JaybH3PtQWldZn3ZNbxYEwYrgp7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2lCY6gv; arc=none smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756226800; c=relaxed/simple;
+	bh=ShRkbVgWqPFeRNNUb308rSMb+MNkCW85WJShD23lDdM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bf5WDYIWVDQCzC75O6CjOqmmUk3APzcBrH5fY+Y4M1cpzkhcuChjJIMjWVLgJrCeMYoTwBSfv+Q3+6HorT89+6Iwde67QbZeRDWf3hyWmgvX+uDCj9WzLEbfSO3vCG9BsMPWVGaBhUkDj6GIP9yBilT/MM99Pj+QRJm2odRcVfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iAovgWO5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RjYRc5de; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2lCY6gv"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-b4c29d2ea05so65260a12.0
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 09:44:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756226660; x=1756831460; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uDV29QwR/hlnQb3a3pIDCgLL6By+C3RiIB8sCFnLQKU=;
-        b=A2lCY6gv0LlzgG+3A8Y8ia3N/Q8UpcXNerRsic4Gxx3YYYBZka41tXan48HyjHbmNV
-         ClxeggcUsX0GcXR+rw7Yx7FjU2JZFy5eJ3Dg4liraoK3gn4ys8gEzBVeWcgm3XRn/Foh
-         xbY6U6MgUBl4kSOR5vGIDLBVpXXc5doTP3TIpm/HqyV8slXED5gxXpTMa4dmXp9JYfas
-         iNcPXuzQjnotyG6XpbZpjy8CkjNvgP1lIW2qBW/gW9l5PhAwUfblH4C/QN6hUVFC1Gqj
-         C+0TIBSp46lZY7reOMmbRadQbXydNJh7PX5EEYQAXSbC02A7biVh6tKuDid/EkyyWbD3
-         IHuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756226660; x=1756831460;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uDV29QwR/hlnQb3a3pIDCgLL6By+C3RiIB8sCFnLQKU=;
-        b=szYqbXyjKToi+VBZ4XMhPgja4JLm7eKVPnRgAFOtoTETt0MyVzJNyCDz7LROOfFaW8
-         EELGFKGytP06RleXJGhhRXqhjHw7z28LOx1Ne2HkR3vnbe55SxuUds8Uc+sj8Y0lHHp4
-         MIh+HmesScacrLJ1ijQ+1iXlfncS3bIgQ3U5PWouKm84HEnsubAwFMxdixOwwa840Giz
-         p93ADt8YqKdcYB4LLV50loAk6tuEOmpXfA5npm8sRq61Zn8eAuXoumNjVBhFTqOml8k1
-         XCZ9gipcCnXVFYKNCcYtjwsTwVqLgmIsMIZtNHnCxwbjtLXKjjdrft18dhSz4H/fIVos
-         uvdQ==
-X-Gm-Message-State: AOJu0YwVKXk3mNtmgt7vzCV5qe4e2nz/VnnavYRjiUBTTQOxEJPY8eqE
-	I7pWQ933OrqxK7W9DoxOH7c9pk3al7HubA4Iv7KDGi8O153cc7EqjoRw7U4RsQ==
-X-Gm-Gg: ASbGnctgBQ6JcxqPe2BvLTz2tA4eXRwUOvpVqVz2yrJI2PvS7qVPA3Ah1Iu9422sg8v
-	0vpGFZLVWlDm21fnrLKyEOuASmB/0c6K34cJpHt+DLB2sslfMXqVDUl0U4HWW6IpVP+kdMlhbIO
-	BB2o3gQ/qmXDN0+JhTs5TX2JNcfJOEPGjkIbnbxFc8wjVnr2TBMvkI9MDYJCRdANET66NYrSXtY
-	pFEEVvPi7BaVmSfGgfU0LnZu+t0tkUhSBbbTiAEbqu3N4RFFhwC125VePD4rhw0BbNFFT/glpWT
-	y0dlcHoL1hKNJs8guQFb00xpTNmEydRj3CLFxhBGxbfnvBY/Iii7f0A2kKQT8BoGSxRNyEoy9rx
-	VrzJGqGb7XqYtCqo5Tn8dxJIEimtK
-X-Google-Smtp-Source: AGHT+IGcD8kK/jbyKN5Srdq6fE8iFWUFsBhznzRUEh4bVkKZwBf/QzRINMvamNb7NGiS700IaYpHUA==
-X-Received: by 2002:a17:90b:3f86:b0:313:d361:73d7 with SMTP id 98e67ed59e1d1-3275085c831mr2830921a91.13.1756226659988;
-        Tue, 26 Aug 2025 09:44:19 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-3276ae27da5sm29564a91.7.2025.08.26.09.44.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Aug 2025 09:44:19 -0700 (PDT)
-Date: Wed, 27 Aug 2025 00:44:17 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/5] refs/reftable: add fsck check for number of tables
-Message-ID: <aK3kYZA1eq-sCs9b@ArchLinux>
-References: <20250819-228-reftable-introduce-consistency-checks-v1-0-8b8f6879fa9e@gmail.com>
- <20250819-228-reftable-introduce-consistency-checks-v1-3-8b8f6879fa9e@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iAovgWO5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RjYRc5de"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 047C8140003E;
+	Tue, 26 Aug 2025 12:46:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 26 Aug 2025 12:46:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756226796; x=1756313196; bh=WiVkakKqfm
+	tpCBVWIS7mjpQinR+QRYvM3UgT48YUUc0=; b=iAovgWO5KMS55XUNCfMCJlHcHr
+	JxRVyAZ/A+8D4nTg9BQGz1fjU6WRFfv4YpZJrpMC3GqejUGPoSsgv60tplNcT/ih
+	Oqf64LsaJ5OcLCKNLCYicdIV0jv84cdxa4gZyALa6X0nooye3DEcwq0EvGF/Q6Pu
+	rdrkg+nnbfuO30UEt+PN8YYjot+0o312HYq0S7m7IT/mHeRrJ2leK5LaXDbOyU1A
+	Gfd/IX4ySySEM1C5rBbYiEnHJCS87z751jswXutZ7D/2ITX5JDr4v0ckHb34Jnj1
+	E0Xu1L6+CbJYb8UDQeWsx4/rXme8lCT63DmPN1LoCZnfYY48tzT90RR71dfw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756226796; x=1756313196; bh=WiVkakKqfmtpCBVWIS7mjpQinR+QRYvM3Ug
+	T48YUUc0=; b=RjYRc5deOOV2zNsJXMmYbl0lVCNC12uFPjt0Ivw0CI7aLZLLK20
+	1AE/YDttAlnQvnnFwcC+WZOa1ieUs7dGuSuu9ormDK1yFRxQ9bhysjKc6KXo8EK+
+	qNU0hH3oywlh572eQnVSCML7/F5ewl8v/2reStpkAzwVzvUqOuJ/RcwdAfJTw7ix
+	HfaszDJKUuZzHZ8LBnUc6/Gf65EsJ4qJFjBY0mIMi2tl7yLghT2dE+Qw0q111mR7
+	TsqnPqAToWxcDW8a5vz2zJoG9YSyMWPCdRidRYtxOB1TfDgS7+XXvcH+Yjb/3jGl
+	QbfCBCgc6Iz6gMHMcTP/TERlRjVoxro2ohw==
+X-ME-Sender: <xms:6-StaEYcb9jtrK6jg_oiZm3SWdC9cqIbHQyLQWuy8vYu5IGIvj4gXQ>
+    <xme:6-StaM_Jgapvwbx8Tqi8rr63NoV6v8eJtKVeyhm2xcl83Hjj52KpiM3w-xeCjUc0_
+    rxbhff9gXCkPx6ECw>
+X-ME-Received: <xmr:6-StaFZVFlAodR1mpieT6PUpXxHeZKmKOF9sueeAh0uglks5CgxEonZI4wMeTBmuYkKyj1Z2j3N8ws4qP4ZXpXm0DpeWqd6WybxCu-E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeehjeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepuggrvhhvihgusehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegviigvkhhi
+    vghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtvggrughmohhnse
+    hgohhoghhlvgdrtghomhdprhgtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvgdr
+    tghomhdprhgtphhtthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:6-StaANuKrHOoKFUhgjCTR8C6ldCzm6pWe4YniNq2gNespGgaaboaA>
+    <xmx:6-StaBDp-OQKhXAVOLxri_e4ilTHQ5SIWix5lpYIIZlBfnMVqoR7dw>
+    <xmx:6-StaHL3-U2ukOM1Eoy9X4DszMVksOy2Ma86jL8XdCQ1A7lCJIPM8A>
+    <xmx:6-StaKPCP0_o1vkJle1CLq74AtQDv8HM0hNHSd7wzGavI1R2Cb9mrg>
+    <xmx:6-StaDJbuy4jr_ZA64PHRo3kaT-gS8n_ZitXqTGX-rXCpTsqCe2zcxzv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 26 Aug 2025 12:46:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: David Aguilar <davvid@gmail.com>
+Cc: git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>,  Josh
+ Steadmon <steadmon@google.com>,  Calvin Wan <calvinwan@google.com>,  Kyle
+ Lippincott <spectral@google.com>
+Subject: Re: [PATCH] Makefile: build libgit-rs and libgit-sys serially
+In-Reply-To: <20250826160437.2539113-1-davvid@gmail.com> (David Aguilar's
+	message of "Tue, 26 Aug 2025 09:04:37 -0700")
+References: <20250826160437.2539113-1-davvid@gmail.com>
+Date: Tue, 26 Aug 2025 09:46:34 -0700
+Message-ID: <xmqq7byqkp3p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250819-228-reftable-introduce-consistency-checks-v1-3-8b8f6879fa9e@gmail.com>
+Content-Type: text/plain
 
-On Tue, Aug 19, 2025 at 02:21:02PM +0200, Karthik Nayak wrote:
-> +test_expect_success 'table count should be checked' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		git commit --allow-empty -m initial &&
-> +
-> +		git refs verify 2>err &&
-> +		test_must_be_empty err &&
-> +
-> +		touch .git/reftable/0x000000002812-0x000000002813-c830a596.ref &&
-> +
-> +		test_must_fail git refs verify 2>err &&
-> +		cat >expect <<-EOF &&
-> +		error: $(pwd)/.git/reftable/tables.list: badReftableStackCount: mismatch in number of tables
+David Aguilar <davvid@gmail.com> writes:
 
-This is a bad usage, we should just use `reftable/tables.list`. And this
-is a common pattern. We would print the relative path against the ".git"
-directory.
+> The "cargo build" invocations in contrib/ cannot be run in parallel.
+>
+> "make -JN" with INCLUDE_LIBGIT_RS enabled causes cargo lock warnings
+> and can trigger ld errors during the build.
+>
+> The build errors are caused by two inner "make" invocations getting
+> triggered concurrently: once inside of libgit-sys and another inside of
+> libgit-rs.
+>
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+>  Makefile | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Jialuo
+Don't we need a similar change to t/Makefile, or "cargo test" does
+fine while "cargo build" cannot be run in parallel?
+
+>
+> diff --git a/Makefile b/Makefile
+> index 29a53520fd..286d3ba3b2 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -3989,7 +3989,7 @@ libgit-sys libgit-rs:
+>  		cargo build \
+>  	)
+>  ifdef INCLUDE_LIBGIT_RS
+> -all:: libgit-sys libgit-rs
+> +all:: libgit-sys .WAIT libgit-rs
+>  endif
+>  
+>  LIBGIT_PUB_OBJS += contrib/libgit-sys/public_symbol_export.o
