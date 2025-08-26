@@ -1,163 +1,140 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FFE27AC41
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 23:48:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75232FE054
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 23:57:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756252102; cv=none; b=QYGHgrOYT469btWmzDy77F1g6QaKmSz/pDsc/3AkFbJvQ+GViWcXtGhKSH8aMHnZzVQV5964JwPIaobtvEF6ioRxh7TNW+bnemp0Bqacl0kgtHMud3+QXWaqwDZnJXROZTup5o+STCB0B+WhsVN+aBgcuzjYISy/uiBQOKdutDM=
+	t=1756252677; cv=none; b=XSg6FwpLFCavXjRAm3qTfp/1CXEiwrWehSf+UAcze5JjIViYGO99YIsmegDTLDVv2nnLjx3M0eW5Xu+6/7VRpGPp7WK3bOCj+CW2d+8qUQacuDJyHj2ppifgmOCrMpdxFxRhvGSKPmE6LXVlVqgMtnbjoHbjAW1N3SvyQ6XK0fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756252102; c=relaxed/simple;
-	bh=rc2UNDfkMnQeWlodstx0FhfAmC7quE7/yQnaSHStJPo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aE+qdnXXpHN1yNElQdZMZSVdlUVG1UOCNL0qVDtTvtilFggFiMtzj6RC5OogT8gqJ7Ez/P/kzJyzv3zUwFKnGURZJ16qhRevJZtRjNW1FfPD7F/LjGSaBQSr2UWRLmj1kb5B/v3m91a+nLC3AEBryeqG3i0trYETDuACiMiiGZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MfGLNAqU; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1756252677; c=relaxed/simple;
+	bh=ww6752a1Gnxbycu4KKXzqIW7sKcJjbCcxYCoHWa6OV4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=o1HD+qhrH9HsjC3q4Wj9t7ici53dup8bYq9K2d/GHgT7wsouZQYhl7mH4Yvcp8DnptLpaeyCh2lwg2if4eYvboi1UqNN/yt0ijwK/O5TEMvn+mtgTRv7UuFaIxUGBZWlIvkFfVghW15aQ4NRBN6UbLKpS5zF+n7AGiXFNSC35jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=urX+CKj2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dC+7CkDy; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MfGLNAqU"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7e87050b077so911647585a.1
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 16:48:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1756252100; x=1756856900; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=61YtBQLnP+QvwN9rDJywK+lUAyenEyRll3caJ5blaBQ=;
-        b=MfGLNAqUnDhPdUPwCb3RWAwsZAqYWeNZx7b/9x5T3vrCCKLbgyAhFz03POLkIoWveb
-         44QKdIFohw0SLGS//Dw3/HQbNOtGQepOEx6ull+lgq9EoWacCV+owqx7wbbk/iri9UCb
-         7tTXWCJraP5iTyqcj8sWkjpKcGxkQ4v56xsdqL8IqUE64CVMFDXMhUYLe0jNJTN9pt1j
-         zjxDV/6v6mWyvqYCCb7pT+yYgiPp00QxdsGJ8nhr9Nrb6nQwUK/811Ly1rmavZdvV9Eo
-         lCsS++pmRfKGbGVl+5GoEfvSPrlwFegiqbfQTi4NOGCt/SDi5nUqj+p31/UIaRCjAd2G
-         yAFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756252100; x=1756856900;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=61YtBQLnP+QvwN9rDJywK+lUAyenEyRll3caJ5blaBQ=;
-        b=ni7FXbMLT3I14XDlDbAPEfGkAgWnGxVdltcOMaIsu+Usqqj0H92UU19RB28HhTLZKs
-         IyttPDVzo+1DBXYewYz39ciPnrCxXs3EY5XdfZ9qnHLOC4y0ZP5/nU/LKqmS9+d2Abnq
-         I+5QQwskZbfbmTKWvsHmBDYrnjDZhkRzFH8FcMbjn5VlRISmLRTUgDEs4P/Iav3x2HCC
-         GZQOZgglOXb4+MvaslYrA5XXka0Xi9+RDNy60TLXQyYF0g+d4gym4QnTslo6wX0vmlF2
-         YQlCqYqNfB1AbL521zHVjXlN6Oe1qZ0M3kQO+4YrdgBQ2mbh+shvgVPIxs9/8HsKfLOr
-         E5uQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUdbd5VJtzRMYm2F6FjaVZioRfwgCth+1rnJ3wEQdFlxGBcF2GW1bAQxC+vE2IDb80lwHI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzr/zA45cM9WCRj3aCd7VIeNrStsSe78rSoR226ItI0Cjpr1JNf
-	8G4SUSefBNzNNn8pnLc8D9CQZuKSp1kkMLcA0+ptGGO+J5SzRmSdxDf+0RjfwyleOFx5IA293nF
-	EIIl1yQlYFvdVdnBmwPBUtjr8El6vbepOfXjC1V3b
-X-Gm-Gg: ASbGncv6qhbaWHGc6Vy2rZJf9LxlgKc2BEqbVFPpIHThccmd3iRKhU4TmFPytqlfgjS
-	Pvh87gWeJRyO15jyElf4llZDIimRJ8s1qp24ewGiReq89QAFn32q3iNeeI95gIYNllOqwt6TnRj
-	vnk5Dpd65hVg85LtqNIhavtg4H0URLnxiW5CXuZ7vl1B2P1aAYcdqKnJiLVjXxMl+Hkpn7SOs64
-	a0g2mlcjo9HgikIjv6wmLQyxKA4PmrwyO8cWaExn6nR
-X-Google-Smtp-Source: AGHT+IELqzW59f06n5VzByytze7GsYZy+Gwk+3LGR/wGqia3F5Rc3+OtGLTjmVVHGEjDvVFeDmWz/d2BF8QhMAkFZpw=
-X-Received: by 2002:a05:620a:19a0:b0:7f3:4a0f:3595 with SMTP id
- af79cd13be357-7f34a0f3d17mr753777685a.36.1756252099485; Tue, 26 Aug 2025
- 16:48:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="urX+CKj2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dC+7CkDy"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EE25014000BF;
+	Tue, 26 Aug 2025 19:57:54 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 26 Aug 2025 19:57:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756252674; x=1756339074; bh=G0XQHDV7je
+	wGK0YWt1Aw6Xm8B0Npq+wxZS7EqA+1GBs=; b=urX+CKj2rJk6WWSs76A+7C20Mr
+	W3x9lcSRgupyMA6TF9jxtmnGeej8wDqPPsYlcySs8Kd4U75QnJ/QJKtZ9wja8eEp
+	KhgdWnkFlXnAOB05tVFqJPBwWuNNeAGSNz5JlSv3DDlDvIKv6G8zNwkCDMhD84sa
+	y8fcDG3KEWj6mAofopT9dEDvnm2H8SZ6Cq8uB25k9vEp/qu59x5srJFadss8hBj4
+	mXYTbJYmN9hjF/5N+QuBVV3ccuDAM3Gnwds7ew8MIqzcP31EghElQHoI6m+lXHej
+	ucCyTlDQ5c3g3KXsZal0wcgasHdFg5AP+hvjuVApJ5fLH0v12w3E0igJ73gQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756252674; x=1756339074; bh=G0XQHDV7jewGK0YWt1Aw6Xm8B0Npq+wxZS7
+	EqA+1GBs=; b=dC+7CkDyuEDvFt0UoaVtSq8EyIvCbnzEznrQ52MfE8K4Oei+ReM
+	kqyUg9Vhu/W6xFkJmcme//g/LBeODRXsHaAi4E62M/2pxBZmPVBPpD1KpAf1B7J2
+	dCaZmxeDWyLbrjz7k/R/aa9mvyD6IQl4i2dUpUmVzUA9ELyq7achdaEVYkxL6rrs
+	oVLpzKayT5YHFNbsYa20mO2G0srNBdOnk21Cu/ypm50RjCo4p3MVHpj6kXeLwou0
+	7WwK9JkjgCVVOmMe+5MVL8KEqx97OOpbY5F6oR+vu0GFPIzERZFFxlCnjO8t1Vz1
+	f6dWNE3r1vq3UmDrZwnMLV2bR7Gk9ea17pg==
+X-ME-Sender: <xms:AkquaNCBHQT3q6gSGUgdcb4G20n7xmgBrmboEWrCNzCShSwQDiz0qw>
+    <xme:AkquaGEz27yriOFYWIIp2nfFPUs2lMAiSnQfXsUjOWQafYFNOT3bX3-jezK5l-4aT
+    o0Fnoja0A9sp6Zhng>
+X-ME-Received: <xmr:AkquaFIUCq6VETgUKLtEY94wqLRvruCl3qCaXOg-FJB9XpHOFmArys332BQ_htmMlt1MrZk_QKpoFj2dAvrIIdjZgnqqckzuCnhOOeg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeeiieegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepveegheekffeiueelveekteelgeffhedvtddtiefhtdfggedtleetudeiuddu
+    tdeknecuffhomhgrihhnpeguvghfrghulhhtrdhtohdpghhithhhuhgsrdgtohhmnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
+    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouh
+    htpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjuhhlih
+    grsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:AkquaKmIZa2mQlECIrUWiHHeKWyfgtIzpX-q152rMlZNMbXgX_PGoA>
+    <xmx:AkquaNRTZeXx31sVeQKGnygoPXnTXZ0THWotThGRWH38wj-EnxENxw>
+    <xmx:AkquaMI80FzXXiq1AX3UJ1V8E7oQ1gelB9vHuhXD20jvoPBdh2YxXQ>
+    <xmx:AkquaDARRfUb0KQmHuEd8ND-61WveIvWZl7ejZM7Fp3M3EXd1v3dMQ>
+    <xmx:AkquaJwcjR7v7tJCi-geQ-lYwFGoRhX5_oxeSjlp7-uoCaAZo-EDqQ6T>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 26 Aug 2025 19:57:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH 3/4] doc: git-push: clarify "what to push"
+In-Reply-To: <ac554cbe75444880bbb2791c4d85dcf083d833d7.1756240823.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Tue, 26 Aug 2025 20:40:21
+	+0000")
+References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
+	<ac554cbe75444880bbb2791c4d85dcf083d833d7.1756240823.git.gitgitgadget@gmail.com>
+Date: Tue, 26 Aug 2025 16:57:53 -0700
+Message-ID: <xmqqldn5fxfi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqq7byqkp3p.fsf@gitster.g> <20250826233525.2635432-1-davvid@gmail.com>
-In-Reply-To: <20250826233525.2635432-1-davvid@gmail.com>
-From: Kyle Lippincott <spectral@google.com>
-Date: Tue, 26 Aug 2025 16:48:07 -0700
-X-Gm-Features: Ac12FXw9Of0skDIjJUQGA-bfMoYCHUaVVPd7aEMGGcBjz2DppbIgfL8FFBieJ_U
-Message-ID: <CAO_smViX+EVyq5AzO3dwfcBGdenuZ1w89ksse=6MXYv8xi+q1g@mail.gmail.com>
-Subject: Re: [PATCH v2] Makefile: build libgit-rs and libgit-sys serially
-To: David Aguilar <davvid@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Ezekiel Newren <ezekielnewren@gmail.com>, Josh Steadmon <steadmon@google.com>, 
-	Calvin Wan <calvinwan@google.com>, rsbecker@nexbridge.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Aug 26, 2025 at 4:35=E2=80=AFPM David Aguilar <davvid@gmail.com> wr=
-ote:
->
-> "make -JN" with INCLUDE_LIBGIT_RS enabled causes cargo lock warnings
-> and can trigger ld errors during the build.
->
-> The build errors are caused by two inner "make" invocations getting
-> triggered concurrently: once inside of libgit-sys and another inside of
-> libgit-rs.
->
-> Make libgit-rs depend on libgit-sys so that "make" prevents them
-> from running concurrently. Apply the same logic to the test invocations.
-> Use cargo's "--manifest-path" option instead of "cd" in the recipes.
->
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
->
-> Differences since v0:
->
-> * The targets have been split apart into
-> separate targets so that the libgit-rs targets can be made to
-> depend on the libgit-sys targets.
->
-> * cargo build/test --manifest-path is being used to simplify
-> the build recipe by eliminating the "cd" step, which would
-> have been duplicated in the split-out target.
->
-> * t/Makefile has been updated to apply the same logic.
->
->  Makefile   | 11 +++++------
->  t/Makefile | 14 ++++----------
->  2 files changed, 9 insertions(+), 16 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 29a53520fd..539e6907b4 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -3983,13 +3983,12 @@ unit-tests: $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG) =
-t/helper/test-tool$X
->         $(MAKE) -C t/ unit-tests
->
->  .PHONY: libgit-sys libgit-rs
-> -libgit-sys libgit-rs:
-> -       $(QUIET)(\
-> -               cd contrib/$@ && \
-> -               cargo build \
-> -       )
-> +libgit-sys:
-> +       $(QUIET)cargo build --manifest-path contrib/libgit-sys/Cargo.toml
-> +libgit-rs: libgit-sys
-> +       $(QUIET)cargo build --manifest-path contrib/libgit-rs/Cargo.toml
->  ifdef INCLUDE_LIBGIT_RS
-> -all:: libgit-sys libgit-rs
-> +all:: libgit-rs
->  endif
->
->  LIBGIT_PUB_OBJS +=3D contrib/libgit-sys/public_symbol_export.o
-> diff --git a/t/Makefile b/t/Makefile
-> index 791e0a0978..29dd226c7d 100644
-> --- a/t/Makefile
-> +++ b/t/Makefile
-> @@ -190,15 +190,9 @@ perf:
->
->  .PHONY: libgit-sys-test libgit-rs-test
->  libgit-sys-test:
-> -       $(QUIET)(\
-> -               cd ../contrib/libgit-sys && \
-> -               cargo test \
-> -       )
-> -libgit-rs-test:
-> -       $(QUIET)(\
-> -               cd ../contrib/libgit-rs && \
-> -               cargo test \
-> -       )
-> +       $(QUIET)cargo test --manifest-path ../contrib/libgit-sys/Cargo.to=
-ml
-> +libgit-rs-test: libgit-sys-test
-> +       $(QUIET)cargo test --manifest-path ../contrib/libgit-rs/Cargo.tom=
-l
->  ifdef INCLUDE_LIBGIT_RS
-> -all:: libgit-sys-test libgit-rs-test
-> +all:: libgit-rs-test
->  endif
-> --
-> 2.50.0.7.ge90cf88798
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This version looks good to me, thanks!
+> -When the command line does not specify what to push with `<refspec>...`
+> -arguments or `--all`, `--mirror`, `--tags` options, the command finds
+> -the default `<refspec>` by consulting `remote.*.push` configuration,
+> -and if it is not found, honors `push.default` configuration to decide
+> -what to push (See linkgit:git-config[1] for the meaning of `push.default`).
+> +To decide which branches, tags, or other refs to push, Git uses
+> +(in order of precedence):
+> +
+> +1. The <refspec> argument(s) (for example `main` in `git push origin main`)
+> +   or the `--all`, `--mirror`, or `--tags` options
+> +2. The `remote.*.push` configuration for the current branch
+> +3. The `push.default` configuration (See linkgit:git-config[1] for
+> +   the meaning of `push.default`).
+
+The use of numbered list does make very good sense here, as we (at
+least conceptually) examine these rules in the order.
+
+>  When neither the command-line nor the configuration specifies what to
+> -push, the default behavior is used, which corresponds to the `simple`
+> -value for `push.default`: the current branch is pushed to the
+> -corresponding upstream branch, but as a safety measure, the push is
+> -aborted if the upstream branch does not have the same name as the
+> -local one.
+> +push, the current branch is pushed to the branch with the same name
+> +on the remote. The current branch must have a configured upstream with
+> +the same name, so this will fail when pushing a new branch.
+
+Is the last sentence correct?
+
+    $ cd /var/tmp/playpen
+    $ git clone https://github.com/git/git src
+    $ git clone --no-local --bare src dst
+    $ cd src
+    $ git checkout -b alter
+    $ git commit -m 'empty' --allow-empty
+    $ git -c push.default=simple push ../dst
+    Enumerating objects: 1, done.
+    Counting objects: 100% (1/1), done.
+    Writing objects: 100% (1/1), 185 bytes | 92.00 KiB/s, done.
+    Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+    To ../dst
+     * [new branch]            alter -> alter
+
+In "src" repository that is a fresh clone without any customization,
+the current branch "alter" does not have any configured upstream.
+
+Puzzled....
+
