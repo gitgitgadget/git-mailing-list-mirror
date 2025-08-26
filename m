@@ -1,106 +1,110 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2973231A54D
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 16:04:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CDA242D9A
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 16:06:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756224283; cv=none; b=fxQbSArUka5Vg/lsLI7vtRRb0rDuIt62hMmLstdUmOPRuYcnTLb+VmQrQGAj+BiUjBMlJz2XtKTKyf7eCMvIirAkJTblaCsPZSNYYv3ZsSNgpBLtah7k2KnrZa6Z9rbpvC6cX+/kn/qcBXumgQ5KGZAkPoKwuAGLCOukTXMK1m8=
+	t=1756224368; cv=none; b=cLggy/2haZFO1HdtXzTyJmvsdIfB6/vHesf9bk5DFmB2YM/hMCUqwtMXx28Z1ENVxGLhSCbIkDdIchYAmd3AsNIQD3QZ9mt0l2wfZiQg3XpF+voLj0AR5u+xWzlbScCHErwLoQBxkiDmrmob11I3pHcfkabYgniHsZHFIqTKXcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756224283; c=relaxed/simple;
-	bh=a7BfXJeJW59qESzuU7ivifc6pL6z4c4QRkylbL7x04Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SGd2aEyB9RxlQGIJhhJmrh4yIZj7fc9dmpIhFFOG8h+u8p2wLnkd/mWtzZ0h+rr4MUJVk2xA5J1k82Tf+A2bL+qv5TRmEEEHn4j/H1v9ztU46ITq0W2jaxyBRhdcfBKVBQbJcMp456yOr1ZsyW79iUMGfcFokHz9FrVWbunBrEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V48HjEKn; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756224368; c=relaxed/simple;
+	bh=art+KzPWxdpXavWIn7d9darCI5oS9ZJOfcdZCNv2Kls=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tlQOPBL3BuvTy3nO7NLJlv4Vt70A4b3hdw8rNjWtV+xCl0pg5wDO+yQX+1LFQO1lN35A+9PW4NNQIDoQqe+TTudSCWVRQxSx0TH1RZhHWekEYU6A3WsSTJ4sNPKDOk3w2oj/0uFiT1jVPSgivM0ffNE9eTSOSK4Cp9i8ewFJj5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LnZS3Xr4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A9yGJsNk; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V48HjEKn"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-7704f3c46ceso2459113b3a.2
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 09:04:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756224281; x=1756829081; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=A7hTZXI4nagfG3cyxyNCtAtCt3rN3Zm/GQalUTBGK+0=;
-        b=V48HjEKn29yYQK2HlA7hfMHvTdfy4uK+Swo8OZIzEq5wp2eQFv2HwlyDfqVHl5du02
-         sKJ6SFErm5yPklw2Dnx5tlrk+WwPvu3qLxGCvALucING8WlZfL10PfgUTwev6EeApyPr
-         r7bFEm9/IwxoTeE/8+WH+jXLZCj8ur2Ol34gE4dxjktD5L/abn9ns7S6QqzMl1ARFfBy
-         W6Zllznv/pauVqo+Sz8BVxgy4MTE/gtl8Pz3uF6Ff4mMwgpMeNMYReAoaIN9isn3aIzO
-         hHGLmtOEPcNFTcCZ27Aw6zpB3hF0v+k1rM43CMyg+mdrAoqrxLJXHnrgh8p4Qj2U0XzQ
-         i30Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756224281; x=1756829081;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=A7hTZXI4nagfG3cyxyNCtAtCt3rN3Zm/GQalUTBGK+0=;
-        b=xIjT40iyQKtZwfGOEuTT7BvahrmiTZ1ckC1wWSRKxb9+oYhXp16drMYhmZzBUqiibC
-         +clLzd0JzwIn3u3vyVFutRahYOVUkausfjubBd3DM3zGrld5fzkXmbuVT6TAO6DURPUc
-         4fRGSBd+6XqZHoHjym83bmxtVeAMByAkZ+nIko8EQO72NmclH/O0+3Jocj8q6PsHFuae
-         eyvxhN9o9FopRCN1Lyq8Lg5PC55EJbrEc+9nLzS2c4m+x8W5d/Wdbu4T1nP230FtUOhY
-         VEQ1F8dzozH02Z6JTA3heGcbAmVOk6Ip1M9FF/7I6cu2kLMIm8y0soOLEuxLaQActJ6b
-         QISg==
-X-Gm-Message-State: AOJu0YxcbdJkSWk4drDy2fcrGb71E4SArlXoTjteoVoqb37sa44363Aq
-	rLR6Bm9WHuYsPYYuj2Einlsdfy1yxBaNb8tWI+jbzi05TNrKPALrq6SI
-X-Gm-Gg: ASbGncubaw0OqilmCYdnBQVK4TcqQlO6Sd9nvvyn3JB4/rbfnZ/3LEMLPKGC48ol3CF
-	UPkCOxFF/tLE8fkMhUgjjsy0NpdNi8XtFZ2f1DuIGxH++5riyAjMmMeyzAzpv/S96mcQ+T1Ay3I
-	G3scMUh2JnVsKAYotN/efy/FhKX8U6v+2Hk6FS0bp5C5rPI/q+b7TU4PzrQwe6jERmklBvwxZIx
-	8N7Jh2lIxzfCJLxxIRWKjzRZUptV6pgv5hOMadWY+MKHoFx6lXccds2747P3tFb96oZn38PjoUq
-	uayyvAlwHv/MBcD+n9/wYCUZ0+T9BZvQZLfLIq7AbyEaZwZ1QdskLbiyMQ2XYv8tVbVzG+OMUla
-	opVD4xe1ks1MY7ckO
-X-Google-Smtp-Source: AGHT+IE/UArbq2DjbpFJb4H+3SY3gmRAdW5HhV7woKgsfiIpeidSWWTKh5QkcSQ5OIpmNRGAgKhovQ==
-X-Received: by 2002:a05:6a00:10d1:b0:76e:7aee:35f2 with SMTP id d2e1a72fcca58-7702fc15031mr17895665b3a.30.1756224281018;
-        Tue, 26 Aug 2025 09:04:41 -0700 (PDT)
-Received: from tinycat ([172.56.186.196])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-771eaa6792dsm5075303b3a.48.2025.08.26.09.04.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Aug 2025 09:04:40 -0700 (PDT)
-From: David Aguilar <davvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Calvin Wan <calvinwan@google.com>,
-	Kyle Lippincott <spectral@google.com>
-Subject: [PATCH] Makefile: build libgit-rs and libgit-sys serially
-Date: Tue, 26 Aug 2025 09:04:37 -0700
-Message-ID: <20250826160437.2539113-1-davvid@gmail.com>
-X-Mailer: git-send-email 2.50.0.7.gec2f25360c
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LnZS3Xr4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A9yGJsNk"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id D5151EC0399;
+	Tue, 26 Aug 2025 12:06:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 26 Aug 2025 12:06:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756224364; x=1756310764; bh=jv4B+o5ccY
+	hx8SKpb3mtKAqHHaRdumudbItQTSInctM=; b=LnZS3Xr4522oXJ1R9TDZWiRm5o
+	dTf5W51F4FiyvILXzvf7bsx9PY82+JiVfIU2KLjFC3JC7DiqZjPGXbi+zEicvWwC
+	0kGP3UhQyf1oQlbCai1+dyyK2nGYkcqJ4039ttabB9Hw2zTgb8DEnpaQVuXe0J9R
+	krGSsQRuyM0Q8jtlJSEiI6/G02vh7eMnu4uGvrfqnhEBscZUTjlDkaKR7RzKxPYa
+	KJtz3rM5x68KczkWGdbQghZX+gvKv7PuFOSIT8BCSc+3ZTdnZjBV2foNJzLo7h//
+	pd5B9TwRYaN5SZj+R+40j1hoG/pO66plKexSgq0qDI9EHZLhS+PmJG2+vTXQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756224364; x=1756310764; bh=jv4B+o5ccYhx8SKpb3mtKAqHHaRdumudbIt
+	QTSInctM=; b=A9yGJsNkEwaSANvjp9r2NRH7h13ydtWdN2I4knGPZm3wB2CQ2N+
+	FVhU5LoCGTCM4rXRktlu4zP2ms+uDPqDPZmxedIebaIenB2arP6nqtQEDBbvJ9DF
+	7PbIfSG4/NUrhB/vXu+mq0gfubO9Yy6Q6YBSEbOnDrBYYq7FvXaUkeR3Pb3ivsJB
+	7wO0+R5jgG0WAUdWiKIYcOOIBboMYB/Zj79XvILL07PJIWLO8UAUjEtl5sQNI+sS
+	QYsIH3Ok9c75UjHxIXGi16O5bhEoRezCTXAGqT/fIIkG7Pis9nGm0wiU3+Sh5jM4
+	JhklnEMY4XXOpqhwFK15iJNrXDjOtasRkzw==
+X-ME-Sender: <xms:bNutaG2khtatDjFmuDedxbXTpgJT3RSLQSkh5827YjeW6M1-W1CE7Q>
+    <xme:bNutaDr-c9eFVq69yMOpg7Hxu7rIdpqiyz5GtsbzWh-gUoPeyz0dNVSxhPXHoUHWI
+    lU5Sb0NWG3t3ob7-w>
+X-ME-Received: <xmr:bNutaLdoY3VPsxjOznwBY9H40FP1CIYnRX-B1GtcsmV4yu2jGM12JI_T7HTUzRazG3NH7VZ23id6DI__0d9HjhRBOp312_FV_1yakMo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeehjeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:bNutaKo1XTMW_Y-8kEbtaD5t_ZZtxBa2Mdu7l7MxcosNajZ5xn4Qtw>
+    <xmx:bNutaEHjNNCeGLuTPplPdqM6CU1GImsvlItt7cYaae274m_SU1KaHA>
+    <xmx:bNutaCs8iJBnQb9VQslZf0rtGUyCiJUmJtyplHKf-i9WT-_eq-fhgA>
+    <xmx:bNutaOUm4cy7K_8Nf3qon9FMWq5QDNZtsGlRgERnHeN-gi9fVRb-gg>
+    <xmx:bNutaEEBsVWmxFATd1dO2Tib0qQbllozNZSuoiAkOLXayfvFJTDeDGVE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 26 Aug 2025 12:06:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Derrick Stolee <stolee@gmail.com>,  git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2025, #10; Fri, 22)
+In-Reply-To: <CABPp-BFuKUH0NKR_9Qb7Q8Cb++o2EVzqYK8WyvQ_PG5_JFyZ0w@mail.gmail.com>
+	(Elijah Newren's message of "Tue, 26 Aug 2025 08:04:39 -0700")
+References: <xmqqsehivqxi.fsf@gitster.g>
+	<CABPp-BFuKUH0NKR_9Qb7Q8Cb++o2EVzqYK8WyvQ_PG5_JFyZ0w@mail.gmail.com>
+Date: Tue, 26 Aug 2025 09:06:03 -0700
+Message-ID: <xmqqbjo2kqz8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The "cargo build" invocations in contrib/ cannot be run in parallel.
+Elijah Newren <newren@gmail.com> writes:
 
-"make -JN" with INCLUDE_LIBGIT_RS enabled causes cargo lock warnings
-and can trigger ld errors during the build.
+>>  Needs to wait for the base topic to solidify.
+>>  source: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
+>
+> Maybe also mark as expecting a reroll?  (cf.
+> CABPp-BFzMLGJwz4QqYtvw3zRYgmC=Mb8T8GCOsrLZqT2z+8H7A@mail.gmail.com and
+> CABPp-BHLcy-A4yLR8gP1Sjt_EKQ4K08kPyb7G6yifdZj+0MJNg@mail.gmail.com)
 
-The build errors are caused by two inner "make" invocations getting
-triggered concurrently: once inside of libgit-sys and another inside of
-libgit-rs.
+Good idea.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+As these are primarily to remind me, I'd prefer to point at articles
+from the topic author that said "in the next reroll I'll do this"
+rather than articles from reviewers when leaving a note to explain
+why I do *not* want to merge it yet.  But this second round does
+look like it needs responses to reviews.
 
-diff --git a/Makefile b/Makefile
-index 29a53520fd..286d3ba3b2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3989,7 +3989,7 @@ libgit-sys libgit-rs:
- 		cargo build \
- 	)
- ifdef INCLUDE_LIBGIT_RS
--all:: libgit-sys libgit-rs
-+all:: libgit-sys .WAIT libgit-rs
- endif
- 
- LIBGIT_PUB_OBJS += contrib/libgit-sys/public_symbol_export.o
--- 
-2.50.0.7.gec2f25360c
+Thanks.
+
+
 
