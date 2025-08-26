@@ -1,155 +1,210 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49AF283FDE
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 18:32:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736EA2264C0
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 18:37:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756233139; cv=none; b=NKlEa3B5N6uIWduXky8TW9haRLz5dgJjpXDhQOnkO+OJzcKPjk6mX5lmL2utHFtMyrWvsXKLUGA+PO9AVu4Wpqo9tUbe4KVNw2UUHNXnFUA/RlNtTS67qHW3JUuHgavsgc62YJR/2ubHEg1VmosNJjAAez5vauHLlOWcGvf/bXU=
+	t=1756233443; cv=none; b=OC4lDNP8MtDkIsZQnrKUGp1v6k5LE/+zEqzqK+UFv27EfD5VcLQ/gVwwdOYnOqHYW00HDhSrjv9kAYwsU1kjTQL+5M7VTCzt7C8yqgl2urmekbzdO4POhFCkktdIDOSPdoWun8buxYY/Z0tyYHViNRqOjAlh+cYVrngTRtaCUus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756233139; c=relaxed/simple;
-	bh=m+aukjZeraU3q5ZALPOuqJ8s50Fttw+F/O+JWjtSDeI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=fhVySA9JMH9Z+fIId8YtKnXiqTS1kO254xMHb80tuMWgAU8NEQaEiCHW1hZix2nWY4vqxH66YNvR9c0Go8jFyVZj6oOCKj5DSAgPEPblPlLhC7zBSS9agcpme9I/86Pbm9tqZ+kkmtfJGPbY/Fh1o1n3eG8ekEhAF3BMXtVLbTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mQclFxGK; arc=none smtp.client-ip=209.85.216.41
+	s=arc-20240116; t=1756233443; c=relaxed/simple;
+	bh=edChDUJKPb8GW/cm3pQiW5bQpaU05EaYf12ZZ9lWSQE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QXRpB/fbtIMchW1W+KuXB6inVMpzPt+CowuX3OIOj/Mgb72BVJCofw/3HwDDt0G68ffV6D397R1kf5+QVH7jrOS4HVZto+bc50z3VvmVmGqLQkbU1XlhwSCJCugDd4hVpytuvd0Xxz4ZTMYqgKI5+xCLPVRD8fF1lRAmMtRlgEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GCKu78ot; arc=none smtp.client-ip=209.85.166.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mQclFxGK"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-32326e2f0b3so4672047a91.2
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 11:32:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GCKu78ot"
+Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-3eb6da24943so36768635ab.3
+        for <git@vger.kernel.org>; Tue, 26 Aug 2025 11:37:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756233136; x=1756837936; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1756233440; x=1756838240; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qUeEuNuOYPsLrvEzUdkECAbz89Jn0rl9kfCVJPsuvUM=;
-        b=mQclFxGKmFNw8gTjfO8oAIGLPTGZ+ABaKwHoF1n8ReyL4SVoI9t/bIr6CvmU8XFpan
-         wSxnEvf34McMs1erHQHEDzwYRhH4zdiquSoLYCd5ontFeXTTOKWvzW0GqWxT/9x0jWsK
-         KuVZ+pwA+H8aam1m2a6FHWJzdEjmg+qvFiVBntWNKiVn8Sgps2rNhZlbIGxHiwuurtwa
-         3Sw5MQtzJOULPKX5444rbYCy9aAIPG4i4hNVKkwG4nTIwh2acLyoNkKMZPdCDCika3HU
-         NyWOTRy9aeQblj4nwYS6uiCuu1vyjptSzFiw67WLCV8WO/E2KhgWGHLdX0h3/2OfGBm2
-         YDmg==
+        bh=EtgHZfNxPLO+rtUhGmlaCSu9SwfZsLJx927uDi/7rVQ=;
+        b=GCKu78ot6LmGGCigiq45wdT5kcrOOaCtLhRQ8l4TywW7SeJp7/N9vITkzN9EhhfZX+
+         oVaiGvRaW6LdHJLuUIkohNVr38nJKCeJMhmYMcysNggcUe2TNF9eBExwQoXJtnYznuAR
+         Oj0y4II4S7izky5c2HW2W1w3h4GZ/SDmTlHuJVPWPt2fWl0CN4Lair0fvQRwH75Leba1
+         Y5rgRiYfz6eDIG61E8416/tggiG53GEiXfkIQDmdgNHjCqbNZRdWBRtoxCf+ZGmCqzda
+         u5zlGHvihymqKRUg8gI+4Q4fLUOR+3C8lhQ5aqlCOZtplGHxj+cT0x+zgntZ301+uMVI
+         rqfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756233136; x=1756837936;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1756233440; x=1756838240;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qUeEuNuOYPsLrvEzUdkECAbz89Jn0rl9kfCVJPsuvUM=;
-        b=v+6qgCV+w0NIDpZplcka+HwwJjlW87NwejQo4BsAeULOBUJioI+uD9k0uS66pCt22h
-         NTAQZOAx1qKhRBpDCX52ncbz0mzZM5u8woN81VMmbUxz3+jTWeMhO8vALzMu4Rm7vRUS
-         cAAaFBjFfMyvnb8AG2ujV+JP/11F/Ut5wsZ2UIq3aoP7jA3EACjKXx1G94cMvBx0d8MY
-         tpP7FFTZNAHvaATkzyBYUGzJx9x1Oi/WkfIIuU+02ZgfmYj+5Xhqc6p1BRX5ywPg/pBz
-         Z/DXdQiCZDA5YC0V79xzw17vXEoAOQK2PUgmnaUqPjv78+ajmc7SN5hLRysAJ4I4MnwJ
-         MXHQ==
-X-Gm-Message-State: AOJu0Yz5l3wQLG6/dM5yzh7Vw+S5EzjowDdbJ/RcpgoP3RJBstATxyIO
-	/aE5XJE2vwUG/9/FC4GXN/aNQ6/b5UkPjiCoFThe4hjRrCa9iJoHSEdspKhJew==
-X-Gm-Gg: ASbGncsNM4ujJCZcN2+HwVDNSb86auMIlFVObye7bWN+Cu+Q3jta5t00kYufetn0VYb
-	xr59bVeBrWgO2Omve/pNeHtio/ANQK9e21SHi5XKlZASONIeYhr1iGq31nAZ+6WcKgTLm60ltTw
-	g4UWNYGgD1HJTbim52WXGP5LgmR4NV5O3P2+N5kvT/wAvOOlMrTOl4yCE6lDwILpZlu2Lr9fXgt
-	8Vl9Tcc5W74wIGM5dxt79b9FDq9SO9hLoBR0mKbhfcrv3w8XHLepmMJyYm4KBLSYrmfs7D8jlEN
-	n4/U3AK7fcFgB+gM5blULfo3KhsKSyJPN3KN+isTXg+MQQSTMo/ed+vFHTpmlwAu/ew5RUVsn5m
-	DOuDrm5X3MYc/VmBevAD9b3DjRR0wnv/z9Twozw3Lphrnv+acQ8U3a4DJMDqwIts=
-X-Google-Smtp-Source: AGHT+IFd8HXMTyYV1iAXNEbOqfov3HAzCl/sX/FRSqn89TvcsPUUdKFTXYAkcjoKhEjr19FgiXjNXw==
-X-Received: by 2002:a17:90b:2e48:b0:321:160f:3349 with SMTP id 98e67ed59e1d1-3251744c8d4mr22176575a91.21.1756233135754;
-        Tue, 26 Aug 2025 11:32:15 -0700 (PDT)
-Received: from localhost.localdomain (nat.ime.usp.br. [143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3276af0786dsm193214a91.27.2025.08.26.11.32.13
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 26 Aug 2025 11:32:15 -0700 (PDT)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	karthik.188@gmail.com,
-	gitster@pobox.com,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH v2 2/2] repo: add the field objects.format
-Date: Tue, 26 Aug 2025 15:32:05 -0300
-Message-Id: <20250826183205.19566-3-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250826183205.19566-1-lucasseikioshiro@gmail.com>
-References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
- <20250826183205.19566-1-lucasseikioshiro@gmail.com>
+        bh=EtgHZfNxPLO+rtUhGmlaCSu9SwfZsLJx927uDi/7rVQ=;
+        b=T7NLb/YWbEebvJtZn4syl1LAltkZgZ70Cd8IZiaapow5IIah+A+HuKoSd+P+75muEc
+         TIl6BaWraGxhOPDK7V3dPuchFTuqBghoy9lAWG4VmQaY3/aMswPwjsedx2finWJvdI4+
+         8t0EIPllCXdNWat0pPF7EE4/2MawUJk07zb/q1ejVJcl8tYAiB16IvQr8C0SZfTB+wpw
+         UMI4u+fi6NwqkIrKa2Mq/zCBU5as2xe3xdB5kBvN9tbWUDgA7wcS8/Fx+lnSDfdeWD3l
+         l7m8oKxgkP/Y7tdDEF7tuDvoeTXieE4Gxbt/kfrI3BWBwudaY+YNL/cyeaP1R7yWUyN5
+         nxLA==
+X-Gm-Message-State: AOJu0Yy9FqdZ/jR9tiGgPQ2LH1lGptBFxATWFlvuMh+Ek26lH3vxvx0P
+	7XIWB0R+ctn9b3gYbZ3C8b87koyn041czw8POudx9ZRqYX9qE64DI5t7E/0WUyocPKTyTget2vr
+	qw/OZxkqGNFsQqY1RwOfkaHhvp+C8yofHmA==
+X-Gm-Gg: ASbGncsrLe2iWza4Bg/EKVXeyY/ODAPxem12XYnInPVSZ/3v2mJvqIv25iICT5Ugn1w
+	Jxb30Nr+QzwSufxrq5bIeRN9UI3c8negrsOyqoccBpaSPCHi8F8ULnNCXPgvTfoxQQOVjgSgGJ1
+	hrgfsCoEVlVHOD0etbuFOmzPvaUnEtQtRORY52prf9pIjStTjOaYaen4DAsOYzIc2cgCNuguooL
+	tP16JvsXI0ik/jzjB4oaVQO5dLYJIC0OZiynBVWdx1dmv9uovg=
+X-Google-Smtp-Source: AGHT+IFo/hWqOjWCt7RUiBrkNBAIIlUsP14OPpCkEwEdlrgcZXqIBJmUhHLuAuzf9gVkLjTqGUDhe84boQGvlfnWk80=
+X-Received: by 2002:a05:6e02:2591:b0:3e5:3520:4a75 with SMTP id
+ e9e14a558f8ab-3e922ad5276mr241992475ab.23.1756233439972; Tue, 26 Aug 2025
+ 11:37:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.1955.git.1755274373717.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1955.git.1755274373717.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 26 Aug 2025 11:37:08 -0700
+X-Gm-Features: Ac12FXyYmlQN5yVXQVuE-fWHq3cTesmBYILH2TmmLeKcpYIUa34pdZH97RSkZgQ
+Message-ID: <CABPp-BE-FrvWHiskk3t7ePG9NWmj8E5FaFfxk6JGF4ztYVQt0w@mail.gmail.com>
+Subject: Re: [PATCH] ls-files: conditionally leave index sparse
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The flag `--show-object-format` from git-rev-parse is used for
-retrieving the object storage format. This way, it is used for
-querying repository metadata, fitting in the purpose of git-repo-info.
+On Fri, Aug 15, 2025 at 9:13=E2=80=AFAM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <stolee@gmail.com>
+>
+> When running 'git ls-files' with a pathspec, the index entries get
+> filtered according to that pathspec before iterating over them in
 
-Add a new field `objects.format` to the git-repo-info subcommand
-containing that information.
+When I first read this patch, I missed this part of your commit
+message and figured there was no possible way your patch could
+actually speed things up.  I verified with your testcase that it
+worked, though, and had to step through a debugger to find out what I
+was missing.  It's the prune_index() call in cmd_ls_files() that does
+this -- but only when the pathspecs provided have some common prefix.
+So, it's not unique to when there's a single pathspec as your commit
+message claims, and the pointer to prune_index() may have helped save
+me some head-scratching in review the patch.
 
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
- Documentation/git-repo.adoc | 3 +++
- builtin/repo.c              | 7 +++++++
- t/t1900-repo.sh             | 6 ++++++
- 3 files changed, 16 insertions(+)
+Perhaps this could be clarified here (and made more explicit for folks
+like me that gloss over it), something like
 
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 8224a88bc8..2f9d696572 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -55,6 +55,9 @@ values that they return:
- `layout.shallow`::
- 	`true` if this is a shallow repository, otherwise `false`.
- 
-+`object.format`::
-+	The object format (hash algorithm) used in the repository.
-+
- `references.format`::
- 	The reference storage format. The valid values are:
- +
-diff --git a/builtin/repo.c b/builtin/repo.c
-index 5df33de42e..5c900d683e 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -38,6 +38,12 @@ static int get_layout_shallow(struct repository *repo, struct strbuf *buf)
- 	return 0;
- }
- 
-+static int get_object_format(struct repository *repo, struct strbuf *buf)
-+{
-+	strbuf_addstr(buf, repo->hash_algo->name);
-+	return 0;
-+}
-+
- static int get_references_format(struct repository *repo, struct strbuf *buf)
- {
- 	strbuf_addstr(buf,
-@@ -49,6 +55,7 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
- static const struct field repo_info_fields[] = {
- 	{ "layout.bare", get_layout_bare },
- 	{ "layout.shallow", get_layout_shallow },
-+	{ "object.format", get_object_format },
- 	{ "references.format", get_references_format },
- };
- 
-diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-index 3df55dcc79..a83139f7ff 100755
---- a/t/t1900-repo.sh
-+++ b/t/t1900-repo.sh
-@@ -63,6 +63,12 @@ test_expect_success 'setup remote' '
- test_repo_info 'shallow repository = true is retrieved correctly' \
- 	'git clone --depth 1 "file://$PWD/remote"' 'shallow' 'layout.shallow' 'true'
- 
-+test_repo_info 'object.format = sha1 is retrieved correctly' \
-+	'git init --object-format=sha1' 'sha1' 'object.format' 'sha1'
-+
-+test_repo_info 'object.format = sha256 is retrieved correctly' \
-+	'git init --object-format=sha256' 'sha256' 'object.format' 'sha256'
-+
- test_expect_success 'values returned in order requested' '
- 	cat >expect <<-\EOF &&
- 	layout.bare=false
--- 
-2.39.5 (Apple Git-154)
+When running 'git ls-files' with pathspecs with a common prefix, the
+index entries get
+filtered according to that common prefix in prune_index() before
+iterating over them in show_files().
 
+> show_files().  In 78087097b8 (ls-files: add --sparse option,
+> 2021-12-22), this iteration was prefixed with a check for the '--sparse'
+> option which allows the command to output directory entries; this
+> created a pre-loop call to ensure_full_index().
+>
+> However, when a user runs 'git ls-files' where the pathspec matches
+> directories that are recursively matched in the sparse-checkout, there
+> are not any sparse directories that match the pathspec so they would not
+> be written to the output. The expansion in this case is just a
+> performance drop for no behavior difference.
+>
+> Replace this global check to expand the index with a check inside the
+> loop for a matched sparse directory. If we see one, then expand the
+> index and continue from the current location. This is safe since the
+> previous entries in the index did not have any sparse directories and
+> thus would remain stable in this expansion.
+>
+> A test in t1092 confirms that this changes the behavior.
+>
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> ---
+>     ls-files: conditionally leave index sparse
+>
+>     Here's a small sparse index performance update based on a user report=
+.
+>
+>     Thanks, -Stolee
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1955%2F=
+derrickstolee%2Fls-files-sparse-index-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1955/derri=
+ckstolee/ls-files-sparse-index-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1955
+>
+>  builtin/ls-files.c                       | 13 ++++++++++---
+>  t/t1092-sparse-checkout-compatibility.sh | 13 +++++++++++++
+>  2 files changed, 23 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> index c06a6f33e41..b148607f7a1 100644
+> --- a/builtin/ls-files.c
+> +++ b/builtin/ls-files.c
+> @@ -414,14 +414,21 @@ static void show_files(struct repository *repo, str=
+uct dir_struct *dir)
+>         if (!(show_cached || show_stage || show_deleted || show_modified)=
+)
+>                 return;
+>
+> -       if (!show_sparse_dirs)
+> -               ensure_full_index(repo->index);
+> -
+>         for (i =3D 0; i < repo->index->cache_nr; i++) {
+>                 const struct cache_entry *ce =3D repo->index->cache[i];
+>                 struct stat st;
+>                 int stat_err;
+>
+> +               if (S_ISSPARSEDIR(ce->ce_mode) && !show_sparse_dirs) {
+> +                       /*
+> +                        * This is the first time we've hit a sparse dir,
+> +                        * so expansion will leave the first 'i' entries
+> +                        * alone.
+> +                        */
+> +                       ensure_full_index(repo->index);
+> +                       ce =3D repo->index->cache[i];
+> +               }
+
+I see how this is safe.  I didn't understand how it helped performance
+until I figured out by stepping through that repo->indexc->cache_nr is
+much less than I expected, because of the prune_index() call that
+happened earlier.
+
+>                 construct_fullname(&fullname, repo, ce);
+>
+>                 if ((dir->flags & DIR_SHOW_IGNORED) &&
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-ch=
+eckout-compatibility.sh
+> index d8101139b40..b0f691c151a 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -1506,6 +1506,8 @@ test_expect_success 'sparse-index is not expanded' =
+'
+>         ensure_not_expanded reset --hard &&
+>         ensure_not_expanded restore -s rename-out-to-out -- deep/deeper1 =
+&&
+>
+> +       ensure_not_expanded ls-files deep/deeper1 &&
+> +
+
+Thanks, this testcase is exactly what I needed to figure out what I
+was misunderstanding.
+
+>         echo >>sparse-index/README.md &&
+>         ensure_not_expanded add -A &&
+>         echo >>sparse-index/extra.txt &&
+> @@ -1607,6 +1609,17 @@ test_expect_success 'describe tested on all' '
+>         test_all_match git describe --dirty
+>  '
+>
+> +test_expect_success 'ls-files filtering and expansion' '
+> +       init_repos &&
+> +
+> +       # This filtering will hit a sparse directory midway
+> +       # through the iteration.
+> +       test_all_match git ls-files deep &&
+> +
+> +       # This pathspec will filter the index to only a sparse
+> +       # directory.
+> +       test_all_match git ls-files folder1
+> +'
+
+Looks good.
