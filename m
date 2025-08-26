@@ -1,256 +1,116 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB72D2F548C
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 19:18:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46CD3164B0
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 19:57:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756235927; cv=none; b=lm4vs4OzNqHSfxS/AlsD4F79+HCngK0XWW3UYj/Z7wB0IHS/urtVmrmZVGmJ0GnTByxnXVkq8o0nob04UM+kOlJ6R8yUwgZGemoUnlNwDurxP0lHjAxGQST6uceORXmVLju4IK9j9hc/CGktUJriDemtPvRHAfd3sfYyBsljuxs=
+	t=1756238274; cv=none; b=ffqBU0DifzuITA7OxImTYO14cmGln34xAX1x3N12AamEn2pKu/XlMEIyqYs0TV+8HJi0eXl0RW0WhRFNxza1jvwiDpUEzjeU/RbVw6Trr9sAXEB/0ZP5lK2AYy6/xjkC/dmEJEzhlhmvzLBvEESkpZVnikZG5gisTA0zWcDk/ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756235927; c=relaxed/simple;
-	bh=sT0un7qSR+d55/HNYYsdvzWAzZiSrsB23DYIWVu5mgk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Bi77qR7i+aoNNHqjLsz1FPqL26PjDDAaDttzQNdqB8o2yYvAOd0DrgWx+psWHcFr6nK61uvQy3bF5LZa0I+uhKQH74LfCRemckNylcZkp+fXPqrh6/IHpYxhOetxAZcM6JUEIm2xhaeniMN9+x/ht4bL3Nyo46etVf/CAFW+OdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wN7I9nph; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M2laIQV0; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756238274; c=relaxed/simple;
+	bh=fcr13ttIxlL3+g8miyVVI37Ir4cX3Tuaol8MVcq2Al0=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=B13D7RICBjy1URnsTn5xg7PktoLJI9DBpDasc6rIuttatc2drNiKQz61ucvujKtC8rw5sE1e/ijo7C2DqRu3hREDUNxQsbNbolId+hTHKXNfcKWE4muCcdU0+5dx2f+GKW8oZeaZjNHyiw0qR705eQxoC1MDK/z35aiGgNhSWDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BRutANON; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wN7I9nph";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M2laIQV0"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EA9AE140005F;
-	Tue, 26 Aug 2025 15:18:43 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 26 Aug 2025 15:18:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756235923; x=1756322323; bh=CQXR1KzLKh
-	2N109f9rDzWO4UMyE4ayx260qmf11ZPFk=; b=wN7I9nphX4nJknEmox1KP5hfJC
-	7RoyOlYdeKFpP7+205eong1E5EzMUds/UhTUEhpXwmo8rCR5UGWq+jrotTJYaIyN
-	Ln8PbYkT4Jx/pzdihMLoA5FiKn+n+HAF6hDZZ/0FjBoJihtA6k2SfPfBcaUQxfQI
-	0JGGbbqvl3FjxnG5cL8NqwHdl6Uh6EicB5XiBa8wOKUvdVbTaE3vqQKsdBrJj3dd
-	t7VSA131Wf7DJ+JMuSAJbe22bPeu/t0pOK5vi+56fOCcqRWrL86EPhf1N5NbHgsK
-	KI7WzVDkLf8763q+LI9EGJCEo57N9x72Dj7jvlNvUS5hzuFWDpF1Mf6I6f1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756235923; x=1756322323; bh=CQXR1KzLKh2N109f9rDzWO4UMyE4ayx260q
-	mf11ZPFk=; b=M2laIQV0tnojV7iYFLkcW2jTF83JymM4/p+oQapdCLhis86T8FK
-	j1z4U9GTBeV2dCZyQQ8jnK5xNMexPTkGUvJIz0aeyIWuLXFNdMQfYZRcj9s4YxER
-	6spMQzndse5V+ZDco7fej2Nl+noT0azV6kmtoeYI+Oc3nhknuVXJ6c739VerfBLE
-	MNXCq0VtPuGAMeCnkoUM0pkWk6OdpPTZgFCAXLO3UZsLbYTJgeFz16GwUVeuNp02
-	/U3zVhSZjux55aMcd8UqOzWmUifWjY5Yj7K1zMPBpEmFs2l+hJTy3UPlwe33l9tC
-	T+xNBH9XD504sP4keCJ1SPsKecPldq6ZWhg==
-X-ME-Sender: <xms:kwiuaCaQrf6N1jtekdV6D3Tof2TLTW9sLNNsW33wc0yNkpc_NzxQ1Q>
-    <xme:kwiuaA4Xg9nWu6b6AVz25AMlDNBHiHxR1TyP4dS0iWuN5Qh3giTDxoSMFNPJvFmGx
-    Hss81_gyiteYb8Mgw>
-X-ME-Received: <xmr:kwiuaDaPEE53eyQCq7DTABahaDjkgFxR04EWdzTuGrAcAB5bfhVzLpj9uhoiEo1laCR-HK3zknGnIpz5Mf_9FePD4IdyFHKhLqoieSw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeeitdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehptggrshgrrhgvthhtohesghhmrghilhdrtghomhdprhgtphhtthhopehprghulhhord
-    gtrghsrghrvghtthhosehshhhophhifhihrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:kwiuaPg6lSzZD93jwn-jkaz1w6DVn-B-xAYzRPIutJ5X74bsDBw-qw>
-    <xmx:kwiuaE9FIX_Dt-9hnckfI0qjREQkJe8ggTNRat6cdZeqOlROUYY6YA>
-    <xmx:kwiuaKrEfMLzNGMSHyvixlKg0nfakfzGTumlZWnhT1pflxj7F1PWOg>
-    <xmx:kwiuaMW5-Zf54dX3_ysYF45BE44LWqOseAJuutR7WCCrY-5N52drCw>
-    <xmx:kwiuaCtt-oBAOH27WleoZbhSaPVE1ikcWkSt4pzGt11ktErSDFwWat-0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Aug 2025 15:18:43 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Paulo Casaretto via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Paulo Casaretto <pcasaretto@gmail.com>,
-  pcasaretto <paulo.casaretto@shopify.com>
-Subject: Re: [PATCH] range-diff: add configurable memory limit for cost matrix
-In-Reply-To: <pull.1958.git.1756228693233.gitgitgadget@gmail.com> (Paulo
-	Casaretto via GitGitGadget's message of "Tue, 26 Aug 2025 17:18:13
-	+0000")
-References: <pull.1958.git.1756228693233.gitgitgadget@gmail.com>
-Date: Tue, 26 Aug 2025 12:18:41 -0700
-Message-ID: <xmqqzfblj3hq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BRutANON"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45b4d8921f2so44647265e9.2
+        for <git@vger.kernel.org>; Tue, 26 Aug 2025 12:57:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756238271; x=1756843071; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=kUZA27y2s3NaxFtdtl/5q29VAvU9k74kG+HPhILYko0=;
+        b=BRutANONn3uCkVZy6gnCCl8MD6ekvIc7i8GDHzx2f3CzibmANzvZ8ir5ZggiCcJflE
+         b6LNEJAzJdT19Rw4Fm77RP1QFOR4D9fFgFMQARc83pDmUwjYcKYePddpDE4y2tDevcCG
+         o4Uzu8UllaHlSXTOnwQpzSEqP47ESs5TwqI5Rj1YCiL6hYFu95yeqluu8Ah2G1aU4T6Q
+         TCsij0BXQCWBFcLaYMJHoFgVd5najsTeBqvbAkcgDHKsww1+97OWnD8VYrJmcHW3Ap93
+         Ii012+uItZZtk2sk2JsWqTMncs5xZsCG3gY5B0i4KXUWQi0c+Ip04PqX/SfBJ87c6r0A
+         U/tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756238271; x=1756843071;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kUZA27y2s3NaxFtdtl/5q29VAvU9k74kG+HPhILYko0=;
+        b=TRIlpArZljEHdKxtrAM4e/9MhErJyGe3+GGOCvQy5QaCng0F980JT6T6Jf7ay3fDhq
+         9UANkHYK/ovynzSM92VesovVJ1Ht55XKkTFtMkNb21vcUeEaKXvIkaAxnGTAjUnHJj1w
+         RJLqnf7EkLHqE5WHm2BeMR3CcN0/5g63JXzVN59g1BaJUJcbg8Y357njrFeYu+PiUhu4
+         mfqMj5QrkxXWUFZ7Ad2GZazfS2Lkm4szQ1UVIbw9VLd2zOolAkuIk5PS6kPZqFnGSjCG
+         yRDd0uxlQzcvFRF4+WXSj3OVxrtJ5kp3efNiIg7y1v/QnBEZ37i/C06lnlVNwWNfaXSq
+         ad3A==
+X-Gm-Message-State: AOJu0YwbXjI4b+Ekv1LKkMCE/yJPgnzJoJgX/ErkcYILdGlHPPVJT2on
+	Hc/TJY9N4r/DszXS4U5uJkqdpVSS/MJi/XOwxMRr0Drfq5e0L7BxKiFoH2wb9g==
+X-Gm-Gg: ASbGncvvQ/s+Da6G2/cwuIvbq6IK7rHUEww+HxfpI0huhI7c8DhJvnuQSjUJvc8E2sA
+	Ap/RKUDuy2bxCe5kz8c+ATnrq58JhwSzNFNq+hsBRK+jw1tu5BA3oyNc4TW9eeuwGsgXo03br8o
+	GqUadyAah6fdQ2l9nBtV5/7ExJ9+5ros0b3xwt2Lp9S6yGcRo0tHRSl4mGaYgBUq04MCYRM5GUL
+	RrZcXWoe1FEeVBNZT3cfOsvJPG1QLOrwcPaZkLgLm97tcjhju669Ng30o4S01mCBKdkKOO7yDdz
+	24rwEND0+bJ6VqHxE4/56vXOds1+7581qzOXwAsR/gIE92I70ZIWUNViqvQoHrCRrWru4PYNoCQ
+	1vlpCOTTYSk84Lzn9Fo/mACif85M=
+X-Google-Smtp-Source: AGHT+IEIRw5ztT8gestOjcfMi+4fBxpPOsmUCQUlU8kKtYi3/mc2MwCyjQB7t30Maj5a7mR32LjCbA==
+X-Received: by 2002:a05:600c:3505:b0:456:1dd2:4e3a with SMTP id 5b1f17b1804b1-45b6bbd3411mr5438225e9.3.1756238270523;
+        Tue, 26 Aug 2025 12:57:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b6f0c8b6bsm227055e9.4.2025.08.26.12.57.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Aug 2025 12:57:49 -0700 (PDT)
+Message-Id: <pull.2040.git.git.1756238268790.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 26 Aug 2025 19:57:48 +0000
+Subject: [PATCH] reset slab_alloc and state fields in clear_alloc_state()
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare <nouraellm@gmail.com>,
+    =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9?= <nea@odoo.com>
 
-"Paulo Casaretto via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9?= <nea@odoo.com>
 
-> From: pcasaretto <paulo.casaretto@shopify.com>
+clear_alloc_state() freed all slabs and nulled the slabs pointer but
+left slab_alloc, nr, and p unchanged.  If the alloc_state is reused,
+ALLOC_GROW() can wrongly assume that the slab array is already
+allocated because slab_alloc still holds a stale nonzero capacity.
+In that case s->slabs remains NULL and the next dereference writes
+through a NULL pointer, causing undefined behavior.
 
-<administrivia>
+To fix this, we reset slab_alloc, nr, and p to zero/NULL after
+freeing the slabs.  This leaves alloc_state in a consistent empty
+state for reuse and avoids dangling pointers.
 
-It is usual to see a less human readable name embedded in the commit
-object than the mail header when a mail comes from GGG.  
+Signed-off-by: Noura EL ALLAM <nouraellm@gmail.com>
+---
+    Reset slab_alloc and state fields in clear_alloc_state()
 
-Just in case you want to be known to this community as "Paulo
-Casaretto", not "pcasaretto", I thought I'd point it out that you
-may want to redo the commit.  I do not mind what name you like to
-use, as long as it is identifiable, and From: identity matches the
-identity you add your Signed-off-by: with.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2040%2Fnouraellm%2Ffix-dangling-pointer-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2040/nouraellm/fix-dangling-pointer-v1
+Pull-Request: https://github.com/git/git/pull/2040
 
-</administrivia>
+ alloc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> Acked-by: Johannes Schindelin johannes.schindelin@gmx.de
+diff --git a/alloc.c b/alloc.c
+index 377e80f5dda..6bf9421c123 100644
+--- a/alloc.c
++++ b/alloc.c
+@@ -49,6 +49,9 @@ void clear_alloc_state(struct alloc_state *s)
+ 	}
+ 
+ 	FREE_AND_NULL(s->slabs);
++	s->slab_alloc = 0;
++	s->nr = 0;
++	s->p = NULL;
+ }
+ 
+ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
 
-It is unusual to lack <> around e-mail address here.
-
-> Signed-off-by: pcasaretto <paulo.casaretto@shopify.com>
-> ---
->     range-diff: add configurable memory limit for cost matrix
-
-> +static int parse_max_memory(const struct option *opt, const char *arg, int unset)
-> +{
-> +	size_t *max_memory = opt->value;
-> +	uintmax_t val;
-> +
-> +	if (unset) {
-> +		return 0;
-> +	}
-
-No unnecessary {braces} around a single statement, please.
-
-> +	if (!git_parse_unsigned(arg, &val, SIZE_MAX))
-> +		return error(_("invalid max-memory value: %s"), arg);
-> +
-> +	*max_memory = (size_t)val;
-> +	return 0;
-> +}
-
-> @@ -33,17 +51,21 @@ int cmd_range_diff(int argc,
->  		OPT_INTEGER(0, "creation-factor",
->  			    &range_diff_opts.creation_factor,
->  			    N_("percentage by which creation is weighted")),
-> +		OPT_PASSTHRU_ARGV(0, "diff-merges", &diff_merges_arg,
-> +				  N_("style"), N_("passed to 'git log'"), 0),
-> +		OPT_BOOL(0, "left-only", &left_only,
-> +			 N_("only emit output related to the first range")),
-> +		OPT_CALLBACK(0, "max-memory", &range_diff_opts.max_memory,
-> +			     N_("size"),
-> +			     N_("maximum memory for cost matrix (default 4G)"),
-> +			     parse_max_memory),
->  		OPT_BOOL(0, "no-dual-color", &simple_color,
->  			    N_("use simple diff colors")),
->  		OPT_PASSTHRU_ARGV(0, "notes", &other_arg,
->  				  N_("notes"), N_("passed to 'git log'"),
->  				  PARSE_OPT_OPTARG),
-> -		OPT_PASSTHRU_ARGV(0, "diff-merges", &diff_merges_arg,
-> -				  N_("style"), N_("passed to 'git log'"), 0),
->  		OPT_PASSTHRU_ARGV(0, "remerge-diff", &diff_merges_arg, NULL,
->  				  N_("passed to 'git log'"), PARSE_OPT_NOARG),
-> -		OPT_BOOL(0, "left-only", &left_only,
-> -			 N_("only emit output related to the first range")),
->  		OPT_BOOL(0, "right-only", &right_only,
->  			 N_("only emit output related to the second range")),
->  		OPT_END()
-
-This seems to mix unrelated changes.  Please don't.
-
-Or if the reordering of options do have a reason to exist in _this_
-commit, please justify it in your proposed log message.  Even if
-there were a good reason for reordering existing options, I strongly
-suspect that the change would want to be done in a separate,
-preparatory-clean-up commit (i.e., making this topic a two-patch
-series), because it has nothing to do with preventing inefficient
-cost matrix computation from consuming too much memory, which _is_
-the theme of this commit.
-
-> diff --git a/range-diff.c b/range-diff.c
-> index 8a2dcbee322..6e9b6b115e5 100644
-> --- a/range-diff.c
-> +++ b/range-diff.c
-> @@ -21,6 +21,7 @@
->  #include "apply.h"
->  #include "revision.h"
->  
-> +
-
-Unrelated, unexplained, and unnecessary change snuck in?  Please
-proof-read the patch yourself before sending.
-
-> @@ -287,8 +288,8 @@ static void find_exact_matches(struct string_list *a, struct string_list *b)
->  }
->  
->  static int diffsize_consume(void *data,
-> -			     char *line UNUSED,
-> -			     unsigned long len UNUSED)
-> +			    char *line UNUSED,
-> +			    unsigned long len UNUSED)
-
-What is this change about???
-
->  static void get_correspondences(struct string_list *a, struct string_list *b,
-> -				int creation_factor)
-> +				int creation_factor, size_t max_memory)
->  {
->  	int n = a->nr + b->nr;
->  	int *cost, c, *a2b, *b2a;
->  	int i, j;
-> -
-> -	ALLOC_ARRAY(cost, st_mult(n, n));
-> +	size_t cost_size = st_mult(n, n);
-> +	size_t cost_bytes = st_mult(sizeof(int), cost_size);
-> +	if (cost_bytes >= max_memory) {
-> +		struct strbuf cost_str = STRBUF_INIT;
-> +		struct strbuf max_str = STRBUF_INIT;
-> +		strbuf_humanise_bytes(&cost_str, cost_bytes);
-> +		strbuf_humanise_bytes(&max_str, max_memory);
-> +		die(_("range-diff: unable to compute the range-diff, since it "
-> +		      "exceeds the maximum memory for the cost matrix: %s "
-> +		      "(%"PRIuMAX" bytes) needed, %s (%"PRIuMAX" bytes) available"),
-> +		    cost_str.buf, (uintmax_t)cost_bytes, max_str.buf, (uintmax_t)max_memory);
-> +	}
-> +	ALLOC_ARRAY(cost, cost_size);
-
-Nicely done.
-
-> @@ -351,7 +363,8 @@ static void get_correspondences(struct string_list *a, struct string_list *b,
->  		}
->  
->  		c = a_util->matching < 0 ?
-> -			a_util->diffsize * creation_factor / 100 : COST_MAX;
-> +			    a_util->diffsize * creation_factor / 100 :
-> +			    COST_MAX;
->  		for (j = b->nr; j < n; j++)
->  			cost[i + n * j] = c;
->  	}
-
-There seem to be other unrelated changes indentation-only changes
-mixed in to the changes to this file, not just this one.
-
-As a style fix, 
-
-		c = a_util->matching < 0
-		  ? a_util->diffsize * creation_factor / 100
-		  : COST_MAX;
-
-would be easier to follow and read, but please do not do such a
-cosmetic clean-up in the same patch.  Do them in a separate
-preliminary clean-up patch before the "real work".
-
-> @@ -591,7 +605,8 @@ int show_range_diff(const char *range1, const char *range2,
->  	if (!res) {
->  		find_exact_matches(&branch1, &branch2);
->  		get_correspondences(&branch1, &branch2,
-> -				    range_diff_opts->creation_factor);
-> +				    range_diff_opts->creation_factor,
-> +				    range_diff_opts->max_memory);
->  		output(&branch1, &branch2, range_diff_opts);
->  	}
-
-OK.
+base-commit: f814da676ae46aac5be0a98b99373a76dee6cedb
+-- 
+gitgitgadget
