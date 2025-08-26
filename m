@@ -1,106 +1,141 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4764C8F
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 14:51:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFE717C91
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 14:51:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219881; cv=none; b=QlqQoTMoJjFg8f/sarjkmRMzjQpaN20U3qkShae54nFdDckjtLDhKfp6RmTK/xPPmBugxcv4BUtW70bVKbnpAqWXpQrZDyvyUVioo5GZoDoiaokQwaP24OiNS+c70tgp9LXWe0QkuyvR2YUEC0imMPKeTk6MljgJxcAB1hYajsw=
+	t=1756219902; cv=none; b=ID2z6/uKTyeYqTUpy8exkzg+LEyl5KiRqbVcyxyg3ZLnYH3w/rzPM+UCdp8WyxTXtLSYpXRA2N4igk0bonczeEmkY4xwWVBZqFqDRxq14mxTu/kKIBZCyeRd1NZT5bs0V0hZG8YjDga9CTDzprS3VABLR2QuO/ti7I6SR8VA+OU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219881; c=relaxed/simple;
-	bh=+DBGik7pMTzYT0ALNVOYAn5vdqCNKbu79MpDPZuxyUY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iWCeptIbAl/1bgN90XNqmAb9zKiV/C3xgt2R4Zfgs232oSmBxTsJCBA6BxHTep9jC186kduJ8h3bUzMmhIvUt86rjwINvYuGqsJbOHyIDtfAsWwvLfeba5XMpLwBH+r2L28BMgHJl5s9Juw8sOkXsfVl1+yhzmv6MZTPlq1T0wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=z019ReUg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UYmvlmdZ; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756219902; c=relaxed/simple;
+	bh=ibkF6zbpYx18JJCz1XcQKcy9f8NeVkDruUr+n5w2++c=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=kaz4UWr6SONwKap52Ko6lb1HQnnl6q5ypozk0+GIYBmORkngoLhScofWr9poD84aavkGofh7GR3m/csfSwY9ybW5HavzTs+RzSQee+2JTf0jerXREg8cv0USTTZ9XYYXR06wYfYGepOjOvCfCD1oQBX7ht1bLRG7r2qSZfh+dmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GQQB18oo; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="z019ReUg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UYmvlmdZ"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1B7B1EC0443;
-	Tue, 26 Aug 2025 10:51:18 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 26 Aug 2025 10:51:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756219878; x=1756306278; bh=NXbyGWKjS/
-	k1cxJp625jClq8DDfJipzcjB2VfvFCAww=; b=z019ReUgq3oSMAKxb6ExiJaXUH
-	y6U0wvVw1U/9Lz6xcisC9YayfAXeuMnLBC0qAcvGmuJPiyKzfsZplMDX91/qeL49
-	8NEw3RQXD3MB2wbJr6z7pQ6xdNXeD3Nyspx6HvD/xHdWvEkxd7XzqpeVjatdB03w
-	ar5T7YGCBlyXhyvTwhCLQP49k4Oc9Anff4Q8v1gxEACwxz1csyCM6kWn9qoJlHE7
-	lCevHIxfqvZkkLCyCMsWFDhM06DVYgpIIjsaXHWXhqiokOqhYMdk4LGGHnlRooKX
-	FHKDPnJek+exXto0ARiao/N4XZvGwNqhRZk6G1IxruABd7WiBIe8LbMkWBQQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756219878; x=1756306278; bh=NXbyGWKjS/k1cxJp625jClq8DDfJipzcjB2
-	VfvFCAww=; b=UYmvlmdZEqrIwy1qjTyZAfh/cbMfV9cipl0AaGPLJwGXg7lpym0
-	mL+FDuCfPJHoRnTNG2ppN/AKaTWeGRKzube+53Xq2vYJnIDm2cDvx0i3tqQPCoLr
-	WIsvDUb219eOK53M/PfDbkLVr7l8wnY4SdmqofzsSwwhdKjBx2X0UJbZTmM4VmoV
-	hlZttVS4tKfgUp4NF+aIL09LBSzABXc4PIrzJtrva2cYbEP79ssJhohp9Y39xipl
-	EzGE9wWUiGgTYxqL5GyfCKiHAyiT9ujDhyOs7mw5wL8GTCesj6n+T0c6k5+RCJEq
-	iCQ8AMh0sgPPaLda+D77TIthEGGSPs5MMcA==
-X-ME-Sender: <xms:5cmtaCCbukNimTb5Ib2LAVXq7u1Agm1CnlZdOiP6cIihiWlmZ5GYZQ>
-    <xme:5cmtaHHaPK0FDr0ye6iMea57fQ_fVGPJN8juaACd4xY-8Zqf1lzwgsu5Tw-GyF3ia
-    tSHnLQ2KKZ3knH-PA>
-X-ME-Received: <xmr:5cmtaCKWdqachGT8-BVdYB2kQQ2Xej82VsGy_E6zW-WXZA0NNsndShyALOtBXewS1x_eSAPvQd7UVx-2HZChh_h5BuzLwuUsB1m7890>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeehheehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehgihhtsehjjhgvrhhphhgrnhdrgiihiidprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:5cmtaDmu-fsVkNb1JO9hPIeMJug5MadjapzR63A-oLCQXq1mEUZjkA>
-    <xmx:5cmtaCSy-PS0jVJDKMwswHV1JGOXhbRY1VHCDum8Th-DZ9n11XKT3w>
-    <xmx:5cmtaNJEC7dtKCUHpfCChEjFJagvfiCENMxMG57unCm6MtVF0ocv8g>
-    <xmx:5cmtaADgZbjBnxhUj37VD2G06yvXDJJf6G_FeNAzhMdle5t7nTb4vQ>
-    <xmx:5smtaDRmAyBIc9QYAA-W70v5hac3USHtuKCFoM3iUunKj-_vY-9lQ8-J>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Aug 2025 10:51:17 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julien Jerphanion via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Julien Jerphanion <git@jjerphan.xyz>
-Subject: Re: [PATCH] Add `-u` short option for `git pull`
-In-Reply-To: <pull.2037.git.git.1756147789443.gitgitgadget@gmail.com> (Julien
-	Jerphanion via GitGitGadget's message of "Mon, 25 Aug 2025 18:49:48
-	+0000")
-References: <pull.2037.git.git.1756147789443.gitgitgadget@gmail.com>
-Date: Tue, 26 Aug 2025 07:51:16 -0700
-Message-ID: <xmqqikiam90b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GQQB18oo"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b476c67c5easo3798120a12.0
+        for <git@vger.kernel.org>; Tue, 26 Aug 2025 07:51:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756219900; x=1756824700; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1Y4+o8z9wJUraSjcqca5lkYTuHIbs4a9h8CCBW7n0OM=;
+        b=GQQB18oooteLa4TwMz4PsvqGBWRpuDkaz4TKQcIbeMrgCFShHML5ZGjpLsa1gN9gBP
+         dYznX8Zt/Ub6/dOFkiNCb4YrQgnxL2v8zloX+TkLrpMqL0ld2jjfiOZZMJNEsmeP9Wv0
+         KQkJS9sL3tYsOzui6/4DedOBVaRVNwsFxSQkv4HtXkmI1joYjwwHQign55NmwhFPyI8L
+         vhZuaf2El35uVdfwi+cnXSaKbiiEGahJvo4ibQW3fdErnfeo1YpMEV+lC1iO20soLd15
+         uPVi/r34VqWcPg/XPqO+PyGJB0E/xLoC0MYhqpKH9iuBMNKM3/9aIJZE07W45XEE+UWp
+         Dwgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756219900; x=1756824700;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1Y4+o8z9wJUraSjcqca5lkYTuHIbs4a9h8CCBW7n0OM=;
+        b=LYqnsUTw3OT6NDo6oVu0MSKR9VJA5Pd4oYQOie27QvH+R7hhDT4Ko89iJ8HRqt03If
+         LXo9sZw3XulqkeIg0/gRxpOcHtOpU0ffmLB97qOdNllz7Ma+LP0rargkTTZ5OZYFU2cg
+         w7gywm4+EWSzLtpoPMAArPd8R8V20cpZMMmJKpuwik1SgF46F9DcemTv/0ml4WJZu+pJ
+         MkrWFvjUMRL8834uKA1hJh/ee1QbLHQM8RDowEWrC40jrQmno+w9rwRoAXPMs0EyZPA4
+         bP/hH7NU5qNpYoQUtF4DQMv9VKXMkz2UFET1s70IuijB1iGR8f0l9wO08TqoWizsJ+vh
+         4jKA==
+X-Gm-Message-State: AOJu0YwEMactCg8RnR9hA6jXk6c3q7RC/kNCZ2gQPiiYxRykIY7U5u8R
+	YdeDb5AVhVlL+IhxL1sOuAuQ8GjC3Hod0Rn0ptpfwKXXD84s7CDrnxItXmqToQ==
+X-Gm-Gg: ASbGnctSZwVsyHdcn/Ceey5noQv6Z8yDlqRJk6HZJTvmXRi1iT5aQ4CJvrH427Q08iP
+	OiJMFbrqutoPWjy+buMaCTqxgibHEJVC2G5K6O1vkblbySRrMTIJqubQcpa5Ak0nllHGcc7rUXT
+	5wcHt9BLybNU1Vzc/UgWN0mno8Rdui2TLFWwjpAqgN1aMXXvTuI6WKWBmo+Oyp5F/ZQX0xnw72G
+	bA/yYofmWXdHeglX6h5a53QfxDBM1S9i43+hjQix4BlNsw3EPkzjUxxd5N50SZmYwTuTlR6pPbk
+	4Yjv+xvnUxs632sAEIffbDzbe4c0MhAVbawefuKiCEociI/jl0QA7ikFrHURdsZYLb8Wjwr0efk
+	8q+NCPkDH6S0h2F2A57dxUeWOi5qBoYOLehAG9MOK5alJkqTFzhkU+5e2
+X-Google-Smtp-Source: AGHT+IEqGekWxXvB1z77LCHOKRI0N/2QzHJJAHTRq5YdrnbbELZ+h5+oz2nDjYxEpOyTmLdMIt1tsg==
+X-Received: by 2002:a17:903:120d:b0:246:2da9:73a2 with SMTP id d9443c01a7336-248753a297fmr23237325ad.27.1756219899554;
+        Tue, 26 Aug 2025 07:51:39 -0700 (PDT)
+Received: from smtpclient.apple (nat.ime.usp.br. [143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-246687ceda5sm98577095ad.63.2025.08.26.07.51.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Aug 2025 07:51:39 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [GSoC PATCH 2/2] repo: add the field objects.format
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <xmqqh5y01mv3.fsf@gitster.g>
+Date: Tue, 26 Aug 2025 11:51:25 -0300
+Cc: git@vger.kernel.org,
+ ps@pks.im,
+ karthik.188@gmail.com,
+ Justin Tobler <jltobler@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <261E9FC0-EE4A-4B4B-BA21-69B93EBA6933@gmail.com>
+References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
+ <20250820144247.79197-3-lucasseikioshiro@gmail.com>
+ <xmqqh5y01mv3.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.700.81)
 
-"Julien Jerphanion via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Julien Jerphanion <git@jjerphan.xyz>
->
-> Add the short form `-u` as an alias for `--set-upstream`
-> in `git pull`, similarly to `git push` which supports both forms.
->
-> This allows users to use `git pull -u <remote> <branch>` as a
-> shorter alternative to `git pull --set-upstream <remote> <branch>`.
+> Yes, and extensions.objectFormat specifies the hash algorithm used
+> in the repository, extensions.compatObjectFormat specifies a
+> compatibility algorithm to use.  So objectFormat is a good name to
+> call this new "repository metadata".
 
-The above explains what it does.  It does not justify why it is
-needed.  Surely it may allow them to type less, but is it something
-they would do very often, like every other day or even twice an
-hour?  If not, should 'set-upstream' squat on a short-and-sweet 'u',
-robbing it from future developers to use it for more useful purpose?
+I was discussing with Patrick some weeks ago about the compatibility
+formats. By now, the "storage", "input", and "output" formats are
+the same. For example, rev-parse already has those options, even=20
+though they return the same value (2eabd38313 (rev-parse: add a
+--show-object-format option, 2019-10-28)).
 
+Repo info is easy to handle this situation in the future by just
+adding a new field. By now, objects.format returns the storage
+format. If/when we have those formats implemented, I think a good
+approach would be add two more values to `objects`:
+
+objects.input-format=3D...
+objects.output-format=3D...
+
+
+> Perhaps drop "s" from "objects.format" before it becomes too late?
+
+Ok!
+
+> We may also want to reconsider references.format as that is not in
+> line with either extensions.refStorage or --ref-format (taken by
+> 'git init' and 'git clone').
+
+What would be a better name? reference.format or ref.format?=20
+
+> Do these keys always have to be two words separated by dots?
+
+The idea is to group everything into categories, than it will be
+easier. I have a future feature planned for that one could call,
+for example, `git repo layout` and then it will return both
+layout.bare and layout.shallow.=20
+
+> I am asking if there are other keys that would plausibly fit next to =
+this
+> object.format thing.  object.count to report how many objects there
+> are in the repository, or things like that, perhaps?
+
+
+Given that it would survey how many objects exist in the repository,
+this would be better placed in the planned `git repo survey` that
+Justin is working on (we discussed a little more about that in=20
+=
+https://lore.kernel.org/git/vygdkwopfzrbdpxpxebnq3xdlg3ow4i3w5y5evduae2zue=
+lqcn@la2dikht2qrf/
+). I'm cc'ing Justin here for more info about it.
+
+In the `info` side, by now I don't remember any other key to be placed
+under `object` aside from the aforementioned input and output format.
+Perhaps an idea is whether we're using packfiles or only loose objects,
+but I don't know if it would be useful.
+
+Thanks!=
