@@ -1,108 +1,95 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE7E276025
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 16:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816CE2BEFF6
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 16:40:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756226363; cv=none; b=bKqdN1lxQvkPiDik3SqIgaV02M/45uEB1iQXUB2m4pdKcTr2pPPNp7c+l3daT2VtCfJnvlHv9eh/CspWWeQ7XELD/lxqTFKcvGS/RG19afTWtNBj8hCkVH5ejyn4PEqopp5f5Cp0MTnzy+53cVZiTWSB+fSb3aZcn7Yk94GnDac=
+	t=1756226456; cv=none; b=rmfsRWkw/uiui2hSIguzciwPkEb1wNcg75NsNP63SLhHJroBejQK6hTXZ5kTxakCer0tXQa59k+4yeGmrwdrDilAvN+oHBprRav2vBHiHP2WQxJ36cgXFrXUSFLtLQSyL9XF/rkA0NEchQp3pjyIdHT8wuJscp7LYgkTuCaK55M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756226363; c=relaxed/simple;
-	bh=vFvt1yPVF1V3CMm16EjJLiJ8Xe8ZAu7BGnAVSf+smuQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SLCeoqOd+kvIM82ZadDonG16K5B3lJookxuOLOFER6V8TSdDPwz19ZZ2QE3SFMl1bVUCFSWPDRP7lp/p3qJZf9CNzUs93zbBgQHBW3yxTKgdLdr0kwYgCU55TRvgWhboTfsp+KRUB5p9ZYubE76lbXDgt/tI5V4w3qsLhJQ2m5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LkQyqptO; arc=none smtp.client-ip=209.85.210.169
+	s=arc-20240116; t=1756226456; c=relaxed/simple;
+	bh=4D4Kc1mMMVC3uXVrrUdi/kxcnYigvacsWd/uOtxHOHw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GuYhDUSytQs0NKcBI3ZyICtZqnlK6IHe+ZfFdM49j4Cnwi6LBaiAZN7NESeaL/Pa63plhpO3yFMq8TGLPS4nC7/b3De5kWrS2bx/G2dfVA//vlEW3VRzj0V9M1dkAoa4FSCto/D4e474ndCFk+VSBoOr8Lsg6NvykGp9vN4v360=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VhIITPi0; arc=none smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LkQyqptO"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-770d7dafacdso2836742b3a.0
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 09:39:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VhIITPi0"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-70ddadde292so3448246d6.0
+        for <git@vger.kernel.org>; Tue, 26 Aug 2025 09:40:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756226359; x=1756831159; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0Cjyo4dumaXkSBCjlN+Wn+zKSpBWBQbPPw4ZBryMqHk=;
-        b=LkQyqptObCUaRPHttAHH877CNHmz65BHBFxk8IMrVeCRpuDoaVsmHHay4qa4z5TpAN
-         0fpY/MzczTjdcLdKwAvY1rsdhsARs0Y0U7EWgsKQGXgzObNUMLvnWQI3sow0icoWfjKI
-         iZuAdGpb+WcPbWlGJwM4v1SfKo9usMhsTr5Jh5ZWd2rTCGMBA/e9cTEAAG/1nlvOhgy6
-         uL5jdnJDBZ4JHhzxGIB56zmB5ap8g9PiLH5MK6KjYLh7VkcD3dU38gouvqTvZIbaADUg
-         FySHhffg8ZqD7mT4Z0DItExoZPaM1eNl9HVhXrTRDCBG87pPFBGW3jGj+GduZwliOq5A
-         IY6A==
+        d=gmail.com; s=20230601; t=1756226453; x=1756831253; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZbF628aM0BdHks2iLAKGOVnbLSS62UC+YgTXiM7ktoE=;
+        b=VhIITPi0rIKCHRzV8KyS4jYrsaXmAxAMrsyWOxqgIFVh0J5RfJ+bWD1i8if+OGzj6M
+         KPtJPqH0i8xYIFlWB6EOvs2cDsh0X4ehsetJR4p+FOHCql9IW04PbfsruFnMrpABmehu
+         vh678afE+vmBcSg6lSutbqYcga3tq7F6fB1X+Qd4WMcuOfoBz7Qz/HJGTvVqkRoxvLvs
+         etL70DxumX+pN7tGc00TynVUbIIRc6YJm/elIoTPNj1ZQj9LlOcibtO3U5e8lhEe7rE9
+         MELA2YzkPHPzQXLWferRTeLntBnLFyg/VI7vUTO+qKTFa3D7EmJnM6Wbp0QfKceFdl7s
+         cxmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756226359; x=1756831159;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0Cjyo4dumaXkSBCjlN+Wn+zKSpBWBQbPPw4ZBryMqHk=;
-        b=dSx6vXwfaHEkw0C2FlKVDIxRNv0V73Ele/eTWAtbOitvuwIm31hHxG0mN/fa8j/U/q
-         HF2/INNz6AzCS9uruipKFe57wa7ykdAlDLr29JyKXpFVt+qpZIf96TiyF21qiCjKMiOg
-         K+T4bjt0WvskjC5d9bJkDvgisM6jX/LMZfabdck12+eSPw7U4ot2nde889WR6X3Zfu+3
-         LHselbd8W4mWvCLAJG1bS8J35BZD8/RnizJHzv0F4WoGavuX+n9it5j6jIVls8JlFlIN
-         1L5u5Ift8P4dymlb2No9a8wscHXQlEv8F3e4ZY7n6hfGQK4vD4nn4QbyvJ1G0g7odC2v
-         5M2g==
-X-Gm-Message-State: AOJu0YwsQb5rX6AhRu6LQ72CdIQq+PqsXM4fidTwXrRoB8oRCFXo6WVi
-	m7ZC0KM7Mpj94ArKqB2Qq5ZtK53TObc4v+Yh8Yher0CoH26OaSjudaW2oNOztA==
-X-Gm-Gg: ASbGncv9NFF8YH0xTqY1K7M0dZ5Sl7YeUfe3kfnfo9RZWy38dWMLV9As23DTUeQrM7p
-	IK0WnGTHEkdRgVCa8w9dlM+KjR3f/H4vjijphNnN0Y2ISvoJEpBshqLkgdH6OrtUmIzjOaDoXUz
-	kw3j/ODpFqoDJrHmKsyyBI2a1gDq/cgXECaYWv1NgtGtmdEXHbPPNkOyXenMUtR/JF8KAVT32cx
-	Z7qByRz4einhiQn6j5VF4rdVAxh3fjNhUgEre7sv1jwOrlRbbnZlfTvy9Cl6Jg14Meq8vsCmvSz
-	iRp7ml8FXOuA9Sy34oB4/HOSVqNgsU1CIs9vZJwkMwxnu3WFEi80Eab8hxjlJmBT3cSzOWhCvzQ
-	p88WY4Yg6jBgONJzLlIDlDr8yDxq9
-X-Google-Smtp-Source: AGHT+IENs8pgUjrp9HbawogoxaWGW11HusBPn9tnMVNBPYE7QICmjrcYh1dOZ1rCCa91MmoqUuh7fw==
-X-Received: by 2002:a05:6a20:244c:b0:240:2e2b:9188 with SMTP id adf61e73a8af0-24340b0171fmr23091391637.12.1756226359085;
-        Tue, 26 Aug 2025 09:39:19 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b49cbbbaffdsm9614926a12.51.2025.08.26.09.39.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Aug 2025 09:39:18 -0700 (PDT)
-Date: Wed, 27 Aug 2025 00:39:16 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/5] refs/reftable: add fsck checks
-Message-ID: <aK3jNK82FILr2GuT@ArchLinux>
-References: <20250819-228-reftable-introduce-consistency-checks-v1-0-8b8f6879fa9e@gmail.com>
+        d=1e100.net; s=20230601; t=1756226453; x=1756831253;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZbF628aM0BdHks2iLAKGOVnbLSS62UC+YgTXiM7ktoE=;
+        b=VEfJIf52lXT4cHKJfrOiw5zI/sQo3icZC9oTBnhqJUnHazWzfBd1tM/26pdWpusezV
+         lCrZ6+tn2D/TjTBY3auOmlNP5pvScdrYOPJltzcjsAktl+J7h21kOCDPveO+4nt1M0Zy
+         i3QTedM3nvrCEuTHqdaayQio/WiQjAtwj1IrPDRSvxTrjWuQBA2XGLLpnAfd0AxhFVYs
+         /DUYB06MJGJfurRSRZIofE/Lf9ItsUC/+MzCErHQT/e12q8th85A9CdvKOitposestns
+         6KDyE1H10rg3ucb/d18lhKqzjBaMfBZBU4shjZjXMhFo4C6YOMDwwdrerzdG7aIQSHi2
+         VHeA==
+X-Forwarded-Encrypted: i=1; AJvYcCUd2USgGC3jlsQ46FjaQroUIWOhi6SyZJea0+INIsx5cHFvJ+fBe1/HBG8C4kGIQSYZmd4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YysYjk4DfT2YhmU6S2RIinoqa1NxE9YFRPjjjKIb9l1nijvMRd2
+	tV96X1g1lBSPTFYyyTxaL4ETknmX1SNed61/6Tg9GhN/jE5Tp2dO6TejfrCMlw==
+X-Gm-Gg: ASbGncukqtcmsk47wIywlQKb9y4hVIMUW8AGWUqm1YlmrwhcVmNtEw4L8uLcDLpPTw7
+	E6gsXIMYWCW+w0xMdIBGze5aWsplms2DVKlHMbY+gGMwrnAm8HyKllOvzUA15rgbzhgaUt6VBoj
+	dIBL5O5T6Xpg/B4VbOBcDNnHks61py2pipIaxOD33GabJESi7oSLxiB6PhJkcBfSbHwqMEUEkge
+	HNTreTXbO7JiPQCkqP2M1OClMgDTplP68MdSpVnNMs/+2mmfkvDh8HmGZTnpKssoSAa70eHEvn3
+	2oBi2J5XPfj+lI7EcvJc1ZESHzTwYX6ZAvbXDAmZ5ImxKYmkAaSjubv0q2xnJHeCje1Ni7vRUKE
+	lIkLYOSj3jmc+1BIZ8iNo73tYrgpxQ/bHdTjXQIkSNg+hyw==
+X-Google-Smtp-Source: AGHT+IG9B0Vj6zu6J7Y/65V5oWrLdoJZgVZQCl86nWJsXgsEfw9N9dQncSTPXheazkt3yvgcavjJcA==
+X-Received: by 2002:a05:6214:3018:b0:70b:af81:690a with SMTP id 6a1803df08f44-70d970a5717mr180188886d6.5.1756226453388;
+        Tue, 26 Aug 2025 09:40:53 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.70.92])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70dbffc1f71sm42159906d6.10.2025.08.26.09.40.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Aug 2025 09:40:52 -0700 (PDT)
+Message-ID: <c1f2e7b1-7583-4e1e-8f20-584a7a768286@gmail.com>
+Date: Tue, 26 Aug 2025 12:40:31 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250819-228-reftable-introduce-consistency-checks-v1-0-8b8f6879fa9e@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ls-files: conditionally leave index sparse
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: gitster@pobox.com, Elijah Newren <newren@gmail.com>
+References: <pull.1955.git.1755274373717.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.1955.git.1755274373717.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Aug 19, 2025 at 02:20:59PM +0200, Karthik Nayak wrote:
-> This series adds the required infrastructure and also some fsck checks
-> for the reftable backend.
-> 
-> Since the reftable backend is treated as a library within the Git
-> codebase, we don't want to spillover our internal fsck implementation
-> into the library. At the same time, the fsck checks need to access
-> internal structures of the reftable library which aren't exposed outside
-> the library.
-> 
-> So we solve this by adding a 'reftable/fsck.[ch]' which implements and
-> exposes a checker for the reftable library and returns specific errors
-> as defined by the library. We then add glue code within
-> 'refs/reftable-backend.c' to map these errors to errors which Git's fsck
-> implementation would understand. This allows us to separate concerns.
-> 
-> This series then adds some checks on the stack ('reftable/tables.list')
-> level of reftable, namely:
-> 1. The table name is as per the spec
-> 2. The number of tables are consistent
-> 3. The tables.list has a newline at the end of file
-> 4. The table names follow correct index sequences
-> 
-> I also plan to send in follow up series's which will implement further
-> checks and go into deeper layers (tables, block, references).
-> 
+On 8/15/2025 12:12 PM, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <stolee@gmail.com>
+...
+> Replace this global check to expand the index with a check inside the
+> loop for a matched sparse directory. If we see one, then expand the
+> index and continue from the current location. This is safe since the
+> previous entries in the index did not have any sparse directories and
+> thus would remain stable in this expansion.
+...>     Here's a small sparse index performance update based on a user report.
 
-Thanks for your patches, it's very nice to see that we begin to
-implement the consistency checks for reftable backend. And I have left
-some comments.
+I know this is small and somewhat niche, but it hasn't had any review
+or been picked up in What's Cooking. Could someone please take a look?
 
 Thanks,
-Jialuo
+-Stolee
