@@ -1,62 +1,62 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3889D1DE4CD
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4740C279788
 	for <git@vger.kernel.org>; Tue, 26 Aug 2025 13:35:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215355; cv=none; b=W1RVC+wjMzuqzU2RLthkR5Uym+CJYAFrSQuuyP3FTa4v0x5CCf50Vyizh4d+mOoYHoRWNbtu4wL06ZYGT1sRg8jRvCSvbmZ5khfPeDFaO9D0rFzMwC6boD9DDp0EHxyEVI0B6hrq5r8TKYgZcGrERm2EJvd5Uq1M09hXpvdYwo8=
+	t=1756215355; cv=none; b=qQhLhrRxTwptH200YNRyjENYxu6RD1k7U9jK8jD2RCyiDnlPq+hihEskibVyZEzNVDNkpgw23yUK/VtGvdgStyWwZ/CXS+1ELI5uR7NqIl1HLkMwyG58TF2v7hY72drBnp33WjOi5F/U+4qC2ykIyfWvewB8qy7pIpYHq/1Oz88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756215355; c=relaxed/simple;
-	bh=71l6u11Jgo/G5A8N39Eo6S6CqJXQbA0HoZoFE1HWvfI=;
+	bh=MHHQrwGUH85HRTdtEnSF6TXdHFrhW3W+7lySpSZAkbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZqVXG1PvfgnY6RkCEnnQhLZydglFWLhHEdQGIK0M7EL8xumhdI+AL/j55TsY0N91bTcJYwe3joXbucHGjH+o3HsyoWCwBZTJM/bOT8KGCnfV0W/TsZlFNdpp4BvRBH3nhx2p20Lmc1YqGKPpOrLnBPCfKK+9j4vk5MB1GQVgc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=md6+C+pN; arc=none smtp.client-ip=209.85.221.45
+	 MIME-Version; b=fjrshuinGVxuq0hx3yBGSZ6WApm0SRBJFfDkce7ZzPbeUwfnVR/MvlxXJp0iR5jY8k7T8FnEFKUs8ey5vgXuYzkVmh4SFCWWxZTAcHREkj/z+ZQMMIWpXBTux1Qjo9x3wMLZAx2lTrTk51Z8PmaOD6yHkBsZap/N7I0gLDwQBYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lOLitsLM; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="md6+C+pN"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3c7ba0f6983so1402238f8f.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lOLitsLM"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-45b618e067eso13505745e9.1
         for <git@vger.kernel.org>; Tue, 26 Aug 2025 06:35:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756215351; x=1756820151; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756215350; x=1756820150; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ZMEGlB/tuT73XjaXm0vjoqzQlvNJv3UVICJfG9X6Dck=;
-        b=md6+C+pNSzhvOdQkdasOV7xt5x/Uwk599DE/elPKZdEksWXuElKBF86WDioANL5DKT
-         p6slacDVShJGJCr07xjkfI0l3IL6t1r6DtodHGvTOn+vxmuK/aB6P60qeKNCM06S7TGs
-         nSkhfnbv7gLE5wbrTFURKD5WkUvUGL9MFjyBy82/isxmZnYkogT3WRmYgLzC6zFD/g2H
-         j7rGQFRLLAQ+5hy+mKF0UOgLgEDuTliWeJgv52htXAKMX98FaifPUIfr9VIo9/Bp2441
-         te7QC4qZNWaguQcegjvN6ZvqVK3M8AemY5bkTDrboQSFYH7drAn9uTFZ4ZO4Q+tgc77o
-         AgqQ==
+        bh=JSuwemODoagXwKekEMwviltadEuRee4qbRCJfnx08aU=;
+        b=lOLitsLM7C+5fKr0gggr7RvVIhBMBj6JNa2Umrb4hTjotrmhP9BqC6Kw4Mars+yREY
+         /Lmm790OGfSeUB8EYVSiONziCodz0pnb5aLz1rL9AXJ1bGYxooHtiBVes4q8CZU0syV2
+         8Yc3H1aiFwBhwTyasSUhHsDU0m/7pj45Mt9/51TfpkXFwh+m+SvPEryvmRNpfyRTvwkR
+         H11uMWy3CiF22Q3rBVxRlCYrR3atuOxRzlCPEsgNXf7AHOjtTPMeOAwT5u32EwRs/KLs
+         gy+N3AFxgXfoZeiK4B42WEzkco7LKyngzRYzrkE2DKwxxFJfA3BUC+eiO+z8RhoA01rP
+         yTzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756215351; x=1756820151;
+        d=1e100.net; s=20230601; t=1756215350; x=1756820150;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZMEGlB/tuT73XjaXm0vjoqzQlvNJv3UVICJfG9X6Dck=;
-        b=hMqK42ha20mTNiVmZiLe9sO9AFFu9ITQ0rpFMhqXWQXHAMGMBZHL5zqfKZXlZlaCgF
-         b7G24Swe/Q9Q+F0DdC6McuWRXU80LPb7EWUhW56MF/QMKVGYTVW1ZAdVjRW6atYS+sE/
-         0RhMLe4TN2ac7u5s56rEbQKVNlKovnYk+vLZxfFbUtwCj+chdBCZ6Wr3iLbUqlD4rXN0
-         uBy9qL8rSBg/ejKNfS0+1NjmtB73/J6CdHZZgQgT5xE0EotHpfK8Xy5F99YnRPM40DrB
-         HLS0RfO4Y+EqsKZXsYMHPCWoqIkMhdhGvjRpuoWTTkdQmBi0b29nzovDmo+8PEx92gUJ
-         eo5Q==
-X-Gm-Message-State: AOJu0YwVi20Xq/rKS6aPIYBUllXyDhvgGgWM/Vq1sCiRZ+IYcY5cQe2P
-	PugzfEKWOiUVIo7g/VLedO71BXBVGrun62jQ0RH5UezRnLGrJk74aH9NU48ryw==
-X-Gm-Gg: ASbGnctLzsu3x11zTB7N0pma70Ptv93TbY94025rXnX9hYKkw0UH2UzGA+iptcR24e6
-	Sh/2Kb/yBXzFYV1RxoKeFD+ei/6w8G2R+4D+7Uj245Hj5TIwlcUsQ9loGpG2As1u8fA8zHhs+c0
-	ZnTn7EblOI6+5ykpezzpyiv+m9RfnN/hhH8eAjDmqwUfzhW2BPeCZbm3m+NG6ck8//Fvp+JvpBN
-	uMylBjoZpQO3c0c08F5Tgh6y8nqcZfXWlrSqB3PoLb5oYZvLdTH5M/O+VwwK14ipDN8YqbfKDu2
-	fBhGcO3P2IcWZYvSXs2g/y21UggrqjCJ5w5TAadPBqBDKxOd+u2t4ls9Hh2sECagc5VqZ3Z3itL
-	EvNBhDab6sbmaJgjuR+7xbujwsyy41k1w1Inj+eel2U37CQ==
-X-Google-Smtp-Source: AGHT+IEyHRnvxg3QGxftZMEgg9Xu9/NqefvBAqhXTwhskGh55c+qBrcWBZeCj/Xh7viXpoBC5HO+4A==
-X-Received: by 2002:a05:6000:250d:b0:3c2:502:d944 with SMTP id ffacd0b85a97d-3cbb15ca2d3mr1541411f8f.0.1756215351177;
-        Tue, 26 Aug 2025 06:35:51 -0700 (PDT)
-Received: from localhost.localdomain ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c70eb7eed5sm15837863f8f.18.2025.08.26.06.35.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=JSuwemODoagXwKekEMwviltadEuRee4qbRCJfnx08aU=;
+        b=P8lGKHHRe18zpsLXCn8Y+zDEh3FA2ZQECg1rGbEIdGQEr4Fr5mQQTQJUL4gbc38cua
+         O3Ir+jh3Ea1vFX/I2jyIF2aPhnSPEpoMQnG/D/RLqeigBoVgIWTnK0iPz4XHjbgWTZsy
+         pK+EfFW7P/d3ZJywkaDSZq1KbOz8g5J6efnVL49Cu6LY0e2v2IUuojHaAmwfumc9t7IW
+         oomlURzPA6kJpN+oIeRnTMLNlkeY3IJi7tL35TMSWgeocH9dtO1j3+y232BiX5Ja9ePz
+         lkvlRzUv6fieAfsFZmttFeeX7d76Vr6WYtZ3ZUVwT2CTMmbE/6necONWETCoQAethozk
+         Y0TQ==
+X-Gm-Message-State: AOJu0YziHdxL05p1c6DlsseKGpidsXs/LvuC5HHUF4/Twv3iT6/VxmV8
+	dtSrZNSk0LP5sDr8IVSyd0bERmdXDk+LxgNIu7lx9ESL0VlHHASiymSlNCiy/A==
+X-Gm-Gg: ASbGncuQrMZymrxA2/F8KdLlwZQ7JVrL4M8jwWOI0B86wKcCo9MsVLMBYee+GgQ6/Vd
+	siP1W2x3tS/4JqC/VHBFYp0oelE2Y0JxpU/fv7kcBplMZIC3CcqTdgbAy2vMvZwxIR+Ifg4quQn
+	w7eH5+CowHcOe3y+sh6GZPhXLonPDhw6TFADLxgsVPg82YocZEEy7sEUFKFi6FxKWTYEs/iE4Na
+	2pxb/CHPRyD/U0X9uPOmON28CfiQbCG567eHqYfZC9biM3d3FPNVdjVR9YOA5nC8RiUjWsV+5iH
+	lAlQFcWZLRWlUT0DsSC6yC0okJ0Y3mUYEJt+C9LHJKpfCop8O16DxDhAHTSnM3oePgLvNgYNg8Y
+	blbYfcjyDy3NzBy+AH0OgOJqigMdDRGUeUrMrBVrS5ho0Cg==
+X-Google-Smtp-Source: AGHT+IHVc6C5NIW5a8G42rzeeMLBb2ukUYij5xk8Q26fDe6KBaNFWEfG5aduGhkM4VaOwC6kEoCohw==
+X-Received: by 2002:a05:6000:22c4:b0:3ca:ca52:ad82 with SMTP id ffacd0b85a97d-3cbb15cbcfemr1783410f8f.11.1756215350231;
         Tue, 26 Aug 2025 06:35:50 -0700 (PDT)
+Received: from localhost.localdomain ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c70eb7eed5sm15837863f8f.18.2025.08.26.06.35.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Aug 2025 06:35:49 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: Ayush Chandekar <ayu.chandekar@gmail.com>,
@@ -64,9 +64,9 @@ Cc: Ayush Chandekar <ayu.chandekar@gmail.com>,
 	Taylor Blau <me@ttaylorr.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 3/3] commit: print advice when core.commentString=auto
-Date: Tue, 26 Aug 2025 14:35:28 +0100
-Message-ID: <ee6cf11a82c96f166941b66a172b15f5ed308098.1756215326.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH v3 2/3] config: warn on core.commentString=auto
+Date: Tue, 26 Aug 2025 14:35:27 +0100
+Message-ID: <5dd897c95e680c4e3f26ec3945fe649b4b61681a.1756215326.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
 In-Reply-To: <cover.1756215326.git.phillip.wood@dunelm.org.uk>
 References: <cover.1751983009.git.phillip.wood@dunelm.org.uk> <cover.1756215326.git.phillip.wood@dunelm.org.uk>
@@ -81,390 +81,375 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Add some advice on how to change the config settings when
-"core.commentString=auto" or "core.commentChar=auto". The advice
-includes instructions for clearing the config setting or setting a
-fixed comment string. To try and be as specific as possible, the advice
-is customized based on the user's config. If "core.commentString=auto"
-is set in the system config and the user does not have write
-access then the advice omits the instructions to clear the config
-and recommends changing the global config instead. An alternative
-approach would be to advise the user to run "git config --show-origin"
-and leave them to figure out how to fix it themselves but that seems
-rather unfriendly. As we're forcing them to update their config we
-should try and make that as easy as possible.
+As support for this setting was deprecated in the last commit print a
+warning (or die when WITH_BREAKING_CHANGES is enabled) if it is set.
+Avoid bombarding the user with warnings by only printing it (a) when
+running commands commands that call "git commit" and (b) only once
+per command. Some scaffolding is added to repo_read_config() to allow
+it to detect deprecated config settings and warn about them. As both
+"core.commentChar" and "core.commentString" set the comment character
+we record which one of them is used and tailor the warning message
+appropriately.
 
-In order to generate this advice we need to record each file where
-either of the config keys is set and whether a key occurs more that
-once in a given file. This lets us generate the list of commands to
-remove all the keys and also tells us which key the "auto" setting
-comes from.
-
-As we want the user to update their config we do not provide a way
-for this advice to be disabled other than changing the value of
-"core.commentChar" or "core.commentString".
+Note the odd combination of die_message() followed by die(NULL)
+is to allow the next commit to insert a call to advise() in the middle.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- config.c                      | 196 ++++++++++++++++++++++++++++++++--
- t/t3404-rebase-interactive.sh |  12 ++-
- t/t7502-commit-porcelain.sh   |  37 ++++++-
- 3 files changed, 234 insertions(+), 11 deletions(-)
+ builtin/commit.c              |   3 +
+ builtin/merge.c               |   3 +
+ builtin/rebase.c              |   3 +
+ builtin/revert.c              |   7 +++
+ config.c                      | 115 +++++++++++++++++++++++++++++++++-
+ environment.c                 |   1 +
+ environment.h                 |   1 +
+ repository.c                  |   1 +
+ repository.h                  |   3 +
+ t/t3404-rebase-interactive.sh |   7 ++-
+ t/t7502-commit-porcelain.sh   |  17 ++++-
+ 11 files changed, 157 insertions(+), 4 deletions(-)
 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index d25cc07a355..f821fdcfcc3 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1783,6 +1783,9 @@ int cmd_commit(int argc,
+ 	show_usage_with_options_if_asked(argc, argv,
+ 					 builtin_commit_usage, builtin_commit_options);
+ 
++#ifndef WITH_BREAKING_CHANGES
++	warn_on_auto_comment_char = true;
++#endif /* !WITH_BREAKING_CHANGES */
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
+ 
+diff --git a/builtin/merge.c b/builtin/merge.c
+index dc4cb8fb14d..794cb7bb269 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1378,6 +1378,9 @@ int cmd_merge(int argc,
+ 	show_usage_with_options_if_asked(argc, argv,
+ 					 builtin_merge_usage, builtin_merge_options);
+ 
++#ifndef WITH_BREAKING_CHANGES
++	warn_on_auto_comment_char = true;
++#endif /* !WITH_BREAKING_CHANGES */
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
+ 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 72a52bdfb98..962917ec480 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1242,6 +1242,9 @@ int cmd_rebase(int argc,
+ 					 builtin_rebase_usage,
+ 					 builtin_rebase_options);
+ 
++#ifndef WITH_BREAKING_CHANGES
++	warn_on_auto_comment_char = true;
++#endif /* !WITH_BREAKING_CHANGES */
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
+ 
+diff --git a/builtin/revert.c b/builtin/revert.c
+index e07c2217fe8..b197848bb0a 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -4,6 +4,7 @@
+ #include "builtin.h"
+ #include "parse-options.h"
+ #include "diff.h"
++#include "environment.h"
+ #include "gettext.h"
+ #include "revision.h"
+ #include "rerere.h"
+@@ -285,6 +286,9 @@ int cmd_revert(int argc,
+ 	struct replay_opts opts = REPLAY_OPTS_INIT;
+ 	int res;
+ 
++#ifndef WITH_BREAKING_CHANGES
++	warn_on_auto_comment_char = true;
++#endif /* !WITH_BREAKING_CHANGES */
+ 	opts.action = REPLAY_REVERT;
+ 	sequencer_init_config(&opts);
+ 	res = run_sequencer(argc, argv, prefix, &opts);
+@@ -302,6 +306,9 @@ struct repository *repo UNUSED)
+ 	struct replay_opts opts = REPLAY_OPTS_INIT;
+ 	int res;
+ 
++#ifndef WITH_BREAKING_CHANGES
++	warn_on_auto_comment_char = true;
++#endif /* !WITH_BREAKING_CHANGES */
+ 	opts.action = REPLAY_PICK;
+ 	sequencer_init_config(&opts);
+ 	res = run_sequencer(argc, argv, prefix, &opts);
 diff --git a/config.c b/config.c
-index 18b42197095..18dcf341d58 100644
+index 97ffef42700..18b42197095 100644
 --- a/config.c
 +++ b/config.c
-@@ -8,6 +8,7 @@
- 
- #include "git-compat-util.h"
- #include "abspath.h"
-+#include "advice.h"
+@@ -11,6 +11,7 @@
  #include "date.h"
  #include "branch.h"
  #include "config.h"
-@@ -1955,9 +1956,51 @@ int git_configset_get_pathname(struct config_set *set, const char *key, char **d
- struct comment_char_config {
- 	unsigned last_key_id;
- 	bool auto_set;
-+	bool auto_set_in_file;
-+	struct strintmap key_flags;
-+	size_t alloc, nr;
-+	struct comment_char_config_item {
-+		unsigned key_id;
-+		char *path;
-+		enum config_scope scope;
-+	} *item;
- };
- 
--#define COMMENT_CHAR_CFG_INIT { 0 }
-+#define COMMENT_CHAR_CFG_INIT {			\
-+		.key_flags = STRINTMAP_INIT,	\
-+	}
-+
-+static void comment_char_config_release(struct comment_char_config *config)
-+{
-+	strintmap_clear(&config->key_flags);
-+	for (size_t i = 0; i < config->nr; i++)
-+		free(config->item[i].path);
-+	free(config->item);
-+}
-+
-+/* Used to track whether the key occurs more than once in a given file */
-+#define KEY_SEEN_ONCE 1u
-+#define KEY_SEEN_TWICE 2u
-+#define COMMENT_KEY_SHIFT(id) (2 * (id))
-+#define COMMENT_KEY_MASK(id) (3u << COMMENT_KEY_SHIFT(id))
-+
-+static void set_comment_key_flags(struct comment_char_config *config,
-+				  const char *path, unsigned id, unsigned value)
-+{
-+	unsigned old = strintmap_get(&config->key_flags, path);
-+	unsigned new = (old & ~COMMENT_KEY_MASK(id)) |
-+				value << COMMENT_KEY_SHIFT(id);
-+
-+	strintmap_set(&config->key_flags, path, new);
-+}
-+
-+static unsigned get_comment_key_flags(struct comment_char_config *config,
-+				      const char *path, unsigned id)
-+{
-+	unsigned value = strintmap_get(&config->key_flags, path);
-+
-+	return (value & COMMENT_KEY_MASK(id)) >> COMMENT_KEY_SHIFT(id);
-+}
- 
- static const char *comment_key_name(unsigned id)
- {
-@@ -1973,10 +2016,10 @@ static const char *comment_key_name(unsigned id)
++#include "dir.h"
+ #include "parse.h"
+ #include "convert.h"
+ #include "environment.h"
+@@ -1951,10 +1952,110 @@ int git_configset_get_pathname(struct config_set *set, const char *key, char **d
+ 		return 1;
  }
  
- static void comment_char_callback(const char *key, const char *value,
--				  const struct config_context *ctx UNUSED,
--				  void *data)
-+				  const struct config_context *ctx, void *data)
- {
- 	struct comment_char_config *config = data;
-+	const struct key_value_info *kvi = ctx->kvi;
- 	unsigned key_id;
- 
- 	if (!strcmp(key, "core.commentchar"))
-@@ -1988,7 +2031,135 @@ static void comment_char_callback(const char *key, const char *value,
- 
- 	config->last_key_id = key_id;
- 	config->auto_set = value && !strcmp(value, "auto");
--}
-+	if (kvi->origin_type != CONFIG_ORIGIN_FILE) {
-+		return;
-+	} else if (get_comment_key_flags(config, kvi->filename, key_id)) {
-+		set_comment_key_flags(config, kvi->filename, key_id,
-+				      KEY_SEEN_TWICE);
-+	} else {
-+		struct comment_char_config_item *item;
++struct comment_char_config {
++	unsigned last_key_id;
++	bool auto_set;
++};
 +
-+		ALLOC_GROW_BY(config->item, config->nr, 1, config->alloc);
-+		item = &config->item[config->nr - 1];
-+		item->key_id = key_id;
-+		item->scope = kvi->scope;
-+		item->path = xstrdup(kvi->filename);
-+		set_comment_key_flags(config, kvi->filename, key_id,
-+				      KEY_SEEN_ONCE);
-+	}
-+	config->auto_set_in_file = config->auto_set;
++#define COMMENT_CHAR_CFG_INIT { 0 }
++
++static const char *comment_key_name(unsigned id)
++{
++	static const char *name[] = {
++		"core.commentChar",
++		"core.commentString",
++	};
++
++	if (id >= ARRAY_SIZE(name))
++		BUG("invalid comment key id");
++
++	return name[id];
 +}
 +
-+static void add_config_scope_arg(struct repository *repo, struct strbuf *buf,
-+				 struct comment_char_config_item *item)
++static void comment_char_callback(const char *key, const char *value,
++				  const struct config_context *ctx UNUSED,
++				  void *data)
 +{
-+	char *global_config = git_global_config();
-+	char *system_config = git_system_config();
++	struct comment_char_config *config = data;
++	unsigned key_id;
 +
-+	if (item->scope == CONFIG_SCOPE_SYSTEM && access(item->path, W_OK)) {
-+		/*
-+		 * If the user cannot write to the system config recommend
-+		 * setting the global config instead.
-+		 */
-+		strbuf_addstr(buf, "--global ");
-+	} else if (fspatheq(item->path, system_config)) {
-+		strbuf_addstr(buf, "--system ");
-+	} else if (fspatheq(item->path, global_config)) {
-+		strbuf_addstr(buf, "--global ");
-+	} else if (fspatheq(item->path,
-+			    mkpath("%s/config",
-+				   repo_get_git_dir(repo)))) {
-+		; /* --local is the default */
-+	} else if (fspatheq(item->path,
-+			    mkpath("%s/config.worktree",
-+				   repo_get_common_dir(repo)))) {
-+		strbuf_addstr(buf, "--worktree ");
-+	} else {
-+		const char *path = item->path;
-+		const char *home = getenv("HOME");
-+
-+		strbuf_addstr(buf, "--file ");
-+		if (home && !fspathncmp(path, home, strlen(home))) {
-+			path += strlen(home);
-+			if (!fspathncmp(path, "/", 1))
-+				path++;
-+			strbuf_addstr(buf, "~/");
-+		}
-+		sq_quote_buf_pretty(buf, path);
-+		strbuf_addch(buf, ' ');
-+	}
-+
-+	free(global_config);
-+	free(system_config);
-+}
-+
-+static bool can_unset_comment_char_config(struct comment_char_config *config)
-+{
-+	for (size_t i = 0; i < config->nr; i++) {
-+		struct comment_char_config_item *item = &config->item[i];
-+
-+		if (item->scope == CONFIG_SCOPE_SYSTEM &&
-+		    access(item->path, W_OK))
-+			return false;
-+	}
-+
-+	return true;
-+}
-+
-+static void add_unset_auto_comment_char_advice(struct repository *repo,
-+					       struct comment_char_config *config)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	if (!can_unset_comment_char_config(config))
++	if (!strcmp(key, "core.commentchar"))
++		key_id = 0;
++	else if (!strcmp(key, "core.commentstring"))
++		key_id = 1;
++	else
 +		return;
 +
-+	for (size_t i = 0; i < config->nr; i++) {
-+		struct comment_char_config_item *item = &config->item[i];
-+
-+		strbuf_addstr(&buf, "    git config unset ");
-+		add_config_scope_arg(repo, &buf, item);
-+		if (get_comment_key_flags(config, item->path, item->key_id) == KEY_SEEN_TWICE)
-+			strbuf_addstr(&buf, "--all ");
-+		strbuf_addf(&buf, "%s\n", comment_key_name(item->key_id));
-+	}
-+	advise(_("\nTo use the default comment string (#) please run\n\n%s"),
-+	       buf.buf);
-+	strbuf_release(&buf);
++	config->last_key_id = key_id;
++	config->auto_set = value && !strcmp(value, "auto");
 +}
 +
-+static void add_comment_char_advice(struct repository *repo,
-+				    struct comment_char_config *config)
++struct repo_config {
++	struct repository *repo;
++	struct comment_char_config comment_char_config;
++};
++
++#define REPO_CONFIG_INIT(repo_) {				\
++		.comment_char_config = COMMENT_CHAR_CFG_INIT,	\
++		.repo = repo_,					\
++	};
++
++#ifdef WITH_BREAKING_CHANGES
++static void check_auto_comment_char_config(struct comment_char_config *config)
 +{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct comment_char_config_item *item;
-+	/* TRANSLATORS this is a place holder for the value of core.commentString */
-+	const char *placeholder = _("<comment string>");
++	if (!config->auto_set)
++		return;
++
++	die_message(_("Support for '%s=auto' has been removed in Git 3.0"),
++		    comment_key_name(config->last_key_id));
++	die(NULL);
++}
++#else
++static void check_auto_comment_char_config(struct comment_char_config *config)
++{
++	extern bool warn_on_auto_comment_char;
++	const char *DEPRECATED_CONFIG_ENV =
++				"GIT_AUTO_COMMENT_CHAR_CONFIG_WARNING_GIVEN";
++
++	if (!config->auto_set || !warn_on_auto_comment_char)
++		return;
 +
 +	/*
-+	 * If auto is set in the last file that we saw advise the user how to
-+	 * update their config.
++	 * Use an environment variable to ensure that subprocesses do not repeat
++	 * the warning.
 +	 */
-+	if (!config->auto_set_in_file)
++	if (git_env_bool(DEPRECATED_CONFIG_ENV, false))
 +		return;
 +
-+	add_unset_auto_comment_char_advice(repo, config);
-+	item = &config->item[config->nr - 1];
-+	strbuf_reset(&buf);
-+	strbuf_addstr(&buf, "    git config set ");
-+	add_config_scope_arg(repo, &buf, item);
-+	strbuf_addf(&buf, "%s %s\n", comment_key_name(item->key_id),
-+		    placeholder);
-+	advise(_("\nTo set a custom comment string please run\n\n"
-+		 "%s\nwhere '%s' is the string you wish to use.\n"),
-+	       buf.buf, placeholder);
-+	strbuf_release(&buf);
-+}
++	setenv(DEPRECATED_CONFIG_ENV, "true", true);
 +
-+#undef KEY_SEEN_ONCE
-+#undef KEY_SEEN_TWICE
-+#undef COMMENT_KEY_SHIFT
-+#undef COMMENT_KEY_MASK
- 
- struct repo_config {
- 	struct repository *repo;
-@@ -2000,18 +2171,26 @@ struct repo_config {
- 		.repo = repo_,					\
- 	};
- 
-+static void repo_config_release(struct repo_config *config)
++	warning(_("Support for '%s=auto' is deprecated and will be removed in "
++		  "Git 3.0"), comment_key_name(config->last_key_id));
++}
++#endif /* WITH_BREAKING_CHANGES */
++
++static void check_deprecated_config(struct repo_config *config)
 +{
-+	comment_char_config_release(&config->comment_char_config);
++	if (!config->repo->check_deprecated_config)
++			return;
++
++	check_auto_comment_char_config(&config->comment_char_config);
 +}
 +
- #ifdef WITH_BREAKING_CHANGES
--static void check_auto_comment_char_config(struct comment_char_config *config)
-+static void check_auto_comment_char_config(struct repository *repo,
-+					   struct comment_char_config *config)
++static int repo_config_callback(const char *key, const char *value,
++				const struct config_context *ctx, void *data)
++{
++	struct repo_config *config = data;
++
++	comment_char_callback(key, value, ctx, &config->comment_char_config);
++	return config_set_callback(key, value, ctx, config->repo->config);
++}
++
+ /* Functions use to read configuration from a repository */
+ static void repo_read_config(struct repository *repo)
  {
- 	if (!config->auto_set)
- 		return;
+ 	struct config_options opts = { 0 };
++	struct repo_config config = REPO_CONFIG_INIT(repo);
  
- 	die_message(_("Support for '%s=auto' has been removed in Git 3.0"),
- 		    comment_key_name(config->last_key_id));
-+	add_comment_char_advice(repo, config);
- 	die(NULL);
- }
- #else
--static void check_auto_comment_char_config(struct comment_char_config *config)
-+static void check_auto_comment_char_config(struct repository *repo,
-+					   struct comment_char_config *config)
- {
- 	extern bool warn_on_auto_comment_char;
- 	const char *DEPRECATED_CONFIG_ENV =
-@@ -2031,6 +2210,7 @@ static void check_auto_comment_char_config(struct comment_char_config *config)
+ 	opts.respect_includes = 1;
+ 	opts.commondir = repo->commondir;
+@@ -1966,8 +2067,8 @@ static void repo_read_config(struct repository *repo)
+ 		git_configset_clear(repo->config);
  
- 	warning(_("Support for '%s=auto' is deprecated and will be removed in "
- 		  "Git 3.0"), comment_key_name(config->last_key_id));
-+	add_comment_char_advice(repo, config);
- }
- #endif /* WITH_BREAKING_CHANGES */
- 
-@@ -2039,7 +2219,8 @@ static void check_deprecated_config(struct repo_config *config)
- 	if (!config->repo->check_deprecated_config)
- 			return;
- 
--	check_auto_comment_char_config(&config->comment_char_config);
-+	check_auto_comment_char_config(config->repo,
-+				       &config->comment_char_config);
- }
- 
- static int repo_config_callback(const char *key, const char *value,
-@@ -2082,6 +2263,7 @@ static void repo_read_config(struct repository *repo)
+ 	git_configset_init(repo->config);
+-	if (config_with_options(config_set_callback, repo->config, NULL,
+-				repo, &opts) < 0)
++	if (config_with_options(repo_config_callback, &config, NULL, repo,
++				&opts) < 0)
+ 		/*
+ 		 * config_with_options() normally returns only
+ 		 * zero, as most errors are fatal, and
+@@ -1980,6 +2081,7 @@ static void repo_read_config(struct repository *repo)
+ 		 * immediately.
  		 */
  		die(_("unknown error occurred while reading the configuration files"));
- 	check_deprecated_config(&config);
-+	repo_config_release(&config);
++	check_deprecated_config(&config);
  }
  
  static void git_config_check_init(struct repository *repo)
+@@ -2667,6 +2769,14 @@ int repo_config_set_multivar_in_file_gently(struct repository *r,
+ 	char *contents = NULL;
+ 	size_t contents_sz;
+ 	struct config_store_data store = CONFIG_STORE_INIT;
++	bool saved_check_deprecated_config = r->check_deprecated_config;
++
++	/*
++	 * Do not warn or die if there are deprecated config settings as
++	 * we want the user to be able to change those settings by running
++	 * "git config".
++	 */
++	r->check_deprecated_config = false;
+ 
+ 	validate_comment_string(comment);
+ 
+@@ -2898,6 +3008,7 @@ int repo_config_set_multivar_in_file_gently(struct repository *r,
+ 	if (in_fd >= 0)
+ 		close(in_fd);
+ 	config_store_data_clear(&store);
++	r->check_deprecated_config = saved_check_deprecated_config;
+ 	return ret;
+ 
+ write_err_out:
+diff --git a/environment.c b/environment.c
+index 4c87876d483..1ffa2ff30b2 100644
+--- a/environment.c
++++ b/environment.c
+@@ -124,6 +124,7 @@ const char *comment_line_str = "#";
+ char *comment_line_str_to_free;
+ #ifndef WITH_BREAKING_CHANGES
+ int auto_comment_line_char;
++bool warn_on_auto_comment_char;
+ #endif /* !WITH_BREAKING_CHANGES */
+ 
+ /* This is set by setup_git_directory_gently() and/or git_default_config() */
+diff --git a/environment.h b/environment.h
+index e75c4abb388..51898c99cd1 100644
+--- a/environment.h
++++ b/environment.h
+@@ -210,6 +210,7 @@ extern const char *comment_line_str;
+ extern char *comment_line_str_to_free;
+ #ifndef WITH_BREAKING_CHANGES
+ extern int auto_comment_line_char;
++extern bool warn_on_auto_comment_char;
+ #endif /* !WITH_BREAKING_CHANGES */
+ 
+ # endif /* USE_THE_REPOSITORY_VARIABLE */
+diff --git a/repository.c b/repository.c
+index ecd691181fc..8af73923d34 100644
+--- a/repository.c
++++ b/repository.c
+@@ -57,6 +57,7 @@ void initialize_repository(struct repository *repo)
+ 	repo->parsed_objects = parsed_object_pool_new(repo);
+ 	ALLOC_ARRAY(repo->index, 1);
+ 	index_state_init(repo->index, repo);
++	repo->check_deprecated_config = true;
+ 
+ 	/*
+ 	 * When a command runs inside a repository, it learns what
+diff --git a/repository.h b/repository.h
+index 042dc93f0f2..5808a5d6108 100644
+--- a/repository.h
++++ b/repository.h
+@@ -161,6 +161,9 @@ struct repository {
+ 
+ 	/* Indicate if a repository has a different 'commondir' from 'gitdir' */
+ 	unsigned different_commondir:1;
++
++	/* Should repo_config() check for deprecated settings */
++	bool check_deprecated_config;
+ };
+ 
+ #ifdef USE_THE_REPOSITORY_VARIABLE
 diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 3b2a46c25ce..cc97628d810 100755
+index ce0aebb9a7e..3b2a46c25ce 100755
 --- a/t/t3404-rebase-interactive.sh
 +++ b/t/t3404-rebase-interactive.sh
-@@ -1186,9 +1186,19 @@ test_expect_success !WITH_BREAKING_CHANGES 'rebase -i respects core.commentchar=
+@@ -1184,8 +1184,13 @@ test_expect_success !WITH_BREAKING_CHANGES 'rebase -i respects core.commentchar=
+ 	test_when_finished "git rebase --abort || :" &&
+ 	(
  		test_set_editor "$(pwd)/copy-edit-script.sh" &&
- 		git rebase -i HEAD^ 2>err
+-		git rebase -i HEAD^
++		git rebase -i HEAD^ 2>err
  	) &&
--	sed -n "s/^warning: //p" err >actual &&
-+	sed -n "s/^hint: *\$//p; s/^hint: //p; s/^warning: //p" err >actual &&
- 	cat >expect <<-EOF &&
- 	Support for ${SQ}core.commentChar=auto${SQ} is deprecated and will be removed in Git 3.0
-+
-+	To use the default comment string (#) please run
-+
-+	    git config unset core.commentChar
-+
-+	To set a custom comment string please run
-+
-+	    git config set core.commentChar <comment string>
-+
-+	where ${SQ}<comment string>${SQ} is the string you wish to use.
- 	EOF
- 	test_cmp expect actual &&
++	sed -n "s/^warning: //p" err >actual &&
++	cat >expect <<-EOF &&
++	Support for ${SQ}core.commentChar=auto${SQ} is deprecated and will be removed in Git 3.0
++	EOF
++	test_cmp expect actual &&
  	test -z "$(grep -ve "^#" -e "^\$" -e "^pick" edit-script)"
+ '
+ 
 diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
-index a9dc1e416d1..05f6da4ad98 100755
+index 65b4519a715..a9dc1e416d1 100755
 --- a/t/t7502-commit-porcelain.sh
 +++ b/t/t7502-commit-porcelain.sh
-@@ -958,10 +958,31 @@ test_expect_success 'commit --status with custom comment character' '
+@@ -958,7 +958,12 @@ test_expect_success 'commit --status with custom comment character' '
  
  test_expect_success !WITH_BREAKING_CHANGES 'switch core.commentchar' '
  	test_commit "#foo" foo &&
--	GIT_EDITOR=.git/FAKE_EDITOR git -c core.commentChar=auto commit --amend 2>err &&
--	sed -n "s/^warning: //p" err >actual &&
-+	cat >config-include <<-\EOF &&
-+	[core]
-+	    commentString=:
-+	    commentString=%
-+	    commentChar=auto
+-	GIT_EDITOR=.git/FAKE_EDITOR git -c core.commentChar=auto commit --amend &&
++	GIT_EDITOR=.git/FAKE_EDITOR git -c core.commentChar=auto commit --amend 2>err &&
++	sed -n "s/^warning: //p" err >actual &&
++	cat >expect <<-EOF &&
++	Support for ${SQ}core.commentChar=auto${SQ} is deprecated and will be removed in Git 3.0
 +	EOF
-+	test_when_finished "rm config-include" &&
-+	test_config include.path "$(pwd)/config-include" &&
-+	test_config core.commentChar ! &&
-+	GIT_EDITOR=.git/FAKE_EDITOR git commit --amend 2>err &&
-+	sed -n "s/^hint: *\$//p; s/^hint: //p; s/^warning: //p" err >actual &&
- 	cat >expect <<-EOF &&
- 	Support for ${SQ}core.commentChar=auto${SQ} is deprecated and will be removed in Git 3.0
-+
-+	To use the default comment string (#) please run
-+
-+	    git config unset core.commentChar
-+	    git config unset --file ~/config-include --all core.commentString
-+	    git config unset --file ~/config-include core.commentChar
-+
-+	To set a custom comment string please run
-+
-+	    git config set --file ~/config-include core.commentChar <comment string>
-+
-+	where ${SQ}<comment string>${SQ} is the string you wish to use.
- 	EOF
- 	test_cmp expect actual &&
++	test_cmp expect actual &&
  	test_grep "^; Changes to be committed:" .git/COMMIT_EDITMSG
-@@ -990,9 +1011,19 @@ EOF
- test_expect_success WITH_BREAKING_CHANGES 'core.commentChar=auto is rejected' '
- 	test_config core.commentChar auto &&
- 	test_must_fail git rev-parse --git-dir 2>err &&
--	sed -n "s/^fatal: //p" err >actual &&
-+	sed -n "s/^hint: *\$//p; s/^hint: //p; s/^fatal: //p" err >actual &&
- 	cat >expect <<-EOF &&
- 	Support for ${SQ}core.commentChar=auto${SQ} has been removed in Git 3.0
-+
-+	To use the default comment string (#) please run
-+
-+	    git config unset core.commentChar
-+
-+	To set a custom comment string please run
-+
-+	    git config set core.commentChar <comment string>
-+
-+	where ${SQ}<comment string>${SQ} is the string you wish to use.
- 	EOF
- 	test_cmp expect actual
  '
+ 
+@@ -982,4 +987,14 @@ EOF
+ 	)
+ '
+ 
++test_expect_success WITH_BREAKING_CHANGES 'core.commentChar=auto is rejected' '
++	test_config core.commentChar auto &&
++	test_must_fail git rev-parse --git-dir 2>err &&
++	sed -n "s/^fatal: //p" err >actual &&
++	cat >expect <<-EOF &&
++	Support for ${SQ}core.commentChar=auto${SQ} has been removed in Git 3.0
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.49.0.897.gfad3eb7d210
 
