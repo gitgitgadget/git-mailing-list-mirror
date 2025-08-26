@@ -1,123 +1,106 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF1226E702
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 15:58:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2973231A54D
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 16:04:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756223897; cv=none; b=DZvteOYk7jDMYkagtmrLsAT2iQLrUqelsV7khXtY6ZtTlJ3bPbLvP8pZxuAUXIAax0zYJz78pNC/yTL0KBsPh7bIkENqSVTOlnTiCnIBlmpLeWScDs2k65XVEHtlEosk3AbBieHE4EngIdxm5/BHxiMWxACfgeqqvAwITdAcxmo=
+	t=1756224283; cv=none; b=fxQbSArUka5Vg/lsLI7vtRRb0rDuIt62hMmLstdUmOPRuYcnTLb+VmQrQGAj+BiUjBMlJz2XtKTKyf7eCMvIirAkJTblaCsPZSNYYv3ZsSNgpBLtah7k2KnrZa6Z9rbpvC6cX+/kn/qcBXumgQ5KGZAkPoKwuAGLCOukTXMK1m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756223897; c=relaxed/simple;
-	bh=zCJSLoH5idl2AoSodKWTrqLb3lwintZ1f5WQ03BvTeU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OGVikowXxpnCQLpJcShlUA5SFASt7mGXLTIxwHEMOOU01Or9hWJKMzFtskHZhOBPiji75jF42iXEXn7ewcUQE1QU75PNrskaTABqvXMRpjlyPFrCJGO5RFJD3azjWq0TV/rbGLY0pnjVk/l2PpzHoUBwkFJWN2gkClwgodFCRDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aTblfr1P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ezg+7RIN; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756224283; c=relaxed/simple;
+	bh=a7BfXJeJW59qESzuU7ivifc6pL6z4c4QRkylbL7x04Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SGd2aEyB9RxlQGIJhhJmrh4yIZj7fc9dmpIhFFOG8h+u8p2wLnkd/mWtzZ0h+rr4MUJVk2xA5J1k82Tf+A2bL+qv5TRmEEEHn4j/H1v9ztU46ITq0W2jaxyBRhdcfBKVBQbJcMp456yOr1ZsyW79iUMGfcFokHz9FrVWbunBrEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V48HjEKn; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aTblfr1P";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ezg+7RIN"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A98321400098;
-	Tue, 26 Aug 2025 11:58:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 26 Aug 2025 11:58:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1756223894;
-	 x=1756310294; bh=286lsenD+DgI6jq8IviJ14KQiiAgQc5Ponf7FEh5Evc=; b=
-	aTblfr1PGr2YxmPBi0BhCdO+u4o5yDzgdjZihuyO7cMeFQcNGToQH4Kq9OmCZaUe
-	BbJw1L8ypHOf6MZ661gqKfuCaiejf5j9n5wg4aze78lXEn+eREpRCXKww2u+QlOR
-	yT7DEsMJ4w67ZCs0XJtMzeFBcyKbwsXClCaxsXg2KYcEfdp0PEZ3O97G1msg4WJY
-	H+JJltNGyP4DRHxpiLr2X5jf98GXjyqAWhxok0PkAwMsPZ0SKhoZyuHW9ZMt0W+R
-	uEXdaCmdcNjp9b4fkIyDR09s7TXAPPe2gQMog/uGCThcj62zle82MBdsdqAmkinP
-	DrjL79deAuKCgsFtox+hRw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756223894; x=
-	1756310294; bh=286lsenD+DgI6jq8IviJ14KQiiAgQc5Ponf7FEh5Evc=; b=E
-	zg+7RINmRUO9Gg08iGlyDLJrpX3+jCPdaMJU6KbCjiXPzAbgfWH94aFWUDSKEzXM
-	pRWxW1U37GcFHRngnPgE2D3yq6PsqbmsmJJDCSuJqy3jJA8zzloWHRCQmW8NSb1z
-	MALgxcP47Wq9neFHDPLVqJx8o0HNyyYLoM1FpufEdorDGFHPDNsfUw2V9EDDAQxB
-	JK62FGd6TDkV+zBVYdiPZmHOOgCkods34KiS0uxJO5edgA5+I9tvbIBCkFwsRpct
-	i1lWskcq5Qz68cRqRH/QQ+VSViOF5tVhMgEWWth9QeD/j0l8sWfhFb959PdZ0MJF
-	IJcda0cQ66zEWJErzHZKg==
-X-ME-Sender: <xms:ltmtaMyvcsdAhUW-xS31faqAZXhBYMv9BAF8JuLZIRulC4Ng8LKj2w>
-    <xme:ltmtaHhvTbVcAnWvKGznDimTWqFEKy2BMkM429pWjGusvHtqysmGl3uzqWSGsFCao
-    gCDkkfExYaQgzSSSw>
-X-ME-Received: <xmr:ltmtaJONPsc8aXpDc3OeiAlXjlOUE5Ow4yy-p0E1R02hlIsK8VJIDKVNv1HewyODd__m6EgD-ZI1sVi5N8jwTILiA-XWSwF-2_Jeh-Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeehieelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedugedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirg
-    hnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdr
-    shgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehjohhhnhgtrghikeeise
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhg
-    lhgvrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
-    lhdrtghomh
-X-ME-Proxy: <xmx:ltmtaKfhwiUIJSG3AGwWXI8oEx9Hj2OELCvmSWpW4iLth1PxsD9MQA>
-    <xmx:ltmtaDxdyKC45S5fxlKIKQEUDUkFR5YkJcjthm4ks4bDhg5V2DlwYA>
-    <xmx:ltmtaP0t31aFQTo5Ivd1iF7RCnL2gjK3Ybxh-tVvQiPUXv-x6QEPHA>
-    <xmx:ltmtaKdidIwRC2CRxTUwMYyHoX9C8vAkWRMcB8qeUuG-0juCZsSGIg>
-    <xmx:ltmtaI3aGjADkoe9oL1vAsnwoJfL2pJNi8mEOI16C_Sw8QUYbFvv4qcF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Aug 2025 11:58:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  christian.couder@gmail.com,
-  johannes.schindelin@gmx.de,  johncai86@gmail.com,
-  jonathantanmy@google.com,  karthik.188@gmail.com,
-  kristofferhaugsbakk@fastmail.com,  me@ttaylorr.com,  peff@peff.net,
-  ps@pks.im,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/2] [2.51.0 Bug] Missing singleton objects in 'git
- repack -adf --path-walk'
-In-Reply-To: <CABPp-BHFxxGrqKc0m==TjQNjDGdO=H5Rf6EFsf2nfE1=TuraOQ@mail.gmail.com>
-	(Elijah Newren's message of "Tue, 26 Aug 2025 08:03:56 -0700")
-References: <pull.1956.git.1755715196.gitgitgadget@gmail.com>
-	<pull.1956.v2.git.1756126197.gitgitgadget@gmail.com>
-	<CABPp-BHFxxGrqKc0m==TjQNjDGdO=H5Rf6EFsf2nfE1=TuraOQ@mail.gmail.com>
-Date: Tue, 26 Aug 2025 08:58:12 -0700
-Message-ID: <xmqqh5xukrcb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V48HjEKn"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-7704f3c46ceso2459113b3a.2
+        for <git@vger.kernel.org>; Tue, 26 Aug 2025 09:04:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756224281; x=1756829081; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=A7hTZXI4nagfG3cyxyNCtAtCt3rN3Zm/GQalUTBGK+0=;
+        b=V48HjEKn29yYQK2HlA7hfMHvTdfy4uK+Swo8OZIzEq5wp2eQFv2HwlyDfqVHl5du02
+         sKJ6SFErm5yPklw2Dnx5tlrk+WwPvu3qLxGCvALucING8WlZfL10PfgUTwev6EeApyPr
+         r7bFEm9/IwxoTeE/8+WH+jXLZCj8ur2Ol34gE4dxjktD5L/abn9ns7S6QqzMl1ARFfBy
+         W6Zllznv/pauVqo+Sz8BVxgy4MTE/gtl8Pz3uF6Ff4mMwgpMeNMYReAoaIN9isn3aIzO
+         hHGLmtOEPcNFTcCZ27Aw6zpB3hF0v+k1rM43CMyg+mdrAoqrxLJXHnrgh8p4Qj2U0XzQ
+         i30Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756224281; x=1756829081;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A7hTZXI4nagfG3cyxyNCtAtCt3rN3Zm/GQalUTBGK+0=;
+        b=xIjT40iyQKtZwfGOEuTT7BvahrmiTZ1ckC1wWSRKxb9+oYhXp16drMYhmZzBUqiibC
+         +clLzd0JzwIn3u3vyVFutRahYOVUkausfjubBd3DM3zGrld5fzkXmbuVT6TAO6DURPUc
+         4fRGSBd+6XqZHoHjym83bmxtVeAMByAkZ+nIko8EQO72NmclH/O0+3Jocj8q6PsHFuae
+         eyvxhN9o9FopRCN1Lyq8Lg5PC55EJbrEc+9nLzS2c4m+x8W5d/Wdbu4T1nP230FtUOhY
+         VEQ1F8dzozH02Z6JTA3heGcbAmVOk6Ip1M9FF/7I6cu2kLMIm8y0soOLEuxLaQActJ6b
+         QISg==
+X-Gm-Message-State: AOJu0YxcbdJkSWk4drDy2fcrGb71E4SArlXoTjteoVoqb37sa44363Aq
+	rLR6Bm9WHuYsPYYuj2Einlsdfy1yxBaNb8tWI+jbzi05TNrKPALrq6SI
+X-Gm-Gg: ASbGncubaw0OqilmCYdnBQVK4TcqQlO6Sd9nvvyn3JB4/rbfnZ/3LEMLPKGC48ol3CF
+	UPkCOxFF/tLE8fkMhUgjjsy0NpdNi8XtFZ2f1DuIGxH++5riyAjMmMeyzAzpv/S96mcQ+T1Ay3I
+	G3scMUh2JnVsKAYotN/efy/FhKX8U6v+2Hk6FS0bp5C5rPI/q+b7TU4PzrQwe6jERmklBvwxZIx
+	8N7Jh2lIxzfCJLxxIRWKjzRZUptV6pgv5hOMadWY+MKHoFx6lXccds2747P3tFb96oZn38PjoUq
+	uayyvAlwHv/MBcD+n9/wYCUZ0+T9BZvQZLfLIq7AbyEaZwZ1QdskLbiyMQ2XYv8tVbVzG+OMUla
+	opVD4xe1ks1MY7ckO
+X-Google-Smtp-Source: AGHT+IE/UArbq2DjbpFJb4H+3SY3gmRAdW5HhV7woKgsfiIpeidSWWTKh5QkcSQ5OIpmNRGAgKhovQ==
+X-Received: by 2002:a05:6a00:10d1:b0:76e:7aee:35f2 with SMTP id d2e1a72fcca58-7702fc15031mr17895665b3a.30.1756224281018;
+        Tue, 26 Aug 2025 09:04:41 -0700 (PDT)
+Received: from tinycat ([172.56.186.196])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-771eaa6792dsm5075303b3a.48.2025.08.26.09.04.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Aug 2025 09:04:40 -0700 (PDT)
+From: David Aguilar <davvid@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Calvin Wan <calvinwan@google.com>,
+	Kyle Lippincott <spectral@google.com>
+Subject: [PATCH] Makefile: build libgit-rs and libgit-sys serially
+Date: Tue, 26 Aug 2025 09:04:37 -0700
+Message-ID: <20250826160437.2539113-1-davvid@gmail.com>
+X-Mailer: git-send-email 2.50.0.7.gec2f25360c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Elijah Newren <newren@gmail.com> writes:
+The "cargo build" invocations in contrib/ cannot be run in parallel.
 
-> On Mon, Aug 25, 2025 at 5:50 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> Updates in v2
->> =============
->>
->> Thank you for the quick and careful review of these patches.
->>
->>  * The test and bug fix are now in the same patch.
->>  * Several commit message typos/grammar edits.
->
-> Thanks, this round addresses all of my feedback and looks good to me.
+"make -JN" with INCLUDE_LIBGIT_RS enabled causes cargo lock warnings
+and can trigger ld errors during the build.
 
-Let's mark it for 'next', then.
+The build errors are caused by two inner "make" invocations getting
+triggered concurrently: once inside of libgit-sys and another inside of
+libgit-rs.
 
-Thanks, both.
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 29a53520fd..286d3ba3b2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3989,7 +3989,7 @@ libgit-sys libgit-rs:
+ 		cargo build \
+ 	)
+ ifdef INCLUDE_LIBGIT_RS
+-all:: libgit-sys libgit-rs
++all:: libgit-sys .WAIT libgit-rs
+ endif
+ 
+ LIBGIT_PUB_OBJS += contrib/libgit-sys/public_symbol_export.o
+-- 
+2.50.0.7.gec2f25360c
 
