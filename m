@@ -1,210 +1,166 @@
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736EA2264C0
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 18:37:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C142D1FE47B
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 18:46:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756233443; cv=none; b=OC4lDNP8MtDkIsZQnrKUGp1v6k5LE/+zEqzqK+UFv27EfD5VcLQ/gVwwdOYnOqHYW00HDhSrjv9kAYwsU1kjTQL+5M7VTCzt7C8yqgl2urmekbzdO4POhFCkktdIDOSPdoWun8buxYY/Z0tyYHViNRqOjAlh+cYVrngTRtaCUus=
+	t=1756234011; cv=none; b=FOWlhPkxjpcBorXmUEGpnEWWHnlciJIa1+eoicrS0vZ00mgwQBYKjrH8jMWJFvSF5qCCz7ILty6dzsDMg4MUknlhc0HtrBf/da27K1ZxHaXtm4kS2lOFdTepNc4eiUg7Yw/1qEkrfjVM+vXeotzMXyoxKUjjEofi62Gw2JJ0nuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756233443; c=relaxed/simple;
-	bh=edChDUJKPb8GW/cm3pQiW5bQpaU05EaYf12ZZ9lWSQE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QXRpB/fbtIMchW1W+KuXB6inVMpzPt+CowuX3OIOj/Mgb72BVJCofw/3HwDDt0G68ffV6D397R1kf5+QVH7jrOS4HVZto+bc50z3VvmVmGqLQkbU1XlhwSCJCugDd4hVpytuvd0Xxz4ZTMYqgKI5+xCLPVRD8fF1lRAmMtRlgEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GCKu78ot; arc=none smtp.client-ip=209.85.166.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756234011; c=relaxed/simple;
+	bh=DDV0AuZ/2hI++FSRwM/WRBuHDm2W4GIG7SzIZwneZ9U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TFgVG3nlcFCXVoNgYP/J6FOxhnadC7jxaRO2nFGl/4EmRzaKyCybz6lfbEvcqiUIRWKnKZp6kcRgef29ofPXTywHYVqCGYnG9/fHJi7hBsppjr2VeG5ljuGnyIcr3blU+xIR8EyQ0JubCXJTrrXPXlf38dsip3p4Fxl0RMdHH74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oWfwWNe1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kmem2yOz; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GCKu78ot"
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-3eb6da24943so36768635ab.3
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 11:37:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756233440; x=1756838240; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EtgHZfNxPLO+rtUhGmlaCSu9SwfZsLJx927uDi/7rVQ=;
-        b=GCKu78ot6LmGGCigiq45wdT5kcrOOaCtLhRQ8l4TywW7SeJp7/N9vITkzN9EhhfZX+
-         oVaiGvRaW6LdHJLuUIkohNVr38nJKCeJMhmYMcysNggcUe2TNF9eBExwQoXJtnYznuAR
-         Oj0y4II4S7izky5c2HW2W1w3h4GZ/SDmTlHuJVPWPt2fWl0CN4Lair0fvQRwH75Leba1
-         Y5rgRiYfz6eDIG61E8416/tggiG53GEiXfkIQDmdgNHjCqbNZRdWBRtoxCf+ZGmCqzda
-         u5zlGHvihymqKRUg8gI+4Q4fLUOR+3C8lhQ5aqlCOZtplGHxj+cT0x+zgntZ301+uMVI
-         rqfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756233440; x=1756838240;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EtgHZfNxPLO+rtUhGmlaCSu9SwfZsLJx927uDi/7rVQ=;
-        b=T7NLb/YWbEebvJtZn4syl1LAltkZgZ70Cd8IZiaapow5IIah+A+HuKoSd+P+75muEc
-         TIl6BaWraGxhOPDK7V3dPuchFTuqBghoy9lAWG4VmQaY3/aMswPwjsedx2finWJvdI4+
-         8t0EIPllCXdNWat0pPF7EE4/2MawUJk07zb/q1ejVJcl8tYAiB16IvQr8C0SZfTB+wpw
-         UMI4u+fi6NwqkIrKa2Mq/zCBU5as2xe3xdB5kBvN9tbWUDgA7wcS8/Fx+lnSDfdeWD3l
-         l7m8oKxgkP/Y7tdDEF7tuDvoeTXieE4Gxbt/kfrI3BWBwudaY+YNL/cyeaP1R7yWUyN5
-         nxLA==
-X-Gm-Message-State: AOJu0Yy9FqdZ/jR9tiGgPQ2LH1lGptBFxATWFlvuMh+Ek26lH3vxvx0P
-	7XIWB0R+ctn9b3gYbZ3C8b87koyn041czw8POudx9ZRqYX9qE64DI5t7E/0WUyocPKTyTget2vr
-	qw/OZxkqGNFsQqY1RwOfkaHhvp+C8yofHmA==
-X-Gm-Gg: ASbGncsrLe2iWza4Bg/EKVXeyY/ODAPxem12XYnInPVSZ/3v2mJvqIv25iICT5Ugn1w
-	Jxb30Nr+QzwSufxrq5bIeRN9UI3c8negrsOyqoccBpaSPCHi8F8ULnNCXPgvTfoxQQOVjgSgGJ1
-	hrgfsCoEVlVHOD0etbuFOmzPvaUnEtQtRORY52prf9pIjStTjOaYaen4DAsOYzIc2cgCNuguooL
-	tP16JvsXI0ik/jzjB4oaVQO5dLYJIC0OZiynBVWdx1dmv9uovg=
-X-Google-Smtp-Source: AGHT+IFo/hWqOjWCt7RUiBrkNBAIIlUsP14OPpCkEwEdlrgcZXqIBJmUhHLuAuzf9gVkLjTqGUDhe84boQGvlfnWk80=
-X-Received: by 2002:a05:6e02:2591:b0:3e5:3520:4a75 with SMTP id
- e9e14a558f8ab-3e922ad5276mr241992475ab.23.1756233439972; Tue, 26 Aug 2025
- 11:37:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oWfwWNe1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kmem2yOz"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id E75CAEC0311;
+	Tue, 26 Aug 2025 14:46:47 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 26 Aug 2025 14:46:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756234007; x=1756320407; bh=q37LfjrosB
+	cXTIKsblPmiFq2w9Yd9aQi7ZkVAX/uLEo=; b=oWfwWNe1plCyTaC7NqaCSRIP8y
+	xjdaI9hD05iO830noVIfBpB1OZ0nUtyhUWyUPuFiFEnpckoeGTdmAgaSMJ19YPy7
+	WC3/jcItXrh5whVSlmgs4KyscpnAosIujpeEnfJBGdng3qFBNschzcceHQ1Cb+t8
+	a9v5fxRgNI0jv6DBo1RkBMFz5JgdvMZx7cLYW9NcokvdAmaRLb7z3ypBAsrmb5WX
+	1YTGhgO17XIev8CsQNbaWhz8+Gg67CUJrrqgbLfZqO6EoVhwDYE4U17oyyV+alWy
+	Z7pSujUOgiVjrHEYqWxZwgwcQe9uEU/24kpaIIx53HD0LerVTQg9/6c7W7kw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756234007; x=1756320407; bh=q37LfjrosBcXTIKsblPmiFq2w9Yd9aQi7Zk
+	VAX/uLEo=; b=Kmem2yOzdoJLp+6WOl1bVH/2ZJfaboIzwvQHW3qDLLQxAXvDduD
+	6v94zxjzg0N7RCguP7ZAEvwDBg/GAGze48xD1hw8tI8XJRwsE5T5kfZGjmCTT3IV
+	u74Hr8iFg+YVcODFBS65SAqIrJoRMPshxoYQDFEaqaLsZpiWQuAKgxKcYXrZL3IX
+	nI/8CylDo1CYRSFl1xivcIFNoNlzqL+FAHNiu2bigVcLn/i1qzvMP3WSyRBE7BJE
+	4VM/eDsrjUxbHYp+lpZcqyj2jxv4yGwjwIacKYkA3YgemklZtuGh5ljOzLqTerxT
+	YKYJa5c37uLoXzAtz/uR58Ccd8Rz07qWggw==
+X-ME-Sender: <xms:FwGuaOb_uK7YteevtQqeIuIqqHR81DnNW1H1mG71Bt2FcZYyI6mpoQ>
+    <xme:FwGuaL-mn2SggIdoA-S0ToIg9IqqG1ecC3MUBZ-qto0w_FvWWfQFtbSFne6IpOKiR
+    Fl53nPpjcbEJ35cBw>
+X-ME-Received: <xmr:FwGuaFin_XqqEDSh0U5b5ceyZnoei4il5VKWWs6gzwnzWaTA380hAq6f0ygVNFIm4oAtQ6VmzebdwG5BMp_6BluDfnLWICNQ3Jg_WVg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeeitddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:FwGuaDeGuoTLrqeR0tLwImE16QwXfQlckcQ_ATscLtEkiPlYhqkr4w>
+    <xmx:FwGuaErdStOYb4hoVWr6n6jHg2qWM3IB7gxODzKRd85tR5vEMHPhAA>
+    <xmx:FwGuaADI0-14-pqB6RDa8bdanhCm8WlatjHGjwRRjJkymO_0J9M8Fg>
+    <xmx:FwGuaJYOCQQh7fxRbYHQS6z4J5ybMCdqEIkmD07YLrOyyyuuOkPG-g>
+    <xmx:FwGuaCJzzoXMEo3fB7zwG4HQJxZ1XExAlgytGUxfNB-wj7ezPoS1NHvk>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 26 Aug 2025 14:46:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH 1/5] doc: git-checkout: clarify intro
+In-Reply-To: <a6125a0128937392af283033e63d2b04776caf2c.1756148933.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Mon, 25 Aug 2025 19:08:49
+	+0000")
+References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
+	<a6125a0128937392af283033e63d2b04776caf2c.1756148933.git.gitgitgadget@gmail.com>
+Date: Tue, 26 Aug 2025 11:46:45 -0700
+Message-ID: <xmqqqzwxkjje.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1955.git.1755274373717.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1955.git.1755274373717.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 26 Aug 2025 11:37:08 -0700
-X-Gm-Features: Ac12FXyYmlQN5yVXQVuE-fWHq3cTesmBYILH2TmmLeKcpYIUa34pdZH97RSkZgQ
-Message-ID: <CABPp-BE-FrvWHiskk3t7ePG9NWmj8E5FaFfxk6JGF4ztYVQt0w@mail.gmail.com>
-Subject: Re: [PATCH] ls-files: conditionally leave index sparse
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Aug 15, 2025 at 9:13=E2=80=AFAM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <stolee@gmail.com>
->
-> When running 'git ls-files' with a pathspec, the index entries get
-> filtered according to that pathspec before iterating over them in
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-When I first read this patch, I missed this part of your commit
-message and figured there was no possible way your patch could
-actually speed things up.  I verified with your testcase that it
-worked, though, and had to step through a debugger to find out what I
-was missing.  It's the prune_index() call in cmd_ls_files() that does
-this -- but only when the pathspecs provided have some common prefix.
-So, it's not unique to when there's a single pathspec as your commit
-message claims, and the pointer to prune_index() may have helped save
-me some head-scratching in review the patch.
+> From: Julia Evans <julia@jvns.ca>
+>
+> - Many users do not understand the terms "index" or "pathspec". Clarify
+>   in the intro by using an example, so that users can understand the
+>   basic idea without learning the full definition of "pathspec".
+> - Use the terminology "Switch" and "Restore" to mirror `git switch`
+>   and `git restore`
+> - Reference (and clarify) the ARGUMENT DISAMBIGUATION section
 
-Perhaps this could be clarified here (and made more explicit for folks
-like me that gloss over it), something like
+Avoid bullet points here.  End your sentence with a full stop.
 
-When running 'git ls-files' with pathspecs with a common prefix, the
-index entries get
-filtered according to that common prefix in prune_index() before
-iterating over them in show_files().
-
-> show_files().  In 78087097b8 (ls-files: add --sparse option,
-> 2021-12-22), this iteration was prefixed with a check for the '--sparse'
-> option which allows the command to output directory entries; this
-> created a pre-loop call to ensure_full_index().
->
-> However, when a user runs 'git ls-files' where the pathspec matches
-> directories that are recursively matched in the sparse-checkout, there
-> are not any sparse directories that match the pathspec so they would not
-> be written to the output. The expansion in this case is just a
-> performance drop for no behavior difference.
->
-> Replace this global check to expand the index with a check inside the
-> loop for a matched sparse directory. If we see one, then expand the
-> index and continue from the current location. This is safe since the
-> previous entries in the index did not have any sparse directories and
-> thus would remain stable in this expansion.
->
-> A test in t1092 confirms that this changes the behavior.
->
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> ---
->     ls-files: conditionally leave index sparse
->
->     Here's a small sparse index performance update based on a user report=
-.
->
->     Thanks, -Stolee
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1955%2F=
-derrickstolee%2Fls-files-sparse-index-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1955/derri=
-ckstolee/ls-files-sparse-index-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1955
->
->  builtin/ls-files.c                       | 13 ++++++++++---
->  t/t1092-sparse-checkout-compatibility.sh | 13 +++++++++++++
->  2 files changed, 23 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index c06a6f33e41..b148607f7a1 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -414,14 +414,21 @@ static void show_files(struct repository *repo, str=
-uct dir_struct *dir)
->         if (!(show_cached || show_stage || show_deleted || show_modified)=
-)
->                 return;
->
-> -       if (!show_sparse_dirs)
-> -               ensure_full_index(repo->index);
-> -
->         for (i =3D 0; i < repo->index->cache_nr; i++) {
->                 const struct cache_entry *ce =3D repo->index->cache[i];
->                 struct stat st;
->                 int stat_err;
->
-> +               if (S_ISSPARSEDIR(ce->ce_mode) && !show_sparse_dirs) {
-> +                       /*
-> +                        * This is the first time we've hit a sparse dir,
-> +                        * so expansion will leave the first 'i' entries
-> +                        * alone.
-> +                        */
-> +                       ensure_full_index(repo->index);
-> +                       ce =3D repo->index->cache[i];
-> +               }
-
-I see how this is safe.  I didn't understand how it helped performance
-until I figured out by stepping through that repo->indexc->cache_nr is
-much less than I expected, because of the prune_index() call that
-happened earlier.
-
->                 construct_fullname(&fullname, repo, ce);
->
->                 if ((dir->flags & DIR_SHOW_IGNORED) &&
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-ch=
-eckout-compatibility.sh
-> index d8101139b40..b0f691c151a 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -1506,6 +1506,8 @@ test_expect_success 'sparse-index is not expanded' =
-'
->         ensure_not_expanded reset --hard &&
->         ensure_not_expanded restore -s rename-out-to-out -- deep/deeper1 =
-&&
->
-> +       ensure_not_expanded ls-files deep/deeper1 &&
+> -Updates files in the working tree to match the version in the index
+> -or the specified tree.  If no pathspec was given, `git checkout` will
+> -also update `HEAD` to set the specified branch as the current
+> -branch.
+> +`git checkout` has two main modes:
 > +
-
-Thanks, this testcase is exactly what I needed to figure out what I
-was misunderstanding.
-
->         echo >>sparse-index/README.md &&
->         ensure_not_expanded add -A &&
->         echo >>sparse-index/extra.txt &&
-> @@ -1607,6 +1609,17 @@ test_expect_success 'describe tested on all' '
->         test_all_match git describe --dirty
->  '
->
-> +test_expect_success 'ls-files filtering and expansion' '
-> +       init_repos &&
+> +1. **Switch branches**, with `git checkout <branch>`
+> +2. **Restore a different version of a file**, for example with `git
+> +   checkout <commit> <filename>` or `git checkout <filename>`
 > +
-> +       # This filtering will hit a sparse directory midway
-> +       # through the iteration.
-> +       test_all_match git ls-files deep &&
-> +
-> +       # This pathspec will filter the index to only a sparse
-> +       # directory.
-> +       test_all_match git ls-files folder1
-> +'
+> +See ARGUMENT DISAMBIGUATION below for how Git decides which one to do.
 
-Looks good.
+As promised in the proposed log message, this conveys the same
+information much more clearly.
+
+"A different version of" neatly sidesteps the need to hint we can
+check out paths from a tree or the index.  "Restore a different
+version of files" (or "files from a different version") perhaps?
+The point being you can grab multiple with a single operation, but
+they all have to come from a single source.
+
+Other than that, very nicely done.
+
+> +Here's a description of all of the modes:
+
+I am not sure if we want/need this line, though.
+
+>  `git checkout [<branch>]`::
+>  	To prepare for working on _<branch>_, switch to it by updating
+> @@ -511,14 +515,17 @@ $ git log -g -2 HEAD
+>  ARGUMENT DISAMBIGUATION
+>  -----------------------
+>  
+> -When there is only one argument given and it is not `--` (e.g. `git
+> -checkout abc`), and when the argument is both a valid _<tree-ish>_
+> -(e.g. a branch `abc` exists) and a valid _<pathspec>_ (e.g. a file
+> -or a directory whose name is "abc" exists), Git would usually ask
+> -you to disambiguate.  Because checking out a branch is so common an
+> -operation, however, `git checkout abc` takes "abc" as a _<tree-ish>_
+> -in such a situation.  Use `git checkout -- <pathspec>` if you want
+> -to checkout these paths out of the index.
+> +When you run `git checkout <something>`, Git tries to guess whether
+> +`<something>` is intended to be a branch, a commit, or a set of file(s),
+> +and then switches branches, switches commits, or restores the files.
+> +
+> +If there's a conflict, you can use the double dash `--` to distinguish
+> +between branches and files:
+
+I do not think you are dealing with a conflict here, rather
+ambiguity.  "You can use double-dash `--` to disambiguate between
+branches and paths".
+
+
+> +* `git checkout <branch> --` will force Git to treat the parameter as a
+> +  branch name or commit
+> +* `git checkout -- <pathspec>` will force Git to treat the parameter as
+> +  a set of file(s)
+
+We do not have to teach the full pathspec syntax here, but I wonder
+if we should do something to avoid leading a new reader into
+thinking they have to list files.  "...as a set of files and/or
+directories", perhaps?
+
