@@ -1,70 +1,70 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD382F39D7
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 07:36:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD2C2F60A5
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 07:36:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756193817; cv=none; b=LF9PhD2BPauMSDnirbYn68xJAvMsDEnmlbtqTxz0vIYYR8XhEU8fsN7dF4pFUJzaQQJJRDSps/Ekh3oOyT2R1NlXLF3oNN/pZ5DBb4V5kUw0rqKvMWvBWHL4+aAPwAG4W8pPeT3of/M+W2y30t2X9tpyy/zmVknTQ//2pyx14Ss=
+	t=1756193819; cv=none; b=exgGAdbdIjVMyS0Ebw5wmYbvt33XpfwHZgXKjbt9P97rUa8Ec0DpNFh5rDHat/h7BspnMLIdXHiE5tQAH6PLlDeFk2mvErVnghZ8TUOAUkyBx+UV5G5HvMMRBOXXSfuTACKQP1VjR+etiAmLVvgSEBvbREBgob7iniLBIZdShD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756193817; c=relaxed/simple;
-	bh=BSlTzCdjFQBhk/JRccpJmtE8BFjz9TXaEtaXtVAvRZE=;
+	s=arc-20240116; t=1756193819; c=relaxed/simple;
+	bh=0DSeY5lwFgIuUmPlYOBEUSCwORzO3qk5PMaUOE3pKt8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=gi1bSfDS9G0zTpnXdRalS8dQgbE1puu5wrHIDltsoRaqBgI14tvRnCXHIWLBaaztX1dh8n1g1+bwGZUpjr3W8TzeFCAwCW83HiMYXEFkK0QHJcAG9mRxLOUElbzcvwtsN7t3ZVkwrH8JSEDZp57dbmREwsq55nvrEIxu35Q6kpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=McJ5vIb5; arc=none smtp.client-ip=209.85.210.176
+	 MIME-Version; b=BA+m+qHOZ40L9Sj2/tChp/bT9ZFB/5nPOTIyv1gYgVvBQ9MQJPfZqyAfXPNA50Pjj8TI3S8/GVRVHqIRIHVa2Pl/k4y9pHuSGYR52b6qm/HklLvlQTxS2OJ3+mT7S7VAGzOYrZvlqj3lnYSK5uyyw+sXrD0hhYkz1+jyH9tiVQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cv03HZD+; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="McJ5vIb5"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-770d7dafacdso2253040b3a.0
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 00:36:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cv03HZD+"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-76e39ec6f30so5046721b3a.2
+        for <git@vger.kernel.org>; Tue, 26 Aug 2025 00:36:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756193815; x=1756798615; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756193817; x=1756798617; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ebsfKpd+g93INpNC4EHIQQlmci2lxcvxCuLOdlUPB+o=;
-        b=McJ5vIb55WVNyasgOCDkXtTv1ILV9pYXz2xJEJgwl2NkdGj3qbqDDq1T6hL/IWMd9v
-         pHU4UoAEh5bgUw3l8BfQyTmPpDqIKejppTJ7s3yiROMF5eLTvYM+CV8QzaY8JhUJzhGJ
-         nuqhrZqdgZQSqyMFP8dqAewfmAgwVAGaFUyOiiM86+40gvt6YL5ni6K4RhPp8K7Ys+X4
-         OrsCXtvLeoPpRzfsis+qfbNO8Gy+O5+UuUHF2l1NgJZQq3LizOqdhE9EgZ2KPRPLBjuU
-         AQo0Otj8mPv4uOa5VhccREmKDjP2ahzCY/N14Oag4jTK+GIZA59f1fu3tiZ9ad4Extjk
-         uS4A==
+        bh=zmN5oYWplPFUur6U2cjlWGQNEzTu6GP7Y1ltB2dIVrc=;
+        b=cv03HZD+E0YHorfws15T/C529zpE9dRAAAwOxZlH9guuoA3Jr00umFl4Z7mrCGdKDy
+         0+SSSWPbVmNaka0PmCZDP5H1zdoj+os59oDqaHn4eu1Jj6A9Jf3k1lXfC3iUPZUvXe1e
+         UXkOGUz7xmZKtBVwnJ8dV0AovWJp4CxSMw+WevVUefEYdqsYjLNk85Rl175QxLFVxqxz
+         /dK4yugHOAXHi8O2D3eVB/HyK0PKHkcsf/1o+uKi4vpHRnAF5RUSm83GQ1jV0MBcRXaO
+         ZvsRmoLaxBrFzdRgtmnCBX4U7gUokCXXq6ptQNXTMc/IYnmSyvlAaVVsOH792ecAE524
+         Rexg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756193815; x=1756798615;
+        d=1e100.net; s=20230601; t=1756193817; x=1756798617;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ebsfKpd+g93INpNC4EHIQQlmci2lxcvxCuLOdlUPB+o=;
-        b=BUHQRP6UifAvhKt44qB3PVqZaujMsQB0BHtkXafTXT+Q9lcN8xmm8bPZUy+3fiFabR
-         map92YZRHUjz7zZkZzgT/zly+DLlSaDehi9hQ93BX2/uEcfG+MQk+4Vy3bCHDNWMABj/
-         6mY7QgUh1WpcizuKF75OBgXZpeXIkNCPdVxD8qAuVLqbDfjiuldEmiTnLieHXWUFFS3F
-         4kH8yPAe/1kYgIAGnwIrnkbQ731KiTOOeKLRNb+YYVp2zpiu/ka73pqGT+FNGE9zDTFc
-         /elqCOFp95iAtGnTsle+eq9YPtT3GMwlhyD8O9VQeh2RotInySterd9rUKf1bNCi9I35
-         VZhg==
-X-Gm-Message-State: AOJu0Yx0UW9rURFiEwABg/cKyNB7CWydEYwmz9L3CHZodXQ/0X84ATmy
-	k3UMMdX9b98xXfNRk0g4BupRVugFqPzshvgLBm+etmsJ6rISQJ6bzbwHkReHLQ==
-X-Gm-Gg: ASbGnctUn9Iyf2Tc307d9rqAjzfhWYUTlNsIfYNAQ11mA8isCq2aEKV+IrqzWDubPIM
-	8lF55bpAO9vwAVJaFLlLAmYGCPR3yo3tjnYr/rQGiL7b7+OwOk3pKasCo03UrVi7eLRTKAO9rsB
-	CyAj7wB5/iEeVYgVTdUwb8AgTcE8W/DP5jEcqA4S2uoNx+2QbjRPkY7GevrvW7nRtgHfInaeNsd
-	pWfSMo8L+FOcJdQZDksh7oA2EGil7DQQ4WkQ17ACsgRrZ04UXqqIeOon064riaHhUgYekjadn0Q
-	Hj46Vp5jMXxSZeJleAq1fvwHikpJQnduuGyLXpON+5Meo0aLlgI9sVEuPRcJxis9pyfsOrblxkg
-	55t6COBGFmSZwXXp9z3s=
-X-Google-Smtp-Source: AGHT+IHyWj5bX+3MYMfaFLq7uGqmGyxhij3O1JQV3C3cYDRoNQNnEi5zxScQC/N30Xd+PGODIYm26Q==
-X-Received: by 2002:a05:6a00:14c4:b0:771:fbb0:b1ce with SMTP id d2e1a72fcca58-771fbb0b3dfmr864311b3a.25.1756193814951;
-        Tue, 26 Aug 2025 00:36:54 -0700 (PDT)
+        bh=zmN5oYWplPFUur6U2cjlWGQNEzTu6GP7Y1ltB2dIVrc=;
+        b=AXz8egHrj6xfs57A+OCF9w/3uUzL4qFogjSwswh+uvGXnxhugfDMlkZWPQV4xWZwwu
+         Iw3UQDZyQL4b2rMYfoP8PRY57HseorsGzfCqaFqHwfSLVbQt++2/0hl3OMX1Rcoy5QZG
+         o/ymrk7n0imNg5CgLxlwqAPSgp4L9SialylHHVMr7I13Dy+rrUY8NUoLLY0nnRJMFy2R
+         Y8tNOp2DHiM7be7m4LNRJ+6kjElEmwEbmOL8+FxNfGSxmr5HzHd+AnTZ8tNlJSk4Vqps
+         yvR/IUDOeIGz6phGAhSVAKg4cWl5Avyqn04QIRb2/TLuPQdPxyblC8cc/nAb8tVT5Ney
+         Q9zg==
+X-Gm-Message-State: AOJu0YxUWF3BH1OAG8B6L9vXe1xinEuCzkFUZ4v85Ccvy6NfLECn+iTP
+	ugEx8X6sN3Pe2tOBCU9gBgs7btOobhpdqAyLykKgmK0QN2ng81HB1ElRszjulw==
+X-Gm-Gg: ASbGnct8ZuVzavfftsHJ6ERmkaVt9KJNkBXQo/IrflwoGgYoECb5c+Mwy2/BQ+X5SSo
+	WuEJJc5QKi8DCj7AGgghw8AEo3XlGXvL/IXgEdhMefcPyaSX4vzZSYDRjIYJRNL2SqQ1DIpF370
+	90o3MSh+DZFLUTubEwLCoeaJk1Tt2vJ2C2coHkzBolnT2w4TEsEN2U3tJUSv0uLKdT1nXT+xncp
+	f6qnO5k5Fui48xPIWGPJD16Oa+wpAlvXoieY/5ThIIVBnEcw6krS+uo7+eEomjmruVMKtzoO4FH
+	ZdIcwxxRz4LnMvMTdcODEPAorcawuyJcPFUwHidbjU7l6JunbiEP7VwxhtrkTpfOhGm0T21P4kF
+	21mkizV6A7OnMKHQJCO3Zb9OzDFfV+g==
+X-Google-Smtp-Source: AGHT+IFbNoeeESrVVKBzQJxH5bpbP+ufHJUvDoV8OxuZbLS9AviOwL1gNmPhtk4SZ6oOME4mmldJhw==
+X-Received: by 2002:a05:6a00:a02:b0:76e:987b:1dc with SMTP id d2e1a72fcca58-7702f9f5b6emr19831326b3a.12.1756193817221;
+        Tue, 26 Aug 2025 00:36:57 -0700 (PDT)
 Received: from meet.. ([103.176.11.198])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-771e814cbe1sm4046216b3a.27.2025.08.26.00.36.52
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-771e814cbe1sm4046216b3a.27.2025.08.26.00.36.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Aug 2025 00:36:54 -0700 (PDT)
+        Tue, 26 Aug 2025 00:36:56 -0700 (PDT)
 From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	shejialuo@gmail.com,
 	Meet Soni <meetsoni3017@gmail.com>
-Subject: [GSoC][PATCH 2/5] doc: factor out common option
-Date: Tue, 26 Aug 2025 13:06:42 +0530
-Message-Id: <20250826073645.1074397-3-meetsoni3017@gmail.com>
+Subject: [GSoC][PATCH 3/5] builtin/refs: add optimize subcommand
+Date: Tue, 26 Aug 2025 13:06:43 +0530
+Message-Id: <20250826073645.1074397-4-meetsoni3017@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250826073645.1074397-1-meetsoni3017@gmail.com>
 References: <20250826073645.1074397-1-meetsoni3017@gmail.com>
@@ -76,146 +76,118 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In preparation for adding documentation for `git refs optimize`, factor
-out the common options from the `git-pack-refs` man page into a
-shareable file `pack-refs-options.adoc` and update `git-pack-refs.adoc`
-to use an `include::` macro.
+As part of the ongoing effort to consolidate reference handling,
+introduce a new `optimize` subcommand. This command provides the same
+functionality and exit-code behavior as `git pack-refs`, serving
+as its modern replacement.
 
-This change is a pure refactoring and results in no change to the
-final rendered documentation for `pack-refs`.
+Implement `cmd_refs_optimize` by having it call the `pack_refs_core()`
+helper function. This helper was factored out of the original
+`cmd_pack_refs` in a preceding commit, allowing both commands to
+share the same core logic as independent peers.
+
+Add documentation for the new command. The man page leverages the shared
+options file, created in a previous commit, by using the AsciiDoc
+`include::` macro to ensure consistency with git-pack-refs(1).
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: shejialuo <shejialuo@gmail.com>
 Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
 ---
- Documentation/git-pack-refs.adoc     | 54 +---------------------------
- Documentation/pack-refs-options.adoc | 52 +++++++++++++++++++++++++++
- 2 files changed, 53 insertions(+), 53 deletions(-)
- create mode 100644 Documentation/pack-refs-options.adoc
+ Documentation/git-refs.adoc | 10 ++++++++++
+ builtin/refs.c              | 16 ++++++++++++++++
+ 2 files changed, 26 insertions(+)
 
-diff --git a/Documentation/git-pack-refs.adoc b/Documentation/git-pack-refs.adoc
-index 42b90051e6..dac63e5e12 100644
---- a/Documentation/git-pack-refs.adoc
-+++ b/Documentation/git-pack-refs.adoc
-@@ -45,59 +45,7 @@ unpacked.
+diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+index e608980711..121a2fbeff 100644
+--- a/Documentation/git-refs.adoc
++++ b/Documentation/git-refs.adoc
+@@ -18,6 +18,7 @@ git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
+ 		   [--contains[=<object>]] [--no-contains[=<object>]]
+ 		   [(--exclude=<pattern>)...] [--start-after=<marker>]
+ 		   [ --stdin | <pattern>... ]
++git refs optimize [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
+ 
+ DESCRIPTION
+ -----------
+@@ -38,6 +39,11 @@ list::
+ 	formatting, and sorting. This subcommand is an alias for
+ 	linkgit:git-for-each-ref[1] and offers identical functionality.
+ 
++optimize::
++        Pack references into a single file to improve repository performance
++        and reduce storage usage. This subcommand is an alias for
++        linkgit:git-pack-refs[1] and offers identical functionality.
++
  OPTIONS
  -------
  
----all::
--
--The command by default packs all tags and refs that are already
--packed, and leaves other refs
--alone.  This is because branches are expected to be actively
--developed and packing their tips does not help performance.
--This option causes all refs to be packed as well, with the exception
--of hidden refs, broken refs, and symbolic refs. Useful for a repository
--with many branches of historical interests.
--
----no-prune::
--
--The command usually removes loose refs under `$GIT_DIR/refs`
--hierarchy after packing them.  This option tells it not to.
--
----auto::
--
--Pack refs as needed depending on the current state of the ref database. The
--behavior depends on the ref format used by the repository and may change in the
--future.
--+
--	- "files": Loose references are packed into the `packed-refs` file
--	  based on the ratio of loose references to the size of the
--	  `packed-refs` file. The bigger the `packed-refs` file, the more loose
--	  references need to exist before we repack.
--+
--	- "reftable": Tables are compacted such that they form a geometric
--	  sequence. For two tables N and N+1, where N+1 is newer, this
--	  maintains the property that N is at least twice as big as N+1. Only
--	  tables that violate this property are compacted.
--
----include <pattern>::
--
--Pack refs based on a `glob(7)` pattern. Repetitions of this option
--accumulate inclusion patterns. If a ref is both included in `--include` and
--`--exclude`, `--exclude` takes precedence. Using `--include` will preclude all
--tags from being included by default. Symbolic refs and broken refs will never
--be packed. When used with `--all`, it will be a noop. Use `--no-include` to clear
--and reset the list of patterns.
--
----exclude <pattern>::
--
--Do not pack refs matching the given `glob(7)` pattern. Repetitions of this option
--accumulate exclusion patterns. Use `--no-exclude` to clear and reset the list of
--patterns. If a ref is already packed, including it with `--exclude` will not
--unpack it.
--+
--When used with `--all`, pack only loose refs which do not match any of
--the provided `--exclude` patterns.
--+
--When used with `--include`, refs provided to `--include`, minus refs that are
--provided to `--exclude` will be packed.
--
-+include::pack-refs-options.adoc[]
+@@ -73,6 +79,10 @@ The following options are specific to 'git refs list':
  
- BUGS
- ----
-diff --git a/Documentation/pack-refs-options.adoc b/Documentation/pack-refs-options.adoc
-new file mode 100644
-index 0000000000..0b11282941
---- /dev/null
-+++ b/Documentation/pack-refs-options.adoc
-@@ -0,0 +1,52 @@
-+--all::
+ include::for-each-ref-options.adoc[]
+ 
++The following options are specific to 'git refs optimize':
 +
-+The command by default packs all tags and refs that are already
-+packed, and leaves other refs
-+alone.  This is because branches are expected to be actively
-+developed and packing their tips does not help performance.
-+This option causes all refs to be packed as well, with the exception
-+of hidden refs, broken refs, and symbolic refs. Useful for a repository
-+with many branches of historical interests.
++include::pack-refs-options.adoc[]
 +
-+--no-prune::
+ KNOWN LIMITATIONS
+ -----------------
+ 
+diff --git a/builtin/refs.c b/builtin/refs.c
+index 76224feba4..e05fa5b8a6 100644
+--- a/builtin/refs.c
++++ b/builtin/refs.c
+@@ -2,6 +2,7 @@
+ #include "builtin.h"
+ #include "config.h"
+ #include "fsck.h"
++#include "pack-refs.h"
+ #include "parse-options.h"
+ #include "refs.h"
+ #include "strbuf.h"
+@@ -14,6 +15,9 @@
+ #define REFS_VERIFY_USAGE \
+ 	N_("git refs verify [--strict] [--verbose]")
+ 
++#define REFS_OPTIMIZE_USAGE \
++	N_("git refs optimize " PACK_REFS_OPTS)
 +
-+The command usually removes loose refs under `$GIT_DIR/refs`
-+hierarchy after packing them.  This option tells it not to.
+ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
+ 			    struct repository *repo UNUSED)
+ {
+@@ -113,6 +117,16 @@ static int cmd_refs_list(int argc, const char **argv, const char *prefix,
+ 	return for_each_ref_core(argc, argv, prefix, repo, refs_list_usage);
+ }
+ 
++static int cmd_refs_optimize(int argc, const char **argv, const char *prefix,
++			   struct repository *repo)
++{
++	static char const * const refs_optimize_usage[] = {
++		REFS_OPTIMIZE_USAGE,
++		NULL
++	};
++	return pack_refs_core(argc, argv, prefix, repo, refs_optimize_usage);
++}
 +
-+--auto::
-+
-+Pack refs as needed depending on the current state of the ref database. The
-+behavior depends on the ref format used by the repository and may change in the
-+future.
-++
-+	- "files": Loose references are packed into the `packed-refs` file
-+	  based on the ratio of loose references to the size of the
-+	  `packed-refs` file. The bigger the `packed-refs` file, the more loose
-+	  references need to exist before we repack.
-++
-+	- "reftable": Tables are compacted such that they form a geometric
-+	  sequence. For two tables N and N+1, where N+1 is newer, this
-+	  maintains the property that N is at least twice as big as N+1. Only
-+	  tables that violate this property are compacted.
-+
-+--include <pattern>::
-+
-+Pack refs based on a `glob(7)` pattern. Repetitions of this option
-+accumulate inclusion patterns. If a ref is both included in `--include` and
-+`--exclude`, `--exclude` takes precedence. Using `--include` will preclude all
-+tags from being included by default. Symbolic refs and broken refs will never
-+be packed. When used with `--all`, it will be a noop. Use `--no-include` to clear
-+and reset the list of patterns.
-+
-+--exclude <pattern>::
-+
-+Do not pack refs matching the given `glob(7)` pattern. Repetitions of this option
-+accumulate exclusion patterns. Use `--no-exclude` to clear and reset the list of
-+patterns. If a ref is already packed, including it with `--exclude` will not
-+unpack it.
-++
-+When used with `--all`, pack only loose refs which do not match any of
-+the provided `--exclude` patterns.
-++
-+When used with `--include`, refs provided to `--include`, minus refs that are
-+provided to `--exclude` will be packed.
+ int cmd_refs(int argc,
+ 	     const char **argv,
+ 	     const char *prefix,
+@@ -122,6 +136,7 @@ int cmd_refs(int argc,
+ 		REFS_MIGRATE_USAGE,
+ 		REFS_VERIFY_USAGE,
+ 		"git refs list " COMMON_USAGE_FOR_EACH_REF,
++		REFS_OPTIMIZE_USAGE,
+ 		NULL,
+ 	};
+ 	parse_opt_subcommand_fn *fn = NULL;
+@@ -129,6 +144,7 @@ int cmd_refs(int argc,
+ 		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
+ 		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
+ 		OPT_SUBCOMMAND("list", &fn, cmd_refs_list),
++		OPT_SUBCOMMAND("optimize", &fn, cmd_refs_optimize),
+ 		OPT_END(),
+ 	};
+ 
 -- 
 2.34.1
 
