@@ -1,166 +1,136 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C142D1FE47B
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 18:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C231C2C17A3
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 18:47:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756234011; cv=none; b=FOWlhPkxjpcBorXmUEGpnEWWHnlciJIa1+eoicrS0vZ00mgwQBYKjrH8jMWJFvSF5qCCz7ILty6dzsDMg4MUknlhc0HtrBf/da27K1ZxHaXtm4kS2lOFdTepNc4eiUg7Yw/1qEkrfjVM+vXeotzMXyoxKUjjEofi62Gw2JJ0nuo=
+	t=1756234041; cv=none; b=nZt+vugJBvBhdu1yrrHMq3I5CFovcgMRKH6u+mbEgoRbMoIgzfFBbnWgPhD5gqpZ3b5DQ6KLB/d48yzKcc8F2qZfutGEYwZpD5v0thfHEVTXJRgs+rbgh/3/3IsyB8USK9L1F8XILMJTZNcaQ4fiVqzL/xKH826xV/QaiZ+hC+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756234011; c=relaxed/simple;
-	bh=DDV0AuZ/2hI++FSRwM/WRBuHDm2W4GIG7SzIZwneZ9U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TFgVG3nlcFCXVoNgYP/J6FOxhnadC7jxaRO2nFGl/4EmRzaKyCybz6lfbEvcqiUIRWKnKZp6kcRgef29ofPXTywHYVqCGYnG9/fHJi7hBsppjr2VeG5ljuGnyIcr3blU+xIR8EyQ0JubCXJTrrXPXlf38dsip3p4Fxl0RMdHH74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oWfwWNe1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kmem2yOz; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756234041; c=relaxed/simple;
+	bh=e0x55Qstzwd2e0KrioTkojt/qd7EH67kO+tmK/Y/WpE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cwsQUugH6xBPI8juiuwp/9OdUJYbOO3j09Hg7p7PtBLBMCJNQZviZA0GuWVHnPTLOe5oD1pQqtpOBnYYJDGeDlELaePQqdXYYu+c6YqmNf7JXO5SUoRLLphAGB/oNhBgIshaYxhUkZeYFZg+ug+h2tUAEnSPMYPMoJJ3dYUNeGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HMhwA8p3; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oWfwWNe1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kmem2yOz"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id E75CAEC0311;
-	Tue, 26 Aug 2025 14:46:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 26 Aug 2025 14:46:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756234007; x=1756320407; bh=q37LfjrosB
-	cXTIKsblPmiFq2w9Yd9aQi7ZkVAX/uLEo=; b=oWfwWNe1plCyTaC7NqaCSRIP8y
-	xjdaI9hD05iO830noVIfBpB1OZ0nUtyhUWyUPuFiFEnpckoeGTdmAgaSMJ19YPy7
-	WC3/jcItXrh5whVSlmgs4KyscpnAosIujpeEnfJBGdng3qFBNschzcceHQ1Cb+t8
-	a9v5fxRgNI0jv6DBo1RkBMFz5JgdvMZx7cLYW9NcokvdAmaRLb7z3ypBAsrmb5WX
-	1YTGhgO17XIev8CsQNbaWhz8+Gg67CUJrrqgbLfZqO6EoVhwDYE4U17oyyV+alWy
-	Z7pSujUOgiVjrHEYqWxZwgwcQe9uEU/24kpaIIx53HD0LerVTQg9/6c7W7kw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756234007; x=1756320407; bh=q37LfjrosBcXTIKsblPmiFq2w9Yd9aQi7Zk
-	VAX/uLEo=; b=Kmem2yOzdoJLp+6WOl1bVH/2ZJfaboIzwvQHW3qDLLQxAXvDduD
-	6v94zxjzg0N7RCguP7ZAEvwDBg/GAGze48xD1hw8tI8XJRwsE5T5kfZGjmCTT3IV
-	u74Hr8iFg+YVcODFBS65SAqIrJoRMPshxoYQDFEaqaLsZpiWQuAKgxKcYXrZL3IX
-	nI/8CylDo1CYRSFl1xivcIFNoNlzqL+FAHNiu2bigVcLn/i1qzvMP3WSyRBE7BJE
-	4VM/eDsrjUxbHYp+lpZcqyj2jxv4yGwjwIacKYkA3YgemklZtuGh5ljOzLqTerxT
-	YKYJa5c37uLoXzAtz/uR58Ccd8Rz07qWggw==
-X-ME-Sender: <xms:FwGuaOb_uK7YteevtQqeIuIqqHR81DnNW1H1mG71Bt2FcZYyI6mpoQ>
-    <xme:FwGuaL-mn2SggIdoA-S0ToIg9IqqG1ecC3MUBZ-qto0w_FvWWfQFtbSFne6IpOKiR
-    Fl53nPpjcbEJ35cBw>
-X-ME-Received: <xmr:FwGuaFin_XqqEDSh0U5b5ceyZnoei4il5VKWWs6gzwnzWaTA380hAq6f0ygVNFIm4oAtQ6VmzebdwG5BMp_6BluDfnLWICNQ3Jg_WVg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeeitddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:FwGuaDeGuoTLrqeR0tLwImE16QwXfQlckcQ_ATscLtEkiPlYhqkr4w>
-    <xmx:FwGuaErdStOYb4hoVWr6n6jHg2qWM3IB7gxODzKRd85tR5vEMHPhAA>
-    <xmx:FwGuaADI0-14-pqB6RDa8bdanhCm8WlatjHGjwRRjJkymO_0J9M8Fg>
-    <xmx:FwGuaJYOCQQh7fxRbYHQS6z4J5ybMCdqEIkmD07YLrOyyyuuOkPG-g>
-    <xmx:FwGuaCJzzoXMEo3fB7zwG4HQJxZ1XExAlgytGUxfNB-wj7ezPoS1NHvk>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Aug 2025 14:46:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 1/5] doc: git-checkout: clarify intro
-In-Reply-To: <a6125a0128937392af283033e63d2b04776caf2c.1756148933.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Mon, 25 Aug 2025 19:08:49
-	+0000")
-References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
-	<a6125a0128937392af283033e63d2b04776caf2c.1756148933.git.gitgitgadget@gmail.com>
-Date: Tue, 26 Aug 2025 11:46:45 -0700
-Message-ID: <xmqqqzwxkjje.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HMhwA8p3"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-55f39fc7967so3126188e87.1
+        for <git@vger.kernel.org>; Tue, 26 Aug 2025 11:47:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756234038; x=1756838838; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e0x55Qstzwd2e0KrioTkojt/qd7EH67kO+tmK/Y/WpE=;
+        b=HMhwA8p32m3ogRUtbYi0Y1SZAnEL9yF59z3cz1KMXr2cknGWY+cBzfguV1kq8GWkkV
+         tQure8mJO9mTzJEyPqLNiOCy1iZl/ueUtQV8Y1o9xgaF8mmTCFZaSKVgwFV0P+iTFU4y
+         HYtmWhr5rtoSeNzYEtlcfBxXzGoBcCCab1x4IceHMG/ScNhkkhyYYsx1/jVev+GefO14
+         kX4LwZU1KxZYsHxXdskHkxlYj93mlaA3lKRLWItHfp0DUsAnqDnOOJLQCxO6MIN+7cHX
+         Bkej5EF7S+xRnUtBPFsFL3iXDrj7qQoHnl6bs7ZFVvFPyCOzLUw7G+W6DkJCbB4L9WRP
+         PJhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756234038; x=1756838838;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=e0x55Qstzwd2e0KrioTkojt/qd7EH67kO+tmK/Y/WpE=;
+        b=bs7tYxxIKmPGzeYeQzgpLcFFXlbFDxnk5zpV9i7XCItcD8amPU25ANzg6ban9O+7vT
+         JGx48ohk5Z8NxJeL94E2wsXW5+TLGnRWLINmSavgw9LnBylLS5oKWZgUXQDNEWGL+Lk2
+         /mtrG0wbt+Z4Veor/oCy3ihrW7+/oQS1VFshZiLatDTCoMPNfnBnM3ec3JncezZkfllc
+         Gwkn7H0vcBYrCVOp9GG+L31sw5jwFHwdLoP8xSu4dg4KGkmWUtJ9TRCYG7je4jGk7cPc
+         6AC36bVGsjLgYHaFJ4be9HSBZ29ZcTKTK+RRMhu1tNxR0kkxF1NUiG39jnySRcfiqQZL
+         CtEw==
+X-Forwarded-Encrypted: i=1; AJvYcCXhPTRXTtw0EdD+yttxPrKVgvKnppAZBbPiO3QVJIpKe1p4hDwPTiQRuBX94ovsfUOfw+k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwH/IZoTtcSOcIquII2Oz/W6fFOpUlmGwROtZ6y4Ex6XQDFR4qu
+	TLGQw39bHz8XyV2+3I1XqQ3BRbMdfq+CXeOGKJgs4LBpw4a3RoFfNyfLwPcmliiEukuTTKGi7bI
+	R5DinfhrdmJZQZrZY9XUJbDU+pi9pm6lUrcNX8/4=
+X-Gm-Gg: ASbGncszfc2SKRssRyfuMkHqrm3TLsMFxzjoMW2c5BDhhH5lfSbYi42pOL/Klqw8X1A
+	G+IZoK67SYqf+3721aSFaN65BMHohmZUGNj0EOFXvqZSBvwxZLn+lDzZ4XVOjFituTrltDdAhHd
+	XCysDfNZZA/IZ8ZdvoV0ZFS2zuJHB8AWtVVCCe6ueiDLLmCf1D/+xB0JfiwNDfM0ZkicpVaD53M
+	Lq44UjE
+X-Google-Smtp-Source: AGHT+IFHHxEGRaTecHwn3+H2+YSupBi1feKbxNiqz+wVnIblZirp2WYHWwU6kOcB/YbdQM9yFHib2DkwpxsXX0oaX2w=
+X-Received: by 2002:a05:6512:4403:b0:55f:5308:fe03 with SMTP id
+ 2adb3069b0e04-55f5308ff9bmr218443e87.54.1756234037332; Tue, 26 Aug 2025
+ 11:47:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <db5d22b188740bcb830e4ccf7f19dcc4e6b557bd.1755921357.git.gitgitgadget@gmail.com>
+ <71B2DFE6-77E5-47FE-9FAC-AFC1B85DA0E2@gmail.com> <CAH=ZcbA=-iEFnJ-TecAZL_EX-f3pAShDhdq=S2XWkQHYgRZV7Q@mail.gmail.com>
+ <CALnO6CASgMQ=cbQ_ijWXV0RMMSZgvS47r8ucTro7Wc4pgZ9_jQ@mail.gmail.com>
+In-Reply-To: <CALnO6CASgMQ=cbQ_ijWXV0RMMSZgvS47r8ucTro7Wc4pgZ9_jQ@mail.gmail.com>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Tue, 26 Aug 2025 12:47:06 -0600
+X-Gm-Features: Ac12FXxfcmstxYKl2TvY8e-T7QFoF3LJPDWRsC_TTdYpfB1CmwlJWaf_KYQ0TnI
+Message-ID: <CAH=ZcbD_pX1YdZbt9b-xMmcu2806twhjECez4HhCyE9iBf-9=Q@mail.gmail.com>
+Subject: Re: [PATCH v3 06/15] ivec: create a vector type that is interoperable
+ between C and Rust
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Taylor Blau <me@ttaylorr.com>, Christian Brabandt <cb@256bit.org>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, Johannes Schindelin <johannes.schindelin@gmx.de>, 
+	=?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
+	Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>, 
+	Mike Hommey <mh@glandium.org>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Julia Evans <julia@jvns.ca>
+On Tue, Aug 26, 2025 at 7:30=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.com=
+> wrote:
+> > > Am I reading the patch correctly that the ivec implementation is prim=
+arily C? I=E2=80=99m not familiar with too many FFI projects in Rust, but I=
+ might have hoped we could write parts in Rust to gain any benefits from th=
+at, too. Is that a fool=E2=80=99s errand I=E2=80=99m thinking of?
+> >
+> > The ivec type is defined and implemented in C (interop/ivec.[ch]) and
+> > Rust (rust/interop/src/ivec.rs). When I started writing the ivec type
+> > I didn't know if the Git community would accept a hard dependency on
+> > Rust, so I made ivec usable in C without needing Rust.
 >
-> - Many users do not understand the terms "index" or "pathspec". Clarify
->   in the intro by using an example, so that users can understand the
->   basic idea without learning the full definition of "pathspec".
-> - Use the terminology "Switch" and "Restore" to mirror `git switch`
->   and `git restore`
-> - Reference (and clarify) the ARGUMENT DISAMBIGUATION section
+> Right=E2=80=94I saw both implementations, but it looked like C did most o=
+f the
+> work, which was my main question. Re-reading, it looks like Rust does
+> more work than I thought (with implementations of insert/push/etc.)
+>
+> That said, I think it's sensible to leave the type useable from just C
+> unless/until Rust becomes required (and then we can move things over).
 
-Avoid bullet points here.  End your sentence with a full stop.
+I like your idea of implementation consolidation. I just don't know
+what that would look like yet.
 
-> -Updates files in the working tree to match the version in the index
-> -or the specified tree.  If no pathspec was given, `git checkout` will
-> -also update `HEAD` to set the specified branch as the current
-> -branch.
-> +`git checkout` has two main modes:
-> +
-> +1. **Switch branches**, with `git checkout <branch>`
-> +2. **Restore a different version of a file**, for example with `git
-> +   checkout <commit> <filename>` or `git checkout <filename>`
-> +
-> +See ARGUMENT DISAMBIGUATION below for how Git decides which one to do.
+It's not straightforward because C doesn't have generics. I'll use
+IVec as an example, but this applies to any generic type in Rust. For
+a function like push() in IVec<T> it will have N definitions if there
+are N IVec types. e.g. If your code uses IVec<u64>, IVec<u8>,
+IVec<i32> that would mean that pub fn push(&mut self) {} would compile
+to 3 functions. If you don't use #[no_mangle] you'd have to figure out
+the Rust compiler's exact behavior for function names when calling it
+from C, which isn't stable or easily predictable. If you do use
+#[no_mangle] then the Rust compiler can't generate a generic function
+for each type.
 
-As promised in the proposed log message, this conveys the same
-information much more clearly.
+Another problem is that the functions in ivec mostly deal with
+resizing the memory rather than controlling access to memory for the C
+side. Even if the C side used Rust defined functions, that wouldn't
+solve memory access issues to the pointer on the C side. We could
+enforce access to each element by requiring C to call a Rust defined
+function for each element, but that sounds very painful and slow. ivec
+is meant to be used as a scaffolding type to help transition C to
+Rust.
 
-"A different version of" neatly sidesteps the need to hint we can
-check out paths from a tree or the index.  "Restore a different
-version of files" (or "files from a different version") perhaps?
-The point being you can grab multiple with a single operation, but
-they all have to come from a single source.
+Other projects that do use Rust's builtin Vec (or some other
+collection type) often Box it and write wrapper functions. This means
+that the C side sees an opaque void* instead of a transparent struct
+like ivec with ptr, length, capacity, and element_size.
 
-Other than that, very nicely done.
-
-> +Here's a description of all of the modes:
-
-I am not sure if we want/need this line, though.
-
->  `git checkout [<branch>]`::
->  	To prepare for working on _<branch>_, switch to it by updating
-> @@ -511,14 +515,17 @@ $ git log -g -2 HEAD
->  ARGUMENT DISAMBIGUATION
->  -----------------------
->  
-> -When there is only one argument given and it is not `--` (e.g. `git
-> -checkout abc`), and when the argument is both a valid _<tree-ish>_
-> -(e.g. a branch `abc` exists) and a valid _<pathspec>_ (e.g. a file
-> -or a directory whose name is "abc" exists), Git would usually ask
-> -you to disambiguate.  Because checking out a branch is so common an
-> -operation, however, `git checkout abc` takes "abc" as a _<tree-ish>_
-> -in such a situation.  Use `git checkout -- <pathspec>` if you want
-> -to checkout these paths out of the index.
-> +When you run `git checkout <something>`, Git tries to guess whether
-> +`<something>` is intended to be a branch, a commit, or a set of file(s),
-> +and then switches branches, switches commits, or restores the files.
-> +
-> +If there's a conflict, you can use the double dash `--` to distinguish
-> +between branches and files:
-
-I do not think you are dealing with a conflict here, rather
-ambiguity.  "You can use double-dash `--` to disambiguate between
-branches and paths".
-
-
-> +* `git checkout <branch> --` will force Git to treat the parameter as a
-> +  branch name or commit
-> +* `git checkout -- <pathspec>` will force Git to treat the parameter as
-> +  a set of file(s)
-
-We do not have to teach the full pathspec syntax here, but I wonder
-if we should do something to avoid leading a new reader into
-thinking they have to list files.  "...as a set of files and/or
-directories", perhaps?
-
+I'm curious if the community has more design feedback, or suggestions
+for an alternative to my ivec type.
