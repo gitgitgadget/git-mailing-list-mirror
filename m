@@ -1,116 +1,85 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46CD3164B0
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 19:57:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4C5149C6F
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 20:20:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756238274; cv=none; b=ffqBU0DifzuITA7OxImTYO14cmGln34xAX1x3N12AamEn2pKu/XlMEIyqYs0TV+8HJi0eXl0RW0WhRFNxza1jvwiDpUEzjeU/RbVw6Trr9sAXEB/0ZP5lK2AYy6/xjkC/dmEJEzhlhmvzLBvEESkpZVnikZG5gisTA0zWcDk/ag=
+	t=1756239640; cv=none; b=aKoQA7ZOl1m5r5bu5+OZ/ECqwSLCb9+tRTsRDvpJqn/w46MNB8j31/8awBHK2zzk0KWwMycxUyCW5Gkqm79nrQTUYEJfezFFcc6uB0SBBDKzOAx/QnRD6kEOpd9Zl7Xsj9C7srWcfHctOo495y3RJh56QpAvzOTpqVSkuQY2m/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756238274; c=relaxed/simple;
-	bh=fcr13ttIxlL3+g8miyVVI37Ir4cX3Tuaol8MVcq2Al0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=B13D7RICBjy1URnsTn5xg7PktoLJI9DBpDasc6rIuttatc2drNiKQz61ucvujKtC8rw5sE1e/ijo7C2DqRu3hREDUNxQsbNbolId+hTHKXNfcKWE4muCcdU0+5dx2f+GKW8oZeaZjNHyiw0qR705eQxoC1MDK/z35aiGgNhSWDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BRutANON; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1756239640; c=relaxed/simple;
+	bh=DrRz1mOTq+7T+jS27H1ZrbzNC8snXfX6WgTVy2gNqpo=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=FuEY+tfHJWDdgTqtH+auo3V17H8grPf+uhvnvtonuFJeUP/9ce8MRTFx4uwyv75ytHgttV4XIS0CwfgvSvq15uCcWF70jwGR95lMVeWfAsIdqQjPL0leoA37c9RaR3urYcxma4mAYc/R97Pxz8nQf8GQpOdb0sJSCNAuTXXZgFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JeKCD+Al; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BRutANON"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45b4d8921f2so44647265e9.2
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 12:57:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JeKCD+Al"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-771e15ce64eso2091369b3a.0
+        for <git@vger.kernel.org>; Tue, 26 Aug 2025 13:20:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756238271; x=1756843071; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=kUZA27y2s3NaxFtdtl/5q29VAvU9k74kG+HPhILYko0=;
-        b=BRutANONn3uCkVZy6gnCCl8MD6ekvIc7i8GDHzx2f3CzibmANzvZ8ir5ZggiCcJflE
-         b6LNEJAzJdT19Rw4Fm77RP1QFOR4D9fFgFMQARc83pDmUwjYcKYePddpDE4y2tDevcCG
-         o4Uzu8UllaHlSXTOnwQpzSEqP47ESs5TwqI5Rj1YCiL6hYFu95yeqluu8Ah2G1aU4T6Q
-         TCsij0BXQCWBFcLaYMJHoFgVd5najsTeBqvbAkcgDHKsww1+97OWnD8VYrJmcHW3Ap93
-         Ii012+uItZZtk2sk2JsWqTMncs5xZsCG3gY5B0i4KXUWQi0c+Ip04PqX/SfBJ87c6r0A
-         U/tw==
+        d=gmail.com; s=20230601; t=1756239638; x=1756844438; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DrRz1mOTq+7T+jS27H1ZrbzNC8snXfX6WgTVy2gNqpo=;
+        b=JeKCD+Al8/d+w5/aW2dIlnYyFzwnZs48KgTJG5XQMd5a6tRHRTyAi5isIa7CKtW06l
+         hwboA77RN5IsErQTrUT/im285PpGGpRvFEzn/51fjzogFivHT976T5mQ7B95N1cjRSGY
+         ud/5hrPu4VgdS4ef03PywFWNfrvdpW5sTJIDksR3bazRpjqVf6OQPbSpbZftpwyEeDLF
+         IKMhyvLyjrIOYP0t9olB5iQVdMa2qvZKXV4eVJuKfqjClgDHRfnwlcDECKoRJZ3sWDes
+         rC4cUEU1gD+0g/qyp173eUN5b/l8qv8mVvFr3/fGZ8CVTpGMCnBQAX2tOYJI7kPkDNTA
+         gayg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756238271; x=1756843071;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kUZA27y2s3NaxFtdtl/5q29VAvU9k74kG+HPhILYko0=;
-        b=TRIlpArZljEHdKxtrAM4e/9MhErJyGe3+GGOCvQy5QaCng0F980JT6T6Jf7ay3fDhq
-         9UANkHYK/ovynzSM92VesovVJ1Ht55XKkTFtMkNb21vcUeEaKXvIkaAxnGTAjUnHJj1w
-         RJLqnf7EkLHqE5WHm2BeMR3CcN0/5g63JXzVN59g1BaJUJcbg8Y357njrFeYu+PiUhu4
-         mfqMj5QrkxXWUFZ7Ad2GZazfS2Lkm4szQ1UVIbw9VLd2zOolAkuIk5PS6kPZqFnGSjCG
-         yRDd0uxlQzcvFRF4+WXSj3OVxrtJ5kp3efNiIg7y1v/QnBEZ37i/C06lnlVNwWNfaXSq
-         ad3A==
-X-Gm-Message-State: AOJu0YwbXjI4b+Ekv1LKkMCE/yJPgnzJoJgX/ErkcYILdGlHPPVJT2on
-	Hc/TJY9N4r/DszXS4U5uJkqdpVSS/MJi/XOwxMRr0Drfq5e0L7BxKiFoH2wb9g==
-X-Gm-Gg: ASbGncvvQ/s+Da6G2/cwuIvbq6IK7rHUEww+HxfpI0huhI7c8DhJvnuQSjUJvc8E2sA
-	Ap/RKUDuy2bxCe5kz8c+ATnrq58JhwSzNFNq+hsBRK+jw1tu5BA3oyNc4TW9eeuwGsgXo03br8o
-	GqUadyAah6fdQ2l9nBtV5/7ExJ9+5ros0b3xwt2Lp9S6yGcRo0tHRSl4mGaYgBUq04MCYRM5GUL
-	RrZcXWoe1FEeVBNZT3cfOsvJPG1QLOrwcPaZkLgLm97tcjhju669Ng30o4S01mCBKdkKOO7yDdz
-	24rwEND0+bJ6VqHxE4/56vXOds1+7581qzOXwAsR/gIE92I70ZIWUNViqvQoHrCRrWru4PYNoCQ
-	1vlpCOTTYSk84Lzn9Fo/mACif85M=
-X-Google-Smtp-Source: AGHT+IEIRw5ztT8gestOjcfMi+4fBxpPOsmUCQUlU8kKtYi3/mc2MwCyjQB7t30Maj5a7mR32LjCbA==
-X-Received: by 2002:a05:600c:3505:b0:456:1dd2:4e3a with SMTP id 5b1f17b1804b1-45b6bbd3411mr5438225e9.3.1756238270523;
-        Tue, 26 Aug 2025 12:57:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b6f0c8b6bsm227055e9.4.2025.08.26.12.57.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Aug 2025 12:57:49 -0700 (PDT)
-Message-Id: <pull.2040.git.git.1756238268790.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 26 Aug 2025 19:57:48 +0000
-Subject: [PATCH] reset slab_alloc and state fields in clear_alloc_state()
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1756239638; x=1756844438;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DrRz1mOTq+7T+jS27H1ZrbzNC8snXfX6WgTVy2gNqpo=;
+        b=h5mPhSIzerOxDXqBIglv+u5ndlkJahxmpHNdckUJpK5J3buR/TOxrp6+D6QuovuNbg
+         vFVH0Hn3Bd9necObhwGYiNwCH4MI21cEw7QMdDpidoLjMXgapKCpIQ2Q2rde2D6GV5v0
+         qvODmUKdHpZPREFTC8Hz4ce5seWTObESmm7B5/m6xz6pIOCVAFIx7NF9+bkkYlMiAIBQ
+         gq7SvyiSV+hugZKkOR1004AkULeYHjWFOwdXFiUB1+syOgwB2x0y64eeHzfVim450OrB
+         MPaZQGXkSDv+Tn2YBpnVZ9FGWgiJpC6DzDS1QYpILGUvV7JCimTe/xlrPjJCJYVp70sV
+         CAlQ==
+X-Gm-Message-State: AOJu0Yy/itgH0gdk7GltsxN0fNAeIHYGeAHPabn33qGTG1Q/YnhqRf8z
+	kv9QWxbV8mJYUFKHLrkXIHe03QAlS2Wse4Xks5Jf2pjk5FF2NPC0HW1Toq3MRA==
+X-Gm-Gg: ASbGncsQ2uZVeXTLBAIf1NiiYJOq2bAYX/k8OhyBxZiX8+wXcJx1qX5xOpLM5Kjnnk/
+	Bgss43iGMarNdGHX08iROTw/4Si3932XVvRZ0GmCp43wGCfpgfxC/m62xZXRitjBm7X9+xkadb0
+	3oEGB1hL7lOMiNsXyKhzDsj7BhZI+3Q85tao1A+8rkDN8Q1vCnlrYYRbATs34T4gsou9EJNvZPG
+	0dNJRJ+Dt3Mk90ACwd7e0TTYGBiD7MGUBuwpHzxvGqkA4vnPyfji55WlRhIBSaBMO9EqmMDg5zM
+	+GxR7TzUl65ToftnJRKpVfUcBQI6mko8eJEUjjOecLavrTK9tOWfWQu8iA83ofOumgiZY+DKkbt
+	fd+pptjwoy60UlOMw10/AkQXIrBIQkQANnqlVDS/B07LdptmNgk68BqrM
+X-Google-Smtp-Source: AGHT+IGdrZYIPRqsUTKjcGYHE9Ja/JWQSTi8Q1JmCKC3VsxvvGx/emYtCWXHy7wYJlZ5X1gEBUa3rQ==
+X-Received: by 2002:a05:6a20:a110:b0:240:763:797e with SMTP id adf61e73a8af0-24340b8a6a0mr25666798637.25.1756239638062;
+        Tue, 26 Aug 2025 13:20:38 -0700 (PDT)
+Received: from smtpclient.apple (nat.ime.usp.br. [143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-770401adf58sm11250935b3a.71.2025.08.26.13.20.36
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Aug 2025 13:20:37 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare <nouraellm@gmail.com>,
-    =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9?= <nea@odoo.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [GSoC] Blog: Machine-Readable Repository Information Query Tool
+ (week 12)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <A203C3BB-AEC9-457E-87B8-189B81C579BF@gmail.com>
+Date: Tue, 26 Aug 2025 17:20:24 -0300
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <75130C2B-A3F2-4614-B790-6FD5CBA4E8A5@gmail.com>
+References: <A203C3BB-AEC9-457E-87B8-189B81C579BF@gmail.com>
+To: git <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3826.700.81)
 
-From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9?= <nea@odoo.com>
+Hi!
 
-clear_alloc_state() freed all slabs and nulled the slabs pointer but
-left slab_alloc, nr, and p unchanged.  If the alloc_state is reused,
-ALLOC_GROW() can wrongly assume that the slab array is already
-allocated because slab_alloc still holds a stale nonzero capacity.
-In that case s->slabs remains NULL and the next dereference writes
-through a NULL pointer, causing undefined behavior.
+Here's the 12th update on my GSoC blog:
 
-To fix this, we reset slab_alloc, nr, and p to zero/NULL after
-freeing the slabs.  This leaves alloc_state in a consistent empty
-state for reuse and avoids dangling pointers.
-
-Signed-off-by: Noura EL ALLAM <nouraellm@gmail.com>
----
-    Reset slab_alloc and state fields in clear_alloc_state()
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2040%2Fnouraellm%2Ffix-dangling-pointer-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2040/nouraellm/fix-dangling-pointer-v1
-Pull-Request: https://github.com/git/git/pull/2040
-
- alloc.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/alloc.c b/alloc.c
-index 377e80f5dda..6bf9421c123 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -49,6 +49,9 @@ void clear_alloc_state(struct alloc_state *s)
- 	}
- 
- 	FREE_AND_NULL(s->slabs);
-+	s->slab_alloc = 0;
-+	s->nr = 0;
-+	s->p = NULL;
- }
- 
- static inline void *alloc_node(struct alloc_state *s, size_t node_size)
-
-base-commit: f814da676ae46aac5be0a98b99373a76dee6cedb
--- 
-gitgitgadget
+https://lucasoshiro.github.io/gsoc-en/#week-12-ago-18th--ago-25th
