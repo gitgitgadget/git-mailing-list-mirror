@@ -1,129 +1,117 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A135933CEB3
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 12:19:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFCC32143D
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 12:20:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756210790; cv=none; b=O7VadSJuhXj5xupuLJPwRn1FjdceD7x+poNNT2bJlMFHSgIcvHDWmbdiDufPcLRM3qDQE6fSbMRGsB+8cVCZDhL0L8qp2KqIQKpC8jiMvfMjZsXni7ATaG1snsmfVn7dnF0DBEqwF9H75rLWV6MTiCIXBzKM0hijNE99FOa+7CY=
+	t=1756210841; cv=none; b=i/tQZ68Suby78Fe0N077zCan6UYT7Mej53kgfVTC3v3DAGx2ymSkb0S6jYiyEeDWYEcyxLO7pRxJn5xKL2vPNI09NW4nYYAWngG4ox+Bgk8dGtCVT2so8RxUQfSxaF8BdKTKdQs++QyZu0U2UbiePFHb32dDUrFT/Vvd7zhyBw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756210790; c=relaxed/simple;
-	bh=qQ4MDUWjCxoVogTG7H4v2UgTToNv3DCykCNv02ZyAUY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zg7LXfLjC9V0r4ykX7s85YabvqHd7Olg+7H1P0O2/OO8wde5LnNdkp8Vzy6YmTAMTdhPkXfiPuAQFC9nI/OQd+JFz9udfbP/fbuTX9oyNABBokGzVxeF0eIzF9ZQYQT0ipr1W7z8TZ1bRXx4+OVezXRASp1i4KJyLF9meFyOKNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RxNe4LTZ; arc=none smtp.client-ip=209.85.218.52
+	s=arc-20240116; t=1756210841; c=relaxed/simple;
+	bh=sjR3cOrmsdbx/57vi4Q5+qFoWVVLpJq0yG4DcR+lAPM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rW3tvm0JkqLbRwyjUzShjvESoxO7sshqhBtTnWOizpKR+uHzt9hcgR9S+ZD86cAS+5XcuYPuCmkB9xfrgh0DQNLi2KLCk8CUpFSbFt1YhOMJfIz2g1VH1Ub+rDiUDJ7dPAWslD6YPGDBk3puOIcKifRaanXG74/Hf/nPIxqIjI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QBCOg0RR; arc=none smtp.client-ip=209.85.219.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RxNe4LTZ"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-afcb7a3a085so871740866b.2
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 05:19:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QBCOg0RR"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-70d9a65c371so37286876d6.2
+        for <git@vger.kernel.org>; Tue, 26 Aug 2025 05:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756210774; x=1756815574; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WDsgLliS2q5wKWHHlNGXi+JHqfdW/MPU0pbkPOlLogM=;
-        b=RxNe4LTZo4CBj0afnPywVllothyRKq87T9PrnXh5cIesv0ONx8NGL5xIPQ/CM8nQKK
-         D+xJsZzCIEFmogIAsYZs8s8sC5bDrxCBFZOKVIqnFY0EKLD4hcAt0YKPPMaN4lwE2Zv/
-         pF02lXEnoa7V9mKXOgcO+Vqx5GPIMs+aEL9ZUw/4lCssCU3WGeJ1gsc3aPI+JTeC7iH9
-         6041URW911VlAYX+21cJgBds+VRlg632AHAvFQf8NjKLLPpw1bERlvxpFrRHwIDKt2yC
-         8LIMdivuGiss1BfQlvTHmfuYbHI+Wpmd3a7Ja3xHIcWmNeprCs1yral6ULH/kOI3kT+q
-         qCmg==
+        d=gmail.com; s=20230601; t=1756210838; x=1756815638; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=K8/yMV+d4ox9uMZOSJDYsVGKRP9HYQM8YtUh+0e+RLA=;
+        b=QBCOg0RR9FvjtJmZ8iuVcIvMpnjRxFhuFF20vzwx+bEMxrC58CV51KCkeEKPT103cm
+         Y61HLJsPNwA5qYv0LyD4fml02uDmOzKjwShiROHw9LEu8Gucv2sze/ADUOIa42s2oKP1
+         I+NUhJGHoAbcRA2SxPZkJnlQJJnwouyUMcmAs/W2QRtc3Y48sJXxsgNHA/h5ysIxn/Uf
+         +i7usdM4lVpd/SDr3QmqEsIGbQB14kRo2C17tfnirEo3OIxMj525RIcB3K7jYe++kMBw
+         Usx6Nkher/y297e6UN7XOA2YGeAGk8i6RofzJZ86xvHo3sQknvUROy4AkRyMKfoX8z/O
+         taNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756210774; x=1756815574;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WDsgLliS2q5wKWHHlNGXi+JHqfdW/MPU0pbkPOlLogM=;
-        b=uHb3oT4yq+0huThObUJtF2IGOan0VOWgSG2NjGN9tlT+aBG4nfMIAQTyHrSJvqTF7V
-         XYXo0yuAxZhGbbDWBb5jTLmZT5GOwILntKlSdM351XEdm2k5tYTeM1BFOeeZ6D3mmy6X
-         0p2mC8fJaH4T1vD+8QtS5jScF5wED1COMcmX/770upzGBGoNP2NyFk4szKZpGPR/oWp1
-         uX6gMMpWUEgRmi+o08klBHFPGl2zwUiJ2CffR4B2JnwYseVnbW9Y0UgT+ddltxWQ48PX
-         iDeWX09aKo4PrK+RpKKVwkMEs8tNgP4y59L0skS4wxbHw0eBO1ygVFIyMIjVDQxPXXxJ
-         pYTA==
-X-Gm-Message-State: AOJu0YzIN8ZYoSbHdrvHXsGU2I289Gva61M3GBeae2E887DTujLCBHpl
-	AWDS5qg0xr2P7E/GaW5G0znWw+6lW6RzYhSsgo0kjTBUAjompapk0vLUmW2O5bK/HXE=
-X-Gm-Gg: ASbGncs2jRnMh4p8cdOf/Sjl1ycRR5k3q7kGu9t1nl26LmJYAmSJ5QN3H62MaiIXoed
-	BiUXEgmiwPzxGYabZUH9m6LH+9+xCeUcppPHWgCheMsoLLI8hedaZlgUzehmCf28p2+ujgOJg8j
-	4Djm48FKzKcMOsqG0Bg0FsrY/3lXeNMWKvXhxB4Drn8sihmTcwStZ+SEp9ETF4smhQtChGr06Q+
-	YLo9tzU2VC+sngXvC4I2hSPgViwUlHaulHdYWYpExIOWIsYmYI0KdrUn/FXA1SWCuXY3f9O4vRs
-	4sbLGOveCv1/Vcc2trlRdgdFn7club97kvk+XPgmnIU6zugcaQhjDlRukLSDNR8SjQyvkJfM2AP
-	qlUNZ5J+GmnXRM75YzRPz2Whs6ppRuU9TB7wyCN4h
-X-Google-Smtp-Source: AGHT+IGC/pUX1RD6Wih90fU9U9mNEGV3TA9W8gjXNt8zDF0f+YFVF48CHQBk9Oc24zwiD5Mj8TdFUw==
-X-Received: by 2002:a17:907:9486:b0:afa:1a67:e012 with SMTP id a640c23a62f3a-afe28f86573mr1286903666b.8.1756210773765;
-        Tue, 26 Aug 2025 05:19:33 -0700 (PDT)
-Received: from knayak--20220801-595b8 ([213.244.170.152])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afe56dd5632sm710934466b.110.2025.08.26.05.19.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Aug 2025 05:19:33 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	karthik.188@gmail.com,
-	ps@pks.im
-Subject: [PATCH] Documentation: note styling for bit fields
-Date: Tue, 26 Aug 2025 14:19:28 +0200
-Message-ID: <20250826121928.22317-1-karthik.188@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <xmqqwm6uvruu.fsf@gitster.g>
-References: <xmqqwm6uvruu.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1756210838; x=1756815638;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=K8/yMV+d4ox9uMZOSJDYsVGKRP9HYQM8YtUh+0e+RLA=;
+        b=v7Om57bNzGvN7S+bl2zV0e1Uis2LrAuI8zA6hRCuucrep6I16F7bT1DQZXtRAch7Nl
+         VNC88DsAUXIjdck6J4xRBtLpnDnG2T3jWmBevCvQmqBJkjkEh2oizdibAMTFvDEPpI37
+         4Z/9AnPCj7R31WbrqRbfw/VG9iilwct3ud1J/GMKSuan92kh4F9KVPV5w3j1PsEH+uQn
+         bNbQYhtxQ9eZUIIraAxx4qdp8UiZiRFz7xMdegNm7JflDBV/r9Pjcs6iZ0y/1ylBW1W+
+         +XFSuS6Nzo5P92KBuUKYD5eRd8pYImlwlBTK3OYhih2MTSQQ+QBunhYYkrPv3JF0o42K
+         BOMw==
+X-Forwarded-Encrypted: i=1; AJvYcCVi08ZrKzzfAzZsEE5ImU4ymAy0uxIzEpnQbhcbsXlJAxlZ0Sg895iwaWAT47d8Tz6FeRc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxOX8coUlJjD5PYw+lFKZeTnj3r3YTSrvgq80uWSsALqwMcnAXP
+	jgGCBXKPmZSo/TElglv3UJz14eXJyPrqa/pcveAAJWozQonGe4SLAHT6
+X-Gm-Gg: ASbGncvYaDNCp54dYMjkoduqEpCHtbSW4t8PSRuEmin05Bb6/kWEKLP9IH1OHQxKH5P
+	DcRtpA7HcpTlcB3jdvHdbyKzOIBizYv4dsAi5aHc1fnAQUTmmXe3NB6sQ8uKpkEoP2gSBKvSr4p
+	Rke1h3+cCbhMZ9Q9AXaDNvRWoY76KFytBXPG2NeJ8OjCIZaSpH0I+EaQlqTDfhB6LYoDhaWNv73
+	VocNYAjzlWQpNhHBdv4JCSgUXWRO2FQZxdwK4KMVZviT16ryTW/5pB7G8e8WiCIEs7wQac2Dbkf
+	4ALWnL0+L9uEFVL9+EzVodoq5tocCQ8nK1sZk3ivtbVjYR8m5BMMwJ4Xt+qG++1eu7VYOi0s4Bh
+	NtaZz/icSm0QJdYFMyA+1T0khT1+Ov3Rn6GzJ2WdeYC1HR3nuu/g0p6NkTsSMywwGSGMNVxXnDz
+	GdGtk2zk8xSQ==
+X-Google-Smtp-Source: AGHT+IFM1pfAispDYaxA5YIvgYagwcYaEOHLowWUaWbx9NVlp2zO6TIdwHUV27+A+o4CF9IGudSgtw==
+X-Received: by 2002:a05:6214:248c:b0:70d:cd1a:4a43 with SMTP id 6a1803df08f44-70dcd1a4ad2mr31121566d6.46.1756210838382;
+        Tue, 26 Aug 2025 05:20:38 -0700 (PDT)
+Received: from ?IPV6:2605:a601:a6de:d300:35d4:8c92:558f:ba56? ([2605:a601:a6de:d300:35d4:8c92:558f:ba56])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70da714603dsm64436526d6.2.2025.08.26.05.20.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Aug 2025 05:20:37 -0700 (PDT)
+Message-ID: <47d09c43-6d27-40ff-8dbc-22cc4a5949ed@gmail.com>
+Date: Tue, 26 Aug 2025 08:20:37 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSOC PATCH v6 0/3] environment: remove sparse-checkout related
+ global variables
+To: Ayush Chandekar <ayu.chandekar@gmail.com>
+Cc: christian.couder@gmail.com, git@vger.kernel.org,
+ shyamthakkar001@gmail.com, phillip.wood123@gmail.com, ps@pks.im,
+ gitster@pobox.com, ben.knoble@gmail.com
+References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
+ <cover.1752882401.git.ayu.chandekar@gmail.com>
+ <CAE7as+b2QKcPVnyEupriK54bMSSxdRAmSrMZqTvfq_KabaU-Ug@mail.gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CAE7as+b2QKcPVnyEupriK54bMSSxdRAmSrMZqTvfq_KabaU-Ug@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Our codebase uses a lot of bit field variables, generally to mark
-boolean type variables. While there is a formatting rule in the
-'.clang-format', there is no guideline specified in the
-'CodingGuidelines'.
+On 8/10/25 11:36 AM, Ayush Chandekar wrote:
+> Just an update, I'm still working on this patch series.
 
-Since the '.clang-format' is not yet enforced, let's also add a
-guideline with the same rule as mentioned in the '.clang-format', which
-is to not use any spaces around the colon, like so:
+Hi Ayush. Do you have an update on your progress? Perhaps there
+is something you're stuck on and could use some help?
 
-    unsigned my_field:1;
-    unsigned other_field:1;
-    unsigned field_with_longer_name:1;
+A few weeks ago, I played around with the ideas around updating
+the location of these globals into the repository struct and
+made this critical observation:
 
-This would allow us not to modify the clang-format file, and more
-importantly, discourage people from doing ugly alignment with spaces,
-i.e.
+   It's "easy" to move the global into the_repository, but it
+   becomes harder (and changes behavior) if we start referring
+   to the data in each repository struct.
 
-    unsigned my_field               : 1;
-    unsigned            other_field : 1;
-    unsigned field_with_longer_name : 1;
+It may be good to separate the two things into different steps:
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
+  1. Move the globals into the repository struct, but only set
+     or read from the_repository->sparse_checkout[_cone].
 
-I think it would be worthwhile to also add this decision to the
-'CodingGuidelines', but if you feel it is unnecessary, feel free to drop it.
+  2. Replace the use of the_repository and instead refer to a
+     specific repo. This may change behavior of the feature in
+     the presence of submodules with different config than the
+     root repo (tests before and after will be necessary).
+     We'll also need to update the_repository during the very
+     early config parsing but then update other repos during
+     repo initialization.
 
- Documentation/CodingGuidelines | 6 ++++++
- 1 file changed, 6 insertions(+)
+Does this make sense based on your progress in this space?
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 224f0978a8..df72fe0177 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -650,6 +650,12 @@ For C programs:
-    cases. However, it is recommended to find a more descriptive name wherever
-    possible to improve the readability and maintainability of the code.
- 
-+ - Bit fields should be defined without a space around the colon. E.g.
-+
-+   unsigned my_field:1;
-+   unsigned other_field:1;
-+   unsigned field_with_longer_name:1;
-+
- For Perl programs:
- 
-  - Most of the C guidelines above apply.
--- 
-2.50.1
+Thanks,
+-Stolee
 
