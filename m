@@ -1,142 +1,123 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF3631A554
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 15:57:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF1226E702
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 15:58:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756223851; cv=none; b=u20dH4HtCmfly7JJGWYZUYF+tau4icehBxBwUylZGVF++usJTbFhITquZ2xTqqaZVfOqv1vT5d3wxwMVT32YkxFI2H6uXp5fU4vbIQqDjE9V4rYI3//QhPcsJIKKHhr3zEcfQGfuc9sCfrjLc2yevzzvbGPThP7fWIsmlWi6UU0=
+	t=1756223897; cv=none; b=DZvteOYk7jDMYkagtmrLsAT2iQLrUqelsV7khXtY6ZtTlJ3bPbLvP8pZxuAUXIAax0zYJz78pNC/yTL0KBsPh7bIkENqSVTOlnTiCnIBlmpLeWScDs2k65XVEHtlEosk3AbBieHE4EngIdxm5/BHxiMWxACfgeqqvAwITdAcxmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756223851; c=relaxed/simple;
-	bh=5RC9+stS/YcnZVugMobZOYhjc8JDm5zTry3RiV6BmK8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IYnYLdi94y3OyQU33JqM76wQ4//7SuIT7rjk/dgjnNMjnUgqhN3vWFGfS+Xs2Lo73twpGG+wiBCBJ4ofPfQnP5GplTm5jqhfWUwZsQ2tkzFTveIiIZ3L+7TCNwiD75K2R44qIG/ao2dXNee8NHW8FPMX+ycts0QBOmYddAfYk6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P8LM+3vU; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756223897; c=relaxed/simple;
+	bh=zCJSLoH5idl2AoSodKWTrqLb3lwintZ1f5WQ03BvTeU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OGVikowXxpnCQLpJcShlUA5SFASt7mGXLTIxwHEMOOU01Or9hWJKMzFtskHZhOBPiji75jF42iXEXn7ewcUQE1QU75PNrskaTABqvXMRpjlyPFrCJGO5RFJD3azjWq0TV/rbGLY0pnjVk/l2PpzHoUBwkFJWN2gkClwgodFCRDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aTblfr1P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ezg+7RIN; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P8LM+3vU"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6188b5ae1e8so6782891a12.0
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 08:57:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756223848; x=1756828648; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=AaJlMowrOLTlMzSXxAq2oUAuJOuc2KAcTK2K84VDX2o=;
-        b=P8LM+3vU3jss2Vr/EY9LpBFTMy95TgJnO2QchvmPvsD+yvb7BPto5xm6tD43XLSWcs
-         ueTPGGpK/j8y19w388zfNbMJMk1pa78Hxsxavm6u1TneBwdEEh3WC+MtavaARL1/siLE
-         0xWYHqxqAlPEwgoUVzq43/RAajjtiXZInCxubormlHoU5MkcGu92KV/COEt56QYyUcKS
-         AfKVC+OF9LOxeZHKPNiJ3GDqYtw4LYImRx9XvAKsM2vD4e3qMh0dXzcyXxwKfdGVvMoB
-         Tu7/jb0haj5ngExG6WeTP15oTVCdSQAgtwXnGRM602vNMTMiLsql/Of86XPTtoxRJ1Rr
-         O+Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756223848; x=1756828648;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AaJlMowrOLTlMzSXxAq2oUAuJOuc2KAcTK2K84VDX2o=;
-        b=tlTsPk1s6o8Q5hMeGxcj8StsnCN53brMTZNcqLWjZyic8TeayT0AxOtusEHZcvNpJy
-         roiZr/PoAlgopHkrp+2+SeRoTNIfE/HQYL5XKPiXotqf+D6hn/7vzXJL7KsjuhCKu7Ja
-         ikKG9z9GIaOazYHZ5glL4lh11IyvF69lhypIwYjZz4aGFaOVc+FuuK4XjL95Kq3RF7xj
-         it02lc7suBavOvqaZFczhllgDjx+Bs4DWkIB1XHugytOADdlEN7veQgHn8K/al7k+LQO
-         mSW++K1wYYUiK2f29F1I85z46krFwtfwLoqHTbQvnSt4q+jz9MEQQWXV2OuzXNhzIw//
-         fR4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV+x4L06IcKVsZnU534E6NhRMxzaQ0fc/buaKqMStkdpaTHZzmOoF3ppBi7ARFojeHVmhc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRQXNPMJB+MmowllC7VLyoZz76Qo/1Cp/knM+quyTBliWw1vkT
-	ILowlufUekNuMA5UV9LvsS+KEijOCtKMmTUcs62OGZRfr+q5bQLneGFU
-X-Gm-Gg: ASbGnctUyIMoKeGNXBZ/QGv6CNTRj9OMkh2KQ2nu/i1qAEqC30XK5rroMzl0ku20pji
-	waaipGfGzf8OzvMGqCTs4HVFaGwFc2pKYwv/XX7fyEaupOsJB2BMyUJtK33+jzIG4cIe8qHrIeC
-	GSE69I81URGq2s0ezxe7kyOThVJc18micIubq47PH1MQRZde9E/NUDC5zGdTSupTulsvI9kl+eH
-	5trYlPXgLEVnxv2JMpBxszD6kGp1dAw6bx7s6C69J4a76vW7HLqKyDoqKeOxnuxW05o0PuRL1+C
-	/Icjsx4NuuPWgrxi49i90yy98RyFqTzqlAZPShgUwqjL13lr5/I+NEdvF7SsfPrWkP9arR3Tlmk
-	Ii2evD7ohDKUdZaOmDsexk+uvklFUsNNpSwh6GLqXm8xtGd6fynF/aE9X9cdhmqtG1zGW+QQWM7
-	hrVQ==
-X-Google-Smtp-Source: AGHT+IEyOlOmookiP6kf2FlcCbBkKwvfjYaGBQEdGlCeIDONWUrLQxnYpI5Vh4517hWohcb37/BUXQ==
-X-Received: by 2002:a17:907:26c8:b0:afc:cc64:86da with SMTP id a640c23a62f3a-afe28ff788fmr1480503266b.26.1756223847430;
-        Tue, 26 Aug 2025 08:57:27 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afe81ebf53bsm448945366b.15.2025.08.26.08.57.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Aug 2025 08:57:26 -0700 (PDT)
-Message-ID: <370f11e1-b335-4111-912c-94429c5018d6@gmail.com>
-Date: Tue, 26 Aug 2025 16:57:25 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aTblfr1P";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ezg+7RIN"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A98321400098;
+	Tue, 26 Aug 2025 11:58:14 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 26 Aug 2025 11:58:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1756223894;
+	 x=1756310294; bh=286lsenD+DgI6jq8IviJ14KQiiAgQc5Ponf7FEh5Evc=; b=
+	aTblfr1PGr2YxmPBi0BhCdO+u4o5yDzgdjZihuyO7cMeFQcNGToQH4Kq9OmCZaUe
+	BbJw1L8ypHOf6MZ661gqKfuCaiejf5j9n5wg4aze78lXEn+eREpRCXKww2u+QlOR
+	yT7DEsMJ4w67ZCs0XJtMzeFBcyKbwsXClCaxsXg2KYcEfdp0PEZ3O97G1msg4WJY
+	H+JJltNGyP4DRHxpiLr2X5jf98GXjyqAWhxok0PkAwMsPZ0SKhoZyuHW9ZMt0W+R
+	uEXdaCmdcNjp9b4fkIyDR09s7TXAPPe2gQMog/uGCThcj62zle82MBdsdqAmkinP
+	DrjL79deAuKCgsFtox+hRw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756223894; x=
+	1756310294; bh=286lsenD+DgI6jq8IviJ14KQiiAgQc5Ponf7FEh5Evc=; b=E
+	zg+7RINmRUO9Gg08iGlyDLJrpX3+jCPdaMJU6KbCjiXPzAbgfWH94aFWUDSKEzXM
+	pRWxW1U37GcFHRngnPgE2D3yq6PsqbmsmJJDCSuJqy3jJA8zzloWHRCQmW8NSb1z
+	MALgxcP47Wq9neFHDPLVqJx8o0HNyyYLoM1FpufEdorDGFHPDNsfUw2V9EDDAQxB
+	JK62FGd6TDkV+zBVYdiPZmHOOgCkods34KiS0uxJO5edgA5+I9tvbIBCkFwsRpct
+	i1lWskcq5Qz68cRqRH/QQ+VSViOF5tVhMgEWWth9QeD/j0l8sWfhFb959PdZ0MJF
+	IJcda0cQ66zEWJErzHZKg==
+X-ME-Sender: <xms:ltmtaMyvcsdAhUW-xS31faqAZXhBYMv9BAF8JuLZIRulC4Ng8LKj2w>
+    <xme:ltmtaHhvTbVcAnWvKGznDimTWqFEKy2BMkM429pWjGusvHtqysmGl3uzqWSGsFCao
+    gCDkkfExYaQgzSSSw>
+X-ME-Received: <xmr:ltmtaJONPsc8aXpDc3OeiAlXjlOUE5Ow4yy-p0E1R02hlIsK8VJIDKVNv1HewyODd__m6EgD-ZI1sVi5N8jwTILiA-XWSwF-2_Jeh-Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeehieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedugedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirg
+    hnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdr
+    shgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehjohhhnhgtrghikeeise
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhg
+    lhgvrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
+    lhdrtghomh
+X-ME-Proxy: <xmx:ltmtaKfhwiUIJSG3AGwWXI8oEx9Hj2OELCvmSWpW4iLth1PxsD9MQA>
+    <xmx:ltmtaDxdyKC45S5fxlKIKQEUDUkFR5YkJcjthm4ks4bDhg5V2DlwYA>
+    <xmx:ltmtaP0t31aFQTo5Ivd1iF7RCnL2gjK3Ybxh-tVvQiPUXv-x6QEPHA>
+    <xmx:ltmtaKdidIwRC2CRxTUwMYyHoX9C8vAkWRMcB8qeUuG-0juCZsSGIg>
+    <xmx:ltmtaI3aGjADkoe9oL1vAsnwoJfL2pJNi8mEOI16C_Sw8QUYbFvv4qcF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 26 Aug 2025 11:58:13 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  christian.couder@gmail.com,
+  johannes.schindelin@gmx.de,  johncai86@gmail.com,
+  jonathantanmy@google.com,  karthik.188@gmail.com,
+  kristofferhaugsbakk@fastmail.com,  me@ttaylorr.com,  peff@peff.net,
+  ps@pks.im,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 0/2] [2.51.0 Bug] Missing singleton objects in 'git
+ repack -adf --path-walk'
+In-Reply-To: <CABPp-BHFxxGrqKc0m==TjQNjDGdO=H5Rf6EFsf2nfE1=TuraOQ@mail.gmail.com>
+	(Elijah Newren's message of "Tue, 26 Aug 2025 08:03:56 -0700")
+References: <pull.1956.git.1755715196.gitgitgadget@gmail.com>
+	<pull.1956.v2.git.1756126197.gitgitgadget@gmail.com>
+	<CABPp-BHFxxGrqKc0m==TjQNjDGdO=H5Rf6EFsf2nfE1=TuraOQ@mail.gmail.com>
+Date: Tue, 26 Aug 2025 08:58:12 -0700
+Message-ID: <xmqqh5xukrcb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 1/2] t/t1517: automate `git subcmd -h` tests outside a
- repository
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, chriscool@tuxfamily.org, christian.couder@gmail.com,
- me@ttaylorr.com, ps@pks.im
-References: <xmqqcya63cqx.fsf@gitster.g>
- <20250721115519.140361-1-usmanakinyemi202@gmail.com>
- <20250721115519.140361-2-usmanakinyemi202@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20250721115519.140361-2-usmanakinyemi202@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hi Usman
+Elijah Newren <newren@gmail.com> writes:
 
-On 21/07/2025 12:55, Usman Akinyemi wrote:
-> 
-> diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-> index 6824581317..9fcebb7d94 100755
-> --- a/t/t1517-outside-repo.sh
-> +++ b/t/t1517-outside-repo.sh
-> @@ -110,8 +110,29 @@ test_expect_success LIBCURL 'remote-http outside repository' '
->   test_expect_success 'update-server-info does not crash with -h' '
->   	test_expect_code 129 git update-server-info -h >usage &&
->   	test_grep "[Uu]sage: git update-server-info " usage &&
-> -	test_expect_code 129 nongit git update-server-info -h >usage &&
-> -	test_grep "[Uu]sage: git update-server-info " usage
->   '
->   
-> +for cmd in $(git --list-cmds=main)
+> On Mon, Aug 25, 2025 at 5:50 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> Updates in v2
+>> =============
+>>
+>> Thank you for the quick and careful review of these patches.
+>>
+>>  * The test and bug fix are now in the same patch.
+>>  * Several commit message typos/grammar edits.
+>
+> Thanks, this round addresses all of my feedback and looks good to me.
 
-This lists all the git commands in $PATH which is causing "make test" to 
-fail when I run it locally as it is testing all my local "git-*" scripts 
-most of which apparently fail this test. If there isn't already we 
-should add a option that lists the commands only in $GIT_EXEC_PATH and 
-use it here.
+Let's mark it for 'next', then.
 
-Also when I run the test with '-i' it does not stop at the first 
-failure. I'm not sure what's causing that as I thought 
-test_expect_success should exit on failure even when it is called in a loop.
-
-Thanks
-
-Phillip
-
-> +do
-> +	cmd=${cmd%.*} # strip .sh, .perl, etc.
-> +	case "$cmd" in
-> +	archimport | cvsexportcommit | cvsimport | cvsserver | daemon | \
-> +	difftool--helper | filter-branch | fsck-objects | get-tar-commit-id | \
-> +	http-backend | http-fetch | http-push | init-db | instaweb.sh | \
-> +	merge-octopus | merge-one-file | merge-resolve | mergetool | \
-> +	mktag | p4 | p4.py | pickaxe | quiltimport | remote-ftp | remote-ftps | \
-> +	remote-http | remote-https | replay | request-pull | send-email | \
-> +	sh-i18n--envsubst | shell | show | stage | submodule | svn | \
-> +	upload-archive--writer | upload-pack | web--browse | whatchanged)
-> +		expect_outcome=expect_failure ;;
-> +	*)
-> +		expect_outcome=expect_success ;;
-> +	esac
-> +	test_$expect_outcome "'git $cmd -h' outside a repository" '
-> +		test_expect_code 129 nongit git $cmd -h >usage &&
-> +		echo "Hello" &&
-> +		test_grep "[Uu]sage: git $cmd " usage
-> +	'
-> +done
-> +
->   test_done
+Thanks, both.
 
