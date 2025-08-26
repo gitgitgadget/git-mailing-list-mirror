@@ -1,108 +1,108 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B1C26FA56
-	for <git@vger.kernel.org>; Tue, 26 Aug 2025 16:37:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE7E276025
+	for <git@vger.kernel.org>; Tue, 26 Aug 2025 16:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756226248; cv=none; b=V+ScVOYdy6BfafOqjJCxwL30ryGIVZnt9+VICrXKgRn6gHeSC3AwzGGlbYOOCIeBdk/+yYFDx3eoiTRyDQU5LW5CWBG2NY4j6kOfUKFocc7k6cl87RHB/6VG7FYDVt+yMUSTmy/IEQbYTwOUPv0SUsVbOiML6SKjk5yn3hqq6FY=
+	t=1756226363; cv=none; b=bKqdN1lxQvkPiDik3SqIgaV02M/45uEB1iQXUB2m4pdKcTr2pPPNp7c+l3daT2VtCfJnvlHv9eh/CspWWeQ7XELD/lxqTFKcvGS/RG19afTWtNBj8hCkVH5ejyn4PEqopp5f5Cp0MTnzy+53cVZiTWSB+fSb3aZcn7Yk94GnDac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756226248; c=relaxed/simple;
-	bh=b3S7FW5hqOjCs1DSGSjHqMzq+gKBXVieijbUifVPuc8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TL61NNZew1op8vjPpfkmMNxq0+1ECxEYUmR2f8re2JiNdY0HMG/bLO2RGcq0pO9yriKUEk1xlKQJwa+qPwN4AmfxRfgfqz/qL8LywuQZ0WhF8saESdCOtD8BDsst9DQfvORgxmeywzMw64U0TIjGrhxFPU9sNFZ5hDzOGZ/FoBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=APkgQ9T4; arc=none smtp.client-ip=209.85.219.51
+	s=arc-20240116; t=1756226363; c=relaxed/simple;
+	bh=vFvt1yPVF1V3CMm16EjJLiJ8Xe8ZAu7BGnAVSf+smuQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SLCeoqOd+kvIM82ZadDonG16K5B3lJookxuOLOFER6V8TSdDPwz19ZZ2QE3SFMl1bVUCFSWPDRP7lp/p3qJZf9CNzUs93zbBgQHBW3yxTKgdLdr0kwYgCU55TRvgWhboTfsp+KRUB5p9ZYubE76lbXDgt/tI5V4w3qsLhJQ2m5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LkQyqptO; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="APkgQ9T4"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-70ddadde2e9so3505436d6.0
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 09:37:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LkQyqptO"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-770d7dafacdso2836742b3a.0
+        for <git@vger.kernel.org>; Tue, 26 Aug 2025 09:39:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756226246; x=1756831046; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ESFh4niFqRGzr53yDwFw8RvD9ObfVEYw0NGY1QrMteA=;
-        b=APkgQ9T4yeu+xFZYQGu1SQkxGzC35W5olszZcfiYzztnZrpZKVEeBP6WDGUVjtAlhf
-         ynzZ1OKWa8eorY8eoe0+obeYqF/oNIVgVbh+POIW/B2Zv0eJM4kMdjCu3N44LKR5ZwS4
-         xZ4ESLzl7LNKWjXbBWvneMoa+FD6ufkWUE+Kmyw2m7AnV1cQF7lETZDhMmwd99yP1nIR
-         cSXajzKlDiw5FPLc+07j1ez6oitkKOm05bPvfB+nwx6W3B4BS/q6nLL5lG/SPMv1omP6
-         hYaRPGkn5mDUGYrIDGu02603Qec2s2Rx7lCPWcTKIgLa55/015S0JbB5KIxcK1EETa4p
-         u9LQ==
+        d=gmail.com; s=20230601; t=1756226359; x=1756831159; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0Cjyo4dumaXkSBCjlN+Wn+zKSpBWBQbPPw4ZBryMqHk=;
+        b=LkQyqptObCUaRPHttAHH877CNHmz65BHBFxk8IMrVeCRpuDoaVsmHHay4qa4z5TpAN
+         0fpY/MzczTjdcLdKwAvY1rsdhsARs0Y0U7EWgsKQGXgzObNUMLvnWQI3sow0icoWfjKI
+         iZuAdGpb+WcPbWlGJwM4v1SfKo9usMhsTr5Jh5ZWd2rTCGMBA/e9cTEAAG/1nlvOhgy6
+         uL5jdnJDBZ4JHhzxGIB56zmB5ap8g9PiLH5MK6KjYLh7VkcD3dU38gouvqTvZIbaADUg
+         FySHhffg8ZqD7mT4Z0DItExoZPaM1eNl9HVhXrTRDCBG87pPFBGW3jGj+GduZwliOq5A
+         IY6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756226246; x=1756831046;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ESFh4niFqRGzr53yDwFw8RvD9ObfVEYw0NGY1QrMteA=;
-        b=TSHOSXGwfuiGW06q6/ZKIWpdl7qtJehtgkRlK+IzFdVC061J8Q64SPOFl46Zt6ue9g
-         PbQjOo/aK/e8pflp7jF+46eY95LauP1+21XfdSEFKqu2IYtHO99KvfWyQsiDG/OfZw0K
-         6TtBhTKQ8hdsYz7N/oMKnTzxOS3jGZR0e0JTs1CKgzbb+gOdySn6DAeq/CRv1rxK5iJH
-         lzXisls1jnh5TFs28nyNxP3pBFk+yIDya/gqgTHKq6rqem8uxAI4uHFyHdbnCTG1MlF3
-         OCYLCSOVh0LN0uEMRWS3MO+7g5wrPGbW64eLPC8HOYHWcIrHO+hUnfEt7kGGxQYeyD3L
-         Pe6g==
-X-Gm-Message-State: AOJu0YxkLACckoe+eXXezCNoRBCoLKd8fnVTs+UCp55CC7xcEVRzKuso
-	7+2A1PEfk7Qt3+PpvYFd+YX2rzme09gtwoqtENRmdKMzTiQ+r0AqlZF/cCwZ3Q==
-X-Gm-Gg: ASbGncu5SMfiMBAzpT5lM00qMqI7yuk4/RybcCTdPLBoTyx55/t1nYDL1RbZM8lwkd+
-	0p+mpO+29B1UpHc1AdNDqhdT4vU3BBgzb4DtwkKW5aF6AkkFWbmvrL9w5XVgOZTlFNbJi4fDwlS
-	caROJr2TdwUyZMhQ835TK43FZbA0J/e8QyCzkpTPQszRt7KnCZguUqie8oyXmCO8tzvGgabCvqs
-	vy8V/vCxcxeEQUVS65inV+KXCmW5kb/Wjcao/mASmHzkvTB73hrmKVgOmxoahV0QA5MiLRwVeHm
-	dDykyafbWQHEsv8NwdCO+jeWi3PwpdHESLs75x2PcSYbjBm0Elhjem//JXKpV/dxHdxDVBge5SO
-	e0KT8Rk0Vuvk9nsAxXtPA+KMeexu5FLj4jH0=
-X-Google-Smtp-Source: AGHT+IFVTLG6YF7Kl7MveU3np353EDXE3J3oTP3cybi3XOZ+4k0V/bx+TnIwVFFDbVcdZLbupvWXTw==
-X-Received: by 2002:a05:6214:5013:b0:70b:a663:b9c8 with SMTP id 6a1803df08f44-70d971f6590mr202913096d6.7.1756226245988;
-        Tue, 26 Aug 2025 09:37:25 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.70.92])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70da72cc195sm67138986d6.63.2025.08.26.09.37.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Aug 2025 09:37:25 -0700 (PDT)
-Message-ID: <c3c0fbef-f395-4972-8352-dd89af6799d5@gmail.com>
-Date: Tue, 26 Aug 2025 12:37:03 -0400
+        d=1e100.net; s=20230601; t=1756226359; x=1756831159;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0Cjyo4dumaXkSBCjlN+Wn+zKSpBWBQbPPw4ZBryMqHk=;
+        b=dSx6vXwfaHEkw0C2FlKVDIxRNv0V73Ele/eTWAtbOitvuwIm31hHxG0mN/fa8j/U/q
+         HF2/INNz6AzCS9uruipKFe57wa7ykdAlDLr29JyKXpFVt+qpZIf96TiyF21qiCjKMiOg
+         K+T4bjt0WvskjC5d9bJkDvgisM6jX/LMZfabdck12+eSPw7U4ot2nde889WR6X3Zfu+3
+         LHselbd8W4mWvCLAJG1bS8J35BZD8/RnizJHzv0F4WoGavuX+n9it5j6jIVls8JlFlIN
+         1L5u5Ift8P4dymlb2No9a8wscHXQlEv8F3e4ZY7n6hfGQK4vD4nn4QbyvJ1G0g7odC2v
+         5M2g==
+X-Gm-Message-State: AOJu0YwsQb5rX6AhRu6LQ72CdIQq+PqsXM4fidTwXrRoB8oRCFXo6WVi
+	m7ZC0KM7Mpj94ArKqB2Qq5ZtK53TObc4v+Yh8Yher0CoH26OaSjudaW2oNOztA==
+X-Gm-Gg: ASbGncv9NFF8YH0xTqY1K7M0dZ5Sl7YeUfe3kfnfo9RZWy38dWMLV9As23DTUeQrM7p
+	IK0WnGTHEkdRgVCa8w9dlM+KjR3f/H4vjijphNnN0Y2ISvoJEpBshqLkgdH6OrtUmIzjOaDoXUz
+	kw3j/ODpFqoDJrHmKsyyBI2a1gDq/cgXECaYWv1NgtGtmdEXHbPPNkOyXenMUtR/JF8KAVT32cx
+	Z7qByRz4einhiQn6j5VF4rdVAxh3fjNhUgEre7sv1jwOrlRbbnZlfTvy9Cl6Jg14Meq8vsCmvSz
+	iRp7ml8FXOuA9Sy34oB4/HOSVqNgsU1CIs9vZJwkMwxnu3WFEi80Eab8hxjlJmBT3cSzOWhCvzQ
+	p88WY4Yg6jBgONJzLlIDlDr8yDxq9
+X-Google-Smtp-Source: AGHT+IENs8pgUjrp9HbawogoxaWGW11HusBPn9tnMVNBPYE7QICmjrcYh1dOZ1rCCa91MmoqUuh7fw==
+X-Received: by 2002:a05:6a20:244c:b0:240:2e2b:9188 with SMTP id adf61e73a8af0-24340b0171fmr23091391637.12.1756226359085;
+        Tue, 26 Aug 2025 09:39:19 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b49cbbbaffdsm9614926a12.51.2025.08.26.09.39.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Aug 2025 09:39:18 -0700 (PDT)
+Date: Wed, 27 Aug 2025 00:39:16 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/5] refs/reftable: add fsck checks
+Message-ID: <aK3jNK82FILr2GuT@ArchLinux>
+References: <20250819-228-reftable-introduce-consistency-checks-v1-0-8b8f6879fa9e@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: What's cooking in git.git (Aug 2025, #10; Fri, 22)
-To: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Ayush Chandekar <ayu.chandekar@gmail.com>
-References: <xmqqsehivqxi.fsf@gitster.g>
- <CABPp-BFuKUH0NKR_9Qb7Q8Cb++o2EVzqYK8WyvQ_PG5_JFyZ0w@mail.gmail.com>
- <xmqqbjo2kqz8.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqbjo2kqz8.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250819-228-reftable-introduce-consistency-checks-v1-0-8b8f6879fa9e@gmail.com>
 
-On 8/26/2025 12:06 PM, Junio C Hamano wrote:
-> Elijah Newren <newren@gmail.com> writes:
+On Tue, Aug 19, 2025 at 02:20:59PM +0200, Karthik Nayak wrote:
+> This series adds the required infrastructure and also some fsck checks
+> for the reftable backend.
 > 
->>>  Needs to wait for the base topic to solidify.
->>>  source: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
->>
->> Maybe also mark as expecting a reroll?  (cf.
->> CABPp-BFzMLGJwz4QqYtvw3zRYgmC=Mb8T8GCOsrLZqT2z+8H7A@mail.gmail.com and
->> CABPp-BHLcy-A4yLR8gP1Sjt_EKQ4K08kPyb7G6yifdZj+0MJNg@mail.gmail.com)
+> Since the reftable backend is treated as a library within the Git
+> codebase, we don't want to spillover our internal fsck implementation
+> into the library. At the same time, the fsck checks need to access
+> internal structures of the reftable library which aren't exposed outside
+> the library.
 > 
-> Good idea.
+> So we solve this by adding a 'reftable/fsck.[ch]' which implements and
+> exposes a checker for the reftable library and returns specific errors
+> as defined by the library. We then add glue code within
+> 'refs/reftable-backend.c' to map these errors to errors which Git's fsck
+> implementation would understand. This allows us to separate concerns.
 > 
-> As these are primarily to remind me, I'd prefer to point at articles
-> from the topic author that said "in the next reroll I'll do this"
-> rather than articles from reviewers when leaving a note to explain
-> why I do *not* want to merge it yet.  But this second round does
-> look like it needs responses to reviews.
+> This series then adds some checks on the stack ('reftable/tables.list')
+> level of reftable, namely:
+> 1. The table name is as per the spec
+> 2. The number of tables are consistent
+> 3. The tables.list has a newline at the end of file
+> 4. The table names follow correct index sequences
+> 
+> I also plan to send in follow up series's which will implement further
+> checks and go into deeper layers (tables, block, references).
+> 
 
-Yes, it does need responses to reviews. And I'm looking forward
-to the base topic getting a reroll before spending too much time
-on a new version.
-
-I'd consider this one blocked at the moment. I reached out to
-Ayush earlier to see about progress there.
+Thanks for your patches, it's very nice to see that we begin to
+implement the consistency checks for reftable backend. And I have left
+some comments.
 
 Thanks,
--Stolee
-
+Jialuo
