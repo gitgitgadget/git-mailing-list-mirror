@@ -1,93 +1,91 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB16D194137
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 01:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4C11A3172
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 02:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756259880; cv=none; b=hxhCn83R/zdXu76qDs8D/O30lz6HRjxfCmFDouIIQIFScx2tUDIOvI3nplT3rvpXht8tpN/UjzEz7Y9Q54pvKdKuguzzfNocEX0PJ6c6d3eIaUahAaX+Evf0UWunc708J/3uUDTIcnn17YJemx4u3mulmks0DEqf3HFGLbusqeA=
+	t=1756260445; cv=none; b=r+46NUKcDQKO2W8y9o+HwyyAMBMb3xAq9srs1BNdWb64UbclXmFC1K5N4T5g/lWdaT+Wps0nwcxb4nQ53D3swmbOAUIkMDDFsLXgR/0mxTZPpGJM5Td8uqO9Tr8kQcefEC1sChZIgNs4HD3H/m94RHhTLlLW02brGkQZx5P+y0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756259880; c=relaxed/simple;
-	bh=tAwqHnuzIBwAp9aFz0MZ9YrMvjeIxx/FzF+xdnw3aac=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mfcd0ptQjuw546IsYFJ/vIrjl0BRpiJ3501CRRLqM73RJEgGCSuKjontM24C4mNLL3HS6MBNFDruBgjoKn9g/bweK2OKvq+BvkNJ9T9JmBUT+3xM/V+I3QkiJZUWQjlpAIqJriYkhIuA1iM+DcbkOBHAReQQ7vdW2DoNejKJ8Qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Cu3mX90x; arc=none smtp.client-ip=209.85.166.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1756260445; c=relaxed/simple;
+	bh=7Abg3cYIf+AQ8ycdXqKFJeqj9nW3y5ucFNKiXV9wMu4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QcoFTlA/s7/rwioQkdbCv2q1J79GmBOoekRgjncFimlfO+5bg5QFhO+YNP6MVwYp/UWapdN/7me3OnOXU9CbAri0wVfMsy+JB7YHpcn3AQNMUynygKFDj8XNgAv68hE33nrgjxAKAHPUI54ixZ0R6os6+VfJjg9AY+ue9S6q2vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QG4a+DOA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fjk2034L; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Cu3mX90x"
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-88432e60eebso165667839f.3
-        for <git@vger.kernel.org>; Tue, 26 Aug 2025 18:57:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1756259878; x=1756864678; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=H/RiiEKsLF4zuIb5muQdgQ9yL9S7GS4wi4qt0+FXEZ8=;
-        b=Cu3mX90x3uavMOkDuV0gn+s6cgpTAuGoTnG2Lke6zUKYHMBIkLpdM+hbiGzopDwMqn
-         REx8pWnv+RVK4WjY7XehZpngZHcBz8n5iyas9ItpSJcOweecZfeVi97jpJjFJQ8wtY+X
-         faBarGEQPGG/fWAQTDkJqGXqjtS941a4lFwoHO6BxZWv6W9x2rcVEThOWUEQRhGN6af5
-         W4N0Fqc6h+c0/T9Ro2NLL3lezLiC6sPCYTsj8H6CrAoBT567iIfo6qqp//GLnp+3rB2D
-         0+aaPlTqgB71b6GE3oSpM8y3de52FFLXTT06gebL/hOYTYFTFIB59iurZ/tp/YzeTHdR
-         V9Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756259878; x=1756864678;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=H/RiiEKsLF4zuIb5muQdgQ9yL9S7GS4wi4qt0+FXEZ8=;
-        b=Dkxt84EIYJe8uwN9ww1lAdMfeoDjkFSMnPROb+V9komWC8fjEygVu7/i0u13GySMv3
-         aDww0TyVai5zw+NZ0edzSg6jvGFSXDI5DcqGOduwqEuTwuMkLvNgrznr913tpvb95Fme
-         TSzL0w6wC4nK3lrmrQyIA1T6lxPB1Tta/JQJjIEKvowAa3KoJHdCR8K5fZhVNw6U9cZ7
-         Kh2h5BZP+vW6m1MBN6ZJnLoO9Zbb4GRzsTa2wRojhPCqhKjLYTR7MuWFagMujxf1lZOl
-         Y1jwaCyWWTgZCdNPEo3DUtlUA3hSzybZIk3Nzq2U0aarzzS9zZ66fKf/7YY98VyRoEVo
-         9tvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV1JPgQepHV/myIeG7Jvk3gjCt+y5AVcitIS2qHnPhCdOypq6xfqUfRaosU+z60klOs5nQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy3GSEHOVQ1OqSQmjNSOm8jXh4dkikioEvg0kxr6CeuIpIACquv
-	4Bm4IU5JnFDCLudzpu1inPpHZcjXehQlM/lEJLD9KBJKVNPn94IMLJ1JbhSmo7Sfkl4=
-X-Gm-Gg: ASbGncvJsW3R+XERlG3fTVSODOLhp4vUZfpd2ZZumbo05vMJl7X31qG7P8lwkAFt4Hu
-	bIwmCVDSjb3EV3YOI1+BDFNUXIj7Jyy7ZmOIrz9KiGFYhe0WFriSIe7QrZ1ehJxWDnXC6M7O7wV
-	RngL2N6Nl+/scd87bGleg71iIhR8m46lvSEKIFndjRZz9xe7kT1bSV0w4SVJrj/YGhtjg71aJe+
-	l4vdA9DTFxUKXj4kCCLunKUoL1jHbkAUMAUHx04zV/40AguF+fJqOZyrlseQDyaAoxocer0m4V4
-	gwH5EFBjfY5fPCurZHbR47x9On/Ft74pPxa7E5pyc29DNcMGpmFD68Y30VlXKDCZJQ0VR6iIrgQ
-	dc8ao30XHcrnj22hu1HwwhBNZnY/tQKNpnrA79TIySEQcIUSCjjpcIPlfufohiPIsk4TJqhQ+gt
-	fxLMjiOUC1eFcwlni5/JeH7caTfQ==
-X-Google-Smtp-Source: AGHT+IEKqbKBiPY3yWTWds75o50AjSOww9NeaqPe/58ObA1V+PSoCJpoNpQ0AD8DfndOJAwsXAQZQg==
-X-Received: by 2002:a05:6602:2b92:b0:886:c53c:92d6 with SMTP id ca18e2360f4ac-886c53c97bbmr2267418739f.18.1756259877863;
-        Tue, 26 Aug 2025 18:57:57 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id ca18e2360f4ac-886ef2be3e2sm179730739f.22.2025.08.26.18.57.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Aug 2025 18:57:57 -0700 (PDT)
-Date: Tue, 26 Aug 2025 21:57:56 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: rsbecker@nexbridge.com,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Christian Brabandt <cb@256bit.org>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-	Patrick Steinhardt <ps@pks.im>, Sam James <sam@gentoo.org>,
-	Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
-Message-ID: <aK5mJI1NfVQDmDXN@nand.local>
-References: <pull.1980.v2.git.git.1755220973.gitgitgadget@gmail.com>
- <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
- <03939951256baaaec3fcc690cfa38ee12fb553ce.1755921357.git.gitgitgadget@gmail.com>
- <030a01dc1433$ee3e2510$caba6f30$@nexbridge.com>
- <4dffd698-9d3c-41c8-9d3f-0d3750e683d3@app.fastmail.com>
- <031601dc143f$7a9a25d0$6fce7170$@nexbridge.com>
- <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QG4a+DOA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fjk2034L"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8B3ACEC00C6;
+	Tue, 26 Aug 2025 22:07:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 26 Aug 2025 22:07:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1756260441;
+	 x=1756346841; bh=CJuhA9WuvbiYYvVxreKOGBUPLQMO83tQOxn1CbU/+vs=; b=
+	QG4a+DOANLnD0bPbw/Lo7P7Hp0+UwfalOLciEgu/6OJxmQskpZ9m62jHDKN7/bN6
+	AXYSRT5N40ZwGTdVLtXtSjexfZ3nbeVJQfkkPaon6xMsIXVEtfSmFv4I5szFFThh
+	UcuQsJ/jLaacuiAdZiV1WBx6fCnlwwFkv/tZzlzXN0VFP1fPMKFIhmZ8g7x7aeNP
+	CkoisLU3CWvS6LI4h4/qjcU4oybdYQXTvx+DV3Bn/+8ydaANP9VmyHj9tss+49jG
+	R7NXnnSQ1oB5PrVdrvtO1b4ZdYUUlYz+lSCq5iv7+RzuMi7hbpkBj0qJfnSDTSWE
+	kUqOmh2d6uWH5Zygl8wB9A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756260441; x=
+	1756346841; bh=CJuhA9WuvbiYYvVxreKOGBUPLQMO83tQOxn1CbU/+vs=; b=f
+	jk2034Ly4HlhA6ti3GovdhhB2IZp27Ke10zJWG6TeGoEHAdDyJD+0P+9UX0VZZAl
+	VXZuBc0o+cggzw8uB3EgWIGD7eMjGI0EPWxsHzLyrh+QhJngRABSSWn3rFT9sF5e
+	LP0ewBBvA76Q1bkEnuKfAbjPiKgoR+hp6txI88K7k09V/bLnnAdY+4IBjsfCzrEQ
+	WYGv7D21//XcxD/9tdJ5/0b3YOA9DYdjzv2WKshvqKg+DTj54YFH/3QwJw2hKw3P
+	cfVF47Vw5KNFv9CTP3mZ+ivdAGXplI5HpVJgagomAe7vGzK1Y0iVX7K+pNtkJEjm
+	hYd5ThEHa1kGLHhiViW0A==
+X-ME-Sender: <xms:WWiuaKSzDx-5TsKjm8_8BG1bOvtWy1-lBQrW95rbFm5r3_61_OFvbw>
+    <xme:WWiuaLRnV8sq6uvCd9HdghCz-SVxuG8v6gYHH3IJ-FER8v888PNRvWEmVxj7qwKwv
+    aXA-hbU-C_7PHTrBg>
+X-ME-Received: <xmr:WWiuaOQJ9FL-P55guAGNht_J7-rMsG7sZ3tHfJu_ejr_EJjWY-U2A5taGoGYb_HB_lJ_StKuMAX05XBGHBTl9WFNYg6W9f_gB-pHddE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeeileduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeehteeivdeuvdevffdttedvheelgedtudevhfekheffteeuuddutedttdfh
+    ueefffenucffohhmrghinheprghllhhotgdrtgifpdhosghjvggtthdrtgifnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhes
+    phhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpd
+    hrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnohhurhgrvg
+    hllhhmsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvrgesohguohhordgtohhmpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:WWiuaA7LEJ4SfIoo8QnRE1PzlSVUkeL0j5CJTYzndQw27yvg_8dp7g>
+    <xmx:WWiuaK1iebw8xcGR-ZEYreNdKVq7ql9YpxZIOzksd7MB3zm_y21P2w>
+    <xmx:WWiuaLC5C6Iqd10vjHY2Q5U7chJeFFp8yGkF_GjArGeYvMl6-aG6Pw>
+    <xmx:WWiuaFNxg00GIrE0zJts0wQt6JR_LmXbaYP1xU6PWGGWQrN3V5YdcQ>
+    <xmx:WWiuaIPdnzl1_YoA4W-8jdMjbIps4CrNLFz3zZ5g7cIme9uOs6CWr_AB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 26 Aug 2025 22:07:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9_|_Flare_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?B?44OO44Km44Op?= | Flare
+ <nouraellm@gmail.com>,  =?utf-8?B?44OO44Km44Op?=
+ <nea@odoo.com>
+Subject: Re: [PATCH] reset slab_alloc and state fields in clear_alloc_state()
+In-Reply-To: <pull.2040.git.git.1756238268790.gitgitgadget@gmail.com>
+ (=?utf-8?B?IuODjuOCpuODqQ==?=
+	| Flare via GitGitGadget"'s message of "Tue, 26 Aug 2025 19:57:48
+	+0000")
+References: <pull.2040.git.git.1756238268790.gitgitgadget@gmail.com>
+Date: Tue, 26 Aug 2025 19:07:19 -0700
+Message-ID: <xmqq8qj5frfs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,77 +93,120 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Sat, Aug 23, 2025 at 11:30:26AM -0700, Elijah Newren wrote:
-> > The assertion in the policy that Rust is easily interoperable is incorrect.
->
-> Are you mixing up interoperability with portability?  Without further
-> context than your email provides, it appears so to me.  Rust code can
-> call C code and vice-versa within the same process without huge
-> amounts of serializing and deserializing of data structures, and
-> without what amounts to something close to an operating system context
-> switch in order to ensure call stacks are as expected for the language
-> in question.  To me, that means we can call the two languages easily
-> interoperable.  On the other hand, portability of those languages is
-> about whether those languages have compilers supported on various
-> hardware platforms.  The document explicitly calls out that fewer
-> systems have a Rust compiler than have a C compiler, and that Rust
-> adoption would thus reduce how portable Git is.  Are you referring to
-> this lower portability that the document itself also calls out, or are
-> you pointing out additional issues with interoperation between the
-> languages on a platform where compilers for both languages exist?  If
-> the latter, could you provide more details?
+"ノウラ | Flare via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I think that this is the main point from my point of view. Yes, we are
-strictly worsening the project's portability by adding Rust as a
-non-optional build component. But it is *not* the case that two Git
-clients (one hypothetical one built with Rust components, one existing
-one without) can't work on the same Git repository, even including one
-on the same machine.
+> From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9?= <nea@odoo.com>
 
-Forgetting Rust for a moment, I don't think it is a realistic goal to
-have support for all platforms that could possibly want to run Git. I
-would imagine that there are platforms today that cannot run the latest
-and greatest version of Git for just that reason. My hope is that
-whatever version(s) *are* compatible with those platforms are good
-enough to support the workflows that those users need.
+This name used on the in-body From: line must match who signs off
+the patch below on Signed-off-by: line.
 
-So my personal feeling is that that (not having a 100% portable version
-of Git across all possible platforms) is OK. But of course that does
-raise the concern that security fixes will be more difficult to backport
-across a hypothetical version boundary where Rust is introduced.
+> clear_alloc_state() freed all slabs and nulled the slabs pointer but
+> left slab_alloc, nr, and p unchanged.  If the alloc_state is reused,
+> ALLOC_GROW() can wrongly assume that the slab array is already
+> allocated because slab_alloc still holds a stale nonzero capacity.
+> In that case s->slabs remains NULL and the next dereference writes
+> through a NULL pointer, causing undefined behavior.
 
-To that end, I would note a couple of things:
+Let's not give such a misuse-prone API to consumers, then.  How
+about doing something like this  instead?
 
- - This assumes that the Rust code has the same security vulnerabilities
-   as the C code that it replaces. I don't think that is a given
-   whatsoever, and I would bet that emperically there are fewer such
-   vulnerabilities on the Rust side than on the C one (in fact, that is
-   one of the reasons that we are considering Rust in the first place;
-   brian m. carlson explains this point quite well IMHO).
+As Documentation/CodingGuidelines says the API functions for
+subsystem S should in general be called S_<something>, let's rename
+allocate_alloc_state() to alloc_state_alloc(), get rid of the "just
+clear" function and make it alloc_state_free_and_null() to do just
+that.
 
- - If there *is* a security vulnerability in the Rust code that also
-   presents a vulnerability on the corresponding C side, I would hope
-   that the project's track record of generously backporting security
-   fixes would suggest that we would do so in this case as well, despite
-   crossing a language boundary.
+ alloc.c  |  7 +++++--
+ alloc.h  |  4 ++--
+ object.c | 26 +++++++++++---------------
+ 3 files changed, 18 insertions(+), 19 deletions(-)
 
-   On the other side of that coin, if there is a security vulnerability
-   in an older version of Git that isn't present in a newer one
-   (regardless of whether or not Rust is involved), I would imagine that
-   that we would write security patches against an even earlier maint-
-   branch and forward-port them up to the most recent vulnerable
-   version.
-
-So my impression is that the main contention here is a concern that
-worsening the portability will make it harder to push out security fixes
-in either direction. But I don't think that's necessarily the case. Even
-if it is, I would again hope that the track record of the folks on the
-git-security list would suggest that we'd do the right thing and not
-abandon users on older platforms the moment Rust is introduced into the
-codebase.
-
-Thanks,
-Taylor
+diff --git c/alloc.c w/alloc.c
+index 377e80f5dd..3a5d0b2bd8 100644
+--- c/alloc.c
++++ w/alloc.c
+@@ -36,19 +36,22 @@ struct alloc_state {
+ 	int slab_nr, slab_alloc;
+ };
+ 
+-struct alloc_state *allocate_alloc_state(void)
++struct alloc_state *alloc_state_alloc(void)
+ {
+ 	return xcalloc(1, sizeof(struct alloc_state));
+ }
+ 
+-void clear_alloc_state(struct alloc_state *s)
++void alloc_state_free_and_null(struct alloc_state **s_)
+ {
++	struct alloc_state *s = *s_;
++
+ 	while (s->slab_nr > 0) {
+ 		s->slab_nr--;
+ 		free(s->slabs[s->slab_nr]);
+ 	}
+ 
+ 	FREE_AND_NULL(s->slabs);
++	FREE_AND_NULL(*s_);
+ }
+ 
+ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
+diff --git c/alloc.h w/alloc.h
+index 3f4a0ad310..cd6ed16ffb 100644
+--- c/alloc.h
++++ w/alloc.h
+@@ -14,7 +14,7 @@ void *alloc_commit_node(struct repository *r);
+ void *alloc_tag_node(struct repository *r);
+ void *alloc_object_node(struct repository *r);
+ 
+-struct alloc_state *allocate_alloc_state(void);
+-void clear_alloc_state(struct alloc_state *s);
++struct alloc_state *alloc_state_alloc(void);
++void alloc_state_free_and_null(struct alloc_state **s);
+ 
+ #endif
+diff --git c/object.c w/object.c
+index c1553ee433..4469755ea6 100644
+--- c/object.c
++++ w/object.c
+@@ -517,11 +517,11 @@ struct parsed_object_pool *parsed_object_pool_new(struct repository *repo)
+ 	memset(o, 0, sizeof(*o));
+ 
+ 	o->repo = repo;
+-	o->blob_state = allocate_alloc_state();
+-	o->tree_state = allocate_alloc_state();
+-	o->commit_state = allocate_alloc_state();
+-	o->tag_state = allocate_alloc_state();
+-	o->object_state = allocate_alloc_state();
++	o->blob_state = alloc_state_alloc();
++	o->tree_state = alloc_state_alloc();
++	o->commit_state = alloc_state_alloc();
++	o->tag_state = alloc_state_alloc();
++	o->object_state = alloc_state_alloc();
+ 
+ 	o->is_shallow = -1;
+ 	CALLOC_ARRAY(o->shallow_stat, 1);
+@@ -573,16 +573,12 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
+ 	o->buffer_slab = NULL;
+ 
+ 	parsed_object_pool_reset_commit_grafts(o);
+-	clear_alloc_state(o->blob_state);
+-	clear_alloc_state(o->tree_state);
+-	clear_alloc_state(o->commit_state);
+-	clear_alloc_state(o->tag_state);
+-	clear_alloc_state(o->object_state);
++	alloc_state_free_and_null(&o->blob_state);
++	alloc_state_free_and_null(&o->tree_state);
++	alloc_state_free_and_null(&o->commit_state);
++	alloc_state_free_and_null(&o->tag_state);
++	alloc_state_free_and_null(&o->object_state);
++
+ 	stat_validity_clear(o->shallow_stat);
+-	FREE_AND_NULL(o->blob_state);
+-	FREE_AND_NULL(o->tree_state);
+-	FREE_AND_NULL(o->commit_state);
+-	FREE_AND_NULL(o->tag_state);
+-	FREE_AND_NULL(o->object_state);
+ 	FREE_AND_NULL(o->shallow_stat);
+ }
