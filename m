@@ -1,88 +1,87 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485B62DBF51
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 21:14:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EDC2F84F
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 21:20:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756329256; cv=none; b=BWR9tbkEDXkea8+OdxqWj248x7CXN+zRKlruK91MuFMNHypx4ssQf+Q40FFaBZHwqCDTq35tMu0tizlGWohDW6kxvyUg21Mao2tTJ5kMdBXjtjJOGzpYyUAuG38Xui1nmg5pfGw04j4Y61cyXF+/yjb/51KW4grKW2Oplwiejbw=
+	t=1756329608; cv=none; b=qKi/X9Z4YC7RxpxXwTG3ZIDTbUVuMdJefkcZVozdVemDQtg5bLIoK5l9inhGsRHTOyKTSky1FqWDmDfeMbeokjIah+AfJICEJlt219T05WxKMBrylv6df8vOhKM7xER+y2YZmTrfSNrvnvwEg/oXw8xlyB2TLA2TTRx9EMF7FuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756329256; c=relaxed/simple;
-	bh=fR/FAH6mvAbG0xfDWtcMSymEzafziG0GpCgj87HuIGg=;
+	s=arc-20240116; t=1756329608; c=relaxed/simple;
+	bh=sqej8k8Br+X7b4MTVclsDONpo/WAHoMuC2KEdr/SO+s=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jXcFTm5mx6V1+lU2joEQYK2pX8AGuYkoU6uGOzDwE3punSpfx3zFCoerdEh5J75ICpAfqtmDGirwTpBRvAOwvnzF29U8Zn9ydbTVtsV1FkZUcHCv19KAuUaJXJ+KOg/PvNiqjCdmeeFlymfke5RRXGtVZ/ouATazMJsy5wzSTEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TkUk29P/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ra+wgdx/; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=RWELnwZzrKxW2kQnz7aKP8LnifbyYZhcMHk66mv8zAZb9702A+wJ00jRFPvO9xs0sj+JOQZ7TWKNBeb7FYMfwkFKn9tSZw5PO6V3SvNfr6+AQiDBZ156kDqs6ZsdDZ6Pcym3FGoOWtSbPJO0AHk0mcie2V/dDidMC6CEIFem3z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vMfmYySP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dXfZ9BlQ; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TkUk29P/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ra+wgdx/"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 47B897A0136;
-	Wed, 27 Aug 2025 17:14:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vMfmYySP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dXfZ9BlQ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8F25C1D000E5;
+	Wed, 27 Aug 2025 17:20:05 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Wed, 27 Aug 2025 17:14:13 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 27 Aug 2025 17:20:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1756329253;
-	 x=1756415653; bh=wDH/C8+BE3UmvTaniMqLm39oaRyEo0rRZ1pHetSwIw8=; b=
-	TkUk29P/KAkZ9lyJkyVa6bKaMmEEoE0ykJcylIoKQrinjt/uCJMqFxAt54iHUgpg
-	NvVjnfFB5Nig9FGNF31wm/RZY7NRNarmv6toQR3DKM/amOrQU6DpzQtKLvkIxMiy
-	7UU/JoRys8tkjZExMWghWj8Py0g6ywXR1Jt7pIIRHfRT6J+s918v/xpkxf/RiuxD
-	z6/UmGW/du/ob1q6FEzjUJ1Bzm6FIE0ZNdngayVHE9Lx8z8H3rtTdpZLQGjlm/x4
-	RjPRguIX2uU86fV84q8N+5o9QHt4YLdCN6YLusR43LW0sR36GiGHVpY+hZ7EGpwf
-	1xCUvpJ8FK3I9WQhZxySvQ==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756329605; x=1756416005; bh=flznyJRJsy
+	Ly/F63OOvb9DHJ8+B4VLQb3Jg4SUM6sUQ=; b=vMfmYySPH53l86XHrYC6pSV4u2
+	V6jkLjm9EPrvtamMlgMuzwX76MmDJ/Lo6o3Xw+qgBetfoIp7m3c/m3GuMrhsBcH5
+	DZIfZcEC2C/FCofvh9AwLd5vjja/+A5Mvr8VbPzTHkho+qxIBFZznkUEWOc6vSPm
+	bFRozAmwBasW/KHQEWwTmStNCNVBcZLioiOaHiXYR0oosPfyd1A/kxnbuTlR3Wb0
+	6MVBGUOYIQNEYDaBXsX8ln3VR/xMLj6XyqtsutllsuQJWKPhimRsVFFkO1zFlfTB
+	tGTTwTv6pjffnuG56xgqKSTBm+na2KD9mXk57Y6v0ANvtQAMkxvDnWfrrGeg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756329253; x=
-	1756415653; bh=wDH/C8+BE3UmvTaniMqLm39oaRyEo0rRZ1pHetSwIw8=; b=R
-	a+wgdx/L/cEVcyBjBrl75+I08kq4d9EU72zx1Kffon4awT6xywqlsY6QgFj7q5OG
-	4vnk3IVT789q6tom+oP0lLDqw7QAeKtGwwzsY74BrbNLpRLuIe3knjK+QE1/MILc
-	9tN5nqRKHR3ALc04AzREhNK95s2k/wKYCiVMMLZkvHhAxvr1vLpAhHlC1fZIXFk7
-	IaRYGJPG2L8upVImBpu78uJrdc3N530g4t1LIePsYfP560MLSXD9ZxmEIUCIKcFv
-	MS+J+C6Rbvp0vkAH1xofSEgrPqBgtMRwZtt4yGBZ1hMID1por1jbf1wxsWPVqMUQ
-	szZy3rzRl1nmGuQ6Orimw==
-X-ME-Sender: <xms:JHWvaHMhojxM5sXhuVnN-POMdwa3LgSg0u_wTt75fad0FH1hQURTfQ>
-    <xme:JHWvaMidA3nsxrfrR4_lPDVhSQ76xxLW0raw6CPGpEiFGYX7bOAMlJSeNn-UPe14o
-    6AjpwzVlLlBzW8xCA>
-X-ME-Received: <xmr:JHWvaC3sy4PZPsuVvCiFB0UYmXimjW2DQHVgASEzGd3M5_On5ZIgvYub80y2B-1nsD78X7GcK3AOgvsjSb1VmxDAwP0nW5fEEryEogM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeelvddtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756329605; x=1756416005; bh=flznyJRJsyLy/F63OOvb9DHJ8+B4VLQb3Jg
+	4SUM6sUQ=; b=dXfZ9BlQwH/vAN64xD61eU9yxAncJCztyUSuQdZ+BpxuQUjYb/z
+	44/DV6aCcpcVa03O6kDIlU8MG+5P0w52axrSrSNhCSh3tAeEqWRL0FA4W35fXsi4
+	iKyIe1TCykUC74GogNFuybDOiVrMxYdNGTRkrqPefKNcnrxa4+HaRaDJYvCX66RU
+	V/i89q/ZRkyctfMOkSGBbXxfHX1WCQiQ08n4RYMtIBThqZw9+AszueWEqnpYxl/B
+	6snIwwhZs+K4ghKdHtW9rSxgve4lbt0RrR8MqO9J+xcBgmW1nbjeB1oU1Y+66Na/
+	/b5vCbVCM39djMkLEuisN1iQn7kMLjo+kUA==
+X-ME-Sender: <xms:hXavaLYLFDVRN1BvTmXpIHfriLyD6Jvz9yrcEwGDuJ3WPncv-1UrSA>
+    <xme:hXavaF4T6d7gOTT4ESev-nLz_0uVUNqK9EdQR_ET916Y3QkF8ImKB_9qiJZ64lj-B
+    E4L02r-lw3m-aeHig>
+X-ME-Received: <xmr:hXavaEbd7DRm7aOCCu_GDDQFfp-tw-ZPJKCWbq4IL6jLPNB1T1IbSOgnBC-ZEXDqb44K9YpnItj-bUbGoqY6pxMkp_hqv8e76n7sepo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeelvdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeejgfduuedtledufeetheehudegvdehueehteeihfejveejgedvledvleff
-    vedtvdenucffohhmrghinhepghhithdqshgtmhdrtghomhdpkhgvrhhnvghlrdhorhhgne
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
-    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghp
-    thhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:JHWvaOgywcC5y7TQ4Wn8F-riMkm-lPK_HLRoPRUEgi0obBUWNwkeAg>
-    <xmx:JHWvaKdqdRKE_PI-AqlRl3jgjMA2Qn1Y77V5g7Pjw5T2hyQA0JvFwQ>
-    <xmx:JHWvaJmGrwXxPLzrBt3ppLEdHF--0jWrPyceIxO0yKmeWDqzsvJrYQ>
-    <xmx:JHWvaLur4vyXWXiqQ9KQntj_1SN0soEGe_XtG-YfiEWBSGjDv_4rdw>
-    <xmx:JXWvaHmVOSbs2IhLQZk0lfW9R8lgGJvjttmU_keIRe-o42l3BjkQ6dnu>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
+    homhdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphht
+    thhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:hXavaMjXRD2nrgTq67Rbi74Z0e3yclRw1t2i6Ck6bZtneTBRkWq5Dg>
+    <xmx:hXavaN_piVBPISzOI4WB1kL720p8Ruc-XNvJ_a6fxCunKORSQueDdA>
+    <xmx:hXavaPo1pISu9OT_317VbUIrbbGeBklKcNyQEUyJu8xl5s3hkRyPAw>
+    <xmx:hXavaNXYUoi9-6iVTHDJECvxE21nC6gySJdaKDvIz1V7Ma7w1yLAOw>
+    <xmx:hXavaAQu0fqJ_Kgm0gesD6h8kAzLmDUHEBLdX9oZmihirCpnNAPMIoA1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Aug 2025 17:14:12 -0400 (EDT)
+ 27 Aug 2025 17:20:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
-  git@vger.kernel.org
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  git@vger.kernel.org
 Subject: Re: [PATCH 1/4] usage: help the user help themselves
-In-Reply-To: <9611573e-fb0b-49d5-933a-50d8e0603701@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Wed, 27 Aug 2025 22:36:04 +0200")
+In-Reply-To: <CAPig+cRgBXX+b=P31VjQ6Dd4mciFvaUJ4T1oeOGjk7mwV-9KMw@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 27 Aug 2025 17:02:28 -0400")
 References: <cover.1756311355.git.code@khaugsbakk.name>
 	<e81023edb2d78d2be0ecffc071f2c5316b0c7a32.1756311355.git.code@khaugsbakk.name>
 	<9611573e-fb0b-49d5-933a-50d8e0603701@app.fastmail.com>
-Date: Wed, 27 Aug 2025 14:14:10 -0700
-Message-ID: <xmqq7byozcv1.fsf@gitster.g>
+	<CAPig+cRgBXX+b=P31VjQ6Dd4mciFvaUJ4T1oeOGjk7mwV-9KMw@mail.gmail.com>
+Date: Wed, 27 Aug 2025 14:20:03 -0700
+Message-ID: <xmqq349czcl8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,65 +89,19 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
->> usage: help the user help themselves
+> That's still inviting unnecessary emails, isn't it? It would probably
+> be better add the qualification that people should send the email only
+> if they were unable to find any workable replacement. Perhaps:
 >
-> I think I’ll change the area to the more pointed:
->
->     you-still-use-that??:
+>     - send an email to <git@...> to let us know
+>       that you still use this command and were unable
+>       to determine a suitable replacement
 
-Ah, that makes sense.
-
-> On Wed, Aug 27, 2025, at 18:29, kristofferhaugsbakk@fastmail.com wrote:
->> @@ -377,12 +378,22 @@ void bug_fl(const char *file, int line, const char *fmt, ...)
->>
->>  NORETURN void you_still_use_that(const char *command_name)
->>  {
->> +	struct strbuf percent_encoded = STRBUF_INIT;
->> +	strbuf_add_percentencode(&percent_encoded,
->> +				 command_name,
->> +				 STRBUF_ENCODE_SLASH);
->> +
->>  	fprintf(stderr,
->>  		_("'%s' is nominated for removal.\n"
->> -		  "If you still use this command, please add an extra\n"
->> -		  "option, '--i-still-use-this', on the command line\n"
->> -		  "and let us know you still use it by sending an e-mail\n"
->> -		  "to <git@vger.kernel.org>.  Thanks.\n"),
->> -		command_name);
->> +		  "If you still use this command, here's what you can do:\n"
->> +		  "\n"
->> +		  "- read https://git-scm.com/docs/BreakingChanges.html\n"
->> +		  "- check if anyone has discussed this on the mailing\n"
->> +		  "  list and if they came up with something that can\n"
->> +		  "  help you: https://lore.kernel.org/git/?q=%s\n"
->> +		  "- send an email to <git@vger.kernel.org>\n"
->
-> Maybe (thinking out loud) this should retain some part of the “let us
-> know you still use this” spirit:
->
->     - send an email to <git@vger.kernel.org> and let us know
->       that you still use this command
-
-We do not actually want to bother individual users about reporting.
-
-We may want to catch third-party tools (like we heard a problem with
-Jenkins from its users), so
-
-    - notify <git@vger.kernel.org> mailing list if you are a lead
-      developer of a widely used tool, especially if you heard a
-      breakage report on your tool from your users due to this
-      message.
-
-perhaps?  If we know that version A of tool X (or older) hasn't
-migrated, users of the same tool will see the same breakage, and
-some of them may come to this list.  If we know about their problem
-ahead of time, we'd be better prepared to give them a definitive
-"Yes, we know version A of tool X (or older) still uses it, and the
-developer of tool X is aware of the problem."
-
-Hopefully ;-)
+In practice, people will respond to such an instruction by always
+sending an e-mail.  Asking others who sound as if they are promising
+to give answers when asked is cheaper than investigating themselves
+;-).
