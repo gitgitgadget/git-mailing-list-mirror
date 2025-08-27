@@ -1,70 +1,70 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED2D2248B0
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 15:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC82F2797A1
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 15:25:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756308313; cv=none; b=iOAQSewI3qOWeU4NRc2iHpfAUmd0V0PLo72gwh94mfQCrjCiHEfnouWfEN5+dx4M7nJzFM9pnrc8BKdqZcJv+FhTF21J3XgkWy+iA37ZBEe8i1zuA95InbCdjZFpykZsYcy/rTLMDgHCWkebRhlEdgEaz1FxaZAedwHGb6FABCs=
+	t=1756308314; cv=none; b=Rm422wuq6zUMZWEvbObKvXUNIKgqmu/brseXsZNvQiLivqGcspx5YfV68tOW5/WKk/u79JJeFIK+80Os0Rhc6OCEAa+Mt2m92f752w4fMLd0EtXWexvJuT90OgbPoNazTgnArRWXQ0QR6TKqRyFjoNe8lsEj/h0N1Ufwd9evxQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756308313; c=relaxed/simple;
-	bh=06pXYsxKzowWRi9NBweK0sVgrEoqdV4cBmBR1Y5/YkY=;
+	s=arc-20240116; t=1756308314; c=relaxed/simple;
+	bh=TjPzjV28xzYAQiVbdpe0AczixUF6KwqJwNca/zv/s0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXFS0LGU+78PXLqqAecJY1MjMlWcTc88otuff8k0hblIOY5RggDuwqNzVJg+tZPfFAjVhWfuzmt/gvusYXs2hhfP72gjHe+7sfvML7reJhplj7Zgdc0W9FO9/0qEaY1Na0XsO73bj9opuDWU3AxN+3jOcPV5pqsCtXgV8QRo/AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MYEJWrDH; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version; b=gPb2mubdqRDu068caVBz3Z/U66lF3gIayIoyWfhgumrdSQACu1XJU0jK5WAi82VT0y9bZkgoKyUTWy8e2s0g8dWkAUGvmMT8v/n3yaXSCvtXHu26JJCO52qqoHctEYczyPFF/gCCEE09aipTl0JMoSm/sUhUfbD8wBy3AhFolwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RpcgIHdl; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MYEJWrDH"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3c73d3ebff0so492188f8f.1
-        for <git@vger.kernel.org>; Wed, 27 Aug 2025 08:25:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RpcgIHdl"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-45b5c12dd87so34255525e9.2
+        for <git@vger.kernel.org>; Wed, 27 Aug 2025 08:25:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756308310; x=1756913110; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756308311; x=1756913111; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=+WNTGmX79oFqnJsiOdMdbD4igS4z58DbFK/0CvG30h8=;
-        b=MYEJWrDH46r7orxyeGyflwut6r1KVmJ0ybrulZcZNe/M9WgdOyMmZuLAXQic5bx0aT
-         vh5iATEQ3usHBOLvNPO0WctbBINYPgL+5hGRZySeqlXYhatEsLPETYgtTsnCzwBnr9wn
-         X/VXxn+gNddeyRHuOIXUt6Doq7e19MRS6ia4trhUMP2W+yEKgQ8zKENC3D0fdTc8TxFq
-         GVQAKnwIqtVj/6d3OWyrX7RXlSL2p7MbsNwsrXVkklL3F2BQkZKWukYEY0qjkvfzXTOK
-         xb4hiKpdR6zVycrzN5l0/URTSB8t7YH2HIHOF3goYzHfKGto3BGim9tobDEo4X7Fe3Yh
-         eYgg==
+        bh=kfXsxDnerVQFaVO/udfNUiaunFKLBVa3eJT7mV3ZOME=;
+        b=RpcgIHdldC02F/OLkx3yQUW0j0F9JDF36BX6nERcSRrF0AgBkANeG7gHHQ94e6EIzU
+         0JrTquJMIJYaJfFp2+jiDjTnzYBrSlHeQL2apfwk4kcBJekBc8xCUvkZF8pUXJtintte
+         iK73jHzmYeJ1/0bhPlenUmn3VRF7btQoYQiwbBMqFhzx8+J/1yYPzt90+gt2utMOobYd
+         yab+RpfqArRVS4/xID8ENVm/CQkjbUMBZkkT2p/2nClHOLzpTK7KsES2CC6GlJXJuFAR
+         GYPTmdymF6vhjENB4XbS95GMqkqSylBNYS1Tcmq7n+ZbOuyw9aIQ2t90q0dnPXG/M4Np
+         8/dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756308310; x=1756913110;
+        d=1e100.net; s=20230601; t=1756308311; x=1756913111;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+WNTGmX79oFqnJsiOdMdbD4igS4z58DbFK/0CvG30h8=;
-        b=pjO9t17AzMwhWgDKMb8wfO6t24faj4ZaS/90OyOpqomGFDlojUSzVtr767bPBTGND9
-         7KofS4ZwdRvjh7CRcrprc0n0LnjumW8Ca6br15+YW35HqCrTf9XJHw9CXCsM8qdnjbfq
-         TfzttfVklEv2NCrmwH0PZmeuw2PGoGIy932+C/qOsgisAN/vRpjFU087fbqSv3nMzW96
-         9UDY6UmG/fb3AYTL9SfcLdiI6nKYmVbKTN5CnMtCTfPyrQL2RRIyVE60xIibyk7hmAA6
-         WIwEN/T91XUPk7pv2oqEZcyWjyGmXDSBVX+EXVxxYqNJXBsxzmGF394PGBB09Z20jrB7
-         tetQ==
-X-Gm-Message-State: AOJu0YwFIDWkj9fQyOa4v1OEAsIQdN4oAIcdxDPdeUnJQY29MhPXrZLb
-	DWBNGV1N1522kwo9JIxa7RlDQTkzrsgDBYr5uNhv5EBhe00R+pb3RE43flR91A==
-X-Gm-Gg: ASbGncu5AW+/A4JnRMD7oBmgyeZd3byT8/9arupjUvOI8myChzAd1W1F4kMvjV/kmy/
-	whQokF6aWFAPC3RR9CmPF+D3pcpAQjuvK/k8XteSWkk0AxzpyJqImoJ5s/325EGpRTgSiFusLg2
-	XL9OAYyMRfs7dAtngjYm7V30d4uqp3XR7wBMmEGr6CF8lHamsLqeT7b+h3nYxNdYlqreAzYCkoh
-	Ht3r94HcMCMK3YzozqMsbtVV/2J9r++Odbn716D5XFq8jUa7l+kgmy+5anRHwl810tI5AS7zQlZ
-	ivDcMzek8RMpNZb6nBZQv9pPwCRYXT1sYu4Ce4uegan2dcYJ8/oRSz4hG27HiCxsgozrUtiTg1d
-	8wpz8A6XrBEgN1iuZF8Vev5A53YQpKuk+WiBcM1xytlRcHg==
-X-Google-Smtp-Source: AGHT+IE+8evUBI+CIITkrCauoaO/l5hFVCXheNreCGU67zsrDZoGegK4vi5qzraxNEmeowC8AM56mA==
-X-Received: by 2002:a05:6000:25c2:b0:3c9:c344:1652 with SMTP id ffacd0b85a97d-3cbb15ca08amr4281941f8f.6.1756308310053;
+        bh=kfXsxDnerVQFaVO/udfNUiaunFKLBVa3eJT7mV3ZOME=;
+        b=Q8x9Oyy/nh0S5/qwESpAzvB5pQFKb48CBFAN/LgraichrLpWKWWfbvIXGEVWdA5HE4
+         Rvvl+htVw/KHG7FFKCUF0hndKrfPqxQ7SXmbOx0Q1DP4FlUUqLV0LU53ckZQfgLhRyOE
+         pyeEt6Bk/HbtCdHHru6NcTaD8ggztAbOOg29SgsdhXoX1dORmBqearWiivCoHgaS8DcW
+         HYL6qEhcxeVBaYmLctrmFvRQqLbiv9gc5pS9v486kM6j1vfZnoK3dLpq0+1LvvlWHdH4
+         SLKYvwH+WX4C5pHF5w/5RALWrqkzBTTH+QdcwospuIP4x1uUBcoLqyCQWavMjb3JMwET
+         t9Aw==
+X-Gm-Message-State: AOJu0Yw03DLJgYXw+SxEfrW20zy6yyTas/ja1YBsIARnDGJGnBwQlObA
+	Xw8RKCVaxP0gGyvZNamxiIsz+1+LoVQMjAAGcWdB4SfyBGFcl7WjyxohqFzWqA==
+X-Gm-Gg: ASbGncsEDIY8nIQOhR9WgARAugtbN2Dbjgfdjddf5FdzQuDuLAngTP2+8rMQSEElbQr
+	qXljiyEvNZc1liI2BSKSq6YrmpMk+kB9YALmDCgYo6K4mhhD5LZcPz77h2GToN9jw6E9DDqDjTv
+	5JHfP8NnArb4Cqa7S9h06SDdHXecW13OjUo5uZV4+lG99qlNZBA6O6C1PM4lw69Hio0KKSYxfFF
+	v2YSG9oAY9z2sBzbnebPdlv5HhKjOlCnqyIVoC088nX3ZHQV8VJ3j4IetagvTeAEspOHX88iPD7
+	VqCj9WdZW92qZiT8gZ2+E0vYuKwSVm8YZeCVgkjyQ2jrgVzaYWvjICyQqNuVC9qH3aQ1G1OVlNW
+	FcK8gbKNTCIXJar5tPydt0kimE4QRjzqWrd/G0dcXf5JWYA==
+X-Google-Smtp-Source: AGHT+IH3DEVqo0mNvWvnfPnds1aeqQQhPz5JAsEJ5ELTBwQ8eXShbbd2W/JpIhOvYFgF4mX+hYm4oA==
+X-Received: by 2002:a05:600c:1988:b0:458:bd2a:496f with SMTP id 5b1f17b1804b1-45b517cbf19mr154360435e9.21.1756308310884;
         Wed, 27 Aug 2025 08:25:10 -0700 (PDT)
 Received: from localhost.localdomain ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b73627bc4sm17894305e9.9.2025.08.27.08.25.09
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b73627bc4sm17894305e9.9.2025.08.27.08.25.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Aug 2025 08:25:09 -0700 (PDT)
+        Wed, 27 Aug 2025 08:25:10 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Wing Huang <huangsen365@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 3/6] t9902: switch default branch name to main
-Date: Wed, 27 Aug 2025 16:24:47 +0100
-Message-ID: <d8a382a79eb4441ab3f8837a50ca072a38fee7c2.1756308283.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH 4/6] t0613: stop setting default initial branch
+Date: Wed, 27 Aug 2025 16:24:48 +0100
+Message-ID: <bbf79dd64fef485b75bf0fbb37322a6cff7df7f8.1756308283.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
 In-Reply-To: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
 References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
@@ -79,40 +79,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-In preparation for removing GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME in
-Git 3.0 update the bash completion tests that rely on the default
-branch name being master.
+As the tests are all run in separate repositories, set the branch
+name to "master" when creating the repository for the tests where
+the result depends on the branch name. This is in preparation for
+removing GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME in Git 3.0.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- t/t9902-completion.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t0613-reftable-write-options.sh | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 6650d33fba6..964e1f15693 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -11,9 +11,9 @@ test_description='test bash completion'
- # untraceable with such ancient Bash versions.
- test_untraceable=UnfortunatelyYes
- 
--# Override environment and always use master for the default initial branch
-+# Override environment and always use main for the default initial branch
- # name for these tests, so that rev completion candidates are as expected.
+diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-options.sh
+index d77e601111f..b547e12d66d 100755
+--- a/t/t0613-reftable-write-options.sh
++++ b/t/t0613-reftable-write-options.sh
+@@ -11,16 +11,12 @@ export GIT_TEST_REFTABLE_AUTOCOMPACTION
+ # Block sizes depend on the hash function, so we force SHA1 here.
+ GIT_TEST_DEFAULT_HASH=sha1
+ export GIT_TEST_DEFAULT_HASH
+-# Block sizes also depend on the actual refs we write, so we force "master" to
+-# be the default initial branch name.
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+-export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
- . ./lib-bash.sh
-@@ -1453,7 +1453,7 @@ test_expect_success 'git bisect - start subcommand arguments before double-dash
- 		HEAD Z
- 		final Z
- 		initial Z
--		master Z
-+		main Z
- 		EOF
- 	)
- '
+ . ./test-lib.sh
+ 
+ test_expect_success 'default write options' '
+ 	test_when_finished "rm -rf repo" &&
+-	git init repo &&
++	git init --initial-branch master repo &&
+ 	(
+ 		cd repo &&
+ 		test_commit initial &&
+@@ -43,7 +39,7 @@ test_expect_success 'default write options' '
+ test_expect_success 'disabled reflog writes no log blocks' '
+ 	test_config_global core.logAllRefUpdates false &&
+ 	test_when_finished "rm -rf repo" &&
+-	git init repo &&
++	git init --initial-branch master repo &&
+ 	(
+ 		cd repo &&
+ 		test_commit initial &&
+@@ -62,7 +58,7 @@ test_expect_success 'disabled reflog writes no log blocks' '
+ 
+ test_expect_success 'many refs results in multiple blocks' '
+ 	test_when_finished "rm -rf repo" &&
+-	git init repo &&
++	git init --initial-branch master repo &&
+ 	(
+ 		cd repo &&
+ 		test_commit initial &&
+@@ -115,7 +111,7 @@ test_expect_success 'tiny block size leads to error' '
+ test_expect_success 'small block size leads to multiple ref blocks' '
+ 	test_config_global core.logAllRefUpdates false &&
+ 	test_when_finished "rm -rf repo" &&
+-	git init repo &&
++	git init --initial-branch master repo &&
+ 	(
+ 		cd repo &&
+ 		test_commit A &&
+@@ -172,7 +168,7 @@ test_expect_success 'block size exceeding maximum supported size' '
+ 
+ test_expect_success 'restart interval at every single record' '
+ 	test_when_finished "rm -rf repo" &&
+-	git init repo &&
++	git init --initial-branch master repo &&
+ 	(
+ 		cd repo &&
+ 		test_commit initial &&
+@@ -212,7 +208,7 @@ test_expect_success 'restart interval exceeding maximum supported interval' '
+ test_expect_success 'object index gets written by default with ref index' '
+ 	test_config_global core.logAllRefUpdates false &&
+ 	test_when_finished "rm -rf repo" &&
+-	git init repo &&
++	git init --initial-branch master repo &&
+ 	(
+ 		cd repo &&
+ 		test_commit initial &&
+@@ -247,7 +243,7 @@ test_expect_success 'object index gets written by default with ref index' '
+ test_expect_success 'object index can be disabled' '
+ 	test_config_global core.logAllRefUpdates false &&
+ 	test_when_finished "rm -rf repo" &&
+-	git init repo &&
++	git init --initial-branch master repo &&
+ 	(
+ 		cd repo &&
+ 		test_commit initial &&
 -- 
 2.49.0.897.gfad3eb7d210
 
