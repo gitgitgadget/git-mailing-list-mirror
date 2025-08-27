@@ -1,109 +1,182 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0759B318150
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 07:36:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0755832254E
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 08:07:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756280220; cv=none; b=RCtZDnmdRrD3rLBBnMsrUmL5IMCkZJL2S3/9FHbewIFRqjEDNqmtwQUwc26uEl84sXVPSGugXI6nFCVn22luZ8Y1zExK9wO12C04GaINfSZQ2Pda8Ny/6pg74RxdgFnpWqDGQRKpHZMzzirHJl+iPBQDlhA7IGhJeWJNh2wHbh0=
+	t=1756282029; cv=none; b=kYw7OC96L2+//v6ONEBmy8hkJiYCfErzute7R6+vJ9g1/lK5B8PHaUHqkHnWcKUzzEFJYsCRRJxQ13h8q0o3mfrgbmAY3c7CHGdEaMnWdUhe0yMrGgTr1LkJLZvunzFOQxveflvhUpodEgtRj4AUM0qiElYJ2jGi2vSiRWeA2p8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756280220; c=relaxed/simple;
-	bh=GMEG1KSWk56Geh7+4v8LwNbsagqLrH9updwFjUj4WY0=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=iN4FJ4uDp/jHr4qUUdmYfEYpA9D1OOYPzviLL+SE7xmVND8OtXXwvF4gOAhPTLO3G5Q9d7Lsbf5NNPdvcS5OPTUwT93Zmq3WnXxM7xWskcoBjoUhxSRz4Oy4kLbzSFuIAxsleJyUdPD0vBDZJvQ9lwxosADfbrQszqvbIJ84Du0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aj.id.au; spf=pass smtp.mailfrom=aj.id.au; dkim=pass (2048-bit key) header.d=aj.id.au header.i=@aj.id.au header.b=8/mMfjkq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q2gtZdVW; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aj.id.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aj.id.au
+	s=arc-20240116; t=1756282029; c=relaxed/simple;
+	bh=cpCvu5OlWc1/VwjRy5fkoNMXrPLSgQyXxeo4ajwZ+vU=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=tcivISCgw3kCPAbTdgcZkOfVlwepY/dZK98xcIbVXeqajUgHsr5xLLK/YZYHvjNlh1b9wtO5qa/J3W/IYzy+57203pry6KkHnXy3YXYCjjyoRCPfE2Oc2WRvJ3RfO4ih6R8gAEkhoAXXQFjVEz64sZSrgjznXmMRqCrrrvHZ/+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=edF5X5x6; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aj.id.au header.i=@aj.id.au header.b="8/mMfjkq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q2gtZdVW"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1EC2E1D00100;
-	Wed, 27 Aug 2025 03:36:57 -0400 (EDT)
-Received: from phl-imap-08 ([10.202.2.84])
-  by phl-compute-12.internal (MEProxy); Wed, 27 Aug 2025 03:36:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1756280216;
-	 x=1756366616; bh=GMEG1KSWk56Geh7+4v8LwNbsagqLrH9updwFjUj4WY0=; b=
-	8/mMfjkqPB5b2amZ4qt2JU5YQEsPVL3IuLRCJQiJGAMdn4MCn0tYOaKlm+gBViYU
-	E8znY/gf55TAJgsuv7YHvOJXvc+EmAH+XHK5w4GnVOS2IT9ibnHzYqFza93rmQ5V
-	fnAewNDcm2evVV0GQV2Boq0rw7WqOfcyUfUWpqAphQGzpj1UQAajff4rDHUwjm8s
-	R9ogEWhZrs/fyz6riESzaI1RAkWrC+3LH+vKyPi443H9TsTjAL2nW2CGmyUjntks
-	sZ76zrPKNf1dUK3ltZ/Y7vINDbRljqbBK3iWg6+EQ/bJPAc8ZQ5Ju47AhqdzbJYm
-	FjRVh5oWZXZTp3SR7saqwQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756280216; x=
-	1756366616; bh=GMEG1KSWk56Geh7+4v8LwNbsagqLrH9updwFjUj4WY0=; b=Q
-	2gtZdVW+gTPRoj5d42TirsWEduv9H51wAs6PENanflhPBRQOyerExZ9CZIzwdYKi
-	bSEcRx/wJyffOAhl4L38f5fG2vMMhxsw1Fuey8qJZB45FztViuIjBzUla15FI86D
-	LISxU7el+tqH34SvQjpnzHCnlaxp7BzQ+9/QGywN+WvA4EXY81h4UB9hC+GAzAtg
-	mX8QXe0znj5++NaDibsTea6s9P993njtDrIePisw5A193Xm9Z6FhT4z4K2bsB8Ur
-	VSoPt52ql9aGzOAOsNjSojKQVJzqc9NiLuiNmZii51bLGJdoaUxFakR1heXBFFFr
-	bsC3Vuf3YMfoG4nrOXgIw==
-X-ME-Sender: <xms:mLWuaLyMlU0rdOiCGww9SQ0mQNIxHUPZJ34jNdDiBjTm8PgbWhKgxA>
-    <xme:mLWuaDTwY3LahoomTj30tCWrjRps2hXmclqV2iF5nJcn_sOpJQTSc70qQVLWbJK7S
-    UYImOut7L9lRB8HFg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeejheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftehnughr
-    vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
-    htthgvrhhnpefgueefiedufeetvefgtedugffgveejgefggeffteelteekfefgvdefuefg
-    hfffvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    grnhgurhgvfiesrghjrdhiugdrrghupdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopegvmhhilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:mLWuaB6PRpt9RPLh2uscOopxLRLzshNow6Z1QJnmTGrIT-ldGcVJTQ>
-    <xmx:mLWuaFxfqd91qnroYrHrG7QbPHlZb6Gw6oVwY2JKmAqbssjETbfuQg>
-    <xmx:mLWuaFbDKyJUl533iLvt7ZQlKrL56w9MRcZsRZiwH_ocO6XIfdD1WA>
-    <xmx:mLWuaHR5PPOFHS9SugzZWreHlK4sqS4G3W_6YjqatBl-YEkjn8zCkw>
-    <xmx:mLWuaGJbhEuybvEW88n8YLjiLAnl7EKgvZLzwM_vQZD-rnB6C4ixpxtm>
-Feedback-ID: idfb84289:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id AA5FB2CE0071; Wed, 27 Aug 2025 03:36:56 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="edF5X5x6"
+Received: (qmail 125099 invoked by uid 109); 27 Aug 2025 08:07:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:subject:message-id:mime-version:content-type:content-transfer-encoding; s=20240930; bh=cpCvu5OlWc1/VwjRy5fkoNMXrPLSgQyXxeo4ajwZ+vU=; b=edF5X5x6MHXzZNsSs2saQWIhzsJ1lvQlpWOFbIJrTf0x+t2Hq8/wgHQNeHI4spuDHUBCjP9iqEO81hF9uIcFfhcYGeqy/Av59OBj4VsnsCvR3PqaOR69A64dJssJG5Nt17/aiwh+cDOyDXg9nYhFCTGekzJjVtKoqhK1cXRU0shJmBuS2tzYiJ5C6aKxzhVi8+1oK5iFAkMrtI7ze303keVXanhmjBW1c11S+bAzAzvw/25M9J0nn6mNOHxyKMOLz34OxXS7SF0oJafO3jowW4rgbOtNKT2JG/IlDZ4Ub/56IU5CsZj2hIWrubKtxSfFsZH2hE49iz2AUcjTiLUtZA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Aug 2025 08:07:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 190209 invoked by uid 111); 27 Aug 2025 08:07:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Aug 2025 04:07:02 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 27 Aug 2025 04:07:02 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Subject: [PATCH] curl: add support for curl_global_trace() components
+Message-ID: <20250827080702.GA3572995@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AbpvHn3zrFiN
-Date: Wed, 27 Aug 2025 17:06:27 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Emily Shaffer via GitGitGadget" <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: "Emily Shaffer" <emilyshaffer@google.com>
-Message-Id: <25c08035-8bb8-4a87-824c-76c88102a1ef@app.fastmail.com>
-In-Reply-To: <pull.2042.v2.git.git.1756279345929.gitgitgadget@gmail.com>
-References: <pull.2042.git.git.1756279041881.gitgitgadget@gmail.com>
- <pull.2042.v2.git.git.1756279345929.gitgitgadget@gmail.com>
-Subject: Re: [PATCH v2] doc: document rev-list opts in revert, cherry-pick
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
+In addition to the regular trace information produced by
+CURLOPT_VERBOSE, recent curl versions can enable or disable tracing of
+specific subsystems using a call to curl_global_trace().
 
+This level of detail may or may not be useful for us in Git as mere
+users of libcurl, but there's one case where we need it for a test. In
+t5564, we set up a socks proxy, access it with GIT_TRACE_CURL set, and
+expect to find socks-related messages in the output. This test is broken
+in the release candidates for libcurl 8.16, as those socks messages are
+no longer produced in the trace.
 
-On Wed, 27 Aug 2025, at 16:52, Emily Shaffer via GitGitGadget wrote:
-> From: Emily Shaffer <emilyshaffer@google.com>
->
-> In f873a273d1 (revert: accept arbitrary rev-list options, 2010-06-14),
-> we added a handful of new options to `git revert` and `git cherry-pick`,
-> but did not document them except by example to `cherry-pick` only. We
-> have a nice shorthand for adding the rev-list documentation, so let's
-> add it now, to both commands.
->
-> Reported-by: Andrew Jeffrey <andrew@aj.id.au>
+The problem bisects to curl's commit ab5e0bfddc (pytest: add SOCKS tests
+and scoring, 2025-07-21). There the socks messages were moved from
+generic infof() messages to the component-specific CURL_TRC_CF() system.
+And so we do not see them by default, but only if "socks" is enabled as
+a logging component.
 
-Thanks!
+This patch teaches Git's http code to accept a component list from the
+environment and pass it into curl_global_trace(). We can then use that
+in the test to enable the correct component.
 
-My only input is my surname is spelled the surprising way: s/Jeffrey/Jeffery/ :) Hopefully someone can fix that up when applying it rather than needing a v3!
+It should be safe to do so unconditionally. In older versions of curl
+which don't support this call, setting the environment variable is a
+noop. Likewise, any versions of curl which don't recognize the "socks"
+component should silently ignore it. The manpage for curl_global_trace()
+says this:
 
-Andrew
+  The config string is a list of comma-separated component names. Names
+  are case-insensitive and unknown names are ignored. The special name
+  "all" applies to all components. Names may be prefixed with '+' or '-'
+  to enable or disable detailed logging for a component.
+
+  The list of component names is not part of curl's public API. Names may
+  be added or disappear in future ver‐ sions of libcurl. Since unknown
+  names are silently ignored, outdated log configurations does not cause
+  errors when upgrading libcurl. Given that, some names can be expected
+  to be fairly stable and are listed below for easy reference.
+
+So this should let us make the test work on all versions without
+worrying about confusing older (or newer) versions. For the same reason,
+I've opted not to document this interface. This is deep internal voodoo
+for which we can make no promises to users. In fact, I was tempted to
+simply hard-code "socks" to let our test pass and not expose anything.
+But I suspect a little run-time flexibility may come in handy in the
+future when debugging or dealing with similar logging issues.
+
+I also considered just putting "all" into such a hard-coded default. But
+if you try it, you will see that many of the components are quite
+verbose and likely not interesting. They would clutter up our trace
+output if we enabled them by default.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I noticed this because curl 8.16-rc2 is in Debian unstable now (and my
+usual "make test" failed as a result). I wondered if this might be
+considered a regression in curl, but I think probably not. Those socks
+messages are pretty low-level, so must users are probably fine without
+them. And they still get _some_ indication that socks is in use.
+Running:
+
+  perl t/socks4-proxy.pl /tmp/proxy &
+  curl --verbose --proxy socks4://localhost/tmp/proxy https://google.com
+
+yields:
+
+  * Opened SOCKS connection from  port 0 to google.com port 443 (via /tmp/proxy port 0)
+
+in the normal output (among many other lines). If we add
+--trace-config=socks after the --verbose flag, you additionally get:
+
+  * [SOCKS] SOCKS4 communication to google.com:443
+  * [SOCKS] SOCKS4 non-blocking resolve of google.com
+  * [SOCKS] SOCKS4 connect to IPv4 192.178.154.139 (locally resolved)
+  * [SOCKS] SOCKS4 request granted.
+
+So obviously another direction here is that we could make the test more
+flexible about which messages it matches (the "old" one does not quite
+look like the "Opened SOCKS" one above, but we could match either).
+
+I kind of like this patch as an extra debugging aid, though.
+
+ git-curl-compat.h     | 7 +++++++
+ http.c                | 8 ++++++++
+ t/t5564-http-proxy.sh | 4 +++-
+ 3 files changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/git-curl-compat.h b/git-curl-compat.h
+index aa8eed7ed2..659e5a3875 100644
+--- a/git-curl-compat.h
++++ b/git-curl-compat.h
+@@ -45,6 +45,13 @@
+ #define GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR 1
+ #endif
+ 
++/**
++ * curl_global_trace() was added in 8.3.0, released September 2023.
++ */
++#if LIBCURL_VERSION_NUM >= 0x080300
++#define GIT_CURL_HAVE_GLOBAL_TRACE 1
++#endif
++
+ /**
+  * CURLOPT_TCP_KEEPCNT was added in 8.9.0, released in July, 2024.
+  */
+diff --git a/http.c b/http.c
+index 98853d6483..a7d55dcbba 100644
+--- a/http.c
++++ b/http.c
+@@ -1348,6 +1348,14 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 	if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK)
+ 		die("curl_global_init failed");
+ 
++#ifdef GIT_CURL_HAVE_GLOBAL_TRACE
++	{
++		const char *comp = getenv("GIT_TRACE_CURL_COMPONENTS");
++		if (comp)
++			curl_global_trace(comp);
++	}
++#endif
++
+ 	if (proactive_auth && http_proactive_auth == PROACTIVE_AUTH_NONE)
+ 		http_proactive_auth = PROACTIVE_AUTH_IF_CREDENTIALS;
+ 
+diff --git a/t/t5564-http-proxy.sh b/t/t5564-http-proxy.sh
+index b27e481f95..c3903faf2d 100755
+--- a/t/t5564-http-proxy.sh
++++ b/t/t5564-http-proxy.sh
+@@ -72,7 +72,9 @@ test_expect_success SOCKS_PROXY 'clone via Unix socket' '
+ 	test_when_finished "rm -rf clone" &&
+ 	test_config_global http.proxy "socks4://localhost$PWD/%2530.sock" && {
+ 		{
+-			GIT_TRACE_CURL=$PWD/trace git clone "$HTTPD_URL/smart/repo.git" clone 2>err &&
++			GIT_TRACE_CURL=$PWD/trace \
++			GIT_TRACE_CURL_COMPONENTS=socks \
++			git clone "$HTTPD_URL/smart/repo.git" clone 2>err &&
+ 			grep -i "SOCKS4 request granted" trace
+ 		} ||
+ 		old_libcurl_error err
+-- 
+2.51.0.410.g59ea61f7ea
