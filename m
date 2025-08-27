@@ -1,84 +1,83 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895452773C1
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 16:48:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181CC27FD59
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 16:53:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756313288; cv=none; b=pZ/hhMt7vx+Cgk9R3Y99MK8E6XPz4lSJC10t5Tg5P076azaamB3fUDUxFSvJn8beYAsRREaywDzI0C8ecNePjmM7YS4UC/iDwyq+IFs5LKjQxCYSmUFZrqF4vzsF3u2tfEV/w+XRg1a2Nt4or6MPgqa6+3vN+6hHaMyY2NFJg+g=
+	t=1756313632; cv=none; b=iX4UGHCxpD0EJ7XMCQU5ZXelluK3VHZsMuepiwIjMLNbGZ0OOMGuv3eG4hmJ0Gw9euoh+0XvjDSDK3BgCmkct3WucCxvZA26v5CiqExLCoHMb/C51rTyW6n5pYBqh8arpXn6JVQEiSosd6E+CBDYKnpOPe3e4qbmLOGRSwCkms4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756313288; c=relaxed/simple;
-	bh=Mg9YKfhOTcYZeAFPxQtFgctErtNEXYEaQ4lXiRpXMl4=;
+	s=arc-20240116; t=1756313632; c=relaxed/simple;
+	bh=CWnAu3nbP3Vx02l1gd+IAlcgnG7MP8htNiPx/fUETfg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CC0FkW/zmZkgpVjwiYMf3A9a4xUlSuH5m6+QcyeYFJxmD21QmwkjOssof0Jv78V9cjLkpU2Mmp0QFfCmwqtKbgZLMvvFzR5TGGpkA9O476G3rEqwXqwjGxl0ulR1zohzWeHnfk6ZKMrC7SJIUxAVyAySrnabEJZ9gQnSt/g6AKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XxpZKUmV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GGzd5ujJ; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=nL0NKmZXwjyoTZVFRrLXaYvyjKOBIa2pK3oA8p4/NHWijUe0p8cDMdFk/LhfmIORhggyPKaEP9e5fn1MiohWMpc2jfZRgETYxCGiKfc7EIMuqxv//UnU4iY6TrsSUT7u6YTOYEEAYJwF7jfOIUNxItV9n01sQunm5p3e41T4BVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=21TpIdp+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z3gxN5vz; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XxpZKUmV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GGzd5ujJ"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="21TpIdp+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z3gxN5vz"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BC7171400167;
-	Wed, 27 Aug 2025 12:48:05 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 27 Aug 2025 12:48:05 -0400
+	by mailfout.phl.internal (Postfix) with ESMTP id 36163EC0106;
+	Wed, 27 Aug 2025 12:53:50 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 27 Aug 2025 12:53:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756313285; x=1756399685; bh=3B31dQEJpS
-	SPbZk1W67fy+sOjgz9FXmUII9qR+YCfNI=; b=XxpZKUmVVc7OYT7c3pKy61uv+/
-	XqdP1RVr/bYQGVzaNB+AcznTEXaaW7Zwt8YCWPLqTjAKjbV7V+CajuDPeR430awG
-	St6+x3Cq2jlXOmlfpTC2XzwZHs1+BNwgBMMWDhHmiY/3zPFlc2KTuE8g7bBFYSug
-	Neb3p0q284T94H2dJm6xdVts8FF5vuTcyl0MmTAhC0+nmeYW0bfsg73W2+foYq8U
-	8A2EplCLyFPA/ZbLOcsiSt6w5/jGuxeH08Om/CnW5Uy8LNASdsF3z9GnB8I4Swmc
-	/rebJC7nhS8yDG2+NTydnGcrqbwTIzeF1c122EccdP/NW0q1Ktim+kr6M1HQ==
+	:subject:to:to; s=fm3; t=1756313630; x=1756400030; bh=CWnAu3nbP3
+	Vx02l1gd+IAlcgnG7MP8htNiPx/fUETfg=; b=21TpIdp+22pHa5OyuBb6LmqKdk
+	Btwhlb0z/eOUmtInhiKz5hYk3utCuzCUXOXRtE3y4aj71KBVk1hsXarnyCXB1IFt
+	Ey8bwCzp6sjzoLAbfa6P3sflsfImCt3sNuGDmT8u1om0TziGaq7ykxz5n25Tpgu2
+	Gd246CHcOncSH/9OVQVXLwo9kwureO3dkM+pMqp/CqFMnqkoc0MFaNtTuxvNV6MI
+	EExqMepXqHIhtafEIdXYCm9dJy7ZTtPW2oserreOjmvSnetHx5YLc8Nkl1x7GzFk
+	PfUuu2wEjWq7I0ni82NhUYkCMsA1hbeTFVoo1e/F6yaybhjOgheoT/oWCCAA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756313285; x=1756399685; bh=3B31dQEJpSSPbZk1W67fy+sOjgz9FXmUII9
-	qR+YCfNI=; b=GGzd5ujJFA/lyGwU9dpNbKWrtQAL1JIpEwaCxjO4jIK8IpiTyOw
-	ytDhJSClYy96bkwGxMU8u9u7V00pIeJVKJFhePpmFVczEbQ8MKFnE8cJuEdrDQWv
-	h9cfE/OY9Gm3cbMjKIQTPEV9D6cOHbTSlDc+NipowfuvkAVRI7KlddDpfX5I8lVk
-	YflB/H1jlRdZL2WM/FgTeCSRx2go8ymJ3rx6vBgriGjkApo50il0BZdX0EdeJZsj
-	Ou8M9FrOtuV3+TwxIzoiy7Kkxajd6o35XDdyn4So7EXcu3mzawOO00NlISgK0alv
-	BnAmpf6ogrWAUL1Hsv3463I/lRR6TOgcXoQ==
-X-ME-Sender: <xms:xTavaKl9WzpTIw6wYxMXp-JaPl6untOjt1xrT_JzP60Ux6yDYvCAGg>
-    <xme:xTavaMZkkN92CniGbisCnWVHOuIPOG7-1mcZ1EJXpgr9DCbJnKPQqmv98Hv_RXpi8
-    QCp85EbePG9TdANng>
-X-ME-Received: <xmr:xTavaFParF7rjne1yg6ud5lNQes7OPgzMzi_yIb7nGd55B5vlRk3oltSIvPLMXTovfn_lbpj52lPjYUWu29d-yiPHjDX_yAB7EexO4E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeekieejucetufdoteggodetrf
+	1756313630; x=1756400030; bh=CWnAu3nbP3Vx02l1gd+IAlcgnG7MP8htNiP
+	x/fUETfg=; b=Z3gxN5vzzJNPm158BWidkabXNeNLZoLOTVoWcSVs2JTGLAqv5nr
+	8vaRKKTbQSMpJKzznpeNCxs7oKmy2bbm3lmDE5sZiCESFZX/+lh9LhULHQJzjJU/
+	igm6c3IiWTPajhyXaC/x/s2ycDKEl6LvtNKdoqTvZ1M3CiW1APsLdkKBsLHgY/nX
+	wc6WqEKWP+G5xYE8jKIQ3UkUuxotGPULJ7tBRxHK56AM+HZsROt2d6d5ZIM8kIuu
+	lnoxHnl9zyPPtOjn0Feyf6AZityPafNiBJqlOuJBl5EqHeBY0zdnKVY02V7zMBMv
+	MUypSg7fL7t4925PZObFRazdeN51wCr67yg==
+X-ME-Sender: <xms:HjivaKp8xLsXYpqN2PlJQN0kgZDnzjuEPfdNM1rMUmMmuPm2L45BlA>
+    <xme:HjivaDPeS0HdB2679Uu_3sRf7zQAfyai1NTFLCoC6oI62hSGNc8xSPam3dbo4UM4x
+    5QaMsxhllCt3MjEhQ>
+X-ME-Received: <xmr:HjivaLx7E-E7jZViCp9USXzpjIL7CRg8CIEZIWjtWRgCP8w_NydtXD2l7X-DhmWcKGouRgQQWdw0kLgAKktb8Ju4AFfAffvA9tyrPaM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeekieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishht
-    ohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgr
-    uhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:xTavaBa9hIevk0UXp75ux7m57k_ardzAPgtJMDd3qd4zJYcSiiqdNw>
-    <xmx:xTavaD2URKi-RvnfK5Ix9Zmn0rd_G4kYtRT-D5QUWt7Ll96Wk1l0wQ>
-    <xmx:xTavaHf_iFil5fvX_luNDrkmY-044sL7Y4MCdZEuFWrHrFUJAfXRYg>
-    <xmx:xTavaEGWupYsRt-GIt2gj3vJe3ZO57tNzheLxBLiuxOpyLGwNH_m0A>
-    <xmx:xTavaJ-OWnmBLUs-4E0K0rW0N-rMfb-dQ4-zUEaifulPrtSM3t2QMdwA>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtoheprhhpsegrsghtihhonhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:HjivaMvMBx3UI-OUyMDQgVBlTSvSxOSsDho1BirrhsrM787Ppqq0ZQ>
+    <xmx:HjivaE7iCoJRbhdq_r06-1WoXnbRocD70tQmBS90qLePlwhCydXbGg>
+    <xmx:HjivaLSCx_Glr2IytdPpflbXr0SO3Ue8WBnn5WdF9XZp0LROw8gixg>
+    <xmx:HjivaDpFfeKVyfby5mL-bgQn24xyiDtmajM56Qx-jSfspIKR7AuA6w>
+    <xmx:HjivaFOPBiesGQSD071Nn14VcrLzoeuS3Z1kA-1LmEP4yBgaXVynTMmI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Aug 2025 12:48:05 -0400 (EDT)
+ 27 Aug 2025 12:53:49 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH 2/4] whatchanged: tell users the git-log(1) equivalent
-In-Reply-To: <xmqq5xe83e8q.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	27 Aug 2025 09:45:25 -0700")
-References: <cover.1756311355.git.code@khaugsbakk.name>
-	<5407c0955af7b5bb30fbc32264481990b2e4e8b8.1756311355.git.code@khaugsbakk.name>
-	<xmqq5xe83e8q.fsf@gitster.g>
-Date: Wed, 27 Aug 2025 09:48:04 -0700
-Message-ID: <xmqq1pow3e4b.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Rune Philosof" <rp@abtion.com>,  git@vger.kernel.org
+Subject: Re: Feature Request: Add comments to commits
+In-Reply-To: <a0c393df-a23c-49e0-8985-4748e1769a62@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Wed, 27 Aug 2025 12:32:56 +0200")
+References: <CAL8J5gbKu7qB8Byg82CGqtrYK0gm4gf5V=qrc7npzAoF+kAXJA@mail.gmail.com>
+	<a0c393df-a23c-49e0-8985-4748e1769a62@app.fastmail.com>
+Date: Wed, 27 Aug 2025 09:53:48 -0700
+Message-ID: <xmqqwm6o1zab.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,20 +87,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-> kristofferhaugsbakk@fastmail.com writes:
+> On Wed, Aug 27, 2025, at 12:29, Rune Philosof wrote:
+>> Git commit messages quality is very important when you investigate your history.
+>> Often it would be useful to be able to attach comments to commits
+>> messages for instance to add forgotten information.
+>> Those comments should be shown when `git show`ing a commit.
+>> Could be implemented as commits that use a new field to link to the
+>> commit they should be shown with, along with some index to make it
+>> performant.
 >
->> -	if (!cfg.i_still_use_this)
->> -		you_still_use_that("git whatchanged");
->> +        if (!cfg.i_still_use_this)
->> +		you_still_use_that("git whatchanged",
->
-> I spot a whitespace breakage here.  I didn't check if there are
+> git-notes(1)
 
-Sorry, I read the patch backwards.  You are fixing an existing
-whitespace breakage, which is very much appreciated, as this is
-immediate vicinity of the real change of this topic.
-
-Thanks.
-
+... together with "git log --notes[=<ref>]".
