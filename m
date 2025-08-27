@@ -1,64 +1,51 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91FAF4F1
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 00:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F11210A1E
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 00:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756254504; cv=none; b=LCa7WL1e3y9Eb+q/Zosgi1K7POl1yU7cotdJEEjrGRPt6HnHH04UuQeTWZNac8E6XekyyI4H2YngS8Iym8xrocb1s4hL5ZjOu3B81Fmn6oILcDg+PDUmajHcZDQHjYDM9f1hE+JloP1izXbSyoDP0iUZmkpwq/vxyneY1Ve3fOs=
+	t=1756255884; cv=none; b=NSFug6UQdp8fau/0rAAT8xsEvpu8KkbKLX1ZdtREgM4l7y8XgTn48UAzSfGknWY9aK6bFv1NnjHafiKRjacfPrUsW2vri92NXNqYjZU1V1uTzqI7rfTqwm4yk7BLikwPShOtXjnC/oAgeBV2BGIbw/3ifptUptfG18QNiDBnMzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756254504; c=relaxed/simple;
-	bh=esXbwColg2d1lOYiyiOp0470HVtwi74veWuMhgh6iyo=;
+	s=arc-20240116; t=1756255884; c=relaxed/simple;
+	bh=Enxi9sFH5f7WcepyX3s6200eICPIWhCaYRIBfIPBIH0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T8pmYE6fj7E0L6a+WPne4r4uIuE3nQt6dCQNZiVTdeyPuTM13fHEyEh4XhFsOE75St0jKE0CqUIpqGdSx0lUs3m4C7NkAFRgtRwFy1NlIaJt/UL7Qz7yI+s9GGjNTWWnMr/WiA7HipShJ/EnFM17Ct6WkaDp1snYyiucMRWPf+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zt8PnZvW; arc=none smtp.client-ip=172.105.7.114
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ao4qLr8cJud1mlkA8bv2abwiceDMid7cWyquQgt6+AGJarOSz0QK96vY1gF7WD5FjLFHHwJC2a7lTsMEO4hcu301ckNzm4zhkRAhOx1k8cCTFPrLKdilXe0XmOKd4z/cxvrHCCsBwbmsbsMb/zLTvI2fyiFJUGNFTcHISPMZkwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=RNwvMTMo; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zt8PnZvW"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="RNwvMTMo"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1756254500;
-	bh=esXbwColg2d1lOYiyiOp0470HVtwi74veWuMhgh6iyo=;
+	s=default; t=1756255880;
+	bh=Enxi9sFH5f7WcepyX3s6200eICPIWhCaYRIBfIPBIH0=;
 	h=Date:From:To:Cc:Subject:References:Content-Type:
 	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
 	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
 	 Content-Type:Content-Disposition;
-	b=zt8PnZvWpUxIKjz//NTbAgwqOO47P2WI2xA9hGU86sbnhiWwrgWw8Ltd8ivBFPNX2
-	 DQIh2mmiWoTfUix7t/QRQLMunVjnVXQUZE081U4fmbyTOVEpTGLfkOnNw5WQghaHdM
-	 l9bP0fWaF+SjFDihw8yEkeBl4wCDMoPzBH7ufSY9sUtncfLB1/XR8JcdGYZd0gii7S
-	 th2Ix07pPCgTLRTWx7RvuwpGLmXwHbR8mEiNe/7K00Gh10q7LyO4S8KCoqrviHwjOo
-	 Q420oNdJh8IuCXVPKBV5qzNzgH2C4AbDo1MtXO/DXKVPy7F0X6gkdTV/qLPVNpx0nY
-	 jOBPGL3zsemPxAl+guG9l+Uo6jYFGgirOAbmyF0utipzbujrzpHmBEw2BFTM02Qw3+
-	 +EeIpvw0HZoQif+ugb5E2UrBHdmiU7kxuJikdmsh2YhuMNkSNaRZWaM4bYK3QsdHB3
-	 OpKe/PNWBzmhizRdmPLwIQB4Qd2G8YBPDkD9si1KIoQ6b2lXz6l
+	b=RNwvMTMoiNubwc5D4cy7cwugraES4+U8SgavNnLza+mgjYwQOSMNLiWlvLhmGPXg0
+	 8MADXVZGnl3JOV33fPKs7szW8Z9a7blBSWgu+iYMK8CCkK2qPDdViWSol1MC4VORzq
+	 Vl/nkp9Q0OApUEeR45kXHL5KlULgEQfvDMXx7CPw9SANaOq8Fl9JuyZFlLNUxTkXan
+	 67E5oiCVoFOAB6j5X2mCgNGYBMtAt2xJ2MAFFc1EOxxR5DIhubY17VmZC+UOxI2sh1
+	 39EXSXACiXffZy3UQQDbiir8vOhXkFjgxDdFJdpc1L93ha0kl4CnRiTKJdQDfGMU05
+	 6j1yQffAjbrS+73LHxdDPtBtWvcbtmMLleYghnPsNddL1+wu3eKoibpukSJMGr5xLw
+	 XXkbEM/Nt4ghcBtGY9Cuyz1ge0Lo/PcZNiyow5Z4Ojbkwao1wrt+X5dEKf4u1kY6Bc
+	 xm5Lo5r53qBx2i4HC/ZEIFq1OCSZ06IQNPLjxV3eiFsV3Xa/QKg
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:6208:a4d:7e2:3785])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 589FD200C3;
-	Wed, 27 Aug 2025 00:28:20 +0000 (UTC)
-Date: Wed, 27 Aug 2025 00:28:18 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 57B7B200C3;
+	Wed, 27 Aug 2025 00:51:20 +0000 (UTC)
+Date: Wed, 27 Aug 2025 00:51:19 +0000
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Julian Swagemakers <julian@swagemakers.org>
-Subject: Re: [PATCH v4] send-email: add --get-smtp-server option to fetch
- SMTP settings
-Message-ID: <aK5RInMzjC6vuLv_@fruit.crustytoothpaste.net>
+To: rsbecker@nexbridge.com
+Cc: git@vger.kernel.org
+Subject: Re: [Suggestion] Handling Rust in upcoming releases
+Message-ID: <aK5WhxsEZJDLqsDS@fruit.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Aditya Garg <gargaditya08@live.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Julian Swagemakers <julian@swagemakers.org>
-References: <20250822151039.36006-1-gargaditya08@live.com>
- <20250826133936.1569-1-gargaditya08@live.com>
+	rsbecker@nexbridge.com, git@vger.kernel.org
+References: <014e01dc16b3$dfae4750$9f0ad5f0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,85 +53,90 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="g1gI40Vj3Ugo6gA3"
+	protocol="application/pgp-signature"; boundary="vPRwqEXTNQ2r4hZX"
 Content-Disposition: inline
-In-Reply-To: <20250826133936.1569-1-gargaditya08@live.com>
+In-Reply-To: <014e01dc16b3$dfae4750$9f0ad5f0$@nexbridge.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
---g1gI40Vj3Ugo6gA3
+--vPRwqEXTNQ2r4hZX
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-08-26 at 13:39:38, Aditya Garg wrote:
-> Autoconfiguring SMTP server settings is a common feature present in many
-> email clients. In order to get the correct SMTP server settings easily,
-> this commit adds a `--get-smtp-server` option to `git send-email`. This
-> option attempts to fetch the SMTP server settings for a given email addre=
-ss
-> via the following steps:
+On 2025-08-26 at 18:04:26, rsbecker@nexbridge.com wrote:
+> Hi All,
 >=20
-> 1. It first attempts to fetch the autoconfig file from the email
->    provider's autoconfig URL, which is typically in the format
->    `https://autoconfig.[domain]/mail/config-v1.1.xml?emailaddress=3D[emai=
-l]`
->    or `https://[domain]/.well-known/autoconfig/mail/config-v1.1.xml`
+> I would like to propose a mechanism where some platforms can keep using g=
+it
+> even where Rust is not available.
 >=20
-> 2. If that fails, it tries to fetch the settings from Mozilla's ISPDB at
->    `https://autoconfig.thunderbird.net/v1.1/[domain]`.
+> Basically, make Rust a dependency for commands that need Rust but for tho=
+se
+> that are still in C, do not require rust. This will mean that git can keep
+> being
+> available, but new development can be done in Rust. It also means that
+> CVE patches, if they come, can be done without leaving non-Rust platforms
+> hanging out in the cold. It does mean that some commands will not be
+> available on some platforms. This has been a well-established position
+> by git for many years for other non-portable dependencies, like p4,
+> subversion, and send-mail.
 
-I'm sorry I didn't ask this sooner, but it just occurred to me.  Do we
-have permission from Mozilla to embed this service into Git?
+Unfortunately, this is going to be very difficult.  The first proposed
+Rust change will wire up the diff code to use Rust.  That's used in a
+lot of places, including diff, log, format-patch, show, and others.
 
-The reason I ask is that sometimes software vendors embed external
-services in a way that causes excessive or unreasonable load.  For
-instance, some router manufacturers hard-coded certain NTP servers into
-their firmware in a way that polled too frequently and then effectively
-DDoSed those servers, all without asking permission first.
+I plan on using it to implement a new format for the SHA-1/SHA-256
+interoperability mapping, which will be involved in a large number of
+code paths: index-pack, fetch-pack, upload-pack, and others.
+Theoretically it could be compiled out if someone doesn't need that
+functionality, but then all of the code that is involved in speaking to
+remote systems needs to learn to not activate, and that's a lot of messy
+conditional code that almost nobody will test.
 
-If we embed this into Git, then it will be present on systems for a long
-time.  Some Linux distros are going up to 12 or more years for software
-lifetimes, so we should assume anything we embed here is going to be
-present on OSes for at least that long and will be used at least
-millions of times a day in a highly automated way.  Even if this only
-lasts one release, it will likely be on a nontrivial number of machines
-for at least 12, if not more, years.  (Not everyone actually upgrades
-when their OS goes EOL, unfortunately.)
+A lot of the memory safety and performance benefits that we'll get from
+using Rust code are going to involve core functionality.  I will admit
+to having written my share of segfaults in my time as a C programmer,
+and if I can write substantially fewer of those by using Rust in core
+places in the code, I'd like to do that, especially if that means we
+have fewer security problems.
 
-Is Mozilla comfortable with providing that service for that amount of
-time and having every Git installation on the planet potentially use it
-at top speed[0]?  If we haven't verified that, then we should probably
-not include this service in the code.
+It also contradicts the proposed policy.  Under non-goals:
 
-> +sub fetch_config {
-> +	require HTTP::Tiny;
-> +	my ($url) =3D @_;
-> +	my $http =3D HTTP::Tiny->new(timeout =3D> 10);
+    Implementing C-only versions of Rust code or compiling a C-only Git.
+    This would be difficult to maintain and would not offer the
+    ergonomic benefits we desire.
 
-This needs to set `verify_SSL =3D> 1` explicitly, or we'll have a security
-vulnerability due to not verifying the certificate.  Our minimum
-supported Perl version is 5.26, which shipped with HTTP::Tiny 0.070.
-Versions before 0.083 defaulted to not verifying certificates, so we
-still need to set it explicitly.
+It also doesn't address the memory safety benefits outlined in that
+document, including the fact that memory safety vulnerabilities
+constitute about 70% of vulnerabilities in software written in
+memory-unsafe languages or that the U.S. government is planning to
+classify development in memory-unsafe languages as a "Product Security
+Bad Practice".[0]
 
-[0] Even if we don't think users will use this that way, with the number
-of Git users, there will be a nontrivial amount of users who do.  Many
-of them will not realize they may be causing a problem, though.
+So I don't think this approach is going to work.
+
+[0] To be clear, I don't mention this because I agree with everything
+that the U.S. government says or does (I certainly don't), but because
+this advice (which I believe is correct) is influential on policies
+around the world, including in governments and large companies, and that
+will affect people's willingness to use and adopt Git.  I would like Git
+to continue to be the version control system of choice for users around
+the world, whether at home, at work, or in the government.
 --=20
 brian m. carlson (they/them)
 Toronto, Ontario, CA
 
---g1gI40Vj3Ugo6gA3
+--vPRwqEXTNQ2r4hZX
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.4.8 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaK5RIgAKCRB8DEliiIei
-gbNZAP0eus83XKtXqTr+EGHd0bA1paikLj3u0vSn98qM/oJKeQEAydVSm4y1jhuK
-qFQQ+IW7Yi0XUmPoQlIY6jyMNOeljg8=
-=nHH3
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaK5WhgAKCRB8DEliiIei
+gUVBAP9LeDpahSr3yDekZm3dQO1u5HeYalZEJsG1ZEQcAhx0+wD/dqLWomogRttu
+fe18b0RT2yjYAgA8SHinJe3gDjQf3Ac=
+=CFzY
 -----END PGP SIGNATURE-----
 
---g1gI40Vj3Ugo6gA3--
+--vPRwqEXTNQ2r4hZX--
