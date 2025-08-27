@@ -1,64 +1,68 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8339A2253EB
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 07:17:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566D1313E22
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 07:22:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756279047; cv=none; b=EW8Hwi/mJumJxrIii9zttnB/BO0LGpnY5bDoE4zHT6Sb2aOUvOxq+MliNztI6FrppHOSKITZyAKn0wRQ7D3qoDpIQy2bnn5UcH7IMMBkuBBTaO+l+ddqpS2MjGkRhw7aVwYhENRdD6a5p2MEVS1r3huHJNvjYxuddfDs5icbZ0I=
+	t=1756279351; cv=none; b=HshQYVLkTJV5F7vaSBHcYQFEWuMM7frbQ4ilka7Yc/HinZb9xJ+OpJwbckcpymy+xjYjIDQ0WWe5IRO/UeMmYyX/3OqMYyLfkt5wCCeKDEfPPBNzXT8xTG3zMBDo60AhbH9T/ksMNBFVvCC0GHnSrtR+esb7hAqjwF9ERrPa5ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756279047; c=relaxed/simple;
-	bh=hJTGvZ2VovNU2PYN7HA7zFXmSEGgVJ6YOKuD69znzwM=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=c+w3S0jJzjVlln1Z/AJkIH9M5o1CNmGxwknJ/Yootj22yODhqYWQGukPG4tSVr/tDteDc4bzGoBqrrxTlEgMIUPZCLVKN5hD4R/IadShY3O0vc3Z/ZaGBKWwZG7nqm9MKBUvzQNPK+ii8U2gE1CiruohRL4xS+Np2/sNM7swL9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TlZ+rGyX; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1756279351; c=relaxed/simple;
+	bh=FgLw1vP4/2kmPF8Y8BLoI6IpXVh2dLkRXwZqDq7UYi8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=gMGMALSSORxIvjWTypHZp/fP6yCKIpl+rPj4MztC74T5Q71I2B3H1TD5kvb+fXWIZc9Wbk7Ql5WNSOXWavCr5+FusELfoFbkrAjP6L13Z6sIo1rerMD2tY7UZeFhChW0xMm9hHg1WjgDA3vIqWOXGiCB9zFgtieRV3UBMwimLhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ho/BlhE2; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TlZ+rGyX"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-45b4a25ccceso38353555e9.3
-        for <git@vger.kernel.org>; Wed, 27 Aug 2025 00:17:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ho/BlhE2"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3b9edf4cf6cso5205193f8f.3
+        for <git@vger.kernel.org>; Wed, 27 Aug 2025 00:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756279043; x=1756883843; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756279347; x=1756884147; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GJcEg2O9nC1jsF4pxwvSabn3qPD8ZjzwktICJV7Pi3g=;
-        b=TlZ+rGyXP6/tRpYdqAMzW9RDOBR/MksPRNZ8pFvBtAf9YgdoPmQudG3t+GV4vxzwDp
-         7c1QolPlpvOAFeYCa5GMNe+LtTzrYgzT1G9ynziB98L1cFjmSrgN/Brs3i/ZTKWCPiPD
-         6xWGYYayMn0JWfKrHUejPmpE08It4fkqf9Yir8H9OXezjVrYHt8rLQECey4cMAolcpci
-         TLOw/6AKz7leFGqPj5KlnM7xL1gDtl52RnoqxDq/RjcVilcy0ofZzi0jr3uF6G+8JDuJ
-         RZzREuAt4319QnK2rNbZ4dBWn/9lwPIINkm9tvFlRyA29oXm19Ckf4xQTzFO9b7BL9G4
-         OK2w==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yfQb6PAAyNAZML7RXk3FVm5vx1OgqcT7pe9Cr6fGhd8=;
+        b=Ho/BlhE2wyXTticRhU3rZRVC9IX5DbjnMNRc47XX650qAnqJi/meCLORyB3cEtObGl
+         p416c8hp3xMsiR239dwgKekAWT+DqFNKGCUzUuww1kacAt2gcBrjnyUJnu1nk8fNna8b
+         7d10UrVjrPrVEkMXPAL/3w5wIql1alEdAOOC64ZR/XKetq2dVh6VnFJn9U5ZUHSr+BWo
+         KQw4ZCAZnU6eNJ1lvWUdbbImtgUJ51fF7EOY0i412WcHDCZ11BfUfWtQwVBsF6jpbPtV
+         yE8GCFCIzsieuy44wTq0eg8irpIaMHgI57uBmFzZKJaic0CJPNQG/nmstiuCa7CQfjNj
+         c8AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756279043; x=1756883843;
+        d=1e100.net; s=20230601; t=1756279347; x=1756884147;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GJcEg2O9nC1jsF4pxwvSabn3qPD8ZjzwktICJV7Pi3g=;
-        b=MH4xqb06emLz6I6ws6hBEqW9ccIhBYFn0tsVrGjXsKPurm98uNucTWZYch4pbyAHoh
-         w/u5Ej/bSPc9uL4csdWUePEW2qTxRIHHDy/6P04Nkqxq036ZDZH/2CjEx/fp3i6vKfpQ
-         O2BWDFfeX5F+B+5r2EEUGv8hryeudPcqU8OvUVhqkoFrIJJ/5Q48+q/1XRmbp2WZUweR
-         lt5KQD3/sI0i8Ho4n5d/3pZHmKum0wmK046B9CUZiwQLF77KKVm2sw1lqxDuKx7KarW3
-         67KTzoidb551iK5jAPf11ejSCP8TYaap4nnCc6rIEGkcN16FlTUw68t7XudDzbMXcz8r
-         Cttg==
-X-Gm-Message-State: AOJu0Yw2ETCZuWBiJFAEVwPQnQga0wVxdMqRtLBaOy27mQYui+w3Ft6K
-	A+C3pKcG4OdTJGOPxHRhYXQNfhsDau+oxnUt4tFMoGReCYf+N+jfCEr7kSkXZg==
-X-Gm-Gg: ASbGnct5XNfZGCW2MMqrnjCw5rvZp8RKceVdt2d75p9fAAY/SwvvBKUeMMfPLv5HhSh
-	+1srLSJwIs51hdg5LvvGCU5KCbqcafzn8SjxEfQRRGn7pQ2YKOf01+nEWltq0LkDdQyB9NOQSnu
-	3TF9U/npJVKugzo9o7CDA3CSZu3T0mII9DLpCZfGoKHhWwiiVJea0NBo8lAjal7SllSUyVnhoV+
-	/vphd1rHlUeueg+4GnDycC8cNpym8y15eiOGJkUS8I+XtEdVWOzsaEJY35JCjjnH0HPXTbNpJtN
-	VvXdLe9Geh7OwQLR9nrUSeR6SnbXUGhrB+loPrQTshbqgg/Y40uc3J5D3AniHLtiLNkstGwp7B9
-	nwbJQFSSBoF/6Zj4TJA0Hc4tlRtBzf77pje5mZXaSRvmy+iFS
-X-Google-Smtp-Source: AGHT+IEprWGX9amwadbnJplJQT9ltX01nR3mnDfk5xNNOhFI0KRevfDoQScnTVEiRf/8ZhYRNcczwA==
-X-Received: by 2002:a05:600c:3544:b0:459:d709:e59f with SMTP id 5b1f17b1804b1-45b5173f9d3mr143528355e9.0.1756279043183;
-        Wed, 27 Aug 2025 00:17:23 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yfQb6PAAyNAZML7RXk3FVm5vx1OgqcT7pe9Cr6fGhd8=;
+        b=ZxAjOhKYsA7Lk99ta5E4oEK8gJG3ik507pQb1WeoNWZR0MmEYYskGx2kZqsoKnk4Fe
+         IIvhnJp8ih7oZGD6L+4g9lqXJG0SfEJsRoWO+/znSa2ynag+FGT168zB3ez0rKx4/iHZ
+         6U/le0Chunb5ISXVhFZl2d1V0PYLRhSRQfvomLW7io1q+cZbrC9fpgkUWSWMsZmSexuB
+         YpELw/ouHQdb99AcjUMSyCfFVlQOQSSmFHUOrN/6GyJoNndGKzF9K//s+TV73fw3Pxf/
+         WV845Lyu9A1jW1zYPQijrIHRYUpZMq+zD2kETmQ1qNZ/cGD17xHN6TyEPVv129OlupCw
+         Jy6A==
+X-Gm-Message-State: AOJu0YxaiOXGXbZCainH+Lf1MWP6rzhTY91S+0luUQkeHPO4so+ZqKa4
+	TEq6pa1AzYZumwzIlIxOakAsA2hhse3RAPS3C4jAg9dPkfhUcG7CwFK1Xt3ZNg==
+X-Gm-Gg: ASbGnctgQ4z/9JbJBCMH9bMtRcGMUP4EsJ/ogh5qAzQr4G85RLeT27OayMiJLtXpyKY
+	mHJdxvRDm/An+pmS6PrMGKDTHlLCD+G6PA6KKvOTdiYX5VTBr/ksf+2FBa6gN4BDGm/pAQWct3O
+	it5TJSgmZqZxylnum2WtSkXj3X3AdZFWa6AS1AGX+c3NpD0H4nZpOwp0Km3oBWmj5BHOSC7/bjQ
+	o3MmSjummTHkqcX4bLy4oHxicsjFjf5ioknWm7aG2r9TuFM+LtPVFAgWk5aUoaI4LCfY/krHwYr
+	Tj5npiKhpOfi7c3bqszQPU8rYMaPHf+4VJ5FlISyDQ0/andPuBpZVFLB9dRKfINZBZxsk3A7X7N
+	rhs4J1dWpvDOhyhTXrepn7lC+9MUnKc8++12W5w==
+X-Google-Smtp-Source: AGHT+IGRVn8/7E+L3/wFBUFFWV22lH55+onfejhAvZbnozj7+a26V/M3YEHxin8vw2ZrF1+xtsmTyw==
+X-Received: by 2002:a5d:5f86:0:b0:3c7:516c:f664 with SMTP id ffacd0b85a97d-3c7516cfafcmr9515977f8f.50.1756279347175;
+        Wed, 27 Aug 2025 00:22:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b6f0c72f8sm18150565e9.3.2025.08.27.00.17.22
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c711211cd3sm19070812f8f.40.2025.08.27.00.22.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Aug 2025 00:17:22 -0700 (PDT)
-Message-Id: <pull.2042.git.git.1756279041881.gitgitgadget@gmail.com>
+        Wed, 27 Aug 2025 00:22:26 -0700 (PDT)
+Message-Id: <pull.2042.v2.git.git.1756279345929.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2042.git.git.1756279041881.gitgitgadget@gmail.com>
+References: <pull.2042.git.git.1756279041881.gitgitgadget@gmail.com>
 From: "Emily Shaffer via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 27 Aug 2025 07:17:21 +0000
-Subject: [PATCH] cherry-pick: document rev-list options
+Date: Wed, 27 Aug 2025 07:22:25 +0000
+Subject: [PATCH v2] doc: document rev-list opts in revert, cherry-pick
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,26 +80,63 @@ Cc: Andrew Jeffrey <andrew@aj.id.au>,
 From: Emily Shaffer <emilyshaffer@google.com>
 
 In f873a273d1 (revert: accept arbitrary rev-list options, 2010-06-14),
-we added a handful of new options to `git cherry-pick`, but did not
-document them except by example. We have a nice shorthand for adding the
-rev-list documentation, so let's add it now.
+we added a handful of new options to `git revert` and `git cherry-pick`,
+but did not document them except by example to `cherry-pick` only. We
+have a nice shorthand for adding the rev-list documentation, so let's
+add it now, to both commands.
 
 Reported-by: Andrew Jeffrey <andrew@aj.id.au>
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
     cherry-pick: document rev-list options
     
-    Reported on socials (https://social.tchncs.de/@arj/115099134305875190).
-    rev-list-options.adoc is unfortunately pretty verbose, but I think it's
-    still better than having undocumented secret options. Or, worse, options
-    that are in examples but not anywhere else ;)
+    Ach, sorry for the noise, turns out it touched both revert and
+    cherry-pick, might as well do the docs for both.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2042%2Fnasamuffin%2Fcherry-pick-docs-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2042/nasamuffin/cherry-pick-docs-v1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2042%2Fnasamuffin%2Fcherry-pick-docs-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2042/nasamuffin/cherry-pick-docs-v2
 Pull-Request: https://github.com/git/git/pull/2042
 
+Range-diff vs v1:
+
+ 1:  fa352ccda08 ! 1:  f41cb4e8abc cherry-pick: document rev-list options
+     @@ Metadata
+      Author: Emily Shaffer <emilyshaffer@google.com>
+      
+       ## Commit message ##
+     -    cherry-pick: document rev-list options
+     +    doc: document rev-list opts in revert, cherry-pick
+      
+          In f873a273d1 (revert: accept arbitrary rev-list options, 2010-06-14),
+     -    we added a handful of new options to `git cherry-pick`, but did not
+     -    document them except by example. We have a nice shorthand for adding the
+     -    rev-list documentation, so let's add it now.
+     +    we added a handful of new options to `git revert` and `git cherry-pick`,
+     +    but did not document them except by example to `cherry-pick` only. We
+     +    have a nice shorthand for adding the rev-list documentation, so let's
+     +    add it now, to both commands.
+      
+          Reported-by: Andrew Jeffrey <andrew@aj.id.au>
+          Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+     @@ Documentation/git-cherry-pick.adoc: fail unless one of `--empty=keep` or `--allo
+       SEQUENCER SUBCOMMANDS
+       ---------------------
+       include::sequencer.adoc[]
+     +
+     + ## Documentation/git-revert.adoc ##
+     +@@ Documentation/git-revert.adoc: include::rerere-options.adoc[]
+     + 	configuration variable can be used to enable this option by
+     + 	default.
+     + 
+     ++include::rev-list-options.adoc[]
+     + 
+     + SEQUENCER SUBCOMMANDS
+     + ---------------------
+
+
  Documentation/git-cherry-pick.adoc | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/git-revert.adoc      | 1 +
+ 2 files changed, 3 insertions(+)
 
 diff --git a/Documentation/git-cherry-pick.adoc b/Documentation/git-cherry-pick.adoc
 index 42b41923d5f..03848aa9f21 100644
@@ -110,6 +151,18 @@ index 42b41923d5f..03848aa9f21 100644
  SEQUENCER SUBCOMMANDS
  ---------------------
  include::sequencer.adoc[]
+diff --git a/Documentation/git-revert.adoc b/Documentation/git-revert.adoc
+index ffba365e639..28827807473 100644
+--- a/Documentation/git-revert.adoc
++++ b/Documentation/git-revert.adoc
+@@ -122,6 +122,7 @@ include::rerere-options.adoc[]
+ 	configuration variable can be used to enable this option by
+ 	default.
+ 
++include::rev-list-options.adoc[]
+ 
+ SEQUENCER SUBCOMMANDS
+ ---------------------
 
 base-commit: f814da676ae46aac5be0a98b99373a76dee6cedb
 -- 
