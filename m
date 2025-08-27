@@ -1,85 +1,87 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE48243964
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 17:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D33273D68
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 17:30:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756315283; cv=none; b=X8DPEd6E38mcQbX2DjdAoUm2vsM8Xel3KeY8mwMhRSxn9j3MJWi2DfCtjqyPbzkz0B4LLFHSxABpjGoGs6uL1GM0u9NzdqJauL19NmpMUwr/VLF79xsRNavk0rR7YttWQ5qO5GvBFtsvB+khrhHy50r/zL/QZuhqX8vvyNFD2UE=
+	t=1756315851; cv=none; b=iEASlkjbx5B97Rcgy5dS+J/NCN4KGSaR4sKsAsEPmvDEXZvG/H8GaXiSq6LLjdfHi9DnedNoyXicUHfZxxMMbG+pb3oY+khcBSh+x/cjw7uzYbKC0h/VCk8gECG8HqDUEDKJGYzXa+qpvlF9O2t2RuqtTI3E4FFOOHp2lGt/HvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756315283; c=relaxed/simple;
-	bh=2Ma91XyLWOU+GzBaZxQqWyTn94+Ccagi7XUeheaeMEk=;
+	s=arc-20240116; t=1756315851; c=relaxed/simple;
+	bh=Ey/fPxZ1lDt4dgIuGbHAgxOnN36FscxGicN3r7Jge0U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iFIS6rYxO1dTAn4aKugG4+nJE88SbEpxu3hNZnroY9Lhl74I0hKIXapH32ahZweFLdrBBsm20WmUVACcFcEHvoWTE/kI/HINMzZRcN3HZFYKNqFKRhKpY+lwVWUdkeN6I71qav6J/f8pyII5XKNFd+5yy3Q5AK/n1YC35QZNxLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Z5G1c6hv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZW4+Nc5R; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=Vh8G7UxVR4oW/nfo3N2V6lqo7RDV+2OK6wiJPMLcaDGOKs0gJeEEzZPqK0Qv7YDuu+sQmSAnRj+Fofy94buBFUS0XLFpWgtHJZi6CluY+3GPNyje+LvzSYumXGN/1R4m+v8A63QXl/y+hh0YxwJ7PnqHiZlhrZP9arAg57Eiz1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=yn9DdMst; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CC6Qfhgd; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z5G1c6hv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZW4+Nc5R"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id B8C4AEC00A7;
-	Wed, 27 Aug 2025 13:21:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="yn9DdMst";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CC6Qfhgd"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3BAB81400066;
+	Wed, 27 Aug 2025 13:30:48 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 27 Aug 2025 13:21:19 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 27 Aug 2025 13:30:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756315279; x=1756401679; bh=ECcI6VISrg
-	zsVhTgcMKzugX/syvbXlar2iEjwz2kUSE=; b=Z5G1c6hvVsD6Qjp2LPYZwdcbel
-	JxpouyvPVkO1A1PY8mYlrh1yUR++InDFYWoUv/RXqjQWNbzmqFiM+l7yCNzQRch0
-	2idSYyZASgVp6UbH/nB0ac5O4aBgUB2qnTmdgdLn25Lnt08LRcEVykfurTC6LWTd
-	0ZOyG8V5RRXgpwvf2axlB3zJXJiUdonh5oQ2og4rAYeawVhcJeKLKJ0uTXySzAfE
-	RaUHiVf+tpo2pHSzWLRymKSsMGn2LZpXe6pj4NAebZadsLY8tXAqHdrZMqIIAcvN
-	+dTHSpGr8cKPQs1vBz5oPCWOso/+PocyJZejxNMlEMX5qSd0ZjfACC16bRUA==
+	:subject:to:to; s=fm3; t=1756315848; x=1756402248; bh=xdaRn3IRvH
+	cqdFJ4JqJiiTLmTAMDR/SFBeUXQ2f0mlE=; b=yn9DdMsthJaUfXPGz9vWUp90KZ
+	Jgxefm5rieeF3dhYbGjqChH8KRgLPAqGB7WHgoygR7xFY3HD29MDzL1FBAVism7I
+	yAeP82dG+rCepxTl2ub2Ejfnzl1H+fVgrVT3yXK/L01YcGnf5FAuMuL0jMnsr7T0
+	PGK3xI3NAAwU4yxv5nx14hGXYq+/XmGvEgN55czxWRnAoLy9YS1EGuOyRCSOljrf
+	cz40A9BoWo/Cj9BEMRbko8MZdQEvz7ujlnRCRG3YaCgQH7RdWNA3bZzg1erxunIY
+	xDatqKijDcbab6Qy62IJzcyFGeFcvNZSp/B7FjMXQdWrOJLSurLYX+gNCZQA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756315279; x=1756401679; bh=ECcI6VISrgzsVhTgcMKzugX/syvbXlar2iE
-	jwz2kUSE=; b=ZW4+Nc5RX4d8I0fSXnMnT2Y1eVkl37pCyUxuhKPVsYUogoK90Ty
-	WnnZHI0oTXMgk9VYpdptKwj6yeyfXjvoJ8eTyFgjrPZk8oUIWEtTv5Nld76yUU2y
-	xl0D6DzXGArr2xIaaoz+GtHfz6OrqcGNEoq2RyEdwZBnYQMdfGp25HWNM+QS3ct7
-	4qQtZTzHXmpOjmDzRvckk9/rbNaUGH4b7QaEJAZWEe6rTMYpQcSq4hsvBituKvYA
-	7Wt/188s7wwbTYSSRLsQalqRawEgzN2pc7WK0ON1A2VLHLxoPPMQPI8WpNci9LGS
-	+Z4EX2MXYJB8BjXJMMEBI5+CXVf9r2I2IOQ==
-X-ME-Sender: <xms:jz6vaKV6Wl5uDJsyZS6IBjxMgN8YDI3eeA3Rq0LtxGQGeTJrHr29uA>
-    <xme:jz6vaCEJ5T_pNxkZS8EYusDFYvGvd8sW1-x7MeGea60oCFlVcTRBNHxIeibILt5Hr
-    bjzVCfpuTroDVkP0Q>
-X-ME-Received: <xmr:jz6vaE2zxYh5nqGyyIT2PDfLb5ZtcPu029rz1A2GcLEJ0ZwyNhrxj4Q2xXw5wxEoby6ANGwN_FECx1YQR6j6ZrClcQIa_d5te6eYGeI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeekjeegucetufdoteggodetrf
+	1756315848; x=1756402248; bh=xdaRn3IRvHcqdFJ4JqJiiTLmTAMDR/SFBeU
+	XQ2f0mlE=; b=CC6Qfhgdce2IKudue1TENCF0r8CyRxD/VsbzyalbF0vEKYKO1lY
+	DGF9sP78RgKG1S5bsCXmK8ptLmrKmT2ybAawEBdUjUNl1mW1hn0TBr8mqIRqOnbK
+	b3XUUTqZWb+yaG31BQvEq06K7tTSN4uRMNhcNyHt63pgc7GCgH49jYfvSiS2tYEa
+	YaNz1n80FqA66MYQeEP2v7rQqz7SUILuGcD/6FVYZ4Sa2zDMuumNGgFG0LKVRKv/
+	NIld8gwHV05yTRFFaBfCfQKTNSXiCAfypGv8Ijk6UMOYFdZqA04PTz/nMfmQ2ovO
+	GtMiPjTeW604oXJ4d3b+r6gVgtL3UMnlf7A==
+X-ME-Sender: <xms:x0CvaHZptRkIwCz2CF0olz1KZqm0eHmMXT0mdyRJqdVZhSvKbXuDBQ>
+    <xme:x0CvaO1FicR48EMBlD3B-IblmES8Sj0nGkiBVKHqibTaZPywGVDfaropm4BFuODlD
+    YoqhtR1uO8jPrqJaA>
+X-ME-Received: <xmr:x0CvaKYjr-N9jJhe5Qjfgh0Zn1C-rlel2qH5pqhI1dXDtdQawcAs5PjCspr68SeCJ3hhGgW5jpaQ-7qS5AIoXjtzbiVr-zok1nuVyjU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeekjeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
     drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpth
-    htohephhhurghnghhsvghnfeeiheesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:jz6vaMNCViHtXPRpm0Pqs5TuJ2_fLiuqBm9TiFDKbAkdCgVI5hDyUQ>
-    <xmx:jz6vaL74dVtbwHSM9C93JAbDGKwtvcQXZKoFGg5eWoOQYDewhGY9Lg>
-    <xmx:jz6vaO3kFlhrqLrw16M5nGPwK10E-uW0bo5BXhlVt9wOy70FBcuGcw>
-    <xmx:jz6vaEyoWZu5IBVxDE6qFFr_u-FUzumupCIjglNRs0sNGBKNAA1AMA>
-    <xmx:jz6vaLo5aN4ClO0vby-_rwcjXmN-Pnb_U44lctb3xn3KTRLOwuqYYGj4>
+    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinh
+    guvghlihhnsehgmhigrdguvgdprhgtphhtthhopehhuhgrnhhgshgvnhefieehsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:yECvaOIgF4NsqCiY_ZcadGoNfCzPt2l4F3a1p-Pf2bjAyuZYMmOqTA>
+    <xmx:yECvaBEr7HPiDt7gIl4wo8xpIGDgHuX3hEioafLfPq6X6H83DQd5Dg>
+    <xmx:yECvaNsS9AlFXljxdKZjXfinr556vrz5aK3AcYHaEXV_VP83uiCX3g>
+    <xmx:yECvaIvNjtCPjKSxurQ6ICkkeJU3bI2NAMp7i_XI53fFBVrrr39qGg>
+    <xmx:yECvaO5sP4igvuxStJizg0s9PpgV3RGDEPAVtuIXR4prEG0YhnXY2Wvu>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Aug 2025 13:21:19 -0400 (EDT)
+ 27 Aug 2025 13:30:47 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: git@vger.kernel.org,
+  Patrick Steinhardt <ps@pks.im>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
   Wing Huang <huangsen365@gmail.com>
-Subject: Re: [PATCH 1/6] t0018: switch default branch name to main
-In-Reply-To: <7c20f7693f4518ef79be0a2277515bb00d912213.1756308283.git.phillip.wood@dunelm.org.uk>
-	(Phillip Wood's message of "Wed, 27 Aug 2025 16:24:45 +0100")
+Subject: Re: [PATCH 4/6] t0613: stop setting default initial branch
+In-Reply-To: <bbf79dd64fef485b75bf0fbb37322a6cff7df7f8.1756308283.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Wed, 27 Aug 2025 16:24:48 +0100")
 References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
-	<7c20f7693f4518ef79be0a2277515bb00d912213.1756308283.git.phillip.wood@dunelm.org.uk>
-Date: Wed, 27 Aug 2025 10:21:17 -0700
-Message-ID: <xmqq5xe81y0i.fsf@gitster.g>
+	<bbf79dd64fef485b75bf0fbb37322a6cff7df7f8.1756308283.git.phillip.wood@dunelm.org.uk>
+Date: Wed, 27 Aug 2025 10:30:46 -0700
+Message-ID: <xmqqwm6ozn7d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,72 +95,57 @@ Phillip Wood <phillip.wood123@gmail.com> writes:
 
 > From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> These tests use "trunk" as the default branch name but the exact
-> name of the branch is incidental to testing if the advice message
-> includes it. ...
+> As the tests are all run in separate repositories, set the branch
+> name to "master" when creating the repository for the tests where
+> the result depends on the branch name. This is in preparation for
+> removing GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME in Git 3.0.
 
-Would't we be better prepared for a future where advice messages may
-start including the current branch name, though, if we made sure we
-are on the branch whose name is known?
-
-> ... Git 3.0 will change the default branch name to "main"
-> and remove support for GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME so change
-
-Will it?  I would have expected and hoped that this support won't be
-ripped out.  The political atomosphere to decide if a name is
-"correct" will change over time.  When somebody comes up with a
-reason to burn 'main', just like everybody moved out of 'master' a
-few years ago, wouldn't we be better off to keep this mechanism?
-
-If we truly believe that we have chosen the forever-perfect name
-that nobody would ever bring up renaming again, we can rip the
-support out.  But I am not that optimistic.
-
-> these test to use "main" instead of "topic".
-
-You meant "trunk" here.
+I do not agree with the statement that Git 3.0 should remove support
+for GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME facility in its test suite,
+so it is somewhat moot for me to review almost all the patches in
+this series, but this caught my attention.  As this one needs to fix
+the initial branch name to a fixed string, no matter the hardcoded
+initial branch name of the time is (even after we rename again from
+'main' to something else), I do think this change is VERY MUCH a
+good thing to do.
 
 > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 > ---
->  t/t0018-advice.sh | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  t/t0613-reftable-write-options.sh | 18 +++++++-----------
+>  1 file changed, 7 insertions(+), 11 deletions(-)
 >
-> diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
-> index f68e08d0b14..c695ade4be8 100755
-> --- a/t/t0018-advice.sh
-> +++ b/t/t0018-advice.sh
-> @@ -2,7 +2,7 @@
->  
->  test_description='Test advise_if_enabled functionality'
->  
-> -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=trunk
-> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-options.sh
+> index d77e601111f..b547e12d66d 100755
+> --- a/t/t0613-reftable-write-options.sh
+> +++ b/t/t0613-reftable-write-options.sh
+> @@ -11,16 +11,12 @@ export GIT_TEST_REFTABLE_AUTOCOMPACTION
+>  # Block sizes depend on the hash function, so we force SHA1 here.
+>  GIT_TEST_DEFAULT_HASH=sha1
+>  export GIT_TEST_DEFAULT_HASH
+> -# Block sizes also depend on the actual refs we write, so we force "master" to
+> -# be the default initial branch name.
+
+We may however need to keep this comment somewhere in this file, to
+warn against future developers that all "git init" invocations must
+use 'master' (by the way, would any 6-byte name do?  I dunno) as the
+initial branch name.
+
+> -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+> -export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 >  
 >  . ./test-lib.sh
-> @@ -33,7 +33,7 @@ test_expect_success 'advice should not be printed when config variable is set to
 >  
->  test_expect_success 'advice should not be printed when --no-advice is used' '
->  	q_to_tab >expect <<-\EOF &&
-> -	On branch trunk
-> +	On branch main
->  
->  	No commits yet
->  
-> @@ -55,7 +55,7 @@ test_expect_success 'advice should not be printed when --no-advice is used' '
->  
->  test_expect_success 'advice should not be printed when GIT_ADVICE is set to false' '
->  	q_to_tab >expect <<-\EOF &&
-> -	On branch trunk
-> +	On branch main
->  
->  	No commits yet
->  
-> @@ -77,7 +77,7 @@ test_expect_success 'advice should not be printed when GIT_ADVICE is set to fals
->  
->  test_expect_success 'advice should be printed when GIT_ADVICE is set to true' '
->  	q_to_tab >expect <<-\EOF &&
-> -	On branch trunk
-> +	On branch main
->  
->  	No commits yet
+>  test_expect_success 'default write options' '
+>  	test_when_finished "rm -rf repo" &&
+> -	git init repo &&
+> +	git init --initial-branch master repo &&
+
+And being explict like this is a good idea.
+
+I am curious how the CC: list was formulated, though, as neither
+name comes up in "git shortlog t/t0613-reftable-write-options.sh".
+
+I've added Patrick for comment (primarily to pick his brain for the
+6-byte thing).
+
+Thanks.
