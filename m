@@ -1,212 +1,116 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4C11A3172
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 02:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8339A2253EB
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 07:17:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756260445; cv=none; b=r+46NUKcDQKO2W8y9o+HwyyAMBMb3xAq9srs1BNdWb64UbclXmFC1K5N4T5g/lWdaT+Wps0nwcxb4nQ53D3swmbOAUIkMDDFsLXgR/0mxTZPpGJM5Td8uqO9Tr8kQcefEC1sChZIgNs4HD3H/m94RHhTLlLW02brGkQZx5P+y0A=
+	t=1756279047; cv=none; b=EW8Hwi/mJumJxrIii9zttnB/BO0LGpnY5bDoE4zHT6Sb2aOUvOxq+MliNztI6FrppHOSKITZyAKn0wRQ7D3qoDpIQy2bnn5UcH7IMMBkuBBTaO+l+ddqpS2MjGkRhw7aVwYhENRdD6a5p2MEVS1r3huHJNvjYxuddfDs5icbZ0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756260445; c=relaxed/simple;
-	bh=7Abg3cYIf+AQ8ycdXqKFJeqj9nW3y5ucFNKiXV9wMu4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QcoFTlA/s7/rwioQkdbCv2q1J79GmBOoekRgjncFimlfO+5bg5QFhO+YNP6MVwYp/UWapdN/7me3OnOXU9CbAri0wVfMsy+JB7YHpcn3AQNMUynygKFDj8XNgAv68hE33nrgjxAKAHPUI54ixZ0R6os6+VfJjg9AY+ue9S6q2vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QG4a+DOA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fjk2034L; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756279047; c=relaxed/simple;
+	bh=hJTGvZ2VovNU2PYN7HA7zFXmSEGgVJ6YOKuD69znzwM=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=c+w3S0jJzjVlln1Z/AJkIH9M5o1CNmGxwknJ/Yootj22yODhqYWQGukPG4tSVr/tDteDc4bzGoBqrrxTlEgMIUPZCLVKN5hD4R/IadShY3O0vc3Z/ZaGBKWwZG7nqm9MKBUvzQNPK+ii8U2gE1CiruohRL4xS+Np2/sNM7swL9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TlZ+rGyX; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QG4a+DOA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fjk2034L"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8B3ACEC00C6;
-	Tue, 26 Aug 2025 22:07:21 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 26 Aug 2025 22:07:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1756260441;
-	 x=1756346841; bh=CJuhA9WuvbiYYvVxreKOGBUPLQMO83tQOxn1CbU/+vs=; b=
-	QG4a+DOANLnD0bPbw/Lo7P7Hp0+UwfalOLciEgu/6OJxmQskpZ9m62jHDKN7/bN6
-	AXYSRT5N40ZwGTdVLtXtSjexfZ3nbeVJQfkkPaon6xMsIXVEtfSmFv4I5szFFThh
-	UcuQsJ/jLaacuiAdZiV1WBx6fCnlwwFkv/tZzlzXN0VFP1fPMKFIhmZ8g7x7aeNP
-	CkoisLU3CWvS6LI4h4/qjcU4oybdYQXTvx+DV3Bn/+8ydaANP9VmyHj9tss+49jG
-	R7NXnnSQ1oB5PrVdrvtO1b4ZdYUUlYz+lSCq5iv7+RzuMi7hbpkBj0qJfnSDTSWE
-	kUqOmh2d6uWH5Zygl8wB9A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756260441; x=
-	1756346841; bh=CJuhA9WuvbiYYvVxreKOGBUPLQMO83tQOxn1CbU/+vs=; b=f
-	jk2034Ly4HlhA6ti3GovdhhB2IZp27Ke10zJWG6TeGoEHAdDyJD+0P+9UX0VZZAl
-	VXZuBc0o+cggzw8uB3EgWIGD7eMjGI0EPWxsHzLyrh+QhJngRABSSWn3rFT9sF5e
-	LP0ewBBvA76Q1bkEnuKfAbjPiKgoR+hp6txI88K7k09V/bLnnAdY+4IBjsfCzrEQ
-	WYGv7D21//XcxD/9tdJ5/0b3YOA9DYdjzv2WKshvqKg+DTj54YFH/3QwJw2hKw3P
-	cfVF47Vw5KNFv9CTP3mZ+ivdAGXplI5HpVJgagomAe7vGzK1Y0iVX7K+pNtkJEjm
-	hYd5ThEHa1kGLHhiViW0A==
-X-ME-Sender: <xms:WWiuaKSzDx-5TsKjm8_8BG1bOvtWy1-lBQrW95rbFm5r3_61_OFvbw>
-    <xme:WWiuaLRnV8sq6uvCd9HdghCz-SVxuG8v6gYHH3IJ-FER8v888PNRvWEmVxj7qwKwv
-    aXA-hbU-C_7PHTrBg>
-X-ME-Received: <xmr:WWiuaOQJ9FL-P55guAGNht_J7-rMsG7sZ3tHfJu_ejr_EJjWY-U2A5taGoGYb_HB_lJ_StKuMAX05XBGHBTl9WFNYg6W9f_gB-pHddE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeeileduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeehteeivdeuvdevffdttedvheelgedtudevhfekheffteeuuddutedttdfh
-    ueefffenucffohhmrghinheprghllhhotgdrtgifpdhosghjvggtthdrtgifnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhes
-    phhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpd
-    hrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnohhurhgrvg
-    hllhhmsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvrgesohguohhordgtohhmpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:WWiuaA7LEJ4SfIoo8QnRE1PzlSVUkeL0j5CJTYzndQw27yvg_8dp7g>
-    <xmx:WWiuaK1iebw8xcGR-ZEYreNdKVq7ql9YpxZIOzksd7MB3zm_y21P2w>
-    <xmx:WWiuaLC5C6Iqd10vjHY2Q5U7chJeFFp8yGkF_GjArGeYvMl6-aG6Pw>
-    <xmx:WWiuaFNxg00GIrE0zJts0wQt6JR_LmXbaYP1xU6PWGGWQrN3V5YdcQ>
-    <xmx:WWiuaIPdnzl1_YoA4W-8jdMjbIps4CrNLFz3zZ5g7cIme9uOs6CWr_AB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Aug 2025 22:07:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9_|_Flare_via_GitGitGadget?=
- <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?B?44OO44Km44Op?= | Flare
- <nouraellm@gmail.com>,  =?utf-8?B?44OO44Km44Op?=
- <nea@odoo.com>
-Subject: Re: [PATCH] reset slab_alloc and state fields in clear_alloc_state()
-In-Reply-To: <pull.2040.git.git.1756238268790.gitgitgadget@gmail.com>
- (=?utf-8?B?IuODjuOCpuODqQ==?=
-	| Flare via GitGitGadget"'s message of "Tue, 26 Aug 2025 19:57:48
-	+0000")
-References: <pull.2040.git.git.1756238268790.gitgitgadget@gmail.com>
-Date: Tue, 26 Aug 2025 19:07:19 -0700
-Message-ID: <xmqq8qj5frfs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TlZ+rGyX"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-45b4a25ccceso38353555e9.3
+        for <git@vger.kernel.org>; Wed, 27 Aug 2025 00:17:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756279043; x=1756883843; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GJcEg2O9nC1jsF4pxwvSabn3qPD8ZjzwktICJV7Pi3g=;
+        b=TlZ+rGyXP6/tRpYdqAMzW9RDOBR/MksPRNZ8pFvBtAf9YgdoPmQudG3t+GV4vxzwDp
+         7c1QolPlpvOAFeYCa5GMNe+LtTzrYgzT1G9ynziB98L1cFjmSrgN/Brs3i/ZTKWCPiPD
+         6xWGYYayMn0JWfKrHUejPmpE08It4fkqf9Yir8H9OXezjVrYHt8rLQECey4cMAolcpci
+         TLOw/6AKz7leFGqPj5KlnM7xL1gDtl52RnoqxDq/RjcVilcy0ofZzi0jr3uF6G+8JDuJ
+         RZzREuAt4319QnK2rNbZ4dBWn/9lwPIINkm9tvFlRyA29oXm19Ckf4xQTzFO9b7BL9G4
+         OK2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756279043; x=1756883843;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GJcEg2O9nC1jsF4pxwvSabn3qPD8ZjzwktICJV7Pi3g=;
+        b=MH4xqb06emLz6I6ws6hBEqW9ccIhBYFn0tsVrGjXsKPurm98uNucTWZYch4pbyAHoh
+         w/u5Ej/bSPc9uL4csdWUePEW2qTxRIHHDy/6P04Nkqxq036ZDZH/2CjEx/fp3i6vKfpQ
+         O2BWDFfeX5F+B+5r2EEUGv8hryeudPcqU8OvUVhqkoFrIJJ/5Q48+q/1XRmbp2WZUweR
+         lt5KQD3/sI0i8Ho4n5d/3pZHmKum0wmK046B9CUZiwQLF77KKVm2sw1lqxDuKx7KarW3
+         67KTzoidb551iK5jAPf11ejSCP8TYaap4nnCc6rIEGkcN16FlTUw68t7XudDzbMXcz8r
+         Cttg==
+X-Gm-Message-State: AOJu0Yw2ETCZuWBiJFAEVwPQnQga0wVxdMqRtLBaOy27mQYui+w3Ft6K
+	A+C3pKcG4OdTJGOPxHRhYXQNfhsDau+oxnUt4tFMoGReCYf+N+jfCEr7kSkXZg==
+X-Gm-Gg: ASbGnct5XNfZGCW2MMqrnjCw5rvZp8RKceVdt2d75p9fAAY/SwvvBKUeMMfPLv5HhSh
+	+1srLSJwIs51hdg5LvvGCU5KCbqcafzn8SjxEfQRRGn7pQ2YKOf01+nEWltq0LkDdQyB9NOQSnu
+	3TF9U/npJVKugzo9o7CDA3CSZu3T0mII9DLpCZfGoKHhWwiiVJea0NBo8lAjal7SllSUyVnhoV+
+	/vphd1rHlUeueg+4GnDycC8cNpym8y15eiOGJkUS8I+XtEdVWOzsaEJY35JCjjnH0HPXTbNpJtN
+	VvXdLe9Geh7OwQLR9nrUSeR6SnbXUGhrB+loPrQTshbqgg/Y40uc3J5D3AniHLtiLNkstGwp7B9
+	nwbJQFSSBoF/6Zj4TJA0Hc4tlRtBzf77pje5mZXaSRvmy+iFS
+X-Google-Smtp-Source: AGHT+IEprWGX9amwadbnJplJQT9ltX01nR3mnDfk5xNNOhFI0KRevfDoQScnTVEiRf/8ZhYRNcczwA==
+X-Received: by 2002:a05:600c:3544:b0:459:d709:e59f with SMTP id 5b1f17b1804b1-45b5173f9d3mr143528355e9.0.1756279043183;
+        Wed, 27 Aug 2025 00:17:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b6f0c72f8sm18150565e9.3.2025.08.27.00.17.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Aug 2025 00:17:22 -0700 (PDT)
+Message-Id: <pull.2042.git.git.1756279041881.gitgitgadget@gmail.com>
+From: "Emily Shaffer via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 27 Aug 2025 07:17:21 +0000
+Subject: [PATCH] cherry-pick: document rev-list options
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Andrew Jeffrey <andrew@aj.id.au>,
+    Emily Shaffer <emilyshaffer@google.com>,
+    Emily Shaffer <emilyshaffer@google.com>
 
-"ノウラ | Flare via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Emily Shaffer <emilyshaffer@google.com>
 
-> From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9?= <nea@odoo.com>
+In f873a273d1 (revert: accept arbitrary rev-list options, 2010-06-14),
+we added a handful of new options to `git cherry-pick`, but did not
+document them except by example. We have a nice shorthand for adding the
+rev-list documentation, so let's add it now.
 
-This name used on the in-body From: line must match who signs off
-the patch below on Signed-off-by: line.
+Reported-by: Andrew Jeffrey <andrew@aj.id.au>
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+---
+    cherry-pick: document rev-list options
+    
+    Reported on socials (https://social.tchncs.de/@arj/115099134305875190).
+    rev-list-options.adoc is unfortunately pretty verbose, but I think it's
+    still better than having undocumented secret options. Or, worse, options
+    that are in examples but not anywhere else ;)
 
-> clear_alloc_state() freed all slabs and nulled the slabs pointer but
-> left slab_alloc, nr, and p unchanged.  If the alloc_state is reused,
-> ALLOC_GROW() can wrongly assume that the slab array is already
-> allocated because slab_alloc still holds a stale nonzero capacity.
-> In that case s->slabs remains NULL and the next dereference writes
-> through a NULL pointer, causing undefined behavior.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2042%2Fnasamuffin%2Fcherry-pick-docs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2042/nasamuffin/cherry-pick-docs-v1
+Pull-Request: https://github.com/git/git/pull/2042
 
-Let's not give such a misuse-prone API to consumers, then.  How
-about doing something like this  instead?
+ Documentation/git-cherry-pick.adoc | 2 ++
+ 1 file changed, 2 insertions(+)
 
-As Documentation/CodingGuidelines says the API functions for
-subsystem S should in general be called S_<something>, let's rename
-allocate_alloc_state() to alloc_state_alloc(), get rid of the "just
-clear" function and make it alloc_state_free_and_null() to do just
-that.
-
- alloc.c  |  7 +++++--
- alloc.h  |  4 ++--
- object.c | 26 +++++++++++---------------
- 3 files changed, 18 insertions(+), 19 deletions(-)
-
-diff --git c/alloc.c w/alloc.c
-index 377e80f5dd..3a5d0b2bd8 100644
---- c/alloc.c
-+++ w/alloc.c
-@@ -36,19 +36,22 @@ struct alloc_state {
- 	int slab_nr, slab_alloc;
- };
+diff --git a/Documentation/git-cherry-pick.adoc b/Documentation/git-cherry-pick.adoc
+index 42b41923d5f..03848aa9f21 100644
+--- a/Documentation/git-cherry-pick.adoc
++++ b/Documentation/git-cherry-pick.adoc
+@@ -174,6 +174,8 @@ fail unless one of `--empty=keep` or `--allow-empty` are specified.
  
--struct alloc_state *allocate_alloc_state(void)
-+struct alloc_state *alloc_state_alloc(void)
- {
- 	return xcalloc(1, sizeof(struct alloc_state));
- }
+ include::rerere-options.adoc[]
  
--void clear_alloc_state(struct alloc_state *s)
-+void alloc_state_free_and_null(struct alloc_state **s_)
- {
-+	struct alloc_state *s = *s_;
++include::rev-list-options.adoc[]
 +
- 	while (s->slab_nr > 0) {
- 		s->slab_nr--;
- 		free(s->slabs[s->slab_nr]);
- 	}
- 
- 	FREE_AND_NULL(s->slabs);
-+	FREE_AND_NULL(*s_);
- }
- 
- static inline void *alloc_node(struct alloc_state *s, size_t node_size)
-diff --git c/alloc.h w/alloc.h
-index 3f4a0ad310..cd6ed16ffb 100644
---- c/alloc.h
-+++ w/alloc.h
-@@ -14,7 +14,7 @@ void *alloc_commit_node(struct repository *r);
- void *alloc_tag_node(struct repository *r);
- void *alloc_object_node(struct repository *r);
- 
--struct alloc_state *allocate_alloc_state(void);
--void clear_alloc_state(struct alloc_state *s);
-+struct alloc_state *alloc_state_alloc(void);
-+void alloc_state_free_and_null(struct alloc_state **s);
- 
- #endif
-diff --git c/object.c w/object.c
-index c1553ee433..4469755ea6 100644
---- c/object.c
-+++ w/object.c
-@@ -517,11 +517,11 @@ struct parsed_object_pool *parsed_object_pool_new(struct repository *repo)
- 	memset(o, 0, sizeof(*o));
- 
- 	o->repo = repo;
--	o->blob_state = allocate_alloc_state();
--	o->tree_state = allocate_alloc_state();
--	o->commit_state = allocate_alloc_state();
--	o->tag_state = allocate_alloc_state();
--	o->object_state = allocate_alloc_state();
-+	o->blob_state = alloc_state_alloc();
-+	o->tree_state = alloc_state_alloc();
-+	o->commit_state = alloc_state_alloc();
-+	o->tag_state = alloc_state_alloc();
-+	o->object_state = alloc_state_alloc();
- 
- 	o->is_shallow = -1;
- 	CALLOC_ARRAY(o->shallow_stat, 1);
-@@ -573,16 +573,12 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
- 	o->buffer_slab = NULL;
- 
- 	parsed_object_pool_reset_commit_grafts(o);
--	clear_alloc_state(o->blob_state);
--	clear_alloc_state(o->tree_state);
--	clear_alloc_state(o->commit_state);
--	clear_alloc_state(o->tag_state);
--	clear_alloc_state(o->object_state);
-+	alloc_state_free_and_null(&o->blob_state);
-+	alloc_state_free_and_null(&o->tree_state);
-+	alloc_state_free_and_null(&o->commit_state);
-+	alloc_state_free_and_null(&o->tag_state);
-+	alloc_state_free_and_null(&o->object_state);
-+
- 	stat_validity_clear(o->shallow_stat);
--	FREE_AND_NULL(o->blob_state);
--	FREE_AND_NULL(o->tree_state);
--	FREE_AND_NULL(o->commit_state);
--	FREE_AND_NULL(o->tag_state);
--	FREE_AND_NULL(o->object_state);
- 	FREE_AND_NULL(o->shallow_stat);
- }
+ SEQUENCER SUBCOMMANDS
+ ---------------------
+ include::sequencer.adoc[]
+
+base-commit: f814da676ae46aac5be0a98b99373a76dee6cedb
+-- 
+gitgitgadget
