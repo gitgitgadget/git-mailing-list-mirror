@@ -1,124 +1,109 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BD931771E
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 10:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B6A72610
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 10:33:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756290608; cv=none; b=WPoVKVOMoMZw+X8gPfn61RIKHbZ82Z8MgJbPWBD1yAakVrWEqDk4lf/M/m6aj6KEFGMGecG9HO7tS/SLzRKEzJrcOGPdarucxpAnCVsdfqO7HKO06rqahpj+d3hGvIW+MyNrvG6Wn6uapgxyeFfqy1dFnpawIUV7HIJl43CaPPc=
+	t=1756290829; cv=none; b=RlBIuylD+y3DTJasUrCbGGoa8UxstRFfsb3bjbST/66DvSoEK10BDdNen80e1D7W5tKK9q3syD8vDR+LdbFS+ycRxG+u4f3Zr8t/ddY85PA6f3mNSs1QWHYVUPyJMtFFxTFqXRBPYzJFOsoxzIV0TAIBUKf+b2eR8uOEk4Nfo94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756290608; c=relaxed/simple;
-	bh=0LwDn6QdAmmzQvuifWOZgAOzkTZY9ng+FDJylqyuS1o=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=GrCmkMGLt0L00epbEJqOoZz4KrHTA6NT3H6LvpO51inp9JVHRkJC/RL3CEW2GY7kH1/fJBk4yl49ss9enHGiIiVkUskciW9ajhpHNdPuY0yyT/urzpvdmw4RQuH0HOV306KM1CZicvdpMecW1dXuX13HYOVcKiV1oe1BI9H1Wnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=abtion.com; spf=pass smtp.mailfrom=abtion.com; dkim=pass (2048-bit key) header.d=abtion.com header.i=@abtion.com header.b=l7A3ZSHf; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=abtion.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=abtion.com
+	s=arc-20240116; t=1756290829; c=relaxed/simple;
+	bh=QuRwJqUIQY2fagyKvtb6t2eDxOCLFHtrYHdJPI6MGLg=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=n7ROb683m9DVZNKpfW6/agm2NAqKS7+RbOHVGhXngiTcFnpF1wed7HuBDgeZuiSWTPTXXGngjglX1GQU8nIYEW3W5edfZOioC9Xwqu3J+l0rgreAmz8rXPrAxkUxnXJj2CXfp95BpSELTsJ8LbvEWXgQEg27FphaE3jylHbkoC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=VvByqfml; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d+K54EA0; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=abtion.com header.i=@abtion.com header.b="l7A3ZSHf"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-61c1a0cd60aso7219085a12.1
-        for <git@vger.kernel.org>; Wed, 27 Aug 2025 03:30:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=abtion.com; s=google; t=1756290605; x=1756895405; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=0LwDn6QdAmmzQvuifWOZgAOzkTZY9ng+FDJylqyuS1o=;
-        b=l7A3ZSHfob96M1DBT7hJk9m9E8uqFuVziQr//6iALadRrM4rs8Axrj07YoLXLNZ7BL
-         pbM0hqgscaIcYWjhSqADAD0JSYe2pQjCibSi5ldHnSJKoLWZVdDu2WkhDxhYvEl2pZqP
-         8+hC2DSreRmnga9/U5iTF6hosjskFQiJa3QEDjBIuoZfEpulI5mme/gvY6V/vKKpdLVF
-         siqa8qGkQ3bs+8J6MIlkb4YWZ7+fIQSmaW4JPhSXsiKi2hgj23Z/X7Rsw3icmBPi6mD1
-         BhOi2wkPsNQw+cOC8bVk3xyM7L03nC7CsTb1pwg7yo8aKAb3v6CfdcR6xhUJQeCQsgpe
-         SJvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756290605; x=1756895405;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0LwDn6QdAmmzQvuifWOZgAOzkTZY9ng+FDJylqyuS1o=;
-        b=FmhGYpMrLUMwHkGUXBPP8HLecFxv1YE83OZatTSvpfzrO1mg+j7mQCStBtS14J0zZB
-         9fwGlYsLbYGsJc1v/AGqEK3qGYo/4A0/oWWcucRWXxAu1Yyf6ZUu85NyrlZf2O8CkFPX
-         t6VxyJhe9eGggAatKmmc2MBS0ynYtGgAxoMdPbn0UXeIEpAoRr+bn1XPSs6EZKCfdoNS
-         XL1M8G7mVn3yEhX1F1uipIVrq0Pq0Cy9oiiP3D/NK8YxeSnpDKRzzcUqRYKO/KUXSeyb
-         7dU1TnVk9+Y//rMnI8W4UcTuKFgvtA4+5pmiT6+GET7PtHMNpI1/68Nd7I7aET8GkWHl
-         n4fQ==
-X-Gm-Message-State: AOJu0YxBAsNdxf+Sl6HnODPJNi78nhdifViP+xb9yLiD30CSX/hr5lAR
-	d1CO+V/YLHJYMBTHDXo9lxJgOlBvg1OWjX5elVW9S5O7rLFazyR0ZhT80JKltLvFLRfsKPdrvdz
-	JuYRbYp0thXdrJSilNBgVXSXClxiiO03h+IMO0d2CAYMV3BI0qSBj/oDyBk3QFsbNoBjVxOOmjg
-	WZB6kAVnVQaivoQlcA0qddEFP3IsGe4KKX
-X-Gm-Gg: ASbGncsftDQUUELyIuaPKbY72lAkhAKkTT9LXo0iHmKTdwh1TX/UaRG4FMOsjBae2Ft
-	gVrkAievj7BSoIwrA8pNVpvySXaOT/Ge1rMgtlDA5sotU6JdjGGD/zmfTWqltSFUCfTfygucIgV
-	J1sRwG4Ggw5Rfv+F6LRdeWr1byVY7W4PM+Wv+tRTfeGOXxUU2nCANjCqiHZ2XR8xSoTbOTlG0Hx
-	VxZ
-X-Google-Smtp-Source: AGHT+IFIiF0YjAtMhmZCiDayEdILL0SpUn0ewDkwZmSVlEFln7VgkkAyi9L8V59/K21QI0Yyrbe2SzR8nTIpq/hRKRA=
-X-Received: by 2002:a05:6402:50c8:b0:61c:bfa8:57f with SMTP id
- 4fb4d7f45d1cf-61cbfa8067fmr142465a12.19.1756290604826; Wed, 27 Aug 2025
- 03:30:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="VvByqfml";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d+K54EA0"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 578621D00085;
+	Wed, 27 Aug 2025 06:33:46 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 27 Aug 2025 06:33:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756290826;
+	 x=1756377226; bh=QuRwJqUIQY2fagyKvtb6t2eDxOCLFHtrYHdJPI6MGLg=; b=
+	VvByqfmlQbTF4LrauhrkS0D0jzP20VHlonYBtBy/yCbG94IXl5ckkuhGIuzSXU53
+	rGC9q/mlwwQJ16xR9w+8T5zoPpplnEh1NwIlzBspjhAYFrpaILxHU8qS4aCwOBhT
+	p5iNvoaq3dJr2hON85lN7qcL88Z4m2UMgcaUGKoYz46F/ynfjVvR8v6du2FYPodr
+	oelKTywjuItEM33pmDSeJn0wSu8YZqHFwN+6Zl1tyMjGvz+B7WlKbDcn248V5E1v
+	Umyb30W/Os69d/FzOD+SpD3cHBOEgy2i4nRLtBEkA9ZTcBXwXbhikCMGBDTiiqxd
+	QDLpAcaeW+/8RNvmA00PoA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1756290826; x=1756377226; bh=Q
+	uRwJqUIQY2fagyKvtb6t2eDxOCLFHtrYHdJPI6MGLg=; b=d+K54EA0kmZQCoVFR
+	xTcG5vjKwsiM1gFTLzFAOsjkG4Rp9zGwWcqGED6m7oQzc0hm78bVil+z074JZuRo
+	2n45FPOp1aBLp/67Cs2EYvEP1U4ga3imQT2GSJfZfd/wu4kPl37d46OfCoLGVw2L
+	OS5Ov2Ecdm+1J0id+lv2dkLQN/v9cySqNxqfY276Qpdhq0eYo91bzO3XodX2n2N5
+	uL28VcqKJGK5TcvUarCLZ6DzTPE0fWBpp8b+Wlv5vxRA9RS9oSjD1FmWi53vj2R2
+	DEiK1wZ1FaiRgEs0AWqVE6ptptTkwhpSzaFxZusX7Mzm0WGY+N1pFvVwxxPiYLnd
+	d4PVQ==
+X-ME-Sender: <xms:Ct-uaJyjEAq85PsjxMO_lqFwyxk3U4VTx1SKXoQKrpsd2r0zQoUMs9w>
+    <xme:Ct-uaJTt2Z8CyzgqA7l9FX9fbye-EEuRl1R84XyrDgoAwocLK6I6P7C8OTQGqA1mw
+    M2Wpq9Ny_o08y8xig>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeejledvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvffkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeelueehteeuleeg
+    jeegffdtgfeiieevueelveekleevtedtffehueeflefgveehveenucffohhmrghinhepgh
+    hithhhuhgsrdgslhhoghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
+    drtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    oheprhhpsegrsghtihhonhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhg
+X-ME-Proxy: <xmx:Ct-uaN0nnv0LiNiWP1xmcOmD4ovI9OFygiA_Xs4tx5Vfemvtgjillw>
+    <xmx:Ct-uaNAEqmPAykcuwtln405oAt-9CCwSoApAaAmZRfuGlP1imdkVHQ>
+    <xmx:Ct-uaP3XDp2oSGFjYwXuyZNGuqsk4QWP9BIYAGfd_HMNQC4BYO5Uuw>
+    <xmx:Ct-uaHv3L5SvVakZtUopPxVGfl4nJ119AdVbRQSts5cPKWQABgAnFw>
+    <xmx:Ct-uaPdycoy8LQ5fxS0Wavxni7d0k1N7UoSdzDcpljeaqjTNzrHr5o_K>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id EA1461EA0066; Wed, 27 Aug 2025 06:33:45 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rune Philosof <rp@abtion.com>
-Date: Wed, 27 Aug 2025 12:29:54 +0200
-X-Gm-Features: Ac12FXxBEXZGHNdPqPQsegoebsUtvU9Yl3DJCmKYcKX9QknCHwNXJyMUExe8Pyo
-Message-ID: <CAL8J5gbKu7qB8Byg82CGqtrYK0gm4gf5V=qrc7npzAoF+kAXJA@mail.gmail.com>
-Subject: Feature Request: Add comments to commits
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-ThreadId: AAZOnxJ1Pc8V
+Date: Wed, 27 Aug 2025 12:32:56 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Rune Philosof" <rp@abtion.com>, git@vger.kernel.org
+Message-Id: <a0c393df-a23c-49e0-8985-4748e1769a62@app.fastmail.com>
+In-Reply-To: 
+ <CAL8J5gbKu7qB8Byg82CGqtrYK0gm4gf5V=qrc7npzAoF+kAXJA@mail.gmail.com>
+References: 
+ <CAL8J5gbKu7qB8Byg82CGqtrYK0gm4gf5V=qrc7npzAoF+kAXJA@mail.gmail.com>
+Subject: Re: Feature Request: Add comments to commits
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Git commit messages quality is very important when you investigate your his=
-tory.
-Often it would be useful to be able to attach comments to commits
-messages for instance to add forgotten information.
-Those comments should be shown when `git show`ing a commit.
-Could be implemented as commits that use a new field to link to the
-commit they should be shown with, along with some index to make it
-performant.
+On Wed, Aug 27, 2025, at 12:29, Rune Philosof wrote:
+> Git commit messages quality is very important when you investigate your history.
+> Often it would be useful to be able to attach comments to commits
+> messages for instance to add forgotten information.
+> Those comments should be shown when `git show`ing a commit.
+> Could be implemented as commits that use a new field to link to the
+> commit they should be shown with, along with some index to make it
+> performant.
 
-Services like Github that already have comments on commits and PRs,
-could integrate with this to make comments made on the platform part
-of git.
+git-notes(1)
 
---=20
-Med venlig hilsen / Best regards
+> Services like Github that already have comments on commits and PRs,
+> could integrate with this to make comments made on the platform part
+> of git.
 
-Rune Philosof
-Software developer
+They stopped supporting it in 2014.
 
-+45 28 45 64 08
-rp@abtion.com
-
-
-Vesterbrogade 15, 3
-1620 K=C3=B8benhavn V
-
-Sverigesgade 18
-5000 Odense C
-
-https://abtion.com
-
---=20
-
-
-
-
-
-
-
-
-Vesterbrogade 40 - 2th
-
-1620 K=C3=B8benhavn V
-
-
-
-Sverigesgade 18
-
-5000=20
-Odense
-
-
-
-
-abtion.com <http://abtion.com/>
+https://github.blog/news-insights/the-library/git-notes-display/
