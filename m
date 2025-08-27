@@ -1,122 +1,150 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from dcvr.yhbt.net (public-inbox.org [173.255.242.215])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0940F2E2EF9
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 18:55:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8571B4F1F
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 19:13:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756320958; cv=none; b=E0awuTUBxa7RTxUpdOGq3yKJcjb8jPz7TsrmBRzOcIpcZL/w+gZwpnarp+3JQ/weza4rGp7Dsoxi2aj4HPH/H3lrl+oHKcZOQ6XlO8IUpgiYYL9viAd2Sly7OfXYyPx0//F4BoFzmFfw3kKGTew4/w4I3noxr3Q8punggPHxWs0=
+	t=1756322037; cv=none; b=lGTKdHYBHkfX2JMEwQhpzFwNmTL0e4PJeqZz3yNc9LKu9FEwENdltcD9krn3lZ61yp7xgcXD7r/rTYzm1YQ+6NRz7b52PxHK1hX1JtoSnp36GHtj2Fibb5bfJfaMPHclqU/SSvpX2yK2OK+NL1V+BeIpm34UAVCEl746fx4f8PE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756320958; c=relaxed/simple;
-	bh=SemNQ9seMJEe1+tbPfHn6prXTqR4OzEAobCMYVNHJYk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qqSv0EK236y2TOhABU/RCd+Q5+GLnrklPzq6T85KOxuDEnA9rGTObU9zLV9KQoDverHsWDTLDBACChWMr+/xgOCkZ5/mQUED3aUO050dyTSug8BZCnwdtPET23B/ZUtGaqr1xD0Rw5WyeOg2kEBAEek6GJ5t4u/nl5co23AuV3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JpNYN+s6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mMiLFpUh; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756322037; c=relaxed/simple;
+	bh=FC+DllNIGeaviSw+PU1QOptGDriT22MBfam2QosVnYg=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C9eXUrFlfCSLPHRjectJPKKSXGnLiyHStUtYsh24oz0iAQD3KfSAqOSdd+WNMEinTGX8I59LOR5oBJHXjJuUkzb2Z58aZGnfCOqeTKTcQaIpMSgx94oBnEXGo8hZnGcVDcR5LulSjhvsFHC+K1HingAFoEHAQpo+RAOOKrPhv4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=Rw9Jqkb2; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JpNYN+s6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mMiLFpUh"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B56DE7A0183;
-	Wed, 27 Aug 2025 14:55:55 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 27 Aug 2025 14:55:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756320955; x=1756407355; bh=jiNEXExEpt
-	S0wApWeE7uJKVn8CbpLc/DE4pFggl2d7s=; b=JpNYN+s6gEIy3Qy9nU+PwMjdfW
-	QvWJjk7Z1m2mWlEOE/McXIB8E4j7gnen88I65d837L39v66IgDWf7ricjov5ynkf
-	SIXeHi/hxdQSrRe5ShBkjapWVTKvfTv6yMXsRkXmv7P1jiQ6UY7kiFGZ2tMXdW5c
-	MAoJj+HRCLOdRPrtobXqN3GfvxZEZKSAUVTTRq4genZp+eJR2pZzun/Kh1+zlD/a
-	Dtw+JEIJgc1uPuOKlXPGDAy21Z8spP+W6ozTjblYuXPINDGiESJ8R/xyFoQOyTWT
-	Zdn1ww6lAbsZyZcUOGXzLAQxHVFBKsAKbf3+OTngzVE+l3A5dB5fhcgcjOXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756320955; x=1756407355; bh=jiNEXExEptS0wApWeE7uJKVn8CbpLc/DE4p
-	Fggl2d7s=; b=mMiLFpUhVZ4xi7p7w0JAiznp92CkMjxHM9jHSXYPEIYzCxkvY3S
-	TDLHZpZ6V/TTto1UyR05CFgeAhSFCM+aWCmyWZbDbW75hn9PQ3Ud1jGpvAdOQRtR
-	UdfQXMjUVKDsgzE5YZ8i+kpsDOo+eyo9CJZJplxHpDw8sbtDdkIkKqFSgEfuNaep
-	1AFe++L+VjbJLi23fv6qWAHoA/CHFo9OKhKuo+sx0LmM3/WkG5yKARENSW4i7l2l
-	zdRV+hgSQjSpksNdK1ZmUviiSVFeQNO7LG/zbH+FY+GsluGo2/nULkmvLOqtPpUY
-	VgmQHf59nckRPpGJmZxAsTFuwm82f9lDw1Q==
-X-ME-Sender: <xms:u1SvaMzt2zEVy3qzSiSQlMZzFFJgM9e-ZJ3R38DR67uLKDbiah1klg>
-    <xme:u1SvaN1jnd0P21jUqkCZ5E0LH7D0B2xJD21W8MeiA0o1nQ0yezwZrU3fIjrFj4vAo
-    txc_AwFhiMkW93OgA>
-X-ME-Received: <xmr:u1SvaEyBJwjAX2890-bf04DofWE-AQHnzK1kUZOuzq27kEqa4ykPu9Hqi2rzdUtbtE_3wHYgBsYS9DcqnQvczaIKWEWqJRtlZFtGruM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeekleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtoheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhope
-    hoshifrghlugdrsghuugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohepmhgv
-    sehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghugh
-    hssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:u1SvaMEpwVjfn__WDeHkFQGp2P_GynTWnuDDQ4NH11PX7MiSdy736w>
-    <xmx:u1SvaPaM-4MhzpUeP1rZfMRvN1ilXekHS_3f4ejWjpxW6peh-XfLdg>
-    <xmx:u1SvaGBkYu1727rtlesEb01xArkX6gshLAz27v8tlP7tPKmrUknFzg>
-    <xmx:u1SvaPn3-88pfUiSAP_QqId4aC7-dditeJoP-CI0r-C9y7kbi0mMGA>
-    <xmx:u1SvaFVbY1sL5Jv2zsVRS39zO-7rqZjgXLCjQ6rd6SLYlmUdEwwap728>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Aug 2025 14:55:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Ayush Chandekar <ayu.chandekar@gmail.com>,  Oswald
- Buddenhagen <oswald.buddenhagen@gmx.de>,  Taylor Blau <me@ttaylorr.com>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 2/3] config: warn on core.commentString=auto
-In-Reply-To: <90a1f901-fcce-4275-b1a5-8ed50620f50d@gmail.com> (Phillip Wood's
-	message of "Wed, 27 Aug 2025 16:29:35 +0100")
-References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
-	<cover.1756215326.git.phillip.wood@dunelm.org.uk>
-	<5dd897c95e680c4e3f26ec3945fe649b4b61681a.1756215326.git.phillip.wood@dunelm.org.uk>
-	<xmqqldn6krmi.fsf@gitster.g>
-	<90a1f901-fcce-4275-b1a5-8ed50620f50d@gmail.com>
-Date: Wed, 27 Aug 2025 11:55:53 -0700
-Message-ID: <xmqqldn4zj9i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="Rw9Jqkb2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+	s=selector1; t=1756321697;
+	bh=FC+DllNIGeaviSw+PU1QOptGDriT22MBfam2QosVnYg=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=Rw9Jqkb2nMGZ7dln4ZXfxfS9ZOarAFSBFqBBGUoh7w5fGCMpzKOlk8LDA0RLowwKG
+	 m1nXFIPV7H2gRUm9c1q95aEy9irmZsjoQorDfp57yMtjuV0OP29JvfwgHeA/hB6jhf
+	 AATA4mTTxmtIrSFxm6RKfkbkitODIlyLHYTQZ/lM=
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54CB81F646;
+	Wed, 27 Aug 2025 19:08:17 +0000 (UTC)
+Date: Wed, 27 Aug 2025 19:08:16 +0000
+From: Eric Wong <e@80x24.org>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Efficiently storing =?utf-8?Q?SHA-1_?= =?utf-8?B?4oaU?= SHA-256
+ mappings in compatibility mode
+Message-ID: <20250827190817.M36986@dcvr>
+References: <aJ03RTHaE_JvHA1t@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aJ03RTHaE_JvHA1t@fruit.crustytoothpaste.net>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> wrote:
+> TL;DR: We need a different datastore than a flat file for storing
+> mappings between SHA-1 and SHA-256 in compatibility mode.  Advice and
+> opinions sought.
 
-> On 26/08/2025 16:52, Junio C Hamano wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->> 
->>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>>
->>> As support for this setting was deprecated in the last commit print a
->>> warning (or die when WITH_BREAKING_CHANGES is enabled) if it is set.
->>> Avoid bombarding the user with warnings by only printing it (a) when
->>> running commands commands that call "git commit" and (b) only once
->> "commands commands" -> "commands".
->
-> Sigh, I removed "only only" which Oswald had pointed out only to add
-> another repeated word. I've just sent V4 with the typo fixed.
+<snip>
 
-Heh, I've locally amended so no need to resend.  I'd rather see the
-"what degree of help would our users need, and is it worth trying to
-find the (impossible) definition of being 'good enough for most
-people'" resolved soon so that we can move forward.  I'll read the
-series again, especially the recovery recipe the topic would give
-our users, to see if my stance would change from my previous one.
+> Our approach for mapping object IDs between algorithms uses data in pack
+> index v3 (outlined in the transition document), plus a flat file called
+> `loose-object-idx` for loose objects.  However, we didn't anticipate
+> that we'd need to handle mappings long-term for data that is neither a
+> loose object nor a packed object.
+> 
+> For instance, with shallow clones, we must store a mapping for the
+> shallows the server has sent us[1], since we lack the history to convert
+> objects otherwise.  Similarly, if there are submodules or we're using a
+> partial clone, we must store those mappings as well, since we cannot
+> convert trees without them.  We can store them in the
+> `loose-object-idx`, but since it's not sorted or easily searchable, it's
+> going to perform really terribly when we store enough of them.  Right
+> now, we read the entire file into two hashmaps (one in each direction)
+> and we sometimes need to re-read it when other processes add items, so
+> it won't take much to make it be slow and take a lot of memory.
 
-Thanks.
+This really seems ideal for SQLite, which has come a long way
+since 2005 when git started.
 
+I really wish git would've relied on more on existing formats
+(e.g. LMDB refs) rather than introducing more one-off data
+formats that require more cognitive overhead to document and
+learn[1], especially when SQLite is extremely portable and works
+on tiny devices.
+
+> For these reasons, I think we need a different datastore for this and
+> I'd like to solicit opinions on what that should look like.  Here are
+> some things that come to mind:
+> 
+> * The format should be fast to read and relatively fast to write.
+> * We need to efficiently read and map objects in both directions.  This
+>   is required for many reasons, including efficient fetches and pushes.
+
+SQLite seems to do these well, in my experience.  It's not the
+fastest possible data store, but it's no slouch, either.
+
+> * We still require an in-memory store because we stuff entries in their
+>   without writing them during pack indexing and other operations, but
+>   that doesn't mean we need to load data from the data files into the
+>   in-memory structure (in fact, we probably should try to avoid it).
+
+SQLite supports in-memory DBs, and also mmap.  I always prefer
+to always put larger structures on TMPDIR and rely on page
+cache; because sometimes code ends up running on machines with
+too little memory/swap (but git has never been great w.r.t.
+memory use :<).
+
+> * We want to be able to write small updates to the data without having
+>   to re-write the entire thing (e.g., `git add`).  We often know that
+>   we'll be writing a whole batch at once, such as with shallows or
+>   submodules from a clone or fetch, so many places in the code will be
+>   able to start a batch and then write, but we shouldn't assume that
+>   will always be the case.  (In other words, we will write more
+>   frequently than we do packs or indexes.)
+
+Transactions and atomicity are included, of course.
+
+> * It would be helpful if we can determine the type of object being
+>   stored.  For instance, if we've stored an object mapping because of a
+>   shallow, `git gc` could remove that mapping if the shallows have been
+>   updated and the mapping is no longer useful.
+
+Column names should be enough.
+
+> * We should try not to assume only two hash algorithms.  Pack index v3
+>   allows for effectively an arbitrary number and while much of the
+>   compatibility code assumes one main and one compatibility algorithm,
+>   we should try to minimize that if possible.[2]
+
+I haven't used it much, but ALTER TABLE should work well nowadays
+for adding (maybe not removing) columns.
+
+> * Being able to mmap it would be convenient, so if we can make it
+>   relatively small, that's nice.
+
+mmap is possible, but default builds of SQLite defaults to a
+relatively small mmap limit (2G?).  I don't know why and never
+bothered to deal sign up for their Fossil (JS required :<, last
+I checked) to ask about the small default limit.
+
+
+I don't like SQLite's approach to rejecting outside
+contributions; but otherwise it's served me well with various
+bits of Perl code for the last 15 years or so.  Yeah, the SQLite
+developer doesn't have the highest opinion of git, but we
+shouldn't let that affect our decision making.
+
+
+[1] Fwiw, I enjoyed working on git a lot more when it used more
+    high-level scripting glue.  I'm disappointed in the overall
+    movement towards AOT languages (C, now Rust) due to large
+    toolchains, slow builds + linkers.  Hacking was much more
+    discoverable when I could just edit installed scripts like
+    config files and not have to deal with builds at all :>
