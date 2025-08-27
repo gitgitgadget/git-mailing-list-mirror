@@ -1,190 +1,215 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0B82F3C01
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 23:14:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84131301006
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 23:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756336483; cv=none; b=AIwcR0AiGtxWfX2GeX4D33vSCXOMs9bNy1CMSvQHq2xwF42+ZS8V8aJReJaig6bhqSB8FcqXCP6SklpjYuoVPP1aill9HsLPpEkR6fLxSgjmBLuo2LnAJxGuDJMDxpWCVhJ6dmRu+WgpIDesP74qyBJDf0c1C0lFuvQkBsxtEqM=
+	t=1756337318; cv=none; b=Wq8LF54k8kSqxcdcNdt9FKHflKQtGHIkFZnWTZQM/RlqVaKXq4ar5s0MCNuMfAIx3r0mHeowu89ppbHuJiOyww4fu1ykUoIzd7zGHzO2lJEv2l/pNbJBP/J0YsJ9Nxu3BocrTq8Xye3Qpi8CKGWCA4bPvu+kLVRm1PIsvq7zEfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756336483; c=relaxed/simple;
-	bh=B0wJim1TWbVPpjM5uQwJl1ACwujVtTbukRW4riFkNnA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oh9TMmX/ZggFukTZ77M5G5kXI7WoJU9rSO+ODhG0fxdKpOZWkgLxUl+MKK+80shqNfrXZdd/1/tn6EUUYPxgJrVNoVe+NEMXgU1nI8pgb4/M/STJY7J3BNxt1Jq1zy6Fceln/JQ21dNg7NYu1zOg3C5qvlCmK9JmadEkTzGMYNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CqeP/twG; arc=none smtp.client-ip=209.85.128.181
+	s=arc-20240116; t=1756337318; c=relaxed/simple;
+	bh=HCssnrAJbAHxvjjYSbimEn7q6ouE+PqNLJpnN92ABkw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=bRMZik+uT32ejlHI34ZBlTLjqkl3NRQBTBUZx/Vkr5AOmHDziDvkDlmK/CRZirfiAj5AUA/b3egS9yp6gX5xO4X0iLHoitIWnLVAYDEjnu6y630zxeIh1b8fai4okc0wa7Wl46dO/RbWTXYNvTBn6xqrlXTj0o4aBQ4KD/2ZVHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hP7gpYOl; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CqeP/twG"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-71d60504bf8so3162737b3.2
-        for <git@vger.kernel.org>; Wed, 27 Aug 2025 16:14:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hP7gpYOl"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3c79f0a604aso186074f8f.2
+        for <git@vger.kernel.org>; Wed, 27 Aug 2025 16:28:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756336480; x=1756941280; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gFpPP/Gb6CHwnXpB50ox3Vr2M3cYDvIjNVF0iKwFzAw=;
-        b=CqeP/twGszdghaKqqq6Bc7QSV2dNMrKt6wtSpPH0Cw4nY2TfS7NexKY2pTm5INq9C/
-         k4dMiJRYVDjnE4IRw4Q+z4y6cq5iAXwzjkw3qqsHLMbuBurzZEX7QIRRGqRvphgK+fCk
-         N24KUjItReClV918/AJTUbJHJQlooXfchTRHWCnhT/6cWQ1KRbVoL8jIkfdlmZ1PjHAB
-         It8MXNqSHNQpMkk+6MvW+ycjhoZ96oFTGwgqFpR8N3fAgudByg9yEmjsxibsm7Xocl2k
-         YTYJrVwQNzHWNrkhsBltvXJfSQFNcWurgogOnmI+GcZUp5ZRMPoRbUAlAaA+pKwOv2kN
-         jkOg==
+        d=gmail.com; s=20230601; t=1756337314; x=1756942114; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dY7hxxF1mR+Yr3lULJ7+pW+W1+qC6BFOdmZhrwSV6Yc=;
+        b=hP7gpYOlkcUKUFJKuYnUfI3c7v7uk7ajnBtvhcgfoEPnvhWY/jQOX/oU+BtfM/rz4m
+         sNOUtOiKhHUDHFM7VQDMBmkG/39CJwgqvS6AG1X8NWI6OvC5zzCFCfQfNkaeTN95f08p
+         tOi0Q6yXpqqmU3S8wf9bh6QuKoZ/uM5LJCLwMW13zl16cCH4pHIXGeJgg+Wc+jls0gyf
+         gzQCxhpB6MwZLiEB4fcFnr8jdtSCgciTYx71yR3jgAP6cBotypHLFK8aPNXIia/uRig+
+         zu+asVwSMQ90DVqZmjMBpmiOC3ZB4lhjm4xLVEcIoaB/ockKmIz+rllB0SxNXeaEGVRN
+         IV3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756336480; x=1756941280;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gFpPP/Gb6CHwnXpB50ox3Vr2M3cYDvIjNVF0iKwFzAw=;
-        b=le3APwOUIFSu5R8McKDvdEH2m7yum9FMVIls0Poqa+grxbj00wnOwLl7/rgJz3T3uh
-         M/DR2fnX+0ZPAfFqatI2O0qQJaAQM0tLBNV6ow5vafvenp3/bCc+21QUC8M+YQX0sCHD
-         XRJT0LmOdBCOlVqPPwUGkBFFYwXJ+O7W8cAn6U7sYBK7aSY91NrZZqIPHqrGPhy7FtLH
-         aAjE7TQYZVA8O9ZrP8UrIBvv8toGdje3ucWMF48kAiye3CeT9ZBbyak2tlvUeUQJPnU5
-         p+XmJKgIv8PYtgQksFi3ibCq9yVDtUv3wPE9gijGQkT46aqkHn3DTjGGE5Tynh8/n0HD
-         a/qQ==
-X-Gm-Message-State: AOJu0Yze0jNj/AoH0iLxrZfuJLQhCVgIebFMozuEx9E7GaGTcy0uVK45
-	+x+qAKlO3Ih1ivkGP9tyG/vd8l6EDp3vODKEtwkJUzxXuBmNV3ydrFYkRVt7ng==
-X-Gm-Gg: ASbGncsdIWlgWEG/iSlgkdSaX6HvZo9FAC4eBOBDhMOYtLyQMKOLE4KzCd31TRG5g4L
-	p0+1LGjCBZav/8s0q7isD54vjGOnaLqx72NcFlZGT2MRRm6VZXRPFvJ9VOL93xZD2AjR+OSsL1H
-	fUo4S0K98Z/i5cg7LOFYbgNp4+erg/k0873K5glsFl0SxAP83+rTePRJsSgEAiuxCzr43suUNOY
-	rGFacAunNrWLSHJhGsr8R/PPLw+c9rTHWMPVDNGotQcf9lKppyznlTYLMwkgz9vKy/a4azLsuWI
-	GAtOVQ3HlGpGIlgckspLMLIqKHQJvMRhrgkIK83KTU8Cv32xjSJhMErFSMzeoR0JeNqsAHOaYoE
-	0FUByAQ4nFzC/pawHZfa/HATVsE28iCkCkvaIhh+CZBMLv8sJdWj6j4aQamCAauLRdfj06e38he
-	5vJoqgd2eLFYpSQ5Wk27Rt
-X-Google-Smtp-Source: AGHT+IGtFhwS2MN3PgyRUM2CrTTZeyb6qCBq+Be7ZhrKw2hjS6BC3oD/cvHOjeT1nVNb8Wc7AMO2Wg==
-X-Received: by 2002:a05:690c:6c0d:b0:71f:efa8:587a with SMTP id 00721157ae682-71fefa85cb8mr202909497b3.44.1756336479743;
-        Wed, 27 Aug 2025 16:14:39 -0700 (PDT)
-Received: from USROMMRAPPAZZ01.infor.com (pool-74-105-50-139.nwrknj.fios.verizon.net. [74.105.50.139])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-721243ea829sm17323767b3.68.2025.08.27.16.14.38
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 27 Aug 2025 16:14:39 -0700 (PDT)
-From: Michael Rappazzo <rappazzo@gmail.com>
-To: git@vger.kernel.org
-Cc: j6t@kdbg.org,
-	Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH v3] gitk: add README with usage, build, and contribution details
-Date: Wed, 27 Aug 2025 18:59:56 -0400
-Message-ID: <20250827231417.12449-1-rappazzo@gmail.com>
-X-Mailer: git-send-email 2.51.0
+        d=1e100.net; s=20230601; t=1756337314; x=1756942114;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dY7hxxF1mR+Yr3lULJ7+pW+W1+qC6BFOdmZhrwSV6Yc=;
+        b=dW0EMBlsMQPWwu935toKxnIxl3lmecDXchOY0Z5kB2N8zAF4HP5bk0QLxnlkyzRWmg
+         Q1P1Q7nOymACsighSwRMMtl4ayL2khb4x3Fvci9rCUT2cEX7rWsne708MYUKplttPU8p
+         aGIiwVeI+X3HN8x9Mvmjz+l4lYTGQzan4HFbgbZXZlyo1iQ4puLnNc1XkLSMWC3QePGy
+         rBqXOrGt10j+H7HeIFYTSl9568npW/PrnZ99qgkTQdDMgs5BuVj15Tt4ezn750uF/c36
+         eXqtgnN3Tm7dOYvdAxEhjeUYeIP2SxfC3jd+ipmCai2tBdli5hezhwJQIFAxAt5DhOQb
+         gbqQ==
+X-Gm-Message-State: AOJu0YxLH0TXsc12jQFYBSKGcZ6DPysD3T0P1fvrP1R8hMaqTCwrI26r
+	Sp+rVIo1CKVpzVe+m0t8wjQD4FF/soHgpV1y9xbwyYQSUYLlLH1OHZZvDXR5HA==
+X-Gm-Gg: ASbGncuq0UkAf0Z0S2xb7K5sFMsCSDjoKhisutc6DfTYXF6jsI+VURgMlbUIftGT8XC
+	T42MsXW1lubBRp0BJwCJxNlTpYY/H6N/jAuywpgCy+yT9yPZZ37X6QNuAIIgZ4fJj/7yJbeRTdB
+	WB391hcVR2Uf25PkBUBYk3P1zCf5eyIxWhYCkjaSGN+Gr0CR9jrEy+tsJcvsm1G3j4VGIFsR2Ak
+	qcm3thJ9tT7kDXdj6uunnoUHh8HrdYdkskoFV3q3fLQrrxBXhtQIu5fsTUxRvDANCoZDKP4NWwo
+	B81J50hj1zS8zgm5QpJf3Gvb/BpgrKVbvvAaWVDKueDiODJlOwQlg1Pw0EbpDKKMzRX8lMWaj/O
+	e7bMseX0/CqOECeR8ekUQmaptqJpjI5lefTYhDQ==
+X-Google-Smtp-Source: AGHT+IHlWXEGfa4uC9mf0x2BNmeSenJ9IEtUesAwrJuTz4Y6OW2tDpEz8zF2qqN2SoW5dr9JYtmPNw==
+X-Received: by 2002:a5d:5d0d:0:b0:3cd:aff8:e22f with SMTP id ffacd0b85a97d-3cdb00827c7mr888822f8f.1.1756337314320;
+        Wed, 27 Aug 2025 16:28:34 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b6ee66bddsm49268025e9.0.2025.08.27.16.28.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Aug 2025 16:28:33 -0700 (PDT)
+Message-Id: <pull.2040.v2.git.git.1756337312918.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2040.git.git.1756238268790.gitgitgadget@gmail.com>
+References: <pull.2040.git.git.1756238268790.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 27 Aug 2025 23:28:32 +0000
+Subject: [PATCH v2] alloc: fix dangling pointer in alloc_state cleanup
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare <nouraellm@gmail.com>,
+    =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
+ <nouraellm@gmail.com>
 
-Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
+ <nouraellm@gmail.com>
+
+clear_alloc_state() freed all slabs and nulled the slabs pointer but
+left slab_alloc, nr, and p unchanged. If the alloc_state is reused,
+ALLOC_GROW() can wrongly assume that the slab array is already
+allocated because slab_alloc still holds a stale nonzero capacity.
+In that case s->slabs remains NULL and the next dereference writes
+through a NULL pointer, causing undefined behavior.
+
+To fix this, this patch:
+
+- Renames allocate_alloc_state() → alloc_state_alloc().
+- Replaces the “just clear” API with
+  alloc_state_free_and_null(struct alloc_state **s_),
+  which frees all slabs and the alloc_state itself,
+  and then nulls the caller’s pointer.
+- Updates call sites to use the new helpers and drops
+  redundant FREE_AND_NULL() calls.
+
+This makes the alloc_state lifecycle API harder to misuse,
+eliminates stale-capacity state,
+and aligns naming with project conventions.
+
+Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
 ---
-Changes from v2:
- - use 'Gitk' to refer to the software, and 'gitk' to refer to the
-   command
- - change the markdown section format to use underlines
- - wrap lines at 70-ish characters
- - add more details and examples in the `make` details
+    alloc: fix dangling pointer in alloc_state cleanup
 
- README.md | 93 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 93 insertions(+)
- create mode 100644 README.md
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2040%2Fnouraellm%2Ffix-dangling-pointer-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2040/nouraellm/fix-dangling-pointer-v2
+Pull-Request: https://github.com/git/git/pull/2040
 
-diff --git a/README.md b/README.md
-new file mode 100644
-index 0000000000..bd3e9a6481
---- /dev/null
-+++ b/README.md
-@@ -0,0 +1,93 @@
-+Gitk - The Git Repository Browser
-+=================================
+Range-diff vs v1:
+
+ 1:  643f14e6225 < -:  ----------- reset slab_alloc and state fields in clear_alloc_state()
+ -:  ----------- > 1:  0b980850bdf alloc: fix dangling pointer in alloc_state cleanup
+
+
+ alloc.c  |  9 +++++++--
+ alloc.h  |  4 ++--
+ object.c | 26 ++++++++++----------------
+ 3 files changed, 19 insertions(+), 20 deletions(-)
+
+diff --git a/alloc.c b/alloc.c
+index 377e80f5dda..c1065551c07 100644
+--- a/alloc.c
++++ b/alloc.c
+@@ -36,19 +36,24 @@ struct alloc_state {
+ 	int slab_nr, slab_alloc;
+ };
+ 
+-struct alloc_state *allocate_alloc_state(void)
++struct alloc_state *alloc_state_alloc(void)
+ {
+ 	return xcalloc(1, sizeof(struct alloc_state));
+ }
+ 
+-void clear_alloc_state(struct alloc_state *s)
++void alloc_state_free_and_null(struct alloc_state **s_)
+ {
++	struct alloc_state *s = *s_;
 +
-+Gitk is a graphical Git repository browser. It displays the commit
-+history of a Git repository as a graph, showing the relationships
-+between commits, branches, and tags.
++	if (!s_ || !*s_) return;
 +
-+Usage
-+=====
-+
-+To view the history of the current repository:
-+```bash
-+gitk
-+```
-+
-+To view the history of specific files or directories:
-+```bash
-+gitk path/to/file
-+gitk path/to/directory
-+```
-+
-+To view a specific branch or range of commits:
-+```bash
-+gitk branch-name
-+gitk v1.0..v2.0
-+```
-+
-+For more usage examples and options, see the [gitk manual](https://git-scm.com/docs/gitk).
-+
-+Building
-+========
-+
-+Gitk is a Tcl/Tk application. It requires Tcl/Tk to be installed on
-+your system.
-+
-+Running directly
-+----------------
-+
-+Gitk can be run from the source directory without installation:
-+
-+```bash
-+./gitk
-+```
-+
-+This allows for quick testing of changes.
-+
-+Installation
-+------------
-+
-+To install system-wide, you can use either `make` or `meson`:
-+
-+```bash
-+# Install to default location ($HOME/bin)
-+make install
-+
-+# Install to system-wide location
-+sudo make install prefix=/usr/local
-+
-+# Install to custom location
-+make install prefix=/opt/gitk
-+
-+# Using Meson
-+meson setup builddir
-+meson compile -C builddir
-+meson install -C builddir
-+```
-+
-+Both build systems will handle setting the correct Tcl/Tk interpreter
-+path and installing translation files.
-+
-+Contributing
-+============
-+
-+Contributions are welcome! The preferred method for submitting patches
-+is via email to the Git mailing list, as this allows for more thorough
-+review and broader community feedback. However, GitHub pull requests
-+are also accepted.
-+
-+All commits must be signed off (use `git commit --signoff`) and should
-+have commit messages prefixed with `gitk:`.
-+
-+Email Patches
-+-------------
-+
-+Send patches to git@vger.kernel.org and CC j6t@kdbg.org. See the Git
-+project's [patch submission guidelines](https://git-scm.com/docs/SubmittingPatches)
-+for detailed instructions on creating and sending patches.
-+
-+License
-+=======
-+
-+Gitk is distributed under the GNU General Public License, either
-+version 2, or (at your option) any later version.
-\ No newline at end of file
+ 	while (s->slab_nr > 0) {
+ 		s->slab_nr--;
+ 		free(s->slabs[s->slab_nr]);
+ 	}
+ 
+ 	FREE_AND_NULL(s->slabs);
++	FREE_AND_NULL(*s_);
+ }
+ 
+ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
+diff --git a/alloc.h b/alloc.h
+index 3f4a0ad310a..87a47a97095 100644
+--- a/alloc.h
++++ b/alloc.h
+@@ -14,7 +14,7 @@ void *alloc_commit_node(struct repository *r);
+ void *alloc_tag_node(struct repository *r);
+ void *alloc_object_node(struct repository *r);
+ 
+-struct alloc_state *allocate_alloc_state(void);
+-void clear_alloc_state(struct alloc_state *s);
++struct alloc_state *alloc_state_alloc(void);
++void alloc_state_free_and_null(struct alloc_state **s_);
+ 
+ #endif
+diff --git a/object.c b/object.c
+index c1553ee4330..986114a6dba 100644
+--- a/object.c
++++ b/object.c
+@@ -517,12 +517,11 @@ struct parsed_object_pool *parsed_object_pool_new(struct repository *repo)
+ 	memset(o, 0, sizeof(*o));
+ 
+ 	o->repo = repo;
+-	o->blob_state = allocate_alloc_state();
+-	o->tree_state = allocate_alloc_state();
+-	o->commit_state = allocate_alloc_state();
+-	o->tag_state = allocate_alloc_state();
+-	o->object_state = allocate_alloc_state();
+-
++	o->blob_state = alloc_state_alloc();
++	o->tree_state = alloc_state_alloc();
++	o->commit_state = alloc_state_alloc();
++	o->tag_state = alloc_state_alloc();
++	o->object_state = alloc_state_alloc();
+ 	o->is_shallow = -1;
+ 	CALLOC_ARRAY(o->shallow_stat, 1);
+ 
+@@ -573,16 +572,11 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
+ 	o->buffer_slab = NULL;
+ 
+ 	parsed_object_pool_reset_commit_grafts(o);
+-	clear_alloc_state(o->blob_state);
+-	clear_alloc_state(o->tree_state);
+-	clear_alloc_state(o->commit_state);
+-	clear_alloc_state(o->tag_state);
+-	clear_alloc_state(o->object_state);
++	alloc_state_free_and_null(&o->blob_state);
++	alloc_state_free_and_null(&o->tree_state);
++	alloc_state_free_and_null(&o->commit_state);
++	alloc_state_free_and_null(&o->tag_state);
++	alloc_state_free_and_null(&o->object_state);
+ 	stat_validity_clear(o->shallow_stat);
+-	FREE_AND_NULL(o->blob_state);
+-	FREE_AND_NULL(o->tree_state);
+-	FREE_AND_NULL(o->commit_state);
+-	FREE_AND_NULL(o->tag_state);
+-	FREE_AND_NULL(o->object_state);
+ 	FREE_AND_NULL(o->shallow_stat);
+ }
+
+base-commit: f814da676ae46aac5be0a98b99373a76dee6cedb
 -- 
-2.51.0
-
+gitgitgadget
