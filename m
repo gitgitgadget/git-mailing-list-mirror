@@ -1,136 +1,150 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FDE227599
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 00:05:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91FAF4F1
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 00:28:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756253150; cv=none; b=sStfRuA0LNpUk9RfCOf1toYM5FKpcdm4k0keILIe0+I7bBHzU3rNDGIh+zCUK3krKjydHc92HUnFXw/K+q+E/ysBuiXQz7LOWzeHugrJfQNB/+anwH7PIO89cd6LkBoWr4LDVty39Kw67LOZqyZjIjw4z1cjV+wKNoZ4V7kooOs=
+	t=1756254504; cv=none; b=LCa7WL1e3y9Eb+q/Zosgi1K7POl1yU7cotdJEEjrGRPt6HnHH04UuQeTWZNac8E6XekyyI4H2YngS8Iym8xrocb1s4hL5ZjOu3B81Fmn6oILcDg+PDUmajHcZDQHjYDM9f1hE+JloP1izXbSyoDP0iUZmkpwq/vxyneY1Ve3fOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756253150; c=relaxed/simple;
-	bh=/MZxpmDpUj8OyyM1U4C8cmFyOXFAgaOImYynuBMwyJQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mSPobGwJ2yITG95AIcehzID8/aKpK/oHRyvcqXI9yAvJFwho6LT3vYeckRFrXu+rlCz3sWqBLkea7j0V4OpyVw/19Ax6wcijiCP2D5EnfOIq5HYEMVrMiRxbTK48Wp5M8v9qoKoKz6LUaX2Rx2N4BGDrsmKAkgUDJM3zVUKFsg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iiYqVs7Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ogx7aqNb; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756254504; c=relaxed/simple;
+	bh=esXbwColg2d1lOYiyiOp0470HVtwi74veWuMhgh6iyo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T8pmYE6fj7E0L6a+WPne4r4uIuE3nQt6dCQNZiVTdeyPuTM13fHEyEh4XhFsOE75St0jKE0CqUIpqGdSx0lUs3m4C7NkAFRgtRwFy1NlIaJt/UL7Qz7yI+s9GGjNTWWnMr/WiA7HipShJ/EnFM17Ct6WkaDp1snYyiucMRWPf+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zt8PnZvW; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iiYqVs7Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ogx7aqNb"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9205AEC0361;
-	Tue, 26 Aug 2025 20:05:47 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 26 Aug 2025 20:05:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756253147; x=1756339547; bh=Nfy8JkWm+T
-	GBCFuBJifl76uRf1qlwF0PY+DRdfQcX70=; b=iiYqVs7QqVgpFLenPXw0EvXN0C
-	F/YjXcJXB69/sbVhHQe/TAZJw55kvxZ1o+x0o6Vte48ubVcLWbYK+iwVRFTTVXsu
-	c3RsWNcWFfxw6stS9fwkAWTXWEAy+6EoVKcoo409L0XVSZQaCTjTH7UU8CSTzoCa
-	2ppgpFd1fxL4L1k522dJ823W8PlwBjjRBGYjEmmyWKkG+FFXD7IGMDJnk1RqQmCh
-	4mWp6NYiARCVBmpvKvVzuXBXLOzVn9y8iVisy9nUjz7f7UE5x0z3acabvsQUdX6/
-	PYpcnW4g0b24qppjqUzmQZpboMtcgmj3DObL07CqKQQl06J8TrTGNcGnRILQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756253147; x=1756339547; bh=Nfy8JkWm+TGBCFuBJifl76uRf1qlwF0PY+D
-	RdfQcX70=; b=Ogx7aqNbH2wdSft8jkWGO3zloH4dL14JQ03QydEBX4ZEvRfkqNx
-	Ehum1PYNaNZYFbIKHH6hsVRoDC+S/oJZsNh8HAbllHNGFzLzh24RfYGVaCwqWchx
-	nvcVEsbD07opbTjWIhu5EhOqJJX2HQ7Lqed+m5Ui0l2vAbuFy4va4Cs4w1YbriOz
-	OFqvI1iKGCDsPpwpp1FVeq4MCPkmK9+AUgkGKrCt8KSiCcLI78GaUWjYMaoHzB4y
-	WirAv/TH8FTZuPQMMw7MXq91NIeJcCarjrQsk/zB9hxpnBvvgXzufbYcapQuw4j2
-	WUE+jmzGvgt8s39VTD/NoYHuMK9+touP0sg==
-X-ME-Sender: <xms:20uuaJgTFOjaFvycUR4o52sSi4ffDULMHbFHdQ6vHbhn1tV5W4BaDA>
-    <xme:20uuaIn1MCiWNRMRFSEjG7h0TRBEVzc8k3OU9F0eOnb9Hus1AKcTdGKKOCUwWb4cc
-    jXVHk_v7TbtCfq8Ew>
-X-ME-Received: <xmr:20uuaFqv3RrOKHh6GEjKYo7EmMwJbSNCKxB7VBTwzeKKVLUeEE_eLw3bW4StJHajZORkt20-ySnAAduGrgqyXrMopLY8ydMTB3UrZxM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeeiieejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:20uuaBG7J_zGcdwJkKyB8Hh-qLtmTJIMwqTHt1HS2XXrZYsY9roH3Q>
-    <xmx:20uuaBw6Po-ksJ_oST2rUvdf02bJwCww2-Gp7nf22NSW6DgmTA6jNg>
-    <xmx:20uuaGr5bkfa32HfnezOz7dtW6-pQnHRUrdj0Sn2GUBxspL7vaiV0Q>
-    <xmx:20uuaLhUOhMgj2zxyjkP9D1qnLB8lMNK3yfWSum3vQJsD0RHovBHcA>
-    <xmx:20uuaKTRxe2PnnK5zmgFPO8uTO7pqWTK5-O7uJFUqjVGt2mOVvD7TGPv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Aug 2025 20:05:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 2/4] doc: git-push: clarify "where to push"
-In-Reply-To: <36112c30bcf881f48c3de23dcae2b74e31d9a565.1756240823.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Tue, 26 Aug 2025 20:40:20
-	+0000")
-References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
-	<36112c30bcf881f48c3de23dcae2b74e31d9a565.1756240823.git.gitgitgadget@gmail.com>
-Date: Tue, 26 Aug 2025 17:05:45 -0700
-Message-ID: <xmqqcy8hfx2e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zt8PnZvW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1756254500;
+	bh=esXbwColg2d1lOYiyiOp0470HVtwi74veWuMhgh6iyo=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=zt8PnZvWpUxIKjz//NTbAgwqOO47P2WI2xA9hGU86sbnhiWwrgWw8Ltd8ivBFPNX2
+	 DQIh2mmiWoTfUix7t/QRQLMunVjnVXQUZE081U4fmbyTOVEpTGLfkOnNw5WQghaHdM
+	 l9bP0fWaF+SjFDihw8yEkeBl4wCDMoPzBH7ufSY9sUtncfLB1/XR8JcdGYZd0gii7S
+	 th2Ix07pPCgTLRTWx7RvuwpGLmXwHbR8mEiNe/7K00Gh10q7LyO4S8KCoqrviHwjOo
+	 Q420oNdJh8IuCXVPKBV5qzNzgH2C4AbDo1MtXO/DXKVPy7F0X6gkdTV/qLPVNpx0nY
+	 jOBPGL3zsemPxAl+guG9l+Uo6jYFGgirOAbmyF0utipzbujrzpHmBEw2BFTM02Qw3+
+	 +EeIpvw0HZoQif+ugb5E2UrBHdmiU7kxuJikdmsh2YhuMNkSNaRZWaM4bYK3QsdHB3
+	 OpKe/PNWBzmhizRdmPLwIQB4Qd2G8YBPDkD9si1KIoQ6b2lXz6l
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:6208:a4d:7e2:3785])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 589FD200C3;
+	Wed, 27 Aug 2025 00:28:20 +0000 (UTC)
+Date: Wed, 27 Aug 2025 00:28:18 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Julian Swagemakers <julian@swagemakers.org>
+Subject: Re: [PATCH v4] send-email: add --get-smtp-server option to fetch
+ SMTP settings
+Message-ID: <aK5RInMzjC6vuLv_@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Aditya Garg <gargaditya08@live.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Julian Swagemakers <julian@swagemakers.org>
+References: <20250822151039.36006-1-gargaditya08@live.com>
+ <20250826133936.1569-1-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Julia Evans <julia@jvns.ca>
->
-> Signed-off-by: Julia Evans <julia@jvns.ca>
->
-> Be clearer about what we're describing ("which repository" instead of
-> "what to push"), and start with a positive "try X, then Y, then Z"
-> instead of a negative ("if X is not specified..").
-
-Since I like this simple rule so much, if it is generally applicable
-everywhere, I'd like to have it or a variant of it in one of our
-developer facing documentation as a tip to write better
-documentation.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="g1gI40Vj3Ugo6gA3"
+Content-Disposition: inline
+In-Reply-To: <20250826133936.1569-1-gargaditya08@live.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-> Signed-off-by: Julia Evans <julia@jvns.ca>
+--g1gI40Vj3Ugo6gA3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-There is some funny ordering problem with the commit log body and
-sign-off.
+On 2025-08-26 at 13:39:38, Aditya Garg wrote:
+> Autoconfiguring SMTP server settings is a common feature present in many
+> email clients. In order to get the correct SMTP server settings easily,
+> this commit adds a `--get-smtp-server` option to `git send-email`. This
+> option attempts to fetch the SMTP server settings for a given email addre=
+ss
+> via the following steps:
+>=20
+> 1. It first attempts to fetch the autoconfig file from the email
+>    provider's autoconfig URL, which is typically in the format
+>    `https://autoconfig.[domain]/mail/config-v1.1.xml?emailaddress=3D[emai=
+l]`
+>    or `https://[domain]/.well-known/autoconfig/mail/config-v1.1.xml`
+>=20
+> 2. If that fails, it tries to fetch the settings from Mozilla's ISPDB at
+>    `https://autoconfig.thunderbird.net/v1.1/[domain]`.
 
-> ---
->  Documentation/git-push.adoc | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
-> index e73b64f61fd0..5c934486c33d 100644
-> --- a/Documentation/git-push.adoc
-> +++ b/Documentation/git-push.adoc
-> @@ -22,10 +22,10 @@ DESCRIPTION
->  Updates one or more branches, tags, or other references in a remote
->  repository from your local repository.
->  
-> -When the command line does not specify where to push with the
-> -`<repository>` argument, `branch.*.remote` configuration for the
-> -current branch is consulted to determine where to push.  If the
-> -configuration is missing, it defaults to 'origin'.
-> +To decide which repository to push to, Git uses the `<repository>`
-> +argument (for example `git push dev`), then if that's not specified the
-> +`branch.*.remote` configuration for the current branch, and then defaults
-> +to `origin`.
+I'm sorry I didn't ask this sooner, but it just occurred to me.  Do we
+have permission from Mozilla to embed this service into Git?
 
-Very nicely done.
+The reason I ask is that sometimes software vendors embed external
+services in a way that causes excessive or unreasonable load.  For
+instance, some router manufacturers hard-coded certain NTP servers into
+their firmware in a way that polled too frequently and then effectively
+DDoSed those servers, all without asking permission first.
 
->  When the command line does not specify what to push with `<refspec>...`
->  arguments or `--all`, `--mirror`, `--tags` options, the command finds
+If we embed this into Git, then it will be present on systems for a long
+time.  Some Linux distros are going up to 12 or more years for software
+lifetimes, so we should assume anything we embed here is going to be
+present on OSes for at least that long and will be used at least
+millions of times a day in a highly automated way.  Even if this only
+lasts one release, it will likely be on a nontrivial number of machines
+for at least 12, if not more, years.  (Not everyone actually upgrades
+when their OS goes EOL, unfortunately.)
+
+Is Mozilla comfortable with providing that service for that amount of
+time and having every Git installation on the planet potentially use it
+at top speed[0]?  If we haven't verified that, then we should probably
+not include this service in the code.
+
+> +sub fetch_config {
+> +	require HTTP::Tiny;
+> +	my ($url) =3D @_;
+> +	my $http =3D HTTP::Tiny->new(timeout =3D> 10);
+
+This needs to set `verify_SSL =3D> 1` explicitly, or we'll have a security
+vulnerability due to not verifying the certificate.  Our minimum
+supported Perl version is 5.26, which shipped with HTTP::Tiny 0.070.
+Versions before 0.083 defaulted to not verifying certificates, so we
+still need to set it explicitly.
+
+[0] Even if we don't think users will use this that way, with the number
+of Git users, there will be a nontrivial amount of users who do.  Many
+of them will not realize they may be causing a problem, though.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--g1gI40Vj3Ugo6gA3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaK5RIgAKCRB8DEliiIei
+gbNZAP0eus83XKtXqTr+EGHd0bA1paikLj3u0vSn98qM/oJKeQEAydVSm4y1jhuK
+qFQQ+IW7Yi0XUmPoQlIY6jyMNOeljg8=
+=nHH3
+-----END PGP SIGNATURE-----
+
+--g1gI40Vj3Ugo6gA3--
