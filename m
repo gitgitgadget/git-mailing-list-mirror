@@ -1,135 +1,179 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5C9302760
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 13:53:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5441E1EB5CE
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 13:53:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756302796; cv=none; b=gi36SwqxTsIw8/afIwyUtelxtWri4CGvAaSrfxunK7z7mmqTHJbSPEfgBnQVOc/ARHjJvVtrjmhb1iFKKoclobSPY+tz9cy1NExchQQ2ZK9CmqwguuiH2PEq+lVxMxL3UTZqfDEd1ZFae7qUS4UP5Z8wtx+ClNd3TtBfnKMXipo=
+	t=1756302830; cv=none; b=U28LC5BwUpahB3Xx3Rxi5hW/AwxipBytnYCVEysv02y9qfYvwXXguC8p45q0Eef98djdQgjD+LZFQr4fqX0uHUTiSQvGNcgZMELIExjKK5CLBhMFdgG9av1eOhozuaQvAR7LERe3MZqpR2k6fjrIJM4C7MSuJfi16aFp8pZTq7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756302796; c=relaxed/simple;
-	bh=05ClpSjGEb5b3c0VGcaGNRnU9QapfXdFb5B69t7IS7c=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=aoo4wTgOYVcSANeVX3+c27WknEloDIB/wRDhCRI7MuhF6yLQJRMOtvxcb8Li4rWd41dw+5g+InoJWkDYNMEhreCzoTBTFhbdZnlaiDzPmv2LENiUSgvE5kWVednys/ZpmViK29NbjvV71uV+tAo7vkMLCSwruQHHBN88T9XydmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=Vr1VQ6cG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a35dYPws; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1756302830; c=relaxed/simple;
+	bh=v5HDPLeTJBBiAbkRonCfR8WbXx4TEmlHDAqwnRP5RTM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=FE62ygXCuKDriiDyogf+JI7es/91m/+6CCeH8wEl/FscxJ1BSSGzW6+gq0HoXuqoki4azVx+jirhUCGQx7xgSUoRbiaswpB1D4dTRjqw7x7s4EZX5jOLeTR27l3F+KVjQgNx7ALoJIPXbzbAx2Tg7FcaVOshraG/OlfX2Sz6vSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YZLNFZ4e; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="Vr1VQ6cG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a35dYPws"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 11E35140037A;
-	Wed, 27 Aug 2025 09:53:14 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Wed, 27 Aug 2025 09:53:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756302794;
-	 x=1756389194; bh=rdotN1uO5twslb+aaaFOr/uKW+FbC5X2AQCB15naWAA=; b=
-	Vr1VQ6cGL41k0QgMh0SIbvK815kFKLDZXpdPS04RYr1hfQSV+UmcvEZsC6YaZKtu
-	xbKMcrIytzVoKUqguSl8VQZa2UkvfAtr/YQAeO1uEQ4qa+2cg9eAB2E/lw7PzLUH
-	kiEdEBPzoBej8q9HzXCB8y1+u/qcQltnP9YbQp2BSnlkzDQbL9LA3DJP2unI+NgZ
-	32nr+Tmi6v6O4/5oha+owzsabc+AZUDd3mfb15C+u7iLXPQtQCC/+B20Aas0+Klc
-	IdBU1CKhLieX8jzVYTgJwJ/IGmrYrZasV6jYR6hUiTwJ9256V+sE+/5oZznwUMS2
-	L3teB/4V7lT97SvMUkEpmw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756302794; x=
-	1756389194; bh=rdotN1uO5twslb+aaaFOr/uKW+FbC5X2AQCB15naWAA=; b=a
-	35dYPwsAjrRr5f6HgfSIHqbBN2FEmm4a5PPwFG7Fm9nVHn1hf0MAwqyTat3VBP8t
-	cCFQqfz1S29oiKjZiNdIFmjc6VonL9hMkfKsXbdH7OWTth+eK+xYBeNoBzmJRikc
-	0OFx4UDLGsqaSSNqXjAF6pOTbMpOvm5Ojjl12DIK/rPTBno0kBXjawFlPeyKOIsV
-	2nMfh1rZ5OyEspEkA42kkXGya0ANIDzHFrc3xAyAFOzabZcGaUOChOrBea6UAxPq
-	EN5juxVVNXfXmW0Ww2zWVue5M2VPMf1C0+sCedEEOXUYd7av2xoCSmexQgmJz0WB
-	8dz8cG2eDtuAi0HNiMC7A==
-X-ME-Sender: <xms:yQ2vaMiUGkW3mZuz7vbPynDomO7cCItEaFj4s6Y4ZZXNRSmn9dj_1w>
-    <xme:yQ2vaFAlUy4ycvmZQj5XduSE7cBXs_C6_H_nkdoFpNWvOexEFsjDqLzRsWWdYF0tX
-    LHvVD6Oz7PXGSRMdTc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeekfedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthejre
-    dtredttdenucfhrhhomhepfdfluhhlihgrucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhn
-    shdrtggrqeenucggtffrrghtthgvrhhnpeduieejkeetheeivdduueeuffdvjedvtedute
-    dtteekjefhgedvueeuffegleffkeenucffohhmrghinhepghhithhhuhgsrdgtohhmnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
-    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:yQ2vaMp5wKKDwS16xEHVSFuEPgPLOSRs9lo0m4k3dMgX6RI-ujxUDw>
-    <xmx:yQ2vaJjS-BWBcdkDpHxnAW3MPN0Gjy7-9LDpIgqwCdrSriDCGOMy9Q>
-    <xmx:yQ2vaOK71-ZPDmU3YQFL0Bp_ovrIp1xFn8xlmU2V4g97W7E-_2UKlw>
-    <xmx:yQ2vaBAV07rgaTSz3o5vun1agNv5hLIErmK8HFj_uxeGk0LZ5y53GQ>
-    <xmx:yg2vaKr2YK_SvFWxoWcTh7P4MxP8hw2ld11EFOrUKPtXlvnFTepB9EVf>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id C6D427840CC; Wed, 27 Aug 2025 09:53:13 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YZLNFZ4e"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7720c7cbcabso327364b3a.3
+        for <git@vger.kernel.org>; Wed, 27 Aug 2025 06:53:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756302827; x=1756907627; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hiJtUq4+rCtaeEI/cVzeXyuJIobFxHkQErgdrK4+cRU=;
+        b=YZLNFZ4e1gLzH06ABwwhS6PyrnQQJZ7/bXM35U9xhHarEpqNTTLBcPoMRf7GcHiYTf
+         6vNX8vYeKzjMXWeb22dv/YfYetbq+lJtk/XGMWZMhFLuEFJ6uguzvDf4MWJpkIkVcZRV
+         35ydlS9gkasAmrg8ZTCzNH5BjYppYwKSgQjJnm+KA0pE+cBRoKkmpy17cnZJAzPhMR0V
+         n24jP6+Ilmw2pd1DjfkPYUOH79hZH5ej+0azsdb9tSpHo9U+UM8mymoHUO1NyiFeOYS2
+         oS0NGuhn6/2ebQM6OCehfk5I/oDWOB5uWi+4CGiPvnCK9TUwQ08R5Ke1O0y2WGY1MUXv
+         6Vpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756302827; x=1756907627;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hiJtUq4+rCtaeEI/cVzeXyuJIobFxHkQErgdrK4+cRU=;
+        b=ehX1uXakqz5xCwO9ljXtBTOG+ODWTgNETXJD5vl/99cZSfmpNmexPjwTZRLSH48wjQ
+         kXySjGbxMWNDBfJyYdq/5ykheJLZCLf+vIPUP6meJAcKCkw29kULF8G5WVET+hZgXlt+
+         Z+1lhjprXAYG4a2tMovJsHqFXTu7yUWzg3Cfq0tlt9n0KnUz2RTWJRz28T4ausBcfPfR
+         WMJpKomQH3AZ+SjYllyV06CGfhnj+OYC/LWy02/KPKFtH48GMW20cT67ZOhud5Gr46z6
+         ykE6vPwppAby0uX3CVOoaFrH9FWEydC4tpdM78sMu5EqHyADGmJZyCpw6yL4XSeTOrRx
+         3sTw==
+X-Gm-Message-State: AOJu0YyGNAEmKYXt0DZ07RnRHuu61X4jc9Tv2lODXAR3JzRvX1n+91C/
+	2QgHDkV3oGEZEx+a8YTAuVXF+SJZ55xMlV573F51u5wv5cW5Z88CqM5CJdhdxktThC6cW8n9n82
+	egQ+rSlqjPOUhUCiAEGMJQqDL2CGV09quY6io
+X-Gm-Gg: ASbGncu97VHOGCbORGa7jZMg0QSqNTdvyqCEaoeOU1OQXedIKYedF6dw19DhWslatof
+	bm+CX/TiVdeqiRNhZnYI9bqVh9xOiHxPfuCA+h2rbZJQ0b/uoffdI1Piwe1oNO3UGzP6TE0imHV
+	41pcm7J6XA6mAmQanmbiMRTzP4vdhq5cIqB7zV7R/iKd5g2trV9oJqNlsQdi/LRnhJ/6d1U8WI1
+	SxcH1GKdA==
+X-Google-Smtp-Source: AGHT+IFHr2WNh6bKw5NqmNTFmPder/Z6KUH1I3RIEovNiVNnwxqN5hWKoXeM2SGRbxgpIFtbOFyQmTDHkLGkAng3rWs=
+X-Received: by 2002:a17:902:f64b:b0:246:7a43:3f82 with SMTP id
+ d9443c01a7336-2467a4378cbmr214763575ad.45.1756302827346; Wed, 27 Aug 2025
+ 06:53:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ALMQnK0r4jnk
-Date: Wed, 27 Aug 2025 09:52:53 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-Message-Id: <092da24a-b9e2-48e2-b0a2-7203545d38bc@app.fastmail.com>
-In-Reply-To: <xmqqldn5fxfi.fsf@gitster.g>
-References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
- <ac554cbe75444880bbb2791c4d85dcf083d833d7.1756240823.git.gitgitgadget@gmail.com>
- <xmqqldn5fxfi.fsf@gitster.g>
-Subject: Re: [PATCH 3/4] doc: git-push: clarify "what to push"
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <20250822084910.98308-1-ayushoffinfo17@gmail.com>
+In-Reply-To: <20250822084910.98308-1-ayushoffinfo17@gmail.com>
+From: Ayush Sharma <ayushoffinfo17@gmail.com>
+Date: Thu, 28 Aug 2025 00:53:36 +0530
+X-Gm-Features: Ac12FXzkxmJ7mz-Say3-AeGD0fkMzyydlhTKrqWNaFNhBblCCJy5YfOVkB0TZpw
+Message-ID: <CABV7AFFLF6SJEk92Kr9x9z2sOk5nZ7Q0gx=GKR+-JNxSkju=RA@mail.gmail.com>
+Subject: Re: [PATCH] config: add "hostname" condition to includeIf
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Is the last sentence correct?
+Hi,
+
+Just a gentle ping to see if there is any feedback on this patch.
+
+Thanks,
+Ayush Sharma
+
+
+On Fri, Aug 22, 2025 at 2:19=E2=80=AFPM monarch <ayushoffinfo17@gmail.com> =
+wrote:
 >
->     $ cd /var/tmp/playpen
->     $ git clone https://github.com/git/git src
->     $ git clone --no-local --bare src dst
->     $ cd src
->     $ git checkout -b alter
->     $ git commit -m 'empty' --allow-empty
->     $ git -c push.default=simple push ../dst
->     Enumerating objects: 1, done.
->     Counting objects: 100% (1/1), done.
->     Writing objects: 100% (1/1), 185 bytes | 92.00 KiB/s, done.
->     Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
->     To ../dst
->      * [new branch]            alter -> alter
+> Teach "includeIf" to include configuration based on the machine's hostnam=
+e,
+> as returned by gethostname(2).
 >
-> In "src" repository that is a fresh clone without any customization,
-> the current branch "alter" does not have any configured upstream.
+> Example:
 >
-> Puzzled....
-
-It looks like Git behaves differently depending on whether the remote
-being pushed to is named "origin" or not: in this example
-the push fails to "origin" but succeeds to a differently named remote.
-
-$ git clone https://github.com/jvns/vue3-tiny-template src
-$ cd src
-$ git remote add origin2 https://github.com/jvns/vue3-tiny-template
-$ git checkout -b alter
-$ git -c push.default=simple push origin --dry-run
-fatal: The current branch alter has no upstream branch.
-$ git -c push.default=simple push origin2 --dry-run
-To github.com:jvns/vue3-tiny-template
- * [new branch]      alter -> alter
-
-I tried to find the responsible code by adding some debug print statements
-(in this commit: 
-https://github.com/git/git/commit/541e5d7cf61f970a5653ab496e5c3111271654a1)
-
-It looks like push.simple has some kind of "same remote" checking, and
-if the branch has no tracking information, then origin is considered to be the
-"same remote" (so pushing is not allowed), but origin2 is not the "same remote",
-so it is allowed
+>     [includeIf "hostname:work-laptop"]
+>         path =3D ~/.gitconfig.work
+>
+>     [includeIf "hostname:home-pc"]
+>         path =3D ~/.gitconfig.home
+>
+> This allows users to write host-specific configuration without separate b=
+ranches.
+>
+> Signed-off-by: monarch <ayushoffinfo17@gmail.com>
+> ---
+>  config.c | 37 +++++++++++++++++++++++++++++++------
+>  1 file changed, 31 insertions(+), 6 deletions(-)
+>
+> diff --git a/config.c b/config.c
+> index e0ff35d426..dbc1a2bc75 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -7,6 +7,7 @@
+>   */
+>
+>  #include "git-compat-util.h"
+> +#include <unistd.h>
+>  #include "abspath.h"
+>  #include "date.h"
+>  #include "branch.h"
+> @@ -391,23 +392,47 @@ static int include_by_remote_url(struct config_incl=
+ude_data *inc,
+>                                              inc->remote_urls);
+>  }
+>
+> +static int include_by_hostname(const char *cond, size_t cond_len)
+> +{
+> +    char actual_hostname[1024];
+> +    struct strbuf target_hostname =3D STRBUF_INIT;
+> +    int ret =3D 0;
+> +
+> +    // Make sure the call to gethostname is correct and its return value=
+ is checked.
+> +    if (gethostname(actual_hostname, sizeof(actual_hostname)) !=3D 0)
+> +        return 0; // If it fails, the condition is false.
+> +
+> +    strbuf_add(&target_hostname, cond, cond_len);
+> +
+> +    // The core of the logic: strcmp returns 0 when strings are equal.
+> +    if (strcmp(actual_hostname, target_hostname.buf) =3D=3D 0)
+> +        ret =3D 1; // Success, the hostnames match!
+> +
+> +    strbuf_release(&target_hostname);
+> +    return ret;
+> +}
+> +
+>  static int include_condition_is_true(const struct key_value_info *kvi,
+> -                                    struct config_include_data *inc,
+> -                                    const char *cond, size_t cond_len)
+> +       struct config_include_data *inc,
+> +       const char *cond, size_t cond_len)
+>  {
+> -       const struct config_options *opts =3D inc->opts;
+> +const struct config_options *opts =3D inc->opts;
+> +
+> +
+>
+>         if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len))
+>                 return include_by_gitdir(kvi, opts, cond, cond_len, 0);
+>         else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &con=
+d_len))
+>                 return include_by_gitdir(kvi, opts, cond, cond_len, 1);
+> -       else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, &con=
+d_len))
+> +       else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, cond=
+_len))
+>                 return include_by_branch(inc, cond, cond_len);
+>         else if (skip_prefix_mem(cond, cond_len, "hasconfig:remote.*.url:=
+", &cond,
+> -                                  &cond_len))
+> +  &cond_len))
+>                 return include_by_remote_url(inc, cond, cond_len);
+> +       else if (skip_prefix_mem(cond, cond_len, "hostname:", &cond, &con=
+d_len))
+> +               return include_by_hostname(cond, cond_len);
+>
+> -       /* unknown conditionals are always false */
+> +/* unknown conditionals are always false */
+>         return 0;
+>  }
+>
+> --
+> 2.43.0
+>
