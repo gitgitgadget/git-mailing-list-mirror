@@ -1,104 +1,153 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6180278F59
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 15:29:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5561E23C4F1
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 16:14:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756308580; cv=none; b=YAXnWtbQGo7qgBuHIUZBqLdtns6RwDmXPcFbaQQhCuFjjKlvLQg81yA+Pks49UNDPr6oDhOgXz/a6VrOG0Uc0fGarpInMI3NRqEsomsYyv+Sclnw0/EQmva/sNx2pLXQmVi7JMbI6rR3rYUDJ0MK9aabYzY0wZhc19HsnqiVLVY=
+	t=1756311271; cv=none; b=Wep0dvmZRPTVUwgEJTLp9uJqLRocYCFF1hLMMLfe1xpSiuO6MHsb7wNmE+7pbk9FZ2Gs529f1j1YZUCHSO+z7lHU7PKooJWabP1LN/209i/y+5RQm3vq2yoQDVUQLovy7BQyZEVusWtlPvzzsTyV9cAaT715N/ejwadp2STMFmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756308580; c=relaxed/simple;
-	bh=JT76X4+g5cA5pM8ZqPKzWaEopK1wujnK0BLTltaxzN0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=GO3PTlZgxqKFd2bc9oh19TleQZa5Q4hlYj+6RXxUwXkAiJ3daoHJ16XOW3ksdhIvAIf0M0U29i1jJkESEz2WMMb5djJjAiZWKYutUEY7jxyrD8sXES33nO6hyadI2oWuYNAg1q4ic2NXgARCfQTkYc4g6v40DpSw96hLnFuE3W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=atPAbvRZ; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756311271; c=relaxed/simple;
+	bh=v+6A95RvkXiyJd3MzAqkuWHCj2y1AtLq1CxhnVZONA0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ou+KyjG1R+iMIUAcPawNY1yGg+Rtn97sLs77XSdHlpvi+jEJsEv/FX+jzq4bbJfWujK7zMUNUuQ/OYk1rCFPR+qpDkL9BkTm8y8B8e3T+sXiES+O5eBnBZU9fLXTEzxfjhtMCbr36uE+Wl2pCFr/Q6XPtZBcHeUsRrfPkwHuDFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rzxdn+WP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OMy/r2lR; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="atPAbvRZ"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-45b5d49ae47so20806265e9.0
-        for <git@vger.kernel.org>; Wed, 27 Aug 2025 08:29:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756308578; x=1756913378; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TEnNbckLBHajDayYI51+7fNCHf1cJxFprESfhVXVDg4=;
-        b=atPAbvRZEe6Nwhr0x3pzFOj9nr8kpflAl2U2/8OcBm4vDeQIlv+pzwmVGUt/1FJ8zy
-         YyQ1UP6a5vPYBUWliXWBC1fmF98kJjXYsFrSU5nKvmyf1yt262Y5fssYqOlnh1mAyTCn
-         XQwGvvQgLsfUoFQHwK9S/T9gByX564PB9bu4hoT1r3h6nvB2OuGsfYCNrtOjBkanvYar
-         aXuS73sSGYTlR0MHoP3b1meu0+UMrXidzTdZekSiMnamdP1wch2q3gVrbYe0aZprp+wk
-         dXs3gBxtTc2dniGBVoWibh4kcDkp2Z8ODEZ/iUpAR1C5YFuIW9YXRJkKvaZfCOyh1NZ7
-         oQkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756308578; x=1756913378;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TEnNbckLBHajDayYI51+7fNCHf1cJxFprESfhVXVDg4=;
-        b=Mk3vIEGEqbnBFPso5EaG0/Vep+LRCW0EZi3/NxJbJAGreDG2iBotv+nKBtYl47dzDn
-         Sv1CPFO18D+77CdLOV8FWEPpcGOy3S7KYsbKNERSNzkbVyFz4yI9WRRn0sS9QTZlNJa/
-         6qqV5vzPZdE8Ymz6qI/SdQltdDnPHFHoXfcRyAet1l9mMrCLoyST9Z4vcp5SkRZ3IJnD
-         1xL2C5LuI+Ncy6kvZFouf4JymZUoCJ/LfzI77FvA3j+r1lXQ2FTnRmlGPVP367SM7ia0
-         46XTBUvqD3RUDZ6+drfgbktA+poWn9ml/D5Ng4W5gRsitoSXEb+DtQk7EDMqTCQnhhuq
-         0J5g==
-X-Gm-Message-State: AOJu0Yx1D+q7i0LnmU+F9u+xy8LL1Ut55QQ5q5nk5J139zQqvj3BWxEH
-	S9Xs/P6oWOU8HVK74FspOX7W7wCcRpTb1JktCqmJuGiWa8NIe20Hi376
-X-Gm-Gg: ASbGncvGQwEy76uKGKbRypf32jgkw9fhSjePJ8DHyUYQrYJC6zgh3o2/rq5YDIl3d3t
-	HAJLMFDfXkiIaWbkr2ReT05BgCRpjbXqaRSdFW2hN4HbbLGQ79u6hIiOMkwhF8DOPH5+olZtm/I
-	AByC2igl0VXCtQRSNlS/J7c4goBNNY3RYCF6ok2itrxG/v9hAbBjThmJL7BVAPn+oZUdkEej/DY
-	unpvubxYFQF1DBuKVDmL28w2TZ/5aNQG0N741ywDOnowDu3y5q4l5ZCj58A/MBqicgQjsrzgmMw
-	q4OC61WOd/cf9SQHd9CgQMcddkP/Rls3WG22fkm9uJF/71Zh5TIk7V6mOFt4VvAjM6+liinML1e
-	CBwL90UZuExaL1jsS4O46GV2SZtR2KmyaqBQp8k0T32JEvAQ5HHFW9O+TQa/rcQQWsy0Gf+4dtB
-	ER1g==
-X-Google-Smtp-Source: AGHT+IFrazR67DJtN3ervvst8HKgiNx9koQFabt9r9OBRZBPDWF0Mmt9UAxBzU/6G7P248lD3ut/FQ==
-X-Received: by 2002:a05:600c:524f:b0:459:d8c2:80a6 with SMTP id 5b1f17b1804b1-45b517cbeb0mr192323335e9.33.1756308576817;
-        Wed, 27 Aug 2025 08:29:36 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b6f0f320esm35172565e9.16.2025.08.27.08.29.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Aug 2025 08:29:36 -0700 (PDT)
-Message-ID: <90a1f901-fcce-4275-b1a5-8ed50620f50d@gmail.com>
-Date: Wed, 27 Aug 2025 16:29:35 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rzxdn+WP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OMy/r2lR"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8224E1400156;
+	Wed, 27 Aug 2025 12:14:27 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 27 Aug 2025 12:14:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756311267; x=1756397667; bh=l6mwFRMHut
+	uOzMctONR4mfaMgVX5dpgeJsBf8Khpkl0=; b=rzxdn+WPGri+o7JQAJRXzrg55A
+	SGp/d3mwhG2Sl5LAw/OD8zBtGrf1M5amMmuSUmfpeYWDxVVmygVA/7E2JBgneCQK
+	swKDiMGi+F5NQVp8UYYVTx6Bwh4PWWmjVA/CLWQYrclKrPeZjGh2uJMwZpYLvo51
+	opzZP7ntzgpKuDpzpPHlSOXwTL90ShRV2R+MYnhYes3aaZnzqJ0h9gQD6y+fzOXu
+	lZfjcVlm6BuypoF60pij/uSmChMw+LLWMoFCS09zV1V7fAfaZr/y1/IC60d0SAGD
+	voxLKMVJj/uRWUqMCEG/XdQExkmOrtP2SE4K/kiv26qRiKu9xUqQUYShY9Wg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756311267; x=1756397667; bh=l6mwFRMHutuOzMctONR4mfaMgVX5dpgeJsB
+	f8Khpkl0=; b=OMy/r2lRoqniDEDLV1x3ZBb/h1yWaQ4eOfKfEXfFW/Kk0nxsTcZ
+	bGhVcfqffmvYrr4z5YwdLxN/7a/F9aRcxd4SgJcm4oQpZshQjw92M6SJrFypMD7y
+	12ouK3W1JeDMMqtjn2Wc4q1LqiZJgOwQs6CvFzhSYbKGhUCRzd4MAAReYQtgw9k7
+	AWMrviuS3CdT7hrqX8QQHIBSkJqxhVUsG0agNc0cobLditkWpDhP9m8uVwNCTy28
+	oIww798mBddoRVx/WLrhM8WdULldXmgu/xgN6DfAr9avVGjx8y7L77aO97s83NBj
+	pyj3tzXkk1fpeebN7NTQns/MSGpkZ3Hh5JA==
+X-ME-Sender: <xms:4y6vaJs4ZU-4hx-bNC-kO8ULZl2srYOMUfFhBQk6Z-eZWlxQnqQt4w>
+    <xme:4y6vaPkY7ox_Z1bynrUZW4310Ih9dchLDQ1Y5iYhaR5MwP1MaIs5MLCV4FJE4iNgK
+    tPyGFNweKhSNqJjqw>
+X-ME-Received: <xmr:4y6vaLyxWOPJsAoubRhEw56VHn75UlT58FhBFNTV6wwdNFFTStRQB9RdzjBG_39uUHGgkk6YpPBbBwdXgCyCWzB92WJsqMKHLq8ULo0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeekiedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegrnhgurhgvfiesrghjrdhiugdrrghupdhrtghpthhtohepvghmihhlhihshhgrfhhfvg
+    hrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:4y6vaBPd-7N_lGbDRL4IJNCeFay_Zlvzi4y7ZyEvl6s622gHHEZePg>
+    <xmx:4y6vaHp00SlfgUwhfsUWdRU4-OjMuMw9uS6in1bUjAfCHJVkL5y50Q>
+    <xmx:4y6vaKGOD3IwlxeKbAyO5EJrqbqvuuUGsbCLEl_G1fOeWcWKn0zWNA>
+    <xmx:4y6vaErQHYko-w47H_BM5fe_3WU5lDLXtdsmOJN-bCBT-UUNH-tnaA>
+    <xmx:4y6vaEahL1IzZTd1vZWHypw-hfkMrCegHm8VkQkg3ZyT9duel1EEMfQW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 27 Aug 2025 12:14:26 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Emily Shaffer via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Andrew Jeffrey <andrew@aj.id.au>,  Emily Shaffer
+ <emilyshaffer@google.com>
+Subject: Re: [PATCH v2] doc: document rev-list opts in revert, cherry-pick
+In-Reply-To: <pull.2042.v2.git.git.1756279345929.gitgitgadget@gmail.com>
+	(Emily Shaffer via GitGitGadget's message of "Wed, 27 Aug 2025
+	07:22:25 +0000")
+References: <pull.2042.git.git.1756279041881.gitgitgadget@gmail.com>
+	<pull.2042.v2.git.git.1756279345929.gitgitgadget@gmail.com>
+Date: Wed, 27 Aug 2025 09:14:25 -0700
+Message-ID: <xmqqjz2o3foe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 2/3] config: warn on core.commentString=auto
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Ayush Chandekar <ayu.chandekar@gmail.com>,
- Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, Taylor Blau
- <me@ttaylorr.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
- <cover.1756215326.git.phillip.wood@dunelm.org.uk>
- <5dd897c95e680c4e3f26ec3945fe649b4b61681a.1756215326.git.phillip.wood@dunelm.org.uk>
- <xmqqldn6krmi.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqldn6krmi.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 26/08/2025 16:52, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> As support for this setting was deprecated in the last commit print a
->> warning (or die when WITH_BREAKING_CHANGES is enabled) if it is set.
->> Avoid bombarding the user with warnings by only printing it (a) when
->> running commands commands that call "git commit" and (b) only once
-> 
-> "commands commands" -> "commands".
+"Emily Shaffer via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Sigh, I removed "only only" which Oswald had pointed out only to add 
-another repeated word. I've just sent V4 with the typo fixed.
+> From: Emily Shaffer <emilyshaffer@google.com>
+>
+> In f873a273d1 (revert: accept arbitrary rev-list options, 2010-06-14),
+> we added a handful of new options to `git revert` and `git cherry-pick`,
+> but did not document them except by example to `cherry-pick` only. We
+> have a nice shorthand for adding the rev-list documentation, so let's
+> add it now, to both commands.
 
-Thanks
+That's a blast from the past.
 
-Phillip
+> diff --git a/Documentation/git-cherry-pick.adoc b/Documentation/git-cherry-pick.adoc
+> index 42b41923d5f..03848aa9f21 100644
+> --- a/Documentation/git-cherry-pick.adoc
+> +++ b/Documentation/git-cherry-pick.adoc
+> @@ -174,6 +174,8 @@ fail unless one of `--empty=keep` or `--allow-empty` are specified.
+>  
+>  include::rerere-options.adoc[]
+>  
+> +include::rev-list-options.adoc[]
+> +
 
+Are there options that rev-list family of commands take that are
+nonsense in the context of cherry-pick (and revert)?
+
+The rev-list-options.adoc[] file is designed to be included from
+different places, so for example it omits certain things from
+appearing in the output.  E.g., by doing things like:
+
+    `--ignore-missing`::
+            Upon seeing an invalid object name in the input, pretend as if
+            the bad input was not given.
+
+    ifndef::git-rev-list[]
+    `--bisect`::
+            Pretend as if the bad bisection ref `refs/bisect/bad`
+            was listed and as if it was followed by `--not` and the good
+            bisection refs `refs/bisect/good-*` on the command
+            line.
+    endif::git-rev-list[]
+
+and not doing
+
+    :git-rev-list: 1
+    include::rev-list-options.adoc[]
+
+we can exclude specific parts of the rev-list-options.adoc from
+inclusion.
+
+I know that the implementation took a blind^Wstupid route to allow
+everything, but documenting them for unsuspecting general public
+would make the harm larger.  They wouldn't have even imagined to
+type
+
+    git cherry-pick --graph master
+
+if they weren't told that the command took such a nonsense option.
+Have you reviewed what is in rev-list-options.adoc and thought about
+excluding certain parts when the file is included in either
+git-cherry-pick.adoc or git-revert.adoc?
