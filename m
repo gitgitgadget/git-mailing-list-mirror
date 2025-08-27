@@ -1,143 +1,233 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010008.outbound.protection.outlook.com [52.103.68.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F74C338F4D
-	for <git@vger.kernel.org>; Wed, 27 Aug 2025 08:19:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756282767; cv=none; b=LU/0dwnGuPSeKpoyPsMsaRDf2sTNwE+ms79weFHoiJVQ5VO1nUm9NSqaeZa92qVBGKm9x+pLwq3NvG3gbW46bxAzTFFo9I4empfMtF6kNtx47YkSvHjhW2qu5Ems6hrV/BNvsxTBM9L6LFQnuhM66YNKuqfnZug/CX8EnAQOp6A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756282767; c=relaxed/simple;
-	bh=eYX8IGmnRAURiqA0f+fjZ9CyTkfAJEU5WKPDf2/uV1E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GT4thBluVr5YHeKNQgDCh1vCkXaZUVyAa9j0ciFrZkDLKIQ6TH8aEBP6MGoaJvEnBMkBY4DLjnl+pNmIZoQhCJdqsemibESc3TO/n88uLl0uSsOX7ZPq8mqeLPMpCdYiD6P0QTQ5qv/TrTUA6v9HwVv8Lx0xr1q+6edcZ0L5spQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=JIo7H7hM; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431F5335BC1
+	for <git@vger.kernel.org>; Wed, 27 Aug 2025 08:54:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.8
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756284882; cv=fail; b=WA00WkhBP6ug4z5YvJ7B36L2eyiHqZFONWOcugxqex+DjZLNGXmyYmLI0qfRx7663XNG+ehxG7FA0BmGo3Bhzx0WjG3APZ5LqfiId3gc4t2CjP3b9vfTcPZ4QK1U1yZnpU6ENWy4pklvzNSGsffjyjS7wSP3c/OH9KxkUgW88uw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756284882; c=relaxed/simple;
+	bh=qSSS0+PwnQ3SBCPvEqZLeNKp1fXFrbv/SZ4tS1JMYdc=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 Content-Type:MIME-Version; b=An1LNnH1le9UfLGfQNJ5lIzANbAfcL/dR9JLlh9mQT2C52AbrpHKaDOI+36FgY6SxtZjZqMUXD3joWpUR4n5immzx+cn7TjDrIG7EDNVq04G2RK8pgtK6HMJHXWF67d0LS0rFxOxZBdFYJi30WRHbIkfCV+nFxH2B2N44yZGN9I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=Eyph3rdo; arc=fail smtp.client-ip=52.103.68.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="JIo7H7hM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1756282763; x=1756887563;
-	i=oswald.buddenhagen@gmx.de;
-	bh=eYX8IGmnRAURiqA0f+fjZ9CyTkfAJEU5WKPDf2/uV1E=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=JIo7H7hMnPgQLr39IUqdx6zNqNjkbQ/qAAP+JdaSc3tIGcQAfTGwYSX++8jHa8qm
-	 zJHye2i5KJn87ViMjJOb5i0H3P4dWuLv+L/p+3gyMj9SdU8irQ2cbljw27c81jCMY
-	 /No8yDqcqIDRWesJkqob9ygTrsk9p6bbe6NkQOvdhfpxFXI2OhNNz1ZukoiFpoUPv
-	 spz6yyvFOPQITNHny/AvpEnedmbpK04CgJttzW+j4ekmCF50dBJeII0t+5+VF8pu1
-	 PG7rq7xLQPmZ8GrvhjEq2BFBTaQ2+GUt8XJkQsfNJZ2RCN5NoxLw0gkRFOM0Tp+jD
-	 ZeJqy1tDS+eoRIxhyA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from ugly.fritz.box ([89.247.162.120]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N3KPq-1uQ82z0m8o-00tFoe; Wed, 27
- Aug 2025 10:19:23 +0200
-Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
-	id 1urBNK-TLV-00; Wed, 27 Aug 2025 10:19:22 +0200
-Date: Wed, 27 Aug 2025 10:19:22 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 3/3] commit: print advice when core.commentString=auto
-Message-ID: <aK6_ivfXr7jIbBCz@ugly.lan>
-References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
- <cover.1753975294.git.phillip.wood@dunelm.org.uk>
- <0e7c08b15e5923ae03f5630a8286c7dcebdbcfb9.1753975294.git.phillip.wood@dunelm.org.uk>
- <aIzayan9nFZo4XYv@ugly>
- <af0c22b9-5034-4bbd-9cdd-f1f16d933e4d@gmail.com>
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="Eyph3rdo"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hnDcKnaN5+K436JXvQbSxREbtDCTMfluBfSkvSqm3Qn+fWtFbgj+Z2KlGiumDlDkNiXmNV9d2xZJZbhI/pB09ROmb35GSdmmtAOVsRgfYFqE3Hc6F9uTr9kqaZfQFafmDARASQoX+jZMsT289D/LqFJFrRH6MkHqLXyDLBZchvqgXoQEznO6ebE4wfm24V+EZArsMvi36oHVeYiWPBdgB/c6eRc1/6X02gsOkiYNxTwr/loDykmSnz98P2ZCPY4r9LLccNjbmeizqLQpOjDvV7aOMcSurXEyZC7tudv7dh2XG5bzl03ZNVghEcowiM7cZDLNFHhEiy63nchPKl1umw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OPB85ONfZwBimzFGyv83KKhE4722LkejqYPii4hjN9c=;
+ b=UDJNrvRDgnj4EA5lfHjIGcOB3ZiEo8KvxNaYCPCZljvwRy3ldRdfemdD/jD4t5gmgbfAvtus1+iWLuNVMnOF9bFGtA4TKq+yuZoBQbL4LxfJh2jaCPXdrBCRyvBx57oXUKvfgXH2rLjAAKPiXpbtXaU6y7W+LDGPEt43l3qJTGLQRcXZv1ebLxm4OYJW3RsQVm29Wnu4NgL6ZbWMRJ51AbPWMJEbcNKPfuwIcxJc7KDZ3zeRT09V4XYLgdnVOiEzz3lDfJIBAPKmTeC1C2dWCpEI8FKOc+54U0opXb4mTJEBvysCCn4P/o+C9ahILGcjNMDZwVT4op4zv9nRoCwsDg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OPB85ONfZwBimzFGyv83KKhE4722LkejqYPii4hjN9c=;
+ b=Eyph3rdoJ1mZ9MNA5bHSMx8sWbsAklsjBv9L6CYrVHmTR6OXdFRRw1Sp6NRgOj6QK+WgNbkoAliZicqpWKi152Acn2gyXQdCONF9HgK8NGfUxIaqbunobiLBvS0SNYgLUUZCQ3I06cU5dYiTynKCKLxE6LWZzgi0+FZSN/FPwALIFEUt2g9UzF/h6JKx6delsrs8ALfmpNKJon7vxy2RhXnuFGSRzvDaojxTSD8ZAqCJh5Fs+xF+YWidxbUjupRSpHYg5E5nN2uHBoH0ovrIh408YYxppI958J3GFPz66Xc0Hna1D9jA53Ydk3b4ab8lVyFhVpEGjKXbUs93hCRZ5Q==
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
+ by MA0PR01MB5755.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:48::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.14; Wed, 27 Aug
+ 2025 08:54:33 +0000
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.9052.019; Wed, 27 Aug 2025
+ 08:54:33 +0000
+Date: Wed, 27 Aug 2025 14:24:31 +0530
+From: Aditya Garg <gargaditya08@live.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>,
+ Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Ben Knoble <ben.knoble@gmail.com>,
+ Julian Swagemakers <julian@swagemakers.org>,
+ Brendan Abolivier <brendan@thunderbird.net>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4=5D_send-email=3A_add_--get-sm?=
+ =?US-ASCII?Q?tp-server_option_to_fetch_SMTP_settings?=
+User-Agent: Thunderbird for Android
+In-Reply-To: <aK5RInMzjC6vuLv_@fruit.crustytoothpaste.net>
+References: <20250822151039.36006-1-gargaditya08@live.com> <20250826133936.1569-1-gargaditya08@live.com> <aK5RInMzjC6vuLv_@fruit.crustytoothpaste.net>
+Message-ID:
+ <PN3PR01MB959731225E912FDCA7308508B838A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-ClientProxiedBy: BM1P287CA0009.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:b00:40::17) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:f7::14)
+X-Microsoft-Original-Message-ID:
+ <35E94BC7-9D46-4EDF-80B3-85F3F4139CAB@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <af0c22b9-5034-4bbd-9cdd-f1f16d933e4d@gmail.com>
-X-Provags-ID: V03:K1:qZk05UiXqpLvn7WW51oqJcsDfJmqwTO8T3N+05EwXj8GdgIw7uW
- c8XVho+c+SBzbrNOG6x0DhcEkZ49EUM+HpEsYc6oDtL9Jq5HISb3RGX13GlHY96IE4BLlCd
- xOiR4Pg7dABlLiyOeBFlPM7kvR97SM7W6irptZrYz9zG5TnK7HepONoH1b4PJkRua1Lznjh
- PuOwT+wvzKqNCcDM3Jryw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:QZhJQ1YEyV4=;M7sK6PB9xV8MyhWq8JID0mxNFs+
- xItYv72rJDIKqf0SyWPFMtts2dOfpvAcHf2l/OsjxE/vrvhXaeTeQvbK+aKlawgiYhZYs3AWn
- m/DWIE3lXr8rugZeAKcauHeHf0Pru0jJNiJXVfp0QLpHdXBnz6WTOWgCKMJWLFr83sThtQpnK
- ZVF11TDv6ky4+w23AW1Li39pQsXYebSo6G5gyCqonuFdp1q7lNpJ+JMxiWK+tj7MQcMJw16Bj
- r7TltQc161KxtKQgbSw7aXxusPGacCjHhHyZhXywjhNRBdCHToYNlKEWstkX3lFiqGN6q3g47
- T8Voil+YFEcbKEdGogzmeWyQW9fb/BUAG4zNNcHsHe/Nz+REqLd6j+2lwgIBbmKl+MDsCTXId
- mhyDtIJ+lmWRe0UI0sdk2Li99XrdnZkFskrwr58wHiOK3ka8PC7TuW5bu55YkLWO/3R0PBg0V
- r7aW/EwDNgJziINvHSOyO8Roz24kQbAAlkDGNAOelja983m6CFTenVfV/P9j8xj+Tw0TGpaMw
- xMzA2096MOrc/9QLm+rwYpYtwvBsYRnBLG0SJtqpokjTgedWhaVoaOeX8pVG0S5kiBlxXJ/dV
- I9jmggR7+p53gWdnbVbcUVAzu/0gnUKK8ePBx6dTAaFiE9Ym/yyoI1FsML6m7JYZ4pOSiZ+h+
- s7MDf0VjkUl0/zFN+h+KLcf7+rlqajuq8DNDrbGVcDopNlICjDU6Gaw+6NbbUFfcX++zkR7i6
- IIM2ph6JVBEksIgmq4t8oVmqMutszalt0Dboda709s2kBIqOWZkOvsV74hpqBugRevvNHXerN
- MyU3uTJ6wgFackRSulbaA9XuH51At1Twy9g3uUWVm+N5D1Eb+znfKp3WYsNy5jGINHiVlzw2d
- 84DqLw3RxYzFx8dEVsKT1QGZxsl4VoFhmVQUtd3FSuVLGfA1MDzMrT8uD5qKg+mO/v5igJ59A
- s+rUPLyyNzB/WutZd072bE9IO8X+xO1QV3JQc2+mtI+sCpP50W3XRO9gU4Q/F1JFi5bu/IoFh
- I5vMo9F0Btw/MDiYOmQ1Hsc3oQviZnFy0A3VQXqcENlBVP64nQu/ndV3Mgw1vXAjsF4r4uLnF
- t76mJNZM3nnW6Onk/pExg9874FnHzVHi2ZAobTpdcekBboG2EgP1mI4su4KRnYncuPN/Y9d3R
- uydxygI2jZlKsXMEqnOBuCtUt7fPpcELP3deYPTrbYBOM+NOI3L++R7CEbfFVQYVIG9TxLr9g
- 07iseRra0ttCQkUTfMduoB8PsY0Pgf414OqyI9DCnki1EbRpzwdjmfXIumxbdrn23PnUVF/hY
- LDdXzPl+tnYD+cHHt1RoxHI9aLv5IEw5/T307wqyr1txeMOcMNpxLhs7cJhcUfYNYPjugcHr1
- zPZyDVsW2wprsmGr/2HtzfR5nFbt1dzyCSnHZlDiL9u1SeQXkd5mlwgsmtkepIWghIdL/KUhO
- oexV5isHasejXeim+y6JxgnwFLhivNHzrFboPxqqur9FXPsqhIXRN8NO9WLIK0z47KngLAsaE
- Elxbh8NSQ2pvCKqyLl5Eof3UbD74f+bG3XGtaBVTM/5qJRHbNElRpcdKpM05lTIwR2wRIV3Jf
- LyEuPFOQt7AGzpT9LOdW5m5SMslrzzm5S4W1C5hV2IIKLBS79OSx9kdzukTBvp/sNhtaK92NK
- FABQg3cMcLr/MPCLMHthnJpsNwmlaEzxlH4QThtWUiAKSGJyeATBmEwSP+xIseEN1bqxaE5G3
- gC2yTrt6TADrtjr5h38BvxJM0zktytuD9q2gx54JpTMSLQ/1lThu5E3Ggm+rW3mpe5mcav/P8
- iJv3X3fyPf4qMQ3IeFaCFaVIgBh7Sg/PahLqhbsct4WyitTdWxMpcW7ge6siCMeLIiiQDT/fc
- 0vT/npytU32H9dk+/chy6rA0bV4NFZgEszEoQeqPJIJxmHfRKRSAR+KjgmlzsUHcXd7usNK5r
- 9efNljmaeISG77KRNmpq/CG8B+sV6z0NM2hvfzJva4Ta1DQvHpyzBBuq/K8pIS76ocDi0VzLT
- ao3O84NSBxb4DA4B66vb3CwWvUWkpZ80usgDBsdYT6U9lH4hUA7RxgaG7DwgvR/+ExhMlfPe6
- agUm/6v6DBYHWxuIL78zu6oitPK1EhJS6iVXjj88rKnqV2SQWF7O2h4mr4D3JynpMpfF2r6a9
- nMjHlhzWxjhBN1SXTMgK72pBpqDBm3SGjt385aItOcr33szXsKqls+eAf8FDnn1+bspfd5A3f
- JtP4yIUikQNS69LDmy2vebgM853FoPbPEWwzIQZFcckMid08hnDsac7TGCbCsDqGTQJppvXrQ
- fyZmjID7/D+1sx1KIMtkCBZ8lNhp3d0WO6EfMEuwLW1vMXX82JpkS8JxJs9OJiJsuspiOlWQt
- MNOveDGIxPXpX9JPYaTnvHExl3PZCHNL4g9XTskbqJ0tJI6c34db8vc6bqzga1BZVT2TFujPN
- qxsCyB0AfWFkKfun7HbhTpjMhKmyUXnOtFWXPe/e74eU4TH8WkUlQTRvjOnI/1Q5LtN6hwK4G
- FIbMfj/kOelym1FA+pnED+3UX0o21TB8Qv9eiJHHcQKnXEOWb7YRayTJfg3NqYuPpnxsn7agG
- cHJggMY86II+8utpJLBPanGPCLq+2WzWWYTYgSoVhN/suurlIKJDs/WvPyv1Yd0m3vBLmVh8t
- U/KBtmVwW/qJmU6Lhe/sCd9VAd5V4eixupldZHMXm4WlBSXkPJUVdcltJZBzl6r8B0JU97sxX
- ipx8QmnHy4K0pYybmFmhSq3e6qNEO7HqwtVFz2v+WxC0WmTlvtqjK7C16WrJcyzxVO0aopeF1
- fwcRQCEGnBHm3448D2Ak2AbilX+0F+wA1mC55UTRAJM2XrZLqxSAOlGevT4ehsCfBVQY2tQaW
- dkCahF9nYECl/1/i53fTJXNXzHTtCvvwRVsmy251kpDRmiA8ZYndtBP6E/00LGKCw0LtgS09Y
- elg6B4RianMupWvPj9PNlC2avYafU13olOi5UQA1q+E6HKNqM6PzpLCldHcSr30x0gkbc0dw3
- FihteVER747eFqLzA+gaHAqUs8vYWXZyJiY4fhZLxutdQ8BoltAcMM6+cKbGdWMkm0YQRvTQA
- Lv72hIJTeWnXlICy2/n3YF9anrskyOH+To+vsavpuWVatnB0SECeKTD+4axjjG2gPtWZSAjBo
- eqisp50Wtkk9jj0wM+xUkyCk1rlGKGtrNQmNeREPFQa0+C5Y4Mpcu5h6khelyB/Dd7dSIZynS
- KUNF4P3ZYTdiA0RO3SupqkqKBvKEnk3Lw2zBObuSPjYtWI1FzMOeIFEj/hBjz/KL3Y/4iuCMn
- XTgGb7TGTdA0n2O1680NSXisFqa13eausf4hhO+vZb+RGygMxle4+10WAgTEWzOuj0Xv/Oni0
- Uk1Pmx8qlMhI4BTEA4h1kA4gY76fpdd4DdPi4pjK6Z+qtEsQEKg3bS/19Tq5xWInfXiFNBX2l
- WWctE+OO5xaFtbR1GjRXIDrHPwsc7x9lss0IfNBbE+Qt3Dxf1IHMcgUc6G6sht08C7srkOKM0
- zp48P85gFlp+eOtvhIVp69zMWlF6HBeHwL4iCh13Eps1gOcyChKSihQDNsLqOdQCvJXcUjY5z
- DZqvNKpQ3uF43UX56Yt8r3T+BJL5Tw3tN2bWIUcnGTHvaNjvZw0S4mPnmeI2KkpShKUICdT8e
- wP4HGVMF9eWadW/cSz0y461KldX3Dp7vTn0TUvGbPTBCPfie+pyAj4N9/hR/661mH0di381Hk
- UXH3A2jsaLYEKNztgDzShg3yAo5f/IBQkq5x/6v9fshLQwSMp7cW83+k6GrA3aaQKEzaopx1X
- PVEATUQ2heUsJucqyn5zihrKnwU3TwGp5CwtxgtRRxCfXQJUI9O91Mh+/4r7mj+DvPipReK9/
- lUTJuwR1vn8lDCX8KxMFLrNXBJxSiRBK03xdnqJXoWtQAqIsHPnmLJv25BjacoHUxR0w3vIA0
- yzPIw5BZZCj0qe2nQfLXc1BbHedTv2CbDr08v+m4Kx/JlDCnI5lJ8GyeSqSC0YSIy+JRDiWv3
- cPN4SgszQzrJHui5BOEQZl/qlSTgIxbJd11pep2Am+9/zvrol6wLsemz+ebGK9UwDzzrln7hT
- OclHmOtLBykpeRygMC5onwkx+MdQ9uKKxkwdsj4gv8EUMcrum7HYUfkngc9l4hACLtwGtd52t
- qhOlAucw/ZbCDuBdnbaNJHZqlc+sLNZU5YInjKYWuzi2NYB22vhPbueDKsaqpRTDBDCG4m0U+
- zCZnhvIWHFjfCc3fo5NGkFeS/0U0BpwL3ebW651Qud7Rbe9glZEV700MYZDHAr4HXjksLblC4
- 0mabvkH9gOsZaBnF9pua5CYY8ekEl8S4UOZEbkOFrpMgGeOYwGgXxAgSq2LHFG8e3zJS/g+lN
- G5Hgh0LjUub8+iKHLsCRVgJQmiQ6J3UEqLdWBB5SObjWxriukPpYFFlFmqLE7aKkc54Sa0R73
- SeXJ5eSbsiMA2ordK2WwcKr1hLc9hwfbZlWbKAlDejaAk1eey57+JJfeccsjJWckHZwOMNFzS
- Bejnios+LMyNh6qNwS4ZjZ+ccRLNjLhHYjEGeBn0JC7OMINbDBuLBjfltDy17bBOc1HqiqfVW
- 3Q78vE872v5GUidqbz20syoAofgOa0w/NE+dLGdNUml9TDS16Y7LYQXSJPJUMlhjuOHXDn1sF
- qhElDXz/bRFIWntySsCyxmldi/5Q
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|MA0PR01MB5755:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4e405df1-99d7-498a-cd69-08dde54757b4
+X-MS-Exchange-SLBlob-MailProps:
+	vuaKsetfIZlps6CageNK96R3p6oJJ6xNiydprFFyXgjXC0jtbkb+8CrbK4OO2ysYRGJevztlLSNPNXfV5ni6ePPcv3egWDOBaCE8NThn59RGr/IYb39aNMpoheI/EEuR05lNWjTkiKebfkJ9+lklas9Q9N9KGLdm+6Z0/gO5qHxdcyDAIE/Wa2RpASZRgkGORkhSjss5mnrTZsmTF6kyqVRRBjNSI0L2L1ga3gupUxOrDm+H/QxH178xvr8nh0UhBl/l3HsUHOe+CVSczhQepZ0e9KdFwnp+BZWnwyaPGYXVMb3a+9a4O7Spgz0Pn7RpA+rCD0h5T2N2DnhKzSqy3rxoSFwKMJdhRLEhxNwYeDiFLKLTKJs+NRLSij9b9Bd6yi18d9jnRZghQ+zND+/IipJHofk/JYSA1VfdK3QnOgT0HFRK9t2njNptbFeQV/vpMbDh5CyCVNYDjd1D4EO1CaicA+1UYb4ySGUy3Pq3NsqiPUSeaVnjItU5C0mnNl0syGSAPbkyllq2+cFNr+2jJg4ai6xxsqYxO33kSe2klKXmfV8OfGt18qWJCWQOGHTzsd7SeB300nlyBrRvEloPbErBq+KYdJRYS8C9CFD5ZqLsABlUQ3bMFjw/wFJzUmzhkaW2q49CKmpMTSLTWSIaEVm5ErB0UpyvAaryH2yurTt20GQyNLBZhY8wcP4KhsVKzluG4Jk0PkSk4TzyPLRp69qrWATUyRKVLokRMo1MAbO1Vfs3kAc9DIkN7FfvUl3CAhhiOUTHgeGQqm6ZZmhsoRZKeM5MXq+Ewaiy9FtHDoOakBdE9tU6DS/6jrGd6gRk
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|23021999003|5072599009|461199028|15080799012|6090799003|41001999006|8060799015|19110799012|1602099012|3412199025|10035399007|40105399003|440099028|51005399003|4302099013;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?WEdOSkFpWjVhcmpTQWdKSTB3b1ZUbVdESkFtRmpzRGhHK1dLY2pydVk3MTBF?=
+ =?utf-8?B?UWdpMFVQVkFrbmRDVVA1bUp5VmplV3krU3RycDFmOXhUTnVhc29hK3hiVFNW?=
+ =?utf-8?B?U2JTeVVGRzgwc01Bd1QxNWNoMlp1MjdwMHNLWDBoSmhPNVVIN1RTeDNJOS9W?=
+ =?utf-8?B?eS90M2h6STRZUDJScnZnK1FIVXVvWmNJVTZwREZ6NFAzRTRyNHlWMVFVblZQ?=
+ =?utf-8?B?TWtGWTJ0cmZFSkJpeHFLTi83SXBiZFBLYlNpd2MzU3RVajB0ZE8xa2dDNTJr?=
+ =?utf-8?B?WWhEMzczN2l1TjNmRXhKelN5QWk4R1Y4cG5hb3hOK0FWK2hyamZ2RUl1ZlBD?=
+ =?utf-8?B?bUdqcG9UM3BTbDQxRVZiNGlWWWtFNU4xUmtRL29pSmtTSFR6VzNmOEYyZ0JG?=
+ =?utf-8?B?UWRYbFEra2J0eGZWWXFEcFROa1g3d3dJK1VEK1dJY0E3ZURLRDJ4STlsbWlJ?=
+ =?utf-8?B?Q3p2SzJGMGVYbWpNNmtxZjBzMWpKbExPNU9JZHVRbGdWVnZTcDU1aW82TXAv?=
+ =?utf-8?B?RG1oaGM4L3haSTFManF6aVVpOHRUK2JkS3YvVUQ3Mlc3ell3Z2RJWnBkdWx2?=
+ =?utf-8?B?Y0lqZ3Q4aUw3aW1sZjVzR0gxMWxoNzV0cUhFMDZiOE52M2drSmU3V3hpVnp5?=
+ =?utf-8?B?UmpMNmRmbVJPS3lWN0cxelE2UEdSVy94YmhiZTE5cUhSK2xmSmZaN1RXVGZS?=
+ =?utf-8?B?Y3BoSE9FTHR1THltVlNNQnZ3bEdvSUk3dUYwS0Fyc29aZnVXcnFsdk81YWY2?=
+ =?utf-8?B?QVQ3bXdxV0h2ZFJQbkVuZFFQS3V5bmhpUFMybmlYektISURKQUQ0eStNdmNE?=
+ =?utf-8?B?L3VPZ1dHcThKNXh2TU4rN1BZQmk1ZkQwVG9wQitTM21WYnptaEt1QlQxYTcy?=
+ =?utf-8?B?bDlLYXREMXpzS21iZFJicTZZWnBidVhoNnpWa3drbkMxbzJKS29TMmkzQ29w?=
+ =?utf-8?B?U3QrK0FERmNKTDU0K0ZJRFl5UlVKOXNWZDB6SmlJYjJraWpEbDM4b3YybXo2?=
+ =?utf-8?B?ZFN5OTIveGFVLzd2Q0Q5bmc2bVJFa3lFMXJlV3lBMEtIeCtOR2dOckhFTWts?=
+ =?utf-8?B?bEJFNHVsd1FoNml2QlBTQWRDRlBIekNjQzRQenN6T1g0QkQxT1BkWU5BTlQ2?=
+ =?utf-8?B?STF2ZS9xZ1EzUDBlZVJpUFdKcWZJcmltaHpRenhGb0ZtQ1EySWkxUXV2QVQ5?=
+ =?utf-8?B?R1liK0tNY0M4SnR4K0N6ZmsycnZUMG9ySWdSR1p0cTVZb2pIVFpKQW04WXd1?=
+ =?utf-8?B?bkt0aUxaUXd1THpqMHkxSERxemFRQ1pYMkQ4ZngrSk1IQlhST1FYRExVZWNK?=
+ =?utf-8?B?b0kxWGJKSTA0KzNMamtNQ0xobGxJTjYyTE5GZmFobUhVNUxMNXU1OTkzRnVL?=
+ =?utf-8?B?WGorODRiK3FzUGI5WENCUENFWmU1bnI0dzZEL1pvaWNibVhVUGFjcUVwbk9y?=
+ =?utf-8?B?YUhRWStuRytPNDBsZVM0a25WOWNvdHAybEZ0R0h4ZW83L1VCSzJpeGFtVnBQ?=
+ =?utf-8?B?MjdxVnRWT2MrMjRUbG5mYllzUThsVk8xTlBwSHcvbEc2ejJpemVZOVg2dHQ2?=
+ =?utf-8?B?ZXo3VyszZ0M0dFRNVTJHREJwdExiMlNGWXg0TnJRc3VKV2FFeEltOHpkQ20w?=
+ =?utf-8?B?ZHVrR2xVQU1HeG8wbTVBWDVhSnNWTVZTL3BNbkpvLzV0cG8xcUhZQis4c1V4?=
+ =?utf-8?B?M3FabnVvN2V0eTBUSUxGSzNsRU16TDMzSWU4dVB3TXVOTUwrNUlTM1MzcS8v?=
+ =?utf-8?Q?v9JwndmRHdGF++JPWhEouN9r090k4U97EcT6rI2?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?bWZmN3k1cmNOOVBaT3d5NkhhOHNvNjA0VUQ5NEJGYXVxYjBTdHU1SERWOVJp?=
+ =?utf-8?B?SFBpT1hmZmNiWUJBamVpZ285NDEwNGNtcTZxVk1KOHBSenhoZkEwVTlUS1l2?=
+ =?utf-8?B?cDFwQzR4UnNQekpjbVk3RnJUOGhRSXIweUloNTdYUWg0UlJjaGNpa2RPYzU2?=
+ =?utf-8?B?UnhNdUsyY3dPMWVaWGNiblVmZFlkb3FreXYwbzZWT3pKVGtXOXdYZk5oMllQ?=
+ =?utf-8?B?MDZiY0VUR2JValNCeEVGZVozMWZTUTdzQUlPTkU2Q1U4b1p6eC9jNGZLcnBi?=
+ =?utf-8?B?bWo4eVdEQU1SSEZnTmdlNGJ5dzlQNjR5L0huWHl5Z01kUmlmQy9EcmNpdG5D?=
+ =?utf-8?B?YVN2RUx5QnErc0E5Y2JRWlEzQWFiWU1xWFI1b0RMTVJKOG9QWkpqMHI1d0FE?=
+ =?utf-8?B?dVFxb2hOZHF4WUlRcXhPUDhTbmliMm13cVFTbVpmb1dIZEpzVE5KWVBOOEgy?=
+ =?utf-8?B?SUg2azE3bGpNMndGREFmQ0JhbmpXWEYvWEpvOE8reTlSdFhxUmVUZ3h6cG1a?=
+ =?utf-8?B?bFhrNVd5UENZYzBxbGhGaWpTbCtrdElKQjYzU2VENWFMQWl4OFJzamZTZ0tG?=
+ =?utf-8?B?WUNDeG10NU1ucElzSWcxbzN2T2diNmR6djB5dlB1a3VKQmhMOVptTWRCVHpY?=
+ =?utf-8?B?VlVXOG4xYzdrUmt6N2ZmSElaWFZEWWkrMitXbTdSYUZoTW9UV1BKWkl3NVN6?=
+ =?utf-8?B?dVhsSFhnaHhGeFJGbkZXUnBxZUhEdzM5OFhudXpxcml6RkZvQmd2N2JacFVy?=
+ =?utf-8?B?T3E4d0hZSndad0hQMlV1NXYzY2hnRTVCYkZRUTdReGg3VXRncnNpNmVCWHl5?=
+ =?utf-8?B?dngwSXkyS1gxdGRrZ2NjSkFLWkxyZjlDQkpFVFZBOHU2Y0lCOGJmMktFZTVs?=
+ =?utf-8?B?b3I3eFZvWnc5MHBEZGlVanJHUkgxQ3dvTUk0STAyZ2RNYTliZi94K0VxN3F6?=
+ =?utf-8?B?cUxXWkJsZVp1amZMNjRnWUY2cnVMZHhSUWl6eitvQVo3Ylo3UU5VVFNnaStY?=
+ =?utf-8?B?alNwMUpIejh6R2lrNGFvclBjRWU4b1k4NUtCYTJCZGJnTThaSlhkRGRtYmRI?=
+ =?utf-8?B?NllqazdmOW45TC9rMnFKc3k3YjU4a05hNHNWT2V6Z3ArUlBRMlpRUEdFWHEy?=
+ =?utf-8?B?MXdKVmphQkRFV3dlOXBLUTg4QkV2cVg1SmlHTUNhZkc5eUpvZktHTC9RWlR6?=
+ =?utf-8?B?MDROYnB1S0gxVUVteDFWZC9CMENLdkFvUDRPMHdVcGp6MGxpQXEwNFFMS09C?=
+ =?utf-8?B?aE9rR1dBeVNqWXdVOGFjVHVpTWpZR1AxNEE3RlVNREVGUWlqekQyRzFxU3hn?=
+ =?utf-8?B?UTJsUWhweXZOYTJFT1NSWG5LT2lSS0drdkxlQWZHdXZ3dUpFUzk1dmp6ZXhk?=
+ =?utf-8?B?NVRxdHR4dTVYcVdhSytaTmxxUkVZcWx5VkJkYWNrSHIxcjk5akl0WEFiTFls?=
+ =?utf-8?B?cVlGYnVTSmphdURmOFJCSUc1SGpwSUhteTZwUC82TTBtNWdtN3dvR3BkS1dr?=
+ =?utf-8?B?bkRFdHAwNDVlbXJUVmFQclNqdFFSeXBMMTNYOXNPZURobmYrdDlMbDg0dzFF?=
+ =?utf-8?B?Q01QeWowenpUQ2h4d0JOZUJEc3p3UkhJajZ5L08zaDgzNEE1a3E5TVAvMmo5?=
+ =?utf-8?B?U0IxNmVFTm9WWHpzbXJaUERHUktBWFBNM3AwYXlXV1IwTHFXTkpCYUd5TGZl?=
+ =?utf-8?B?MkxWS2ozK1A3WnFsRWtTalZ5S2FNS1IrbC83eThRZ0pPNG1IRzhWUmZJUFhD?=
+ =?utf-8?Q?9MlshU9d1rwohzoKWyH/cFrpVt3PphXV5o9ltu+?=
+X-OriginatorOrg: sct-15-20-8880-26-msonline-outlook-ce67c.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4e405df1-99d7-498a-cd69-08dde54757b4
+X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Aug 2025 08:54:33.6204
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB5755
 
-On Tue, Aug 26, 2025 at 02:33:10PM +0100, Phillip Wood wrote:
->Some of git's reputation for being hard to use is well earned and I=20
->don't want to add to that.
+
+
+On 27 August 2025 5:58:18=E2=80=AFam IST, "brian m. carlson" <sandals@crust=
+ytoothpaste.net> wrote:
+>On 2025-08-26 at 13:39:38, Aditya Garg wrote:
+>> Autoconfiguring SMTP server settings is a common feature present in many
+>> email clients. In order to get the correct SMTP server settings easily,
+>> this commit adds a `--get-smtp-server` option to `git send-email`. This
+>> option attempts to fetch the SMTP server settings for a given email addr=
+ess
+>> via the following steps:
+>>=20
+>> 1. It first attempts to fetch the autoconfig file from the email
+>>    provider's autoconfig URL, which is typically in the format
+>>    `https://autoconfig.[domain]/mail/config-v1.1.xml?emailaddress=3D[ema=
+il]`
+>>    or `https://[domain]/.well-known/autoconfig/mail/config-v1.1.xml`
+>>=20
+>> 2. If that fails, it tries to fetch the settings from Mozilla's ISPDB at
+>>    `https://autoconfig.thunderbird.net/v1.1/[domain]`.
 >
-i would find that reasoning compelling if we weren't talking about a=20
-case that is likely to affect only very few, and probably rather=20
-advanced users (who somehow managed to make the feature actually useful=20
-for them - others would have quickly reverted the setting, because it=20
-would have gotten into their way).
+>I'm sorry I didn't ask this sooner, but it just occurred to me.  Do we
+>have permission from Mozilla to embed this service into Git?
+>
+>The reason I ask is that sometimes software vendors embed external
+>services in a way that causes excessive or unreasonable load.  For
+>instance, some router manufacturers hard-coded certain NTP servers into
+>their firmware in a way that polled too frequently and then effectively
+>DDoSed those servers, all without asking permission first.
+>
+>If we embed this into Git, then it will be present on systems for a long
+>time.  Some Linux distros are going up to 12 or more years for software
+>lifetimes, so we should assume anything we embed here is going to be
+>present on OSes for at least that long and will be used at least
+>millions of times a day in a highly automated way.  Even if this only
+>lasts one release, it will likely be on a nontrivial number of machines
+>for at least 12, if not more, years.  (Not everyone actually upgrades
+>when their OS goes EOL, unfortunately.)
+>
+>Is Mozilla comfortable with providing that service for that amount of
+>time and having every Git installation on the planet potentially use it
+>at top speed[0]?  If we haven't verified that, then we should probably
+>not include this service in the code.
+
+Good point. Ccing the maintainer of the autoconfig code with this reply:
+
+Hi Brendan
+
+Aditya here. I was proposing a patch to git send email which uses Mozilla's=
+ ISPDB to get configurations for various email providers, and makes things =
+easier for users. The original patch has been sent here: <https://lore.kern=
+el.org/git/20250826133936.1569-1-gargaditya08@live.com/>
+
+brian believes that I should ask Mozilla whether they are fine with users u=
+sing their ISPDB with git send email. I agree with them and thus, am sendin=
+g this message to you for your views.
+
+Hope to hear from you soon!
+
+Thanks
+Aditya
+
+>
+>> +sub fetch_config {
+>> +	require HTTP::Tiny;
+>> +	my ($url) =3D @_;
+>> +	my $http =3D HTTP::Tiny->new(timeout =3D> 10);
+>
+>This needs to set `verify_SSL =3D> 1` explicitly, or we'll have a security
+>vulnerability due to not verifying the certificate.  Our minimum
+>supported Perl version is 5.26, which shipped with HTTP::Tiny 0.070.
+>Versions before 0.083 defaulted to not verifying certificates, so we
+>still need to set it explicitly.
+
+Will do if Mozilla allows us to use their service.
+
+>
+>[0] Even if we don't think users will use this that way, with the number
+>of Git users, there will be a nontrivial amount of users who do.  Many
+>of them will not realize they may be causing a problem, though.
