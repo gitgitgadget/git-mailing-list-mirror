@@ -1,121 +1,117 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06731DFE0B
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 19:47:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA0E225D6
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 20:00:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756410480; cv=none; b=DcBoCWIwutyUKS0GjLKtJ2XtuKfxzQWwnp8++OXcezQXJRuuPadPGAs40cBpb2sG1N9W4kI+pfsl4tJSSJ3zW/nBW5h8EnQ/vIwDgzpFJ2hf4OoKgzbavjR9OWbbyx/mVlt6EuPbmNRoLPpJwEz3U2yimNwl8G3Lm080cijiMpQ=
+	t=1756411216; cv=none; b=j9xvTDSZZlqgF9rmYi8EjHtNxCSN1TxZzGMTgLhfaIqbOHBO6WUrKwgfrNULQVOUSrBmKZF5G3Hjh8bJVxjtJRYwkY41ZxYD4B+UQxSxBjkgAgXUjjMAi6O/E505CWiwSAXwHpWkIPzUyoA4LI3se0lSX5+WC5XihLi7X0Rz0xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756410480; c=relaxed/simple;
-	bh=AGZBENVfKCRgqpmVCBhFzrpm4qZAFFIeCHc8AQGR9E8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Knoe4gwqxmI+UxjrGogGkRTl8e9F7j7u5rvtg7mSG9hR82+ffQTfpXXBkfBTDj54eqgXgGI6UhgXNiWBlf9tNuUZg/paicU4skFP/59XaL7In/Ka1eEPdQjNSqGqyqfORH+VISnFvDCYUlWS4b+11tJh4R7V/06/yDwD0V7ZQiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J6qBNWqP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CGqSKAjg; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756411216; c=relaxed/simple;
+	bh=/78oC6umwb5dTCdNEdekyfZJT0folz0/9QWH2sxwKnY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=U+QT3mE252D6N9YzJnhTTIiCG3zUsUmsbCJkjUsLYQIhtq8r4bO/5bvqnL3wUzxeJbQrqhgLcdhadg9rC7XAWgiHYYs8P3K/mV5Xr/ajvrT4ir+2fXzSSsK+wD2WVCDpw1P7RyM5LTs+Gk+EIcQlGg7iuUYFtf2Hj9qy6FXVVik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=jZq0oo8L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bzeL/LqI; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J6qBNWqP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CGqSKAjg"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B0E0B7A0188;
-	Thu, 28 Aug 2025 15:47:57 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 28 Aug 2025 15:47:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1756410477;
-	 x=1756496877; bh=Mgy4mIPaeABhskGWO/0t7QQfFRFuzEYPcQYfm2zvicc=; b=
-	J6qBNWqPBNfN7BRUYwCCqwiTHWEKkTDgpX3KZDhTCB/LVJzki8JBSdF/Du4Om9ts
-	mvjBcy8JYsH3BbCaTxRFT+C3YiJ5l6wIty3NVHeKX6S0b299lsddijX4xsOU6qme
-	ugrTdzMgA4KrWTyEZL35gSTB6XnYsEpuunZA8gTKji4rwECLtW8WqLy/TMkkTy9A
-	AlH85kfbo+ke+NCxIInYHmdgAeH+6qHZJwVturJz8yR9WWmawHBZ4f6tTNrojHJV
-	oKmK/iiqQl3qkAdlo7MjyKcw20yzyu9l2YWaJYm4/ndp7e1kRAHnzUY77mw5zD8B
-	cElRYYMDEUAZ+U+YCOuCPg==
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="jZq0oo8L";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bzeL/LqI"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 09E631D0016F;
+	Thu, 28 Aug 2025 16:00:13 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Thu, 28 Aug 2025 16:00:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756411212;
+	 x=1756497612; bh=/78oC6umwb5dTCdNEdekyfZJT0folz0/9QWH2sxwKnY=; b=
+	jZq0oo8LGsDkLQuKqT8rrhcmvj5ywmTq8MOxWHAyNHCgCSSE3M4nPvLqQpn+ZdlE
+	b4WmB84o3aKs3NeAjiIMgFBcIEhS2n5F3S7eWBYLDRhk6RKypClgDr3+kXg5S+zI
+	y5K3rgzNEI51qKYODszTpVdzOdSOleODCFAlf61xWKWFCMksLdUovSobaYbcsOGj
+	s7RCPKDi6B9d7QF92vHahv1WFFXpl1FnDb0+UbhZs11o56jvZA1WUtzmi4O0pJke
+	4/6jsfoEp1Ig91qxHPH7vzBVQLeBoNtj8Xcjarg2tuMjM4hrzeKHNY+ogbOjAyxA
+	LKZV2Obl+BPpfzA/AKh5cA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756410477; x=
-	1756496877; bh=Mgy4mIPaeABhskGWO/0t7QQfFRFuzEYPcQYfm2zvicc=; b=C
-	GqSKAjg0us31KlzNLbgSi4dUUfD4oAscjwqPC6NsyMqOL2V7MUhVVPKDJgN7QLYI
-	/LOY8FINAYTCVVMTh70YMTm073twGI/OAoGmciOSaf/yLIROLQt9AGUGKKpXPOi7
-	va4wpuWRSZo/bVzbSITDdGa7U/ciVpFwJUmRTmscjHqitnxMONfdCPPxjhZ3ScBa
-	W8jQqqWpVDkotMN5qVbnU+TH8Lu5DiKjFt3CnkNJIE4NUVh8m0pY4gkVjDQGV4f1
-	W0Lpm/SUpzObj7TK/1q7cHZv2yPqIt+E+qiSHOod7HWziSwF5cZy9YvkZG3niDYy
-	25cKBGEpK2OMGaN/2m3hw==
-X-ME-Sender: <xms:bbKwaD3PJMOwL4_CXy_f2BeivAwoOgtAct_3EX261J7QSMwgYSew5A>
-    <xme:bbKwaNmdK77jIqBLbxUmaCT6KXVTMIinZ9NBaia8sqiE5r8WOLBpbS5p2gnQ5PiI-
-    AuaUE8amZ-ahgr6cA>
-X-ME-Received: <xmr:bbKwaKVVEGApk7LL9f1obSCucOSQFv5Pxbj533oZmUXclWCSEoR_Tj2T7HARJ1jAieVXnD2N7TFPKDelKNvr-ZbyPoKE6UhkXwG5axM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedukeekucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756411212; x=
+	1756497612; bh=/78oC6umwb5dTCdNEdekyfZJT0folz0/9QWH2sxwKnY=; b=b
+	zeL/LqI0q52F3dXXhz9JzuaRvFPcPpo1hf1OOHm6sCDP21vXyPFNeYnF46MFDT/H
+	HDna88r+U4HH4lgb79xyFkYGbENnVcKWCB7SZa6HX4KlrWYw95cnVb2OUqVrgUL2
+	gKIQTWnPh3t7PQdaMUnusVptbcKH5gGOl3FNcLER0aFat2CfzIlfWBxWeL+V1Euw
+	qQT15EzfJgqjDWLgPBpI0n+++qlf8ZsZC8CECIKaDuh7Lq9LRMQY0/Z8hJld1j7R
+	s7APgfmcUyH1QKEjMDuPq74qaT7CalYu+Vj0RtsXmSdHCmY3cJVHLPXsdCPKk5xx
+	nLLh4vgPqFkJGeuXhWRGw==
+X-ME-Sender: <xms:TLWwaMKHN1PxCcovnIw1KVRC-gRCYsOpufVlptOOXs7349dsr5vOog>
+    <xme:TLWwaMI1a_2UQ0Qdus8uOf9FKtqU7KhMTVNSsR79MvYSpgo90GednW8sVgDv-MGwW
+    vj1eoDRQG14ktE-Zr0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeduledtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehtsghovghgihesfigvsgdruggvpdhrtghpthhtoh
-    epghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnohhurhgrvghllhhmsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:bbKwaDtyGNPmt40BK7z3JH0Oz9JVXpwsjDCQOGiAEFQdXjBBQ3aOhQ>
-    <xmx:bbKwaNb-aVQRUMnP7qkzW6-zoq2o9dWXE682RQer_VdWB9oa-yLyNg>
-    <xmx:bbKwaCUNlwMX94OI2u6NW9Is4a0FxYoBP99zGOwvQMnkj0cRjo8VZg>
-    <xmx:bbKwaCQYrWhzZWkZbts2GrNt_kiORgKrV741UJpyjq9vVfWqbVhmDg>
-    <xmx:bbKwaGAzO9DDzxwM4efdN8Orlw8YNVMPQnilVBpE5kSRujoOxKeeHNn7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Aug 2025 15:47:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc: =?utf-8?B?44OO44Km44Op?= | Flare via GitGitGadget
- <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  =?utf-8?B?44OO44Km44Op?= | Flare
- <nouraellm@gmail.com>
-Subject: Re: [PATCH v2] alloc: fix dangling pointer in alloc_state cleanup
-In-Reply-To: <20250828192949.GA18641@tb-raspi4> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?=
-	message of "Thu, 28 Aug 2025 21:29:49 +0200")
-References: <pull.2040.git.git.1756238268790.gitgitgadget@gmail.com>
-	<pull.2040.v2.git.git.1756337312918.gitgitgadget@gmail.com>
-	<20250828192949.GA18641@tb-raspi4>
-Date: Thu, 28 Aug 2025 12:47:55 -0700
-Message-ID: <xmqqtt1rut1w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
+    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
+    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
+    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:TLWwaHQDbXE_ljswgPPUgKqPYiVUCqavZjOZ_kGu3iVXu2c6Lgo2Kw>
+    <xmx:TLWwaPor1m3UHqqFL9tV0xruCkUpfNnT-WLppgLfqytaN0qnPfhcXQ>
+    <xmx:TLWwaJzWvJBuF0ESM6qCSvaCTF_LEFiUykRsF3KcivgEPUx80mj4uw>
+    <xmx:TLWwaEKS2takzkYVEcpQKHEKyy05gv9Znys7OcLDtLavDy24eShIdg>
+    <xmx:TLWwaIvvGDhxIlY8D9s6Td4vq2iGLlBMNJGG_kZF-II4AQVFWaFysvM0>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 941537840CE; Thu, 28 Aug 2025 16:00:12 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-ThreadId: A2lJ7FwKEGVZ
+Date: Thu, 28 Aug 2025 15:59:44 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <2efb789d-db2d-4dae-ae81-373bd231c3c6@app.fastmail.com>
+In-Reply-To: 
+ <CALnO6CDpsgTnC95CzjOL5MuhFNAnYYSQCR-jC_n5JYLEu0BTow@mail.gmail.com>
+References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
+ <b641874627b3898831c3965616e936bd4ee310df.1756148933.git.gitgitgadget@gmail.com>
+ <CALnO6CDpsgTnC95CzjOL5MuhFNAnYYSQCR-jC_n5JYLEu0BTow@mail.gmail.com>
+Subject: Re: [PATCH 5/5] doc: git-checkout: clarify restoring files section
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Torsten Bögershausen <tboegi@web.de> writes:
+> Wishful thinking (see glossary comments): I wish we could teach them
+> about "tree-ish"s here rather than stop using useful shorthands
+> altogether. Of course, then we have to wonder where we can use the
+> shorthand and where we must do the "spell it out (give an
+> abbreviation)" dance. Hm.
 
-> On Wed, Aug 27, 2025 at 11:28:32PM +0000, ノウラ | Flare via GitGitGadget wrote:
->> From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
->>  <nouraellm@gmail.com>
->> 
->> clear_alloc_state() freed all slabs and nulled the slabs pointer but
->> left slab_alloc, nr, and p unchanged. If the alloc_state is reused,
->> ALLOC_GROW() can wrongly assume that the slab array is already
->> allocated because slab_alloc still holds a stale nonzero capacity.
->> In that case s->slabs remains NULL and the next dereference writes
->> through a NULL pointer, causing undefined behavior.
-> This is good.
->
->> 
->> To fix this, this patch:
-> Style nit, we tend to use the "imperative form" here in Git,
-> like this:
->
-> - Rename allocate_alloc_state() → alloc_state_alloc().
-> - Replace ...
-> - Update ...
+What I find hard about documenting cases like this is identifying
+the use case for providing so much flexibility
+("you can pass any tree, not just a commit!), since personally
+I've never passed anything to `git checkout` other than a commit.
 
-Thanks.  We also tend to avoid bulleted list.
+I've been trying to think of examples of cases where it's useful
+to pass a tree instead of a commit. I can see that it's possible to run
+something like this
+
+$ git checkout HEAD:Documentation/ git-commit.adoc
+
+to restore `file.txt` into a different directory than it was originally.
+This seems cool in theory but it's hard for me to see why it's useful,
+which makes it hard for me to document. What I would tell a friend is
+"<tree-ish> 99% of the time just means "commit or something
+which resolves to a commit, but Git has made it more general for
+a reason I don't understand", but of course that's not the right
+thing to say in the Git documentation :)
