@@ -1,208 +1,153 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137FB3128AD
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 13:27:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36BC3128B0
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 13:33:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756387638; cv=none; b=UcNQp3owjkfXzp9iUp/5CuD0vnBUQDtTVax3WLrm8/SjD36b/xdb5LLbC9KpxywjfCv2GVqQfnYZjORQwv5Y7zEHYc/a4paddI8PV3V+kIqo9iTzPT7H+1tOIoV6nH79KlF9iyjUOUC/wyqycC5k/0WAidV2ytyAkVc8dqCN8JA=
+	t=1756388022; cv=none; b=WB5fAeO8tf+PpZBkd4kUOYcZQhXiJu3RsPiQB9kcVUstcRK8fRb/uVaM4SnqYMQQqskB2PN9YWceDGL+96+MjtRxjLDOb8zYBgsUt7j2Jz7uuZi8hWLKRJUORw7S0QQivWRBt2Sno43ZCk5brB9ByUvzeBOBl8vEsD8RfwDYKH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756387638; c=relaxed/simple;
-	bh=O4Cb4hNCFhccqGcZf6oSZdG3/X+gtG6nGgMYc/EC7Ik=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=iO+dNoHdEdCeGyoYbNapS3jo4FE2hp+Pz4mqQr6TnxWRmskyxkHo940jBo7qGELUhE9QYembbQ+zVnh0UxFjnaulzeXeCYoEwM6PFrzs7k9KweL1EjTqsus0x2Y6sHGFQmRmPHLLqGELiK3WfyX9A43wOm1BvfMAnPm0c4R0sOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=s6hs8dZu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RSRZ0kay; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1756388022; c=relaxed/simple;
+	bh=278xRccU1NuahYsQIDN/WXJdWOXnSH6mEBQDXvMS94w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=flZAP56/qounNqbu6ejj/x+CGqU54ZDvwGK96vKyckcvzpONIRL/gPAaMlcyfbKhJSNlJIhjuXCnvlE3Fc+tAD7veaVo3+O3CipGwrpBp5reFgOtSTLrQmQw9E1K8NWdfG923qodL5lH7gYF2Xq8s1jOTHIGo5XDu+WIy1M2fj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RkRQmTZi; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="s6hs8dZu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RSRZ0kay"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 323D9EC0040;
-	Thu, 28 Aug 2025 09:27:15 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Thu, 28 Aug 2025 09:27:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756387635;
-	 x=1756474035; bh=Om7/nS5j/4u5/fHokBHwupwejgXCqWIWQMpjWLSJ+nE=; b=
-	s6hs8dZul7BP+p/JPLSfnXD+gdIYa9/NXvPgZHUSNjV2ylnojOZUG0Lqq3ybuc1R
-	xPS5e3nI9tmY02Y8mLr6PwmJzcYCWlWQCC+gWVis6AlX0SpzfZfu8ChWVMxe0CIy
-	qGS1ZXScd8D28GZ6jvrJ9dPM0QsKg6AqnYud7oShTKeDzU1FxqBvEhJsoSgBek/F
-	1OTloZb64l9LKh0u+x1Ln5dk2sFZefbJ6NXm3Ry/Lz7oSMEUTHbaBeG5FL2rKdFC
-	TZjafGt04EL/lptlzF430EdmWEB9pyILJJX2dtvkMkX4JMq2RsApUrB2GKEWACLd
-	A0dhKV3zsPKuJQjYc+OhNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756387635; x=
-	1756474035; bh=Om7/nS5j/4u5/fHokBHwupwejgXCqWIWQMpjWLSJ+nE=; b=R
-	SRZ0kayC4cNYT/t/muiilTWKndWfCtBazn6k9Ea3sQ62QoesiVFpGGxrkOKUGRE6
-	q5mJsmtAVWfHlGQab8/d0OU1l1/yrJAOgM9C70g9hawdFJhJZaf7lMlb64NkOy7P
-	P8kBkeL8xTN9ngkViS4pSuac678dYq+rIMnvRZbh05q/olE8IJe5XuCZ51G9cLrI
-	VmXzOcAdPmNblQWZ81WyvEwnH+CBy2GJVrY/tPAdkhA/me5r2uebKOuJyiMi736q
-	23aikOxbebLzrJ3eGNUy+lHmUfhLv9jxWIJSbtcu6mYMJjWkfc0LAIgPc+Lxs7f9
-	YZbDoMpg9fc0HPoA72n5Q==
-X-ME-Sender: <xms:MlmwaP0VpcyhMhbxsYAHuwd799IOChUWF7krx2MRwmAhv_DbIUoByQ>
-    <xme:MlmwaOHGPWegqX8Izni7v9CSmW6Q_5pRU7r4cjxv00JWepkyUNpqIGxHqbDS5KML-
-    8hjm3fQNfa12t_JoEU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeduudegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthejre
-    dtredttdenucfhrhhomhepfdfluhhlihgrucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhn
-    shdrtggrqeenucggtffrrghtthgvrhhnpefgveekudeviedvveeuhefhvdetgefgffdufe
-    eguddtkeegtdeltdevhfdtuddttdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehjuhhlihgrsehjvhhnshdrtggrpdhnsggprhgtphhtthhope
-    efpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:M1mwaJe20b0buwpSLVdMUQZsH3WwbUNDsgp0mtsqU0Vspkin9eGPQg>
-    <xmx:M1mwaOHj6-tFKyosrzLPXVC98KCM5FxZ04xXMdm9AQ1GtKYQIS0Zng>
-    <xmx:M1mwaPetKZ6RFX8uhkpeOcQPIIsrbrFK0VjKTC7h1yrHdt01sVKKcQ>
-    <xmx:M1mwaAEGkskPLReV35lSnCaJZYC23nzHR230sm970WHdKu_MyjeLDQ>
-    <xmx:M1mwaK9pp7sKiU1wPvLPu5480Y4DaFxPe6Ch2KD208xuiWsa51A_d9GR>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id E32007840CC; Thu, 28 Aug 2025 09:27:14 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RkRQmTZi"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-70bb007a821so12567806d6.0
+        for <git@vger.kernel.org>; Thu, 28 Aug 2025 06:33:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756388020; x=1756992820; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jZVM2noQkvmsMnnJ1gtUS+N9lHfKD4r8zMBIw5xAhJw=;
+        b=RkRQmTZiix02dUxkt20Slm1JKDYN8y5YqSCFw6w02pWsUvrY/+iIjyJSOQf96BHdVZ
+         iWOPLqCN8S0x6bL9EXm6fhNdi+g8fbCiyA0JnQ5Zavvum2qV4jXEl0HOQ5SI2jCB8eYa
+         i9Hbb6D+zzSk8yahXaOFmUQnEOB99VAudEmAvSJUpKfM/nlxXaKalxHuC2pOl3j/yxRy
+         aGIMD7Sn1YHDB6RKtiGtvDHH7lPk2CJSfuwKB97sf3dacC1MNYMGSAo8yRKUNY98O8It
+         ySOk1yrzLjBToWFLBlAojoF6OYc9DUeiBJ1A0x1GOHPCLtzRAPUN+b6qdvdw6ux0GaCq
+         ub7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756388020; x=1756992820;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jZVM2noQkvmsMnnJ1gtUS+N9lHfKD4r8zMBIw5xAhJw=;
+        b=REP1rVDA7VKLB+BSc+kMVRkzF86LZYKO9YT3UvfBmUqJLcFKZ6P/KOzGeyoVfImiji
+         SfWRX+SbmgeXHek1CukNHWhy1jmwAjxLOIk0WuNatCvdu52ZJeHNK4+q2aFPazGRGzWx
+         Ucw9W8T3OHjQ56LS3d8+i24A4UbisAWUPUJICI4w+uLLQw23mo8tTyzgRlxdsiwsNrMg
+         SvMPwwhbG9W9NICijZ0FGhDjvh3SBtUSJA+L5FAw5EVDz+lKT50BqjTubBToXCJxuzbk
+         +Q/m6szSAy2KTBNobQoMoysGt6CcawtPuaaOqD6PjnpXqBt0mWrezg6tX5Atu/ywW4kM
+         f1Rg==
+X-Gm-Message-State: AOJu0YwiacF+0L6ez99lFq1xFZlDNJpJ0zysKVqZk8ynrcXq2jMgBVmp
+	9Nzfc9bQYM2M1AyztNO+KmPgxSGG3boA6k1HcBdbfkGAstWekHpjXLOh
+X-Gm-Gg: ASbGncvSuYbIfzZ89MHd0MKda5Fk0wdRFj9Vqx39COli7tWq0YrSyHxQDx+I/Von7mV
+	5qzx4kzgc+I7xaxmk4EJuczGo/wf2GzObCr67ND3Zsl8Olg4ZmlnzziqjpRYCV3VYMlEUQthVzr
+	ZsM6dnMkRrICARc9kd4uYEPR1CKUgMNaj81DyaGu9NALR6W5Bh0AiOw9zGggINH0ub/oJvhvOpY
+	IZoQbv/Zjh30yxoVEbGlOoWF+9lTT8CSVf/VBjr/Py21zP23tmOCj43iyMhPx1BsyXxYJl3ifB+
+	td6Y2TrXqZRpEN8hD2Zkwp+F/b7GGHKGv1lwXNN55H05Dq2k4e2EQ+zaqmqnSXK13BVWikn/COG
+	blWX01SXnnuQius15E39cviT0/ySgoHPwh7ag4wYgUNiatePViaOD+r/SQppIjaDHHNMXkk4UKI
+	+8wbs=
+X-Google-Smtp-Source: AGHT+IFIgBUjpyCf0xm3zvbc0JqHpeWiNC6c3t3kQZGnOF8FPePJJGSkExHaaJZL9jaVn7VPKz+qNQ==
+X-Received: by 2002:ad4:5f4e:0:b0:70d:e88f:ec36 with SMTP id 6a1803df08f44-70de88ff242mr59612736d6.60.1756388017664;
+        Thu, 28 Aug 2025 06:33:37 -0700 (PDT)
+Received: from markl5i.lan (pool-173-73-185-17.washdc.fios.verizon.net. [173.73.185.17])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70da7173220sm107271066d6.27.2025.08.28.06.33.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Aug 2025 06:33:37 -0700 (PDT)
+From: Mark Levedahl <mlevedahl@gmail.com>
+To: johannes.schindelin@gmx.de
+Cc: git@vger.kernel.org,
+	j6t@kdbg.org,
+	me@yadavpratyush.com,
+	Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH] git-gui: use tk_messageBox for ask yes/no
+Date: Thu, 28 Aug 2025 09:33:01 -0400
+Message-ID: <20250828133301.74328-1-mlevedahl@gmail.com>
+X-Mailer: git-send-email 2.51.0.99.15
+In-Reply-To: <4b04832c0b8119b784806f54a2354d910965a523.1756371530.git.gitgitgadget@gmail.com>
+References: <4b04832c0b8119b784806f54a2354d910965a523.1756371530.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A2lJ7FwKEGVZ
-Date: Thu, 28 Aug 2025 09:26:54 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-Message-Id: <80fba886-4693-4f31-b64f-438391edc3da@app.fastmail.com>
-In-Reply-To: <xmqqiki9hfg2.fsf@gitster.g>
-References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
- <b641874627b3898831c3965616e936bd4ee310df.1756148933.git.gitgitgadget@gmail.com>
- <xmqqiki9hfg2.fsf@gitster.g>
-Subject: Re: [PATCH 5/5] doc: git-checkout: clarify restoring files section
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 26, 2025, at 6:43 PM, Junio C Hamano wrote:
-> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
->> index b343d292b30b..9f2b86ac5368 100644
->> --- a/Documentation/git-checkout.adoc
->> +++ b/Documentation/git-checkout.adoc
->> @@ -82,20 +82,21 @@ Omitting _<branch>_ detaches `HEAD` at the tip of the current branch.
->>  `git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...`::
->>  `git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]`::
->>  
->> -	Overwrite the contents of the files that match the pathspec.
->> -	When the _<tree-ish>_ (most often a commit) is not given,
->> -	overwrite working tree with the contents in the index.
->> -	When the _<tree-ish>_ is given, overwrite both the index and
->> -	the working tree with the contents at the _<tree-ish>_.
->> +	Restore another version of the file(s) that match the pathspec.
->
-> The same comment about "files and directories from a different
-> version" applies here.
->
-> Also, I am not so sure about the claim that the verb "restore" is
-> better understood than "overwrite" due to the presence of "git
-> restore".  If you are working on, say, an older maintenance track,
-> and want to borrow what is in a few files from the development
-> branch, you may say "git restore --source=develop files..." go grab
-> them down to your current working tree.  But at least to me,
-> "restore" has a connotation to get back what you used to have, but
-> the contents in these files you are grabbing had not existed on the
-> older maintenance track you are working on, ever, and "restore" had
-> always made me go "Huh?".
->
-> I am not suggesting to change the command name "restore"; I am
-> suggesting the operation that command does using a verb that is
-> different from "restore" (in an ancient thread, we tried to explain
-> "checkout" without using "checkout" as the primary verb to describe
-> what it does, it is the same thing).
->
->>  +
->> -The index may contain unmerged entries because of a previous failed merge.
->> -By default, if you try to check out such an entry from the index, the
->> -checkout operation will fail and nothing will be checked out.
->> -Using `-f` will ignore these unmerged entries.  The contents from a
->
->> +If you specify a commit or tree to restore from (for example `git
->> +checkout main file.txt`), this will restore the version of the file(s)
->> +from that commit or tree. This overwrites the file in the working
->> +directory and stages the file's contents.
->
-> OK.  I suspect the most common is to "restore" from HEAD, and the
-> "Huh?"ness of using the verb "restore" goes away.  It clearly is
-> getting you back to where you were back when your working tree was
-> in sync with HEAD.  Perhaps use "git checkout HEAD file.txt" for the
-> example?
->
->> +If you do not specify where to restore from (for example `git checkout
->> +file.txt`), this will replace the file(s) with the version from the index.
->
-> That is a very negative way to state it.  It is not "do not specify
-> where".  If you do not give tree, you are actively specifying that
-> you want things from the index.
->
->> +If you check out a file with an unresolved merge
->> +conflict, the checkout operation will fail and no changes will be made.
->
-> This is confusing in a way different from the original.  During a
-> conflicted merge, you will see a few stages until they are resolved.
->
->  (1) The working tree file has conflict markers and text from
->      multiple variants.  The index has higher-stage cache entry for
->      such a path.
->
->  (2) The user edits the working tree file to resolve the conflicts.
->      Once all the conflict markers are removed, some people may say
->      "the merge conflict has been resolved".  To Git, the path is
->      still unmerged.
->
->  (3) The user tells the index what the resolution is, with commands
->      like "git add", "git rm", and the like.  The higher-stage cache
->      entries in the index for the path are moved and replaced with a
->      single stage-0 entry.  To Git, the path is now merged.
->
-> So, "a file with an unresolved merge conflict" would not mean what
-> you wanted to say for those who consider that dealing with the
-> working tree files is enough to declare victory and consider the
-> conflict has been resolved.
->
->> +Using `-f` will ignore the merge conflict.  The contents from a
->
-> This changes the meaning to most people from what the original
-> meant.  If you have a file F with merge conflicts in the earlier
-> part but the later part merged cleanly, does "git checkout -f F"
-> ignore the conflicted part and overwrite the rest of the file
-> somehow?
->
-> If you wanted to avoid the term "unmerged cache entries", you can
-> say "unmerged paths".
->
-> Taking all of the above into consideration, perhaps...
->
->     When you are in the middle of a conflicted merge (or
->     cherry-pick, "stash pop", etc.) and haven't told Git what the
->     resolution for these conflicted paths are with "git add" and
->     friends, using "git checkout" to check out such an unmerged path
->     out of the index would fail and the command exits with non-zero
->     exit status.
->
->     When the `-f` option is given, these unmerged paths are left
->     untouched, instead of triggering an error.  For all other
->     (i.e. merged) paths that match the <pathspec>, the working tree
->     files are overwritten by the version recorded in the index.
->
-> or something along that line, but with a readability enhancement
-> like you have been doing in your series ;-).
+git-gui includes git-gui--yesno that relies upon Tk 8.5 constructs, and
+this dialog box is not supported with Tk 9.0.  Tk provides tk_messagebox
+for this same purpose, fully supported in Tk 8.5+, so use tk_messagebox
+instead.
 
-Thanks, this section of the man page is not easy and this is very
-useful feedback. Will work on improving all of these points.
+Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+---
+ git-gui--askyesno | 35 +++++++----------------------------
+ 1 file changed, 7 insertions(+), 28 deletions(-)
+
+diff --git a/git-gui--askyesno b/git-gui--askyesno
+index 142d1bc..cd986f2 100755
+--- a/git-gui--askyesno
++++ b/git-gui--askyesno
+@@ -10,12 +10,6 @@ exec wish "$0" -- "$@"
+ # overridden via the optional `--title` command-line
+ # option.
+ 
+-set NS {}
+-set use_ttk [package vsatisfies [package provide Tk] 8.5]
+-if {$use_ttk} {
+-	set NS ttk
+-}
+-
+ set title "Question?"
+ if {$argc < 1} {
+ 	puts stderr "Usage: $argv0 <question>"
+@@ -28,25 +22,7 @@ if {$argc < 1} {
+ 	set prompt [join $argv " "]
+ }
+ 
+-${NS}::frame .t
+-${NS}::label .t.m -text $prompt -justify center -width 40
+-.t.m configure -wraplength 400
+-pack .t.m -side top -fill x -padx 20 -pady 20 -expand 1
+-pack .t -side top -fill x -ipadx 20 -ipady 20 -expand 1
+-
+-${NS}::frame .b
+-${NS}::frame .b.left -width 200
+-${NS}::button .b.yes -text Yes -command {exit 0}
+-${NS}::button .b.no  -text No  -command {exit 1}
+-
+-pack .b.left -side left -expand 1 -fill x
+-pack .b.yes -side left -expand 1
+-pack .b.no -side right -expand 1 -ipadx 5
+-pack .b -side bottom -fill x -ipadx 20 -ipady 15
+-
+-bind . <Key-Return> {exit 0}
+-bind . <Key-Escape> {exit 1}
+-
++set dlgicon {question}
+ if {$::tcl_platform(platform) eq {windows}} {
+ 	set icopath [file dirname [file normalize $argv0]]
+ 	if {[file tail $icopath] eq {git-core}} {
+@@ -55,9 +31,12 @@ if {$::tcl_platform(platform) eq {windows}} {
+ 	set icopath [file dirname $icopath]
+ 	set icopath [file join $icopath share git git-for-windows.ico]
+ 	if {[file exists $icopath]} {
+-		wm iconbitmap . -default $icopath
++		set dlgicon $icopath
+ 	}
+ }
+ 
+-wm title . $title
+-tk::PlaceWindow .
++wm withdraw .
++
++option add *Dialog.msg.font {Sans 10}
++set ans [tk_messageBox -icon $dlgicon -message $prompt -title $title -type yesno]
++exit [expr $ans eq {no}]
+-- 
+2.51.0.99.15
+
