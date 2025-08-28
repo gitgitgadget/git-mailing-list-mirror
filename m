@@ -1,158 +1,200 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBDA30F937
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 12:11:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16A630F7FF
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 12:43:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756383094; cv=none; b=QhimDu21mH3wvqimxC7Tts2bBWGEKC8R9Lwd3f73r+PEubGeVXxg9sVR0/GojtTwSmrwTfMik1HUwTgh7J1REE0ngd9lmRBzDoM27s3rSgCf91swnN4an2S5cjNrY0NnLz3fahCiZoBkV26dLbBB07z/acuQenMRWYrqZYagS7Q=
+	t=1756385030; cv=none; b=SpB1+60XFtLaXh629Ch75Z4vjgXBnZWrfw9qKhGsoHu+LC+4DRsYLvYfGCAwf1qJmBUT9YR8CqehFE++/nG/TLa+knld1KIGglpAhL04lyWew4HJSEQik43fNVNFybAf6lENxC5N+UgjMitSulnKVcr5FjGIr+mVOpSrAfD0DRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756383094; c=relaxed/simple;
-	bh=5hCJH+rFo70151lwlc6s6sxh3Np/FwGbykE5J3FaOtc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=kE3Gz/abUo1uCuUElVa5RrZgN+02gV6/dlNZALwxrc03/cb3Xp2agvu6mjjUFGqrMIGbmvotUSCEDmv/+5l+XcROzH0tGfQ8XjoGGSseOPrRQ14mwk/+j13smdEjxJUfDwDwqY+VrZRISVGwje1CaXGppGY+78Qs3tXQTwQ1sD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=LZ3Xitiu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SeVHWTuF; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1756385030; c=relaxed/simple;
+	bh=7aczUGbjxYkWZjWxMcnezu2mvRDAIHrcnDDS+a0ALP8=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=LJdYXc4hDtdPr29SjAYzj5QHRxAHAy3jVylUMXZzs1hWSV6tGOsXx90DVD7s8va/EmM2z1vIM3H70My3PcqN4kLIBsSH6ufWz3JHDIQ+HlToYpT2SDSF9VFBEUm/71Bu+MggmMoJXU6kdCVNSWx3a4OooQ/V602etQ4898atoZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P9QYzrPh; arc=none smtp.client-ip=209.85.166.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="LZ3Xitiu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SeVHWTuF"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id B1970EC00D3;
-	Thu, 28 Aug 2025 08:11:31 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Thu, 28 Aug 2025 08:11:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756383091;
-	 x=1756469491; bh=3Yv4AhK21YeMlKi8K8WB4+QiY6Wdm6Lg7esnZL3A4w8=; b=
-	LZ3XitiuBP5sfnGMtDPzlh020BpTdH6dHjXB8IhSSrPgb7J1C3mKDwl0xWVEuEcr
-	ypWeep5I8F3zCpVop1ixzO91mMlseHE1T96c9Oeef8YgjspRg1CWLCk93ZkW8Qfq
-	fNoDuD1Q90ZbSa0t2sG6nvxjZ/XEwbDAdqYCL7PyUuPaw69+glmfsA19sfhiygpX
-	WKHnfcGym3+HlGMuV3dXwRPsZw4d66yw5wiPAf7dd7LiL6sqmncSlD/bnTjo336s
-	kvUFxdOlfCwzCfGNtt8vc6b8/oBmfWFmVHJUD/ViBX/bFVSv8C3KMR/bA3RqB8bi
-	5xIqYv/W1M1GdwlBmgr6mw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756383091; x=
-	1756469491; bh=3Yv4AhK21YeMlKi8K8WB4+QiY6Wdm6Lg7esnZL3A4w8=; b=S
-	eVHWTuFN48zCEIN4ZF4MVRV9v+XWRAc9oYdr5jEtjbttkpoWZUQmG1c2pPLgT4oI
-	31Dy3k4a1YE8YX/HbUrgJL5It3w9exZqEVjE4NoO2UMKKDdQtm+Eu1CHU9LOzxR5
-	WgoXji3NvAd+RiM7ue0P3dGb8JhC74Tr79heMbwKzqklqjPPww9oolsHB2FtQ0Na
-	4LlQd58QiamYhhYU4JykSN7SL5IGidNcrGN1fMCqopsPj/ro2QozYDVuOm2BvO+u
-	8pOpzdx//Eey6Q8Xbtl42vaieUZlhEz6YjjcJe9Vgdagd6ZqNpaix2XBWw8Dg9/Q
-	oiMzj1W/0h/1VA2k7opSA==
-X-ME-Sender: <xms:c0ewaI64vOWOs7oXzuPuTXdONTwbdCHa2ScUcrA8OLuVMVCWJPj8ag>
-    <xme:c0ewaJ5ECO4MgwiApoioXBWoMvZoKHNvEHeEy0n0rv2rt--1ZAYdHsYY0LVJuglgD
-    eWwJWjIMp5CDnVo5lM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedtleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqre
-    dtredtjeenucfhrhhomhepfdfluhhlihgrucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhn
-    shdrtggrqeenucggtffrrghtthgvrhhnpeefieeigeegtdefkeejgfdvteejfffhveeuud
-    dttedvjefggeevfffhleegvddvudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehjuhhlihgrsehjvhhnshdrtggrpdhnsggprhgtphhtthhope
-    efpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:c0ewaOAAYg3yPpgOpkun-T9bttMytS89thngA2GkF0VZ7HGlPvgRZQ>
-    <xmx:c0ewaPYaZThauA_u8dz9ThtL7nCZH3gnqvlK8XR-lfl2Ym17XFguEQ>
-    <xmx:c0ewaOj_nhJDVYV5gwan8amWxRIM-TwJgpccje9hivpqwarHZhkoUw>
-    <xmx:c0ewaJ5vUE-6m9RUdX8QVYU5aKiEql4iEbcM1n3rKcm2ZjGi1r5K5A>
-    <xmx:c0ewaNBxyo8mPKLFBB-_hntuB7QcDSejNaXqTLuke_k-z_HQQVMaHnvL>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 677017840CE; Thu, 28 Aug 2025 08:11:31 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P9QYzrPh"
+Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-88432cc7e74so3920639f.0
+        for <git@vger.kernel.org>; Thu, 28 Aug 2025 05:43:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756385027; x=1756989827; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q71jxHLGEVBgVkzImaF84atXJ+7mkyuttKG4TtVa6oA=;
+        b=P9QYzrPhGrdiZtVqtGKwAV+Yov6N0d2tLQ8N7CL6jacc930bjN5qTsD40+lSOtrAjs
+         kztXLTl42jTG0LxQ6ox6/HPNQuMm/oisd9inLHBRY74IcdFGyEMjdWR4+cXvjDZS+j5a
+         3cqDWZVYzO9whmOXl3H+7uvp85SHDInuXR59xflmGK6Hxeo6aFClVwAL0swq1WbY6teg
+         ipLO+ZfSGpSBIQskgGZPTXjYrpdyJHKZ+evaHZS0P06X27XtC5HoPztf3aCtSkJSaXmP
+         RTrqCwXiiUDzzkyKCuXjG1vXaCO0olGsXzO3JOe4ThuBB74+eMF32bcBVHErfGO0/tNN
+         YpUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756385027; x=1756989827;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Q71jxHLGEVBgVkzImaF84atXJ+7mkyuttKG4TtVa6oA=;
+        b=fwIGwhPpJsPrciTjeP0fPYQmQ0uJ0RcZ1bh1UtlWc/guFg/cn9BfO21Q+9lujHKJ4X
+         7ZjaetPGS5uZvEdlqfocyjBEgb43BKyqfxS/Bicvuhr2vhXuTAyP8mL8aaN/U3zjQ++X
+         FZbkG614lw5yl8ktmGGXMMr5r+9V1oyKJxUaMOt1dOUz6NjRE3+oEkeZgsCnHIK65qge
+         p24TiKRJKdBkiEz0CRjGxtbZe898xuXxaqXLva0DBmC9dfFedry5Y1uYFPLDmS4Pm1JA
+         ZzQFDsVE1yrMg84zLneUx3MuVwT6emPR8yb6ZbSqJJRX2TISxjoFgb9QpXNEP5BceZpL
+         pTSQ==
+X-Gm-Message-State: AOJu0YxaYf8A7c0/RzJoxL0ueTCJSXn8kaBcOtiuxotZF780Clfx8BOp
+	pOBemuINHoJGZH6Ey3oUiIdJnaVM8F4Ioq5mGYjzMWXDUUjvCksgY3vbohCeoA==
+X-Gm-Gg: ASbGncs9TQTwwAbzgm7PyyMev5uOPF6t1FncEThtqBIpGBKxaf6eh4xBg7xJIFDBEe7
+	IzgFbFCQBU2psadAzYkeLi5yjVWrZ+8L+1EY+bX+heS7V51/+TLs5OVZssivqLKUS7rjJm60sIi
+	bs4esc2o1oY++Nor/e1xvlPUnDdU1/9Qp4QxBs4As6B4jmZf2QpfoYXoVdVClthV4BA5I7lc+Xa
+	WsY/TxMPw2Xe3wIjzqukr0j+HZije6zTPPMhHAzc4ahK8kDw6AVtDLZAb8cWb0Y1Pk9RtuT+LZO
+	W5Hdmo6LBnGqcs+W6FR4i2fpnxUgmPRawPgX/D6D6dkNJvkqV6zgRno5IoLP16PC0IW4Ya2ZCpD
+	Zf3gkTKpblZhN3kccspmZyai1rTf2rClr7sAIoLlSPQ==
+X-Google-Smtp-Source: AGHT+IEVI874+fJg4vRtOh1KXyHYcopyIoEx8SAux9GyxZKimajoW+Yujd3ztfE8A+HXYLXi9w5G+Q==
+X-Received: by 2002:a05:6e02:1648:b0:3f0:fc6b:4e02 with SMTP id e9e14a558f8ab-3f0fc6b501fmr51614025ab.15.1756385027255;
+        Thu, 28 Aug 2025 05:43:47 -0700 (PDT)
+Received: from [127.0.0.1] ([172.212.163.233])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3f0693d885esm25988335ab.38.2025.08.28.05.43.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Aug 2025 05:43:46 -0700 (PDT)
+Message-Id: <pull.2041.git.git.1756385026051.gitgitgadget@gmail.com>
+From: "Julian Prein via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 28 Aug 2025 12:43:46 +0000
+Subject: [PATCH/RFC] submodule: gracefully handle links in module paths
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AvvqYbK4iQrF
-Date: Thu, 28 Aug 2025 08:11:11 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-Message-Id: <276630b8-ad98-4ada-aa85-9f136d653d7b@app.fastmail.com>
-In-Reply-To: <xmqqldn5ix0r.fsf@gitster.g>
-References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
- <b8873c4529caeddc85879efd122e5a57278352f0.1756148933.git.gitgitgadget@gmail.com>
- <xmqqldn5ix0r.fsf@gitster.g>
-Subject: Re: [PATCH 2/5] doc: git-checkout: clarify `git checkout <branch>`
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Julian Prein <julian@druck.dev>,
+    Julian Prein <julian@druck.dev>
 
-> Do we expect readers to truly understand what is to "switch to branch"
-> without explanation?  IOW, I am undecided if the lost "To prepare for
-> working on" is a good thing.
+From: Julian Prein <julian@druck.dev>
 
-I'm not sure what you mean here: "switch to <branch>" is as far as I can=
- tell
-the most widely used term to refer to this operation, in other Git
-resources, in Git's own man pages, and in the error output of the=20
-`git checkout` command itself:
-("Please commit your changes or stash them before you switch branches.")
-Which readers do you think would be confused by it?
+Due to security concerns the commit e8d060894448 (submodule: require the
+submodule path to contain directories only, 2024-03-26) introduced some
+checks and hard `exit(128)` calls for the case that a submodule path
+contains symbolic links. This change was motivated by CVE-2024-32002,
+which was discovered shortly before. Consequently, git currently aborts
+actions of which some could be continued by not processing the faulty
+module.
 
-> Usually with "changes on _<branch>_", people mean quite a different
-> thing from what the above paragraph refers to.
->
-> Imagine that you are on a branch that you forked from 'main' some
-> time ago, built a handful of commits, among which there may be ones
-> that touch file F.  You further have local modification to file F.
-> Now you want to switch to another branch.  That branch, since it
-> forked from 'main', never touched F.  Your local changes do not
-> conflict with "the changes on branch" (there is no changes on branch
-> to conflict with your work, as F stayed the same).
->
-> To improve, "with the changes on _<branch>_" should be phrased more li=
-ke
-> "with the differences between the current state and that of the
-> _<branch>_" or something.
+As an example, one of these actions that may be aborted is showing a
+diff with diff.submodule set to `log` or `diff`: Let's assume a
+repository where a submodule was moved and its old path replaced with a
+symlink pointing to the new location. A git-show on an older commit from
+before the move that also touches the module will now have only partial
+output. If the submodule is the first file to list, there will be no
+diff at all after the commit message. Other examples for actions that
+are aborted after already being started are fetching and pushing with
+their respective recurseSubmodules turned on.
 
-That makes sense. I'll work on a better way to phrase this.
+Handle these cases more gracefully by returning an error value instead
+of dying, if possible. This was done only in functions that already
+supported returning an error.
 
-> I do not think "glorified no-op" is a reference to "status".  At least,
-> when I wrote it, I didn't mean it that way to compare this glorified
-> no-op with "git status" [*].  It is a reference to "even though you are
-> invoking the 'checkout' command, you are not checking out anything."
-> The side effect is to see the tracking information, which is "rather
-> expensive side-effects"---compared to doing nothing, anything is
-> expensive ;-).
->
-> I strongly suspect that running "git status" is much more costly than
-> "git checkout", simply because the former has to do a lot more than ju=
-st
-> peeking the tracking information; it internally runs diff between HEAD
-> and the index, and between the index and the working tree, and it also
-> has to find and list untracked paths.  Both commands compute the
-> tracking info by calling the same remote.c::format_tracking_info()
-> function.
+With this change the mentioned git-show will display the full diff and
+show a "(commits not present)" for the submodule - the same is done
+currently when a submodule is simply moved. The fetch and push will
+complete their action while skipping the faulty module and printing an
+error message.
 
-Ah, I thought `git status` was faster because I benchmarked it it on one
-of my repositories and got these results [1].=20
+Signed-off-by: Julian Prein <julian@druck.dev>
+---
+    submodule: gracefully handle links in module paths
+    
+    Hello,
+    
+    I'm submitting this patch primarily to fix the issue described with
+    diff.submodule. I maintain a repository in which this kind of move
+    occurred, and I have diff.submodule set to log. With current git I can't
+    properly display some older commits. Changing submodule_to_gitdir would
+    be sufficient to address this, but I noticed more places doing the same
+    thing (exit(128) even though an error value could be returned), so I
+    changed these as well.
+    
+    Since this is security-relevant, and I'm not very familiar with the
+    codebase, I probably lack the foresight to foresee all consequences of
+    this change. For this reason, I'm submitting this as an RFC and without
+    any tests for now. If you deem this patch reasonable, I'd be happy to
+    write tests and add them to a future version.
+    
+    Thanks,
+    
+    Julian
 
-Now that I see that that's not what "expensive side-effects" was intended
-to mean, will change to something much simpler, like "Running `git check=
-out`
-without specifying a branch outputs the tracking information for the cur=
-rent
-branch. It has no other effect. "
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2041%2Fdruckdev%2Fpr2041-graceful-submodule-links-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2041/druckdev/pr2041-graceful-submodule-links-v1
+Pull-Request: https://github.com/git/git/pull/2041
 
-- Julia
+ submodule.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-[1]
-$ hyperfine 'git status'
-Benchmark 1: git status
-  Time (mean =C2=B1 =CF=83):       6.6 ms =C2=B1   1.2 ms    [User: 3.2 =
-ms, System: 5.1 ms]
-$ hyperfine 'git checkout'
-  Time (mean =C2=B1 =CF=83):      29.5 ms =C2=B1   1.9 ms    [User: 12.6=
- ms, System: 14.8 ms]
+diff --git a/submodule.c b/submodule.c
+index fff3c75570..843ec48339 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1127,7 +1127,7 @@ static int push_submodule(const char *path,
+ 			  int dry_run)
+ {
+ 	if (validate_submodule_path(path) < 0)
+-		exit(128);
++		return 0;
+ 
+ 	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
+ 		struct child_process cp = CHILD_PROCESS_INIT;
+@@ -1514,10 +1514,19 @@ static struct fetch_task *fetch_task_create(struct submodule_parallel_fetch *spf
+ {
+ 	struct fetch_task *task;
+ 
+-	CALLOC_ARRAY(task, 1);
++	if (validate_submodule_path(path) < 0) {
++		// Add submodule path to the list of submodules with errors.
++		// validate_submodule_path already printed an error message, but
++		// it would be confusing if the submodule wouldn't be listed
++		// together with other erroneous modules at the end.
++		//
++		// NEEDSWORK: name instead of path would be nice
++		spf->result = 1;
++		strbuf_addf(&spf->submodules_with_errors, "\t%s\n", path);
++		return NULL;
++	}
+ 
+-	if (validate_submodule_path(path) < 0)
+-		exit(128);
++	CALLOC_ARRAY(task, 1);
+ 
+ 	task->sub = submodule_from_path(spf->r, treeish_name, path);
+ 
+@@ -1999,8 +2008,12 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int ret = 0;
+ 
+-	if (validate_submodule_path(path) < 0)
+-		exit(128);
++	if (validate_submodule_path(path) < 0) {
++		if (flags & SUBMODULE_REMOVAL_DIE_ON_ERROR)
++			die(NULL);
++		ret = -1;
++		goto out;
++	}
+ 
+ 	if (!file_exists(path) || is_empty_dir(path))
+ 		return 0;
+@@ -2555,7 +2568,7 @@ int submodule_to_gitdir(struct repository *repo,
+ 	int ret = 0;
+ 
+ 	if (validate_submodule_path(submodule) < 0)
+-		exit(128);
++		return -1;
+ 
+ 	strbuf_reset(buf);
+ 	strbuf_addstr(buf, submodule);
+
+base-commit: f814da676ae46aac5be0a98b99373a76dee6cedb
+-- 
+gitgitgadget
