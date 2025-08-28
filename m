@@ -1,127 +1,266 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025BD25BEF8
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 19:08:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991FC2116E9
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 19:28:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756408097; cv=none; b=Sg3Vq34I4bWblu0g8Oiaw2EnDCG7hzIyrCgc8UsTm/XTjTekrasVNCEvVfK1NN3SFGzLbnxbBZC8yJ0Z28Q7AkHwPj/PK2uZjTRYsQnL3/3AuXOnx/mUB2+tzn0ThLUkotdHNrV1IMkIdLKQZOCzFD78ZmIX3MELOX/VorbUWe0=
+	t=1756409297; cv=none; b=Jzo8MtpZq9Y5YYjyj+TEVUVkZAX94fsMyA6/6fGO7EznRe+AemP6qZS9jdbao2vSje5RQ5Gjt5/FZr2+IkaxmZEqHNiy5YGRc8kzm7nb+aod25v4UpE8cnF9JikaCYS21twS7x/3HpYb8AkUDW+7E/JbNRZcZBVPmcaYKw7s7To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756408097; c=relaxed/simple;
-	bh=RI3VBJYhegn7VdILnWE+J7NGMOxF9e2ltuAftq+iCws=;
+	s=arc-20240116; t=1756409297; c=relaxed/simple;
+	bh=eOKspV5aC4H30Az7n3vFPQKzvOKaZb5vAdc2wmgb48s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=G6qUCl+4erYzbj6ZabB84G+Mh8oMofRIz+ISlm+RZa2bqShs1GKBFZTR0+JsegMCQV6P6ErRjIorQ1o3GSpZbDAXp8zjI2GnmvJuFf8yxAIzIyvPVE9YnLdjXMf1zNKCiXNLbpi4iVBHpzekGwjRaJb4ZHlKJPp6a4W8N91hIzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VAAptgBL; arc=none smtp.client-ip=209.85.218.42
+	 To:Cc:Content-Type; b=BWH2G6ymw6Y6zxjHIQUbBa0ooX0l5FwCarCtBZpXvI5WANtGQu5Mi/7gpKM+JeWBMhq9KlMiPGZn8CEyb04LCfsnpPOAmLfRmEFNpWQodjJOWkAMSxxIkPKkeXurHsWwoEV/2Skw932YQkNA8I0NHl/aWNBrMMjp3mf2mMKpIAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hNiX10F7; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VAAptgBL"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-afcb7a8dd3dso128767166b.3
-        for <git@vger.kernel.org>; Thu, 28 Aug 2025 12:08:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hNiX10F7"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-61caa266828so2843671a12.1
+        for <git@vger.kernel.org>; Thu, 28 Aug 2025 12:28:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756408094; x=1757012894; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756409294; x=1757014094; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FVVoM4r0MTO13D/vC1wZY44k50/hDuOzoc5bsEQ8Gvk=;
-        b=VAAptgBLOtuqSsQXbeqvqMW5QWTjS7z1Tt7tdCQwu14ps35wxQFqvOzCHq9iw70t2N
-         +igkeol+VDqurm/dOLI5lytK2n3aVurp9BdNobh9Vge0Te+GYz8TiWd4QF+JUJOOaS3a
-         EOcKvdknnP5055x427H6Y5QABvAKJx7GwoFhE2zbzML0qh3dnm+cB2nakSvU1SSY4SLA
-         DgwcB9ZBucYlPsxtvJqA8KM1ZO4T0n0RHxiPZ/peRcsvBcHwyVt3fJoBGuJaG9NcjRRC
-         azHkEjBE84wSAB9uydrZChb2WnmiD8ujfM41og2fugXpJBW1voqU/a3rOpyN9xhnWRbn
-         Pfyg==
+        bh=L4iMOuqeqQzCW35iWxbRlNrAKYdbjaixjEmXEHT91H4=;
+        b=hNiX10F7DFdzTJVg1z3O/avI8H6mxqm7wvezoAiraHmOXaTEM8LEib9XtL9FsaN/7Y
+         5AGbxdFvtmm9isuXbLa3WSlgSMHL4vhWnVX+pn4iiCQVl5OIaa7Lq4vbM0OQusgU7Vgr
+         srTWCC06CFEByHAE3UTT5D2q+75tpq4YOR73mhEDy3qA9CSMOy6Od5gZWIrwfT7JFKYZ
+         vnWJ33UMMa0/idhRB6Tpq2iRSJ+JFYnGOHam1rwq0AKkcBhWiBWWrg7r5txq2ihLX7pH
+         FwFK0HHzLx9Vcsgdgwb1bx482X01qhzxfsURxU1tmymEt+SE+O85cjuBNbYt9dWR04d6
+         5JUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756408094; x=1757012894;
+        d=1e100.net; s=20230601; t=1756409294; x=1757014094;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FVVoM4r0MTO13D/vC1wZY44k50/hDuOzoc5bsEQ8Gvk=;
-        b=khchFP4xL+kfWCQl0gwWueaN0g20WypmlgqxSdX8kubGo6WuMKczPQT3SJtmCrXKw4
-         /isq+aF0jXov9Oa4c8shtgzpb6t5JgVMdQow2PYDN8ZZyJr55k9VxbvC393jEeFwOl9p
-         bGTtxG0iSVp8cteqVfdLe8Wf3XfJs149EMc+wfxyefOI98cMA6g5ftB/TW9Lt/xm3Gqc
-         sK4RGc0mfpwnsWm9xJGSedbSEVBmJ8XDKCxWMaZ4erWQruSeQ8EVdM8cA1UiC6VnG6PL
-         tOAzhF5r69IaUHHeN4pMD3mmit/V4505qjKxZAOtUhBbJ0QySnF1yy/Guv6MBgD7BAKg
-         Rmsg==
-X-Gm-Message-State: AOJu0YzYF8nCT019gwsXjdeSqBpZ0EDjM8M+XsIzEraPxAqKKYWRFI8+
-	4Im1tD/14TWVhYck64XCtL21TYbW/XoZHW0TfzM+1emkKYQS9gboxa/HIun3sLTMI7sNhdYIi0Z
-	moisX2vBqwhB0JibDDeu2hyEdIe6nbTI=
-X-Gm-Gg: ASbGnctqWz1tpvxz3jgYZ7HgCQV72c3XUk4kZEXskiC2/nCX0HIm+BsXC7WyXzWc/Gz
-	iPv1BozUUudckHhkwHMK9i+hNEZrUZSEQ0fGPRCL9DguyaYxTb5EQy032A6eG36SluejDRL7RZa
-	AzHVkrMJxzEl+Bxb3WHGmG34oENZMrbNahmX/yY0KxU4G7WWeLb/ptY4cFQmlpAQD+tmo388FDS
-	K0lpoE62b3vGUtFEYTRdf5AyT2VEZOZpUIyDRn/8A==
-X-Google-Smtp-Source: AGHT+IEcBfBe4hl3jVChVFedH/AbUika5x8uNUvFVd+y3goCWqThQqwPVP8+d13Zd4RExmbM8nG8D6pUbaE/y/uNKMg=
-X-Received: by 2002:a17:907:9281:b0:afe:a83a:87ce with SMTP id
- a640c23a62f3a-afea83a8c21mr1044991766b.2.1756408094062; Thu, 28 Aug 2025
- 12:08:14 -0700 (PDT)
+        bh=L4iMOuqeqQzCW35iWxbRlNrAKYdbjaixjEmXEHT91H4=;
+        b=b8OEdMMMF9Hwfkrk2t7CwXzxSE9JjbDzgc0rEm5oAtFoiwrLHiByMm+ElCpzVqHyLn
+         2CIfeTJ5j9iKf5tvQbW6MjYs5eCC/hP0AJai40ZO0yZ10K3WfmvQGMvlnoR829QAupK0
+         SDINSX0LSY0KQlaLvE0+kzsAKy/oBURRbxm5UPo+7oZt3CQ5+fl13v6Oss3zBWhlRDNJ
+         5gmYUqQS22UxcEaSDy0GA6nFhTJpPiHha4/Oe3UIkEB6d2wFbiFBkbSmeDm5nlEocQFq
+         c+yud05qDAKsvrUmSrvGsx7gvL146lvn7m8EJBvI63bFOsEp7UAy8SsWHUqimMzfJOzo
+         3MoQ==
+X-Gm-Message-State: AOJu0YyZsYqQ+6HZVxBx0ldKh8z5BV1P6gvq0SiYWd1lxLtnEKsfE+9y
+	ucNLvO0rvFojxIqMlz+orIaNDV+XV+9eM7u0fUmn4XbISQBV+LhWih8cExA2ok5qqQzbRACGXgS
+	aHlKC6jyxbuhAf6CrcTgTgH0PuX2v16M=
+X-Gm-Gg: ASbGnctBEaLLCCayM2JXw/KONmbBd8/u3Oi5X8qS8/S8ZBgY5R4dE65KpEkZ0VO6kJz
+	+Gd9UwNVeCcc2S35Gcz8yYTBVgcq/FiTgsZq8exBIa+QLFq0gIQwjDJRnYTbQTxFMLeK1Mbzv8A
+	F5THKntcH4aJmncNxWfQQ3gO3ejEsqN0F2mWp3HJONxphLQjVGly5sdCf3LJdMHA9pfuB6NAO26
+	ISeMnCLMcoPE+6zNQ4l/vE7wkfaYr22iMVMGmDSIlvT2YgYj4sdy8H3Z4Dp7Yg=
+X-Google-Smtp-Source: AGHT+IFRSKabf6WYI63HyTDCKR66e6itlmlZklWj00fk54ZPZlSX1FtwOQvQb4cpRg7GSD3QOYQ/5byyKILJ7VuapE8=
+X-Received: by 2002:a05:6402:5207:b0:61c:ae5e:d1cd with SMTP id
+ 4fb4d7f45d1cf-61cae5ed3cemr6359623a12.35.1756409293513; Thu, 28 Aug 2025
+ 12:28:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1962.git.1756148933.gitgitgadget@gmail.com> <b641874627b3898831c3965616e936bd4ee310df.1756148933.git.gitgitgadget@gmail.com>
-In-Reply-To: <b641874627b3898831c3965616e936bd4ee310df.1756148933.git.gitgitgadget@gmail.com>
+References: <pull.1964.git.1756240823.gitgitgadget@gmail.com> <72114133aafc94354c8b7f3c8ac65456421ce34b.1756240823.git.gitgitgadget@gmail.com>
+In-Reply-To: <72114133aafc94354c8b7f3c8ac65456421ce34b.1756240823.git.gitgitgadget@gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 28 Aug 2025 15:08:02 -0400
-X-Gm-Features: Ac12FXwsxE3DjM9D8_jU1bUxgpBqn5p_fkKxLo8Kd0ZDga_dGr774QsP28CCPK0
-Message-ID: <CALnO6CDpsgTnC95CzjOL5MuhFNAnYYSQCR-jC_n5JYLEu0BTow@mail.gmail.com>
-Subject: Re: [PATCH 5/5] doc: git-checkout: clarify restoring files section
+Date: Thu, 28 Aug 2025 15:28:02 -0400
+X-Gm-Features: Ac12FXz_kcoohAS42WLCuoE661xaQXrQNodOM2ZaKKgrNPuVnFWZp9LImBbq6Fs
+Message-ID: <CALnO6CCZD+DQSG9OMbAia02Nhpseuko95RVRYZ6-YJpvfsAWog@mail.gmail.com>
+Subject: Re: [PATCH 4/4] doc: git-push: rewrite refspec specification
 To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Julia Evans <julia@jvns.ca>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 25, 2025 at 3:31=E2=80=AFPM Julia Evans via GitGitGadget
+Thanks for the docs updates! A few nits below, but this looks nice to me :)
+
+On Tue, Aug 26, 2025 at 4:40=E2=80=AFPM Julia Evans via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
 > From: Julia Evans <julia@jvns.ca>
 >
-> - Use the term "Restore" to mirror `git restore`
-> - Many Git users do not know what a "tree-ish" is. Clarify by using an
->   example of each case, and by saying "commit or tree" in the text
->   instead of "<tree-ish>"
+> - Originally it said that a refspec was `+<src>:<dst>`, but then later
+>   contradicted itself by saying that the `:<dst>` is optional.
+>   Mention that `:<dst>` is optional much earlier.
+> - Put the complex sets of rules about different refspec forms
+>   in lists instead of in long paragraphs of prose
+> - Add examples for the various types of refspecs
+>   (negative, deletion, pattern, etc)
+> - Previously `*` and `^` were not mentioned, mention them
+> - Explain what `+` does earlier
+> - Remove "might be added in the future" (it's a given that software
+>   might change in the future)
 
-Wishful thinking (see glossary comments): I wish we could teach them
-about "tree-ish"s here rather than stop using useful shorthands
-altogether. Of course, then we have to wonder where we can use the
-shorthand and where we must do the "spell it out (give an
-abbreviation)" dance. Hm.
+Excellent ideas!
 
-> diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout=
-.adoc
-> index b343d292b30b..9f2b86ac5368 100644
-> --- a/Documentation/git-checkout.adoc
-> +++ b/Documentation/git-checkout.adoc
-> @@ -82,20 +82,21 @@ Omitting _<branch>_ detaches `HEAD` at the tip of the=
- current branch.
-> -The index may contain unmerged entries because of a previous failed merg=
-e.
-> -By default, if you try to check out such an entry from the index, the
-> -checkout operation will fail and nothing will be checked out.
-> -Using `-f` will ignore these unmerged entries.  The contents from a
-> +If you specify a commit or tree to restore from (for example `git
-> +checkout main file.txt`), this will restore the version of the file(s)
-> +from that commit or tree. This overwrites the file in the working
-> +directory and stages the file's contents.
+> diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
+> index 0232195515c9..78d433c60c51 100644
+> --- a/Documentation/git-push.adoc
+> +++ b/Documentation/git-push.adoc
+> @@ -57,77 +57,74 @@ OPTIONS[[OPTIONS]]
+> +The format for a refspec is [+]<src>[:<dst>], for example `main`,
+> +`main:other`, or `HEAD^:refs/heads/main`.
 > ++
-> +If you do not specify where to restore from (for example `git checkout
-> +file.txt`), this will replace the file(s) with the version from the inde=
-x.
-> +If you check out a file with an unresolved merge
+> +The `<src>` is often the name of the local branch to push, but it can be
+> +any arbitrary "SHA-1 expression" (see linkgit:gitrevisions[7]).
+> ++
+> +The `<dst>` determines what to update on the remote side. It must be the
+> +name of a branch, tag, or other ref, not an arbitrary expression.
 
-Possibly a missing paragraph break here?
+A welcome (to me) simplification from the original paragraph,
+especially if we don't lose the original content but rearrange it
+better :)
 
-> +conflict, the checkout operation will fail and no changes will be made.
-> +Using `-f` will ignore the merge conflict.  The contents from a
->  specific side of the merge can be checked out of the index by
->  using `--ours` or `--theirs`.  With `-m`, changes made to the working tr=
-ee
->  file can be discarded to re-create the original conflicted merge result.
-> -
->  `git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]`::
+> +`:<dst>` is optional.
 
-I think I would expect to keep this break, but I might be misreading someth=
-ing.
+Here=E2=80=A6
+
+> ++
+> +`+` is optional and does the same thing as `--force`.
+> ++
+
+=E2=80=A6and here, I find it odd to start sentences with punctuation if we =
+can avoid it.
+
+> +You can write a refspec using the fully expanded form (for
+> +example `main:refs/heads/main`) which specifies the exact source
+> +and destination, or with a shorter form (for example `main` or
+> +`main:other`). Here are the rules for how refspecs are expanded,
+> +as well as various other special refspec forms:
+> ++
+> + 1. `<src>` without a `:<dst>` means to update the same ref as the
+> +       `<src>`, unless the `remote.<repository>.push` configuration spec=
+ifies a
+> +       different <dst>. For example, if `main` is a branch, then the ref=
+spec
+> +    `main` expands to `main:refs/heads/main`.
+> + 2. If <dst> unambiguously refers to a ref on the <repository> remote,
+> +    then expand it to that ref. For example, if `v1.0` is a tag on the
+> +    remote, then `HEAD:v1.0` expands to `HEAD:refs/tags/v1.0`.
+> + 3. If <src> resolves to a ref starting with refs/heads/ or refs/tags/,
+> +    then prepend that to <dst>. For example, if `main` is a branch, then
+> +    `main:other` expands to `main:refs/heads/other`
+> + 4. The special refspec `:` (or `+:` to allow non-fast-forward updates)
+> +    directs Git to push "matching" branches: for every branch that exist=
+s on
+> +    the local side, the remote side is updated if a branch of the same n=
+ame
+> +    already exists on the remote side.
+
+I'm not 100% sure this belongs as an item in an ordered list here,
+since it implies (structurally) something about the order of possible
+expansions tried. But the introduction to the list does say "rules
+[and] special refspec forms"=E2=80=A6 Hm. Maybe it's worth splitting the
+special ones out? idk.
+
+I see Junio mentioned something similar.
+
+> + 5. `tag <tag>` expands to `refs/tags/<tag>:refs/tags/<tag>`.
+> + 6. <src> may contain a * to indicate a simple pattern match.
+> +    This works like a glob that matches any ref matching the pattern.
+> +    There must be only one * in both the <src> and <dst>.
+> +    It will map refs to the destination by replacing the * with the
+
+Should src/dst/* have backticks here? I'm not sure.
+
+> +    contents matched from the source. For example, `refs/heads/*:refs/he=
+ads/*`
+> +    will push all branches.
+> + 7. A refspec starting with ^ is a negative refspec.
+
+Ditto the "^"
+
+> +    This specifies refs to exclude. A ref will be considered to
+> +    match if it matches at least one positive refspec, and does not
+> +    match any negative refspec. Negative refspecs can be pattern refspec=
+s.
+> +    They must only contain a <src>.
+> +    Fully spelled out hex object names are also not supported.
+> +    For example, `git push origin 'refs/heads/*' '^refs/heads/dev-*'`
+> +    will push all branches except for those starting with `dev-`
+
+I learned something new today! This isn't in the manual I have for
+2.48.1 or 2.51.x locally. Thanks! [Junio mentions it's on the fetch
+side, which I see now]
+
+> + 8. If `<src>` is empty, it deletes the <dst> ref from the remote
+
+Backticks for dst ;)
+
+> +    repository. For example, `git push origin :dev` will
+> +    delete the `dev` branch.
+> +    Deletions are always accepted without a leading `+` in the
+> +    refspec (or `--force`), except when forbidden by configuration or ho=
+oks.
+
+Maybe "except when forbidden on the remote by=E2=80=A6" ? (This came from t=
+he
+original and does not need tweaked in this series, though.)
+
+> +    See `receive.denyDeletes` in linkgit:git-config[1] and `pre-receive`=
+ and
+> +    `update` in linkgit:githooks[5].
+> + 9. If the refspec can't be expanded unambiguously, error
+> +    out with an error indicating what was
+> +    tried, and depending on the `advice.pushUnqualifiedRefname`
+> +    configuration (see linkgit:git-config[1]) suggest what refs/
+> +    namespace you may have wanted to push to.
+
+Wrapping looks strange to me here.
+
+> +
+> ++
+> +Not all updates are allowed: it depends on what kind of destination
+> +you're pushing to. In the following rules "update" means any
+> +modifications except deletes, which as noted above are treated different=
+ly.
+> ++
+> +All of these rules
+> +can be overridden by adding the optional leading `+` to a refspec
+
+Ditto.
+
+>  (or using `--force` command line option). The only exception to this
+>  is that no amount of forcing will make the `refs/heads/*` namespace
+>  accept a non-commit object. Hooks and configuration can also override
+> @@ -135,18 +132,21 @@ or amend these rules, see e.g. `receive.denyNonFast=
+Forwards` in
+>  linkgit:git-config[1] and `pre-receive` and `update` in
+>  linkgit:githooks[5].
+>  +
+> -Pushing an empty <src> allows you to delete the <dst> ref from the
+> -remote repository. Deletions are always accepted without a leading `+`
+> -in the refspec (or `--force`), except when forbidden by configuration
+> -or hooks. See `receive.denyDeletes` in linkgit:git-config[1] and
+> -`pre-receive` and `update` in linkgit:githooks[5].
+> -+
+> -The special refspec `:` (or `+:` to allow non-fast-forward updates)
+> -directs Git to push "matching" branches: for every branch that exists on
+> -the local side, the remote side is updated if a branch of the same name
+> -already exists on the remote side.
+> -+
+> -`tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
+> +1. If the destination is a **branch** (`refs/heads/*`): the source must
+> +   be a commit object, and only fast-forward updates are allowed.
+> +2. If the destination is a **tag** (`refs/tags/*`):  the source can
+> +   be any object (as commits, trees and blobs can be tagged), and any
+> +   updates to them will be rejected.
+> +3. For destinations outside of `refs/{tags,heads}/*`:
+> +   * If the source is a tree or blob object, any updates will be rejecte=
+d
+> +   * If the source is a tag or commit object, any fast-forward update
+> +     is allowed, even in cases where what's being fast-forwarded is not =
+a
+> +     commit, but a tag object which happens to point to a new commit whi=
+ch
+> +     is a fast-forward of the commit the last tag (or commit) it's
+> +     replacing. Replacing a tag with an entirely different tag is also
+> +     allowed, if it points to the same commit, as well as pushing a peel=
+ed
+> +     tag, i.e. pushing the commit that existing tag object points to, or=
+ a
+> +     new tag object which an existing commit points to.
+
+I didn't close-read this bit, but it seems reasonable.
 
 --=20
 D. Ben Knoble
