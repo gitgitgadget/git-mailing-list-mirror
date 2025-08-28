@@ -1,54 +1,54 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08F0286D69
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 20:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37A417A300
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 20:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756414285; cv=none; b=p4Uy7l/1axltjtL97xja7F3oNXH2oFzUhuUvJUhKNIiMq38U0l8IRav8myk1v7ilVY7NPZIv4xlzjVc1HV7nE6v0/Lv4fYkTCE09UVa8AKvKujUSLzVhXg2MxtIznNYU4HfMPYQqu4utQtOIOOMVTS4RRdzvqG2xcuVNb2QdsVE=
+	t=1756414708; cv=none; b=l+aJzypJ/6FJme9KhScC34XeTkMqfOJmSpqOs5DwYfybRhEaWnmenwAXqMxVCUDUWaTbO2DtGcAfHyzCURIVC3tFiTrxFS1cihjOevqYopRuk2p9V3Akw25g+UjxACnqu5rEkQOtjEPKGpxPw9Xv+1hBGS95JPAO38SSiLNUmZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756414285; c=relaxed/simple;
-	bh=xdRiFXD4x76kNe0F8A7gRtVKAmgFNLdFWx+p8ynaJ8A=;
+	s=arc-20240116; t=1756414708; c=relaxed/simple;
+	bh=z3xubKx86uujgGLB0yeHDOwSEoAziIKQlqYGK/4OmRc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K4hVNnbAtzwl85BODEm7h9X6/1XIJ2r6TpXumchmyRYXZg8R3jxep4hgs0ZGXZhBfWwK86px1oGgBwWRU+gv1maKDrdQxaddHmhkZ3x2XJ7vzpXdVLk/pp4Gn1qJDO6TA0MjQ+4PMgZtpMynOGn9q+047OdpASIIWQbF8kZd6gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ovagmw/b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C8X/8ZXL; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=tca8ZqBw1Yw37eXvWzudvE+7EhppXsLQ8+dYmLQak/X07p/xlo7VKoWkkpZDPUJvLtq8nJ+4NxFEFcA2g8hFv8A27O9cD6otXlXU7qboTiGKhPMUwxNrOrf5BiIF4LtQ2cjnyyrqcj1trNFB/DBieTLovwakceRyhjMMflFbcRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hBGl+/03; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hj5bPrjS; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ovagmw/b";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C8X/8ZXL"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id B394B1D000B1;
-	Thu, 28 Aug 2025 16:51:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hBGl+/03";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hj5bPrjS"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id C777D1D000ED;
+	Thu, 28 Aug 2025 16:58:25 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 28 Aug 2025 16:51:20 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 28 Aug 2025 16:58:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756414280; x=1756500680; bh=oD1sKYJiGv
-	RUscx+gzgKc07NMFo7+hNg5bCs2nPqUPg=; b=Ovagmw/buS/+TzZlGyp+K61CmZ
-	JZOM7VvpL+4Gy+8GCvoz/BPVsbnwuLsyGDDUzUyB4+EZbTyJiSI8PTAubjXzhisz
-	CcNXcBxL2YsfTuIjAjjiRui0F4x1wBB9MQ8XlMuTtKsz/xy3lYt1r7tH2XDRw429
-	l0k2PcMJMY1glSOeIPDsfU7iSobe4bD8hek8+h6MR30ViGgiejViAChXE3+axliV
-	AOpnSYQLwE+FS5r39z5c4kDPzjBhTBkCRlcntSymjiKSgNe3z63KWOXBxLGNa9Yg
-	41JXtt2SJZjFFLVkOkcflSaSpO7K0bKoZs/4dvJ3YKn8cM3KGqUtOox9uXxw==
+	:subject:to:to; s=fm3; t=1756414705; x=1756501105; bh=0De/Co4SMq
+	yLJOHvBU5NOD9XUwp0TTlcjuHsQm6cJA0=; b=hBGl+/03kbr+UhoqQqJKrSpH35
+	RJiuly3qUQXPo45INuXz4jEC6jwpdj1yPjaZx5kziaPBtr07UfFfw2f9+28ixwl+
+	XAkwJ5K6QPzPXI4JugNrnmRWJuh7QWEJmo8LIjaacx9eh81rCpUVgwbOE5ZqN9K3
+	n7l0WIF9g2TQNjFUbKaRLygjlhkpwvQG/6H8areQ8eBK/Wx/m2SlmkII+P3ymssh
+	UsWEZhxSGZlq2ETNv1vwUi2QDxmSLT7PqLgaFeZ7nXQ7q4Qwd7TMmbIOrK9PF4Zu
+	X9zd8qsbr6x0a1PJQbcx7nGAgsOi5/1CRaEdzifhagG9DgWJQgp4QkChqGLw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756414280; x=1756500680; bh=oD1sKYJiGvRUscx+gzgKc07NMFo7+hNg5bC
-	s2nPqUPg=; b=C8X/8ZXLxUOJIAjlTndROacwqeKNrXmLrlewMfbZLAeOBeTe4PT
-	ztIF3F+Uh8P1lyHxC2FdHrF5m5wzCZdj0SiWzPagsOgGfVkzWw7jXCUO4v9gaEw/
-	6TyDVxjmT1EoTZAM5Bl9Gd3Ifq88g9bh42JVbkwy91qYPI8Sp2KNsSPD160P0smx
-	qIERImlKu5gPGk6/eAD/RMAk1+kYwUsMLnSIuo0Y/qUnPd2uMuEAPX9k5J8XR25O
-	zRZ+R3lKu9CpUmftCGQhQE0cMYSSOhnqHJykjp41TO3WcnY0jeKtGuaogBQqjD2l
-	Vcx1/ysAn+gT2Kv17XIUDLGwuqDn36Quq3w==
-X-ME-Sender: <xms:SMGwaPOZNcpcPbI1YjkXKdpLV6eL77XeSNWYh--mwg8oheOsmF4dyw>
-    <xme:SMGwaFdxOYreJr8LPP9eNXyZz_2XEBxb_hkndYJ-BM80ai6n_LeRvh4j3wfuVCOGR
-    704br5ju-MKfc1LTg>
-X-ME-Received: <xmr:SMGwaEuWHurJPxWpv6EoMETsmJKtGC8tmJGmrtmaZepQL5Ih2zLqqqYkmq2MWKXDPqYPMFH0b9cRroGAy5IhO8-cV-QS9a7Hfz3EnHY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvtddtucetufdoteggodetrf
+	1756414705; x=1756501105; bh=0De/Co4SMqyLJOHvBU5NOD9XUwp0TTlcjuH
+	sQm6cJA0=; b=Hj5bPrjSDa4hvkwbI1lug+ftgIDsXAHzz8Ic33YTo1GnlD63aR/
+	j6fYgTQzK2lgMpBKS+FKW/5HuVwGIS8uDa/H2vAVix5BYQFzhgdAbtoxrQeVTY8P
+	QHrtseS6dJNITEARcNijB/0p2fznnSMajIoAZyT6Q/PVQP3kQ4FypzLxFesNSXUB
+	h/O9BUxMvTFGAqNhSSAQeLqHYd8iMBM0R5D2lTCgafShg/fZ2ISC+e7eiPLXmlYf
+	jiI6koQSc4sn7WRVOtcpD4J8g1EEbP6FltKTpuq/5wfRye2SbDwy64jKk+F3Vblo
+	2LMflhVlSRCKY44D07vC/cDsEzx0EcxTiiA==
+X-ME-Sender: <xms:8cKwaNqsjMxX9lyiWJRLitREWBkhv5nH4yo6X-4LafQBzzr77amnxQ>
+    <xme:8cKwaLIHPIMDvzVG1Pltfz8gZGiQvowOdC4m7lSTLWTNxnbsXxNe8eNRtR8ja3ZER
+    jF3Sk1ws1NERpXC6g>
+X-ME-Received: <xmr:8cKwaApdMsloIjHTBT3b_qUldugRdGrM_PbXEszW2o8eWJSHQhnwBA7mMgfYwFfiPlTr0xbfk3xDg20LfE_ygrMvoSYkLWEmVkh26nM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvtdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -60,25 +60,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvtddtucetufdote
     hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
     pehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrih
     hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:SMGwaOkcR_aPSRLOk681L2it6No8ixUl1fUa7nJu72A1ccoAl9nhLw>
-    <xmx:SMGwaOz-CHnyex02TCk1zyn3u0YcHTi8tLMGMN8v77HGRuXBoxbnpQ>
-    <xmx:SMGwaIPapZ0wHDV7GEy9j2gqkT-fLITFxZkwM4O8RN3WLpTXlixp2Q>
-    <xmx:SMGwaCr9JCRbgwOFkL7dV-AvpeK8_dP-hovU9SEEG522cKoMF8Ym7A>
-    <xmx:SMGwaAjzCilbC_87Z-ZNAh4rL4qCeaPTXJ9tHKGMz2NJgzFlZqK-6tmH>
+X-ME-Proxy: <xmx:8cKwaDxWVpA1EEn1ioIdxGZkJAPgQvLwTdjFwuyNvF-Hd7wtMRDwJA>
+    <xmx:8cKwaEP5iJEtKMRuEv2Wvxs8HIFqHu-7zqjIdJ1eOGItmLyXANz0Aw>
+    <xmx:8cKwaI6bQUGkRItonm_y0ARVV859kX3bkjSk3lHlEqcv6EBT0SL_rg>
+    <xmx:8cKwaNkQCj0J2jAjcC_4npAo929fPdpn1ywypXGVsNzzHJzej5hApA>
+    <xmx:8cKwaPvWBxklybxrsWk1xFez9WxS5ZIoAUj-AB2EsVwo3ZqVbAn5PXr2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Aug 2025 16:51:20 -0400 (EDT)
+ 28 Aug 2025 16:58:25 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  me@ttaylorr.com,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 3/5] midx-write: use cleanup when incremental midx fails
-In-Reply-To: <a5bee036019a044273f93434f9e382a4cfa6533c.1756402795.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 4/5] midx-write: use uint32_t for preferred_pack_idx
+In-Reply-To: <bd97db26f7f789315134dc796403b1ab9976135b.1756402795.git.gitgitgadget@gmail.com>
 	(Derrick Stolee via GitGitGadget's message of "Thu, 28 Aug 2025
-	17:39:53 +0000")
+	17:39:54 +0000")
 References: <pull.1965.git.1756402795.gitgitgadget@gmail.com>
-	<a5bee036019a044273f93434f9e382a4cfa6533c.1756402795.git.gitgitgadget@gmail.com>
-Date: Thu, 28 Aug 2025 13:51:18 -0700
-Message-ID: <xmqqwm6ntbjt.fsf@gitster.g>
+	<bd97db26f7f789315134dc796403b1ab9976135b.1756402795.git.gitgitgadget@gmail.com>
+Date: Thu, 28 Aug 2025 13:58:24 -0700
+Message-ID: <xmqqsehbtb7z.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,88 +90,37 @@ Content-Type: text/plain
 
 "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Derrick Stolee <stolee@gmail.com>
->
-> The incremental mode of writing a multi-pack-index has a few extra
-> conditions that could lead to failure, but these are currently
-> short-ciruiting with 'return -1' instead of setting the method's
-> 'result' variable and going to the cleanup tag.
->
-> Replace these returns with gotos to avoid memory issues when exiting
-> early due to error conditions.
->
-> Unfortunately, these error conditions are difficult to reproduce with
-> test cases, which is perhaps one reason why the memory loss was not
-> caught by existing test cases in memory tracking modes.
->
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> ---
->  midx-write.c | 18 ++++++++++++------
->  1 file changed, 12 insertions(+), 6 deletions(-)
+> For now, replace the use of -1 with a 'NO_PREFERRED_PACK' macro and an
+> equality check. The macro stores the max value of a uint32_t, so we
+> cannot store a preferred pack that appears last in a list of 2^32 total
+> packs, but that's expected to be unreasonable already. This improves the
+> range from 2^31 already.
 
-Good thinking, but may I suggest us to go one more step to adopt
-even better convention if we were to do this?
+;-)  
 
-Pessimistically initialize the "result" to -1 and let many "goto
-cleanup" just jump there.  And have "result = 0" just before the
-cleanup label where the success code path joins the final cleanup
-part of the function.
+I very much like this change.  An obvious alternative may be to use
+int instead of uint32_t to number and index into in-core packs, as
+we all know that not just 2^32 but 2^31 is still unreasonably too
+many anyway.
 
-This is often the right way to make the flow easier to see, because
-often the success code path is straight forward, and these error
-conditions are what employ the "goto cleanup" from many places.  By
-starting pessimistic, and declaring the success at the very end of
-the straight-forward success case code path, all other flows to the
-clean-up labels do not have to set the "ah I failed" flag.  It would
-eliminate the need for patches like the previous step if the
-original were following that pattern.
+> There are some careful things to worry about with initializing the
+> preferred pack in the struct and using that value when searching for a
+> preferred pack that was already incorrect but accidentally working when
+> the index was initialized to zero.
 
-> diff --git a/midx-write.c b/midx-write.c
-> index 85b2d471ef..f2d9a990e6 100644
-> --- a/midx-write.c
-> +++ b/midx-write.c
-> @@ -1321,13 +1321,15 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
->  		incr = mks_tempfile_m(midx_name.buf, 0444);
->  		if (!incr) {
->  			error(_("unable to create temporary MIDX layer"));
-> -			return -1;
-> +			result = -1;
-> +			goto cleanup;
->  		}
->  
->  		if (adjust_shared_perm(r, get_tempfile_path(incr))) {
->  			error(_("unable to adjust shared permissions for '%s'"),
->  			      get_tempfile_path(incr));
-> -			return -1;
-> +			result = -1;
-> +			goto cleanup;
->  		}
->  
->  		f = hashfd(r->hash_algo, get_tempfile_fd(incr),
-> @@ -1427,18 +1429,22 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
->  
->  		if (!chainf) {
->  			error_errno(_("unable to open multi-pack-index chain file"));
-> -			return -1;
-> +			result = -1;
-> +			goto cleanup;
->  		}
->  
-> -		if (link_midx_to_chain(ctx.base_midx) < 0)
-> -			return -1;
-> +		if (link_midx_to_chain(ctx.base_midx) < 0) {
-> +			result = -1;
-> +			goto cleanup;
-> +		}
->  
->  		get_split_midx_filename_ext(r->hash_algo, &final_midx_name,
->  					    object_dir, midx_hash, MIDX_EXT_MIDX);
->  
->  		if (rename_tempfile(&incr, final_midx_name.buf) < 0) {
->  			error_errno(_("unable to rename new multi-pack-index layer"));
-> -			return -1;
-> +			result = -1;
-> +			goto cleanup;
->  		}
->  
->  		strbuf_release(&final_midx_name);
+True.
+
+> -	struct write_midx_context ctx = { 0 };
+> +	struct write_midx_context ctx = {
+> +		.preferred_pack_idx = NO_PREFERRED_PACK,
+> +	 };
+
+Good.
+
+>  	if (preferred_pack_name) {
+> -		ctx.preferred_pack_idx = -1;
+> +		ctx.preferred_pack_idx = NO_PREFERRED_PACK;
+
+This too.
+
+Thanks.
