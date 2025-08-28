@@ -1,85 +1,84 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13713002BC
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 23:08:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217D92D0C67
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 23:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756422503; cv=none; b=O3xlBxhVOC9K9+gXVIIpWNWXe9uFBRMwYRjljnPMGeR8MQbKZ5AZyjKBE2ffaRSjYEpW8fiQoNwoRNoH3DUYBr/VBvn30GGqFffmwFc4nmnGyqcC0tQ8JvpjoRigYfqxxv9cg71r5Wvf1NOz8XBUL2WU3c+5PwS7/6HyuDgzLYQ=
+	t=1756422733; cv=none; b=izOCvGP7AFGiYUHxSuTzm99QZeDdmV2uHjW2jUHmqSjosWru8bW1n5DIXzR88G+3rOjvKOkB8gvzWVhJHN6BWCvOL3Zdt6KX6Lyur73vM+vhwC0H+T03jh9ErfAoTz4dag4TMo2hycWJRPIT+R/2vAGBXPmn3xQAuObYeE3R4/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756422503; c=relaxed/simple;
-	bh=84V+rkXAoQAKSoPzX9UQRm0vrztOHevskb+j/GwWiuk=;
+	s=arc-20240116; t=1756422733; c=relaxed/simple;
+	bh=GJ5judaZhsQoJhBk8Vq5Uv2l1NBJbbqYO0Sg1fyENtg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cK8RrYV7Pe91lRy/FkZF99eT2mLjy7I9Dtt0ZQcmhvpofbYSnJ11IhLr2KEPhD3ZYnoFBpSsrksngYoPGDxzEGOy47Qs8MC4cqBUYTmSLrhbFgcy2/OAGEEX7BgBPht/WeFTd1QrnjEy41v/WyEfFeEfSkn7jycy2G4hmisR4Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aLCMvhu0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C5yCuq4r; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=lIg6ZMvg3kDqwkudK4/7GbvvHlegooOnh9HVWK7NiKW7EnenfeGDRV/8ln+XJVkhFmVI/7FIg4AwgG13KqoiTqDcKGIvYgxBRGZaXIKgzr/qmvVcFIdjvaZhVhIDUC2SpTkWRGskkYFua8k8G5xpihYkwKw/VtLPreCo8r0/Ntg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=3gZ1Q7h1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=niQfetu3; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aLCMvhu0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C5yCuq4r"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9B7227A01B0;
-	Thu, 28 Aug 2025 19:08:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 28 Aug 2025 19:08:19 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="3gZ1Q7h1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="niQfetu3"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1652D1D000B1;
+	Thu, 28 Aug 2025 19:12:10 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 28 Aug 2025 19:12:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756422499; x=1756508899; bh=iSegT11gwR
-	Qq8fqSw0G35qJTdHk/D2Hv9QfZdf1AFqo=; b=aLCMvhu0XMkk7ZUOl5bHJ86SlI
-	Nn2qPXo0iaS2qCaqVWLglTIwZK7OA3/L2RF6iAlADxFe7yUpIDEJ+oT7JDGCVCNf
-	7J4k3ncN7SSM4O03DHHNgZI1XQDAWNIQK3FSKzwtECTuGJYlaEujLnnXqJC6EEu3
-	DSz6hRdFOoL1NMLTYST71qnVTADFUwDmIdqVwyE6m83tKYrBjHY/6hkM3mA220jX
-	vJhAxrcsZ7oX9IFw530220ZdogrOfbrS7J27kLkfQ8QRAYgajTGE5ZxUuTMz/XQX
-	Y1kzS3vwFG7RNaSWT6ozK+yw93iQ8wxkHe3DSdK4Yo+u688wJyNkwy2Xu+wQ==
+	:subject:to:to; s=fm3; t=1756422729; x=1756509129; bh=kAnIkgBBMs
+	PvFX4on8YsHSJfONGaZlXj7qd0jr57PoY=; b=3gZ1Q7h1r+HPUue/gENKca64mZ
+	NYFi80004oQs6HrPPoSKpAnKLaYasYCeuderdpOtA4OOgS0BMjwj1FtIp3S+L6kS
+	OpMVHbjgCxbAkWk+3Dv/+XBXbT2PBjuKuJ23gcXy1TUv1InW1JVcYiHNv6DK/1tS
+	kqgsWANSq/xcDl/gyxzaRqSVOF+SFP8aEjW4v3H9Nv7ksSpuOp3kMOmluyoSNsbf
+	SAyvuCKQaTN/GkC5qqu2HFj6BAv5pZuHc6Y3Y02f8uvggllBo2yEOyWrZ2p3IKsJ
+	GiFhQ2HA2jYzMwVLba3XuLDGBueBcs+qvNRPu7Veq0LcWotLyid2j0aZP1CQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756422499; x=1756508899; bh=iSegT11gwRQq8fqSw0G35qJTdHk/D2Hv9Qf
-	Zdf1AFqo=; b=C5yCuq4rDAyLuBcm/X8SmQlaZdqQZ7uHJWyfna+WovgXG4Oy/51
-	j5ZgjtVzcBKblbTzXAmZn4pfiLWSm8HNFqdmrabDghEmr8F3FoM+teHpVhMjLZNq
-	796EMrbOdjtnx3ID2YK7JU2BBHh8d6osdO181d5Y+3XOwkzyS6ToGe/KwHddjLK/
-	GSAofTLtfQHr8UF09CeQR4KO1ee6h8Pol6zi9pEIKNpC73ASjy9MHQ6eo04Ww2EV
-	Bf+IKtar56xjia3F3M4QZ+vZmq/Kuz4+rduNN+qp8fgAnnxql2csY8oyCwEdJSE1
-	orHoh2292OMFcPWn/0KUjMMrpDVUa/QtLtw==
-X-ME-Sender: <xms:Y-GwaCu3OKIEeBPcLjN3oZMdIDY94qoZkNcpiID-BehPOi1Bsl1waw>
-    <xme:Y-GwaC8ybc-N_7JhydeKZNcA68NGHtWadIm94Rkdkk18IZiKY7Y1XmoFFi539qrn6
-    zkLWZxZwk26GHMUbA>
-X-ME-Received: <xmr:Y-GwaEPCifclwbkDNkWKzFTTTVZzwqL2EOcnev-Z5011DywXnLYwDUdceDRqwfxwmR8m8BmoU2MKDklkS-7AGrJyL0P0f04ijpioLvo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvvdejucetufdoteggodetrf
+	1756422729; x=1756509129; bh=kAnIkgBBMsPvFX4on8YsHSJfONGaZlXj7qd
+	0jr57PoY=; b=niQfetu3AMCVlyAoDWPq3dithQPH9+8Isn+H+vlHMKvlOoP71mC
+	xeihQndiea0coGVzG78BZyE8KE0qKu/ZGZN/qI+OyvxTWetYTZkYKO0h9XxyBOvv
+	0PweTSaopkPtLaP8KLJDlizcvG7WyM94hFEyYlSqOXhgCtxUezlcBGfXTzzkfWqF
+	trD/8GVvswdcIwawRRElt567Hr0yl9o96Wi0mChQOA5y6sx22lJP5rJQaLTA3STk
+	CrNkzS8+JVhscA8h9/dFtCHVUkbPMXZE4Tus4hR8DqSxfHY/9Qkn1QnAjtZFyBtW
+	OXvR7OyxwtWkZRgIvXf0U1W7xkgssbawjGg==
+X-ME-Sender: <xms:SeKwaDly7hAVCd3WU5bpZ6PfCZi3m_n_obocSagBu6fG8p7KxOyvpg>
+    <xme:SeKwaBbmm5iM3SI4ZEdOtzj8noERc27AJcJkw5aKg5sWS7rYaqlDxyYGQCghQed-l
+    Va9XJkguPkfupcMkA>
+X-ME-Received: <xmr:SeKwaGPJgBRN01d7O5CKUJs65C7eocjbTVMSlmE428ylQkZToGG57P4b42KFRhRhuMMToVSc3e91L9KVEDD5Lc39PBA8Fh0umZ0LX-M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvvdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Y-GwaIGlCY_0U7QJd2q1uEBW3xlf5r8Y_G0Uvezoxtnjl1WL8Yi93g>
-    <xmx:Y-GwaKS3tQaU0SCSR7c7awjN5hNjem8V0phhUDUeQ84ILp9VqEvXLA>
-    <xmx:Y-GwaNvQxffd9LliAQCgyEB-KCnyZIgkrOsHGCMYXw2l70ihAg23yQ>
-    <xmx:Y-GwaKLwM6QCrgHvGN-uF28RaP4AM1RL-K6iPC9ErvcqHZjifdKsfw>
-    <xmx:Y-GwaDdyrJQrnn1k2y7-V5qXTTcbqo5UP63bP0b9v_408UwPu3a4AvmE>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:SeKwaObmSZ6lAC5YWUngJPD2vPc7-umJFK6zqK8aJYr-VAh7eViIaA>
+    <xmx:SeKwaM1BiGlkTdqV6IvzY_b3pZZzCYPtmRBZWZrkWDEk6zGcrZObig>
+    <xmx:SeKwaMdFCVH_WVpVvizPPaGSsh206LSX1yMkrwS7K5oKAYmKtGweNg>
+    <xmx:SeKwaFFmRNZqVgnftLIDelUKPjjbGA1fiSjDzv7T98G1BXHL39ozDg>
+    <xmx:SeKwaJYypdBNn3XYzaCcuyE0Gi_BengRsivvFFgB8vV2WTo2Ac9M_ySk>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Aug 2025 19:08:18 -0400 (EDT)
+ 28 Aug 2025 19:12:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  karthik.188@gmail.com
-Subject: Re: [GSoC PATCH v2 1/2] repo: add the flag -z as an alias for
- --format=nul
-In-Reply-To: <20250826183205.19566-2-lucasseikioshiro@gmail.com> (Lucas Seiki
-	Oshiro's message of "Tue, 26 Aug 2025 15:32:04 -0300")
-References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
-	<20250826183205.19566-1-lucasseikioshiro@gmail.com>
-	<20250826183205.19566-2-lucasseikioshiro@gmail.com>
-Date: Thu, 28 Aug 2025 16:08:17 -0700
-Message-ID: <xmqqcy8frqn2.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] t0450: add allowlist for builtins with missing
+ .adoc
+In-Reply-To: <aJs5D2jPh8Uom96p@pks.im> (Patrick Steinhardt's message of "Tue,
+	12 Aug 2025 14:52:31 +0200")
+References: <20250804073002.1586332-1-toon@iotcl.com>
+	<20250808095943.3312265-3-toon@iotcl.com> <xmqq7bzdfoxe.fsf@gitster.g>
+	<aJs5D2jPh8Uom96p@pks.im>
+Date: Thu, 28 Aug 2025 16:12:08 -0700
+Message-ID: <xmqq8qj3rqgn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,110 +88,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Other Git commands that have nul-terminated output (e.g. git-config,
-> git-status, git-ls-files) have a flag `-z` for using the null character
-> as the record separator.
+>> > To ensure no new builtins are added without documentation, add an
+>> > allowlist: t0450/adoc-missing...
+>> > ...
+>> >  t/t0450-txt-doc-vs-help.sh | 8 +++++++-
+>> >  1 file changed, 7 insertions(+), 1 deletion(-)
+>> 
+>> Forgot to add something?
+>
+> Indeed. Toon is currently out of office, so I had a look at what it
+> takes. The below patch is what I ended up with -- note that I also had
+> to reverse the `grep` condition to set the prereq in the else branch.
+>
+> Let me know whether you're fine with just squashing these changes in or
+> whether I shall send another version.
 
-Putting the devil's advocate hat on, "--format=<plain,nul>" was an
-attempt to avoid needless proliferation of options (e.g. presense of
-"-z" would tempt people into add "--json" when they introduce
-"--format=json"), so it may not be unconditionally a good idea to
-mimic these older commands where there are only two output formats.
+I've marked this topic in the What's cooking report to be expecting
+a reroll after 2.51 final gets tagged, which has now done.  If the
+fixup! sitting at the tip of the topic is good to Toon's eyes, then
+I can squash it in and mark the topic for 'next' without waiting for
+a reroll.  If not, please do send in a hopefully small and final
+update.
 
-But assuming that the short-and-sweet "-z" is something we want to
-add, the patch itself looks pretty well done, but not quite.
+Thanks.
 
-> Add the `-z` flag to git-repo-info as an alias for `--format=nul`,
-> making it consistent with the behavior of the other commands.
+From: Patrick Steinhardt <ps@pks.im>
+Date: Tue, 12 Aug 2025 14:52:31 +0200
+Subject: [PATCH] fixup! t0450: add allowlist for builtins with missing .adoc
 
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index 8c6e7f42ab..5df33de42e 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -115,20 +115,27 @@ static int print_fields(int argc, const char **argv,
->  static int repo_info(int argc, const char **argv, const char *prefix,
->  		     struct repository *repo)
->  {
-> -	const char *format_str = "keyvalue";
-> +	const char *format_str = NULL;
->  	enum output_format format;
-> +	int format_nul = 0;
->  	struct option options[] = {
->  		OPT_STRING(0, "format", &format_str, N_("format"),
->  			   N_("output format")),
-> +		OPT_BOOL('z', NULL, &format_nul, N_("alias for --format=nul")),
->  		OPT_END()
->  	};
->  
->  	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
->  
-> -	if (!strcmp(format_str, "keyvalue"))
-> -		format = FORMAT_KEYVALUE;
-> -	else if (!strcmp(format_str, "nul"))
+---
+ t/t0450-txt-doc-vs-help.sh | 17 ++++++++++-------
+ t/t0450/adoc-missing       |  9 +++++++++
+ 2 files changed, 19 insertions(+), 7 deletions(-)
+ create mode 100644 t/t0450/adoc-missing
+
+diff --git a/t/t0450-txt-doc-vs-help.sh b/t/t0450-txt-doc-vs-help.sh
+index 980130be78..e12e18f97f 100755
+--- a/t/t0450-txt-doc-vs-help.sh
++++ b/t/t0450-txt-doc-vs-help.sh
+@@ -112,16 +112,19 @@ do
+ 	adoc="$(builtin_to_adoc "$builtin")" &&
+ 	preq="$(echo BUILTIN_ADOC_$builtin | tr '[:lower:]-' '[:upper:]_')" &&
+ 
+-	# if and only if *.adoc is missing, builtin shall be listed in t0450/adoc-missing
+-	result=success
++	# If and only if *.adoc is missing, builtin shall be listed in t0450/adoc-missing.
+ 	if grep -q "^$builtin$" "$TEST_DIRECTORY"/t0450/adoc-missing
+ 	then
++		test_expect_success "$builtin appropriately marked as not having .adoc" '
++			! test -f "$adoc"
++		'
++	else
+ 		test_set_prereq "$preq"
+-		result=failure
+-	fi &&
+-	test_expect_$result "$builtin appropriately marked as having missing .adoc" '
+-		test -f "$adoc"
+-	'
++
++		test_expect_success "$builtin appropriately marked as having .adoc" '
++			test -f "$adoc"
++		'
++	fi
+ 
+ 	# *.adoc output assertions
+ 	test_expect_success "$preq" "$builtin *.adoc SYNOPSIS has dashed labels" '
+diff --git a/t/t0450/adoc-missing b/t/t0450/adoc-missing
+new file mode 100644
+index 0000000000..1ec9f8dcf3
+--- /dev/null
++++ b/t/t0450/adoc-missing
+@@ -0,0 +1,9 @@
++checkout--worker
++merge-ours
++merge-recursive
++merge-recursive-ours
++merge-recursive-theirs
++merge-subtree
++pickaxe
++submodule--helper
++upload-archive--writer
+-- 
+2.51.0-262-gbae8ff527a
 
 
-> +	die_for_incompatible_opt2(!!format_nul, "-z",
-> +				  !!format_str, "--format");
-
-Hmph, so "git repo info --format=nul -z" is now forbidden?  That
-does not make much sense to me.
-
-> +	format_str = format_str ? format_str : "keyvalue";
-
-	if (!format_str)
-		format_str = "keyvalue";
-
-is probably easier to follow, but I suspect this becomes a bit of
-moot point as the general structure of this command line parsing may
-have to change when you fix the "-z is --format=nul so why are they
-incompatible?" problem.
-
-> +	if (format_nul || !strcmp(format_str, "nul"))
->  		format = FORMAT_NUL_TERMINATED;
-> +	else if (!strcmp(format_str, "keyvalue"))
-> +		format = FORMAT_KEYVALUE;
->  	else
->  		die(_("invalid format '%s'"), format_str);
-
-You'd probably need to define a parseopt callback function for
-"format" and "-z", and remember the one that you saw the last.  So
-giving "-z --format=nul --format=text" would first set an internal
-"format" to FORMAT_NUL_TERMINATED (due to "-z"), and then to the
-same FORMAT_NUL_TERMINATED again (due to "--format=nul"), and then
-finally to FORMAT_TEXT (due to "--format=text"), or something like
-that, which would give the familiar "the last one wins" semantics.
-
-Something like (not even compile tested):
-
-	static int parse_format_cb(const struct option *opt,
-        			   const char *arg, int unset)
-	{
-		enum otuput_format *format = opt->value;
-
-                if (opt->short_name == 'z')
-                	*format = FORMAT_NUL_TERMINATED;
-		else if (!strcmp(arg, "nul"))
-                	*format = FORMAT_NUL_TERMINATED;
-		else if (!strcmp(arg, "keyvalue"))
-                	*format = FORMAT_KEYVALUE;
-		else
-			die(_("invalid format '--format=%s'", arg));
-		return 0;
-	}
-
-with
-
-	enum output_format format = FORMAT_KEYVALUE;
-	struct option opt[] = {
-		OPT_CALLBACK_F(0, "format", &format, N_("format"),
-			       N_("output format"),
-			       PARSE_OPT_NONEG, parse_format_cb),
-		OPT_CALLBACK_F('z', NULL, &format, NULL,
-			       N_("synonym for --format=nul"),
-			       PARSE_OPT_NONEG|PARSE_OPT_NOARG,
-			        parse_format_cb),
-	};
-
-perhaps?
