@@ -1,109 +1,121 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D95270EBC
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 19:39:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06731DFE0B
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 19:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756409967; cv=none; b=TybTDGBS8A2ZAw3IbDRU1dC92B6tZHxWWokt7ev0f18Ro3I+eZCAGcylkD2E1zg1lQmQlSjduwwBs7uskXEetx6/royirDV4KZxpOTb+fJ4yQRNO4uWQdfmKU0TMRzOjk5r9yEJV6pv7bQTJdhcT6jHN6i0aSzjxKxrz5vrlITo=
+	t=1756410480; cv=none; b=DcBoCWIwutyUKS0GjLKtJ2XtuKfxzQWwnp8++OXcezQXJRuuPadPGAs40cBpb2sG1N9W4kI+pfsl4tJSSJ3zW/nBW5h8EnQ/vIwDgzpFJ2hf4OoKgzbavjR9OWbbyx/mVlt6EuPbmNRoLPpJwEz3U2yimNwl8G3Lm080cijiMpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756409967; c=relaxed/simple;
-	bh=z/d/dS5JI/OlIHcZxqCppuMDe5NfqhPMsFD8LFN7J9o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=guehGom1kThjjIVb5+jidnM1ACEmOj5cBbNqgasR3l0PMrO/VaGqzmGL7QfUL3kcXbUAvu2pZreh4jOkMi+qHq6kBdk/S8YsYkWl2nLvdIUPT3cxo7yaSxzdkNpxhLJWCRE9WTP4QYXGtGDnY2337y9tO9grLFiLJyEdIz9wvxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X8I7YhAl; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756410480; c=relaxed/simple;
+	bh=AGZBENVfKCRgqpmVCBhFzrpm4qZAFFIeCHc8AQGR9E8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Knoe4gwqxmI+UxjrGogGkRTl8e9F7j7u5rvtg7mSG9hR82+ffQTfpXXBkfBTDj54eqgXgGI6UhgXNiWBlf9tNuUZg/paicU4skFP/59XaL7In/Ka1eEPdQjNSqGqyqfORH+VISnFvDCYUlWS4b+11tJh4R7V/06/yDwD0V7ZQiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J6qBNWqP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CGqSKAjg; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X8I7YhAl"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6188b6f7f15so1642902a12.2
-        for <git@vger.kernel.org>; Thu, 28 Aug 2025 12:39:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756409964; x=1757014764; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z/d/dS5JI/OlIHcZxqCppuMDe5NfqhPMsFD8LFN7J9o=;
-        b=X8I7YhAlwIA+4CcgPUhDsMKDYYCGJoAg6uIGv3wO6MkffVqdOZ+zHbJIkwpQIdfDd6
-         +gk3dvOD2sGSSurI9xim/FHnTUZhiAlBF9Ly/HCrxiIFieKGDtkjEA3krug/LL3Zxs/p
-         eGMQndlBShTnLxoUW0siUEb83uxzCHGZd0G3LP4m+W+7oJViY2yLn7khJbCdNCbeHY1E
-         t50ljXhb11TE6zh6X3ZyaVue9ZYgQelk5xyi6905K9OO/agJHs17vQyfQTJe5sR5uyGV
-         IISS3TshO4Nb1873jpNQEE460aZN0x/SSygIjtDSLAkuzkyFw+4+y3OwgO6uulOBu0/W
-         TOCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756409964; x=1757014764;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z/d/dS5JI/OlIHcZxqCppuMDe5NfqhPMsFD8LFN7J9o=;
-        b=r71GXEkb319LxtqQ4ySOcoahyw4UFSyGKVlsaYEdkVsNZMaX1Z89zVa+BD1j8R7UKQ
-         S4uDNIVyEZ+MV3CtNlEHsL7MkHCuOSSM5bpLV6KXsphaFohVAnoCzYWAzf+58aUH1h0t
-         HVfdDWtIl5WfIgXkqpwN2gouc/Ell38puVVHG8F1LQsxV+6HCzo7U7EavT9PcLKKJR+G
-         LKXx9QSIEoROr43GqOOVvZyivzKba/zBYxj2ywqUeMkjRB/ecbPlm52+ZC6id9DvdWEK
-         M673p/iPvgEwuWYuJpqyp9oNUF3ZRAiikp0er7vgUAtOpmVzGZXIt+CLV28wZ/t6VPzi
-         WuWA==
-X-Forwarded-Encrypted: i=1; AJvYcCX7hQIttdO+ryXnRVvoaihd+NEzjKT4QoRl/2347gMACe3pz36OHnkXVsQufRb15wRSTi8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUXeX4SyfcqZaspwjSfRCx2e1ceiFF/wHJnst47bHF/e24yN8D
-	R0NvSQ6Y0cl1zQPtfc+tuTxItoHwujSYYm4Y7/shZBgfJOR8AyCNVeG9eBHQ5QLe6Rd8OjAU4eT
-	ldzM0rViirXBlgKtKGArFi7+cDN0HX4wN/OxD
-X-Gm-Gg: ASbGncsxTs7wpdsEHxh7439OGaWPp9PoRl2jpT6ozV4xeWc2IphJsNFnNKTaD3nlV9a
-	Y+EwCXO0OIQQtQMyA0MwYu0IPdq+K5YAVqb9zr6QSn8fMy79m6PGLQd7Yd9Tu5gzSXSbKVrvOah
-	VUsuGwGogJIlmMqcTWT51oF+04z6ZTWMxp33nEgt/Hl1rhF52R80aVPbndFN5ucY5UMoz1R8x5A
-	4BxndjuLH/EzntJWqIg/C6/PKm2HmCddKbg3GdYVkz9zTtoQOmV
-X-Google-Smtp-Source: AGHT+IFS25j8dV4O/zfQNEqa1qfg29L27h+fKaAne/6S4W8OeSH5vZCDmcGVL3HtVC/soCEHd7gse1igK0sRXQzT90I=
-X-Received: by 2002:a05:6402:5107:b0:61c:9970:a870 with SMTP id
- 4fb4d7f45d1cf-61c9970ad55mr7387670a12.37.1756409963835; Thu, 28 Aug 2025
- 12:39:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J6qBNWqP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CGqSKAjg"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B0E0B7A0188;
+	Thu, 28 Aug 2025 15:47:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 28 Aug 2025 15:47:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1756410477;
+	 x=1756496877; bh=Mgy4mIPaeABhskGWO/0t7QQfFRFuzEYPcQYfm2zvicc=; b=
+	J6qBNWqPBNfN7BRUYwCCqwiTHWEKkTDgpX3KZDhTCB/LVJzki8JBSdF/Du4Om9ts
+	mvjBcy8JYsH3BbCaTxRFT+C3YiJ5l6wIty3NVHeKX6S0b299lsddijX4xsOU6qme
+	ugrTdzMgA4KrWTyEZL35gSTB6XnYsEpuunZA8gTKji4rwECLtW8WqLy/TMkkTy9A
+	AlH85kfbo+ke+NCxIInYHmdgAeH+6qHZJwVturJz8yR9WWmawHBZ4f6tTNrojHJV
+	oKmK/iiqQl3qkAdlo7MjyKcw20yzyu9l2YWaJYm4/ndp7e1kRAHnzUY77mw5zD8B
+	cElRYYMDEUAZ+U+YCOuCPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756410477; x=
+	1756496877; bh=Mgy4mIPaeABhskGWO/0t7QQfFRFuzEYPcQYfm2zvicc=; b=C
+	GqSKAjg0us31KlzNLbgSi4dUUfD4oAscjwqPC6NsyMqOL2V7MUhVVPKDJgN7QLYI
+	/LOY8FINAYTCVVMTh70YMTm073twGI/OAoGmciOSaf/yLIROLQt9AGUGKKpXPOi7
+	va4wpuWRSZo/bVzbSITDdGa7U/ciVpFwJUmRTmscjHqitnxMONfdCPPxjhZ3ScBa
+	W8jQqqWpVDkotMN5qVbnU+TH8Lu5DiKjFt3CnkNJIE4NUVh8m0pY4gkVjDQGV4f1
+	W0Lpm/SUpzObj7TK/1q7cHZv2yPqIt+E+qiSHOod7HWziSwF5cZy9YvkZG3niDYy
+	25cKBGEpK2OMGaN/2m3hw==
+X-ME-Sender: <xms:bbKwaD3PJMOwL4_CXy_f2BeivAwoOgtAct_3EX261J7QSMwgYSew5A>
+    <xme:bbKwaNmdK77jIqBLbxUmaCT6KXVTMIinZ9NBaia8sqiE5r8WOLBpbS5p2gnQ5PiI-
+    AuaUE8amZ-ahgr6cA>
+X-ME-Received: <xmr:bbKwaKVVEGApk7LL9f1obSCucOSQFv5Pxbj533oZmUXclWCSEoR_Tj2T7HARJ1jAieVXnD2N7TFPKDelKNvr-ZbyPoKE6UhkXwG5axM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedukeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehtsghovghgihesfigvsgdruggvpdhrtghpthhtoh
+    epghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnohhurhgrvghllhhmsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:bbKwaDtyGNPmt40BK7z3JH0Oz9JVXpwsjDCQOGiAEFQdXjBBQ3aOhQ>
+    <xmx:bbKwaNb-aVQRUMnP7qkzW6-zoq2o9dWXE682RQer_VdWB9oa-yLyNg>
+    <xmx:bbKwaCUNlwMX94OI2u6NW9Is4a0FxYoBP99zGOwvQMnkj0cRjo8VZg>
+    <xmx:bbKwaCQYrWhzZWkZbts2GrNt_kiORgKrV741UJpyjq9vVfWqbVhmDg>
+    <xmx:bbKwaGAzO9DDzxwM4efdN8Orlw8YNVMPQnilVBpE5kSRujoOxKeeHNn7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 28 Aug 2025 15:47:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc: =?utf-8?B?44OO44Km44Op?= | Flare via GitGitGadget
+ <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  =?utf-8?B?44OO44Km44Op?= | Flare
+ <nouraellm@gmail.com>
+Subject: Re: [PATCH v2] alloc: fix dangling pointer in alloc_state cleanup
+In-Reply-To: <20250828192949.GA18641@tb-raspi4> ("Torsten =?utf-8?Q?B?=
+ =?utf-8?Q?=C3=B6gershausen=22's?=
+	message of "Thu, 28 Aug 2025 21:29:49 +0200")
+References: <pull.2040.git.git.1756238268790.gitgitgadget@gmail.com>
+	<pull.2040.v2.git.git.1756337312918.gitgitgadget@gmail.com>
+	<20250828192949.GA18641@tb-raspi4>
+Date: Thu, 28 Aug 2025 12:47:55 -0700
+Message-ID: <xmqqtt1rut1w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
- <2fa98fb5cae78b8872d0b864ee246ba619ef631b.1756240823.git.gitgitgadget@gmail.com>
- <CALnO6CCca2Yp7K16ShqUaZNN_POv106qyXfKq1aJMyXhA+EyCw@mail.gmail.com> <4d9caee9-973a-4d41-b6cf-d399a238942b@app.fastmail.com>
-In-Reply-To: <4d9caee9-973a-4d41-b6cf-d399a238942b@app.fastmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 28 Aug 2025 15:39:12 -0400
-X-Gm-Features: Ac12FXz-bybRtInN_z8dKadwNErIYxwUrXEGrL0_nd9KDARBweOgHxhdXNbSvAo
-Message-ID: <CALnO6CC4e_CY+D7_d151dyZQS5t6ukEgkyMH=qy39ZPttSPOvA@mail.gmail.com>
-Subject: Re: [PATCH 1/4] doc: git-push: update intro
-To: Julia Evans <julia@jvns.ca>
-Cc: Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-+cc Junio due to his reply to my reply
+Torsten Bögershausen <tboegi@web.de> writes:
 
-On Thu, Aug 28, 2025 at 1:48=E2=80=AFPM Julia Evans <julia@jvns.ca> wrote:
+> On Wed, Aug 27, 2025 at 11:28:32PM +0000, ノウラ | Flare via GitGitGadget wrote:
+>> From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
+>>  <nouraellm@gmail.com>
+>> 
+>> clear_alloc_state() freed all slabs and nulled the slabs pointer but
+>> left slab_alloc, nr, and p unchanged. If the alloc_state is reused,
+>> ALLOC_GROW() can wrongly assume that the slab array is already
+>> allocated because slab_alloc still holds a stale nonzero capacity.
+>> In that case s->slabs remains NULL and the next dereference writes
+>> through a NULL pointer, causing undefined behavior.
+> This is good.
 >
-> > Considering the glossary entry[1] is for "ref", not "reference", what a=
-bout
-> >
-> > (a) linking to the glossary (is this possible?), and/or
+>> 
+>> To fix this, this patch:
+> Style nit, we tend to use the "imperative form" here in Git,
+> like this:
 >
-> I like this idea. Over on the HTML docs side
-> (https://github.com/git/git-scm.com/pull/2040)
-> I've been working on a way to show an interactive tooltip from the glossa=
-ry when
-> people hover over "jargon" terms. The goal there is to make the glossary =
-a lot
-> more discoverable.
->
-> Right now it only works for terms inside angle brackets (like `<ref>`), b=
-ut
-> I've been thinking of adding a `linkgitglossary:` AsciiDoc macro or somet=
-hing
-> (similar to `linkgit:`) to link terms to specific glossary entries. It's =
-hard
-> to tell what that should do in the terminal version of the man pages
-> (maybe nothing!), but it could make the HTML versions a lot easier to use=
-.
+> - Rename allocate_alloc_state() → alloc_state_alloc().
+> - Replace ...
+> - Update ...
 
-I think we could so similar to existing "linkgit:" and expand to
-"gitglossary(7)" (or "git help glossary")
-
---=20
-D. Ben Knoble
+Thanks.  We also tend to avoid bulleted list.
