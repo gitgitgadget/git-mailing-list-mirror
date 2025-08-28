@@ -1,85 +1,88 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9235F26D4CD
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 22:44:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AF7265CCD
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 22:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756421086; cv=none; b=OWGkbkdzw/ZRpd+vYL9Ku0yhBB1xK/wacMcTrtS7TJ3XatiHDX9xth/HGLJqQP1xmlbUu/0jcdFokMiSjtd+eoyl0EAteGLklzgmS89mQr63pHyLRPcvGw3c5x9IEf3K3nQayI/PCZtVXY+TU6wh2j9wiJZKAr8LkiJW4BYdbtA=
+	t=1756421200; cv=none; b=uSS8S35+D6mLvrrVNyRaNex/pP5YYcwK3nWZOKxKC6GksnOxwbpKbZto2wxnySrwDp4Wl4mWoiYR9ZvtltMzWvI553MJlmdmchLI4xpMcTSJk8urt9OYfgXUu2OOoHoNVS59rtsHOJb0MvboKdXso2+tKkRdje6UbRbUMS0lALI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756421086; c=relaxed/simple;
-	bh=fRqTrTNsb4bn5yKlxGuZiAfS9ycRpWGFtZQgeIixfXU=;
+	s=arc-20240116; t=1756421200; c=relaxed/simple;
+	bh=/DtUuhToqjNTAKgWbVKEPKHf10R+1lgH2/4TL9+NIDI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ubFbVncD00ZEH8XXjVPbqEUHtj7oSkSAMkUs9k4aPqpbllJh9X0uYrMAPU3yYNBB6sCnjq4Om+ZBAQM9OLGL3osF3+QjBGnwACAhLDQPUZ+z9ZPua0K+HUI3CRQbd+0BFeZ2SxJwoJ0aSvHaf2CxROq9BlUC6IAFkQPZmGwfOpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ljM3MXa4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I/2rrTmO; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=fQmSvRQnEO57YIX2n0x7GcaAyvIZd3CzYcgWHG/6T03VJMPY64saUrDh8WcTokTA5qgYWe7OSH0wll15IPilKsT3odlSVNOycP/gnc17gvdiIUUhSs/8Qf/mnCCJdORcRBkXeyiwCMFrQ1+5nBGd6xprHSSBh18kiLWkfKkm1wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hxX65SS3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EgtJJWV0; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ljM3MXa4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I/2rrTmO"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 901CB1D001DF;
-	Thu, 28 Aug 2025 18:44:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hxX65SS3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EgtJJWV0"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F3B877A01B0;
+	Thu, 28 Aug 2025 18:46:36 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 28 Aug 2025 18:44:43 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 28 Aug 2025 18:46:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756421083; x=1756507483; bh=3OCY5+5727
-	bo4wNxSPnxJcEYV70zMFwvxgZu3f8A4sU=; b=ljM3MXa4PxH7DXAU6pxYa+IpZm
-	fEq+3Q+mx72RiUNdIrWhkCaa36zPPsQAmdCpToo8i3hZEmW2AYsxLR8Ve8gRGnba
-	I7iqZZzfXmPFvkkK+f4PsHx7oHHouQeNl4Jas0SP54nO9o+TZxGYrllc8PiMJDKx
-	Km5IUGeCGUJVhbXBjFUXfHAVWqMe4lzYDHrmZFeiKxLUp8/HnwOi0S/qk9mwqQPi
-	5twt6u9Q1cpm2A8GHlj15R8G1/fCBNrpbPSXteIFQ/cf7dMLETUx7rXE0hru/cBj
-	ge+Hcs4fDoOuSxeynO8f5Fmv03KHJB6dcOTfzuvg4+08EISfrnPIQQSiP1Eg==
+	:subject:to:to; s=fm3; t=1756421196; x=1756507596; bh=MfEah+5pzU
+	aCg/kzMwCiKBVqpamdWXv6d8n8wEhD+DM=; b=hxX65SS3DZXg3fhZJ0Zd3CO+O0
+	uD5r0b+ziW+R7e5dLio235oO7K13VSexPUeYdXcc2JFnp71cutRpta1ppn2LvGn7
+	P3ZtQbxEUzTXA3eXIujdpu/Bne9wKt3GOZtupsr1gqQDpwwdEBobMeiplroQ8Uvd
+	AIl8RiItm6ViJsA55DNAxk+nJdX3kA3ABkZ4zTw7yltak9Pp4zKwKpcnGXHkjLOu
+	lgm/7JCM43GrfvEKo/zbqjs8JrOX58JWw0tn7yNLjsDsUm9SXZ96GZrRw9Hcittg
+	h/LkE5dgNkGnDVB0hdeI4hDuFDpw2vrNsMJTpx8jiANogTqBDs3E8AZi/YtA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756421083; x=1756507483; bh=3OCY5+5727bo4wNxSPnxJcEYV70zMFwvxgZ
-	u3f8A4sU=; b=I/2rrTmOT6D2U+J5JMIDSYG80G3If7pJldP3ThXTAfQYguUtgVb
-	xfFoRgfOLWAukrt8bnBUsao37XuaUhQgiOVdcQQ406lfnryMObHoQ975B6Fz3R87
-	ibjgdDdkfh6cyYQzmb99xqQwOrbL2lpb3LVCHIJYs+wlarI5ukGvEGJfwcNW//zr
-	2XC04qvuAmoJvn7D4rOjEjcQp9iMP5xDf9MooZkBDXwZluNvlhfnDrtvQcZxC2hl
-	OdwWIDfwkc8v2HViFRh+yYZxBbbRccpdLfzinRJJuN1fUYdRWlPRDFt34WdIOnNP
-	9CS255guC+9y/8Chc46fLTYWmzyz+XPsKPA==
-X-ME-Sender: <xms:29uwaLgCFPAjAq5mq_Wkm2cyjrQfU_y6zHVkn0Ge3eR_08QX5QnzqQ>
-    <xme:29uwaCmGgLKETBnf45q6-UtXJdFwHBrGHV99UCnAOTkAVOtn7TQB7Y4MhQkvHq1kP
-    U8YyEAI5r_Q2_TYUQ>
-X-ME-Received: <xmr:29uwaHoDLo7iGJnAFfAKfREtAZvweo3d_5kqwUVzLd2w7gzvTseKeV8piNA3sZeOP4mXWEQXNaflqu1Rqfr-eHvH6F6i90U_QhlNTu8>
+	1756421196; x=1756507596; bh=MfEah+5pzUaCg/kzMwCiKBVqpamdWXv6d8n
+	8wEhD+DM=; b=EgtJJWV0wkqRfDXLPG2wG8RvgBfumHeOHt63bMp/KIqZ2b8apRG
+	iHnTFQFMnkqiSK2B5WjiUP/SgIvEOuKZviY7+uPlrV/8XSVgIRpcmAgv3TMoOH4f
+	OSutCKDv/y/PIrYOZsIpDMLT9BjXF86KTSCok3KDK7Q4GbU8s4wT1iT4CLOkCnci
+	o0SvxbUDWDccm5z7afkdbtr0dAZUeTQKNGQWPhEbjCSSnzEeZW15+bl/wJGcTJDz
+	fZVwxmR+FmsWd4KzoYdqhNH5NXMLI1kv3ti5AkpcCAf+mGazJrVlrZW9XvpV5L1g
+	tfZ0xLJkte0tqW6hEJk4brzatrd20wFioXA==
+X-ME-Sender: <xms:TNywaJJJhu5Xr2qvMOU9sKVYj6EY8EQo7YWwY1GYTBjly2N9SscA5g>
+    <xme:TNywaCtbIo-2DaLJy-BiLKlDYCT_chR0zZuvhUvKJsU2FPREyZQIM-zCmZH_ihuy_
+    Q36lTq8Q9TiuUf8jQ>
+X-ME-Received: <xmr:TNywaILh3LPhXErlevOWlJDW38dd9YKtpa6npbxQeChS7ydXkEZAm0xjaG1NXFyKd-IxR0lFCuKCCENBHhfyjKMZNhdqtkYh7vfd9Ro>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvvdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:29uwaLFMcI7XRQuD38FqhGx5yXHWDJtcSddNZgKFiVTPgPwoFUYNAA>
-    <xmx:29uwaDz7eQo8AMyA8g9iMWdfXsFiGKGXBRKqZmIP1F4Vd5BInDRoEA>
-    <xmx:29uwaAr04jg4AIVIZGxBCOFd8tDRBUzihyGwMTl2m1db6nTWPOQ2Eg>
-    <xmx:29uwaNjKR-CegpRiAPv9ReQh8TjToA2y8PYsA1rtZ7TV4eEClCqIhA>
-    <xmx:29uwaAMWi7XULFQWloEfyNUZpd1NjASlVwBIhcJAm0zJaMmEOdHT1nGR>
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
+    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepthhoohhnse
+    hiohhttghlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:TNywaL-kM-8f3G1lmB8HZvb6U748LOkrwiPWw0kF-6ZS0KVRXkUszQ>
+    <xmx:TNywaBwfYhMW2Z4lUce5S58HFveDj8tE-LNbN_f17KXcb1GGrsaKMw>
+    <xmx:TNywaI7CZNJX6ZOuC7VNc6b9OwfPb6n1l1DtCLlSCG9LdmM-ZYaU_A>
+    <xmx:TNywaI9lAymhbPPg8bEbrVF_QQgTS5mzl2mZQeMGjPPZ3cp9v3bz8g>
+    <xmx:TNywaN3lHkEqXMtk4mkmpiYTfhGA_MGTN-58gu0ko6jRmmPyod0hdNZI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Aug 2025 18:44:42 -0400 (EDT)
+ 28 Aug 2025 18:46:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v7 0/3] Introduce git-last-modified(1) command
-In-Reply-To: <xmqqectowjdb.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	06 Aug 2025 08:38:24 -0700")
-References: <20250730175510.987383-1-toon@iotcl.com>
-	<xmqqjz3h20cs.fsf@gitster.g> <87tt2lu2rx.fsf@iotcl.com>
-	<1929210.tdWV9SEqCh@cayenne> <xmqqwm7hxx0a.fsf@gitster.g>
-	<87qzxou0an.fsf@iotcl.com> <xmqqectowjdb.fsf@gitster.g>
-Date: Thu, 28 Aug 2025 15:44:41 -0700
-Message-ID: <xmqq5xe7t6au.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Toon Claes
+ <toon@iotcl.com>,  Derrick Stolee <stolee@gmail.com>,  Karthik Nayak
+ <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 00/10] midx: stop duplicating info redundant with
+ their sources
+In-Reply-To: <20250811-b4-pks-midx-deduplicate-source-info-v3-0-e442bdf2b4ad@pks.im>
+	(Patrick Steinhardt's message of "Mon, 11 Aug 2025 15:46:40 +0200")
+References: <20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im>
+	<20250811-b4-pks-midx-deduplicate-source-info-v3-0-e442bdf2b4ad@pks.im>
+Date: Thu, 28 Aug 2025 15:46:35 -0700
+Message-ID: <xmqq1povt67o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,61 +92,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Toon Claes <toon@iotcl.com> writes:
+> Changes in v2:
+>   - Fix a comment typo.
+>   - Introduce another commit that simplifies the calling convention for
+>     `link_alt_odb_entry()`.
+>   - Link to v1: https://lore.kernel.org/r/20250729-b4-pks-midx-deduplicate-source-info-v1-0-748db2eda3b5@pks.im
 >
->> Looks good to me. Do you want me to reroll, or will you `--autosquash`
->> yourself? 
->
-> I can do the latter, unless there are other reasons that make it
-> necessary to update the patches.  We'll see.
+> Changes in v3:
+>   - Introduce `odb_find_source_or_die()` so that we don't have to repeat
+>     the calls to `die()`, as suggested by Taylor.
+>   - Split out a patch to adapt `link_alt_odb_entry()` and friends to
+>     consistently name the parameter that refers to the alternate object
+>     directory's path.
+>   - Link to v2: https://lore.kernel.org/r/20250807-b4-pks-midx-deduplicate-source-info-v2-0-bcffb8fc119c@pks.im
 
-Sorry, but it seems that I dropped the ball after this exchange.
+This has gone quiet even though the previous two iterations got
+fairly detailed review.  Should we declare victory and mark the
+topic for 'next' now?
 
-The topic still has the fixup! sitting at the top.  If there are no
-further changes needed, let me squash it into the base commit and
-then mark the topic for 'next'.
-
- Documentation/git-last-modified.adoc | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
-index 35bd4a1dd0..602843e095 100644
---- a/Documentation/git-last-modified.adoc
-+++ b/Documentation/git-last-modified.adoc
-@@ -22,24 +22,24 @@ THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
- OPTIONS
- -------
- 
---r::
----recursive::
-+`-r`::
-+`--recursive`::
- 	Instead of showing tree entries, step into subtrees and show all entries
- 	inside them recursively.
- 
---t::
----show-trees::
-+`-t`::
-+`--show-trees`::
- 	Show tree entries even when recursing into them. It has no effect
- 	without `--recursive`.
- 
--<revision-range>::
-+`<revision-range>`::
- 	Only traverse commits in the specified revision range. When no
- 	`<revision-range>` is specified, it defaults to `HEAD` (i.e. the whole
- 	history leading to the current commit). For a complete list of ways to
- 	spell `<revision-range>`, see the 'Specifying Ranges' section of
- 	linkgit:gitrevisions[7].
- 
--[--] <path>...::
-+`[--] <path>...`::
- 	For each _<path>_ given, the commit which last modified it is returned.
- 	Without an optional path parameter, all files and subdirectories
- 	in path traversal the are included in the output.
--- 
-2.51.0-262-gbae8ff527a
-
+Thanks.
 
