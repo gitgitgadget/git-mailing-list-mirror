@@ -1,162 +1,115 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA342882AF
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 20:27:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C932E2BE051
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 20:38:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756412826; cv=none; b=RjZvd6ZSn0qYUEP2J5MXHX3updGOhH4N3EAJ2nsdAyIbgM8iGN428jIDg54CwoR4ylCqeE9fEjSs629aHNVDv1jXqPVQhEeJvKDGK31DSqILByD2AJqGXJCfQox55L5SN/0yij5UHPkSyPr8HJLcdbQCp0+wh4ynFjxme2C0384=
+	t=1756413488; cv=none; b=odGsF9z0L3cNhJoDAGAQSCz6gUO4jNMLBRp7znBpYztBOxxyahtV/TGr2WvRbvCMQix6vdNVc9oiWOuqZmbSWckruct6dvE+7bzOPCjXmON2tnEA5c3Hfe1VfFRgjNcfTet+hQklE4Qe1ip3lPnO/FxBvwL/aS/lsM+pFm8NbQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756412826; c=relaxed/simple;
-	bh=B/Ppjmjrt2hW7AnlsfKX1oYi0KxIURTdRvHfP8VH9Cw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JM8sOLG994Fbux6TAB+bzEHNwhnFj9EB4bmQ6GAZ1vlSftK8Hhk2Iu1BtVa6xr5wtRYqSq7eAbw3mBJfp0NKLJTAraWAhuyOolxveTXb5WFe3woG//T+TzhYUYSgyhxCRLlRyHFWO+I+i5t8zf1P+BaB+yGFDn5uo/xIFyFmcRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YGGIDOJ8; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756413488; c=relaxed/simple;
+	bh=w88zF8Vr1ztV+QqKPwp/yPPfCvQemLZ8Iy2Amaq+q7Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lMjbRdsVnq4MTwIsvt17HGNe6vssLCYuZY3xkQvaKWEx5tKAjolnkqkEBKf7wC0qm0cfshiCZvW+xaHU4ar/Df5+j/bWKLkzqSLSglnrXubY/uUoPwEDvNiEg7xgfuBaoA28P57gYosogJCGMqbImHgeOfBceG+9HLPIZF4Mp7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KdERwn3i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LOtX+qYJ; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YGGIDOJ8"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45b7c01a8c1so8424075e9.2
-        for <git@vger.kernel.org>; Thu, 28 Aug 2025 13:27:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756412823; x=1757017623; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QfazVU9uhHdjWyfzsx0cU+pWsjycVh5HDiHo6YtbbG4=;
-        b=YGGIDOJ8FJb+yoLGwQTZmy3GhEm4csUGMcjrVSUTFIVJo6LgM/YIhF40QjrT6apDQd
-         mzWwtVjh1pgqxFr9+YbLfGIt+7VSmWvBNOeLtDCA2PazdKgPaziGc5g9PLfg4R8IBYf5
-         uuvpoLK9vwaVrsnXhjb/vKOV109vHYb6cLSx7YpXAJ7njik0qEIs/T5ZfiLvIAk7yebh
-         MFxmrrciAOi8LYxPccxIuxdYMoGE0lzutRKw4mO1MuWhKifec4DJZ8v+ol1qZpH+VIY1
-         3oTCw5mQ2FFO15lM3lBM8NfD0EHfXnW4kZU0AH9U5yyJi5n1QxOegvLylwR45danKJKr
-         ht5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756412823; x=1757017623;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QfazVU9uhHdjWyfzsx0cU+pWsjycVh5HDiHo6YtbbG4=;
-        b=myp/YXv9LdG/V2rqPgiucwNLayemolMnvMHy+luYE2X2KymwwWur5KhiswE81ULodX
-         qsLtdQ0uv0GsOVYikN/cnbY0k4esRFgY/liWRgWFEJS3cjsB+Qd5iC2f5ux8LyaNHSmd
-         bAFZ5/JqKUTL9qCVK6ox6UqhjHO4uCYjtnZhXoxhS+lFUTxf1huH7GiclbPzQ8nbwt4a
-         kE9ZAS/uaxlpeGxrpubPCZShdKk/bRvbwRIpAdeGzEbRaq1azBVIk7Yc6DoCVi+ELni7
-         eMhJPnZPH4QI+YNQF20YJKzwVSh+jZMKwIrQEDEXvErCFDfFwkZfTviamDteVKB9czdi
-         RG4A==
-X-Forwarded-Encrypted: i=1; AJvYcCX4qqTBEJy6cPC57NQF3EC95OBHV6Tp6NL9lbB3Qcm/+5DEnNqoY/dqaECqNX27xNMsj7Q=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwK2FzzT2cp4LPWIi8fu/aKjPGwnxNUJczx/8y5fGAL8NoJPXDm
-	dXJtk/R1y6BezzfaTNbqPe08GMY032as2buUCFd9qMtcCsSO7Pc9D0uswIVxJw==
-X-Gm-Gg: ASbGncvfJEAtb+Yuoq7rLQGGK1V46VEtDFRJIiOF1wsW/Sc8nuZPwh6lgtuSFD21O4W
-	PF96krwGbhqb0LEfgBtFlQUTBwKX4pQrov6uvmALujfA/xcNFCDJPhnsDMPcoeoLDObYbxdHrpo
-	LcWQsruBC45LlyvLEklL6a1wkE96xMs0iiiFHT9PVp3ENZ4U02HAqjCCOkwFUe8NHebzLGWHmAq
-	yYtUqyPsHIsic/UEE8MU211sV+Id6ofVLDmaHmrXMlfcFusesu9UXGxNVHQ9rOw4kFoaxMJMDwR
-	EDHjV3q55Yy5r8oE3bttCX7ytVz3BdJIqY5S2cptt5YUxfdFEwADqyL9nyFdf1h1MXQXi0NtuKn
-	7kmgRE16NZefcmCknVZdMlyaSuOREWyILZ3i9cwi6iQwgB+a+TvLpXKwsHkzlPxM=
-X-Google-Smtp-Source: AGHT+IHnODqbKdi+PgQ7dNVl2LWIo0FEnnpYMh84+yXDCs6teEXbIE+7SNS/5CwnWJRaLELncO7mKg==
-X-Received: by 2002:a05:600c:4747:b0:45b:627a:60cf with SMTP id 5b1f17b1804b1-45b627a62cbmr149555195e9.24.1756412822714;
-        Thu, 28 Aug 2025 13:27:02 -0700 (PDT)
-Received: from localhost (78-131-14-115.pool.digikabel.hu. [78.131.14.115])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b661200e8sm67196985e9.0.2025.08.28.13.27.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Aug 2025 13:27:02 -0700 (PDT)
-Date: Thu, 28 Aug 2025 22:27:01 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/4] line-log: avoid unnecessary tree diffs when
- processing merge commits
-Message-ID: <aLC7lQQWfdB/QUk3@szeder.dev>
-References: <20250824190644.2573279-1-szeder.dev@gmail.com>
- <20250824190644.2573279-2-szeder.dev@gmail.com>
- <xmqqms7ntnvq.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KdERwn3i";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LOtX+qYJ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id BE0441D000F5;
+	Thu, 28 Aug 2025 16:38:05 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 28 Aug 2025 16:38:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756413485; x=1756499885; bh=yqdq1Z4TIS
+	xEcPwtF/042tuL4lI/rZBZNncadANls3s=; b=KdERwn3iyLAZJK/jNvXkkotqBe
+	2uJcD23X/vt5Ofdf8uEnOcGQlHOzIcIMMmQeB9FuTOabcLaVj6o809uzPx8LXYW5
+	nkQU6R9DCm8fWU7EcVQB3OjlAVPZOljvqb2eS5LO4QhUpGqQQNoSgDLvMIqMIEl4
+	fE5Ols6jh58SMWUJcRPFWACOD6ahVezwclygIPP7ssO9WTDNHpiUq4pjoPOVa/lT
+	XTvxpaKePAzGS3M18qPKm13/uioZvuoxV19mFBpDsRmCICPrF1OUCMb7e/dMzHea
+	4e13S1HxlhaORQrCEdE/TXPFra0dFFgo/LzjQyueXyoaqBtF5iO1TflYdAJQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756413485; x=1756499885; bh=yqdq1Z4TISxEcPwtF/042tuL4lI/rZBZNnc
+	adANls3s=; b=LOtX+qYJYrh6LqgYs86DswNkHQX/CizNBZCC/BCniFu6msLbdme
+	G7VNsGddF93plKEqCegihdjFhqwt4vxJcXHyGjbd9HRZUnt8IIlL2cgDr5uFlPJy
+	yubadoI49/ocihBwM2lXXFHswlPlg7kfDquarZe9nFrnooZBO2eQ00UV3+r8xZNa
+	NrpjWMx9OCWaIg5UVyu18UYcwrYRur+XtE5/rss1yMInS2M1SFJB6GBwah25XchX
+	jzpW+GP57MoKZJgVJvCOWHsEUIy0k9m1DbvW9yC0iC0nzVFofaytuo3ZSjFI2zM6
+	SCH3fd7tY1+S++KzWrTEaYAmSYq4PkG13Gw==
+X-ME-Sender: <xms:Lb6waEkAasNhl8SHMOfJzEBEHHFWBbUpIdtXktL5Rr1P6jTBW-eRig>
+    <xme:Lb6waPVHwqT1XNDeTmVt8ch3b5A75GTHuMTogv5HmLescjWrhuWp7LtXY-olo3BiD
+    Rmi-kWmthg2g2SY8g>
+X-ME-Received: <xmr:Lb6waJHr2wTkjl3ybo3bHozlkTAsXaiSAjmMiHi2si7UJFzHs9KhkxvH-VeX12q_prYjWMQMUPU4zvdL8kUSpTKzsB6LnvbAU4-Wryo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeduleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
+    gsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhg
+    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Lb6waLdPCcR2UAP34k1ldVWtVohwVx9qqNpYyX12wVIyiA4krUFywg>
+    <xmx:Lb6waKK0RQjtEZHbi76e4LytbYXFVLgQl6DkU0Y66mkU2fevubOgJw>
+    <xmx:Lb6waAG9iH3dg6ROd3_EgwsQucKkPIgWTa3XsC2LtKerPx2-KO3e1Q>
+    <xmx:Lb6waNCgZF8vT0CG5DIryBWeub1DMCkx67py5gLPnnTxPfqo7J2mHQ>
+    <xmx:Lb6waO27HG5DbSBbPDigmc6mHCSLMCd7F6Z4YUQULgzPUN86_AM2hXhf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 28 Aug 2025 16:38:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  "Julia Evans"
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 5/5] doc: git-checkout: clarify restoring files section
+In-Reply-To: <2efb789d-db2d-4dae-ae81-373bd231c3c6@app.fastmail.com> (Julia
+	Evans's message of "Thu, 28 Aug 2025 15:59:44 -0400")
+References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
+	<b641874627b3898831c3965616e936bd4ee310df.1756148933.git.gitgitgadget@gmail.com>
+	<CALnO6CDpsgTnC95CzjOL5MuhFNAnYYSQCR-jC_n5JYLEu0BTow@mail.gmail.com>
+	<2efb789d-db2d-4dae-ae81-373bd231c3c6@app.fastmail.com>
+Date: Thu, 28 Aug 2025 13:38:03 -0700
+Message-ID: <xmqq7bynuqqc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqms7ntnvq.fsf@gitster.g>
+Content-Type: text/plain
 
-On Mon, Aug 25, 2025 at 08:35:53AM -0700, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> > @@ -1209,7 +1202,6 @@ static int process_ranges_ordinary_commit(struct rev_info *rev, struct commit *c
-> >  static int process_ranges_merge_commit(struct rev_info *rev, struct commit *commit,
-> >  				       struct line_log_data *range)
-> >  {
-> > -	struct diff_queue_struct *diffqueues;
-> >  	struct line_log_data **cand;
-> >  	struct commit **parents;
-> >  	struct commit_list *p;
-> > @@ -1220,20 +1212,19 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
-> >  	if (nparents > 1 && rev->first_parent_only)
-> >  		nparents = 1;
-> >  
-> > -	ALLOC_ARRAY(diffqueues, nparents);
-> >  	CALLOC_ARRAY(cand, nparents);
-> >  	ALLOC_ARRAY(parents, nparents);
-> >  
-> >  	p = commit->parents;
-> >  	for (i = 0; i < nparents; i++) {
-> > +		struct diff_queue_struct diffqueue = DIFF_QUEUE_INIT;
-> > +		int changed;
-> >  		parents[i] = p->item;
-> >  		p = p->next;
-> > -		queue_diffs(range, &rev->diffopt, &diffqueues[i], commit, parents[i]);
-> > -	}
-> > +		queue_diffs(range, &rev->diffopt, &diffqueue, commit, parents[i]);
-> >  
-> > -	for (i = 0; i < nparents; i++) {
-> > -		int changed;
-> > -		changed = process_all_files(&cand[i], rev, &diffqueues[i], range);
-> > +		changed = process_all_files(&cand[i], rev, &diffqueue, range);
-> > +		diff_queue_clear(&diffqueue);
-> >  		if (!changed) {
-> >  			/*
-> >  			 * This parent can take all the blame, so we
-> 
-> This is surprisingly small change that eliminates quite a lot of
-> waste.  Nicely done.
+"Julia Evans" <julia@jvns.ca> writes:
 
-It's funny you say that...
+> $ git checkout HEAD:Documentation/ git-commit.adoc
+>
+> to restore `file.txt` into a different directory than it was originally.
 
-This patch series just turned 6 years old this weekend, and up until
-Sunday morning this first patch was actually two, because the
-optimization and the removal of the now unnecessary diffqueues array
-were two separate patches that I finally decided to squash together.
+It probably is handy when you want to cross a rename boundary to
+backport a new thing into an old history (or vice versa).  Something
+like
 
-Here is the diff of that optimization-only patch :)
+    $ git checkout v1.0.0
+    $ git checkout v1.7.1:builtin cat-file.c
 
-  ---- >8 ----
+perhaps.
 
- line-log.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+> What I would tell a friend is
+> "<tree-ish> 99% of the time just means "commit or something
+> which resolves to a commit, but Git has made it more general for
+> a reason I don't understand", but of course that's not the right
+> thing to say in the Git documentation :)
 
-diff --git a/line-log.c b/line-log.c
-index 07f2154e84..b3766c67ea 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -1220,19 +1220,17 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
- 	if (nparents > 1 && rev->first_parent_only)
- 		nparents = 1;
- 
--	ALLOC_ARRAY(diffqueues, nparents);
-+	CALLOC_ARRAY(diffqueues, nparents);
- 	CALLOC_ARRAY(cand, nparents);
- 	ALLOC_ARRAY(parents, nparents);
- 
- 	p = commit->parents;
- 	for (i = 0; i < nparents; i++) {
-+		int changed;
- 		parents[i] = p->item;
- 		p = p->next;
- 		queue_diffs(range, &rev->diffopt, &diffqueues[i], commit, parents[i]);
--	}
- 
--	for (i = 0; i < nparents; i++) {
--		int changed;
- 		changed = process_all_files(&cand[i], rev, &diffqueues[i], range);
- 		if (!changed) {
- 			/*
+You are describing commit-ish (which allows an annotated or signed
+tag that points at a commit).
