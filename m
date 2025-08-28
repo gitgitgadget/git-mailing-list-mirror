@@ -1,124 +1,122 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B3825FA05
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 16:51:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08603314DE
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 17:05:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756399873; cv=none; b=oAmOFfivUUEbe6vGHcLTMq3ZtvxkZVWtnvPwjBWvucwEncw4+ta/4g8eDM1a9KY6AAL1mYffFs3M4stEXCBuBNE+Zf2gp+ECibCTI8BTPcgf4RNXG9D/R7dGKRGwd8STvYR5fLxy2M8RvFflAjzxabARsskj5a0C++UP6qLSX7w=
+	t=1756400707; cv=none; b=PPx9PAFXc5itHRhoCwBS3b7Lf+vtR/zQjdV6VOPySwlI7/+M9NWT2R88mQy7MB2OLCAhbPof+PBfxrR/h4HykpOmxh3pXvEhN7kB9XyzSegUdSxcmatlz2rPI8Tv7SVHtK2iyNuVjAV3jfMZFIY4Zl8WKCNb6Y9wkVuAMf8rfzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756399873; c=relaxed/simple;
-	bh=jcfBpeYW1XV6KFJYxDn9CBhsA7+LwnY2aTjZCwYzYTo=;
+	s=arc-20240116; t=1756400707; c=relaxed/simple;
+	bh=w3+NmWtTPFBxpAWuGFsuzW7LFIao4EafDa2whAZA6qY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iesUTjfQUTIQriKuV2McDdsVhWIQpaQ4XRO/vvHbkegzfSdisHph192kXdzXboFfUWf5T3K6cYxIzsMSrZPpvsRtUpkTpgEhWkNMxrNzgA+nRBtmIMu/9IpRasXn8/czQU76M+wwV4lJ+rJqLcRQynIZ/CkOOHMUJi48jTodqOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cxnHofQB; arc=none smtp.client-ip=209.85.166.180
+	 To:Cc:Content-Type; b=FsbCWYX+qYlw5G9LC/6tmj23vTW733zeocoHCqoynllXRDooDcNSU7uXKlCX0VK0xhkWeFIA+iD7wv99u4qwXUMtTccoCrprhH+ZI4/J6DxDky95a8wOYL2KRoNgAnKJ2QiV3h49vf3twCfXmobkWhrIYDcNFmniXuh6erKW8XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dXfWj8E6; arc=none smtp.client-ip=209.85.166.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cxnHofQB"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3e854d14bdaso12282355ab.1
-        for <git@vger.kernel.org>; Thu, 28 Aug 2025 09:51:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dXfWj8E6"
+Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-3f23f3fc686so2235055ab.2
+        for <git@vger.kernel.org>; Thu, 28 Aug 2025 10:05:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756399871; x=1757004671; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756400705; x=1757005505; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WOnnW2qK0m1wNHknIUg24awb3O2zLW/fJttl6OtDUzw=;
-        b=cxnHofQBlZ7VYdEy+/tqctK0Rq/RB6wxNw4oYUB53e3RvqU1UzfVgyalMnnoe81DwM
-         AXhrP3tee05WrDm8aPJa4SPnPeoyPtN1jKuI0/VnrPRc+4OG9kQyxeYCHjLiUCK4UhBH
-         JNMoYppFhQfwTB/8ytl98Le8VlmBJtdc65oX0tzKc+6sA37SvBzorP1uHgsQfZ3ezVwu
-         PewZWjF2Nop5JohjTGRCHegFzgBw9/lumUUKvpBal6CLZBKo34mfsaLy3XJOQImfnyxf
-         otGKAHByFCWhYBa2FtGIsVZWmkebeQzwrPsFJp8g9SuXXD76ftB+UJETfLW6coCB/GwP
-         FjRg==
+        bh=aeu1L+CjBHDL2PYbBfmP7iBe/x1sqwNnetQDiLuM6MY=;
+        b=dXfWj8E6oxOBNvd3Ov5OPx6CsTyQ9hwQaFne4IEXBQz4ggd89/Qqk3V6EVsbVF3u19
+         h8oI4sD0Sah/cUiYUf71AiQqF4/kfjHVfEATb99uomkun2w54NT9FCXIseToMd7bA9SE
+         6aeSP4ijiEOlLkdQ5XwB4xCXj5I6p60l3yuJMCtHHbUoeaL1rLCRIFDFI+YW/kmLQqN8
+         /Ko2wUku3rHqKCff4ARHQXzz8XZJBt23+ZLAEcYf3Zrx+T6TiGgJj6NseAl3n6nttErZ
+         39bp8fV4ZnkIl/M2ZrKxlNMwUVL/GNMwmy9F5tJaRUpgf8qk24jlF8WJs7vkOruazVwi
+         N71w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756399871; x=1757004671;
+        d=1e100.net; s=20230601; t=1756400705; x=1757005505;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WOnnW2qK0m1wNHknIUg24awb3O2zLW/fJttl6OtDUzw=;
-        b=mrqLEz7M1/bI/aSLjvt5KcVwWT8SEvjeQwxb+bDjDcA17klzcB9uCMMRRyJe5fI023
-         g3VBWH2AnoLl+BNasftOYq8cpr5G/I2NFh6yWISj/dT3TdHIxFguN0zSPXp5qYw0EHrp
-         vgeCUzDKRPhWx4CnA3GmpQDnZv+NppbGBM2twwLwXl8UhhPdkjD0qYv3PEUgSvzWP17F
-         SFacRQ+lrMccqXflDlbSXrdShKAf/j3KqJCqYa4ooMbNguqyIASSqhgYsXFBja++Jb4J
-         ushSgb4hRj2Ext6fBr/+JrCPwnWf4BJiKSb7DH3QYKZ2p2ykBtyORPvjNFMl0sSXGFcx
-         liiw==
-X-Gm-Message-State: AOJu0YylYm1w47+KWbkf1OYkUlRUFEMC9PxTIHAS/KNcNZdOJUIe6KxW
-	kpJJSQJ3K66cq1LcLh2Qv2DM8Lchaii/G/gGfJt3nHQ1dUClWQgwXLo2IDdJevn3MZlUjXA+h85
-	TAK4xxEwxiiBU1hv5lqFbY0wYJSdLSWs=
-X-Gm-Gg: ASbGnctDGgOjUpz6Mz0/Q+fbWW5zcxkrVqsYA/SpITp9EdcPjqhbCMo2p87wp9b9mpG
-	vnCWvRSszZgT187n0pUYR+UCjIYSo65SbTlXXMqUD+IlBFnffPVxfG9xkhxzyiLcf318pPfPXDs
-	LdUpt0W47K+qud0slPOawaZ5c+zDUKzJ5jFvkNJC5HClnMK7EIqThy6lnw/gK2r0u2AbMhpXPNw
-	UddFo4budV3duNPOOqqlbercQ6DPw56DIdg2mDZL7/du9VvZpc=
-X-Google-Smtp-Source: AGHT+IFYzUO+vEvHskCNRXgXCX+tPhaEqP2Tc4LFmA3WrkaIVDqGb8Cnk2uP3BqnSZKIOci43G0aH8iD66vy831Y3rE=
-X-Received: by 2002:a05:6e02:2784:b0:3f1:258e:93cb with SMTP id
- e9e14a558f8ab-3f1258e9425mr49709085ab.14.1756399870691; Thu, 28 Aug 2025
- 09:51:10 -0700 (PDT)
+        bh=aeu1L+CjBHDL2PYbBfmP7iBe/x1sqwNnetQDiLuM6MY=;
+        b=IOMW3Peo4cLmAdHbbV+v/cfcN7ib5UB5U582QUX6Yj9EJziAGecSMxH9IT4t0JxNrZ
+         H8D2oTGZlxMG53FYPbdZcEpPJfwl6P0feg+Fr/BA8DQ7FzCc22VW2/AJ8sbpETKe0VWh
+         e+1vHCfoz4LokC5ZaRUNEcKhcMg400Z2YmEaWLfuwjje98dnu0PqnlHyMG/Ubx/DF9aD
+         ED2lAE6AHpeixAOe+KrKFrDmzXASsnh3BDb8ykMdmI2S8yQXrLbXUbm9CIvwC1aC97dn
+         5crrtDI4eKg1Yy65I1nqydJ3aYSR/6kM4+0icuewK5b2kIE58eraIHcvAL4glqUy2vSy
+         hoZQ==
+X-Gm-Message-State: AOJu0YzlzOmJLj/qKAMfNVE1L12qoLaQl3URR9t5xNtqudnMXXZNKi2I
+	1J3FUt3+EdUpwPuV8vGwBqvpy67NmEvaDaqqJgRXvhCd5LxdNVAbql2TsPUFPODutMpuJslDCeI
+	JxK7AJIMSIR8msRMS27TSzQPksV3G0oM=
+X-Gm-Gg: ASbGnctZEGTGbrPAMrw2A4MCqO5ArG0OyzRQ+3DCEoStpns/QskDl47l6ppmrBkjTiQ
+	EpslhsfU1ebcN6Vbmb8/ZU1F+qjYqQ2VMsDar0u9hY8NijLMmpsJ8QcNErX6jfU+oOcO3KW1pYY
+	5EiQNx8L7IVjIm0ookEMIHz4dXwY+6emaQEuGvfcKrPBOWu8FWtjTslxIQ8IcGaoanFkcC9ZW+F
+	S2gRJI8s3/HX59RkiPHb1/15eMwFuMwMZaT+kTAm2ZqHL0e2KzLKL0pJYXAaA==
+X-Google-Smtp-Source: AGHT+IFNMlXtWFoOnEp9pXsyHh+JPXFvzs62Q6C7LtDqv10RlIW9Iy9yYYrKpAbCuh9lY5pWjNpJX2W3fouxBMCEirA=
+X-Received: by 2002:a92:ca06:0:b0:3ee:94f2:486 with SMTP id
+ e9e14a558f8ab-3ee94f20832mr146891485ab.29.1756400704703; Thu, 28 Aug 2025
+ 10:05:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADR1ei4LFVoLhMyya+wx8dXBmrRNSNy6L5Ye_MJgL4kzgtVR_A@mail.gmail.com>
-In-Reply-To: <CADR1ei4LFVoLhMyya+wx8dXBmrRNSNy6L5Ye_MJgL4kzgtVR_A@mail.gmail.com>
+References: <pull.1958.git.1756228693233.gitgitgadget@gmail.com>
+ <pull.1958.v2.git.1756370289.gitgitgadget@gmail.com> <c81f920fee0ed8672783728fae70b6435e800f82.1756370289.git.gitgitgadget@gmail.com>
+In-Reply-To: <c81f920fee0ed8672783728fae70b6435e800f82.1756370289.git.gitgitgadget@gmail.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Thu, 28 Aug 2025 09:50:58 -0700
-X-Gm-Features: Ac12FXwek28guqkmdxF46rf49OmrzXgEuuDQZdT0n2fKPTVNmpmO5y8kfOJOvy8
-Message-ID: <CABPp-BELxkVgXPJtQj1XACP5DSCiPsW36erQzMGSPwpsY-o-6Q@mail.gmail.com>
-Subject: Re: question: what does "garbage" field in "git count-objects -v"
- represent? Is it broken?
-To: Daniele Sassoli <danielesassoli@gmail.com>
-Cc: git@vger.kernel.org
+Date: Thu, 28 Aug 2025 10:04:53 -0700
+X-Gm-Features: Ac12FXx48_j3zcDSlQNpMtlIFY9vbPOq7lPAYDshwCZ2F5bFQDrS6Gm-USNEX-Y
+Message-ID: <CABPp-BEDje5dYZHEyYMN6j_LdR5CqRN1cxc0riRK06qK-OxiTA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] range-diff: add configurable memory limit for cost matrix
+To: pcasaretto via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Paulo Casaretto <pcasaretto@gmail.com>, 
+	pcasaretto <paulo.casaretto@shopify.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 28, 2025 at 9:33=E2=80=AFAM Daniele Sassoli
-<danielesassoli@gmail.com> wrote:
+On Thu, Aug 28, 2025 at 2:00=E2=80=AFAM pcasaretto via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Hi All,
->
-> When reading the output `git count-objects -v` there is a `garbage` field=
-. At
-> first I thought this would highlight objects that are considered "garbage=
-", i.e.
-> could be garbage collected. However, I kept noticing that this wasn't the=
- case,
-> despite my repository having plenty of dangling objects (that where remov=
-ed once
-> I run `git gc --prune=3Dnow`), garbage kept being 0.
->
-> I then turned to reading the docs, which state:
-> garbage: the number of files in the object database that are neither
-> valid loose objects nor valid packs
->
-> I don't think I've ever seen a definition of an invalid object? I tried a=
-dding
-> random chars to an object, effectively corrupting the repository(which `g=
-it
-> fsck` correctly picked up), but count-objects kept returning 0 at the gar=
-bage
-> field.
->
-> The only way I've been able to get count-objects to report some garbage i=
-s by
-> creating files in the packs directory (or in any of the sub-directories o=
-f
-> `objects` folder) with random names, like "test", or sometimes I've seen =
-it
-> report the existence of lock files or even preserved files.
->
-> So my question is, am I fundamentally misunderstanding what garbage means=
-, are
-> the docs simply unclear or is the functionality not working as expected?
->
-> Thanks for taking the time to read this and respond.
-> Dani
+> From: pcasaretto <paulo.casaretto@shopify.com>
+> Signed-off-by: Paulo Casaretto <paulo.casaretto@shopify.com>
 
-The most common way I've seen to get garbage files into the repository
-is either someone pushing from elsewhere into the current repository
-and interrupting the transfer mid-way through, or someone fetching
-from elsewhere into the current repository and interrupting the
-transfer mid-way through.  In either case, there will be a partial
-packfile with a temporary name (since we use a temporary name at the
-beginning and rename to the final location after the transfer is
-complete), and `git count-objects -v` will report it as garbage.
+The names (and emails) in these should match; I believe the name in
+the From field is set by Gitgitgadget based on your profile settings;
+see https://github.com/settings/profile and set your name there.
+
+>  static void get_correspondences(struct string_list *a, struct string_lis=
+t *b,
+> -                               int creation_factor)
+> +                               int creation_factor, size_t max_memory)
+>  {
+>         int n =3D a->nr + b->nr;
+>         int *cost, c, *a2b, *b2a;
+>         int i, j;
+> -
+> -       ALLOC_ARRAY(cost, st_mult(n, n));
+> +       size_t cost_size =3D st_mult(n, n);
+> +       size_t cost_bytes =3D st_mult(sizeof(int), cost_size);
+> +       if (cost_bytes >=3D max_memory) {
+> +               struct strbuf cost_str =3D STRBUF_INIT;
+> +               struct strbuf max_str =3D STRBUF_INIT;
+> +               strbuf_humanise_bytes(&cost_str, cost_bytes);
+> +               strbuf_humanise_bytes(&max_str, max_memory);
+> +               die(_("range-diff: unable to compute the range-diff, sinc=
+e it "
+> +                     "exceeds the maximum memory for the cost matrix: %s=
+ "
+> +                     "(%"PRIuMAX" bytes) needed, %s (%"PRIuMAX" bytes) a=
+vailable"),
+
+available?  I'm worried the error message will report in users
+checking system memory, claiming they have 14GB available on their
+system, and then reporting a "bug".
+
+Perhaps something like:
+
++                     "(%"PRIuMAX" bytes) needed, limited to %s
+(%"PRIuMAX" bytes)"),
+
+?
+
+
+The rest of the patch looks good to me.
