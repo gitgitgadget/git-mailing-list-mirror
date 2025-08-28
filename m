@@ -1,149 +1,111 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDC228153A
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 21:22:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D82622538F
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 21:31:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756416171; cv=none; b=X21IwSnFKA2ecx/2BZ8R4jvdxpsKvHePYKorPSfGgGot5WFYVGvxKPHMnmLIwpwZuHy/k/uYi6c5aba5eM7Dhm2gAoxCLhtBNQ2RJdSQxhJzUBnepwYinawFUdIDPp0tUfUEClDZZlBN/WLcvPtbMB1EGNdnxmopZTnRsfCup+E=
+	t=1756416673; cv=none; b=XYhnWRgTrvZya+RQ4i9aAxnx3R/H0wIMKRYqyvlFwY6bK887rb5N84eL81/PZN+Ny7+VHZDa+ZC3MezlTe7NtVDNz+igDbXlwWJ+c9EXIMJOj4rbAvr5qNi2YYlTJBvWGD5f6mwmqC6FwSYXMl6hSJ22y+Hm8PmVSjHORFql4PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756416171; c=relaxed/simple;
-	bh=80O+oQ88aooNJ3HeukUg52sKU+NPA/KlKdwHvYrOvfw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tlk7oLJoP/h24N5W0S/t1+FzaKV5A3jdDbo7Dds/U4kLYlIQrOxBneiXmLHef0IlYOqOkxy4cbEpYZyZCRjRzKg+ES18imfRWu7RFPHaajMUg3Y74MtN2atFhfjTl3tELUsPaetzjS7sOCf7SSS0jd5uMdW5EsC1UmPlDPQBA7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=3YKkaBmF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kBGRvpgQ; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756416673; c=relaxed/simple;
+	bh=Wsu0RcF61FXWxpEWP0lJPu3vVkvSl3HGtfxFmW2mWoE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kbzYXSowqQ6C05aXMZ96TD7xZRkfe2xIYz99pEV/nBIr3tLdfUsO+dUp+l24IZ24Swcc/xxxLsK4SK8FuTPm0nL0ycci0KWtgQJN3NACBIFol0cpQfhlKjFI2Af6iHUkn8CIaM1vpUp7UHzw5UY9JfD6tzycQhwsMRtKzZm+7Dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=MoeVAENL; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="3YKkaBmF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kBGRvpgQ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2AC787A01AD;
-	Thu, 28 Aug 2025 17:22:48 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 28 Aug 2025 17:22:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756416168; x=1756502568; bh=5K2n2yMoAy
-	pWjq633AB+JNGwqaIhBzIOEX/+ErOlGO0=; b=3YKkaBmFXuS7s/3hMcJO7+PaGQ
-	4vIwMEL7OGOrM2/49o2dZbOLSlb/i5Uu0crvkCbmBolUW//BU0LnydN3fNPxe1Me
-	AD8wHoLicX6bJCS648UeeIfDPFbvsEt9EJovO7a+a+yIQVHOV6hgtgS+tw50CqJH
-	65bXfJbF2Zusf1X9sfJhXMoj1I436idutLfp4nkwMsel+KapCghwMPS3xjY7w2jP
-	dh6PN8DME96Q7WNoWB8jP5naM5D6MEjfBIQEPGdSBoCuUgjX3zYBraO0vInCL3Nm
-	YnCCE+8wVWFsxQDYgwTaD/I0FGLl1V3m8RhaRxy2aPVBWsxUF0w2Q3Ub7lWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756416168; x=1756502568; bh=5K2n2yMoAypWjq633AB+JNGwqaIhBzIOEX/
-	+ErOlGO0=; b=kBGRvpgQn0pc9MdJiTkJgRqezFQOLunOyY+x+eyihbs5U+jn8Jg
-	XaWg1Gp/bduiz/A1zC5tKBZMATGHrP8KRI9WTzctCmBoiFqPpGnUuc3V0Hv0GQhW
-	0Sc8sHUEqTCzkI9VDJopEf/+PeU8rSUm+hus+VWcQVAeBxLxHaI29VDX0xL48PHd
-	fbnNRt3D7XlyRRnoe+Hho6aseEeWEUMg6gH8uzwYuL4cma9HnL8ds9av5N0y/tQe
-	/omkZpQv49PYRvnhoyZIFMgyAbCNrObOXGQ/bFMHIERNJ9IUE0byUcT0zOgmySpg
-	G+iKxKpg6aPWskMK/8un/jgxDrSH8GNli/Q==
-X-ME-Sender: <xms:p8iwaAIthPllGhpKaBm3wF3lSV_wvGdeVgdyqZn4_1xQRBDtyyEbHw>
-    <xme:p8iwaIlQUoChPfB5aVgVkY-X7e16eyKpnzrF6M02MPOZ89PWj_7Zo30QdM1pVbkBt
-    jUkAvWuUMYOFSOb6g>
-X-ME-Received: <xmr:p8iwaBLQoIe-zsFDf2Bs8e7YmSEOImC57OcALVXSotqTVzO8tXulC2yqfmEkfv2INazbz7SoMood4tcKXUz-pV45pqtP-B8BnrVG5ws>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvtdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnvg
-    ifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepphgtrghsrghrvghtthhosehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepphgruhhlohdrtggrshgrrhgvthhtohesshhhohhpihhfhidrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:p8iwaN6Sdg16TmTNNvAZ3GlLNPF66OKESVqqdJDvWjOo5x2-zTNsXw>
-    <xmx:p8iwaF0bSLt9qe-uqWkDBHmkhi7zseSzurDKHWk1zox6p4OGC1ITtw>
-    <xmx:p8iwaDerDXRCsJIfWVRP9uNk4vs1E9TDVwi5SyDr86Xs6vxjskmQLA>
-    <xmx:p8iwaLdUJznAk4eF3gaAT_pAkRScLGO4esv15C8YbtiOTNoyw4f2cA>
-    <xmx:qMiwaEhPGX-0MD-C_kO6sct-b1u6uB4Qa-agdBarWeNqE3ax0heLlPpX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Aug 2025 17:22:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: pcasaretto via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Paulo Casaretto <pcasaretto@gmail.com>,  pcasaretto
- <paulo.casaretto@shopify.com>
-Subject: Re: [PATCH v2 2/2] range-diff: add configurable memory limit for
- cost matrix
-In-Reply-To: <CABPp-BEDje5dYZHEyYMN6j_LdR5CqRN1cxc0riRK06qK-OxiTA@mail.gmail.com>
-	(Elijah Newren's message of "Thu, 28 Aug 2025 10:04:53 -0700")
-References: <pull.1958.git.1756228693233.gitgitgadget@gmail.com>
-	<pull.1958.v2.git.1756370289.gitgitgadget@gmail.com>
-	<c81f920fee0ed8672783728fae70b6435e800f82.1756370289.git.gitgitgadget@gmail.com>
-	<CABPp-BEDje5dYZHEyYMN6j_LdR5CqRN1cxc0riRK06qK-OxiTA@mail.gmail.com>
-Date: Thu, 28 Aug 2025 14:22:45 -0700
-Message-ID: <xmqqiki7ta3e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MoeVAENL"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1756416663;
+	bh=Wsu0RcF61FXWxpEWP0lJPu3vVkvSl3HGtfxFmW2mWoE=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=MoeVAENLNJiPxgFzs5GCrtKQogr7G1cJ8O/1zge6d4OBbVPlEzsLmbaPiV+Rf5BJR
+	 sT47KeVVuFCDgi3JglfGs3PXDVxOU+An29mTcWA1rM5i8lxvvKVpZgnBzHinzDZEc5
+	 iTSg7dqkXIcEg+pB+xNJYz1sMDGuwTLXkutVpqJ/RAvALNYC8QZTSwYyVfcQ+hKqA9
+	 xWZ2DRtgk+Hoj4vPzJ568tUCCkKz90la/8Im7d75B8vanYmSwjUxhgmdK6IN8kPxLD
+	 wrTkATDwJvzl58+KrDtIxt1sMOuIhK+q1+e6IOqYeHD1jokVziyBnxpOeQgqp9Ecur
+	 1BQq2AzyNmPwI7Cj++g1Yn9lWn5hDvxnY3aj9otkGPKl4LXet3pgmLoDpuzaBKvhAn
+	 ar/IXAIQSzopRzEvaV5Is/HBg5/xE9pA9MAJSTjCLovZ4Nos5nKr0HQd/hSCq1C40Y
+	 aHWrWa3rJFvYHUjklPn9fCccqOnbXBKcZgqV5Jt8+CU7mqWIzy/
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:db8f:7ecf:23e1:9783])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id F0E98200C5;
+	Thu, 28 Aug 2025 21:31:02 +0000 (UTC)
+Date: Thu, 28 Aug 2025 21:31:01 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Wing Huang <huangsen365@gmail.com>
+Subject: Re: [PATCH 1/6] t0018: switch default branch name to main
+Message-ID: <aLDKlfsUrDTrKrl_@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Wing Huang <huangsen365@gmail.com>
+References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
+ <7c20f7693f4518ef79be0a2277515bb00d912213.1756308283.git.phillip.wood@dunelm.org.uk>
+ <xmqq5xe81y0i.fsf@gitster.g>
+ <b6b60e6b-c06d-4dc6-8722-b53736f8b059@gmail.com>
+ <xmqqbjnzwfvk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Elijah Newren <newren@gmail.com> writes:
-
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: pcasaretto <paulo.casaretto@shopify.com>
->> Signed-off-by: Paulo Casaretto <paulo.casaretto@shopify.com>
->
-> The names (and emails) in these should match; I believe the name in
-> the From field is set by Gitgitgadget based on your profile settings;
-> see https://github.com/settings/profile and set your name there.
->
->>  static void get_correspondences(struct string_list *a, struct string_list *b,
->> -                               int creation_factor)
->> +                               int creation_factor, size_t max_memory)
->>  {
->>         int n = a->nr + b->nr;
->>         int *cost, c, *a2b, *b2a;
->>         int i, j;
->> -
->> -       ALLOC_ARRAY(cost, st_mult(n, n));
->> +       size_t cost_size = st_mult(n, n);
->> +       size_t cost_bytes = st_mult(sizeof(int), cost_size);
->> +       if (cost_bytes >= max_memory) {
->> +               struct strbuf cost_str = STRBUF_INIT;
->> +               struct strbuf max_str = STRBUF_INIT;
->> +               strbuf_humanise_bytes(&cost_str, cost_bytes);
->> +               strbuf_humanise_bytes(&max_str, max_memory);
->> +               die(_("range-diff: unable to compute the range-diff, since it "
->> +                     "exceeds the maximum memory for the cost matrix: %s "
->> +                     "(%"PRIuMAX" bytes) needed, %s (%"PRIuMAX" bytes) available"),
->
-> available?  I'm worried the error message will report in users
-> checking system memory, claiming they have 14GB available on their
-> system, and then reporting a "bug".
->
-> Perhaps something like:
->
-> +                     "(%"PRIuMAX" bytes) needed, limited to %s
-> (%"PRIuMAX" bytes)"),
-
-Sounds like a good idea.
-
-I am not a huge fan of configuration variables that do not have a
-command line option.  Assuming that it is not like you'd be doing
-overly huge range-diff that would not fit your memory every day,
-shouldn't we start this with a command line option without a
-configuration variable to gauge how useful it would be for users
-with such a need, and then after it proves useful and we identify a
-workflow where a user would be passing this option all the time, add
-a configuration to allow it always be in effect (with command line
-override still available)?
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="JBM34nZUQnOrVrMk"
+Content-Disposition: inline
+In-Reply-To: <xmqqbjnzwfvk.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
+--JBM34nZUQnOrVrMk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2025-08-28 at 16:49:35, Junio C Hamano wrote:
+> One thing that is missing is probably a way to remotely create a
+> symref (or repoint one).  As it would break existing users if an
+> upstream suddenly switches its 'master' to 'main', the second best
+> thing to do is to ensure that they always point at the same commit,
+> and the natural way to do so is to
+>=20
+>     $ git symbolic-ref refs/heads/main refs/heads/master
+>=20
+> but we cannot do so remotely.  I've been doing the third best thing
+> since late November 2021, which is to push to both at the same time,
+> which is ugly but https://git.kernel.org/pub/scm/git/git.git/ and
+> other mirrors may tell you that both are available.
+
+Yes, this would be a nice feature to have.  Oftentimes forges have
+external functionality that needs to hook in to name changes, so they
+might not choose to enable such an option, at least at first, but users
+using things like Gitolite or simply bare repositories over SSH might
+find this to be very useful.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--JBM34nZUQnOrVrMk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaLDKlAAKCRB8DEliiIei
+gfmdAP4gs5eM7cc0p02pAEIjIufIpo8qT/MAgOxjmJhhMlgeKwD/Wq/W9qjMvLqF
+YBCEt/SGv0WgyoNHnEgCHNoV2K+JhQU=
+=H6zi
+-----END PGP SIGNATURE-----
+
+--JBM34nZUQnOrVrMk--
