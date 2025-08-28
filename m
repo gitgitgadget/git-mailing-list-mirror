@@ -1,123 +1,109 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3007E2253EB
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 21:45:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD7ADF72
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 22:34:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756417545; cv=none; b=Eu/K+zMnbEHKqJr1MAVBjwfsmo6wnQjahno4Awg23RkAOVUL9d0UncdsXaIsj6CkGZKRe3cXCm8zITMscb8VJD8X+5KCZ4kW+1mU8MfLHGPrDKCGCKnrxF9jCP5DHmvJ5B3G07gW0ztCs1YpbLuEAwxRt3zswlwlfvO4JA9sy+I=
+	t=1756420487; cv=none; b=nYQnaakP4GS/SWmGU4I70mjnzWvbPlmPtIx4f0zSRVPB5YpuFhYvC+Rj1sICGwxZfiBzqx6jBuSjEvrx+114gh0vNK/nhtUwOm0Ybl/48an8SgAEygT0m+5gZuAQT5vwU1OHagMQJLV4Gc71YvF3Q334/EER8KNuwMc/huHFTWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756417545; c=relaxed/simple;
-	bh=3LsMwWvHoN+b+GpcZpoykIlHSfFVs4L2swI4imgKHtg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eAz3Ux7ZPBVt0bEwn/g7AUIcC+je9fxX7CffdmkmfY7tbR7eJrFGOUOr/Pj1WrqauZMzdtrievA/+h0Wa/+QeYMl9BcSVI+HlJNBTC6P2UJ7LzKpiC8ObZNjzNn1uXNIHstAulfQDHxj0TDdTnZADzzbniMpjOpaN/erSzku8RA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qF/vBnBc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iEsyHGqn; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756420487; c=relaxed/simple;
+	bh=eJH8MHADF+R5TyoeRK9DDIhih0JdsT3FQ0YmtfCudlQ=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=IE2X/WI17kecYRWxgje1TUEBN1uiB6GG8sn+xhKV0fiL1uh3Q68NjsBoNkON3oPObHgFe/1sVgvy+sJFM6k1dmU7V5MS19R/BtWQ9cWrjdQQ8j4Gbj/0QBNsonq8pOABAdp4bcvXd+qvNQZNSbLokSJqh8NWVH90oQllx1+HPM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=NrWX90qp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L85TAlqd; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qF/vBnBc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iEsyHGqn"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 34B1C1D00086;
-	Thu, 28 Aug 2025 17:45:42 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 28 Aug 2025 17:45:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1756417542;
-	 x=1756503942; bh=N6kKlK1xrr7Ud5UDBY/FgiEURX/Ib7oDuVejXtW6KHQ=; b=
-	qF/vBnBcyhPyoObcADQz8IQmCwojgkrQiToeeE5orndNszFA5yZcj0ZsdEE7evm/
-	q2neXgsXFxOWtI/BIiUAZ8fz56bffgemamfm4GW7GeOJNRv8GL9hM6txSGG/UTfA
-	r/f7l67wpiQ1attltZ+t+MYb88Od51uExwgmIYI05qq72ynwqaxAROql3QzP8J0w
-	MWOzWHJdomJLpHpX+7iCATE91TxXYb/zsfr1cM6Wi/n98JBLxb3l9r2Sj0vDAwUf
-	FkGsfiF1qCHumJV+Sn/tSdoUkUR8ND/hae4Hs2y7JiTet/rnBuHdtfPnUdd+yFKy
-	CS3qrP3Dye/gcbsISepMIQ==
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="NrWX90qp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L85TAlqd"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2CE7F7A0166;
+	Thu, 28 Aug 2025 18:34:44 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Thu, 28 Aug 2025 18:34:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756420484;
+	 x=1756506884; bh=RHH26pTIsIq+o13N47Jteag8Xq88eoL+DzPJyVgD4Fo=; b=
+	NrWX90qpLxQBevb9zVkOkshIiIEpIe2TRfPSxu81UW3GE2BcrFSRQQNGF41HWL+i
+	PTvxttp3SewWF3XE06gYZXLbT3YohRrGWbuXgjDkLLCOPGhoSW1hLFFqEx9o1Is6
+	l57STOFsqaZvht3KH09hUIsqaOAvdhc6KaCPsZG+7rKWp24C1jsSpyU2JXJ8uG+M
+	g5WNub8WXCeJlNi2/1aA6Ht0g/yv6LBA2IGALmh4XtH93fWuzK0hEFGuZE7YkwN9
+	1NzklGesVhBBDl9h2kQ4ai1ZmYHMjRj3jepmiCOh+il98nc7bLFa22lITXkhKT/2
+	WCLfQrE4jEfaU2lDbThdGg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756417542; x=
-	1756503942; bh=N6kKlK1xrr7Ud5UDBY/FgiEURX/Ib7oDuVejXtW6KHQ=; b=i
-	EsyHGqnfeGxl+YIk4dqZhIxScdrNGddY78ElkNrXJx5UPMKFCHecmi1tpquciZtZ
-	VMPPkRUOH8ZGweYIp2yFsxvt1QDAF44F4YMwZomnNBujHw0iDJs/UqMz3R/153kH
-	FQw3ZwmnbrFoc9FKjc6H5ADygzPGnv28t+VbpvJ3cueGS97DGWATOMhaGdxLY+uF
-	+e5ixOaQeihyiTJWOVZYH/sLiHeW1T6QrNWH+2cQXsz0YyojUpgjuOlaHEJ+xVKY
-	r81Uo+TiWGri9c7CBgMfmXnD07Xg0Q11/JXrFTE3N6x3yFy2COKpw+9RGavC3XAt
-	CANnSVlkAu4TfalyoFpBA==
-X-ME-Sender: <xms:Bc6waPf_q8ud_xP5J3SzL1S26LGWUZEAxOvcJITMFOvw-T0lVgVxzg>
-    <xme:Bc6waNpAq7I1NJHM3gC5oQrXa7d8FaWJt_zS-gtp0-CN8og_93USSLUM2CXnxD_Q2
-    h_hfL5UdVma4xcVug>
-X-ME-Received: <xmr:Bc6waI_oE6ig2FsuNGAAYrbDknCPerA6dbXOt7sE4lBkPh-6O8NBjaNIYyy-pHnZc-ixPh-xV5NFUE2q-VxxDiDoyqS_ecgXN0O-02s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvuddvucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756420484; x=
+	1756506884; bh=RHH26pTIsIq+o13N47Jteag8Xq88eoL+DzPJyVgD4Fo=; b=L
+	85TAlqdtJK17ySDcGbR8seXUUiyGtc5N3tOz1Np2frU/UaY+PRTK+AmO4xrqaNaM
+	i5GjEHdkWO4dXE+W7QvSTQakKrotbTsZdUzxRsyqZunjAh6BlYwicSxAEKNH7lna
+	FtBKtqITRDqhyNwKpuyZ6Jvj18n9sIvAeVyXJUsbIzhj+rvyx2dshfJ2AIzM+vzY
+	truPparie8FNJF4p/iwt+oTBu/a3Kj+LxE6iW7WHg/oeKXGu4joC0vGP2CAE8gWd
+	UvZjpMMosiUVjIgYTSHb0ZQ/1Q9IRgLjDnHoVaRlLG0CDaHrTemUO5gNjC/ooz0U
+	1duD1TgST7FoHKm787Qbg==
+X-ME-Sender: <xms:g9mwaDsD_phGYpt_xWVDrqx9I3qpcvDDrv9yj81urLJ0GbNGuI_Olg>
+    <xme:g9mwaEd-aMc9iLv4OPSiZYPypkHzRsOx0FREgoAjBlS2vTiYDeLEUgkFfUI-2k-8T
+    N5tV9hklVagau1rIgE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvvdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgtrghsrghrvghtth
-    hosehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgruhhlohdrtggrshgrrhgvthhtohes
-    shhhohhpihhfhidrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:Bc6waBdOtD86oZMijn4oGhkbgDgQVwjuPLhCswziZZoRXF5RIK6MXQ>
-    <xmx:Bc6waKIIUpw0_s9dbLrAoVzgHBumgWTh0Ue0Z9BTHzPiSCvpIEQgJA>
-    <xmx:Bc6waJivD8Kga0abD9zGrriwIWvd6c_LgGys-goxWT_yVio1s8STrg>
-    <xmx:Bc6waARYXmfiLtLFpPUgcjR3_Imt9RZgpB46zTwaEmUYzlREjlMUww>
-    <xmx:Bs6waI3WRrFV2x5qm_LV65d8jtzTfaTQq0ubDashgQ_4bblN2vx6Od8d>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Aug 2025 17:45:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: pcasaretto via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Paulo Casaretto <pcasaretto@gmail.com>,  pcasaretto
- <paulo.casaretto@shopify.com>
-Subject: Re: [PATCH v2 2/2] range-diff: add configurable memory limit for
- cost matrix
-In-Reply-To: <CABPp-BF1z7iS6m4FzM6555j8UQeqfTZuCbwwK=Zh0zQ1+qfMZA@mail.gmail.com>
-	(Elijah Newren's message of "Thu, 28 Aug 2025 14:34:21 -0700")
-References: <pull.1958.git.1756228693233.gitgitgadget@gmail.com>
-	<pull.1958.v2.git.1756370289.gitgitgadget@gmail.com>
-	<c81f920fee0ed8672783728fae70b6435e800f82.1756370289.git.gitgitgadget@gmail.com>
-	<CABPp-BEDje5dYZHEyYMN6j_LdR5CqRN1cxc0riRK06qK-OxiTA@mail.gmail.com>
-	<xmqqiki7ta3e.fsf@gitster.g>
-	<CABPp-BF1z7iS6m4FzM6555j8UQeqfTZuCbwwK=Zh0zQ1+qfMZA@mail.gmail.com>
-Date: Thu, 28 Aug 2025 14:45:40 -0700
-Message-ID: <xmqqecsvt917.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
+    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
+    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
+    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:g9mwaGVZjVfaPtFJOPsRgeUnx9alwTum2alJcVsFmiCgQrxUIygOmg>
+    <xmx:g9mwaJdJ_a7kjb_GuO3BV1A7-ty-KWrWbm83ItC1-YGIUHGlfQ5fVg>
+    <xmx:g9mwaHWAu-XpLm9rPWvcGdowCxjwEOtuplQlmomd06rDu-GEYLBXnw>
+    <xmx:g9mwaKfZ7ZULiLK_cingEv28VCrMbUcyANjuyeTSecOW4iIt76kqPA>
+    <xmx:hNmwaGSaj0V1kbhMG1R60QaI4xX_NI-VirkjPx0aTHA0tOek1moelIJJ>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id BD3A87840CC; Thu, 28 Aug 2025 18:34:43 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-ThreadId: Aye-6GR96UBw
+Date: Thu, 28 Aug 2025 18:34:23 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <f440d0e4-0754-49a0-9677-980f60a5dbf5@app.fastmail.com>
+In-Reply-To: 
+ <CALnO6CCvD-uoan=-VW+OmfCk5cLgNm=zENAejL9vX2czahMGxg@mail.gmail.com>
+References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
+ <a6125a0128937392af283033e63d2b04776caf2c.1756148933.git.gitgitgadget@gmail.com>
+ <CALnO6CCvD-uoan=-VW+OmfCk5cLgNm=zENAejL9vX2czahMGxg@mail.gmail.com>
+Subject: Re: [PATCH 1/5] doc: git-checkout: clarify intro
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Elijah Newren <newren@gmail.com> writes:
-
-> On Thu, Aug 28, 2025 at 2:22 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> I am not a huge fan of configuration variables that do not have a
->> command line option.  Assuming that it is not like you'd be doing
->> overly huge range-diff that would not fit your memory every day,
->> shouldn't we start this with a command line option without a
->> configuration variable to gauge how useful it would be for users
->> with such a need, and then after it proves useful and we identify a
->> workflow where a user would be passing this option all the time, add
->> a configuration to allow it always be in effect (with command line
->> override still available)?
+> I think we've dropped the bit about the default interpretation of "git
+> checkout <something>". Maybe
 >
-> Isn't that what Paulo's patch does?  Maybe I'm just blind, but I've
-> looked over the patch a couple times and don't see where he's reading
-> from a configuration variable; am I just missing it?
+>     When you run `git checkout <something>`, Git tries to guess whether
+>     `<something>` is intended to be a branch, a commit, or a set of file(s),
+>     and then switches branches, switches commits, or restores the files.
+>
+>     By default, Git interprets `<something>` as a _<tree-ish>_.
+>     [explain what choosing a tree-ish means for the user?]
+>
+>     [Your notes on disambiguation as before]
 
-Ah, I just blindly trusted that the "configurable memory limit" on
-the subject line is talking about configuring memory limit with some
-mechanism.  Thanks for correcting me.
-
+Thanks, will fix. Though I don't think it's accurate that
+Git will treat <something> as a <tree-ish> in this context, since
+`git checkout <tree>` is not valid. Will find a different wording.
+(I get "fatal: Cannot switch branch to a non-commit")
