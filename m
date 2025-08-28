@@ -1,115 +1,94 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31CD320CD3
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 16:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E59722FDE8
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 16:32:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756397912; cv=none; b=UMRSh4H/osxXu6DbYiH4HmhK5FmI0fez4Bv1DxbVdmw0uPROAFnpNbO/zIxzuU5O1h+In9wnhxPkbyaiWXv08wn1WTRrVuFjOKTLoiNByouQLccJQaBGrb4NONv1vVM2uj2RTnKBq9r+Ve8NEoa1BzbychPmQbEIyUwXvlF0AUA=
+	t=1756398745; cv=none; b=eYfmogMN6tduO2CyfpZ+WMcyGGjuG4Mokuhljpp4vCVmE/ac1MmPtG7oHooCHDp5z6UTpfU4vftVuP4YHmSp6j08bhCtoNsJIAg1d60Djogxhp+71KYT5ROs9UQk6INg92TMFXdvioPD7hB3gJF9whbtS2Gt467f+ePn7wKkcyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756397912; c=relaxed/simple;
-	bh=4zDGFKEcqtvAnBbrKMyQqFudyU+n3VFT1tg+CrNX8ks=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lSDb4egCNiMXAp+ZKna7z8PE80FzsCF9Gy0Si6YN/dhyCSnbeXWieXAiLU4/WtVcAmi4k5ieQ2BFkGd1dyF0Hrv8Phnm6ttkR9cyr296vuW/3hPkxFymQGvA3Xe/AWO2aEh/bPW5cRkTSjhGeB2FiFs7BTwRUiOgFAP7BpzPncQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I9ISjASf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q9Rt3itN; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756398745; c=relaxed/simple;
+	bh=YKw8LZS5zA+doLnXigsEg3yzi0tY/JbHMQIwtwjt39w=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=uV11rxQpwljdOZv33wv+cWu8x9Jim9AO3oe9bT0n0rifKB9+RxOXue4oXntj40Wrf+j8FE6d+GJ6AtwvMvqDIZ/LNf/HHSK2Z/V9aB+LyhZrBpFPr2/AzSKCnJiN402SAGyxlRHXBkX+YSfedTRaqfxxJyDZibza5ORUKnriscU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OTbL1eWJ; arc=none smtp.client-ip=209.85.166.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I9ISjASf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q9Rt3itN"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id B76DD1D000F8;
-	Thu, 28 Aug 2025 12:18:29 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 28 Aug 2025 12:18:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1756397909;
-	 x=1756484309; bh=yxzjZkpoT8wTN5h05kRilM13tgtVAGdoccsgphsdXoY=; b=
-	I9ISjASfQ/GtHeU9ZKJ8u2KjDjr1Gy1wLeFCNhcyId8DytbR2wPWcLxuroXjRmdm
-	0thK2LmRWse2Q5ZGJR+r8wOt5EveL0nTTJ1kBiMuu/N8Xo7d5zkxQTQPHRyIz6cx
-	G4Dhe/SDDzK9jxrL9ZkG9LjSgFJ16aupjSqOnvwdFfPmt+cRAgu0pgXF+prVN5LS
-	AxGLRPqepUMCKygggnMcqDdc2SlRW6gscZpf2glDhN2aLqBNpr7nGdgnuo/1X/RT
-	PhIfCEX/f0T5KfWFo6KyWzw6yUuTyzdJQn5cCCQPKWXqVxuudwBthFnTyp44EPCa
-	nBWgWFJc0aQomgdZ9lG8Vw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756397909; x=
-	1756484309; bh=yxzjZkpoT8wTN5h05kRilM13tgtVAGdoccsgphsdXoY=; b=Q
-	9Rt3itNSyyrrv7YjQ3bQ6l86Kv4B++O2SLr7M7FnulK52oAIqr9+1UrdCFVp0hIQ
-	ho4hfCvYOpA+lkSx4UjqnQ4GZGlhzMYT3enkAg608t1dJrUKXlCyktgfkr+1RDl6
-	gO2GE5DsZOL+F344KbNJVYd0FNYeaVxFsfPOnHrgjpvyvO2LdAZEztRGKYiXqKJf
-	NwlCsWocuw4z6k5DjhMwRmQn5Kzf9Nu5dbA1ecq/SFevfMVxc6sklpANSqk9smHW
-	AU/Ej9mR4ASfO8zv2GbYy3GK7tiwGVKqbjJ30B5Bujq4b9cqwHk0lo5nuuExCRQr
-	LKhMJPtLZH2AmFwCJ+Aqw==
-X-ME-Sender: <xms:VYGwaClS1Bl6HYCJg5oXf59oqcOoll-Yo2GwgDcjfY9THmRMNDbdAw>
-    <xme:VYGwaFVkFrCnxIpxRA_ni80ZTMxz98MocXkfAzfp7uYQ22o17s16Q9U3sKRBG0jS7
-    6c8_S07KbcH8_QURw>
-X-ME-Received: <xmr:VYGwaHFAqtGtR7pvQS1n4nWijMb7WK0yeplg3NfkUlvdu0KnDscamVKwvmwzBiyeyJD1JFtW2Yn-bdryDz62ELqBPvMxiAkLTS98-_8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedugeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedvhfegieehtddtfeehjeeigeffieetueegleejueekueehudduieeflefh
-    hedtteenucffohhmrghinhepghhithdqshgtmhdrtghomhenucevlhhushhtvghrufhiii
-    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgt
-    ohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    gsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhg
-    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:VYGwaBezpNbZOqjLjVoK7-Fz6_VsInPQv-uRJ_LoRGP5OOjavgiEyQ>
-    <xmx:VYGwaIJEN2w-hXbRreJc5Ahl9r7VzAEhRz7igqdvbAw0FzpDjg0i5A>
-    <xmx:VYGwaGE_JvXJgmKunfHPx_Jyh5uJ25SeK6aspwFMekeXNYgEJhxSSw>
-    <xmx:VYGwaLBjF0HanyN8BQ8eFkgMjYio9gyjCBW0qSWAAyxPxAaDcprlpQ>
-    <xmx:VYGwaE0XMlBjcdpPJLU-NTcs3_1OG5LthzMLdkQFdPjouWkkXK1oxmn->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Aug 2025 12:18:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 1/4] doc: git-push: update intro
-In-Reply-To: <CALnO6CCca2Yp7K16ShqUaZNN_POv106qyXfKq1aJMyXhA+EyCw@mail.gmail.com>
-	(D. Ben Knoble's message of "Thu, 28 Aug 2025 09:53:06 -0400")
-References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
-	<2fa98fb5cae78b8872d0b864ee246ba619ef631b.1756240823.git.gitgitgadget@gmail.com>
-	<CALnO6CCca2Yp7K16ShqUaZNN_POv106qyXfKq1aJMyXhA+EyCw@mail.gmail.com>
-Date: Thu, 28 Aug 2025 09:18:28 -0700
-Message-ID: <xmqqtt1rwhbf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OTbL1eWJ"
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3ec4802d41fso6884975ab.1
+        for <git@vger.kernel.org>; Thu, 28 Aug 2025 09:32:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756398743; x=1757003543; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=YKw8LZS5zA+doLnXigsEg3yzi0tY/JbHMQIwtwjt39w=;
+        b=OTbL1eWJqjrzLueRIFHIkEXF01D6RxeTZ2Izbvb5PcC6NMMgt+J7tWDrzZVVOEBCe2
+         GeQNesx+SU7+hVv2eOq/Vol2d6RHbKSVp3MHg6VylDhlj8ygMYsLxPVukJV88haSmYbh
+         gd82VocRscn/kBXO0TQ2KhdLIYp5oA5F+yWDuNrW5GF5HiKWMfHvLcfHPqQNRLswfsvp
+         oExgEavQebJtAdXRpIfPNLQCOlAhBX+hAsCcE0EI3FOHDhTMq8CAqfG6cdnnf9JEoxMA
+         6HXJ7VLp5z5DxROOjOkNP/GJRe1qFfywCEw/xwx2m6DqmMKj2UsXzA2n6qckdli7Kyhn
+         OpFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756398743; x=1757003543;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YKw8LZS5zA+doLnXigsEg3yzi0tY/JbHMQIwtwjt39w=;
+        b=Gw850vNAXJZfm/dNv9zl/S39RjGg6qXNxA28rVSWFeav0Q8dXmEiWGzT922f2vX1Xj
+         owicOpdoch85nw/i3j3F30OAwjbZqUnVyBYHoyn+YVcApu/bUGr2zDDCk8lulTqYCJvb
+         6f1BzyTt1a6ssEeT3MTXI9H88a0BB9ld4WKTJFeG8BZAcHvMkhudqu0xKBLyTSXP+fWr
+         tcHUFCmtNQX2hxvIrJftjUuaPNuT4/VaABbi1GnKjZnbbhLXUEu40U6DguaaubJiLaWH
+         wOvyFEbPihT5Yz0Q//68QT/M+oPeWbDjZdn1YOoNVooO3p6fVc9n6VMuOUW95ltLlwGb
+         KwGw==
+X-Gm-Message-State: AOJu0Yz97pJdyMALgKPasTK3HOFEtZqcwIjP8071k1J59V93VzhPw2t5
+	5jVIAObn5g8rsUsnQk4chmYToJ50f1pKCbgh6z09VAJIgou1MbbqNFgxXfRAQC8dn1rccv4ATRB
+	3s4doQZUUECcpGddcN6jK0U2wUCEx/LUiwIGmz6rm3Q==
+X-Gm-Gg: ASbGncsjMQnAtlJZbOFHGPN5DqgH8EQBgWHMAayijshf9Y1tDtKJ/s4bF7PUk99zT42
+	CdziosXibJWdyNlBLrpOsC9Kwh5+CNiUDm8YHR/Jxwwvsv5ZZVleCiRkuWtknj1vUbuzZxpV2f0
+	rT4ujHs4YzmBNkAHiIh/mnQhtdmHkR+v18uR13QNhzJ3Er3x5Da91jOCdssW2EwfHQLwCcYAxOn
+	P1NCu16FvLzuT+LAhgucVhktuhwMxPfzq4WS0YY/kzGbtCaiw==
+X-Google-Smtp-Source: AGHT+IG4i38v44WNojcuGS29BOznNszhdY6hFR7a5E8TvrigHkhx71TRFLn3HV/AWzLlw+InAkqkFNkwj9y3lqy5xQs=
+X-Received: by 2002:a05:6e02:214f:b0:3e5:52a3:dade with SMTP id
+ e9e14a558f8ab-3e921f3872bmr330731395ab.16.1756398743051; Thu, 28 Aug 2025
+ 09:32:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From: Daniele Sassoli <danielesassoli@gmail.com>
+Date: Thu, 28 Aug 2025 18:32:10 +0200
+X-Gm-Features: Ac12FXzeoMRKqSe9y2Hqpsb_r-aqwTPwCzIK4WIuGS1pwVqDld_KYUg-bvflAXA
+Message-ID: <CADR1ei4LFVoLhMyya+wx8dXBmrRNSNy6L5Ye_MJgL4kzgtVR_A@mail.gmail.com>
+Subject: question: what does "garbage" field in "git count-objects -v"
+ represent? Is it broken?
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+Hi All,
 
->> +Updates one or more branches, tags, or other references in a remote
->> +repository from your local repository.
->
-> Considering the glossary entry[1] is for "ref", not "reference", what about
->
-> (a) linking to the glossary (is this possible?), and/or
-> (b) saying something like
->
->     Updates one or more branches, tags, or other references (called "refs")…
->
-> ?
->
-> [1]: "git help glossary", or
-> https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-ref
+When reading the output `git count-objects -v` there is a `garbage` field. At
+first I thought this would highlight objects that are considered "garbage", i.e.
+could be garbage collected. However, I kept noticing that this wasn't the case,
+despite my repository having plenty of dangling objects (that where removed once
+I run `git gc --prune=now`), garbage kept being 0.
 
-Both sound good ideas.  We should make sure that readers are aware
-of the glossary by linking into it from more places. 
+I then turned to reading the docs, which state:
+garbage: the number of files in the object database that are neither
+valid loose objects nor valid packs
 
+I don't think I've ever seen a definition of an invalid object? I tried adding
+random chars to an object, effectively corrupting the repository(which `git
+fsck` correctly picked up), but count-objects kept returning 0 at the garbage
+field.
+
+The only way I've been able to get count-objects to report some garbage is by
+creating files in the packs directory (or in any of the sub-directories of
+`objects` folder) with random names, like "test", or sometimes I've seen it
+report the existence of lock files or even preserved files.
+
+So my question is, am I fundamentally misunderstanding what garbage means, are
+the docs simply unclear or is the functionality not working as expected?
+
+Thanks for taking the time to read this and respond.
+Dani
