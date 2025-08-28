@@ -1,121 +1,119 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4A72C11E4
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 16:12:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F0D21CC68
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 16:16:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756397543; cv=none; b=WX5jpIwyvJmGCvh8MyjvN0qoTdYpYZ15dLy7LJJn19JuT1ZeM64XEMOP65lbisIc1zsdU9E7+uoO+VSvQ1/3cRLQtFQa2qJvpx+C60RjcUetp9CAuBkZfLV+jw21qvhD8ApV0orYikpXu0NQn83rGqyFKD09Zqv939U3qJJsRZc=
+	t=1756397813; cv=none; b=XFtpAd4+w0rFUbqQbkD9oSBB6RBQwKTVOtYCtC5rZZ5sH9bdoK96iT85vZ3PIcT4PIobwSopMr96ZFZ91ze9StGQ/6CH9d5iKOkkVfMEXocU2cmjWhSoVr76duZ6FBpq+DV3Qu7DF0NHMup61cvDwI34CPDSh/FYKeQ4cdCc8Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756397543; c=relaxed/simple;
-	bh=5+XLBH+/Szxw3QYD/SegV6jzoqzp1JALFaHheisjoM0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=kjsy9H8mQiL3DC3DEI3+ztYFfzQ++92u/BQ58fbKbnwRrkKHx8iVyzl889RnjOE8ox64pO8eXU7hQjiPjVUo8n0cwp9IPsy19qiVTdPT1mXEC/6tqiPedr2LtlSA169ENkR4Op1NIg4R6W4DKN3iAgTwMiMri3XsNIwe1G0Cb5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IllPINPF; arc=none smtp.client-ip=209.85.219.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756397813; c=relaxed/simple;
+	bh=+YqDVHI+n3gVIMRHU1W+svbVtK7+QszLjfKDeY+GXBc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sNV4Nu4bxVALC6tPTr+oWYxqetfiBDKM+N7vO7yNm0Gc+70mwFkPksclRB7DmEM52ol0fQjvFx2HQ7L8iBb7aFwvaXwtRIgFeMpXA7qd4qsXFafwVWoVt9Bkr4rkLNPpWuYi4T/StogHZZiye4UhkQjQUslS5CQfbjBoGoL73H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ifiPBMMU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SkpQMEOx; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IllPINPF"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-70df1b769e4so5195846d6.2
-        for <git@vger.kernel.org>; Thu, 28 Aug 2025 09:12:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756397541; x=1757002341; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=bp4ElGK6RP77Uen8rMm55HR028QrXYt0ST2h0Q/cZjY=;
-        b=IllPINPFZKtBvgQ6JZtqs5cHmLTEjmB0aeEjQecjx2Q3sZ/m2Mc38KfNixFT+SGQQG
-         LWS9xWer1CNU1+31rni4N51Xcd8aU0ap4l5bcCgv1ziWwnNIRqLmz4BiX0lUYoga55BT
-         NaBaR7XjuVx3w6Vg1TqIBGLcJyezxqM00qfrvjN8Gps2QGiOF7PVHaV63j2/kwJe6UPE
-         HNuNxOhWrpmp83sQ5BMVKeMKluWjjqOjdtVpjwCdTFFflHsGTgX9nUr72HbB3t6G4Q8e
-         Hs4r/MfsVkPj7ZVpteS7we798DsrfvYfZ11jlX8bCrsABawR0UTfodjQvo4hOZGAuX2v
-         xk1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756397541; x=1757002341;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bp4ElGK6RP77Uen8rMm55HR028QrXYt0ST2h0Q/cZjY=;
-        b=UsDtob2oLSl4NHi3efOeVrTwUZfW2bgEgLIegAz1u2bNkyxu1nXmv8N5r4SzbhB7wL
-         3/HVAbJckNFAGFIAW8Xk2PcrR8nSvUzQKgjgq8+N/yR5Ovljmmisn2qZ38aLVuyed7H5
-         qsJiVI0NRiTazzZ9gnfObYQBKiIMDTWIi1pBJ4ak1cQos4dUzMl0mwnlV90oEKQALYZQ
-         fBFmXTfmym06vim/FRzvphjiytM9Sk8IFc2MakJqo6tSX3zdAk9udGO848CMyrxnuxcf
-         6NwEmWP6WLXVAFzBFF7KpQait87vaghV6BWNztQdzSk4+QRkSS6OkvMJ+0WSXE86X3G2
-         xPnw==
-X-Gm-Message-State: AOJu0Yzp7uuR2ze2SGLBt7mNuGzYFJ4hwMZPwpHx4B5OwYx5KMSVC7pR
-	7Sb2Uk18ftVXWg//ifNsilu3mP/LjPNDbRlAflkJLrJZDWwig0BTOOexvgmwvt+X
-X-Gm-Gg: ASbGncvxgIaE+v/SDZ//L4TSZao8n6D3F8JfmgjFZCQLnIUao09X/C2i0jN/gzH1Xtm
-	REytj0NYshoF08Go5N44rkc1MXifUC0jgzKSVk+HqIEhSvl5KdHpth5nDVsZ5T2VOOVSCdToY2U
-	GxD14NZBoKFQAkYETuh4G0YKYIpItFj+Ae9s8A+muBeh3hMIUzk1YIjcHtqHClTrpdj0AH1JQd+
-	urr8yW4Ywwe7RcgtklH8ANN4JGwxWS5CxfW3tf67a4so9qWxzcei/bBqEjpz15rBvMRZUdkSDMR
-	JpYzqBc27BUlbnpkAa8fKXk499DuaWR8VpbM95mHM14CyFQECcpj0B9yebfKN1+6oHim5KkdL2E
-	FFHv2LLIVZ1LtrryK10/G69Cmaun/3hRkaU2E1HDr
-X-Google-Smtp-Source: AGHT+IHh8exqxBifb3w8aRsUPLLydmvrrWe3n6sWiYOt07REfYs8vqooc1bDt43ZiHVYkrbsHOtOVQ==
-X-Received: by 2002:a05:620a:698c:b0:7f5:9bf0:b45d with SMTP id af79cd13be357-7f59bf0b4cfmr1140012985a.36.1756397540526;
-        Thu, 28 Aug 2025 09:12:20 -0700 (PDT)
-Received: from [127.0.0.1] ([135.119.237.68])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7fc0d67c51asm8537785a.5.2025.08.28.09.12.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Aug 2025 09:12:20 -0700 (PDT)
-Message-Id: <pull.2035.git.git.1756397539285.gitgitgadget@gmail.com>
-From: "haihuayang via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 28 Aug 2025 16:12:19 +0000
-Subject: [PATCH] update worktree in config.worktree if it exists
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ifiPBMMU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SkpQMEOx"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id B761D1D000EA;
+	Thu, 28 Aug 2025 12:16:50 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 28 Aug 2025 12:16:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756397810; x=1756484210; bh=MiU/8Owi1/
+	gCVFfAsWUNlThO5tuvgqwuiEUu08DaY/E=; b=ifiPBMMUv0YoHMpjFPx0gxbJ0x
+	YmUFziCPdbAta0nviHPt1Cr4vnM9OzQRUs/jb5mAxXUlmiUrYq0r4O+FWR1sMy3e
+	Y+eLJfe2sOmYbLVnpzxrS75uN5PH3P/Hfa9L0uogCDDUVr0JffDhAYVwx9i5Zg9o
+	Yw20LYVVdtj/Kh1XODaaj5g7pzLOtVM9pyt4anW14rJg2feetgS7KFs1/exVGECG
+	XHhnQfeY4j8oqSUQ+q311WvpHkiRMUbmX9x2WK7FiAxbRCkwDzyOF03SpPgTTuet
+	G9/kSUUB15xXaAmBrTDE0eZ9QJ1FZNUPRx67pCxUW0UJW0gkjxtHX/l+B3pQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756397810; x=1756484210; bh=MiU/8Owi1/gCVFfAsWUNlThO5tuvgqwuiEU
+	u08DaY/E=; b=SkpQMEOxkKEJcGxqU9TiF4pqXR+LzprIVz7eUynRUsI6EQZySOg
+	BCSe5tAtRWhW1fBizLmlXY8bkijRsRQGGLkg5DaPEB7xfWtQYBXcojmw+mLy8k/P
+	pEi5UXJUWiKG4CryEuPCZKfoaKP1mb30aMuC9MePfhwH4iboVCqTqoAzmTV4laO3
+	OiYfMrf6WTfvNUD75cJzmamY3Uj0vVFpdo3+jJklWP2TB2p/wepMvG64XbOWFVNC
+	AGDOHOymu5mMrk2+m2M72ZHfHU3ITSWUSuhs+S2jG5ZJbdbedgVsrH+TMtuXxRnt
+	gaaisBZYsQfCSXgD69VYHmPpa6Rl6ycrGNw==
+X-ME-Sender: <xms:8oCwaD19QdpfdOjQtE2FDdeB3T5QxaK_evcn4l12_tQu_HMDopy0Xw>
+    <xme:8oCwaKh7ZmeKigJjWh2qaYEcNSJyTqz_MjyDRi1O121FteAaRfUPiJWWIy88VF2i3
+    kX85-LTyQXvTt0ZXA>
+X-ME-Received: <xmr:8oCwaEUGiazGMoRejZIP7febw7-gPQ71Fnjb5uNUN0-0imyIXe2BLRdgp7B_TnOhpscHDmuTlAkYH7nvm6vc5aJrZThpoPfNaewi92U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedugeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
+    nhgvthdprhgtphhtthhopehjohgvrdgurhgvfiesihhnuggvgigvgigthhgrnhhgvgdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:8oCwaJV4C5bYXcwxjMXtcwZsEw1qU24phTQwIdgRCusgZyk2X2dWWA>
+    <xmx:8oCwaEhUxB9hVdfKyhPZBvZYbmXYeBgXLyXFipM8N92sbd0TKReqLw>
+    <xmx:8oCwaEYJuRqqrTj8lE8SdeZkvVtQrVRLWc0aE9T3aIm4IHeFCA4__Q>
+    <xmx:8oCwaBrbc94IMAb3U772I6w1nLZwq17bywRf6aQO9T4FMTdvqaHsLw>
+    <xmx:8oCwaPTEvp1SHOLj-mz2bxES0x0aRG7RDsJUs30X3P2kiI4CSeoN5jOB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 28 Aug 2025 12:16:49 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Jeff King <peff@peff.net>,  Joe Drew
+ <joe.drew@indexexchange.com>,  "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: "lock file exists" when fetching in bare clone of repository
+In-Reply-To: <CAOLa=ZRizMKRsP2wo-RJUksXAv1Hgx3XDGCO_ZGOwKpf6kAbQQ@mail.gmail.com>
+	(Karthik Nayak's message of "Thu, 28 Aug 2025 06:51:18 -0700")
+References: <YQXPR01MB3046197EF39296549EE6DD669A33A@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
+	<20250820213323.GA1667633@coredump.intra.peff.net>
+	<aKbHozlmDIqfgkg4@pks.im>
+	<20250821072706.GA2390046@coredump.intra.peff.net>
+	<aKbwabLZiWasYoBC@pks.im> <xmqqwm6w3bjp.fsf@gitster.g>
+	<aKgKmLvaHAuueJeb@pks.im>
+	<CAOLa=ZS43w74tWjD47h2mnGiyaQWrGEY-UpL8kdXJi_zD0ASmw@mail.gmail.com>
+	<xmqq8qjbxn8n.fsf@gitster.g>
+	<CAOLa=ZRizMKRsP2wo-RJUksXAv1Hgx3XDGCO_ZGOwKpf6kAbQQ@mail.gmail.com>
+Date: Thu, 28 Aug 2025 09:16:48 -0700
+Message-ID: <xmqqy0r3whe7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: haihuayang <yanghh@gmail.com>,
-    Haihua Yang <yanghh@gmail.com>
+Content-Type: text/plain
 
-From: Haihua Yang <yanghh@gmail.com>
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-When updating submodule core.worktree configuration
-- If config.worktree exists in the submodule's gitdir, write to that file
-- Otherwise, write to the commondir/config file
+> This error type is bubbled up to `files_transaction_prepare()` which
+> tries to lock each reference update by calling `lock_ref_for_update()`.
+> So if the locking fails, we check if the rejection type can be ignored,
+> which is done by calling `ref_transaction_maybe_set_rejected()`.
+>
+> Only during batched updates would errors be ignore and only for
+> non-generic errors. So this change would specifically only apply for
+> batched updates. Currently that is used by:
+>
+>     1. git fetch
+>     2. git receive-pack
+>     3. git update-ref --batch-updates
+>
+> And for all three scenarios I think it makes sense to add this in.
 
-Signed-off-by: Haihua Yang <yanghh@gmail.com>
+Thanks for an extra explanation.
 
-Signed-off-by: Haihua Yang <yanghh@gmail.com>
----
-    update worktree in config.worktree if it exists
-    
-    When updating submodule core.worktree configuration
-    
-     * If config.worktree exists in the submodule's gitdir, write to that
-       file
-     * Otherwise, write to the commondir/config file
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2035%2Fhaihuayang%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2035/haihuayang/master-v1
-Pull-Request: https://github.com/git/git/pull/2035
-
- builtin/submodule--helper.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 07a1935cbe..231c70f12e 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2519,7 +2519,12 @@ static int ensure_core_worktree(const char *path)
- 		const char *rel_path;
- 		struct strbuf sb = STRBUF_INIT;
- 
--		cfg_file = repo_git_path(&subrepo, "config");
-+		/* Use config.worktree if it exists, otherwise use config */
-+		cfg_file = repo_git_path(&subrepo, "config.worktree");
-+		if (access(cfg_file, F_OK) != 0) {
-+			free(cfg_file);
-+			cfg_file = repo_git_path(&subrepo, "config");
-+		}
- 
- 		abs_path = absolute_pathdup(path);
- 		rel_path = relative_path(abs_path, subrepo.gitdir, &sb);
-
-base-commit: 1fa68948c3d76328236cac73d2adf33c905bd8e3
--- 
-gitgitgadget
+These pieces of information would be necessary in the proposed log
+message when it becomes a real patch.
