@@ -1,136 +1,116 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDAA63314DB
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 17:10:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0ABE245006
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 17:12:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756401007; cv=none; b=tzWuU/bVevQFnlWkZp3/w1L34uEn7CRmpc5MFohh/vh5+caClCzzor56r1+49TPfaJtGlmYQfniU7L6ljlV+ICglejRXBLEfSoM2w061nh/PFevxuceONc1yY9MnGu42uRA/yAVbheoYhT2FNnHfH1NUkL9EtcYzA3ZzcWBWFFg=
+	t=1756401169; cv=none; b=GQx+mDt1lAJktM6KlO1HuROWyxu3SjdNqcEnp2P5B8a7QbFWjKRJ76gCReL02jbAQHLLw+R6I80Lufa3QKNahDCDi1grzYaQ0waiQfA3BVcR7XcRSWpMA/mpB/azRO8WFTBIYx19/7NSN0oOdaMCzQXiEl83GeDXEmQmOOjmZmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756401007; c=relaxed/simple;
-	bh=PYsH9wqxEzhDb8Csk66LiI6/xWTnB1vNfqR+NYq172U=;
+	s=arc-20240116; t=1756401169; c=relaxed/simple;
+	bh=2Bg8VfOJwRWUJIKQsj4YngqDJZRbllTOrq72YaXW+d4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QUStv4hHOf3ROJDcYXlBzz/8ZuD6aGGgK9ccBuoMCKYW4l6Gn25NyQvtKN4PdXWFUUngG0FZjB0TcKO4ah0IIB4OmfaJPjZYBSRhR5smdurQNDj7ipWaB1bs+Ph+QOR/E6arFtCgInPt8ifEea6HN8loqA6hpiwXmpWuu8uUwSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BbNC1342; arc=none smtp.client-ip=209.85.166.172
+	 To:Cc:Content-Type; b=IRkGroBCs4U2g+q7bA1htjVkDKjZUlX1Kx2z/5Yr/j9ilnH2BpfOy8QnavsINXij+SS9ChoXnEUlwoSnHgEjDiBnnsro9SfvHhtS94/WubcRychy5aRRs4kev356kCZLUihML6D+j6ucjpGDuc2X+A5czmeTej+Tb5zUaPg7r7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UH7UTP0v; arc=none smtp.client-ip=209.85.166.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BbNC1342"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3ee6485e7d7so11696915ab.3
-        for <git@vger.kernel.org>; Thu, 28 Aug 2025 10:10:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UH7UTP0v"
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-88432ccff13so43177339f.0
+        for <git@vger.kernel.org>; Thu, 28 Aug 2025 10:12:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756401005; x=1757005805; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7gVfK/YJZxAsBVLWd1vgitIk0gau1j+Jg6oIb5n4SvU=;
-        b=BbNC1342o42ta1RmoNeFOsBmBJKq2/a+DHG2WvrPAvz4UR2GBGyQMIlpAF5hOX3Z70
-         EpRygmao0ZwwgYYcW5Y13Y7O1yZhCr8N/dYXDg/aruPugKkuRwuQKeTEBM3ET4gZU4rS
-         T1aNQIoNcI6xiICDj8DD3Q6Rrh/S1hfniNiOcShfGuDPHqVC2E1sXJGiyb7h97HiNMSq
-         4lgtLmjV6DaH08X/713A/xyt3q/NOJ0D7X0xcR4yg2sUHgfcov7q/BAPNIM4UACHIyKE
-         hTOB+ble62KUYD/vsJgq5edliLYWfRe7BBStjlJ8sDmzr3EZic4XPMvGiK174c35BFLi
-         wNFQ==
+        d=gmail.com; s=20230601; t=1756401167; x=1757005967; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bmOgNjHn3+F8DQBxHMfAqCj+IIFGtjmbN7frSJj9amQ=;
+        b=UH7UTP0vRj8UUz1XK5CkVn65RgIkDoEOEVGq8UbzBplLr2b94Y3AECGsa2ewY60ZV6
+         I/8zkRWClCgJae1PgxQKdJcys0nv3k7rFpC5stCQFriwZ12Sr+3FBn1jsqk9FJVPk/sv
+         MqwFmG7Q898lS2UCp0eyU10GLAEgvES6n0DavmzAAiGXZ9A2urxlRNPbN8Ei76TFCO7z
+         MVrLC3pmByEmNEkWDNemVNGKPSAxVawtkVN13NSmZp7otGV064y2mG9Q5vKicJPr6Hdo
+         eUb5vXuyQJdapxtg9l6lLxoM4dNTJsrkY53DaFpHAkxFHIW3CaWsihIGv8wxXPrGb+5/
+         qHJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756401005; x=1757005805;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7gVfK/YJZxAsBVLWd1vgitIk0gau1j+Jg6oIb5n4SvU=;
-        b=lQgB8gbwAlv9aXZ2d7mulTiHkMkchxOgTNKBQIx5Fe0tDH+wgqW5E+OMNpm/7pBJqE
-         RuoD70zlJxRWxAz7W0V/wgPpGTJ/SRsT8eg8vej2c0k0hPVh+3ClO1KpMy08N1yzwr/y
-         /E7RN/aonlVQzlgeKUjwMMDPSEetcEXg8tDmQnTL6m8nJyayQljC+5D6XQi/wAFST8tj
-         yYxnBmqVVlwHc16J21wQCoJ+MQL6O44uHWBd/sj7cT9vqNO9Jbckcg2/zoWQtv6GxStt
-         34YkHcXC4B6Rb8K8cdHhx5P02neBv+lj4UbyTN9VL06Ta8UDJyDT1vqUeFc1EMh3Em1u
-         xyMA==
-X-Gm-Message-State: AOJu0YwqYviZvQrmiM9wPGhcykh3az6sJW45AE6/JYSZ0eR/1H/IMMya
-	BHgqkeWrNVaErw2NOHR3jcB4DXOThQPSFn4VqVF5zHRWGgJONAqGhHMMas6/VxHkr18AiB/OqII
-	orI1XrVKYv5ODPmfKOAFW2PNszPUkWtWZ8YmF2y0oWzrq
-X-Gm-Gg: ASbGncsvxSlsr6v/pquEFChR7FIfFoLlnh04cS/XR2+STsFVf0R0CSg4IvwE9CTwYR3
-	6itTob36mIqCeUPkQ1mF3TmdRo2vCznob7rNyrIO+gLuw27vlj95pf5XBrq9/KOfYwpYL6MHxV8
-	zk5b6XZhfx0JWo4yC/KX0IkXNJqu+5mXHN+GxqZVQ5BxV6AKp4DKGj55uSoegXsOvoQWxPb5tr1
-	qwQFd8Uhq8wo6G4PYbn+sY3tlD7wvKyrDpUGJosc8xcLhe4hQ==
-X-Google-Smtp-Source: AGHT+IHdeiouvdYBBevt+FwXiL8YL6GZ+54bEGjFtP8D3FX3vJarFKqaMo9QD6IvClKeRK1T5uv3NErq2GU0yVdG+a4=
-X-Received: by 2002:a05:6e02:2184:b0:3eb:2708:3b8 with SMTP id
- e9e14a558f8ab-3eb27080780mr305886995ab.19.1756401004643; Thu, 28 Aug 2025
- 10:10:04 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1756401167; x=1757005967;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bmOgNjHn3+F8DQBxHMfAqCj+IIFGtjmbN7frSJj9amQ=;
+        b=rsTv4OwCT1ojzI5r7kVP5wB1bT0lgkCsmC0UP79Woky93tOd9ES5EbwlwNA0A53zNW
+         DG7LCNwBjIK2Ltuo8R292jyNCqxdOiTbEDTUJWtkBukMcx9SqULGBBS3qkRq3HabbglQ
+         fYy0wlWH7WYTw+UUXeF9vg61tJ01xKCaTkqo0MHaQAxFObLX3+CdVY12JFsC+dr/jR/m
+         wvJpq134TF+6Si6YjGYbvw8frYIR+Y1IC7ChMxRYDQzPZ+Y/55QtsnE/dmOQ03bF0Jhk
+         TZr0WzAbXlJhTEZTSNxFZZ8td6gOtWrj9ZWZVAKj1cs9aOYUIph+shLTzwjaObBbNi5s
+         mUvw==
+X-Forwarded-Encrypted: i=1; AJvYcCXJXrg6VtHFHO5MvaWO4cASPGBaWdUGf6s8WWduGoH8lWKskl/P9BMC5V7y8uaVuD/0wqI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyUWCA1OAlQ6rwjMNN5t60mNy7Mp/Lx1c24fxKMomr758Lc09/V
+	vBbSQqsVRdbXL2YW0t52kC1XktU3Z7U9SZmpkHdK4G5wfjkY/VtjMnsRdMwfE36zcWEnRHVB3Qu
+	DCdpmYzweRfgBmjv6MUMenuuspwAAoPGWS+GR
+X-Gm-Gg: ASbGnctLoTBpilB7bYtuzdz0q4xFcxl0IwiBkPprmtow0gX+F3v8i3ph3FZgwgoXki/
+	oeaHhhr4udqeKmHh4YpdWxcLF0ZLSowTuy44YkF55OOvCQKTyhCl9NQcFpKae8Bcd8mFBTExf4d
+	2r7Ilz59Sv48nTUqbtxUZAklZ1qDQ220XIxJhGvGbx/fIvbr6bmnsAD0AdWM9vGGmy9bnrDTF7T
+	rnZcz2P767FQJnfiFF+pRa7j0CPGtlzPgARR+lZ
+X-Google-Smtp-Source: AGHT+IGfR4q382h7nHrdditYiTJbPXDqzifRL3++DyQ2OicbT1RaN8kyP0HNYztToFucNVnFhGVaxjXF0nKq43t1EDc=
+X-Received: by 2002:a05:6e02:16ce:b0:3ea:a3db:ce75 with SMTP id
+ e9e14a558f8ab-3eaa3dbdbbemr248003915ab.20.1756401166657; Thu, 28 Aug 2025
+ 10:12:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADR1ei4LFVoLhMyya+wx8dXBmrRNSNy6L5Ye_MJgL4kzgtVR_A@mail.gmail.com>
- <xmqqy0r3v0jz.fsf@gitster.g>
-In-Reply-To: <xmqqy0r3v0jz.fsf@gitster.g>
-From: Daniele Sassoli <danielesassoli@gmail.com>
-Date: Thu, 28 Aug 2025 19:09:53 +0200
-X-Gm-Features: Ac12FXxCWc31_EnVAg6bOhsVblcedD5JDP5_6O6MvbpPSEs0ZbVhkN2TGeoBUnY
-Message-ID: <CADR1ei41b6oNONF1GPiWMm+LdwbV7_2K=vBy1b30OrqpyfMbvQ@mail.gmail.com>
-Subject: Re: question: what does "garbage" field in "git count-objects -v"
- represent? Is it broken?
+References: <pull.1958.git.1756228693233.gitgitgadget@gmail.com>
+ <pull.1958.v2.git.1756370289.gitgitgadget@gmail.com> <ec5dcdf9d00473417b1f0b676a485f01076ce075.1756370289.git.gitgitgadget@gmail.com>
+ <xmqqa53jxyiz.fsf@gitster.g>
+In-Reply-To: <xmqqa53jxyiz.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 28 Aug 2025 10:12:35 -0700
+X-Gm-Features: Ac12FXxSv0aCU81narqKHFl3eoR7L4fhEH0ARYQkMR1cuVukKn4gi6m28wv1L-k
+Message-ID: <CABPp-BGRHajFf5z91CvvKvahpknbt1KraCR3_rOmAjvxz36_Ag@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] range-diff: reorder options lexicographically
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
+Cc: pcasaretto via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Paulo Casaretto <pcasaretto@gmail.com>, pcasaretto <paulo.casaretto@shopify.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 28 Aug 2025 at 19:05, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Aug 28, 2025 at 8:24=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Daniele Sassoli <danielesassoli@gmail.com> writes:
+> "pcasaretto via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > When reading the output `git count-objects -v` there is a `garbage` field. At
-> > first I thought this would highlight objects that are considered "garbage", i.e.
-> > could be garbage collected. However, I kept noticing that this wasn't the case,
-> > despite my repository having plenty of dangling objects (that where removed once
-> > I run `git gc --prune=now`), garbage kept being 0.
->
-> count-objects is about quick housekeeping stats and does not (and
-> should never) analyze reachability like fsck does, which is required
-> to tell which objects are dangling.
+> > From: pcasaretto <paulo.casaretto@shopify.com>
+> > Signed-off-by: Paulo Casaretto <paulo.casaretto@shopify.com>
 
-Totally agree with this.
+Same issue with name here.
 
+> I am not sure if "lexicographic order" fits well in the context of
+> "git cmd -h" that spews out many many options, shown with related
+> options together in groups.  I find it aggressively annoying to show
+> left/right-only far apart.  A user unfamiliar with the command would
+> look at the list, find "left-only" sitting in the list alone, and
+> waste time and break concentration wondering what in the first range
+> is so special to deserve such an option, until they see "right-only"
+> further down to realize that they are symmetric.
 >
-> > I then turned to reading the docs, which state:
-> > garbage: the number of files in the object database that are neither
-> > valid loose objects nor valid packs
-> >
-> > I don't think I've ever seen a definition of an invalid object?
-> > I tried adding random chars to an object, effectively corrupting
-> > the repository(which `git fsck` correctly picked up), but
-> > count-objects kept returning 0 at the garbage field.
+> I'd rather not to see this "lexicographic" change done, but others
+> may have better justification (note: "for better organization and
+> readability" I just disagreed is a good justification) that may make
+> me change my mind.
 >
-> count-objects is about quick housekeeping stats and does not (and
-> should never) analyze object contents like fsck does, which is
-> required to tell which objects are corrupt.
+> What I would change, if there is something suboptimal in the current
+> output from "git range-diff -h" that deserves improvement, is the
+> lack of the grouping header before the options for range-diff
+> operation (i.e. creation-factor to left/right-only, before the next
+> "diff output" group begins).
 >
-> > The only way I've been able to get count-objects to report some garbage is by
-> > creating files in the packs directory (or in any of the sub-directories of
-> > `objects` folder) with random names, like "test", or sometimes I've seen it
-> > report the existence of lock files or even preserved files.
-> >
-> > So my question is, am I fundamentally misunderstanding what garbage means, are
-> > the docs simply unclear or is the functionality not working as expected?
-> >
-> > Thanks for taking the time to read this and respond.
-> > Dani
->
-> You are fundamentally understanding correctly.  The command tells
-> you it found a garbage when you do this:
->
->     $ mkdir -p .git/objects/00 && >.git/objects/00/tmp-garbage
->     $ git count-objects -v
->     warning: garbage found: .git/objects/00/tmp-garbage
->
-Do you both agree that the term garbage is somewhat misleading? I've spoken
-about this both on Discord[1] and in person at the recent Git Mini Summit, and
-both times people expected to see garbage-collectable objects being reported by
-this field (which, as Junio says, wouldn't be correct, but that's what people
-think of).
-Other users also seem to be confused by this as shown by [2].
+> Thanks.
 
-At the very least, I believe the documentation could do with some clarification
-and maybe we should even look at changing the wording of the field.
-I wanted to triple check my understand was correct before submitting a patch.
-
-Thanks for your feedback.
-
-[1]https://discord.com/channels/1042895022950994071/1156706741875130499/1408738703156973640
-[2]https://stackoverflow.com/questions/30999879/git-garbage-size-out-of-control-need-understanding
+I do like lexicographic ordering for unrelated options, but I prefer
+options to be grouped by intent/use first, then by lexicographic
+ordering.  And here, not only are--left-only & --right-only related as
+Junio points out, to me --diff-merges and --remerge-diff are a similar
+grouping that belong together.  So, my $0.02 is that I'd lean towards
+calling both changes in the patch a reduction in organization rather
+than an improvement.
