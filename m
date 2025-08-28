@@ -1,89 +1,85 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A741F09A5
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 23:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006723FC7
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 23:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756423954; cv=none; b=lwJxTowCw9nqykXWwNpgSXaG15zpVGjvbeIfOP0oL0h0GtXiZi7SDlEmhq1SO9ZKkrLcE8skURmfTqq3QmzkU1Y/d8UJWEJsP+1BxFIVBlZqhJ52xVkwBUJfdhGYoPc13St+woP+ITODM6ygvgpNo82rZQXxAXqV+8K3LpLzSmQ=
+	t=1756424150; cv=none; b=qDitfG1spEbxgt3oH9v6EMuwN11Yaadg6jVM0Bak+m56vRVxUr68sTxuqAOI0+hS7wNsSgN28jT3rckLaFmDi7IzY1SG/8OerZGQdSvoUGWj84T6rPld/ADssqF9uyV0eZyzf0EGhMndZWD/oMVIXOVLAdI5oQjG5iKdoZUnJws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756423954; c=relaxed/simple;
-	bh=Y9Cop2S812cUS+evrgj6/+82gNUkSAnfgKH/SwvNm1M=;
+	s=arc-20240116; t=1756424150; c=relaxed/simple;
+	bh=erTZlUOi93L2PEiR1MuOMtAYbjd2QhP8ZYJfQ+6ZkhI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=APFbOPl13MpJOps6igv/5NMFlnGHS7PwEGI2ILDK8eMDwds5AUeoWyD+8aklQNAMRzIox8/r9NFWyBO/ZFDfRIEIUsISxN0KDuBYtlq6W34CBd620rONNkh3VKm73Yrxzg7qEESWnNXibhZFkTXSY7eRbCVC49u5FNQT3tD09bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CSwNWQfh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gSDnWmWq; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=KE0CrJhA+BS8EF3yJPfF3FSn5OdUwOu/EF/C/bVhZrK6WjquLkVypFVY/Okv6cK2AjqZGcXOi/GKgG14RMEpSTIVdprN7ihDJYITqmw/b6Guhu9DGeViz7CFJPHAvP0wtrifjlgOUYXSP5qDU6ewcJOZRA+I/yEKq8t2JKz+KYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=onBgHGMo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XiAvEdla; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CSwNWQfh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gSDnWmWq"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2E3697A0149;
-	Thu, 28 Aug 2025 19:32:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 28 Aug 2025 19:32:32 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="onBgHGMo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XiAvEdla"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F22CC7A01E5;
+	Thu, 28 Aug 2025 19:35:47 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 28 Aug 2025 19:35:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756423952; x=1756510352; bh=ShJjl0w6OH
-	E0gpZGsRydrBLTGn3UIKBkdNpjN8IfvEU=; b=CSwNWQfh+Tmnxjw6UhT8Ji0vA+
-	UeO95o+KAptUD5c4tlvCvMC/0sFIztpPDL/oRadzHnJbP9hsas9Xg1UEvZRSBdxh
-	EpZBs8PKhkz+ENFr69B/qAPeMbJQ8mYNgG2DiGWBMjmQ1pyM1u6K5ynLm4WdLzrN
-	zwhP79Q4MwV0i6l9SlkGAsNRSZOjiUVVJUffDYaRIWghsBnDYudBRQxP+Nzvq2+I
-	qh2kJzz3UoYtzPzOV9hODvXdDVF8QXGCKVdTZDFTlyw84nN4L6VBkioIAsM3acTp
-	qOOJ5QD8+tcMJvjJ5984Lwkbf0NNpPtUHp28hidDO2M8ZI6MR9rcX5BjMeaQ==
+	:subject:to:to; s=fm3; t=1756424147; x=1756510547; bh=LKKiPMBZEZ
+	RqFOoWqef1WRnDIC0OhPC4eXyduOX1t2M=; b=onBgHGMofGpSEWyViAKd8Xfbwp
+	qvs3RVK8UDOPPDf30YVSqkt53/uwaZv1sCyLNbpOqoy+zqEplSAV+nolmJ6TxGZd
+	vMlj/Kea/PRi6MJn/KnhTofTYsAv8L7ZiWgWwWIxe4KgbnIaXu28XeHp9t+31beh
+	VRgVDQiDsTmjsheoPDrxO6pB6RlcT4vKcQsgK7Xb1IdDtVdNZHZAwxufwCyqHeWb
+	3/1IY1tmTTzc/e5gRdBJdNV/2Lm0zoAKF82826a8nl/AY+JumiyUlnygHLJdqAHm
+	xlhZb7kmADiPdXMYxvL0ppzsKqWIno8wLRUbXz/sf5pQh1PvSlVkQmAc9Mpw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756423952; x=1756510352; bh=ShJjl0w6OHE0gpZGsRydrBLTGn3UIKBkdNp
-	jN8IfvEU=; b=gSDnWmWqPGAq5IVhmrHyDttDPGU+l9oDJ4rT+VS6WA7HRnUAKX4
-	G6e72bEqb7kwjQ06AAhFOk1UDXG7atcYhp+fQfNWKQLSEJES2wVONVjD0zBcHaFx
-	JDJzktn3XHU5GDqVQ5gFgE1JXaxjcRMbBfWggrRYjn3JPdHT5Wyk4aDWCNN81jaF
-	R5l98CNzyEaUa61VXk6R3grpDgrramsFy2CY/braJExOyaJac1wXtsmRHeRhsWGW
-	RuVPzlg4W22m7GioiuvXMHp0nYPyl+6HzvZq3g7q0RcS6fRiIoiAPtwSCy618whN
-	6dLe2mGydAny7nPyKTP3bROBW7cOQKqO0/A==
-X-ME-Sender: <xms:D-ewaPg0IVv4ezZk_K80RZY6HSmJik0idcyqEjp5YNQWaJxR_Kg6bQ>
-    <xme:D-ewaI8b5xpVYG1z53HbgPYJLQa9oenXXVzzNsf8OdvzBf4reMogsZrABB-7iCkBf
-    PULZIr0QDdMh1ynWw>
-X-ME-Received: <xmr:D-ewaKtT5vVONjBs_QHMuyquBT9Nomi_MqWCNcUNJh2a2cJsB-FmyTs3XeZef8fc6JElytUyCZziPFaVY3MJP0c_HUVJoSQoULhylV4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvfeefucetufdoteggodetrf
+	1756424147; x=1756510547; bh=LKKiPMBZEZRqFOoWqef1WRnDIC0OhPC4eXy
+	duOX1t2M=; b=XiAvEdlaWCXlShMVEtx3lv/qTPs0l2rQlX3zP0BKtlGJDuj5aEo
+	KuoSn5dmj/UMl8AqJFgL+YB17HRpsxEVV+9tCBmbYicdlpCyP7Ouzzzx8eKwVZuT
+	Hw1hoRc4/JRa4Lsuw77NEes2XYHokGflBWUcXNFPbRENk1H72zK+PHMgqFKxm1K/
+	Ua4Lst7N7x2z3cDDeCjzH99JBm20lanmw/muiZxG5Fsagg8xfbu7MXthYmzy3p73
+	T6aRhba3zFGf8dVWuJax4N4fp0zPWqOycoKpUBn4okV95b9aBVGoXfJw6zH4iISy
+	PaZxo8epNFxAR6ljLJqvUQGaVmAfNwjOLqw==
+X-ME-Sender: <xms:0-ewaOJJo6Xp2iTBsrvWe3lcxHV1kk9BRrk6iWlsilHEpOZ1WY4CuQ>
+    <xme:0-ewaBnP1aGf3i1Gj3-eLLQ5Qt2W6LGl-4PmCWlxV88JpCUC10RBL2ELvcwXwZyM1
+    XtUg7tsDHcnNsPFOw>
+X-ME-Received: <xmr:0-ewaCO3ECG8SEnpUX6vmt73o82zRQJ661xR3D_zPGrx8QRBn3cyZD1Gq7DYMqOa9vXWjO9DIUks-9i6aaXn2OsvGpZCAvjydevf56s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvfeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtg
-    homhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvh
-    hilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:D-ewaErQHzYfywwdeJLvyRGmmOdgJZWbmCt5TV1UvzWAFLnz3m-iOQ>
-    <xmx:D-ewaGopnrGR70kNZj7UXM_MJrbLdTZI25tysWmBQVuS5Gehk84Lzg>
-    <xmx:D-ewaLYuCFYtu_AONvcDFt4wbjh2NDz8CqxG9aixN8GIzmg1WX-CJA>
-    <xmx:D-ewaM9H7xF6QEZiwcLNMl0NAh4-hwHGZFNsA5Hd470ClyNRQok-lw>
-    <xmx:EOewaDNu5d4FeLLy2yj4gAfOZ5ZUsgBrSn_IrLoXIiEp6CEFjBE-UCDU>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgeslhhi
+    nhhugidrsggvrghuthihpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvg
+    hlmhdrohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:0-ewaH1SGGIf_DFuL03-RcPGpTuIW3SjKwSL9_XAVDitqLSO4qtT6Q>
+    <xmx:0-ewaBkAxrIlxzYlcCfAdbYHWmKLvI0L98G_gdSa2yDJjYxbMJvx0A>
+    <xmx:0-ewaOWqEU0cB-SF08XuEsyMHa1zaX3ZVITCPehBXV8GO7qEZcHH5g>
+    <xmx:0-ewaHs-QQYGR_Ow8kvfes7pAgTXN5231Nv1tNR6spdSMOKF2H26lg>
+    <xmx:0-ewaOnUeTtDPeeusxGaSDr0SzNaLZALseTNjWoG4Pb7K4JTqI555WPG>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Aug 2025 19:32:31 -0400 (EDT)
+ 28 Aug 2025 19:35:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
- <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Justin Tobler
- <jltobler@gmail.com>,  Jean-Noel Avila <jn.avila@free.fr>
-Subject: Re: [PATCH v7 0/5] Make the "promisor-remote" capability support
- more fields
-In-Reply-To: <20250731072401.3817074-1-christian.couder@gmail.com> (Christian
-	Couder's message of "Thu, 31 Jul 2025 09:23:52 +0200")
-References: <20250721141056.2283349-1-christian.couder@gmail.com>
-	<20250731072401.3817074-1-christian.couder@gmail.com>
-Date: Thu, 28 Aug 2025 16:32:30 -0700
-Message-ID: <xmqqqzwvqay9.fsf@gitster.g>
+To: Li Chen <me@linux.beauty>
+Cc: "phillipwood" <phillip.wood@dunelm.org.uk>,  "git" <git@vger.kernel.org>
+Subject: Re: [PATCH v3 2/2] rebase: support --trailer
+In-Reply-To: <198826665b6.317113211709957.1514728503207030488@linux.beauty>
+	(Li Chen's message of "Thu, 07 Aug 2025 10:40:05 +0800")
+References: <20250803150059.402017-1-me@linux.beauty>
+	<20250803150059.402017-3-me@linux.beauty>
+	<e911d897-8664-40a7-b7a9-8eb9f71a8735@gmail.com>
+	<499da566-66a8-4c38-a2b3-13c06092568f@gmail.com>
+	<198826665b6.317113211709957.1514728503207030488@linux.beauty>
+Date: Thu, 28 Aug 2025 16:35:45 -0700
+Message-ID: <xmqqiki7qasu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,34 +89,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Li Chen <me@linux.beauty> writes:
 
-> Changes since v6
-> ----------------
-> ...
-> Christian Couder (5):
->   promisor-remote: refactor to get rid of 'struct strvec'
->   promisor-remote: allow a server to advertise more fields
->   promisor-remote: refactor how we parse advertised fields
->   promisor-remote: allow a client to check fields
->   promisor-remote: use string constants for 'name' and 'url' too
+> Hi Phillip, 
 >
->  Documentation/config/promisor.adoc    |  61 ++++
->  Documentation/gitprotocol-v2.adoc     |  64 +++--
->  promisor-remote.c                     | 398 +++++++++++++++++++++-----
->  t/t5710-promisor-remote-capability.sh |  65 +++++
->  4 files changed, 500 insertions(+), 88 deletions(-)
+> Thanks for your thorough review; I will address them in the next version.
 
 As I do not want to keep an inactive topic in 'seen' for more than a
 month, I was doing my usual "sweep" of the topics, and found this
-one.
+exchange.  
 
-I think I gave a review on one step that pointed out a few problems
-with an outline for a possible solution, but I did not see anybody
-else reviewing, and nothing happened since the end of last month.
+Is this still being worked on?  No rush, but just checking to see
+what the status is.
 
-Since the summer is a slow season, I do not mind keeping it for a
-few more weeks in 'seen', but I can simply discard the one I have,
-and requeue a new version in 'seen' when it materializes.
+Since the summer is a slow season, I do not mind keeping the topic
+for a few more weeks in 'seen', but I can simply discard the one I
+have, and requeue a new version in 'seen' when it materializes.
 
 Thanks.
