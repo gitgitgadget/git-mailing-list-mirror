@@ -1,116 +1,111 @@
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0ABE245006
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 17:12:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8728212577
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 17:39:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756401169; cv=none; b=GQx+mDt1lAJktM6KlO1HuROWyxu3SjdNqcEnp2P5B8a7QbFWjKRJ76gCReL02jbAQHLLw+R6I80Lufa3QKNahDCDi1grzYaQ0waiQfA3BVcR7XcRSWpMA/mpB/azRO8WFTBIYx19/7NSN0oOdaMCzQXiEl83GeDXEmQmOOjmZmc=
+	t=1756402800; cv=none; b=KIMbhqO0Xx5g2K3xTMB565PgyMIVF+uIxqSPT8ugFPhWlKcPCeYEdjvZkM5USQpwCX6zw1buAL/ud+2Gqq+jTEBvwgsndq0o2fOdvpap7H4V9bjYxQTbTtVPep8KgLsmt7XfL1KoajH/+ePRRuo4ksSvSfnZhPPvDm73hPOoxsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756401169; c=relaxed/simple;
-	bh=2Bg8VfOJwRWUJIKQsj4YngqDJZRbllTOrq72YaXW+d4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IRkGroBCs4U2g+q7bA1htjVkDKjZUlX1Kx2z/5Yr/j9ilnH2BpfOy8QnavsINXij+SS9ChoXnEUlwoSnHgEjDiBnnsro9SfvHhtS94/WubcRychy5aRRs4kev356kCZLUihML6D+j6ucjpGDuc2X+A5czmeTej+Tb5zUaPg7r7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UH7UTP0v; arc=none smtp.client-ip=209.85.166.48
+	s=arc-20240116; t=1756402800; c=relaxed/simple;
+	bh=3fTMwuCEmz/gT+mkDaFxX8DyH7uqDRTTfI7UskqQ0Ec=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=EhTqd0/P55HKEKWM44BFdTGX9y8dBNnkii4Em14KeotDqbHUHafkwbveFugdjEjADKxVjPNZocodHU6C70+JVMJUTm5xM7nuWjVuPCYqvLUSrYBn0FRRn7P9iT473QnkvPiuVcxGUI2nF7iGdBSDCGwZXmVYwKsYNXiN+Ymtl9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ANSLZmFj; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UH7UTP0v"
-Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-88432ccff13so43177339f.0
-        for <git@vger.kernel.org>; Thu, 28 Aug 2025 10:12:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ANSLZmFj"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7f8ea864d54so119594585a.0
+        for <git@vger.kernel.org>; Thu, 28 Aug 2025 10:39:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756401167; x=1757005967; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bmOgNjHn3+F8DQBxHMfAqCj+IIFGtjmbN7frSJj9amQ=;
-        b=UH7UTP0vRj8UUz1XK5CkVn65RgIkDoEOEVGq8UbzBplLr2b94Y3AECGsa2ewY60ZV6
-         I/8zkRWClCgJae1PgxQKdJcys0nv3k7rFpC5stCQFriwZ12Sr+3FBn1jsqk9FJVPk/sv
-         MqwFmG7Q898lS2UCp0eyU10GLAEgvES6n0DavmzAAiGXZ9A2urxlRNPbN8Ei76TFCO7z
-         MVrLC3pmByEmNEkWDNemVNGKPSAxVawtkVN13NSmZp7otGV064y2mG9Q5vKicJPr6Hdo
-         eUb5vXuyQJdapxtg9l6lLxoM4dNTJsrkY53DaFpHAkxFHIW3CaWsihIGv8wxXPrGb+5/
-         qHJg==
+        d=gmail.com; s=20230601; t=1756402797; x=1757007597; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=AwW/yHLM4+MVUOFktVXcNftMF7mXervDLTY5nyNv0Vw=;
+        b=ANSLZmFjI7qXskyiJzBY+if5gbZ21+b9zARNT7YVadqKZ6splstb7jT+dQdpx4IF17
+         MDtsK6t4VGSBvdDaUdtWiw7KbBaUvN0Q5O6uq2RGgXgWZyQ2lpftTu1WfAzZAlT0953h
+         4SIDc0l/B01zj/jDAzybfnxU8cjYbiWz5p13f16XkCNriJTjT7+/KKak5VUVfGGoJbrg
+         bpghiI5fyaI+mgS/6vhEAGUY72rLbLpHgoCDtCD2MCallI6sci4mG8vjisCVIJRHEakj
+         ywrSVGwB5Ua8+ywLSpnDR+NaxKScmdE2B1/IbtOjY43LwJai5y+GazeC4IpCKgKdzhVn
+         EnIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756401167; x=1757005967;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bmOgNjHn3+F8DQBxHMfAqCj+IIFGtjmbN7frSJj9amQ=;
-        b=rsTv4OwCT1ojzI5r7kVP5wB1bT0lgkCsmC0UP79Woky93tOd9ES5EbwlwNA0A53zNW
-         DG7LCNwBjIK2Ltuo8R292jyNCqxdOiTbEDTUJWtkBukMcx9SqULGBBS3qkRq3HabbglQ
-         fYy0wlWH7WYTw+UUXeF9vg61tJ01xKCaTkqo0MHaQAxFObLX3+CdVY12JFsC+dr/jR/m
-         wvJpq134TF+6Si6YjGYbvw8frYIR+Y1IC7ChMxRYDQzPZ+Y/55QtsnE/dmOQ03bF0Jhk
-         TZr0WzAbXlJhTEZTSNxFZZ8td6gOtWrj9ZWZVAKj1cs9aOYUIph+shLTzwjaObBbNi5s
-         mUvw==
-X-Forwarded-Encrypted: i=1; AJvYcCXJXrg6VtHFHO5MvaWO4cASPGBaWdUGf6s8WWduGoH8lWKskl/P9BMC5V7y8uaVuD/0wqI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyUWCA1OAlQ6rwjMNN5t60mNy7Mp/Lx1c24fxKMomr758Lc09/V
-	vBbSQqsVRdbXL2YW0t52kC1XktU3Z7U9SZmpkHdK4G5wfjkY/VtjMnsRdMwfE36zcWEnRHVB3Qu
-	DCdpmYzweRfgBmjv6MUMenuuspwAAoPGWS+GR
-X-Gm-Gg: ASbGnctLoTBpilB7bYtuzdz0q4xFcxl0IwiBkPprmtow0gX+F3v8i3ph3FZgwgoXki/
-	oeaHhhr4udqeKmHh4YpdWxcLF0ZLSowTuy44YkF55OOvCQKTyhCl9NQcFpKae8Bcd8mFBTExf4d
-	2r7Ilz59Sv48nTUqbtxUZAklZ1qDQ220XIxJhGvGbx/fIvbr6bmnsAD0AdWM9vGGmy9bnrDTF7T
-	rnZcz2P767FQJnfiFF+pRa7j0CPGtlzPgARR+lZ
-X-Google-Smtp-Source: AGHT+IGfR4q382h7nHrdditYiTJbPXDqzifRL3++DyQ2OicbT1RaN8kyP0HNYztToFucNVnFhGVaxjXF0nKq43t1EDc=
-X-Received: by 2002:a05:6e02:16ce:b0:3ea:a3db:ce75 with SMTP id
- e9e14a558f8ab-3eaa3dbdbbemr248003915ab.20.1756401166657; Thu, 28 Aug 2025
- 10:12:46 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1756402797; x=1757007597;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AwW/yHLM4+MVUOFktVXcNftMF7mXervDLTY5nyNv0Vw=;
+        b=vXDbDaybDHu7I85KySO1jG4VgSf8M+WKzbj+Q+q1HrtAx5iGJZlAIhN1gsNe+hwAC7
+         cTDiIQjkO6Aa8g1ZEUsFO9PXnrxAV/zvtVQqVCKrunueEw/K5MyyVAHK563kATZzd1f3
+         QSQN3wFnOX4AUSH1LaSJhcwdIhXIXknpACR91HxfYYP/FNjZzZP5L5qlgEvePQdVY0jZ
+         cR1AeBbuE7iT4O+KUDF93+6zpM1RuCMxznwfGjhsTS7ysIU+NRQBwo4gJNn9v4EdK4vQ
+         IVszSAx3C+moDFxlR37GDPwIh+Uf1gkHnHOYM0Dsh+//NBSetl7N6zCcjm+tSWiddbm6
+         w3ZA==
+X-Gm-Message-State: AOJu0Ywtah3Wte4y0eNglEqqRizGW6KdzCgkIZAkNSGcsSb+oiaqLFea
+	dBWmh7hPxZKwjK9ZYeuhTITD4x5fAdDCiraY3zARebGXLkw3Zhz4NupvFpK3TrRr
+X-Gm-Gg: ASbGncsliYqLlZBFvv7azNkI2pGAdylVQ7MQivNeN/ijnu7cCUABobmgWZ1/AA+JSZW
+	U3SdX28+a3agDMcDKeGq+DJUu670W5pfBjJtXV8S6eZPqMrTgH/Pz4NEcrdk2WL7XMUl/Pe27Mk
+	XLtegwuDmysv5V8aQbVWglFMlrp4vHv1z/uBQq2xaxtiYm8/D3rPFS8SCgto7SqDXrLk22WUzNg
+	19Y8mzcPsEGQ/JUuUaUzn3tZNjeTxgDux3Z6bqx8ouJ0HgenZGDq2oLG82vREzbMyjIbHO98jwu
+	2s0ifExm0ZDEaTdobC3w7VGPivJJV23EL7FeoC2VVn5K/f9IbGbTLDbFV6ohIn/gL3YVuA4UB+f
+	QFtkc3siIHYnGgY44LeCqjJtT
+X-Google-Smtp-Source: AGHT+IHF0KmU87j0dbNwOOCDajSfiOc+Urs8VFrwBIBIAAiw6w6GofJlPH/w+Ni7qMsB2QrOwwHeZw==
+X-Received: by 2002:a05:620a:25d3:b0:7e9:f820:2b39 with SMTP id af79cd13be357-7ea1106e9e7mr2903945285a.69.1756402796818;
+        Thu, 28 Aug 2025 10:39:56 -0700 (PDT)
+Received: from [127.0.0.1] ([57.154.244.34])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7fc14660baasm19200585a.38.2025.08.28.10.39.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Aug 2025 10:39:56 -0700 (PDT)
+Message-Id: <pull.1965.git.1756402795.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 28 Aug 2025 17:39:50 +0000
+Subject: [PATCH 0/5] midx-write: fix segfault and do several cleanups
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1958.git.1756228693233.gitgitgadget@gmail.com>
- <pull.1958.v2.git.1756370289.gitgitgadget@gmail.com> <ec5dcdf9d00473417b1f0b676a485f01076ce075.1756370289.git.gitgitgadget@gmail.com>
- <xmqqa53jxyiz.fsf@gitster.g>
-In-Reply-To: <xmqqa53jxyiz.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 28 Aug 2025 10:12:35 -0700
-X-Gm-Features: Ac12FXxSv0aCU81narqKHFl3eoR7L4fhEH0ARYQkMR1cuVukKn4gi6m28wv1L-k
-Message-ID: <CABPp-BGRHajFf5z91CvvKvahpknbt1KraCR3_rOmAjvxz36_Ag@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] range-diff: reorder options lexicographically
-To: Junio C Hamano <gitster@pobox.com>
-Cc: pcasaretto via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Paulo Casaretto <pcasaretto@gmail.com>, pcasaretto <paulo.casaretto@shopify.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    me@ttaylorr.com,
+    Derrick Stolee <stolee@gmail.com>
 
-On Thu, Aug 28, 2025 at 8:24=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "pcasaretto via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: pcasaretto <paulo.casaretto@shopify.com>
-> > Signed-off-by: Paulo Casaretto <paulo.casaretto@shopify.com>
+I was motivated to start looking closely at midx-write.c due to multiple
+users reporting Git crashes in their background maintenance, specifically
+during git multi-pack-index repack calls. I was eventually able to reproduce
+it in git multi-pack-index expire as well.
 
-Same issue with name here.
+Patch 1 is the only change we need to fix this bug. It includes a test case
+that will fail under --stress with SANITIZE=address. It requires creating
+many packfiles (50 was not enough, but 100 is enough). As far as I can tell,
+this bug has existed since Git 2.47.0 in October 2024, but I started hearing
+reports of this from users in July 2025 (and took a while to get a
+dump/repro).
 
-> I am not sure if "lexicographic order" fits well in the context of
-> "git cmd -h" that spews out many many options, shown with related
-> options together in groups.  I find it aggressively annoying to show
-> left/right-only far apart.  A user unfamiliar with the command would
-> look at the list, find "left-only" sitting in the list alone, and
-> waste time and break concentration wondering what in the first range
-> is so special to deserve such an option, until they see "right-only"
-> further down to realize that they are symmetric.
->
-> I'd rather not to see this "lexicographic" change done, but others
-> may have better justification (note: "for better organization and
-> readability" I just disagreed is a good justification) that may make
-> me change my mind.
->
-> What I would change, if there is something suboptimal in the current
-> output from "git range-diff -h" that deserves improvement, is the
-> lack of the grouping header before the options for range-diff
-> operation (i.e. creation-factor to left/right-only, before the next
-> "diff output" group begins).
->
-> Thanks.
+The remaining patches are cleanups based on my careful rereading of
+midx-write.c. There are some issues about error handling that needed some
+cleanup as well as a removal of the DISABLE_SIGN_COMPARE_WARNINGS macro.
 
-I do like lexicographic ordering for unrelated options, but I prefer
-options to be grouped by intent/use first, then by lexicographic
-ordering.  And here, not only are--left-only & --right-only related as
-Junio points out, to me --diff-merges and --remerge-diff are a similar
-grouping that belong together.  So, my $0.02 is that I'd lean towards
-calling both changes in the patch a reduction in organization rather
-than an improvement.
+Thanks, -Stolee
+
+Derrick Stolee (5):
+  midx-write: only load initialized packs
+  midx-write: put failing response value back
+  midx-write: use cleanup when incremental midx fails
+  midx-write: use uint32_t for preferred_pack_idx
+  midx-write: reenable signed comparison errors
+
+ midx-write.c                | 118 ++++++++++++++++++------------------
+ t/t5319-multi-pack-index.sh |  17 ++++++
+ 2 files changed, 75 insertions(+), 60 deletions(-)
+
+
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1965%2Fderrickstolee%2Fmidx-write-cleanup-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1965/derrickstolee/midx-write-cleanup-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1965
+-- 
+gitgitgadget
