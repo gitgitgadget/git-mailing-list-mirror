@@ -1,134 +1,123 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911212BE7AC
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 21:43:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3007E2253EB
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 21:45:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756417427; cv=none; b=YiWpbcFMr//TpGZNqAcUm1R5FuLFXKA3PYS8KRMM1+e/2rfbfTAIcFB7tCtgsXRInCFBNnhrrOee5OoruaUVseI5HCJ8BWrcRGaEssekPmLgnelcvAirwLQRS+r4AV5frkQML0dWYtbvgTjyeVjKRh01lbYjCxgjS8hM0xLpOOE=
+	t=1756417545; cv=none; b=Eu/K+zMnbEHKqJr1MAVBjwfsmo6wnQjahno4Awg23RkAOVUL9d0UncdsXaIsj6CkGZKRe3cXCm8zITMscb8VJD8X+5KCZ4kW+1mU8MfLHGPrDKCGCKnrxF9jCP5DHmvJ5B3G07gW0ztCs1YpbLuEAwxRt3zswlwlfvO4JA9sy+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756417427; c=relaxed/simple;
-	bh=8pnqTXrXI+1Vt3PkPQyREodWcdEG8qDY51GE3Xdp8+w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nTnj6WDpqmYSk9QkqNamA8rlj2BUKC63KQ7pnsxb4p/I4BYXQCnAP3csbrmzrcxXLGMEGU259iJi76mDlgDjp1chpLfHhKoTXVw+Ad3QE54IwstDZ437xKIF++Q+uovchpKy2p2xR42cxBDxTEDMb4EDmv58zfxRJc8+nE+otjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=wjQv7Z7W; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1756417545; c=relaxed/simple;
+	bh=3LsMwWvHoN+b+GpcZpoykIlHSfFVs4L2swI4imgKHtg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eAz3Ux7ZPBVt0bEwn/g7AUIcC+je9fxX7CffdmkmfY7tbR7eJrFGOUOr/Pj1WrqauZMzdtrievA/+h0Wa/+QeYMl9BcSVI+HlJNBTC6P2UJ7LzKpiC8ObZNjzNn1uXNIHstAulfQDHxj0TDdTnZADzzbniMpjOpaN/erSzku8RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qF/vBnBc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iEsyHGqn; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="wjQv7Z7W"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1756417424;
-	bh=8pnqTXrXI+1Vt3PkPQyREodWcdEG8qDY51GE3Xdp8+w=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=wjQv7Z7W7sgxnkDwAnphITgkscUuUs++xwRAeGggeiy0SpRNxMNPVTeVb/gEWy6N0
-	 4nGW+JpMCgASsG47kjuJLo0qVuDkGOLxw7QvhGBD1xpyge8PcWpMxzlb506frLy+su
-	 zDH94zAjLykGQF9zaWvu1V1uov6kwTmM9NpEUG3wthT21rpaQUPGLyd7TUmvn5F0Sy
-	 xktsx1dqebliupTV7PJL/kswQKHaHG7uv5Po9KOtUdh7iBy2LlbqJUMMCTtpr8qvfi
-	 Z8NrcCavIoUCF9EYiGwCrKwqxltE1c464sooB84p+ioVSy/YfhWMLBoUpeoNqKMwXv
-	 EESp6GGi3irBP+E+gvqtWKpYmY+74Udy/npYnFk/++8hfoYX+3953H3JofY8jZVkwA
-	 f6VaeNiM4mVhbntlZUI8dvCOPRr7OqcEoVrvmeNR6jIXc03ASmDXnUsnCknOjCRS25
-	 7Ocmuyk7A9ISVSwieJAmymgtCtDSCVhKn6XzIbWBugFIoDqbs6/
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:db8f:7ecf:23e1:9783])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A620A200C5;
-	Thu, 28 Aug 2025 21:43:44 +0000 (UTC)
-Date: Thu, 28 Aug 2025 21:43:43 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Eric Wong <e@80x24.org>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Efficiently storing =?utf-8?Q?SHA-1_?= =?utf-8?B?4oaU?= SHA-256
- mappings in compatibility mode
-Message-ID: <aLDNj5GPYA9nR3xR@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Eric Wong <e@80x24.org>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Jonathan Nieder <jrnieder@gmail.com>
-References: <aJ03RTHaE_JvHA1t@fruit.crustytoothpaste.net>
- <20250827190817.M36986@dcvr>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qF/vBnBc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iEsyHGqn"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 34B1C1D00086;
+	Thu, 28 Aug 2025 17:45:42 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Thu, 28 Aug 2025 17:45:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1756417542;
+	 x=1756503942; bh=N6kKlK1xrr7Ud5UDBY/FgiEURX/Ib7oDuVejXtW6KHQ=; b=
+	qF/vBnBcyhPyoObcADQz8IQmCwojgkrQiToeeE5orndNszFA5yZcj0ZsdEE7evm/
+	q2neXgsXFxOWtI/BIiUAZ8fz56bffgemamfm4GW7GeOJNRv8GL9hM6txSGG/UTfA
+	r/f7l67wpiQ1attltZ+t+MYb88Od51uExwgmIYI05qq72ynwqaxAROql3QzP8J0w
+	MWOzWHJdomJLpHpX+7iCATE91TxXYb/zsfr1cM6Wi/n98JBLxb3l9r2Sj0vDAwUf
+	FkGsfiF1qCHumJV+Sn/tSdoUkUR8ND/hae4Hs2y7JiTet/rnBuHdtfPnUdd+yFKy
+	CS3qrP3Dye/gcbsISepMIQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756417542; x=
+	1756503942; bh=N6kKlK1xrr7Ud5UDBY/FgiEURX/Ib7oDuVejXtW6KHQ=; b=i
+	EsyHGqnfeGxl+YIk4dqZhIxScdrNGddY78ElkNrXJx5UPMKFCHecmi1tpquciZtZ
+	VMPPkRUOH8ZGweYIp2yFsxvt1QDAF44F4YMwZomnNBujHw0iDJs/UqMz3R/153kH
+	FQw3ZwmnbrFoc9FKjc6H5ADygzPGnv28t+VbpvJ3cueGS97DGWATOMhaGdxLY+uF
+	+e5ixOaQeihyiTJWOVZYH/sLiHeW1T6QrNWH+2cQXsz0YyojUpgjuOlaHEJ+xVKY
+	r81Uo+TiWGri9c7CBgMfmXnD07Xg0Q11/JXrFTE3N6x3yFy2COKpw+9RGavC3XAt
+	CANnSVlkAu4TfalyoFpBA==
+X-ME-Sender: <xms:Bc6waPf_q8ud_xP5J3SzL1S26LGWUZEAxOvcJITMFOvw-T0lVgVxzg>
+    <xme:Bc6waNpAq7I1NJHM3gC5oQrXa7d8FaWJt_zS-gtp0-CN8og_93USSLUM2CXnxD_Q2
+    h_hfL5UdVma4xcVug>
+X-ME-Received: <xmr:Bc6waI_oE6ig2FsuNGAAYrbDknCPerA6dbXOt7sE4lBkPh-6O8NBjaNIYyy-pHnZc-ixPh-xV5NFUE2q-VxxDiDoyqS_ecgXN0O-02s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvuddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgtrghsrghrvghtth
+    hosehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgruhhlohdrtggrshgrrhgvthhtohes
+    shhhohhpihhfhidrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:Bc6waBdOtD86oZMijn4oGhkbgDgQVwjuPLhCswziZZoRXF5RIK6MXQ>
+    <xmx:Bc6waKIIUpw0_s9dbLrAoVzgHBumgWTh0Ue0Z9BTHzPiSCvpIEQgJA>
+    <xmx:Bc6waJivD8Kga0abD9zGrriwIWvd6c_LgGys-goxWT_yVio1s8STrg>
+    <xmx:Bc6waARYXmfiLtLFpPUgcjR3_Imt9RZgpB46zTwaEmUYzlREjlMUww>
+    <xmx:Bs6waI3WRrFV2x5qm_LV65d8jtzTfaTQq0ubDashgQ_4bblN2vx6Od8d>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 28 Aug 2025 17:45:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: pcasaretto via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Paulo Casaretto <pcasaretto@gmail.com>,  pcasaretto
+ <paulo.casaretto@shopify.com>
+Subject: Re: [PATCH v2 2/2] range-diff: add configurable memory limit for
+ cost matrix
+In-Reply-To: <CABPp-BF1z7iS6m4FzM6555j8UQeqfTZuCbwwK=Zh0zQ1+qfMZA@mail.gmail.com>
+	(Elijah Newren's message of "Thu, 28 Aug 2025 14:34:21 -0700")
+References: <pull.1958.git.1756228693233.gitgitgadget@gmail.com>
+	<pull.1958.v2.git.1756370289.gitgitgadget@gmail.com>
+	<c81f920fee0ed8672783728fae70b6435e800f82.1756370289.git.gitgitgadget@gmail.com>
+	<CABPp-BEDje5dYZHEyYMN6j_LdR5CqRN1cxc0riRK06qK-OxiTA@mail.gmail.com>
+	<xmqqiki7ta3e.fsf@gitster.g>
+	<CABPp-BF1z7iS6m4FzM6555j8UQeqfTZuCbwwK=Zh0zQ1+qfMZA@mail.gmail.com>
+Date: Thu, 28 Aug 2025 14:45:40 -0700
+Message-ID: <xmqqecsvt917.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qN1oS5u3m/dA0yE3"
-Content-Disposition: inline
-In-Reply-To: <20250827190817.M36986@dcvr>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---qN1oS5u3m/dA0yE3
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On 2025-08-27 at 19:08:16, Eric Wong wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
-> > TL;DR: We need a different datastore than a flat file for storing
-> > mappings between SHA-1 and SHA-256 in compatibility mode.  Advice and
-> > opinions sought.
->=20
-> <snip>
->=20
-> > Our approach for mapping object IDs between algorithms uses data in pack
-> > index v3 (outlined in the transition document), plus a flat file called
-> > `loose-object-idx` for loose objects.  However, we didn't anticipate
-> > that we'd need to handle mappings long-term for data that is neither a
-> > loose object nor a packed object.
-> >=20
-> > For instance, with shallow clones, we must store a mapping for the
-> > shallows the server has sent us[1], since we lack the history to convert
-> > objects otherwise.  Similarly, if there are submodules or we're using a
-> > partial clone, we must store those mappings as well, since we cannot
-> > convert trees without them.  We can store them in the
-> > `loose-object-idx`, but since it's not sorted or easily searchable, it's
-> > going to perform really terribly when we store enough of them.  Right
-> > now, we read the entire file into two hashmaps (one in each direction)
-> > and we sometimes need to re-read it when other processes add items, so
-> > it won't take much to make it be slow and take a lot of memory.
->=20
-> This really seems ideal for SQLite, which has come a long way
-> since 2005 when git started.
->=20
-> I really wish git would've relied on more on existing formats
-> (e.g. LMDB refs) rather than introducing more one-off data
-> formats that require more cognitive overhead to document and
-> learn[1], especially when SQLite is extremely portable and works
-> on tiny devices.
+Elijah Newren <newren@gmail.com> writes:
 
-SQLite is not an option because it performs poorly with Java and we want
-our formats to work with other implementations, like JGit.  That's why
-we created reftable instead of using SQLite.
+> On Thu, Aug 28, 2025 at 2:22 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> I am not a huge fan of configuration variables that do not have a
+>> command line option.  Assuming that it is not like you'd be doing
+>> overly huge range-diff that would not fit your memory every day,
+>> shouldn't we start this with a command line option without a
+>> configuration variable to gauge how useful it would be for users
+>> with such a need, and then after it proves useful and we identify a
+>> workflow where a user would be passing this option all the time, add
+>> a configuration to allow it always be in effect (with command line
+>> override still available)?
+>
+> Isn't that what Paulo's patch does?  Maybe I'm just blind, but I've
+> looked over the patch a couple times and don't see where he's reading
+> from a configuration variable; am I just missing it?
 
-Also, in general, I'm not interested in being tied to a single
-implementation.  If the developers of SQLite decide to dramatically
-change the license of all their code like Oracle did with Berkeley DB,
-we're going to have a problem.  Yes, we can use the older versions, but
-we'd still need people to maintain the library and update it.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Ah, I just blindly trusted that the "configurable memory limit" on
+the subject line is talking about configuring memory limit with some
+mechanism.  Thanks for correcting me.
 
---qN1oS5u3m/dA0yE3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaLDNjgAKCRB8DEliiIei
-gae4AP401jauDL3eRIzNZYemP33wmxqgdCqyrpi5aZhcwpHEeAD9FdbXp9wuTcbY
-Oa+YatcNypAKZiX+0UuO5dx8dFUgAgo=
-=pUQz
------END PGP SIGNATURE-----
-
---qN1oS5u3m/dA0yE3--
