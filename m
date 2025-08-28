@@ -1,111 +1,121 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF4E2367D3
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 15:45:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4A72C11E4
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 16:12:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756395934; cv=none; b=gxOu6CMk0bTffSUdqQ4bfH6p413Zwhd5NFU/GoaFbNVaw7mk+sJ3JQsW/mv5V0pP7j5A7stik3bQMhiYGe/EeCAqPEDfbjswsNDorhNR4Z86EkkgDPQrDCBYjNGpX3NoK1A+Q4q7nGed3KPcGOciTwZN4v9zW5CxTnvplbQNYuE=
+	t=1756397543; cv=none; b=WX5jpIwyvJmGCvh8MyjvN0qoTdYpYZ15dLy7LJJn19JuT1ZeM64XEMOP65lbisIc1zsdU9E7+uoO+VSvQ1/3cRLQtFQa2qJvpx+C60RjcUetp9CAuBkZfLV+jw21qvhD8ApV0orYikpXu0NQn83rGqyFKD09Zqv939U3qJJsRZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756395934; c=relaxed/simple;
-	bh=QQ1e0qLfYV2uCDuChsm2ZMh9m1zGWPVFzJNrui/Lcb4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VqMegXFHkTl/Rfska/Oo9BR4SlZqfFbDqIxx+afWMv9+pIiJNLNrtW5dIPThLBgzuyl18onBMOZWHcll5tMwUbbPTF9/c7ilX53FW6+/ha75e1XS4xZetPEB5qSQ8iat2OVYcHrsRQQl+ETjRWmgasvHdKMi1xN1sbl7iPXjKsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=2j0hXXsn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=evea+5YP; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756397543; c=relaxed/simple;
+	bh=5+XLBH+/Szxw3QYD/SegV6jzoqzp1JALFaHheisjoM0=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=kjsy9H8mQiL3DC3DEI3+ztYFfzQ++92u/BQ58fbKbnwRrkKHx8iVyzl889RnjOE8ox64pO8eXU7hQjiPjVUo8n0cwp9IPsy19qiVTdPT1mXEC/6tqiPedr2LtlSA169ENkR4Op1NIg4R6W4DKN3iAgTwMiMri3XsNIwe1G0Cb5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IllPINPF; arc=none smtp.client-ip=209.85.219.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="2j0hXXsn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="evea+5YP"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B52AA7A0169;
-	Thu, 28 Aug 2025 11:45:31 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 28 Aug 2025 11:45:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756395931; x=1756482331; bh=6TusO3vTrR
-	ENieeMvWcPo6iz2sSHEqWTmpdcaQM/+EA=; b=2j0hXXsn4pn1PV4Dz/MhdnLU0p
-	xvgpM0i9r93jXlfw/H+2iIezKUj7soSlTSDDgQIQeK/yqajneYFyIeS/AAPyZifK
-	iwupssPwrtCAfEH2yAF6x3XbNEQWXayfyqAUPBUSR7GILh4TqFYeHEWrIj6tSCL7
-	6OkssuXKVr5LXSHTIO9xCzLJ++upXqGwzLVLI7a+/PPS5HQDTfPtRqHR6Q874L5N
-	epKRW+eKHoOIcoY2Dz4PXAOcTL3kLHMxmHmXtmyKEk68XzQPl1IT5fvTm5L4MFQi
-	Trq9pDp/1dt2uikPAuLjvyleAZwk9MTeXScaJiEiu/ngNGOJGaHQN7ohtUxg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756395931; x=1756482331; bh=6TusO3vTrRENieeMvWcPo6iz2sSHEqWTmpd
-	caQM/+EA=; b=evea+5YPX2/QD/HTr89+JQd9zfWsDQu0Pwj9owH9RSPvP7ztBDK
-	7jL18bxNXhLEGiUyUpMC/ioXlKGhJkCX2NVVZ2mL1FSd4U6VxliYWHg4ONgyUaY+
-	6NbtEKT0BVqnVoNF9/JyEpZBpQrpoqSSgPaG48EK6gIVMuSc9AzXpO3ZuHMK442w
-	H8TLILWQdgosuM6ParkYvlEAHeFySeL0LWAndJvc7y1Lud5pwhrNxj7f5G5RiLu8
-	MJ4ftQnackbiTV9mK6wLo7TCMpKd6UIAtvu4H0bC0Cn2oywMwnxmEleEMfxlKtqO
-	Dp5nOrYdsBGX4yxg69Jx1ksvoLLkb9JHOAA==
-X-ME-Sender: <xms:m3mwaAAko0injXqi0OlzIJcDu_ooL9Ixvjwq4Ant_3f5kn4lxZXXWA>
-    <xme:m3mwaNFhuB3vxB7sr3-S63Gc41pss2Cww8b0O5NtdUL4xBfS0GM01hNsJ0FwK2MnO
-    0-QK_6h3AUiZe0b4A>
-X-ME-Received: <xmr:m3mwaAJ6L5M2purVWgHv2aY8tbPthOySRWZaLT__eJe5jisB9-3OgSxG3uK8KuYXnQaPTbd5TOInWWLDuzkphbLWf2qmWlpZ-YHEaPU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedugedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
-    hgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:m3mwaJn07TVBmQEml0KUJl2xh3gTaxVO9WD8wJp2rHJE3NITCJPE_w>
-    <xmx:m3mwaATptDnA0PoquC51qnUircwlgX2OzkXly7AtQ6awsE17Z63o1A>
-    <xmx:m3mwaDLi--rxr8klaJiAuNBwH7nct0_gJ7dgW8lBzbg2F38aGWGgvQ>
-    <xmx:m3mwaOAhvVfNFz9rFE7EHNykkPA53nfb7UzD_f2mcLxuFW98i5o-gA>
-    <xmx:m3mwaEx-mI5DKj6UcZqqtsw2kLDkg2hJOD5EoHFJ0lgkFZySQfy8tCdl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Aug 2025 11:45:30 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/5] doc: git-checkout: clarify `git checkout <branch>`
-In-Reply-To: <276630b8-ad98-4ada-aa85-9f136d653d7b@app.fastmail.com> (Julia
-	Evans's message of "Thu, 28 Aug 2025 08:11:11 -0400")
-References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
-	<b8873c4529caeddc85879efd122e5a57278352f0.1756148933.git.gitgitgadget@gmail.com>
-	<xmqqldn5ix0r.fsf@gitster.g>
-	<276630b8-ad98-4ada-aa85-9f136d653d7b@app.fastmail.com>
-Date: Thu, 28 Aug 2025 08:45:29 -0700
-Message-ID: <xmqq349bxxeu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IllPINPF"
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-70df1b769e4so5195846d6.2
+        for <git@vger.kernel.org>; Thu, 28 Aug 2025 09:12:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756397541; x=1757002341; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=bp4ElGK6RP77Uen8rMm55HR028QrXYt0ST2h0Q/cZjY=;
+        b=IllPINPFZKtBvgQ6JZtqs5cHmLTEjmB0aeEjQecjx2Q3sZ/m2Mc38KfNixFT+SGQQG
+         LWS9xWer1CNU1+31rni4N51Xcd8aU0ap4l5bcCgv1ziWwnNIRqLmz4BiX0lUYoga55BT
+         NaBaR7XjuVx3w6Vg1TqIBGLcJyezxqM00qfrvjN8Gps2QGiOF7PVHaV63j2/kwJe6UPE
+         HNuNxOhWrpmp83sQ5BMVKeMKluWjjqOjdtVpjwCdTFFflHsGTgX9nUr72HbB3t6G4Q8e
+         Hs4r/MfsVkPj7ZVpteS7we798DsrfvYfZ11jlX8bCrsABawR0UTfodjQvo4hOZGAuX2v
+         xk1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756397541; x=1757002341;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bp4ElGK6RP77Uen8rMm55HR028QrXYt0ST2h0Q/cZjY=;
+        b=UsDtob2oLSl4NHi3efOeVrTwUZfW2bgEgLIegAz1u2bNkyxu1nXmv8N5r4SzbhB7wL
+         3/HVAbJckNFAGFIAW8Xk2PcrR8nSvUzQKgjgq8+N/yR5Ovljmmisn2qZ38aLVuyed7H5
+         qsJiVI0NRiTazzZ9gnfObYQBKiIMDTWIi1pBJ4ak1cQos4dUzMl0mwnlV90oEKQALYZQ
+         fBFmXTfmym06vim/FRzvphjiytM9Sk8IFc2MakJqo6tSX3zdAk9udGO848CMyrxnuxcf
+         6NwEmWP6WLXVAFzBFF7KpQait87vaghV6BWNztQdzSk4+QRkSS6OkvMJ+0WSXE86X3G2
+         xPnw==
+X-Gm-Message-State: AOJu0Yzp7uuR2ze2SGLBt7mNuGzYFJ4hwMZPwpHx4B5OwYx5KMSVC7pR
+	7Sb2Uk18ftVXWg//ifNsilu3mP/LjPNDbRlAflkJLrJZDWwig0BTOOexvgmwvt+X
+X-Gm-Gg: ASbGncvxgIaE+v/SDZ//L4TSZao8n6D3F8JfmgjFZCQLnIUao09X/C2i0jN/gzH1Xtm
+	REytj0NYshoF08Go5N44rkc1MXifUC0jgzKSVk+HqIEhSvl5KdHpth5nDVsZ5T2VOOVSCdToY2U
+	GxD14NZBoKFQAkYETuh4G0YKYIpItFj+Ae9s8A+muBeh3hMIUzk1YIjcHtqHClTrpdj0AH1JQd+
+	urr8yW4Ywwe7RcgtklH8ANN4JGwxWS5CxfW3tf67a4so9qWxzcei/bBqEjpz15rBvMRZUdkSDMR
+	JpYzqBc27BUlbnpkAa8fKXk499DuaWR8VpbM95mHM14CyFQECcpj0B9yebfKN1+6oHim5KkdL2E
+	FFHv2LLIVZ1LtrryK10/G69Cmaun/3hRkaU2E1HDr
+X-Google-Smtp-Source: AGHT+IHh8exqxBifb3w8aRsUPLLydmvrrWe3n6sWiYOt07REfYs8vqooc1bDt43ZiHVYkrbsHOtOVQ==
+X-Received: by 2002:a05:620a:698c:b0:7f5:9bf0:b45d with SMTP id af79cd13be357-7f59bf0b4cfmr1140012985a.36.1756397540526;
+        Thu, 28 Aug 2025 09:12:20 -0700 (PDT)
+Received: from [127.0.0.1] ([135.119.237.68])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7fc0d67c51asm8537785a.5.2025.08.28.09.12.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Aug 2025 09:12:20 -0700 (PDT)
+Message-Id: <pull.2035.git.git.1756397539285.gitgitgadget@gmail.com>
+From: "haihuayang via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 28 Aug 2025 16:12:19 +0000
+Subject: [PATCH] update worktree in config.worktree if it exists
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: haihuayang <yanghh@gmail.com>,
+    Haihua Yang <yanghh@gmail.com>
 
-"Julia Evans" <julia@jvns.ca> writes:
+From: Haihua Yang <yanghh@gmail.com>
 
->> Do we expect readers to truly understand what is to "switch to branch"
->> without explanation?  IOW, I am undecided if the lost "To prepare for
->> working on" is a good thing.
->
-> I'm not sure what you mean here: "switch to <branch>" is as far as I can tell
-> the most widely used term to refer to this operation, in other Git
-> resources, in Git's own man pages, and in the error output of the 
-> `git checkout` command itself:
+When updating submodule core.worktree configuration
+- If config.worktree exists in the submodule's gitdir, write to that file
+- Otherwise, write to the commondir/config file
 
-My assumption was that you are making this a manual to teach what
-"switch to branch" means to folks who do not know, hence my
-question.
+Signed-off-by: Haihua Yang <yanghh@gmail.com>
 
-> ("Please commit your changes or stash them before you switch branches.")
-> Which readers do you think would be confused by it?
+Signed-off-by: Haihua Yang <yanghh@gmail.com>
+---
+    update worktree in config.worktree if it exists
+    
+    When updating submodule core.worktree configuration
+    
+     * If config.worktree exists in the submodule's gitdir, write to that
+       file
+     * Otherwise, write to the commondir/config file
 
-Exactly those who are given that message and want to understand what
-it means.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2035%2Fhaihuayang%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2035/haihuayang/master-v1
+Pull-Request: https://github.com/git/git/pull/2035
+
+ builtin/submodule--helper.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 07a1935cbe..231c70f12e 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2519,7 +2519,12 @@ static int ensure_core_worktree(const char *path)
+ 		const char *rel_path;
+ 		struct strbuf sb = STRBUF_INIT;
+ 
+-		cfg_file = repo_git_path(&subrepo, "config");
++		/* Use config.worktree if it exists, otherwise use config */
++		cfg_file = repo_git_path(&subrepo, "config.worktree");
++		if (access(cfg_file, F_OK) != 0) {
++			free(cfg_file);
++			cfg_file = repo_git_path(&subrepo, "config");
++		}
+ 
+ 		abs_path = absolute_pathdup(path);
+ 		rel_path = relative_path(abs_path, subrepo.gitdir, &sb);
+
+base-commit: 1fa68948c3d76328236cac73d2adf33c905bd8e3
+-- 
+gitgitgadget
