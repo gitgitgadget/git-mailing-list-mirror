@@ -1,54 +1,54 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217D92D0C67
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 23:12:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1EB52C236D
+	for <git@vger.kernel.org>; Thu, 28 Aug 2025 23:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756422733; cv=none; b=izOCvGP7AFGiYUHxSuTzm99QZeDdmV2uHjW2jUHmqSjosWru8bW1n5DIXzR88G+3rOjvKOkB8gvzWVhJHN6BWCvOL3Zdt6KX6Lyur73vM+vhwC0H+T03jh9ErfAoTz4dag4TMo2hycWJRPIT+R/2vAGBXPmn3xQAuObYeE3R4/4=
+	t=1756422884; cv=none; b=MfgNSoaTekc1e9Vt6XJWS8yBJG5fA2qFwdXerm5co66/lToh2/Qgx5Dbua+p0G2NcLMkVCE0Tq0NigOcUAkNMdcTfZnwDYQQI23Cago7rbXe70J8x5gM/GAwgE7jbvR+v7LJ2vOWwC8hHMs2OJqzspEt0yptrBCb0tSeYamgs7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756422733; c=relaxed/simple;
-	bh=GJ5judaZhsQoJhBk8Vq5Uv2l1NBJbbqYO0Sg1fyENtg=;
+	s=arc-20240116; t=1756422884; c=relaxed/simple;
+	bh=y/U4yBpe929q62lFVyG7PMxBYmVF6Ctcc88p+C/WoeE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lIg6ZMvg3kDqwkudK4/7GbvvHlegooOnh9HVWK7NiKW7EnenfeGDRV/8ln+XJVkhFmVI/7FIg4AwgG13KqoiTqDcKGIvYgxBRGZaXIKgzr/qmvVcFIdjvaZhVhIDUC2SpTkWRGskkYFua8k8G5xpihYkwKw/VtLPreCo8r0/Ntg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=3gZ1Q7h1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=niQfetu3; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=c5ARlWI2+lbN7lAyoQwqihg5BZLxgVAGKN0mV8ccmy6hi/L0Di9k32xdqHrI4uwBj6RxXy0cngfg2qgjorDWmfuKhLcpdPySkTniYqB6T8gsY/4ZXv7X/qtJ5fMq0+io4i0NBsAOUn5csnmynOxxXuKQ2RgmMNLgq3pRmQUv2yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WAeipVn/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U+GmMPF3; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="3gZ1Q7h1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="niQfetu3"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1652D1D000B1;
-	Thu, 28 Aug 2025 19:12:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 28 Aug 2025 19:12:10 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WAeipVn/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U+GmMPF3"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A50AF7A0155;
+	Thu, 28 Aug 2025 19:14:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Thu, 28 Aug 2025 19:14:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756422729; x=1756509129; bh=kAnIkgBBMs
-	PvFX4on8YsHSJfONGaZlXj7qd0jr57PoY=; b=3gZ1Q7h1r+HPUue/gENKca64mZ
-	NYFi80004oQs6HrPPoSKpAnKLaYasYCeuderdpOtA4OOgS0BMjwj1FtIp3S+L6kS
-	OpMVHbjgCxbAkWk+3Dv/+XBXbT2PBjuKuJ23gcXy1TUv1InW1JVcYiHNv6DK/1tS
-	kqgsWANSq/xcDl/gyxzaRqSVOF+SFP8aEjW4v3H9Nv7ksSpuOp3kMOmluyoSNsbf
-	SAyvuCKQaTN/GkC5qqu2HFj6BAv5pZuHc6Y3Y02f8uvggllBo2yEOyWrZ2p3IKsJ
-	GiFhQ2HA2jYzMwVLba3XuLDGBueBcs+qvNRPu7Veq0LcWotLyid2j0aZP1CQ==
+	:subject:to:to; s=fm3; t=1756422881; x=1756509281; bh=tTBUgC9NYA
+	HrOiGIVOyKgU8iFy/RSRZvO59LKlUawQc=; b=WAeipVn/1dxQ61w4qS2x4mFRN1
+	O7tGelsoF7IwQXpKu5s5QmARWLpUL7H+YOpZJz4MpL7ETYLAWxwzeD06Jpc3+2CS
+	FyIz5msLOc7V+r9nIRuvxnE4m0mfL32LizwQONX6OY7/Je8AiJo3I9FEQBhVuYw/
+	D2YKvYi8X/IQtHSSsficB/ghc1zqOxuRPdMzGOhnl+cgZA/F6Zi41ltk6wQFoGuD
+	xmVNOB1bnAGD6bQ05ltWbZ3/uiLuiRPAGareV+dsi8WTUNhIRL+9L0a1vIWeVQfS
+	P5o0TgF19cvjXGLyouFve+N/x7QQyKm95S0IPBGLbs2suapgQTr3y3/sujvw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756422729; x=1756509129; bh=kAnIkgBBMsPvFX4on8YsHSJfONGaZlXj7qd
-	0jr57PoY=; b=niQfetu3AMCVlyAoDWPq3dithQPH9+8Isn+H+vlHMKvlOoP71mC
-	xeihQndiea0coGVzG78BZyE8KE0qKu/ZGZN/qI+OyvxTWetYTZkYKO0h9XxyBOvv
-	0PweTSaopkPtLaP8KLJDlizcvG7WyM94hFEyYlSqOXhgCtxUezlcBGfXTzzkfWqF
-	trD/8GVvswdcIwawRRElt567Hr0yl9o96Wi0mChQOA5y6sx22lJP5rJQaLTA3STk
-	CrNkzS8+JVhscA8h9/dFtCHVUkbPMXZE4Tus4hR8DqSxfHY/9Qkn1QnAjtZFyBtW
-	OXvR7OyxwtWkZRgIvXf0U1W7xkgssbawjGg==
-X-ME-Sender: <xms:SeKwaDly7hAVCd3WU5bpZ6PfCZi3m_n_obocSagBu6fG8p7KxOyvpg>
-    <xme:SeKwaBbmm5iM3SI4ZEdOtzj8noERc27AJcJkw5aKg5sWS7rYaqlDxyYGQCghQed-l
-    Va9XJkguPkfupcMkA>
-X-ME-Received: <xmr:SeKwaGPJgBRN01d7O5CKUJs65C7eocjbTVMSlmE428ylQkZToGG57P4b42KFRhRhuMMToVSc3e91L9KVEDD5Lc39PBA8Fh0umZ0LX-M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvvdekucetufdoteggodetrf
+	1756422881; x=1756509281; bh=tTBUgC9NYAHrOiGIVOyKgU8iFy/RSRZvO59
+	LKlUawQc=; b=U+GmMPF3kwplAEfoGqXL4KPfbm2shkOzgs2GCtMw+kXUVeulXrj
+	Jc1BhKyBFJKO1oxfobcdi9n0R7dr1bo369rPjbqV8Hhnm5+cq056fUETtUAnbymR
+	fiLnHp8uaOES6FN73I94mrWSJtaY1kADMhEMFwnOjvddFyvrmdn20jnrrh7bokKE
+	AA1UAda444D3lexgP4zTqDB8QVOfKxAheOflgQ1FKGww6D0qod+hEjnG2/MjxVDP
+	0KFiHVrpfIxX8KF9FEkLBDwrfelYklehKRXe2CyOcfEf4lIqgU5EhcFhYzJorjiu
+	bWhqq/zXhB3kDL55+buh7RhJmqxpwBLrusg==
+X-ME-Sender: <xms:4eKwaJ7jAaK8mWYLt0aPV73cE_psJzEm8a4vrQuw5E_y7ZqupLQaKg>
+    <xme:4eKwaBfs3_S0vcM3FkIlHYEX0u2nyGbhBpYX9kvw2ISW592HjhmXHHA-7DlFWNp1q
+    BNfHlCPjgDAnhotCQ>
+X-ME-Received: <xmr:4eKwaNA9yOH53I2fHfnoF9tdLIDOhWIIFCpsWDW0r5rHB5gmr0SIyLJ19D5qQL-FDnZyF6rb00rEzf477_n5DP184qR4zYOsXXsSiRM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvvdelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -56,29 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvvdekucetufdote
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:SeKwaObmSZ6lAC5YWUngJPD2vPc7-umJFK6zqK8aJYr-VAh7eViIaA>
-    <xmx:SeKwaM1BiGlkTdqV6IvzY_b3pZZzCYPtmRBZWZrkWDEk6zGcrZObig>
-    <xmx:SeKwaMdFCVH_WVpVvizPPaGSsh206LSX1yMkrwS7K5oKAYmKtGweNg>
-    <xmx:SeKwaFFmRNZqVgnftLIDelUKPjjbGA1fiSjDzv7T98G1BXHL39ozDg>
-    <xmx:SeKwaJYypdBNn3XYzaCcuyE0Gi_BengRsivvFFgB8vV2WTo2Ac9M_ySk>
+    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhk
+    shdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:4eKwaE9nzBLfOn51A5kfiSBXCCasIt9Tni-yGEojhR8gEKLm5-o8_g>
+    <xmx:4eKwaIJEQ7NgNmtrXJVzOKMH7WbfaGmEGyHecyJZb9GKblr2NeQHCQ>
+    <xmx:4eKwaNgK9C77e2CT_95ZX0P2JpmsGKv1SSymo5-flVZZQgxh7ikqtw>
+    <xmx:4eKwaI6U86lVIQejM0-C_1gkSf2vdeGTi0QmnijqcYv_wW6yHXahsg>
+    <xmx:4eKwaJrP0Mnpe7Zl1vfXiUv5dwCbYC2m8RyAHGQqI8AnjWS1q2LmmRIg>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Aug 2025 19:12:09 -0400 (EDT)
+ 28 Aug 2025 19:14:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] t0450: add allowlist for builtins with missing
- .adoc
-In-Reply-To: <aJs5D2jPh8Uom96p@pks.im> (Patrick Steinhardt's message of "Tue,
-	12 Aug 2025 14:52:31 +0200")
-References: <20250804073002.1586332-1-toon@iotcl.com>
-	<20250808095943.3312265-3-toon@iotcl.com> <xmqq7bzdfoxe.fsf@gitster.g>
-	<aJs5D2jPh8Uom96p@pks.im>
-Date: Thu, 28 Aug 2025 16:12:08 -0700
-Message-ID: <xmqq8qj3rqgn.fsf@gitster.g>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: What's cooking in git.git (Aug 2025, #09; Wed, 20)
+In-Reply-To: <aKbFNq_pLasQGjbc@pks.im> (Patrick Steinhardt's message of "Thu,
+	21 Aug 2025 09:05:26 +0200")
+References: <xmqqo6s97e3t.fsf@gitster.g> <aKbFNq_pLasQGjbc@pks.im>
+Date: Thu, 28 Aug 2025 16:14:39 -0700
+Message-ID: <xmqq4itrrqcg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,87 +87,28 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
->> > To ensure no new builtins are added without documentation, add an
->> > allowlist: t0450/adoc-missing...
->> > ...
->> >  t/t0450-txt-doc-vs-help.sh | 8 +++++++-
->> >  1 file changed, 7 insertions(+), 1 deletion(-)
+>> * ps/object-store-midx-dedup-info (2025-08-11) 11 commits
+>>  - midx: compute paths via their source
+>>  - midx: stop duplicating info redundant with its owning source
+>>  - midx: write multi-pack indices via their source
+>>  - midx: load multi-pack indices via their source
+>>  - midx: drop redundant `struct repository` parameter
+>>  - odb: simplify calling `link_alt_odb_entry()`
+>>  - odb: return newly created in-memory sources
+>>  - odb: consistently use "dir" to refer to alternate's directory
+>>  - odb: allow `odb_find_source()` to fail
+>>  - odb: store locality in object database sources
+>>  - Merge branch 'ps/object-store-midx' into ps/object-store-midx-dedup-info
 >> 
->> Forgot to add something?
+>>  Further code clean-up for multi-pack-index code paths.
+>> 
+>>  Will merge to 'next'?
+>>  source: <20250811-b4-pks-midx-deduplicate-source-info-v3-0-e442bdf2b4ad@pks.im>
 >
-> Indeed. Toon is currently out of office, so I had a look at what it
-> takes. The below patch is what I ended up with -- note that I also had
-> to reverse the `grep` condition to set the prereq in the else branch.
+> There's still an outstanding question for Stolee [1] regarding the
+> `--object-dir` option of git-multi-pack-index(1). It would be nice to
+> give him a copule of days more to chime in. I've Cc'd him now.
 >
-> Let me know whether you're fine with just squashing these changes in or
-> whether I shall send another version.
+> [1]: <aJUn0qeliNQ/nnWr@nand.local>
 
-I've marked this topic in the What's cooking report to be expecting
-a reroll after 2.51 final gets tagged, which has now done.  If the
-fixup! sitting at the tip of the topic is good to Toon's eyes, then
-I can squash it in and mark the topic for 'next' without waiting for
-a reroll.  If not, please do send in a hopefully small and final
-update.
-
-Thanks.
-
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 12 Aug 2025 14:52:31 +0200
-Subject: [PATCH] fixup! t0450: add allowlist for builtins with missing .adoc
-
----
- t/t0450-txt-doc-vs-help.sh | 17 ++++++++++-------
- t/t0450/adoc-missing       |  9 +++++++++
- 2 files changed, 19 insertions(+), 7 deletions(-)
- create mode 100644 t/t0450/adoc-missing
-
-diff --git a/t/t0450-txt-doc-vs-help.sh b/t/t0450-txt-doc-vs-help.sh
-index 980130be78..e12e18f97f 100755
---- a/t/t0450-txt-doc-vs-help.sh
-+++ b/t/t0450-txt-doc-vs-help.sh
-@@ -112,16 +112,19 @@ do
- 	adoc="$(builtin_to_adoc "$builtin")" &&
- 	preq="$(echo BUILTIN_ADOC_$builtin | tr '[:lower:]-' '[:upper:]_')" &&
- 
--	# if and only if *.adoc is missing, builtin shall be listed in t0450/adoc-missing
--	result=success
-+	# If and only if *.adoc is missing, builtin shall be listed in t0450/adoc-missing.
- 	if grep -q "^$builtin$" "$TEST_DIRECTORY"/t0450/adoc-missing
- 	then
-+		test_expect_success "$builtin appropriately marked as not having .adoc" '
-+			! test -f "$adoc"
-+		'
-+	else
- 		test_set_prereq "$preq"
--		result=failure
--	fi &&
--	test_expect_$result "$builtin appropriately marked as having missing .adoc" '
--		test -f "$adoc"
--	'
-+
-+		test_expect_success "$builtin appropriately marked as having .adoc" '
-+			test -f "$adoc"
-+		'
-+	fi
- 
- 	# *.adoc output assertions
- 	test_expect_success "$preq" "$builtin *.adoc SYNOPSIS has dashed labels" '
-diff --git a/t/t0450/adoc-missing b/t/t0450/adoc-missing
-new file mode 100644
-index 0000000000..1ec9f8dcf3
---- /dev/null
-+++ b/t/t0450/adoc-missing
-@@ -0,0 +1,9 @@
-+checkout--worker
-+merge-ours
-+merge-recursive
-+merge-recursive-ours
-+merge-recursive-theirs
-+merge-subtree
-+pickaxe
-+submodule--helper
-+upload-archive--writer
--- 
-2.51.0-262-gbae8ff527a
-
-
+Then let me give a gentle ping here...
