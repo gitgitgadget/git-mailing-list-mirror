@@ -1,124 +1,206 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5342765D7
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 15:22:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD4A314B85
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 15:40:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756480973; cv=none; b=Xiv3IH7cgzVaTDBVtGkpqoFcTUgv1lMwqyBCyov1TEMC1P2fU7/DMpB9uXTa1xDNpFquKFjydM28ZP7WLgAnLS0KI0R9yoC9mWPlIEr61u21JXA5ipzz3V0vMQ/ZpVl0IPRvf3crp+Y4VVrAgUHRn+4+KeK/xHxf4rc5bJmDPOY=
+	t=1756482013; cv=none; b=qOQU4ekG5SUO7LVvmaPu1Y6DvCI6bUWOX8GAX9IaIlrjKlszl01VkBY1Tg88vr0f7Brv97N55ulrZiEw1DBxl79UwoU+YDCYNc3SbZ8bbO/6U0KtTh579EXKz/QCsUCvmBHORDAqy3BlpnYfGvp54YoV3RJNM5mxc1P9jPiYGsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756480973; c=relaxed/simple;
-	bh=fHG1fSDNj9pEk07Zwt/08ZM8l45/LPoz6cMbB8NgcTY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1iGar3N1KFU5qgwcC0G1INUYGAYXw2Op3qJAF5pYn5iRS1w4f40hidRpIi+pURA+bUTC2V5JiLS8vTGnmP8U1W6j1VZquP8/jv3vt+37Q8bpVMf9pnCDDMeo1Uhbko+KLciM8YhUj4DS3SONpoxwPA+NQ3gc4lhCWcgxsXaIb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ajkQfjOv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e23OeDWk; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1756482013; c=relaxed/simple;
+	bh=Qv181jjEFFOYsDcL803I44g414B7H9hLU7goBrMhT3w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ozze24QHx1n89QlTK9PonemgkXjhmV5z0Ib1HuAtJzGYiQ4LVZm3i399jF4vr5pS5+aR2X7WvyWHs/jtL0CAA84jgdgiSKxIAD3ycSC4jd+MEW5teDhr8M4SaDGdz6B8RNyfjwg7fsKXrCcE5KsnFChr9kPQKyQ6/5g1aZqv+wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oZmctF6A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EMhzkOyk; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ajkQfjOv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e23OeDWk"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 92EBCEC0304;
-	Fri, 29 Aug 2025 11:22:50 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 29 Aug 2025 11:22:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1756480970; x=
-	1756567370; bh=BJ8pgPuYFh04N/uSN3OPxGh2IBHkwwZIOUCEKG+BeM8=; b=a
-	jkQfjOvvrUegGVnkgc0fg3HROeVuhAZldq4ADzQ5NwDyCg6unp4Byg9H2Y738sfb
-	YnLNqgOj9lKXMHLy5/AlKHt+cuphEHc3caU41DY+r19Gz4qiw3RTpKeO9VMAKdpd
-	5zTDiH4jLPKh84plSvrr4zCX88IPOqbV1CKKAgS2QW6dhAP64Xqzb6qo9/xGroBj
-	1/AymONs9q3BkKWKOdbU2+CYm0nhjRKG3EzB3qdiFbmwYbo5d+ZGReMhrwJCyrAV
-	2n++WpKC7hORTb0zufw9dN11JDguvIhi1HWV8uictMQ63t1BrVMB7JfiTBM0RIbB
-	txjcQB2qsqcqJuU8B+ifw==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oZmctF6A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EMhzkOyk"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6AAD87A00CD;
+	Fri, 29 Aug 2025 11:40:10 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 29 Aug 2025 11:40:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1756482010;
+	 x=1756568410; bh=9Pbduont8jVzZfV76gAWTtYiUxdapeghLXxcDDUz4t8=; b=
+	oZmctF6AVZq/8E+XHVm+RKH3xNzFksFJ23Vj5QqI8PhImPD6y6kiVlul/ns+egHS
+	xoajEf29UMf1yN15IbECzMKT+P9VnceLrGGNF0sxKFoER90ypChfL6S7ECQ62DGL
+	qz+IEVphJU/ZpviICRHo7crllFD8bZQyn+0ZieXLMSz6Xc7oIgv8IDPf7VBfWM2p
+	/aY50Bp+1Mk7z6whAhQgQ7hughTOjzn/Zn9c0YLQPbzQZWAdaNIeX2g6ahDwruWx
+	8LvO8wAFsSfXNpRpcrT+NCqiPO7yxPmOxL9tNK48ZQOq0OpmML0E37vHby+2vWLQ
+	dU+tW0+ab4jw03ccU1snJg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1756480970; x=1756567370; bh=B
-	J8pgPuYFh04N/uSN3OPxGh2IBHkwwZIOUCEKG+BeM8=; b=e23OeDWk5NrZ3nTSc
-	KdVWLAQghE07AXpyxHADOo5zV4qYT6zSAHaew8U9mHcvUYx5wU6XRkQwPEYq9UOW
-	Rzm2eeOXnHQdqvQdGVuvWumXMbF0GT6PuWS/n+C4iYNL28YRxYgsy6whKlbQyIVC
-	yl2nZGkbGXR99s8VpXMCcz1yKrleutHH2yv6sropQGdNtxUh/2293bEzlgd83bBx
-	AssSOpPi0Eh6jpcfNzNjng1oay9LlMKCU2uSVHCFIOu5FJWNPRfmnI6YD8wetIBm
-	5fbocanWW/LRYhzA8cUXRCvkYQdl0N+JpQNJYxt5WD+SqTMK9tzcSSSw36umhjQt
-	1DLdw==
-X-ME-Sender: <xms:ysWxaPMVhJoPh-GFkX02JbMeq2kKGScyw3Q4nGImNawKCsLl0Y5Q9OM>
-    <xme:ysWxaNOyd6Cou2Z-zEzv9xNQw25tWq1dw109yHo5b_DBcQKX3lImnbxormEFt3_sO
-    G6z3BxUD7geed8xTw>
-X-ME-Received: <xmr:ysWxaHs575rBSOJw_-eudwaINPaz7HGYGGIxBB8DyGML7CUQRRdm7pJjziZXqGzakjZbZji7knk8q2BNJw7jvfLSmwCaclYHtjaChNYkncywlU3irc684ankcQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeegvddvucetufdoteggodetrf
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756482010; x=
+	1756568410; bh=9Pbduont8jVzZfV76gAWTtYiUxdapeghLXxcDDUz4t8=; b=E
+	MhzkOykyDTbWRPTOTiQ09dr794gWmMcnVtTRTwh4mPMZRxQSPYzQOqYXnU5osSdQ
+	ZI70snPjTysxgW8y0LC7IuE4zAyyk6nffJFM8mwSLZbDgFi149Nmx0VipkQCBwZA
+	cb9sfo3TG97Kxj5r5GC1+GGvg4HuEky7dS5GUZ2PCafyV8fwJc9SSKkVpt1/t2Tg
+	Q7SuqK+kbOgAe8FzRA7HoQnT/Z7yvOFe31DRoY9tslnbSJGfkq67l2z4v6LhGWDf
+	KzqftSthenyG9MjuFenjReJBtUoJHbHIm6kcYGCT3wpiRFDDG1DN7jcmOhtB1vay
+	MeSIBdudMKOj0+UVOWj+w==
+X-ME-Sender: <xms:2smxaB-96oobURnaDT9YpfL-1JNm1ubYu_2pj0Q724QQSPTiswGVeQ>
+    <xme:2smxaBPzguluQDHE978rvaHwLOZDPsYY3J39hr8uwErwbeMsSUQPg5VSSEOsRUkOp
+    Bld_6CHIeCOqc-3_A>
+X-ME-Received: <xmr:2smxaFe7SSgQDXEMztgX9hnq7SM6Aa4yUhttM00CEUPMmvqfvnYXuaAVFmQ-FrVxN1pRB2merPEQ-c8z3pGu1KEx-YSpb1dcUGdQ9CM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeegvdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepkhhrihhsthho
-    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvg
-    hrnhepfeehteekfedtieffvdejteeutefhuefgtefgtdevhefhveffuefftdehiedtfedu
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgt
-    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdr
-    nhgrmhgvpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:ysWxaPV2Rff2QSS8fN8mqANJnyhplhukadvnu9MOaoiS71GaFjy8fg>
-    <xmx:ysWxaHtF4dvQ_BDHhhtuMgS5lkaGJ-Eb9vWP3a5rjPeZnlps5tCfrg>
-    <xmx:ysWxaDUhjijhJuv_7PrCfMRSlWRJOpJtAkShiYT8wc8hOFdKfAmyJw>
-    <xmx:ysWxaCmCZOyLoe4Ptn38lBBfqHKSxaAeW3LyyRfhzYrv-aH1hjvmvw>
-    <xmx:ysWxaBdSUTK5KLi5ICTlac74MBWReL36kWez390btZkpWjR1JkKci3yi>
-Feedback-ID: i8b11424c:Fastmail
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpefhtedvjeehudehgeelheefieevtdegleefvdfftdevtdduffeikeeiieej
+    vdelhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
+    mhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
+    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehptggrshgrrhgvthhtohesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:2smxaAWr_sB2f7DPVTLK-u1p8GjpzzJ-uGjMTpbvmSo4R3-DIpsL7A>
+    <xmx:2smxaNiorfxiNujBQ_Hxt1eD_VGgF9kMueCBgbkJ6AVxsWRcRJZefQ>
+    <xmx:2smxaP87_Oijq-JLysMBMriZrl7NNEeDzaUuMybK4ehFb9VeylJ39Q>
+    <xmx:2smxaPbm0TlikrGFebz9NfHxaOtEtPYTSWCzvn7N2ideghzmXt_OKw>
+    <xmx:2smxaLsECukQoEybtgsxy0Vh-YTLGRTQyl26gqpT0KCWVW7ctiDUBWJG>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 29 Aug 2025 11:22:49 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 4/4] BreakingChanges: remove claim about whatchanged reports
-Date: Fri, 29 Aug 2025 17:21:06 +0200
-Message-ID: <9196c3c7e33dbd7027096cf7c7bf342869ee2c57.1756480827.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.51.0.16.gcd94ab5bf81
-In-Reply-To: <cover.1756480827.git.code@khaugsbakk.name>
-References: <cover.1756311355.git.code@khaugsbakk.name> <cover.1756480827.git.code@khaugsbakk.name>
+ 29 Aug 2025 11:40:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Paulo Casaretto via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Paulo Casaretto
+ <pcasaretto@gmail.com>
+Subject: Re: [PATCH v3] range-diff: add configurable memory limit for cost
+ matrix
+In-Reply-To: <pull.1958.v3.git.1756465231183.gitgitgadget@gmail.com> (Paulo
+	Casaretto via GitGitGadget's message of "Fri, 29 Aug 2025 11:00:31
+	+0000")
+References: <pull.1958.v2.git.1756370289.gitgitgadget@gmail.com>
+	<pull.1958.v3.git.1756465231183.gitgitgadget@gmail.com>
+Date: Fri, 29 Aug 2025 08:40:08 -0700
+Message-ID: <xmqqecsup25j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+"Paulo Casaretto via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This was written in e836757e14b (whatschanged: list it in
-BreakingChanges document, 2025-05-12) which was on the same
-topic that added the `--i-still-use-this` requirement.[1]
+> From: Paulo Casaretto <pcasaretto@gmail.com>
+>
+> When comparing large commit ranges (e.g., 250,000+ commits), range-diff
+> attempts to allocate an n×n cost matrix that can exhaust available
+> memory. For example, with 256,784 commits (n = 513,568), the matrix
+> would require approximately 256GB of memory (513,568² × 4 bytes),
+> causing either immediate segmentation faults due to integer overflow or
+> system hangs.
+>
+> Add a memory limit check in get_correspondences() before allocating the
+> cost matrix. This check uses the total size in bytes (n² × sizeof(int))
+> and compares it against a configurable maximum, preventing both
+> excessive memory usage and integer overflow issues.
+>
+> The limit is configurable via a new --max-memory option that accepts
+> human-readable sizes (e.g., "1G", "500M"). The default is 4GB for 64 bit
+> systems and 2GB for 32 bit systems. This allows comparing ranges of
+> approximately 32,000 (16,000) commits - generous for real-world use cases
+> while preventing impractical operations.
+>
+> When the limit is exceeded, range-diff now displays a clear error
+> message showing both the requested memory size and the maximum allowed,
+> formatted in human-readable units for better user experience.
+>
+> Example usage:
+>   git range-diff --max-memory=1G branch1...branch2
+>   git range-diff --max-memory=500M base..topic1 base..topic2
+>
+> This approach was chosen over alternatives:
+> - Pre-counting commits: Would require spawning additional git processes
+>   and reading all commits twice
+> - Limiting by commit count: Less precise than actual memory usage
+> - Streaming approach: Would require significant refactoring of the
+>   current algorithm
+>
+> This issue was previously discussed in:
+> https://lore.kernel.org/git/RFC-cover-v2-0.5-00000000000-20211210T122901Z-avarab@gmail.com/
+>
+> Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Paulo Casaretto <pcasaretto@gmail.com>
+> ---
 
-Maybe it was a work-in-progress comment/status.
+Looks good, especially without the reordering existing entries in
+the options list.  The authorship information above looks much
+better, too.
 
-[1]: jc/you-still-use-whatchanged
+> @@ -40,6 +57,10 @@ int cmd_range_diff(int argc,
+>  				  PARSE_OPT_OPTARG),
+>  		OPT_PASSTHRU_ARGV(0, "diff-merges", &diff_merges_arg,
+>  				  N_("style"), N_("passed to 'git log'"), 0),
+> +		OPT_CALLBACK(0, "max-memory", &range_diff_opts.max_memory,
+> +			     N_("size"),
+> +			     N_("maximum memory for cost matrix (default 4G)"),
+> +			     parse_max_memory),
+>  		OPT_PASSTHRU_ARGV(0, "remerge-diff", &diff_merges_arg, NULL,
+>  				  N_("passed to 'git log'"), PARSE_OPT_NOARG),
+>  		OPT_BOOL(0, "left-only", &left_only,
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+Among existing options (an excerpt from "git range-diff h")
 
-Notes (series):
-    Footnote solely to avoid awkward paragraph wrapping...
+    --[no-]creation-factor <n>
+                          percentage by which creation is weighted
 
- Documentation/BreakingChanges.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+    This controls how correspondence between commits on old and new
+    branches are computed.
 
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index f8d2eba061c..c4985163c3c 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -235,7 +235,7 @@ These features will be removed.
-   equivalent `git log --raw`.  We have nominated the command for
-   removal, have changed the command to refuse to work unless the
-   `--i-still-use-this` option is given, and asked the users to report
--  when they do so.  So far there hasn't been a single complaint.
-+  when they do so.
- +
- The command will be removed.
- 
--- 
-2.51.0.16.gcd94ab5bf81
+    --no-dual-color       use simple diff colors
+    --dual-color          opposite of --no-dual-color
+
+    These control how the findings are shown, by painting the lines
+    in distinct colors. 
+
+    --[no-]notes[=<notes>]
+                          passed to 'git log'
+    --[no-]diff-merges <style>
+                          passed to 'git log'
+    --[no-]remerge-diff   passed to 'git log'
+
+    These control what text are used to represent each commit and
+    participate in comparison and display.
+
+    --[no-]left-only      only emit output related to the first range
+    --[no-]right-only     only emit output related to the second range
+
+    These again control how the findings are shown, by omitting some
+    commits from the output.
+
+So there is no perfectly logical place to place the new option, but
+between diff-merges and remerge-diff somewhat feels a bit odder
+choice than other possible places.
+
+Will queue as is.  If some users find the location in the "-h"
+output too odd and disturbing, they can later send in a reordering
+patch on top, but I would think the chosen location is good enough.
+
+As #leftoverbits we might want to
+
+ * Group range-diff specific options with OPT_GROUP()
+
+ * Instead of having to match the full NxN matrix, perhaps reduce
+   the matrix by keeping the most promising M (which is much smaller
+   than N) for each N, or something?
+
+but that (especially the latter) is totally outside the scope of
+this patch.
+
+Thanks.
 
