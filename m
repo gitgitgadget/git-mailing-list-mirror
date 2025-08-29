@@ -1,114 +1,101 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A865C13C8EA
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 15:15:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6178C322DC4
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 15:21:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756480546; cv=none; b=NE4jkcUfZU7GLjdbTKtQj7eWwwxBve92ClAY5UFh3HMZGfrIstEVJ1wCU327mDZsIZHOQnR8sh6PERNSlmYTP9bkQjaMhptOZgq5+rQmcEKVPgcCUjNpu/8Rfqqo+OUJ/i6OO64DWcN541bWt+UsDljSDsMNTH/jag56zjq2HCo=
+	t=1756480897; cv=none; b=P8b0ZFv1XJBLXQnrcvHnqUkk3mIlHCtmIBHMgJ76F9koIc2/2ozhpPZoYiKvCifyVFjwtKZSIjeGKfex6Sc7VYgDCDX0dGJdsZkhqarTPXOeBTIlbuj1ezDA44GOXpfvVMN/iVg9iKnChPcgwihAgLq77J+9Tq0aKIvg6fgfsC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756480546; c=relaxed/simple;
-	bh=dM+d6hFkRtzxR7T9F+rnZrWiAPpKa6xJ+SjWeJsxV/8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pEK62CaGVsQxyzuPMngtZyB06KkEXRXvW8vqI9WE1BG70V7lFLxpKUI7h/hibqRw+6sH3NHWVLLQh9EwKSznD5Mw5vmo0k+KattGi6jDWV0xAHLcmGZ1tsI+uHfuCNciNp22aOyxysLHXiYI/MZziCelI5XWbVmJ5vdZUsCGFiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HzpdvII5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bm4uz0M6; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756480897; c=relaxed/simple;
+	bh=gM0Tu/9QLQC2+k+ZWPlG6XqojYs8z2ImH6e8TmYxu3U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aRi6KiN4nGRO5m+nRQ0uwHDx5BqVNCoNN5NscYtbAxsijJ+yue8kiFhLROomPfCp82zhIIDqzsE693m64VsSdS+NM+XneWaSfLKoxlMyPPgHM61PoS/wIXtSytF6C6B4Z9cLypib5lIzd2MMYtGt8i4tX4q8SrXp6+8i7avNgCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oxlx1fzp; arc=none smtp.client-ip=209.85.166.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HzpdvII5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bm4uz0M6"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id BE1291D000E1;
-	Fri, 29 Aug 2025 11:15:43 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 29 Aug 2025 11:15:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756480543; x=1756566943; bh=dM+d6hFkRt
-	zxR7T9F+rnZrWiAPpKa6xJ+SjWeJsxV/8=; b=HzpdvII51KmWyHW+JqQy/LRrQH
-	yuYFno/Gcsp6wzPssA5AYveNu+Ur2c6JjhLqGKkNt6aVFSC/X8FdAkswhWG4lruh
-	oWGve6MSy5PGhVP1aA4Z25PpIWpfZocN8iL8PRvRokrVUrbpuQiupfWEw7q2Fo9c
-	5Gs6GxfbvUMdzyGGpzwBM3xIpadJps6d2i6Oa+4Yphom0AdxXiFMLLGw3YNrS+qh
-	Xr3io2hIRJmSspU2DLiscWTQbL6TJkkovNii3P3O29uU1q9PusAC7ILyPheZWuOH
-	g1RQsrRV5G6hyij900iDFrAniIpdoyIcl2GE9/8Wt3TlXUXdj7hi2vQ6zJAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756480543; x=1756566943; bh=dM+d6hFkRtzxR7T9F+rnZrWiAPpKa6xJ+Sj
-	WeJsxV/8=; b=Bm4uz0M65IqAWXQWH3DQKU/QFOqyPphVTxdYpzGB4uc8gk6PUN7
-	LE55/O75Erou2E1CkhWXEYxJJQ/aMxRsyQCHxByUJS8fKAUdG2YuyomMW3ZgH1yb
-	+NJrbo2PBsfOoZXvjsMTrMae44X73IzUCqVZuAqjM8s1cm+pm2XnCQ5/aSvm0smo
-	2JtZFsdk15nEORZ/HcWpgmxV3KLq83Gmtu4r1/USMrEfwDPSsLnKLKiD1E5aC2ww
-	UqoqpVnTioMvPEx1duW2/gqOjc+XMPe/dOz/4GoytE8fnSn7c2YBT7av0S+DUwH4
-	t2dQcdvwX34HCHIXVccZSEq1zlnxNv1wQaw==
-X-ME-Sender: <xms:H8SxaKIwX9ETNdHY4l4nm3h2JHyoJR5WLktgv9pnU6XWs5sXuZYRMA>
-    <xme:H8SxaKmbVEXb9y79wqi1n68YgIQ9J8wfTNMJso6XZFWn4w7mbz0kZBkIHz4CHVwsz
-    xT3fExfdF0xnP98Mw>
-X-ME-Received: <xmr:H8SxaLKMmXpisNfBTW34Ai7TJpRN5AePwan7j5N4rw3RMQQlWJ3zy-9jcIEJmjsVJyhZMDfB2SKjgU6mpBYxqfI_ZdUrpEAudll85oI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeegvdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgtrghsrghrvghtthhosehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhg
-    ihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghulhhordgtrghsrghrvghtthhosehs
-    hhhophhifhihrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:H8SxaP6iVp4eJlnDAL_PibqvmgA661J7Mj8gNVznp3o0N_gvPctcWQ>
-    <xmx:H8SxaP24q1blDBkGcCHnQkgXKzQ72p-DF9g_eFH1Tdrn_lunJsQmMA>
-    <xmx:H8SxaFeIlSzMVJNKr1EIlKbN4TgbhRgPTA0rv8WWsdEjRXeH2Bdugw>
-    <xmx:H8SxaFc7K3VB9UH1GFW974VSW5Qymm0gsC-LSu0hGWkj6xNQ43fvtA>
-    <xmx:H8SxaOgs6tJnY0RDw7CWyo60LcbLbuV-uxTtDwt5C_8n3zU7E59SVc2l>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 29 Aug 2025 11:15:43 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Paulo L F Casaretto <pcasaretto@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>,  pcasaretto via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  pcasaretto
- <paulo.casaretto@shopify.com>
-Subject: Re: [PATCH v2 1/2] range-diff: reorder options lexicographically
-In-Reply-To: <CABEf2MkN0BNVuiA4Q0SrP=vFb18tSEKcD09qDzs40CowHjO3rg@mail.gmail.com>
-	(Paulo L. F. Casaretto's message of "Fri, 29 Aug 2025 12:56:29 +0200")
-References: <pull.1958.git.1756228693233.gitgitgadget@gmail.com>
-	<pull.1958.v2.git.1756370289.gitgitgadget@gmail.com>
-	<ec5dcdf9d00473417b1f0b676a485f01076ce075.1756370289.git.gitgitgadget@gmail.com>
-	<xmqqa53jxyiz.fsf@gitster.g>
-	<CABPp-BGRHajFf5z91CvvKvahpknbt1KraCR3_rOmAjvxz36_Ag@mail.gmail.com>
-	<CABEf2MkN0BNVuiA4Q0SrP=vFb18tSEKcD09qDzs40CowHjO3rg@mail.gmail.com>
-Date: Fri, 29 Aug 2025 08:15:42 -0700
-Message-ID: <xmqqsehap3a9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oxlx1fzp"
+Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-88432d8fdd6so100900839f.1
+        for <git@vger.kernel.org>; Fri, 29 Aug 2025 08:21:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756480895; x=1757085695; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h7RbWz1oU+xDptzUsGdyJDdifSifIzujUpkKQThrU8k=;
+        b=Oxlx1fzpsBk3aOBsp4Xz9SzrGltZKxJ7BmL0K6nGIFnWcy5izNJh7i6G7CVXsPM72q
+         DIYQQR4ekEXGI6WXWCUm+5z34RnweTMhVOS2dW6HPsE4CSwgRkSoULAEzcmqsfensBv4
+         nHiq0gJDLUbzx1OPo3LuVs4u+JRIAddEEyUQId77U5mkdwATrajKwY60tV5dPnKvKKJD
+         DoahwVh8ozRuHrpT/kwff1kOxeJrmHvtZZd9QH1KTcEkQ4oeF6DHK1oj6a47VtlDplm8
+         LLtFBmrPf8o4o0Zrv04hNivXGnusrUB80SNoHbI/MeZGPxxACrmSDL8F1pWAkZk2jiSR
+         5asw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756480895; x=1757085695;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=h7RbWz1oU+xDptzUsGdyJDdifSifIzujUpkKQThrU8k=;
+        b=IJXxetpMHYttCUkDiky/HKQExXN2pJNmPgs89iJQkMyna7bcTr9Ji5uZqVgaurdjAj
+         +xtFK4LjP1RG+B7QIyBptwUbVD3o5kw9rgLR7siTJsaMhU7+nKH9zMNSf3y3gkM/xVi0
+         Fw4vsHb66dzS1XL6xBxVm1hmzyaU9cPON8SJsPqrB/k8baBx4vCw32Q3ceWstn6eUiyr
+         z06FoN9zmgmiXKW9n+YgwY0olV6/QvwnJJrGjATvuToeHdHyPXPUwxU7B93EwKlwS2//
+         svQ5PmUZL4+anVT7ilKys8IY2OkucumkDo92KoJjVwPpd8k/elAfP1ivDZN3+WtjBnPm
+         NU8g==
+X-Gm-Message-State: AOJu0Ywh61ohb6tIdWAFNpehAXjQwxXBt8o4NYK43SN0ncdl44i2OPZY
+	Zw8U9Z2OTgmm5F784loGTTssO5+HpaCrvk+w+sam//l5NcH9mmOplnhbYcBidestqtVOkvcH+dC
+	FXwzftYiRKWKTqip3Cn3L0gJgrXQ2oyk=
+X-Gm-Gg: ASbGncviWyZZ00OuYXIoUHdxJhM2Qqa0crr5RLGyP2cMeNm6pObwZ7zDRFya9xnFElB
+	2LoAd9YsYdqVlQaPZPRdUbcSzk1K9CONgjUzBp5jm0x8FVQlIwl37E6vhsLliUouujd6VjknYmj
+	dY3SxS52BbemMV38zcC1sDOiFsBJmzJ0wPRQ7oLA7LNsc8qlNt88ysNVBg5GTYsC3EvOSIPzjif
+	2AyN1LIP25y0TvQGVqLgz6PJT7RHHUgL01lqkeIwoFmAMsMQw==
+X-Google-Smtp-Source: AGHT+IFbnwaXLE8gR1ljUzUoxIKHcgMp9svXvQNJVtAAcWZkWdxezt5tKhRhNC20d/dQ5SY4TaclKeIFN3YrnVXge6U=
+X-Received: by 2002:a05:6e02:b25:b0:3f3:5ee1:3c83 with SMTP id
+ e9e14a558f8ab-3f35ee13ce4mr20359975ab.11.1756480895295; Fri, 29 Aug 2025
+ 08:21:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1958.v2.git.1756370289.gitgitgadget@gmail.com> <pull.1958.v3.git.1756465231183.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1958.v3.git.1756465231183.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 29 Aug 2025 08:21:24 -0700
+X-Gm-Features: Ac12FXyOJSaoSamsleZJ5kAlsbO5EYCcg7GlV4vRbR-qoLyVM7tzCWFG0nwgYYk
+Message-ID: <CABPp-BHnCHiTFNKCrnpKF5STkeGNQWMxdVMZ_v-Rp2judZVEgw@mail.gmail.com>
+Subject: Re: [PATCH v3] range-diff: add configurable memory limit for cost matrix
+To: Paulo Casaretto via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Paulo Casaretto <pcasaretto@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Paulo L F Casaretto <pcasaretto@gmail.com> writes:
+On Fri, Aug 29, 2025 at 4:00=E2=80=AFAM Paulo Casaretto via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> -
+> -       ALLOC_ARRAY(cost, st_mult(n, n));
+> +       size_t cost_size =3D st_mult(n, n);
+> +       size_t cost_bytes =3D st_mult(sizeof(int), cost_size);
+> +       if (cost_bytes >=3D max_memory) {
+> +               struct strbuf cost_str =3D STRBUF_INIT;
+> +               struct strbuf max_str =3D STRBUF_INIT;
+> +               strbuf_humanise_bytes(&cost_str, cost_bytes);
+> +               strbuf_humanise_bytes(&max_str, max_memory);
+> +               die(_("range-diff: unable to compute the range-diff, sinc=
+e it "
+> +                     "exceeds the maximum memory for the cost matrix: %s=
+ "
+> +                     "(%"PRIuMAX" bytes) needed, %s (%"PRIuMAX" bytes) a=
+vailable"),
+> +                   cost_str.buf, (uintmax_t)cost_bytes, max_str.buf, (ui=
+ntmax_t)max_memory);
+> +       }
+> +       ALLOC_ARRAY(cost, cost_size);
+>         ALLOC_ARRAY(a2b, n);
+>         ALLOC_ARRAY(b2a, n);
+>
 
-> Yes, I concur. I noticed these were "out of order" when I added the
-> new flag but now it's obvious that there was order. I'll remove this
-> commit.
-> Regarding the name problem, I've checked and I do have "Paulo
-> Casaretto" set as my name in my Github public profile.
-> I fixed my local git config and apparently that fixed it.
-
-Yeah, these in-body From: lines GigGitGadget adds come from the
-authorship of the commits you are sending (in other words, what you
-see in "git cat-file commit <commit>" for these commits), and your
-GitHub profile would not affect it (and you do not want your GitHub
-profile name be used---otherwise you cannot send a series that
-contains a change written by somebody else without overtaking the
-authorship of their commits).
-
-I see v3 posted there; thanks.
+This still has the same wording issue that I commented on in v2:
+https://lore.kernel.org/git/CABPp-BEDje5dYZHEyYMN6j_LdR5CqRN1cxc0riRK06qK-O=
+xiTA@mail.gmail.com/
