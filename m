@@ -1,173 +1,120 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9741DB154
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 13:30:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD292ED865
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 13:39:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756474227; cv=none; b=BfPqXEsVOjxaZVHTtyH8KcLzgJdjuEd2x7HVLJSsqTcMa0EKZEr5BMsqOfpOsTpIIpROoVEgBcCpYjK3XGAOkCkSJmKAeRcNBLyU9zbKOmg+DTdE+Fo+9DzsXpZ/bqT0yYnZRlMpzaZ7RrepVdTWnK+2mnz6ZtwLzOEb7BAZJmA=
+	t=1756474783; cv=none; b=XKffUTjDEgNxtdzuB+Gvic2vzqeHbKlmRQvakdDcJViS7EuWpujGoklIXRsOL3PveFehY700zf9G94wrNTDdIIELIiw47l+Zjm9DCDt2NB6pf0QFEnAPzcImv8o1zl/p5MFrApGIeVX87KhWt7SkU8B3PPiFxnPhS7WYZ8h3fjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756474227; c=relaxed/simple;
-	bh=5eAwSwKuJcIUI/pttp/cKpjQK89RoiH7hWQSNT7M7DE=;
+	s=arc-20240116; t=1756474783; c=relaxed/simple;
+	bh=Ey1ikdv8kzmApMjmQrpNUcfhkw/LxxntJMw9HrEsxJw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ejVtW8y3R/iL7hsdeceiRXg2Gm1PTJOf+Al/+x8PNQD4WmRhZpq4bkJ0RS+3wzt7ncWaPjepHiT5GQLq/lt41DIXfspNU2geMrA+PS0iYYaSwgKg4zmoPda3ptdOTrfY+mX7TvEm3HIog/E1WR7sV5WtvZqX7/1/VSEbSEhVZ4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g7Ca8870; arc=none smtp.client-ip=209.85.208.54
+	 To:Cc:Content-Type; b=jkOeuU2EPoMnfhxxxyXsRbI2IjOFCqJ00qMxVFAAXPQbrxvj9VyN+DbXfIvvSUWwmrugCc4PESAPHUu6hfjTCvYBxsumJIMtOT3D5VKeFFakV0AHmTfqWpJx8fE/Dvt0T08NPO4gaNcADmzgAxkf+wLP7CaeNh5KyTp9MQrQYY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mc8hD9wb; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g7Ca8870"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-61cb9f6dbe7so3788222a12.0
-        for <git@vger.kernel.org>; Fri, 29 Aug 2025 06:30:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mc8hD9wb"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-61ce9bcc624so1980804a12.1
+        for <git@vger.kernel.org>; Fri, 29 Aug 2025 06:39:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756474223; x=1757079023; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756474780; x=1757079580; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QL9Oy9RTMH5R5JZolvJnl6N6lfiFFeTvYXbhiS7Z6+Q=;
-        b=g7Ca8870WDmptUo23rDpeo6fRiVoMFPapjMaw26rdS3Iwrwq3RSXmUxO+Z0wIrAygt
-         qmR4IvOffzieBeuC/eAFj8WeIMVJMc9HT5KFLaaeXHFPx8/4q/7Y0A8yxsDibww7VY6Q
-         znHAsWWJt/3dPxluwz8AL2dUajrqufl86+ruHJy3yvBMDDh4rM7fSQ7A+QGFf5JTYoxw
-         Zg0TgdqVhhiv3gtIKMSyCxOcAHFv5/+CRneyiGrDAmaq8IMSodlYjcD9yioAgApgzTup
-         2/migQWNzu3447dxunGkHaSZk5ko4gBMFdnISxmuPu5aJcdEJ7d/94wlXSDKn7jwwlci
-         5S6g==
+        bh=zg7mVyt2yTG7pSC3i2zbzDlB1MqDgF0gr/7LAjQ6/58=;
+        b=Mc8hD9wb4xMgKvIA3g8aqPSeuGQ8ON+VLWTuQ3LBI8e0n+/u1ohkMoLgRugrm77Gcf
+         986tYTdFYzMiWC/aEqhEtYzBTEYyT6GSzgea4b3stuj7uV5xeAjRU+a/gN/L/XfUMVpu
+         OD8wEjPTV7JhPp6NcdnFFk8NbBzUUrJ66QX5HY5noXeszv1l66yiNQ5WrYroh2DFApQH
+         NGDW7Vbw1jH4WEUGdQQq1OnNPubrH5WkcfaW7vxvnFcJwd/vU6Ci1aOia1ni6vExZ01s
+         qjH5aOkS1SAJc4DdE+ime3xIvSx+8iRByjOtHGXK1gstI26eIx4hV9sQAvFQJ8H94Wxc
+         VYuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756474223; x=1757079023;
+        d=1e100.net; s=20230601; t=1756474780; x=1757079580;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QL9Oy9RTMH5R5JZolvJnl6N6lfiFFeTvYXbhiS7Z6+Q=;
-        b=EHAsPll/V4cFZ83mnP6Fi10+EF+vEyni3kCwIL2UIC+wYOaGn9tn0GpzWpA4Si3q2p
-         UXF+L+T8Cv+3FCKDhp6NvIzQPsxx7Cw2Z503sBwrtwg1UkBOCG4INkqPUg1lNsoVlKIE
-         m51QegAoJGNMdxjtEOrEpeSsenDYoCUnbNHj4MHwbrz4001w2MOphJqoYH55vh53t3Fi
-         et2eJLwGXc/37PlAYPJqovW3SfGpg2el2qUnbLyzo7oSe2mOqzo4hoc1QFamgEZvON8s
-         +xrRB74h4oruYxhJahJf3Ur6vaxVJbRArC/Kfs0MnRNHb0/oO4vGeImpT9/i5v8u4Y3K
-         8/Mg==
-X-Forwarded-Encrypted: i=1; AJvYcCVeCBgwuQYjCVthm4jw1OMsxuOghwazKVJ65sX8XYf4ZGWV9Ir5pYvfR1rcUm7t4/Vj2uw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIyZf3U9xtVFHHF7tkL3iAcRp/yH1p9Pk9PDKYoNvqZN0pkNK5
-	c7S7GKVLMunOHurmCuTwxhVxHL9AvoO1g5JU1dZyX7xYD3lUH+nrUJwVLjipGe5JPw9C3wegb0n
-	exZ217Onz7xNvDeBUVN1Ulc9XIQ147Ps=
-X-Gm-Gg: ASbGncvEEg5XusXXNsUEzosQ9dgzEj/fUJeP+/2uBqaHN0XZWgimJkvRtenSekfogkG
-	Vs+r0IpuyzTaAVcUwOcGTenQaJzVW0SuB77kZoNGuuQxIZ0TqG0jZfQNknf3x8/9GSSk2yvlgge
-	jkok6JECgqxdLrZv8PUnmoLSAkh7fzAo/WDqdOgzeopIjfguRYKArgxIRIcXrNmUeeLCsp2r+gI
-	5+G6MEsMkxqxP6FE7TYiHCXxdGX1IfrJ3ypI8DthOrltK5Sr0pa
-X-Google-Smtp-Source: AGHT+IFeuvNkt3EaiTcOqP7B8IJn93KKY0t9Qw8hD5N7ch8rjdeYqfjrJbdINxwrvxw2xchZJL4NP78K897Vfutizgg=
-X-Received: by 2002:a05:6402:440b:b0:61d:b8e:195a with SMTP id
- 4fb4d7f45d1cf-61d0b8e1cd1mr1130266a12.1.1756474223083; Fri, 29 Aug 2025
- 06:30:23 -0700 (PDT)
+        bh=zg7mVyt2yTG7pSC3i2zbzDlB1MqDgF0gr/7LAjQ6/58=;
+        b=JW+W+qULNS/r3cw0mwK5fsPUbSt4RfRsQIidkDBopcb1oGHoO6UTq6A+RmQtue+HW6
+         JWXrhz1Vgnj9fMBV4Qj77oZDUr2nqz0j4O+yrSduRCzaBXr8LZWC2aS62hfxRD1Tnl0w
+         u8fVDMyEBGeq+mfCaK721sFbH7H4G9QI55ZPE2c61xRDCCy4534m8oJuYPTPSbnhACY5
+         KjQmXcTpbVNgvUjfHsThsBfYkwryZKSoTT17jqeb4ek2sPN2dr33n4IlYysH4Ev0xIfG
+         UZA42iOQoxNmb3+PITcl2CxFzKYX+3jI2e4hz1PxtMiCZFhXi3OcURD1Lcz1cSXcgaYw
+         Em6A==
+X-Forwarded-Encrypted: i=1; AJvYcCWzTeuFB/le0wqg3Ci3kIPG8GCjVOABM7myx1I4WjTnWmANDkL0dExhX/ufnxiKNnsnqHI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBWgk3kDLJf7PhXMbelrcuZYPLzg9sLBwUr25nttC/8xk0JZRc
+	Jv+P2TFrxoglpEZ2dkZ464TBuXWyKHRbrwnxAwDx1Wq3WVby38vRp7f/cujJIfKIwMBv1TV1qVX
+	H2NS0eBb/uSiuTwvDj2CSta3tP11rOmU=
+X-Gm-Gg: ASbGncvz9a8GK0nCvIgsBiovgNUmWYdZG20hOXeE2crteLtZ0vBz/e9dDscQwtyFDhl
+	7KVr0vqW3wai1l3SFB2csKHSa2a72bT9UjgAr4OAgk2XCqfWGrpaAOEEIX08vMJcw7G8Cg5Kvne
+	xTIqpriGH2kkirbHV0oP0OMwu+bwdXxMNdfTG4xutWdv+ByuGTac/xgW+bgiEG7KBIM8I7ftS/Z
+	0yyobI1AkvmRovTUQcyigYNl2ucxu+pfe6mxoBdJeNcgLGetuzB
+X-Google-Smtp-Source: AGHT+IE9ruY8zIA7wiowP6b/9+gVnPRVv397uRY8tHxgKPzJFfJY3BHT8MAfj6SQFpZyM69HhtxF5mYK+edJ7DcCJmc=
+X-Received: by 2002:a05:6402:1d4b:b0:618:1250:ac5e with SMTP id
+ 4fb4d7f45d1cf-61c1b6f982amr22804163a12.19.1756474779763; Fri, 29 Aug 2025
+ 06:39:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <89394e50-9077-4a7b-b30e-afd1be1a40e8@gmail.com>
- <18A45EC6-2D2C-45A2-8802-0E5060539398@gmail.com> <9f9e49c5-5612-4e6d-89af-839b353506f1@gmail.com>
-In-Reply-To: <9f9e49c5-5612-4e6d-89af-839b353506f1@gmail.com>
+References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
+ <a6125a0128937392af283033e63d2b04776caf2c.1756148933.git.gitgitgadget@gmail.com>
+ <CALnO6CCvD-uoan=-VW+OmfCk5cLgNm=zENAejL9vX2czahMGxg@mail.gmail.com>
+ <f440d0e4-0754-49a0-9677-980f60a5dbf5@app.fastmail.com> <xmqqa53jqaen.fsf@gitster.g>
+In-Reply-To: <xmqqa53jqaen.fsf@gitster.g>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 29 Aug 2025 09:30:11 -0400
-X-Gm-Features: Ac12FXy4FTSG0VdbzhJlrMLipyHEAQrFXxLDr8PxS7Q6w4uxlyUjpFgWKvjj9j0
-Message-ID: <CALnO6CCsFuYqo-q8D1g=vR9q22+Cy1MAgk1Ld0cD1wFNjr-eSw@mail.gmail.com>
-Subject: Re: [FEATURE] Proposal: git stash --only-unstaged
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>, 
-	"J. Dettweiler" <git.vger.kernel.org@dettweb.de>, git@vger.kernel.org
+Date: Fri, 29 Aug 2025 09:39:28 -0400
+X-Gm-Features: Ac12FXxwTI68tUK6cqPb2ZvW4UXjyMTEfBj2p-__eyn0NgjW5uRASz0FiqydnDc
+Message-ID: <CALnO6CBvsWZe77ireTxBoPBuHem1J3Qrn9H6GZvA-w59ytAqVw@mail.gmail.com>
+Subject: Re: [PATCH 1/5] doc: git-checkout: clarify intro
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Julia Evans <julia@jvns.ca>, Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 29, 2025 at 9:06=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
+On Thu, Aug 28, 2025 at 7:44=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Hi Ben
+> "Julia Evans" <julia@jvns.ca> writes:
 >
-> On 19/08/2025 00:41, Ben Knoble wrote:
-> >
-> >> Le 18 ao=C3=BBt 2025 =C3=A0 11:14, Phillip Wood <phillip.wood123@gmail=
-.com> a =C3=A9crit :
+> >> I think we've dropped the bit about the default interpretation of "git
+> >> checkout <something>". Maybe
 > >>
-> >> =EF=BB=BFOn 17/08/2025 17:08, Junio C Hamano wrote:
-> >>> Phillip Wood <phillip.wood123@gmail.com> writes:
-> >>>> To use it create your stash with "git stash push --keep-index" and t=
-hen
-> >>>> use the script to pop the unstaged changes rather than using "git st=
-ash
-> >>>> pop". If the script proves to be useful then perhaps we could add an
-> >>>> "--unstaged" option to "git stash pop"
-> >>> Hmph, would the behaviour useful enough that it should be always
-> >>> enabled, without any new option?  I strongly suspect that those who
-> >>> worked on adding "--keep-index" option did not expect the user to be
-> >>> mucking with the working tree files while "testing the staged stuff
-> >>> by updating the working tree files to match it and nothing else",
-> >>> and as long as the end-user stays within that originally designed
-> >>> use case, nothing changes for them, no?
+> >>     When you run `git checkout <something>`, Git tries to guess whethe=
+r
+> >>     `<something>` is intended to be a branch, a commit, or a set of fi=
+le(s),
+> >>     and then switches branches, switches commits, or restores the file=
+s.
+> >>
+> >>     By default, Git interprets `<something>` as a _<tree-ish>_.
+> >>     [explain what choosing a tree-ish means for the user?]
+> >>
+> >>     [Your notes on disambiguation as before]
 > >
-> > I can=E2=80=99t particularly comment on the script, but I do think the =
-example
->  > in the docs should either just work or be adjusted to work.
->
-> I think the example works but may generate conflicts when the stash is
-> popped. One can argue that the conflicts are unnecessary because they
-> could be avoided by popping the unstaged changes but I don't think the
-> example is broken as such.
+> > Thanks, will fix. Though I don't think it's accurate that
+> > Git will treat <something> as a <tree-ish> in this context, since
+> > `git checkout <tree>` is not valid. Will find a different wording.
+> > (I get "fatal: Cannot switch branch to a non-commit")
 
-Thanks, let me try to rephrase: the example makes no mention of
-conflicts appearing or having to adjust them. It seems to heavily
-imply to me that no such conflicts are expected, though as we
-discussed upthread it seems unlikely you _won't_ get conflicts if you
-do
+Interesting. A docs bug! :) AFAICT it comes from 19e5656345
+(checkout.txt: document a common case that ignores ambiguation rules,
+2016-09-07). I was a novice then and don't know the behavior from that
+period, nor did I bother to find out whether "tree-ish" matched the
+behavior at the time and has changed or was simply wrong from the
+start. Good catch.
 
-               # ... hack hack hack ...
-               $ git add --patch foo            # add just first part
-to the index
-               $ git stash push --keep-index    # save all other
-changes to the stash
-               $ edit/build/test first part
-               $ git commit -m 'First part'     # commit fully tested chang=
-e
-               $ git stash pop                  # prepare to work on
-all other changes
-               # ... repeat above five steps until one commit remains ...
-               $ edit/build/test remaining parts
-               $ git commit foo -m 'Remaining parts'
+> True.  "git checkout foo" is disambiguated by seeing if 'foo' can be
+> interpreted as a commit-ish, and if not, if there is a path 'foo' in
+> the working tree.  Otherwise we'd get an ambiguity error.  A commit-ish
+> that is nameed by giving a branch name and other commit-ish then trigger
+> a bit different codepaths (the former results in checking out a branch,
+> the latter detached HEAD).
 
-since we explicitly say "edit[=E2=80=A6] first part," since it seems natura=
-l
-to me for that to include editing "foo." Perhaps this is where Junio's
-suspicion (reproduced below) falls afoul of the language used in the
-example?
-
-> I strongly suspect that those who
-> worked on adding "--keep-index" option did not expect the user to be
-> mucking with the working tree files while "testing the staged stuff
-> by updating the working tree files to match it and nothing else",
-> and as long as the end-user stays within that originally designed
-> use case, nothing changes for them, no?
-
-I suppose my main complaint is nothing about the example makes it
-clear that's the intended use case to me? Hence
-- we could change the example to mention conflicts and/or use case
-(smaller patch, punts on the problem)
-- we could change the code to accommodate the example as written
-(using ideas from your script; harder but bigger win IMO?)
-
-> >> Yes it probably would make sense if we knew that the stash had been
-> >> created with "--keep-index". At the moment I don't think there is
->  >> anywhere to tell from looking at the stash if that's the case but we
->  >> could add a trailer to the commit message when we create the stash to
->  >> record that it was created with "--keep-index" and apply only the
->  >> unstaged changes when we see that trailer.>
-> > This seems reasonable; I wonder if there would be any interaction
->  > with the stash import/export features? But perhaps those omitted the
->  > index anyway, I cannot recall.
->
-> It exports the stash commits as-is so it should be fine I think
-
-Great!
-
-> Thanks
->
-> Phillip
-
-Thank _you_ for taking a look and providing something to work from :)
+Yep, makes sense.
 
 --=20
 D. Ben Knoble
