@@ -1,69 +1,68 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF730314A60
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 11:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61992D321D
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 11:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756467945; cv=none; b=jBl3DbhSPmTEaDAxvNZGA2gGkuLzZfRQiieyJO2xWJXRtlhMyST6gwd25dGGKcRZYCnXJd5aV5qoBFm826YAahXmXmrmEp7aYCUdEwogkEBeuE0e6YmsD18uOqBR4ZjI0hpDtbnb4WrePoE/KtTzSZ2oQQ0/x6dt6y35OG6nmFA=
+	t=1756468508; cv=none; b=SV3QiY0MouLE4mciOTMehkkI58KfrlE7xV2nxgj3dxVzkxtxiBehzMJfMrAIcUtd+vAF8RLRz2uBT4JKYLevYi/baAO/bv/GykBYKBDZZG0VoZNE75T6sccjLPVbgA9IdXvqYo+PXICcq7AxJKeIpyoVTjoPuJPIVlIB4ZiSCAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756467945; c=relaxed/simple;
-	bh=vjkzOqhJ+NNxQOfCTL+NTydKBVye4+AfgiVMBN7uhMc=;
+	s=arc-20240116; t=1756468508; c=relaxed/simple;
+	bh=rZrs/GsUl1/AABsiYSFtfUsRozKF2QQEkisflcZnbQo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=nxU8ir6DqTOjrTWiC3deljCcN+6dvw8FTrao9kI/yQscR9wQzrr/4BHccPGv44W03uOS+Y9/BBH0MJW4Qhl7umpX39awKGd4xmP0U+W+jFFLH/nZx4F1x4wQbb4431EcYKOSQcZJpoMSgWWFTKWyBSa7fipcApVwl8jrLn55M8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ey3CBxTU; arc=none smtp.client-ip=209.85.219.47
+	 MIME-Version:To:Cc; b=FpaYLO9GFAo35ag7LifkGCYXzWSUjtW6kYS2qgl07DjHPUx+cisaKcVRxSBwzfVjgMtq/8DEnzxWtt+Jg7mT/F9677XC0hzsTJ7Ts9nnA8AjfEgeIZQx+K9A/OnQ1+UkKwPYo2MTrEGsh+/UhWR6FUsRi6lKA1+mJVonprqYdYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ok3e3pZX; arc=none smtp.client-ip=209.85.166.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ey3CBxTU"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-70df91bdc53so13307696d6.3
-        for <git@vger.kernel.org>; Fri, 29 Aug 2025 04:45:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ok3e3pZX"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-88432a1ed9aso16665939f.1
+        for <git@vger.kernel.org>; Fri, 29 Aug 2025 04:55:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756467942; x=1757072742; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756468504; x=1757073304; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mRi80fmboFgw5P+aXXDQjmf/YzIXEvyhIqZh12MFWl0=;
-        b=ey3CBxTUszA8Ts+rvN4JxIzUqY/O2XO+fz/rN6/hWP+8aF04b6NQC0txi5nYmGRSUV
-         8Oxsta7M1XcCZnNnNpBa47VJ4bwurtUxFGyRQe3xSi45fNuygEuCrEC9KqPFOajhoe3E
-         gM/vwThP43kC96LwshGlmnYfTiehpGDR/K4/L1WjzsENt31nNXJwLSeOFlkdHNiNr1zR
-         D8RtKGlOtkjllC2voEO3TFeEPGkWMIUPUKaEsmry9vQZXzm8pD4nEqIpU8oZakZZrdmY
-         DI2nXFIoKkVay/1HhD+T5scxm5ZroapecD0ol9+S8797lsxxTZUtwCohE2A+a9fHCl43
-         Bekg==
+        bh=hpgcQHKHiE0HYfDCKVBAyXv8cL61VemustuPY/LrEFU=;
+        b=Ok3e3pZXUl/ryJAuR/S82WnRLx4qLAqalbhDIs8kidUeQHQWgKzYRfZX+l4rnlNQqa
+         0EKsD40kF68S/3CG662j8rTjAICaXx2rbTr1PTKtRIjiiWx3YdSfO1+zmPKOdCPURjle
+         ENlpfvj2N0abWY1zt3IgWynPH8C+kLRbA320HcogrGXepukTO/SCcb9K7L8hF1eVUXFt
+         bnK0onZ+MbpD3I+kKJjmFZkl+IvbvXEWYhaShHb7c7tl39BIeiF54tGuUuompousVXKh
+         6VCVVqw4NmOucy4lh7w0iFoRwZ4XzjuTl0nDEQX7C6E05xLX5ZGW7t44NmY1526zu3rc
+         Gryw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756467942; x=1757072742;
+        d=1e100.net; s=20230601; t=1756468504; x=1757073304;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mRi80fmboFgw5P+aXXDQjmf/YzIXEvyhIqZh12MFWl0=;
-        b=XKuNweyUltb6IiKBsvq3DRsJvzw65DQtYGktAHw58p4sSHTjoC1wSQ/jgvX/kpYfNJ
-         u1x8KQbZf2JTFIZmPonE/iCpJlRf2siY4D74iVXUrrX7WroM3d51uQp4azapnduhwqdo
-         uIsv6KUNCiuZepY0TKexKgGQbkcm8BVW+ddseThyAjE3tgFio4JPYxBz1kebWTi3+UD7
-         xHb4MgTZrdd9HKo8x0l0kDRkfrBrBnhWRH2I/Q0UuiaZptIqQGsgV0FKyDfdQnvF16VU
-         VntEXV5inExm2YHMkTGBWNyutXi/9zexe9bTs/gtl4RgKj9vVcBIdS76o06uLhFdZAm9
-         0u4g==
-X-Gm-Message-State: AOJu0YylspCj5Y4UCeeT1pmSnA3B3XPw2iVALOjkbL10h6dyPTG9Yu92
-	gzIGipd2M1raB+4180JfZdVBKnD8vKOaaBp7VQ4HoXjN753B3VYxlyTgi1yuadVegaY=
-X-Gm-Gg: ASbGncvP3EfvdsvnsIGfmAneXyjQl9NZGVX0iLx6jKuOBCZ7XnVlDl76G0uJhuXHOlM
-	Ww5XhoI3K+mn5dlId1J1Hr7jryP1+CNCuFbNTxQpF8kwfQiLmaliZgcAp7BXFKrCzDimE9He1+8
-	Lebf5ETvt7Pqzu6pxzneByYhKz4e8ari/z1uAD/0jGQRsfgyNfcULjkoLYXTZWsLRdR+lVHUW1P
-	NmrQOnvNBsV0gqJuPupxhL7064FlPnKUvtZs2X2dOAJuI+AWuGD2IZKNhfRRK+bgrJevDWGbHNA
-	b5e7upI/8KI9xxfAnPL4NSzskT+y9XEkYCovJDRMtKnTk0t61CtsmqMVitFjIaroAest9/fZ+mh
-	tv6Gxt7jumFMM5hmSzUxku8jt7nrNotBywg==
-X-Google-Smtp-Source: AGHT+IF1aBLUIrMCURmk2FWvlx9RuvV+JPEzpSni/wlZDNPv23lttvV2YX9TSzizh6h7qQgXGFxo7g==
-X-Received: by 2002:a05:6214:2483:b0:70d:f384:4266 with SMTP id 6a1803df08f44-70df38442d7mr66532696d6.59.1756467942210;
-        Fri, 29 Aug 2025 04:45:42 -0700 (PDT)
-Received: from [127.0.0.1] ([20.57.47.232])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70e624d1750sm13670106d6.41.2025.08.29.04.45.41
+        bh=hpgcQHKHiE0HYfDCKVBAyXv8cL61VemustuPY/LrEFU=;
+        b=ufGiyyV2Y7Pdc+lKzqBfXvvIa40mTI5R3E3Y4SA5C/9lkKtVAju/t13tQcfuIwuBBJ
+         vzf0DOxwz26nBsQvXrPdQ1KFLbRR5kmca7wMiecdafVoBm9Ta4/QOtdmL9ISqDbtp6YH
+         IzPbRGENAkzjlNrtxsfgN/oAICN1LQzm/B3+hs2aNwIStC69R3zmzG9GQw0Jpnh7QGf4
+         kAjz0nQqOKfH+w26HbkU9LIuPANr4ZZYFhV5KULtcr7Uan6GMKLuQI9YJGc+3ozVc+Nx
+         jKudotdOIgh2b7rSqdU5hh9/bdJEvHALBkl+MwgKu+WyMoOgFcUShcdQ1sXrCDpulSay
+         mxLw==
+X-Gm-Message-State: AOJu0YyRi2J7XpZHtzERP64kkSzdm5sYYCG7wDjv/Dk/43oBK1OgWChs
+	sHjIKabn7FDWaIvrSe7dPr/feNAJ8xGSdcalskEZhlaxiz7xBYTEdIsmN1M65i8C
+X-Gm-Gg: ASbGncsUFk0Tc0M9Xp50trsufcmxOug6bF4isYvWSKSCFzzEl5YknAA9/gkvRjWzo8b
+	zrupUHGk/HiR9zAomUXTMzVrKsS19kuL4FL55bfbuKXTU4GcSde0cbfheoDW3+EuyVm2598+r0Z
+	truoaEuqbzUT00vowZr1pbG6XRXjHuWPHtdgW9E9M/j0FlXB3l9BR2xosSRhLsnrtyUFbue4FEc
+	n+F322CtIfKpIAr3mGyJX+eOpHKS4blo9ZIqTKc8KxZvrSXcCGApBfN1XvhZn45/2JJDeGgBFjc
+	NW6o6sbeX5r+BMV+QcDOMZF/a08OMjJZVzB2Qox9zV0Il5hlEXCGItTswvqVpLMG87QQCveGSnS
+	OF7erTJb+ds8N7w48zSW4ud7qVNs=
+X-Google-Smtp-Source: AGHT+IF667pFNF0D/o+xEfMutrm/UHLfkwT0cwzba2KRm1K0kVe8dGOSU6ZAQuPlObCv5EdE7WWjfg==
+X-Received: by 2002:a05:6602:600b:b0:887:601:c5f6 with SMTP id ca18e2360f4ac-8870601c63amr1335364339f.7.1756468504270;
+        Fri, 29 Aug 2025 04:55:04 -0700 (PDT)
+Received: from [127.0.0.1] ([135.232.177.182])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-88714d62146sm41497439f.5.2025.08.29.04.55.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Aug 2025 04:45:41 -0700 (PDT)
-Message-Id: <9c0119e70d6bdb49a8b46ae74e12c4827a7a9173.1756467934.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
-References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
-	<pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
+        Fri, 29 Aug 2025 04:55:02 -0700 (PDT)
+Message-Id: <pull.1952.v4.git.1756468502.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1952.v3.git.1755636370.gitgitgadget@gmail.com>
+References: <pull.1952.v3.git.1755636370.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 29 Aug 2025 11:45:34 +0000
-Subject: [PATCH v2 5/5] doc: git-checkout: clarify restoring files section
+Date: Fri, 29 Aug 2025 11:55:00 +0000
+Subject: [PATCH v4 0/2] doc: git-add: clarify DESCRIPTION section
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,97 +73,43 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Julia Evans <julia@jvns.ca>,
+Cc: Chris Torek <chris.torek@gmail.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    =?UTF-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+    rsbecker@nexbridge.com,
     Julia Evans <julia@jvns.ca>
 
-From: Julia Evans <julia@jvns.ca>
+Slightly reword the first sentence ("you use" instead of "Git stores")
 
-- Split up the forms `git checkout file.txt` and
-  `git checkout main file.txt` to match what's given in the SYNOPSIS
-- Remove `-f` from the SYNOPSIS for the second form, since according to
-  this man page it is not relevant in that context
-- Many Git users do not know what a "tree-ish" is. Clarify by using an
-  example of each case, and by saying "commit or tree" in the text
-  instead of "<tree-ish>"
-- Many Git users do not know what the "index" is. Instead say "stage the
-  file's contents" where appropriate, since Git often uses "stage" as a
-  verb to mean the same thing as "add to the index" and it's a more
-  familiar term.
-- Use "Discard unstaged changes" instead of "checking out paths from
-  the index" where relevant
+Julia Evans (2):
+  doc: git-add: clarify intro & add an example
+  doc: git-add: simplify discussion of ignored files
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/git-checkout.adoc | 45 ++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 17 deletions(-)
+ Documentation/git-add.adoc | 34 ++++++++++++++++------------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
-index 4d522a5f75..dababe452a 100644
---- a/Documentation/git-checkout.adoc
-+++ b/Documentation/git-checkout.adoc
-@@ -12,8 +12,8 @@ git checkout [-q] [-f] [-m] [<branch>]
- git checkout [-q] [-f] [-m] --detach [<branch>]
- git checkout [-q] [-f] [-m] [--detach] <commit>
- git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new-branch>] [<start-point>]
--git checkout [-f] <tree-ish> [--] <pathspec>...
--git checkout [-f] <tree-ish> --pathspec-from-file=<file> [--pathspec-file-nul]
-+git checkout <tree-ish> [--] <pathspec>...
-+git checkout <tree-ish> --pathspec-from-file=<file> [--pathspec-file-nul]
- git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [--] <pathspec>...
- git checkout [-f|--ours|--theirs|-m|--conflict=<style>] --pathspec-from-file=<file> [--pathspec-file-nul]
- git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
-@@ -75,25 +75,36 @@ that is, the branch will not be created or modified unless
- +
- Omitting _<branch>_ detaches `HEAD` at the tip of the current branch.
- 
--`git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...`::
--`git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]`::
-+`git checkout <tree-ish> [--] <pathspec>...`::
-+`git checkout <tree-ish> --pathspec-from-file=<file> [--pathspec-file-nul]`::
- 
--	Overwrite the contents of the files that match the pathspec.
--	When the _<tree-ish>_ (most often a commit) is not given,
--	overwrite working tree with the contents in the index.
--	When the _<tree-ish>_ is given, overwrite both the index and
--	the working tree with the contents at the _<tree-ish>_.
-+	Replace the specified files and/or directories with the version from
-+	the given commit or tree.
- +
--The index may contain unmerged entries because of a previous failed merge.
--By default, if you try to check out such an entry from the index, the
--checkout operation will fail and nothing will be checked out.
--Using `-f` will ignore these unmerged entries.  The contents from a
--specific side of the merge can be checked out of the index by
--using `--ours` or `--theirs`.  With `-m`, changes made to the working tree
--file can be discarded to re-create the original conflicted merge result.
-+For example, `git checkout main file.txt` will restore the version
-+of `file.txt` from `main`. This overwrites the file in the working
-+directory and stages the file's contents.
- 
-+`git checkout [-f|--ours|--theirs|-m|--conflict=<style>] <pathspec>...`::
-+`git checkout [-f|--ours|--theirs|-m|--conflict=<style>] --pathspec-from-file=<file> [--pathspec-file-nul]`::
-+
-+	Replace the specified files and/or directories with the latest
-+	committed or staged version.
-++
-+This overwrites the file(s) you specify with either the staged version
-+or the version from the current commit if there is no staged version.
-+For example, if you've been editing `file.txt` and you want to discard
-+your changes to it, you can run `git checkout file.txt` to replace it
-+with the latest committed version.
-++
-+This will fail if the file has a merge conflict and you haven't yet run
-+`git add file.txt` (or something equivalent) to mark it as resolved.
-+You can use `-f` to ignore the unmerged files instead of failing, use
-+`--ours` or `--theirs` to replace them with the version from a specific
-+side of the merge, or use `-m` to replace them with the original
-+conflicted merge result.
- `git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]`::
--	This is similar to the previous mode, but lets you use the
-+	This is similar to the previous two modes, but lets you use the
- 	interactive interface to show the "diff" output and choose which
- 	hunks to use in the result.  See below for the description of
- 	`--patch` option.
+
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1952%2Fjvns%2Fclarify-add-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1952/jvns/clarify-add-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1952
+
+Range-diff vs v3:
+
+ 1:  c44beea485 < -:  ---------- Git 2.51
+ 2:  080720c059 ! 1:  57947d5a3e doc: git-add: clarify intro & add an example
+     @@ Documentation/git-add.adoc: git add [--verbose | -v] [--dry-run | -n] [--force |
+      -the commit command, you must use the `add` command to add any new or
+      -modified files to the index.
+      +Add contents of new or changed files to the index. The "index" (also
+     -+known as "staging area") is where Git stores the contents of the next
+     -+commit.
+     ++known as the "staging area") is what you use to prepare the contents of
+     ++the next commit.
+      +
+      +When you run `git commit` without any other arguments, it will only
+      +commit staged changes. For example, if you've edited `file.c` and want
+ 3:  fc2ec305a9 = 2:  f57effdd2b doc: git-add: simplify discussion of ignored files
+
 -- 
 gitgitgadget
