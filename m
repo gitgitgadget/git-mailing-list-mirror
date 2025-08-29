@@ -1,94 +1,97 @@
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BC03FE7
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 01:36:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB431FBE9B
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 03:09:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756431417; cv=none; b=NRBQVJldNQos7mWKtGl0v41r7aW6u+D8rEaaDUhFHgTyvkCNiqZ77neSzhcdxC0eBtCOdTHtWwtlAby0gVmILVqe60HmyrFinA7qCJj8fwucdqAL4GZ4JQ6MZfmvy7MCshg0aH5JwV8UfpIVD2hbAR3Vi2XqAmZ8r2FuHJSNSrM=
+	t=1756436970; cv=none; b=YFLW+wrf5agA9mYIghFWzFAAlKFBzr1icWBtktDChUgyxLb/ICJRz72wJpv8Blfq7AeHJ4EttfZdex6x7bd4MT8O7tggnvTdyElZtnPQSBm8w4pUw4ayPpxrmD/zo+z6Hj4fHuqXM5GMZ+q0gTdTqhKM+Hnq2mGpuwl6JMPg2Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756431417; c=relaxed/simple;
-	bh=Z9hRDlg7CVR9k9UJJEt3lNFys+krFyXIV3JhqIh3VH8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gj+SX6D1n4ynydPiskHM3MKufpol3wXuMJYjLDIqoWMtWCbLx39ceGlXKrfWAoWlpinbGXt1ned7AiTckF/92ORfQyrfVcQR2nqYQMaXnbqvp0IoNVIKBflYVbcDXCT27rQngb/lBi+TGQwaNNt41iakvwb+0Uw2qtYpKZ4Q/UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ofAYsO/u; arc=none smtp.client-ip=209.85.166.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1756436970; c=relaxed/simple;
+	bh=aMhBrcnJjKf+1SJuc0ELiqP8Hh1Wq4sZAtrArsOEBB8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UgTJX/WPABMaVHvutaEFqy4E7P1ErWc2wJp7jhnC6bRk2hSzZ41bxyiQ4OOS62ZKFpQffS2UepBbNcMIYlFijeYrdU1km8q9/Ft9scr/3zSQtgQJCGCUEhUXhvZhugdUC0PVrvrx7FSb0uLIxJCsj2BUlB0dQp4dlwYE/kyB/no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SLNdsDDk; arc=none smtp.client-ip=209.85.166.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ofAYsO/u"
-Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-88428b19ea9so92659239f.0
-        for <git@vger.kernel.org>; Thu, 28 Aug 2025 18:36:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SLNdsDDk"
+Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-3ef2efc0439so15932215ab.0
+        for <git@vger.kernel.org>; Thu, 28 Aug 2025 20:09:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1756431415; x=1757036215; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=23UoUalw2f9YYEiYIj6bQL/vI3K/2pS5xwwERHe8jp0=;
-        b=ofAYsO/uFVhzClM/wGAAoMsB9+O7FZgys24Wg2GO3VcckNT34MNFPoD/g3sIng1YZl
-         k9A6ATAAWzryFVk7zSlTaci7DBliYR8iPBkc2478jGtYlocPBnWnwHPayZcOeCAYFiJC
-         2sD4413IsRPQIZWpGJN/ZoExrtBXEneKSMRrMKYp4okKzgupkfy4AMsb+zYT20gMEK7W
-         La6BJSopNpSpM44sige+vxSGXUBdiODNw0qQyYWzfajn667AdmwD51EvmyIdVVWcthFc
-         lwfOWhwPfyU0LWG5JUnLpjYlp09Fx0o6YgNlbXnHLb2A3Ag0KHktpbWV9YFsELsymiRY
-         yJNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756431415; x=1757036215;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1756436968; x=1757041768; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=23UoUalw2f9YYEiYIj6bQL/vI3K/2pS5xwwERHe8jp0=;
-        b=q0BgVHtgjncSTkE7cVXEyP9f5gJ6yazH2iTp5XFXkD++koYmkOi7uuN8eeeP62p/iE
-         lqP/IABcR7KGuvOJO04y2T/tEgYZZ86mHWJ3eQwqr1EiAoaNuxQ9ywdOXi7vT45FX+YG
-         t3D6dALr8BCRq5jaKOHQA3QeJTvXIXdX4ii8u4GAH5bFzPAfOmrDfHbw90gBsD7LuKGw
-         BAF3zCtYhhtofMKIyCGr5k890jyYOYlTqmIY/+BMmsQyz/s0XZYu42fuLbm5ij0gR8d9
-         Mg0ztEVjWoLau0kYGrUi9dLSDRO/TgTpXNvnlxr7G7L7F1G7scbPzBmu8uI/soRrNUTk
-         /hdw==
-X-Gm-Message-State: AOJu0YyGkE+XNzfD8Q0dV+jCR+fqvwVk4H0MxLnemWXiQNjIZf14JtEd
-	YigodemtmjTClzHDl+ndscaeiyGrrRZEiVZPG5Vd2ceMesuAZYhzFuK/au0BJcqspQQ=
-X-Gm-Gg: ASbGncv9rm5in6YNUzKvUp3YOJRCaLMS4zRXzUzBHTLYA7/CobrnpXtfHdqRAyIH+Qs
-	b+oyN2l1r2f45FzqW9qqzLN5P4+mHmoz8uARhgIq1eK4JclijST6Wg4LJhMz3MLnsVqFA8MIMMd
-	UXZFSOe79VkcOHNlLcdto6FId7VlDLI+fwEVbmArD2dlY5Tum8zkK4iOpyGFmyXSaLRbG1H0bLB
-	pLxQcidnqElbBmaTNZqHLHE3oLTCIdZfYBIcHJOluKghxFIERxxr7ac4KZEQX94b3ViUkDzSKwF
-	twguoQA0f1MGZQcHjrwG51W1OK4rSMtmPdoiibpbK4PlGhqYVFwPVathFbJIoM9KJPEwbxc4cYR
-	lhT2xTfCl6JOgln3MCIanLxFDE2sMaVXyGKMrj1vzAQk7Ps83qFd0P83IUmNsUyBg3g9dJKLcR7
-	m3NJ2bM9p7JkYQW0lhAuelmkVM0Q==
-X-Google-Smtp-Source: AGHT+IFoK622Cy/TeUw5al/wVayCLWaFtpTEezMHwkvn6w/w6yhW6y+GaeOJUi6xcPhKjirWe//7Xw==
-X-Received: by 2002:a05:6602:15c7:b0:881:8bc8:b02f with SMTP id ca18e2360f4ac-886f18f62ecmr1825499139f.2.1756431414868;
-        Thu, 28 Aug 2025 18:36:54 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id ca18e2360f4ac-88713e27354sm18289139f.20.2025.08.28.18.36.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Aug 2025 18:36:54 -0700 (PDT)
-Date: Thu, 28 Aug 2025 21:36:53 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/5] midx-write: fix segfault and do several cleanups
-Message-ID: <aLEENQcWvfOC7Iyn@nand.local>
-References: <pull.1965.git.1756402795.gitgitgadget@gmail.com>
+        bh=8meeOgKxyBMM46iZEcbIUd9pT/TCdq2lNCo0WlTjt+M=;
+        b=SLNdsDDkkdvPcjdu4GtCgin2ew1XG260NUdhzyXjl3Aei/QWkjKaLCN87ssXVFzf3Z
+         SuAnK+Z/pTA+ywqEX7bo4khm/o4v2Q5PjtEYABMGq4wRN6p75qlTp5D68JkQJ3ZIBi/n
+         OKAxoqHYIyEEBJ3E9agV7IW2EfOtSnzbngW5cGc/pqMQL1HLPnOzozPHHCNFabN7PJiZ
+         F2UraqIpoajThhFtTkMboWFdTS2PyZ3e62VGepQhGUy08qKifnT9tCq/FzubbHF08Hr1
+         zOk0gwEreePrberSrA8TgcSK2C0HsybOBAXLOZu5uhLPhDt6dR3b1tTG1gli+vW/9qEx
+         Wo2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756436968; x=1757041768;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8meeOgKxyBMM46iZEcbIUd9pT/TCdq2lNCo0WlTjt+M=;
+        b=aSXvnWwwL4aVNTgqaaMTqOTIQtoBTqedrfYDbb0imqqpgsHQ5YlLDHW1nyVHS2UIiP
+         MKiO75bH/gnLNMkMopu0pz61mGGu7d74Y8n3GKxUF5ComnOSKz6CuSdgHKn7X3/OVZ5t
+         fPfotBYcDZ22VY1mfCPmEpFN3Jzqds339KVbLq0a3oHEveDoRhs8UfMpQxRazI8zsfkG
+         VXjDAHVpjFu5QONdq4P6i4OSm77pg9EtdcxVefyshGc9N4VoiTopGj+Rs/nVjoamThqA
+         MgN8Al5HbxMZtAmxRqvdL/A6OWY28P2+53Xyjw+15WkTXHk6Fi7IaaGI5/M5EbWBOFlZ
+         Oa4g==
+X-Forwarded-Encrypted: i=1; AJvYcCVnJ+7lLMvrjvj9en3WLkT2QZq4hdOCQHk+swg5Vgmhda+9+Xq/ufKz3qdxq7oAzngVHi0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yybsva3mAFkkHB8Djilz7w2y/vK/AX9Y1rrPGc7OnkqCUyZeLSK
+	W7/jvL2UDpPcbugbVEnK/uuyy4R3inNyrdfWXTuKHpnjzDPNQ29oSpjHPBujpZGXZbXvSB6q82l
+	OeGNzkZx15JZfmTLDueX4o0i732nDtto=
+X-Gm-Gg: ASbGncuAylvEjPCAoqm6JbZXBcBI0fQIpippLetq0ZfPjLRW7Zch6xVadGVgWTAqFHg
+	Pl1EzRRT0pquls1agWbahss0CkEERootF/v4IJcuIEbm06toOOIWJSx6/RYJe66t//iENs66FZa
+	wAI6+mJJorguWH0mtT0pViuPMZAnZgLkIHwCYxifOQStpdI54tEXWcPYZogVUgzmfSXhMnd5uRH
+	atSI+M8tztxIHrof6gjRqQZcpF0jG3Wt+W8/J/YEVICIoNBvtM=
+X-Google-Smtp-Source: AGHT+IGM+xsdqvuK3uYka5V5T2mFkTpwOFmM6Xml3py/UVBDEgqCvyBzjfRjeZSaEnHJwI4X4MOSwyO6GswKN64VRU0=
+X-Received: by 2002:a05:6e02:1524:b0:3e5:262b:8303 with SMTP id
+ e9e14a558f8ab-3e92231a63amr369588015ab.20.1756436967871; Thu, 28 Aug 2025
+ 20:09:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1965.git.1756402795.gitgitgadget@gmail.com>
+References: <20250728190520.10962-1-amonakov@ispras.ru> <xmqqa54oun5w.fsf@gitster.g>
+ <43459416-ced2-d551-40e3-6db594ca4520@ispras.ru> <xmqqecsvqal6.fsf@gitster.g>
+In-Reply-To: <xmqqecsvqal6.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 28 Aug 2025 20:09:16 -0700
+X-Gm-Features: Ac12FXzB_KRkXL1bfeAFtdVxjUiGgmqhDbxViPQJ0SqplRYif4agNH9ntR-UT1g
+Message-ID: <CABPp-BGo17qAicW0C3o6eURfTvGjXTN9EbTzokcmmTCd_bzpWg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] optimize string hashing in xdiff
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Alexander Monakov <amonakov@ispras.ru>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>, Ezekiel Newren <ezekielnewren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 28, 2025 at 05:39:50PM +0000, Derrick Stolee via GitGitGadget wrote:
-> Derrick Stolee (5):
->   midx-write: only load initialized packs
->   midx-write: put failing response value back
->   midx-write: use cleanup when incremental midx fails
->   midx-write: use uint32_t for preferred_pack_idx
->   midx-write: reenable signed comparison errors
+On Thu, Aug 28, 2025 at 4:41=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Alexander Monakov <amonakov@ispras.ru> writes:
+>
+> >> Using xxhash() was merely a sample code path for technology
+> >> demonstration, so the Rust adoption topic may want to pick a
+> >> different code path to do its thing.
+> >
+> > My interest here is just speeding up xdiff in C, is that a welcome topi=
+c?
+>
+> It seems that the (side) discussion on the performance has
+> concluded, and Ezekiel's new iteration of the Rust thing moved to a
+> non-overlapping part of the system, so I do not see any reason to
+> keep this topic out of 'next'.
+>
+> Is everybody OK for me to mark the topic for 'next' soonish?  Any
+> objections I overlooked?
 
-Thanks for looking at this, and my apologies for the regression plugged
-by the first patch.
-
-The last four patches look good to me, and I left just some minor
-comments throughout. The first patch does leave me feeling like there
-ought to be a smaller reproduction, but I can't seem to find one easily.
-
-Thanks,
-Taylor
+Sounds good to me.
