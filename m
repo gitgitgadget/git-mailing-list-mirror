@@ -1,117 +1,98 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721C5347B4
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 13:48:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC42D261B9A
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 15:11:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756475314; cv=none; b=MLZFJe1ygyY0VDsnPrsYhemZSmJUR2j8upPidpD2EZhy3yv+x1yxx5PNDa8ezrdtMhz3xGVwIrjIL7YUww7TS6uiLKeA5BZ41w8cuKjHKpuEhNvVVfyuzY3lbNkeg5R+Pi6nXjPJIBV9Mk7Rv798WUIwdJF75RPtx68mPL5mvz0=
+	t=1756480302; cv=none; b=VzEGFpy25o0c4cX94EezLvKU6FbN1BX+f85MD5xTpIb5FztrBtpFaBQ8jPO3Mh0Q/lXl5RC0zwnGUVvFa/9iU54bcV7M8bQc9fdS0hRmcJbpWg5lUJM7RR9bQYkIiH+g1Fwg0Vr8ycWsz3JuhFt80UEvfoKP8kFQgXptER0BpcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756475314; c=relaxed/simple;
-	bh=3/aoo3cYYmhchLI/7aQWD88FtsA3Q+v/yMgmQI8wic8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H8et1IF0w/24KKfZKGAUYqcnZUyt5KuDfhqatI0A0o/DykRNGpNCmbONFhPdC6W4U91ZQUC0aggF0uVyjutFFoiIHk7FCYR66DFGitcGrLkcRWtXJfIHXMt1pXdaVGGm8EEr05IZPctl/UL0INSDpHeWcYyAiKuqGYEoKAZJFd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wc852Xii; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756480302; c=relaxed/simple;
+	bh=XEtJ4rHQecQPFc1JRoA5cPo2/La6XkjY8gM1upHm808=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Z1Pmc5xW+5pAO4tgk/lUDjWwC2Jj4j6/uBZpz51T8Kylqy2l6McmL6cVy4ZXRLYDa9RtEHiSIdevAgJW5r3tTY/F6lw7wdixstM21JYiMM6v69xbkv0qKdC0EKjYucYgjeaVnY3dIQfo5VSxcmDKtUCsMOW5tl0KVZhEU29jxWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MKUkSqDo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QS/gyLsI; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wc852Xii"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6188b5ae1e8so2234279a12.0
-        for <git@vger.kernel.org>; Fri, 29 Aug 2025 06:48:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756475311; x=1757080111; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3/aoo3cYYmhchLI/7aQWD88FtsA3Q+v/yMgmQI8wic8=;
-        b=Wc852XiiEcvFnM4fa1MVpn+AO9SFxhOGMaSpVAmpYXOyWF1JNz8DnVWGczbSMzmhkQ
-         fMJXjuspDbIOoJfu6tTDPOAZWwn+sbTxaxtSC75zeMN2DzGiNohHaY3pjrNnDIWXFItS
-         uU7frcOxAppeVeZMWkmxbF/VhjaaWZe71Rg82Nc3znJHxg3Ygxn5BUv5182FkGkvb34v
-         sVlh9iT6ZRWJk8YoQd3u/olg9YOsDYxVLgDlsr519or1ALhV/gV57aLWGPtsl476/Vo7
-         eojDL1vZPF6kzGMhpSXQYL5yv0d3qeD+67/Z7sf21OIAjBxcCz6b5W+KQOjHXSNvctIC
-         H4sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756475311; x=1757080111;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3/aoo3cYYmhchLI/7aQWD88FtsA3Q+v/yMgmQI8wic8=;
-        b=XVQ/rd0F59t7B4k+6xpZHOO4xnB+srxHOGjEN6NASUttCIyB6S5J/Dne7Lu2D2X+6v
-         Wtrc5wdmEjKpSI2u1RsAKzVdUSE0VyAQhYqiorQhGCC2uKzIyx4DSJDU9SKaMDmXOTrD
-         lLhhMjcG6uoYljei1TqL6qEniSh1fwJwP7YpNwkU2iHX3hZvJ4eZkbIIwkOJBuay54YF
-         E/n6qLbqtC1akTeFUHApGmrVClt/1Q/Itx1IqWafeaRIgmV9FbbtMgkKJg/gtm3sBOA6
-         59HwYrKmwQH6+ERajsCdVlcYkez6yAhdEqwDQMDSMnk9thdyoOeTCPEMqp+f775dP7VB
-         XKFA==
-X-Forwarded-Encrypted: i=1; AJvYcCU2tExv9rELzOJjgY1Rs5YY31hcvqhotoaETRnxMhoagkkPEj3QNAa6/yx5KgbU+aXmsmg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWx7aH75YvIr8YnyJvTM2HHVKmghsUPif1Cf/Jj7sXTDVyfY4m
-	mBQGm8dsh23uD7NYIQqSIFSNK7D0FQECZAarFOTz3Gb2HZvdELIHD4h4IrJo3UyahtbGfCKBEim
-	elwfFI6i9FJVhQAOaIT8NIUU7RraHG9k=
-X-Gm-Gg: ASbGnctdQePIV2Q4OrhLtlDN4zsKtFEHFHKnMwcwYtG9LCqUf/ygSK5ORBVrXbzG8Sx
-	1+8zS5CKuUJVFBSWkDr6EvMogmg4iaOtVCWIKKS1xD9tVDx5UwqN83xEoSkpsOlRezl0j3B4n2O
-	j3Yh4gjvtTRC1Q+c7JsYkhplxzZWEqhMC4xDococ6WXAXydZSCBtNqeRibH+2vSX+4bLLWSPUe6
-	6Q2/yPD1x2qEkGHY7YVGuhsPEwLaZyKPqrWHBWjhcAH9sPoAR0n
-X-Google-Smtp-Source: AGHT+IGDbQjiX74M7u8WOHjGOdrh/n4HpiSOwDRfb+SmiDgCOHmq6GORLVpRQFkFPc9nU6LA5YybAlQbe01EKCJAAh8=
-X-Received: by 2002:a05:6402:3591:b0:61c:cf9a:d479 with SMTP id
- 4fb4d7f45d1cf-61ccf9ad68amr5946009a12.10.1756475310496; Fri, 29 Aug 2025
- 06:48:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MKUkSqDo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QS/gyLsI"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E51897A0101;
+	Fri, 29 Aug 2025 11:11:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 29 Aug 2025 11:11:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756480298; x=1756566698; bh=//+TEorUQm
+	v8RI/dNIUEhLCtuA7zRLfBLdiZPniuLi4=; b=MKUkSqDojXThmULdSv5wf5ubuZ
+	rTWxohx9LkYsTlZXA2S8r7y3c1bfDwWowrapn9ecj6d51p3kFnQ6FlVm2b/G3efH
+	wSGUi4wg2Wu4e+sQ9r6x1JwRETl+SUvQAB2xSgi7VMWz9M2zZq9xIZynWbgqOIcN
+	vyifIhTRvaR53TLaAar/56HUS0zZKJH4YbqmIf1Wp0glWyAjPTg3Yu5oazj5InvG
+	GsCqthxC80UOwtIVuwrvd6j9rxLjAXoO31Ep6yl1OmM/gAfUZKkmHcAyNZmBtsP9
+	f7ksEOnwGUJEOBhuAqPfknZfUrE14JyIGbWaxFf56Ny/q7VrNYq9yIEh3HTA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756480298; x=1756566698; bh=//+TEorUQmv8RI/dNIUEhLCtuA7zRLfBLdi
+	ZPniuLi4=; b=QS/gyLsIThkVWdlNn5nJ25vPe1r1/RRNdTofVxx3NSA0CtoB+J9
+	5s9soF81VjWvE6JnQvwkph6M0nxewfZ0ZsO8VXCT1dnjg9QWVlvvYHnR6fBq+xlf
+	x7D7xcXBdpev4UIvtiHtm47o8N3D4UmUuZD0OC+pMpQS5W6PClGNotxZ1doEQBdw
+	Zbe+fUGGv1O0NTahOkHSw55SoLNTguiVWwLLtznf9qSbNHL7I0d6tdEM5a7QjDeR
+	cs+8sXopUOjT9rtUXMxMwEbwpNRIdQL8rcEpa8Xg1g2WKELa+MSnCbMyVdyewJhT
+	1eB7ER3EEsU3p4tQBouvqYJbybwwHzHhG9Q==
+X-ME-Sender: <xms:KsOxaNZ3pBcjZY_COH2dBS85zsF69ubAo_r4O2VLDNVosFJHxvxZrg>
+    <xme:KsOxaHpSdxapq2_UAVaU1HBOtnTArannt_kJyzgteZYX8C2Q-cVQ7kxm78yRtHA0Z
+    Cj8Zz8GOk5HdjtIww>
+X-ME-Received: <xmr:KsOxaJY9KoL3b0pkZE3GKroKHx3JJl-mNlFTJO0Y2ZJyR-93N5_9XKH3yHZiZqKzQgJperC5VFSD6uElgYN-xtH2Ka22KgguWlKCq5Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeegvddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrmhihsehf
+    rhhiphhpvghrhidrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:KsOxaHR4-qPsq2I2kNd5FeQKUBdDyPulROzVfLARDb-zUF0HcbNeGA>
+    <xmx:KsOxaI4CX4ceB4NndPnF6osW4p7B69T5OFWd6f2Fz5G7_eCnqyPr_g>
+    <xmx:KsOxaEy0euz8okUxf76Jstkt7Q45hX0-8XJh_CjygsCLcCCb9Vw5vw>
+    <xmx:KsOxaPTMeW_kqi9cMgnQO_XfwWJiDVBSpaCDo2jBsx8yN5QSBXOJMw>
+    <xmx:KsOxaI5YtL5atRttClYDYWb-qCdpuSKnEttOqXWCjOt7uXahjkiNiGs_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 29 Aug 2025 11:11:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ron Yorston <rmy@frippery.org>
+Cc: git@vger.kernel.org
+Subject: Re: git whatchanged breakage
+In-Reply-To: <68b14aad.X1BRkbvYn8oZ8Dhp%rmy@frippery.org> (Ron Yorston's
+	message of "Fri, 29 Aug 2025 07:37:33 +0100")
+References: <68b14aad.X1BRkbvYn8oZ8Dhp%rmy@frippery.org>
+Date: Fri, 29 Aug 2025 08:11:36 -0700
+Message-ID: <xmqqwm6mp3h3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
- <b641874627b3898831c3965616e936bd4ee310df.1756148933.git.gitgitgadget@gmail.com>
- <CALnO6CDpsgTnC95CzjOL5MuhFNAnYYSQCR-jC_n5JYLEu0BTow@mail.gmail.com> <2efb789d-db2d-4dae-ae81-373bd231c3c6@app.fastmail.com>
-In-Reply-To: <2efb789d-db2d-4dae-ae81-373bd231c3c6@app.fastmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 29 Aug 2025 09:48:19 -0400
-X-Gm-Features: Ac12FXwXx2n6gGoDKGbHADqaAhG2gRE55hdIYhj5PtppVXSrubbhyAtmr6xlP_I
-Message-ID: <CALnO6CDJ72-vDYuf_9LzQ-U+Rc_em77WNO2nqNgQ-Cy=T=g3Kg@mail.gmail.com>
-Subject: Re: [PATCH 5/5] doc: git-checkout: clarify restoring files section
-To: Julia Evans <julia@jvns.ca>
-Cc: Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Aug 28, 2025 at 4:00=E2=80=AFPM Julia Evans <julia@jvns.ca> wrote:
+Ron Yorston <rmy@frippery.org> writes:
+
+> I use 'git-restore-mtime' from git-tools[1].  The latest release of
+> git broke this.
 >
-> > Wishful thinking (see glossary comments): I wish we could teach them
-> > about "tree-ish"s here rather than stop using useful shorthands
-> > altogether. Of course, then we have to wonder where we can use the
-> > shorthand and where we must do the "spell it out (give an
-> > abbreviation)" dance. Hm.
->
-> What I find hard about documenting cases like this is identifying
-> the use case for providing so much flexibility
-> ("you can pass any tree, not just a commit!), since personally
-> I've never passed anything to `git checkout` other than a commit.
+> What happened to politely deprecating things before breaking them?
 
-This makes sense, and: I think some of how I learned more Git was to
-read the manuals, look up things I wasn't familiar with, and then play
-with them :) So in a sense my wishful thinking is about sign-posting
-"here's this other nook to explore if you're curious" (knowing that
-~70% or or more simply won't be).
 
-> I've been trying to think of examples of cases where it's useful
-> to pass a tree instead of a commit. I can see that it's possible to run
-> something like this
->
-> $ git checkout HEAD:Documentation/ git-commit.adoc
->
-> to restore `file.txt` into a different directory than it was originally.
-> This seems cool in theory but it's hard for me to see why it's useful,
-> which makes it hard for me to document. What I would tell a friend is
-> "<tree-ish> 99% of the time just means "commit or something
-> which resolves to a commit, but Git has made it more general for
-> a reason I don't understand", but of course that's not the right
-> thing to say in the Git documentation :)
+Perhaps the wording was not explicit enough before the recent
+update, but I thought it has been in the deprecated state for a long
+time, at least since Aug 2013.
 
-I would say that it's more general in part because it can be: the data
-model allows it without any extra effort (not a jab at the
-programming, which was probably not easy!). But I'm in a tangent now
-and the latest version is probably fine by me. I just don't want to
-lose the signposts for explorers.
-
---=20
-D. Ben Knoble
