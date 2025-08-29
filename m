@@ -1,68 +1,68 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F6E24467A
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 19:42:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B7F25484B
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 19:42:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756496563; cv=none; b=oJFVZPBhYtbsDK0CCKUH7vyhADQdIDpfMNWD1OriyCCf8ivf40G2gCLnNq446x6fs6O0TF5+oz8zUp56s553tGDvaJSIS8F3ViVvfMJf7s/if13KTWT+rt7mFKZd54oGrkg2ZdHmpJDcxpIFALjcvKQ+Xolf70HoQB1algk+W6Y=
+	t=1756496565; cv=none; b=rY/LoNUpTl+sVgGpKe1d5SvfHJXNYFl6jYvtLb9EEtOYGyFh9rIq1eQZtPkwAw5TxLum+7URodczEOL8owAKYe9TKdTlgdZWRwxGGJ8ccT7iZGp9Rh+6uTwO7A0yDulPcev0JrVhaokYgit1V8kDhWOfrpeGoPzg0bpvJkGnYoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756496563; c=relaxed/simple;
-	bh=J/LWJAaOaCbhBXVIpMdmWZdwznqJMGZVzPojtfvCYNU=;
+	s=arc-20240116; t=1756496565; c=relaxed/simple;
+	bh=JvjMMyp/DVz5R1A5RNfR+sHk7hdeyyu/q2PKRp7GhVs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=PeazcbGVypfIIgCuCp1jokWz3aNFFaM4+3EPliSos17mcuI/kM4MzQeK6ru0Jw+o0uLyrD58LVcaHpzhC26TGZA4CW96ZqLU/8BdsMP7s6v360Fzeh2Rqlv7R9IGYDuU2egybyhk2TWo5RW6d2mYXcIl7DS/JdxDx/ywqAFzx0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BAaejzP9; arc=none smtp.client-ip=209.85.210.182
+	 MIME-Version:To:Cc; b=eCA0B3qPfiTqDCdH0sqSyP5SvNvrJVcjFc8vTtjKwFiRGW7g+zKT308X+AroVs6K0bWLkTlBpx0G6FW99YbWqpagiJPx9MDj56wsx6gBI6YbnsAr8bsh2f6KXMXxlq0hRUSPdd0X6fCy3Vz2pfyMAaesl7Dv47bDxQUp/HgLZuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iFDZ7eJs; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BAaejzP9"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-771fa8e4190so1771103b3a.1
-        for <git@vger.kernel.org>; Fri, 29 Aug 2025 12:42:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iFDZ7eJs"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-248de53d12dso14517515ad.2
+        for <git@vger.kernel.org>; Fri, 29 Aug 2025 12:42:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756496561; x=1757101361; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756496562; x=1757101362; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8AzopeWoWlK2mnIEinCe6QTa8mZWB9qVUroIHBVTTQM=;
-        b=BAaejzP9+KsXzALrb+SP6iTWPOCg+DZhUvcE/dLpIQ3A/9BLHV4xLTEIwm4Klb/awS
-         g8aD7F8qi2+Li62sM+BClQnwilwADyUzbqVgm20hZsHqLoexm8oQNSPIzJyUIsfX8cZQ
-         2a+4T8aGZ07Pv+wimH71S4+o+uw73OEgIZIRarVk7AZAX0zobwfGVmzM2hgAsDvFEUmQ
-         webYaaFoW/1eOlNRvaqFprDaXjUd0OhNDq0xR3NNHR4A0pexRRpFnNjmVdeszEnSVUqF
-         wmZZ1IDXHRqUcNnBUXBpRmG4ouUDLMeKBGHTfVxp9O+tIlTrcTyWQkNSVCAWBa7hXFPm
-         94Mg==
+        bh=fuKP1ci51fdZgl3QECK0lkoImMiAcQsKNSUai6piGDg=;
+        b=iFDZ7eJsNjTblKeSSCj/a8rnpj9exw2cpJIfPuHOh8xN+Lwm6rmUNcLDd60xFGHrDE
+         pDZyMFKgyy+8vMZkig5lFpzTABNqIwQAjg13ApSAXDVwMz+tt1zyVjgkkDjVLFtOJiQx
+         XAqbBBOnf80xXe5f+Dp4qvohmPvjKCnXokIg+OGYa2jvL7xK1vdJ+xTEl68xVqac+Mhv
+         lZFLYeYW55PXhG47dwUc/98VGB9UhT1+FDfrKVRNBbBtcyBPl5YRKov7XdlZH56PB1l3
+         eBC3MrdDrzkEb3Gl0NuWCJdgXEaL2Zz3b7XO9+54OJW1XpN5f83q8KTc5mdOYCztuCVN
+         k+2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756496561; x=1757101361;
+        d=1e100.net; s=20230601; t=1756496562; x=1757101362;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8AzopeWoWlK2mnIEinCe6QTa8mZWB9qVUroIHBVTTQM=;
-        b=FGHP1l2ZLF35j2zxcHpZzmLppI8lb4rzs5NT7UhZzkiFOVbfYF/POyXl6fW8xJwgh7
-         9r++zHyOD/BLrqR3LrGjQWz0BMFSLMtLkInW6b/r61SYagK7SlinShN7wXllwthXIgHJ
-         12SistcsW0AIvzFiZFDkEdoFo9GxMJAikKH0a3oqqKcRoQzvgl3FDRAvARb4bLSoGP90
-         LSr9wx1BXrMOrxwVvMJVWSAtCgkbkNY6VGpiaSLAUF3WsG+P7TN8zccK6+7mq+SR+KXl
-         1mol5Mbqms8mTfFPdbmShiu7UbngrQSmABHzGZ+JtjztW9XVc3yQ7ZcngSw87zBIwBoi
-         sDXA==
-X-Gm-Message-State: AOJu0Yxo31fS/7Ai0hImsl5bAL/rd6X1AU5+6fLgi2Mhcv5aaNSOukhR
-	BqAH6L8jEj4G3qq2HIVulhgCm6sMs08hUcnS+qounibYowuNJTTK3qWsGtMQdg==
-X-Gm-Gg: ASbGncvjpEQNYZDoSUYz0pzEvVEuNtWxFutwfghHK6fdYkE1mXWpj8ZIR7g+jaDS2hu
-	MrMX1dji+tTL8ASU+kOQkRTGg7Ipoh2Tg7PU49IWBKqSqjPdnHvV66ytidJd2+UDGHgB3VdlJzX
-	6Xz2T0MU/lrD7xRInD2Nj6ZfWhJLK6VQGmNc8MDy67Z9YPQ+oZW9nxLwMr/g5n5eXN9IcE2p8hb
-	NhS9Pg+jW4941K34GV5Gt8PGUZcCbMcHSRvcKvZr2uHJwp4YBzfTuw3fQ3f7BkvT79lQy1RUCz2
-	Yq9XOA2cd3e/p9kHmqJMAE2k+xKitRYkGCd7VDmQsdJzdM8p9DCdvVN6San6JSCxiXbSwcx/7qw
-	gNH3DBb56mryBdVQ7kfDqRWjN22U=
-X-Google-Smtp-Source: AGHT+IElWdKHD7gyy4dfWKvmR6dxSCmAqZILQSPMJxJqLbBgUuLdW1Og89uIWPZ19oxC44zTe7EeCQ==
-X-Received: by 2002:a05:6a00:6b85:20b0:736:a8db:93bb with SMTP id d2e1a72fcca58-7702f9e0cc1mr24098768b3a.5.1756496560776;
-        Fri, 29 Aug 2025 12:42:40 -0700 (PDT)
+        bh=fuKP1ci51fdZgl3QECK0lkoImMiAcQsKNSUai6piGDg=;
+        b=ho7qzBWcdLxP6nWdkIUZVEALJRwcvuKIkgsPkgvaYn0ZF2t7rFfV63CXdR84V2mi0F
+         aqmuPh+eWAM81+ORRxY6HtsCZ1Qe8pbibgheBdGgqmwgiYBot45jIoH3ioRWNWEck3bY
+         U8uq/C4XJoQYQg8rrenJg2cYDqvs6/C7n3w1OW+AUGKN4hA/cnbD+m6QtCBzsn22Psj9
+         aKZ1o61GC95GFBZilTjXRCcCOeDy7sxO3ya6yzzeUCiVTZJcuQEuK7kd2F8X/fYGVy9s
+         gouOVA5Qi3N8TophtPdCr0pLRoGNYKZFi/QXXH7gDSnO3LbkD7d79CIqgq6GBCwlYDA2
+         bYSQ==
+X-Gm-Message-State: AOJu0Yy2bx77Z3w+E26Z3Sb+1Mw0vjHuK739HMDa99IKxPiwAXqm49lr
+	HwsQ4RIXTxjiyHg+izg1zSvg3Mw6IkhTIbWgnA3Z4uWee4m7WlkFGwoqR3FISA==
+X-Gm-Gg: ASbGncusnKgfE3oysDw6xt4IZjg11YarGn+y4uBaT/RuPuuU5Bis6hNQfH4E3gZ1Y+i
+	iOP9RM6a4kS9RD27v06EVRmP2pKkQ9VvkE40+9+mXb82QtiFa6GPaQsSrDJ8xEzNgry2wsAPX7z
+	8/Y9dq5YrmdNjI9/RbmXQM+URyBS9aYLgw683gtEIzetK6KGi2KweEV5LHDOsx61sQBROG95c0A
+	AXCSkbIyvDS61b1Ub/FzgFhH7xUwoDAbtHKiFZjszlUpReo6+ZW5AlceNFvlbhlVZLyfkfoXV3S
+	7KVzbMwnLRrkKNkVA2QK8/9hOmH3E5zYwWWnw+4JWuklhD26NA/uKK8WVcNOVss8CE0+vIxVWRc
+	B9eAdUVpS/9amnP2LHCFUCM0iH5U=
+X-Google-Smtp-Source: AGHT+IEsd4mwKV7t4a+9mYwJzI7vnbH5ceZdzYc44T1dn+WFMgK7zXTq+EXP6wjXF2aZyygbaRyzkA==
+X-Received: by 2002:a17:902:e846:b0:248:a054:e1c4 with SMTP id d9443c01a7336-248a054e4e1mr140607245ad.23.1756496562208;
+        Fri, 29 Aug 2025 12:42:42 -0700 (PDT)
 Received: from [127.0.0.1] ([172.182.195.227])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7722a2b78d7sm3167849b3a.30.2025.08.29.12.42.39
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3276f5925adsm9051172a91.10.2025.08.29.12.42.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Aug 2025 12:42:40 -0700 (PDT)
-Message-Id: <3dacb2c09dd6f2b718033a181a53479f52863917.1756496539.git.gitgitgadget@gmail.com>
+        Fri, 29 Aug 2025 12:42:41 -0700 (PDT)
+Message-Id: <9fdd23acf6613c6f07c8928755ce18b87321911e.1756496539.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
 References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 29 Aug 2025 19:42:18 +0000
-Subject: [PATCH 14/15] xdiff: make xdfile_t more rust friendly
+Date: Fri, 29 Aug 2025 19:42:19 +0000
+Subject: [PATCH 15/15] xdiff: implement xdl_trim_ends() in Rust
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,108 +78,135 @@ Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
 
 From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-Convert the remaining ambiguous fields in xdfile_t from C types to Rust
-types for interoperability.
+Replace the C implementation of xdl_trim_ends() with a Rust
+implementation.
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- xdiff/xdiffi.c | 16 ++++++++--------
- xdiff/xdiffi.h |  8 ++++----
- xdiff/xtypes.h | 10 +++++-----
- 3 files changed, 17 insertions(+), 17 deletions(-)
+ rust/xdiff/src/lib.rs      | 15 +++++++++++++++
+ rust/xdiff/src/xprepare.rs | 27 +++++++++++++++++++++++++++
+ rust/xdiff/src/xtypes.rs   | 19 +++++++++++++++++++
+ xdiff/xprepare.c           | 28 +---------------------------
+ 4 files changed, 62 insertions(+), 27 deletions(-)
+ create mode 100644 rust/xdiff/src/xprepare.rs
+ create mode 100644 rust/xdiff/src/xtypes.rs
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index ebdb724322..0509b48759 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -42,8 +42,8 @@ typedef struct s_xdpsplit {
-  * using this algorithm, so a little bit of heuristic is needed to cut the
-  * search and to return a suboptimal point.
-  */
--static long xdl_split(unsigned long const *ha1, long off1, long lim1,
--		      unsigned long const *ha2, long off2, long lim2,
-+static long xdl_split(u64 const *ha1, long off1, long lim1,
-+		      u64 const *ha2, long off2, long lim2,
- 		      long *kvdf, long *kvdb, int need_min, xdpsplit_t *spl,
- 		      xdalgoenv_t *xenv) {
- 	long dmin = off1 - lim2, dmax = lim1 - off2;
-@@ -260,7 +260,7 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
- int xdl_recs_cmp(diffdata_t *dd1, long off1, long lim1,
- 		 diffdata_t *dd2, long off2, long lim2,
- 		 long *kvdf, long *kvdb, int need_min, xdalgoenv_t *xenv) {
--	unsigned long const *ha1 = dd1->ha, *ha2 = dd2->ha;
-+	u64 const *ha1 = dd1->ha, *ha2 = dd2->ha;
+diff --git a/rust/xdiff/src/lib.rs b/rust/xdiff/src/lib.rs
+index e69de29bb2..4cc05a7e6b 100644
+--- a/rust/xdiff/src/lib.rs
++++ b/rust/xdiff/src/lib.rs
+@@ -0,0 +1,15 @@
++pub mod xprepare;
++pub mod xtypes;
++
++use crate::xprepare::trim_ends;
++use crate::xtypes::xdfile;
++
++#[no_mangle]
++unsafe extern "C" fn xdl_trim_ends(xdf1: *mut xdfile, xdf2: *mut xdfile) -> i32 {
++    let xdf1 = xdf1.as_mut().expect("null pointer");
++    let xdf2 = xdf2.as_mut().expect("null pointer");
++
++    trim_ends(xdf1, xdf2);
++
++    0
++}
+diff --git a/rust/xdiff/src/xprepare.rs b/rust/xdiff/src/xprepare.rs
+new file mode 100644
+index 0000000000..f64f60c099
+--- /dev/null
++++ b/rust/xdiff/src/xprepare.rs
+@@ -0,0 +1,27 @@
++use crate::xtypes::xdfile;
++
++///
++/// Early trim initial and terminal matching records.
++///
++pub(crate) fn trim_ends(xdf1: &mut xdfile, xdf2: &mut xdfile) {
++    let mut lim = std::cmp::min(xdf1.record.len(), xdf2.record.len());
++
++    for i in 0..lim {
++        if xdf1.record[i].ha != xdf2.record[i].ha {
++            xdf1.dstart = i as isize;
++            xdf2.dstart = i as isize;
++            lim -= i;
++            break;
++        }
++    }
++
++    for i in 0..lim {
++        let f1i = xdf1.record.len() - 1 - i;
++        let f2i = xdf2.record.len() - 1 - i;
++        if xdf1.record[f1i].ha != xdf2.record[f2i].ha {
++            xdf1.dend = f1i as isize;
++            xdf2.dend = f2i as isize;
++            break;
++        }
++    }
++}
+diff --git a/rust/xdiff/src/xtypes.rs b/rust/xdiff/src/xtypes.rs
+new file mode 100644
+index 0000000000..3d1ce9742f
+--- /dev/null
++++ b/rust/xdiff/src/xtypes.rs
+@@ -0,0 +1,19 @@
++use interop::ivec::IVec;
++
++#[repr(C)]
++pub(crate) struct xrecord {
++    pub(crate) ptr: *const u8,
++    pub(crate) size: usize,
++    pub(crate) ha: u64,
++}
++
++#[repr(C)]
++pub(crate) struct xdfile {
++    pub(crate) record: IVec<xrecord>,
++    pub(crate) dstart: isize,
++    pub(crate) dend: isize,
++    pub(crate) rchg: *mut u8,
++    pub(crate) rindex: *mut usize,
++    pub(crate) nreff: usize,
++    pub(crate) ha: *mut u64,
++}
+diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+index 93370f1c6d..2c7480875f 100644
+--- a/xdiff/xprepare.c
++++ b/xdiff/xprepare.c
+@@ -318,33 +318,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+ }
  
- 	/*
- 	 * Shrink the box by walking through each diagonal snake (SW and NE).
-@@ -273,14 +273,14 @@ int xdl_recs_cmp(diffdata_t *dd1, long off1, long lim1,
- 	 * be obviously changed.
- 	 */
- 	if (off1 == lim1) {
--		char *rchg2 = dd2->rchg;
--		long *rindex2 = dd2->rindex;
-+		u8 *rchg2 = dd2->rchg;
-+		usize *rindex2 = dd2->rindex;
  
- 		for (; off2 < lim2; off2++)
- 			rchg2[rindex2[off2]] = 1;
- 	} else if (off2 == lim2) {
--		char *rchg1 = dd1->rchg;
--		long *rindex1 = dd1->rindex;
-+		u8 *rchg1 = dd1->rchg;
-+		usize *rindex1 = dd1->rindex;
- 
- 		for (; off1 < lim1; off1++)
- 			rchg1[rindex1[off1]] = 1;
-@@ -944,7 +944,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 
- int xdl_build_script(xdfenv_t *xe, xdchange_t **xscr) {
- 	xdchange_t *cscr = NULL, *xch;
--	char *rchg1 = xe->xdf1.rchg, *rchg2 = xe->xdf2.rchg;
-+	u8 *rchg1 = xe->xdf1.rchg, *rchg2 = xe->xdf2.rchg;
- 	long i1, i2, l1, l2;
- 
- 	/*
-diff --git a/xdiff/xdiffi.h b/xdiff/xdiffi.h
-index 126c9d8ff4..c766ee115c 100644
---- a/xdiff/xdiffi.h
-+++ b/xdiff/xdiffi.h
-@@ -25,10 +25,10 @@
+-/*
+- * Early trim initial and terminal matching records.
+- */
+-static int xdl_trim_ends(xdfile_t *xdf1, xdfile_t *xdf2) {
+-	long i, lim;
+-	xrecord_t *recs1, *recs2;
+-
+-	recs1 = xdf1->record.ptr;
+-	recs2 = xdf2->record.ptr;
+-	for (i = 0, lim = XDL_MIN(xdf1->record.length, xdf2->record.length); i < lim;
+-	     i++, recs1++, recs2++)
+-		if (recs1->ha != recs2->ha)
+-			break;
+-
+-	xdf1->dstart = xdf2->dstart = i;
+-
+-	recs1 = xdf1->record.ptr + xdf1->record.length - 1;
+-	recs2 = xdf2->record.ptr + xdf2->record.length - 1;
+-	for (lim -= i, i = 0; i < lim; i++, recs1--, recs2--)
+-		if (recs1->ha != recs2->ha)
+-			break;
+-
+-	xdf1->dend = xdf1->record.length - i - 1;
+-	xdf2->dend = xdf2->record.length - i - 1;
+-
+-	return 0;
+-}
++extern i32 xdl_trim_ends(xdfile_t *xdf1, xdfile_t *xdf2);
  
  
- typedef struct s_diffdata {
--	long nrec;
--	unsigned long const *ha;
--	long *rindex;
--	char *rchg;
-+	usize nrec;
-+	u64 const *ha;
-+	usize *rindex;
-+	u8 *rchg;
- } diffdata_t;
- 
- typedef struct s_xdalgoenv {
-diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-index 849f218b32..66b3dfae8b 100644
---- a/xdiff/xtypes.h
-+++ b/xdiff/xtypes.h
-@@ -48,11 +48,11 @@ DEFINE_IVEC_TYPE(xrecord_t, xrecord);
- 
- typedef struct s_xdfile {
- 	struct ivec_xrecord record;
--	long dstart, dend;
--	char *rchg;
--	long *rindex;
--	long nreff;
--	unsigned long *ha;
-+	isize dstart, dend;
-+	u8 *rchg;
-+	usize *rindex;
-+	usize nreff;
-+	u64 *ha;
- } xdfile_t;
- 
- typedef struct s_xdfenv {
+ static int xdl_optimize_ctxs(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xdf2) {
 -- 
 gitgitgadget
-
