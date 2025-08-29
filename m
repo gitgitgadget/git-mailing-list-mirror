@@ -1,69 +1,69 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185202C11CF
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 11:45:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858912D640D
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 11:45:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756467941; cv=none; b=Ubs1vkE5VrBTR7k+kjsH/O4OLwY1ohtlqFSs4NspHRPO3FVshHPvuYVVSQzv81UlOsUPYRGg02bZps7OkcPkrIV7LBa2qVs3SGL4UNASBfDMoW3+y3L3aedsXMduZkJwbycp3OgtBCxJCg4lfg3CmDlRgqE2qCT1btxi0+wTwOg=
+	t=1756467943; cv=none; b=dH4jdWbIf1lj0PefR5udNnWYGyLWB+1OQsYGDvmYFxAl3KhvWWnNGcHBKDzK8qnysGxLrDr9iCvVQftfid7oirSJDdT8yMgsEl4aAI3p/ryj8emdjikHputPKRhHRVJW9GnAfLfhkawcebk1+sA9TRzL9JIi67ZMGqZeZyjolLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756467941; c=relaxed/simple;
-	bh=CafkI2UHLTmhU0OsRS8YflI/UPOVcfSyG2eByzqKdyM=;
+	s=arc-20240116; t=1756467943; c=relaxed/simple;
+	bh=sbDbCudXjkJEyu3PRfiPRQcun2YeIDgsheJb2vpOuDE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=tj1b+cwqacIo0b4J+G4iyrs++xJGBgNoU6YpyoR+XuUwiDcBvYBBd9P1vu7ie9V8+QiczLJX14SEMb65u4GjR6fxQIc/yCfyfWsMttyVkJ17qVh2SofCj10GJfaygC95AhNlXwHgos1xiYBPYnf6HNXEBEWGMdFk9XANinnBTbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S8MhpKur; arc=none smtp.client-ip=209.85.160.182
+	 MIME-Version:To:Cc; b=N7vbXB3gvgK3yDoDpQe2AstjobyD5Txk0NeHrfeF5JgQWfrPgZnZiIi39QdMkCn0qfjAie3W22AskhHD9qHa6I7Gcu52gwDuX8FU9Qbo39hvGKnwm8PvA+wZv1LprdYKW3EDIzAAOv8iYDW8El48rR1dzfIU60D1NW4IqEteKZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fzwhkFtk; arc=none smtp.client-ip=209.85.160.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S8MhpKur"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4b307179ea4so10528231cf.2
-        for <git@vger.kernel.org>; Fri, 29 Aug 2025 04:45:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fzwhkFtk"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-4b109c58e29so31868091cf.3
+        for <git@vger.kernel.org>; Fri, 29 Aug 2025 04:45:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756467939; x=1757072739; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756467940; x=1757072740; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eXEGHqyszOJ/jf+edVSwIK53qbKpq3HsaTlrsdFro2c=;
-        b=S8MhpKurFLmr0o/s1sj2rE1kfkU1M78yXL7fiYoLAaQ7NFtlU4pOiRbD0yZA86e2ay
-         mopYwyy8UNnCJyJHCSPOVp+Jn90I/mjij1epE0lUUh6jRZfEZFrH/9/WqNYuanEukfGS
-         DZqgpjaGDYrUXV0bsvq3yKQZZRjwKZ1hss+8cSNgriEveH4qDBqv6rJgS2d1OdlPfsKv
-         /nUCrE+GRBLITjqSL2WgIj84YQ5ggMilMZXVbQ2Ez+SRXicpCdhsOABww2CW+goztwm1
-         hhevB7pWiIH1C3QFRMINlY1B+7Mwsqy6bSrI3w/UH/E/+PGIrM9OL/Nl0yLGkMJfazu/
-         GQAA==
+        bh=EnVPDucSxogL50V+HHD5/V0wXJFlu0jAPqBudj+Dymg=;
+        b=fzwhkFtkjOLwTbqrz1QGwecCgejyixJfBCDF3FB3QyhSTMvsKKWpTwcP3oosjbV9AH
+         2N8H7CpgJ8/06Pjf+cw290E1m1aMaGxeQFMrJ96tJ4PNvflCPh5IqKE6/1eb0sbYHp7x
+         gM/ZNx7CBVv3XUAyl6HSRjcjiU+XSX1nADPjjL/ZSh3L6ERMzHM/L+T0SPyHAIEuF2TX
+         vvW833HolVto6zr3SCXLgokJ8cFBXX9vMJf1CURZ77baVEQH/HDs1anShZp6emL2+cWJ
+         EeHBhAEvAtkTLmaoGU4XALoCds9QwlRFHe3m9ujoiyidhWt0BV/t0XXhLfffyp3wUmoA
+         s5wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756467939; x=1757072739;
+        d=1e100.net; s=20230601; t=1756467940; x=1757072740;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eXEGHqyszOJ/jf+edVSwIK53qbKpq3HsaTlrsdFro2c=;
-        b=KSiod15ONrrKGocxzUprti9lbZJ584XMpvRbdXyF5RLbvlYrU/UM1K9KTrNU9B7Zvm
-         rm0uj17gBG/9sxgli4lCDZIda2kAu+OLCHZgxq3FlhAmj8SF2t4m4agW62Yt1etRpHDU
-         9BRlpi829ylSVpOk4gexNC8qQRH9rGnJmYEoqIw0c9ovQDF4+dqZBQF5BFB+Yx5EKsKO
-         nYv93f71e4z8FoOdFJaKhpzQdRxOgMjnWfSscMSqpzq8VmYUCKEjGLoN+DdTry5mMJ7M
-         3epWyioHm3yQ/pjUuoxWQxC6rdE+Uu61K8St2v3t5P+zeN4bk6VKn+NrsVNNvcl8pCJF
-         y7Pw==
-X-Gm-Message-State: AOJu0YzSGaF0lIfNIAcz0hh0KXrvBA3CurM8cnOQvLyks/mUbMqJbh9y
-	UWAGc4HvaxDSsikVzrqrTEIRNbVcg4ksMfKET86jMNAAGmrRBMDnZRpC8GpFXaxuE8w=
-X-Gm-Gg: ASbGncsopA0fUpIAvznVNU2CGBJoGAp415s28SuokB7QXrofqLXTiYt6n6pHgWYSXhv
-	agePcQXdQEUQiiej2sZ1zG3cvEnYn7dQoF4mD8lta3HIq3l+FAEXfkUY6fQqxyoC6dWYi56336C
-	D45D0QdaD2dLxGmjaaPkXejNNYA+x0oQwkwgdHtwnj4VQl7kLKa5sOXKTMoXTSpNIfLzI81++Vd
-	nIGRoI31vP1U5mTtx71CVRnGEAOFkgNbeVrmoiLRKNzdUG6pkEQv7zJYdephUkR5kVXWwVzoZRN
-	6jJbtdYI02+PwWJkd17CEp5QAYr3fTSH5VJ51GAbB7wLRPbNCPb+cJSQhMtvCXeoryPn1zmnc6U
-	E2RARAv/qW2oqAUkTbs4rm+I=
-X-Google-Smtp-Source: AGHT+IE/VverfbA8SbWaJAJWfS9eRh/AVCwjSecMmCVPU6honGJcDBL0W015ekemZEm7ibT32Blh9Q==
-X-Received: by 2002:a05:622a:15ca:b0:4b1:2df:1e39 with SMTP id d75a77b69052e-4b2aaa81e70mr287013701cf.33.1756467938642;
-        Fri, 29 Aug 2025 04:45:38 -0700 (PDT)
+        bh=EnVPDucSxogL50V+HHD5/V0wXJFlu0jAPqBudj+Dymg=;
+        b=ZO1LgVstc6jJq3dlgAEYcEsfjI/HTrcD1VrGnb13ayLOcDahSBF144+6SFEtS6mt1B
+         qZjI3BDKFsH//g8jPxroyKXjQlG0+mRLIrAIhF0qrwjQ23sEsOKxE1rgSzHBywB3ySiJ
+         VTUkSXJ8tJ3JeOUAOyyMi4cHYjyOmQLkaRRv1XZULaEaE+yfwoT8OD3hl/yywI0zfybo
+         fIIcZEmKc8LVsuZSPYhnlCVbhfeR9dx90JvHzug4uipUit8/BobUvG5w6v3xNY0rF5F9
+         /zyHqoQifl31j17xg3FgRuNv7TOhI3wduU4c13xrqu3dUc8FsPUz6g751C0tRqRhg2S0
+         8+5g==
+X-Gm-Message-State: AOJu0Yzq7jk2DRUaY0y7qwNp13uMDLqwd/6G79KEO/uSDU37UTFAoIeO
+	pV4g7l1GcUGwpxR2r3K4sLwu8oqnRXqAu+H28JhNb65wYe4/+lV0qhKQDp97r3Ixp5o=
+X-Gm-Gg: ASbGncvpmKpu2d6MeaLMb/ukUk32yt4xKrjPpdi7Ayn1iXFEyP3to+BRa97ySGLo8pU
+	DYmQaxy+8fmJ6uzHStDfecff+zlL20UAs1iVvNZJyhHjH0sXXJPiWJXSxjkUHbHJN8P5x2rbmTX
+	X1XgqG719qJFjrqMNK3Q4/v2+Egq72gwKwoiQnmD0vByKARjTUzCXmb14e/y93L86hWGTmNhXN9
+	xcFbZzozsYv8ztvkKzub1jbzFDUjy7D/d+BMn4WiT4kQ4RPn+rGh7JNAGWDAo2Ix6L7iVIwENbV
+	NTaNBKZb+smg4UXcETL9jCdD6P+8J1MVvc1eAY9szuoW5BGb+OK3P+FwxGPu1NM8JzESKLunedm
+	vqyZcxH0R3aZ5uBf/QZM0zb4=
+X-Google-Smtp-Source: AGHT+IESaXd55prAVlQhxnyjDD67d6myGZ3cy+nUsXXIMBXFhskOxzAYtbnnRUXJrqCTerGABI4peg==
+X-Received: by 2002:ac8:59c8:0:b0:4b2:89cd:c1be with SMTP id d75a77b69052e-4b2aaa81ecdmr395219691cf.16.1756467939672;
+        Fri, 29 Aug 2025 04:45:39 -0700 (PDT)
 Received: from [127.0.0.1] ([20.57.47.232])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7fc1643ac5esm153025085a.68.2025.08.29.04.45.37
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b30b6abc60sm13716101cf.37.2025.08.29.04.45.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Aug 2025 04:45:38 -0700 (PDT)
-Message-Id: <23a738981abd2073c70bbb5dd36eea050065e643.1756467934.git.gitgitgadget@gmail.com>
+        Fri, 29 Aug 2025 04:45:39 -0700 (PDT)
+Message-Id: <360051d2a656727ca42d489de81ffec9b23a6386.1756467934.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
 References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
 	<pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 29 Aug 2025 11:45:31 +0000
-Subject: [PATCH v2 2/5] doc: git-checkout: clarify `git checkout <branch>`
+Date: Fri, 29 Aug 2025 11:45:32 +0000
+Subject: [PATCH v2 3/5] doc: git-checkout: don't use "reset"
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,55 +80,45 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Julia Evans <julia@jvns.ca>
 
-- "To prepare for working on _<branch>_..." is confusing to some users:
-  it makes it sound like these are steps that the user has to do, not
-  steps that Git itself will do. Reword it.
-- Use "changes" instead of "modifications" (which Git normally does)
-- Mention that `git checkout` will fail if there's a merge conflict
-- The current explanation of `You could omit <branch>`... is confusing
-  to users (what are the "expensive side effects"? what's a better way
-  of getting the same info?). Be more direct and mention that `git
-  status` is likely a better option.
+Many Git users don't know what the term "reset" means. Resolve this by:
+
+- Expanding it into its definition, in one case
+- Giving a simpler but still accurate explanation ("the branch will not
+  be created or modified"), in the other case
 
 Signed-off-by: Julia Evans <julia@jvns.ca>
 ---
- Documentation/git-checkout.adoc | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ Documentation/git-checkout.adoc | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
-index c86941ad53..4de3ac6680 100644
+index 4de3ac6680..e4614674f0 100644
 --- a/Documentation/git-checkout.adoc
 +++ b/Documentation/git-checkout.adoc
-@@ -28,11 +28,11 @@ DESCRIPTION
- See ARGUMENT DISAMBIGUATION below for how Git decides which one to do.
- 
- `git checkout [<branch>]`::
--	To prepare for working on _<branch>_, switch to it by updating
--	the index and the files in the working tree, and by pointing
--	`HEAD` at the branch. Local modifications to the files in the
--	working tree are kept, so that they can be committed to the
--	_<branch>_.
-+	Switch to _<branch>_. This sets the current branch to <branch> and
-+	updates the files in your working directory. Local changes to
-+	the files in the working tree are kept, so that they can be committed
-+	to the _<branch>_. If the local changes can't be cleanly merged into
-+	the _<branch>_, no changes will be made and the checkout operation will fail.
+@@ -54,18 +54,17 @@ to print out the tracking information for the current branch.
+ 	`--track` without `-b` implies branch creation; see the
+ 	description of `--track` below.
  +
- If _<branch>_ is not found but there does exist a tracking branch in
- exactly one remote (call it _<remote>_) with a matching name and
-@@ -42,10 +42,8 @@ exactly one remote (call it _<remote>_) with a matching name and
- $ git checkout -b <branch> --track <remote>/<branch>
+-If `-B` is given, _<new-branch>_ is created if it doesn't exist; otherwise, it
+-is reset. This is the transactional equivalent of
++If `-B` is given, _<new-branch>_ is created if it doesn't exist;
++otherwise `<new-branch>` is forced to point at the commit. This is the
++transactional equivalent of
+ +
+ ------------
+ $ git branch -f <branch> [<start-point>]
+ $ git checkout <branch>
  ------------
  +
--You could omit _<branch>_, in which case the command degenerates to
--"check out the current branch", which is a glorified no-op with
--rather expensive side-effects to show only the tracking information,
--if it exists, for the current branch.
-+Running `git checkout` without specifying a branch has no effect except
-+to print out the tracking information for the current branch.
+-that is to say, the branch is not reset/created unless "git checkout" is
+-successful (e.g., when the branch is in use in another worktree, not
+-just the current branch stays the same, but the branch is not reset to
+-the start-point, either).
++that is, the branch will not be created or modified unless
++`git checkout` is successful.
  
- `git checkout (-b|-B) <new-branch> [<start-point>]`::
- 
+ `git checkout --detach [<branch>]`::
+ `git checkout [--detach] <commit>`::
 -- 
 gitgitgadget
 
