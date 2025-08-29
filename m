@@ -1,73 +1,71 @@
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1332AEFD
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 01:29:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED763FE7
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 01:35:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756430996; cv=none; b=DeMroiPJGS0s1Z0kPTIERmoDBHSR3J72XEjzAi/VqpYfRDbqZFHvxsnJ+UnibdTj/jyYewwyRcnh+uIYmPaqVywaCZn0Zi2Mn4VfgOOa++ELE9l9VQscXy3oU1R2QFfkfDIg9EXtvGHpEq+PdKDcn76oYtReG2cADUuFEIKHqVA=
+	t=1756431312; cv=none; b=RvYVML5qwu0WoM5XXH/K5ixURBXyuoJnvC+LIlsmccJvwUnpdsMiwZct4UtMo8yKeIElmjxQgno+y2ncj8K13qg6jaaBbgwOcC/XvEfUil70Uw5rIO2mSq8r+wlTPEuNnhnHJGyBo6mLmwPBbVsjjNFjpbdgtDC1a2/7zapAHMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756430996; c=relaxed/simple;
-	bh=GDz61pwsrd8OKNRdjn8rI0u+LEhPlzEBd6NYQPuPDDA=;
+	s=arc-20240116; t=1756431312; c=relaxed/simple;
+	bh=7J8P2mnqJ1Y+wVof9UpmpMIjjr3dKInC01uWPqyp3Ag=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Uhrx73ddwDsfG4GHAQLj6CKG3VS8g7iqaR0lK9OEifOsJPyqaf5eAswt0fiEIEZdcV7Q8gWyu4/nq4Kt8bHQDeMnvSF3Uv9NQEDVFmgO87dH9OUe3IOk/rIYfUkz1gKPsON8ahel/Ebpe7WXaG0upzsuRGH9L4KzHkaHbHV4Mvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=nvMbIT2+; arc=none smtp.client-ip=209.85.166.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=qTADCNmAjejSyb5mB0IK5sEWgZi2nBhZvfVfTUDEOH7DO5ES3YRixvuvZo6WaJh4r05aG/Z2pQmjKZCb6ZjAkYDVgX48JuuyykSl9gRjuxFmYBZvG/Dzhui5NbIH/z2GlhMlPX4Xlnobz8EXcI6XdWn1livBlLaZnEKmQ2NvSlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=jrm4WUqi; arc=none smtp.client-ip=209.85.166.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="nvMbIT2+"
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-3e566327065so13087085ab.0
-        for <git@vger.kernel.org>; Thu, 28 Aug 2025 18:29:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="jrm4WUqi"
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3f2b6e0b942so923535ab.1
+        for <git@vger.kernel.org>; Thu, 28 Aug 2025 18:35:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1756430994; x=1757035794; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1756431310; x=1757036110; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fV0T6tAHA9195Vi+6CYA5t6alJdn1QJ5k0ORbQaHviQ=;
-        b=nvMbIT2+7b9FNn3ykdL0rqo9Xhgnnl2eY68QWQPi7MNGlSft6nW/xLMz5uMkProNmx
-         ohRAoBKMIHICWYB/fCFxqMSFf1y1LDdMwYAkUnC6BmYk7fhqLrOkcK7JkCX8Y3el6Wuz
-         L99/6Vj70JQwfjBHvJKp+wEFZqpoj6SqpMURnb7N5cy0qcYZhKlx1AXVHK7/pVuEhoqo
-         8pW1qxusZ680RXUyv7Q9mzMvQeFYbxSGjq3HZSd+uf8AhwxnDIPoS9ETfPkawfBtqvSa
-         QhQSR4lw4T1NGX0G751DrSdSAyyujXPdaeVuEXNf1tNAfw1x9NmV3Et2qXPL3ulcFFDe
-         77RQ==
+        bh=iigQslfwzil5RVs49aF8FbznLBxPZt1mA779Y5YiEBw=;
+        b=jrm4WUqinzbtYLI5a79DNAS9axBXmi8KlJwV2Cvf8DihxPQz4D7zl9FmohQK4ZVoib
+         ALT+9vN3/QeHwnxQqOk3VDMwH4U758WTD/4R4g0myRuRONDlU0w2WW2YKQKy9ErWZ7Ak
+         1wrVwPBCRDp050c8wyBphl/xGgZTEfeYMGonouC8f878sZ8UGI8M85clSkw+NFivsHr1
+         cBsjigNpjpX0OJJibtJeVv/MGE7TKtxP4wBu8FRLDP916Cy1JYZVCcakoZncaYwjTl0Z
+         kwzreYetRLX5jVc1S80DiOhD2Lzx7vCZy+4+Jtw7CL40GwqkisUkg2/SfFXKcCiPKaNz
+         BvYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756430994; x=1757035794;
+        d=1e100.net; s=20230601; t=1756431310; x=1757036110;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fV0T6tAHA9195Vi+6CYA5t6alJdn1QJ5k0ORbQaHviQ=;
-        b=m9ncMqdc8WQQT1vUefl/ZcRpNTUWCy4umSyIczhd0Une4C+w+lOCcrAaAlYsmV6SjP
-         72IEn0kAsCqIwobUJTEHieC1li6FuiZm6tve8pI0lXoYVkEzk8U/aCfPVylcTDbcZFSb
-         he15O59U+4/dPPyaKyL1PM5rLxSzM8uvGEdM5mmUvEy/hOA/6kZc8jEfO7L2sRtQDICW
-         H/kXqLrCL29BSKd6qIvglNgpQNwCVGBrGHoHG2mc74RQUxSDLjFKhKDyhkmRPfmUg8bh
-         MFD8KxpsIs8y0PvNzVhLQMcIXjSvD1DllVxEarHBLK2xC4NtFCvRFEvU+X0NWUwfV/mv
-         In+w==
-X-Forwarded-Encrypted: i=1; AJvYcCUUzWdjHp005tKveMN7HdYpwBMIZT6Vbw2KCSR0xohgrvPLwa6G+JUdJM9TI50YaYKbUkc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRSl7j4BykFaizl6oK07B/pm1vEPM65vxQh6BnzHklFtFpekLd
-	B7D8gB7/qPpWuqCgRML3QiR2NAH7o9qiBjr+8r8tBDwfKMnypUNBKNQP6stxOVmtZSI=
-X-Gm-Gg: ASbGnctMskrxsu6ZVBI/LhFvWWyogztCCrIqtkMk7vKkpRkxGYdHQQ8ayWQsbRdUFs5
-	6QU5eaNgCnuWYxT4LixBOf+/1fpi91ON+ul1bvQQB7kf6EovsUdSMstITA6Z6zHovTRGw1bmIZg
-	SL5wYRgeIZAliJtdZW9yu8Yc+6z2DLB/0CPZNofCqX8Rk/mNfaAagzRplOjWDwNQ/r1s8LaFxuL
-	WvuvjebgJdizmp7fPgjz6SY46Z1OBf/xpuRe0BZWJDhfwoJt+vKuLtzthb8MGvT4U+hJK4Ds+l/
-	+ikC/WqL6CfKn5JTyzbci/zh0ZtdHQSjdTx9EMkBpJFZe6kehEVJUXsuVtkdduuk63EJD3Y6p8U
-	Ra3+MO64o3JbRsJ2KKLMrzaGE3wrdLPjwPQF6pzk7JDGgLPhwLCGH8o8l7jTA3p8BOXA0iZgDNY
-	oyFlupW/m2NqdQBKaVEjQwkLroWDqj3/xu5jju
-X-Google-Smtp-Source: AGHT+IEs0ZEdPYQ5a1O1kK5hS6cf7zXpJuxORWTfIR1S+KeXx8CsTsR5aiTgmBbsY6O3KI5WruigWg==
-X-Received: by 2002:a05:6e02:1248:b0:3e6:7ac1:b8bf with SMTP id e9e14a558f8ab-3ef08858899mr126134975ab.9.1756430994389;
-        Thu, 28 Aug 2025 18:29:54 -0700 (PDT)
+        bh=iigQslfwzil5RVs49aF8FbznLBxPZt1mA779Y5YiEBw=;
+        b=gGnXTXf3oaIAzj96oBXxoOVln40bTk3QLLwpJp5ZgVnlH4p+tlmp4E0+b+KODflCFj
+         5cPZB9EHiWH0oJHINeo8TtIkZXshrs2nDB6ZMRVoTBsudr+vMJz7IPudxtQWdCa8ekDd
+         g0UqS75StlBGaMn8DAdPZ3RG/U2vB4e5mUtq4OmSOuRfaD1Gl2OkRMooXZ0uzX0luEuL
+         pE3JHIfeoyAhASVWjmRvX1IdOpbGZKTvw3Yjt4kLiQP4wuUDL5VnUbFcbBiDGGvFQkO1
+         DSWkCoCM3YV9AWWC7CSaEXvBdqCeYi8Y26jnHb+VvqShdUmICARaATRCoEo3lcaWdIB/
+         aNRg==
+X-Gm-Message-State: AOJu0Ywl584nCfgVgam+S9obLZn8EnR/Wg8az0zgh/YJRlfMWGQJwR/u
+	P0EHt30N7RC7AkIdNys/Ei1PbKkhmrIIx8B8Ibp5/tTCNtNw5kJWS7A9s0DA7LeVh98=
+X-Gm-Gg: ASbGncsmM37rxH52wcD+m6t1YB1t1czip0vFbq9wtKdfYIyEkeLb4YCEOax9jkqwDjY
+	IzBA5ZU7LNUcBfdCoSo7PJP4AsiMv4A6Fi3lTnqOzzxVdOLmoc0Dvk2fqjmc6aVXZ1mzrekXzZf
+	r4a3qp4ZyQI2Ar99aZ9Fi/DnwyyOVCZvB2Ic8KPq++xADmrDVo1oYhw0NHt++TLPzKejeAvZ3ht
+	T5qG3g8xxs+irJGs5dL1B8i2kzrlFqM8aKC/GWY8UsE8ONk29ADzTbIZ1v2S3/YdOlxJiTWBeH9
+	+aP1MNOaVczQ0QDFxwvmjwUhhEyzk95jkllBI3aEE4WZZZAP1P2MAd3K6lVd02xhaFp1n+xFL5u
+	FMESzPW4xxNMwe9l77Koc7YyXWvJsgq22UaZf0t+DnTax7H/exZcwBNh/ejU7qowZqsCihsPwCe
+	F4zrInPo0wmVIwQleMidL2lsfNj8UJp0Z5e8rl
+X-Google-Smtp-Source: AGHT+IHoP80uZq9QuSQDATuZpflEorfSLwbt+qKWCAHWA+FWLwsH7shUzp+VBeuO2icEuemtRsBgAQ==
+X-Received: by 2002:a05:6e02:19c8:b0:3e4:9a1:6542 with SMTP id e9e14a558f8ab-3e921c51667mr410327515ab.18.1756431309638;
+        Thu, 28 Aug 2025 18:35:09 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-50d7bffd133sm172930173.64.2025.08.28.18.29.53
+        by smtp.gmail.com with UTF8SMTPSA id e9e14a558f8ab-3f29f398205sm2489395ab.12.2025.08.28.18.35.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Aug 2025 18:29:54 -0700 (PDT)
-Date: Thu, 28 Aug 2025 21:29:53 -0400
+        Thu, 28 Aug 2025 18:35:09 -0700 (PDT)
+Date: Thu, 28 Aug 2025 21:35:08 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 3/5] midx-write: use cleanup when incremental midx fails
-Message-ID: <aLECkfDqFVgNA1xh@nand.local>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 4/5] midx-write: use uint32_t for preferred_pack_idx
+Message-ID: <aLEDzF3b6tax6Lnq@nand.local>
 References: <pull.1965.git.1756402795.gitgitgadget@gmail.com>
- <a5bee036019a044273f93434f9e382a4cfa6533c.1756402795.git.gitgitgadget@gmail.com>
- <xmqqwm6ntbjt.fsf@gitster.g>
+ <bd97db26f7f789315134dc796403b1ab9976135b.1756402795.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,67 +74,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqwm6ntbjt.fsf@gitster.g>
+In-Reply-To: <bd97db26f7f789315134dc796403b1ab9976135b.1756402795.git.gitgitgadget@gmail.com>
 
-On Thu, Aug 28, 2025 at 01:51:18PM -0700, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Aug 28, 2025 at 05:39:54PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <stolee@gmail.com>
 >
-> > From: Derrick Stolee <stolee@gmail.com>
-> >
-> > The incremental mode of writing a multi-pack-index has a few extra
-> > conditions that could lead to failure, but these are currently
-> > short-ciruiting with 'return -1' instead of setting the method's
-> > 'result' variable and going to the cleanup tag.
-> >
-> > Replace these returns with gotos to avoid memory issues when exiting
-> > early due to error conditions.
-> >
-> > Unfortunately, these error conditions are difficult to reproduce with
-> > test cases, which is perhaps one reason why the memory loss was not
-> > caught by existing test cases in memory tracking modes.
-> >
-> > Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> > ---
-> >  midx-write.c | 18 ++++++++++++------
-> >  1 file changed, 12 insertions(+), 6 deletions(-)
+> midx-write.c has the DISABLE_SIGN_COMPARE_WARNINGS macro defined for a
+> few reasons, but the biggest one is the use of a signed
+> preferred_pack_idx member inside the write_midx_context struct. The code
+> currently uses -1 to indicate an unset preferred pack but pack int ids
+> are normally handled as uint32_t. There are also a few loops that search
+> for the preferred pack by name and those iterators will need updates to
+> uint32_t in the next change.
 >
-> Good thinking, but may I suggest us to go one more step to adopt
-> even better convention if we were to do this?
+> For now, replace the use of -1 with a 'NO_PREFERRED_PACK' macro and an
+> equality check. The macro stores the max value of a uint32_t, so we
+> cannot store a preferred pack that appears last in a list of 2^32 total
+> packs, but that's expected to be unreasonable already. This improves the
+> range from 2^31 already.
+
+Nice ;-).
+
+> There are some careful things to worry about with initializing the
+> preferred pack in the struct and using that value when searching for a
+> preferred pack that was already incorrect but accidentally working when
+> the index was initialized to zero.
 >
-> Pessimistically initialize the "result" to -1 and let many "goto
-> cleanup" just jump there.  And have "result = 0" just before the
-> cleanup label where the success code path joins the final cleanup
-> part of the function.
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> ---
+>  midx-write.c | 26 +++++++++++++++-----------
+>  1 file changed, 15 insertions(+), 11 deletions(-)
 >
-> This is often the right way to make the flow easier to see, because
-> often the success code path is straight forward, and these error
-> conditions are what employ the "goto cleanup" from many places.  By
-> starting pessimistic, and declaring the success at the very end of
-> the straight-forward success case code path, all other flows to the
-> clean-up labels do not have to set the "ah I failed" flag.  It would
-> eliminate the need for patches like the previous step if the
-> original were following that pattern.
+> diff --git a/midx-write.c b/midx-write.c
+> index f2d9a990e6..ea1b3a199c 100644
+> --- a/midx-write.c
+> +++ b/midx-write.c
+> @@ -24,6 +24,7 @@
+>  #define BITMAP_POS_UNKNOWN (~((uint32_t)0))
+>  #define MIDX_CHUNK_FANOUT_SIZE (sizeof(uint32_t) * 256)
+>  #define MIDX_CHUNK_LARGE_OFFSET_WIDTH (sizeof(uint64_t))
+> +#define NO_PREFERRED_PACK (~((uint32_t)0))
 
-Alternatively replacing something like:
+I think that just (~(uint32_t)0) is necessary, but I don't mind the
+extra clarity.
 
-    error(...);
-    result = -1;
-    goto cleanup;
+> @@ -274,7 +275,7 @@ static void midx_fanout_add_midx_fanout(struct midx_fanout *fanout,
+>  	end = m->num_objects_in_base + ntohl(m->chunk_oid_fanout[cur_fanout]);
+>
+>  	for (cur_object = start; cur_object < end; cur_object++) {
+> -		if ((preferred_pack > -1) &&
+> +		if ((preferred_pack != NO_PREFERRED_PACK) &&
+>  		    (preferred_pack == nth_midxed_pack_int_id(m, cur_object))) {
 
-with just
+OK, here we should make sure that the preferred pack was provided.
 
-    result = error(...);
-    goto cleanup;
+Like you mentioned above, I guess that means we can't have the 2^32-1'st
+pack, but before we couldn't have any pack greater than 2^31-1
+preferred, so this is a strict improvement ;-).
 
-would IMHO make the code easier to read, though I agree that nothing is
-forcing us to remember to assign result in the first place ;-). I am not
-sure the pessimistic initialization is better in all cases either, since
-we have to remember to place it before any "cleanup" label, and make
-sure that that does not regress.
+>  			/*
+>  			 * Objects from preferred packs are added
+> @@ -364,7 +365,8 @@ static void compute_sorted_entries(struct write_midx_context *ctx,
+>  						    preferred, cur_fanout);
+>  		}
+>
+> -		if (-1 < ctx->preferred_pack_idx && ctx->preferred_pack_idx < start_pack)
+> +		if (ctx->preferred_pack_idx != NO_PREFERRED_PACK &&
+> +		    ctx->preferred_pack_idx < start_pack)
 
-So, I dunno. I'm OK with what is written here, and I think we could
-certainly have a separate discussion to perhaps have CodingGuidelines
-take a stronger stance here.
+Looks good. It's tempting to say that any value of preferred_pack_idx
+lower than start_pack is going to be OK, since start_pack is a uint32_t
+as well, but we need to make sure that the preferred pack was specified
+in the first place.
+
+The rest all looks good as well, thanks.
 
 Thanks,
 Taylor
