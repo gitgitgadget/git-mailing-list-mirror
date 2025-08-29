@@ -1,68 +1,68 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2A724DCEF
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 19:42:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5712252287
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 19:42:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756496557; cv=none; b=Ik7f5SVsBy4/D2tqRlOeyFqy5tX8rSCnm6+8mX/VlJf+GPemfRKBfkPrexjVVX1emtulYuZJAs1XD4NiNT/5VwJ65K2FmFyCpK2UeheQSHOcZpAfAZPh9iIdrWrLdla5mmRSmcuh8bH5KFpQKTgPXGJY49ZI3SPFzmCEZUw/+FA=
+	t=1756496559; cv=none; b=N9SMzxjB6b9RsA6xsUSYwK5sljmv5LI8otDSyLzTSNFIAB3axf0/XTHcYjYfR96pZgqZLjSpeG9v0p7xKbXrbvEO8WDox5tRhl5DBJ/AnaUtfXtSyrI0YZ/s/eAxVY8tntF5WSI3EWpl4dsMblD+zWOnUdJdhKlAp7Reg8C8JSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756496557; c=relaxed/simple;
-	bh=6+j4cPtFKFIVH94pjubtJeKGVVYsh2fo+oMDEywoL4E=;
+	s=arc-20240116; t=1756496559; c=relaxed/simple;
+	bh=oFnqDk0TpLA1lRi7Ds88AjIoVZFXY8GRr7eDx8Y0AEI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=g781keYpU4zRvAKQAlCav2kCNRPWU1YXfSwkdsi80Mrvf7+oTtd1UFkN8SuFpTkDE2z3jSV5cmCwPf1+GjudQg59I9+bW06kjc7uQHs/rLj8H2LcrnxnSNxaI34Wtk+rqz3W1pAfQhmCi0hPLT/ZjyGB/qkAz8fzRQJwWzzKhOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KINmX7wG; arc=none smtp.client-ip=209.85.215.172
+	 MIME-Version:To:Cc; b=CQ0bxFNhe97MfmGe2y42IwMzADp8oP0eJm+QeNHvqTQTnfi4uzg7pFH9Fovy6exocj/7du6zeGNpVW6Ezgp4asnq3sPqOr4zkh4hC8dBRjfB36Eg5egPudbPEhE4efMqEJ5TLymmu+R4VQR07K0VLFIW8Inv3UcW1rNJnDCM4ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YPpBuc4o; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KINmX7wG"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b4c8bee055cso1327074a12.2
-        for <git@vger.kernel.org>; Fri, 29 Aug 2025 12:42:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YPpBuc4o"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7720b23a49fso2801409b3a.0
+        for <git@vger.kernel.org>; Fri, 29 Aug 2025 12:42:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756496555; x=1757101355; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756496557; x=1757101357; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fRuauxKmDnCWRMe3eAZqnwlO9yEYZImEFmFo11uDBuY=;
-        b=KINmX7wG8IJwdQiXv+awZm9ZWSYhQcg794bK663447DmfxJY5AqnjGurXsfa4RHC03
-         wGPXABVd9NRvHeRbez9Hv3E/X+T+eV4MkJTRb8Vc2qJzqEwmpd4auZ6XL8EEfEJQmbgj
-         QKNMPLBbbGg1OkYMHEV3yzAlBu+iqE+35Avh3bjIzOYtPvitsU8SGuQHSLvMG8JTS/4K
-         eWRNnf5w6ml//Fcx4R0Zeyh/ZCsLmQ9LsTIG7b/FrbX8Y/asrjbI2OZbnnLjPLTFiS5w
-         exvxwVj+mtd7J5oSyRvT9EznPdZXksS4iUI5Whmydbgkva8QEAW51KmbPQv2ZHNtkQ+Q
-         S3UA==
+        bh=CndQ8sdowH4p2w5NGe1MSpI72J2BQUnO+s2em84l74I=;
+        b=YPpBuc4oUjixpEBlncxD8NRihr8vwRdr4HQhPj+xBFGba0vvQA9qrUQDSiOPuE+ior
+         Erw6LvdLGmgYLFvC0hCJ+++hT2MwbQy9aXE/fc+drZo3UuPjdtD5IcVAezgmYQ9sazSl
+         CNgUQwIoSjRWpymuhiC60J9Jz3MFtcF7sWpIt3VTt+qsNXMFL75CXhDKLtSIVONKG7By
+         AhrLF5ppbJWh4uS6IACs/VeimlTFNo07chQpNXrY2TNKD0YBAczfy8FjyrfDG17/YAHN
+         gZmEGCSLPquuItxr8RuNFKTghFVDIth/PjWCTvxK9cvW7kMqJ28wkmtXHFqomSY8qGhu
+         C51Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756496555; x=1757101355;
+        d=1e100.net; s=20230601; t=1756496557; x=1757101357;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fRuauxKmDnCWRMe3eAZqnwlO9yEYZImEFmFo11uDBuY=;
-        b=W19QyXzzQO8hR0NqtdW8r8NmlTZtaPSMMJbzGDV2gEkIfABUkzTagPQX5e//n4jnYN
-         4n+dJ2VDt2CziTnti5uWyA/8pOhQqsbKGrLlirPY+dgoXX+dqFH3L5VDwnitwI/YzCgB
-         uEuSMTCqyekmP3ehTQXyhvQ0/jPOLxZFbU+/x1FO01SRXaw/fueOTi7937lmO1DXKAYf
-         stxZ79iQxeoTK9RDdjT2TO2DwNkCnTFL8wJWw7CId7tfSCYZVGgmzNz9KN7Q2bf8RbIf
-         uz4q3DHsMYZqs7Llkz3RtjUH6mAlERYVYFsPacgVhXyogh7zYqpbEQiHSSm4IMhany5h
-         snrQ==
-X-Gm-Message-State: AOJu0YwVByc6/vmQtH7RahVFSjoazQf2P9Jdt96MTbBTXZXNMnAiFO44
-	jkb/buKjSGdGx4T5ZEPGq4BaaNw4rMU8Pe/bY8ipBiMhqU3DpveWwEADpvxAHA==
-X-Gm-Gg: ASbGncvUUzdjak3vEttk8U8MvIIvjkuEsMhlEPM3EyCUsPKAYNDAhaZqxGmXE4B12zS
-	u/jeF0pjEzbKkFSOOQIWVGerav19PSFMF4JalqXjLU2GySWdWlrTeb786Vc2X0cbZmvh/uL0D7B
-	EkXoeKXpsQVegDL5ZQOlgChZPxWlVADmM/BpT8lOBfjc+JEyqFa3VEo6uGgeQzy1sfsOua/vJQn
-	SnCn6tdqviw8hKQ6v92oLwKJJHkgxN+CHu8cQVGUyE79eu8X8qJV3HkuyKOtujM2EJiE/iKA5ex
-	Y3oqnoMMC0YAK286Mr8fk1p+hyc3NCdfpEo2kLqB1omGQzATXrkdy7eUaUWjmwCEy9Ego+69c9b
-	3k9eoOLmXHOlX8ZpD86uC6vhezPTw4/AlBcQKF9yPX9tru2lW
-X-Google-Smtp-Source: AGHT+IHbCKPwkK9rjnazw3mNVCBQkT3tZD3wXc5PNczxpMJpcsGqEt5ipTZazsFOBWKQtnCKwwtnig==
-X-Received: by 2002:a17:903:178b:b0:240:8cec:4823 with SMTP id d9443c01a7336-2462eeea432mr360338685ad.41.1756496555334;
-        Fri, 29 Aug 2025 12:42:35 -0700 (PDT)
+        bh=CndQ8sdowH4p2w5NGe1MSpI72J2BQUnO+s2em84l74I=;
+        b=TkTbtWw39IcwhqP86gLGMNmL+/puvWu4U88uQrgtanc8RMqZVrvnwdu+hHaaWtrs3l
+         N04zTaR7dNGF97Oovxezp7BeDZlN3tjm0LvBqcGOLaEb1xpdE1AIyh0PSzU+Xw6QzhkN
+         BYvVvXYOF5D109Rk6iLcfb18hXU65dPrV2Mz4LTKeW1SAahjN9gKYMZvEmcap6FC1BdB
+         kOw5zsewwfJP9krJfRo/YL2xEdRMgcrfbgpCcN7g+BJaDFQ4g4YoKfhhKFPj6Ai7Cx1c
+         Eybs6AN/BXDcp8rdLSY3fFq2yvn8abtAmQzNUhycUV032ha0q8+mJpOdSOk6rrE7z922
+         05ug==
+X-Gm-Message-State: AOJu0YxZLhOZxCmWcuafM6zvIBJogSC8vGT5Mksn9EnZJabAb6wv4d/G
+	NErGZHebh+DS5ZEverpfLYq/wJUbeDD+51PXeOxv9h/QvWn1eQsMIq0ZFnyRrQ==
+X-Gm-Gg: ASbGncvB50K6ogYwFDGYzD3wL1m7a/dK8TQOTuaxIA2c8XnB96m+2qvatmuP5SPozyn
+	kYehmckMLCtsceDjdOts/W5r1J1ZnJ2BbBplYsch0i16Lw/Yu5F0S/eFRuE7h4SkNRdYfn68Qqq
+	R2yAti79cL9JWIxa/r6OBatmLu3fWD7vM8qbTwGdqHi9ASIf1xtmTsLVSZRz5geBRBgMGTJ5/Qk
+	F7OyxvTCAwk02/saQYVcIRG15lhgySiRPWPWpuNP1i6ri/zGhvTkJlQh4eoZQXrtZLuHz0X1lLe
+	02XI2RMiulVtrggUJkZIU9VY5Uq8XzQpJk/uc0h2FLIWoLnV6HPQLmHsFUfqj6jV1/n+Q4qf8Bz
+	UxdM/6r9FPkjsfcZLWhem7il3xu002SWRjNnpqw==
+X-Google-Smtp-Source: AGHT+IFYqloDJajJX+zX5WMLi61ZEHRAvUJZ2ZX+MqPuQzURGeLpqm60XsTTHnxlJDsklZbp1AFEiQ==
+X-Received: by 2002:a05:6a21:33a2:b0:231:acae:1983 with SMTP id adf61e73a8af0-24340c2263fmr42670826637.3.1756496556661;
+        Fri, 29 Aug 2025 12:42:36 -0700 (PDT)
 Received: from [127.0.0.1] ([172.182.195.227])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-327da90ecd1sm3523892a91.21.2025.08.29.12.42.34
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4cd3095df7sm2883754a12.36.2025.08.29.12.42.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Aug 2025 12:42:34 -0700 (PDT)
-Message-Id: <0cd2168512465f1d131e8bddccb4be584f34b6c2.1756496539.git.gitgitgadget@gmail.com>
+        Fri, 29 Aug 2025 12:42:36 -0700 (PDT)
+Message-Id: <7ea2dccd71fc502f20614ce217fc9885d1b17413.1756496539.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
 References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 29 Aug 2025 19:42:14 +0000
-Subject: [PATCH 10/15] xdiff: use one definition for freeing xdfile_t
+Date: Fri, 29 Aug 2025 19:42:15 +0000
+Subject: [PATCH 11/15] xdiff: replace chastore with an ivec in xdfile_t
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,129 +78,119 @@ Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
 
 From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-Simplify xdl_prepare_ctx() by using xdl_free_ctx() instead of using
-local variables with hand rolled memory management.
+xdfile_t currently uses a chastore which functions as a memory pool and
+a vector which maps to the allocations created by the chastore. It seems
+like xrecord_t used to be a linked list until the recs and nrec fields
+were added. I think that xrecord_t.next was meant to be removed, but
+was overlooked. This dual data structure setup make the code somewhat
+confusing.
+
+Additionally the C type chastore_t isn't FFI friendly. While it could
+be implemented in Rust, since the data structure is confusing anyway,
+replace it with an ivec whose purpose is to be interoperable. This
+makes the fields nrec and recs in xdfile_t redundant, which will be
+removed in the next 2 commits.
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- xdiff/xprepare.c | 60 +++++++++++++++++++-----------------------------
- 1 file changed, 24 insertions(+), 36 deletions(-)
+ xdiff/xprepare.c | 34 +++++++++++++++++-----------------
+ xdiff/xtypes.h   |  6 ++++--
+ 2 files changed, 21 insertions(+), 19 deletions(-)
 
 diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index 00cdf7d8a0..55e1cc3087 100644
+index 55e1cc3087..3b33186c15 100644
 --- a/xdiff/xprepare.c
 +++ b/xdiff/xprepare.c
-@@ -129,86 +129,74 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
+@@ -130,11 +130,11 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
+ 
+ 
+ static void xdl_free_ctx(xdfile_t *xdf) {
++	ivec_free(&xdf->record);
+ 	xdl_free(xdf->rindex);
+ 	xdl_free(xdf->rchg - 1);
+ 	xdl_free(xdf->ha);
+ 	xdl_free(xdf->recs);
+-	xdl_cha_free(&xdf->rcha);
  }
  
  
-+static void xdl_free_ctx(xdfile_t *xdf) {
-+	xdl_free(xdf->rindex);
-+	xdl_free(xdf->rchg - 1);
-+	xdl_free(xdf->ha);
-+	xdl_free(xdf->recs);
-+	xdl_cha_free(&xdf->rcha);
-+}
-+
-+
- static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_t const *xpp,
- 			   xdlclassifier_t *cf, xdfile_t *xdf) {
--	long nrec, bsize;
-+	long bsize;
+@@ -143,35 +143,35 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
+ 	long bsize;
  	unsigned long hav;
  	char const *blk, *cur, *top, *prev;
- 	xrecord_t *crec;
--	xrecord_t **recs;
--	unsigned long *ha;
--	char *rchg;
--	long *rindex;
+-	xrecord_t *crec;
  
--	ha = NULL;
--	rindex = NULL;
--	rchg = NULL;
--	recs = NULL;
-+	xdf->ha = NULL;
-+	xdf->rindex = NULL;
-+	xdf->rchg = NULL;
-+	xdf->recs = NULL;
-+	xdf->nrec = 0;
+ 	xdf->ha = NULL;
+ 	xdf->rindex = NULL;
+ 	xdf->rchg = NULL;
+ 	xdf->recs = NULL;
+ 	xdf->nrec = 0;
+-
+-	if (xdl_cha_init(&xdf->rcha, sizeof(xrecord_t), narec / 4 + 1) < 0)
+-		goto abort;
+-	if (!XDL_ALLOC_ARRAY(xdf->recs, narec))
+-		goto abort;
++	IVEC_INIT(xdf->record);
  
- 	if (xdl_cha_init(&xdf->rcha, sizeof(xrecord_t), narec / 4 + 1) < 0)
- 		goto abort;
--	if (!XDL_ALLOC_ARRAY(recs, narec))
-+	if (!XDL_ALLOC_ARRAY(xdf->recs, narec))
- 		goto abort;
- 
--	nrec = 0;
  	if ((cur = blk = xdl_mmfile_first(mf, &bsize))) {
  		for (top = blk + bsize; cur < top; ) {
++			xrecord_t crec;
  			prev = cur;
  			hav = xdl_hash_record(&cur, top, xpp->flags);
--			if (XDL_ALLOC_GROW(recs, nrec + 1, narec))
-+			if (XDL_ALLOC_GROW(xdf->recs, xdf->nrec + 1, narec))
- 				goto abort;
- 			if (!(crec = xdl_cha_alloc(&xdf->rcha)))
- 				goto abort;
- 			crec->ptr = (u8 const*) prev;
- 			crec->size = (long) (cur - prev);
- 			crec->ha = hav;
--			recs[nrec++] = crec;
-+			xdf->recs[xdf->nrec++] = crec;
- 			if (xdl_classify_record(pass, cf, crec) < 0)
- 				goto abort;
+-			if (XDL_ALLOC_GROW(xdf->recs, xdf->nrec + 1, narec))
+-				goto abort;
+-			if (!(crec = xdl_cha_alloc(&xdf->rcha)))
+-				goto abort;
+-			crec->ptr = (u8 const*) prev;
+-			crec->size = (long) (cur - prev);
+-			crec->ha = hav;
+-			xdf->recs[xdf->nrec++] = crec;
+-			if (xdl_classify_record(pass, cf, crec) < 0)
+-				goto abort;
++			crec.ptr = (u8 const*) prev;
++			crec.size = cur - prev;
++			crec.ha = hav;
++			ivec_push(&xdf->record, &crec);
  		}
  	}
++	ivec_shrink_to_fit(&xdf->record);
++
++	xdf->nrec = (long) xdf->record.length;
++	if (!XDL_ALLOC_ARRAY(xdf->recs, xdf->record.length))
++		goto abort;
++	for (usize i = 0; i < xdf->record.length; i++) {
++		if (xdl_classify_record(pass, cf, &xdf->record.ptr[i]) < 0)
++			goto abort;
++		xdf->recs[i] = &xdf->record.ptr[i];
++	}
  
--	if (!XDL_CALLOC_ARRAY(rchg, nrec + 2))
-+	if (!XDL_CALLOC_ARRAY(xdf->rchg, xdf->nrec + 2))
+ 	if (!XDL_CALLOC_ARRAY(xdf->rchg, xdf->nrec + 2))
  		goto abort;
+diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
+index 6e5f67ebf3..5028a70b26 100644
+--- a/xdiff/xtypes.h
++++ b/xdiff/xtypes.h
+@@ -23,7 +23,7 @@
+ #if !defined(XTYPES_H)
+ #define XTYPES_H
  
- 	if ((XDF_DIFF_ALG(xpp->flags) != XDF_PATIENCE_DIFF) &&
- 	    (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF)) {
--		if (!XDL_ALLOC_ARRAY(rindex, nrec + 1))
-+		if (!XDL_ALLOC_ARRAY(xdf->rindex, xdf->nrec + 1))
- 			goto abort;
--		if (!XDL_ALLOC_ARRAY(ha, nrec + 1))
-+		if (!XDL_ALLOC_ARRAY(xdf->ha, xdf->nrec + 1))
- 			goto abort;
- 	}
- 
--	xdf->nrec = nrec;
--	xdf->recs = recs;
--	xdf->rchg = rchg + 1;
--	xdf->rindex = rindex;
-+	xdf->rchg += 1;
- 	xdf->nreff = 0;
--	xdf->ha = ha;
- 	xdf->dstart = 0;
--	xdf->dend = nrec - 1;
-+	xdf->dend = xdf->nrec - 1;
- 
- 	return 0;
- 
- abort:
--	xdl_free(ha);
--	xdl_free(rindex);
--	xdl_free(rchg);
--	xdl_free(recs);
--	xdl_cha_free(&xdf->rcha);
-+	xdl_free_ctx(xdf);
- 	return -1;
- }
- 
- 
--static void xdl_free_ctx(xdfile_t *xdf) {
--	xdl_free(xdf->rindex);
--	xdl_free(xdf->rchg - 1);
--	xdl_free(xdf->ha);
--	xdl_free(xdf->recs);
--	xdl_cha_free(&xdf->rcha);
--}
 -
--
- void xdl_free_env(xdfenv_t *xe) {
++#include "../interop/ivec.h"
  
- 	xdl_free_ctx(&xe->xdf2);
+ typedef struct s_chanode {
+ 	struct s_chanode *next;
+@@ -44,8 +44,10 @@ typedef struct s_xrecord {
+ 	u64 ha;
+ } xrecord_t;
+ 
++DEFINE_IVEC_TYPE(xrecord_t, xrecord);
++
+ typedef struct s_xdfile {
+-	chastore_t rcha;
++	struct ivec_xrecord record;
+ 	long nrec;
+ 	long dstart, dend;
+ 	xrecord_t **recs;
 -- 
 gitgitgadget
 
