@@ -1,104 +1,132 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD381BC5C
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 07:32:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E031C311C22
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 10:56:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756452772; cv=none; b=LMkhwyHcDiDw2HWzqo+bhPiyz6X0gZdPZ5fpSIsa6xU7ZvWqmAiNAcipdSFkOAVC+nhW77u4SLtwXO4dauHss0u01WFho0iTG9LqSexQOyXui+bBRhP0E5DxVMolIZaFnOXOP1l+aPEjRMC9wNiLn0/MOSaRj6FLtCvTGD1JVKk=
+	t=1756465005; cv=none; b=MsvcU2Pdgg7vNVPdXiI8LkJPGvjjZaWyb1Bpw797ZzNwI/shEb0wF9GMs2jz8dzu/azf8bpaj1A5AaZVlHyFnxj4Lv8v9VbKM4tWZdwWdZt3jW/94g5T9RNROUQokIiAMw3u2XkozkH6X0/qTAEy/f7CGQaWYyM/baO/GrlXCoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756452772; c=relaxed/simple;
-	bh=bPAYZEapaADE1kxzcOzLXSH3oVRuR8uUfB+cUgLHkEE=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=SUsMj+M1xvpqGpTXl5kg3QGmA5xDnXosMngYNgzc8JlmzFFR8OoIag4i82IkIj0vsjdM2hxPkqxNw0UPbqLvGeScW4tGQgVOooEv1662XyTGCc3PnUZW/XXe4xBtPi8hT5+8v3RSSWva2BwaLWf9gSc+DyEDklTIf6sEaeXlPcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=El1It2Ia; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iOuEqx4l; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1756465005; c=relaxed/simple;
+	bh=ljid0EZKgIFnXab2toMbmiqsjcMlwYDlAu0tcWpMlNc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tpDBPfyQ41hmMfkJJpqbDGulZmz7JxHAIo+9/P+3tUHPotP3Wh0KD0U2dc+tKZ6DBnRfgS7zJxV8Qxh+D2X2D2qaHZGejfNeqFTXGmZiN4b+QWXPTS33U+NRjB/yTdSV8a7zTT0I7dDet25vM4HCTw6MJNrP6uPvZou8YIl4MNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C1hErc8b; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="El1It2Ia";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iOuEqx4l"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B40C77A012E;
-	Fri, 29 Aug 2025 03:32:49 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Fri, 29 Aug 2025 03:32:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756452769;
-	 x=1756539169; bh=qppU2ZElzMUF8HxGs8sX97IZLK4hXjWfzXizfuQOC6w=; b=
-	El1It2Ia6w1kjCgAYvVGSzZoALE9DrELTXdvUOXkZrGm0nghsGSGwBiCLFAkOEtP
-	kb0kWlVAq8nSCiefpRyyN4PRRlCO5tQh7HXs7Bhupam0eJz/tcuU4giWZD3tJyVY
-	/+Rp333D38v8mB4BEBqH4/bpXQpNPp45JH3AK2BrJPJX+FJb3OqYl9nvZ2Jc/yu0
-	J0txeOAf23JsRUW2L6bJdESCqlcsfKSVqLxqW54pX3GYNsOD8RWNwMI2FmTxmOP5
-	e2RLFzisM2CZ0DvVaRtKd6d9HxeLePjQBMc21vvAVq8s0l6hA70w1wuRZDrg88Su
-	/L7LFcQaxvZLU31N25PcOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1756452769; x=1756539169; bh=q
-	ppU2ZElzMUF8HxGs8sX97IZLK4hXjWfzXizfuQOC6w=; b=iOuEqx4la/tR5eCkN
-	3gC20Kn8gaji22FQVdjW+Q0QuBs+zV6LiNxiRD2f99y9VvzvfiQcO/Z41dsMlDrZ
-	1KQKQUXR++F+OSzZuIhiEN15H3Jdi+sCEwLXHBfF3WnjPLValA0aKFX39hZAhuIs
-	x+oXJcUrcIoPYDQiWN6vfVTe8Mk62MeByLA6EecqWL/rF7MCEo5/mpUwLHusGeM7
-	Kh23OXyKgAd7DdXnO04fhhDmfpHzWQ9MuG9X914lqoLu5+3djUYm7da7q6uM+gyo
-	lz4faWjUq9nTM63uU7gZiNT0pTiIVljgcKpPqw0mYZkXp+C/HGxq7U542CT1xoyD
-	jOhZQ==
-X-ME-Sender: <xms:oVexaL4F803vAAfmsvcwQecAqfaXpv9ir9q74n4o41zL_vkDFvkJNHE>
-    <xme:oVexaA5CwN6y5vnePdBNxqPUArrmpcpZX7fg4UqTIVKV3tUFKzbY3IFCqS_JOPxt1
-    M80Ti8DvTQ0UJfwNA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeefvdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtqhertd
-    ertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
-    ftrfgrthhtvghrnhepffejkedvjeegieegfeejkeegleevheeiteettddvvdeghfegheeg
-    leelleevffdunecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtoheprhhmhiesfhhrihhpphgvrhihrdhorhhgpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:oVexaH9WRTYnVXzD7Cprw3uC8iV8pWtM5Jga0y8eVWR3F2BPeai6TA>
-    <xmx:oVexaMprFjDcTpKFLl4SR2SEXmzjlNidSENg780oN_UyxrB-zODTyA>
-    <xmx:oVexaG9MM8YZPhRwEQ9G-87yRdXJx7x4dJFVPsnWOcX7MVhnDKFtAA>
-    <xmx:oVexaAX4aw51D5AJsw6KhqdJCtTFKEEueAcVkJ4H8noW1WhmSO83mg>
-    <xmx:oVexaDOhjM8DyXnljbslPFjvDG8EwlM_K7Ge2Zn6nrAJ5wxCEBWIOiy5>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 4F9E81EA0066; Fri, 29 Aug 2025 03:32:49 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C1hErc8b"
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-336925ebb8aso14087691fa.1
+        for <git@vger.kernel.org>; Fri, 29 Aug 2025 03:56:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756465002; x=1757069802; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cfJTynh6p0p7VyOGV2BmQwoXr7Cx6YCUHtxdde07SIU=;
+        b=C1hErc8baUlS8ngzpu+s1sL3EtJ6OpV7lXe6EbAR5hZzW4+nf6+AzFHoRfBxw84GNG
+         1soL8u7FYUvBup7FNmVzlhMyo1HA9fRVnVcgLReFVl//Jd5nI79yZDu+LnXdl3FElk6u
+         BvGRCJpaQxMsJdD5SvyfufJJnOM21o+xeNt5nlDR2YH371F6VYXaVYtceQLnEsO7c5nX
+         Ok+eim3k0LjALdnz9Nir3uvhpCA3uhn2EAwv6zKSbuT8tyMeFz7+YdP5HXiydEbKG1cn
+         zroXK9XFxsvNM3OSWUZ3rxLlRrDAwu8OrLiQgE11I1m3fEsIo8al6hqhDFXYDeRgaSAQ
+         BhwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756465002; x=1757069802;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cfJTynh6p0p7VyOGV2BmQwoXr7Cx6YCUHtxdde07SIU=;
+        b=o21fRH17yWylTRF7DwMmOcahv/3vNh3XqFy3qDwOhKRw1lVmHvGqVvPIbMmzswQk31
+         gV7dtWDqi2yo9WzsX3RHa2KLzUlqrnwOl1wl6kR6z6hItA3zHgRAaXmlHV4aa4wI9xQP
+         5AXvRqKcX7M0VXnE6Fi95LDeo6r/dKLP5Ta54UAHNlxjryQT6IoT1gJDXwgMeUv/Pem/
+         j/vnGxeXpHdrMoOYIxJ6KGqgxTjTuCIUhI0LZgboeE+NasBxSeKldQny1CGjmGM0YEnw
+         FqcWbnfbcnT5dypH3c3pvut/eLx0f56Obm+gKisEoAp6iaBfOIY/YMDO9fJdpH6xJmAw
+         EuGA==
+X-Forwarded-Encrypted: i=1; AJvYcCXTeXeTgLobENBRdDXQ8mBAbXjMErzOxy5R4/jsqfj5BkG7d///ClFEJf4wMA8ZgqY0FaQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSUpHXxQo+AvK/QZF5PdPXrm5vTWkWYvMzMErC91E7HvwFoK9z
+	n3/+4DnSiOlG1F5cQ1/GtnL3kdwmPWrUh9yBSnR0XvjLd3e8gsC5KTl0TeR7m7rtO8wynoOSzk3
+	KpI+yNUSvi+getjiU65AvfzVRxRdxKYg=
+X-Gm-Gg: ASbGncsoJ+txTL3gClUqpEiPRnXCUz1zPMlYrvHi3Pck8xxu5pbC+d0ZcGhr4IwpE67
+	RPFO4Tv9bPLKSYCysT47aIp1YCzZV+iHodaRPHXoyEZ8pOMegMJw+jP33po1TjditjC7UqEYeux
+	lDyIOy384T+3lSyiQFgQ8WX2Ew/zEiAJ/5dDB8KB27rwYBO6S/qrbj/0N7+puNoDD1wzUMHNoie
+	f9Zk80j31n9NZB7
+X-Google-Smtp-Source: AGHT+IGb7xtIutfe/U8EaUb0HmYXMZpSWKwzsuRl5O/crPVWlH9QR/itL86YItSA9UZvpoM3b8WUKQrTNpcf31fGLpc=
+X-Received: by 2002:a05:651c:154a:b0:336:a8e3:b80f with SMTP id
+ 38308e7fff4ca-336a8e3babbmr13873451fa.5.1756465001587; Fri, 29 Aug 2025
+ 03:56:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AkMA6QeNSR0c
-Date: Fri, 29 Aug 2025 09:32:28 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Ron Yorston" <rmy@frippery.org>, git@vger.kernel.org
-Message-Id: <aac16c10-df63-4ff7-af39-954e57b112d1@app.fastmail.com>
-In-Reply-To: <68b14aad.X1BRkbvYn8oZ8Dhp%rmy@frippery.org>
-References: <68b14aad.X1BRkbvYn8oZ8Dhp%rmy@frippery.org>
-Subject: Re: git whatchanged breakage
-Content-Type: text/plain; charset=utf-8
+References: <pull.1958.git.1756228693233.gitgitgadget@gmail.com>
+ <pull.1958.v2.git.1756370289.gitgitgadget@gmail.com> <ec5dcdf9d00473417b1f0b676a485f01076ce075.1756370289.git.gitgitgadget@gmail.com>
+ <xmqqa53jxyiz.fsf@gitster.g> <CABPp-BGRHajFf5z91CvvKvahpknbt1KraCR3_rOmAjvxz36_Ag@mail.gmail.com>
+In-Reply-To: <CABPp-BGRHajFf5z91CvvKvahpknbt1KraCR3_rOmAjvxz36_Ag@mail.gmail.com>
+From: Paulo L F Casaretto <pcasaretto@gmail.com>
+Date: Fri, 29 Aug 2025 12:56:29 +0200
+X-Gm-Features: Ac12FXzpN0orrmXQDBvV3qlP6AVF-88cwhB5QaqnY5KLyh1Ent3WoIutzrNveWM
+Message-ID: <CABEf2MkN0BNVuiA4Q0SrP=vFb18tSEKcD09qDzs40CowHjO3rg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] range-diff: reorder options lexicographically
+To: Elijah Newren <newren@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, pcasaretto via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	pcasaretto <paulo.casaretto@shopify.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 29, 2025, at 08:37, Ron Yorston wrote:
-> I use 'git-restore-mtime' from git-tools[1].  The latest release of
-> git broke this.
-> ...
-> [1] https://github.com/MestreLion/git-tools
+Yes, I concur. I noticed these were "out of order" when I added the
+new flag but now it's obvious that there was order. I'll remove this
+commit.
+Regarding the name problem, I've checked and I do have "Paulo
+Casaretto" set as my name in my Github public profile.
+I fixed my local git config and apparently that fixed it.
 
-Issue: https://github.com/MestreLion/git-tools/issues/82
-A PR: https://github.com/MestreLion/git-tools/pull/83
 
-> What happened to politely deprecating things before breaking them?
+On Thu, Aug 28, 2025 at 7:12=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
+ote:
+>
+> On Thu, Aug 28, 2025 at 8:24=E2=80=AFAM Junio C Hamano <gitster@pobox.com=
+> wrote:
+> >
+> > "pcasaretto via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> > > From: pcasaretto <paulo.casaretto@shopify.com>
+> > > Signed-off-by: Paulo Casaretto <paulo.casaretto@shopify.com>
+>
+> Same issue with name here.
+>
+> > I am not sure if "lexicographic order" fits well in the context of
+> > "git cmd -h" that spews out many many options, shown with related
+> > options together in groups.  I find it aggressively annoying to show
+> > left/right-only far apart.  A user unfamiliar with the command would
+> > look at the list, find "left-only" sitting in the list alone, and
+> > waste time and break concentration wondering what in the first range
+> > is so special to deserve such an option, until they see "right-only"
+> > further down to realize that they are symmetric.
+> >
+> > I'd rather not to see this "lexicographic" change done, but others
+> > may have better justification (note: "for better organization and
+> > readability" I just disagreed is a good justification) that may make
+> > me change my mind.
+> >
+> > What I would change, if there is something suboptimal in the current
+> > output from "git range-diff -h" that deserves improvement, is the
+> > lack of the grouping header before the options for range-diff
+> > operation (i.e. creation-factor to left/right-only, before the next
+> > "diff output" group begins).
+> >
+> > Thanks.
+>
+> I do like lexicographic ordering for unrelated options, but I prefer
+> options to be grouped by intent/use first, then by lexicographic
+> ordering.  And here, not only are--left-only & --right-only related as
+> Junio points out, to me --diff-merges and --remerge-diff are a similar
+> grouping that belong together.  So, my $0.02 is that I'd lean towards
+> calling both changes in the patch a reduction in organization rather
+> than an improvement.
 
-It wasn=E2=80=99t deprecated but its use was discouraged starting from
-52f425e1a9a (whatchanged: document its historical nature, 2013-08-09).
+
 
 --=20
-Kristoffer
+Paulo L F Casaretto
