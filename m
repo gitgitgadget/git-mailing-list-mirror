@@ -1,86 +1,95 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAB78F48
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 16:22:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88162101DE
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 16:31:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756484548; cv=none; b=kI72sZ1/e/Iti9z6C+/UT2ydHN6TBGiwEYM1q3RH4wxPMJLBqNw4EtKXpD0+8vm1Rv3QE50JXW2Iaj+sDmfmNBqqBwGgW3FvyQPgyGAzVPNHq9JegV4LC+QojucU3iohz9i+VqHquh098K2bXGxZwJWJqqBGXtT4Dgk2IWFT3oY=
+	t=1756485080; cv=none; b=i3D4udXlBr5SfTNzL9A7rFkmyBa0m7rnWXvYYVXFklqWYZh68OdNxJOzhZ8raYrEIvmGelJvPzxl1TX9hHAKP6szFSqd7yV6BNwq05VxmT7iq7G3uFDGcSzP7bK//6Pc3PqiyzkzNWojns7Ofo2V/CKtMBt8kVZtfVLoqh6ubCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756484548; c=relaxed/simple;
-	bh=sSKYPoXPG6BHnpRYDW+A4LMoXnSmf3BjADijdiiP77c=;
+	s=arc-20240116; t=1756485080; c=relaxed/simple;
+	bh=Rj1mMjrgr277CT9As6baEQ/mCm+6VAChEwCPx4YgtW4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iW20hfl19MAzWxu3RefilWT+3iheUklN5xlesEoHMgMUD6Am3xXyKiwA7aRMr448gP0V2v02Meh6Q4SXtDFbJdy2nj3Dd6wD1YNSDaxzU1rU1XJS0JTsC9HfovzZ1YAqypxw2rJd5rTxyctlY63FOSwePwef/u2E6UBnGajEvIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=z6LAJ35s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BH73qb92; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=ZXCPGV4qwn1SSlEQwHcWYPhIlEVpkWXJJU8QGFMPJxcl/5wqbnIvxsZZBtl8IiscPVEymGheqcNPAbTunHoZSgkLXCsFsDDqTfXImoH+cJT6awnvSJbaGgsRauCafbG4d8I1XZMAH3KQHLkGRz0fm7+aSHrNUQb567w1bQ0PELA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DmjOmj1V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QhYteuPh; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="z6LAJ35s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BH73qb92"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5CF507A0199;
-	Fri, 29 Aug 2025 12:22:25 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 29 Aug 2025 12:22:25 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DmjOmj1V";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QhYteuPh"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4CBA61D0007F;
+	Fri, 29 Aug 2025 12:31:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 29 Aug 2025 12:31:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756484545; x=1756570945; bh=V2uV/NdNLL
-	ZpJHoZVj8KVp6WKRUUyKOwTzd01zhoRTE=; b=z6LAJ35sEmkQDulciX0gXIom1W
-	X9kwN+SdwHdPNwvea+195eHcSN1/u289tZBuWqt8ee5GDC8eW3EiAilPBkQmohZC
-	LWFrv399S1S4rAGyPrdrD+FGxfilPHjQID7NSj/qtvAXyiJgH4VjWFSMIDQHGeyH
-	AU/vIG+rwvibtmlSKx7devdV7dLNmK2erIJ7y0A+K3Z63jB6tyLfNAUOtBpdQOs9
-	R50+eF/ZvWPGiLpC+2T5ZxIucKrTnP8FtMYxYbB8k9yQC93twKYVgw0wdD7zp+ea
-	FPdXcHGc96pPTZOhPfi/QlRriDJiPcU0H0UVoshx1zLxGtjRMGIvF4iWu0rg==
+	:subject:to:to; s=fm3; t=1756485076; x=1756571476; bh=+dPwIZKxsk
+	DmV3P+imT8nh1m/fGex49KmNUL9T0SlOw=; b=DmjOmj1VtDkzkqCXdYorKtD33H
+	hCwrifz/f3Yt/f7lQijPOe2snZEBYu78Q7/1HK1xjwohXF2IfrN412mT7QtxGHIg
+	DstBbkUn8jVeRwhnXhhEtarxtbRGE7msQ/7nWNyQuBXgXchr73/7a8GFC8faRzKv
+	16Mfl6H2IMSTqpn6KkMfJxCh7ZdebZrmO1jweYe52/rgYUttihyAX1aqQmDN3Llp
+	JuFmwiLsS0Wa1K8aPZ3xfokbC4FmKzdEGjlCUmVlWKu8OpPL2Alc+/lAze+6qrcS
+	zuA4uYRysKkuFegEhzUKPYeS0KLeBePO0N025ou3nJ70KNZ/yjPfLlhCNZEA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756484545; x=1756570945; bh=V2uV/NdNLLZpJHoZVj8KVp6WKRUUyKOwTzd
-	01zhoRTE=; b=BH73qb92c5fYIZjQ5RciTdOCmQ65vFu+pqr893Mh3KUqV81GxoS
-	HlRWjw2pAKDo1EMLAqYOHvgsh743QDGmBosRuMdTE94DMQUYbDJmy+o03xKiuFSz
-	f46oYlqQA8/YpunItcjWpTEcELoLrybziy6qvVtKrmnTy5H6hHI2BKnMBvNsNUj6
-	sftpPoEhM7PwdB+0XJdrBgd050Rg1xgiHfmE5eVaLsF7AFPr7JYDkLOlWY0irSb7
-	VqJuhu+V/BcuVUNQVM8Q0hgF8KV+EVua0lqT5vxrzAwvnolMla+MfctQK7cGNjCZ
-	GbNU2lPgUXvMPPHDOUqmVaNMe34e2Wezrig==
-X-ME-Sender: <xms:wdOxaC9KT1OsIODkXhy7rb9e4AJ0owlXYOr3B388ALzvc_7Q9p0GUw>
-    <xme:wdOxaONiz31ztRr0UhT3FiS6Kn2Kd_SaHWNehGqH4ASRXP9kFTgvCsxjQbVdgy3jv
-    g07fANJkJLKXztJGw>
-X-ME-Received: <xmr:wdOxaOc2Cm10cRE9tAzVQQ4gAIvIJ_OVhSArhJk06qO_1GLqQH9fhQyf89hQClyq91BBsaW5Ug9-32mxSUc6fJ01rDtsLKwV1gGCB3s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeegvdehucetufdoteggodetrf
+	1756485076; x=1756571476; bh=+dPwIZKxskDmV3P+imT8nh1m/fGex49KmNU
+	L9T0SlOw=; b=QhYteuPham+D9wGmNJJRjc01QkJG+AVPecpKte1RcScNlj8K2TY
+	i3wxYwUDYTEjtm9VZxLHStwcZd+ldYxSuKgqmQdxvt63G3j47sWH/FOkeZNiD7OD
+	a2t1mpQukDbYS+IGJxjmDfHpCGECQT2TZuPCWMrA+Y/Seb5DVBQRxqvfikTZPV3n
+	PavFJO3KJ3MudofwgrI2fAf7Pe52TaeyFnsk8U+1MuJfrdky+BOorF0R3p+E8JMz
+	LpHw90fjgg8sfG/b2dvJNtRol8p+hq2nkWENV8QXk/jWn9DLLddDHd+tD+5pe1Ul
+	RMPHXL7sWtfT/qDDNAPLOy+aXoIjIz4Q7UA==
+X-ME-Sender: <xms:09WxaMvGu1U_8M3Nnse_c1h73_K--krcWIwYQK9GfMSZL18kcFcilQ>
+    <xme:09WxaG3ez97ndi7lxZ_gkwyiWcQTCqqELdotlz7hxX-GnS1nz-VEFf7AsgSQMRhWB
+    MpDh-l8RTTJn1WGsg>
+X-ME-Received: <xmr:09WxaPEZ1gvRwanqLGjkaNG3B8NXpDIPn4O3Ub79FhLYCsOkVy5TLXibhANgpQ2CbwEbXunvnwb_zmAXaqemFoOWSD-2J4HBcMolo9U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeegvdeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehjuhhlihgrse
-    hjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:wdOxaFWntr5CFCGOqGdka5109XhNnbER1Zxa8BE5lozd9M8VK0ftiw>
-    <xmx:wdOxaOj2c0ra_jjqZlnvIh6pVLFPy_aulSmq-wVocNqIcaKa11LZ3Q>
-    <xmx:wdOxaM_YTQeiDOgejTDvt1h5eG-J9c7ozTqyKR7K4PwQ4Tq0I-y_dw>
-    <xmx:wdOxaIaLNGVmuSXzaX8iWnphQpnQ4RMC_2Rg2NQnhQftB8vosyh8Eg>
-    <xmx:wdOxaAuFqu8BdItAu4IbTEbGkxoZpDSNweUONJ5MVb98D3f_Dv5l5nIA>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtg
+    hpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrih
+    hstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgr
+    nhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihloh
+    hrrhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:09WxaJv6Y-FgrF3zKllUtKomwuTcYMdYE6qfSRgeGjhthfxAoai5PQ>
+    <xmx:09WxaKoGD_64X-TeX9cO5UOlEkzI6mwo0h31EVOfFcRq-uaYhH_fqQ>
+    <xmx:09WxaIVUlcb8w63oNvHGjPPs19BXn-yWuVODy87Tmp3R17mF4azjfg>
+    <xmx:09WxaK0AmVpifT0smJMKyNZcSo2VOWTWrTTEWOze7B7zsbA3DeGNJQ>
+    <xmx:1NWxaJZZnAz7CxqUI3v_Smr1bmrlqHps_aDx98rBfWuoEGtUvrPodg-B>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 29 Aug 2025 12:22:24 -0400 (EDT)
+ 29 Aug 2025 12:31:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Julia
- Evans <julia@jvns.ca>
-Subject: Re: [PATCH v2 3/5] doc: git-checkout: don't use "reset"
-In-Reply-To: <360051d2a656727ca42d489de81ffec9b23a6386.1756467934.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Fri, 29 Aug 2025 11:45:32
-	+0000")
-References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
-	<pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
-	<360051d2a656727ca42d489de81ffec9b23a6386.1756467934.git.gitgitgadget@gmail.com>
-Date: Fri, 29 Aug 2025 09:22:23 -0700
-Message-ID: <xmqqh5xqnlmo.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  phillip.wood@dunelm.org.uk,
+  Usman Akinyemi <usmanakinyemi202@gmail.com>,  git@vger.kernel.org,
+  chriscool@tuxfamily.org,  christian.couder@gmail.com,  me@ttaylorr.com,
+  ps@pks.im
+Subject: Re: [PATCH v4 1/2] t/t1517: automate `git subcmd -h` tests outside
+ a repository
+In-Reply-To: <0548f4b2-6c36-4958-8725-5c9ac91e31e8@crinan.ddns.net> (Phillip
+	Wood's message of "Fri, 29 Aug 2025 14:05:58 +0100")
+References: <xmqqcya63cqx.fsf@gitster.g>
+	<20250721115519.140361-1-usmanakinyemi202@gmail.com>
+	<20250721115519.140361-2-usmanakinyemi202@gmail.com>
+	<370f11e1-b335-4111-912c-94429c5018d6@gmail.com>
+	<CALnO6CBbEB=94YsZn8vtjcwYENuMhMdg_wb2RbQunVCxnf53jQ@mail.gmail.com>
+	<0548f4b2-6c36-4958-8725-5c9ac91e31e8@crinan.ddns.net>
+Date: Fri, 29 Aug 2025 09:31:13 -0700
+Message-ID: <xmqqa53inl7y.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,93 +99,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> From: Julia Evans <julia@jvns.ca>
+>> That should only happen if you set GIT_TEST_INSTALLED or something,
+>> right? Or maybe some even more exotic setup: even with my
+>> distro-installed Git, the command doesn't list my git-* scripts in
+>> $PATH or installed extensions (like git-when-merged).
 >
-> Many Git users don't know what the term "reset" means. Resolve this by:
+> Sorry for the confusion, I've just had another look and it turns out I
+> had some rubbish laying around in the root of my repository which was
+> causing the problem.
 
-Even though it is the name of one of the most often used commands?
-And yet a separate step in this series made the claim that everybody
-knows what "switch" means because it is the name of another command?
+I do not think this is something you should feel sorry about.
 
-I think the source of the problem is not that they "don't know what
-the term means" at all.  Isn't the real problem that the use of the
-verb in the original sentence you are correcting in this patch is
-vague and does not say what the branch is reset *to*?
+If you checked out and built 'seen' that invents new commands,
+and then checked out 'next' that lacks these new commands without
+first running "make clean" (relying on the mtime of the source will
+cause rebuilding of necessary things), your build on 'next' will 
+see "some rubbish laying around" that may cause the same issue, no?
 
-> - Expanding it into its definition, in one case
+As "test" is primarily to help developers, I think we should find a
+way for this test not to be confused by "some rubbish laying around"
+if possible.
 
-    The description says "-B <branch>" resets the branch if it
-    exists, but does not say what it resets to.  Rephrase to clarify
-    that it is made to point at the specified commit.
-
-or something?
-
-> - Giving a simpler but still accurate explanation ("the branch will not
->   be created or modified"), in the other case
-
-By the way this kind of use of bulleted list in a proposed log
-message I do not mind all that much.  What I reacted to was a list
-without the introducing text (in the case of this patch, "resolve
-this by doing these things:").
->
-> Signed-off-by: Julia Evans <julia@jvns.ca>
-> ---
->  Documentation/git-checkout.adoc | 11 +++++------
->  1 file changed, 5 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
-> index 4de3ac6680..e4614674f0 100644
-> --- a/Documentation/git-checkout.adoc
-> +++ b/Documentation/git-checkout.adoc
-> @@ -54,18 +54,17 @@ to print out the tracking information for the current branch.
->  	`--track` without `-b` implies branch creation; see the
->  	description of `--track` below.
->  +
-> -If `-B` is given, _<new-branch>_ is created if it doesn't exist; otherwise, it
-> -is reset. This is the transactional equivalent of
-> +If `-B` is given, _<new-branch>_ is created if it doesn't exist;
-> +otherwise `<new-branch>` is forced to point at the commit. ...
-
-Good.
-
-> ... This is the
-> +transactional equivalent of
->  +
->  ------------
->  $ git branch -f <branch> [<start-point>]
->  $ git checkout <branch>
->  ------------
->  +
-> -that is to say, the branch is not reset/created unless "git checkout" is
-> -successful (e.g., when the branch is in use in another worktree, not
-> -just the current branch stays the same, but the branch is not reset to
-> -the start-point, either).
-> +that is, the branch will not be created or modified unless
-> +`git checkout` is successful.
->  
->  `git checkout --detach [<branch>]`::
->  `git checkout [--detach] <commit>`::
-
-This is in response to "transactional equivalent".  I've always felt
-that there is no need to say "transactional" in this at all.  IOW, I
-wouldn't have minded if we rewrote this more heavily.
-
-When you have to clarify with things like "that is", "what this
-means is", etc., after some text, I've often found that the result
-becomes crispier and more clear if we removed fuzzy text that needed
-such clarification and rewrite the sentence using elements form only
-the clarifying text.
-
-    If `-B` is given, _<new-branch>_ is created if it doesn't exist,
-    otherwise, it is made to point at the given commit.  And the
-    branch is made the current branch.
-    +
-    Creation of the new branch or reseting of the existing branch to
-    point at the commit happens only if the resulting branch can be
-    successfully checked out.  Oterwise branch creation is not done
-    and the exiting branch is left as-is.
-
-or something?  I dunno.
-
+Thanks.
