@@ -1,89 +1,87 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD4A314B85
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 15:40:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FC12066CF
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 15:58:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756482013; cv=none; b=qOQU4ekG5SUO7LVvmaPu1Y6DvCI6bUWOX8GAX9IaIlrjKlszl01VkBY1Tg88vr0f7Brv97N55ulrZiEw1DBxl79UwoU+YDCYNc3SbZ8bbO/6U0KtTh579EXKz/QCsUCvmBHORDAqy3BlpnYfGvp54YoV3RJNM5mxc1P9jPiYGsM=
+	t=1756483127; cv=none; b=aAX9Ahm9TRBXDDruLhKzJ79wxaZUgsjraJfy8kbktjBQhzATOORtcinNCmbfZpyTFlLpUhYGZ53vFZIDFUftuydAY+gukXNKiU25vAXl4aJfC2MZ5vSibdQFpwl2VYWrm+HqGmuMNZSHthaKG5rQFKndS/yEvj0wUxTHooX375c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756482013; c=relaxed/simple;
-	bh=Qv181jjEFFOYsDcL803I44g414B7H9hLU7goBrMhT3w=;
+	s=arc-20240116; t=1756483127; c=relaxed/simple;
+	bh=kot8HiBptuW7kDoR+wmUw5YoEHZeG2FiPAlYfEiAJtA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ozze24QHx1n89QlTK9PonemgkXjhmV5z0Ib1HuAtJzGYiQ4LVZm3i399jF4vr5pS5+aR2X7WvyWHs/jtL0CAA84jgdgiSKxIAD3ycSC4jd+MEW5teDhr8M4SaDGdz6B8RNyfjwg7fsKXrCcE5KsnFChr9kPQKyQ6/5g1aZqv+wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oZmctF6A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EMhzkOyk; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=ff2yCNAFmPAG/ViMaQVuk0gBDlm1yzoPHMX728dQ7AUw0rf2SKP1V4GD+KpCOekN32lzcvkdBN2Q+kDckKouD2GEVC1i6rjTNrDzBEIYsCt7K0Vb91Bg+UYSAM3GjpSzUU450/0H0aVlbg6IGXPIeRwbaMHhCjmQoSjvy8LXozs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DpeVvyr4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IIFpR0Q/; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oZmctF6A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EMhzkOyk"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6AAD87A00CD;
-	Fri, 29 Aug 2025 11:40:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 29 Aug 2025 11:40:10 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DpeVvyr4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IIFpR0Q/"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id D94381D00171;
+	Fri, 29 Aug 2025 11:58:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Fri, 29 Aug 2025 11:58:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1756482010;
-	 x=1756568410; bh=9Pbduont8jVzZfV76gAWTtYiUxdapeghLXxcDDUz4t8=; b=
-	oZmctF6AVZq/8E+XHVm+RKH3xNzFksFJ23Vj5QqI8PhImPD6y6kiVlul/ns+egHS
-	xoajEf29UMf1yN15IbECzMKT+P9VnceLrGGNF0sxKFoER90ypChfL6S7ECQ62DGL
-	qz+IEVphJU/ZpviICRHo7crllFD8bZQyn+0ZieXLMSz6Xc7oIgv8IDPf7VBfWM2p
-	/aY50Bp+1Mk7z6whAhQgQ7hughTOjzn/Zn9c0YLQPbzQZWAdaNIeX2g6ahDwruWx
-	8LvO8wAFsSfXNpRpcrT+NCqiPO7yxPmOxL9tNK48ZQOq0OpmML0E37vHby+2vWLQ
-	dU+tW0+ab4jw03ccU1snJg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756483123; x=1756569523; bh=R9Uua3G1Ti
+	V0OIVbWSl4h1tSRt1OMAjd6Dmj9L+Z0PA=; b=DpeVvyr4gLtZlLiyq3DuPYzEZc
+	4gEAV0oFFhd1OtZ9xQKJrG1zbAS6vQaArMuYn3WbR8FgVZhPnCjDXXb3iG2qXcJC
+	dfQMc+euc0i/pBfiaCRqptaMa90OveOr36AkwgOqS6VcezhKwjnJaY9eeCyDUn/K
+	aKVj8VduZxdd1IGJ7Xl+i5GWq+o6y5oAndNKAUfDKGtQ9hj4/7zUazdJrVfrtNC+
+	XrrvyxUzRuFUS/grWfz6F3uR59stWbNQSEYdURjBYLTJQj4jAvkOBCAexkvi6D47
+	eUJINXciK4bmhvXpj1NrjnY/SzZMD8zQw0oMIWq6KlCPw62MONSoztFh3EOg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756482010; x=
-	1756568410; bh=9Pbduont8jVzZfV76gAWTtYiUxdapeghLXxcDDUz4t8=; b=E
-	MhzkOykyDTbWRPTOTiQ09dr794gWmMcnVtTRTwh4mPMZRxQSPYzQOqYXnU5osSdQ
-	ZI70snPjTysxgW8y0LC7IuE4zAyyk6nffJFM8mwSLZbDgFi149Nmx0VipkQCBwZA
-	cb9sfo3TG97Kxj5r5GC1+GGvg4HuEky7dS5GUZ2PCafyV8fwJc9SSKkVpt1/t2Tg
-	Q7SuqK+kbOgAe8FzRA7HoQnT/Z7yvOFe31DRoY9tslnbSJGfkq67l2z4v6LhGWDf
-	KzqftSthenyG9MjuFenjReJBtUoJHbHIm6kcYGCT3wpiRFDDG1DN7jcmOhtB1vay
-	MeSIBdudMKOj0+UVOWj+w==
-X-ME-Sender: <xms:2smxaB-96oobURnaDT9YpfL-1JNm1ubYu_2pj0Q724QQSPTiswGVeQ>
-    <xme:2smxaBPzguluQDHE978rvaHwLOZDPsYY3J39hr8uwErwbeMsSUQPg5VSSEOsRUkOp
-    Bld_6CHIeCOqc-3_A>
-X-ME-Received: <xmr:2smxaFe7SSgQDXEMztgX9hnq7SM6Aa4yUhttM00CEUPMmvqfvnYXuaAVFmQ-FrVxN1pRB2merPEQ-c8z3pGu1KEx-YSpb1dcUGdQ9CM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeegvdefucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756483123; x=1756569523; bh=R9Uua3G1TiV0OIVbWSl4h1tSRt1OMAjd6Dm
+	j9L+Z0PA=; b=IIFpR0Q/p2ELCw4WLgkUNj64NTrCSD8lFQ8kYi1pAEhI5yUXBEd
+	13tp6D0e575dJNUvcFZuXc4GIACM26WQlr/EKfip2rzsR/7Q4wfuUP3Wzus2SwMh
+	MrEJ8xBbRWXpKwIWcvXU2+8HdxvSrhQoLHw0bez1N7KTH8OtvzgM+/0adootwjcc
+	g12nrfXrI2imFZLTyR5kuQwWw3QboEHJhGUUBPy2Rwm5/xGqvyHOhVwqiZvBgBUT
+	lj3sZzv0ZjRGwilir4e9/YdOsH8c7N2NoXsBlAxnTTS9giBMaZOIL6+QnfpCw35G
+	4xvbbsnB0wfTZZ+kciLnQesqnV815/7vrwg==
+X-ME-Sender: <xms:M86xaPRd471ztRJWjUNjGst8QLHlkNwtu0OJSb3m8A4Iv01qEdvHhw>
+    <xme:M86xaMTLOvhgGQX8muX7vKKF_-PfCyvjDunN-7xbemOmZL-IynmYIXOTi2S4k1u_k
+    CmnRJ0ZiFQJQLT_IA>
+X-ME-Received: <xmr:M86xaLQEbNoHlgFmvLmTxTRCLFLsntWQBBA4gVLS5Q59QMpPNySYUgi7qSmkBqNNFChLqlb9075g5By31pBXYbW0bL44SnLnVbIgBb8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeegvdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpefhtedvjeehudehgeelheefieevtdegleefvdfftdevtdduffeikeeiieej
-    vdelhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehptggrshgrrhgvthhtohesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2smxaAWr_sB2f7DPVTLK-u1p8GjpzzJ-uGjMTpbvmSo4R3-DIpsL7A>
-    <xmx:2smxaNiorfxiNujBQ_Hxt1eD_VGgF9kMueCBgbkJ6AVxsWRcRJZefQ>
-    <xmx:2smxaP87_Oijq-JLysMBMriZrl7NNEeDzaUuMybK4ehFb9VeylJ39Q>
-    <xmx:2smxaPbm0TlikrGFebz9NfHxaOtEtPYTSWCzvn7N2ideghzmXt_OKw>
-    <xmx:2smxaLsECukQoEybtgsxy0Vh-YTLGRTQyl26gqpT0KCWVW7ctiDUBWJG>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:M86xaJ51Pa-TxeTAxqiJH8SNUZdNo9zkxwt84WSyoC8OABQy2DJ2gA>
+    <xmx:M86xaP1he0rS8BNcJ9dtZfmaj8DT3KXktEWYtdvhxsWoMsgRIFTDSw>
+    <xmx:M86xaMBOB6L6AM6Ht7FwjgeA6CurqayvfN-hiLX8RZcTMiNvAkeVbQ>
+    <xmx:M86xaCNJTp7BOx7LS-LJXv5B1G9uC_MjuHu38C5xNiJMzqf-q_VrCQ>
+    <xmx:M86xaJSofZEO7J2E2UAckXFmO6Zy6CP3TB-CI3LZpqJpYJtrXl6a0XYa>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 29 Aug 2025 11:40:09 -0400 (EDT)
+ 29 Aug 2025 11:58:43 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Paulo Casaretto via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Paulo Casaretto
- <pcasaretto@gmail.com>
-Subject: Re: [PATCH v3] range-diff: add configurable memory limit for cost
- matrix
-In-Reply-To: <pull.1958.v3.git.1756465231183.gitgitgadget@gmail.com> (Paulo
-	Casaretto via GitGitGadget's message of "Fri, 29 Aug 2025 11:00:31
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Julia
+ Evans <julia@jvns.ca>
+Subject: Re: [PATCH v2 1/5] doc: git-checkout: clarify intro
+In-Reply-To: <48e7f230294e131007032ef8850456a5c0493ef9.1756467934.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Fri, 29 Aug 2025 11:45:30
 	+0000")
-References: <pull.1958.v2.git.1756370289.gitgitgadget@gmail.com>
-	<pull.1958.v3.git.1756465231183.gitgitgadget@gmail.com>
-Date: Fri, 29 Aug 2025 08:40:08 -0700
-Message-ID: <xmqqecsup25j.fsf@gitster.g>
+References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
+	<pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
+	<48e7f230294e131007032ef8850456a5c0493ef9.1756467934.git.gitgitgadget@gmail.com>
+Date: Fri, 29 Aug 2025 08:58:41 -0700
+Message-ID: <xmqq1poup1am.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,116 +89,100 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Paulo Casaretto via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Paulo Casaretto <pcasaretto@gmail.com>
+> From: Julia Evans <julia@jvns.ca>
 >
-> When comparing large commit ranges (e.g., 250,000+ commits), range-diff
-> attempts to allocate an n×n cost matrix that can exhaust available
-> memory. For example, with 256,784 commits (n = 513,568), the matrix
-> would require approximately 256GB of memory (513,568² × 4 bytes),
-> causing either immediate segmentation faults due to integer overflow or
-> system hangs.
+> - Many users do not understand the terms "index" or "pathspec". Clarify
+>   in the intro by using an example, so that users can understand the
+>   basic idea without learning the full definition of "pathspec".
+> - Use the terminology "Switch" and "Restore" to mirror `git switch`
+>   and `git restore`
+> - Reference (and clarify) the ARGUMENT DISAMBIGUATION section
 >
-> Add a memory limit check in get_correspondences() before allocating the
-> cost matrix. This check uses the total size in bytes (n² × sizeof(int))
-> and compares it against a configurable maximum, preventing both
-> excessive memory usage and integer overflow issues.
->
-> The limit is configurable via a new --max-memory option that accepts
-> human-readable sizes (e.g., "1G", "500M"). The default is 4GB for 64 bit
-> systems and 2GB for 32 bit systems. This allows comparing ranges of
-> approximately 32,000 (16,000) commits - generous for real-world use cases
-> while preventing impractical operations.
->
-> When the limit is exceeded, range-diff now displays a clear error
-> message showing both the requested memory size and the maximum allowed,
-> formatted in human-readable units for better user experience.
->
-> Example usage:
->   git range-diff --max-memory=1G branch1...branch2
->   git range-diff --max-memory=500M base..topic1 base..topic2
->
-> This approach was chosen over alternatives:
-> - Pre-counting commits: Would require spawning additional git processes
->   and reading all commits twice
-> - Limiting by commit count: Less precise than actual memory usage
-> - Streaming approach: Would require significant refactoring of the
->   current algorithm
->
-> This issue was previously discussed in:
-> https://lore.kernel.org/git/RFC-cover-v2-0.5-00000000000-20211210T122901Z-avarab@gmail.com/
->
-> Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Paulo Casaretto <pcasaretto@gmail.com>
+> Signed-off-by: Julia Evans <julia@jvns.ca>
 > ---
 
-Looks good, especially without the reordering existing entries in
-the options list.  The authorship information above looks much
-better, too.
+You seem to have forgotten to update the proposed log message ...
 
-> @@ -40,6 +57,10 @@ int cmd_range_diff(int argc,
->  				  PARSE_OPT_OPTARG),
->  		OPT_PASSTHRU_ARGV(0, "diff-merges", &diff_merges_arg,
->  				  N_("style"), N_("passed to 'git log'"), 0),
-> +		OPT_CALLBACK(0, "max-memory", &range_diff_opts.max_memory,
-> +			     N_("size"),
-> +			     N_("maximum memory for cost matrix (default 4G)"),
-> +			     parse_max_memory),
->  		OPT_PASSTHRU_ARGV(0, "remerge-diff", &diff_merges_arg, NULL,
->  				  N_("passed to 'git log'"), PARSE_OPT_NOARG),
->  		OPT_BOOL(0, "left-only", &left_only,
+https://lore.kernel.org/git/de40e0ed-ca12-41b0-acd0-3c594078cc14@app.fastmail.com/
 
-Among existing options (an excerpt from "git range-diff h")
+... to avoid making it just an enumeration of "these random things
+were done in this patch" (and instead tell a coherent story).
 
-    --[no-]creation-factor <n>
-                          percentage by which creation is weighted
+The same comment applies to many of your patches in this and other
+topics (I won't repeat for brevity, though, on my review on them).
 
-    This controls how correspondence between commits on old and new
-    branches are computed.
+>  Documentation/git-checkout.adoc | 29 +++++++++++++++++------------
+>  1 file changed, 17 insertions(+), 12 deletions(-)
+>
+> diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
+> index 40e02cfd65..c86941ad53 100644
+> --- a/Documentation/git-checkout.adoc
+> +++ b/Documentation/git-checkout.adoc
+> @@ -20,10 +20,12 @@ git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
+>  
+>  DESCRIPTION
+>  -----------
+> -Updates files in the working tree to match the version in the index
+> -or the specified tree.  If no pathspec was given, `git checkout` will
+> -also update `HEAD` to set the specified branch as the current
+> -branch.
+> +`git checkout` has two main modes: it can
+> +**switch branches**, for example with `git checkout <branch>`, and
+> +**restore files from a different version**, for example with
+> +`git checkout <commit> <filename>` or `git checkout <filename>`
+> +
+> +See ARGUMENT DISAMBIGUATION below for how Git decides which one to do.
+>  
+>  `git checkout [<branch>]`::
+>  	To prepare for working on _<branch>_, switch to it by updating
+> @@ -511,14 +513,17 @@ $ git log -g -2 HEAD
+>  ARGUMENT DISAMBIGUATION
+>  -----------------------
+>  
+> -When there is only one argument given and it is not `--` (e.g. `git
+> -checkout abc`), and when the argument is both a valid _<tree-ish>_
+> -(e.g. a branch `abc` exists) and a valid _<pathspec>_ (e.g. a file
+> -or a directory whose name is "abc" exists), Git would usually ask
+> -you to disambiguate.  Because checking out a branch is so common an
+> -operation, however, `git checkout abc` takes "abc" as a _<tree-ish>_
+> -in such a situation.  Use `git checkout -- <pathspec>` if you want
+> -to checkout these paths out of the index.
+> +When you run `git checkout <something>`, Git tries to guess whether
+> +`<something>` is intended to be a branch, a commit, or a set of file(s),
+> +and then switches branches, switches commits, or restores the files.
 
-    --no-dual-color       use simple diff colors
-    --dual-color          opposite of --no-dual-color
+"Switches branches" I can understand.  You were on your old branch
+(your HEAD usually is pointing at some branch), and you move to your
+new branch by making it your "current" branch.
 
-    These control how the findings are shown, by painting the lines
-    in distinct colors. 
+I do not understand "switches commits".  When you move to a commit
+(i.e. your HEAD can point directly at a commit without referring to
+any branch), are you switching one commit with another?  I do not
+think users would view it that way.
 
-    --[no-]notes[=<notes>]
-                          passed to 'git log'
-    --[no-]diff-merges <style>
-                          passed to 'git log'
-    --[no-]remerge-diff   passed to 'git log'
+Phrasing it with "switch to" may make it easier to handle.  Then
+your previous state would not matter as much.
 
-    These control what text are used to represent each commit and
-    participate in comparison and display.
+    ... and then switch to the named branch or the named commit, or
+    restores the files in the working tree (i.e. overwrites them
+    from different versions).
 
-    --[no-]left-only      only emit output related to the first range
-    --[no-]right-only     only emit output related to the second range
+perhaps.
 
-    These again control how the findings are shown, by omitting some
-    commits from the output.
+> +If there's any ambiguity, Git will treat `<something>` as a branch or
+> +commit, but you can use the double dash `--` to force Git to treat the
+> +parameter as a list of files and/or directories, like this:
+> +
+> +----------
+> +git checkout -- file.txt
+> +----------
 
-So there is no perfectly logical place to place the new option, but
-between diff-merges and remerge-diff somewhat feels a bit odder
-choice than other possible places.
+Good.
 
-Will queue as is.  If some users find the location in the "-h"
-output too odd and disturbing, they can later send in a reordering
-patch on top, but I would think the chosen location is good enough.
-
-As #leftoverbits we might want to
-
- * Group range-diff specific options with OPT_GROUP()
-
- * Instead of having to match the full NxN matrix, perhaps reduce
-   the matrix by keeping the most promising M (which is much smaller
-   than N) for each N, or something?
-
-but that (especially the latter) is totally outside the scope of
-this patch.
-
-Thanks.
-
+>  
+>  EXAMPLES
+>  --------
