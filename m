@@ -1,246 +1,126 @@
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBCD19DF5F
-	for <git@vger.kernel.org>; Fri, 29 Aug 2025 13:00:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C752261B9A
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 13:06:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756472412; cv=none; b=D6voGhRHqtMVWnKvLrtzjXhXuZ20HCkYTspJa7uj6RBCYYLLD9qaOmigIbU85NTxBlv3tt+pponY6FcE3uUCH4GPlbNGFY6l9mC353O6xp+4UNt3sSGd1n2qny9+9mmU3dnzEIQK6pW7K5SUgMQElA9G+krQ7iGbveLaEcQBKvQ=
+	t=1756472764; cv=none; b=lX+pVTK5LmfiC34HijiiSx1gqb6NbOqNSGCikwBlmq7TXYqIUqr/I5aStTLM6M/Hzc369iQtbD/lXBmaU+7wT3StV4+6LYFMBT2755GfxNDoleMECoq7pw+40Z8LALFAzL+Bad6ag+jBNf0gSfODojVKpbVwCY/iI8qHpW/SvBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756472412; c=relaxed/simple;
-	bh=dsExlpa6sFh5MCGKV+2P6wC3clY1mWk8MLjehxVI5Sg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=JtL0+ZGrQcm5Wi8RSL4XptO1L9Ut4FA6Fg3UR1LbTk1Nz/GmKnQk2UK1xyR9JLIRKcxcGEtTrhcqBQxgFfVZEwW/dWtVmpSxXSL6+kQWx84Huh1sSBe2rJ5GgHk3jHuMjpX5F72FtX5U1BeXFI3HLTuyHqpcN+JglogPQnxpchc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YwuqFnMR; arc=none smtp.client-ip=209.85.166.171
+	s=arc-20240116; t=1756472764; c=relaxed/simple;
+	bh=fX6z6kdOer0E5Vucuf3BKYC7CrwexYqU+urN6heMY9c=;
+	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Zi7YoGxX2JUCC1xGqZciLONCxk9GlNe+fg9w4UJZUlX8zQfFmKxJjkNBdTjVl7fjRZegp4S269ni+GsWW29VdWwNXDuidKni7K3TKrtuh1RcWvE3DkyiT6luzF3GJUxWbm0yqHlrWDsU37ANno5szdqBhrZF1UhIdPDHNrnQRCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R+x3hoXI; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YwuqFnMR"
-Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-3ea8b3a64c4so8372855ab.2
-        for <git@vger.kernel.org>; Fri, 29 Aug 2025 06:00:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R+x3hoXI"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-45b7d485173so10181075e9.0
+        for <git@vger.kernel.org>; Fri, 29 Aug 2025 06:06:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756472409; x=1757077209; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hSJB/MITg1eVCOFwuUwHEVUA4dbnnVNjwSWoZTjmT+c=;
-        b=YwuqFnMRzm34Ji6z1Co4mCdrYRISvokG+sXJ6OmkEJITxPwDT3VMhYUZ+XgwpyheEl
-         qqSApEh10K6MG28oMSgVILbsaRRlifPK9LiH9FnQGGyYYzhiYmdij+n5tMpWSkycSESh
-         u5gijQucMLr8qi1Y9W8LgeAUThWmPJDV5ZmXc+dJ1oIrbqOYonRjJ8o2NfmUoHxYZ4F/
-         iD52hX+bCt/ezvr4wv0ouZBUOphEzZxp+ff6ZPIeD9aiN6UF3Z+IIPwOZvcPKm9BIvXI
-         qutLzgQaCKScwmE+f2Pg5ChwZ9rONH2qYfjtresF5SRA8ehwdA0kzW2SCls6Chm44ysy
-         0y8A==
+        d=gmail.com; s=20230601; t=1756472760; x=1757077560; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tyM8WTfd24saRUo2v/SV3CyeFM7A7vHkPkVSo0G4DIs=;
+        b=R+x3hoXIL80iWmCGiUtXoqpugroaR+M40gpLvOaofDzBydLXrHSpx1PCZCUnEENT40
+         XSxdIRdTAyWJzPKiOmEmro4mmP4+A7lYpQmhz2+HFdm+Pb0emdV+AHchCDSlNk855oqt
+         T9reUohw75wZapESjVVKN0lm+Dg6YMdxZXDtBEOTTsvaVu6gMo6lQp8/7U4p7+xDo0iu
+         GkXw4kTJzUARMD4594klD9oy5w0nHPWEXkzKg+BeMAI67ClcBRLSfCxh+DctB9Vdd8zn
+         pnXNuOFYMD6ErkHTWQHUABVBGOfT8YFM+a/AgbVEqV8TnGqwrEi5vvMZ1fGdRsq0XUkk
+         D5yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756472409; x=1757077209;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hSJB/MITg1eVCOFwuUwHEVUA4dbnnVNjwSWoZTjmT+c=;
-        b=SQXXsP8jBSl7NJI8RgWSDdCOXC3yrT0mm70x0993oM1BFC/C4oNpOKM4ngP5eDwPB+
-         Ud7hZqJ3+mupncaGSAw/mwnP4bjRPpBvvpc8jdjr9eHcGMiH05YgDVZiXHMJQPfI4cYz
-         JMaC23dXOsypGYacsZpcIPBXWVG0qKNJv8gpc1YpTjbKRZI9CBQwxJJKU5q8v1adsj6s
-         28XYtzUWnAS4XNJqxH7ogYJ9kqRPtWOuwUnr7XhsuLzWxaH6mSWLgNVELS23F8qlaI29
-         ggXM+Fonbe46rXdjjy7rfnzDxv8XdE3HZ6dJI8ouwzitJ1KKkhnx0kMAnQoiEOgdILJL
-         qPeg==
-X-Gm-Message-State: AOJu0YxUDrKm8xPzC+Ya0RtRFtVKawKzqs+ZScTEenwv2BlWsONk+VjU
-	xfmYZ+qd1SKEKmofYdRm79ffbLrkck+Ou4Wuxv5/1u29086ycFVlfcK9+0DNnw==
-X-Gm-Gg: ASbGncsSfePNuQ1dn0xaT7ESwEjn4CZ6Y/zzfbN1gL2CwIVR2hKb+s9HpEMav1RbJ3F
-	Ej63FYyF3CSX5dC69XGzCuWi8GNT5Zo6Rxu05eXWWNBYA9hGE1gIvv+4FLU8DX1wmSWTb2V//87
-	a+40irRShoscGGslBks81U7TYRzFG/Zp58/H4O0aRCLc3kNBQxtefVDNg7p3UEwG9MczOL4DZEl
-	gW+IbtZoTSTJZc9mWe+VUFGkvLETHphfJYYFbKqMq5I1IWFDoAVo3ioIdrDNflDJoqSrhAGnDoi
-	JkB7oz3wg7enrm2crNYct+IVTpyn33Lcv9N/Ib9pM/ui70iNiPudWDS600bgFGuPVNhfVCkX2Jk
-	IiO55ZzZWibrp8T4mKNnLPzJn6oq5gwbIpkeD
-X-Google-Smtp-Source: AGHT+IFd6q7DqnNUF8NLfdqAYMLEeZucl8lf1VZCGDmERp4z8dB2crY77I5bwdTd20qWiCVrCV3d4w==
-X-Received: by 2002:a05:6e02:3c03:b0:3ec:8541:a5b6 with SMTP id e9e14a558f8ab-3ec8541a786mr305689065ab.25.1756472408161;
-        Fri, 29 Aug 2025 06:00:08 -0700 (PDT)
-Received: from [127.0.0.1] ([135.232.201.37])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50d7be0190esm538051173.12.2025.08.29.06.00.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Aug 2025 06:00:07 -0700 (PDT)
-Message-Id: <pull.2040.v3.git.git.1756472406487.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2040.v2.git.git.1756337312918.gitgitgadget@gmail.com>
-References: <pull.2040.v2.git.git.1756337312918.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 29 Aug 2025 13:00:06 +0000
-Subject: [PATCH v3] alloc: fix dangling pointer in alloc_state cleanup
+        d=1e100.net; s=20230601; t=1756472760; x=1757077560;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tyM8WTfd24saRUo2v/SV3CyeFM7A7vHkPkVSo0G4DIs=;
+        b=ee9JfDJNVZ4uTPidqwrf9CvuY2YQjLliwMEisj9+xnZW94tk8JSFjj/KwTVwIv+JAv
+         CyT7C7ZWtARW8xU1mlLpPnnr1Ed7Fxe7moHzWf9hSzKqsU1T+fsehltL+X+ycLQWaScS
+         jjNGDwcKDGNai8qQQxbxviyIiYfuQL2lQwPhbVmLuswchCMfrdaOR7tUwr57+x/ANiXl
+         nBh1MNdfkAe8vFvK/5zbXihTHTfWiqnlCOTp34V1SukN7Sq7nYKpssYau99GUZ+CDN2o
+         0mslKnlZ/Tebu3K0f5R8tBxPyRftIvm+ozdxxMNZZXoHzdkDh8boyISvNiu7ArAg68eX
+         jPHA==
+X-Forwarded-Encrypted: i=1; AJvYcCVmPFq/+FFaUNvbN8UcyTTC/+1iqqO63J5mrlua9xSRyheUytNUEMjx3LXL5BXSJKxGHkM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBBL5e6uyp2nmPXBCyn3Ve9j+V923QTzBVu5FAHBWq6nKPnD/J
+	wLJ1bOUls7GvAheGCuP4DfIGdbP8p/oKnkbDul64Nkj63ao0YMHoePcZzr7Wnw==
+X-Gm-Gg: ASbGnctkMrxSGLJ5ubd/dCH9MTJ9YkXUAXVfmgBtjvd+wk+JuxGfbLLSrKK9N+x1m3K
+	106VktxEVZ7C9wwRMHIidE2AGZBL92oKwNYnU7d083/ftt3x/2/sxl0TCcDIRd0P8wI+cRYmGVa
+	22zB0gYHCdNKI5atPiT2ep1IqzWJyR20qBJ5OrjXvDgvwk42J9/ZInPwJPSwa/J8hyt5o9E64wm
+	9X5qF0e0MlhOMu6Ekkjn5TRXuLxTGmxv6FTtgbil0ivWHCq/QnpRhZ15LbhYViEDlBFZjnP6g5d
+	589vpu/VfzeY8JvqI0e+3N/sNuk1OBm7BPt9lGHaCRRenQdqNgefuw86V6JZ/3P+NTGx6HnPEzd
+	anVVowmPLVfH20vRSDTG4f0gM0pIj+u1f8Fo+oDF7jKjtCbUt2u7FNiLs0wYLxu2MCGfzFrFggh
+	dT
+X-Google-Smtp-Source: AGHT+IFrsL47RrNgNU68sLHGNUypQqldFRTErAfX4gRP2V+l3aY+qyKhz4+6fzVla4WIT3mV4LLJcw==
+X-Received: by 2002:a05:600c:1386:b0:45b:69c0:1909 with SMTP id 5b1f17b1804b1-45b69c01d6cmr100747805e9.8.1756472760072;
+        Fri, 29 Aug 2025 06:06:00 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7a5:4701:1c1d:4ebf:5a41:64b9? ([2a0a:ef40:7a5:4701:1c1d:4ebf:5a41:64b9])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b83f86c8dsm344765e9.7.2025.08.29.06.05.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Aug 2025 06:05:59 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phil@crinan.ddns.net>
+Message-ID: <0548f4b2-6c36-4958-8725-5c9ac91e31e8@crinan.ddns.net>
+Date: Fri, 29 Aug 2025 14:05:58 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] t/t1517: automate `git subcmd -h` tests outside a
+ repository
+To: "D. Ben Knoble" <ben.knoble@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>, git@vger.kernel.org,
+ gitster@pobox.com, chriscool@tuxfamily.org, christian.couder@gmail.com,
+ me@ttaylorr.com, ps@pks.im
+References: <xmqqcya63cqx.fsf@gitster.g>
+ <20250721115519.140361-1-usmanakinyemi202@gmail.com>
+ <20250721115519.140361-2-usmanakinyemi202@gmail.com>
+ <370f11e1-b335-4111-912c-94429c5018d6@gmail.com>
+ <CALnO6CBbEB=94YsZn8vtjcwYENuMhMdg_wb2RbQunVCxnf53jQ@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CALnO6CBbEB=94YsZn8vtjcwYENuMhMdg_wb2RbQunVCxnf53jQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare <nouraellm@gmail.com>,
-    =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
- <nouraellm@gmail.com>
 
-From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
- <nouraellm@gmail.com>
+Hi Ben
 
-All callers of clear_alloc_state() immediately free what they
-cleared, so currently it does not hurt anybody that the
-alloc_state is left in an unreusable state, but it is an
-error-prone API. Replace it with a new function that clears but
-in addition frees the structure, as well as NULLing the pointer
-that points at it and adjust existing callers.
+On 28/08/2025 14:47, D. Ben Knoble wrote:
+> On Tue, Aug 26, 2025 at 12:04 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>>
+>>> +for cmd in $(git --list-cmds=main)
+>>
+>> This lists all the git commands in $PATH which is causing "make test" to
+>> fail when I run it locally as it is testing all my local "git-*" scripts
+>> most of which apparently fail this test. If there isn't already we
+>> should add a option that lists the commands only in $GIT_EXEC_PATH and
+>> use it here.
+> 
+> That should only happen if you set GIT_TEST_INSTALLED or something,
+> right? Or maybe some even more exotic setup: even with my
+> distro-installed Git, the command doesn't list my git-* scripts in
+> $PATH or installed extensions (like git-when-merged).
 
-While at it, rename allocate_alloc_state() and name the new
-function alloc_state_free_and_null(), to follow more closely the
-function naming convention specified in the CodingGuidelines
-(namely, functions about S are named with S_ prefix and then
-verb).
+Sorry for the confusion, I've just had another look and it turns out I 
+had some rubbish laying around in the root of my repository which was 
+causing the problem.
 
-Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
----
-    alloc: fix dangling pointer in alloc_state cleanup
-    
-    cc: Torsten Bögershausen tboegi@web.de
+>> Also when I run the test with '-i' it does not stop at the first
+>> failure. I'm not sure what's causing that as I thought
+>> test_expect_success should exit on failure even when it is called in a loop.
+> 
+> That's odd: when I make some modifications that cause a failure and
+> run with "-i," it does stop early. Hm.
+> 
+> Thanks for looking carefully! I'm personally having a hard time
+> reproducing the issue though :/
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2040%2Fnouraellm%2Ffix-dangling-pointer-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2040/nouraellm/fix-dangling-pointer-v3
-Pull-Request: https://github.com/git/git/pull/2040
+Hmm, I'm not sure what was happening, at the time it looked like the 
+loop was continuing but I can't reproduce it either now.
 
-Range-diff vs v2:
+Thanks for taking a look and sorry for the noise
 
- 1:  0b980850bd ! 1:  c521b44adb alloc: fix dangling pointer in alloc_state cleanup
-     @@ Metadata
-       ## Commit message ##
-          alloc: fix dangling pointer in alloc_state cleanup
-      
-     -    clear_alloc_state() freed all slabs and nulled the slabs pointer but
-     -    left slab_alloc, nr, and p unchanged. If the alloc_state is reused,
-     -    ALLOC_GROW() can wrongly assume that the slab array is already
-     -    allocated because slab_alloc still holds a stale nonzero capacity.
-     -    In that case s->slabs remains NULL and the next dereference writes
-     -    through a NULL pointer, causing undefined behavior.
-     +    All callers of clear_alloc_state() immediately free what they
-     +    cleared, so currently it does not hurt anybody that the
-     +    alloc_state is left in an unreusable state, but it is an
-     +    error-prone API. Replace it with a new function that clears but
-     +    in addition frees the structure, as well as NULLing the pointer
-     +    that points at it and adjust existing callers.
-      
-     -    To fix this, this patch:
-     -
-     -    - Renames allocate_alloc_state() → alloc_state_alloc().
-     -    - Replaces the “just clear” API with
-     -      alloc_state_free_and_null(struct alloc_state **s_),
-     -      which frees all slabs and the alloc_state itself,
-     -      and then nulls the caller’s pointer.
-     -    - Updates call sites to use the new helpers and drops
-     -      redundant FREE_AND_NULL() calls.
-     -
-     -    This makes the alloc_state lifecycle API harder to misuse,
-     -    eliminates stale-capacity state,
-     -    and aligns naming with project conventions.
-     +    While at it, rename allocate_alloc_state() and name the new
-     +    function alloc_state_free_and_null(), to follow more closely the
-     +    function naming convention specified in the CodingGuidelines
-     +    (namely, functions about S are named with S_ prefix and then
-     +    verb).
-      
-          Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
-      
-
-
- alloc.c  |  9 +++++++--
- alloc.h  |  4 ++--
- object.c | 26 ++++++++++----------------
- 3 files changed, 19 insertions(+), 20 deletions(-)
-
-diff --git a/alloc.c b/alloc.c
-index 377e80f5dd..c1065551c0 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -36,19 +36,24 @@ struct alloc_state {
- 	int slab_nr, slab_alloc;
- };
- 
--struct alloc_state *allocate_alloc_state(void)
-+struct alloc_state *alloc_state_alloc(void)
- {
- 	return xcalloc(1, sizeof(struct alloc_state));
- }
- 
--void clear_alloc_state(struct alloc_state *s)
-+void alloc_state_free_and_null(struct alloc_state **s_)
- {
-+	struct alloc_state *s = *s_;
-+
-+	if (!s_ || !*s_) return;
-+
- 	while (s->slab_nr > 0) {
- 		s->slab_nr--;
- 		free(s->slabs[s->slab_nr]);
- 	}
- 
- 	FREE_AND_NULL(s->slabs);
-+	FREE_AND_NULL(*s_);
- }
- 
- static inline void *alloc_node(struct alloc_state *s, size_t node_size)
-diff --git a/alloc.h b/alloc.h
-index 3f4a0ad310..87a47a9709 100644
---- a/alloc.h
-+++ b/alloc.h
-@@ -14,7 +14,7 @@ void *alloc_commit_node(struct repository *r);
- void *alloc_tag_node(struct repository *r);
- void *alloc_object_node(struct repository *r);
- 
--struct alloc_state *allocate_alloc_state(void);
--void clear_alloc_state(struct alloc_state *s);
-+struct alloc_state *alloc_state_alloc(void);
-+void alloc_state_free_and_null(struct alloc_state **s_);
- 
- #endif
-diff --git a/object.c b/object.c
-index c1553ee433..986114a6db 100644
---- a/object.c
-+++ b/object.c
-@@ -517,12 +517,11 @@ struct parsed_object_pool *parsed_object_pool_new(struct repository *repo)
- 	memset(o, 0, sizeof(*o));
- 
- 	o->repo = repo;
--	o->blob_state = allocate_alloc_state();
--	o->tree_state = allocate_alloc_state();
--	o->commit_state = allocate_alloc_state();
--	o->tag_state = allocate_alloc_state();
--	o->object_state = allocate_alloc_state();
--
-+	o->blob_state = alloc_state_alloc();
-+	o->tree_state = alloc_state_alloc();
-+	o->commit_state = alloc_state_alloc();
-+	o->tag_state = alloc_state_alloc();
-+	o->object_state = alloc_state_alloc();
- 	o->is_shallow = -1;
- 	CALLOC_ARRAY(o->shallow_stat, 1);
- 
-@@ -573,16 +572,11 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
- 	o->buffer_slab = NULL;
- 
- 	parsed_object_pool_reset_commit_grafts(o);
--	clear_alloc_state(o->blob_state);
--	clear_alloc_state(o->tree_state);
--	clear_alloc_state(o->commit_state);
--	clear_alloc_state(o->tag_state);
--	clear_alloc_state(o->object_state);
-+	alloc_state_free_and_null(&o->blob_state);
-+	alloc_state_free_and_null(&o->tree_state);
-+	alloc_state_free_and_null(&o->commit_state);
-+	alloc_state_free_and_null(&o->tag_state);
-+	alloc_state_free_and_null(&o->object_state);
- 	stat_validity_clear(o->shallow_stat);
--	FREE_AND_NULL(o->blob_state);
--	FREE_AND_NULL(o->tree_state);
--	FREE_AND_NULL(o->commit_state);
--	FREE_AND_NULL(o->tag_state);
--	FREE_AND_NULL(o->object_state);
- 	FREE_AND_NULL(o->shallow_stat);
- }
-
-base-commit: f814da676ae46aac5be0a98b99373a76dee6cedb
--- 
-gitgitgadget
+Phillip
