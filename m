@@ -1,118 +1,96 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F0923C507
-	for <git@vger.kernel.org>; Thu, 28 Aug 2025 23:44:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D5B79CD
+	for <git@vger.kernel.org>; Fri, 29 Aug 2025 00:15:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756424663; cv=none; b=WVubIFlBhh3zzI8HqrJGkzpuAm3jD9f+v6KFaGo1rrtzY1zmqP46MIP7OUUH85RBRNWepotmWR3ugsQnhplQvON6YOysQ1cBoQ1NE3khgpWuUM3Tje3o5N88oajymNtNaweOlZOpPwQxmQC/WZK/e+UNjcaVofz5yUmBqjqYKUo=
+	t=1756426527; cv=none; b=hd93KeSnBUgfQGaZCds3HWlpvzDyLOFhMp1w72G+dvrd3xjX4lQ34lnjgq5tRmetr5LJX4m1+X8baZTUUN9cu6xfhW+eWL0hm/p+5n6zIh8Dmjww46gw1PI1OgPntDC3Gk85RmkQIdHVKC8wUocQvh9yH1QEExerklUC9Lf58Jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756424663; c=relaxed/simple;
-	bh=+eHE71D0hZjFPdaFsAyP0lFyNn+ut1eNVl5/0waiY9E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=P80DI4otjJc3p2CkQTQGOXD9u30qITWdnwRvDVFXZB3CWwl43OG+riVhoS/6qdv6lAhqG7q+W7Tc2IESDKL8PkIfAGBIxaHpc+XM8edCrGpat/l9F+mMDSkHbCvZ4kdNhaq1SDJz8thqN4HJs+/DsQbuaY+o3M+XBhUaeaYD/+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=0aFg0HBz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WfCrB814; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756426527; c=relaxed/simple;
+	bh=PrqF0CteG81x8clf4Wq2DzPityX52MJMIDBhfbOON0Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V5edLPIHd2QHXJ/1zj3+NyUqSSYZKL9va7yLeSdTG4brzAK04J8isP4yZ11g+FGuiAMaxosqSjJVTcdSL3pfKj8U0iCobWgnrGmWSG6jwO292bp79yFVG6OkTbileZI8aZIbV44H8FPV6RFlrZJXsMzmuTR87YsV9ZijZiz2cH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jVk8SWC0; arc=none smtp.client-ip=209.85.166.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="0aFg0HBz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WfCrB814"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 295CA7A01B0;
-	Thu, 28 Aug 2025 19:44:19 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 28 Aug 2025 19:44:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756424657; x=1756511057; bh=jtgBh4POh8
-	nsusIEKhuKrU+ypX89QHySy6vdanUIBb0=; b=0aFg0HBzJrdDFGPukSc9cIu9DY
-	sKDJCUswRv/M5Y/h49ipuq8kFTbf3HeWztNOecRN+CT0eBYzoy5DIjMJzTfZud5g
-	4/u+rGztknYnpt3Kxrmn7guDmuPZmFPfoZMzpWB+JuBadpNRgz/Le5eZg//OUX9o
-	HO9imvsieZ2cjsQkT5hiFDgS+bRTk/sIx35fJqPWDB+3FI2DqGvXF2hVsjPHMQJP
-	PFrQ6j0GL+7w5RAcEZNqlUKUhqVWch57CACo7nXDUhy7WpmSlm3hTq5qRVvNfgk6
-	1cwQt2WnDaRTAKrK67zpBw7j4rolE3F8z/OvvE1mpCpJhjC9LaN/tbIhMxDQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756424657; x=1756511057; bh=jtgBh4POh8nsusIEKhuKrU+ypX89QHySy6v
-	danUIBb0=; b=WfCrB8141YTLiIx04g1fhtWxRRnbmZTO9rsdh+UsiNIanSyj+EI
-	+TZ+dWKw0upxSoHGou8nXTGlhShHNNqiOc9m0Kkz8CtQbmiFFmy8HvUnORNFNy0U
-	LndhVF9UFtzrN8Z8Ajl0nh9+GP773mO8w7E9ZuI3TPHIvD4IWIqzOef6Yy1RQd1R
-	XeokzZ/uv4XyHgF+YRjpGKULn7Wpz4cVn86Y//Fmx6ZcjA8Xh2IEHls8lXleSIHa
-	ztqUaiTJtQcXg6V0McwtxBQ+vi+Loi7ehJP0v/f4ypx4T1ffEwDpFhyExc96N1iy
-	NA5YKCmLE/1rMbwNmeTVNkfzlAt5oGIAA0A==
-X-ME-Sender: <xms:0emwaMq0RzNQcBL2mhfp0Eap5GASxcTetiFFTUU2DeQ27AVpF-R14w>
-    <xme:0emwaOIIQLuTGp6Gtk8opItCsPxnngbA37J90lwHqChq8VyCeCAcgzIDDa59r-yzV
-    9KvBXXvaa8my_Qagw>
-X-ME-Received: <xmr:0emwaHr-N_Qbuvj2JrHB7a-dHucYavXmpxnz7sCF4x_wgggNMhPl3Umx8w7jLU2jywUMrK-CUSYVhVVUX-6b8GAq11e1iPKJi8MgAYg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukedvfeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
-    gsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhg
-    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:0emwaOyyBuSUhKGYD3vYzEgQzzWZNoxOeOHKuJfix66cGSERF4cJ-Q>
-    <xmx:0emwaDOQJrmkgGdgKEaxwUCfCsSLdXP6hXhrSWWXUqCkzkJRl8kMOQ>
-    <xmx:0emwaL5_Nvpk34_V7QFpVgKE4MEhgZCaIQVOBAbxrNUE1z3Rc12xYQ>
-    <xmx:0emwaElZkv6H-39SGrHza1oAcyWWVKwdeK9SGRlyrHD3x2p1tfpDMw>
-    <xmx:0emwaGJTLb3U4GRftwOndmKoa_nHhzUDbUORMNr_5B0oiM3SgIFNAX29>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Aug 2025 19:44:17 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  "Julia Evans"
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/5] doc: git-checkout: clarify intro
-In-Reply-To: <f440d0e4-0754-49a0-9677-980f60a5dbf5@app.fastmail.com> (Julia
-	Evans's message of "Thu, 28 Aug 2025 18:34:23 -0400")
-References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
-	<a6125a0128937392af283033e63d2b04776caf2c.1756148933.git.gitgitgadget@gmail.com>
-	<CALnO6CCvD-uoan=-VW+OmfCk5cLgNm=zENAejL9vX2czahMGxg@mail.gmail.com>
-	<f440d0e4-0754-49a0-9677-980f60a5dbf5@app.fastmail.com>
-Date: Thu, 28 Aug 2025 16:44:16 -0700
-Message-ID: <xmqqa53jqaen.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jVk8SWC0"
+Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-3f29ebce11fso1485895ab.3
+        for <git@vger.kernel.org>; Thu, 28 Aug 2025 17:15:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756426525; x=1757031325; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Gi6Hw1DBJ7u78axnQeRzGa9IRaSnFTKR7FrmYYXyIjg=;
+        b=jVk8SWC0w+prdiOo9JlCLx9wYU6aJubE9vf2tDpegW74mhrOq81KqzwtHABWrVspBy
+         /nz/bnuLkYPKI8+8qodNw9EByx49Dcse7pVeNIpnyNL25Tn+e91YVrhDKHT6nGfJOCiq
+         Hdd2q2fOSk+E+FF1evmqswsfmc6kJOsZ07FAL38IK7LlhWCUrrNEayrMlercWvL6n1Vj
+         FkDgjzjtUI7dsdp9/TT2hnsTKCH5ZizBsWj3fuN9/vsT5fes1zjQtU82gtGjMXskP0Nv
+         5QtRCPGvbJiPxniKR/nDQUNm96WJ4ZsEHsFOa79FLF/6WvqvFm71mt5T1vZnu7SrrrdZ
+         FIZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756426525; x=1757031325;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Gi6Hw1DBJ7u78axnQeRzGa9IRaSnFTKR7FrmYYXyIjg=;
+        b=Dhg/TOMvZ8sSUAeDymC/NRkkrOnDGgDTh0UL/fXBQdKl6CyFLiU2dlG+zMeB4kWZ9P
+         N9heQBIg5qQLl2OzLbjbsdg/g82+pLgN7IXbHY7QfLNIQZmeS+Hl5SMCrgN4NQCXoSai
+         OkInwby+mShNpsaXBEaCzuBOTjGPkFBtCLFGJ0pFO9z2RmNFotTmb0xpXnfcaik3gtK1
+         ZW0gTKlqyvcy3cCHplea1KzhvmJrAlTn+3WKR3do9C5cgbxq8nl4w1Ng5RpYWEy+dlZJ
+         4ASS9picyt0DRg9+1VhJ4lZOpEUo10qbxEip/o2nduLG1qGRsiQ6COCPJqviqUUgV8iv
+         xMJA==
+X-Forwarded-Encrypted: i=1; AJvYcCWkZQFWcAeBp12wpZmw358nTxR6lqrXRnEX9WacKn7FD4zHlZQffIC2Ge3v3zglhC6bbpY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwL+Cq3D/Ss8KAhDyDXMtUSe2JZDeE7HkQfEQwM0U9h+s+sSte+
+	ZWdcuOzsSX4FosUgi2YL90a4L2im8zuvuklCy8g9s2eI0ZE8ENVkH/FYUp3/FtpqwiuMSYJGuLT
+	ly9eOjimX/6GhIq4Xg1sc4YOt6YESjz0=
+X-Gm-Gg: ASbGncts06IHst9JRWDaK9XKlRfwC8c/vdmSA2NUl38uOsQcrJ/hvVLGTWWTPFLIKCE
+	t9zY8KlOFggGDGtFHE0FWRG5ITkrez6GDZUyE+Gsj17sWmN1fdOMgEarq/GPCZfFI8beMm4WpPV
+	irVg5YrWBtKHNKGqpX7tYao2E2jIC3F7wqaTFULJwJlDZohr0RLcyn0ML/28quXWSUGd2j5QVI+
+	W8Cjqv1oV08cZ6fKiDqXhGrAZ/AAvbFgHg/D9lUbdq7IKV/JXs=
+X-Google-Smtp-Source: AGHT+IG5I+57ARMoTM7ejspHoUiB7S/PqEI7bmiggKBWmg4KZESlPsZ5fscmfWU5OxAt1FtRF4UFAb8aC7kUXBxNfGM=
+X-Received: by 2002:a05:6e02:214c:b0:3e5:42ec:1352 with SMTP id
+ e9e14a558f8ab-3e91fc24c59mr319905805ab.4.1756426525374; Thu, 28 Aug 2025
+ 17:15:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
+ <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com> <xmqqzfbjqbfo.fsf@gitster.g>
+In-Reply-To: <xmqqzfbjqbfo.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 28 Aug 2025 17:15:14 -0700
+X-Gm-Features: Ac12FXxevemtdqT1tRuzpRVEFtF2BmYWY2nOEg0AJKGqLA3Vrk4ls535NuGQJM0
+Message-ID: <CABPp-BH=tk3eenHJkbRcD8uLGuakNMT5GkjVt6WfmOO8P+xq7A@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] sparse-checkout: add 'clean' command
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Julia Evans" <julia@jvns.ca> writes:
-
->> I think we've dropped the bit about the default interpretation of "git
->> checkout <something>". Maybe
->>
->>     When you run `git checkout <something>`, Git tries to guess whether
->>     `<something>` is intended to be a branch, a commit, or a set of file(s),
->>     and then switches branches, switches commits, or restores the files.
->>
->>     By default, Git interprets `<something>` as a _<tree-ish>_.
->>     [explain what choosing a tree-ish means for the user?]
->>
->>     [Your notes on disambiguation as before]
+On Thu, Aug 28, 2025 at 4:22=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Thanks, will fix. Though I don't think it's accurate that
-> Git will treat <something> as a <tree-ish> in this context, since
-> `git checkout <tree>` is not valid. Will find a different wording.
-> (I get "fatal: Cannot switch branch to a non-commit")
+> This seems to have a few comments that haven't been responded to
+> (plus a "This step looks good to me" or two).  Can we get it unstuck
+> soonish?  The topic is from mid July and I do not like to hold topics
+> in 'seen' for longer than a month without any activity.
 
-True.  "git checkout foo" is disambiguated by seeing if 'foo' can be
-interpreted as a commit-ish, and if not, if there is a path 'foo' in
-the working tree.  Otherwise we'd get an ambiguity error.  A commit-ish
-that is nameed by giving a branch name and other commit-ish then trigger
-a bit different codepaths (the former results in checking out a branch,
-the latter detached HEAD).
+Stolee built this series on top of Ayush's topic to avoid conflicts
+for you, and he said
+(https://lore.kernel.org/git/c3c0fbef-f395-4972-8352-dd89af6799d5@gmail.com=
+/)
+that since you marked this as blocking on Ayush's topic, he didn't
+want to update until that topic moved.
 
+Do you want to instead kick Ayush's topic out and have Stolee rebase
+to no longer be on top of Ayush's, and have Ayush rebase anything he
+might do on top of Stolee's work?  (See also Ayush's recent update at
+https://lore.kernel.org/git/CAE7as+ZpEwiNsDAozoZXqHRLOF3+hT++uo=3DmzZqEvTPo=
+vQN9uw@mail.gmail.com/)
