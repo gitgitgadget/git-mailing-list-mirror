@@ -1,101 +1,110 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FFD2367A0
-	for <git@vger.kernel.org>; Sat, 30 Aug 2025 05:04:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D781258EF6
+	for <git@vger.kernel.org>; Sat, 30 Aug 2025 11:31:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756530257; cv=none; b=PBiV2nzNiy1gDXeb2u65v41H28mgY1+drH/CBOBeHyup7z1CnPkFY+r1vaZUnaVPrHnLZn0ZAdTNPS5YjtqPCmxo8xvoOPJWI6rsN8NBTwV4tfZmTKtKIjF0LPGWmX6ugUGmB9G4ma5a+ow553lT0iIHrNjgWJfPR4fYe2LNWLc=
+	t=1756553500; cv=none; b=FPaNeqwmWUUs/eVyolQ7KpxYRmuOy1rFPajALgrb4Ny3RnISEvgC3TcAhVYZ2pZXDI3ccKg1QvZ5ZHEEGVxn/cXoX036pxKF5AIoghqnB33bmOaqAwqFoVKQQOTlIzsRrOm3um7pfFsf+yzR6tqzOKUg4YBSWASJPZiqdy/Di8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756530257; c=relaxed/simple;
-	bh=xjgpT4xdS4HoRlwxGGWqDCuRo4jucR6RWksbjoLrMTM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o6dPI22fuE297BB8aU0v0dkFJnTnoNI9RNqsA+fA2mFade/MJoapcfDFIAkQ9ayMwnmWI15iIjX5wM8yFfCSk8mrCGU6yJK8F8Y50nFEwSESQyXiGxP9pfwf0/fpey5xtK3Rjs+LKQJlDkL5DUyxB5YiSHG3MLn6vhqdenSoPl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MNGudeyb; arc=none smtp.client-ip=209.85.210.181
+	s=arc-20240116; t=1756553500; c=relaxed/simple;
+	bh=/Vi9KpqWFO2teVk3ZHtWK+rsCFtp7SwdjtAFUAqU2b4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=m6laFjGzU8d3PE3Injm75FuI5RKiuPlBxIFXApbO4vwc39jeJrUGG3C3jc9k4fQRDeUSeKVJztV5XMwvtryLva81p2mGMHXw2BYWmekDZoiKnBhPtF3NsN2KRUOCS9A+0Pip5BRW6HnVe06HTCKeBtm/9bdFYNc8r22oK0Qwm+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jpu3Z1Th; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MNGudeyb"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-76e4fc419a9so2897411b3a.0
-        for <git@vger.kernel.org>; Fri, 29 Aug 2025 22:04:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jpu3Z1Th"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7f861f89313so269563285a.1
+        for <git@vger.kernel.org>; Sat, 30 Aug 2025 04:31:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756530251; x=1757135051; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bjGTtM8+2S5SrqOnceFJklgq4sIB4nNnfrBHPY4fUDU=;
-        b=MNGudeybCGI2FmGxd0xC7T62Q6w0x6F2lFP2CY8fd/EiYIYzx6K0jtvSNmRarI6LfQ
-         bayQkcXtI3H+3BHHOalUOV62wL09NzyGAbDDaLSjwtOEkiay/Jf4ff1bPSrzheTEL1+h
-         DLMyRxiJuUtQX1qhPmZPmD+r5hqiBhsdio/V6LK3Kh1ohbnX++LctUGlL8OH4SPVG44M
-         qHvaJ773YubuKcGM5VUQfp4++A1m8tP1GZkLvzlEc8C5oZjZzKTU+J6/zpQ9VRgAguaN
-         ojKhzBYrchADhTHUzqUMV47K+Mm2yEK+irWnhFVk0RdUU+cIIqIG+PmwzjwHu2yBSTa2
-         Khag==
+        d=gmail.com; s=20230601; t=1756553497; x=1757158297; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=u9K8RTaYrgTMFZzQ23BU14/4fXbrwesK9ztURcf/3wQ=;
+        b=jpu3Z1ThAJbV92CiuVicoc22c6hx8gXXlzFKTK+sIzkN8klRISRVTOFXlUGNCm9ZXY
+         3mNufohYIY9NTKVIPXsfBNOE5nDg10RIa9R2htPdn78OgWztM9lEdaTzUnS9CuNIaDQk
+         pU5nkXiPKnumgOgUhoytVB8SlP0XQIEj7cytegQugiE6FP3d+sQjqHthSo/deWQyBru7
+         O0MvlZLbcWKMKxamPWlqOE8rRf9Z3IzPi2kQd9yQg7jRa0FbtEu9KuHO0uZ+7faF+uyb
+         1XkwOluR01mjr9ylVU7JN/uqd3/zBOnN0BkgXKGWnWYrqNGaiwufQ7dwnbVJlg4rcO25
+         lujQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756530251; x=1757135051;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bjGTtM8+2S5SrqOnceFJklgq4sIB4nNnfrBHPY4fUDU=;
-        b=aSvnfIiGxO9UgbTuAQvseK8btfbGOky6ctXdW4LZfMNUkJ4qFMmyGe8+hBmr0Y9nsD
-         xmw3i9eiMnLHS2LoM4d8jaIT8nY2mCHQOflnvyaoTcQqS9q+NchJkp75xKhDA7d8UWu0
-         9Z/MV5AYY61m57D6OYl4IGY3mv4d6dBvrd1scMhXOamxR3zucYTwNFIekpYwEDkIDlio
-         vDaj6lptFWJnkOLSeTimwIyvqA0fjqSTHqE52fZCmZNle11b5xlpC6SSf/d+JD+Jk86B
-         9Nn1tSAeU44GASUq+s9i7nwnE3FmL70VJnG/oG+j2eMBqm0HoDiYIrbwRvSaHaqZDNeh
-         Pamw==
-X-Gm-Message-State: AOJu0YxfpY3qwDZbrAWM4xrwYnIO4G4XJgtgm8CIYqihucswBhy0jrgz
-	cXg5UxxojISwsWZTV+4WgPMGc7H2OX+SUTR03X/l7fuxxam+YQy9RkBt8IJvIg==
-X-Gm-Gg: ASbGncu2zH8rdS5pnp9mbY3Lw9gP3ySzjdxVJNDpM3ugGkvqfvMy3CkAuQHXnzd1NIf
-	JtDNwoR/P8vrVAhU/q7uI8+h2z+2Dl7C+HwDMy7/Dgn97q65izV8inrrOS9XVw65+u7w2Kr52NG
-	958ZFS1ul61n+hxesenKwiRxoOPUslp+niYDM6TXL70QOTFSlaWO3YBzs2NnFpBgrKWi5ASjrth
-	CbpprCRHh9CK8FAQE4LOLsZ1MKDCHmpb0Id9TOP0aIFc4zZhwdzuqwCqA0CVYsGxfNRKQKHSV6A
-	6lTD2Pp9Uwli3xlsviX4Mid7N1y8zMBws2tNOybf2cPeAtfQbhQ/qkKD3anTat4BOxzVYoFY+56
-	C9XATf1DU6iKRke1evg==
-X-Google-Smtp-Source: AGHT+IE8I3AyF8OpB8Ib5P0PSezlB7tkcmM+dVqqM9EbOdt3fiof2EJ5F3iRBpYF8t7F7BR95jyHsA==
-X-Received: by 2002:a05:6a00:a29:b0:76e:885a:c33a with SMTP id d2e1a72fcca58-7723e3efc04mr1537216b3a.32.1756530251364;
-        Fri, 29 Aug 2025 22:04:11 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7722a4bd1ccsm3962512b3a.47.2025.08.29.22.04.09
+        d=1e100.net; s=20230601; t=1756553497; x=1757158297;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u9K8RTaYrgTMFZzQ23BU14/4fXbrwesK9ztURcf/3wQ=;
+        b=NY37Q9H2HYIdPHuqNEkDGJkunCkCsWckdPlyRnp5V1r7hW1oqwsFz/Ycfs7XgJvnCd
+         H45sSNP0mPs8G6NFtFj/7cXLXXP1fQCNUH33usUcE3ouFCjVoExpRp/mv4Kp2m55ZfID
+         Lrxcqx/wDGrWfV6ccnXTgZO+VAvlWijuIJxso0MIW3WYFYitpk3dPrwLPJv6pwlFojhe
+         bIrZW4GvBseGCOvMcel5ouMDA2cPn1afagNs/6hFfkGgmODKU0CbgqkeRR7ZpjknN4Gg
+         Coinl+X7Wxf5rFQl3JXGPBLU8ZZszbJcXbJhivpKz64mK4SL4NGEaHybhVm117x3q15O
+         60Cw==
+X-Gm-Message-State: AOJu0YzSt7HwWDGJki77Pf6kmZXeOcvR4NtKnYiRJip1ZK1V/bFV0OSY
+	ZsRoiXir9jn8AGFEgWawJUe0PAckMjZIYKOp1A2ML+6KOvHVqA76RLrD7oDAwQ==
+X-Gm-Gg: ASbGncsOU+ftan3ymTbl1TUB+2uA4loxw38nIsP+zEARsZvHWfcEl/SRsZqjAaZ5Fwt
+	b4iZD1rjS8ZKph/YPQBz1kEwL1NVYtFUg7oXNIg6+FVy2ndsRsfJREPxo27z2eTYhlPtezzVqjf
+	SkPWELvaHSd5Oc9xw0e55r5GzErZdwaI377XD+nLRBb/YfD/TYJySBauxAbIIrWJaNFMRK3Ut3X
+	oqzd8HJJfX6NyVVAoI9hjK56Y8A93x9Zoeu//A45uTIoJI22DXN4BOmFL+xfUb4rM2VoaBBAFK5
+	Ke5+h13wBNcQV+ngG9PfA36kvFYVhMxIkmkHotdUazInKwd1tUyyO3qnXn/oYGpGoetik/C8rQW
+	i1AZZU77jw8DPdEI2nJodePixYc5YdrLxWw==
+X-Google-Smtp-Source: AGHT+IGLw+7+4kViqt9mDXAEcQFPa41vw5XVkh/GujFMp4xeyh9v0LiYsDrV9btAB1wCz3FoAjDzuA==
+X-Received: by 2002:a05:620a:1a99:b0:7fa:a4fd:6f45 with SMTP id af79cd13be357-7ff2aa22387mr196688085a.45.1756553496635;
+        Sat, 30 Aug 2025 04:31:36 -0700 (PDT)
+Received: from [127.0.0.1] ([9.234.151.19])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7fc14849559sm340498985a.41.2025.08.30.04.31.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Aug 2025 22:04:10 -0700 (PDT)
-Date: Sat, 30 Aug 2025 13:04:13 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Contributor's Summit updates
-Message-ID: <aLKGTQljGZ2cmOan@ArchLinux>
-References: <aLDEPRnXqazmxwzq@nand.local>
+        Sat, 30 Aug 2025 04:31:36 -0700 (PDT)
+Message-Id: <pull.2044.git.git.1756553495661.gitgitgadget@gmail.com>
+From: "Seonghyeon Cho =?UTF-8?Q?=28=EC=A1=B0=EC=84=B1=ED=98=84=29?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 30 Aug 2025 11:31:35 +0000
+Subject: [PATCH] add-interactive: reject malformed numerical input
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aLDEPRnXqazmxwzq@nand.local>
+To: git@vger.kernel.org
+Cc: Seonghyeon Cho =?UTF-8?Q?=28=EC=A1=B0=EC=84=B1=ED=98=84=29?= <seonghyeoncho96@gmail.com>,
+    Seonghyeon Cho <seonghyeoncho96@gmail.com>
 
-On Thu, Aug 28, 2025 at 05:03:57PM -0400, Taylor Blau wrote:
-> Hi again,
-> 
-> Following up on my earlier announcements[1, 2], I have some more details
-> for the Contributor Summit at Git Merge this year:
-> 
->   When:  September 30th, 11am-4pm(ish) PDT (UTC-7)
->   Where: GitHub HQ, 88 Colin P Kelly Jr St, San Francisco, CA 94107
->   What:  Contributor's Summit
->   Who:   Git contributors (more below)
-> 
-> If you haven't yet registered for the Contributor's Summit (whether or
-> not you are planning on attending in person), you can do so using the
-> following link:
-> 
->     https://git-merge-2025.eventbrite.com/
-> 
-> In order to grab tickets for the Contributor's Summit, **you'll have to
-> enter in the special code "git-20-25" to expose that as an add-on**.
-> 
+From: Seonghyeon Cho <seonghyeoncho96@gmail.com>
 
-If I understand correctly here, I'd want to join the Contributor's
-Summit remotely, the only thing I need to do is get a free remote pass?
+The list-and-choose interface accepts malformed input such as "2m3" and
+interprets it as "2-", silently selecting a range to the end. This is
+misleading and makes it easy to select unintended items.
 
-Thanks,
-Jialuo
+Reject such input by treating it as invalid.
+
+Signed-off-by: Seonghyeon Cho <seonghyeoncho96@gmail.com>
+---
+    add-interactive: reject malformed numerical input
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2044%2Fsh-cho%2Freject-malformed-input-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2044/sh-cho/reject-malformed-input-v1
+Pull-Request: https://github.com/git/git/pull/2044
+
+ add-interactive.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/add-interactive.c b/add-interactive.c
+index 3e692b47ec..86ff632288 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -396,6 +396,8 @@ static ssize_t list_and_choose(struct add_i_state *s,
+ 					if (endp != p + sep)
+ 						from = -1;
+ 				}
++				else
++					from = -1;
+ 			}
+ 
+ 			if (p[sep])
+
+base-commit: 6ad802182101d622e6a4132f48292ddfa79e2024
+-- 
+gitgitgadget
