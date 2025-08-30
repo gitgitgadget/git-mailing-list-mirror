@@ -1,68 +1,69 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2E513774D
-	for <git@vger.kernel.org>; Sat, 30 Aug 2025 21:23:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50232441B8
+	for <git@vger.kernel.org>; Sat, 30 Aug 2025 21:23:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756589013; cv=none; b=S2b/sJuHo0u08wCzyC4pXEWNsSe6h2P4QclsSKP1ezm8+rYUFcsEec0ctAKsYf9YqHQo8GCFVJxjUTTgve3XvTjFN/3g0Qp5AYZoAMTP3YOR4wW5oLguLhJEXf/CaHRtJfbDgVB9jbVqCq7C3iXOp7r/owN0fGPRer8Hexdald8=
+	t=1756589014; cv=none; b=Lez08251Pm/X5cbClTBkbR3tYJJntop9Wx8mwU7vBb3CMUf+8xvZqz7qXbZ3ykS8yE1mIZuiCtSfF9714H8eMgGsZa7t4789If65TRShmkoFvrxXM7Mnhhso5ppqwUei7RoUvbcxRFYVy9Q5RzW5WB/iaIYOg/1epE/lF9EH3a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756589013; c=relaxed/simple;
-	bh=cfIHQkW42hbL+YquUSxjazwJv9eIFXD7H7MzE1ZL1SY=;
+	s=arc-20240116; t=1756589014; c=relaxed/simple;
+	bh=GG5IuBWmdsEXRipfC5+/rodcOziicIznKokAFjacaD8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kR7XfYznkTsGurEUkcPeBNL9GwjLtWqO8shCESwPDgafFN9rlZYc5RbNAg2JXWBgElyAlgD+ToGwEPBnVog3ZpogK5W8oB+Oum5i+cQX6HIxUfqmpzuYY+SxT1i+epOACWEOsJ9Z0feTQdII1+z9JhYZ9Y6G2ACOBTaRMX7Qedo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L59A4Tqb; arc=none smtp.client-ip=209.85.160.181
+	 MIME-Version:To:Cc; b=JVMjD2edNDEqtzEV4RqJLeLYjsN38oyWiIYXuptNsZbi/e4ksbgIb9KXejSrgxKCCDySyNUyo+mhOBLS4QPTIT/dq7cQlDkQJUGO/ZGNXLoKxPM3ewxyBF1lSAg/wfFRxljFjkJzkelr4H/ts8poobtAhRFE/141l6YE5YPh05M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D7i5P2N9; arc=none smtp.client-ip=209.85.160.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L59A4Tqb"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-4b30f73ca43so13973681cf.3
-        for <git@vger.kernel.org>; Sat, 30 Aug 2025 14:23:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D7i5P2N9"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4b310f0449bso11389111cf.2
+        for <git@vger.kernel.org>; Sat, 30 Aug 2025 14:23:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756589010; x=1757193810; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756589011; x=1757193811; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5R9qK7o/lAPezkrK6tWt/6PQtOuwLj0RXySupD86K0I=;
-        b=L59A4TqbBYhi7k4Z1jRhzAW8H9ilAnfFD3oxI7qhDXrY184+oFZjL8FmEEdNLGcRWJ
-         KTfI31ggKU99QSFrDMmWC984Dn0PEQ9NX5QWHUqEv5EkOWBDfl/XGQ48mJ/NRkzOV2ja
-         XmevoTuHYkX9spog3Rh9codNQNv9PS0v1DoOJwav7FbJ2qenCoPwk+G3okRBCd4lKYEW
-         sJ3wyYptIbejGod30rddjWma1BU5VR56QdQDGJu0I2Zo6J1akkFC/3vZAE/+27V0c8y9
-         fYq628kP2XCcpbT0ZD2Iij9H2m7HgOrrpl0b/ZzZfskXQxqaRpwUFdLzZ3BGn21my4CT
-         QSfw==
+        bh=85LlYTbhtDvt39WSHiofncoxI6MxNrlwL8j4cQMBoAU=;
+        b=D7i5P2N9o1S3TWr64317TI6IjHXsYqMqQsWXEgPacLEU29/oXGteFrkozngWvqy/KA
+         OUce1tmkndVL2vRU8Hg2F554hV3sL9mlOR39omkpZBo5DrlzgUO1pFRta+r6m0lsSce8
+         yDCorE3WY6Dp1gzDIw3MC7OMt8tPejhshXEcdKLg+FOsgi9vTZr0YUmdeG1N/vbGm9lL
+         8XJBeLx9qVEh4fxYJHcI0f0/eH6XX3u4Uno8qThg3JB9kGHqr1zNHGFIsjpmpWBnLNR/
+         QsKld8WkbZTIQ9pLVbtkRLpcwEpiQxRnSfjzwHHZaYf1twBtfiZkCAJXIE+nYsA6Ek9D
+         hr2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756589010; x=1757193810;
+        d=1e100.net; s=20230601; t=1756589011; x=1757193811;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5R9qK7o/lAPezkrK6tWt/6PQtOuwLj0RXySupD86K0I=;
-        b=WmdSFNbD1Sl81nwa4DisZl/AHDbvvorH1GMR/st01JmqwXypjhSRwdxnpQdsOats2R
-         XgXZSH7VjM9ogNWqIWWVhmF+HFSovUbQRYFCRoMEVkbbp/7w5G/7QdP8mGNUoOsNX/Ef
-         oCFM1ZFARmYumCP6QCeXo6Id7KdePtvcOH/RyxLkINsO1kZzOofpcJ9AiL2hLeZoH6h3
-         SXvbAwljaLEPd/RCj5ooa61nJVcaTZdEupqME97SYlZx+UtLzve1UKL3ggjlbS7U7yEU
-         uMFoA2G9fyoAHwKO0TPpYAQRnm+c9RYThUlS4XDAwcq/dhwj8SyKwhbYZM0zMsuIgSQk
-         QEBw==
-X-Gm-Message-State: AOJu0Yz2QPzkf7KhQIkQcW+kBzZBTG93pb69Icd64F6LolQbxpDXCxF2
-	Iy2B+rcoeTEK67rRPGZtU1h5TxTRXe2cCaTmJ8jLQN3HgyleQWQeW/8P6ykX6XFG
-X-Gm-Gg: ASbGnct7E86vaxf1mD41gB9h23YlIsnMIvf32hKxyNEuAyLxdhcUduFB+BaasPCnEIb
-	su1V34JqzKvzSfCEIfsXZp8reUVVaQIKN6DkV/Dp9cMJQgdoGv5JAf8fAwE7ndI6Bf9dMdm2D8c
-	339zDZgwQwAAUaTR4Rugaz08ZbV4O3S2Tf8H4xW0cprRexNTHXXZUgdBDiqZ6iEY3L3PZ+RdNgv
-	FcWGK4+80T0EplyCWsckRxrdYsf3nCwC6+f72CgI/NDthqkZReob385SKGecs2hz1AmwYpa5yuK
-	tDpP5TzFKtjf+aOU1Rl6e3L2dVyq/ayPvpqy6qD+3LyjwfHxf6fYLJY02V8zC5CKMzTHtVZbgpM
-	Fs++quSznCuYF1ah3moHvV1cjTJpqvvVngtM1bfm9gJqv85c=
-X-Google-Smtp-Source: AGHT+IFDu97ZQzTQaYYkeniIgGrRvl0WBl6sk1T1tHzl+WsXMGj9tltq/7lIO3RypU4AhbR+KY5KNw==
-X-Received: by 2002:a05:622a:8b:b0:4b2:d607:16c8 with SMTP id d75a77b69052e-4b31d89da2amr37217851cf.37.1756589009901;
-        Sat, 30 Aug 2025 14:23:29 -0700 (PDT)
+        bh=85LlYTbhtDvt39WSHiofncoxI6MxNrlwL8j4cQMBoAU=;
+        b=OcDPMhUDUTRksIP+O1yCohegbcBGzQZgGbVvfLOUDAjcECA9IH+wCZixDKCXsZdv7e
+         iJ7Gwj8/kH5Vj9IGnVC8U3ySSgyMXZBQmSB+KUyzAlIDE2cvPQIVrGkwgTMLzNXqYcBQ
+         BoaBg3G9I3HjSSumKAAYNWPUqpgPxqlc1HukK7M9Z5NsRVt0BkKMbYcfcImFx9l27MDs
+         YDtyhWEK0kyrO1uvG4EWxwAWnadMyG/b5JGBk2aOsDOsnNsZdUEKfdvT9sTr8MKglRJf
+         6+GPEkYGvakdRfEVkU5tN0CXl27T8M6ivz/tt4cuUBIB3X3/2XOwG92TN3u5HiMnZGQl
+         5mAg==
+X-Gm-Message-State: AOJu0YwkQ+N9rIENR4MnJGJXEWha+g+IoIDT15uVBXULN3sAUIgNKWAc
+	0mpHlr+N0eEHnIpQOvH2J11rHX9CW5t9bz6lwnDGPqp3JoK1Yp+AMH/nOEsf0AzZ
+X-Gm-Gg: ASbGnct9cMZwGq1bitPItHtEq65ODgbbsk1AUMAH2UrIF/X8YVMl7jH9jtRefOXI5bD
+	4SkjSuTSdSV0l81RwQxN9ANflip8AkvkCx/sd4SqtcBNFKPxxPXETPeqaE2jdAm7NsUps12bN5K
+	tXCRkucGMCz/mkhnHETdJ3c0nwnfSkBt6qvT6kElv0JyXqOYi5oTuu6JKOEZZ40AJniS5C9lXDF
+	nUS3rK/3bBkH4nPBkuO6MQ0p3NWTGKYXUn0lvCri4kJ4ihEH8xea3YU+xynTPbBlsu6WEivWwCq
+	9DDQcpiuGj6WrMmdn3h1C8DGbxqznDhdu9GAmYlraxespGB6KEzByuSG7BYAha/SxvQVm5YWBRy
+	9Hdi4dM5MbIy0pd4SrbLTehJDPGVO5paZ+zOA
+X-Google-Smtp-Source: AGHT+IHUmc+5z9KmaYgsJSPlc2mLel2DiUSYia3PuXNwUrmyEVd1vDpvZdFErSI0Z82eoUaoIplnXA==
+X-Received: by 2002:a05:6214:2262:b0:70f:a04f:233b with SMTP id 6a1803df08f44-70fac88dbaamr34607366d6.32.1756589011072;
+        Sat, 30 Aug 2025 14:23:31 -0700 (PDT)
 Received: from [127.0.0.1] ([145.132.103.19])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b30b54cc37sm35657871cf.12.2025.08.30.14.23.28
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70fb25c86f8sm11540516d6.6.2025.08.30.14.23.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Aug 2025 14:23:29 -0700 (PDT)
-Message-Id: <pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1965.git.1756402795.gitgitgadget@gmail.com>
+        Sat, 30 Aug 2025 14:23:30 -0700 (PDT)
+Message-Id: <e02a444315acbc638a3d31279c10a936f0adb7b4.1756589007.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
 References: <pull.1965.git.1756402795.gitgitgadget@gmail.com>
+	<pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 30 Aug 2025 21:23:21 +0000
-Subject: [PATCH v2 0/6] midx-write: fix segfault and do several cleanups
+Date: Sat, 30 Aug 2025 21:23:22 +0000
+Subject: [PATCH v2 1/6] midx-write: only load initialized packs
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,169 +76,196 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
     me@ttaylorr.com,
+    Derrick Stolee <stolee@gmail.com>,
     Derrick Stolee <stolee@gmail.com>
 
-I was motivated to start looking closely at midx-write.c due to multiple
-users reporting Git crashes in their background maintenance, specifically
-during git multi-pack-index repack calls. I was eventually able to reproduce
-it in git multi-pack-index expire as well.
+From: Derrick Stolee <stolee@gmail.com>
 
-Patch 1 is the only change we need to fix this bug. It includes a test case
-that will fail under --stress with SANITIZE=address. It requires creating
-many packfiles (50 was not enough, but 100 is enough). As far as I can tell,
-this bug has existed since Git 2.47.0 in October 2024, but I started hearing
-reports of this from users in July 2025 (and took a while to get a
-dump/repro).
+The fill_packs_from_midx() method was refactored in fcb2205b77 (midx:
+implement support for writing incremental MIDX chains, 2024-08-06) to
+allow for preferred packfiles and incremental multi-pack-indexes.
+However, this led to some conditions that can cause improperly
+initialized memory in the context's list of packfiles.
 
-The remaining patches are cleanups based on my careful rereading of
-midx-write.c. There are some issues about error handling that needed some
-cleanup as well as a removal of the DISABLE_SIGN_COMPARE_WARNINGS macro.
+The conditions caring about the preferred pack name or the incremental
+flag are currently necessary to load a packfile. But the context is
+still being populated with pack_info structs based on the packfile array
+for the existing multi-pack-index even if prepare_midx_pack() isn't
+called.
 
+Add a new test that breaks under --stress when compiled with
+SANITIZE=address. The chosen number of 100 packfiles was selected to get
+the --stress output to fail about 50% of the time, while 50 packfiles
+could not get a failure in most --stress runs.
 
-Updates in V2
-=============
+The test case is marked as EXPENSIVE not only because of the number of
+packfiles it creates, but because some CI environments were reporting
+errors during the test that I could not reproduce, specifically around
+being unable to open the packfiles or their pack-indexes.
 
- * A stale comment to an unsubmitted version of the test is removed.
- * More cases needing open_pack_index() are patched.
- * Typos fixed.
- * A new patch assumes error and sets result to zero only on the few
-   successful paths.
+When it fails under SANITIZE=address, it provides the following error:
 
-Thanks, -Stolee
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==3263517==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000027
+==3263517==The signal is caused by a READ memory access.
+==3263517==Hint: address points to the zero page.
+    #0 0x562d5d82d1fb in close_pack_windows packfile.c:299
+    #1 0x562d5d82d3ab in close_pack packfile.c:354
+    #2 0x562d5d7bfdb4 in write_midx_internal midx-write.c:1490
+    #3 0x562d5d7c7aec in midx_repack midx-write.c:1795
+    #4 0x562d5d46fff6 in cmd_multi_pack_index builtin/multi-pack-index.c:305
+    ...
 
-Derrick Stolee (6):
-  midx-write: only load initialized packs
-  midx-write: put failing response value back
-  midx-write: use cleanup when incremental midx fails
-  midx-write: use uint32_t for preferred_pack_idx
-  midx-write: reenable signed comparison errors
-  midx-write: simplify error cases
+This failure stack trace is disconnected from the real fix because the bad
+pointers are accessed later when closing the packfiles from the context.
 
- midx-write.c                | 134 +++++++++++++++++-------------------
- t/t5319-multi-pack-index.sh |  22 +++++-
- 2 files changed, 86 insertions(+), 70 deletions(-)
+There are a few different aspects to this fix that are worth noting:
 
+ 1. We return to the previous behavior of fill_packs_from_midx to not
+    rely on the incremental flag or existence of a preferred pack.
 
-base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1965%2Fderrickstolee%2Fmidx-write-cleanup-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1965/derrickstolee/midx-write-cleanup-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1965
+ 2. The behavior to scan all layers of an incremental midx is kept, so
+    this is not a full revert of the change.
 
-Range-diff vs v1:
+ 3. We skip allocating more room in the pack_info array if the pack
+    fails prepare_midx_pack().
 
- 1:  4a4b35c694 ! 1:  e02a444315 midx-write: only load initialized packs
-     @@ Commit message
-          Add a new test that breaks under --stress when compiled with
-          SANITIZE=address. The chosen number of 100 packfiles was selected to get
-          the --stress output to fail about 50% of the time, while 50 packfiles
-     -    could not get a failure in most --stress runs. This test has a very
-     -    minor check at the end confirming only one packfile remaining. The
-     -    failing nature of this test actually relies on auto-GC cleaning up some
-     -    packfiles during the creation of the commits, as tests setting gc.auto
-     -    to zero make the packfile count match the number of added commits but
-     -    also avoids hitting the memory issue.
-     +    could not get a failure in most --stress runs.
-      
-          The test case is marked as EXPENSIVE not only because of the number of
-          packfiles it creates, but because some CI environments were reporting
-     @@ Commit message
-              #4 0x562d5d46fff6 in cmd_multi_pack_index builtin/multi-pack-index.c:305
-              ...
-      
-     -    This failure stack trace is disconnected from the real fix because it
-     -    the bad pointers are accessed later when closing the packfiles from the
-     -    context.
-     +    This failure stack trace is disconnected from the real fix because the bad
-     +    pointers are accessed later when closing the packfiles from the context.
-      
-          There are a few different aspects to this fix that are worth noting:
-      
-     @@ midx-write.c: static int fill_packs_from_midx(struct write_midx_context *ctx,
-      -				if (open_pack_index(m->packs[i]))
-      -					die(_("could not open index for %s"),
-      -					    m->packs[i]->pack_name);
-     +-			}
-      +			if (prepare_midx_pack(ctx->repo, m,
-     -+					      m->num_packs_in_base + i)) {
-     -+				error(_("could not load pack"));
-     -+				return 1;
-     - 			}
-     ++					      m->num_packs_in_base + i))
-     ++				return error(_("could not load pack"));
-       
-      +			ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
-       			fill_pack_info(&ctx->info[ctx->nr++], m->packs[i],
-     @@ midx-write.c: static int write_midx_internal(struct repository *r, const char *o
-       		goto cleanup;
-       	}
-       
-     +@@ midx-write.c: static int write_midx_internal(struct repository *r, const char *object_dir,
-     + 		struct packed_git *oldest = ctx.info[ctx.preferred_pack_idx].p;
-     + 		ctx.preferred_pack_idx = 0;
-     + 
-     ++		/*
-     ++		 * Attempt opening the pack index to populate num_objects.
-     ++		 * Ignore failiures as they can be expected and are not
-     ++		 * fatal during this selection time.
-     ++		 */
-     ++		open_pack_index(oldest);
-     ++
-     + 		if (packs_to_drop && packs_to_drop->nr)
-     + 			BUG("cannot write a MIDX bitmap during expiration");
-     + 
-     +@@ midx-write.c: static int write_midx_internal(struct repository *r, const char *object_dir,
-     + 
-     + 			if (!oldest->num_objects || p->mtime < oldest->mtime) {
-     + 				oldest = p;
-     ++				open_pack_index(oldest);
-     + 				ctx.preferred_pack_idx = i;
-     + 			}
-     + 		}
-      @@ midx-write.c: static int write_midx_internal(struct repository *r, const char *object_dir,
-       
-       	if (ctx.preferred_pack_idx > -1) {
- 2:  709555c531 ! 2:  a1dd3ed874 midx-write: put failing response value back
-     @@ Commit message
-      
-          This instance of setting the result to 1 before going to cleanup was
-          accidentally removed in fcb2205b77 (midx: implement support for writing
-     -    incremental MIDX chains, 2024-08-06).
-     +    incremental MIDX chains, 2024-08-06). Build upon a test that already deletes
-     +    a packfile to verify that this error propagates to full command failure.
-      
-          Signed-off-by: Derrick Stolee <stolee@gmail.com>
-      
-     @@ midx-write.c: static int write_midx_internal(struct repository *r, const char *o
-       		goto cleanup;
-       	}
-       
-     +
-     + ## t/t5319-multi-pack-index.sh ##
-     +@@ t/t5319-multi-pack-index.sh: test_expect_success 'load reverse index when missing .idx, .pack' '
-     + 		mv $idx.bak $idx &&
-     + 
-     + 		mv $pack $pack.bak &&
-     +-		git cat-file --batch-check="%(objectsize:disk)" <tip
-     ++		git cat-file --batch-check="%(objectsize:disk)" <tip &&
-     ++
-     ++		test_must_fail git multi-pack-index write 2>err &&
-     ++		grep "could not load pack" err
-     + 	)
-     + '
-     + 
- 3:  a5bee03601 = 3:  c4f75cca09 midx-write: use cleanup when incremental midx fails
- 4:  bd97db26f7 ! 4:  2290e27ded midx-write: use uint32_t for preferred_pack_idx
-     @@ midx-write.c: static int write_midx_internal(struct repository *r, const char *o
-      +		struct packed_git *oldest = ctx.info[0].p;
-       		ctx.preferred_pack_idx = 0;
-       
-     - 		if (packs_to_drop && packs_to_drop->nr)
-     + 		/*
-      @@ midx-write.c: static int write_midx_internal(struct repository *r, const char *object_dir,
-       			 * objects to resolve, so the preferred value doesn't
-       			 * matter.
- 5:  eb1abdca32 = 5:  35302f5228 midx-write: reenable signed comparison errors
- -:  ---------- > 6:  7be25cf534 midx-write: simplify error cases
+ 4. The method has always returned 0 for success and 1 for failure, but
+    the condition checking for error added a check for a negative result
+    for failure, so that is now updated.
 
+ 5. The call to open_pack_index() is removed, but this is needed later
+    in the case of a preferred pack. That call is moved to immediately
+    before its result is needed (checking for the object count).
+
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+ midx-write.c                | 46 +++++++++++++++----------------------
+ t/t5319-multi-pack-index.sh | 17 ++++++++++++++
+ 2 files changed, 36 insertions(+), 27 deletions(-)
+
+diff --git a/midx-write.c b/midx-write.c
+index a0aceab5e0..070a7f61f4 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -920,8 +920,7 @@ static struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
+ 	return get_multi_pack_index(source);
+ }
+ 
+-static int fill_packs_from_midx(struct write_midx_context *ctx,
+-				const char *preferred_pack_name, uint32_t flags)
++static int fill_packs_from_midx(struct write_midx_context *ctx)
+ {
+ 	struct multi_pack_index *m;
+ 
+@@ -929,30 +928,11 @@ static int fill_packs_from_midx(struct write_midx_context *ctx,
+ 		uint32_t i;
+ 
+ 		for (i = 0; i < m->num_packs; i++) {
+-			ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
+-
+-			/*
+-			 * If generating a reverse index, need to have
+-			 * packed_git's loaded to compare their
+-			 * mtimes and object count.
+-			 *
+-			 * If a preferred pack is specified, need to
+-			 * have packed_git's loaded to ensure the chosen
+-			 * preferred pack has a non-zero object count.
+-			 */
+-			if (flags & MIDX_WRITE_REV_INDEX ||
+-			    preferred_pack_name) {
+-				if (prepare_midx_pack(ctx->repo, m,
+-						      m->num_packs_in_base + i)) {
+-					error(_("could not load pack"));
+-					return 1;
+-				}
+-
+-				if (open_pack_index(m->packs[i]))
+-					die(_("could not open index for %s"),
+-					    m->packs[i]->pack_name);
+-			}
++			if (prepare_midx_pack(ctx->repo, m,
++					      m->num_packs_in_base + i))
++				return error(_("could not load pack"));
+ 
++			ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
+ 			fill_pack_info(&ctx->info[ctx->nr++], m->packs[i],
+ 				       m->pack_names[i],
+ 				       m->num_packs_in_base + i);
+@@ -1123,8 +1103,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 			ctx.num_multi_pack_indexes_before++;
+ 			m = m->base_midx;
+ 		}
+-	} else if (ctx.m && fill_packs_from_midx(&ctx, preferred_pack_name,
+-						 flags) < 0) {
++	} else if (ctx.m && fill_packs_from_midx(&ctx)) {
+ 		goto cleanup;
+ 	}
+ 
+@@ -1186,6 +1165,13 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 		struct packed_git *oldest = ctx.info[ctx.preferred_pack_idx].p;
+ 		ctx.preferred_pack_idx = 0;
+ 
++		/*
++		 * Attempt opening the pack index to populate num_objects.
++		 * Ignore failiures as they can be expected and are not
++		 * fatal during this selection time.
++		 */
++		open_pack_index(oldest);
++
+ 		if (packs_to_drop && packs_to_drop->nr)
+ 			BUG("cannot write a MIDX bitmap during expiration");
+ 
+@@ -1200,6 +1186,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 
+ 			if (!oldest->num_objects || p->mtime < oldest->mtime) {
+ 				oldest = p;
++				open_pack_index(oldest);
+ 				ctx.preferred_pack_idx = i;
+ 			}
+ 		}
+@@ -1223,6 +1210,11 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 
+ 	if (ctx.preferred_pack_idx > -1) {
+ 		struct packed_git *preferred = ctx.info[ctx.preferred_pack_idx].p;
++
++		if (open_pack_index(preferred))
++			die(_("failed to open preferred pack %s"),
++			    ctx.info[ctx.preferred_pack_idx].pack_name);
++
+ 		if (!preferred->num_objects) {
+ 			error(_("cannot select preferred pack %s with no objects"),
+ 			      preferred->pack_name);
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index bd75dea950..49705c62a2 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -989,6 +989,23 @@ test_expect_success 'repack --batch-size=0 repacks everything' '
+ 	)
+ '
+ 
++test_expect_success EXPENSIVE 'repack/expire with many packs' '
++	cp -r dup many &&
++	(
++		cd many &&
++
++		for i in $(test_seq 1 100)
++		do
++			test_commit extra$i &&
++			git maintenance run --task=loose-objects || return 1
++		done &&
++
++		git multi-pack-index write &&
++		git multi-pack-index repack &&
++		git multi-pack-index expire
++	)
++'
++
+ test_expect_success 'repack --batch-size=<large> repacks everything' '
+ 	(
+ 		cd dup2 &&
 -- 
 gitgitgadget
+
