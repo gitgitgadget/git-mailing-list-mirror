@@ -1,102 +1,128 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677392356D9
-	for <git@vger.kernel.org>; Sun, 31 Aug 2025 22:29:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06F579CD
+	for <git@vger.kernel.org>; Sun, 31 Aug 2025 23:26:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756679355; cv=none; b=EGXRicP80Mw+ue1jWlOXmAo2HTHVOiPsirMeQL+OOvwifgSVfdmW82dsvchMPQD1NtFaWIjNdiYQAb0J2kElYA0IRUA2nFX08rDqv1sZgPEH6DZDJimTN1xdU/GvkFDvRqLZCygd9Hc/4SHpWGUk5hSePpl0zbznqDpXTXH83FE=
+	t=1756682767; cv=none; b=ZhIoZEsekMwN30qFZQWuDeVLhHJMcIunoUDWowvDBJnUodvT1aTY9d+DFZIPRd8smu/0cesHTpx1aSOZXJfHcdYdlGqHPm7fpmAEGCcOjJJ5TEy0SIlWJW/oi/GfkMy4RGPb+AKKeK4BuUBe2hHTOqrAybzs3zqMXS0JAQIFP/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756679355; c=relaxed/simple;
-	bh=igDi+P/BHAQ9gKvIaiwovMNMSy9T79lDovtf7oamPQM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Bl8/agNNH9YfegBKN2Bfdlh4FhvhPntPjWUE9ZA+vpRHpFfTwcRrhofmOggaJ7JJSQ9sM3uPmBVWyhTwaH2ZHrOnHQJpCVm5SKlVcnwcxgCWKHehyWF+gpdIXktcE9mLMh3mOLAxFRWh8utEgplRXzpj1zXmEHA0tRXB9egjUXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M2GWtpdA; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756682767; c=relaxed/simple;
+	bh=X/0Rn/Y/Txu9SNqQR7qKZyrQmOceTw61tacXfm5vdwM=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=E9erCSpXLivwQI3cyg5/pDEc1JPjH7STgcMcU0eiw+nHon+b5oBoGgwLacWyq+HSFvVSQqKbQhZpbQw+Q7idE07vuOxPiWU7FvqVb2VLV5EfmxHOiOhexa9xY+Mvr90JoWytgJVcbdJ9hSX84jrspgdCgxZaPvGM7b/G0QeamR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io; spf=pass smtp.mailfrom=alchemists.io; dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b=LU7TzSKE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fksq+7cv; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alchemists.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M2GWtpdA"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-61cc281171cso6429521a12.0
-        for <git@vger.kernel.org>; Sun, 31 Aug 2025 15:29:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756679351; x=1757284151; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7XqTws0M7DETNtn1lZn7vkm2oXQFkIlJHQxoGFuBhXc=;
-        b=M2GWtpdAhFkP7RYnMb+PlTVtseYnmJPX3ElYtXn6Ofen7n+feAi9iVKRN8+4Q0e7DW
-         klC/JL5Bvp+fElhvcR9KiHWOof0lYfe/sxtVGbHszMO7VIzVKNiylG1A6HII3n/HhAI6
-         UWJchPtARcgDPKkHzALcwsnnl880Baj14uzlk1WXLCqEF9eU2SmV50h0+ezx0UZWB2pT
-         NB9sV1YQg9qqafdtWVoRKZ/uM2YtKZsOtcH4s2TCP8vezrkJkDXjW64Kg8xPXIyPbFIz
-         zoi8YN6CCdTyxhzk15eqkevhnFea8kvOZKkanwY6vBk0GwWz6FfAha7l1D1xKHbuGnuF
-         b/NA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756679351; x=1757284151;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7XqTws0M7DETNtn1lZn7vkm2oXQFkIlJHQxoGFuBhXc=;
-        b=qt+ixndOrFq2CQCEubtw9OT0SqPyhHMZ4VRnZyvQqX6aE8K169e6KIyfzER2UH+xNY
-         lZYopXHu6dXTixtySMa5ia9Pu6W4mwLF4ft0XSae3vDf5N3j/2x+TE/wl4NeFm3fGckS
-         t4IcaND4oadwAX3dBZfKAtT/zWLFPYTfCvCTO5KFnPSSRtHpg7dxSc3Apc2vs9t63Bxf
-         nkbVKsfBDMqL1tzflsO2j0tryyZQCg39Bh5FYDq8UXsbscmAsovypCMflz4fCXKYqjq/
-         S9P+QYdDTGfIPRG9AoBU0pbvEvyapu5MPGuHAp1PCZwgnRqAQ1wbRT55GdsCFcmlvdw6
-         AACg==
-X-Gm-Message-State: AOJu0YwH+12A3yRFpcWdGzT3MXU4w/jTz1wQR69RfzvfUZoh5MYyKlZu
-	mXomWhqzw3xEMehsxaPZJcurRjRo+hhWVnZx8gAPLse9GjNpCFc21ttC5boOP7/uI2tWOkmU5fa
-	s5meZfneloTjYZb/t8jUzOzBGfNtDxEgLKaRc8Sc=
-X-Gm-Gg: ASbGnct4zxxdGKjqqWKcsX30VaVm2Kr+swcJgMzgTu/UjhcjLxzziIHmhfX8zLgB4+W
-	1VC0yc7w6xPlUUpyQG5aODbknshtXm3eTE4z1GjoSQa6QJUnO3Zje4323c7XR3NectbVXdtm3m8
-	rOIhw2/P5wE3S1BCnF0//zgIU8Yx/pqW71FgBjmhbh5BQV0v/DyW8VV2eoOa8BB8riVqZcs07Wh
-	4DXGlEOerLC49VIg5l0GibWxzU0Vm/dLauA8ehU
-X-Google-Smtp-Source: AGHT+IEEWHEqS4mjy+aY06vjmBh8iGVZUTY7uVj1UKWp3TG9RrpG/mpzTQQ9a1qv4eSq4W9kl5Fyl2AFicjMIMN8r/E=
-X-Received: by 2002:a05:6402:2742:b0:61c:7ba9:8a3 with SMTP id
- 4fb4d7f45d1cf-61d269974dfmr5006469a12.3.1756679351097; Sun, 31 Aug 2025
- 15:29:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b="LU7TzSKE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fksq+7cv"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A0061140018D
+	for <git@vger.kernel.org>; Sun, 31 Aug 2025 19:26:03 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Sun, 31 Aug 2025 19:26:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
+	 h=cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1756682763; x=1756769163; bh=SA
+	RHKashyEpnH5zrSOgj0RN07im2FZIAlpRVakCeTkI=; b=LU7TzSKEHzzOQ9UaFU
+	qYUhKDW7CZJSHpMP1R7wSuZT82jKoqsKR+RoOKq16LmHX8jssoHMqAUJbVDFBfpf
+	WzQ6emCYySAREzMTuLNGw13DjmbR61Bo6aO8Fkul/2qrN2WHaxnIRuIC1lUVVZck
+	TTmSJwBWygsD5hY2xK1D5xythDSDddap0zCc2mqFQKnNjKxoJB+ZnjQLi3PODUbt
+	CM42ISZAB6LrGpnAwL+Tzuow41gRFoLvc1GW6X5C+KmLK6mrnf76r+Ch0yBfrwXp
+	yE7gaC7tTY3+WWKmLys1KDv7iLp8Y/M+O+VYc4Xo0nupOmyVTD27C4lIpXWZ5jaY
+	o1qg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756682763; x=1756769163; bh=SARHKashyEpnH5zrSOgj0RN07im2FZIAlpR
+	VakCeTkI=; b=fksq+7cvp/G6tTCZq+0EG8+MF0BputYWgNiXUilH5WeMApVNl1z
+	+xE/kaO7x3devee0ifk4C/ybU8+NmQH4N0Te1vrea/KMqc3u2wHbZURzVoy2H/WA
+	AM2A36soUjipaJJC9jIAlEwvyXSsD4oxZc4lafFjLogw57V69EXGG+6eVj4dWTxB
+	GJAt0ODpFSkI+UR3oD0ERGDbbDf6/viV/LvevZiHLCbEEuzlJEl25gP01X8UMFJi
+	Eh/39FwJ6rlAlFyQiWVo710s9GJabJ/5dqv97W/uzWDx4zaFYjbS5EA+8sH80lnt
+	C66JuYUKuLpLTczNv9H7wCNxaAyikU6GV2A==
+X-ME-Sender: <xms:C9q0aOdY_JICm_6vx-_-6WI5WmAq70mt-jzkZkB-qQxPrZg0kFKzXA>
+    <xme:C9q0aKPPZxAVZUcaYphremoWQTEgqXa-XqJmTopOFdoAMAyPrYmxX4aDeDB-lwAHr
+    QVtgxOFucX9WYfh>
+X-ME-Received: <xmr:C9q0aI5beW1GKBKG5Eka358phQ1bhQKg67daOkMeooz2IMwZwgweVd_QlPfDPMBrxVi5EQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduledtheekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhtgfgggfukfffvffosehtqhhmtdhhtd
+    dvnecuhfhrohhmpeeurhhoohhkvgcumfhuhhhlmhgrnhhnuceosghrohhokhgvsegrlhgt
+    hhgvmhhishhtshdrihhoqeenucggtffrrghtthgvrhhnpeelkeegtdelffetffelueelfe
+    fhuedugffgudegvdeuudfhteelheegieehfeelueenucffohhmrghinhepghhithhhuhgs
+    rdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epsghrohhokhgvsegrlhgthhgvmhhishhtshdrihhopdhnsggprhgtphhtthhopedupdhm
+    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhg
+X-ME-Proxy: <xmx:C9q0aOKE-tDMBg9RRjVrqBMiPRqoaK9Ubmn7XTJJ1O7fljbCO4a3Gw>
+    <xmx:C9q0aCeNEEx4gOfcP2z4EGBOkzQ1Axxb8oveV4uyXkSYZp_X6P8jgw>
+    <xmx:C9q0aBct0ELnAzXvUONEVUE_fRJJtQap8RKoKbqStv74NTTckidm0Q>
+    <xmx:C9q0aFN87dY1HWV4-Q_k_9wl9OLltvGagbkFiAqfN6EwYjraLSKOTQ>
+    <xmx:C9q0aFGmOM07zLnOtA_6T2BpETL7v-S4dbsO0pvCKhfKBjsTI-_qOftN>
+Feedback-ID: i78e840cc:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Sun, 31 Aug 2025 19:26:03 -0400 (EDT)
+From: Brooke Kuhlmann <brooke@alchemists.io>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 1 Sep 2025 00:28:58 +0200
-X-Gm-Features: Ac12FXy3jU8rV4ehMpkfIpD_727CBfTkBu77nYaeSsDXHJ77bYQvWk3yzadMhFA
-Message-ID: <CAP8UFD0Lh8caRsMV0nUB5Oge_hwLO_WWMAqxTqd8eY7mqwA-9Q@mail.gmail.com>
-Subject: Draft of Git Rev News edition 126
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Bryan Lee <hi@looping.me>, 
-	Lidong Yan <yldhome2d2@gmail.com>, Seyi Chamber <kuforiji98@gmail.com>, 
-	Johannes Sixt <j6t@kdbg.org>, Ben Knoble <ben.knoble@gmail.com>, 
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Git Stash Synchronization - Best Workflow?
+Message-Id: <7B1CCA36-23F1-410D-84ED-6E965989EA8B@alchemists.io>
+Date: Sun, 31 Aug 2025 17:25:51 -0600
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3826.700.81)
 
-Hi everyone,
+Hello.
 
-A draft of a new Git Rev News edition is available here:
+When using Git 2.51.0, what is the correct way to safely export your =
+stash and then keep that stash up-to-date? Here's an example workflow:
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-126.md
+touch demo.txt
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+git stash push --include-untracked --message "Demo"
+git stash export --to-ref "refs/stashes/$USER"
+git push origin "refs/stashes/$USER"
 
-  https://github.com/git/git.github.io/issues/793
+git stash pop stash@{0}
+git push origin "refs/stashes/$USER"
 
-You can also reply to this email.
+git stash push --include-untracked --message "Demo II"
+git stash export --to-ref "refs/stashes/$USER"
+git push origin "refs/stashes/$USER"
 
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
+Notice, in the middle, I pop the stash only to rename it. Upon pushing =
+these changes back up, I get the following error:
 
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
+To https://github.com/bkuhlmann/test
+ ! [rejected]                  refs/stashes/bkuhlmann -> =
+refs/stashes/bkuhlmann (non-fast-forward)
+error: failed to push some refs to 'https://github.com/bkuhlmann/test'
+hint: Updates were rejected because a pushed branch tip is behind its =
+remote
+hint: counterpart. If you want to integrate the remote changes, use 'git =
+pull'
+hint: before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for =
+details.
 
-Jakub, Markus, Kaartic and I plan to publish this edition on Thursday
-September 2nd, 2025.
+The work around is to use `git push --force` when pushing updates. I'd =
+like to use `git push --force-with-lease` but that doesn't work.
 
-Thanks,
-Christian.
+I realize that force pushing over your remote stash makes a lot more =
+sense since you typically never share a stash with folks but was =
+thinking it would be nice to ensure you don't accidentally override your =
+remote stash when working on different machine when you forgot to import =
+first. Basically, wanting to protect myself from myself. :)
+
+Is force push the only way to handle this use case or is there a better =
+approach? Thanks!=
