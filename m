@@ -1,124 +1,143 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5DE2BB17
-	for <git@vger.kernel.org>; Sun, 31 Aug 2025 06:20:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB9218E25
+	for <git@vger.kernel.org>; Sun, 31 Aug 2025 17:29:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756621245; cv=none; b=l0fq9lciDhrDKMe3Gh/WsX4WsXXXp0U2HZyQXVofM0j8u8Odt6yAQwErvfpsocfIeGZAondwiDkTLUSOHmH2qYxto1KaN0v3yCs5DyP0kg79e1cv+17utPd427GAQc6eW1BGPnw90HZh5oqug6D27R9w/sGFTijuy4eodY3nmf8=
+	t=1756661378; cv=none; b=Z6dJuXna5WTE54XquUUd8N4yX9O+UMYnasmYcP3wriZbepaWQ7OBwUc8tk/7T2EMwHtwkbm+qqSZBSxQTWaYemJro5MIaC9C6ZG4c6B0bk2VdADs0rrJzddKjdEKS1tutZtLvnOYnE6fWLYRzjp81LBZiDjMyt1h6PQ9bI+nkwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756621245; c=relaxed/simple;
-	bh=4owTSKechj1aLPP4nlXs9HXoUhW3vLj3F/D2aQ0T6Xs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=elw+IDHPXK8AgX4PwUo0GETXRKteh3VKwffrTsFzpAVcOQf4pzmJCwaMhrlwTPZWda80oRXvSNtuuDGJlmLypTnqCXydZTGmKzW8OgszvanEMn/8U/UcYc6YX30cQrbdysfOZuSqvu3r/CSI+YnwOT8h4MMfXt63c4EI0mnBfZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kKeNvkXS; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756661378; c=relaxed/simple;
+	bh=Sqa1RyB41vmge2Xmn815jOHEm3yCGsSef5Iwivm2OAA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=dkZ7dl7KYJJJiDpwk+AJKkg/GEXkXKMeX7UdQeU2cX9QzzUC2gBrgZM7DkZjfSgYlmrXqIb1kGVTz929FctuzYhIi2thHNIgKY0i+lUeDlNnLlpvq8MTfEgTFi56QLIWx+vbk5MaBmWJ/QQArpoW0M54jgXh8Y1qwI657+uAqlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=aRW3ky9H; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kKeNvkXS"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2445824dc27so29777435ad.3
-        for <git@vger.kernel.org>; Sat, 30 Aug 2025 23:20:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756621244; x=1757226044; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4owTSKechj1aLPP4nlXs9HXoUhW3vLj3F/D2aQ0T6Xs=;
-        b=kKeNvkXSEkgfxBxfAS8LM+McAiwdZdH4bwxxq8DEV8FvJfD5QyJLaZvIg6YtD/JpDL
-         rknZJ44vfIfwKFYjJqiwh1PFYTqKv+0yZAvUAY68wVFsJ8V4rv6MH8h163e6+umgHUwR
-         HIb+v1f29d8V+0lLzJvxjGafiBdF2L8dvC4pxupdYqrMA1/A/RuMLujS0dSYScziaNfx
-         2kIyeSHbwXR/svw2CHLNCzC2kg0WQWtkAR4SVFOd1xKEtR8WI8/phG+mlle9IP1kOl4H
-         itRkPGqWYmbHJTJkosQSi/+7SqLyDxon/Gc1QPxwRhDiDCC5XHWawv3M1cRUm7cq8sCV
-         pU5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756621244; x=1757226044;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4owTSKechj1aLPP4nlXs9HXoUhW3vLj3F/D2aQ0T6Xs=;
-        b=IRcmDgt6/R6m1bbiA10325p9KRB19OBZTXarTBu31L4JbdiaFEP1DJOO/fiqt3UvWW
-         fCJGZ3uWXiRV2S1AH0EQP3jGx+HplY6i753AMmctswQwZn+eKVWLFSjGGNqGqZFDNN54
-         owgVWVo0hKjdBNmuVTPIhgp9y7NjbRWG6HAHh+Uuxznc/cyMr/esLj9L5h2JWlZHFg+9
-         h5nzY4vj61428S3rBSLOINhPlLcdu5w/5bk1g0NM7qb4NRcdNWL8oaf1BNy+rWL8Reo0
-         8ElxWLmqYeJzk9/Tn4duoYu1Spt/Ab87mnBiVYtOcONDqdAopPQbfWhjN8XGTmeNztlb
-         lNtA==
-X-Gm-Message-State: AOJu0YzIYRGCo5wHCretivx6c84SkgrdRYb+ZAvfkxw7V0qxC8geOwCr
-	YUCaiYNyoyPUiZpJ0c5NgOLA2tjOL92yDFDmaSiZH0BZLfgkNU0Np2T4ZKun13whB0OdzTS17Ms
-	/FElwOsBmsIF8SVP4ArvGn5KEjEjflSc=
-X-Gm-Gg: ASbGnctIjhBmwug3xhDuFLbAPKf9GuPFApFsnbfMBfQBF2ey91IVO/DwdT1booIl+Wf
-	TRHqFCdMoI8WjMOHVYSX3c9fqFRXBo0n5C7ExVVPRFtc/CnDBh5YPwf1GZokxfSX9Lsp87injn6
-	9aD/8et/ZhnUutwTztoT6JKm8kozz0c8Ni4vzL28Z5tCNFpEV6diDHNd46bWpZRj/yCjq3Hf2bg
-	Cd7+P3k
-X-Google-Smtp-Source: AGHT+IHSKAQSiMGg8TnIxk5JoLqWzqYWJ+dS7tCrChsu/UXzMqcC9pnJxqhINcazHFonTW7/7BjsLabuBYEJC+FCOi4=
-X-Received: by 2002:a17:903:190:b0:246:e8cc:8cef with SMTP id
- d9443c01a7336-24944870a4emr64795495ad.3.1756621243624; Sat, 30 Aug 2025
- 23:20:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="aRW3ky9H"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1756661371; x=1757266171; i=l.s.r@web.de;
+	bh=qPThEig6dkO/eRSY3bYhB45ARP0xk4Gf8QddTOLixUQ=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=aRW3ky9HrKgdRV4hgvoPJGUXxAKpR3UR+9VslvI8BXuso9nDDDKaTD2oSGKRZdak
+	 qv8KLSzmyxvV2l+fgNbZdZVyIdZsfR89qYJLTsHqqR7BgwdGXahbECYKEad7TsfsV
+	 QGTVjWATR77PjWOAgXFmwaNRhC+7dBZ5YgfZ+Nn3Vvm07HHSr6S4yPu4CUoxxvXM/
+	 l60mHPAkhvtR8VjY5HDUgjgyaCy5ABoJ2AJzRsjg4RFJmZ90VD/uaD91PKTOej6yd
+	 z9luJxLZ0UwM04E7G2Jh117ahVEc3rrbF28PMzQABnXn02grp5Y4yHgks//nMFIvb
+	 OTyNaW1twsOV6Kg4UQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([91.47.159.98]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MZjEJ-1ux0hQ0LTT-00X3M4; Sun, 31
+ Aug 2025 19:29:31 +0200
+Message-ID: <fdee7ee5-21ef-4c5e-92e7-eb92fe07251e@web.de>
+Date: Sun, 31 Aug 2025 19:29:30 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250826073645.1074397-1-meetsoni3017@gmail.com>
- <20250826073645.1074397-6-meetsoni3017@gmail.com> <aK3QOtQzUFsGvmyA@ArchLinux>
-In-Reply-To: <aK3QOtQzUFsGvmyA@ArchLinux>
-From: Meet Soni <meetsoni3017@gmail.com>
-Date: Sun, 31 Aug 2025 11:50:32 +0530
-X-Gm-Features: Ac12FXwnrPZMXLPXK2uTtjdIrpfoWymwezlZdEg6ajtbNMRaRlex3FiZC24KMuc
-Message-ID: <CAPhwyn0r11owkcSLXDALfPjKe1QvexC0uH6F7B=vktwfAue53w@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 5/5] t: add test for git refs optimize subcommand
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: What's cooking in git.git (Aug 2025, #12; Fri, 29)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq8qj1n71s.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqq8qj1n71s.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:io+1O+eu+jIedc0S6q1oK5xQCngYEpOqaMCHGKl7Q1bwTGxTZ59
+ fPo8PTaPNtk3nqAkck+PaxVDqyaLX9Hp/NrbL085mOSQOumBwesUy3t3SPr6QZjR74UH/7K
+ KOBHYfm2T3c9OwiSzpkJKOJCSJ6Lytq5wtk7yJ5MXGo3MFnB9QU890A+1gYgIAqWPICQdZm
+ TFwoKeYa79+3/5yJW8x5A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:gpNlfWjVLA4=;JAjc7P0kEHpr0AtBTJN50dE1EgA
+ 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
 
-Thanks for the review, and apologies for missing your email earlier, I just saw
-your comments today.
+On 8/29/25 11:37 PM, Junio C Hamano wrote:
+> * rs/describe-with-lazy-queue-and-khash (2025-08-24) 1 commit
+>  - describe: use khash in finish_depth_computation()
+>=20
+>  Instead of scanning for the remaining items to see if there are
+>  still commits to be explored in the queue, use khash to remember
+>  which items are still on the queue (an unacceptable alternative is
+>  to reserve one object flag bits).
+>=20
+>  Will merge to 'next'?
+>  source: <9110f085-aec0-42e9-9774-b153ece6284f@web.de>
+Please keep it in seen for now -- Peff's proposal to use an oidset
+instead looks promising.  I'll do some more measurements over the next
+few days and report back.
 
-On Tue, 26 Aug 2025 at 20:48, shejialuo <shejialuo@gmail.com> wrote:
->
-> On Tue, Aug 26, 2025 at 01:06:45PM +0530, Meet Soni wrote:
->
-> > diff --git a/t/t1463-refs-optimize.sh b/t/t1463-refs-optimize.sh
-> > new file mode 100755
-> > index 0000000000..c11c905d79
-> > --- /dev/null
-> > +++ b/t/t1463-refs-optimize.sh
-> > @@ -0,0 +1,17 @@
-> > +#!/bin/sh
-> > +
-> > +test_description='git refs optimize should not change the branch semantic
-> > +
-> > +This test runs git refs optimize and git show-ref and checks that the branch
-> > +semantic is still the same.
-> > +'
->
-> When reading the description, I am wondering how this test runs `git
-> refs optimize` and `git show-ref` to achieve the goal. Should we simply
-> just say we use "pack-refs-tests.sh" to ensure the compatibility with
-> the `git pack-refs`?
->
-You're right that the current description is too tied to implementation details
-(git show-ref). The intent of this test is to ensure that git refs optimize
-does not change branch semantics, similar to the existing pack-refs tests.
+Ren=C3=A9
 
-I'll update the description to focus on the behavior being verified, not the
-specific commands used.
-
-> > +
-> > +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-> > +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> > +GIT_TEST_DEFAULT_REF_FORMAT=files
-> > +export GIT_TEST_DEFAULT_REF_FORMAT
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +pack_refs='refs optimize'
-> > +. "$TEST_DIRECTORY"/pack-refs-tests.sh
-> > --
-> > 2.34.1
-> >
->
-> Thanks,
-> Jialuo
-
-Thanks,
-Meet
