@@ -1,128 +1,108 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06F579CD
-	for <git@vger.kernel.org>; Sun, 31 Aug 2025 23:26:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F45C25A322
+	for <git@vger.kernel.org>; Mon,  1 Sep 2025 06:59:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756682767; cv=none; b=ZhIoZEsekMwN30qFZQWuDeVLhHJMcIunoUDWowvDBJnUodvT1aTY9d+DFZIPRd8smu/0cesHTpx1aSOZXJfHcdYdlGqHPm7fpmAEGCcOjJJ5TEy0SIlWJW/oi/GfkMy4RGPb+AKKeK4BuUBe2hHTOqrAybzs3zqMXS0JAQIFP/g=
+	t=1756709961; cv=none; b=IiCOsNNpMhu9vf/TiqjN7z8XMWFWno233HiaqCnVFoLvW0S7D8aLPUSbjqc+GvCUytVDT9h4WN+VH+k9bUJbj0ntE3ljfJsF7EZ4Wv7rboA5iNhutWq2qBmAbHf+eHBLMYJfDbs/Pyye42NtnTpJZSldOlDLJtCp0G9ifZoI1rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756682767; c=relaxed/simple;
-	bh=X/0Rn/Y/Txu9SNqQR7qKZyrQmOceTw61tacXfm5vdwM=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=E9erCSpXLivwQI3cyg5/pDEc1JPjH7STgcMcU0eiw+nHon+b5oBoGgwLacWyq+HSFvVSQqKbQhZpbQw+Q7idE07vuOxPiWU7FvqVb2VLV5EfmxHOiOhexa9xY+Mvr90JoWytgJVcbdJ9hSX84jrspgdCgxZaPvGM7b/G0QeamR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io; spf=pass smtp.mailfrom=alchemists.io; dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b=LU7TzSKE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fksq+7cv; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alchemists.io
+	s=arc-20240116; t=1756709961; c=relaxed/simple;
+	bh=0kFvnj/XJ7I5vLZyirZW0cFWsG4TO8Uq5IPOC2IG5Ug=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=YRcEE/3P4SryD431UEYup5YHL0NdK026srTkdR22DfNxOZS50YMqfU9gTtHlFxJw62/K/w8z7ioaJDlM/4Lg1IGvw/vc5P8sZS1pb0W4cNo2nFKOUCEMvQDoZEWhF7qxvXI2MuKzAL5h8A0AZWx1BvLQv6NhZMvayL71Z5Y3yjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=b0TRlASs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aGLmj89n; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b="LU7TzSKE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fksq+7cv"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A0061140018D
-	for <git@vger.kernel.org>; Sun, 31 Aug 2025 19:26:03 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Sun, 31 Aug 2025 19:26:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
-	 h=cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm1; t=1756682763; x=1756769163; bh=SA
-	RHKashyEpnH5zrSOgj0RN07im2FZIAlpRVakCeTkI=; b=LU7TzSKEHzzOQ9UaFU
-	qYUhKDW7CZJSHpMP1R7wSuZT82jKoqsKR+RoOKq16LmHX8jssoHMqAUJbVDFBfpf
-	WzQ6emCYySAREzMTuLNGw13DjmbR61Bo6aO8Fkul/2qrN2WHaxnIRuIC1lUVVZck
-	TTmSJwBWygsD5hY2xK1D5xythDSDddap0zCc2mqFQKnNjKxoJB+ZnjQLi3PODUbt
-	CM42ISZAB6LrGpnAwL+Tzuow41gRFoLvc1GW6X5C+KmLK6mrnf76r+Ch0yBfrwXp
-	yE7gaC7tTY3+WWKmLys1KDv7iLp8Y/M+O+VYc4Xo0nupOmyVTD27C4lIpXWZ5jaY
-	o1qg==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="b0TRlASs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aGLmj89n"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id A0E6A1D0018E;
+	Mon,  1 Sep 2025 02:59:17 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Mon, 01 Sep 2025 02:59:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756709957;
+	 x=1756796357; bh=NaeqljnmVVYAHVNtFt+pyomkzQWVH4dsXKmBdtGeBOc=; b=
+	b0TRlASsceRAr5yzvzcRtsQwZFttSs9m2p+8pVY59NWPn2ap7IVv5r5mYK+0/WT0
+	IA1pQVgGahxQelWHcRVFu89RZbbkfuCh1OjLiygsclje1/REyBzWuzs/r9/8p8DH
+	YWL2M5LJ4FN6fMRelpdZkSkF5QKA2ZKGt8X77nhsSO4UJPBw4yaX9Cay1vGKl353
+	yg+UF+b7T5OHDhbgAIqASjT7/r2/ppx0/pRkPU3N5zLQpe2AtwwG4+KcZr3rpWXL
+	Te4H2RNz6MEPS05HNntmHdSKQoIcN/DHi6KXXfa13PZHBFUsSq61DomE5kF5zMxg
+	/SXIGVAaznmoYCZouRnMDw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756682763; x=1756769163; bh=SARHKashyEpnH5zrSOgj0RN07im2FZIAlpR
-	VakCeTkI=; b=fksq+7cvp/G6tTCZq+0EG8+MF0BputYWgNiXUilH5WeMApVNl1z
-	+xE/kaO7x3devee0ifk4C/ybU8+NmQH4N0Te1vrea/KMqc3u2wHbZURzVoy2H/WA
-	AM2A36soUjipaJJC9jIAlEwvyXSsD4oxZc4lafFjLogw57V69EXGG+6eVj4dWTxB
-	GJAt0ODpFSkI+UR3oD0ERGDbbDf6/viV/LvevZiHLCbEEuzlJEl25gP01X8UMFJi
-	Eh/39FwJ6rlAlFyQiWVo710s9GJabJ/5dqv97W/uzWDx4zaFYjbS5EA+8sH80lnt
-	C66JuYUKuLpLTczNv9H7wCNxaAyikU6GV2A==
-X-ME-Sender: <xms:C9q0aOdY_JICm_6vx-_-6WI5WmAq70mt-jzkZkB-qQxPrZg0kFKzXA>
-    <xme:C9q0aKPPZxAVZUcaYphremoWQTEgqXa-XqJmTopOFdoAMAyPrYmxX4aDeDB-lwAHr
-    QVtgxOFucX9WYfh>
-X-ME-Received: <xmr:C9q0aI5beW1GKBKG5Eka358phQ1bhQKg67daOkMeooz2IMwZwgweVd_QlPfDPMBrxVi5EQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduledtheekucetufdoteggodetrf
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1756709957; x=1756796357; bh=N
+	aeqljnmVVYAHVNtFt+pyomkzQWVH4dsXKmBdtGeBOc=; b=aGLmj89nWOV1u3dEj
+	lIVurIlZx1DwAlwAoj2jF9YnqgIUv5SRkc80SonCLDTbrkX+UjOtnr+XmKekr38b
+	792iRPZaDENoC5qSy5WnTEgv5XwexG7KVUIk0oqYcgU0bU0r1t9+i9OAYEkqktXO
+	6nuXsU0iy2sUm1NYBNi3ZQo2a5C9xIRda4H51AbjmqgohwzRVIGkCeBZVcpnQrcq
+	E+1+QsEees8JcNTBG4mHSh4I14h3am6tFdLQlrZKSXmMVO+N4oddFjW4phed6s22
+	vdfiZiG65NvG/O1pVFCny3p9q7d2rDYGIigmFmDyZ8xqDcbvUY8UgtE6zSsY2Uma
+	WKq+w==
+X-ME-Sender: <xms:RUS1aI9I_L845s8-DEwm9LnXm8oXfaFxL3z7vIb29FFhG9ZR79OLDCk>
+    <xme:RUS1aAt7ZZVyHVwJN_rA2bw-ug-wSy1stuMw5Kc2sInuK9ql7fcX6dCI9IObFHKXM
+    IslwwYeRqnXxJh2ZQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleduhedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhtgfgggfukfffvffosehtqhhmtdhhtd
-    dvnecuhfhrohhmpeeurhhoohhkvgcumfhuhhhlmhgrnhhnuceosghrohhokhgvsegrlhgt
-    hhgvmhhishhtshdrihhoqeenucggtffrrghtthgvrhhnpeelkeegtdelffetffelueelfe
-    fhuedugffgudegvdeuudfhteelheegieehfeelueenucffohhmrghinhepghhithhhuhgs
-    rdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    epsghrohhokhgvsegrlhgthhgvmhhishhtshdrihhopdhnsggprhgtphhtthhopedupdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhg
-X-ME-Proxy: <xmx:C9q0aOKE-tDMBg9RRjVrqBMiPRqoaK9Ubmn7XTJJ1O7fljbCO4a3Gw>
-    <xmx:C9q0aCeNEEx4gOfcP2z4EGBOkzQ1Axxb8oveV4uyXkSYZp_X6P8jgw>
-    <xmx:C9q0aBct0ELnAzXvUONEVUE_fRJJtQap8RKoKbqStv74NTTckidm0Q>
-    <xmx:C9q0aFN87dY1HWV4-Q_k_9wl9OLltvGagbkFiAqfN6EwYjraLSKOTQ>
-    <xmx:C9q0aFGmOM07zLnOtA_6T2BpETL7v-S4dbsO0pvCKhfKBjsTI-_qOftN>
-Feedback-ID: i78e840cc:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Sun, 31 Aug 2025 19:26:03 -0400 (EDT)
-From: Brooke Kuhlmann <brooke@alchemists.io>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtjeertd
+    ertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
+    ftrfgrthhtvghrnhepffdtfffhfeffjeefffettedvtedtveefteehgedthedtiedufeff
+    udelffelleejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepfigrfhhkshgvsehprhhothhonhdrmhgvpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:RUS1aJDv2OOM4UjsN9eQo1Pn7BGLNZ1c3fYGNGh8tB5KWGsKea21VA>
+    <xmx:RUS1aAfeH41VN2qpQ8wjR84gYxf0FhEozagql0D0SQdBzkput_QbYw>
+    <xmx:RUS1aGi-FxbGoCFb2jNAByJkZNgSk4yY7wGv7QE1zppK35qIdqlJTg>
+    <xmx:RUS1aAo1olAky5D5W6UkqaeuPSB_Ddr43WIp1ImmPggckcrTqj0QMQ>
+    <xmx:RUS1aCDU32E85bKi_xjH-xomoEo4mhO7hl6zBQhH8cWVFhwIhVvWntdS>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 382AC1EA0066; Mon,  1 Sep 2025 02:59:17 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Git Stash Synchronization - Best Workflow?
-Message-Id: <7B1CCA36-23F1-410D-84ED-6E965989EA8B@alchemists.io>
-Date: Sun, 31 Aug 2025 17:25:51 -0600
-To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+X-ThreadId: Aq6Ho9AcbCnZ
+Date: Mon, 01 Sep 2025 08:58:56 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: wafkse@proton.me, "git@vger.kernel.org" <git@vger.kernel.org>
+Message-Id: <015b5428-505b-405a-82c0-b0545379692f@app.fastmail.com>
+In-Reply-To: 
+ <z0DSzYCJ68tvrJA8fIF-14x3u0CvVyuA7lSRrUJy-78qEySmZEUs8frQxRMPvaar4qfTFdtkv0ZLhVNfkpbVyOle8auxRPLIWGfge9AQT7c=@proton.me>
+References: 
+ <z0DSzYCJ68tvrJA8fIF-14x3u0CvVyuA7lSRrUJy-78qEySmZEUs8frQxRMPvaar4qfTFdtkv0ZLhVNfkpbVyOle8auxRPLIWGfge9AQT7c=@proton.me>
+Subject: Re: I still use this!
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Hello.
+On Mon, Sep 1, 2025, at 00:21, wafkse@proton.me wrote:
+> Yes, I still use `git whatchanged`.
+>
+> In fact, its one of the first or the first git command I run after
+> pulling from a remote.
+>
+> Please do not make it go! My muscle memory is too used to it to
+> migrate to `git log`...
 
-When using Git 2.51.0, what is the correct way to safely export your =
-stash and then keep that stash up-to-date? Here's an example workflow:
+Relevant email about allowing aliases to shadow deprecated commands:
 
-touch demo.txt
+https://lore.kernel.org/git/20250830022718.GB567900@coredump.intra.peff.net/
 
-git stash push --include-untracked --message "Demo"
-git stash export --to-ref "refs/stashes/$USER"
-git push origin "refs/stashes/$USER"
+-- 
+KH
 
-git stash pop stash@{0}
-git push origin "refs/stashes/$USER"
 
-git stash push --include-untracked --message "Demo II"
-git stash export --to-ref "refs/stashes/$USER"
-git push origin "refs/stashes/$USER"
 
-Notice, in the middle, I pop the stash only to rename it. Upon pushing =
-these changes back up, I get the following error:
-
-To https://github.com/bkuhlmann/test
- ! [rejected]                  refs/stashes/bkuhlmann -> =
-refs/stashes/bkuhlmann (non-fast-forward)
-error: failed to push some refs to 'https://github.com/bkuhlmann/test'
-hint: Updates were rejected because a pushed branch tip is behind its =
-remote
-hint: counterpart. If you want to integrate the remote changes, use 'git =
-pull'
-hint: before pushing again.
-hint: See the 'Note about fast-forwards' in 'git push --help' for =
-details.
-
-The work around is to use `git push --force` when pushing updates. I'd =
-like to use `git push --force-with-lease` but that doesn't work.
-
-I realize that force pushing over your remote stash makes a lot more =
-sense since you typically never share a stash with folks but was =
-thinking it would be nice to ensure you don't accidentally override your =
-remote stash when working on different machine when you forgot to import =
-first. Basically, wanting to protect myself from myself. :)
-
-Is force push the only way to handle this use case or is there a better =
-approach? Thanks!=
