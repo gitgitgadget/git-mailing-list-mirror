@@ -1,140 +1,213 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C83C341679
-	for <git@vger.kernel.org>; Mon,  1 Sep 2025 14:29:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003FF2747B
+	for <git@vger.kernel.org>; Mon,  1 Sep 2025 17:27:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756736986; cv=none; b=IFD+6TR7Z3svOWiribjLnho8Xpv7GLiEns8kA+ltXklqPbN0nS1/w6Vr37yfUWcQJJKrcfhKeSuhPhynu34j4hLyCd//vPODFXVsjjWt5Z6P1Aope1MYH5hukp6DfBI3xwfc/sLeaLJPTDynVP37O3UPfGvL3VNOlD7GTkNy4aM=
+	t=1756747674; cv=none; b=KTq7dMlTtBr9hIMZzsLlFiWE6nEnvKOUORK9yAxdeNHpVqVhqjQQUPcPxRdN89to/nzqtH9C2wVmchO3fbcUcCL495IG/HN068XMASu9CUrFq8zzxs+MffSKVXULzXLKKFfTS0kQ6+h9+JqwzMxgu20RDpJ0uTJbI0LVkSSyaQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756736986; c=relaxed/simple;
-	bh=qM+ak9Yc/V+uh6Awpx4jloeX1iSo9105Y7sz94Vdk0g=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=UFGfBSz/LPaSQINH2XdQzoarG0whqhKXgz4QoK5V2cvHb0d7nTo4zKkotI/faWXNtW1TerCQSavuiBXcyam1pzHQKk+pUrvbdKS6G1FkROhpcqLaa6zzuzBxf0aBF2DhIdd0gZKV/b3pdvnO7DLzYeQ8jEKG859nkc+VDVgNQEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=rq1aWpRk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L+pSpiL0; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1756747674; c=relaxed/simple;
+	bh=2ou0/wnqVUtPKGV6jYe5CLLo3OJaxf1CfDjmS2kBcwU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=XtmJN1UkfSeXi8L51t2YSW6y8Y5n55hHglyycBbTyvPI8qTyV3VBfHBzdMfsqqI7GtTdGqCHS8inlG0BGr4PtDENzlDgAUlulT9hVe6FMONKxx+PHuZJyQxhCFsMNDjEcRRTptqTXmSbW8ceh2axpwJ1Ypsd38PedJn1D99Hwb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wf6qNF1w; arc=none smtp.client-ip=209.85.222.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="rq1aWpRk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L+pSpiL0"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 54E711D00269;
-	Mon,  1 Sep 2025 10:29:43 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Mon, 01 Sep 2025 10:29:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756736983;
-	 x=1756823383; bh=N2ymu19mh7fEBqZN/DaKhOxFvjNxv01ivcDRaHtshaQ=; b=
-	rq1aWpRkRRshB69k69nSGzjsCgrCIFoENVUvoO2FUlIvyjvRquIhKdF57V0+/LIh
-	qFJmULKS6vu+KKx7xV+IMGfcYQRrOBjoMmPo2gdkMB5Gf4VKLQH3/E87z1mV3vy9
-	AOIdy7JFfyJluBBKOrzw0tyGW4OenTdDsmrCOodv29oQp4nJ8TWa7RDTdVllUL47
-	1ZXhaZfTRv2mQgCW8ml6/hJrLwNnazy40RCPgIa0vJMu4M/SkB19oR6LDtiVp4lq
-	4kDLwJvQITm+6IiSwxNBf1cFHTnfqNmobXq3FYLPnEfRYefNkLzq5bAn5Nco5/7n
-	/cgiSMA6sSH1d6lu4cgyWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756736983; x=
-	1756823383; bh=N2ymu19mh7fEBqZN/DaKhOxFvjNxv01ivcDRaHtshaQ=; b=L
-	+pSpiL0tdcPPr9+8FUhcvm6Txbv+T076VIlIwZDZmNkhVNVIwbNmd6K4WzIXgbRM
-	ukFUg7Q9Buyqa5WaZPEoIhagVYp6kT0dRh3JR9jjqrPSTS/GM9qxQjDAb25lLCOd
-	efzYwEiCvCHrWEfXwMb10Bw+zrD0Xt8m2xWmCM/Fod2RHlQNDmNNZ2sA04zLLlxQ
-	KLrXw8D7u0XTEfnfLr2rd4syYqEXbh/VS5D6t1JpktwZLI45AyO7HkVTlPmmIxjc
-	5joHQkdFiwJHvSzN0IdKm47A8ntO5JtqqdMKrEpN1I3zGmK90Qa76ECdutfFIHUF
-	sYhkDLX+X8bFHPxwDoo+g==
-X-ME-Sender: <xms:1q21aP3uVC2ef-zGvFPv3LqeDAlxAYG3mzqS_9tTQDmbL5oE7mfyqQ>
-    <xme:1q21aOErE5uprnCZn904KGkF_zFaajLJQuGt0aCe-aGq909F5OU89nwDZks_dJ2GD
-    HIVX7DlMW9cEn9oB30>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduledvfeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
-    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
-    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
-    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhg
-X-ME-Proxy: <xmx:1621aA9wnioxquycoqNaABOUf1gUML_d7wvEj9u0k3Ifzh6OMU5A4g>
-    <xmx:1621aCJmOHuEW5XXV4sE7ja2QkIeC-pANZ7fcuJTIopMlPms0cKgiA>
-    <xmx:1621aFlWtBTl3EhmvPQaUQ4uQ-Tv5yjt_qDoMunw_m1_H2weV7hqyg>
-    <xmx:1621aGPNUyayYSnvBjUukb_EsGihJkkG_KeZIf6OQL8bBom4QhYX6w>
-    <xmx:1621aKo0BuNqoYffpeFRcbfxNtm1Rxia6M51fyY5LXv5-ApDMKdB5JBd>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id E505A7840CD; Mon,  1 Sep 2025 10:29:42 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wf6qNF1w"
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-8900fcc0330so3873107241.0
+        for <git@vger.kernel.org>; Mon, 01 Sep 2025 10:27:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756747672; x=1757352472; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JJipzrkJjGpjQBkO9e4lDVlN4DMXt9+ADyr8gBiPdlQ=;
+        b=Wf6qNF1wdMW9yuALPOeGuqgSeeQTfIFsvdspn//kmNNKqNbHLSrwwsgYsJlH7vMo1O
+         K+PYEgdhG8JxFx+D3EK2lEi5Nnw+1sXf3wMU6Wzmy+Ubz2HbvOUCv/cxbUDJaZvDzR7j
+         Mt9jC7seJcQnLYSKAtYw8TFCMYhdcpZvhhYvpTPXUFK+Ni3E3f4gYz48jD72Jfbx8PGs
+         kYMRTQnRmf/V5WG5Rg4T53sUBQ+K5R64hwS7PprFrKmH7NeiPu+ZIoi53i+PM4dMF50s
+         zO+bTbFqYUlz0YveCkdYr5017u9+7VeJuSu1gqPP7N8knXOBUs6n1bPqkrT5VdtaVjDL
+         Z9HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756747672; x=1757352472;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JJipzrkJjGpjQBkO9e4lDVlN4DMXt9+ADyr8gBiPdlQ=;
+        b=JjDue4Dbv899hGLNqnkqY3xczEBTcJcDyOxilYrMtjYwFKn3RN7nZx/84gv79K5TMB
+         arE74/yNg9x+WLczgm5KKoS5SIJqJpxAc+81kSD//lkh+hlizOcC3B8KI8JqFz9HCbx1
+         A9LXgNXFJ5m0foJt4p52SmG8Ia944Pel/9H2u63l34oc3vRuXp4Fv03LJM3V7jHFvtCM
+         F6rf3SHDlJ6fcPi6Wut/IB+JVl4v5LrmjQlGAAhd8EQ0gpR0fvJb8miZ2Oc6oCwXoN5h
+         eahFT1365uJsOhA1fldV3BLg4SBkrEVa+OUwMigG5N3lyU4y1SRy01GbbEPvfE1F2OSH
+         pnmA==
+X-Gm-Message-State: AOJu0YynI478TeUVZpTSnWb+ODv7OhCOLTnFQDajx4JxB5dYQkut7++I
+	lLYnQsesjml1jYnTLvS6r/35pDuMhSK0KqtLMoXy6rzgC6HrI2s1+7w+Ffqaxg==
+X-Gm-Gg: ASbGnctPQ3p3GpvSA1UweogMARA1ksKBMcjZ2KHO6HwKN74qZ2Oj+CjHx2KCUCcbSzT
+	XpecQ46u9d2plFZaPpEe89QxvChQQQlrxIQXH2NV8qX3ukkkeKEuk1+oNzsHGKzwmpkb0OHpvjm
+	IWH5CA6pBk/JnAqolDFKWOjZhN5Cg5+rBUdDqE06VToSsQIxKm8gT0irX5zeWYL8kn/98AwjUgt
+	/FmVS6KaWjvQNqq7tJRnNG0/ePuZ13QLObBv1gl+w45Ho6LP4b3m+w5XEIDfq8B0zMm1frt3TUe
+	MvtKMzhKfm7SZykz+Zzm7PfFPE4YTi9rCgdBxSDtRmlCo9NiLFt3yqENsCl/19Wny5ipQ+jtCBK
+	AEyHoInj3uEFtvTAjNVlvFEZfxxXixSK5x7B826AWaln4t6sZ5Ifr+W4ILYagG5g7QgCUf3EgUw
+	==
+X-Google-Smtp-Source: AGHT+IHtD0bIaHZyqYMZQ4OVuAzhr1FmUb2R0l/FqhZxN7BnMpiKb8rxLWejMH8rUIgHTik3DAVBug==
+X-Received: by 2002:a67:e009:0:10b0:4fa:3547:2d38 with SMTP id ada2fe7eead31-52aed4ea307mr2611128137.10.1756747671632;
+        Mon, 01 Sep 2025 10:27:51 -0700 (PDT)
+Received: from localhost.localdomain ([2804:7f0:b77d:8aa:edea:fa75:64b3:34fd])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-8943b7c2c42sm3973283241.4.2025.09.01.10.27.49
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 01 Sep 2025 10:27:51 -0700 (PDT)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	karthik.188@gmail.com,
+	gitster@pobox.com,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Subject: [GSoC PATCH v3 0/2] repo: add -z and objects.format
+Date: Mon,  1 Sep 2025 14:27:30 -0300
+Message-Id: <20250901172732.98845-1-lucasseikioshiro@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
+References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ABiMobVYJg4V
-Date: Mon, 01 Sep 2025 10:28:44 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <9d708558-df36-4bdd-a914-522228b27215@app.fastmail.com>
-In-Reply-To: <xmqqh5xqnlmo.fsf@gitster.g>
-References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
- <pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
- <360051d2a656727ca42d489de81ffec9b23a6386.1756467934.git.gitgitgadget@gmail.com>
- <xmqqh5xqnlmo.fsf@gitster.g>
-Subject: Re: [PATCH v2 3/5] doc: git-checkout: don't use "reset"
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-> I think the source of the problem is not that they "don't know what
-> the term means" at all.  Isn't the real problem that the use of the
-> verb in the original sentence you are correcting in this patch is
-> vague and does not say what the branch is reset *to*?
+Hi!
 
-I agree this is a reasonable approach here, will try that.
+The major change in this v3 is that it's now possible to use --format and -z
+together. If the user uses a combination of two or more --format or -z, only
+the last one will be considered.
 
->> Many Git users don't know what the term "reset" means. Resolve this by:
->
-> Even though it is the name of one of the most often used commands?
-> And yet a separate step in this series made the claim that everybody
-> knows what "switch" means because it is the name of another command?
+Here's the range-diff versus v2:
 
-I'm surprised to hear you say that "reset" is one of the most often
-used Git commands -- what I frequently hear from Git users is that they
-use `git reset` only in "emergencies" where something has gone wrong
-and that they're afraid of using it.
+1:  3ea40b1572 ! 1:  0323f1fa75 repo: add the flag -z as an alias for --format=nul
+    @@ Documentation/git-repo.adoc: git-repo - Retrieve information about the repositor
+      --------
+      [synopsis]
+     -git repo info [--format=(keyvalue|nul)] [<key>...]
+    -+git repo info [--format=(keyvalue|nul) | -z] [<key>...]
+    ++git repo info [--format=(keyvalue|nul)] [-z] [<key>...]
+      
+      DESCRIPTION
+      -----------
+    @@ Documentation/git-repo.adoc: THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHAN
+      COMMANDS
+      --------
+     -`info [--format=(keyvalue|nul)] [<key>...]`::
+    -+`info [--format=(keyvalue|nul) | -z] [<key>...]`::
+    ++`info [--format=(keyvalue|nul)] [-z] [<key>...]`::
+      	Retrieve metadata-related information about the current repository. Only
+      	the requested data will be returned based on their keys (see "INFO KEYS"
+      	section below).
+    @@ builtin/repo.c
+      
+      static const char *const repo_usage[] = {
+     -	"git repo info [--format=(keyvalue|nul)] [<key>...]",
+    -+	"git repo info [--format=(keyvalue|nul) | -z] [<key>...]",
+    ++	"git repo info [--format=(keyvalue|nul)] [-z] [<key>...]",
+      	NULL
+      };
+      
+     @@ builtin/repo.c: static int print_fields(int argc, const char **argv,
+    + 	return ret;
+    + }
+    + 
+    ++static int parse_format_cb(const struct option *opt,
+    ++			   const char *arg, int unset UNUSED) {
+    ++	enum output_format *format = opt->value;
+    ++
+    ++	if (opt->short_name == 'z')
+    ++		*format = FORMAT_NUL_TERMINATED;
+    ++	else if (!strcmp(arg, "nul"))
+    ++		*format = FORMAT_NUL_TERMINATED;
+    ++	else if (!strcmp(arg, "keyvalue"))
+    ++		*format = FORMAT_KEYVALUE;
+    ++	else
+    ++		die(_("invalid format '%s'"), arg);
+    ++
+    ++	return 0;
+    ++}
+    ++
+      static int repo_info(int argc, const char **argv, const char *prefix,
+      		     struct repository *repo)
+      {
+     -	const char *format_str = "keyvalue";
+    -+	const char *format_str = NULL;
+    - 	enum output_format format;
+    -+	int format_nul = 0;
+    +-	enum output_format format;
+    ++	enum output_format format = FORMAT_KEYVALUE;
+      	struct option options[] = {
+    - 		OPT_STRING(0, "format", &format_str, N_("format"),
+    - 			   N_("output format")),
+    -+		OPT_BOOL('z', NULL, &format_nul, N_("alias for --format=nul")),
+    +-		OPT_STRING(0, "format", &format_str, N_("format"),
+    +-			   N_("output format")),
+    ++		OPT_CALLBACK_F(0, "format", &format, N_("format"),
+    ++			       N_("output format"),
+    ++			       PARSE_OPT_NONEG, parse_format_cb),
+    ++		OPT_CALLBACK_F('z', NULL, &format, NULL,
+    ++			       N_("synonym for --format=nul"),
+    ++			       PARSE_OPT_NONEG|PARSE_OPT_NOARG,
+    ++			       parse_format_cb),
+      		OPT_END()
+      	};
+      
+    @@ builtin/repo.c: static int print_fields(int argc, const char **argv,
+     -	if (!strcmp(format_str, "keyvalue"))
+     -		format = FORMAT_KEYVALUE;
+     -	else if (!strcmp(format_str, "nul"))
+    -+	die_for_incompatible_opt2(!!format_nul, "-z",
+    -+				  !!format_str, "--format");
+    -+
+    -+	format_str = format_str ? format_str : "keyvalue";
+    -+
+    -+	if (format_nul || !strcmp(format_str, "nul"))
+    - 		format = FORMAT_NUL_TERMINATED;
+    -+	else if (!strcmp(format_str, "keyvalue"))
+    -+		format = FORMAT_KEYVALUE;
+    - 	else
+    - 		die(_("invalid format '%s'"), format_str);
+    +-		format = FORMAT_NUL_TERMINATED;
+    +-	else
+    +-		die(_("invalid format '%s'"), format_str);
+    +-
+    + 	return print_fields(argc, argv, repo, format);
+    + }
+      
+     
+      ## t/t1900-repo.sh ##
+    @@ t/t1900-repo.sh: test_expect_success 'git-repo-info aborts when requesting an in
+     +	test_cmp expected actual
+     +'
+     +
+    -+test_expect_success 'git repo info fails when using --format and -z' '
+    -+	echo "fatal: options ${SQ}-z${SQ} and ${SQ}--format${SQ} cannot be used together" >expected &&
+    -+	test_must_fail git repo info -z --format=keyvalue 2>actual &&
+    ++test_expect_success 'git repo info uses the last requested format' '
+    ++	echo "layout.bare=false" >expected &&
+    ++	git repo info --format=nul -z --format=keyvalue layout.bare >actual &&
+     +	test_cmp expected actual
+     +'
+     +
+2:  1d062e690e = 2:  b2b241f401 repo: add the field objects.format
 
-I'm curious about whether there are any datasets about which Git
-commands are the most frequently used, or if it would be worth me
-trying to build one.
 
->> ... This is the
->> +transactional equivalent of
->>  +
->>  ------------
->>  $ git branch -f <branch> [<start-point>]
->>  $ git checkout <branch>
->>  ------------
->>  +
->> -that is to say, the branch is not reset/created unless "git checkout" is
->> -successful (e.g., when the branch is in use in another worktree, not
->> -just the current branch stays the same, but the branch is not reset to
->> -the start-point, either).
->> +that is, the branch will not be created or modified unless
->> +`git checkout` is successful.
->>  
->>  `git checkout --detach [<branch>]`::
->>  `git checkout [--detach] <commit>`::
->
-> This is in response to "transactional equivalent".  I've always felt
-> that there is no need to say "transactional" in this at all.  IOW, I
-> wouldn't have minded if we rewrote this more heavily.
+Lucas Seiki Oshiro (2):
+  repo: add the flag -z as an alias for --format=nul
+  repo: add the field objects.format
 
-"Transactional equivalent" was bothering me too and I like the
-idea of rewriting it, will give it a shot.
+ Documentation/git-repo.adoc |  9 ++++++--
+ builtin/repo.c              | 44 +++++++++++++++++++++++++++----------
+ t/t1900-repo.sh             | 18 +++++++++++++++
+ 3 files changed, 57 insertions(+), 14 deletions(-)
+
+-- 
+2.39.5 (Apple Git-154)
+
