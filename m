@@ -1,153 +1,415 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF54E2EE268
-	for <git@vger.kernel.org>; Mon,  1 Sep 2025 10:10:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC4E84039
+	for <git@vger.kernel.org>; Mon,  1 Sep 2025 13:33:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756721407; cv=none; b=g9tg1u9Fw0+XqN52jWpjxvg1p/KD939ezMZfpxJeC5xYaQG9T19FGZDRfXnYpPF1Q1PI+E5zAnozrrmxhX98NFUFoD7iLDFbvcY1j/ust44c0AEHvvyozNXgEdf8OiFcUQijYZ31opQsc4iGCQ/Cobd8rCALJJJePBoZpMqiQQw=
+	t=1756733609; cv=none; b=MbL/rkpxlGQGVeTmESSpgzF1a8CzzKKfsWG3+6oHGQ76HtSFZNpGMsnU+2b3UkYUWr/vqMTjPiH+TrxpPnm+/dlPqHDPjEtZbSg9dQFtU4EjX7bnGg5wnLQSjwAKqXVYQrtzofL2VjFKI9nRsmsB6iCD/SLfDcl2sDUzXOWdby0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756721407; c=relaxed/simple;
-	bh=Twi0TUr5c4FQJP6TrXt4UWAd1X5ZR5BHBaoRs9WBMLM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=sUymg5qcHypElMtg57Bz8H8lYu1SHF4GFfubg2KGCufgPsCg6zeUnBqSyEdYQ1fn8GhQdz1+kQgk3u19OmK8cYmBRYvNJCe2d1DAT1ebaIlciwNXTdR5u4VFgAAHhiEk0gS/XP6Fd6LJ5W45q92Zpexjw/BueoqcS4Yo5BmY1Vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aRZGcWY7; arc=none smtp.client-ip=209.85.128.53
+	s=arc-20240116; t=1756733609; c=relaxed/simple;
+	bh=biLWtRw05txCIlBwc2BmrYVFAiStCoEaJOLlvmLiwOQ=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pAFK4j76i1eGpxjTwaS7cs3ck4L6CV1nJfZimx9PR4c8B5DiY1AXySvoRqwUuWTgo45jadZnuN5Spi+hAwBid/b5p9b3XQUQBQzO4gMzUQyAkvS5luWaSOWP70ZM2YfsNmaFih1U+yz9ss/KCtV7TmnYwvAtQqRiAMs3eve8x+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pss6uaWx; arc=none smtp.client-ip=209.85.217.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aRZGcWY7"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-45b7c01a8c1so32761045e9.2
-        for <git@vger.kernel.org>; Mon, 01 Sep 2025 03:10:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pss6uaWx"
+Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-52912c1c805so2069725137.2
+        for <git@vger.kernel.org>; Mon, 01 Sep 2025 06:33:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756721404; x=1757326204; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=QSCIsRlEW5CeTM4Mrb/HnIwa8mHCL+Rb1HK8XN1O3/0=;
-        b=aRZGcWY79C9U+OTdjJrla2llpgAhzRQhOjvWaQ/1Pu5g85mIUq1Au4m+C4JIWsSRPY
-         Jdip3hPEuEiL1KrOUCnH1Yk6uuPbS674P5tA9ymia1QUlIHZBpD6+uejVHbpI09GPGCA
-         fssKRBsu7g8qLsOSUqtPngKiixh9LkeVk7tAZAz6eWoPE0A2PkLj+f7reXuiuiPMlBKB
-         9+cF2HU35T6duYnV63z6WbV97bnWnGo2Zf0GSJZJKvigMotYmkm7K24VNqOAvYdIZmdT
-         JkE7PYxE8UwFClmafLvxGYAp4Y/yUYFFe9LNTF2PjUpgRsHKR/b0pYriELimh2QCRUrb
-         jktQ==
+        d=gmail.com; s=20230601; t=1756733607; x=1757338407; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mSQBiR83IgyCiEvXDJ8QdXCjJ6OzMy7/CChkJ3DNTPQ=;
+        b=Pss6uaWxynMA8Wkay3Gyb5VV+0xG4HIlBKJwGksD0J7fjQPZEw8H/kHQ0j9nVR/18/
+         eBCbQuOjTHwZe6eFNVDSJpsbDU0hh8H9BhE4Ewvdrwzh2j1DOGFhrWVDIjcSSR1pQNLu
+         hcIFD+wvMmPKkEvxuvxX3AjWGDmWrJB6f5Pa+09gdJW6lV/AcRlJi9hX0kZAsIra6A/A
+         Xu3BGs0lTYLLM87fn3wSesL7/Iq8zGdIzNflvVz9J9YHW9OJRMAY1nbRPn4p/dvmxbEz
+         Uh92Mlw3X04j7L0d+kt0YMrk95uPin+5INpPh+Rzc5CByO4aTfU4V7nZSc0Zr3TwyNv+
+         HChA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756721404; x=1757326204;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QSCIsRlEW5CeTM4Mrb/HnIwa8mHCL+Rb1HK8XN1O3/0=;
-        b=Bv/a8Lb8LwXOIOdUXXghi4R7kzr4V4TVm6hgOIqIvkxIbpLPHr7Nu3hFcxgzeYFMc0
-         6exyulVuGdGhTX/C0Uhfzrj9a4oxGDxRpuqVTvvt6l/ov7Y9mh3ruuAvUHiEXWagjvx6
-         JhssR66K44zbzKU15p93NjLNhi0UfihWxS8RfXVjhY+LtqVXsc21QHSUC4vjwgs/UUDc
-         nOhzW8P3gIm8BqzPrEpfJjpzkR7PwujluUwcyrGlRBL1R+S8XJDsbfqI+ZNDZFKHWtYZ
-         BAqpdcbteun0H4iwCSmbRppep5rIfLHnyU0tJCZwVasowX8hsV7vQSggVGXFsypgZ3Dz
-         XDaA==
-X-Forwarded-Encrypted: i=1; AJvYcCXC6mug9G11GaQMHMNqFkZKutk1UJ16jtShlZGl2e7tw88so1c+Cn7dD67mBnOUIbDizUA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzL8jLODqlR7GKDQjXVFmLJAwGAvl/ncoJIqJXGP9a4i7qcVCsz
-	rkkzpG6F3O5kxgiYcnU6RViKJaRY9VC2X0U8VL8DARx9GNwcxISYm8We
-X-Gm-Gg: ASbGncuV93fHc0I/9U+WE8tSNmk8EGkrkIuCLOsKVCJ8E0AYD7Mx4LODffYBdzQkyXi
-	XGBLtyak+pV0n5j7aUGy/WEcR1JcfPPSOPExQCpST9acAgIqLQTnUwYUtusnK1zQg2VsVShHFuW
-	rINE9WvMqISZ3ZtkZr9RY3T5L95ELSZ2E/SZ4shfrqWRuX9TlgRwGVx02QZ0+FY+z/Tz4X3KN4I
-	gc0KstzGCpvpjLOZ0RO3MFktDpNlusxK4xm3zQbNhz0paPAjVvvxlzRwh4svzknWz0VEugNxdlD
-	kxH7wkM869Uv6pSuyhyhk/JyTFZIRcmnxhp79evnmKYrslYiAXBOGMrQUF4jf8A5+leBvsiBtrF
-	F631rE4xdZZkw9haVwYZYy0gSRqJq7NunihSdAmu3dlQn8YYKVEzc66mSCWy0P3eknBYyw2D0Du
-	shHUFVf+ICQP/C
-X-Google-Smtp-Source: AGHT+IEefly4ujQ0dlrDuExpxLBbuByTgJx0gFR1VsVRxhaSpOP2LZWzKRWuqlKCH2eJN68UJjCl6A==
-X-Received: by 2002:a05:600c:c4a1:b0:45b:84b1:f638 with SMTP id 5b1f17b1804b1-45b8559babbmr48522925e9.20.1756721403539;
-        Mon, 01 Sep 2025 03:10:03 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b7e7d2393sm149906445e9.3.2025.09.01.03.10.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Sep 2025 03:10:02 -0700 (PDT)
-Message-ID: <5dee5f49-eeb6-49e2-8bca-6ae6a1d6be5d@gmail.com>
-Date: Mon, 1 Sep 2025 11:10:02 +0100
+        d=1e100.net; s=20230601; t=1756733607; x=1757338407;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mSQBiR83IgyCiEvXDJ8QdXCjJ6OzMy7/CChkJ3DNTPQ=;
+        b=QwJeQNPodhQtaZwL988jOud/6OH7vpAmeIZ8FrzSqjvHcQulm7v9hMBZgzIO06CrQy
+         jlU/xmx63QMXENCqfkR90RL2ZKKL00XAyc/fp0BsHaRqal5f+PSEtOTPAHqPbiFXY5la
+         nqIyu31ApbigYBmKXsiwTuTCJXSWUbJZ6/VHnJ6V1WaZoH7aIijK+iuLzV9BsUZW+aOn
+         8Vk5re+WdDaY8wE1CjVP57foVyzB4jszQyp5L5KO0LqZ+8HK/s/TBy7Bbor40mtJrGcJ
+         KXINN1SZ6opqSQK2bt39XWbbU7EygRox5gCZE6p3DqSOchNqNQTtJ/Jta/hVxwcEQM9o
+         f/CQ==
+X-Gm-Message-State: AOJu0YyyNzlvVNx/Kh3VYJhcAFFHGIxq/Ytpnja4fmjkvXGlGj0qZM6E
+	YAQFCfYGRO/r7OgTMUeriA3aBROe6nVmkS7bElsilJyqvuW3RqM+yO0dDBDm2ukCD0NIpBcaIiy
+	oGMo6ifY7WrOBko+lSm2JgPbO0KDgdD3zMg==
+X-Gm-Gg: ASbGncu+5GMEohcm+1HA52upOdbQPHtpb9IhZ7Hym1cWGByvvHltC8BBcL1wJeu398H
+	QXl10r85554lwkEqR9dNZP/uxCyyUPxXGarGKYKPmmxs/i5rxwGZHS/XpTTUtd17P1ObEO7Al3W
+	n97NjWb3xeIN0UFKX3dcOE2EST9gyNtYT9+CtI9O057czwRjIkNTd4+Xt4rLQpPD81fxu2AeNfX
+	bQMlltSjtNUmxqala+73BgzBsrvkRqrnVKr3Mvg4DRS8MjNXOFC
+X-Google-Smtp-Source: AGHT+IEkE6Z+0b1VvQvBLthdYp3UqTLRaFUwq/sfNSnt+drxMUVM0LhziifkPieU4flMFAcxbonTwQfvq6MUN/iJK/0=
+X-Received: by 2002:a05:6102:5f04:b0:529:e9a5:c216 with SMTP id
+ ada2fe7eead31-52b19848814mr2177831137.4.1756733606380; Mon, 01 Sep 2025
+ 06:33:26 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 1 Sep 2025 06:33:24 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 1 Sep 2025 06:33:24 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aK3fHRMFiRBYNiJE@ArchLinux>
+References: <20250819-228-reftable-introduce-consistency-checks-v1-0-8b8f6879fa9e@gmail.com>
+ <20250819-228-reftable-introduce-consistency-checks-v1-2-8b8f6879fa9e@gmail.com>
+ <aK3fHRMFiRBYNiJE@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Git Stash Synchronization - Best Workflow?
-To: Brooke Kuhlmann <brooke@alchemists.io>, git@vger.kernel.org
-References: <7B1CCA36-23F1-410D-84ED-6E965989EA8B@alchemists.io>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-Cc: "brian m . carlson" <sandals@crustytoothpaste.net>
-In-Reply-To: <7B1CCA36-23F1-410D-84ED-6E965989EA8B@alchemists.io>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Mon, 1 Sep 2025 06:33:24 -0700
+X-Gm-Features: Ac12FXyAYIhE9R6YS_FlqlaZGdNWIL-BGQDF_hJkC-OTtKqnmKXNvWHMu2X_LlE
+Message-ID: <CAOLa=ZR43JYu1ky_HF7nC4xkVe6B+fMWTNK+sczaar_8YNcd8A@mail.gmail.com>
+Subject: Re: [PATCH 2/5] refs/reftable: add fsck check for checking the table name
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Content-Type: multipart/mixed; boundary="00000000000092e2ea063dbd6ad6"
 
-Hi Brooke
+--00000000000092e2ea063dbd6ad6
+Content-Type: text/plain; charset="UTF-8"
 
-[I've cc'd brian to see what he thinks about setting up a reflog by 
-default when exporting stashes]
+shejialuo <shejialuo@gmail.com> writes:
 
-On 01/09/2025 00:25, Brooke Kuhlmann wrote:
-> Hello.
-> 
-> When using Git 2.51.0, what is the correct way to safely export
- > your stash and then keep that stash up-to-date? Here's an example
- > workflow:>
-> touch demo.txt
-> 
-> git stash push --include-untracked --message "Demo"
-> git stash export --to-ref "refs/stashes/$USER"
-> git push origin "refs/stashes/$USER"
-> 
-> git stash pop stash@{0}
-> git push origin "refs/stashes/$USER"
+> On Tue, Aug 19, 2025 at 02:21:01PM +0200, Karthik Nayak wrote:
+>> The `git refs verify` command is used to run fsck checks on the
+>> reference backends. This command is also invoked when users run 'git
+>> fsck'. While the files-backend has some fsck checks added, the reftable
+>> backend lacks such checks. Let's add the required infrastructure and a
+>> check to test for the table names in the 'tables.list' of reftables.
+>>
+>> For the infrastructure, since the reftable library is treated as an
+>> independent library we should ensure that the library code works
+>> independently without knowledge about Git's internals. To do this,
+>> add both 'reftable/fsck.c' and 'reftable/reftable-fsck.h'. Which
+>
+> A design question here, we name the "fsck.c" for the source code but for
+> the header, we use "reftable-fsck.h", it is a little strange. Why not
+> just "fsck.h" instead of "reftable-fsck.h".
+>
 
-This push doesn't do anything because refs/stashes/$USER is unchanged 
-since the last push
+Since the reftable code is treated as an external library, all
+'reftable-.*.h' headers are treated as headers which expose APIs for the
+libraries users. We would have defined 'reftable/fsck.h' if there were
+internal users of the 'fsck.c' code. But there are none.
 
-> git stash push --include-untracked --message "Demo II"
-> git stash export --to-ref "refs/stashes/$USER"
-> git push origin "refs/stashes/$USER"
 
-This push fails because you've popped and then pushed a stash since the 
-last export so refs/stashes/$USER on the remote cannot fast-forward
-> Notice, in the middle, I pop the stash only to rename it. Upon 
- > pushing these changes back up, I get the following error:>
-> To https://github.com/bkuhlmann/test
->   ! [rejected]                  refs/stashes/bkuhlmann -> refs/stashes/bkuhlmann (non-fast-forward)
-> error: failed to push some refs to 'https://github.com/bkuhlmann/test'
-> hint: Updates were rejected because a pushed branch tip is behind its remote
-> hint: counterpart. If you want to integrate the remote changes, use 'git pull'
-> hint: before pushing again.
-> hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-> 
-> The work around is to use `git push --force` when pushing updates.
- > I'd like to use `git push --force-with-lease` but that doesn't work.
-You can use --force-with-lease=refs/stashes/$USER:$expect where $expect 
-is the value of refs/stashes/$USER when you last pushed. The problem is 
-that there is no easy way to find that as by default refs/stashes/$USER 
-does not have a reflog and there is no remote tracking ref set up for it 
-either. If you add a fetch refspec like
+>> diff --git a/Documentation/fsck-msgids.adoc b/Documentation/fsck-msgids.adoc
+>> index 1c912615f9..784ddc0df5 100644
+>> --- a/Documentation/fsck-msgids.adoc
+>> +++ b/Documentation/fsck-msgids.adoc
+>> @@ -38,6 +38,9 @@
+>>  `badReferentName`::
+>>  	(ERROR) The referent name of a symref is invalid.
+>>
+>> +`badReftableTableName`::
+>> +	(ERROR) A reftable table has an invalid name.
+>> +
+>
+> When reading this, I feel a little strange. `Reftable` already indicates
+> it is a table. Should we simply say like the following:
+>
+>     A reftable has an invalid table name
+>
 
-     refs/stashes/*:refs/remote/origin/stashes/*
+I'm not sure about this, since 'reftable' refers to the reference
+backend and the 'table' refers to an individual table within the
+'reftable' format. I would say both are important.
 
-(note "remote" rather than "remotes" to avoid clashing with the default 
-refspec for branches) then refs/remote/origin/stashes/$USER should be 
-updated when you push to or pull from refs/stashes/* and I think a bare 
---force-with-lease will work. In general --force-with-lease without 
-explicitly specifying $expect is not that safe as it will happily 
-overwrite the remote ref if you fetch and do not incorporate the remote 
-changes into your local changes before pushing. Using 
---force-if-includes is safer if you don't want to give $expect 
-explicitly. That requires a reflog for the local ref though which you 
-can enable by setting core.logAllrefUpdates=always. We should perhaps 
-change the export code to create a reflog for the ref we're exporting 
-the stashes to and maybe expand the documentation to mention setting up 
-a fetch refspec.
+CC'ing Patrick here for a second opinion.
 
-Thanks
+>>  `badTagName`::
+>>  	(INFO) A tag has an invalid format.
+>>
+>> diff --git a/Makefile b/Makefile
+>> index e11340c1ae..f2ddcc8d7c 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -2733,6 +2733,7 @@ REFTABLE_OBJS += reftable/error.o
+>>  REFTABLE_OBJS += reftable/block.o
+>>  REFTABLE_OBJS += reftable/blocksource.o
+>>  REFTABLE_OBJS += reftable/iter.o
+>> +REFTABLE_OBJS += reftable/fsck.o
+>>  REFTABLE_OBJS += reftable/merged.o
+>>  REFTABLE_OBJS += reftable/pq.o
+>>  REFTABLE_OBJS += reftable/record.o
+>> diff --git a/fsck.h b/fsck.h
+>> index 559ad57807..5901f944a1 100644
+>> --- a/fsck.h
+>> +++ b/fsck.h
+>> @@ -34,6 +34,7 @@ enum fsck_msg_type {
+>>  	FUNC(BAD_PACKED_REF_HEADER, ERROR)                         \
+>>  	FUNC(BAD_PARENT_SHA1, ERROR)                               \
+>>  	FUNC(BAD_REFERENT_NAME, ERROR)                             \
+>> +	FUNC(BAD_REFTABLE_TABLE_NAME, ERROR)                       \
+>>  	FUNC(BAD_REF_CONTENT, ERROR)                               \
+>>  	FUNC(BAD_REF_FILETYPE, ERROR)                              \
+>>  	FUNC(BAD_REF_NAME, ERROR)                                  \
+>> diff --git a/meson.build b/meson.build
+>> index 5dd299b496..82879fbfaa 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -452,6 +452,7 @@ libgit_sources = [
+>>    'reftable/error.c',
+>>    'reftable/block.c',
+>>    'reftable/blocksource.c',
+>> +  'reftable/fsck.c',
+>>    'reftable/iter.c',
+>>    'reftable/merged.c',
+>>    'reftable/pq.c',
+>> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+>> index 8dae1e1112..ccd12052f2 100644
+>> --- a/refs/reftable-backend.c
+>> +++ b/refs/reftable-backend.c
+>> @@ -6,20 +6,21 @@
+>>  #include "../config.h"
+>>  #include "../dir.h"
+>>  #include "../environment.h"
+>> +#include "../fsck.h"
+>>  #include "../gettext.h"
+>>  #include "../hash.h"
+>>  #include "../hex.h"
+>>  #include "../iterator.h"
+>>  #include "../ident.h"
+>> -#include "../lockfile.h"
+>
+> Here, we delete this header file. Is the reason that we don't need this
+> header file anymore?
+>
 
-Phillip
+Yes, it wasn't needed in the first place, let me add a comment in the
+commit message.
 
-> I realize that force pushing over your remote stash makes a lot more sense since you typically never share a stash with folks but was thinking it would be nice to ensure you don't accidentally override your remote stash when working on different machine when you forgot to import first. Basically, wanting to protect myself from myself. :)
-> 
-> Is force push the only way to handle this use case or is there a better approach? Thanks!
+>>  #include "../object.h"
+>>  #include "../path.h"
+>>  #include "../refs.h"
+>>  #include "../reftable/reftable-basics.h"
+>> -#include "../reftable/reftable-stack.h"
+>> -#include "../reftable/reftable-record.h"
+>>  #include "../reftable/reftable-error.h"
+>> +#include "../reftable/reftable-fsck.h"
+>>  #include "../reftable/reftable-iterator.h"
+>> +#include "../reftable/reftable-record.h"
+>> +#include "../reftable/reftable-stack.h"
+>>  #include "../repo-settings.h"
+>>  #include "../setup.h"
+>>  #include "../strmap.h"
+>> @@ -2675,11 +2676,59 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+>>  	return ret;
+>>  }
+>>
+>> -static int reftable_be_fsck(struct ref_store *ref_store UNUSED,
+>> -			    struct fsck_options *o UNUSED,
+>> +static void reftable_fsck_verbose_handler(const char *msg, void *cb_data)
+>> +{
+>> +	struct fsck_options *o = cb_data;
+>> +
+>> +	if (o->verbose)
+>> +		fprintf_ln(stderr, "%s", _(msg));
+>> +}
+>> +
+>> +static int reftable_fsck_error_handler(struct reftable_fsck_info info,
+>
+> A design question: why do we need to pass the value "info" instead of
+> pointer?
+>
 
+I didn't see a reason to make it a pointer. But it does make it more
+efficient when the struct size increases. Let me change it!
+
+>
+>> +				       void *cb_data)
+>> +{
+>> +	struct fsck_options *o = cb_data;
+>> +	struct fsck_ref_report report = { .path = info.path };
+>
+> Let's make it reverse-christmas-tree ordering.
+>
+
+Will change!
+
+>> +static int reftable_be_fsck(struct ref_store *ref_store, struct fsck_options *o,
+>>  			    struct worktree *wt UNUSED)
+>>  {
+>> -	return 0;
+>> +	struct reftable_ref_store *refs;
+>> +	struct strmap_entry *entry;
+>> +	struct hashmap_iter iter;
+>> +	int ret = 0;
+>> +
+>> +	refs = reftable_be_downcast(ref_store, REF_STORE_READ, "fsck");
+>> +
+>> +	if (o->verbose)
+>> +		fprintf_ln(stderr, _("Checking references consistency"));
+>> +
+>> +	ret = reftable_fsck_check(refs->main_backend.stack, reftable_fsck_error_handler,
+>> +				  reftable_fsck_verbose_handler, o);
+>> +	if (!ret)
+>> +		return ret;
+>> +
+>
+> From my understanding, if we find that there is any trouble in the main
+> worktree reftable backend, we would just abort the check. Should we
+> continue to check the linked worktrees?
+>
+
+I think that makes sense. Let me make that change.
+
+>> diff --git a/reftable/fsck.c b/reftable/fsck.c
+>> new file mode 100644
+>> index 0000000000..22ec3c26e9
+>> --- /dev/null
+>> +++ b/reftable/fsck.c
+>> @@ -0,0 +1,50 @@
+>> +#include "basics.h"
+>> +#include "reftable-fsck.h"
+>> +#include "stack.h"
+>> +
+>> +int reftable_fsck_check(struct reftable_stack *stack,
+>> +			reftable_fsck_report_fn report_fn,
+>> +			reftable_fsck_verbose_fn verbose_fn,
+>> +			void *cb_data)
+>> +{
+>> +	char **names = NULL;
+>> +	uint64_t min, max;
+>> +	int err = 0;
+>> +
+>> +	if (stack == NULL)
+>> +		goto out;
+>> +
+>> +	err = read_lines(stack->list_file, &names);
+>> +	if (err < 0)
+>> +		goto out;
+>> +
+>> +	verbose_fn("Checking reftable table names", cb_data);
+>> +
+>> +	for (size_t i = 0; names[i]; i++) {
+>> +		struct reftable_fsck_info info = {
+>> +			.error = REFTABLE_FSCK_ERROR_TABLE_NAME,
+>> +			.path = names[i],
+>> +			.msg = "invalid reftable name"
+>> +		};
+>
+> Should we define this data structure outside of the loop? It's
+> unnecessary here as we could change ".path" and ".msg" dynamically in
+> the loop.
+>
+
+I don't think it'd make much difference for reftables, since tables are
+geometrically packed. But I don't feel strongly, so I'll make the
+change.
+
+>> +		uint32_t rnd;
+>> +		/*
+>> +		 * We want to match the tail '.ref'. One extra byte to ensure
+>> +		 * that there is no unexpected extra character and one byte for
+>> +		 * the null terminator added by sscanf.
+>> +		 */
+>> +		char tail[6];
+>> +
+>> +		if (sscanf(names[i], "0x%012" PRIx64 "-0x%012" PRIx64 "-%08x%5s",
+>> +			   &min, &max, &rnd, tail) != 4) {
+>> +			err = report_fn(info, cb_data);
+>
+> I think we could just pass pointer to avoid unnecessary copy operations.
+> Besides that, I think here we report two different kinds of problem. But
+> we would give report the user always the same message `invalid reftable
+> name`. This is too vague.
+>
+
+Not sure what you mean by 'unnecessary copy operations', could you
+elaborate?
+
+> I think we'd better set different messages for different problems.
+>
+
+Fair enough, let me modify that.
+
+[snip]
+
+>> diff --git a/t/t0614-reftable-fsck.sh b/t/t0614-reftable-fsck.sh
+>> new file mode 100755
+>> index 0000000000..0d11871b1c
+>> --- /dev/null
+>> +++ b/t/t0614-reftable-fsck.sh
+>> @@ -0,0 +1,35 @@
+>> +#!/bin/sh
+>> +
+>> +test_description='Test reftable backend consistency check'
+>> +
+>> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>> +GIT_TEST_DEFAULT_REF_FORMAT=reftable
+>> +export GIT_TEST_DEFAULT_REF_FORMAT
+>> +
+>> +. ./test-lib.sh
+>> +
+>> +test_expect_success 'table name should be checked' '
+>> +	test_when_finished "rm -rf repo" &&
+>> +	git init repo &&
+>> +	(
+>> +		cd repo &&
+>> +		git commit --allow-empty -m initial &&
+>> +
+>> +		git refs verify 2>err &&
+>> +		test_must_be_empty err &&
+>> +
+>> +		TABLE_NAME=$(cat .git/reftable/tables.list | head -n1) &&
+>> +		sed "1s/$/extra/" .git/reftable/tables.list >.git/reftable/tables.list.tmp &&
+>> +		mv .git/reftable/tables.list.tmp .git/reftable/tables.list &&
+>> +		mv .git/reftable/${TABLE_NAME} .git/reftable/${TABLE_NAME}extra &&
+>> +
+>> +		test_must_fail git refs verify 2>err &&
+>> +		cat >expect <<-EOF &&
+>> +		error: ${TABLE_NAME}extra: badReftableTableName: invalid reftable name
+>> +		EOF
+>> +		test_cmp expect err
+>> +	)
+>> +'
+>
+> We would check two kinds of errors, should we add two tests instead of
+> only this one.
+>
+
+Yeah, makes sense, will add!
+
+>> +
+>> +test_done
+>>
+>> --
+>> 2.50.1
+>>
+>
+> Thanks,
+> Jialuo
+
+Thanks for the review.
+
+--00000000000092e2ea063dbd6ad6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e4b4fe1987e87704_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pMW9LTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMThDQy85SnZFMXcvUXZuQXE4RUVReXd2NWlSTDJWZApoZTdrdXVWZDRi
+dnJ1blRoOFhGTmVTNmp4cFZBTjE3UGlPRTJEVElDZ2FGYmVCSW5HNEhwNU5uRXlvcCs0TGluClpH
+M095b3pzNVdBdmJSREFmbWpWdkhpc0Z0Y2RacFdadHNRa1c5T0RBMytQdDdLZkpOaUJZdDU0ZGhV
+TUNMcG8KWUxjNFBQQXBQWGJiQ1ZFVC91WkpyNTdNVm1OZjBUK1VScDI0WUsrTVZ1ZVNLRnlnMGVG
+Z0E4MlluS0x0Q3VkOQo4MHdYZmlOZjN4cytwRWlYeFVDbEFibStpOWRlU2s0M292a3J1KzV2SU9y
+bjRvTmhENlBSNzNNMFlvQVlYdGIvCnl2aE81SjFuNTZISDdxdG1Ga2xzZUxXbzZibnlCMmxEYkFp
+a2F5SlZ6RjZXWXZtYms3MFgvTmRTRCtOQjgyL1QKS3VIYm4wUW51TDVWRVVWbGdOTEwyK1JUYXRu
+R3FOV1FvTWNTTzRoRGJhK2FSNmlXRUlEbWxUN3Bha3psWU5RSwp5b0w1YkF6TnJteHMwRmw4WWtm
+RmdFMGhVTDBXSkVlK0h5STJyV1g1TDFUZWxURGo1eGhaZnZYLzNZU3dUQlFJCk90cG1GT293NXEv
+YXo5MEJqODlzNU9uVGQ0SW05MGV2OTEzM0VuWT0KPXBZRTEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000092e2ea063dbd6ad6--
