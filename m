@@ -1,131 +1,151 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B953716132A
-	for <git@vger.kernel.org>; Mon,  1 Sep 2025 18:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25F932F763
+	for <git@vger.kernel.org>; Mon,  1 Sep 2025 19:06:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756750655; cv=none; b=ds5CcUHwZJzhi/kRBdqY3POAyFhoZQIN6V3X+r/+ybohnYkEsP6IWzeRNk0AQw4qDH4e8m1jaRHNZWAJEnE1nUanwf/eMzkDDVdDXUL16NgFIJJhXRU+fYhJAm1EATl20LswAasHnzqcSivZtiy3YC6mXtSo5Tm6zAtuH+HwVqo=
+	t=1756753591; cv=none; b=t7wNIS/GUPGRH8WO29JkrRnEHyxqyTFuDSbRPdIZjyFc8XDweyWrDoiifaqCErgl/WiEXMArrCJEKUyo9hZyVwNLLkzx97JD8X89d4pvwaTFP2WcVlTPZW2RYPHzAYymX5tkbtuqfglswCZya3JAPsoKIAu4+7jeBevizFxLq8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756750655; c=relaxed/simple;
-	bh=Jjmrm6k9Gym5LB5kQ0jbR1w6KMTndnLv3Dur/tLdpjk=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hbpvGzWG2u/vK0LkEcKzuZQt4XKel1WMONucPniEUtv1j2TLQihL4N0b/A4NaiimDjkTZHEuJajKDiYJwu83iI0f4Clwm2uGBtplwuCtNwWbWcAF5Pt6DaYkGI1ACxwJHiHUEnX6F3yMgUM40mccnj19/Pw0pOJ9oabYWFQBTnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VgT8fvzu; arc=none smtp.client-ip=209.85.222.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756753591; c=relaxed/simple;
+	bh=Hhc4NoIqTdlrR4XoLfqXugoeb+J5cMESQZIuSX2aR7Q=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=AbwrIBmmbFBBUtbmiZK4vemdcU1WIYYBVQD1inw2vaGXhYlrYSHH1nb9mpI5pF3z9vQiNCFHK44bZIcUSN6/KZTuzJ37v57ItQASWG4DMFs9rT5fDoHx+ujtMf14wCbRhrSSmVoQfjVaHkmvfyxob97NUryruq0flRrhFMAxbb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=CfcLQCRy; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VgT8fvzu"
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-8960a00e85bso828865241.1
-        for <git@vger.kernel.org>; Mon, 01 Sep 2025 11:17:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756750652; x=1757355452; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JO2LN8MUR2x0D/p/+MH97zWQNVQKicfQHziUm8eP1lg=;
-        b=VgT8fvzumNmdgWKSUgBJUorvC2A9MBJZVj6Bjh1/VoD3kce9Xq6gZLKu/+cIu9NSyK
-         Dz5vPLjhYKiPNOZKp0+d0Szz0Ymr/iLplU1Hlyfcw4GqtR5LkvQAuVaGRfHBxvqo0hZE
-         pEpTAzQgmZniaHexpb/Ie60zc9BI7e4+EV7RaZIAVSTYnlL97DD3NGtAjOGU+oaZ8yEB
-         yeSeKLb5PtVJfAeAWtKsmEBVSV4aqJYait7fvtqSXj/BRMGl7kQ0hUWBdyd+Mh0GJjHy
-         iSUhvCRn3g5MRFhBGvFBhxmexVNFXDytHaa4OBtZc3/Q/vKqPnHfwz29rxbfzqnJRWlc
-         nj0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756750652; x=1757355452;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JO2LN8MUR2x0D/p/+MH97zWQNVQKicfQHziUm8eP1lg=;
-        b=uG6nJt13YfYIOLESMyFqtFkLKPB20Jro2f0uZr1S0d7sgCbihFCpZZQpn1i9rImUDx
-         oU4sCBtCJ+qR4PrDwP7TE/1S93kUsiEoy8IQHWn2/q3mXDp9mJ2kSAqIiYrlaHDYz/Hp
-         vXsF1weC1iX5EpqR0qfbwpbCbqtahx6KhJXfkq3RSPrKmwk7ruAfe5mDF9DuHVqQp0W9
-         xToBAwQ0/ce+zKKtqlByfS4DOmuhrV5iP60T3wAXyHRatuCkcmt/lFEJx/yLieouyNzT
-         uT5dbhfOw6RhscNtN5LFvEP0aZlSW8dZ4rtbDjyexpMmwmS5tTwTBIT8reyPriyQw8Jm
-         JLTA==
-X-Forwarded-Encrypted: i=1; AJvYcCWsJV96E8fKne61PlcKT1hCsLJ4ARxDIHeFm75Nkj0WviM2TqcsTc5BNAT2FsGhk1GQiM4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxemFGSJrVJEOwu1c1A7i+YoiR0CNTTMrF+JS4Mc+nMCm8L+I2C
-	OBNgPiio+C+a4rrbci+KTW65JdH0zfUZBFJqT2ZdjRZnRMp3oJhlWZ3Hh7TbDsg8uWjUXbv1+Tb
-	qnqF7Zv1NpWgcVWPPP/2WQmt+v5ZRX88=
-X-Gm-Gg: ASbGnct16tVHrglgi+5xZd9pmLXlM1EFIsjGM2PxGONnpjN7wcVr1FVXqLMfW+lIWRn
-	6pH/5WwjEse+7+mYnBT9400tEFgBVRHdxISUuui5jtOgd/WG6j5ZKmZcfEgYqkmgUFPUYfjgNBr
-	b26mWBDJI36fcqvpov7kZaxYQFrNtyAnZ+D+N8PDWxWq5W+dNxaEeHdhrzn4M1L82KuEASwEhSw
-	6qcybTMdqDbosPPMz7qTdzrzoEF5hjlmZWwSiF85coBJLknD/Ny
-X-Google-Smtp-Source: AGHT+IG8Xt4r2bH+ljEiQ/1Uqdo2CKK3CcigingkG4RzukZiW/CSzCzVlPzTAAxAtSQ5cqPkl+BFBno2W6qQhqGwkzM=
-X-Received: by 2002:a67:e707:0:b0:52a:5fc6:e50 with SMTP id
- ada2fe7eead31-52b1bd35203mr2832148137.30.1756750652516; Mon, 01 Sep 2025
- 11:17:32 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 1 Sep 2025 11:17:30 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 1 Sep 2025 11:17:30 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqy0r3whe7.fsf@gitster.g>
-References: <YQXPR01MB3046197EF39296549EE6DD669A33A@YQXPR01MB3046.CANPRD01.PROD.OUTLOOK.COM>
- <20250820213323.GA1667633@coredump.intra.peff.net> <aKbHozlmDIqfgkg4@pks.im>
- <20250821072706.GA2390046@coredump.intra.peff.net> <aKbwabLZiWasYoBC@pks.im>
- <xmqqwm6w3bjp.fsf@gitster.g> <aKgKmLvaHAuueJeb@pks.im> <CAOLa=ZS43w74tWjD47h2mnGiyaQWrGEY-UpL8kdXJi_zD0ASmw@mail.gmail.com>
- <xmqq8qjbxn8n.fsf@gitster.g> <CAOLa=ZRizMKRsP2wo-RJUksXAv1Hgx3XDGCO_ZGOwKpf6kAbQQ@mail.gmail.com>
- <xmqqy0r3whe7.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="CfcLQCRy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1756753580; x=1757358380; i=l.s.r@web.de;
+	bh=sad7pJ73tFdFqjj4pJ05PrMUv8x9bIAQSuYMzO5jo40=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=CfcLQCRyZAA5de7Wij77gIy2oZfgGzXJ9WKaMYRrOPtKkKGZsyit9kpomcsK/t8j
+	 kal8dEPSpm/3+nN89G+5mVkhX8rekEJyE7J3BVepBMYQ1GNQKKSedNDUq15FelslS
+	 021J7ZLcOqNyEEJ4JFKfq3o28chYjvA6/bLleK8LrjYVUuBsP4/orf3xI5yKa0COp
+	 eUHARt611/jB7ptnFHfCkoCX7Vz3aNloF50D9EYmsPMpr7+4rFpJnZBdwJ8cwgoer
+	 DYaLl9mb977neYTlzVHsc7iZo1kNDuXGW1KhDw4qYjuL0Yy0RXry6sS7Acd7OueZ4
+	 6ERszerHFUnlah/SOg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([91.47.159.98]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mav6t-1uMHsO3wa3-00eVTu; Mon, 01
+ Sep 2025 21:06:19 +0200
+Message-ID: <84fb48b3-17ae-405c-b7a9-6d48a3c57a36@web.de>
+Date: Mon, 1 Sep 2025 21:06:19 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 1 Sep 2025 11:17:30 -0700
-X-Gm-Features: Ac12FXyWRU1Q7Nn-WraSTaHE_6lP1hJU_JHj1LKGu6WU-lVNtS9QGYI3DJMiC-M
-Message-ID: <CAOLa=ZQgMfeJf6aQGJZ7z-3SNtCjK+so70fb0YSPOa5qLzZ7uA@mail.gmail.com>
-Subject: Re: "lock file exists" when fetching in bare clone of repository
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, Joe Drew <joe.drew@indexexchange.com>, 
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="0000000000009a4779063dc162cf"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] describe: use khash in finish_depth_computation()
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To: Jeff King <peff@peff.net>
+Cc: Git List <git@vger.kernel.org>
+References: <9110f085-aec0-42e9-9774-b153ece6284f@web.de>
+ <20250824103117.GA250458@coredump.intra.peff.net>
+ <6402268d-bc80-4bfe-abb8-edec9e1b8417@web.de>
+ <20250825073403.GA332447@coredump.intra.peff.net>
+ <cb192b28-d85a-4866-a312-df4408cae93e@web.de>
+Content-Language: en-US
+In-Reply-To: <cb192b28-d85a-4866-a312-df4408cae93e@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:YTSKDzf6YwJ1FuztbaFjEBxgzIxxvnjeOkyYnu/TuAVg8ho0SZy
+ W0VErvZrWkx+Inbn5UubixOgn7nt8+Iq8fC1vlTKM26aYs+lkOz83LhkYUegU0Vcht5mY5e
+ 5lsDtMz5z+Ij5UD8+w/w+KNivNtIU5eg0B8RCF4SfEFndKqwbAhyLcF8sePO5jZ1hljPq2T
+ EM9LF2zISFgroDC3IDWeQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:uvvdsH4HjEU=;HE1d4jkf5rnBIOiyII9h7Hc6NRy
+ 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
+ k2XUSVZT1k5b2WgYgKY
 
---0000000000009a4779063dc162cf
-Content-Type: text/plain; charset="UTF-8"
+On 8/31/25 7:25 PM, Ren=C3=A9 Scharfe wrote:
+> Sure.  I'm not comfortable with oidhash() though, because it allows
+> attackers to influence the hash value, cause collisions and thus
+> increase the cost of lookups and inserts to O(N), leading to quadratic
+> complexity overall.
+>=20
+> They "just" need to construct commits with a common hash prefix.  I
+> guess that's easy for two bytes and hard for four bytes.  Not sure how
+> what an attacker would get out of planting such performance traps, but
+> I guess some people would do it just for the heck of it.
 
-Junio C Hamano <gitster@pobox.com> writes:
+There's https://github.com/not-an-aardvark/lucky-commit, which claims to
+take a quarter of a second on a four year old laptop to give a commit a
+chosen 28-bit hash prefix by adjusting whitespace in its message.
+Constructing a history with a common 32-bit prefix that would
+effectively turn any oidhash()-based hash table into an unordered list
+seems within easy reach.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> This error type is bubbled up to `files_transaction_prepare()` which
->> tries to lock each reference update by calling `lock_ref_for_update()`.
->> So if the locking fails, we check if the rejection type can be ignored,
->> which is done by calling `ref_transaction_maybe_set_rejected()`.
->>
->> Only during batched updates would errors be ignore and only for
->> non-generic errors. So this change would specifically only apply for
->> batched updates. Currently that is used by:
->>
->>     1. git fetch
->>     2. git receive-pack
->>     3. git update-ref --batch-updates
->>
->> And for all three scenarios I think it makes sense to add this in.
->
-> Thanks for an extra explanation.
->
-> These pieces of information would be necessary in the proposed log
-> message when it becomes a real patch.
+Ren=C3=A9
 
-Yup. I will send it in soon. Was a bit busy last week with the OSSE and
-Git mini summit.
-
---0000000000009a4779063dc162cf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: afe415caa5fc1949_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pMTR6a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md3k5REFDVmR6QnhJdEUxVFhwUnNZK2MxcE5aM05KNgo3QTBzSGY0NGZB
-eWZkYUhtaVRHVDNGOGFLb3c2VktSUmpvWDUxbkRuRnp5L1g1V2RmOTIrMi9ZNGRaT09mSFpDClRp
-MUNEUUxTanZWazZuUWlMY3laQnRTZU5TWGhhVzVkR0tsM0tNMkNHVGtlM2RheVozNUVsTnJDOVkr
-aUsva2kKa0IxM3JBQWNveCtTUDdQVUw3QklONXhXTUlDTG9ZSmw5b1k1dk5hSmhTWGVwNmFCWlFK
-V1FhcWxtSHpHY04vdQpTZFJBaE5MNGRaMnJaVTNOMEZ0eHRVSVV6UWFqOVBSaml3V051cFpTSFAv
-eVNoWW5XcHdXVHp3UXl0MzIxUGx3CkpxQ29qb2ZqL2oxOW5sR1ltbG1xVXdsQ2hNRzFZa2dyczFE
-UzVtaGp2WXJUNW1wa3hhQWxGVWx5ekd4enlXR1IKRFphU1V4ZTJUTU5qZG5NSUhJbmhxNVpoTENW
-bDRXZlpGN2h5ajJ4Y3RSazdVMnpoSW5KL3F1NElFeWN4MjZTNgp3V1RqS0NyR2VCcStpa242Q1d3
-MzJTQ0VhZS92cHF5cTVaY2RyRmpMcjlScWFCaWM5bHJMNzNJYjFDeXo0djRWCmpiakVGYUNGZ3N6
-eEU1YkdrdmNBZFdtTzFNZCsvWjFYSndTSlJORT0KPTAwRFIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000009a4779063dc162cf--
