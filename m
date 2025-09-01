@@ -1,249 +1,157 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBF632F760
-	for <git@vger.kernel.org>; Mon,  1 Sep 2025 20:48:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811401C5D6A
+	for <git@vger.kernel.org>; Mon,  1 Sep 2025 21:38:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756759726; cv=none; b=Ukk7x41uvE2WnAXxSA+a3dr0Cq+OeyL+a2T61CIE29KcIJ3PQZE1ihrJWLJmxSQPt0a56Z3F0lkvenkGBwCYhmcKDS+YrMt/HIuMlf2XJq96YPS62wmlPBMZcos7l8NUBnLCkKN19pNlw0jcy78isjRXCvoSYzWg6He6oE5hzZE=
+	t=1756762704; cv=none; b=KrygnyUMX32fR1s2VEnWpWMAS/1WZ/dDCj3TFrJgCq2CpmVSsL5JReiVxTCC1C8/I+gISfZK+LkWR82iSKr2p7qJUZckg5D4HVuT8EJwzTDQnJLWlB3yvj2vbnLXZwKJidU1hgvQMSnCsG69HiRgLfPIjHtJuwt5I4+QyTi5c5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756759726; c=relaxed/simple;
-	bh=OCvGc3qATc5+p+XkEM6DIT8wYWQXrzLXPiPadkuW/2g=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=Tgzr92Q2N52xc8FuB7KVeaFc2ibBcs9BqvQ0E/mfPQbyLlKXzb7A9MqN2ZIXiZiIPXGCc8yA+DmxJ7Sv16SIp33tt+I2JhYRCQ+S2bL1RQmwsKo1jwViWmlFLudvohlPNDbdI3lm/+li3FdkctcR+p/qO5IfQx0qGKtp+65tEbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io; spf=pass smtp.mailfrom=alchemists.io; dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b=PA4sQqvv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cPiGTXu3; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alchemists.io
+	s=arc-20240116; t=1756762704; c=relaxed/simple;
+	bh=G015bvikUmmHyxHyNa2XqS5Bgc3l3Gplqy9itHqB3jE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=gF8vwxNT+PByNzEOh6W0AABog8IGUXY4AGesqAm72CmrGXssHmnDQZ8z0c4zR815t2u5r59ELs2vw3K8yea49P2m1KmGNNy4q2xOeT2n9ipJkpY/C6Z6sCSKMiyArbGHlNN0cCBJapFVqsR4xmzjskCkbovFhexRDmLVlP/Fsh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=jhVLiNTT; arc=none smtp.client-ip=185.226.149.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b="PA4sQqvv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cPiGTXu3"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 105B97A02AC;
-	Mon,  1 Sep 2025 16:48:42 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 01 Sep 2025 16:48:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1756759721; x=1756846121; bh=gcsEoltDMjd1iuOc7jIIpKnstCHCUSxc
-	q48Vov0S0oc=; b=PA4sQqvv0alXu8lBWqc93WuB2QLH1Oa6QHKKmujJre4mJs5d
-	gyRmaQIHHEHN6TcIzZRJjfHgyH0FAve+po4QrfWqqay9Nd/e9vUQXPP2HTUXoHn9
-	ep43fw0zuvkktWR1Ot1JLlukfckG3s7cBNu58zFaPAO1hZ6T4UWLV0B3HDiqUsuG
-	eNFlgUj3jhEYzpARpvczLm+j3cfalZvqmH0yMzZUFVqeASo8iuTYMEHQ0Q+S2oCy
-	CMPIaPKhanmUU5gaSK1cOEbJ+YRwZ1RAxB8Cw/e2BlHTvRzMKLg/5ihOWBB48sTs
-	kvRU2AQq66iZtzdZ5PwdPR652rvdjlasRV52DQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756759721; x=
-	1756846121; bh=gcsEoltDMjd1iuOc7jIIpKnstCHCUSxcq48Vov0S0oc=; b=c
-	PiGTXu3M7AMl0w/Qyi2/z8FrhPrP3zkRMJcmON4BFnfusdEooh85JVoEkQ1FH2qy
-	SZGlkCnGcv0Bn3RZNO/LZaRPr3dFX8UyqqOh2pLgiclzC//CIR2VwBGc8hkCZsIv
-	CxdOGeQQ5GYvM1D5JPXMOBiThSSBDcFkzPumdIv4Y/K48qvmgbBiNwmfv3augTbO
-	3oQpBbap8D7XZnxu9BMPIsW4Uc+6lTAM/V8g/v/krMYHaOQj98Xt8vXbQsdmeUSN
-	XqNYgYvGpZEnUtbJBLRi+dfJxjcMhZUra1RDpj0PSo291T0KiAgWAQTIpWA8iGPr
-	WDMlQWxJjOmi7Jhw6RsLA==
-X-ME-Sender: <xms:qQa2aBza--6NaIWy1-LtRan7YUJjUaJNQGoIlDUT9gyOtO7u7YPXUA>
-    <xme:qQa2aIKBYsuVAMAP_UboDo8B42ajT4aEwDWj-3mtZP-8vbTnvG3-nOSzOOwxMOES0
-    -UqTdGb8IMWEWIh>
-X-ME-Received: <xmr:qQa2aIRxtUPGNnb59gaJ_S4Yt5VdF_Ae_FGX1JKPQQtz7B4MTzlkxUGuU7TSGVGNEReo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleefudehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpegtggfuhfgjffevgffkfhfvofesthhqmh
-    dthhdtjeenucfhrhhomhepuehrohhokhgvucfmuhhhlhhmrghnnhcuoegsrhhoohhkvges
-    rghltghhvghmihhsthhsrdhioheqnecuggftrfgrthhtvghrnhepgeejvdeuvdetieelte
-    euhfehieekkeefgfdvhfelgeegteehueelfeegledvieevnecuffhomhgrihhnpehgihht
-    hhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
-    hrohhmpegsrhhoohhkvgesrghltghhvghmihhsthhsrdhiohdpnhgspghrtghpthhtohep
-    fedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguse
-    guuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
-    htvgdrnhgvth
-X-ME-Proxy: <xmx:qQa2aAr3wGP3rM2qHmI2TwcU62smOb018b35RrPZNHa6MtgUqOok4w>
-    <xmx:qQa2aNrrgqOcetmocu7kipM-IwVlbrqPQqwVGpbU68uv10N00nDoVQ>
-    <xmx:qQa2aKNVhiV86wYu_YTes4lQ3qEs2EYwFh35eDQ8adiQm9gkdKLRHg>
-    <xmx:qQa2aGz2htCk-hNEFiRMyTrOGPSN2_5Ip6DkX_PcSmX7FFZA_0pXqQ>
-    <xmx:qQa2aBRdlW1bM--9_HFBo3P3wMTcvMXB0XLWNkzxA4ABY3zWhtTmNuls>
-Feedback-ID: i78e840cc:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Sep 2025 16:48:40 -0400 (EDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="jhVLiNTT"
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1utBNM-005UrZ-Py; Mon, 01 Sep 2025 22:43:40 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector1; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
+	References:Cc:To:Subject:From:MIME-Version:Date:Message-ID;
+	bh=rCm2wVg4YLxJurkcYAz+g5wmBfwIC2lLll/Z5WI4vu8=; b=jhVLiNTTvwNrphHvTW/lDQSRBx
+	Z9X2DxsfzegAL+BeI8A53Rj3fstA5ZMIpC9ClcKh240B+DepXwWhU4pTk7QN/BLyKx6M9x0JBOAg1
+	Npj/fdy98UWLtAIC1bdDr8dmbcrM4qVUzbSFbKJos7A0tMGWzPQEtk977EacBykCOttM2j38bCs8u
+	6FVrgOrRBaoA8fTS8+nDVZ8QisSqJUvigBxrLr+LK3xlx4mPx+2qpOffIVO8dzQI6SGWXYJCcSQon
+	axUGdeTVv4uyKBgjyp393u+sELLE0iTEIx//+0wJJwA+ut/3u6QQeDGPCsWJY1UakeCRYEIF/6mCO
+	KYXtaBfg==;
+Received: from [10.9.9.74] (helo=submission03.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1utBNM-0000ta-3U; Mon, 01 Sep 2025 22:43:40 +0200
+Received: by submission03.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1utBN5-008ZZA-AM; Mon, 01 Sep 2025 22:43:23 +0200
+Message-ID: <ee480c22-0dd3-4c45-a2bd-838c238f1d55@howdoi.land>
+Date: Mon, 1 Sep 2025 15:43:19 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: Git Stash Synchronization - Best Workflow?
-From: Brooke Kuhlmann <brooke@alchemists.io>
-In-Reply-To: <5dee5f49-eeb6-49e2-8bca-6ae6a1d6be5d@gmail.com>
-Date: Mon, 1 Sep 2025 14:48:29 -0600
-Cc: git@vger.kernel.org,
- "brian m . carlson" <sandals@crustytoothpaste.net>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <CE34C4BA-1ED4-458C-A31F-3DDB61ECCAAF@alchemists.io>
-References: <7B1CCA36-23F1-410D-84ED-6E965989EA8B@alchemists.io>
- <5dee5f49-eeb6-49e2-8bca-6ae6a1d6be5d@gmail.com>
-To: phillip.wood@dunelm.org.uk
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Colin Stagner <ask+git@howdoi.land>
+Subject: Re: [PATCH] contrib/subtree: fix split with squashed subtrees
+To: git@vger.kernel.org, phillip.wood@dunelm.org.uk
+Cc: Zach FettersMoore <zach.fetters@apollographql.com>,
+ Christian Couder <chriscool@tuxfamily.org>,
+ Patrik Weiskircher <patrik@pspdfkit.com>, Colin Stagner <ask+git@howdoi.land>
+References: <20250824191048.1938340-1-ask+git@howdoi.land>
+ <00e76b7e-ce4f-44d9-acd9-466c6b14f41b@gmail.com>
+Content-Language: en-US
+In-Reply-To: <00e76b7e-ce4f-44d9-acd9-466c6b14f41b@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hey Phillip, thanks!
+On 9/1/25 08:54, Phillip Wood wrote:
 
-I applied what you've suggested and still was only able to make push and =
-popping my stash with `git push --force` work. Actually, `git push =
---force-with-lease` does work but I get this error still:
+Colin Stagner <ask+git@howdoi.land> writes:
 
-To https://github.com/bkuhlmann/test
- ! [rejected]                  refs/stashes/bkuhlmann -> =
-refs/stashes/bkuhlmann (remote ref updated since checkout)
-error: failed to push some refs to 'https://github.com/bkuhlmann/test'
+>> -    if test -n "$(git log -1 --grep="git-subtree-dir:" $rev)"
+>> +    if test -n "$(git log -1 --grep="git-subtree-dir:" "$rev^!")"
+> 
+> We could drop the "-1" as we're only considering a single commit.
 
-Despite that error showing up -- and the fact that I've applied your =
-changes -- the stash DOES get updated properly both locally and via the =
-remote. That didn't happen before.
+Concur.
 
-Good callout on the use of `--force-if-includes`. I didn't mention that =
-I have this enabled earlier because I always forget I have it configured =
-via my global configuration as:
+>> -        if test -z "$(git log -1 --grep="git-subtree-mainline:" 
+>> $rev)" &&
+>> -            test -z "$(git log -1 --grep="git-subtree-dir: 
+>> $arg_prefix$" $rev)"
+>> +        if test -z "$(git log -1 --grep="git-subtree-mainline:" 
+>> "$rev^!")" &&
+>> +            test -z "$(git log -1 --grep="git-subtree-dir: 
+>> $arg_prefix$" "$rev^!")"
+>
+> I'm less sure about this change. Is the second test checking
+> making sure we don't prune this commit if it has an ancestor
+> that is a subtree merge for the subtree we're interested in?
 
-[push]
-  useForceIfIncludes =3D true
+The outer loop in git-subtree.sh:983 appears to iterate from the root 
+commit forwards… and not from the HEAD backwards.
 
-...but I did update my global configuration, per your suggestion, as =
-follows:
+     git rev-list --topo-order --reverse --parents $rev $unrevs
+     #                         ^^^^^^^^^
 
-[core]
-  logAllrefUpdates =3D always
-
-[remote "origin"]
-  fetch =3D refs/stashes/*:refs/remote/origin/stashes/*
-
-With the above enabled, my reflog ended up showing this (using my "test" =
-repository):
-
-9305680c9afb (HEAD -> main, tag: 0.0.0, origin/main, origin/HEAD) =
-HEAD@{6 minutes ago}: reset: moving to HEAD
-9305680c9afb (HEAD -> main, tag: 0.0.0, origin/main, origin/HEAD) =
-HEAD@{7 minutes ago}: reset: moving to HEAD
-9305680c9afb (HEAD -> main, tag: 0.0.0, origin/main, origin/HEAD) =
-HEAD@{8 minutes ago}: reset: moving to HEAD
-
-I'm only seeing "reset: moving to HEAD" in my reflog when performing the =
-push on my stash (in case that helps).
-
-Yeah, having the documentation reflect this would be nice in terms of =
-informing folks that you should enable what I've shown above. Ensuring =
-any change to the stash would also update the reflog would be helpful =
-too so folks can be implicit instead of explicit.
+Since the iteration is ancestor-first, I'm having difficulty seeing why 
+`should_ignore_subtree_split_commit()` would want to do an ancestor 
+traversal at all. It already sees the commits ancestor-first. But there 
+could be a reason that I don't know.
 
 
-> You can use --force-with-lease=3Drefs/stashes/$USER:$expect where =
-$expect is the value of refs/stashes/$USER when you last pushed. The =
-problem is that there is no easy way to find that as by default =
-refs/stashes/$USER does not have a reflog and there is no remote =
-tracking ref set up for it either. If you add a fetch refspec like
->=20
->    refs/stashes/*:refs/remote/origin/stashes/*
->=20
-> (note "remote" rather than "remotes" to avoid clashing with the =
-default refspec for branches) then refs/remote/origin/stashes/$USER =
-should be updated when you push to or pull from refs/stashes/* and I =
-think a bare --force-with-lease will work. In general --force-with-lease =
-without explicitly specifying $expect is not that safe as it will =
-happily overwrite the remote ref if you fetch and do not incorporate the =
-remote changes into your local changes before pushing. Using =
---force-if-includes is safer if you don't want to give $expect =
-explicitly. That requires a reflog for the local ref though which you =
-can enable by setting core.logAllrefUpdates=3Dalways. We should perhaps =
-change the export code to create a reflog for the ref we're exporting =
-the stashes to and maybe expand the documentation to mention setting up =
-a fetch refspec.
+Here is a more long-winded breakdown of these tests. From what I can 
+determine:
+
+     test -z "$(git log -1 --grep="git-subtree-mainline:" "$rev")
+
+excludes squashed commits created from
+
+     git subtree merge --prefix subM --squash srcBranch
+
+The --squash creates two commits:
+
+1. A single-parent "Squashed 'subM/' content from", which
+    squashes the changes from srcBranch. This commit's tree
+    is like the one on srcBranch. It does not have the `subM/`
+    prefix.
+
+2. A merge commit which rewrites the tree in (1) to add
+    the `subM/` leading directory, then merge it with the
+    current branch. The merge commit doesn't have any
+    `git-subtree:` trailers.
+
+We must exclude (1) since the trees aren't actually compatible with 
+HEAD. (They don't have the `subM` prefix). We must keep (2). The above 
+`test -z` appears to do this.
 
 
+I am *much* less certain about the second test:
+
+    test -z "$(git log -1 \
+               --grep="git-subtree-dir: $arg_prefix$" $rev)"
+
+I think this was intended to keep the mainline portion from a previous 
+`git subtree split --rejoin`. But if I remove this `test -z`, all the 
+unit tests still pass—including mine. There may not be any test coverage 
+for this line. I will probably omit this `test` from v2.
 
 
+> It would be very helpful if Zach could comment on what was intended here.
 
-> On Sep 1, 2025, at 4:10=E2=80=AFAM, Phillip Wood =
-<phillip.wood123@gmail.com> wrote:
->=20
-> Hi Brooke
->=20
-> [I've cc'd brian to see what he thinks about setting up a reflog by =
-default when exporting stashes]
->=20
-> On 01/09/2025 00:25, Brooke Kuhlmann wrote:
->> Hello.
->> When using Git 2.51.0, what is the correct way to safely export
-> > your stash and then keep that stash up-to-date? Here's an example
-> > workflow:>
->> touch demo.txt
->> git stash push --include-untracked --message "Demo"
->> git stash export --to-ref "refs/stashes/$USER"
->> git push origin "refs/stashes/$USER"
->> git stash pop stash@{0}
->> git push origin "refs/stashes/$USER"
->=20
-> This push doesn't do anything because refs/stashes/$USER is unchanged =
-since the last push
->=20
->> git stash push --include-untracked --message "Demo II"
->> git stash export --to-ref "refs/stashes/$USER"
->> git push origin "refs/stashes/$USER"
->=20
-> This push fails because you've popped and then pushed a stash since =
-the last export so refs/stashes/$USER on the remote cannot fast-forward
->> Notice, in the middle, I pop the stash only to rename it. Upon
-> > pushing these changes back up, I get the following error:>
->> To https://github.com/bkuhlmann/test
->>  ! [rejected]                  refs/stashes/bkuhlmann -> =
-refs/stashes/bkuhlmann (non-fast-forward)
->> error: failed to push some refs to =
-'https://github.com/bkuhlmann/test'
->> hint: Updates were rejected because a pushed branch tip is behind its =
-remote
->> hint: counterpart. If you want to integrate the remote changes, use =
-'git pull'
->> hint: before pushing again.
->> hint: See the 'Note about fast-forwards' in 'git push --help' for =
-details.
->> The work around is to use `git push --force` when pushing updates.
-> > I'd like to use `git push --force-with-lease` but that doesn't work.
-> You can use --force-with-lease=3Drefs/stashes/$USER:$expect where =
-$expect is the value of refs/stashes/$USER when you last pushed. The =
-problem is that there is no easy way to find that as by default =
-refs/stashes/$USER does not have a reflog and there is no remote =
-tracking ref set up for it either. If you add a fetch refspec like
->=20
->    refs/stashes/*:refs/remote/origin/stashes/*
->=20
-> (note "remote" rather than "remotes" to avoid clashing with the =
-default refspec for branches) then refs/remote/origin/stashes/$USER =
-should be updated when you push to or pull from refs/stashes/* and I =
-think a bare --force-with-lease will work. In general --force-with-lease =
-without explicitly specifying $expect is not that safe as it will =
-happily overwrite the remote ref if you fetch and do not incorporate the =
-remote changes into your local changes before pushing. Using =
---force-if-includes is safer if you don't want to give $expect =
-explicitly. That requires a reflog for the local ref though which you =
-can enable by setting core.logAllrefUpdates=3Dalways. We should perhaps =
-change the export code to create a reflog for the ref we're exporting =
-the stashes to and maybe expand the documentation to mention setting up =
-a fetch refspec.
->=20
-> Thanks
->=20
-> Phillip
->=20
->> I realize that force pushing over your remote stash makes a lot more =
-sense since you typically never share a stash with folks but was =
-thinking it would be nice to ensure you don't accidentally override your =
-remote stash when working on different machine when you forgot to import =
-first. Basically, wanting to protect myself from myself. :)
->> Is force push the only way to handle this use case or is there a =
-better approach? Thanks!
->=20
+Yes, this would aid my understanding a lot.
+
+
+> If it turns out that all three tests only want to consider a single 
+> commit then it would be be more efficient to run a single git command 
+> and check the output with something like
+> 
+>      git show -s --format='%(trailers:key=git-subtree-dir,key=git- 
+> subtree-mainline' $rev | while read trailer
+>          do
+>              # check trailers here using case "$trailer"
+>          done
+
+This is a cleaner approach, and I'll explore it for v2. Any objection to 
+long options like `--no-patch` instead of `-s`? I find these are better 
+for scripts since there's less hunting around in man pages.
+
+Thanks for your review,
+
+Colin
 
