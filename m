@@ -1,196 +1,412 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC07285C82
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 18:51:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE22350D42
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 19:11:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756839105; cv=none; b=MAjsOn3hjn51bk8DTHRTL0O4NXSBypA6y8T9oQ7xXb7NSIu36z6essJi7FTgdk1iCSBliaS0o0TGGuc1se/9E6drwrS6Sz8c7NcmihW0/Aw4kgtZgW2syTKrupLEjcObclPb2TO/VtH0/cyEMQchukkvZPg3wJUntfoUi4tzgk4=
+	t=1756840288; cv=none; b=DcOzA6bYFHAUSv2OdAAb+ouSyLv5xe5/m7jUdyPVzR3D1O2LCV/dGt8CpuGMQDHkVnbxPQd//afxec9eMDVwI2BIhRwp3sHYjr7omBgu3ZJSE4nY34yu98kx6HSE7uelfXL5UAXB57DOOJc8JuRvaTGamAUZTFGuRvRGQKvmoDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756839105; c=relaxed/simple;
-	bh=PjbbbBaop4Swj/YhWmt6q+kVkPUeHEGBh6oVejzcpiw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RDRn465prDJwWzcD4qiZvD4hS0B4fuTaZ047EPhQMhGaVxmTrYua5+LM2fB9R3OUdce6jdIrlZI16Y49WWn7jIVPal7OLqp5XAJR64qvY0iPEHM0kroazfWXPT2Ld0WxgMHyiVBu24mKerC4TTKFHCsyUsmIuS7ptwoedgvW5FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=fPaJEteV; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1756840288; c=relaxed/simple;
+	bh=ddem7/+J37dg2VVlLjwNDM5jgASJvsOshMW96oB4KZs=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=i9a40eY/DcS1qpEWDEFVoAZFzSpg2bFSqkyfa0bOekMgjkWMoVZqJk6DLBQKv2RPCzRU1fbTD4vqNEqFbpfiSfcN/PQ7QPDx/vvLK6yOBxY370+Yq4YcuAM6ejV6EpJj7EFrku1IEj0VUlabzqVcevysjUkR7uW/tXNDfDEDXl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=b5UUfmrF; arc=none smtp.client-ip=209.85.166.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="fPaJEteV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1756839098; x=1757443898; i=l.s.r@web.de;
-	bh=VR8hqq/szGLfLmA6ba3o0B7dKXZz46a2/Xh88HAvKZE=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=fPaJEteVH6DTpAt+nxoG5gy8+i8lwrwVwMNb+ZkBgsKa5QG80eSZFPBkXV6uA7sn
-	 oxozyxRbYil0BhxNXSMHyFN07ZHHg7tTFcAGmk/VYAKci7+58kI6LXHXRlrUdwTMY
-	 8Misx3D0MZAnsyXEl0dCngHefavrArtA+3VWGYJdNYSsvN+zlxFXb5vBOtRDYL+a+
-	 5Q+Y0T25RPTJf3DzYmOUSJ8J4667vkBp1UvqLLnGHD5mtdS79SlHRkJ+2oGna5mUp
-	 nkGD+sLpeq1iY2ozFmnHRtGV3FFqcOlma4ONG5a0EraD7VYrbSc7vhz6H/MCx/1ua
-	 7oIsnlVHxML/tTPSdw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([91.47.159.98]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MIc3F-1uet6V1IOb-00G4if; Tue, 02
- Sep 2025 20:51:38 +0200
-Message-ID: <05b8e161-9087-4eb8-b049-6e99ff288af7@web.de>
-Date: Tue, 2 Sep 2025 20:51:37 +0200
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="b5UUfmrF"
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-88432efaf45so51692539f.3
+        for <git@vger.kernel.org>; Tue, 02 Sep 2025 12:11:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1756840285; x=1757445085; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2NO3KcUJ8oI/lqUcaW74OayK4V6JHH9qv4uh5haWklc=;
+        b=b5UUfmrFQM5y37ClDCtnDKI4cimF19+TpuHQpnCWu22MlK8mumwLZuA4Y5HgnVDGZu
+         BlkpN22hSBxZIkqG7usknBSEHzVQ7AP2EwgwhxyVcHRZJnJCTKT7MkhPRqKR2Y3ZwFhM
+         HQ9BseZN7Dq2ok6/k7yZm9x+DcC9Qz6LsM6pdMY9vhyL1QIhthTgFp8KwDvXKDr533Ke
+         pGH25BtWTmrlqFnpVDpKuPckm6Ga/F5e0JzEYlpBEVmSrMbSmT8XzVWBzAm7bKZDmxo0
+         ky2XYXCLEKFhfZr7gYHa/dxA85nGF5EQ8JbE+B7X/DL/MNEAPaAxS+mLVJQfg0liQGvx
+         LbFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756840285; x=1757445085;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2NO3KcUJ8oI/lqUcaW74OayK4V6JHH9qv4uh5haWklc=;
+        b=gpe/FobP3IEIYdV1DMTkJodf3OZb31UcG1USn9Y9+pScatTv7roqXw465qDm5UVPIN
+         6p6dVh9WeljSnO3f2W8aAsjqCkmpBLqkGVp5CpgUdOBXHXXwE9oyBjWqf6iM6xI3OALr
+         8lkCuWKxcwVDh9D8+HB50vhvXxUAYoZ6DwY09ahu0f67S9pA1lX5KnYB7LiEws7K6uIi
+         GHPRdPChp2k2MervtcoqQg5/slCcWzUsn/MrxESrBehaDd1VWZ69zTejZdZxbtE7fXN8
+         mEShwq4EfF0UVyYmUYCGVu9WDrXmv3FkyiYpHxAXVFntFgyVj0t5q6lkV10Iq5gjLD6w
+         dC0g==
+X-Gm-Message-State: AOJu0YyMy5XCUP7KpvlEaJFfiywSWFQyPwOBoOwtAk+j3lKhEBKq5qjY
+	b+piobisor0MALtgLhyGlUXOIMxb48s269HFs/SBCzqRyv0ABsWvwky5VU8dYV1muGzVvpQmzZQ
+	wKDRJ
+X-Gm-Gg: ASbGncvRvUEUVuqnLmAFxx+pgqFXjLnS49cnPwYGh3GC546VlnnMyzYf21QVZVnBSMR
+	ZZtmoqZ/HaF933G9MtMYfNhVPfFr4cASXiptqrdX9qTaAU9hzlM3LqjcWIpVoeW5ozc8v6kCt+f
+	VwprW/eHd9AUBPYPqXPWOvuX8MTuyGGyQWrKcLg8btm1B4Yca/Bs4MEW2ASl6y1ycCyfEjgPh4m
+	Bma/zNmh4oRzNF6p506BwyryMaJ1i8ocT279HE9f211zs83rsey/VjbwR8x2PzCHRzld48KthG8
+	W1NlLrN14Pf3Zq2iNjwiNHfaHAiqkQWZEQvUAQdRh4sE33tutGJpiu/IvsXu8n+zN6wFMLl+oce
+	+EnfBczhfoeADY8BmoukOXbiOl4ybopIUMbXyCdC07le7bnlNCqT7pFiTRhID0y6ua1JEzUeyg4
+	zczYJdSJcn1s+aNtlowIHcO28zJg==
+X-Google-Smtp-Source: AGHT+IHEFtgjMFUlkE7wS5jQp/VUHX0eRjJ5jOMp3UYA6gWHc0yx+lc7jqzAQCHJ/425cz0EDhCxHQ==
+X-Received: by 2002:a05:6e02:214e:b0:3f0:f22:53df with SMTP id e9e14a558f8ab-3f4026c2d34mr188283065ab.31.1756840284471;
+        Tue, 02 Sep 2025 12:11:24 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-50d8f0d56d2sm3379023173.30.2025.09.02.12.11.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Sep 2025 12:11:24 -0700 (PDT)
+Date: Tue, 2 Sep 2025 15:11:23 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Moritz Sanft <moritz.sanft@outlook.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] gitweb: plug various command-line option injection holes
+Message-ID: <22c8463a5eebc609b4848f6db1db231fcce7d839.1756840261.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] describe: use khash in finish_depth_computation()
-To: Jeff King <peff@peff.net>
-Cc: Git List <git@vger.kernel.org>
-References: <9110f085-aec0-42e9-9774-b153ece6284f@web.de>
- <20250824103117.GA250458@coredump.intra.peff.net>
- <6402268d-bc80-4bfe-abb8-edec9e1b8417@web.de>
- <20250825073403.GA332447@coredump.intra.peff.net>
- <cb192b28-d85a-4866-a312-df4408cae93e@web.de>
- <20250902123834.GA711442@coredump.intra.peff.net>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20250902123834.GA711442@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:U6/3nJbg7rvouAtTcKP1b7qZXOKFpB4rR8JMB7IHP3N2ZSUczZN
- 6lMvYjHiGenPZu6AEjxut2EUI3Xc+pPMi/mzECenWQtIHpbraEZAb+fot4I+ABOWwG0iJhv
- 8BH3KeC6l5WKWjsVpAPvEW4dpULrVT61CH86MGi4vdZ9mDW8yKJGPsDsNa9aMWE9wOLO1kL
- JH4XQq5nHeJf52yPZBdwA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:4qbTy5czRXU=;CtrtrbUNAYaH7urPkmBwrWfvN06
- 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
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-On 9/2/25 2:38 PM, Jeff King wrote:
->=20
-> I doubt that commit->index is any better in that regard. If I can
-> influence the order in which Git loads the commits (e.g., by creating a
-> bunch of refs which get loaded when we walk over for_each_ref), I can
-> choose the index for each. They'll be unique, but I can still cause
-> collisions modulo the number of buckets.
+When running Gitweb and loading a blobdiff with the "hpb" ("hash parent
+base") query parameter set to a valid diff-tree option, say,
+"--output=/tmp/pwned", Gitweb will faithfully execute "diff-tree"
+internally (via "sub git_blobdiff") and blindly pass in the "hpb" query
+parameter.
 
-Hmm, sounds tricky, but feasible. :-O
-> Likewise for oidhash(), I'd guess that colliding 4 bytes is not even
-> necessary to cause trouble, since probing starts by throwing away
-> everything mod n_buckets. So really you just need to collide however
-> many low bits you need to make your desired N, and then get O(N^2)
-> behavior.
+In other words, visiting a URL like:
 
-Oh, right.
+    http://127.0.0.1:1234/?p=<PROJECT_NAME>;a=blobdiff;f=*;hpb=--output=/tmp/pwned;hb=HEAD
 
->> Letting oidhash() XOR in another word would close that line of attack
->> for quite a while, I assume.
->=20
-> Yeah. We have at least 160 bits in an object hash, and we only bother
-> with the low 32. We could XOR up to 5 times, but I agree that even a
-> single extra word would probably be plenty. Might be an interesting
-> experiment to time something like the patch below on a hash-heavy
-> workload.
->=20
-> diff --git a/hash.h b/hash.h
-> index fae966b23c..c9d21f589e 100644
-> --- a/hash.h
-> +++ b/hash.h
-> @@ -457,7 +457,10 @@ static inline unsigned int oidhash(const struct obj=
-ect_id *oid)
->  	 * platforms that don't support unaligned reads.
->  	 */
->  	unsigned int hash;
-> +	unsigned int entropy;
->  	memcpy(&hash, oid->hash, sizeof(hash));
-> +	memcpy(&entropy, oid->hash + sizeof(hash), sizeof(entropy));
-> +	hash ^=3D entropy;
->  	return hash;
->  }
-> =20
->=20
-> I suspect it won't make a big time difference. The old code should have
-> been optimized down to a single word load, and now we have two word
-> loads and an xor. That probably isn't important compared to the actual
-> 5-word memcmp() we have to do in order to verify that we found the right
-> bucket anyway.
-I see slightly worse performance, but within the noise.
+will result in the file "/tmp/pwned" being created. This happens as a
+result of gitweb executing something like:
 
-However, just stacking two words won't do if only a few bits of the
-resulting hash will be used to find a bucket.  We could mix in more bits
-and smear them all over, but if that's done by a deterministic function
-then it could be applied during the construction of manipulated object
-hash values as well, no?
+    git diff-tree -r -M --output=/tmp/pwned HEAD --
 
-Perhaps salting with a random value determined at runtime would help.
-Not XORing it in (pointless if the other value is controlled by the
-attacker, as the result would still collide), but using it as a mask to
-choose the bits to take from the object hash?
+, where "--output=/tmp/pwned" is substituted in as the value of
+"$hash_parent_base".
 
-Ren=C3=A9
+There are various other spots in Gitweb which are too eager to pass
+untrusted query parameter values as command-line arguments, leading to
+at least the above option-injection attack, and likely many others.
 
+Since 51b4594b40 (parse-options: allow --end-of-options as a synonym for
+"--", 2019-08-06), we have the "--end-of-options" command-line flag as
+a standard mechanism to indicate that any further argument should not be
+interpreted as command-line options.
+
+Guard agains this and other option-injection attacks by placing the
+"--end-of-options" flag before any untrusted user-input in any place
+that gitweb spawns Git as a sub-process.
+
+Reported-by: Moritz Sanft <moritz.sanft@outlook.de>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ gitweb/gitweb.perl | 77 +++++++++++++++++++++++++++++++---------------
+ 1 file changed, 52 insertions(+), 25 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index b5490dfecf2..a0f2c981e33 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2722,7 +2722,7 @@ sub git_get_hash {
+ 	my $retval = undef;
+ 	$git_dir = "$projectroot/$project";
+ 	if (open my $fd, '-|', git_cmd(), 'rev-parse',
+-	    '--verify', '-q', @options, $hash) {
++	    '--verify', '-q', @options, '--end-of-options', $hash) {
+ 		$retval = <$fd>;
+ 		chomp $retval if defined $retval;
+ 		close $fd;
+@@ -2737,7 +2737,9 @@ sub git_get_hash {
+ sub git_get_type {
+ 	my $hash = shift;
+ 
+-	open my $fd, "-|", git_cmd(), "cat-file", '-t', $hash or return;
++	open my $fd, "-|", git_cmd(), "cat-file", '-t', '--end-of-options',
++		$hash
++		or return;
+ 	my $type = <$fd>;
+ 	close $fd or return;
+ 	chomp $type;
+@@ -2885,7 +2887,8 @@ sub git_get_hash_by_path {
+ 
+ 	$path =~ s,/+$,,;
+ 
+-	open my $fd, "-|", git_cmd(), "ls-tree", $base, "--", $path
++	open my $fd, "-|", git_cmd(), "ls-tree", "--end-of-options", $base,
++		"--", $path
+ 		or die_error(500, "Open git-ls-tree failed");
+ 	my $line = <$fd>;
+ 	close $fd or return undef;
+@@ -2912,7 +2915,8 @@ sub git_get_path_by_hash {
+ 
+ 	local $/ = "\0";
+ 
+-	open my $fd, "-|", git_cmd(), "ls-tree", '-r', '-t', '-z', $base
++	open my $fd, "-|", git_cmd(), "ls-tree", '-r', '-t', '-z',
++		'--end-of-options', $base
+ 		or return undef;
+ 	while (my $line = <$fd>) {
+ 		chomp $line;
+@@ -3334,6 +3338,7 @@ sub git_get_last_activity {
+ 	     '--format=%(committer)',
+ 	     '--sort=-committerdate',
+ 	     '--count=1',
++	     '--end-of-options',
+ 	     map { "refs/$_" } get_branch_refs ()) or return;
+ 	my $most_recent = <$fd>;
+ 	close $fd or return;
+@@ -3390,6 +3395,7 @@ sub git_get_references {
+ 	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
+ 	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
+ 	open my $fd, "-|", git_cmd(), "show-ref", "--dereference",
++		"--end-of-options",
+ 		($type ? ("--", "refs/$type") : ()) # use -- <pattern> if $type
+ 		or return;
+ 
+@@ -3410,7 +3416,8 @@ sub git_get_references {
+ sub git_get_rev_name_tags {
+ 	my $hash = shift || return undef;
+ 
+-	open my $fd, "-|", git_cmd(), "name-rev", "--tags", $hash
++	open my $fd, "-|", git_cmd(), "name-rev", "--tags", "--end-of-options",
++		$hash
+ 		or return;
+ 	my $name_rev = <$fd>;
+ 	close $fd;
+@@ -3472,7 +3479,9 @@ sub parse_tag {
+ 	my %tag;
+ 	my @comment;
+ 
+-	open my $fd, "-|", git_cmd(), "cat-file", "tag", $tag_id or return;
++	open my $fd, "-|", git_cmd(), "cat-file", "tag", "--end-of-options",
++		$tag_id
++		or return;
+ 	$tag{'id'} = $tag_id;
+ 	while (my $line = <$fd>) {
+ 		chomp $line;
+@@ -3600,6 +3609,7 @@ sub parse_commit {
+ 		"--parents",
+ 		"--header",
+ 		"--max-count=1",
++		"--end-of-options",
+ 		$commit_id,
+ 		"--",
+ 		or die_error(500, "Open git-rev-list failed");
+@@ -3624,6 +3634,7 @@ sub parse_commits {
+ 		("--max-count=" . $maxcount),
+ 		("--skip=" . $skip),
+ 		@extra_options,
++		"--end-of-options",
+ 		$commit_id,
+ 		"--",
+ 		($filename ? ($filename) : ())
+@@ -3784,6 +3795,7 @@ sub git_get_heads_list {
+ 		($limit ? '--count='.($limit+1) : ()),
+ 		'--sort=-HEAD', '--sort=-committerdate',
+ 		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
++		'--end-of-options',
+ 		@patterns
+ 		or return;
+ 	while (my $line = <$fd>) {
+@@ -3998,7 +4010,8 @@ sub run_highlighter {
+ 
+ 	close $fd;
+ 	my $syntax_arg = (defined $syntax) ? "--syntax $syntax" : "--force";
+-	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
++	open $fd, quote_command(git_cmd(), "cat-file", "blob",
++		    "--end-of-options", $hash)." | ".
+ 	          quote_command($^X, '-CO', '-MEncode=decode,FB_DEFAULT', '-pse',
+ 	            '$_ = decode($fe, $_, FB_DEFAULT) if !utf8::decode($_);',
+ 	            '--', "-fe=$fallback_encoding")." | ".
+@@ -4687,7 +4700,8 @@ sub git_get_link_target {
+ 	my $link_target;
+ 
+ 	# read link
+-	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
++	open my $fd, "-|", git_cmd(), "cat-file", "blob", "--end-of-options",
++		$hash
+ 		or return;
+ 	{
+ 		local $/ = undef;
+@@ -6377,7 +6391,7 @@ sub git_search_files {
+ 
+ 	local $/ = "\n";
+ 	open my $fd, "-|", git_cmd(), 'grep', '-n', '-z',
+-		$search_use_regexp ? ('-E', '-i') : '-F',
++		$search_use_regexp ? ('-E', '-i') : '-F', '--end-of-options',
+ 		$searchtext, $co{'tree'}
+ 			or die_error(500, "Open git-grep failed");
+ 
+@@ -6768,17 +6782,18 @@ sub git_blame_common {
+ 	my $fd;
+ 	if ($format eq 'incremental') {
+ 		# get file contents (as base)
+-		open $fd, "-|", git_cmd(), 'cat-file', 'blob', $hash
++		open $fd, "-|", git_cmd(), 'cat-file', 'blob',
++			'--end-of-options', $hash
+ 			or die_error(500, "Open git-cat-file failed");
+ 	} elsif ($format eq 'data') {
+ 		# run git-blame --incremental
+ 		open $fd, "-|", git_cmd(), "blame", "--incremental",
+-			$hash_base, "--", $file_name
++			"--end-of-options", $hash_base, "--", $file_name
+ 			or die_error(500, "Open git-blame --incremental failed");
+ 	} else {
+ 		# run git-blame --porcelain
+ 		open $fd, "-|", git_cmd(), "blame", '-p',
+-			$hash_base, '--', $file_name
++			"--end-of-options", $hash_base, '--', $file_name
+ 			or die_error(500, "Open git-blame --porcelain failed");
+ 	}
+ 	binmode $fd, ':utf8';
+@@ -7058,7 +7073,8 @@ sub git_blob_plain {
+ 		$expires = "+1d";
+ 	}
+ 
+-	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
++	open my $fd, "-|", git_cmd(), "cat-file", "blob", "--end-of-options",
++		$hash
+ 		or die_error(500, "Open git-cat-file blob '$hash' failed");
+ 
+ 	# content-type (can include charset)
+@@ -7121,7 +7137,8 @@ sub git_blob {
+ 	}
+ 
+ 	my $have_blame = gitweb_check_feature('blame');
+-	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
++	open my $fd, "-|", git_cmd(), "cat-file", "blob", "--end-of-options",
++		$hash
+ 		or die_error(500, "Couldn't cat $file_name, $hash");
+ 	my $mimetype = blob_mimetype($fd, $file_name);
+ 	# use 'blob_plain' (aka 'raw') view for files that cannot be displayed
+@@ -7216,7 +7233,8 @@ sub git_tree {
+ 	{
+ 		local $/ = "\0";
+ 		open my $fd, "-|", git_cmd(), "ls-tree", '-z',
+-			($show_sizes ? '-l' : ()), @extra_options, $hash
++			($show_sizes ? '-l' : ()), @extra_options,
++			"--end-of-options", $hash
+ 			or die_error(500, "Open git-ls-tree failed");
+ 		@entries = map { chomp; $_ } <$fd>;
+ 		close $fd
+@@ -7417,7 +7435,7 @@ sub git_snapshot {
+ 	my $cmd = quote_command(
+ 		git_cmd(), 'archive',
+ 		"--format=$known_snapshot_formats{$format}{'format'}",
+-		"--prefix=$prefix/", $hash);
++		"--prefix=$prefix/", "--end-of-options", $hash);
+ 	if (exists $known_snapshot_formats{$format}{'compressor'}) {
+ 		$cmd .= ' | ' . quote_command(@{$known_snapshot_formats{$format}{'compressor'}});
+ 	}
+@@ -7569,6 +7587,7 @@ sub git_commit {
+ 	open my $fd, "-|", git_cmd(), "diff-tree", '-r', "--no-commit-id",
+ 		@diff_opts,
+ 		(@$parents <= 1 ? $parent : '-c'),
++		"--end-of-options",
+ 		$hash, "--"
+ 		or die_error(500, "Open git-diff-tree failed");
+ 	@difftree = map { chomp; $_ } <$fd>;
+@@ -7649,7 +7668,8 @@ sub git_object {
+ 		my $object_id = $hash || $hash_base;
+ 
+ 		open my $fd, "-|", quote_command(
+-			git_cmd(), 'cat-file', '-t', $object_id) . ' 2> /dev/null'
++			git_cmd(), 'cat-file', '-t', '--end-of-options',
++			$object_id) . ' 2> /dev/null'
+ 			or die_error(404, "Object does not exist");
+ 		$type = <$fd>;
+ 		defined $type && chomp $type;
+@@ -7660,11 +7680,13 @@ sub git_object {
+ 	} elsif ($hash_base && defined $file_name) {
+ 		$file_name =~ s,/+$,,;
+ 
+-		system(git_cmd(), "cat-file", '-e', $hash_base) == 0
++		system(git_cmd(), "cat-file", '-e', '--end-of-options',
++			$hash_base) == 0
+ 			or die_error(404, "Base object does not exist");
+ 
+ 		# here errors should not happen
+-		open my $fd, "-|", git_cmd(), "ls-tree", $hash_base, "--", $file_name
++		open my $fd, "-|", git_cmd(), "ls-tree", "--end-of-options",
++			$hash_base, "--", $file_name
+ 			or die_error(500, "Open git-ls-tree failed");
+ 		my $line = <$fd>;
+ 		close $fd;
+@@ -7700,7 +7722,7 @@ sub git_blobdiff {
+ 		if (defined $file_name) {
+ 			# read raw output
+ 			open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-				$hash_parent_base, $hash_base,
++				"--end-of-options", $hash_parent_base, $hash_base,
+ 				"--", (defined $file_parent ? $file_parent : ()), $file_name
+ 				or die_error(500, "Open git-diff-tree failed");
+ 			@difftree = map { chomp; $_ } <$fd>;
+@@ -7715,7 +7737,8 @@ sub git_blobdiff {
+ 
+ 			# read filtered raw output
+ 			open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-				$hash_parent_base, $hash_base, "--"
++				"--end-of-options", $hash_parent_base, $hash_base,
++				"--"
+ 				or die_error(500, "Open git-diff-tree failed");
+ 			@difftree =
+ 				# ':100644 100644 03b21826... 3b93d5e7... M	ls-files.c'
+@@ -7751,6 +7774,7 @@ sub git_blobdiff {
+ 		# open patch output
+ 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+ 			'-p', ($format eq 'html' ? "--full-index" : ()),
++			"--end-of-options",
+ 			$hash_parent_base, $hash_base,
+ 			"--", (defined $file_parent ? $file_parent : ()), $file_name
+ 			or die_error(500, "Open git-diff-tree failed");
+@@ -7945,7 +7969,7 @@ sub git_commitdiff {
+ 	if ($format eq 'html') {
+ 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+ 			"--no-commit-id", "--patch-with-raw", "--full-index",
+-			$hash_parent_param, $hash, "--"
++			"--end-of-options", $hash_parent_param, $hash, "--",
+ 			or die_error(500, "Open git-diff-tree failed");
+ 
+ 		while (my $line = <$fd>) {
+@@ -7957,7 +7981,8 @@ sub git_commitdiff {
+ 
+ 	} elsif ($format eq 'plain') {
+ 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-			'-p', $hash_parent_param, $hash, "--"
++			'-p', '--end-of-options', $hash_parent_param, $hash,
++			"--"
+ 			or die_error(500, "Open git-diff-tree failed");
+ 	} elsif ($format eq 'patch') {
+ 		# For commit ranges, we limit the output to the number of
+@@ -7982,7 +8007,8 @@ sub git_commitdiff {
+ 			push @commit_spec, '--root', $hash;
+ 		}
+ 		open $fd, "-|", git_cmd(), "format-patch", @diff_opts,
+-			'--encoding=utf8', '--stdout', @commit_spec
++			'--encoding=utf8', '--stdout', '--end-of-options',
++			@commit_spec
+ 			or die_error(500, "Open git-format-patch failed");
+ 	} else {
+ 		die_error(400, "Unknown commitdiff format");
+@@ -8334,7 +8360,8 @@ sub git_feed {
+ 		# get list of changed files
+ 		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+ 			$co{'parent'} || "--root",
+-			$co{'id'}, "--", (defined $file_name ? $file_name : ())
++			$co{'id'}, "--end-of-options", "--",
++			(defined $file_name ? $file_name : ())
+ 			or next;
+ 		my @difftree = map { chomp; $_ } <$fd>;
+ 		close $fd
+
+base-commit: 2462961280690837670d997bde64bd4ebf8ae66d
+-- 
+2.51.0.179.g22c8463a5ee
