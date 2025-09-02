@@ -1,89 +1,158 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3932C2EA47C
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 09:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B322BD11
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 10:18:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756804471; cv=none; b=fiesJU+yXXjloioJ6hkMSsy89LpQiOEPAvA54NjIcMrq0kXpi6dTsttd82b1VW+no2XoEITgEL0pZsuPKmX0aIvmRp1UMolsDYwZUQgNZfYZ5JzLyXy+0eMkE4+jmRxF+qRwRilZrCtn4AZJ+RylOFwtOmv5m9woLgoa4vQeTic=
+	t=1756808292; cv=none; b=QyPgXA+3wOtN9se6QL8QVWE1bq2eeuLp0opiN3JML8OseuWrcnM2MxnoGQU9RNrJbiKzjA76Ec2w8edzfbWgmLFYIams1q4hQ7OlbiF4pfXzT3JFNuIrdRoox6sSz+F7RgQpafr81UmRVcVYgwdGB4kLs5bxCL1QbsfOLjRTWIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756804471; c=relaxed/simple;
-	bh=l6UfE325+96Hr+KSf6vHKRkPhu7vrv5TheGB8SRmsHg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GqrSIzsWeO7PGuid0X3iYX88eQ11rBjuyB1NRjyp58bUp+DnP8u33eT9cy7n5RLTzWC5WqUG6UUj1MhMYKVNXmXuIcmskV7DjBSBK6U6GFMT5kKxvTIrmJEkofhR6ppzUVAHCwBntCWMqECO/pM1kLx4sL7kizAQF1QTVjQY87U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K0vbanyW; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756808292; c=relaxed/simple;
+	bh=P8iTRxjIh/uia/97LHuuf2cXHkXJ6Zcai8iQOwsHwmk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fi+ktAXG9YEfhCPYyenpdc/G21ggFCvDhepr8TtJ9AAImezD/s8FfEIhuAh27sDGBHNymEUzsedjNhcsymF3gIgczTXcRJHxBepTDjYsLUA7S1/14qFV6ZO7F8gmnwE3nu30KvN9vQrzZ3w0LqgwmNnj4o5zuLoCE2J82JWNOVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sGyji4as; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UizYwUf5; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K0vbanyW"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-61e8fdfd9b4so3890200a12.1
-        for <git@vger.kernel.org>; Tue, 02 Sep 2025 02:14:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756804468; x=1757409268; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l6UfE325+96Hr+KSf6vHKRkPhu7vrv5TheGB8SRmsHg=;
-        b=K0vbanyWcOqZw0rYW0akogxga+48vzZrnmmBVfZ2rY1fJd8r/gcT84F3mNiA2jQXYw
-         wTFN+IvCUAmJlD+HMlyamE2CQr8icUEZSkoCj/OOQ1psbWU6Wfl5TM1n2Em7fNREnt+d
-         Q+IsptxT6ddcz6deO+Rr2nF2AxF5kh3/wCynwnn8lfFW6CViMfwHQKyQxedcncBUjoQN
-         eIjCP+gajAmEbVI2SumBvHuhixyEGBew3Bf4RrvtGmhfVT7glwaRK5Evjsd45YaWOy9Q
-         eLdtEX3lvA2ii2Mu+83s99EciFKju/4hLLVZJ/+1AcJsNH1VkVuVe1ujIUbhmVWGIN6u
-         52Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756804468; x=1757409268;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=l6UfE325+96Hr+KSf6vHKRkPhu7vrv5TheGB8SRmsHg=;
-        b=VB7fVAz9VNHCjNHR5jX8CD3npMgmiTDlQpioTNMCk56cn6c86nQUjCBwFlXqw/EshB
-         oSGjJNC5zHLIPtBKWe9MOqJJTmvYDQGjMA7zFayMZ/24ldi24IZjV1TokgYOfiWgz+YJ
-         vjleWOHwEbdUKeQbk9+eeQ8Jwc90bKOM5avCEm32ih8uodH4M2W9J71VwIUSXYj1zVxG
-         3/YULknFEZFy3XqSHUmcTNFZ4D80tdhxDpVApiTGVLUrQFCvyIrfN1NAtRf+AXUldXDA
-         gB2THmyJZFE2w3RbVjAC4iDA6L2B0yHQOdtZwc/4XoM6gi2kZ/7q+1uBJN2lLZh6S29y
-         58Tg==
-X-Gm-Message-State: AOJu0YzMrLc/ipES2X9gSFuUlTMPFfS0xqf2DMwy4c8041Sz5qGQ+cU2
-	3a5AxfY4XkxfsOgyqxWA/N/aUYoQy3NJEXskzlPP/UBv+wpIgwqqzBENCPkDU9Rbg0OJK8/hNO1
-	aEuBrEqdYEQmA4EJQoCDtx/hkD+ZYBXs=
-X-Gm-Gg: ASbGncvntMF8UgTSxKXTDMxkc5Ym304PH0d6k0ZmLBqagN7P7FrzrXa7WZUMTAtjjBq
-	zHFumhwRILgrgORNXo5zpHYeyTqoeEAT++kcvlRmDmIOzXtVXfWT5wZ2oTVhH+7+PGb3nxeKs86
-	xCm7/jmrskxfycRbr/tU5vd5Wtc9eVarVxecIr8TnffRLoXor4J3pSQjPa2LZCJ+Hc3jtnRWLo3
-	TZulcyBEq7IGpJ/5Oe8lqzVd4IWMltXoJid8+mB
-X-Google-Smtp-Source: AGHT+IHeslsmJAVsykvJ7yv21izWFo0lf2IXj7q38Tj3X5MgmUGSgp4jgbfUHcdJnRjkbs8Wt1ATy1WvxxkjQFdp5eo=
-X-Received: by 2002:a05:6402:3494:b0:61d:9a4c:d03 with SMTP id
- 4fb4d7f45d1cf-61d9a4c0e7cmr7366694a12.13.1756804468389; Tue, 02 Sep 2025
- 02:14:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sGyji4as";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UizYwUf5"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id C90F4EC03B8;
+	Tue,  2 Sep 2025 06:18:08 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Tue, 02 Sep 2025 06:18:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1756808288; x=1756894688; bh=47HO9ZYbXC
+	FDZzyJLVb/xAyPTkHv6YvGkG5EM2ZYL0o=; b=sGyji4asArWV9NU7WnM/pRvT+2
+	YrErUnnb3pGmMx4GxA7C9rudt6sRtgA5N32I20uaVmL/B0xLq3X07PGWyupx2LLz
+	sixCmOA3ZgvX0Jzr34gx4YPxwl16WQEJdckaFu9fIP2N03ZhBDaGnAIgQg/Ytnul
+	qbbiTTIa60gZ/dfVBHCwTCVLogu5x7NESIuQu5fLEtPFPD3g9wAx/5MM9D/OTI0r
+	w1R8FP5lpQyGKWGb+3K8d8aAYMqA+mAFPV4Rc86ng9s4obCvy612ErQpA8sRfbug
+	5tpAWbHpf0KyBos5zhfAleYzW1MGJuQQP5E9v7NvdNY4jzT4H3RryAMnp/QQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756808288; x=1756894688; bh=47HO9ZYbXCFDZzyJLVb/xAyPTkHv6YvGkG5
+	EM2ZYL0o=; b=UizYwUf5hpKB2hvBBPExlBeBAEMEowpcw6dNXCaSI2hCic1YA2B
+	/3aRUMWRfTPy9y8oMR1pDZ70yIdifFeDLNM1yKm//ewW1mV5Vbfm6fXh3yrFNroK
+	kQgKr4j35iCi33BK5M8MKMl2qWUhRlrGOSBhXGdy93BJgkHSpfDydup6eR4IgOCT
+	HvgmTxdKDF4wWGTQ8GK2ECe9oh0JtY8z8Hi9/0ktyMfD1jx2omtr/DK9+6ejxAUN
+	6DBYb8XCScC4uOjswTRkGv87uqM+mWiMgAJdFHStgoZ97tfTXWHmWvNyjMAe02rs
+	/elz0w6SLEljATTErmZL1lWk/Mpfr5lWf1w==
+X-ME-Sender: <xms:YMS2aE-5PDxT81VnE_lZcOAiwpw2VoRcVF2PXKqmoQAiQw6osUcDnQ>
+    <xme:YMS2aEdk9nO8f48Fn8i8iYS7vIfbfVmEhux7nO4dPfTrGVjI7_b79zn6H3MO2fZGE
+    klOwqYfYk32bBqa-A>
+X-ME-Received: <xmr:YMS2aNH31Su4wUheXnS3ff0uOEPopABRlNiiLPiZBFCUUGvmTJTRcPJHvsYBQng0Lfv1NlMEvSuj9xkTcCgbMjtfM-rtKVLoXEtnTjFGgQxIew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdegucetufdoteggodetrfdotffvucfrrh
+    hofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghilhhouhht
+    mecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepjedttdegff
+    ekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvvght
+    shhonhhifedtudejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgt
+    ohhm
+X-ME-Proxy: <xmx:YMS2aCfL_aMI9RrejLEh4-DtRzE8wygmrMZDyYOuNESY4uEFq-G1iA>
+    <xmx:YMS2aHGTW1-C1r2GNpemaTIjNn59hiWWyrcLOgR7SbYiRG4LQ1eHQw>
+    <xmx:YMS2aLUN0C0gUn11sZVIBUQ5IjBl6A5qmilsST2DXvq5E43Gp-h3_A>
+    <xmx:YMS2aOKBrHTTGTu5RQcm_rsEKF6uKW1gIi4jyUspvUuKq0tRH2bkUg>
+    <xmx:YMS2aPcxrqMXwG4aDd-rLAm6bdeNxXAFesyZ0cVe1LYqrnfegqsvF4KA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Sep 2025 06:18:07 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3eecd012 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 2 Sep 2025 10:18:04 +0000 (UTC)
+Date: Tue, 2 Sep 2025 12:18:01 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org, shejialuo@gmail.com
+Subject: Re: [GSoC][PATCH 1/5] builtin/pack-refs: factor out core logic into
+ a helper
+Message-ID: <aLbEWSHUotkmSiCq@pks.im>
+References: <20250826073645.1074397-1-meetsoni3017@gmail.com>
+ <20250826073645.1074397-2-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP8UFD0Lh8caRsMV0nUB5Oge_hwLO_WWMAqxTqd8eY7mqwA-9Q@mail.gmail.com>
- <417d5e7725eac11750468f064e1e4f8ca06155c7.camel@jansen-preisler.de>
-In-Reply-To: <417d5e7725eac11750468f064e1e4f8ca06155c7.camel@jansen-preisler.de>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 2 Sep 2025 11:14:16 +0200
-X-Gm-Features: Ac12FXyM2wWVQurQ1-Je-2KAsJ39bV-r00Oq3ExTHlweqptAenm18ArFGTbpW4Q
-Message-ID: <CAP8UFD1nsPjhK0rEzCc5n5OCJ8y3Xs4D+GmdwZv3BANQZN7MsQ@mail.gmail.com>
-Subject: Re: Draft of Git Rev News edition 126
-To: "mja@jansen-preisler.de" <mja@jansen-preisler.de>
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
-	Jakub Narebski <jnareb@gmail.com>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Bryan Lee <hi@looping.me>, 
-	Lidong Yan <yldhome2d2@gmail.com>, Seyi Chamber <kuforiji98@gmail.com>, 
-	Johannes Sixt <j6t@kdbg.org>, Ben Knoble <ben.knoble@gmail.com>, 
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250826073645.1074397-2-meetsoni3017@gmail.com>
 
-On Tue, Sep 2, 2025 at 10:44=E2=80=AFAM mja@jansen-preisler.de
-<mja@jansen-preisler.de> wrote:
->
-> Supplied some fixes and rephrasings plus Bruno Brito's PR #794 in
-> 408a216.
+On Tue, Aug 26, 2025 at 01:06:41PM +0530, Meet Soni wrote:
+> The implementation of `git pack-refs` is monolithic within
+> `cmd_pack_refs()`, making it impossible to share its logic with other
+> commands. To enable code reuse for the upcoming `git refs optimize`
+> subcommand, refactor the core logic into a shared helper function.
+> 
+> Introduce a new `pack-refs.h` header to define the public interface
+> for this shared logic. It contains the declaration for a new helper
+> function, `pack_refs_core()`, and a macro for the common usage
+> options.
+> 
+> Move the option parsing and packing logic from `cmd_pack_refs()` into a
+> new helper function named `pack_refs_core()`. This helper is made
+> generic by accepting the command's usage string as a parameter.
+> 
+> The original `cmd_pack_refs()` is simplified to a thin wrapper that
+> is only responsible for defining its specific usage array and calling
+> the shared helper.
+> 
+> Mentored-by: Patrick Steinhardt <ps@pks.im>
+> Mentored-by: shejialuo <shejialuo@gmail.com>
+> Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
+> ---
+>  builtin/pack-refs.c | 31 ++++++++++++++++++++-----------
+>  pack-refs.h         | 22 ++++++++++++++++++++++
+>  2 files changed, 42 insertions(+), 11 deletions(-)
+>  create mode 100644 pack-refs.h
 
-Thanks, it looks great to me!
+Shouldn't that header live in "builtin/pack-refs.h"? Makes it way more
+obvious that it exposes functions from "builtin/pack-refs.c".
+
+> diff --git a/pack-refs.h b/pack-refs.h
+> new file mode 100644
+> index 0000000000..ba51d154e3
+> --- /dev/null
+> +++ b/pack-refs.h
+> @@ -0,0 +1,22 @@
+> +#ifndef PACK_REFS_H
+> +#define PACK_REFS_H
+> +
+> +struct repository;
+
+Let's add a newline here.
+
+> +/*
+> + * Shared usage string for options common to git-pack-refs(1)
+> + * and git-refs-optimize(1). The command-specific part (e.g., "git refs optimize ")
+> + * must be prepended by the caller.
+> + */
+> +#define PACK_REFS_OPTS \
+> +	"[--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]"
+> +
+> +/*
+> + * The core logic for pack-refs and its clones
+
+And a dot after to terminate the sentence.
+
+> + */
+> +int pack_refs_core(int argc,
+> +		   const char **argv,
+> +		   const char *prefix,
+> +		   struct repository *repo,
+> +		   const char * const *usage_opts);
+> +
+> +#endif /* PACK_REFS_H */
+
+Patrick
