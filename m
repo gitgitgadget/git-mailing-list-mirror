@@ -1,86 +1,85 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95EE2E573
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 08:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD83E573
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 08:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756803055; cv=none; b=jCJppjiORbDZGVMNABCpOw+roEyDh6iIW+mKf1kOE5aarqs/F6V4YSl/5GNTUj2+S7QU+95VXWDHfJTvi1WPd8CO2D7GTgyGEvN5pYQnyS9igsk1/5UVJlSj5kD5U07AH3SE5yAoXG9uUOgtDiGaASwGEurpXmyX23c5bAyJ9zw=
+	t=1756803061; cv=none; b=glZfDZEib0IXfUtrF2P5oH+p2sBWP7mhnGXMmNKEFHokHRUnV+GXn4M6wBqheRBUDds1vfQlrLjGx6dS8XX/2hIBfwQj1/MKR230CsXE+iXts7M0oLYyh6OxBWqvhe1OqsogFCe187cG1TCX/2X/RuYtteE5ZzDPGWjmhMF/mHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756803055; c=relaxed/simple;
-	bh=HSUJDRvzWjwFQP/icgQ3U3kV7KZmFJ9MduHS6T5KrnA=;
+	s=arc-20240116; t=1756803061; c=relaxed/simple;
+	bh=n7ksQQ2HwtdS7DXiYy4xlZWQbjlG5weXslp7Lce7ZOU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EeRecjCGbBjam4t7gOHECFTdiUOoMWu3izkFaIVXaATaixmbVkRN0h2SLOv20BKCiOx/N47O0QpjZHVAY3F2/A4guvvtHXONK74ykUeSVoAy/q4P+IC9hAhaM4UJMGQGAd1YO/40E3vNyaGqz5KOzrbq9KKQ7d9Qb+tq0kb5s/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mqMOj1N2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q7JIYzqD; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=kLl1ezwA83ltdPcQE8KnPb1l7Phsvunr/D5nh7kZc/eaxQQaDSdWImrtL9t/b41flDbt3++rOi4t9YEqrPle01PM522gZW/1E1SMp1fOM+tI0v+/2bte+JR8WC14L0ON4k12v28y0PpXlMndDiaic6WuvLKhAb/2fBFTcduX9Mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FZpz5dnT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LgZNvoUE; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mqMOj1N2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q7JIYzqD"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FZpz5dnT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LgZNvoUE"
 Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id A8C7DEC0540;
-	Tue,  2 Sep 2025 04:50:52 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id D31FEEC0540;
+	Tue,  2 Sep 2025 04:50:58 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Tue, 02 Sep 2025 04:50:52 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 02 Sep 2025 04:50:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1756803052; x=1756889452; bh=IWhjQ8DfG5
-	6Ltfon0UXhFG+u1brxbXgrLEh9jGRdBDY=; b=mqMOj1N2ho8bRWeg5mxlC1Kqh+
-	uDOJUh4mhrx1YzN/5hJkHMfJsSWbVCm6Rw8tGa409vUD0QVnAcCrcGxGXeUnnDfe
-	zvCm25SRtV8haS+Fr2n3XjJlMki1yjv8wAde1FTXD7C9iFnPQNSbH60RWvf9LqaW
-	O7bD+dbXg2r5VVrnXGF04MMKwv9UlLO4AMy49NEZWYWpFCcg7xcWiHpLqj0Up4/k
-	NdfrhXCZbdDSo7FQASz9tsAzae/4AW7AXhKRN4zwYUT/DukuPL8IYfWzo9ZNlO+x
-	NYvoep1ZwEeM9p3Zrvl0MTogQQO7nu4+2YvmFt4WHXnNifp40tIGE4ov3Pzw==
+	:subject:to:to; s=fm1; t=1756803058; x=1756889458; bh=qT+esleklN
+	jxi186mSpB8bj/tMtdetY/3Vp87QGw+dU=; b=FZpz5dnTPlkaEl+OSvsKEwtQPW
+	FfKUyp0fC/DF43fxu/eLTg17A/aTT0GGDxuTz7A7Rk443qQdRGCMfn6/ALOM+5Fp
+	GiLhqVeGXDRbwz+O1nHVczgjakaFBT3um8DeOnAgV7vCpbZKKvV8rSaGsiGrCS8T
+	2Rm4hN9YJXv5VQUFv4iVQTBTFGr6qzR731dlZ0OLByfUdnzyhjeudTPRArIkkcAq
+	YSJkUnfb2UrIol/C2XnOjjfiA4P4JohBV7MP6kWSfYRMqNwMTYJHltECBdX8Wxux
+	BhawaCj4JUMaj9/c2weR7JHhNxr00Gbp9fMnE8OJo3wu76eSNSoFEBldFPUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756803052; x=1756889452; bh=IWhjQ8DfG56Ltfon0UXhFG+u1brxbXgrLEh
-	9jGRdBDY=; b=Q7JIYzqD4/Hmyc/x3ERm2tbwRW+IF0igT+uzevsnkE5iGqV/FO1
-	lvKWBynG+TIhvLjCf7wkLYybIhUSv6Qx/Ao4PX/glebYqmwBGEcmty6TezbcFL03
-	wkud2EzlUlf3rsvMIMz33Biy+vh+bAmIEIsoupfFwAxS0T1v4cL0/9KR515hrNMF
-	RP1KOvPztt6xDnUeZrXjYGVUjxl5tYrOy8KIR2dUQzKt6QMaZ5OX09q0MPVLfQXI
-	ap6L0ZV+AWfYRhIR5Wvbup0rGZ1L2e3a49Qitv+tyaf58bxFs0+udKyeJ+3V/GL4
-	EF12YfYRZ/fbxulK6PYhnnIM7h7cDcr2zTQ==
-X-ME-Sender: <xms:7K-2aD7UROlPY3Qme4WERfPeKd7h7sVjeqhHgtGpBWTGXHsB6ZpYTQ>
-    <xme:7K-2aDcgEATpZEJhKRujKVIRFbiwPfOZ8H7yPjOMVpo6vOvtEoJpJ_W7F0UJjDT3h
-    Ez32GjZ-nBwQ39koQ>
-X-ME-Received: <xmr:7K-2aHAvo3WpaGMOTHD8qClYVJ_3Wz1T7XRIIADMad3GxzbmjZf4gJ6nbBjf6DEkEpjdM9epZ_XnEEDeJxFHFNC2qwdEXb2uI3E2wxSnJ6jf5g>
+	1756803058; x=1756889458; bh=qT+esleklNjxi186mSpB8bj/tMtdetY/3Vp
+	87QGw+dU=; b=LgZNvoUEbjNFBNurFBuq+yfWLByzfUO4frl8HOOWT7LhSk/7ZYW
+	U5G1esC83T5xZ9TlII7yQ5Ni24bbIEJ9V9z/RN1hybCQifzwBcVBFotmXE/ivZJh
+	P4KdJGZ0/X00H2l7W8Qm92Tnv+IFt6Hge6GZsO9LjrvebijuBpN9AnBupL1/NCRf
+	cwwEJPmAH8932bHDtG8BLgt0KVNlUalK4lT75S1IBLZ+/2xk3Jac+IFBKPStF4kg
+	H0bhKTxyetQ0I87k+TwUtBH4PXg7bB83nQT5DBNT/+c+CwDZ41YioLVn2HEOMewb
+	ChRJD9WjkQvDfty1NiMXq92zpuN6c4dBy1g==
+X-ME-Sender: <xms:8q-2aKkDQN9GdRR5kNtNHBMqfMP3Ur8j-3FRDI8W_axG_SMU5tOLJw>
+    <xme:8q-2aMZyQe0gW8LMk9T7pReHF1CsNVtjo2jHM5mS2b4lrNVb8d02Tifs6TTHQqVCi
+    W4Dya6gFjVQ0giUWg>
+X-ME-Received: <xmr:8q-2aFPQoy17bl8lQBZHOR-lzYP1QhbE9pXnQ2pMrykISFgwkPi32V8r4EYsjiTmwVT4hItb8TP4q7gXECPPjtLmh0e2c4bl1z3cAOAxSrT-Xg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleegiedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphht
-    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:7K-2aG8ImztHoaDwswQu9dKM0t1c61E-4M7Yd5iniH9lb_SV3wf9Jg>
-    <xmx:7K-2aCKfgAEHGVH-L6lf1Mj3-GbQbTopuEdhHxKZhuQq1_v3rVmY_Q>
-    <xmx:7K-2aPhg_-ngZOAEnOtbhQxTDl1QaBGLdSkBTzjvoLDKEst2kZBbog>
-    <xmx:7K-2aC4AqKIQWWilR0YLMz-B2Kc5Wyrq8eQad1FDOriWxmowV5f17Q>
-    <xmx:7K-2aOQQBSQG2kqMfAIdBbm83c5pmz3vg_h6PFi3farVXFYygdZieB4G>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
+    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgv
+    thdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:8q-2aBZ7r097aKAZ8ksmTz9RTK8-aKwezpbtOFhYjENtDVNDgwU_CQ>
+    <xmx:8q-2aD16K3HeShRql3Te7RDAPo7wSD2GsARIgn0rYBZtNeKryYvYbA>
+    <xmx:8q-2aHftfF2EnFkq6K3gmELkXKZMNFXaiQUqo78vWkRspdv_9_TLSw>
+    <xmx:8q-2aEHsakIzIQ13AxzZPhw2oMZMOMi6poWh0ZDKFOX2MOBZvkzCoA>
+    <xmx:8q-2aDcYes22GgsQMkOsGXEa-0sW1rQ_sDykf-vnvnp8hvoxq-gRZLwW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Sep 2025 04:50:51 -0400 (EDT)
+ 2 Sep 2025 04:50:57 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bc7e5eda (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 2 Sep 2025 08:50:51 +0000 (UTC)
-Date: Tue, 2 Sep 2025 10:50:48 +0200
+	by mail (OpenSMTPD) with ESMTPSA id d3e32e35 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 2 Sep 2025 08:50:57 +0000 (UTC)
+Date: Tue, 2 Sep 2025 10:50:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 11/16] packfile: always add packfiles to MRU when
- adding a pack
-Message-ID: <aLav6D4PhIHsUd36@pks.im>
+Subject: Re: [PATCH v2 14/16] packfile: remove `get_packed_git()`
+Message-ID: <aLav7vdfxPGTVDQd@pks.im>
 References: <20250821-b4-pks-packfiles-store-v2-0-d10623355e9f@pks.im>
- <20250821-b4-pks-packfiles-store-v2-11-d10623355e9f@pks.im>
- <aK5ZmNxE4zhNt7Zg@nand.local>
+ <20250821-b4-pks-packfiles-store-v2-14-d10623355e9f@pks.im>
+ <aK5hpwcCgjkgQB1N@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,69 +88,81 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aK5ZmNxE4zhNt7Zg@nand.local>
+In-Reply-To: <aK5hpwcCgjkgQB1N@nand.local>
 
-On Tue, Aug 26, 2025 at 09:04:24PM -0400, Taylor Blau wrote:
-> On Thu, Aug 21, 2025 at 09:39:09AM +0200, Patrick Steinhardt wrote:
-> > When adding a packfile to it store we add it both to the list and map of
-> > packfiles, but we don't append it to the most-recently-used list of
-> > packs. We do know to add the packfile to the MRU list as soon as we
-> > access any of its objects, but in between we're being inconistent. It
-> > doesn't help that there are some subsystems that _do_ add the packfile
-> > to the MRU after having added it, which only adds to the confusion.
+On Tue, Aug 26, 2025 at 09:38:47PM -0400, Taylor Blau wrote:
+> On Thu, Aug 21, 2025 at 09:39:12AM +0200, Patrick Steinhardt wrote:
+> > We have two different functions to retrieve packfiles for a packfile
+> > store:
 > >
-> > Refactor the code so that we unconditionally add packfiles to the MRU
-> > when adding them to a packfile store.
+> >   - `get_packed_git()` returns the list of packfiles after having called
+> >     `prepare_packed_git()`.
+> >
+> >   - `get_all_packs()` calls `prepare_packed_git()`, as well, but also
+> >     calls `prepare_midx_pack()` for each pack.
 > 
-> I am a little confused why prepare_midx_pack() wants to add packs to the
-> MRU cache so eagerly, and the commit which introduced that behavior
-> (commit af96fe3392 (midx: add packs to packed_git linked list,
-> 2019-04-29)) doesn't focus on that area in detail.
+> Yeah, having two of these functions that are named so similarly as to
+> suggest they do the same thing (even though they don't) is unfortunate,
+> and I am glad that we are looking at it here.
 > 
-> (Note that commit af96fe3392 *does* discuss a separate cache's behavior
-> regarding the open file descriptor limit, but that LRU cache is a
-> different one than the MRU cache we're discussing here.)
+> > This means that the latter function also properly loads the info of
+> > whether or not a packfile is part of a multi-pack index. Preparing this
+> > extra information also shouldn't be significantly more expensive:
 > 
-> What I do wonder about is why af96fe3392 adds packs to the MRU cache in
-> the first place. As far as I can tell, we never move MIDX'd packs to
-> the front of the MRU cache at all. There are two spots that call
-> list_move() on the MRU cache, which are:
-> 
->  - packfile.c::find_pack_entry(), which enumerates MIDX'd
->    packs in a separate loop earlier on in the function, and ignores
->    packs in the MRU cache whose p->multi_pack_index bit is set.
-> 
->  - builtin/pack-objects.c::want_object_in_pack_mtime(), which also
->    enumerates MIDX'd packs in a separate loop, though it does not
->    explicitly ignore packs in the MRU cache with the multi_pack_index
->    bit set.
-> 
-> In practice, though, I think these two are equivalent, since
-> want_object_in_pack_mtime() will return before it gets to the MRU cache
-> if it found the object in a MIDX'd pack.
-> 
-> So I don't think we need to be adding MIDX'd packs to the MRU cache in
-> the first place.
+> Right; get_packed_git() only loads the non-MIDX'd packs, and
+> get_all_packs() loads everything (regardless whether or not a pack is
+> part of the MIDX or not).
 
-I think the status quo is quite confusing. There are callers which
-directly iterate through the list of packfiles in MRU order, and that
-list is not guaranteed right now to even contain all packfiles that are
-tracked in the packfile store. The list is complete when we only load
-packfiles from disk, but if we ever manually add a packfile to the store
-in-memory the list is not up-to-date anymore. I also couldn't find a
-reason for that distinction.
+I initially understood the distinction of these functions to be exactly
+this. But after looking further I don't think this is the actual
+distinction: both functions end up loading all packfiles in the repo,
+with the only distinction being that `get_all_packs()` also prepares the
+MIDX for each MIDX'd packfile.
 
-Despite being confusing, there's another motivation here as discussed
-with Peff in [1]: we can drop the distinction between the MRU list and
-the "normal" list altogether. Ensuring that all packfiles are always
-stored in the MRU is a prerequisite for that subsequent change. I
-already got a patch series pending that does this refactoring.
+The important thing to note is that an MIDX may only ever refer to
+packfiles in the same object directory. And as we have already loaded
+all packfiles in that object directory via `prepare_packed_git_one()`
+there isn't really any difference in the returned list of packfiles
+whatsoever. Both functions end up loading all packfiles, regardless of
+whether or not they have an MIDX.
 
-That being said, I wouldn't mind moving this change into that subsequent
-patch series, either. It doesn't really have a strong reason to exist
-yet, but once we remove the distinction between the two packfile lists
-we have a much stronger argument.
+Please double check my understanding though, I have been staring at this
+code for quite a while to figure out what the actual differences are,
+and whether or not `get_all_packs()` may actually end up loading more
+packs than `get_packed_git()`.
 
-[1]: <20250820192008.GA1662788@coredump.intra.peff.net>
+> Are all of the get_packed_git() callers prepared to handle packs that
+> are in the MIDX? Looking through them:
+> 
+>  - builtin/gc.c::incremental_repack_auto_condition() skips over
+>   'p->multi_pack_index', so this one is fine to convert.
+> 
+>  - builtin/grep.c::cmd_grep() calls get_packed_git() but doesn't
+>    actually use the result, so this should be fine to convert, though I
+>    think there is some subtlty here.
+> 
+>  - builtin/pack-objects.c::want_object_in_pack_mtime() takes a separate
+>    pass over the MIDX'd packs before calling get_packed_git_mru() (which
+>    itself calls prepare_packed_git()). I think in practice this is OK,
+>    since we will have already handled the MIDX'd packs, but this
+>    function is now iterating over packs in the MIDX twice, so it may be
+>    worth adding a "if (p->multi_pack_index) continue;" in there.
+> 
+>  - object-name.c::find_short_packed_object() handles MIDX'd packs
+>    separately, and unique_in_pack() is a noop for MIDX'd packs, so this
+>    one is fine.
+> 
+>  - object-name.c::find_abbrev_len_packed() is OK for the same reasons.
+> 
+> So I think that want_object_in_pack_mtime() may need a small tweak, and
+> I am not 100% certain that cmd_grep() is OK to convert.
+
+I initially misunderstood the distinction between these two functions
+the same as you did, and had a similar list to the above in the initial
+commit message. But with the adjusted understanding of the actual
+difference between these functions I think it shouldn't be necessary
+anymore to go through each caller one by one.
+
+I'll adapt the commit message a bit.
 
 Patrick
