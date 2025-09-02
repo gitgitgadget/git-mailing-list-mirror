@@ -1,136 +1,89 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5887207A18
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 09:08:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3932C2EA47C
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 09:14:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756804090; cv=none; b=hK7u8n+PmcLOIPw0asmEA2hI0gPMwYT91Dz/0ddrYRPgCtEqMs2fyouwq4HTscBLd2CGy1KMFcvx8K37OLKc6G/vpiO+VqOSo1xcbORuQqu1AP9EP6ddQ+5D+PXC5FCtfDB//zI06shuqwXJ5CGKN4ZwsIux6Ji4g9/UrlB7bjU=
+	t=1756804471; cv=none; b=fiesJU+yXXjloioJ6hkMSsy89LpQiOEPAvA54NjIcMrq0kXpi6dTsttd82b1VW+no2XoEITgEL0pZsuPKmX0aIvmRp1UMolsDYwZUQgNZfYZ5JzLyXy+0eMkE4+jmRxF+qRwRilZrCtn4AZJ+RylOFwtOmv5m9woLgoa4vQeTic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756804090; c=relaxed/simple;
-	bh=IuvrD2yNdsobxXNwjx2rT7tn2roAGQ7YNpxnX22q+MY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lYgiDZ36yghgnsbEyShNNop93pRhvG/+xsc+oTxYZYL5bujDf4dJrJrp4ts+x/gbzTXKwnLAvjm08BS/knogpL31CnibWLr864pu/57ExRbaAmZAZ0ImxtUUGejKPPqMz1O4YEWsdZfC4JDvYNRvw2omdymfLdAyanJo/y/0YWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dTpG7KJd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eyqN/sMx; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1756804471; c=relaxed/simple;
+	bh=l6UfE325+96Hr+KSf6vHKRkPhu7vrv5TheGB8SRmsHg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GqrSIzsWeO7PGuid0X3iYX88eQ11rBjuyB1NRjyp58bUp+DnP8u33eT9cy7n5RLTzWC5WqUG6UUj1MhMYKVNXmXuIcmskV7DjBSBK6U6GFMT5kKxvTIrmJEkofhR6ppzUVAHCwBntCWMqECO/pM1kLx4sL7kizAQF1QTVjQY87U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K0vbanyW; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dTpG7KJd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eyqN/sMx"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id E807AEC0457;
-	Tue,  2 Sep 2025 05:08:07 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Tue, 02 Sep 2025 05:08:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756804087;
-	 x=1756890487; bh=cMnmku3lz4a5zkCXe0fMzKO69rWRq9a6cR0yKcqkylU=; b=
-	dTpG7KJd6KHqPle9AdR9sMwkywzBl9RZhzvgjnAtOkqdpvmaHa7yfGBHB5Kw8om/
-	/OyHZdaPh+DY0naBcI9VH4ixvwlUvxNGaSF3lb0JAU6GtkDk/ws2GHULezoOJOS0
-	yHMzNLSPZQ/pMcKN01XiktmTpUSy9Ifj+5nbvdxHUeFn8UoM9b9eUARKzBIF5+hW
-	ytMFn8Q1Hu8Gn3LHPN/uwOxpOmHA8+2ObhfdXz6lCA2GyshzeHQ1kUTU3hfAj1aJ
-	Fk5qKmuKWc8GXx0eI2fDX+Xm7h7HmnfU3QEw4UXSQME6PrG8zi8X/VyEZo/8Vx4T
-	joiznPmuYwL3tK1eJIeghQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756804087; x=
-	1756890487; bh=cMnmku3lz4a5zkCXe0fMzKO69rWRq9a6cR0yKcqkylU=; b=e
-	yqN/sMx0USZPPqh0mo0bJc7bjbUhVueCyEJ0ZKpAvvUH+PvbSHaYouVTPLACQcWB
-	Rx/ZKak0VGZkyw/T3gb95bC63mfqIqCaqLnWwTaa+/tCu0221MvjC9154gXa+OPG
-	oZx49MO3mlW3mdddeUPswLUYgYg1nNRS5IZwe1LhFnv4Lfn1xlzZFv+hqY7ahpwe
-	RD3/5t9MHTpCWbg0Yt2/wb2kXL3SXctMku9NIytgN2qR0/26lyY1BRVw2xvwLG95
-	EIY3kSO/agQ7eRGSQOWiZXxU6vnkNtbeySmOKebNBfpXt1sDBmeg/ycqRdofSzbm
-	oHPDYaR94LfnzwV5TaWIw==
-X-ME-Sender: <xms:97O2aPvDvhiG3eQ7Vav-BuOWOQolaw1Qlhn1FJSLG0rEXeE7l5mrjw>
-    <xme:97O2aDv8Lnc2pfv9_OrTR8bHPvidyV4sL1XNmi2cRY0wgllGYWuufKgalfV97pw6x
-    NrzqVzaTu3kXcQE2w>
-X-ME-Received: <xmr:97O2aMPqzI6BEenq3e-fH29usVZ2_JB_WK4EoQEDc7a25Fixgm5Y2iO8icKzapdOqxl4cV7aN5RFmXZnMA6CT98oEwCwEG-4aFmtBciT3_hxFQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleegieefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehsvg
-    honhhghhihvghonhgthhholeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:97O2aJ2iUNjYVfpMguEr42XfbEKWkjAdMHN2Sd2U4EevMc5BdUcxmA>
-    <xmx:97O2aAPMu6UApKdRWrXB2lIVcTZ6zY6pri5n0Xy66NOizDNlNP0N_Q>
-    <xmx:97O2aB2Z12TtbdYKjphs1vzrIb2myg6lXNFjg_8hNw56vUaJmfD3tw>
-    <xmx:97O2aPH_RlNn3GG2JkUAan3fEVk8cBEy_5As1i8_FIgrRYj3I4VA7Q>
-    <xmx:97O2aBpC-kBfqm0dW4HAvK6OUZPRLL84eQv18qtWZyAmQuRP8dVdw_o5>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Sep 2025 05:08:07 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a0f96f76 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 2 Sep 2025 09:08:03 +0000 (UTC)
-Date: Tue, 2 Sep 2025 11:07:59 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Seonghyeon Cho =?utf-8?B?KOyhsOyEse2YhCk=?= via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-	Seonghyeon Cho =?utf-8?B?KOyhsOyEse2YhCk=?= <seonghyeoncho96@gmail.com>
-Subject: Re: [PATCH] add-interactive: reject malformed numerical input
-Message-ID: <aLaz7yCXWGG2_oP_@pks.im>
-References: <pull.2044.git.git.1756553495661.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K0vbanyW"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-61e8fdfd9b4so3890200a12.1
+        for <git@vger.kernel.org>; Tue, 02 Sep 2025 02:14:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756804468; x=1757409268; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=l6UfE325+96Hr+KSf6vHKRkPhu7vrv5TheGB8SRmsHg=;
+        b=K0vbanyWcOqZw0rYW0akogxga+48vzZrnmmBVfZ2rY1fJd8r/gcT84F3mNiA2jQXYw
+         wTFN+IvCUAmJlD+HMlyamE2CQr8icUEZSkoCj/OOQ1psbWU6Wfl5TM1n2Em7fNREnt+d
+         Q+IsptxT6ddcz6deO+Rr2nF2AxF5kh3/wCynwnn8lfFW6CViMfwHQKyQxedcncBUjoQN
+         eIjCP+gajAmEbVI2SumBvHuhixyEGBew3Bf4RrvtGmhfVT7glwaRK5Evjsd45YaWOy9Q
+         eLdtEX3lvA2ii2Mu+83s99EciFKju/4hLLVZJ/+1AcJsNH1VkVuVe1ujIUbhmVWGIN6u
+         52Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756804468; x=1757409268;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=l6UfE325+96Hr+KSf6vHKRkPhu7vrv5TheGB8SRmsHg=;
+        b=VB7fVAz9VNHCjNHR5jX8CD3npMgmiTDlQpioTNMCk56cn6c86nQUjCBwFlXqw/EshB
+         oSGjJNC5zHLIPtBKWe9MOqJJTmvYDQGjMA7zFayMZ/24ldi24IZjV1TokgYOfiWgz+YJ
+         vjleWOHwEbdUKeQbk9+eeQ8Jwc90bKOM5avCEm32ih8uodH4M2W9J71VwIUSXYj1zVxG
+         3/YULknFEZFy3XqSHUmcTNFZ4D80tdhxDpVApiTGVLUrQFCvyIrfN1NAtRf+AXUldXDA
+         gB2THmyJZFE2w3RbVjAC4iDA6L2B0yHQOdtZwc/4XoM6gi2kZ/7q+1uBJN2lLZh6S29y
+         58Tg==
+X-Gm-Message-State: AOJu0YzMrLc/ipES2X9gSFuUlTMPFfS0xqf2DMwy4c8041Sz5qGQ+cU2
+	3a5AxfY4XkxfsOgyqxWA/N/aUYoQy3NJEXskzlPP/UBv+wpIgwqqzBENCPkDU9Rbg0OJK8/hNO1
+	aEuBrEqdYEQmA4EJQoCDtx/hkD+ZYBXs=
+X-Gm-Gg: ASbGncvntMF8UgTSxKXTDMxkc5Ym304PH0d6k0ZmLBqagN7P7FrzrXa7WZUMTAtjjBq
+	zHFumhwRILgrgORNXo5zpHYeyTqoeEAT++kcvlRmDmIOzXtVXfWT5wZ2oTVhH+7+PGb3nxeKs86
+	xCm7/jmrskxfycRbr/tU5vd5Wtc9eVarVxecIr8TnffRLoXor4J3pSQjPa2LZCJ+Hc3jtnRWLo3
+	TZulcyBEq7IGpJ/5Oe8lqzVd4IWMltXoJid8+mB
+X-Google-Smtp-Source: AGHT+IHeslsmJAVsykvJ7yv21izWFo0lf2IXj7q38Tj3X5MgmUGSgp4jgbfUHcdJnRjkbs8Wt1ATy1WvxxkjQFdp5eo=
+X-Received: by 2002:a05:6402:3494:b0:61d:9a4c:d03 with SMTP id
+ 4fb4d7f45d1cf-61d9a4c0e7cmr7366694a12.13.1756804468389; Tue, 02 Sep 2025
+ 02:14:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <pull.2044.git.git.1756553495661.gitgitgadget@gmail.com>
+References: <CAP8UFD0Lh8caRsMV0nUB5Oge_hwLO_WWMAqxTqd8eY7mqwA-9Q@mail.gmail.com>
+ <417d5e7725eac11750468f064e1e4f8ca06155c7.camel@jansen-preisler.de>
+In-Reply-To: <417d5e7725eac11750468f064e1e4f8ca06155c7.camel@jansen-preisler.de>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 2 Sep 2025 11:14:16 +0200
+X-Gm-Features: Ac12FXyM2wWVQurQ1-Je-2KAsJ39bV-r00Oq3ExTHlweqptAenm18ArFGTbpW4Q
+Message-ID: <CAP8UFD1nsPjhK0rEzCc5n5OCJ8y3Xs4D+GmdwZv3BANQZN7MsQ@mail.gmail.com>
+Subject: Re: Draft of Git Rev News edition 126
+To: "mja@jansen-preisler.de" <mja@jansen-preisler.de>
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
+	Jakub Narebski <jnareb@gmail.com>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Bryan Lee <hi@looping.me>, 
+	Lidong Yan <yldhome2d2@gmail.com>, Seyi Chamber <kuforiji98@gmail.com>, 
+	Johannes Sixt <j6t@kdbg.org>, Ben Knoble <ben.knoble@gmail.com>, 
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 30, 2025 at 11:31:35AM +0000, Seonghyeon Cho (조성현) via GitGitGadget wrote:
-> From: Seonghyeon Cho <seonghyeoncho96@gmail.com>
-> 
-> The list-and-choose interface accepts malformed input such as "2m3" and
-> interprets it as "2-", silently selecting a range to the end. This is
-> misleading and makes it easy to select unintended items.
-> 
-> Reject such input by treating it as invalid.
+On Tue, Sep 2, 2025 at 10:44=E2=80=AFAM mja@jansen-preisler.de
+<mja@jansen-preisler.de> wrote:
+>
+> Supplied some fixes and rephrasings plus Bruno Brito's PR #794 in
+> 408a216.
 
-Okay, that does feel fishy indeed. It would be good though to have a
-test case that demonstrates the new behaviour and at the same time
-ensures that we don't regress in the future. You can have a look at
-"t3701-add-interactive.sh", which has a bunch of other tests for this
-command, as well.
-
-In general though we're not doing a good job here of error checking. We
-don't at all verify whether `strtoul()` returned an error, for example
-ERANGE. So if a user passes an integer that exceeds whatever we can
-store in an `unsigned long` we'll silently proceed with a bogus result,
-won't we?
-
-Ideally, we'd use a saner interface to parse these integers, like for
-example our own `git_parse_ulong()`. But unfortunately, that interface
-does not handle the case where we only want to parse a substring in a
-longer string. Too bad.
-
-> diff --git a/add-interactive.c b/add-interactive.c
-> index 3e692b47ec..86ff632288 100644
-> --- a/add-interactive.c
-> +++ b/add-interactive.c
-> @@ -396,6 +396,8 @@ static ssize_t list_and_choose(struct add_i_state *s,
->  					if (endp != p + sep)
->  						from = -1;
->  				}
-> +				else
-> +					from = -1;
->  			}
-
-Coding style: the `else` should sit on the same line as the closing
-curly brace. And furthermore, if one of the branches of an if-else chain
-requires curly braces, then all branches should have curly braces.
-
-Patrick
+Thanks, it looks great to me!
