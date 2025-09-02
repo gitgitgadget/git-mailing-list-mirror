@@ -1,126 +1,163 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6803451C9
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 17:42:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF2234A324
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 17:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756834950; cv=none; b=tRmxdIVmtV6SYANQUmE9apUBP+oKaf4WXzmrNUnvFQ1F9rnVYfUs3Qs+3iUl6UFKP1Wr0IWFvJm4ChlBxmBFsFrbj6FSrcxSU9MpcF83xWPdvgynUkHeldVAQ2JXiKetyIM6n+OsxWnEbl5mDGzR3FkQs4IE2o6RFVUmkfj5LFc=
+	t=1756835420; cv=none; b=dYiOULHKGF9gFfU6FtdFDIDBURZUgEksctZxBhR8TUpu5vv+dskOXasMt3vXETbrt5CRAjSeNZkdHc15PFtRBXdsp/56UG3uJ2V4+CL9cXKEXyfZwQSn1KHOPDj/Qt2Xi8RiDI9YlDhUr6LP3jFh3Tc0tiWsu02eiL62Tv6axtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756834950; c=relaxed/simple;
-	bh=7NPAVqGwofaOnF59Iqv9xfJrNrT0hpwFHznJIc1S9yw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OdPdBHSQUCmqFTRX38i8WaQTQzNVxlC0xEdNBi7/SMnsH9YCLmfE17nSAI+CiBh55D4yirU0Ukk9eyCorUsGkING1zLkB6CH24plcthfNPrSxZfLnf5oUGFU4DZ8HR4y70bs5IDFYs7LRdTjFFipR/Z3GOVCl5r2mMMZPmU2VIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qMl9rIHR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W3tEtUxL; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756835420; c=relaxed/simple;
+	bh=TKmXiDkw4uKqIODvbeBILQs6SwVnwTaRtqZqbnmp2tI=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=VHA48MMq6XcYqTqf6v+Jrwmatm3Mh4hPU0jO/z82M24pjB2oe/kyA0YoIuVD5b6OAdZbd6QjH9PBveH7xqcynU/e+AyXAEUGGo+856A+V4gVcMlGjs1mPRHIV04BiHyONwqU/0pvEikRsTbkGmMpmWa5cD/ji9CdNtOcZm4quzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RQiWVuVV; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qMl9rIHR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W3tEtUxL"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id BFC01EC03BB;
-	Tue,  2 Sep 2025 13:42:27 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 02 Sep 2025 13:42:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756834947; x=1756921347; bh=jZ0sld7bGZ
-	Sx6ZbFvhpo0CkBpuSqp4A0NpmbHHUD9B0=; b=qMl9rIHRRFKSBdMWE04Jl+vmy3
-	utwBdlWyfhKeFV3GyaUliWzS59VvFHXUfEq6iPKLDzk9aamlDu/n6th/eXMpcZ1d
-	edqPI2RJK0u65wtPXcGQq0+cLPsRrvHKZSEYB5xUAxi/XHOekGvWQYIt0j8KOej/
-	3EYrZO3/KKxlYz7keCIl9BG8ytbV0uAwSZXatchp+pSdJgzaDNiEjpEugg5b2/je
-	kfjUkjzXTx3MvYJQQS60Q+QJsY+uCf0KwczcydjHny+Ze/dBEr4/QjeF1iBJ5vhZ
-	5s8SPncexeCWF/ZvUaDWjEvj9U4GkJaTTzRv4iW4MDUP4hJ4q4/Ul58aWAWw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756834947; x=1756921347; bh=jZ0sld7bGZSx6ZbFvhpo0CkBpuSqp4A0Npm
-	bHHUD9B0=; b=W3tEtUxLren4TZG99LdtDw3F7QIUBk4tR2/DhGIrQv3W+WDR1o/
-	491QCD+FUAfwlFBSblvaw2UlsEV66cJbySLBjMC9s0FhKuHi4AtnhRqFKv8JaSRz
-	mALSIY5ilTImHefXpdiIK0WgZjkN2eWb4VROAYVBeetfTW/cjTZH0k4onHU9fGR5
-	c4RV+Un/6U9weOC1k1UqwnjP9KU0c5ZESC3oygEJ0CvZaJNYEIBqSeSXSaBvaJR3
-	J9iOZr3cwfVgwkm7UUwp6f8E88xvoJQYdhhZ/VLPaD5h/QPOF4qdFEsnNNY9urdJ
-	X74Jz8PcYCDJiJi0A9kANY7ijgxjard4aoQ==
-X-ME-Sender: <xms:gyy3aMRbdlpf1CzRBvccx_4vgLwtfVknAdCj14pc-Kalc_Z635qmKw>
-    <xme:gyy3aCOFSrRgH8jPGXi9CwONkDbLHHfPR1p85i0v-S5F8MQ-dHKFU9429gR5uY62D
-    iK9stbuMSQSJJ-8uw>
-X-ME-Received: <xmr:gyy3aKSRibF8bH0J4i42yLPH0-0WJ1O_0Gxuhrh451rCZCYYfgQSI4TBwdmu7LvtcTXQIt-KBN0w0_-RK_ukJeBrZl8rIqQY6C8y3v0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
-    ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
-    fhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfj
-    rghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrh
-    hnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepph
-    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtth
-    hopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:gyy3aAgqEhLAhzPkDE3raeEuW1sGY-DGNN8uc3w7POzVBYi6xduOSQ>
-    <xmx:gyy3aD80D0JvI_SX5BEvOHhqsMk4bcdmntWuIlLRe2diSHq2fRgF7w>
-    <xmx:gyy3aHFPhqNv7oOAxZ0y6DcWUhRLNkrNMe1pR3x6wrjF6OKjmi9kcA>
-    <xmx:gyy3aGldiYQK-oCnGMdX3nXcYiJFeTs9mpMciPdqw8kc4f4AidsgIw>
-    <xmx:gyy3aCrMw9sAieFTvdzIliRykJa9UAeHBd2y5wVV4RNEV0-ET9qeOqN3>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Sep 2025 13:42:27 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Karthik Nayak
- <karthik.188@gmail.com>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 02/16] odb: move list of packfiles into `struct
- packfile_store`
-In-Reply-To: <aLcngI6vm9DmqUeI@nand.local> (Taylor Blau's message of "Tue, 2
-	Sep 2025 13:21:04 -0400")
-References: <20250821-b4-pks-packfiles-store-v2-0-d10623355e9f@pks.im>
-	<20250821-b4-pks-packfiles-store-v2-2-d10623355e9f@pks.im>
-	<aKz0/WNu/GRYh3/W@nand.local> <aLav4UAcfQjvNzMF@pks.im>
-	<aLcngI6vm9DmqUeI@nand.local>
-Date: Tue, 02 Sep 2025 10:42:25 -0700
-Message-ID: <xmqq4itkkaym.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RQiWVuVV"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-45b8b7ac427so15717475e9.2
+        for <git@vger.kernel.org>; Tue, 02 Sep 2025 10:50:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756835417; x=1757440217; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:from:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CUuTBvr+OnFGtY9bq/TvvW0tHoiOWKm4ey+nGS6Lp98=;
+        b=RQiWVuVVzTJwSEIOCVEZ/S6AoNzI/Ehs/RcsP3/gdY/9S+nQF0qn63f86a5n966ohT
+         vj0yHOUVAkMGDNt52TOqNi4edSweqwdkmByCBrH6FpL1783+QyQRK/EwkWviOKSsYRW7
+         xkg5tm7yGRa7xNPXIKzuddvpKpXlTyDZvVz/p2U+L+7/vmtnLL/iYMr5tCpHQ3rGEcly
+         JaOgHrPiHTCX+5PtRr2BZ4vDpJU0xkRk6jrlqyBnzgLIZ6eOw392JbhDRHyNjncWIbPH
+         QjX5dCAzoVeh8a0AFyIlQpxOC2JgzPAzNXvmVvZUgSF9jwcLsZML7LyKUj9hBRszlKo9
+         FJAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756835417; x=1757440217;
+        h=content-transfer-encoding:subject:to:from:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=CUuTBvr+OnFGtY9bq/TvvW0tHoiOWKm4ey+nGS6Lp98=;
+        b=fW0TIFWAkT2mg2ZQyol/YjsOKkN6nitqtk3YJPMQGCTh09er0atxRkaOkNBgsxfr5l
+         TRyFkGsenUPwaEZFWOhehxWOzdraG/+/Ywmbttgybtjmo5c0gvMAv9zb9mdTKzY3a1Z1
+         0ms15FUeIIsOffsgY6S1vA0m6ztGGWja4NDMv+PCAf3Y0DHgyqvPasVZsQLQE8avHywj
+         XvGw8218ONxupgLy5hrugYR3rWBcCDmwYe8uoT+nVTMm03c8DN8/xQipZ9A8jyI0oUp6
+         r8AimXBL9Sat0xZqRf9nLfeUjQ6g5uVjNly4tf1rgN5H3+pp7kvC6Gbef37pUO2dgMoP
+         AHZw==
+X-Gm-Message-State: AOJu0Yy0FHQh0wZ8vE74Cv4T+0ULp3esR4kewXBO7ctMCiHW2ysOrUYA
+	ED7vEcAyk+Od7ZuOvKH4IyOnNaxmezGmlFZNhgyX/yDsZxgaupAgcGGPug1wWRfM+CaQVQ==
+X-Gm-Gg: ASbGncuE2wa0gHJit2iTOgPrBCWrdJAyFGGpOfJNYr1Fx7JyL8MtbyRqCU1JJdQJ6UZ
+	PB0cOe2RADpsskZxqlYJgvto+aNBdm0OV/4vG9ocgqbACR+LdOLOmVKQlSnnlyxUdv+AS+OgH/+
+	wceiLVMk9DgS66ic/cEe39xsUdtHmAs05Q2zFqWnWLcSC8io5ySbZWq+1ssRUmsM9s9E+q/vfnI
+	1ASfjDmTvZ7SUhhgdRjquoRutIloRcYEEeY1Hg7vze+T6sg6oKvbruR7FF7gBivca3bfVxt6ycN
+	6RbaYRMHBw1ZKcR4bUE+Fz3zTjPP/+I6dJlS6oySoCAF6W8v1/JU8/ZA++ccDi6iL9tFKRCrGYE
+	/FiF47W42Qi/yrCojUL4xO1D9m1xtXEV3gYmnFiyPC2dN033zL6wXZ/KCcT0KrdBndo/sDv3s4/
+	C5IHxXNwgPyw==
+X-Google-Smtp-Source: AGHT+IFB5fbRfEAEG2GbKO3e9uaDH1A+G0KSjajtMHshNAvd7/061vRsf+ZOa1kEGEJpT0qCsACObA==
+X-Received: by 2002:a05:600c:a44:b0:45b:725e:6acc with SMTP id 5b1f17b1804b1-45b8557c5d6mr132663535e9.31.1756835416856;
+        Tue, 02 Sep 2025 10:50:16 -0700 (PDT)
+Received: from ?IPV6:2a02:2f0e:d80c:d600:4613:b722:1dbe:95e8? ([2a02:2f0e:d80c:d600:4613:b722:1dbe:95e8])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3d21a80c723sm15542846f8f.9.2025.09.02.10.50.15
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Sep 2025 10:50:16 -0700 (PDT)
+Message-ID: <6be0928c-df10-417e-a264-f4562f9d2585@gmail.com>
+Date: Tue, 2 Sep 2025 20:50:14 +0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Cristian Dinu <cristian.virgil.dinu@gmail.com>
+To: git@vger.kernel.org
+Subject: Bug: ls-remote refuses to run when work tree mounted in container
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Taylor Blau <me@ttaylorr.com> writes:
+First of all hello,
 
-> So I think in this case, the CodingGuidelines would suggest that we
-> write this as:
->
->     for (p = store->packs; p; p = p->next) {
->         if (p->do_not_close)
->             BUG("want to close pack marked 'do-not-close'");
->         else
->             close_pack(p);
->     }
->
-> , which from our discussion here seems like something that we both find
-> more readable than the original.
+I think I found a bug in git, 'git ls-remote', to be more specific.
 
-Yes.  Technically the "if...else..." is still a single statement, so
-a rule like "do not use {} only if you would place a single
-statement in it", though.
+My workflow on my current project consists of using git work trees and 
+testing
+the work I do in a podman container. My project is an Ansible playbook 
+meant to
+automate different things. One of those things is doing some git clones.
 
-I would actually write it more like this, though.
+Ansible module 'ansible.buildin.git' makes use of 'git ls-remote' to obtain
+some information about the git repository I want to clone:
 
-     for (p = store->packs; p; p = p->next) {
-         if (p->do_not_close)
-             BUG("want to close pack marked 'do-not-close'");
+This is what the Ansible module executed behind the scenes:
 
-         close_pack(p);
-     }
+'''
+git ls-remote http://some.repo.com -h refs/head/master
+'''
 
-The first two lines in that block is a glorified assert(), and
-without a programming bug, what the loop wants to do is only to call
-close_pack() on eacn and every pack on the list.  Not using "else"
-conveys that much clearer.
+The problem I'm facing has to do with 'git ls-remote' requiring you to 
+run it
+in a git repository or in no git repository, but something in the middle 
+makes
+the tool blow up.
+
+Here are the exact repo steps so you can reproduce and better understand the
+issue I'm facing:
+
+1. 'mkdir -p /tmp/git_ls_remote_bug'
+
+2. 'cd /tmp/git_ls_remote_bug'
+
+3. 'git clone --bare https://github.com/git/git.git .bare/'
+
+4. 'echo "gitdir: .bare/" > .git'
+
+5. 'git worktree add master'
+
+6. 'cat master/.git'
+    Should output 'gitdir: /tmp/git_ls_remote_bug/.bare/worktrees/master'
+
+7. 'podman run -it --rm -v "./master/:/workdir:ro,Z" fedora:42'
+
+
+The next steps are executed in the container:
+
+8. 'dnf install -y git'
+
+9. 'cd /workdir'
+
+10. 'git ls-remote https://github.com/tmux-plugins/tpm -h refs/heads/master'
+
+
+Will return:
+
+'''
+fatal: not a git repository: /tmp/git_ls_remote_bug/.bare/worktrees/master
+'''
+
+This is the bug I want to point out, even if I did a 'git ls-remote' on 
+a remote
+repository 'git' or maybe 'git ls-remote' in particular wants to be 
+executed in a
+git repository.
+
+I want to add the following, if I do 'cat /workdir/.git' inside the 
+container it
+will show 'gitdir: /tmp/git_ls_remote_bug/.bare/worktrees/master' and 
+because that
+is not present in the container at all it thinks it should not run.
+
+I did not explore git's code to see if I can do a patch, but from a 
+user's point of
+view I think 'git ls-remote' should skip the 'Am I in a git repository?' 
+check and
+just query the remote repository when a remote repository is provided as 
+argument.
+
+At the moment of writing I used git 2.51.0 both on the host and in the 
+container.
+
+~ Cristian
+
+PS: It's the first time I write to a mailing list, if I did a mistake 
+tell me so I
+     can learn.
+
