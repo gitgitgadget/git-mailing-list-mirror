@@ -1,102 +1,112 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C184303C87
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 11:52:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FC320F063
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 12:31:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756813965; cv=none; b=f1hf13xAYTr1byF8H16zQGRgoVYMQ45bL3mIZdcBJsyZ6RmSUtL85LeDTj9m/8kEkUVkJK05cRq3xl195F8coq8zBaNfR0rFuQsyWkh5xfV68vPZElOOBDG5yV8aXvYIexnJEavc4tC0PDau9CqPHVpHweQZTbZFlahRHPWXkt8=
+	t=1756816264; cv=none; b=cGFVkIg2eu3N7WwNFPYb4NEaz6y1RGIID2l/S/fQNNRS5NZMb8csHaS3TGxoQMSOdNZErQ8YH2NxwbPODPLTLY1V/uptyKUGizgCoXkZlObc6L5vHqPQ0LmzMv3J47yPa3CB7DGUITdtYr8Mo/KONKNSA81ghNejjonztxVe54Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756813965; c=relaxed/simple;
-	bh=+nz3cv2PxUC1D10Og9f1nNOGOaR1VUP2kcuyjtIWa8Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HFdMx5jWo/6WD0+1Acn/nx1OkzCbEKgbEXkiCnKstUQUPse/eCJVBbIh6cRkm8z5/3vjtZMQBRWPPGYP7ZI5/iQK2NNPlCCpLKt06Qmriuy/JGYDOKiFKUCCrErMNC4A8wUHLyVSqLBD3fVRLgEF5DWo6WlPuShF+jihSqrRgIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WPBI0E83; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T84tNAdR; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1756816264; c=relaxed/simple;
+	bh=jS7NeVOtKgwNpNd1bJv68JhG0SP0Rx9DxNBbSJiwZ60=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=WizLJ2w1UoJEcWuKUhEFj5PEaFAmsyK4pGrLZYQtQRAjrqFuJrdTf2f6h0ODBiW7yrFqm8ULm+6/0kzV3jidTHLz3mqH5wPGZ+ZuU6PSFvstH2fsSXI2vb33/uNQgbgyKiJXfULgIqFQHYY3MBi9IlZI5bft2ppkzpbR+4ij40I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GFnXNGHu; arc=none smtp.client-ip=209.85.166.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WPBI0E83";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T84tNAdR"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0CB9414001D9;
-	Tue,  2 Sep 2025 07:52:43 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Tue, 02 Sep 2025 07:52:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1756813963; x=1756900363; bh=eLidWEQULH
-	hki1SdZ0sC+MCAulOf/XCQ/DRDUj0m05Q=; b=WPBI0E836GsbFXclbPMdYVJj0Y
-	XjMMYc1tS2sv92CcZV/LebvUWdD6WHDK/PR5RN5+EqYCINZSDZLlXirFYrOyKPrO
-	4ftPxXfOvudOMPGsNJeOwykDR2pKts83on56+/hvvpG0Gfx1uQ+YCTyHvLsxMp2Y
-	FkBCSIO33/f0dyxHwWiGjOe5MpQ7a+5Lckd44/duHIgJGoTbmrdCluWGE3pJ1HLk
-	Dg2U1OsCeSH5RCLwZxMT67x6YVJ1cp+tCLmh+eWyK4GPuB9/XqRl3BRF/2C0v2VA
-	MJ0w+BN9gmTR+zRmmHmlUB4ZJdyoKekKQw5k7TIfNaMl3zxvM/x6ZpsE2UeQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756813963; x=1756900363; bh=eLidWEQULHhki1SdZ0sC+MCAulOf/XCQ/DR
-	DUj0m05Q=; b=T84tNAdRWqsuct1lRO95ys7FQfUI0ciRkCXOE5eGU+lEhYgGmMS
-	tyogLi7k00gFI6fye+SlDYYH4yWH/J/hRjanwiHZzasZNaoZMpKiYFw0nV+PJdDJ
-	iJX2xp+ftbYHKSX+7QCnuy5BLJGwC7p0tmQ18SdNX5A14n52j/hwBChIFA+8qPDb
-	4AfRpi+oQZOOCbZV2DKAEM504wv7V5DuU+zoP65ATnav0dgn5I/hWIM0U7jzM2IX
-	1PcpR80pHtTWUpjuYzgrqrC0hAivXdlTbiEGnTrVhI4JN8Zwu4jRTZ8YBb25GIkQ
-	1gmGRNImmJeKoqYfkMEMuNBEyow0xcc2dLA==
-X-ME-Sender: <xms:itq2aPZ5lbx2R9wu84hOM-vQtz-JP8zDJl4dgK4WGUzItKcPfBXaOw>
-    <xme:itq2aI__6cc9mZD0ZTulSC8znzWjxl6q8WGuwtbYyKa7RFi4MHoYy9nOt-dtZD2FF
-    JBnbi0KjkxXMhJ3nw>
-X-ME-Received: <xmr:itq2aOhXMM0nK2wYFhp7dGMECPr2Rlwr50hsEAhixfVLWhYsvq9BlkaytxlN0qmQhF03rQd0TvsclBnb1zalXUzadYUrpZSdNKZQluDugiMANQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddulecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
-    ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
-    ffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfu
-    thgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevke
-    ekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
-    hmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehs
-    hhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopehmvggvthhsohhniheftddujeesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:itq2aIcTsbM6yl4NH6CfpVBknMD-eW0MghaHTy7b-vdKqyK7Acv2YQ>
-    <xmx:itq2aFro-vrUVUB5ukkV0w3U5c7ea2wB4CYsH5wMGO9uR0JKq3TVKg>
-    <xmx:itq2aNDdeBDqFiWt1GTbo26e9pOQzH7m_rqZT83AiaDmvCzGsopU_w>
-    <xmx:itq2aCY4rJGsUjW7DUO5_DCg5THeA7n0_6Sj3kn6cJ47cB5auHSi9g>
-    <xmx:i9q2aLJ3fWU5YGToVxYmrfwyt7DIh8RFLfmx-6RObMR_Sod_oPOXuRM_>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Sep 2025 07:52:42 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9cdfdbc3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 2 Sep 2025 11:52:40 +0000 (UTC)
-Date: Tue, 2 Sep 2025 13:52:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org, shejialuo@gmail.com, gitster@pobox.com
-Subject: Re: [GSoC][PATCH v3 0/4] Add refs exists subcommand
-Message-ID: <aLbahNFrs9jchnXZ@pks.im>
-References: <20250823060012.540433-1-meetsoni3017@gmail.com>
- <20250826064110.10540-1-meetsoni3017@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GFnXNGHu"
+Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-88728579b64so199733539f.3
+        for <git@vger.kernel.org>; Tue, 02 Sep 2025 05:31:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756816261; x=1757421061; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=QnAHHWvLi1vrCGKf2ucuUk4oo+AX6Gc9aIMqQTdgYKk=;
+        b=GFnXNGHuTwcdpcvINh7fsd1z1RkERi74+iourGJWs914D3PXTr6QrO57c5GX0sAdLm
+         HuLk1tL1CyWpeD3Q35jcFE2/RWQccP8jPV7Xt30BQujRTNYt/71hi9K9+0dCbritWoD0
+         1kGDNNqea7x9IPkGND4bt8Q5yUAerDUHTnNsLetOtIHTR+KYUO68yFCwZ4z7lGVsOtgg
+         wTaZLW8lsPLbHHc3cdm1dDYL7HyHq5yH9oTynZu2Ywe91kANGyvz6cI86Y/6Ip/9OWeC
+         EJTSAe4kL2do3NkBHKMNcXJen6x1ZgZH2FGApRPGiEP/Qp+KohA7aBmWqFb836JN92B5
+         O6Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756816261; x=1757421061;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QnAHHWvLi1vrCGKf2ucuUk4oo+AX6Gc9aIMqQTdgYKk=;
+        b=Bh4xNXNcEP5Lr4hz3hqod/KNRKKD0RXIGrUZ2/yZ5Cxh5GRdH+L5Tc62t+lHRirkEy
+         OezSfeD+QgWbm82UzxQcIB//e6QUUMP+cXoQA/Airx4r9iGHOXCyAfbZvNRGEmFFW+n2
+         RNPxYXzf6QIV9iRxLI1RS2xDlLey0vwTkDEMZLbtfAfXDtCeSdOz3TE4T0rYSs9AJx5o
+         L+kG4FX6C280u1/WyG2QkAu9zw5+PQA0h1NY0omVPqud1HS65z13WSK3glx2Egy51nZK
+         SxacfeQnGzF0NG4fuucmIB3GoNBGyiaiT20Ef/jkBbzR+hKFYh1NXcmdXNrVj/z1biQK
+         Xf7g==
+X-Gm-Message-State: AOJu0YxY25vbTlOPIdMSHqhpt+HHwXGQlqgFDideQTdFcxNQP7tOqf2j
+	sA6nQiahPYdzriQEmPWUsZ6vhQWjAx78iAtJvM/kMUJbFkHC1g/IVjUSCgEKuA==
+X-Gm-Gg: ASbGncsAv9Khmmh9QsetkCjSnQ/DPDlJ7I+PFNjBDpqDms4aoAKJ52jk/eDEe78BDjt
+	iQTK5+73x/JpaCdLxMGP9h/bTFV1Pf7hJHWyPcI1Kc7n1QJjQqI+UMfDSjFxvkO5Bp1qxhJZoJ1
+	DLwT067qvMUoLakLzd38L0RR2Y1ZqUiQ+CoZ0RJT11qI1079OilJAeNTebEpAr6qxMxHORwHRul
+	L4PuNQso4DGLVLXBB6FMD5mqfOK7mMmZtDdiPq/DikKp13FDGbrQLb3ve1rJ7pnW6x9f2h/ntbm
+	Im+MrNiz1L8C5zGyM++IEMz4mwLZS3nevL9/Zdx/f5cA4MWC3L9eVILrmwVcHpt9LLRH6JEqxME
+	T3JUsinUVE2y8lRBxp6W8kFGK
+X-Google-Smtp-Source: AGHT+IEsVxEBJSREL7/ss8E5OOy5k7IZ/4KRJjjM5lPUb6N1XpZoMRYAfkUWqUUlX/Gznlp+Vv0maw==
+X-Received: by 2002:a05:6602:150e:b0:887:48b8:fe74 with SMTP id ca18e2360f4ac-88748b903famr154514139f.17.1756816261355;
+        Tue, 02 Sep 2025 05:31:01 -0700 (PDT)
+Received: from [127.0.0.1] ([52.173.108.24])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-8871e34ab18sm313239839f.12.2025.09.02.05.30.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Sep 2025 05:31:00 -0700 (PDT)
+Message-Id: <pull.1966.git.1756816258606.gitgitgadget@gmail.com>
+From: "Greg Hurrell via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 02 Sep 2025 12:30:58 +0000
+Subject: [PATCH] mailmap: consolidate multiple addresses into one
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250826064110.10540-1-meetsoni3017@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Greg Hurrell <greg.hurrell@datadoghq.com>,
+    Greg Hurrell <greg.hurrell@datadoghq.com>
 
-On Tue, Aug 26, 2025 at 12:11:06PM +0530, Meet Soni wrote:
-> This series introduces `git refs exists` as a modern replacement for
-> `git show-ref --exists`, continuing the effort to consolidate commands
-> under the `git refs` namespace.
-> 
-> changes in v3:
->  - Reverted commit message.
->  - nit: added empty line.
+From: Greg Hurrell <greg.hurrell@datadoghq.com>
 
-Thanks, this version looks good to me.
+Merges contributions made from three different addresses:
 
-Patrick
+- win@wincent.com (old address, initial contributions in 2007–2009)
+- greg@hurrell.net (personal address matching full name, so this one is
+  the "forever" address; contributions made starting in 2018)
+- greg.hurrell@datadoghq.com (current work address, used for recent
+  contributions)
+
+Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
+---
+    mailmap: consolidate multiple addresses into one
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1966%2Fwincent%2Fmailmap-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1966/wincent/mailmap-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1966
+
+ .mailmap | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/.mailmap b/.mailmap
+index 96c2740fbb..afa21abbaa 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -81,6 +81,8 @@ Fredrik Kuivinen <frekui@gmail.com> <freku045@student.liu.se>
+ Frédéric Heitzmann <frederic.heitzmann@gmail.com>
+ Garry Dolley <gdolley@ucla.edu> <gdolley@arpnetworks.com>
+ Glen Choo <glencbz@gmail.com> <chooglen@google.com>
++Greg Hurrell <greg@hurrell.net> <greg.hurrell@datadoghq.com>
++Greg Hurrell <greg@hurrell.net> <win@wincent.com>
+ Greg Price <price@mit.edu> <price@MIT.EDU>
+ Greg Price <price@mit.edu> <price@ksplice.com>
+ Heiko Voigt <hvoigt@hvoigt.net> <git-list@hvoigt.net>
+
+base-commit: 6ad802182101d622e6a4132f48292ddfa79e2024
+-- 
+gitgitgadget
