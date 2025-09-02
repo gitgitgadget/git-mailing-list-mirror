@@ -1,82 +1,83 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10BD32F77A
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 21:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CE827702B
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 22:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756850064; cv=none; b=NBzTM99Nx7P+7qYzZpq6VM9m0hD7wYF+/+mz0aYPxtLoB6DQgBt81sv8+7LG8CPgIE06NGs7f/Y3YzQV0fX6YrISaDCqQtXBeWXmcySZklR3yq+dgPq+HeESVm2YYvVEvMF+B7OMxMUbS7v1pJ0KGZb5IbEeakQUGRz5snVZjHw=
+	t=1756851929; cv=none; b=SrswulebH3WzOMFrtifDKWDxaHqkU0AyqhIl9QEtCZHfFnQkAUouGTRSIMkjYweoESPcBkxolLQSSDnDvWa8xOiR8+HQc1F3IMHcHCIJu51kO7XkSr1NSxWWd7Zx84BmgvC76gyHQT5CDFNteZPQAn7wNqYM5KSyj4WFSPYMXl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756850064; c=relaxed/simple;
-	bh=4sSmeWksIxjaSPEmSeAzfsqUxvmZpygJIvI55XfvDqg=;
+	s=arc-20240116; t=1756851929; c=relaxed/simple;
+	bh=OLRs9F9A+uw5N8bteiYj08/E1H0rb9Z04XZZSnd5ZAg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Qep3yAhrKUxxVnYf7MDOPtn811imSnm/5rISg5DyY8gU6SGF5m5JHH4peUvOBsnglu+aCfXD8eQMamYBNKfkgWdVlw3Vpw/q7JOFEug+6W/WgH01fFCh7l2Lryp3Y8pbn/KhSDw/M/TJXa9gLyAw4Jte4py27uJqXKkz+/MnkkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xwHybpJI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JV+OupCV; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=aI/Ld5mTvjLpQcZ6GZEyi/Zj8QUBB1kfcGj75igd8Bos99Qh3K2UOJbpzl2JrXfQAzGnBD00vQrD6Eop7gGHgumfiCRoJ7e3AgccLCBJ/YIJpCgiwK5cbWix2L7hVpFn9aJMmvLFQ46uvaML6o4KUGfhnPrqsEBkx9WAFbyc+aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sa+CVvbV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZrnE6s80; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xwHybpJI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JV+OupCV"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B29D91400155;
-	Tue,  2 Sep 2025 17:54:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sa+CVvbV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZrnE6s80"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 74C51140015E;
+	Tue,  2 Sep 2025 18:25:26 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 02 Sep 2025 17:54:20 -0400
+  by phl-compute-07.internal (MEProxy); Tue, 02 Sep 2025 18:25:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756850060; x=1756936460; bh=NP42qBRGjs
-	MoZ6lDgTWKEDQkMIY6KeOTAc6BOibHz2g=; b=xwHybpJIocCBc4TfGvk0S2CLcQ
-	6lUCYNPefcbfC9S6rKOARzZJRKIyHyBizu4efy+AGWAcozz7BeSP1tg6dYySaoda
-	aKmRP9BFERFigk+W44Gxh+6v8Gbw5pB9VcUb9S804eM13F+12fU/hEST8veK+0Jn
-	/kMcohMNChdbodlTF5txIqhsIwHjhlL5Rsf8DpX4p3FX9+qJDMZwGojMw2O/mRUN
-	D89/95z4XNXIF2nhlqH0pHEXUtNemy0odZrurvVgF+r1cAD8TZW0K01n8flII8uP
-	ozJYWY6290iEGKbnESBqFNtxf6X3iUERi0nxVrs/F2mQ3f7nnzjO8QGz98Zg==
+	:subject:to:to; s=fm3; t=1756851926; x=1756938326; bh=aF8GtZz5cD
+	QlxKkVSTeW6mYhkk0zNp9SPN0ntbl4LrI=; b=sa+CVvbVWvcarpHQY40Gt2k0k1
+	zfW3TdWXDzbB+w8i8tuHhmWVehv0pZV3QNiNRbjHqkAmroCnhxu6JpShxmatVNea
+	9ADzX1SS+gdcaMPLoMLehO4enGO1wHyJpjNgkuP6K+gRjBoJMAW09Fe02TUX1mJA
+	Mh5TNPQ86GycnQ2gqvsn1Zta6K8PVQcWD4V20AFLJFrujUYp0Kb51gcdDw/Pzrf2
+	K1z+uPnGj6gWo2uOJLekvjQPVNYiwZAFLndbtTscinA4m+yNt4FhkAVK94QkKDPz
+	kOIpjVICgN4qSxrYEY7lMEzrtD35lem387/VaqYjhuJrLRs200lI/Vk0RlJQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756850060; x=1756936460; bh=NP42qBRGjsMoZ6lDgTWKEDQkMIY6KeOTAc6
-	BOibHz2g=; b=JV+OupCVmeJ4UtHc6+Nq7wvVynONQHKdzyNmnnAAuZKAodYrVWX
-	RQ9Pe/0yRsdbQ+bjelmsf64saVc+AfxtfJS5Z4V8svt4HhftSHWgFK0TB8F4ssFp
-	vhDJ3VfESXF+MZHnRW3xaCaGChEeu1lTCuVY1pqWB1Qnp5SfuS0Npw7VpFflP+4R
-	92vQ3W6woHF56XV5vcwtG59me68u7qWD3BdvDmuyawcTooQZ8Y8a0wnYkPKMufIX
-	/+bcJ0NqFI5AE8Dc+V0i2Ott4xzDUMTNWV0PGOeKZLS8pblJEhDIw42AEZa+5gIH
-	eMGDmIL5IW8jUy5xHqvmGS5H+L2DWOuppjg==
-X-ME-Sender: <xms:jGe3aHfdOZU0R1pamkkP6Nvu3lMVixsp9zDDDHsCqPegTxI6zH0-Lw>
-    <xme:jGe3aHxDOlDtDNCET6AixODYKM1_p630Jk5rR6TRHDmhkNGmKr_QM8xMHcqPOv8r1
-    VdSp6mShlfsTVexKQ>
-X-ME-Received: <xmr:jGe3aNEx4BgkCxe1Kvjs4SHG7CNjBqNBhqn9qVOtnuS9Uoi06V3AMgwVPpiJd6fnvvlCUC9ydhhrAeM74zCfGWbJH670eaa_F0gGCsE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufeelucetufdoteggodetrfdotf
+	1756851926; x=1756938326; bh=aF8GtZz5cDQlxKkVSTeW6mYhkk0zNp9SPN0
+	ntbl4LrI=; b=ZrnE6s80lgdff2oxjDPfVDOKvWxSr4w+GsifroOlWMS0LRWzwKu
+	DFL77Ic4O7atvP21Bbm3GWyRSZee+VqfNAK2bNT9fzLhp327e1/AlsaG8QaJXC/b
+	PramqYdaQEG2iBJ3uf/JaDgP3SPhQo7TJzLKNMxEUuKTwgYKA/iUYr0H8BkyUJrH
+	1OewpYzWTOKjnw/RqL0+m6SSpTgl4uEDJBv11URXynzYPYysQIrZx6PY9XJaPIam
+	rVX1Njh3M2evpkUuvX7dEgCJPtUk6kvlaBl0gVoBD45hY+GRSgjnb0qZFTXDDLEx
+	0cDRMnZamAx5QUk4FZ5UWP5YLwZuoIXJwZQ==
+X-ME-Sender: <xms:1m63aOiBIiVDg0RMNqpR4kLKcrb_mmfcCfpq_klSTHQJuxCx-IHClA>
+    <xme:1m63aKhSWmWcUg6tUNhyTL4WFjSSi4_bg4r7YpW7-4Ow1lthqLORvs-c43e6KkPwn
+    q_Acutl7G-3tkMtLg>
+X-ME-Received: <xmr:1m63aMhLObb0oOUMuCyPy8-zj6Gga3jBpLrnyQcPq91s8NHft5-c9Y7K4dfTa3H1B--rDEtUkUEeEWUfiy2l_NeupqHQ8QEkLcEAqWA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtre
-    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffue
-    efjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
-    gtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhf
-    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhg
-    shgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:jGe3aLwxJNwg04dim7nf1FkOsJHV-wMDf3Q4vWhfw4CEEfefq808Sw>
-    <xmx:jGe3aOti_m89Z5cFpucMf_I3jbAxv9YOJlXWmNjfqM2v1ZwTJSvdjw>
-    <xmx:jGe3aI1Tvr5hJNfjv5ZBtOIuo90Z47jCd2Nt4WSWtSQsP1hZYVWVsg>
-    <xmx:jGe3aJ8nQ53LoUHoal4SeNs8_E2KAESsV-r6tldSL_AZiWAk-SwjOw>
-    <xmx:jGe3aB19tbv7Hrc2FlghtZVYEFEc2x61V9mGyIUb5O_iEo-jsX7NDZfY>
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhl
+    thhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuohesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:1m63aCKx8JFmA0s5RJ-pnwIIa9BPkvY0y7qYnfVMRTQZTjcx7p_LCA>
+    <xmx:1m63aDFR9C1j8rhoUcWBnamB15NduE9I-xOnZUMdBLTw3wuqsvOPAw>
+    <xmx:1m63aOTfXb-br5wRLYL3JKly9xqKglumP7sbaGd_wQsu4KI9gCo6rg>
+    <xmx:1m63aHdtwOdaDldWYlFln8gd81PqqQlkEpc6JAMArHQZ3lcDlALkrg>
+    <xmx:1m63aBjxOKiG2GD8xCiA1e38fgQvpcPe5b9S2MDbDKBTV3zbH3gyroCs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Sep 2025 17:54:20 -0400 (EDT)
+ 2 Sep 2025 18:25:25 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH 0/2] doc: add/remove backticks for inline-verbatim markup
-In-Reply-To: <cover.1756845314.git.code@khaugsbakk.name>
-	(kristofferhaugsbakk@fastmail.com's message of "Tue, 2 Sep 2025
-	22:35:45 +0200")
-References: <cover.1756845314.git.code@khaugsbakk.name>
-Date: Tue, 02 Sep 2025 14:54:18 -0700
-Message-ID: <xmqq1pooikqd.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  jltobler@gmail.com,  shejialuo@gmail.com
+Subject: Re: [PATCH v2 1/5] fsck: order 'fsck_msg_type' alphabetically
+In-Reply-To: <20250902-228-reftable-introduce-consistency-checks-v2-1-4f96b3834779@gmail.com>
+	(Karthik Nayak's message of "Tue, 02 Sep 2025 09:05:21 +0200")
+References: <20250902-228-reftable-introduce-consistency-checks-v2-0-4f96b3834779@gmail.com>
+	<20250902-228-reftable-introduce-consistency-checks-v2-1-4f96b3834779@gmail.com>
+Date: Tue, 02 Sep 2025 15:25:24 -0700
+Message-ID: <xmqqwm6gh4q3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,19 +87,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-kristofferhaugsbakk@fastmail.com writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> The list of 'fsck_msg_type' seem to be alphabetically ordered, but there
+> are a few small misses. Fix this by sorting the sub-sections of the
+> list to maintain alphabetical ordering. Also fix a clang-format issue
+> where the escaped newlines are not aligned.
 >
-> Fix markup where either a backtick (for inline-verbatim) was missed or
-> one too many was used.
->
-> Ignores the one in `Documentation/config/alias.adoc` because [1] already
-> covers that one.
+> While here, remove a duplicate instance of 'gitmodulesLarge' in the
+> 'fsck-msgids' documentation.
 
-The places these patches address are clearly broken.  Thanks for
-noticing and fixing them.
+"A few small misses".
 
-Will queue.
+> diff --git a/fsck.h b/fsck.h
+> index dd7df3d5b3..559ad57807 100644
+> --- a/fsck.h
+> +++ b/fsck.h
+> @@ -20,82 +20,82 @@ enum fsck_msg_type {
+> ...
+> -#define FOREACH_FSCK_MSG_ID(FUNC) \
+> -	/* fatal errors */ \
+> -	FUNC(NUL_IN_HEADER, FATAL) \
+> -	FUNC(UNTERMINATED_HEADER, FATAL) \
+> ...
+> +#define FOREACH_FSCK_MSG_ID(FUNC)                                  \
+> +	/* fatal errors */                                         \
+> +	FUNC(NUL_IN_HEADER, FATAL)                                 \
+> +	FUNC(UNTERMINATED_HEADER, FATAL)                           \
+> ...
+
+Please undo these "pad by spaces before backslash"; otherwise we
+cannot tell which ones are "a few small misses".
 
 Thanks.
+
