@@ -1,167 +1,121 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA702DF125
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 14:46:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928CD27B330
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 14:57:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756824417; cv=none; b=TGXG+F66S2SbfELHqXpP5gCfra3quuaKZ3jsPSS15Ap0V0moFhYMMP1pmtthyJq0ZOmLxZca7pg07IcoHigp2tD8+/+f+39Dkj7Xg4/UnUssoR+ukUdEu+yMSnep6zVvVEvpvyk88cfXC+smoh9Uvg5UTgjGXIVsGkbErpkPiDs=
+	t=1756825029; cv=none; b=Nns3ICEwC+uEWiZAm8xoXqhnAr4vmA0Dycfbo0X9Lz6TRRHTOLck0ASPansixQVhQvGOqLXWeVraOpOemyvPIBGF+r7jkHeLMIkWgNvzNwmEHfVhKDNoWNF52X5pZdgQHpLihTderYXoovTxQRe0ZucC7gXXJ59fVqV6eHHC554=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756824417; c=relaxed/simple;
-	bh=lERsYnTzsiTZgBOR25WoyQMz+8LHZyFR6L8xjkdj2gM=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=GAe0juDIASnlijVZGdoTHhotbNiswlAtNudL6qjItDJcxYlxmykookt+IhSWjkgcqMGv9OWNiEd/U+d1YTw7T4JrhmDiZ9rgselwsaynJHlRmmliJvuJ9LK/pDY1bOOftm1hg1fqmAJZDtwYbgri4JYvtBjwIgDxKlEj4PzJ1w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=eYKfp+oX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z02MOiRX; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1756825029; c=relaxed/simple;
+	bh=6aIT99cyZWWOwC17U0RlJXOtcJZg21GYX/er/+WKSzU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ooAfdPp4CevYhylTWNmxCPcspUA722ifTIfnUdnrhGn3yfNxsuP12YfBO6ldXs2jawu6rtxZbIJOQnNXg/VGxKB5ui+4t8PI9Z0dQf9RbNg6DCReLMFrHJ0jzZXUgbX5LAKBxoXl+r93VKmZUQ+DA8MLcQLJW1fXBckxmLMZlWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cmG2d7dR; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="eYKfp+oX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z02MOiRX"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id AD6691D00362;
-	Tue,  2 Sep 2025 10:46:54 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 02 Sep 2025 10:46:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756824414;
-	 x=1756910814; bh=lERsYnTzsiTZgBOR25WoyQMz+8LHZyFR6L8xjkdj2gM=; b=
-	eYKfp+oXHmoRjVAl+0CVw2OMxqXK9Mgfko3wxbRbe+SA5bnkpqdB1hhjeNKb/TRz
-	dpe/UQqMRCbUVWJciqUrejWBtvLXUhPwSLT+98kSVSFmKeqxGv/gkAy4i8Z0w+6P
-	ubd5c9XTEtnlx4IwEhdn+41pmhM5u2SUq37ggkuT7RZhX7xAKBBmbhTgUdDh4yQ1
-	AWas/eOQh0h15HRDp+3w2YDSbiElEof94heNWRfsvS8Uc3+WTxMHr4XJ9UNGw0qF
-	DJqnNdZfwePiABZhqmndoHrMN33K0s8AUVPq3LMRABGkGrCUz3T4Pa18ZFs8pkxP
-	n3arhDKpRTsr5r7W4Gyx8w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1756824414; x=1756910814; bh=l
-	ERsYnTzsiTZgBOR25WoyQMz+8LHZyFR6L8xjkdj2gM=; b=Z02MOiRXLGWvsXhWc
-	3k/qnKU3amQpqiX0P5MYZawDzMzYDFIFN6lAtfB7m1Gs3wAEpU80gG26P/xx/D4w
-	BeQGRM8HXieEx/nhRacI1cNxSjYbxsvG3TdSIwO9GK1ZQ4hL9Egty8W3d2GzK+2C
-	b19ygydhAn0+DzMhLXi/R2tkWp4tc5fEjSOVF2DYff4SpUAQ4PtET2jHpEff2rVG
-	OQ4yLNoePIH2cE2+vJ6p9REORUr4aJjepFTHYZlWJ3STLgummasc5jJoE8tIdzoi
-	hXBTMMFVqHjjRFoh4iwk4JE6GX8BwJeu+Mei3r+KdFHW8yt5nZJkOHxuE3Pikj8r
-	aJY4g==
-X-ME-Sender: <xms:XgO3aHgFsd_5AJjVYLsoDlV59W7CYKfu-moKgReVe9vHO9i5wjXtLa8>
-    <xme:XgO3aEBA36v4QGLnclbI3rArTlQ61gRaUwTkAhOXjZHkZnypzJY2JZBav4N-9hmho
-    WhJTb5Z4sDg2SRCyA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
-    ohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthhqredtredtje
-    enucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhs
-    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeffjeekvdejgeeigeefjeekgeelveehieettedtvddvgefhgeehgeelleel
-    veffudenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgs
-    rghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepsh
-    hmthhpohhuthdprhgtphhtthhopehtrghruhhnrhgrmhhsihhnghhhrghnihesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:XgO3aLm4ylOnBTJGLg3RQJEFL-IsZGGjm7FGTqTSwjoMCZlg5HVCLA>
-    <xmx:XgO3aHxamXElvFPQlewNuJnu2srcb-c9jxvFgZDByatmjHDDvJq3UQ>
-    <xmx:XgO3aDnafrUwAalv0sAiXlmrFkLChHQuQ92nmpCJAydRpZ2z63lXaQ>
-    <xmx:XgO3aAfTMrUk-T8aFJFDcPgiptYmowua9o93gzkZ7yyvh0qUxC3zIg>
-    <xmx:XgO3aPt75Rj8NnFclXKp9D4A6LABOtCzXuIxb1zukHspmRUq54QRnRbd>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 46CCD1EA0068; Tue,  2 Sep 2025 10:46:54 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cmG2d7dR"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3ce772ce0dbso3802361f8f.0
+        for <git@vger.kernel.org>; Tue, 02 Sep 2025 07:57:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756825026; x=1757429826; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6UqpX3CESI+5S81hqlVSLbV3+EMijnN4kOkoKfZh0Rg=;
+        b=cmG2d7dRXY7lfGz0LmPODSm3wcBUjdAA1gRaWfo6pfigNIxSk4ycLugVIahLQqUDbt
+         Tjx5+rJrML3qXMVgMHAFKiubZXa2lZf9QUI15RNuVQETruNPNdozIaqKGUUEcC71R+X0
+         24G/vWpPYNqpSzV6kxgiqJ2KGDFAj9XzmdEVHQyvQvYbXX1VV38DREUQgB3DMRMYkL97
+         VlU1hDXn58IFlg0316LXRVa1pIF2F7Q5nZrxplrvtIiVKGC077sDwmG3cjFVy4pFL4V4
+         lfLoBR0jrh2ZaHl9zoj+5tKjNd1z3UG45EGfaRCiWi2xUuxhTcZ0zErv/Dv41eADRJ8U
+         GaFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756825026; x=1757429826;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6UqpX3CESI+5S81hqlVSLbV3+EMijnN4kOkoKfZh0Rg=;
+        b=rLb5VLl91cPE0szFSC0irUmLW0aBXnUCxKoQGPgYC93jg0VYXoqkEIlvUqlaYUkcGM
+         LofgjIsQA48Fam96CpSkOS7mn252J3RJP/3nVyuA4HHClYbS4RZqXJ7xisyKyrGAhq/l
+         ZTv83cHSlikdqscy2Z7I06t7Ffno6wCqMAt7jRcFctVr0wYyE8VhOCohAh7MBt32UblZ
+         3uO9Tjkor0Z9AbtvV66nTUFljEZB0MkyLezkiQXFLiSx9cu5Z6xuP5hHUh0JHfgeCAQh
+         BwLmBMy522jSJxxIF/ovkZi2Y9Zzig85XsKmJyUGBJLaI5GPqecaS//PnNFtqJuGQoX8
+         u52A==
+X-Forwarded-Encrypted: i=1; AJvYcCVox5HoFzczIe8CQj1GD5d3BkFIYWpme+OL8Gbf8qAN7q9xUvPATiYfqhcol28lP0gxMD0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyp0GRtTqnBphEdRqzZT4jRmemRLpJhEb6z/LZPCz4kmsKrKE4s
+	vGJW81DOm+/zGIcOEn5vRVbRJ+bf+HFTnYXmw0g8XsGl9br22yYIvI/p
+X-Gm-Gg: ASbGncsxsoyZ06XbTCNLZ8RBo5WYDSsBjaX1ZF4Y+y1LWLhmc1noWj/Mlap7Otk+gNN
+	gqpzdd1YzeECyBjWyp83GNqEnDTe1p1XCcDVBtFCBoS6RcfSu55oA6pikvS8+ZtOa+BE0OOtF6q
+	1ekgfPCOfN2WUvnvYIfUJ0UZnBrDrvglwovmiueS/O52chjnsNnTs2OsR3ufBdMMK2Xe3K/vG8Z
+	chaI1WIFiVIj0Shwpc1mhdKjiBSgHJ/QKIbhJz1g/3QD2BCIWjCZWnRfbzYJdlZvyVj6rBweSjs
+	UYIpGoAEtH42S7nbU6AsIESY0JCHzPsECXDknOAehZAwcluUFHGlv23WhQ2W9/D2PO3urrZtxL/
+	IQn2KTCiZESf9wbN8apPveg3hnSmVdn2AUmfDLrTgxMG3qE9zvdVsdEPAqV0s3BvEzdRpTnNcby
+	djSPvfTXwzeDtBMTU=
+X-Google-Smtp-Source: AGHT+IHPRKATeBvNOMc9MpwQnaJ/vlNBvv+WZS+Ei8YNyCzjzeHLJ3p30VZZga7J+7VVL4N/ngVjYA==
+X-Received: by 2002:adf:f70c:0:b0:3d4:1517:d2e9 with SMTP id ffacd0b85a97d-3d41517d9a8mr6734283f8f.25.1756825025696;
+        Tue, 02 Sep 2025 07:57:05 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc? ([2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3d729a96912sm8025273f8f.8.2025.09.02.07.57.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Sep 2025 07:57:05 -0700 (PDT)
+Message-ID: <62b50f7e-7ee3-420b-9de3-6d9df611b6b6@gmail.com>
+Date: Tue, 2 Sep 2025 15:57:03 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ApP4gqYI_F_R
-Date: Tue, 02 Sep 2025 16:46:33 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: 
- =?UTF-8?Q?Tarun=E3=80=90=E3=83=84=E3=80=91?= <tarunramsinghani@gmail.com>,
- git@vger.kernel.org
-Message-Id: <829c6e09-c834-461f-820d-981512a02a76@app.fastmail.com>
-In-Reply-To: 
- <CAGAx-2Ac2Tt4-jTH=AApK3m=U7d2RJBaTW=uX6jBHzmpWU9NYw@mail.gmail.com>
-References: 
- <CAGAx-2Ac2Tt4-jTH=AApK3m=U7d2RJBaTW=uX6jBHzmpWU9NYw@mail.gmail.com>
-Subject: Re: Git fetch Failure
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] contrib/subtree: fix split with squashed subtrees
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: Colin Stagner <ask+git@howdoi.land>, git@vger.kernel.org,
+ phillip.wood@dunelm.org.uk
+Cc: Zach FettersMoore <zach.fetters@apollographql.com>,
+ Christian Couder <chriscool@tuxfamily.org>,
+ Patrik Weiskircher <patrik@pspdfkit.com>
+References: <20250824191048.1938340-1-ask+git@howdoi.land>
+ <00e76b7e-ce4f-44d9-acd9-466c6b14f41b@gmail.com>
+ <ee480c22-0dd3-4c45-a2bd-838c238f1d55@howdoi.land>
+ <773ed81e-34b4-4116-88de-7e4307b6c679@gmail.com>
+Content-Language: en-US
+In-Reply-To: <773ed81e-34b4-4116-88de-7e4307b6c679@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Sep 2, 2025, at 16:08, Tarun=E3=80=90=E3=83=84=E3=80=91 wrote:
->[snip]
-> What happened instead? (Actual behavior)
->
-> Git fetch failed with error
->
-> error: cannot lock ref
-> 'refs/remotes/origin/users/ajya/sqlservermoduleimportM146': Unable to
-> create
-> '/Users/admin/Repos/tasks1/.git/refs/remotes/origin/users/ajya/sqlserv=
-ermoduleimportM146.lock':
-> File exists.
->[snip]
-> [System Info]
->
-> git version:
->
-> git version 2.51.0
->
-> cpu: arm64
->
-> no commit associated with this build
->
-> sizeof-long: 8
->
-> sizeof-size_t: 8
->
-> shell-path: /bin/sh
->
-> feature: fsmonitor--daemon
->
-> libcurl: 8.7.1
->
-> zlib: 1.2.12
->
-> SHA-1: SHA1_DC
->
-> SHA-256: SHA256_BLK
->
-> default-ref-format: files
->
-> default-hash: sha1
->
-> uname: Darwin 24.6.0 Darwin Kernel Version 24.6.0: Mon Jul 14 11:30:29
-> PDT 2025; root:xnu-11417.140.69~1/RELEASE_ARM64_T6000 arm64
->
-> compiler info: clang: 17.0.0 (clang-1700.0.13.3)
->
-> libc info: no libc information available
->
-> $SHELL (typically, interactive shell): /bin/zsh
->
->
->
-> [Enabled iHooks]
+On 02/09/2025 14:22, Phillip Wood wrote:
+> On 01/09/2025 21:43, Colin Stagner wrote:
+>> On 9/1/25 08:54, Phillip Wood wrote:
+>> Colin Stagner <ask+git@howdoi.land> writes:
+>>
+>> The outer loop in git-subtree.sh:983 appears to iterate from the root 
+>> commit forwards… and not from the HEAD backwards.
+>>
+>>      git rev-list --topo-order --reverse --parents $rev $unrevs
+>>      #                         ^^^^^^^^^
+>>
+>> Since the iteration is ancestor-first, I'm having difficulty seeing 
+>> why `should_ignore_subtree_split_commit()` would want to do an 
+>> ancestor traversal at all. It already sees the commits ancestor-first. 
+>> But there could be a reason that I don't know.
+> 
+> Ah, I was only looking at this patch, not how it was called. That begs 
+> the question "what's the point of these checks if we've already visited 
+> all the ancestors anyway". I think the answer is that it is pruning the 
+> recursion that happens in check_parent() and checking the commits that 
+> come from that rev-list command is pointless. The regression test 
+> introduced with this function only looks at $extracount which comes from 
+> the recursion. I haven't looked too closely but it would be nice if we 
+> could move this check so it is only run when check_parents() is recursing.
 
-It looks like a casing issue caused by `default-ref-format: files`.
+Sorry that's not quite right. check_parents() recurses into 
+process_split_commit() rather than the loop that call 
+should_ignore_subtree_split_commit(). I think what this check does do is 
+prune some parents which stops check_parents() from recursing into other 
+subtrees so the check is in the right place.
 
-```
-$ git for-each-ref --format=3D'%(refname)' | grep -i sqlServerModuleImpo=
-rtM146
-refs/remotes/origin/users/ajya/sqlServerModuleImportM146
-refs/remotes/origin/users/ajya/sqlservermoduleimportM146
-```
+Thanks
 
-You could try
-
-```
-$ git clone --ref-format=3Dreftable https://github.com/microsoft/azure-p=
-ipelines-tasks.git
-```
-
---=20
-Kristoffer Haugsbakk
+Phillip
 
