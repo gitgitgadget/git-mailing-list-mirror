@@ -1,53 +1,53 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AB92E6CBD
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 08:50:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4511C270572
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 08:50:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756803033; cv=none; b=dHXNFD8cpejl+6YVD6YjTE5P6F5gvGIKzLzvk4/aZJjK488NMJgrUGVL9CXszyk6ZFc0mlhV0qhOFdVjQVpuf/FJaxEkoTG1YDDkUV827/yEMfJb2aMdd3Tm3mSkOOUqkb1/j+CGrek7s5z0/0lsJXbo/tdnYGS2j7//HFDOjXQ=
+	t=1756803042; cv=none; b=Yxp2Qx2VGRwXo6vv9XfT47QYz4EiHwXtOtE1EXwCaNP6zKPPPk4r6shW3QsWRPh/IscIB3DyN5c5zukFmJit3z2qZoSnfhRWOOGUn3sUI0tvHMoU01+vDew/Zh5FTnzi36+Fy5YTYuGdlOkwZEUZg/2T5i2SDFl/OyLnEOSVISg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756803033; c=relaxed/simple;
-	bh=WEjQzEH75ddmXHiJk6+kqxAcQHYHlKHD2nKzpIV5T0E=;
+	s=arc-20240116; t=1756803042; c=relaxed/simple;
+	bh=av5ndcztbMY7GjwTrExIDylwcXbYLYMNqzNSmAKzx2I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TXhWD0d3eMKpUAF4a09eSkPN+vVjopIYj2a+ChrTJtSAaGBTJBzQNIe+ea2L8bdF6H2C3qe6C6chBlo7W/K3nsKEcduIbj4bjR/rLBWaKxy9DPvnbj09Nu6UazeKtXy1fRh+vPrgIYVQBAUkLSgajfUc0F/v/SOD6AupXtR/vOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ebMPeh1R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YN5hKDkF; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=XVsaoHk3SUGu4nQIdYmGrbH4UzttdXQuvYPsEVbY0+GVH4LQtnC9zf6TDwhkF1ARlk3Hv4tqqTsxj9ZywMigHtw/NTWDiyHu21uW+QGOwGDY7Kl7cmh0NCj7BVMdniWBfDSwHQiVb8YqXpfCN4d7FY69KwoGPoUxhDOpAEc1pjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DVegJt4m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PlQKEweJ; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ebMPeh1R";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YN5hKDkF"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 39538140028B;
-	Tue,  2 Sep 2025 04:50:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DVegJt4m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PlQKEweJ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 578ABEC0540;
+	Tue,  2 Sep 2025 04:50:38 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Tue, 02 Sep 2025 04:50:30 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 02 Sep 2025 04:50:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1756803030; x=1756889430; bh=+5yiDrOTs4
-	j8EK/x2VkHe6f3s3Lxd16kdsvaJ+QVMzw=; b=ebMPeh1RmwgTwJF4WhpjaswHA/
-	9lvtdoQK2ViFrQWJqOblkdgf46BV7BMtaxBKo5OMpFvQaD1357Cn9koB0O+O1Qr3
-	7HKMThF+YhgsLRZIKAwiKSggLLdviLA5vWlnDk5/RcKSvk6hy/gAWDbg4BchgQxl
-	KFze7/EvyWfzquwKIekRNn1cFG9mtUzNz8ShOiiBRQmVoMn9LF36aNM9Y2DHO3xz
-	hUgmXwf/vRMIzQsiSlIjO4uepFVL6BeaziNMcaald8ktfTchJBKE9+lPqgWLMlfK
-	hRgiwY89RhJw6P5tJJQOdhJwZ63xBl9Vv143yfesJxMFmhAX8vaEcuQCZPdQ==
+	:subject:to:to; s=fm1; t=1756803038; x=1756889438; bh=UP7hFXJS9X
+	St5cXnYyFeKsANiD2CWws+/dJN7SnKG3s=; b=DVegJt4mUMR46M9s8OMz12TdvX
+	j8waudOMeXyWfm7VYTzRgwTR5Nq22Cx52zug2UGskLHQ+6r0qd6q8Wil8wOoenZD
+	JEbBK0zdHOsz48lwMXokgxTD7lStyFnFn1k74F7q0+E/5zYMbMZjzoxZhLdo5JAV
+	YnA+DGcrmC1gcMxo2pBOY+XlZew0usKZLE0lwCGdOoB/hTcDtP1WdVTPnxiqQDYo
+	FmYhtvzakwcYFu7iFxaXGr6Cyl6o/1g1v0znsZIsQAzegiJ8jgVPKmKHwOD/iqcl
+	C/6zRMOokk4hSJHFHUjYoeu3FamluLQUe7eP62PSOqR3VXxFQDTbWKd0sang==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756803030; x=1756889430; bh=+5yiDrOTs4j8EK/x2VkHe6f3s3Lxd16kdsv
-	aJ+QVMzw=; b=YN5hKDkFOfFfNBiuabUBUYhNCuF4L56fi1MjBjFGQi/FGjQOa1g
-	mCH/s2jNVGId4TSwrR+cROfSHY3+wGtPktjTuVtzuZn758NkiG3ajKszvcrotDbG
-	hNWQtdfV0NC04uxftkaJVlqbvCoMYrd8UVlBDfBLb3osyj3udINEsLcFaDZNCmwT
-	/x6h/vlxTMKNHIOOb10NR76c8Tqoc83TCyJgNFQE6D9G0VYXousXPavERf8frU1n
-	EmMjAnQHljbBrOqfWPv1tmeid0Np5R3hgAGsKTQQft3yw05uB2sfBgVHx/VxonKH
-	kI6s+GwX0qlCGH6nXDAhSE2ZPTBha1mGfKw==
-X-ME-Sender: <xms:1a-2aMdcmT-iWxdGwySkZID8sJZtCYtUcNJMKJF3lTuSS5lzDRzNAQ>
-    <xme:1a-2aIxYBWV3Mrdf0GOo_CJsM7gy5Q-l5imQclP_NZnCzg7Gpq9OJS9Aa2TxCI_Sp
-    VCZBhoCo-9mbQm7Vw>
-X-ME-Received: <xmr:1a-2aKGJBLNvyL2z6A1zUFtNu5bLbjlQ23Io99nexPYFJT8cC9pu7cEv2j9m3bxo1fMRVXmbeuXptslayy2lv8ZessctkxYP2TTG0YgCa1XN_Q>
+	1756803038; x=1756889438; bh=UP7hFXJS9XSt5cXnYyFeKsANiD2CWws+/dJ
+	N7SnKG3s=; b=PlQKEweJUGhhIcbE21hBNMxyZU7Z79DQUzAOrc5ktd6a8NoRAAb
+	roaC7QxFB67OapBBQWLOZU9QuWMxlJJnoLA/b4q3SMT0mJsNSc07aS+K13mqpKrH
+	RnZ81XFGnoXjuJYrOBhROtQEhLJwSA7v1lA2um+9O+Miug/AqIDngEAtO0rMWNH1
+	IFRtG7RAQdC5t30/mBAwfCpdrYyaQxqSHfNY0CAoeiDsEmRlhN0y02mWFS2GATiU
+	7VNqnlRh20IGkOH8CsvGDHG5VYKhlv8YCpE9Amw8UjTRfXb/hfTp/ONpLx5kLU8t
+	hIDBIrGVlfEQ5KU2YCbf9cEi9qn8oaxaQhQ==
+X-ME-Sender: <xms:3q-2aIBHiGUWoHF_4_ZaD5uKgmgDZl9RMsU6_zUJBVtVK6f1lKL-_Q>
+    <xme:3q-2aFF_LQOquLFxnA51jJ51L7BeR7Bh6IKEmKUXKbdNcT-CGatDyyLmY54CQfBys
+    9FuoTw8WhNLs2YT8A>
+X-ME-Received: <xmr:3q-2aIIJjrA8U27DAnh51cNteCQqIivA1Kf5T5bw7hp7HW131qtvozyoUJnmDTNumCG_BVfSISW2PJw1bM1mRQ3PFL3psy-dVWUPJZ_VVOzsXQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleegiedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,31 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleegiedtucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:1a-2aEx1QnhqyCDd__CFDXe4DZhf26XP-VrmF8WMV_eaefYE7M_oiw>
-    <xmx:1a-2aDuHVELLimSbTlxsxAAKab2Pw88gwYWHcv4xfBBYzvdo1U5vVw>
-    <xmx:1a-2aJ2py4tHDkndU7qHOxsZzvfv5rPv2mVb9uaP5S3texpNmZFBAw>
-    <xmx:1a-2aG8sAx5pD6WmMX_7nAPyEwVQbj4PrfrA8hASBXe-9PcDkl6x0Q>
-    <xmx:1q-2aOWM76hfvbwDF0di93z5L7ianJKfANTfltU8PG1LnrxGj7ctW_eK>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesph
+    gvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphht
+    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:3q-2aBkOHva6QSaAnGBhcCQwCWCqSzOpP0Mlyx6PLQvGJ5LZbZwFvw>
+    <xmx:3q-2aITEGMeX6SYm3ee6g9MLldrVVQPe8Peox_9cRauiNK_enF1aww>
+    <xmx:3q-2aLJXtS_BLyz_d20D0JenLMwY8cHZ7ot-KDm61pEjQshQzEwIOw>
+    <xmx:3q-2aGApRYyQGqytfyHb2hjGfz76yen3H6Pxag3poJUhUGGRy4dY0Q>
+    <xmx:3q-2aJatrpL0Aaqm88kanEyxj6LGNAvs20Z9eqBcjU4csTtC54LDbh8b>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Sep 2025 04:50:29 -0400 (EDT)
+ 2 Sep 2025 04:50:37 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fdff466a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 2 Sep 2025 08:50:28 +0000 (UTC)
-Date: Tue, 2 Sep 2025 10:50:25 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 27b67a8f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 2 Sep 2025 08:50:36 +0000 (UTC)
+Date: Tue, 2 Sep 2025 10:50:33 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 09/16] packfile: split up responsibilities of
- `reprepare_packed_git()`
-Message-ID: <aLav0TRRg6mH4Umw@pks.im>
+Subject: Re: [PATCH v2 10/16] packfile: refactor `install_packed_git()` to
+ work on packfile store
+Message-ID: <aLav2QQgO8dRJWNY@pks.im>
 References: <20250821-b4-pks-packfiles-store-v2-0-d10623355e9f@pks.im>
- <20250821-b4-pks-packfiles-store-v2-9-d10623355e9f@pks.im>
- <aK0XeiRz13O7j+HO@nand.local>
+ <20250821-b4-pks-packfiles-store-v2-10-d10623355e9f@pks.im>
+ <aK0X6FF/vX9kujFR@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,81 +89,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aK0XeiRz13O7j+HO@nand.local>
+In-Reply-To: <aK0X6FF/vX9kujFR@nand.local>
 
-On Mon, Aug 25, 2025 at 10:10:02PM -0400, Taylor Blau wrote:
-> On Thu, Aug 21, 2025 at 09:39:07AM +0200, Patrick Steinhardt wrote:
-> > diff --git a/odb.c b/odb.c
-> > index 80ec6fc1fa..37ed21f53b 100644
-> > --- a/odb.c
-> > +++ b/odb.c
-> > @@ -694,7 +694,7 @@ static int do_oid_object_info_extended(struct object_database *odb,
-> >
-> >  		/* Not a loose object; someone else may have just packed it. */
-> >  		if (!(flags & OBJECT_INFO_QUICK)) {
-> > -			reprepare_packed_git(odb->repo);
-> > +			odb_reprepare(odb->repo->objects);
-> >  			if (find_pack_entry(odb->repo, real, &e))
-> >  				break;
-> >  		}
-> > @@ -1039,3 +1039,26 @@ void odb_clear(struct object_database *o)
-> >
-> >  	string_list_clear(&o->submodule_source_paths, 0);
-> >  }
-> > +
-> > +void odb_reprepare(struct object_database *o)
+On Mon, Aug 25, 2025 at 10:11:52PM -0400, Taylor Blau wrote:
+> On Thu, Aug 21, 2025 at 09:39:08AM +0200, Patrick Steinhardt wrote:
+> > The `install_packed_git()` functions adds a packfile to a specific
+> > object store. Refactor it to accept a packfile store instead of a
+> > repository to clarify its scope.
 > 
-> OK; so here is the new location for the non-packfile related portions of
-> the former reprepare_packed_git() function. That makes sense, but...
+> All of the refactoring here looks straightforward and correct to me. I
+> admit that I have a vague preference towards keeping the word "install"
+> in the function name here, since it (to me) suggests that the packfile
+> in question is going to be used for lookups, whereas "add" is a bit
+> more generic.
 > 
-> > +{
-> > +	struct odb_source *source;
-> > +
-> > +	/*
-> > +	 * Reprepare alt odbs, in case the alternates file was modified
-> > +	 * during the course of this process. This only _adds_ odbs to
-> > +	 * the linked list, so existing odbs will continue to exist for
-> > +	 * the lifetime of the process.
-> > +	 */
-> > +	o->loaded_alternates = 0;
-> > +	odb_prepare_alternates(o);
-> > +
-> > +	for (source = o->sources; source; source = source->next)
-> > +		odb_clear_loose_cache(source);
-> > +
-> > +	o->approximate_object_count_valid = 0;
-> > +
-> > +	packfile_store_reprepare(o->packfiles);
-> > +
-> > +	obj_read_unlock();
-> 
-> ...I think I am missing where we call odb_read_lock(). The function
-> packfile_store_reprepare() has a comment that it must be called under
-> the odb_read_lock(), but I don't see where we acquire that lock here.
-> 
-> Are the callers of odb_reprepare() supposed to acquire that lock? If so,
-> it seems a little awkward that the caller is supposed to acquire the
-> lock, but the callee is the one to release it. Is this function missing
-> a odb_read_lock() at the top?
-> 
-> I looked at a few callers here and none of them seem to be holding this
-> lock. pthread_mutex_unlock() is supposed to check that the mutex lock is
-> held for recursive and error-checking mutexes. IIRC we initialize the
-> the odb mutex with PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP, so I am a
-> little surprised that this did not cause a runtime error.
+> I don't feel strongly about it, though, so if you have a preference
+> towards "add" then I'm fine with that.
 
-Oh, that's a very good catch. And yes, surprising indeed that this does
-not cause an error anywhere. But if you look at the code it ultimately
-isn't all that surprising: there is only a single command in our code
-base that performs concurrent reads via the ODB, namely git-grep(1).
-That command explicitly opts into `obj_read_use_lock` by calling
-`enable_obj_read_lock()`. All the other commands never perform any
-locking whatsoever.
+I think "install" would make sense if there was a mode where you can set
+up a packfile via the store that is _inactive_, but that's not the case
+anymore. It was before the changes to introduce the packfile store,
+where "add" only instantiated the packfile whereas "install" added it to
+the store. But that difference is basically going away now, so as soon
+as you add a packfile to the store it immediately becomes active.
 
-In any case, I think I merely missed to add the locking call into
-`odb_reprepare()`. It shouldn't be the responsibility of the caller to
-care about locking, it should be handled automatically.
+So I picked "add" because it's a bit shorter compared to "install", and
+because from my point of view the previous distinction isn't necessary
+anymore.
 
-Will fix.
+I'll keep this as-is for now, but same as you: I don't really feel all
+that strongly about it.
 
 Patrick
