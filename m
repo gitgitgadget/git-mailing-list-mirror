@@ -1,129 +1,196 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692751E0B86
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 18:47:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC07285C82
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 18:51:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756838828; cv=none; b=cx6gUokoPZPY1ldRpg18g7ms6tb2gVXQlNrAqhL1KzRRTE8rAJvR7JA3aHQj/CLqtcmcd+UPZVYlW4ZVgyp8srG+uiHpyrcL+qxrefGovflCYJwqTOCdysQD/QgHToNfTWSwaij4+Fl7AbQMGOnQAGlIjJeCywr4ecb4hc0Yink=
+	t=1756839105; cv=none; b=MAjsOn3hjn51bk8DTHRTL0O4NXSBypA6y8T9oQ7xXb7NSIu36z6essJi7FTgdk1iCSBliaS0o0TGGuc1se/9E6drwrS6Sz8c7NcmihW0/Aw4kgtZgW2syTKrupLEjcObclPb2TO/VtH0/cyEMQchukkvZPg3wJUntfoUi4tzgk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756838828; c=relaxed/simple;
-	bh=H4UF5aJuObkUmViKK+RCW+FTrwCx8REysVY0lLwjNOI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Asyre0pHUm20xh535N5u5WZDG8JkYqaD113jgHn4Xy8jAG9pw1SQDyN5IeJlUiExG5YRacXOlUjS0jJ03feUn/JJv0EKqJrlmJLKFTrqQ+WhHpP1Zu8nPq/IzYVNZV3Y49+PA+zcuDo6goorFNbJzswaMfZy3XDvUN+z3U1ThDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from mop.sam.mop (2.8.3.0.0.0.0.0.0.0.0.0.0.0.0.0.a.5.c.d.c.d.9.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:19dc:dc5a::382])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: sam)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 59F1A340D85;
-	Tue, 02 Sep 2025 18:47:02 +0000 (UTC)
-From: Sam James <sam@gentoo.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  Junio C Hamano <gitster@pobox.com>,
-  Taylor Blau <me@ttaylorr.com>,  rsbecker@nexbridge.com,  'Elijah Newren'
- <newren@gmail.com>,  'Kristoffer Haugsbakk'
- <kristofferhaugsbakk@fastmail.com>,  'Josh Soref'
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  'Christian Brabandt'
- <cb@256bit.org>,  'Phillip Wood' <phillip.wood123@gmail.com>,  'Eli
- Schwartz' <eschwartz@gentoo.org>,  "'Haelwenn (lanodan) Monnier'"
- <contact@hacktivis.me>,  'Johannes Schindelin'
- <Johannes.Schindelin@gmx.de>,  'Matthias =?utf-8?Q?A=C3=9Fhauer'?=
- <mha1993@live.de>,
-  'Collin Funk' <collin.funk1@gmail.com>,  'Mike Hommey' <mh@glandium.org>,
-  'Pierre-Emmanuel Patry' <pierre-emmanuel.patry@embecosm.com>,  "'D. Ben
- Knoble'" <ben.knoble@gmail.com>,  'Ramsay Jones'
- <ramsay@ramsayjones.plus.com>,  'Ezekiel Newren'
- <ezekielnewren@gmail.com>,  'Josh Steadmon' <steadmon@google.com>,
-  'Calvin Wan' <calvinwan@google.com>
-Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
-In-Reply-To: <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
-Organization: Gentoo
-References: <030a01dc1433$ee3e2510$caba6f30$@nexbridge.com>
-	<4dffd698-9d3c-41c8-9d3f-0d3750e683d3@app.fastmail.com>
-	<031601dc143f$7a9a25d0$6fce7170$@nexbridge.com>
-	<CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
-	<aK5mJI1NfVQDmDXN@nand.local>
-	<01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
-	<xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
-	<xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im>
-	<aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
-User-Agent: mu4e 1.12.12; emacs 31.0.50
-Date: Tue, 02 Sep 2025 19:47:00 +0100
-Message-ID: <87plc8lmjf.fsf@gentoo.org>
+	s=arc-20240116; t=1756839105; c=relaxed/simple;
+	bh=PjbbbBaop4Swj/YhWmt6q+kVkPUeHEGBh6oVejzcpiw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RDRn465prDJwWzcD4qiZvD4hS0B4fuTaZ047EPhQMhGaVxmTrYua5+LM2fB9R3OUdce6jdIrlZI16Y49WWn7jIVPal7OLqp5XAJR64qvY0iPEHM0kroazfWXPT2Ld0WxgMHyiVBu24mKerC4TTKFHCsyUsmIuS7ptwoedgvW5FQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=fPaJEteV; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="fPaJEteV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1756839098; x=1757443898; i=l.s.r@web.de;
+	bh=VR8hqq/szGLfLmA6ba3o0B7dKXZz46a2/Xh88HAvKZE=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=fPaJEteVH6DTpAt+nxoG5gy8+i8lwrwVwMNb+ZkBgsKa5QG80eSZFPBkXV6uA7sn
+	 oxozyxRbYil0BhxNXSMHyFN07ZHHg7tTFcAGmk/VYAKci7+58kI6LXHXRlrUdwTMY
+	 8Misx3D0MZAnsyXEl0dCngHefavrArtA+3VWGYJdNYSsvN+zlxFXb5vBOtRDYL+a+
+	 5Q+Y0T25RPTJf3DzYmOUSJ8J4667vkBp1UvqLLnGHD5mtdS79SlHRkJ+2oGna5mUp
+	 nkGD+sLpeq1iY2ozFmnHRtGV3FFqcOlma4ONG5a0EraD7VYrbSc7vhz6H/MCx/1ua
+	 7oIsnlVHxML/tTPSdw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([91.47.159.98]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MIc3F-1uet6V1IOb-00G4if; Tue, 02
+ Sep 2025 20:51:38 +0200
+Message-ID: <05b8e161-9087-4eb8-b049-6e99ff288af7@web.de>
+Date: Tue, 2 Sep 2025 20:51:37 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] describe: use khash in finish_depth_computation()
+To: Jeff King <peff@peff.net>
+Cc: Git List <git@vger.kernel.org>
+References: <9110f085-aec0-42e9-9774-b153ece6284f@web.de>
+ <20250824103117.GA250458@coredump.intra.peff.net>
+ <6402268d-bc80-4bfe-abb8-edec9e1b8417@web.de>
+ <20250825073403.GA332447@coredump.intra.peff.net>
+ <cb192b28-d85a-4866-a312-df4408cae93e@web.de>
+ <20250902123834.GA711442@coredump.intra.peff.net>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20250902123834.GA711442@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:U6/3nJbg7rvouAtTcKP1b7qZXOKFpB4rR8JMB7IHP3N2ZSUczZN
+ 6lMvYjHiGenPZu6AEjxut2EUI3Xc+pPMi/mzECenWQtIHpbraEZAb+fot4I+ABOWwG0iJhv
+ 8BH3KeC6l5WKWjsVpAPvEW4dpULrVT61CH86MGi4vdZ9mDW8yKJGPsDsNa9aMWE9wOLO1kL
+ JH4XQq5nHeJf52yPZBdwA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:4qbTy5czRXU=;CtrtrbUNAYaH7urPkmBwrWfvN06
+ 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
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On 9/2/25 2:38 PM, Jeff King wrote:
+>=20
+> I doubt that commit->index is any better in that regard. If I can
+> influence the order in which Git loads the commits (e.g., by creating a
+> bunch of refs which get loaded when we walk over for_each_ref), I can
+> choose the index for each. They'll be unique, but I can still cause
+> collisions modulo the number of buckets.
 
-> On 2025-09-02 at 11:16:19, Patrick Steinhardt wrote:
->> As Pierre-Emmanuel menitoned in [1], the backend is likely to stabilize
->> next year. One or two years of backports for that particular LTS version
->> doesn't feel too bad. And if it does become more involved we can maybe
->> also distribute the load and rely on maintainers of impacted platforms
->> without Rust to help out with the backporting.
->
-> I'm very much in favour of supporting gccrs when it's available, but I
-> also want to say that it currently is targeting 1.49, which is much
-> older than we want.  It's also not necessarily going to be fully usable
-> or bug free in that amount of time.
->
-> I also want to point out that it's important that the maintainers of
-> affected platforms build the tooling necessary for their platforms to be
-> supported.  I'm not seeing ports of LLVM to those architectures or
-> contributions to gccrs that would make those platforms easier to
-> support.
+Hmm, sounds tricky, but feasible. :-O
+> Likewise for oidhash(), I'd guess that colliding 4 bytes is not even
+> necessary to cause trouble, since probing starts by throwing away
+> everything mod n_buckets. So really you just need to collide however
+> many low bits you need to make your desired N, and then get O(N^2)
+> behavior.
 
-This isn't accurate. gccrs doesn't need particular porting to arches: at
-least not yet, and if it does, it'll be very minor; any changes of this
-sort will be in crates themselves which would go upstream.
+Oh, right.
 
-As for the libgccjit-based backend for rustc, see
-https://github.com/rust-lang/rustc_codegen_gcc/issues/49,
-https://github.com/rust-lang/rustc_codegen_gcc/issues/744, and
-https://github.com/rust-lang/rustc_codegen_gcc/issues/742 for discussion
-and complications. But to say that nobody is doing it or working towards
-it is inaccurate.
+>> Letting oidhash() XOR in another word would close that line of attack
+>> for quite a while, I assume.
+>=20
+> Yeah. We have at least 160 bits in an object hash, and we only bother
+> with the low 32. We could XOR up to 5 times, but I agree that even a
+> single extra word would probably be plenty. Might be an interesting
+> experiment to time something like the patch below on a hash-heavy
+> workload.
+>=20
+> diff --git a/hash.h b/hash.h
+> index fae966b23c..c9d21f589e 100644
+> --- a/hash.h
+> +++ b/hash.h
+> @@ -457,7 +457,10 @@ static inline unsigned int oidhash(const struct obj=
+ect_id *oid)
+>  	 * platforms that don't support unaligned reads.
+>  	 */
+>  	unsigned int hash;
+> +	unsigned int entropy;
+>  	memcpy(&hash, oid->hash, sizeof(hash));
+> +	memcpy(&entropy, oid->hash + sizeof(hash), sizeof(entropy));
+> +	hash ^=3D entropy;
+>  	return hash;
+>  }
+> =20
+>=20
+> I suspect it won't make a big time difference. The old code should have
+> been optimized down to a single word load, and now we have two word
+> loads and an xor. That probably isn't important compared to the actual
+> 5-word memcmp() we have to do in order to verify that we found the right
+> bucket anyway.
+I see slightly worse performance, but within the noise.
 
->
->> Also, all of this feels like a significant shift. I'm strongly in favor
->> of adopting Rust in our codebase, but I think we should do so carefully.
->> So we might take it extra carefully and say that Rust will become a
->> mandatory dependency in Git 3.0, where the last release before Git 3.0
->> will become an LTS release.
->
-> I'd prefer we not wait that long.  I'm doing some work in building the
-> new loose object mapping using Rust and it's much more efficient than
-> writing it in C because we don't have to sort the data when we use a
-> BTreeMap.  The code is much simpler, shorter, and easier to write.
->
+However, just stacking two words won't do if only a few bits of the
+resulting hash will be used to find a bucket.  We could mix in more bits
+and smear them all over, but if that's done by a deterministic function
+then it could be applied during the construction of manipulated object
+hash values as well, no?
 
-I still think adopting Rust is a compatibility break and a "breaking
-change". Again, keeping in mind that for adopting C99 features (!), the
-Git project used "test balloons" very very recently.
+Perhaps salting with a random value determined at runtime would help.
+Not XORing it in (pointless if the other value is controlled by the
+attacker, as the result would still collide), but using it as a mask to
+choose the bits to take from the object hash?
 
-> Nobody else is currently working on the interoperability code and we
-> expressed that we ideally wanted it for Git 3.0.  Being able to use Rust
-> means I can write that code faster, with fewer errors (and hence less
-> debugging time), and better tests.  Otherwise, I'm afraid that it will
-> take longer and we might not have it fully upstream for Git 3.0.
->
-> We also have this series right now, which we'd have to abandon if we're
-> not going to support Rust right away.  I'd like to retain Ezekiel as a
-> contributor and incorporate Rust, and I think the best time to adopt
-> Rust is now, not at Git 3.0.
+Ren=C3=A9
 
-I think there's going to be various issues that arise even on platforms
-that support Rust that would make it fitting for Git 3.0, at least for
-the first few releases that incorporate Rust. I'll note that the series
-isn't currently using Meson's Rust integration as QEMU is doing.
-
-sam
