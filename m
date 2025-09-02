@@ -1,89 +1,129 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26AFA95E
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 18:39:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692751E0B86
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 18:47:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756838394; cv=none; b=tmntWrKeaK12TeLMlZHCsOYL2LDeXy+ZNsbDtsIWbAnkBAsgdv4oOXTZR/R2JUB3eFU7ywCTC9+mlZ43WJJqYjwlBzrSm18gi15gkjH0HJZwPW1pgAQtvSr1jFKkXV5/NQBUUqtoWvXaArs+N4Uu/3E2Jva98iAfdb+2NBFETSo=
+	t=1756838828; cv=none; b=cx6gUokoPZPY1ldRpg18g7ms6tb2gVXQlNrAqhL1KzRRTE8rAJvR7JA3aHQj/CLqtcmcd+UPZVYlW4ZVgyp8srG+uiHpyrcL+qxrefGovflCYJwqTOCdysQD/QgHToNfTWSwaij4+Fl7AbQMGOnQAGlIjJeCywr4ecb4hc0Yink=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756838394; c=relaxed/simple;
-	bh=+Sm9GOIpiN0k5/tWB2+0b9v8iCFEckisIQC4WG+ScmI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=Jh9majLrQs3RKBlXuP9FFctFKa3x7BNj50QYylrvwcS1v9mM5MuF4ncEqZ4PLiMgBjlFx+4YmrL7xc99P1uw8Zs79+pGSLho8QowR5gmk/5l+hgrpb000rDuSy06xt7QB2K1XOJIGBcAe13V6Z8C62OQ6/GfmK4dMdl+c/pU57A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NNuwc2BM; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NNuwc2BM"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-333f92a69d4so44095781fa.2
-        for <git@vger.kernel.org>; Tue, 02 Sep 2025 11:39:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756838391; x=1757443191; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M1l/V2w0TS5HYy0ZoU2SOf23jfOre+OSxIn91rdyeXg=;
-        b=NNuwc2BMRF5H7c4mYKe0i7mWoOxSHq+7YdnxSL4iXWMSBMTENqqpI8L/WI0VtuWWHS
-         nuZlfqBtdjFA4X1y+WG7cwXCC/9d05LaMrLwdHu62Flp0ba248LkDG5PYn5lkAzxJtdx
-         zXZ89q2N12aAWtKMwFaW8+rzTsQI1l6gzbk6jNQScDprr6N+WSwsZv5cpX8OGeGAofPI
-         aCvo0kUEvmlKncsUMh8PfxKmrrAz9h8mtoCtsdA0ukLErvC10t7YQaROEfhDY6KGw3H2
-         1CEGHFzAlV+SLSR+T9pUmJoLm71t6r/mVV9GRCyM/hjks8hSNUkdr4J8Vfg63rbo6g9G
-         1dvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756838391; x=1757443191;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=M1l/V2w0TS5HYy0ZoU2SOf23jfOre+OSxIn91rdyeXg=;
-        b=lvFQXwO/9DwiuHQq+FWIYglFRRkZ0S0xl5SqCN8K7Xw/sglu8ywwafwkc1Qui8q/lF
-         C0toDXfYDptjwvVTRfP0q/CCYc6GsISkYwjLHpmIuGac0odgz3dZOzAGC1C6+Pu3xdS5
-         5PmTFp+YZReIAbWY3eQxXWL4L7eI1bSLIt/zeze3zgbiB9WOgOIKW5U1GXJLOHSnLzWR
-         QvdTZiKBXROGHWL2KKBwkZP9ddtrhoXcr4odkZDEdQJlsW9P2CC410AxuflN6YVJiGIC
-         snr0miR+LOhvwJby6aFmddgOTgDB4jBQ599QAGUgd9/ZjWlQdGxMEajsQjaoAwi3Cej5
-         MB+g==
-X-Forwarded-Encrypted: i=1; AJvYcCWL0Ix6CR+Kr1aPsbnA7aLEHnAx+gQj/TNRQegtphsuPiKoW4W61Gf53Y2lXcjTc8fY3xQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxIMrwORcA5HjTx2BM/uOckZYSDO+IaJuleladeRHDnToZmXh4N
-	drGEZtV6fz0g3GPf1bPr8IoPMlgh8WpK2vGPOYNciMbK3gtvAt7zWaR6lkgMpC/n4yiu7MYwnQU
-	HktjC/uso6cyPi3TXZU9Th+2DLC2H7lM=
-X-Gm-Gg: ASbGnctjfxhklJuy0PYt7CxHxFtMihtCzi8MKhHD0nncUDSiWsjfW5aNh16231YscgC
-	edNn8ohpj/WNrFJDcr41VKXXnx5keqZnzLrrVbfZ0gPg2o06QxGjWKKaQA45KEY4Fwt1MvW5XP4
-	l5+yqZto0bzjQ3h6fi3s1SNVRbQ0idyDwb1ntkfCjrD2JqWAsM59W9fY4nzgrra2j9RQ7z12vz+
-	AtDKU6zpKZpatypcsI=
-X-Google-Smtp-Source: AGHT+IGi37hsflkiMOt4+g9bLGM6f3JFUsVB/tiIcsVMRQV7MrEYBWNdRnKEQRIJg/K39PQWM8K7dgLKBBi3huvqc74=
-X-Received: by 2002:a2e:be1d:0:b0:336:dd88:6a02 with SMTP id
- 38308e7fff4ca-336dd886e73mr25062621fa.43.1756838390592; Tue, 02 Sep 2025
- 11:39:50 -0700 (PDT)
+	s=arc-20240116; t=1756838828; c=relaxed/simple;
+	bh=H4UF5aJuObkUmViKK+RCW+FTrwCx8REysVY0lLwjNOI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Asyre0pHUm20xh535N5u5WZDG8JkYqaD113jgHn4Xy8jAG9pw1SQDyN5IeJlUiExG5YRacXOlUjS0jJ03feUn/JJv0EKqJrlmJLKFTrqQ+WhHpP1Zu8nPq/IzYVNZV3Y49+PA+zcuDo6goorFNbJzswaMfZy3XDvUN+z3U1ThDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from mop.sam.mop (2.8.3.0.0.0.0.0.0.0.0.0.0.0.0.0.a.5.c.d.c.d.9.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:19dc:dc5a::382])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: sam)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 59F1A340D85;
+	Tue, 02 Sep 2025 18:47:02 +0000 (UTC)
+From: Sam James <sam@gentoo.org>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  Junio C Hamano <gitster@pobox.com>,
+  Taylor Blau <me@ttaylorr.com>,  rsbecker@nexbridge.com,  'Elijah Newren'
+ <newren@gmail.com>,  'Kristoffer Haugsbakk'
+ <kristofferhaugsbakk@fastmail.com>,  'Josh Soref'
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  'Christian Brabandt'
+ <cb@256bit.org>,  'Phillip Wood' <phillip.wood123@gmail.com>,  'Eli
+ Schwartz' <eschwartz@gentoo.org>,  "'Haelwenn (lanodan) Monnier'"
+ <contact@hacktivis.me>,  'Johannes Schindelin'
+ <Johannes.Schindelin@gmx.de>,  'Matthias =?utf-8?Q?A=C3=9Fhauer'?=
+ <mha1993@live.de>,
+  'Collin Funk' <collin.funk1@gmail.com>,  'Mike Hommey' <mh@glandium.org>,
+  'Pierre-Emmanuel Patry' <pierre-emmanuel.patry@embecosm.com>,  "'D. Ben
+ Knoble'" <ben.knoble@gmail.com>,  'Ramsay Jones'
+ <ramsay@ramsayjones.plus.com>,  'Ezekiel Newren'
+ <ezekielnewren@gmail.com>,  'Josh Steadmon' <steadmon@google.com>,
+  'Calvin Wan' <calvinwan@google.com>
+Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
+In-Reply-To: <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
+Organization: Gentoo
+References: <030a01dc1433$ee3e2510$caba6f30$@nexbridge.com>
+	<4dffd698-9d3c-41c8-9d3f-0d3750e683d3@app.fastmail.com>
+	<031601dc143f$7a9a25d0$6fce7170$@nexbridge.com>
+	<CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
+	<aK5mJI1NfVQDmDXN@nand.local>
+	<01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
+	<xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
+	<xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im>
+	<aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
+User-Agent: mu4e 1.12.12; emacs 31.0.50
+Date: Tue, 02 Sep 2025 19:47:00 +0100
+Message-ID: <87plc8lmjf.fsf@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
- <6d065f550fe871cf010409f7bd2a63438cf52723.1756496539.git.gitgitgadget@gmail.com>
- <aLIG5bLOisbxfn1y@fruit.crustytoothpaste.net> <CAH=ZcbBJV0oT1Ht6qVKmq7xG8ki9Enutq+VNes4n9+2r+0nrvA@mail.gmail.com>
- <aLcdwiRpD1Yo7SKy@fruit.crustytoothpaste.net>
-In-Reply-To: <aLcdwiRpD1Yo7SKy@fruit.crustytoothpaste.net>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Tue, 2 Sep 2025 12:39:39 -0600
-X-Gm-Features: Ac12FXzyVui41AeZYzxqJYQWRQ-jIvE1NlQNjh1rNWDPwv1cNd5Ng_JnLu5lHfI
-Message-ID: <CAH=ZcbCgYEVrhejh66H4xqpuXyZj9jh+JqfH3mYik206-fVTSg@mail.gmail.com>
-Subject: Re: [PATCH 01/15] doc: add a policy for using Rust
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Ezekiel Newren <ezekielnewren@gmail.com>, 
-	"brian m. carlson via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Sep 2, 2025 at 10:39=E2=80=AFAM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> I think it's fine to introduce it in a different series.  I'll plan to
-> do that myself if it doesn't get done sooner.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Actually now that I'm knee deep in adding cbindgen to Rust it'll make
-less sense to add it later. I'm currently working on refactoring my
-entire patch series to include cbindgen from the beginning. I haven't
-looked into cbindgen until now because I wanted to understand at a
-deep level how C <-> Rust ffi worked rather than using an automagical
-tool like cbindgen. I now think cbindgen should be part of the
-introduction of Rust.
+> On 2025-09-02 at 11:16:19, Patrick Steinhardt wrote:
+>> As Pierre-Emmanuel menitoned in [1], the backend is likely to stabilize
+>> next year. One or two years of backports for that particular LTS version
+>> doesn't feel too bad. And if it does become more involved we can maybe
+>> also distribute the load and rely on maintainers of impacted platforms
+>> without Rust to help out with the backporting.
+>
+> I'm very much in favour of supporting gccrs when it's available, but I
+> also want to say that it currently is targeting 1.49, which is much
+> older than we want.  It's also not necessarily going to be fully usable
+> or bug free in that amount of time.
+>
+> I also want to point out that it's important that the maintainers of
+> affected platforms build the tooling necessary for their platforms to be
+> supported.  I'm not seeing ports of LLVM to those architectures or
+> contributions to gccrs that would make those platforms easier to
+> support.
+
+This isn't accurate. gccrs doesn't need particular porting to arches: at
+least not yet, and if it does, it'll be very minor; any changes of this
+sort will be in crates themselves which would go upstream.
+
+As for the libgccjit-based backend for rustc, see
+https://github.com/rust-lang/rustc_codegen_gcc/issues/49,
+https://github.com/rust-lang/rustc_codegen_gcc/issues/744, and
+https://github.com/rust-lang/rustc_codegen_gcc/issues/742 for discussion
+and complications. But to say that nobody is doing it or working towards
+it is inaccurate.
+
+>
+>> Also, all of this feels like a significant shift. I'm strongly in favor
+>> of adopting Rust in our codebase, but I think we should do so carefully.
+>> So we might take it extra carefully and say that Rust will become a
+>> mandatory dependency in Git 3.0, where the last release before Git 3.0
+>> will become an LTS release.
+>
+> I'd prefer we not wait that long.  I'm doing some work in building the
+> new loose object mapping using Rust and it's much more efficient than
+> writing it in C because we don't have to sort the data when we use a
+> BTreeMap.  The code is much simpler, shorter, and easier to write.
+>
+
+I still think adopting Rust is a compatibility break and a "breaking
+change". Again, keeping in mind that for adopting C99 features (!), the
+Git project used "test balloons" very very recently.
+
+> Nobody else is currently working on the interoperability code and we
+> expressed that we ideally wanted it for Git 3.0.  Being able to use Rust
+> means I can write that code faster, with fewer errors (and hence less
+> debugging time), and better tests.  Otherwise, I'm afraid that it will
+> take longer and we might not have it fully upstream for Git 3.0.
+>
+> We also have this series right now, which we'd have to abandon if we're
+> not going to support Rust right away.  I'd like to retain Ezekiel as a
+> contributor and incorporate Rust, and I think the best time to adopt
+> Rust is now, not at Git 3.0.
+
+I think there's going to be various issues that arise even on platforms
+that support Rust that would make it fitting for Git 3.0, at least for
+the first few releases that incorporate Rust. I'll note that the series
+isn't currently using Meson's Rust integration as QEMU is doing.
+
+sam
