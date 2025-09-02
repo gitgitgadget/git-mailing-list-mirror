@@ -1,102 +1,97 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312F335AAB0
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 21:51:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A5A2E9753
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 21:52:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756849921; cv=none; b=rFddTRF5O2Cq8WS9Dv/9bS/q5EGQQ+EqfY8zONbEsJnjORLnKv9aUl00AujjFSQR9M4TsMueRJLUYKlTqVmdliDMMwS5OKaTYDAhoeU1us8RCOxAGKZhg7CTj+RfIGbtZEnFljZnlvaB5LyKteV+RixTYOhW8gmJtXSw/IqiOtg=
+	t=1756849948; cv=none; b=QoU78m+9DX09kxgJqP3xgdlC6pW68ftCmVwICyxuecmJJRYijPZiw4wFeCXu5nypwgsm9rGGuaKwT0p+PFf5KLqImGhCbsFI18ytQoZMBjAFPhzIO5KA5kSCqJ4h6zxhPe8bhFpGjhU9ihMkZu+dSjxrIF7XYlZ5p3rap2ONAVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756849921; c=relaxed/simple;
-	bh=l2KXVPOH2EsBV4rBxslGaUwkQL09gkt61680Ww/H31Q=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=lJ1HVQx3iYKkWcaj+vNRpEJR/fqEuphGr7PoFB7NOJjzCbas2k/5bVhSW5onqFmwydhwnNfzdkVwO3CZvMadeRVrhNjqIptjHG/V2tx+c9KoXBYRKKoGmNZ3WOtZyfF4L/LDYMKfE9iVHV1e4CH8MJAxwS8pKmuAnPT15Na/27Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bKUuzGy+; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1756849948; c=relaxed/simple;
+	bh=sb1cmYzm1pCjn2WnqA4RvJzZwb+zLkV/gI3443M5HbI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QDQTwk6nLjTO2HGsX2aoIugmmtfffLIxlGjDLGiaCIyJ93+YP1tGmKyoyFRadHpAu1Z85GnuQ0y6h3Duxz2JhuNBgiDUdlk1FGbTkAY7BfxOsMCErZuAiSGJ3nKfGq4IIYXDwcdX3CmiP7C/KjNiYSUQzu12LsQNFpJbePqnWWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bKUuzGy+"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7724fe9b24dso2000272b3a.2
-        for <git@vger.kernel.org>; Tue, 02 Sep 2025 14:51:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756849919; x=1757454719; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L9kUXW6SRsQXD7oD+a7xDkSMvn1zBUMXuOTPPZYlhso=;
-        b=bKUuzGy+rxGXfzzVn6rXi3iQJldjFW/BJ0SZfF67pR8erkPHH78EHvlF1w8NNLPJLL
-         ixFPuruRHUGCMA9H7athNbZx3Z0NjzuZxmdDvcSVKcLfAA63kfjD47fe1zNC2s1ruK4t
-         HhR7mL3Xd1Ox2lxipB6fyrzU4aDaWYWzaqv6rhyW3wzaVm3qDEF6naCkQPuddyEZyb9v
-         w1uzBvD50eYRQ6NxyWPJFqgAnTUqfRdQzt539N6sKyVpA6mZqoMEzeWvbatDqiUPRvey
-         TmeQiPnUupJ3RzrqgcXcHbxhLHtehjMMa50qjqlfI78RbmcnnrJyzO8jyZB+CaSaW6PQ
-         VfOQ==
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7e87055f827so86555485a.1
+        for <git@vger.kernel.org>; Tue, 02 Sep 2025 14:52:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756849919; x=1757454719;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1756849945; x=1757454745;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=L9kUXW6SRsQXD7oD+a7xDkSMvn1zBUMXuOTPPZYlhso=;
-        b=kSIBqUD5KYw65264HzCKaj+Toez9MMaWZ2jn9Ibx/M9aEbnoQKbIHK4UHIPjMqlyNW
-         NTzdZ0zx7b/IWoL26J+fCig2LInONbUk+aE8i6BuzY1ZhdVw/vWr/Fu3aTuMF+38jHIL
-         wtFTQux8os4yZu3aaayohyjMhfrlVIpWPDBXywadNc1MvoijVnS8Aec3JptGqM7SN7vU
-         rE0coHTBksIQe0UTg5b8sQpPKc9ln1E1qNAx6ZGod0l8qApYN6mzhZbsgomYOSpSvk5w
-         UHOBJsK5D3sYXl3JiqpXD5nGnl8e2x+l3NRkCuYtupPAaGapMrbnQmrS/cwyN6EaSwCm
-         UqgA==
-X-Gm-Message-State: AOJu0Yz4r3R84AuxfvUflcs2eq2WfZkkZkdb9PVkR8VJiLPgryPSM0uh
-	7wTGHlvsnBBusVOFz9hIJ6qyg48yM0rxKbmvLYm21lDNef4VFag3Fek6
-X-Gm-Gg: ASbGncuVaoyOLqCaLZi9pmvj0ZhDQeOXLcr1vHfBlge1SSE0PpnFTfUVeP42Ymt86uG
-	NFINVR8DToayn9nQon9L/dwylMIKFrMBgjGHKWy21AvJPHsADIEeaUaS5wNQ9w+g7Ta/tFeHrj1
-	XDGdGK1apqHVplZCUOr4rFzIL4TWignf6uKXzg4eng4IYviZ7ECtLm2u5Qhy1QT1RNdks0zeBA/
-	Mrz48szWvY9bTBgh1nn7eU8LYATAHfHapgvp3rCGYUqgAlmB2m975POUBfw0o4eGXT4RfKFOO7c
-	oCgdVvTpbilnvKBG+U6vMAQsaKCX/44SNROeNSotAMVOTof393hVwzTHHmL36Zvo8w1eiwbOdUJ
-	DXbjBDhnEZH1P+c2Cd2OZxvElE6vIAicjGk3OjyJzm+FJekqAzbDXB8xghUkOmouKaNM=
-X-Google-Smtp-Source: AGHT+IGetwkZB4GaItyeLMPII9QkjYwtuUYE3qSeManOls5OzWlHGTulS88p18vWcQd8QYTU4PUoog==
-X-Received: by 2002:a05:6a00:4b48:b0:772:282d:5a68 with SMTP id d2e1a72fcca58-7723e392a0fmr16324773b3a.29.1756849919328;
-        Tue, 02 Sep 2025 14:51:59 -0700 (PDT)
-Received: from smtpclient.apple ([2804:7f0:b77d:8aa:fda6:1fc7:374b:6356])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7722a4b99fasm14745844b3a.57.2025.09.02.14.51.57
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Sep 2025 14:51:58 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        bh=2ltT3L8a27n9XxK88UKYeK9gGYK6FTYeZ4qpPBI4mUo=;
+        b=eL4t9dpFPng5NIXnuuC37dvZvpdlPtzn4JusUPtSRJQyZgxaUxgzG6sYE0TP7bStD4
+         y2iNHzYysnjmoV/5FxqywJtbpBH2XlHBSBk1qJaN4oI1FM3FGkjoJuCt+ys2y3ihge8x
+         vLp9XDkfJfvRdUrN17Qz+dkA3s6hFaJVOYRrEwFfWxEj9N8hbUKdo/l5D0fRADS9+PPj
+         mJRv98DklkU/xGDDXITu2gETlx3BWbkY/+KvIvt+IksIkdNhCpqDsSZCjfA380a5b0y2
+         VrDpDmyJvksMxEA8GC+QLeEkHqIqoiSDvCO+Qd+IOMmIIacpFxkDbl5BYZVKjOZfFyYw
+         Pw4g==
+X-Gm-Message-State: AOJu0YwYnRsim3HXX9yMea/K+CXpR5iLIjxlhX2353CYg1DCWq0Tebsw
+	EhoxgUXV/7Bn3y5wN1QTbe0Lgh6N7tZJCNZPTELxmTqVMdbMIkXvkNYNdjheb8kQUU93kYUuR4T
+	S9fpgQdFgAApA8O/eWO4SGtHuBVkHoFM=
+X-Gm-Gg: ASbGncu+jMd8LumiC4tW9HlDUeiDArVXprbhMxskGF8X0ik+62s42+KI0YiJ9MpsDfZ
+	E02XshT1NSLOISCF7Ykc8SkOy9GKsxhO6K2WSJWzmV9mTWv1V+4O5Vs6PD2IO3cQamQfptRtzAR
+	j+VS/7gBETBjPNiAvAPbDvRNmaPLRNQhC4HPBA5Bg2Ig7Je+Dz9TzzTN35Z6cbfG7ASxEBhgJPT
+	xjLOT8SvKccisqKZh83XkcsRjADBOPXL2GI/vGFQTUD8HSc8q8=
+X-Google-Smtp-Source: AGHT+IE9193lOq4KK0mdNtznqzOGaKHyxAfZvyqbsXWC7k7bphs7YgPCISTY4+aRVDU6kUBwYmwovFchxzw3hFklpPE=
+X-Received: by 2002:ad4:5961:0:b0:70d:fc2d:7de9 with SMTP id
+ 6a1803df08f44-70fa1dda407mr114573216d6.5.1756849944711; Tue, 02 Sep 2025
+ 14:52:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [GSoC PATCH v3 1/2] repo: add the flag -z as an alias for
- --format=nul
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <xmqqms7cltak.fsf@gitster.g>
-Date: Tue, 2 Sep 2025 18:51:43 -0300
-Cc: git@vger.kernel.org,
- ps@pks.im,
- karthik.188@gmail.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <E6D61B04-E10A-4533-BB5F-E8E066AB4ADD@gmail.com>
-References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
- <20250901172732.98845-1-lucasseikioshiro@gmail.com>
- <20250901172732.98845-2-lucasseikioshiro@gmail.com>
- <xmqqms7cltak.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+References: <22c8463a5eebc609b4848f6db1db231fcce7d839.1756840261.git.me@ttaylorr.com>
+In-Reply-To: <22c8463a5eebc609b4848f6db1db231fcce7d839.1756840261.git.me@ttaylorr.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 2 Sep 2025 17:52:13 -0400
+X-Gm-Features: Ac12FXwYuLZJoeYlsUWfRVSXWlbS55t9z-1dBrqhRcOsqMM-TpYVlMfNgPImvI4
+Message-ID: <CAPig+cTPgkkhAdmws9XM58744zs7A4QDOkgnYPcbgB0G9f1ivQ@mail.gmail.com>
+Subject: Re: [PATCH] gitweb: plug various command-line option injection holes
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Moritz Sanft <moritz.sanft@outlook.de>, Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Sep 2, 2025 at 3:11=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote:
+> When running Gitweb and loading a blobdiff with the "hpb" ("hash parent
+> base") query parameter set to a valid diff-tree option, say,
+> "--output=3D/tmp/pwned", Gitweb will faithfully execute "diff-tree"
+> internally (via "sub git_blobdiff") and blindly pass in the "hpb" query
+> parameter.
+>
+> In other words, visiting a URL like:
+>
+>     http://127.0.0.1:1234/?p=3D<PROJECT_NAME>;a=3Dblobdiff;f=3D*;hpb=3D--=
+output=3D/tmp/pwned;hb=3DHEAD
+>
+> will result in the file "/tmp/pwned" being created. This happens as a
+> result of gitweb executing something like:
+>
+>     git diff-tree -r -M --output=3D/tmp/pwned HEAD --
+>
+> , where "--output=3D/tmp/pwned" is substituted in as the value of
+> "$hash_parent_base".
+>
+> There are various other spots in Gitweb which are too eager to pass
+> untrusted query parameter values as command-line arguments, leading to
+> at least the above option-injection attack, and likely many others.
+>
+> Since 51b4594b40 (parse-options: allow --end-of-options as a synonym for
+> "--", 2019-08-06), we have the "--end-of-options" command-line flag as
+> a standard mechanism to indicate that any further argument should not be
+> interpreted as command-line options.
+>
+> Guard agains this and other option-injection attacks by placing the
+> "--end-of-options" flag before any untrusted user-input in any place
+> that gitweb spawns Git as a sub-process.
 
-> This is OK and I do not want you to reroll only to revert this, but
-> FWIW what you had in the previous iteration
-> 
->    git repo info [--format=(keyvalue|nul) | -z] [<key>...]
-> 
-> would also work perfectly well here.  It is not like you are
-> forbidding the command line to mention "--format=nul" twice, or
-> "--format=keyvalue --format=nul" to allow the later one to override
-> the former ones.
+s/agains/against/
 
-Hmmm, ok!
-
-> The updated option parsing looks much nicer.  Thanks.
-
-Thanks, Junio!
-
-
+> Reported-by: Moritz Sanft <moritz.sanft@outlook.de>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
