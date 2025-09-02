@@ -1,568 +1,126 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52A82DF14C
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 17:35:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6803451C9
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 17:42:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756834520; cv=none; b=L90f64OfcbAHQraFStRBmEpr8vjf7KV7hAp9pUDzlbGchFttzjOkoY+y8lYxF6PF3Nvz/eQ6cJY34zPAnVF24XhgDZaGn/dHJPn+Yg/utXzOXNkdlNryeQ8gC7E4kTz2n0t0KBGuFv4N7FtYEWwdlDdCDxDS86JAVVndnGUwAe8=
+	t=1756834950; cv=none; b=tRmxdIVmtV6SYANQUmE9apUBP+oKaf4WXzmrNUnvFQ1F9rnVYfUs3Qs+3iUl6UFKP1Wr0IWFvJm4ChlBxmBFsFrbj6FSrcxSU9MpcF83xWPdvgynUkHeldVAQ2JXiKetyIM6n+OsxWnEbl5mDGzR3FkQs4IE2o6RFVUmkfj5LFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756834520; c=relaxed/simple;
-	bh=Lb56J88RuOd5lD7rQpwZxn9MqLmx9tFAe6Ki1eGluVo=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iP74C3I6Lmr6o4gPKNMmr+dlYIyyN7LPFYMsl/8lkwumpcr0PF+zk7szyrkfx+lIEIk2AY/+fz8/MP33Kv6KSx6BGOU6xkeqe+5sudIW1n8+yNUTbVnWYFTUdWaWBo2dFvYBTy9z4PComFC6KLdxxPPAwZDNEpgCvCaPowJqI0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 582HZ6x81466537
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Sep 2025 17:35:06 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <xmqqv7m0kd1a.fsf@gitster.g>
-In-Reply-To: <xmqqv7m0kd1a.fsf@gitster.g>
-Subject: RE: What's cooking in git.git (Sep 2025, #01; Tue, 2)
-Date: Tue, 2 Sep 2025 13:35:01 -0400
-Organization: Nexbridge Inc.
-Message-ID: <017701dc1c2f$ec839800$c58ac800$@nexbridge.com>
+	s=arc-20240116; t=1756834950; c=relaxed/simple;
+	bh=7NPAVqGwofaOnF59Iqv9xfJrNrT0hpwFHznJIc1S9yw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OdPdBHSQUCmqFTRX38i8WaQTQzNVxlC0xEdNBi7/SMnsH9YCLmfE17nSAI+CiBh55D4yirU0Ukk9eyCorUsGkING1zLkB6CH24plcthfNPrSxZfLnf5oUGFU4DZ8HR4y70bs5IDFYs7LRdTjFFipR/Z3GOVCl5r2mMMZPmU2VIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qMl9rIHR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W3tEtUxL; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qMl9rIHR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W3tEtUxL"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id BFC01EC03BB;
+	Tue,  2 Sep 2025 13:42:27 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 02 Sep 2025 13:42:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756834947; x=1756921347; bh=jZ0sld7bGZ
+	Sx6ZbFvhpo0CkBpuSqp4A0NpmbHHUD9B0=; b=qMl9rIHRRFKSBdMWE04Jl+vmy3
+	utwBdlWyfhKeFV3GyaUliWzS59VvFHXUfEq6iPKLDzk9aamlDu/n6th/eXMpcZ1d
+	edqPI2RJK0u65wtPXcGQq0+cLPsRrvHKZSEYB5xUAxi/XHOekGvWQYIt0j8KOej/
+	3EYrZO3/KKxlYz7keCIl9BG8ytbV0uAwSZXatchp+pSdJgzaDNiEjpEugg5b2/je
+	kfjUkjzXTx3MvYJQQS60Q+QJsY+uCf0KwczcydjHny+Ze/dBEr4/QjeF1iBJ5vhZ
+	5s8SPncexeCWF/ZvUaDWjEvj9U4GkJaTTzRv4iW4MDUP4hJ4q4/Ul58aWAWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756834947; x=1756921347; bh=jZ0sld7bGZSx6ZbFvhpo0CkBpuSqp4A0Npm
+	bHHUD9B0=; b=W3tEtUxLren4TZG99LdtDw3F7QIUBk4tR2/DhGIrQv3W+WDR1o/
+	491QCD+FUAfwlFBSblvaw2UlsEV66cJbySLBjMC9s0FhKuHi4AtnhRqFKv8JaSRz
+	mALSIY5ilTImHefXpdiIK0WgZjkN2eWb4VROAYVBeetfTW/cjTZH0k4onHU9fGR5
+	c4RV+Un/6U9weOC1k1UqwnjP9KU0c5ZESC3oygEJ0CvZaJNYEIBqSeSXSaBvaJR3
+	J9iOZr3cwfVgwkm7UUwp6f8E88xvoJQYdhhZ/VLPaD5h/QPOF4qdFEsnNNY9urdJ
+	X74Jz8PcYCDJiJi0A9kANY7ijgxjard4aoQ==
+X-ME-Sender: <xms:gyy3aMRbdlpf1CzRBvccx_4vgLwtfVknAdCj14pc-Kalc_Z635qmKw>
+    <xme:gyy3aCOFSrRgH8jPGXi9CwONkDbLHHfPR1p85i0v-S5F8MQ-dHKFU9429gR5uY62D
+    iK9stbuMSQSJJ-8uw>
+X-ME-Received: <xmr:gyy3aKSRibF8bH0J4i42yLPH0-0WJ1O_0Gxuhrh451rCZCYYfgQSI4TBwdmu7LvtcTXQIt-KBN0w0_-RK_ukJeBrZl8rIqQY6C8y3v0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
+    ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
+    fhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfj
+    rghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrh
+    hnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
+    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhp
+    ohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepph
+    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtth
+    hopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:gyy3aAgqEhLAhzPkDE3raeEuW1sGY-DGNN8uc3w7POzVBYi6xduOSQ>
+    <xmx:gyy3aD80D0JvI_SX5BEvOHhqsMk4bcdmntWuIlLRe2diSHq2fRgF7w>
+    <xmx:gyy3aHFPhqNv7oOAxZ0y6DcWUhRLNkrNMe1pR3x6wrjF6OKjmi9kcA>
+    <xmx:gyy3aGldiYQK-oCnGMdX3nXcYiJFeTs9mpMciPdqw8kc4f4AidsgIw>
+    <xmx:gyy3aCrMw9sAieFTvdzIliRykJa9UAeHBd2y5wVV4RNEV0-ET9qeOqN3>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Sep 2025 13:42:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 02/16] odb: move list of packfiles into `struct
+ packfile_store`
+In-Reply-To: <aLcngI6vm9DmqUeI@nand.local> (Taylor Blau's message of "Tue, 2
+	Sep 2025 13:21:04 -0400")
+References: <20250821-b4-pks-packfiles-store-v2-0-d10623355e9f@pks.im>
+	<20250821-b4-pks-packfiles-store-v2-2-d10623355e9f@pks.im>
+	<aKz0/WNu/GRYh3/W@nand.local> <aLav4UAcfQjvNzMF@pks.im>
+	<aLcngI6vm9DmqUeI@nand.local>
+Date: Tue, 02 Sep 2025 10:42:25 -0700
+Message-ID: <xmqq4itkkaym.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQIfBdW4GMidAjV0cOPTEUzWb/ENv7P6U9eA
-X-Antivirus: Norton (VPS 250902-6, 9/2/2025), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain
 
-On September 2, 2025 12:58 PM, Junio C Hamano wrote:
->Here are the topics that have been cooking in my tree.  Commits
->prefixed with '+' are in 'next' (being in 'next' is a sign that a
->topic is stable enough to be used and are candidate to be in a
->future release).  Commits prefixed with '-' are only in 'seen', and
->aren't considered "accepted" at all and may be annotated with an URL
->to a message that raises issues but they are no means exhaustive.  A
->topic without enough support may be discarded after a long period of
->no activity (of course they can be resubmit when new interests
->arise).
->
->Copies of the source code to Git live in many repositories, and the
->following is a list of the ones I push into or their mirrors.  Some
->repositories have only a subset of branches.
->
->With maint, master, next, seen, todo:
->
->	git://git.kernel.org/pub/scm/git/git.git/
->	git://repo.or.cz/alt-git.git/
->	https://kernel.googlesource.com/pub/scm/git/git/
->	https://github.com/git/git/
->	https://gitlab.com/git-scm/git/
->
->With all the integration branches and topics broken out:
->
->	https://github.com/gitster/git/
->
->Even though the preformatted documentation in HTML and man format
->are not sources, they are published in these repositories for
->convenience (replace "htmldocs" with "manpages" for the manual
->pages):
->
->	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
->	https://github.com/gitster/git-htmldocs.git/
->
->Release tarballs are available at:
->
->	https://www.kernel.org/pub/software/scm/git/
->
->--------------------------------------------------
->[Cooking]
->
->* ag/doc-sendmail-gmail-example-update (2025-08-26) 1 commit
-> - docs: update sendmail docs to use more secure SMTP server for Gmail
->
-> Doc update.
->
-> Will merge to 'next'?
-> source: <20250826150919.5239-1-gargaditya08@live.com>
->
->
->* da/cargo-serialize (2025-08-26) 1 commit
->  (merged to 'next' on 2025-08-29 at 5a193b1525)
-> + Makefile: build libgit-rs and libgit-sys serially
->
-> Makefile tried to run multiple "cargo build" which would not work
-> very well; serialize their execution to work it around.
->
-> Will merge to 'master'.
-> source: <20250826233525.2635432-1-davvid@gmail.com>
->
->
->* en/rust-xdiff (2025-08-22) 6 commits
-> - ivec: create a vector type that is interoperable between C and Rust
-> - github workflows: upload Cargo.lock
-> - win+Meson: do allow linking with the Rust-built xdiff
-> - github workflows: install rust
-> - xdiff: introduce rust
-> - doc: add a policy for using Rust
->
-> Rust!
->
-> Comments?
-> source: <pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com>
->
->
->* je/doc-checkout (2025-08-29) 5 commits
-> - doc: git-checkout: clarify restoring files section
-> - doc: git-checkout: deduplicate --detach explanation
-> - doc: git-checkout: don't use "reset"
-> - doc: git-checkout: clarify `git checkout <branch>`
-> - doc: git-checkout: clarify intro
->
-> Doc updates.
-> source: <pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
->
->
->* kn/clang-format-bitfields (2025-08-26) 1 commit
-> - Documentation: note styling for bit fields
->
-> CodingGuidelines now spells out how bitfields are to be written.
->
-> Will merge to 'next'?
-> source: <20250826121928.22317-1-karthik.188@gmail.com>
->
->
->* jk/curl-global-trace-components (2025-08-27) 1 commit
-> - curl: add support for curl_global_trace() components
->
-> Adjust to the way newer versions of cURL selectivel enables tracing
-> options, so that our tests can continue to work.
->
-> Will merge to 'next'?
-> source: <20250827080702.GA3572995@coredump.intra.peff.net>
->
->
->* kh/you-still-use-whatchanged-fix (2025-08-29) 4 commits
-> - BreakingChanges: remove claim about whatchanged reports
-> - whatchanged: remove not-even-shorter clause
-> - whatchanged: tell users the git-log(1) equivalent
-> - you-still-use-that??: help the user help themselves
->
-> Update "do you still use it?" message given by a command that is
-> deeply deprecated and allow us to suggest alternatives.
->
-> Will merge to 'next'?
-> source: <cover.1756480827.git.code@khaugsbakk.name>
->
->
->* ds/ls-files-lazy-unsparse (2025-08-15) 1 commit
->  (merged to 'next' on 2025-08-29 at a48fee2dde)
-> + ls-files: conditionally leave index sparse
->
-> "git ls-files <pathspec>..." should not necessarily have to expand
-> the index fully if a sparsified directory is excluded by the
-> pathspec; the code is taught to expand the index on demand to avoid
-> this.
->
-> Will merge to 'master'.
-> source: <pull.1955.git.1755274373717.gitgitgadget@gmail.com>
->
->
->* pc/range-diff-memory-limit (2025-08-29) 1 commit
-> - range-diff: add configurable memory limit for cost matrix
->
-> "git range-diff" learned a way to limit the memory consumed by
-> O(N*N) cost matrix.
->
-> Will merge to 'next'?
-> source: <pull.1958.v4.git.1756483374980.gitgitgadget@gmail.com>
->
->
->* ne/alloc-free-and-null (2025-08-29) 1 commit
-> - alloc: fix dangling pointer in alloc_state cleanup
->
-> The clear_alloc_state() API function was not fully clearing the
-> structure for reuse, but since nobody reuses it, replace it with a
-> variant that frees the structure as well, making the callers simpler.
->
-> Will merge to 'next'?
-> source: <pull.2040.v3.git.git.1756472406487.gitgitgadget@gmail.com>
->
->
->* ds/doc-ggg-pr-fork-clarify (2025-08-23) 1 commit
->  (merged to 'next' on 2025-08-25 at 71aea64ee4)
-> + doc: clarify which remotes can be used with GitGitGadget
->
-> Update the instruction to use of GGG in the MyFirstContribution
-> document to say that a GitHub PR could be made against `git/git`
-> instead of `gitgitgadget/git`.
->
-> Will merge to 'master'.
-> cf. <xmqqtt1vs77x.fsf@gitster.g>
-> source: <pull.2034.v2.git.git.1755940331248.gitgitgadget@gmail.com>
->
->
->* js/doc-sending-patch-via-thunderbird (2025-08-22) 1 commit
->  (merged to 'next' on 2025-08-25 at 1e63ebff8c)
-> + doc/format-patch: adjust Thunderbird MUA hint to new add-on
->
-> Doc update.
->
-> Will merge to 'master'.
-> source: <6ec34bbc-6811-41fa-aa06-1d54fd2acb0c@kdbg.org>
->
->
->* kh/doc-config-typofix (2025-08-24) 1 commit
->  (merged to 'next' on 2025-08-25 at f82e0a4c9b)
-> + doc: config: replace backtick with apostrophe for possessive
->
-> Documentation typofix.
->
-> Will merge to 'master'.
-> cf. <xmqqwm6rp2y4.fsf@gitster.g>
-> source:
-><3ec6a00e3046166c7adb593f38c4099921d8ada3.1756064760.git.code@khaug
->sbakk.name>
->
->
->* rs/describe-with-lazy-queue-and-khash (2025-08-24) 1 commit
-> - describe: use khash in finish_depth_computation()
->
-> Instead of scanning for the remaining items to see if there are
-> still commits to be explored in the queue, use khash to remember
-> which items are still on the queue (an unacceptable alternative is
-> to reserve one object flag bits).
->
-> Will merge to 'next'?
-> source: <9110f085-aec0-42e9-9774-b153ece6284f@web.de>
->
->
->* lo/repo-info-step-2 (2025-08-26) 3 commits
-> - repo: add the field objects.format
-> - repo: add the flag -z as an alias for --format=nul
-> - Merge branch 'lo/repo-info' into lo/repo-info-step-2
->
-> "repo info" learns a short-hand option "-z" that is the same as
-> "--format=nul", and learns to report the objects format used in the
-> repository.
->
-> Waiting for review responses.
-> cf. <xmqqcy8frqn2.fsf@gitster.g>
-> source: <20250826183205.19566-1-lucasseikioshiro@gmail.com>
->
->
->* jc/doc-includeif-hasconfig-remote-url-fix (2025-08-21) 1 commit
-> - config: document includeIf conditions consistently
->
-> Doc mark-up fix.
->
-> Will merge to 'next'?
-> source: <xmqqldnc4stv.fsf@gitster.g>
->
->
->* jk/add-i-color (2025-08-21) 4 commits
-> - contrib/diff-highlight: mention interactive.diffFilter
-> - add-interactive: manually fall back color config to color.ui
-> - add-interactive: respect color.diff for diff coloring
-> - stash: pass --no-color to diff-tree child processes
->
-> Some among "git add -p" and friends ignored color.diff and/or
-> color.ui configuration variables, which is an old regression, which
-> has been corrected.
->
-> Will merge to 'next'?
-> source: <20250821070740.GA3356411@coredump.intra.peff.net>
->
->
->* jt/de-global-bulk-checkin (2025-08-22) 4 commits
-> - bulk-checkin: use repository variable from transaction
-> - bulk-checkin: require transaction for index_blob_bulk_checkin()
-> - bulk-checkin: remove global transaction state
-> - bulk-checkin: introduce object database transaction structure
->
-> The bulk-checkin code used to depend on a file-scope static
-> singleton variable, which has been updated to pass an instance
-> throughout the callchain.
->
-> Will merge to 'next'?
-> source: <20250822213500.1488064-1-jltobler@gmail.com>
->
->
->* kh/doc-interpret-trailers-markup-fix (2025-08-22) 1 commit
->  (merged to 'next' on 2025-08-25 at 9bee54a64d)
-> + doc: interpret-trailers: close all pairs of single quotes
->
-> Fix missing single-quote pairs in a documentation page.
->
-> Will merge to 'master'.
-> source:
-><4eac944102a846695a9f61ead39a5a86361a0532.1755875970.git.code@khaug
->sbakk.name>
->
->
->* ar/submodule-gitdir-tweak (2025-08-18) 10 commits
-> . fixup! t: add gitdir encoding tests
-> . t: add gitdir encoding tests
-> . t: move nested gitdir tests to proper location
-> . submodule: remove validate_submodule_git_dir()
-> . submodule: encode gitdir paths to avoid conflicts
-> . strbuf: bring back is_rfc3986_unreserved
-> . t: submodules: add basic mixed gitdir path tests
-> . submodule: add gitdir path config override
-> . submodule: create new gitdirs under submodules path
-> . submodule--helper: use submodule_name_to_gitdir in add_submodule
->
-> Avoid local submodule repository directory paths overlapping with
-> each other by encoding submodule names before using them as path
-> components.
->
-> Expecting a reroll.
-> cf. <87sehk7r66.fsf@collabora.com>
-> source: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
->
->
->* je/doc-add (2025-08-29) 3 commits
-> - doc: rephrase the purpose of the staging area
->  (merged to 'next' on 2025-08-25 at 0c84501ed2)
-> + doc: git-add: simplify discussion of ignored files
-> + doc: git-add: clarify intro & add an example
->
-> Documentation for "git add" has been updated.
->
-> Will merge to 'next' and then to 'master'.
-> source: <pull.1952.v3.git.1755636370.gitgitgadget@gmail.com>
-> source: <pull.1952.v4.git.1756468502.gitgitgadget@gmail.com>
->
->
->* ds/path-walk-repack-fix (2025-08-25) 2 commits
->  (merged to 'next' on 2025-08-29 at 13028ffb8e)
-> + path-walk: create initializer for path lists
-> + path-walk: fix setup of pending objects
->
-> "git repack --path-walk" lost objects in some corner cases, which
-> has been corrected.
->
-> Will merge to 'master'.
-> cf. <CABPp-
->BHFxxGrqKc0m==TjQNjDGdO=H5Rf6EFsf2nfE1=TuraOQ@mail.gmail.com>
-> source: <pull.1956.v2.git.1756126197.gitgitgadget@gmail.com>
->
->
->* sg/line-log-boundary-fixes (2025-08-18) 2 commits
-> - line-log: show all line ranges touched by the same diff range
-> - line-log: fix assertion error
->
-> Fix for a corner case bug in "git log -L...".
->
-> Will merge to 'next'?
-> source: <20250818111310.1283932-1-szeder.dev@gmail.com>
->
->
->* ja/asciidoc-doctor-verbatim-fixes (2025-08-20) 1 commit
->  (merged to 'next' on 2025-08-22 at 61fb953314)
-> + doc: fix asciidoc format compatibility in pretty-formats.adoc
->
-> Doc mark-up fix.
->
-> Will merge to 'master'.
-> source: <20250820212319.41044-1-jn.avila@free.fr>
->
->
->* jc/longer-disambiguation-fix (2025-08-14) 1 commit
-> - abbrev: allow extending beyond 32 chars to disambiguate
->
-> "git rev-parse --short" and friends failed to disambiguate two
-> objects with object names that share common prefix longer than 32
-> characters.
->
-> Will merge to 'next'?
-> source: <xmqqh5ya6iua.fsf_-_@gitster.g>
->
->
->* tc/t0450-harden (2025-08-12) 3 commits
-> - fixup! t0450: add allowlist for builtins with missing .adoc
-> - t0450: add allowlist for builtins with missing .adoc
-> - t0450: fix test for out-of-tree builds
->
-> Test updates.
->
-> Expecting a reroll.
-> cf. <xmqq8qj3rqgn.fsf@gitster.g>
-> source: <20250804073002.1586332-1-toon@iotcl.com>
->
->
->* lc/rebase-trailer (2025-08-03) 2 commits
-> - rebase: support --trailer
-> - trailer: append trailers in-process and drop the fork to
-`interpret-trailers`
->
-> Expecting a reroll.
-> cf. <198826af571.62b85cb31711042.2415806544948206668@linux.beauty>
-> cf. <xmqqiki7qasu.fsf@gitster.g>
-> source: <20250803150059.402017-1-me@linux.beauty>
->
->
->* ps/object-store-midx-dedup-info (2025-08-11) 11 commits
-> - midx: compute paths via their source
-> - midx: stop duplicating info redundant with its owning source
-> - midx: write multi-pack indices via their source
-> - midx: load multi-pack indices via their source
-> - midx: drop redundant `struct repository` parameter
-> - odb: simplify calling `link_alt_odb_entry()`
-> - odb: return newly created in-memory sources
-> - odb: consistently use "dir" to refer to alternate's directory
-> - odb: allow `odb_find_source()` to fail
-> - odb: store locality in object database sources
-> - Merge branch 'ps/object-store-midx' into ps/object-store-midx-dedup-info
->
-> Further code clean-up for multi-pack-index code paths.
->
-> Will merge to 'next'?
-> cf. <aKbFNq_pLasQGjbc@pks.im>
-> cf. <xmqq4itrrqcg.fsf@gitster.g>
-> source: <20250811-b4-pks-midx-deduplicate-source-info-v3-0-
->e442bdf2b4ad@pks.im>
->
->
->* am/xdiff-hash-tweak (2025-07-28) 2 commits
->  (merged to 'next' on 2025-08-29 at 43590f0b38)
-> + xdiff: optimize xdl_hash_record_verbatim
-> + xdiff: refactor xdl_hash_record()
->
-> Inspired by Ezekiel's recent effort to showcase Rust interface, the
-> hash function implementation used to hash lines have been updated
-> to the one used for ELF symbol lookup by Glibc.
->
-> Will merge to 'master'.
-> cf. <xmqqecsvqal6.fsf@gitster.g>
-> source: <20250728190520.10962-1-amonakov@ispras.ru>
->
->
->* ag/send-email-imap-sent (2025-08-11) 2 commits
-> - send-email: enable copying emails to an IMAP folder without actually
-sending
->them
-> - send-email: add ability to send a copy of sent emails to an IMAP folder
->
-> "git send-email" learned to drive "git imap-send" to store already
-> sent e-mails in an IMAP folder.
->
-> Will merge to 'next'?
-> source:
-><PN3PR01MB9597E8E33868386C997D2563B82BA@PN3PR01MB9597.INDPRD0
->1.PROD.OUTLOOK.COM>
->
->
->* ds/sparse-checkout-clean (2025-07-16) 9 commits
-> - sparse-checkout: make 'clean' clear more files
-> - t: expand tests around sparse merges and clean
-> - sparse-index: point users to new 'clean' action
-> - sparse-checkout: add --verbose option to 'clean'
-> - dir: add generic "walk all files" helper
-> - sparse-checkout: match some 'clean' behavior
-> - sparse-checkout: add basics of 'clean' command
-> - sparse-checkout: remove use of the_repository
-> - Merge branch 'ac/deglobal-sparse-variables' into
-ds/sparse-checkout-clean
-> (this branch uses ac/deglobal-sparse-variables.)
->
-> "git sparse-checkout" subcommand learned a new "clean" action to
-> prune otherwise unused working-tree files that are outside the
-> areas of interest.
->
-> Needs to wait for the base topic to solidify.
-> Waiting for review responses.
-> cf. <xmqqzfbjqbfo.fsf@gitster.g>
-> source: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
->
->
->* pw/3.0-commentchar-auto-deprecation (2025-08-26) 4 commits
-> - commit: print advice when core.commentString=auto
-> - config: warn on core.commentString=auto
-> - breaking-changes: deprecate support for core.commentString=auto
-> - Merge branch 'ps/config-wo-the-repository' into pw/3.0-commentchar-auto-
->deprecation
->
-> Proposes to deprecate "core.commentChar=auto" that attempts to
-> dynamically pick a suitable comment character, as it is too much
-> trouble to support for little benefit.
->
-> Will merge to 'next'?
-> source: <cover.1756215326.git.phillip.wood@dunelm.org.uk>
->
->
->* tc/last-modified (2025-08-05) 3 commits
->  (merged to 'next' on 2025-08-29 at 3f3e111189)
-> + last-modified: use Bloom filters when available
-> + t/perf: add last-modified perf script
-> + last-modified: new subcommand to show when files were last modified
->
-> A new command "git last-modified" is proposed to show the closest
-> ancestor commit that touched each path.
->
-> Will merge to 'master'.
-> source: <20250730175510.987383-1-toon@iotcl.com>
->
->
->* ac/deglobal-sparse-variables (2025-07-18) 3 commits
-> - environment: remove the global variable
->'sparse_expect_files_outside_of_patterns'
-> - environment: move access to "core.sparsecheckoutcone" into repo_settings
-> - environment: move access to "core.sparsecheckout" into repo_settings
-> (this branch is used by ds/sparse-checkout-clean.)
->
-> Two global variables related to sparse checkout have been moved to
-> the repository settings structure.
->
-> Expecting a reroll.
-> cf.
-><CAE7as+bnG6KgA8X_n36pqP15bmyM6re+xEb1MOXKvZSUdJ8Arg@mail.gmail.co
->m>
-> source: <cover.1752882401.git.ayu.chandekar@gmail.com>
->
->
->* tb/prepare-midx-pack-cleanup (2025-05-28) 5 commits
-> - midx: return a `packed_git` pointer from `prepare_midx_pack()`
-> - midx-write.c: extract inner loop from fill_packs_from_midx()
-> - midx-write.c: guard against incremental MIDXs in want_included_pack()
-> - midx: access pack names through `nth_midxed_pack_name()`
-> - Merge branch 'ps/midx-negative-packfile-cache' into
-tb/prepare-midx-pack-
->cleanup
->
-> Improvement on Multi-pack-index API.
->
-> Expecting a reroll.
-> cf. <20250530065034.GC1321283@coredump.intra.peff.net>
-> source: <cover.1748473122.git.me@ttaylorr.com>
->
->
->* cc/promisor-remote-capability (2025-07-31) 5 commits
-> - promisor-remote: use string constants for 'name' and 'url' too
-> - promisor-remote: allow a client to check fields
-> - promisor-remote: refactor how we parse advertised fields
-> - promisor-remote: allow a server to advertise more fields
-> - promisor-remote: refactor to get rid of 'struct strvec'
->
-> The "promisor-remote" capability mechanism has been updated to
-> allow the "partialCloneFilter" settings and the "token" value to be
-> communicated from the server side.
->
-> Expecting a reroll.
-> cf. <xmqqqzwvqay9.fsf@gitster.g>
-> source: <20250731072401.3817074-1-christian.couder@gmail.com>
+Taylor Blau <me@ttaylorr.com> writes:
 
-One comment. It would be helpful for some of us to have a release plan for
-when git will
-no longer be fully buildable because of Rust. Dropping this in at 2.52.0 is
-short notice in
-the mailing list.
+> So I think in this case, the CodingGuidelines would suggest that we
+> write this as:
+>
+>     for (p = store->packs; p; p = p->next) {
+>         if (p->do_not_close)
+>             BUG("want to close pack marked 'do-not-close'");
+>         else
+>             close_pack(p);
+>     }
+>
+> , which from our discussion here seems like something that we both find
+> more readable than the original.
 
+Yes.  Technically the "if...else..." is still a single statement, so
+a rule like "do not use {} only if you would place a single
+statement in it", though.
+
+I would actually write it more like this, though.
+
+     for (p = store->packs; p; p = p->next) {
+         if (p->do_not_close)
+             BUG("want to close pack marked 'do-not-close'");
+
+         close_pack(p);
+     }
+
+The first two lines in that block is a glorified assert(), and
+without a programming bug, what the loop wants to do is only to call
+close_pack() on eacn and every pack on the list.  Not using "else"
+conveys that much clearer.
