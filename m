@@ -1,181 +1,91 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E782045C0B
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 20:57:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA4220311
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 21:23:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756846679; cv=none; b=YA21AS+qcjJkq0FVlrlr8oghRP0nB62ynRC8JRTHibhYsQtHSOfWu28H5Hd/cqkiCb43JZ1A4H1yZQpRcR++T/TBfgWwK2vaH9Vgfu6o4ZBAyHZrmUYCApdLyz3D2d7T50v3aTCqnCWmvtqGm7lUti9HbF0eqC1TLl0LOAIiVfk=
+	t=1756848187; cv=none; b=ZH1NsbWuv5RAe1WHUo6dG3ganjaavxltqoxJtmIqHe5SLnGsK/JMH3FxIp8AoLemYzfGTinGcEfqXSY80fKuos3rJT+FCG0b+1U3HGGGfZgna75MhtKW9sMIVF8cfXw0nlkpn6osJ3Qb3Pfjmuyq4wDy12wcJHcQAjHJUKDH2DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756846679; c=relaxed/simple;
-	bh=MP7penrRIPU72/xGXIN3Kx2TA/Sk5awzj2zra8fa8j4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Pb3a4b04EfL0qOfRT1XebhJZ38sCZN2r2SXoe9GMDCqNDTbhJx1kfL7r+deaqJUXEwSaXOxMBAdm65bB2Rbi/KBI3I4E7lEpNv20FX/lcG8negMvcvgnOqHEW4P9vNLtHQos/kqGPbOEudbrg/JpV7q4YxvYCBYkzIKVqqMmpEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NYi9fqUh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZiIyRh31; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756848187; c=relaxed/simple;
+	bh=Gjhr7eZhfwaujBtHoL11J/DIhpXe66HJq7CEte/j2cg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FXFqjCkfEz5cIXxq491JuBvPAJlasRwUYhdB2D+9OOVpkkao+/CsKe8CSO8W9R5ShXVfm3/EUMq9iKDApz3/NQDPYRsuZMP6toIlJGn6T+3GVhzmeyB89Rq0GWe2mz4DOdLoi8qERSFrJCJi0g6pTlU3el9b9PPCE7WCr9he284=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WMLLJRcE; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NYi9fqUh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZiIyRh31"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id F2364EC04CD;
-	Tue,  2 Sep 2025 16:57:56 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 02 Sep 2025 16:57:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756846676; x=1756933076; bh=bsmrgwLnsh
-	51q8w3jcZcYGGR2uVCc+2vyQVM4UgACGo=; b=NYi9fqUhdIrDg1NekNWpPlqDLP
-	qXe6GCgC1NB+sptlz3w8qsPry9FCSW36iikrSCrT31k4PbvPD34J0XQl6t/xl752
-	3h479Sj4tc35HLm8wn7sR4o7jCQr0aE3pN/6aAx2S0JKoY27xx7tWSV0rHgh9DdZ
-	yd6QRLbAsXGPQ6B0qsJm6NmnRt1zO/ANNXqvIr10snA7NERcWUdoLKekScFgPLAW
-	eXUvCLDFTdki/x3/rlfoEjAE4ypaC5vo+8tqn9YuIwKqe3nulvuBr0xBFDK5KTqr
-	kv7Hn5Ymm1x8ZUD3t2KFu3odXr/RqgByB03sh0IiNy9Nd76L1fGW5KZw58dQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756846676; x=1756933076; bh=bsmrgwLnsh51q8w3jcZcYGGR2uVCc+2vyQV
-	M4UgACGo=; b=ZiIyRh3158TRxWgp0x2vDz47R3iylq2zTXNLE0fCsQB4osSc8P6
-	cRZk/PT6mLKCDG7uvPDzwlOxzOuXn4s+6rkfYxcNOoANwEC+BgnzCPkvmlwkth/k
-	qTtXiePEEZw8NZmo+Fhyhy56Ui3gvxIKt/uCBLDlxTI9kV3BHrzhSnoMzsI3lUFX
-	h86wfEjmJzaj1Bo2GI0My2XAk0evfwM7pLuS889MrPXXcOeL6KZa4hpVtdmYa5DR
-	XTpkiTVAiFsClDuphTkWcJ4zqpyErWfWHZ49/NiuFuZaxjebG7pEd9M9R+KYa8ld
-	ec34WqCBDID393UCGw9azGuSIPFhQWpaZKg==
-X-ME-Sender: <xms:VFq3aBPd-ooVGjCvXaJdZC2H1Xziz8QpQ3UM4Txmra2jK4nO2-jCmQ>
-    <xme:VFq3aOhA3UQuBk6CF76SGclDgc5MXy00kUZWlDZMIRugoyJozMAiB_3DE-yjbgtF_
-    FHFsqeyvAmNAOtF5Q>
-X-ME-Received: <xmr:VFq3aM0ghfm1tMp7GS3NcXunaywEiaTDeMqWR8HxSRW9th2FsTUN9FLhOhJ6B2C5hU15GktBhXIOwYfh3MHSMfX2fRYv4GVtMR5IIVg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepph
-    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:VFq3aAhbZIkERkxGiogJBCkb2hxEyIP-LA7Tc7WPNpzAiAyeXEGEnA>
-    <xmx:VFq3aEdAetOMU0yki0XdPjJj59T_oCR3s95ce6T_S2OYYEE69N504Q>
-    <xmx:VFq3aLk7LDxewK7mlowg5kcYXytIroN97YLwSIn1Ksy41M4WlNLd0w>
-    <xmx:VFq3aFuKNvSHiOYYGtIgd6ywi01Ks7_A8OLiLf6xWkPml-A3sxysdQ>
-    <xmx:VFq3aNGsbs8ZtOwFu8cG69Ywdg3EP2WPsOV8TZIIRDl0akjF2caSNqmz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Sep 2025 16:57:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] t0450: add allowlist for builtins with missing
- .adoc
-In-Reply-To: <xmqq8qj3rqgn.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	28 Aug 2025 16:12:08 -0700")
-References: <20250804073002.1586332-1-toon@iotcl.com>
-	<20250808095943.3312265-3-toon@iotcl.com> <xmqq7bzdfoxe.fsf@gitster.g>
-	<aJs5D2jPh8Uom96p@pks.im> <xmqq8qj3rqgn.fsf@gitster.g>
-Date: Tue, 02 Sep 2025 13:57:54 -0700
-Message-ID: <xmqq5xe0incd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WMLLJRcE"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-55f6b0049fbso4878886e87.0
+        for <git@vger.kernel.org>; Tue, 02 Sep 2025 14:23:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756848184; x=1757452984; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Gjhr7eZhfwaujBtHoL11J/DIhpXe66HJq7CEte/j2cg=;
+        b=WMLLJRcEpVJ5A2FmVASOdc9Lwp39dD45HIbYo3uiRQo3cGBzJAmJDDqgHCQGkCtGj9
+         U5AcLmxUIBY4Y9XatBm5byK9eaKgs2OBeIHN15N8On9jRcydf6U/ibl4WaoC374eQX6E
+         lej6HKrWrIXvY86Fqe9t0BKec+0x4FDKQ2f5bw+9saXonkVmN9gQhoiyI40PheYpoV+q
+         GEySHkGO3QKB65fvIsvgg65aRtcUk7Hh8Dy2k9lXPKYx+yPVVupCZCcCB1XlU3yOXMP/
+         nMRy5s0Vjy52W8IGGn0f5IAApEGODhv2FZrjzhDfsxJDNSJMEgbOt5tZGM7u9U2Uwg/L
+         4d6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756848184; x=1757452984;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Gjhr7eZhfwaujBtHoL11J/DIhpXe66HJq7CEte/j2cg=;
+        b=RSHqznrQv3dlQekH61Ro62rtcouNU9596UkjbkVD2sIBpBeiA7zN0GGd6TdcIy0yhf
+         cfdASTnCY3TopWC9hmQpV+CpA2X3XnMUS9/+TPL7Rez5TtwD6ISZMZFYJOd/ldlgdyAZ
+         sRMg9hpIUzuz9FJZfbRWps4HJl7jVpOr1q/Dg5109srJTsEDP2ggd+5XqBGN8Dz+7Isz
+         y3HhF7iEpzkaGXvaa0KXJxiIqwbwNT9Y7eoavUZpvfz4hRUMEJKHYaPxLqSil4DAaBXw
+         lGjYnIf5jRFc50/SLDM4pRANJneyDjWsyGxZWZDLJR6QE8jO9ZqgaTQ6o0+fKHsmq1h5
+         Z5dg==
+X-Gm-Message-State: AOJu0YxlcMg+khpiHsWVkK+t5MBWz4CXq0EXRpNIa65tYVS+JBYBGh4D
+	WrNy6k6VZliDTbbZo9SGw3LvFkKIRr5d0pGDeIm7HGV0sF3EGzxGXZher0ljXTSuNiRThGyVO/W
+	XNXAQ20OJecYOfmwLBciPjP+QYGymhUM=
+X-Gm-Gg: ASbGncvc5WsVQWi2SLnu6RKbnNHuU3KWcmyT/0n+MMmXxbJ1a9h58u40euQG4B04Wld
+	j6sS55OvcAqv0Ofa2kCLhnrySa8dF+7/g9rQqK2qF2MM3LFCEZUFE5oQIfB2R4xu2PM+nkKp52Z
+	mhG+EZecRVjnKhObOI1G+30n3Vpaw8D7drLDXUsYez+rOQOOQhqh2dBMUBQYmhqa1vlwJLBIJCt
+	+IGvNIh
+X-Google-Smtp-Source: AGHT+IEEoGW1eJpa40Tijr4Bc2Xcdn1AO4Rv+0hkgvEp8z6zHegY6bjuZ4gg8BbuDJU8c38t7gfP9m/kABrhyhCMmKc=
+X-Received: by 2002:a05:6512:1455:20b0:560:885b:2c5a with SMTP id
+ 2adb3069b0e04-560885b2e96mr470961e87.41.1756848183448; Tue, 02 Sep 2025
+ 14:23:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com>
+ <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-1-35e69bbb507d@gmail.com>
+In-Reply-To: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-1-35e69bbb507d@gmail.com>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Tue, 2 Sep 2025 14:22:51 -0700
+X-Gm-Features: Ac12FXzmm5X-FoSzKKVbt2XXuCs_dkbP9GKtX1wGVg_dmhQkvkZhCTnfKEY5e6I
+Message-ID: <CAPx1GvdA3dhWN8b6wORdL1MktdVoJ3E2s9sgoAyUDwFK+7WdzA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] refs/files: use correct error type when locking fails
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, joe.drew@indexexchange.com, peff@peff.net, ps@pks.im, 
+	gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+Minor:
 
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Sep 2, 2025 at 1:40=E2=80=AFAM Karthik Nayak <karthik.188@gmail.com=
+> wrote:
+> During the 'prepare' phase of reference transaction in the files
+> backend, we create the lock files for references to be created. When
+[mass snippage for space]
 >
->>> > To ensure no new builtins are added without documentation, add an
->>> > allowlist: t0450/adoc-missing...
->>> > ...
->>> >  t/t0450-txt-doc-vs-help.sh | 8 +++++++-
->>> >  1 file changed, 7 insertions(+), 1 deletion(-)
->>> 
->>> Forgot to add something?
->>
->> Indeed. Toon is currently out of office, so I had a look at what it
->> takes. The below patch is what I ended up with -- note that I also had
->> to reverse the `grep` condition to set the prereq in the else branch.
->>
->> Let me know whether you're fine with just squashing these changes in or
->> whether I shall send another version.
->
-> I've marked this topic in the What's cooking report to be expecting
-> a reroll after 2.51 final gets tagged, which has now done.  If the
-> fixup! sitting at the tip of the topic is good to Toon's eyes, then
-> I can squash it in and mark the topic for 'next' without waiting for
-> a reroll.  If not, please do send in a hopefully small and final
-> update.
->
-> Thanks.
+> This is buggy behavior since the user is never intimated about the
+> overrides performed and missing references. Nevertheless, the user is
 
-Toon, did you have a chance to take a look at Patrick's update?  Can
-we move forward by squashing it into your [2/2]?
+"Intimated" is the wrong word (also this is a rare form, "intimate"
+as a verb that is, at least in US and British English). I'd suggest
+"informed" here, or some alternate phrasing.
 
-Thanks.
-
-
->
-> From: Patrick Steinhardt <ps@pks.im>
-> Date: Tue, 12 Aug 2025 14:52:31 +0200
-> Subject: [PATCH] fixup! t0450: add allowlist for builtins with missing .adoc
->
-> ---
->  t/t0450-txt-doc-vs-help.sh | 17 ++++++++++-------
->  t/t0450/adoc-missing       |  9 +++++++++
->  2 files changed, 19 insertions(+), 7 deletions(-)
->  create mode 100644 t/t0450/adoc-missing
->
-> diff --git a/t/t0450-txt-doc-vs-help.sh b/t/t0450-txt-doc-vs-help.sh
-> index 980130be78..e12e18f97f 100755
-> --- a/t/t0450-txt-doc-vs-help.sh
-> +++ b/t/t0450-txt-doc-vs-help.sh
-> @@ -112,16 +112,19 @@ do
->  	adoc="$(builtin_to_adoc "$builtin")" &&
->  	preq="$(echo BUILTIN_ADOC_$builtin | tr '[:lower:]-' '[:upper:]_')" &&
->  
-> -	# if and only if *.adoc is missing, builtin shall be listed in t0450/adoc-missing
-> -	result=success
-> +	# If and only if *.adoc is missing, builtin shall be listed in t0450/adoc-missing.
->  	if grep -q "^$builtin$" "$TEST_DIRECTORY"/t0450/adoc-missing
->  	then
-> +		test_expect_success "$builtin appropriately marked as not having .adoc" '
-> +			! test -f "$adoc"
-> +		'
-> +	else
->  		test_set_prereq "$preq"
-> -		result=failure
-> -	fi &&
-> -	test_expect_$result "$builtin appropriately marked as having missing .adoc" '
-> -		test -f "$adoc"
-> -	'
-> +
-> +		test_expect_success "$builtin appropriately marked as having .adoc" '
-> +			test -f "$adoc"
-> +		'
-> +	fi
->  
->  	# *.adoc output assertions
->  	test_expect_success "$preq" "$builtin *.adoc SYNOPSIS has dashed labels" '
-> diff --git a/t/t0450/adoc-missing b/t/t0450/adoc-missing
-> new file mode 100644
-> index 0000000000..1ec9f8dcf3
-> --- /dev/null
-> +++ b/t/t0450/adoc-missing
-> @@ -0,0 +1,9 @@
-> +checkout--worker
-> +merge-ours
-> +merge-recursive
-> +merge-recursive-ours
-> +merge-recursive-theirs
-> +merge-subtree
-> +pickaxe
-> +submodule--helper
-> +upload-archive--writer
+Chris
