@@ -1,209 +1,170 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from FR6P281CU001.outbound.protection.outlook.com (mail-germanywestcentralazon11020105.outbound.protection.outlook.com [52.101.171.105])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2D22E9EBE
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 08:34:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756802087; cv=none; b=lPmQtUxVWMi3EJmkXMARA1aPGQMSXcNymVdec14R6ru4hDK1TN9wT/AqdyuZwQrcpUm6fU/5xyyDkVXx/uhV7lLLZJuPYDGjPIKLeqDnLirmEikDvJZcSq17KKWiRaHzA7zbDbSuPB2iIZNgfsl7i4UXuvTAyapT9JAEHfoPUfk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756802087; c=relaxed/simple;
-	bh=/3jkdz3WFLf7j4W2qdsl6IiU4zfi2c55QvWAYYf51rw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oDSrnKlBRFEhmZsHqZN7FLVyF1bDhnHxHbNvmsTWn+MeYDD4BUMV6Ci/jJMz5al/LUWv15sjy4MpYl5I9L2M5TMnCdBuYhkePz6Q1vjWlVvo8qUQl4SHaHQlz/3lPgwgJsAZpRzeqYzbnJOT7YhQhqH6sD4O8L5iRE3VM4uVlbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YKItPqyq; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YKItPqyq"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b0449b1b56eso104697466b.1
-        for <git@vger.kernel.org>; Tue, 02 Sep 2025 01:34:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756802084; x=1757406884; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uE1LBptDhczMeMbPC6NapSzySd7qpoo8etCiua8VLUI=;
-        b=YKItPqyqan0lIy/SvdtSxw2QSPYC7LKVw8AvyHo/h6r+afEKdsO8+3QK+x6t2PQ4Ab
-         BrstIk0WUHAhtRPijqxHQxFR6/Jhl9UDZZOHFcTolTTSkydAGpSuHnS3fFL3kL2V/fc/
-         ISkczg/hM2kyDXQGfylOcuvWyC6g5BurBnvM5Uw2L93TxngfDD/sJjz2OwiCaaIhou1O
-         fH6Ee8AsSt+ZFDkSHnoDzPVg3tCDqBC2QTSdR3RrkpU6BTcawyCTNKvSOfb18MXvQZw5
-         zrR0s9Z4qli4Hv16GKSbAdRun0dBBwOkW+dtLDp4xzrfaKa5NypXKWWYck/mYvuhNB1l
-         e8jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756802084; x=1757406884;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uE1LBptDhczMeMbPC6NapSzySd7qpoo8etCiua8VLUI=;
-        b=oxYSXM4KDzKDJRgHZ3iNtnRfxqrbOwVkqryRs4HGmXpU2VJAtHaxPRcyEXFzFuB4pJ
-         WxAtY3tZNKq97NoNwzJMlSuHDaaVnDGUtsfbkwiAn0RSXXj37hOzKYYtHAzVxHINyqS6
-         rTWF2u5ZYDlzSO2dUDY6ZAO5nISMD+Uj/qcQmuleJ91Ur0ftGJ8+AO2CYyVu2W44nnfj
-         7ejBVLcCFsekYlIg0OoIyzSIxJX027jkR+50T772jHufPidCU05cZcMFmPZfp3Y+0Tao
-         ftOcf+Cmz5HAdSPAyxqBid+b9G7RpfwvKzJDu7KbbHYndgGTrv9+yqY3YMQ9agBrJt9h
-         xo9g==
-X-Gm-Message-State: AOJu0Yw92Nh65hHU/5qalHjllPUVrYjrg6QRDQKgP/21TP4LRfrBEo38
-	yilih1ue67eB9hGpfeTIXGftxfvCNeC2e3DBgfR/DSqIZYLIAaVQYhOJ
-X-Gm-Gg: ASbGnctbUhgmOpXB227QpFd36XMFvb2yKwjK7HhgKhVYe2V+GOFFZIkBDp6/feGst+1
-	VZ68T4r6N1ODtL994//vAYjyEfDY62EwlVsCtMgguZSp6idVfWZoMkfJ5P54SdXfFGQHGKtseO1
-	kwb4dWxv2DYNhMRutknbd1k/SIk6/D5RzJFo/EH09rewc4v+/rDVwHofMQDy3ce0iNUR2AaklA2
-	brXnmmcbpjtIGhPfmOphXl9rWcxIY4G+ytAAjv+H9wJiH+kagPgxhJnsES7pM+6yZWtvkSDAay/
-	WwgvC2mtAn7aKLAqjn9cOKHaGbjkKAI7bKaw4RpepD7kwFdaipEbuHGnkk5jVBRE8zch7Gj8hs0
-	cP6iB5oG+UQfu5Xr67+ZBbJKPiDXOVLTE5qn7m1M=
-X-Google-Smtp-Source: AGHT+IGfA/IXjT7FPE7NuEBM7lVuG1u5nwsZ3FN8E9WB6WBdkVBVcbSRtyBBE/G0k5WjsXHNSK98iA==
-X-Received: by 2002:a17:907:7f89:b0:afe:d62a:f053 with SMTP id a640c23a62f3a-b01d8a322c4mr1028584366b.10.1756802083803;
-        Tue, 02 Sep 2025 01:34:43 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2455:8268:bc00:d13e:1f84:4afd:ec5e])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b041800e89esm594785366b.30.2025.09.02.01.34.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Sep 2025 01:34:43 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 02 Sep 2025 10:34:26 +0200
-Subject: [PATCH 2/2] refs/files: handle F/D conflicts in case-insensitive
- FS
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4212DF144
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 08:44:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.171.105
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756802683; cv=fail; b=TNR5D+mzkDbBc5UPVwF2fo8sf/zUrBJYT4VROYOOMmFI4/Cxxl1ZYD1N2bKf3hshZH86QAX+K2bCwnPIVXRc0HIUlH4/OLPt4qpuLzJ75mn19GhP9xytwg7ckOUfIJQrV4v06VQZqf+XWfE0d0kdaPFnxVgaODr4J9D9zoG7ocw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756802683; c=relaxed/simple;
+	bh=SRv/jDdgn2tFg+TbD13u3ztC2np+TEPenIewlamezeA=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=fOz/uMKSa+oRASRoe7Y4qllbTLLcKWwX+xbXFhP3QcgQgROz28k2YFAKsmvfuIdliO2/0M97pCBmdA8bU7tDcso/Ptgw9uh6CHLco+E1sYau1t8JCWqltJe4jSlTArWRhluwpJGgGTjYJOBBUU8hrhKtnZR4lhKjok+g+/eIZVA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jansen-preisler.de; spf=pass smtp.mailfrom=jansen-preisler.de; arc=fail smtp.client-ip=52.101.171.105
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jansen-preisler.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jansen-preisler.de
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fgBDkk0Q0cwa0X7BOa0QNRcOZj6Z6pLsuz037on9vn/u06zciJBU8PD+4gGH1OVTJ7leQ784G4QtaJFZ1RKQGKT2KJ4UXUZuqqlXp/W6qDn5scZlFJULhs4Ae8Lj3K6w26Lc5fj6QjB++9baFrJJFpWxxf3WpDSN54qmsC+nMW1FzdWOiFhqmxZl2qAOpeXUKInMZ9JesIbA6CIjQL9PBdCK3he83GS+MPfxn3bF4EClKmpRy26+SnB013w4Yx36L1un1UpRUu4ARg4+WGq5EByPnyJeSd7y+IBbB/7HVSPDWMv+JLcIHQpmug0VWfv+zBfo8Jo7END9Z1SlXeO+xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SRv/jDdgn2tFg+TbD13u3ztC2np+TEPenIewlamezeA=;
+ b=mn8nrulsfEMAD9b/ycpFDgf813ynlQ7aQycUmxEDy+XmByH//3bu7QYJ2jtaN1oQisF1m37Ue1SNpdUw9vMHiGKQcGsU7GW4VHeuAgxLfYZrRJiMVpYCdaPxXIiT0V6Y1VnYHXqdy7owHYHsPmgTeVZV0NuIlqgjrjtafwAgPKbnGMbgpQm2GCuMgK4HXXueGG8p464UqjCXQRiTe/v2/gyMHGiyA3LOYkebIcs94FSnbcxYlsaowmziv4hy6ewXjUAnggVoLOti24QOCYPTwfdxN4EWdqR219LgELNfCbQUce8GvEeFUBxadSpB6XwBEOv5SNFt9uw0eHnXLsc6NA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=jansen-preisler.de; dmarc=pass action=none
+ header.from=jansen-preisler.de; dkim=pass header.d=jansen-preisler.de;
+ arc=none
+Received: from BE1PPFA37683A28.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b18::67f)
+ by BE1PPFAA9F3EB8C.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b18::688) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.21; Tue, 2 Sep
+ 2025 08:44:36 +0000
+Received: from BE1PPFA37683A28.DEUP281.PROD.OUTLOOK.COM
+ ([fe80::1b4b:e3f3:ad3:f3e4]) by BE1PPFA37683A28.DEUP281.PROD.OUTLOOK.COM
+ ([fe80::1b4b:e3f3:ad3:f3e4%2]) with mapi id 15.20.9073.026; Tue, 2 Sep 2025
+ 08:44:36 +0000
+From: "mja@jansen-preisler.de" <mja@jansen-preisler.de>
+To: Christian Couder <christian.couder@gmail.com>, git <git@vger.kernel.org>
+CC: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>,
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+	=?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, Taylor Blau
+	<me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, Eric
+ Sunshine <sunshine@sunshineco.com>, Bryan Lee <hi@looping.me>, Lidong Yan
+	<yldhome2d2@gmail.com>, Seyi Chamber <kuforiji98@gmail.com>, Johannes Sixt
+	<j6t@kdbg.org>, Ben Knoble <ben.knoble@gmail.com>, Lucas Seiki Oshiro
+	<lucasseikioshiro@gmail.com>
+Subject: Re: Draft of Git Rev News edition 126
+Thread-Topic: Draft of Git Rev News edition 126
+Thread-Index: AQHcGsatsl/VkH3JNkS8fmE4AQJId7R/lhCA
+Date: Tue, 2 Sep 2025 08:44:35 +0000
+Message-ID:
+ <417d5e7725eac11750468f064e1e4f8ca06155c7.camel@jansen-preisler.de>
+References:
+ <CAP8UFD0Lh8caRsMV0nUB5Oge_hwLO_WWMAqxTqd8eY7mqwA-9Q@mail.gmail.com>
+In-Reply-To:
+ <CAP8UFD0Lh8caRsMV0nUB5Oge_hwLO_WWMAqxTqd8eY7mqwA-9Q@mail.gmail.com>
+Reply-To: "mja@jansen-preisler.de" <mja@jansen-preisler.de>
+Accept-Language: de-DE, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=jansen-preisler.de;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BE1PPFA37683A28:EE_|BE1PPFAA9F3EB8C:EE_
+x-ms-office365-filtering-correlation-id: 7f76ccbc-49f3-4d31-0125-08dde9fcf21b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|376014|7416014|1800799024|38070700018;
+x-microsoft-antispam-message-info:
+ =?utf-8?B?RW1DZ3VHWmIwR1JEVk5HM1V1T2JyQUZDVzRCWFZnVlBzZ2FSbzE3RVZ3cFAv?=
+ =?utf-8?B?cG1KR0NFT092eDdaZnRpLzZQcURWVUlaNVRoSEtsSjd4c1NxU1k3NlMwdDg3?=
+ =?utf-8?B?N3ROclBqWlJPV3ByMTJlb2VsanZLVUtndjVuaExVK05JMzRRTi9EOWVleUZn?=
+ =?utf-8?B?OTV5MitzZXZzb1hRTEQ2YTkvTmFBRDNNWFB3eWdKNXdPaUMvV2FuaDh2R2hN?=
+ =?utf-8?B?VjdEZk9LWldVblZJVG5mWVJhQTNsaFlSbHZKaEZWY09CS2RsbzJ0TGJIOTM4?=
+ =?utf-8?B?bWdFdnhWalpvOXRzbC9nSU9iS2l3TXhPRG9VVWxRM05xazE0M2o0Y1phTGIz?=
+ =?utf-8?B?YzBHTTBySUFmYU1qeDdHc2ZLc05JaDViRGVjQUkxRmhVWWZIc002S1VCU2ZJ?=
+ =?utf-8?B?UDVYMlV4VjRKNFpPL0RLVFVJcTNpRTNTRjRFSDFEakpBNmI3Y2lCWnFwTTFQ?=
+ =?utf-8?B?cVgwMnF2VVI3V0llMElOYWNoR01VK00yNmo3VXBCN1dvMjczaWl5TktJVU5T?=
+ =?utf-8?B?d2JZNEE1b24rK29PV2lmUklteFJWcFlCNlpyMHZJWUo3K0NJdWY2YTJZZk1D?=
+ =?utf-8?B?SlZIOHhqQ0N5NG0xQloxME1Jc0s4OFNPc0daZ2tsRWt6RUZoY3BEZmJ2QU96?=
+ =?utf-8?B?YVRwMEpnend2d09YODFxQkw3UnV1bXZyTGlrUHVIRFNGaE5sKzhmTmtHS3pG?=
+ =?utf-8?B?YUx6cElaZXZISEhWeWFPRWpyd1h5MzBTdXBPc1RxbENOL0htTEREZjViWlN3?=
+ =?utf-8?B?Tkw0VUtWS29JdWx3YTdMQkRtblRyT0xtTDl2RGI5TTkvZW84SlNOU2NKWnJ3?=
+ =?utf-8?B?ajZNYjBnSnFFbVZVSS9wWVdVbFRyMkdVVFZGMEVrL0VndkFFVktxQlVRVFo4?=
+ =?utf-8?B?WEh3RVFhZjc0NEc1WWFtUXIwRXJrc0dDajN5Z1M5cTFyeUhKaVorR2MzcTNI?=
+ =?utf-8?B?MzBLTXgxbS9icEZCRS9Nb2hqQlkyVXRsbnhPQ1ovek4wOStIU1VDV3l2akFT?=
+ =?utf-8?B?T1pYZ2JkUGgzWUt5L3dSNS9jZnVlRS9kVFpPWWQ3cElPRTUrQzMxVUtkQmlx?=
+ =?utf-8?B?a1dkOWxjUHR3S0JBUU1mUmlCSEU0dVk1bldLUHBmQ0t6Q1JhZW5qVDlkSnE3?=
+ =?utf-8?B?UHpGMWphZU1rUGFRNWhOZWd5Wm9aVFZFcVdia1BzczRwOE5CN0FGME1NcVVI?=
+ =?utf-8?B?TXpGWGxxRjZnTjc4RzlEWmxqMm9zTGI0ckhVSzlWZVVaNlJ6VlA2dVVHbkRH?=
+ =?utf-8?B?ZzhZR05HYVlEaGlyQjVqTUpCK3RibGNKd0JsL2lVenhQVi8va0NrNFI5eWQz?=
+ =?utf-8?B?MzFEak1yQ3l4S1VLUWhac3RnQUt1L1MzTUVjMWJnTGJZR1lHWTNSNmFhcFll?=
+ =?utf-8?B?TE04OUgwL1RuVDBQa1VQZ3pnQmlEaWN3bzFLR2JzcUxFMGVxU0srV1c0U0pW?=
+ =?utf-8?B?QXlCUldGRWZ6RjBsV0IvZitGK1JkUzZrZCs2WmEyVmtxYXZPYjdrb2grZ3Vm?=
+ =?utf-8?B?TTNDU1A4eWU2TjdNN08rWUp1QWpwdkh2bEtwQzFQdkl2VXVOSUxMRVRkZ2RU?=
+ =?utf-8?B?Y0ZBS2lDMGFLa3l5R1g3UkMzR2NlQlQ5RDRYSEVuR0xTTjA1NWJzNmpTWG8v?=
+ =?utf-8?B?MmVjMEdJeVZNWFhpMmp2akdReXdRZVJJMVpwSElJWmlFdFpQRTFtdXhEN01h?=
+ =?utf-8?B?cDE1K0VvVnRpVzdmZFkrZ3d0ZkErTnExZ1BkaS9Ja0VQZEQxcE1UdzNSZ05S?=
+ =?utf-8?B?RDdoMzY4VzN1VE14bGdBOUFIZWdrTzBhMXhkbFJQQi90WVkzSXNrdFkrbC96?=
+ =?utf-8?B?NDJOOFM4dTZkRWNGRktyLzFBalRHZ2czWU9iaDM5cDJOL3NxSXFTNyswb3I3?=
+ =?utf-8?B?TUsrbXFoWVJsSkVpU0Znc1gzWU11ZE5CaGNKaGRpcFRLNGJwS0J6OThSVzZk?=
+ =?utf-8?B?dEMzZ3R2SVRRU2tlQmxWU0hKU0FBVC90TTRoMnloTFRRV2ZHbE5Jd1A4Vy9w?=
+ =?utf-8?B?NldQbkltMThnPT0=?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BE1PPFA37683A28.DEUP281.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024)(38070700018);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?Q0JrMDN2WnFlY3dHaUNrRlV0ckZnZDhkSWNMNkh5bnZ2SXhHdTExSTMvMGRI?=
+ =?utf-8?B?NERHTVRmeFpVenFTZzlOV2RFT0p1V1EzbGpXb09sd012ZGx4ekpJWW8vTlIx?=
+ =?utf-8?B?ZDE0SnRnOGFYNTFKSzBTekVOdldKOTJGQ1FDZCt5WGNEQldOYjRvdk1pU0sw?=
+ =?utf-8?B?RVJ4MERmR1VocVI0aHliR0lNTnYvMXFTQmNWbTkyck1YcE5kRVhrUVhWRUhB?=
+ =?utf-8?B?ZjBqa3F4b2d2WnZ5dFN2Nnk0VjB6bUJUUlhSNVg1Vm5tY283dTVlSWRxQUlt?=
+ =?utf-8?B?ZS9ZVmFLU0M5VUpCTXd5TW9rUlI3cDZmTGpQWld5aXVuQ1JubDRtUHhMN0t2?=
+ =?utf-8?B?S2RsY1hUN1J0WTdVb1hubHBETmoxOXF2WVVlZG5tUldCUmIzNFpOWkZmYXRn?=
+ =?utf-8?B?M2tsRVNrZW5Pang5czlJYVZRT01adkVQMUFhdTlYdHpHS1QrREJDTUdEeGJr?=
+ =?utf-8?B?SlN1TlpoR2IwK3lDcEZnbDV1YmZlVEMwZEJtYUE2MnExTFl3Q0preEwvemtl?=
+ =?utf-8?B?dVFubXVDRlVzSWYyOWFzM3h6aG9ldnJOZHhGU2U0VGdheFVadlRlTm9WWkhG?=
+ =?utf-8?B?Yzd4TkgvRkloS0kvdWVRcUhJRWFvMHB4ZDcxdnQ1MTdlYWE2QjFFMHBwVENU?=
+ =?utf-8?B?WHRWTGVEekxlZU42YXFWYVdaOTlVQWVhU2lwK3hLSHlDVVY0Vzc3SFJkNUNS?=
+ =?utf-8?B?YUF0c0RCNC9BMHFlYmJVcHg0QXBzYWJBYU5ONHF5UDZmZ2F0MXExeEFaNjdG?=
+ =?utf-8?B?Mm1wdkY5WmRUNktKd1kzUTJyWjEyazU0S3Y0NVZVdjJFVmVMdWxWTUF6NXZr?=
+ =?utf-8?B?amZsbFpDa3NNb3phUU1tbytVMDJtSGNjVHkveDR1V2tMWVlxc3MySlhCN3Bq?=
+ =?utf-8?B?aTBwcEp5N3dITjloOXBkSjJrU3FJYkU3QkRKTjNiTU9CKzJTb0hRTmdWZGpJ?=
+ =?utf-8?B?MDhrcjVKU2JIRmZhYVc5bnZuM2ljTmsxalRsV0tnLzNVMnNxZFo1M0RPYnlE?=
+ =?utf-8?B?Y250TURFdndsMGxjMW5jUkJhUml0dmIyWG5wcTBXZy9iZ0txcjgxZ1VRd3BJ?=
+ =?utf-8?B?MnFtZUhua3gzUVhCK3VzYmZXK1NETnZRRG4xQkVobExObDdML1hEaWdYT2Iv?=
+ =?utf-8?B?RUxNOGk4aHNtdi80dTg2OUt4NDgwVUcwS1pGSXo5R2xOUzFFWmdaaHZEMGJr?=
+ =?utf-8?B?LzY3U3BQU1grUHk3UXdaM0x3MzV6a21pczkrSm10V3hpU2QxOWw3NXdXN0Y3?=
+ =?utf-8?B?TDJ3ZU1CQ0FUYjNQVlp5TmdjQXUvRUhYNW9PNTV1SmtJRXJrVmdMZzVNNHph?=
+ =?utf-8?B?Mjd3MlU1aVNscFJaNnFXN1dJWi92VHV6UkFSdUFONXMxdFFRWkMwK1Q0WEtH?=
+ =?utf-8?B?WWRreWdId2RtRkwwbTVMRzlpeHp6eVVTNjdxMGhzVUs5Y2FMR1lXVGJsM2lv?=
+ =?utf-8?B?TG81Nk1YNlYxc2xKaERyNDRKbzBpUjNrL0U4dzFLU09XaEhaKy9odEliTE96?=
+ =?utf-8?B?blVONldkRi9VS3htRlVpS3BVblpVQXY5aVFYdy9leHkzSzI2QzZqeHFvbDhN?=
+ =?utf-8?B?NTlPa0dobDhlb0pjZ0JrT3F4eEpHdmQxQVlKdHE4TWtUN3JtTlBnTDQ3ZStZ?=
+ =?utf-8?B?OUxPZUN6Y0YzOVR4OTkxNmx6eW8xUFRtNGZ0N3MrMkhjSTV5NDgyQVpWcW1H?=
+ =?utf-8?B?dGxFa3BtcnU5VitpZDNGNXNiaktvOUoxRmNTTXpwbG9nb245d2xUTnRXVndM?=
+ =?utf-8?B?empXbkl2SEdiS05vdzJ3NkFhZjk5b0ppaGNwTHBzYjJCV1JGMDdyOHN1VzZo?=
+ =?utf-8?B?K0tJNysvZktsTlFDSVBwOG1ZQmFnTXRQSTExallSSlRxS3padGlGMHF5aG9u?=
+ =?utf-8?B?U3FhaHJHUEZ0RnBKK0p2TVF1Q1lYTnhlQUhna1VvTklJVGQ3dzVzN2cwR0li?=
+ =?utf-8?B?K1BUOS92MDhoWFBQWHlQOHYrcEdOazRodkVDOFk0REhPZStOWWxYWi9BclFB?=
+ =?utf-8?B?VnhrWjhSU052dzhBbHBpa3RUUjArR3VmSzFtK2VCaE1WZ0kxMHA0Njh3OWZM?=
+ =?utf-8?B?eVRsdE9YeDFBSFczVTJRT1QzUGJuekFLcnRXUUw0TmpQRlIvekljNzFIb2x6?=
+ =?utf-8?Q?6bRghQo8RZy6QlJ6+YW8gJJYT?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <1FCA0D20C0B55E43AC192AA1BF863507@DEUP281.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-2-35e69bbb507d@gmail.com>
-References: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com>
-In-Reply-To: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, joe.drew@indexexchange.com, 
- peff@peff.net, ps@pks.im, gitster@pobox.com
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4323; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=/3jkdz3WFLf7j4W2qdsl6IiU4zfi2c55QvWAYYf51rw=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGi2rCAE3MeyGi+AGgM4ShkOPrz4DrxTjZOCa
- u6pVQ4MAYLwC4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJotqwgAAoJED7VnySO
- Rox/a50L/iCfSDk2E1m9aG1ktomzBrRL4nfMa9XFSkF5WUKE2T1gIU++tYjaSCAecFyk5iwX8h7
- I/a8lxTRrP/QKqZRdHn56VQlOgpKKvlebM3zL5HJkc03x5E3F4rkYRQGn3q0rVbCvG1udQpDCKn
- NOEP5WCgi3IrtveZ0LA1Ub8Um5oo5mvKuSI4kG2Ay2Da/XmAnqxNPBwXlipgyJeeGwZ0/pzz33H
- 4A4D5Dr66u7w8X3+AKYBcEneCVGmxnV2pw5/Rqx8BOlgTlSvRos2wl2iegNq/T3zyYWmZiH0u0z
- 6cqcfCylccs9SmZRAjArnmOWnRZVoZKpTdsb5wKcVgWlw9rrcbhv7XMRQOpZVPoS6S16i2R7xQC
- SPqoL+iHOapNjEOwE8TwJQvcSjppRH5IFloCzXt5dPepQF/tePHvboGmsN7KQO5yQ6m56N//p41
- aCraTIdxxe2pntCCaXAEZftXnaiv2u9fCFz3VFoi9xN3BdYERyl0fXcPJfN+9N4oaQDz4TcZbk4
- tQ=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+X-OriginatorOrg: jansen-preisler.de
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BE1PPFA37683A28.DEUP281.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7f76ccbc-49f3-4d31-0125-08dde9fcf21b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Sep 2025 08:44:35.8958
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bb24b2e4-d1d1-4e9e-a276-0d90427a6a9e
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 5rkDqPkUzThfLAJdV296pAtT9zK/ud6OCa+ynovWxRKUnhvYn22jROhM8qp6bSCkUHPk1dQEmDGundAhWdgtvg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BE1PPFAA9F3EB8C
 
-Similar to the previous commit, when using the files-backend on
-case-insensitive filesystems, there is possibility of hitting F/D
-conflicts when creating references within a single transaction, such as:
-
-  - 'refs/heads/foo'
-  - 'refs/heads/Foo/bar'
-
-Ideally such conflicts are caught in `refs_verify_refnames_available()`
-which is responsible for checking F/D conflicts within a given
-transaction. This utility function is shared across the reference
-backends. As such, it doesn't consider the issues of using a
-case-insensitive, which only affects the files-backend.
-
-While one solution would be to make the function aware of such issues.
-This feels like leaking implementation details of file-backend specific
-issues into the utility function. So opt for the more simpler option, of
-lowercasing all references sent to this function when on a
-case-insensitive filesystem and operating on the files-backend.
-
-To do this, simply use a `struct strbuf` to convert the refname to a
-lower case and append it to the list of refnames to be checked. Since we
-use a `struct strbuf` and the memory is cleared right after, make sure
-that the string list duplicates all provided string.
-
-Without this change, the user would simply be left with a repository
-with '.lock' files which were created in the 'prepare' phase of the
-transaction, as the 'commit' phase would simply abort and not do the
-necessary cleanup.
-
-Reported-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- refs/files-backend.c | 19 +++++++++++++++++--
- t/t5510-fetch.sh     | 20 ++++++++++++++++++++
- 2 files changed, 37 insertions(+), 2 deletions(-)
-
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 9f58ea4858..466cdfe121 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -869,8 +869,23 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
- 		 * If the ref did not exist and we are creating it, we have to
- 		 * make sure there is no existing packed ref that conflicts
- 		 * with refname. This check is deferred so that we can batch it.
-+		 *
-+		 * For case-insensitive filesystems, we should also check for F/D
-+		 * conflicts between 'foo' and 'Foo/bar'. So let's lowercase
-+		 * the refname.
- 		 */
--		item = string_list_append(refnames_to_check, refname);
-+		if (ignore_case) {
-+			struct strbuf lower = STRBUF_INIT;
-+
-+			strbuf_addstr(&lower, refname);
-+			strbuf_tolower(&lower);
-+
-+			item = string_list_append(refnames_to_check, lower.buf);
-+			strbuf_release(&lower);
-+		} else {
-+			item = string_list_append(refnames_to_check, refname);
-+		}
-+
- 		item->util = xmalloc(sizeof(update_idx));
- 		memcpy(item->util, &update_idx, sizeof(update_idx));
- 	}
-@@ -2796,7 +2811,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 			       "ref_transaction_prepare");
- 	size_t i;
- 	int ret = 0;
--	struct string_list refnames_to_check = STRING_LIST_INIT_NODUP;
-+	struct string_list refnames_to_check = STRING_LIST_INIT_DUP;
- 	char *head_ref = NULL;
- 	int head_type;
- 	struct files_transaction_backend_data *backend_data;
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 57f60da81b..84dc68e5f3 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -53,6 +53,12 @@ test_expect_success "clone and setup child repos" '
- 		cd case_sensitive &&
- 		git branch branch1 &&
- 		git branch bRanch1
-+	) &&
-+	git clone --ref-format=reftable . case_sensitive_fd &&
-+	(
-+		cd case_sensitive_fd &&
-+		git branch foo/bar &&
-+		git branch Foo
- 	)
- '
- 
-@@ -1546,6 +1552,20 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'existing references in a case
- 	)
- '
- 
-+test_expect_success CASE_INSENSITIVE_FS,REFFILES 'F/D conflict on case insensitive filesystem' '
-+	test_when_finished rm -rf case_insensitive &&
-+	(
-+		git init --bare case_insensitive &&
-+		cd case_insensitive &&
-+		git remote add origin -- ../case_sensitive_fd &&
-+		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
-+		test_grep "failed: refname conflict" err &&
-+		git rev-parse refs/heads/main >expect &&
-+		git rev-parse refs/heads/foo/bar >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
-
--- 
-2.50.1
-
+U3VwcGxpZWQgc29tZSBmaXhlcyBhbmQgcmVwaHJhc2luZ3MgcGx1cyBCcnVubyBCcml0bydzIFBS
+ICM3OTQgaW4KNDA4YTIxNi4KU29ycnkgZm9yIHRoZSBsYXRlIGNvbnRyaWJ1dGlvbiAtIGFzIGFs
+d2F5cywgcGxlYXNlIHNjcnV0aW5pemUuIAo=
