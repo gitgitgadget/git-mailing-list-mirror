@@ -1,197 +1,114 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E1A1A7264
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 20:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75CC2E0909
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 20:33:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756844901; cv=none; b=q7dfIsp6HyS37GRl3Ctzylby2RdCexv9ozMcirp8FERn3lkswTDSeG0U/tE/q/a/SuNwnUabd0eoBRrWw5cQN1vWq/Le82J5XGpXTuBwJY0R/jpal5Tj3ZvlXH03iwQs9H8BASBCb/UTFpDKPce4tJJuiUaLDmRGvTQ3B3mh3WY=
+	t=1756845213; cv=none; b=e4uVC58uaO7Ko3lBUQuBykgeqOk+r5ae5Hu9My13BSlu+R2+ZQsrsz1hKFPaOWLw4JLHYS7aefeSMez3L1TVMJLvDT74GyUDJ3GkEcgB6bSr56sn653nJyAfCh3/A0IgIl4b7ql7zVcZ4RPcyVY5GeB0OJ/0BuzfPsPjF+Xi+rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756844901; c=relaxed/simple;
-	bh=qs4C9hjbdDE25RRCXzbASxYJpxRzrYl7CWA5G7Jo1EE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=sdo2e4ydUDViEn298Po+pnegwkgfnhMP4GKeGubBu8ppHrBqymMaVc3JfHC+LNKKBxbS3S8Xp7gflF4XqTzmhLdnnLB56yszNKnO1PL3+gSYU/DPG2LIVDAbkJL8RHj85cl/2Mktq3KVoqQjSQkw77/NhM7d5EKjVNqnZXvxxoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ifA4DdgT; arc=none smtp.client-ip=209.85.217.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756845213; c=relaxed/simple;
+	bh=2VK3GWs773qC9gPCmquQwAT3bo9nPgcJBPfPrfBNyaE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TCQ8ZvzT5Nm3s5gIhLum37sEgcu8LZ3IHYUN9o5LCXvazFZExjDwsA8pjX6fZ4JoQO8IBlVYN+2atqiw3lMTiB7eBGth1u7IPWqgxrqMEHrkZrnnKU+Df9ArEjtaVejiW+Qpx4k3G2aApRG3R1DZzcq3GCici3f1nOR1sIlhBE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=30JdBSRO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XG1OhweN; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ifA4DdgT"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-52992b299feso1143431137.0
-        for <git@vger.kernel.org>; Tue, 02 Sep 2025 13:28:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756844899; x=1757449699; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qs4C9hjbdDE25RRCXzbASxYJpxRzrYl7CWA5G7Jo1EE=;
-        b=ifA4DdgTheC6useM47ZarRDPhdhz3uHRv44dcng4B50tcXmThfiw5iifB4Pg6cNHO0
-         d4K0FgYFiArv99POljqi3AHaTOzLIgLQBQLqtnDqCLmpoOT78Xmbwj7/rJ2Ek2h1Ui8/
-         I/VP2u8Hoh2vYIYdz6yV7lHqpRAOuDbjbR9npXO3j4g9F85xYnwiAJ/6bqLs4XFYfcaL
-         7WHX3i/bRIUZ94pZcPvZ7mM20tGW7m+ajaDiAL2OnWiramPJiPNfEdjCKrBXOn7WiDol
-         nRMLNfn0M2wP3naYpkUX2fMLzYsDqQ8quueB2mN7o6gVorvDtIG5D8+0k6Eac9BtLeH5
-         FrJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756844899; x=1757449699;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qs4C9hjbdDE25RRCXzbASxYJpxRzrYl7CWA5G7Jo1EE=;
-        b=Biql3UWfdZhovesfIFkHQ/DBn0zjVChPrXTiAkVdtbHKCU3qlrIzJwn/l04EFv2scT
-         zpCSVLw3sKN20+GlBfuRDF+AxKDpNQ2CyKZ/pBlo87a637v//aGb4YzOUbFrNzhfRUpj
-         yt9xdBHHYqDaiCxqJ7k7ZE5LZb2xBj4B3Gbz8a8tytasd8IrGzTxl60H1TwYe6Wd4tLh
-         U9Fy1pshG2XS5T23+8QIJA313TNH9NPh2SbVEz2vr9g6xU+sgOvmG6v+NK+wfL4uY4sH
-         8wsBh7Nsj+YjvkWhAdbZKDyWevN8jMNiX6hWejkgn8oxsnXptwjofHVI34mCeOaAZck9
-         C0OA==
-X-Forwarded-Encrypted: i=1; AJvYcCVEEdNQgzACol2zFDYsnRpn8weKzwu4rxGfMVjFFqzdic69l2EgZrV1FmKu7VVaPpRmw70=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6WSVvK4XZS+hYbEr69lHwd1OjqcKYgRLVEKSvxUjTmMU9Phhq
-	qpyyOkykdA0tYYG+BpJFVk7IpD9MSivHk+lBgqVlsDjr8S14iKFDyorWLTfESDSF17NVf6hkr+X
-	w+WDzTHHI/2j/wZTzW4fWs7RiqQkGBfc=
-X-Gm-Gg: ASbGnctWSeaUv4tBIck8+4T2cJeIuGv1z8iNJ87N1EkO7hCafVe7mKoHY5LN51Q6meO
-	5OQ9vID3IsDCDnD3JL9KOPFEOA+V6NBVFLbFRv4NC+hq+gEXlZxU7qdRqo4stxZWNQJqaDpiw8N
-	abPpLm9bFZFXMSqsoj74S4XcP0/K+iFKUFtZPepxjX/l5HulXK0v6nriane49s3JA+CFifwceIa
-	Dre8ID14KwOp0K5KHmhb/S7OsvT0+e5JXECOhvV9A==
-X-Google-Smtp-Source: AGHT+IECU8b9AfveeT1GlySEhojqaYtPPFUvPZDMYdMKvWEJ+H0UXxmZREl5SCheajSja6+gqUKnjvYTHrePM1um9BM=
-X-Received: by 2002:a05:6102:5a8c:b0:525:471f:de14 with SMTP id
- ada2fe7eead31-52b1a37bfcemr3824464137.13.1756844898890; Tue, 02 Sep 2025
- 13:28:18 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Sep 2025 13:28:18 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Sep 2025 13:28:18 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <829c6e09-c834-461f-820d-981512a02a76@app.fastmail.com>
-References: <CAGAx-2Ac2Tt4-jTH=AApK3m=U7d2RJBaTW=uX6jBHzmpWU9NYw@mail.gmail.com>
- <829c6e09-c834-461f-820d-981512a02a76@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="30JdBSRO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XG1OhweN"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 936101400112;
+	Tue,  2 Sep 2025 16:33:28 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 02 Sep 2025 16:33:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756845208; x=1756931608; bh=S3wtZq6t/2
+	cJxBbaS1ou9HsYcDJahiuctYTqGNoqVNs=; b=30JdBSROcvNr01KRGsC7v/iSD4
+	WBB9L7RMH+EHs5EJA1FwnneXV6spTYplJGU3aowiLy0lrqAB2VLaMEyd0yUvNhxK
+	upIfZaTpT9CtE4RbfVSSQrYDVqfoeezatcyh9seXiTtyAXhnaygDQe3J3WdoXulI
+	9NJepNWwh7eCEEuThQsZVoEfsLZ27JUrmi8fMofFdiBosuP7ZiLG59wMxtJTZPcq
+	O8cLi18TDNvb77iDB18D3Wx5X4ecgzw5Q+rGeJkAMGctC+X7k1jeCjNI8wjc5kHn
+	+5uC2DTBo2LWB8MnbRxuMPxNtam6baXHZFMRu3iMLuHB72JLrQkbLRvuArZg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756845208; x=1756931608; bh=S3wtZq6t/2cJxBbaS1ou9HsYcDJahiuctYT
+	qGNoqVNs=; b=XG1OhweNjJHIDmMqpXsHbtfJTCUYERhuSURtgmzbB17Xw2wwLNl
+	r7AM+D6Y3GkUXpG16mT4oM1xPgW2OCu1PNfj1V0IjVCHJsf2jskG9QVROXIjX9BE
+	z9TF9cA5U20ckz32+T2LEoRbmico+Gx3U9a9S+Xi07zGgbLkYtGCH4YQ1muLcU1+
+	eDADbK6P2ZF4NeiOQBnT+J0WKOJ1hLxz1NfN3/gj1EBEWipeVqNbwk6+Heo4bndK
+	uKKISlKGXJBDBEy7qLlYIKlhc2Jjbbn+WVwnoDXrcCla/cIKAEJOFZsmeALsVBpW
+	5zq4NRgAIUV7hp9Zde/eCB26NHkZHeiw0Aw==
+X-ME-Sender: <xms:mFS3aKTItaFBLqBZFHEb9pXqnhoIVQ1zdvbPxxUW2ZhMz7QEpyzZZQ>
+    <xme:mFS3aDDOV5COrxCE0jW2g-BqlX_3qrWBft54QnHipgfnaV-5evk5KaIrfSC7JP3W6
+    QtNjuL4JQlBtfmhiw>
+X-ME-Received: <xmr:mFS3aBRurPVeBmneVNSp47HDWrR28Jo6YSLFU_yqfMZaxIL3SjIqCTsRp4H--OJnI-WD0FHxdZvumdZttJtNJmWjZPCKenrGXHS-Pzc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtre
+    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffue
+    efjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
+    gtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjohhrghesmhhl
+    uddrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:mFS3aBpSIsInHALtIWTz_pA5SYvOsBO6HVeWGjvlhDVXwpFZWVxnhw>
+    <xmx:mFS3aDzS6cQ7UbqfPIis2TpZPF1rJcUnPobAXn6EAv1eyvKiMxKW7g>
+    <xmx:mFS3aGJ1ky_bfByZAr0Imgq-CxsgMYrlJmXJg5XTgvr4TDexlTnX6w>
+    <xmx:mFS3aFLHxVJyMaufYUhQmDFMSsNH93vVkxH2fr9Fn_noHZ_h_NyEow>
+    <xmx:mFS3aClxr1k3brwhmJKbatqLsQuxcVKfuN-7-jvhaitpc7iMvNC-vThd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Sep 2025 16:33:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: jorg@ml1.net
+Cc: git@vger.kernel.org
+Subject: Re: Still using "git whatchanged"
+In-Reply-To: <6597b201-8087-462e-adc0-0ddaa8a7402e@app.fastmail.com>
+	(jorg@ml1.net's message of "Tue, 02 Sep 2025 19:38:31 +0300")
+References: <74c5f07d-6376-4787-a5e2-bb09abc58ce1@app.fastmail.com>
+	<xmqqcy88lsw3.fsf@gitster.g>
+	<6597b201-8087-462e-adc0-0ddaa8a7402e@app.fastmail.com>
+Date: Tue, 02 Sep 2025 13:33:26 -0700
+Message-ID: <xmqqa53cioh5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 2 Sep 2025 13:28:18 -0700
-X-Gm-Features: Ac12FXwdlmSjvwIxt4mrEN3d9P2BvHczJxZjfpN3HgLe9NXBJ8p66jxEZaTe9B8
-Message-ID: <CAOLa=ZQZL3hZE_3ajCAA5=41PZLAVOE=rnPJexu4nPGibNgvRA@mail.gmail.com>
-Subject: Re: Git fetch Failure
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	=?UTF-8?B?VGFydW7jgJDjg4TjgJE=?= <tarunramsinghani@gmail.com>, 
-	git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000001fd8f2063dd754f2"
+Content-Type: text/plain
 
---0000000000001fd8f2063dd754f2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+jorg@ml1.net writes:
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
-
-> On Tue, Sep 2, 2025, at 16:08, Tarun=E3=80=90=E3=83=84=E3=80=91 wrote:
->>[snip]
->> What happened instead? (Actual behavior)
+> On Tue, Sep 2, 2025, at 19:29, Junio C Hamano wrote:
+>> jorg@ml1.net writes:
 >>
->> Git fetch failed with error
+>>> apart from what's stated in the subject, I think it's not logical
+>>> to use "--raw" when I want to see what has changed.
+>>>
+>>> "git log" shows me the log. What's the raw part about wanting to
+>>> see what's changed?
 >>
->> error: cannot lock ref
->> 'refs/remotes/origin/users/ajya/sqlservermoduleimportM146': Unable to
->> create
->> '/Users/admin/Repos/tasks1/.git/refs/remotes/origin/users/ajya/sqlserver=
-moduleimportM146.lock':
->> File exists.
->>[snip]
->> [System Info]
->>
->> git version:
->>
->> git version 2.51.0
->>
->> cpu: arm64
->>
->> no commit associated with this build
->>
->> sizeof-long: 8
->>
->> sizeof-size_t: 8
->>
->> shell-path: /bin/sh
->>
->> feature: fsmonitor--daemon
->>
->> libcurl: 8.7.1
->>
->> zlib: 1.2.12
->>
->> SHA-1: SHA1_DC
->>
->> SHA-256: SHA256_BLK
->>
->> default-ref-format: files
->>
->> default-hash: sha1
->>
->> uname: Darwin 24.6.0 Darwin Kernel Version 24.6.0: Mon Jul 14 11:30:29
->> PDT 2025; root:xnu-11417.140.69~1/RELEASE_ARM64_T6000 arm64
->>
->> compiler info: clang: 17.0.0 (clang-1700.0.13.3)
->>
->> libc info: no libc information available
->>
->> $SHELL (typically, interactive shell): /bin/zsh
->>
->>
->>
->> [Enabled iHooks]
+>> But that is what "git whatchanged" gives, so when one is so attached to
+>> what "git whatchanged" does, "--raw" is what we cite as "compatible"
+>> option.
 >
-> It looks like a casing issue caused by `default-ref-format: files`.
->
-> ```
-> $ git for-each-ref --format=3D'%(refname)' | grep -i sqlServerModuleImpor=
-tM146
-> refs/remotes/origin/users/ajya/sqlServerModuleImportM146
-> refs/remotes/origin/users/ajya/sqlservermoduleimportM146
-> ```
->
-> You could try
->
-> ```
-> $ git clone --ref-format=3Dreftable https://github.com/microsoft/azure-pi=
-pelines-tasks.git
-> ```
->
+> My point was merely that IMO "raw" is not the best name for that
+> option. When I specify "--raw" on the command line, I usually
+> expect the program to output similar data than without that
+> option, but of a less refined state or kind.
 
-Yeah, so the issue is that using the files backend on case-insensitive
-filesystems breaks since there are conflicts due to references with only
-case difference. Before 2.51 we would simply overwrite one reference
-with the other _silently_. With 2.51 we use a single transaction for
-reference update and this breaks.
+Sorry, but you are 20 years too late for *that* party.  Once you
+invent a time machine and go back 20 years, you can advocate for
+different name(s) that may fit your personal preferences better
+there.
 
-There was another report similar to this [1] and I've also pushed
-patches to overcome this issue [2]. But with the files backend, there
-will always be a compromise.
-
-So like Kristoffer suggested, the best path is to use the reftable
-backend, which can handle different cases in references.
-
-[1]: https://lore.kernel.org/all/YQXPR01MB3046197EF39296549EE6DD669A33A@YQX=
-PR01MB3046.CANPRD01.PROD.OUTLOOK.COM/
-[2]: https://lore.kernel.org/all/20250902-587-git-fetch-1-fails-fetches-on-=
-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com/
-
-> --
-> Kristoffer Haugsbakk
-
---0000000000001fd8f2063dd754f2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 82a935bc54433366_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pM1UyQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNFFLREFDYkVleHV1eEZ0T1NBYTAvbktDVnFrSk42aAo2VWQrV2R0c21G
-SndCSzVaeTFXZHp3UnVMa2pJaVBWcHBIbWxYRHQ2M3hVOGRqM2VyVnBrU09tV25XRTgwU1ZmCmM4
-MmJSQ3Q0WEJaaHlWbVV0YnhYMGZlM2dGT29FR0pUUjUwU1YzV004U21hSDBPcStab0xUcDBRcUcv
-c1dmUWYKSjM2azFQSTB5QWdXdW40MFNjUUV1WnhLTTFFNEJwdUdWdkk3bmV4aGFIR2cvRnRsK2FQ
-YXRONGFWaHh1ZkNCcwoxdCthdmc4RU5aWU9HSEM1dHV4aW5EVmVhcWRaaTRPbmtCQWpJcjNIcjRP
-bitGQjl1UE1yUnFpdFArOWpJemViCmppaTdEQjFpTnZvLy9rSGptM2lQT3BBQXpER2hyUFc2OWwz
-ZmVsMXBhbitmOFEyVXVqWG9wN1NVRnp4UlFhcUcKYWdwNThhWTJLRldHTTU1ODhJN2VKU25mLzZk
-SHdseWVPOFpUVVFUTVpaaHdFOGw0S1VUbGdSZmthZzNrR3lVbgpMUmZVakpmYjhJSjNKbVdZUzFB
-Nk9ZYXdUekZ2RWhvemowdWxVWnhZU1laSVZWUmVkUzIvb1BsTzFxa1VwZE5pCkZ3SXdsZ3VwTVV5
-bWdqd2M2Qkh1L21PdlhadDhYTXMrMWJhcmdsUT0KPWEvbmMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001fd8f2063dd754f2--
+But not here and not now.
