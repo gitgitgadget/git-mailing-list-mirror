@@ -1,74 +1,73 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB77341AAD
-	for <git@vger.kernel.org>; Tue,  2 Sep 2025 17:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A01205E25
+	for <git@vger.kernel.org>; Tue,  2 Sep 2025 17:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756833286; cv=none; b=jFrsX0mGYXjbNWkW6l7nk/EGEhgKH1LvG8BruewnoGFoqxAGHS6uY/+lipXGKv2Tx0z70h9UYiU7FY7vek58PI8SsdGpJ/R07lw3geMREJc7YVvVdtkN8AlR/8lHyw0Fdy4iZruAhX7ZViJJR6WpDu76cCIaUeKjYKzVp1SQ3R0=
+	t=1756833436; cv=none; b=gkFzoLkSuYebVWBLssL7tLJs9rjr50O0X2dFiI5yyGXUQsyqf2E0mast37Ds1E2+NHPEUA9sVaQe0tuu+mHOpYPkAoHHLNxk1dJ46UbRKryGfnJUnWPiBNomOlAD3TdbIjcqvkwHamvXgFNAKnCdrMRoyDeQnJsVjMjk4iKKaGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756833286; c=relaxed/simple;
-	bh=JUsENW1XE42q9HG42Bqr0JFM4DawELudw2+ydFiai7Y=;
+	s=arc-20240116; t=1756833436; c=relaxed/simple;
+	bh=TWQOu7LcB352DOvlP+mBmaksyhVK9iSU5fmoPmDnJAM=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=AfJVy+O12CCWlgPCjFXQVgzydnDCIjV5s7hCJAp4neZk8ZMDvcqCmyl8+8c1epkhqcZhwCaU4w7/JWki6ey3kkB02DkJv6EJg6GiaKyWquncKgIR+1ubZK+0mZbNfpctT/xeWvYLilXOzDWDHIT6SPUph4mcOk392Q5h0qyCXfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=JHVYS/Tu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bJD/z0P7; arc=none smtp.client-ip=103.168.172.153
+	 Subject:Content-Type; b=ayjEIcIQAQtuMx26jrBKoy1x15G+Jf0/HKaNE/xy+gcMRKctSEAlKNUpGKcCjzKBIAg/mVvkDN4FIsnYKZeG2Ff/FjN6bwtYOseE/1gvdlavcpO0AeAbbyAgL7OtGjRx5t/6E9+3RRU5MyvIMOFPhlKnCCSf5mjTKU3032mHEM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=iB6z9nW1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dD3ZuYYy; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="JHVYS/Tu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bJD/z0P7"
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="iB6z9nW1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dD3ZuYYy"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 648DB14001A6;
-	Tue,  2 Sep 2025 13:14:43 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B5C67140019F;
+	Tue,  2 Sep 2025 13:17:12 -0400 (EDT)
 Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Tue, 02 Sep 2025 13:14:43 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 02 Sep 2025 13:17:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756833283;
-	 x=1756919683; bh=NWWLfqjX5DbBSQXLWGICmvbGU4at7riDtRVmwo8x4jg=; b=
-	JHVYS/TuG/yeMoaM6NdfsBoIrVNNKe+IKoEC6IX9+NkIROEl7aNrf++4ahqryeiL
-	J+gc4LEFAmAGTyD0AaVimA7y0bRt+CQwddNw8+HzFseQXWDA0Fr2H1bZh75etL6M
-	lTdB6GOUNnsKWkA/vx/WaMxPBXojOpUvH2zRwFbpWYvPgulnVDmc4XXr7MP3XHys
-	B98S/+UAKxSM9Hl2MGvNlIq1dC4EjdUHk9PNKqTOQgSafF/A4W8jH+54sZN4tJM+
-	mci1htiOUc4h0WimwOxexNkPiqorvdgQYEh1j7J7z44L8Sgek8BiMbCfILL1Buiy
-	za6sBA6PaGzul7slN3zNTg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756833432;
+	 x=1756919832; bh=563vlCekje5STBT6nGaaHoFzo03ewsSo2FbJRPUWZ6U=; b=
+	iB6z9nW10lPDO4DR9pf5AEw7HGHya5rUNgHEIwGDybCoxCVRGuB1xcS+VfZaa1r5
+	fyzK4vvXCqRWxpyRTgKK1ioRA3LfTWDIrGO0zr7CEAe/DdiYTmG+7XfDUdD9xQpj
+	TkJeRMX8fULJciBSsH9iVvC48eC9VlKKyG+LGfPXcyy6u/WpdjAUjKjMBJysv3LK
+	ocoBZIrW0ds/rGQuRMS9IwosvP9lYsh2T78Zsb9SfVPZYsJUGOljVO0hmHFZ0A9F
+	O1Vah97+cGjA1OaS0mbAIyRn2dxH+siZMB7piEVsiAugiC84IljppCnGCf5dgy4P
+	otRu72Fr9QOBnZ+kQpr2+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756833283; x=
-	1756919683; bh=NWWLfqjX5DbBSQXLWGICmvbGU4at7riDtRVmwo8x4jg=; b=b
-	JD/z0P7aK+4tmPdvfH6KDXOCGtEYZhMjpXMSwg2VQujlMBL47woKjrT4Fyabz3AT
-	jp1dx9vhAaCXbU2fiNFUCk6zInebv7QrThAT7Gac3rhIDt9Ivx2wwhHBJnL8NQ8O
-	Z1kChmT8UlLZgMHovOwkG9OCAO/NY533jZshj1GwUcLGAeP7MuIByKJ0j5chwY7m
-	NoXKRiyQpJa10zLBUr5DZBIi8eQqn8KzQgPjEHLFhHJ7Aec5jm4fyLr8PlNL1Y37
-	O70K0dqrhATGqNoAMzECM3vqY1EbBIpS9Zx97cKW3IbuHG/AuO9uGNvr6D4vHZE/
-	w7kgFL+Aie9jvndXsHMVQ==
-X-ME-Sender: <xms:Aya3aI7mR6HnIHbtBazcOcba_Q66LfuvYK_-PsSGbxTPYApiodzm-A>
-    <xme:Aya3aJ7anjvqXFMHanq1N9QiobTinEEElNm_o1vBTCfrDgs6XDIrvtNLHxoD9GTiV
-    pTv0ryVpXqOpYws9LU>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756833432; x=
+	1756919832; bh=563vlCekje5STBT6nGaaHoFzo03ewsSo2FbJRPUWZ6U=; b=d
+	D3ZuYYy7d5npRbTCxu9TCQ+dfO6aVHPSJXL8hwjqZT7f3l2THY8VYltPll14xsBk
+	Bf5HRJRTz9pHg1DEEmQvG/P1N1VVSYVv6MXgZ2t5hjYU9vFKdADZxqmDn9EfE3TC
+	CRiYkKic2OwT7GCr5wm/qU/CdLX1bWwV9faw/3HI3ovsfMEmyImn0ypaVAZoME4i
+	onzWAyZQO0KRBvvfbS0e7WdXQedEXI/oFTp8InlTG7oyLVNBJaaAD6VfMYLfj0yr
+	T0WKsqNazqRFbuXPptD2nH3jR4RhSk9IySErNC/weHP/uEGRvuCNvSPBz11O0PJ3
+	od9DEoI+U8UoY36jia1PQ==
+X-ME-Sender: <xms:mCa3aAEUzVCz0sITxr3by4sxc_kfn5gSoLm3-J31zZPPXKrOOPErAg>
+    <xme:mCa3aJWGLD5aw2hQi6k_41G3oMhYHb0rgu15y1G2FT2l0NLXCrxvyDXaA-0swcrKW
+    tLEtYCSF6yQcC8Vg0Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekfecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
     ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
     foggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfluhhlihgrucfg
-    vhgrnhhsfdcuoehjuhhlihgrsehjvhhnshdrtggrqeenucggtffrrghtthgvrhhnpeetje
-    evheejjeduhfevgfeggedtteeuieekffeutdfggeegudfgkeeiudffteegleenucffohhm
-    rghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepjhhulhhirgesjhhvnhhsrdgtrgdpnhgspghrtghpthhtohep
-    gedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:Aya3aBDVo1pIw_tnSYMBo84_XhrofLzrPjQY_ce8fc9PjVmicMyQkA>
-    <xmx:Aya3aI9NL8FSIQhxGB3SfQ7OC36WFg4-NBH9kDct7fAZER1UBU-etA>
-    <xmx:Aya3aMLNPJFTmYqMqsLNPEYpeQMlficGoqwUOMtKmMGZvgzLmctYWw>
-    <xmx:Aya3aBj7gurQ8gQLRdJMidzsdiOY8Zc-x1UPQ9QFXdxL4pOaHscCtw>
-    <xmx:Aya3aE-xKbOWLb4IwYl-7f1Z96WZok-UVb44A5NEFZlw6cs5YL3-5IPE>
+    vhgrnhhsfdcuoehjuhhlihgrsehjvhhnshdrtggrqeenucggtffrrghtthgvrhhnpefgve
+    ekudeviedvveeuhefhvdetgefgffdufeeguddtkeegtdeltdevhfdtuddttdenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjuhhlihgrsehjvh
+    hnshdrtggrpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtgh
+    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:mCa3aNO-oQkQIzueW18oDAcOeUWApQd8IHnlBF2bvpB1AMNfajz2Fw>
+    <xmx:mCa3aJYHFf3Ug6gpClfz2f3OUeV5xhukSu2jP-k6b_DmFhRkeLE6yw>
+    <xmx:mCa3aL1MowfOB2jqVVw6_X4Lx4DF8exQ1MO7bLNNV8pmR1oJ5Zlh1w>
+    <xmx:mCa3aPeNoCOG6DYzhUsPq1RT3IeGRNah9FawuRyCsADUNL36RcUQ5g>
+    <xmx:mCa3aF2SUWdjWzw8fD8ndAqxnFEnQD14uWheM_LlWxl-VreUhQSp5oU3>
 Feedback-ID: i2aa947c3:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 20EE1780070; Tue,  2 Sep 2025 13:14:43 -0400 (EDT)
+	id 774CB780075; Tue,  2 Sep 2025 13:17:12 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -76,38 +75,30 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Aye-6GR96UBw
-Date: Tue, 02 Sep 2025 13:14:22 -0400
+X-ThreadId: AvvqYbK4iQrF
+Date: Tue, 02 Sep 2025 13:16:52 -0400
 From: "Julia Evans" <julia@jvns.ca>
 To: "Junio C Hamano" <gitster@pobox.com>,
  "Julia Evans" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <a9351a8a-09eb-4fc7-92d2-fff5e504dbcc@app.fastmail.com>
-In-Reply-To: <xmqq1poup1am.fsf@gitster.g>
+Message-Id: <2b00569b-bdc9-43e1-8a59-540d13c41a7a@app.fastmail.com>
+In-Reply-To: <xmqqv7m6nmhz.fsf@gitster.g>
 References: <pull.1962.git.1756148933.gitgitgadget@gmail.com>
  <pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
- <48e7f230294e131007032ef8850456a5c0493ef9.1756467934.git.gitgitgadget@gmail.com>
- <xmqq1poup1am.fsf@gitster.g>
-Subject: Re: [PATCH v2 1/5] doc: git-checkout: clarify intro
+ <23a738981abd2073c70bbb5dd36eea050065e643.1756467934.git.gitgitgadget@gmail.com>
+ <xmqqv7m6nmhz.fsf@gitster.g>
+Subject: Re: [PATCH v2 2/5] doc: git-checkout: clarify `git checkout <branch>`
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-> You seem to have forgotten to update the proposed log message ...
+> The condition to stop you is a bit stronger than that.
 >
-> https://lore.kernel.org/git/de40e0ed-ca12-41b0-acd0-3c594078cc14@app.fastmail.com/
->
-> ... to avoid making it just an enumeration of "these random things
-> were done in this patch" (and instead tell a coherent story).
+> By default, we would not even attempt to "merge into the branch" at
+> all.  If your previous HEAD and the branch you are switching to are
+> different at a path you have local modifications in, then no changes
+> will be made and the checkout will fail.  With "-m", we try to merge
+> and this merge can leave conflicts for you to sort out.
 
-Thanks for the reminder, will work on that. I just realized today that I can
-use `lazygit` to make it much faster to edit my log messages :)
-
-> I do not understand "switches commits".  When you move to a commit
-> (i.e. your HEAD can point directly at a commit without referring to
-> any branch), are you switching one commit with another?  I do not
-> think users would view it that way.
->
-> Phrasing it with "switch to" may make it easier to handle.  Then
-> your previous state would not matter as much.
-
-Agreed that "switches commits" is weird, will use "switches to".
+Thanks, I wasn't sure based on the existing text what
+"modifications are kept" meant exactly, and I've always been slightly
+hazy about this behaviour. Will fix.
