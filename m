@@ -1,127 +1,129 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEE32C08CC
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 21:55:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30437283CBD
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 21:59:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756936543; cv=none; b=CYMLfxBjC4qzeMMLNrA78c+we5lco1VlF+GZheAM+SNPiDCBXlMM699RCdI4kQVhRAXsU63YetqWrJrigMXck8T5+SisA8LZ6/V68/zYABp+wa2kcnuwYY9NS36f3wdOfiLLk8Gfa8EIdppzIIktEVT7Z/obMiEprOA8/VvwECQ=
+	t=1756936768; cv=none; b=OcT8067JHpzUPHYg1YroGDHu3l7nGgCbYQmUiuvmSZJ5WHj8L95Ej9ivB1NcOH8/HR2SaF2aoB8XGdvSaFDnEiP9gseiZ9NhLJehZipQj8208mRcrZQkuj3Sx9Yy4qSzgy+5I4DOraCF/av//QHpMKF+nTHYhOmElOMq/loi++8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756936543; c=relaxed/simple;
-	bh=uuSFFMVhWqpb1xatzsDS+zBF+4UB8jqGXErz9tdWSNg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NDNL2ggYZLlY8Eaxgid3iJbyB+Pfc2rvE50sJCEyrG/iG+S3E4JgqLShMV9nMtTgIEGIETP/nyMayrhy6bWZLcQLjoy2WvGduuE6n9dGf5mjD5NvCaHeLFokMnX3rSe3expmyZjo9pjwMpmW4sTh3Xw5r+9dy0xgdSMtnK8+iCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R2cp3QbA; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756936768; c=relaxed/simple;
+	bh=gMfRPFf0P5MjpbPmB4/XQJYl3trdLnEYaVdSjRGR2ro=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rBnwtBfs5fsZCS/J8Fel8+QsMiU3I59lauEkwhq+vjvp8I/tLITmUU7o7cl4QBjpdb94s1ZOLgvshLvn9qw3hZGnhDXUmoImMXkkcWTkUV553LobdEKdWx+i8qaoQENjJHdRB/VW5VMGvitQkNP/ShizezAElLRcSJH6wyV6QNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=3LKiWreO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jndjFA6T; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R2cp3QbA"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-b0449b1b56eso59535066b.1
-        for <git@vger.kernel.org>; Wed, 03 Sep 2025 14:55:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756936540; x=1757541340; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QOQulw3unx2X3zpt/F62AZldKQW56NwXyiSUscqFCXc=;
-        b=R2cp3QbA1j8c6t5pPLAIZsC0QjVeX2BsttEoVqpvD9/uSkexHBF6CpUPef+y6h4ztq
-         COk2WB66y6wsdBODvSJSJNjU6ecklzY8amshbjxEHJVwkNGEnyTxF4Rcj81+Z/w7t75W
-         nIOfzgZWB3RIo+ZsyZRLcopDVhCeiP6fTcdsk9gB+2mq5jRiExkiSE1WiTKgrXNmVFF7
-         rlTB1CfcNIR7zvg8o0mfZNug+pqKYGDWJfxR+AoEQz6lzCzWEoxz1pZCp+MBRY6s+vWz
-         Ek0MW0H/PxcplWydMUGInWi7DqSGLWlzmKgUMYzNNpXLXTx8TNgldgdxb0HYOBmO9BN4
-         kL/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756936540; x=1757541340;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QOQulw3unx2X3zpt/F62AZldKQW56NwXyiSUscqFCXc=;
-        b=s6I22f9Uilj1SnrkaVAFr2Jfi8yR81CVXpMUuIdoRKFalXNG3dtK8Kq+ctnU4az4kK
-         O/sTDOtXagaWZZnpl4xKZawHr0rs0/dl7KDRXu1rmK3BHZstM2CcCkeuUTowEKBJNbJs
-         p3NR0RQJdwNhJAvxqhXWcxpInfyyDZIXKAjSKHO8RhYbjZFBvvf4drOU/sQPyjrzMvnz
-         b3fcjFFQVSBY+J63+KBD5V/sOJwhkw0ub84b0/Sbxl74FuI5L+D4uAA49zqWyFsLlTIz
-         PgXvIRYClJ9QnS3yfCQ3YlwBAEnTvBg7mt8Sq2bZmqiyujYvWySirGqm/86cRWvuycDk
-         Nzcg==
-X-Gm-Message-State: AOJu0YwgJskeKjoU9AszHr8UFV8V7mJGVSvbRUwFoQ/YrNATzBXGpn8P
-	8+irZyPlYKlfMlh1rBpf+vffDdEE+xm2TYpfVmpQTMuH6TQBic6DIeziV1noSAhLN9n6eBk+UxR
-	Vq8UmGBBLNboeOb9bnQETS0FeSXYJzSQ=
-X-Gm-Gg: ASbGncvsSPI47dVyW61CLSEBDUZUT+GC/fA2wsbgv/T78deGGy3QKh/LslucN6HOVjF
-	w+n7eS460U66cJP5qPFoIK/8tqYclXBAQCDu23fP6QU0pHPusbgPMPa4DehcpkjW0zRcR/Yeek5
-	xmsq5QmUN6VVs6BiRAnFIqQUk+i/B0qEkR4KqImHq+02c3tUCQt9HYJlHv7O2o9quGnm6rSypXb
-	b220j8Trfi8UNKoShwNC2NGSQsUKOI0oxjQhuabn8KPOYXsSTP5
-X-Google-Smtp-Source: AGHT+IHLUYNSQ4ypY6nU7Qaqd8lbcmGGMPN/zSIzu9PLaqlVstBMSRYryyJEVA99CpDPBAZ8Pk59x4njHJnfDdc2ijQ=
-X-Received: by 2002:a17:907:6e87:b0:b04:5895:fe8e with SMTP id
- a640c23a62f3a-b0458960044mr676131366b.36.1756936539531; Wed, 03 Sep 2025
- 14:55:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="3LKiWreO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jndjFA6T"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 576C1EC04E5;
+	Wed,  3 Sep 2025 17:59:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 03 Sep 2025 17:59:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1756936765;
+	 x=1757023165; bh=fmZyFgTSuVSZP0o8wVZ/sGgxT5pwZvuzCV5pPRP9GnA=; b=
+	3LKiWreOOlpZal7xY1LSOSABv5JKIpVsoOImeRKj1aNDzDBQGqUms7K7ih6BmIYl
+	GbQY90nmcgdtfEWGsZbp98KzzRqqpyh3Ha5wY0taqmrhHZ5b3wXRvYhvU5LD2cCA
+	dDi90Bv00i3EzUgwERJ+NaBu5/Wpgi04F5dTlccAeAa1k9p7Xpmwg3+V8BIKkE/P
+	qyKIGQ31rKqKXo/LAzgo5t84AEGhul/XyQu19cKkfJX3UUcJkBhOrzcK+CW9kgUt
+	GRRFihtrCOqYyIxd7L/qTKPrZ4rM4zU73t7JXX7sMveEBfwm2zUar04YKaQpPWH0
+	gLZ+Iolc/gCp1ZguFMReqA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756936765; x=
+	1757023165; bh=fmZyFgTSuVSZP0o8wVZ/sGgxT5pwZvuzCV5pPRP9GnA=; b=j
+	ndjFA6Ts2dmesh9HoGOGvNeeC5FYYKUax2bcava+X9J6dKXc/ZXpeCDVS7VMVeJW
+	/frgamanIQIZRsSCevYVrE5DKNYjUYNa2GhETF5EWOOMh+Y1uQACMFw8Vpk4XfX2
+	HxaxsdpXUX5z4QEG4o4NvISXFLY5BEeH50dmaIzIAUcb46JGyHXHjrnoozarXcYw
+	zb51elRWFsQkeyPVJSB/HEPDgMXFYmjJgA4uB3TXFr8FjMso8Wj71YvMCjNe+tOQ
+	yvz06O3pGG7vVLgTgNUejcLLbOAd0nHbP0MxKL+7JKCOn9Ms8chEJJKPSEBQ35Yy
+	OK3gjzCmfReV8PH3GrI6g==
+X-ME-Sender: <xms:Pbq4aKIp2BNIxsaKA2Zg3FLPmWRXPBgtTAoE4x-uORPm7af4jygtbA>
+    <xme:Pbq4aNrY2yi0lh-gosiHKCnrm0HudI76fpKL9MKpZMpJNDPaDKgiiSFoMU7i62EiB
+    twbArLBVtzjOJwrtg>
+X-ME-Received: <xmr:Pbq4aBJbCGX-YWPmA_CmmqzXsIVfojUcsXUQs-BdivAMJxx8cjUG2_AnCoKnL3ywj_mkIM3jqiebryuhM4ka8gU3G1DDYJa6aGKw2N0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegvdekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedt
+    heenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepgh
+    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnohhurhgrvghllhhmsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Pbq4aKSvDkz7CUnPAxfcS8Xmg8UejKgD3pBC75wmLHrOOEAn5es9IQ>
+    <xmx:Pbq4aIt6Ort1cckEb3mG1k14tfij2fhUxwWA6NEr-jZDajy56UjZ3Q>
+    <xmx:Pbq4aDZXXBpK1gtSspfUm5sbCenUDdydYTcfZRfShmnJmi8hetNimA>
+    <xmx:Pbq4aGHn5GACwNA5c6E6e1MEuTVrS4MHUmJbcOZJVZVlWW97dxguIQ>
+    <xmx:Pbq4aBHe8sTB8drrBTQSBKhZHds-G4JYdG9ALbIj9vKi0VeGhAdXFBTg>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 3 Sep 2025 17:59:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: =?utf-8?B?44OO44Km44Op?= | Flare via GitGitGadget
+ <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  =?utf-8?B?44OO44Km44Op?= | Flare
+ <nouraellm@gmail.com>
+Subject: Re: [PATCH v3] alloc: fix dangling pointer in alloc_state cleanup
+In-Reply-To: <20250903111829.GA1877518@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 3 Sep 2025 07:18:29 -0400")
+References: <pull.2040.v2.git.git.1756337312918.gitgitgadget@gmail.com>
+	<pull.2040.v3.git.git.1756472406487.gitgitgadget@gmail.com>
+	<20250903111829.GA1877518@coredump.intra.peff.net>
+Date: Wed, 03 Sep 2025 14:59:23 -0700
+Message-ID: <xmqqtt1jci4k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250824-b4-pks-history-builtin-v2-0-964ac12f65bd@pks.im>
- <20250824-b4-pks-history-builtin-v2-15-964ac12f65bd@pks.im>
- <CALnO6CBRv-Jvm1FsUAkDSyaNNRXtMukReKzefvCw5-vj=-pnCA@mail.gmail.com> <aLgygyUuQCmR25qU@pks.im>
-In-Reply-To: <aLgygyUuQCmR25qU@pks.im>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 3 Sep 2025 17:55:28 -0400
-X-Gm-Features: Ac12FXwfAzA1K5Qiqc3NTAtEPo8jc-fLGSeSKj6T4fWZ8VX4zIQ5qk1c2FIaseM
-Message-ID: <CALnO6CAjv0=99AcBLU=z71hGrk0fXp9pWm7wiBF-a1Xd_efrdA@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 15/16] builtin/history: implement "split" subcommand
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Sergey Organov <sorganov@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
-	Martin von Zweigbergk <martinvonz@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 3, 2025 at 8:20=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
+Jeff King <peff@peff.net> writes:
+
+> On Fri, Aug 29, 2025 at 01:00:06PM +0000, ノウラ | Flare via GitGitGadget wrote:
 >
-> On Tue, Aug 26, 2025 at 09:14:49AM -0400, D. Ben Knoble wrote:
-> > On Sun, Aug 24, 2025 at 1:44=E2=80=AFPM Patrick Steinhardt <ps@pks.im> =
-wrote:
-> > > diff --git a/builtin/history.c b/builtin/history.c
-> > > index 16b516856e..6d3f44152c 100644
-> > > --- a/builtin/history.c
-> > > +++ b/builtin/history.c
-> > > @@ -517,6 +527,285 @@ static int cmd_history_reorder(int argc,
-> [snip]
-> > > +               wt_status_collect_changes_trees(&s, old_tree, new_tre=
-e);
-> > > +               wt_status_print(&s);
-> > > +               wt_status_collect_free_buffers(&s);
-> > > +               string_list_clear_func(&s.change, change_data_free);
-> >
-> > I think I'm supposed to see the changes between the old and new trees,
-> > right? Does this only happen if I use the interactive machinery to
-> > edit a hunk? When I try accepting some changes and leaving others for
-> > the next commit I get no diff in the template.
+>> +void alloc_state_free_and_null(struct alloc_state **s_)
+>>  {
+>> +	struct alloc_state *s = *s_;
+>> +
+>> +	if (!s_ || !*s_) return;
+>> +
 >
-> Yeah, it's supposed to show the diff between old and new tree indeed. So
-> in theory you should see something.
+> Coverity complains that there's a NULL check here for "s_", but we'll
+> have already dereferenced it in the initializer for "s".
 >
-> > I did try to add new diff lines to a hunk, and nothing showed up=E2=80=
-=A6
-> > maybe I'm holding it wrong? I'm pretty sure I compiled this version.
+> I don't think any caller passes NULL, so you can't trigger a segfault in
+> practice. But the code is kind of misleading. Should it just be:
 >
-> Do you maybe have a reproducer for this? It seems to work alright for
-> me, but I wouldn't be surprised if there was a bug here. The wt-status
-> interfaces are quite something and I was tearing my hair while trying to
-> figure them out.
+>   if (!*s_)
+> 	return;
+>
+> ? Or even just "if (!s)".
 
-Hm. I have a copy of these patches at
-https://github.com/benknoble/git/tree/ps-jj. After "make DEVELOPER=3D1
--j $(nproc)" on that branch, I did
+Yup, I like that.
 
-    bin-wrappers/git history split @~3
-    <input y,q> # once I even used "e" and added new diffs to the patch
-    <type commit message> # no status info
-    <exit editor>
+The primary point of s_ (parameter with a trailing underscore) is
+that we would want to use it as-is as little as possible.  When we
+talk about the pointer to alloc_state in this function (not the
+location such a pointer is stored at), we should use "s" (not
+"*s_").
 
-Then it looks like the 2nd commit gets created automatically. Maybe
-I'm just missing how this should work? Thanks for looking at it.
+Thanks for sanity checking.  This may have been my breakage.
 
---=20
-D. Ben Knoble
+
