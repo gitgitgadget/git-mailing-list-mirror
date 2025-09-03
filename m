@@ -1,159 +1,96 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A082EA743
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 21:09:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A9E2E8E07
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 21:21:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756933760; cv=none; b=bE6u0jDetj6764G+lrSf8B3UNXUPpModKKe6GLT9FyVN8VHmJqhZYtfOqLGvvo3ozomVLhSPVwLH9q8lH8JBxoObf7pz5JjIZePNiLPIBlXIwz8onVHRVT2SeOm9By4eu+sfyaqSp7IInfss6dkw2AWbqpFn98vxAlLkwhHSGmo=
+	t=1756934521; cv=none; b=klU0BTOO6CcJGwv8iFVLvGlHrRZue8KigWQK34oa0utba3ft14oybErA+WvhJlu9eTrj3tKqzuT/a/SnKFGoLqUY+BdYtM2gI5xS2p0Ig1RVMU8HieBjgaBCA2mHoA9LcHe/WbRDxamOu3Tb6t1JgfxlGlVo401jBu9r8yHLics=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756933760; c=relaxed/simple;
-	bh=yTw9cPxVKjJrVeU375bGHPf08jjU4Z14FJ9Z7uHDZIg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q39iReikRdy0L7ywIphwrE753d5zl4xARUh7w0Ng6+STIOjjYMsNTZNQQ84fV7VvzGQ9j4HJiE6vOK18VC3ObxEKgDkS22T91gvV54H8+8q+vz1k8G556K875qL+1ZTSwma8feSZHrU1pVwyEi8jVg+205OXL2oPxfdgtQaPVMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DyBwMXIm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RC/+vzOe; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DyBwMXIm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RC/+vzOe"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 07CDF1400500;
-	Wed,  3 Sep 2025 17:09:17 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 03 Sep 2025 17:09:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756933757; x=1757020157; bh=yhYMAseift
-	D0Xpe/VA2lDDLMQM5xUFQbEwEM6YIiiXY=; b=DyBwMXImwoi99IbINp6yVlR2wE
-	60vzmzmRGnOP/WCoFKZRZSNL/lJDZ2zIDBDWcY7g9syU9UJY9tfPcbwS78mQiGBE
-	TiwAyMzn0F8VLFC+iN6Cln6VVKx1tBY00DVKyyvvl9Ruy7NuINXP/o+K7E631ev1
-	lDfR4lwMLzVD9XJbYkdawfb5LWDPjHhMg/ClWd5trHmDjrbc+gZKjgopuUt0I5JD
-	8tsdJf/DbpOno8MMng7et697a0F3oti4xmFpS0pd5CFdbqXXKuFdm+2kKW03BdfU
-	rnzWAWsSIvwv2WMRkx1J94OexlKHCYCsjx3/va71A8AJhis4An1E3I8sRrGg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756933757; x=1757020157; bh=yhYMAseiftD0Xpe/VA2lDDLMQM5xUFQbEwE
-	M6YIiiXY=; b=RC/+vzOeBqNA+wK4uqfLYFkSFhf4E/JtgA2uIR0AnlSY07DYvaF
-	r52k9BSQsB5dx8cKkrnl+H29NWwo1r807hsQBTsBzjUvwYa5KsKf3fWWOtWMq2QE
-	LyliSJUrj34f+lqtBoItGohQjVEvT6P/BQFl4CNoJIW5d7wjj7YwimBXqBLQN2Ab
-	rsc5PAKaKHLvqiP6znfCQWlJJA0CqBT4ndAWuN+qZvLeV4pni2xxTVodUh5KP0os
-	OnZEhOeTSxSNEpo5Y7uKqThzSz3wHkEvl8hYZflAu2fNisNkFV5XNHWes94isrtM
-	HP8QI2juKKC8iVgIsHZUN5s+MZUPN6SjxPA==
-X-ME-Sender: <xms:fK64aLAFgM0NUROW2XuIMQZQzJFrTglNb_4BRsvGhc8bkhEDGJMaHg>
-    <xme:fK64aNAe8QVzgxndrUEMF6Q73eLA7ZlB_yo-9klIz3YLGxGS8fIkNNEvU2JFVADbm
-    fKTdeZDe3T50yyG_g>
-X-ME-Received: <xmr:fK64aNAounZiR1inRAx43EXVH5GTzNqXjw7iwv67qxTWzHHyx90t0agIGMyxVOoT9582tiZ_kwpyMXril0tpRVdtn0QmZuq64J6Sq7A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegudelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegs
-    vghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehjuhhlihgrsehjvh
-    hnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:fK64aIr9wwInj32LSMkjBPRZNqBQIgeiS5CD8hLkIzhVhz9fzNMnrw>
-    <xmx:fK64aHlJca4PdrKyDEdxH0NshcfOJY_WXzbUQjSIy-cP5rEewHG_Jw>
-    <xmx:fK64aIxGBA4F6zhwKa0KjpZ8PFIHF4C2xwJLVLw-3qnfSOnIzupGIg>
-    <xmx:fK64aP8StTcZubyLUsOIAatjiI7ORGy8UlxkLU_NpiObk-HDYJRbDA>
-    <xmx:fa64aIDPGEhDoxc5cbJRGvRXQprM3p03GYqHzvjtmc69Eb_L1uV-03Vm>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Sep 2025 17:09:16 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Julia
- Evans <julia@jvns.ca>
-Subject: Re: [PATCH v3 0/6] doc: git-checkout: clarify DESCRIPTION section
-In-Reply-To: <pull.1962.v3.git.1756918202.gitgitgadget@gmail.com> (Julia Evans
-	via GitGitGadget's message of "Wed, 03 Sep 2025 16:49:56 +0000")
-References: <pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
-	<pull.1962.v3.git.1756918202.gitgitgadget@gmail.com>
-Date: Wed, 03 Sep 2025 14:09:15 -0700
-Message-ID: <xmqqikhzdz0k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1756934521; c=relaxed/simple;
+	bh=mJAba1olcjzKpnPtYlmnasIvWXA7Qw4WmCUYYCpjfB4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VvrB5dzuW/6zIICvd39nAioStzgpSHJgJcOYRIT049spbrHiLIqkvndLbopilFLalyNgApB9DzIqiVY8ZEYELHtaCW9al8HZwkokgZxima9STNzEQu7jw/ljEBxPTJlcj6b3VfR2VOId7OMNy08T+jDb9Xz2KHNly5j9v05aHMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-726721d76a7so122466d6.1
+        for <git@vger.kernel.org>; Wed, 03 Sep 2025 14:21:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756934519; x=1757539319;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qNc95vt3rMaw3+6yTLYE2vTtTzDjHp+HtSVuZT4tkmE=;
+        b=Cc6k5l33edAVuQeYT+5TmLascXuBSMpE8FG6+OHEeLrz8D/vopYFt9a7i0sV/Girxe
+         yko9AN+sfRsGAJtsgP1wBf2kuo8xWid855/efiS0GRxCK+ZCYYsKCwz8w39KGTjR2Mhd
+         76XL2HWFBaYDUrKGyHlqNCINDRDUn9fc4MwNVYkdXfs9UpdcIUbtzOThbYMxNul7D2A/
+         jktmJXsTgNQrDVrD6tUGHnuAhdZuo7CAWk6cpwJfcpvr6mNaOltZ2vUQ4WVc6R7mpCP6
+         dOPeFpbZpqzKxfJjQ/6xgmPOeKoFr2NIeVZC25LRepXEFsqF+TA75AXjIi/HLIzaXzoB
+         +zsg==
+X-Forwarded-Encrypted: i=1; AJvYcCVOuQc7C5FeoupKBcNXS0dPv7AaJQA7IaA9PV+hD2HiedzeHUd7Ueo9EDpzDcvJBGspZA4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzCZBF3u2edAN9fZ/0EDfPG9rcTxeesgygprTchkUgeyeKj+bNq
+	3yhPAxvJk7xOXCSUzVU43J0niFTkmA39r0tjmeOYsGV6S41yDmaQUQqaGVuFTIB44rFa3/cSi9s
+	0HlkNZHqzbul6ZPv5q3C+y5ChRxCMToA=
+X-Gm-Gg: ASbGncvuFAhzRel5U0cNQr1PCwlDOMrMtZi0+7+bTbcF776W9fLbnaAJGJSzdVlj7y/
+	to6lFxLcTU6XMhrfSzH3NTwrNgjy9IOXWuoL4z31GdT36UEnsKtRncdiOJFe8llIis1K6EXku5I
+	B045EiVxwoIX+rRSTguTaXeETV3U5YO/xjMfMeWLkyvLFSmaF17zy3rp+RyBhZpd6ADg3QhGa6S
+	eInyg==
+X-Google-Smtp-Source: AGHT+IGdd3uMQtHWAXAVBoy1vmQcPpA09k0bVEdHE9NCw0/CDdBibwZ79Qtlgj3km1AdljbJehogsIt+3L7KlLQ1wOE=
+X-Received: by 2002:a05:6214:21eb:b0:70d:f55b:e940 with SMTP id
+ 6a1803df08f44-70fa1b87094mr146215196d6.0.1756934518706; Wed, 03 Sep 2025
+ 14:21:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1756311355.git.code@khaugsbakk.name> <e81023edb2d78d2be0ecffc071f2c5316b0c7a32.1756311355.git.code@khaugsbakk.name>
+ <9611573e-fb0b-49d5-933a-50d8e0603701@app.fastmail.com> <CAPig+cRgBXX+b=P31VjQ6Dd4mciFvaUJ4T1oeOGjk7mwV-9KMw@mail.gmail.com>
+ <xmqq349czcl8.fsf@gitster.g> <CAPig+cQkVP57n_FE6dJ0uxvai-J7usxKFp8gzfEbPY=Ytsd6=Q@mail.gmail.com>
+ <CAPig+cSL=-gD5+WomF7-hYjVJ_PH0m+0i8g3F=E_U3k=QNHr8Q@mail.gmail.com> <15bb8d07-675b-4ccd-8345-ab5861319faf@app.fastmail.com>
+In-Reply-To: <15bb8d07-675b-4ccd-8345-ab5861319faf@app.fastmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 3 Sep 2025 17:21:47 -0400
+X-Gm-Features: Ac12FXz71EWlJY1vLg5Z1lcLM4aoevQ-7jaxiNbWUI4-pOLofj86BDm1IeQ_auI
+Message-ID: <CAPig+cQdwr-a_B++=2+q4mV8oZ7VLTYEQ9wnVP84jFYkTHFtHw@mail.gmail.com>
+Subject: Re: [PATCH 1/4] usage: help the user help themselves
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Sep 3, 2025 at 1:54=E2=80=AFPM Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
+> On Wed, Sep 3, 2025, at 18:50, Eric Sunshine wrote:
+> > I realize that the changes made by this series are not in any released
+> > version yet, but from reading the emails still arriving which argue
+> > for retaining the command for reasons of muscle memory or because of
+> > its (strong) mnemonic value, I suspect that the hint(s) this series
+> > adds may not be complete enough. In particular, the advice this series
+> > adds (use `git log --raw --no-merges`) seems to be primarily aimed at
+> > scripted use of the command. But the muscle memory and mnemonic
+> > arguments suggest that advice should be given for interactive use, as
+> > well, such as proposing that the user can create an alias.
+>
+> Good point. I would suggest discussing it in the
+> breaking changes doc under a new "For Users"
+> section. I would like to avoid expanding the error
+> message too much due to the already mentioned
+> fear of overwhelming folks.
 
->  * Improve the storytelling in the commit messages
->  * Take a different approach to the git checkout -b description (keep reset
->    in -B, but simplify the description of -B a lot)
->  * Make the description of git checkout [<branch>] more accurate.
->  * Try a different approach to git checkout file.txt ("Discard any unstaged
->    changes...")
+I have doubts that users will consult a document when presented with
+the message.
 
-Not just you repeat having bulleted list in your proposed log
-messages (which I already said something about, remember?), now you
-have them in your cover letter, too?  You must be so fond of
-bulletted list X-<.
+> I've seen  "troubleshooting" questions from git users
+> who got one of those long and well-described Hints
+> like e.g. detached head and default git init branch
+> when either the msg already spelled eveything out
+> or the msg was purely informational.
 
->      @@ Documentation/git-checkout.adoc: $ git log -g -2 HEAD
->       -to checkout these paths out of the index.
->       +When you run `git checkout <something>`, Git tries to guess whether
->       +`<something>` is intended to be a branch, a commit, or a set of file(s),
->      -+and then switches branches, switches commits, or restores the files.
->      ++and then either switches to that branch or commit or restores the
->      ++specified files.
+I didn't spell it out above, but what I had in mind was something very
+simple... not at all ong and detailed; for instance:
 
-Much better.
-
->      ++	Switch to _<branch>_. This sets the current branch to _<branch>_ and
->      ++	updates the files in your working directory. Files which are
->      ++	identical in _<branch>_ and your current commit are left unchanged
->      ++	so that you can keep your uncommitted changes to those files.
-
-Here "left unchanged" is technically correct, but somehow it gives
-me a (n incorrect) connotation that they are not modified since
-HEAD, which is not what you wanted to say at all.  I recall that we
-once explained this not as "left unchanged", but as "changes follow
-you", and I found the explanation easier to absorb.
-
-I cannot come up with a good way to remove duplicates in the
-following desciption, but what we want the reader to understand are
-twofold:
-
- * For paths that are not identical between HEAD and the _<branch>_
-   you are switching to, you MUST NOT have a local change.  After
-   you switch to _<branch>_, these paths in the working tree match
-   that of the _<branch_>.  This is to avoid losing your local
-   changes.
-
- * For paths that are identical between HEAD and the _<branch>_ you
-   are switching to, you may have local modifications, and they
-   follow you to the switched-to _<branch>_.
-
->      ++`git checkout -b <new-branch> [<start-point>]`::
->      ++
->      ++	Create a new branch named _<new-branch>_, start it at _<start-point>_
->      ++	(defaults to the current commit), and check out the new branch.
->      ++	You can use the `--track` or `--no-track` options to set the branch's
->      ++	upstream tracking information.
->        +
->      ++This fails without making any changes if there's an error checking out
->      ++_<new-branch>_, for example if checking out the `<start-point>`
->      ++commit would overwrite your uncommitted changes.
-
-OK.  Do people understand "making a(ny) changes" refers to creation
-of the new branch, I have to wonder, but if so, the above is much
-much nicer than the original text.
-
-    This fails without doing anything and without creating a new
-    branch, if checking out the <start-point> has to overwrite your
-    uncommitted changes.
-
-might be slightly better?  I dunno.
+   For interactive use, define a Git alias `git whatchanged`
+   which runs `git log --raw --no-merges`.
