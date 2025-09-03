@@ -1,92 +1,131 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3E21482E8
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 14:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A211DE2C2
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 14:31:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756909885; cv=none; b=Njfcl73BButJ6YLnYiGa4triQfaMskB3X3QI4GWZGt1e/F8dGgjeGMB11cE9ASg5lEfqw8m9bTThh3U1KzfHIV9HyZhPdSWJuDpf2aFRb0jDuE0oOhld1MoVZPn5mHWMAtVz3K5xSyqWT0xShaPlqY75l/KUJN9Us253b8VXHJ0=
+	t=1756909903; cv=none; b=gmTmNGZ8+nmuzeg3OgS5xSnNGliFsFjT63dFvgBue1/0y96ulUwBaE9eOXMOufGB6K7VFAbx3Ysf/sAaOgqkpDZbvUfokA30DUrCmCXbYZr+nx6v8AOSSmGWQsV5D99aLlGnmTMuWouJdkweNOwmPAyBIs7plVbQ8CipQqGpcVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756909885; c=relaxed/simple;
-	bh=mOii0AhE+mfk5XuJgxLYFAmx8HVnryvGUIyTcSZkvl4=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=lRtqsJZljP11H82Wsu73L8pK3zbc7cUvdaYIx6g1vqQTmMA3SwF9SjtuA8lCTYuIjDZudspkA6IBhgPRR4O+fb5ktqqKMv4FqP4idx00a/z3VW8UUR3D7wjG8iL0c+08xEtD8Q0EMnb9Hr1195pwp6w3qVSF8PPT0liwG0jOuJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bWqAqib4; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756909903; c=relaxed/simple;
+	bh=dCESFRm10fLJ3UK9jQZ5QCEKwPuA7qYpMCIvpEsM4fs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nQzUQpfRIDRh9YcYUUUVsJDv3cg+H6HbslOKdUK04SK91Mf/+85U2bG3EWpmPRfU+2kUcVHqO2/RHk+UNy1u33ADRAXBExhwKeOQqQc5//dnTQVBT6YWGc1Jc9dxJDJGCISLvqj+5msJVS0QxNKv5uKul4C9l5Bu1WPTU8AZ/Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YeKFEcv1; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bWqAqib4"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-32b5d8bea85so828462a91.1
-        for <git@vger.kernel.org>; Wed, 03 Sep 2025 07:31:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756909881; x=1757514681; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FUlSaKiatQX5NtdyXWY629/LOKGkseEfahBSe4KY8nI=;
-        b=bWqAqib4jb9YNlrlHQK50pE93fdHQPZPtCtuBDrIQh32/+ZMNRSnoNUCWbyQ9ng/TR
-         Y2fsjEffxSeU7Ie/NgVZZK5kC0jFOMnBuiMZMTwmsymEmcH2Cjykmr2LTKb+XxMarJuv
-         hqj4KSPsw/jTuwehpYnWXkSoHT3HEioNDmPXC4kd2NmwF1RYvCKkslbyATszTMBrFLEQ
-         QTlWumoc23OsLex362xZRAjr4W/dqwzMBbxGsmwOUY2XXirrse+Uq3Y36YKpg9sP1za3
-         Z777WHs/N1ZyJ6fFsTI7gEFrH+MMY7pM9PO//ZkC+acqK+WvJwpgMaNcvm7djXdRgU66
-         a3cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756909881; x=1757514681;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FUlSaKiatQX5NtdyXWY629/LOKGkseEfahBSe4KY8nI=;
-        b=to1WSox65lvdzEhrHY3m5D/Oa0eGw0+Ctub9gdO+nBrm/loa9p8DFLyBXiKrY5/nIY
-         s8JggC5hJfAFOHdWwJLZWKdCw2amQqzjhSc8js5wIB6kyNTbDrHTbKYlbj2qwiyZt6vu
-         GYNAmdnlDcHhpydI5R1oRIOco4oY4eWGcdat2utWXxvWOcrbZmO8smMtLTz9Pbn0677P
-         vw/URNfCyFNgVifU/cRyh5E6N4+CmSRmju9sb7T1i8/J/oinGY8w2emEJWwZjcW9Jtq4
-         RlzvHUPfhjy15CoXjDKfGPL8Q7n63ZZxNikTxfhIB2YSZnZ76zP7g1qbHwHU7Ra+xaeC
-         FPKQ==
-X-Gm-Message-State: AOJu0YzMk4a5yIIyQiQXH24OKutY2A7QT/lqXITvhKb79PUCmTR7+W3i
-	RGOLeu+x+dRqDWIdg1GMGjxaQ2nEJKZk7BnqGzVtv2O6W7aqinzOcXpEuU2K3A==
-X-Gm-Gg: ASbGnctr+zf/UQ/i30V6fmsrTM6COJ2i3Iezemv6T0ZBfRwCMUf472w87MpPDzTVDmL
-	RJdeAuJLkq3RQDllUmStGT3zkOHQ6i4v0dXjxv2X8K/X6RsQSBw+OYKPudaZVJWhW9TmCll39+Z
-	1SNnR5wt20O7fWpcQ/0uBAdocqSvqZyP9AIk/h6EfAcXODFGAnI1yth7LlnJ2Oc4G+IkVrEVmaS
-	aMAwJmKUTZYpf4Lo8TgTGa3yVR+bhkbpA4gO/s2t34BnCOXQQ3CtfU6ZziM7HFu1xNzfyspkcXN
-	VoK0zt4kDorSHKqN36fzE8xk70gk9KUrQVevK6BFtNAOg94bXxYNFhAaeVGf8mIXoKUeLMMqNAd
-	Eqv/vtWfWOEgHwIbjtw422zQ1QB8/Aarpt6nM/oObWaBiJeJZVUg5GRBjIVhHM7sZafw=
-X-Google-Smtp-Source: AGHT+IEJwS+Ith+NYVtK9+y8zzKbxGniTvGbKo3mg3EHWrsLykTPkYj+wuXp/HtBTZDD3HawbHaD9w==
-X-Received: by 2002:a17:90b:3844:b0:321:82a0:fe50 with SMTP id 98e67ed59e1d1-3280d2d9b63mr21614859a91.5.1756909880947;
-        Wed, 03 Sep 2025 07:31:20 -0700 (PDT)
-Received: from smtpclient.apple ([2804:7f0:b77d:8aa:fda6:1fc7:374b:6356])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3276f57b232sm23150975a91.2.2025.09.03.07.31.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Sep 2025 07:31:20 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YeKFEcv1"
+Received: (qmail 194053 invoked by uid 109); 3 Sep 2025 14:31:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=dCESFRm10fLJ3UK9jQZ5QCEKwPuA7qYpMCIvpEsM4fs=; b=YeKFEcv1izLsy4ksfvbgSqLHDogF8ySrD1VlCKxxuw5Xor69WJSKGriGHAEWVHxVd8/HsaJE6s9DCTOjIUOlBvCt/qckpPGFCO9XQyN8nnGd8AyzFlWw9Lb94rb/EP2/rZ+jS26vpnPUT9VVOeLl9NMF5a2oFLtG5Q4WWxfo+350mIBe5F+TJ+rOA4SLF9lV28wAdGMf9siGasNIwFSsDJNjK4TfwaXioV2uzKpeXALdozLF/BY5qRAHzJPFlVKGE2shdAWCd7JT4urKeSVxyCk6LkJqqSM75uEA8403f4v5I1veXhiY46ao4T/n8oeW0x5/I1hL3EEqMjlZ+7H7NA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 03 Sep 2025 14:31:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 341841 invoked by uid 111); 3 Sep 2025 14:31:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 03 Sep 2025 10:31:34 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 3 Sep 2025 10:31:34 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] describe: use khash in finish_depth_computation()
+Message-ID: <20250903143134.GA1884731@coredump.intra.peff.net>
+References: <9110f085-aec0-42e9-9774-b153ece6284f@web.de>
+ <20250824103117.GA250458@coredump.intra.peff.net>
+ <6402268d-bc80-4bfe-abb8-edec9e1b8417@web.de>
+ <20250825073403.GA332447@coredump.intra.peff.net>
+ <cb192b28-d85a-4866-a312-df4408cae93e@web.de>
+ <20250902123834.GA711442@coredump.intra.peff.net>
+ <05b8e161-9087-4eb8-b049-6e99ff288af7@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: What's cooking in git.git (Sep 2025, #01; Tue, 2)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <xmqqv7m0kd1a.fsf@gitster.g>
-Date: Wed, 3 Sep 2025 11:31:07 -0300
-Cc: git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <10A6F3A4-E4EE-4E2F-B23A-7A4985B4B536@gmail.com>
-References: <xmqqv7m0kd1a.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <05b8e161-9087-4eb8-b049-6e99ff288af7@web.de>
 
+On Tue, Sep 02, 2025 at 08:51:37PM +0200, René Scharfe wrote:
 
-> * lo/repo-info-step-2 (2025-08-26) 3 commits
-> - repo: add the field objects.format
-> - repo: add the flag -z as an alias for --format=nul
-> - Merge branch 'lo/repo-info' into lo/repo-info-step-2
+> > I suspect it won't make a big time difference. The old code should have
+> > been optimized down to a single word load, and now we have two word
+> > loads and an xor. That probably isn't important compared to the actual
+> > 5-word memcmp() we have to do in order to verify that we found the right
+> > bucket anyway.
+>
+> I see slightly worse performance, but within the noise.
 > 
-> "repo info" learns a short-hand option "-z" that is the same as
-> "--format=nul", and learns to report the objects format used in the
-> repository.
-> 
-> Waiting for review responses.
+> However, just stacking two words won't do if only a few bits of the
+> resulting hash will be used to find a bucket.  We could mix in more bits
+> and smear them all over, but if that's done by a deterministic function
+> then it could be applied during the construction of manipulated object
+> hash values as well, no?
 
-I've answered your last review, is there something left to do in
-this patch?
+I think the difficulty in manipulating scales as the number of bits
+increases. So yeah, if you are worried about the low 8 bits, then
+XOR-ing in another 8 bits is not going to do much. But your table is
+only 256 items long, so you don't care much either way.
+
+At even 16 bits, it gets hard for the attacker to choose the low 16 bits
+_and_ the low 16 bits of the next word (you mentioned a project earlier
+which claims 28 bits). If you XOR in a third word, now your 16-bit hash
+is using 48 bits that the attacker has to control. And so on.
+
+> Perhaps salting with a random value determined at runtime would help.
+> Not XORing it in (pointless if the other value is controlled by the
+> attacker, as the result would still collide), but using it as a mask to
+> choose the bits to take from the object hash?
+
+I think that would work, but XOR-ing the higher order bits is easier to
+do and I think produces a similar effect. Let's shrink the problem for a
+second. Imagine sha1 was 16 bits, and we wanted to create an 8-bit hash
+to use in our table.  The attacker creates two objects with binary
+hashes:
+
+  object a: 10111001 11110111
+  object b: 01001000 11110111
+
+They collide in the lower 8 bits, but we don't want them to. In your
+scheme, as I understand it, we'd come up with a 16-bit mask that has
+exactly 8 bits set, like:
+
+  11010110 01011000
+
+and then picking only the bits where the mask is "1", we get:
+
+  object a: 10111001 11110111
+      mask: 11010110 01011000
+    hash a: 10100110
+
+  object b: 01001000 11110111
+      mask: 11010110 01011000
+    hash b: 01000110
+
+So I agree that is hard to foil without the attacker knowing which bits
+you'll pick. You've made their job 8 bits harder, because they now have
+to control all 16 bits to get their collision.
+
+But if we instead XOR the words of the object hashes together, we get:
+
+  object a[hi]: 10111001
+  object a[lo]: 11110111
+        hash a: 01001110
+
+  object b[hi]: 01001000
+  object b[lo]: 11110111
+        hash b: 10111111
+
+So you're flipping bits "randomly". It's not truly random, but is coming
+from the rest of the hash the attacker provided. But for any bit they
+want to control, they have to control that position in both words. So
+they're back to needing to control all 16 bits to get their desired
+hash.
+
+And as somebody who just hand-computed those answers, I can tell you
+that the XOR one is much simpler to do. ;)
+
+-Peff
