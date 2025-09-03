@@ -1,96 +1,126 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A9E2E8E07
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 21:21:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376B72EB5BF
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 21:28:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756934521; cv=none; b=klU0BTOO6CcJGwv8iFVLvGlHrRZue8KigWQK34oa0utba3ft14oybErA+WvhJlu9eTrj3tKqzuT/a/SnKFGoLqUY+BdYtM2gI5xS2p0Ig1RVMU8HieBjgaBCA2mHoA9LcHe/WbRDxamOu3Tb6t1JgfxlGlVo401jBu9r8yHLics=
+	t=1756934931; cv=none; b=O3pwqjo3Vjebhw2WPrtRx0+GgZt6HmUzsY7xQ0Jeb/VUN431EUPALqvKIEZNylDZZhynca0xlZnyWz7whqITq2C2boSL6ufcr5xNMD/KnBWn4oaS6pnyBEF8O1xKIDn/g7pl4KnKGdcGnbNH0qbrKRlN7q1C0E5mzx22xlzcjjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756934521; c=relaxed/simple;
-	bh=mJAba1olcjzKpnPtYlmnasIvWXA7Qw4WmCUYYCpjfB4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VvrB5dzuW/6zIICvd39nAioStzgpSHJgJcOYRIT049spbrHiLIqkvndLbopilFLalyNgApB9DzIqiVY8ZEYELHtaCW9al8HZwkokgZxima9STNzEQu7jw/ljEBxPTJlcj6b3VfR2VOId7OMNy08T+jDb9Xz2KHNly5j9v05aHMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-726721d76a7so122466d6.1
-        for <git@vger.kernel.org>; Wed, 03 Sep 2025 14:21:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756934519; x=1757539319;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qNc95vt3rMaw3+6yTLYE2vTtTzDjHp+HtSVuZT4tkmE=;
-        b=Cc6k5l33edAVuQeYT+5TmLascXuBSMpE8FG6+OHEeLrz8D/vopYFt9a7i0sV/Girxe
-         yko9AN+sfRsGAJtsgP1wBf2kuo8xWid855/efiS0GRxCK+ZCYYsKCwz8w39KGTjR2Mhd
-         76XL2HWFBaYDUrKGyHlqNCINDRDUn9fc4MwNVYkdXfs9UpdcIUbtzOThbYMxNul7D2A/
-         jktmJXsTgNQrDVrD6tUGHnuAhdZuo7CAWk6cpwJfcpvr6mNaOltZ2vUQ4WVc6R7mpCP6
-         dOPeFpbZpqzKxfJjQ/6xgmPOeKoFr2NIeVZC25LRepXEFsqF+TA75AXjIi/HLIzaXzoB
-         +zsg==
-X-Forwarded-Encrypted: i=1; AJvYcCVOuQc7C5FeoupKBcNXS0dPv7AaJQA7IaA9PV+hD2HiedzeHUd7Ueo9EDpzDcvJBGspZA4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzCZBF3u2edAN9fZ/0EDfPG9rcTxeesgygprTchkUgeyeKj+bNq
-	3yhPAxvJk7xOXCSUzVU43J0niFTkmA39r0tjmeOYsGV6S41yDmaQUQqaGVuFTIB44rFa3/cSi9s
-	0HlkNZHqzbul6ZPv5q3C+y5ChRxCMToA=
-X-Gm-Gg: ASbGncvuFAhzRel5U0cNQr1PCwlDOMrMtZi0+7+bTbcF776W9fLbnaAJGJSzdVlj7y/
-	to6lFxLcTU6XMhrfSzH3NTwrNgjy9IOXWuoL4z31GdT36UEnsKtRncdiOJFe8llIis1K6EXku5I
-	B045EiVxwoIX+rRSTguTaXeETV3U5YO/xjMfMeWLkyvLFSmaF17zy3rp+RyBhZpd6ADg3QhGa6S
-	eInyg==
-X-Google-Smtp-Source: AGHT+IGdd3uMQtHWAXAVBoy1vmQcPpA09k0bVEdHE9NCw0/CDdBibwZ79Qtlgj3km1AdljbJehogsIt+3L7KlLQ1wOE=
-X-Received: by 2002:a05:6214:21eb:b0:70d:f55b:e940 with SMTP id
- 6a1803df08f44-70fa1b87094mr146215196d6.0.1756934518706; Wed, 03 Sep 2025
- 14:21:58 -0700 (PDT)
+	s=arc-20240116; t=1756934931; c=relaxed/simple;
+	bh=okipzJux//nZXiLV132D3W5C7YIFNDoIna6+VQPjEQg=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=XKQ+t4O064NYnHrviSb5WeWx+pGp1aD5y8shks1ZcJDnAxdAsVluWVJG5q61zWz9cMu76SoEmDWGqlTjfvH958nIuddPh2Q71dhpNt1hmc+AYa6cvzyJ6CnnLLbBeg9PVwsYtwxX5OWpJd0urxobr4vq0gewLBE8auiAuAysVDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=jUeMzF9p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UtuYTLsv; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="jUeMzF9p";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UtuYTLsv"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 55CA1EC01FF;
+	Wed,  3 Sep 2025 17:28:48 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Wed, 03 Sep 2025 17:28:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756934928;
+	 x=1757021328; bh=/eCzIM8iS7xAVb4D7IYRupdr0MCrKG94M4xjHfnCpBY=; b=
+	jUeMzF9pxCUMRtj/TUr4BcsA/BR0q+cTp8D6BqLKJBeVnSF2bUWfC4pmKdov+Ux7
+	0cABHfjb+YOy2TFcB+wmFv7T1p9kT3nbXP8h7H2ZBms3Jl3gGA0R2eF8Op94/EjK
+	AAuVBwqvS1ZLgddaPuTZcVTEjW8gg4TUA54CY/oYntvqYvs5LW9ntR7YRvhj1XPf
+	koboHfU5si6LdB3SJLRy4pZhkuTaltQSKkHLYrkw07poDy4zxm0TpJ8cTEWc5SJI
+	yq2G/jaSJ5HAAr2u2Vujb/di8hcep97ym3QNFkb9xBJY5eBMq9aBP1pZu47Z+pTE
+	FR44/Pz3oajmwRvh4QhXZg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756934928; x=
+	1757021328; bh=/eCzIM8iS7xAVb4D7IYRupdr0MCrKG94M4xjHfnCpBY=; b=U
+	tuYTLsvqx3PNB0mqnkGgk+3qDCwjJNVJoXrOcQ7ilNRYu7+VIDUgpi0mawM4bIGy
+	hh7kioRdAcG65Cv/fo20PneVhrwlg/W2eJgAr5j+GqM0yUyq5faNvF0Gyz05kX80
+	Fty0xXu17ITjbbixW/fSXicVG+pre+pn+pSIk0rOE4FIz/7vEAC95ocIM+/Ql+uJ
+	MkOrZtrnsYr2EsLAJzRXx1dULnGpt5UzlqDivHlJPbOXkytozk1K68pjg9tQ/nZh
+	p2j5MaIWkCP7p3h/M3d19FOFCVHV5JYV8NW89eG5e5stytCzNbN7oPTbecTPToei
+	eWZpWjmx/GiqJYWJkKqGA==
+X-ME-Sender: <xms:ELO4aGE2gaJrul-ePa4UrTRta--2M5yTF_uUh1d8lW9whKZ5RQzcHw>
+    <xme:ELO4aHVpQc_Zu1g_Sx_SEn-8lBBKzg-EndiUIkx9TA25Nxtqk4KqL3QHVSEX9pntJ
+    xbM_l5sFNMBQDVOnm0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegvddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    epofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhirgcu
+    gfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnhepgf
+    evkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirgesjh
+    hvnhhsrdgtrgdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghp
+    thhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hg
+X-ME-Proxy: <xmx:ELO4aDMr2LQ5sbFwqz-48Vx1cq7zdjuFl1Nk41_G5yvTLsmmD3Pk0w>
+    <xmx:ELO4aHZsH_GFq7hQhHZEJtZ8Pm-uPKKBFX3SbMkmLEWXtnPVkmyRLw>
+    <xmx:ELO4aB2AMYWshzyvPYlfSRD0a4TSn9im3XSrxLdtrijdPuyBNtCxiw>
+    <xmx:ELO4aNet1PctgoO_wbQ9aG2xFXS3EO_Ssv3ddbC9jjDz7YKMWrO7fg>
+    <xmx:ELO4aN6-QnGteIeCAcrAZwecY6Sh3ofzq1vX91bG_Kg8uA4NaIITIY2p>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 19FC3780070; Wed,  3 Sep 2025 17:28:48 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1756311355.git.code@khaugsbakk.name> <e81023edb2d78d2be0ecffc071f2c5316b0c7a32.1756311355.git.code@khaugsbakk.name>
- <9611573e-fb0b-49d5-933a-50d8e0603701@app.fastmail.com> <CAPig+cRgBXX+b=P31VjQ6Dd4mciFvaUJ4T1oeOGjk7mwV-9KMw@mail.gmail.com>
- <xmqq349czcl8.fsf@gitster.g> <CAPig+cQkVP57n_FE6dJ0uxvai-J7usxKFp8gzfEbPY=Ytsd6=Q@mail.gmail.com>
- <CAPig+cSL=-gD5+WomF7-hYjVJ_PH0m+0i8g3F=E_U3k=QNHr8Q@mail.gmail.com> <15bb8d07-675b-4ccd-8345-ab5861319faf@app.fastmail.com>
-In-Reply-To: <15bb8d07-675b-4ccd-8345-ab5861319faf@app.fastmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 3 Sep 2025 17:21:47 -0400
-X-Gm-Features: Ac12FXz71EWlJY1vLg5Z1lcLM4aoevQ-7jaxiNbWUI4-pOLofj86BDm1IeQ_auI
-Message-ID: <CAPig+cQdwr-a_B++=2+q4mV8oZ7VLTYEQ9wnVP84jFYkTHFtHw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] usage: help the user help themselves
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-ThreadId: AJ8O7vPh7Xgs
+Date: Wed, 03 Sep 2025 17:28:27 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>
+Message-Id: <07e52117-96da-4443-8974-08a22516ed75@app.fastmail.com>
+In-Reply-To: <xmqqikhzdz0k.fsf@gitster.g>
+References: <pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
+ <pull.1962.v3.git.1756918202.gitgitgadget@gmail.com>
+ <xmqqikhzdz0k.fsf@gitster.g>
+Subject: Re: [PATCH v3 0/6] doc: git-checkout: clarify DESCRIPTION section
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 3, 2025 at 1:54=E2=80=AFPM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
-> On Wed, Sep 3, 2025, at 18:50, Eric Sunshine wrote:
-> > I realize that the changes made by this series are not in any released
-> > version yet, but from reading the emails still arriving which argue
-> > for retaining the command for reasons of muscle memory or because of
-> > its (strong) mnemonic value, I suspect that the hint(s) this series
-> > adds may not be complete enough. In particular, the advice this series
-> > adds (use `git log --raw --no-merges`) seems to be primarily aimed at
-> > scripted use of the command. But the muscle memory and mnemonic
-> > arguments suggest that advice should be given for interactive use, as
-> > well, such as proposing that the user can create an alias.
+> Not just you repeat having bulleted list in your proposed log
+> messages (which I already said something about, remember?), now you
+> have them in your cover letter, too?  You must be so fond of
+> bulletted list X-<.
+
+It's true, I do really love bulleted lists. I see now that I misunderstood
+your previous comment about this: I'll avoid using bulleted lists in
+commit messages and emails in the future.
+
+>>      ++	Switch to _<branch>_. This sets the current branch to _<branch>_ and
+>>      ++	updates the files in your working directory. Files which are
+>>      ++	identical in _<branch>_ and your current commit are left unchanged
+>>      ++	so that you can keep your uncommitted changes to those files.
 >
-> Good point. I would suggest discussing it in the
-> breaking changes doc under a new "For Users"
-> section. I would like to avoid expanding the error
-> message too much due to the already mentioned
-> fear of overwhelming folks.
+> Here "left unchanged" is technically correct, but somehow it gives
+> me a (n incorrect) connotation that they are not modified since
+> HEAD, which is not what you wanted to say at all.  I recall that we
+> once explained this not as "left unchanged", but as "changes follow
+> you", and I found the explanation easier to absorb.
 
-I have doubts that users will consult a document when presented with
-the message.
+I like the idea of "changes follow you". Will work on making this clearer.
 
-> I've seen  "troubleshooting" questions from git users
-> who got one of those long and well-described Hints
-> like e.g. detached head and default git init branch
-> when either the msg already spelled eveything out
-> or the msg was purely informational.
+> OK.  Do people understand "making a(ny) changes" refers to creation
+> of the new branch, I have to wonder, but if so, the above is much
+> much nicer than the original text.
+>
+>     This fails without doing anything and without creating a new
+>     branch, if checking out the <start-point> has to overwrite your
+>     uncommitted changes.
+>
+> might be slightly better?  I dunno.
 
-I didn't spell it out above, but what I had in mind was something very
-simple... not at all ong and detailed; for instance:
-
-   For interactive use, define a Git alias `git whatchanged`
-   which runs `git log --raw --no-merges`.
+Makes sense. I'll be more explicit.
