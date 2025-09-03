@@ -1,169 +1,95 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0675B217F33
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 22:10:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AF72ECE82
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 22:11:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756937451; cv=none; b=YS7f+df/GNxCoIJWVOZpMxuulvVaNYWEjsOJipqAuD4mwuaDxDt+eJ95D6RQAmY5z1CsfhhFmvwQOsp9x0iM5WcB2uP4BxmEHxzlHvrx2dSZgV5+2bjAse79lEaRKyA6B2UJ63I944xMWz5sHT3oIKqgm3msJU/gYpzo59VBfUg=
+	t=1756937506; cv=none; b=rmpy4pzkez9zOc2/1RFiZI47bCr8NcYguzfqfc8TwBNPJlueKj4LORyTWrWYE5RyMLI4xNNqCaV+VbWer2TjnvlZljA5PYSqrEsRyZT1y3iORHYIKb5TPKgCyZ1+oargvU2s5xT1NEjryVdfGajmeROc0RiJU1j2qgPdDlobZjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756937451; c=relaxed/simple;
-	bh=+64M0ueCQz850qwZK87rSLwEdNGVIq8MtTABc7jJFUY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jzehDl1Yf7ytGXZHHdbeoX+eZEQ2solqk0XwKuqGKrz6CD+xkf+r2Nxzg/3po4JpsWUs701rJ6wxokrmVcX5ydr+2bbl4TuOTgEECTVE9atME7YJTS0ESEr3BtM8zGGmJTUb9G3jOIYXEJlhD2n3dLxvgmLeg1JPcNVibLzGdKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AJhxjRpJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R1bOOYX3; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AJhxjRpJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R1bOOYX3"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2F0A11400554;
-	Wed,  3 Sep 2025 18:10:48 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 03 Sep 2025 18:10:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756937448; x=1757023848; bh=GtiRj0zIVm
-	0Qep57MYcr5CjmqsJQmByouqyus26Pe/U=; b=AJhxjRpJkNMP0RcmkYWO/2vWDU
-	sRoNcEXNfeEpCcSE45g+1PXZQz7PBG0l8MCek7ZDR9GvhJxt0sf8KWR9wcSZzJTt
-	eKxtCqk7uW+MZb2ZwaDUT1/+r27Onk9OCd6d29GGpd+mcEueQIDhVYOOT3czwP43
-	2cSK6xh+LfY62gkdL5uStpUkab88G/WWRjZ3M5nLS1bCrvR4owTwL0NkQB1e/OGQ
-	+KNdkZT/ox42Om0BOGui+W8Cwx0djtsnARtPeZskxbjOZXhsA96wrqi6ROfaHUGa
-	Q+3LCud/806nsCBJvRMh0I2GwbdhFx/5l9GkYe6GcPYH/wM/7zg9MMuCoZ9g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756937448; x=1757023848; bh=GtiRj0zIVm0Qep57MYcr5CjmqsJQmByouqy
-	us26Pe/U=; b=R1bOOYX3fdzxJSFMpPJxKTTYCkBcgIerxKv4tFPpwpWCSKmzl4O
-	pgHIktrLo7A2nk7cqkTP2QgOZWl5BcBf0DxbQ6KJrihPxdGbFFFXrFDDbIQt5RKI
-	pddXxalBiu0KsxqorqveSVQC10UCYRejM1TMNRkR1fQJkMHUMVBLsNc6yiAsNYua
-	iS0B+k5acUAEss0TkD9VZk5kbYBNBcJHQC5DrNakfhWc8pmhDg4bCZ1WrLcZpo2w
-	BMvSRfwvIqNyVRKYJfz8NOwQ+RuhYa4GLODwgdByAg4Xtbiz7PCBStkzbXovxzj1
-	n9xcJ99kC6f/YE+2eAEXE0MaqZECPSsrMvg==
-X-ME-Sender: <xms:5ry4aFXGfZRgLgQuh2gwLHNMhZ8uB419Gptbh9T7C558PIcffttevw>
-    <xme:5ry4aAXhRR69oYiuda0deb3FwvXHOsRmqXE_hYAmvOgW_NigakP9VTNjslCv6N0Jz
-    B6MxmX8tENWTPpeEg>
-X-ME-Received: <xmr:5ry4aAQdKn8btYwP3oKm3KyZg-OaKaWoikguGBE2k4_e1N7-HhbhgKLMraiUjJCTBOJoNpfAVCI0x34yQ4zYccGFMVa-8A-KWpyOMss>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegfeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepvdegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshgrnhgurg
-    hlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiug
-    hgvgdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphht
-    thhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggssedvhe
-    eisghithdrohhrgh
-X-ME-Proxy: <xmx:5ry4aPFL-M61LLsTg0eY-YXMcZr9C_Oi4vr4WqzyjZ4SCjJJRd5SUA>
-    <xmx:5ry4aAQjSQJU5cW_Wu20GPShSLicxnjcSYu1AmKKtPdPb_wJbGywtA>
-    <xmx:5ry4aJrABrcav4cJ-_6l_8pkQ_X28Pphpoy0oJ9y0c0B9S9AnLl2KA>
-    <xmx:5ry4aGpuvooEDiVKIz3LTR1cQwr5YCfN-We82Po0y6REgTaa8UNqsQ>
-    <xmx:6Ly4aJkGakaTsBq0YkzsNOejBw8w8J5v8VDe7uVvvRe3PjOwbPcovZEN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Sep 2025 18:10:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Taylor Blau
- <me@ttaylorr.com>,  rsbecker@nexbridge.com,  'Elijah Newren'
- <newren@gmail.com>,  'Kristoffer Haugsbakk'
- <kristofferhaugsbakk@fastmail.com>,  'Josh Soref'
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  'Christian Brabandt'
- <cb@256bit.org>,  'Phillip Wood' <phillip.wood123@gmail.com>,  'Eli
- Schwartz' <eschwartz@gentoo.org>,  "'Haelwenn (lanodan) Monnier'"
- <contact@hacktivis.me>,  'Johannes Schindelin'
- <Johannes.Schindelin@gmx.de>,  'Matthias =?utf-8?Q?A=C3=9Fhauer'?=
- <mha1993@live.de>,  'Sam
- James' <sam@gentoo.org>,  'Collin Funk' <collin.funk1@gmail.com>,  'Mike
- Hommey' <mh@glandium.org>,  'Pierre-Emmanuel Patry'
- <pierre-emmanuel.patry@embecosm.com>,  "'D. Ben Knoble'"
- <ben.knoble@gmail.com>,  'Ramsay Jones' <ramsay@ramsayjones.plus.com>,
-  'Ezekiel Newren' <ezekielnewren@gmail.com>,  'Josh Steadmon'
- <steadmon@google.com>,  'Calvin Wan' <calvinwan@google.com>
-Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
-In-Reply-To: <aLfU5sEa-RE3X4G2@pks.im> (Patrick Steinhardt's message of "Wed,
-	3 Sep 2025 07:40:54 +0200")
-References: <4dffd698-9d3c-41c8-9d3f-0d3750e683d3@app.fastmail.com>
-	<031601dc143f$7a9a25d0$6fce7170$@nexbridge.com>
-	<CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
-	<aK5mJI1NfVQDmDXN@nand.local>
-	<01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
-	<xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
-	<xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im>
-	<aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
-	<aLfU5sEa-RE3X4G2@pks.im>
-Date: Wed, 03 Sep 2025 15:10:44 -0700
-Message-ID: <xmqqms7bchln.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1756937506; c=relaxed/simple;
+	bh=RYWCq1YO6mJK5pjnx9dM7S4bobU30kqDse6+36shiBA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q3ePZQg8C1683Fiy17pQV1mlzheKJ4R1/XWnH3jY2XJPs52ok/QGcxBkHDLJD8KZ0N2a7KZV3iP2A/DARq8HA919XirqpATHf71dEvOFqvLEsxAq/Gk0VJxYvkCX2lE+MyTEcGSXhl5zhCjz6kHr87PkGWjxMRkzhnf+DFNiSsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4b494e774bfso988761cf.3
+        for <git@vger.kernel.org>; Wed, 03 Sep 2025 15:11:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756937504; x=1757542304;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JtZu0K8pVnYpEgx8+xkKplTWorU93Ks6nu6DBHG3tms=;
+        b=i37m9CtNQX5qXvxPCBcs1yxxDHaUeEoYW+Pz+9GogvmU/0rxEc8uFm+pkRAtBS71+c
+         8Q2pAJTSC2K88SKbO2sLxp4RSsSqJCZQ9u0NftJGenT3ivMZEiw5m1hoPg2t/uXnb6mi
+         sz6PywAslzFxNKveQbwk9i5QYZsf7MJarUP7ir3O4dkRi6xmzWiWrt/+dOYVc1NB2zNL
+         ZbfJ11ROOqAVd90rptiKOMt7bWQWaIPAngv192BFYMGYfSiVwovYQaKI2U/3gXJ9YUWX
+         VVE4H8heGaLU2GYSFeRNnqVWP3TtIteYmQ93sr5V6hHxmrdNn9lmlDRkX7A+J1eC78Xi
+         LTqQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV5O08mnmxsGJvwBybFCnfv27OGI5xPHV7zFbcp74+CX4dslnuJxmYE4OBdy95XUJBV2HY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxqorrhD9IGDo7szj1lN+tzDS9bO/g+drEnpapwJQikuVGg5IXp
+	zNuf3gnzCL7SIZy4rzxHiDcAMhb2ZHrNv8Il6wyR4TaJtQJrD7mUdU2xhATXJiwk+TIcvf85C5b
+	hZ3yJdMW7xNAyMtu+1/0qUtLg+pm+A98yIg==
+X-Gm-Gg: ASbGncv3wgRZJK6dFsMDBrrRvbPR1cbnw4n1zio2yF159GnPSqz/4t19WNcCIkWMfWz
+	4kXd2lu0OKcX+CbvIMyTru2hJir1zqUQZUeB6dVa2hwFrFEzg5fzVNS9+s9xu4G1YSuxuN5Wc6+
+	DyhJ4H1m7RLHx4lzjqKATiPtao6gtciFyyGMDLiGTGyx9PO3RCqvZ0pMmzKiUPwC3UXi1hkN10d
+	lJtFA==
+X-Google-Smtp-Source: AGHT+IEWNlP+0JZHssPL7/iYjkHkb2zpDxP84bR7m5mEQP3Ex2l1//ryzEeWoOtG+MYGv285pB8b3vQdwqQEon1+Cvo=
+X-Received: by 2002:a05:6214:21eb:b0:70d:f55b:e940 with SMTP id
+ 6a1803df08f44-70fa1b87094mr147370926d6.0.1756937503555; Wed, 03 Sep 2025
+ 15:11:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1756311355.git.code@khaugsbakk.name> <e81023edb2d78d2be0ecffc071f2c5316b0c7a32.1756311355.git.code@khaugsbakk.name>
+ <9611573e-fb0b-49d5-933a-50d8e0603701@app.fastmail.com> <CAPig+cRgBXX+b=P31VjQ6Dd4mciFvaUJ4T1oeOGjk7mwV-9KMw@mail.gmail.com>
+ <xmqq349czcl8.fsf@gitster.g> <CAPig+cQkVP57n_FE6dJ0uxvai-J7usxKFp8gzfEbPY=Ytsd6=Q@mail.gmail.com>
+ <CAPig+cSL=-gD5+WomF7-hYjVJ_PH0m+0i8g3F=E_U3k=QNHr8Q@mail.gmail.com>
+ <15bb8d07-675b-4ccd-8345-ab5861319faf@app.fastmail.com> <CAPig+cQdwr-a_B++=2+q4mV8oZ7VLTYEQ9wnVP84jFYkTHFtHw@mail.gmail.com>
+ <20250903214415.GA1915988@coredump.intra.peff.net>
+In-Reply-To: <20250903214415.GA1915988@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 3 Sep 2025 18:11:30 -0400
+X-Gm-Features: Ac12FXz8FaR0iqyHrFbqqUM14XDJm6rICyw_0C8iQ4h0sKNKiMpIk74I6v2iKVM
+Message-ID: <CAPig+cTN9vwoquOKCRz9TXRLtwHaxF-mL6xbbXxUmoHxZkW5rA@mail.gmail.com>
+Subject: Re: [PATCH 1/4] usage: help the user help themselves
+To: Jeff King <peff@peff.net>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> I still think we need to be mindful around the community though. I
-> understand that we want to have Rust in the codebase, and as I said I'm
-> in favor of adopting it. But we also have a certain responsibility with
-> Git given that it's used by almost every single developer out there.
+On Wed, Sep 3, 2025 at 5:44=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+> On Wed, Sep 03, 2025 at 05:21:47PM -0400, Eric Sunshine wrote:
+> > > I've seen  "troubleshooting" questions from git users
+> > > who got one of those long and well-described Hints
+> > > like e.g. detached head and default git init branch
+> > > when either the msg already spelled eveything out
+> > > or the msg was purely informational.
+> >
+> > I didn't spell it out above, but what I had in mind was something very
+> > simple... not at all ong and detailed; for instance:
+> >
+> >    For interactive use, define a Git alias `git whatchanged`
+> >    which runs `git log --raw --no-merges`.
 >
-> A compromise could be to ease into Rust: we adopt Rust, but before Git
-> 3.0 it is entirely optional. So Git will continue to work alright even
-> if there is no Rust compiler available. On the one hand this plays
-> nicely with platforms that do not have Rust. On the other hand it also
-> allows us to slowly iterate on the build infra for Rust, because I'm
-> very sure that there's going to be issues there initially.
+> I think that is good advice, but... it won't do anything until we
+> actually drop the whatchanged command, since until then we'll refuse to
+> override the command (even the crippled --i-still-use-this one).
 >
-> With that we can:
+> We'd need something like the patch here:
 >
->   - Build confidence in our Rust tooling.
->
->   - Figure out things as we go.
->
->   - Give distributions and other platforms enough time to prepare for
->     Rust becoming mandatory.
->
-> I think adopting Rust as a mandatory dependency out of nowhere would not
-> be playing nice. It may require significant effort from distros to adapt
-> to the new reality, so we should give them time to do so.
+>   https://lore.kernel.org/git/20250830022718.GB567900@coredump.intra.peff=
+.net/
 
-Not just distros on exotic platforms, but also for users who cannot
-afford to see regressions.  
-
-> Note that I'm not saying that we need to have both a C and Rust
-> implementation for everything written in Rust. I don't think that's
-> sustainable in any way. But any feature written in Rust should be a
-> _new_ feature that can be disabled and that users can live without for
-> the time being.
-
-Yes, if we can find such modular niche, it would be ideal.  But how
-many areas that we can cleanly plug an optional thing in without
-disrupting existing codebase are there?  Offhand, all I'd think of
-are a new merge backend, a new rebase backend, a transport helper,
-or perhaps a new diff-algorithm?
-
-> It would be a shame, but right now it's a risky bet to build anything on
-> top of Rust given that we don't officially accept it in Git yet. We need
-> to first make the decision whether or not we want to have it right now,
-> and if so how that's supposed to look like.
-
-One more thing that I noticed.  What are our plans for the two
-directories in contrib/libgit-{sys,rs}/?  IIRC, the new stuff from
-Ezekiel did not interact with them at all, but it did not remove
-them either, so I am a bit lost.
-
-Thanks.
-
+Indeed. I saw your patch in the other thread and had it in mind when
+composing my earlier email, even though I didn't specifically mention
+it (though I probably should have) since I was more focused on raising
+the point that -- given the recent spate of muscle-memory /
+mnemonic-value argument emails -- the existing hints in Kristoffer's
+patch series may be insufficient to quell future emails.
