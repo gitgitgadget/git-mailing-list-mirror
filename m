@@ -1,126 +1,137 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376B72EB5BF
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 21:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFFF2EBB8B
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 21:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756934931; cv=none; b=O3pwqjo3Vjebhw2WPrtRx0+GgZt6HmUzsY7xQ0Jeb/VUN431EUPALqvKIEZNylDZZhynca0xlZnyWz7whqITq2C2boSL6ufcr5xNMD/KnBWn4oaS6pnyBEF8O1xKIDn/g7pl4KnKGdcGnbNH0qbrKRlN7q1C0E5mzx22xlzcjjU=
+	t=1756935000; cv=none; b=rBA2Opgf84yozeXqrK7Qw+1JXwpv+bT7Jfr41LEjiR3HZQgbMzHZXrFcV2xt9VlmEjlorNcqIFDSBQwdXc0oezAIoxiuUaumKpBKGbQ7JUh249V21t80g0XY8by+J6Luk2+Vz/ftgPjFVBSiSZTOLgR0FkL7q5EvG2bFXDrFV9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756934931; c=relaxed/simple;
-	bh=okipzJux//nZXiLV132D3W5C7YIFNDoIna6+VQPjEQg=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=XKQ+t4O064NYnHrviSb5WeWx+pGp1aD5y8shks1ZcJDnAxdAsVluWVJG5q61zWz9cMu76SoEmDWGqlTjfvH958nIuddPh2Q71dhpNt1hmc+AYa6cvzyJ6CnnLLbBeg9PVwsYtwxX5OWpJd0urxobr4vq0gewLBE8auiAuAysVDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=jUeMzF9p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UtuYTLsv; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1756935000; c=relaxed/simple;
+	bh=q67vjLOuqDyrhp7QlQU90fzHHA6S3YmEgOC2qAcg+d0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tJd38A30sF5AODUttn4K8abkQ87aNxRBKw4cY1I0URzV87BpVjO/ovtbvP/RWrfTalPn/eLBo9314ANG5gTTZCeX3rtBIexpVakGhv/nmfTQUGqnvvU2BJkTHT/9Vl6VbELKR3XsvxsTSSJN9X+/M1oeUB9GMJ6jGjZ6gg41Kc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C6niFTZT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g50a49mJ; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="jUeMzF9p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UtuYTLsv"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 55CA1EC01FF;
-	Wed,  3 Sep 2025 17:28:48 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Wed, 03 Sep 2025 17:28:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756934928;
-	 x=1757021328; bh=/eCzIM8iS7xAVb4D7IYRupdr0MCrKG94M4xjHfnCpBY=; b=
-	jUeMzF9pxCUMRtj/TUr4BcsA/BR0q+cTp8D6BqLKJBeVnSF2bUWfC4pmKdov+Ux7
-	0cABHfjb+YOy2TFcB+wmFv7T1p9kT3nbXP8h7H2ZBms3Jl3gGA0R2eF8Op94/EjK
-	AAuVBwqvS1ZLgddaPuTZcVTEjW8gg4TUA54CY/oYntvqYvs5LW9ntR7YRvhj1XPf
-	koboHfU5si6LdB3SJLRy4pZhkuTaltQSKkHLYrkw07poDy4zxm0TpJ8cTEWc5SJI
-	yq2G/jaSJ5HAAr2u2Vujb/di8hcep97ym3QNFkb9xBJY5eBMq9aBP1pZu47Z+pTE
-	FR44/Pz3oajmwRvh4QhXZg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C6niFTZT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g50a49mJ"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0FEABEC0505;
+	Wed,  3 Sep 2025 17:29:58 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Wed, 03 Sep 2025 17:29:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756934998; x=1757021398; bh=FrX5h17fc0
+	saJIzvWI/i0onTu4+bBJy+xEEnUOFLNmI=; b=C6niFTZT2AV69cxU+pW/vUJb+f
+	GC1G9iSAyZPTm6xfPs9c8CyypxnKe1APMbP+AYFKVJ3gvTOseEgpN6Fj8hNWd2SN
+	Ywh9OhnUQRstKgHjzOWa6vqkBZ6xPpzhh987KcIHbHz3mVp8myKfVm431uJRB2k4
+	Mh2ILpyeoAdQaRA2UYIPJj050QY6QcGgfowNhlx0KBMTTakan2u9UTLU8fKymHBj
+	zwyrWT9In6EZXu1Zs6LvFuMX460ifo3mBAOlO7oImO7Vs0EH5M6a8maN0+tSn6JU
+	p6c9Lf3qBd7Qw+xtGh5Brk1SCWqXJBoZVf53XJ7fqz9qw8dIgZJF0RwY4vUg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756934928; x=
-	1757021328; bh=/eCzIM8iS7xAVb4D7IYRupdr0MCrKG94M4xjHfnCpBY=; b=U
-	tuYTLsvqx3PNB0mqnkGgk+3qDCwjJNVJoXrOcQ7ilNRYu7+VIDUgpi0mawM4bIGy
-	hh7kioRdAcG65Cv/fo20PneVhrwlg/W2eJgAr5j+GqM0yUyq5faNvF0Gyz05kX80
-	Fty0xXu17ITjbbixW/fSXicVG+pre+pn+pSIk0rOE4FIz/7vEAC95ocIM+/Ql+uJ
-	MkOrZtrnsYr2EsLAJzRXx1dULnGpt5UzlqDivHlJPbOXkytozk1K68pjg9tQ/nZh
-	p2j5MaIWkCP7p3h/M3d19FOFCVHV5JYV8NW89eG5e5stytCzNbN7oPTbecTPToei
-	eWZpWjmx/GiqJYWJkKqGA==
-X-ME-Sender: <xms:ELO4aGE2gaJrul-ePa4UrTRta--2M5yTF_uUh1d8lW9whKZ5RQzcHw>
-    <xme:ELO4aHVpQc_Zu1g_Sx_SEn-8lBBKzg-EndiUIkx9TA25Nxtqk4KqL3QHVSEX9pntJ
-    xbM_l5sFNMBQDVOnm0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegvddvucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756934998; x=1757021398; bh=FrX5h17fc0saJIzvWI/i0onTu4+bBJy+xEE
+	nUOFLNmI=; b=g50a49mJiI67ZnvqbYrtFHfTsGuKVPjR7rpUPXCvoZaqvGFjG3g
+	PeNwKBHxU51wdVTM5YiqPFBoFMfoEn+TCeyZ6dWZ+q4m/iA8Sbh2WTdWYr5x+bxu
+	TAOt1e9Vu6L5k+G/s6KzGzVD8choPVXqgiU2tm7TYmYvYxkE+upLd2t2IC5rm2CW
+	MVn77btvP2rJLpmEwPLh0r57ii3Jx/z5LxsTziRsitHQS7oZv9FZ36mZNgb/mClp
+	J3yczzLyfC0VnYvDSO45TbebavmU5Z338aoF62faygFzfQnXE7s9mCC4sxLOsxI7
+	5kbIyJeDh6DASF3ndSL+tpM53ndpAB7y6pA==
+X-ME-Sender: <xms:VbO4aGWs4w9X1jF_zkiGAAhBpES3GYIE4qVyuuf_th1TxRehLoYIXA>
+    <xme:VbO4aOG3AXf5P27p8_t4ngH5Y6eVtkjIEv19aMHDyi_Zed-ln3-sPd_rvwZfEneK2
+    BynvWeMI7e1YGpAHQ>
+X-ME-Received: <xmr:VbO4aA2b_F1h1bG5F2Z7ze3Uf-W3X6XNv3g5iFJkh0oNboKBaBzOkTnqWrog3DzzYX-Fcivn0pOT8NDUtAV7WxUu0oonHeIlXH0EUDo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegvdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhirgcu
-    gfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnhepgf
-    evkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirgesjh
-    hvnhhsrdgtrgdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hg
-X-ME-Proxy: <xmx:ELO4aDMr2LQ5sbFwqz-48Vx1cq7zdjuFl1Nk41_G5yvTLsmmD3Pk0w>
-    <xmx:ELO4aHZsH_GFq7hQhHZEJtZ8Pm-uPKKBFX3SbMkmLEWXtnPVkmyRLw>
-    <xmx:ELO4aB2AMYWshzyvPYlfSRD0a4TSn9im3XSrxLdtrijdPuyBNtCxiw>
-    <xmx:ELO4aNet1PctgoO_wbQ9aG2xFXS3EO_Ssv3ddbC9jjDz7YKMWrO7fg>
-    <xmx:ELO4aN6-QnGteIeCAcrAZwecY6Sh3ofzq1vX91bG_Kg8uA4NaIITIY2p>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 19FC3780070; Wed,  3 Sep 2025 17:28:48 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegs
+    vghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehjuhhlihgrsehjvh
+    hnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:VbO4aINv7WK4We3-0mpQRbLEMinQJtx3Um1xusdBharHUwYv7frQ8Q>
+    <xmx:VbO4aH6GCNwV23jyUqnc6ft3EdK4bjnx9EExfOjksk5PTMWllzm1ew>
+    <xmx:VbO4aK2_1-5SeupidiSsuVLiPtnD1k6626t0PcMRCTl4PIRcfYUr4A>
+    <xmx:VbO4aAxM_zikBacLBaNvLdu9ittfHmw5rTBL9N-GTavrtGv1gu-fpg>
+    <xmx:VrO4aLkSLvBfZV5ZXdigZONFiUNm_YsaCVipS3xPNMUkEVUDHMdwa7NS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 3 Sep 2025 17:29:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Julia
+ Evans <julia@jvns.ca>
+Subject: Re: [PATCH v3 6/6] doc: git-checkout: clarify restoring files section
+In-Reply-To: <90fe48cfe37852b9e245aa0f7b45383f9b879199.1756918202.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Wed, 03 Sep 2025 16:50:02
+	+0000")
+References: <pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
+	<pull.1962.v3.git.1756918202.gitgitgadget@gmail.com>
+	<90fe48cfe37852b9e245aa0f7b45383f9b879199.1756918202.git.gitgitgadget@gmail.com>
+Date: Wed, 03 Sep 2025 14:29:56 -0700
+Message-ID: <xmqqecsndy23.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AJ8O7vPh7Xgs
-Date: Wed, 03 Sep 2025 17:28:27 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <07e52117-96da-4443-8974-08a22516ed75@app.fastmail.com>
-In-Reply-To: <xmqqikhzdz0k.fsf@gitster.g>
-References: <pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
- <pull.1962.v3.git.1756918202.gitgitgadget@gmail.com>
- <xmqqikhzdz0k.fsf@gitster.g>
-Subject: Re: [PATCH v3 0/6] doc: git-checkout: clarify DESCRIPTION section
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-> Not just you repeat having bulleted list in your proposed log
-> messages (which I already said something about, remember?), now you
-> have them in your cover letter, too?  You must be so fond of
-> bulletted list X-<.
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-It's true, I do really love bulleted lists. I see now that I misunderstood
-your previous comment about this: I'll avoid using bulleted lists in
-commit messages and emails in the future.
+> -	Overwrite both the index and the working tree with the
+> -	contents at the _<tree-ish>_ for the files that match the pathspec.
+> +	Replace the specified files and/or directories with the version from
+> +	the given commit or tree and stage the files' contents.
 
->>      ++	Switch to _<branch>_. This sets the current branch to _<branch>_ and
->>      ++	updates the files in your working directory. Files which are
->>      ++	identical in _<branch>_ and your current commit are left unchanged
->>      ++	so that you can keep your uncommitted changes to those files.
->
-> Here "left unchanged" is technically correct, but somehow it gives
-> me a (n incorrect) connotation that they are not modified since
-> HEAD, which is not what you wanted to say at all.  I recall that we
-> once explained this not as "left unchanged", but as "changes follow
-> you", and I found the explanation easier to absorb.
+Hmph.  I agree that there is no reason to stress that you are not
+required to use a commit here (hence not much point in saying
+tree-ish).  I do not think avoiding "index" (which is not even a
+jargon; it is the official name of the thing) is necessarily a good
+idea, given that ...
 
-I like the idea of "changes follow you". Will work on making this clearer.
+> +For example, `git checkout main file.txt` will replace `file.txt`
+> +with the version from `main`.
+>  
+>  `git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [--] <pathspec>...`::
+>  `git checkout [-f|--ours|--theirs|-m|--conflict=<style>] --pathspec-from-file=<file> [--pathspec-file-nul]`::
+>  
+> -	Overwrite working tree with the contents in the index for the files
+> -	that match the pathspec.
+> +	Discard any unstaged changes to the specified files and/or directories.
+> +	This works by copying the file from the index to your working directory.
+> +	For example, `git checkout file.txt` will replace `file.txt` with either
+> +	the staged version of `file.txt` (if there is one) or the version from the
+> +	current commit.
 
-> OK.  Do people understand "making a(ny) changes" refers to creation
-> of the new branch, I have to wonder, but if so, the above is much
-> much nicer than the original text.
->
->     This fails without doing anything and without creating a new
->     branch, if checking out the <start-point> has to overwrite your
->     uncommitted changes.
->
-> might be slightly better?  I dunno.
+... we'd have to say "from the index to your working tree files"
+here.  In contrast, the earlier one is "from the commit to the index
+and to your working tree files", and explaining it as such may make
+the similarity & differences stand out more clearly.
 
-Makes sense. I'll be more explicit.
+Also, I personally find it easier to follow if you did
+"directories. This works by copying" -> "directories, by copying".
+It comes from the same "think again when you find that you are
+saying 'it means that' and such" principle.
+
+> +This will fail if the file has a merge conflict and you haven't yet run
+> +`git add file.txt` (or something equivalent) to mark it as resolved.
+> +You can use `-f` to ignore the unmerged files instead of failing, use
+> +`--ours` or `--theirs` to replace them with the version from a specific
+> +side of the merge, or use `-m` to replace them with the original
+> +conflicted merge result.
+
+OK.
