@@ -1,91 +1,87 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0588B24CEEA
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 18:40:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC1C368095
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 18:43:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756924809; cv=none; b=DX5/aHS9FnDeS3uUka4fRp+UEjoOMkKQVyMo+yQyNVGOx7LSYVnjI3IQObHphbt3Fv1f3vas54mupvumxng5D/nZOf/cAmodmUNuut3Tg5Q4qNaCYqv31wYwS0xiRbQE4vnp4p15BHQD95k7IsIa6g31rHVWo7zVhlvTfLXZguk=
+	t=1756924992; cv=none; b=j5DpC1TwMEWvjIbbu9Yyc264s+eYsXgMBWi4s3pMjCO/9EQ2gIyJ2tjdpfCnLdXpIzqUIFvZUaUG3qvS8fUmXqtSggZhOSudfQItABK6RTVmJwC53xNWVQXS61yW+f6be4m3p/Yocpi8FTBUiv92DNN3SeJC2T5RBkhP4F+1vCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756924809; c=relaxed/simple;
-	bh=VBooKnE2JCJAeertaOBFdRXyI+6goOTARW4MCtjD1hQ=;
+	s=arc-20240116; t=1756924992; c=relaxed/simple;
+	bh=4HJAa3tS8W3kIpz1IJg6cQ7gejfkwKy2/pGqU/ECFE8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XEdUeedV7QG1oWSAKaRHzTp57CQo9B3wyCZfL0ljpHDY3VZv23ExpHx7VPwXKSixE0PePLIVgrRZl2vryyUKkDEXwSGihatEXxiTtwX9VaphgI715szpRpe6oLGoWulALVdQW2kUoofiieU9p/QjgvBCY4Y0we0B4TEObMZjTvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=v8FWln0z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T3c48NLX; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=CbwSpfKaEw1YN97eCnHweSAH4hTuXP4OK0fDgM7vy93pzwBfENHjhpLVLRiGeTkGIUFLwPhBYIPMIQoCf8adNPFTreiR8swswRlQ4DFpC5e4UVPuHuPju1En/eFXQBKBihXK/I7BieaGQpdK2TbPryA/SMinkU6lDgKY22hBciw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VB8j196P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VNr4w4xK; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="v8FWln0z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T3c48NLX"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 296791400463;
-	Wed,  3 Sep 2025 14:40:07 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 03 Sep 2025 14:40:07 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VB8j196P";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VNr4w4xK"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 258A6EC0331;
+	Wed,  3 Sep 2025 14:43:10 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 03 Sep 2025 14:43:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756924807; x=1757011207; bh=eMToTlQKzM
-	4mOo/DzMp+QfYU4ezKegbyn3taHnT8LOI=; b=v8FWln0zg2PAfdRICPQXWPNYkH
-	Ljoo5D3bxFg2mnBu9TFt7bec3ZOFkYjbqjG3q1pzkvmXGItnNhuMQSnkddR3/9QW
-	ygym+lX3ixQK1/RJWskNve+jljx9UW2lWHX7jSiiTnsVjZ0XbQZNMBkSiAgI+Jrg
-	r8lg/iqDrM0TMRBtvMI82L46KMRZwXK2RZpCg9RJ7LiAyyNoK5FTgRcUFSC+A5Es
-	sJshqfOql0e66AIHtUun8DC4J8VEedali+MVnDxNHyTJpqDip0zR97Nu9fdLe1Gf
-	RKl9GjS7u7XxU/z23Y1zqvg3+1vBQZar8ppm0hR8juVhcxHzxHi7nifWjQuw==
+	:subject:to:to; s=fm3; t=1756924990; x=1757011390; bh=CKhlxwPRMC
+	bG6ycCzJlbJ+FtZ6HHi3s2dobBYlI//Ok=; b=VB8j196P+6gJ1SopYZakk9I8eA
+	nZrH59ovRx3VU3V2u58OjU9YVEvtvrTqamsLIm3NMZxy5rZpGWIAqUz+50U0wbIW
+	GfUvwOmPFyRfDKmzdVOi5arOrvPQsat09EAUXJZfsOYcLjhtIsrKny4LMZtetNKW
+	iRPnZAzGrz5Dd/bbSDQRYEkYo4fpYTV7YMKpaufP2duU66O4baUPie76US3II2XC
+	u3J3RfND5FxeAp8ihY/Hj/2al5OeJmvTO2JZi/ty14tOmy7RlTQPkqfBK5oSDlMz
+	aNbhHuM5ae2YdDvoSqoplh7m4C72BTVwIiU9v/Zy6qqM7eafGQpKYgPj6hPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756924807; x=1757011207; bh=eMToTlQKzM4mOo/DzMp+QfYU4ezKegbyn3t
-	aHnT8LOI=; b=T3c48NLXxvO655bdiXeN49FsQUZGZYjFUuDM16wK7ycd6fXpj9h
-	oheLrXhcRkWw8ERoro/RW0eerWO/oyHrJ+b1d6tjInC/NbgInqG6Ip7pmIttDh18
-	Hc40COr5YtqCgaqVa61Yadqwbosi3zxwPbYcVj1oVjncOA9PfYV9o2OEVs00LB4Z
-	TYtoFst0QikwG07JrG9sTpn3UcfQusbHwWb6dI/Jzur15hydB9tyqpa/vlc7DepS
-	3Ps3qttjaRpKKupH0uJl85ftUedMJn2ogdhTxJkfTyClArMjHW1JZxyYLsggSrBd
-	sp8LuMsUsXCnBXnufghV00pI0mHhuvB4mUg==
-X-ME-Sender: <xms:hou4aFukx2OKfiTBGv22ugfrtjgaajMQq05vZxmLtXq6k76o2kn_Cw>
-    <xme:hou4aCSRQ4-bFsjLIJPbcc7fjpcXSUUyDtkPHDdSiZq4aRNi-OZ-XE4vxVcCuooIv
-    aAOnenNmbQStJli3w>
-X-ME-Received: <xmr:hou4aB2EqAsRr3R1omGVovTCvTtELa7s1IPjacv6o4ZMbiPIdIpeJSrfnKuMQjpk1phX4RIozwWlrl2dJ5NqXwNjdGzH-SOsMThL3ok>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefkeekucetufdoteggodetrfdotf
+	1756924990; x=1757011390; bh=CKhlxwPRMCbG6ycCzJlbJ+FtZ6HHi3s2dob
+	BYlI//Ok=; b=VNr4w4xK3QVaZU89yqu5aqgRdMy14zVJYF5i1OwZalNpZ6SJLQs
+	EwycIlAPULiuLKxwxPdycL1A7XjQaZz7dXwDfWTfFy89FQmKOLJk0DM7T0cG573W
+	aZUjbAkXTJha2b5gp3jRpItF5fsSwzccJw3Xt9NW6F5SMSd0WXFPqEC76BjMXWkt
+	AX+td0+j8t6EAM5xy37sSoYaZLrxU63y/LCELtEikcJ5w7ifsz8dKJi37mnwhrLr
+	2C/4v9jFEqxF3PNvB/Nw+8kpwBTVt8DUUdmhqXpL4NtlRD5Lohxk3gwT/UEEbYJB
+	LrCpjXlHk8gmgxYRaXDkhkj4MEnnkz5Olsw==
+X-ME-Sender: <xms:PYy4aBzQt4-ok9s4RDYNMUI0s5awQ6UTk64xOFMGLV9FklDaY79CpQ>
+    <xme:PYy4aJse0MCVC8CGQDdyyLQwAXEHfEVt4muxNXsrHBTnTivLSOlctGPTcVF6TJAXB
+    hXLvNJqSNsDgR8tZg>
+X-ME-Received: <xmr:PYy4aLy57ZjE7lTDqFvGIVehkp0pl6g4NnR33BjybvSdkFyxwdjeihRgdwDid9uh5Y1k-oCXIcb0pTeeFnoZ5QyBqxvWK1kXDs8q68s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefkeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
     ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
     jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
     hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllhhiphdr
-    fihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
-    ihhnsehgmhigrdguvgdprhgtphhtthhopehhuhgrnhhgshgvnhefieehsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:hou4aPupCMKnlyB5lAeQ9aYpuoBYmMOk0Hz0-UjGWhh5-rAiO_t6Fw>
-    <xmx:hou4aPjcNFInNYmBJN_QkE5hO2YTVxiThFRTqzwWJfYh1d6PmZUhbw>
-    <xmx:hou4aI-jNdeJs4pi12vEFfHtySsk9IFbIuCZrYrdhBiXm91c1k9FHg>
-    <xmx:hou4aKs7hhGHSAAqXWNEE4JyTYmj-YVE31IGD_3OdfT7jG_drRghng>
-    <xmx:h4u4aLanZOm68YMr8jEPTNLDBWvgN94r606jkhuzFaeRqTgVytVE2S3V>
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtghhith
+    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtph
+    htthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:PYy4aEDM3FmrC62GKx1oQ15WZjrWBlC1_2e6-ou1zZGzNgGIJJBEyA>
+    <xmx:PYy4aBeWtPw-zFMyXUefoRcIxo1BX2qX5ATVPUUWzn4sik7gLRR_dw>
+    <xmx:PYy4aGkI-TRIUXS8plcdpjVKsOdsLt1dkv45cHhIJ6jjOrQCSsURNw>
+    <xmx:PYy4aAHvMBn65JCLLmb1K4dfq88aGnx-On15B1DPdcjvai20dfGvoQ>
+    <xmx:Poy4aOUdQag5qodFslFmsi12sL05mtqYxJ7W1qB-4Tn87flqVyS_TlfM>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Sep 2025 14:40:06 -0400 (EDT)
+ 3 Sep 2025 14:43:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  phillip.wood@dunelm.org.uk,
-  git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Wing Huang <huangsen365@gmail.com>
-Subject: Re: [PATCH 6/6] breaking-changes: switch default branch to main
-In-Reply-To: <9d52f24e-d495-44d4-b122-7d80d1f4b77f@gmail.com> (Phillip Wood's
-	message of "Wed, 3 Sep 2025 10:54:06 +0100")
-References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
-	<487d1a33130cb2fafadcf98da00a332a7408a0e8.1756308283.git.phillip.wood@dunelm.org.uk>
-	<aLbWuGQhriQCMFbO@pks.im>
-	<96e128d9-e5e3-4bfc-9e33-3caa75cacfe6@gmail.com>
-	<aLfHvl5JuttXrI0y@pks.im>
-	<9d52f24e-d495-44d4-b122-7d80d1f4b77f@gmail.com>
-Date: Wed, 03 Sep 2025 11:40:05 -0700
-Message-ID: <xmqqcy87fkhm.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  me@ttaylorr.com,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 6/6] midx-write: simplify error cases
+In-Reply-To: <aLgVRMxNUrdScrjk@pks.im> (Patrick Steinhardt's message of "Wed,
+	3 Sep 2025 12:15:32 +0200")
+References: <pull.1965.git.1756402795.gitgitgadget@gmail.com>
+	<pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
+	<7be25cf5349c389cf2887ab5b852779fc364bd7e.1756589007.git.gitgitgadget@gmail.com>
+	<aLgVRMxNUrdScrjk@pks.im>
+Date: Wed, 03 Sep 2025 11:43:08 -0700
+Message-ID: <xmqq8qivfkcj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,26 +91,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> When the variable was introduced in 704fed9ea22 (tests: start moving
-> to a different default main branch name, 2020-10-23) it was described
-> as "This `GIT_TEST_*` variable is meant purely for the transitional
-> period while the entire test suite is converted to use `main` as the
-> initial branch name by default." The way it has been used is to allow
-> tests to continue to hard code a fixed name for the default initial
-> branch.
+>> -	int result = 0;
+>> +	int result = -1;
+>>  	const char **keep_hashes = NULL;
+>>  	struct chunkfile *cf;
+>
+> I personally prefer to keep the result uninitialized and then assign the
+> result of `error()` to it. It's almost the same lines of code as we have
+> right now, but it has the advantage that the compiler will complain
+> about `result` being uninitialized if we ever forget to set it. So it's
+> overall way more explicit, and the compiler protects us.
+>
+> But seeing that Junio previously recommended to go into the direction of
+> setting it to `-1` I won't insist on such a refactoring. So please feel
+> free to ignore this comment.
 
-Yes, but ripping it out would mean that you make it much harder to
-transition out of 'main' and move to the next correct name when the
-need comes, wouldn't it?
+I am equally fine with uninitialized one, as long as compilers are
+trustworthy in all cases.  But the code path I made a comment IIRC
+did not necessarily have calls to error(), so the same number of
+code argument does not apply.  And initializing it to zero is worse
+than leaving it uninitialized.
 
-> ... like to keep the patches that switch the tests from using
-> "master" to "main".
-
-I have no problem with that.  I am still unsure about that "reftable
-cares about the name being 'master'" thing.  If that can live with
-any 6 byte name, we may want to fix it to something different from
-'master', for the sake of removing 'master'.  Perhaps 'banana' or
-something?
-
+Thanks.
