@@ -1,136 +1,123 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-lf1-f66.google.com (mail-lf1-f66.google.com [209.85.167.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEEA1E5B6F
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 13:39:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F80B2030A
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 14:11:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756906769; cv=none; b=MJydup/MroP9oRZb1rnUndyyazngw9WzXm1sF45z0jqpJN7QizRL7bk5japIca5sir5lNpsrgyrjfV5aw20BdEqUw21R6uN5PdL3cmtdBVeh0CnjJB8g6Zo83eUaJOgJPPGZpJyO1Fi9BQTmoaWp86TCG+3fqJj/Gsd+uLnCneE=
+	t=1756908681; cv=none; b=o83ATw7xidgzCrlUYgwcE61uw06dxXyYo83ulDiIaNjUsPfOrX+mmix5fiv7OMdCSqfYYflIldYmBiFDA95QlrTdOPBnk9cuq3uwuu3wotSvpvf3Usadc5bea4RU4H07n8+FUsuUBhVn/x4MBCcSshqtclS32yeu0EC95HWmcz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756906769; c=relaxed/simple;
-	bh=lo8RxKUL2XBHrMhDix0qhdJssQ7zSePczzbR+N/SaDc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gq8mcLEmKBKJp+Uz4W82ClDUfADLZeoLW2bWP+OcxAyLrIT4L8RHhjbZ3EMCfSGfF05fwoyCBlvmhPhdaXuzZIEWnOEn3+KcwCrKLfI4vZrhYh1qoPy0HvS9zILbTr1YkrS1B1pkHsi5H/orWainL/UWPqzt8iDD26i7xJYuvC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SFyCfcJz; arc=none smtp.client-ip=209.85.214.173
+	s=arc-20240116; t=1756908681; c=relaxed/simple;
+	bh=PVNjLaE1ZU1ngnjtcsfOKQIqj6/EcIw4mahP/LNC7AU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Fzh72ZY6MHGBb6lxgz17IsOtVb3VJiWRLsFaXBoT+1Q+WLYZ47TkpMdGmeP3CA6qWkERsVQrIGmxkXqQXpkuzFYU03jPThfAGzKtTFVCEjjxs40/Y/AdmwSAYAGwLk+b//PblHC6tHUg+JIpKlFs4te0HBPXrFsnxO2YJjX4RDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=anqtmEic; arc=none smtp.client-ip=209.85.167.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SFyCfcJz"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-24b21006804so16575585ad.3
-        for <git@vger.kernel.org>; Wed, 03 Sep 2025 06:39:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="anqtmEic"
+Received: by mail-lf1-f66.google.com with SMTP id 2adb3069b0e04-55f753ec672so4511295e87.2
+        for <git@vger.kernel.org>; Wed, 03 Sep 2025 07:11:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756906767; x=1757511567; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8opgXGigDB/7eo/cxi6dg4RQju841sJWE6SOXhgdR78=;
-        b=SFyCfcJzof8chVuV2NxQOrBYB5G70ai1elrnbyOD2P54vRwawKv7O7L2Dh8OjIMrrJ
-         nOPIaWTg1yMuF4A9NIZFDlIUjGqLoskjJ0Erof/ILZ1qkds2ism01KyFHXy5b4tVkpop
-         aJSd/VFDEG2dTvd74dGa8xDYXLChPV0snZ+IpXzDRRK9MNKi8WmUX5762DsDkvT7yZ8R
-         gazBvzZq2aRICuHZKrIYpv5Qdm7hmuEtv3ah7UXjPwOj74beTZn+iRw28y1He68lupd6
-         qyWxprXKtS1wnAIgO4UBvrfZHuKgLB9meWxBuF/dDaFIFH29YGvHn1/bvhNlYVXxUNcc
-         UQJw==
+        d=gmail.com; s=20230601; t=1756908676; x=1757513476; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=KM0HasdSeliZKTd6kZjwX1JZOHFeQvc8+3CRZuyRZi8=;
+        b=anqtmEicul5lVNP8fca/xTpRURkRevuKt+lX1QoairWaFudfhiDqjUhfyGJooSQ++s
+         XXlv+uRVYKGm+f212oF1B3EYaPUaUvF4Xy9nDq8KM3VUVuhfwFYaieuSlOIKYOEtKbVA
+         7wNOlyg7au7t7cZZQzSRq0lHlY4AQI7/+RP8YVw2jZLYoqsSWLF8PfwKbTN68gGfPOqS
+         067o6YI8Ne9gf/v+lUEIXqfsGypjOukzkY8GjlhicD3B3GbjaF0KTZ4ZQVtB0PZibGWm
+         Vo2Xr0mKbBGRYNSvg++8OrUzgIC1HLugxvFI3sDXFRRFvUp4WMOKxtnpYAaRFrymYVpQ
+         79aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756906767; x=1757511567;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8opgXGigDB/7eo/cxi6dg4RQju841sJWE6SOXhgdR78=;
-        b=vYg66P62baIX6krVbG88GFiBb9K1tEuHqq5Y1jpLr9Sff8kEk4bHv9xTnPVKACsYe0
-         +NCO6SG97JBNZgc+emazh1RlyJPn+qfJ7/oJF34zgJybKBC7fnMBQI5VDMiWr3sZm06E
-         7x3/601c5aKO0Kziz9SssLyVUolritMXT2p2MTw6VelKQPZdBx4eiXJZws3K5A6yMM4D
-         FzJPLIO35pbETPG0jgoc8/pUZ8jVZbkuGM2GU2bgBBnA7xQrKbErPas4rvJzXwevpw5r
-         6SRvJfNihTHo5hN0AoVuDOhYyZzU4EYUeOKL/qRJQ8Gysh3BL+ecOUA+Q29MzdLsTHUL
-         ozSQ==
-X-Gm-Message-State: AOJu0YxV0bUgUjPz2DXGWdaB++SVLSwv0PCRWdeN6xVmUSuB4ulDUnEw
-	HcRcM3t3S3ad1PA1wWQmFVQ1enWxIA9FahtFZPEaGg2r9cEaS5MFcFOc
-X-Gm-Gg: ASbGnctJbRp9Zv5cvB4RTHPop2wsl7d4uLHnwBnn9TdDO1Uq69W5vkFggGQR56lnCaK
-	jjx9LFcdrjRANfuAskdzZ1++n8cH4hLO9J97j4/qYjwTbzzUViyKclO3w6NRyYQ3yDVv7GBafq1
-	ksGDCaO2qEvty/khOLp4LmByZBaY9JEWnvLBmKpkov6yNyKqVVDNIFimxHsDjEaTdWwi3Hd2qxO
-	icocuQACT2gFVedPHi5ap7Uk4fKZCEmuenjQ2GwOOTxwoxuqqq556NNqJ7S4dAaeeK8aWKl6rYV
-	TdX0EqM9Y9qdMh1SrHm1QMR/AbJF4bWRbwBb5nkfF0j5eFF3Qps3kMkA3O+3vqc3KNfRXEOHn06
-	9N2TT30HvXGL/r1dNgUQ9I3JirQ8L
-X-Google-Smtp-Source: AGHT+IHWuKeZwJL1dHyl2dXW2tgQSxdr5IGRthS3763o562FKtAJz9B9eRwCQMnxVhRxim2Is6vH+Q==
-X-Received: by 2002:a17:903:38c7:b0:249:2d84:f416 with SMTP id d9443c01a7336-24944b766eamr192359715ad.58.1756906767115;
-        Wed, 03 Sep 2025 06:39:27 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-249066e042asm164093195ad.146.2025.09.03.06.39.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Sep 2025 06:39:26 -0700 (PDT)
-Date: Wed, 3 Sep 2025 21:39:32 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH 2/5] refs/reftable: add fsck check for checking the table
- name
-Message-ID: <aLhFFFKOo4CtVJJy@ArchLinux>
-References: <20250819-228-reftable-introduce-consistency-checks-v1-0-8b8f6879fa9e@gmail.com>
- <20250819-228-reftable-introduce-consistency-checks-v1-2-8b8f6879fa9e@gmail.com>
- <aK3fHRMFiRBYNiJE@ArchLinux>
- <CAOLa=ZR43JYu1ky_HF7nC4xkVe6B+fMWTNK+sczaar_8YNcd8A@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1756908676; x=1757513476;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KM0HasdSeliZKTd6kZjwX1JZOHFeQvc8+3CRZuyRZi8=;
+        b=hJvF1u2Od3UUSQszPPABucQMSYYPHn3HIkdgj6tjrFX8UAAkWhJ6oujHcRIqZtJclq
+         mdDZG5mzja23E+SB+kEKCP2sCdubvvgBFu4rCqGeuYeOxbicZwA24Yff7O00g8pNwePg
+         BJ9c2ORVMQlab4cOs9ncJwrOouDktx7BSniWw51ZsW37umqRhgzMNPu+lODdfQuOHpjI
+         WRRW07iyUTbd0lD3X8XtulTAnp4ofxNtySCKrr+T5bqH1aJ7B1A0FpxW8Dkaxe7/0myA
+         YdzlAzSL6Z7bqfodle2nyBtY4HbswYt+AMVg0mgrxt8VwHIOCRCch5Y1U4/bMKpc1fdJ
+         MWAQ==
+X-Gm-Message-State: AOJu0YxtMLQp2iqtWspUpzU2NBzLX4Dru5gYMDJYha3x2yOSgFausTCn
+	hDXOQL2u0nZHyX+KfgI+3ZbNTyaNQJt7rRUGoQxD2BIkK2DhPTJz68MI+xuaHnvQE9/vi1nGMTo
+	MK8uGjkk9R9tIeC5zeP2FN1b4mTWeov2pwZcx0Rw4lg==
+X-Gm-Gg: ASbGncvuc4ZMwg+EN7IGfAQilZ07jV6A0ZfN7x7ZriMHq1yNxyh2uOpZdbFMYwgn1jo
+	2+QLouS7bGOi1MGylb5bhW1/tH3d6N9TVqoX/27CRNhZaFSCDwGKTwJcxiHdNrdbRhqDxqnXz7P
+	RXs4fm8O1ZbbXh+ERyiOLCKKCqcSTMncCNgorZg6RfWQOsC1UI/9HtGBXJ6xrwLgnnS+FkI2Bvd
+	7ZcWz1aH12qfkQX
+X-Google-Smtp-Source: AGHT+IFVwDyPYHYs7/rVE0rKW6D4WxIXB9G0/k0WdyohbYzR5kRCgVKDbSc4i/Xi60uBZM33uXOeGd2nuqd0UGbYXhc=
+X-Received: by 2002:ac2:4bc5:0:b0:55f:3e82:9c7f with SMTP id
+ 2adb3069b0e04-55f7099a779mr4152528e87.51.1756908675921; Wed, 03 Sep 2025
+ 07:11:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZR43JYu1ky_HF7nC4xkVe6B+fMWTNK+sczaar_8YNcd8A@mail.gmail.com>
+From: elhmn <elhmn42@gmail.com>
+Date: Wed, 3 Sep 2025 16:11:05 +0200
+X-Gm-Features: Ac12FXxMvTPcoHtJvkgjIjCcvvQc2HsEMctmX1VmSS89sX6iXFShHoyfsEJZ-vY
+Message-ID: <CACpeKQ=sPOc2AqsMT--2tu=BMEK9MaCAq5=PTG5w49gbRcQgVQ@mail.gmail.com>
+Subject: Reference transaction hook is unable to find the old_oid for
+ pre-existing refs
+To: git@vger.kernel.org
+Cc: ps@pks.im
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Sep 01, 2025 at 06:33:24AM -0700, Karthik Nayak wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > On Tue, Aug 19, 2025 at 02:21:01PM +0200, Karthik Nayak wrote:
-> >> The `git refs verify` command is used to run fsck checks on the
-> >> reference backends. This command is also invoked when users run 'git
-> >> fsck'. While the files-backend has some fsck checks added, the reftable
-> >> backend lacks such checks. Let's add the required infrastructure and a
-> >> check to test for the table names in the 'tables.list' of reftables.
-> >>
-> >> For the infrastructure, since the reftable library is treated as an
-> >> independent library we should ensure that the library code works
-> >> independently without knowledge about Git's internals. To do this,
-> >> add both 'reftable/fsck.c' and 'reftable/reftable-fsck.h'. Which
-> >
-> > A design question here, we name the "fsck.c" for the source code but for
-> > the header, we use "reftable-fsck.h", it is a little strange. Why not
-> > just "fsck.h" instead of "reftable-fsck.h".
-> >
-> 
-> Since the reftable code is treated as an external library, all
-> 'reftable-.*.h' headers are treated as headers which expose APIs for the
-> libraries users. We would have defined 'reftable/fsck.h' if there were
-> internal users of the 'fsck.c' code. But there are none.
-> 
+While inspecting the reference transaction hook code,
+I realised that the hook was receiving a CREATE ref update line even for
+references that already existed on disk, where I was expecting to see
+an UPDATE ref update line.
+That behaviour was observed for the file and the reftable backends.
 
-I understand the design. Thanks for the explanation.
+Using the `reference-transaction` file bellow:
+```
+$ cat .git/hooks/reference-transaction
+if test "$1" = prepared
+then
+         while read -r line
+         do
+                 printf "%s\n" "$line"
+         done >>actual
+fi
+```
 
-[snip]
+I created the commits A and B
 
-> >> +		uint32_t rnd;
-> >> +		/*
-> >> +		 * We want to match the tail '.ref'. One extra byte to ensure
-> >> +		 * that there is no unexpected extra character and one byte for
-> >> +		 * the null terminator added by sscanf.
-> >> +		 */
-> >> +		char tail[6];
-> >> +
-> >> +		if (sscanf(names[i], "0x%012" PRIx64 "-0x%012" PRIx64 "-%08x%5s",
-> >> +			   &min, &max, &rnd, tail) != 4) {
-> >> +			err = report_fn(info, cb_data);
-> >
-> > I think we could just pass pointer to avoid unnecessary copy operations.
-> > Besides that, I think here we report two different kinds of problem. But
-> > we would give report the user always the same message `invalid reftable
-> > name`. This is too vague.
-> >
-> 
-> Not sure what you mean by 'unnecessary copy operations', could you
-> elaborate?
-> 
+```
+$ git commit --allow-empty -m "A"; git tag A
+$ git commit --allow-empty -m "B"; git tag B
+```
 
-In `report_fn`, we would copy the `info` value for each call. That's my
-meaning.
+Checked which refs were created:
+```
+$ git show-ref
+9b18557013105bb7a7bf681f18757084ada9d948 refs/heads/master
+01077b2840db5baea0084921d8f3158a240e8d85 refs/tags/A
+9b18557013105bb7a7bf681f18757084ada9d948 refs/tags/B
+```
 
-Thanks,
-Jialuo
+Then ran `git update-ref refs/heads/master A`  which logged:
+```
+0000000000000000000000000000000000000000
+01077b2840db5baea0084921d8f3158a240e8d85 refs/heads/master
+```
+
+But I expected:
+```
+9b18557013105bb7a7bf681f18757084ada9d948
+01077b2840db5baea0084921d8f3158a240e8d85 refs/heads/master
+```
+
+The git/git t1416-ref-transaction-hooks.sh update tests seem to be
+expecting a $ZERO_OID for reference update, so
+I am not sure if that's a bug or a feature.
+
+A test case: https://github.com/git/git/blob/2462961280690837670d997bde64bd4ebf8ae66d/t/t1416-ref-transaction-hooks.sh#L55
+
+CREATE: <zero_oid> <new_oid> <ref_name>
+UPDATE: <old_oid> <new_oid> <ref_name>
+
+I ran those tests using the git version `2.51.0` on `Ubuntu 20.04.6 LTS`.
