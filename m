@@ -1,69 +1,69 @@
 Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A7C312835
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 16:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B553148BF
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 16:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756918212; cv=none; b=PWVoYWFrNsvVOWhlvCo5l6q+7f1z+EcyjJqgpmIUwA8SBeiZdeeLNvO8Cnblf4aNy/D1UExTMeyoWvLcnAYdmueZAgiSQnQ3e6rV3WyM8L5GyUXiGrSFe88IDvkThDoh4TL0bB/1tidwUT+0opqmArGiWrjnUflmU8KExZSJ2/M=
+	t=1756918213; cv=none; b=MLTQzwqBJywTuC0VStetblg/X8T58XTsUatMqyGCRK1c/9GCzg93zCqzUiNNKbwR1CQvg9knggQhazjD4bfzcrlgqz1ItdWA/LU4fEW/2TSYbK5uGaqY8LFE0L2HvMKc9ZuaK2UUd5cch68TYXEsaAqoXDYuZrAx8HNGNvf2V6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756918212; c=relaxed/simple;
-	bh=0f60XgvqiswZe+9bOA4WZJbmAUUl1nPiKS8zqG1KKYM=;
+	s=arc-20240116; t=1756918213; c=relaxed/simple;
+	bh=hgz8zYZmLBe11p6g/kAkVncxFk2UeSotlw/dWQW2jKY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LinS/QQoGcYy9+AjT3NSUu+bQQNICEDToP9lZw43SkUAkXF50wa7bi50lEFK2xppyFOFaYKiL68pvJJXTC/bvBSSqf66nT7jV738sOi3img82kYhOjyaVEeQnIwSSlXC/iL4CKUg40g4QDEstz4qatFXtD93WQiUgo53ynM8vbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MBAr/6hP; arc=none smtp.client-ip=209.85.222.181
+	 MIME-Version:To:Cc; b=aTthaIIXzoKAP1btemn3rDIImzYm8Yc7nOeyhEk/2jJsmS4qewBHmlGaCviHOuTUmUEs/TvWQqa7slp8ZlZD6HCjC4zqgy3oFEogFJ3cZ6qvlQsDlXWTpCNqBn6PhoSknla4JeLnv/jiPg4SqwEgou3m6FGzmOvEPjA5pRmBwAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TmeP/zGk; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MBAr/6hP"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7e86faa158fso6043685a.1
-        for <git@vger.kernel.org>; Wed, 03 Sep 2025 09:50:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TmeP/zGk"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-80597face96so15079685a.0
+        for <git@vger.kernel.org>; Wed, 03 Sep 2025 09:50:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756918209; x=1757523009; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756918211; x=1757523011; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rE0A8/d1o17x6rONhhVyATvXkWiEqP8RkSS+EoNcKJg=;
-        b=MBAr/6hP68m5BRTbYoXr0G7XqwwkKysBPRnNHhPx9b6O/gh46pTIEpYSk0ljWqrUl2
-         rej1ZbkwpSwguHBOVspfW66jib8LHSEUDBSoHnCydSrCgxnjUG5k6Q4m8aTndVSTQpis
-         r/sH/Pqe/30l4eeXskiwgjv2Vc+M/wzIb7GHSVDU9ORGcjXlKewTvB2l6QxJ4rohpZNL
-         yZ0ernXb4FFoL6LeG0i4G6/znSDN6wBpyK2QK015iTZk0hM38vOeC7eFzypsfgQrZnMM
-         CQ7MkF1izLuFeKmmzk5pqM9taShXXnl1vYjRaWHrweKsY4wE16WBB56V9o2KRERkfirA
-         UJ5A==
+        bh=SgL7KJ1Z/F5sFQZ/TrZld8LbgaC5mTAyDQXtT5YRMCg=;
+        b=TmeP/zGkQoQEmq1bFVwV9NmWMSWmuNxBpoAAlj9593rAwi4MR+NJmFZXkyjU0TXPX/
+         HZzUMI9K8KXS/W7TA1WIfKvn5qWc8Z5+0GzDGFMO8lx2oFqpaRtKvJCrHxjD29Ny1VAg
+         JZBkHxAjl9c/aocVTnQbgs+WqhVK8GAIUNeEG9GNy4HaXj/+vMJCdsCzNYqKRXwNflZa
+         3YlOeC4W3XspGri6IwYdXmZrNdsPxiHbh0eKlobgyU3KAM3frJnSaLunNJ2M1/hvUl+t
+         b4Dv9/5caDuGbpbyS7c5zH6IKlCrW27aoev5xnYlCClXirHYx3e7bsGwDAGHpoksvYow
+         btfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756918209; x=1757523009;
+        d=1e100.net; s=20230601; t=1756918211; x=1757523011;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rE0A8/d1o17x6rONhhVyATvXkWiEqP8RkSS+EoNcKJg=;
-        b=f2SXICF2B2cLL2qCPOdZaYuoQ3wk+brupBE4Bv4j2Vsfvw4JJM9Xbh8LF5XqDdnCan
-         dtqmBMkLsVQeMFsESLwkuiTz8r4Sj1E300BtMaFt3gjQXFMP8stQUWD/pYGTZv+AmYV3
-         sNA9Y7mqMK6FcK0nKg3kPvuBAxn8AmoTs/K7HQnOSgsFaDyyZLFmli7rCBT8R00eVASi
-         111FPtWoU3CiEbG3o69WtvYL+tz+jMq0p7jxJSk28mO2GlmISZgdHBvZr2xMyfWNtcO5
-         ORMD2KgtYTyvBau0K1V/jA1oadV8Y5R3CvEVLV9sV2alTn6OocbANeu17+gC8U4Rcl0L
-         Qm7A==
-X-Gm-Message-State: AOJu0YyPv0bunwRvG4ceNyvr3iYBT0YjVfX4wVOxBAEL3oVgeO2zErgF
-	HevPp5/NGbH/142PkHi54nx32MlauQCGje05BQUt7feuqzgY+0HaJ8779Db5yQ==
-X-Gm-Gg: ASbGnctLZwAmCW+h3qekuKj0JilGjz03HkjkSYzz+b3UqI8HELwQp7qtCCXLM6ckAxi
-	aSREYH3yfDrDe0Sj0T/T9Ep4mfVntfL9e4ghycRadTyM2DDDSvWcfu91URMVaGWXBuy0nqalO3H
-	pXpDvd4FUL5cRmUbOWm9J6mx/5YX935x+ME5fDpqpKxWMt52CwoIn2jwJYU4MIKradY07EHxA3g
-	sWOKAol1a6tFWcHMh46UCm8qniciZmRIsVmlGzcLTgWmaCWayGk29M0jqMNjAbi311pCWwxQO7X
-	iaxAK349UuLsHNw5DodjcdcXmpUNwCCDA890a5iix/c35yEhrxKCrzoORjNI6qZ1Ei9BjjIeNGW
-	0nJdgdk7hboSze92fPT/mXEFR
-X-Google-Smtp-Source: AGHT+IHjndfg63hlogcnHamZGo5apm1OLaZNvaWK2qxaCm8FKqawgg1KuUWvPFjkoxTGaWPRtgH3iQ==
-X-Received: by 2002:a05:620a:3188:b0:7fe:e18:d4b7 with SMTP id af79cd13be357-7fed3224e49mr1589043285a.13.1756918209203;
-        Wed, 03 Sep 2025 09:50:09 -0700 (PDT)
+        bh=SgL7KJ1Z/F5sFQZ/TrZld8LbgaC5mTAyDQXtT5YRMCg=;
+        b=AzsBmZDGnxUaYTO8Qd28I8o+V8nmNJFTi3ZOAOL/tv2LIkNjqCe3Hb5Kga1YLBLqWe
+         2X7Wyuv6W6DUGfxOMNYryVVGOFe+hwRhK1npGzatMvhc6crygxAQsi5fp9kjHsLR0FS6
+         bq56GuYpNd6FY9e4JRtJo6ibrtKVC0arNxAQyp9kAM9rUcZIqJjvZfhJSUiHNf+2ZObi
+         Lytt7IQc41ee2bzrORKn+m5iG+fOfRMHYITTBmyepZtYikelGTO3975oL3iB3wqVn55o
+         uQzRE8m+AHlXtwdmG+tJEjK+HK7WYSJPFRgGxPxVQauawa9NmFGPtbgpcUxMpcLeH47l
+         sB4A==
+X-Gm-Message-State: AOJu0Yys+cHr3dz+hNkGfQlqbu3pMcL8YAeQIL8EJR8g3zR1yIH9d0lb
+	SMbfKYn6advPqN6eaiF8FnHIjkk8L8qmRR8/2b/8dzIv+1pwnvqv0tYWlh2EqA==
+X-Gm-Gg: ASbGncvtRHDsK49amoVaONIb/OUAOvnH3agbRsFE+RQGMsiKuoV4ehbJIBwxUghyAiL
+	gWOeoJT4qAJem0o29nQFvW377kQrscCZivbhXPkeIRPmphe7a1rXFHt0BZFvwbmnFfuSiLgLy5e
+	9ti+NIX51KVUuO/cTYG2bvy9AhEWzikOMx/KL132abLjQDNROsI5vQKde+U9Pm0wOs+mqjNn1Jw
+	xa6mKz5N1RkHDL2EkiHWrNYMmnlPp3IPW62IUY+imjKL0LMkrsTRs1SruFGoP5FtYoz9ypUfmT5
+	cV3r3nto6bEunwYkGBNqOdiIZvBTrUqdJUgGur03yv7G8QSt9ZzAkkyNTmWPCuIUPKJJoUVAROg
+	t0hAIXkW49em1hAQA0Q1P0K3Yyh9K3PScDd4=
+X-Google-Smtp-Source: AGHT+IGuBooMzxcAVgWTt+lrEUx6ix6WVtFk5ddsfYwvxH8V8GWggZD9DTbmhV1YeZC/EkgMH21s2A==
+X-Received: by 2002:a05:622a:511:b0:4ab:3a31:680d with SMTP id d75a77b69052e-4b31d80cb2dmr234954481cf.16.1756918210352;
+        Wed, 03 Sep 2025 09:50:10 -0700 (PDT)
 Received: from [127.0.0.1] ([20.55.213.113])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-80aa6e49847sm132864885a.15.2025.09.03.09.50.08
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b48f785d50sm13761331cf.40.2025.09.03.09.50.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Sep 2025 09:50:08 -0700 (PDT)
-Message-Id: <6ce31b62787694610138e052f3d4fcf6ebbcfddd.1756918202.git.gitgitgadget@gmail.com>
+        Wed, 03 Sep 2025 09:50:09 -0700 (PDT)
+Message-Id: <24793f9a451a1b906952256bc2f67c395a02f66b.1756918202.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1962.v3.git.1756918202.gitgitgadget@gmail.com>
 References: <pull.1962.v2.git.1756467934.gitgitgadget@gmail.com>
 	<pull.1962.v3.git.1756918202.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 03 Sep 2025 16:50:00 +0000
-Subject: [PATCH v3 4/6] doc: git-checkout: deduplicate --detach explanation
+Date: Wed, 03 Sep 2025 16:50:01 +0000
+Subject: [PATCH v3 5/6] doc: git-checkout: split up restoring files section
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,39 +80,67 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Julia Evans <julia@jvns.ca>
 
-Say that `git checkout --detach` is almost the same as `git checkout`
-instead of duplicating the content of the `git checkout` section, since
-many users will already be familiar with what `git checkout` does.
+Will make it easier to explain the two versions clearly in the following
+commit. As a bonus, now the structure of the DESCRIPTION
+matches the SYNOPSIS.
+
+Also remove `-f` from `git checkout <tree-ish> <pathspec>` since it's
+not relevant in that context.
 
 Signed-off-by: Julia Evans <julia@jvns.ca>
 ---
- Documentation/git-checkout.adoc | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ Documentation/git-checkout.adoc | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
-index a2777fb5b0..d35fd32ce8 100644
+index d35fd32ce8..b361ff011a 100644
 --- a/Documentation/git-checkout.adoc
 +++ b/Documentation/git-checkout.adoc
-@@ -65,16 +65,9 @@ commit would overwrite your uncommitted changes.
- `git checkout --detach [<branch>]`::
- `git checkout [--detach] <commit>`::
- 
--	Prepare to work on top of _<commit>_, by detaching `HEAD` at it
--	(see "DETACHED HEAD" section), and updating the index and the
--	files in the working tree.  Local modifications to the files
--	in the working tree are kept, so that the resulting working
--	tree will be the state recorded in the commit plus the local
--	modifications.
--+
--When the _<commit>_ argument is a branch name, the `--detach` option can
--be used to detach `HEAD` at the tip of the branch (`git checkout
--<branch>` would check out that branch without detaching `HEAD`).
-+	The same as `git checkout <branch>`, except that instead of pointing
-+	`HEAD` at the branch, it points `HEAD` at the commit ID.
-+	See the "DETACHED HEAD" section below for more.
+@@ -12,8 +12,8 @@ git checkout [-q] [-f] [-m] [<branch>]
+ git checkout [-q] [-f] [-m] --detach [<branch>]
+ git checkout [-q] [-f] [-m] [--detach] <commit>
+ git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new-branch>] [<start-point>]
+-git checkout [-f] <tree-ish> [--] <pathspec>...
+-git checkout [-f] <tree-ish> --pathspec-from-file=<file> [--pathspec-file-nul]
++git checkout <tree-ish> [--] <pathspec>...
++git checkout <tree-ish> --pathspec-from-file=<file> [--pathspec-file-nul]
+ git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [--] <pathspec>...
+ git checkout [-f|--ours|--theirs|-m|--conflict=<style>] --pathspec-from-file=<file> [--pathspec-file-nul]
+ git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
+@@ -71,14 +71,17 @@ commit would overwrite your uncommitted changes.
  +
  Omitting _<branch>_ detaches `HEAD` at the tip of the current branch.
  
+-`git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...`::
+-`git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]`::
++`git checkout <tree-ish> [--] <pathspec>...`::
++`git checkout <tree-ish> --pathspec-from-file=<file> [--pathspec-file-nul]`::
+ 
+-	Overwrite the contents of the files that match the pathspec.
+-	When the _<tree-ish>_ (most often a commit) is not given,
+-	overwrite working tree with the contents in the index.
+-	When the _<tree-ish>_ is given, overwrite both the index and
+-	the working tree with the contents at the _<tree-ish>_.
++	Overwrite both the index and the working tree with the
++	contents at the _<tree-ish>_ for the files that match the pathspec.
++
++`git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [--] <pathspec>...`::
++`git checkout [-f|--ours|--theirs|-m|--conflict=<style>] --pathspec-from-file=<file> [--pathspec-file-nul]`::
++
++	Overwrite working tree with the contents in the index for the files
++	that match the pathspec.
+ +
+ The index may contain unmerged entries because of a previous failed merge.
+ By default, if you try to check out such an entry from the index, the
+@@ -89,7 +92,7 @@ using `--ours` or `--theirs`.  With `-m`, changes made to the working tree
+ file can be discarded to re-create the original conflicted merge result.
+ 
+ `git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]`::
+-	This is similar to the previous mode, but lets you use the
++	This is similar to the previous two modes, but lets you use the
+ 	interactive interface to show the "diff" output and choose which
+ 	hunks to use in the result.  See below for the description of
+ 	`--patch` option.
 -- 
 gitgitgadget
 
