@@ -1,220 +1,130 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F482FB99D
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 12:19:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7495C2EACF3
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 12:19:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756901981; cv=none; b=okrNvOsnqedpwvj9ugx8b5y3Trl4E0sIIk445q8QiykoaSj88KRi7T2jNw2wWRiKbXfjTHBsF7FkcWKsN4dn08xs6jDW37aW17WOxKlM/K9Ib2no8HE9GgIAahkGdDrpBmV+7j76HDLRdgZflWPRZrGmg5iumI76s8rQ6i3I3pI=
+	t=1756901997; cv=none; b=hX7mVqT5UHHBK4bxqeRz587hfVHCsieuz9kxXqftfmDdlbErRWLLuyCCdjfWLESd/gVqhLyOk+VR8BX2DDe+2mQrbC1I0lzPDX1x/13asil22dGz/w6ki9z/eGRe0C5Ea/NCwdiap4kxJONYSNIVBRM5dyqGPqQwu2ACvaZVnl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756901981; c=relaxed/simple;
-	bh=1J0bXSohuDZSsAyV+qomDeNzPHyu5L6hz3mCXvHtvJ0=;
+	s=arc-20240116; t=1756901997; c=relaxed/simple;
+	bh=BxcJEO4MwOHpncwrfTTIQ4BipeVdgL1hWwsLMShpu6I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dm74ovyt6bsRdnURnbbsrIGijbqlyhvm93hEfYh51dgDozjP0r7GmO0SKIKoqzGP9Hmv27zVmsddv3a202U4loKPIt8T2nMzeJZvdKYNxjHXPCPFJt/AUIII3Cqt6YzG4U2iVQ1NFCdBiSNab1wAsJECJ8Ermtb0JKA/sI3ZpTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hGx1ffAA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dYrtVErP; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZgjOTrBPgqLLq5GLAYoNtjZ7jmisSTVgDtwg5H27SvDFvXjf9iIsxghoFKCtRydNges5jflOTKmehpcj1sXqpW7BKw376G9vUbYmHLr8BfKiNm24LWmrupkgkT+HldpGQmEbOyCzOEJxmp3StlylSxvRg/fCfSP0GqdvMqHk8L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eBoC0dDQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=er5sqfb3; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hGx1ffAA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dYrtVErP"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D27651400421;
-	Wed,  3 Sep 2025 08:19:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eBoC0dDQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="er5sqfb3"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7AAFEEC0329;
+	Wed,  3 Sep 2025 08:19:54 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Wed, 03 Sep 2025 08:19:37 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 03 Sep 2025 08:19:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756901977;
-	 x=1756988377; bh=lIROLNARJA2WbnExF3SDfZVZ8MiRTpDBGljj1+fr45Q=; b=
-	hGx1ffAAwEH4dJ6zhu9yyowQ9mZcBdTvCCaZnEE782UyVR0CY9aZhInnxfnazBH1
-	gvkbhg4HWOY3CBDdOfgKOV+cI37JS/6bVXiVB6rMoSTYNJYXC7RJSVJ5TQjTyqRg
-	OzAOJAcw2oeG/h3IIvEjj5GvaNanwnkF+lhbR4s6qE9YJHzm0aBt3hAeiq8WTD+f
-	r0fL/0naZ0OA7li8GYBgJMmfLFcedPlee+GZTv2D0frwPMUfesWETeBFDWr9gbhg
-	wq5BcHz+aCI8SZL0Oc5Q5FWDo7bMrdYu3J3QKVXvi+cWzcRpj04ezWyaMmf9dHx5
-	uq3BMUROQbBGZwwE3uisyA==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1756901994; x=1756988394; bh=hZ5rg6Dkl/
+	mEJ2rEZiy6VhdO12jRZkAWOy62u4Z1j1k=; b=eBoC0dDQfrI40hDSzDXR4xc+3+
+	jBq61isu0x7eN7gOZQRt6uLeYU1hy4SSkm/7ca9ellySpUHbEkr/L4yq+ffTKXu4
+	QAtjtGiGxkL4rYdUrlmrLc6H1qBl5lwbhIGwkx+dKj7mHfPNRlzRiJieGJS03DiB
+	TqNybJYiCHW9lHUpeKPQ7SaFIVT7RelwyonZ7Mk/rie/4Bsmfh4XXt5lbF3pclIJ
+	RX7vh/b5sRNmSmwUZ51tCL5FhA/TtCBqGBZpghSWVcbjnmE9VwWq6WZBLzkvlu04
+	cVpTtbxfFXrIa/ItC6PcBkEwOPvK6qHT2+zFPPtZlL/AVsqH3B6WLVdNjeHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756901977; x=
-	1756988377; bh=lIROLNARJA2WbnExF3SDfZVZ8MiRTpDBGljj1+fr45Q=; b=d
-	YrtVErPQ9pivqxBsQMQZmAIDtwz8WaVGab5c0Zu36q6qY1Ih9ZK46xh555rD0GTF
-	KvxbBbSzrY0KO0spzldfpL3ADff4DWGGohPE/sSMGRSxIiICsWu/TEjoy+6+Uukx
-	YbHWyDfDGHMQKhkovP27Up5TfvOXAyOYGyhPlsyzryRod8B8lO8FGKFrBfsFdLdC
-	o+F7MnNfcMunTRVrSHIJXigzx8fTSEClGJqbHH1O1AL+lIKO/bXMRWy2Lexk2SKe
-	2T4E/gOQNV11psc8rQO/aN6/9zN9hZtqqGFHM3XI8BvEzhyt3bb7K6rgH+Hc/DEh
-	Vcztxq5ZejnY+Rl9l6ZcQ==
-X-ME-Sender: <xms:WTK4aABGKEsB8nx2ZVa4eIFfCOmmcQ31zc727-KspghqxGIcBdF80Q>
-    <xme:WTK4aAGqTaJ2HtHrMt0130niUZhDoNqvqZN2wC_MA5-BTxm-YPudGAa4ACtiCujPg
-    zJ9ODXmSSGeNLWN4w>
-X-ME-Received: <xmr:WTK4aKC2aQeqZHBoyJg9IlKXeRMb1A6eTemYUNucIRhT4alG83nu-KBte1VRw7U-nWCHL7ji42oLi38NtsZlUBkRTyYgzcCEXftBGf0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefudefucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756901994; x=1756988394; bh=hZ5rg6Dkl/mEJ2rEZiy6VhdO12jRZkAWOy6
+	2u4Z1j1k=; b=er5sqfb3ueOdgAYzyZlDaeF5i9Sra2vryy8zWzA3R/yFT9j2ZLB
+	pfjGqMx8Qai9Ljq3Z+iPgdFyGIoBr21/+Zy3ahUP7V4eRcKFBPF7m7zfarK9tCTc
+	A4LAFZVg4AD6EGGLvrjtswSEsFftgTh26U2Klu+YL/r21k/NeqESrmUce2cfVlRs
+	9ZU8wYKaXRth9N5lTFXa8Li6L0qZU0dBTddUKWzrV8k130ZMkPkwDtZ0yjxyCV2l
+	Yqw/imbrMV6hSewxMIBlyXDP10Bo79z93fUKBvUYDjAu+hyUwIwT7FnGt7+xnPFr
+	JSb7wEOH0Zrdqr04jTfdZJS8/XOOXMolt8A==
+X-ME-Sender: <xms:ajK4aEwVXi2XrTfmpLHAAzYF7SEh0zYm0c1qzk6g20vzhx3xnfROaA>
+    <xme:ajK4aF01hU0O_lcw-LXZVjTRuTbYEvCWEVpZbkNiUar3Q3gmcnKcxQmMhPUJ3R6ws
+    bBTfzZmgCYbm7CiHQ>
+X-ME-Received: <xmr:ajK4aMy0FBZeOHAm1rg2H3nflN-iN1XaVVbXusnHRIRRTIblXQTSZVlQVJKxpWiNqxUUpi3YI8JjHF7NnZ9NvGp2ZI_B9eV-bSICRv8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefuddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    dvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehsohhrghgrnhhovhesghhmrghilhdrtghomhdprhgtphhtthhopehmrghrthhinhhvoh
-    hniiesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
-    htmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegsvghnrd
-    hknhhosghlvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:WTK4aIVWS4UNLYmsXMg3thrTZsKXY_spKj3R2sSYXYJhsX6Q_oDxDQ>
-    <xmx:WTK4aGq0uNsGtKqFZ0Ng-IOFZHKJ8X2IPRksSJTSMZF_zyFuhLPYVw>
-    <xmx:WTK4aMRoTjHDKHnyNWtkK7PzaoW8YPRmUlPXoj6Q4IrakZ0CLJDMfw>
-    <xmx:WTK4aI2um4sqADPXDkomuxGD8gCGrfh3hKaFNCo5D7f9mnMpiC-zjw>
-    <xmx:WTK4aF-sc74UA_MV3tBGYn9ftoeXSpDevkUzD1kU4aHPQ1qvM3aT7UlL>
+    epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
+    ekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    jhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
+    sehfrghsthhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgrrhhtih
+    hnvhhonhiisehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:ajK4aEEXBd0Deb_A8-0AMe4iyO7niLjoG7b3jnrcDBASeBdmUW-yIg>
+    <xmx:ajK4aHasSM4L61WgKW-YpIHN3aS81m7qAMxZMA669_Heh2sYp7gLIw>
+    <xmx:ajK4aODNheTiwxmBsakkF23CFAudrc0oIZif4G9YH7FiMXDv-A4jMQ>
+    <xmx:ajK4aHnj2BwdIeONjvdiEu-UORjhVkLGbsmVix83568yYrMApR-Lsg>
+    <xmx:ajK4aJqliacMdZj2ICAe7tMLmLAT8ZEISJ0eCnfhDHtVBPMOPH1vIiMm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Sep 2025 08:19:36 -0400 (EDT)
+ 3 Sep 2025 08:19:53 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0d86e6c5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 3 Sep 2025 12:19:34 +0000 (UTC)
-Date: Wed, 3 Sep 2025 14:19:31 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 051b738d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 3 Sep 2025 12:19:52 +0000 (UTC)
+Date: Wed, 3 Sep 2025 14:19:49 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
 	Sergey Organov <sorganov@gmail.com>,
 	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
 	Martin von Zweigbergk <martinvonz@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH RFC v2 03/16] sequencer: introduce new history editing
- mode
-Message-ID: <aLgyUw7wkxTYd1Dm@pks.im>
+Subject: Re: [PATCH RFC v2 05/16] cache-tree: allow writing in-memory index
+ as tree
+Message-ID: <aLgyZdXV7TUIx_y9@pks.im>
 References: <20250824-b4-pks-history-builtin-v2-0-964ac12f65bd@pks.im>
- <20250824-b4-pks-history-builtin-v2-3-964ac12f65bd@pks.im>
- <CALnO6CBgGNdD7eRsseXVmTCkfi9TU6S46MckC6her0FzJNa=Wg@mail.gmail.com>
+ <20250824-b4-pks-history-builtin-v2-5-964ac12f65bd@pks.im>
+ <xmqqjz2rs6fk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CBgGNdD7eRsseXVmTCkfi9TU6S46MckC6her0FzJNa=Wg@mail.gmail.com>
+In-Reply-To: <xmqqjz2rs6fk.fsf@gitster.g>
 
-On Tue, Aug 26, 2025 at 08:55:13AM -0400, D. Ben Knoble wrote:
-> On Sun, Aug 24, 2025 at 1:42 PM Patrick Steinhardt <ps@pks.im> wrote:
-> > diff --git a/sequencer.c b/sequencer.c
-> > index bff181df76..898ac1a2a8 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -3052,17 +3087,29 @@ static int read_populate_todo(struct repository *r,
-> >                 return error(_("no commits parsed."));
-> >
-> >         if (!is_rebase_i(opts)) {
-> > -               enum todo_command valid =
-> > -                       opts->action == REPLAY_PICK ? TODO_PICK : TODO_REVERT;
-> > +               enum todo_command valid;
-> >                 int i;
-> >
-> > -               for (i = 0; i < todo_list->nr; i++)
-> > +               switch (opts->action) {
-> > +               case REPLAY_PICK:
-> > +               case REPLAY_HISTORY_EDIT:
-> > +                       valid = TODO_PICK;
-> > +                       break;
-> > +               default:
-> > +                       valid = TODO_REVERT;
-> > +                       break;
-> > +               }
+On Mon, Aug 25, 2025 at 09:38:07AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> I think I see this hunk repeated in a few places—maybe some
-> leftoverbits for a refactor?
+> > The function `write_in_core_index_as_tree()` takes a repository and
+> > writes its index into a tree object. What this function cannot do though
+> > is to take an _arbitrary_ in-memory index.
+> >
+> > Introduce a new `struct index_state` parameter so that the caller can
+> > pass a different index than the one belonging to the repository. This
+> > will be used in a subsequent commit.
+> 
+> Nice.  
+> 
+> I wonder if this would also allow us to simplify the code paths for
+> "git commit -o <pathspec>", where we use a separate temporary index
+> that gets populated afresh from HEAD, grab the new snapshot for the
+> paths that match the pathspec, and write it out as a tree to be
+> wrapped in the new commit (and then the real index is also updated
+> at these same paths).
+> 
+> I guess the code paths need to expose what is in the temporary index
+> to hooks, which means the index file needs to be written out to an
+> actual on-disk file, so the picture would be a bit different?
 
-Fair enough. I don't really see a strong reason why we shouldn't fix
-this in the same patch though. We can for example do something like the
-below patch.
+Well, the sequencer itself is also writing out the temporary index to
+disk. Took me quite a while to figure out why the index I wrote always
+turned out to only contain a subset of the changes I wanted. So I don't
+really see a reason why we couldn't use the infra for other commands,
+but cannot say whether or not it would end up improving the status quo.
 
 Patrick
-
--- >8 --
-
-diff --git a/sequencer.c b/sequencer.c
-index 898ac1a2a8..9a66e7d128 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3063,6 +3063,19 @@ static void todo_list_write_total_nr(struct todo_list *todo_list)
- 	}
- }
- 
-+static enum todo_command action_to_command(enum replay_action action)
-+{
-+	switch (action) {
-+	case REPLAY_PICK:
-+	case REPLAY_HISTORY_EDIT:
-+		return TODO_PICK;
-+	case REPLAY_REVERT:
-+		return TODO_REVERT;
-+	default:
-+		BUG("unsupported action %d", action);
-+	}
-+}
-+
- static int read_populate_todo(struct repository *r,
- 			      struct todo_list *todo_list,
- 			      struct replay_opts *opts)
-@@ -3087,19 +3100,9 @@ static int read_populate_todo(struct repository *r,
- 		return error(_("no commits parsed."));
- 
- 	if (!is_rebase_i(opts)) {
--		enum todo_command valid;
-+		enum todo_command valid = action_to_command(opts->action);
- 		int i;
- 
--		switch (opts->action) {
--		case REPLAY_PICK:
--		case REPLAY_HISTORY_EDIT:
--			valid = TODO_PICK;
--			break;
--		default:
--			valid = TODO_REVERT;
--			break;
--		}
--
- 		for (i = 0; i < todo_list->nr; i++) {
- 			if (valid == todo_list->items[i].command)
- 				continue;
-@@ -3408,16 +3411,7 @@ static int walk_revs_populate_todo(struct todo_list *todo_list,
- 	if (prepare_revs(opts))
- 		return -1;
- 
--	switch (opts->action) {
--	case REPLAY_PICK:
--	case REPLAY_HISTORY_EDIT:
--		command = TODO_PICK;
--		break;
--	default:
--		command = TODO_REVERT;
--		break;
--	}
--
-+	command = action_to_command(opts->action);
- 	command_string = todo_command_info[command].str;
- 	encoding = get_log_output_encoding();
- 
-@@ -5578,15 +5572,7 @@ static int single_pick(struct repository *r,
- 	int check_todo;
- 	struct todo_item item;
- 
--	switch (opts->action) {
--	case REPLAY_PICK:
--	case REPLAY_HISTORY_EDIT:
--		item.command = TODO_PICK;
--		break;
--	default:
--		item.command = TODO_REVERT;
--		break;
--	}
-+	item.command = action_to_command(opts->action);
- 	item.commit = cmit;
- 
- 	return do_pick_commit(r, &item, opts, 0, &check_todo);
-
