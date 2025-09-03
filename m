@@ -1,223 +1,147 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C09F259C98
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 23:17:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7922F4A18
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 23:40:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756941432; cv=none; b=PGXJdOYnoe11cja6CKGnjkWwlNWyxkCPbDpzTa+AXcenL5tZupnQma7F7E6ptAnuQz7sdcB5nZRFEXlCsDRO7WqYvMjKjiINjhofqEw5IqLhBZf383NEOLhI0hmuH5yeRedAfYQughgpXMNmwfHzni/nCHmWtAMMWwFwUF6rlbI=
+	t=1756942814; cv=none; b=Tj6Qoj7U9CgBm4MY/sBzqaNtHixD7OMo2a3kPKHFTnyQoKF8IYde97lgGs/bNKK8RLuMQmynRD0jVw7vHcnTV1SYME3pX0bo6nScksN/IPQ5bkVS48uCYJP9yj8EtBXFs5LBmGTvlnucn0RbF2XLHkTRs6gobzWTUSio91k9b9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756941432; c=relaxed/simple;
-	bh=3bVVK3Umbe42KjtiM9GqHL3AZ5TPciymLVOoaMp/X3M=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=q3bHpAPeQXzjyxyU0iC7r4whRvXpHITfB2S3WgpmsxxY2yDRBTSed1CxTAFSZAhCoey9t/LSWSVGotxYubxvhiW+IdjOcrL+bVCuAevsmPlcytKg9xSMRizMZ853sflVS9gXDetK220Vr+t8ZB4lSnrgIQOZehhhu+cWGpyg9k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PfSXxNY1; arc=none smtp.client-ip=209.85.215.169
+	s=arc-20240116; t=1756942814; c=relaxed/simple;
+	bh=p1/hBjpAR870W4eff8NabcSyCuy2eOGxBEYvDEEq7UI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZDPrAWO5VaeyzwNtPxRSmAQMrxXrk9rUrXmLg15aR2QgiUK1kmYpKWfRdgt4Kn5L0JkWDuWuaL+ILIEILVqe0dFpc5nVgZ+C2/FjuSLI1ygBxRnW4vsa52aoIp+/BIY62bUOZdr+iijqOe9z2wzIz9ERoxrgO7roG6h++Tsq4rQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HYFoxV2V; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PfSXxNY1"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-b4f9d61e7deso238525a12.2
-        for <git@vger.kernel.org>; Wed, 03 Sep 2025 16:17:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HYFoxV2V"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6188b6f501cso474335a12.2
+        for <git@vger.kernel.org>; Wed, 03 Sep 2025 16:40:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756941429; x=1757546229; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1756942810; x=1757547610; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UKSE19dzwVBGUdeU+v3BoOUbv3mqBkERvWaR3UMdCBE=;
-        b=PfSXxNY1k19uN+yMoGp4LyKd+sok6Vi4T63gMuge+lxboMQCwDaKekg7SasEGXy0Am
-         WkOss9VKtaAbsuKW58B9QgE+GDl6dvFpKYEZNZgHhzehyKD/0gP7kz/QWKEJCrunxIgN
-         m5ya3vqEfL6JjqoiIP+/Kp2Z1HKxj4TUmJc+4CHDVaaGBbqLM4Td0j1P088003N2xmSM
-         OXIgoLdXiYqqlz2a/UMRofMaDJ9AyUgdRHhUoO5RgGA2JizS5UbQaFcpxkv7vdzynBwn
-         NA60S2wXmfLipYLP6astos1FnFpAB7K/UZolWlkOb5UwfqgpY3f+OC6gL4kh3W4SQgNl
-         2bEQ==
+        bh=961PtKntESlcAD5b2n7GAg+scvOt8J/X9QXLRlCvt6c=;
+        b=HYFoxV2Vm+lFjOPiwzmKa5DErmyclKX0zB0bu+HZdBgYRkFDZwT2GimrRRuq9rXvBr
+         aI+ZH0AZ1bkdCLCh5ecMrLgEPKgx7IRo2/fQ06QcSOwp7ttnhbmjoSvr4zTcb8xFOYSA
+         zL4hgZD+L7945F9i7Ojfz2EOIyJ72dE6SF9Lt2KZAQvb437y1BWJx1q32XyKKhLpUohk
+         Qsw07EelDSqhCd88vtBW1+cgT0wuXnavrJIseWVME0LGpyxwhNqn+URUfZM0UDI+Vp/B
+         Y0mlu8RZfntYOwIYugiC+V0yda4VVwfNeUwJdAJt65xyRkRIC9Pj9aQAkYDnF2EKxU+B
+         XFbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756941429; x=1757546229;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1756942810; x=1757547610;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UKSE19dzwVBGUdeU+v3BoOUbv3mqBkERvWaR3UMdCBE=;
-        b=lrSpB6Gyq9mAqJ4uxkNwphElj5VQWIfHZzYsyweYHJZWNsFI8Sup1l1HoyUCnYmPMD
-         cm/18BQy3dU1YWuU+i0Tvim9mFtWU+vHPa2tmg5umsnh5sug9XVOtkEPHe+sUZrlPhLn
-         2p/S1IhEoBdhUrRLFdoY6XESem85FzebM1uWjs6ld+CIND9ESgBFK4/kh0dQ5MlNmrWP
-         k9Bc0OE7aZpXvpRFKAVkU3i7fl6UsUFZbKayPMEFPhoDCY+qRF6/+lHXX+3tNUe4tP4Y
-         uzNYUoe7LjaScmJa2qzXYYj8ihomxiKitYPQk4D//Mk71YF5s6hl+WuBh1AaNbPx2ugV
-         omxg==
-X-Gm-Message-State: AOJu0YzZxYXbwjQa0h6sjhtzYVE9+TLFwGQMR0j0oiuXx7tZsQ70RGeC
-	d0vGsrAQyjBnKqf2wDAX81aWJhucibPnREw7MOrfK0Zp0RwVF1QxPT1puQnz6Q==
-X-Gm-Gg: ASbGncuyNzQDUbacScPPfCOuIevktmmMvSxWMgDeW2w2szozw6qzP9QP1axAP034sV8
-	XkXLsjKxhIHareS5ZCv9Q5d29ycEFKu2XQn8g8W36m7ZoCnEXiBO36TZhaQ8GJEVXlcEF2gm4y5
-	My74uOaSCIrh2giP5vv16P2tL0+FQZTPMz3y7xpiDGWb/qS+P+g6VSmKjRjVg6CoGFNjg3tG6E+
-	HwDQmJ2/gD2OE0hkCdZ0XwlkKrCpuzJjBPO365lMBuXblevgY+5M8hkgphNrSgvr3bYcSSf7ZDD
-	k9x0hqVEBrNpuPdU8bFolAmjWttHnQ1lY4pPZISIzAVwfTbUTpZ8i9V0tth2wpRyzn9gMvHMFIb
-	fFdHmYO1/FuY7U/btyazwQH23x9C+3euHh8j7
-X-Google-Smtp-Source: AGHT+IGSTu2h+OkevJlCqQL1LnOYfvO/ZfuQBToWm3H7oxC2KAGRjcaQk8FgYDyj4OEP3zh+Q6ES1Q==
-X-Received: by 2002:a17:902:ce07:b0:24c:7b94:2f87 with SMTP id d9443c01a7336-24c7b943278mr76817385ad.14.1756941429305;
-        Wed, 03 Sep 2025 16:17:09 -0700 (PDT)
-Received: from [127.0.0.1] ([52.159.228.208])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24b2342b95bsm51226895ad.38.2025.09.03.16.17.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Sep 2025 16:17:08 -0700 (PDT)
-Message-Id: <pull.2040.v4.git.git.1756941427825.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2040.v3.git.git.1756472406487.gitgitgadget@gmail.com>
-References: <pull.2040.v3.git.git.1756472406487.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 03 Sep 2025 23:17:07 +0000
-Subject: [PATCH v4] alloc: fix dangling pointer in alloc_state cleanup
+        bh=961PtKntESlcAD5b2n7GAg+scvOt8J/X9QXLRlCvt6c=;
+        b=XrERgpF0cEp2mPbKxswin6nJ+Kx8fyTXcQObzjfnP5yqudXHtG2rq1hLMzudUuAZVL
+         JNQsh9djSJXibFCQ2PsoyObiL6Y4pgnYLNomBIdvNBCxfXthcSQ2v5Tytk/6OQNH5jp/
+         gP+xH1pFVpYzRVsjnQNMD4IG7cjIJuozg06Nk6WAusLYVJm606oV1s7cSpWoILS0u9WB
+         v4kQDSl4HcIiWHVRRSuc8MJ3hVKAjGbRfZIY0TSbJl/o031vQk0sPZZv73iPkxPlZ0Ml
+         WD0sRjZa/td6+Q08xdN2DCxcChdJ1BinPkrxeVWkhHpSAOvWUNcHSr6/0PKGUFFJoWwR
+         3dnw==
+X-Gm-Message-State: AOJu0YyXBwPEwLadkSxT8OIbk+CxwYVPSu4lN7EcX/kysKXTRJ1UCXlE
+	ZDFyp2StCmYQWUO0GeIyUUE7rItqwSrrpCCNlBBafxdimkddqoivINE19PPFaqwzjuvVNJvH9QM
+	PfEuvg3eAcKtpjJyy7lAyUQ0hmAUTm7s=
+X-Gm-Gg: ASbGncuyl83EufE62kyfx+BxXREd/tfT61voNT4Ic+Nju2LvKDLfGod/gNYNtDAP292
+	6vNhPAgWaBvTs27cVtGacPQ96l6wTW9fvHpRAf9w4j4mtLq4CTaCDbqvP4sxVTTIzzKJmFc4yQ/
+	IG/z8oPiUE4oYjqz2YrAueWjF8C+xROxv8R/jVqk81dSRZ00LaRl03SSKcSayzIGSzhDyNviCfv
+	A/zXrfPMIQKzDkrFdoPkBofmmlqa2wr2M8SoGucMQY/cM8VNSs=
+X-Google-Smtp-Source: AGHT+IF3bLoiMOdNIPc5aSPOhBo3o0FrCii/j4BhERY8UCuOpDzY2b4UlMizGOl4TNrsKjEM2qyZyMwhlkjzAGLYMtk=
+X-Received: by 2002:a17:907:72ce:b0:b04:61aa:6adc with SMTP id
+ a640c23a62f3a-b0461aa6b6fmr546860266b.7.1756942809883; Wed, 03 Sep 2025
+ 16:40:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare <nouraellm@gmail.com>,
-    =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
- <nouraellm@gmail.com>
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im> <20250824-b4-pks-history-builtin-v2-0-964ac12f65bd@pks.im>
+In-Reply-To: <20250824-b4-pks-history-builtin-v2-0-964ac12f65bd@pks.im>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Wed, 3 Sep 2025 19:39:58 -0400
+X-Gm-Features: Ac12FXz1sVcKUN_XJIEL6e4HH-0L2apzHDctPL8qi2MR6L3pH3Crt9x_7xR9zsI
+Message-ID: <CALnO6CC5K81QRxJR3jvqyL+fO6Yec_Ee83EOeeiUEzF6oBV3UA@mail.gmail.com>
+Subject: Re: [PATCH RFC v2 00/16] Introduce git-history(1) command for easy
+ history editing
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Sergey Organov <sorganov@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
+	Martin von Zweigbergk <martinvonz@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
- <nouraellm@gmail.com>
+On Sun, Aug 24, 2025 at 1:42=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> Changes in v2:
+>   - Add a new "reword" subcommand.
+>   - List git-history(1) in "command-list.txt".
+>   - Add some missing error handling.
+>   - Simplify calling convention of `apply_commits()` to handle root
+>     commits internally instead of requiring every caller to do so.
+>   - Add tests to verify that git-history(1) refuses to work with changes
+>     in the worktree or index.
+>   - Mark git-history(1) as experimental.
+>   - Introduce commands to manage interrupted history edits.
+>   - A bunch of improvements to the manpage.
+>   - Link to v1: https://lore.kernel.org/r/20250819-b4-pks-history-builtin=
+-v1-0-9b77c32688fe@pks.im
 
-All callers of clear_alloc_state() immediately free what they
-cleared, so currently it does not hurt anybody that the
-alloc_state is left in an unreusable state, but it is an
-error-prone API. Replace it with a new function that clears but
-in addition frees the structure, as well as NULLing the pointer
-that points at it and adjust existing callers.
+Having test-driven this a bit, I wanted to mention a feature from my
+editor that I use frequently and that "reword" reminded me of [*]. I
+wonder if this would be a good fit for git-history, but certainly
+wouldn't be _necessary_ for a v1.
 
-While at it, rename allocate_alloc_state() and name the new
-function alloc_state_free_and_null(), to follow more closely the
-function naming convention specified in the CodingGuidelines
-(namely, functions about S are named with S_ prefix and then
-verb).
+With fugitive.vim [1], I can get a list of {staged,unstaged} changes
+and commits. It looks something like this
 
-Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
----
-    alloc: fix dangling pointer in alloc_state cleanup
-    
-    cc: Torsten Bögershausen tboegi@web.de cc: Jeff King peff@peff.net
+Head: ps-jj
+Rebase: origin/master
+Push: benknoble/ps-jj
+Help: g?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2040%2Fnouraellm%2Ffix-dangling-pointer-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2040/nouraellm/fix-dangling-pointer-v4
-Pull-Request: https://github.com/git/git/pull/2040
+Unstaged (1)
+M README.md
 
-Range-diff vs v3:
+Unpushed to origin/master (16)
+5c65c405e6 builtin/history: implement "reword" subcommand
+b215e38d49 builtin/history: implement "split" subcommand
+93977ef8d2 wt-status: provide function to expose status for trees
+b09b4b9d48 add-patch: add support for in-memory index patching
+[=E2=80=A6]
 
- 1:  c521b44adb ! 1:  82d228661d alloc: fix dangling pointer in alloc_state cleanup
-     @@ alloc.c: struct alloc_state {
-      -void clear_alloc_state(struct alloc_state *s)
-      +void alloc_state_free_and_null(struct alloc_state **s_)
-       {
-     -+	struct alloc_state *s = *s_;
-     ++	struct alloc_state *s;
-      +
-      +	if (!s_ || !*s_) return;
-     ++
-     ++	s = *s_;
-      +
-       	while (s->slab_nr > 0) {
-       		s->slab_nr--;
+If I stage changes, then the following mappings are available when the
+cursor is on any commit line:
 
+cF                      Create a `fixup!` commit for the commit under the
+                        cursor and immediately rebase it.
 
- alloc.c  | 11 +++++++++--
- alloc.h  |  4 ++--
- object.c | 26 ++++++++++----------------
- 3 files changed, 21 insertions(+), 20 deletions(-)
+cS                      Create a `squash!` commit for the commit under the
+                        cursor and immediately rebase it.
 
-diff --git a/alloc.c b/alloc.c
-index 377e80f5dd..1483697ca8 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -36,19 +36,26 @@ struct alloc_state {
- 	int slab_nr, slab_alloc;
- };
- 
--struct alloc_state *allocate_alloc_state(void)
-+struct alloc_state *alloc_state_alloc(void)
- {
- 	return xcalloc(1, sizeof(struct alloc_state));
- }
- 
--void clear_alloc_state(struct alloc_state *s)
-+void alloc_state_free_and_null(struct alloc_state **s_)
- {
-+	struct alloc_state *s;
-+
-+	if (!s_ || !*s_) return;
-+
-+	s = *s_;
-+
- 	while (s->slab_nr > 0) {
- 		s->slab_nr--;
- 		free(s->slabs[s->slab_nr]);
- 	}
- 
- 	FREE_AND_NULL(s->slabs);
-+	FREE_AND_NULL(*s_);
- }
- 
- static inline void *alloc_node(struct alloc_state *s, size_t node_size)
-diff --git a/alloc.h b/alloc.h
-index 3f4a0ad310..87a47a9709 100644
---- a/alloc.h
-+++ b/alloc.h
-@@ -14,7 +14,7 @@ void *alloc_commit_node(struct repository *r);
- void *alloc_tag_node(struct repository *r);
- void *alloc_object_node(struct repository *r);
- 
--struct alloc_state *allocate_alloc_state(void);
--void clear_alloc_state(struct alloc_state *s);
-+struct alloc_state *alloc_state_alloc(void);
-+void alloc_state_free_and_null(struct alloc_state **s_);
- 
- #endif
-diff --git a/object.c b/object.c
-index c1553ee433..986114a6db 100644
---- a/object.c
-+++ b/object.c
-@@ -517,12 +517,11 @@ struct parsed_object_pool *parsed_object_pool_new(struct repository *repo)
- 	memset(o, 0, sizeof(*o));
- 
- 	o->repo = repo;
--	o->blob_state = allocate_alloc_state();
--	o->tree_state = allocate_alloc_state();
--	o->commit_state = allocate_alloc_state();
--	o->tag_state = allocate_alloc_state();
--	o->object_state = allocate_alloc_state();
--
-+	o->blob_state = alloc_state_alloc();
-+	o->tree_state = alloc_state_alloc();
-+	o->commit_state = alloc_state_alloc();
-+	o->tag_state = alloc_state_alloc();
-+	o->object_state = alloc_state_alloc();
- 	o->is_shallow = -1;
- 	CALLOC_ARRAY(o->shallow_stat, 1);
- 
-@@ -573,16 +572,11 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
- 	o->buffer_slab = NULL;
- 
- 	parsed_object_pool_reset_commit_grafts(o);
--	clear_alloc_state(o->blob_state);
--	clear_alloc_state(o->tree_state);
--	clear_alloc_state(o->commit_state);
--	clear_alloc_state(o->tag_state);
--	clear_alloc_state(o->object_state);
-+	alloc_state_free_and_null(&o->blob_state);
-+	alloc_state_free_and_null(&o->tree_state);
-+	alloc_state_free_and_null(&o->commit_state);
-+	alloc_state_free_and_null(&o->tag_state);
-+	alloc_state_free_and_null(&o->object_state);
- 	stat_validity_clear(o->shallow_stat);
--	FREE_AND_NULL(o->blob_state);
--	FREE_AND_NULL(o->tree_state);
--	FREE_AND_NULL(o->commit_state);
--	FREE_AND_NULL(o->tag_state);
--	FREE_AND_NULL(o->object_state);
- 	FREE_AND_NULL(o->shallow_stat);
- }
+What they do is populate my command line with something like
 
-base-commit: f814da676ae46aac5be0a98b99373a76dee6cedb
--- 
-gitgitgadget
+:Git commit --fixup=3D<commit>|Git -c sequence.editor=3Dtrue rebase
+--interactive --autosquash <commit>^
+
+(The pipe is Vim's command separator, a bit like ";" or "&&" in shell.)
+
+If git-history had a squash or fixup mode, I imagine it would function
+similarly (and could be used as the backend for fugitive's cF/cS with
+new enough Git).
+
+[*] The reason I thought of this from "reword" is the obvious tie-in
+to interactive rebase commands. Fugitive does have "cw" to reword the
+last commit, "ca" to amend, and "cW" to "amend!" an arbitrary commit,
+but no mappings that "amend!" + rebase immediately. It doesn't need
+them because "rw" starts an interactive rebase with the commit under
+cursor set to "reword" ;) likewise "rd" for drop.
+
+[1]: https://github.com/tpope/vim-fugitive
+
+--=20
+D. Ben Knoble
