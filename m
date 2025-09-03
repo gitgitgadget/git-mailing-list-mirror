@@ -1,99 +1,120 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C1229D0E
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 19:56:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571B22C18A
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 20:31:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756929415; cv=none; b=IAFNzhS6+aWsKMs+2w5txmczwzHgzXTwzP07T041lS6h8nmAp2Lio+p/zpUzfP0M6oNAfL1rP7W1HwdvwNfQAy2MbqRJf9ObczhIvIH/TzVLpv6UaHgF5u+GKUzZZ7yXt1VqveoF0So/1rvFE+buXkmdQ7NYVpxpqtqJcYkeg0M=
+	t=1756931520; cv=none; b=HzsuO5ODqa8xFIelgBOrRc1uBfeNc2tJmmhZLPzrArW68DEAAlcahu8k7t7DwVqtm+2sAJJ/0b6vrZA4r4xWOuuvfSqRhKSp9d4REcUCEdw9MzwjBCE1NfHXGUq4AMzkD/NjsMbi7xtrFIp/8bSgMBfFvltwG0QGyvXNdwSzZxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756929415; c=relaxed/simple;
-	bh=mvRu/jxi0LXPA/jXkjPfjs8BpP0tGCOYVkfEDfvbzCo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UD3xl75wAo/ie3WR8HMm3LHJngoQ1hbOZY7X2qiN7pDA8m49ERK/dgyqq+Snpbi30wEiilYUAIKsAcApyZlaO2VdfO+8s0pqHTSKcFP5yst0d8bvhNkC0QCBl7Sv9yhiRnha2DoeJbl+ItK5aeJBB9XOrpFJL1TACLD0ugF1RC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nO+1qw91; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EZoMRcNV; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1756931520; c=relaxed/simple;
+	bh=RJ5wcEzBuUaw9yGeu1/8B6is8URTJEC0z8Db4KdbyjM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=gercZf8exKDshVQgSn1+TseQDmdU9Ac8cQVKTigAKgOjOpEK1o1ntqFmhMhaYOprdNxKs7crhpXqNRll0GUxpTvLBIijQLmvn3h1+nqJwYl7xCOqDP6jDJeRKBmDTn9AK5rpCE0KC0mUPHm9NFk9derpEY+M+RT6HIbnLYE0wlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CBD6s8ki; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nO+1qw91";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EZoMRcNV"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EE2501400277;
-	Wed,  3 Sep 2025 15:56:51 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 03 Sep 2025 15:56:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1756929411; x=1757015811; bh=e1BSjYLg6a
-	ppg7tS37OiaekT9Z+BY62YMPaC/6cHXiU=; b=nO+1qw91mCCbeejDv5fAFiCAWl
-	qsCNe8W8dbmtBsNss9YFxZOx6P7pqzn88B1ENqoIWtr9gak7TNbsnS72fddxZXI+
-	FUoTjCUDMHUBDcvhbU14tJ8zDR8lyrpEJ1wthg86pQDS1T6A46I57/0tLoNIn6HC
-	733x/7Ku6qXexfLs5IF48CcJMRVDpDWH5GQxp325kwt8Nmcig5XAbkXmgAKhYW97
-	4b+2iLRq2U5HoAt216B27UeNHD5UF8Yf1gQ3D+GZo79yMm//7mRhhqBv9NOdrtW+
-	jh0h+iKNN83o77VQYJFOvr56H9tisopaUgFISXTscApY/S5XdEX9AvRPhyyg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756929411; x=1757015811; bh=e1BSjYLg6appg7tS37OiaekT9Z+BY62YMPa
-	C/6cHXiU=; b=EZoMRcNVEJF1sv8TIxIvX5UB9JdeXl8FGvtCT/MCrg8pxv8mBE3
-	kGxeTtzK5EY8pV6ok9gXFkmGINtS9MMups/MVdcs5GDEskoob9u0RKUipQtR/mqE
-	QIk7qhEQ0qyZUqT9X4FDZuyH9lw5AY5181xXuwuhKHGQrZgqQTN5dVAIbd8KDo85
-	XNo2s44PlJwgMsKlD5W+ccE2sscmq7qYUVf2u+So5PFFdmM6T7WUbwGLDacxoAir
-	77oD/JmuuHazVkKZOo3YwdwcT7miCBWVx7L5psZvGvl3nJ3tCPQFGEcky0ea177A
-	WyTqyajTzEAu/f21V9qccvNVo4Sfd9eG0mQ==
-X-ME-Sender: <xms:g524aMSLLUcEb6C0_XwOxwL0tFlDLWNXmU3WZwD7yFTwE-HL3NUVhg>
-    <xme:g524aNCiJD-ue84agVmMDfgjAYicD7LNOb2_Txh-ynFnfo64f2SNKvbJk1Nm0r1gW
-    0e_Oz-5Eh8hTKhwDA>
-X-ME-Received: <xmr:g524aDS2ai1xnRe5HIvgQCI9x0Y_xVpRHNVIqtj2CxxLwbdCZ6R6Q4kurp2eGXMMOstfRdPNSrk71eUF4Q_6A6j7uaWJ2iqNJr0qVuw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegtdegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepjhgvshhsvgesmhgsuhhkihdqmhhvuhhkihdrohhrghdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:g524aLrHc7DVp_BXBZqDtHgjokDFPC9vUmfTyKEVzroeN9DWAWqbbA>
-    <xmx:g524aFynxpxxibVWD1_OJqh2k2bH3ZmLo4NpgQiWlytc7fDMJHOWeQ>
-    <xmx:g524aAL0lLmlm-Lm6esqoFwT5bDn2z3JJ5XVCjcjN8QlVxL2z9gw6A>
-    <xmx:g524aHJxrOi238dXsuJz-ugxbWMcw1jMTbw7gfsL69CkvSNEkhw6PQ>
-    <xmx:g524aFq7IurUBwgibm98IYokWYc9eQQPx-oB9QhZQWbIpr2hqOHpCqnK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Sep 2025 15:56:51 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jesse Hathaway <jesse@mbuki-mvuki.org>
-Cc: git@vger.kernel.org
-Subject: Re: git whatchanged
-In-Reply-To: <CANSNSoWZNx3j3eLAayW64iC+bvC9XfetV+wZAkK6Zy8Zm0DWSw@mail.gmail.com>
-	(Jesse Hathaway's message of "Wed, 3 Sep 2025 10:34:59 -0500")
-References: <CANSNSoWZNx3j3eLAayW64iC+bvC9XfetV+wZAkK6Zy8Zm0DWSw@mail.gmail.com>
-Date: Wed, 03 Sep 2025 12:56:50 -0700
-Message-ID: <xmqqwm6fe2d9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CBD6s8ki"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b047f28a83dso9352766b.2
+        for <git@vger.kernel.org>; Wed, 03 Sep 2025 13:31:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756931516; x=1757536316; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=W8sAfUFhiDIxytcQZcm7ITFGHJsLgNIRGScO2jI5B6o=;
+        b=CBD6s8kiufwG0Xch26pz5d/hskjVVNairb3zJiBCUQI0V+1PEqpoeL2YoelEVo0uCH
+         IeIjOuPd1zF/8kkj7zRWEUTZSjoQluRnnsUyN1Wlrs7mSlM5Q+gC2DqXeEvYhLNA4zEi
+         rpnqUemXcEWEG7kueR8Mzap+7BVIHru0FuxeqNUZCARBa/Y4lPHHv6HyBVnLr6i0gba7
+         IMCLlZBAJDFBa5CTo379hregjcgPZVbhFveJypST/+Mi/2Lpp6B689HsoNOD7DwogYhn
+         VrDoZNOYhxbH1ZvBMzwmocPHXvuevN7QkIEM1eSI1UM81eU7wd0Dg5Fd8JZHGit9vXk8
+         9/NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756931516; x=1757536316;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=W8sAfUFhiDIxytcQZcm7ITFGHJsLgNIRGScO2jI5B6o=;
+        b=hbj55FMkdDQUQ5JXNQmLlS+RglfRbSZ2fE/IJOpP5URsXyhzzXrgkxzH3Kct9Jxfg8
+         kPvdELwsMoYZRwbzEjxCsj6z2eH9J+I3xmtRUmGFyK0aBBGNGabIgbhEOWeJfx/dSWr7
+         RY/ek9Xiy7I/frgz+4LRLKw+de9g7ufafiaMnzb6bYGacDddmbZrLOWhXXX2nNQsob08
+         yVk7lVCW/ip1aO9fg0erqH6XEg94cdCWbsGGGbmUl5szWh4ThhmAn3+oBmWfmQyGFncY
+         ZugDPp7jExIcrZ1siuaXtc8JHGKmafnev2sC+INDMI4ZE0eSjHZ4WduBDLuiTa7lOaZS
+         vTcw==
+X-Gm-Message-State: AOJu0Yz3agFXsMWYzwnoJSNp2/omH4sRzWandi6w2jFk2JaAXMRQIo6z
+	+ipJelvygLmaAwjiltL6j8UBu8eaF5GbCFASGibFO6JYlqP0R+wFAzy+2xAIHVYFgs2VkBJhmTh
+	oeAaZqvfUGAPGUGDJMBcqrP75fkYFSA3GCaiB
+X-Gm-Gg: ASbGnct5sX+14R6gYj37Jq9KfxV+ii+Mn5D0pSzjeumQvJECUEqN6e4F3CyTF/BJQSs
+	1K4NMLjSzFg5LLK0B575XvxeyB5ESyBMDKqqyRJIvfW8XQkazlMZ+oxEUhRuDFUfeH3ks4hMT9m
+	QxPCb+0BaU/SutDFGYvqJ7HtV9DZ4EtnScs9uT+wIZDt6tQbPtsOsbry5xGnx0sceWRAXokrqOz
+	kqpAg0++gE1sA5Q/dve94XP0B5emIkM+IoTiEMQgxizaxIzG4PulCGfDk1RsYU=
+X-Google-Smtp-Source: AGHT+IHnRDo14vbT1EtpAfjoey8TbicUHdsy4fHamCo0IWFcLcEfFv6yy3sCWFPdVk/CUgXi6AGzV21tkZplkH30tec=
+X-Received: by 2002:a17:907:72c4:b0:b04:274a:fc87 with SMTP id
+ a640c23a62f3a-b04274b17e4mr1318683866b.4.1756931514906; Wed, 03 Sep 2025
+ 13:31:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Wed, 3 Sep 2025 16:31:44 -0400
+X-Gm-Features: Ac12FXzGb48uckVkUCyI6logAUdgxeic1eXXbU45JBRkHrTm5egehpfsArTlzzI
+Message-ID: <CALnO6CA3FkiOeF4w1TUf9S_UDTG_1iRxjEZcAkfrL_eqY+P26w@mail.gmail.com>
+Subject: Performance (self-compiled vs. distributed)
+To: Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jesse Hathaway <jesse@mbuki-mvuki.org> writes:
+I have an installation of Git at /usr/local/bin/git managed by
+Homebrew. I'm also tinkering with building my own Git (+ patches) to
+experiment with new features. Today I used "make install =E2=80=A6" to get
+that in ~/bin/git, but I'm noticing some performance problems. My
+shell prompt started coming back slower, especially in a large
+monorepo.
 
-> Git developers,
->
-> Thanks for the wonderful tool. I still use `git whatchanged` I realize
-> that `git log --raw` is the same output, but it doesn't have the same
-> mnemonic resonance as `git whatchanged`.
+For example, inside said monorepo (apologies in advance; output is on
+a computer I can't easily copy from):
 
-The "raw" output spews meaningless hexadecimal strings.  Why not
-learn to use a more meaningful option, now you are switching out of
-the command that is going away anyway, perhaps like "--status",
-which lets you see the extent of damage to each path, for example?
+    hyperfine -Ni -w10 {/usr/local,$HOME}/bin/git
+    =E2=80=A6
+    /usr/local/bin/git ran 4.99 +/- 1.69 times faster than ~/bin/git
+
+The difference is 22ms +/- 6.5ms (15.3ms=E2=80=9356.3ms) compared to 109.7m=
+s
++/- 17.8ms (91.1ms=E2=80=93159.9ms).
+
+My build recipe was
+
+    export DEVELOPER=3D1
+    export XML_CATALOG_FILES=3D/usr/local/etc/xml/catalog
+    make -j "$(nproc)" all doc
+    make install install-doc install-html
+
+Which differs somewhat from Homebrew's recipe (namely, Perl & Python
+path aren't set; nor is USE_LIBPCRE nor INSTALL_SYMLINKS=E2=80=A6 I'm ignor=
+ing
+the "extras" for now). I wouldn't particularly expect any of those to
+create an issue, though.
+
+Any tips on debugging this would be greatly appreciated.
+
+Some other tidbits:
+
+    ls -lh@ {/usr/local,$HOME}/bin/git
+    -rwxr-xr-x@ =E2=80=A6 4.4M =E2=80=A6 ~/bin/git
+        com.apple.provenance     11B
+    -r-xr-xr-x@ =E2=80=A6 3.5M =E2=80=A6 /usr/local/bin/git
+        com.apple.provenance     11B
+
+I wondered if quarantining was at play, and this seems to indicate it
+isn't. It is interesting that my binary is so much bigger!
+
+Source I compiled: https://github.com/benknoble/git/tree/ps-jj
+
+PS I also noticed we put all the RelNotes in
+$prefix/share/doc/git-doc/RelNotes/*.adoc; I might have expected those
+to get turned into HTML, too?
+
+--=20
+D. Ben Knoble
