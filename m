@@ -1,125 +1,218 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D8832ED5F
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 17:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4BA2D0C74
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 18:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756922054; cv=none; b=mxTuwOxW4R/Kz+nLBUxoKebDwrBUmptoPX12jp5pAq0X+/BlZKvJeYnqGt8AuFzjClGtUydOLhwuxr0OQlf2dTImuxmRoR1P4CB/e5zQStl3sa353yrnHL2CrLTvwNkFDC+2VbmxqtlTpDTx9pQRFgq1xAYfGYatn5Yk8A9NL20=
+	t=1756923389; cv=none; b=PwrdfD4tBOOaZynOXm2Z+Zrhl6Oqpm0ribphMpiRTDDpkqcb+6LkTb1yIqRjZfTA8zux56TaQiLGz54lhdTp5sw01ERSsUmT5zxgs2oYJx5W1gNXQ1UWoKs23S7nTZaJ7UipvR52sGSPNlvoXiWOMA2v5W4mzRb8lQo++3V41r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756922054; c=relaxed/simple;
-	bh=6r9L4xrled7LSxLNkfNziHRGAps5PdZmISk8oLETtHs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=dqPGyI9XQxnsQRAQxY2DlbGawnwOISPDoBGgo1682dYVkqm0lHOONogF8ksblAgbFwXkt3PRQRy5Cn4nJyUAwNe/qGIAk18HsusTJt02CBWqwKYFVZjcThDJUUXhQ6hC7tH5IUvkcmJkpgD6qJ4XApCrE34NLe+Wt/aG3gIPwwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=gGYLBsBC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ml3Mub+Y; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1756923389; c=relaxed/simple;
+	bh=8o6Mt7ZOoUn+szAFtTCmB2KN6LAK+4sjESo2N02KSsY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=adLW9tcIX5XKAOHZzDtW3Uw3VoKXvFyAUAkDzNtg1nFTw0NKFmOGdjzjCqwtUvq0LSGKyP4C725ltzCSK9xPeEyFKBDPZCyoZaDFxH8ulDnRimXFHXFigr43zOR9cCzdDZhzviLRyOPWs5srqAHWZW6551qCLjlmTUrpBGUgzek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=0rO8tKWm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LYCoDfZ6; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="gGYLBsBC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ml3Mub+Y"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8FC8B140039F;
-	Wed,  3 Sep 2025 13:54:11 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Wed, 03 Sep 2025 13:54:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756922051;
-	 x=1757008451; bh=UDLk0W1z3Ph5AuqUkCsH6n1c9C2YDc48UTENXKhNao4=; b=
-	gGYLBsBC6NobufsaKj6rdpeFi0CovtZOSBXSFoxH+94+7d4syoMRuJbhDWQwojuh
-	qke77XJ/RTA1h2i7wTKOAUpu64YsNWivvaQ8RTBQBRbNrpsvZJcPKndzbu8VX8tC
-	PXBdxnxA+NpqNUZYNU3ZPyiVa9lBUxFxUw1KsjBNogng2eexOOiArTnLUkUGEz/P
-	UYE2ZO805OVc6derPI4cd4STqPo2yLAMcnN0ewoniegklPXuemAgssQyId9WhvVR
-	qNJ6mA073I15gvNUSL0IaW4B4XkP69etAbifKsKqp+zzlwDp8+3teq3VBh67N9Fj
-	axeS29AtfKEtLW0pOXKL5w==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="0rO8tKWm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LYCoDfZ6"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CB8D614001A6;
+	Wed,  3 Sep 2025 14:16:25 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 03 Sep 2025 14:16:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756923385; x=1757009785; bh=oBzMqxjy0A
+	uRc4ihuzpj5SYYCEtHL7P/v75e4K5NrdE=; b=0rO8tKWmabc2nq3AWBdBFZ1gUS
+	yiznmo7e5s/cn98Nu5j3w80c4yP/utQ9hbxZ9WcTPMBs3AzKlJVm5jFJ3gZRhNvd
+	URxbAau0UHtdEFOTWtA+Q6SzP6W4pTkV70UTE5OqRmjARF55VZl8NiJEpXvtmWEP
+	BZzvM11XhsBGInjCq25EZ5X6nW/JkHxJHRlucAoAUoEz52zCbsL8UZJmPOUWJbMV
+	nMGDsnNV0lgGnF7wD3zi6pOZ8nZFMtYK3FgnGU0mOEPAuXmaWXOL1X8qbcRuKlED
+	x0wCGKS1G269nYoQrndVi6P0Nw7kCrCSHWmhkZSbHX4vrk8k6blv1rsFKObg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756922051; x=
-	1757008451; bh=UDLk0W1z3Ph5AuqUkCsH6n1c9C2YDc48UTENXKhNao4=; b=m
-	l3Mub+Y1r+owyXr8CluiK+GahIn3GL6pcYUgWR9zSBxtaQU7+LZOiKsuhN3DAEhy
-	jrDWluw98BWEWpmAy39Dh434krpYnI9GEohYVg/FYixFTriNJz/gT7OWr/x7fSWt
-	m3LI1eUcoSKbz6yqnjNOs/3cBxZYS9LOWZdILc81Ah8coOTqw9R2qdhl7RXdzkPL
-	ZehU+25g8An1tBUKNcOEfS8k+nGvQF3zUImxaSVNDII55IAm8gqZ0pS+dhvLDP5a
-	N96p6u6ed+y4eL9TcRUNTWPcWH3i09oknWPZ9203vIFr8TRuuy+XW3X9qBelQ/+B
-	O1i7GBiw6gau5rmhDppKg==
-X-ME-Sender: <xms:w4C4aCT3P7nbztOJC6VOhMB-uQgT-sBh-JoqviRo4omNbjWEvc0mEVI>
-    <xme:w4C4aHyubK1xG8Fh66cXnHoeA8gjvA2nKpiFvZRXVZR_6yK1N6NutZExQ6biu8nEc
-    WW5YDAMYHNCtwZlsg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefkedtucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756923385; x=1757009785; bh=oBzMqxjy0AuRc4ihuzpj5SYYCEtHL7P/v75
+	e4K5NrdE=; b=LYCoDfZ6OY03tnAH1kPQ7KDMqmEqbdkpnrAP/42+zGb+fUJ3Jik
+	hKJUV4GBpWHeeWmkfUN1pIXqfsBvWMWkybHb0B50FIP26qBPnvIAHp/Q7Erh2Ech
+	YFJKKWqSIZukzjZqXCUw6zUFsEyG2K1XrrgETqZf+h1VMBXciBRH98oo1DDrK617
+	KiXPTVSGKxIlbSft3mZhMF2dubB5G2bO0A3dBRL6b4HOxA/tBbNOjA9yQ0c7bruk
+	vU9Z0K3vrm/9/IauTdhOBjO434bymn/0a4IkYGn8P+xqeOsfVgDDBxDrK3QJ7q2C
+	IqH3FFnwqmFvQZUykoAGrnDXIYpzFDk2Oig==
+X-ME-Sender: <xms:-YW4aF6SW8XxKWXRL6V4ij0tqaTFSwd0ppU72ZsB4DhSGkKUZpD-wg>
+    <xme:-YW4aLUg6QhuB0YcezmdPlyca7lxGrH-yAEQZHya59GXVECobthPcG8fBQcr0vihS
+    FLLkyb3VVR4npzQ3w>
+X-ME-Received: <xmr:-YW4aM76bj9BXy2W2oG11Ser0AtpwYSgTqX45G0toWwVxpOuIaxNnGIyXtvSvqZjC0YxsbcuKI_C0AtSGV6zq8XFR3fLnuhHnQnCI_c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefkeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhsthho
-    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
-    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeghfeu
-    tdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghm
-    vgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsh
-    hunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:w4C4aEZ7Pa3U1QH8cUPR0MsPtv8pDMtbC36gzcQsCyLRe0LNFf94KA>
-    <xmx:w4C4aI2WtwWCv_lFwdr9SDPONqyTgAgxLHERBbqnlF0POtvB_FOi2g>
-    <xmx:w4C4aOgVAL_0Aayuqlvw7i2Vhx66RxxPglqt-tZLgUZmUfKJU7Vbzg>
-    <xmx:w4C4aEbXglAbEqsIPS4UxkUbS4RpZgV7rCsOOjUN6OsJJa8VL0b6wA>
-    <xmx:w4C4aGSlDHD412ErPDmxSxfXvLJnOpkSMaOVdkpWC0rkYyp0oYIDsKoc>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 381931EA0068; Wed,  3 Sep 2025 13:54:11 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepueeifffhjeefvdfhffekheeuteefkeeuffegiedtkeeguddvueejfeeuvddtvefh
+    necuffhomhgrihhnpehhthhtphgurdhshhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhih
+    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehjohgvrdgurhgvfiesihhnuggvgigvgigthhgrnh
+    hgvgdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
+    phhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:-YW4aOqs8_cOdXz4EWDSQsdRsSJvsx2EvsI_WcIIJBSCfFzhur8i3g>
+    <xmx:-YW4aHn6AmOtAchKX3JfASlHRoZXLvAFxrCBLpOIQpacO2tdZXdwqw>
+    <xmx:-YW4aCPS4bhB3CBr7YdXZgOR3_7e1ZvhxLH48k44FjAtenCSBn1KYg>
+    <xmx:-YW4aDPvA6wgAKIPchkGfR2_prTacFZfrK1CL-gQmgHnuNnZ0aNYjA>
+    <xmx:-YW4aI2a0NrKicxM6ehz1VMqn3erbFgdrS44EPS4lbUKeKhQTn2LPbOf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 3 Sep 2025 14:16:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  joe.drew@indexexchange.com,  peff@peff.net,
+  ps@pks.im
+Subject: Re: [PATCH 2/2] refs/files: handle F/D conflicts in
+ case-insensitive FS
+In-Reply-To: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-2-35e69bbb507d@gmail.com>
+	(Karthik Nayak's message of "Tue, 02 Sep 2025 10:34:26 +0200")
+References: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com>
+	<20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-2-35e69bbb507d@gmail.com>
+Date: Wed, 03 Sep 2025 11:16:23 -0700
+Message-ID: <xmqqms7bfll4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AMHZM2JIZMZV
-Date: Wed, 03 Sep 2025 19:53:32 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Eric Sunshine" <sunshine@sunshineco.com>,
- "Junio C Hamano" <gitster@pobox.com>
-Cc: "Kristoffer Haugsbakk" <code@khaugsbakk.name>, git@vger.kernel.org
-Message-Id: <15bb8d07-675b-4ccd-8345-ab5861319faf@app.fastmail.com>
-In-Reply-To: 
- <CAPig+cSL=-gD5+WomF7-hYjVJ_PH0m+0i8g3F=E_U3k=QNHr8Q@mail.gmail.com>
-References: <cover.1756311355.git.code@khaugsbakk.name>
- <e81023edb2d78d2be0ecffc071f2c5316b0c7a32.1756311355.git.code@khaugsbakk.name>
- <9611573e-fb0b-49d5-933a-50d8e0603701@app.fastmail.com>
- <CAPig+cRgBXX+b=P31VjQ6Dd4mciFvaUJ4T1oeOGjk7mwV-9KMw@mail.gmail.com>
- <xmqq349czcl8.fsf@gitster.g>
- <CAPig+cQkVP57n_FE6dJ0uxvai-J7usxKFp8gzfEbPY=Ytsd6=Q@mail.gmail.com>
- <CAPig+cSL=-gD5+WomF7-hYjVJ_PH0m+0i8g3F=E_U3k=QNHr8Q@mail.gmail.com>
-Subject: Re: [PATCH 1/4] usage: help the user help themselves
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-(Sent from mobile, might have mistakes)
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-On Wed, Sep 3, 2025, at 18:50, Eric Sunshine wrote:
-> I realize that the changes made by this series are not in any released
-> version yet, but from reading the emails still arriving which argue
-> for retaining the command for reasons of muscle memory or because of
-> its (strong) mnemonic value, I suspect that the hint(s) this series
-> adds may not be complete enough. In particular, the advice this series
-> adds (use `git log --raw --no-merges`) seems to be primarily aimed at
-> scripted use of the command. But the muscle memory and mnemonic
-> arguments suggest that advice should be given for interactive use, as
-> well, such as proposing that the user can create an alias.
+> Similar to the previous commit, when using the files-backend on
+> case-insensitive filesystems, there is possibility of hitting F/D
+> conflicts when creating references within a single transaction, such as:
+>
+>   - 'refs/heads/foo'
+>   - 'refs/heads/Foo/bar'
+>
+> Ideally such conflicts are caught in `refs_verify_refnames_available()`
+> which is responsible for checking F/D conflicts within a given
+> transaction. This utility function is shared across the reference
+> backends. As such, it doesn't consider the issues of using a
+> case-insensitive, which only affects the files-backend.
 
-Good point. I would suggest discussing it in the 
-breaking changes doc under a new "For Users"
-section. I would like to avoid expanding the error
-message too much due to the already mentioned
-fear of overwhelming folks.
+Sounds like a sensible way to separate the issues and
+responsibilities between higher and lower layers.
 
-I've seen  "troubleshooting" questions from git users
-who got one of those long and well-described Hints
-like e.g. detached head and default git init branch
-when either the msg already spelled eveything out
-or the msg was purely informational.
+> While one solution would be to make the function aware of such issues.
+> This feels like...
 
-Cheers
+The first line alone is only half a sentence.  "such issues. This"
+-> "such issues, this".
+
+> ... leaking implementation details of file-backend specific
+> issues into the utility function.
+
+Very true.
+
+> So opt for the more simpler option, of
+> lowercasing all references sent to this function when on a
+> case-insensitive filesystem and operating on the files-backend.
+
+So when you are trying to lock "Foo", you lock "foo", for example?
+How would that let the generic code liks verify_refname_available
+notice that an existing ref "Foo/bar" would crash with the name you
+are trying to take, which is now downcased to be "foo"?  I am not
+sure if the above explanation is sufficiently clear to convince
+readers why it is sufficient..
+
+> Reported-by: Junio C Hamano <gitster@pobox.com>
+
+Hmph, I do not recall reporting anything, but perhaps it was a long
+time ago...
+
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  refs/files-backend.c | 19 +++++++++++++++++--
+>  t/t5510-fetch.sh     | 20 ++++++++++++++++++++
+>  2 files changed, 37 insertions(+), 2 deletions(-)
+>
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 9f58ea4858..466cdfe121 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -869,8 +869,23 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+>  		 * If the ref did not exist and we are creating it, we have to
+>  		 * make sure there is no existing packed ref that conflicts
+>  		 * with refname. This check is deferred so that we can batch it.
+> +		 *
+> +		 * For case-insensitive filesystems, we should also check for F/D
+> +		 * conflicts between 'foo' and 'Foo/bar'. So let's lowercase
+> +		 * the refname.
+>  		 */
+> -		item = string_list_append(refnames_to_check, refname);
+> +		if (ignore_case) {
+> +			struct strbuf lower = STRBUF_INIT;
+> +
+> +			strbuf_addstr(&lower, refname);
+> +			strbuf_tolower(&lower);
+> +
+> +			item = string_list_append(refnames_to_check, lower.buf);
+> +			strbuf_release(&lower);
+> +		} else {
+> +			item = string_list_append(refnames_to_check, refname);
+> +		}
+> +
+>  		item->util = xmalloc(sizeof(update_idx));
+>  		memcpy(item->util, &update_idx, sizeof(update_idx));
+>  	}
+> @@ -2796,7 +2811,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+>  			       "ref_transaction_prepare");
+>  	size_t i;
+>  	int ret = 0;
+> -	struct string_list refnames_to_check = STRING_LIST_INIT_NODUP;
+> +	struct string_list refnames_to_check = STRING_LIST_INIT_DUP;
+>  	char *head_ref = NULL;
+>  	int head_type;
+>  	struct files_transaction_backend_data *backend_data;
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index 57f60da81b..84dc68e5f3 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -53,6 +53,12 @@ test_expect_success "clone and setup child repos" '
+>  		cd case_sensitive &&
+>  		git branch branch1 &&
+>  		git branch bRanch1
+> +	) &&
+> +	git clone --ref-format=reftable . case_sensitive_fd &&
+> +	(
+> +		cd case_sensitive_fd &&
+> +		git branch foo/bar &&
+> +		git branch Foo
+>  	)
+>  '
+>  
+> @@ -1546,6 +1552,20 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'existing references in a case
+>  	)
+>  '
+>  
+> +test_expect_success CASE_INSENSITIVE_FS,REFFILES 'F/D conflict on case insensitive filesystem' '
+> +	test_when_finished rm -rf case_insensitive &&
+> +	(
+> +		git init --bare case_insensitive &&
+> +		cd case_insensitive &&
+> +		git remote add origin -- ../case_sensitive_fd &&
+> +		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
+> +		test_grep "failed: refname conflict" err &&
+> +		git rev-parse refs/heads/main >expect &&
+> +		git rev-parse refs/heads/foo/bar >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+>  . "$TEST_DIRECTORY"/lib-httpd.sh
+>  start_httpd
