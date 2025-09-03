@@ -1,95 +1,131 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AF72ECE82
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 22:11:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4874819C560
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 22:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756937506; cv=none; b=rmpy4pzkez9zOc2/1RFiZI47bCr8NcYguzfqfc8TwBNPJlueKj4LORyTWrWYE5RyMLI4xNNqCaV+VbWer2TjnvlZljA5PYSqrEsRyZT1y3iORHYIKb5TPKgCyZ1+oargvU2s5xT1NEjryVdfGajmeROc0RiJU1j2qgPdDlobZjo=
+	t=1756939741; cv=none; b=q7uAvjsQCJe+OfgDpSIvjkvKw/kN8cT9tHaQBGb4s58Nh1w8Y3vUK83PE0hCxPGwWC078sjF0YhmH2dzO/q9xV155FsK/KV/T+GCl3pXwl7CeVXOw+dxIBaqbIC9rXwNEYWZ4EOUf2CjYiPw7RQhrAmLevthqWVP7/aSeLEgo0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756937506; c=relaxed/simple;
-	bh=RYWCq1YO6mJK5pjnx9dM7S4bobU30kqDse6+36shiBA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q3ePZQg8C1683Fiy17pQV1mlzheKJ4R1/XWnH3jY2XJPs52ok/QGcxBkHDLJD8KZ0N2a7KZV3iP2A/DARq8HA919XirqpATHf71dEvOFqvLEsxAq/Gk0VJxYvkCX2lE+MyTEcGSXhl5zhCjz6kHr87PkGWjxMRkzhnf+DFNiSsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4b494e774bfso988761cf.3
-        for <git@vger.kernel.org>; Wed, 03 Sep 2025 15:11:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756937504; x=1757542304;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+	s=arc-20240116; t=1756939741; c=relaxed/simple;
+	bh=/caXtB7ZOgW7Rkmr1KKKrlyXKICjEWblnXDfAFHI3lY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PL41bHknz75xfM1b4rHlhS8iHf0bCA0fxT2GkDjCofzXEObjsMQfPEJ5/j+Fef6UJrIXa46o9/XqYM0+sv40dyxcOvxZjkHNYT1LTnuaAu84odhdu+JX205svSIdD22WvJ+5jOJ03F4mU7+8q9skoX3jb/5hLn+lsCfeqaqjkzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IHUtAg8T; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IHUtAg8T"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-24ab15b6f09so71155ad.0
+        for <git@vger.kernel.org>; Wed, 03 Sep 2025 15:49:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1756939739; x=1757544539; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JtZu0K8pVnYpEgx8+xkKplTWorU93Ks6nu6DBHG3tms=;
-        b=i37m9CtNQX5qXvxPCBcs1yxxDHaUeEoYW+Pz+9GogvmU/0rxEc8uFm+pkRAtBS71+c
-         8Q2pAJTSC2K88SKbO2sLxp4RSsSqJCZQ9u0NftJGenT3ivMZEiw5m1hoPg2t/uXnb6mi
-         sz6PywAslzFxNKveQbwk9i5QYZsf7MJarUP7ir3O4dkRi6xmzWiWrt/+dOYVc1NB2zNL
-         ZbfJ11ROOqAVd90rptiKOMt7bWQWaIPAngv192BFYMGYfSiVwovYQaKI2U/3gXJ9YUWX
-         VVE4H8heGaLU2GYSFeRNnqVWP3TtIteYmQ93sr5V6hHxmrdNn9lmlDRkX7A+J1eC78Xi
-         LTqQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV5O08mnmxsGJvwBybFCnfv27OGI5xPHV7zFbcp74+CX4dslnuJxmYE4OBdy95XUJBV2HY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxqorrhD9IGDo7szj1lN+tzDS9bO/g+drEnpapwJQikuVGg5IXp
-	zNuf3gnzCL7SIZy4rzxHiDcAMhb2ZHrNv8Il6wyR4TaJtQJrD7mUdU2xhATXJiwk+TIcvf85C5b
-	hZ3yJdMW7xNAyMtu+1/0qUtLg+pm+A98yIg==
-X-Gm-Gg: ASbGncv3wgRZJK6dFsMDBrrRvbPR1cbnw4n1zio2yF159GnPSqz/4t19WNcCIkWMfWz
-	4kXd2lu0OKcX+CbvIMyTru2hJir1zqUQZUeB6dVa2hwFrFEzg5fzVNS9+s9xu4G1YSuxuN5Wc6+
-	DyhJ4H1m7RLHx4lzjqKATiPtao6gtciFyyGMDLiGTGyx9PO3RCqvZ0pMmzKiUPwC3UXi1hkN10d
-	lJtFA==
-X-Google-Smtp-Source: AGHT+IEWNlP+0JZHssPL7/iYjkHkb2zpDxP84bR7m5mEQP3Ex2l1//ryzEeWoOtG+MYGv285pB8b3vQdwqQEon1+Cvo=
-X-Received: by 2002:a05:6214:21eb:b0:70d:f55b:e940 with SMTP id
- 6a1803df08f44-70fa1b87094mr147370926d6.0.1756937503555; Wed, 03 Sep 2025
- 15:11:43 -0700 (PDT)
+        bh=2Ixg9/jNUB5QY3QZ5mFb+dgVE+GqihXC87MTGhT7rQU=;
+        b=IHUtAg8TEKNIQDDk9bX60Jbf1C0+h8klLhjdprvyDPNQtrBBDsO9PogmLFv40Y3Ydv
+         7B8Ux/P8Ogm3i9x6jWGFfwyKnOLSXf1Cm5DN3I6Jb2qu40exl9dZTbG5qRtou+70FbFA
+         zna4f44UkZXKkHmLnfHCodwdzvi4zIOPQgojRFa4EO91BKeHh75y8CHITyUmdI6MNC+W
+         FPXsGizYK8L0TFNW/1rdTewG48PXwyE8pra6JBpuApWtNpsz7CDpOhyg82tPc4krYFpF
+         hpSBQrl4Kut+vo9QnA0uwHEXldDHPXXb0G6cHaoJc7VDFOf1EmFvCIoC2e4QJYmFCZrR
+         plFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756939739; x=1757544539;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2Ixg9/jNUB5QY3QZ5mFb+dgVE+GqihXC87MTGhT7rQU=;
+        b=RFkW5fRuDZR8hTDthHXiAOvCB+IZbEDSkIoddHiI5mNhAHa05EoYq7s9MpL+HBN2D8
+         FIjxNandjMHIid+jh1fIgRqRSWPW+wVzrnn8+HY8WuRWHTjCE0eQZVnZ8OExtNjYhyc5
+         M5efhd+vIQMV1F4b463wMHd+jm+ug1Jg4vubCLvHwVm1VaQIF0Si3tsO5q/y+xpqzqUE
+         8xL1L3dcaGTf35lE+SdZOUeAYV3D1yZRL51+hUWTjaSl7fiPj+Se8PJQyCqLIi+FG1sn
+         zY14tG7mN6dINWMeIWgzA2+dSBZDQBOpFOfs5MoMYc3/NK+zNtEtcNLghHw3outQjoi/
+         GuCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW60+SB2FkanBD9A9gA/MfuAiIu4NvJCpt/AFFoK+h4BmO8R8AuJj1OEqKwz2I8SxQj+YM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz2GcqedFdMnji3jHCmVK0NhAg8U0ug1iU7srC3YZWNlj/2KuBx
+	u2+i4w8ashrHWQE0urdvtkA4K21Heiy8cIEc0r0tUtIQypV7+cSbILbQSzDSBGaMRA==
+X-Gm-Gg: ASbGncuozqXV2U5xbrkUC259Zk4/1DOfHQFR7+EMKEP0jVeVw6OnyV88qNHXZfl0/vD
+	XNRkqeegsandf1/r9AlK9EZbRNSAcVCYEZLhr/8zGGWSlf9DfgIlt3R05DiSl1OQUnwZuqNS76O
+	oB9VdznDjQ7b3WWI+h0Pk/ybFi8mYqYvudiSpZWMpeEX45yrsO3mfia90+RsOV4ucuGxqViH4uO
+	2crePl3OKep2glqFSj8vcFDht8Qx9vzsxjmKNtowSLMNdXow1znE7bwjxTHL8Hc1MTxpXwAOnOk
+	vGmBbQbkIHVu2lMHquQDlU8m77hza9xXiPXnZXJe9c12ZzgGYsXj0amC0HqNgNLabNV41/KaYXk
+	d8PZqqIY0jGIUtrkiksScmcmwZz+UIJSSNSV7BArB4S6vTYac7AKD9ZakACHqAA==
+X-Google-Smtp-Source: AGHT+IEYDWrhAIYKB+BKczY8DoIZMVVnT4svwD3SqPMAdcJcAs8UonDy65zs/fD0rarzeFQA3nwjJg==
+X-Received: by 2002:a17:903:22c8:b0:240:4464:d486 with SMTP id d9443c01a7336-24ccb19d02emr208695ad.13.1756939739366;
+        Wed, 03 Sep 2025 15:48:59 -0700 (PDT)
+Received: from google.com ([2a00:79e0:2f0b:6:9cbe:cc78:867d:1486])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24a956d9b7esm126960135ad.11.2025.09.03.15.48.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Sep 2025 15:48:57 -0700 (PDT)
+Date: Wed, 3 Sep 2025 15:48:51 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Junio C Hamano <gitster@pobox.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
+	rsbecker@nexbridge.com, 'Elijah Newren' <newren@gmail.com>, 
+	'Kristoffer Haugsbakk' <kristofferhaugsbakk@fastmail.com>, 'Josh Soref' <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	'Christian Brabandt' <cb@256bit.org>, 'Phillip Wood' <phillip.wood123@gmail.com>, 
+	'Eli Schwartz' <eschwartz@gentoo.org>, "'Haelwenn (lanodan) Monnier'" <contact@hacktivis.me>, 
+	'Johannes Schindelin' <Johannes.Schindelin@gmx.de>, 'Matthias =?utf-8?B?QcOfaGF1ZXIn?= <mha1993@live.de>, 
+	'Sam James' <sam@gentoo.org>, 'Collin Funk' <collin.funk1@gmail.com>, 
+	'Mike Hommey' <mh@glandium.org>, 'Pierre-Emmanuel Patry' <pierre-emmanuel.patry@embecosm.com>, 
+	"'D. Ben Knoble'" <ben.knoble@gmail.com>, 'Ramsay Jones' <ramsay@ramsayjones.plus.com>, 
+	'Ezekiel Newren' <ezekielnewren@gmail.com>, 'Calvin Wan' <calvinwan@google.com>
+Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
+Message-ID: <shv56ip5fs5ij653xyp2blun7e4in3gccjxl7k6qani5lwgich@ih5o7qu2fk4v>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com, 
+	'Elijah Newren' <newren@gmail.com>, 'Kristoffer Haugsbakk' <kristofferhaugsbakk@fastmail.com>, 
+	'Josh Soref' <gitgitgadget@gmail.com>, git@vger.kernel.org, 'Christian Brabandt' <cb@256bit.org>, 
+	'Phillip Wood' <phillip.wood123@gmail.com>, 'Eli Schwartz' <eschwartz@gentoo.org>, 
+	"'Haelwenn (lanodan) Monnier'" <contact@hacktivis.me>, 'Johannes Schindelin' <Johannes.Schindelin@gmx.de>, 
+	'Matthias =?utf-8?B?QcOfaGF1ZXIn?= <mha1993@live.de>, 'Sam James' <sam@gentoo.org>, 
+	'Collin Funk' <collin.funk1@gmail.com>, 'Mike Hommey' <mh@glandium.org>, 
+	'Pierre-Emmanuel Patry' <pierre-emmanuel.patry@embecosm.com>, "'D. Ben Knoble'" <ben.knoble@gmail.com>, 
+	'Ramsay Jones' <ramsay@ramsayjones.plus.com>, 'Ezekiel Newren' <ezekielnewren@gmail.com>, 
+	'Calvin Wan' <calvinwan@google.com>
+References: <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
+ <aK5mJI1NfVQDmDXN@nand.local>
+ <01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
+ <xmqqsehc1ypi.fsf@gitster.g>
+ <aK9mx2XemppIaKVI@nand.local>
+ <xmqqh5xszf91.fsf@gitster.g>
+ <aLbSA5KsBdD4wW_B@pks.im>
+ <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
+ <aLfU5sEa-RE3X4G2@pks.im>
+ <xmqqms7bchln.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1756311355.git.code@khaugsbakk.name> <e81023edb2d78d2be0ecffc071f2c5316b0c7a32.1756311355.git.code@khaugsbakk.name>
- <9611573e-fb0b-49d5-933a-50d8e0603701@app.fastmail.com> <CAPig+cRgBXX+b=P31VjQ6Dd4mciFvaUJ4T1oeOGjk7mwV-9KMw@mail.gmail.com>
- <xmqq349czcl8.fsf@gitster.g> <CAPig+cQkVP57n_FE6dJ0uxvai-J7usxKFp8gzfEbPY=Ytsd6=Q@mail.gmail.com>
- <CAPig+cSL=-gD5+WomF7-hYjVJ_PH0m+0i8g3F=E_U3k=QNHr8Q@mail.gmail.com>
- <15bb8d07-675b-4ccd-8345-ab5861319faf@app.fastmail.com> <CAPig+cQdwr-a_B++=2+q4mV8oZ7VLTYEQ9wnVP84jFYkTHFtHw@mail.gmail.com>
- <20250903214415.GA1915988@coredump.intra.peff.net>
-In-Reply-To: <20250903214415.GA1915988@coredump.intra.peff.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 3 Sep 2025 18:11:30 -0400
-X-Gm-Features: Ac12FXz8FaR0iqyHrFbqqUM14XDJm6rICyw_0C8iQ4h0sKNKiMpIk74I6v2iKVM
-Message-ID: <CAPig+cTN9vwoquOKCRz9TXRLtwHaxF-mL6xbbXxUmoHxZkW5rA@mail.gmail.com>
-Subject: Re: [PATCH 1/4] usage: help the user help themselves
-To: Jeff King <peff@peff.net>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Junio C Hamano <gitster@pobox.com>, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqms7bchln.fsf@gitster.g>
 
-On Wed, Sep 3, 2025 at 5:44=E2=80=AFPM Jeff King <peff@peff.net> wrote:
-> On Wed, Sep 03, 2025 at 05:21:47PM -0400, Eric Sunshine wrote:
-> > > I've seen  "troubleshooting" questions from git users
-> > > who got one of those long and well-described Hints
-> > > like e.g. detached head and default git init branch
-> > > when either the msg already spelled eveything out
-> > > or the msg was purely informational.
-> >
-> > I didn't spell it out above, but what I had in mind was something very
-> > simple... not at all ong and detailed; for instance:
-> >
-> >    For interactive use, define a Git alias `git whatchanged`
-> >    which runs `git log --raw --no-merges`.
->
-> I think that is good advice, but... it won't do anything until we
-> actually drop the whatchanged command, since until then we'll refuse to
-> override the command (even the crippled --i-still-use-this one).
->
-> We'd need something like the patch here:
->
->   https://lore.kernel.org/git/20250830022718.GB567900@coredump.intra.peff=
-.net/
+On 2025.09.03 15:10, Junio C Hamano wrote:
+> One more thing that I noticed.  What are our plans for the two
+> directories in contrib/libgit-{sys,rs}/?  IIRC, the new stuff from
+> Ezekiel did not interact with them at all, but it did not remove
+> them either, so I am a bit lost.
+> 
+> Thanks.
 
-Indeed. I saw your patch in the other thread and had it in mind when
-composing my earlier email, even though I didn't specifically mention
-it (though I probably should have) since I was more focused on raising
-the point that -- given the recent spate of muscle-memory /
-mnemonic-value argument emails -- the existing hints in Kristoffer's
-patch series may be insufficient to quell future emails.
+I haven't followed this series closely, but I wouldn't expect it to
+interact with contrib/libgit-*, since those libraries are intended use
+by external projects.
+
+That said, we at Google don't currently have plans on expanding
+libgit-*, since JJ has been able to meet its needs by shelling out to
+the Git CLI for cases where gitoxide is not sufficient. It's possible
+(probable??) that we might return to libgit-rs in the future, but
+nothing is on the radar right now.
+
+When libgit-* was still under review, brian said[0] they were interested
+in building on it, but I don't know if that is still accurate. brian,
+any update on that?
+
+[0] https://lore.kernel.org/git/Z47kr0_fYYdaMWyA@tapette.crustytoothpaste.net/
