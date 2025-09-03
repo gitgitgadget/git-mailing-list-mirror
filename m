@@ -1,90 +1,87 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DD02BD5B2
-	for <git@vger.kernel.org>; Wed,  3 Sep 2025 05:58:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2614501A
+	for <git@vger.kernel.org>; Wed,  3 Sep 2025 06:00:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756879120; cv=none; b=Q4t8ku5Ph6d4f5YEN+7d/SWIjL1OMCKVgePeiIVTVSSuKWtSIGRjOtfggenVIjeXcT4vD6XAlRE7KIAmrHXlYs3ug98ADIeaHhqaRv35f5M1n902QDQ+jFXw18o2BIhDfiHJ6yfvdLx7im9EtA7E+sZZP4/VqPs5YNI2I5YSeIY=
+	t=1756879238; cv=none; b=Rn9lUMOoCrRecGYKn86M9lGpelbNA3WvH5c4iy9wesFBO+LOaYbiqJ2MpKout9lNqsM+DdlwgEH9jT6hO+bYtWda5cmZtESWELTZNT44p6g2OAv14mkJOTogqw+KkC0AOdGeT/T0po9aKlXO34e2mKQPlC0m9XuHESQpum56CXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756879120; c=relaxed/simple;
-	bh=l4Myl/H801zPBkY8UZvhGSws21YWCjbsiyT8+tlrC/I=;
+	s=arc-20240116; t=1756879238; c=relaxed/simple;
+	bh=H/RKhaW7nvLD3nQP9IPsNsPFBd0z2e20nIvOVEWA5HA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bOQkXNudcbfbLuFCPezmmPClKXIpzFipNQ5LTbt0a+6EhWb8dorFxA8olxs16E0d6TkS2fa1e79lE0p8L1XCQfIpuC6v+GuBcYbHtWigmXAOOtbiKH5fzLaMfBEyMLXLaa0xQmziznWWn01/ludWrqLGlQsxCdE48PMKeB8YTMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hNZ9DH6T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W5PWpM8E; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=AxNM2jgI8/G8jjqkeMoUchA9MuKE37ep1dEOF9MUiknfeNBRH+xRf8zgg3zkddCX/YaHL7QP30E748CKRtrzChTeZGILRPygpu0TVCN9Ahsy0K7cVbzSKTJkhIdHFZQYL8+axqoxKIqqKPpH53MFkpz1A5El4dwzmniO43byxIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mx1wbNWi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j50gUEY4; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hNZ9DH6T";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W5PWpM8E"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mx1wbNWi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j50gUEY4"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 04251EC033C;
-	Wed,  3 Sep 2025 01:58:38 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 03 Sep 2025 01:58:38 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 680FB14003F6;
+	Wed,  3 Sep 2025 02:00:35 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 03 Sep 2025 02:00:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1756879118; x=1756965518; bh=zh+o9M47n6
-	eiS6SXfkfg8pi3fZRpNKeR6rmwiueELqk=; b=hNZ9DH6TgXdbZEebuNNFkahOJ1
-	6V8uiwFKkc7CYMVWBBmFY4Xah40EAVv2lfbggK+y99yIw/VR7GzKekCYLT6QQEKO
-	NQdVxPJI+bzhsCrzG2/ke0Ho4Ktn5o9Ti6OvDAjettsMzKYb8h43nh+4ThC9JK0V
-	6mWnat0/2iDrXwyEvi+r9SFP2SVNLcxYhDTZWYCHu5wVcH7/KS0Jt+hH2RK/ep2C
-	pSgAyJMCKn+q42kDrrAFjpolAS6aKWsXgVrTsFX2MlofbRpIfpSzZAxnx9jOSyFw
-	uXNVXpY2znF2RJaj8PL0YqtowhPF2cREpskXvT0qQ/dVEZ7wrwPm0UBuk8mA==
+	:subject:to:to; s=fm1; t=1756879235; x=1756965635; bh=nC2ALCpqv4
+	GStQF6SR+pvdz/1q03vISeC45U78z/BFk=; b=mx1wbNWiJ4TxB5+4+XtIDhR/OM
+	eAmXNkZ8ZqgxgdPlx9KjopUe01fUN4qWE4zhjFT0B7IuboTrUXmyYI1dvYH/VrME
+	BelomQ2m21sdubrdRGvJKlJF/SbJx/4RMGrLzlduGrztl6Zm/STm7h4pRxaz0UgQ
+	GU/q2S7pqjxtU99vxIYAY728VUdntw1UbGwrtspaKw1ywl7V8EMUTKOkMnGVyxQk
+	VJ0yG2QUlzH9/4mC0fvp8N7kEWRZQpOjf2B+GkWYuOtBtY/fcFhPFjv742qCkoAH
+	W0KQ5wqkiPhHEMrbrnlNq1G++B1lFEQMtE1fuHQkz0i9tp/UMtGgBRqzBLEQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1756879118; x=1756965518; bh=zh+o9M47n6eiS6SXfkfg8pi3fZRpNKeR6rm
-	wiueELqk=; b=W5PWpM8EhLnSVDRm81zr2DWDmMP5ejVEFD/mLMU+TrAZeaPiLRS
-	H3ezuAbzbttBfKg3AhKRVCSUWvIr02dM+IQY447TOs9fXHoXEuAi3toxN1/sBYO9
-	7bfdlLavrJEIR1K1mSbNlKfNSMcAWgSOfuYpw+egnmgo1jDEXtFFpS7C4uDontuW
-	14LyVF9jPpFi6wOltG+8VQ0GLoQWIrx7s2KI8yiLBBtykj7LRRItuwxkiHSLoKnT
-	zGT704OhgTGEpi/ifxVXC4MUdPkUmZHtDNt7XpMPNOtsJKJdHPweY2awPbnZJstg
-	xNWxVnB6HkWeMak5O1Ui8lpt0OxOWv0zcOw==
-X-ME-Sender: <xms:Ddm3aAcAtioJN7TGSYSxlZEOtpYTnaITWSFIc73R-qPZcuMO99Jh0g>
-    <xme:Ddm3aNvfCm-fOc2d6_DyyA5KhgUWlFUq8IhGb3AYWeKsfxJ1pyfIhNE4Udt7-tKEX
-    0Vya8uY3N4Crz0afg>
-X-ME-Received: <xmr:Ddm3aH88RdrhQjrh1Djrc6_wRjxdDTMbq_bdjHNSOY-jSIyAcjE5PwXJC-1dioZf81Clp-bVyF3YwYmTqVMoJOLu39mzjDHsX2swZSE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeeiucetufdoteggodetrfdotf
+	1756879235; x=1756965635; bh=nC2ALCpqv4GStQF6SR+pvdz/1q03vISeC45
+	U78z/BFk=; b=j50gUEY4ISjJi3nzifD82tQnmt6CvQgrpDCrSbgCk8lITfqHNJO
+	jC1G5/Q1AjIUkjWT1KKuuEqVd0O0XjgpvR06WkmSsijIkgZV5jxDdnR34ieJNLQJ
+	JusG8bmNLVbQov0vyVe0GxVOn29RCGdhfYHGnpX1JzMW52/apArby9osND0aMbtW
+	k6nc0FF3WNP0v2E4HbOHJjildewTMOuuTBsNYPJS6MK44iXg9Crh6DSHFgqH8udO
+	99F/86MU+cSswQO+pHy5p0gzDBzOQx3FKdVOv2bCzbtTxiJOW+t3vxXUGGIpnz/M
+	IHdZ+LPgcI+N892/258JFxZ1gSdnby0mdYw==
+X-ME-Sender: <xms:g9m3aM7MWQ1zLSki8-s6udSyz5vw-boP6bQKhVDjvMnSJO5QmOqRrA>
+    <xme:g9m3aIdVDz2lYRPpWnJDHNzeuQXR27TBtkCfbCfnFCtaJ0v6tppLxMbhogL4VSdoN
+    WMEDEGsm0LLlDGtTg>
+X-ME-Received: <xmr:g9m3aIDC8om7vksP6v34UkGGe9HcVB7dU7DPsTJURfbo13lvyTzNxfR-2IWrZTVlFgiukPigy1QoZULhad7iNZvM5QtW-oe2ktJvLMo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
     epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
     ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
     ekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehl
     uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrd
-    hnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrud
-    ekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:Ddm3aA2Z_j_cCpMfB-3EFkKbbVOdXFOU4vajsGa4S85L9QuQAM3GLA>
-    <xmx:Ddm3aEAy4V5jo-NHtFP0A2k16IUROa-NX7Aaryk3Dfzw1JAOblDJ9Q>
-    <xmx:Ddm3aEctQeLBPMMVYBVlCY5geeCCRu68uIBPF104IjwsioxBiPaC3A>
-    <xmx:Ddm3aJ5SUyvz-8szuRiHGEN6Uqh-YPVktfaKnZkuQp5M6prIa4vGAA>
-    <xmx:Ddm3aEAFoupL2iQ5Rn0GsFiS5b_C9ltrlONH_BQl7Gm9vahRfSU2Ujht>
+    himhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvvghtshhonhhifedtudejsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:g9m3aD8GXdJSOIuk6sqxKIGMN-_Y_SisnbUN7XScMZwNGh6ZVW4szg>
+    <xmx:g9m3aLKQ4tdj8RyGaQI9TrPHFVsvmX7OldjcXWPQhZ21d2bPq47-HQ>
+    <xmx:g9m3aEibesHsCzZqfYR-6h1-8xRoMV9idx66-LO-Y4FYjzeQ_TBnDg>
+    <xmx:g9m3aD60Qzo5Qsrj5FN5V39lu3gtWwRdJ-KAvuOZIXrRr6NJmHv-UA>
+    <xmx:g9m3aEoQ3otNoE2t-su1YDkFr14gSkrVuJ2wrHrFRvWifDqc91-wLNd_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Sep 2025 01:58:36 -0400 (EDT)
+ 3 Sep 2025 02:00:34 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 611d2562 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 3 Sep 2025 05:58:34 +0000 (UTC)
-Date: Wed, 3 Sep 2025 07:58:31 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a4ca9c98 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 3 Sep 2025 06:00:33 +0000 (UTC)
+Date: Wed, 3 Sep 2025 08:00:30 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 02/16] odb: move list of packfiles into `struct
- packfile_store`
-Message-ID: <aLfZB9L_jvxt7U94@pks.im>
-References: <20250821-b4-pks-packfiles-store-v2-0-d10623355e9f@pks.im>
- <20250821-b4-pks-packfiles-store-v2-2-d10623355e9f@pks.im>
- <aKz0/WNu/GRYh3/W@nand.local>
- <aLav4UAcfQjvNzMF@pks.im>
- <aLcngI6vm9DmqUeI@nand.local>
- <xmqq4itkkaym.fsf@gitster.g>
+Cc: Meet Soni <meetsoni3017@gmail.com>, git@vger.kernel.org,
+	shejialuo@gmail.com
+Subject: Re: [GSoC][PATCH 1/5] builtin/pack-refs: factor out core logic into
+ a helper
+Message-ID: <aLfZflWT4618ptCA@pks.im>
+References: <20250826073645.1074397-1-meetsoni3017@gmail.com>
+ <20250826073645.1074397-2-meetsoni3017@gmail.com>
+ <aLbEWSHUotkmSiCq@pks.im>
+ <xmqq8qiwgl9j.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,43 +90,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq4itkkaym.fsf@gitster.g>
+In-Reply-To: <xmqq8qiwgl9j.fsf@gitster.g>
 
-On Tue, Sep 02, 2025 at 10:42:25AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Tue, Sep 02, 2025 at 10:25:44PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > So I think in this case, the CodingGuidelines would suggest that we
-> > write this as:
+> >>  builtin/pack-refs.c | 31 ++++++++++++++++++++-----------
+> >>  pack-refs.h         | 22 ++++++++++++++++++++++
+> >>  2 files changed, 42 insertions(+), 11 deletions(-)
+> >>  create mode 100644 pack-refs.h
 > >
-> >     for (p = store->packs; p; p = p->next) {
-> >         if (p->do_not_close)
-> >             BUG("want to close pack marked 'do-not-close'");
-> >         else
-> >             close_pack(p);
-> >     }
-> >
-> > , which from our discussion here seems like something that we both find
-> > more readable than the original.
+> > Shouldn't that header live in "builtin/pack-refs.h"? Makes it way more
+> > obvious that it exposes functions from "builtin/pack-refs.c".
 > 
-> Yes.  Technically the "if...else..." is still a single statement, so
-> a rule like "do not use {} only if you would place a single
-> statement in it", though.
-> 
-> I would actually write it more like this, though.
-> 
->      for (p = store->packs; p; p = p->next) {
->          if (p->do_not_close)
->              BUG("want to close pack marked 'do-not-close'");
-> 
->          close_pack(p);
->      }
-> 
-> The first two lines in that block is a glorified assert(), and
-> without a programming bug, what the loop wants to do is only to call
-> close_pack() on eacn and every pack on the list.  Not using "else"
-> conveys that much clearer.
+> There shouldn't be any *.h files in builtin/.  since the top-level
+> is where the library-ish reusable things live, so that they can
+> eventually be used by more than one *.c files in builtin/ and also
+> by other *.c files outside builtin.
 
-That reads even better, agreed. Will queue this change locally and send
-it out with the next revision of this patch series.
+Hm, okay. I still find it puzzling if the header file for
+"builtin/pack-refs.c" sits in "pack-refs.h" as it makes it very hard to
+connect these two. How would you reconcile that? By moving the shared
+logic into (non-"builtin/) "pack-refs.c"?
 
 Patrick
