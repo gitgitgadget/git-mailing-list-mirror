@@ -1,100 +1,138 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB052459F8
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 18:47:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5332505A5
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 18:50:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757011680; cv=none; b=l5BJG0X8bNkvz/A4w5lZfdiX89Nju+jbGTuRTccL0F5S4M2gqqiGseMhsWuaeJ//jDMK4wqUDsddCOYnxDJSWODnt5Bw6v1aWphuR4ZC2ONoAUw5Sf1HCYE1kSw4eBmMmRsljEUu1A4y+bbbZvE+DzY+7a6PbXYnkrL2aNdDcfA=
+	t=1757011819; cv=none; b=KpEi2iFZrh1w+HBK2SNFpbbzRWoI7mEUDlTjclYLc/ki6q/PepL791ivDSS3m0MnYwagzEwAcVgX03O/1bSH+MT2xZRHfaej2uXTCezZ6M+iT6ZQ15qLnWTdEXRY01QGL65BX2rVk71zlT+dx0X39pFUC5yEgKllPxgdGfaIMJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757011680; c=relaxed/simple;
-	bh=0G4GvMSpX4k1fDAzlNkIKOi+6uZ10fy4ame1maLm1rY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=U3wp32/WkhkoEHwfFtdxsi2SkgW8gSN3T2vnzJ2Igv4l0ZG9IPbdVhZa0HiYAhvk8CTXZRZv7Dil67EP9YE/NnrgwUHKphvftGio5gm29lsfbAvnlbAsecqQXb0gBhFSe4/TadRA4GOkftDxQU8LpYsr/UJX/TCySFHlSTXkoEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kYI07Clx; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757011819; c=relaxed/simple;
+	bh=O+rPJqutO/Dg8XvYO6ZdprEmnLDYAwtwS8HvxuTukRc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VGLq8W1KmzNCRYcgxAsrZBa4Hi4xkQllZRClJG/eoxcDh+35iqxMfs9GsvNiWZBEQ2Mi/aFHbN/3laRSOIGfYQlMt0bXgaY6cbL8GCmH7PyhhfoiU8RS2oTuhYGGfrf+NlB8MwZQkKKU9qUkf8E2uoc4+HwQmyp+8wHMdaU6UWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hZwJgOLu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZlWXDGj0; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kYI07Clx"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-45b87bc67a4so10196075e9.3
-        for <git@vger.kernel.org>; Thu, 04 Sep 2025 11:47:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757011677; x=1757616477; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7Gce6hrTk8dVe3AYigVque5IEO5zLv+22x+PIOyfzb8=;
-        b=kYI07ClxouOmfyWKvUoGeBZ9gl8vwx0sQSuj8GDy1fJFB7xOiok4BevaIThvXQD7DK
-         GY03fp+7bVnx9GWC2Z5K33qFt+gxm0ncVEWcP2T1ptDg7hktLPtrar5GvGiLwIiqhmvn
-         QmofFR81DeXETpauScr2UPr0W015Z9lyH22Fjhsok25Au95EKjKSthpWRy+jm34tFMY1
-         tjSIeMvd33kHh8wa02K/mZiFyymrW9XalkFErIjDVyTt96dxsIs5owAQ3joBLI4/akgJ
-         Sg0F0MWSwRyJGFhosuuNICI/VwLUCLpbKKEmbJjsEYFiZBQUbgaOZsYXnwwE5oCBSnu+
-         qWIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757011677; x=1757616477;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7Gce6hrTk8dVe3AYigVque5IEO5zLv+22x+PIOyfzb8=;
-        b=nX6wei1nvXDqGeLia2LWLIvJyK1j6fWKk/0jYveWDB251kTGJBWoX7qwOI2wlwIF+2
-         hGL5OZUPPomnm54gYfgcbRS+zWcXWPWbDZ+Ero2Y9hy3LD4oLRN68I2g7j5UW5KYW8gE
-         52Ygna51kPvQq9NifSXZRH8xa3XjGuX0RbGBkyMHWkWK0s+tH9P5vSsGSJ28qYGvDhoK
-         HUzngyhKZEwuTsm55f7ZMcO1+nnQ4jjXZxKZJ7Omhm54+LP4G14WE2acJ2oHZmapAS0N
-         Wv0r//7j7YQciUjekqn0agySWRo5f+lNJ2WjhYxMi0F98XVsHwPbovys70AugICfDH3w
-         UF7A==
-X-Gm-Message-State: AOJu0YzvkbNWAlPiph0WUTzMng0idTUBu3i3BknPVCIQ9c+NnyoHmO1h
-	F1A1m4TTjUW2AEmVcKGVN2BNtvP7WGOHjSTvKzkOG26ZHTwKdmsBLyN4
-X-Gm-Gg: ASbGnctBICs5MpCf2UHIPIeF9q0jHx7QpytDuc9bE7lDVVbNZ4wBsYrWoqMIqFZwBmt
-	HzLCMdqpVe74+Q1w+bs3EQ6MGJEQz4JF2YTIHEmlTJwJgTppCCkJww8y7odR2S1vu9SszovEBax
-	Mk6YWzTPTvs8dQg5zY980YATBRlE8AUi3jM4bmp3ocu1xTry/LZwfOw6wYPwyHyUTELHj6S5alN
-	ZiU4/30wOSQ6sJiE+M1ELOLvI546k2tkxeAzZz5PqHL4BevXqRIFf6zx4cfxaAMCfTZziCxJqMJ
-	B3pECx3MqGF2GNezl+c5oOCT2G7aHsjrKhW8NaoKoyazKX5DK5qNV56FbzEW0oARnSg3aQQEpN8
-	T4178n4uiXGCh+RLV2znxBnmje367mbcUjp+KfTk9AT+LIEm9Xu2YgZlAmWGwla/AW45vojGEGA
-	rNAR9aW3jOIkJNPhg=
-X-Google-Smtp-Source: AGHT+IFYQvWYF1jVNIpsMDbXnpGsXIKyoOFMvn+uXf94+V+pg+3GosxnO7KOff+G2E99c3CgUTeX+w==
-X-Received: by 2002:a05:600c:1d1f:b0:45b:8f11:8e00 with SMTP id 5b1f17b1804b1-45c055e1774mr75772365e9.37.1757011676782;
-        Thu, 04 Sep 2025 11:47:56 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc? ([2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45dd074a3ecsm22195125e9.9.2025.09.04.11.47.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Sep 2025 11:47:56 -0700 (PDT)
-Message-ID: <cca02e90-a7a1-495f-94e5-426bc0c5f13e@gmail.com>
-Date: Thu, 4 Sep 2025 19:47:55 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hZwJgOLu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZlWXDGj0"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5F47B1D0045B;
+	Thu,  4 Sep 2025 14:50:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 04 Sep 2025 14:50:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757011816; x=1757098216; bh=kx8Q/6Lv53
+	N0MDMK4i1982pmR76n9nQAu4hhmeut40s=; b=hZwJgOLu17XOkjZDrEFBQ4izKA
+	jTvnUiJGxjLmWecS3x1TiDAzC57JUrfUZGLW9k2Evaj6yHZEZsw7ATGkRnd+VeTm
+	o7nLbZi8j3Y/DIMCPsEN1zj+5yFH9+z/TV6y36QaK8+1rl9hpJPwzjP3ddGF+tgB
+	UW29gmzD85NcC4oTnl0GDb46Cb3iWmpiDtZphO82EdbrHjdiZCRdccclX3HSaTfP
+	1Ct0zSXiz/gn8e2+0rfG7cv66mpn6KfAu9dLBUdIPA7KhHMOcQitiNMtE3AMulbn
+	HdMUmKXAI2OitFZei0G0vlP2PLCoQ5cpAZAXz0mVo5pJyOIODdX2ohoCE8dg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757011816; x=1757098216; bh=kx8Q/6Lv53N0MDMK4i1982pmR76n9nQAu4h
+	hmeut40s=; b=ZlWXDGj0KVYJYy9YldKEQOwlrp9IkhLP6eSiaJ3OL8JYVByrqPB
+	ea0BHS8i5pBykezCR2ONgt4B4vCMdccChvxsmoEe2aKBAJmMOef8xZVZlvwj2qND
+	UOL5paZuPl5dgz1k8Ax2Uo0ZUOui/X4/lENNoer4Og+i6akeXjYblP59Xkugb+47
+	R7BdXqzJd3xU9gOrz5F6Lpdq8Ecy5/lOzSG9j09w5GGx+3tv/6Nt3Xuk/FyxCJNq
+	A97nuKSSOpriNg6+76M5xnump+wGDXyqi72E28fIfFENATHi7yRZnDu+HAzvg+i2
+	OYz1E7JupRKqmNQ6/bheYd5st5NbFbOzjEw==
+X-ME-Sender: <xms:Z9-5aECpXkgZWtuYSxf_axeCuUliGKCeUkyEgE5-NGcDE-AgdZcT-g>
+    <xme:Z9-5aHIAQcTfLY-kxPcl3MlV09Jacp_k-7XQrRZG9kgoSF1MwMbSQB-BLKQvpM8DQ
+    c5zQqksv9FBkEX1Nw>
+X-ME-Received: <xmr:Z9-5aCtsvZFK0yDJ4qgJSnaixp9tXsariv61NLCbCAdxzWdYvYfuBwVwDCNTiNjiXc7Lb_5KIED-pOOUn0ZNqU1Hd9uJ6AvPBTseK9Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohhnthgrtghtsehhrggtkhht
+    ihhvihhsrdhmvgdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhph
+    grshhtvgdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtgho
+    mhdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtoheptgholhhlih
+    hnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiies
+    ghgvnhhtohhordhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:Z9-5aPW6JFnPzE-QzVYyZPZeu2pf_P0xB2SZ9HjE6z3tl_NHnDS1BA>
+    <xmx:Z9-5aNIXK3hM7vble7PTHAj2eIBQVs3mqSQOLmb_7SjUTWRBv6e14A>
+    <xmx:Z9-5aE9YqQd1KOUQsXXzjR5p4j05iozsACfxDpG2cMGFM_u1b3vPcA>
+    <xmx:Z9-5aLPRyzLOnvaCcs39ss3kbkktJ5kfwsDw8tdRuxTsgo297P9HdQ>
+    <xmx:aN-5aNwDYIVqNPJe1bp2HCNKh4sGJM3DxyaNJOFx8RlwkMI-O-6LhxW5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 4 Sep 2025 14:50:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "Haelwenn (lanodan) Monnier"
+ <contact@hacktivis.me>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
+  Christian Brabandt <cb@256bit.org>,  Collin Funk
+ <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
+ Newren <newren@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
+ <pierre-emmanuel.patry@embecosm.com>,  Sam James <sam@gentoo.org>,  Taylor
+ Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC 1/3] meson: add infrastructure to build internal
+ Rust library
+In-Reply-To: <20250904-b4-pks-rust-breaking-change-v1-1-3af1d25e0be9@pks.im>
+	(Patrick Steinhardt's message of "Thu, 04 Sep 2025 16:26:43 +0200")
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+	<20250904-b4-pks-rust-breaking-change-v1-1-3af1d25e0be9@pks.im>
+Date: Thu, 04 Sep 2025 11:50:14 -0700
+Message-ID: <xmqqzfba6oih.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/4] breaking changes: switch default initial branch
- name to "main"
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Wing Huang <huangsen365@gmail.com>, Patrick Steinhardt <ps@pks.im>
-References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
- <cover.1756992089.git.phillip.wood@dunelm.org.uk>
- <xmqq7bye9mla.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqq7bye9mla.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 04/09/2025 18:03, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> This is an alternative to changing the branch name now as suggested in
->> https://lore.kernel.org<pull.1961.git.1756183921623.gitgitgadget@gmail.com
-> 
-> No reason to repost, but for those who are reading from the
-> sidelines, the URL would work better with "org<pull" ->
-> "org/git/pull".
+Patrick Steinhardt <ps@pks.im> writes:
 
-Thanks for correcting that. dscho pointed it out last time and I'd 
-forgotten to change it.
-Thanks
+> Add the infrastructure into Meson to build an internal Rust library.
 
-Phillip
+I am a bit surprised that Meson needs to learn Rust now.  How have
+you been dealing with contrib/libgit-{sys,rs}?
 
+> Building the Rust parts of Git are for now entirely optional, as they
+> are mostly intended as a test balloon for both Git developers, but also
+> for distributors of Git. So for now, they may contain:
+>
+>   - New features that are not mission critical to Git and that users can
+>     easily live without.
+>
+>   - Alternative implementations of small subsystems.
+>
+> If these test balloons are successful, we will eventually make Rust a
+> mandatory dependency for our build process in Git 3.0.
+>
+> The availability of a Rust toolchain will be auto-detected by Meson at
+> setup time. This behaviour can be tweaked via the `-Drust=` feature
+> toggle.
+>
+> Next to the linkable Rust library, also wire up tests that can be
+> executed via `meson test`. This allows us to use the native unit testing
+> capabilities of Rust.
+
+OK.
+
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  meson.build       | 16 +++++++++++++++-
+>  meson_options.txt |  2 ++
+>  src/lib.rs        |  0
+>  src/meson.build   | 12 ++++++++++++
+>  4 files changed, 29 insertions(+), 1 deletion(-)
