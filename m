@@ -1,126 +1,103 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F328298CD5
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 23:12:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65A528152B
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 23:17:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757027580; cv=none; b=g6y0MAIKS8khLTJFuJjK/VENDZA7pdiAK//8C9rhhI50bu+E3OCkF9sd7Zyr99OQA6ExI1M7O4ToXa49vJTrmXf8eQoTLRIT9YBIVs/5BDpXTOp4gCUHPsUKBcJvG8aKoKS3wPBtWZ+VcE3dW1HIGBYJi/2zxSpv8+7lzyYBO1A=
+	t=1757027845; cv=none; b=P5/akjwYujOOnJ+NKToh603wrJHGGBnlRSy9So9KPHmOE0TnbLrXz7do41R1UMMOoFPxt/wwyviGhtNMkCvIOf81siyTBnKyAhydCDCeU9oyoldjZTRnrlJRP2bkXgDVahnWFAB7mXlDwMCmGZcK7G/fxmRnCO5+KmGER8bemyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757027580; c=relaxed/simple;
-	bh=EmPxEgcmb8jigZufgGILp+PXRunHgUnWaTUCrCo02BQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Xch5yQHkvwJK+vE7cJAwiIlCuRDtXWDZPyxnjiY8GYT4K/GUKJDu2Kb8DFHNcgzE0X4AyISClNWSONwYF0Tvh0TvFimEE0QE0dTSncZblXiNi70KvMbTCPcndfymZoweIYcmJsLwO5KJQu6tTufilr68njd5bkQ6nNHjTO9y5b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KPwNcAW7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EE6GnIiG; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757027845; c=relaxed/simple;
+	bh=sZTa/Zx6mPrrRL8ucf/nLp0P/7XEGXrbSmbhS89TA4k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dJijOxczq8jwTiKuuklQPME22C8tYSGRcszxaxa1v3XBG/EQ4sWcsgJ75ZqitRAiws8BdC1NoID2DpqFqMUTtCafy3SmPdLpY6EuIAH9VNS9o/Lo1XiicumBLmnzFrSBqOQzavTAqfDS7b5i2Y0iciTtU/5rv0aTxJUx1WKzJYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B3Uf1UPC; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KPwNcAW7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EE6GnIiG"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 06EAA7A0608;
-	Thu,  4 Sep 2025 19:12:56 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Thu, 04 Sep 2025 19:12:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757027576; x=1757113976; bh=8ZMTxyzV8i
-	ZBa8+ZRJygbMQ3gt5uoQUQQq2uMe43xsg=; b=KPwNcAW7YA30vsWCwTGWrPGnRO
-	DVt15EI/PmudPSW3tSrJ6WTHeVagxcjfvgG9IFHU+psluPEkWsgt5Nc9Rx3uakWU
-	nf24QJbZ89upo3OfXNDGRkT5KB0lERvJ2joCDdT3nIz+xE8No39SvwNIFMumwVTs
-	43doh2fKvmSw4RJ2cdcVXkJ1UlSYcFsJ/BBWxRawKE7mhuvmvBI8Yz5Hn6apSjII
-	efCZa4stmawrdES0iMAawxsIrkJyRJzKJTsdzpHOQbTdJlic2bS6k+PlTBUasw7h
-	S5HjhZ/6nZ9jcu7Jl8bymZXK/lJ4pldOizQldCd4LqlN51b029fziETiGrGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757027576; x=1757113976; bh=8ZMTxyzV8iZBa8+ZRJygbMQ3gt5uoQUQQq2
-	uMe43xsg=; b=EE6GnIiGuDgU9LlVEqjkgb3TL3wJnPf3KibQC6lZnTiTNjTIDLk
-	1TdU1frHS0Wfgrta/NG2YmAxTSv9lPw1+aqdddPwj/PWEA+n8O8mCebtsbKAcYpo
-	gWCa+lgaTpIXl/8093cyDxiEQ6jnWjACk7YfiaaMlGWp8U5Kl6aYaMGH/eO/TM8S
-	h29Bu1dRIgy2kkNaPnifqKE7mh0aTidQVIktjowFdVFyJDP2KHvggR0tJGYtos4F
-	1Afi+0M2zw+srUEwrS9PmYPZA0/Pp/6V4i6sr6Hkk/y+Mq/SZP+gX8QxlqremDXL
-	yKg1NRLqRGnz36RXB8xx8+/rW7DhVSmQxhg==
-X-ME-Sender: <xms:-By6aCiZFFqKYXWhrSQ7B7wjPn4C1AP76DKadt2py5oLZ9Sn7QKuJQ>
-    <xme:-By6aGQuvfG86a5xL26mk-p5u0omIFKlgVMmSYe_d4I0JAXgbXEWG1MGHprZUzZlB
-    EIvYvDhT7_7S-hUTQ>
-X-ME-Received: <xmr:-By6aDgcNUrqIDagC2BhIaTtwmG1KnHXsYiuw8welTPdOeu-P-APaEv5rDxA0nG5Nk9yy_qUPtBhCfC-tERgv7HJ8GwtzBbKMtX2JgA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejvdelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:-By6aG7P-E0HxhsCoYmu1Elv7EjQDWpUDBksTFcZtzcn_pyvivbHxw>
-    <xmx:-By6aACnRmW6nVlNDve10cJH6NJyUM4rwBcssU1bqwQgLFrMPfp2KA>
-    <xmx:-By6aNYk8vqs363XhCzSyjJ_7wRy7zVYtruPNOr0zAIR82WdwIsdrQ>
-    <xmx:-By6aLazqFJE1w24ze8qTIuc3I-7x2AN5y91zJgIwWNUD562KUF84A>
-    <xmx:-By6aF37bHEm5kBStNr0FpuXTRNYe_RmWwVwANapqnxqBNbcPwQDQpI7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Sep 2025 19:12:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
-In-Reply-To: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
-	(Patrick Steinhardt's message of "Thu, 04 Sep 2025 14:49:54 +0200")
-References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
-Date: Thu, 04 Sep 2025 16:12:55 -0700
-Message-ID: <xmqq5xdx7qx4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B3Uf1UPC"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-336dd55aae1so15006261fa.1
+        for <git@vger.kernel.org>; Thu, 04 Sep 2025 16:17:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757027842; x=1757632642; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sZTa/Zx6mPrrRL8ucf/nLp0P/7XEGXrbSmbhS89TA4k=;
+        b=B3Uf1UPCRAaSJnqmwYPgQPi8tS1S9vEkrtZcS05LIHOUlu5uoKGTxa5cCUH79m/jkb
+         NLgF557N5saPEgvUwXF2LIpU1ak/8o3DdmAWhgCdaBOEn2HE7MZvAe0KEF9txqvOp9Jg
+         eNaKXKZbHvlb+xZNN/B2ApP0JBeS5CUYqf30E8QVDZMu60n11LzGJ4m10/OAo3zW123C
+         0/mWRP7OOHJoMmAaVOxeasX3c2X1uB5udXM+cIOfd9HAmZDXR4Awq/j1q3MRtGjz04Sh
+         3DWCgqJafZnUHLKwMfyHoDoC2JNSebwdQ4qKSnrHzRF5OTCpnC8YCP0xELMTlPNRysLe
+         dqVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757027842; x=1757632642;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sZTa/Zx6mPrrRL8ucf/nLp0P/7XEGXrbSmbhS89TA4k=;
+        b=t17Lj9rVMzjeXj7cpjqmIRoRPqqLkdRFWaa3Hc7216bCEqDQwNfYdzrDhPI7bU6s1K
+         3hc7kaxV38NV89Sjalcd3vlhK+H0tw/USMfw9/I6rb+WP9T8BIC1/w3d2AxXystasZMD
+         Ky9KZvXxVRLPavWnOi4uKUqLcpin5iCKLxFiuBtMD1ab5RfgJKq2UzAEqjbI+0hILtV1
+         7GKVMDD0bmpZCMXzIjy6T7C/TP2xUWdbF2GXZbSRrYOgf9HyTiNbFlmGdzr5YHxuV8we
+         0VXYmjKPlhnO5AGbtgotuOBbnu8fL3xbuvFNaH1lh4/6imJBMv93zHGjiPq+SzTYjLUj
+         lKDg==
+X-Forwarded-Encrypted: i=1; AJvYcCV8MIVzgj/wfD0hhqXWuBcVGt3VlzSNLu6V0fcYepvMg1kyxZfVJZFdpetUXQKRTbWrw7U=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4EauhNfXWYaO6j5GGVLQLpRD0kmb6AX03OdV7LuIk0I1KW4Ry
+	q7HG0v7DS1TVIXdCcHuFUiR8AhDmseBcr3GtVodUsEESCQ8v9efJXcSHVbCoZNIw3g0Qh8hwF0N
+	kaNDEIgSuirGZCHkRoBeD4mQE0XziJ6Q=
+X-Gm-Gg: ASbGncvgRxJcXf4yBFIbKQyTR6mDA0XLv2j8WGq8DcPebDIq7LWhKQM2n8c8IrZOmNW
+	HzDiInBowC+CEjGTLY61SlIETvkDNMg6uyKjUZVPjT0hN3WnIVXV65bnGm7EqiEU/DXS+PBnNET
+	xXBmKMFhLTCWDSMN8mFAZgG2v7etoQYTv6SP//CVAj35s6BF6bQn2mlarecEcTxWbx+nMP0Std6
+	Eo1N5JN8vnOOGM+KdGLGkaIPjXrIA==
+X-Google-Smtp-Source: AGHT+IHqFfbx9nhI4hx+MVifKsTPIQqCk4ylSvYY2JOMUZFwhG1DKlXCHcQ+CsyR61ngqeqLm6cVxjzn6b/qPbzc4H4=
+X-Received: by 2002:a05:651c:211d:b0:337:ed76:7067 with SMTP id
+ 38308e7fff4ca-337ed76723amr37787281fa.39.1757027841573; Thu, 04 Sep 2025
+ 16:17:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
+ <aK5mJI1NfVQDmDXN@nand.local> <01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
+ <xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
+ <xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im> <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
+ <aLfU5sEa-RE3X4G2@pks.im> <aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net> <aLl6iFXeAvL_hvqR@pks.im>
+In-Reply-To: <aLl6iFXeAvL_hvqR@pks.im>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Thu, 4 Sep 2025 17:17:10 -0600
+X-Gm-Features: Ac12FXzJIlp8kqqz52Pet56htxmPdt3CkaL7Eg7EhuGN1BXyi8Wxf574ArBfoS0
+Message-ID: <CAH=ZcbBLAKaE733_2_2qbFTYCfwGq37RfF-Z3vaKL1ZR49msAA@mail.gmail.com>
+Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano <gitster@pobox.com>, 
+	Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com, Elijah Newren <newren@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Josh Soref <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org, Christian Brabandt <cb@256bit.org>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
+	Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, Josh Steadmon <steadmon@google.com>, 
+	Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> commit graphs are currently stored on the object database level. This
-> doesn't really make much sense conceptually, given that commit graphs
-> are specific to one object source. Furthermore, with the upcoming
-> pluggable object database effort, an object source's backend may not
-> evene have a commit graph in the first place but store that information
-> in a different format altogether.
+On Thu, Sep 4, 2025 at 5:40=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
+> The only reason why we want to have it as an optional component is to
+> make the transitioning period easier for downstream distributors. And
+> the intent is not to convert major components -- it should be trivial
+> components that we can use as test balloons, similar to how we did it
+> for all of our C99 test balloons.
 >
-> This patch series prepares for that by moving the commit graph from
-> `struct object_database` into `struct odb_source`.
+> We cannot just pull the rug away under their feet without advance notice
+> that this is going to happen.
 
-Hmph, I am finding the above hard to agree with at the conceptual
-level.  In some future, we may use multiple object stores in a
-single repository.  Perhaps we would be storing older parts of
-history in semi-online storage while newer parts are stored in
-readily available storage.  But the side data structure that allows
-us to quickly learn who are parents of one commit is without having
-to go to the object store in order to parse the actualy commit
-object can be stored for the entire history if we wanted to, or more
-recent part of the history but not limited to the "readily available
-storage" part.  IOW, where the boundary between the older and the
-newer parts of the history lies and which commits the commit graph
-covers should be pretty much independent.
-
-So moving from object_database (i.e. the whole world) to individual
-odb_source (i.e. where one particular subset of the history is
-stored) feels like totally backwards to me.  Surely, a commit graph
-file may be defined over a set of packfiles and remaining loose
-object files, but it is not like an instance of the commit-graph
-file is tied to packfiles in the sense that it uses the index into
-some packfile instead of the actual object names to refer to
-commits, or anything like that (this is quite different from other
-files that are very specific to a single object store, like midx
-that is tied to the packfiles it describes).
-
-
-
-
+I think making Rust optional for at least 1 version is a viable path.
+I'm not opposed to that idea; it was just easier to develop and talk
+about Rust as a hard dependency. I needed to know if making Rust
+optional was in demand before spending any significant time on that.
