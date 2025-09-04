@@ -1,119 +1,121 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F00179BD
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 17:03:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655033126CA
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 17:39:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757005414; cv=none; b=LRnV+3tU8brJgBwx+No9yaP+4WHEQ6fxYQfEZj/E6rIgPWkpDfK0LDtU4ueJqlg+NMThom1lpFpftP+Ksh1e2r3giqBNLf7Xm9QeRz0XcqXXHGzLIV7VEF8tCQHo9l2Nw6LPXmweQLmIVSEijCidxh/Y7//mh85vspXcEMxLFrk=
+	t=1757007546; cv=none; b=DAQwrgaotupcOtdjexH48kZmQ7pJU1uvPLvNOjVFMHhUeOaSTh3xScaTLLVG5+uwOjMKvBk2/K9TKMEsI1AgYNsn6x19/2oekJXHEH3KAJAAVTImUa9+phcnM0aZv6MbUz0/BY0EBf+rSI0SPHFEOadvasWWrl+fLFi2nSaJvRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757005414; c=relaxed/simple;
-	bh=AkPuw7bQo27zHcehwJ+XUOm+TeGZikMk+xTajjpk3Yg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ekFv7O1oOsblTb7LuxtTReMqqwIuxcwH5pFfePFTX+GQrLq8GbWQJta3EKrEiqCmr/8ZRRnFLEE3iSgGg1aGlso9P1HsTnI4Z3j3EQbplJgA0pMf0j6Y+OrjBtx9TanSyiULhPgE8raGmfqkvNu17MvA2pZJG0naXkD2oQrPCqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QmKJDc0c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CienZKzc; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QmKJDc0c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CienZKzc"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9FE36EC024D;
-	Thu,  4 Sep 2025 13:03:31 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 04 Sep 2025 13:03:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757005411; x=1757091811; bh=jD6hv1bVPm
-	Lb+/WKVxpiAea0Lsk+tVYb2eYyvrRb+ZM=; b=QmKJDc0cKPdsR/8iIqe+Fc/Su2
-	xfMTVmLpjVdeiQLXyz0PCgiKlGkqfn+69TFw0ywp5rLgFSXng8Y7aPi23IxK01/W
-	yxSNtBVllLrJ/0vfYcKMRE6f0tpZGqddirFECGchbRG5YaJ3aa5dI/Ugkvz9d7QX
-	SizURKoXJRPO8UwAdUZf17E4BNgTcM6Ax0npMowNoLJhbCwi7iElbQczxd1Mf57/
-	y7F7hnZRlzx+8AocSuqU0E3ldnmb8xdjD9J0vu6V9Cyww+S1KB1r7+aPLMvsMNhD
-	m3+Vju8kHreB3u71UUmm88o1xxUjJRb9/KVxcSyf0riclxdrc+ntToP3Igvg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757005411; x=1757091811; bh=jD6hv1bVPmLb+/WKVxpiAea0Lsk+tVYb2eY
-	yvrRb+ZM=; b=CienZKzcOATRTR2Qgr6bm0SGDs6Ni4/d9wG/iL5jQpfS5dk5lc1
-	QzVkS7beqljAhGERcdO0OVCvA+Vo8ZsiVaCi2j2jQxC3MZtxffegcR6z+2fOpP8K
-	Wwf4etA+ucK2GH4I6fIUaF/UGNxVK2JtFe4f5Uvn2ZCpSdiGG1h5ipriVb+JJpaF
-	EBFMqzQZr9ERyF8ijuSOQca7zaWqMAXHhfl95+znPwUVOQ+Q1uT4VXIJio3iY+/m
-	rhhXjG5BDlRam0VWCQFNBTbLFzpTJ1l43JAQwF95EeLmBq69HbTMks+0IiMJZHNs
-	J4dbWec7wDD4nn9njjzfvLzUZLSLe7Gz7ZQ==
-X-ME-Sender: <xms:Y8a5aK1jpLHf2JPMUMYuRkBdDfq3hPBHP0mW5kPOEA8areFWHNhtwA>
-    <xme:Y8a5aFg5y4Z1p4hCeBffLaW2wgOjjjn-r9iTO9q3o0PC_fE_QrGE5EaL5462GlOXo
-    paCbFHBsfJv3_n0_Q>
-X-ME-Received: <xmr:Y8a5aDXqGQt8U7zXplNE5QfPtGJlY5ovhmhVWEXInmDy4xIrtMK_AntQU0klgL4DPJfB5A-A70ZncPnkOEfc5X_zOgJzOXRCamaS1Pk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiheeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdejledu
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhn
-    sggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilh
-    hlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinh
-    guvghlihhnsehgmhigrdguvgdprhgtphhtthhopehhuhgrnhhgshgvnhefieehsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Y8a5aMUlxkfSQke2brP_0IfUdpj4ujnmu6tBk7WsKVY8ohLDEQBhMw>
-    <xmx:Y8a5aLgxGcywgVn439PabVpDMIhybMHo4A-kgra3rBx1pIcHTd03IQ>
-    <xmx:Y8a5aPbxDf24NQm2Q2kQ20y9csS5w-w128KZN7fBYqnCNuTkzenELQ>
-    <xmx:Y8a5aAoO6aezVf9LaKnXM7Zp4Qs4fQjPxQOtQ-1qTeBaNzDM3aHERw>
-    <xmx:Y8a5aBXSJ39wOmPh7m64iiVGQ_q7XEdHQipFo1J_Uor3vDbjTHfwE76y>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Sep 2025 13:03:31 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Wing Huang <huangsen365@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 0/4] breaking changes: switch default initial branch
- name to "main"
-In-Reply-To: <cover.1756992089.git.phillip.wood@dunelm.org.uk> (Phillip Wood's
-	message of "Thu, 4 Sep 2025 14:21:28 +0100")
-References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
-	<cover.1756992089.git.phillip.wood@dunelm.org.uk>
-Date: Thu, 04 Sep 2025 10:03:29 -0700
-Message-ID: <xmqq7bye9mla.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1757007546; c=relaxed/simple;
+	bh=iaE0NgCEzWro03x5kQ9et7KBxHXDKZt/Slv0CjfuNHo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qX9b/8+YVjdxYdI6s7UR5ciSHSpmJ9D+43/9/Vl/29Fn4Ccv2/iJ0Z5+npIcoUa8PFhOt5H3HQ6KXmKfiV3UfpbP0ZKkBn7y+QZMtX9pqazmksX9oVLciLKABZqe6MFB9hdkeAkKaZJLPIlz2cH5KUpCFnqunplpNQ2N1RS6r4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4b5d70c2cccso2581421cf.1
+        for <git@vger.kernel.org>; Thu, 04 Sep 2025 10:39:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757007543; x=1757612343;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iaE0NgCEzWro03x5kQ9et7KBxHXDKZt/Slv0CjfuNHo=;
+        b=lqVbN9Qc3sDWFUAgivPF5hhRY7D0CqO7IEU7G2LPUqyE0W+gOscltiwR5fLa59aqop
+         /m176O5uFisFWasyrFIU3rkiwnsgDCGFtN0r6+bZ379nSOil4Z2eJ7m6h7lf2HQCHQzQ
+         tX6OUBH1TCwZYY6iOPWHllY5oyVvdas2nIzhHYfg7n5KPrVB9FuKifY0UbgDg5TiSiPG
+         1aSEiqWW8/alrFimyZVFbrAdCYF6X8+D5W+0YwOgz/KiXAgHsOh1qKC5kpVAsOt5dHxO
+         UneM8jhZPkfYK3euFjufi0+dsbe8mxKk+fl28IwMzWJKJHgsRMgvfcF3yZxxJfJdR5uW
+         R5sA==
+X-Gm-Message-State: AOJu0YzrlfbeIEds0DbCi76yojM1l9U2hKIG342K5zhGQp0EtW/6lj+J
+	mKhaQqXGRL0p69YbhFz8rPthd2fKT4MKMJqo40HC9ZlXN+mtLkIfBojY4nqT1CRJ5DBybkCWH6J
+	m1ynDeNSBLT/19oFm8G9m3KeMvtRvkvE=
+X-Gm-Gg: ASbGncsKvjloHB09u7dHRUvGxHPnyxnU7weqDxKzZtJk/0sElSWmOy+qQ6JvqEGeHTs
+	P6PLC/IE0OygozKctLIJlh5xEBh5QoB4IgWAW/sSga/anL49q9yOx7DPHZRfj+GN9rYVSAvJnWu
+	KS95IYpzh2S4Fw6ks8sppQnc/wSBS2ZO4KPKZE8tX5ohj5+VbmM3mOjV4Mb3O9YO9VlUjRToFjm
+	aXIJoa1LIJj6wlvDM9lCVhpntM=
+X-Google-Smtp-Source: AGHT+IEGmYLlyhYsCUIMXfOHZ4+gwNI/FDzOjLGHC8eZPp+on2Ma3r5bu+0hY2URR4XZOX6N1BY6X+1oeLttFG9pIfA=
+X-Received: by 2002:ad4:5d4e:0:b0:70d:bcbe:4e79 with SMTP id
+ 6a1803df08f44-70f5a5fae45mr204178096d6.6.1757007543037; Thu, 04 Sep 2025
+ 10:39:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im> <20250904-b4-pks-rust-breaking-change-v1-3-3af1d25e0be9@pks.im>
+In-Reply-To: <20250904-b4-pks-rust-breaking-change-v1-3-3af1d25e0be9@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 4 Sep 2025 13:38:52 -0400
+X-Gm-Features: Ac12FXw14MkK79h-YDL9kUHDrZVCvjXKACe2LV_Vp3ac-VZnHKVcszs6YqB4bJk
+Message-ID: <CAPig+cThyuo7=A2f7_XkE_TZmSRc5i=EFgZOw_pKgu+Ckgx70w@mail.gmail.com>
+Subject: Re: [PATCH RFC 3/3] BreakingChanges: announce Rust becoming mandatory
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Ben Knoble <ben.knoble@gmail.com>, 
+	Christian Brabandt <cb@256bit.org>, Collin Funk <collin.funk1@gmail.com>, 
+	Eli Schwartz <eschwartz@gentoo.org>, Elijah Newren <newren@gmail.com>, 
+	Ezekiel Newren <ezekielnewren@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Sam James <sam@gentoo.org>, 
+	Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Thu, Sep 4, 2025 at 10:30=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> Over the last couple of years the appetite for bringin Rust into the
+> codebase has grown significantly across the developer base. Introducing
+> Rust is a major change though and has ramifications for the whole
+> ecosystem:
 
-> The patches have been re-ordered so that the change to the default
-> initial branch name comes first.
+s/bringin/bringing/
 
-We have been running for quite some time the "breaking-changes" CI
-job with 'main' as the default initial branch name, long before this
-series materialized.  Thanks to it, we know that such a flip should
-not break any of our tests, so this patch being the first in the
-series makes perfect sense.
+> Instead, preceding commits have introduced a test balloon into our build
+> infrastructure that convert one tiny subsystem to use Rust. For now,
+> using Rust to build that subsystem is entirely optional -- if no Rust
+> support is available, we continue to use the C implementation. This test
+> balloon has the intention to give distributions time and let them ease
+> into our adoption of Rust.
 
-> That patch now includes a test
-> for the default initial branch name and includes the changes to the
-> commit message and documentation suggested by Patrick and Junio. The
-> commit messages for the other patches have been reworded now that
-> GIT_TEST_DEFAULT_BRANCH_NAME is not being removed but the code changes
-> are the same.
+If it's entirely optional and automatically disabled on platforms
+which don't have Rust installed/available, then it isn't a test
+balloon, is it? All previous test balloons in this project were
+architected in such a way that Git would fail to build if the platform
+in question lacked the feature being "test-ballooned", and the idea
+was that packagers of those systems would alert the Git project about
+the problem or somehow resolve it themselves via the platform's local
+build infrastructure.
+
+However, with the approach implemented here, Git will build as usual
+on all platforms on which it already builds successfully, which means
+that the Git project is unlikely to hear complaints from packagers,
+especially if packagers haven't followed the relevant discussion
+threads and are unaware that a Rust test is being conducted. Moreover,
+the project has already heard from some packagers/maintainers that
+Rust support is lacking or (currently) impossible, so the project
+already has the sort of knowledge that a test balloon is intended to
+elicit.
+
+That's not to say that the changes implemented by this series can't be
+valuable, but rather that for these patches to be valuable, you
+probably need some way to advertise the test more loudly so that
+packagers actually attempt the Rust build. One possible way to rectify
+this shortcoming would be to enable the Rust code by default in the
+Git project but give packagers a way to opt out of it if they can't
+make it work on their platforms.
+
+> Having multiple implementations of the same subsystem is not sustainable
+> though, and the plan is to eventually be able to use Rust freely all
+> across our codebase. As such, there is the intent to make Rust become a
+> mandatory part of our build process.
 >
-> This is an alternative to changing the branch name now as suggested in
-> https://lore.kernel.org<pull.1961.git.1756183921623.gitgitgadget@gmail.com
-
-No reason to repost, but for those who are reading from the
-sidelines, the URL would work better with "org<pull" ->
-"org/git/pull".
-
-Thanks.
+> Add an announcement to our breaking changes that Rust will become
+> mandatory in Git 3.0. A (very careful and non-binding) estimate might be
+> that this major release might be released in the second half of next
+> year, which should give distributors enough time to prepare for the
+> change.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
