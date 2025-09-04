@@ -1,74 +1,75 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4232FE05F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B3B2FF178
 	for <git@vger.kernel.org>; Thu,  4 Sep 2025 13:22:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756992179; cv=none; b=BUYQ0lTdzMhdinEmn/JBRhhfJQcLs1ehLQFHBonx11fx4uYllhErEKDilaHi8k2Had3DlY8Pzx4J8K4Adc2gFVs6xNhB9W5q0OEARkpNOAXP7fYLcmItb5TlCsrbuaA/4/Gs7M8RPeKqKLRwSbwAAfr+tvQD8E+dBfK/jUyVHsA=
+	t=1756992179; cv=none; b=Vl2J7d/a7mhcB2UM3Hh25YqLalLDALFoUY8L6pmBVG0T4+BiM4FWz4TMsmPWJcQEs+3CZD/guWdpma4m3bUw7PyiFXPcS6pHfDzjm4Y6uxDv4NQHYWScT9MhQd4VLMDy2UNpjMV7qY0oMhRv3uDwngCgoevVAimLyCKSDpFmx6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756992179; c=relaxed/simple;
-	bh=GRMLjg3kuKp6G0nWD2jNkbngn3V8cU72BTFD+TMRKuY=;
+	bh=VgOAAahRPa/vMN6aHgUAWDeJlt2/hkq/7+EIgcOSbYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UtABt5ECSoHH81TukKsezpjwD7XRbEkkCuPcq7kQU3Ie09/A63SsmercqlqiYH6FFNc3SUp0ylL3GCNSL7cfya9gtti6k47a3Wai7o19DAbAR6L79WEzZN19tfZbusLmHkBG7VKmWsixLck2DTRr/pAGiyU/FQZh4RqfQ2k/Q80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GDCdSV6S; arc=none smtp.client-ip=209.85.221.43
+	 MIME-Version; b=d+t7xq0JpmXnUXr690AcyS0ZtfX17hE1A8OVd/GA8DRsdgsPoJQWMUuxV3HY0koetDM0FmJovmhmTPQ6Y5Ke9Lw5vhOpK+4Zwj7bjGydKPdzkETYmKruPUk9bR6HWM+tPkUluxR7dto9z/ebNTv5lLQv2swyp3qDf8CXVjfvEsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c0vrCmbb; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GDCdSV6S"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3c68ac7e18aso755097f8f.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c0vrCmbb"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-45dcfecdc0fso7576935e9.1
         for <git@vger.kernel.org>; Thu, 04 Sep 2025 06:22:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1756992175; x=1757596975; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=CiuSoTsQHzNMthZYgUQxo2ldnWeKDOmEpCQVmvbBbQ4=;
-        b=GDCdSV6SfnmMY1UtkERRG9pOKThHJnDmnGuMuk/67Fd/WXze6SPv96ea24ptXUwGvx
-         sadNB7z2z2RmjGCuP2RjYKX3mHzW5WTNLWVJTR9TsNxCVu5HeCkAHNVAL37UaRH2njFh
-         aqrrbJpSeQDcUJXdMp/aUFc5b6Biw9/qTcGBFC/fcWYJ2xa6IvCc/LVs12/VB5T/z0rc
-         tqcdB/qqHm5WamXyutlq0ms+RlXfD8CbaiVhZryasLofFMXwxq9xPseN9NTC9z8Zahid
-         3ywVGbOwLpbFom6tPIutvNR4WESSnjLOE3tmoeuF273+0eGHOyH77Q7XvQvMKCT36oFt
-         7hKw==
+        bh=MUFjIRTz9iibhZ4rQAxHBYMDSTKDeFlB8OSznhVB5yA=;
+        b=c0vrCmbbSREkipvBUSboidZS/+9grsCZ26L2brMud4cj1faLziHcRniTnFmqkRmKyk
+         uaQ2EYpFHal25quQtvSdoJ76+K3v/Otm4M+rK8X7ry5e+hYrWbJvYGVv5do/w6x8JBU3
+         jF1V1xfPoPiHnbNxnzk/QijlZUjPhAzEH9T71OOhvf6IC0SonTZEJNRU3/vP8dAaFRZ8
+         sXHdzVFHmhhqRDdBy/F/E4SRpIBJgJ9QsXM934XfTDoFSzQw6MSKYNac7lRnO14yAN0c
+         q1W7fHjYxjZUk409KTnp6oItWOP5oS+Ap4ch0ktEYNFp23KLEiL2U2MVPqDXLJEw0vcQ
+         DCYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1756992175; x=1757596975;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CiuSoTsQHzNMthZYgUQxo2ldnWeKDOmEpCQVmvbBbQ4=;
-        b=YZnyJ46dKYw6bE9cyMgNZzvV8YhFbrS2/jZb2WxzlJO8Yifse4ygsMbFFGzgR5VzBW
-         c+Kfz9Blk9FOF+9O64dOQvnNXbV89xChoPgGu2goq495s4BsB2nSjDj+X8Ojc1rmNdrk
-         bWbjxI0sO7UfzKEBPLc2ie6j+7yuU0oQuVuVf9LdBRZOqlPy2lOyS9qzYQQlgiYvNLZb
-         YiDSnEqTdAnhjneDrej8ttgSIYzAcEKEnThEZBSX103o6zJMxn0wXqqtxHhpjF577Oke
-         Wyp40z4Y64rvtQ5LR2hGEj1zvqd4QaD+7ntuNXqm+nLGBRX5PD4+D/cPVG1p9AvcIwdR
-         sLsw==
-X-Gm-Message-State: AOJu0Yx2OHX3cF4lcZGAjNofsbGOSSFdOa/FyIwfGw9w6rXslS4uMMsE
-	FDXnUMWPeBLGcCXVmMUFqEdqHO8zrBX+pHLfhr4xwXeC7K3GyFUBQq5EQ9RMuQ==
-X-Gm-Gg: ASbGnctuNTw5oNbf+iy3oYLnC30ZbUaUTqQj+SORQcC3bxrFex5Vvuut8khOkFEh2Y7
-	RRiwF1V9SCnUw7sl05F+gEePlNWcckR4NIXYO9IztJvjmvGjod05n7QymQMHVdNTOeKwb15nN2y
-	YUX6YNOpBmYOr+D9mDOGy84BOZ1AUdhBSSxsIuq9/lF6El2ZSjeMfE85GBXYrs8hQVto8cHior6
-	VI9pK7dNYUVFtaamXxIBmd5LijwjNSOyp2QtVlGIP+u2IV+0705it78xNszbNLuMjHc1yaXiB6t
-	XQaT7/HWBe427hkwhyEvwOCjdLmbX3dlZddNbWSUaK5sY6ZNaOFdoeKkeHpn1EpUyEhDfX8YY0/
-	6Ml/rgpiC5zCTONL9rm7+zqsJR173C46oWHuuZAi5FWlnXtU=
-X-Google-Smtp-Source: AGHT+IFTZw8FQl/YM/FuhOGqBD++WkkhRXFVMBUkd+wkxQoO9yvceEqZZkrgcHmFNMJ3hQ9DUHnlEg==
-X-Received: by 2002:a05:6000:4312:b0:3cf:3f1:acc3 with SMTP id ffacd0b85a97d-3d1df631895mr17482091f8f.60.1756992174184;
-        Thu, 04 Sep 2025 06:22:54 -0700 (PDT)
+        bh=MUFjIRTz9iibhZ4rQAxHBYMDSTKDeFlB8OSznhVB5yA=;
+        b=iUdNkUmv1whcPJynvbEUNQNA/EKg5PzBCp/UeL+y3zpiXXpZ4UjlpIpffjSG6doMwc
+         er5IrehvhKgif1coC7NgUBnSaeoBqZOvmsR5hqyDfC6Dkcj0dEksQkVmWhWlypR5AWQF
+         7TL8wZk5VunSw8+Hq5CKgB9IZ21X6iEDYWwGnwVAFR5MVlk5l3fitXlG/AHqPLLYMbZr
+         wz0GQ+VavBN746sE4imlehFuzeNR7Mfnd+snsPoGsk5mfSbKj6KwQnWvLZvbLefy6114
+         9mIW7XyVQ8BUwAukrN6qYRVqQIROLGCsDxOgak5mRsnxZCp5GQpWa8tQLQYLG24EA0R/
+         do8A==
+X-Gm-Message-State: AOJu0YzLywsNMKD90gzjOYutdE7FFWxnkMfpN7sshjseIG3/b+h23RFG
+	XGanqB0XvEb1C2xLtlynh7lqqQ4iXxc+qBDLKfg/5u8KJYa0j45gLFsKs3KSSA==
+X-Gm-Gg: ASbGncsUqwjlAg++2qJk7YLus2lX3d2jMewz8whehLyRh3nzStEDnPHniESKFmZQb6o
+	QkgRV8CWxCyYMGXH6IHeCxCpbDv3EShZG0+80MkIu/B23glTGR3/s6GoRgqVaInBLH6BumnOAeC
+	b2WKEtIVQA8eKm7r6DyQ0mvNEWmDyy2HONOW/iteZb7bdWxmEg3qOLM1JubZZsWawgpiTroTc9V
+	TKUUjvMJdK3wJAuzRaRVZamyQX7Xq84ddRlO0vNmSCvj3/Agh9pvsEQ9RoW+3jhax/b60twzErN
+	m+iJwJgofpQ5/wEXEKj+jYYWjrmmoUCLhxgYVfMrNYpjhAKq17PWvcTdixks7kNGZXWhQoz5RSc
+	I2kzXFr6lkprMZ0tYbeJoKSPuBZzF4/lnCkkvZpCIPzV5ZYE0zdRhUBQiqg==
+X-Google-Smtp-Source: AGHT+IHrGSs3FcvpynLuvWr4vMWaYlHneFeNESlTV1+rW/5ihW9K2Sfm4Ssek3H4vFf9CCRS9hU/rQ==
+X-Received: by 2002:a05:6000:1788:b0:3df:c5e3:55f4 with SMTP id ffacd0b85a97d-3dfc5e35d8cmr3247520f8f.6.1756992175090;
+        Thu, 04 Sep 2025 06:22:55 -0700 (PDT)
 Received: from localhost.localdomain ([2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3cf276d643dsm28278985f8f.26.2025.09.04.06.22.53
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3cf276d643dsm28278985f8f.26.2025.09.04.06.22.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Sep 2025 06:22:53 -0700 (PDT)
+        Thu, 04 Sep 2025 06:22:54 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Wing Huang <huangsen365@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/4] breaking changes: switch default initial branch name to "main"
-Date: Thu,  4 Sep 2025 14:21:28 +0100
-Message-ID: <cover.1756992089.git.phillip.wood@dunelm.org.uk>
+	Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v2 1/4] breaking-changes: switch default branch to main
+Date: Thu,  4 Sep 2025 14:21:29 +0100
+Message-ID: <6986375dc379a646bb184be3cf7a018b2eb3eec7.1756992089.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
-In-Reply-To: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
-References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
+In-Reply-To: <cover.1756992089.git.phillip.wood@dunelm.org.uk>
+References: <cover.1756308283.git.phillip.wood@dunelm.org.uk> <cover.1756992089.git.phillip.wood@dunelm.org.uk>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,438 +81,236 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-This series switches the default branch name from "master" to "main"
-when WITH_BREAKING_CHANGES is enabled. We have been warning that the
-default name will change since 675704c74dd (init: provide useful advice
-about init.defaultBranch, 2020-12-11) and the major git forges have all
-switched their default branch name to "main", so I think it makes sense
-to change the default branch name in git to match the wider ecosystem.
+Since 1296cbe4b46 (init: document `init.defaultBranch` better,
+2020-12-11) "git-init.adoc" has advertised that the default name
+of the initial branch may change in the future. The name "main"
+is chosen to match the default used by the big Git forge web sites.
 
-The first patch switches the default initial branch name to "main"
-and the other three patches remove the last remaining instances of
-GIT_TEST_DEFAULT_BRANCH_NAME=master from the test suite. Patch 2 is
-quite large but is mechanically generated so it should be possible
-to review it by checking that the changes can be reproduced. As this
-series changes the default branch name it focuses on updating tests
-that rely on the default branch name being "master", there are still
-a number of tests that create a branch called "master".
+The advice printed when init.defaultBranch is not set is updated
+to say that the default will change to "main" in Git 3.0. Building
+with WITH_BREAKING_CHANGES enabled removes the advice and changes
+the default branch name to "main". The code in guess_remote_head()
+that looks for "refs/heads/master" is left unchanged as that is only
+called when the remote server does not support the symref capability
+in the v0 protocol or the symref extension to the ls-refs list in the
+v2 protocol. Such an old server is more likely to be using "master"
+as the default branch name.
 
-Thanks to everyone who commented on V1, I have dropped the removal of
-GIT_TEST_DEFAULT_BRANCH_NAME and the test changes related to that but
-have kept the patches that remove GIT_TEST_DEFAULT_BRANCH_NAME=master.
-The patches have been re-ordered so that the change to the default
-initial branch name comes first. That patch now includes a test
-for the default initial branch name and includes the changes to the
-commit message and documentation suggested by Patrick and Junio. The
-commit messages for the other patches have been reworded now that
-GIT_TEST_DEFAULT_BRANCH_NAME is not being removed but the code changes
-are the same.
+With the exception of the "git-init.adoc" the documentation is left
+unchanged. I had hoped to parameterize the name of the default branch
+by using an asciidoc attribute. Unfortunately attribute expansion
+is inhibited by backticks and we use backticks to mark up ref names
+so that idea does not work. As the changes to git-init.adoc show
+inserting ifdef's around each instance of the branch name "master"
+is cumbersome and makes the documentation sources harder to read.
 
-This is an alternative to changing the branch name now as suggested in
-https://lore.kernel.org<pull.1961.git.1756183921623.gitgitgadget@gmail.com
+Apart from "git-init.adoc" there are some other files where "master" is
+used as the name of the initial branch rather than as an example of a
+branch name such as "user-manual.adoc" and "gitcore-tutorial.adoc". The
+name appears a lot in those so updating it with ifdef's is not really
+practical. We can update that document in the 3.0 release cycle. The
+other documentation where master is used as an example branch name
+can be gradually converted over time.
 
-Base-Commit: f814da676ae46aac5be0a98b99373a76dee6cedb
-Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Finitial-branch-is-main%2Fv2
-View-Changes-At: https://github.com/phillipwood/git/compare/f814da676...c4d89c376
-Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/initial-branch-is-main/v2
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ Documentation/BreakingChanges.adoc |  5 +++++
+ Documentation/git-init.adoc        | 12 +++++++++---
+ advice.c                           |  2 ++
+ advice.h                           |  2 ++
+ ci/run-build-and-tests.sh          |  1 -
+ refs.c                             | 15 +++++++++++----
+ t/t0001-init.sh                    | 18 +++++++++++++++++-
+ t/test-lib.sh                      | 11 +++++++----
+ 8 files changed, 53 insertions(+), 13 deletions(-)
 
-
-Phillip Wood (4):
-  breaking-changes: switch default branch to main
-  t4013: switch default branch name to main
-  t9902: switch default branch name to main
-  t0613: stop setting default initial branch
-
- Documentation/BreakingChanges.adoc            |   5 +
- Documentation/git-init.adoc                   |  12 +-
- advice.c                                      |   2 +
- advice.h                                      |   2 +
- ci/run-build-and-tests.sh                     |   1 -
- refs.c                                        |  15 +-
- t/t0001-init.sh                               |  18 +-
- t/t0613-reftable-write-options.sh             |  20 +-
- t/t4013-diff-various.sh                       | 228 +++++++++---------
- ...ree_--cc_--patch-with-stat_--summary_main} |   2 +-
- ...iff.diff-tree_--cc_--patch-with-stat_main} |   2 +-
- ...r => diff.diff-tree_--cc_--shortstat_main} |   2 +-
- ...diff.diff-tree_--cc_--stat_--summary_main} |   2 +-
- ...master => diff.diff-tree_--cc_--stat_main} |   2 +-
- ...e_--cc_master => diff.diff-tree_--cc_main} |   2 +-
- ...master => diff.diff-tree_-c_--abbrev_main} |   2 +-
- ...> diff.diff-tree_-c_--stat_--summary_main} |   2 +-
- ...t_master => diff.diff-tree_-c_--stat_main} |   2 +-
- ...-tree_-c_master => diff.diff-tree_-c_main} |   2 +-
- ...-tree_-m_master => diff.diff-tree_-m_main} |   2 +-
- ...-p_-m_master => diff.diff-tree_-p_-m_main} |   2 +-
- t/t4013/diff.diff-tree_-p_main                |   2 +
- t/t4013/diff.diff-tree_-p_master              |   2 -
- t/t4013/diff.diff-tree_main                   |   2 +
- t/t4013/diff.diff-tree_master                 |   2 -
- t/t4013/diff.diff_--dirstat_--cc_main~1_main  |   3 +
- .../diff.diff_--dirstat_--cc_master~1_master  |   3 -
- t/t4013/diff.diff_--dirstat_main~1_main~2     |   3 +
- t/t4013/diff.diff_--dirstat_master~1_master~2 |   3 -
- ...ff.diff_--line-prefix=abc_main_main^_side} |   2 +-
- ...master^_side => diff.diff_main_main^_side} |   2 +-
- ...mat-patch_--attach_--stdout_initial..main} |   2 +-
- ...at-patch_--attach_--stdout_initial..main^} |   2 +-
- ...e_--stdout_--numbered-files_initial..main} |   2 +-
- ...t_--subject-prefix=TESTCASE_initial..main} |   2 +-
- ...mat-patch_--inline_--stdout_initial..main} |   2 +-
- ...at-patch_--inline_--stdout_initial..main^} |   2 +-
- ...t-patch_--inline_--stdout_initial..main^^} |   2 +-
- ...--stdout_--cover-letter_-n_initial..main^} |   2 +-
- ...atch_--stdout_--no-numbered_initial..main} |   2 +-
- ...t-patch_--stdout_--numbered_initial..main} |   2 +-
- ... diff.format-patch_--stdout_initial..main} |   2 +-
- ...diff.format-patch_--stdout_initial..main^} |   2 +-
- ..._-m_-p_master => diff.log_--cc_-m_-p_main} |   2 +-
- t/t4013/diff.log_--decorate=full_--all        |   2 +-
- ..._--decorate=full_--clear-decorations_--all |   2 +-
- ...f.log_--decorate=full_--decorate-all_--all |   2 +-
- t/t4013/diff.log_--decorate_--all             |   2 +-
- ...f.log_--decorate_--clear-decorations_--all |   2 +-
- .../diff.log_--decorate_--decorate-all_--all  |   2 +-
- ... diff.log_--diff-merges=first-parent_main} |   2 +-
- ..._--diff-merges=off_-p_--first-parent_main} |   2 +-
- ..._--first-parent_--diff-merges=off_-p_main} |   2 +-
- ...g_--no-diff-merges_-p_--first-parent_main} |   2 +-
- ..._--patch-with-stat_--summary_main_--_dir_} |   2 +-
- ...master => diff.log_--patch-with-stat_main} |   2 +-
- ...> diff.log_--patch-with-stat_main_--_dir_} |   2 +-
- ...oot_--cc_--patch-with-stat_--summary_main} |   2 +-
- ...g_--root_--patch-with-stat_--summary_main} |   2 +-
- ...=> diff.log_--root_--patch-with-stat_main} |   2 +-
- ...-root_-c_--patch-with-stat_--summary_main} |   2 +-
- ...root_-p_master => diff.log_--root_-p_main} |   2 +-
- ...log_--root_master => diff.log_--root_main} |   2 +-
- ...ter => diff.log_-GF_-p_--pickaxe-all_main} |   2 +-
- ...log_-GF_-p_master => diff.log_-GF_-p_main} |   2 +-
- ...{diff.log_-SF_master => diff.log_-GF_main} |   2 +-
- ...aster => diff.log_-IA_-IB_-I1_-I2_-p_main} |   2 +-
- ...log_-SF_-p_master => diff.log_-SF_-p_main} |   2 +-
- ...{diff.log_-GF_master => diff.log_-SF_main} |   2 +-
- t/t4013/diff.log_-SF_main_--max-count=0       |   2 +
- ...ount=2 => diff.log_-SF_main_--max-count=1} |   2 +-
- t/t4013/diff.log_-SF_main_--max-count=2       |   7 +
- t/t4013/diff.log_-SF_master_--max-count=0     |   2 -
- t/t4013/diff.log_-SF_master_--max-count=1     |   7 -
- ...iff.log_-S_F_master => diff.log_-S_F_main} |   2 +-
- ...cc_-m_-p_master => diff.log_-c_-m_-p_main} |   2 +-
- ...-m_--raw_master => diff.log_-m_--raw_main} |   2 +-
- ..._--stat_master => diff.log_-m_--stat_main} |   2 +-
- ...ter => diff.log_-m_-p_--first-parent_main} |   2 +-
- ...f.log_-m_-p_master => diff.log_-m_-p_main} |   2 +-
- ...ff.log_-p_--diff-merges=first-parent_main} |   2 +-
- ...master => diff.log_-p_--first-parent_main} |   2 +-
- .../{diff.log_-p_master => diff.log_-p_main}  |   2 +-
- t/t4013/{diff.log_master => diff.log_main}    |   2 +-
- ...iff.noellipses-diff-tree_-c_--abbrev_main} |   2 +-
- ...> diff.noellipses-whatchanged_--root_main} |   2 +-
- ...r => diff.noellipses-whatchanged_-SF_main} |   2 +-
- ...aster => diff.noellipses-whatchanged_main} |   2 +-
- ...t_master => diff.show_--first-parent_main} |   2 +-
- ...{diff.show_-c_master => diff.show_-c_main} |   2 +-
- ...{diff.show_-m_master => diff.show_-m_main} |   2 +-
- t/t4013/{diff.show_master => diff.show_main}  |   2 +-
- ..._--patch-with-stat_--summary_main_--_dir_} |   2 +-
- ...> diff.whatchanged_--patch-with-stat_main} |   2 +-
- ...hatchanged_--patch-with-stat_main_--_dir_} |   2 +-
- ...oot_--cc_--patch-with-stat_--summary_main} |   2 +-
- ...d_--root_--patch-with-stat_--summary_main} |   2 +-
- ...whatchanged_--root_--patch-with-stat_main} |   2 +-
- ...-root_-c_--patch-with-stat_--summary_main} |   2 +-
- ...master => diff.whatchanged_--root_-p_main} |   2 +-
- ...ot_master => diff.whatchanged_--root_main} |   2 +-
- ...-p_master => diff.whatchanged_-SF_-p_main} |   2 +-
- ...d_-SF_master => diff.whatchanged_-SF_main} |   2 +-
- ...ged_-p_master => diff.whatchanged_-p_main} |   2 +-
- ...atchanged_master => diff.whatchanged_main} |   2 +-
- t/t9902-completion.sh                         |   6 +-
- t/test-lib.sh                                 |  11 +-
- 107 files changed, 282 insertions(+), 244 deletions(-)
- rename t/t4013/{diff.diff-tree_--cc_--patch-with-stat_--summary_master => diff.diff-tree_--cc_--patch-with-stat_--summary_main} (86%)
- rename t/t4013/{diff.diff-tree_--cc_--patch-with-stat_master => diff.diff-tree_--cc_--patch-with-stat_main} (89%)
- rename t/t4013/{diff.diff-tree_--cc_--shortstat_master => diff.diff-tree_--cc_--shortstat_main} (65%)
- rename t/t4013/{diff.diff-tree_-c_--stat_--summary_master => diff.diff-tree_--cc_--stat_--summary_main} (71%)
- rename t/t4013/{diff.diff-tree_-c_--stat_master => diff.diff-tree_--cc_--stat_main} (76%)
- rename t/t4013/{diff.diff-tree_--cc_master => diff.diff-tree_--cc_main} (91%)
- rename t/t4013/{diff.diff-tree_-c_--abbrev_master => diff.diff-tree_-c_--abbrev_main} (83%)
- rename t/t4013/{diff.diff-tree_--cc_--stat_--summary_master => diff.diff-tree_-c_--stat_--summary_main} (70%)
- rename t/t4013/{diff.diff-tree_--cc_--stat_master => diff.diff-tree_-c_--stat_main} (75%)
- rename t/t4013/{diff.diff-tree_-c_master => diff.diff-tree_-c_main} (93%)
- rename t/t4013/{diff.diff-tree_-m_master => diff.diff-tree_-m_main} (96%)
- rename t/t4013/{diff.diff-tree_-p_-m_master => diff.diff-tree_-p_-m_main} (97%)
- create mode 100644 t/t4013/diff.diff-tree_-p_main
- delete mode 100644 t/t4013/diff.diff-tree_-p_master
- create mode 100644 t/t4013/diff.diff-tree_main
- delete mode 100644 t/t4013/diff.diff-tree_master
- create mode 100644 t/t4013/diff.diff_--dirstat_--cc_main~1_main
- delete mode 100644 t/t4013/diff.diff_--dirstat_--cc_master~1_master
- create mode 100644 t/t4013/diff.diff_--dirstat_main~1_main~2
- delete mode 100644 t/t4013/diff.diff_--dirstat_master~1_master~2
- rename t/t4013/{diff.diff_--line-prefix=abc_master_master^_side => diff.diff_--line-prefix=abc_main_main^_side} (87%)
- rename t/t4013/{diff.diff_master_master^_side => diff.diff_main_main^_side} (89%)
- rename t/t4013/{diff.format-patch_--attach_--stdout_initial..master => diff.format-patch_--attach_--stdout_initial..main} (98%)
- rename t/t4013/{diff.format-patch_--attach_--stdout_initial..master^ => diff.format-patch_--attach_--stdout_initial..main^} (97%)
- rename t/t4013/{diff.format-patch_--inline_--stdout_--numbered-files_initial..master => diff.format-patch_--inline_--stdout_--numbered-files_initial..main} (99%)
- rename t/t4013/{diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..master => diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..main} (99%)
- rename t/t4013/{diff.format-patch_--inline_--stdout_initial..master => diff.format-patch_--inline_--stdout_initial..main} (98%)
- rename t/t4013/{diff.format-patch_--inline_--stdout_initial..master^ => diff.format-patch_--inline_--stdout_initial..main^} (97%)
- rename t/t4013/{diff.format-patch_--inline_--stdout_initial..master^^ => diff.format-patch_--inline_--stdout_initial..main^^} (95%)
- rename t/t4013/{diff.format-patch_--stdout_--cover-letter_-n_initial..master^ => diff.format-patch_--stdout_--cover-letter_-n_initial..main^} (96%)
- rename t/t4013/{diff.format-patch_--stdout_--no-numbered_initial..master => diff.format-patch_--stdout_--no-numbered_initial..main} (97%)
- rename t/t4013/{diff.format-patch_--stdout_--numbered_initial..master => diff.format-patch_--stdout_--numbered_initial..main} (97%)
- rename t/t4013/{diff.format-patch_--stdout_initial..master => diff.format-patch_--stdout_initial..main} (97%)
- rename t/t4013/{diff.format-patch_--stdout_initial..master^ => diff.format-patch_--stdout_initial..main^} (96%)
- rename t/t4013/{diff.log_-c_-m_-p_master => diff.log_--cc_-m_-p_main} (99%)
- rename t/t4013/{diff.log_--diff-merges=first-parent_master => diff.log_--diff-merges=first-parent_main} (95%)
- rename t/t4013/{diff.log_--no-diff-merges_-p_--first-parent_master => diff.log_--diff-merges=off_-p_--first-parent_main} (95%)
- rename t/t4013/{diff.log_--first-parent_--diff-merges=off_-p_master => diff.log_--first-parent_--diff-merges=off_-p_main} (95%)
- rename t/t4013/{diff.log_--diff-merges=off_-p_--first-parent_master => diff.log_--no-diff-merges_-p_--first-parent_main} (95%)
- rename t/t4013/{diff.log_--patch-with-stat_--summary_master_--_dir_ => diff.log_--patch-with-stat_--summary_main_--_dir_} (96%)
- rename t/t4013/{diff.log_--patch-with-stat_master => diff.log_--patch-with-stat_main} (98%)
- rename t/t4013/{diff.log_--patch-with-stat_master_--_dir_ => diff.log_--patch-with-stat_main_--_dir_} (96%)
- rename t/t4013/{diff.log_--root_--cc_--patch-with-stat_--summary_master => diff.log_--root_--cc_--patch-with-stat_--summary_main} (98%)
- rename t/t4013/{diff.log_--root_--patch-with-stat_--summary_master => diff.log_--root_--patch-with-stat_--summary_main} (98%)
- rename t/t4013/{diff.log_--root_--patch-with-stat_master => diff.log_--root_--patch-with-stat_main} (98%)
- rename t/t4013/{diff.log_--root_-c_--patch-with-stat_--summary_master => diff.log_--root_-c_--patch-with-stat_--summary_main} (98%)
- rename t/t4013/{diff.log_--root_-p_master => diff.log_--root_-p_main} (98%)
- rename t/t4013/{diff.log_--root_master => diff.log_--root_main} (96%)
- rename t/t4013/{diff.log_-GF_-p_--pickaxe-all_master => diff.log_-GF_-p_--pickaxe-all_main} (90%)
- rename t/t4013/{diff.log_-GF_-p_master => diff.log_-GF_-p_main} (91%)
- rename t/t4013/{diff.log_-SF_master => diff.log_-GF_main} (86%)
- rename t/t4013/{diff.log_-IA_-IB_-I1_-I2_-p_master => diff.log_-IA_-IB_-I1_-I2_-p_main} (97%)
- rename t/t4013/{diff.log_-SF_-p_master => diff.log_-SF_-p_main} (91%)
- rename t/t4013/{diff.log_-GF_master => diff.log_-SF_main} (86%)
- create mode 100644 t/t4013/diff.log_-SF_main_--max-count=0
- rename t/t4013/{diff.log_-SF_master_--max-count=2 => diff.log_-SF_main_--max-count=1} (79%)
- create mode 100644 t/t4013/diff.log_-SF_main_--max-count=2
- delete mode 100644 t/t4013/diff.log_-SF_master_--max-count=0
- delete mode 100644 t/t4013/diff.log_-SF_master_--max-count=1
- rename t/t4013/{diff.log_-S_F_master => diff.log_-S_F_main} (86%)
- rename t/t4013/{diff.log_--cc_-m_-p_master => diff.log_-c_-m_-p_main} (99%)
- rename t/t4013/{diff.log_-m_--raw_master => diff.log_-m_--raw_main} (98%)
- rename t/t4013/{diff.log_-m_--stat_master => diff.log_-m_--stat_main} (98%)
- rename t/t4013/{diff.log_-m_-p_--first-parent_master => diff.log_-m_-p_--first-parent_main} (97%)
- rename t/t4013/{diff.log_-m_-p_master => diff.log_-m_-p_main} (99%)
- rename t/t4013/{diff.log_-p_--diff-merges=first-parent_master => diff.log_-p_--diff-merges=first-parent_main} (97%)
- rename t/t4013/{diff.log_-p_--first-parent_master => diff.log_-p_--first-parent_main} (97%)
- rename t/t4013/{diff.log_-p_master => diff.log_-p_main} (98%)
- rename t/t4013/{diff.log_master => diff.log_main} (97%)
- rename t/t4013/{diff.noellipses-diff-tree_-c_--abbrev_master => diff.noellipses-diff-tree_-c_--abbrev_main} (81%)
- rename t/t4013/{diff.noellipses-whatchanged_--root_master => diff.noellipses-whatchanged_--root_main} (96%)
- rename t/t4013/{diff.noellipses-whatchanged_-SF_master => diff.noellipses-whatchanged_-SF_main} (86%)
- rename t/t4013/{diff.noellipses-whatchanged_master => diff.noellipses-whatchanged_main} (96%)
- rename t/t4013/{diff.show_--first-parent_master => diff.show_--first-parent_main} (92%)
- rename t/t4013/{diff.show_-c_master => diff.show_-c_main} (95%)
- rename t/t4013/{diff.show_-m_master => diff.show_-m_main} (98%)
- rename t/t4013/{diff.show_master => diff.show_main} (96%)
- rename t/t4013/{diff.whatchanged_--patch-with-stat_--summary_master_--_dir_ => diff.whatchanged_--patch-with-stat_--summary_main_--_dir_} (94%)
- rename t/t4013/{diff.whatchanged_--patch-with-stat_master => diff.whatchanged_--patch-with-stat_main} (97%)
- rename t/t4013/{diff.whatchanged_--patch-with-stat_master_--_dir_ => diff.whatchanged_--patch-with-stat_main_--_dir_} (94%)
- rename t/t4013/{diff.whatchanged_--root_--cc_--patch-with-stat_--summary_master => diff.whatchanged_--root_--cc_--patch-with-stat_--summary_main} (97%)
- rename t/t4013/{diff.whatchanged_--root_--patch-with-stat_--summary_master => diff.whatchanged_--root_--patch-with-stat_--summary_main} (97%)
- rename t/t4013/{diff.whatchanged_--root_--patch-with-stat_master => diff.whatchanged_--root_--patch-with-stat_main} (97%)
- rename t/t4013/{diff.whatchanged_--root_-c_--patch-with-stat_--summary_master => diff.whatchanged_--root_-c_--patch-with-stat_--summary_main} (97%)
- rename t/t4013/{diff.whatchanged_--root_-p_master => diff.whatchanged_--root_-p_main} (98%)
- rename t/t4013/{diff.whatchanged_--root_master => diff.whatchanged_--root_main} (97%)
- rename t/t4013/{diff.whatchanged_-SF_-p_master => diff.whatchanged_-SF_-p_main} (89%)
- rename t/t4013/{diff.whatchanged_-SF_master => diff.whatchanged_-SF_main} (86%)
- rename t/t4013/{diff.whatchanged_-p_master => diff.whatchanged_-p_main} (98%)
- rename t/t4013/{diff.whatchanged_master => diff.whatchanged_main} (97%)
-
-Range-diff against v1:
-1:  7c20f7693f4 < -:  ----------- t0018: switch default branch name to main
-6:  487d1a33130 ! 1:  6986375dc37 breaking-changes: switch default branch to main
-    @@ Commit message
-         breaking-changes: switch default branch to main
-     
-         Since 1296cbe4b46 (init: document `init.defaultBranch` better,
-    -    2020-12-11) "git-init.adoc" has advertized that the default name
-    +    2020-12-11) "git-init.adoc" has advertised that the default name
-         of the initial branch may change in the future. The name "main"
-    -    is chosen to match the default used by the big git forge web sites.
-    +    is chosen to match the default used by the big Git forge web sites.
-     
-    -    The advice printed when init.defaultBranch is not set is
-    -    updated to say that the default will change to "main" in Git
-    -    3.0. Building with WITH_BREAKING_CHANGES enabled removes the advice,
-    -    changes the default branch name is "main" and removes support for
-    -    GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME. The code in guess_remote_head()
-    +    The advice printed when init.defaultBranch is not set is updated
-    +    to say that the default will change to "main" in Git 3.0. Building
-    +    with WITH_BREAKING_CHANGES enabled removes the advice and changes
-    +    the default branch name to "main". The code in guess_remote_head()
-         that looks for "refs/heads/master" is left unchanged as that is only
-         called when the remote server does not support the symref capability
-         in the v0 protocol or the symref extension to the ls-refs list in the
-    @@ Documentation/BreakingChanges.adoc: A prerequisite for this change is that the e
-      "reftable" format. Most importantly, alternative implementations of Git like
-      JGit, libgit2 and Gitoxide need to support it.
-      
-    -+* The default branch name will be `main`. We have been warning that the default
-    -+  name will change since 675704c74dd (init: provide useful advice about
-    -+  init.defaultBranch, 2020-12-11). The new name matches the default branch name
-    -+  used by many of the big git forges.
-    ++* In new repositories the default branch name will be `main`. We have been
-    ++  warning that the default name will change since 675704c74dd (init: provide
-    ++  useful advice about init.defaultBranch, 2020-12-11).  The new name matches
-    ++  the default branch name used by many of the big Git forges.
-     +
-      === Removals
-      
-    @@ Documentation/git-init.adoc: If this is a reinitialization, the repository will
-     +(currently `master`, but this will change to `main` when Git 3.0 is released).
-     +endif::with-breaking-changes[]
-     +ifdef::with-breaking-changes[]
-    -+(`main`).
-    ++`main`.
-     +endif::with-breaking-changes[]
-     +The default name can be customized via the `init.defaultBranch` configuration
-     +variable.
-    @@ refs.c: static const char default_branch_name_advice[] = N_(
-      );
-     +#endif /* WITH_BREAKING_CHANGES */
-      
-    - char *repo_default_branch_name(struct repository *r, int quiet)
-    +-char *repo_default_branch_name(struct repository *r, int quiet)
-    ++char *repo_default_branch_name(struct repository *r, MAYBE_UNUSED int quiet)
-      {
-      	const char *config_key = "init.defaultbranch";
-      	const char *config_display_key = "init.defaultBranch";
-    - 	char *ret = NULL, *full_ref;
-    -+#ifndef WITH_BREAKING_CHANGES
-    - 	const char *env = getenv("GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME");
-    +@@ refs.c: char *repo_default_branch_name(struct repository *r, int quiet)
-      
-      	if (env && *env)
-      		ret = xstrdup(env);
-     -	else if (repo_config_get_string(r, config_key, &ret) < 0)
-    -+#endif /* WITH_BREAKING_CHANGES */
-     +	if (!ret && repo_config_get_string(r, config_key, &ret) < 0)
-      		die(_("could not retrieve `%s`"), config_display_key);
-      
-      	if (!ret) {
-     +#ifdef WITH_BREAKING_CHANGES
-     +		ret = xstrdup("main");
-    -+		(void) quiet; /* Silence -Wunused-parameter */
-     +#else
-      		ret = xstrdup("master");
-      		if (!quiet)
-    @@ t/t0001-init.sh: test_expect_success 'advice on unconfigured init.defaultBranch
-      	test_grep ! "hint: " err
-      '
-      
-    --test_expect_success 'overridden default main branch name (env)' '
-    -+test_expect_success !WITH_BREAKING_CHANGES 'overridden default main branch name (env)' '
-    ++test_expect_success 'default branch name' '
-    ++	if test_have_prereq WITH_BREAKING_CHANGES
-    ++	then
-    ++		expect=main
-    ++	else
-    ++		expect=master
-    ++	fi &&
-    ++	echo "refs/heads/$expect" >expect &&
-    ++	(
-    ++		sane_unset GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME &&
-    ++		git init default-initial-branch-name
-    ++	) &&
-    ++	git -C default-initial-branch-name symbolic-ref HEAD >actual &&
-    ++	test_cmp expect actual
-    ++'
-    ++
-    + test_expect_success 'overridden default main branch name (env)' '
-      	test_config_global init.defaultBranch nmb &&
-      	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=env git init main-branch-env &&
-    - 	git -C main-branch-env symbolic-ref HEAD >actual &&
-    - 	grep env actual
-    - '
-    - 
-    - test_expect_success 'invalid default branch name' '
-    --	test_must_fail env GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME="with space" \
-    --		git init initial-branch-invalid 2>err &&
-    -+	test_must_fail env GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-    -+		git -c init.defaultBranch="with space" \
-    -+			init initial-branch-invalid 2>err &&
-    - 	test_grep "invalid branch name" err
-    - '
-    - 
-     
-      ## t/test-lib.sh ##
-     @@ t/test-lib.sh: then
-    @@ t/test-lib.sh: then
-     +	# transitory "git init" warning under --verbose.
-     +	: ${GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME:=master}
-     +	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-    -+else
-    -+	# Unset the default branch name that is set in many test scripts
-    -+	# before sourcing this file.
-    -+	unset GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-     +fi
-      
-      ################################################################
-2:  c445cf9c65e ! 2:  2a112a1b983 t4013: switch default branch name to main
-    @@ Metadata
-      ## Commit message ##
-         t4013: switch default branch name to main
-     
-    -    In preparation for removing TEST_GIT_DEFAULT_INITIAL_BRANCH in Git 3.0
-    -    switch the default branch name to main.
-    -
-    -    The changes here are purely mechanical replacing 'master' with 'main'
-    +    Remove one of the last remaining uses of
-    +    "TEST_GIT_DEFAULT_INITIAL_BRANCH= main" in the test suite. We have
-    +    been steadily be converting tests from using "master" as the default
-    +    branch name since the introduction of TEST_GIT_DEFAULT_INITIAL_BRANCH
-    +    in 704fed9ea22 (tests: start moving to a different default main branch
-    +    name, 2020-10-23) The changes here are purely mechanical replacing
-    +    "master" with "main"
-     
-         Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-     
-3:  d8a382a79eb ! 3:  f1bf01e1322 t9902: switch default branch name to main
-    @@ Metadata
-      ## Commit message ##
-         t9902: switch default branch name to main
-     
-    -    In preparation for removing GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME in
-    -    Git 3.0 update the bash completion tests that rely on the default
-    -    branch name being master.
-    +    Remove the penultimate use of "GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=
-    +    main" in our test suite. We have slowly been removing these ever since
-    +    we started to switch the default branch name used in tests to "main".
-     
-         Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-     
-4:  bbf79dd64fe ! 4:  c4d89c3761b t0613: stop setting default initial branch
-    @@ Metadata
-      ## Commit message ##
-         t0613: stop setting default initial branch
-     
-    -    As the tests are all run in separate repositories, set the branch
-    -    name to "master" when creating the repository for the tests where
-    -    the result depends on the branch name. This is in preparation for
-    -    removing GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME in Git 3.0.
-    +    As the tests are all run in separate repositories, set the branch name
-    +    to "master" when creating the repository for the tests where the result
-    +    depends on the branch name. This reduceds the number of tests that
-    +    depend on the default branch name being "master" and removes the last
-    +    instance of a test file using "GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=
-    +    master".
-     
-         Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-     
-    @@ t/t0613-reftable-write-options.sh: export GIT_TEST_REFTABLE_AUTOCOMPACTION
-      test_expect_success 'default write options' '
-      	test_when_finished "rm -rf repo" &&
-     -	git init repo &&
-    ++	# Block sizes also depend on the actual refs we write, so we force
-    ++	# "master" to be the default initial branch name.
-     +	git init --initial-branch master repo &&
-      	(
-      		cd repo &&
-5:  a46c0dd25a6 < -:  ----------- t1403: remove dependency on GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
+index f8d2eba061c..eb92e6f6a7d 100644
+--- a/Documentation/BreakingChanges.adoc
++++ b/Documentation/BreakingChanges.adoc
+@@ -165,6 +165,11 @@ A prerequisite for this change is that the ecosystem is ready to support the
+ "reftable" format. Most importantly, alternative implementations of Git like
+ JGit, libgit2 and Gitoxide need to support it.
+ 
++* In new repositories the default branch name will be `main`. We have been
++  warning that the default name will change since 675704c74dd (init: provide
++  useful advice about init.defaultBranch, 2020-12-11).  The new name matches
++  the default branch name used by many of the big Git forges.
++
+ === Removals
+ 
+ * Support for grafting commits has long been superseded by git-replace(1).
+diff --git a/Documentation/git-init.adoc b/Documentation/git-init.adoc
+index a0dffba665f..bab99b9b477 100644
+--- a/Documentation/git-init.adoc
++++ b/Documentation/git-init.adoc
+@@ -77,9 +77,15 @@ If this is a reinitialization, the repository will be moved to the specified pat
+ `-b <branch-name>`::
+ `--initial-branch=<branch-name>`::
+ Use _<branch-name>_ for the initial branch in the newly created
+-repository.  If not specified, fall back to the default name (currently
+-`master`, but this is subject to change in the future; the name can be
+-customized via the `init.defaultBranch` configuration variable).
++repository.  If not specified, fall back to the default name
++ifndef::with-breaking-changes[]
++(currently `master`, but this will change to `main` when Git 3.0 is released).
++endif::with-breaking-changes[]
++ifdef::with-breaking-changes[]
++`main`.
++endif::with-breaking-changes[]
++The default name can be customized via the `init.defaultBranch` configuration
++variable.
+ 
+ `--shared[=(false|true|umask|group|all|world|everybody|<perm>)]`::
+ 
+diff --git a/advice.c b/advice.c
+index e5f0ff84491..48c49ee4145 100644
+--- a/advice.c
++++ b/advice.c
+@@ -51,7 +51,9 @@ static struct {
+ 	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir" },
+ 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName" },
+ 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge" },
++#ifndef WITH_BREAKING_CHANGES
+ 	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName" },
++#endif /* WITH_BREAKING_CHANGES */
+ 	[ADVICE_DETACHED_HEAD]				= { "detachedHead" },
+ 	[ADVICE_DIVERGING]				= { "diverging" },
+ 	[ADVICE_FETCH_SET_HEAD_WARN]			= { "fetchRemoteHEADWarn" },
+diff --git a/advice.h b/advice.h
+index 727dcecf4a3..fc1dc872049 100644
+--- a/advice.h
++++ b/advice.h
+@@ -18,7 +18,9 @@ enum advice_type {
+ 	ADVICE_AM_WORK_DIR,
+ 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
+ 	ADVICE_COMMIT_BEFORE_MERGE,
++#ifndef WITH_BREAKING_CHANGES
+ 	ADVICE_DEFAULT_BRANCH_NAME,
++#endif /* WITH_BREAKING_CHANGES */
+ 	ADVICE_DETACHED_HEAD,
+ 	ADVICE_DIVERGING,
+ 	ADVICE_FETCH_SET_HEAD_WARN,
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 01823fd0f14..a21834043f3 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -9,7 +9,6 @@ run_tests=t
+ 
+ case "$jobname" in
+ linux-breaking-changes)
+-	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ 	export WITH_BREAKING_CHANGES=YesPlease
+ 	;;
+ linux-TEST-vars)
+diff --git a/refs.c b/refs.c
+index 4ff55cf24f6..149a8d1cec1 100644
+--- a/refs.c
++++ b/refs.c
+@@ -627,10 +627,12 @@ void expand_ref_prefix(struct strvec *prefixes, const char *prefix)
+ 		strvec_pushf(prefixes, *p, len, prefix);
+ }
+ 
++#ifndef WITH_BREAKING_CHANGES
+ static const char default_branch_name_advice[] = N_(
+ "Using '%s' as the name for the initial branch. This default branch name\n"
+-"is subject to change. To configure the initial branch name to use in all\n"
+-"of your new repositories, which will suppress this warning, call:\n"
++"will change to \"main\" in Git 3.0. To configure the initial branch name\n"
++"to use in all of your new repositories, which will suppress this warning,\n"
++"call:\n"
+ "\n"
+ "\tgit config --global init.defaultBranch <name>\n"
+ "\n"
+@@ -639,8 +641,9 @@ static const char default_branch_name_advice[] = N_(
+ "\n"
+ "\tgit branch -m <name>\n"
+ );
++#endif /* WITH_BREAKING_CHANGES */
+ 
+-char *repo_default_branch_name(struct repository *r, int quiet)
++char *repo_default_branch_name(struct repository *r, MAYBE_UNUSED int quiet)
+ {
+ 	const char *config_key = "init.defaultbranch";
+ 	const char *config_display_key = "init.defaultBranch";
+@@ -649,14 +652,18 @@ char *repo_default_branch_name(struct repository *r, int quiet)
+ 
+ 	if (env && *env)
+ 		ret = xstrdup(env);
+-	else if (repo_config_get_string(r, config_key, &ret) < 0)
++	if (!ret && repo_config_get_string(r, config_key, &ret) < 0)
+ 		die(_("could not retrieve `%s`"), config_display_key);
+ 
+ 	if (!ret) {
++#ifdef WITH_BREAKING_CHANGES
++		ret = xstrdup("main");
++#else
+ 		ret = xstrdup("master");
+ 		if (!quiet)
+ 			advise_if_enabled(ADVICE_DEFAULT_BRANCH_NAME,
+ 					  _(default_branch_name_advice), ret);
++#endif /* WITH_BREAKING_CHANGES */
+ 	}
+ 
+ 	full_ref = xstrfmt("refs/heads/%s", ret);
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index f593c536874..df0040b9ace 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -868,7 +868,7 @@ test_expect_success 'overridden default initial branch name (config)' '
+ 	grep nmb actual
+ '
+ 
+-test_expect_success 'advice on unconfigured init.defaultBranch' '
++test_expect_success !WITH_BREAKING_CHANGES 'advice on unconfigured init.defaultBranch' '
+ 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= git -c color.advice=always \
+ 		init unconfigured-default-branch-name 2>err &&
+ 	test_decode_color <err >decoded &&
+@@ -883,6 +883,22 @@ test_expect_success 'advice on unconfigured init.defaultBranch disabled' '
+ 	test_grep ! "hint: " err
+ '
+ 
++test_expect_success 'default branch name' '
++	if test_have_prereq WITH_BREAKING_CHANGES
++	then
++		expect=main
++	else
++		expect=master
++	fi &&
++	echo "refs/heads/$expect" >expect &&
++	(
++		sane_unset GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME &&
++		git init default-initial-branch-name
++	) &&
++	git -C default-initial-branch-name symbolic-ref HEAD >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'overridden default main branch name (env)' '
+ 	test_config_global init.defaultBranch nmb &&
+ 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=env git init main-branch-env &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 621cd31ae1d..b191954c3c4 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -127,10 +127,13 @@ then
+ 	export GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS
+ fi
+ 
+-# Explicitly set the default branch name for testing, to avoid the
+-# transitory "git init" warning under --verbose.
+-: ${GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME:=master}
+-export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++if test -z "$WITH_BREAKING_CHANGES"
++then
++	# Explicitly set the default branch name for testing, to avoid the
++	# transitory "git init" warning under --verbose.
++	: ${GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME:=master}
++	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++fi
+ 
+ ################################################################
+ # It appears that people try to run tests without building...
 -- 
 2.49.0.897.gfad3eb7d210
 
