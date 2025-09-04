@@ -1,81 +1,86 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33EA163
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 16:23:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653972BDC32
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 16:38:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757002999; cv=none; b=eIDs0BkT53Sj/ST4aC3kPgPfxKYwsY2pPQKQC99x2zJPhDkMVWqdMuN9ahtzeHFCjPqTWH1vSXNS3+kA7gzVygYNekgOv+R20Qd4xnT1I8VkqXyFhbJMssvFuBIjuSVNEgp44gbl2e69n4b8CHxHCrNlgKFx/JJq2tXyY5GzeRg=
+	t=1757003883; cv=none; b=ljX65CjNrySkcmKcAXXXtL9cGyy/hnLZ77affFzuf5rBpj+d2l9zIkquRJJ+HUhokx0wWUihrQRomdQ2MN5MXeTbOZW81IzhNw4KAyQOu6YnSKXl3pRFw64BNjSThRtvuXr3rbLoiR6CYWtncu9KGP9oaIDPNB2OKarLBT9yhd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757002999; c=relaxed/simple;
-	bh=l84KkF1PC+AsHkJ2PQDg1+Qjm6V9/9FdWTEzpUujY3U=;
+	s=arc-20240116; t=1757003883; c=relaxed/simple;
+	bh=dVSKW07nQqkS5Kmsx8maer8FY+7YZsxtJWztpah/cVw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MRn8sstq1Jl8/4YnP4AqoEHGRW4aZdOt7Y33T4iofVPxcV+QVH7mPY3xZK/yR7atbxEDQaFc/4/YdPcZXar42ypt6JqNCWnLDQ//yCjaN7hxq5kEJDpxk7fxZuF35efEZvV2YXub4+GDXolGRmZyMRAUz84/PKxbHNUD0A/A7UA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BjnsZYQp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=anLjv8YM; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=pp2QS7FuaBJXAAiM5djd2mgFaSAlqouM9VSlZl1k543ngthfUvwByub3ZkXUcOuhiEd3IQKClCxGqrtg+Tgs6nm5s4G5ToiS0KJYPqg1v1UMtxV6zlLaesg1R4Wmnb32dMIffYZtEgvtWdZoT2hDgha2jx43jmAHy8iXOTQSGp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HLt5YpL+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B/iJDHlX; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BjnsZYQp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="anLjv8YM"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id E11D0EC0254;
-	Thu,  4 Sep 2025 12:23:16 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Thu, 04 Sep 2025 12:23:16 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HLt5YpL+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B/iJDHlX"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9795D14002E0;
+	Thu,  4 Sep 2025 12:38:00 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 04 Sep 2025 12:38:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757002996; x=1757089396; bh=yiAQxBRMg5
-	cNxmYAqwSA4RS+RNyOfx2BgEIyvUJ4S54=; b=BjnsZYQpH35zcokMqIaZjzShO3
-	SIBlyXItAA5aZOlpabpwOZVCalFBwlDCIV6snRyW3LqRAq2lVvo3ckaAosu7kbwK
-	2WdpQVpWvvMZxbOFCIgqq0edvCfobhVpV5chXUUVVMFCpztDsmUqFvuHIerTNcfp
-	6YnTfiZOJhG4d0bboxLGjnp7RMmaIgfPwe1DpigLOpYfAatxRTkAZ0WLgM4ctenr
-	ck76PeXwzL5QZToSMwhSc63Cd1hMy0yzc2wINrrv18taIdkVCP6rcU0oSOBMizW4
-	JG4YTfZz3xRQ1I/zMiP8OqOyCqJk0i5GmmSkinR827yWlV6pg4rdP9i0OU3A==
+	:subject:to:to; s=fm3; t=1757003880; x=1757090280; bh=51moDVAlT8
+	9+GxKzmy87m0KTwBqIIPH76TfCpEBA7zo=; b=HLt5YpL+IbjZVuXvWrJW9T9TUF
+	L/Kx5aD3DOeBd1LSBrPcLqsY8+ZWwqkoSi9rgFi6qXx+vxHKKSq7EUaf8qcxl11+
+	ih6fxLq0Adk8EUlrnVlwTOYjAZ4Sl3oqrdkhJUWyX7lW2ECbgJMMB6FH/mKUIh21
+	fO6pxwJnb8rIMpzLSyODQ+5ce0QWIZnKWsgsDlqgPuxdEmj/OICfHnEFjNjrwJmm
+	Nh27yYgaocJy1DmKLKL1RE0xspabHbuHJdcF1PvtcD+uYGd/dtvb9S2aYiPX9XLj
+	gi4YLwbeZaR3DwJWdLxctfiakkcBlKEBKUwFXL2nOnX1kr6K5j5KcBNa8tPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757002996; x=1757089396; bh=yiAQxBRMg5cNxmYAqwSA4RS+RNyOfx2BgEI
-	yvUJ4S54=; b=anLjv8YMSp+ATGUzNYL1QNo/LLGwaQDkqsq/8bXmdE2m8cDPEmX
-	Lnyr4y/HJGC7AA3Jklk2FWf2J2YOcDgB4NfO47Ld1SVo8gcyDilKaM/Cd8Dd+MMu
-	bCXq+Zz7K2imfLyOhdnvtRl3/DE4gvHSwKrJdqobNVa8DtClMXE09R32GStEi3wR
-	l6TbG23Bx8rigfWW4sb7W+NIKjVzRkD9hhKXkzKTYLlSpnlZEEPgM8VtDD19dAta
-	kEhJF8YvmddUFC6+cnaRsG+OOWlfsit2b+pVYMm8kwV5k/H28g61YL7ulGV1Eqv9
-	pGNwJS+KN/Hxh+NUkzhlLOtldbPRv9hgQ2Q==
-X-ME-Sender: <xms:9Ly5aOT5rruZq7sUdrfP1BhgzAGxAiBDDcpz91NnhIHwti7M_iUE7A>
-    <xme:9Ly5aHBGsWgDty_FInFj8hkxGbvhe2hHfTVKKGQ8NIM0clu9_Fkmrngp3lLZLJ46c
-    BKnTeshSvShRUzwmg>
-X-ME-Received: <xmr:9Ly5aFQhztAyKW8qwaSgLEoerWZ7_1klg1KN_7lX-eW4CTHNatj017_VrhqAZJ7IKA2LzVoBWaB7Tw7AYJCcfe0V30-Za5z6_vdAcno>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeigeekucetufdoteggodetrfdotf
+	1757003880; x=1757090280; bh=51moDVAlT89+GxKzmy87m0KTwBqIIPH76Tf
+	CpEBA7zo=; b=B/iJDHlX74BU1jYHQ0birxMzjF8GoEiSSwkf9mO/KRMgGs2N+Zj
+	FREC/n74fGoC+LxbJPT1YClvDrqluV8qs+netZkcgRzXjL5egNBIyUmecSkiPYbV
+	snO/oPLN1glECFOru1AhbB5klxL+dAjiT1Nfh1omvFOXbSQCcfpps4haTdu+AZ8j
+	6o+tV3gJ/AKiPz60o3oBNywAv9okzvlXg7XmvfyQwBQN8lK8E502dbS1R4Lhoup5
+	3EEMaF6aQladOFKyfT85W5T2BUcsJKGTxl44ND8CZvb5KKz8g0jlGm6AQ9EZVg6t
+	wtqVbKa6lyK6KpYFyMtrcuAFmVgArdMXBZA==
+X-ME-Sender: <xms:aMC5aBd6MSTspE174NPPOjjQ_Wwd5LwFDgY_tNCb5L35reoQUxDjlQ>
+    <xme:aMC5aKs4CP8932IIB8hZg41CfPjmwVaMK-fni0NsKc4tBbNbzFwwoydWOFslEj6R8
+    P_Lajc1uxQEhFy7qw>
+X-ME-Received: <xmr:aMC5aA_trgbpbd_n7vpehtQWvSeNBK1_jktF_hWXO88-DDj5GeK_hU6cMrVTkRMseL1WFXVNrvogdvb6zVsDA2em-wx62qnZYb-Uegk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
     ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
     jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:9Ly5aFokhxXA7CTHU4Ub-GHxTS0I-y96sxP7cCQcp50PGD88EYkjwA>
-    <xmx:9Ly5aHzXvC6aTqJOCo0g-5E6ED3CAA-U0i5PZBGNkcCLi2BwRv6Qqg>
-    <xmx:9Ly5aKIxJCzW-dgm0RaLXal0oEVQ8cjseaLmvWhXEsZ2JkBz9USPLg>
-    <xmx:9Ly5aJJuh_B1d8vfSHhu1Nlt9sNHHtHfyFSaGekctHoGgYd3D69SOg>
-    <xmx:9Ly5aGkJai_K-Ladd8ER8PKniifKkQoEn366agJfHvrT-1d4K2UsJty5>
+    hrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdejledu
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhn
+    sggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesph
+    hkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihloh
+    hrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:aMC5aF0mYMLtWMnlhYkzNHPykG4zMxahmyPrHJBRMvNSLwvJKW00Jw>
+    <xmx:aMC5aFA9IC1VtBmoWfnx7AWzPsU5sK_bbYk5lX632O3r7MIY8qKQiw>
+    <xmx:aMC5aBdDyWmKgSKiJLi_oLAeB5AeiwQa6Q_QHAHIB-qtAnTKRjy1dQ>
+    <xmx:aMC5aC58nZ_eASsBq82wkXk8qcQRi8ZHHvLCqKWy5y97tkQHE7gUBw>
+    <xmx:aMC5aBMefqKZlBHwQ2-FtCoAWNEh6VQ55Lh8A_zXg2x359cWBHJoZZtW>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Sep 2025 12:23:16 -0400 (EDT)
+ 4 Sep 2025 12:38:00 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2025, #02; Wed, 3)
-In-Reply-To: <aLmhjw2xAbUogL1L@pks.im> (Patrick Steinhardt's message of "Thu,
-	4 Sep 2025 16:26:23 +0200")
-References: <xmqqplc6byai.fsf@gitster.g> <aLmhjw2xAbUogL1L@pks.im>
-Date: Thu, 04 Sep 2025 09:23:15 -0700
-Message-ID: <xmqqy0qu9ogc.fsf@gitster.g>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
+ <me@ttaylorr.com>
+Subject: Re: [PATCH 2/2] upload-pack: don't ACK non-commits repeatedly in
+ protocol v2
+In-Reply-To: <aLmJOdxUYiyHpiLA@pks.im> (Patrick Steinhardt's message of "Thu,
+	4 Sep 2025 14:42:33 +0200")
+References: <20250903-b4-pks-upload-pack-repeated-non-commit-acks-v1-0-4e019af4dddc@pks.im>
+	<20250903-b4-pks-upload-pack-repeated-non-commit-acks-v1-2-4e019af4dddc@pks.im>
+	<xmqqtt1ic0ci.fsf@gitster.g> <aLmJOdxUYiyHpiLA@pks.im>
+Date: Thu, 04 Sep 2025 09:37:58 -0700
+Message-ID: <xmqqqzwm9nrt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,24 +92,31 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Wed, Sep 03, 2025 at 10:07:49PM -0700, Junio C Hamano wrote:
->> * jt/de-global-bulk-checkin (2025-08-22) 4 commits
->>  - bulk-checkin: use repository variable from transaction
->>  - bulk-checkin: require transaction for index_blob_bulk_checkin()
->>  - bulk-checkin: remove global transaction state
->>  - bulk-checkin: introduce object database transaction structure
->> 
->>  The bulk-checkin code used to depend on a file-scope static
->>  singleton variable, which has been updated to pass an instance
->>  throughout the callchain.
->> 
->>  Will merge to 'next'?
->>  source: <20250822213500.1488064-1-jltobler@gmail.com>
->
-> The series looks good to me, so I think it should be ready for prime
-> time.
+> ... when the
+> server ACKs an object there is no reason for the client to go deeper, so
+> they stop advertising any of its parents.
 
-Yup, I am fairly familiar with the area, and I didn't see anything
-questionable in the updates.  Let's move it forward.
+Very true.  I did point out the difference in behaviour, but I
+couldn't actually figure out what goodness we are deriving in this
+code by marking grandparents (and possibly their ancestors) as
+something they have.  Your change in behaviour could be seen as
+stopping us from making unnecessary operations ;-)
 
-Thanks.
+If the other side is mischievous, they are not limited to feed us a
+commit and then its parent in the naturally expected order.  They
+could feed us A and then skip B and give us C that is a child of B.
+Pre-painting B when we got A from them, in order to prepare for
+seeing B (which we can return without doing anything) in the next
+round, would not help us all that much, if they give us C after
+giving us A, as we haven't even heard of C yet at that point.
+
+But in the normal case against sane clients that do not skip the
+probes, marking immediate parents (like B) when processing A might
+be helping?  I dunno.  I also somehow thought that even normal case
+we have an option to skip the probes in order to converge faster,
+but I am misremembering.
+
+cf. https://lore.kernel.org/git/?q=upload-pack%20fibonacci
+
+
+
