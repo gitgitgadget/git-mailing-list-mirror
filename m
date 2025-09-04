@@ -1,55 +1,55 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CF82FDC3E
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 12:50:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1FB2FE05D
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 12:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756990218; cv=none; b=MgQ05m/vhEszpq2qlthNy+eoFX3FhNl/DLitFkusxBwLiSgvWBs4ZYmV0jq11pm7afCdZfkO5IJIN/cDlR4ic1zAGGdL7RS0XGHc2xF+31hDT8mrHdrKfa2mCpz/ZWp+Pln+/OP/l0exd6qUGcD4CJ3ibZHvZYkXtNvZEimhXCk=
+	t=1756990220; cv=none; b=Ry8jxFPs2mBQQWoxbHazCyyS/0lYbfSqJNuwIzQWFGnq8RZTZDHha0cbezsw6aKB+0FTYFWf3C5U3LT+KI3mME60HlgsAgptiX/JKRV9JCkdC7rZlsQ2iD4PDnVJHmT7DqeFarhZMW/bqGJmQeCIivKNgi11GnI5Nma6EShn3aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756990218; c=relaxed/simple;
-	bh=7S28JjqOt1Rqmv++2AOMWtZyglWT1NES1vSF7HP1twU=;
+	s=arc-20240116; t=1756990220; c=relaxed/simple;
+	bh=pgeclTpx7JEH7x/wFWCxo8A1EDSCLowIf2Ybt5QHpoQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rQQIa0CyM1V27JTpesjlPiP0ss7YD4xmICpw5QewtHndluU2Y6TijORI5fTVE/2gDC2E3yg6MresaD7Rby7PvX4ekr2qeDEU2eBqpUwOgLPrO9PhoPF4ULEjXTeZ6Tj6WttdkH0/ayAVmc1Tb4nkAWYFYOgGy3PUV9gZtz1zpps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nfP9pHvc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z6J8i3Ie; arc=none smtp.client-ip=202.12.124.158
+	 In-Reply-To:To:Cc; b=rrrJBjvB4ZqfIwU0f0mmNN9AU/u2xywKe3VoB6xDN5y7GrAgEsKOdGfdnXAoqHu5pq76bsS5Q5Rd8Wa001p3Fc/rKLv86Jia4I6QucIGrKdw4uisQYbEYUe6O0V4KMhE8WQax5P2ZxoMUncesroWjSXhAqdUQbKxHwGvkglY/FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sFTvM82I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OzMTECKn; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nfP9pHvc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z6J8i3Ie"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A1A537A03B4
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 08:50:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sFTvM82I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OzMTECKn"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id B458C1D0029B
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 08:50:17 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 04 Sep 2025 08:50:14 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 04 Sep 2025 08:50:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756990214;
-	 x=1757076614; bh=2ooXQt9eG8JgBGmF4TWsfq04ONtfNxRamjI9ug57QlI=; b=
-	nfP9pHvc1Q9aT0aAzyIgEidfxV/HmA245EsZWJBCtHv2k1HmbJih/ZMK6/Gnax4o
-	BxB3cpUf46mUMPfwJKsm1lommaIxJ+pxkgZRPfsmkMKh7Pcucx9iU/8T6w/XEwu8
-	wbJ+ty4oRpj/Ri5QQ+uLxMwErIQLWylyftTbd1HmBitmUJTuAe3DkRxtCgJeLQMJ
-	MXvrhmPlWpzS/NF++L5Y4gRNld92jPfqvTIf1+MP+zCnoWlRL1uox0lLnL280bP8
-	044BfOCVsL+uuidbFfWxVvxNJvOrA4sxCDHwP6qnvikB8wFDSMi/vjY1iRGnNZ6r
-	aUF65Gi05YOcbQdik4CIwQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756990217;
+	 x=1757076617; bh=Jx4eGjzi4p551kPiP0KZHn9dz/J7oBib6OH7VQAYo0c=; b=
+	sFTvM82IC5h+Zt/m/iz+xFzB8hf9CuLN2Bu4uuaXUWAIy2B0OSWqu7AJoR2A9PZD
+	El6Vtw7TTN+KTgZsL68MTPQGgMIgzq3bv1tVmKxbIm3nLHdrGOj7oTPUSs6j3dg4
+	iK5WoyiEOPMpBCcPKLLEGup3s9UazJB8qrJ36fFczo8ysPFTJPZ3OoGtha/WBOjN
+	13Em8efa83X6HIQSUyb0uud+YBCc1oXVVxnhyDx8RycPd/ZWBEvIOBCR5K30e5Oo
+	1biuwWs5oXSOAF9l1bXH/yB1zMsncCiv20OY8JNaTv5DZhQdfh8LwnJH2lTQVoDP
+	pII1J7xb1SJCwPh9cPnTxw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756990214; x=
-	1757076614; bh=2ooXQt9eG8JgBGmF4TWsfq04ONtfNxRamjI9ug57QlI=; b=Z
-	6J8i3IemVRG+HsmfR3MafZ5aGQ9iIrDkD8W4zZhSpKcV81rRP2vkYwzKLFA/1isb
-	WMJfCr7yuH5y07UAJDEdhbiyPu1/p7D3QBEuEuoX+fz0OhjdtAFgr+iLVHIPm2Dd
-	q+18Vfka10Ex+Y42IaYpvwE1Hc0RRKM63daKGbZhMZmRh0ZyT1mKxtjNT2+eOTfb
-	wnkjYl3eouTjhYARI7vQ4ET8WwsgXnV5zGrJuB5ikkh5MlgX5fEJW50E0lx4JVmT
-	ExfaSRPORqU6ee8Qd7WlHLVf02T7CHX4Ab/uNXPMT+GtK64m+62w6ZXfRkjE2AFY
-	4kH3S78jN8siWxxiV3M4w==
-X-ME-Sender: <xms:Bou5aJvWxjlXDwhd8qQIYx7MXu-3A-ljYDnTC503XN_l38kZ_VBqxQ>
-    <xme:Bou5aEcNf_uBjlzglHcydF8OezfGj_n-hQW8OWAQ77apSrrUSiUH18vFRZJcpspZX
-    olbapgHA0EL83AvLw>
-X-ME-Received: <xmr:Bou5aGLy73KjC24hnApF2hfkzsRemwNB3WkGWRHGB3wHx3AnlHUQ1-iQJI_S2TD5_Cfbpj6bRLC1NvRNmZbK43BOkWfwfbdk1UJzhkFGOHwqUg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756990217; x=
+	1757076617; bh=Jx4eGjzi4p551kPiP0KZHn9dz/J7oBib6OH7VQAYo0c=; b=O
+	zMTECKne42t7+O6vS1rKlnnxRB/yuOUHs5xGyyq6Q0CkaTnPmFNCsnG2vAOri+t4
+	zoANTzvHeHWYhZ8PLjc3jclmybCJZLk/SshYIgIS50q6TG04B3HkSoK+htmtYmQX
+	Liwh6dElMsscIc+bGFpvQlOm+J+ko95yPHsMscLIBLMhWsku8gQmojnJTWgF0Xzo
+	nJ/XG6z16JdYWO4Yb3XAr0Q0Q7Ek8dzclL+0Bn9cgh8OeHxWWu4mIPuuu3pASdop
+	Oxs3A7P0N3XT0Fn1vY0/EmuCb2BYjmANMTtHJIml3s+xdKXsguHomfz0URcRR9c1
+	pdah/eDgFlX9TFUnSeNbQ==
+X-ME-Sender: <xms:CYu5aKUGFe36bJEe9vj0I9bowiZPe-QkCfDGmmNi_tXm-TNswBDyRA>
+    <xme:CYu5aIl9KojHJIF8nKrB1vHcqYtVEoXXjukt1P1b3koa_8WxmYFllQSE3kIbSoY-f
+    f5bDJW2G_IRfyaBJg>
+X-ME-Received: <xmr:CYu5aHwKohf3cTOOWuev4b14MKStp0pqK5cj1hVHLkUKnM9cLZdCNZM5TWZLa6lawPswKxD9pjrBZR4zC7APVI_gMMMEdiXMC7mPpsO9YL9UzQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtre
@@ -59,22 +59,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdeiucetufdoteggod
     pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhoug
     gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
     gh
-X-ME-Proxy: <xmx:Bou5aCY1a5NNvWXYjFuPHFHaNelsQdlC_TAG3iTxFM2yjNtv-2di0A>
-    <xmx:Bou5aBuyGMtnNJJG6wKn19SHVsPuSpEZ44v05PPk5Xqbd7hYg3OIYA>
-    <xmx:Bou5aPsga1P1ayg6t84w0dbL9nzQ2RpDXeYjlNBBa_LtGkYpvRQcSQ>
-    <xmx:Bou5aGcsNq6qhLKPKIXY1eDM_45kQ8pdmZaHYQb6a-aGBh73bScCew>
-    <xmx:Bou5aJXvBWzZ8_7g4-6LiOha8Eg3vycTBIjzmdK06Tj07Hhqbrr1AlAS>
+X-ME-Proxy: <xmx:CYu5aDjU3nigjfpp3p0exxSPzaEx3r6K3nruifYgI9FPLYhE21WfeA>
+    <xmx:CYu5aMWY1Z557_1_IIKI8vbYaAeSA7qwy-bfvSNWRSpLRjnEihIovA>
+    <xmx:CYu5aF0TzkIK2VuzoKlZGgAu9UDoPmJ5ZRV1ZiltTYPWewZfDJK2aw>
+    <xmx:CYu5aCFsc-_gzHo81uEc0_T997_ZUTYYZGGKso2YvT5yPKEP6CvwRg>
+    <xmx:CYu5aCd3x2m6oBg9jJmYBKJKexI0oc4TwJQ_RTkLKOPYxsW3hwDBKeCz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 4 Sep 2025 08:50:13 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 4 Sep 2025 08:50:16 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 39235984 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 43b6ece1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 4 Sep 2025 12:50:13 +0000 (UTC)
+	Thu, 4 Sep 2025 12:50:16 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 04 Sep 2025 14:49:58 +0200
-Subject: [PATCH 4/6] commit-graph: return commit graph from
- `repo_find_commit_pos_in_graph()`
+Date: Thu, 04 Sep 2025 14:49:59 +0200
+Subject: [PATCH 5/6] commit-graph: pass graphs that are to be merged as
+ parameter
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,127 +83,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250904-b4-pks-commit-graph-via-source-v1-4-d932c2481e1a@pks.im>
+Message-Id: <20250904-b4-pks-commit-graph-via-source-v1-5-d932c2481e1a@pks.im>
 References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
 In-Reply-To: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-The function `repo_find_commit_pos_in_graph()` takes a commit as input
-and tries to figure out whether the given repository has a commit graph
-that contains that specific commit. If so, it returns the corresponding
-position of that commit inside the graph.
+When determining whether or not we want to merge a commit graph chain we
+retrieve the graph that is to be merged via the context's repository.
+With an upcoming change though it will become a bit more complex to
+figure out the commit graph, which would lead to code duplication.
 
-Right now though we only return the position, but not the actual graph
-that the commit has been found in. This is sensible as repositories
-always have the graph in `struct repository::objects::commit_graph`.
-Consequently, the caller always knows where to find it.
-
-But in a subsequent change we're going to move the graph into the object
-sources. This would require callers of the function to loop through all
-sources to find the relevant commit graph.
-
-Refactor the code so that we instead return the commit-graph that the
-commit has been found with.
+Prepare for this change by passing the graph that is to be merged as a
+parameter.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bloom.c        |  8 +++++---
- commit-graph.c | 18 ++++++++++++------
- commit-graph.h | 12 ++++++------
- 3 files changed, 23 insertions(+), 15 deletions(-)
+ commit-graph.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/bloom.c b/bloom.c
-index b86015f6d1..2d7b951e5b 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -452,10 +452,12 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 	filter = bloom_filter_slab_at(&bloom_filters, c);
- 
- 	if (!filter->data) {
-+		struct commit_graph *g;
- 		uint32_t graph_pos;
--		if (repo_find_commit_pos_in_graph(r, c, &graph_pos))
--			load_bloom_filter_from_graph(r->objects->commit_graph,
--						     filter, graph_pos);
-+
-+		g = repo_find_commit_pos_in_graph(r, c, &graph_pos);
-+		if (g)
-+			load_bloom_filter_from_graph(g, filter, graph_pos);
- 	}
- 
- 	if (filter->data && filter->len) {
 diff --git a/commit-graph.c b/commit-graph.c
-index 62260a2026..16dfe58229 100644
+index 16dfe58229..0e25b14076 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1003,13 +1003,16 @@ static int find_commit_pos_in_graph(struct commit *item, struct commit_graph *g,
+@@ -2226,7 +2226,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	return 0;
+ }
+ 
+-static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
++static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
++				       struct commit_graph *graph_to_merge)
+ {
+ 	struct commit_graph *g;
+ 	uint32_t num_commits;
+@@ -2245,7 +2246,7 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
+ 		flags = ctx->opts->split_flags;
  	}
+ 
+-	g = ctx->r->objects->commit_graph;
++	g = graph_to_merge;
+ 	num_commits = ctx->commits.nr;
+ 	if (flags == COMMIT_GRAPH_SPLIT_REPLACE)
+ 		ctx->num_commit_graphs_after = 1;
+@@ -2297,7 +2298,7 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
+ 		ctx->commit_graph_filenames_after[i] = xstrdup(ctx->commit_graph_filenames_before[i]);
+ 
+ 	i = ctx->num_commit_graphs_before - 1;
+-	g = ctx->r->objects->commit_graph;
++	g = graph_to_merge;
+ 
+ 	while (g) {
+ 		if (i < ctx->num_commit_graphs_after)
+@@ -2395,9 +2396,9 @@ static void sort_and_scan_merged_commits(struct write_commit_graph_context *ctx)
+ 	stop_progress(&ctx->progress);
  }
  
--int repo_find_commit_pos_in_graph(struct repository *r, struct commit *c,
--				  uint32_t *pos)
-+struct commit_graph *repo_find_commit_pos_in_graph(struct repository *r,
-+						   struct commit *c,
-+						   uint32_t *pos)
+-static void merge_commit_graphs(struct write_commit_graph_context *ctx)
++static void merge_commit_graphs(struct write_commit_graph_context *ctx,
++				struct commit_graph *g)
  {
- 	struct commit_graph *g = prepare_commit_graph(r);
- 	if (!g)
--		return 0;
--	return find_commit_pos_in_graph(c, g, pos);
-+		return NULL;
-+	if (!find_commit_pos_in_graph(c, g, pos))
-+		return NULL;
-+	return g;
- }
+-	struct commit_graph *g = ctx->r->objects->commit_graph;
+ 	uint32_t current_graph_number = ctx->num_commit_graphs_before;
  
- struct commit *lookup_commit_in_graph(struct repository *repo, const struct object_id *id)
-@@ -1075,9 +1078,12 @@ int parse_commit_in_graph(struct repository *r, struct commit *item)
+ 	while (g && current_graph_number >= ctx->num_commit_graphs_after) {
+@@ -2632,12 +2633,13 @@ int write_commit_graph(struct odb_source *source,
+ 		goto cleanup;
  
- void load_commit_graph_info(struct repository *r, struct commit *item)
- {
-+	struct commit_graph *g;
- 	uint32_t pos;
--	if (repo_find_commit_pos_in_graph(r, item, &pos))
--		fill_commit_graph_info(item, r->objects->commit_graph, pos);
-+
-+	g = repo_find_commit_pos_in_graph(r, item, &pos);
-+	if (g)
-+		fill_commit_graph_info(item, g, pos);
- }
+ 	if (ctx.split) {
+-		split_graph_merge_strategy(&ctx);
++		split_graph_merge_strategy(&ctx, g);
  
- static struct tree *load_tree_for_commit(struct commit_graph *g,
-diff --git a/commit-graph.h b/commit-graph.h
-index 4899b54ef8..f6a5433641 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -48,10 +48,9 @@ int open_commit_graph_chain(const char *chain_file, int *fd, struct stat *st,
- int parse_commit_in_graph(struct repository *r, struct commit *item);
+ 		if (!replace)
+-			merge_commit_graphs(&ctx);
+-	} else
++			merge_commit_graphs(&ctx, g);
++	} else {
+ 		ctx.num_commit_graphs_after = 1;
++	}
  
- /*
-- * Fills `*pos` with the graph position of `c`, and returns 1 if `c` is
-- * found in the commit-graph belonging to `r`, or 0 otherwise.
-- * Initializes the commit-graph belonging to `r` if it hasn't been
-- * already.
-+ * Fills `*pos` with the graph position of `c`, and returns the graph `c` is
-+ * found in, or NULL otherwise. Initializes the commit-graphs belonging to
-+ * `r` if it hasn't been already.
-  *
-  * Note: this is a low-level helper that does not alter any slab data
-  * associated with `c`. Useful in circumstances where the slab data is
-@@ -59,8 +58,9 @@ int parse_commit_in_graph(struct repository *r, struct commit *item);
-  *
-  * In most cases, callers should use `parse_commit_in_graph()` instead.
-  */
--int repo_find_commit_pos_in_graph(struct repository *r, struct commit *c,
--				  uint32_t *pos);
-+struct commit_graph *repo_find_commit_pos_in_graph(struct repository *r,
-+						   struct commit *c,
-+						   uint32_t *pos);
+ 	ctx.trust_generation_numbers = validate_mixed_generation_chain(g);
  
- /*
-  * Look up the given commit ID in the commit-graph. This will only return a
 
 -- 
 2.51.0.417.g1ba7204a04.dirty
