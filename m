@@ -1,274 +1,219 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F85718EAB
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 17:40:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78902135D7
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 17:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757007633; cv=none; b=FTsNfjNodCykbHr5GS06lWIlgYRCdNlZsddna3pJRIHFnQjJKgJdl6EO9PIOck5QCbM31zyE+hSn/rLv9Kcv654//fPknx7CJxGRci8FlYsscJ08akwwlk3Fb0f41dHHYwSeHwqFW/C/bXMLYeqWcOnHi/gGJ/H/qQqWAaS6xMA=
+	t=1757007861; cv=none; b=FpwGJNoNI+BQhhMdH0UbtBuw2loL0sD8DfIpFmmheGDR7VFfdlt7a35FbO0esgR+DNz1oZDlWZSUsKKvyjt4Yez0fMEa/CYa+X5UDY6GqYrd1y9Jdl0uQAZwO+mh8XiME3IYR5uqWPeN6/TcW/Ee0aGcMmkGTBOuhMSf41P7lgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757007633; c=relaxed/simple;
-	bh=dFTLbdJ3Mwiuwl6YZPAruuYHQIxgXDZpycD3vk/P3Ag=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O1vNdXBu8YvappcduEuk4Uoewa7KGlfVY+2qz4qyl5bZ7GdLBQoVcMy5qPTDhqRFYNErjhIuZg7nJPY4M+HKascJ1FbFCYd2JJ17qVy3KQR0kAyhXHhLMzPRKQ8DNl95v5ywnKRkVuxSBF2hj5+o4XLdxx686e4g0zx3KJ+9qjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pyjDqwKQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NpA6Aq3I; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757007861; c=relaxed/simple;
+	bh=/KPt1hJehJaAr6kXkrQcJJ1Jp+H1JRl83T9fyjjNLug=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=RMsqCAgeKz+4e8WyYiS9oDa8ynxxldX8qJO0Ahd4jQCiNAiGy4QbMj6qFOJEoTTT9kQqQQA7gBtCd9SRdhRdu33jVdPm8rKjcu15JFkYG9RaNlJt6U83rwC41b/5/1MuiCUGPyBdWo8FF3JozIdAqWScsDZ3IulQ69u2BBvKRLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fbNYm7wZ; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pyjDqwKQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NpA6Aq3I"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 823CCEC034B;
-	Thu,  4 Sep 2025 13:40:30 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 04 Sep 2025 13:40:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757007630; x=1757094030; bh=OpdHBlTqU2
-	ugmpB34L3gKcwvcE1747CvkPhhelMnD9A=; b=pyjDqwKQ02Xfrk8dM35gv8Cg9Y
-	MlPlbDKuDnH2I0uPpS+eFvIz3wzoIUgQdHzitjAvOEtwiMnKj/aHawleLlD9UkhY
-	h0JtSYjyzV4atICgxlc9VPMXq85VhgPC3FB8XmEhfolcEdCpCLP2cG9Q1llLd6i0
-	/I0jiUCerX7vCI5tCa9Z/VoY+H1T3d1p6VLxKy4KMZs1y0FU1rGi9q2jtSX+oSdw
-	IcBaAvjjfGYGAM93Wfh2lyJF/YtxHWJ7w+nPyTXbZI64URdkxr6PZNNps6pzjfxT
-	kSrYBvzENsRXPdPKk8XdCF7Dn1ukqznP0No0AxkFX2b5OXj4EgcZHmpZHfeQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757007630; x=1757094030; bh=OpdHBlTqU2ugmpB34L3gKcwvcE1747CvkPh
-	helMnD9A=; b=NpA6Aq3I7BqQBHZU2uPPNfQaoXKVHifOCzhTQH/4hrDy58c5KmI
-	El9Xf42TM6WD/5SrH3vsoYWjYEGP8+tuBXAeXOu9aXik3qwp0cereRjLLaiUXWcx
-	BppIYhyT6mHD9UCO+mCwp7RrQcedLvTHQkWbJFWfLLGvvPRH4hc6rJsJV1YkCXBZ
-	uBQ1PLZUTu5jbv1Pp4dFoiMJgUHAzMillJmvwxxs0t7KKxZ8il2x/7hwWnr/O8FB
-	HqJiP+41zHgIgqJRayhZUH+WhzEpz0K47m8lvnYeCvlmBMRc5baWu2JyECyaGLBZ
-	ak7ZbnhiY/UxOiMy+n9xSGi+2GEeJKKIbgA==
-X-ME-Sender: <xms:Ds-5aC3HqmPKlCibp941BXkL1fuy-E4PMjeUffYQQBiIY9vHPm0SjQ>
-    <xme:Ds-5aNiW6MoItytNgLmcXBNAYtO4B3naJ87_sI8GBXRQVvGrNHUxPJISlwD9G4o_A
-    BXhXvfS9bVYwoJi0A>
-X-ME-Received: <xmr:Ds-5aLW5m5_5xEUxPogLaG8gOqXpZwxk4sgRpj3g5O4HSYDZmC98fWqFR8tuk8HtNUKLkSROz4hf0TyYN06j4Wtd_QUcC02-JlYv1sU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiieefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoh
-    ephhhurghnghhsvghnfeeiheesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhk
-    shdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Ds-5aEV_eG3y6xaXtCJ6xJnN20HtgxCf1rt9Lo-TGdt0eH04KS0bVQ>
-    <xmx:Ds-5aDhNcpej5mHvdTESN5U8OBvQuB7KdyRy-KPrD4Ebj_f6llgxFA>
-    <xmx:Ds-5aHans_oU_wteSy2E7q_fgSlimZNehgmAmsZeur-Pf_sMYh0Kvw>
-    <xmx:Ds-5aIpViNplXVLIWOvc8gBy8yfoHnS3BglN4HpJVC_d258rFp82uQ>
-    <xmx:Ds-5aOnjlL-C4PW5dHLzLhOqWX2TfVUd0As94KH16YYAIGktLswJRqaB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Sep 2025 13:40:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Wing Huang <huangsen365@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 1/4] breaking-changes: switch default branch to main
-In-Reply-To: <6986375dc379a646bb184be3cf7a018b2eb3eec7.1756992089.git.phillip.wood@dunelm.org.uk>
-	(Phillip Wood's message of "Thu, 4 Sep 2025 14:21:29 +0100")
-References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
-	<cover.1756992089.git.phillip.wood@dunelm.org.uk>
-	<6986375dc379a646bb184be3cf7a018b2eb3eec7.1756992089.git.phillip.wood@dunelm.org.uk>
-Date: Thu, 04 Sep 2025 10:40:28 -0700
-Message-ID: <xmqqjz2e86b7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fbNYm7wZ"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4b32384e586so13888191cf.0
+        for <git@vger.kernel.org>; Thu, 04 Sep 2025 10:44:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757007857; x=1757612657; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=js6LktNktZCU/SwBkpj1PQVoWIXet2SsOB/pMNGhXZ0=;
+        b=fbNYm7wZ5MvL166zlFbi3VeZTas++Xl0n/6NGsD+fOrivG/VyxulzNyl7PG4OuP0I5
+         J307Zk7vcEGhI7Tzv7wgQ2ErNSZ5Dj7AARgyZ19moC6mBAl5iHbLRRgqD7gUZw3MtxQ0
+         c/Wg7aRV2jv37r5v/B8nvcQErWQN25Sa8JIQcZ48tCxQfHaY8fYt4X+n8VItTQsUgfrN
+         UvbIgOF+RrnXQGHSzIKHbqyAfUbs4FznejSrIW5N/zSvqEY7KfzFccP4K1ReQy3DUuea
+         ryG2JZDdZYPdKbTWs9BZJMqG/NwDferV9KEiBZ0JcZwd0i1olx0BorxBDDVPLrqV1Rki
+         v7pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757007857; x=1757612657;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=js6LktNktZCU/SwBkpj1PQVoWIXet2SsOB/pMNGhXZ0=;
+        b=QzQoSrCN+0ObCr4kfd55HqZS3oO3OUhXNgx5bT1dARC9mCc6VuKYVb/PM0tzv9SNQd
+         V5JGdPScDEloF+y0yJ59CicLGBzUH7pg0Fmwf61yytVJbH8cYFrtZfboocBn5TtRBdrX
+         BC43Qtq16dfi6mWOlDcQCRXgLQvnHLqYZu1rHG8quSW6WoN9Whh4CclnAy/aosfqB2nm
+         nqP5QU2xdBzjiURcbfJVB/EsloFEiv36dBXCyVGlTJo0WReMJGHWTZ8b59BeB8isUxSP
+         QSTtA3M1tRTC+40V59V7/0CqwdSRikanLlD5F8rxRVGBYrjdnEOucoQFEaXaL8kU50Xk
+         37gQ==
+X-Gm-Message-State: AOJu0Yw9IGfeVwfkR+zY3wtyFrFWwfff+f7B6gXqt++nbUIgNQwn6ffT
+	H1D5+VdEwtqEH+DJiPzSa8UZ7yYZFuhObZRd4W7W/m70Hwij7wFrO1nFwk/MOA==
+X-Gm-Gg: ASbGncsDZ3LjJ688U3Dyz2FMGl4aDdLt+nspJeJlJjwQKUC/A8/vl3wFgbY1fdfxq51
+	wVD4scP5JJmd6vljy+0CifEuhZ/WAPWBv1uhx8B9ONKN766131X8XiovyV6KSD+OVp+vvxbomZX
+	vpbTeNIzo7hyNPqc6elAjf4OLSyU0KD6PI92IpLbReWc9vQRhTTOljFdpCxsxP7sVJ9YD63wq3v
+	TRoZ7Pyo4Z63J0IS3jNTnxltXJNrbc95QbIcg1wUCvdWWjL9PWQv413HRNFJUo0yM81N+SBNB2f
+	0aYo8f55NegxQ4spKDg+oewc7vjxdqn7mLmf9ULGePQSp3fRjAmW69L4rQS+WGmEsLcgTqM1uWS
+	3L8furG6bZSNteG29rHvP1lw=
+X-Google-Smtp-Source: AGHT+IEHvvpA4nuTnhINNEsRFc6JUMfqLK0k+spzNUMmcE7WlcunTcg717ft++bU0XsSUhJ+Ew3YAQ==
+X-Received: by 2002:a05:622a:11c1:b0:4b1:dd3:e399 with SMTP id d75a77b69052e-4b31dc6791fmr263370491cf.64.1757007857091;
+        Thu, 04 Sep 2025 10:44:17 -0700 (PDT)
+Received: from [127.0.0.1] ([20.51.206.84])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b48f785d71sm32226501cf.44.2025.09.04.10.44.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Sep 2025 10:44:16 -0700 (PDT)
+Message-Id: <pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2040.v4.git.git.1756941427825.gitgitgadget@gmail.com>
+References: <pull.2040.v4.git.git.1756941427825.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 04 Sep 2025 17:44:16 +0000
+Subject: [PATCH v5] alloc: fix dangling pointer in alloc_state cleanup
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare <nouraellm@gmail.com>,
+    =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
+ <nouraellm@gmail.com>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
+ <nouraellm@gmail.com>
 
-> diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-> index f8d2eba061c..eb92e6f6a7d 100644
-> --- a/Documentation/BreakingChanges.adoc
-> +++ b/Documentation/BreakingChanges.adoc
-> @@ -165,6 +165,11 @@ A prerequisite for this change is that the ecosystem is ready to support the
->  "reftable" format. Most importantly, alternative implementations of Git like
->  JGit, libgit2 and Gitoxide need to support it.
->  
-> +* In new repositories the default branch name will be `main`. We have been
-> +  warning that the default name will change since 675704c74dd (init: provide
-> +  useful advice about init.defaultBranch, 2020-12-11).  The new name matches
-> +  the default branch name used by many of the big Git forges.
+All callers of clear_alloc_state() immediately free what they
+cleared, so currently it does not hurt anybody that the
+alloc_state is left in an unreusable state, but it is an
+error-prone API. Replace it with a new function that clears but
+in addition frees the structure, as well as NULLing the pointer
+that points at it and adjust existing callers.
 
-As I am not a native, this is a mere question and not a suggestion,
-but my reading hiccups when I see the lack of comma after "In new
-repositories".
+While at it, rename allocate_alloc_state() and name the new
+function alloc_state_free_and_null(), to follow more closely the
+function naming convention specified in the CodingGuidelines
+(namely, functions about S are named with S_ prefix and then
+verb).
 
-"used by many of" -> "used for new repositories by many of"?
+Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
+---
+    alloc: fix dangling pointer in alloc_state cleanup
+    
+    cc: Torsten Bögershausen tboegi@web.de cc: Jeff King peff@peff.net
 
-> diff --git a/Documentation/git-init.adoc b/Documentation/git-init.adoc
-> index a0dffba665f..bab99b9b477 100644
-> --- a/Documentation/git-init.adoc
-> +++ b/Documentation/git-init.adoc
-> @@ -77,9 +77,15 @@ If this is a reinitialization, the repository will be moved to the specified pat
->  `-b <branch-name>`::
->  `--initial-branch=<branch-name>`::
->  Use _<branch-name>_ for the initial branch in the newly created
-> -repository.  If not specified, fall back to the default name (currently
-> -`master`, but this is subject to change in the future; the name can be
-> -customized via the `init.defaultBranch` configuration variable).
-> +repository.  If not specified, fall back to the default name
-> +ifndef::with-breaking-changes[]
-> +(currently `master`, but this will change to `main` when Git 3.0 is released).
-> +endif::with-breaking-changes[]
-> +ifdef::with-breaking-changes[]
-> +`main`.
-> +endif::with-breaking-changes[]
-> +The default name can be customized via the `init.defaultBranch` configuration
-> +variable.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2040%2Fnouraellm%2Ffix-dangling-pointer-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2040/nouraellm/fix-dangling-pointer-v5
+Pull-Request: https://github.com/git/git/pull/2040
 
-Good.  Both the text for post-3.0 period and the rephrasing of the
-original for pre-3.0 period look good.
+Range-diff vs v4:
 
-> diff --git a/advice.c b/advice.c
-> index e5f0ff84491..48c49ee4145 100644
-> --- a/advice.c
-> +++ b/advice.c
-> @@ -51,7 +51,9 @@ static struct {
->  	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir" },
->  	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName" },
->  	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge" },
-> +#ifndef WITH_BREAKING_CHANGES
->  	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName" },
-> +#endif /* WITH_BREAKING_CHANGES */
->  	[ADVICE_DETACHED_HEAD]				= { "detachedHead" },
->  	[ADVICE_DIVERGING]				= { "diverging" },
->  	[ADVICE_FETCH_SET_HEAD_WARN]			= { "fetchRemoteHEADWarn" },
+ 1:  82d228661d ! 1:  d04b0258f5 alloc: fix dangling pointer in alloc_state cleanup
+     @@ alloc.c: struct alloc_state {
+      -void clear_alloc_state(struct alloc_state *s)
+      +void alloc_state_free_and_null(struct alloc_state **s_)
+       {
+     -+	struct alloc_state *s;
+     -+
+     -+	if (!s_ || !*s_) return;
+     -+
+     -+	s = *s_;
+     ++	struct alloc_state *s = *s_;
+      +
+       	while (s->slab_nr > 0) {
+       		s->slab_nr--;
 
-Would there be folks who type "git init" to get a 'main' branch,
-while trying to follow a recipe written in pre-3.0 days that assumes
-the initial branch is called differently, and get confused after
-seeing many commands written in the recipe for them to follow , like
-"git checkout -b next master" fail?  Do they need a different advice
-message to help them, i.e.e.g, 
 
-    $ git init
-    Initialized empty Git repository in /a/b/c/.git/
-    hint: Since Git 3.0, an initial branch is 'main' these days.
-    hint: If you need its name to be different (e.g. 'frotz'),
-    hint: you can immediately rename it with "git branch -m frotz".
-    hint: Disable this message with "got config set advice.foo false"
+ alloc.c  |  7 +++++--
+ alloc.h  |  4 ++--
+ object.c | 26 ++++++++++----------------
+ 3 files changed, 17 insertions(+), 20 deletions(-)
 
-or something?  I dunno.  In any case, that will have to be a new and
-different advice message, and defaultBranchName should not be reused
-for that purpose, so the change in the the above hunk is fine.  I am
-wondering if we need a new entry protected by the same #ifdef on the
-#else side.
+diff --git a/alloc.c b/alloc.c
+index 377e80f5dd..3a5d0b2bd8 100644
+--- a/alloc.c
++++ b/alloc.c
+@@ -36,19 +36,22 @@ struct alloc_state {
+ 	int slab_nr, slab_alloc;
+ };
+ 
+-struct alloc_state *allocate_alloc_state(void)
++struct alloc_state *alloc_state_alloc(void)
+ {
+ 	return xcalloc(1, sizeof(struct alloc_state));
+ }
+ 
+-void clear_alloc_state(struct alloc_state *s)
++void alloc_state_free_and_null(struct alloc_state **s_)
+ {
++	struct alloc_state *s = *s_;
++
+ 	while (s->slab_nr > 0) {
+ 		s->slab_nr--;
+ 		free(s->slabs[s->slab_nr]);
+ 	}
+ 
+ 	FREE_AND_NULL(s->slabs);
++	FREE_AND_NULL(*s_);
+ }
+ 
+ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
+diff --git a/alloc.h b/alloc.h
+index 3f4a0ad310..87a47a9709 100644
+--- a/alloc.h
++++ b/alloc.h
+@@ -14,7 +14,7 @@ void *alloc_commit_node(struct repository *r);
+ void *alloc_tag_node(struct repository *r);
+ void *alloc_object_node(struct repository *r);
+ 
+-struct alloc_state *allocate_alloc_state(void);
+-void clear_alloc_state(struct alloc_state *s);
++struct alloc_state *alloc_state_alloc(void);
++void alloc_state_free_and_null(struct alloc_state **s_);
+ 
+ #endif
+diff --git a/object.c b/object.c
+index c1553ee433..986114a6db 100644
+--- a/object.c
++++ b/object.c
+@@ -517,12 +517,11 @@ struct parsed_object_pool *parsed_object_pool_new(struct repository *repo)
+ 	memset(o, 0, sizeof(*o));
+ 
+ 	o->repo = repo;
+-	o->blob_state = allocate_alloc_state();
+-	o->tree_state = allocate_alloc_state();
+-	o->commit_state = allocate_alloc_state();
+-	o->tag_state = allocate_alloc_state();
+-	o->object_state = allocate_alloc_state();
+-
++	o->blob_state = alloc_state_alloc();
++	o->tree_state = alloc_state_alloc();
++	o->commit_state = alloc_state_alloc();
++	o->tag_state = alloc_state_alloc();
++	o->object_state = alloc_state_alloc();
+ 	o->is_shallow = -1;
+ 	CALLOC_ARRAY(o->shallow_stat, 1);
+ 
+@@ -573,16 +572,11 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
+ 	o->buffer_slab = NULL;
+ 
+ 	parsed_object_pool_reset_commit_grafts(o);
+-	clear_alloc_state(o->blob_state);
+-	clear_alloc_state(o->tree_state);
+-	clear_alloc_state(o->commit_state);
+-	clear_alloc_state(o->tag_state);
+-	clear_alloc_state(o->object_state);
++	alloc_state_free_and_null(&o->blob_state);
++	alloc_state_free_and_null(&o->tree_state);
++	alloc_state_free_and_null(&o->commit_state);
++	alloc_state_free_and_null(&o->tag_state);
++	alloc_state_free_and_null(&o->object_state);
+ 	stat_validity_clear(o->shallow_stat);
+-	FREE_AND_NULL(o->blob_state);
+-	FREE_AND_NULL(o->tree_state);
+-	FREE_AND_NULL(o->commit_state);
+-	FREE_AND_NULL(o->tag_state);
+-	FREE_AND_NULL(o->object_state);
+ 	FREE_AND_NULL(o->shallow_stat);
+ }
 
-> diff --git a/advice.h b/advice.h
-> index 727dcecf4a3..fc1dc872049 100644
-> --- a/advice.h
-> +++ b/advice.h
-> @@ -18,7 +18,9 @@ enum advice_type {
->  	ADVICE_AM_WORK_DIR,
->  	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
->  	ADVICE_COMMIT_BEFORE_MERGE,
-> +#ifndef WITH_BREAKING_CHANGES
->  	ADVICE_DEFAULT_BRANCH_NAME,
-> +#endif /* WITH_BREAKING_CHANGES */
->  	ADVICE_DETACHED_HEAD,
->  	ADVICE_DIVERGING,
->  	ADVICE_FETCH_SET_HEAD_WARN,
-
-Ditto.
-
-> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> index 01823fd0f14..a21834043f3 100755
-> --- a/ci/run-build-and-tests.sh
-> +++ b/ci/run-build-and-tests.sh
-> @@ -9,7 +9,6 @@ run_tests=t
->  
->  case "$jobname" in
->  linux-breaking-changes)
-> -	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->  	export WITH_BREAKING_CHANGES=YesPlease
->  	;;
-
-OK.
-
->  linux-TEST-vars)
-
-We have been very careful to make sure that none of our tests
-implicitly rely on that the initial branch name will still be
-'master' with the above.  Now we should make sure that none of our
-tests implicitly assume that the initial branch name will forever be
-called 'main'.  In the post-context, linux-TEST-vars arm has
-something that forces the initial branch name to be 'master', and we
-probably should keep it for a while to serve that purpose.
-
-> diff --git a/refs.c b/refs.c
-> index 4ff55cf24f6..149a8d1cec1 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -627,10 +627,12 @@ void expand_ref_prefix(struct strvec *prefixes, const char *prefix)
->  		strvec_pushf(prefixes, *p, len, prefix);
->  }
->  
-> +#ifndef WITH_BREAKING_CHANGES
->  static const char default_branch_name_advice[] = N_(
->  "Using '%s' as the name for the initial branch. This default branch name\n"
-> -"is subject to change. To configure the initial branch name to use in all\n"
-> -"of your new repositories, which will suppress this warning, call:\n"
-> +"will change to \"main\" in Git 3.0. To configure the initial branch name\n"
-> +"to use in all of your new repositories, which will suppress this warning,\n"
-> +"call:\n"
->  "\n"
->  "\tgit config --global init.defaultBranch <name>\n"
->  "\n"
-> @@ -639,8 +641,9 @@ static const char default_branch_name_advice[] = N_(
->  "\n"
->  "\tgit branch -m <name>\n"
->  );
-> +#endif /* WITH_BREAKING_CHANGES */
->  
-> -char *repo_default_branch_name(struct repository *r, int quiet)
-> +char *repo_default_branch_name(struct repository *r, MAYBE_UNUSED int quiet)
->  {
-
-And if we were to introduce a new advice to help people who still
-expected the traditional name, this MAYBE_UNUSED would not become
-necessary ...
-
->  	const char *config_key = "init.defaultbranch";
->  	const char *config_display_key = "init.defaultBranch";
-> @@ -649,14 +652,18 @@ char *repo_default_branch_name(struct repository *r, int quiet)
->  
->  	if (env && *env)
->  		ret = xstrdup(env);
-> -	else if (repo_config_get_string(r, config_key, &ret) < 0)
-> +	if (!ret && repo_config_get_string(r, config_key, &ret) < 0)
->  		die(_("could not retrieve `%s`"), config_display_key);
->  
->  	if (!ret) {
-> +#ifdef WITH_BREAKING_CHANGES
-> +		ret = xstrdup("main");
-
-... as we will have the same if (!quiet) advice sequence here,
-protected with a different ADVICE_ thing.
-
-> +#else
->  		ret = xstrdup("master");
->  		if (!quiet)
->  			advise_if_enabled(ADVICE_DEFAULT_BRANCH_NAME,
->  					  _(default_branch_name_advice), ret);
-> +#endif /* WITH_BREAKING_CHANGES */
->  	}
->  
->  	full_ref = xstrfmt("refs/heads/%s", ret);
-
-Thanks.
+base-commit: f814da676ae46aac5be0a98b99373a76dee6cedb
+-- 
+gitgitgadget
