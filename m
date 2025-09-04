@@ -1,92 +1,105 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336353002DA
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 13:24:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B142F99AA
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 13:26:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756992285; cv=none; b=P4Va0VOY5mrpx4PvX9kT9MQlLxTHTY2K16qQdxsxEZFxknj1NVO8xA8kezRoU6JZ0/AsHtzfq91YP9jz75pe9ZlZ/m8pzJGY09UDP+I90Hij/qC9uzy0WiPI5bAauw369qWCkQ84UfqDAaOX/Pa3cHHIYIHUX2pKP2Swd9GyUVg=
+	t=1756992362; cv=none; b=oaXOQqlwnRgPLVcmjJQMqAK3EB5rwKOuIDedjCAaDs5b4q5Vspn0XN7eraHVLA2b0FyV9dHpdtFhS+8J0HQcbIag11BJb9yacuPYD4frVWJMYeMssXah6ZlwMJ4aIYK1Wgs4pqUM01ERM3lc8nK8PnywePEXwwZYdQj8Z0hn96M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756992285; c=relaxed/simple;
-	bh=Z1yBizTrDbmeuQtz2knrZIJMKV8v/vjy931BuEdwX+M=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=DBDtuzxSBukjHvvUS9A95lDsUp/dgnuK8E3o6ycCCKYDDF8oJYEHxwL0JmMJmEIM3m5qZPxJJgsqIQP1ltlPjUpAGUjccGOVde7LU8Nq02ASySSAfgWHfbMyeDWGgvX4jbMr4V8Puwkx5LfGyroHIb/xG8sILrDhsMzXDkP7u94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b3b/JZ5R; arc=none smtp.client-ip=209.85.217.43
+	s=arc-20240116; t=1756992362; c=relaxed/simple;
+	bh=oMYRHyMGjCX+JoPMDK1E8jvHVJjHtN9qp5J1/kT+kxM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cBZQfK1IST4xW30r2Nguikt8WgA69HXjNu2TJLgGdFywSSeG12t8p6dzu/6pd9u4+wIaofKGtwFIHb0oXX7/XHQfo6dkEYccRwufHkgBfYB/Zqh7v8xOMrxz87kiNoGODXIC9JP8nXaweNiSNvM7isLsZs6frDsLqVw9UsaZfK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PKV+BA4R; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b3b/JZ5R"
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-53410d0f4e7so914285137.0
-        for <git@vger.kernel.org>; Thu, 04 Sep 2025 06:24:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PKV+BA4R"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-45b79ec2fbeso7486765e9.3
+        for <git@vger.kernel.org>; Thu, 04 Sep 2025 06:26:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756992283; x=1757597083; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5A6DGkcCsFkC+L8tE6D8VsHAuYk0xXCMm7m5ewYgrpM=;
-        b=b3b/JZ5RIUNFyvNhHC1mzdYxPFo/SpJ928zoIInw/nR9+BPHd5D+q926ZkoHqKPrTN
-         z0Rzt6IYiZvEaNA2NRihjXXR90PmfnhWHKv6k7bqlupXEfBOLgE2fAz/h5IX4q5MPK6f
-         w7BSRbE5qq8fK7Tjx4cQ7zZZDwDhSPRPXCUigGB2dxZE1VtxC8ULSmhhv4yObkA/69hW
-         8PNr/c4vDbc/onznR4lZfGFWlYA4nW4+9QlVFZuQYsJhrgsQ5VyWJwvSf6G6c22DEau8
-         E8gSPdU2KIgLkDsJCJUn7CdwQ/7xhfeqNomouY949AVQtLm+zeN+pEOWkoIT5pbLJQb+
-         QBFA==
+        d=gmail.com; s=20230601; t=1756992360; x=1757597160; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PRXzhW0KWiHPLk195Wj1HzsGE3ol9CtKOVK21f0vJFI=;
+        b=PKV+BA4R0FBWMYKZXYjjTSZRxYrAuj8+sdhSjTvhalL5fE/obXitQtKP+peec1Goxx
+         VCECF4qSjIb853TjDu6PLY/v1eBTqMhWh9m2qk28Y7j945dtXe0QFhDtUD/0UDUwZ6Z2
+         BZhHj1AlP/O6kZ26wDx4RQE7NECIVg0X09Hf9J3VFklwAdLKJIiMjBT4b0HwziQd9ooY
+         z68YG/6udNWg6fQgRnnCjsiZwiytjtnKNx3LUS1CxG7ADRv3e6sDHiUqK2nmP9Ckr1tL
+         cxoWs7Dp+gCMIXquiH7WOhne2WTf5qRHOGq5wF48n2Hb7jk4VzQv/++VYvNCuPyE/cpa
+         nAYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756992283; x=1757597083;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5A6DGkcCsFkC+L8tE6D8VsHAuYk0xXCMm7m5ewYgrpM=;
-        b=tuPuPzOW+FJLgR+he6abP+YoZfsxuJ3kNH9xfBVWECpcjCMfpu/54x7mgNW9rTMBwE
-         br9olil4Hx1ZtMPDV4L8fAoRRyRq0e3Rj08gfabidUB8pn+EbyIoA1+Ix51JlXbKQ6Go
-         1i4hcinpTmsaF6GQhM7zzxtxDxCun62W69WkXH0+RYuyB+Wv+bzt33l0cfa7+5bMRCKa
-         /wObBqKPcGBrhFUJ08FIHoa7rH8T0g3kUkhK0h5EcPLXG4rHvMjHPZbtNJ6//oW+tXdg
-         dHaDtQ/y6qCAVg6TKHR2vl8LVNv7vs8eiprBhM7RmiXtgbnkldu9eKavhCjbdyung5r+
-         j2lg==
-X-Gm-Message-State: AOJu0YysqK+F0NvnV7LpGzDuxLihhwrNRmCU6oVvGPqpua0Bo4Dws9mp
-	D3rW7r8qJtHyve3zeQladJDT85q2cTSntw0z+zB9zqTKZi+mvE8mgwHv++WUpA==
-X-Gm-Gg: ASbGncvcVor0Ce2BNkyFOMYL2rSwabHWjA3Yp5EghTsXjiBn7U+1T4D4f66h1VLWlfF
-	3F2tKHu/IFwtp7RFxMiST/scmmfycPgZqtgtvPAQUzRnfZuH/3DpYlFv/h80IL3vJg4f1jr/lnF
-	i4tozAOjMzRIDuTaMm43DiCKOapW4/k48ZCUcHEEFANT7f31/mwfi4/EELbuxHxXnSNv17IieGf
-	l6ytDSFRhtoKWSUZoCPqDnivfjkzOgAbIbeM8ezW9jXodGLOVPSqU2E5PJguRb1ixQOTtD/2Veh
-	BI91OVFsbxNLO6+mvmsyz6AlE3wheXv+1aujII20lYUPTtTdg4jsUUkgWv+tazgA0JDoZ2LL8n8
-	WI4yIazZ/2uYrd6IpxyxXyEv7IfvcnQ139yEDX2PDhtdC2MAc6z1HL+eJ
-X-Google-Smtp-Source: AGHT+IEQ6XPvHe8ibftZLxvtKOpZ0hLkQ/pWmXCL/WNRP4yel93kXOrtFWxcvoky6WsAEpo66SvmpA==
-X-Received: by 2002:a05:6102:5f04:b0:51b:fdb0:8f90 with SMTP id ada2fe7eead31-52b1b1f3011mr7259922137.16.1756992282965;
-        Thu, 04 Sep 2025 06:24:42 -0700 (PDT)
-Received: from smtpclient.apple ([2804:7f0:b77d:8aa:3d64:69a5:cf8e:268f])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-899a902b2cesm2600543241.14.2025.09.04.06.24.41
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Sep 2025 06:24:42 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        d=1e100.net; s=20230601; t=1756992360; x=1757597160;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PRXzhW0KWiHPLk195Wj1HzsGE3ol9CtKOVK21f0vJFI=;
+        b=LQFGKfxVB7VCDC/PcOcvJj+W0l6PlrJhOna2346EHjBLqd6xXLpW7Ei8P6Ls1L93dU
+         QzA5QQ4gjbUO+Ppopn2Jcpozs46/XnmsDKFqkQqpQm4t/xMb18+j+EUYNzBCDEQxxnMi
+         yRu0/QELXl6VVYXlBO6t4Ykq/5TIlk5F7EMjLdWuWFVeFav5rIxAWeTIaL/46K9YBzvd
+         HFjY7gFC9LX3TLH9KK0kicGER2CnW8sMFHt+VqNZltmrl5otRcwUvkzEZcEmgins4E6i
+         cTEW+8xMB8tvyluZqFYGt0zWE1fbbheWJITMc6MIibAGZBzEsTv9Wilu3spG/Gc4O/eb
+         HGbQ==
+X-Gm-Message-State: AOJu0YzZqo2LCG0Hv0jlZk+Yao7UQl8SsPlSgeCihVX1phadWmw865+d
+	yyVaT2SN+P0xggNwPJVtU7klBs3f99qjOHGHBncm8sZLtv42V5Xw2vD3
+X-Gm-Gg: ASbGnctMBE7J2lrYEV3YcuTaRIEnWJ5SaQ3fVxqWTe0SugEYMXykvB8+ZnVacHoXMf/
+	XaOO6SswNoYieIq/zD41KnHJO8vlinOhEmU6R0HPedX16USNQbbiRvc4+SJkmCwFO50QzV3E35p
+	LpJJpSCLgV+37t5Npe3Vr76hyHF1WxJ2+qlDJFZKV4W5IK1IOW5b7aZe/00HVaQeVf0luwwzru2
+	XJSQgryrZbj9MnnplQTmmIRGt1+yciHPSfaTlTI9hZuTWd4Kq2xQUy0IevMbNTmaAgTpZP1a9PT
+	0nRiSlsgRPS+WoGrjEbXlBw0J9DlY2QBVb+I//dpqfdFEuunfKx+NEDInZym5ZS4lNiA7gc5IcA
+	YEoq2T0Kc95T6Eh+C0a6LadwGr5Ss5nSO2dXrZIMF1guNHB3TLLXrzNmtRHphsXA0kuQ=
+X-Google-Smtp-Source: AGHT+IHRPYkc1MlPFGGEAlWretJXF51Al2+6Y0BPwv0qaAGwG2dgoIInaQ2a6vgzFUgFMm90JKV6ag==
+X-Received: by 2002:a05:600c:1ca7:b0:45c:b53f:ad9 with SMTP id 5b1f17b1804b1-45cb6fad54dmr42348385e9.33.1756992359303;
+        Thu, 04 Sep 2025 06:25:59 -0700 (PDT)
+Received: from [192.168.0.4] (ptr-178-51-192-26.dyn.orange.be. [178.51.192.26])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b7eb05fd9sm283480785e9.24.2025.09.04.06.25.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Sep 2025 06:25:58 -0700 (PDT)
+Message-ID: <c8137063-c928-45a1-aae5-9de2b35e5150@gmail.com>
+Date: Thu, 4 Sep 2025 15:25:57 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: What's cooking in git.git (Sep 2025, #02; Wed, 3)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <xmqqplc6byai.fsf@gitster.g>
-Date: Thu, 4 Sep 2025 10:24:27 -0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] alloc: fix dangling pointer in alloc_state cleanup
+To: Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?B?44OO44Km44OpIHwgRmxhcmUgdmlhIEdpdEdpdEdhZGdldA==?=
+ <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <66233596-6A16-4299-B00C-ED86BA4B2DA4@gmail.com>
-References: <xmqqplc6byai.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.700.81)
+References: <pull.2040.v3.git.git.1756472406487.gitgitgadget@gmail.com>
+ <pull.2040.v4.git.git.1756941427825.gitgitgadget@gmail.com>
+ <xmqqh5xibqvu.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?B?44OO44Km44OpIHwgRmxhcmU=?= <nouraellm@gmail.com>
+In-Reply-To: <xmqqh5xibqvu.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+The point of the check was to avoid subtle crashes
+aligning with defensive programming requirements.
 
-> * lo/repo-info-step-2 (2025-09-01) 3 commits
-> - repo: add the field objects.format
-> - repo: add the flag -z as an alias for --format=nul
-> - Merge branch 'lo/repo-info' into lo/repo-info-step-2
-> 
-> "repo info" learns a short-hand option "-z" that is the same as
-> "--format=nul", and learns to report the objects format used in the
-> repository.
-> 
-> Will merge to 'next'?
-> source: <20250901172732.98845-1-lucasseikioshiro@gmail.com>
+If you lean more towards strict contract enforcement
+Just say the word.
 
-I found a codestyle problem in it, I'll send an v3 fixing that.
+On 04/09/2025 09:47, Junio C Hamano wrote:
+> "ノウラ | Flare via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> +void alloc_state_free_and_null(struct alloc_state **s_)
+>>   {
+>> +	struct alloc_state *s;
+>> +
+>> +	if (!s_ || !*s_) return;
+> I still do not see the point of this check.  If the caller passes a
+> NULL pointer, when they are expected to pass the address of a
+> pointer variable so that the struct the pointer points at is cleared
+> and freed, and the pointer variable is NULLed, it is called a
+> programmer error and they deserve a segfault.  Why would it be
+> better to sweep such an error under the rug by returning without
+> anything?  It would delay discovery of such a bug, but for what
+> gain?
+>
