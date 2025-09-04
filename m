@@ -1,55 +1,55 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966EA320387
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31653320CCC
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756996105; cv=none; b=aG+mKafjkags5aAFdZZUjqjsCd9naCe3t5swNDwc8uVrI/B7rwRQB7mEaynE7d6kcSvIY4w6Wk2Po8+u7tR65E6o2/FWim5z5OHxHPJNrGAD9hey/qkkWBzUTZhKDWLt+armk8yDjJbUqkHr+pGmgqnTEbvbXgVvDQqgSM4ZvXg=
+	t=1756996107; cv=none; b=YMp9hU8IN9hTTVbcjXnxf+9VdvkG3iGhCrv3+EeQSxHHW3txp26y4fbRLMUCDgzkluU3Yqufxs7RIwI759ZXp1/ZPStmg0kPLVz7l6ktg8nrUyz+0gjacg9HtTCWHXY8SubrTfhR2MiRYYp8u0CwVZIo55tdI1c63jLOiWKWiSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756996105; c=relaxed/simple;
-	bh=WkDnLJt92MSwLOSCRWIk1DhJgjZORBn89+UxVx2oZnM=;
+	s=arc-20240116; t=1756996107; c=relaxed/simple;
+	bh=Zftlwzm1xn8SlrcQlbmiO42LzeMfdz+Vqr+UA097o+w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MtBssEDTrYR2IMOvG6lYlOiFqX4huz1Y/m+h6mu835VggfFwYtX3VvxWfoZMpUWHoiv9vRjaOuzHn67vd4VS+4sGiToUyZGvoY+z8OkJPhU5iqxzCCsjsL/eVZ9UWGR+tR2x5gVStQD0CErwl8txB3b9FKHgKSrIMp9XmpCHPyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZiJMx/FK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N45sW9ZJ; arc=none smtp.client-ip=202.12.124.148
+	 In-Reply-To:To:Cc; b=nZkd+UbNYXsZXUlWEo0jLUlnBw7BNyv4cbtuVmhRPE87P93Q9KQSarOXYhR0xmqmYAGIeXBPWwV2o3imNXqC1FyiUdFsxt8l1vc3mIFs0kXFNCMdQDOzoHsibpcNk2fxrLQaae9sK39PLrgt7ThNR8Hyb4ajdg7yvht21DXqBEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V+/J7zMU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mb895AmI; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZiJMx/FK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N45sW9ZJ"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V+/J7zMU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mb895AmI"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8636B1D00275;
-	Thu,  4 Sep 2025 10:28:22 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 581A01D00294;
+	Thu,  4 Sep 2025 10:28:25 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 04 Sep 2025 10:28:22 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 04 Sep 2025 10:28:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756996102;
-	 x=1757082502; bh=rEy1n7eIwYzqUprgpqttTyr2ryF6wx4PHCRflxcwSoQ=; b=
-	ZiJMx/FKeSHzQ3AxqeZFuSGLpT4xx8TleyUjh4Qm/DnqA/wRSyYpZGXGPvINoStg
-	wxOIgWICVEgJ+AsRaYKdjP6/poMghPWLZQRbzC1h9NZ52vDrafXCK812r4m5dmkt
-	g3buGu7BwURRP5YN++GcEQ/QnSt87HGLzvqvwcMmLIRXwn5REscS3metDH0QFsDl
-	ryHINqHcAR6n6lTjqNK9XAputvqe5SnZQ2+Dc1eY88bI+NcDi3Zh3Ue3Ua9W96OM
-	jziTQ7iD1naZu2P/kLb3/V13OA8AoITuL46trRkHM36eQXstXqSGIab3xEJCiZeE
-	XER6OYP8fOstf+fCeDhDuQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756996105;
+	 x=1757082505; bh=oI/GFmZT8TemxeUot4QmTXFhZ2AwPVKOkTEEnNOorBw=; b=
+	V+/J7zMUXYemYHMqQP3uzi8bbOSDEqWQ0UgKVbZrqUqme+fyyc9wcJnyWw9ToGaY
+	tBPrcwCAfhRGK54GQjLiX7bAwOHU3fOIGIuNLCl1tFAjYbcZpKE160QadR1S7DVa
+	N31sdp8xOoz+rOHRozWC9XK0nBTOqJQ+glsCI3xsba04l+5zgz6Se0mDuxvOx0Wb
+	YyxHYDxMyx7CSXRdw/4Ez1d8N1Qrd2G19gTP9JGgSFFLvexdTlJXQtR8hCQjTTyc
+	qVGk6l8GYmWIAETfBo3v0oo3QW9KH78AUvCBX75AeIrN6tiGt+1ruAsQcXCg4CBG
+	h0tHbOgyMdf8PJIDeCmzMQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756996102; x=
-	1757082502; bh=rEy1n7eIwYzqUprgpqttTyr2ryF6wx4PHCRflxcwSoQ=; b=N
-	45sW9ZJ3bAsYHULV4ErkDgTgkNS8tAb/tLOUWU/Dqw71aRYKSBDNg+JJcZS6Y2i3
-	KsPgjfQiyTqOgtDIuKo5Wme3WGi7hyndbJbh39vE1LrIk4GgSAAqXv4V+PWd/sEd
-	A5TSrPDpZpjecStMJ+GV/QuEI9D+4WhQdyNEG+wXUnpWHYoNXw53AdzxI9OxH+UI
-	dLlfBs1WTH1azhEbFHC/YMnmOzI1/4XFshuOECQmliunxGOxO3naYkpVAKJiFHo8
-	ccoSc3SKKv0F9uQLX6AZOVUix71sjOpirmJuBgWP5AOlpDS6VBo9zbF0zyoWlBL0
-	SI/KLnErJvfQS6JmZV6Gg==
-X-ME-Sender: <xms:BqK5aChfaRFNEeM7j1Urn7VIc9j_aYIzt8SEJc1baxTPiwTkjQB7lQ>
-    <xme:BqK5aAlQf2lpfTahoDnfvOVESLTGMa9zOaHk5U5qGwLXip2NKZpj5hsBBWiH_BtzC
-    G38Wgi65Zrrqnf3Lw>
-X-ME-Received: <xmr:BqK5aAiYGHKFARm4TdsIft0nXDywjYzEtJFSvL1DCasdomWgi7f0y5VSKHh-h9I7MvIV0I8Ld2eA8dzlB45ok5cK1Wcm5my4Cv6T43XcG1KSjA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756996105; x=
+	1757082505; bh=oI/GFmZT8TemxeUot4QmTXFhZ2AwPVKOkTEEnNOorBw=; b=M
+	b895AmIoF7hLTMUiBkZ3ort0uO2g4xNwIBO345TBuYs5K1NhsEDDqc09XJhs+7bh
+	11SBhIDaTjMO4DQ12jaYaLQDRBR34gByJiW90KFqwEWgP2u2G47mOVBy9LicJY9P
+	lVwv+Obz2DpVDUYt206dG+p2ZYem9tsdMBnw+AjzmHfgD28Oz9S2wXvjOwJI9J1o
+	YD5EMyytuljAde3goQnM9wjDrOPEsa9D2LW7EE/RhO/j7Nity6wyP6NWcmfNzkRu
+	1tS0Uw4O7urGbU+FCKvr/xg6djc+SH4lAn74qGRxmV37oGik24WSYzOn9uMD3Yl6
+	BrXOL3A8QkKz7cNBJAtVg==
+X-ME-Sender: <xms:CaK5aEtb6X2F2VfL4dU5kKBwaapgEgunhqhF_G-doL4P4M_g74DbHA>
+    <xme:CaK5aPAcyWLVhSwxPvJH9F1rZaeD5OL0gymaUnjwUky-6uiHWy7bxCmWMyTeRCmop
+    in6hQEBja5x9AGrBw>
+X-ME-Received: <xmr:CaK5aGNgkBvsK4VWWfm7nFPes6B8JYGyDSxu08r5i6gh-2lEK4URjHzuM8upKj9IVBR7TeWhaSvWOyeaTZISQSfi4iiqIQ9zY7-wrnx3d6C7VA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeivdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
@@ -59,26 +59,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeivdeiucetufdoteggod
     lhhushhtvghrufhiiigvpeejnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
     pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgrrhht
-    ihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehsoh
-    hrghgrnhhovhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:BqK5aM2_JAw4dtpvykSq561QFJtkCA-jZUH8CjWStZ7mnH4HXCDrFg>
-    <xmx:BqK5aBI4QRlVJ1o4YFr9-g6_EyNb90v-WJdiAnhc3Fd1QAdhihq-pA>
-    <xmx:BqK5aExnlxnNOyLpusdxrt1yD7l0eX56CNs820Pgql8Tk9frK2VsFw>
-    <xmx:BqK5aHU-vpy4ruqfTpKaKT2sreB9C-KruZK8BQ77Yvi1YG7kzvqBDQ>
-    <xmx:BqK5aGc-JmBYrOrB5n9kKJDuaONP_de596Hv2xmIWrZDGO3IDvwxSfHG>
+    gtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrhhtihhnvhhonhiise
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:CaK5aIzQCnDb_pLLdtnbi1NHtncj0UbGkOVhOrDP9__qsK4fsrJkOA>
+    <xmx:CaK5aGXzVWc8_EZ5FxUmFG2dQFmOBRuBNkXHny4Ve6Bz3OO2KV0Kyg>
+    <xmx:CaK5aKO7O6NwBV7c_qQPxe7xKkq0RwwxLy2U4ma87gL8rls2pjVjmQ>
+    <xmx:CaK5aIBRsA08AlIeC-EoRvggtjQwFKPlD6iEeXH_j1Y31ht6CKcmKA>
+    <xmx:CaK5aM7JOx3QaukmDjn-WGE5UB_BvJWspE6wlGKou5kTSRUIJYKqS-sa>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Sep 2025 10:28:21 -0400 (EDT)
+ 4 Sep 2025 10:28:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 69a5ea9e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 4 Sep 2025 14:28:20 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 76b84cd6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 4 Sep 2025 14:28:23 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 04 Sep 2025 16:27:44 +0200
-Subject: [PATCH RFC v3 14/18] add-patch: add support for in-memory index
- patching
+Date: Thu, 04 Sep 2025 16:27:45 +0200
+Subject: [PATCH RFC v3 15/18] wt-status: provide function to expose status
+ for trees
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250904-b4-pks-history-builtin-v3-14-509053514755@pks.im>
+Message-Id: <20250904-b4-pks-history-builtin-v3-15-509053514755@pks.im>
 References: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
 In-Reply-To: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
 To: git@vger.kernel.org
@@ -98,214 +98,76 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.2
 
-With `run_add_p()` callers have the ability to apply changes from a
-specific revision to a repository's index. This infra supports several
-different modes, like for example applying changes to the index,
-worktree or both.
+The "wt-status" subsystem is responsible for printing status information
+around the current state of the working tree. This most importantly
+includes information around whether the working tree or the index have
+any changes.
 
-One feature that is missing though is the ability to apply changes to an
-in-memory index different from the repository's index. Add a new
-function `run_add_p_index()` to plug this gap.
+We're about to introduce a new command though where the changes in
+neither of them are actually relevant to us. Instead, what we want is to
+format the changes between two different trees. While it is a little bit
+of a stretch to add this as functionality to _working tree_ status, it
+doesn't make any sense to open-code this functionality, either.
 
-This new function will be used in a subsequent commit.
+Implement a new function `wt_status_collect_changes_trees()` that diffs
+two trees and formats the status accordingly. This function is not yet
+used, but will be in a subsequent commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- add-patch.c | 110 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- add-patch.h |   8 +++++
- 2 files changed, 115 insertions(+), 3 deletions(-)
+ wt-status.c | 24 ++++++++++++++++++++++++
+ wt-status.h |  3 +++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/add-patch.c b/add-patch.c
-index 1bcbc91de9..2a72c7b931 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -4,11 +4,13 @@
- #include "git-compat-util.h"
- #include "add-patch.h"
- #include "advice.h"
-+#include "commit.h"
- #include "config.h"
- #include "diff.h"
- #include "editor.h"
- #include "environment.h"
- #include "gettext.h"
-+#include "hex.h"
- #include "object-name.h"
- #include "pager.h"
- #include "read-cache-ll.h"
-@@ -263,6 +265,8 @@ struct hunk {
- 
- struct add_p_state {
- 	struct repository *r;
-+	struct index_state *index;
-+	const char *index_file;
- 	struct interactive_config cfg;
- 	struct strbuf answer, buf;
- 
-@@ -414,7 +418,7 @@ static void setup_child_process(struct add_p_state *s,
- 
- 	cp->git_cmd = 1;
- 	strvec_pushf(&cp->env,
--		     INDEX_ENVIRONMENT "=%s", s->r->index_file);
-+		     INDEX_ENVIRONMENT "=%s", s->index_file);
- }
- 
- static int parse_range(const char **p,
-@@ -1838,7 +1842,7 @@ static int patch_update_file(struct add_p_state *s,
- 		strbuf_reset(&s->buf);
- 		reassemble_patch(s, file_diff, 0, &s->buf);
- 
--		discard_index(s->r->index);
-+		discard_index(s->index);
- 		if (s->mode->apply_for_checkout)
- 			apply_for_checkout(s, &s->buf,
- 					   s->mode->is_reverse);
-@@ -1849,9 +1853,11 @@ static int patch_update_file(struct add_p_state *s,
- 					 NULL, 0, NULL, 0))
- 				error(_("'git apply' failed"));
- 		}
--		if (repo_read_index(s->r) >= 0)
-+		if (read_index_from(s->index, s->index_file, s->r->gitdir) >= 0 &&
-+		    s->index == s->r->index) {
- 			repo_refresh_and_write_index(s->r, REFRESH_QUIET, 0,
- 						     1, NULL, NULL, NULL);
-+		}
+diff --git a/wt-status.c b/wt-status.c
+index 454601afa15..f09309d12e3 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -612,6 +612,30 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
  	}
- 
- 	putchar('\n');
-@@ -1864,6 +1870,8 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- {
- 	struct add_p_state s = {
- 		.r = r,
-+		.index = r->index,
-+		.index_file = r->index_file,
- 		.answer = STRBUF_INIT,
- 		.buf = STRBUF_INIT,
- 		.plain = STRBUF_INIT,
-@@ -1922,3 +1930,99 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- 	add_p_state_clear(&s);
- 	return 0;
  }
-+
-+int run_add_p_index(struct repository *r,
-+		    struct index_state *index,
-+		    const char *index_file,
-+		    struct interactive_options *opts,
-+		    const char *revision,
-+		    const struct pathspec *ps)
+ 
++void wt_status_collect_changes_trees(struct wt_status *s,
++				     const struct object_id *old_treeish,
++				     const struct object_id *new_treeish)
 +{
-+	struct patch_mode mode = {
-+		.apply_args = { "--cached", NULL },
-+		.apply_check_args = { "--cached", NULL },
-+		.prompt_mode = {
-+			N_("Stage mode change [y,n,q,a,d%s,?]? "),
-+			N_("Stage deletion [y,n,q,a,d%s,?]? "),
-+			N_("Stage addition [y,n,q,a,d%s,?]? "),
-+			N_("Stage this hunk [y,n,q,a,d%s,?]? ")
-+		},
-+		.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
-+				     "will immediately be marked for staging."),
-+		.help_patch_text =
-+			N_("y - stage this hunk\n"
-+			   "n - do not stage this hunk\n"
-+			   "q - quit; do not stage this hunk or any of the remaining "
-+				"ones\n"
-+			   "a - stage this hunk and all later hunks in the file\n"
-+			   "d - do not stage this hunk or any of the later hunks in "
-+				"the file\n"),
-+		.index_only = 1,
-+	};
-+	struct add_p_state s = {
-+		.r = r,
-+		.index = index,
-+		.index_file = index_file,
-+		.answer = STRBUF_INIT,
-+		.buf = STRBUF_INIT,
-+		.plain = STRBUF_INIT,
-+		.colored = STRBUF_INIT,
-+		.mode = &mode,
-+		.revision = revision,
-+	};
-+	struct strbuf parent_revision = STRBUF_INIT;
-+	char parent_tree_oid[GIT_MAX_HEXSZ + 1];
-+	size_t binary_count = 0;
-+	struct commit *commit;
-+	int ret;
++	struct diff_options opts = { 0 };
 +
-+	commit = lookup_commit_reference_by_name(revision);
-+	if (!commit) {
-+		err(&s, _("Revision does not refer to a commit"));
-+		ret = -1;
-+		goto out;
-+	}
++	repo_diff_setup(s->repo, &opts);
++	opts.output_format = DIFF_FORMAT_CALLBACK;
++	opts.format_callback = wt_status_collect_updated_cb;
++	opts.format_callback_data = s;
++	opts.detect_rename = s->detect_rename >= 0 ? s->detect_rename : opts.detect_rename;
++	opts.rename_limit = s->rename_limit >= 0 ? s->rename_limit : opts.rename_limit;
++	opts.rename_score = s->rename_score >= 0 ? s->rename_score : opts.rename_score;
++	opts.flags.recursive = 1;
++	diff_setup_done(&opts);
 +
-+	if (commit->parents)
-+		oid_to_hex_r(parent_tree_oid, get_commit_tree_oid(commit->parents->item));
-+	else
-+		oid_to_hex_r(parent_tree_oid, r->hash_algo->empty_tree);
++	diff_tree_oid(old_treeish, new_treeish, "", &opts);
++	diffcore_std(&opts);
++	diff_flush(&opts);
++	wt_status_get_state(s->repo, &s->state, 0);
 +
-+	strbuf_addf(&parent_revision, "%s~", revision);
-+	mode.diff_cmd[0] = "diff-tree";
-+	mode.diff_cmd[1] = "-r";
-+	mode.diff_cmd[2] = parent_tree_oid;
-+
-+	interactive_config_init(&s.cfg, r, opts);
-+
-+	if (parse_diff(&s, ps) < 0) {
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	for (size_t i = 0; i < s.file_diff_nr; i++) {
-+		if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr)
-+			binary_count++;
-+		else if (patch_update_file(&s, s.file_diff + i))
-+			break;
-+	}
-+
-+	if (s.file_diff_nr == 0) {
-+		err(&s, _("No changes."));
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	if (binary_count == s.file_diff_nr) {
-+		err(&s, _("Only binary files changed."));
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	ret = 0;
-+
-+out:
-+	strbuf_release(&parent_revision);
-+	add_p_state_clear(&s);
-+	return ret;
++	diff_free(&opts);
 +}
-diff --git a/add-patch.h b/add-patch.h
-index 51c0d7bce9..d0edfec936 100644
---- a/add-patch.h
-+++ b/add-patch.h
-@@ -3,6 +3,7 @@
- 
- #include "color.h"
- 
-+struct index_state;
- struct pathspec;
- struct repository;
- 
-@@ -50,4 +51,11 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- 	      struct interactive_options *opts, const char *revision,
- 	      const struct pathspec *ps);
- 
-+int run_add_p_index(struct repository *r,
-+		    struct index_state *index,
-+		    const char *index_file,
-+		    struct interactive_options *opts,
-+		    const char *revision,
-+		    const struct pathspec *ps);
 +
- #endif
+ static void wt_status_collect_changes_worktree(struct wt_status *s)
+ {
+ 	struct rev_info rev;
+diff --git a/wt-status.h b/wt-status.h
+index 4e377ce62b8..b262e345f79 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -153,6 +153,9 @@ void wt_status_add_cut_line(struct wt_status *s);
+ void wt_status_prepare(struct repository *r, struct wt_status *s);
+ void wt_status_print(struct wt_status *s);
+ void wt_status_collect(struct wt_status *s);
++void wt_status_collect_changes_trees(struct wt_status *s,
++				     const struct object_id *old_treeish,
++				     const struct object_id *new_treeish);
+ /*
+  * Frees the buffers allocated by wt_status_collect.
+  */
 
 -- 
 2.51.0.417.g1ba7204a04.dirty
