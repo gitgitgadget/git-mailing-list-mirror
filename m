@@ -1,155 +1,105 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605373090DC
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:22:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F161C3112C4
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:26:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756995747; cv=none; b=J4ds7ZCHTWYJz+wVdstHEwmLpGlCZrTTvKiJYtCnHS2w0Jsh3APKgzgpQXkgQjampCCBDuN0DXvPfT07Hm5eTvmLCvDoojzYiqJnyXWeYf7cZLL/RoeTMcuaRNW590jrWr9EngqEx5BegfrQQo5RWHETW17FmmBfZftIBdj0huo=
+	t=1756995993; cv=none; b=soR6xoPPZcoKtzTe9/UPZB/1+R51up24He+iJwbXRhx4i3e7P9TrALWczyHSKR75qJMORzqaukel1cSm45d1zRGsItGhD2KrM6wCtBHoxrfCtXHKOAG6VO62n6tAxjwTR/mfu0+klohdzKNgCNSarX661boOD7w35lzKPheL3O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756995747; c=relaxed/simple;
-	bh=6F4xNzO+w0TxuW1Z0ruZz4Oxj9IPndLPZZX05dWpqZk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YPPm8Jxx5/5pkujam8XsANX8qbLbVEyJWMJ2ohjOP0lhN777tERCFv0kWMk28Tv9UDvpnu22hOxzqPraLBn+m+bRR9y9EbhKKhq4xrW0/XAjRSwHW1SeMTRMNhh4OzDh1PEUDDBTnKeW4CbDOohbjQKpnJ3XItuwGiC5bHJHdMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c9KUR4wA; arc=none smtp.client-ip=209.85.221.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756995993; c=relaxed/simple;
+	bh=S9rtqT24oBxaQIrXw2N1vYrz+hSnaWzCknUYWjWjeJ0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f4+lndgZKfW7VjicqQFvoG7i2AaXXnMZPcNfbabpQgyIX7J8FMZNuohRuIEF75AOThn+q5J1P0+P4IELa3GtaI/VCDYWw5i7tTuIUj7+0kHAXZM5elcIVIXJX6cfWjxrcHF18dIPXDAOk7K6aN6ERGJcAK1pQbQj5dyo9ClF1PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SYlMMAhr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H/J+14Nj; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c9KUR4wA"
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-53b174ca9bdso757886e0c.2
-        for <git@vger.kernel.org>; Thu, 04 Sep 2025 07:22:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756995744; x=1757600544; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iL1TeFSTO8VHnItclI0/T0S+AOYITq0vMFlTUhcur6w=;
-        b=c9KUR4wAZUcpn8DHAgRrsFOhBQLnDdnwEaAc9bgFnhz1HP0iTTVu2w8dfXScNLUknK
-         iOhI0eQYRybU8u3FdDS1R9Y4M0BZEFBWJDmTT7WZgiZUv7Fv9Na1F5bKp/9hPd5xz+Z+
-         h5ed+ALomfBGFhjzrknjbqf0rUgwi0JLJU2RgqqLK3e6jyM5Tp5UdqaQp88yl/fwoybw
-         DRwEx74sbNUdCsea7tXmNOl0cnbDKzrouw08QEsRmBOrN0aHsWrHlXBnAwoKjuhQlrUT
-         y7CQKoVx/9NDJA6K4AGFopZ1aKxLVQM+qic9n/LJzL48Mr1H/SsCzTpl3ebKtn2PflRU
-         5xdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756995744; x=1757600544;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iL1TeFSTO8VHnItclI0/T0S+AOYITq0vMFlTUhcur6w=;
-        b=bIlYauJATf4aaDbyiZTrmtFzBE4nfh3ZZywdiZS0oBMz+NVCyALBUt17MTHyF+dw59
-         YYEJIWmLY0G/h1Eqxbjski0kEC6GdGTirigmY+EkmRA62PcbSOr0u4A+qJ7G+ev6VaGL
-         qD7hS2Mc/q06CCVTDH7CjjRSC0JH0jL3k2cXQK6SWL+qb3iRpjPfITYErOEodTg453m3
-         0UarvwbkrNz2LS4kRVDKVVoKgw4nbAjyJOzuyuxFyDeMWhqFql93GofjOyvhEBSITbIH
-         mhe2tyiWRhSI027M+b2wx/lG1bRPlvB6tHOY56B9578d3qsUc/X921jIznbxlW6B3/FZ
-         okzA==
-X-Gm-Message-State: AOJu0YyFLKz2xpIADTQgcOsXYyHBpekQEutpaCdcrDjgmo7GtzC+arId
-	0ThKp9Cki/SzC6gV/xXMljO7XBz87P7ghPfjjFVYsY2cE9o5M8ft8Siq0asoPg==
-X-Gm-Gg: ASbGncuDXxE2CPNqGrlJHDiorUltITLJcg+sQZrJVt7SGlJ0cMCDwPN0MucCbcrZgYW
-	oAmfj4XSpGnj9Ts3MiPaef6hNlnuare8DiieDvsfICHMlFT6YUi1ek3LrEjpEP6Iov20AWEr3Wd
-	8H5ZU1XHTUG7FIdM86Z/kCJvqP1p7bASVKUlI/kvLBqCg0kRkr8bpr4h9yy3mtsVYPw5jKSotWA
-	nv99BMLmneSXHewBV+iWjQSohcmnURDctst/FtHk91I5prD9Bcv1qp+Cq+bOLq7TPP5GZYp9Mvv
-	sXCVFSzSSHIx9nhE/CHDdkUBullRm1laGIlKCiks2Lsm1w5G99urcgY01Vj0NtFXVXDe2I9pmqT
-	QRzZubucEVu541BcWsZTDhL1lbqO/hzcCt/FMwr1XbmEDzfk0xUDSPBNjF1BcUUU=
-X-Google-Smtp-Source: AGHT+IEZflqkL7z6iYDvmAdWkDvMbUk8mczp6cF/qDndtE6cTUZVdW6nrbXmyabc/Pmvs29wjdNzyg==
-X-Received: by 2002:a05:6122:3d06:b0:542:59a2:72fb with SMTP id 71dfb90a1353d-544a02b1510mr6907168e0c.9.1756995743853;
-        Thu, 04 Sep 2025 07:22:23 -0700 (PDT)
-Received: from localhost.localdomain ([2804:7f0:b77d:8aa:3d64:69a5:cf8e:268f])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-544b1933316sm5409732e0c.9.2025.09.04.07.22.21
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 04 Sep 2025 07:22:23 -0700 (PDT)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	karthik.188@gmail.com,
-	gitster@pobox.com,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH v4 2/2] repo: add the field objects.format
-Date: Thu,  4 Sep 2025 10:40:17 -0300
-Message-Id: <20250904134017.47364-3-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250904134017.47364-1-lucasseikioshiro@gmail.com>
-References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
- <20250904134017.47364-1-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SYlMMAhr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H/J+14Nj"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0CBA57A0365;
+	Thu,  4 Sep 2025 10:26:30 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Thu, 04 Sep 2025 10:26:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1756995989; x=1757082389; bh=/RJCvtfvk0
+	Ro2f9ialNhxIOZLheszSswMpQ+E0tIXsY=; b=SYlMMAhreZC8p+1SKjAQ5R/pRC
+	wNBpyOAZFRa26GSrpkt5Em0UUkPb18jY9/NJhPjVfiTU6+wxGbL97VW9igmgqud6
+	TZ4fXYNqXlfwFDjuKCDAtOu99bPKM+09+2x3wEMEMJz2XABZsO4yBmvU9K7jMQAv
+	BkaPe9EfJjpIzj7ZDnlhJbZWCBAaD1r6FcJFdw0FhdbhdaUiFRn7El3lTg0S+BCS
+	wOjM5TTsKuHzoPsNkN+dfOQ2+6xKrZfM4zhntvR2PZ++uhGPf/ERBmCwShf43AB+
+	Bk17CmTiSsKTUDa59wEptOQY4UEO8yNkz1MlXHfvsv/21GDn7rynO859Shqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756995989; x=1757082389; bh=/RJCvtfvk0Ro2f9ialNhxIOZLheszSswMpQ
+	+E0tIXsY=; b=H/J+14NjbtPm+DxNQ0DbRhOT82m4CX7AIeiLszLYrGolqofWZnx
+	7tQDBR3W1A5wXsm+WSc8TletV0W+knXIlsq2IC8UmyBQn2fWCucp9zv6LpRy5Dkm
+	IiI5kh6o5VCWI5pP7A10AWVQUIwqHoXn6Lw1LytAIKK2lRypLwtfWqPTFe5iTye6
+	ApEYf4ezGS37k63LUcfGsv2rR6F6zE5LhS+i8LO4m4TO7oy5i/tb7KnFgAO1G0EZ
+	SrS5wvMfLW55PZrnO7XxUvbgbXOIY9RLZr0anVZXKIj6csyXtqWyOlzQIYhb5Cbp
+	y4wU1wE7A8h1B4JJ/YtvQFIb/xS+8xck+6Q==
+X-ME-Sender: <xms:laG5aNp28_5KHEwh-NXjy9AnL1UE1FZfS2HNBzGovu8DigTL4kRIQQ>
+    <xme:laG5aP1ssht12wibn82fIHV5jCdJf6C53ykg_Tcn6dgSobxwQ7Orr42cH2B-ECkoI
+    _y7NO1RLiHKrGaluQ>
+X-ME-Received: <xmr:laG5aMD--R9gL2UVGtHhEGzu0WBqGQw7YT0uOw8BzwKgKTkNmHtzkpzZwwuu_iXKpjPWsJKguQhxSEMrQ72iHdgMQy3Urs680YN20Pne2h6kBQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeivdeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttd
+    dvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
+    ihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgf
+    eugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:laG5aHd1GHtVhVQD6frdpqP-FNMh-QXfuuJjuQP4nv7EBJjqGcI4yA>
+    <xmx:laG5aBjZPnxAmye4S-wmYVddBCL3FtL1YLnck0N6ya8L2v_6bKAg5g>
+    <xmx:laG5aPqxgivv9dgeQ5WNNSA8DOLM7v3-hqlmIg3PctxorRERO2lyYA>
+    <xmx:laG5aBFb1oKgxqQlTNTUU9hD29WyMQER2zk2BN4NYJKO0pw1iI0ttg>
+    <xmx:laG5aIPnepfQ-XeL_iKmWPvl2SQfB7iu-Xu7aLwtEiPfjCDOgSCq49WP>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 4 Sep 2025 10:26:28 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 6a35b3b8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 4 Sep 2025 14:26:27 +0000 (UTC)
+Date: Thu, 4 Sep 2025 16:26:23 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2025, #02; Wed, 3)
+Message-ID: <aLmhjw2xAbUogL1L@pks.im>
+References: <xmqqplc6byai.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqplc6byai.fsf@gitster.g>
 
-The flag `--show-object-format` from git-rev-parse is used for
-retrieving the object storage format. This way, it is used for
-querying repository metadata, fitting in the purpose of git-repo-info.
+On Wed, Sep 03, 2025 at 10:07:49PM -0700, Junio C Hamano wrote:
+> * jt/de-global-bulk-checkin (2025-08-22) 4 commits
+>  - bulk-checkin: use repository variable from transaction
+>  - bulk-checkin: require transaction for index_blob_bulk_checkin()
+>  - bulk-checkin: remove global transaction state
+>  - bulk-checkin: introduce object database transaction structure
+> 
+>  The bulk-checkin code used to depend on a file-scope static
+>  singleton variable, which has been updated to pass an instance
+>  throughout the callchain.
+> 
+>  Will merge to 'next'?
+>  source: <20250822213500.1488064-1-jltobler@gmail.com>
 
-Add a new field `objects.format` to the git-repo-info subcommand
-containing that information.
+The series looks good to me, so I think it should be ready for prime
+time.
 
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
- Documentation/git-repo.adoc | 3 +++
- builtin/repo.c              | 7 +++++++
- t/t1900-repo.sh             | 6 ++++++
- 3 files changed, 16 insertions(+)
-
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 6f5ee88215..209afd1b61 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -55,6 +55,9 @@ values that they return:
- `layout.shallow`::
- 	`true` if this is a shallow repository, otherwise `false`.
- 
-+`object.format`::
-+	The object format (hash algorithm) used in the repository.
-+
- `references.format`::
- 	The reference storage format. The valid values are:
- +
-diff --git a/builtin/repo.c b/builtin/repo.c
-index dc9a267469..bbb0966f2d 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -38,6 +38,12 @@ static int get_layout_shallow(struct repository *repo, struct strbuf *buf)
- 	return 0;
- }
- 
-+static int get_object_format(struct repository *repo, struct strbuf *buf)
-+{
-+	strbuf_addstr(buf, repo->hash_algo->name);
-+	return 0;
-+}
-+
- static int get_references_format(struct repository *repo, struct strbuf *buf)
- {
- 	strbuf_addstr(buf,
-@@ -49,6 +55,7 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
- static const struct field repo_info_fields[] = {
- 	{ "layout.bare", get_layout_bare },
- 	{ "layout.shallow", get_layout_shallow },
-+	{ "object.format", get_object_format },
- 	{ "references.format", get_references_format },
- };
- 
-diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-index ddf788d5a2..2beba67889 100755
---- a/t/t1900-repo.sh
-+++ b/t/t1900-repo.sh
-@@ -63,6 +63,12 @@ test_expect_success 'setup remote' '
- test_repo_info 'shallow repository = true is retrieved correctly' \
- 	'git clone --depth 1 "file://$PWD/remote"' 'shallow' 'layout.shallow' 'true'
- 
-+test_repo_info 'object.format = sha1 is retrieved correctly' \
-+	'git init --object-format=sha1' 'sha1' 'object.format' 'sha1'
-+
-+test_repo_info 'object.format = sha256 is retrieved correctly' \
-+	'git init --object-format=sha256' 'sha256' 'object.format' 'sha256'
-+
- test_expect_success 'values returned in order requested' '
- 	cat >expect <<-\EOF &&
- 	layout.bare=false
--- 
-2.39.5 (Apple Git-154)
-
+Patrick
