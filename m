@@ -1,108 +1,160 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5CE14AA9
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 13:31:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA972FC882
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 13:53:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756992663; cv=none; b=e2/XMmWNRcyV7TQt34FDxOFIgoOOxGxNjsidl3aU8tO1Tp4JNQw6Gcg9mXv555tqRh+AQfItd+efpjpaTHutehJtTO/rZo3uZyIwOdgya+Svg3pJqFF2jem2JG7xiLwVBAEOJeGFfnrHeeSJ+Q4xTYZuPIZozFTi7GXsdRq2fwU=
+	t=1756993995; cv=none; b=cD6Ee77wG4lQg7bAcyTWL2C6ePCtuOYs2FOeqH0ax/k6LA8y0hRmH7/lXOQIE9tj5xNUDAVq5Mm5rUOJEwStAualGvBIJjP7nPf0sXD+JA61XRSGukSF5bfklMO6coa7q3g2i5z6UpwprYay3Itm9yeLP7/WA7WC7TgMOc9JgGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756992663; c=relaxed/simple;
-	bh=NSgpYzudc73dZ9ZGEKvCd1K30izC2lTHLn9oLsJG6L4=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=p9sq/JInzSPJbqYt99BYh4EbKd9vETe9ZLC4ZbZL2TYYL3illWbWowrhHbpodoFi0RKra2yu3fYyhEu0focEDlx2ZZomn0L83IHbS2bGVYdbzsedfcR1fU3KpiP4sPmL3falCQuaK2RgsRWygiiNZjM7MoAUB2OE6ubVwOCabv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QmV820mT; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QmV820mT"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-45dcfecdc0fso7654605e9.1
-        for <git@vger.kernel.org>; Thu, 04 Sep 2025 06:31:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756992660; x=1757597460; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=itOvdXQMkgglOCMeEYn1AuiGXyixFeEAXTMDG1OaLcQ=;
-        b=QmV820mTqJTN5+tQP16ZGWOJCekw2yI0iw4Bu3+iQ+zKZTqNQ6KEaSvciGf6oQOzWw
-         1u3KlO5MfkB3Ww5XM2yxx+SeH5BhEHkCjACgdkxtRRQt6c8MjWkIc9VuovfvsIKQhkWT
-         nI1T6HLXYr958Kt6EaGwLhxW/cvXOYV0Pc8pHDxv9j/GUrnISMb3VGmGTIIp4zBGlpE8
-         pL4s9Gc6C+Ycy00ajyGjD+7L2QoYhENAHE6kaVY/QJ5OW0B/jhMAQb1u0h8hmiLqvKpQ
-         upqB5wWHn7HqdZDNRzVk+4HgqPMCOlKhwiNzkEGn+z2jC4AynfwbStO9Ai0PyrODefHf
-         24aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756992660; x=1757597460;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=itOvdXQMkgglOCMeEYn1AuiGXyixFeEAXTMDG1OaLcQ=;
-        b=fbBdQEfsy7KqRWK1MXghSiuGNP0KboHxWldCuyw3oURHTav9gVbjUqmWUNRXjJf0ji
-         RDeGwoW61pLw7Tduml/IH5/+AtQDoQtHe3Dydj1K5e5Midm6s5AjJDezlPyvDjVm9Bpf
-         imvRlA3bVNLzF3C7sm7aa8mq84dRHoFZJ9HgIgfy/+wfZfNfWRqcKVc2rb3i3LBptH/E
-         46IsBzkmdhA+ilIXSV7mbFR+42iejjR+q3NQs4DsORxI7FJfh6DjoXwewMXPc36QcMJ2
-         Te2xXLO4oIFmRrWhbLZRicCHtd7YSFsqV829uvri8qX7oe5E6avcF5TUC3wNKgLbMtQg
-         1siA==
-X-Forwarded-Encrypted: i=1; AJvYcCWN2dLWOsM5++7nIVy4sas1M9fjQI+h1Ii5BUmCfsSwHY8aEbpX6HpDM8bPPPZHGpbEO+I=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKm2bA0JGUhNRWP8mOGt1LSUV4Gd9iDdKatbl39/DPGdrba0ap
-	tPQ5Eiz1jrjIjUYHBIOMzhEBldalp9sLWzys9hYKMkrfl9yQLzjvC626
-X-Gm-Gg: ASbGncv6BeusAx8rxUK3ArezJ1EqcQxJqglk9RT3HH9+mls4ictoJJnb8SfQQzhhpER
-	YmhiA0cvlSJPRT7bWVNzZKaUiP3eytpo+To3Yg1QWO9WmiZzUOHt7qw7aCYV8QPERCg4Qm3m04D
-	kolBubZIDUrVaf3wv4in8hhqpeEXI75AJFXWNCR6sn5ikTXnDYwPJgahyFFLlVC2c7GVz+k0K6L
-	TQhYs9vzqjJGT/s5wLypsltp3YiXTl3G7ia2ZNrFQWhThs7eTEd2hv+VACoQvS064lhmaf9cHUI
-	YIJWEVexYxZcBvGMElLdubB+3PlvtXPSt+POryioF5Hm2NaWERR3o7jsY4M+gbpzNUwnTO5JLSE
-	55JPkX9aM81WDil8mZCsibUUlN3Za4U6sNahc/2nn65ly2nvNrFN16bXdtsuadtWVGo24DL9Ruy
-	CDg07D
-X-Google-Smtp-Source: AGHT+IEx8NOn4VnlwYpmLg9S2pQok+SoC4p/Ktp/gvzPdPaDZCDs8lVeJA7/JihyzbPeFo6BLJeZSQ==
-X-Received: by 2002:a05:600c:1f0e:b0:458:a7b5:9f6c with SMTP id 5b1f17b1804b1-45b855335a8mr167620695e9.11.1756992659853;
-        Thu, 04 Sep 2025 06:30:59 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc? ([2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b81a9e971sm298145965e9.18.2025.09.04.06.30.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Sep 2025 06:30:59 -0700 (PDT)
-Message-ID: <d990d908-5513-4f35-91ec-ff860ca126d5@gmail.com>
-Date: Thu, 4 Sep 2025 14:30:58 +0100
+	s=arc-20240116; t=1756993995; c=relaxed/simple;
+	bh=28/dzEPb0UWRc1Bf1SQXNrYqQXqm60r9evd4CsfAcSI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oDiJIHWR5R71Mt48mYVMe4u31fRO4jTgqw45Nxf2wZr5Ks7I/NzCK6AXuF5rHuKMAETeu3DGD8QpIZrCuQbRbPY5K4q1ENCraIjbGgx9kJQ2R/8WX3LC9yJpcAqcyrIj3QD4WmIwTyNBjL2YJYnDttWOopwtccF02dpd3Xv2j4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from mop.sam.mop (2.8.3.0.0.0.0.0.0.0.0.0.0.0.0.0.a.5.c.d.c.d.9.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:19dc:dc5a::382])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: sam)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 31A35340D2B;
+	Thu, 04 Sep 2025 13:53:10 +0000 (UTC)
+From: Sam James <sam@gentoo.org>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Junio C Hamano
+ <gitster@pobox.com>,  Taylor Blau <me@ttaylorr.com>,
+  rsbecker@nexbridge.com,  'Elijah Newren' <newren@gmail.com>,  'Kristoffer
+ Haugsbakk' <kristofferhaugsbakk@fastmail.com>,  'Josh Soref'
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  'Christian Brabandt'
+ <cb@256bit.org>,  'Phillip Wood' <phillip.wood123@gmail.com>,  'Eli
+ Schwartz' <eschwartz@gentoo.org>,  "'Haelwenn (lanodan) Monnier'"
+ <contact@hacktivis.me>,  'Johannes Schindelin'
+ <Johannes.Schindelin@gmx.de>,  'Matthias =?utf-8?Q?A=C3=9Fhauer'?=
+ <mha1993@live.de>,
+  'Collin Funk' <collin.funk1@gmail.com>,  'Mike Hommey' <mh@glandium.org>,
+  'Pierre-Emmanuel Patry' <pierre-emmanuel.patry@embecosm.com>,  "'D. Ben
+ Knoble'" <ben.knoble@gmail.com>,  'Ramsay Jones'
+ <ramsay@ramsayjones.plus.com>,  'Ezekiel Newren'
+ <ezekielnewren@gmail.com>,  'Josh Steadmon' <steadmon@google.com>,
+  'Calvin Wan' <calvinwan@google.com>
+Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
+In-Reply-To: <aLl6iFXeAvL_hvqR@pks.im>
+Organization: Gentoo
+References: <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
+	<aK5mJI1NfVQDmDXN@nand.local>
+	<01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
+	<xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
+	<xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im>
+	<aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
+	<aLfU5sEa-RE3X4G2@pks.im>
+	<aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net>
+	<aLl6iFXeAvL_hvqR@pks.im>
+User-Agent: mu4e 1.12.12; emacs 31.0.50
+Date: Thu, 04 Sep 2025 14:53:07 +0100
+Message-ID: <87v7lymiik.fsf@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 6/6] breaking-changes: switch default branch to main
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Wing Huang <huangsen365@gmail.com>
-References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
- <487d1a33130cb2fafadcf98da00a332a7408a0e8.1756308283.git.phillip.wood@dunelm.org.uk>
- <aLbWuGQhriQCMFbO@pks.im> <96e128d9-e5e3-4bfc-9e33-3caa75cacfe6@gmail.com>
- <aLfHvl5JuttXrI0y@pks.im> <9d52f24e-d495-44d4-b122-7d80d1f4b77f@gmail.com>
- <xmqqcy87fkhm.fsf@gitster.g> <aLk7QEEWy4nWxsQK@pks.im>
-Content-Language: en-US
-In-Reply-To: <aLk7QEEWy4nWxsQK@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 04/09/2025 08:09, Patrick Steinhardt wrote:
-> On Wed, Sep 03, 2025 at 11:40:05AM -0700, Junio C Hamano wrote:
->>
->> I have no problem with that.  I am still unsure about that "reftable
->> cares about the name being 'master'" thing.  If that can live with
->> any 6 byte name, we may want to fix it to something different from
->> 'master', for the sake of removing 'master'.  Perhaps 'banana' or
->> something?
-> 
-> Huh, did I miss anything? I scanned the thread for reftables but
-> couldn't find any discussion around it relying on a 6 byte name. Could
-> you maybe provide a pointer to what you are referring to?
+Patrick Steinhardt <ps@pks.im> writes:
 
-c.f. <xmqqwm6ozn7d.fsf@gitster.g>. In t0613 some of the tests check 
-various sizes of things in the reftable and those depend on the length 
-of the branch name
+> On Thu, Sep 04, 2025 at 12:57:25AM +0000, brian m. carlson wrote:
+>> On 2025-09-03 at 05:40:54, Patrick Steinhardt wrote:
+>> > If I had the choice, I'd much rather adopt an ancient version of Rust if
+>> > it means that more platforms can support it.
+>> 
+>> I think you may be assuming that gccrs targeting Rust 1.49 will
+>> magically make it work on more platforms than upstream Rust will.
+>> That's not the case.
+>
+> I don't have enough context to be able to tell. I'm mostly going by what
+> the gccrs maintainers themselves are saying. But if I'm misunderstanding
+> what gccrs will bring to the table I'm happy to be corrected.
+>
 
-Thanks
+(I also think it's obvious that once gccrs can handle 1.49, we will have
+to put effort into making things build with it. Not sure who wanted or
+claimed magic. I just think relyling on a single implementation isn't a
+good idea.)
 
-Phillip
+> [snip]
+>> > I think adopting Rust as a mandatory dependency out of nowhere would not
+>> > be playing nice. It may require significant effort from distros to adapt
+>> > to the new reality, so we should give them time to do so.
+>> 
+>> We've actually had this discussion on the list several times where we've
+>> proposed the inclusion of Rust.  This is not the first time it's come
+>> up, or the second.  It was explicitly mentioned a year ago on the list
+>> that we wanted to adopt Rust in the notes from the Contributor Summit.
+>> 
+>> There has been plenty of notice that this is coming down the line.  It's
+>> not accurate to claim it's "out of nowhere" nor to claim that people
+>> have not had plenty of time to port their systems.
+>> 
+>> Distros and porters should not be insensible to the increasing use of
+>> Rust or the need for them to get their systems working.  For instance,
+>> you cannot run a GNOME or MATE desktop environment without librsvg2,
+>> which is written in Rust.  Python's cryptography package adopted Rust
+>> over four years ago and there was the same gnashing of teeth[1], yet
+>> little progress has been made by porters on the same affected
+>> architectures since that time.  In that time, Debian has bootstrapped
+>> and released an entire RISC-V port, complete with Rust.
+>
+> Discussions of theoretical nature are one thing though. The transition
+> that is actually happening is a different thing, and distributions will
+> need to prepare for this. We already had multiple distro maintainers
+> coming into these discussions saying that this will require a bunch of
+> work, which should be an indicator to us that we need to take it slow.
+> We should accommodate for that.
 
+I imagine most distributions have absolutely zero awareness of this
+thread or plans for git. See below.
+
+>
+> [snip]
+>> It should be stated that there is a very easy way to get Rust working,
+>> and that's to port LLVM to the platform in question.  IA-64 was removed
+>> in 2009, but it might be possible to resurrect that out of tree if
+>> there's interest and maybe even get it re-accepted upstream.  I'll point
+>> out that AIX, Solaris, and QNX have done the necessary porting work to
+>> get LLVM and Rust working over the past couple years, so it's not out of
+>> the question for other platforms to do so as well.  And, for the
+>> avoidance of doubt, I would be absolutely delighted if we were able to
+>> support additional platforms with Rust as well.
+>
+> I cannot really say how hard or easy it is to port LLVM to a different
+> platform. I'd be surprised though if that work really was that easy.
+
+I think it's an interesting characterisation indeed.
+
+>
+>> Also, the approach of making it an optional component directly
+>> contradicts the proposed policy I wrote up.  That's a recipe for
+>> additional burdensome work maintaining two implementations, when we
+>> actually want to make it easier for people to contribute functionality.
+>> It also doesn't provide any of the memory safety benefits or address any
+>> of the concerns from governments, security professionals, and other
+>> parties about the real and substantial risks of continuing to develop in
+>> C.
+>
+> The only reason why we want to have it as an optional component is to
+> make the transitioning period easier for downstream distributors. And
+> the intent is not to convert major components -- it should be trivial
+> components that we can use as test balloons, similar to how we did it
+> for all of our C99 test balloons.
+
+Yes, even if it were just for one release, having it optional for
+something would mean we can adjust packaging without some huge pressure
+where git had 0 Rust in one release and then mandatory Rust in another.
+
+(I would of course prefer far more than one release, but I've tried
+throughout this thread to give options even if the one I'd prefer isn't
+pursued, not "teeth gnash").
+
+sam
