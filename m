@@ -1,102 +1,105 @@
-Received: from mail.aegee.org (mail.aegee.org [144.76.142.78])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3C81A9F82
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 09:35:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.142.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC612C159A
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 09:42:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756978564; cv=none; b=hhSSGzqzVpBJynu5uYKCPKmZ8mv3x4151ElTvMZexvh6SGl3kJ9vU0cc9IhA+LrsG+hD9FLTlIJ5vkcVYwyoQsMg9JHv/WaFTIMZ69voqAh6kT0aKyVgSkgtXCV8wHX7MXmhgnmn5zvMVENl0wlJPQNefoSGEv9rroWuZoDHvoQ=
+	t=1756978978; cv=none; b=ig6/iHyQxMmaWTPb63q11SQ86FfdBNluYNQOtsAqs1vaIf4Wcvi5VAxyIOcdUGVJAtvPQJQwVd/ad+mAGewicUUu9SIF690WPsrbFxbUPI+C9Tc8lpsE1qSx4ARI5qmd/AFSDrAPKBtZljtFRx9OU5UhjTTMcIyldCYftR4gT1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756978564; c=relaxed/simple;
-	bh=xK8ufI0N3qqFZqjWoTi0pdnGjlJ0Ndp2C4MIEYpNptU=;
-	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=lHUpVKtAYpIPrWGG0wpc4mQhdp5QWPVdcjt5FA4AbAFZMvWyJNMkTn07tlS1ymK2kzyxvVuC9Kc93N26m8IpWRZVNUJQzOyKw6Bajrk3e18g/NXTbfnoFrHPVIeDWdRHqydLhJYk6XMt/IAZRz4yWD55VO/dJhlVVF0sh+t5Lyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org; spf=pass smtp.mailfrom=aegee.org; dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-tls@aegee.org header.b=bW02bKXy; arc=none smtp.client-ip=144.76.142.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aegee.org
+	s=arc-20240116; t=1756978978; c=relaxed/simple;
+	bh=uIJpQqyvi/wB3BiTDD4MdVl4Vnl5Dn/0wBzzg2cgIW8=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ChaP8wRj+Qb+PS66588rFpTuG/9QuqLMp8f0k2/CV5aIFIhLWmsIwwrxA/21hTi1HKxgVRc6ooOSqEkEQSIDak8J8/aXqgxqJxsDYtheX96OJngPqpvjSpAO9HnFeEB2UJiSUJ52NZxKDkEvqU3Y/ZUO8rdfKsCskqz6V2j+wkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Q8BJkMDa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qjm5aeMp; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-tls@aegee.org header.b="bW02bKXy"
-Authentication-Results: mail.aegee.org/5849X9Vm2703251; auth=pass (PLAIN) smtp.auth=didopalauzov@aegee.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aegee.org; s=k4096;
-	t=1756978389; i=dkim+MSA-tls@aegee.org;
-	bh=xK8ufI0N3qqFZqjWoTi0pdnGjlJ0Ndp2C4MIEYpNptU=;
-	h=Subject:From:To:Date;
-	b=bW02bKXyHa+skAE79ad9q5irc62Xqkd6YnNFbv5oA/8WUUp8pN2h3tM4ORtWY49Wq
-	 hthwzCWBB+/Sj+u/rcHvM6aVNqJ5558ap72lplPJZJ9XNdHTWq3D2/LFhAwcIr6KUD
-	 zicYx0vIe5tLi+3ULSihdAmsbC2ikNB3ruzOvHYaoGnLAdEKBKT8hFZqQBo2r/nkzz
-	 OM/3TO6nEOQZjRh/CD4q7rkkQQVSqKNme68avXhNGL9LwO4WtytgUuPkH7HZSG3X/c
-	 73XHHMSKVth4sGNIgVcvavs0pGlyFHvjfn22QhO6xNaFQ1Uedq3d5HhHXy1kraftCV
-	 wNfpBrP4ut4Gl66eBqdRkIBFdpsng9uToUKQNhpzSl9wFLf5X64O2ezxZ6GPnKGjtd
-	 10hpxzbIne0ukYE3eGjqnEqR33qmkm4zPgCybgcrlsvaMUn0b8LfemkVvYMNMm0OZZ
-	 i5tfeIes1Bget1h9PHtLZhxVoArH21yuhnee6rsgSQOQPkQRSZ6+E6jVUvPSbNkR6X
-	 vHUU4qqdRp4Wp2Mjh20lFoQu3IXsLokqURbUd+P7ztjtbYpnNl6RCu+osju75+n+v5
-	 LcMhoT4vwbth4TIOZFIS5YrK/1YMpLVS2N3dtpqFVYPuiqsHIbOSejE57CocwSIo8V
-	 JM5ytBLOL7yRUrY3kJERlZp8=
-Authentication-Results: mail.aegee.org/5849X9Vm2703251; dkim=none
-Received: from [192.168.0.242] (95-43-114-153.ip.btc-net.bg [95.43.114.153])
-	(authenticated bits=0)
-	by mail.aegee.org (8.18.1/8.18.1) with ESMTPSA id 5849X9Vm2703251
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 4 Sep 2025 09:33:09 GMT
-Message-ID: <79ed51fbd94ec2793ab0388b33963b366e48c590.camel@aegee.org>
-Subject: Doing blobless clone by default; switching between blobless,
- treeless and full clones by a command
-From: =?UTF-8?Q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD_?=
- =?UTF-8?Q?=D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2?=
-	 <dilyan.palauzov@aegee.org>
-To: git <git@vger.kernel.org>
-Date: Thu, 04 Sep 2025 12:33:08 +0300
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.0 
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Q8BJkMDa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qjm5aeMp"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id A4CB01D00254;
+	Thu,  4 Sep 2025 05:42:54 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Thu, 04 Sep 2025 05:42:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756978974;
+	 x=1757065374; bh=uIJpQqyvi/wB3BiTDD4MdVl4Vnl5Dn/0wBzzg2cgIW8=; b=
+	Q8BJkMDaWHlIGbpEySnxtBdfedVSfQwFpe5Sm7x+BL9gD94jO6Z/E7ehDlMRYjSs
+	+rWuiVjmXfbTebip1mTxojxqmW8IK3flJokJYmlpqCz0sUGUu2JRMlWkrxRZPOwY
+	/UKbGEERT130AXlrifpk/uJyMWCo3cWjQ0Tm2bQWvgWH16brkgJp24CROA0cahUU
+	G4IsXPLB+g96JJ4BjtUmVKZI9dNWpuvo1h/kOZeBjmK9y2pRguQu/rppvmTseorQ
+	oyJ2wR9v+DCxNLD5EHcN4eAnnbocsht7cH/wVbQdzCqsR61oNBw2ShdrqVb2rxKZ
+	mWmGg5CS4IP+lr5dH7UWlw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1756978974; x=1757065374; bh=u
+	IJpQqyvi/wB3BiTDD4MdVl4Vnl5Dn/0wBzzg2cgIW8=; b=Qjm5aeMp4XtR+UYWw
+	Tc8kjqk3zcFgFtaaCvD8bHGLS+GP3hfvg1CtlyU8md24ffEC39aKoXxlf36QaHiY
+	pf8Or268FfCHxHV7TjMtH5em6KZKgtHqC1goCU63Wz2r9oTcj0rgTST7bIcWK5dG
+	dec8j++wL6iQoXMeqiCvbZdTOWXJ1znhlfZ8cVvzwmYSXod790e71sANr8ZfJdAe
+	i4jyTY0cyANv0jZeIIhz2q8avGn1IxQp9dFNkkdM2q1dzACtXqtgjl5jvAiu2ZDS
+	VO1ZRt60YJEDjn0cas1/rR3T+Dlz6RqCMxN+IAHoJ/OLEsR3/mM7/wjDVAO82hHY
+	+MkdA==
+X-ME-Sender: <xms:Hl-5aJBp-TltY7PnGxN32m7nOByuhaUfqicig5txovSWLBNQj2G9vr0>
+    <xme:Hl-5aHhuvzykeEVLb9bPDjPRd_2J3oFVKuxBg-onPI_7MPBENyEVRoZudaJnv1UFS
+    hAPLUdbZ0uhHkGgLg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehieelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtqhertdertd
+    ejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhi
+    shhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrf
+    grthhtvghrnheptdfgffettedulefhfeekheetgfegfeejveeikeeffeeikeekhfevieel
+    tdekgfeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhn
+    sggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeguihhlhi
+    grnhdrphgrlhgruhiiohhvsegrvghgvggvrdhorhhgpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:Hl-5aNFS1CuvZV2E_85YnFmrNCoqauUVO_GYdxxocWQs5zao5xfzrg>
+    <xmx:Hl-5aLSGQezPfDp4p0JyXofLr1rpzqV6bPOQr8fDxNkeoytYHTDVeg>
+    <xmx:Hl-5aBH-c1pNPnp-rufzrKouMOqQw_atbpjWes9dHveLYXEjxy4Pbw>
+    <xmx:Hl-5aP8l54oDqgyUAWJb0ggXaBRA0GBMfTBC7FBCWP-YitHKHnqTXA>
+    <xmx:Hl-5aJx-gpK3SctMdhcMo3VZU1UZp-YuHzdE_c-U-INtxg_UkfbuAHSG>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 417F51EA0068; Thu,  4 Sep 2025 05:42:54 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: AlQwsfZ_u25N
+Date: Thu, 04 Sep 2025 11:41:51 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: 
+ =?UTF-8?Q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD_=D0=9F=D0=B0=D0=BB=D0=B0=D1=83?=
+ =?UTF-8?Q?=D0=B7=D0=BE=D0=B2?= <dilyan.palauzov@aegee.org>,
+ git <git@vger.kernel.org>
+Message-Id: <2ebdff4d-8adf-45d9-8cb5-6d7ee39f218d@app.fastmail.com>
+In-Reply-To: <79ed51fbd94ec2793ab0388b33963b366e48c590.camel@aegee.org>
+References: <79ed51fbd94ec2793ab0388b33963b366e48c590.camel@aegee.org>
+Subject: Re: Doing blobless clone by default; switching between blobless, treeless and
+ full clones by a command
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Thu, Sep 4, 2025, at 11:33, =D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=B0=
+=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2 wrote:
+> =E2=80=A2 add a git command to download all locally missing history, i=
+ncluding=20
+> for treeless clones and blobless clones
 
-the most common workflow to see and change files of a repository is to do  =
-git clone.  With --filter=3Dblob:none this process can be sped up.  Blobles=
-s and blobfull clones have their trade offs.
+This sounds like git-backfill(1).
 
-I think these additions to git would be useful:
+I=E2=80=99ve never used blob/treeless.
 
-=E2=80=A2 add a config option to do by default blobless clone, when just  g=
-it clone URL  is invoked.
-=E2=80=A2 add a git command to download all locally missing history, includ=
-ing for treeless clones and blobless clones
-=E2=80=A2 add a git command to convert a repository to pure treeless or pur=
-e blobless clone (that is delete some commits) - to save disk space.
+--=20
+Kristoffer Haugsbakk
 
-The git command to download all locally missing history should show how muc=
-h per cent it has completed and after Ctrl+C interrupts, when the command i=
-s reissued, it should resume downloading the remaining data.
-
-Rationale:
-
-The reason people execute  git clone  is hardly to issue immediately afterw=
-ards  git log  or  git annotate.  The reason for git clone is to (try chang=
-ing something and then) build the software. (Provided that git manages sour=
-ce code.)  Doing by default a reduced data download with  git clone  will s=
-ped up the initialization, it will save bytes in transit and reduce server =
-load.  In fact I think that by default (without extra configuration)  git c=
-lone  should do a reduced download (blobless) and
-git should download the other things, when asked to do so.  This default do=
-wnload preference should be ideally managed by an option in global gitconfi=
-g .  When looking at https://git-scm.com/docs/git-config for =E2=80=9Cfilte=
-r=E2=80=9D I do not recognize anything relevant.
-
-For the latter https://stackoverflow.com/questions/76770003/is-there-a-way-=
-to-configure-git-to-clone-with-filter-blobnone-by-default suggests adding a=
- variable GITFLAGS=3D'--filter=3Dblob:none' .
-
-There might be already commands to switch a repository to: full download, b=
-lobless clone, treeless clone, but I do not know these.  In any case, if it=
- is possible to switch easily between full and blobless repository, in both=
- directions, for me it only makes sense if by default the downloads are blo=
-bless.
-
-Greetings
-  =D0=94=D0=B8=D0=BB=D1=8F=D0=BD
