@@ -1,83 +1,84 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F4E30C620
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA893164D3
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756996089; cv=none; b=EuKlK3DA9MEcahBhW4uN+bAF7qEQtBiwv46TJuduYAV+rSAKJ4kzH8TOUeWlShbSjtKcZ3/bR+hk5Ql+4LzQW+Jxumc7OuXCkmksN3uAvr6ZT52r7WOZLSLGLo67LwimLoDersq6Yn2abGMwgrvT9JPz85bJLkvrtpV5UIizvwQ=
+	t=1756996092; cv=none; b=MpQeB0fbPt5Vw7O7uzWVCjhC01WrWjs6tj+/8OFYI8Bm9qiH9363Py9yNWXR7+JURl5XLKV42H7dNABGGwLrAUt8znNu5EKN22n4OuExEGli0UxzS7ULeEsbXCSRfFuJrBEHk47DidAyibHwAe5i8/1EledZWXQBfo52hmy6eI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756996089; c=relaxed/simple;
-	bh=VzLX1GkpGTi37sLfrEYpkPUok1dODFEKem1N5BBHlZM=;
+	s=arc-20240116; t=1756996092; c=relaxed/simple;
+	bh=o7ApqTtUk6BocLR2+DZS209PhE5eppJR1C0HMZhwd7k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pQl9qDJX0QkkArs30Ktp50P1it4MSDtQIf1fythgJGw/2Tk3zAXB7S5iuQMpp/0Tc8sz3BIO0HK+lgMZZtRNw4V25p7cm5grDLDZeAAT5AyNr6nffeuN70J+Aa3b5WrisVIMIrmnOR0A5X3xydv5vYJNTGJ4ljSl8koxj+jy/Eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i/Uof2Qy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WuQGBiYg; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=E6nqAMDLbYSDyiVCzFTk+9B3dGrCBNv2RTm/iy9qtS2F3ubKf0GaILYTbEht87HFSrSvHvpgMmgpsUK/zMX8EoueyWHpGTfLi+F7N6vf0nubhqwV6XT0TQ0Xrsos0pCDrNU+7aUNSFlRC1BKE9yJl9ZSsn4yIFP6ijIF47j9QUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tOpcm2yw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XDZNPScx; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i/Uof2Qy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WuQGBiYg"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 12A847A035E;
-	Thu,  4 Sep 2025 10:28:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tOpcm2yw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XDZNPScx"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F22FC7A034B;
+	Thu,  4 Sep 2025 10:28:09 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Thu, 04 Sep 2025 10:28:06 -0400
+  by phl-compute-12.internal (MEProxy); Thu, 04 Sep 2025 10:28:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756996085;
-	 x=1757082485; bh=lRUUCZyoJew2WwpinPvIKmcAMDnfNTzXPcQxwitJjqA=; b=
-	i/Uof2QykVZZsvViI9zgede/R+GWgJMu+k94bDwDeTe2DqhRxwlManjm5tzZDugS
-	bebDQYzVAv/JCp88Zm+HTGmLjVULTgSzeE++N2YJEo+lu5Mdoar8thZnl1cVTGk9
-	YhOrcBa3j5AFawXIuUEWQjeckpJTcY6SmAMD+2dcQIHysMnySOuP3u7H6K/nqcok
-	z4IJXyziUZ21q2/RVad2rkNsihsENfWszNhrJmSzyKrkrhlgeeKe5hG7ak0XwITs
-	IJ+bCePRs0SyYfVzVQ7Ymc79SSePs59zGHuZjHwka8MqOt+nQB5I87iLZ1JrVCyd
-	Z549Vbb0ZKB3jEl4S/Hagw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756996089;
+	 x=1757082489; bh=HT+CxQqjKYkLthyLjCAoSfyuqOZNzcAsNkFqb558erw=; b=
+	tOpcm2ywYEOs7QgHfUjF7xnexFH+mLpffZrZHXVa858JX7EMLt/sNRF1H0IOsK2l
+	us0IB/b0x7qEtB6BjS5JeWF7eMssE5dDX5rZ6LQvbiDTLU1bXN1cQnqNEu0AwY9X
+	pQbFPgIbtczM3MMlJZ7a/jYW7Jj2F/2RN7kWnxu+Cm9UD1ocRRddeunvBKmhsslN
+	z4Ha1WWW6VfGiIzT2uDsAexTW4xajct8L6VmTJ6It/ez0kHn8C9H5rzylRBqfWhd
+	nyaK0Rl5TkHRVa3L5ZvnFkJ7rr8II1A1ORSFeRgOPlwh9hBrD+oYTewOLyu6WF/P
+	SxgKQePPDJ/oa7xi965ffA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756996085; x=
-	1757082485; bh=lRUUCZyoJew2WwpinPvIKmcAMDnfNTzXPcQxwitJjqA=; b=W
-	uQGBiYgQlWRqFMtyxuxS1JLBiBuwhzyQ/bYsshWCjrnxPQRdJ8fRUeJBrD97CIOc
-	ceduPJu/3MBLzIIhjXO0HMJBamDjjkzR9VTwCdb9Vm9IWUBZhejtdsG83P8asCuJ
-	9X7dcClRY/g1VdDW7+KRriKcwrmvPEk65Ei860UF4ekpNl2tc1/0PivoevkOaXwh
-	8DZ8ie24mwD1iljnDhRjtFliU0pq3QZO6Y8OE8+xlmAFfga4UEt2BjcbTVQCcfq5
-	/nIEn+rq56sLL9sNVTOS0IK8SMD0BJLO7ddyuCFISbyz2i8/oQ3EpVT2qYu3ffTC
-	MIV8p5t8tnfSjusaSKA4A==
-X-ME-Sender: <xms:9aG5aB7pIkF_xy-_TXRyE4GY2OvdkuyOkdDUZG3xXPvNq7RmCgqyAg>
-    <xme:9aG5aMcROvAbO6ZUhmpN94NYNe74EmvnlrSdHrdUSBARl6TDW7oR_vlDzYc5dqg55
-    Ug8peC-CuIWyYl_jQ>
-X-ME-Received: <xmr:9aG5aO7J1fhgp6t-JpFI_QhXWQ9ABtxj0j0SghDR1J-t047850DhQU4OPPKFDSQs8qG2vVIPJQnpX7x9OBv8HlK1f8fXwul6Oq7cLgjxZbjVUA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756996089; x=
+	1757082489; bh=HT+CxQqjKYkLthyLjCAoSfyuqOZNzcAsNkFqb558erw=; b=X
+	DZNPScxjkdmt1bY9iAqthihT41NH0HNpPSSSYiaOEUTKdjRGZ9+rSw88EElvQlUh
+	WIb1JWbY4903HCKczZzrExRXvFLwTnIo2gTECk+NeMziTMeDWJxyyy1qVwQwAxMo
+	IKCkTzJcC2Jd/aVaU/lYerPWIgEwgjJqLz+f//ovgBuQyDIZa4W+11XdHogJInbe
+	tq6nAPCs1rroXWz5ZwTp5i1Zz5AivNdCSGCM2LdMxgt1p2Tlmm3MDy2vb+eNRtS8
+	C3QbE84+1xdTN1FrV6Y+1eDnYGrbD2/JB/iiu1t/GAAc0V8nLWdGhU8Fg+J+LfWh
+	W1JnCpouecs5Q0aL69zaA==
+X-ME-Sender: <xms:-aG5aGnzTQattETdrI5ACLD2_KFd6Pye_T9uBKx4lrkw0xam8Y9DCg>
+    <xme:-aG5aLbV8BX2eyg_QMXC4XONcB1g53s6Ho_058dicNgwqLhyHURaAZUDJmdvqOwWE
+    vQwbIDknj4uSEn9PA>
+X-ME-Received: <xmr:-aG5aLHwAx4GJKphl8cTt9Ch_ZkXInpYqxQSacoMDwxlrE261o9P0zsKdaGP16gYz_ArpftQCPcNkMYRHs0xdnNyeSsiG9Jp_yR_x5Zzp4vrqA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeivdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
     ephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     ffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucev
-    lhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsoh
-    hrghgrnhhovhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:9aG5aLuij9n34xKpJH1GS0mF_VtnZzToZiCrp1Lv3wplRqj4hU2JhA>
-    <xmx:9aG5aGirDS9paZDaWdba55YlLe5_udl9OhdGcoy4K1PuZNSF0jGeKA>
-    <xmx:9aG5aOrGi_gMh8RS1eNm09Nk8Fb1jHJ-9G7zCHgYohsGh_8lzmc4OQ>
-    <xmx:9aG5aLvoWkJmZSGbZG1YqYB5gI01UgnKOR5CIWIHfdFe-buwOQ7aOQ>
-    <xmx:9aG5aCWlVG__JE7Lm4Z9kroz-vv95VSyimNg4pyE9tMsvf4sCfAhgX3a>
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtoh
+    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehj
+    nhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-aG5aMJVzfoFjrjWPR3RdIeLGt_96lROBVe9_QdY6B8_Zt922vmQ1Q>
+    <xmx:-aG5aGMvn-GQz5tAT4IctVutC0mqdj7kMQ_OCA49a4D2NBguVXaxQw>
+    <xmx:-aG5aMl6eBK_VAO3DqIqZ4uCX9yR0bSpTEQwWDdXvQq9Q21O5f8tbA>
+    <xmx:-aG5aK7YUSnO_IDbRho_Or_-IW5hqCI3UB5WWIgL1wT-SMfRxfxR4g>
+    <xmx:-aG5aJSTDTNQLBJw6ceKmTe_ge81ydZ0fJK7Iwgvgt_tsDvm5YQMoj9T>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Sep 2025 10:28:04 -0400 (EDT)
+ 4 Sep 2025 10:28:08 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 19c54e80 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 4 Sep 2025 14:28:04 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id ead5b02e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 4 Sep 2025 14:28:07 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 04 Sep 2025 16:27:39 +0200
-Subject: [PATCH RFC v3 09/18] builtin/history: implement "drop" subcommand
+Date: Thu, 04 Sep 2025 16:27:40 +0200
+Subject: [PATCH RFC v3 10/18] builtin/history: implement "reorder"
+ subcommand
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250904-b4-pks-history-builtin-v3-9-509053514755@pks.im>
+Message-Id: <20250904-b4-pks-history-builtin-v3-10-509053514755@pks.im>
 References: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
 In-Reply-To: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
 To: git@vger.kernel.org
@@ -97,429 +98,288 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.2
 
-It is a fairly common operation to perform an interactive rebase so that
-one of the commits can be dropped from history. Doing this is not very
-hard in general, but still requires the user to perform multiple steps:
+When working in projects where having nice commits matters it's quite
+common that developers end up reordering commits a lot. This is
+typically done via interactive rebases, where they can then rearrange
+commits in the instruction sheet.
 
-  1. Identify the commit in question that is to be dropped.
+Still, this operation is a frequent-enough operation to provide a more
+direct way of doing this imperatively. As such, introduce a new
+"reorder" subcommand where users can reorder a commit A to come after or
+before another commit B:
 
-  2. Perform an interactive rebase on top of that commit's parent.
+    $ git log --oneline
+    a978f73 fifth
+    57594ee fourth
+    04eb1c4 third
+    d535e30 second
+    bf7438d first
 
-  3. Edit the instruction sheet to drop that commit.
+    $ git history reorder :/fourth --before=:/second
+    $ git log --oneline
+    1610fe0 fifth
+    444f97d third
+    2f90797 second
+    b0ae659 fourth
+    bf7438d first
 
-This is needlessly complex for such a supposedly-trivial operation.
-Furthermore, the second step doesn't account for certain edge cases like
-for example dropping the root commit.
-
-Introduce a new "drop" subcommand to make this use case significantly
-simpler: all the user needs to do is to say `git history drop $COMMIT`
-and they're done.
-
-Note that for now, this command only allows users to drop a single
-commit at once. It should be easy enough though to expand the command at
-a later point in time to support dropping whole commit ranges.
+    $ git history reorder :/fourth --after=:/second
+    $ git log --oneline
+    c48729d fifth
+    f44a46e third
+    26693b8 fourth
+    8cb4171 second
+    bf7438d first
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-history.adoc |  27 ++++
- builtin/history.c              | 287 +++++++++++++++++++++++++++++++++++++++++
+ Documentation/git-history.adoc |  33 +++++
+ builtin/history.c              | 130 +++++++++++++++++++
  t/meson.build                  |   1 +
- t/t3451-history-drop.sh        | 207 +++++++++++++++++++++++++++++
- 4 files changed, 522 insertions(+)
+ t/t3452-history-reorder.sh     | 278 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 442 insertions(+)
 
 diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-index 3e9a789b83..39c9f1e25e 100644
+index 39c9f1e25e..b36cd925dd 100644
 --- a/Documentation/git-history.adoc
 +++ b/Documentation/git-history.adoc
-@@ -11,6 +11,7 @@ SYNOPSIS
- git history abort
+@@ -12,6 +12,7 @@ git history abort
  git history continue
  git history quit
-+git history drop <commit>
+ git history drop <commit>
++git history reorder <commit> (--before=<following-commit>|--after=<preceding-commit>)
  
  DESCRIPTION
  -----------
-@@ -35,6 +36,15 @@ COMMANDS
- This command requires a subcommand. Several subcommands are available to
- rewrite history in different ways:
+@@ -45,6 +46,12 @@ Dropping the root commit converts the child of that commit into the new
+ root commit. It is invalid to drop a root commit that does not have any
+ child commits, as that would lead to an empty branch.
  
-+`drop <commit>`::
-+	Drop a commit from the history and reapply all children of that
-+	commit on top of the commit's parent. The commit that is to be
-+	dropped must be reachable from the currently checked-out commit.
-++
-+Dropping the root commit converts the child of that commit into the new
-+root commit. It is invalid to drop a root commit that does not have any
-+child commits, as that would lead to an empty branch.
++`reorder <commit> (--before=<following-commit>|--after=<preceding-commit>)`::
++	Move the commit so that it becomes either the parent of
++	<following-commit> or the child of <preceding-commit>. The commits must
++	be related to one another and must be reachable from the current `HEAD`
++	commit.
 +
  The following commands are used to manage an interrupted history-rewriting
  operation:
  
-@@ -51,6 +61,23 @@ operation:
- 	the original branch. The index and working tree are also left unchanged
- 	as a result.
+@@ -78,6 +85,32 @@ b1bc1bd third
+ e098c27 first
+ ----------
  
-+EXAMPLES
-+--------
-+
-+Drop a commit from history
-+~~~~~~~~~~~~~~~~~~~~~~~~~~
++Reorder a commit
++~~~~~~~~~~~~~~~~
 +
 +----------
 +$ git log --oneline
-+2d4cd6d third
-+125a0f3 second
-+e098c27 first
-+$ git history drop HEAD~
-+$ git log
-+b1bc1bd third
-+e098c27 first
++a978f73 fifth
++57594ee fourth
++04eb1c4 third
++d535e30 second
++bf7438d first
++$ git history reorder :/fourth --before=:/second
++$ git log --oneline
++1610fe0 fifth
++444f97d third
++2f90797 second
++b0ae659 fourth
++bf7438d first
++$ git history reorder :/fourth --after=:/second
++$ git log --oneline
++c48729d fifth
++f44a46e third
++26693b8 fourth
++8cb4171 second
++bf7438d first
 +----------
 +
  CONFIGURATION
  -------------
  
 diff --git a/builtin/history.c b/builtin/history.c
-index 0ad45dbfef..2132b6a441 100644
+index 2132b6a441..16b516856e 100644
 --- a/builtin/history.c
 +++ b/builtin/history.c
-@@ -1,7 +1,16 @@
- #include "builtin.h"
- #include "branch.h"
-+#include "commit.h"
-+#include "commit-reach.h"
-+#include "config.h"
-+#include "environment.h"
- #include "gettext.h"
-+#include "hex.h"
-+#include "object-name.h"
- #include "parse-options.h"
-+#include "refs.h"
-+#include "reset.h"
-+#include "revision.h"
- #include "sequencer.h"
- 
- static int cmd_history_abort(int argc,
-@@ -104,6 +113,282 @@ static int cmd_history_quit(int argc,
+@@ -182,6 +182,33 @@ static int collect_commits(struct repository *repo,
  	return ret;
  }
  
-+static int collect_commits(struct repository *repo,
-+			   struct commit *old_commit,
-+			   struct commit *new_commit,
-+			   struct strvec *out)
++static void replace_commits(struct strvec *commits,
++			    const struct object_id *commit_to_replace,
++			    const struct object_id *replacements,
++			    size_t replacements_nr)
 +{
-+	struct setup_revision_opt revision_opts = {
-+		.assume_dashdash = 1,
-+	};
-+	struct strvec revisions = STRVEC_INIT;
-+	struct commit_list *from_list = NULL;
-+	struct commit *child;
-+	struct rev_info rev = { 0 };
-+	int ret;
++	char commit_to_replace_oid[GIT_MAX_HEXSZ + 1];
++	struct strvec replacement_oids = STRVEC_INIT;
++	bool found = false;
++	size_t i;
 +
-+	/*
-+	 * Check that the old commit actually is an ancestor of HEAD. If not
-+	 * the whole request becomes nonsensical.
-+	*/
-+	if (old_commit) {
-+		commit_list_insert(old_commit, &from_list);
-+		if (!repo_is_descendant_of(repo, new_commit, from_list)) {
-+			ret = error(_("commit must be reachable from current HEAD commit"));
-+			goto out;
-+		}
++	oid_to_hex_r(commit_to_replace_oid, commit_to_replace);
++	for (i = 0; i < replacements_nr; i++)
++		strvec_push(&replacement_oids, oid_to_hex(&replacements[i]));
++
++	for (i = 0; i < commits->nr; i++) {
++		if (strcmp(commits->v[i], commit_to_replace_oid))
++			continue;
++		strvec_splice(commits, i, 1, replacement_oids.v, replacement_oids.nr);
++		found = true;
++		break;
 +	}
++	if (!found)
++		BUG("could not find commit to replace");
 +
-+	repo_init_revisions(repo, &rev, NULL);
-+	strvec_push(&revisions, "");
-+	strvec_push(&revisions, oid_to_hex(&new_commit->object.oid));
-+	if (old_commit)
-+		strvec_pushf(&revisions, "^%s", oid_to_hex(&old_commit->object.oid));
-+	if (setup_revisions(revisions.nr, revisions.v, &rev, &revision_opts) != 1 ||
-+	    prepare_revision_walk(&rev)) {
-+		ret = error(_("revision walk setup failed"));
-+		goto out;
-+	}
-+
-+	while ((child = get_revision(&rev))) {
-+		if (old_commit && !child->parents)
-+			BUG("revision walk did not find child commit");
-+		if (child->parents && child->parents->next) {
-+			ret = error(_("cannot rearrange commit history with merges"));
-+			goto out;
-+		}
-+
-+		strvec_push(out, oid_to_hex(&child->object.oid));
-+
-+		if (child->parents && old_commit &&
-+		    commit_list_contains(old_commit, child->parents))
-+			break;
-+	}
-+
-+	/*
-+	 * Revisions are in newest-order-first. We have to reverse the
-+	 * array though so that we pick the oldest commits first.
-+	 */
-+	for (size_t i = 0, j = out->nr - 1; i < j; i++, j--)
-+		SWAP(out->v[i], out->v[j]);
-+
-+	ret = 0;
-+
-+out:
-+	free_commit_list(from_list);
-+	strvec_clear(&revisions);
-+	release_revisions(&rev);
-+	reset_revision_walk();
-+	return ret;
++	strvec_clear(&replacement_oids);
 +}
 +
-+static int apply_commits(struct repository *repo,
-+			 const struct strvec *commits,
-+			 struct commit *head,
-+			 struct commit *base,
-+			 const char *action)
-+{
-+	struct setup_revision_opt revision_opts = {
-+		.assume_dashdash = 1,
-+	};
-+	struct replay_opts replay_opts = REPLAY_OPTS_INIT;
-+	struct reset_head_opts reset_opts = { 0 };
-+	struct object_id root_commit;
-+	struct strvec args = STRVEC_INIT;
-+	struct strbuf buf = STRBUF_INIT;
-+	char hex[GIT_MAX_HEXSZ + 1];
-+	int ref_flags, ret;
-+
-+	/*
-+	 * We have performed all safety checks, so we now prepare
-+	 * replaying the commits.
-+	*/
-+	replay_opts.action = REPLAY_HISTORY_EDIT;
-+	sequencer_init_config(&replay_opts);
-+	replay_opts.quiet = 1;
-+	replay_opts.skip_commit_summary = 1;
-+	if (!replay_opts.strategy && replay_opts.default_strategy) {
-+		replay_opts.strategy = replay_opts.default_strategy;
-+		replay_opts.default_strategy = NULL;
-+	}
-+
-+	strvec_push(&args, "");
-+	strvec_pushv(&args, commits->v);
-+
-+	replay_opts.revs = xmalloc(sizeof(*replay_opts.revs));
-+	repo_init_revisions(repo, replay_opts.revs, NULL);
-+	replay_opts.revs->no_walk = 1;
-+	replay_opts.revs->unsorted_input = 1;
-+	if (setup_revisions(args.nr, args.v, replay_opts.revs,
-+			    &revision_opts) != 1) {
-+		ret = error(_("setting up revisions failed"));
-+		goto out;
-+	}
-+
-+	/*
-+	 * If we're dropping the root commit we first need to create
-+	 * a new empty root. We then instruct the seqencer machinery to
-+	 * squash that root commit with the first commit we're picking
-+	 * onto it.
-+	 */
-+	if (!base->parents) {
-+		if (commit_tree("", 0, repo->hash_algo->empty_tree, NULL,
-+				&root_commit, NULL, NULL) < 0) {
-+			ret = error(_("Could not create new root commit"));
-+			goto out;
-+		}
-+
-+		replay_opts.squash_onto = root_commit;
-+		replay_opts.have_squash_onto = 1;
-+		reset_opts.oid = &root_commit;
-+	} else {
-+		reset_opts.oid = &base->parents->item->object.oid;
-+	}
-+
-+	replay_opts.restore_head_target =
-+		xstrdup_or_null(refs_resolve_ref_unsafe(get_main_ref_store(repo),
-+							"HEAD", 0, NULL, &ref_flags));
-+	if (!(ref_flags & REF_ISSYMREF))
-+		FREE_AND_NULL(replay_opts.restore_head_target);
-+
-+	/*
-+	 * Perform a hard-reset to the parent of our commit that is to
-+	 * be dropped. This is the new base onto which we'll pick all
-+	 * the descendants.
-+	 */
-+	strbuf_addf(&buf, "%s (start): checkout %s", action,
-+		    oid_to_hex_r(hex, reset_opts.oid));
-+	reset_opts.orig_head = &head->object.oid;
-+	reset_opts.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD;
-+	reset_opts.head_msg = buf.buf;
-+	reset_opts.default_reflog_action = action;
-+	if (reset_head(repo, &reset_opts) < 0) {
-+		ret = error(_("could not switch to %s"), oid_to_hex(reset_opts.oid));
-+		goto out;
-+	}
-+
-+	ret = sequencer_pick_revisions(repo, &replay_opts);
-+	if (ret < 0) {
-+		ret = error(_("could not pick commits"));
-+		goto out;
-+	} else if (ret > 0) {
-+		/*
-+		 * A positive return value indicates we've got a merge
-+		 * conflict. Bail out, but don't print a message as
-+		 * `sequencer_pick_revisions()` already printed enough
-+		 * information.
-+		 */
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	ret = 0;
-+
-+out:
-+	replay_opts_release(&replay_opts);
-+	strbuf_release(&buf);
-+	strvec_clear(&args);
-+	return ret;
-+}
-+
-+static int cmd_history_drop(int argc,
-+			    const char **argv,
-+			    const char *prefix,
-+			    struct repository *repo)
+ static int apply_commits(struct repository *repo,
+ 			 const struct strvec *commits,
+ 			 struct commit *head,
+@@ -389,6 +416,107 @@ static int cmd_history_drop(int argc,
+ 	return ret;
+ }
+ 
++static int cmd_history_reorder(int argc,
++			       const char **argv,
++			       const char *prefix,
++			       struct repository *repo)
 +{
 +	const char * const usage[] = {
-+		N_("git history drop <commit>"),
++		N_("git history reorder <commit> (--before=<following-commit>|--after=<preceding-commit>)"),
 +		NULL,
 +	};
++	const char *before = NULL, *after = NULL;
 +	struct option options[] = {
++		OPT_STRING(0, "before", &before, N_("commit"), N_("reorder before this commit")),
++		OPT_STRING(0, "after", &after, N_("commit"), N_("reorder after this commit")),
 +		OPT_END(),
 +	};
-+	struct commit *commit_to_drop, *head;
++	struct commit *commit_to_reorder, *head, *anchor, *old;
 +	struct strvec commits = STRVEC_INIT;
-+	struct strbuf buf = STRBUF_INIT;
++	struct object_id replacement[2];
++	struct commit_list *list = NULL;
 +	int ret;
 +
 +	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+	if (argc != 1) {
-+		ret = error(_("command expects a single revision"));
-+		goto out;
-+	}
++	if (argc != 1)
++		die(_("command expects a single revision"));
++	if (!before && !after)
++		die(_("exactly one option of 'before' or 'after' must be given"));
++	die_for_incompatible_opt2(!!before, "before", !!after, "after");
++
 +	repo_config(repo, git_default_config, NULL);
 +
-+	commit_to_drop = lookup_commit_reference_by_name(argv[0]);
-+	if (!commit_to_drop) {
-+		ret = error(_("commit to be dropped cannot be found: %s"), argv[0]);
-+		goto out;
-+	}
-+	if (commit_to_drop->parents && commit_to_drop->parents->next) {
-+		ret = error(_("commit to be dropped must not be a merge commit"));
-+		goto out;
-+	}
++	commit_to_reorder = lookup_commit_reference_by_name(argv[0]);
++	if (!commit_to_reorder)
++		die(_("commit to be reordered cannot be found: %s"), argv[0]);
++	if (commit_to_reorder->parents && commit_to_reorder->parents->next)
++		die(_("commit to be reordered must not be a merge commit"));
++
++	anchor = lookup_commit_reference_by_name(before ? before : after);
++	if (!commit_to_reorder)
++		die(_("anchor commit cannot be found: %s"), before ? before : after);
++
++	if (oideq(&commit_to_reorder->object.oid, &anchor->object.oid))
++		die(_("commit to reorder and anchor must not be the same"));
 +
 +	head = lookup_commit_reference_by_name("HEAD");
-+	if (!head) {
-+		ret = error(_("could not resolve HEAD to a commit"));
++	if (!head)
++		die(_("could not resolve HEAD to a commit"));
++
++	commit_list_append(commit_to_reorder, &list);
++	if (!repo_is_descendant_of(repo, commit_to_reorder, list))
++		die(_("reordered commit must be reachable from current HEAD commit"));
++
++	/*
++	 * There is no requirement for the user to have either one of the
++	 * provided commits be the parent or child. We thus have to figure out
++	 * ourselves which one is which.
++	*/
++	if (repo_is_descendant_of(repo, anchor, list))
++		old = commit_to_reorder;
++	else
++		old = anchor;
++
++	/*
++	 * Select the whole range of commits, including the boundary commit
++	 * itself. In case the old commit is the root commit we simply pass no
++	 * boundary.
++	*/
++	ret = collect_commits(repo, old->parents ? old->parents->item : NULL,
++			      head, &commits);
++	if (ret < 0)
 +		goto out;
-+	}
 +
-+	if (oideq(&commit_to_drop->object.oid, &head->object.oid)) {
-+		/*
-+		 * If we want to drop the tip of the current branch we don't
-+		 * have to perform any rebase at all. Instead, we simply
-+		 * perform a hard reset to the parent commit.
-+		 */
-+		struct reset_head_opts reset_opts = {
-+			.orig_head = &head->object.oid,
-+			.flags = RESET_ORIG_HEAD,
-+			.default_reflog_action = "drop",
-+		};
-+		char hex[GIT_MAX_HEXSZ + 1];
-+
-+		if (!commit_to_drop->parents) {
-+			ret = error(_("cannot drop the only commit on this branch"));
-+			goto out;
-+		}
-+
-+		oid_to_hex_r(hex, &commit_to_drop->parents->item->object.oid);
-+		strbuf_addf(&buf, "drop (start): checkout %s", hex);
-+		reset_opts.oid = &commit_to_drop->parents->item->object.oid;
-+		reset_opts.head_msg = buf.buf;
-+
-+		if (reset_head(repo, &reset_opts) < 0) {
-+			ret = error(_("could not switch to %s"), hex);
-+			goto out;
-+		}
++	/*
++	 * Perform the reordering of commits in the strvec. This is done by:
++	 *
++	 *   - Deleting the to-be-reordered commit from the range of commits.
++	 *
++	 *   - Replacing the anchor commit with the anchor commit plus the
++	 *     to-be-reordered commit.
++	 */
++	if (before) {
++		replacement[0] = commit_to_reorder->object.oid;
++		replacement[1] = anchor->object.oid;
 +	} else {
-+		/*
-+		 * Prepare a revision walk from old commit to the commit that is
-+		 * about to be dropped. This serves three purposes:
-+		 *
-+		 *   - We verify that the history doesn't contain any merges.
-+		 *     For now, merges aren't yet handled by us.
-+		 *
-+		 *   - We need to find the child of the commit-to-be-dropped.
-+		 *     This child is what will be adopted by the parent of the
-+		 *     commit that we are about to drop.
-+		 *
-+		 *   - We compute the list of commits-to-be-picked.
-+		 */
-+		ret = collect_commits(repo, commit_to_drop, head, &commits);
-+		if (ret < 0)
-+			goto out;
-+
-+		ret = apply_commits(repo, &commits, head, commit_to_drop, "drop");
-+		if (ret < 0)
-+			goto out;
++		replacement[0] = anchor->object.oid;
++		replacement[1] = commit_to_reorder->object.oid;
 +	}
++	replace_commits(&commits, &commit_to_reorder->object.oid, NULL, 0);
++	replace_commits(&commits, &anchor->object.oid, replacement, ARRAY_SIZE(replacement));
++
++	ret = apply_commits(repo, &commits, head, old, "reorder");
++	if (ret < 0)
++		goto out;
 +
 +	ret = 0;
 +
 +out:
++	free_commit_list(list);
 +	strvec_clear(&commits);
-+	strbuf_release(&buf);
 +	return ret;
 +}
 +
  int cmd_history(int argc,
  		const char **argv,
  		const char *prefix,
-@@ -113,6 +398,7 @@ int cmd_history(int argc,
- 		N_("git history abort"),
+@@ -399,6 +527,7 @@ int cmd_history(int argc,
  		N_("git history continue"),
  		N_("git history quit"),
-+		N_("git history drop <commit>"),
+ 		N_("git history drop <commit>"),
++		N_("git history reorder <commit> (--before=<following-commit>|--after=<preceding-commit>)"),
  		NULL,
  	};
  	parse_opt_subcommand_fn *fn = NULL;
-@@ -120,6 +406,7 @@ int cmd_history(int argc,
- 		OPT_SUBCOMMAND("abort", &fn, cmd_history_abort),
+@@ -407,6 +536,7 @@ int cmd_history(int argc,
  		OPT_SUBCOMMAND("continue", &fn, cmd_history_continue),
  		OPT_SUBCOMMAND("quit", &fn, cmd_history_quit),
-+		OPT_SUBCOMMAND("drop", &fn, cmd_history_drop),
+ 		OPT_SUBCOMMAND("drop", &fn, cmd_history_drop),
++		OPT_SUBCOMMAND("reorder", &fn, cmd_history_reorder),
  		OPT_END(),
  	};
  
 diff --git a/t/meson.build b/t/meson.build
-index 966d7c14f4..8189c6c561 100644
+index 8189c6c561..2bf7bcab5a 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -377,6 +377,7 @@ integration_tests = [
-   't3437-rebase-fixup-options.sh',
+@@ -378,6 +378,7 @@ integration_tests = [
    't3438-rebase-broken-files.sh',
    't3450-history.sh',
-+  't3451-history-drop.sh',
+   't3451-history-drop.sh',
++  't3452-history-reorder.sh',
    't3500-cherry.sh',
    't3501-revert-cherry-pick.sh',
    't3502-cherry-pick-merge.sh',
-diff --git a/t/t3451-history-drop.sh b/t/t3451-history-drop.sh
+diff --git a/t/t3452-history-reorder.sh b/t/t3452-history-reorder.sh
 new file mode 100755
-index 0000000000..4fc295ef21
+index 0000000000..2e9d64a9fd
 --- /dev/null
-+++ b/t/t3451-history-drop.sh
-@@ -0,0 +1,207 @@
++++ b/t/t3452-history-reorder.sh
+@@ -0,0 +1,278 @@
 +#!/bin/sh
 +
-+test_description='tests for git-history drop subcommand'
++test_description='tests for git-history reorder subcommand'
 +
 +. ./test-lib.sh
 +
@@ -535,21 +395,10 @@ index 0000000000..4fc295ef21
 +		test_commit theirs &&
 +		git switch - &&
 +		git merge theirs &&
-+		test_must_fail git history drop HEAD 2>err &&
-+		test_grep "commit to be dropped must not be a merge commit" err &&
-+		test_must_fail git history drop HEAD~ 2>err &&
++		test_must_fail git history reorder HEAD --before=HEAD~ 2>err &&
++		test_grep "commit to be reordered must not be a merge commit" err &&
++		test_must_fail git history reorder HEAD~ --after=HEAD 2>err &&
 +		test_grep "cannot rearrange commit history with merges" err
-+	)
-+'
-+
-+test_expect_success 'refuses to work when history becomes empty' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit base &&
-+		test_must_fail git history drop HEAD 2>err &&
-+		test_grep "cannot drop the only commit on this branch" err
 +	)
 +'
 +
@@ -561,38 +410,41 @@ index 0000000000..4fc295ef21
 +		test_commit initial &&
 +		test_commit file file &&
 +		echo foo >file &&
-+		test_must_fail git history drop HEAD 2>err &&
++		test_must_fail git history reorder HEAD --before=HEAD~ 2>err &&
 +		test_grep "Your local changes to the following files would be overwritten" err &&
 +		git add file &&
-+		test_must_fail git history drop HEAD 2>err &&
++		test_must_fail git history reorder HEAD --before=HEAD~ 2>err &&
 +		test_grep "Your local changes to the following files would be overwritten" err
 +	)
 +'
 +
-+test_expect_success 'can drop tip of a branch' '
++test_expect_success 'requires exactly one of --before or --after' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +		test_commit first &&
 +		test_commit second &&
-+		test_commit third &&
-+
-+		git symbolic-ref HEAD >expect &&
-+		git history drop HEAD &&
-+		git symbolic-ref HEAD >actual &&
-+		test_cmp expect actual &&
-+
-+		cat >expect <<-EOF &&
-+		second
-+		first
-+		EOF
-+		git log --format=%s >actual &&
-+		test_cmp expect actual
++		test_must_fail git history reorder HEAD 2>err &&
++		test_grep "exactly one option of ${SQ}before${SQ} or ${SQ}after${SQ} must be given" err &&
++		test_must_fail git history reorder HEAD --before=a --after=b 2>err &&
++		test_grep "options ${SQ}before${SQ} and ${SQ}after${SQ} cannot be used together" err
 +	)
 +'
 +
-+test_expect_success 'can drop commit in the middle' '
++test_expect_success 'refuses to reorder commit with itself' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_must_fail git history reorder HEAD --after=HEAD 2>err &&
++		test_grep "commit to reorder and anchor must not be the same" err
++	)
++'
++
++test_expect_success '--before can move commit back in history' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
@@ -602,14 +454,75 @@ index 0000000000..4fc295ef21
 +		test_commit third &&
 +		test_commit fourth &&
 +		test_commit fifth &&
-+
-+		git symbolic-ref HEAD >expect &&
-+		git history drop HEAD~2 &&
-+		git symbolic-ref HEAD >actual &&
-+		test_cmp expect actual &&
-+
++		git history reorder :/fourth --before=:/second &&
 +		cat >expect <<-EOF &&
 +		fifth
++		third
++		second
++		fourth
++		first
++		EOF
++		git log --format=%s >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success '--before can move commit forward in history' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		test_commit fourth &&
++		test_commit fifth &&
++		git history reorder :/second --before=:/fourth &&
++		cat >expect <<-EOF &&
++		fifth
++		fourth
++		second
++		third
++		first
++		EOF
++		git log --format=%s >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success '--before can make a commit a root commit' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		git history reorder :/third --before=:/first &&
++		cat >expect <<-EOF &&
++		second
++		first
++		third
++		EOF
++		git log --format=%s >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success '--after can move commit back in history' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		test_commit fourth &&
++		test_commit fifth &&
++		git history reorder :/fourth --after=:/second &&
++		cat >expect <<-EOF &&
++		fifth
++		third
 +		fourth
 +		second
 +		first
@@ -619,7 +532,7 @@ index 0000000000..4fc295ef21
 +	)
 +'
 +
-+test_expect_success 'correct order is retained' '
++test_expect_success '--after can move commit forward in history' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
@@ -629,12 +542,32 @@ index 0000000000..4fc295ef21
 +		test_commit third &&
 +		test_commit fourth &&
 +		test_commit fifth &&
-+		git history drop HEAD~3 &&
++		git history reorder :/second --after=:/fourth &&
 +		cat >expect <<-EOF &&
 +		fifth
++		second
 +		fourth
 +		third
 +		first
++		EOF
++		git log --format=%s >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success '--after can make commit the tip' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		git history reorder :/first --after=:/third &&
++		cat >expect <<-EOF &&
++		first
++		third
++		second
 +		EOF
 +		git log --format=%s >actual &&
 +		test_cmp expect actual
@@ -663,32 +596,25 @@ index 0000000000..4fc295ef21
 +		} >>"$(pwd)/hooks.log"
 +		EOF
 +
-+		git history drop HEAD~ &&
++		git history reorder :/third --before=:/second &&
++		cat >expect <<-EOF &&
++		second
++		third
++		first
++		EOF
++		git log --format=%s >actual &&
++		test_cmp expect actual &&
++
 +		cat >expect <<-EOF &&
 +		prepare-commit-msg: .git/COMMIT_EDITMSG message
 +		post-commit
++		prepare-commit-msg: .git/COMMIT_EDITMSG message
++		post-commit
 +		post-rewrite: history
-+		$(git rev-parse third) $(git rev-parse HEAD)
++		$(git rev-parse third) $(git rev-parse HEAD~)
++		$(git rev-parse second) $(git rev-parse HEAD)
 +		EOF
 +		test_cmp expect hooks.log
-+	)
-+'
-+
-+test_expect_success 'can drop root commit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		test_commit second &&
-+		test_commit third &&
-+		git history drop HEAD~2 &&
-+		cat >expect <<-EOF &&
-+		third
-+		second
-+		EOF
-+		git log --format=%s >actual &&
-+		test_cmp expect actual
 +	)
 +'
 +
@@ -697,29 +623,34 @@ index 0000000000..4fc295ef21
 +	git init repo &&
 +	(
 +		cd repo &&
-+		test_commit base &&
-+		echo original >file &&
-+		git add . &&
-+		git commit -m original &&
-+		echo modified >file &&
-+		git commit -am modified &&
++		echo base >file &&
++		git add file &&
++		git commit -m base &&
++		echo "first edit" >file &&
++		git commit -am "first edit" &&
++		echo "second edit" >file &&
++		git commit -am "second edit" &&
 +
-+		test_must_fail git history drop HEAD~ >err 2>&1 &&
-+		test_grep CONFLICT err &&
-+		test_grep "git history continue" err &&
-+		echo resolved >file &&
++		git symbolic-ref HEAD >expect-head &&
++		test_must_fail git history reorder HEAD --before=HEAD~ &&
++		test_must_fail git symbolic-ref HEAD &&
++		echo "second edit" >file &&
++		git add file &&
++		test_must_fail git history continue &&
++		echo "first edit" >file &&
 +		git add file &&
 +		git history continue &&
 +
 +		cat >expect <<-EOF &&
-+		modified
++		first edit
++		second edit
 +		base
 +		EOF
 +		git log --format=%s >actual &&
 +		test_cmp expect actual &&
-+		echo resolved >expect &&
-+		git cat-file -p HEAD:file >actual &&
-+		test_cmp expect actual
++
++		git symbolic-ref HEAD >actual-head &&
++		test_cmp expect-head actual-head
 +	)
 +'
 +
