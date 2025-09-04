@@ -1,74 +1,75 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D81308F17
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:22:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F41308F1F
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756995744; cv=none; b=mbb2u69ZU+zkhQDNKfneHQ8TpJ1DETvJ9vMPo/jOQQfReOXoGTrydlWzKrGssG9CcM9t1AOxvaoaz39LtpbXFKyCyj4Uwj7P36FmQ80R+YFeXFRG7xK0ALeoD5cncLQpvdDgKBSFuOzzXtZynjOrArX1Zm/fexUYLEhIw2ySzyM=
+	t=1756995745; cv=none; b=DBVT2Gmkv+/vJ0htuLeBqraLaQDm39zW+iiln4z3NwqABR0SKg/xI76AU062qo8wyWtS9tnbtrGdqvOLfF1G9x6o53zBr99BRphR3K4UcuzdVlRlIgFjtlkG33rufcvB65gkN5KjeG/oqxRwNCFQABUcCRoVUh/AdZgipa9KdgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756995744; c=relaxed/simple;
-	bh=miJLzEwUDqXIWLKM9rf6wXE2C+KMlm2yErI/wUje83w=;
+	s=arc-20240116; t=1756995745; c=relaxed/simple;
+	bh=i28lJEA5xXlMmWNAAwK3AjrvLaR3AduHpl2Rsei61E0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=szIJnqk1AIgUnsm2VjR9+bitYZxpbKMiui7cj8HmsFpv5patbu4+8xGq+rIg0No88ICd4TzXRsHXuf087bs80V9ddaCu2rs64Zd3LvmnSqekM1hTb32yA1cjgTXp9vPQyPm7kb06VV9zahfYT+ZpabVd7gVY/FK+h6SgArQQcVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Efo1O3A2; arc=none smtp.client-ip=209.85.221.170
+	 MIME-Version; b=gSQwpbp5LCz9neoVfrQ8zplviOEYwjw7YqKQfd9wVyeg8UdbmFEDBvaG6te+0YvQjhnHuvr7W3aTyHPVIz9wG5nHfr2Zt2yQ6PXxxnvjsSgFWVmjlrSON+jxErYeo3WEcGAksKwLJijFly+VD8C3COuFquDEJcfjG+vRcbWehNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B0hay26O; arc=none smtp.client-ip=209.85.221.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Efo1O3A2"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-544ad727e87so876857e0c.2
-        for <git@vger.kernel.org>; Thu, 04 Sep 2025 07:22:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B0hay26O"
+Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-545dccac2f9so965428e0c.0
+        for <git@vger.kernel.org>; Thu, 04 Sep 2025 07:22:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756995739; x=1757600539; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1756995742; x=1757600542; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=o9qXTUEaTGJAPyEBtsR2SLhdGtj1LhgM+3Xta21GEYM=;
-        b=Efo1O3A2fiMc9tythKuGULJ7902a3dXUkWI4JCFZFvYeDb+aZ13csYGTrc8EX50z2j
-         cxyhRX3+973zXXymplg5AO+mJTzfn6AktG6lwo0JWMb35SmNG69YmeagoBVvnrQQmZwd
-         bQoZYn6Vl6jVJSc6ZkJxZ2lKKiRd6S/asGB17QrF0fibp5Em/Psep+1Q6rAGSJxn5iFp
-         jUIbZhu4nQ9d/5STd5QKzOVDRGDXnJJERROuRkdTV9YHmdJuAvY/WTNUhBYFTOfo0NxM
-         iVIyW+KcwjtmRfd8mZNOKuQsKAh5pIsgRyXovJQEQd/M2/JZ54NrslaGWmLgNNUSB72U
-         DrrQ==
+        bh=MzQ1y/hSnxUvy+p0oYqoyY8QWRh9/rhzLzzVGOk0zYQ=;
+        b=B0hay26OSyaAI2RIe/Td4Z9YtdPMtcF3ifobdd5+O+sxXUoWcdhfyL8YWXNecZMj57
+         NPBdP8L6FgwEm7h9VXeZ6RfI4QfuJ3CC/WICzTfQZaY9PeeMbh+V1g0DbyrVJ4/CWuKf
+         jV2frFwWAXSXPuEHdnYES4MH6IqkDEp7SDpO7tZfCGH8xXOy2kjNmRRbgNN2vISZgZfR
+         Kg61+wbzfeIIaCXIEEnurx/5H1r8FdFKMug1b7dywAIunbKBGybyCsHoFffN1B+/NSyD
+         krxHgCF4qC5zauLwPN2lBDg3LEuLmpd4xFey4F5jLwBEKsoTiq7MleY7xE7vkHsYLDOG
+         /XcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756995739; x=1757600539;
+        d=1e100.net; s=20230601; t=1756995742; x=1757600542;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=o9qXTUEaTGJAPyEBtsR2SLhdGtj1LhgM+3Xta21GEYM=;
-        b=gSBFhA4HYtC7SQYHcx8gikukfYfcsrS9AgwYf/T7oOCKLSSjRiIJZRRfpDOMtKfocv
-         5uYQYkHLAzBEF4bsWyMVAs/ydn9eGlnD0OW7CHpiDVcF87S9YSd0mL4RffzRU2/uRKzp
-         eXpT4Y/W4PWFJwZAVKZRa17YRLw4K2h2JHsJoBuK9FWqgmzDBFZoart0nR2PEn4EV4n/
-         2c0FftakifsOt6ZB63qGGjA4tUnR2844uOuejsgSZSxYwb9U5zLAa0ohW2qBJ+t4v3Sm
-         XPCHNKA2gIa/TnHIVgCMP7UhYy3BfUlLlHR8SGv6pxrUglBNMS5y7siEBXRtDG/aAUys
-         CjQQ==
-X-Gm-Message-State: AOJu0YwOx6ZHr/9l6Dx68jWE3Jw3e0mW2FVPR1ovts1cJ5UGkn99MODc
-	tR1LWVOWbnH7ZQcc9fxj3wJtIRnolKClbfcZ/sxhKF/8DSO1mGcfRGZYVu0hNw==
-X-Gm-Gg: ASbGncs0YnTuPIqK9gEz8koZH56gjqH8DpeWLTwJwFw9W+guuJPEVUqTnQ14+PjEij1
-	QTDbOodxQCIuNvApGawqexpfyp7xHEAvo+ipueHMW4CLPlcToSc8+h17/s50fThAkGKAB4hLWsl
-	6MPh6bMcl0ssfmF9k3+ytWQoF9d3V6kQJvqLtC6S1lfNzvAwzIkESMKBb2BGgXTCeWWP0SvtSOw
-	IOKycIz63SuHm7EOtkjw1loV47xKRX0+95SG8gHwUqzM2T3WRUQyYg9F1TjvBafBiMg28zPWwHz
-	cKpw1AU945i/cIiRr+3KhFU08OWQd+YoSBfN1wuuLF1Y1pBj4TlnwTm2Npe0UDo+BLYPTjwhKGq
-	a/+CWKZiPUsWsu8x31MAYA8uOaTMl9b91lxj5WxgqWxNuPvTE8qRfX6jl2iokLZ4=
-X-Google-Smtp-Source: AGHT+IHqVlfuufFGjIabfcFB6ta5Bf26CbvxglixyRez3rEH22MRd2/fvwd0Pvx1doAdHRcXsNvqkQ==
-X-Received: by 2002:a05:6122:1350:b0:539:5717:ecff with SMTP id 71dfb90a1353d-544a018be5dmr6066080e0c.6.1756995739101;
-        Thu, 04 Sep 2025 07:22:19 -0700 (PDT)
+        bh=MzQ1y/hSnxUvy+p0oYqoyY8QWRh9/rhzLzzVGOk0zYQ=;
+        b=ia3wbkvq2AdfpmruWjjUgtdwROIVn4dwnKDCAzUzGjGSh0vfx4L/Gkuffh7RUF4Wpp
+         lyOjlVShSfRsiZ1DixHnKMj3+xtdpfV8Its+hdkjLevxW7f8MdozG4nNiHaAA7aulI/U
+         4cLsAJ4H6CU+GkMwKlsQLGMUDm8BSpoFUIiAr9JpPbSa+piZklxn/FSdf2RckM/c3amt
+         qHrdZI5BH0Gi+0hDgzql42cFB+vNnwhaPG8gqV89vb1xAzhH1kapdBqMAJ3GOwzoGI7P
+         Mc/2aJFUwUeoOk+fCMhQYEeSWjuRUwkEZb0dunHka6N/tDldcmjMLg8NNk+auswWpJcr
+         BcZA==
+X-Gm-Message-State: AOJu0YxDJqwy9PyHUgSsmsm+JSXQyNYE7HWV05YF5wwpS7PkD8A/IW8B
+	WRPlUfSLSG2MZA7lcA3tw3fkKyyZRPpCJ7DTfCleW1mXpaS4wi5UYnWCDMnYsA==
+X-Gm-Gg: ASbGncvf1zMqMmgIm5QiYNnHUE88s5OF+h7CWSeHI50ReafkTvUsh5H5A/csxTsUGl1
+	IBUNWfx+Ch1qf5E5JEm+cQxal3s2SQm0+TznYsWPw+GfDZErijhsClLQgiRmx9ApDlvFdkg34+5
+	HVLcn/RU+1DM3SXVBCp0aePuBNHPIwWxbqmpDQptYnv5kyYITrnlm2hc/uI5oTbq9dIh0FqGdWR
+	B10fBaqC259cZOras4ZILwn+yBXAKGLUQvdvQS0rpOUKhv3rklpIxDizG7wSyJANuHU4VtjRsdy
+	6HGU0hE4Qru3u+94SVTsEVDowHt5vaShur9Y2a/pP3xWSPxMxFM6Bbh1LTns5OnGlu4hbHw0LeT
+	+7Na3iuAH0ytQ47YTyfBE2Mo+K8H+wQ4X651xDUN7cQnTBcTDas+hfiXmFRGLiB8=
+X-Google-Smtp-Source: AGHT+IF5j+fgM05zhFjw9u7SIN2N0hDjJkb52w9vOyZAtT8keDlvdhRPMbsebbY41DC3St+4Z4Qwnw==
+X-Received: by 2002:a05:6122:1309:b0:53c:6d68:1d31 with SMTP id 71dfb90a1353d-544a02f8a13mr7387679e0c.15.1756995741538;
+        Thu, 04 Sep 2025 07:22:21 -0700 (PDT)
 Received: from localhost.localdomain ([2804:7f0:b77d:8aa:3d64:69a5:cf8e:268f])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-544b1933316sm5409732e0c.9.2025.09.04.07.22.16
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-544b1933316sm5409732e0c.9.2025.09.04.07.22.19
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 04 Sep 2025 07:22:18 -0700 (PDT)
+        Thu, 04 Sep 2025 07:22:21 -0700 (PDT)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	karthik.188@gmail.com,
 	gitster@pobox.com,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH v4 0/2] repo: add -z and objects.format
-Date: Thu,  4 Sep 2025 10:40:15 -0300
-Message-Id: <20250904134017.47364-1-lucasseikioshiro@gmail.com>
+Subject: [GSoC PATCH v4 1/2] repo: add the flag -z as an alias for --format=nul
+Date: Thu,  4 Sep 2025 10:40:16 -0300
+Message-Id: <20250904134017.47364-2-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
+In-Reply-To: <20250904134017.47364-1-lucasseikioshiro@gmail.com>
 References: <20250820144247.79197-1-lucasseikioshiro@gmail.com>
+ <20250904134017.47364-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,46 +78,139 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi!
+Other Git commands that have nul-terminated output (e.g. git-config,
+git-status, git-ls-files) have a flag `-z` for using the null character
+as the record separator.
 
-This v4 fixes two codestyle issues:
+Add the `-z` flag to git-repo-info as an alias for `--format=nul`,
+making it consistent with the behavior of the other commands.
 
-- Break line before opening a brace
-- Add spaces surrounding a `|`
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+---
+ Documentation/git-repo.adoc |  6 ++++--
+ builtin/repo.c              | 38 +++++++++++++++++++++++++------------
+ t/t1900-repo.sh             | 12 ++++++++++++
+ 3 files changed, 42 insertions(+), 14 deletions(-)
 
-Here's the range-diff versus v3:
-
-1:  0323f1fa75 ! 1:  19c84e1a48 repo: add the flag -z as an alias for --format=nul
-    @@ builtin/repo.c: static int print_fields(int argc, const char **argv,
-      }
-
-     +static int parse_format_cb(const struct option *opt,
-    -+                     const char *arg, int unset UNUSED) {
-    ++                     const char *arg, int unset UNUSED)
-    ++{
-     +  enum output_format *format = opt->value;
-     +
-     +  if (opt->short_name == 'z')
-    @@ builtin/repo.c: static int print_fields(int argc, const char **argv,
-     +                         PARSE_OPT_NONEG, parse_format_cb),
-     +          OPT_CALLBACK_F('z', NULL, &format, NULL,
-     +                         N_("synonym for --format=nul"),
-    -+                         PARSE_OPT_NONEG|PARSE_OPT_NOARG,
-    ++                         PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-     +                         parse_format_cb),
-                OPT_END()
-        };
-2:  b2b241f401 = 2:  6258316d93 repo: add the field objects.format
-
-Lucas Seiki Oshiro (2):
-  repo: add the flag -z as an alias for --format=nul
-  repo: add the field objects.format
-
- Documentation/git-repo.adoc |  9 ++++++--
- builtin/repo.c              | 45 +++++++++++++++++++++++++++----------
- t/t1900-repo.sh             | 18 +++++++++++++++
- 3 files changed, 58 insertions(+), 14 deletions(-)
-
+diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+index 2870828d93..6f5ee88215 100644
+--- a/Documentation/git-repo.adoc
++++ b/Documentation/git-repo.adoc
+@@ -8,7 +8,7 @@ git-repo - Retrieve information about the repository
+ SYNOPSIS
+ --------
+ [synopsis]
+-git repo info [--format=(keyvalue|nul)] [<key>...]
++git repo info [--format=(keyvalue|nul)] [-z] [<key>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -18,7 +18,7 @@ THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+ 
+ COMMANDS
+ --------
+-`info [--format=(keyvalue|nul)] [<key>...]`::
++`info [--format=(keyvalue|nul)] [-z] [<key>...]`::
+ 	Retrieve metadata-related information about the current repository. Only
+ 	the requested data will be returned based on their keys (see "INFO KEYS"
+ 	section below).
+@@ -40,6 +40,8 @@ supported:
+ 	between the key and the value and using a NUL character after each value.
+ 	This format is better suited for being parsed by another applications than
+ 	`keyvalue`. Unlike in the `keyvalue` format, the values are never quoted.
+++
++`-z` is an alias for `--format=nul`.
+ 
+ INFO KEYS
+ ---------
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 8c6e7f42ab..dc9a267469 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -9,7 +9,7 @@
+ #include "shallow.h"
+ 
+ static const char *const repo_usage[] = {
+-	"git repo info [--format=(keyvalue|nul)] [<key>...]",
++	"git repo info [--format=(keyvalue|nul)] [-z] [<key>...]",
+ 	NULL
+ };
+ 
+@@ -112,26 +112,40 @@ static int print_fields(int argc, const char **argv,
+ 	return ret;
+ }
+ 
++static int parse_format_cb(const struct option *opt,
++			   const char *arg, int unset UNUSED)
++{
++	enum output_format *format = opt->value;
++
++	if (opt->short_name == 'z')
++		*format = FORMAT_NUL_TERMINATED;
++	else if (!strcmp(arg, "nul"))
++		*format = FORMAT_NUL_TERMINATED;
++	else if (!strcmp(arg, "keyvalue"))
++		*format = FORMAT_KEYVALUE;
++	else
++		die(_("invalid format '%s'"), arg);
++
++	return 0;
++}
++
+ static int repo_info(int argc, const char **argv, const char *prefix,
+ 		     struct repository *repo)
+ {
+-	const char *format_str = "keyvalue";
+-	enum output_format format;
++	enum output_format format = FORMAT_KEYVALUE;
+ 	struct option options[] = {
+-		OPT_STRING(0, "format", &format_str, N_("format"),
+-			   N_("output format")),
++		OPT_CALLBACK_F(0, "format", &format, N_("format"),
++			       N_("output format"),
++			       PARSE_OPT_NONEG, parse_format_cb),
++		OPT_CALLBACK_F('z', NULL, &format, NULL,
++			       N_("synonym for --format=nul"),
++			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
++			       parse_format_cb),
+ 		OPT_END()
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
+ 
+-	if (!strcmp(format_str, "keyvalue"))
+-		format = FORMAT_KEYVALUE;
+-	else if (!strcmp(format_str, "nul"))
+-		format = FORMAT_NUL_TERMINATED;
+-	else
+-		die(_("invalid format '%s'"), format_str);
+-
+ 	return print_fields(argc, argv, repo, format);
+ }
+ 
+diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
+index a69c715357..ddf788d5a2 100755
+--- a/t/t1900-repo.sh
++++ b/t/t1900-repo.sh
+@@ -92,4 +92,16 @@ test_expect_success 'git-repo-info aborts when requesting an invalid format' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '-z uses nul-terminated format' '
++	printf "layout.bare\nfalse\0layout.shallow\nfalse\0" >expected &&
++	git repo info -z layout.bare layout.shallow >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'git repo info uses the last requested format' '
++	echo "layout.bare=false" >expected &&
++	git repo info --format=nul -z --format=keyvalue layout.bare >actual &&
++	test_cmp expected actual
++'
++
+ test_done
 -- 
 2.39.5 (Apple Git-154)
 
