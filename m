@@ -1,83 +1,84 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD2930AD04
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E0F30C352
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:28:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756996083; cv=none; b=gnh5Xabk+hdzdts2/CxJ8tk5GAKcu9YmIr1a3R9YRTzudto0y4HvLJSwLpUHDrzLBietFutD6yu4rKKAJwSmVIXxQrqGPk9OfM+80CK69aU4F8WGIc/h2uDT4N5idwPvf+0RwgvlPYr9dCfN+CBe4giJsT+J6tG9dJlLhsSd7Ds=
+	t=1756996085; cv=none; b=dknhcDPS0L6GTQmsZVnFLQ6FjgzCBdEfhutL9xe6k1yHfEphBfHda75JbAL5VLYcUsq69OARaFgCWTeWvAzmfKXbrjZ6tC6Y68L+mf9iepwyO/BEiuwEK22Bu/tDkxwOoMyh/SGJdzQtM0k9c9qjk2dBspxBMQ7ClAOR1Q6FsF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756996083; c=relaxed/simple;
-	bh=f4+5FEvV0xARflXzJel2CESzWPoRkc0xNyJwzSv8muQ=;
+	s=arc-20240116; t=1756996085; c=relaxed/simple;
+	bh=JdZNpXJBDRWiBeRgx1KDjtekFS65P8nOcVBC3n+7PCM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jpb2MQ/tMdR85WOMkK6iIxfzMjiktoZd+rUbh9fDEoLqCS/d6WIUbc77MlDq+NbyYsBSJ8he2RCbNYvUE06lM+Q+USKwEecQYQgb462rYG89+koKrfiMF3ysdkZH5hEAF8CrIzu1QPEaABh7mgTUpe1dMjW/x+t04/ceKcRrVnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JbCwuNfj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hTdFeZs2; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=FqLf8IqloTBuWpEoC3AL1mBotoY/KXYtErkT2NltA+5uUmB5N0Fv6rqLkLl33W+hR06g8tgQpiRR37WBm+vstudYF7/B/HiqMgrRPz7dJXVjkb15Pgabt/WbrOmqdCid/jRGpFhCQhii5J681TXN6wEM2ekAbqXLuerjV2yaCns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TpwZN3H8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PnVHIwdJ; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JbCwuNfj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hTdFeZs2"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 602FE7A0354;
-	Thu,  4 Sep 2025 10:28:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TpwZN3H8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PnVHIwdJ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 362131D0028C;
+	Thu,  4 Sep 2025 10:28:03 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Thu, 04 Sep 2025 10:28:00 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 04 Sep 2025 10:28:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756996080;
-	 x=1757082480; bh=/OKtq3zYetVR0Wi6GICpH8EXdzX8+2aRVreoO8YWBVE=; b=
-	JbCwuNfjxT/NQyzAXhaQKXPzhPpDAS6/meeuy7OF7J6aXG8NbOr/ulX/oUet7/T4
-	YiBQXf00EtIafB/B6Qa4xrHlilDpVM9RbpDhi2Dua3SuBhG5caJq0Gp/yYpn/2OT
-	VJQNGBvkiw/8vHMJhvtDrLDnJK7941Pm+TlgXu7IhGt5kXPawDgFeWHBINd0w1fZ
-	EKOOaZeHCN6HOlXbVeqLQ/rTjDlPf6pXd5OuKWlz0apuOZl3K/CRTzuYN9PS34Y6
-	toOsh0X+t+YzcjkTz8RyCtagRPHRlX67guYDibWjl8T1yjW1KSlwCeQ5AwMKUTW9
-	ti/+KR3CTFglHTrjsA/TSA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756996083;
+	 x=1757082483; bh=de4tIdws1jHFaA9p4ehJ7+y68QATco1GAw/zQeTnZgY=; b=
+	TpwZN3H8d6nvaWwZbILhwIxBUs8tL1YA5P24yCtwgSDMMo1+9lsCx6ccr/TG/DN6
+	GOrRmti3HozYOX6m0COIV94QamxtX3j5Gf+qY1oKTBCaqEVk+X7mgOcDFKMCH+3x
+	aQy1xYJDNaeoSgxGuDs5KciZu59YX9yPeJyqSME+C0A6Bgt6LQi0oUEQfnJzNaPy
+	+QpNQUhvzCeQajbm2e802K021wi1SKZaFvpB2MsLWzVp5783q7QWZU/F7m4oyvqS
+	3if5bef2vdsMirbERYwoTwFe8wK1VWWcGPa0bhEHN7YiTF+2ZDCSbUlkkfJbmDXC
+	NNG1uVUwUekaDY+kGbiXUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756996080; x=
-	1757082480; bh=/OKtq3zYetVR0Wi6GICpH8EXdzX8+2aRVreoO8YWBVE=; b=h
-	TdFeZs2TK5VHVr8gPFw+UDNvH7T88/G+T14rPxYM6ulra4cEK1wiXTafEItu9GQD
-	RDvc5t+jJ2ojdeJDdXLl8oOHvddvYq3bX2ZkEc0DJwXXh+PSzipPWaoEGGXmvPwn
-	qWS2ipe6UJTq2q5A14K4gqbqkNs2hf1E2+WYXjeNLIcPBepQVPWrEGuNTc87UBdr
-	cAk1DxwfVCYKf/zVmZXlWGScNIIKF3p1QF0KjKOkjRrBZNj9a290jYVrr7BFOJZ7
-	TW+OTtswjb2RoE7uOtaBtzFiC2UNx66WsK9QmPbs2YkzaavKdBQKAUZyMQNbv8TA
-	yyUwiH8UAOJ0FJI+g9EBA==
-X-ME-Sender: <xms:8KG5aBN1o2T4LiFLfrYLpLKq56U37CFUuykh1nbvoJ3vEo0gUxg2qg>
-    <xme:8KG5aBjHjwcAlitpmrFvTzKSmwAzt4Qu-7LaFHycl11CINJpppUE4Aw56YD8dQzqI
-    lmPWjuHp4WLQHiefg>
-X-ME-Received: <xmr:8KG5aGvD5k2VRqeLgzADA1sq3UY5i04SWsuMbb6SdjNb21AjgJU2V18M7_24mM_GmypPllGbqJk-fEiVYLGrOFkj8vuddfiuj3df6BXzPT8pEg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756996083; x=
+	1757082483; bh=de4tIdws1jHFaA9p4ehJ7+y68QATco1GAw/zQeTnZgY=; b=P
+	nVHIwdJeTeC38NvNbS1gmUfCEWkRxd+y4NjNO/ZxGnsWhpTmRU0vpJeBLwmFni8H
+	D6y9M3cUDSfMuffqzDk72J8Cza37KVHxXGZnrArlt0UKPnkXYmz/c7+SzdyCyPL3
+	iX0FE2IbmX3EStplwev1NjteNcFDmJiHwvyuJuA6GN0/bQlBqxheBh1QGnkLwEje
+	ikhzmEWqW40vmILD1LX5GBERJtCjrtxXO6W8mTuHUm/ZzZLM/XYljJzjb2qEBt6B
+	yAxhf4jbbQcarQKElccFTZFDbDlSp8fVAPVOH214UnJn8GhjTIwOTNwbyC/iWhJS
+	1hTHnJEmFytsf3falVbAQ==
+X-ME-Sender: <xms:8qG5aNoFW1tgF0eMicNY8AHJ6afwKh68VUv7szS99lZ7Kw0bWuXQDw>
+    <xme:8qG5aNM1PwkMFZfoY3K8P6om-q3j69HL7A9SOfwM-7lgz1-5eIFft4iVxMp9da4s8
+    V4G3o9bDNdnBejRLw>
+X-ME-Received: <xmr:8qG5aArreOFOpTj9eOv0ZYDwodAanxQ8PQejzlmLS2euQ7-0bA2ieXTAfIMLc_IME32PeOmwkfchsmOWnTtlznK_sTrbjJy20Mk8a-6csSFjsg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeivdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
     ephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     ffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucev
-    lhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    lhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehmrghrthhinh
-    hvohhniiesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
+    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
+    gtphhtthhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomhdprhgtphhtthhopehs
+    ohhrghgrnhhovhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
+    rhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhope
     hjnhdrrghvihhlrgesfhhrvggvrdhfrh
-X-ME-Proxy: <xmx:8KG5aPQqLLddqs7DPcZ9efOBnu75HyLw9mEbD2HS2zwXDFwM5dLH-g>
-    <xmx:8KG5aK3hoi8p55V00aetU5AwxgrGpzEso3FepGSkbdS_AZsTMIMgDw>
-    <xmx:8KG5aEvgcSRkyBb-DaccXZh-cDLL110a6W4e0SSFZCDDikyMR17YGg>
-    <xmx:8KG5aAjdjDHaCM-6enYQ0b17TnIA1-03zOhNkwrlDWznXCqrIN42jg>
-    <xmx:8KG5aPYPeXKDVAdpDm-fF1p3aS13h6X3ULNcsw76yN0cKvtf85n0s56f>
+X-ME-Proxy: <xmx:8qG5aKfjk0REocOQrBfvm4oMV97_fhiv_73STKPuhO5L50qXkqHwqw>
+    <xmx:8qG5aORXwROzWKxb2ASEchalvy64sxenBkVHfXRSWBAhn1fHc3PNVA>
+    <xmx:8qG5aLafU1CPjTTP6FiDFXF5XHjC9n5wn6PTeNxy_wfAeHc5kmwmOQ>
+    <xmx:8qG5aJd_SfNUwlRZBoMW7JLwvlbTWo_Sw8aRdJcbDpcwk3vqkmK2QQ>
+    <xmx:86G5aJokGxc0gHEhQwCT13vIH8d8Lbcr3k22rXVyTyM5IEkHujM86Klf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Sep 2025 10:27:58 -0400 (EDT)
+ 4 Sep 2025 10:28:01 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 14f9cbac (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 4 Sep 2025 14:27:57 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 85a0614c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 4 Sep 2025 14:28:01 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 04 Sep 2025 16:27:37 +0200
-Subject: [PATCH RFC v3 07/18] builtin: add new "history" command
+Date: Thu, 04 Sep 2025 16:27:38 +0200
+Subject: [PATCH RFC v3 08/18] builtin/history: introduce subcommands to
+ manage interrupted rewrites
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250904-b4-pks-history-builtin-v3-7-509053514755@pks.im>
+Message-Id: <20250904-b4-pks-history-builtin-v3-8-509053514755@pks.im>
 References: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
 In-Reply-To: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
 To: git@vger.kernel.org
@@ -97,241 +98,235 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.2
 
-When rewriting history via git-rebase(1) there are a couple of very
-common use cases:
-
-  - The ordering of two commits should be reversed.
-
-  - A commit should be split up into two commits.
-
-  - A commit should be dropped from the history completely.
-
-  - Multiple commits should be squashed into one.
-
-While these operations are all doable, it often feels needlessly cludgy
-to do so by doing an interactive rebase, using the editor to say what
-one wants, and then perform the actions. Furthermore, some operations
-like splitting up a commit into two are way more involved than that and
-require a whole series of commands.
-
-Add a new "history" command to plug this gap. This command will have
-several different subcommands to imperatively rewrite history for common
-use cases like the above. These commands will be implemented in
-subsequent commits.
+Introduce subcommands to manage the sequencer state for git-history(1).
+These aren't really useful yet, but will become useful in subsequent
+commits where we will introduce git-history(1) subcommands that actually
+edit history.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .gitignore                     |  1 +
- Documentation/git-history.adoc | 45 ++++++++++++++++++++++++++++++++++++++++++
- Documentation/meson.build      |  1 +
- Makefile                       |  1 +
- builtin.h                      |  1 +
- builtin/history.c              | 20 +++++++++++++++++++
- command-list.txt               |  1 +
- git.c                          |  1 +
- meson.build                    |  1 +
- t/meson.build                  |  3 ++-
- t/t3450-history.sh             | 12 +++++++++++
- 11 files changed, 86 insertions(+), 1 deletion(-)
+ Documentation/git-history.adoc |  20 +++++++-
+ builtin/history.c              | 114 +++++++++++++++++++++++++++++++++++++++--
+ t/t3450-history.sh             |  32 +++++++++++-
+ 3 files changed, 161 insertions(+), 5 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 04c444404e..3932d4d618 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -77,6 +77,7 @@
- /git-grep
- /git-hash-object
- /git-help
-+/git-history
- /git-hook
- /git-http-backend
- /git-http-fetch
 diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-new file mode 100644
-index 0000000000..1537960374
---- /dev/null
+index 1537960374..3e9a789b83 100644
+--- a/Documentation/git-history.adoc
 +++ b/Documentation/git-history.adoc
-@@ -0,0 +1,45 @@
-+git-history(1)
-+==============
+@@ -8,7 +8,9 @@ git-history - EXPERIMENTAL: Rewrite history of the current branch
+ SYNOPSIS
+ --------
+ [synopsis]
+-git history [<options>]
++git history abort
++git history continue
++git history quit
+ 
+ DESCRIPTION
+ -----------
+@@ -33,6 +35,22 @@ COMMANDS
+ This command requires a subcommand. Several subcommands are available to
+ rewrite history in different ways:
+ 
++The following commands are used to manage an interrupted history-rewriting
++operation:
 +
-+NAME
-+----
-+git-history - EXPERIMENTAL: Rewrite history of the current branch
++`abort`::
++	Abort the history-rewriting operation and reset HEAD to the original
++	branch.
 +
-+SYNOPSIS
-+--------
-+[synopsis]
-+git history [<options>]
++`continue`::
++	Restart the history-rewriting process after having resolved a merge
++	conflict.
 +
-+DESCRIPTION
-+-----------
++`quit`::
++	Abort the history-rewriting operation but `HEAD` is not reset back to
++	the original branch. The index and working tree are also left unchanged
++	as a result.
 +
-+Rewrite history by rearranging or modifying specific commits in the
-+history.
-+
-+This command is similar to linkgit:git-rebase[1] and uses the same
-+underlying machinery. You should use rebases if you either want to
-+reapply a range of commits onto a different base, or interactive rebases
-+if you want to edit a range of commits.
-+
-+Note that this command does not (yet) work with histories that contain
-+merges. You should use linkgit:git-rebase[1] with the `--rebase-merges`
-+flag instead.
-+
-+THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-+
-+COMMANDS
-+--------
-+
-+This command requires a subcommand. Several subcommands are available to
-+rewrite history in different ways:
-+
-+CONFIGURATION
-+-------------
-+
-+include::includes/cmd-config-section-all.adoc[]
-+
-+include::config/sequencer.adoc[]
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index 4404c623f0..a30b5307fd 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -64,6 +64,7 @@ manpages = {
-   'git-gui.adoc' : 1,
-   'git-hash-object.adoc' : 1,
-   'git-help.adoc' : 1,
-+  'git-history.adoc' : 1,
-   'git-hook.adoc' : 1,
-   'git-http-backend.adoc' : 1,
-   'git-http-fetch.adoc' : 1,
-diff --git a/Makefile b/Makefile
-index e11340c1ae..bed6eda5e6 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1261,6 +1261,7 @@ BUILTIN_OBJS += builtin/get-tar-commit-id.o
- BUILTIN_OBJS += builtin/grep.o
- BUILTIN_OBJS += builtin/hash-object.o
- BUILTIN_OBJS += builtin/help.o
-+BUILTIN_OBJS += builtin/history.o
- BUILTIN_OBJS += builtin/hook.o
- BUILTIN_OBJS += builtin/index-pack.o
- BUILTIN_OBJS += builtin/init-db.o
-diff --git a/builtin.h b/builtin.h
-index bff13e3069..2934f4479a 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -172,6 +172,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix, struc
- int cmd_grep(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_hash_object(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_help(int argc, const char **argv, const char *prefix, struct repository *repo);
-+int cmd_history(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_hook(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_index_pack(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_init_db(int argc, const char **argv, const char *prefix, struct repository *repo);
+ CONFIGURATION
+ -------------
+ 
 diff --git a/builtin/history.c b/builtin/history.c
-new file mode 100644
-index 0000000000..d1a40368e0
---- /dev/null
+index d1a40368e0..0ad45dbfef 100644
+--- a/builtin/history.c
 +++ b/builtin/history.c
-@@ -0,0 +1,20 @@
-+#include "builtin.h"
-+#include "gettext.h"
-+#include "parse-options.h"
+@@ -1,20 +1,128 @@
+ #include "builtin.h"
++#include "branch.h"
+ #include "gettext.h"
+ #include "parse-options.h"
++#include "sequencer.h"
 +
-+int cmd_history(int argc,
-+		const char **argv,
-+		const char *prefix,
-+		struct repository *repo UNUSED)
++static int cmd_history_abort(int argc,
++			     const char **argv,
++			     const char *prefix,
++			     struct repository *repo)
 +{
 +	const char * const usage[] = {
-+		N_("git history [<options>]"),
++		N_("git history abort"),
 +		NULL,
 +	};
 +	struct option options[] = {
 +		OPT_END(),
 +	};
++	struct replay_opts opts = REPLAY_OPTS_INIT;
++	int ret;
 +
 +	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+	return 0;
++	if (argc) {
++		ret = error(_("command does not take arguments"));
++		goto out;
++	}
++
++	opts.action = REPLAY_HISTORY_EDIT;
++	ret = sequencer_rollback(repo, &opts);
++	if (ret)
++		goto out;
++
++	ret = 0;
++
++out:
++	replay_opts_release(&opts);
++	return ret;
 +}
-diff --git a/command-list.txt b/command-list.txt
-index b7ade3ab9f..f95f0ce926 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -115,6 +115,7 @@ git-grep                                mainporcelain           info
- git-gui                                 mainporcelain
- git-hash-object                         plumbingmanipulators
- git-help                                ancillaryinterrogators          complete
-+git-history                             mainporcelain           history
- git-hook                                purehelpers
- git-http-backend                        synchingrepositories
- git-http-fetch                          synchelpers
-diff --git a/git.c b/git.c
-index 83eac0aeab..9d2cba2906 100644
---- a/git.c
-+++ b/git.c
-@@ -560,6 +560,7 @@ static struct cmd_struct commands[] = {
- 	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
- 	{ "hash-object", cmd_hash_object },
- 	{ "help", cmd_help },
-+	{ "history", cmd_history, RUN_SETUP },
- 	{ "hook", cmd_hook, RUN_SETUP },
- 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
- 	{ "init", cmd_init_db },
-diff --git a/meson.build b/meson.build
-index 5dd299b496..0e40778a23 100644
---- a/meson.build
-+++ b/meson.build
-@@ -603,6 +603,7 @@ builtin_sources = [
-   'builtin/grep.c',
-   'builtin/hash-object.c',
-   'builtin/help.c',
-+  'builtin/history.c',
-   'builtin/hook.c',
-   'builtin/index-pack.c',
-   'builtin/init-db.c',
-diff --git a/t/meson.build b/t/meson.build
-index bbeba1a8d5..966d7c14f4 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -376,6 +376,7 @@ integration_tests = [
-   't3436-rebase-more-options.sh',
-   't3437-rebase-fixup-options.sh',
-   't3438-rebase-broken-files.sh',
-+  't3450-history.sh',
-   't3500-cherry.sh',
-   't3501-revert-cherry-pick.sh',
-   't3502-cherry-pick-merge.sh',
-@@ -1214,4 +1215,4 @@ if perl.found() and time.found()
-       timeout: 0,
-     )
-   endforeach
--endif
-\ No newline at end of file
-+endif
++
++static int cmd_history_continue(int argc,
++				const char **argv,
++				const char *prefix,
++				struct repository *repo)
++{
++	const char * const usage[] = {
++		N_("git history continue"),
++		NULL,
++	};
++	struct option options[] = {
++		OPT_END(),
++	};
++	struct replay_opts opts = REPLAY_OPTS_INIT;
++	int ret;
++
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
++	if (argc) {
++		ret = error(_("command does not take arguments"));
++		goto out;
++	}
++
++	opts.action = REPLAY_HISTORY_EDIT;
++	ret = sequencer_continue(repo, &opts);
++	if (ret)
++		goto out;
++
++	ret = 0;
++
++out:
++	replay_opts_release(&opts);
++	return ret;
++}
++
++static int cmd_history_quit(int argc,
++			    const char **argv,
++			    const char *prefix,
++			    struct repository *repo)
++{
++	const char * const usage[] = {
++		N_("git history quit"),
++		NULL,
++	};
++	struct option options[] = {
++		OPT_END(),
++	};
++	struct replay_opts opts = REPLAY_OPTS_INIT;
++	int ret;
++
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
++	if (argc) {
++		ret = error(_("command does not take arguments"));
++		goto out;
++	}
++
++	opts.action = REPLAY_HISTORY_EDIT;
++	ret = sequencer_remove_state(repo, &opts);
++	if (ret)
++		goto out;
++	remove_branch_state(repo, 0);
++
++	ret = 0;
++
++out:
++	replay_opts_release(&opts);
++	return ret;
++}
+ 
+ int cmd_history(int argc,
+ 		const char **argv,
+ 		const char *prefix,
+-		struct repository *repo UNUSED)
++		struct repository *repo)
+ {
+ 	const char * const usage[] = {
+-		N_("git history [<options>]"),
++		N_("git history abort"),
++		N_("git history continue"),
++		N_("git history quit"),
+ 		NULL,
+ 	};
++	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option options[] = {
++		OPT_SUBCOMMAND("abort", &fn, cmd_history_abort),
++		OPT_SUBCOMMAND("continue", &fn, cmd_history_continue),
++		OPT_SUBCOMMAND("quit", &fn, cmd_history_quit),
+ 		OPT_END(),
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options, usage, 0);
+-	return 0;
++	return fn(argc, argv, prefix, repo);
+ }
 diff --git a/t/t3450-history.sh b/t/t3450-history.sh
-new file mode 100755
-index 0000000000..9eb1ed6749
---- /dev/null
+index 9eb1ed6749..aa9d44c03b 100755
+--- a/t/t3450-history.sh
 +++ b/t/t3450-history.sh
-@@ -0,0 +1,12 @@
-+#!/bin/sh
-+
-+test_description='tests for git-history command'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'refuses to do anything without subcommand' '
-+	test_must_fail git history 2>err &&
-+	test_grep foo err
+@@ -6,7 +6,37 @@ test_description='tests for git-history command'
+ 
+ test_expect_success 'refuses to do anything without subcommand' '
+ 	test_must_fail git history 2>err &&
+-	test_grep foo err
++	test_grep "need a subcommand" err
 +'
 +
-+test_done
++test_expect_success 'abort complains about arguments' '
++	test_must_fail git history abort foo 2>err &&
++	test_grep "command does not take arguments" err
++'
++
++test_expect_success 'abort complains when no history edit is active' '
++	test_must_fail git history abort 2>err &&
++	test_grep "no history edit in progress" err
++'
++
++test_expect_success 'continue complains about arguments' '
++	test_must_fail git history continue foo 2>err &&
++	test_grep "command does not take arguments" err
++'
++
++test_expect_success 'continue complains when no history edit is active' '
++	test_must_fail git history continue 2>err &&
++	test_grep "no history edit in progress" err
++'
++
++test_expect_success 'quit complains about arguments' '
++	test_must_fail git history quit foo 2>err &&
++	test_grep "command does not take arguments" err
++'
++
++test_expect_success 'quit does not complain when no history edit is active' '
++	git history quit 2>err &&
++	test_must_be_empty err
+ '
+ 
+ test_done
 
 -- 
 2.51.0.417.g1ba7204a04.dirty
