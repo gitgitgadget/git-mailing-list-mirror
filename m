@@ -1,160 +1,112 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA972FC882
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 13:53:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C2F2222AC
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:06:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756993995; cv=none; b=cD6Ee77wG4lQg7bAcyTWL2C6ePCtuOYs2FOeqH0ax/k6LA8y0hRmH7/lXOQIE9tj5xNUDAVq5Mm5rUOJEwStAualGvBIJjP7nPf0sXD+JA61XRSGukSF5bfklMO6coa7q3g2i5z6UpwprYay3Itm9yeLP7/WA7WC7TgMOc9JgGk=
+	t=1756994764; cv=none; b=NhTTO+Mgg/5Cfsv0A5ZJVvdCCIkklqpwvb1rB1YWW18BK5QxNeylj9TgwnhC4Q69ANUu2ABj/ylExNAarClxsWCJ8LofBHXjvAZGyZyENX6nBgoB1/5Aul8GaOBguWUoIPdw+meyb9P7JlkiT4oVS67Oy9Fdu4VN12cQPjRR770=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756993995; c=relaxed/simple;
-	bh=28/dzEPb0UWRc1Bf1SQXNrYqQXqm60r9evd4CsfAcSI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oDiJIHWR5R71Mt48mYVMe4u31fRO4jTgqw45Nxf2wZr5Ks7I/NzCK6AXuF5rHuKMAETeu3DGD8QpIZrCuQbRbPY5K4q1ENCraIjbGgx9kJQ2R/8WX3LC9yJpcAqcyrIj3QD4WmIwTyNBjL2YJYnDttWOopwtccF02dpd3Xv2j4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from mop.sam.mop (2.8.3.0.0.0.0.0.0.0.0.0.0.0.0.0.a.5.c.d.c.d.9.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:19dc:dc5a::382])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: sam)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 31A35340D2B;
-	Thu, 04 Sep 2025 13:53:10 +0000 (UTC)
-From: Sam James <sam@gentoo.org>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Junio C Hamano
- <gitster@pobox.com>,  Taylor Blau <me@ttaylorr.com>,
-  rsbecker@nexbridge.com,  'Elijah Newren' <newren@gmail.com>,  'Kristoffer
- Haugsbakk' <kristofferhaugsbakk@fastmail.com>,  'Josh Soref'
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  'Christian Brabandt'
- <cb@256bit.org>,  'Phillip Wood' <phillip.wood123@gmail.com>,  'Eli
- Schwartz' <eschwartz@gentoo.org>,  "'Haelwenn (lanodan) Monnier'"
- <contact@hacktivis.me>,  'Johannes Schindelin'
- <Johannes.Schindelin@gmx.de>,  'Matthias =?utf-8?Q?A=C3=9Fhauer'?=
- <mha1993@live.de>,
-  'Collin Funk' <collin.funk1@gmail.com>,  'Mike Hommey' <mh@glandium.org>,
-  'Pierre-Emmanuel Patry' <pierre-emmanuel.patry@embecosm.com>,  "'D. Ben
- Knoble'" <ben.knoble@gmail.com>,  'Ramsay Jones'
- <ramsay@ramsayjones.plus.com>,  'Ezekiel Newren'
- <ezekielnewren@gmail.com>,  'Josh Steadmon' <steadmon@google.com>,
-  'Calvin Wan' <calvinwan@google.com>
-Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
-In-Reply-To: <aLl6iFXeAvL_hvqR@pks.im>
-Organization: Gentoo
-References: <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
-	<aK5mJI1NfVQDmDXN@nand.local>
-	<01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
-	<xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
-	<xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im>
-	<aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
-	<aLfU5sEa-RE3X4G2@pks.im>
-	<aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net>
-	<aLl6iFXeAvL_hvqR@pks.im>
-User-Agent: mu4e 1.12.12; emacs 31.0.50
-Date: Thu, 04 Sep 2025 14:53:07 +0100
-Message-ID: <87v7lymiik.fsf@gentoo.org>
+	s=arc-20240116; t=1756994764; c=relaxed/simple;
+	bh=5Qteg1EJNDC8WuddTk52yiXvYJPL3ivlww5CRXUs2Z0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=j8cRTYxL1j1qsFcSII4+F2arxDRfNqiq98fuCsWFVGj4tf4ORTHFwJhJ+W5Kzq1hCsmuIT8/c+TAyRV9nzEbqaoR/sPLjul0rEnm8MnSygw+NEwkKp1CNFU4YGRuYeCel0PXxNQu2TXNvAtPeGlOi3lK5XVnQBobxtkcRU+NCPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QpD8B09L; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QpD8B09L"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6188b5ad4f0so1836023a12.0
+        for <git@vger.kernel.org>; Thu, 04 Sep 2025 07:06:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756994761; x=1757599561; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZSc42OzCNscTVlOaiK3ppJAOQmDeNFkpIeiEBV/dbIY=;
+        b=QpD8B09Lt31xbK/mGuCijsH8siiYtIOPXfCUp4nM4IZvKQc/CnXvZPIR9HYzEg4c5O
+         uFO7EpXHbm1m4WjJ9QmVOH0PTwvwmcm8ZNTWgw8zd8FrC1noPHB5FmXN0E5j8lwnAMtr
+         XIH99aMQO8v9acCYmiYcHH5+HqeG5nivt5o9tIHpQTFRJM6r/QeQDoUJ+27Ieevs4MtA
+         Ca6tP+J85fvO2AYVvQWWraa2ROy8j/NpmtEC0DbJcOO/8321995L2dR+pM2XgNTz5aKs
+         3fTQZ7lkemkV55AUlPNmjfrOpqoYhAi4qKflfkVnFJWY06MVGGkkfpA6j2jNiKKvhZGG
+         mvzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756994761; x=1757599561;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZSc42OzCNscTVlOaiK3ppJAOQmDeNFkpIeiEBV/dbIY=;
+        b=FCqDg//6n6tQzRHAHhTisC4q9g18bgwS0ZLOw6yI9K3wypgu69V2CZhRzn4j3cWYrM
+         QjjbmKkKOnZu3oaLRHw6vs6tRlQfAo7gydEkfYLQXLFFeH19dqPLNmoqakztVVWUWDck
+         9VvhkDreutQq6w7QZtmdqPVWK3MvFhuxs2v7dGVNEZ4ZyAfvWKG/NRZZEY2WA1DeHdra
+         sDYgB8Z4jbuF4DfLTafjMMPTRs6mRhxSzIhoMLUCuzUBYrHfTh0vdBTLrAixFZb+EE2O
+         2VMpqcaStqpJ9eao4H+//d0KuQkLDpigCCJ3FJjgu6F76qEfwIIydPz8JDa9vY+GIGd8
+         ls5g==
+X-Gm-Message-State: AOJu0YykGDIy6qAmbB8yg+/wbP/lNIvBArcSFNXcUQioRmeysH4pVrph
+	mxHVwCsTAe6sbngHfofx3IqA1yc5A42nIiThMQuKmRt35pfTPTq4eFbdXzD9sVk6weqUESx9dvs
+	td3qczrVRFn6CVPt/mMwJsVEwbFE20Qbgg24t
+X-Gm-Gg: ASbGnctN4+d7E6I3MQKCJvJ4N4gk89npf9IO+GnVksfNXO9YW9Di8nCr/4wSUtLONoc
+	/iD1mq0mssCNJejhytdUNk8OBXyvta3bWsvryHrYxCRZ4Z+2PPcCAaYNG1EjNBkBgnYvXWGnVoi
+	vruJXkA5wG2ry1yGPS/i6G+Yf2G2dG0cVE4jckMe2ffQGZynXM3MCmDYGB9mb37XbuGK99GlYxI
+	vMTa16naEVdKNpKbqtcKCrxOhOvOeBp+sV5ReC0a1460K19lLE=
+X-Google-Smtp-Source: AGHT+IGJ6hHsyUZjeFNdK5htCLF0sFQYRgAoUwXBzy5l2rygTvR4uUdYTYvadxOMXt3PBDzgTetZo5N91fb5Wv55N4w=
+X-Received: by 2002:a17:906:4789:b0:b04:1a1c:cb5b with SMTP id
+ a640c23a62f3a-b041a1ccc38mr1531034966b.7.1756994760629; Thu, 04 Sep 2025
+ 07:06:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CALnO6CA3FkiOeF4w1TUf9S_UDTG_1iRxjEZcAkfrL_eqY+P26w@mail.gmail.com>
+In-Reply-To: <CALnO6CA3FkiOeF4w1TUf9S_UDTG_1iRxjEZcAkfrL_eqY+P26w@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 4 Sep 2025 10:05:48 -0400
+X-Gm-Features: Ac12FXzm-VQp4MFivohKIIpoA1R-bw_cEf4TP8MDBToq-OZl1k1hy7NRLSECuX8
+Message-ID: <CALnO6CCEF75uriogAEd5LfORJ-m9OmDcF7ubu-U_xLWwxfZWTQ@mail.gmail.com>
+Subject: Re: Performance (self-compiled vs. distributed)
+To: Git <git@vger.kernel.org>
+Cc: "hanyang.tony@bytedance.com" <hanyang.tony@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Thu, Sep 04, 2025 at 12:57:25AM +0000, brian m. carlson wrote:
->> On 2025-09-03 at 05:40:54, Patrick Steinhardt wrote:
->> > If I had the choice, I'd much rather adopt an ancient version of Rust if
->> > it means that more platforms can support it.
->> 
->> I think you may be assuming that gccrs targeting Rust 1.49 will
->> magically make it work on more platforms than upstream Rust will.
->> That's not the case.
+On Wed, Sep 3, 2025 at 4:31=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com>=
+ wrote:
 >
-> I don't have enough context to be able to tell. I'm mostly going by what
-> the gccrs maintainers themselves are saying. But if I'm misunderstanding
-> what gccrs will bring to the table I'm happy to be corrected.
+> I have an installation of Git at /usr/local/bin/git managed by
+> Homebrew. I'm also tinkering with building my own Git (+ patches) to
+> experiment with new features. Today I used "make install =E2=80=A6" to ge=
+t
+> that in ~/bin/git, but I'm noticing some performance problems. My
+> shell prompt started coming back slower, especially in a large
+> monorepo.
 >
-
-(I also think it's obvious that once gccrs can handle 1.49, we will have
-to put effort into making things build with it. Not sure who wanted or
-claimed magic. I just think relyling on a single implementation isn't a
-good idea.)
-
-> [snip]
->> > I think adopting Rust as a mandatory dependency out of nowhere would not
->> > be playing nice. It may require significant effort from distros to adapt
->> > to the new reality, so we should give them time to do so.
->> 
->> We've actually had this discussion on the list several times where we've
->> proposed the inclusion of Rust.  This is not the first time it's come
->> up, or the second.  It was explicitly mentioned a year ago on the list
->> that we wanted to adopt Rust in the notes from the Contributor Summit.
->> 
->> There has been plenty of notice that this is coming down the line.  It's
->> not accurate to claim it's "out of nowhere" nor to claim that people
->> have not had plenty of time to port their systems.
->> 
->> Distros and porters should not be insensible to the increasing use of
->> Rust or the need for them to get their systems working.  For instance,
->> you cannot run a GNOME or MATE desktop environment without librsvg2,
->> which is written in Rust.  Python's cryptography package adopted Rust
->> over four years ago and there was the same gnashing of teeth[1], yet
->> little progress has been made by porters on the same affected
->> architectures since that time.  In that time, Debian has bootstrapped
->> and released an entire RISC-V port, complete with Rust.
+> For example, inside said monorepo (apologies in advance; output is on
+> a computer I can't easily copy from):
 >
-> Discussions of theoretical nature are one thing though. The transition
-> that is actually happening is a different thing, and distributions will
-> need to prepare for this. We already had multiple distro maintainers
-> coming into these discussions saying that this will require a bunch of
-> work, which should be an indicator to us that we need to take it slow.
-> We should accommodate for that.
-
-I imagine most distributions have absolutely zero awareness of this
-thread or plans for git. See below.
-
+>     hyperfine -Ni -w10 {/usr/local,$HOME}/bin/git
+>     =E2=80=A6
+>     /usr/local/bin/git ran 4.99 +/- 1.69 times faster than ~/bin/git
 >
-> [snip]
->> It should be stated that there is a very easy way to get Rust working,
->> and that's to port LLVM to the platform in question.  IA-64 was removed
->> in 2009, but it might be possible to resurrect that out of tree if
->> there's interest and maybe even get it re-accepted upstream.  I'll point
->> out that AIX, Solaris, and QNX have done the necessary porting work to
->> get LLVM and Rust working over the past couple years, so it's not out of
->> the question for other platforms to do so as well.  And, for the
->> avoidance of doubt, I would be absolutely delighted if we were able to
->> support additional platforms with Rust as well.
+> The difference is 22ms +/- 6.5ms (15.3ms=E2=80=9356.3ms) compared to 109.=
+7ms
+> +/- 17.8ms (91.1ms=E2=80=93159.9ms).
 >
-> I cannot really say how hard or easy it is to port LLVM to a different
-> platform. I'd be surprised though if that work really was that easy.
-
-I think it's an interesting characterisation indeed.
-
+> My build recipe was
 >
->> Also, the approach of making it an optional component directly
->> contradicts the proposed policy I wrote up.  That's a recipe for
->> additional burdensome work maintaining two implementations, when we
->> actually want to make it easier for people to contribute functionality.
->> It also doesn't provide any of the memory safety benefits or address any
->> of the concerns from governments, security professionals, and other
->> parties about the real and substantial risks of continuing to develop in
->> C.
->
-> The only reason why we want to have it as an optional component is to
-> make the transitioning period easier for downstream distributors. And
-> the intent is not to convert major components -- it should be trivial
-> components that we can use as test balloons, similar to how we did it
-> for all of our C99 test balloons.
+>     export DEVELOPER=3D1
+>     export XML_CATALOG_FILES=3D/usr/local/etc/xml/catalog
+>     make -j "$(nproc)" all doc
+>     make install install-doc install-html
 
-Yes, even if it were just for one release, having it optional for
-something would mean we can adjust packaging without some huge pressure
-where git had 0 Rust in one release and then mandatory Rust in another.
+Interesting. It was suggested off-list that I should try building with
+CFLAGS=3D-Oz, which I'm having some trouble propagating (with V=3D1, I see
+some initial files built with -Oz and then later some with -O2??).
 
-(I would of course prefer far more than one release, but I've tried
-throughout this thread to give options even if the one I'd prefer isn't
-pursued, not "teeth gnash").
+But on my other (non-corporate-managed) machine, I see almost no
+timing difference between a built Git and a Homebrew-installed Git. So
+I wonder if the corporate binary sniffer is causing problems=E2=80=A6
 
-sam
+--=20
+D. Ben Knoble
