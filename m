@@ -1,88 +1,96 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046172749C4
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 22:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53C32EBDF9
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 22:46:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757025831; cv=none; b=kUGCm8rjNPPlWbeu3E+LA1+H+WJTW2KjkUUzobkxcA/n2ZGlB4trxNV3+itUpV4WoPPVgVK8MqtuURUW+/LXnpc0257eQQ/KBLVDJ0TlGpT2mtqOwhZZAGrXFzSZzqJp5seEskHqDyAlRmHGYHUiJDIQdFcM+RTt+t9ha4tjErs=
+	t=1757026019; cv=none; b=WNt5/XRsGKA+6s6gLgwk53jM1TQWiD2kVojs8Y/CEwLIcuSxnGHjmxErDyxaupVoxT2G1OiXCvg/rgZTCa6OJoptM/yzKN7OkRlkGB0ctWA1JqYVxhKY/gFvQirpBIDJtyGGeJEPY5dVwAcyWG/mMNw2jKeNEdRZFdJK88XDeAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757025831; c=relaxed/simple;
-	bh=LVzcteWa+5K1zF0vwlWgj8kMV3kqw2ymAbn8MAudFik=;
+	s=arc-20240116; t=1757026019; c=relaxed/simple;
+	bh=6gNI2d7sRp6Gcu4dLazeh4LhIsVm5i9FtqONjlyY0KQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IgcMGu5HmwYqEemrUcWQyPTSJoeIYzZ8g2Q6SWN6PI1het2khcmjnP/aUFGTYC++PSrDZ7wpjPbLgwjWUYOB/iVZhJFMv5D4/YTM7GPfAJ2QSFSqoDY170+zJpYrvmigIiyfVy3WfdI8jSWK2GTSBUQCQ4vFTlNCwMqdUnlUWeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=y2Ljyd1C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ASHxYh/3; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=Ugnzs8WVyjitnGFaB+ereYiCOcZ3id+OzG15r+0x1Tf9N95M6VVG4nxKPsEO6odfhx0j14lngSpARJWFtvdJ3HtWF3LBYC+osK+Hv6zlxoA6oJj1Nu0BO3iKZiFRChktAc/LpXRGMhSIzYm6aFSDcpWnY/joXAPNkP/fqd2u728=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sMiWQC0e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y1aTx11E; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="y2Ljyd1C";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ASHxYh/3"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id DB7B51D005A7;
-	Thu,  4 Sep 2025 18:43:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 04 Sep 2025 18:43:48 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sMiWQC0e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y1aTx11E"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6A5B77A0602;
+	Thu,  4 Sep 2025 18:46:56 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 04 Sep 2025 18:46:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757025827; x=1757112227; bh=W+VqJPd10+
-	6d5I+jp3eDMX8HSeGOXkVq0aQHV3uPTEU=; b=y2Ljyd1CqEsW7UwQUBGJj7RIz8
-	ukq1448ShbIPXCpQcsEKQDMUSDcimIpzy4n/72iJQNq2jL1MOSQfRXhhQXQJsNmE
-	IbH1IE8rc6UfPRBCdUWrVk4ElOm8pFAioG95BZEICLpYSoUSn8PKZ3kuWFiYm9IQ
-	8A2xNFoZZjCqtATvA+Xg7VGqWfJn3X6S/nYNTj1kDspmGpBoA6kQjpVbgnq/IykJ
-	EkrdKxTAq3noofraLuAbh9sj4SakS2viI6gl7gGgv/d72PSQDxlFPDCetjvWdqHH
-	TJAyF5WcebAisERpFa862+fl1kp2MoUn65aXtjxqPfDJ4PXGIpV2c+f4xAPQ==
+	:subject:to:to; s=fm3; t=1757026016; x=1757112416; bh=HMU5NyfVs2
+	eiTZmc8sCwQxop583gmcmMyN++LfDsBvM=; b=sMiWQC0e8QFAgiv1woxAokHIBS
+	+vYhKa023dxf9iOV7nI17dGJDcMFkNxudORibnDrNTDOIEmZJyWHgG2v5AmDytVD
+	D6OWiy5wMftoyOcozq2rfPy6af6o7KFc3nHbjKE5GdXjUoKlWswoMNJisM7AsYZZ
+	8R8FND0wO4cv6RTtpv42AcMXWi/C5kQiHf+27JbzyqWTCfZbYz3KHwNtKfUDL83B
+	RmACsDFiHX4O9fCSt97Gi75V1jQwaCu4pw2+KGfWTFLtz2ICj7TG6Ipgp1yeJWsJ
+	QYhpi6t6RE92aofnn/MrjDdPif9+kg87X5i+B58AO3HUBe4digTlrXbxkTkw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757025827; x=1757112227; bh=W+VqJPd10+6d5I+jp3eDMX8HSeGOXkVq0aQ
-	HV3uPTEU=; b=ASHxYh/33vtd+Rwlck289sFd6zKbKQEBS3le2U6xLKcTjEaPC8Y
-	sc57lvo/R0RVkNLXEA4GEhfNIpp//wBrb5e63Ab0K3wMd9U3XZatAOYBX29eR6mT
-	INcCB1wg+LvIU734XvY1LncNhDKUxZDoJPMC7TK8F1upRyB/dsHcfS03t04abfIA
-	a6dPzJqGwoQqMDMIivDtKC/xTMKUAAbzpT2SQ6H1RKZ9OEHhcTJ6+ejdyPs/5XYY
-	OIDEsRqiHc+L5U0YYjW1Pt8vRNy7wNA0Q+Z7hPUWEgNiTEtWTbp0FZAfp7O10fCg
-	kdCEanZ7BZY8CvFSNhnzZpHmKHXR+U//8gg==
-X-ME-Sender: <xms:Ixa6aBmezjoPFwyRDppC1Jjwi2aFauIL9aoeIM2rE4C3k_PMgUMe-Q>
-    <xme:Ixa6aFQh02FRs6mC4uhtTssV-K8w1gb2FzvjsPE395Va2jbgQ0NNu3I7V1vml20h0
-    9giNWVEtEpkXe4oxA>
-X-ME-Received: <xmr:Ixa6aIEYNMyCf1dGKs-EsEy_twWBcWXpwwSW_SMYx13hanHvJWVEYvEulk4bOsAmBppxr6pHPGc2yjgJ23RxEGYOmNmonCNmS-de5JU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejvdegucetufdoteggodetrfdotf
+	1757026016; x=1757112416; bh=HMU5NyfVs2eiTZmc8sCwQxop583gmcmMyN+
+	+LfDsBvM=; b=Y1aTx11EBk2H2LbBj4uSl/jcmWelTbJz16tlV3haH6W7TWGNEdc
+	DYP9Pp/5Ztt7BiVimlpUTKov0oO/1hkru9f2FBT01agi52shGJ0dfB6Mb4ELXeKt
+	Qu7MxVjft5Al+M53Z0L1qgWelULj4EfRrnM9G1WTaLc3zxRxah/dAZv48PKcoReG
+	DPNYbkdWHDfItOcSFIobmf/bZOZRVByFmdNVt6nM3tugYScer0CQBH/FkCAgxhAo
+	kJagznq4FJPl43tibNaphzeJRx61JFHE+wD+y7DydMwJrEQgwTKGTvpS6f4LEw5x
+	6YRWYa/rxe25stVjUFFT6fZLRId49xyeCTw==
+X-ME-Sender: <xms:3xa6aO5Uy_3og2MQIjkNEVxJVebwN_oIhzPJ5L_fvxfo5n3ik87qdw>
+    <xme:3xa6aIhtLM4Izq_xgklqVUEp7mzutXjL0msSpwQSqRwyaxjUlnng4Qk9E2-fMMAzx
+    Lc1RNS36CJlzZ93Kw>
+X-ME-Received: <xmr:3xa6aImiRPNGjFlvkkIUYCt566FZSNFdkuFppesL8ifcfmbQLPMcAwuBGwKrtoEZBoCRPURRdXvSL5OvgNxuZ4bB7DLlEcrNT4YvNoY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejvdehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
     ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
     jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepgefhgffffeduheeuleefhfevtedvvdffteffgeeiheehfeduieegfefgteeitedt
-    necuffhomhgrihhnpehgihhthhhusgdrtghomhdphhhtthhpugdrshhhnecuvehluhhsth
-    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphho
-    sghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhovgdrughrvgifse
-    hinhguvgigvgigtghhrghnghgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
-    nhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:Ixa6aCEklJsnKKIItWbIe-fQv5MqVB4ZLIhUvq3BamPPEmg7QNtmiQ>
-    <xmx:Ixa6aOQmJdJmJLJY8mPv0u7HF79rngrO3Y75l--p0Nw3lEDxlOtU_g>
-    <xmx:Ixa6aLLd-nqDz3Lrx3FkU-C1tXuWHTa5jA8drXcDaZKPqOLRJQYVhw>
-    <xmx:Ixa6aBZV5HqwO4nhBxDbj62oo4SN5lKcNmI5QtgHB7p2ap9KQs5nvg>
-    <xmx:Ixa6aPBIrnm3gBjF4KwVuNzhz1dDHL78wXTIKARJfTtdF8YmK7W4WSVG>
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
+    htvgdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohhnthgrtghtsehhrggtkh
+    htihhvihhsrdhmvgdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtgho
+    mhdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtoheptgholhhlih
+    hnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiies
+    ghgvnhhtohhordhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:3xa6aPtUN_08R2LpLOTsC2mPz-xm8Xkb4hE64KCgeVRj7v9EvUhECw>
+    <xmx:3xa6aGAQADyh4R-vgjp89f1ovHuij1a5kRQxZ9JLMC4q56u7SRgqBg>
+    <xmx:3xa6aMXAjgfVm63C3kkAjUqyNrRKsPEnYcGdURjPo6nDbsAyC-E47w>
+    <xmx:3xa6aPFPG-TxJ8t2OPPInR0ZOuTW7S1FUCctHk9tWSN9vBGSFw7ttA>
+    <xmx:4Ba6aKrqRGOWmPNFjxTP3TqBa2Ktom58zlon5qg2_4V8ntGMzuIuqACc>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Sep 2025 18:43:47 -0400 (EDT)
+ 4 Sep 2025 18:46:55 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  joe.drew@indexexchange.com,  peff@peff.net,
-  ps@pks.im
-Subject: Re: [PATCH 2/2] refs/files: handle F/D conflicts in
- case-insensitive FS
-In-Reply-To: <xmqqms7bfll4.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	03 Sep 2025 11:16:23 -0700")
-References: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com>
-	<20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-2-35e69bbb507d@gmail.com>
-	<xmqqms7bfll4.fsf@gitster.g>
-Date: Thu, 04 Sep 2025 15:43:46 -0700
-Message-ID: <xmqqfrd17s9p.fsf@gitster.g>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  "Haelwenn
+ (lanodan) Monnier" <contact@hacktivis.me>,  Ben Knoble
+ <ben.knoble@gmail.com>,  Christian Brabandt <cb@256bit.org>,  Collin Funk
+ <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
+ Newren <newren@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
+ <pierre-emmanuel.patry@embecosm.com>,  Sam James <sam@gentoo.org>,  Taylor
+ Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC 1/3] meson: add infrastructure to build internal
+ Rust library
+In-Reply-To: <aLoNc5S6PVW8jLu5@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Thu, 4 Sep 2025 22:06:43 +0000")
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+	<20250904-b4-pks-rust-breaking-change-v1-1-3af1d25e0be9@pks.im>
+	<aLoNc5S6PVW8jLu5@fruit.crustytoothpaste.net>
+Date: Thu, 04 Sep 2025 15:46:53 -0700
+Message-ID: <xmqqa5397s4i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,66 +100,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
->> So opt for the more simpler option, of
->> lowercasing all references sent to this function when on a
->> case-insensitive filesystem and operating on the files-backend.
+> I don't see any changes in this series that wire up the Makefile to do
+> the same thing.  Lots of people use the Makefile, or things based on the
+> Makefile like the autotools, so we'll want to make sure this
+> autodetection works there.  For instance, I build with the Makefile, we
+> build with it at work, and Debian builds only with the Makefile.
+
+Yeah, that is a bit disappointing, but I was not surprised, as that
+is what the cover letter promised to give us ;-)
+
+> We also probably need to test this configuration in CI as well.
 >
-> So when you are trying to lock "Foo", you lock "foo", for example?
-> How would that let the generic code liks verify_refname_available
-> notice that an existing ref "Foo/bar" would crash with the name you
-> are trying to take, which is now downcased to be "foo"?  I am not
-> sure if the above explanation is sufficiently clear to convince
-> readers why it is sufficient..
+>> diff --git a/meson.build b/meson.build
+>> index e8ec0eca165..1c0e98bbc14 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -1702,8 +1702,21 @@ version_def_h = custom_target(
+>>  )
+>>  libgit_sources += version_def_h
+>>  
+>> +libgit_libraries = [ ]
+>> +
+>> +if meson.version().version_compare('>=1.9.0')
+>
+> I think we need a different approach.  Debian 13, which was just
+> released, only supports meson 1.7.0, and you have to use testing or
+> unstable to get 1.9.0.  There are no versions of Ubuntu, released or
+> not, that support meson 1.9.0.
+>
+> If we require this version, practically nobody is going to actually test
+> this case.
+>
+> Our platform support policy implies that we should be requiring nothing
+> greater than meson 0.56.2, which is available in Debian 11 and has LTS
+> support until 2026-08-31.  Ubuntu 22.04 offers 0.61.2.
 
-Here is a quick-and-dirty monkey-see-monkey-do patch on top of your
-series, and with it jobs on osx boxes seem to fail.
-
-https://github.com/git/git/actions/runs/17477662700/job/49641377250#step:4:1912
-
- t/t5510-fetch.sh | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
-
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 84dc68e5f3..76af769f5c 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -59,6 +59,12 @@ test_expect_success "clone and setup child repos" '
- 		cd case_sensitive_fd &&
- 		git branch foo/bar &&
- 		git branch Foo
-+	) &&
-+	git clone --ref-format=reftable . case_sensitive_df &&
-+	(
-+		cd case_sensitive_df &&
-+		git branch Foo/bar &&
-+		git branch foo
- 	)
- '
- 
-@@ -1566,6 +1572,20 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'F/D conflict on case insensiti
- 	)
- '
- 
-+test_expect_success CASE_INSENSITIVE_FS,REFFILES 'D/F conflict on case insensitive filesystem' '
-+	test_when_finished rm -rf case_insensitive &&
-+	(
-+		git init --bare case_insensitive &&
-+		cd case_insensitive &&
-+		git remote add origin -- ../case_sensitive_df &&
-+		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
-+		test_grep "failed: refname conflict" err &&
-+		git rev-parse refs/heads/main >expect &&
-+		git rev-parse refs/heads/Foo/bar >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
--- 
-2.51.0-314-g9a15cfd6dc
-
-
+Thanks for reminding all of us.
