@@ -1,89 +1,126 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEBB2BE020
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 22:56:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F328298CD5
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 23:12:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757026573; cv=none; b=kmsEIurDCf414sIgDDxH9AsNde2/oZ8c2+bfPx+Wx5UshDTuld1y1usMCxxbF9bRJVaKl8R+7k6thIQw+QrIbBmk+5pMzR3V9BHVkB+0Ix3IyI6yUXnpINg2nlwMwmmiUT4mqrQrHaiuhhwDDO8xp46KplsaLtv/IO2SIUcHncw=
+	t=1757027580; cv=none; b=g6y0MAIKS8khLTJFuJjK/VENDZA7pdiAK//8C9rhhI50bu+E3OCkF9sd7Zyr99OQA6ExI1M7O4ToXa49vJTrmXf8eQoTLRIT9YBIVs/5BDpXTOp4gCUHPsUKBcJvG8aKoKS3wPBtWZ+VcE3dW1HIGBYJi/2zxSpv8+7lzyYBO1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757026573; c=relaxed/simple;
-	bh=3ljmOwObkK6rXB6I86ZDePtEOcbWgOSchspsakRhgSU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=eM5aoC9rDYoTgRPDCtV5aenzztw+6AI8FjjyYw9dBgOlMrRGPgs4IDYNGRH/jgYw1NVtFapmAhDVd/oOwlxdfyPL9E8zTtl4iC9+wrBdGwPD89F90CDCmUtneWekzcWP7EI5e/n72o3zyabF05kGW66QLVBNlpbHZR62PI698i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XhQ8zcCz; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757027580; c=relaxed/simple;
+	bh=EmPxEgcmb8jigZufgGILp+PXRunHgUnWaTUCrCo02BQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Xch5yQHkvwJK+vE7cJAwiIlCuRDtXWDZPyxnjiY8GYT4K/GUKJDu2Kb8DFHNcgzE0X4AyISClNWSONwYF0Tvh0TvFimEE0QE0dTSncZblXiNi70KvMbTCPcndfymZoweIYcmJsLwO5KJQu6tTufilr68njd5bkQ6nNHjTO9y5b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KPwNcAW7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EE6GnIiG; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XhQ8zcCz"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-55f98e7782bso1843375e87.0
-        for <git@vger.kernel.org>; Thu, 04 Sep 2025 15:56:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757026569; x=1757631369; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3ljmOwObkK6rXB6I86ZDePtEOcbWgOSchspsakRhgSU=;
-        b=XhQ8zcCzcEB7G5ybUSnOr5llGEUr7DOmUyM4RT7fvtjBGVkjKNzVTpYxf+HNsaHho+
-         HPPMo19+3wJYBOxr2s9ACBQi0hG3iIuYu2ziLlKrGS7SxWoyNDTfNrVmEHtvZmVVDAJn
-         kzWfHUyyQeueo4ygJCgX7b22CSElomhYXCbAnwnUynfvun5d/06y4M4IgGbSO+FOGxsT
-         JhenfXJ8rzptRjcuJwwXYu0yKmMrahlHNRfabnyA1j7PBM7hZ+w49fxxcSqzehTMBW/p
-         faa9MGkDI1W4qI+x/MQT57A0OmP/Cb8AxGzzTU7G5r2D2m64I6hKKALsvFPqnpaDWyj9
-         OR9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757026569; x=1757631369;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3ljmOwObkK6rXB6I86ZDePtEOcbWgOSchspsakRhgSU=;
-        b=qRa8GySpc3JKs3HHSOpuBcsYlRgWYP7qHpHMDzqhbb+0VYJV9mDelCxAKxduTv1V5s
-         EcCcbK/CSDZ6YHmD7KcVnThgyQMf4kkMSMpy1Elnp50AvfvVLNt2UGrdcO3hfvev6byx
-         L6vJG3qojkaRHt+wBqnLBZCjPvjPoeRHRUWFR+9erDY/rDZ17zOup+NB5c9P52EbxVVI
-         GhAfMVVjgtUAIFJOGGPLTFrrSdQnyXp38Wat2FOCAeWHHHZ+qNi9pPIrAnMzImz6aIkD
-         x0I/gh4HZCg0B32vTSrjiWFs5sNKsuVfpF40Xnc+nbmltr+BdfitxZ3KPLIGcBbOE4ho
-         3dyg==
-X-Forwarded-Encrypted: i=1; AJvYcCU5FP3pGzprBLvTPyd41YIB1RShQxSrjss2mGzqLken2snoZ+5MwaRuU4systsinXcGBYk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXcdnGYcDsOL4VWIyZLZaH5hKbQGpQWjL5c9hMbz7ilieHSLYf
-	rsnKx2fwoF8Y25MmoVymlzq6NULNtOflSPwtTrJo88xUly4zPJXi4tr3bakyubfNxVB1VF0xK4r
-	PW3sQwBxnn+NscCvqpHDaNvR45A7yzRc=
-X-Gm-Gg: ASbGnctTNk+2BmpXjz0CWjfp2pxmi/smFSf7PhFEBHaGX9nxGQeoPKVbEIS2QBMV8Ef
-	aZm43D4JfHCZnkoEgy4i5lGg2ugdr1ZIugPG7yLP5ZNXSD+ctqxpp9RnATah7Bl/W3h9oq4Bcdh
-	VVIpljCykje9CTpumRZo6LrNCRs7FOoIdKNF2El1kZ2NQTk7fxCTb7FgW8r0FUmvG2tsPg/m/Ap
-	fWxtjRDZ1ZYjEQaEZc=
-X-Google-Smtp-Source: AGHT+IFtJ2f8jik2VpCMozGTwyPVMAvqAPL+DxY9IEtBoPBviqLhHx0+/MG4ujQs9QmkqLdBQQro4JmHC14bV36zRE0=
-X-Received: by 2002:ac2:57c7:0:b0:55f:5c1d:6cc4 with SMTP id
- 2adb3069b0e04-560995d6aaamr289653e87.20.1757026569389; Thu, 04 Sep 2025
- 15:56:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KPwNcAW7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EE6GnIiG"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 06EAA7A0608;
+	Thu,  4 Sep 2025 19:12:56 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Thu, 04 Sep 2025 19:12:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757027576; x=1757113976; bh=8ZMTxyzV8i
+	ZBa8+ZRJygbMQ3gt5uoQUQQq2uMe43xsg=; b=KPwNcAW7YA30vsWCwTGWrPGnRO
+	DVt15EI/PmudPSW3tSrJ6WTHeVagxcjfvgG9IFHU+psluPEkWsgt5Nc9Rx3uakWU
+	nf24QJbZ89upo3OfXNDGRkT5KB0lERvJ2joCDdT3nIz+xE8No39SvwNIFMumwVTs
+	43doh2fKvmSw4RJ2cdcVXkJ1UlSYcFsJ/BBWxRawKE7mhuvmvBI8Yz5Hn6apSjII
+	efCZa4stmawrdES0iMAawxsIrkJyRJzKJTsdzpHOQbTdJlic2bS6k+PlTBUasw7h
+	S5HjhZ/6nZ9jcu7Jl8bymZXK/lJ4pldOizQldCd4LqlN51b029fziETiGrGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757027576; x=1757113976; bh=8ZMTxyzV8iZBa8+ZRJygbMQ3gt5uoQUQQq2
+	uMe43xsg=; b=EE6GnIiGuDgU9LlVEqjkgb3TL3wJnPf3KibQC6lZnTiTNjTIDLk
+	1TdU1frHS0Wfgrta/NG2YmAxTSv9lPw1+aqdddPwj/PWEA+n8O8mCebtsbKAcYpo
+	gWCa+lgaTpIXl/8093cyDxiEQ6jnWjACk7YfiaaMlGWp8U5Kl6aYaMGH/eO/TM8S
+	h29Bu1dRIgy2kkNaPnifqKE7mh0aTidQVIktjowFdVFyJDP2KHvggR0tJGYtos4F
+	1Afi+0M2zw+srUEwrS9PmYPZA0/Pp/6V4i6sr6Hkk/y+Mq/SZP+gX8QxlqremDXL
+	yKg1NRLqRGnz36RXB8xx8+/rW7DhVSmQxhg==
+X-ME-Sender: <xms:-By6aCiZFFqKYXWhrSQ7B7wjPn4C1AP76DKadt2py5oLZ9Sn7QKuJQ>
+    <xme:-By6aGQuvfG86a5xL26mk-p5u0omIFKlgVMmSYe_d4I0JAXgbXEWG1MGHprZUzZlB
+    EIvYvDhT7_7S-hUTQ>
+X-ME-Received: <xmr:-By6aDgcNUrqIDagC2BhIaTtwmG1KnHXsYiuw8welTPdOeu-P-APaEv5rDxA0nG5Nk9yy_qUPtBhCfC-tERgv7HJ8GwtzBbKMtX2JgA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejvdelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:-By6aG7P-E0HxhsCoYmu1Elv7EjQDWpUDBksTFcZtzcn_pyvivbHxw>
+    <xmx:-By6aACnRmW6nVlNDve10cJH6NJyUM4rwBcssU1bqwQgLFrMPfp2KA>
+    <xmx:-By6aNYk8vqs363XhCzSyjJ_7wRy7zVYtruPNOr0zAIR82WdwIsdrQ>
+    <xmx:-By6aLazqFJE1w24ze8qTIuc3I-7x2AN5y91zJgIwWNUD562KUF84A>
+    <xmx:-By6aF37bHEm5kBStNr0FpuXTRNYe_RmWwVwANapqnxqBNbcPwQDQpI7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 4 Sep 2025 19:12:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
+In-Reply-To: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
+	(Patrick Steinhardt's message of "Thu, 04 Sep 2025 14:49:54 +0200")
+References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
+Date: Thu, 04 Sep 2025 16:12:55 -0700
+Message-ID: <xmqq5xdx7qx4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
- <6d065f550fe871cf010409f7bd2a63438cf52723.1756496539.git.gitgitgadget@gmail.com>
- <aLIG5bLOisbxfn1y@fruit.crustytoothpaste.net> <CAH=ZcbBJV0oT1Ht6qVKmq7xG8ki9Enutq+VNes4n9+2r+0nrvA@mail.gmail.com>
- <aLcdwiRpD1Yo7SKy@fruit.crustytoothpaste.net> <CAH=ZcbCgYEVrhejh66H4xqpuXyZj9jh+JqfH3mYik206-fVTSg@mail.gmail.com>
-In-Reply-To: <CAH=ZcbCgYEVrhejh66H4xqpuXyZj9jh+JqfH3mYik206-fVTSg@mail.gmail.com>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Thu, 4 Sep 2025 16:55:58 -0600
-X-Gm-Features: Ac12FXwwzBQVAkYsJ9LWWsZESq8xCRnLA-pCsNGcTX344rEx3BoniMxyh0tmy2g
-Message-ID: <CAH=ZcbBzqHfikO79JyFRvWVvh+vFQtXmhXViJWuW1yq3Xa04bQ@mail.gmail.com>
-Subject: Re: [PATCH 01/15] doc: add a policy for using Rust
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Ezekiel Newren <ezekielnewren@gmail.com>, 
-	"brian m. carlson via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Sep 2, 2025 at 12:39=E2=80=AFPM Ezekiel Newren <ezekielnewren@gmail=
-.com> wrote:
-> Actually now that I'm knee deep in adding cbindgen to Rust it'll make
-> less sense to add it later. I'm currently working on refactoring my
-> entire patch series to include cbindgen from the beginning. I haven't
-> looked into cbindgen until now because I wanted to understand at a
-> deep level how C <-> Rust ffi worked rather than using an automagical
-> tool like cbindgen. I now think cbindgen should be part of the
-> introduction of Rust.
+Patrick Steinhardt <ps@pks.im> writes:
 
-I've been able to get cbindgen to work with 1.63.0, but I'm not ready
-to release my next patch series yet.
+> commit graphs are currently stored on the object database level. This
+> doesn't really make much sense conceptually, given that commit graphs
+> are specific to one object source. Furthermore, with the upcoming
+> pluggable object database effort, an object source's backend may not
+> evene have a commit graph in the first place but store that information
+> in a different format altogether.
+>
+> This patch series prepares for that by moving the commit graph from
+> `struct object_database` into `struct odb_source`.
+
+Hmph, I am finding the above hard to agree with at the conceptual
+level.  In some future, we may use multiple object stores in a
+single repository.  Perhaps we would be storing older parts of
+history in semi-online storage while newer parts are stored in
+readily available storage.  But the side data structure that allows
+us to quickly learn who are parents of one commit is without having
+to go to the object store in order to parse the actualy commit
+object can be stored for the entire history if we wanted to, or more
+recent part of the history but not limited to the "readily available
+storage" part.  IOW, where the boundary between the older and the
+newer parts of the history lies and which commits the commit graph
+covers should be pretty much independent.
+
+So moving from object_database (i.e. the whole world) to individual
+odb_source (i.e. where one particular subset of the history is
+stored) feels like totally backwards to me.  Surely, a commit graph
+file may be defined over a set of packfiles and remaining loose
+object files, but it is not like an instance of the commit-graph
+file is tied to packfiles in the sense that it uses the index into
+some packfile instead of the actual object names to refer to
+commits, or anything like that (this is quite different from other
+files that are very specific to a single object store, like midx
+that is tied to the packfiles it describes).
+
+
+
+
