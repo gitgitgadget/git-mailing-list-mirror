@@ -1,118 +1,100 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B79D2F6565
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 23:27:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C40A2D73B3
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 23:39:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757028466; cv=none; b=lNBdPZbHKkHoJvlb1lJbJ3FiM1c0U5jR5mddrkaqMj73Jbu9Z9+2QYJz3BTgnnx9nPlaaAAPHe7mNzlamCuUzdtEMkeD1aZDoFWbQSzO+BpezpZkdW9nbUfx8oyi2QlY2YMBAgtPCvSk+OIAkhZ9Ji6gM92zs8tri3BYKII8tNw=
+	t=1757029200; cv=none; b=V6haq/0+AyS44orM1z5jQYYjD3G5wjyf6UcCJNeS6aDHcwu0QrUiYG9lyXTW4YB8rg+DNXZmbttUJxz85FNaB66bYwOcYXXfkiRh3MXMzXjJ0lLsDgBc/W9QZpEdiSYYrUESgL8Z3vobVCfDezA87m3T9Cukfs0KeujtHfOGNzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757028466; c=relaxed/simple;
-	bh=cBfHd5jgi70VRWcM4PlUENuzG2bNmKfcpC/YvBIkA8U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Yg8UwNbTCIcbABYfzLiOnYgXTOkwkW/Tyh19GQFsLXNw8EbqPK3Q3yCxolERGYD6XK6jHEWjIzcldHD8fxmuqQ4VsbtNx5R5jBevuDeZK/4b9mO7Lr37ii6j6czT6o02CvKPjE89oKct7C0Baon2ErbbuuTyfC4zirB0jCSCjNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ILaI1iOM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JTeBwJZV; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757029200; c=relaxed/simple;
+	bh=vFO/yJN8RtChGm7WvPGMSfCI3FqkzqTYJkyyLd9TySE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=j3zcDCYYb8/GB3NIu/wLXhclDNVfsbYvknpghc6WyFoeCYQ7tk2CuEhklFcQlSwlaZ/R4emSffxuYfIvQR+c0bUSlEztkjhU0qtF1dZroFoA1mBEDm2ni+ZqXADyuQ4sXL8JkepxacesFcSVvCmrcUH8JZBNr+3QcNxB+G2LiU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lReODY2K; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ILaI1iOM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JTeBwJZV"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B53687A05E9;
-	Thu,  4 Sep 2025 19:27:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Thu, 04 Sep 2025 19:27:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757028462; x=1757114862; bh=iBuMaj49S3
-	rkogzKun1b51t61swo3PhE6y4GVMoMjDE=; b=ILaI1iOMDzfVfb0MyOgLi2CS0F
-	7fD1cT2No4wQK8+9+WHULp13dQv5a7NLPkItpBMt8QPVcZiu7L3kI3k6imMBjQ1J
-	vJZxTYwg1t9QgKzeNp9jjgYy+CPPVzR1RXehVuEsn1XBvQg1LdFO3COP+2HKUik9
-	JQ+Gfm25fgA/aXweg23QsFG3sbr8NAn+kjQTKOTNHVBJ9Zdfs1V5AUPgp+Pu2AI5
-	mGYKKtS0021h6S/nUQzgxZPjbWyiFVa5/2O97Dxne1YVIEbcURbrr4TrBfaa7i8u
-	yHE2sf/NhqFIbvvi3cvTCsM/T0ImLvrytL0dfpQCD1lvs3OMqwV+K+suNZZg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757028462; x=1757114862; bh=iBuMaj49S3rkogzKun1b51t61swo3PhE6y4
-	GVMoMjDE=; b=JTeBwJZVK7d84fZkocq/5ZuQMedGsMFKXcxCxoEyE/c6Nul99GX
-	3nyBFcQ64fGutbGLLfl+waYnlxxof0wksWQGEtBeYlJk1/elvoDgmB/VSBqRpcJZ
-	42+00WgbAMBioHyCaS7rL/WZMNNYwec/JJKOgkjiz5zuoiDeWMhgktMXPp1Hdii1
-	TSnollaCLCeYjIX6irLTXMMd2HcCwoRFm9zH+RaTL05yuskJK51Va72t8fYuE/lj
-	AiiScafGXz/gH2cKZ6RoKha3jBYAVdu4Qb4eKp6ss3Y6DUBl0LV688dnLxW4hG7s
-	S6gPt5WF1GXCV0KZtGdpq9y6RrCgF+keQXQ==
-X-ME-Sender: <xms:biC6aGk_dRCIHIqu8-i7ioey-49hUbvwZhKb_GGKKxu5KttQ2XFDTA>
-    <xme:biC6aBFeLhCyv4LCebAZS_iJp0lCagpUdKj-jtiCH4faQNrtWHBmVTlZd9wkBhr2L
-    mZVebeVN2P6Ju1fhg>
-X-ME-Received: <xmr:biC6aOHWt-pwBtw4fO9Ub5V-STp57JijwFzPfwzpLsgK5dJEEGdmRGwJCaQcq3Keqka1eYsvcsmveqlobm9Rr_lLQc5Nz0ONEnNkScc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejfeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:biC6aGMfIrt0odB_son3QVuC8umTrrnIpwmJiEoTnAZrP8NjI7J8nw>
-    <xmx:biC6aFHQjykfZVBtbJGWuKomPzezZM4-RKam8jR8iQyU7-PXzi6O4Q>
-    <xmx:biC6aFOC451akdG7b9lYjErJ9NgLxscWkxYYtsLIRy9MgDjFOIxd9A>
-    <xmx:biC6aO_PpyJdzJzckqOPdq42Yhg8HOZ2OdYRZhnDhBQDN2pLh7oQjQ>
-    <xmx:biC6aIqFWEXGrvS_lj_nH3A81Q0ia3p8xNDW1z1Sugn82bSFM9s3yX3c>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Sep 2025 19:27:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
-In-Reply-To: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
-	(Patrick Steinhardt's message of "Thu, 04 Sep 2025 14:49:54 +0200")
-References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
-Date: Thu, 04 Sep 2025 16:27:41 -0700
-Message-ID: <xmqq1pol7q8i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lReODY2K"
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-3381df3b950so4609551fa.0
+        for <git@vger.kernel.org>; Thu, 04 Sep 2025 16:39:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757029197; x=1757633997; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7dlmxNudCh/MFw+sxcsYXJdjvwJxLJWbhGKO74LPyL4=;
+        b=lReODY2KHZfb/peg9CtKTedTPx/mnWzmin+jgiOIsKeKYJEIup8xdNLtn3zWXkPRaA
+         mkPdP+hSifxYYBddApczaQXWyscf0p6LSBDM8pvHyUVa9lZoPn9IO0g3R73a7Bht+PAj
+         txxlg0stxzSnP54R6aggA2giGBjrTLEeV0YcMu3ITwrOreNPSPshHzjti4Ibqw0PmFoK
+         b1H3rOBEPsnp2F+ENUO34pjyZCWa+ytWRQLsMhYUIXiT4N6cM0wazTkjEM8ZFU13kRjD
+         32kWFh/fOh1XheQ65ooJr3JrDik2LK+/K3NIncELzwEEkt470rScWA5Pn2WYXxWoVV1D
+         qXcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757029197; x=1757633997;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7dlmxNudCh/MFw+sxcsYXJdjvwJxLJWbhGKO74LPyL4=;
+        b=bRTrw2m+QAkITlxlXDdJR7ENkuY92B6z+viAdHm+FAMM/k81o23HOAAWVB3ylsdC4e
+         yGsN6a52HF/oI+nrB153JAbHW7giUXyymiiy5XmTXFOCqYD9btm4nm5SVY/GqBaaYl9X
+         Dm7jopJgFbPsz4FVmr0YKi8R5oLzEEYZQ+OyBHSDFHXejBBMzXu25mflwaS9pjIdt0N3
+         MNs9sgTOWWZKv5nZf2ZE5y1smpV5YCfnLvHeQj1HLPS7ALdeNNud4uIVt3ysy1WaQkT+
+         vharYuuOAI/Sfa1zhbtLJVGnE2r38GNRY6IEOA3ZBgIDQClhO5q8MTDOPe0Uw0jzuFms
+         hP/A==
+X-Gm-Message-State: AOJu0YzWujg68O/KRtWvbQhF8wpi73RyRbp6vpfYaMbzVD8jtU0/as4H
+	G8EYCBJK786oYVgeeROl3Hm0fNXdKEXusb7lre0TD7XZr3L7tK2dbxG4sOyUjUPrZ7y9Tb5ZSI+
+	BnqyfnWwWFsX3SmuXFKPFqfqwe9DntRQ=
+X-Gm-Gg: ASbGnctEZBllllxq2E8EnLHkhuvqtHlXK4Zf5aT+Q/a1+5E6hTApdt35i2qQIxKn2BC
+	X+GSwBwIkExddPu/N1luKAWAlBJx2Pk+7N6nXY5MxUAHkc7+cRTJs+hrgtpaVGCeMqj85tzm7xg
+	Su7+wk+CJICU+u8RwrZcEbmL/5pMtB/6TTafbsPsLh2cWK/gNXtYJHAwqNrUww30LSJrqeuv/2P
+	xB2J1Jlu9genHCb52loN3RpA3Gkfg==
+X-Google-Smtp-Source: AGHT+IFhv4IoSDQsq5pKt1CKj5tKUgH4pYch7HLubzK5+Kas3zJgvuasztYhWs7cHH21ViJ4USzXqHHpgT8lbdw+fZ0=
+X-Received: by 2002:a2e:bc26:0:b0:336:dec9:38bb with SMTP id
+ 38308e7fff4ca-336dec94354mr45333091fa.0.1757029196950; Thu, 04 Sep 2025
+ 16:39:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im> <20250904-b4-pks-rust-breaking-change-v1-2-3af1d25e0be9@pks.im>
+In-Reply-To: <20250904-b4-pks-rust-breaking-change-v1-2-3af1d25e0be9@pks.im>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Thu, 4 Sep 2025 17:39:45 -0600
+X-Gm-Features: Ac12FXx2ceMUaDoBVE32I3yXFytsOe0wZsX5Syx9Q2xlm1IVdwtxrcMamDzVUj0
+Message-ID: <CAH=ZcbANoa8Qjbz4OmdZatBi5b+RQVnatF+7pmffA4SQh=EFCw@mail.gmail.com>
+Subject: Re: [PATCH RFC 2/3] rust: implement a test balloon via the "varint" subsystem
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Ben Knoble <ben.knoble@gmail.com>, 
+	Christian Brabandt <cb@256bit.org>, Collin Funk <collin.funk1@gmail.com>, 
+	Eli Schwartz <eschwartz@gentoo.org>, Elijah Newren <newren@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Sam James <sam@gentoo.org>, 
+	Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Sep 4, 2025 at 8:27=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
+> Implement a trivial test balloon for our Rust build infrastructure by
+> reimplementing the "varint.c" subsystem in Rust. This subsystem is
+> chosen because it is trivial to convert and because it doesn't have any
+> dependencies to other components of Git.
 
-> There's a trivial conflict with tc/last-modified that can be solved like
-> this:
->
-> diff --cc commit-graph.c
-> index 9929c1ed87,2f20f66cfd..0000000000
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@@ -823,7 -812,12 +823,11 @@@ int corrected_commit_dates_enabled(stru
->   
->   struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r)
->   {
->  -	struct commit_graph *g;
->  +	struct commit_graph *g = prepare_commit_graph(r);
-> + 
->  -	if (!prepare_commit_graph(r))
-> ++	if (!g)
-> + 	       return NULL;
-> + 
+Huh, I thought Meson couldn't run Rust tests. It's refreshing to see
+someone else try a different approach on bringing Rust to Git.
 
-The while (g) loop will be entirely skipped when g==NULL, and then
-the function returns NULL after iterating the loop, so there is not
-much reason to have these three lines for early-return, no?
+There are a few reasons why I picked Cargo instead of Meson to build Rust:
+  1. Needs to work with make.
+  2. I've heard that using crates in Meson is quite painful.
+  3. My understanding is that someday in the distant future Rust will
+supplant C in Git.
+  3. The IDE RustRover only understands Cargo.
 
->  -	g = r->objects->commit_graph;
->   	while (g) {
->   		if (g->bloom_filter_settings)
->   			return g->bloom_filter_settings;
-
-Thanks.
+As I mentioned in another thread: The reason why I made Rust a hard
+dependency is because it's easier to develop and talk about that way.
+I'm open to suggestions on how to make Rust optional.
