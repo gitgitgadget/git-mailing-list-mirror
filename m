@@ -1,84 +1,84 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31653320CCC
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A37321F2A
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 14:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756996107; cv=none; b=YMp9hU8IN9hTTVbcjXnxf+9VdvkG3iGhCrv3+EeQSxHHW3txp26y4fbRLMUCDgzkluU3Yqufxs7RIwI759ZXp1/ZPStmg0kPLVz7l6ktg8nrUyz+0gjacg9HtTCWHXY8SubrTfhR2MiRYYp8u0CwVZIo55tdI1c63jLOiWKWiSg=
+	t=1756996110; cv=none; b=UpKubWpWLr3zd+r5VQaR1DwLV0lByi1LZRmB190wmHJDACkO+U03BNsGY+RoaSVoXraGorzQtNGPRyzS6EW5JxyV/drmxoQ8sfk9uqmY6WGhkj5g63lEfdsr+7L9Qpg1c6aTTGiLZhEoeToMVNmd4WVoOtnq6tYwDQhCmsdpv9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756996107; c=relaxed/simple;
-	bh=Zftlwzm1xn8SlrcQlbmiO42LzeMfdz+Vqr+UA097o+w=;
+	s=arc-20240116; t=1756996110; c=relaxed/simple;
+	bh=ofcV8AJDNnVFZyyWYB+xOsGi0AV9IoFB+BqccuT8Efw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nZkd+UbNYXsZXUlWEo0jLUlnBw7BNyv4cbtuVmhRPE87P93Q9KQSarOXYhR0xmqmYAGIeXBPWwV2o3imNXqC1FyiUdFsxt8l1vc3mIFs0kXFNCMdQDOzoHsibpcNk2fxrLQaae9sK39PLrgt7ThNR8Hyb4ajdg7yvht21DXqBEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V+/J7zMU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mb895AmI; arc=none smtp.client-ip=202.12.124.148
+	 In-Reply-To:To:Cc; b=B+vZ96+YI4XWxUsTsrno7cdXsMQu32nsxefO9/359/NiqAlS6iMoqH6rInKzVAQBb/J6hQAJw75PX+M3cyg2T8fhWqANnWATB6SeWctgfDgSTOViBfvgNFEvdGBe93mv9H0eiGz7ijlDmxFlezYp0mesX31ZO6YwZ1JV99JiYAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lgBsh7aq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XXCmJPF9; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V+/J7zMU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mb895AmI"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 581A01D00294;
-	Thu,  4 Sep 2025 10:28:25 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lgBsh7aq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XXCmJPF9"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 384491D00293;
+	Thu,  4 Sep 2025 10:28:28 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 04 Sep 2025 10:28:25 -0400
+  by phl-compute-09.internal (MEProxy); Thu, 04 Sep 2025 10:28:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756996105;
-	 x=1757082505; bh=oI/GFmZT8TemxeUot4QmTXFhZ2AwPVKOkTEEnNOorBw=; b=
-	V+/J7zMUXYemYHMqQP3uzi8bbOSDEqWQ0UgKVbZrqUqme+fyyc9wcJnyWw9ToGaY
-	tBPrcwCAfhRGK54GQjLiX7bAwOHU3fOIGIuNLCl1tFAjYbcZpKE160QadR1S7DVa
-	N31sdp8xOoz+rOHRozWC9XK0nBTOqJQ+glsCI3xsba04l+5zgz6Se0mDuxvOx0Wb
-	YyxHYDxMyx7CSXRdw/4Ez1d8N1Qrd2G19gTP9JGgSFFLvexdTlJXQtR8hCQjTTyc
-	qVGk6l8GYmWIAETfBo3v0oo3QW9KH78AUvCBX75AeIrN6tiGt+1ruAsQcXCg4CBG
-	h0tHbOgyMdf8PJIDeCmzMQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756996108;
+	 x=1757082508; bh=QtycuTFKv0hzEVa/q02G6NWVKGOgpWLv3psaP4eZjow=; b=
+	lgBsh7aqkoMjgQLshmyPGZ9CQUKKFUHRD4Q7RkmVm01FpZDIFB/Mgnh7woNS9XH1
+	ffvMzTdIBKcRQHPXCaI06UoSXGDTOO+WhJzONlHoetqFD6teGo4a4/kmpmsK25B0
+	hrF+sDMhjB1JIrov1EgjzBWfID8B5Dwj/KKcPIXRJz0ZYwyolBNzOstcpuM3Q+TM
+	EDlV5imHl42TPzPx8hi479LraAgkvNJ9PyoS8RsCwyAnee4UUHLh2QsnLEKmUtCK
+	4tq9EEK7jqPF4kSITiElyzVOpq1bzV4gdsefqHFqeIQh7mOEnQ5CpDtqCpY63iPM
+	J5tLsrcMiqzzzxfE+yyjSg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756996105; x=
-	1757082505; bh=oI/GFmZT8TemxeUot4QmTXFhZ2AwPVKOkTEEnNOorBw=; b=M
-	b895AmIoF7hLTMUiBkZ3ort0uO2g4xNwIBO345TBuYs5K1NhsEDDqc09XJhs+7bh
-	11SBhIDaTjMO4DQ12jaYaLQDRBR34gByJiW90KFqwEWgP2u2G47mOVBy9LicJY9P
-	lVwv+Obz2DpVDUYt206dG+p2ZYem9tsdMBnw+AjzmHfgD28Oz9S2wXvjOwJI9J1o
-	YD5EMyytuljAde3goQnM9wjDrOPEsa9D2LW7EE/RhO/j7Nity6wyP6NWcmfNzkRu
-	1tS0Uw4O7urGbU+FCKvr/xg6djc+SH4lAn74qGRxmV37oGik24WSYzOn9uMD3Yl6
-	BrXOL3A8QkKz7cNBJAtVg==
-X-ME-Sender: <xms:CaK5aEtb6X2F2VfL4dU5kKBwaapgEgunhqhF_G-doL4P4M_g74DbHA>
-    <xme:CaK5aPAcyWLVhSwxPvJH9F1rZaeD5OL0gymaUnjwUky-6uiHWy7bxCmWMyTeRCmop
-    in6hQEBja5x9AGrBw>
-X-ME-Received: <xmr:CaK5aGNgkBvsK4VWWfm7nFPes6B8JYGyDSxu08r5i6gh-2lEK4URjHzuM8upKj9IVBR7TeWhaSvWOyeaTZISQSfi4iiqIQ9zY7-wrnx3d6C7VA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756996108; x=
+	1757082508; bh=QtycuTFKv0hzEVa/q02G6NWVKGOgpWLv3psaP4eZjow=; b=X
+	XCmJPF9NPUrtrmIeoCcFOU3ve3Zvcrt7JTg/J62tD2cl7rtO28T0HX3vH5ht1+Ga
+	tVjvfjOuhjNjcVPD4aTKsg5IoM0MnEwgoCzZL+qJIa13hIK96kmYPNRecyqLH4Ib
+	jm3Ml8mof172o99z6uXbIxMqpRspX+pgcp9QczljZ4wzV+IQGll5cadsbymguj54
+	P0GE8QQ4VhcEQj8VSwYRfXI4fWQLbxufao3euN3/p1RRAM3V7n4Brxp0jJzw+S5f
+	bXOX3FWtxC08xB52e2RHfBtsqKFKD0NLORADWOPhPJfZnNQ0ssmNZOt/kC4mjqbs
+	0rZ8L5N3MM6XMY4+J8+zg==
+X-ME-Sender: <xms:C6K5aIBVW5VpIkKV069G1uGoxf-BmbQuIdXRLfv5nbwT_uRjQhoVmw>
+    <xme:C6K5aIFD-GP7mSB0QYC-uV9_oRQ-31LpG1kd-TpUYOtQ5OUSx_dERGDaDAUai4j7N
+    kQBS0_Xyv3oUyf-GQ>
+X-ME-Received: <xmr:C6K5aCAS9kS7pHi85Y3Ap6u4qlMGPR1i1Dc31oCNwH3n9nXH3_wJCW557SdhCVr4q0wcDuZdAIt0xpu4UXO_l9ZSHH7fLA0Sb9kMQeBZ4XAXNA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeivdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
     ephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     ffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucev
-    lhhushhtvghrufhiiigvpeejnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    lhhushhtvghrufhiiigvpeehnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrhhtihhnvhhonhiise
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:CaK5aIzQCnDb_pLLdtnbi1NHtncj0UbGkOVhOrDP9__qsK4fsrJkOA>
-    <xmx:CaK5aGXzVWc8_EZ5FxUmFG2dQFmOBRuBNkXHny4Ve6Bz3OO2KV0Kyg>
-    <xmx:CaK5aKO7O6NwBV7c_qQPxe7xKkq0RwwxLy2U4ma87gL8rls2pjVjmQ>
-    <xmx:CaK5aIBRsA08AlIeC-EoRvggtjQwFKPlD6iEeXH_j1Y31ht6CKcmKA>
-    <xmx:CaK5aM7JOx3QaukmDjn-WGE5UB_BvJWspE6wlGKou5kTSRUIJYKqS-sa>
+    pehmrghrthhinhhvohhniiesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepkhhrihhsthhofhhf
+    vghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:C6K5aAVMQy7Zp2-sZVMuNWT488YqiI9YqjG-oMR8KPN8svD7_ReYOg>
+    <xmx:C6K5aOo73eW9PSFLaj2S-8Y7UaeolgYGZdrVGPtZhGD15GpxDcInIA>
+    <xmx:C6K5aEQamT7ZSyV0WbaopYmxmNBtD72U4MJ4sZ2ycr3bsQGUrSByXQ>
+    <xmx:C6K5aA1C4vFhqlVxslY6jJ7jTqzXTC6NBUkaUcHm61By2VOQzMMUdg>
+    <xmx:DKK5aN-FnvOOOSHNol55b3JEhSHzCIfusij9hjvQwIf9VazooVJRcPcM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Sep 2025 10:28:23 -0400 (EDT)
+ 4 Sep 2025 10:28:26 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 76b84cd6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 4 Sep 2025 14:28:23 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 4a4f0104 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 4 Sep 2025 14:28:26 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 04 Sep 2025 16:27:45 +0200
-Subject: [PATCH RFC v3 15/18] wt-status: provide function to expose status
- for trees
+Date: Thu, 04 Sep 2025 16:27:46 +0200
+Subject: [PATCH RFC v3 16/18] sequencer: allow callers to provide mappings
+ for the old commit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250904-b4-pks-history-builtin-v3-15-509053514755@pks.im>
+Message-Id: <20250904-b4-pks-history-builtin-v3-16-509053514755@pks.im>
 References: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
 In-Reply-To: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
 To: git@vger.kernel.org
@@ -98,76 +98,85 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.2
 
-The "wt-status" subsystem is responsible for printing status information
-around the current state of the working tree. This most importantly
-includes information around whether the working tree or the index have
-any changes.
+When executing the "rewritten-hook" we provide a list of commit mappings
+that tell the hook the original commit ID as well as the commit ID that
+specific commit was rewritten to. Typically, these should always be
+different from one another, as otherwise there wouldn't have been a
+rewrite of those commits in the first place.
 
-We're about to introduce a new command though where the changes in
-neither of them are actually relevant to us. Instead, what we want is to
-format the changes between two different trees. While it is a little bit
-of a stretch to add this as functionality to _working tree_ status, it
-doesn't make any sense to open-code this functionality, either.
+With two upcoming subcommands for git-history(1) that is not the case
+though, as we have already written the new commits ahead of time. We
+only use the sequencer infrastructure in that case to insert those
+commits at the correct position in the graph. This has the consequence
+that original and rewritten object IDs will be the exact same, which is
+quite unhelpful.
 
-Implement a new function `wt_status_collect_changes_trees()` that diffs
-two trees and formats the status accordingly. This function is not yet
-used, but will be in a subsequent commit.
+Introduce infrastructure so that the caller can tell us the original
+object ID for such already-rewritten objects.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- wt-status.c | 24 ++++++++++++++++++++++++
- wt-status.h |  3 +++
- 2 files changed, 27 insertions(+)
+ sequencer.c |  7 +++++++
+ sequencer.h | 14 ++++++++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/wt-status.c b/wt-status.c
-index 454601afa15..f09309d12e3 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -612,6 +612,30 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
- 	}
- }
+diff --git a/sequencer.c b/sequencer.c
+index 61447e5ccf..72d26b0eef 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2214,6 +2214,13 @@ static void record_in_rewritten(struct object_id *oid,
+ 	const char *path;
+ 	FILE *out;
  
-+void wt_status_collect_changes_trees(struct wt_status *s,
-+				     const struct object_id *old_treeish,
-+				     const struct object_id *new_treeish)
-+{
-+	struct diff_options opts = { 0 };
++	if (opts->old_oid_mappings) {
++		struct replay_oid_mapping *mapping =
++			oidmap_get(opts->old_oid_mappings, oid);
++		if (mapping)
++			oid = &mapping->rewritten_oid;
++	}
 +
-+	repo_diff_setup(s->repo, &opts);
-+	opts.output_format = DIFF_FORMAT_CALLBACK;
-+	opts.format_callback = wt_status_collect_updated_cb;
-+	opts.format_callback_data = s;
-+	opts.detect_rename = s->detect_rename >= 0 ? s->detect_rename : opts.detect_rename;
-+	opts.rename_limit = s->rename_limit >= 0 ? s->rename_limit : opts.rename_limit;
-+	opts.rename_score = s->rename_score >= 0 ? s->rename_score : opts.rename_score;
-+	opts.flags.recursive = 1;
-+	diff_setup_done(&opts);
+ 	if (opts->action == REPLAY_HISTORY_EDIT)
+ 		path = git_path_rewritten_pending_file();
+ 	else
+diff --git a/sequencer.h b/sequencer.h
+index 0e0e7301b8..e6cc8aeb5d 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -1,6 +1,7 @@
+ #ifndef SEQUENCER_H
+ #define SEQUENCER_H
+ 
++#include "oidmap.h"
+ #include "strbuf.h"
+ #include "strvec.h"
+ #include "wt-status.h"
+@@ -35,6 +36,12 @@ enum commit_msg_cleanup_mode {
+ struct replay_ctx;
+ struct replay_ctx* replay_ctx_new(void);
+ 
++/* Used as entry for the `original_oid_map`. */
++struct replay_oid_mapping {
++	struct oidmap_entry entry;
++	struct object_id rewritten_oid;
++};
 +
-+	diff_tree_oid(old_treeish, new_treeish, "", &opts);
-+	diffcore_std(&opts);
-+	diff_flush(&opts);
-+	wt_status_get_state(s->repo, &s->state, 0);
+ struct replay_opts {
+ 	enum replay_action action;
+ 
+@@ -83,6 +90,13 @@ struct replay_opts {
+ 	/* Only used by REPLAY_NONE */
+ 	struct rev_info *revs;
+ 
++	/*
++	 * Used by the post-rewrite hook to fix up old object IDs. This can be
++	 * used to rewrite the old object ID to whatever is stored as value in
++	 * this map. The map contains `struct replay_oid_mapping` entries.
++	 */
++	const struct oidmap *old_oid_mappings;
 +
-+	diff_free(&opts);
-+}
-+
- static void wt_status_collect_changes_worktree(struct wt_status *s)
- {
- 	struct rev_info rev;
-diff --git a/wt-status.h b/wt-status.h
-index 4e377ce62b8..b262e345f79 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -153,6 +153,9 @@ void wt_status_add_cut_line(struct wt_status *s);
- void wt_status_prepare(struct repository *r, struct wt_status *s);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
-+void wt_status_collect_changes_trees(struct wt_status *s,
-+				     const struct object_id *old_treeish,
-+				     const struct object_id *new_treeish);
- /*
-  * Frees the buffers allocated by wt_status_collect.
-  */
+ 	/* Private use */
+ 	struct replay_ctx *ctx;
+ };
 
 -- 
 2.51.0.417.g1ba7204a04.dirty
