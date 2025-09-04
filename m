@@ -1,146 +1,141 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2486C72618
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 02:10:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4DB1940A1
+	for <git@vger.kernel.org>; Thu,  4 Sep 2025 04:10:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756951826; cv=none; b=i+p6DKmIDGMiTCyYJx7PbDFMMo9q5YjtUmpIjYs7LpAvCMTnnRP8CPMo7Vm6yIFENw7MnFWlBo6jL5O9L+NRdvW6IV0OYuH0AZNawHGKAKOm7PV/XpoeN+MtN+lAG8zny7xQgLMdM5JYD0CTSk7ZkgK1blNpGHX5n+cVRJzSYFU=
+	t=1756959008; cv=none; b=jrbRnNRCLtaskV7UUUdg50oiNR0584Xfvbb2uP9UeYMVSncFzoNGQZL1rY0YQHX2OlNhEJgEnvl+VLj7osXIDKU0vvHyF+XM1w66xVrahYYr2DCWnMDHYbHC8JkyZX7pkCV+UG5PYl06Jf8twglT1C2VvDB7gOOYwljj+nhaqDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756951826; c=relaxed/simple;
-	bh=1shQIzWoJJ+HMyfaxURHpdlc9I/KdxnkdYtQin6RQq8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=js4tWJnkKy5b2SHVQAO2O6zeJVY2P9ShaYE84bOd7I5STKbX2XSNtFsGcQrcelWN4hMyaBKkNzy5QvHhE6SLtMAW+PYQdDzpHjelh8BV4B0YYOyyPKISVS9/GnCIRnLjJigA32eU6k1zJ2u5IjHYDNLrZwTH8slm55sz8hizDCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=Qou21c1p; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1756959008; c=relaxed/simple;
+	bh=mk7MNdHr11GvJhtDnpFCf3us0wXELL/XF4VEJRrAXSc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VSEOYnE43afnyyDeF/0fgmstDVt4c5izq15Ts8wUWCpKtpb7GU2gTBPOvmgFHp6Bz7Qbrc0qCNtpLJLxEFlO8+nmRMV0Km1baAshaAjMn6worjonhIiPD5kr8mG1w8LE4WRBBQyYyBoBXUcVXASIrp/PL4dZ85h9CBWJydynoao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U9ehRmv4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FLxKn/pw; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="Qou21c1p"
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1utys6-00D7eo-DP; Thu, 04 Sep 2025 03:34:42 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector1; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
-	bh=LtSb4mvYkH9hcfEkZShYFHEmBEbiKAAoOMXBEbLqI8Y=; b=Qou21c1p8Y7zOBUcIKEzni+LL7
-	ADHdLsWBtmhB/AWfj8Jl4xUs8Zym8/T8IEAak+lKdT64Qklqg5mie1FgL3Z1XuGnvMIoH7rm62mkb
-	nXjaqoex49saRfa9eskLzDUwm6mQaycHqvqnY3I864AUNHmm4uUR8SiwgPt1ps90p89Il9iUcjgK7
-	MWbFbb2iVkJF9Rspl8w+50i2om4vmPOASb1ZNOz6UQAlXNKc/iH+u2HHgP+Kj1xtJBcJFbi/kWBf3
-	92+Mp07PR5iXP5Fict7HGpXxebUpcBuFoYl4rd+zV1NhMdmQ+pWLCXkD+Uqcl/WKLS33+Kyt0o6gt
-	gclBKtSw==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1utys5-0002jS-IE; Thu, 04 Sep 2025 03:34:41 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1utyrr-00FuUo-0C; Thu, 04 Sep 2025 03:34:27 +0200
-Message-ID: <b8bf66c1-39c4-419d-ac78-e5f847d9ff90@howdoi.land>
-Date: Wed, 3 Sep 2025 20:34:23 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U9ehRmv4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FLxKn/pw"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 00739EC01FC;
+	Thu,  4 Sep 2025 00:10:03 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 04 Sep 2025 00:10:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756959003; x=1757045403; bh=Q4hk54Y+UY
+	WjW4JAAljAVyIedFQl43+MB/CSglgKmCk=; b=U9ehRmv4O/VJgOuGQWSO2IpVM/
+	VOthlcAS+gIMh5w2gU6QOb1H5ptGXrwCOqXjD1cryZTrZtHFns6BSpZI7OGk37mo
+	p7+64hcYisZFQH5ynPcbyL+ix2Yi0NneGUokuaWwOy86qhT+WzQ5VwaRik7KV3/Z
+	czhp6SeN4bbBvUp6jvBv3l5rLO/y7r4liMEmcwikg1zefaBfTenp4uoWUJEQyz7L
+	T0Zb9Ls4KBfajIc/y3+AUn+NJkdEJOWIfjdIgRoZSAFCtcDf5QthJjGk75E9caZ9
+	nMQV2lIwzIuqgR5xY0PPACaTEotGWuIRVohJEbURQev7P1cmrOYGiCIlGfEQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756959003; x=1757045403; bh=Q4hk54Y+UYWjW4JAAljAVyIedFQl43+MB/C
+	SglgKmCk=; b=FLxKn/pwZ+g7Bpakj32BWzTErrUg0HkcvgLqfyJAdEZyuFFVCXD
+	JilQbJaEBlC/6nutlLevMkzFI3S/yVSEdzr9FCEIbRVdQmGZOgKqB3jLL0GTfzzO
+	H77MsXAFNhAkJi/QD+nTNp6tfkjn17odhjKN108hImVmFVwLqS2njzthSCoG7y0N
+	owJi2vblW9j/pJn9U+AgdU/YR5TtRjBcTMQWw/Sxix2pDQGvbRmWB3T/1tlihMTc
+	5ZunJA1snQbv1trp91j8qnGprjEKw6wLWNJv2+XFBpbsMQ615vVsrVbWqUhQJn7Z
+	Q3DTpxKQJgA5mAqfa4i0Oo5G+pV6HZeJHAA==
+X-ME-Sender: <xms:GxG5aD1p2Ic_IE8R89x3MJfIDv_QbhDoqmMBTfl7EyhlpeGD7wz1KQ>
+    <xme:GxG5aNkvANPejv8mCAMHR5QBcLfRhxYEW8sAmnGxa1fKT0GM31vuFcqcNlPjBuJec
+    Hub3W3KsbBEvfLNEQ>
+X-ME-Received: <xmr:GxG5aKV_vtEA7byMdbW47u8f149sP7M1mvryZXtf4CXU1ymSMPHijz8yzU1JCJojVNdVHouiwaSy9H9r0DS5PJaawELNygBlF6h7z3E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehtddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
+    rhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:GxG5aDtU_Gt5w26aAmG8zEXhYrnXMLc-C40zEHmHqdxCPjJ3ekUh9Q>
+    <xmx:GxG5aNY4fYKtsxvaXeWDrStJN7xq5DUC9_IA2d9cZ7kOeae_6nqtbA>
+    <xmx:GxG5aCW_4l8fJjysVthMZWxQeLkWJ83DTCMx5Mg4hAn0aIV5HsdTRw>
+    <xmx:GxG5aCTi087zHfI45HtdndvuS0s-qKy_xq-H45zt8P3QQHuBjHIcjw>
+    <xmx:GxG5aNHaNqHpMwnK5uU4nrZwAI3lZW0dkP68V5mQBNFnqODH8NUqe7zU>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 4 Sep 2025 00:10:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
+ <me@ttaylorr.com>
+Subject: Re: [PATCH 1/2] t5530: modernize tests
+In-Reply-To: <20250903-b4-pks-upload-pack-repeated-non-commit-acks-v1-1-4e019af4dddc@pks.im>
+	(Patrick Steinhardt's message of "Wed, 03 Sep 2025 06:54:10 +0200")
+References: <20250903-b4-pks-upload-pack-repeated-non-commit-acks-v1-0-4e019af4dddc@pks.im>
+	<20250903-b4-pks-upload-pack-repeated-non-commit-acks-v1-1-4e019af4dddc@pks.im>
+Date: Wed, 03 Sep 2025 21:10:00 -0700
+Message-ID: <xmqqzfbac0yv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/subtree: fix split with squashed subtrees
-To: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
- phillip.wood@dunelm.org.uk
-Cc: Zach FettersMoore <zach.fetters@apollographql.com>,
- Christian Couder <chriscool@tuxfamily.org>,
- Patrik Weiskircher <patrik@pspdfkit.com>
-References: <20250824191048.1938340-1-ask+git@howdoi.land>
- <00e76b7e-ce4f-44d9-acd9-466c6b14f41b@gmail.com>
- <ee480c22-0dd3-4c45-a2bd-838c238f1d55@howdoi.land>
- <773ed81e-34b4-4116-88de-7e4307b6c679@gmail.com>
- <62b50f7e-7ee3-420b-9de3-6d9df611b6b6@gmail.com>
-Content-Language: en-US
-From: Colin Stagner <ask+git@howdoi.land>
-In-Reply-To: <62b50f7e-7ee3-420b-9de3-6d9df611b6b6@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 9/2/25 09:57, Phillip Wood wrote:
-> On 01/09/2025 21:43, Colin Stagner wrote:
->>
->> The outer loop in git-subtree.sh:983 appears to iterate from the root 
->> commit forwards… and not from the HEAD backwards.
->>
->>      git rev-list --topo-order --reverse --parents $rev $unrevs
->>      #                         ^^^^^^^^^
->>
->> Since the iteration is ancestor-first, I'm having difficulty seeing 
->> why `should_ignore_subtree_split_commit()` would want to do an 
->> ancestor traversal at all. It already sees the commits ancestor- 
->> first.
-> check_parents() recurses into process_split_commit() rather than the
-> loop that call should_ignore_subtree_split_commit(). I think what this
-> check does do is prune some parents which stops check_parents() from
-> recursing into other subtrees so the check is in the right place.
+Patrick Steinhardt <ps@pks.im> writes:
 
-I agree. In the original patch [1], Zach indicated that the check 
-results in a significant speedup for rejoin-heavy repos. The check is 
-clearly doing something.
+> -D=$(pwd)
+> -
+> @@ -21,11 +19,7 @@ test_expect_success 'setup and corrupt repository' '
+>  	test_tick &&
+>  	echo changed >file &&
+>  	git commit -a -m changed &&
+> -	corrupt_repo HEAD:file
+> -
+> -'
+> -
+> -test_expect_success 'fsck fails' '
+> +	corrupt_repo HEAD:file &&
+>  	test_must_fail git fsck
+>  '
+>  
+> @@ -40,17 +34,12 @@ test_expect_success 'upload-pack fails due to error in pack-objects packing' '
+>  '
+>  
+>  test_expect_success 'corrupt repo differently' '
+> -
+>  	git hash-object -w file &&
+> -	corrupt_repo HEAD^^{tree}
+> -
+> -'
+> -
+> -test_expect_success 'fsck fails' '
+> +	corrupt_repo HEAD^^{tree} &&
+>  	test_must_fail git fsck
+>  '
 
-Performance improvements may be possible. Instead of looking at commits 
-one at a time, this operation might be faster as part of a one-shot 
-HEAD-to-root traversal:
+Both changes make sense.
 
-    git log --grep 'for stuff' --format='%(trailers:...)' $unrev..HEAD
+> -test_expect_success 'create empty repository' '
+> -
+> -	mkdir foo &&
+> -	cd foo &&
+> -	git init
+> -
+> -'
+> -
+>  test_expect_success 'fetch fails' '
+> -
+> -	test_must_fail git fetch .. main
+> -
+> +	git init foo &&
+> +	test_must_fail git -C foo fetch .. main
+>  '
 
-Commits that are deemed "uninteresting" or unnecessary could then be 
-provided, in bulk, as negative refs to the `git rev-list` traversal.
-
-But my plan is to make the smallest and most portable maint-2.44 bugfix. 
-I think that non-essential performance changes are a task for later.
-
-
->> I am *much* less certain about the second test:
->> 
->>      test -z "$(git log -1 \
->>                 --grep="git-subtree-dir: $arg_prefix$" $rev)"
->> 
->> If I remove this `test -z`, all the unit tests still pass—including mine. There may not be any test coverage for this line.
-> I'm not very familiar with git-subtree but I thought this was ensuring 
-> that we did not exclude the ancestors of a squash or split that involves 
-> the subtree that we're interested in.
-
-It does, but I am still having problems finding commits that actually 
-trigger it.
-
-It appears that `find_existing_splits()` in git-subtree.sh:459 filters 
-out the commits that the `test -z` I quoted above would otherwise 
-detect. `find_existing_splits()` searches for a previous --rejoin commit 
-to use as an `$unrev` stopping point for the rev-walk. It searches for 
-commits matching
-
-     git log --grep="^git-subtree-dir: $dir/*\$"
-
-in combination with `git-subtree-mainline:`.
-
-This is essentially the same test as in 
-`should_ignore_subtree_split_commit()`.
-
-In --ignore-joins mode, `find_existing_splits()` looks for different 
-commits. I experimented a bit with adding --ignore-joins to some of the 
-existing unit tests, but I still could not find any instance where this 
-`test -z` makes a difference.
-
-That said... I am inclined to keep this second test. The bug I am 
-patching is the result of an overzealous prune. The last thing I want to 
-do is to inadvertently prune commits we need for the sake of a 
-performance boost.
-
-
-> I wouldn't be surprised if the test coverage was lacking.
-
-There don't appear to be any tests at all for --ignore-joins, aside from 
-option parsing.
-
-
-[1]: 98ba49ccc2 (subtree: fix split processing with multiple subtrees 
-present, 2023-12-01)
-
+Nice.
