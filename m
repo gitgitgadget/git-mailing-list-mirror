@@ -1,112 +1,131 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E2F524F
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 22:39:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69321283CA3
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 23:04:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757111959; cv=none; b=SCm06cVd5qlewTEdl0Tfq0idRd/hJWwrssl2/3ldqL/wrTnuHYHDwcK9m4/Mo52zdASDItpvGeQ6MSIjsJ37LH9koau2x3roAgF2KO/QpFtYws6AJjW8n+aCfjFCJRQm4F9pBwNFCBF+l1rBSulNBv3xL1DD57oktyJjO1z5EDA=
+	t=1757113491; cv=none; b=W1MlDssYLgEpVgmo/Ss0pqprf1CPZdgk6e+F/hYfE7OTIA7UzEoJb/ugAxQfvRpHszW4rLfy7u4JMdAnPFcH6KKJqdB6lUFh+oO+zqIPWVXx++1xwaRUlr596VzL9WmcnOFYRD+ijO6czzzY1+LrI1mM27s7chnBTRrL0zmxdek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757111959; c=relaxed/simple;
-	bh=8XjLyjuY6gtMsEmMX+KlqBo88NGHkb/Kig6kNGGIvok=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hpW01SLKS9eHvQ809m9Gu8WqP67CaiTuUXRR3rw3IjTNzZ5mZWlqMozpV8V6Csg6v2Ur6brv7ATSw7ukXe5QqPq/Rjl/hJITEFzzTSkDDwWftEvII0yMBiaRpRzQ2kwRERlah3LIvDYlKMHx8HLZgahliuDbHhAUU9GjQ04sV3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wI1eMxlN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m8w7qRlJ; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757113491; c=relaxed/simple;
+	bh=7iejqIRb659etJftKJ84ZYb2OkNiegFmEkjS6VbtL3g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oNMxKn4yKTq/WnMLufAF8LAfPgEXar/xkVXX3J/rz/Vq1F2gdRlRJyl/SBN9EYuE/Y/KORAV6AkAZ9LILma4CcPAqvm2FK2hdunRxVrvgJDSseALAiNabnVMVyUf/pwunXSfD9JPouGrENsQbxwrxy7yTGI35gvP4hLsvoh5jJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=xwmKxLCK; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wI1eMxlN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m8w7qRlJ"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B193414002D6;
-	Fri,  5 Sep 2025 18:39:15 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 05 Sep 2025 18:39:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757111955; x=1757198355; bh=ZvpdsiJSgc
-	YeH2GjHpd6XZFYglU9cyJyGxFSexV3tDg=; b=wI1eMxlNPI4pCNzkMbtxBr+Jly
-	+S/R8pghHDDuHy41azdzeVzgiRN+0Jm5gZ1+7QYCuEpi7vXYHU4kMBdyexsdfdQa
-	LtZv0jdMnl9tGPsKMTLT1IIIY/G9Uv4M/kHceDgnuc5tLyLWrWQdQItB+qiJGgRN
-	VyY6/e0MNE1l94jP7X7KIpqFB5XMtijHvZSB9k2X7jBBrjweSQkqV59gzzPW2ERa
-	AR6O1mpL0YC7qHRBxhdt2xSU1k/mTsWsEyZXoOtlmzZoSPeKeabgJEiqhQbE5J7M
-	GRRggs+mFxZuyKH6gsbuSdXNo/iSNVuGOGDr2WSB056Yx4kIPtYEitFN9djw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757111955; x=1757198355; bh=ZvpdsiJSgcYeH2GjHpd6XZFYglU9cyJyGxF
-	SexV3tDg=; b=m8w7qRlJfyzD28iRzaXAOtwWhX5tpeIeghLn6sSTW032UVvUdPX
-	iMeKOEagdUrwzGNxxQDn1qy6kZvs8JpUb98EdB5gAYYEzh9veDSkjpLT19Zeb8BH
-	A8xQ08IIuA3EKPZyp5YBtt2pGthWZN+zrtliGGD8IjoV7dECCRGuX/Z+JRP2D4IV
-	R73EBL4qfuok82iaJaaPYNyU2rxcNSSiCwWxSdMpw7L/8LHnWwJCWOzkHP+SCOUi
-	PB473zyTn1snZVB/p0U3TlWTCA0qE7vytUJpuH2uIZ+5UP9SmgICajQ38DYB5y0G
-	kN0PJBH1UZDYtLt1oPR+QNgyLfGesrKyLmw==
-X-ME-Sender: <xms:kma7aAZ4ibDGxhC4bMcHJ6ibP4fYFoiTF83wk8baM2NS8DoM9trRBA>
-    <xme:kma7aMDuyOZwt7TQlxl8WyVlmW0k1TNCkkrbnWRZCD8BTJB8QwwvFfNjjUxGWcynr
-    kzgGbkM8RBpuSDHsQ>
-X-ME-Received: <xmr:kma7aGH3n7mDxcy6P8PgBxdIgK9uqMZ5LfFyj5I7RafL9NzFvGt8jMh6MNQ75P8wyCfOc7kdmqd5wmPypbEv1QU0Dj0yYBFvh0KPVVA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdduudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghonhhtrggttheshhgrtghk
-    thhivhhishdrmhgvpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthh
-    hprghsthgvrdhnvghtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtoheptggssedvheeisghithdrohhrghdprhgtphhtthhopegtohhllh
-    hinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthhifrghrthii
-    sehgvghnthhoohdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:kma7aPOEdAe3EuoEAHrT3kG8Sh_OW3modyLxHhAbIsuwL62p-N_ttg>
-    <xmx:kma7aPhMxtke-0BHYFt9Q2vueNO5xpVpcvZbyHPZl7hpMnOn4SRZIg>
-    <xmx:kma7aH0dh_uLAP6US-n6gQu5Ql8IKp5FaHqKHOb6FUIPTzW20VjmCQ>
-    <xmx:kma7aEkayPHFAGSEuBg4tedoTkySvo1KRanfDy2hWXZQQbSuO7Z_Cw>
-    <xmx:k2a7aEKUr1CLwW5ETL2BuWNdi3zvyJ-L7askyXjeJfRq8lJv50LRqOk2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Sep 2025 18:39:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "Haelwenn (lanodan) Monnier"
- <contact@hacktivis.me>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
-  Christian Brabandt <cb@256bit.org>,  Collin Funk
- <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
- Newren <newren@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
- <pierre-emmanuel.patry@embecosm.com>,  Sam James <sam@gentoo.org>,  Taylor
- Blau <me@ttaylorr.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xwmKxLCK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1757113487;
+	bh=7iejqIRb659etJftKJ84ZYb2OkNiegFmEkjS6VbtL3g=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=xwmKxLCKSjuhj45MlorDfGA2vnzHrLQb5Up4RGRA3AAWPtY6FoiewA1TA23qctGfX
+	 /3WbfCQz5RnQ3OsjHF+2ORpxRsyIy6S8aGBejekvo5F4iQ+A1o8I8IoybdFcAQag2M
+	 9Z78avLIcivp+QMaCajrajkUu10lybrWp7U6KqUaFdG8CLr66Y4vtSiBtIOE+VT06b
+	 SnBxteyQzp86tUOJgwpVjvTLC6JmZwR5CySttfoovl6b9136JoDhaCddmAlLd/oBvK
+	 8vaWxnrtlZoENO6OBXk+s66Dn3WN3fqMfFeH/unqGBGalwbjWf5s8lX0IPgDeeRZVW
+	 RnvgBBMudOgQYj5CgZFqHAIKobXDhJsRdm1YfGj9o8UuM5tMd8UD+WPcopesxeWVHs
+	 ppHsDyiEVDt1DiGsMIdS4CUdB7Gg+aRMVXD6seuIedxKIJJ73phm3lSt/B4C5ajcmf
+	 M/Jdvr3IA8qYq1MRiNpLb2N9v73AtHlXKHMCGLtvlUmHmhiGsrk
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f8f0:4bbe:8989:f575])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 88139200BC;
+	Fri,  5 Sep 2025 23:04:47 +0000 (UTC)
+Date: Fri, 5 Sep 2025 23:04:46 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
 Subject: Re: [PATCH RFC v2 4/7] rust: implement a test balloon via the
  "varint" subsystem
-In-Reply-To: <xmqqy0qs1sk5.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	05 Sep 2025 14:46:18 -0700")
+Message-ID: <aLtsjvV3GWyFByMq@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
 References: <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
-	<20250905-b4-pks-rust-breaking-change-v2-4-6939cbf4a0b8@pks.im>
-	<xmqqy0qs1sk5.fsf@gitster.g>
-Date: Fri, 05 Sep 2025 15:39:12 -0700
-Message-ID: <xmqqqzwk1q3z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250905-b4-pks-rust-breaking-change-v2-4-6939cbf4a0b8@pks.im>
+ <xmqqy0qs1sk5.fsf@gitster.g>
+ <xmqqqzwk1q3z.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="TQ4bcfeo9nFxDAnc"
+Content-Disposition: inline
+In-Reply-To: <xmqqqzwk1q3z.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> ...  Interestingly, disassembly I saw looked a lot more
-> optimized than the C variant compiled with clang-19 -O2.
+--TQ4bcfeo9nFxDAnc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That was a false alarm.  With right compilation option passed, C
-version of decode_varint() compiled to identical assembly as what
-rustc/llvm produced.
+On 2025-09-05 at 22:39:12, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> > ...  Interestingly, disassembly I saw looked a lot more
+> > optimized than the C variant compiled with clang-19 -O2.
+>=20
+> That was a false alarm.  With right compilation option passed, C
+> version of decode_varint() compiled to identical assembly as what
+> rustc/llvm produced.
 
+That's not unexpected, I'd say, especially since the code is very
+similar and uses very similar data structures, including pointers.
+
+However, as we adopt Rust more in the future, we may see some
+performance optimizations because Rust allows making more guarantees
+about data.  For instance, the C compiler must deal with the fact that
+you can cast a const pointer to a non-const pointer, but Rust does not
+allow you cast or transmute an immutable slice to a mutable one or
+access it mutably at the same time, so the compiler can then assume that
+the data will not be modified, including by another thread, and optimize
+accordingly.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--TQ4bcfeo9nFxDAnc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaLtsjQAKCRB8DEliiIei
+gfvkAQCoMnYlKW7AJbeJ/6JZvJ8PlVFOPIlF93jq5/8BR/UYVAEAslI9+iTFm+8/
++NHzjrqYXSH9/94I+1MJkFLWVuQpHQE=
+=pyz6
+-----END PGP SIGNATURE-----
+
+--TQ4bcfeo9nFxDAnc--
