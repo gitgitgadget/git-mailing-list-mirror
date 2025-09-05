@@ -1,89 +1,86 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0479221577
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:37:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB2F221577
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:38:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757101055; cv=none; b=A+7i/dBZBHHs6+BfJ7yMidn+Nky6HRNh7gGpePvlQXGfkZnX2FBsaSSZmq6MI2K8FXMWAd6qHWnuU3kIHx0o0AQP1osvqdm4ASXFiSx2syuz0migVDvCh59Id+ojzvcsy2Guszkg9E0Dl664MeCbUooUfrl73+q7CStHb5BtLoY=
+	t=1757101092; cv=none; b=iOnsPvyfjhfGe87E5TEi6DU3d3Xa3QsbaLLZB4gd8u4S8eNFdnKtrkfCWk14cMkiJ2dTmPM19AGvb/+8W3R0tYwZj35A87gP+tPGpI3K246ok/lKufnOPtGWoNepXeQAzBwcZ6ooI62vo8jL4CrOvKqrzTneHG3EUca2CyZBA9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757101055; c=relaxed/simple;
-	bh=Teb4jjaLJqwgmMIzKzkX+pXhZEVyjY3mPSWTfrIG9vo=;
+	s=arc-20240116; t=1757101092; c=relaxed/simple;
+	bh=OK6zG8j1JZtBc7pQm7YdAteNWfE6bKN80QnG4JJfi5k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=W4b/7RXSlDoJh5nIKWZWAvDruhNACpWwjGzUhFzD0HPHZA8shNCYADhOtsDq+shM9GmOqdaW6qahRI2EJEfiHj3wY5zToHMEjLPWVpCPewK7dVzLJW5NOojr3ZjJ6TnFXl7QKVrLwSkTtzVDDPYirex6m7UOtNS3aMJaFmE9fpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eORfg6/Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dlmFq3sP; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=L+4HWGS4swq4kfNiJUQhepAc36Qk6uT+KqZOJRpJOUZEbn+CdfK95bfPsrw96H7i6R6n2MM2E5Q0cc7Kf16ydJeJxXbNd3GUVYOTp+zVjNqYKwA/KYFd/qL0ZrW6gzSo4GZnTco137LvO9EXBUQBDu0+FgDQJE1MqQtr0AyvDII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JzeQXqOc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=enZd8Kt2; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eORfg6/Z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dlmFq3sP"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C97DE140039F;
-	Fri,  5 Sep 2025 15:37:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JzeQXqOc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="enZd8Kt2"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id DF980EC02B3;
+	Fri,  5 Sep 2025 15:38:09 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 05 Sep 2025 15:37:31 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 05 Sep 2025 15:38:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1757101051;
-	 x=1757187451; bh=v9Dmg1vk9Ya5vto94JqS8N0oKDem60lbLtzTycsA5Io=; b=
-	eORfg6/Z6wzz+HR1W+u39O44CDOqaUrKq4KeIjwbF8E82CyQNEuo1ampkE3tFknL
-	BzTmi40vYlQvHROttPSIuoo4qmFOX/f5y1xTtbY5ZLesXX/n1CX9ZsCXlWECExBn
-	+ES3wBfvBOF07bcf9m+z49Gwq174KR4QskaCyE333ppoIhvidEpWIhe5NYI0YsmN
-	cixwpsaxNe4kkCPkVfoIvYjVOWRBgrhdvica7NAN9gybtyNINvFK1GX7WJEAzKG9
-	LLmMalFGHLcdszS2DnenyRyZriaSawZAqCIWwgBFr5jyVi0ceDCkzH1AxKH9Sf3R
-	HdLMaN9zbRn7yZ4pIgyY6Q==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757101089; x=1757187489; bh=6Wa0RH/YaV
+	kkPezhMHASpn9aSr1aNqvK/QPgAJZSu6M=; b=JzeQXqOcOzPyLxNeCh4/AcScDQ
+	ApzLJ4s7a5Tg0hD9aZD5liqGqIwkcnv5Q41M6gi9NwN58qCEUOeys5gPldIGZcrF
+	QZy81k9i7d74n5252nR06S+sr6IwUMvPXIPxCfofIQDZNiU08p8oJRB+EBlPDBCe
+	isatHMd/yH4tMmkjnNVE5Kvbn/4rqbzDQ0HPZ7uoifLta+XBtgF2MYi8V4M3q+er
+	On4IEhY8KOYEh8cTjFBrHldCw2ayywgpCnUZegro7tPDWzEraNeYULXc1seuNcNF
+	MKftYK6INCmDprStHKTFdCKOv4npa8REZ5Ct9UnlKiemRgrpDZeYGNcqxEJw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757101051; x=
-	1757187451; bh=v9Dmg1vk9Ya5vto94JqS8N0oKDem60lbLtzTycsA5Io=; b=d
-	lmFq3sP1BCWBqXMeAEBJvFB1AOBJDnlyJ7ohKAmUYYI1+rwEl24IurrSUYVjvpUb
-	gQe5bjKIF+43u5gU5m0+bZLNYJAodkpyBLFavlySa14CP7M8HTxFExKSF/1Z3o4E
-	glB5x1hL1PyW2LFf69iQPmzgQ2Yfy0h/NhEA/oQN4OQk1gnn0PioX0Sxqam68IFT
-	qHUxB3V+fEzOcTHstbayMs2c+AFkWa745Ergk8SIzNgK8gwjgfG1QnghdVGuEHEG
-	oQ/szgKK35nWpiYzgpZyGXw5Me4zCvdV5UEkbevmOgPNwICh/9BgJJzbwQUZ3Lix
-	6IdFoDOp4qFYr8I2FUZPA==
-X-ME-Sender: <xms:-zu7aKGGkOi3EtgE8ypy4wUSv_l5ylKZa78mNWdCl7DF1HY9KwggRQ>
-    <xme:-zu7aF4G1AaVMSPYuBZAr81AzN0VYk7f4lxmf9JtFC8Qio805SjSoY_l5oGqULUtK
-    yGIE5Kmd_uG1oeYUA>
-X-ME-Received: <xmr:-zu7aAs4x6G3oC8uzr8BoEpVQyp-h-7zbMPfOGM54doLJRWf5dsbWo_7C8NAswd-BzagZtpu0wQbJYv-v9d2CIFmZAf08OXUv2kexTo>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757101089; x=1757187489; bh=6Wa0RH/YaVkkPezhMHASpn9aSr1aNqvK/QP
+	gAJZSu6M=; b=enZd8Kt2BtEIw3aSO5ilh1CAMPIJJ4RHpW4C7f4Wojk7YzBHu//
+	xODByNNQPhrJIgi1dIi1LHGXOvFl+ccCBcm4Vx89X4OwbJwfmKsHU4AaZzl87J+H
+	132y61BOLtVCV4x5UCe0mdTQxIXp/OSpvTc/t3BOcL/uwtEvBzr0v3SwrE9pAWvT
+	69fiNl0auX968ZkaY8AL5wiw9mKKet4rx7vxKyS/KGSacYtehPa5AvXtIf4HHEdV
+	e4qva68Ab1+LS1MI7eoyQc9bMsFipcWYEeIsBk1MV1U4O0FA9oc3FDX4hWKdESmw
+	hibXZpuuy/fJvhtxdzLcGnGfjqBrFNdZgVw==
+X-ME-Sender: <xms:ITy7aElG7KaHeEpbgpdsFakZ56yEN_YguBE2Q5hESzuCAB_zcKggCQ>
+    <xme:ITy7aMTdzrvir6Olx1cSlQetAPkXnNe0lylbwx1-YVPPovUw8tzOIQOrRHbMAe5qS
+    KhxvJ4tRuARgHMX_g>
+X-ME-Received: <xmr:ITy7aDH07x5egPi8eeDGbQcYNGoZImGH1o5wlKUSqVbb59Md2Dg99zKcFMBo9MyHCphatCSp87aAXYdKo6ZYMTd2L1aW7No4LyQbbFI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeljeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeggefhudefkeegueeigfejhfejvdejvedtheeguedukefgieelfeeuteejieeu
-    leenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnohhurhgrvghllhhmsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-zu7aG70kb9aZXvaGKB0XJyytHKw3r9swktzdzeU5GgktQXFRTspaw>
-    <xmx:-zu7aLU0vroSij1s82729WjDPBbV3ywjve73RTl8JpSuTI4gPyXDgw>
-    <xmx:-zu7aI8iHntC5L4SAEQztAIYRc7sWtiHcr-Emxjm64HVZwOivgEfYQ>
-    <xmx:-zu7aHkX4ndWQWSdIgAQTf2G6sogx8Fp0OoDDoofJRwnP3970cY37g>
-    <xmx:-zu7aJXBXesG_Zb5jDIJGgAI0XQCpwERalU48UbuU2ywKkE8aRsyxFIw>
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehm
+    vgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
+    htthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ITy7aBHOMMPmdR9G4KUPjm9Bu3saxncPaGbYMsCImNtxL1QJY2QVew>
+    <xmx:ITy7aBQixznmgG3lfC3E4m4lbl3sBfESQ_b8W1DBgoqN1NPM_3qViQ>
+    <xmx:ITy7aCLx31K0_NbQIUV2YHzwd60542KF9R0Q2rjbSC3L_algK2bRWg>
+    <xmx:ITy7aMY7JEJ6RawlXQOg5eMAcozogMojxoHy-jZM56oJqMl4fbKgtw>
+    <xmx:ITy7aEKFUTLQ1fB4hlVXhwGR3ZJpXMtU4R08i-f_jCdzrZWP3OMkwYGp>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Sep 2025 15:37:31 -0400 (EDT)
+ 5 Sep 2025 15:38:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9_|_Flare_via_GitGitGadget?=
- <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?B?44OO44Km44Op?= | Flare
- <nouraellm@gmail.com>
-Subject: Re: [PATCH v6] alloc: fix dangling pointer in alloc_state cleanup
-In-Reply-To: <pull.2040.v6.git.git.1757098308277.gitgitgadget@gmail.com>
- (=?utf-8?B?IuODjgnjgqbjg6k=?= | Flare via GitGitGadget"'s message of "Fri,
- 05 Sep 2025 18:51:48
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  me@ttaylorr.com,  Patrick Steinhardt <ps@pks.im>,
+  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 0/6] midx-write: fix segfault and do several cleanups
+In-Reply-To: <pull.1965.v3.git.1757100378.gitgitgadget@gmail.com> (Derrick
+	Stolee via GitGitGadget's message of "Fri, 05 Sep 2025 19:26:12
 	+0000")
-References: <pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
-	<pull.2040.v6.git.git.1757098308277.gitgitgadget@gmail.com>
-Date: Fri, 05 Sep 2025 12:37:29 -0700
-Message-ID: <xmqqh5xg3d3a.fsf@gitster.g>
+References: <pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
+	<pull.1965.v3.git.1757100378.gitgitgadget@gmail.com>
+Date: Fri, 05 Sep 2025 12:38:08 -0700
+Message-ID: <xmqqcy843d27.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,56 +88,36 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"ノウラ | Flare via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
->  <nouraellm@gmail.com>
+> I was motivated to start looking closely at midx-write.c due to multiple
+> users reporting Git crashes in their background maintenance, specifically
+> during git multi-pack-index repack calls. I was eventually able to reproduce
+> it in git multi-pack-index expire as well.
 >
-> All callers of clear_alloc_state() immediately free what they
-> cleared, so currently it does not hurt anybody that the
-> alloc_state is left in an unreusable state, but it is an
-> error-prone API. Replace it with a new function that clears but
-> in addition frees the structure, as well as NULLing the pointer
-> that points at it and adjust existing callers.
+> Patch 1 is the only change we need to fix this bug. It includes a test case
+> that will fail under --stress with SANITIZE=address. It requires creating
+> many packfiles (50 was not enough, but 100 is enough). As far as I can tell,
+> this bug has existed since Git 2.47.0 in October 2024, but I started hearing
+> reports of this from users in July 2025 (and took a while to get a
+> dump/repro).
 >
-> As it is a moral equivalent of FREE_AND_NULL(), except that what it
-> frees has internal structure that needs to be cleaned, allow the
-> helper to be called twice in a row, by making a call with a pointer
-> to a pointer variable that already is NULLed.
+> The remaining patches are cleanups based on my careful rereading of
+> midx-write.c. There are some issues about error handling that needed some
+> cleanup as well as a removal of the DISABLE_SIGN_COMPARE_WARNINGS macro.
 >
-> While at it, rename allocate_alloc_state() and name the new
-> function alloc_state_free_and_null(), to follow more closely the
-> function naming convention specified in the CodingGuidelines
-> (namely, functions about S are named with S_ prefix and then
-> verb).
 >
-> Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->     alloc: fix dangling pointer in alloc_state cleanup
->     
->     cc: Torsten Bögershausen tboegi@web.de cc: Jeff King peff@peff.net
+> Updates in V3
+> =============
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2040%2Fnouraellm%2Ffix-dangling-pointer-v6
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2040/nouraellm/fix-dangling-pointer-v6
-> Pull-Request: https://github.com/git/git/pull/2040
+>  * Use test_grep over grep.
+>  * Translate an error message.
+>  * Clarify a commit message.
 
-Nicely done.
-I see no more need for further changes.
+All incremental changes made sense to me.  Will replace.
 
-> +	if (!s)
-> +	    return;
+Shall we mark the topic ready for 'next' by now?
 
-This must be indented with two tabs, i.e.
-
-	if (!s)
-		return;
-
-but the copy I have since yesterday already is formatted that way,
-so no need to resend this patch.
-
-Thanks.  Let's mark the topic for 'next'.
+Thanks.
