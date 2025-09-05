@@ -1,276 +1,167 @@
-Received: from FR5P281CU006.outbound.protection.outlook.com (mail-germanywestcentralazon11012017.outbound.protection.outlook.com [40.107.149.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B5835085E
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 13:19:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.149.17
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757078397; cv=fail; b=KnM08qefYn1dVKaOj8VQbY0Eb/TLSDFUV6R7wK/UiqOAYibsq8qvQ8tgdINQUn0DKRxU22kdeVfxvEYEFwlUJW9msWrhD4G/eKauJnSzEAQ4hkhqcp/FKSLK8azxXZNYlrrABWsXaHtaM+asCNaOj+psLP7PNwbNW0S8Au75srI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757078397; c=relaxed/simple;
-	bh=lt2Vk0LN9xwa2H3AbPRFY+wR37+FjPCYpwntj/3XJHE=;
-	h=Content-Type:Message-ID:Date:From:Subject:To:MIME-Version; b=ClOv5fIG/fo0NeZ/+Cy0iO82mosECkk+UCP6SpOxV0E1O1uZ8GhiCUznn1SkGnDvys99vhYDElM2uZREYP05Xi/MTdP/LKlblPxUtTXA/iNhRUyA+X5QSTjzLaFeXsbyzffoCCIi0szpoebn+oW7p9NvmTPWiACm52Y5/jB15HA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=innomotics.com; spf=pass smtp.mailfrom=innomotics.com; dkim=pass (2048-bit key) header.d=innomotics.com header.i=@innomotics.com header.b=L69hGQyj; arc=fail smtp.client-ip=40.107.149.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=innomotics.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=innomotics.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=innomotics.com header.i=@innomotics.com header.b="L69hGQyj"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eaynJMN2xkhllIxRjy6UTsqDMduQEFyGP6NKpLGgkVNgq49Uq+Z8UMLcApnbyWrqwacOdr4KHdmoGTuMT6aFF0OlForMhs33ohWt0/OtM0vKaev6GFsxXKzUTiMu5uzNuJ7xPTdEcgYCxv2EJdliPWdU3Yq52GA5ld9/8zavTDHyK/GLpyKMYzCxFKyz7mGDmhT5/AZUXg7JjF1o8u66AGze3OMUIPuScu9QmxumrRUTqIQbioKuL+uRCXCrQLRn5rKh0aazJeYfPL1Sm4P8agfYoUReqilURx7EAnIeTpM7dqVxNYDZOHtt0eH4NYWwPRs6Rq4MsJBh90uT2rQ7kA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lt2Vk0LN9xwa2H3AbPRFY+wR37+FjPCYpwntj/3XJHE=;
- b=YYM+7axSR/vRGYcysUt08ZnxpPjgQsS+ii7CajiodCJBbmuUS+szZbUCva1HnVL7VjoyPyUyef1n9PgDLNrl3qWSGkcQ+vN1jdP9aHqXKzOC+/5kGh2kXUVJUSO6KayAACUgasBuCRGwL2alsUfdLLePuXzIUO9D3cwxxXHF1tE8gHy6nwhOCleQ7WjsAaHVkb7Wc4GNvvQ+MnvqtzR8FoHj6HFHMzeeq5a0GzJslJR72EhZxZR6abHLGaDdU2V/TN3F+nr94o0WHDmKVExk51k4mLoWKb1PQF9ls96/DUA/VLURBo7eN+ueoOf8cNdgLxBWkmBx1/KLMYpuQkiEkg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=innomotics.com; dmarc=pass action=none
- header.from=innomotics.com; dkim=pass header.d=innomotics.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=innomotics.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lt2Vk0LN9xwa2H3AbPRFY+wR37+FjPCYpwntj/3XJHE=;
- b=L69hGQyjVOzM1A7HJIILgtaLx8G6gifstlGnu3iCdMe+yW9hA3gKjTsmWFTMmHUHtMnJK91uyVfmcHZJjUezm0DLhm22BNZzf8Iqr/lhpK0a1YcpWtrXv8v2S5GQsyhVHenaQq3Bqb1N5WplD9Yo8KD0AcCRGScvyV8wDqjKnl6DwS8rq60b2mznLC2HF/a4sFXFhrT+fmoX1ACuc1/FRixcrF/rgD59rjsw3pNVtVKtPkiydWIG/k8JTAF3kANduqJvA0GaEpWn7dM9p1KfRNDrjJ6HypvBsXcqG8TdERUe8yym3DBtRsWLW6UnAaIqGG6rOqwzhyI1UtQFY0QdvQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=innomotics.com;
-Received: from FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d18:2::1af)
- by BEVP281MB3778.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b10:97::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.17; Fri, 5 Sep
- 2025 13:19:51 +0000
-Received: from FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM
- ([fe80::4db0:74ab:67b3:b6]) by FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM
- ([fe80::4db0:74ab:67b3:b6%7]) with mapi id 15.20.9094.018; Fri, 5 Sep 2025
- 13:19:51 +0000
-Content-Type: multipart/mixed; boundary="------------NnkWr49C2YHuu3aBKoz53iir"
-Message-ID: <d8d4266e-838c-488e-9aaf-4a1be0169795@innomotics.com>
-Date: Fri, 5 Sep 2025 15:19:50 +0200
-User-Agent: Thunderbird Daily
-From: "Osipov, Michael (IN IT IN)" <michael.osipov@innomotics.com>
-Subject: [Bug] Compat objects not added to CLAR_TEST_PROG
-To: git@vger.kernel.org
-Content-Language: en-US
-X-ClientProxiedBy: BE1P281CA0278.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:b10:84::13) To FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d18:2::1af)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2621B191F84
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 13:20:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757078427; cv=none; b=JLFvhLVom2grUM5bDKQUcEFpp9l/17N0DEEb6jZ9hJKrAMip0xjUHTN+c4aHjydneQS163Q6lczhWlf0IwIXSve4u8kfsWQJ4G6rw/T5vVeEgmG+yTVusqUXDXC4/cxHl5UuhvXocQIcnazhUejEaqyf6ZGFBUt0NIOzeJIEzlM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757078427; c=relaxed/simple;
+	bh=/Y3ualz4JEYc5WBeQ/t60gju1KfBog8cEz029YTn76U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gudkgEjP+HU+aVp5kDpEcmYQRi1QVdf4GMPkTg8rWo35fDFkiJE6wntZ6Gk14faK+TotNlUi7k+mcLb7yw/Sl6juCwRe9xXTWqxB/8e17lSVjMQx42hs3lWILWAoTH/zV63BeN8eww06zWqz6ym4+ddS827Oc7bUPa1WjyAucco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:cf90::12ac] (unknown [IPv6:2603:6011:3f0:cf90::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id E947E33BF39;
+	Fri, 05 Sep 2025 13:20:23 +0000 (UTC)
+Message-ID: <7040d009-2a1f-4962-abcc-80b82b89f1e6@gentoo.org>
+Date: Fri, 5 Sep 2025 09:20:20 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: FR3PPFFBD1D31FB:EE_|BEVP281MB3778:EE_
-X-MS-Office365-Filtering-Correlation-Id: bfaa4b63-0c13-4bc0-2005-08ddec7ee50c
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|4053099003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?YzFVMmJ4b3NLKzAxL2VOVUc3cmtYTVh5NFRMcG5zWldsNklTWWtzNytxR1Yy?=
- =?utf-8?B?WVRWcDZzbGR5aU00ZURQM2JadlBKVmpqQ0pIMVdwWGFoWENYMjBVdGVHQXR4?=
- =?utf-8?B?ZWlSaVkrM3NvWmNnYjN5ZHJScGFHSG5hYmRmdEFDTUF2VE0vd29kK2xqZ01m?=
- =?utf-8?B?REQrUGxnKzFCV0VJQ1ZpMUZYSk95L1JmaDJqZWVWelYzOFNXbHQ5d084U0FN?=
- =?utf-8?B?czFMTnR0L01GOHFMVURtdkhpNEtQdVZsR0JRTkh1eUVObEdHRVVoKzlrak5l?=
- =?utf-8?B?VVVhZ0w5Y0srQXpkMmJnSXVRY1FRWVJpUDhtbWJlMThtUUcwUDBSdVZuNnhI?=
- =?utf-8?B?OVZUMmxYQVU3T0dzM0F1TVVqdm1DMEV2ZkV6NUwrZmEzbmFUdms4S2tnWVBX?=
- =?utf-8?B?MWxQS3dDVXF6LzJBWjZ2YWtIajhDRkhtdVoyT1FkQ3FubWhFMU9Fd1FYemx1?=
- =?utf-8?B?NkZtaHZWNlhVZE90Vld4bVhjRUxxNmtZd1hpYkRJVXNuSmFFT21IeTFWYTBl?=
- =?utf-8?B?dVhDS0pUN0tjSE9VTXBlOEhhUE9Zd2p3TlVLNEQ1S2RWdThCTDZobWdXWFJT?=
- =?utf-8?B?MGJPNC8wZEIxeGx4d0luUUJUMXZUeG5UQVJZTUthUElwallGS2h1U0psYWsx?=
- =?utf-8?B?V3RiRURoQy9JcllQaUhySzh4QmpZSHpoNmJRTVZUQ3JqZ2Y5cTJQMDVhTzg3?=
- =?utf-8?B?aWZNWjVtUWNMNXdMaUtLbTJIMkpoQ0dQTkl1ZjRBeG95TGZCSEdTeVhkMWRq?=
- =?utf-8?B?eTJJVFE0bEp1SXBLU3BPbzNHaFlXN1dsL2szdGZHWEFzb3ZjV1c1V0pEWkdR?=
- =?utf-8?B?RHVzOFRsaG1SbFA0bmNwUkppZy8wSHpac05wY1Z3Z3Y5ZjliMEFidG9qV0xm?=
- =?utf-8?B?eHVVVjBHRnFZZE9vTGNaSy9FS2s1dHpuL2JmY0Qzdnpta05rQmZzNFY1T1l0?=
- =?utf-8?B?cjVoTXRmV1ljejVwU09LcitDWFNka0FCTG5IWlRLZlZxRGd1R3BKTVl6Vk9G?=
- =?utf-8?B?YnBWY1FFekpxMzdzTlhNMmJxTDZRcS9UcHliN3JVNnJGSWdCeXRCR1ZzQStt?=
- =?utf-8?B?dytxUFhwODZjVzZBSGczeUFtbGFSSE1mQ1RtRkt1dEFlVlpUaDRPRHVwSWs2?=
- =?utf-8?B?NWVpalFTazdvMjJkK1J2VG13NDZvU01sdkVESkMxUzJQWGMydGxiTFlmS3BG?=
- =?utf-8?B?cDNhNzZqRVJndUl1L2lia3prVG1GbVRWY2FmWWVZQ0pFNEhuVS8zd1Ftckg5?=
- =?utf-8?B?RVY3dUY4VkZKNUVWc3hRUkEvYjRWR29TVm1sZDRkWjZ0TDZqSzA5SHRDa1lP?=
- =?utf-8?B?WDNGYllYNUk3WHEwMnExUXl1eEVVRFIzWlk5bk55Z3hlUG91Nm1sUmtlcFE3?=
- =?utf-8?B?YndVanBXWW5EWUZmU3RwbGZYbU5UTWlidFJNckRSbVR6b0srV0JPck9yK1dH?=
- =?utf-8?B?M3YySXVnVVR6bWxSSHhFdkFnMlpic0VqS1JBWmwwa3g3Z3NJa2xxb3QvVUxV?=
- =?utf-8?B?KzJlNjBiYlJKelVKYWFVclFwdWVWdFMwU3Zqc3F0QWR4TWJ2eldNQjM1ZUdO?=
- =?utf-8?B?eXRZZ2FBcm9XS0p6WFdFV2R6aHFXTENqSS9CVWQwNjRMeVBFeUZXdTBGSHl3?=
- =?utf-8?B?MjJvUldUZVB5QUh5UDBkT0dlelZybVZSWFBsSnV0K0pNYkIwTERmWHFKUE5u?=
- =?utf-8?B?WFZUV3hWa0pkUGNuTlJLS3JzK09oQm05dFV3Y0RCamhHaGZPMHE2allFbldH?=
- =?utf-8?B?UGx3YVRLQWh4d0RHWnlOZEVuYWJEUGdZb2ZHSVVNci9DMThzMVZYdTk5TThu?=
- =?utf-8?Q?tCHC8+oTlYAyqr1Oxt6wbV7XNWLSINtwiWd/Q=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(4053099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?R3JyNGNFUXU2YXExa01aWU9YbU9iVkp0a200ZHFIYnRydFMxcEpFVjJaZ0p5?=
- =?utf-8?B?d21UYUV1TUh3eVA3d2tSWWg4Q0NDcWlmVHk5RHphaThBcnVWWHV3L09aNGFW?=
- =?utf-8?B?b0NEbExPR3ZOZ0NsQ0dQaTUyMDVCb0NYWXdXUEFzT2xtQjZ6V3V4YWR5Rktx?=
- =?utf-8?B?MzlNNXZKZTNwa0xQVmsvakdSYldtb2ZVa0JTQ2Y5dXdkbm9ONExGeFJ6RlhS?=
- =?utf-8?B?OG1uTkJjRGJlNWdHQXFoK215eFNtSE1YWDJuK3V5alBuMGU0TkV0UjNIQ1V4?=
- =?utf-8?B?U3h6VTVyZU9LdC9TWTkwSGVWc2hSRVpia2VldVZoSnZmVVZJSzRJZk9VcTJO?=
- =?utf-8?B?UW82WlRFamU2cytYVHdVUGJHRFVZNmFGNmxUZDlxZTdqQSt1blB2elhFdVZn?=
- =?utf-8?B?M3F6bUUvdkdGZEZ4aWJhd292UC9LQzRaUmZpdXFicjV0R0V3SmN0S0NtM1VS?=
- =?utf-8?B?aTRRSm04RGdnOE9xcGZkdWxhOEtuY3Y0RnV5RlZyY2hyQWk1a1lPRTMyNXVo?=
- =?utf-8?B?eDlMUWIvLzZkbmpJTlo4eXhYOGhIclF4UEdFWVJrd01nSFhtRzJ0ZmMzVFdh?=
- =?utf-8?B?RzlYWGU5NUlUM0ZKNjBFZkZaY25vbmVCNFpNNGhZR0lHbnZNWDJzN0ZGcE1n?=
- =?utf-8?B?VWYzeDZETUx3K2lUeE1iNFlndURtemNXd25Gb0NOSG5nVXI2M1hIbit0blZB?=
- =?utf-8?B?NkdrVXlnS2MyNDVIamxXV2VEY29tRXE0UnZwY3dWektHYzF0aU93Q1M3THJN?=
- =?utf-8?B?RW9rRTk2Q2VPbG9OQUkwTGs0VFBvYThPdjRMaS9pdVdvU2FDT1krSFNnL1BJ?=
- =?utf-8?B?bUJ0clB4NlJuSWZwQW42N3MwQVFKenAyVXZKVFE0cC9SZnltNW9GbE96bHRy?=
- =?utf-8?B?WDhxUk54RHBvYkxKeGhSaUpEVXRzR3FMWUZOejNLV0dKeDBFaFRFMFFOakFv?=
- =?utf-8?B?MVplYU1DN2llRnZhRkVNUUhTUE5ibEQ5NnZYY0tqRStrUU9GNEpxRlpvYTBn?=
- =?utf-8?B?b0ZUck5uU1pCRlRSaFRSV2VYbEZiZFlZbVpUeTFnVk9oZE1OTDNlcWxRN3kv?=
- =?utf-8?B?dVhTbzdOWG4yaThnSWY0a01manNDRmRvYURTMWtnUkRzRW5wTGR4dVNPaUJw?=
- =?utf-8?B?ZjV1aDYva1FZZTF4WkMvUW1MWTc5TnBrTkwxY1A4MThUejlqVXpKY0VBYVNh?=
- =?utf-8?B?Y0Nwb0F3QVNGV0RJdldQMEl0Y3Vwc1Z5eTlNREdrUy80NkdldFRBL08zV1Vo?=
- =?utf-8?B?amRSTHZkeU9WUlh4MDZEWUNkVnJ1d3RNQlFvd0lBcVNIT2kvUzY5R1QrajQ3?=
- =?utf-8?B?KzBDWittMVcrb09xR2hPNWdrRFQweFRMWDVaeVptNmt1VnZQMnNIYmlsWTZa?=
- =?utf-8?B?STB6cXR2V2wyME5WRE1BRHBQUEJSb1ZKVncvQUZyMUNlK0t3bUlhSE41REtS?=
- =?utf-8?B?aVVtK1IvV0FMUituWkgzQ3h3dzVncFJrNWpDNzhIeGlkcWhxVXorZzRPSHg5?=
- =?utf-8?B?TSt1bkFkcXpoOW9nQ2ZrVzhaTEs2N2VnekZZZ01PVWRQSXF2V2tIODUyUElK?=
- =?utf-8?B?MVEvQU16alhrQ09Od210cldFMlJQcnRGRTZhU0pCUFhvZ2w0M3ZUNERLOTdZ?=
- =?utf-8?B?dmU5ZmlWb0V5MXdDdjJoaXpxKzFKakxOUjdiTnBoQmZyZjZXUzdZcWZYMkdZ?=
- =?utf-8?B?UjBIeFd3dzBreW5TdENlTzFMYm44QjUxbCtzMHR5K25XRmF5eGRscDYzVlM1?=
- =?utf-8?B?TXFjOFE3dzFRQTE3elBnMk01azdqMHEwaVcrMWhDTldDVE9YMUY0d1Bwbzc1?=
- =?utf-8?B?L0tpVGpWU3Q0WDF6OXoreTNKenN6ZmpCOEEzdUhBZzJnZ2xrYWlGUzBaNUZk?=
- =?utf-8?B?ZDJPdHVDSE0zTnNJQnY1aFBMY0FqdG4ra0RPMlFtL1R6bi8wNThaTnk3K2ZI?=
- =?utf-8?B?VHM3RXhubzliTFJIeVcvVmVTMCt1QjBXRklwcUZPbC8wb1AwWERBVkRNTHpN?=
- =?utf-8?B?RENjeDErMENjQzlRN2lVL0ZWN0ROSVg5QjdSQ2NkRndLWUUzbVk4dG5yaWV5?=
- =?utf-8?B?NXhCbWNDa29jMkdRS1A1THNCaTRhUjFWQ3JUVlIzL2thOUd5ZWNiSUZveWZO?=
- =?utf-8?B?VE9Rdm5pT1N1SVJLTi93S3dNWml0bmpVc2RDTHc4L0JXazRNZzhQTXFmeHpj?=
- =?utf-8?B?cFE9PQ==?=
-X-OriginatorOrg: innomotics.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bfaa4b63-0c13-4bc0-2005-08ddec7ee50c
-X-MS-Exchange-CrossTenant-AuthSource: FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2025 13:19:51.0631
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 698c6ffb-74e3-4a84-be68-f22d8d3201a3
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5xEKPsFnEhzKcd4ZLykupgFsTuHeJJ+XmhS+wXWVgKLeZ3B2n/O2xGiJWX3m8/9gja9vNB7DCv8SLYCBoS+FxeXtnK+B2WavWdOxINEr0tU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BEVP281MB3778
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 1/3] meson: add infrastructure to build internal Rust
+ library
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+ "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+ Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>,
+ Collin Funk <collin.funk1@gmail.com>, Elijah Newren <newren@gmail.com>,
+ Ezekiel Newren <ezekielnewren@gmail.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>, Phillip Wood
+ <phillip.wood123@gmail.com>,
+ Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+ Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+ <20250904-b4-pks-rust-breaking-change-v1-1-3af1d25e0be9@pks.im>
+ <aLoNc5S6PVW8jLu5@fruit.crustytoothpaste.net>
+ <013a3006-d220-424d-a28d-fb273c523c71@gentoo.org> <aLqWKYkj98QUDxRi@pks.im>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <aLqWKYkj98QUDxRi@pks.im>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------4O4QGVY9p6whXruta0I8A0pj"
 
---------------NnkWr49C2YHuu3aBKoz53iir
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------4O4QGVY9p6whXruta0I8A0pj
+Content-Type: multipart/mixed; boundary="------------ubdAxcF0Wrbf0gXI0ZmWsy7l";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+ "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+ Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>,
+ Collin Funk <collin.funk1@gmail.com>, Elijah Newren <newren@gmail.com>,
+ Ezekiel Newren <ezekielnewren@gmail.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>, Phillip Wood
+ <phillip.wood123@gmail.com>,
+ Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+ Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+Message-ID: <7040d009-2a1f-4962-abcc-80b82b89f1e6@gentoo.org>
+Subject: Re: [PATCH RFC 1/3] meson: add infrastructure to build internal Rust
+ library
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+ <20250904-b4-pks-rust-breaking-change-v1-1-3af1d25e0be9@pks.im>
+ <aLoNc5S6PVW8jLu5@fruit.crustytoothpaste.net>
+ <013a3006-d220-424d-a28d-fb273c523c71@gentoo.org> <aLqWKYkj98QUDxRi@pks.im>
+In-Reply-To: <aLqWKYkj98QUDxRi@pks.im>
 
-SGkgZm9sa3MsDQoNCkkgYW0gYnVpbGRpbmcgR2l0IDIuNTEuMCBvbiBIUC1VWCAxMS4zMSwgcHJl
-dmlvdXMgcmVsZWFzZXMgd2VudCANCnNtb290aGx5LiBUaGlzIHJlbGVhc2Ugbm93IGZhaWxzIHdp
-dGg6DQo+IC9vcHQvYUNDL2Jpbi9hQ0MgLUFDOTkgLUFDOTkgLW8gdC91bml0LXRlc3RzL2NsYXIv
-Y2xhci5vIC1jICAgIC1JL29wdC9wb3J0cy9pbmNsdWRlIC1EX1hPUEVOX1NPVVJDRT02MDAgICAt
-SS4gLURHSVRfSE9TVF9DUFU9IlwiaWE2NFwiIiAtRFVTRV9MSUJQQ1JFMiAtSS9vcHQvcG9ydHMv
-aW5jbHVkZSAtREhBVkVfQUxMT0NBX0ggIC1JL29wdC9wb3J0cy9pbmNsdWRlIC1EVVNFX0NVUkxf
-Rk9SX0lNQVBfU0VORCAtSS9vcHQvcG9ydHMvaW5jbHVkZSAtSS9ldGMvb3B0L3BvcnRzL3NzbC9p
-bmNsdWRlIC1JL29wdC9wb3J0cy9pbmNsdWRlIC1ETk9fRF9UWVBFX0lOX0RJUkVOVCAtRE5PX05T
-RUMgLURTSEExX0RDIC1EU0hBMURDX05PX1NUQU5EQVJEX0lOQ0xVREVTIC1EU0hBMURDX0lOSVRf
-U0FGRV9IQVNIX0RFRkFVTFQ9MCAtRFNIQTFEQ19DVVNUT01fSU5DTFVERV9TSEExX0M9IlwiZ2l0
-LWNvbXBhdC11dGlsLmhcIiIgLURTSEExRENfQ1VTVE9NX0lOQ0xVREVfVUJDX0NIRUNLX0M9Ilwi
-Z2l0LWNvbXBhdC11dGlsLmhcIiIgLURTSEEyNTZfQkxLIC1ETk9fUFRIUkVBRFMgLURIQVZFX0xJ
-QkNIQVJTRVRfSCAtREhBVkVfU1RSSU5HU19IIC1ESEFWRV9DTE9DS19HRVRUSU1FIC1EU05QUklO
-VEZfUkVUVVJOU19CT0dVUyAtREZSRUFEX1JFQURTX0RJUkVDVE9SSUVTIC1ETk9fU1RSQ0FTRVNU
-UiAtRE5PX1NUUkxDUFkgLUROT19NS0RURU1QIC1ETk9fSFNUUkVSUk9SIC1ETk9fTUVNTUVNIC1J
-Y29tcGF0L3JlZ2V4IC1EREVGQVVMVF9FRElUT1I9JyJ2aW0iJyAtRFNIRUxMX1BBVEg9JyIvYmlu
-L3NoIicgLUl0L3VuaXQtdGVzdHMgdC91bml0LXRlc3RzL2NsYXIvY2xhci5jDQo+ICJ0L3VuaXQt
-dGVzdHMvY2xhci9jbGFyLmMiLCBsaW5lIDkwOiB3YXJuaW5nICMyMDQ3LUQ6IGluY29tcGF0aWJs
-ZQ0KPiAgICAgICAgICAgcmVkZWZpbml0aW9uIG9mIG1hY3JvICJNQVgiIChkZWNsYXJlZCBhdCBs
-aW5lIDQyNiBvZg0KPiAgICAgICAgICAgIi91c3IvaW5jbHVkZS9zeXMvcGFyYW0uaCIpDQo+ICAg
-I2RlZmluZSBNQVgoeCwgeSkgKCgoeCkgPiAoeSkpID8gKHgpIDogKHkpKQ0KPiAgICAgICAgICAg
-Xg0KPiANCj4gInQvdW5pdC10ZXN0cy9jbGFyL2NsYXIvc2FuZGJveC5oIiwgbGluZSAxMzg6IHdh
-cm5pbmcgIzIyMjMtRDogZnVuY3Rpb24NCj4gICAgICAgICAgICJta2R0ZW1wIiBkZWNsYXJlZCBp
-bXBsaWNpdGx5DQo+ICAgICAgICAgaWYgKG1rZHRlbXAoX2NsYXJfcGF0aCkgPT0gTlVMTCkNCj4g
-ICAgICAgICAgICAgXg0KPiANCj4gL29wdC9hQ0MvYmluL2FDQyAtQUM5OSAtQUM5OSAgLUkvb3B0
-L3BvcnRzL2luY2x1ZGUgLURfWE9QRU5fU09VUkNFPTYwMCAgIC1JLiAtREdJVF9IT1NUX0NQVT0i
-XCJpYTY0XCIiIC1EVVNFX0xJQlBDUkUyIC1JL29wdC9wb3J0cy9pbmNsdWRlIC1ESEFWRV9BTExP
-Q0FfSCAgLUkvb3B0L3BvcnRzL2luY2x1ZGUgLURVU0VfQ1VSTF9GT1JfSU1BUF9TRU5EIC1JL29w
-dC9wb3J0cy9pbmNsdWRlIC1JL2V0Yy9vcHQvcG9ydHMvc3NsL2luY2x1ZGUgLUkvb3B0L3BvcnRz
-L2luY2x1ZGUgLUROT19EX1RZUEVfSU5fRElSRU5UIC1ETk9fTlNFQyAtRFNIQTFfREMgLURTSEEx
-RENfTk9fU1RBTkRBUkRfSU5DTFVERVMgLURTSEExRENfSU5JVF9TQUZFX0hBU0hfREVGQVVMVD0w
-IC1EU0hBMURDX0NVU1RPTV9JTkNMVURFX1NIQTFfQz0iXCJnaXQtY29tcGF0LXV0aWwuaFwiIiAt
-RFNIQTFEQ19DVVNUT01fSU5DTFVERV9VQkNfQ0hFQ0tfQz0iXCJnaXQtY29tcGF0LXV0aWwuaFwi
-IiAtRFNIQTI1Nl9CTEsgLUROT19QVEhSRUFEUyAtREhBVkVfTElCQ0hBUlNFVF9IIC1ESEFWRV9T
-VFJJTkdTX0ggLURIQVZFX0NMT0NLX0dFVFRJTUUgLURTTlBSSU5URl9SRVRVUk5TX0JPR1VTIC1E
-RlJFQURfUkVBRFNfRElSRUNUT1JJRVMgLUROT19TVFJDQVNFU1RSIC1ETk9fU1RSTENQWSAtRE5P
-X01LRFRFTVAgLUROT19IU1RSRVJST1IgLUROT19NRU1NRU0gLUljb21wYXQvcmVnZXggLURERUZB
-VUxUX0VESVRPUj0nInZpbSInIC1EU0hFTExfUEFUSD0nIi9iaW4vc2giJyAtbyB0L3VuaXQtdGVz
-dHMvYmluL3VuaXQtdGVzdHMgLUwvb3B0L3BvcnRzL2xpYi9ocHV4MzIgICB0L3VuaXQtdGVzdHMv
-dS1jdHlwZS5vIHQvdW5pdC10ZXN0cy91LWV4YW1wbGUtZGVjb3JhdGUubyB0L3VuaXQtdGVzdHMv
-dS1oYXNoLm8gdC91bml0LXRlc3RzL3UtaGFzaG1hcC5vIHQvdW5pdC10ZXN0cy91LW1lbS1wb29s
-Lm8gdC91bml0LXRlc3RzL3Utb2lkLWFycmF5Lm8gdC91bml0LXRlc3RzL3Utb2lkbWFwLm8gdC91
-bml0LXRlc3RzL3Utb2lkdHJlZS5vIHQvdW5pdC10ZXN0cy91LXByaW8tcXVldWUubyB0L3VuaXQt
-dGVzdHMvdS1yZWZ0YWJsZS1iYXNpY3MubyB0L3VuaXQtdGVzdHMvdS1yZWZ0YWJsZS1ibG9jay5v
-IHQvdW5pdC10ZXN0cy91LXJlZnRhYmxlLW1lcmdlZC5vIHQvdW5pdC10ZXN0cy91LXJlZnRhYmxl
-LXBxLm8gdC91bml0LXRlc3RzL3UtcmVmdGFibGUtcmVhZHdyaXRlLm8gdC91bml0LXRlc3RzL3Ut
-cmVmdGFibGUtc3RhY2subyB0L3VuaXQtdGVzdHMvdS1yZWZ0YWJsZS10YWJsZS5vIHQvdW5pdC10
-ZXN0cy91LXJlZnRhYmxlLXRyZWUubyB0L3VuaXQtdGVzdHMvdS1zdHJidWYubyB0L3VuaXQtdGVz
-dHMvdS1zdHJjbXAtb2Zmc2V0Lm8gdC91bml0LXRlc3RzL3Utc3RyaW5nLWxpc3QubyB0L3VuaXQt
-dGVzdHMvdS1zdHJ2ZWMubyB0L3VuaXQtdGVzdHMvdS10cmFpbGVyLm8gdC91bml0LXRlc3RzL3Ut
-dXJsbWF0Y2gtbm9ybWFsaXphdGlvbi5vIHQvdW5pdC10ZXN0cy9jbGFyL2NsYXIubyB0L3VuaXQt
-dGVzdHMvbGliLW9pZC5vIHQvdW5pdC10ZXN0cy9saWItcmVmdGFibGUubyB0L3VuaXQtdGVzdHMv
-dW5pdC10ZXN0Lm8gY29tbW9uLW1haW4ubyBsaWJnaXQuYSB4ZGlmZi9saWIuYSByZWZ0YWJsZS9s
-aWJyZWZ0YWJsZS5hIGxpYmdpdC5hIC1scGNyZTItOCAtTC9vcHQvcG9ydHMvbGliL2hwdXgzMiAt
-V2wsK2IsL29wdC9wb3J0cy9saWIvaHB1eDMyIC1ML29wdC9wb3J0cy9saWIvaHB1eDMyIC1XbCwr
-Yiwvb3B0L3BvcnRzL2xpYi9ocHV4MzIgLWx6IC1ML29wdC9wb3J0cy9saWIvaHB1eDMyIC1XbCwr
-Yiwvb3B0L3BvcnRzL2xpYi9ocHV4MzIgLWxpY29udiAtbGludGwgLWxpY29udg0KPiBsZDogVW5z
-YXRpc2ZpZWQgc3ltYm9sICJta2R0ZW1wIiBpbiBmaWxlIHQvdW5pdC10ZXN0cy9jbGFyL2NsYXIu
-bw0KPiAxIGVycm9yLg0KPiBnbWFrZTogKioqIFtNYWtlZmlsZTozOTM4OiB0L3VuaXQtdGVzdHMv
-YmluL3VuaXQtdGVzdHNdIEVycm9yIDENCj4gZ21ha2U6ICoqKiBEZWxldGluZyBmaWxlICd0L3Vu
-aXQtdGVzdHMvYmluL3VuaXQtdGVzdHMnDQoNCkhQLVVYJyBsaWJjIGRvZXMgbm90IGNvbnRhaW4g
-bWtkdGVtcCgpIGFuZCB0aGUgY29uZmlndXJlIHNjcmlwdCBwcm9wZXJseSANCmRldGVjdHMgdGhp
-cy4gTk9fTUtEVEVNUCBpcyBwYXNzZWQgYW5kIHRoZSBnaXRta2R0ZW1wKCkgZnVuY3Rpb24gaW4g
-DQpjb21wYXQvIGlzIGNvbXBpbGVkLiBzYW5kYm94LmggbWFrZXMgdXNlIG9mIG1rZHRlbXAoKSwg
-YnV0IG5ldmVyIA0KaW5jbHVkZXMgdGhlIHByb3RveXBlIGFuZCB0aGUgYWN0dWFsIG9iamVjdCBp
-c24ndCBhZGRlZCB0byB0aGUgbGlua2VyIHBhdGguDQpJIGhhdmUgd3JpdHRlbiBhIG1pbmltYWxp
-c3RpYyBwYXRjaCAoc2VlIGF0dGFjaG1lbnQpLCBtYXliZSB0aGVyZSBpcyBhIA0KYmV0dGVyIHdh
-eS4gVGhpcyBwZXJmZWN0bHkgd29ya3MgZm9yIG1lIG5vdyB3aXRoIG90aGVyIHdhcm5pbmdzOg0K
-PiAidC91bml0LXRlc3RzL2NsYXIvY2xhci5jIiwgbGluZSA5MDogd2FybmluZyAjMjA0Ny1EOiBp
-bmNvbXBhdGlibGUNCj4gICAgICAgICAgIHJlZGVmaW5pdGlvbiBvZiBtYWNybyAiTUFYIiAoZGVj
-bGFyZWQgYXQgbGluZSA0MjYgb2YNCj4gICAgICAgICAgICIvdXNyL2luY2x1ZGUvc3lzL3BhcmFt
-LmgiKQ0KPiAgICNkZWZpbmUgTUFYKHgsIHkpICgoKHgpID4gKHkpKSA/ICh4KSA6ICh5KSkNCj4g
-ICAgICAgICAgIF4NCj4gDQo+ICJ0L3VuaXQtdGVzdHMvY2xhci9jbGFyLy4uLy4uLy4uLy4uL2Nv
-bXBhdC9wb3NpeC5oIiwgbGluZSA2ODogd2FybmluZyAjMjA0Ny1EOg0KPiAgICAgICAgICAgaW5j
-b21wYXRpYmxlIHJlZGVmaW5pdGlvbiBvZiBtYWNybyAiX1hPUEVOX1NPVVJDRV9FWFRFTkRFRCIN
-Cj4gICAgICAgICAgIChkZWNsYXJlZCBhdCBsaW5lIDI2MCBvZiAiL3Vzci9pbmNsdWRlL3N5cy9z
-dGRzeW1zLmgiKQ0KPiAgICNkZWZpbmUgX1hPUEVOX1NPVVJDRV9FWFRFTkRFRCAxIC8qIEFJWCA1
-LjNMIG5lZWRzIHRoaXMgKi8NCj4gICAgICAgICAgIF4NCj4gDQo+ICJ0L3VuaXQtdGVzdHMvY2xh
-ci9jbGFyLy4uLy4uLy4uLy4uL2NvbXBhdC9wb3NpeC5oIiwgbGluZSA3Mjogd2FybmluZyAjMjA0
-Ny1EOg0KPiAgICAgICAgICAgaW5jb21wYXRpYmxlIHJlZGVmaW5pdGlvbiBvZiBtYWNybyAiX0JT
-RF9TT1VSQ0UiIChkZWNsYXJlZCBhdCBsaW5lIDgNCj4gICAgICAgICAgIG9mICJ0L3VuaXQtdGVz
-dHMvY2xhci9jbGFyLmMiKQ0KPiAgICNkZWZpbmUgX0JTRF9TT1VSQ0UgMQ0KPiAgICAgICAgICAg
-Xg0KPiANCj4gInQvdW5pdC10ZXN0cy9jbGFyL2NsYXIvLi4vLi4vLi4vLi4vY29tcGF0L3Bvc2l4
-LmgiLCBsaW5lIDczOiB3YXJuaW5nICMyMDQ3LUQ6DQo+ICAgICAgICAgICBpbmNvbXBhdGlibGUg
-cmVkZWZpbml0aW9uIG9mIG1hY3JvICJfREVGQVVMVF9TT1VSQ0UiIChkZWNsYXJlZCBhdA0KPiAg
-ICAgICAgICAgbGluZSAxMCBvZiAidC91bml0LXRlc3RzL2NsYXIvY2xhci5jIikNCj4gICAjZGVm
-aW5lIF9ERUZBVUxUX1NPVVJDRSAxDQo+ICAgICAgICAgICBeDQoNCkV4ZWN1dGFibGUgaW4gcXVl
-c3Rpb246PiByb290QGRlYmxuZHcwMDJ4Oi92YXIvdG1wL3BvcnRzL3dvcmsNCj4gIyBubSBnaXQt
-Mi41MS4wLnBhdGNoZWQvdC91bml0LXRlc3RzL2Jpbi91bml0LXRlc3RzIHwgZ3JlcCBta2R0ZW1w
-DQo+IFsxMDUyXSAgIHwgICAgICAgICAgICAwfCAgICAgICAwfEZJTEUgfExPQ0FMfDB8ICAgICBB
-QlN8Y29tcGF0L21rZHRlbXAuYw0KPiBbMTY0MDddICB8ICAgICA2OTM2NTU1MnwgICAgIDI3MnxG
-VU5DIHxHTE9CIHwwfCAgIC50ZXh0fGdpdG1rZHRlbXANCg0KV291bGQgYmUgbmljZSB0byBicmlu
-ZyB0aGlzIHVwc3RyZWFtIGZvciBIUC1VWCBhbmQgbm9uLUhQLVVYIG9mIGNvdXJzZS4NCg0KTWlj
-aGFlbA0K
+--------------ubdAxcF0Wrbf0gXI0ZmWsy7l
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
---------------NnkWr49C2YHuu3aBKoz53iir
-Content-Type: text/plain; charset=UTF-8; name="git.patch"
-Content-Disposition: attachment; filename="git.patch"
-Content-Transfer-Encoding: base64
+On 9/5/25 3:50 AM, Patrick Steinhardt wrote:
+> On Thu, Sep 04, 2025 at 09:16:03PM -0400, Eli Schwartz wrote:
+>> Hmm. Patrick -- do you mind documenting why you decided to use this
+>> version guard at all? Off the top of my head I'm not sure why you'd ne=
+ed
+>> this.
+>>
+>> In src/meson.build,
+>>
+>> +libgit_rs =3D static_library('git_rs',
+>> +  sources: [
+>> +    'lib.rs',
+>> +  ],
+>> +  rust_abi: 'c',
+>> +)
+>>
+>>
+>>
+>> rust_abi is new in meson 1.3.0, but it's just a rename for clarity of
+>> rust_crate_type, available since meson 0.42.0, so please use the
+>> backwards-compatible name...
+>=20
+> Oh. I think I misunderstood the following sentence [1]:
+>=20
+>     (Since 1.9.0) Rust supports mixed targets, but only supports using
+>     rustc as the linker for such targets. If you need to use a non-Rust=
 
-ZGlmZiAtdSAtdXIgTWFrZWZpbGUgTWFrZWZpbGUKLS0tIE1ha2VmaWxlCTIwMjUtMDgtMTggMDI6
-MzU6MzggKzAyMDAKKysrIE1ha2VmaWxlCTIwMjUtMDktMDUgMTQ6MzQ6NDMgKzAyMDAKQEAgLTM5
-MzMsNyArMzkzMyw3IEBACiAkKFVOSVRfVEVTVF9ESVIpL2NsYXIvY2xhci5vOiAkKFVOSVRfVEVT
-VF9ESVIpL2NsYXIuc3VpdGUKICQoQ0xBUl9URVNUX09CSlMpOiAkKFVOSVRfVEVTVF9ESVIpL2Ns
-YXItZGVjbHMuaAogJChDTEFSX1RFU1RfT0JKUyk6IEVYVFJBX0NQUEZMQUdTID0gLUkkKFVOSVRf
-VEVTVF9ESVIpCi0kKENMQVJfVEVTVF9QUk9HKTogJChVTklUX1RFU1RfRElSKS9jbGFyLnN1aXRl
-ICQoQ0xBUl9URVNUX09CSlMpICQoR0lUTElCUykgR0lULUxERkxBR1MKKyQoQ0xBUl9URVNUX1BS
-T0cpOiAkKFVOSVRfVEVTVF9ESVIpL2NsYXIuc3VpdGUgJChDTEFSX1RFU1RfT0JKUykgJChDT01Q
-QVRfT0JKUykgJChHSVRMSUJTKSBHSVQtTERGTEFHUwogCSQoY2FsbCBta2Rpcl9wX3BhcmVudF90
-ZW1wbGF0ZSkKIAkkKFFVSUVUX0xJTkspJChDQykgJChBTExfQ0ZMQUdTKSAtbyAkQCAkKEFMTF9M
-REZMQUdTKSAkKGZpbHRlciAlLm8sJF4pICQoTElCUykKIApkaWZmIC11IC11ciB0L3VuaXQtdGVz
-dHMvY2xhci9jbGFyL3NhbmRib3guaCBnaXQtMi41MS4wLnBhdGNoZWQvdC91bml0LXRlc3RzL2Ns
-YXIvY2xhci9zYW5kYm94LmgKLS0tIHQvdW5pdC10ZXN0cy9jbGFyL2NsYXIvc2FuZGJveC5oCTIw
-MjUtMDgtMTggMDI6MzU6MzggKzAyMDAKKysrIHQvdW5pdC10ZXN0cy9jbGFyL2NsYXIvc2FuZGJv
-eC5oCTIwMjUtMDktMDUgMTQ6MTA6NTIgKzAyMDAKQEAgLTIsNiArMiw4IEBACiAjaW5jbHVkZSA8
-c3lzL3N5c2xpbWl0cy5oPgogI2VuZGlmCiAKKyNpbmNsdWRlICIuLi8uLi8uLi8uLi9jb21wYXQv
-cG9zaXguaCIKKwogc3RhdGljIGNoYXIgX2NsYXJfcGF0aFs0MDk2ICsgMV07CiAKIHN0YXRpYyBp
-bnQK
+>     linker, or support Meson < 1.9.0, see below.
+>=20
+> I thought that only with Meson 1.9 you could link Rust libraries with C=
 
---------------NnkWr49C2YHuu3aBKoz53iir--
+> libraries. But I guess this rather means that you can now have a single=
+
+> target that has both '.c' and '.rs' sources?
+>=20
+> In any way, thanks for the hint, will drop.
+>=20
+> Patrick
+>=20
+> [1]: https://mesonbuild.com/Rust.html#mixing-rust-and-nonrust-sources
+
+
+Yes -- a single target is something like a libXXXX.so or a libXXXX.a
+file, and there are significant nuances in how a build system backend
+needs to run rustc in order to emit the final C interface (or merge into
+an executable). Once it is exported to C, though, it is "normal" C code
+and anything may link to it freely, even for much older versions of Meson=
+=2E
+
+The previous (<1.9.0) gold standard for Rust / C interop in Meson, was
+the far more well-trodden path of "use libraries, not *.o files" (which
+is also more straightforward in cargo, of course ;)).
+
+
+--=20
+Eli Schwartz
+
+--------------ubdAxcF0Wrbf0gXI0ZmWsy7l--
+
+--------------4O4QGVY9p6whXruta0I8A0pj
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaLrjlQUDAAAAAAAKCRCEp9ErcA0vV1QO
+AP41PUIbtnNExTJVWOcAYo8pPDNWTjc/IMfU8lnoxivpMAD/dQsAofzk/ul4uhy0ny5cMXcSduyr
+R1LBoqIQYmCJJQI=
+=r8I7
+-----END PGP SIGNATURE-----
+
+--------------4O4QGVY9p6whXruta0I8A0pj--
