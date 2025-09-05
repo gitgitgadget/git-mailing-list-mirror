@@ -1,232 +1,113 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0258523B62B
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 06:18:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3044920DD42
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 06:18:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757053098; cv=none; b=KWPDmjtfH9JX5K8cFNE8nd+DHXHsvp3MTR+mtEfUzN28/Y7B3jQrMPtHPrBMi3m9z+EdAql/o0pNs4WoasgFCH6N5+SQBZU+PIZ/DRDuTIcNLOixTUhYYkUNt4uo0eAPU8oOoutCC/2ePd3iOLOhvPOdUEJkDHEzTdOXp+w7OUE=
+	t=1757053117; cv=none; b=KEuhXhDU2XVwxXLnwc/1jtUKCnYOADqPsZzDWQsnpo7PGZiM/QsIGLU8qE7WXx7FZclUa2jwdaiA6/msS5qgV61VWQjxqsvoOZVJYY2p3TYOvRESAP5kLq/m+4lTwh3HHt0USszkG8Ff6lmogCLPqvLTe6rsb+Fb2kl6Zpt6Lm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757053098; c=relaxed/simple;
-	bh=x3lMpUCouU5kUjao/i72nJBERNoZB9VthKs5UAg829o=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EBDEZI1RuXI70TRFyPOMjBkb+2d7X5GMYk6ftAWaS7WziLy3CFHiijg6cK4e7QxYiLFhe6NQULswJF+56MmKefm25/8X2o2wLcWVdRj/2AhYILdKwAub1E6y2j/sO/MhPhi9AYF4uH6+rdVk9mN9+bLGwOdqvqgm1VU3owbiwR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IrsndHLF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lWeQAjcb; arc=none smtp.client-ip=202.12.124.150
+	s=arc-20240116; t=1757053117; c=relaxed/simple;
+	bh=J9OSCVoR44yWEUZnB/xmdwuG/gmdWwK+1LwfaOVH0mI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XIl2voBuIfytPQxmflxjcctBbt3o5HXJs1Lmqpvq/nDpTT0v6WZGaVEderMZ3vUnTB6VvJ3SLpKB5fL92uDS6c6dJVvLEwMjG8RGdJDFxXjunXcDUPgd4w0e1Ozc+uEHg65P/O2F0CSQ2VZ3C4YteEEK12dnXYDRCvAiieR5Ev8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XBkPivOm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GvbM8QmK; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IrsndHLF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lWeQAjcb"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id ECB931D0042B;
-	Fri,  5 Sep 2025 02:18:14 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Fri, 05 Sep 2025 02:18:15 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XBkPivOm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GvbM8QmK"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 364977A045D;
+	Fri,  5 Sep 2025 02:18:35 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Fri, 05 Sep 2025 02:18:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757053094;
-	 x=1757139494; bh=hexaemvpd2mp7lG96b05bPL4142ArCFwsK4s9dJiIlM=; b=
-	IrsndHLF5urm865FPt1gqWCi/fQ2mnVuOfyMGnhCjW9BVFvYaqxuG0tA4gmCNISj
-	mTFySgiIFk/aQS7zpsVoDGD+3PwUH/fzo8nCElfUqSDlyxlI1FNFxYZwlFTL4QDH
-	3wSeLcNoJKyJCS1U2S5UM5URrIrZgtdVpPcks31wdO0GV3KRqiwZb8yb18BPJ4bV
-	TiUnoBXfLDxHhzR032dK1KtESTcPFJk8eoli8Sv1JAnmJX0e78tjWJ4fSc5WtQKJ
-	hQzapaq444KDK0WEr9bxxiJbjQXqybSxxHv5bTCZ6zmxJUZiMPuwhwEvQ/X/0oNP
-	OB4Trs/BXGJFlpX3RYhC/g==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1757053115; x=1757139515; bh=Fq36AOlipd
+	ZhCcegINbz6CPlobzjSr4DVg0riUDZVos=; b=XBkPivOmnvjdIqi/fsJjiboO4O
+	S1YJsvy0/oYkHqcK/OofN08css+jLj4xuWATCXLLgcTtxxdOqZlCB3shkHbTn4Kw
+	RSiAHB/yKaM8vMfWbTRoIKLsz/5Z+WP4QvqQfJzMmWqS/1V8ALjsSA0cC3/0khvy
+	XHZWI7pwqre5gUP2a01MeSxNonXDZqzcY8qFVNnMgTm8uaMsJHL6c6Y4yqKI9QH0
+	aHka2Vs2f2FqJcVOVhK2Bi70pyr+Yy5J6YYYmn+iS37iKI4dRIpzylhoUxadlcVW
+	q1Zi11FjmQGfEe3WK+bTDEhQL5S/P/n+h4HL4FT19T9pR8DXQTNBjlq2Dctw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757053094; x=
-	1757139494; bh=hexaemvpd2mp7lG96b05bPL4142ArCFwsK4s9dJiIlM=; b=l
-	WeQAjcbjAKk5BNcr18IDbB7ObL7Al3GFBJdBjV+LeVD6uTo5XpJ7CwL+ElJ0uK+z
-	x668lpWbhPm4/Xl3nE1/w3+mWIfDaHZdPQxX5EDnyQE+f4bpKKHUfSUMdLpORxX5
-	Ac9/JbnYmLD+qIz0Zn9bGUjj0tJ05lSoZtNyEbCAV9UFHQOI4K1GJZA5fsDvDUf2
-	sQclb44SsgqhtWbn3/WllvZZtx7Pnmoth5F6iQXEGAIYiID3Y+P9m00h+7RzDtZs
-	RRNC6T2wJe7hV00N9P+ZAdua+rxufZOuVrIoS1ByaeiOHKkPHEuvBR0B4Ss+3Bub
-	ELI2WGoVUibC33nkbYv3A==
-X-ME-Sender: <xms:poC6aKyjDM9lGUNV9kNmLwEayTVXcmqh0b8UglJnr2XYmd_Sd6_4zA>
-    <xme:poC6aA1G6PvOEuZw2c5dbKOlvy8k4qtW-fiGqNEG-aYj66yVorD1lDoUa4NLFt7TU
-    iAF-g6ZWTjHPQDBGg>
-X-ME-Received: <xmr:poC6aI6P8aM1SIdt8RW2mHTKbtngSNgABFYmJtgaSTqr3EYkvuByf9fLo_DetpaOgufIlmm79jgNig99rO57Q1ILtUpbiFnt6nDzkzqtaQz2>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757053115; x=1757139515; bh=Fq36AOlipdZhCcegINbz6CPlobzjSr4DVg0
+	riUDZVos=; b=GvbM8QmKoPzov0Bxpy6BtygfTstkhZ3Q7NFRKhuKffb57MoHgga
+	NxH69uWemaGoFu7IGOxXpIUeHVO7RyLokBEwdJtN73z7T+JfQXrxDG1eKMfxa9mN
+	ZOvZWPLgFjUp6qQ6MO2szJ3vmPO4Dq72200vJU9KXYUCERHSUYR9tWBl6lcXPllA
+	FuE7ib7CuvHRmKubk7r5KhZx+/O1eCWymhfjJJIaUru8tUrdQCUnmgP9+BepyNW7
+	CvlNaUDe33JLt0o/pskTWIlssF8envTlLcXwQcyk9lHz7sosBK/ZNcGPK4OZhzZc
+	MKvtXyXKZTA/alecAPKDcTYCG+6zUHJqZvA==
+X-ME-Sender: <xms:uoC6aFmsSBzTpttQ3CZHcS7kf0R7d0O8pBS5u5ihKb5MDbFGExGWvw>
+    <xme:uoC6aBBOHprXxHNiBrtCjz16CdehyaaRrTKZ9Vqmru9lqCiQd3eJxqYZ6zGwBqiCC
+    9JC2queEVW7PCE4bw>
+X-ME-Received: <xmr:uoC6aNflo9eor1eR_gHkl9spRs53242WWUg5Y4aahyjzn_QS5KRrwVW10yj1wstRGPYcCV32aaDeU8irSdEzfsnCXkUYYe4cStDMsAxBcvvR>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekudegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtre
-    dtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetke
-    duheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:poC6aDXp_PyiC1ZebRnQDjACmakiAE1nv2RNTyoqoigE4CCrRhbKUA>
-    <xmx:poC6aHA3pzJ_7bauF62DzdtsYNgTfwqEJX4Kwfs59FUZEyxwo49n6g>
-    <xmx:poC6aC5OLJD8-Z6o9ui1zHoRgu8ASQ0Wfc2WPod6HgJIa6vSKUmWTg>
-    <xmx:poC6aCyEr0KPahrZNfEfcV2daeWligJoyz69JZNh2clSHN9QNU3zkw>
-    <xmx:poC6aNh6rDkTREp5PZPXlEBuGsIK8BGGgEvAP9CsYFhl5guuIRFrUYRQ>
+    lhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttd
+    dvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
+    ihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgf
+    eugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:uoC6aEKEQk_ZDMCJALqPQafn2FIjJ6oKiWFoaDyo72_HJ0fZsUk1Eg>
+    <xmx:uoC6aIeHlUgmeBOi9vyGz-z4Ovvlznw5OkiS4HwADEacqlHDVMF62A>
+    <xmx:uoC6aD2xdh2mWapeT9CuFbSHAlmPU1_h7-tgVkqPDbOtsNmPOW4xSA>
+    <xmx:uoC6aJg81CqQVJxm2jqPhlatBJISF1944KhQ7WU1aQnBOia8bor12g>
+    <xmx:u4C6aILIK8TW5i9K0dypqmGv5cbertt1CWVNgnqE6wKGzTWwcOMVKEpi>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Sep 2025 02:18:13 -0400 (EDT)
+ 5 Sep 2025 02:18:34 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6bda9c2b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 5 Sep 2025 06:18:12 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id fbceb49b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 5 Sep 2025 06:18:33 +0000 (UTC)
+Date: Fri, 5 Sep 2025 08:18:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 05 Sep 2025 08:18:02 +0200
-Subject: [PATCH v2 2/2] upload-pack: don't ACK non-commits repeatedly in
- protocol v2
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
+Message-ID: <aLqAtVW667nZI5JG@pks.im>
+References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
+ <xmqq1pol7q8i.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250905-b4-pks-upload-pack-repeated-non-commit-acks-v2-2-d2e67f3cb94c@pks.im>
-References: <20250905-b4-pks-upload-pack-repeated-non-commit-acks-v2-0-d2e67f3cb94c@pks.im>
-In-Reply-To: <20250905-b4-pks-upload-pack-repeated-non-commit-acks-v2-0-d2e67f3cb94c@pks.im>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>, 
- Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq1pol7q8i.fsf@gitster.g>
 
-When a client performs a fetch or clone they can optionally send "have"
-lines to tell the server which objects they already have available
-locally. These object IDs are stored by the server in an object array so
-that it can remember any objects it doesn't have to include in the pack
-sent to the client.
+On Thu, Sep 04, 2025 at 04:27:41PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --cc commit-graph.c
+> > index 9929c1ed87,2f20f66cfd..0000000000
+> > --- a/commit-graph.c
+> > +++ b/commit-graph.c
+> > @@@ -823,7 -812,12 +823,11 @@@ int corrected_commit_dates_enabled(stru
+> >   
+> >   struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r)
+> >   {
+> >  -	struct commit_graph *g;
+> >  +	struct commit_graph *g = prepare_commit_graph(r);
+> > + 
+> >  -	if (!prepare_commit_graph(r))
+> > ++	if (!g)
+> > + 	       return NULL;
+> > + 
+> 
+> The while (g) loop will be entirely skipped when g==NULL, and then
+> the function returns NULL after iterating the loop, so there is not
+> much reason to have these three lines for early-return, no?
 
-While there isn't any reason to do so, clients are free to send the same
-"have" line repeatedly. git-upload-pack(1) already knows to handle this
-well: every commit it has seen via a "have" line gets marked with the
-`THEY_HAVE` flag, and if such a commit is seen repeatedly we know to not
-process it another time. This also has the effect that we only store the
-object ID once, only, in the `have_obj` array.
+Ah, true. That's even better.
 
-There is an edge case though: if the client sends an object ID that does
-not refer to a commit we neither store nor check the `THEY_HAVE` flag.
-This means that we repeatedly store the same object ID in our `have_obj`
-array, with two consequences:
-
-  - In protocol v2 we deduplicate ACKs for commits, but not for any
-    other objects as we send ACKs for every object ID in the `have_obj`
-    array.
-
-  - The `have_obj` array can grow in size indefinitely with both
-    protocols.
-
-The potentially-more-serious issue is the second one, as we basically
-have a way for an adversary to allocate arbitrarily large buffers now.
-Ultimately, this doesn't seem to be all that serious though: on my
-machine, the growth of that array is at around 4MB/s, and after roughly
-five minutes I was only at 1GB RSS. So this is concerning, but only
-mildly so.
-
-Fix this bug by storing the `THEY_HAVE` flag independent of the object
-type so that we don't store duplicate object IDs in `have_obj` anymore.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t5530-upload-pack-error.sh | 39 +++++++++++++++++++++++++++++++++++++++
- upload-pack.c                | 19 +++++++++----------
- 2 files changed, 48 insertions(+), 10 deletions(-)
-
-diff --git a/t/t5530-upload-pack-error.sh b/t/t5530-upload-pack-error.sh
-index 8e505786f1..d40292cfb7 100755
---- a/t/t5530-upload-pack-error.sh
-+++ b/t/t5530-upload-pack-error.sh
-@@ -96,4 +96,43 @@ test_expect_success 'fetch fails' '
- 	test_must_fail git -C foo fetch .. main
- '
- 
-+test_expect_success 'upload-pack ACKs repeated non-commit objects repeatedly (protocol v0)' '
-+	commit_id=$(git rev-parse HEAD) &&
-+	tree_id=$(git rev-parse HEAD^{tree}) &&
-+	test-tool pkt-line pack >request <<-EOF &&
-+	want $commit_id
-+	0000
-+	have $tree_id
-+	have $tree_id
-+	0000
-+	EOF
-+	git upload-pack --stateless-rpc . <request >actual &&
-+	depacketize <actual >actual.raw &&
-+	grep ^ACK actual.raw >actual.acks &&
-+	cat >expect <<-EOF &&
-+	ACK $tree_id
-+	ACK $tree_id
-+	EOF
-+	test_cmp expect actual.acks
-+'
-+
-+test_expect_success 'upload-pack ACKs repeated non-commit objects once only (protocol v2)' '
-+	commit_id=$(git rev-parse HEAD) &&
-+	tree_id=$(git rev-parse HEAD^{tree}) &&
-+	test-tool pkt-line pack >request <<-EOF &&
-+	command=fetch
-+	object-format=$(test_oid algo)
-+	0001
-+	want $commit_id
-+	have $tree_id
-+	have $tree_id
-+	0000
-+	EOF
-+	GIT_PROTOCOL=version=2 git upload-pack . <request >actual &&
-+	depacketize <actual >actual.raw &&
-+	grep ^ACK actual.raw >actual.acks &&
-+	echo "ACK $tree_id" >expect &&
-+	test_cmp expect actual.acks
-+'
-+
- test_done
-diff --git a/upload-pack.c b/upload-pack.c
-index 4f26f6afc7..9b9b149068 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -476,20 +476,17 @@ static void create_pack_file(struct upload_pack_data *pack_data,
- 
- static int do_got_oid(struct upload_pack_data *data, const struct object_id *oid)
- {
--	int we_knew_they_have = 0;
- 	struct object *o = parse_object_with_flags(the_repository, oid,
- 						   PARSE_OBJECT_SKIP_HASH_CHECK |
- 						   PARSE_OBJECT_DISCARD_TREE);
- 
- 	if (!o)
- 		die("oops (%s)", oid_to_hex(oid));
-+
- 	if (o->type == OBJ_COMMIT) {
- 		struct commit_list *parents;
- 		struct commit *commit = (struct commit *)o;
--		if (o->flags & THEY_HAVE)
--			we_knew_they_have = 1;
--		else
--			o->flags |= THEY_HAVE;
-+
- 		if (!data->oldest_have || (commit->date < data->oldest_have))
- 			data->oldest_have = commit->date;
- 		for (parents = commit->parents;
-@@ -497,11 +494,13 @@ static int do_got_oid(struct upload_pack_data *data, const struct object_id *oid
- 		     parents = parents->next)
- 			parents->item->object.flags |= THEY_HAVE;
- 	}
--	if (!we_knew_they_have) {
--		add_object_array(o, NULL, &data->have_obj);
--		return 1;
--	}
--	return 0;
-+
-+	if (o->flags & THEY_HAVE)
-+		return 0;
-+	o->flags |= THEY_HAVE;
-+
-+	add_object_array(o, NULL, &data->have_obj);
-+	return 1;
- }
- 
- static int got_oid(struct upload_pack_data *data,
-
--- 
-2.51.0.417.g1ba7204a04.dirty
-
+Patrick
