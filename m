@@ -1,228 +1,221 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFAD28137D
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:26:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B30272E51
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:34:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757100391; cv=none; b=T6wOD7x16cyd4LCY3FVOM2qr5xB09gbdCZtApAnR+QIoCbHyrBwLnopDpoP+OznBvXZuFWye4deQtYVJaw+AebA45VXtedfkpEGSplQdv1PbyYXYwUMPU/ulXytLafWU+yXgzqr20dCIL1xcv5bEtwWsheMQfb0QsaiketGpIJg=
+	t=1757100880; cv=none; b=onW7X7LgnB787/E41L1aM6aWtXhVvHnV/rJg4tHLJW9Og5UXBGbIbOqkYo9tMVch0hUgsDWJJ2syKba7oiTtAops/fGC52zR4AzQZc4hYaiY4ZupqFYo10cQeuxZ0Uv2szXqBSX4/UPD2k009Xor20+twce2VS4N/V29voR0OYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757100391; c=relaxed/simple;
-	bh=BBvU01KZb8LVvEzxAhEFAlkmhiEVZ70adIrYGY5A9/8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=S78qLyqj9kOlqYIm8y1kRIKZ6hh7uDayFek5hAknf+s/qOREQ74J+sh19vCLGt4ZBrXqHHcK9/3N6CL0d3aggzZpSqVA0IWx6dsZY8VI7l+rnEjco9QyaZYg69wsWx/fyNSgbEhi+gI32wWlqerzFLSg+JucD3H4omFBe+UBWMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NYjVUtqX; arc=none smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757100880; c=relaxed/simple;
+	bh=IJg4h2/lVSSu/v6Xkhar0p06NHkceiyQiDei2LwcAWU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kfd4xbxo9uS84AQBhv/946pNMT9NkxHa7rkrHQNnk2F9NF+CUP2+GYEr6fWoIXh4Ldjfm4XVWl7R6P0YwqwJ3AZvapY/Uc7QthNOM2unlCp7LBskCFAqJxjwyjFQzS2nht9HjVvLt8rkvWylJ+IZ7NHGUuVD57zj549iSkaJ0i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=lfak7DIC; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NYjVUtqX"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-b520c9c291dso838553a12.1
-        for <git@vger.kernel.org>; Fri, 05 Sep 2025 12:26:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757100389; x=1757705189; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=A0YPzAPfyGqJBE9xxnVOVMGqO3hwT3OquLyRW+s/bN4=;
-        b=NYjVUtqXXj1qUgQ5C+I247CHXAlAoIfuJXn3ByHJxH6NpKqk4ikE7TlCv5fI5MH6Ca
-         kSHtLY3Nan5262RBjqYCM+6oZu2xWAQcuh4UYslwEgfiyVSVv17CNs5AZMFLpzmdFdG1
-         KBa3ZJoh7EtRiGusHh3y0bWwZFRExUvbzsksecPlPRiLjKjbOY1U3NE/Ud+wRpO/U+UH
-         ELQrMbe4NNRbDQ7eG9/rTmJJv0y0EbMtat57d7AVPpeMD53qdD2KRlK5+yl6ymPqlGHT
-         B96j9d4HUcJJt2eCgOrOMFzRa3RGzNLp84h2S7z2qhmCV5BPsz7qRaK4HEnYkwhjsduF
-         vE6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757100389; x=1757705189;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A0YPzAPfyGqJBE9xxnVOVMGqO3hwT3OquLyRW+s/bN4=;
-        b=fP7Iaq50ley50dcEQl6wmSrlUcCh3DjE7yM0IvEs4wfXWTwbZUewApwlqV9KdYy2N9
-         3JfHpXnbrGJ/TDxOGxNVyLZhKyPmTAk+TRYfi11LNdwmrj6fbmVu1XyEc1Y29FMVohDp
-         j2ZEt8dDGZ6ygVcbjVHcp7U7IKfPa6Bm59gROpvwVqholyJAKOUpbr2Vv1LpSHRg4ViQ
-         R2M++evTKXCkvpiL2NqNMg2dFNn2g/fmdhjq17mHU6mMPxDJhzadk+4yujnZ7cI2Il5H
-         YSPlgb0zbCWSH5/b2t/TmcSoJuZSUBjdiQbYqc7Xwwma3ocTSsF4VYl+s8BcTa599hpn
-         +uiQ==
-X-Gm-Message-State: AOJu0Yy1LHYLjlip0yiXR912v329nsK4Lu+LBgCVPKHbbbqrfPoIii/l
-	C/QKtKAu89vsHURY1BEtpLrl7a+kkNUi47L8bWxZOTubKmJ0qMi04WfEFJPoug==
-X-Gm-Gg: ASbGncuflDP2e6OBQ1iDbICycFtk8mJcZNu6M8GBLWLEIIViHWEghP4xvo7DIA3m8+B
-	Hotkqb3B68mtrxNl8wClhYwhFeR2fPCBOlSmM9fyGG1oD3iFJU1KS3nCPjNSUE2CKeF2B2Exfhg
-	3ZfLvj2mlePdtQneaNd4BYVQ6lmRbAMJsoa1dPfKtviVV63LFYK5kK4YD/gNA+ypwLFe2i3hZCv
-	OfFZnva5fo5cC0R5Sh3wS4UmZC0pE2A3E2iQy3/hiw3DGR2Inbtsr6T/1BcvCo+tSoNoYyPyvQE
-	BNwBj31GjiYRRx+KN8ufOv3E0niD+D28pq5+eRkmWDiBV+uwWmQPj2zBoneQLTuOUAVbdPlmytp
-	+0SSUeU5WhwDwy54kIQ0epCjGiA==
-X-Google-Smtp-Source: AGHT+IGRxW5eu1xlw5wQBAaG24qrRNW3k7R2QpKUC7lUjbHoLlNTs+/agOm3UayXbtQmobMb5bI/Iw==
-X-Received: by 2002:a17:902:ebc9:b0:24c:7bc6:7ad7 with SMTP id d9443c01a7336-24c7bc67d09mr173375785ad.3.1757100388900;
-        Fri, 05 Sep 2025 12:26:28 -0700 (PDT)
-Received: from [127.0.0.1] ([52.159.243.166])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4cd3670e5csm19864436a12.53.2025.09.05.12.26.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Sep 2025 12:26:28 -0700 (PDT)
-Message-Id: <224be4ee5c66a5d161ba35754dd324b8ee53d07c.1757100378.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1965.v3.git.1757100378.gitgitgadget@gmail.com>
-References: <pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
-	<pull.1965.v3.git.1757100378.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 05 Sep 2025 19:26:18 +0000
-Subject: [PATCH v3 6/6] midx-write: simplify error cases
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lfak7DIC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1757100876;
+	bh=IJg4h2/lVSSu/v6Xkhar0p06NHkceiyQiDei2LwcAWU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=lfak7DICdwjU21a4i5RwM3aOzM6PV/bgpBN14+LHTzCK6lkb1BWRU2sYS5AfFBMux
+	 WRcJ1M4gAmV00n5YgFRaPwT1DusehY+4t0/RHBPLDIhYV1/xo9gK2NXjYfObI99qSK
+	 zXB7Rzcv2BIZVNBSuGEyrNPHaQA27hcwMABs3cw7DoZ+riO9qIiQJUBvoXoMDX66oG
+	 +fFaiO6GrpSDV6dpg8HRsMmr1RdD1476WqLleXyIF7apeKrsH+cEqwB9Wm7akoH/6o
+	 EuwMYBmb10kD3QQ5oyEqowbWwz9ema4e9GynJa2BzywkLX/v6d8YLuKWPh2fEQ5CTz
+	 qvas3NdI4xMnmLPmN4L44fzFrAsHD/+sn7LRt+Hto9uXr2nv4p9X0vKwNEfRjeXBq5
+	 zzPz0Em+BFPjzXcDZxDs1K+MBcFL46IN7CeSmjbje8hTOF+CZY3TVDPrTVcKaAE81g
+	 tF9okeLD6G06p5uceIZcyxtYoeajkR3ASQ95Sk8uB2XjrYEcMNs
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f8f0:4bbe:8989:f575])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C516C20100;
+	Fri,  5 Sep 2025 19:34:36 +0000 (UTC)
+Date: Fri, 5 Sep 2025 19:34:35 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Eli Schwartz <eschwartz@gentoo.org>
+Cc: Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC v2 5/7] BreakingChanges: announce Rust becoming
+ mandatory
+Message-ID: <aLs7SwT-Gd6hXuvH@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+References: <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
+ <20250905-b4-pks-rust-breaking-change-v2-5-6939cbf4a0b8@pks.im>
+ <DB9P250MB0692264976781C194B7D6194A503A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
+ <11394b17-905a-4888-981c-c5b4a7f8cd62@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    me@ttaylorr.com,
-    Patrick Steinhardt <ps@pks.im>,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="84Xj+shCT3GcNPxB"
+Content-Disposition: inline
+In-Reply-To: <11394b17-905a-4888-981c-c5b4a7f8cd62@gentoo.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-From: Derrick Stolee <stolee@gmail.com>
 
-The write_midx_internal() method uses gotos to jump to a cleanup section to
-clear memory before returning 'result'. Since these jumps are more common
-for error conditions, initialize 'result' to -1 and then only set it to 0
-before returning with success. There are a couple places where we return
-with success via a jump.
+--84Xj+shCT3GcNPxB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This has the added benefit that the method now returns -1 on error instead
-of an inconsistent 1 or -1.
+On 2025-09-05 at 14:32:49, Eli Schwartz wrote:
+> LLVM is theoretically an open source project. So is Rust. We can ask
+> people on those platforms how successful they have been at the political
+> side of convincing the Rust project to allowlist the platforms inside
+> low-level case statements of platform-specific defines, in order to
+> attempt the first round of "try running make, see what breaks and start
+> fixing it".
+>=20
+> Hint: it did not go well, in the sense that the rust maintainers even
+> accepted the validity of making a proposal in the first place.
+>=20
+> LLVM is easier to work with, at least in that sense. But not all
+> platforms are supported by LLVM either, and you do need a stable release
+> of LLVM to support the platform before you can begin work on rust at all.
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- midx-write.c | 26 +++++++++-----------------
- 1 file changed, 9 insertions(+), 17 deletions(-)
+It is possible to build with a custom LLVM because all of the
+distributions do it, so it is possible to build the work out of tree and
+then add it when everything is ready.  I mentioned elsewhere in the
+discussions that LLVM upstream said that work on IA-64 could continue
+out of tree and then it could be re-added if there was sufficient
+maintenance and support, so this is at least in theory a viable option.
 
-diff --git a/midx-write.c b/midx-write.c
-index cd7bf7554a..72189f74bb 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -1046,7 +1046,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 	int bitmapped_packs_concat_len = 0;
- 	int pack_name_concat_len = 0;
- 	int dropped_packs = 0;
--	int result = 0;
-+	int result = -1;
- 	const char **keep_hashes = NULL;
- 	struct chunkfile *cf;
- 
-@@ -1099,14 +1099,12 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 				error(_("could not load reverse index for MIDX %s"),
- 				      hash_to_hex_algop(get_midx_checksum(m),
- 							m->repo->hash_algo));
--				result = 1;
- 				goto cleanup;
- 			}
- 			ctx.num_multi_pack_indexes_before++;
- 			m = m->base_midx;
- 		}
- 	} else if (ctx.m && fill_packs_from_midx(&ctx)) {
--		result = 1;
- 		goto cleanup;
- 	}
- 
-@@ -1142,12 +1140,16 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 			 */
- 			if (!want_bitmap)
- 				clear_midx_files_ext(object_dir, "bitmap", NULL);
-+
-+			result = 0;
- 			goto cleanup;
- 		}
- 	}
- 
--	if (ctx.incremental && !ctx.nr)
-+	if (ctx.incremental && !ctx.nr) {
-+		result = 0;
- 		goto cleanup; /* nothing to do */
-+	}
- 
- 	if (preferred_pack_name) {
- 		ctx.preferred_pack_idx = NO_PREFERRED_PACK;
-@@ -1221,7 +1223,6 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 		if (!preferred->num_objects) {
- 			error(_("cannot select preferred pack %s with no objects"),
- 			      preferred->pack_name);
--			result = 1;
- 			goto cleanup;
- 		}
- 	}
-@@ -1260,10 +1261,8 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 			}
- 		}
- 
--		if (missing_drops) {
--			result = 1;
-+		if (missing_drops)
- 			goto cleanup;
--		}
- 	}
- 
- 	/*
-@@ -1309,7 +1308,6 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 
- 	if (ctx.nr - dropped_packs == 0) {
- 		error(_("no pack files to index."));
--		result = 1;
- 		goto cleanup;
- 	}
- 
-@@ -1329,14 +1327,12 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 		incr = mks_tempfile_m(midx_name.buf, 0444);
- 		if (!incr) {
- 			error(_("unable to create temporary MIDX layer"));
--			result = -1;
- 			goto cleanup;
- 		}
- 
- 		if (adjust_shared_perm(r, get_tempfile_path(incr))) {
- 			error(_("unable to adjust shared permissions for '%s'"),
- 			      get_tempfile_path(incr));
--			result = -1;
- 			goto cleanup;
- 		}
- 
-@@ -1414,7 +1410,6 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 				      midx_hash, &pdata, commits, commits_nr,
- 				      flags) < 0) {
- 			error(_("could not write multi-pack bitmap"));
--			result = 1;
- 			clear_packing_data(&pdata);
- 			free(commits);
- 			goto cleanup;
-@@ -1440,21 +1435,17 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 
- 		if (!chainf) {
- 			error_errno(_("unable to open multi-pack-index chain file"));
--			result = -1;
- 			goto cleanup;
- 		}
- 
--		if (link_midx_to_chain(ctx.base_midx) < 0) {
--			result = -1;
-+		if (link_midx_to_chain(ctx.base_midx) < 0)
- 			goto cleanup;
--		}
- 
- 		get_split_midx_filename_ext(r->hash_algo, &final_midx_name,
- 					    object_dir, midx_hash, MIDX_EXT_MIDX);
- 
- 		if (rename_tempfile(&incr, final_midx_name.buf) < 0) {
- 			error_errno(_("unable to rename new multi-pack-index layer"));
--			result = -1;
- 			goto cleanup;
- 		}
- 
-@@ -1487,6 +1478,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 	clear_midx_files(r, object_dir, keep_hashes,
- 			 ctx.num_multi_pack_indexes_before + 1,
- 			 ctx.incremental);
-+	result = 0;
- 
- cleanup:
- 	for (size_t i = 0; i < ctx.nr; i++) {
--- 
-gitgitgadget
+If LLVM and Rust upstreams are just completely unreasonable and won't
+accept certain platforms at all (which I doubt), then distros can carry
+patches.  It's not pretty and it's a bunch of hassle, but it's common.
+
+I'll also say that LLVM is a pretty useful piece of software that most
+distros will want to have.  It provides clangd, which is one of the the
+major C and C++ LSPs; it's used by Doxygen, which is a major
+documentation generator; and it's used by Mesa and PostgreSQL, which are
+pieces of software people will want to use.  And, as well, it provides a
+complete compiler toolchain.  So I think there are compelling reasons
+why porting LLVM is valuable functionality to have anyway, in addition
+to the fact that it also gets you most of the way towards Rust (and a
+variety of other, less common languages).
+
+> That is the advantage of GCC-rs -- it has much broader platform support,
+> so if the rust frontend works at all, it will likely also work on the
+> specific platform you care about (and the GCC developers usually don't
+> bite, even if you want to enable experimental support for new platforms).
+
+I agree gccrs is a great project and of course I want it to succeed.
+Clearly having multiple independent implementations makes it easier to
+find bugs and increases portability.  And if it means that we get better
+platform support, fantastic.
+
+However, if your complaint is that Rust upstream will not allow
+platform-specific defines and other incremental work without support in
+LLVM or other core toolchain components, then I don't see how gccrs is
+going to convince them otherwise.  I also pointed out elsewhere that the
+compiler is but one part of the equation and that libstd and libcore,
+which are shared between the implementations, plus their dependencies,
+are absolutely required for Rust to work on any platform.  If Rust
+upstream doesn't allow support for the standard libraries, then distros
+will have to carry patches, gccrs or not.
+
+To be clear, I do support this kind of incremental work since it's a
+valuable way to do large projects (and it's what I did for SHA-256 in
+Git and am doing for SHA-1/SHA-256 interop), but saying, "brian and
+other Git contributors say this is a good idea" may not be more
+convincing.  To the extent I can encourage this kind of thing, I am
+happy to do so, though.
+
+> > Do we want to commit to promising support until gccrs is ready? What if
+> > gccrs ends up abandoned? Or takes an unexpectedly long time to reach a
+> > stage where it can build Git? It might make sense to give this LTS
+> > release a time limit instead, or in addidtion.
+
+I think a two-year limit is reasonable.  As anyone who speaks Spanish
+will tell you, there's a degree of uncertainty when speculating about
+the future, so we cannot guarantee that gccrs, however promising it
+might currently appear, will be usable or viable in that time.  We
+cannot agree to backport patches forever if gccrs doesn't materialize,
+so a time limit seems like a good idea.
+
+_However_, I will state that I am interested in seeing if we can get
+mrustc to build Git's Rust code.  I understand that it is not intended
+to do that (it's intended primarily to bootstrap Rust) and it definitely
+will require some patches to get working, but I think it's at least a
+possibility and it seems like a much lower effort way to solve the
+problem.  It will probably involve some inconvenience on our part
+because it's very limited in its toolchain and fake cargo, but I would
+be willing to deal with said inconvenience for the purposes of
+portability.  And it works now and is (for its limited purpose) actively
+maintained.
+
+> Well, that will one way or another mean users of such platforms cannot
+> use git at all, not even old versions, lest they be hacked. Bit of a
+> problem for an application that mainly exists for the purpose of
+> communicating over the network. I suppose such platforms can finally
+> leave the world of DVCSes, given:
+>=20
+> - jj, breezy, and mercurial all use rust already
+> - bitkeeper and monotone are dead
+> - darcs is written in GHC (haskell) which is far less available than
+>   rust
+
+There are other Git-compatible options.  There's Game of Trees, which
+uses Git repositories and is being designed by OpenBSD.  It isn't
+drop-in compatible, since it's designed to meet the OpenBSD team's
+needs, but it appears to be basically functional (and is shipped in
+Debian, no less).
+
+There's also libgit2 and Dulwich, which also implement Git repositories.
+
+So there are options for people who want to use Git on platforms that
+don't support Rust.  I suspect that the lack of Git on certain platforms
+will actually be more of a problem for those platforms than for Git,
+though.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--84Xj+shCT3GcNPxB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaLs7SwAKCRB8DEliiIei
+gWXsAP914QKYHV5EBgB2MAqV0OdqPsXZdeeFkmeh2oAno+Z7HAEA54rT26brEXF0
+MUN0Ty8/NTsYDOvZLVd23o+eciBIAAc=
+=dlaf
+-----END PGP SIGNATURE-----
+
+--84Xj+shCT3GcNPxB--
