@@ -1,154 +1,247 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BBA305971
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 18:30:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0A82848B4
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 18:51:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757097016; cv=none; b=RdjxkJDyVOumwerrxAIXlho+7U7K4E4vjji3DcQPFH9DsJGpYSX75Dkd6z1+SWRwHgbd+t6aYARMKZIulxdV/nnIWGV2mxUDtVBrnA1VzCJXITX4mvUXWS3ctp4NB1LlRI6+jN5M27UwAwc3YRmxGTHpjMeFhCFQCF4Q4IXzlAs=
+	t=1757098313; cv=none; b=ecs6E1+iOkVtNGu0NEggNNcO/ZIP+H3MFCgu4gLtkZdnZIYhXnXFmOJjIVCMIC5qZWssUF2twSj1uGeXHdVyR+UFciIGewfBk76m5UiTAEj924MtEHzq7Xje0ARBeLKQURw/pP6wsgkGHpaCU8u4bmz3k6q9yyfCcnuS9tweRBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757097016; c=relaxed/simple;
-	bh=1Ty0GFhj7nQ5Dzk8G88OLUMUcoYDcbY+yDqlOkq0I8Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QBtYs6ErZSRMiNsHt1EB8HKhPDXFKEoMHhfgvxevBaJAz1PVd3PrRV2gPxAn/9a59ZeiJzHWHjTyR/wrUwPE3WUGxpdJgcbg9nkeCRkKKlL8vPcslrmbjR4eXdNzW0JyhctsFrEWMEA+ubQY+UBZIYAEMOYbQ292mzUE74abSsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k9kiq7zi; arc=none smtp.client-ip=209.85.160.173
+	s=arc-20240116; t=1757098313; c=relaxed/simple;
+	bh=zXWJlWCHxYGco+Z0oPY+qgnRaGN+wZGrUTTlZKrx84A=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=E5ZAP7T+pMrgevpVy2C9JgxxuXNaOIY9d31Cj3O9GYl4NmPYwTRr7SGOWsehtzkdAbMuzAjIGpbYwCgQYBjW6OgvX9SGO8i9pEQwiOG6/Nn41ddIOp84b48qEjqHUNeT+F/tou/jy19eDO89/8sEwk5pXcsK7MufNpTd4aZUM6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZFLgtvPw; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k9kiq7zi"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4b5e4fc9b4fso10447221cf.2
-        for <git@vger.kernel.org>; Fri, 05 Sep 2025 11:30:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZFLgtvPw"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b4c9a6d3fc7so1405961a12.3
+        for <git@vger.kernel.org>; Fri, 05 Sep 2025 11:51:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757097013; x=1757701813; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mCngJoByNoAspaGfLn8Eq0vi2bFQ5U5QoVKvc2VOz6g=;
-        b=k9kiq7zi81XFpS1GpT1JHTFWwn3LM3N87ssylSo2zXFD9NZnK6pdr90iV9zViJvyMx
-         dClxTZgDSluHwhObL0+8SfyHpEQr5mimk7JFWkTWAKJ1nAFfDG3REL1aSbyK60uFXbWk
-         GG1SoMj/w01FAtdBdyVv7X+x8kD1q8I93JSykv88OwKwvI/bQr4ND7iUQnON1b4EDmOc
-         kG9WAjjXH8QxVs3U7V942VUHk1TPZKEc1PwOd0dgDGlIWaeSsuWbCfj6QccddWz0jTb7
-         GM4J15noaA/XcMRZYg01CMY1F0MwW15v9SniRCSZ6bRV6TSN3BTcxyB7g7Q5Hs90uCpV
-         hjaQ==
+        d=gmail.com; s=20230601; t=1757098310; x=1757703110; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JANTcZkcAQL+G2NPdUPZROfSUbffVbNfVkud++CqltY=;
+        b=ZFLgtvPwnRKWgrojnbdxTND4fN7+pOh1If7rTQsKZIUcE5lOuJjgt+nXYSb8LX+7yt
+         7ZqDO9fCMBXpWEqVNnIqYOJFUi5Zn3KVOOPdl+REmKtwUu8rYRxZfUrPIbTZls8cYuT0
+         9m3/OB5C5Y2XezJjF3qKY+B1qUBGU6HH4FFdcPfXD+KHGJ8Dzjn0gS3jQXSv3XBOruZ8
+         YxNp85hqJXiMUp0vBdWRRCpTjBAQ2yrQRfwtr6pRXJoWP1Z6w45QjsPXjIUqlfLKwz2Q
+         NZeLVGEGDVBo0E2q+nwKEYdrsdjdO0Qk0E92jNW/2hZ+woFx8H6sCl5XpoC5x6QEp8b+
+         0jHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757097013; x=1757701813;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mCngJoByNoAspaGfLn8Eq0vi2bFQ5U5QoVKvc2VOz6g=;
-        b=I+dooEvCNGioYRp0+KcYyvviamx9mBVGpF4yj6y/los9ciHzg1aEEvytshhiYMUaTB
-         iccNKKhNMgGqqeoF9CH3jBri5AFxpaG/90ks6+gOd7EkznlUX5F85LEKI+pAjQfG6fnu
-         Q4DqCgAw2TBmyJpFvlD6D6dbbitLeNQ6LykTu0l7UGIfF5h5cf6Y1MiopvbQ2OKjcgW9
-         oPsu5wczdgES2wUHha7KjRXWq0Frost/G+3+xZWfXtJnvMDa4NNHDhNiBFwvcndiD86f
-         nixcF5n6OFpOyTMW8+Nrs0II0tG4Fe6obRQ15MrAm0HEfAAogePPZ1eazlV2Rr8GVhJO
-         9g6A==
-X-Gm-Message-State: AOJu0YynZcONmj5sr98GZ0dkz+4ImnoQQUOQUyoJh0akg+V5tnFoazxg
-	+bCd5GOPmp28CvOTyLyVfIawK49WKqw0PqLixLhgjSLXehT0AAri0rQIAHe97g==
-X-Gm-Gg: ASbGncs/MvY+V9DpHkoiLz469xPDcmBrAcaTshxv/99dAZMZ7pFwn2Pl3ypsARpf9Vw
-	vM8kiHgABG3r3ufHwSO/s+lj2lKQ9sbXQl4Q+qSlzZ5WQOXlYbCgshsx12n1ux/5sJnRVs4JSbr
-	jKd4dX8GJOM3OM9ZFlPGsHTNiMhMOBA1b/aBL9cnpfwWQ/z+nnm/zURxK1ljnbEnM0Ke7jLkgBr
-	HknOuh+T4bu7C0HBGUZ1rjRDNHdukfzQHHz5AiaMyzPUszfrDj1XUCfweGj4rYg7K/KQz2ndQPS
-	DIDbKPoo0RXVPgyhC9jk7eri92iXEpzVr4fALJU/4CPJHRrTej1MJZqQE9iI2PfnrTMgd+DSKCS
-	UKuOp5pL3wI8BmO0qC14b4HWctvKhXabj/1QTJu+jvkr+OQ==
-X-Google-Smtp-Source: AGHT+IHYMEV86tVprakoKrjF6gJ5QGzDIeDzdQKP3jSGP8yC/hUPuObSTryaSIOU6UPltatQsGe6yA==
-X-Received: by 2002:ac8:5f14:0:b0:4b3:1d29:6a68 with SMTP id d75a77b69052e-4b31dc8e3f8mr343531181cf.71.1757097012616;
-        Fri, 05 Sep 2025 11:30:12 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.70.92])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b48f799b83sm51630571cf.45.2025.09.05.11.30.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Sep 2025 11:30:11 -0700 (PDT)
-Message-ID: <cf7aeda1-297a-4805-b0ae-e379ce11bbcf@gmail.com>
-Date: Fri, 5 Sep 2025 14:29:50 -0400
+        d=1e100.net; s=20230601; t=1757098310; x=1757703110;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JANTcZkcAQL+G2NPdUPZROfSUbffVbNfVkud++CqltY=;
+        b=PEYvIx7z0qz/f0gdhsJazeJl+fWiLqK6olS+q58wTJf+e0wp5Y6oootKrk8UKqOtb3
+         ZtaXtspq5O1swXnD8iRBTb9XLb60xYIxY8uBY0DbHEQzMJrcgDXNdgA/3VdWIkIk097J
+         7uZAn/gNDc4ExMeEy2+Tz4TJ+Xi5E273OEjy2Jrlhm5E+9A2ugztxcxZoUQj/MgFmaLh
+         wpr/rIB2ewHrewwZG5LoAg+GCg6AkNiS6ZdCJ9Vqsqs17x/tF4BftAxak4f2fFrlrLbR
+         IuAU6uYms2efxDk1jtb39DSAjIYrzOKp3kANtdKq6M9YLXPIk0necBAE4B0C+QDdPbCn
+         40Eg==
+X-Gm-Message-State: AOJu0YzCuNPoA87RXuGiXNl8r/DC44GAsyJQmwHtX5f8FE4W+PxN2sGq
+	voEkYNOXqTRqT1eEH5/Ufm/luMGaN87Ndst4OUsvBUlqJ8lzNLOBLnSncsNdPg==
+X-Gm-Gg: ASbGncv/Nv40fVuBEm7bidck3YFghh06vJSynPJt377TawOhHhjn2ChGpBAfgNVhmno
+	w7U8NibloiIoXDaUEWSBRmy//5uGA8ck2NhLs2/RLlSIbsi76gn2R+Yt3JaDoXWlf8pnnUX2c5o
+	0FO5CWLsrHWkjL3TboLYJc45FHXae9BjwNGi2DuvYxuM9yc0t+TiNxGrW7VSIbFkzdAvGC/nIgM
+	DhBjAY7n0FxqYPjBVDJ79Q56GkMMIH5URNLGx8wTQ2xV9dpIYUjjM/KX0tHIpgEG1SlH6EUEnkB
+	M4S6ND7pU+5R08z9dLPStnsUtZPYqr41Z+9pyNKrdpg0/pyQMGUKuxqsPqAjQKYsS+1RkLuuAOn
+	maExReA9tPIZx4R6YEaaz+2fifQ==
+X-Google-Smtp-Source: AGHT+IG2Qdp9eVv0Ca+gHmxd5ioT4naaZ/GTSHvyAGN/N39w2518SQiVJizDOH8dJSMrIqBloYuWwg==
+X-Received: by 2002:a17:903:3b84:b0:24e:742b:660a with SMTP id d9443c01a7336-24e742b6a4bmr28760695ad.32.1757098309967;
+        Fri, 05 Sep 2025 11:51:49 -0700 (PDT)
+Received: from [127.0.0.1] ([172.182.195.87])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24cbe170977sm53462475ad.42.2025.09.05.11.51.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Sep 2025 11:51:49 -0700 (PDT)
+Message-Id: <pull.2040.v6.git.git.1757098308277.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
+References: <pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 05 Sep 2025 18:51:48 +0000
+Subject: [PATCH v6] alloc: fix dangling pointer in alloc_state cleanup
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
- <xmqq5xdx7qx4.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq5xdx7qx4.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare <nouraellm@gmail.com>,
+    =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
+ <nouraellm@gmail.com>
 
-On 9/4/2025 7:12 PM, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
->> commit graphs are currently stored on the object database level. This
->> doesn't really make much sense conceptually, given that commit graphs
->> are specific to one object source. Furthermore, with the upcoming
->> pluggable object database effort, an object source's backend may not
->> evene have a commit graph in the first place but store that information
->> in a different format altogether.
->>
->> This patch series prepares for that by moving the commit graph from
->> `struct object_database` into `struct odb_source`.
-> 
-> Hmph, I am finding the above hard to agree with at the conceptual
-> level.  In some future, we may use multiple object stores in a
-> single repository.  Perhaps we would be storing older parts of
-> history in semi-online storage while newer parts are stored in
-> readily available storage.  But the side data structure that allows
-> us to quickly learn who are parents of one commit is without having
-> to go to the object store in order to parse the actualy commit
-> object can be stored for the entire history if we wanted to, or more
-> recent part of the history but not limited to the "readily available
-> storage" part.  IOW, where the boundary between the older and the
-> newer parts of the history lies and which commits the commit graph
-> covers should be pretty much independent.
-> 
-> So moving from object_database (i.e. the whole world) to individual
-> odb_source (i.e. where one particular subset of the history is
-> stored) feels like totally backwards to me.  Surely, a commit graph
-> file may be defined over a set of packfiles and remaining loose
-> object files, but it is not like an instance of the commit-graph
-> file is tied to packfiles in the sense that it uses the index into
-> some packfile instead of the actual object names to refer to
-> commits, or anything like that (this is quite different from other
-> files that are very specific to a single object store, like midx
-> that is tied to the packfiles it describes).
+From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
+ <nouraellm@gmail.com>
 
-This is an interesting aspect to things, where the commit-graph file
-is a "structured cache" of certain commit information. It happens to
-be located within the object stores (either local or in an alternate)
-but is conceptually different in a few ways.
+All callers of clear_alloc_state() immediately free what they
+cleared, so currently it does not hurt anybody that the
+alloc_state is left in an unreusable state, but it is an
+error-prone API. Replace it with a new function that clears but
+in addition frees the structure, as well as NULLing the pointer
+that points at it and adjust existing callers.
 
-The biggest difference is that you can only open one commit-graph
-(or chain of commit-graphs). Having multiple files across different
-object stores will not accumulate additional context. Instead, we
-have a "first one wins" approach.
+As it is a moral equivalent of FREE_AND_NULL(), except that what it
+frees has internal structure that needs to be cleaned, allow the
+helper to be called twice in a row, by making a call with a pointer
+to a pointer variable that already is NULLed.
 
-This does seem to be something that you are attempting to change
-by including the ability to load a commit-graph for each odb (and
-closing them in sequence as we close a repo).
+While at it, rename allocate_alloc_state() and name the new
+function alloc_state_free_and_null(), to follow more closely the
+function naming convention specified in the CodingGuidelines
+(namely, functions about S are named with S_ prefix and then
+verb).
 
-So in this sense, the commit-graph lives at the repository level,
-not an object store level. When doing I/O to write or read a graph,
-we use a specific object store at a time.
+Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+    alloc: fix dangling pointer in alloc_state cleanup
+    
+    cc: Torsten Bögershausen tboegi@web.de cc: Jeff King peff@peff.net
 
-The other direction to consider is what context we have when we
-interact with a commit-graph. We generally are parsing commits from
-a repository or loading Bloom filter data during file history walks.
-Each of these do not have a predictable nature of which object store
-will "own" the commit we are inspecting, so it wouldn't make sense
-to restrict things like odb_parse_commit() over repo_parse_commit().
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2040%2Fnouraellm%2Ffix-dangling-pointer-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2040/nouraellm/fix-dangling-pointer-v6
+Pull-Request: https://github.com/git/git/pull/2040
 
-With these thoughts in mind, I have these big-picture thoughts:
+Range-diff vs v5:
 
-1. Patches 1-5 are great. Nice cleanups.
+ 1:  d04b0258f5 ! 1:  5afd5b6a26 alloc: fix dangling pointer in alloc_state cleanup
+     @@ Commit message
+          in addition frees the structure, as well as NULLing the pointer
+          that points at it and adjust existing callers.
+      
+     +    As it is a moral equivalent of FREE_AND_NULL(), except that what it
+     +    frees has internal structure that needs to be cleaned, allow the
+     +    helper to be called twice in a row, by making a call with a pointer
+     +    to a pointer variable that already is NULLed.
+     +
+          While at it, rename allocate_alloc_state() and name the new
+          function alloc_state_free_and_null(), to follow more closely the
+          function naming convention specified in the CodingGuidelines
+     @@ Commit message
+          verb).
+      
+          Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
+     +    Helped-by: Jeff King <peff@peff.net>
+     +    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+      
+       ## alloc.c ##
+      @@ alloc.c: struct alloc_state {
+     @@ alloc.c: struct alloc_state {
+      +void alloc_state_free_and_null(struct alloc_state **s_)
+       {
+      +	struct alloc_state *s = *s_;
+     ++
+     ++	if (!s)
+     ++	    return;
+      +
+       	while (s->slab_nr > 0) {
+       		s->slab_nr--;
 
-2. Some of Patch 6 is great, including having the I/O methods use
-   an odb_source to help focus the specific location of the files
-   being read or written. However, the movement of the struct into
-   the odb_source makes less sense and should still exist at the
-   object_database level.
 
-Thanks,
--Stolee
+ alloc.c  | 10 ++++++++--
+ alloc.h  |  4 ++--
+ object.c | 26 ++++++++++----------------
+ 3 files changed, 20 insertions(+), 20 deletions(-)
 
+diff --git a/alloc.c b/alloc.c
+index 377e80f5dd..7a0af6b4bb 100644
+--- a/alloc.c
++++ b/alloc.c
+@@ -36,19 +36,25 @@ struct alloc_state {
+ 	int slab_nr, slab_alloc;
+ };
+ 
+-struct alloc_state *allocate_alloc_state(void)
++struct alloc_state *alloc_state_alloc(void)
+ {
+ 	return xcalloc(1, sizeof(struct alloc_state));
+ }
+ 
+-void clear_alloc_state(struct alloc_state *s)
++void alloc_state_free_and_null(struct alloc_state **s_)
+ {
++	struct alloc_state *s = *s_;
++
++	if (!s)
++	    return;
++
+ 	while (s->slab_nr > 0) {
+ 		s->slab_nr--;
+ 		free(s->slabs[s->slab_nr]);
+ 	}
+ 
+ 	FREE_AND_NULL(s->slabs);
++	FREE_AND_NULL(*s_);
+ }
+ 
+ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
+diff --git a/alloc.h b/alloc.h
+index 3f4a0ad310..87a47a9709 100644
+--- a/alloc.h
++++ b/alloc.h
+@@ -14,7 +14,7 @@ void *alloc_commit_node(struct repository *r);
+ void *alloc_tag_node(struct repository *r);
+ void *alloc_object_node(struct repository *r);
+ 
+-struct alloc_state *allocate_alloc_state(void);
+-void clear_alloc_state(struct alloc_state *s);
++struct alloc_state *alloc_state_alloc(void);
++void alloc_state_free_and_null(struct alloc_state **s_);
+ 
+ #endif
+diff --git a/object.c b/object.c
+index c1553ee433..986114a6db 100644
+--- a/object.c
++++ b/object.c
+@@ -517,12 +517,11 @@ struct parsed_object_pool *parsed_object_pool_new(struct repository *repo)
+ 	memset(o, 0, sizeof(*o));
+ 
+ 	o->repo = repo;
+-	o->blob_state = allocate_alloc_state();
+-	o->tree_state = allocate_alloc_state();
+-	o->commit_state = allocate_alloc_state();
+-	o->tag_state = allocate_alloc_state();
+-	o->object_state = allocate_alloc_state();
+-
++	o->blob_state = alloc_state_alloc();
++	o->tree_state = alloc_state_alloc();
++	o->commit_state = alloc_state_alloc();
++	o->tag_state = alloc_state_alloc();
++	o->object_state = alloc_state_alloc();
+ 	o->is_shallow = -1;
+ 	CALLOC_ARRAY(o->shallow_stat, 1);
+ 
+@@ -573,16 +572,11 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
+ 	o->buffer_slab = NULL;
+ 
+ 	parsed_object_pool_reset_commit_grafts(o);
+-	clear_alloc_state(o->blob_state);
+-	clear_alloc_state(o->tree_state);
+-	clear_alloc_state(o->commit_state);
+-	clear_alloc_state(o->tag_state);
+-	clear_alloc_state(o->object_state);
++	alloc_state_free_and_null(&o->blob_state);
++	alloc_state_free_and_null(&o->tree_state);
++	alloc_state_free_and_null(&o->commit_state);
++	alloc_state_free_and_null(&o->tag_state);
++	alloc_state_free_and_null(&o->object_state);
+ 	stat_validity_clear(o->shallow_stat);
+-	FREE_AND_NULL(o->blob_state);
+-	FREE_AND_NULL(o->tree_state);
+-	FREE_AND_NULL(o->commit_state);
+-	FREE_AND_NULL(o->tag_state);
+-	FREE_AND_NULL(o->object_state);
+ 	FREE_AND_NULL(o->shallow_stat);
+ }
+
+base-commit: f814da676ae46aac5be0a98b99373a76dee6cedb
+-- 
+gitgitgadget
