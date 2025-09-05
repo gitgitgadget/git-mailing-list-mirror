@@ -1,143 +1,264 @@
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11023127.outbound.protection.outlook.com [40.107.201.127])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8772737E5
-	for <git@vger.kernel.org>; Thu,  4 Sep 2025 23:45:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.127
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757029517; cv=fail; b=fm1rN2/S4thrNIISjhgcgO53Z7VjSFSvHdoy/0Ed8zcnf+EkWI74SShhcrmhjBJOgIMmx5Z2jQ/2Gzx5lHmcmh5orVX2gVwRIriSYwoohHf0iy7ZQIQc0bjjWFn7nAfTZqwxLaj719t+6gDpt22r1lkZ27IclITGIVfJ7N/D+xw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757029517; c=relaxed/simple;
-	bh=KhnH0DBCHTHSOO0Bjxzf6ktKcxklJ287EVcR9sJMCNc=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=l9C2OGmzCoEi/YxCRpoZb6mgN/obnCtFyKiVYUfXgpnTsLlCtgZc2Cjbk16VsT4wpMnGDxBfk1r4ccsu/pLiJtE9NozDgic/iUZX1Ae4zEfnzYb/OEr1D+6ZPM5FNyxNnQNOt3ublaWFu2DijDcK1n0yZhKdKhblFM2Qvtrk2qg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com; spf=pass smtp.mailfrom=microsoft.com; dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b=KhOZIsMa; arc=fail smtp.client-ip=40.107.201.127
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEF11FC3
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 00:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757030564; cv=none; b=iJ8J4XJcXTOFEvtMmte8CFzO9WOZ5sDPxl+fWAdgJZerF2IkbabcGfiMVZGYI8V/lP994qSaoWoL6jPsvmQdLcEq4kHwMf8GuCk2MnhpJTCdydeRATeUzsiDtky0yMiEcHFyyO2yY6eT0HnBlGeLbW8ySyqbopK5O3cVrnD84+o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757030564; c=relaxed/simple;
+	bh=To8iFFmttzLbswQ+lzdQ2N/3kZzQTdixe0zx3RrCS98=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=A7IEQ8k4774AZjQnGspJTxfepL7BsFqY2S405pxcngeDa5isEkJhx/tWXh74GO42aW6jgxw48obn1L8u4lr/a0C/J90BQmFtZU22namgZJBcYx9omYlP4hLz5QEsIXMDnDNqoXDl0AZ0n2HP63VsS04QOBlYPKWMwCyiStMw21w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cSieKcNC; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="KhOZIsMa"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lqZWucw25um4OYPQS8bE/ZEz5r7JGxjWjgHPpqnXY+/2gbYZ/3Ig1Y8n1zCQj//E7xXEPhhorsm9Oags3UxDcqHhCUhj29pkNbXAJT84+T3xOYa31maUnBjN9043/QGVVt80G85bYclMZ6K9omjXb7RrNf9nzFPbHkFJdAGrNJBWpTWvs0kQN9W03mU3C/Ihu86U1F7I7QGFw3Gbw/7KNfor+njh+1udDTCkup12/lYYOjs9maoX1iQWld650PbOFovXnUcAA+N1YspV7iuNvJIfMJ24v56lJf8uJVC+EhXvEtwTWwYSztqolMFvjV5nSXyWcLsyJl1FKbPww0NF6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KhnH0DBCHTHSOO0Bjxzf6ktKcxklJ287EVcR9sJMCNc=;
- b=eHYKkE3PBKpkN2uOxN4pTQksz6KyfezFFo8cXRqzpZBU9mHIPbBNfNoHUwHLo1qyomkC9xGHe5tgC2Bq202NRlPHnaIYCELZhr5GLRv2rPtVGDfX37VBj5zd8gyQ3dtUSFXYuTkMxcrsP97/wBoNMqNrr8qJG4B2wQN2nqPew1nE9cVHJLw+TG9sAb/hIJsSvuJ16mD66KQ55ewQtHPRScsibgjaiiealiptO6lMUpYWr8fLcHxbbyRnlJKTnJAC25TOxHZ2tK3T+Ar0o46CPqatnG6LhC3B/PS5VRbqT0dzgSvl7vGnWoXHY7MW0MRgGShy1eZ0XDzIL1Vj7q3QpQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KhnH0DBCHTHSOO0Bjxzf6ktKcxklJ287EVcR9sJMCNc=;
- b=KhOZIsMaTSWYUzPYMlBlbHFNaeDb1N7lAzveCVhkklYZjELvDWmLGmaZyFw6aQzoqk6iVqt08q/qzLQbaLkPEEGapVEQtsq/W1kmD8u1KYeCulzUUGTAaafcUFmx6jj5XtmJd+YziyLEyGVXwDGoI0EoPij5yLTnRk4Y+1Vhq1Y=
-Received: from CH4PR21MB4613.namprd21.prod.outlook.com (2603:10b6:610:265::20)
- by CH9PR21MB5688.namprd21.prod.outlook.com (2603:10b6:610:2de::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.16; Thu, 4 Sep
- 2025 23:45:13 +0000
-Received: from CH4PR21MB4613.namprd21.prod.outlook.com
- ([fe80::5965:18b9:4e58:a176]) by CH4PR21MB4613.namprd21.prod.outlook.com
- ([fe80::5965:18b9:4e58:a176%3]) with mapi id 15.20.9094.016; Thu, 4 Sep 2025
- 23:45:13 +0000
-From: "Michael Tourigny (TERAWE CORPORATION)" <v-mitourigny@microsoft.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: git whatchanged
-Thread-Topic: git whatchanged
-Thread-Index: AQHcHfWQuMB4F8A4d0uIvJDHvjTnPQ==
-Date: Thu, 4 Sep 2025 23:45:13 +0000
-Message-ID:
- <CH4PR21MB4613E73BD3A24899330002B89B00A@CH4PR21MB4613.namprd21.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2025-09-04T23:45:13.312Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=1;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH4PR21MB4613:EE_|CH9PR21MB5688:EE_
-x-ms-office365-filtering-correlation-id: 389b9d56-8115-4d1b-2d72-08ddec0d17f1
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|376014|1800799024|366016|38070700018;
-x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?98rngyNgUckMgaq3GzBJzZ+jSSGVeth744zpGEMKF9INIu9ha1/YzxHh3F?=
- =?iso-8859-1?Q?Bej6g9Rrp6UhemCWJtmiIojbOKz7YfVLwoSxAbEOOFlrqfQJfJcTX1rdbg?=
- =?iso-8859-1?Q?5Ob9jYzXOgRieZvWoAc6t0TKoXBfPRDY94tb12+79kDVG1pnXqKCITuS0S?=
- =?iso-8859-1?Q?FGoFvpkFhxIXA5p2tTot0Qe4VbuqeNR4DLeugtlVg50qFSuvticrZxD94e?=
- =?iso-8859-1?Q?Qt+TjiQPjiHbzOaSWrP5Tn15/6vZ3F/Rcm1x5xZy/6Y8QTOhEtePWMLUmz?=
- =?iso-8859-1?Q?MiiWxR/0QF9Bt4W/+llk8P+apMluvXTf09NAiRfdVplbz/lE/P14pX6jAV?=
- =?iso-8859-1?Q?XlFUvTybTYte1lvinSmUETbkA4ORws/H4+SYCzf2PBVsibz3F18SiXmPnE?=
- =?iso-8859-1?Q?uquLQp2ruUiGjQAUuuQriV3Ady2eHojYfuZkl+y/SK2gNEz6b9z80e7i22?=
- =?iso-8859-1?Q?5D8kpaAJ8ZHYEMuZaiCUCFvWkvChZrOhXuJqy8fj5YjNBXgu6r4nehfpNN?=
- =?iso-8859-1?Q?vbYM4biZazOxWKBtoq1QPkCs9UzsQq9ci10nrKY67fLa48vSeWiY6SnytW?=
- =?iso-8859-1?Q?46kgbOoP7r38mW+61r1bUjChWbdxpMVH4PnDMO1zwO+ZbMhYkCM3TY99sq?=
- =?iso-8859-1?Q?AnjXapO2yxMWCclil/f9670ytl84BydGP13+WjpZjQ0LKay0+rrHfrJFdS?=
- =?iso-8859-1?Q?1S5evdsIECfuwl0SdbaXNHxUnsT13YBrpUpl1BcmMH7ednsf4jEjzX+C+q?=
- =?iso-8859-1?Q?CWc0XmlO75Y6d03bRM0II1uPto/6L38V5lMCTqWBULzHaL3IvaL8Yaf1ba?=
- =?iso-8859-1?Q?yHNoVg9+bDRDprATwfk0WxfWJu8pfsAp+BmjQEeYIMcIq92cLHdqHvFX8x?=
- =?iso-8859-1?Q?/HLSmk/hApLJdvFUEYiDNlVV90gjj7kuH/pmN9C8k0QhJUkstjpiE5jB5f?=
- =?iso-8859-1?Q?zjkb2iFDsMWvL+UUyt4rJZVtILeZzUOS+hh5+v6ug5g99wFVCRlxCWCvuu?=
- =?iso-8859-1?Q?zR6a0mVnD3aKJOQNmjESTo6wYnOW6s2bh9yjpE7l/LtITqzVLEQMHYv1EM?=
- =?iso-8859-1?Q?gVVRw61FJGIx33aApigyNoSnggZtDTFaxtZLz0IWQFl6tYYnYgwCUjzvpH?=
- =?iso-8859-1?Q?fkJmOf7PFjFRGzKU/8IqBFV9I2fdTwy31pKyTYJEZ8qG/WJv9yrOVFzZWG?=
- =?iso-8859-1?Q?fnay3cnnJQ1MKjBkYf2xfFJbkp9MFTfQ2WQsCvrveGQfFdhHIse/MZQoaf?=
- =?iso-8859-1?Q?cUCyzYjSUlveqiN1eA2+avroNCV9lndYbqBsgERruXv/YIiZtfQ9HYKwev?=
- =?iso-8859-1?Q?/My/fdT680OvGZXP1m7lH7GCJXv4ZLDCRUMP6DBxmakFpMKElwMvQtTpqm?=
- =?iso-8859-1?Q?AUGlxaeebYOeX0cEMwsZ+exjMOFRU/SCAWwlAbfuLRk/HR4eLfao+0lqup?=
- =?iso-8859-1?Q?BoPt5qQO8H8RwscTVsdXIpFhGgcOoO8n4mrkZloqV21NHreaxRA2WO4+hm?=
- =?iso-8859-1?Q?+o/INoDrLGtVMtGtRpGK6SUPgCt8N5r51fhTHV3Z4C+A=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH4PR21MB4613.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?HjtG9uzXdDputPpCaqhqg3XqvUdyNcIDha1TPh18+HlM2TNceFy41xG8sq?=
- =?iso-8859-1?Q?rjo8IbRZZy0R52aUZBWeKYbtGCcz0gFfwmA+vutBMXBbGN+yREWjIF5VKg?=
- =?iso-8859-1?Q?ADhtptNGRnufEXQKn/ZVu3I4btWmtdZFreoCJnnTHBy+fenoJ49GBQK/Mj?=
- =?iso-8859-1?Q?xrXA6YoIiedV16NCgieym74TaJ4l++b7PHnRWDPapG96bFFek/zfzSOKqR?=
- =?iso-8859-1?Q?CupnIzfXyFewOSCWZ2Cgu89P69Xh5G+TmkixsUX7GazkrloRCDS1/dJttW?=
- =?iso-8859-1?Q?hJ+gOA2IcxpQNRRewxSQN3KP4I1EeNt60v8EObWmsbi2psT7KdPEl+ksT+?=
- =?iso-8859-1?Q?i1De+0CCAd8ZpkBqHZ1ZFoZQDsKz1oRsVzlcswem58EP33B6uFjkCAuj3D?=
- =?iso-8859-1?Q?OQQXV7ZWNCXIzQx3/0750FDNjlIxDXypJQD/g3AGaKhE6//Wd9o8StCKnq?=
- =?iso-8859-1?Q?rWaufSFbDvIo5hvO8lNzOim/dvyUl1el+IYSjSHCaJEtEJ+0oxKek9VB+K?=
- =?iso-8859-1?Q?cjtWzgJrsgA1QjEi+0SOf1WMbBhePgTBFmsBqNO4GByBMPaY2XO5a4p8C/?=
- =?iso-8859-1?Q?iLrD9M2dKykKTDvWTGitGuBJSztJsqmvze/CkH2Knn77+SZDa1wfqDnRww?=
- =?iso-8859-1?Q?1NA+V8naw2I/KOZu7K3LUUVc4HIGHJ1ShUzhV+RI/HqQX58YKhryBUZEsC?=
- =?iso-8859-1?Q?sX7jxgBhWapQQwEnOcf7oZ3R7kB8L1QzHXDpWmHOf6eAEt+82NKWsro+Tp?=
- =?iso-8859-1?Q?ehoqBRfUdSVmqrdrpUggBufRBTukNpfQB0Lw0yAulIUrbcgu9glVs74ro7?=
- =?iso-8859-1?Q?AQgQKkVbhQT36rwkv1cxBzH9S+7+zdyoSlDj2RlClAlH1qRLLQFieY+uJC?=
- =?iso-8859-1?Q?MMBKLiAliT5REbl0FYPZv+1EW9Jl4rDOdeoOVfGrW8L+Jqwrm6+2Niqs3c?=
- =?iso-8859-1?Q?R6Pt5G+ehz90DbANLVJjiVJADMO8eM1UK4PmxAzlwqq5W92AfIClTd47Nt?=
- =?iso-8859-1?Q?lY054tMBVRFMsnU+PvY0gnvACs+1qjPHxxlhdIGcs5jqIpItHUj8qUE9Sf?=
- =?iso-8859-1?Q?AGnt5bc6JjWlFqRLTZ9Et6FBTG+fOW1NIywJ8mWRKBX84YL4a80/v4H0ev?=
- =?iso-8859-1?Q?6GZhtLCWMuXbm9qp5jMqEfWhB8U6VJaUvqbAF2YrT7eWnPGuHhdGFtTxmr?=
- =?iso-8859-1?Q?yy4OYu+rZi/E+sQPqNciclN9B32wx2cgbiIBzdTnzS51x6M63bTf3l/0I2?=
- =?iso-8859-1?Q?GOlFgkEUkvC/nsAn+e0sQwY+O2d75hbWbtBDRKXYyaSo+c+bfS8EHcWtDv?=
- =?iso-8859-1?Q?8NclOb0xii7dxSLfCsGY4+mU8Sc5x17wFPVZTA3j1VCjgOjO4uERtu+Yjp?=
- =?iso-8859-1?Q?tHqhW6HiFvt73e6gRXxqQcIT65VrOW5qfHNhCiYXO+b9zgLDj5smyRGjPk?=
- =?iso-8859-1?Q?Xc21qukiZQgkRobl5ji+eg8SEiav9xp2cCi95T7hzy7vTPqlXpXUhzdr0R?=
- =?iso-8859-1?Q?7NP/5pPmmbjc24QR2KWV4o/V86ksM01bFlXzgtHAsEtGSoTKmNGhk1IuBH?=
- =?iso-8859-1?Q?8XsY6hdk/rvbCkQArNGqwbrGRuh5?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cSieKcNC"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-45cb5492350so10735825e9.1
+        for <git@vger.kernel.org>; Thu, 04 Sep 2025 17:02:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757030561; x=1757635361; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c9OCslP5+to20RbmwCtSj5+ONdge+NSERx+4RjqKB+E=;
+        b=cSieKcNCEXfe1ukleWXv5TBva53iE1BfT0HgfhT3KU/WKsi+sTEKwHQtLh50lQ2/Lz
+         5Mj+pmXJ0pXrfKPiGe5YkhPvp92JYzy6/N2wPfaXJJwWfX5BTGbeO8sAopGNERFKC0EI
+         7IJV7bYo0JqjeX+Vz4gG/ZWioaniMm73rPVX4aqD4U9vNP1LFLXn7WKvAkOqfJAwEIP9
+         nDtp5T8Hi43AAHszoJ5xxR5pDyUfWku2M1/caj+nu7ReIgzrgEZe2KVk2UUldmK2kPk8
+         9IyAVLPY1fSa9BMu3DqF9NBNk+qUIXzrO8qsmLgv9UQBGUDT5qOwfEWcl1i8f+72bLR6
+         DFig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757030561; x=1757635361;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c9OCslP5+to20RbmwCtSj5+ONdge+NSERx+4RjqKB+E=;
+        b=B7LVHoRy5djrmzLKxit/7+olgcHvBsan+Wjkqk5//qB0LfiIRzJq6SWf1N6RT4NvzM
+         Y9fjNJFbpjNB2bF3xUZQ5FD3yp5yeBVdjNPF9Alt51KgNHYTts0etvCfIHLHq6W2a6tW
+         IC5oi2bzHbS0rMPVHXQlvvntivGAx0aJ+V/MAs3yc1CtDD/EGHmy1CARGR17dYbmkWtt
+         tNJqSDCYk5R+jUab1scC0ntafaeHjRbcEri5q7HYOVWIsbfxwp9i3In76lRhOAcJm6e4
+         fYQy+uhw1frjN+EjjFaPd50obPOFErjc3z4gFEl/53r3GhsJojYxbP6xUAVStBgg21N5
+         iXAA==
+X-Forwarded-Encrypted: i=1; AJvYcCXkUt81OE3/HnHnnfG5aUJNAMgJAySalwYy3pQ00LMCsCNB/NHAaOi4rmeGBwnN8YMtNwc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx76TgLjxerykFjyIl/P3Lorr+WuvCa+2MyvHnjG9Q+LM9y3xlf
+	ZyJaRqKXeNLg1gJyRPs6lLpry+8Z8fpvCMLX33PDDIMa/wTuxPX+ZEvkbAKdcb2uBso=
+X-Gm-Gg: ASbGncvNqrYyZHIVs+0skVga/DsAd0xqW5uHETluiJyMVhK55U3ImHAW1URyzgRDweY
+	p+yq5W+MpaVJ5cG09NlBy4muvfdITSlv61NtShiwYNofxEJ/BYiwHvJ9IZX1YOj9itacth/m4Sj
+	AsRRB71clD9blG18fa25XUmg2Wb0dBWQYLi196t0aAgyKz6USRBBv504h2DZOS+URfHY1DiYj86
+	gjSfqTBZwQJkjcSCPx9cvIanjC/jyZBvKIbDsC2FJFmrEjHzUe4NPh7hl06dN5NdE+TyCeETOVV
+	VkOgdylkKWGavbO70ADVInsb5yd11fS1ICMJ4uUHxkmhtyR0Cp92o3OMJ4fBaphYKbwlb1eeAyV
+	KZMLIAhNXRmWluUGcyEBxCtt9juV/f0JOqP73exff7iy3cmLp+6TRHTz6wnc8PkEQLKjwiujkFn
+	1RB10LJif5rC7R
+X-Google-Smtp-Source: AGHT+IG7aaemo5xkrn5aNCT+UdX9WqmS9mwwT0fcd9PqdbJ2C0EM44X3vBEvQ6A2tntGbASS7viGjQ==
+X-Received: by 2002:a05:600c:314c:b0:45d:d356:c358 with SMTP id 5b1f17b1804b1-45dd3a26584mr35798115e9.16.1757030560703;
+        Thu, 04 Sep 2025 17:02:40 -0700 (PDT)
+Received: from [192.168.0.4] (ptr-178-51-192-26.dyn.orange.be. [178.51.192.26])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b81a9e971sm318729905e9.18.2025.09.04.17.02.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Sep 2025 17:02:40 -0700 (PDT)
+Message-ID: <8f831259-7372-4357-b059-cc21f7a04864@gmail.com>
+Date: Fri, 5 Sep 2025 02:02:39 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH4PR21MB4613.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 389b9d56-8115-4d1b-2d72-08ddec0d17f1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Sep 2025 23:45:13.6788
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: arCwZMZOpsqLUbkbsvpD53A28CJ/J4LE+AVEZpKDpsKPi7CkAFnVzowoLhQatKRy3KjQYPbKExpEKAWLerWjnRI1En14aoFtYH6Q1xHFzJM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH9PR21MB5688
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] alloc: fix dangling pointer in alloc_state cleanup
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc: =?UTF-8?B?44OO44Km44OpIHwgRmxhcmUgdmlhIEdpdEdpdEdhZGdldA==?=
+ <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <pull.2040.v4.git.git.1756941427825.gitgitgadget@gmail.com>
+ <pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
+ <20250904204932.GD30633@coredump.intra.peff.net> <xmqqjz2d7t2q.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?B?44OO44Km44OpIHwgRmxhcmU=?= <nouraellm@gmail.com>
+In-Reply-To: <xmqqjz2d7t2q.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-I use git whatchanged once in a while.=0A=
-I like it because it is easy to remember.=
+No. I am confused here.
+
+ > It is a programming error, period.  Do not silently return. That's
+ > not being defensive.  That is sweeping a problem under the rug.
+
+Yet
+
+ > +    if (!s) return;
+
+However, I agree with Peff. After calling alloc_state_free_and_null(&foo)
+Having foo == NULL is an expected behavior, especially since the function
+Is designed to free the memory and null out the caller’s pointer using
+A double pointer ensuring the helper is idempotent
+
+So, calling it again on the same pointer is safe because it simply
+no-ops if the memory is already freed
+
+Regarding the sanity check, it should be:
+
++ if (!*s) return;
+
+The reasoning is the following:
+
+=> s is the double pointer (the address of the caller’s pointer)
+=> *s is the actual pointer to the memory we want to free
+
+Thus, we check !*s to allow the function to safely handle already-NULL 
+pointers
+But if we instead checked !s then we would be testing whether the caller 
+passed
+A NULL double pointer which is a programmer error
+So silently returning on !s would hide a bug
+
+Finally, I'd appreciate more explicit instructions.
+
+On 05/09/2025 00:26, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> It's probably not worth going back and forth on this too much, but I
+>> thought the happy medium was:
+>>
+>>    if (!s)
+>> 	return;
+>>
+>> That is, it is perfectly reasonable and friendly for it to be a noop to
+>> free-and-null a NULL value (either never initialized, or already freed).
+>> The overkill was worrying about whether somebody passed in a NULL
+>> double-pointer. I.e., doing:
+>>
+>>    alloc_state_free_and_null(&foo);
+>>
+>> is reasonable and should be idempotent
+> ... when foo == NULL, e.g., after alloc_state_free_and_null(&foo)
+> has just successfully returned?
+>
+> I can by that argument with the reasoning in the updated log message
+> below.  Does it good to everybody?
+>
+> Thanks.
+>
+> --- >8 ---
+> From: ノウラ | Flare <nouraellm@gmail.com>
+> Subject: [PATCH] alloc: fix dangling pointer in alloc_state cleanup
+>
+> All callers of clear_alloc_state() immediately free what they
+> cleared, so currently it does not hurt anybody that the
+> alloc_state is left in an unreusable state, but it is an
+> error-prone API. Replace it with a new function that clears but
+> in addition frees the structure, as well as NULLing the pointer
+> that points at it and adjust existing callers.
+>
+> As it is a moral equivalent of FREE_AND_NULL(), except that what it
+> frees has internal structure that needs to be cleaned, allow the
+> helper to be called twice in a row, by making a call with a pointer
+> to a pointer variable that already is NULLed.
+>
+> While at it, rename allocate_alloc_state() and name the new
+> function alloc_state_free_and_null(), to follow more closely the
+> function naming convention specified in the CodingGuidelines
+> (namely, functions about S are named with S_ prefix and then
+> verb).
+>
+> Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   alloc.c  | 10 ++++++++--
+>   alloc.h  |  4 ++--
+>   object.c | 26 ++++++++++----------------
+>   3 files changed, 20 insertions(+), 20 deletions(-)
+>
+> diff --git a/alloc.c b/alloc.c
+> index 377e80f5dd..533a045c2a 100644
+> --- a/alloc.c
+> +++ b/alloc.c
+> @@ -36,19 +36,25 @@ struct alloc_state {
+>   	int slab_nr, slab_alloc;
+>   };
+>   
+> -struct alloc_state *allocate_alloc_state(void)
+> +struct alloc_state *alloc_state_alloc(void)
+>   {
+>   	return xcalloc(1, sizeof(struct alloc_state));
+>   }
+>   
+> -void clear_alloc_state(struct alloc_state *s)
+> +void alloc_state_free_and_null(struct alloc_state **s_)
+>   {
+> +	struct alloc_state *s = *s_;
+> +
+> +	if (!s)
+> +		return;
+> +
+>   	while (s->slab_nr > 0) {
+>   		s->slab_nr--;
+>   		free(s->slabs[s->slab_nr]);
+>   	}
+>   
+>   	FREE_AND_NULL(s->slabs);
+> +	FREE_AND_NULL(*s_);
+>   }
+>   
+>   static inline void *alloc_node(struct alloc_state *s, size_t node_size)
+> diff --git a/alloc.h b/alloc.h
+> index 3f4a0ad310..87a47a9709 100644
+> --- a/alloc.h
+> +++ b/alloc.h
+> @@ -14,7 +14,7 @@ void *alloc_commit_node(struct repository *r);
+>   void *alloc_tag_node(struct repository *r);
+>   void *alloc_object_node(struct repository *r);
+>   
+> -struct alloc_state *allocate_alloc_state(void);
+> -void clear_alloc_state(struct alloc_state *s);
+> +struct alloc_state *alloc_state_alloc(void);
+> +void alloc_state_free_and_null(struct alloc_state **s_);
+>   
+>   #endif
+> diff --git a/object.c b/object.c
+> index c1553ee433..986114a6db 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -517,12 +517,11 @@ struct parsed_object_pool *parsed_object_pool_new(struct repository *repo)
+>   	memset(o, 0, sizeof(*o));
+>   
+>   	o->repo = repo;
+> -	o->blob_state = allocate_alloc_state();
+> -	o->tree_state = allocate_alloc_state();
+> -	o->commit_state = allocate_alloc_state();
+> -	o->tag_state = allocate_alloc_state();
+> -	o->object_state = allocate_alloc_state();
+> -
+> +	o->blob_state = alloc_state_alloc();
+> +	o->tree_state = alloc_state_alloc();
+> +	o->commit_state = alloc_state_alloc();
+> +	o->tag_state = alloc_state_alloc();
+> +	o->object_state = alloc_state_alloc();
+>   	o->is_shallow = -1;
+>   	CALLOC_ARRAY(o->shallow_stat, 1);
+>   
+> @@ -573,16 +572,11 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
+>   	o->buffer_slab = NULL;
+>   
+>   	parsed_object_pool_reset_commit_grafts(o);
+> -	clear_alloc_state(o->blob_state);
+> -	clear_alloc_state(o->tree_state);
+> -	clear_alloc_state(o->commit_state);
+> -	clear_alloc_state(o->tag_state);
+> -	clear_alloc_state(o->object_state);
+> +	alloc_state_free_and_null(&o->blob_state);
+> +	alloc_state_free_and_null(&o->tree_state);
+> +	alloc_state_free_and_null(&o->commit_state);
+> +	alloc_state_free_and_null(&o->tag_state);
+> +	alloc_state_free_and_null(&o->object_state);
+>   	stat_validity_clear(o->shallow_stat);
+> -	FREE_AND_NULL(o->blob_state);
+> -	FREE_AND_NULL(o->tree_state);
+> -	FREE_AND_NULL(o->commit_state);
+> -	FREE_AND_NULL(o->tag_state);
+> -	FREE_AND_NULL(o->object_state);
+>   	FREE_AND_NULL(o->shallow_stat);
+>   }
