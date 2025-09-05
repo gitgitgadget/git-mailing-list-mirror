@@ -1,247 +1,166 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0A82848B4
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 18:51:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBFA315D2F
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 18:59:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757098313; cv=none; b=ecs6E1+iOkVtNGu0NEggNNcO/ZIP+H3MFCgu4gLtkZdnZIYhXnXFmOJjIVCMIC5qZWssUF2twSj1uGeXHdVyR+UFciIGewfBk76m5UiTAEj924MtEHzq7Xje0ARBeLKQURw/pP6wsgkGHpaCU8u4bmz3k6q9yyfCcnuS9tweRBs=
+	t=1757098745; cv=none; b=kiphVTbxM0zRLHP3SNXB6jBxvbWUXZcsoTdkUqRDE4ymeap7/JicteeU2HO5qdjnMyqWX+0xsLVeRaUqCArkPWa3EP3MHsDndFK2C8/tEhA/sHmJqT9snRWKO8l8LjR+F+CpI7F21/f6H8Up9FYpAjsMR4S8gUTvSjpeFth+NhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757098313; c=relaxed/simple;
-	bh=zXWJlWCHxYGco+Z0oPY+qgnRaGN+wZGrUTTlZKrx84A=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=E5ZAP7T+pMrgevpVy2C9JgxxuXNaOIY9d31Cj3O9GYl4NmPYwTRr7SGOWsehtzkdAbMuzAjIGpbYwCgQYBjW6OgvX9SGO8i9pEQwiOG6/Nn41ddIOp84b48qEjqHUNeT+F/tou/jy19eDO89/8sEwk5pXcsK7MufNpTd4aZUM6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZFLgtvPw; arc=none smtp.client-ip=209.85.215.176
+	s=arc-20240116; t=1757098745; c=relaxed/simple;
+	bh=K3mbU7K7OiU2ywzqBnqSyRgpC50MPKltTKi90ll9NgA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Lk7M9vrW2jvmhRnNQ4/rErLejWBg7jAyxuWjN0LsGe5VH5mbvmeVxju7g5rWe0Py3aCHn/aQPE/z6GqRC/58oVQgQljguc5a8U7mKtBaPdr7wLNccgGBGZSD6636Mt6odSKuPpG0WdOYqenQ3bffxJrKshfEeOCn2TrZqPdDTOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H2tVaXRx; arc=none smtp.client-ip=209.85.160.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZFLgtvPw"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b4c9a6d3fc7so1405961a12.3
-        for <git@vger.kernel.org>; Fri, 05 Sep 2025 11:51:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H2tVaXRx"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-4b490287648so40354491cf.2
+        for <git@vger.kernel.org>; Fri, 05 Sep 2025 11:59:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757098310; x=1757703110; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JANTcZkcAQL+G2NPdUPZROfSUbffVbNfVkud++CqltY=;
-        b=ZFLgtvPwnRKWgrojnbdxTND4fN7+pOh1If7rTQsKZIUcE5lOuJjgt+nXYSb8LX+7yt
-         7ZqDO9fCMBXpWEqVNnIqYOJFUi5Zn3KVOOPdl+REmKtwUu8rYRxZfUrPIbTZls8cYuT0
-         9m3/OB5C5Y2XezJjF3qKY+B1qUBGU6HH4FFdcPfXD+KHGJ8Dzjn0gS3jQXSv3XBOruZ8
-         YxNp85hqJXiMUp0vBdWRRCpTjBAQ2yrQRfwtr6pRXJoWP1Z6w45QjsPXjIUqlfLKwz2Q
-         NZeLVGEGDVBo0E2q+nwKEYdrsdjdO0Qk0E92jNW/2hZ+woFx8H6sCl5XpoC5x6QEp8b+
-         0jHw==
+        d=gmail.com; s=20230601; t=1757098743; x=1757703543; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dSghiykIFopnM3oPGHZX6+S/1C+N0QISyI3lm3cvxa0=;
+        b=H2tVaXRxIGP9NyTKPiY5sb07SZKDMJeEeegRbVptnLhTAjEVPYXNiw7nTZTMohuOYU
+         Sj3g62C0KuFCuP42TBovTnxFeONEwXWARBb6OZA7Jy2tL0PbPcerrAw+RVxnmqQwQ4uN
+         I0by9DFl4Je8QnWntjir8YOt9nSeLD09pFVeb04rmBku9zhgMACFIy6yYWV5sM1IjFxx
+         1QuQZk7biHcDIov0uTe9eRZ7R7eockxmz7cSrLMKQ5aTJ71mgD3H1q3XYAmT/78Niqdy
+         tQOjiESFtoqEjZkA897d2MwC2AfgS4B2zO45kGQndOEYXFnkOo/y1H6PqTBwXzHezlLZ
+         l2YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757098310; x=1757703110;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JANTcZkcAQL+G2NPdUPZROfSUbffVbNfVkud++CqltY=;
-        b=PEYvIx7z0qz/f0gdhsJazeJl+fWiLqK6olS+q58wTJf+e0wp5Y6oootKrk8UKqOtb3
-         ZtaXtspq5O1swXnD8iRBTb9XLb60xYIxY8uBY0DbHEQzMJrcgDXNdgA/3VdWIkIk097J
-         7uZAn/gNDc4ExMeEy2+Tz4TJ+Xi5E273OEjy2Jrlhm5E+9A2ugztxcxZoUQj/MgFmaLh
-         wpr/rIB2ewHrewwZG5LoAg+GCg6AkNiS6ZdCJ9Vqsqs17x/tF4BftAxak4f2fFrlrLbR
-         IuAU6uYms2efxDk1jtb39DSAjIYrzOKp3kANtdKq6M9YLXPIk0necBAE4B0C+QDdPbCn
-         40Eg==
-X-Gm-Message-State: AOJu0YzCuNPoA87RXuGiXNl8r/DC44GAsyJQmwHtX5f8FE4W+PxN2sGq
-	voEkYNOXqTRqT1eEH5/Ufm/luMGaN87Ndst4OUsvBUlqJ8lzNLOBLnSncsNdPg==
-X-Gm-Gg: ASbGncv/Nv40fVuBEm7bidck3YFghh06vJSynPJt377TawOhHhjn2ChGpBAfgNVhmno
-	w7U8NibloiIoXDaUEWSBRmy//5uGA8ck2NhLs2/RLlSIbsi76gn2R+Yt3JaDoXWlf8pnnUX2c5o
-	0FO5CWLsrHWkjL3TboLYJc45FHXae9BjwNGi2DuvYxuM9yc0t+TiNxGrW7VSIbFkzdAvGC/nIgM
-	DhBjAY7n0FxqYPjBVDJ79Q56GkMMIH5URNLGx8wTQ2xV9dpIYUjjM/KX0tHIpgEG1SlH6EUEnkB
-	M4S6ND7pU+5R08z9dLPStnsUtZPYqr41Z+9pyNKrdpg0/pyQMGUKuxqsPqAjQKYsS+1RkLuuAOn
-	maExReA9tPIZx4R6YEaaz+2fifQ==
-X-Google-Smtp-Source: AGHT+IG2Qdp9eVv0Ca+gHmxd5ioT4naaZ/GTSHvyAGN/N39w2518SQiVJizDOH8dJSMrIqBloYuWwg==
-X-Received: by 2002:a17:903:3b84:b0:24e:742b:660a with SMTP id d9443c01a7336-24e742b6a4bmr28760695ad.32.1757098309967;
-        Fri, 05 Sep 2025 11:51:49 -0700 (PDT)
-Received: from [127.0.0.1] ([172.182.195.87])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24cbe170977sm53462475ad.42.2025.09.05.11.51.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Sep 2025 11:51:49 -0700 (PDT)
-Message-Id: <pull.2040.v6.git.git.1757098308277.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
-References: <pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 05 Sep 2025 18:51:48 +0000
-Subject: [PATCH v6] alloc: fix dangling pointer in alloc_state cleanup
+        d=1e100.net; s=20230601; t=1757098743; x=1757703543;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dSghiykIFopnM3oPGHZX6+S/1C+N0QISyI3lm3cvxa0=;
+        b=e/EdhJUQhZcaPr1WiGU61hOPDCjuBIMRhDm+70LIXCRegQ/CLQcn/xKozffnqmTm+i
+         gn4thK5Yb8hCE+TkVRo/yH+ORfptTtSOV307aUAyQLppazy+kEcW7sy2ohqEIBcCUYoD
+         qCmd7LvKqN2z+4PjRHLAS7gN+CAAAT3E0G1z4u/420ZVdeYSppNOAGt3EgGmfIkm1Dtu
+         H/YledBr4ZwglpyIzOMS3SVPSycM8itFKzJIADwtnY5XHjUAPCe7CNnUyhNE/mUQkEzL
+         panJIGaQi+uRCM2OovO66b4tEnz8u7fwnFBjtZwhegmGHTG1nL7FwcgtcpOoK6I+RwKi
+         aN8A==
+X-Gm-Message-State: AOJu0YzOvIGDCLE11z7lHPs8y4qRfDKoW6B6Z/TQj2RgB/EAj6hcvWuA
+	KsTzcWTF2EPZ39QByud17XNOWuAUllCAezxiReFrnmQPDgwt4YZsnqzB
+X-Gm-Gg: ASbGnctnCF7FSXLoR1Kz6XDXSiCRNa3JxKY84tTK0LMcwdwWSRQLoBrR9DjAajgkHbT
+	6KyTqBB7hWnRhSYBqRtnmBaeEkgeg9BzC388ENlfzvMoAW8CyHA97B9CbOvfrPWRnRy/CeaFDdR
+	uFgeDl39FV8px+yEjbVNP1q7A3ZxRCta6Qu0uIBa8kItNOU+6hF2F1sRKUnMfGm2jU04l2KIeMb
+	Jaiz4qI7ozH6HztTmUYd9uKyd8LdkjcKI/os8kIL7qjyNVvbEikYjlSjvX4kq50gq1AaWKzTbf3
+	i8PkNjf8tnd4u1hdRbdFI84xHlz2pWwD9ApGLFiDOUThdKJBZmj5iWbgRuW5Cy3dmx06BaUc+jC
+	mpkoYo6hMLk/KzFhBnw+TowIpTZk3nGxw9a2Cot7lByLVWQ==
+X-Google-Smtp-Source: AGHT+IFHaTCpvMmnLajZEZnfPalYX/55WAfG01XSSg3b5D85BDp0kmy2xfpYgp861gsJ2+uYWSOHxg==
+X-Received: by 2002:a05:620a:1a05:b0:811:ae92:e67 with SMTP id af79cd13be357-811ae9210ebmr290244085a.56.1757098743039;
+        Fri, 05 Sep 2025 11:59:03 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.70.92])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b48f760331sm51159191cf.24.2025.09.05.11.59.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Sep 2025 11:59:02 -0700 (PDT)
+Message-ID: <745f5241-b745-481b-85e7-8cfe6ef73844@gmail.com>
+Date: Fri, 5 Sep 2025 14:58:40 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/6] midx-write: only load initialized packs
+To: Patrick Steinhardt <ps@pks.im>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com
+References: <pull.1965.git.1756402795.gitgitgadget@gmail.com>
+ <pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
+ <e02a444315acbc638a3d31279c10a936f0adb7b4.1756589007.git.gitgitgadget@gmail.com>
+ <aLgVIPpW9QBFmgb7@pks.im>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <aLgVIPpW9QBFmgb7@pks.im>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9?= | Flare <nouraellm@gmail.com>,
-    =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
- <nouraellm@gmail.com>
+Content-Transfer-Encoding: 7bit
 
-From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
- <nouraellm@gmail.com>
+On 9/3/2025 6:14 AM, Patrick Steinhardt wrote:
+> On Sat, Aug 30, 2025 at 09:23:22PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <stolee@gmail.com>
+>>
+>> The fill_packs_from_midx() method was refactored in fcb2205b77 (midx:
+>> implement support for writing incremental MIDX chains, 2024-08-06) to
+>> allow for preferred packfiles and incremental multi-pack-indexes.
+>> However, this led to some conditions that can cause improperly
+>> initialized memory in the context's list of packfiles.
+>>
+>> The conditions caring about the preferred pack name or the incremental
+>> flag are currently necessary to load a packfile. But the context is
+>> still being populated with pack_info structs based on the packfile array
+>> for the existing multi-pack-index even if prepare_midx_pack() isn't
+>> called.
+> 
+> I honestly don't quite understand why the conditions are necessary here.
+> In other words, why do we need to be careful _not_ to open the
+> packfiles?
 
-All callers of clear_alloc_state() immediately free what they
-cleared, so currently it does not hurt anybody that the
-alloc_state is left in an unreusable state, but it is an
-error-prone API. Replace it with a new function that clears but
-in addition frees the structure, as well as NULLing the pointer
-that points at it and adjust existing callers.
+My wording is poor. "We don't load packfiles unless one of these
+conditions holds" is more appropriate.
 
-As it is a moral equivalent of FREE_AND_NULL(), except that what it
-frees has internal structure that needs to be cleaned, allow the
-helper to be called twice in a row, by making a call with a pointer
-to a pointer variable that already is NULLed.
-
-While at it, rename allocate_alloc_state() and name the new
-function alloc_state_free_and_null(), to follow more closely the
-function naming convention specified in the CodingGuidelines
-(namely, functions about S are named with S_ prefix and then
-verb).
-
-Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-    alloc: fix dangling pointer in alloc_state cleanup
-    
-    cc: Torsten Bögershausen tboegi@web.de cc: Jeff King peff@peff.net
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2040%2Fnouraellm%2Ffix-dangling-pointer-v6
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2040/nouraellm/fix-dangling-pointer-v6
-Pull-Request: https://github.com/git/git/pull/2040
-
-Range-diff vs v5:
-
- 1:  d04b0258f5 ! 1:  5afd5b6a26 alloc: fix dangling pointer in alloc_state cleanup
-     @@ Commit message
-          in addition frees the structure, as well as NULLing the pointer
-          that points at it and adjust existing callers.
-      
-     +    As it is a moral equivalent of FREE_AND_NULL(), except that what it
-     +    frees has internal structure that needs to be cleaned, allow the
-     +    helper to be called twice in a row, by making a call with a pointer
-     +    to a pointer variable that already is NULLed.
-     +
-          While at it, rename allocate_alloc_state() and name the new
-          function alloc_state_free_and_null(), to follow more closely the
-          function naming convention specified in the CodingGuidelines
-     @@ Commit message
-          verb).
-      
-          Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
-     +    Helped-by: Jeff King <peff@peff.net>
-     +    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-      
-       ## alloc.c ##
-      @@ alloc.c: struct alloc_state {
-     @@ alloc.c: struct alloc_state {
-      +void alloc_state_free_and_null(struct alloc_state **s_)
-       {
-      +	struct alloc_state *s = *s_;
-     ++
-     ++	if (!s)
-     ++	    return;
-      +
-       	while (s->slab_nr > 0) {
-       		s->slab_nr--;
-
-
- alloc.c  | 10 ++++++++--
- alloc.h  |  4 ++--
- object.c | 26 ++++++++++----------------
- 3 files changed, 20 insertions(+), 20 deletions(-)
-
-diff --git a/alloc.c b/alloc.c
-index 377e80f5dd..7a0af6b4bb 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -36,19 +36,25 @@ struct alloc_state {
- 	int slab_nr, slab_alloc;
- };
+There are some test cases that want to keep things working even
+when a .idx file disappears, I think. This is a reason to be
+careful about open_pack_index(), but prepare_midx_pack() is
+something we want to call always.
  
--struct alloc_state *allocate_alloc_state(void)
-+struct alloc_state *alloc_state_alloc(void)
- {
- 	return xcalloc(1, sizeof(struct alloc_state));
- }
- 
--void clear_alloc_state(struct alloc_state *s)
-+void alloc_state_free_and_null(struct alloc_state **s_)
- {
-+	struct alloc_state *s = *s_;
-+
-+	if (!s)
-+	    return;
-+
- 	while (s->slab_nr > 0) {
- 		s->slab_nr--;
- 		free(s->slabs[s->slab_nr]);
- 	}
- 
- 	FREE_AND_NULL(s->slabs);
-+	FREE_AND_NULL(*s_);
- }
- 
- static inline void *alloc_node(struct alloc_state *s, size_t node_size)
-diff --git a/alloc.h b/alloc.h
-index 3f4a0ad310..87a47a9709 100644
---- a/alloc.h
-+++ b/alloc.h
-@@ -14,7 +14,7 @@ void *alloc_commit_node(struct repository *r);
- void *alloc_tag_node(struct repository *r);
- void *alloc_object_node(struct repository *r);
- 
--struct alloc_state *allocate_alloc_state(void);
--void clear_alloc_state(struct alloc_state *s);
-+struct alloc_state *alloc_state_alloc(void);
-+void alloc_state_free_and_null(struct alloc_state **s_);
- 
- #endif
-diff --git a/object.c b/object.c
-index c1553ee433..986114a6db 100644
---- a/object.c
-+++ b/object.c
-@@ -517,12 +517,11 @@ struct parsed_object_pool *parsed_object_pool_new(struct repository *repo)
- 	memset(o, 0, sizeof(*o));
- 
- 	o->repo = repo;
--	o->blob_state = allocate_alloc_state();
--	o->tree_state = allocate_alloc_state();
--	o->commit_state = allocate_alloc_state();
--	o->tag_state = allocate_alloc_state();
--	o->object_state = allocate_alloc_state();
--
-+	o->blob_state = alloc_state_alloc();
-+	o->tree_state = alloc_state_alloc();
-+	o->commit_state = alloc_state_alloc();
-+	o->tag_state = alloc_state_alloc();
-+	o->object_state = alloc_state_alloc();
- 	o->is_shallow = -1;
- 	CALLOC_ARRAY(o->shallow_stat, 1);
- 
-@@ -573,16 +572,11 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
- 	o->buffer_slab = NULL;
- 
- 	parsed_object_pool_reset_commit_grafts(o);
--	clear_alloc_state(o->blob_state);
--	clear_alloc_state(o->tree_state);
--	clear_alloc_state(o->commit_state);
--	clear_alloc_state(o->tag_state);
--	clear_alloc_state(o->object_state);
-+	alloc_state_free_and_null(&o->blob_state);
-+	alloc_state_free_and_null(&o->tree_state);
-+	alloc_state_free_and_null(&o->commit_state);
-+	alloc_state_free_and_null(&o->tag_state);
-+	alloc_state_free_and_null(&o->object_state);
- 	stat_validity_clear(o->shallow_stat);
--	FREE_AND_NULL(o->blob_state);
--	FREE_AND_NULL(o->tree_state);
--	FREE_AND_NULL(o->commit_state);
--	FREE_AND_NULL(o->tag_state);
--	FREE_AND_NULL(o->object_state);
- 	FREE_AND_NULL(o->shallow_stat);
- }
+>> Add a new test that breaks under --stress when compiled with
+>> SANITIZE=address. The chosen number of 100 packfiles was selected to get
+>> the --stress output to fail about 50% of the time, while 50 packfiles
+>> could not get a failure in most --stress runs.
+>>
+>> The test case is marked as EXPENSIVE not only because of the number of
+>> packfiles it creates, but because some CI environments were reporting
+>> errors during the test that I could not reproduce, specifically around
+>> being unable to open the packfiles or their pack-indexes.
+>>
+>> When it fails under SANITIZE=address, it provides the following error:
+>>
+>> AddressSanitizer:DEADLYSIGNAL
+>> =================================================================
+>> ==3263517==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000027
+>> ==3263517==The signal is caused by a READ memory access.
+>> ==3263517==Hint: address points to the zero page.
+>>     #0 0x562d5d82d1fb in close_pack_windows packfile.c:299
+>>     #1 0x562d5d82d3ab in close_pack packfile.c:354
+>>     #2 0x562d5d7bfdb4 in write_midx_internal midx-write.c:1490
+>>     #3 0x562d5d7c7aec in midx_repack midx-write.c:1795
+>>     #4 0x562d5d46fff6 in cmd_multi_pack_index builtin/multi-pack-index.c:305
+>>     ...
+>>
+>> This failure stack trace is disconnected from the real fix because the bad
+>> pointers are accessed later when closing the packfiles from the context.
+> 
+> Okay. So in other words we need to make sure to always prepare the
+> MIDX'd packfiles, but we may not want to open them?
 
-base-commit: f814da676ae46aac5be0a98b99373a76dee6cedb
--- 
-gitgitgadget
+Yes. Always prepare. Don't always open (since that loads the .idx).
+
+>> There are a few different aspects to this fix that are worth noting:
+>>
+>>  1. We return to the previous behavior of fill_packs_from_midx to not
+>>     rely on the incremental flag or existence of a preferred pack.
+>>
+>>  2. The behavior to scan all layers of an incremental midx is kept, so
+>>     this is not a full revert of the change.
+>>
+>>  3. We skip allocating more room in the pack_info array if the pack
+>>     fails prepare_midx_pack().
+>>
+>>  4. The method has always returned 0 for success and 1 for failure, but
+>>     the condition checking for error added a check for a negative result
+>>     for failure, so that is now updated.
+> 
+> Nit, feel free to ignore: this change feels like it would make for a
+> nice separate commit.
+
+True. I only included it since I was modifying the call anyway due to
+the changing parameters.
+
+Thanks,
+-Stolee
+
