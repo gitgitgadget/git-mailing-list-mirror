@@ -1,167 +1,117 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2621B191F84
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 13:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2439611713
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 13:23:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757078427; cv=none; b=JLFvhLVom2grUM5bDKQUcEFpp9l/17N0DEEb6jZ9hJKrAMip0xjUHTN+c4aHjydneQS163Q6lczhWlf0IwIXSve4u8kfsWQJ4G6rw/T5vVeEgmG+yTVusqUXDXC4/cxHl5UuhvXocQIcnazhUejEaqyf6ZGFBUt0NIOzeJIEzlM=
+	t=1757078593; cv=none; b=tt7pX34k8EvCICC3+4ntRKIN3FKQFUXEqdKahCr34C0VvyKY1gHXhCOCQwmwQ7Xsmg80huAI7ZKWw3JgJKv4zp6+A4jvGW27oBgKNI6hRw3h+ocNbJMuON99Glh4Uq6Tf2L0vlZ2KDV9H6o/zBVfgfi7LUiMcHHCgGEqwdOnv54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757078427; c=relaxed/simple;
-	bh=/Y3ualz4JEYc5WBeQ/t60gju1KfBog8cEz029YTn76U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gudkgEjP+HU+aVp5kDpEcmYQRi1QVdf4GMPkTg8rWo35fDFkiJE6wntZ6Gk14faK+TotNlUi7k+mcLb7yw/Sl6juCwRe9xXTWqxB/8e17lSVjMQx42hs3lWILWAoTH/zV63BeN8eww06zWqz6ym4+ddS827Oc7bUPa1WjyAucco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:cf90::12ac] (unknown [IPv6:2603:6011:3f0:cf90::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id E947E33BF39;
-	Fri, 05 Sep 2025 13:20:23 +0000 (UTC)
-Message-ID: <7040d009-2a1f-4962-abcc-80b82b89f1e6@gentoo.org>
-Date: Fri, 5 Sep 2025 09:20:20 -0400
+	s=arc-20240116; t=1757078593; c=relaxed/simple;
+	bh=bStUHICnhZPMlGdS+VX9In0NgUMD2MBrLbi/J2X/vU8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DqWTHUm1w3XqrRZ0VJEabkYCe9vg8B1JiMe8s8gOpreuZWcyRWbUPOSQa3EGpyrPPcXLzZBqIstdDxrCMIRu1BpKshOcdkxP/mXCsu1pFimHs8VTP445Z/C2gGx9NKxAu/S6UgkrpYFPdtFRW5T0G0yY6p7lgxGvc1nJKknHoJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WDmhFcjA; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WDmhFcjA"
+Received: (qmail 217455 invoked by uid 109); 5 Sep 2025 13:23:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=bStUHICnhZPMlGdS+VX9In0NgUMD2MBrLbi/J2X/vU8=; b=WDmhFcjAmKClVH+JrwmH9jOHxmkCx2IV/W0+elVfucHPdAlNKHWlhdp+fGhEZ37Gxso7GYcAqhKKqSFuxFbmVb4rz70P+JPKhRIoJXV6eNSLxqc5+z3VLEmVoC+A3un0J+sUFsAtB3DExmwBWkvH062tGOh3Zlspr3xruYJITOn6KF2Q2UQhFijsprekyg7JP2iIUzZUVzQ7EWPrhxbG3iepFfr7zLX2xwD79l3HnpoOOy9rKzUNmEDGumdVjLlt1V5s3wZdfJYuoI4VhkcEV2J6EWkus5xL6Tc0Sxp+LD7uSl1kZckImuK1yzU7EpFIrliEvqs4ED+7KvxcgVtIqA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Sep 2025 13:23:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 374746 invoked by uid 111); 5 Sep 2025 13:23:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Sep 2025 09:23:09 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 5 Sep 2025 09:23:09 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?44OO44Km44Op?= | Flare <nouraellm@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?44OO44Km44Op?= | Flare via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH v5] alloc: fix dangling pointer in alloc_state cleanup
+Message-ID: <20250905132309.GC596956@coredump.intra.peff.net>
+References: <pull.2040.v4.git.git.1756941427825.gitgitgadget@gmail.com>
+ <pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
+ <20250904204932.GD30633@coredump.intra.peff.net>
+ <xmqqjz2d7t2q.fsf@gitster.g>
+ <8f831259-7372-4357-b059-cc21f7a04864@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/3] meson: add infrastructure to build internal Rust
- library
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
- "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
- Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>,
- Collin Funk <collin.funk1@gmail.com>, Elijah Newren <newren@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>, Phillip Wood
- <phillip.wood123@gmail.com>,
- Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
- Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
- <20250904-b4-pks-rust-breaking-change-v1-1-3af1d25e0be9@pks.im>
- <aLoNc5S6PVW8jLu5@fruit.crustytoothpaste.net>
- <013a3006-d220-424d-a28d-fb273c523c71@gentoo.org> <aLqWKYkj98QUDxRi@pks.im>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <aLqWKYkj98QUDxRi@pks.im>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------4O4QGVY9p6whXruta0I8A0pj"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8f831259-7372-4357-b059-cc21f7a04864@gmail.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------4O4QGVY9p6whXruta0I8A0pj
-Content-Type: multipart/mixed; boundary="------------ubdAxcF0Wrbf0gXI0ZmWsy7l";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
- "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
- Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>,
- Collin Funk <collin.funk1@gmail.com>, Elijah Newren <newren@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>, Phillip Wood
- <phillip.wood123@gmail.com>,
- Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
- Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Message-ID: <7040d009-2a1f-4962-abcc-80b82b89f1e6@gentoo.org>
-Subject: Re: [PATCH RFC 1/3] meson: add infrastructure to build internal Rust
- library
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
- <20250904-b4-pks-rust-breaking-change-v1-1-3af1d25e0be9@pks.im>
- <aLoNc5S6PVW8jLu5@fruit.crustytoothpaste.net>
- <013a3006-d220-424d-a28d-fb273c523c71@gentoo.org> <aLqWKYkj98QUDxRi@pks.im>
-In-Reply-To: <aLqWKYkj98QUDxRi@pks.im>
+On Fri, Sep 05, 2025 at 02:02:39AM +0200, ノウラ | Flare wrote:
 
---------------ubdAxcF0Wrbf0gXI0ZmWsy7l
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> > +    if (!s) return;
+> 
+> However, I agree with Peff. After calling alloc_state_free_and_null(&foo)
+> Having foo == NULL is an expected behavior, especially since the function
+> Is designed to free the memory and null out the caller’s pointer using
+> A double pointer ensuring the helper is idempotent
+> 
+> So, calling it again on the same pointer is safe because it simply
+> no-ops if the memory is already freed
+> 
+> Regarding the sanity check, it should be:
+> 
+> + if (!*s) return;
 
-On 9/5/25 3:50 AM, Patrick Steinhardt wrote:
-> On Thu, Sep 04, 2025 at 09:16:03PM -0400, Eli Schwartz wrote:
->> Hmm. Patrick -- do you mind documenting why you decided to use this
->> version guard at all? Off the top of my head I'm not sure why you'd ne=
-ed
->> this.
->>
->> In src/meson.build,
->>
->> +libgit_rs =3D static_library('git_rs',
->> +  sources: [
->> +    'lib.rs',
->> +  ],
->> +  rust_abi: 'c',
->> +)
->>
->>
->>
->> rust_abi is new in meson 1.3.0, but it's just a rename for clarity of
->> rust_crate_type, available since meson 0.42.0, so please use the
->> backwards-compatible name...
->=20
-> Oh. I think I misunderstood the following sentence [1]:
->=20
->     (Since 1.9.0) Rust supports mixed targets, but only supports using
->     rustc as the linker for such targets. If you need to use a non-Rust=
+With the correction in your follow-up that this should be:
 
->     linker, or support Meson < 1.9.0, see below.
->=20
-> I thought that only with Meson 1.9 you could link Rust libraries with C=
+  if (!*s_) return;
 
-> libraries. But I guess this rather means that you can now have a single=
+I agree that is the right thing. But it is equivalent to:
 
-> target that has both '.c' and '.rs' sources?
->=20
-> In any way, thanks for the hint, will drop.
->=20
-> Patrick
->=20
-> [1]: https://mesonbuild.com/Rust.html#mixing-rust-and-nonrust-sources
+  if (!s) return;
 
+since we'll have just assigned "s". Which one to choose is purely a
+matter of style. Using "*s_" perhaps makes it more clear that we are
+sanity-checking the input (and could happen even before we assign "s").
+Using "s" is consistent with the rest of the function in working with
+the more direct pointer value. I am happy with either.
 
-Yes -- a single target is something like a libXXXX.so or a libXXXX.a
-file, and there are significant nuances in how a build system backend
-needs to run rustc in order to emit the final C interface (or merge into
-an executable). Once it is exported to C, though, it is "normal" C code
-and anything may link to it freely, even for much older versions of Meson=
-=2E
+> The reasoning is the following:
+> 
+> => s is the double pointer (the address of the caller’s pointer)
+> => *s is the actual pointer to the memory we want to free
+> 
+> Thus, we check !*s to allow the function to safely handle already-NULL
+> pointers
+> But if we instead checked !s then we would be testing whether the caller
+> passed
+> A NULL double pointer which is a programmer error
+> So silently returning on !s would hide a bug
 
-The previous (<1.9.0) gold standard for Rust / C interop in Meson, was
-the far more well-trodden path of "use libraries, not *.o files" (which
-is also more straightforward in cargo, of course ;)).
+I think this is wrong. "s" is the value we would have allocated from
+alloc_state_new(), and what we are actually interested in freeing. We
+only see the double-pointer "s_" because we want to modify the caller's
+containing pointer.
 
+The FREE_AND_NULL() macro does not itself have this same confusion
+because it _is_ a macro. So it is expanded in the caller's context and
+does not need the extra layer of indirection.
 
---=20
-Eli Schwartz
+I do not think this is a good idea, because it obscures things further
+for people who are accustomed to C idioms, but one could imagine a more
+general macro like:
 
---------------ubdAxcF0Wrbf0gXI0ZmWsy7l--
+  #define FREE_AND_NULL_WITH(p, fn) do { fn(p); (p) = NULL; } while (0)
+  #define FREE_AND_NULL(p) FREE_AND_NULL_WITH(p, free)
 
---------------4O4QGVY9p6whXruta0I8A0pj
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+and then you could do:
 
------BEGIN PGP SIGNATURE-----
+  FREE_AND_NULL_WITH(o->blob_state, alloc_state_free);
 
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaLrjlQUDAAAAAAAKCRCEp9ErcA0vV1QO
-AP41PUIbtnNExTJVWOcAYo8pPDNWTjc/IMfU8lnoxivpMAD/dQsAofzk/ul4uhy0ny5cMXcSduyr
-R1LBoqIQYmCJJQI=
-=r8I7
------END PGP SIGNATURE-----
+where alloc_state_free() would only receive the single pointer "s", and
+would free it but not assign NULL.
 
---------------4O4QGVY9p6whXruta0I8A0pj--
+-Peff
