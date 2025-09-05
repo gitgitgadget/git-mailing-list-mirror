@@ -1,128 +1,122 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A467E4C9D
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 03:55:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E989A1C8630
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 06:07:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757044517; cv=none; b=DhCVY5eLSd08zifkZrtTZ5OYpV0byfO3cNtL+sOJKYITxbtPHwag8PXTviG3qkPMfdPre4UHNva4I1nAzHNAyvGFgkTGBt8+tGAjnERVMRHaLzLgoMk23QyaLF1ot+5yoINvL59rWnO7wKUpHEYU91BAr5bQH5/bfDT/ByDpmSY=
+	t=1757052479; cv=none; b=WqtK4x3W070PODjUf3/RuSS4yoYDUUiq5nvR7x+Nr+prpHEX6vG2mZpCBeXw0rkpfIQvycvMSxSpRXaGCvJWemUqf3V63mG5Y9s8DH/C/GEItDpsibSggCwrdI2EsXmjArC7qtwFFcfqKe6R24ldaBPMSUcZNNV5Ep8TZllF14M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757044517; c=relaxed/simple;
-	bh=b4ZDAOmpAarxEfTbnjZ2G3/wIWmvcBYXzW2/55QNGSM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gn/NRwKm47C5Qtc2qOvsgHXmPlGuH/8t4zzpdAbz1rc6K6YS9QixJpXf1bdD14fJ9/B2gP75383Zu9g1aKGP4R+B1x65sQgmzXjOL4AA0Vq3ZB1Rf28ZoiWg6NBOTGr+LvaWIe6DJkD8TR3JwOakVLDE9W6KnIyN8ztODRMtLwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LKUCfITZ; arc=none smtp.client-ip=209.85.166.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757052479; c=relaxed/simple;
+	bh=uCuHH/LLfT2EbH2hje7DZ5v6YzNv+OiReYgP8cTq8QA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e75Z1MsrFhV1ukQnmwDhi1A1ILoNE5drzVe6EcsExeYfLg1KjuthriLv4IMFwHMwUAkLs9Qwjyrl4IDxF5vDy1CL9sV5EC+mmeTWld/jzrlr2YPqfMdtAfH4QGfYi+PUqY0MXzNSOn76o8/4mNoD01oUUE2wHe6ZlHJjZGIucjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XKeDXrYN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YiVRe+8t; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LKUCfITZ"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3f664c47ae0so10146775ab.0
-        for <git@vger.kernel.org>; Thu, 04 Sep 2025 20:55:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757044515; x=1757649315; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f3qQDs4HVqJPxSMWU7mHKAtXm36hIloL9pNIhwwdGgg=;
-        b=LKUCfITZJama3BPqG01SJaaW2Se55wCKykLxvYdSA2azB500e/BY0YtyG+wy+mVDHn
-         F6mzFZtKYzd2AJTNrN/Quc7DS8PGqkQPMo/Eo6TRohnHDP0g1uBWJNLFtEA0tm0gqjau
-         8PRjoW/5LNkPJv0Eld9pwyZnlfpcWg7DXjjgVaqCziA0sva/YGIwtCTo5VUmLkIqozgY
-         CHjT//QRmiYAp6g7f3gDJ4c7m9hwkCe/mGHyRbpjMLGYE0UJkz2TLLx6yJLvFf0JnPMe
-         WMiNlvT5mpHX/Y3GbR5R7iafEe7py5CZTUKxa378cxzfMT9u51ZowYGnKSRVo1c2OQFu
-         ndxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757044515; x=1757649315;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=f3qQDs4HVqJPxSMWU7mHKAtXm36hIloL9pNIhwwdGgg=;
-        b=cwkGEsnaniUPDkZIBZKJClrEg0zGWBdDcOn985QeBghTzKIeqpJWom8B0+1ZBWobI/
-         6E+nkeGeonArilzr6n1yeFKmDfj6dgSEpZzcrql8h2pCnpfojxfKivHG6YqtDfTQhFpI
-         bCzNe3Rol8SK0l2PEtxMzTneYjWiIIQ6iZDxLZ5krsPWOAR35NVJJyBgWjLvaUeljy/o
-         hk34LqY/b5emkTAKS3VUYDfwk9MHXy3Ofw/vGs+J/S2tD/ArkyrA8iBNTIi7bs/Y9Exw
-         wWwlLtKdKDtkEQ5Dyrjy1Xld37CqVzG9pQXKbQlX1jMGr1EWMT+/fWaeaAqwn/MvE1Wf
-         r2Nw==
-X-Forwarded-Encrypted: i=1; AJvYcCW7u+IU34XbkdwQEAqh7J2RD6XPxa4BAOXvKMrLUG4+DgxIiwDtyM7Nr2WZ3YP+ggqi1Q8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzcRaIymuXIgSB80xZ+btNcB13V6ARJU8zl4gVmeRPf9r4ODfnA
-	qsVlcVUZkSTVCs6kFfWvzBE5w7LWgP6A6KFZ3zAWtFdltrm8dFn6RWc38y6pgQKKVdIHSBppPbS
-	Gre5Zz8xg7H0UBNexCwI+BOUEQKGE92g=
-X-Gm-Gg: ASbGncsVou4WdPXN3xS24ufP+PG78mEEVuK+sl89n7JOF35WhKlxKcmxqJujMkn/beG
-	/sn9gFhmZrW7sAzCEIQrC8GFiDSzn29zQrqGjpjDnoc8cVdYqsHcfWULn0CiXiGmBoKDEfJDAFL
-	4HIL4q9I/bOhK5Z6KxtAXn5pR8oyag8gPWa9YuWx5NO64qxgUL0Uo/ProdQe39xILQwHFhqah/+
-	aX1O4VvhDLUbqdoILw=
-X-Google-Smtp-Source: AGHT+IEtLmcE4Um+QtRzuYrRMG3pEuHRcmgRzUxE4VfqrSJM+31U8yjyFEMiXDuQKqXCus2i1LBFngaurJfaoKbblD8=
-X-Received: by 2002:a05:6e02:4411:b0:3f6:5e42:9ec0 with SMTP id
- e9e14a558f8ab-3f65e42a7b4mr165159375ab.13.1757044514605; Thu, 04 Sep 2025
- 20:55:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XKeDXrYN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YiVRe+8t"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BEF257A03DE;
+	Fri,  5 Sep 2025 02:07:54 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 05 Sep 2025 02:07:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1757052474; x=1757138874; bh=rKM7eIwDz5
+	ZovJqHrt8zyQ2oifpmw63Qb3LOSzI/H8I=; b=XKeDXrYNEZLpqpnSm4xOZO2ELi
+	UP96ze6pvHIx5NrZrWMhW3hFARtGUwdLv3zWpi4TeXhFAYJbcvdOzE0dgusmFokX
+	5wx5Vls1I5cq89w8s37aRQ3ELkIv7Fyv6XLgzyZz1j1LW/VWlrSzB4kI/0yasmf3
+	zNREwdEu4kwNswBCzvdyB5QMWhKfz6BTkqZ3uucFpVIJh/SVC3wjGaEs1nxr1h37
+	8VvK2K6A656XuQR1YE8uyAYMo0nCG18f/JxpeHMqRhc3PEA/n8COBTlZUiZeObes
+	zb44Vwpgq1kvNAZ16HaIwx/8+RhV83coXeJUbvcScTXcL28lIs5580CrF5Ag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757052474; x=1757138874; bh=rKM7eIwDz5ZovJqHrt8zyQ2oifpmw63Qb3L
+	OSzI/H8I=; b=YiVRe+8tGOdqF+hie7B0BLmm0qvtGmQf5CLK3IRrrFiG1dWzasr
+	FKxUQ4QEWjH0nURZD0ik+oECktFYIBY+jnTtFzKorIJSrhFzjx/UIOG6jkY1F/TA
+	oV08Qw/Pz/gr3E6iixM6KWobc2W8YjzqPugRnnAxnYFxfPkNaG6WciOraebGaGoo
+	hiAMd3OC9S86vI3An/3AY9CRBV/abFEx0NMPnk7UCntlsuWEbss+nlw+CUusMvUE
+	jNUSbZ86K3DOEZr9Epx0XIDDOqyf99bm7h7mtgVxi6SXKrgTczjCc2mGmiWr8N/c
+	5o34G4YRc9KC+RB38F148B4HE9Bki+ddX0g==
+X-ME-Sender: <xms:OX66aMuyEOXdHe1dlX2fmF87CzDuUm9ZCK0Xaf9noGHz-HUHkRWZ9w>
+    <xme:OX66aGk_-Jqp_gQsB1r_fgyKOjePG6mxWpHHKvBrbYsJNbQHMsu5pgWJ43IYmZm0y
+    0KOuyJHeeoVEgL4Ng>
+X-ME-Received: <xmr:OX66aGyvc4tkCS8GXZ7-wpNEDKDmVPHsJjmbfgMORAtCi2WKj688pQAgiJDQhrO09-Es9BiU4Pyfa_Zr5uGo0Zjww5NUgz9yq-Jp6fegOS2B>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekudefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
+    ekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    phhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdr
+    shgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehhuhgrnhhgshgvnhefie
+    ehsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:OX66aAMBpgXGn7jIPgXp3XHByJeNRlD54E4-jnVaiUuwVqQEcrLlpQ>
+    <xmx:OX66aKphzAxuMZtIoftLkgxedCS1sxf80xFuWspw1XwE_DVOiv0mUg>
+    <xmx:OX66aBGsP9ASQUAOhTnw4p8drKCWwjg5TTa3eU6Zy5khHfEBTUK7cg>
+    <xmx:OX66aPr4TCEWoCTfVCkLxWXuY0rl8iMhLpF7iuKZra2DOnuP7ko2AA>
+    <xmx:On66aB0hUywIQ3L2tK97XobMMSweJlloqn3pgW7wbZE6SrOhrawKn3xB>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 5 Sep 2025 02:07:52 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d2081b33 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 5 Sep 2025 06:07:51 +0000 (UTC)
+Date: Fri, 5 Sep 2025 08:07:48 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Wing Huang <huangsen365@gmail.com>
+Subject: Re: [PATCH 6/6] breaking-changes: switch default branch to main
+Message-ID: <aLp-NA6FIIX5k7xh@pks.im>
+References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
+ <487d1a33130cb2fafadcf98da00a332a7408a0e8.1756308283.git.phillip.wood@dunelm.org.uk>
+ <aLbWuGQhriQCMFbO@pks.im>
+ <96e128d9-e5e3-4bfc-9e33-3caa75cacfe6@gmail.com>
+ <aLfHvl5JuttXrI0y@pks.im>
+ <9d52f24e-d495-44d4-b122-7d80d1f4b77f@gmail.com>
+ <xmqqcy87fkhm.fsf@gitster.g>
+ <aLk7QEEWy4nWxsQK@pks.im>
+ <d990d908-5513-4f35-91ec-ff860ca126d5@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
- <aK5mJI1NfVQDmDXN@nand.local> <01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
- <xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
- <xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im> <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
- <aLfU5sEa-RE3X4G2@pks.im> <aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net>
- <aLl6iFXeAvL_hvqR@pks.im> <87v7lymiik.fsf@gentoo.org>
-In-Reply-To: <87v7lymiik.fsf@gentoo.org>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 4 Sep 2025 20:55:02 -0700
-X-Gm-Features: Ac12FXx5ws9yv_8zoixGZBIstHXve_3MuqeICBMBPwCIRIw3vFtYk4adHAMznT0
-Message-ID: <CABPp-BEgzQg4MOsepFwnfg8AfE5xv2JxKpQa1rGyOpwWW00HqQ@mail.gmail.com>
-Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
-To: Sam James <sam@gentoo.org>
-Cc: Patrick Steinhardt <ps@pks.im>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Josh Soref <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org, Christian Brabandt <cb@256bit.org>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
-	Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>, 
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Ramsay Jones <ramsay@ramsayjones.plus.com>, Ezekiel Newren <ezekielnewren@gmail.com>, 
-	Josh Steadmon <steadmon@google.com>, Calvin Wan <calvinwan@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d990d908-5513-4f35-91ec-ff860ca126d5@gmail.com>
 
-On Thu, Sep 4, 2025 at 6:53=E2=80=AFAM Sam James <sam@gentoo.org> wrote:
->
-> Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Sep 04, 2025 at 02:30:58PM +0100, Phillip Wood wrote:
+> On 04/09/2025 08:09, Patrick Steinhardt wrote:
+> > On Wed, Sep 03, 2025 at 11:40:05AM -0700, Junio C Hamano wrote:
+> > > 
+> > > I have no problem with that.  I am still unsure about that "reftable
+> > > cares about the name being 'master'" thing.  If that can live with
+> > > any 6 byte name, we may want to fix it to something different from
+> > > 'master', for the sake of removing 'master'.  Perhaps 'banana' or
+> > > something?
+> > 
+> > Huh, did I miss anything? I scanned the thread for reftables but
+> > couldn't find any discussion around it relying on a 6 byte name. Could
+> > you maybe provide a pointer to what you are referring to?
+> 
+> c.f. <xmqqwm6ozn7d.fsf@gitster.g>. In t0613 some of the tests check various
+> sizes of things in the reftable and those depend on the length of the branch
+> name
 
-[...]
+Ah, makes sense. Thanks for the pointer.
 
-> >> Also, the approach of making it an optional component directly
-> >> contradicts the proposed policy I wrote up.  That's a recipe for
-> >> additional burdensome work maintaining two implementations, when we
-> >> actually want to make it easier for people to contribute functionality=
-.
-> >> It also doesn't provide any of the memory safety benefits or address a=
-ny
-> >> of the concerns from governments, security professionals, and other
-> >> parties about the real and substantial risks of continuing to develop =
-in
-> >> C.
-> >
-> > The only reason why we want to have it as an optional component is to
-> > make the transitioning period easier for downstream distributors. And
-> > the intent is not to convert major components -- it should be trivial
-> > components that we can use as test balloons, similar to how we did it
-> > for all of our C99 test balloons.
->
-> Yes, even if it were just for one release, having it optional for
-> something would mean we can adjust packaging without some huge pressure
-> where git had 0 Rust in one release and then mandatory Rust in another.
->
-> (I would of course prefer far more than one release, but I've tried
-> throughout this thread to give options even if the one I'd prefer isn't
-> pursued, not "teeth gnash").
-
-Rust has been an optional component of git for the last three releases
-already, going back to v2.49.0.  See the v2.49.0 release notes, or
-e.g. https://github.blog/open-source/git/highlights-from-git-2-49/
-[*].
-
-[*] A quote: "This release marks a major milestone in the Git project
-with the first pieces of Rust code being checked in..."
+Patrick
