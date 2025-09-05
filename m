@@ -1,123 +1,127 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB2F221577
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:38:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1D7E55A
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:51:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757101092; cv=none; b=iOnsPvyfjhfGe87E5TEi6DU3d3Xa3QsbaLLZB4gd8u4S8eNFdnKtrkfCWk14cMkiJ2dTmPM19AGvb/+8W3R0tYwZj35A87gP+tPGpI3K246ok/lKufnOPtGWoNepXeQAzBwcZ6ooI62vo8jL4CrOvKqrzTneHG3EUca2CyZBA9o=
+	t=1757101894; cv=none; b=fDTWwGsJgc44FpugNuXJNqtO1fU9moGf1tlHpsprdgBgzKtHPorQmzHto85VgWIDwhrYcHW1hnNiFYGC9SK+ChOdzZ4kTuAdMGPMaqeERJkqAHD+pEFRd8hqTMFy2pt9W4wab1SzY0XI58AdGA5SptYBRQz1xq49C7ctRyQKvlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757101092; c=relaxed/simple;
-	bh=OK6zG8j1JZtBc7pQm7YdAteNWfE6bKN80QnG4JJfi5k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L+4HWGS4swq4kfNiJUQhepAc36Qk6uT+KqZOJRpJOUZEbn+CdfK95bfPsrw96H7i6R6n2MM2E5Q0cc7Kf16ydJeJxXbNd3GUVYOTp+zVjNqYKwA/KYFd/qL0ZrW6gzSo4GZnTco137LvO9EXBUQBDu0+FgDQJE1MqQtr0AyvDII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JzeQXqOc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=enZd8Kt2; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757101894; c=relaxed/simple;
+	bh=13i+tUGHB/SjWR4hdIsLplyRaDBO8ujPcvTqITwf/2Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jTX4vPf5Ih3ik/bQiTjIh6ZnQ6sRmta/kSYnLdAEgtRwMgkvGgxviJ9c3ddydblRfEyr89uUBREpCGg2bPC17i1WyurYA4UXWnELS45u18OhaRT0o7BXwFb8pZFRa2Vuh1yP0g90kGwXXEoQlamPfmg5GCUbJZR6G9CcNl4Rzr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=xXKAeNFt; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JzeQXqOc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="enZd8Kt2"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id DF980EC02B3;
-	Fri,  5 Sep 2025 15:38:09 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 05 Sep 2025 15:38:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757101089; x=1757187489; bh=6Wa0RH/YaV
-	kkPezhMHASpn9aSr1aNqvK/QPgAJZSu6M=; b=JzeQXqOcOzPyLxNeCh4/AcScDQ
-	ApzLJ4s7a5Tg0hD9aZD5liqGqIwkcnv5Q41M6gi9NwN58qCEUOeys5gPldIGZcrF
-	QZy81k9i7d74n5252nR06S+sr6IwUMvPXIPxCfofIQDZNiU08p8oJRB+EBlPDBCe
-	isatHMd/yH4tMmkjnNVE5Kvbn/4rqbzDQ0HPZ7uoifLta+XBtgF2MYi8V4M3q+er
-	On4IEhY8KOYEh8cTjFBrHldCw2ayywgpCnUZegro7tPDWzEraNeYULXc1seuNcNF
-	MKftYK6INCmDprStHKTFdCKOv4npa8REZ5Ct9UnlKiemRgrpDZeYGNcqxEJw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757101089; x=1757187489; bh=6Wa0RH/YaVkkPezhMHASpn9aSr1aNqvK/QP
-	gAJZSu6M=; b=enZd8Kt2BtEIw3aSO5ilh1CAMPIJJ4RHpW4C7f4Wojk7YzBHu//
-	xODByNNQPhrJIgi1dIi1LHGXOvFl+ccCBcm4Vx89X4OwbJwfmKsHU4AaZzl87J+H
-	132y61BOLtVCV4x5UCe0mdTQxIXp/OSpvTc/t3BOcL/uwtEvBzr0v3SwrE9pAWvT
-	69fiNl0auX968ZkaY8AL5wiw9mKKet4rx7vxKyS/KGSacYtehPa5AvXtIf4HHEdV
-	e4qva68Ab1+LS1MI7eoyQc9bMsFipcWYEeIsBk1MV1U4O0FA9oc3FDX4hWKdESmw
-	hibXZpuuy/fJvhtxdzLcGnGfjqBrFNdZgVw==
-X-ME-Sender: <xms:ITy7aElG7KaHeEpbgpdsFakZ56yEN_YguBE2Q5hESzuCAB_zcKggCQ>
-    <xme:ITy7aMTdzrvir6Olx1cSlQetAPkXnNe0lylbwx1-YVPPovUw8tzOIQOrRHbMAe5qS
-    KhxvJ4tRuARgHMX_g>
-X-ME-Received: <xmr:ITy7aDH07x5egPi8eeDGbQcYNGoZImGH1o5wlKUSqVbb59Md2Dg99zKcFMBo9MyHCphatCSp87aAXYdKo6ZYMTd2L1aW7No4LyQbbFI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeljeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehm
-    vgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
-    htthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ITy7aBHOMMPmdR9G4KUPjm9Bu3saxncPaGbYMsCImNtxL1QJY2QVew>
-    <xmx:ITy7aBQixznmgG3lfC3E4m4lbl3sBfESQ_b8W1DBgoqN1NPM_3qViQ>
-    <xmx:ITy7aCLx31K0_NbQIUV2YHzwd60542KF9R0Q2rjbSC3L_algK2bRWg>
-    <xmx:ITy7aMY7JEJ6RawlXQOg5eMAcozogMojxoHy-jZM56oJqMl4fbKgtw>
-    <xmx:ITy7aEKFUTLQ1fB4hlVXhwGR3ZJpXMtU4R08i-f_jCdzrZWP3OMkwYGp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Sep 2025 15:38:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  me@ttaylorr.com,  Patrick Steinhardt <ps@pks.im>,
-  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 0/6] midx-write: fix segfault and do several cleanups
-In-Reply-To: <pull.1965.v3.git.1757100378.gitgitgadget@gmail.com> (Derrick
-	Stolee via GitGitGadget's message of "Fri, 05 Sep 2025 19:26:12
-	+0000")
-References: <pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
-	<pull.1965.v3.git.1757100378.gitgitgadget@gmail.com>
-Date: Fri, 05 Sep 2025 12:38:08 -0700
-Message-ID: <xmqqcy843d27.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xXKAeNFt"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1757101890;
+	bh=13i+tUGHB/SjWR4hdIsLplyRaDBO8ujPcvTqITwf/2Q=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=xXKAeNFtjon0IOv8ZBQYoiWn+KQTrML4Rz4ZLYUO6+ZTGGatdAItoy7a8OnvFXiJ9
+	 pgd37KZYmvCubYsQZQJ/xZ+XsxBOALl8DKMzKHWFm9IuqEx9JQ9a7Nugcxi6T1omub
+	 fM809N27Oq0jgHEXJWpjBl/55+wmXNbLfBeHHdjXHy9Z4sXxY0Hsq7ja4mf+m0ZEL4
+	 nNSbsbwm8p9DkAQgFTY9DltR0hSVThYqXp4eHmqvur37zA88mzF3sgk+kbVgjaOGyT
+	 N/SyCAe37wkKwt32x5wyUE/x62OgXnGxCSN0A6ZMcPckktspYslh4uE+Dgz0Ji53NM
+	 DaQKkgv9x45dXLPzuqefzN4MFKu+/TWQzLNgINsvC5eapnMz31Byjzlab6JaQW+y6Y
+	 f7fEDahh3ufLcGLwxfyZxuJ7T9RPhaEMqV8torj2XCDVqSA4HBWcy1kd+wWDFsu5Tz
+	 ll2wyQajlBB8iphUt0L44/cc16FYHEHHzRWQBb4a7zyf/vRtwVb
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f8f0:4bbe:8989:f575])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7FDFC20100;
+	Fri,  5 Sep 2025 19:51:30 +0000 (UTC)
+Date: Fri, 5 Sep 2025 19:51:29 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC v2 3/7] help: report on whether or not Rust is enabled
+Message-ID: <aLs_QZ9eBGevcGfb@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+References: <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
+ <20250905-b4-pks-rust-breaking-change-v2-3-6939cbf4a0b8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="SQrSqGyV0SjbFMRv"
+Content-Disposition: inline
+In-Reply-To: <20250905-b4-pks-rust-breaking-change-v2-3-6939cbf4a0b8@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> I was motivated to start looking closely at midx-write.c due to multiple
-> users reporting Git crashes in their background maintenance, specifically
-> during git multi-pack-index repack calls. I was eventually able to reproduce
-> it in git multi-pack-index expire as well.
->
-> Patch 1 is the only change we need to fix this bug. It includes a test case
-> that will fail under --stress with SANITIZE=address. It requires creating
-> many packfiles (50 was not enough, but 100 is enough). As far as I can tell,
-> this bug has existed since Git 2.47.0 in October 2024, but I started hearing
-> reports of this from users in July 2025 (and took a while to get a
-> dump/repro).
->
-> The remaining patches are cleanups based on my careful rereading of
-> midx-write.c. There are some issues about error handling that needed some
-> cleanup as well as a removal of the DISABLE_SIGN_COMPARE_WARNINGS macro.
->
->
-> Updates in V3
-> =============
->
->  * Use test_grep over grep.
->  * Translate an error message.
->  * Clarify a commit message.
+--SQrSqGyV0SjbFMRv
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-All incremental changes made sense to me.  Will replace.
+On 2025-09-05 at 11:50:59, Patrick Steinhardt wrote:
+> diff --git a/help.c b/help.c
+> index bb20498cfd..5854dd4a7e 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -791,6 +791,12 @@ void get_version_info(struct strbuf *buf, int show_b=
+uild_options)
+>  		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
+>  		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
+> =20
+> +#if defined WITH_RUST
+> +		strbuf_addstr(buf, "rust: enabled\n");
+> +#else
+> +		strbuf_addstr(buf, "rust: disabled\n");
+> +#endif
+> +
 
-Shall we mark the topic ready for 'next' by now?
+I think this is a great idea and likely to be super helpful.  Thanks for
+including it.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Thanks.
+--SQrSqGyV0SjbFMRv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaLs/QAAKCRB8DEliiIei
+gRDWAP0T4ljr1yrR70fFxHqgeoUisx7E56i+rzOXUB3RHR1WNwEAxQEo043cXlNq
+fZGpF7yShGkChwVPs5S0872ceIHUtAw=
+=nD4j
+-----END PGP SIGNATURE-----
+
+--SQrSqGyV0SjbFMRv--
