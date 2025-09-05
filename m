@@ -1,113 +1,263 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92462A55
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 00:21:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0AFA55
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 00:25:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757031697; cv=none; b=CE+N/swY9+vEXITQ/fQEz+96W38LlLIjiTZpNmLDbkeSPBum4+zy950/p5ed0NzrSthKLlmCayiDKe0DzHG+dcKUvxL74VFeIxRsdl/U+nNR6hisauoZ9eVsS4GHL9LHJcnuLUM1Mge+YBtJdHmZt9+CDEsDXQvHuFp5pQ5m76w=
+	t=1757031961; cv=none; b=ZGDMAy/OyZiIq9C9pWSIt2qYCHf4hnl4XMY3eJWEFaQxAhtaZKdSMISdx8nt4ubbCTqS9EnVD+VlQdjnwx/hM3KrimRLBwdIlHR8liwfaxPP6IY8a/ROskjGokL4HuLb6gnZMT0YKop80XTYT5ml5IylhLmoTSqP+/py10UO+hI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757031697; c=relaxed/simple;
-	bh=5f8jPOi/cs1Vebk+u1w0ZIWnb5dGRwNcOu8YAZwert0=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=DHM6q+EpM6NeJ1G1kiNCAATAhCIML1SqUWXykEZwrX4htDmrW58ftes91vP7RrEN6l7K/O78qrfmJfbAfy9u5A60YnwV9XYSei1gvdX2XdrKX5Vw1z93zdyXXcvJ8coA7r9l6gfjevnWZqw0KlEV2FS3nttfY/ZLG1V1LlTGOr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m0vF6HJR; arc=none smtp.client-ip=209.85.128.180
+	s=arc-20240116; t=1757031961; c=relaxed/simple;
+	bh=CV/wdBbXCbcSjDDqCQOcfxNP8nyWcl7DWZGiZSWCE+k=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=kyeffhcSODHuXhKefkIillJyAGhLHXOivM2LoF076GZofuBVAU4oBqXwsU3Mi6sLtVol7hs4fFp5+2DExvvxHaE4J6U4+8Z81Nq500PrZgNCSoMBSyVmOTo44s+U9l65u4EzU1SRp690QDXUsrDiW2UF+0jNIh+MqfGXd3sJ5Bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EV4i5OWM; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m0vF6HJR"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-71d605c6501so17264007b3.3
-        for <git@vger.kernel.org>; Thu, 04 Sep 2025 17:21:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EV4i5OWM"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3d44d734cabso1120052f8f.3
+        for <git@vger.kernel.org>; Thu, 04 Sep 2025 17:25:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757031694; x=1757636494; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fBOCDsTVsXvZiYWjM2EB9FRioYex5qflYlq5jGvQc6g=;
-        b=m0vF6HJRsPyf+wtyVAU4Etl6tF8pfFiS4Lb13fU2pME1HACtA5h/yHLR9i6Siog1cw
-         DO5LC+MQlInQh5FIb8tQ/U61C78s+YkdO4pEWi4XYb9+KMK+Qy+ge++qx+bY6etxfb8h
-         lmJyewDpGDL+S6TNS9o2nZpOV+DO4ik6eene7u4tzUpVc15jvTtUWzbBJzi7kWOMMaCE
-         Cf+4L1n6to5bEI9+Z/2oaRLdQpKq42wOgirJBpw2z11VaM4Oj1CJz1A3DwzLar+zHlj/
-         XRnPP4Gd1su2rtvjjB4IdyN8aHRA7eGDH0X0KOIKR2vkjPfQoCFjhIWYwnPIZQbVIULA
-         qxZg==
+        d=gmail.com; s=20230601; t=1757031958; x=1757636758; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Yg03lhXSpSol7fR+xmaC89AbaDf7Lp5fMS4hkGOdFt0=;
+        b=EV4i5OWM3X8EuZE+CAwxQNyzGpmX3TVbY9/oBzIF+MaAjpBZOCRZ7NT9cR0uMFN7Yf
+         FoTDBv9037BJIzbJzQ/2iEJVUFncypFjQzbnrLG4Yg+B5WE6YCkcnEn43nXrGkD8oI9x
+         /Az12o0l3X5J9olIIAdtbvhI4lGrZe3HgYWbmNqeI0zUg9wf6oEnvLgr8EwSzNomeO58
+         4kOHVrXTEsaE3PkIEtkFEY55ujZpZwUv+Q5tB3t5xACaH+VRJOAXvE4YOcTnmrtPx9zU
+         uymkwmLm1bAbubrvHmOcBpjWN046rq2yYJGPD89caa9mZyx+CIEQ3nZSV3wh5MiyE97H
+         6YEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757031694; x=1757636494;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fBOCDsTVsXvZiYWjM2EB9FRioYex5qflYlq5jGvQc6g=;
-        b=VJ5WDKUceGIF76cAF0TNXTCwbb8O4sQLt0qH9rrMNSznafl3cGgsami5X1MrqONu05
-         QsVxFr9VJTNIOSJqOhdJlF52X6mtt78tWFE7Hz11GLbD20aUj9xRHlyeLEx2EuEkOIqx
-         11WUrIudFPOFz9KsRmMtCQq/YNJxt6WYt24MdM8oMrpJkIbMDVSufxs7BNeCBqOs53Ow
-         uoH4Ed1B0YWx26TghDTC0fvjuPkfj1tfwa7131GHe9NCbc4SU0HKfNTrVmTQLX1rIJAS
-         6ph1LBdGbWVQs1b17b3FBqBACqUToZHki+a2GPHLC2Zaz8ITlSDmcIjQfxstBcYvyO62
-         4gMA==
-X-Forwarded-Encrypted: i=1; AJvYcCXoHIpytLdIM19lc/xYZMCVj4h5GTZfmEf5s2G3tt/OlJ/zOmH+3n/6EK8ucSIWZGptVgA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHMmKR8D/D6tE2bNi0WdrnRSYIXJiS26bAcKmunw03rhp6gTgS
-	mmUV7HS47LeIKC/JYjiVgcNURln2VVb/NbfVF8+6xFM2QTMPz3O+1aGx
-X-Gm-Gg: ASbGncv/qmxAXPJxa7RWE+vTDZPI10S8jqcD+ilqAyEskqnXFwCUT6/VqbukyT1zo/a
-	nPCUxCbi99IAWz/8kW9jQd2JfqhNPbAb66lVguighDf73WuPXffzUrVd9sXl5qLFSTuWas1eHPn
-	Mg5SpiSYtPQrAG4+gIov/6C+zFYnB3/jDDvGVthSGaUgo5U5kef51TK0xNZeF+Rbe3FknIR6Gl2
-	0Hoc9SQsAuwVE1HsZUPUSZnqz+HjdHDOb6U13EFF74+1pVqV++tIXh49PY3ZnosRzHJIhsxpQZ8
-	tlbxReLhiBhdg7mJ2F97Dii8cyBtx/Bpd0oSJora7t2Nd5kXR2YddJPh5b/uKpeANCoIZSASoPU
-	K0PeF0EJzmMbe2RpeiEg5ruK4e3wYgZWGiXpb/Gjz8JW3osaTTw==
-X-Google-Smtp-Source: AGHT+IFFCmxnqBPjR5R+MxDGtz8cqqott2wN0TpYZPb1KfLOHWe3JWyWSbJr8DKeImzZ0vVYzl1dyg==
-X-Received: by 2002:a05:690c:45c5:b0:723:8be3:a678 with SMTP id 00721157ae682-7238be3a833mr139624997b3.40.1757031694287;
-        Thu, 04 Sep 2025 17:21:34 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:3443:acb0:c14:892e])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-723a85aaac9sm25184927b3.72.2025.09.04.17.21.33
+        d=1e100.net; s=20230601; t=1757031958; x=1757636758;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yg03lhXSpSol7fR+xmaC89AbaDf7Lp5fMS4hkGOdFt0=;
+        b=BVlNTUM2YfA2HTt1ToGdClupvSKOFoneuElXMdfaTqqnoNxHqhrXOIOd1pn4CGREI2
+         aMlvmx0Os6k9NZyG+f4buWPfH1DVySlj9CXZBsSmcr1pC6CYLJdAQNn8SeFnNsV8eVg3
+         IWj/ktpgB1oUIVvm3jBZj35xv5d8MFAdDvzLTaM7/qpbbpjHzQ8PW6HGMm+9NSeEP8vW
+         kcJ45MDq2wggdijA6UM6E1iEOvmBYwCZGf5km3fJs0kO8d1uHJCyGCihcIO1S2BbTZCW
+         IsFMVFYP1tBwU08z8CaDUi0JdIho2y3uiDda+KtiaccEWjEqIxFmBrLIib58QtzuqC7n
+         lcoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWG9JexNiMYyT8572KXTP27t9hL/t7yTXrzSSbL5mRIAMAj3SBcf5OWzyz63pc11xS2A5o=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5l+pUZJNcx/VJAybsY3/FkmZv3+wJiA8Xmx2NddG4rJ7eZ3Ij
+	0ZicsEU7rn4IedD4RQTkjKbhKUp3BaGuvr8Lra1W1VNw7c+TxgITXdSl
+X-Gm-Gg: ASbGncvwqLsBXU7r/BWKjSdKoKxzX8R0FtgcWv0/+uBwglVi5zbaVcg3tH9CXy+IGgt
+	am6Qwqjv1lTR2+51j+zM4pibPC+k9bLfmltbUE9QhGE1dP+Bx3GP1m62/MWfD1tcJeOx9JQWZOA
+	eX/74p18CtFBnYMdx5iUiSykfDB7LcNBUU1NWyxhF+Y7+tZ10oyDKnj99r0EH5UxsCvs5UD5A4X
+	014XdVMUvtMbRn/Blis1ZM17hywAOAg1nDfxI2xE4a8I3KWgtddkKCpuX1QQakpX018Cyj8HjzL
+	7hs0IJZNhZmZyficKcgYm1QrIW9VJNXkqJtnR9ktAM2oDod3i/Ns9GvJ5MwgCR0/m4W2P1xT1fM
+	+pRcDz3taLLUREPA1pvh3beXArbQHFziRtGqSHw2bLp9PPWLcxz2IrLo2QpJYl6aURpxDZRerae
+	PvQw==
+X-Google-Smtp-Source: AGHT+IEXl3kdgF2MFIozRfn0qVBWWK2hRos9/I8fNMaSOK+huWYuSwmon32Y9htc/gFxMaSXvwAWCA==
+X-Received: by 2002:a05:6000:2288:b0:3cd:7200:e025 with SMTP id ffacd0b85a97d-3d1dd81e7b2mr17209233f8f.5.1757031957771;
+        Thu, 04 Sep 2025 17:25:57 -0700 (PDT)
+Received: from [192.168.0.4] (ptr-178-51-192-26.dyn.orange.be. [178.51.192.26])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3decf936324sm7748949f8f.9.2025.09.04.17.25.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Sep 2025 17:21:33 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        Thu, 04 Sep 2025 17:25:56 -0700 (PDT)
+Message-ID: <88ae6c7b-0a69-48bd-9e73-672331a22197@gmail.com>
+Date: Fri, 5 Sep 2025 02:25:55 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: What's cooking in git.git (Sep 2025, #02; Wed, 3)
-Date: Thu, 4 Sep 2025 20:21:23 -0400
-Message-Id: <B980B743-2034-45DA-8829-998034381BF3@gmail.com>
-References: <xmqq7byeb34a.fsf@gitster.g>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
-In-Reply-To: <xmqq7byeb34a.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] alloc: fix dangling pointer in alloc_state cleanup
+From: =?UTF-8?B?44OO44Km44OpIHwgRmxhcmU=?= <nouraellm@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc: =?UTF-8?B?44OO44Km44OpIHwgRmxhcmUgdmlhIEdpdEdpdEdhZGdldA==?=
+ <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <pull.2040.v4.git.git.1756941427825.gitgitgadget@gmail.com>
+ <pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
+ <20250904204932.GD30633@coredump.intra.peff.net> <xmqqjz2d7t2q.fsf@gitster.g>
+ <52fb3fea-4842-4532-8572-df41537da5f9@gmail.com>
+Content-Language: en-US
+In-Reply-To: <52fb3fea-4842-4532-8572-df41537da5f9@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> Le 4 sept. 2025 =C3=A0 12:21, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
-rit :
->=20
-> =EF=BB=BF"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:=
+By *s I am referring to *s_ so a sanity check with: if (!*s_) return;
 
->=20
->> =E2=80=A2 Incorporate Peff=E2=80=99s patch[2] if I=E2=80=99m up to the ta=
-sk
->> =E2=80=A2 Then mention on the whatchanged *hint* that they can make an al=
-ias to
->>  shadow it
->=20
-> Hmph, I am not sure if training users that they can always alias
-> anything away in order to keep deprecated names forever is a good
-> idea overall.  That way, we will ensure that newer users when
-> watching over shoulders of more old timers will have more chance to
-> get confused by unusual synonyms old timers would use without any
-
-They stand an equal chance to be confused by my unusual aliases and scripts :=
-p
-
-> advantage over the more modern ways they have learned at school,
-> other than the "mustle memory" of old timers.
-
-(Most of which I try to update to take account for modern Git CLI practice.)=
-
-
-> But if nobody is disturbed by that idea, then the above two would be
-> a reasonable way forward.
-
-Agreed. I suppose the question is how quickly the changes should land and re=
-lease: were you planning on trying to get these messages out as a fast .1 or=
- similar to help quell the noise more quickly? Or wait a while for the next n=
-ormal release, in which case baking a few more patches on top seems logical?=
+On 05/09/2025 02:07, ノウラ | Flare wrote:
+> No. I am confused here.
+>
+> > It is a programming error, period.  Do not silently return. That's
+> > not being defensive.  That is sweeping a problem under the rug.
+>
+> Yet
+>
+> > +    if (!s) return;
+>
+> However, I agree with Peff. After calling alloc_state_free_and_null(&foo)
+> Having foo == NULL is an expected behavior, especially since the function
+> Is designed to free the memory and null out the caller’s pointer using
+> A double pointer ensuring the helper is idempotent
+>
+> So, calling it again on the same pointer is safe because it simply
+> no-ops if the memory is already freed
+>
+> Regarding the sanity check, it should be:
+>
+> + if (!*s) return;
+>
+> The reasoning is the following:
+>
+> => s is the double pointer (the address of the caller’s pointer)
+> => *s is the actual pointer to the memory we want to free
+>
+> Thus, we check !*s to allow the function to safely handle already-NULL 
+> pointers
+> But if we instead checked !s then we would be testing whether the 
+> caller passed
+> A NULL double pointer which is a programmer error
+> So silently returning on !s would hide a bug
+>
+> Finally, I'd appreciate more explicit instructions.
+>
+> On 05/09/2025 00:26, Junio C Hamano wrote:
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> It's probably not worth going back and forth on this too much, but I
+>>> thought the happy medium was:
+>>>
+>>>    if (!s)
+>>>     return;
+>>>
+>>> That is, it is perfectly reasonable and friendly for it to be a noop to
+>>> free-and-null a NULL value (either never initialized, or already 
+>>> freed).
+>>> The overkill was worrying about whether somebody passed in a NULL
+>>> double-pointer. I.e., doing:
+>>>
+>>>    alloc_state_free_and_null(&foo);
+>>>
+>>> is reasonable and should be idempotent
+>> ... when foo == NULL, e.g., after alloc_state_free_and_null(&foo)
+>> has just successfully returned?
+>>
+>> I can by that argument with the reasoning in the updated log message
+>> below.  Does it good to everybody?
+>>
+>> Thanks.
+>>
+>> --- >8 ---
+>> From: ノウラ | Flare <nouraellm@gmail.com>
+>> Subject: [PATCH] alloc: fix dangling pointer in alloc_state cleanup
+>>
+>> All callers of clear_alloc_state() immediately free what they
+>> cleared, so currently it does not hurt anybody that the
+>> alloc_state is left in an unreusable state, but it is an
+>> error-prone API. Replace it with a new function that clears but
+>> in addition frees the structure, as well as NULLing the pointer
+>> that points at it and adjust existing callers.
+>>
+>> As it is a moral equivalent of FREE_AND_NULL(), except that what it
+>> frees has internal structure that needs to be cleaned, allow the
+>> helper to be called twice in a row, by making a call with a pointer
+>> to a pointer variable that already is NULLed.
+>>
+>> While at it, rename allocate_alloc_state() and name the new
+>> function alloc_state_free_and_null(), to follow more closely the
+>> function naming convention specified in the CodingGuidelines
+>> (namely, functions about S are named with S_ prefix and then
+>> verb).
+>>
+>> Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
+>> Helped-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>   alloc.c  | 10 ++++++++--
+>>   alloc.h  |  4 ++--
+>>   object.c | 26 ++++++++++----------------
+>>   3 files changed, 20 insertions(+), 20 deletions(-)
+>>
+>> diff --git a/alloc.c b/alloc.c
+>> index 377e80f5dd..533a045c2a 100644
+>> --- a/alloc.c
+>> +++ b/alloc.c
+>> @@ -36,19 +36,25 @@ struct alloc_state {
+>>       int slab_nr, slab_alloc;
+>>   };
+>>   -struct alloc_state *allocate_alloc_state(void)
+>> +struct alloc_state *alloc_state_alloc(void)
+>>   {
+>>       return xcalloc(1, sizeof(struct alloc_state));
+>>   }
+>>   -void clear_alloc_state(struct alloc_state *s)
+>> +void alloc_state_free_and_null(struct alloc_state **s_)
+>>   {
+>> +    struct alloc_state *s = *s_;
+>> +
+>> +    if (!s)
+>> +        return;
+>> +
+>>       while (s->slab_nr > 0) {
+>>           s->slab_nr--;
+>>           free(s->slabs[s->slab_nr]);
+>>       }
+>>         FREE_AND_NULL(s->slabs);
+>> +    FREE_AND_NULL(*s_);
+>>   }
+>>     static inline void *alloc_node(struct alloc_state *s, size_t 
+>> node_size)
+>> diff --git a/alloc.h b/alloc.h
+>> index 3f4a0ad310..87a47a9709 100644
+>> --- a/alloc.h
+>> +++ b/alloc.h
+>> @@ -14,7 +14,7 @@ void *alloc_commit_node(struct repository *r);
+>>   void *alloc_tag_node(struct repository *r);
+>>   void *alloc_object_node(struct repository *r);
+>>   -struct alloc_state *allocate_alloc_state(void);
+>> -void clear_alloc_state(struct alloc_state *s);
+>> +struct alloc_state *alloc_state_alloc(void);
+>> +void alloc_state_free_and_null(struct alloc_state **s_);
+>>     #endif
+>> diff --git a/object.c b/object.c
+>> index c1553ee433..986114a6db 100644
+>> --- a/object.c
+>> +++ b/object.c
+>> @@ -517,12 +517,11 @@ struct parsed_object_pool 
+>> *parsed_object_pool_new(struct repository *repo)
+>>       memset(o, 0, sizeof(*o));
+>>         o->repo = repo;
+>> -    o->blob_state = allocate_alloc_state();
+>> -    o->tree_state = allocate_alloc_state();
+>> -    o->commit_state = allocate_alloc_state();
+>> -    o->tag_state = allocate_alloc_state();
+>> -    o->object_state = allocate_alloc_state();
+>> -
+>> +    o->blob_state = alloc_state_alloc();
+>> +    o->tree_state = alloc_state_alloc();
+>> +    o->commit_state = alloc_state_alloc();
+>> +    o->tag_state = alloc_state_alloc();
+>> +    o->object_state = alloc_state_alloc();
+>>       o->is_shallow = -1;
+>>       CALLOC_ARRAY(o->shallow_stat, 1);
+>>   @@ -573,16 +572,11 @@ void parsed_object_pool_clear(struct 
+>> parsed_object_pool *o)
+>>       o->buffer_slab = NULL;
+>>         parsed_object_pool_reset_commit_grafts(o);
+>> -    clear_alloc_state(o->blob_state);
+>> -    clear_alloc_state(o->tree_state);
+>> -    clear_alloc_state(o->commit_state);
+>> -    clear_alloc_state(o->tag_state);
+>> -    clear_alloc_state(o->object_state);
+>> +    alloc_state_free_and_null(&o->blob_state);
+>> +    alloc_state_free_and_null(&o->tree_state);
+>> +    alloc_state_free_and_null(&o->commit_state);
+>> +    alloc_state_free_and_null(&o->tag_state);
+>> +    alloc_state_free_and_null(&o->object_state);
+>>       stat_validity_clear(o->shallow_stat);
+>> -    FREE_AND_NULL(o->blob_state);
+>> -    FREE_AND_NULL(o->tree_state);
+>> -    FREE_AND_NULL(o->commit_state);
+>> -    FREE_AND_NULL(o->tag_state);
+>> -    FREE_AND_NULL(o->object_state);
+>>       FREE_AND_NULL(o->shallow_stat);
+>>   }
