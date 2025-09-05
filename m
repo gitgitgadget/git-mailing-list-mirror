@@ -1,196 +1,123 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB6D220F3F
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 20:21:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F4A26D4E2
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 21:00:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757103719; cv=none; b=rpCsCjjjb5f4OLbruB0igCXn7O4CmUZNAHhtf1i2TAfZiwmh+lA3R5gz8G3v9Evhs3M8SwGorq333LAYfxrVbPx9VjyzD+ozZeoE/ndt3aql4nPoypZsIYQ7dVFMSnOzPwzfcMp4abyshHqFzECOqp9ugOUozjsXoeZ8yUEqpbI=
+	t=1757106018; cv=none; b=PaWzrL815Dfv80Fyccpy7C2WvMKMKxgsaIycMJgSA3IzTN+8rrCcF2/bOLfcFgB4E6cI/V4gt10pEykB5uuDBqa2EpjDWbNrLBfkikqaALFIYk4kxuiJGZsNEJq2xLFmyyMMxPhmAX6FPaISuPu/qqXE0eRFb9pG5fERnVAJmYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757103719; c=relaxed/simple;
-	bh=ZpFCjULqd90UQCVTAhGfm09tf4lRBDdo1/qF26OaxnQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hREqLw40z0J2oJheakwqW2YKyG/P/3O/2H+TGr7etBbtTuWPnrVP/vNcfqfVKKyX7mEVoiAzepHFLpUMOv23wrjPeuU4zEeoqeH2j7b9oTzRFpkR/n0InK0JSgrwXIfXLfQk/XaLIBFwDfkV1MvlugwIz/KH2QLv/Nf88RkJKuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=mjKoqbhV; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1757106018; c=relaxed/simple;
+	bh=vl++jd4B+HMLsklB0D+USHMs22hZZFi9ZuQitzJtTAs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=N6dFwYtyVXoyiRz+GlUQKkXIu32XQdrTtNMbtPLTXC/BQSpdxH23A29opkja7dMNJkTOm1HQUrsJON1jcYP3EruNmBzCWiv9pkZegFPf/HXF0+Cfjxq3qPMW8HHtpKLtJamFXWMEVRbZ0OUic8JIITrcuXtZ1NJVNPqdjvhklro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AozCPdi5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z+Mi5v57; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mjKoqbhV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1757103716;
-	bh=ZpFCjULqd90UQCVTAhGfm09tf4lRBDdo1/qF26OaxnQ=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=mjKoqbhVYga4p08ijDnoEWXiE9qXunfUk+5qopTBjKDoa3tCMrJ25lP2B6ml1zsOl
-	 LdM768Bh9t74vs5em573JVU5YfW82KlZhqrGnodkdrnKXhrVwiHr3RFPyaIKc4p/Jd
-	 2Zd5DaE8WwcHsCKk+y1lUgj5DOsASDl6JTRtBQiStk8Odsim59ufrDWyY/dj2OLY9H
-	 ezYkjdROEDX4TmYVl38/5bjguO7uS6z2SYEpAJZoKzkh0muClj9m8EnecgpnI17Zq4
-	 OuxAIoQ524dqcMOwOn5IPxRjSJ6fmwnaE6m8N6m0CJfwOlIa3pBU1MXoegqKRaUWgW
-	 SJapc0zmwfqaOO2Zy2FvaCPiAuV9npRmE/GL+hxe7m02aL3ghSzkUm0xRc7j+uPVGm
-	 LHodDFyNZCD7S5ldS/k7BLH9mFYXc/YBjS/kK+V4TQ1RIgEuRCDJNpfSBn+2JgjzOq
-	 8djYNx2+YfP6XIJo9uBP+bjygu3Wi5Gg+Be74Q/uXKiKKftdSEk
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f8f0:4bbe:8989:f575])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 16A1720100;
-	Fri,  5 Sep 2025 20:21:56 +0000 (UTC)
-Date: Fri, 5 Sep 2025 20:21:54 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AozCPdi5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z+Mi5v57"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1A519EC02BB;
+	Fri,  5 Sep 2025 17:00:15 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Fri, 05 Sep 2025 17:00:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757106015; x=1757192415; bh=jL6hk4oB6N
+	mQPShMcEfl3ax2iL+BSiGBh+SllloXWXY=; b=AozCPdi5Ms+ZSW2IClygef4MpX
+	KXm++46SXUCQt+v2OBIVzAG8UjeWADvJKPnq2MhV4aLzoigUyvINI7ieKjZ7SG76
+	PxT1KbisMDjatt+fWYJTSABrwKeqvX5wPEtFCWuZbhJGdxO9THEn2UwikXePUMEU
+	N+fulB2J18iJga2ulyJzgYTWiVuq4k7Mbi6EIpc73W50Y9/7xOYCNqL2pBbf1W4J
+	jRWN4K+hOuBQxAcHB4bIvhCTK9bvFD+cucqTY8itR37NQBLzQVNimzDhK2DnaYOt
+	Dd/R26jRbX2er9bm6i3zusiaAfTZ5eMEoV8Cr5IH5TGk+EERf4FxgLpwce1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757106015; x=1757192415; bh=jL6hk4oB6NmQPShMcEfl3ax2iL+BSiGBh+S
+	llloXWXY=; b=Z+Mi5v57BJcSxIpphfC2nxSmL4rXPiCHyz/1f9XkTyazNyXriF0
+	OmjvIIrCd9uiT9Hqv1YoITRvt3ccN+HVi0nRe5JWWZ1fHz2af3BYuzaJ1/XTdl6K
+	K6w2hp+PmNzDNRUPIqQvKIbEn7Laj3arrsNXArc9Vqlah+2wwUsPY4i9BwpRA0Lx
+	p2yL40UvN0iNdsVw4uLRzT2Akju2POY7Uc4IM8OlRP9unYQ7tO4azEVCUPo8EqIu
+	6wB7+IJgG05dXO76T+cJRThx9UzZOU+eNEzf77InxkGFz9c6VisZAPfujwou290p
+	Z+cAmuUnodZvsJRAzNqgqx7nqUBpLfysnYQ==
+X-ME-Sender: <xms:XU-7aCxYyHlVF1ydKN8MPcexHIb7CrE9czAm4gyGR4rAXfp8Q32x1g>
+    <xme:XU-7aO6C-Kpm0Xih_LXsGBlo24J5Ww8irrnR7GVX9YHTjX6D-PPsvNc5OwyN9rsm6
+    msOyTis6QXjcuPSMw>
+X-ME-Received: <xmr:XU-7aPdia39DImlBp4BUQAaeBNX5QZm5Y4RxriMPZ4dRHjXwZ2BVhmZsgt6vJ3Mh3e82OJ1I_1HNhVEtg0RxdjhncPSm976jNVTvNls>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelleduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohhnthgrtghtsehhrggtkhht
+    ihhvihhsrdhmvgdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhph
+    grshhtvgdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtgho
+    mhdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtoheptgholhhlih
+    hnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiies
+    ghgvnhhtohhordhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:XU-7aNEXAkRJ6OurFfQbMDylTNXcCzUN9xBRW01D3XSHwJJLmEOrNw>
+    <xmx:XU-7aH5JqbzYRyNIET7fmrjcqUXKfnquctZ5kSIYq6_ZyLJkYnCAYA>
+    <xmx:XU-7aIsGlYTDc_ecKiVt35HmarKMNjF6cuMHm4jP2LIHRIpGx37H7w>
+    <xmx:XU-7aD_p_si6Zf-AEztoDYyUqsZdr7RTyZkyTzyY2FacDriotsYycQ>
+    <xmx:X0-7aAgAfpwzglM7jgcIcvrDGEcCPAuqwj7ZWtwFXmN44MAcI0IhOR42>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 5 Sep 2025 17:00:13 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC v2 2/7] Makefile: introduce infrastructure to build
- internal Rust library
-Message-ID: <aLtGYlTXktuzxD0q@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  "Haelwenn (lanodan) Monnier"
+ <contact@hacktivis.me>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
+  Christian Brabandt <cb@256bit.org>,  Collin Funk
+ <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
+ Newren <newren@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
+ <pierre-emmanuel.patry@embecosm.com>,  Sam James <sam@gentoo.org>,  Taylor
+ Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC v2 7/7] ci: enable Rust for breaking-changes jobs
+In-Reply-To: <20250905-b4-pks-rust-breaking-change-v2-7-6939cbf4a0b8@pks.im>
+	(Patrick Steinhardt's message of "Fri, 05 Sep 2025 13:51:03 +0200")
 References: <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
- <20250905-b4-pks-rust-breaking-change-v2-2-6939cbf4a0b8@pks.im>
+	<20250905-b4-pks-rust-breaking-change-v2-7-6939cbf4a0b8@pks.im>
+Date: Fri, 05 Sep 2025 14:00:11 -0700
+Message-ID: <xmqq8qis399g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4c11t8uLHsMYShTs"
-Content-Disposition: inline
-In-Reply-To: <20250905-b4-pks-rust-breaking-change-v2-2-6939cbf4a0b8@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Patrick Steinhardt <ps@pks.im> writes:
 
---4c11t8uLHsMYShTs
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> index 3680446649..c718bd101a 100755
+> --- a/ci/run-build-and-tests.sh
+> +++ b/ci/run-build-and-tests.sh
+> @@ -9,7 +9,9 @@ case "$jobname" in
+>  fedora-breaking-changes-musl|linux-breaking-changes)
+>  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>  	export WITH_BREAKING_CHANGES=YesPlease
+> +	export WITH_RUST=YesPlease
+>  	MESONFLAGS="$MESONFLAGS -Dbreaking_changes=true"
+> +	MESONFLAGS="$MESONFLAGS -Drust=enabled"
+>  	;;
+>  linux-TEST-vars)
+>  	export OPENSSL_SHA1_UNSAFE=YesPlease
 
-On 2025-09-05 at 11:50:58, Patrick Steinhardt wrote:
-> Introduce infrastructure to build the internal Rust library. This
-> mirrors the infrastructure we have added to Meson in the preceding
-> commit. Developers can enable the infrastructure by passing the new
-> `WITH_RUST` build toggle.
+This had a slight interaction with other topics in flight that
+targets 3.0 boundary.  I believe the resolution I did was correct,
+but please double check for sanity.
 
-The idea here seems great and I'm fully on board=E2=80=A6
-
-> diff --git a/Makefile b/Makefile
-> index 555b7f4dc3..e7b3c8e57b 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -483,6 +483,14 @@ include shared.mak
->  # Define LIBPCREDIR=3D/foo/bar if your PCRE header and library files are
->  # in /foo/bar/include and /foo/bar/lib directories.
->  #
-> +# =3D=3D Optional Rust support =3D=3D
-> +#
-> +# Define WITH_RUST if you want to include features and subsystems writte=
-n in
-> +# Rust into Git. For now, Rust is still an optional feature of the build
-> +# process. With Git 3.0 though, Rust will always be enabled.
-> +#
-> +# Building Rust code requires Cargo.
-> +#
->  # =3D=3D SHA-1 and SHA-256 defines =3D=3D
->  #
->  # =3D=3D=3D SHA-1 backend =3D=3D=3D
-> @@ -918,6 +926,11 @@ TEST_SHELL_PATH =3D $(SHELL_PATH)
->  LIB_FILE =3D libgit.a
->  XDIFF_LIB =3D xdiff/lib.a
->  REFTABLE_LIB =3D reftable/libreftable.a
-> +ifdef DEBUG
-> +RUST_LIB =3D target/debug/libgit.a
-> +else
-> +RUST_LIB =3D target/release/libgit.a
-> +endif
-> =20
->  GENERATED_H +=3D command-list.h
->  GENERATED_H +=3D config-list.h
-> @@ -1387,8 +1400,12 @@ CLAR_TEST_OBJS +=3D $(UNIT_TEST_DIR)/unit-test.o
-> =20
->  UNIT_TEST_OBJS +=3D $(UNIT_TEST_DIR)/test-lib.o
-> =20
-> -# xdiff and reftable libs may in turn depend on what is in libgit.a
-> -GITLIBS =3D common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB=
-_FILE)
-> +GITLIBS =3D common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB)
-> +ifdef WITH_RUST
-> +GITLIBS +=3D $(RUST_LIB)
-> +endif
-> +# Other libs may in turn depend on what is in libgit.a.
-> +GITLIBS +=3D $(LIB_FILE)
->  EXTLIBS =3D
-> =20
->  GIT_USER_AGENT =3D git/$(GIT_VERSION)
-> @@ -1411,6 +1428,19 @@ BASIC_LDFLAGS =3D
->  ARFLAGS =3D rcs
->  PTHREAD_CFLAGS =3D
-> =20
-> +# Rust flags
-> +CARGO_ARGS =3D
-> +ifndef V
-> +CARGO_ARGS +=3D --quiet
-> +endif
-> +ifndef DEBUG
-> +CARGO_ARGS +=3D --release
-> +endif
-> +
-> +ifdef WITH_RUST
-> +BASIC_CFLAGS +=3D -DWITH_RUST
-> +endif
-
-=E2=80=A6but unfortunately, all of this code is above the `-include config.=
-mak`
-line, so if I set `WITH_RUST=3D1` in `config.mak`, it doesn't work: no
-`target` directory is created and `git version --build-options` says
-Rust isn't enabled.  (It does work if I specify `WITH_RUST=3D1` on the
-command line, though.)
-
-Might it be a better idea to place this with the conditional code
-farther down so it's properly honoured when configured in `config.mak`
-and friends?
-
-I am very pleased by the fact that cargo is quiet by default, though,
-and otherwise it seems to be well integrated into our build system.
-This patch seems smaller than I was expecting, which is nice.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---4c11t8uLHsMYShTs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaLtGYgAKCRB8DEliiIei
-geZeAQDzkis2mG+RURDs44C8pQlb3AWF6SFzaNrF9ke8Bq5SBwEA17IpDZl/81Qo
-W++L6O4WUn6uN2w633XplEFXvUaNhgQ=
-=0qmt
------END PGP SIGNATURE-----
-
---4c11t8uLHsMYShTs--
+Thanks.
