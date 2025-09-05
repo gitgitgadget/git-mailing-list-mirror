@@ -1,133 +1,175 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551E4169AE6
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:05:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B730222836C
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:26:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757099146; cv=none; b=Azb4nbqTsshywdBTMeCQuJdf+Tv99VyzDvxeps4ogdkT8IjQ7z5ezNdGuHqIaaQgVRJd62Ein22YCS/6+RpvyUET2v8vKb5gSbFvSleSfFhY/6ligfh7J/X2KeCBHksgWWXvHZK1xnJxrH/mJlRvN0hTVVwtImzYAIexqEMjuJg=
+	t=1757100382; cv=none; b=Z9kYcVdfzNTe7QPeJyqkflSubxT2JJ0PQ70PsRu1cdausi/wjbHGCjqc+A+704ZkpDu4EYiR7fbNKmR45P6PMP4qNiX6r1g70ncHRhMUE4S3vIEfHcVPeKTwbiHL/GdWQfbyP6ZdluDxGGs5F8QCoN1BIXEhQtL9yS7SgPPp8xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757099146; c=relaxed/simple;
-	bh=/UmDbXB2XcCVEVuya2ZJdS1lQdHxkLQlql1F7wiMFIg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=roSCJpdcIpDJkHmOm0OPaWzJBm3d0Ugm/zn8d16XANn4SxNs4TdMbNeblpNd4LvRhgLG5SAc4YGgPbqUrGYqeI279+OojJKRmewMxdFJGuTjPWsCcJEz7vIGaCW+h0sxn2qE8Bo3o+PmAS3yLMo5OAD+fzmZt2NzBU+bt/qIehs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LbyeeByj; arc=none smtp.client-ip=209.85.160.174
+	s=arc-20240116; t=1757100382; c=relaxed/simple;
+	bh=ueXQFzkHsE7PMfcyfqdQC2/oPyv2RiAO5Fr13yOCoJQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ci6oMm1cWHD4vn7phQL2x2euybHIjilSBszHgNRXONQNbtuJa9wDVRKGQpUFuXQwYrord3HFi7Zq7eSrAE9nkRJjoqRLkG7tbOOKecoUceXlO/G01W11YWCQB83WRN9jcAZO8fv8rCwVN+nWWZKw+MX7RojiPWA31fd0YqD5FGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E9hy94Yt; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LbyeeByj"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-4b38d4de61aso33213131cf.0
-        for <git@vger.kernel.org>; Fri, 05 Sep 2025 12:05:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E9hy94Yt"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-24af8cd99ddso32231905ad.0
+        for <git@vger.kernel.org>; Fri, 05 Sep 2025 12:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757099144; x=1757703944; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=f7RlUw3/cCW7TgoB3IIOk795QhV+F9Z0hfTm/yW3/AE=;
-        b=LbyeeByj+35UhDc7mZPuAzKNRgoZAPcWlkWAy14GGT15HoPyz26DJjgcOZfx4jfqFk
-         QgZzSpkZAWTzwhBtTw+hh4XeMtQ4qkg41NSk3YF2trE92yzYj4VKVNU7TbDQgfx6v1Gr
-         4weVIa1Fri7alypSgMyirpUb6ZwkfMiot3WtcveAGA7lh3z92ugShNWwKyKKIJBzpBGs
-         gGo0vMVSTcBG0asZ0djxVPr1FFWs0FbxVSV1LHOnfTzlh0eZWkQUkaHr0LTfdFdRwVx6
-         6+RVU33L0Uz65Cdpkj5307qs2Ft6Wp2UYJne1v+qWCoIu4qNqSBTEKqQSq9dUuEVvh/v
-         N6fw==
+        d=gmail.com; s=20230601; t=1757100380; x=1757705180; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qm/VvxEFtfHBf4wg558m+psoosH6pV3dwgZ5RkgZ9vQ=;
+        b=E9hy94Yt4ZejYyIdspNRDcvySCU3c1PoAY4I+ucocogdhGB3dDf2Y3acnPxfMDQuMu
+         omqS0naPWL1mSRO2oR8H7JHYIWKpEx5MOt0aPIOkmPrNorUvcHLKeI8CN1OCHMgREXY+
+         mBg3Tjs4JYQqDvt0VTrS5Y+Y82TftWblZl4Fzq0xKM634kIWTI3+SN6aUUjN0OSeDrwi
+         0he7TekALL8m2GzF0VoZahDCYNB9aUOukg59Ih8FQ42EGDFNjESAnyrzahTByHfLmFHn
+         zSpl19/oWzS6JITl7VUm+3L1bb9jKN0JxuNu106l139A5MQGEOhVM84EVLVuDG+EV6ip
+         IGMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757099144; x=1757703944;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f7RlUw3/cCW7TgoB3IIOk795QhV+F9Z0hfTm/yW3/AE=;
-        b=fIyGqg+FO5TPeMsgfa2X69Xk/XoC4O1OLMi2c8qtlIDPVw2B65ZPqShUfUF2GcYFVx
-         DwKQE0kTevCdsTxF97MiPZRle3zIHcsd2xE+jZPWMY5Ns+ocz3zpKlLioHLfdUeg88w/
-         eIh3Yyx14kdOOD7oO7b1zDpdbS8n7qGMZ8r95CfST83DpKUSFlLRuIZ0+bFcH3aACCYa
-         hA+4AyiRKgqgZBMBVCUmA2uQLiXlVOHScTfK5R8U3O54XY4KFodV/HwYmUFx/dUzemkH
-         +32cDiWpABq60xMJHZ20W/3Nj2TfH/sEmP2Eh7yLr/EcKmT4DAk5pYiOouqJ8cZYFsbU
-         I48Q==
-X-Gm-Message-State: AOJu0YyOd07HlpnxzOw1S/ueSPdX1SqasoRYeSFxrjo/NtasJf+PWeoF
-	uymF9dhR82k5jALqOguC8qds8akWUQ4fdok1K8gBxBSRC25WBGV2sqkR
-X-Gm-Gg: ASbGnctqV+mDPiJpS+v5t7mU6anURL33KuU73urS1NGSvEEbFsfCoVRHbuE3b8Y1giD
-	sUW9smwTFX+egStZNeXROJKjSzkn6HWdJI+3IOeWlDv92SzZDTdQH0KgvxbRfkYFuMKJCEWJWqF
-	KfWvxs0MbbDo1Kfgd9C5zzK2+j+FSTSoUfbn3/8d/ieOu9RHWuo1KyxkTNz30uRDBFooMnrgyJ5
-	QqKp6AFFt8aMndkg8RDDU/X+mOre0OD5FK4uv02m+YexFJMlsdz8rbISb+1OMqBhoZ5Wy1Ipiol
-	ZEcc8MO8Pa1L+skOwkvE3FzsaZ685tmDjg3zu0u82yaJGFN6b7a2RW6P/pDi9fMFVfa3q+j7Yld
-	p9ZCxYjyzUXGGlraBbIIsVi4KR9rP407iCmM=
-X-Google-Smtp-Source: AGHT+IEWvsHBBaj4lZLyds4mCp8P7N/TJAE+KTNQJ/fRBCwQgYJP5BoTyw1nuOJkB0TD2+TTCqYBXw==
-X-Received: by 2002:a05:622a:4d4c:b0:4b5:f6fa:83b6 with SMTP id d75a77b69052e-4b5f6fa8763mr3235171cf.84.1757099144057;
-        Fri, 05 Sep 2025 12:05:44 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.70.92])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-80af4b3bda6sm507399185a.39.2025.09.05.12.05.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Sep 2025 12:05:43 -0700 (PDT)
-Message-ID: <4c6468d6-02c1-4c79-8ec7-4d250341ca81@gmail.com>
-Date: Fri, 5 Sep 2025 15:05:42 -0400
+        d=1e100.net; s=20230601; t=1757100380; x=1757705180;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qm/VvxEFtfHBf4wg558m+psoosH6pV3dwgZ5RkgZ9vQ=;
+        b=nkOeSrg5AapPO1cDwDMgb5ziQ3RqJbo2cOkvWPgpFK8n3gVghwoW60t3XWl6RN696R
+         pnFf6QNjSSTuT+kD9z9hC87y2n7Y8DZM3YyfJZb91YgWPza0eVUPsAu8zSUYHfg3CTtx
+         jjPgEknVKLNzqGaOkNaI4aO+BOC1JfN3Rf9UFFu9UlXD+Jh/RLs6SgFEb/dqfJKUrp3o
+         nXfjdmlfRP1MHc3mjNh2QxdKcwq9aVDnLE6EkHMnw0KR6gWg2XkRbE0fJhPmM75ZXjkz
+         dMTqmuIGxXGhNAwI91HdIWSBxUD8TEIiy/59XjFwfmLXEDFeXu3lzG86i3RaiLZqOqn1
+         zuRQ==
+X-Gm-Message-State: AOJu0YwqCwPdouMZz+gf1EXvt7a+cwlkQjL2mUFFPXm2fBPNZgIsy6jp
+	2Jb/iP4PIa+z0Rpsml9fN59IghqUiM0YtIrwHNG3ezRhNM/0ek7k0Sztie7BZg==
+X-Gm-Gg: ASbGncu/Ff6WifngxVPQ5KEz0SCzBoiXnkdJ03B/mAwPRGEusxaX2tPliIX3t/9vAFm
+	HXLyv7x1lWLgkEWHqwTXerwEtKMSpOHBK8WerCUjdH3kB8LW13nLoaZ45LQTSpQKQNnowLSDMve
+	mjqMWWO8UhTHog3YiHgTWJ0YhPEBISZhYRt3ppk4MRhxIP7t/idzs7hI31rRU/36niLLYYY0wWg
+	uAT4xluSgqCZtd4WPdeNlGMdjzUxaYqsTspyEYKJ98EdnNcGA5hdi0F2cAvTJwd/9U8sBuQuumr
+	ezhdAKJSRUkZSxLjjrI27GX3Di4BkOFVUApilEUipunBY/SuG0dP4HohmJsKxYrMlXfmSFRibZp
+	ikvy9iy7Lb4Cfw+aj3Iew5TUdR1Y1UsWo5MQ9
+X-Google-Smtp-Source: AGHT+IHz5OLsrl/F+ekCcCWGr+JaFaxEseb2l4wK1ytca2is6gPeOHaeJqXxfOkWLTSfS1KX3cWjmA==
+X-Received: by 2002:a17:902:f78f:b0:24b:153f:7722 with SMTP id d9443c01a7336-24b153f792amr179163255ad.43.1757100379420;
+        Fri, 05 Sep 2025 12:26:19 -0700 (PDT)
+Received: from [127.0.0.1] ([52.159.243.166])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24cb01df2c0sm62965945ad.86.2025.09.05.12.26.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Sep 2025 12:26:18 -0700 (PDT)
+Message-Id: <pull.1965.v3.git.1757100378.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
+References: <pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 05 Sep 2025 19:26:12 +0000
+Subject: [PATCH v3 0/6] midx-write: fix segfault and do several cleanups
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] midx-write: use uint32_t for preferred_pack_idx
-To: Patrick Steinhardt <ps@pks.im>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com
-References: <pull.1965.git.1756402795.gitgitgadget@gmail.com>
- <pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
- <2290e27ded03866cb816be5fb6e08b83a75a6f07.1756589007.git.gitgitgadget@gmail.com>
- <aLgVOa96grWC3G0Q@pks.im>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <aLgVOa96grWC3G0Q@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    me@ttaylorr.com,
+    Patrick Steinhardt <ps@pks.im>,
+    Derrick Stolee <stolee@gmail.com>
 
-On 9/3/2025 6:15 AM, Patrick Steinhardt wrote:
-> On Sat, Aug 30, 2025 at 09:23:25PM +0000, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <stolee@gmail.com>
->>
->> midx-write.c has the DISABLE_SIGN_COMPARE_WARNINGS macro defined for a
->> few reasons, but the biggest one is the use of a signed
->> preferred_pack_idx member inside the write_midx_context struct. The code
->> currently uses -1 to indicate an unset preferred pack but pack int ids
->> are normally handled as uint32_t. There are also a few loops that search
->> for the preferred pack by name and those iterators will need updates to
->> uint32_t in the next change.
->>
->> For now, replace the use of -1 with a 'NO_PREFERRED_PACK' macro and an
->> equality check. The macro stores the max value of a uint32_t, so we
->> cannot store a preferred pack that appears last in a list of 2^32 total
->> packs, but that's expected to be unreasonable already. This improves the
->> range from 2^31 already.
-> 
-> Tiny nit: the last sentence reads a bit funny. Maybe something like
-> this?
-> 
->     Furthermore, with this change we end up extending the range from
->     2^31 possible packs to 2^32-1.
+I was motivated to start looking closely at midx-write.c due to multiple
+users reporting Git crashes in their background maintenance, specifically
+during git multi-pack-index repack calls. I was eventually able to reproduce
+it in git multi-pack-index expire as well.
 
-That is better.
+Patch 1 is the only change we need to fix this bug. It includes a test case
+that will fail under --stress with SANITIZE=address. It requires creating
+many packfiles (50 was not enough, but 100 is enough). As far as I can tell,
+this bug has existed since Git 2.47.0 in October 2024, but I started hearing
+reports of this from users in July 2025 (and took a while to get a
+dump/repro).
 
->> @@ -1040,7 +1042,9 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
->>  	struct hashfile *f = NULL;
->>  	struct lock_file lk;
->>  	struct tempfile *incr;
->> -	struct write_midx_context ctx = { 0 };
->> +	struct write_midx_context ctx = {
->> +		.preferred_pack_idx = NO_PREFERRED_PACK,
->> +	 };
->>  	int bitmapped_packs_concat_len = 0;
->>  	int pack_name_concat_len = 0;
->>  	int dropped_packs = 0;
-> 
-> Why is this change needed? We didn't previously initialize
-> `.preferred_pack_idx = -1` either.
+The remaining patches are cleanups based on my careful rereading of
+midx-write.c. There are some issues about error handling that needed some
+cleanup as well as a removal of the DISABLE_SIGN_COMPARE_WARNINGS macro.
 
-I think the previous lack of initialization was incorrect. It happened
-to work because it became initialized to -1 later _or_ its value of
-zero was implicitly used when searching for a preferred pack.
 
-I thought it prudent to set this value as the default instead of
-implying that the 0th packfile was preferred.
+Updates in V3
+=============
 
-Thanks,
--Stolee
+ * Use test_grep over grep.
+ * Translate an error message.
+ * Clarify a commit message.
 
+
+Updates in V2
+=============
+
+ * A stale comment to an unsubmitted version of the test is removed.
+ * More cases needing open_pack_index() are patched.
+ * Typos fixed.
+ * A new patch assumes error and sets result to zero only on the few
+   successful paths.
+
+Thanks, -Stolee
+
+Derrick Stolee (6):
+  midx-write: only load initialized packs
+  midx-write: put failing response value back
+  midx-write: use cleanup when incremental midx fails
+  midx-write: use uint32_t for preferred_pack_idx
+  midx-write: reenable signed comparison errors
+  midx-write: simplify error cases
+
+ midx-write.c                | 134 +++++++++++++++++-------------------
+ t/t5319-multi-pack-index.sh |  22 +++++-
+ 2 files changed, 86 insertions(+), 70 deletions(-)
+
+
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1965%2Fderrickstolee%2Fmidx-write-cleanup-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1965/derrickstolee/midx-write-cleanup-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1965
+
+Range-diff vs v2:
+
+ 1:  e02a444315 = 1:  e02a444315 midx-write: only load initialized packs
+ 2:  a1dd3ed874 ! 2:  1e5f43a417 midx-write: put failing response value back
+     @@ t/t5319-multi-pack-index.sh: test_expect_success 'load reverse index when missin
+      +		git cat-file --batch-check="%(objectsize:disk)" <tip &&
+      +
+      +		test_must_fail git multi-pack-index write 2>err &&
+     -+		grep "could not load pack" err
+     ++		test_grep "could not load pack" err
+       	)
+       '
+       
+ 3:  c4f75cca09 = 3:  414ae51024 midx-write: use cleanup when incremental midx fails
+ 4:  2290e27ded ! 4:  b113b3f012 midx-write: use uint32_t for preferred_pack_idx
+     @@ Commit message
+          For now, replace the use of -1 with a 'NO_PREFERRED_PACK' macro and an
+          equality check. The macro stores the max value of a uint32_t, so we
+          cannot store a preferred pack that appears last in a list of 2^32 total
+     -    packs, but that's expected to be unreasonable already. This improves the
+     -    range from 2^31 already.
+     +    packs, but that's expected to be unreasonable already. Furthermore, with
+     +    this change we end up extending the range from 2^31 possible packs to
+     +    2^32-1.
+      
+          There are some careful things to worry about with initializing the
+          preferred pack in the struct and using that value when searching for a
+ 5:  35302f5228 ! 5:  7c68f2535c midx-write: reenable signed comparison errors
+     @@ midx-write.c: static int write_midx_internal(struct repository *r, const char *o
+       	 */
+       
+      +	if (ctx.num_multi_pack_indexes_before == UINT32_MAX)
+     -+		die("too many multi-pack-indexes");
+     ++		die(_("too many multi-pack-indexes"));
+      +
+       	CALLOC_ARRAY(keep_hashes, ctx.num_multi_pack_indexes_before + 1);
+       
+ 6:  7be25cf534 = 6:  224be4ee5c midx-write: simplify error cases
+
+-- 
+gitgitgadget
