@@ -1,170 +1,238 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6941D5CC9
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 13:23:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A7F285CB2
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 13:38:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757078609; cv=none; b=SEuQYmk0vXxlm+lbjLLHpUdQ/L+B+opyp5Y6bOYcXceUqgEgb/NdCdqNDnQNA6RKg1GfJaH1bF2f1EzlLa6ZhcPHwVA9RNrC+VUpZlkzvk0GwzspeqgNQdqERBdlIQkS0LFS0pJSl68Z8CDgdAZe6sU/j6TGACmS9m4QcIvQbLM=
+	t=1757079499; cv=none; b=Ms5jYQW4bzWFatc/FnucxYHnhnjjor+kP6S2FxIxg6dpf5XDDRAHq3beH/ehQmY/ngSn6LmwVTeWT2m79MUfXPHAmuCWYXTOCppQ68bCI//HN6Hp6KAXUz20aFgUlLQxL0ACV8++l84w/5DXX4HMfoEeZUlk8v839gUz2JSBWEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757078609; c=relaxed/simple;
-	bh=BJWdR67NS5CpO0IgkIvPrXJkPPt/TnA3qhF8JUuyyz0=;
+	s=arc-20240116; t=1757079499; c=relaxed/simple;
+	bh=C7hvp5uho0mDMj5QUzw8u9sWNoBK72qHE54fjAZBY/E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tJPrUat30noxW+Ny+sA8OZnwGgQEitx6ifokf1d7GkSRnbuiPRNnLqX/MfPVBrVbvx0SKCewkoXimSHSc+x8uKhfXqviwTSiF1Vaq4xuinauU7B8YK8MPcWYbazUCHWuuYe3oEYZxYlPiTG1e3AG9DHzU+ZazNmjnpAGj7igydc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IpynS/BP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m3yrLFWy; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=ThEfWBpyGd7h6KRbapO30P8/EMDcPx2xEVKmcGPM6xW3aX41rUxxdWu7zGggYnS1raFU0p0gDJVrkaKiHJVCyStqAf7clt7GzEIXvBpJYFD0wIlA9oDJCAzUbEr+aXCsGAq7UvgFTCv+ayZVD24N0oPnVJqzAjU1zDMZs67bOE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Jz5ZPshB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZivVBJnV; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IpynS/BP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m3yrLFWy"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id AF6BAEC0207;
-	Fri,  5 Sep 2025 09:23:26 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 05 Sep 2025 09:23:26 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Jz5ZPshB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZivVBJnV"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7D51E14003E0;
+	Fri,  5 Sep 2025 09:38:16 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Fri, 05 Sep 2025 09:38:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757078606; x=1757165006; bh=cSL4PNN+M3
-	VgwGAP/1e6epMUasVypNJbJL6ievpQgog=; b=IpynS/BPrflpoUbdhwVsFo0WNp
-	oxyQr0e1wYhqkY/+UgXRKE/3rfMzy65ZC65ytbnQQcsReOTATzKbo9SWXh/fRLPl
-	Ofw1xzbSi3GYMTW6jOWiaDxKE4QmTDnY+P1jumSGzDDswlXDxuublkdi/ZJMk7ZG
-	zmgyWeZIdgIZveKoAn9pdTgDFStnXEVVUXqRSi6NL+oEhHmq2XEkcj5A4zRhzO3g
-	ZKtP8SLGPmyRIj4J/1g9xmYRR/P8jNKpZt4uY4QApt3QDfmJJuln/Vf8XhTXUCJh
-	k55gNRKeJBmBSoINz/grzFpfEZuerZFZq/E3cr38w+qmp0AsbGSvhlz8w6sg==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757079496;
+	 x=1757165896; bh=ajaiFkBKHUpinaUmnFNbUuyFwIiVYofRDdcGFBJApyQ=; b=
+	Jz5ZPshBdrZCQYuX1RhsUapyPlbFoakvlWav3fE/lqaIKVkLZut/px1H1nX12G9v
+	uZrhPg2yikeTL+nblBCM5LUOGQkLhjAz3Tq+uuHbpZNsYHcp9r2M1Q6qEPC+aWtr
+	Fuy6vV+MO3jjFivlD1XVI0/xehlYVmp1la1x2j9Ah6yeXMoEMFcHgSlTl83tHGZ0
+	Io7bezrWmgnkCl/qOQbbVGq8PjSrnK/5KqawuRZ2NbtyOfKvEjcWOpkrNEsOtwla
+	zlBg20/LHhD5HwhqgEn+EcUtXFEzoGp/ipDnaznNhhiFd5WDp/YJqLlaDCVCdb61
+	cl+5Fm4siboipOFPXb2Ifw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757078606; x=1757165006; bh=cSL4PNN+M3VgwGAP/1e6epMUasVypNJbJL6
-	ievpQgog=; b=m3yrLFWyLigPX6W3Ip4Icf3bTg3nS4FBcCr4LjeHNeq7z8oZkDD
-	WCPuiS+F82C5OrUkztVeWSc9FoH8B0fkOdtqqbS4QsW4cm/R06v68yF/XDIT8rgD
-	H8JYwqAGcAkrduGPbxF8aeHZXuijmMai6vzXfe5P0GnrzBiIK+e8ZPyznFmimHs5
-	ld8b7j+C9Skmlex/Ta+3rGNhaam8GTeFzt0kzUXrkBEDeYKQRU15SRlVHgGEMTG6
-	AgIWQbNv4X0rRfmMfyVYa8gfyWrGVol29IJrJO9DVanLGv9oRuqhKtM6HgbUYP9M
-	0nQMPixZ7Hfh6zKUOPWr85iA8/oDPH2C74A==
-X-ME-Sender: <xms:TeS6aNvmqzoHAV4TnDhhio0Lde_z7YUXysk0vTPLMLGOk0JFVJxNwg>
-    <xme:TeS6aJ_yP4-9JsuCbyWPqpZSaN7_z98_otnZubMWeALlgq5gNRWmBQfCfgc_KCI9T
-    S4deFUoVq4MJ8V-0g>
-X-ME-Received: <xmr:TeS6aJTO2sSjnWD87YwpwIK954jHfJEAdu6ittqGLhqa7TFMtF0KzJ7-nefneXV317m_Z73YJRl8R2QuoHHeKx0Wc62U-wV6h77RcFahoodN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeltddtucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757079496; x=
+	1757165896; bh=ajaiFkBKHUpinaUmnFNbUuyFwIiVYofRDdcGFBJApyQ=; b=Z
+	ivVBJnVhIE5ja8zWioMPW9wY/OFE869pMGEQYKgDyLpgycSGacsosp8F/PwK1lFq
+	jLmq0KhKp1GsWxzi8nqy/bAuZ4+W+Xyn6sSIhitFrCwLDrolEhY7v/PxVZFj2aZK
+	f8FKWC9TGFspfKufUg9uXWpUIC0blgilBP80xuNkWhWiEiUEyEyDKDdp3Nx1KlUc
+	+VklWegQ7TcG9vmJcTAqHHhm/Gh59IOSDslIc5sQUbArwxp85HsLg+GDAYzdaJS1
+	cMPou5Lzvvoim7xjly8vAYod8IOj4RFLFRKOjmei50OxE1tpHiuQyTLmKDvNcyYU
+	OtNKb7IZJeEzlDSYe4GXg==
+X-ME-Sender: <xms:x-e6aLy6FC3wEbtDb8qvOnEhlkde1M5LEIvFXXsIibZ7vPcE7YgHVg>
+    <xme:x-e6aD7ay1_ykSfyMtBzYcj3ZkfYBs29NNqnXSlaGsZCU74PjaZAZZhP5bd8nbkVj
+    bixm3WyflHcyQZBrw>
+X-ME-Received: <xmr:x-e6aAdwmTtVNlTdV3vzu7F4xMS-rukS2g-F4uKEY8CsK5dG5P79aLz4y7DLcRHpPzWBjbYqXWnOneYeUqhXpxsHx6-Tso6SWgMlQE4wyrEG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeltddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
-    ekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himhdpnhgspghrtghpthhtohepvdefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopegtohhllh
-    hinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdif
-    ohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopegtsgesvdehiegsihhtrd
-    horhhgpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhssggvtg
-    hkvghrsehnvgigsghrihgughgvrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhr
-    rhdrtghomhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrgh
-X-ME-Proxy: <xmx:TeS6aHCJLf3-r18NsNvuv6hd50VtGO4KRHMmWspmee9V-GXBS-4Fxw>
-    <xmx:TeS6aCYYb4uaMDLjrGUBV-8hejwrguF6vaEeffxtzi8xZRTattaasQ>
-    <xmx:TeS6aAJ9M71U82JvEns3EKqY_RMU6XHAPHsf4Y7gZT2s_jQU7yzb2A>
-    <xmx:TeS6aL3VttdLP_7tOC_Pam7U6wnS-RuPyyBs4Uphe6fROrTU-Tny5w>
-    <xmx:TuS6aM6vlUAuUrw2yenC1xfVDH6Xncshtb_k-quwasJ0f3J2h6sXl01t>
+    epfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    dvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeduiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehsrghmsehgvghnthhoohdrohhrghdprhgtphhtthhopegtsgesvdehiegsihht
+    rdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    mhhhrgduleelfeeslhhivhgvrdguvg
+X-ME-Proxy: <xmx:x-e6aKEHGq4Na5bBnX8PY4MAN276OjgHhTejrV8iIGQQujfDBC56tQ>
+    <xmx:x-e6aA5FD97463nPSwYRbolRxbCKvhdvMjDII-0M4mkVAVOqx8BHLQ>
+    <xmx:x-e6aNuCxCUjoKmePwgwzs3AXMFH_PlHQ3Tkb-hkA2f1ZPE5_Qal7w>
+    <xmx:x-e6aE-3pg0zOm9NjnPAWWrrIharE--yET6fpw99MKZH4vuejHPK5w>
+    <xmx:yOe6aPUBX34kThSCPvR1bBtDtTprK-6vdI-lnlza4_wYE02M9VfJkY4U>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Sep 2025 09:23:22 -0400 (EDT)
+ 5 Sep 2025 09:38:13 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ccd98446 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 5 Sep 2025 13:23:20 +0000 (UTC)
-Date: Fri, 5 Sep 2025 15:23:17 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 90a938b5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 5 Sep 2025 13:38:12 +0000 (UTC)
+Date: Fri, 5 Sep 2025 15:38:08 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: Elijah Newren <newren@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	rsbecker@nexbridge.com,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	Christian Brabandt <cb@256bit.org>,
-	Eli Schwartz <eschwartz@gentoo.org>,
+To: Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>
+Cc: git@vger.kernel.org,
 	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-	Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>,
-	Mike Hommey <mh@glandium.org>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
 	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
-Message-ID: <aLrkRS_EuGN9FfVE@pks.im>
-References: <aK9mx2XemppIaKVI@nand.local>
- <xmqqh5xszf91.fsf@gitster.g>
- <aLbSA5KsBdD4wW_B@pks.im>
- <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
- <aLfU5sEa-RE3X4G2@pks.im>
- <aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net>
- <aLl6iFXeAvL_hvqR@pks.im>
- <CABPp-BFNoLC+TdtuEq5Nx+VcFJ-WFga2r0E+eq=fFaaCN_sRGg@mail.gmail.com>
- <ada227ec-94aa-4563-800e-05c116a361a8@gmail.com>
- <ba386547-10e0-45e2-95ad-c47e84919abf@gmail.com>
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC v2 5/7] BreakingChanges: announce Rust becoming
+ mandatory
+Message-ID: <aLrnwOGKaAjLj0Bo@pks.im>
+References: <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
+ <20250905-b4-pks-rust-breaking-change-v2-5-6939cbf4a0b8@pks.im>
+ <DB9P250MB0692264976781C194B7D6194A503A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ba386547-10e0-45e2-95ad-c47e84919abf@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <DB9P250MB0692264976781C194B7D6194A503A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
 
-On Fri, Sep 05, 2025 at 02:14:43PM +0100, Phillip Wood wrote:
-> On 05/09/2025 11:31, Phillip Wood wrote:
+On Fri, Sep 05, 2025 at 02:45:46PM +0200, Matthias Aßhauer wrote:
+> On Fri, 5 Sep 2025, Patrick Steinhardt wrote:
+> > Over the last couple of years the appetite for bringin Rust into the
+> > codebase has grown significantly across the developer base. Introducing
+> > Rust is a major change though and has ramifications for the whole
+> > ecosystem:
 > > 
-> > I would like us to adopt rust but I am concerned about the implications
-> > for platforms without rust and think we should give some notice in the
-> > form a clear announcement in the release notes once we have a concrete
-> > plan. That plan should include a decision on what commitment we can
-> > realistically offer with regard to security updates for platforms
-> > without a rust compiler so maintainers on those platforms have a clear
-> > idea of how long they will be supported.
+> >  - Some platforms haven't yet been able to implement a Rust toolchain,
+> >    even though it is possible in theory.
+> > 
+> >  - Some platforms don't have any support for Rust at all.
 > 
-> Here's what such an announcement might look like
-> 
->     This release introduces an optional dependency on rust that is
->     enabled by default. Platforms without a rust compiler can continue
->     to build git by passing NO_RUST=1. In six months time we plan to
->     make rust mandatory for building git. From that point git 2.x.y (the
->     last version that can be built without rust) will continue to
->     receive security updates for three years.
-> 
-> To me the important elements are:
-> 
-> 1) There is a short period where rust is optional. This allows
->    (i) Distributors on platforms without a rust compiler time to notify
->        their users that in the future they will only be able to offer
->        security updates.
->   (ii) Distributors on platforms with a rust compiler time to adjust
->        their build procedures to include rust.
->  (iii) The git project time to gain experience of using rust and writing
->        the necessary bindings while building with it is optional.
-> 
-> 2) Rust is enabled by default so platforms without a rust compiler are
->    made aware of the problem but have an easy way to continue to build
->    git while rust is optional.
-> 
-> 3) There is a period of a small number of years where we continue to
->    provide security updates for a version of git that can be built
->    without rust. This is intended to  allow a realistic time for
->    distributors on platforms without a rust compiler to port one or make
->    other arrangements for providing future security updates without
->    placing an undue burden on the project to provide security updates
->    for niche platforms indefinitely.
+> What's the difference between these two kinds of platform? It should be
+> theoretically possible to build rust tooling for all of them, right?
 
-Something like this is part of the BreakingChanges document I'm
-proposing in [1]. I think we should also highlight this upcoming change
-in the next release notes, with a pointer to that document.
+The first platform is something where Rust just hasn't been wired up
+yet. This involves for Cygwin, or the Darwin ports of Gentoo's portage
+tree. Rust is available for those platforms in theory, but in practice
+it's not there yet.
+
+The second platform is where there is no Rust compiler available at all.
+So for example NonStop, Intel Itanium, Alpha.
+
+I'll try to clarify this in the next version.
+
+> > diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
+> > index f8d2eba061..dbb15b6a57 100644
+> > --- a/Documentation/BreakingChanges.adoc
+> > +++ b/Documentation/BreakingChanges.adoc
+> > @@ -165,6 +165,42 @@ A prerequisite for this change is that the ecosystem is ready to support the
+> > "reftable" format. Most importantly, alternative implementations of Git like
+> > JGit, libgit2 and Gitoxide need to support it.
+> > 
+> > +* Git will require Rust as a mandatory part of the build process. While Git
+> > +  already started to adopt Rust in the Git 2.52, all parts written in Rust are
+> > +  optional for the time being. This includes:
+> > ++
+> > +  ** Subsystems that have an alternative implementation in Rust to test
+> > +     interoperability between our C and Rust codebase.
+> > +  ** Newly written features that are not mission critical for a fully functional
+> > +     Git client.
+> > ++
+> > +These changes are meant as test balloons to allow distributors of Git to prepare
+> > +for Rust becoming a mandatory part of the build process. There will be multiple
+> > +milestones for the introduction of Rust:
+> > ++
+> > +1. Initially, with Git 2.52, support for Rust will be auto-detected by Rust and
+> 
+> Support for Rust will be detected by Rust? Should that say "by Meson"?
+
+Ah, yes.
+
+> > +   disabled in our Makefile so that the project can sort out the initial
+> > +   infrastructure.
+> > +2. In Git 2.53, support for Rust will be made mandatory in case Git is compiled
+> > +   with breaking changes. Breaking changes can be enabled for Meson by saying
+> > +   `meson configure -Dbreaking_changes=true` and for Makefiles via `make
+> > +   WITH_BREAKING_CHANGES=YesPlease`. It will still be possible to compile with
+> > +   breaking changes, but explicitly disable Rust.
+> 
+> Mandatory, but not mandatory? opt-out?
+
+True, this reads a bit awkward.
+
+> > +3. In Git 2.54, both build systems will default-enable support for Rust so that
+> > +   builds will break if Rust is not available on the build host. The use of Rust
+> > +   can still be explicitly disabled via build flags.
+> 
+> I assume you mean that we will default to building with Rust, even when
+> building without breaking changes, but I feel like the wording could be more
+> explicit.
+> 
+> Assuming packagers read this when 2.52 is released, 2.54 would give them
+> roughly 16-26 ish weeks of a heads up, assuming our typical 8-13 week
+> development cycles.
+
+Ok.
+
+Does this revised version of the plan read better to you?
+
+    1. Initially, with Git 2.52, support for Rust will be auto-detected by Meson and
+       disabled in our Makefile so that the project can sort out the initial
+       infrastructure.
+    2. In Git 2.53, support for Rust will be enabled by default in case Git is
+       compiled with breaking changes. Breaking changes can be enabled for Meson by
+       saying `meson configure -Dbreaking_changes=true` and for Makefile-based
+       builds via `make WITH_BREAKING_CHANGES=YesPlease`. It will still be possible
+       to compile with breaking changes, but explicitly disable Rust.
+    3. In Git 2.54, both build systems will default-enable support for Rust even
+       when breaking changes aren't enabled. Consequently, builds will break by
+       default if Rust is not available on the build host. The use of Rust can still
+       be explicitly disabled via build flags.
+    4. In Git 3.0, the build options will be removed and support for Rust is
+       mandatory.
+
+> > +4. In Git 3.0, the build options will be removed and support for Rust is
+> > +   mandatory.
+> > ++
+> > +You can explicitly ask both Meson and our Makefile-based system to enable Rust
+> > +by saying `meson configure -Drust=enabled` and `make WITH_RUST=YesPlease`,
+> > +respectively.
+> > ++
+> > +The Git project will declare the last version before Git 3.0 to be a long-term
+> > +support release that is maintained until alternate Rust backends like gcc-rs are
+> > +able to build Git. The Git project may need to rely on distributions to help
+> 
+> Do we want to commit to promising support until gccrs is ready? What if
+> gccrs ends up abandoned? Or takes an unexpectedly long time to reach a stage
+> where it can build Git? It might make sense to give this LTS release a time
+> limit instead, or in addidtion.
+
+Yeah, I wasn't quite clear on that one, either. An alternative:
+
+  - We will maintain the LTS release for 8 release cycles, which equates
+    to roughly two years. It sounds like a lot, but recent security
+    releases have stretched quite far into the past.
+
+  - If there are still dependents after these two years we will hand
+    over maintainership of the LTS branch to dependents. So they will be
+    responsible for the backporting.
+
+This really only is a suggestion though. I'm especially waiting for
+Junio's feedback here to see whether he thinks that this is a reasonable
+thing to do.
 
 Patrick
-
-[1]: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
