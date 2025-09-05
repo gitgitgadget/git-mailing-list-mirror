@@ -1,187 +1,245 @@
-Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazolkn19011025.outbound.protection.outlook.com [52.103.32.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767F4244694
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 08:31:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.32.25
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757061106; cv=fail; b=eZbDcHXGsIbzx7gyJ7r8At+Rri5/D3g/6sZdNG+/MhFWsVsYn2mtFkEIkDEUxc0soFfudxka0iuVXWFRWq/nY9PM5Zp0uZRaO7iwneseN3hwvZgeFPNZHK9f4f688EtsCqTdonJ2iqnwJH6BW0+47h7CO3aP+sOlyoNERzA/hYg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757061106; c=relaxed/simple;
-	bh=1eGQyh+joN0Un3MytGj7Et35Txfc128+yojO9w9cd7k=;
-	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=uwCTBg5DGnAmnqEFkvzReYRnj+f0ZHT1W0yStZ6ZETFgEPhTUloOqfpBvtykLe+YqRse83R2LzNtgbvNb/tPKMRcqQkvJPJyKwazu9i2iE7UTK90tPwKv0q71kYxmV0tyRCmm40xY8aqgKtmISM+aH7cStZHWiPlscphAIYH4BQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=vJsL+Z05; arc=fail smtp.client-ip=52.103.32.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31923285C99
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 10:06:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757066808; cv=none; b=F+A3ntH8qBmVSWPRzk5w/b/nF1Z7+8IPzi2LQO904OY8//DJiU2LAUBy1fb11kYnb6bBTl+c2LM0zVwWN5mD2x1q6sYgP6Sm6W8FutZYVOzzqCjc1atB5Iuak7jgsFr6n8HMWtYAkAAFT3VFpw9jCybF3WknvkYyw4gHKBBH3Qs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757066808; c=relaxed/simple;
+	bh=TaztsgBb1/JRguDkkW2iP/vPHAAc0cly/jBPLvGdAjc=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=CupSSwOwZwC3Seva0frzKvk9mCbB9t7t85+0Iah1tfNlzqEv1jbmF/oXGr6Uj2MMaSsNlqURZiciajVWMCr2i7mi2vIRIeisrQYBg9yRnaX8NbQXG/ARJwwAfXpptSBq0FoVCM32iw+jm4JddK5rrX4Vq1JUMLisIuq9/XALPjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bPL1QfCq; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="vJsL+Z05"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zJzq7JGJsKeoCXOprAxIL31ITxvV4tDcBaLlQgFsTUor69gO/ueqylf3+skSGaAqUF5S9pldNm/Lp2eaQmxWyvvS4R0g3oXoDPzfYSd8sa/NtE09aJkiOW+ZyMXZIZAcCuswFvRoFYHuc41510QJoLsTJdQwB2aUYIxSliRviXlMz24YILH7fdwvzFourUWoMH2AK+9zwRdB+0GuBZJ8y2ynsmbyzm1X6zeU7KZyoITjmRcR91aLSzj6loGKa8WfuGIXhkUKTUWHGv+9y7nbIjFs+QhcrP7GNnCG6J5UUJEdOPII6KFsh+ks/oHjb9U/cLRH2zAjcIpcPs3/G8o55w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1eGQyh+joN0Un3MytGj7Et35Txfc128+yojO9w9cd7k=;
- b=L7BE6saV7SwKehMp7tEVXpQRbMtK4qsNzV2CRSvIaKhrh3Jie0NutgqbFyeD9TaNrugrQxzz30rmUD3mURiPC3bkoY1dfeOEWpBBlWyWAdx1UqT7MmuqDLOqTZYzd5WEqucXazf9lfx05AqNa09uj5VAkrHG1yGA/IEbO0n4gTVTwXNeuO475JKCXPdbiD6jFbjJP5h4QlhMti0z2R77VXp0kJrfXJFPIgQx2sVZoHr/IbCRXqYvGdHyuP96r4fhRnVsyAVbwnxp7VTYRGV4dEoyz7wGCzf402nCGT9YPlF7xxq8LBEn6f2QQy1rTF2LOkuxVtBxxjvBx34PJt4LPw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1eGQyh+joN0Un3MytGj7Et35Txfc128+yojO9w9cd7k=;
- b=vJsL+Z05OkJPvn6d0gAMzJyWo9+v3asfkLN+iWkGPWJW4skPawfu4o/jOkO2nqYlhtTzdpXPdy9aJLHxtGT/HcEjaENQeLkIwAKMb8ZTFRedbHgkiaX7iRnD8izlflD888DEtT8VRJjEYSgc/QTrZFzZZnGis7yfZYQ2Y+/4XdChQfIvGRm4i1KJGIbPQLCbUa2RvjnFwl4p5KAU8vg+y9RANYLT8zrCYbog+/FzJmwiKhiTr7mZ7OJ0qu9Rnd12zZEHAvDDH24eKmbOwURRxCzLLRKAt/vnYDecsFpFzjWuWft/ByUp6C6VhvREylUpI80EhtVyxJRIAJuoQMjs4A==
-Received: from VI1PR02MB4271.eurprd02.prod.outlook.com (2603:10a6:803:82::29)
- by AM7PPF3041E2F7E.eurprd02.prod.outlook.com (2603:10a6:20f:fff1::809) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.19; Fri, 5 Sep
- 2025 08:31:42 +0000
-Received: from VI1PR02MB4271.eurprd02.prod.outlook.com
- ([fe80::473a:177d:640e:c07f]) by VI1PR02MB4271.eurprd02.prod.outlook.com
- ([fe80::473a:177d:640e:c07f%6]) with mapi id 15.20.9052.019; Fri, 5 Sep 2025
- 08:31:42 +0000
-From: Skybuck Flying <skybuck2000@hotmail.com>
-To: Haridas Mahato <haridasmahato12@gmail.com>, "git@vger.kernel.org"
-	<git@vger.kernel.org>
-Subject: Re: Was "Re: [RFC] Proposed Git Workflow for Permanent History,
- Explicit Branch Status, and Developer Continuity" now "Skybuck's GitFlow"
-Thread-Topic: Was "Re: [RFC] Proposed Git Workflow for Permanent History,
- Explicit Branch Status, and Developer Continuity" now "Skybuck's GitFlow"
-Thread-Index: AQHcGR0afBR4UVFtH0y7jlWzQ0OEhLR6DyAsgAM/ILKAARBogIAF69kQ
-Date: Fri, 5 Sep 2025 08:31:41 +0000
-Message-ID:
- <VI1PR02MB4271C163F38DB205BD30FFE1B303A@VI1PR02MB4271.eurprd02.prod.outlook.com>
-References:
- <DB7PR02MB4265BF28A39C7BD3DB097E1CB359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
- <DB7PR02MB4265499C1103242CB482B407B359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
- <DB7PR02MB4265CDBD131FB755B0799B2FB359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
- <DB7PR02MB42655790BB6E1EF589B7D173B359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
- <DB7PR02MB4265DDA928244F526CF1EF4AB359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
- <DB7PR02MB4265527016FB04A500FBE321B35BA@DB7PR02MB4265.eurprd02.prod.outlook.com>
- <VI1PR02MB42713B3BBD5802512B5FC9FBB33AA@VI1PR02MB4271.eurprd02.prod.outlook.com>
- <VI1PR02MB4271CE7B8F32225C98A2DCBEB33AA@VI1PR02MB4271.eurprd02.prod.outlook.com>
- <VI1PR02MB42710CA61134BF19214F855AB304A@VI1PR02MB4271.eurprd02.prod.outlook.com>
- <DCHIM5YWYM7F.1DO69EZ20ONH8@gmail.com>
-In-Reply-To: <DCHIM5YWYM7F.1DO69EZ20ONH8@gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: VI1PR02MB4271:EE_|AM7PPF3041E2F7E:EE_
-x-ms-office365-filtering-correlation-id: ffac9e46-96bb-449b-aa4f-08ddec56a410
-x-microsoft-antispam:
- BCL:0;ARA:14566002|19110799012|8060799015|8062599012|461199028|31061999003|15080799012|15030799006|52005399003|40105399003|4302099013|3412199025|440099028|13041999003|26104999006|12091999003|102099032|10035399007|1602099012|56899033;
-x-microsoft-antispam-message-info:
- =?utf-8?B?clYrdnl3ZlRpMGprUFRDUThuNDQyZjNGd1JLa0tRNFV0T1hvL1NDSjRLWCtv?=
- =?utf-8?B?NnVHWXF4UzRTcjdlRDF2MklpT0twSlBnQ2dPMTYwc1RNR0RpSXpZZFpIcFJL?=
- =?utf-8?B?blkrQktMZ0Foek5lSVhLMlI3UDNWdjZDWG5sZWFRbjExaXIwTnExQytxZHZz?=
- =?utf-8?B?NG1nYzZ0L1ZtVjltT3BEOVFybFlkakwwZDAwNURicm5QQ1VHdW1paEVSNnFS?=
- =?utf-8?B?U2d4MDVvWDUvMGxwZEd2d3krQnphb2VpRkFybDE1RUxScHpYb0xVL1o0SmVn?=
- =?utf-8?B?V1BXNjZjcTBuT1dJQm96YXN3aU9uTXJ5V0MxU3dXVkJ2dys4aXM3Qmw0ZnIy?=
- =?utf-8?B?MFV6cDZkNE9EN1J1MG8yTk51VXZJZGZwT0V2ZnZueU1BazVTSy8rdW1PN1Br?=
- =?utf-8?B?aEthYU9YWjNzM0k5bVBZekhUWDd0NlhkYmYxWjRiRWhycnYxVFhRS1FncmxE?=
- =?utf-8?B?TmFBRlV2enl3R0J0bmRabWRMOW9ybXVNZmpnTmlLMW1IZjNZa2FMWGdTOVNs?=
- =?utf-8?B?c1ZqZ2o2R2tYa0oyYlRvQk9LV2Y2dnVGdkw3VTJIWTlhVFkxME1RR1NqTDBT?=
- =?utf-8?B?aEpmcGQ5YTUrUnNmQmFBU2NHaG9Ga2Z3T3RXTG13RTdwb3dkUjFwbnhndlZJ?=
- =?utf-8?B?K0RYWXVqWk5ielJCSHgxNHh3VVc3dVdseWZiWDRTRUttK01nTzA5d2dIMVR5?=
- =?utf-8?B?WmpqcHlBRSs4MmUwa2RLMEJCL0JQcFFiZ0lqaXRwdHNDem5oYTE3MEFqYzJi?=
- =?utf-8?B?QWVvN0NPSEErVXk1VzJmOGoramgvc29qL05xcmsxVm93NEU0TEw1eHZPVVBy?=
- =?utf-8?B?M1R6UTlZTTlLVHplVkloWk9jeWpXbjZnUXoxcU9oVVN1KzdSQmw1Zk1GWStl?=
- =?utf-8?B?bFhsTHVUa3kxRllzVFMxR1RxVGdRdEZjL0R6aEJ4b0xUZDlkRmRhT1Vaa0Qz?=
- =?utf-8?B?ZzJGdFZFVE9mZ0tFcGFnbFZYMkxLcEtybGV4VFEyL0orS3NDeU1vZTd0QnR2?=
- =?utf-8?B?RG8vSmQ5OTA0TFp4NjN0UG1jNHhHWDBFVWtkWjhLMzV3YTN5WWgxMjBSYUx2?=
- =?utf-8?B?UGpVRGFnaDNxcVZUZFE3d09nKzgzNEs0SUFLR1dCVW43UTliU0U1TWsyMmpC?=
- =?utf-8?B?cGc4ZXdHOUZRakJPZlJxOEVLUmFvWXFEb0M3NVN6V0h4Y3R3czJtM2hKTWNW?=
- =?utf-8?B?QThZWHZuK2RTckJEaEwwNjRUaEJCTm9mdmNIM1VZblVScndXU2hVNWRiVzhh?=
- =?utf-8?B?NmxxRThUdCtKWXNxRmFUZmFpWm1aeEthMUtXc0xuUTBKMmF5OGNSQllCMmdq?=
- =?utf-8?B?eEczblFkQUxkS1YzZFBOdkhZSnZURFNKOFpTMUhuOVRIWkpNSWhvRktGYm5o?=
- =?utf-8?B?Yi9hYTJvaFBtbW5jK2puSDlVVVozbkgydjA5aXJhU2d5bHlOMXVJN2Z1T3dI?=
- =?utf-8?B?bTRod1ErMzMvTk5NaTlTNDl2Z1krUnBHbkFzT3ZUNjdwTXZSaC85ZFZVMlNm?=
- =?utf-8?B?UUt6QWtvRG9JQ1Z6VStsV0N6eVU5bGE4WENpSmVocE96ZjZjcUJwUjRPZjNL?=
- =?utf-8?B?bm1Hc2V0dlBCRFNKNnFJK09TelB6MXoxdU05eDdkM3JpSWg2QmJKUmswMlo3?=
- =?utf-8?B?bTg5R1UyVWRBZVYrOHBsV3JFckVqVG84Uk4vUUNQd3VEbys0NWp4cUlxTkpW?=
- =?utf-8?B?cWJYbmM0bGxNZWtsTVZBSE4waG82UUpWdEpqZ2ErOHJad2o3MlBzQ1ZtdndW?=
- =?utf-8?B?NG1nRVZxaGpNY1dUS1E5S3ROd2JaQkErNS9lOUw1YlQ2cmlPUlJKQzhqRG9O?=
- =?utf-8?B?bVg4ZHEyMVltb3hqWVRFY1c3TU9PcVZwVDUrT1d0b3ZJdzYreGF0LzIzV0ZS?=
- =?utf-8?Q?UW7pXF1o/elN0?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?Q2kyYmtkTno0dFVQYyswMXhqT3h6QWlCNklic0NzNTd4N21FOGFGc1M0MFR0?=
- =?utf-8?B?QjFob0FpRythdU5rVHdTNk96MjNZZ1Jhb0x0MzNYOEQyemJmS1JYMnZRejZM?=
- =?utf-8?B?Qk5WQkFOUUJrYTRDTHI3UVZweDlqV1hNVlNxOU4vNFhtVExIT1RsNjg5ZW8r?=
- =?utf-8?B?WTZ6WkFaS1FKQXpnTjk0cGppeGFkVU9nRkxlV292VXhoaEg1VUs1NUovaG9x?=
- =?utf-8?B?REx5bHpMMjJoRGxsRmpBZ1NBTWhyemtLWEd4c1h2UDFGaU9iaFliV2tka2R2?=
- =?utf-8?B?dy9HQnZycmRDRjBiR2UraFY4YnhrVURhaE9NWjlPblRFUFQ3WGYrWVNoa2xL?=
- =?utf-8?B?bW1FS1VRUGxWNVVSdFQ3cmRLV3BzTVhmQ05QQk5PUm1tTS9ya2hNOHlYRE1T?=
- =?utf-8?B?OFJYRUxOTDF1SHdaSVdmUXVBUzUxcklJU1B3c3g3SEFwSWdza3JOazZzenBt?=
- =?utf-8?B?Z0VzdjZ4Tk9BbVRoT2oxYzR0RlgwV3dvckh5Q1ZKZWlHN0ltc2FOdmxBcS9t?=
- =?utf-8?B?elNYRndkVU96Sm1GQzVSM2l6enBxMTU3YURQOUdnYzVnMGdxMnQxL3crclFh?=
- =?utf-8?B?b1kvN25KNVpmdjJod3pwVk9qdVFYY296d1ExQmlibmxFVklOOHNBUjZML1Nu?=
- =?utf-8?B?Sm40eWZzK2YwVlNtbkJ1aWJ4UWVSVDN5czRLVzg2c0tlR0Z3TTRqdCszQXhN?=
- =?utf-8?B?U284L3g2ZjkwV1haeHFYYVFaYWhLYnFWR1NMdlVQdFpDeldRYnRxOGxsY3l0?=
- =?utf-8?B?WU9pOFlTQ1dlZTVRMy8zNW1tb0NGZ3o5Wm9hVzl6bmtRVE9lTGNpUFgyS0t6?=
- =?utf-8?B?K21VcCtGM3o1T0pLNmNSd3pQTjVuY25TZmFmemNFVERoaTdKT2N6c0tEaTVI?=
- =?utf-8?B?d0RCYWRTYzZiN2ZmYUxGZlVNcFQwMjQ3Nm5aWGp5elFLa2w3d3ZYdmZtdEhu?=
- =?utf-8?B?MzBwMXM3cVZTbUFRNVpGNDlaTlIxN2tROXVCOWE2K0RHTC9haG5qZ2F0M3c0?=
- =?utf-8?B?dlViVGd5MnoyS05ZbDNya3Ezc3VZQXVGeWl4UHVBeldudVZneGlIWGdxM2dX?=
- =?utf-8?B?MEZkME4yMnNxYnU3MEYydkl3bkJMaVYzVUIyMjhudy9kT1ptTzBrb1NJY09x?=
- =?utf-8?B?eFpKYzRNd2QrOFFrdEZCR2czN3Q3RnJTeXVIYnM4d0JTK2dHaThxaHBzc0Qy?=
- =?utf-8?B?ZGlkNlpmT2FZdkNTOEpWQ1pTWVZzRG5ROERuSXEyMTQrV01wTGxKNmJaZGV5?=
- =?utf-8?B?clpqRWxrNU5uVEtsUktrb0ZNZjhYbnZnM2owQlJiRVBBaDlJeUxDcFVVQ3FL?=
- =?utf-8?B?UGR2L04rR2E1b1U0SHlGTG55TEFmZlhZbVFCeHZtUW5zanQvaDF3dGV6SjBy?=
- =?utf-8?B?a0JkY1IwYjJkNlV1REdLdVFYN2JqcXFMWkprbTFvVnVJRG55ZnhDZDI0SFNh?=
- =?utf-8?B?S0I4N3JtTDZsbDZRRW16blAzTW1wTUN2WnloUUVPV1JyOUo4azc2QVBqNXJP?=
- =?utf-8?B?UGdKYzlLRk82bVlub01xSFY4OS9hdkk0ZEExeTRlQ1ZJZDZ5U2Jwb0xqWVhw?=
- =?utf-8?B?Q0pZeEZzQmx4d0ZMazV6YnFZVkNpRTRSdkFsY053SHlrNlNMdUtLdHpuRzdK?=
- =?utf-8?B?TXFIdzJJMnhJaFZha294dnFUdGQ4TDBNRTRSa0MxY3l4OTVmYVVwMXZGaWhS?=
- =?utf-8?B?RytmeEsyWXhyNXlLZ0QwRU90bmRBd3hlZGZTaUhWYlNLZm0zb2w0LzZ4bmhE?=
- =?utf-8?Q?pRZEBt271P0aGNJnNI=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bPL1QfCq"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45dd5e24d16so7210515e9.3
+        for <git@vger.kernel.org>; Fri, 05 Sep 2025 03:06:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757066804; x=1757671604; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=153F9Y6oa9lvzqtxBI5eXi4ClbBlReBEsZ+bszWFM8M=;
+        b=bPL1QfCq6SPAYGIKFSBHsydeOM4ZEUzKvnt7fAK57Ofz2+4S4aHlmMz9wR+oMhTwZO
+         TdCJqpsNYp0i+YqHYn3+l6i1vLWCozQbgh6pEKRpDp1Z5qk5RwirVfAardxpqGJub/Ox
+         q7yElfmQuHa/I2bkfxKkN0ZNa8BK/gViuXVeQLUw0E5vulh50yPH+ZuVp9BeYM1isC7n
+         ijECHo0GtU4g9LykAM6VI3dJmTc3nKqUO1kX+vr15WkT7kNNB82td7X9v50QwaQM3Msj
+         kXRw2bQqaF+6MZKgThEFb6+O4V2CweI59Kz36jtSgo+YvJx8lHWHh7s5LewUUSEuDGnn
+         bdAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757066804; x=1757671604;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=153F9Y6oa9lvzqtxBI5eXi4ClbBlReBEsZ+bszWFM8M=;
+        b=wWP/GmlIkeo61FVqxxqdwoIk/c40gp9ANEv5h8atRSNN+hJBZOlES/GKc/zhAI8uL2
+         kkYBiJUYW0+SMS1+ksylswRen7XH+Gm5uYIYbJdUY1wBnSe6qt7jGDqBputbEOY2OEYy
+         T/eg+YQVh442fiHl8ZbqWzEzNoyMyxhJoVB/HLe8h0uXJvTkZ4wlmqQQ9apZKegsaeJR
+         21tFQQApvvDn26cHiWaIO688NeVtNfmNcT2v5FFt7peLiY0/jHGMeEe20lX+E9MRH7gL
+         /DuD1zRSCXuWy/qBZ5cULGc7ekINlqG4AmKpTmZwG42k7LhivdPOVRkgD0bf6sPz5Dv3
+         qAvQ==
+X-Gm-Message-State: AOJu0YzxWf6F4aAcNfrmcBmmdJc6pbA3x+H7vp1dprtZ1mY/0yWRhgsi
+	LbEehG149hjzv/aIiyACsBrUBnGJLNW1tPFg4/Hja2Tu5Y5i7Qvf9RHn
+X-Gm-Gg: ASbGncs5WT1/ReeA9bgV60dmnFwX2h8C/jqiSJvFrpA2vzzI1xxY0UtjFs549xFf8zt
+	4W2ubPvtocUM7iisF4Wc64+fES4PTeymDjie0WwJC/dpysUW8VWg2yZUadYfTF9h0YNeFH6AA9Y
+	CfiCG9iCJLBb22AfvGRLxaPyvbeSTCvOouWtY74qDdWyvBvQfrgdtzz37dvDjayEYo4GYyQxwgY
+	sc9e91UVfNIpQwlhR/kQmVg5vWQte5fu1lBFrJiGZUpm1QumNRB/LswdWh8ZWKqEXmmDbbINrjt
+	GVP9s2qghYRFALjnThcUbAsRbMJicoXfhvVeXwAsXYvdoT7lKLI/tE5kPadOsEgScIZfMDqPANh
+	dNw6Lu0WuvoIUrYnLgpDSByPAkqPO3Fl2Rq4yt9aBuustMJ2spfUBM4Cv56YAR35+ngguSYvarc
+	ujm78h
+X-Google-Smtp-Source: AGHT+IE7Cd5z8kzO6VSqZ30cFSZ0ewQykM+BGy1fObB3MlKWDiFXh9XiHNh3bFsdZ4nAN5fmEmqP7A==
+X-Received: by 2002:a05:6000:649:b0:3d7:eb95:b1e1 with SMTP id ffacd0b85a97d-3d7eb95b67fmr11383989f8f.32.1757066804174;
+        Fri, 05 Sep 2025 03:06:44 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc? ([2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e411219ddfsm1537558f8f.57.2025.09.05.03.06.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Sep 2025 03:06:43 -0700 (PDT)
+Message-ID: <f43c3e61-01c8-47d8-bf0d-7cfa13cacca5@gmail.com>
+Date: Fri, 5 Sep 2025 11:06:41 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-8534-20-msonline-outlook-5faa0.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: VI1PR02MB4271.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: ffac9e46-96bb-449b-aa4f-08ddec56a410
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Sep 2025 08:31:42.0009
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PPF3041E2F7E
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 1/4] breaking-changes: switch default branch to main
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Wing Huang <huangsen365@gmail.com>, Patrick Steinhardt <ps@pks.im>
+References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
+ <cover.1756992089.git.phillip.wood@dunelm.org.uk>
+ <6986375dc379a646bb184be3cf7a018b2eb3eec7.1756992089.git.phillip.wood@dunelm.org.uk>
+ <xmqqjz2e86b7.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqjz2e86b7.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-SGVsbG8gSGFyaWRhcyBNYWhhdG8sCgpUaGUgcHJvY2VkdXJlIHdhcyB1cGRhdGVkIGFuZCB0aGUg
-dXBkYXRlZCBjb2RlIGlzIGF2YWlsYWJsZSBvbiBnaXRodWI6CgpDaGVjayBoZXJlOgoKaHR0cHM6
-Ly9naXRodWIuY29tL1NreWJ1Y2tGbHlpbmcvU2t5YnVjay1zLUdpdGZsb3cKCkdvb2QgbHVjayB1
-c2luZyBpdC4gSSdkIGxvdmUgdG8gaGVhciBmcm9tIHlvdSBpZiB5b3Ugd2VyZSBzdWNjZXNzZnVs
-bCB3aXRoIGl0ICEgOikgb3Igbm90ID8hIDspIPCfmYIKCkJ5ZSBmb3Igbm93LArCoCBTa3lidWNr
-IEZseWluZy4KClAuUy46IEkndmUgYmVlbiB2ZXJ5IGJ1c3kgd2l0aCBjcmVhdGluZyBhIHZpcnR1
-YWxpemVkIHdpbmRvd3MgMTEgaW5zaWRlIGh5cGVyLXYgdG8gcHJvdGVjdCBteSBob3N0IG9zIGZy
-b20gYW55IEFJIHNoZW5pZ2FuZ3MgISA7KSBWZXJ5IGNsb3NlIHRvIGdldHRpbmcgaXQgd29ya2lu
-ZzogV2luZG93cyAxMSBQcm8gZm9yIFdvcmtzdGF0aW9ucyAoRW5nbGlzaCBYNjQgaXNvKSAyNGgy
-IHNlZW1zIHRvIGJlIHRoZSBtYWdpYyBidWxsaXQsIG1hbnkgb3RoZXIgdmVyc2lvbnMgb2Ygd2lu
-ZG93cyBmYWlsZWQgc28gZmFyLi4uIGluY2x1ZGluZyBjbG9uaW5nIGFsc28ga2luZGEgZmFpbGVk
-LCBuZXR3b3JrIGFkYXB0ZXIgcHJvYmxlbXMgd2l0aCB0aGF0IHdpbmRvd3MgMTEgMjNoMiB2ZXJz
-aW9uLCBidXQgdGhpcyBXaW5kb3dzIDExIFBybyBmb3IgV29ya3N0YXRpb25zIDI0aDIgc2VlbXMg
-dG8gaGF2ZSBnb29kIG5ldHdvcmtpbmcsIGhvd2V2ZXIgTWljcm9zb2Z0IGlzIHN0aWxsIG9mZmVy
-aW5nIHRoZSBkcmVhZGVkICJwb29mIHlvdXIgZHJpdmVzIiBhcmUgZ29uZSB1cGRhdGUuLi4gc28g
-bXVzdCBiZSBjYXJlZnVsbC4uIFRlc3Rpbmcgb3V0IGh5cGVyLXYgY2hlY2twb2ludGluZywgbm90
-IHRvIGdyZWF0LCBraW5kYSBmbGltc3kuIEFuIGVhc3kgd2F5IHRvIGNvcHkgJiBwYXN0ZSB2bSBt
-YWNoaW5lcyBhbmQgdmVyc2lvbiB0aGVtIGlzIHNpbXBseSBjb3B5IHRoZSB2aGR4IGZpbGUgYW5k
-IHJlLWNyZWF0ZSBhIG5ldyB2aXJ0dWFsIG1hY2hpbmUuLi4gc2V0IHRoZSBuYW1lIGZvciB0aGUg
-dm0gbWFjaGluZSB0byBzaW1wbHkgdGhlIHZlcnNpb24gbnVtYmVyLCB0aGVuIHNhdmUgdGhlIGxv
-Y2F0aW9uIGFzIHRoZSB2aXJ0dWFsIG1hY2hpbmUgbmFtZSwgdGhlbiBpdCB3aWxsIGxvb2sgbGlr
-ZSAidm0gbmFtZSBcIHZlcnNpb24iIGZvbGRlciBzdHJ1Y3R1cmUgaGFuZHkgbGl0dGxlIHRyaWNr
-LiBMYXRlciAhCgpXaW5kb3dzIDExIHdvcnJpZXMgbWUgdGhvdWdoLCBhbHJlYWR5IHNhdyBleHBs
-b3JlciBzY3JlZW4gZGlzYXBwZWFyIGR1cmluZyB0ZXN0aW5nIGluIHZtLi4uIGhtbS4uLgoKVW5m
-b3J0dW5hdGVseSBXaW5kb3dzIDExIHdpbGwgcHJvYmFibHkgYmUgbmVjZXNzYXJ5IHRvIFJ1biBE
-ZWxwaGkgMTIuMyBhbmQgYWx0ZXJuYXRpdmUgY291bGQgYmUgdG8gdHJ5IEZyZWUgUGFzY2FsIG9u
-IExpbnV4IGFuZCBXaW5kb3dzLi4u
+On 04/09/2025 18:40, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
+>> index f8d2eba061c..eb92e6f6a7d 100644
+>> --- a/Documentation/BreakingChanges.adoc
+>> +++ b/Documentation/BreakingChanges.adoc
+>> @@ -165,6 +165,11 @@ A prerequisite for this change is that the ecosystem is ready to support the
+>>   "reftable" format. Most importantly, alternative implementations of Git like
+>>   JGit, libgit2 and Gitoxide need to support it.
+>>   
+>> +* In new repositories the default branch name will be `main`. We have been
+>> +  warning that the default name will change since 675704c74dd (init: provide
+>> +  useful advice about init.defaultBranch, 2020-12-11).  The new name matches
+>> +  the default branch name used by many of the big Git forges.
+> 
+> As I am not a native, this is a mere question and not a suggestion,
+> but my reading hiccups when I see the lack of comma after "In new
+> repositories".
+
+I agree a comma would be good here
+> "used by many of" -> "used for new repositories by many of"?
+
+Sounds good
+>> diff --git a/advice.c b/advice.c
+>> index e5f0ff84491..48c49ee4145 100644
+>> --- a/advice.c
+>> +++ b/advice.c
+>> @@ -51,7 +51,9 @@ static struct {
+>>   	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir" },
+>>   	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName" },
+>>   	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge" },
+>> +#ifndef WITH_BREAKING_CHANGES
+>>   	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName" },
+>> +#endif /* WITH_BREAKING_CHANGES */
+>>   	[ADVICE_DETACHED_HEAD]				= { "detachedHead" },
+>>   	[ADVICE_DIVERGING]				= { "diverging" },
+>>   	[ADVICE_FETCH_SET_HEAD_WARN]			= { "fetchRemoteHEADWarn" },
+> 
+> Would there be folks who type "git init" to get a 'main' branch,
+> while trying to follow a recipe written in pre-3.0 days that assumes
+> the initial branch is called differently, and get confused after
+> seeing many commands written in the recipe for them to follow , like
+> "git checkout -b next master" fail?  Do they need a different advice
+> message to help them, i.e.e.g,
+> 
+>      $ git init
+>      Initialized empty Git repository in /a/b/c/.git/
+>      hint: Since Git 3.0, an initial branch is 'main' these days.
+>      hint: If you need its name to be different (e.g. 'frotz'),
+>      hint: you can immediately rename it with "git branch -m frotz".
+>      hint: Disable this message with "got config set advice.foo false"
+> 
+> or something?  I dunno.  In any case, that will have to be a new and
+> different advice message, and defaultBranchName should not be reused
+> for that purpose, so the change in the the above hunk is fine.  I am
+> wondering if we need a new entry protected by the same #ifdef on the
+> #else side.
+
+Personally I find the current advice pretty annoying and would be glad 
+to see it go away. Are there really that many people who want to 
+customize the initial branch name that it is worth adding some new 
+advice post Git 3.0? Although I find it annoying, I do think the current 
+advice serves a useful purpose as it informs people the default that 
+they are used to is changing and that they can override it. Given how 
+long we've been warning people I'm not sure we need to say anything once 
+the default has changed.
+
+>> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+>> index 01823fd0f14..a21834043f3 100755
+>> --- a/ci/run-build-and-tests.sh
+>> +++ b/ci/run-build-and-tests.sh
+>> @@ -9,7 +9,6 @@ run_tests=t
+>>   
+>>   case "$jobname" in
+>>   linux-breaking-changes)
+>> -	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>>   	export WITH_BREAKING_CHANGES=YesPlease
+>>   	;;
+> 
+> OK.
+> 
+>>   linux-TEST-vars)
+> 
+> We have been very careful to make sure that none of our tests
+> implicitly rely on that the initial branch name will still be
+> 'master' with the above.  Now we should make sure that none of our
+> tests implicitly assume that the initial branch name will forever be
+> called 'main'.  In the post-context, linux-TEST-vars arm has
+> something that forces the initial branch name to be 'master', and we
+> probably should keep it for a while to serve that purpose.
+
+That sounds sensible. I'll wait a few days to see if there are any other 
+comments and then re-roll the the documentation tweaks you suggested above.
+
+Thanks
+
+Phillip
+
+>> diff --git a/refs.c b/refs.c
+>> index 4ff55cf24f6..149a8d1cec1 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -627,10 +627,12 @@ void expand_ref_prefix(struct strvec *prefixes, const char *prefix)
+>>   		strvec_pushf(prefixes, *p, len, prefix);
+>>   }
+>>   
+>> +#ifndef WITH_BREAKING_CHANGES
+>>   static const char default_branch_name_advice[] = N_(
+>>   "Using '%s' as the name for the initial branch. This default branch name\n"
+>> -"is subject to change. To configure the initial branch name to use in all\n"
+>> -"of your new repositories, which will suppress this warning, call:\n"
+>> +"will change to \"main\" in Git 3.0. To configure the initial branch name\n"
+>> +"to use in all of your new repositories, which will suppress this warning,\n"
+>> +"call:\n"
+>>   "\n"
+>>   "\tgit config --global init.defaultBranch <name>\n"
+>>   "\n"
+>> @@ -639,8 +641,9 @@ static const char default_branch_name_advice[] = N_(
+>>   "\n"
+>>   "\tgit branch -m <name>\n"
+>>   );
+>> +#endif /* WITH_BREAKING_CHANGES */
+>>   
+>> -char *repo_default_branch_name(struct repository *r, int quiet)
+>> +char *repo_default_branch_name(struct repository *r, MAYBE_UNUSED int quiet)
+>>   {
+> 
+> And if we were to introduce a new advice to help people who still
+> expected the traditional name, this MAYBE_UNUSED would not become
+> necessary ...
+> 
+>>   	const char *config_key = "init.defaultbranch";
+>>   	const char *config_display_key = "init.defaultBranch";
+>> @@ -649,14 +652,18 @@ char *repo_default_branch_name(struct repository *r, int quiet)
+>>   
+>>   	if (env && *env)
+>>   		ret = xstrdup(env);
+>> -	else if (repo_config_get_string(r, config_key, &ret) < 0)
+>> +	if (!ret && repo_config_get_string(r, config_key, &ret) < 0)
+>>   		die(_("could not retrieve `%s`"), config_display_key);
+>>   
+>>   	if (!ret) {
+>> +#ifdef WITH_BREAKING_CHANGES
+>> +		ret = xstrdup("main");
+> 
+> ... as we will have the same if (!quiet) advice sequence here,
+> protected with a different ADVICE_ thing.
+> 
+>> +#else
+>>   		ret = xstrdup("master");
+>>   		if (!quiet)
+>>   			advise_if_enabled(ADVICE_DEFAULT_BRANCH_NAME,
+>>   					  _(default_branch_name_advice), ret);
+>> +#endif /* WITH_BREAKING_CHANGES */
+>>   	}
+>>   
+>>   	full_ref = xstrfmt("refs/heads/%s", ret);
+> 
+> Thanks.
+
