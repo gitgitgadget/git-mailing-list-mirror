@@ -1,66 +1,28 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA834134AB
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 01:03:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2BC224F3
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 01:16:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757034215; cv=none; b=BoTdUN7XJFlOzA0hvnrH+vxTUXWkKwy2i8bUfwkdrMpo+hHiNeGEqtcT9Stf7icdBrBdiUxcYN3LgKIz0nlvySAaJ9WyAz9etB3gAHHmGDg2IEmOXNa88KtKKsMSL3EXyv/n6wOe8YfTif1Z6B7yMsLhtYoCtXypXcvaWTqckHA=
+	t=1757034970; cv=none; b=LaOUTU0YDPTnRaQa3xFdloF6v/AjRG//88DhRPn4m1umrCGlgUHwfN6ecO5ptd5z0E9pmQ902Rxr1Wb2c7e/wg/jw8fx3ZbisWUe3gTubc/N8UTnCX1g+k/mAYVnx6TXXOaaE7yRCnUSlQfIOffydN1oXivH2gg1RjxDYT7IRm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757034215; c=relaxed/simple;
-	bh=1xmbE6zYhP0hVC3uyQ2633z5TW+xl9PXPIimsZ1Pex8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hP5cZ9/52XOVpGTi7h45WyY95TeKWmt9gAeTay9hQw4ev8b8FfCoNEfBEeD0CkK03vLCx46EY1hRADt9zQiEAzzXneFmcHRiw5dxu5vohyqOv08AS6wCMqHdLEasL7pVjfuTAkiAzC77VU7YzB1PpW8Tusci38jqQMpeFbqPO7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CIRkUurG; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CIRkUurG"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3da9ad0c1f4so1089198f8f.3
-        for <git@vger.kernel.org>; Thu, 04 Sep 2025 18:03:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757034212; x=1757639012; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=1xmbE6zYhP0hVC3uyQ2633z5TW+xl9PXPIimsZ1Pex8=;
-        b=CIRkUurGbXZtzp1mqVe5QEnFoemkJ6w7qQw/9OZIbAKlW1/WQDoOUqhE8wIOiXLBEd
-         QQgAXM7wUyt42EOGv7uG5/N6jk++BIDRkv8lMeOHewo0nE8dpOaZFEi9tbUn0Hm/qGsK
-         HOqz3hWkhixDyYKipmCJJ8pqI+9bQgl8ElEmR+bLxA/HAoc0NuxSTDJqXAHtOrGKtFE6
-         xA5JbnGS1hw1593R3AD3EXlNSJZsgixyGKXfMzKa/V8lvGlwkqqsD9eDHLT0GQ7OWdf1
-         H6wwzhqJ41tqsBg+roncCm34OquqUR9GBRwpLliGwgbG77hZHulK39ErUCmuUp45HlUY
-         QW0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757034212; x=1757639012;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1xmbE6zYhP0hVC3uyQ2633z5TW+xl9PXPIimsZ1Pex8=;
-        b=ap4mXefdSHKqgu4lsTd+pQcjG3aj35Vv9JhXaaLDPUYwz3mU6buKQagU61c7AAXdou
-         aNrmRHrNEGfwAf69mA8Vj05aTSE4f/qB8vwdEQC1usQTN3jo7I+NuShKu1fNrJK3iDin
-         nwdI/MZA2t7TQMUVykaKHDBJ/VIOHEpe89OB7zpFEp81/LUdpz2ICdApzYGnnRPAdlWp
-         WWCu+N/qRRtU5HUj0ENwp5CXiUep4hiKGKojKDKXcMiaerryIfpLf8k0FOWPyhsNrC7g
-         uWGmiu9L9k6Hw+0ByfEPjlDTnLsLZwmwxvw8aa8hO8YqM3Pdu/CkvzEcuH7my8mLD8kK
-         a/TQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWpo67utbDRbw6YARbIAiddshwBdSTKFH23c8JXSnB5a9JeKpsssouJOKueAGeiMUh5sPY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzoFVpL9/tQ+lkQnBur5nRNYZGe+Nudik1jsQBnADU76vGEfjnq
-	qlNE0soZtJXOqIdNWGZs/2YMsTjhj91Orukhsgqj+gwQPztQ3JU7adcU
-X-Gm-Gg: ASbGncu0xjSBIsCk3J5PlJI73zH9kR0jWNJw948zqN8kVeQ3ftPEX/DhEt2F0XYw2IE
-	W4avl5buXOLph3WTHKZJCWPEKIhhgpa7FDjnteEWNyr0NINiiGU4JdD1gDIddOXxD5AcJ4RFw9K
-	Jn2aOovHVKYSiVV698rjdeO09yrHLR6CH88rfNBcZOnLooYEGeVEnilMDTlTTs9D6XFvSc3qtqO
-	qHlRXvQ45d8ZeMtDBrJl0J3cTdBEu8rC3n5I3sZq75+5of1RaghbO2SrjDzfZB2ojjGaGv03WJ8
-	iZt5uA6YPTRPRXvag8UAD0NdEvmDT4qa01QGX3YU/VmkFmH59MG2oNPI8tuGMWqGCzdPssi9ZOH
-	WG0XJ040eBFai7x0f8qdDn3/waxg7iXiX9AAzOXp78kf+Hbr9rl6tiranO1euWgkXBb/sDVw86v
-	FkoA==
-X-Google-Smtp-Source: AGHT+IFsJcIbf4iasxKRvUbT1mvXKefwyrtRTeM471tUgJCz4S3QWv8cqKZHpnD+XglFsZDSwgcrZQ==
-X-Received: by 2002:a5d:5f95:0:b0:3e3:2c0b:dc3d with SMTP id ffacd0b85a97d-3e32c0be08emr737934f8f.17.1757034212263;
-        Thu, 04 Sep 2025 18:03:32 -0700 (PDT)
-Received: from [192.168.0.4] (ptr-178-51-192-26.dyn.orange.be. [178.51.192.26])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e1dc0bc365sm3263885f8f.40.2025.09.04.18.03.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Sep 2025 18:03:31 -0700 (PDT)
-Message-ID: <699b387f-b09a-4003-9f6c-5a4a4b527ed5@gmail.com>
-Date: Fri, 5 Sep 2025 03:03:30 +0200
+	s=arc-20240116; t=1757034970; c=relaxed/simple;
+	bh=WpcK6EN8JAcSnzGZvrq74Sc++8g4NzB8IZHdVyPc1ag=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=V8L+T/Im+XNmvev4zbncvsq8HY0jqi9YWShrmTAWTJ26OzvBBa9IvSqWuiciqeKURGhnj/YvU3TOVePIal/QFNk8sfz6HKPzkD6+ClZxPOTlgoX4GDBqWz56wA9I0Td+cshl8EwA2uGq2Ks9iuOfKRDH7URWlAV0W2BYp7mk+B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:cf90::12ac] (unknown [IPv6:2603:6011:3f0:cf90::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id B2D9E340834;
+	Fri, 05 Sep 2025 01:16:06 +0000 (UTC)
+Message-ID: <013a3006-d220-424d-a28d-fb273c523c71@gentoo.org>
+Date: Thu, 4 Sep 2025 21:16:03 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,24 +30,121 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] alloc: fix dangling pointer in alloc_state cleanup
-From: =?UTF-8?B?44OO44Km44OpIHwgRmxhcmU=?= <nouraellm@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc: =?UTF-8?B?44OO44Km44OpIHwgRmxhcmUgdmlhIEdpdEdpdEdhZGdldA==?=
- <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.2040.v4.git.git.1756941427825.gitgitgadget@gmail.com>
- <pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
- <20250904204932.GD30633@coredump.intra.peff.net> <xmqqjz2d7t2q.fsf@gitster.g>
- <52fb3fea-4842-4532-8572-df41537da5f9@gmail.com>
- <88ae6c7b-0a69-48bd-9e73-672331a22197@gmail.com>
+Subject: Re: [PATCH RFC 1/3] meson: add infrastructure to build internal Rust
+ library
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+ "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+ Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>,
+ Collin Funk <collin.funk1@gmail.com>, Elijah Newren <newren@gmail.com>,
+ Ezekiel Newren <ezekielnewren@gmail.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>, Phillip Wood
+ <phillip.wood123@gmail.com>,
+ Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+ Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+ <20250904-b4-pks-rust-breaking-change-v1-1-3af1d25e0be9@pks.im>
+ <aLoNc5S6PVW8jLu5@fruit.crustytoothpaste.net>
 Content-Language: en-US
-In-Reply-To: <88ae6c7b-0a69-48bd-9e73-672331a22197@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <aLoNc5S6PVW8jLu5@fruit.crustytoothpaste.net>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------bOXjysI1tU5sua3a06Do9bOD"
 
- > => s is the double pointer (the address of the caller’s pointer)
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------bOXjysI1tU5sua3a06Do9bOD
+Content-Type: multipart/mixed; boundary="------------0App2WmEkSUi0aTBHvphlLcf";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+ "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+ Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>,
+ Collin Funk <collin.funk1@gmail.com>, Elijah Newren <newren@gmail.com>,
+ Ezekiel Newren <ezekielnewren@gmail.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>, Phillip Wood
+ <phillip.wood123@gmail.com>,
+ Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+ Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+Message-ID: <013a3006-d220-424d-a28d-fb273c523c71@gentoo.org>
+Subject: Re: [PATCH RFC 1/3] meson: add infrastructure to build internal Rust
+ library
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+ <20250904-b4-pks-rust-breaking-change-v1-1-3af1d25e0be9@pks.im>
+ <aLoNc5S6PVW8jLu5@fruit.crustytoothpaste.net>
+In-Reply-To: <aLoNc5S6PVW8jLu5@fruit.crustytoothpaste.net>
 
-For this part as well, it's s_ not s
+--------------0App2WmEkSUi0aTBHvphlLcf
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+On 9/4/25 6:06 PM, brian m. carlson wrote:
+
+>> +if meson.version().version_compare('>=3D1.9.0')
+>=20
+> I think we need a different approach.  Debian 13, which was just
+> released, only supports meson 1.7.0, and you have to use testing or
+> unstable to get 1.9.0.  There are no versions of Ubuntu, released or
+> not, that support meson 1.9.0.
+>=20
+> If we require this version, practically nobody is going to actually tes=
+t
+> this case.
+>=20
+> Our platform support policy implies that we should be requiring nothing=
+
+> greater than meson 0.56.2, which is available in Debian 11 and has LTS
+> support until 2026-08-31.  Ubuntu 22.04 offers 0.61.2.
+
+
+Hmm. Patrick -- do you mind documenting why you decided to use this
+version guard at all? Off the top of my head I'm not sure why you'd need
+this.
+
+In src/meson.build,
+
++libgit_rs =3D static_library('git_rs',
++  sources: [
++    'lib.rs',
++  ],
++  rust_abi: 'c',
++)
 
 
 
+rust_abi is new in meson 1.3.0, but it's just a rename for clarity of
+rust_crate_type, available since meson 0.42.0, so please use the
+backwards-compatible name...
+
+
+--=20
+Eli Schwartz
+
+--------------0App2WmEkSUi0aTBHvphlLcf--
+
+--------------bOXjysI1tU5sua3a06Do9bOD
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaLo50wUDAAAAAAAKCRCEp9ErcA0vVxVX
+AQDq5UcXCrOGVCm3ErOWNRr3n12t8xYkCePYDtLxKr0k1wD/XdbFDAmRxHMKOlcKWW7AfIsIS8Zp
+QzysPWswdzG0GAU=
+=x0gv
+-----END PGP SIGNATURE-----
+
+--------------bOXjysI1tU5sua3a06Do9bOD--
