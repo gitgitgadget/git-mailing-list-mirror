@@ -1,66 +1,25 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F391E350D56
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 13:40:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D062882D7
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 13:43:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757079653; cv=none; b=M/pxIVvWtDL2DNr6hR4jE1Z7SA8Oy6b5CCCklwF3mGX9P1O53GPX5o/tS3/UyNnpTcr7fcLuE1i4llUyosaUT4cL4OAtczdAHnhPxIeTiAcW67IFULBgw0uQcaTAKT85I0WxVisLHVk/CaA0gYHjJ3ePSRi0YRHP7HiJg70fHzU=
+	t=1757079807; cv=none; b=YoekbsiUjNGJXCwI3KoiuHmaA6iqeRBZfR8Yu+DciqbAVUiwkoir3kq8CFcySoc8zoJaSZ0sUuPyFlZa7u7tU6E+7imVen2LG4buIwLIclUNkfiSMdg3eBTavniPf/0WpOj6FIGAL1ly6cGigjqQuRlcSNHyivk2VFybeKnC310=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757079653; c=relaxed/simple;
-	bh=jZ8CqQZcrp4IJb5pnvDbyEjiI8YJ77WtPF4/8Vynyss=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dJSsC3U+VvV7G16wf0udZ6WxHe/eejaghcRTobzgw+G4/SQ2c+Q3t194P6UG96+M30bjpWzEJPLcMfiglSP0281brNdlAagpZ/4PmNiCZYgL2zBrIO1Lv9qgTDaopyvbJJMRoebQdL+Ts7VOTPxEqBiIxHqHIb+PNXhSlGrIh+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ku+SEEvG; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ku+SEEvG"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-80c45a0b023so207324285a.0
-        for <git@vger.kernel.org>; Fri, 05 Sep 2025 06:40:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757079651; x=1757684451; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jZ8CqQZcrp4IJb5pnvDbyEjiI8YJ77WtPF4/8Vynyss=;
-        b=ku+SEEvGiYwM12kIjgcDChctKiSWfryyHig9fFrlfQM5Oy3ZqT6fyo64D1gY+HIDNe
-         9tD5YEFJoUD4iiL/DP7Vm/47sOrSIXsB9mj04zzwu50d4j9U4eOs8nPc7fT+m0or8CBi
-         f22yTKwlae3wSYwyfjL2Ap1vajT37Wbs5qF6+t8dsFVLkaXTtUaVNon5cZ4beqd5P0DJ
-         I4kGdri6BKDUI+RY7YKjLJ5WHP3b8l4E5PKTMvfweBksCm18JFoEVVVBKfNXLXk1xgNP
-         YWPG8mYfA5KpYufNhECTlwvBdzCz3GsOvBtFkUJU3A5f+zoWzAr5tIq+PLgdu/I0MPo/
-         zXyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757079651; x=1757684451;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jZ8CqQZcrp4IJb5pnvDbyEjiI8YJ77WtPF4/8Vynyss=;
-        b=Oggpdmg/VHdJI5s0u98NdXWevXgus+3T11u5wBFNdOsLF3IWYn/OIcvJcAquwPjHN1
-         XSe7jHgw/kOlvTnf/ilJXiGvxglfyRafbZnprFFvynpRXFZF9ZlA6t7h4/eeN2MvCv8C
-         UnxAcMCc7NtArkyttadZZbmg9ZV0TFQz6jQwSayG2EyzuQrKFdCVNFTrvo0GpWSlTybP
-         bVSDnwyUqGQP7Gjh+TaolalNTEddKe1YUH0+OkiJ+xtIBvRm8Bpe790RTw1JeSrqSfoU
-         tbKDafbE9GDg6NmsM5wF+IHW+N6KWWB49XZxtNqbEP2FsSL7YjBhjUT/cdzWcpw/r1Aa
-         KiZw==
-X-Forwarded-Encrypted: i=1; AJvYcCVg1E0ZqSiMq1uDyCgSNHkLeZakZvphecTH2dUGQDZC+8FYmYSFoYIv9hRHdxauH3zl3IQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzxEsKMueggIA5fzIQo3kraY0jSe2ynnGKtBtxmaKiRxYE1TkX4
-	+j/d42KTLu+WlBSCcmrb2RPuWPvJtl2g5CRf9/E+1vZeonlurPvpYAY2KV97pHLo
-X-Gm-Gg: ASbGnctQH8944iDqBTxPQub6R1pt0wmKAsX4dznb6umtvezyrEBncrA9lXI8ZFyNI2O
-	1ebrIizPouUZvoYl5smgqVa+IomgZzV74juJUpcEqlhAsHtfYdN2O1ZHfJpPzPs0FFLafJy8wOV
-	Hsw9atKrKqEm252zJeP45+XMSsBnybI2V3QpFFPkk250Bv2mCviWkqT20ju6VewDBHubNodyhiN
-	e8J6ZD5RzQPf5n3VA+EpblNLHOp+PzdRHKwNUK+XftdTBrRA4AgpHp+CdesK1OQovgZHFA3DXx9
-	0ACwNZJvq3K0Noz25llyBbA7aw6SJLPtkagTar50i+6tOTKF9FklheoQRU+gmnjV4PNnDCahFir
-	y3AhsVgKvKXuTP0mfeMGsGeCYsRkCir/6AgQnyPP2HQ5b8GTX5swDsB00MwD3rfqZwMryoPE7ig
-	==
-X-Google-Smtp-Source: AGHT+IErZ25gV+eXgW2FfiqdWsERg74MYX9egJ0dNA3utVbKlHHADknNBucW0o7iJsJnYq6T+ycH3A==
-X-Received: by 2002:a05:620a:4693:b0:811:cc7d:5096 with SMTP id af79cd13be357-811cc8c957dmr195712585a.72.1757079650679;
-        Fri, 05 Sep 2025 06:40:50 -0700 (PDT)
-Received: from ?IPV6:2605:a601:a6de:d300:7483:aeb9:86a5:6b19? ([2605:a601:a6de:d300:7483:aeb9:86a5:6b19])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b48f756d16sm45197811cf.34.2025.09.05.06.40.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Sep 2025 06:40:50 -0700 (PDT)
-Message-ID: <a1f72b71-2068-4526-920b-bab82137a509@gmail.com>
-Date: Fri, 5 Sep 2025 09:40:49 -0400
+	s=arc-20240116; t=1757079807; c=relaxed/simple;
+	bh=97JVEBOhy1D013yuaMCWgmaNE3yGg0BouTw8kp1MpGI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=dnLuJIcNnBrJYl19CJ5+vKsCy9lGe51+yFcuKVNvb4wS5y3kHuXrJ/yRlUxnVfbSB1mjSHFkM8RirWwf6UAfZAkDx4JT6PdocQIuw8KmZgyJyLZjH8jdlhGysJc7ZoX+Ibx1xLOikbjeo9VQ9vf4etFlYDeLr12BGCpK4eYNXto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77] helo=[127.0.0.1])
+	by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
+	(envelope-from <jre@pengutronix.de>)
+	id 1uuWin-0006X2-Tv; Fri, 05 Sep 2025 15:43:21 +0200
+Message-ID: <9928e25d-f20c-41c1-9a33-5214f54fb11c@pengutronix.de>
+Date: Fri, 5 Sep 2025 15:43:21 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,34 +27,53 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Doing blobless clone by default; switching between blobless,
- treeless and full clones by a command
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?=
- <dilyan.palauzov@aegee.org>, git <git@vger.kernel.org>
-References: <79ed51fbd94ec2793ab0388b33963b366e48c590.camel@aegee.org>
- <2ebdff4d-8adf-45d9-8cb5-6d7ee39f218d@app.fastmail.com>
- <7713256d-e258-4356-b303-128fdb417972@gmail.com> <aLrWUhtCqp1hMcQS@pks.im>
+Subject: Re: [PATCH] GIT-VERSION-GEN: Use standard versioning suffix
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+ gitster@pobox.com, Patrick Steinhardt <ps@pks.im>, kernel@pengutronix.de
+References: <20250905-semver-v1-1-3f6dd32f71a3@pengutronix.de>
+ <aLrVQLZpAf-WqFvY@fruit.crustytoothpaste.net>
 Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <aLrWUhtCqp1hMcQS@pks.im>
-Content-Type: text/plain; charset=UTF-8
+From: Jonas Rebmann <jre@pengutronix.de>
+In-Reply-To: <aLrVQLZpAf-WqFvY@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
+X-SA-Exim-Mail-From: jre@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 
-On 9/5/2025 8:23 AM, Patrick Steinhardt wrote:
-> On Thu, Sep 04, 2025 at 08:19:59AM -0400, Derrick Stolee wrote:
+On 2025-09-05 14:19, brian m. carlson wrote:
+> Git doesn't follow SemVer.  We make breaking and incompatible changes
+> without bumping the major version all the time, so it doesn't make sense
+> to say that we should follow SemVer for version numbers.
 
-> So in general, the recommendation I typically give is to not use
-> treeless clones at all.
+I meant the lexical format of semver, rather than its semantics, and the
+way that snapshot-version suffixes are separated in particular. The
+output of git-describe already aligns with the semver syntax so it seems
+reasonable to expect that `git version` of a snapshot build would follow
+the same syntax, which has become quite common, and for which parsers
+are ubiquitous.
 
-Rather, I'd say that treeless clones are useful if you want the
-speed of a shallow clone with some need to analyze commit history
-(with no path history) for an ephemeral scenario like a CI build.
+The change in 2006 (commit 5c7d3c9507f7) aimed to make versions
+monotonic for RPM packaging but the resulting format doesn't seem to
+conform to a known version string format, and not to today's
+RPM-packaging guidelines either looking at [1].
 
-Treeless clones are not a good approach for doing ongoing work as
-a human. They are a tool for a very narrow case, so don't use them
-unless you understand how to avoid their pitfalls.
+> I would say that since Git has had this version number format for a long
+> time, b4, which is much newer and should be designed to work with Git,
+> should gracefully handle the Git version number rather than have Git
+> conform to b4.
 
-Thanks,
--Stolee
+Is this really Git's version format, or just how git-version happens to
+print in snapshot builds? Is this format used or depended on anywhere
+else?
+
+I agree that b4 must follow what git-version outputs and I sent a patch
+for b4 [2] but each tool having to implement custom parsing for only the
+specifics of the git-version output (as opposed to git-describe which
+follows a common format) makes integration needlessly difficult.
+
+Regards, Jonas
+
+[1]: https://docs.fedoraproject.org/en-US/packaging-guidelines/Versioning/
+[2]: https://lore.kernel.org/tools/20250905-versionparse-v1-1-48d926da9c10@pengutronix.de
