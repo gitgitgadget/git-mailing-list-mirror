@@ -1,221 +1,146 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B30272E51
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:34:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0479221577
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:37:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757100880; cv=none; b=onW7X7LgnB787/E41L1aM6aWtXhVvHnV/rJg4tHLJW9Og5UXBGbIbOqkYo9tMVch0hUgsDWJJ2syKba7oiTtAops/fGC52zR4AzQZc4hYaiY4ZupqFYo10cQeuxZ0Uv2szXqBSX4/UPD2k009Xor20+twce2VS4N/V29voR0OYc=
+	t=1757101055; cv=none; b=A+7i/dBZBHHs6+BfJ7yMidn+Nky6HRNh7gGpePvlQXGfkZnX2FBsaSSZmq6MI2K8FXMWAd6qHWnuU3kIHx0o0AQP1osvqdm4ASXFiSx2syuz0migVDvCh59Id+ojzvcsy2Guszkg9E0Dl664MeCbUooUfrl73+q7CStHb5BtLoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757100880; c=relaxed/simple;
-	bh=IJg4h2/lVSSu/v6Xkhar0p06NHkceiyQiDei2LwcAWU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kfd4xbxo9uS84AQBhv/946pNMT9NkxHa7rkrHQNnk2F9NF+CUP2+GYEr6fWoIXh4Ldjfm4XVWl7R6P0YwqwJ3AZvapY/Uc7QthNOM2unlCp7LBskCFAqJxjwyjFQzS2nht9HjVvLt8rkvWylJ+IZ7NHGUuVD57zj549iSkaJ0i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=lfak7DIC; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1757101055; c=relaxed/simple;
+	bh=Teb4jjaLJqwgmMIzKzkX+pXhZEVyjY3mPSWTfrIG9vo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=W4b/7RXSlDoJh5nIKWZWAvDruhNACpWwjGzUhFzD0HPHZA8shNCYADhOtsDq+shM9GmOqdaW6qahRI2EJEfiHj3wY5zToHMEjLPWVpCPewK7dVzLJW5NOojr3ZjJ6TnFXl7QKVrLwSkTtzVDDPYirex6m7UOtNS3aMJaFmE9fpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eORfg6/Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dlmFq3sP; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lfak7DIC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1757100876;
-	bh=IJg4h2/lVSSu/v6Xkhar0p06NHkceiyQiDei2LwcAWU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=lfak7DICdwjU21a4i5RwM3aOzM6PV/bgpBN14+LHTzCK6lkb1BWRU2sYS5AfFBMux
-	 WRcJ1M4gAmV00n5YgFRaPwT1DusehY+4t0/RHBPLDIhYV1/xo9gK2NXjYfObI99qSK
-	 zXB7Rzcv2BIZVNBSuGEyrNPHaQA27hcwMABs3cw7DoZ+riO9qIiQJUBvoXoMDX66oG
-	 +fFaiO6GrpSDV6dpg8HRsMmr1RdD1476WqLleXyIF7apeKrsH+cEqwB9Wm7akoH/6o
-	 EuwMYBmb10kD3QQ5oyEqowbWwz9ema4e9GynJa2BzywkLX/v6d8YLuKWPh2fEQ5CTz
-	 qvas3NdI4xMnmLPmN4L44fzFrAsHD/+sn7LRt+Hto9uXr2nv4p9X0vKwNEfRjeXBq5
-	 zzPz0Em+BFPjzXcDZxDs1K+MBcFL46IN7CeSmjbje8hTOF+CZY3TVDPrTVcKaAE81g
-	 tF9okeLD6G06p5uceIZcyxtYoeajkR3ASQ95Sk8uB2XjrYEcMNs
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f8f0:4bbe:8989:f575])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C516C20100;
-	Fri,  5 Sep 2025 19:34:36 +0000 (UTC)
-Date: Fri, 5 Sep 2025 19:34:35 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC v2 5/7] BreakingChanges: announce Rust becoming
- mandatory
-Message-ID: <aLs7SwT-Gd6hXuvH@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-References: <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
- <20250905-b4-pks-rust-breaking-change-v2-5-6939cbf4a0b8@pks.im>
- <DB9P250MB0692264976781C194B7D6194A503A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
- <11394b17-905a-4888-981c-c5b4a7f8cd62@gentoo.org>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eORfg6/Z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dlmFq3sP"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C97DE140039F;
+	Fri,  5 Sep 2025 15:37:31 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 05 Sep 2025 15:37:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1757101051;
+	 x=1757187451; bh=v9Dmg1vk9Ya5vto94JqS8N0oKDem60lbLtzTycsA5Io=; b=
+	eORfg6/Z6wzz+HR1W+u39O44CDOqaUrKq4KeIjwbF8E82CyQNEuo1ampkE3tFknL
+	BzTmi40vYlQvHROttPSIuoo4qmFOX/f5y1xTtbY5ZLesXX/n1CX9ZsCXlWECExBn
+	+ES3wBfvBOF07bcf9m+z49Gwq174KR4QskaCyE333ppoIhvidEpWIhe5NYI0YsmN
+	cixwpsaxNe4kkCPkVfoIvYjVOWRBgrhdvica7NAN9gybtyNINvFK1GX7WJEAzKG9
+	LLmMalFGHLcdszS2DnenyRyZriaSawZAqCIWwgBFr5jyVi0ceDCkzH1AxKH9Sf3R
+	HdLMaN9zbRn7yZ4pIgyY6Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757101051; x=
+	1757187451; bh=v9Dmg1vk9Ya5vto94JqS8N0oKDem60lbLtzTycsA5Io=; b=d
+	lmFq3sP1BCWBqXMeAEBJvFB1AOBJDnlyJ7ohKAmUYYI1+rwEl24IurrSUYVjvpUb
+	gQe5bjKIF+43u5gU5m0+bZLNYJAodkpyBLFavlySa14CP7M8HTxFExKSF/1Z3o4E
+	glB5x1hL1PyW2LFf69iQPmzgQ2Yfy0h/NhEA/oQN4OQk1gnn0PioX0Sxqam68IFT
+	qHUxB3V+fEzOcTHstbayMs2c+AFkWa745Ergk8SIzNgK8gwjgfG1QnghdVGuEHEG
+	oQ/szgKK35nWpiYzgpZyGXw5Me4zCvdV5UEkbevmOgPNwICh/9BgJJzbwQUZ3Lix
+	6IdFoDOp4qFYr8I2FUZPA==
+X-ME-Sender: <xms:-zu7aKGGkOi3EtgE8ypy4wUSv_l5ylKZa78mNWdCl7DF1HY9KwggRQ>
+    <xme:-zu7aF4G1AaVMSPYuBZAr81AzN0VYk7f4lxmf9JtFC8Qio805SjSoY_l5oGqULUtK
+    yGIE5Kmd_uG1oeYUA>
+X-ME-Received: <xmr:-zu7aAs4x6G3oC8uzr8BoEpVQyp-h-7zbMPfOGM54doLJRWf5dsbWo_7C8NAswd-BzagZtpu0wQbJYv-v9d2CIFmZAf08OXUv2kexTo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeljeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeggefhudefkeegueeigfejhfejvdejvedtheeguedukefgieelfeeuteejieeu
+    leenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnohhurhgrvghllhhmsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-zu7aG70kb9aZXvaGKB0XJyytHKw3r9swktzdzeU5GgktQXFRTspaw>
+    <xmx:-zu7aLU0vroSij1s82729WjDPBbV3ywjve73RTl8JpSuTI4gPyXDgw>
+    <xmx:-zu7aI8iHntC5L4SAEQztAIYRc7sWtiHcr-Emxjm64HVZwOivgEfYQ>
+    <xmx:-zu7aHkX4ndWQWSdIgAQTf2G6sogx8Fp0OoDDoofJRwnP3970cY37g>
+    <xmx:-zu7aJXBXesG_Zb5jDIJGgAI0XQCpwERalU48UbuU2ywKkE8aRsyxFIw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 5 Sep 2025 15:37:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?=E3=83=8E=E3=82=A6=E3=83=A9_|_Flare_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?B?44OO44Km44Op?= | Flare
+ <nouraellm@gmail.com>
+Subject: Re: [PATCH v6] alloc: fix dangling pointer in alloc_state cleanup
+In-Reply-To: <pull.2040.v6.git.git.1757098308277.gitgitgadget@gmail.com>
+ (=?utf-8?B?IuODjgnjgqbjg6k=?= | Flare via GitGitGadget"'s message of "Fri,
+ 05 Sep 2025 18:51:48
+	+0000")
+References: <pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
+	<pull.2040.v6.git.git.1757098308277.gitgitgadget@gmail.com>
+Date: Fri, 05 Sep 2025 12:37:29 -0700
+Message-ID: <xmqqh5xg3d3a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="84Xj+shCT3GcNPxB"
-Content-Disposition: inline
-In-Reply-To: <11394b17-905a-4888-981c-c5b4a7f8cd62@gentoo.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---84Xj+shCT3GcNPxB
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On 2025-09-05 at 14:32:49, Eli Schwartz wrote:
-> LLVM is theoretically an open source project. So is Rust. We can ask
-> people on those platforms how successful they have been at the political
-> side of convincing the Rust project to allowlist the platforms inside
-> low-level case statements of platform-specific defines, in order to
-> attempt the first round of "try running make, see what breaks and start
-> fixing it".
->=20
-> Hint: it did not go well, in the sense that the rust maintainers even
-> accepted the validity of making a proposal in the first place.
->=20
-> LLVM is easier to work with, at least in that sense. But not all
-> platforms are supported by LLVM either, and you do need a stable release
-> of LLVM to support the platform before you can begin work on rust at all.
+"ノウラ | Flare via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-It is possible to build with a custom LLVM because all of the
-distributions do it, so it is possible to build the work out of tree and
-then add it when everything is ready.  I mentioned elsewhere in the
-discussions that LLVM upstream said that work on IA-64 could continue
-out of tree and then it could be re-added if there was sufficient
-maintenance and support, so this is at least in theory a viable option.
+> From: =?UTF-8?q?=E3=83=8E=E3=82=A6=E3=83=A9=20=7C=20Flare?=
+>  <nouraellm@gmail.com>
+>
+> All callers of clear_alloc_state() immediately free what they
+> cleared, so currently it does not hurt anybody that the
+> alloc_state is left in an unreusable state, but it is an
+> error-prone API. Replace it with a new function that clears but
+> in addition frees the structure, as well as NULLing the pointer
+> that points at it and adjust existing callers.
+>
+> As it is a moral equivalent of FREE_AND_NULL(), except that what it
+> frees has internal structure that needs to be cleaned, allow the
+> helper to be called twice in a row, by making a call with a pointer
+> to a pointer variable that already is NULLed.
+>
+> While at it, rename allocate_alloc_state() and name the new
+> function alloc_state_free_and_null(), to follow more closely the
+> function naming convention specified in the CodingGuidelines
+> (namely, functions about S are named with S_ prefix and then
+> verb).
+>
+> Signed-off-by: ノウラ | Flare <nouraellm@gmail.com>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>     alloc: fix dangling pointer in alloc_state cleanup
+>     
+>     cc: Torsten Bögershausen tboegi@web.de cc: Jeff King peff@peff.net
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2040%2Fnouraellm%2Ffix-dangling-pointer-v6
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2040/nouraellm/fix-dangling-pointer-v6
+> Pull-Request: https://github.com/git/git/pull/2040
 
-If LLVM and Rust upstreams are just completely unreasonable and won't
-accept certain platforms at all (which I doubt), then distros can carry
-patches.  It's not pretty and it's a bunch of hassle, but it's common.
+Nicely done.
+I see no more need for further changes.
 
-I'll also say that LLVM is a pretty useful piece of software that most
-distros will want to have.  It provides clangd, which is one of the the
-major C and C++ LSPs; it's used by Doxygen, which is a major
-documentation generator; and it's used by Mesa and PostgreSQL, which are
-pieces of software people will want to use.  And, as well, it provides a
-complete compiler toolchain.  So I think there are compelling reasons
-why porting LLVM is valuable functionality to have anyway, in addition
-to the fact that it also gets you most of the way towards Rust (and a
-variety of other, less common languages).
+> +	if (!s)
+> +	    return;
 
-> That is the advantage of GCC-rs -- it has much broader platform support,
-> so if the rust frontend works at all, it will likely also work on the
-> specific platform you care about (and the GCC developers usually don't
-> bite, even if you want to enable experimental support for new platforms).
+This must be indented with two tabs, i.e.
 
-I agree gccrs is a great project and of course I want it to succeed.
-Clearly having multiple independent implementations makes it easier to
-find bugs and increases portability.  And if it means that we get better
-platform support, fantastic.
+	if (!s)
+		return;
 
-However, if your complaint is that Rust upstream will not allow
-platform-specific defines and other incremental work without support in
-LLVM or other core toolchain components, then I don't see how gccrs is
-going to convince them otherwise.  I also pointed out elsewhere that the
-compiler is but one part of the equation and that libstd and libcore,
-which are shared between the implementations, plus their dependencies,
-are absolutely required for Rust to work on any platform.  If Rust
-upstream doesn't allow support for the standard libraries, then distros
-will have to carry patches, gccrs or not.
+but the copy I have since yesterday already is formatted that way,
+so no need to resend this patch.
 
-To be clear, I do support this kind of incremental work since it's a
-valuable way to do large projects (and it's what I did for SHA-256 in
-Git and am doing for SHA-1/SHA-256 interop), but saying, "brian and
-other Git contributors say this is a good idea" may not be more
-convincing.  To the extent I can encourage this kind of thing, I am
-happy to do so, though.
-
-> > Do we want to commit to promising support until gccrs is ready? What if
-> > gccrs ends up abandoned? Or takes an unexpectedly long time to reach a
-> > stage where it can build Git? It might make sense to give this LTS
-> > release a time limit instead, or in addidtion.
-
-I think a two-year limit is reasonable.  As anyone who speaks Spanish
-will tell you, there's a degree of uncertainty when speculating about
-the future, so we cannot guarantee that gccrs, however promising it
-might currently appear, will be usable or viable in that time.  We
-cannot agree to backport patches forever if gccrs doesn't materialize,
-so a time limit seems like a good idea.
-
-_However_, I will state that I am interested in seeing if we can get
-mrustc to build Git's Rust code.  I understand that it is not intended
-to do that (it's intended primarily to bootstrap Rust) and it definitely
-will require some patches to get working, but I think it's at least a
-possibility and it seems like a much lower effort way to solve the
-problem.  It will probably involve some inconvenience on our part
-because it's very limited in its toolchain and fake cargo, but I would
-be willing to deal with said inconvenience for the purposes of
-portability.  And it works now and is (for its limited purpose) actively
-maintained.
-
-> Well, that will one way or another mean users of such platforms cannot
-> use git at all, not even old versions, lest they be hacked. Bit of a
-> problem for an application that mainly exists for the purpose of
-> communicating over the network. I suppose such platforms can finally
-> leave the world of DVCSes, given:
->=20
-> - jj, breezy, and mercurial all use rust already
-> - bitkeeper and monotone are dead
-> - darcs is written in GHC (haskell) which is far less available than
->   rust
-
-There are other Git-compatible options.  There's Game of Trees, which
-uses Git repositories and is being designed by OpenBSD.  It isn't
-drop-in compatible, since it's designed to meet the OpenBSD team's
-needs, but it appears to be basically functional (and is shipped in
-Debian, no less).
-
-There's also libgit2 and Dulwich, which also implement Git repositories.
-
-So there are options for people who want to use Git on platforms that
-don't support Rust.  I suspect that the lack of Git on certain platforms
-will actually be more of a problem for those platforms than for Git,
-though.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---84Xj+shCT3GcNPxB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaLs7SwAKCRB8DEliiIei
-gWXsAP914QKYHV5EBgB2MAqV0OdqPsXZdeeFkmeh2oAno+Z7HAEA54rT26brEXF0
-MUN0Ty8/NTsYDOvZLVd23o+eciBIAAc=
-=dlaf
------END PGP SIGNATURE-----
-
---84Xj+shCT3GcNPxB--
+Thanks.  Let's mark the topic for 'next'.
