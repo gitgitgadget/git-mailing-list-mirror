@@ -1,129 +1,127 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6F52F7ACE
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 15:38:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDD528641E
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 17:10:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757086717; cv=none; b=Jm61WOPeVTVmDRGVfYnP/r5hrDyV/+wLRGSRx9XiJ6dl0uJZAz0DGeY8aR/5e1n5YGatDFKrUEwMtIs3LldPgR7vqDxBzw7bxqkEHie6BcqcJTiKXcmRCM21iMDyg/ePVLSPxVrc9025fA26udvZxcUyIYZkait4XuycuVq2LcY=
+	t=1757092218; cv=none; b=DmZmBhJaeWegUdfmfH21+St0XqCPNQglfvEuVSCy2CmjLs1VU6ybHR+1D9qWmDZ562qk8VuKIAC558dBKTMpMYVvEame+0PHE7DaVL7ZP/BofCtKPteeUEPpYdw+lEeTppyxQovFlfKHdahusXe5LyPTLPIBMkxYTI3rj5mU2UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757086717; c=relaxed/simple;
-	bh=a3uFfh4nxRrGEp+lgCoDn6KAMa8O0/H8IeJyMMf+twY=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Tyyo+i9Vo/99/fBkh6W/t0pgdR8yqt8DqWZz5EnDBJkNmDYX+d+n618mjHLOLOrEU+4pHB63Zqli4mrh2Z9UtuM8HTyxWsUg9tbeqvn6tEXMAD9lC6u0x5NAnIQX8qRXj7fLP4mPaHz1C5O4XmMlSA6VxMddWc0tpSzbL/5zJHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=J1kbM0JE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j//4EOMG; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757092218; c=relaxed/simple;
+	bh=ng6DCjii0k+VyGQ96ER8Rt3FnYGfp9kr5HS3QXSpH2g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EXJIJV//ULWBZc+hmCMZm42cryoJkMgz5PMrWnjrRas2ONENqOl7mOSlZyH99VYY4exT9i1hXkYi7odFjNDtKYXhRGLYsrRU2og8KFWF2OzMlgFOYstDb1BYVRqh73r+pKQRYjllcxjLQRAC6QlYloip+WmThFzy+9B62ZFT0f4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zArOsDJX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZuVeMtOQ; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="J1kbM0JE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j//4EOMG"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5D38F7A0377;
-	Fri,  5 Sep 2025 11:38:33 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Fri, 05 Sep 2025 11:38:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757086713;
-	 x=1757173113; bh=1z+EezYFhCBIZjO54EaOItR0CC+0fghX6v7icZxTjRY=; b=
-	J1kbM0JExyH2kFQxf1UitySPk18h6Hr/ONiQitd7CDn294Z/MwD2E/9/+91g7waw
-	68J2jZDwkUSA0S4W5WcjqenZgSF26bBZADH9q0KyufF31x49+QsXJ4cbNQisbjg3
-	vFrxbLD/T9rX58YdO6y1ahmbm29pibZEH13vUQ/6FwIN2sW/3iIEHVqUZGlF89sH
-	DvA185VeDDcwfSLF3SouOxoRAOr03MfuWshRQgV/ndx6wtwNAs89P1yQNL72glc8
-	9a3ocM+xmCB3FXlZSJpziywk/Uv3r1rNXvyQX4O3+vn8vyerectBYYiyZcwmnqPC
-	LVEMMZygK+ILifeadjaFEw==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zArOsDJX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZuVeMtOQ"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 32425EC04D4;
+	Fri,  5 Sep 2025 13:10:15 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 05 Sep 2025 13:10:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757092215; x=1757178615; bh=PI/WFAl+aW
+	9EFWV8OulzIOUi+0/AdIrrF7KunlSWIu8=; b=zArOsDJXy1Tnclsng0fZRUtpbe
+	en6HqOsYEOKaeRCnPYhwk9qfK1oeDOqc6cWDx2QWYOD2zowloAJZPIrjpsVonG6G
+	FR0rqdQEJYEbUVK4IHjo4ey6yUojyEmSkP6e8qqnWQIeA3kI0rMMotD1nbJAQ5YQ
+	1FNgmXVkEGCR7UaRW/4SRG4sc3QWDUVXyt1G13UODip/YvMNH+11mlHEAL8Ygebd
+	OgSiZKmdBfyDP3hDKG9M4QiHBt9iW/gOk6Mqs9c412PTLakt0re1b4UmS3md7fvr
+	KVKKC8JzQCGbXTI4dkYP4QT9F+jug9EHXMW+ooOMcYeH5dreXcjo1jc5vSAw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757086713; x=
-	1757173113; bh=1z+EezYFhCBIZjO54EaOItR0CC+0fghX6v7icZxTjRY=; b=j
-	//4EOMGRoKbfMd24U7q4EqYCieDd335zEfL0VsYd2GeECTApECkUhk7zjkv1BSLV
-	/6RmGc0FFqTdQrIl682xbe+il0lTp+3Sq5yaQFO1S2cMLvtQJ7j3fymcwkFv5EbX
-	oq+bHkhEFRzDKKhLT8OyWHQJIaYa/0X6626HWlPTxmpTMbWT5rWO6eC5BKEvl5wC
-	zgcAD4oILOHwIoAZkchS7wG7Lu8bA6YgcLwZf9MgaBLk62uIKXSgJgydCSK6U9jv
-	vQyFhFsnwF+9VgiwrNMJRRL5+dqcLsH+TsXLvo034FVWA3MI1FLd9v2uI0xtIuQk
-	kgqhrrRzgig6ppn1D+qEQ==
-X-ME-Sender: <xms:-AO7aK1jAUvOs--4JNOrL3JibLxDMHHb4-9ugZpDfi6kpRKpxqyyb2M>
-    <xme:-AO7aNH6lmB0tfgDjX5BG0dTEiKiu4bVywCwbysQ-T_UBN16mMqkFj31HQ0zrYJBJ
-    iIfZowKohjirl7J_Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelvdejucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757092215; x=1757178615; bh=PI/WFAl+aW9EFWV8OulzIOUi+0/AdIrrF7K
+	unlSWIu8=; b=ZuVeMtOQkVHpbKF7j6PVrlqC4/1fsU6R2MxYYKppAueQ2ocn+qj
+	I/EOUFhtkKODoYHqspF/r+08K+12wLmEB+LSpQyD7faYSJwF1F2TY7XB+g6RDUBn
+	s4D8L+Y0M/fSeHokzrPCzmHQPwgO4lhxv+Z9fx0ViXJFl2G07volix7iqJKk1SWl
+	F/Wpj+XwuIKYYFtvhKPTahWSckG+q/6gyyGucQreR74Jo18vIQVeenJOnJj+m37Z
+	mnPI0uN1UArNpVexGHmqw83ad3IilpcFVLSPtyqKhCTbMtkAHnoc8gQhrgBUA7CJ
+	LEECDZ3Vxv9HmFtcgGDXev3fYuskDoxf0KA==
+X-ME-Sender: <xms:dhm7aPHZq0kX4iFAzxK9x3Q1yCfm3A_2aW4dWXv29cboZ2QXzs-d_Q>
+    <xme:dhm7aJMmRDN7Rp9heXD7nsWOvF7mcUE5p4SFRWwwYu1qGtV27zSuS79fscepBEWOW
+    Hp82-50DuRjmMYNOA>
+X-ME-Received: <xmr:dhm7aA40vSUeZanu6dXNVwficH6o8D-NnWieVth6yajzc4Fm2ggJkWRq3-FpmGF5JFBj7qeO2yPO6J9E2y8LS_JU_XIK2uBlVg0lwbI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelgeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthho
-    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
-    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeegjefh
-    heeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphht
-    thhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:-AO7aFX61f_Xy5g_OKIFrHBe8I40-b7Ze-V1HjrNEH7N05IRZFGdjg>
-    <xmx:-AO7aCuxdd619BMGma4YwRSX3xeCpTJVr_2EqWeagPDteeAOSDN-ag>
-    <xmx:-AO7aAZr6RZoYhOKtm1ecIOW8sug1Iihm9VSHxVkDyPJUwYqrBtUag>
-    <xmx:-AO7aJU9S6vWc9-2_LxWVWxQEU6rJcInSe5hGoCP7RHCUx3Q8qzTsQ>
-    <xmx:-QO7aHc4FbnpG1cQfrCBgGmPgrFqqxO_mqwm0ZJfyT8vftSOtXdJrMbL>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id AD3691EA0068; Fri,  5 Sep 2025 11:38:32 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    eprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhopegthhhr
+    ihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhhigrmhhthhgrkhhkrghr
+    tddtudesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvd
+    efsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:dxm7aMjtu7BtjzbnCQMBKi4t7j84uTQWYhS3BeLRrmktShh_qtt8OQ>
+    <xmx:dxm7aFekp81QjYYBo3qaniTDmM9PsBKQyoF-OL8pujzDls5cMzJjHQ>
+    <xmx:dxm7aEwfQukiM6fe6byXRtENxbtktQgyhRWFxh6pSbZ-nFtjcEpqcw>
+    <xmx:dxm7aE2CIfO2PjRfymeyOG9-92tXwRL0wNO6cp7_gljKGoarr7G63w>
+    <xmx:dxm7aMF6FZt4d8FpXQNGhqajCu1D1VlAfksquQvzMiJZ2PqtLTyiPSyn>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 5 Sep 2025 13:10:14 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>,  Ayush Chandekar
+ <ayu.chandekar@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org,
+  shyamthakkar001@gmail.com,  phillip.wood123@gmail.com,  ps@pks.im,
+  ben.knoble@gmail.com
+Subject: Re: [GSOC PATCH v6 0/3] environment: remove sparse-checkout related
+ global variables
+In-Reply-To: <xmqqv7lx56kn.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	05 Sep 2025 07:15:20 -0700")
+References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
+	<cover.1752882401.git.ayu.chandekar@gmail.com>
+	<CAE7as+b2QKcPVnyEupriK54bMSSxdRAmSrMZqTvfq_KabaU-Ug@mail.gmail.com>
+	<47d09c43-6d27-40ff-8dbc-22cc4a5949ed@gmail.com>
+	<CAE7as+ZpEwiNsDAozoZXqHRLOF3+hT++uo=mzZqEvTPovQN9uw@mail.gmail.com>
+	<xmqqv7lx56kn.fsf@gitster.g>
+Date: Fri, 05 Sep 2025 10:10:12 -0700
+Message-ID: <xmqqldms3jwr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AwDhMGrf3VWc
-Date: Fri, 05 Sep 2025 17:37:03 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Toon Claes" <toon@iotcl.com>
-Cc: git@vger.kernel.org, "Patrick Steinhardt" <ps@pks.im>,
- "Christian Couder" <chriscool@tuxfamily.org>
-Message-Id: <cbee77df-19e7-4070-aa79-a80107cbcc65@app.fastmail.com>
-In-Reply-To: <xmqq5xdw537l.fsf@gitster.g>
-References: <20250905-toon-fix-last-modified-v2-1-d859eeed408e@iotcl.com>
- <xmqq5xdw537l.fsf@gitster.g>
-Subject: Re: [PATCH v2] combine-diff: don't override recursive flag in
- diff_tree_combined()
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Sep 5, 2025, at 17:27, Junio C Hamano wrote:
-> Toon Claes <toon@iotcl.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Ayush, what's the status of this effort?
 >
->> This patch is based on 'next' at 1ba7204a04 (Merge branch
->> 'kh/doc-markup-fixes' into next, 2025-09-03).
->
-> Can't you be a bit more specific?  We usually say "do not build on
-> 'next'", but what we really mean by that statement are
->
->  * Your topic may interact with some topics already in 'next', but
->    it is unlikely that you depend on _all_ of them.  If you are
->    willing to depend on a few selected topics (meaning: you accept
->    that you have to adjust your topic when they get updated, and you
->    accept that you cannot graduate before all of them graduate),
->    identify them and build on the result of a merge of these topics
->    into 'master'.  State how you constructed your base in your cover
->    letter.
->
->  * If you are truly depending on _everything_ in 'next', then stop.
->    Wait until all of them graduates, and then submit your topic
->    after that.
+> Currently a topic by Derrick is built on top of this one, which
+> means it is stuck waiting for this topic to stabilize.  Should we
+> ask Derrick to rebuild his topic independent from this topic and let
+> it graduate sooner, and when you reroll this series, you'd base
+> yours on top of whatever the Git codebase looks like when it
+> happens?
 
-It seemed like Toon was applying the part in SubmittingPatches about
-applying fixup patches on top of the series once the series is in
-`next`.[1]  But then used `next` as the base instead of the series.
+I tried to (re)adjust Derrick's ds/sparse-checkout-clean topic to
+build directly on top of 'master', which involved removing its first
+step to make it depend on the global core_apply_sparse_checkout and
+core_sparse_checkout_cone variables, which was not too bad.
 
-Of course that simple topic named kh/doc-markup-fixes is irrelevant to=20
-what he is fixing up.  ;)
+The result is queued on 'seen' I just pushed out.  Derrick, could
+you take a look to see if I screwed up any?  At least it seems to
+pass the tests locally.
 
-=E2=80=A0 1: =E2=80=9CAfter the patches are merged to the 'next' branch,=
-=E2=80=9D
+I've ejected the ac/deglobal-sparse-variables topic from 'seen' for
+now, but perhaps it may want to be rebased on Derrick's series when
+it is rerolled.  We'll see how fast the sparse-checkout-clean topic
+can enter 'next' and graduate, hopefully soon enough.
 
---=20
-Kristoffer Haugsbakk
-
+Thanks.
