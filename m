@@ -1,155 +1,130 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D21171C9
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 10:31:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C06A2F5495
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 11:30:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757068296; cv=none; b=h894g0eaXAWwCluPGND2wU8r4BoKVPUklldxE5sL0RuS/VgPcMFc26z3cPwFzD2UTt8abQx7WCavEterK403TOPRD8V1QbMFYI1ZGJsOfovhyStsGHYNWrpydEcM/0gvWHrpkuJNlGS4md217HK6YL6TuhSloO/M+qKSu1AZ5Bg=
+	t=1757071808; cv=none; b=kU6jSu5Zd3dYfJgZVrMWX1SGE7NNCDiIO6eiDaXnOj+M+X92hCf7J7c+KdbLU2Nlv68dKrMp+Ml/hMIqP6wafMU9ldOjnwYUWky8JiFGMTy3eMdjZaDwQmb3oSqtXhHmd3YuTc72H4wEJYdOSPJyNEwRe/nZ+7TydJrFxixB1G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757068296; c=relaxed/simple;
-	bh=NJRAUeLg2IDmRVJcAwXs3pHQ6qiP27U1XHOMrKvkDKw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=nPnxgr05QwOhG6M81NFoSypaFzMYOk/uOl0YVp7AQjar0w3c1aCOki6mJEss22KwKIFL/MFPNwoNaARzh+82dM+cjccNVcDlHTgA7y4O7Xcllc+fg/DJaBJ8KZv/JjwVWmxtK1pnUTJXf82ECiag3520Z0GrcRCExQfWpi9c8OQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rn1owEtG; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757071808; c=relaxed/simple;
+	bh=49V8j7eqhZpAZMZGG7W2omPXRfPReA0nJffPSKwu0vQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FYchI7x0owkMHYzY8xKOU5L/ZkmI96XppoYcNj/hXeN5FpniLvmZIqbUD75fXwn50p3/NIBJbIhrygd0TLFCZ8Sn4t2RjMCs6vlkWphxnZ8/obgh6z+ApbG5L/pYuVS+OQ4H+Ws2gXaqIIgcXMZ5iGG7M4OsqlPMZ9FJJR2UsJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mWmKJ53k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h9bkPhQz; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rn1owEtG"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45b9853e630so18404565e9.0
-        for <git@vger.kernel.org>; Fri, 05 Sep 2025 03:31:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757068293; x=1757673093; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WxFgUDtZ4FZl5Y54Xv2BhGOAGfk7g7Ew1zzjKcGQQLg=;
-        b=Rn1owEtGziSYraTDj6HA84fxnuuMzTSZY4cl4UPBBsFWRpMZ+BwllYlOnIc3IJxBAo
-         5KIMln2TNkuwDmka+8YKs5sm3UxfaPK4L+W2WmTrpCdoSx3Y/NXQCn+7tS7Rip6QWHdN
-         ZuIXozH0Z3FiT14wPLpa59eGogR68+bgb7/1rKzswDU7X2V/Y54Rv11iXvQ4Y5TzM0rO
-         Jg6vlPuZidll0/MhoqtG9ut/FPwVK/43+EcrwofNatfQtXKHFDcqRu76Hh78khh1Xd+R
-         oEkhtGxPcy8n/4lKQUDQX6WvHpmZKmGnOCuu0Bv8YEjDLi6i9W+hVoHUMkUHTBMk5Mpa
-         t34A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757068293; x=1757673093;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WxFgUDtZ4FZl5Y54Xv2BhGOAGfk7g7Ew1zzjKcGQQLg=;
-        b=nwrH2lA9VO5Are/ABmhQNhz7N99Ny6jGSBigDB5p+x1P/+M9DI1VPiLp6PG57hWj4h
-         H95L14mUq4vA8U1TDvY9XH129i+5CTs7/w5DADXfdDYbO/l1cXETKZMjSWaGXnFF2ZfI
-         ZJT9AEtb007TxVnBtsJJvMsKehhYS/i1ChhNLRe08hYUHsV7yhR2w0pZ5kRA3MiCpdCT
-         coWN1tLg/V5aVt7kiI5wCMsYOKEEm+WZKvdD5DxGUJmf46CcXfQSjJ+OizpuQS8CkXnI
-         8sfa7njm2m/tAx15XoubKihjcN0cb7Az+yb0Jz1SIxSocPwdW1jhk2MfcAngyuBC1MCd
-         iffA==
-X-Forwarded-Encrypted: i=1; AJvYcCWuNiWhuz459Wj8tkhpzVX14iNy1aGVX154EqD1zBoUoudVvyyIKDxjNEVI+8Pw+4K3680=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyix7bSCDxc3hlO5Y2KKIXaAojSbSb/jaj2eb9seZYVEUp6Yj5T
-	rKazAiTpe5jIqUO3kE4N1rw8ash0O0rYwLkWznDPKQpTyl8LfL6Gonly
-X-Gm-Gg: ASbGncuF67gysvtHx6AypDMOakrNdUZt/8mdc9ljs+Bo7+EYtVgKM8QasUYxKA6BvpX
-	IxQA1iSNoBJlA0JUVOpSSwrgNvhimSdBF9EYNXxYL4Qe4DxsyOyJrEeye3kUjmFH3k+jM4L0pqO
-	5SSpuwng4DcoocjFW90ovCuZtl2kt+wjFmjkLhp880QkZ4lZJeCH+by5zGhyJVW9F4taZByIaHV
-	SHchI7/WsPTJ/vZbGVg0AbNbFCubS8/0PRx/Fmu3pvW5M1rdwIUc2fmRkDRlbPSBVW712TgV68g
-	v8iUjGmnMJx9EuP2+OuXjgHGNG1/rW1OOlOK7J1EGmGunPJkIJ50K37LyTZIbDYD7IFNLdCwzik
-	HVbendGEmfWh5stzz3m6knkhDUKlEUuAtdSbFKOgiF5l+U3mgl0ZK+NBNHpyVdT0BA90Y5ze2Kj
-	w1dthYiXmOXGr46EU=
-X-Google-Smtp-Source: AGHT+IFOE8FuTEhmi8c9iHvpdyc0eTqq/DUhMgdo/QIrDAklrMmdHw5h4PalW+Ujo6Ud8XoYMO++Vw==
-X-Received: by 2002:a05:600c:458d:b0:45c:b6fa:352e with SMTP id 5b1f17b1804b1-45cb6fa37f7mr73854675e9.18.1757068292547;
-        Fri, 05 Sep 2025 03:31:32 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc? ([2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45dcfc3e11esm39163465e9.0.2025.09.05.03.31.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Sep 2025 03:31:31 -0700 (PDT)
-Message-ID: <ada227ec-94aa-4563-800e-05c116a361a8@gmail.com>
-Date: Fri, 5 Sep 2025 11:31:30 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mWmKJ53k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h9bkPhQz"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 25D141D004FE;
+	Fri,  5 Sep 2025 07:30:04 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 05 Sep 2025 07:30:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1757071804; x=1757158204; bh=Ijv7jY87JR
+	fBuFRmDRches4E7nBMPaiHbK/3a041u2M=; b=mWmKJ53kow7qNX4ZTC+zj9WbZK
+	h9fMsHKO26m1y1s4Gl7C3Kl4yNm7+ZET6/7TcSgfQWGPKq6YrZ4Zbc9/kfVSwwPc
+	ORK+XMhI0+oBiWYy+/lZ3QG1azbmPYfIPnEVOHeOvy48q1rUCjF7txPpIcyKak3O
+	Pf9ptOzqSniZ1cJWtqtZkC15ByDABleXyHyvzKlFTyjb5jlKlfJRvgUeR6A53zZK
+	/od37HNjVdCVmvM9OPjY1ALKrfzF5rMfsfrsMKFP5HiMJHXSANZmD4tZ5RLDnoh4
+	G0ihxIe//JRnXVA9qjvExBYLGrHWdSYq6nWteNL8sNQIwlGyETVp70xdRPaA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757071804; x=1757158204; bh=Ijv7jY87JRfBuFRmDRches4E7nBMPaiHbK/
+	3a041u2M=; b=h9bkPhQzJ1sZ5HD6lfUphZLeoEoHEgUXNIcerFX5WUF1pHxLmD8
+	s/9Jz7HKyLMSPanQlDB7oVE+UehGA8otjuCvwr97OegCC4egUfFkne7bi4cZ7hTm
+	1XR2Otsi/wqtnDamQ0XqWCAC7PRsXG+O1WO/k+44CaF7tC3BE6Cz0Fhijc7v0Lxa
+	IkdTTQ4VhTdT/YXDEmfBydlyjKReQN3UEwFrszy72GId33LBHstcevMF7p/5Oldh
+	KYy+OrOjzM1MRYoHAJlLUoalMMVVDCTLxeh7c+9pA4sjspjilbdfO1K7++8nPmI3
+	x6QKlToZ0BTRpWVa3QsuZKeFZwBefUv+Vuw==
+X-ME-Sender: <xms:u8m6aLLNXwtD0V7au2DyMmYEa9L3nubs0_aQbI3M9iZaXIVGZksAPw>
+    <xme:u8m6aMtc9NHtbZAKpPrafLjzmjiG6ClguJ7fqg-BSia5SSvMxxxpqqJ7Woq_grkqK
+    nS2MZY8AlNnqv0SvA>
+X-ME-Received: <xmr:u8m6aKJSPRT4eQbOV31gx3UhO6wgCYH9cSR775yF97C-2CQxfBUZxH3qTyvFHskcPzTeBuCpX2wPZMVPUXGr0RDTbd8L3xcuKJ8jYSYX-Hvd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekjeejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
+    ekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffh
+    gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehjnhdr
+    rghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghp
+    thhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhorh
+    hgrghnohhvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:u8m6aF-PZqeJsoFJPlRI5Zw_ePqU2p5e0DihqhsQZ_ncofYUahMfxA>
+    <xmx:u8m6aDzFW0v7qdiVU5qeq_xiY0cOMA4PLbe8zdlrjG_pc5hOVd4SHg>
+    <xmx:u8m6aC4-cdgBKJHTZ0rcfqj2qS4d9wU49qwK2mvHUhjZOpogVnICNg>
+    <xmx:u8m6aK_I5ar6nwayC1CFN7HefArI-VabvuZa0Tqrz1NJTB4TvaymGg>
+    <xmx:u8m6aClmo8rMP3Bx104VWa01mgh8Q2WofYiNez_P-87U1BrP1iaLkmcc>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 5 Sep 2025 07:30:00 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a3ad3f07 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 5 Sep 2025 11:29:59 +0000 (UTC)
+Date: Fri, 5 Sep 2025 13:29:55 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+	Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [PATCH RFC v3 00/18] Introduce git-history(1) command for easy
+ history editing
+Message-ID: <aLrJs5ONF0Foi6er@pks.im>
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+ <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
+ <83d36c12-64c0-44e1-a5d3-dd7a5575ad65@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
-To: Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
- rsbecker@nexbridge.com,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Christian Brabandt <cb@256bit.org>, Eli Schwartz <eschwartz@gentoo.org>,
- "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>,
- Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>,
- Mike Hommey <mh@glandium.org>,
- Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>,
- Ramsay Jones <ramsay@ramsayjones.plus.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>, Josh Steadmon
- <steadmon@google.com>, Calvin Wan <calvinwan@google.com>
-References: <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
- <aK5mJI1NfVQDmDXN@nand.local> <01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
- <xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
- <xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im>
- <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net> <aLfU5sEa-RE3X4G2@pks.im>
- <aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net> <aLl6iFXeAvL_hvqR@pks.im>
- <CABPp-BFNoLC+TdtuEq5Nx+VcFJ-WFga2r0E+eq=fFaaCN_sRGg@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CABPp-BFNoLC+TdtuEq5Nx+VcFJ-WFga2r0E+eq=fFaaCN_sRGg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <83d36c12-64c0-44e1-a5d3-dd7a5575ad65@app.fastmail.com>
 
-Hi Elijah
-
-On 05/09/2025 04:54, Elijah Newren wrote:
+On Fri, Sep 05, 2025 at 12:29:55PM +0200, Kristoffer Haugsbakk wrote:
+> On Thu, Sep 4, 2025, at 16:27, Patrick Steinhardt wrote:
+> > Hi,
+> >[snip]
+> > I thus had a look at implementing some of these commands in Git itself,
+> > where the result is this patch series. Specifically, the following
+> > commands are introduced by this patch series:
+> >
+> >   - `git history drop` to drop a specific commit. This is basically the
+> >     same as jj-abandon(1).
+> >
+> >   - `git history reorder` to reorder a specific commit before or after
+> >     another commit. This is inspired by jj-new(1).
+> >
+> >   - `git history split` takes a commit and splits it into two. This is
+> >     basically the same as jj-split(1).
+> >
+> > If this is something we want to have I think it'd be just a starting
+> > point. There's other commands that I think are quite common and that
+> > might make sense to introduce eventually:
+> >
+> >   - An equivalent to jj-absorb(1) would be awesome to have.
+> >
+> >   - `git history reword` to change only the commit message of a specific
+> >     commit.
 > 
-> (1) "without advance notice" was already pointed out to be inaccurate
-> in this thread, including in the exact email you are responding to;
-> you could argue that there hasn't been _sufficient_ advance notice,
-> but then there should be more details about what is and isn't
-> sufficient.  Merely repeating this claim which brian just barely
-> pointed out to you as false almost feels dishonest.
+> The cover letter is a bit outdated. Reword has been here since v2.
 
-I think there is a difference of understanding of what constitutes 
-"advanced notice". While it is true that there have been discussions on 
-the list for a couple of years where people were clearly enthusiastic 
-about adopting rust those discussions have always petered out after 
-concerns about portability were raised without us actually adopting 
-rust. In those discussions there has been no clear conclusion about 
-whether rust would be mandatory or optional. I think from the point of 
-view of an outsider who was following the mailing list it has not been 
-clear exactly where the rust discussion was going. For someone not 
-following the mailing list but just reading the release notes there has 
-been no indication that we're thinking of rust mandatory for building 
-git as opposed to offering rust bindings for our C code.
+Good point, addressed locally.
 
-> (2) "pull the rug away" seems hyperbolic.  I would have liked some
-> explanation as to how a transition period is expected to help, and how
-> the existing transition period has been insufficient.
-
-I'm very unclear what "the existing transition period" has been
-
- > [...] > (4) you suggest that adding Rust as an optional component 
-should avoid
-> the problem, yet we've already had Rust as an optional component for
-> the last three releases, going back to 2.49.0.  (libgit-rs and
-> libgit-sys).
-
-Right but from the point of view of someone trying to build git on a 
-platform without rust support there is a world of difference between 
-having some optional bindings for rust external projects to use, and 
-making rust mandatory to build git.
-
-I would like us to adopt rust but I am concerned about the implications 
-for platforms without rust and think we should give some notice in the 
-form a clear announcement in the release notes once we have a concrete 
-plan. That plan should include a decision on what commitment we can 
-realistically offer with regard to security updates for platforms 
-without a rust compiler so maintainers on those platforms have a clear 
-idea of how long they will be supported.
-
-Thanks
-
-Phillip
-
+Patrick
