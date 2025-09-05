@@ -1,272 +1,211 @@
-Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72017200113
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 02:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4066A4C9D
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 03:54:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757039336; cv=none; b=Lu9CZRFJ+8YmlMC3sZ9mxQLpjDMvpDeptLNC1tQBLYPWjxWrQgiKiLwxFPhzqp550Ns1CbSA9PwTd81bKOxRFngqWOztfuJvA2J2vO44Gt05rId1blfg9agq7G9x6N375FAm2LrWo+NMU3I/UYqaMpdd/31Pk+bLVVvPcKvHOT0=
+	t=1757044473; cv=none; b=XRrBQ9TilPwKh0CpByf8Xq8lT1T7GtXXfdfny3i1MjWswknadXjcJQVpxjFJilvgP4F8uP9pO1wrD2120Jc3DgDxiTQ6YJfSDKCQkSfHrvWw87iv+aaCO9Hw0oJJ50ThUbpy+SLc+6RpoYFE0ddNYxW1zK+9XHBl0Iyqtg9Yu+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757039336; c=relaxed/simple;
-	bh=1IgNBYKX8J2eFFCIm8nNOFX/tqNPdhkI1iwOjyk5PuA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQ1YcZXBsPDxanZRD427WtXzSWrr4Xq2G0cQgZfsBKLnNjMW46ioAo1l2lrbsfxukEZH4EMkc6AdfZy/6MHO1cGiZsEG7MrhEO136HvAfGauaU6LwrQ6BKFyBTsOq3MrWYX/B8f8TpJ+lzX5K75+ZC0XfsOn/eDZVGVnDB8ifBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=P1f2GD6t; arc=none smtp.client-ip=185.226.149.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1757044473; c=relaxed/simple;
+	bh=qAgzJcYOk9D64ZnvtMdS6mfNWLRIXQP1dWP/1g6Wkfw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YT3O+3z5u7UbZ7YqDAuY1f5q8aLWGcBoJkADoezCWTIMWQ0fNtRMZ0BL5PO5LsfdzxsTAaVsJs4eXb2uofxpgb4Dvv10M6e0qPfS0s10l1CjzEHXUBRb+APVt9PF6giraEZd6qFPhXe4QRPCaRXWX7nxtr78EzAuyJNZ2AQnHac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JZE9V7dC; arc=none smtp.client-ip=209.85.166.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="P1f2GD6t"
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1uuMBs-002NZE-D3; Fri, 05 Sep 2025 04:28:40 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector1; h=Content-Transfer-Encoding:MIME-Version:References:
-	In-Reply-To:Message-ID:Date:Subject:Cc:To:From;
-	bh=NP5sH8p3UP96/p5WG7tWzuB/VE9YLVcfEVYMeUYCkQc=; b=P1f2GD6tIiGbvuTk7+xJBzcdQy
-	VvpSBDHqneJu81giWQnNfHp+A9FVZ8eR6EVbPE1Pmu9IfzHFgU0himmaPWl5T1WmsQVkj6PYJzPj3
-	K60Bsl8hfLUxAJPqqYiIpYivzMbwh2I0oyMq2o3um0P5idRBb7i3FClC1F+IPlt1nWZveFXkiHc3+
-	vnMUuuvSP0OjGrX4kfc1x/YBJTJiQuM9sHiCGwVPRr5vwsc5T75H5CX3b21iPJ0oTXdOXsruvQvq9
-	dEhQl+W7HfXFsVXYfFDoFQbItowDyeiTSFMMIleDawPV+nMqtV0ct5yRJ9I/XvpNOLmGPINbLln4+
-	9dOb6PHA==;
-Received: from [10.9.9.74] (helo=submission03.runbox)
-	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1uuMBr-0004Rf-Jj; Fri, 05 Sep 2025 04:28:39 +0200
-Received: by submission03.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1uuMBa-001x2u-2q; Fri, 05 Sep 2025 04:28:22 +0200
-From: Colin Stagner <ask+git@howdoi.land>
-To: git@vger.kernel.org,
-	phillip.wood@dunelm.org.uk,
-	Phillip Wood <phillip.wood123@gmail.com>
-Cc: Zach FettersMoore <zach.fetters@apollographql.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Patrik Weiskircher <patrik@pspdfkit.com>,
-	Colin Stagner <ask+git@howdoi.land>
-Subject: [PATCH v2] contrib/subtree: fix split with squashed subtrees
-Date: Thu,  4 Sep 2025 21:27:28 -0500
-Message-ID: <20250905022728.940664-1-ask+git@howdoi.land>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250824191048.1938340-1-ask+git@howdoi.land>
-References: <20250824191048.1938340-1-ask+git@howdoi.land>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JZE9V7dC"
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3f663c571ffso18129055ab.1
+        for <git@vger.kernel.org>; Thu, 04 Sep 2025 20:54:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757044471; x=1757649271; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7QvBBwSvJnRw6UUB84hnpKPVwdOKfUhXFV+yUWtAiCg=;
+        b=JZE9V7dCiDi1MziTOKSMFiw8SZocgIeWmJRWykH7Id/nWkOBPez6FrUVIlzgStvDHV
+         RoBclHIFEEJdM4Z88Ae0fqqh7Bh+g79L6fowK4/P+W+OSzctwFZW4sUgJwKfF+XEoUfD
+         HoT/G7dP/lrMVekIqQoSb4S82phQPXGKKUZ/lUpH1Y/wy1jfe1xepk32OTPsX/K5IOZT
+         0EYJsveb9wkxdUASDxsAPqJbIsqvRfuFXahhqAXmI8nY+fhxgFbB5rP9sSIXAFZHLDaJ
+         V0fEnHyQa13trmupA3peUq7nzB7MBGCYe9dlZ0iuN9uh1gIkdWdbyYFUcp7P7o3+zdLW
+         Lauw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757044471; x=1757649271;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7QvBBwSvJnRw6UUB84hnpKPVwdOKfUhXFV+yUWtAiCg=;
+        b=qmIqPnOwM6drlEWOTBAHpurqRCdS7t+R6v2/pV1ejofvkbV5VQDOWqi9e2jON04Qjq
+         HeIIaX4j3tx4+I/GDRj/f++ByILEgfqVa+ZniRDy5vm4z0l1bQo4JTdOIyQdUk5sh9xP
+         qWWSQoESrR65/ozXAZNT7cxvCC0JdVcwfm+aUv0G9sZ2MzkXJNbWJfo5PyQDydRAmwDh
+         ZQocwzBN2CR2Yo6sJYPzNHGYvtWMPxW1sg3pP2fmKutZ9XCjIvVRZi/O0EHqFxanxeiJ
+         RC4FPCk+gCo2C8uVa9hvioSLHgXC7B4r/xDHvjOhm9jumypE6Wq8Pxi71glr3jHSnUhH
+         uNWA==
+X-Forwarded-Encrypted: i=1; AJvYcCXIWMYm5FmulTXiT4uzsByCpypoYTkpCxtgtYoLf9cMH6CynWKkD/lC0B+VT+LKQ59Oixc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAc6CUbtSQ683npEGBQVCAFyIbz8RRNm8D8pC/F2pT5FMA2G78
+	YAAwnH0xScNvqrUVfSQ52Km+BluObu26+eyZKKVz44iP7ExpK0uH1+zLS7FmVT+jMOH2nY925lw
+	oPlEDzteehaxmpgIJARKrFWpt+uQLNNg=
+X-Gm-Gg: ASbGncvj6iNtpEWNROW0K6NU+kw1BJ0K73zR0qpGR3Q5llHkTyv6ONfWjAJu5oI47x+
+	fI2mB3axrDY15NRPOooOs5tzUFYk4yJyRIsHElTuJdOzKomodMDYt7Z+BHfcxTm/aQ6EcsBfxMs
+	VJJJqG1sTdOLHsAdc5qGpLdD6RoMYdB+eJf5gMkR0qF3vfSYg+/jPqUXpCfT/TqL/evdU1pQc0l
+	/jWPEHjn/XipyGrp+c=
+X-Google-Smtp-Source: AGHT+IFgk937xju1ePcEpcMsS/MvUEmlmIt3mD3Z1Q2ojTmB3A0kbjITKpUpuOUsmR596PpuG/0/uAzUAdVx+8FC9DQ=
+X-Received: by 2002:a92:cdab:0:b0:3ed:69d5:f71 with SMTP id
+ e9e14a558f8ab-3f3ffda3362mr392434675ab.6.1757044471254; Thu, 04 Sep 2025
+ 20:54:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CABPp-BHdHQFv74GDbe=pJBFBALAMZoGsJDhSGqPbT3Daadnd4A@mail.gmail.com>
+ <aK5mJI1NfVQDmDXN@nand.local> <01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
+ <xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
+ <xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im> <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
+ <aLfU5sEa-RE3X4G2@pks.im> <aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net> <aLl6iFXeAvL_hvqR@pks.im>
+In-Reply-To: <aLl6iFXeAvL_hvqR@pks.im>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 4 Sep 2025 20:54:19 -0700
+X-Gm-Features: Ac12FXzByTGGbMQLXrP7UoGrWpFDmGIGVJCg7luykI9HkUnqRu_nIA2pa5AwdQE
+Message-ID: <CABPp-BFNoLC+TdtuEq5Nx+VcFJ-WFga2r0E+eq=fFaaCN_sRGg@mail.gmail.com>
+Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano <gitster@pobox.com>, 
+	Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Josh Soref <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org, Christian Brabandt <cb@256bit.org>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
+	Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, Ezekiel Newren <ezekielnewren@gmail.com>, 
+	Josh Steadmon <steadmon@google.com>, Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-98ba49ccc2 (subtree: fix split processing with multiple subtrees
-present, 2023-12-01) increases the performance of
+On Thu, Sep 4, 2025 at 4:40=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
+>
+> On Thu, Sep 04, 2025 at 12:57:25AM +0000, brian m. carlson wrote:
+> > On 2025-09-03 at 05:40:54, Patrick Steinhardt wrote:
 
-    git subtree split --prefix=subA
+[snip]
 
-by ignoring subtree merges which are outside of `subA/`. It also
-introduces a regression. Subtree merges that should be retained
-are incorrectly ignored if they:
+> > Also, the approach of making it an optional component directly
+> > contradicts the proposed policy I wrote up.  That's a recipe for
+> > additional burdensome work maintaining two implementations, when we
+> > actually want to make it easier for people to contribute functionality.
+> > It also doesn't provide any of the memory safety benefits or address an=
+y
+> > of the concerns from governments, security professionals, and other
+> > parties about the real and substantial risks of continuing to develop i=
+n
+> > C.
+>
+> The only reason why we want to have it as an optional component is to
+> make the transitioning period easier for downstream distributors. And
+> the intent is not to convert major components -- it should be trivial
+> components that we can use as test balloons, similar to how we did it
+> for all of our C99 test balloons.
+>
+> We cannot just pull the rug away under their feet without advance notice
+> that this is going to happen.
 
-1. are nested under `subA/`; and
-2. are merged with `--squash`.
+I find this statement a bit problematic for four reasons:
 
-For example, a subtree merged like:
+(1) "without advance notice" was already pointed out to be inaccurate
+in this thread, including in the exact email you are responding to;
+you could argue that there hasn't been _sufficient_ advance notice,
+but then there should be more details about what is and isn't
+sufficient.  Merely repeating this claim which brian just barely
+pointed out to you as false almost feels dishonest.
 
-    git subtree merge --squash --prefix=subA/subB "$rev"
-    #                 ^^^^^^^^          ^^^^
+(2) "pull the rug away" seems hyperbolic.  I would have liked some
+explanation as to how a transition period is expected to help, and how
+the existing transition period has been insufficient.  You do hint a
+little at the former, which I'll discuss more in point 4, but you
+neglect the latter to the point of pretending it didn't exist.   In
+short, why is a further transition period needed, and how will it
+differ from the existing one we've already had?  It's not clear to me
+why distributors must immediately update to the latest git version.
+Taylor discussed this aspect in detail in this thread; you even
+responded briefly (and tangentially?), but still as far as I can tell
+presume the latest and greatest is mandatory for them to adopt without
+stating why.  Maybe they do need to adopt the latest and greatest, but
+I haven't seen folks state why that's the case.  Did I miss it?
 
-is erroneously ignored during a split of `subA`. This causes
-missing tree files and different commit hashes starting in
-git v2.44.0-rc0.
+It also feels like Rust support is being lumped in with "breaking
+changes", which to me feels misleading.  Historically, we have talked
+about breaking changes and deprecation periods and such so that users
+could adjust scripts or their command lines such that they would work
+across multiple versions of Git.  The Rust case is somewhat different
+in that we're not discussing behavioral changes of git, merely
+implementation differences.  If someone has both a C-only version of
+git and a newer version of git that was built with both Rust and C,
+any commands they run should behave the same as far as the C-vs-Rust
+goes (unless we have our normal discussions about specific behavior
+and any deprecations we want to do related to it, of course).
 
-The method:
+I do agree that reduced platform support is a negative change (though
+Rust brings other advantages that may offset this downside depending
+on your viewpoint), but I don't see why it's a breaking change and
+especially not a "pull the rug away under their feet" change.
 
-    should_ignore_subtree_split_commit REV
+(3) the use of "cannot" presupposes the policy stance which we are
+having a discussion about, which, whether intended or not, feels like
+an unfair way to attempt to shut down the conversation.
 
-should test only a single commit REV, but the combination of
+(4) you suggest that adding Rust as an optional component should avoid
+the problem, yet we've already had Rust as an optional component for
+the last three releases, going back to 2.49.0.  (libgit-rs and
+libgit-sys).  In this case, you helpfully provided some details
+distinguishing the type of optional component you want -- the
+reference to a test balloon suggests you want an optional component
+that is turned on by default (but which users can easily turn off).
+Am I correct that this is your intention?  If that's the case, then
+that's a useful distinction, but I think that distinction needs to be
+made a bit more clearly (and as a side effect, acknowledge that Rust
+has already been optionally shipped in some form, and was even
+specifically highlighted by GitHub's and GitLab's blog posts about the
+v2.49.0 release, among other places)
 
-    git log -1 --grep=...
+> > For example, there is zero chance I will implement any of the
+> > SHA-1/SHA-256 compatibility code twice.  I'm already doing that in my
+> > free time without any compensation at all and it's unreasonable to
+> > expect me to do it twice or even to #ifdef out all the places it would
+> > need to go.  I am happy to let someone else take responsibility for the
+> > project instead, however, if they would like to do those things.
+>
+> And that's totally fair. From my point of view, this compatibility code
+> is a _new_ feature that we are adding to Git. And as I mentioned, I
+> think it is reasonable to say that new features may be implemented in
+> Rust now already, as platforms that aren't yet ready wouldn't lose any
+> existing functionality.
 
-actually searches all *parent* commits until a `--grep` match is
-discovered.
+Am I correct to understand that you're suggesting a policy where brian
+cannot modify any existing code to be written in Rust, and can only
+add new Rust code?  Perhaps the SHA-1/SHA-256 compatibility code is
+just new code, or can be done with minimal changes to existing C code
+while adding new code.  If so, maybe this is a workable solution for
+him.
 
-Rewrite this method to test only one REV at a time. Extract commit
-information with a single `git` call as opposed to three. The
-`test` conditions for rejecting a commit remain unchanged.
+But if it can't be done with minimal changes to existing C code and
+this policy would impair brian's ability to deliver the compatibility
+code, then I think this policy would be unworkable.  I really don't
+want to hamstring brian's ability to implement the compatibility code.
+It has sat dormant for years with no one else stepping up to the
+plate, it's a really important project, and brian has time and energy
+now.  I don't want any chicken-and-egg problems introduced for him
+with the 3.0 release.  Even though I've been working with Ezekiel on
+xdiff, and I'm obviously a bit biased in that area, I find the
+sha1-sha256 compatibility work to be more critical and something we
+should do everything possible to facilitate.
 
-Unit tests now cover nested subtrees.
+> I think most or even all of the contributors are on board. But we never
+> really talked about timelines, or how we want to introduce Rust, so
+> that's a discussion we need to have now.
 
-Signed-off-by: Colin Stagner <ask+git@howdoi.land>
----
-
-Notes:
-    This bugfix patch is intended for maint-2.44 and up.
-    
-    v2 rewrites `should_ignore_subtree_split_commit()` completely. In
-    addition to the review comments, v2 also:
-    
-    * adds `--no-show-signature` to align with
-      8841b5222c (subtree: fix add and pull for GPG-signed commits,
-      2018-02-23)
-    
-    * removes use of `local` from `should_ignore_subtree_split_commit`.
-      `local` is not part of POSIX sh. Other uses of `local` remain in
-      untouched code.
-    
-    * unit tests are unchanged since v1.
-
- contrib/subtree/git-subtree.sh     | 36 +++++++++++----
- contrib/subtree/t/t7900-subtree.sh | 70 ++++++++++++++++++++++++++++++
- 2 files changed, 98 insertions(+), 8 deletions(-)
-
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 5dab3f506c..c3cd60d341 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -783,24 +783,44 @@ ensure_clean () {
- # Usage: ensure_valid_ref_format REF
- ensure_valid_ref_format () {
- 	assert test $# = 1
- 	git check-ref-format "refs/heads/$1" ||
- 		die "fatal: '$1' does not look like a ref"
- }
- 
--# Usage: check if a commit from another subtree should be
-+# Usage: should_ignore_subtree_split_commit REV
-+#
-+# Check if REV is a commit from another subtree and should be
- # ignored from processing for splits
- should_ignore_subtree_split_commit () {
- 	assert test $# = 1
--	local rev="$1"
-+
-+	git show \
-+		--no-patch \
-+		--no-show-signature \
-+		--format='%(trailers:key=git-subtree-dir,key=git-subtree-mainline)' \
-+		"$1" |
-+	(
-+	have_mainline=
-+	subtree_dir=
-+
-+	while read -r trailer val
-+	do
-+		case "$trailer" in
-+		(git-subtree-dir:)
-+			subtree_dir="${val%/}" ;;
-+		(git-subtree-mainline:)
-+			have_mainline=y ;;
-+		esac
-+	done
-+
--	if test -n "$(git log -1 --grep="git-subtree-dir:" $rev)"
-+	if test -n "${subtree_dir:-}" &&
-+		test -z "${have_mainline:-}" &&
-+		test "${subtree_dir}" != "$arg_prefix"
- 	then
--		if test -z "$(git log -1 --grep="git-subtree-mainline:" $rev)" &&
--			test -z "$(git log -1 --grep="git-subtree-dir: $arg_prefix$" $rev)"
--		then
--			return 0
--		fi
-+		return 0
- 	fi
- 	return 1
-+	)
- }
- 
- # Usage: process_split_commit REV PARENTS
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index ca4df5be83..8bd45e7be7 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -67,6 +67,34 @@ test_create_pre2_32_repo () {
- 	git -C "$1-clone" replace HEAD^2 $new_commit
- }
- 
-+# test_create_subtree_add REPO ORPHAN PREFIX FILENAME ...
-+#
-+# Create a simple subtree on a new branch named ORPHAN in REPO.
-+# The subtree is then merged into the current branch of REPO,
-+# under PREFIX. The generated subtree has has one commit
-+# with subject and tag FILENAME with a single file "FILENAME.t"
-+#
-+# When this method returns:
-+# - the current branch of REPO will have file PREFIX/FILENAME.t
-+# - REPO will have a branch named ORPHAN with subtree history
-+#
-+# additional arguments are forwarded to "subtree add"
-+test_create_subtree_add () {
-+	(
-+		cd "$1" &&
-+		orphan="$2" &&
-+		prefix="$3" &&
-+		filename="$4" &&
-+		shift 4 &&
-+		last="$(git branch --show-current)" &&
-+		git checkout --orphan "$orphan" &&
-+		git rm -rf . &&
-+		test_commit "$filename" &&
-+		git checkout "$last" &&
-+		git subtree add --prefix="$prefix" "$@" "$orphan"
-+	)
-+}
-+
- test_expect_success 'shows short help text for -h' '
- 	test_expect_code 129 git subtree -h >out 2>err &&
- 	test_must_be_empty err &&
-@@ -425,6 +453,48 @@ test_expect_success 'split with multiple subtrees' '
- 		--squash --rejoin -d -m "Sub B Split 1" 2>&1 | grep -w "\[1\]")" = ""
- '
- 
-+# When subtree split-ing a directory that has other subtree
-+# *merges* underneath it, the split must include those subtrees.
-+# This test creates a nested subtree, `subA/subB`, and tests
-+# that the tree is correct after a subtree split of `subA/`.
-+# The test covers:
-+# - An initial `subtree add`; and
-+# - A follow-up `subtree merge`
-+# both with and without `--squashed`.
-+for is_squashed in '' 'y';
-+do
-+	test_expect_success "split keeps nested ${is_squashed:+--squash }subtrees that are part of the split" '
-+		subtree_test_create_repo "$test_count" &&
-+		(
-+			cd "$test_count" &&
-+			mkdir subA &&
-+			test_commit subA/file1 &&
-+			git branch -m main &&
-+			test_create_subtree_add \
-+				. mksubtree subA/subB file2 ${is_squashed:+--squash} &&
-+			test -e subA/file1.t &&
-+			test -e subA/subB/file2.t &&
-+			git subtree split --prefix=subA --branch=bsplit &&
-+			git checkout bsplit &&
-+			test -e file1.t &&
-+			test -e subB/file2.t &&
-+			git checkout mksubtree &&
-+			git branch -D bsplit &&
-+			test_commit file3 &&
-+			git checkout main &&
-+			git subtree merge \
-+				${is_squashed:+--squash} \
-+				--prefix=subA/subB mksubtree &&
-+			test -e subA/subB/file3.t &&
-+			git subtree split --prefix=subA --branch=bsplit &&
-+			git checkout bsplit &&
-+			test -e file1.t &&
-+			test -e subB/file2.t &&
-+			test -e subB/file3.t
-+		)
-+	'
-+done
-+
- test_expect_success 'split sub dir/ with --rejoin from scratch' '
- 	subtree_test_create_repo "$test_count" &&
- 	test_create_commit "$test_count" main1 &&
-
-base-commit: 09669c729af92144fde84e97d358759b5b42b555
--- 
-2.43.0
-
+Agreed.
