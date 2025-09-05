@@ -1,69 +1,69 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE03280CE5
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:26:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFAD28137D
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 19:26:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757100390; cv=none; b=fpuZQkwwa3v5xK7XQ+etnmwkulAlyb07Ys4dw53Rw9V6ALCkaiSlcGkgYO5cJQ4pgGobA8d+QL8p0SObm78grCYJoRDgVvawuyHqLnaV/TOcCOACifWb9OQbbR9QmIomwvZgxbMwJkMGGc5oevPIp2ONIHs0Xij5ygrrlI/3en8=
+	t=1757100391; cv=none; b=T6wOD7x16cyd4LCY3FVOM2qr5xB09gbdCZtApAnR+QIoCbHyrBwLnopDpoP+OznBvXZuFWye4deQtYVJaw+AebA45VXtedfkpEGSplQdv1PbyYXYwUMPU/ulXytLafWU+yXgzqr20dCIL1xcv5bEtwWsheMQfb0QsaiketGpIJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757100390; c=relaxed/simple;
-	bh=5m2HEzVw5T6ogr/P1GwUhNj1H4MfAWX4859cwg2x+90=;
+	s=arc-20240116; t=1757100391; c=relaxed/simple;
+	bh=BBvU01KZb8LVvEzxAhEFAlkmhiEVZ70adIrYGY5A9/8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=eggPe4lF+XF9A0nHozqBPa3HUUWkkfYBfWEo7FmKDkicJrKIuf+Hi7gIF8cZiIIB1bdQT1hJNCUtaqO0XWW1XuV6cRKzy5VkKAJAcijsl2xdCeoJuPANb6gkFL0Q2ZPjk5W4eR2lxgtaLKycMKO8680LnBJzCVar5vymNa8v6D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IIDWP/sb; arc=none smtp.client-ip=209.85.210.179
+	 MIME-Version:To:Cc; b=S78qLyqj9kOlqYIm8y1kRIKZ6hh7uDayFek5hAknf+s/qOREQ74J+sh19vCLGt4ZBrXqHHcK9/3N6CL0d3aggzZpSqVA0IWx6dsZY8VI7l+rnEjco9QyaZYg69wsWx/fyNSgbEhi+gI32wWlqerzFLSg+JucD3H4omFBe+UBWMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NYjVUtqX; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IIDWP/sb"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-772481b2329so2651249b3a.2
-        for <git@vger.kernel.org>; Fri, 05 Sep 2025 12:26:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NYjVUtqX"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-b520c9c291dso838553a12.1
+        for <git@vger.kernel.org>; Fri, 05 Sep 2025 12:26:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757100388; x=1757705188; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757100389; x=1757705189; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f2u/5zq3AONOVfcUqYT6Yl06OEXlVuoQKivTu9bP1Ok=;
-        b=IIDWP/sb86/vSBtoZuBstLfNHGzfAvQOYQXt1pJo7CH/fyj2gX4hKjVrhnwR83jfIh
-         m8PEDakmCBZZZ7PS5kp98dulCQGvIY9lNRuBFmXtbeEQ/ZJRddXj6uQ2f3dMi4w3nUo8
-         2qrJhgVaE2qytc8vDlgIAlmmWtUHBoYmWhH2K1laTYcRaH6Ou7RfzkFETnNXmoca4F6+
-         KnTcVHWRdUXxxxToUH02Xsimh5I0dGgPGMy1kE9JfGh8Ue9tOLsKxdWVyreXQj0qb6IA
-         dV932GmrnYy+4nieZomfD4J0N4ZFqaTmIoMqxERmcuP/orC/2CSx7NMBUySHqfl8myA0
-         zhAA==
+        bh=A0YPzAPfyGqJBE9xxnVOVMGqO3hwT3OquLyRW+s/bN4=;
+        b=NYjVUtqXXj1qUgQ5C+I247CHXAlAoIfuJXn3ByHJxH6NpKqk4ikE7TlCv5fI5MH6Ca
+         kSHtLY3Nan5262RBjqYCM+6oZu2xWAQcuh4UYslwEgfiyVSVv17CNs5AZMFLpzmdFdG1
+         KBa3ZJoh7EtRiGusHh3y0bWwZFRExUvbzsksecPlPRiLjKjbOY1U3NE/Ud+wRpO/U+UH
+         ELQrMbe4NNRbDQ7eG9/rTmJJv0y0EbMtat57d7AVPpeMD53qdD2KRlK5+yl6ymPqlGHT
+         B96j9d4HUcJJt2eCgOrOMFzRa3RGzNLp84h2S7z2qhmCV5BPsz7qRaK4HEnYkwhjsduF
+         vE6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757100388; x=1757705188;
+        d=1e100.net; s=20230601; t=1757100389; x=1757705189;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=f2u/5zq3AONOVfcUqYT6Yl06OEXlVuoQKivTu9bP1Ok=;
-        b=K2nUNL7ajqkVtZUw3rv498+x7bCLZq+g+ME5qTmpz40eY840e/cPv6yw9sjA/z8sQh
-         RyfZgLlnS7Pt3t3VH5+LPdRsyE7G+BVpi9fZP1VQ+ZH9/lsjOGzXLlpQMsZD1W4jkzaQ
-         p8k/vvVHlUe7+XqkhpWsMDv6dLsgNKfIi/IHNhywMVFcP069KgBtfnkuTFItTJ6q+i1B
-         ZxhjKrcxZqSTSjei388SA6fVfygURIBi7ZkgB+NkF168ZzomLo8YpPfdPdIdris/2Gzi
-         dn06HlcFOweWPyiI/eCmFtk6mTBHmQPmWzdSw1CtsdmVEVFly8sow1/fk21JYP47UITj
-         usQQ==
-X-Gm-Message-State: AOJu0Yw4I8+0904x17M1v3FQ5zhpirO5k69TFgkAMGQ1J8QHJbzmsWKl
-	G0OdLzkWM8TzHrQPm9HEoVNIYzh7pToo0o5l5gZQzycmbp4mxNS5YHim9lMOow==
-X-Gm-Gg: ASbGnctk8macQ1uvPyRIv1UlXHiE6w2TmSwvv331fQa6LzStCPJGlYCW4N0D1xNIKIo
-	kF7kGICvy6of0xAI1E8RUyWfRwfe9PJZsJ6x/7VG1fq9mL6l/c6bljlb0CyBeDhDJMR0Bks4gN8
-	UF7s3QbAolS1GNa74enTSaFOYhuUfSu77P4w1cNAUvhPOSI125YQYErqrMtlr6fGX4E2jEtLO3i
-	Q44/PjcHH5PArLxLV1kBzdC731tVtwif+1YihTOPszJT0ZH5HvZFMpKlNBLYXxKGmfxVItNTYhV
-	SjTSnSUkmlcTdDXOKJSxK1e4xA57whiiqP6fvUoeNSEarwohHS1ZHd2QhGhV+wOx+nXQw+XQbXB
-	f7dFc1kRd5umCkWMMBSaosZGFzw==
-X-Google-Smtp-Source: AGHT+IGAeKs/D8O8LTR3iGy8K+jgJVjdAYvxN6kIewW4Gm1sBslbQm+/Mjn+1W/A3oOKaZLqC8TNWQ==
-X-Received: by 2002:a05:6a00:2381:b0:771:f69a:c426 with SMTP id d2e1a72fcca58-7723e276e5dmr34159674b3a.14.1757100387600;
-        Fri, 05 Sep 2025 12:26:27 -0700 (PDT)
+        bh=A0YPzAPfyGqJBE9xxnVOVMGqO3hwT3OquLyRW+s/bN4=;
+        b=fP7Iaq50ley50dcEQl6wmSrlUcCh3DjE7yM0IvEs4wfXWTwbZUewApwlqV9KdYy2N9
+         3JfHpXnbrGJ/TDxOGxNVyLZhKyPmTAk+TRYfi11LNdwmrj6fbmVu1XyEc1Y29FMVohDp
+         j2ZEt8dDGZ6ygVcbjVHcp7U7IKfPa6Bm59gROpvwVqholyJAKOUpbr2Vv1LpSHRg4ViQ
+         R2M++evTKXCkvpiL2NqNMg2dFNn2g/fmdhjq17mHU6mMPxDJhzadk+4yujnZ7cI2Il5H
+         YSPlgb0zbCWSH5/b2t/TmcSoJuZSUBjdiQbYqc7Xwwma3ocTSsF4VYl+s8BcTa599hpn
+         +uiQ==
+X-Gm-Message-State: AOJu0Yy1LHYLjlip0yiXR912v329nsK4Lu+LBgCVPKHbbbqrfPoIii/l
+	C/QKtKAu89vsHURY1BEtpLrl7a+kkNUi47L8bWxZOTubKmJ0qMi04WfEFJPoug==
+X-Gm-Gg: ASbGncuflDP2e6OBQ1iDbICycFtk8mJcZNu6M8GBLWLEIIViHWEghP4xvo7DIA3m8+B
+	Hotkqb3B68mtrxNl8wClhYwhFeR2fPCBOlSmM9fyGG1oD3iFJU1KS3nCPjNSUE2CKeF2B2Exfhg
+	3ZfLvj2mlePdtQneaNd4BYVQ6lmRbAMJsoa1dPfKtviVV63LFYK5kK4YD/gNA+ypwLFe2i3hZCv
+	OfFZnva5fo5cC0R5Sh3wS4UmZC0pE2A3E2iQy3/hiw3DGR2Inbtsr6T/1BcvCo+tSoNoYyPyvQE
+	BNwBj31GjiYRRx+KN8ufOv3E0niD+D28pq5+eRkmWDiBV+uwWmQPj2zBoneQLTuOUAVbdPlmytp
+	+0SSUeU5WhwDwy54kIQ0epCjGiA==
+X-Google-Smtp-Source: AGHT+IGRxW5eu1xlw5wQBAaG24qrRNW3k7R2QpKUC7lUjbHoLlNTs+/agOm3UayXbtQmobMb5bI/Iw==
+X-Received: by 2002:a17:902:ebc9:b0:24c:7bc6:7ad7 with SMTP id d9443c01a7336-24c7bc67d09mr173375785ad.3.1757100388900;
+        Fri, 05 Sep 2025 12:26:28 -0700 (PDT)
 Received: from [127.0.0.1] ([52.159.243.166])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7722a4e5b44sm22301604b3a.88.2025.09.05.12.26.26
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4cd3670e5csm19864436a12.53.2025.09.05.12.26.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Sep 2025 12:26:27 -0700 (PDT)
-Message-Id: <7c68f2535cd5084ae796ef0e8767caecaf1c7c3f.1757100378.git.gitgitgadget@gmail.com>
+        Fri, 05 Sep 2025 12:26:28 -0700 (PDT)
+Message-Id: <224be4ee5c66a5d161ba35754dd324b8ee53d07c.1757100378.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1965.v3.git.1757100378.gitgitgadget@gmail.com>
 References: <pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
 	<pull.1965.v3.git.1757100378.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 05 Sep 2025 19:26:17 +0000
-Subject: [PATCH v3 5/6] midx-write: reenable signed comparison errors
+Date: Fri, 05 Sep 2025 19:26:18 +0000
+Subject: [PATCH v3 6/6] midx-write: simplify error cases
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,177 +82,147 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-Remove the remaining signed comparison warnings in midx-write.c so that
-they can be enforced as errors in the future. After the previous change,
-the remaining errors are due to iterator variables named 'i'.
+The write_midx_internal() method uses gotos to jump to a cleanup section to
+clear memory before returning 'result'. Since these jumps are more common
+for error conditions, initialize 'result' to -1 and then only set it to 0
+before returning with success. There are a couple places where we return
+with success via a jump.
 
-The strategy here involves defining the variable within the for loop
-syntax to make sure we use the appropriate bitness for the loop
-sentinel. This matters in at least one method where the variable was
-compared to uint32_t in some loops and size_t in others.
-
-While adjusting these loops, there were some where the loop boundary was
-checking against a uint32_t value _plus one_. These were replaced with
-non-strict comparisons, but also the value is checked to not be
-UINT32_MAX. Since the value is the number of incremental multi-pack-
-indexes, this is not a meaningful restriction. The new die() is about
-defensive programming more than it being realistically possible.
+This has the added benefit that the method now returns -1 on error instead
+of an inconsistent 1 or -1.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- midx-write.c | 35 ++++++++++++++++++-----------------
- 1 file changed, 18 insertions(+), 17 deletions(-)
+ midx-write.c | 26 +++++++++-----------------
+ 1 file changed, 9 insertions(+), 17 deletions(-)
 
 diff --git a/midx-write.c b/midx-write.c
-index 1822268ce2..cd7bf7554a 100644
+index cd7bf7554a..72189f74bb 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -1,5 +1,3 @@
--#define DISABLE_SIGN_COMPARE_WARNINGS
--
- #include "git-compat-util.h"
- #include "abspath.h"
- #include "config.h"
-@@ -845,7 +843,7 @@ static int write_midx_bitmap(struct write_midx_context *ctx,
- 			     uint32_t commits_nr,
- 			     unsigned flags)
- {
--	int ret, i;
-+	int ret;
- 	uint16_t options = 0;
- 	struct bitmap_writer writer;
- 	struct pack_idx_entry **index;
-@@ -873,7 +871,7 @@ static int write_midx_bitmap(struct write_midx_context *ctx,
- 	 * this order).
- 	 */
- 	ALLOC_ARRAY(index, pdata->nr_objects);
--	for (i = 0; i < pdata->nr_objects; i++)
-+	for (uint32_t i = 0; i < pdata->nr_objects; i++)
- 		index[i] = &pdata->objects[i].idx;
+@@ -1046,7 +1046,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 	int bitmapped_packs_concat_len = 0;
+ 	int pack_name_concat_len = 0;
+ 	int dropped_packs = 0;
+-	int result = 0;
++	int result = -1;
+ 	const char **keep_hashes = NULL;
+ 	struct chunkfile *cf;
  
- 	bitmap_writer_init(&writer, ctx->repo, pdata,
-@@ -894,7 +892,7 @@ static int write_midx_bitmap(struct write_midx_context *ctx,
- 	 * happens between bitmap_writer_build_type_index() and
- 	 * bitmap_writer_finish().
- 	 */
--	for (i = 0; i < pdata->nr_objects; i++)
-+	for (uint32_t i = 0; i < pdata->nr_objects; i++)
- 		index[ctx->pack_order[i]] = &pdata->objects[i].idx;
- 
- 	bitmap_writer_select_commits(&writer, commits, commits_nr);
-@@ -1038,7 +1036,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- {
- 	struct strbuf midx_name = STRBUF_INIT;
- 	unsigned char midx_hash[GIT_MAX_RAWSZ];
--	uint32_t i, start_pack;
-+	uint32_t start_pack;
- 	struct hashfile *f = NULL;
- 	struct lock_file lk;
- 	struct tempfile *incr;
-@@ -1154,7 +1152,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 	if (preferred_pack_name) {
- 		ctx.preferred_pack_idx = NO_PREFERRED_PACK;
- 
--		for (i = 0; i < ctx.nr; i++) {
-+		for (size_t i = 0; i < ctx.nr; i++) {
- 			if (!cmp_idx_or_pack_name(preferred_pack_name,
- 						  ctx.info[i].pack_name)) {
- 				ctx.preferred_pack_idx = i;
-@@ -1186,7 +1184,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 		 * pack-order has all of its objects selected from that pack
- 		 * (and not another pack containing a duplicate)
- 		 */
--		for (i = 1; i < ctx.nr; i++) {
-+		for (size_t i = 1; i < ctx.nr; i++) {
- 			struct packed_git *p = ctx.info[i].p;
- 
- 			if (!oldest->num_objects || p->mtime < oldest->mtime) {
-@@ -1231,7 +1229,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 	compute_sorted_entries(&ctx, start_pack);
- 
- 	ctx.large_offsets_needed = 0;
--	for (i = 0; i < ctx.entries_nr; i++) {
-+	for (size_t i = 0; i < ctx.entries_nr; i++) {
- 		if (ctx.entries[i].offset > 0x7fffffff)
- 			ctx.num_large_offsets++;
- 		if (ctx.entries[i].offset > 0xffffffff)
-@@ -1241,10 +1239,10 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 	QSORT(ctx.info, ctx.nr, pack_info_compare);
- 
- 	if (packs_to_drop && packs_to_drop->nr) {
--		int drop_index = 0;
-+		size_t drop_index = 0;
- 		int missing_drops = 0;
- 
--		for (i = 0; i < ctx.nr && drop_index < packs_to_drop->nr; i++) {
-+		for (size_t i = 0; i < ctx.nr && drop_index < packs_to_drop->nr; i++) {
- 			int cmp = strcmp(ctx.info[i].pack_name,
- 					 packs_to_drop->items[drop_index].string);
- 
-@@ -1275,7 +1273,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 	 * pack_perm[old_id] = new_id
- 	 */
- 	ALLOC_ARRAY(ctx.pack_perm, ctx.nr);
--	for (i = 0; i < ctx.nr; i++) {
-+	for (size_t i = 0; i < ctx.nr; i++) {
- 		if (ctx.info[i].expired) {
- 			dropped_packs++;
- 			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = PACK_EXPIRED;
-@@ -1284,7 +1282,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 		}
- 	}
- 
--	for (i = 0; i < ctx.nr; i++) {
-+	for (size_t i = 0; i < ctx.nr; i++) {
- 		if (ctx.info[i].expired)
- 			continue;
- 		pack_name_concat_len += strlen(ctx.info[i].pack_name) + 1;
-@@ -1430,6 +1428,9 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 	 * have been freed in the previous if block.
- 	 */
- 
-+	if (ctx.num_multi_pack_indexes_before == UINT32_MAX)
-+		die(_("too many multi-pack-indexes"));
-+
- 	CALLOC_ARRAY(keep_hashes, ctx.num_multi_pack_indexes_before + 1);
- 
- 	if (ctx.incremental) {
-@@ -1462,7 +1463,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 		keep_hashes[ctx.num_multi_pack_indexes_before] =
- 			xstrdup(hash_to_hex_algop(midx_hash, r->hash_algo));
- 
--		for (i = 0; i < ctx.num_multi_pack_indexes_before; i++) {
-+		for (uint32_t i = 0; i < ctx.num_multi_pack_indexes_before; i++) {
- 			uint32_t j = ctx.num_multi_pack_indexes_before - i - 1;
- 
- 			keep_hashes[j] = xstrdup(hash_to_hex_algop(get_midx_checksum(m),
-@@ -1470,7 +1471,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+@@ -1099,14 +1099,12 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 				error(_("could not load reverse index for MIDX %s"),
+ 				      hash_to_hex_algop(get_midx_checksum(m),
+ 							m->repo->hash_algo));
+-				result = 1;
+ 				goto cleanup;
+ 			}
+ 			ctx.num_multi_pack_indexes_before++;
  			m = m->base_midx;
  		}
+ 	} else if (ctx.m && fill_packs_from_midx(&ctx)) {
+-		result = 1;
+ 		goto cleanup;
+ 	}
  
--		for (i = 0; i < ctx.num_multi_pack_indexes_before + 1; i++)
-+		for (uint32_t i = 0; i <= ctx.num_multi_pack_indexes_before; i++)
- 			fprintf(get_lock_file_fp(&lk), "%s\n", keep_hashes[i]);
- 	} else {
- 		keep_hashes[ctx.num_multi_pack_indexes_before] =
-@@ -1488,7 +1489,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+@@ -1142,12 +1140,16 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 			 */
+ 			if (!want_bitmap)
+ 				clear_midx_files_ext(object_dir, "bitmap", NULL);
++
++			result = 0;
+ 			goto cleanup;
+ 		}
+ 	}
+ 
+-	if (ctx.incremental && !ctx.nr)
++	if (ctx.incremental && !ctx.nr) {
++		result = 0;
+ 		goto cleanup; /* nothing to do */
++	}
+ 
+ 	if (preferred_pack_name) {
+ 		ctx.preferred_pack_idx = NO_PREFERRED_PACK;
+@@ -1221,7 +1223,6 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 		if (!preferred->num_objects) {
+ 			error(_("cannot select preferred pack %s with no objects"),
+ 			      preferred->pack_name);
+-			result = 1;
+ 			goto cleanup;
+ 		}
+ 	}
+@@ -1260,10 +1261,8 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 			}
+ 		}
+ 
+-		if (missing_drops) {
+-			result = 1;
++		if (missing_drops)
+ 			goto cleanup;
+-		}
+ 	}
+ 
+ 	/*
+@@ -1309,7 +1308,6 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 
+ 	if (ctx.nr - dropped_packs == 0) {
+ 		error(_("no pack files to index."));
+-		result = 1;
+ 		goto cleanup;
+ 	}
+ 
+@@ -1329,14 +1327,12 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 		incr = mks_tempfile_m(midx_name.buf, 0444);
+ 		if (!incr) {
+ 			error(_("unable to create temporary MIDX layer"));
+-			result = -1;
+ 			goto cleanup;
+ 		}
+ 
+ 		if (adjust_shared_perm(r, get_tempfile_path(incr))) {
+ 			error(_("unable to adjust shared permissions for '%s'"),
+ 			      get_tempfile_path(incr));
+-			result = -1;
+ 			goto cleanup;
+ 		}
+ 
+@@ -1414,7 +1410,6 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 				      midx_hash, &pdata, commits, commits_nr,
+ 				      flags) < 0) {
+ 			error(_("could not write multi-pack bitmap"));
+-			result = 1;
+ 			clear_packing_data(&pdata);
+ 			free(commits);
+ 			goto cleanup;
+@@ -1440,21 +1435,17 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 
+ 		if (!chainf) {
+ 			error_errno(_("unable to open multi-pack-index chain file"));
+-			result = -1;
+ 			goto cleanup;
+ 		}
+ 
+-		if (link_midx_to_chain(ctx.base_midx) < 0) {
+-			result = -1;
++		if (link_midx_to_chain(ctx.base_midx) < 0)
+ 			goto cleanup;
+-		}
+ 
+ 		get_split_midx_filename_ext(r->hash_algo, &final_midx_name,
+ 					    object_dir, midx_hash, MIDX_EXT_MIDX);
+ 
+ 		if (rename_tempfile(&incr, final_midx_name.buf) < 0) {
+ 			error_errno(_("unable to rename new multi-pack-index layer"));
+-			result = -1;
+ 			goto cleanup;
+ 		}
+ 
+@@ -1487,6 +1478,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 	clear_midx_files(r, object_dir, keep_hashes,
+ 			 ctx.num_multi_pack_indexes_before + 1,
  			 ctx.incremental);
++	result = 0;
  
  cleanup:
--	for (i = 0; i < ctx.nr; i++) {
-+	for (size_t i = 0; i < ctx.nr; i++) {
- 		if (ctx.info[i].p) {
- 			close_pack(ctx.info[i].p);
- 			free(ctx.info[i].p);
-@@ -1501,7 +1502,7 @@ cleanup:
- 	free(ctx.pack_perm);
- 	free(ctx.pack_order);
- 	if (keep_hashes) {
--		for (i = 0; i < ctx.num_multi_pack_indexes_before + 1; i++)
-+		for (uint32_t i = 0; i <= ctx.num_multi_pack_indexes_before; i++)
- 			free((char *)keep_hashes[i]);
- 		free(keep_hashes);
- 	}
+ 	for (size_t i = 0; i < ctx.nr; i++) {
 -- 
 gitgitgadget
-
