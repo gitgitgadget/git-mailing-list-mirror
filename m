@@ -1,85 +1,84 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCFA72633
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 15:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8579623BF91
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 15:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757085546; cv=none; b=KZv+ctjvoPkjnKowyUPFat8QN+54BUp2ZPryUzHeCYjobQY8l1LsBRnld8zw/cmOc46MdUONYuFlCCZMa5eTZZfU4LhkLVyPLMiQB7Fo2VpjW2h5bo2Y/ElgjZnTRYt8U3iI2GIiNHLoNh18zgw2+phQY9W4LJOjrkrGJc8+dgA=
+	t=1757086084; cv=none; b=nuHdL/HScEnjmxDeA0OEwvcGwuJzZuS6pYkPk2O0gm+LhiRug+dU9amFYk+g3JBZSf6HSKuNmhOlM3AvVkps5xzHcyFPFPy/tKgM8uiKYGFTeWAYK89ochxbUTINPsaaU32Hoy4X9P3FNUHIiLJi435C//DDTP89EgLMqWKLaYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757085546; c=relaxed/simple;
-	bh=zSZU9vEsdWSveXBHFGi7DLHiOHLJ6eGHFMxkb+q3O5o=;
+	s=arc-20240116; t=1757086084; c=relaxed/simple;
+	bh=5myDitpVOHsQ56mAK1FqIR8QV/XFDTBZmo6QSFaxItQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fczb+BfSlQkkaFibsSN9T4ViI0JY8WU9RFiZCp7ziJyFD2cxX1swmpSVZoy9cE8azUW4cngVRh6+kZzij7maADnp10Xf+FQA8QXfXYwp/d/Yy97mVVbtLHmcpAdFoSIm5rSLcwDGPbQ66FI99hgpIptCY31uJxCd+SiW5fdzTvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BfKwibsv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FFsONne3; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=I16lyZPCr83+EV6whFsP6i5tu573Jst5EpfTEfTLTzNmH0Aso9OY2WHJaOINF4/3rPiKyAtel++ggi0IX0eqq7cFxcS7cwnXRdczivg4aFZo6etsthaJ2pR+pFBmrwc8b23wITN59AG5OrtLko0vsXaBrJeDjgx7VlJQdgVQw7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=afkneff5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XqHsWkB2; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BfKwibsv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FFsONne3"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 893AF14002CF;
-	Fri,  5 Sep 2025 11:19:03 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 05 Sep 2025 11:19:03 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="afkneff5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XqHsWkB2"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8F30814002CF;
+	Fri,  5 Sep 2025 11:28:01 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Fri, 05 Sep 2025 11:28:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757085543; x=1757171943; bh=KmGivFfa+U
-	/3hIV6mP8/br5N+Baj1nT4c2o0x6AaOQM=; b=BfKwibsv7F237sv8RO000gnuxi
-	QoU4pXZUjjlqRqS9l4855CxhbDx5pClOwRc/xizdAysl8CMKnNx2y1tABcJfJelc
-	HNFMRmv8bfI0vSQpf5WZwMwHy2d9Ryuo38eCO5Y6P6dFEPSvH00I5HCrbv6ZYkfs
-	q8+TLrLJnTYYaDeAdxSqPF8pwKWWxCjPqtdGEktdLni7zSixGVm2TAx0cW6/q0qU
-	LS9VLnKqW2biXlzxk4rNiGy/hMZ/2ukYd7ANHgfheKFVPwGgbTuCQBeTGaDw/Jf0
-	cdlFEQXGP3OIlNBUuyuhc9DHKwTvFiRoQ9VezbjoDMdcRR9E2Z8MUOvpygug==
+	:subject:to:to; s=fm3; t=1757086081; x=1757172481; bh=p7wHFhIiQi
+	RUVOeEdQlCDrvFId8tyxWC3f4jDHBxdz4=; b=afkneff5QzFo+uXoJIdoPWWMVd
+	qZd5ygiMpCBMHby456nXTGzq6Q+nYLv8IU5fyooio+UqxxLZyqkplwGE5qNcowVE
+	uYVfXuNhl66HmvrlVN3K5WjLzV5Nc9BxnEAH/ohPag6bR0VCu7SbFq1DxeB2Gww7
+	PC9ye8xWTErk3WFWnb3+RLTkeknlDr6QdRYgM6GoXaaHJdg7k7/A8VTWoaaqlFRv
+	2uLTV1+1Ic2Xn/ToDTAbQSDPkZ4JS8oldORl4RIxKxfEnx8VqXS/+6ufN563o9+8
+	DPwvd/sXKlg7ctHWKsgpbUvusCGVB9mSejxo5r7TUJ3WhcpzSNEnaDEEPpYg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757085543; x=1757171943; bh=KmGivFfa+U/3hIV6mP8/br5N+Baj1nT4c2o
-	0x6AaOQM=; b=FFsONne3c1XoXZv5A0CskSVSTx4W34hy3Uz8VFHM0FqBDEzjQlk
-	j1J5El0uSdaNzoGSQ5j6gOvt3jb86MxD0OA9cinptzUjkAgo6JJSUUgyn6gR0mcb
-	sRAASz6DTNOS1zEx0HdLfMoPlyP110mz2myFZiSrR+pQPH0XoAwANdzN9UnLWAud
-	W1OsGrvq3V3wl7HzUwXgQhvfQyU9JhQHXPO1mDcNpon/JE4T3CSXy3mplJE5gRi+
-	d9bw41S38E8dDYFgNqlu/lJzisSBFVIRrCpMA+X7CxNECST9Xdr6Mt+GOG9/gs8x
-	IIARClLDGVKcHu+u0v6cyWxnZcrIS2wXFxQ==
-X-ME-Sender: <xms:Zv-6aHIFmztMisf14Fuq9A0lBWAnaKqhfRt4cVtXPp2AfPC-MpXOjw>
-    <xme:Zv-6aDkYwdEXe1J-WKbURkMzU4cwM-sFh-kcDxMcaydc4eFP9J9pNbh8zkEzRG04j
-    jm9smG6afvmSduXTg>
-X-ME-Received: <xmr:Zv-6aAL2c3F04JnDkgQGfFPDEenBYiQqQ_tr-U9qyBXM2V7jge5vu-G5Y_ehymp65xfOG1_pOmp2FWjHWlff10juGb3VCDdLyXL-xE0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelvdefucetufdoteggodetrfdotf
+	1757086081; x=1757172481; bh=p7wHFhIiQiRUVOeEdQlCDrvFId8tyxWC3f4
+	jDHBxdz4=; b=XqHsWkB2Ra9hm70I9/fiS3KLKMZPI+V31ZwR9cmYn6zG0YvNvni
+	tyNrbLhohIYqlCd0rn3Sylez0aycCpxPFrxKaZFc7vKv5B1fVE7eqDIPfRz/vAPC
+	nDDsCqjRdPvYf+86rQ+L3vp7YOaBvKk7jVFwX9vaKtOGBDBlU8gvQBxCxTKR3mtT
+	ZlM9EEN0R7YdiFiNcHg/W4dlwqYFY5rI7UkeOt6V8JVz8mnwlgVWy+tSZTXOwsC8
+	KwHZUXVlOTjzK5dC93XPmNrLOOdkMt8PoAbqix/ZawGAFv0a6WwcbxY9q6LUIyxM
+	dkv/AllrKnko+dc7+0VpK4vVVAX9YKSaFCg==
+X-ME-Sender: <xms:gAG7aJ01spxDB_mqkVF1pOr3MhSVmIMUWgGT0m4wV-JvTD92exO_Lw>
+    <xme:gAG7aLl02glc91Es5AYEBG2mTMAof7yq4ic3fm78t2jLpiF0N8gKSCzVjGescf7PW
+    YM22FSC--faE1j-yg>
+X-ME-Received: <xmr:gAG7aAUTDwVpym_sI-mxLpxsALxpR_h_RrbLKNzedVYRxWfe3mmDm86eYTDeSXyGGZ3Yh2HjcEw2WlxSJWydj9KH2sm5R5xod1wbs1E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelvdehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
     ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
     jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
     hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsth
-    gvrdhnvghtpdhrtghpthhtohepjhhrvgesphgvnhhguhhtrhhonhhigidruggvpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesph
-    hkshdrihhmpdhrtghpthhtohepkhgvrhhnvghlsehpvghnghhuthhrohhnihigrdguvgdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Zv-6aA5as2mG2YRIWG2TZKj3KVIn-Iu1geyusFsPYeg6Epwnijm7zg>
-    <xmx:Zv-6aM0KXtytRDlnnY4ID76jEpBwzaR1EicC00nC-hNzSaz4ae9M5Q>
-    <xmx:Zv-6aOc9wxodg3UumOEVgN_xQ-ADb8T-J6Tkz-pmsgkybXhx-bUNgQ>
-    <xmx:Zv-6aKfpgDD-tWar9v2jz_GXxHfN_5C4pu0xaFTZXsiXMYsNajFa1Q>
-    <xmx:Z_-6aK6981e-8wihheH-tHWxbdAiMkint4BIUkT7KmIg0YyrGKKDqhYW>
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhm
+    pdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:gAG7aBtUM8ZIeBA0oL6ovFai_rVVKvawzJS8HJACKG6E0CL8UNNBgA>
+    <xmx:gAG7aDZrS3gFLWS1LGeuIVgAT9b1NX9aD8zIra8R2kmEZwkFNVKWyw>
+    <xmx:gAG7aAVycPopkSHgB1PSu7j7tUyhQj5kg2uzCmvRVYUKaLOCxkfyuA>
+    <xmx:gAG7aIRLXhJ_vss8qUMYpt7B3YJNn-Ey95PqlBqFNflyMwKT0ZECog>
+    <xmx:gQG7aAztt4h-eZBnP6py6IyM4JtQrWg9IPoHhazIQ2lMI0Yd_gOwaKLH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Sep 2025 11:19:01 -0400 (EDT)
+ 5 Sep 2025 11:27:59 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Jonas Rebmann <jre@pengutronix.de>,  git@vger.kernel.org,  Patrick
- Steinhardt <ps@pks.im>,  kernel@pengutronix.de
-Subject: Re: [PATCH] GIT-VERSION-GEN: Use standard versioning suffix
-In-Reply-To: <aLrVQLZpAf-WqFvY@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Fri, 5 Sep 2025 12:19:12 +0000")
-References: <20250905-semver-v1-1-3f6dd32f71a3@pengutronix.de>
-	<aLrVQLZpAf-WqFvY@fruit.crustytoothpaste.net>
-Date: Fri, 05 Sep 2025 08:19:00 -0700
-Message-ID: <xmqqh5xh3p23.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Christian Couder
+ <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] combine-diff: don't override recursive flag in
+ diff_tree_combined()
+In-Reply-To: <20250905-toon-fix-last-modified-v2-1-d859eeed408e@iotcl.com>
+	(Toon Claes's message of "Fri, 05 Sep 2025 15:06:31 +0200")
+References: <20250905-toon-fix-last-modified-v2-1-d859eeed408e@iotcl.com>
+Date: Fri, 05 Sep 2025 08:27:58 -0700
+Message-ID: <xmqq5xdw537l.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,37 +88,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> On 2025-09-05 at 12:14:38, Jonas Rebmann wrote:
->> In snapshot builds of git, git-version uses a modified variant of the
->> git-describe output, e.g. 2.51.0.178.g2462961280 instead of
->> 2.51.0-178-g2462961280 for seemingly historical reasons.
->> 
->> This is not semver compliant which makes the output harder to parse in
->> tooling such as b4, which currently errors out when using a snapshot
->> build of git.
->
-> Git doesn't follow SemVer.  We make breaking and incompatible changes
-> without bumping the major version all the time, so it doesn't make sense
-> to say that we should follow SemVer for version numbers.
->
-> I would say that since Git has had this version number format for a long
-> time, b4, which is much newer and should be designed to work with Git,
-> should gracefully handle the Git version number rather than have Git
-> conform to b4.
+> This patch is based on 'next' at 1ba7204a04 (Merge branch
+> 'kh/doc-markup-fixes' into next, 2025-09-03).
 
-Well said.
+Can't you be a bit more specific?  We usually say "do not build on
+'next'", but what we really mean by that statement are
 
-If somebody cares about the format deeply enough to patch it, it is
-likely that somebody else cares equally deeply about the current
-format and depends on it, as Git these days are used by more than a
-few thousands of people, and "semvar syntax" is too weak a reason to
-change it for everybody.
+ * Your topic may interact with some topics already in 'next', but
+   it is unlikely that you depend on _all_ of them.  If you are
+   willing to depend on a few selected topics (meaning: you accept
+   that you have to adjust your topic when they get updated, and you
+   accept that you cannot graduate before all of them graduate),
+   identify them and build on the result of a merge of these topics
+   into 'master'.  State how you constructed your base in your cover
+   letter.
 
-If somebody wants to have their own versioning scheme, there is an
-escape hatch to drop the "version" file in their source material,
-which does not have to change versioning schemes used by other
-builders with a patch like this one.
+ * If you are truly depending on _everything_ in 'next', then stop.
+   Wait until all of them graduates, and then submit your topic
+   after that.
 
 Thanks.
