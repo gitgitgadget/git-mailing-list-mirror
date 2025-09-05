@@ -1,150 +1,122 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185753705B5
-	for <git@vger.kernel.org>; Fri,  5 Sep 2025 14:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A244C9D
+	for <git@vger.kernel.org>; Fri,  5 Sep 2025 14:39:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757083101; cv=none; b=pnYLLbfZ6AXp18fzE5uxM0Hcn1CFcZ5FurDzJC1jh20eKigL4vbnLJ+0blQu9ZrUSKwwVD2KhnK9YF0sK2cTkiwI7MUBA7PJ2Fb4h74jiX+yDQ1md1Y0iyZPaSYaicN9SisLSWduh8L2Q7z6GjEIa4MVC0twpU5FaE6qXpjk+o8=
+	t=1757083167; cv=none; b=p2aJTvQ9BI/WqwibcD5UF0AESd8FTUS86B3EapHW4DOeVjKjL13RY0KMDol0LxdObIxLZsAwhQKQQnz/CVU346kQ2u2PQKdbhpIQWrju4BC7x/T0V0+/iYrWENhJa8ys5zOlu0W+Us1tbVpICDit5gmq2vLO8RSLIYXLv9VF1TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757083101; c=relaxed/simple;
-	bh=qwSMfPyRCjFvnk6RPb72aUpp6ho4Z2syTbBozACUAWY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Oh15X108ESUm4O7G8tE+UrFQH2+kvOScp+e2vKjLPmkvIX4wUS11HeVNwvel+vH0kxuxO8Hh2Gr38LzrS2JhAGYVAKyn+zJO+Lh18n1z+DFSdUx6YOSFuyK0yBouf6rpXF/UPqp4kyu78Iow8b40aSAnCeCrVJf04glFCvBM4AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:cf90::12ac] (unknown [IPv6:2603:6011:3f0:cf90::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 0BAB23408F0;
-	Fri, 05 Sep 2025 14:38:17 +0000 (UTC)
-Message-ID: <9fcda14f-d4d4-4db4-ae77-d9408bfae035@gentoo.org>
-Date: Fri, 5 Sep 2025 10:38:16 -0400
+	s=arc-20240116; t=1757083167; c=relaxed/simple;
+	bh=BiK0c278qOOh1usJ6TaOiKLiuEjyFWqeQ/Jgwvyy2ZQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=l09aYjgxlb8Y1utGSkDSTJF1SCQBamfcbFQDz4vfhrCPD6Q5T1LmImccg9g/ymt1nga6THzDHP6+QNXI3ytGFegv5SnHDFSJf75GwdCbwffYM8jlQXR1jPwstlOoFqV3lQ10hTbk0hqE4AJyfHbpj+Y4BwsYnW+iJBsY3TTjTB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YIETXGgu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lqYBqF2h; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YIETXGgu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lqYBqF2h"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CE4D5140030A;
+	Fri,  5 Sep 2025 10:39:24 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 05 Sep 2025 10:39:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1757083164;
+	 x=1757169564; bh=0gyk3zo2LGPPGfJLirprRbSyEQORTqExOKS52KQoad4=; b=
+	YIETXGgukGXFHGTEEG69DfeGa48TMQM9EbkJERzItl/LY9ZGIhuF6FXeW+r4jtKK
+	9/sRrrsNuqtLyxCRglR31fw6EDqbyf3s7m9gu1fdgdmesFqEN5jAVzhvHGU/DR6s
+	DlrFsFfo0No+PXsUZV4ayYBFRGgLAXcyqjbphge2CB0Fo6Hpa5A1GM84SPEY0jdC
+	yjB5L1yKKYM7tPcenc3EgHL8nJrqfJdmI2cbjy/w1v1NDb2CNkbHHDWb2ToF4yIm
+	KxDwYN0d5d3cjF2dJsJrZ6DrRai+rtN4y8yZ+9we3rAx4RQwsQVQozbbphHewUN7
+	9wafObyMGu2IjWNLYKcJlA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757083164; x=
+	1757169564; bh=0gyk3zo2LGPPGfJLirprRbSyEQORTqExOKS52KQoad4=; b=l
+	qYBqF2hjO3BMhQFZw4BuCd3WhYsxpiiGWSDx63SQUacMmr1DwVJLytPtHlKh7cLw
+	l8dTp6l1V+JkvM03em3dgj/j/W1pSfylAJ9aOC9dPSVh7j50bPSJOJe090PaPSMN
+	UizVQOFTD8yfVMfjqESay6wasDEeefnj7k2IH9HEviKtkMQPCLvhvKO8d0mqxkpZ
+	5R8MrngYR6vsY6QjU7S04gtFW4CGKWXRO6QOyKHt9ABCnEF28Ji3//GUWsauN4e6
+	mzNmgoPbvp5whq5oa8PydmUIzQV4SbcRZv8L1G//5ksmZuAJgcYafXKMsHgY1haa
+	I//t3dnEOOEjA335Y8zUQ==
+X-ME-Sender: <xms:HPa6aC84sxbTeRnf1oXinR3f3CQAJlqtyPzX4rvM9xQb4dSNVMlQew>
+    <xme:HPa6aOO4L9-Nvu6OXMhjI0_gKQ5yxaLNlX8hGKrMYjHq1JfkGZmyvFix3WSoddVlL
+    2eRSu4btd620sOLoQ>
+X-ME-Received: <xmr:HPa6aOfUUriIMvzsBG4J6lM-oAANzcpkP0dpUpEiwFAVJy3Dasd_XSoSUCs5OQePkNAadMOfcCZnAw4Xln1CaxuJ5KqO4Ly0g7kJmHU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeludehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedt
+    heenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehnohhurhgrvghllhhmsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggu
+    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:HPa6aFXtlbIh9lnbn_U40UqBbVAgKrJoErM5e5qyWB9Iqb-nc9CiYg>
+    <xmx:HPa6aOjEaEHIMRV1Vkb-CxedDY2TXLxIiFzLhoT1TKY03uCV3ElbpA>
+    <xmx:HPa6aM-OnQbYB1uxzk3ZmIZywThw3jIju8_iXFF6ctfyI025WNqLWQ>
+    <xmx:HPa6aIYJqX-CBXHoaStF6HNlAOOHfM4Qv0efdQfMmtCnJXOEo2wABQ>
+    <xmx:HPa6aCIQwBNeXHp3uoQodcSxlpCASlF3zzNwMaeKtcGgoR9MvBtceAdP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 5 Sep 2025 10:39:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?44OO44Km44Op?= | Flare <nouraellm@gmail.com>
+Cc: Jeff King <peff@peff.net>,  =?utf-8?B?44OO44Km44Op?= | Flare via
+ GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v5] alloc: fix dangling pointer in alloc_state cleanup
+In-Reply-To: <88ae6c7b-0a69-48bd-9e73-672331a22197@gmail.com>
+ (=?utf-8?B?IuODjuOCpuODqQ==?= |
+	Flare"'s message of "Fri, 5 Sep 2025 02:25:55 +0200")
+References: <pull.2040.v4.git.git.1756941427825.gitgitgadget@gmail.com>
+	<pull.2040.v5.git.git.1757007856062.gitgitgadget@gmail.com>
+	<20250904204932.GD30633@coredump.intra.peff.net>
+	<xmqqjz2d7t2q.fsf@gitster.g>
+	<52fb3fea-4842-4532-8572-df41537da5f9@gmail.com>
+	<88ae6c7b-0a69-48bd-9e73-672331a22197@gmail.com>
+Date: Fri, 05 Sep 2025 07:39:23 -0700
+Message-ID: <xmqqecsl55gk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 5/7] BreakingChanges: announce Rust becoming
- mandatory
-To: Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?Matthias_A=C3=9Fhauer?=
- <mha1993@live.de>
-Cc: git@vger.kernel.org, "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>,
- Collin Funk <collin.funk1@gmail.com>, Elijah Newren <newren@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>, Phillip Wood
- <phillip.wood123@gmail.com>,
- Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
- Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-References: <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
- <20250905-b4-pks-rust-breaking-change-v2-5-6939cbf4a0b8@pks.im>
- <DB9P250MB0692264976781C194B7D6194A503A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
- <aLrnwOGKaAjLj0Bo@pks.im>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <aLrnwOGKaAjLj0Bo@pks.im>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------zTPbH7zvzf5uq7f1pVGPDzjN"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------zTPbH7zvzf5uq7f1pVGPDzjN
-Content-Type: multipart/mixed; boundary="------------yt7OLIwUy7zUAHo2NcgKh8a1";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?Matthias_A=C3=9Fhauer?=
- <mha1993@live.de>
-Cc: git@vger.kernel.org, "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>,
- Collin Funk <collin.funk1@gmail.com>, Elijah Newren <newren@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>, Phillip Wood
- <phillip.wood123@gmail.com>,
- Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
- Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Message-ID: <9fcda14f-d4d4-4db4-ae77-d9408bfae035@gentoo.org>
-Subject: Re: [PATCH RFC v2 5/7] BreakingChanges: announce Rust becoming
- mandatory
-References: <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
- <20250905-b4-pks-rust-breaking-change-v2-5-6939cbf4a0b8@pks.im>
- <DB9P250MB0692264976781C194B7D6194A503A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
- <aLrnwOGKaAjLj0Bo@pks.im>
-In-Reply-To: <aLrnwOGKaAjLj0Bo@pks.im>
+ノウラ | Flare <nouraellm@gmail.com> writes:
 
---------------yt7OLIwUy7zUAHo2NcgKh8a1
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> By *s I am referring to *s_ so a sanity check with: if (!*s_) return;
 
-On 9/5/25 9:38 AM, Patrick Steinhardt wrote:
+Because we
 
->> Do we want to commit to promising support until gccrs is ready? What i=
-f
->> gccrs ends up abandoned? Or takes an unexpectedly long time to reach a=
- stage
->> where it can build Git? It might make sense to give this LTS release a=
- time
->> limit instead, or in addidtion.
->=20
-> Yeah, I wasn't quite clear on that one, either. An alternative:
->=20
->   - We will maintain the LTS release for 8 release cycles, which equate=
-s
->     to roughly two years. It sounds like a lot, but recent security
->     releases have stretched quite far into the past.
->=20
->   - If there are still dependents after these two years we will hand
->     over maintainership of the LTS branch to dependents. So they will b=
-e
->     responsible for the backporting.
->=20
-> This really only is a suggestion though. I'm especially waiting for
-> Junio's feedback here to see whether he thinks that this is a reasonabl=
-e
-> thing to do.
+	s = *s_;
 
+upfront, exactly because we do want the code to segfault if the
+caller passes NULL to the function (so s_ that is NULL will cause a
+NULL dereference right there), after that happens checking the NULL
+ness of s and *s_ is equivalent.
 
-This seems reasonable to me -- people who still need that LTS should be
-allowed to ensure it still works, and be expected to commit to the bit
--- but with the emphasis that I would consider it absolutely mandatory
-that the git project accepts to host that branch, and it won't just
-exist in some other shadowy corner of the internet.
-
-
---=20
-Eli Schwartz
-
---------------yt7OLIwUy7zUAHo2NcgKh8a1--
-
---------------zTPbH7zvzf5uq7f1pVGPDzjN
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaLr12AUDAAAAAAAKCRCEp9ErcA0vVwK7
-AP47MKfCbzfueMpvLIKRn2F6MuM1kCEW1BpgYtDt9kZfKAD8Dr+7l2pjMHKMcGlVnwXr+eH1QIsc
-m9WZWVhd9OsdUQA=
-=CP6u
------END PGP SIGNATURE-----
-
---------------zTPbH7zvzf5uq7f1pVGPDzjN--
+And the whole point of doing "s = *s_" upfront is because readers
+can easily get confused when they have to deal with double pointers.
+The only reason why we pass the address of the pointer variable is
+so that we can assign NULL to it at the very end, and before we can
+do so, we want to be able inspect the innards of alloc_state object.
+By dereferencing s_ early into s, the code can work with the object
+itself without having to worry about following double pointer, so
+even though if (!*s_) and if (!s) may be equivalent, writing the
+latter is more in line with the whole reason why we have a variable
+'s' that is separate from 's_'.
