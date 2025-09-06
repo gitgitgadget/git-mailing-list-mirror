@@ -1,181 +1,135 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A762B18DB01
-	for <git@vger.kernel.org>; Sat,  6 Sep 2025 04:57:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1717A33E7
+	for <git@vger.kernel.org>; Sat,  6 Sep 2025 07:52:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757134624; cv=none; b=BbkTTLcOi+ZSE9YP+fbicNWa9nZb6LfdSa5VgBcvoq2lXZJCW0zDB28Dc4MVpstnasAr5frOpBoMEqb87F8P81CQPtZSf5PLw+8ciyBJUm/Xb/OTm/xlav/n8fTjN471JoomFhACPVR/zxxX6GH2C2fww1OFzXmRcGr9HlpzCas=
+	t=1757145124; cv=none; b=t+VH4IHSLugxpqFlrkYcFbayVMR5Xzu4KWo4ZikqkSCr+9sb6Zk1wf9tRAAs6ikFIR07Mq/ldt4i0ydp3HRAAm1w5WRq8KByHi0z68C21E1APDrFFcdcPG2zQ5ND1anfP6MxjEMhzEppRWptKO8ur52rQ5QZ6wlAGj35GSz1Rps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757134624; c=relaxed/simple;
-	bh=pvMooT1zF/3FwUyd3bf6sZJYUmT6BkoUtjlua6hB6IY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UDDbrZufHCwUOgm42IUJ6Z+/ecIqVJGqRyI2UYei12cOXdAcVN1+/Bv75lkHNMLGGvvtmC+dwbAu4JBMHev54jIDS4Kc2gO/E5yUKRBBBkUz+C9hcqe+qYgLkUd9Th/mcJ/JeGlziER9ISzW3rybgjrqLWl2kJcVtan395kxwao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nMIlgIkm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ot2Ztti0; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757145124; c=relaxed/simple;
+	bh=mapNKpp3oP0jhvICBrsqCy9E/lcw9xY7hzCrtIiGDdM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=kLTcfQDXG93FPEeBVL5L2/bn9wrBocsukkFEt5O1E9GpsJi0SFBRDNJIuz9aXbZ1DRRokmYH6UEHUQUsrKX65PifhDtSDfpHveIMo7Ao11wgJ0zeRls6wREHvHLdCc3vLB8FIi6HHChV6XvJ2rwntsILdSc2Las2O9qLncXa3wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EVyycIW9; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nMIlgIkm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ot2Ztti0"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 962EA1D0005A;
-	Sat,  6 Sep 2025 00:56:59 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 06 Sep 2025 00:56:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757134619; x=1757221019; bh=yC6YtaZB5s
-	KJvGCKOYW9Q+ETvGXg1CGhfi4adFNBu/g=; b=nMIlgIkm6hKwccC4r+bPa8DVFr
-	DB6LXCSRtuI8ZxzLmH2oXe2B9Kzzf2tX4kaPdEs9ZepCLNhkdTdZzIEtuV0DT1BS
-	H0QOeq9Hn1TbqCfJBJlsU7Tb6mEyPktzdsFjYr8bmZCuSrICUKznAw46B8Kt961V
-	I1HvURuSaJLgcS50VZJ9RkbUZt/MqkICBKJtCOM+TmHggFDx+JieU7zE/5lgdk1p
-	pCwvrBJ6FkinE3JPdwGDHS2ldVrntTFAcHSwnt0yjBss+4uLm/4fEand5SpieUrU
-	dFZtV/DvqZcvFuWKgWxj4Y4hpTEX1UDiuSNfWz/g0E4E8XUTNEdfMHN97h0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757134619; x=1757221019; bh=yC6YtaZB5sKJvGCKOYW9Q+ETvGXg1CGhfi4
-	adFNBu/g=; b=Ot2Ztti0FIItyXsZCsEWtTdZTkTAL93Dz5MIU92zt8SLk17kkcQ
-	E+099gDAFwSoiULHcWiXI2EodUzYv4yRIpqEyUWJoBoX+PdZwgI8sPGizkHoTU1r
-	tSmgmniGm0Tp9ucn6NsfqGWbm4tUW/Y/3qDKj0vFdvh/mNxHniXBgeTj6RloNP17
-	eOXR7nA7b0GHOFFqBN1ObhTXwOFmwD3rEF2/wPY88Sf0hnF+dI3iG0cQ0r4J4R8E
-	VWRFOKKJdcomYiYvKkBIf1RwgJCrzkUEDbecHUkpfKP688MmpVa7Feho7u/svMwK
-	qZoSJYVuAacR+fd6rNUUvMQZbpUb56scgmA==
-X-ME-Sender: <xms:G7-7aP6ovgU7hS7Zcy0wV_Aswuk9zx12OAZx51KzsROys_3RF6awyQ>
-    <xme:G7-7aIIwqAB5T4KevX3VH76_4-XIaM0BBbBPE_MYRrciXJbegynxZyFROtjHuOzBw
-    NVgDb3SfDE_Nrbkcw>
-X-ME-Received: <xmr:G7-7aP7207_knMz2an2wXf7KIsYwTjhgPOXHJphovNmBVmuFQg0AspBCQ8dU5TOVQmVJSeAbNqsnI8kvWaNpD3oFjbyXvIClL8ZWV1c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdekjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopeguvggsohhhmhgrnhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:G7-7aLzZsX1ciToFpb0NfTGAn84Loxd6DoLlVl3iAbeTAyPdD0STOg>
-    <xmx:G7-7aDYeOhqPzR03HM7pnq1dhtn7ftZ12yIGbMrkaICXT2rC6FWRtA>
-    <xmx:G7-7aNRqfn09MAbY1s5suq2iIUkUO8bJONmyjLr9Eo_mEBsq_7eTcQ>
-    <xmx:G7-7aNy0bLlwZ3b6tCMtQjYd5HzRS80C7EKYs509WoXcSYfkVwzuVw>
-    <xmx:G7-7aIybix21xaTKOm1uRMlDzFNBv1DVNvKOPqeg_bp-2GSYEOlW37aI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 6 Sep 2025 00:56:58 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: David Bohman <debohman@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: git-2.51.0: Fetching tags does not work
-In-Reply-To: <CAB9xhmPcHnB2+i6WeA3doAinv7RAeGs04+n0fHLGToJq=UKUNw@mail.gmail.com>
-	(David Bohman's message of "Fri, 5 Sep 2025 17:30:40 -0700")
-References: <CAB9xhmPcHnB2+i6WeA3doAinv7RAeGs04+n0fHLGToJq=UKUNw@mail.gmail.com>
-Date: Fri, 05 Sep 2025 21:56:57 -0700
-Message-ID: <xmqqcy8418me.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EVyycIW9"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-329b76008c6so2254551a91.1
+        for <git@vger.kernel.org>; Sat, 06 Sep 2025 00:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757145121; x=1757749921; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xG2pxoM/qfMf3SqL35kHvkYiRdU0BMS7ed5ilq84Ol0=;
+        b=EVyycIW9DwTvZpTDko1z/T3rsB7FkeMnvZpZOoCK1NAd30atbUIImRmmGsnmwgIC5/
+         DTLZdBaqeLygvgsRlucDDvVA7R9gk/rysZL305PIYHSnTBEUZgkYHCz+v/LO05kXmES1
+         JGUnFP7I8+l7ncaOSRvaHS9j7u9T+7PrD76+GTaKJgT2LdPnmRZiQEW3J8UGK1S3PJJe
+         WYGb/Q98eX6rUQXqc8MkYOO2SWaoD5oIgAuzR+bu0NDLZE+QRjklLZF0BpqkMS3C4qeW
+         UJUVakG3qzhguQOk+XR2pBEkRC/COivbfFuG+oh22jW0Ci4cQ3mkAKEUglekVjuVzoRC
+         4MoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757145121; x=1757749921;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xG2pxoM/qfMf3SqL35kHvkYiRdU0BMS7ed5ilq84Ol0=;
+        b=Ge7j0xDFZRH06u1zWCn5zpFz/JihEPIXDxmcTPLiDFUH31qDFvOS1vw0YgIiaODr2P
+         0b3+dqdHfen4heKJbh+bx/F0346cVlURK60PQIBUzhqoWVqfz3Gy9kZM/a+UKR+ENaU+
+         MbMp7zm5XmTU531RD2w6f73vJUjvPPIFmmWAsA2RlkGr1eIjo2Y0hs35KnicUIrLJUev
+         U4XaaGYyPVYqDsTxTQyEpWI6lhCn/zKDqwkMO3dWpeMSSS08tlh9D52J/ctYQME3FOt5
+         /JGXmhR3oQr2bgK6K9EFzp6jvrSUjBv+NMj7mh2tqjyxqpmuBmyBtAPiHklS8PhDvoel
+         cSWw==
+X-Gm-Message-State: AOJu0Yw2ri7jrm5cvgB9DkvUGINQRwwwBugM1QPVWvIuJYJu3NxaQyhw
+	/BZ+uKi9tPIhdFd4Bb5QmKpx9GNl38+xMDvZCyf1kunevsAAjs6Zsvz+uvQ1BA==
+X-Gm-Gg: ASbGnctjDWyZSVX8dBQ9SUeqGNXvBre4kuFioytsvmW74BTrsQhXJDC9Cw+rkxpT/s2
+	KWSFOFLMV3KIvJym1cIIhQsYULSniTlAy1bjQllyspHrS6OVXkowJ/IY4Eprxab1ZDmS+8NxcaT
+	IRJmENmSuIvjtzaoV4p7aSxdDlsIf9qujuCNgyG+aS3OnDzCvw/U5J4y4+fyS7GRAy5YUKpCr62
+	4s5VyhC/ll7s2pSBNtYdLN9A+10DyDJy2cw7eCBVSw2gsrynIjWO2IwlHQlKb2xODz1XRV8DURn
+	RGmIe42JnkQxXMIvAuyu+j6keLImlZw7B2mfiOo8EWxR2lFCgxRopbXPuhulWCO0nRPcIRh5HOA
+	ZsHN2jdxiOuwNEugwUQMpDrXiNahpkw==
+X-Google-Smtp-Source: AGHT+IG8OGUri2hdR2nEDnUNBKMEK8ZrLaehwg9bg0bGBAL1pgmaozsNq+U73SYF937xK9fUHOkORg==
+X-Received: by 2002:a17:90b:1fcc:b0:32b:94a2:b0c9 with SMTP id 98e67ed59e1d1-32d43f045f7mr2214517a91.3.1757145120945;
+        Sat, 06 Sep 2025 00:52:00 -0700 (PDT)
+Received: from meet.. ([103.176.11.198])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32bd182256bsm3540929a91.23.2025.09.06.00.51.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 06 Sep 2025 00:52:00 -0700 (PDT)
+From: Meet Soni <meetsoni3017@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	shejialuo@gmail.com,
+	gitster@pobox.com,
+	Meet Soni <meetsoni3017@gmail.com>
+Subject: [GSoC][PATCH v2 0/5] Add refs optimize subcommand
+Date: Sat,  6 Sep 2025 13:21:42 +0530
+Message-Id: <20250906075147.1076656-1-meetsoni3017@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-David Bohman <debohman@gmail.com> writes:
+This series introduces `git refs optimize` as a modern replacement for
+`git pack-refs`, continuing the effort to consolidate commands
+under the `git refs` namespace.
 
-> This is into a bare repository:
->
-> git fetch --tags
->
-> The command notates the tags it will update, but they do not get added
-> to the repository.
->
-> I reverted to git-2.50.1, and the problem went away. This is a
-> regression in git-2.51.0.
+changes in v2:
+- Updated documentation.
+- moved `pack_refs_core()` from `builtin/pack-refs.c` to `pack-refs.c`.
 
-The following is my attempt to reproduce ("rungit $version" is my
-way to invoke any one of many versions of Git I have installed).
+Meet Soni (5):
+  builtin/pack-refs: factor out core logic into a shared library
+  doc: factor out common option
+  builtin/refs: add optimize subcommand
+  t0601: refactor tests to be shareable
+  t: add test for git refs optimize subcommand
 
-First let's create a bare clone of a repository "foo" in bar.git
+ Documentation/git-pack-refs.adoc     |  54 +---
+ Documentation/git-refs.adoc          |  10 +
+ Documentation/pack-refs-options.adoc |  52 ++++
+ Makefile                             |   1 +
+ builtin/pack-refs.c                  |  55 +---
+ builtin/refs.c                       |  16 +
+ meson.build                          |   1 +
+ pack-refs.c                          |  56 ++++
+ pack-refs.h                          |  23 ++
+ t/meson.build                        |   3 +-
+ t/pack-refs-tests.sh                 | 431 +++++++++++++++++++++++++++
+ t/t0601-reffiles-pack-refs.sh        | 430 +-------------------------
+ t/t1463-refs-optimize.sh             |  17 ++
+ 13 files changed, 616 insertions(+), 533 deletions(-)
+ create mode 100644 Documentation/pack-refs-options.adoc
+ create mode 100644 pack-refs.c
+ create mode 100644 pack-refs.h
+ create mode 100644 t/pack-refs-tests.sh
+ create mode 100755 t/t1463-refs-optimize.sh
 
-: git x; rungit v2.51.0 clone --bare file://$(pwd)/foo bar.git
-Cloning into bare repository 'bar.git'...
-remote: Enumerating objects: 3, done.
-remote: Counting objects: 100% (3/3), done.
-remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
-Receiving objects: 100% (3/3), done.
-: git x; cd bar.git
-: git bar.git/BARE:master; rungit v2.51.0 for-each-ref
-dcd3daa27e4c2f5182cfa80e5097fed4936b7037 commit refs/heads/master
+Range-diff against v1:
+1:  0268933403 < -:  ---------- builtin/pack-refs: factor out core logic into a helper
+-:  ---------- > 1:  67a9187b59 builtin/pack-refs: factor out core logic into a shared library
+2:  ec14212c7b = 2:  422eaa0c8b doc: factor out common option
+3:  d3a4d7cb67 ! 3:  067a2baa97 builtin/refs: add optimize subcommand
+    @@ Documentation/git-refs.adoc: list::
+      	linkgit:git-for-each-ref[1] and offers identical functionality.
+      
+     +optimize::
+    -+        Pack references into a single file to improve repository performance
+    -+        and reduce storage usage. This subcommand is an alias for
+    -+        linkgit:git-pack-refs[1] and offers identical functionality.
+    ++	Optimizes references to improve repository performance and reduce disk
+    ++	usage. This subcommand is an alias for linkgit:git-pack-refs[1] and
+    ++	offers identical functionality.
+     +
+      OPTIONS
+      -------
+4:  16fa3f5445 = 4:  640ebd9a4f t0601: refactor tests to be shareable
+5:  22620613d9 = 5:  37ca586bb9 t: add test for git refs optimize subcommand
 
-So now I cloned from "foo" to obtain the "master" branch.  There is
-no tag, so nothing else was transferred.
+base-commit: 1fa68948c3d76328236cac73d2adf33c905bd8e3
+-- 
+2.34.1
 
-Then we go back to "foo", create a new commit, and a tag.
-
-: git bar.git/BARE:master; cd ../foo
-: git foo/master; date >stamp && rungit v2.51.0 commit -a -m "second"
-HEAD is now at 2ec78a8 second
-: git foo/master; rungit v2.51.0 tag really
-: git foo/master; rungit v2.51.0 for-each-ref
-2ec78a8e44a74213773a96f6c870b59ae2bfc7f0 commit refs/heads/master
-2ec78a8e44a74213773a96f6c870b59ae2bfc7f0 commit refs/tags/really
-
-Now we have an updated branch plus a tag.  We go back to the bare
-repository that was created earlier by cloning "foo".
-
-: git foo/master; cd ../bar.git
-: git bar.git/BARE:master; rungit v2.51.0 fetch --dry-run
-remote: Enumerating objects: 5, done.
-remote: Counting objects: 100% (5/5), done.
-remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
-Unpacking objects: 100% (3/3), 252 bytes | 63.00 KiB/s, done.
-From file:///var/tmp/x/foo
- * branch            HEAD       -> FETCH_HEAD
-
-Without --tags, we would not fetch the tag.
-
-: git bar.git/BARE:master; rungit v2.51.0 fetch --dry-run --tags
-From file:///var/tmp/x/foo
- * branch            HEAD       -> FETCH_HEAD
- * [new tag]         really     -> really
-
-With --tags, we would.  After seeing these two dry-run results,
-and making sure ...
-
-: git bar.git/BARE:master; rungit v2.51.0 for-each-ref
-dcd3daa27e4c2f5182cfa80e5097fed4936b7037 commit refs/heads/master
-
-... dry-runs did not do anything, let's try a fetch for real.
-
-: git bar.git/BARE:master; rungit v2.51.0 fetch --tags
-From file:///var/tmp/x/foo
- * branch            HEAD       -> FETCH_HEAD
- * [new tag]         really     -> really
-: git bar.git/BARE:master; rungit v2.51.0 for-each-ref
-dcd3daa27e4c2f5182cfa80e5097fed4936b7037 commit refs/heads/master
-2ec78a8e44a74213773a96f6c870b59ae2bfc7f0 commit refs/tags/really
-
-We have the tag fetched.  Note that this bare clone does not have
-any fetch refspec,...
-
-: git bar.git/BARE:master; cat config
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = true
-[remote "origin"]
-        url = file:///var/tmp/x/foo
-
-...so the master branch hasn't been updated (the new value is only
-in FETCH_HEAD, which is expected).
-
-As we can see here, my local copy of 2.51 does not seem to exhibit
-such a problem, so you may need to narrow it down a bit more for
-others to be able to help.
-
-Thanks.
