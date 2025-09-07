@@ -1,138 +1,116 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDAE131E2D
-	for <git@vger.kernel.org>; Sat,  6 Sep 2025 15:34:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF8F610D
+	for <git@vger.kernel.org>; Sun,  7 Sep 2025 00:21:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757172893; cv=none; b=jRK4/zAkSaNrHYy3ahU8GHC+Q3VoC/vLj+rObvrEBfUyzsUftOkEC2IBNlAKxSf3lTR6nu9swOaGyAJKqu5td8euyDW24+Ylc9exJw8J4xUtP55nS3Gzoo3TsGoAeiefLMugyURKYAZ3YljlGj3a0qxpVxLHcWx/9dxgxwnSwv0=
+	t=1757204518; cv=none; b=S6G7k2dSpXfUdoFX1rXWwDG0Ej6h3IGjHN92RaYYFiY2IGlrTKpCXm3WT6xp0wum1xmkawJ1GMuuwL02c0YJoN6OujRisBwgr/2EEIZLyO7UxxKp2v1A4r2YKQFGZJ8gQY9CWKK4ewiPNh0QcTvxJMxgqiP32sjQBGQIGEi7dAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757172893; c=relaxed/simple;
-	bh=7WyAc6+WO8bWoCYn1q+vl4XJRut0FW3dHx453InJyXQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KMsyvdlbm1NQKCkvEZCHBtmngrE1qmjMUYMcnMrT4GV4z+kxAcvGIVH+SpYQCOBH96ZE6fLpwmrb8UAk8bb6PP/aDC9UH5VKsxDFCtMUqU771tp1PUchSVwdxnf1QIbUV8cTRLT1lv6dWExkLevznE4ht2lVGAMUj/rcTvU5TC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=kA2OyxJx; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1757204518; c=relaxed/simple;
+	bh=AWbdTwdwL0BPxCtvLdDFhWzr4bh2rU0b03E+aY5mZRs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dZjKjyYclVnIkZuSEuF9Mcn/Srg2oX5ProZjM5RfwGQwuh1D8nBSQ4A8PiZIUpj+1v+5ywi4bZR7cmBdvqvVsO8K95RIvd7o7CjiJLVZ/YCc/T8WSS/4DiZ9mvmeykSv1DoqO94T2Xvm3EF7LXQvP5d3ziH9FLrm29MhL7DSlXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FbYcPUFu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CC9DhJL5; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kA2OyxJx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1757172883;
-	bh=7WyAc6+WO8bWoCYn1q+vl4XJRut0FW3dHx453InJyXQ=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=kA2OyxJx17T3mMfFZHhKBeLwwDTLyWhHhwLRb5YXdavvZVWmODY98ga81SvQIZF4X
-	 smY3mOIv3KAu4fIbpmx/9SS2SpUGLnboZyshVvnEdV0yTK2YYbs8itvDoUO7ssdNDG
-	 XvUZfKloiM1jpiSBlhfAQq9p5yNGnHZGPov5IrFTkHhCvRL/qs8eNgEIpRf79IUCKS
-	 SqJ/GwAHWb75l/vMVt8RUQ5DASgMVIfrSyyktW8am7rPVheJcrF/UKSpWpzMvBSDby
-	 2JhORx7DvZxjUQpJMkw07VKOk+H6eiQGn3ua86LyItZekEZl+JOOi5lxfC0Q0qDn6i
-	 A3NrNAxBtdBE8L2uHXYQwgAxSJBjFgK64a9Qd6dRDBSPEkuVYc6BQKfGMjGrAIYcgB
-	 DKr/AYPPkueboRdHfTaISWGMh3IyoKCEzDVqjAiH4Q3ap/zQn6iP0k/n4c8L6OzMcH
-	 Et+dYgg5/2n5TWDnpn0fSNH7yEqQLMeEElzwrGZ7GuaVkiOMPOp
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f8f0:4bbe:8989:f575])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 26E9F20100;
-	Sat,  6 Sep 2025 15:34:43 +0000 (UTC)
-Date: Sat, 6 Sep 2025 15:34:41 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Kousik Sanagavarapu <five231003@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Running out of inodes on an NFS which stores repos
-Message-ID: <aLxUkTzuVaZrWDs2@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
-References: <20250906141711.64419-1-five231003@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FbYcPUFu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CC9DhJL5"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 96DBA1D0005F;
+	Sat,  6 Sep 2025 20:21:53 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Sat, 06 Sep 2025 20:21:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757204513; x=1757290913; bh=RUHil8cFjg
+	xSIZbQ5tXAn9UpxLRVSAs2lqB2HpqW/ws=; b=FbYcPUFui3mWzQ+BnAw8n7Qhen
+	yanxhdYPZE9CsWv1G30lvkMsB2rLxXxYsxbdbZyAmzRupnawWalIXWe8zjXBlVax
+	f7O+NMrwK0nR5m9ebyS2XOlKobrDN6BK/vXD3ONPjlpgsboYAt6ZJdiTc+t+bp5C
+	EeybqCsVXolytmBtUSQs9wyXcRpcobX/FQEQpcXgVWHXnA7DviCFSe6oZL1AcQTy
+	Bjeg1ZYIz6Sf9tPyRtyBiESpXW/iPKE4nHyfb7d79kf8/URlPA/41UzaLLTnEktb
+	nbO34y8WpHgiKx4qYTrlAaP23ocQXasmwDWOpgidFbKDuwHsioCW03SyT6Uw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757204513; x=1757290913; bh=RUHil8cFjgxSIZbQ5tXAn9UpxLRVSAs2lqB
+	2HpqW/ws=; b=CC9DhJL5vdYOMChRXmfrDVzpjR2B/aLZmwnDwSG9CGLOxq0nXPg
+	yVfsc6pfWGEQUACQiSB2hCXb7YLzkAGxH9F3pcTM9IchCpAxQx3sdiK9p7RUhIW3
+	JBaDeQAw6Vt1tcTZA1nsoD6YhzdpkDhw6HFbrHiBHmvlaytiftZXVHcCt1JkdGAQ
+	z891mOQ42MhwdvtjmhbueDmRy3LjaRsklWlENjkH+FSzlsaORILvMw4pJhcNozXG
+	eCwg2FPcqWG4II3gscccTEoty1IKsTNl53T4BvvzC/IzFuTWjN472z6bjpNJy26+
+	Acj6jwOUUQb/V7GSWQZin1ErX1UMrQ1fuHQ==
+X-ME-Sender: <xms:INC8aLYiKZHYOmXhDtJPEMSp4-P4OmaCuKuGSCZt8Gh5hd-ZjU2lFg>
+    <xme:INC8aLC7XvjJBUvqZv_o1yiMeC9UD8_XsJbDRlLWe8BRUgzsGKwSOp5yRYfRfsMzK
+    jgr05KB4uNPweRoQQ>
+X-ME-Received: <xmr:INC8aJHZx9kU0gJEo9YZ9n-6cLrVrNLOYt7qduvLzz4Wo4obe4S1elo_pCKQ1UBInJl7dPGkCH_sozvTVwMQoxgCmM4aGqW9M521_z0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufedulecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeffieetueejveefheduvdejudffieejgeefhfdtvdekfeejjeehtdegfefgieej
+    tdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepudeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
+    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopegtohhnthgrtghtsehhrggtkhhtihhvihhsrdhmvgdprhgtphhtthhope
+    hsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopegtsgesvdehie
+    gsihhtrdhorhhgpdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpth
+    htohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:INC8aGPz5rGuPeTS4ao-iiv_dZwR_i172mPe-okOWJa3ZvMafq4E7A>
+    <xmx:INC8aKjy9yoJ_uU_ARRQFq2_sN6LgxXj4I-KiSF2k_QPaBSNcRx6pA>
+    <xmx:INC8aG3JxoYWvAwmc_lGnhS8CMo1sguCCLZhDfQlSYS-v47YXfxDTQ>
+    <xmx:INC8aHnvnREPDbbmiAv4NqJY2oJ857Qlmw8l0dbZe63mQXhdV60umA>
+    <xmx:IdC8aPKDxMhqUYhnR5recuIMSWpa8cejBBDaag_3NaPh3rPsmZCecPVO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 6 Sep 2025 20:21:51 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "Haelwenn (lanodan) Monnier"
+ <contact@hacktivis.me>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
+  Christian Brabandt <cb@256bit.org>,  Collin Funk
+ <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
+ Newren <newren@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
+ <pierre-emmanuel.patry@embecosm.com>,  Sam James <sam@gentoo.org>,  Taylor
+ Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC v2 6/7] ci: convert "pedantic" job into full build
+ with breaking changes
+In-Reply-To: <20250905-b4-pks-rust-breaking-change-v2-6-6939cbf4a0b8@pks.im>
+	(Patrick Steinhardt's message of "Fri, 05 Sep 2025 13:51:02 +0200")
+References: <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
+	<20250905-b4-pks-rust-breaking-change-v2-6-6939cbf4a0b8@pks.im>
+Date: Sat, 06 Sep 2025 17:21:50 -0700
+Message-ID: <xmqqzfb7yuw1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vW855D7sBEC5ZYbU"
-Content-Disposition: inline
-In-Reply-To: <20250906141711.64419-1-five231003@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Patrick Steinhardt <ps@pks.im> writes:
 
---vW855D7sBEC5ZYbU
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>  fedora-*|almalinux-*)
+>  	dnf -yq update >/dev/null &&
+> -	dnf -yq install shadow-utils sudo make gcc findutils diffutils perl python3 gawk gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
+> +	dnf -yq install shadow-utils sudo meson ninja pkg-config gcc findutils diffutils perl python3 gawk gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
 
-On 2025-09-06 at 14:16:12, Kousik Sanagavarapu wrote:
-> Hello everyone,
+This drops "make" and adds "meson ninja pkg-config".
 
-Hi,
+https://github.com/git/git/actions/runs/17506343802/job/49765327830
 
-> These git repos come from another service and there are typically
-> thousands of them each day. It is important to note that we only store
-> the .git dir and expose a url which is configured as the remote by
-> default to read and write into this repo.
->=20
-> All of these are small repos; usually not many files and not many
-> commits too - I'd say ~5 commits on average.
->=20
-> Historically, when we ran out of inodes, we had implemented a few
-> strategies where we used to repack the objects or archive the older
-> repos and move them into another store and bring them back into this
-> NFS and unarchive the repo.
->=20
-> However, none of these totally mitigated the issue and we still run
-> into issue as the traffic increases. As a last resort,  we increased
-> the disk size even though there was ton of free space left - just
-> for increasing the number of inodes.
->=20
-> We can't delete any of these repos, no matter how old, because they are
-> valuable data.
->=20
-> I was wondering if there was some other strategy that we could implement
-> here as this seems like a problem that people might often run into. It
-> would really help to here your thoughts or if you could point me to
-> anywhere else.
+seems to indicate that AlmaLinux is unable to find meson and ninja.
 
-There are a couple things that come to mind here.  You can try to set
-`fetch.unpackLimit` to 1, which will cause of the objects pushed into
-the repository to end up in a pack.  That means you'll usually have
-only two files, the pack and index, rather than the loose objects.
-
-If you have a large number of references, you may wish to convert the
-repositories to use the reftable backend instead of the files backend
-(via `git refs migrate --ref-format=3Dreftable`), which will also tend to
-use fewer files on disk.  Note that this requires a relatively new Git,
-so if you need to access these repositories with an older Git version,
-don't do this.
-
-You can also periodically repack more frequently if you set
-`gc.autoPackLimit` to a smaller number (in conjunction with
-`fetch.unpackLimit` above).  If you have repositories that are not
-packed at all, running `git gc` (or, if you don't want to remove any
-objects, `git repack -d --cruft`), which will likely reduce the number
-of loose objects and result in more objects being packed.
-
-Finally, it may be useful to you to reformat the underlying file system
-in a way that has more inodes.  I know ext4 supports a larger inode
-ratio for repositories with many small files.  Alternatively, apparently
-btrfs does not have a fixed inode ratio, so that may be helpful to avoid
-running out of inodes.  I can't speak to non-Linux file systems, though.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---vW855D7sBEC5ZYbU
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaLxUkQAKCRB8DEliiIei
-gcL5APwJH2qGeH7rWKjPlqmXQVaA5trruT6acEOS5DGkRANItAEA9H4ot9Pw/uMW
-gByMYR8oZIQ0poucnbCiDbob43aDegc=
-=WzqV
------END PGP SIGNATURE-----
-
---vW855D7sBEC5ZYbU--
