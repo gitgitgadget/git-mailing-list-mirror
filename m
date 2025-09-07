@@ -1,78 +1,109 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3C81C8605
-	for <git@vger.kernel.org>; Sun,  7 Sep 2025 17:23:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AB928725D
+	for <git@vger.kernel.org>; Sun,  7 Sep 2025 17:42:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757265822; cv=none; b=IgXrkDaarLoGKgAcB6SPOrVB1Ok4/dwdMMINSkDWuzb5hpAxwN7mFqZAm2B1UNVzt1aQAUfpzzd63QzIRPznbIWRONtIv7oArbIGHhtV/zVKs8j8TYErtfeCHAlnUaqGVWRm+JUDf5FfS9jcIufxNq08/8PF45ETz8d6Qq0z+bs=
+	t=1757266973; cv=none; b=DauxA4Ic1kCHXl106q1CxSUzRMOMdsKwQZ/wYPOJM1QfmgbtnDudykMScYOITCQzgp93+tWlbmDWh4oaW7JfsCZoGO12PbV9x8IvJSqfogsLorVs8h25W0ml+SEoA0+tG8us02vnHHxiAMs20FNrrqWb0f/baWQvmP9VTvRlFMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757265822; c=relaxed/simple;
-	bh=inmtY1nGjfPKToT1yPeM2sMH7SiwwHJgOKPR+2Z1hPY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=OhZ92e4+YHv4+iDX8FfzamC3Bleq5/8covm4g00R3z88sp92KDjTZIVuwQvMYdmwRBQ3Ken2qFL9YG6V89L3GBvW+Y3AMhmR2HnLfiae40vamQYY3WOR2A7gNhVBjIqtRz1X2TsE0xEVg3LoXYa0l1pzMDRY8EzalTzi9X1Amkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EZG0xrf0; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757266973; c=relaxed/simple;
+	bh=eIbSk1Vz6UtOKDzPe+NRpnvch3ZxskrgAUdZPFIfrUw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cyKr8qoQO+zUPmFiIPjnVRg8TjfcLoKzdOEXidmC9TLhHoZhBfz13LX2+oRpTDtRZupBErAxi9vFsVVlRei143N1BrXMiZ6Vq/pPsS4eu5X8TqHJqF+Qp0AW647uh6l54+V78unW1V7fZWsLcxFf+pI9spczyoly+wY2E7Ywcc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=DLvshb0m; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EZG0xrf0"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-71d60504bf8so35600487b3.2
-        for <git@vger.kernel.org>; Sun, 07 Sep 2025 10:23:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757265820; x=1757870620; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=inmtY1nGjfPKToT1yPeM2sMH7SiwwHJgOKPR+2Z1hPY=;
-        b=EZG0xrf0pEEH39E3eZOYrwZkd5THh2S1lBKzvCw2YBMui/Pxf85ghDAVJfat9Im7Z4
-         uozhD1jvhJ+k7+MrHoQR9Mfm3x62CgIDpDhqAASMwiCiTnQo36wMZUpAXkqlGatm/IkM
-         5FsnIcqYVX4rwa8G5xl67hee/j0J8/xc4/DCaLwPqWmTxP68gV9W9Q8ReQjpgRqJ6Zd/
-         7ueWa4FN+hTNeRIxbAqtcUShkGbtB80Rj9zGRxNSNExvIaK6fyp1gL+3M4m3V34GQUfq
-         dHV3RT6LTCL2t+I6MI414AxBoEVAboFX5COPeAVofUZN9TUzYiKFrMECMnkJA60PuRv/
-         RmYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757265820; x=1757870620;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=inmtY1nGjfPKToT1yPeM2sMH7SiwwHJgOKPR+2Z1hPY=;
-        b=GDRT8GNxoMJhCWANx+JqPrTePNDG76uVzUB4/DPE+AYem8BBLFb6I27NhhGyny0dlw
-         53iX7LOeSXfyuGOCxff5O7QiZguJT8J/HEnfgsdLr6Yf/nj/GI4jNryMVZaPQIInUK3c
-         3/r1VAcKslcmyn/wpzSkNzAnvZ+smIVtExjWC8cZ5Q5H+09UzQEas7qdmg4SNOjyhb0U
-         iyE/Jm3Cd2yCNt19+xLXHpSCcCeF0vZILI/9p+A23dEUpiTBDvpTBNEPVb1OmtAuUPVk
-         lOgX5Nw3/2bd2+2mEU8ZR5sZ8zsQkLUsmtLv6YEAlCAVogqZN9W8lREBuTD30k1rnb8x
-         58CA==
-X-Forwarded-Encrypted: i=1; AJvYcCX91Y8T7Sx6tV9P63Ft8lJW5QevtmMLF/7mxUDHARCFnpzpJZ7ZPBWf/cTYm9e/kY38e2U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYn1OfIMZOGveeiKz2P5Mp4yAZx1jSUxcpqwq4k4KNnc3PKhs2
-	i1eUGkCTAK491abGDfBl+g6j4qLE4L6lWes2lkb2Ahgo1QQMTMPgLlLn79dwXxnN2RJdwDdrhx1
-	ixn7FzGYZ8RsNQb6PSB3myNwHc63HE3s6yziql6A=
-X-Gm-Gg: ASbGncsM7vrZRp+KwYBHe8vAEIkJO0rViZbsScCRVymHhl9flTYo8Gb6aJ6V4kYAxe4
-	pbE/2WdfWlP++DnTqX7hnBDZvCm18iKIWNXFz6EjADKvtPuPI1ZOVfy2Hcu3hUoy9gM+0O5H9t3
-	FWDhXMpf9jAlkThEtvZ9FXvkRDMVWpMADRZKoWEbKgp8YzMu8OOiMaf4oz12KDYFJ9MjY9Kdif4
-	/d2cTKyw2Y17NQb
-X-Google-Smtp-Source: AGHT+IH9jIhIPNnYtSGYBTPS97JlfsU5FvFMViHheegJ28kjHFdV9zouzhjdPQVVa3YG0Z08RifNKC9ZjrfmKfkgAIc=
-X-Received: by 2002:a05:690c:6912:b0:720:c65:eee0 with SMTP id
- 00721157ae682-727f3e78c77mr54555607b3.19.1757265820070; Sun, 07 Sep 2025
- 10:23:40 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="DLvshb0m"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1757266964;
+	bh=eIbSk1Vz6UtOKDzPe+NRpnvch3ZxskrgAUdZPFIfrUw=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=DLvshb0mcxJcJ33fVo3SZ6b9etTNr27Pyb0H1a9JQXgWnGxhFVKMyXuR53HKk0KnN
+	 L2Ot07m83pZxgdUGorTfZ9RW7GbrFuJXEjhhEClKKfWWgreB6MITtp/3ZMGAl6qEbv
+	 Y+3ienNQkgRICn7QtI0sLuPCNisCnpIhyGvLNYCh4vrWbmHNfEe7AKUiCxlEhbJpwH
+	 8r5a0TLkvvQPkblmsv0alpFeXnfG/brcnwTc04MIREwhFyx8xPyRUkUeyjXCoCsF3c
+	 7tOnHD451tZikisKSvbJZFyxECIcAVa0Op91SIfQc5jcGtn9dBE+Gj7sj81sTPMYSc
+	 EEQUNG00ncN27fv7V3c6Tx8trpqi/NjFlHEwi7ubwvRbPEkjbTGie/nAfzzz+s6kud
+	 gcyRx1h8PFuTgD3QBx2cGPXcIImxR8i8W0IL/NFS3tWOrKIoPAeFfDDSnhoOA8VYg7
+	 O7IMGl7R6ScrDfOcXeR624aDTSFLgX8NpSBRva+yd1vtY1aV0V8
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:3b61:a7f:90:9d10])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5C4B2200C9;
+	Sun,  7 Sep 2025 17:42:44 +0000 (UTC)
+Date: Sun, 7 Sep 2025 17:42:43 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Milan Hauth <milahu@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Git dumb HTTP protocol should work without update-server-info
+Message-ID: <aL3EE7dLMuj6ONZQ@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Milan Hauth <milahu@gmail.com>, git@vger.kernel.org
+References: <CAGiEHCtP29bQRsEyLabNrLuiP96P-o7EEGi88B7pJbP0tfprxw@mail.gmail.com>
+ <aL2fn4j5uhrVWrDp@fruit.crustytoothpaste.net>
+ <CAGiEHCvFnhZRXwNVRyzQ4ABi3p0Opdo8+draXoDu5p1R6HZn1Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGiEHCtP29bQRsEyLabNrLuiP96P-o7EEGi88B7pJbP0tfprxw@mail.gmail.com>
- <aL2fn4j5uhrVWrDp@fruit.crustytoothpaste.net>
-In-Reply-To: <aL2fn4j5uhrVWrDp@fruit.crustytoothpaste.net>
-From: Milan Hauth <milahu@gmail.com>
-Date: Sun, 7 Sep 2025 19:23:28 +0200
-X-Gm-Features: AS18NWChv4hC3GDe1l20L9w1CBHkmoi1VwBRn7XJzLNGj-LZH3M-WEdO3JjRcOM
-Message-ID: <CAGiEHCvFnhZRXwNVRyzQ4ABi3p0Opdo8+draXoDu5p1R6HZn1Q@mail.gmail.com>
-Subject: Re: Git dumb HTTP protocol should work without update-server-info
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Milan Hauth <milahu@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="cqaKSAJHb5C+mo7c"
+Content-Disposition: inline
+In-Reply-To: <CAGiEHCvFnhZRXwNVRyzQ4ABi3p0Opdo8+draXoDu5p1R6HZn1Q@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-> HTTP push
 
-im only talking about "read" operations:
+--cqaKSAJHb5C+mo7c
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-git ls-remote
-git fetch
-git pull
+On 2025-09-07 at 17:23:28, Milan Hauth wrote:
+> > HTTP push
+>=20
+> im only talking about "read" operations:
+>=20
+> git ls-remote
+> git fetch
+> git pull
+
+Yes, as I said, reading directories is only possible with WebDAV since
+HTTP doesn't offer native directory listing.  However, we don't use
+WebDAV for fetches and other read operations and not all web servers
+support it.  We get better web server support in many cases by requiring
+that the server side do the work of updating the lists of packs and
+refs.
+
+Without some way to list directories, you cannot in the general case
+iterate over the refs and packs in the file system without a manifest,
+so creating a manifest is what update-server-info does.
+
+This is also why most tools which provide HTTP access in the file system
+require WebDAV, since it isn't very useful to have a file system where
+you can't list directories.  (We abandoned directory-less file systems
+in the early DOS and Macintosh days.)
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--cqaKSAJHb5C+mo7c
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaL3EEgAKCRB8DEliiIei
+gUI2AQDsH9Std9cd1M5c1zTAu1pS9Bd/zdUFg8WR1ApGH2DRrwD7BkmcMlqRUZMZ
+AnhW87zG4CMh0BdZij/JmxsWtH/aWg0=
+=j4hz
+-----END PGP SIGNATURE-----
+
+--cqaKSAJHb5C+mo7c--
