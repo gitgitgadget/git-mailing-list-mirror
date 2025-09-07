@@ -1,68 +1,68 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0A529BDBD
-	for <git@vger.kernel.org>; Sun,  7 Sep 2025 19:45:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B0229D267
+	for <git@vger.kernel.org>; Sun,  7 Sep 2025 19:45:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757274330; cv=none; b=LillJPThPwQ+/tweOlrZ6Mqs1aWm2LfjQ8acNXaAAVvxOzdaTdXuRqwG6PnHord7tDDAXHkSkVBh2OiymWm60qNmJQj3lA8AyrPELhADF29ygYTxBO0Qb0PXiL2dBIRxddRE3QArFUIYiYfKGKhjDkoaC00wXgVPV2M1b6ho7NA=
+	t=1757274332; cv=none; b=tuRlMJNPEKoRPOLbTDsWeH3tnGtHB/qa7KBJDi94aS58pP8Ws9kM26Y9JMOi795WD3HLpmjNWn6ejFg9f/zvSwElUSUnYnmMdbMqAvFSsdY9esqgZtDTHxcKK4HfuQjtTrB78VpFPl0XaqNgZVXA//7PoIHc7pnhBnBG0c/JjVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757274330; c=relaxed/simple;
-	bh=zejrKiRM2CWHXswyfUP3N98+xfqSySoV4HBV8AsHsIw=;
+	s=arc-20240116; t=1757274332; c=relaxed/simple;
+	bh=YhKU4Dd6CseVzO/uR/JuVesLzZAOtAbsQ5/6TFjWZQs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=R9w+wweGz03xtDUgCPgrHLTo7HJBlB2aEDac7HTcFFtepXFj0W0mu25yIiCQVcQuc5Yyd9UBAsC9b1GHCrNYxwCKZcOvU79TKWJH/1nBNvTs+iRqkpjgeq+72UNkyS2ATJ8iWqgTUWwmDSCB6q3xH6HYuBkq3DNYVpRkZqUeAIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nXFDXrdL; arc=none smtp.client-ip=209.85.160.180
+	 MIME-Version:To:Cc; b=nGqVDlA64+sIoaag3VHiOkWx/DhNa2fRAfteTi29T4wZQ/g4wrztIfEUO26cHZTWuOhp2mZcb3dgQV337J7FiPMbftN3CPbNNhL3nAx2S6vY1HUtCWYmJ2jidXNnQ2ByttwpFZx8k6GKAbSD+EJiWyx5U90fU4OnhmTYbWochBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=duAxkTzo; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nXFDXrdL"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-4b548745253so56246361cf.0
-        for <git@vger.kernel.org>; Sun, 07 Sep 2025 12:45:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="duAxkTzo"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8173e8effa1so20063885a.0
+        for <git@vger.kernel.org>; Sun, 07 Sep 2025 12:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757274328; x=1757879128; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757274329; x=1757879129; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fB5dXkFmZhV/7QB2sUSgNwH6HYy+KsDLd6IWSEcjAeo=;
-        b=nXFDXrdLZkhaNkw5UOZLBDyFTv3RqAUgWx45XbNerN21MdSAla5T8o2AJckNxEzaFu
-         /FTm5fwzqVSlTrJK8nAiBfEz0q762Ig5UdOg/tD3EhtoZd6pLacFjfLBzI0/UUBvXVAd
-         l0r4O7RDOfb3GMm2nqyEiNEPwohaS5WFpIT6gMopj2dA9anRCnAeL0bKkkB5D2utYGQM
-         4rr6dVSK74m3Eeb/uDIXV1mmydTf1ocZwJ8BCJQ4Zoy8H5rjoXf8B0WmzQ5YYw/XH1wA
-         JQ8HSV8ZUTPRjd7ysGXFg3FcDRzoM0zIq8y4ghDZOwu1sclxRXhMxWHib/yr8QM9T+ot
-         4b+w==
+        bh=9pdnK5krzEsFGQ/vixumX6Hueg6fYWhnywLbJlUUXwI=;
+        b=duAxkTzojl6Ts9H5zmKFIJe/+wxFTTInlX1F5vj9mNl+85ahuuHmBJ+PYWM2vGk37m
+         5khpR2g9lGRV7euVRZ7JGRBZ79yvqFEa0gir58hoIwyy6dC3f3E5ID1191tHulksXI1U
+         cYWrdKXs4njRKb2NHeAQ4vnlqkEL9a3h1jJuJ0hRYbLZ/nQxUQObRwU5mIfXnx6mEzzB
+         osJDV2zHJchp2SqAshMuFiuPvgnbOe7jP9P/bbZDye0p7owJ9CEmfHHh95QyzJD0qzTB
+         n2wCajlVAXkSjgDAw87/kolnGwukLO37/dqewfaFRIp/WaDTAMOfesBatQcY/0rzwDq9
+         BS4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757274328; x=1757879128;
+        d=1e100.net; s=20230601; t=1757274329; x=1757879129;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fB5dXkFmZhV/7QB2sUSgNwH6HYy+KsDLd6IWSEcjAeo=;
-        b=KRaRZMvmjvQWhd2gIG3Oi2FwV23n4XNcYUBwrl6EYIeM4bg/OFtvbhdr+/72Ug8GVw
-         Q1Pw23w8DOhDr37H9Yo6hSgj18+DulkSLROOjon/tVQiyqXoTI3cGGFNej+1D8vr2ROW
-         yH7aTZJ04dW9AbKdkfLm9bAkjDtcD7q75m3/yXs6cVSSWZYF4/DAeAqwEyHTiz3WmMes
-         4xmL2ha+CLQuHyCeFCEfHvDEEuGS7hITvArh9XeY0sschYUEMKYKwDIJfNDwQwpzk40p
-         0XvsRR6cfWYc+E399ebkguHVqG2WVst8GpNhe+49hZT9hho1wlMVv7s38jetQIJqLXy3
-         gaKA==
-X-Gm-Message-State: AOJu0Yzz6PNL2nRr9flv6WZ4ZYHIgim8hBf2r0YT+rlacBVJJ5fxNUPt
-	5EP1QVEED4HyKuZwKVP4rLIRAF8ZvjkSVDRNLc62Yu9rEkMxW98e/04YvDv0VGeL
-X-Gm-Gg: ASbGnct4jISxFOeDCS278zQHTNGMHpYeSFysCgt4PAH6Ebfuvv+BAx4vA4Z4DOjNaxh
-	A1+vkNJwFPH9IJD+D1PPFcprQr/nNAMxSIATEjbOvqB4KCxrKfG28T8C+WYz35noxQyN4I7HoG/
-	efpV7LZSZBeVshZOb4EG+5ALOd+QZ5rR3eJi90kgsNmneq269CwVf/T0PbyOKvB8DyKoW4o2GE/
-	R9Apj2aXuhBhDRR2oz/tAUr04Nzki7ycdJ+G5u0PQq72SucTCsGQCEo6GuinBs/HBi2ffGVkdsZ
-	ggbLqtx/sqEmJnl4gztiRtBWNv1No85+5Y6odFrm036z2pZZZnKYjOnUkL9efT+3TLzIbDP+ddn
-	ijp5f1cvRSZR9dPYKZ4xNZiw=
-X-Google-Smtp-Source: AGHT+IHYRBx3Fg3EEzj6rV7R3RkPQmFy2Vl7C2cCziu1wrWfT9zBo6QLcEJK9Y+e2aPtDKQNgkyfuw==
-X-Received: by 2002:a05:622a:181b:b0:4af:890f:ff9a with SMTP id d75a77b69052e-4b5f836d8c6mr62806841cf.4.1757274327694;
-        Sun, 07 Sep 2025 12:45:27 -0700 (PDT)
+        bh=9pdnK5krzEsFGQ/vixumX6Hueg6fYWhnywLbJlUUXwI=;
+        b=lwQmoUckalqzL1UNScYCPE3i30jbNtBc1VwP9Tw5P1aQ2Ca8kpK7jyvftn9LgBNFLA
+         Cb6yk0TjzR0ZRu9DT3y8sVZKddLJuywJ0yZVIOl3lSWmaK15o6Bxt6RK9rq57exiLz3L
+         6bZrP/w2bbhFLi9vZU270XRBpEfX9tULOPQR8uYrNrbg+KbYvFdI26/q3d+2cO+tjbTd
+         /HotATDG+YVkpq3U0mDpoUHffhxYLVmECws4SrUjKk7ti5CqCJ41GeDIs78o12j9/9QO
+         0GLdReR4LIttlh1tMYWrq6iIQzwdeCVFfXRQC+IfUjT7r0ik9zb6SUuAvpZrU4xvOd0g
+         ilOA==
+X-Gm-Message-State: AOJu0YxkDbC8GBjiA8XdnB6VKTvy9D9k+ChoPM3WfL7xXf6PRn6RzCPI
+	jVHuFv1SPlMDObRq+EXFhh0YtVEUNuCHgD9IkWcmND7QykG7PjIqrSv0xh2vMaLg
+X-Gm-Gg: ASbGncuNiNgGeUSwsN9R5iaoopFMLCVlzW/gi6K/9RJ2O0FCF+rrOgu3ZLVqKikJBpm
+	ew9wAks8mNs3armt8RXsK5raz3lnuBc4+thIpBnLclHuB9zDs1RojM87NOVDiZTkUtFAuFlNlT6
+	QT1Gm+NTaIE9WWQ+Reewd2q5fbOdvdUQJTQiAeCVgH2WF+qsvBqiTZoLqosGAqgFlhmc3kjBvuN
+	fDjtkH/5rvNAsFVC/pt+R+gXWNxiW9Do7b/dT1GAK5wyJVwuunQJ77QEjTwT8InvROw3agZH4uG
+	LoSC+TCQx0s+kHV7/TgUh+eZoN00XNkTKEmxorqvfFX5ihYrVRx+89TCTcdivnsTePgjlOx/U2V
+	mgGSRMligQVssRDMZ9BWgcR1ONVFKZDoHVg==
+X-Google-Smtp-Source: AGHT+IFtvqRGFktJDn45aLXvds/dlX9yUiUHJJCnPOkSc/QnJUfPh9xz+JE29q4K+kPi8PUfSoS1UA==
+X-Received: by 2002:a05:620a:a81a:b0:815:37b0:bc84 with SMTP id af79cd13be357-81537b0dde7mr422279385a.84.1757274328837;
+        Sun, 07 Sep 2025 12:45:28 -0700 (PDT)
 Received: from [127.0.0.1] ([20.161.28.97])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b48f7838edsm84253161cf.39.2025.09.07.12.45.26
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-816be049587sm150467485a.70.2025.09.07.12.45.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Sep 2025 12:45:27 -0700 (PDT)
-Message-Id: <6cf371ec13d3e57ea7d679a0170951d0b0346349.1757274320.git.gitgitgadget@gmail.com>
+        Sun, 07 Sep 2025 12:45:28 -0700 (PDT)
+Message-Id: <bff456860268a833078b273ff34e3bc26a0c3975.1757274320.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2048.git.git.1757274320.gitgitgadget@gmail.com>
 References: <pull.2048.git.git.1757274320.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 07 Sep 2025 19:45:08 +0000
-Subject: [PATCH 05/17] xdiff: delete struct diffdata_t
+Date: Sun, 07 Sep 2025 19:45:09 +0000
+Subject: [PATCH 06/17] xdiff: delete redundant array xdfile_t.ha
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,124 +78,167 @@ Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
 
 From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-Every field in this struct is an alias for a certain field in xdfile_t.
-
-diffdata_t.nrec   -> xdfile_t.nreff
-diffdata_t.ha     -> xdfile_t.ha
-diffdata_t.rindex -> xdfile_t.rindex
-diffdata_t.rchg   -> xdfile_t.rchg
+When 0 <= i < xdfile_t.nreff the following is true:
+xdfile_t.ha[i] == xdfile_t.recs[xdfile_t.rindex[i]]
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- xdiff/xdiffi.c | 32 ++++++++------------------------
- xdiff/xdiffi.h | 11 ++---------
- 2 files changed, 10 insertions(+), 33 deletions(-)
+ xdiff/xdiffi.c   | 24 ++++++++++++++----------
+ xdiff/xprepare.c | 12 ++----------
+ xdiff/xtypes.h   |  1 -
+ 3 files changed, 16 insertions(+), 21 deletions(-)
 
 diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 5a96e36dfb..bbf0161f84 100644
+index bbf0161f84..11cd090b53 100644
 --- a/xdiff/xdiffi.c
 +++ b/xdiff/xdiffi.c
-@@ -257,10 +257,10 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
-  * sub-boxes by calling the box splitting function. Note that the real job
-  * (marking changed lines) is done in the two boundary reaching checks.
+@@ -22,6 +22,11 @@
+ 
+ #include "xinclude.h"
+ 
++static unsigned long get_hash(xdfile_t *xdf, long index)
++{
++	return xdf->recs[xdf->rindex[index]]->ha;
++}
++
+ #define XDL_MAX_COST_MIN 256
+ #define XDL_HEUR_MIN_COST 256
+ #define XDL_LINE_MAX (long)((1UL << (CHAR_BIT * sizeof(long) - 1)) - 1)
+@@ -42,8 +47,8 @@ typedef struct s_xdpsplit {
+  * using this algorithm, so a little bit of heuristic is needed to cut the
+  * search and to return a suboptimal point.
   */
--int xdl_recs_cmp(diffdata_t *dd1, long off1, long lim1,
--		 diffdata_t *dd2, long off2, long lim2,
-+int xdl_recs_cmp(xdfile_t *xdf1, long off1, long lim1,
-+		 xdfile_t *xdf2, long off2, long lim2,
+-static long xdl_split(unsigned long const *ha1, long off1, long lim1,
+-		      unsigned long const *ha2, long off2, long lim2,
++static long xdl_split(xdfile_t *xdf1, long off1, long lim1,
++		      xdfile_t *xdf2, long off2, long lim2,
+ 		      long *kvdf, long *kvdb, int need_min, xdpsplit_t *spl,
+ 		      xdalgoenv_t *xenv) {
+ 	long dmin = off1 - lim2, dmax = lim1 - off2;
+@@ -87,7 +92,7 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
+ 				i1 = kvdf[d + 1];
+ 			prev1 = i1;
+ 			i2 = i1 - d;
+-			for (; i1 < lim1 && i2 < lim2 && ha1[i1] == ha2[i2]; i1++, i2++);
++			for (; i1 < lim1 && i2 < lim2 && get_hash(xdf1, i1) == get_hash(xdf2, i2); i1++, i2++);
+ 			if (i1 - prev1 > xenv->snake_cnt)
+ 				got_snake = 1;
+ 			kvdf[d] = i1;
+@@ -124,7 +129,7 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
+ 				i1 = kvdb[d + 1] - 1;
+ 			prev1 = i1;
+ 			i2 = i1 - d;
+-			for (; i1 > off1 && i2 > off2 && ha1[i1 - 1] == ha2[i2 - 1]; i1--, i2--);
++			for (; i1 > off1 && i2 > off2 && get_hash(xdf1, i1 - 1) == get_hash(xdf2, i2 - 1); i1--, i2--);
+ 			if (prev1 - i1 > xenv->snake_cnt)
+ 				got_snake = 1;
+ 			kvdb[d] = i1;
+@@ -159,7 +164,7 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
+ 				if (v > XDL_K_HEUR * ec && v > best &&
+ 				    off1 + xenv->snake_cnt <= i1 && i1 < lim1 &&
+ 				    off2 + xenv->snake_cnt <= i2 && i2 < lim2) {
+-					for (k = 1; ha1[i1 - k] == ha2[i2 - k]; k++)
++					for (k = 1; get_hash(xdf1, i1 - k) == get_hash(xdf2, i2 - k); k++)
+ 						if (k == xenv->snake_cnt) {
+ 							best = v;
+ 							spl->i1 = i1;
+@@ -183,7 +188,7 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
+ 				if (v > XDL_K_HEUR * ec && v > best &&
+ 				    off1 < i1 && i1 <= lim1 - xenv->snake_cnt &&
+ 				    off2 < i2 && i2 <= lim2 - xenv->snake_cnt) {
+-					for (k = 0; ha1[i1 + k] == ha2[i2 + k]; k++)
++					for (k = 0; get_hash(xdf1, i1 + k) == get_hash(xdf2, i2 + k); k++)
+ 						if (k == xenv->snake_cnt - 1) {
+ 							best = v;
+ 							spl->i1 = i1;
+@@ -260,13 +265,12 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
+ int xdl_recs_cmp(xdfile_t *xdf1, long off1, long lim1,
+ 		 xdfile_t *xdf2, long off2, long lim2,
  		 long *kvdf, long *kvdb, int need_min, xdalgoenv_t *xenv) {
--	unsigned long const *ha1 = dd1->ha, *ha2 = dd2->ha;
-+	unsigned long const *ha1 = xdf1->ha, *ha2 = xdf2->ha;
+-	unsigned long const *ha1 = xdf1->ha, *ha2 = xdf2->ha;
  
  	/*
  	 * Shrink the box by walking through each diagonal snake (SW and NE).
-@@ -273,17 +273,11 @@ int xdl_recs_cmp(diffdata_t *dd1, long off1, long lim1,
- 	 * be obviously changed.
  	 */
- 	if (off1 == lim1) {
--		char *rchg2 = dd2->rchg;
--		long *rindex2 = dd2->rindex;
--
- 		for (; off2 < lim2; off2++)
--			rchg2[rindex2[off2]] = 1;
-+			xdf2->rchg[xdf2->rindex[off2]] = 1;
- 	} else if (off2 == lim2) {
--		char *rchg1 = dd1->rchg;
--		long *rindex1 = dd1->rindex;
--
- 		for (; off1 < lim1; off1++)
--			rchg1[rindex1[off1]] = 1;
-+			xdf1->rchg[xdf1->rindex[off1]] = 1;
- 	} else {
- 		xdpsplit_t spl;
- 		spl.i1 = spl.i2 = 0;
-@@ -300,9 +294,9 @@ int xdl_recs_cmp(diffdata_t *dd1, long off1, long lim1,
+-	for (; off1 < lim1 && off2 < lim2 && ha1[off1] == ha2[off2]; off1++, off2++);
+-	for (; off1 < lim1 && off2 < lim2 && ha1[lim1 - 1] == ha2[lim2 - 1]; lim1--, lim2--);
++	for (; off1 < lim1 && off2 < lim2 && get_hash(xdf1, off1) == get_hash(xdf2, off2); off1++, off2++);
++	for (; off1 < lim1 && off2 < lim2 && get_hash(xdf1, lim1 - 1) == get_hash(xdf2, lim2 - 1); lim1--, lim2--);
+ 
+ 	/*
+ 	 * If one dimension is empty, then all records on the other one must
+@@ -285,7 +289,7 @@ int xdl_recs_cmp(xdfile_t *xdf1, long off1, long lim1,
  		/*
- 		 * ... et Impera.
+ 		 * Divide ...
  		 */
--		if (xdl_recs_cmp(dd1, off1, spl.i1, dd2, off2, spl.i2,
-+		if (xdl_recs_cmp(xdf1, off1, spl.i1, xdf2, off2, spl.i2,
- 				 kvdf, kvdb, spl.min_lo, xenv) < 0 ||
--		    xdl_recs_cmp(dd1, spl.i1, lim1, dd2, spl.i2, lim2,
-+		    xdl_recs_cmp(xdf1, spl.i1, lim1, xdf2, spl.i2, lim2,
- 				 kvdf, kvdb, spl.min_hi, xenv) < 0) {
+-		if (xdl_split(ha1, off1, lim1, ha2, off2, lim2, kvdf, kvdb,
++		if (xdl_split(xdf1, off1, lim1, xdf2, off2, lim2, kvdf, kvdb,
+ 			      need_min, &spl, xenv) < 0) {
  
  			return -1;
-@@ -318,7 +312,6 @@ int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	long ndiags;
- 	long *kvd, *kvdf, *kvdb;
- 	xdalgoenv_t xenv;
--	diffdata_t dd1, dd2;
- 	int res;
+diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+index 91b0ed54e0..59730989a3 100644
+--- a/xdiff/xprepare.c
++++ b/xdiff/xprepare.c
+@@ -134,7 +134,6 @@ static void xdl_free_ctx(xdfile_t *xdf)
  
- 	if (xdl_prepare_env(mf1, mf2, xpp, xe) < 0)
-@@ -357,16 +350,7 @@ int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	xenv.snake_cnt = XDL_SNAKE_CNT;
- 	xenv.heur_min = XDL_HEUR_MIN_COST;
+ 	xdl_free(xdf->rindex);
+ 	xdl_free(xdf->rchg - 1);
+-	xdl_free(xdf->ha);
+ 	xdl_free(xdf->recs);
+ 	xdl_cha_free(&xdf->rcha);
+ }
+@@ -147,7 +146,6 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
+ 	char const *blk, *cur, *top, *prev;
+ 	xrecord_t *crec;
  
--	dd1.nrec = xe->xdf1.nreff;
--	dd1.ha = xe->xdf1.ha;
--	dd1.rchg = xe->xdf1.rchg;
--	dd1.rindex = xe->xdf1.rindex;
--	dd2.nrec = xe->xdf2.nreff;
--	dd2.ha = xe->xdf2.ha;
--	dd2.rchg = xe->xdf2.rchg;
--	dd2.rindex = xe->xdf2.rindex;
--
--	res = xdl_recs_cmp(&dd1, 0, dd1.nrec, &dd2, 0, dd2.nrec,
-+	res = xdl_recs_cmp(&xe->xdf1, 0, xe->xdf1.nreff, &xe->xdf2, 0, xe->xdf2.nreff,
- 			   kvdf, kvdb, (xpp->flags & XDF_NEED_MINIMAL) != 0,
- 			   &xenv);
- 	xdl_free(kvd);
-diff --git a/xdiff/xdiffi.h b/xdiff/xdiffi.h
-index 126c9d8ff4..49e52c67f9 100644
---- a/xdiff/xdiffi.h
-+++ b/xdiff/xdiffi.h
-@@ -24,13 +24,6 @@
- #define XDIFFI_H
+-	xdf->ha = NULL;
+ 	xdf->rindex = NULL;
+ 	xdf->rchg = NULL;
+ 	xdf->recs = NULL;
+@@ -182,8 +180,6 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
+ 	    (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF)) {
+ 		if (!XDL_ALLOC_ARRAY(xdf->rindex, xdf->nrec + 1))
+ 			goto abort;
+-		if (!XDL_ALLOC_ARRAY(xdf->ha, xdf->nrec + 1))
+-			goto abort;
+ 	}
  
+ 	xdf->rchg += 1;
+@@ -301,9 +297,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+ 	     i <= xdf1->dend; i++, recs++) {
+ 		if (dis1[i] == 1 ||
+ 		    (dis1[i] == 2 && !xdl_clean_mmatch(dis1, i, xdf1->dstart, xdf1->dend))) {
+-			xdf1->rindex[nreff] = i;
+-			xdf1->ha[nreff] = (*recs)->ha;
+-			nreff++;
++			xdf1->rindex[nreff++] = i;
+ 		} else
+ 			xdf1->rchg[i] = 1;
+ 	}
+@@ -313,9 +307,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+ 	     i <= xdf2->dend; i++, recs++) {
+ 		if (dis2[i] == 1 ||
+ 		    (dis2[i] == 2 && !xdl_clean_mmatch(dis2, i, xdf2->dstart, xdf2->dend))) {
+-			xdf2->rindex[nreff] = i;
+-			xdf2->ha[nreff] = (*recs)->ha;
+-			nreff++;
++			xdf2->rindex[nreff++] = i;
+ 		} else
+ 			xdf2->rchg[i] = 1;
+ 	}
+diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
+index 8b8467360e..85848f1685 100644
+--- a/xdiff/xtypes.h
++++ b/xdiff/xtypes.h
+@@ -52,7 +52,6 @@ typedef struct s_xdfile {
+ 	char *rchg;
+ 	long *rindex;
+ 	long nreff;
+-	unsigned long *ha;
+ } xdfile_t;
  
--typedef struct s_diffdata {
--	long nrec;
--	unsigned long const *ha;
--	long *rindex;
--	char *rchg;
--} diffdata_t;
--
- typedef struct s_xdalgoenv {
- 	long mxcost;
- 	long snake_cnt;
-@@ -46,8 +39,8 @@ typedef struct s_xdchange {
- 
- 
- 
--int xdl_recs_cmp(diffdata_t *dd1, long off1, long lim1,
--		 diffdata_t *dd2, long off2, long lim2,
-+int xdl_recs_cmp(xdfile_t *xdf1, long off1, long lim1,
-+		 xdfile_t *xdf2, long off2, long lim2,
- 		 long *kvdf, long *kvdb, int need_min, xdalgoenv_t *xenv);
- int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 		xdfenv_t *xe);
+ typedef struct s_xdfenv {
 -- 
 gitgitgadget
 
