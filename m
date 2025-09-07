@@ -1,109 +1,117 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AB928725D
-	for <git@vger.kernel.org>; Sun,  7 Sep 2025 17:42:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC098158535
+	for <git@vger.kernel.org>; Sun,  7 Sep 2025 19:42:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757266973; cv=none; b=DauxA4Ic1kCHXl106q1CxSUzRMOMdsKwQZ/wYPOJM1QfmgbtnDudykMScYOITCQzgp93+tWlbmDWh4oaW7JfsCZoGO12PbV9x8IvJSqfogsLorVs8h25W0ml+SEoA0+tG8us02vnHHxiAMs20FNrrqWb0f/baWQvmP9VTvRlFMQ=
+	t=1757274166; cv=none; b=VBO0B77fjExP1EdFYzWqRuojJJGdR5q0Okw1FtTevPvf0ci/DJuhKikZ6qHMF8JqcoV3+NeYgjefraBkug3w9B0fOOP/G5uib3ZLIUDQWzt7jdivrjOj1DdY7t0EelwWcjRI6BpP/z9InZePFi2XqEz/6OMuModHJWT6M6w7L88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757266973; c=relaxed/simple;
-	bh=eIbSk1Vz6UtOKDzPe+NRpnvch3ZxskrgAUdZPFIfrUw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cyKr8qoQO+zUPmFiIPjnVRg8TjfcLoKzdOEXidmC9TLhHoZhBfz13LX2+oRpTDtRZupBErAxi9vFsVVlRei143N1BrXMiZ6Vq/pPsS4eu5X8TqHJqF+Qp0AW647uh6l54+V78unW1V7fZWsLcxFf+pI9spczyoly+wY2E7Ywcc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=DLvshb0m; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1757274166; c=relaxed/simple;
+	bh=b30wMKXPRB4yUscTDVszs6ftaMCgsoy41S9A2lNdtSA=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=kSx0+LoFC/0rVcns4UQsOkbOK+lXaNE8Hc1O5jKcjY2NBcsHxI5yFEXPWFUjxhBNrglh1BdSpu5sygbhXDm687boH6uByEU0/oEH1f+77+QKcUcrTjazZK522Ca5Dmm0dgEQp0RQhVsBGjx+3PU1SKP/MVDvETJyFhpxu4Z1Hm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f4Xn1t0g; arc=none smtp.client-ip=209.85.219.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="DLvshb0m"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1757266964;
-	bh=eIbSk1Vz6UtOKDzPe+NRpnvch3ZxskrgAUdZPFIfrUw=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=DLvshb0mcxJcJ33fVo3SZ6b9etTNr27Pyb0H1a9JQXgWnGxhFVKMyXuR53HKk0KnN
-	 L2Ot07m83pZxgdUGorTfZ9RW7GbrFuJXEjhhEClKKfWWgreB6MITtp/3ZMGAl6qEbv
-	 Y+3ienNQkgRICn7QtI0sLuPCNisCnpIhyGvLNYCh4vrWbmHNfEe7AKUiCxlEhbJpwH
-	 8r5a0TLkvvQPkblmsv0alpFeXnfG/brcnwTc04MIREwhFyx8xPyRUkUeyjXCoCsF3c
-	 7tOnHD451tZikisKSvbJZFyxECIcAVa0Op91SIfQc5jcGtn9dBE+Gj7sj81sTPMYSc
-	 EEQUNG00ncN27fv7V3c6Tx8trpqi/NjFlHEwi7ubwvRbPEkjbTGie/nAfzzz+s6kud
-	 gcyRx1h8PFuTgD3QBx2cGPXcIImxR8i8W0IL/NFS3tWOrKIoPAeFfDDSnhoOA8VYg7
-	 O7IMGl7R6ScrDfOcXeR624aDTSFLgX8NpSBRva+yd1vtY1aV0V8
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:3b61:a7f:90:9d10])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5C4B2200C9;
-	Sun,  7 Sep 2025 17:42:44 +0000 (UTC)
-Date: Sun, 7 Sep 2025 17:42:43 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Milan Hauth <milahu@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Git dumb HTTP protocol should work without update-server-info
-Message-ID: <aL3EE7dLMuj6ONZQ@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Milan Hauth <milahu@gmail.com>, git@vger.kernel.org
-References: <CAGiEHCtP29bQRsEyLabNrLuiP96P-o7EEGi88B7pJbP0tfprxw@mail.gmail.com>
- <aL2fn4j5uhrVWrDp@fruit.crustytoothpaste.net>
- <CAGiEHCvFnhZRXwNVRyzQ4ABi3p0Opdo8+draXoDu5p1R6HZn1Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f4Xn1t0g"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e98b7071cc9so3256716276.3
+        for <git@vger.kernel.org>; Sun, 07 Sep 2025 12:42:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757274163; x=1757878963; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=58Df8/B1EfzSVj1iY9+TiRYS81sDD8zrD3+JXVtq+4c=;
+        b=f4Xn1t0gLeoJp0AcegEQQlPZiED/6MZ8d/muX1Sa/e6VgiShYZPGstx6LeWDTEbBdD
+         g6M2H46k32JNeK3xsmFRTSyj6Q3TRm0H7gBU5PXu/yrhehFij+LcRHvI9lBQTW2sMxXf
+         QcVuZbaomPZOR2H4oV3LhJ/9xK6EmQemfDI+AuLCJWNzpxHshzXzhCLQMP7UXwtqpvpB
+         57ZgTm/OycqV5vCxDnYurcW/dW1gqNcysbtJrSWq6vxSZL0s0q691ejrJFdK4kiD+8YP
+         MYQeFKUXM/JTWfVu3MDok5t5gHrOr1jU+YNOmvI8pyCOil6VK2B0zjuM6+joahfGfrJq
+         WXvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757274163; x=1757878963;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=58Df8/B1EfzSVj1iY9+TiRYS81sDD8zrD3+JXVtq+4c=;
+        b=sWgljGOSgjEZg9uJ2o202eq8sPxr5dA1aWci0Psqz72VIm/Uo30FG7zjVKE0gjoKA6
+         DBXTE2trEkfMErzCjfnD5ono3WsALDhffJ4jFpCaciO8pJeveUn8eznLhKYI+Yd1vXqy
+         wS+/p7+Eqhum1rFyKtNL3Z5gUnL00nzF513ErCdzgm56vYhX/+ziDbn8ISAXbI36SYET
+         vOMzA+tHrWTl/OSxG9QVFKO6cTL5nM7Kxz9c5Fkbdlz4vurgdIwZ4FtGY6IiUwhKCze1
+         uYbe+5uJPw9q3YVnqk9KMoUudoTjgGLm+lCkQ1Hh6DIyRIXdsiAAuq0ZkR2ZlrxE7s0n
+         loOA==
+X-Gm-Message-State: AOJu0YxbeZE0E1znLJnB+2sbvQPV35K2YTv7JIaz4S5LlPIm9qP/pYtU
+	CR/dV8ht4tVPumGSsn/YswkkqXcda3dUTeZCIF0X5hhTZJiyG90TirMwWc++WQ==
+X-Gm-Gg: ASbGnctT4OB230zFpzZ6EjynSltj251Abcc78/0MuAtnQJUpKSq6HSPfYaOFtCYyuZw
+	uVKTXlXHOqhk2hZHr4GnsVMeTqYqzf0zcU0e4zFs8nddcfVSQeL7U1iGfnUspfIdU0wE38bRodi
+	QpgoP90uxBslcLRliVQsOgK90RStHSKXrl+y3ugj3by9C24cmsJzpsf4LrLb8OhSkehwfmgYs1y
+	Nl1N+aSoqA0eA+KwAq9dBF6OcKZyeBSl5vOQx7xrQNSCN1x4Tz9hWbqczJjKlQAfs6p/iI9GEi1
+	WL3As87SLi7eWM4bZwqS6IJFqS/pbv8vOzubdNQbWYJ9ru2mVt6zX7oiYyHqMXMYbKcObML+227
+	4jptsmyIrRL16uazYHiEhNjZkI9/9AOe8qhnNula0aZ+ipk7W0zrOffs91wOHofXUt14X2OX3
+X-Google-Smtp-Source: AGHT+IGtInHaqMZ9zcJTccFyXR0Jpg9ROosFqd1HH/fTKXE5KK0+QSubGXDbf71Na9yJiPsb2O40Ig==
+X-Received: by 2002:a05:690e:258a:b0:615:14:8320 with SMTP id 956f58d0204a3-61500148498mr1203397d50.34.1757274163210;
+        Sun, 07 Sep 2025 12:42:43 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:656a:2d24:478f:190b])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e9d056d8ee6sm3634115276.27.2025.09.07.12.42.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 07 Sep 2025 12:42:42 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cqaKSAJHb5C+mo7c"
-Content-Disposition: inline
-In-Reply-To: <CAGiEHCvFnhZRXwNVRyzQ4ABi3p0Opdo8+draXoDu5p1R6HZn1Q@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Mime-Version: 1.0 (1.0)
+Subject: Re: Doing blobless clone by default; switching between blobless, treeless and full clones by a command
+Date: Sun, 7 Sep 2025 15:42:32 -0400
+Message-Id: <297E6C80-C998-4D6A-B06D-7B2D1B229269@gmail.com>
+References: <79ed51fbd94ec2793ab0388b33963b366e48c590.camel@aegee.org>
+Cc: git <git@vger.kernel.org>
+In-Reply-To: <79ed51fbd94ec2793ab0388b33963b366e48c590.camel@aegee.org>
+To: =?utf-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= <dilyan.palauzov@aegee.org>
+X-Mailer: iPhone Mail (21F90)
 
 
---cqaKSAJHb5C+mo7c
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Le 4 sept. 2025 =C3=A0 05:37, =D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=B0=D0=
+=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2 <dilyan.palauzov@aegee.org> a =C3=A9crit :=
 
-On 2025-09-07 at 17:23:28, Milan Hauth wrote:
-> > HTTP push
 >=20
-> im only talking about "read" operations:
+> =EF=BB=BFHello,
 >=20
-> git ls-remote
-> git fetch
-> git pull
+> Rationale:
+>=20
+> The reason people execute  git clone  is hardly to issue immediately after=
+wards  git log  or  git annotate.
 
-Yes, as I said, reading directories is only possible with WebDAV since
-HTTP doesn't offer native directory listing.  However, we don't use
-WebDAV for fetches and other read operations and not all web servers
-support it.  We get better web server support in many cases by requiring
-that the server side do the work of updating the lists of packs and
-refs.
+Maybe for you, and maybe in many contexts, but I also frequently clone thing=
+s to run various history spelunking searches on them.=20
 
-Without some way to list directories, you cannot in the general case
-iterate over the refs and packs in the file system without a manifest,
-so creating a manifest is what update-server-info does.
+>  The reason for git clone is to (try changing something and then) build th=
+e software. (Provided that git manages source code.)  Doing by default a red=
+uced data download with  git clone  will sped up the initialization, it will=
+ save bytes in transit and reduce server load.  In fact I think that by defa=
+ult (without extra configuration)  git clone  should do a reduced download (=
+blobless) and
+> git should download the other things, when asked to do so. =20
 
-This is also why most tools which provide HTTP access in the file system
-require WebDAV, since it isn't very useful to have a file system where
-you can't list directories.  (We abandoned directory-less file systems
-in the early DOS and Macintosh days.)
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Absolutely not (in my opinion, :p). Not having the entire repository availab=
+le except when connected to a network defeats the tremendous advantage of di=
+stributed version control. Namely, privileged forks are given status by soci=
+al agreement, not technical requirement. I want the whole repository availab=
+le independently.=20
 
---cqaKSAJHb5C+mo7c
-Content-Type: application/pgp-signature; name="signature.asc"
+> This default download preference should be ideally managed by an option in=
+ global gitconfig .  When looking at https://git-scm.com/docs/git-config for=
+ =E2=80=9Cfilter=E2=80=9D I do not recognize anything relevant.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
+This seems more moderated and achievable. If you would prefer to clone less b=
+y default (I would not), go for it. I mostly don=E2=80=99t work with repos w=
+here this matters, though, or where git-maintenance doesn=E2=80=99t do most o=
+f the job I need after a 1-time setup cost.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaL3EEgAKCRB8DEliiIei
-gUI2AQDsH9Std9cd1M5c1zTAu1pS9Bd/zdUFg8WR1ApGH2DRrwD7BkmcMlqRUZMZ
-AnhW87zG4CMh0BdZij/JmxsWtH/aWg0=
-=j4hz
------END PGP SIGNATURE-----
-
---cqaKSAJHb5C+mo7c--
+I do chastise folks for mis-managing large binary files in history that crea=
+te large blobs and clone times, though :)=
