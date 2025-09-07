@@ -1,68 +1,68 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CC329E115
-	for <git@vger.kernel.org>; Sun,  7 Sep 2025 19:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB14C29ACC6
+	for <git@vger.kernel.org>; Sun,  7 Sep 2025 19:45:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757274337; cv=none; b=s2ngGyC8WniFOSiyDcQzSB6j6ur0PepVNnpmnArVEIkg/AmQyZNNkPr5txYDbgmz1IWcZYP7+ikUF2juGwwnsm1zw6Iy15DrGh6b2j+wxzMVgx50xM7RiWmfbsm9XXID/5r0EwkhJhpeR5bVVo+s+YbPk2SnddDK4MgIvsZKGDA=
+	t=1757274338; cv=none; b=MmfYMaR3XtmyPq2WEzgin6XOoUsrwqY/wu7aDGWQKnFqQjbY3YTyuGhLWnkfaIpp5xP3Ii0a4kXCoq6++KxeEgHkvBriXNNAIWddZmwk5QlFSWSNNClNoqEYPZD4Leljjj5D2WuWhDgi/S9UFfgiL6JbyW2//BRIyeFoQFpypeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757274337; c=relaxed/simple;
-	bh=45fwoU6ZzCRKrA4Y1m9Z5hfC6xUvMPu5EyLR1loZCEw=;
+	s=arc-20240116; t=1757274338; c=relaxed/simple;
+	bh=KyaXLJUnuALiSO8HG9cn696kQ2xGRqkqTTXz5M7peHk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=NSsAYkIaLvJOInI+mKdDGVnpaUuN3Fu+Zja9mAbijVsZDhUD32X6d1OcKgkv3ZfNuFZ5ciPBv/8HvoG+rtMcAZDf75x48iV9mTBZPxhZMjunwPQMMRy48clJSjX6ni95yyl5bRIAlkJfo6djBk2//wxA+HyYvWCs2Hd8Mhdu2Rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A4W+v5w5; arc=none smtp.client-ip=209.85.222.176
+	 MIME-Version:To:Cc; b=qnKrJQ6PFH0KBfZdFB2H8KWhuX4hvoigSR9NiuyXt9enrf1cMENQ1pGDi0ZFVAJU3c/6ODRwyA28VRJKQaNebYYfTQPBUqcgtP2mrr665sgXtfLTo6pAhW5r67MYCRtfv/lFZly4ulxe1CuDaSxAzlYFFNJP1uF8f3UVstfDGtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZuB7wco0; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A4W+v5w5"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7f722cb35fdso317004885a.3
-        for <git@vger.kernel.org>; Sun, 07 Sep 2025 12:45:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZuB7wco0"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-817f3d08465so19290885a.2
+        for <git@vger.kernel.org>; Sun, 07 Sep 2025 12:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757274334; x=1757879134; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757274335; x=1757879135; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=P+48tATkaDFeXaHSeY1ouWvOtv7eSX+sXV67s46QBG0=;
-        b=A4W+v5w5kT6Zx4wxgd99oegBP6n6CAm+N1hnsAkQD+U/Yk5pdn1Fedr55IwutZ08V/
-         95SqhjPtszw5IZNDSmFUtfTjIsssAv7tvc4aIyzQQTnI8kcxiWriQ532iswLmXwhEjoL
-         ZPfhiW15OX1tqmArcWShoZC9WD4TLCWNEozkH2KP+TWF7KojoawzqD/88hcbZwgkZWoQ
-         qzeBBIPubk0RmDWtlJpNoxOCfY5cMuBai3THeACbcrUz7SITTOuQdwT3c4KMfOEK+PmW
-         VcMY43IuIfhCO7s0h0fQ7oBp8d7cHQUCPJ5MgVnblft2NXSg5ntOI/U2u6qzgc0zHUr2
-         +/AA==
+        bh=I9aqDdw2OhYhJqKx1mlW4ZT5Uk5oE9Gnbhficeew/l4=;
+        b=ZuB7wco0F0bzC8mpJKG5/ySSolQanimmb4oQ57B9mdV6ZjV/UJ9yjwktMnqWKiKHLR
+         aVmdl9usqiFk5FvNoeg/GSd63MD9kk5kyPk40j5h0iX1gbNqrcGZxelGCg1IV7pXdZH3
+         +DLz0YJjoUzQZAOT+B1Cm/rKebfVvLhG66IPkHsS3BRcUGFUNLYYpRTeppA2vSRhpXEO
+         sTO8pcQLxJ39xVxevFlvlim3/RQS+gBI+U4Fh0Z2b5WVWI/254ToDyYAmgbGyEWhMfkN
+         emz2nQ4sES3+c6rqZQTktNRdrGRl+riUJosW9cdrzAut8AF3BzFzXVa4ASB5M/+3zrRG
+         Mu3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757274334; x=1757879134;
+        d=1e100.net; s=20230601; t=1757274335; x=1757879135;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=P+48tATkaDFeXaHSeY1ouWvOtv7eSX+sXV67s46QBG0=;
-        b=D+N9rYn9mt8nq3M4d7Ss7yHiHuOlMY7euQQQ1jOnpNrykonc7tZ3JqiVqvP9esvp61
-         nFBcUO3O1j+hTiySSV1ZePwKwtewnVKi0GF9oUaSJSR3l69/zu8iUxx1PW+btV6TUUVc
-         jnKamUOIDrDU628YIy3Uncq7lHdhlt8MK9RXoA2eFqefDWji0IFL+lVPYTqXqfW+mllT
-         hjZnhMXJAsPbvOwrWv7ANenIW5o7HDC4wHb+00M50zVNVcjddgjYynlOzm1zrOZB7gnw
-         JycX6O0bQMxm1db9N8A9t9hbpN8u0P/d03Z2EjPrxBFcC/UevmTWU4QW0YnW5Af0HFxo
-         jsqg==
-X-Gm-Message-State: AOJu0YyDPO8P41+HUP8nuEKtpB/8IAHhdt3k7TduvpM+fkfa8z2/dxrT
-	0Niid+3oeErLihaxuz2bOYtXIuf8Jjv3olGiBJEmTWoS7CBn3pLQ3QvDNM377GF6
-X-Gm-Gg: ASbGncvfE6z6MlesvojAyhE635HOPDvEIrk2I1G3pgI/Dwm6XTsPohwP8zTyhzPjuVK
-	Q0LGB4c9dWcF3GQRCtG9xZeZMasHVmyzKTuwUSg027rq2ySBjOcechq5FXD6X91zz7AH5PMuyYH
-	s8DhL11ZC7RckZjhjSyVeDVxPUmCaQsUNH8fQE+R0mXOq/OkgRmJ1ygPQxLSGnWw83jST0D2Bi9
-	LD1THOPILA4BcVrD9+J3m8IPBpgWh9qIacAri8wBtKZK0mr6UXmPNurHUbv0eHbHD0nUmKBn6Ws
-	328vRkVSgMXUrhs/HH3eUfd82h0fmvom3HSLZZNABQ/CP5jJxIpbZVWrxu3xpQDTshueito6/V4
-	NsRyh687jMA8TV/MIRbHHgO0=
-X-Google-Smtp-Source: AGHT+IHaQYtPe2qjvYhbzjPFcfqXkl56MJdf2BsT3WEox4e42vK4LoU342tpDejsnRJ8kKKPEIIo0w==
-X-Received: by 2002:a05:620a:3189:b0:812:f1e3:44fc with SMTP id af79cd13be357-813c26488c7mr501080585a.47.1757274334136;
-        Sun, 07 Sep 2025 12:45:34 -0700 (PDT)
+        bh=I9aqDdw2OhYhJqKx1mlW4ZT5Uk5oE9Gnbhficeew/l4=;
+        b=a4gF/jtu91Eh9VkFxQmg+YlE+/RHhKY6ILfMiuPtkNHl/aB7DyM7RqpO6v8zE3sa41
+         QtMC7FCTZsNOq+izNJFBK7jpy6i87a7YniOjGc3/cANbNCzzfAQB4RbdQzdtyPu9RteA
+         DTcPwqtgFyfH9+XCLUPRCREKEvwCVh+K/3WmQ9I7GPQ6vJzNGYqlbZMUn8PLtOF2I958
+         BInoh8iA59ZivlnnvBbMd0qIyU+1pIwflm5RTIWBHNjC+H+lAjYfs7QLJMtv0N0pzmor
+         oHuJLQhE1HcVN3Fk0HrAo+25Twdo2qHRFZGBhxLiMcFoSIOl42icQEtRFFiQ74PpBmbu
+         tpPw==
+X-Gm-Message-State: AOJu0YxSpyXWW+lvkAnOWXc8vrpN/PyFBDiqO2agHoJHPib8aRPbz2g1
+	T3n7xlxig230ejv1gn5SKXznGRS9RA7eSx05ntEdnMTvq1NtbelNttp3MB76ZflN
+X-Gm-Gg: ASbGnct0umBcKxulCK9/SXlZVwJlANMe72Y9+BCEdox90vOPTSuziuPDZL/OMgRfikV
+	JFfylAGnFxVy64iKmqDk6weLPhrOicQ+Ubpgi6oidZ7I0LOVPL68A4atCSxDozUszN2SJ36IlT6
+	6C7rzdkRwNsOsqpkXKvUz6CMjUwWkguGOjfoh6qXjf05sfuFwiu5D8AMRHPoVGzCkR3nxB6gZzg
+	gEiuzyYEDuJZSO3Nyvp3ZsQMyzp+2uTtldw4D+ZIr+Ff95syxn2tnPUykkmxOLqAg8E2rghM7QA
+	mi3do9Ga8aqG4o0tf/beXULAten+SQljHJr9rGAX8ezfEsxs+tXoayPU4rxLgwFZ6Fe5wGAeSrO
+	XtMGa+kitpdIwRPgXNRxOKP8TaDUe1bpK8w==
+X-Google-Smtp-Source: AGHT+IFJYN+kCzHk4DrEqNioagMSgsabgWrbd6bgYTpR8mq9D4TJdrPX+V73Xvs9jbXUiDi8S2N9fA==
+X-Received: by 2002:a05:620a:d8a:b0:810:c12d:bef7 with SMTP id af79cd13be357-813bf8b5d14mr539050485a.9.1757274335244;
+        Sun, 07 Sep 2025 12:45:35 -0700 (PDT)
 Received: from [127.0.0.1] ([20.161.28.97])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-80aab3b772bsm886103385a.51.2025.09.07.12.45.32
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b48f673e8esm82396471cf.18.2025.09.07.12.45.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Sep 2025 12:45:32 -0700 (PDT)
-Message-Id: <2a7d5b05c18d4a96f1905b7043d47c62d367cd2a.1757274320.git.gitgitgadget@gmail.com>
+        Sun, 07 Sep 2025 12:45:34 -0700 (PDT)
+Message-Id: <ec54380ed385438a1322ef25afa6e0f4dfa7c711.1757274320.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2048.git.git.1757274320.gitgitgadget@gmail.com>
 References: <pull.2048.git.git.1757274320.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 07 Sep 2025 19:45:13 +0000
-Subject: [PATCH 10/17] compat/rust_types.h: define rust primitive types
+Date: Sun, 07 Sep 2025 19:45:14 +0000
+Subject: [PATCH 11/17] xdiff: include compat/rust_types.h
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,77 +78,51 @@ Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
 
 From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-Why Rust primitive types should be used in C:
-  * Consistency across languages: Sharing the same type names makes it
-    easier to translate and refactor code across boundaries, and search
-    history.
-  * Clarity and ergonomics: The types f32 and f64 are clearer than
-    float and double. The types u64 or isize are easier to write than
-    uint64_t, or ptrdiff_t.
-  * Explicit intent: Inclusion of compat/rust_types.h signals other
-    readers that the code is designed, or being cleaned up, for Rust
-    interop.
-  * Character types: Rust's char is defined as an unsigned 32-bit type.
-    In contrast, C's char is an 8-bit type that is neither signed nor
-    unsigned. The u8 type should be used instead of C's char when
-    referring to bytes in memory.
-  * Keep the FFI boundary precise: When Rust calls into C, the C
-    interface should use Rust types exclusively in both functions and
-    structs. If a broad refactor would cause too much churn, C stub
-    functions may be used as an interim step.
-
-Reasons to avoid c_* types (e.g. c_char, c_long) in Rust:
-  * Rust remains precise: Bringing c_* into Rust reintroduces the very
-    ambiguity Rust was designed to eliminate. Using only Rust
-    primitives keeps our code portable and predictable.
-  * One clear contract: Rust should define the interface with precise
-    types. C adapts through compat/rust_types.h, ensuring the boundary
-    is consistent and easy to audit.
-  * Future-proof interop: Other runtimes (Python, Go, Java, Wasm, etc.)
-    map cleanly onto Rust's primitives, but not onto c_*. Sticking with
-    Rust types makes bindings straightforward and avoids locking Git's
-    ABI to C's historical quirks.
-
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- compat/rust_types.h | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
- create mode 100644 compat/rust_types.h
+ xdiff/xinclude.h | 1 +
+ xdiff/xmacros.h  | 2 +-
+ xdiff/xtypes.h   | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/compat/rust_types.h b/compat/rust_types.h
-new file mode 100644
-index 0000000000..af93d0a116
---- /dev/null
-+++ b/compat/rust_types.h
-@@ -0,0 +1,28 @@
-+#ifndef COMPAT_RUST_TYPES_H
-+#define COMPAT_RUST_TYPES_H
-+
-+#include <compat/posix.h>
-+
-+/*
-+ * A typedef for bool is not needed because C bool and Rust bool are
-+ * the same if #include <stdbool.h> is used.
-+ */
-+
-+typedef uint8_t   u8;
-+typedef uint16_t  u16;
-+typedef uint32_t  u32;
-+typedef uint64_t  u64;
-+
-+typedef int8_t    i8;
-+typedef int16_t   i16;
-+typedef int32_t   i32;
-+typedef int64_t   i64;
-+
-+typedef float     f32;
-+typedef double    f64;
-+
-+typedef size_t    usize;
-+typedef ptrdiff_t isize;
-+typedef uint32_t  rust_char;
-+
-+#endif /* COMPAT_RUST_TYPES_H */
+diff --git a/xdiff/xinclude.h b/xdiff/xinclude.h
+index a4285ac0eb..6733d752a4 100644
+--- a/xdiff/xinclude.h
++++ b/xdiff/xinclude.h
+@@ -24,6 +24,7 @@
+ #define XINCLUDE_H
+ 
+ #include "git-compat-util.h"
++#include <compat/rust_types.h>
+ #include "xmacros.h"
+ #include "xdiff.h"
+ #include "xtypes.h"
+diff --git a/xdiff/xmacros.h b/xdiff/xmacros.h
+index 8487bb396f..ef663af3b8 100644
+--- a/xdiff/xmacros.h
++++ b/xdiff/xmacros.h
+@@ -23,7 +23,7 @@
+ #if !defined(XMACROS_H)
+ #define XMACROS_H
+ 
+-
++#include <compat/rust_types.h>
+ 
+ 
+ #define XDL_MIN(a, b) ((a) < (b) ? (a): (b))
+diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
+index 3d26cbf1ec..80afb98bf4 100644
+--- a/xdiff/xtypes.h
++++ b/xdiff/xtypes.h
+@@ -23,7 +23,7 @@
+ #if !defined(XTYPES_H)
+ #define XTYPES_H
+ 
+-
++#include <compat/rust_types.h>
+ 
+ typedef struct s_chanode {
+ 	struct s_chanode *next;
 -- 
 gitgitgadget
 
