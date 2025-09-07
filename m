@@ -1,105 +1,134 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB5C2BE643
-	for <git@vger.kernel.org>; Sun,  7 Sep 2025 19:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C1522F74D
+	for <git@vger.kernel.org>; Sun,  7 Sep 2025 20:07:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757274344; cv=none; b=GckyT+EPYO6BRpSbXcE7jYr8K+EUojOi6EQQdX5CnQkTC/mbMtzwYgsoDZHvAivLekGQB9ynulcKO2u0Ih+35ZBARA3FfpChXVaXQd6qy8s8fLvAOYpSL0TBGyhajaJ6PMOtePGVnd3KI5pA9tJP8GNyYtVD91R8jbJbmh6hEjw=
+	t=1757275650; cv=none; b=blKwQv0cR25MKqswpltMD9TyUcHNOmbjkDOP/mq/SrSj1ueKhCAlBs7spkTRYtJmbDv/r973VKnyAO1V+XTaDMU3bhs8RT5BcEjQzvrCrgF+ZzbVOH5Ecq3kd4+runFJASmBqqiXxjhAjD2NfVoIjs1Bv1CErRC4z7TCwcpfenI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757274344; c=relaxed/simple;
-	bh=6RU4Kz0K796lr9gWPCW8yy+u8L6EmkTlXgqcJIEoJ3Q=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=SEIzEyX7CjHfUL4nSE7mgsvvjU41g91P5yyuZzUbULiPz0Qwu9PeMsku/12iBxM2lbBN0hXFkc1WgSRkdGQu7XT66sKOs4NdYDKwjqySlDFGBOnLMlUMwKr1AhPwbaxdnwDpwLvEmfstnSL8HPBXfE0YRBUgfCTUxloEh0rUUcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jBCr7jBR; arc=none smtp.client-ip=209.85.160.175
+	s=arc-20240116; t=1757275650; c=relaxed/simple;
+	bh=WCefACXZyKrKYBEhNASyISv5V+t87SrRTo5f0sonw4U=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Cc:Date:
+	 Message-Id:References:To; b=Z5TrTAoHZD6AuDzPLH7PJgsmRQYGImDuEsoH44T4g3HFoGtuW5FupoMOGIzwDhIhQBIOnUasoFNfjx1Fwc8QQSHYN6qdyoLQZr15m4PGE+5oH3HUrK4HXwLkuLc8QXbBblQPFOijGaMwsW9DuG5i4aAw8mNwSMk9+yH4YxDTfXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c2TDgLoQ; arc=none smtp.client-ip=209.85.219.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jBCr7jBR"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4b548745253so56247891cf.0
-        for <git@vger.kernel.org>; Sun, 07 Sep 2025 12:45:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2TDgLoQ"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-ea059954d52so401109276.1
+        for <git@vger.kernel.org>; Sun, 07 Sep 2025 13:07:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757274342; x=1757879142; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1757275648; x=1757880448; darn=vger.kernel.org;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=E2RLhmwKFG6QLURA67o8rVWAhKoI11M88JdeTBbM36E=;
-        b=jBCr7jBRGcTGxcWJ1/v3DkYrqC3qGh0q5mhTAYVMSyOIL0vvTxLoc9iIL7wol8rBeO
-         oAfJLNcAae7zGn95kOo/buQQ7lrj0gRDZuFvaJnyVH5M9xy4THCn0/h6jzfmFw/heE1B
-         dN8Ggaf13qnXv/hw93HSj0AvfXqgFv3hTRArGQhFuZYVsViPqZV1Cn8xO+AUQSTjwytD
-         XH4X9+6iOHM3gT/9bJkH/60ewqtqFaRX04dDPv2g1uJwlYKg7b+Bqh/SFtUreFOBqUOk
-         EkiDm6XwLaZc+T4d++LFaEPp/VdQl+a8mWlptl9KrsTMCbRwuR3kGH21fgpUoUdU5bea
-         ZelQ==
+        bh=ecuzf5CyhuU4X5ACuYUrjIVsjK5ifKQIH6HfxAfEDH4=;
+        b=c2TDgLoQuL5wk7EfVEn/kVpelXaLgKwk6KLIBR7JlB0IowuT+sJRH33wDkjmVmAlaQ
+         CsPqC+LGEDavXo/FG17OvQSjAslG+wF1zxf0VjbA8PYANUhApB3cdGmUkCXN2P63ik0o
+         Wl2R0dbwX3sNyEjn2K3Bn8ZJOZ3UuzrXCCbUFYXPDMxL5uneKrbBI+WMyXtgylkgeZOZ
+         IaAdOo4yDh+OKFeoQBt7Flh3wVHwP08QmvRjbF0PeQmAvGDSTdGsfsxNtkE4ugjxGan3
+         Xc8BlydAkw839hhzzn1rvLHC39zY7XXeMR2hHSStbvyO+j8OCyxF6XCqNyMYbMAJi3Q8
+         pXEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757274342; x=1757879142;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E2RLhmwKFG6QLURA67o8rVWAhKoI11M88JdeTBbM36E=;
-        b=pzP1rTAvUmWFkxpUrrXcWRZCC5gicNzz6WnwamhsawdmzxtC/yXDxo0X9ev6J9Km09
-         1w4r6++x0qvpvN9qBbZgzVXA+c4jTQVISzAKvfAngj+1Ckes+oyaFiFJbepamww3wmw+
-         dFC8uQdcDAAuprwUaItBQv/428Y8Co5wN6kHxAGtcvtQG8ExADlclDKuYiWw6oag9zjJ
-         pC45+AsvBaq84iHfjS5SQ6XnZpCsxQipYA0GRFJjA5ifYh+Klk/0j3jgWQ7xuw4qeYJm
-         dhTTk5+ltqfvzjASVj1SH1RddhhZsNs1LfATXC+nbR9kjwylfjJTyia58MQtmN+vS57g
-         pUQA==
-X-Gm-Message-State: AOJu0YwfCxaBu+ZXbkWn47uUUYnIbKvr6K6oE1PW7fVf3gSuzd+yhAIO
-	xZvbaw4Go2uo6QCbipoyXb1+ItwgtIG7YzCXFNOO3WsO6OpL/hhxqxC2tfBU92Zx
-X-Gm-Gg: ASbGncskM/AJlcCr8n8bJkX2snftfm0w/4BAHoSgKo4z/0gOSLKYjxgXtlTvLrv1f4i
-	LTt5oeOegRpEh1BhK0fIRAOjVc68OM9e5OBpINA5b/NoZH8SD4dZMJygxM+DthZS3f9bt7D4oXL
-	Y+SU5sOiOwarUIW3FIkh4b8+j7hrhN48v3i0uVvh5bghFCix6MyonxwwI9Bt2fq8Gqs56Rg15HK
-	mJA7pADOQv8+4FhvB2RqvaHE7uBF680ns2+xAAA2h+RHUWCEg4xqz/tlvMGgOQqwqlLgNqNMlTR
-	daSdp8ZU5WJKcsbSNJRlX1YgTuuAt4GiErL5r3vW0vMDUcR2ylTbl5djFzrztyxcsWDU5fG4s8P
-	5UP+wt+QCRrL4Mj2ZiVbvdBgScHXrKFmi4A==
-X-Google-Smtp-Source: AGHT+IFSJk6LDHZTD7I23oBGxXDqSiTn7vs06gyxubOJDQW8UjPXOe5S1kTdkJcD3QBdRonsKJRbgw==
-X-Received: by 2002:ac8:5d4c:0:b0:4b4:8f9f:746d with SMTP id d75a77b69052e-4b5f8398f8cmr63400791cf.24.1757274342123;
-        Sun, 07 Sep 2025 12:45:42 -0700 (PDT)
-Received: from [127.0.0.1] ([20.161.28.97])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-7426533bdeasm23210426d6.39.2025.09.07.12.45.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Sep 2025 12:45:41 -0700 (PDT)
-Message-Id: <00401e775a110f4713c3f6aa72a54476ec699aa9.1757274320.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2048.git.git.1757274320.gitgitgadget@gmail.com>
-References: <pull.2048.git.git.1757274320.gitgitgadget@gmail.com>
-From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 07 Sep 2025 19:45:20 +0000
-Subject: [PATCH 17/17] xdiff: change the types of dstart, dend, rchg, and
- rindex in xdfile_t
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1757275648; x=1757880448;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ecuzf5CyhuU4X5ACuYUrjIVsjK5ifKQIH6HfxAfEDH4=;
+        b=YZe8Q3mwGaeJhe9mMqtyDeeBil9cv67qgFFGg1ybnNf6pGsdDdmE1yzGtjW7vxd6l8
+         wTaKYWQpFRMs56SsCVaIfsmrJdI8uod+ARQh8YR+TqQRF2F72dKqte+jzFXdJswPU/bm
+         MRsTQRQHIYPtT/rD+UjgyGb2m6wl2okY+p38yNvOmZHPGosOBJe9CDCQZI6ZmvzcGOjZ
+         +bLTk5CkMV/P3/JsO03WXFB+y8fId2IhQLxmbeyWITSC1ATNam0SiAySAdixY8avYPRh
+         /pKtmfEyMzYkBA5DOlrRIERrR8MrgmjqQtp+0Fcaumvbck5Q4s/mNatUb70zfGW9t3gu
+         wigQ==
+X-Gm-Message-State: AOJu0Yz+kwrTDMz/46G2DRV+gzXHakZ2RgIfKTRxi2j01WRxo1BDIyO0
+	z7Dchhc4kWm4DPrrEEE0vmGwNdCZFYo2c5G7KCx28Us5a5FxcLSjwm8n
+X-Gm-Gg: ASbGncus8VuC6hhG3bc/6eoKdBjOQAISOcl5AuA8964s/0yy5F+ALFgJi1LwelXEjU9
+	YAe1rzCqCtgsUwhzCScgXtgzmiXS+I7w/OixiSXUK5x+IychVy26ZkgXQvvly+sJ8wDpWylfCan
+	uWhYJ5LwpCk+beitpdyWzr3dz54zZdiyGbFJwIGfV5i3no2SHhL44IyPUdSjpsXf+mPgAfKVrRR
+	a1KpaE5ScIEyaddZYczDDN4bKPtcWxdnf3pZwnAaWSlxCN+br/tBfzUxYxfY9+aV+ZpTc2JBhHJ
+	UrFxsi68RnxFIl0wLd6AeYnBrtNR6JRoB+6Ypk3medXRYFSTHeQ0ojkwz8PUNYMkslNqc7lngxR
+	9gUTzjnnL1KL1V1d2HthDYQHx4R8nDANiDgh1LpB2vqruPSzp/1Am5ugFNzK1CA==
+X-Google-Smtp-Source: AGHT+IHJm6wjZCJiT8b6TAzktCYMDaWU0WM4l5/+qkqxD3J6oyNOI40fmEyshMVwwO0Z6fQyY8jGPA==
+X-Received: by 2002:a05:690c:7108:b0:71e:715b:a988 with SMTP id 00721157ae682-727f583dd24mr50084287b3.42.1757275647956;
+        Sun, 07 Sep 2025 13:07:27 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:656a:2d24:478f:190b])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-723a8324cb7sm45967207b3.17.2025.09.07.13.07.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 07 Sep 2025 13:07:27 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
-    Ezekiel Newren <ezekielnewren@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH RFC 2/3] rust: implement a test balloon via the "varint" subsystem
+From: Ben Knoble <ben.knoble@gmail.com>
+In-Reply-To: <20250904-b4-pks-rust-breaking-change-v1-2-3af1d25e0be9@pks.im>
+Cc: git@vger.kernel.org,
+ "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Christian Brabandt <cb@256bit.org>, Collin Funk <collin.funk1@gmail.com>,
+ Eli Schwartz <eschwartz@gentoo.org>, Elijah Newren <newren@gmail.com>,
+ Ezekiel Newren <ezekielnewren@gmail.com>,
+ Johannes Schindelin <johannes.schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+ Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+Date: Sun, 7 Sep 2025 16:07:17 -0400
+Message-Id: <8A7DBC60-286A-48FE-A3D3-CAFC11FD3AEA@gmail.com>
+References: <20250904-b4-pks-rust-breaking-change-v1-2-3af1d25e0be9@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: iPhone Mail (21F90)
 
-From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
----
- xdiff/xtypes.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> Le 4 sept. 2025 =C3=A0 10:27, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
 
-diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-index 070674d7c4..08301bf932 100644
---- a/xdiff/xtypes.h
-+++ b/xdiff/xtypes.h
-@@ -48,9 +48,9 @@ typedef struct s_xrecord {
- typedef struct s_xdfile {
- 	xrecord_t *recs;
- 	usize nrec;
--	long dstart, dend;
--	char *rchg;
--	long *rindex;
-+	i32 dstart, dend;
-+	u8 *rchg;
-+	usize *rindex;
- 	usize nreff;
- } xdfile_t;
- 
--- 
-gitgitgadget
+>=20
+> =EF=BB=BFImplement a trivial test balloon for our Rust build infrastructur=
+e by
+> reimplementing the "varint.c" subsystem in Rust. This subsystem is
+> chosen because it is trivial to convert and because it doesn't have any
+> dependencies to other components of Git.
+>=20
+> If support for Rust is enabled, we stop compiling "varint.c" and instead
+> compile and use "src/varint.rs".
+>=20
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> meson.build     |  5 +++-
+> src/lib.rs      |  1 +
+> src/meson.build |  1 +
+> src/varint.rs   | 92 +++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++
+> 4 files changed, 98 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/src/varint.rs b/src/varint.rs
+> new file mode 100644
+> index 00000000000..3d41760a555
+> --- /dev/null
+> +++ b/src/varint.rs
+> @@ -0,0 +1,92 @@
+> +use std::os::raw::c_int;
+> +use std::os::raw::c_uchar;
+> +
+> +#[no_mangle]
+> +pub unsafe extern "C" fn decode_varint(bufp: *mut *const c_uchar) -> usiz=
+e {
+> +    let mut buf =3D *bufp;
+> +    let mut c =3D *buf;
+> +    let mut val =3D usize::from(c & 127);
+> +
+> +    buf =3D buf.add(1);
+> +
+> +    while (c & 128) !=3D 0 {
+> +        val +=3D 1;
+> +        if val =3D=3D 0 || val.leading_zeros() < 7 {
+> +            return 0; // overflow
+
+Hm. I thought overflows panic in debug builds, in which case checking afterw=
+ards is too late? Does unsafe change that?=
