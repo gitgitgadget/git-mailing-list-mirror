@@ -1,88 +1,90 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76032D3756
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 20:48:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40D62749E4
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 21:04:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757364493; cv=none; b=BCM9gkxl7J2hgSAegWehx05Z5gmqjfbOwLLmNeuMolJrJqlvGKQchXdabYqL1Tj0LCBjXmptdL7jez8CNuuzb/82OJTKYZ622Ed7W1iBs+ZAT/r3YoGugOuL2XWQoVPx7qsJBpSW0bN1oyKWBfGpHuPOT6a65EudS0T/fHvDJjg=
+	t=1757365461; cv=none; b=eMFRkKmelsYboB3Rlq2kYICHoAABlWbvI6sUPmMXzhwXb41+JqslRUWcbJJRCfghRNJJxL3VQ2VFI5tkzqAmEXVikO20HxGg/Fvg49Z+2iDqQD+PceSaXjPWlWcC1VGmvbcImPI04/HJBc0RjQFlcWsC2G8Weq8HsohP0yVMBEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757364493; c=relaxed/simple;
-	bh=B3oGnqL5SfTVPxc9AIsG/fzsbosuOec2rgBnoiaWnqA=;
+	s=arc-20240116; t=1757365461; c=relaxed/simple;
+	bh=i6C6bJD1WsVWedD4LX+jPFaIKsz3reLVf/ErlLwS1F8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LQkS/Jh0oVUaHmFZKeZuHPYJv2nMaTtmkQopuwn4TYYQ8dBYvXpU8Ldo75obin1yaqNFeWwCE75tvWR8bRAySrmanDokG74ory2Mimyf8roGixjpEYmYwdkQNgDdxCv8xfuuBgtdMfCZqbEgDDnF3HZ8X1pJ10K+4jJ9agclWJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nSMYOU6y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WtAd59U7; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=IDaABwpiZS0wyz6a8b4aadg37QUqAuvV6rNxQ3KvhmbbCOc7k0nmgd9bu5JXiAmKCmj41Uh8uV+Xn6ixCBxdXoUiwwgiLNp5ekkukUGRLwrZKwHyNUQ760rXOcv8JYcZ2a7kCYbR/vIKJD+Q32uQ1CU/hfjTF/uJjuRg4HyM0eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zLLOnaSR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dgh4fP4R; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nSMYOU6y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WtAd59U7"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D9D6F7A014B;
-	Mon,  8 Sep 2025 16:47:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zLLOnaSR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dgh4fP4R"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9CA277A00B4;
+	Mon,  8 Sep 2025 17:04:18 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Mon, 08 Sep 2025 16:48:00 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 08 Sep 2025 17:04:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757364479; x=1757450879; bh=HWDxkKl6E+
-	lHV01e9chkJZ/ZzdVQEZKMXZjPfkr1tDo=; b=nSMYOU6yT2RvMZGXz8jFFy+PkN
-	pOCDoFlVAEy2BggKU5I8zN1q12LIrFCRKHfcIW5ue6joJVAg6qtSKX7srrJI9AYR
-	N/vo+5Zgj80z4SE1YCJ3s/lSHFpGdOmb+O9WO4ELwBAnRyI4pqUqPPwKJj6H5R14
-	VtMztF6+zjfRErwbiYlqyQADS0fJInHo9Hr+dK6YExvGCkvKTeOcPXSySmxoOCYS
-	KMGktiVCnpI1f39ArcR6KauAduY95lwu6sLeUOYLOXE+oC7uQGhC1qr5uNnXSUul
-	c9adX3QGC8IFdHIHE2LXesAcCaxWWLnYc2PFgPc04imcKB7cS/AeFK9rYfjA==
+	:subject:to:to; s=fm3; t=1757365458; x=1757451858; bh=Su2t/uZhwB
+	bChQyiFJvkLK6FdhsI0Btfj3jw7CV6YiA=; b=zLLOnaSRbiL4wzYWtDzCm51Cbw
+	Cjzt/gipvThhXOBVcKisarIWvVlqNSP5xmFmkBkdXhQhPcpnUHgeP2xpfSdMNbvj
+	EU7zqgdQed/4S59+kyGdbXpVyc+VNKFsjAizafoii8gaNqXMos83tPKxwNSEJFx7
+	0TuqxZ5muVuPETzNwekJTmHk+FL4/qscL4AOKFNFOrbV+YuSjs3w5xdLPAJJakSI
+	al7GgkvBZ7cUxyz5qZXGM04E0HBxEauZMgPSvw370Z1pQW3XkR883SZU4l2UlGKE
+	pwjo3TDfaXTxekT+sbMvcQrXdId6KeGfSEdtPcsIc/q+ZXuIOUTvWkZVPqkg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757364479; x=1757450879; bh=HWDxkKl6E+lHV01e9chkJZ/ZzdVQEZKMXZj
-	Pfkr1tDo=; b=WtAd59U7ghJI0Z8MUB7PHajWXMKgPkn/v5EkAX1AzZ7rP+T4GIF
-	tB9AGc3hw0WqtYXmbD66XdGrsyImhDpTG5WDcZf5BKLhgJwPk50XDtdck1WbQ/QG
-	tOwp2+iRcR6FGMroSHqpyINnaDf0z6hQnC8tc0Ep4i/tHcddXiWRKqXvdAq8zyJM
-	N+qffFsaNcDn9Lf6Y4a3sNfDvmoNcbIKwNsrcfEvgeKXNNbU0I01Ml5KiTSh+W5h
-	OvjOI+NLOa0KbGpiPskcHJrlwKBmMPso/gNAulLPT5dI+qf2PB7z46kuwAxMgroX
-	oxOZuAo6mCUPKTyqICfAOpn2GMGHmzFaQDg==
-X-ME-Sender: <xms:_0C_aCdXH259jveMYGk_QRZuS4PTRkgmYT8kTjywbJ8XeVww-GdxYw>
-    <xme:_0C_aEqAXH7y6CI1sacqh76KVx-0Rl2y4xyx44nnSKUFIukxqefBWaXPQPgqqq7kd
-    5fxm0iCf19uYupYqQ>
-X-ME-Received: <xmr:_0C_aD-LyjzvuIoI5QFoLrO9wzAQ_AK8xfaYTyaySUOPHhRzZd_VbsEtdMaBmkV7XHAJLG_QO3HQXxKFZpaMGKNuqOihC50970T-J0M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeehvdcutefuodetggdotefrod
+	1757365458; x=1757451858; bh=Su2t/uZhwBbChQyiFJvkLK6FdhsI0Btfj3j
+	w7CV6YiA=; b=Dgh4fP4RhgG1KzRVtyEun8TkVQRaBvu8xTtED1P3qz2SlDZjA1a
+	TI8Y1KHlgB7Vkpm+Izg19Yj8CtYRJaLk7+rkY2gaV6wm/M8IgtoYwROKJQLRPmrr
+	vrEdXY+jqc9UqrR6orOO7I1LsUrXsa8J50oV+lEZ8REU5lPc5srN+mJpnEtEk16C
+	NWZKIqhbIqz2pShRKnNmMyoKJx6CjuuyXxiYHT6TEn+/ViiZPqU1YzhnfxwmDaHy
+	skz3uIi7vxtPgOmN8iOTFmGepbzCIbUAWMRC7lswl0zaMytJhKBiZbe0wpe+GwBq
+	nNBTl4V4ZGHuAGBCuuRJZ9n8pZC1qETPWXA==
+X-ME-Sender: <xms:0US_aAxiLF8XCQx7sM_7BUgV2PlRKEgg7Xx03elXqsauacI0M5p0Mw>
+    <xme:0US_aNu8Td40YqWFP_zAHw3IEivMGMspx0M7JHWPgd9y0rQoezGD2QR8PVSqJY_kZ
+    5hy4QTms1hIucs01Q>
+X-ME-Received: <xmr:0US_aB55QNHszMCsNcvpG5KVQiXgZSLXjtvyNEhmVRj___yrYIb3e-8EkEQr9TPRSx96p3GEuKEam6wDFR56pfMOpWzqvuZ8YfBldxY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeehiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpth
-    htohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehp
-    vghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:_0C_aAez4UGwjmLeOy-buZGaeuDh2A_F1lI50ddgaPpVPXxnh2MNqw>
-    <xmx:_0C_aNKilX_Y9bZNaSYG_4RoT6L7Q_ARMedVdy4lEAtHNX4tsLXJFA>
-    <xmx:_0C_aAh2nwYx1ULOiBg1WiYBWV8HeY4t7u_kqlALgqtpNnE7R0CcMg>
-    <xmx:_0C_aLR1HtRoTEPcPcB1iA7bYcUEIfcoGeH8t6kN-9s69OWyM8FSXg>
-    <xmx:_0C_aA1PThRm-sRGFyWpL78_8FSll15DcJe157AudU2DU_kQ0C3vpj9V>
+    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
+    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghmoh
+    hnrghkohhvsehishhprhgrshdrrhhupdhrtghpthhtohepphhhihhllhhiphdrfihoohgu
+    seguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:0US_aESZ1zgr02_ZX36sUCgW2k9opOmdwyzlrDrtgKozIi1bHYbnpA>
+    <xmx:0US_aIpAXEVQn2epLLIvNLx3jcplwNl2GqPV9_swku0DWeeupP5m0A>
+    <xmx:0US_aKIJjjiuRoz1KRQZekvhAJyAk81_wR5vaj1sW_1sc9ZHdjP7eQ>
+    <xmx:0US_aDrQGpSkeJaIZ_1D26-B6CJhWpioebMGimanfVfvu_mGGGhGDg>
+    <xmx:0kS_aK-evahSwOoo7S3HW95R-yrLrsnwLRSTaHWQjQewqmyWdQhZCYVw>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 16:47:59 -0400 (EDT)
+ 8 Sep 2025 17:04:17 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Eric
- Sunshine <sunshine@sunshineco.com>,  peff@peff.net
-Subject: Re: [PATCH v3 3/8] git: allow alias-shadowing deprecated builtins
-In-Reply-To: <eec01cbac16596c5e117843ae86956e1f66ec097.1757345711.git.code@khaugsbakk.name>
-	(kristofferhaugsbakk@fastmail.com's message of "Mon, 8 Sep 2025
-	17:36:14 +0200")
-References: <cover.1756480827.git.code@khaugsbakk.name>
-	<cover.1757345711.git.code@khaugsbakk.name>
-	<eec01cbac16596c5e117843ae86956e1f66ec097.1757345711.git.code@khaugsbakk.name>
-Date: Mon, 08 Sep 2025 13:47:57 -0700
-Message-ID: <xmqqcy80wu0y.fsf@gitster.g>
+To: Alexander Monakov <amonakov@ispras.ru>
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,  git@vger.kernel.org
+Subject: Re: [PATCH 2/2] xdiff: optimize xdl_hash_record_verbatim
+In-Reply-To: <abb2bc1a-e68b-85a3-2562-53328fb502c6@ispras.ru> (Alexander
+	Monakov's message of "Mon, 8 Sep 2025 22:06:56 +0300 (MSK)")
+References: <20250728190520.10962-1-amonakov@ispras.ru>
+	<20250728190520.10962-3-amonakov@ispras.ru>
+	<aedb1be1-3151-421e-94ce-27bc77d80b83@gmail.com>
+	<353c7865-d9b5-2a1c-4d71-cd1136581f01@ispras.ru>
+	<5cf47722-7073-4761-8698-090af840d0c4@gmail.com>
+	<c2fe3b69-8436-af46-c47d-dde5bb037227@ispras.ru>
+	<0379ba2d-837b-761e-9d5a-d65ca9d051d6@ispras.ru>
+	<xmqq7byx8yo3.fsf@gitster.g>
+	<abb2bc1a-e68b-85a3-2562-53328fb502c6@ispras.ru>
+Date: Mon, 08 Sep 2025 14:04:16 -0700
+Message-ID: <xmqq8qiowt9r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,15 +94,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-kristofferhaugsbakk@fastmail.com writes:
+Alexander Monakov <amonakov@ispras.ru> writes:
 
-> +static int is_deprecated_command(const char *cmd)
-> +{
-> +	return !strcmp(cmd, "whatchanged") ||
-> +	       !strcmp(cmd, "pack-redundant");
-> +}
+> On Wed, 20 Aug 2025, Junio C Hamano wrote:
+>
+>> The thread has gone quiet.  I assume everybody is happy with the
+>> result?  Can we have a hopefully final v2 iteration of these
+>> patches, to address the updated to the table (this thread), to
+>> squelch the __asm__() issue [*asm*], and a reword you mentioned
+>> [*reword*] against Phillip's review?
+>
+> I was expecting that Phillip would come back to the question of underwhelming
+> performance improvement he was seeing on his CPU. I was working on an
+> alternative approach to speed up that function, which I just sent in the v2
+> thread: https://lore.kernel.org/git/20250908184939.16338-4-amonakov@ispras.ru/
+> It does not depend on the performance of integer multiplication anymore,
+> so it should work better from architecture neutrality point of view.
+>
+> I'm not sure what's the current status though, it seems nobody gave the original
+> two patches a Reviewed-by?
+>
+> If the proposed changes in v2 are too sudden, what happens now?
 
-This is somewhat a shame as you introduced the DEPRECATED bit to
-annotate entries in "struct cmd_struct commands[]" array.  Shouldn't
-this be moved to git.c and taught to consult that array instead?
+Well, it has been quite a while since I asked, and the last round,
+which looked reasonably well done, is now in 'next' and is about to
+graduate to 'master'.  So, if there are further good changes on top,
+can you make them incremental on top of 'master' after I push out
+today's integration result?
 
+Thanks.
