@@ -1,105 +1,84 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714CC1E130F
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 15:47:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757346440; cv=pass; b=WDGKDWJfRX1ljmQ/tmiiVtWav6azUNwa1+Whh94K7tGvrCzO45S2VNt3VF6+6on1vg7MEPeuruoZBuxNIpYcFwXk5BPVCzeIP0FKWeim4q6EFbzGTfdZZyDRZrFChR2AIVnzd9kAM995iqr8mNvpWHG5YzgWxVlPFaK5VthgWbQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757346440; c=relaxed/simple;
-	bh=wvROhhXIBj8BZCS5Xt1QV+QWww2XCjLwMQ5C8vyx1cM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RjSk/urmGwsFzYRH4wTre3XV7qc6JjaHYKfTiZsyu5eVrR7q0u9B67PPE4rJoeDaQx7wBj7s/9Zp/YsDfR7Pdran3yBYfJ/izIup0IAntKSorIcT5S9H0SO1jsnFvljSwfJymQCSZ0n0cjiiNQGz/V420ksf0TJaNmJ8orNv8p8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=YXep3j20; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D3218872A
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 15:51:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757346715; cv=none; b=hty/IFdKZj27QCJZSs2uqV7Nz/cBsFQDOG++1ZOCLcuoMV8esBfE37514RiSOxkJ4PyvS2/Qj7Fd/BXIAdY22P3Ib/0HFbpEKDDwMWJ8xQUuJgIpKY+Pd2P4SVrgjZTpJXgMoUSeZAleuPaFJwPWsChQLOlDG2Uqx06Ute0GmD8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757346715; c=relaxed/simple;
+	bh=SOkGct4WfG4Vln9cbKrPBh6sBSy2hXd6XMnoe5ymZls=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D8G7/wD6hVsATNfg8K+HD5DEBybmzG1H2XLjn42TKtwyYopBb+YFDSMKYfsvXtZE81LfIQ1caXUgeSUNY+TmhkPWRSaZxB7MKCqrTG3fXrDkgM5Fv+WIGeJ41cHSJX7xKQskf9g3IOK0Gw1Ae/oDpSF+I/WIg8VCTpTRa1VGgx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=BOv1STDj; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="YXep3j20"
-ARC-Seal: i=1; a=rsa-sha256; t=1757346414; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=HnslVh0Z6EdPOpdZpILTnLWbgg34PEhz2UOH9rAnrNT3kqYbax+Ty25f803wDz8ssf1Lbh1/sw/H2PMUlU2SCEo777gWE3UlxNL8GG7FxYqnEzQKrFPYFlW1PHvO22Lz1w7PmpymnQUc8xvUrGoL/PTUR6Aqw9syne41m9Zl3Yk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1757346414; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=A/jsRDJ5EhrVuxiZf6bmojjBUKM5IYPVcZreDvy2UCI=; 
-	b=Ic9b/ZV0LBS9G9pJnur4gR9PfgdTL4W+PSqv+NdfBFVv00hk6ITSAlQ3XFEGesqKchkeahc84j7zEEJgQyM4QQhSlTWaJ+TRHWodFLfW0+ULDMmqrk1+i6wLgesDeMMyCYnk1W8Lev+E0H7mOY0SHJP6ca/uVZqguECGhWm4LwU=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1757346414;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=A/jsRDJ5EhrVuxiZf6bmojjBUKM5IYPVcZreDvy2UCI=;
-	b=YXep3j20HL/ff8xkO95PvyU/5Z+35CBFfKcomZRAacmUKRuosgn8dgr9Sk4nitvC
-	hDHiE9ANufZw+HSBs1MaLfMUg4bY9ezEgM23rlwl50/3t9BGMLSJdsZ4tC3M68V1OjJ
-	S9OQ3VkyHzdQ31j4nxOVZH1BvtLjyAWRZAH7jsZ8=
-Received: by mx.zohomail.com with SMTPS id 1757346410747630.8874359585689;
-	Mon, 8 Sep 2025 08:46:50 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc: Emily Shaffer <emilyshaffer@google.com>, Rodrigo Damazio Bovendorp
- <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano
- <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan Nieder
- <jrnieder@gmail.com>, Stefan Beller <sbeller@google.com>, Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 2/9] submodule: create new gitdirs under submodules path
-In-Reply-To: <fc69ee66-815f-48ec-a5fb-99cac5f4d58c@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="BOv1STDj"
+Received: (qmail 21259 invoked by uid 109); 8 Sep 2025 15:51:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=SOkGct4WfG4Vln9cbKrPBh6sBSy2hXd6XMnoe5ymZls=; b=BOv1STDjmOpp/5wbgw15F574X3D+CcKUvtkIrvrY1nDUmJmj5tXilFSEbl91B2VbRP8yaSG63vUl6SiHracBc/eVadI73tLNV8ScSfEUcT7XEhMt4ZGAt7h5uN/ToRxOUjmPJvhaPuKbu0AyU1IbzLmaopcuhjvKWuITLTuMXLPfXpRKaFrzwNBBziX9HOeSwSegVR71aRWBYHDlp6rqz7lNz+P4oAnZMzU26BSjEn40VS6cK7UsY4cxBL4/6/yCTvjzj+E17DR780kOlyxkawvaED84DLjWQIgBKVASNPCyYTvO8IPCjo1UKs9qwUykWGfWl4DeS72BF5BZpseDQw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Sep 2025 15:51:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 34461 invoked by uid 111); 8 Sep 2025 15:51:47 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Sep 2025 11:51:47 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 8 Sep 2025 11:51:46 -0400
+From: Jeff King <peff@peff.net>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+	Junio C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>,
+	Ben Knoble <ben.knoble@gmail.com>
+Subject: Re: [PATCH v2 07/10] submodule: error out if gitdir name is too long
+Message-ID: <20250908155146.GA1308482@coredump.intra.peff.net>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20250816213642.3517822-3-adrian.ratiu@collabora.com>
- <fc69ee66-815f-48ec-a5fb-99cac5f4d58c@gmail.com>
-Date: Mon, 08 Sep 2025 18:46:46 +0300
-Message-ID: <877by9ndzt.fsf@ratioveremundo.com>
+ <20250908140117.262205-1-adrian.ratiu@collabora.com>
+ <20250908140117.262205-8-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250908140117.262205-8-adrian.ratiu@collabora.com>
 
-On Mon, 08 Sep 2025, Phillip Wood <phillip.wood123@gmail.com> 
-wrote:
-> Hi Adrian 
->
+On Mon, Sep 08, 2025 at 05:01:14PM +0300, Adrian Ratiu wrote:
 
-Hello Phillip and thanks for the feedback! :)
-
-I just sent v2 at the same time if you want to give that a look, 
-though the issues you raised are still valid for v2 as well.
- 
-> On 16/08/2025 22:36, Adrian Ratiu wrote: 
->> This is in preparation for encoding the submodule names to 
->> avoid conflicts like submodules named foo and foo/bar together 
->> with case-insensitive file- system handling and other corner 
->> cases like reserved filenames on Windows.   Backward 
->> compatibility is kept with plain-name modules already existing 
->> at paths like .git/modules/<name>, however a clear separation 
->> between legacy (plain) and new (encoded) namespaces is 
->> desirable, to avoid situations like an existing plain-name 
->> module containing the encoding escape character/  Thus we split 
->> the new-style (encoded) gitdir name paths to .git/submodules, 
->> while legacy-style paths remain under .git/modules.   This is 
->> just a default directory change with the accompanying test 
->> updates, in preparation for the actual encoding additions in 
->> future commits. 
+> Encoding submodule names increases their name size, so there is an
+> increased risk to hit the max filename length in the gitdir path.
+> (the likelihood is still rather small, so it's an acceptable risk)
 > 
-> Does this need an extentions.submoduleEncoding (name suggestions 
-> welcome) config key to stop older versions of git trying to read 
-> the  repository as they wont be able to locate the gitdir of any 
-> submodules  added under .git/submodules? 
- 
-Very good point. I'm a bit unsure we actually need it, likely we 
-do.
+> This gitdir file-name-too-long corner case can be be addressed in
+> multiple ways, including sharding or trimming, however for now, just
+> add the portable logic (suggested by Peff) to detect the corner case
+> then error out to avoid comitting to a specific policy (or policies).
 
-On the one hand, older versions of git can still initialize and 
-work on submodules under the legacy .git/modules/ path ignoring 
-the new one...
+Thanks, the compat logic here looks reasonable to me.
 
-On the other hand, there is a non-zero risk users will get in 
-trouble by switching git versions or can lead to 
-inconsistent/corrupted states, so I'm inclined to say the answer 
-is yes: better safe than sorry.
+As somebody who has not really been looking into or thought about the
+topic at all, though, I wondered how necessary pathconf() is here. That
+is, I can imagine two alternatives:
 
-So if there are no objections or better ideas, I'll add this in v3.
+ - just try to use the path, and we either get an error from
+   open()/mkdir() or we don't. This would end up with roughly the same
+   outcome as the current code which calls die(), though it would not
+   help with eventually fulfilling your TODO.
+
+ - set some arbitrary but sane limit (say, 255?). That would make the
+   behavior consistent across platforms, though it does mean you might
+   be prevented from using very long submodule names on systems that
+   could support it.
+
+I dunno. Like I said, this is not a problem I thought a lot about, so
+feel free to ignore. Mostly I just notice that we have lived for 20+
+years without pathconf, I think mostly by following the philosophy of
+the first bullet point above.
+
+-Peff
