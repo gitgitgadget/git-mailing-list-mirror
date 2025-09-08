@@ -1,87 +1,87 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4298C30ACEF
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 15:38:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27932FCC1B
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 15:38:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757345888; cv=none; b=XzzWdSN0wFvfT5XfbieFvApu8dwlFub4cQ2G9XiwQV6K4NXAsDjckOxBbL/N8Hu9JEMacMzf1jOFlfemfnlDxptVLfpuzKLuHYXx2NuJUEgFsN4rIMeLDB51FjSw9JtfueD+hlK7uEgm7Bh1iU46cECZn+ixD7sOGzVnzpK1J0w=
+	t=1757345907; cv=none; b=D2Vsls2Zyr/bpTykXb4zZvL+AwpEkj/kw3/Tje4u84l85i2RUpUrw07elBpSMb0qslp5v+0VEKddeft4yDcnHNsD3sKib3Gs5AemFToUmoGZMBk/FVwB+LbV8zKy54hzpWfWUBNpns78gXVYV5lvc+uW69Of1CYhfCpWjKdWjC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757345888; c=relaxed/simple;
-	bh=27hpRfaUmP2LB7r0O33JbU4VwZmxHHNHvkCgWlQbUYY=;
+	s=arc-20240116; t=1757345907; c=relaxed/simple;
+	bh=DqEFtHjLn1qmV4MyjfneAf46IAiVJbWEFktp4uRAp0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jHmumEgLWeDx+Bf94pdwjp7sEE/RZIx5qXENIvdqBnsS54Qnb2S9N1jmv1Rv4xz5ttpqLNRXssF1rAFeoW7jAyqa3rPnmV+JFvh6nEnUZ0bcl3+GcEqVcAz2wrvC5azm3PCbEadjIbdw75F1FDf88V6Ti255y881oB/VBDscb74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=WmL+iAc0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VUPzD57W; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=Jhld5rrxrEMtYI5d/JOFyd2fIDBpQg8RwF63CT41aAPpqU4egVQkfmjC629f0HU028jyX6al/dDRYcipgWhHTujaNLbccaAr6lpZCAbwkVwdmJ6tPYHF4k50KSOcFkIwSSBsLgHuFOwArfvkk9QoharvXlZCb6J1b0m//5mQtY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Id0xGWSZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HSbM5qb3; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="WmL+iAc0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VUPzD57W"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 46802EC020B;
-	Mon,  8 Sep 2025 11:38:05 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 08 Sep 2025 11:38:05 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Id0xGWSZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HSbM5qb3"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B73A114000C9;
+	Mon,  8 Sep 2025 11:38:24 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Mon, 08 Sep 2025 11:38:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757345885;
-	 x=1757432285; bh=DjhuU8dJ1wVvILNlNI4cMaUT5lMe8yJlTgRibmLOhak=; b=
-	WmL+iAc02RopLk3s1DqwffyL3B3fKd5My3vjNx4BBMmoGI4t9pwnolew4T5QVbfQ
-	GVcJbSFZFTWToedQCzEIAF1c4uhZsXBZmEoIBDImvScwKGOY0yAO9ITBcV40SuqN
-	B1UG3ZK6m+rVptKVFh9b4OPdUOYZFJFh2WQzuZECGmrTuhDM2wY9vSyfWta59ftK
-	xn/fyR77Yas5gyUGXAoCAk6JetQkXuRq+RwwjzczQwjYHJwQWC4hkYMv5Zi6imou
-	XQ4VFVEAr+8Ftkn1tdeymDxs5FjqxInyV0qWhJsxBFMvo6+nOXA17+P2jEKFluRm
-	Vq/ZZiUIgRn89MY1Pi8KDw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757345904;
+	 x=1757432304; bh=21crlXS7AHXpBSiYSJM4DHflXbsszcd+mLPBQClOo/8=; b=
+	Id0xGWSZANQnCFTPsQi3Z7AqvJ1kWAjWpwPh8np4d3VW1NjPnx6bgqoBFttDy33T
+	Lpow5qtkxG6ZyHJdNogAW2w0DoEq8x0z8EDNAbpiED/M++UmRpJK5KAWG1bPvb/Q
+	ZHEtnVZVc3oUWbgrYbPAj3pPAU1KnMIs+A2N0NN1uzwdpCF+eLrahH6/lQWBN00j
+	t5JonK63pP0GpMyigguh8d6jbwum0J+3hRc/ovbN2NRW5TGYTyq/eVPiforExhPl
+	wz0grVUsc32JNAid9+VmNySMTTrdRG3EsyYEuBVZdhAFRMMvaYSyRRKTXNti3GPi
+	ToGZPlw3Z2JUEgmY0ic2UQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757345885; x=
-	1757432285; bh=DjhuU8dJ1wVvILNlNI4cMaUT5lMe8yJlTgRibmLOhak=; b=V
-	UPzD57W1ZWfpuGg6N3spUZ1dbJKH7Sjo4kyANJ82UjqMhLFyV5QuesZVsR7Bm9EG
-	LtjJivhO2qHcp35lZLIxNqT+kzCnEVie4x+jlOWlKak0EYmpNv3cE2J1BjW6PX9z
-	yEAryfMOtsCxflxWAOisJgv+06qwOWBiMHyh91hbBiv6jwltdpw8M499CL1lex0M
-	+MQMK6cQDfzCZT7sqU4KXAcowrMDSxG8+iMKfFfr+f+TJEg8TlLYIcp7I8aZeDbL
-	CTC3OKMVsAhu+ddRQgdyRiqde/pS1qjVd0XeEyIN9QsbldAM5fzm2iTTd+ucAEoy
-	NFUrpDDZ3B9q+rKN1YgOg==
-X-ME-Sender: <xms:XPi-aNvNujiBBdqmyyFD5TbQrOYOSoeFYLwUP8HSiYcmnhF7TW5FYDU>
-    <xme:XPi-aBB2ShpdpmeJ_PfZb1AABiczoCRoz4wd3L4llI43G6GZhb_uFfRqQ-DM72KKv
-    Zn3BOHmnEceqARQNA>
-X-ME-Received: <xmr:XPi-aNWypqcjpNJNNNrV0YUDeSYY3UjdAni0dkWho4mFEETv5EvuG6QHu_vJcymFJCwFw9zq_1y5t7R4yCinF73ii0rJnhqB9YZ63TA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeeludcutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757345904; x=
+	1757432304; bh=21crlXS7AHXpBSiYSJM4DHflXbsszcd+mLPBQClOo/8=; b=H
+	SbM5qb3RfKVrKYe2wbHCBfe7cUS/8nMVRvvaZQrafbG8X5xPrHA6jvZBRQoptYCP
+	neAIi0FQxZbhALFkBNi7xvi+un/Tz8iuqMqT8SxQ84KRC7VjLifdlOyeI7yTfOpP
+	fzRfmntFrr2BQXnxEWh50b5NwgTCNpZn2OP+IaRFSo661IBHNiKcDoseveSnA+qM
+	a02mH/uD86u9M7hP6vrEUecTTWIWEKVslBC9JRIdVUjRPtq8jtwbjxm+BmyjYjI9
+	6EfsCMvePxpCHYJ6aVj3y0L+U8WECPvUuReG+EA0jeLJ+PtH33u0bHXbVqtyTxS3
+	Ns3i4uTBrIMOfZJo5QVuA==
+X-ME-Sender: <xms:cPi-aB_yeuR8BtCJu34qvTrhp1imCFgWInW0QA4KJwgWDjRZz4jG9TI>
+    <xme:cPi-aAT_XkLuFd8-AvOXyflUSd8typxzIKgYELCU6v-2WfVT38iFHcgTcfacJu2lz
+    jNpYeWe8cT3dSqr5g>
+X-ME-Received: <xmr:cPi-aLk6YAQ2NxDWklvi471_obQmerEDVNN-uO7QIW_LBLmxo7ChigIHchQpYmfdQoDYYTH45pi4lWSvp2d7xsaBccgqCmoQAHCe59A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthho
     fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvg
-    hrnhepieegvdffvedvvdetjedtieeigeejjeelgfeugfevlefhtedvieeiteehvedtiedt
-    necuffhomhgrihhnpehgihhtqdhstghmrdgtohhmpdhkvghrnhgvlhdrohhrghenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhf
-    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtoh
-    epgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-    dprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghp
-    thhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:Xfi-aHC4QmbkcJXbxT4xojy7Dv9wnrK4W6-QooqKnj4b6WWbwMYDOQ>
-    <xmx:Xfi-aI918_FdAhGugo2xYqW8rSmVvgRf2AbTNI5-FadO5NklRE4HQg>
-    <xmx:Xfi-aGGbBqp4b1OFReLfUBean3xIUIZVO3ZHRKOIX1iH28KBYjPmDQ>
-    <xmx:Xfi-aOM0AssUyL9MoWLtwvxzLz-3oZDnr914vxKtHIBuUVh7zUKgoQ>
-    <xmx:Xfi-aC83IkM9slDU_J-kAuxEUWSdbEsIgSX8-pZ8OInWCMOlRQk01POu>
+    hrnhepudelgfeuieeuteekleeifeegudefheetkefhjeffkedvueehtdevhfekieekhffg
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
+    sehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehsuhhnsh
+    hhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphgvfhhfsehpvghf
+    fhdrnhgvth
+X-ME-Proxy: <xmx:cPi-aIRsiI90zcWYeT_NXPj6oY90vbgd5p_FnmlzCn3y7wOmOy4rjA>
+    <xmx:cPi-aBMa234QjE5ciCnN_CNvWWsDBXKE14bnEcKf1Qfbz0R8cw1BQQ>
+    <xmx:cPi-aJU_Jui96LTaYHwgxAk7OUO6vnL4PGUadXlftodCUGti2JqD3w>
+    <xmx:cPi-aAfX8SMu_7pa7wFcoesYPhR5V74uDrcqdLP2oGoWmfpcR8kGmg>
+    <xmx:cPi-aFMMG18b4WnlNP1OfaHpEB17nVadfp3-9mVRUZFt6EEn5V7TB0Ij>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 11:38:03 -0400 (EDT)
+ 8 Sep 2025 11:38:23 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	peff@peff.net
-Subject: [PATCH v3 0/8] you-still-use-that??: improve breaking changes troubleshooting
-Date: Mon,  8 Sep 2025 17:36:11 +0200
-Message-ID: <cover.1757345711.git.code@khaugsbakk.name>
+Subject: [PATCH v3 1/8] git: add `deprecated` category to --list-cmds
+Date: Mon,  8 Sep 2025 17:36:12 +0200
+Message-ID: <bdc683a92b38884e9428cd4bade1f86960ef432b.1757345711.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.51.0.16.gcd94ab5bf81
-In-Reply-To: <cover.1756480827.git.code@khaugsbakk.name>
-References: <cover.1756480827.git.code@khaugsbakk.name>
+In-Reply-To: <cover.1757345711.git.code@khaugsbakk.name>
+References: <cover.1756480827.git.code@khaugsbakk.name> <cover.1757345711.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,102 +93,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Based on the recent i-still-use-that reports about whatchanged, improve
-the error reporting with this command in mind:
+With 145 builtin commands (according to `git --list-cmds=builtins`),
+users are probably not keeping on top of which ones (if any) are
+deprecated.
 
-1. Give more possible actions instead of just (only) asking them to send
-   an email
-2. Hint how to replace their git-whatchanged(1) use with git-log(1) or
-   an alias `whatchanged` (you can alias deprecated commands now)
-3. Minor documentation changes
-4. Add `deprecated` to `git --list-cmds`
+Let’s expand the experimental `--list-cmds`[1] to allow users and
+programs to query for this information.  We will also use this in an
+upcoming commit to assert that all deprecated commands will have been
+covered in some manner.
 
-§ What the errors now look like
+[1]: Using something which is experimental to query for deprecations is
+    perhaps not the most ideal approach, but it is simple to implement
+    and better than having to scan the documentation
 
-    $ /git whatchanged
-    'git whatchanged' is nominated for removal.
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-    hint: You can replace 'git whatchanged <opts>' with:
-    hint:   git log <opts> --raw --no-merges
-    hint: Or make an alias:
-    hint:   git config set --global alias.whatchanged 'log --raw --no-merges'
+Notes (series):
+    v3 (new):
+    
+    This is something I wanted to submit independently until the point about
+    aliasing builtins was brought up.[1]  It will help (in a small way) with
+    the upcoming patch “git: allow alias-shadowing deprecated builtins”.
+    
+    By the way: should `command-list.txt` be updated in some way (I didn’t
+    know what way?)
+    
+    🔗 1: https://lore.kernel.org/git/cover.1756311355.git.code@khaugsbakk.name/T/#mee19f8d39572f9021f9d3000758e87b6c32c967c
 
-    If you still use this command, here's what you can do:
+ Documentation/git.adoc |  3 ++-
+ git.c                  | 38 +++++++++++++++++++++++++++-----------
+ 2 files changed, 29 insertions(+), 12 deletions(-)
 
-    - read https://git-scm.com/docs/BreakingChanges.html
-    - check if anyone has discussed this on the mailing
-      list and if they came up with something that can
-      help you: https://lore.kernel.org/git/?q=git%20whatchanged
-    - send an email to <git@vger.kernel.org> to let us
-      know that you still use this command and were unable
-      to determine a suitable replacement
-
-    fatal: refusing to run without --i-still-use-this
-    $ git pack-redundant
-    'git pack-redundant' is nominated for removal.
-    If you still use this command, here's what you can do:
-
-    - read https://git-scm.com/docs/BreakingChanges.html
-    - check if anyone has discussed this on the mailing
-      list and if they came up with something that can
-      help you: https://lore.kernel.org/git/?q=git%20pack-redundant
-    - send an email to <git@vger.kernel.org> to let us
-      know that you still use this command and were unable
-      to determine a suitable replacement
-
-    fatal: refusing to run without --i-still-use-this
-
-§ Changes in v3
-
-Patches 1–4 are new:
-
-• Make aliases which shadow deprecated builtins possible (based on
-  Peff’s patch)
-  • This was based on Eric’s prompt[1]
-• Add `deprecated` category to `git --list-cmds`
-
-Then the patch “whatchanged: tell users the git-log(1) equivalent” is
-changed to add the now-possible aliasing.
-
-🔗 1: https://lore.kernel.org/git/CAPig+cSL=-gD5+WomF7-hYjVJ_PH0m+0i8g3F=E_U3k=QNHr8Q@mail.gmail.com/
-
-Kristoffer Haugsbakk (8):
-  git: add `deprecated` category to --list-cmds
-  git: make the two loops look more symmetric
-  git: allow alias-shadowing deprecated builtins
-  t0014: test shadowing of aliases for a sample of builtins
-  you-still-use-that??: help the user help themselves
-  whatchanged: tell users the git-log(1) equivalent
-  whatchanged: remove not-even-shorter clause
-  BreakingChanges: remove claim about whatchanged reports
-
- Documentation/BreakingChanges.adoc |  2 +-
- Documentation/config/alias.adoc    |  3 +-
- Documentation/git-whatchanged.adoc |  8 +++--
- Documentation/git.adoc             |  3 +-
- builtin/log.c                      |  8 ++++-
- builtin/pack-redundant.c           |  2 +-
- git-compat-util.h                  |  2 +-
- git.c                              | 55 ++++++++++++++++++++++++------
- t/t0014-alias.sh                   | 34 ++++++++++++++++++
- usage.c                            | 33 ++++++++++++++----
- 10 files changed, 124 insertions(+), 26 deletions(-)
-
-Interdiff against v2:
-diff --git a/Documentation/config/alias.adoc b/Documentation/config/alias.adoc
-index 2c5db0ad842..3c8fab3a95c 100644
---- a/Documentation/config/alias.adoc
-+++ b/Documentation/config/alias.adoc
-@@ -3,7 +3,8 @@ alias.*::
- 	after defining `alias.last = cat-file commit HEAD`, the invocation
- 	`git last` is equivalent to `git cat-file commit HEAD`. To avoid
- 	confusion and troubles with script usage, aliases that
--	hide existing Git commands are ignored. Arguments are split by
-+	hide existing Git commands are ignored except for deprecated
-+	commands.  Arguments are split by
- 	spaces, the usual shell quoting and escaping are supported.
- 	A quote pair or a backslash can be used to quote them.
- +
 diff --git a/Documentation/git.adoc b/Documentation/git.adoc
 index 743b7b00e4d..a2f0838b168 100644
 --- a/Documentation/git.adoc
@@ -203,23 +139,8 @@ index 743b7b00e4d..a2f0838b168 100644
  	others (all other commands in `$PATH` that have git- prefix),
  	list-<category> (see categories in command-list.txt),
  	nohelpers (exclude helper commands), alias and config
-diff --git a/builtin/log.c b/builtin/log.c
-index 5dbb90c014d..1d1e6e9130a 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -546,7 +546,9 @@ int cmd_whatchanged(int argc,
- 		you_still_use_that("git whatchanged",
- 				   _("\n"
- 				     "hint: You can replace 'git whatchanged <opts>' with:\n"
--				     "    git log <opts> --raw --no-merges\n"
-+				     "hint:\tgit log <opts> --raw --no-merges\n"
-+				     "hint: Or make an alias:\n"
-+				     "hint:\tgit config set --global alias.whatchanged 'log --raw --no-merges'\n"
- 				     "\n"));
- 
- 	if (!rev.diffopt.output_format)
 diff --git a/git.c b/git.c
-index 83eac0aeab7..a452ce3f9e9 100644
+index 83eac0aeab7..87d61f12594 100644
 --- a/git.c
 +++ b/git.c
 @@ -28,6 +28,7 @@
@@ -290,7 +211,7 @@ index 83eac0aeab7..a452ce3f9e9 100644
  #endif
  	{ "worktree", cmd_worktree, RUN_SETUP },
  	{ "write-tree", cmd_write_tree, RUN_SETUP },
-@@ -668,13 +677,18 @@ int is_builtin(const char *s)
+@@ -668,13 +677,20 @@ int is_builtin(const char *s)
  	return !!get_builtin(s);
  }
  
@@ -309,122 +230,14 @@ index 83eac0aeab7..a452ce3f9e9 100644
 +			if (commands[i].option & include_option)
 +				string_list_append(out, commands[i].cmd);
 +	} else {
-+		for (size_t i = 0; i < ARRAY_SIZE(commands); i++)
-+			if (!(commands[i].option & exclude_option))
-+				string_list_append(out, commands[i].cmd);
++		for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
++			if (commands[i].option & exclude_option)
++				continue;
++			string_list_append(out, commands[i].cmd);
++		}
  	}
  }
  
-@@ -793,6 +807,12 @@ static void execv_dashed_external(const char **argv)
- 		exit(128);
- }
- 
-+static int is_deprecated_command(const char *cmd)
-+{
-+	return !strcmp(cmd, "whatchanged") ||
-+	       !strcmp(cmd, "pack-redundant");
-+}
-+
- static int run_argv(struct strvec *args)
- {
- 	int done_alias = 0;
-@@ -800,6 +820,19 @@ static int run_argv(struct strvec *args)
- 	struct string_list_item *seen;
- 
- 	while (1) {
-+		/*
-+		 * Allow deprecated commands to be overridden by aliases. This
-+		 * creates a seamless path forward for people who want to keep
-+		 * using the name after it is gone, but want to skip the
-+		 * deprecation complaint in the meantime.
-+		 */
-+		if (is_deprecated_command(args->v[0]) &&
-+		    alias_lookup(args->v[0])) {
-+			if (!handle_alias(args))
-+				break;
-+			done_alias = 1;
-+			continue;
-+		}
- 		/*
- 		 * If we tried alias and futzed with our environment,
- 		 * it no longer is safe to invoke builtins directly in
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index 854d59ec58c..bf7e6512bb1 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -55,4 +55,38 @@ test_expect_success 'tracing a shell alias with arguments shows trace of prepare
- 	test_cmp expect actual
- '
- 
-+can_alias_deprecated_builtin () {
-+	cmd="$1" &&
-+	# some git(1) commands will fail for `-h` (the case for
-+	# git-status as of 2025-09-07)
-+	test_might_fail git status -h >expect &&
-+	test_file_not_empty expect &&
-+	test_might_fail git -c alias."$cmd"=status "$cmd" -h >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'can alias-shadow deprecated builtins' '
-+	for cmd in $(git --list-cmds=deprecated)
-+	do
-+		can_alias_deprecated_builtin "$cmd" || return 1
-+	done
-+'
-+
-+cannot_alias_regular_builtin () {
-+	cmd="$1" &&
-+	# some git(1) commands will fail... (see above)
-+	test_might_fail git "$cmd" -h >expect &&
-+	test_file_not_empty expect &&
-+	test_might_fail git -c alias."$cmd"=status "$cmd" -h >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'cannot alias-shadow a sample of regular builtins' '
-+	for cmd in grep check-ref-format interpret-trailers \
-+		checkout-index fast-import diagnose rev-list prune
-+	do
-+		cannot_alias_regular_builtin "$cmd" || return 1
-+	done
-+'
-+
- test_done
-Range-diff against v2:
--:  ----------- > 1:  bdc683a92b3 git: add `deprecated` category to --list-cmds
--:  ----------- > 2:  183dd68d09d git: make the two loops look more symmetric
--:  ----------- > 3:  eec01cbac16 git: allow alias-shadowing deprecated builtins
--:  ----------- > 4:  80fb02caeeb t0014: test shadowing of aliases for a sample of builtins
-1:  6803e2cc6c3 = 5:  d25ee26f989 you-still-use-that??: help the user help themselves
-2:  2f3ac952980 ! 6:  50621a0748f whatchanged: tell users the git-log(1) equivalent
-    @@ Commit message
-     
-     
-      ## Notes (series) ##
-    +    v3:
-    +
-    +    Add an alias hint now that that is possible.  Also prefix each hint-line
-    +    with `hint: `.
-    +
-         v2:
-     
-         Review found a whitespace error in the prev. patch version.  I found a
-    @@ builtin/log.c: int cmd_whatchanged(int argc,
-     +		you_still_use_that("git whatchanged",
-     +				   _("\n"
-     +				     "hint: You can replace 'git whatchanged <opts>' with:\n"
-    -+				     "    git log <opts> --raw --no-merges\n"
-    ++				     "hint:\tgit log <opts> --raw --no-merges\n"
-    ++				     "hint: Or make an alias:\n"
-    ++				     "hint:\tgit config set --global alias.whatchanged 'log --raw --no-merges'\n"
-     +				     "\n"));
-      
-      	if (!rev.diffopt.output_format)
-3:  a074e7be422 = 7:  812c9870f1b whatchanged: remove not-even-shorter clause
-4:  9196c3c7e33 = 8:  0d23a4badf0 BreakingChanges: remove claim about whatchanged reports
-
-base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
 -- 
 2.51.0.16.gcd94ab5bf81
 
