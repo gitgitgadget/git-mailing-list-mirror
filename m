@@ -1,157 +1,231 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8676293C4E
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 07:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD38D5661
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 07:27:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757315114; cv=none; b=sq4AmCr/I61cdEJymWRMP7gMZ3LKUg9oxRIn3byw5gGMzT0/e4OnnEQh7ZSsKxfhJPnQe1KqAqsPdH0ephFCbVDu+wbvALe2kzPw45lNL9nypFD/cnsXUN6P/UqjjhMGu/YZmhXqDN0DjDQ+zFDIaqnUmGwoPJNdwlHpmGl0qx0=
+	t=1757316428; cv=none; b=IllS7ELUffcwOCOJU5xLxEXQ9oaLLjj/8JjvvnJmC8UA6mK81TwMlgT0YCQDFy+HOpoIMy03cSNoPEGDMLULec/RN7yuWYTee62vEAwUkfUPpnH+XGNFv81y1ZdcxWkWaom+FnxKVynxwkD9gVthcYBPFSDRoCMSwaG+5L0cKZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757315114; c=relaxed/simple;
-	bh=5p5nUtKO+aoxO4Ygjw4VOrXzFudCwC0d7syMNIryuKU=;
-	h=Content-Type:Date:Message-Id:Subject:From:To:Mime-Version:
-	 References:In-Reply-To; b=e6+ua1IC5uvNAAf4k55HMFxBdjjRox4pu4PkFUN0/lNo38dlafzlxxg+eh4X1Uns5m209Gp/sHqtz4+E0vbeH1k4KEjDjAQ/XtGF1sDy1d32jimxvfp1puRVQiWPeF6oGBtkdzsEWzd8wbEmEFpftma5fhEe9NQZYA0tUfS7KlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g89/Akfp; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1757316428; c=relaxed/simple;
+	bh=8NtY1vr0HHTGMrbfBz6faguIku2UtORAsO9xqUVgx98=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=p1PWKeHsg7sF83YfNkV0BpVe8q+KfQw0NOhzyi/+JRXdaMimigYvRMMtXBtXlU/xht2u6iOKmv0EurHBWNB1URme2PdC0Vu/PaWMF8d0cBJw28dixpLiIVT+Em1DHgVN4/MT34pRJmbGy/qJzT7e8OWHYWgrvvGJPEgokOal+l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UZ81AmDI; arc=none smtp.client-ip=209.85.217.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g89/Akfp"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-24c8ef94e5dso33107975ad.1
-        for <git@vger.kernel.org>; Mon, 08 Sep 2025 00:05:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UZ81AmDI"
+Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-529858dc690so1147473137.0
+        for <git@vger.kernel.org>; Mon, 08 Sep 2025 00:27:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757315112; x=1757919912; darn=vger.kernel.org;
-        h=in-reply-to:references:content-transfer-encoding:mime-version:to
-         :from:subject:message-id:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bRax/MOngoT8COgkIZ5o1CqlyrdyPatI6lai10viKQo=;
-        b=g89/AkfpZh7vcPAoCi3SXrE1K9R4LtwUGFVbpZFSYiRew0FiH5sm7ibiBiUFyiHdeP
-         MNdPPsfUZipFTyX0CFOx8FChi/lklPn/+fECZqefMnOJFdlLs6LJqwXNH8aC1KcLx9/Z
-         ozFgsy2vB/XvoS5O8/clwXtXv8nlFcN9bBSCMk4vO/meMF2qBniWxd6Ow9jajeBXfooS
-         7P0jov+4OLNivR95KE10LeooEMfq6QBXWYX5lyXNJTrbdrsydxBoO0AwqCpNGZ2o6lM8
-         mo/K7lGaG/srKxaCBHPYFAQB03Zuii2MN1yG7k1cTpdO6ZhrW97ShUtlLsYkDe2Dw3tp
-         QVfA==
+        d=gmail.com; s=20230601; t=1757316425; x=1757921225; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WwB+hhktbryV9GcQhAlRRrGRqAWUdvIqaB9ymu1O5rM=;
+        b=UZ81AmDISBHJJ7/HPxuwx0GUc4FPj+vpVFkqolDEVxRsn3QXEhiD9ddyu1wFE+Btqm
+         gsgBforRWSUApSTv5RvUgaqZaCJjRIYREnbOW+spzqif1f0IKRuGXuklINU2fkyAqSaa
+         o7IYdhEQDybDTOFgUj4gLGlFGq7h12ZGDuGHsx3KyK0hupqIA2iQjcDnDtI3qphkq4fz
+         Eue/RhJDjqgeTkarqmRey2veVokRgUGbm/8Aaj7y2LpA2jUaSeZn+crf9cMClzsHa1fu
+         HhiQlCASRml+7TR6wyG2/7rOofYnq0uPRwYBTByGLEGwc6PIu8RbqOz9oycf4c+s6Z1k
+         9+8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757315112; x=1757919912;
-        h=in-reply-to:references:content-transfer-encoding:mime-version:to
-         :from:subject:message-id:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=bRax/MOngoT8COgkIZ5o1CqlyrdyPatI6lai10viKQo=;
-        b=Rx7/lvNerxG5276vr9xf9tsK8cW2hmT4gO1PYJ5RxBHpH8AgsWy7zeh6uTlWBsOkZm
-         jLnjBkzfVZ+3JyBHTq3TDuzHlbmziLpxF0cCQ0QrYe2IVw2wArAwQGqkaDsQ50BzecWn
-         9pAkWP3t8PoM18al+WvcPL7b2hTCKrpc6Hlb1mDq5HM76BFIxLvUuGRPJ3nPhnoZQKMI
-         G/d0jBEmCv3UhDQrg4m2tFVVvAFOmzrEk5RogwW1RAd2tgl+KveKn9K+DSeQg0zqdkMZ
-         0mG6Llfi0uQdpAPZ1efGj6k7IJXBiOzT1yExxMqczlHD1McYoPvGavnU2sy+oH0IS22r
-         yAng==
-X-Forwarded-Encrypted: i=1; AJvYcCW00g0bKy99HC90rI4HYy8m3JINJ+CP8AQYNnthm75eKLMumWwtBz+mt4pkasSfC2KJ33A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwzhEerucAj6RwwAUCNvHPzdI0RwwLi+XVX42P1qcpXtRNESfRl
-	VVMGcK7l6fEOPzSyYH0rQ0/6qvD1jYgVcKMVahKKdhzFj0x1PmmONZau2wQKqV0u
-X-Gm-Gg: ASbGncvJ+B/id1Ir2LgojAxZC7PUYT6z5psdHOUDsyoEOPKl7hZs0zJUVQNpi+qJU9T
-	uRWfkqd8pgH47SXdq0kSwx6ptTD70zB9GqwpMkjSrO/eQ7sNSotL4p+ImJKJAjojCcu8ScgD91W
-	hwLGaYu5m2bJ6bSi6C8kgzft6i22WxmjZ3fjUUmK1eDidScRgMUoFOIcXHgbeOnH6KLDfzDT4EX
-	R2cueN29vPis352FKiJm3MimfrYPhuPryBO8ge27+McXGN3b6N98g6Y6sgYzvo+S10CPuIvzS7g
-	4GLynErSw86FbvcUEFLf61e3dRw3F5qqQcEssX2sd+ThZAtYDlYyaqoCLYo3WCD98dwwP/zMESX
-	C/N6rsv+YTD7CIlc6k4a6T2ZVK5nib8vXCCgFyistd4Mw29tA9/LTIjoTJMZYhmD1FsHuwbKaRA
-	==
-X-Google-Smtp-Source: AGHT+IH8AKtkszUdm3WO4qKfqZxvlKw6GjzZ4tnv81WISWsN6AtXoKClNdWnM3ztuviQ3TsIv4ikKQ==
-X-Received: by 2002:a17:903:22c3:b0:253:65e4:205f with SMTP id d9443c01a7336-25365e4e33dmr68902855ad.3.1757315111847;
-        Mon, 08 Sep 2025 00:05:11 -0700 (PDT)
-Received: from localhost ([106.51.239.186])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-329e445d875sm17695294a91.11.2025.09.08.00.05.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 00:05:11 -0700 (PDT)
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 08 Sep 2025 12:35:08 +0530
-Message-Id: <DCN87S14V9G8.3BAV5XX1BDHKM@gmail.com>
-Subject: Re: Running out of inodes on an NFS which stores repos
-From: "Kousik Sanagavarapu" <five231003@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, "Kousik Sanagavarapu"
- <five231003@gmail.com>, <git@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1757316425; x=1757921225;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WwB+hhktbryV9GcQhAlRRrGRqAWUdvIqaB9ymu1O5rM=;
+        b=qftWp6MeWM+yE7qJmAaGcM5hZG4BFeaM+Fm6QpIC5dtZXhhN20pnGK6dp2A+jAo06U
+         AfDUGkoBeoCbwIZcF4z1J+stN7dUgnDtc4brgoO5eVTiCzJXwYzDsTAcbOTjigE2Fa1/
+         J5cuQdXz12zr4Ro6GWdCA3/wqLVqNPwLRvZUrWOzZyexu07ZwxaEMumHcqQ9rUu7Ip1U
+         tavtAlSfj9gyDjvlHuJxX6Wy5cfz6zTd3N4PAtIcA2tmh3tNeSNmEReuXW/C88OVMPvj
+         4WAq5/exRVBfINbpyacxvbV24KgBeOcn/WdBA7Ta96Z57L0f720qEbxZj66T3d/nkVXZ
+         IM/Q==
+X-Gm-Message-State: AOJu0Yz97kLMO4Xk/9b3BVZv6dI3914M2xAcepQZskdu5hNyZSKwDt9F
+	IVkN2f47g/nPb5ifAjwfg/JiYFNZAlczpCH1yvszajzzXCXqVOkatvHooLmz8hutuzJihP2get7
+	7Tw//NSF45YYa1Dt5R6DylGVBfbT044diWgws
+X-Gm-Gg: ASbGncvgn0XKJ0LVc87u2HVqUwWDcDTXEoXAqtuYVRn+I3ZVrFHdLtwKar1Ps6/07QP
+	U2PVMowc8ghiRVrPAlB/JgNttF8uyqb/ItNfXY5jj6MBG+uvaE508vexryY3wksNrrPyOjRg2wb
+	1o4Bk+Aw3p+yPfkB3ldjRZ6QEHsMut34kHtAYbA2b7baVLc9giAJ3xVhjpHmnsYF/a7xq5rCFaH
+	R4z/bBcoQgt0CxXM+BuFOW6sPTjqQ+2Ag4nuAO0Tw==
+X-Google-Smtp-Source: AGHT+IEt5Wn2b+4JsBI3NRQloEYDK/HNiyaDLDrTFWbGnj4QB0IPujar9BeW6TH+g4py2DUBH3c/i72DW0RidWHPNlY=
+X-Received: by 2002:a05:6102:160e:b0:4e2:a235:2483 with SMTP id
+ ada2fe7eead31-53d13a4fb07mr1322779137.19.1757316425439; Mon, 08 Sep 2025
+ 00:27:05 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 8 Sep 2025 02:27:03 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 8 Sep 2025 02:27:03 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aLfw-peLY8NEKSZd@pks.im>
+References: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com>
+ <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-2-35e69bbb507d@gmail.com>
+ <aLfw-peLY8NEKSZd@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: aerc 0.21.0
-References: <20250906141711.64419-1-five231003@gmail.com>
- <aLxUkTzuVaZrWDs2@fruit.crustytoothpaste.net>
-In-Reply-To: <aLxUkTzuVaZrWDs2@fruit.crustytoothpaste.net>
+MIME-Version: 1.0
+Date: Mon, 8 Sep 2025 02:27:03 -0500
+X-Gm-Features: AS18NWA7ypXeZQalut-9E30kb6nE3tbezc3y8ryDD5V9LSpISW4cR3m2yqGJZZA
+Message-ID: <CAOLa=ZTC1=KRB6pANUcwpoiVKSbbCGJQPG=WW_TLEjHziyO6ig@mail.gmail.com>
+Subject: Re: [PATCH 2/2] refs/files: handle F/D conflicts in case-insensitive FS
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, joe.drew@indexexchange.com, peff@peff.net, 
+	gitster@pobox.com
+Content-Type: multipart/mixed; boundary="0000000000004bf5ff063e451dbb"
 
-On Sat Sep 6, 2025 at 9:04 PM IST, brian m. carlson wrote:
-> On 2025-09-06 at 14:16:12, Kousik Sanagavarapu wrote:
->> Hello everyone,
+--0000000000004bf5ff063e451dbb
+Content-Type: text/plain; charset="UTF-8"
+
+Patrick Steinhardt <ps@pks.im> writes:
+
+> On Tue, Sep 02, 2025 at 10:34:26AM +0200, Karthik Nayak wrote:
+>> Similar to the previous commit, when using the files-backend on
+>> case-insensitive filesystems, there is possibility of hitting F/D
+>> conflicts when creating references within a single transaction, such as:
+>>
+>>   - 'refs/heads/foo'
+>>   - 'refs/heads/Foo/bar'
 >
-> Hi,
+> Great, I wanted to ask about this scenario.
 >
->> These git repos come from another service and there are typically
->> thousands of them each day. It is important to note that we only store
->> the .git dir and expose a url which is configured as the remote by
->> default to read and write into this repo.
+>> Ideally such conflicts are caught in `refs_verify_refnames_available()`
+>> which is responsible for checking F/D conflicts within a given
+>> transaction. This utility function is shared across the reference
+>> backends. As such, it doesn't consider the issues of using a
+>> case-insensitive, which only affects the files-backend.
 >>
->> All of these are small repos; usually not many files and not many
->> commits too - I'd say ~5 commits on average.
+>> While one solution would be to make the function aware of such issues.
+>> This feels like leaking implementation details of file-backend specific
+>> issues into the utility function. So opt for the more simpler option, of
+>> lowercasing all references sent to this function when on a
+>> case-insensitive filesystem and operating on the files-backend.
 >>
->> Historically, when we ran out of inodes, we had implemented a few
->> strategies where we used to repack the objects or archive the older
->> repos and move them into another store and bring them back into this
->> NFS and unarchive the repo.
+>> To do this, simply use a `struct strbuf` to convert the refname to a
+>> lower case and append it to the list of refnames to be checked. Since we
+>> use a `struct strbuf` and the memory is cleared right after, make sure
+>> that the string list duplicates all provided string.
 >>
->> However, none of these totally mitigated the issue and we still run
->> into issue as the traffic increases. As a last resort,  we increased
->> the disk size even though there was ton of free space left - just
->> for increasing the number of inodes.
->>
->> We can't delete any of these repos, no matter how old, because they are
->> valuable data.
->>
->> I was wondering if there was some other strategy that we could implement
->> here as this seems like a problem that people might often run into. It
->> would really help to here your thoughts or if you could point me to
->> anywhere else.
+>> Without this change, the user would simply be left with a repository
+>> with '.lock' files which were created in the 'prepare' phase of the
+>> transaction, as the 'commit' phase would simply abort and not do the
+>> necessary cleanup.
 >
-> There are a couple things that come to mind here.  You can try to set
-> `fetch.unpackLimit` to 1, which will cause of the objects pushed into
-> the repository to end up in a pack.  That means you'll usually have
-> only two files, the pack and index, rather than the loose objects.
-
-Thanks for this, I have tried this out and while going through the
-surrounding documentation, found `transfer.unpackLimit`. This was exactly
-what I was looking for.
-
-> If you have a large number of references, you may wish to convert the
-> repositories to use the reftable backend instead of the files backend
-> (via `git refs migrate --ref-format=3Dreftable`), which will also tend to
-> use fewer files on disk.  Note that this requires a relatively new Git,
-> so if you need to access these repositories with an older Git version,
-> don't do this.
+> Oh, that's a clever hack. Does this also work for the case where we have
+> preexisting refs already that differ only in casing? I guess it should
+> given that the lookups we perform should yield those refs regardless of
+> their casing.
 >
-> You can also periodically repack more frequently if you set
-> `gc.autoPackLimit` to a smaller number (in conjunction with
-> `fetch.unpackLimit` above).  If you have repositories that are not
-> packed at all, running `git gc` (or, if you don't want to remove any
-> objects, `git repack -d --cruft`), which will likely reduce the number
-> of loose objects and result in more objects being packed.
+> In any case, if we don't already have such a test it would be great to
+> also verify that this works as expected.
+>
 
-Yes, I have now set the following config surrounding gc
+There is a case which I missed and Junio also highlighted, I will fix
+that in the consequent version.
 
-	[receive]
-		autogc =3D true
-	[gc]
-		auto =3D 1
-		autopacklimit =3D 1
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index 9f58ea4858..466cdfe121 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -869,8 +869,23 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+>>  		 * If the ref did not exist and we are creating it, we have to
+>>  		 * make sure there is no existing packed ref that conflicts
+>>  		 * with refname. This check is deferred so that we can batch it.
+>> +		 *
+>> +		 * For case-insensitive filesystems, we should also check for F/D
+>> +		 * conflicts between 'foo' and 'Foo/bar'. So let's lowercase
+>> +		 * the refname.
+>>  		 */
+>> -		item = string_list_append(refnames_to_check, refname);
+>> +		if (ignore_case) {
+>> +			struct strbuf lower = STRBUF_INIT;
+>> +
+>> +			strbuf_addstr(&lower, refname);
+>> +			strbuf_tolower(&lower);
+>> +
+>> +			item = string_list_append(refnames_to_check, lower.buf);
+>> +			strbuf_release(&lower);
+>
+> Can we use `string_list_append_nodup()` together with `strbuf_detach()`
+> here to avoid one memory allocation?
+>
 
-Curious to know if this will have any noticable performance impact
-though. As I mentioned in my previous msg, these are small repos but the
-number of repos being created and the operations performed on them are
-large - mostly pushes,
+That's clever, I'll add that in, thanks!
 
-> Finally, it may be useful to you to reformat the underlying file system
-> in a way that has more inodes.  I know ext4 supports a larger inode
-> ratio for repositories with many small files.  Alternatively, apparently
-> btrfs does not have a fixed inode ratio, so that may be helpful to avoid
-> running out of inodes.  I can't speak to non-Linux file systems, though.
+>> +		} else {
+>> +			item = string_list_append(refnames_to_check, refname);
+>> +		}
+>> +
+>>  		item->util = xmalloc(sizeof(update_idx));
+>>  		memcpy(item->util, &update_idx, sizeof(update_idx));
+>>  	}
+>> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+>> index 57f60da81b..84dc68e5f3 100755
+>> --- a/t/t5510-fetch.sh
+>> +++ b/t/t5510-fetch.sh
+>> @@ -53,6 +53,12 @@ test_expect_success "clone and setup child repos" '
+>>  		cd case_sensitive &&
+>>  		git branch branch1 &&
+>>  		git branch bRanch1
+>> +	) &&
+>> +	git clone --ref-format=reftable . case_sensitive_fd &&
+>> +	(
+>> +		cd case_sensitive_fd &&
+>> +		git branch foo/bar &&
+>> +		git branch Foo
+>>  	)
+>>  '
+>>
+>
+> Nice idea to use the reftable format here.
+>
 
-Unfourtunately, I can't reformat the NFS. It is currently on ext4 and
-even though there are quite a few filesystems which don't impose a
-threshold on inodes, I can't migrate to them.
+Yeah, that was the only way.
+
+>> @@ -1546,6 +1552,20 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'existing references in a case
+>>  	)
+>>  '
+>>
+>> +test_expect_success CASE_INSENSITIVE_FS,REFFILES 'F/D conflict on case insensitive filesystem' '
+>> +	test_when_finished rm -rf case_insensitive &&
+>> +	(
+>> +		git init --bare case_insensitive &&
+>> +		cd case_insensitive &&
+>> +		git remote add origin -- ../case_sensitive_fd &&
+>> +		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
+>> +		test_grep "failed: refname conflict" err &&
+>> +		git rev-parse refs/heads/main >expect &&
+>> +		git rev-parse refs/heads/foo/bar >actual &&
+>> +		test_cmp expect actual
+>> +	)
+>> +'
+>
+> Okay, so we again only end up with one of these references, which is the
+> best we can do.
+>
+
+Exactly.
+
+> atrick
+
+--0000000000004bf5ff063e451dbb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: cc18945a3c5bcb73_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pK2hVVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM0loREFDQWFLanE2VzBLaEZWakRDaDNjT2xhUEFrUQozMVoyZUNwNFNL
+c24rQndKK1BwRzZUSWhZU1g3cktMY1RabmdBWi9KblBvNElUOW56bVVidTVxT1g1YXpRWjFUCnpC
+Y09Ib3puR3VpOGdxekI5NnBTUWFEdGs1R2N2YWgyakxUd2t6R3hmVzBHNE1GcW0welZ1MHMyTXVT
+SG94OXMKWkdFc0NVd2cxOHJUVjdKM3VXUVdyV0F3RkJZWlV5dEdzOWNLSzdwTnF2bnJiNUozd3lj
+R0RUc2I0RkNabW94dwpDZ0gxOG95enNzUCsyNFZkbjJUT1hmYTFpRFFyRERnb093M2tlTVh3N3Qw
+Y3NOanB0V283bm5Na2trQzREMlZ6Cis2WWNRUktMTndYeFowdWpCSkhDQnc5a0xoQ2ZoWVNNUkJO
+RnlXTUc0Tk5LWjRxZ0VnTWJuYmlkeTlOSEZLa3QKVFdKaFpnMGxvNVZ4aEVvN0p1b0Jwc25tWlgw
+OWswNXB2K2ZVM1NFQXQ5dTYvVjdVMDRiUnBPcXBMV0FKNW9aNgpDU1ZjTUppckFhc21EeUR5RHMw
+U3Nsb1BzVmNjMDBONkErMVhVRWtUN21wcGVLQ3ROaHVQbEtnZURDQWlRaDBLCmpaSXEwUDdqMGtO
+MERHd3VNd0VJTStmMHd6MCtweEUycFlTbGVBaz0KPW9XdlgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000004bf5ff063e451dbb--
