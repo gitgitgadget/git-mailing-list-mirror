@@ -1,152 +1,121 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4049820C001
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 21:21:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69E421FF39
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 21:27:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757366484; cv=none; b=YQGMV+xfsXRxVTP+wpy+FZff+Ko1om5LiNydVp8NDbygN7Wg3Fg0qXYp1MX8EzPNH6t6yYPATsczWyhI4BU9jMPLWLC+7sRXWQpXdVNn0fzCJhqRqVQOxgSuF2dh9JhBVUo2NYTdb0XVETWfQH8Clflio1afVXVwOhrCqZFjffs=
+	t=1757366854; cv=none; b=fftPhRFlhoW1ZbiqFiR18Kd73LK9Aug2fhNs+OYgviGOsJ5ENEum3GEL8gjdYwVJfB6oBnCkIIizjvjzA28Xm7k4f3ovmEGp6t7+5TBNdOkqq3U5zrTQeguGx9ggWnObThKgqLHuE7WEhDDEDAARA+YhMHuJFf682edBB7LEfzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757366484; c=relaxed/simple;
-	bh=7Qr0uY6IgsNrTt/kpq3XDdFtxZSjOJcJXveJwnk5R4Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XefkIxxa5iEWCNdtYLfoQk8od8Qs+7kAu9DZcgWSmrkk08k4UBLPvvrC3x3Gfda4XXdmGZMcNuIKXXQwjxmH7j0cBTqRjpwJ5PSu+rtfMq7Pw9u1Rn8Oha7hI7wry05ZwKlJk5yVJd6xuFiAg935RgMlwWeUSSAyDG7NnW6vyzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MtyMr75s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SsLFus3Q; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757366854; c=relaxed/simple;
+	bh=QnmCPpiF90rk5wBkAcTtYFKwVjOVGPiydUhlUT6YZK4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aqL0dyuVmGWUmrfyNfwIur1hzL3cLxF1CZPPyZRbIkQZbH0A+q+0zLeDZKEHFyS/TSAzgdBAzrZGOG2eJsCIlG4+w60y3o7DBFweReonZmwJq7mOBoaB8TI0i5KtjCYrgZHChcl7PoHPPgs0sth8DWYMOFU0xevGOo/KqFEgOEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=TgKg4O2Z; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MtyMr75s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SsLFus3Q"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 085E31D00124;
-	Mon,  8 Sep 2025 17:21:21 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 08 Sep 2025 17:21:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1757366480; x=
-	1757452880; bh=FIRcdYUjeWHF/lHbxKD2KJV2Eo2Z9EWJTdskjdLUb7M=; b=M
-	tyMr75stO/wLyZjyAWUNrvWUslo2dlRqVXlKkKtLZm6GWpGs+6kX+69zRXR0SiRy
-	y5Vod/gbeojt93JgqKcP4w8UZ0arwjw8PgWkqjCmoKOFqtiWdMcffzxmidDxdZ1O
-	/MB5sRJUQuudYUV41ffxo7USRN/fxTJlcPi5dwoTdpSJn36OTVNIvOeE/oTfEScI
-	z/cWaJU3yTX/mMumYbQLARD0HgEONHh6VpNmnvq6imGGnG3mjB9wq7LFoEl5LpQV
-	xgOlAs9pnklH4DhGIZvD97/4Okl5onmW7OQzxZ9LpXrsfZtuiOFXNSilFEN67BJE
-	aW4f/ekub6lMtmInp4Kag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1757366480; x=1757452880; bh=F
-	IRcdYUjeWHF/lHbxKD2KJV2Eo2Z9EWJTdskjdLUb7M=; b=SsLFus3QQZ2cxzX72
-	ZoyUn7pcKDENFsspNs4NVXvcHYk+Od5pZQQkV46tMd655yrK0AL9ieg737A7Ruxm
-	cgSzDvBEwEaBiptipRPFZkd/vJi6cuZtAYv2EJCAeX4MwRgCjdYP1E3Y4XMG5wNH
-	rin4jZBoSTaut4YmDIi48WFZOV3ZOj2OvsTFMjUVFTS4VGOncq3yOwasDWiRnDKL
-	vQJPhzEyfk5bML/EKkpGUrjF91z6etw3WyflhAWlobZ1PXdIWDgDs+TJSvZJrZY5
-	ZmjbZWpSm9Ll5FR5XCYB3MumPuuwiM2R3+1A3xX9uWacmFAb7DJhubNobwUgCVrL
-	gS+3w==
-X-ME-Sender: <xms:0Ei_aDYb2d4HYDr3AC6486Bq25WQXIHygQnbPr0akC6btD4E5pRK7F4>
-    <xme:0Ei_aM8nlUgUw_hBXV06M2Y1UP_r3-4qU0lxiHZUPD1x9aa1zb-FvkSG1ChAG45LP
-    hDsavx7W45EXHAnOg>
-X-ME-Received: <xmr:0Ei_aCj7OfcyQAAjfQK8_W9UZhclnD13mNvHPi95CbMxqs-Hz4lQ4f6lAKjNA1accFJkHWS2Gzx0Iwi8dBnO43lcVyBfuM-dmkZi1s6pVNGdSxG5_qMHR5rmVg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeeitdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhgggfestdekredtre
-    dttdenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
-    ihhlrdgtohhmnecuggftrfgrthhtvghrnhepfeehteekfedtieffvdejteeutefhuefgte
-    fgtdevhefhveffuefftdehiedtfedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
-    htmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptghoug
-    gvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:0Ei_aMcVd0F2WKPIh3dJmGxdFV-rqWISVU-ro-IW8yKNxAihDJRVew>
-    <xmx:0Ei_aJpdT9EOvZP0TylCodgRbcb-daWf0Ek1i5Y7FvgArQ-CPMFGgQ>
-    <xmx:0Ei_aBBKxsrCRxg0mQhwIBi_V6jjHmNN4aY7P2G1Brkb7k0hlMkGkg>
-    <xmx:0Ei_aGbP5L7kybhc5TWKogn5mjG4-rbbP4Zs5ebVfxoUdcnYreUfJQ>
-    <xmx:0Ei_aFEyi2_3rV4DtFLKwEsKq97vrTE36L_A9Dzs6K30e-M3xLB-sGfN>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 17:21:19 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	git@vger.kernel.org,
-	peff@peff.net
-Subject: [PATCH v2] doc: fast-import: replace literal block with paragraph
-Date: Mon,  8 Sep 2025 23:20:54 +0200
-Message-ID: <724b975078daf11e17f26472c0da5638a5d1ca86.1757366352.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.51.0.16.gcd94ab5bf81
-In-Reply-To: <09aaad696895c18c6d4dda7d6a2f4b77f84f39ba.1757363213.git.code@khaugsbakk.name>
-References: <09aaad696895c18c6d4dda7d6a2f4b77f84f39ba.1757363213.git.code@khaugsbakk.name>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="TgKg4O2Z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1757366844;
+	bh=QnmCPpiF90rk5wBkAcTtYFKwVjOVGPiydUhlUT6YZK4=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=TgKg4O2Zi9/7ZRz84a7f47X9WdO4ApRHzQaHFQ40BxtDTanyK1Xc7+4KY8Q5s19mE
+	 0eKhoh7t5AnhirMalukl8g88wXc5u3cKVnIEzTNA/2tRtSsd7O4YTFFoTWpJ4U57Bv
+	 s6a8zefNMHf+9PjMbUKGBBj0nl3RiyRESvlopI63EmrWZ43MQ7R3s4mGPJvV80mBW0
+	 R36QK1swErSxAcTrX4xfW770NToZS86B7tlwvXIazoPZgqNLMdxlEJWaB8UYfbg6tL
+	 MjSx6pwgh0PVX+83ucDDsS95uXF+TT3hSCMi3NGP4MnFgL2mTyGLg65A7DawTiwZ1J
+	 F7Srrf6zM7hdpyK0GmfSiQb/BXijVrb3O9QDs3oK0YVLtAn3gyBA+K/b8HYehxUfK6
+	 6zeIhOzOBm5wmWTs6clSmgfY0X/Ipj/G6i38o7EZjabg90B/wUCeyQVc1pxAzhK1A1
+	 wT4PX14nfe19Yr9G3QBnGBmGtP2kIyoWO9K8TfciFqyMs+a853g
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:91aa:86f1:d85a:ac64])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7428F200C9;
+	Mon,  8 Sep 2025 21:27:24 +0000 (UTC)
+Date: Mon, 8 Sep 2025 21:27:23 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: Milan Hauth <milahu@gmail.com>, git@vger.kernel.org
+Subject: Re: Git dumb HTTP protocol should work without update-server-info
+Message-ID: <aL9KOyR0eb7zAg2R@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Milan Hauth <milahu@gmail.com>,
+	git@vger.kernel.org
+References: <CAGiEHCtP29bQRsEyLabNrLuiP96P-o7EEGi88B7pJbP0tfprxw@mail.gmail.com>
+ <20250908000543.GB1281511@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gCu5cBGXecv6odV5"
+Content-Disposition: inline
+In-Reply-To: <20250908000543.GB1281511@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-68061e34702 (fast-import: disallow "feature export-marks" by default,
-2019-08-29) added the documentation for this option.  The second
-paragraph is a literal block but it looks like it should just be
-a regular paragraph.
+--gCu5cBGXecv6odV5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Acked-by: Jeff King <peff@peff.net>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+On 2025-09-08 at 00:05:43, Jeff King wrote:
+> Possibly dumb-http could learn to do the same scraping that httpdirfs
+> does to get the refs and pack listings (though this might be quite slow
+> for unpacked refs, if the ref tree is deep). But I doubt you will find
+> anybody that enthused about working on or reviewing dumb-http patches
+> these days. The code is not very well maintained, IMO.
 
-Notes (series):
-    v1:
-    
-    > but it looks like it should just be a regular paragraph.
-    
-    ... unless this is some kind of callout-block style?
+That kind of scraping is really not a good idea.
 
- Documentation/git-fast-import.adoc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+It's the equivalent of trying to parse the FTP LIST output, which is
+customarily the equivalent of `ls -l`, but doesn't have to be, and often
+isn't on Windows.  I can tell you from experience how painful doing that
+is and how many bug reports come in when you try to use that (because
+the FTP server also doesn't support either variant of the
+machine-readable format that solves this problem).
 
-diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
-index 3144ffcdb68..c3951f5f879 100644
---- a/Documentation/git-fast-import.adoc
-+++ b/Documentation/git-fast-import.adoc
-@@ -61,10 +61,10 @@ OPTIONS
- 	currently impacts only the `export-marks`, `import-marks`, and
- 	`import-marks-if-exists` feature commands.
- +
--	Only enable this option if you trust the program generating the
--	fast-import stream! This option is enabled automatically for
--	remote-helpers that use the `import` capability, as they are
--	already trusted to run their own code.
-+Only enable this option if you trust the program generating the
-+fast-import stream! This option is enabled automatically for
-+remote-helpers that use the `import` capability, as they are
-+already trusted to run their own code.
- 
- Options for Frontends
- ~~~~~~~~~~~~~~~~~~~~~
+It's also prone to breaking things because some HTTP servers have weird
+redirect loops due to sorting entries in the index pages that you have
+to be careful not to trigger.  And, of course, that depends on the
+server having index pages turned on, which many do not.
 
-Range-diff against v1:
-1:  09aaad69689 ! 1:  724b975078d doc: fast-import: replace literal block with paragraph
-    @@ Commit message
-         paragraph is a literal block but it looks like it should just be
-         a regular paragraph.
-     
-    +    Acked-by: Jeff King <peff@peff.net>
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-     
-     
-      ## Notes (series) ##
-    +    v1:
-    +
-         > but it looks like it should just be a regular paragraph.
-     
-         ... unless this is some kind of callout-block style?
+And then you have to do all of this in C with pointer arithmetic, with
+all of the terrifying security properties that has, especially because
+you can't actually use an XML parser to do it (unlike in DAV) since many
+servers have index pages that are (possibly invalid) autogenerated HTML
+3.2 or something.
 
-base-commit: 2462961280690837670d997bde64bd4ebf8ae66d
--- 
-2.51.0.16.gcd94ab5bf81
+I've seen exactly one piece of software (lftp) that hasn't done a
+terribly awful implementation of this and that happens to have worked
+every time I've tried it (which is extremely infrequently, so I probably
+just haven't found a server which breaks it yet).  Every other piece of
+software I've used that's done this kind of thing has just been broken
+and I anticipate Git would be no different.
 
+I do want to be very clear that this is a bad idea and I hope never to
+see such patches come into Git.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--gCu5cBGXecv6odV5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaL9KOgAKCRB8DEliiIei
+gYUxAQCQG2tzVHhbei7zQN51OJsRUYpqmF+XkZGd/FWDae41FAD7BFOLkkpNZ9lY
+P/c/kMvz6KoggrdKKIxp3C3Qeqqduwc=
+=cPiT
+-----END PGP SIGNATURE-----
+
+--gCu5cBGXecv6odV5--
