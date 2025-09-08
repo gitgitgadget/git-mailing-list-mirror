@@ -1,41 +1,41 @@
 Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696AA30C632
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 14:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414A830CDBA
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 14:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757340173; cv=pass; b=OEJhW9EGZU/EamAeW5dDg4QM71yaoGS4MMcS4xW1o0BdMUnGtSDtleRDylEoq3ZDAo0FolZnP/abtadz4O3NsTSvdEdlWz/SDRUzlFS0R9bRqhZk4x5iZoTISVAkNeXu1YHGPA9Y3wiXNF/pllDYSAlBfyuFQTKVDQkO6rT44xg=
+	t=1757340175; cv=pass; b=k9aQziz6m3vVkbobEMfvDOcQd1BB6bqYtuiBxAaeI2946l2kX3a71xz0ctLodG7Y5xKdMoEfaaDnBOKvsuKymMz9+r4lmlr1toUHDJc7FSsEaYH/L2h+hn0PLPbFud+jhpoFNodhPsFT/kq8m+H/FUQwRl7ypuL/7dGXUVsYMlw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757340173; c=relaxed/simple;
-	bh=IBVouNftop4IwdKy5X4V9/ddwb5cSvYn93M5O/SrJNU=;
+	s=arc-20240116; t=1757340175; c=relaxed/simple;
+	bh=G9yTS/JyGDY9/2XvXMlt2L0I8VxcKtckXWVDy4vkAB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQSrd6cjslzDp7Pc1srYyoPSv89k8LPrV0/ofYATg2CJ2Lo9cfchJjtYYqZVH4gkUHNOaIXiy8om3pd/O4tPQYuZKwWhL+FNM+QPIFPtEzzz5jM+8yWkNlyabYJYl5rI+/1InbmgbrLOOesay+aV2OnZkNXJsoneCCCcEMhTdZo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=P7VLHzkD; arc=pass smtp.client-ip=136.143.188.112
+	 MIME-Version; b=J0oWERdb2slPPtW++mvFvo+8/pi4PjeuDPHU4uWU1SHYbSH1CQW/Q4F5H8XpUCInH9NY2nz9npCESja4JSerEO8IetO9PsypL/uM5LhKZs88FtmRsc0OtkXS+H0fzolCX2h62/C7S6uW7rHtBfc3ST69H5aKzCy8BaNekU11M+s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=f31wUTrL; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="P7VLHzkD"
-ARC-Seal: i=1; a=rsa-sha256; t=1757340147; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="f31wUTrL"
+ARC-Seal: i=1; a=rsa-sha256; t=1757340152; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=gf9rH3mKOMWH5BUVoJBN4XIEQ0NH5X81Dok0+Qc/WhLZEmI643boa3eJTZLNxShM3mlD5NF51AYSWb1EzagAKPw6rRQcNY40hP5OZRAEJd0XpPWqYT3Aj4UFkOiA/kF0TvhLIj0IKxv7u9+qLafrexYCT+UYr8lIMdLDoMuSa64=
+	b=UxK9mT+Et5lgkYYEL+21D8h+sHoF95E9wAGfULQcqruzEUL5gd2ydyMbUa8SF/0hzueHHL52Ni8mB+xH+LbYFBdhWqruwwTvGPOYkpgHKZELG9FWzy2slv/N1hJ/hJ/ZxEwLIMNZAoJ7aPrpwmTJQPfowjY0YgFX/bJsM1lRp2Q=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1757340147; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=89I61hbathWPuXzLWIqxe78wL3Cp1nE9zXdVKVbl06s=; 
-	b=IJzxcKXBqfmar57DNveiAnjDjU+94and6wSkCttuOjAYQgH8d8G43XM7H9m+nBTJz0AtMI1EQmXLIcvWbvqraTtuWwKM6e5b9F0+sU1yyYAIkXLTKpKPYnEoroCmYuTcAffnbngCITYfp27oxZYL5bzoUQPIGo+rCgN6SBwJI8s=
+	t=1757340152; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=kX+mBdVj/0+EjTSfaCI/u90NzNkU6vJRY40PuST9+Ig=; 
+	b=BnKgCD//fxuM03R8N4V9Siupeo67Pvl8GCBWnNRwd4xNvvEqt/zFrh+e/le80wlka61LsuOFV+JxMzSzJEhSQVG+GFL7LbDiNBBRJKEaIo+EhZ7CKotTS+nUW226OLVE5UKbHDsOhNDXWWXNIJD1/C8NRj9kYwPPAkeK7mjgGh8=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1757340147;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1757340152;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=89I61hbathWPuXzLWIqxe78wL3Cp1nE9zXdVKVbl06s=;
-	b=P7VLHzkD1iKZdqeqQHsRMhwg/Vz/RRrAnGhCx1HdVEBKKUtrD1O4B1so+Z2Mzg3B
-	12OkjAUzCsXmwBxmwN8BvAWaXHtieZgVmD1sdYmeB9mYI3FEbKeJuend2/qph4wEYaK
-	E2nXWarJujBm39n4odSGM+489k0yKqOhQMiDgDE8=
-Received: by mx.zohomail.com with SMTPS id 1757340143490740.6059786250702;
-	Mon, 8 Sep 2025 07:02:23 -0700 (PDT)
+	bh=kX+mBdVj/0+EjTSfaCI/u90NzNkU6vJRY40PuST9+Ig=;
+	b=f31wUTrL3bx67eJNVBxaV0hqA4rO+FrO9IG6IMlDW/f1dDZdhTo1uSf90Y7SaNID
+	WdQWA2oDJDEe+E9iu3YcU9Zd3loV/3OQU47GxOEbNAOFByy4g0iCvDoKP5QCdjQ1mak
+	rIRWLduuzxiTJtfosD1B+SbAoPFbjVcsZJbYoM5c=
+Received: by mx.zohomail.com with SMTPS id 1757340147353379.6569607675377;
+	Mon, 8 Sep 2025 07:02:27 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -48,9 +48,9 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v2 07/10] submodule: error out if gitdir name is too long
-Date: Mon,  8 Sep 2025 17:01:14 +0300
-Message-ID: <20250908140117.262205-8-adrian.ratiu@collabora.com>
+Subject: [PATCH v2 08/10] submodule: remove validate_submodule_git_dir()
+Date: Mon,  8 Sep 2025 17:01:15 +0300
+Message-ID: <20250908140117.262205-9-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.51.GIT
 In-Reply-To: <20250908140117.262205-1-adrian.ratiu@collabora.com>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
@@ -64,138 +64,200 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Encoding submodule names increases their name size, so there is an
-increased risk to hit the max filename length in the gitdir path.
-(the likelihood is still rather small, so it's an acceptable risk)
+The validate_submodule_git_dir test is not very useful anymore, after
+submodule names are encoded to resolve gitdir path conflicts.
 
-This gitdir file-name-too-long corner case can be be addressed in
-multiple ways, including sharding or trimming, however for now, just
-add the portable logic (suggested by Peff) to detect the corner case
-then error out to avoid comitting to a specific policy (or policies).
+In other words, the purpouse of gitdir path encoding is precisely to
+avoid such conflicts as this function tries to also prevent.
 
-In the future, instead of throwing an error (which we do now anyway
-without submodule encoding), we could maybe let the user specify via
-configs how to address this case, eg pick trimming or sharding.
+The first test from the function can be kept though, because it just
+verifies invariants which should always be true and raise a BUG if:
 
-Suggested-by: Jeff King <peff@peff.net>
+  - no "/" separator is between dirs/names.
+  - len(full_gitdir) < len(name).
+  - name does not match the gitdir path suffix.
+
+Thus we move the invariant checks to submodule_name_to_gitdir() and
+clean up the rest of validate_submodule_git_dir() and its uses.
+
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- Makefile          |  5 +++++
- compat/pathconf.c | 10 ++++++++++
- compat/posix.h    |  8 ++++++++
- config.mak.uname  |  2 ++
- meson.build       |  1 +
- submodule.c       | 14 ++++++++++++++
- 6 files changed, 40 insertions(+)
- create mode 100644 compat/pathconf.c
+ builtin/submodule--helper.c | 21 -----------
+ submodule.c                 | 74 ++++---------------------------------
+ submodule.h                 |  5 ---
+ 3 files changed, 7 insertions(+), 93 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 555b7f4dc3..1a98eac8a5 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2212,6 +2212,11 @@ ifndef HAVE_PLATFORM_PROCINFO
- 	COMPAT_OBJS += compat/stub/procinfo.o
- endif
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 564f7aadf8..8af7062ff2 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1725,10 +1725,6 @@ static int clone_submodule(const struct module_clone_data *clone_data,
+ 		clone_data_path = to_free = xstrfmt("%s/%s", repo_get_work_tree(the_repository),
+ 						    clone_data->path);
  
-+ifdef NO_PATHCONF
-+	COMPAT_CFLAGS += -DNO_PATHCONF
-+	COMPAT_OBJS += compat/pathconf.o
-+endif
-+
- ifdef RUNTIME_PREFIX
+-	if (validate_submodule_git_dir(sm_gitdir, clone_data->name) < 0)
+-		die(_("refusing to create/use '%s' in another submodule's "
+-		      "git dir"), sm_gitdir);
+-
+ 	if (!file_exists(sm_gitdir)) {
+ 		if (clone_data->require_init && !stat(clone_data_path, &st) &&
+ 		    !is_empty_dir(clone_data_path))
+@@ -1802,23 +1798,6 @@ static int clone_submodule(const struct module_clone_data *clone_data,
+ 		free(path);
+ 	}
  
-         ifdef HAVE_BSD_KERN_PROC_SYSCTL
-diff --git a/compat/pathconf.c b/compat/pathconf.c
-new file mode 100644
-index 0000000000..37500cfa0d
---- /dev/null
-+++ b/compat/pathconf.c
-@@ -0,0 +1,10 @@
-+#include "git-compat-util.h"
-+
-+/*
-+ * Minimal stub for platforms without pathconf() (e.g. Windows),
-+ * to fall back to NAME_MAX from limits.h or compat/posix.h.
-+ */
-+long git_pathconf(const char *path UNUSED, int name UNUSED)
-+{
-+	return -1;
-+}
-diff --git a/compat/posix.h b/compat/posix.h
-index 067a00f33b..aa050fd58c 100644
---- a/compat/posix.h
-+++ b/compat/posix.h
-@@ -250,6 +250,14 @@ char *gitdirname(char *);
- #define NAME_MAX 255
- #endif
+-	/*
+-	 * We already performed this check at the beginning of this function,
+-	 * before cloning the objects. This tries to detect racy behavior e.g.
+-	 * in parallel clones, where another process could easily have made the
+-	 * gitdir nested _after_ it was created.
+-	 *
+-	 * To prevent further harm coming from this unintentionally-nested
+-	 * gitdir, let's disable it by deleting the `HEAD` file.
+-	 */
+-	if (validate_submodule_git_dir(sm_gitdir, clone_data->name) < 0) {
+-		char *head = xstrfmt("%s/HEAD", sm_gitdir);
+-		unlink(head);
+-		free(head);
+-		die(_("refusing to create/use '%s' in another submodule's "
+-		      "git dir"), sm_gitdir);
+-	}
+-
+ 	connect_work_tree_and_git_dir(clone_data_path, sm_gitdir, 0);
  
-+#ifdef NO_PATHCONF
-+#ifndef _PC_NAME_MAX
-+#define _PC_NAME_MAX 1 /* dummy value, only used for git_pathconf */
-+#endif
-+#define pathconf(a,b) git_pathconf(a,b)
-+long git_pathconf(const char *path, int name);
-+#endif
-+
- typedef uintmax_t timestamp_t;
- #define PRItime PRIuMAX
- #define parse_timestamp strtoumax
-diff --git a/config.mak.uname b/config.mak.uname
-index 1691c6ae6e..49ba3de39d 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -473,6 +473,7 @@ ifeq ($(uname_S),Windows)
- 	NEEDS_CRYPTO_WITH_SSL = YesPlease
- 	NO_LIBGEN_H = YesPlease
- 	NO_POLL = YesPlease
-+	NO_PATHCONF = YesPlease
- 	NO_SYMLINK_HEAD = YesPlease
- 	NO_IPV6 = YesPlease
- 	NO_SETENV = YesPlease
-@@ -688,6 +689,7 @@ ifeq ($(uname_S),MINGW)
- 	NEEDS_CRYPTO_WITH_SSL = YesPlease
- 	NO_LIBGEN_H = YesPlease
- 	NO_POLL = YesPlease
-+	NO_PATHCONF = YesPlease
- 	NO_SYMLINK_HEAD = YesPlease
- 	NO_SETENV = YesPlease
- 	NO_STRCASESTR = YesPlease
-diff --git a/meson.build b/meson.build
-index e8ec0eca16..1fb9300ab1 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1393,6 +1393,7 @@ checkfuncs = {
-   'initgroups' : [],
-   'strtoumax' : ['strtoumax.c', 'strtoimax.c'],
-   'pread' : ['pread.c'],
-+  'pathconf' : ['pathconf.c'],
- }
- 
- if host_machine.system() == 'windows'
+ 	p = repo_submodule_path(the_repository, clone_data_path, "config");
 diff --git a/submodule.c b/submodule.c
-index 8e0fd077db..016509806e 100644
+index 016509806e..dbe1a7b091 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -2641,5 +2641,19 @@ void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
- 	strbuf_release(&tmp);
- 	strbuf_addbuf(buf, &encoded_sub_name);
+@@ -2163,27 +2163,10 @@ int submodule_move_head(const char *path, const char *super_prefix,
+ 			if (!submodule_uses_gitfile(path))
+ 				absorb_git_dir_into_superproject(path,
+ 								 super_prefix);
+-			else {
+-				char *dotgit = xstrfmt("%s/.git", path);
+-				char *git_dir = xstrdup(read_gitfile(dotgit));
+-
+-				free(dotgit);
+-				if (validate_submodule_git_dir(git_dir,
+-							       sub->name) < 0)
+-					die(_("refusing to create/use '%s' in "
+-					      "another submodule's git dir"),
+-					    git_dir);
+-				free(git_dir);
+-			}
+ 		} else {
+ 			struct strbuf gitdir = STRBUF_INIT;
+ 			submodule_name_to_gitdir(&gitdir, the_repository,
+ 						 sub->name);
+-			if (validate_submodule_git_dir(gitdir.buf,
+-						       sub->name) < 0)
+-				die(_("refusing to create/use '%s' in another "
+-				      "submodule's git dir"),
+-				    gitdir.buf);
+ 			connect_work_tree_and_git_dir(path, gitdir.buf, 0);
+ 			strbuf_release(&gitdir);
  
-+	/* Ensure final path length is below NAME_MAX after encoding */
-+	name_max = pathconf(buf->buf, _PC_NAME_MAX);
-+	if (name_max == -1)
-+		name_max = NAME_MAX;
-+
-+	encoded_len = buf->len - base_len;
-+	if (encoded_len > name_max)
-+		/*
-+		 * TODO: make this smarter; instead of erroring out, maybe we could trim or
-+		 * shard the gitdir names to make them fit under NAME_MAX.
-+		 */
-+		die(_("encoded submodule name '%s' is too long (%"PRIuMAX" bytes, limit %"PRIuMAX")"),
-+		    encoded_sub_name.buf, (uintmax_t)encoded_len, (uintmax_t)name_max);
+@@ -2263,52 +2246,6 @@ int submodule_move_head(const char *path, const char *super_prefix,
+ 	return ret;
+ }
+ 
+-int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
+-{
+-	size_t len = strlen(git_dir), suffix_len = strlen(submodule_name);
+-	char *p;
+-	int ret = 0;
+-
+-	if (len <= suffix_len || (p = git_dir + len - suffix_len)[-1] != '/' ||
+-	    strcmp(p, submodule_name))
+-		/*
+-		 * TODO: revisit and cleanup this test short-circuit, because
+-		 * submodules with encoded names are expected to take this path.
+-		 * Likely just move the invariants to submodule_name_to_gitdir()
+-		 * and delete this entire function in a future commit.
+-		 */
+-		return 0;
+-
+-	/*
+-	 * We prevent the contents of sibling submodules' git directories to
+-	 * clash.
+-	 *
+-	 * Example: having a submodule named `hippo` and another one named
+-	 * `hippo/hooks` would result in the git directories
+-	 * `.git/submodules/hippo/` and `.git/submodules/hippo/hooks/`, respectively,
+-	 * but the latter directory is already designated to contain the hooks
+-	 * of the former.
+-	 */
+-	for (; *p; p++) {
+-		if (is_dir_sep(*p)) {
+-			char c = *p;
+-
+-			*p = '\0';
+-			if (is_git_directory(git_dir))
+-				ret = -1;
+-			*p = c;
+-
+-			if (ret < 0)
+-				return error(_("submodule git dir '%s' is "
+-					       "inside git dir '%.*s'"),
+-					     git_dir,
+-					     (int)(p - git_dir), git_dir);
+-		}
+-	}
+-
+-	return 0;
+-}
+-
+ int validate_submodule_path(const char *path)
+ {
+ 	char *p = xstrdup(path);
+@@ -2367,9 +2304,6 @@ static void relocate_single_git_dir_into_superproject(const char *path,
+ 		die(_("could not lookup name for submodule '%s'"), path);
+ 
+ 	submodule_name_to_gitdir(&new_gitdir, the_repository, sub->name);
+-	if (validate_submodule_git_dir(new_gitdir.buf, sub->name) < 0)
+-		die(_("refusing to move '%s' into an existing git dir"),
+-		    real_old_git_dir);
+ 	if (safe_create_leading_directories_const(the_repository, new_gitdir.buf) < 0)
+ 		die(_("could not create directory '%s'"), new_gitdir.buf);
+ 	real_new_git_dir = real_pathdup(new_gitdir.buf, 1);
+@@ -2611,7 +2545,7 @@ void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
+ {
+ 	struct strbuf encoded_sub_name = STRBUF_INIT, tmp = STRBUF_INIT;
+ 	size_t base_len, encoded_len;
+-	char *gitdir_path, *key;
++	char *gitdir_path, *key, *p;
+ 	long name_max;
+ 
+ 	/* Allow config override. */
+@@ -2655,5 +2589,11 @@ void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
+ 		die(_("encoded submodule name '%s' is too long (%"PRIuMAX" bytes, limit %"PRIuMAX")"),
+ 		    encoded_sub_name.buf, (uintmax_t)encoded_len, (uintmax_t)name_max);
+ 
++	/* Trigger a BUG if these invariants do not hold */
++	p = buf->buf + buf->len - encoded_len;
++	if (buf->len <= encoded_len || p[-1] != '/' || strcmp(p, encoded_sub_name.buf))
++		BUG("encoded submodule name '%s' is not a suffix of git dir '%s'",
++		    encoded_sub_name.buf, buf->buf);
 +
  	strbuf_release(&encoded_sub_name);
  }
+diff --git a/submodule.h b/submodule.h
+index b10e16e6c0..0b7692bc20 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -137,11 +137,6 @@ int submodule_to_gitdir(struct repository *repo,
+ void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
+ 			      const char *submodule_name);
+ 
+-/*
+- * Make sure that no submodule's git dir is nested in a sibling submodule's.
+- */
+-int validate_submodule_git_dir(char *git_dir, const char *submodule_name);
+-
+ /*
+  * Make sure that the given submodule path does not follow symlinks.
+  */
 -- 
 2.51.GIT
 
