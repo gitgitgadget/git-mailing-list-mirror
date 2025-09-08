@@ -1,84 +1,83 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27932FCC1B
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 15:38:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2921C3BFC
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 15:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757345907; cv=none; b=D2Vsls2Zyr/bpTykXb4zZvL+AwpEkj/kw3/Tje4u84l85i2RUpUrw07elBpSMb0qslp5v+0VEKddeft4yDcnHNsD3sKib3Gs5AemFToUmoGZMBk/FVwB+LbV8zKy54hzpWfWUBNpns78gXVYV5lvc+uW69Of1CYhfCpWjKdWjC0=
+	t=1757345926; cv=none; b=pPH8i7VZoeCJorVFW63zzyOsjDEVq0PKC8lijGQCGo1vlcIj+UlyZ+Bixx3osbHYZVqblulPgfRjrJgW+S5VvFqBiwB73SlivmFjTCFpKEXkRnkBtSanKoBP5CbtbLkp50L7LOi9hsbc3H/0Li/9CRD3RLUpwN8F2EpTAcRS8xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757345907; c=relaxed/simple;
-	bh=DqEFtHjLn1qmV4MyjfneAf46IAiVJbWEFktp4uRAp0E=;
+	s=arc-20240116; t=1757345926; c=relaxed/simple;
+	bh=Ayj+3xXr/kY6q0jyj0I1BeLn75fk3tF6fethFCTq8wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jhld5rrxrEMtYI5d/JOFyd2fIDBpQg8RwF63CT41aAPpqU4egVQkfmjC629f0HU028jyX6al/dDRYcipgWhHTujaNLbccaAr6lpZCAbwkVwdmJ6tPYHF4k50KSOcFkIwSSBsLgHuFOwArfvkk9QoharvXlZCb6J1b0m//5mQtY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Id0xGWSZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HSbM5qb3; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=PL3fZ/9ka0TyJIszAHejO02UrHdpoXjUs/HscaIrPNdvpMYB92W9nErgmBUAJbyo10zE9Lo0vXltJl5J40WxAbeVazwrQcjCScx6hNZehRPCw1fIC05eDC1kt7OqIkVJ+MMiqFjmeqn9UY54sQS4Ii+5fcGCkE5+rKy1gxASXVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=U7aHYRKc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=myhfTT+C; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Id0xGWSZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HSbM5qb3"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B73A114000C9;
-	Mon,  8 Sep 2025 11:38:24 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 08 Sep 2025 11:38:24 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="U7aHYRKc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="myhfTT+C"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1CF0EEC0216;
+	Mon,  8 Sep 2025 11:38:44 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 08 Sep 2025 11:38:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757345904;
-	 x=1757432304; bh=21crlXS7AHXpBSiYSJM4DHflXbsszcd+mLPBQClOo/8=; b=
-	Id0xGWSZANQnCFTPsQi3Z7AqvJ1kWAjWpwPh8np4d3VW1NjPnx6bgqoBFttDy33T
-	Lpow5qtkxG6ZyHJdNogAW2w0DoEq8x0z8EDNAbpiED/M++UmRpJK5KAWG1bPvb/Q
-	ZHEtnVZVc3oUWbgrYbPAj3pPAU1KnMIs+A2N0NN1uzwdpCF+eLrahH6/lQWBN00j
-	t5JonK63pP0GpMyigguh8d6jbwum0J+3hRc/ovbN2NRW5TGYTyq/eVPiforExhPl
-	wz0grVUsc32JNAid9+VmNySMTTrdRG3EsyYEuBVZdhAFRMMvaYSyRRKTXNti3GPi
-	ToGZPlw3Z2JUEgmY0ic2UQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757345924;
+	 x=1757432324; bh=i5zLJlfE/W4OuLFvcGRbmqiuU/d6kyK1PdMGX3/1xvA=; b=
+	U7aHYRKcqKqHLN0DnVh2cy9P/SVf0R/y+9ExEKJeX+iKOkGsT31iLEBuhP20OAy7
+	/AwWCCSLPdAAIINlen1MQvGewxg5baPx9WXImLGTNTvxnOE9F/FtWv8uSSQN1Ng3
+	gCHgB0j9O3juuXWSzR0nmx79qnXcGzH2WgZsmQ7lZSWcP43g+0v+kYlyh7xCBi+L
+	F535PVnxSLq0m8lakCpsPMcdug254/dizc0aHnFyhoefYVA+XgsKJvIGK8diDcqw
+	kTmQYVMJCbV1uu5xGa1QBno/3MwBRwpoe7UhHbwuoDzIApcymBnUx9yqSJbhd5fm
+	s1hSfv6fVxj/E9GjNKWuPQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757345904; x=
-	1757432304; bh=21crlXS7AHXpBSiYSJM4DHflXbsszcd+mLPBQClOo/8=; b=H
-	SbM5qb3RfKVrKYe2wbHCBfe7cUS/8nMVRvvaZQrafbG8X5xPrHA6jvZBRQoptYCP
-	neAIi0FQxZbhALFkBNi7xvi+un/Tz8iuqMqT8SxQ84KRC7VjLifdlOyeI7yTfOpP
-	fzRfmntFrr2BQXnxEWh50b5NwgTCNpZn2OP+IaRFSo661IBHNiKcDoseveSnA+qM
-	a02mH/uD86u9M7hP6vrEUecTTWIWEKVslBC9JRIdVUjRPtq8jtwbjxm+BmyjYjI9
-	6EfsCMvePxpCHYJ6aVj3y0L+U8WECPvUuReG+EA0jeLJ+PtH33u0bHXbVqtyTxS3
-	Ns3i4uTBrIMOfZJo5QVuA==
-X-ME-Sender: <xms:cPi-aB_yeuR8BtCJu34qvTrhp1imCFgWInW0QA4KJwgWDjRZz4jG9TI>
-    <xme:cPi-aAT_XkLuFd8-AvOXyflUSd8typxzIKgYELCU6v-2WfVT38iFHcgTcfacJu2lz
-    jNpYeWe8cT3dSqr5g>
-X-ME-Received: <xmr:cPi-aLk6YAQ2NxDWklvi471_obQmerEDVNN-uO7QIW_LBLmxo7ChigIHchQpYmfdQoDYYTH45pi4lWSvp2d7xsaBccgqCmoQAHCe59A>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757345924; x=
+	1757432324; bh=i5zLJlfE/W4OuLFvcGRbmqiuU/d6kyK1PdMGX3/1xvA=; b=m
+	yhfTT+C/9iNE5/zAMeiLQJwDs/VvaxkVJSvUyhm9z2TNsP1equi5KCt25gwEpeuD
+	6neVi2lGM6HCxiZkB+KGdn6H0qQXLmxcqJQCIolopgXWZdlJsdCsh57QDKkfx37q
+	MnrtXh1Y9n1Zp4C6f+mEbLGIK1sQBYk7iOaVuE9Q/s7xCd6+XiPJ3n9+8JvPohVn
+	61BSCuBh2K1LE9+zY0xR2JppYMt7Im7Da1ShS8r6UzP+xIQcT0IbwzH134z0cTmZ
+	RE7Y6RJ9JL89VWQ8USBOwYhwMcMks2z647TBUxcMpXrmBmZrmNB6enQGUQ3r3L0u
+	dspRIE5BK6fV9TyHmsGeQ==
+X-ME-Sender: <xms:g_i-aCraTNjdiRZLnqmLsfxnLcEIyF_YGwIfenghKwRWh0CtMgJaoVo>
+    <xme:g_i-aLOtXB0o8lE0SKC7-YEdjpoupM8dv1WwuCjhia5qqAsrPoHUr_59mz7qYRBeJ
+    v9yBbMei_-DgeZd-Q>
+X-ME-Received: <xmr:g_i-aDzVqPggVJoRp7K9QSZXAM6P-LVFPdMoZi6jK8ZBXC0UgDo0o2UTq-Iy3JZcBhgOVPCDTBMD10gWIesO0lp_6CM8adj8Y0sNeW0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthho
     fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvg
-    hrnhepudelgfeuieeuteekleeifeegudefheetkefhjeffkedvueehtdevhfekieekhffg
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
-    sehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehsuhhnsh
-    hhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvth
-X-ME-Proxy: <xmx:cPi-aIRsiI90zcWYeT_NXPj6oY90vbgd5p_FnmlzCn3y7wOmOy4rjA>
-    <xmx:cPi-aBMa234QjE5ciCnN_CNvWWsDBXKE14bnEcKf1Qfbz0R8cw1BQQ>
-    <xmx:cPi-aJU_Jui96LTaYHwgxAk7OUO6vnL4PGUadXlftodCUGti2JqD3w>
-    <xmx:cPi-aAfX8SMu_7pa7wFcoesYPhR5V74uDrcqdLP2oGoWmfpcR8kGmg>
-    <xmx:cPi-aFMMG18b4WnlNP1OfaHpEB17nVadfp3-9mVRUZFt6EEn5V7TB0Ij>
+    hrnhephffggeelhfejkefgteelteejhfetieehgeeftdduudffgeejhfektedugefghfek
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdr
+    nhgrmhgvpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
+    dprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:g_i-aEvoB9gKTjqRhPCSDOmxqp9MpgDh962ethYH1tr3hSlweSnr9g>
+    <xmx:g_i-aM6Xy5MC8zCLRFPpA5yvieteSwGGQJpGcAR3Bs3WzKHA30ktcA>
+    <xmx:g_i-aDTK5fWWibZvuvhoZPZNULJ_ZoKx7VsQS8uvzpW3JvCk3eFLYA>
+    <xmx:g_i-aLq2nsE3kZzGkhD4NorkwFKaq4ETfZzt60YtCrFboS6x4Oaglw>
+    <xmx:hPi-aEZ0XJVUUZsDVNK4meZWroS4K668yiaak_o6Oh4pH1auPqUUDTz6>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 11:38:23 -0400 (EDT)
+ 8 Sep 2025 11:38:42 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	peff@peff.net
-Subject: [PATCH v3 1/8] git: add `deprecated` category to --list-cmds
-Date: Mon,  8 Sep 2025 17:36:12 +0200
-Message-ID: <bdc683a92b38884e9428cd4bade1f86960ef432b.1757345711.git.code@khaugsbakk.name>
+Subject: [PATCH v3 2/8] git: make the two loops look more symmetric
+Date: Mon,  8 Sep 2025 17:36:13 +0200
+Message-ID: <183dd68d09d7785b449f0c5295094690f7f35509.1757345711.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.51.0.16.gcd94ab5bf81
 In-Reply-To: <cover.1757345711.git.code@khaugsbakk.name>
 References: <cover.1756480827.git.code@khaugsbakk.name> <cover.1757345711.git.code@khaugsbakk.name>
@@ -93,18 +92,8 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-With 145 builtin commands (according to `git --list-cmds=builtins`),
-users are probably not keeping on top of which ones (if any) are
-deprecated.
-
-Let’s expand the experimental `--list-cmds`[1] to allow users and
-programs to query for this information.  We will also use this in an
-upcoming commit to assert that all deprecated commands will have been
-covered in some manner.
-
-[1]: Using something which is experimental to query for deprecations is
-    perhaps not the most ideal approach, but it is simple to implement
-    and better than having to scan the documentation
+Rewrite the original conditional here to match the new sibling loop
+in structure.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
@@ -112,129 +101,28 @@ Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 Notes (series):
     v3 (new):
     
-    This is something I wanted to submit independently until the point about
-    aliasing builtins was brought up.[1]  It will help (in a small way) with
-    the upcoming patch “git: allow alias-shadowing deprecated builtins”.
-    
-    By the way: should `command-list.txt` be updated in some way (I didn’t
-    know what way?)
-    
-    🔗 1: https://lore.kernel.org/git/cover.1756311355.git.code@khaugsbakk.name/T/#mee19f8d39572f9021f9d3000758e87b6c32c967c
+    This is just a refactor commit to avoid having to add a “while at it”
+    for such small tweaks for the new context.
 
- Documentation/git.adoc |  3 ++-
- git.c                  | 38 +++++++++++++++++++++++++++-----------
- 2 files changed, 29 insertions(+), 12 deletions(-)
+ git.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 743b7b00e4d..a2f0838b168 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -219,7 +219,8 @@ If you just want to run git as if it was started in `<path>` then use
- 	List commands by group. This is an internal/experimental
- 	option and may change or be removed in the future. Supported
- 	groups are: builtins, parseopt (builtin commands that use
--	parse-options), main (all commands in libexec directory),
-+	parse-options), deprecated (deprecated builtins),
-+	main (all commands in libexec directory),
- 	others (all other commands in `$PATH` that have git- prefix),
- 	list-<category> (see categories in command-list.txt),
- 	nohelpers (exclude helper commands), alias and config
 diff --git a/git.c b/git.c
-index 83eac0aeab7..87d61f12594 100644
+index 87d61f12594..39dc9f8ec0f 100644
 --- a/git.c
 +++ b/git.c
-@@ -28,6 +28,7 @@
- #define NEED_WORK_TREE		(1<<3)
- #define DELAY_PAGER_CONFIG	(1<<4)
- #define NO_PARSEOPT		(1<<5) /* parse-options is not used */
-+#define DEPRECATED		(1<<6)
- 
- struct cmd_struct {
- 	const char *cmd;
-@@ -51,7 +52,13 @@ const char git_more_info_string[] =
- 
- static int use_pager = -1;
- 
--static void list_builtins(struct string_list *list, unsigned int exclude_option);
-+/*
-+ * 'include_option' and 'exclude_option' are mutually exclusive.
-+ *
-+ * The default ('!include_option') is to include everything
-+ * except those filtered out by 'exclude_option'.
-+ */
-+static void list_builtins(struct string_list *list, unsigned int include_option, unsigned int exclude_option);
- 
- static void exclude_helpers_from_list(struct string_list *list)
- {
-@@ -88,7 +95,7 @@ static int list_cmds(const char *spec)
- 		int len = sep - spec;
- 
- 		if (match_token(spec, len, "builtins"))
--			list_builtins(&list, 0);
-+			list_builtins(&list, 0, 0);
- 		else if (match_token(spec, len, "main"))
- 			list_all_main_cmds(&list);
- 		else if (match_token(spec, len, "others"))
-@@ -99,6 +106,8 @@ static int list_cmds(const char *spec)
- 			list_aliases(&list);
- 		else if (match_token(spec, len, "config"))
- 			list_cmds_by_config(&list);
-+		else if (match_token(spec, len, "deprecated"))
-+			list_builtins(&list, DEPRECATED, 0);
- 		else if (len > 5 && !strncmp(spec, "list-", 5)) {
- 			struct strbuf sb = STRBUF_INIT;
- 
-@@ -322,7 +331,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			if (!strcmp(cmd, "parseopt")) {
- 				struct string_list list = STRING_LIST_INIT_DUP;
- 
--				list_builtins(&list, NO_PARSEOPT);
-+				list_builtins(&list, 0, NO_PARSEOPT);
- 				for (size_t i = 0; i < list.nr; i++)
- 					printf("%s ", list.items[i].string);
- 				string_list_clear(&list, 0);
-@@ -590,7 +599,7 @@ static struct cmd_struct commands[] = {
- 	{ "notes", cmd_notes, RUN_SETUP },
- 	{ "pack-objects", cmd_pack_objects, RUN_SETUP },
- #ifndef WITH_BREAKING_CHANGES
--	{ "pack-redundant", cmd_pack_redundant, RUN_SETUP | NO_PARSEOPT },
-+	{ "pack-redundant", cmd_pack_redundant, RUN_SETUP | NO_PARSEOPT | DEPRECATED },
- #endif
- 	{ "pack-refs", cmd_pack_refs, RUN_SETUP },
- 	{ "patch-id", cmd_patch_id, RUN_SETUP_GENTLY | NO_PARSEOPT },
-@@ -647,7 +656,7 @@ static struct cmd_struct commands[] = {
- 	{ "verify-tag", cmd_verify_tag, RUN_SETUP },
- 	{ "version", cmd_version },
- #ifndef WITH_BREAKING_CHANGES
--	{ "whatchanged", cmd_whatchanged, RUN_SETUP },
-+	{ "whatchanged", cmd_whatchanged, RUN_SETUP | DEPRECATED },
- #endif
- 	{ "worktree", cmd_worktree, RUN_SETUP },
- 	{ "write-tree", cmd_write_tree, RUN_SETUP },
-@@ -668,13 +677,20 @@ int is_builtin(const char *s)
- 	return !!get_builtin(s);
- }
- 
--static void list_builtins(struct string_list *out, unsigned int exclude_option)
-+static void list_builtins(struct string_list *out, unsigned int include_option, unsigned int exclude_option)
- {
--	for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
--		if (exclude_option &&
--		    (commands[i].option & exclude_option))
--			continue;
--		string_list_append(out, commands[i].cmd);
-+	if (include_option && exclude_option)
-+		BUG("'include_option' and 'exclude_option' are mutually exclusive");
-+	if (include_option) {
+@@ -686,11 +686,9 @@ static void list_builtins(struct string_list *out, unsigned int include_option,
+ 			if (commands[i].option & include_option)
+ 				string_list_append(out, commands[i].cmd);
+ 	} else {
+-		for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
+-			if (commands[i].option & exclude_option)
+-				continue;
+-			string_list_append(out, commands[i].cmd);
+-		}
 +		for (size_t i = 0; i < ARRAY_SIZE(commands); i++)
-+			if (commands[i].option & include_option)
++			if (!(commands[i].option & exclude_option))
 +				string_list_append(out, commands[i].cmd);
-+	} else {
-+		for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
-+			if (commands[i].option & exclude_option)
-+				continue;
-+			string_list_append(out, commands[i].cmd);
-+		}
  	}
  }
  
