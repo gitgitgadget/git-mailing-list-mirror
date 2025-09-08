@@ -1,130 +1,143 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F082FF65D
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 16:56:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B5918AFF
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 17:02:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757350572; cv=none; b=LDKT8B+2C7I8971dPDr+JmxttBEvk1zaRbIW5H9+HalPSgUv+RYljdsF7rx5u86GzzgVMTJukWtI5UQIxhiUmmhXCtl/xp3lKBgykwaahN/rOk934hWUfPZKdtYg70XoqIZAC501pyiURi2ooAUqoJ0KljIKKw1Th9A2L11tIcA=
+	t=1757350957; cv=none; b=mpk82ZyXNVzx+0UMFvaniILpzZXOzm7QFfN778Fb8VFTfBceJbdd841eNOR+CEHHVDfTLAvEYU/Q9QvUrwlkzT1NO3Bg5FCtrymJwngbM2lbYDwApFiwycAo29Wt+ZeKsvF2smdlrbzqEXisw6IG//ArmiK0aZaERlTWgi5IO7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757350572; c=relaxed/simple;
-	bh=hHQdoI4IxoMqbSiq9lQ9rSkVoBXIXy8EsITYXVJkSy4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Wf71gh6qY9/HzB63oWTAf+hsZPMcfgetFxVwK+QTJLax84wybID5JZwfqitTSwp3ZI4rpKmnOOh15QJeFTkZ4IwBwtEtDtrkNiHrlaDqpzwFK2A9fFmJfo/5O+a67PDYcFtlDAjsRrZlhKu0V2se+vR1b8/CfZZ7n13AnPOfxwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X1/4mkKQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=STkxHxzQ; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X1/4mkKQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="STkxHxzQ"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 466FD7A0067;
-	Mon,  8 Sep 2025 12:56:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Mon, 08 Sep 2025 12:56:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757350570; x=1757436970; bh=XFNl7PAE1I
-	JHTaVoMEIUegSMhcycGM9Fsowm0dXtVFY=; b=X1/4mkKQ9NktQmZAMbWsbvqjX4
-	oIWoNuPdbhRkeRs3ueAgE6cySz1m17ByYmSwst/yvCX1bJuD5gdyJXw1QympX30w
-	oub0Xz/GQfKp6zwB1j5eldthccLG3onmx1oZFnWWqTblzfdMHQfFrVKo2tzURj6k
-	waC1olu79gTbjpaKGGZCsd4yax8m0g0oh8BxYNB8HDwRC6/Fgtpiv/a5h4y+Ao5E
-	gMHrpnGorxMdtc1+mu1eg9LJWoeXtfckrPPkGD0I2jeNINZO0D0e5thdR49Fwq5P
-	fvC/doHXgXSkxbmFIf6PvckHg8m0I7sLMBKMPPJj1KDYis6eH4bFRmGg/0LQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757350570; x=1757436970; bh=XFNl7PAE1IJHTaVoMEIUegSMhcycGM9Fsow
-	m0dXtVFY=; b=STkxHxzQblTHHslBrliHNbx3ZPgh0JsZ/1XcCGsOhx6Gg++2t5m
-	Ug5/01kDIIjYpsMei6tLe0lkO57KOmYzoZpqIglDl0wSnClEVvxgZuArF9FZd3aU
-	ZHWc+erV1wnNW5W8/OGXj7D2XjCnGj3S/44ha9ZK4TUYzy689AuIa5sYEFhoWYCr
-	5cZ2hHD2CsCziM+ifCrFUivrejdVQXtz+N/o8JHIorQLxSNvF0QLHpKRC8df5d7y
-	ssIU1sIa0Gb4z+36K5dkeUhXQHH08Lit9aDUdkX4Nd0sso0Wv5y7+P0MwLjGEWRK
-	UGC4NnWzWfunpoHhzXxYBZ6Z8LQ4FIqdxVQ==
-X-ME-Sender: <xms:qQq_aHB3FDm377dK1YdemJoHfTpkNmhq8aMxUEBRt8HtPiXgQkOTRA>
-    <xme:qQq_aAyDwyASM_KRkgKKnqL1eaI5FXyBc3sOM6d3nuhWmIkr-ECA4ZC4xwwdoMYja
-    ZyKwblLM2f3_Xjvtw>
-X-ME-Received: <xmr:qQq_aMAX1rpWMarUcIIxQ1-TVsgJEfp-2--UJ-ddsR5_l4s3gjEQq6DFpVHWUcJYcYhHTVbTSlclvxiyZ7BMlGxt8ve5DyStKjtFxdI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedtjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhvghjihgr
-    lhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:qQq_aFYY4LUL1myQJXBT941xdsPIJ0epBN7c9HJo7ATn4ScCkWXCtA>
-    <xmx:qQq_aMghIdRwBMvk9vt5TFJvyExOrm7BUEfAhkeQJ2MQx0vm-mpZbA>
-    <xmx:qQq_aP4bqBg1CpsepkpJ1l2HGudhOFVk3nRK2BJJYXQuBJtvX402Fg>
-    <xmx:qQq_aL7fEP6DUG5nhqxKOJNfDNfhSetXLDxPxBTRJaTXrlX4nr1fQQ>
-    <xmx:qgq_aJa-SXXOtJOyTt5vxQQR4JacOUZQVatPC2luPo2pkUBDvarNflkl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 12:56:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/4] string-list: replace negative index encoding with
- "exact_match" parameter
-In-Reply-To: <aL21gazVeyHMeG-s@ArchLinux> (shejialuo@gmail.com's message of
-	"Mon, 8 Sep 2025 00:40:33 +0800")
-References: <aL21gazVeyHMeG-s@ArchLinux>
-Date: Mon, 08 Sep 2025 09:56:08 -0700
-Message-ID: <xmqqv7lsx4rb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1757350957; c=relaxed/simple;
+	bh=kqw3v4b7aI+KZCwq/P4WVJmr6pa32hVbKuJwPTDTIic=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=H641QxhQXEpBZG6nC4o/F/pr32Uo6RdpaFggcMZ8bq/DRuTD6eKIRCVKYtaGhmqgtDcjM0thMAPC5zzHy4w6KdoXELsFaDNFRmUUsL9K5Cih1JpA0U1r87/3PX77EWUJ9u9hI6U3JcXPe2OIgFMLItVqLv6rbFMf9PziY3ivR4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 588H1hQX2997465
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Sep 2025 17:01:43 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Elijah Newren'" <newren@gmail.com>
+Cc: "'Patrick Steinhardt'" <ps@pks.im>,
+        "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Taylor Blau'" <me@ttaylorr.com>,
+        "'Kristoffer Haugsbakk'" <kristofferhaugsbakk@fastmail.com>,
+        "'Josh Soref'" <gitgitgadget@gmail.com>, <git@vger.kernel.org>,
+        "'Christian Brabandt'" <cb@256bit.org>,
+        "'Phillip Wood'" <phillip.wood123@gmail.com>,
+        "'Eli Schwartz'" <eschwartz@gentoo.org>,
+        "'Haelwenn \(lanodan\) Monnier'" <contact@hacktivis.me>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
+        "=?UTF-8?Q?'Matthias_A=C3=9Fhauer'?=" <mha1993@live.de>,
+        "'Sam James'" <sam@gentoo.org>,
+        "'Collin Funk'" <collin.funk1@gmail.com>,
+        "'Mike Hommey'" <mh@glandium.org>,
+        "'Pierre-Emmanuel Patry'" <pierre-emmanuel.patry@embecosm.com>,
+        "'D. Ben Knoble'" <ben.knoble@gmail.com>,
+        "'Ramsay Jones'" <ramsay@ramsayjones.plus.com>,
+        "'Ezekiel Newren'" <ezekielnewren@gmail.com>,
+        "'Josh Steadmon'" <steadmon@google.com>,
+        "'Calvin Wan'" <calvinwan@google.com>
+References: <01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com> <xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local> <xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im> <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net> <aLfU5sEa-RE3X4G2@pks.im> <aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net> <aLl6iFXeAvL_hvqR@pks.im> <CABPp-BFNoLC+TdtuEq5Nx+VcFJ-WFga2r0E+eq=fFaaCN_sRGg@mail.gmail.com> <aLqIHCdlbwF5X6Cm@pks.im> <CABPp-BG3Zcw63vNziy86MvYNubefn1SmPvXefpqpA=a+42KT8A@mail.gmail.com> <042f01dc2011$da9dcda0$8fd968e0$@nexbridge.com> <CABPp-BEEU0yhurwewuRjrceU+AeHy9vYzXaOFmK5u0nnoSbp6w@mail.gmail.com> <049401dc20d6$69086400$3b192c00$@nexbridge.com> <CABPp-BHQyQk+Vkzm3RhVXxvNrpLB--bCLYwSCfZBQhB6PGBQQQ@mail.gmail.com>
+In-Reply-To: <CABPp-BHQyQk+Vkzm3RhVXxvNrpLB--bCLYwSCfZBQhB6PGBQQQ@mail.gmail.com>
+Subject: RE: [PATCH v3 02/15] xdiff: introduce rust
+Date: Mon, 8 Sep 2025 13:01:38 -0400
+Organization: Nexbridge Inc.
+Message-ID: <049f01dc20e2$42c75650$c85602f0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQEGadT21z5OprxVD7HWLLwOJZ29EAFNCYxRAdIt06UCgtOkMwLNWyY+AkPZBcsB+sNnaQLQ9HhNAfwz3cQCYIs5bgMRNqFTAiZSYtwCDxYVSgETxoD6AUaJgf4BwEHCzbU7CPow
+X-Antivirus: Norton (VPS 250908-8, 9/8/2025), Outbound message
+X-Antivirus-Status: Clean
 
-shejialuo <shejialuo@gmail.com> writes:
-
-> We would return negative index to indicate exact match by converting the
-> original positive index to be "-1 - index" in
-> "string_list_find_insert_index", which requires callers to decode this
-> information.
+On September 8, 2025 12:13 PM, Elijah Newren wrote:
+>On Mon, Sep 8, 2025 at 8:37=E2=80=AFAM <rsbecker@nexbridge.com> wrote:
+>>
+>> On September 8, 2025 11:31 AM, Elijah Newren wrote:
+>> >On Sun, Sep 7, 2025 at 9:10=E2=80=AFAM <rsbecker@nexbridge.com> =
+wrote:
+>> >>
+>> >> On September 7, 2025 12:10 AM, Elijah Newren wrote:
 >
-> This is bad due to the following reasons:
+>> >Thanks, Randall, this is useful information.  In regards to one =
+point not fully
+>covered
+>> >by Phillip:
+>> >
+>> >> Also remember that without support from the git team, the code =
+base is
+>> >> no longer the same, meaning the auditors will not necessarily =
+accept
+>> >> fixes from third-party sources.
+>> >
+>> >Why does it need to be "third-party" sources?  Linus years ago =
+blessed having
+>> >someone else be in charge of providing updates for stable releases =
+of Linux.
+>Junio
+>> >could do the same with Git and similarly mark an individual or group =
+of people as
+>> >the maintainers for the last Rust-optional version of Git, and those =
+individuals
+>could
+>> >make official releases of Git with extended security fix support.  =
+Then it's not
+>every
+>> >platform repeating the backporting work that needs to be done, but =
+rather
+>> >individuals from the affected platform(s) collaborating on that work =
+and then
+>> >making official first-party releases.
+>>
+>> Linux has one set of rules, and other platforms have others. I do not =
+define the
+>> audit requirements for PCI, SWIFT, or HIPPA compliance (and other =
+rules outside
+>> of North America), which apply one way or another to most of my =
+community.
+>> The audit teams, which are both internal to the companies and at
+>> governmental regulatory levels, do this. It is 100% out of my control =
+but is a
+>> reality. Fixes to any code involved in managing financial and health =
+instruments
+>> must be done by authorized and recognized sources. I am not one of =
+them.
 >
-> 1. The callers need to convert the negative index back to the original
->    positive value, which requires the callers to understand the detail
->    of the function.
+>Perhaps I wasn't clear?  Let me try to summarize what I've understood
+>of the conversation:
+>
+>Randall: We need to have official git releases for the last
+>Rust-optional release.
+>Elijah: Great!  Let's enable interested folks to make official git
+>releases for the last Rust-optional release.
+>Randall: We need to have official git releases for the last
+>Rust-optional release.
+>
+>Which makes me just want to repeat what I said last time -- let's
+>enable some folks to do that.
 
-That has pretty much been the convention so far, not convincing that
-it is "bad" at all.
+Ok, what does that look like. When and how? Will I get added to the list =
+of
+committers for this? How many people? Starting when, ending when? It =
+would
+be very nice to have some kind of project plan for this with =
+dependencies
+and milestones - I have been asking. If someone sends me a list, I can =
+start
+officially tracking it.
 
-> 2. As we have to return negative index, we need to specify the return
->    type to be `int` instead of `size_t`, which would cause sign compare
->    warnings.
-
-That sounds more like the tail wagging the dog.
-
-Construct your argument the other way around, perhaps?
-
- - We NEED to be able to use the full range of size_t to express the
-   index in the array string_list holds for SUCH AND SUCH REASONS.
-   But string_list_find_insert_index() uses "int", which may not be
-   large enough to cover the range size_t covers.
-
- - In addition, in order to signal that the returned value for a
-   query is about an existing entry in the array, or a location that
-   an entry would be inserted at, we use a signed int and use the
-   bog standard "-1 - index" encoding for this purpose.  This
-   further halves the range of valid array index.
-
- - To allow us to use the full range of size_t, use full size_t for
-   the index, and have a separate bit to tell if that index is about
-   an existing entry, or where the queried entry would be stored at
-   if we inserted it.
-
-Your argument does not justify the first point, your desire to use
-size_t in the first place, and that is what makes it sound
-backwards, I think..
