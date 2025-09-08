@@ -1,202 +1,214 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8111E572F
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 10:11:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5009A2FAC0B
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 11:17:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757326303; cv=none; b=IT4WPPxSiPVeISjAD/ywqrezHM7bvcHhN7sifHmW9de+eWtaTPXdsB1msKBOhl1DKIjzHmhTD+QjMmcKVDoLBYtUt1dWYFqaa7ZUi6sg48rJkjivql84oe67DbzbYa9Po1ykrvSSM401eAuSaVAy99y23Nj7JlPD+nq/GKUz110=
+	t=1757330275; cv=none; b=ICNYfAJlR0mAxpsB8J5qMoYnS4ddolS6SahIMq0ZxXLy0NF/y/F3PpZ6tBdgrReWhcbNG9IXcFYBwepLLw4eU3M6QNG/hQTQrtasM+hUETI2vzQhbrqxMr3jC/gSEZ/7Zx9IPhVnSNTYuE5YkY8H4A7F6zegYzOvlEUTuCYPjM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757326303; c=relaxed/simple;
-	bh=rtfvFGBst1iCIa8XEwNC62hSuEDeElrxWTKH1mo7aLk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DuwDizcO/kWiL/pyWYAT//3MMPtAjiVjkVF+VxuuoZire6JYX2tJDeBuQJHiaIqKZxIqLFym+CMIvoDIwDPKJ28ioJjIK0+7AnuASnN3wCty7Lmc+nLuJ/bilPfC7kF6119fBpi2EYLiHRMVX8FabFPUhVvg7i5Re0dK8icttgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DpuFBrid; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757330275; c=relaxed/simple;
+	bh=Ivie+bpyLR8lcV+wTDWFzdAIXXC2HIQhn7U2AwsMFUg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t5MbW5wyKdJV3LV2zpFSjg8Co9oeg1axyIWRwdOkcpZunKn/o243NDVNIhJhinbPyA2Wkku4o4wGWeXq1ImlPefw43R3A3e39CXXZGJrQUGxb7/Ea5XuYYdIXSYBoXI7WQ+9e/rqwpD5dHd7TJfUS1cUec4av/n53UabOpZUUD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l2+BptpB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QDj8G0MZ; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DpuFBrid"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45de6ab6ce7so4438285e9.1
-        for <git@vger.kernel.org>; Mon, 08 Sep 2025 03:11:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757326300; x=1757931100; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VA8gSTSRVFzTmjKYeI7zoxbt9lBLchF1WAbAAXVHulc=;
-        b=DpuFBridGRWYRKYRwhUhovXS6velXDQG5a9sUYdQ+JD/PbrvxIq9m7uzSD1Y4/FJMi
-         gUdHrzdPtgAA262Mo5OOcjNl3nCdMqjzDO5+IOA0M7dKHW6i0f1cxKli7eLImlcJnOj/
-         huYew6s68Ato3clp+6UG+BPe7wEchmu7jm+ROMol4vIjJPUEmi/1UGfIh1TycYTG5Kr4
-         qZ7yPXdHMAxuYlqwEZAqdtUXi0Dxjez6OOCyefk6pFMT3BaImxC7WLQLtodnwbaVEk71
-         RuwlWIf7kiAx/MqozmXCYovFFewgjNWmwP9d5xPj+PcO8PeUhtYNGiZgmx7W3omIhskO
-         l0Xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757326300; x=1757931100;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VA8gSTSRVFzTmjKYeI7zoxbt9lBLchF1WAbAAXVHulc=;
-        b=gsuoufKpyJmGasJDqcr8jV8Fw6b5qMFlRdEkqtVISn5qqOFnuC5jQWOlV2Sov1BTWA
-         tr15HE0PtKtE5/vmExrL6bt6vaKrd+rl2RSpR5Z5o+mNp/00ryzXI0jzyd7IDc9XX94j
-         qW9k2kMMp9CBymhS4kledolokn8LrO2YOtUwSi+888o4Lg+xpZ3kThTPTU6H+ft2uvSS
-         /Fl6MUd2bXTvrMBx2qx+REsFCayQOPdmEAhoChYR3ybz2rHqUIeeNOmLPQo7jEBvh1Zu
-         IyibsxaBB0sPrDOQKzytQvtMLShYcps7ToYZOcaqkrEjQCmfLQOJqgOox34+bxGDWW51
-         DOAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCURBOhnpoQBmrzs8UtMwKPFHaE6eZhxsZ8teyZIkazhEMke+nyt5CT+Pn/DaC1GxjvOqo4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx3o/8KoELaBuUW4DSYDAG9/tk8uuIlpD+YJbsA8AmLNYxnj31P
-	LEQUMS4b0x+V9qupRrK0h0WQE9jNyFS/WnAt3HHqoY3oYV3BCSgUS0c4
-X-Gm-Gg: ASbGnct4siqTLf1J7AwlIvKJ1QUkBuQ13QzqfwSOmjBN6KlHiBK3tZ90OGgDqNkX4GK
-	thabV5Ruj7QxIwHIVqSkMgprcFU/r1t1qS18cmEE5/pG2+WfNdQrd4+dr1fETa8q8baG8LVHA03
-	mMQqS6nSS4kh69ziOeX/JPk48QPqArmKUVvYsyDmrkRWQ+sLwk1tm80wTVMPhvkpuuyKfpYFjO6
-	LQbAIfZyFDF7+kQQvDaGOnj2d223fxuSi0s+0SHgT4RNszj6MXIcPbwKOn6p7DKcfTClE0KLLEA
-	MN/9IdFpD0Y19k+txV08Y8yHHAvGvk19HT8G2wIT4PPULKMIheM3JYaexNzG8/PRCxJjy5wCYsz
-	NWuDNDh3XLsTn/pX6rO8f3cL+JHtijtD7ISLimyR0b5XgIQ84YVBMlNZ2jDAqpVWXFffstcMVxc
-	EskfOvdv2b5Q==
-X-Google-Smtp-Source: AGHT+IGiM8UC90WTIdnGO7GPXJLmB8XYdpQeL/MzQEA9nYj20kOJiRYaIUtEcsJYMaigI+M+sXWBCw==
-X-Received: by 2002:a05:600c:a49:b0:45d:d5fb:185b with SMTP id 5b1f17b1804b1-45dddec84edmr55540945e9.20.1757326299634;
-        Mon, 08 Sep 2025 03:11:39 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1751:3d01:9485:10d6:281e:e659? ([2a0a:ef40:1751:3d01:9485:10d6:281e:e659])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45ddfe09835sm42190735e9.3.2025.09.08.03.11.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 03:11:39 -0700 (PDT)
-Message-ID: <ad54bb8f-04e4-4bf7-a13f-6ae7b967b718@gmail.com>
-Date: Mon, 8 Sep 2025 11:12:20 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l2+BptpB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QDj8G0MZ"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3668D1D000DD;
+	Mon,  8 Sep 2025 07:17:51 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Mon, 08 Sep 2025 07:17:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1757330271; x=1757416671; bh=xbuQi+wh9c
+	asrZ0OzobS+e4k5yoQ2nSas0owtX5xcbw=; b=l2+BptpBz0WDnGGfvJAM2ALfbQ
+	8NI9Ue6UUFuYsrP2IhDgXsboy2IY1g1wgXvwWlOcixijMFqDulsAaQk0GolzszTb
+	sYFnsP6K7AgCBgXH0W6ziyRnd1zmACAsNCHsvGbJMaxdetPJj8r3BgTay3Engtk/
+	qPJfxTmfoPN640ct62S73jCXdy/D5aNhlktX8cU9rPyPtI+9bg6JtNHpMZGgTKsr
+	TX3lGMNLvLc+mUel7TxVrAbTySiVyJ1dn8sKzoKCF5r4Gr8vhBazrwhMC7JQyRXW
+	rurL94t1J+Gkw1Y40t+510uMceFrzdSeknTj0ESHQYfOnLH2fQCpY5L+gWag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757330271; x=1757416671; bh=xbuQi+wh9casrZ0OzobS+e4k5yoQ2nSas0o
+	wtX5xcbw=; b=QDj8G0MZtbckgZEcNl9s/xy1lt4IXc0p6hZTR7UzBNvDQy/Xdpd
+	7bnrtXRsXI2YuqS3qUEZMuUQo0EWQgex2WnKchO2Yfib7fSDrhL0kIqR+HWXbrcT
+	15MoqPykBfxesdmvxEgGvgoW+TiyImdOisKzHW6J6f/gbW9ZVKl801bafhzoZBQA
+	fHOon5nFDfbQbx0vqJPwaEDMU0ftZfEtNq+6BCLyY35uXK5aKpa4tXdpgnsBZk4J
+	29i/vzxnXOhcnxb4jx63GLxCo5epUaGT53uQwsCjOmIidN8riB7GFTazMUyN7mRH
+	Mvg3v7JAdUNR+IZYUE9d7p5A818vfSv8jvQ==
+X-ME-Sender: <xms:Xru-aNbUzo0OY5yONzqmCWiPoaJXcAPS0Lasc_Vd0fc9uHNf7OSvgQ>
+    <xme:Xru-aHrrDjJ-BV_DGxWVJRZGhQIB4xw3kdIMinv0pkNO4rHqUd7RjwCQTlK8bl0tH
+    TnlVfE4BweeQZUZ3A>
+X-ME-Received: <xmr:Xru-aJZiLIGbCeL6BtDwK0ikmF4ctfQ_a4uY5Mlk35TW1ga8Wv_R9Q36CxTOHSZ20MVofxlEc5NpyGu68vZRD5drSeSfi6tCy7QNBCHIHr1RFw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeeflecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Xru-aHQ5IkEV5sM4cB1BhlFbHMzdpoOt6TTaPMkuuDZf29YuvWgh1w>
+    <xmx:Xru-aI4vshThBxis4y_OG5Lnk5yV4_i02ZfpVa2WaYy6qJFIlvTQ1A>
+    <xmx:Xru-aEzdUk87PPF5nM5seiMDC9vJSib7E0NsvXp4xJpCnhpo0p_edg>
+    <xmx:Xru-aPRBWYbxRPHRb6iHl0QVVzYxk0oak7TWkhuR6Nsq-VHGkIaZ_g>
+    <xmx:X7u-aIS8lAbOsncAeO9w_nye0INQ3IrN91F9m3waS7hexauIKkHGM5bb>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Sep 2025 07:17:50 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id bc799514 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 8 Sep 2025 11:17:48 +0000 (UTC)
+Date: Mon, 8 Sep 2025 13:17:39 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
+Message-ID: <aL67U0-tw7O-y6_X@pks.im>
+References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
+ <xmqq5xdx7qx4.fsf@gitster.g>
+ <cf7aeda1-297a-4805-b0ae-e379ce11bbcf@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
-To: rsbecker@nexbridge.com, 'Elijah Newren' <newren@gmail.com>,
- 'Patrick Steinhardt' <ps@pks.im>
-Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
- 'Junio C Hamano' <gitster@pobox.com>, 'Taylor Blau' <me@ttaylorr.com>,
- 'Kristoffer Haugsbakk' <kristofferhaugsbakk@fastmail.com>,
- 'Josh Soref' <gitgitgadget@gmail.com>, git@vger.kernel.org,
- 'Christian Brabandt' <cb@256bit.org>, 'Eli Schwartz' <eschwartz@gentoo.org>,
- "'Haelwenn (lanodan) Monnier'" <contact@hacktivis.me>,
- 'Johannes Schindelin' <Johannes.Schindelin@gmx.de>,
- =?UTF-8?Q?=27Matthias_A=C3=9Fhauer=27?= <mha1993@live.de>,
- 'Sam James' <sam@gentoo.org>, 'Collin Funk' <collin.funk1@gmail.com>,
- 'Mike Hommey' <mh@glandium.org>,
- 'Pierre-Emmanuel Patry' <pierre-emmanuel.patry@embecosm.com>,
- "'D. Ben Knoble'" <ben.knoble@gmail.com>,
- 'Ramsay Jones' <ramsay@ramsayjones.plus.com>,
- 'Ezekiel Newren' <ezekielnewren@gmail.com>,
- 'Josh Steadmon' <steadmon@google.com>, 'Calvin Wan' <calvinwan@google.com>
-References: <01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
- <xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
- <xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im>
- <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net> <aLfU5sEa-RE3X4G2@pks.im>
- <aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net> <aLl6iFXeAvL_hvqR@pks.im>
- <CABPp-BFNoLC+TdtuEq5Nx+VcFJ-WFga2r0E+eq=fFaaCN_sRGg@mail.gmail.com>
- <aLqIHCdlbwF5X6Cm@pks.im>
- <CABPp-BG3Zcw63vNziy86MvYNubefn1SmPvXefpqpA=a+42KT8A@mail.gmail.com>
- <042f01dc2011$da9dcda0$8fd968e0$@nexbridge.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <042f01dc2011$da9dcda0$8fd968e0$@nexbridge.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cf7aeda1-297a-4805-b0ae-e379ce11bbcf@gmail.com>
 
-Hi Randall
-
-On 07/09/2025 17:09, rsbecker@nexbridge.com wrote:
-> On September 7, 2025 12:10 AM, Elijah Newren wrote:
->> Sorry for the delay; life outside of work is challenging at the moment...
->>
+On Fri, Sep 05, 2025 at 02:29:50PM -0400, Derrick Stolee wrote:
+> On 9/4/2025 7:12 PM, Junio C Hamano wrote:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> > 
+> >> commit graphs are currently stored on the object database level. This
+> >> doesn't really make much sense conceptually, given that commit graphs
+> >> are specific to one object source. Furthermore, with the upcoming
+> >> pluggable object database effort, an object source's backend may not
+> >> evene have a commit graph in the first place but store that information
+> >> in a different format altogether.
+> >>
+> >> This patch series prepares for that by moving the commit graph from
+> >> `struct object_database` into `struct odb_source`.
+> > 
+> > Hmph, I am finding the above hard to agree with at the conceptual
+> > level.  In some future, we may use multiple object stores in a
+> > single repository.  Perhaps we would be storing older parts of
+> > history in semi-online storage while newer parts are stored in
+> > readily available storage.  But the side data structure that allows
+> > us to quickly learn who are parents of one commit is without having
+> > to go to the object store in order to parse the actualy commit
+> > object can be stored for the entire history if we wanted to, or more
+> > recent part of the history but not limited to the "readily available
+> > storage" part.  IOW, where the boundary between the older and the
+> > newer parts of the history lies and which commits the commit graph
+> > covers should be pretty much independent.
+> > 
+> > So moving from object_database (i.e. the whole world) to individual
+> > odb_source (i.e. where one particular subset of the history is
+> > stored) feels like totally backwards to me.  Surely, a commit graph
+> > file may be defined over a set of packfiles and remaining loose
+> > object files, but it is not like an instance of the commit-graph
+> > file is tied to packfiles in the sense that it uses the index into
+> > some packfile instead of the actual object names to refer to
+> > commits, or anything like that (this is quite different from other
+> > files that are very specific to a single object store, like midx
+> > that is tied to the packfiles it describes).
 > 
-> I am going to address the critical point mentioned below and snip the rest for brevity.
+> This is an interesting aspect to things, where the commit-graph file
+> is a "structured cache" of certain commit information. It happens to
+> be located within the object stores (either local or in an alternate)
+> but is conceptually different in a few ways.
 > 
->> I still don't see why distributors _must_ ship the latest version of Git and why folks
->> on some platforms are considered broken if they are using a slightly older version.
->> Let me ask again: has anyone answered why this is considered mandatory?  If they
->> have, I've missed it, but I've asked multiple times.  Even if you want to lump
->> "distributors cannot build a newer version" under the umbrella of "breaking
->> changes", I argue it's a much different kind of break and one which merits different
->> timelines for handling than e.g. lumping it in with 3.0.
+> The biggest difference is that you can only open one commit-graph
+> (or chain of commit-graphs). Having multiple files across different
+> object stores will not accumulate additional context. Instead, we
+> have a "first one wins" approach.
 > 
-> I do not see that distributors _must_ ship the latest version. Suppose we are on
-> 2.51.0 and a CVE comes out that prohibits its use in an organization that does
-> not allow any medium-high to high CVEs. This represents hundreds of thousands
-> of impacted users in my community alone. How does the CVE get applied if the
-> latest cannot be built and the git team does not apply the CVE fixes to old
-> versions. Personally, I do not care if git versions are different between work
-> and home, or even between CI/CD and other platforms. I don't even care
-> if I have to use JGit instead of git in some situations (which I see is a likely
-> outcome of this discussion). Is there an official statement of what an LTS
-> means?
-
-We're currently discussing what promises we can make about supporting a 
-non-rust version of git.
-
-> In other projects LTS is typically, and formally by policy 5 years.
-
-I know commercial linux distributions offer that kind of support but are 
-there really open source projects that guarantee 5 years of security 
-updates without any kind of support contract?
-
->  From what others have said here, positions of 6 months, 3 years, and
-> "apply it yourself if you want to continue to use git" have been made.
-
-Yes it is still being discussed, and no one is volunteering to offer 
-five years of support.
-
-> The core problem of adding a breaking dependency is when a CVE comes
-> out that prohibits git from being used at all. If the git team is not going
-> to provide a clear statement, one way or another, if how CVEs (at
-> whatever severity level) will not have a commitment of any kind,
-> then distributors are essentially cast adrift and on our own. It would
-> be helpful of those of us who donate our time, for no compensation,
-> are able to plan for this in a meaningful way.
-
-Doesn't your company make a front end to git? Are you saying that the 
-management does not allocate any staff time to work on git itself and 
-expects the community to provide it with free security updates?
-
-> Please remember that
-> we have to justify our participation to our management teams to be
-> allowed to continue to participate. 
-I'm confused by this, as the sentence before say's you're donating your 
-time for no compensation.
-
-> Nothing is free from this end
-> and if fixing (not just applying fixes) CVEs are now 100% our
-> responsibility, if would be critical to know that when we build our
-> business cases to our bosses, who I am fairly certain will say an
-> emphatic no.
-
-In the long term, unless your platform gains a rust compiler I'm afraid 
-I think that is most likely outcome.
-
-> Also remember that without support from the git team, the
-> code base is no longer the same, meaning the auditors will not
-> necessarily accept fixes from third-party sources.
-
-I think I saw a suggestion/question about the possibility of hosting any 
-long term support branch that is maintained by interested parties within 
-the main repository. Would that help?
-
-I appreciate that any move to rust would be very disappointing and 
-disruptive to you but the community has to weigh up the benefits rust 
-has to offer against that.
-
-Phillip
-
-> This particular
-> point enabled adoption on some platforms, particularly NonStop.
-> Adoption was at 1-2 customers when we had a divergent code
-> based because some platform fixes being different from the
-> standard code-base and could not be certified as valid. Once the
-> code-base because common, adoption was rapid and enthusiastic.
-> If this goes away, I suspect that adoption rates will go negative.
-> I am aware that that particular discussion is actually happening
-> in some organizations in my community right now, with companies
-> looking for alternatives to git based on this discussion thread.
+> This does seem to be something that you are attempting to change
+> by including the ability to load a commit-graph for each odb (and
+> closing them in sequence as we close a repo).
 > 
-> With over a decade of respect and participation,
-> Randall
+> So in this sense, the commit-graph lives at the repository level,
+> not an object store level. When doing I/O to write or read a graph,
+> we use a specific object store at a time.
 > 
+> The other direction to consider is what context we have when we
+> interact with a commit-graph. We generally are parsing commits from
+> a repository or loading Bloom filter data during file history walks.
+> Each of these do not have a predictable nature of which object store
+> will "own" the commit we are inspecting, so it wouldn't make sense
+> to restrict things like odb_parse_commit() over repo_parse_commit().
+> 
+> With these thoughts in mind, I have these big-picture thoughts:
+> 
+> 1. Patches 1-5 are great. Nice cleanups.
+> 
+> 2. Some of Patch 6 is great, including having the I/O methods use
+>    an odb_source to help focus the specific location of the files
+>    being read or written. However, the movement of the struct into
+>    the odb_source makes less sense and should still exist at the
+>    object_database level.
 
+I (probably unsurprisingly :)) don't quite agree with this.
+
+Let's take a step back: why does the commit-graph exist in the first
+place? It basically provides a caching mechanism to efficiently return
+information that is otherwise more expensive to obtain:
+
+  - It contains a cached representation of the graph so that we don't
+    have to parse each commit from the object database.
+
+  - It encodes generation numbers.
+
+  - It contains bloom filters.
+
+All of which makes sense with the current design of our object storage
+format, because obtaining this information can be quite expensive. But
+let's consider a different world where we for example store objects in a
+proper database:
+
+  - This database may have an efficient way to compute generation
+    numbers on the fly, either when reading an object or when writing it
+    to disk. We cannot currently store that information in the packfile
+    right now, so it needs to be stored out-of-band. But with a database
+    there is no reason why we couldn't immediately compute and store the
+    generation number on each insert.
+
+  - This database may have an efficient way to store bloom filters next
+    to a specific commit directly, without requiring a separate file.
+
+  - This database may be distributed. So why should every client now
+    have to recompute a commit graph if we can instead store the data in
+    the database and thus have it accessible to all clients thereof?
+
+  - It may be _less_ efficient to use the commit graph to access data
+    compared to what that database can provide.
+
+So I would claim that the commit graph is specifically tied to the
+actual storage format of objects, and it's not at all obvious that it
+would need to exist if we had a different storage format.
+
+The goal of this patch series is thus explicitly _not_ to allow loading
+one commit graph per object source. In fact, the refactorings I did
+ensure that we still only ever load a single commit graph.
+
+Instead, the goal is to allow each object source to decide for itself
+how this additional information is to be stored and retrieved. This
+_may_ be a commit graph if that makes sense for a particular storage
+format. But it may just as well _not_ be a commit graph, as other
+storage formats may have way better solutions for making the commit
+graph information accessible.
+
+Patrick
