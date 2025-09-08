@@ -1,188 +1,134 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0679F1DFE22
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 11:39:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907762FF645
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 12:10:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757331582; cv=none; b=ec/kQT8xQiez1zsciEMvKMndvsk0dBB1bxUMbDVl9rfGAufGb95fGeaWcqwPG7URHCeyeqJze6PencB8WUuygsLKrIvrwZxeBtDVBTc4oFrZJYQasHjT1hsAEBGqo09jmnxhu+tqBrgyoBOIIPVIPQlqzkecm5TGn1ToNqCce3w=
+	t=1757333450; cv=none; b=FFJjTEcbVWjRmNKddGXsx7dlQpw3zDdBtUGpXBMoMo+1+Nqu5fG7IzTb4pBSqJLuaWGKO9o7JtW3UhZdS//G9JwzFOWJa68ESmM5wj2ITUm6LygJhnM25mr3/SQKa2HT7XHCPePJHlPPA3NH1tDPUxeCkefazRhDarM8rVhBYaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757331582; c=relaxed/simple;
-	bh=/d2D6mG9tT+twdTuKTn5nAuYInNIanCyynYY+ovcY/k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tVHsFRWnGAucwI0v4STuyCpcOrotUKK8CcfNSshNEzITwkd3IkU2MLbY+5d1Q2ZDdSLPuTEPA7kxsYqF5BSVN9T1lPe2Q1TJAQ/kWmg/qIsw86p7gwqrbsZnoaVJ4ZFoD3h0uN2Djh6bqnGnSuEDZi2LJRdlHT3m2RwJnXYZK2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MptsaP8f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EOG0zmnh; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1757333450; c=relaxed/simple;
+	bh=XZmEg1EedgiHXJIFsGejwHgzcyOWzE3VXC5ccL6BWbI=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=F3FCHsHIHIxYibPUIDflLG0TCfPe1YB50XCoU5wlsaDxZtVa/68riBNygop09K6t3HtVOlrbAqwvxT8pnJXdMPjDlXg0micHLtUQcalNGsvA3/xmmMNwd+Huj8U6vH0YtioxuXwT0LtsRbLppLd3FMpH2XAKgrIdkJF77IxIxRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lSlYuipu; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MptsaP8f";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EOG0zmnh"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C70B37A011C;
-	Mon,  8 Sep 2025 07:39:38 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 08 Sep 2025 07:39:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757331578; x=1757417978; bh=QAIN8I5oI2
-	wb9fj9ZtbKZO71hU5mIx1hja7AsbSI2xw=; b=MptsaP8fpaY0WgkQxLAGP9ogNg
-	ViJb31yxGx2rURp18c1DjYvBYxHPwjwZI+P4scDks9z06FCbDrzrcSWr31ldQlXM
-	Wj+4kepbrp5FGbS65TEcJJ4KLvAa0Zy7pQr7BcUSwyhDisfOmOUplX4lO7RjOvs2
-	po2xmR+iKU7ch2yH/eLgdLus66jlvn30chpVoxVZrIyZE0G06gfCGLq6s+mSVb8t
-	HcLlnBnQ3r6Bx72viINZThnnf6rdVOU0w2uF5Zi78HIC5xEa99sNbWsRCDwZW3qV
-	x/6DlEJgSwG9ZUBCA0fvfvjmjKOqo+EToRdGkOxHw5548yNJpIN80jT7d9mw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757331578; x=1757417978; bh=QAIN8I5oI2wb9fj9ZtbKZO71hU5mIx1hja7
-	AsbSI2xw=; b=EOG0zmnhpv6Y1VfmjF0NvUf4WR4pVb9K6P1KaZf/ZDkuYk6dBaD
-	Skb7emyiqe5el7keOMBAI6jjiVpd5RpXKa0ZxNav1MCdicq4nhutm1SCy9da1fBn
-	TH0i88EzA7EJuQ3j2fCkGbpccHLYkuOdkbrq8PfVEyzq7152rWw8/yRBVzq+Zj3Y
-	/OR9JgdlyFZSJTDcurKt7qsdHOvAfvDjvel+tO8imfB7x4xHV6LKXxLiZXhwx/GB
-	yfG5Zn3HDLKNEf6sujVoSjW0wKn9mAcKoOE17lauGm9YEewfR6gwHNYmFeoJ8KTg
-	XXcZzpY1vBbTSYAZBjUnan2etA27IuG87PA==
-X-ME-Sender: <xms:ecC-aFMXnvFPglrtL51SeYuEnE-91nwV-WvmHoF9ofzZoU_eErxf4g>
-    <xme:ecC-aIERhKYE-egw4YOAdxi7yP2QyBJHSPu245xCTOdEJ_MojEbz96v-ZoXre_vrn
-    OVcb2TaMCBCK6KTdQ>
-X-ME-Received: <xmr:ecC-aLtuFhZ4_3aty8lNUERx7vE40EkkzoIY-3g431nrwu3-LPZFOwFg-_EPtQ4Kd2dPIegY7SgCfUu4TKyZSL_4Npz1uQjS_xk-DxvrNHhMlA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeegfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeduhedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheptggssedvheeisghithdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghi
-    lhdrtghomhdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomh
-    dprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepjhhohhgr
-    nhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepvghstghhfi
-    grrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepshgrmhesghgvnhhtohhordho
-    rhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrd
-    hnvght
-X-ME-Proxy: <xmx:ecC-aITHM3pn8Z3wWA9jI2wSUF17JKst90xp5gh7ybctcgZTLZ02XQ>
-    <xmx:ecC-aFOvYw56IsgC43MWApUJjK1-38zXoZRp9l49pYdmFSSP2hHd7g>
-    <xmx:ecC-aG49pd4QbsZDGJ0Q_3vwk041QSX8wh3L_Btxhc1qZEwAtY5biQ>
-    <xmx:ecC-aAVvnnpALNa7mhSu-y5cxWIxrn8BmSR_PDfeP3VHTO2c3fVNhQ>
-    <xmx:esC-aNyLJ5cQ8-WP5t52mnclZQHplXnehMQsMZzE1NKX5x3nVuaugaS6>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 07:39:35 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e05604a6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 8 Sep 2025 11:39:34 +0000 (UTC)
-Date: Mon, 8 Sep 2025 13:39:26 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ben Knoble <ben.knoble@gmail.com>, git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC 2/3] rust: implement a test balloon via the "varint"
- subsystem
-Message-ID: <aL7Abgdbi0-aIm6Y@pks.im>
-References: <20250904-b4-pks-rust-breaking-change-v1-2-3af1d25e0be9@pks.im>
- <8A7DBC60-286A-48FE-A3D3-CAFC11FD3AEA@gmail.com>
- <xmqq8qipzhg3.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lSlYuipu"
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-ea059954d52so799717276.1
+        for <git@vger.kernel.org>; Mon, 08 Sep 2025 05:10:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757333446; x=1757938246; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=u2WjekutghDao99RBLahXWEGdPf7+QbTXcWh7dztnCw=;
+        b=lSlYuipuy44Wr+qnOQssiJ7M8ckgV2Pn4jEs+85ysKdm2+1D+H46lzoGdgx9K2lvBo
+         QrnUn15fcjKACKRJ3ZPTXE8xACvXHyiEnkv8e56aPdexblrv1nBpfrhURSZaPPDRTuvR
+         YSmre7gpktC5irG/yVYwtmog1QsDSjVxdaQA6KXWSY1WIHNMWk1RhxFYexMMe3Qnfe2O
+         vXYedgt6r11MBakbamAlhzoIe1ovdPHE+/jH3gnzCWkCOukfFLKuhasZBzexuvfZvA2j
+         7lvO6sWSnfoE+bJCCGInm9sHHJNUgk9kMy10LjRg3bRN/jMFk4jt1TVq2oh7rNKMxABs
+         bPWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757333446; x=1757938246;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=u2WjekutghDao99RBLahXWEGdPf7+QbTXcWh7dztnCw=;
+        b=hD6IJmUh98PfeyfN9B7KibPQHI6XROeDKWpr51Nd3S0C1OL++auGMIRMJfgzy87fz8
+         vJcMkV6eL01ihnmu9NbMkU8HW6hggdSLvSz3VtXpu2XLd8DEOtCq6rMCkd0oH4CkgHFX
+         Foj2y1m4K77adgc/7uCTVoPvsNFUtnMphOcVU5rxZUDdsk3DxA8qQvYzVNwlH0bgjewG
+         t5boc3lnJjK0m8yERNJC7EI64FpOKJkmB8p+Y0t3LJfF2eqegcWsqKbQyarNUUtlvCbX
+         DlUnhWzp6SQTaShoxEOyMiROzmKg6W+OLNloD8Bo7wZRan/kTRwWRKU9lOTC8xCTuXm7
+         fbCw==
+X-Gm-Message-State: AOJu0YyjZD3MAvhj4jxFV4Tw3iC65oF0zojUPUZ90CIzylm6ey/TbIu3
+	344Uueqn8a4xxplLhlfRBTL5kXzoE0QkeZd9YxCky9Ux+KV9RpMCZh9ay2hecNPH1IqS4x8IBmz
+	YPTOzi4wYX8+11WtMTuDbp9gB1m1YNsWnbtxJYyk=
+X-Gm-Gg: ASbGncufzDQa8/9/YqPcJSq131HU/D7G7Z9cRcIfTPvSw80TxbN6gqwmP9AWeeaVj4d
+	GOCLwPE6rQF0z3Iz1KHdOP3/jlmQNVDiBJS+uFcXvrCejVSTPWPaY0ZEJ4JQZ3bjGWuls9dnl7O
+	iwnOeILHTUZRlFjCLhAc+bUlFiDvxikFU517gQdmTk5wWezpTJv43Ugc/su2MN2rTcYw54dJVQb
+	dP8qw==
+X-Google-Smtp-Source: AGHT+IHYSBwa9SVxQskWLkngIfw0RX55Xr/AkFQJLeJ7WKA5cyCVo6O1eEdY6XNEvQqUk1OVni9F1a6P52R2WWdrbbE=
+X-Received: by 2002:a05:6902:20c4:b0:e97:53f:6688 with SMTP id
+ 3f1490d57ef6-e9f657464d6mr5840529276.7.1757333446217; Mon, 08 Sep 2025
+ 05:10:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8qipzhg3.fsf@gitster.g>
+From: Milan Hauth <milahu@gmail.com>
+Date: Mon, 8 Sep 2025 14:10:34 +0200
+X-Gm-Features: AS18NWDcMcE4EoikTSfCUUY8lPINhsasUVIDplXb8AuQaDnzZEShPXgaFYdSdaw
+Message-ID: <CAGiEHCv7kXSB5v8Pi6gDYaC2O3m5qEM8dYW3vKvNm6sXQ_Vuhw@mail.gmail.com>
+Subject: Git dumb HTTP protocol should use WebDAV PROPFIND method
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Sep 07, 2025 at 09:39:08PM -0700, Junio C Hamano wrote:
-> This is a tangent, but as many people pointed out, calling this a
-> test balloon is misreading.  This is quite different from what we
-> traditionally called a test balloon, where 
-> 
->  - we were already fairly sure that the construct is safe, but
->    wanted to be extra careful to smoke out anybody who has trouble
->    with it;
-> 
->  - hence we use the construct in question in a place where nobody
->    can compile it out, hoping that anybody with a system incapable
->    of handling the construct in question would be broken badly,
->    reporting the breakage to us;
-> 
->  - this is done with an understanding that even a single "the
->    compiler on this this platform with more than dozen thousands
->    users cannot groke it" would automatically stop us, causing us to
->    revert that test balloon code for _everybody_, refraining from
->    using that construct for _everybody_ until the situation changes.
-> 
-> This thing is different at all points.  We are not "fairlu sure that
-> Rust is safe to use for everybody"  Far from it.  We are confident
-> that requiring Rust would break known people.  We are doing this not
-> because we intend to stop once we know of folks who would be broken.
-> Far from it.
+i am serving git repos over http with webdav extensions
 
-That's fair. I still think that this conversion is viable though. The
-main intent here is to start building the infrastructure for Rust, which
-may take a bit of iteration to fully get there. And the earlier we start
-with the process the better, so I think we should go ahead with this
-regardless.
+read operations like git ls-remote, git fetch, git pull
+should work with such an http remote
+but currently (with git 2.49.0) this fails with
 
-From that perspective it still feels like a test balloon to me. The
-intent here is less to figure out whether anything breaks. It's more
-that we need to have some Rust code in central parts of Git to be able
-to tell whether our Rust infra works in the first place. And it allows
-downstream packagers to give it a try, as well, so that they can start
-to report any issues with our infra before it becomes mandatory.
+$ git ls-remote http://localhost/src/somerepo/
+fatal: repository 'http://localhost/src/somerepo/' not found
 
-I don't mind much whether we want to call it a "test balloon" or not.
-But giving it a name helps, and "test balloon" is the closest match and
-I don't really have a better name. If somebody else does I'm happy to
-adapt the wording though.
+$ git ls-remote http://localhost/src/somerepo/.git/
+fatal: repository 'http://localhost/src/somerepo/.git/' not found
 
-> It would really be nice to find a niche that can be a new optional
-> feature that is not essential to the functioning of the system
-> implemented in an already modularized part of the system (e.g., an
-> optional merge strategy, diff algorithm, built-in textconv filter, a
-> new ref backend, etc.).  Then we can introduce Rust, knowing that
-> some Rust-challenged systems will not be able to use these optional
-> features.  What Brian mentioned about two-hash interop feature,
-> being only available on Rust-capable systems, could be such an
-> optional feature, and if it can be done that way, that would be very
-> welcome.  If we can have Rust goodness soon enough without making it
-> mandatory in too short a timeframe, that would be ideal.
 
-I feel like this is something we should _also_ do. But for now I'd like
-to continue with "varint.rs": it's easy to convert, self-contained and
-allows us to iterate on our tooling while we don't have a better
-subsystem or feature to convert yet.
 
-> I already said that I find 6 months advance notice to folks on
-> Rust-challenged systems is way too short to be any good.  If the
-> only reason we give advance notice is because we want to make an
-> excuse of cutting them off sooner while being able to say that we
-> gave them advance notice, that may be sufficient.  But if we truly
-> want to help them by giving enough time to them so that they can
-> help their platform themselves, by lobbying, fundraising, or
-> otherwise campaigning to have usable Rust on their system, I really
-> do not think it is sufficient.
+http server: nginx
 
-Yeah, agreed, six months feels insufficient. My current timeline
-suggests roughly a year before we make it mandatory with 3.0 with
-various in-between steps that gradually ease into Rust to alert
-packagers. Which still may not be sufficient, but it should hopefully
-okayish if we also commit to 1.5 years of security fixes.
+nginx webdav module:
+https://github.com/mid1221213/nginx-dav-ext-module
 
-In any case, the exact timeline very much is an open discussion point.
+nginx config:
 
-Patrick
+> http {
+>   server {
+>     listen 0.0.0.0:80;
+>     root /var/www/nginx/htdocs;
+>     location /src/ {
+>       # PROPFIND allows directory listing
+>       dav_ext_methods PROPFIND OPTIONS;
+>       dav_access user:r group:r all:r;
+>       autoindex on;
+>       # disable index.html
+>       index this_file_should_never_exist_DsMSIsKgBk;
+>     }
+>   }
+> }
+
+available methods can be fetched with the OPTIONS method
+
+curl -s -i -X OPTIONS http://localhost/src/somerepo/ | grep -i ^allow:
+
+directory listings can be fetched with the PROPFIND method
+
+curl -s -X PROPFIND -H "Depth: 1"  http://localhost/src/somerepo/ |
+grep -F 'D:displayname' | sed -E 's|.*>(.*)<.*|\1|' | LANG=C sort
+
+
+
+workaround:
+
+pushd /path/to/repo/.git/
+git --bare update-server-info
+mv hooks/post-update.sample hooks/post-update
+popd
+git ls-remote http://localhost/src/somerepo/.git/
+
+
+
+continue:
+
+Git dumb HTTP protocol should work without update-server-info
+https://lore.kernel.org/git/CAGiEHCtP29bQRsEyLabNrLuiP96P-o7EEGi88B7pJbP0tfprxw@mail.gmail.com/
+
+> reading directories is only possible with WebDAV since
+> HTTP doesn't offer native directory listing.  However, we don't use
+> WebDAV for fetches and other read operations and not all web servers
+> support it.  We get better web server support in many cases by requiring
+> that the server side do the work of updating the lists of packs and
+> refs.
