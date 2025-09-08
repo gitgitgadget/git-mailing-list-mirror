@@ -1,228 +1,152 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F0E231C9F
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 09:55:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2BC1FE47C
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 09:59:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757325306; cv=none; b=Hz55TlhkeHr3Liwr4qDOrzLI4fK+Qf+d9qPKc6iSATd6PshlJU4ytEiFZgifhAPTWo7NkddHD8t4Czn9U94VTQj8Mu1JKNyxBzk+izfYrwnIpq56Gm5m7uJt5FrJ7keBf6dzO2uqM6fRLPap2MTaEMxnZcg7wZ3Ie6ixtFazUEQ=
+	t=1757325553; cv=none; b=fQyhUfyd0WvhL0XKusqtxeLc2LMxVB3nCPnzKMjwgxXRlOsTSREKaeq33Ry+oBSEWjJQx8vakBDJQGcuIk64btljMvUWnGVv6jtDlQwhitvF1DI5Qvv3qo3AISNXwGAihWIMjA+oVyGPVwYHS9bpyeKgauRjg7gq81DiNlPsGgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757325306; c=relaxed/simple;
-	bh=q/SHz0otxHI4uZS4nrzhHC28tJ0Q1/atCL/dCqcPiiE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WVuRlqUO105J2PVaqsz6SYXKLhW7I7UtyBFWT6uukEz/YA6L6kzOuBMx3wEEtPEz2V1dbyJ3pYR9yUAjSIttkXqHnkDm9BzPrWiUaBTxQUqJMAk3p7P7Ayxn7TTXvs/hryk89ttrpT8iqv+ZhcU9mk8eZEL52/E/E6TNatrUAcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=o9wXvnPI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nv9kvOdl; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1757325553; c=relaxed/simple;
+	bh=LuZ2+2n+NHeUm/2CCdzrzeaivOrezHgwEe2NKJ9OZ4k=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=CCrWWPep3vMuP8S1EkNeqyqGs43En2TQDfL9RWNGq71TdllYcqA0YbJ+r0RYYxdogWMwd/kV2gwm7rQZK3rxVxIUrHOfR6pABHpom/b4cXPvQyxPu7bAjCYIlHAXK3H8jBi6qo6bJszgpCqqlzQMgXV9qqMJmvdEOiak9PmRo2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=CHVovmFO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g+9ptvBk; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="o9wXvnPI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nv9kvOdl"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 48EB87A005D;
-	Mon,  8 Sep 2025 05:55:03 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 08 Sep 2025 05:55:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757325303; x=1757411703; bh=Ix3dSwVo76
-	cNc04XPZOzKldiZYvaGhIfomK4hZPui7A=; b=o9wXvnPI1R4eMRG/F5VBtJa4NB
-	PqpEoF42puFzHhZe1jvRQpGUcD5LsrCQWdiFzHbz2LZqA3owXC4A2csECfcV4CzF
-	O/j3lKkKH5FnNI4yMq/QLo087LJelh0X+bxfPidYXY0k4veUsFdQ4AZaKyqDib+5
-	KYPRc+d1d7ALhpugUDYB0C2cf1fnmISEwvwM0GVtROJdDX3bR55UfNL401AdkItU
-	ezVHqoYGoeggZleCSj4Aa/JJKM0U1Co+6dDv+OCoLs8NJFj1d8GnQF9qqzejcmXV
-	exlwvomSkli8IhYk/gmgmUFAbLlr66cuKz0XDHrZeILuV0dH+ih/nEBMVvng==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="CHVovmFO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g+9ptvBk"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 97892EC0179;
+	Mon,  8 Sep 2025 05:59:09 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Mon, 08 Sep 2025 05:59:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757325549;
+	 x=1757411949; bh=/bnI7Q9MWlStYCrvpmQ1AMXQLgPD5BBNmX7KKirjKNs=; b=
+	CHVovmFO8JcSlMhD87chcTLXKo/cFKPBAtHz3TgxHTFTJTtNR2Tj5BmITXHe723I
+	j6ipqlGBIYpz5RVVaBzTYrj3kakVLkdX4vZwxsrvMBcDcvIpXeGpzx4qaiNarQLc
+	Yi/Hz5x8PifESPIKDhW2dkCbSzdWb7+BQYzC9EIXSPW3v7SIuyTNvVJiLbD3n5fr
+	hGX4ZkpYSb0IoLBvjY7VWcflKdPsUr75MXV/U+tE9NbrGZ9eBq/0HX5UVJYVwDBL
+	PMd+yjeTzC1vujxWQROdF0Mx2JWmKDqJRHMjOWT/7Lbg+KERYodi1NjM+Es93qan
+	OstS+OTh6Io/gceg2IuofQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757325303; x=1757411703; bh=Ix3dSwVo76cNc04XPZOzKldiZYvaGhIfomK
-	4hZPui7A=; b=Nv9kvOdl7cKhbM9Q3LnmcmcqT9PIywVQOqJp5xRZA8tWrLKzghX
-	oTGrVyBAw5pHmqoD1CQSTewNULfHoZJnqN6rVJwMJIuBrCM3rnvElo6q0wWjAbjv
-	TgbcnUufIiy/aSgVnoIHkQ6hJtkdBAGB5EXXaa2/4geDW4z7CCo6TZbnpoHp4Fei
-	gEcdbLXOv/KEmHZ1loi3ZMRbgq7uRPu4IUuRzLlpAu2iPUitS1SP9ur9VvTtzc5O
-	tA0x/hOXgEXquGCj+AOK3XjYG26dm7WKXzp5sTuP6r+vzFEAgp2vCooxpofxPbCd
-	JN/+i3/OV9KDANyCLJU4w5Oj8ZQUbVT+Pbw==
-X-ME-Sender: <xms:9qe-aFLBkaHNWE_WXqs4jBP1ymum-3uPNWkBGO79TrmcL-9q8YbPig>
-    <xme:9qe-aM00_YWOA8IzAbV64j1byIfCh5JXVP7phh8GmOrlHxXHTYShzdyrBMRwhvQ-q
-    qOJ_Q9VJyloopnccw>
-X-ME-Received: <xmr:9qe-aKKqsC2j3e8CCdPYvxrT_N-C3Pr_rPj1JEURmkTYJFuN99FkJS9mnkFaimzTJnRYbOstzc6dTFd22aSR9m5OUpVtp3tn8PFVrKWhHX8GTw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujedvvdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757325549; x=
+	1757411949; bh=/bnI7Q9MWlStYCrvpmQ1AMXQLgPD5BBNmX7KKirjKNs=; b=g
+	+9ptvBkyAZgNOKBrNY3vxmgb/Jr+UqBtsb/4gygGoizlPoITBN+OFSCPcVKOA6f5
+	4LTRA7fu1Qzj2//P6YpmTF+v7ev8d99bnb7Rw7iN2hm87u2aJB+BxiA4WekuyMYR
+	yB+jg/M0cvQhJn3Iw7rERRJZxyrHmpSw7zLeuykfXDp87/i9WvJhi5rskKTCjm4I
+	CdVhc6mhL48cDp8u/9Ze5LCWQqxiV4ZEsZb59xIb7Nn5n3nFB/zIo8W5Iw+IPG+Q
+	A0W8ScJX0L5OMvKUprXulQhgOLK/mOgqJ3t+tZEXTsLMvDkSJxuUtt4jIErYfnQt
+	9XfT1GGtcU6BxcDrmXpxw==
+X-ME-Sender: <xms:7ai-aCAy8rUSDjD_bZjx8JKngeD-rjGU1k6tlbxco-FRLA-PEXP6NfY>
+    <xme:7ai-aMgznk4mTgw7z8cWJCGBOublLH_LhUcKsqyNVnahPKg_relclmBOetjbOFlnq
+    SL9b7dVNALtzYsgfQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujedvgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhn
-    sehgmhigrdguvgdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
-    hilhdrtghomh
-X-ME-Proxy: <xmx:9qe-aPgK_FJUDdPu3RIqWI6Ei7eHKlGDSPR3NipqWn0Ti1WUlZQ8PQ>
-    <xmx:9qe-aCDzzcy_R4jOUf8iMiv2EZWWxtixYFnB0bVJopn0kPcdUR9-Ww>
-    <xmx:9qe-aJ6tX7ECKz277n3S1K5GtVAPDZyv-sylfsxHUileKiiNtOpoKQ>
-    <xmx:9qe-aPHw0k_bnrYHhpzudaWLlKkIsZu__Ce-iLIx6DmfrPjtpqKyfg>
-    <xmx:96e-aK8slMpm7NPg4c7EcuP_4qL9_J10qqNQktmuepRna3qAFVuKHsSQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 05:55:00 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3f20b346 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 8 Sep 2025 09:54:59 +0000 (UTC)
-Date: Mon, 8 Sep 2025 11:54:56 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Elijah Newren <newren@gmail.com>, Toon Claes <toon@iotcl.com>,
-	John Cai <johncai86@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] replay: add --update-refs option
-Message-ID: <aL6n8KEHSDii5Wd1@pks.im>
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
- <20250908043620.57848-2-siddharthasthana31@gmail.com>
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepkedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghgrsghrihgvlhdrshgthhgvrhgvrhesghhm
+    rghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehmrghtthhhihgvuhdqmhhohidrfhhrpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpth
+    htohepthhmiiesphhosghogidrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhu
+    nhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrgh
+X-ME-Proxy: <xmx:7ai-aMR7EenWOBcq5viK5sBsXIAcDoKIZ4c-11DuEgGvALFpVGzL0A>
+    <xmx:7ai-aO9YkiqObsNCuxET6cTLTqFLWErZDHvw82BAbYzfXr4QEztKJg>
+    <xmx:7ai-aKuVQrvJdhep5CuvjojCYok6m_YDWo536sg193i9ddxfHawZgA>
+    <xmx:7ai-aGOsOFTCcscnmb0ysVwuzJvPC1oYWNzPJrx_I9EAi5xB0nusoQ>
+    <xmx:7ai-aIOw76Ph0lV2xecg8F24_bu8zUG85yre1zRLFc1pgpUUxd_8C7as>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 1F6D51EA0068; Mon,  8 Sep 2025 05:59:09 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250908043620.57848-2-siddharthasthana31@gmail.com>
+X-ThreadId: AIy4R3mHOV7B
+Date: Mon, 08 Sep 2025 11:58:48 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Gabriel Scherer" <gabriel.scherer@gmail.com>,
+ "Patrick Steinhardt" <ps@pks.im>
+Cc: "Matthieu Moy" <git@matthieu-moy.fr>, git@vger.kernel.org,
+ "Junio C Hamano" <gitster@pobox.com>, "Elijah Newren" <newren@gmail.com>,
+ "Eric Sunshine" <sunshine@sunshineco.com>, "Todd Zullinger" <tmz@pobox.com>
+Message-Id: <2b3c951b-0400-4cc5-b790-17ff77154ec2@app.fastmail.com>
+In-Reply-To: <5580aa89-09f1-426e-8483-c99481c998ab@gmail.com>
+References: <20250512-pks-contrib-spring-cleanup-v3-10-32e151b0bfb0@pks.im>
+ <5580aa89-09f1-426e-8483-c99481c998ab@gmail.com>
+Subject: Re: [PATCH v3 10/11] contrib: remove "git-new-workdir"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 08, 2025 at 10:06:19AM +0530, Siddharth Asthana wrote:
-> diff --git a/builtin/replay.c b/builtin/replay.c
-> index 6172c8aacc..a33c9887cf 100644
-> --- a/builtin/replay.c
-> +++ b/builtin/replay.c
-> @@ -284,6 +284,37 @@ static struct commit *pick_regular_commit(struct repository *repo,
->  	return create_commit(repo, result->tree, pickme, replayed_base);
->  }
->  
-> +static int update_ref_direct(struct repository *repo, const char *refname,
-> +			     const struct object_id *new_oid,
-> +			     const struct object_id *old_oid)
-> +{
-> +	const char *msg = "replay";
-> +	return refs_update_ref(get_main_ref_store(repo), msg, refname,
-> +			       new_oid, old_oid, 0, UPDATE_REFS_MSG_ON_ERR);
-> +}
+On Mon, Sep 8, 2025, at 11:28, Gabriel Scherer wrote:
+> Dear git developers,
+>
+> I find myself affected by the removal of the `git-new-workdir` script
+> which is a relatively common part of my workflow. I am writing to ask
+> if it might be possible to reinstate the script in `contrib`, and also
+> possibly create a discussion with other users affected.
+>
+> (The removal of the script was released in git 2.51, three weeks ago.)
 
-Is there a strong reason why a user would want to update refs one by
-one? If not, let's not add new code to our base that does so. This is
-known to be inperformant for the reftable backend, but also for the
-files backend in some cases. If we really want to support the case where
-only a subset of references gets committed we should be using batched
-updates with the `REF_TRANSACTION_ALLOW_FAILURE` flag.
+Did you run into this issue when upgrading from 2.50 to 2.51 or from an
+older version?  Was it simple to troubleshoot that the script was gone?
 
-> @@ -319,6 +355,12 @@ int cmd_replay(int argc,
->  			   N_("replay onto given commit")),
->  		OPT_BOOL(0, "contained", &contained,
->  			 N_("advance all branches contained in revision-range")),
-> +		OPT_BOOL(0, "update", &update_directly,
-> +			 N_("update branches directly instead of outputting update commands")),
-> +		OPT_BOOL(0, "update-refs", &update_refs_flag,
-> +			 N_("update branches using ref transactions")),
-> +		OPT_BOOL(0, "batch", &batch_mode,
-> +			 N_("allow partial ref updates in batch mode")),
->  		OPT_END()
->  	};
->  
+Just curious.  I=E2=80=99m as na=C3=AFve about release management as any
+random person!
 
-So I think we should reduce this to only accept two flags:
-`--update-refs` and a flag that accepts a subset of refs failing.o
+>
+>
+> Thanks for your work on git!
+>
+>
+> ## Details/comments
+>
+>  > The command thus predates git-worktree(1), which is what people use
+>  > nowadays to create any such working directory. As such, the script
+>  > doesn't really have much of a reason to exist nowadays anymore.
+>
+> `git worktree` suffers from the substantial restriction that it is not
+> allowed for two worktrees to checkout the same branch.
 
-We might also want to make this something like `--update-refs[=<mode>]`,
-where `<mode>` could be "allow-failures".
+You can override that restriction with `--force`.[1]
 
-> @@ -333,6 +375,14 @@ int cmd_replay(int argc,
->  	if (advance_name_opt && contained)
->  		die(_("options '%s' and '%s' cannot be used together"),
->  		    "--advance", "--contained");
-> +
-> +	if (update_directly && update_refs_flag)
-> +		die(_("options '%s' and '%s' cannot be used together"),
-> +		    "--update", "--update-refs");
-> +
-> +	if (batch_mode && !update_refs_flag)
-> +		die(_("option '%s' can only be used with '%s'"),
-> +		    "--batch", "--update-refs");
->  	advance_name = xstrdup_or_null(advance_name_opt);
->  
->  	repo_init_revisions(repo, &revs, prefix);
+=E2=80=A0 1: Naming override options just `--force` has some UX issues l=
+ike
+    discoverability and the fact that (in this case) it is used for
+    multiple orthogonal things
 
-We have the `die_for_incompatible_opt*()` helpers for this.
+> I understand
+> why its designers felt that this would provide better guarantees (it
+> is not a good idea to mutate branch names that are checked out
+> somewhere else), but checking out various branches to test them and
+> inspect their code (before returning to the feature branch I am
+> actively working on) is a common part of my workflow.
 
-> @@ -389,6 +439,18 @@ int cmd_replay(int argc,
->  	determine_replay_mode(repo, &revs.cmdline, onto_name, &advance_name,
->  			      &onto, &update_refs);
->  
-> +	/* Initialize ref transaction if using --update-refs */
+I agree, that=E2=80=99s a great use of worktrees.  But I never feel like=
+ I have
+to checkout the branch itself.  I detach on top of the branch.
 
-Nit: the comment doesn't really add much context, so I'd just drop it.
-It's generally discouraged to add a comment that re-states what the code
-already says. Instead, comments should point out things that are easy to
-miss or not obvious at all.
-
-> @@ -445,10 +525,43 @@ int cmd_replay(int argc,
->  
->  	/* In --advance mode, advance the target ref */
->  	if (result.clean == 1 && advance_name) {
-> -		printf("update %s %s %s\n",
-> -		       advance_name,
-> -		       oid_to_hex(&last_commit->object.oid),
-> -		       oid_to_hex(&onto->object.oid));
-> +		if (update_directly) {
-> +			if (update_ref_direct(repo, advance_name,
-> +					     &last_commit->object.oid,
-> +					     &onto->object.oid) < 0) {
-> +				ret = -1;
-> +				goto cleanup;
-> +			}
-> +		} else if (transaction) {
-> +			if (add_ref_to_transaction(transaction, advance_name,
-> +						   &last_commit->object.oid,
-> +						   &onto->object.oid,
-> +						   &transaction_err) < 0) {
-> +				ret = error(_("failed to add ref update to transaction: %s"), transaction_err.buf);
-> +				goto cleanup;
-> +			}
-> +		} else {
-> +			printf("update %s %s %s\n",
-> +			       advance_name,
-> +			       oid_to_hex(&last_commit->object.oid),
-> +			       oid_to_hex(&onto->object.oid));
-> +		}
-> +	}
-> +
-> +	/* Commit the ref transaction if we have one */
-
-Likewise here.
-
-> +	if (transaction && result.clean == 1) {
-> +		if (ref_transaction_commit(transaction, &transaction_err)) {
-> +			if (batch_mode) {
-> +				/* Print failed updates in batch mode */
-> +				warning(_("some ref updates failed: %s"), transaction_err.buf);
-> +				ref_transaction_for_each_rejected_update(transaction,
-> +										 print_rejected_update, NULL);
-> +			} else {
-> +				/* In atomic mode, all updates failed */
-> +				ret = error(_("failed to update refs: %s"), transaction_err.buf);
-> +				goto cleanup;
-> +			}
-> +		}
->  	}
->  
->  	merge_finalize(&merge_opt, &result);
-
-Patrick
+> Getting a 'fatal
+> error' because some other, independent worktree also checked this
+> branch out is a hindrance.
+>
+> Note: I don't know about the `worktree` implementation and whether the
+>[snip]
