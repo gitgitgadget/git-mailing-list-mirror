@@ -1,90 +1,131 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mail.ekdawn.com (mail.ekdawn.com [159.69.120.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F407404E
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 00:05:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BCAAD51
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 02:44:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.120.39
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757289948; cv=none; b=qvorpWynooxBDRjGzU0PBCbsX+M8iC9q6dwGZSNOx0wvK/t1wEuIpjxkW1SQ1sVCQgGBXwiQjv2E4xvQkcfz5kdjE/H5ykhk7lnkLrrGbNeuQr3mnmsPcuH5iUdktO+THzeSsPD04PIgMXDxQ5zjDLGL5KH8XRHA/uPKVim6qFw=
+	t=1757299456; cv=none; b=TcBmDB2qbJIMfcEWBZJQqjT+QB4KsJKeUPfQvOVWJBdtfsLjzC/eBYeIPNfcI1P2PDZQiBNa5tu2qaG1HvwSfCQ7UmnOptmSyjAEyuViztMPzQ4LjRTVsts9fclxM+tI20+V31kPPJxFa7/DEci31AroTrHpoBIEJSmwm+jRxoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757289948; c=relaxed/simple;
-	bh=BxGskf5QQ9H6ke+Nmh1FS8/WP/FaOLlCYpMysGjAr+0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nMJ9zDWbLfLhXz0JBermm/GoDVNVy2Mx6TqGY7ndIbNE4cKIbmlELFNj0RRtMy1uFMIgp/1CCDLZW9z4stWmSYKHeykCtW+9d8TKE6/FfmF0+DGWArdbD440CaIlR3yRKLbczjjJdhqSd/dShdWaor1itELt3NulFfOuhSFM2PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QtCKjM/P; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1757299456; c=relaxed/simple;
+	bh=tHw0ZeuFrz7lcaK/1pv29NHHPjxg+iu8GKzMQErfyyw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AQpphYNaXAxXfwy7wUTHFDQJHanV/locdAG5/b4LET/IMJwgKMn+0kC1o14C0e4VNFyz3SDg7RzEBZ/aqZIHhtpeo8xJDoiH5ua9SVuGkXzjvQxHle3Waa63hurlFszeSlxLw1ybzLkSwbpwAnUf+ikTmyJH5vOKwAymjjMenKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org; spf=pass smtp.mailfrom=horse64.org; dkim=pass (4096-bit key) header.d=horse64.org header.i=@horse64.org header.b=1t0ZlqnV; arc=none smtp.client-ip=159.69.120.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=horse64.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QtCKjM/P"
-Received: (qmail 13731 invoked by uid 109); 8 Sep 2025 00:05:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=BxGskf5QQ9H6ke+Nmh1FS8/WP/FaOLlCYpMysGjAr+0=; b=QtCKjM/PEnJgvHMt89f2rrH2yrW1175FerhUsFeb5c+y/yJyPqBzZqJpldk86da6KNkrxgiabW6O7osIicLjvJvrgkhgnQ39XrSEkapWZDCW1Z/OyynHKfcRGlHReE3RM+LVcSOVotQTnrCSma2zzs6TTSCui7yKsDQ4vqrBuiO9tM5nQp4oFQkZQWzj0SB0XxNGJ7E2vCM482+gbi/UMmqdp/mYj2Jn5FZtLKFIp+/XKEnXf5ACPF+R07hiSxwL0CjwNq86IOt4XZ0wg9SWZalSyvMPcth4laKKsc5BUK2wGQmJBj+BNw3Btzn63Aexdstnn+VWDlbODfuMawcY3w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Sep 2025 00:05:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23823 invoked by uid 111); 8 Sep 2025 00:05:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 07 Sep 2025 20:05:44 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sun, 7 Sep 2025 20:05:43 -0400
-From: Jeff King <peff@peff.net>
-To: Milan Hauth <milahu@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Git dumb HTTP protocol should work without update-server-info
-Message-ID: <20250908000543.GB1281511@coredump.intra.peff.net>
-References: <CAGiEHCtP29bQRsEyLabNrLuiP96P-o7EEGi88B7pJbP0tfprxw@mail.gmail.com>
+	dkim=pass (4096-bit key) header.d=horse64.org header.i=@horse64.org header.b="1t0ZlqnV"
+Received: by mail.ekdawn.com (Postfix) id ED9B7181A2C;
+	Mon, 08 Sep 2025 02:34:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=horse64.org; s=dkim1;
+	t=1757298895; bh=tHw0ZeuFrz7lcaK/1pv29NHHPjxg+iu8GKzMQErfyyw=;
+	h=Message-ID:Date:Subject:To:Cc:From:From:Sender:To:CC:Subject:
+	 Message-Id:Date;
+	b=1t0ZlqnV97bsU9t5D9Hu8KyzxbpyQSD4AYSoCTqfw21vsljkoNXtJBl06qmdwoKQI
+	 yO/F/cD5pWpfdgRvPB+dj4YyeQxT7V2H2YOhWESzea+GceBPKNUJwt1jMLkeUiJyTK
+	 +KLCMi6HhhfsxzIlIaroT1M+c0hb+fZ62++4EyXrGyGJjZXtE6PmnXbCxFl9v2FkhG
+	 Z1LbkGs6ZCNSt0mHs7G4nHXhQvyS5l4J5bcCpTio2Z7d3Q8LgzaINnYqEqlWYzHnyj
+	 pg5b3AIQephHcGZ0+VI0VeZKGrXB+seT86rCg5aDhKTXeKZK44BdttugvTZAsmaPgi
+	 q8HVRFa5EtlMwa2jLFA0hFxU2dds58uwT+rPmVveQhS4O8HhKdyrZK0yYkrFH6mO4S
+	 Uhs64pLlHnMsFRGnkHHaCxbTi/wehLY5HUcSVlx22tCK99SrlU7JAFufUxMMtrRo5L
+	 6WaT/+5uyHRZkx9cnV4UIy4Yh8eSKsSxkCE3M7iOS0q9GYqK4lOY3p3XLH2Py4Irks
+	 43T//nFrS3IpyaA3GfmAHEhxZLyhSs5WUdhYK8blgzl0DxfZ0vpmSPE8mu5mBFqvms
+	 uKgOhDb5AjoswIi3cNz2b/nEtfnpDbLEg1C/NCf/LPQPvujCXv0sNyKfb1HHaR1GDL
+	 fX2Ak04cX/zFQ7oDQzGwcIeI=
+Message-ID: <15eac16b-41b6-4bfc-91c7-4997d390cc5b@horse64.org>
+Date: Mon, 8 Sep 2025 04:34:53 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGiEHCtP29bQRsEyLabNrLuiP96P-o7EEGi88B7pJbP0tfprxw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: With big repos and slower connections, git clone can be hard to
+ work with
+To: rsbecker@nexbridge.com, 'Konstantin Khomoutov' <kostix@bswap.ru>
+Cc: git@vger.kernel.org
+References: <20240708143239.vq47dg7mgh33hykf@carbon>
+ <2e10070f-2720-4d70-aa15-d4c008cc57bf@horse64.org>
+ <20240708154457.jpt2aa5orzxy6kqh@carbon>
+ <001b01dad153$ba880ca0$2f9825e0$@nexbridge.com>
+Content-Language: en-US
+From: Ellie <el@horse64.org>
+Autocrypt: addr=el@horse64.org; keydata=
+ xjMEZov4ABYJKwYBBAHaRw8BAQdAV+B+D8EgzDouy2nDV3ZvoAlfCdXDgPc77jwQv8WFOyHN
+ FkVsbGllIDxlbEBob3JzZTY0Lm9yZz7CigQQFggAMgUCZvwh5gIbAwULCQgHAgYVCgkICwIE
+ FgIDARYhBDNofAurx9gz4zmiYhX8ptnSOysIAAoJEBX8ptnSOysIVtUA/0M98whfeyLZN1kU
+ poSyuIkAy24OCZzEDzk8JhjXunnhAQCGjsO2TdM6tcc5s0e2FqRDFleP0vXBRqUd5vrgNPgI
+ Cs44BGaL+AASCisGAQQBl1UBBQEBB0Armcmr+4Ez2zZ9nMioqYvXRVLppRFfo8ATE0A/j7a7
+ ZAMBCAfCeAQYFggAIAUCZvwh5gIbDBYhBDNofAurx9gz4zmiYhX8ptnSOysIAAoJEBX8ptnS
+ OysIFoQBAPkec14UBSROnDc4wW5eABx1XYWOF7o5A2WTV/dEJOi+AP0eRQ3hxUJ+daiWYxqe
+ VmCpAVDV/6jpoEvNZV03nSFpAg==
+In-Reply-To: <001b01dad153$ba880ca0$2f9825e0$@nexbridge.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Sep 07, 2025 at 01:24:13PM +0200, Milan Hauth wrote:
+This has been addressed on Github's side by now, it seems to have been a 
+Github server config issue.
 
-> expected:
-> dumb http remotes should behave like file remotes
+Nevertheless, the ability to resume a file transfer remains what some 
+would consider essential for internet software. I still hope it'll be 
+added one day.
 
-File remotes are running a local git-upload-pack to act as the server.
-A dumb http remote can't run anything on the server side. So we are
-stuck pretending that the http endpoint is a filesystem. Besides
-performing terribly, as brian noted it is not even portable to do,
-since there is no readdir() equivalent (and things like httpdirfs have
-to resort to scraping auto-generated directory listings).
+Thank you for the lively debate.
 
-If you want to go that route, I think you're better off using a fuse
-wrapper and just letting Git work against the mounted filesystem, as you
-tried here:
+Regards,
 
-> as another workaround
-> i tried to mount the .git/ directory with httpdirfs
-> but httpdirfs fails to mount git repos, see
-> https://github.com/fangfufu/httpdirfs/issues/183
+Ellie
 
-I think this does work. The instructions you gave there won't do it,
-though, because python's http.server module doesn't support range
-requests.
+On 7/8/24 6:27 PM, rsbecker@nexbridge.com wrote:
+> On Monday, July 8, 2024 11:45 AM, Konstantin Khomoutov wrote:
+>> On Mon, Jul 08, 2024 at 05:14:33PM +0200, ellie wrote:
+>>
+>> [...]
+>>>>> error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly:
+>>>>> CANCEL (err 8)
+>>>> [...]
+>>>>> It seems extremely unlikely to me to be possibly an ISP issue, for
+>>>>> which I already listed the reasons. An additional one is HTTPS
+>>>>> downloads from github outside of git, e.g. from zip archives, for
+>>>>> way larger files work fine as well.
+>>>> [...]
+>>>> What if you explicitly disable HTTP/2 when cloning?
+>> [...]
+>>> Thanks for the idea! I tested it:
+>>>
+>>> $  git -c http.version=HTTP/1.1 clone
+>>> https://github.com/maliit/keyboard
+>>
+>> Over there at SO people are trying all sorts of black magic to combat a
+> problem
+>> which manifests itself in a way very similar to yours [1]. I'm not sure
+> anything from
+>> there could be of help but maybe worth trying anyway as you can override
+> any (or
+>> almost any) Git's configuration setting using that "-c"
+>> command-line option, so basically test round-trips should not be
+> painstakingly
+>> long.
+>>
+>> [...]
+>>> fetch-pack: unexpected disconnect while reading sideband packet
+>> [...]
+>>> Sadly, it seems like the error is only slightly different.
+>>
+>> I actually find it interesting that in each case a sideband packet is
+> mentioned. But
+>> quite possibly it's a red herring anyway.
+>>
+>> 1. https://stackoverflow.com/questions/66366582
+> 
+> I have customers who hit this problem frequently setting up git. It is 99%
+> of the time a firewall or proxy configuration issue, not specific to GitHub,
+> and changes to those usually resolve the problem. The firewall and proxy can
+> be implemented in the ISP's modem if coming from a home network. That is why
+> I really think the OP's issue is the network, not something that can
+> reasonably fixed in git. I think the network speed is also a potential
+> red-herring unless the speed issue relates to the ISP's configuration.
+> 
 
-Something like:
-
-  sudo apt install python3-rangehttpserver
-  (cd /path/to/repo && python -m RangeHTTPServer)
-  mkdir mnt
-  sudo httpdirfs http://localhost:8000/.git mnt
-
-got me a mount that worked with:
-
-  # you could probably avoid sudo here with better mount perms above
-  sudo git clone mnt foo
-
-It's painfully slow, though.
-
-Possibly dumb-http could learn to do the same scraping that httpdirfs
-does to get the refs and pack listings (though this might be quite slow
-for unpacked refs, if the ref tree is deep). But I doubt you will find
-anybody that enthused about working on or reviewing dumb-http patches
-these days. The code is not very well maintained, IMO.
-
--Peff
