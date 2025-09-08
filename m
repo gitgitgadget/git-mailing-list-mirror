@@ -1,143 +1,127 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B5918AFF
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 17:02:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757350957; cv=none; b=mpk82ZyXNVzx+0UMFvaniILpzZXOzm7QFfN778Fb8VFTfBceJbdd841eNOR+CEHHVDfTLAvEYU/Q9QvUrwlkzT1NO3Bg5FCtrymJwngbM2lbYDwApFiwycAo29Wt+ZeKsvF2smdlrbzqEXisw6IG//ArmiK0aZaERlTWgi5IO7k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757350957; c=relaxed/simple;
-	bh=kqw3v4b7aI+KZCwq/P4WVJmr6pa32hVbKuJwPTDTIic=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H641QxhQXEpBZG6nC4o/F/pr32Uo6RdpaFggcMZ8bq/DRuTD6eKIRCVKYtaGhmqgtDcjM0thMAPC5zzHy4w6KdoXELsFaDNFRmUUsL9K5Cih1JpA0U1r87/3PX77EWUJ9u9hI6U3JcXPe2OIgFMLItVqLv6rbFMf9PziY3ivR4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 588H1hQX2997465
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Sep 2025 17:01:43 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Elijah Newren'" <newren@gmail.com>
-Cc: "'Patrick Steinhardt'" <ps@pks.im>,
-        "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Taylor Blau'" <me@ttaylorr.com>,
-        "'Kristoffer Haugsbakk'" <kristofferhaugsbakk@fastmail.com>,
-        "'Josh Soref'" <gitgitgadget@gmail.com>, <git@vger.kernel.org>,
-        "'Christian Brabandt'" <cb@256bit.org>,
-        "'Phillip Wood'" <phillip.wood123@gmail.com>,
-        "'Eli Schwartz'" <eschwartz@gentoo.org>,
-        "'Haelwenn \(lanodan\) Monnier'" <contact@hacktivis.me>,
-        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-        "=?UTF-8?Q?'Matthias_A=C3=9Fhauer'?=" <mha1993@live.de>,
-        "'Sam James'" <sam@gentoo.org>,
-        "'Collin Funk'" <collin.funk1@gmail.com>,
-        "'Mike Hommey'" <mh@glandium.org>,
-        "'Pierre-Emmanuel Patry'" <pierre-emmanuel.patry@embecosm.com>,
-        "'D. Ben Knoble'" <ben.knoble@gmail.com>,
-        "'Ramsay Jones'" <ramsay@ramsayjones.plus.com>,
-        "'Ezekiel Newren'" <ezekielnewren@gmail.com>,
-        "'Josh Steadmon'" <steadmon@google.com>,
-        "'Calvin Wan'" <calvinwan@google.com>
-References: <01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com> <xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local> <xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im> <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net> <aLfU5sEa-RE3X4G2@pks.im> <aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net> <aLl6iFXeAvL_hvqR@pks.im> <CABPp-BFNoLC+TdtuEq5Nx+VcFJ-WFga2r0E+eq=fFaaCN_sRGg@mail.gmail.com> <aLqIHCdlbwF5X6Cm@pks.im> <CABPp-BG3Zcw63vNziy86MvYNubefn1SmPvXefpqpA=a+42KT8A@mail.gmail.com> <042f01dc2011$da9dcda0$8fd968e0$@nexbridge.com> <CABPp-BEEU0yhurwewuRjrceU+AeHy9vYzXaOFmK5u0nnoSbp6w@mail.gmail.com> <049401dc20d6$69086400$3b192c00$@nexbridge.com> <CABPp-BHQyQk+Vkzm3RhVXxvNrpLB--bCLYwSCfZBQhB6PGBQQQ@mail.gmail.com>
-In-Reply-To: <CABPp-BHQyQk+Vkzm3RhVXxvNrpLB--bCLYwSCfZBQhB6PGBQQQ@mail.gmail.com>
-Subject: RE: [PATCH v3 02/15] xdiff: introduce rust
-Date: Mon, 8 Sep 2025 13:01:38 -0400
-Organization: Nexbridge Inc.
-Message-ID: <049f01dc20e2$42c75650$c85602f0$@nexbridge.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C352C859
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 17:16:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757351780; cv=pass; b=Qv+4OKFuCpdHYTq1yF3he2/72KnVIzu+QMmJX6Z/rTkrRl5sVcG5cLkKBAKiGqygJtbXXWFScV7dtZWNIM3I+H+An+ooHgk4E4TsWomD/UMQKPpJ00/7cGZCXuPKumb8Rr0Kc9Ckk8yszfClVS3DDCQ84YjnvovS7lhvBblxmDU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757351780; c=relaxed/simple;
+	bh=13GoLXUPA5NZQDVnvYblVIm/wxBcdi915QZGHEF3WKY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lBbL3u3fHRJy8Z/tSGOYLmojFTkGK1Yr67IWvtaju38eYcgxt47UzYttXa/vJ+ktpWXuV50zymsa2RD9UpDPjW3mkPyI3A7hy2bfeb2NW4FQRUGpmVG9NbZUl5pKzGncRqsPGJMmzAadkMZGPoNq/OobW1Q74iAj8vU67LE5KSQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=hXVI4khE; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="hXVI4khE"
+ARC-Seal: i=1; a=rsa-sha256; t=1757351761; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=UZ1O4G2l4LHlyM/B592MbutTl9ksCcaLX3aM+Ms+3hgWFRXpntp/P8qFYckDw/sO1IYb5XI6qqGxL1Gb+7vza1Zlyqw14J74Pf7aZngw+xCXRs1etCNvFhRKs0AKnEoOE4jMVVkTNJOFOY1BOoXFSPH+RDGTlDBjWOpQcqYN/ds=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1757351761; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=RPdnQfkVNYdn72HURkZZe+yZmiYRHcmHR7slbF+sY8k=; 
+	b=YydKvp1KJIkmN3dobGECzj5gQOnibTx9UJ+h3PhlZexeWeEBCOR9V8OEa/9Ef//pVpcmDstuUVpRggyRQUlOPaG4I9IGCVP5/wbA0MsX0dlHn4ksuEqO/gxatvY02fiD0CeU5AamwCpTStCwEkJTPwbdIhe1NYCDE+89soC4dDw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1757351761;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=RPdnQfkVNYdn72HURkZZe+yZmiYRHcmHR7slbF+sY8k=;
+	b=hXVI4khEIMrEN+bMOhZCuCmPpFFIcsrVM3JSWDzlOq2jpX7S3pJjl2hzLhpYXbEX
+	yl0jXIInafBJ3EsO2bvZU6Wd/DrFElCpqTnTChBkKf2PQBFc6yqwtinrZ/SYr7OquzH
+	Mtwstqs68ElaWFVM/0Aiom28VcAWl6TCD5zfG6ms=
+Received: by mx.zohomail.com with SMTPS id 1757351758309633.6855853229439;
+	Mon, 8 Sep 2025 10:15:58 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Junio C Hamano
+ <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan Nieder
+ <jrnieder@gmail.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
+ <steadmon@google.com>, Ben Knoble <ben.knoble@gmail.com>
+Subject: Re: [PATCH v2 07/10] submodule: error out if gitdir name is too long
+In-Reply-To: <20250908155146.GA1308482@coredump.intra.peff.net>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20250908140117.262205-1-adrian.ratiu@collabora.com>
+ <20250908140117.262205-8-adrian.ratiu@collabora.com>
+ <20250908155146.GA1308482@coredump.intra.peff.net>
+Date: Mon, 08 Sep 2025 20:15:54 +0300
+Message-ID: <874itcoofp.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQEGadT21z5OprxVD7HWLLwOJZ29EAFNCYxRAdIt06UCgtOkMwLNWyY+AkPZBcsB+sNnaQLQ9HhNAfwz3cQCYIs5bgMRNqFTAiZSYtwCDxYVSgETxoD6AUaJgf4BwEHCzbU7CPow
-X-Antivirus: Norton (VPS 250908-8, 9/8/2025), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-On September 8, 2025 12:13 PM, Elijah Newren wrote:
->On Mon, Sep 8, 2025 at 8:37=E2=80=AFAM <rsbecker@nexbridge.com> wrote:
->>
->> On September 8, 2025 11:31 AM, Elijah Newren wrote:
->> >On Sun, Sep 7, 2025 at 9:10=E2=80=AFAM <rsbecker@nexbridge.com> =
-wrote:
->> >>
->> >> On September 7, 2025 12:10 AM, Elijah Newren wrote:
->
->> >Thanks, Randall, this is useful information.  In regards to one =
-point not fully
->covered
->> >by Phillip:
->> >
->> >> Also remember that without support from the git team, the code =
-base is
->> >> no longer the same, meaning the auditors will not necessarily =
-accept
->> >> fixes from third-party sources.
->> >
->> >Why does it need to be "third-party" sources?  Linus years ago =
-blessed having
->> >someone else be in charge of providing updates for stable releases =
-of Linux.
->Junio
->> >could do the same with Git and similarly mark an individual or group =
-of people as
->> >the maintainers for the last Rust-optional version of Git, and those =
-individuals
->could
->> >make official releases of Git with extended security fix support.  =
-Then it's not
->every
->> >platform repeating the backporting work that needs to be done, but =
-rather
->> >individuals from the affected platform(s) collaborating on that work =
-and then
->> >making official first-party releases.
->>
->> Linux has one set of rules, and other platforms have others. I do not =
-define the
->> audit requirements for PCI, SWIFT, or HIPPA compliance (and other =
-rules outside
->> of North America), which apply one way or another to most of my =
-community.
->> The audit teams, which are both internal to the companies and at
->> governmental regulatory levels, do this. It is 100% out of my control =
-but is a
->> reality. Fixes to any code involved in managing financial and health =
-instruments
->> must be done by authorized and recognized sources. I am not one of =
-them.
->
->Perhaps I wasn't clear?  Let me try to summarize what I've understood
->of the conversation:
->
->Randall: We need to have official git releases for the last
->Rust-optional release.
->Elijah: Great!  Let's enable interested folks to make official git
->releases for the last Rust-optional release.
->Randall: We need to have official git releases for the last
->Rust-optional release.
->
->Which makes me just want to repeat what I said last time -- let's
->enable some folks to do that.
+On Mon, 08 Sep 2025, Jeff King <peff@peff.net> wrote:
+> On Mon, Sep 08, 2025 at 05:01:14PM +0300, Adrian Ratiu wrote: 
+> 
+>> Encoding submodule names increases their name size, so there is 
+>> an increased risk to hit the max filename length in the gitdir 
+>> path.  (the likelihood is still rather small, so it's an 
+>> acceptable risk)  This gitdir file-name-too-long corner case 
+>> can be be addressed in multiple ways, including sharding or 
+>> trimming, however for now, just add the portable logic 
+>> (suggested by Peff) to detect the corner case then error out to 
+>> avoid comitting to a specific policy (or policies). 
+> 
+> Thanks, the compat logic here looks reasonable to me. 
+> 
+> As somebody who has not really been looking into or thought 
+> about the topic at all, though, I wondered how necessary 
+> pathconf() is here. That is, I can imagine two alternatives: 
+> 
+>  - just try to use the path, and we either get an error from 
+>    open()/mkdir() or we don't. This would end up with roughly 
+>    the same outcome as the current code which calls die(), 
+>    though it would not help with eventually fulfilling your 
+>    TODO. 
+> 
+>  - set some arbitrary but sane limit (say, 255?). That would 
+>  make the 
+>    behavior consistent across platforms, though it does mean you 
+>    might be prevented from using very long submodule names on 
+>    systems that could support it. 
+> 
+> I dunno. Like I said, this is not a problem I thought a lot 
+> about, so feel free to ignore. Mostly I just notice that we have 
+> lived for 20+ years without pathconf, I think mostly by 
+> following the philosophy of the first bullet point above. 
+> 
+> -Peff 
 
-Ok, what does that look like. When and how? Will I get added to the list =
-of
-committers for this? How many people? Starting when, ending when? It =
-would
-be very nice to have some kind of project plan for this with =
-dependencies
-and milestones - I have been asking. If someone sends me a list, I can =
-start
-officially tracking it.
+I can go either (thrice?) way with this. :) No strong opinion.
 
+1. Just let the OS/filesystem default do its own thing: not doing 
+anything is the easiest and perhaps the best approach sometimes.
+
+2. Benefit of hardcoding: we already hardcode NAME_MAX in 
+compat/posix.h for platforms which don't have it and fallback to 
+it. Might as well use it and print a nice error.
+
+3. The compat layer allows us to at least try and detect the 
+corner-case because we slightly increase the risk of hitting it 
+(say you have a module name with length >200, encoding it might 
+push beyond the limit).
+
+Right now it's worth it mostly for the error msg telling the user 
+why the command fails because a default -ENAMETOOLONG might be 
+confusing (the plain-text name could be just 200 < NAME_MAX), 
+while also opening the door to avoid this situation entirely by 
+addressing the TODO.
+
+Again, I'm fine either way.
+
+Since I split this logic into a separate commit, we could even 
+drop it now and bring it back later when (if?) we decide to tackle 
+the TODO (series is big enough already).
+
+Thanks,
+Adrian
