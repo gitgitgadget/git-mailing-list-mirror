@@ -1,77 +1,79 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AD917E0
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 22:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E3E3054E4
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 23:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757370174; cv=none; b=daFVmT+vUn84rNRK75075XQl7OSV+MFOoSuV/xQe8a62ghC0M5hUhg8w+4picKIlqsIEN0Cs6aIbiyN5jOy2sAvncJN7fUdchscMn0pS6XXetdCkZ610g4IpgOfHGUBq0kZeIJh4gEFSVmBWd7yWUfN0HEPCh4xtD24Cm1WXyY0=
+	t=1757372434; cv=none; b=C11dgC0cVRX/uAJjoBjXu8vCiOsHxsvXkpvQBjPZmG6E+6CEMany1lv4RDhAxTeReWM7jf+jqHoLqEWxtC0fpQsb5Zp1Pv/CX6IGtmaZFTYRrie+ZKxjfNXMFJkRzkG420btIDER+nVq16FuN3ZnVKJUnWnaN3pkzGTTUDOgWdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757370174; c=relaxed/simple;
-	bh=LyX/Tet2B49m2qxdrEv1n5r6JNSvI61gDHyWbGRz5NI=;
+	s=arc-20240116; t=1757372434; c=relaxed/simple;
+	bh=c4H1YaDc7oNrKU+iZSA3fKCz9JNYwQHXwdHZbWFA6Yk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YK1/iPyT8aFeO2DVWEu6l8RaroabYYK5ECbfuneoaBqDRep5a3ZxAv9YN65W3rfwL1pTetPZAJ+ONR7vtNlqlzjxlQJC186VxZOsPbUx571CI0YkjqpKIhrSblYtygfujYzJEW7uwNvhZMcWPrKxJ2JGmbtU8v/TwoF0rhyOtp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Jue8EHUR; arc=none smtp.client-ip=172.105.7.114
+	 Content-Type:Content-Disposition:In-Reply-To; b=mJAJVT1FZAkFs5vkL3BMlUf6ORl+vl2R7Ee+H2+N0GSbKkRW5Tf7u//77dT7pBjmvSkNAKBEUWDs28IC73YlrTAXBPlwQT9R3XFnyw4okbDyMrESzmnv5bkoyf+ZEa5EcuesDS3dl9r3GXicj5Pl+eHwBCJ3TasvriSCMAsEkA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=z5h5Ds+W; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Jue8EHUR"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="z5h5Ds+W"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1757370171;
-	bh=LyX/Tet2B49m2qxdrEv1n5r6JNSvI61gDHyWbGRz5NI=;
+	s=default; t=1757372430;
+	bh=c4H1YaDc7oNrKU+iZSA3fKCz9JNYwQHXwdHZbWFA6Yk=;
 	h=Date:From:To:Cc:Subject:References:Content-Type:
 	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
 	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
 	 Content-Type:Content-Disposition;
-	b=Jue8EHURmeFZX2KF8xNzxhpX8hVkOKYoGja6Y/Qy6tUfAurM0tp7AoF7rMLtDJF4l
-	 jxrvrlLLYWYnZNWgMh6/dG0qup6JQ6ZHDBQS3Bk24w47gQ8Pz+Q1QH7kQvJcGeQy7H
-	 wG9QODgkE3E4AxCoImZW/Dn4oa19G//WC96sTxw5mjVwUZtIh864LpZYi468/EI46J
-	 8RE2127VpU+0VjeyrGS6cl0Y8QJyfoTCr5nLpQk2325co9vDIawqG4FqGRXcNTGbJ9
-	 ZeZgWx61gdGq2QDvKGpwruukSSSlDZv12r8zOYc1SMxxl15LnMC3/x0D22N3YIiPqt
-	 JfGkPRvoeGHNxKQjpodLBe+0mxSPy7Q4cN16gt0BQGHJPC+pxzJKQnsz3M+QYzasTF
-	 PAgV6gcZDDXvAnfzMptnHhNAs4Bwkg2+pwQoTY7FsOx1B1iADISFH/Ih66vCTNVyPG
-	 4PH4x4de8V8meE90qXIWkREfozHEC5T4KvrsQ/Y4oraSanZuvGV
+	b=z5h5Ds+WHbdJI5NFRrLyxtgupluOClLTnyMJPN6PWxVaXHfMc3bor8vJCfd725YvM
+	 W+AlZPGUp3d+h2Hl8yPyJhYgu+Ekk3lW/yoxBhCIx+CTY4Q4OhtSIAwXIkEwj60ZG6
+	 9bf051VaYn6J1K+FugohvSWMfhzWFhxJa4Z+AAqipNz1IRTmketh4aqrW3idi1ZynV
+	 FC3zB6IkIOWKRPDMrHjpx6N8/uc5wZO6Z27p2ssWg2XcOy9jZzdiMz/d8a0RXcV2Tz
+	 cpmi4gDTulzNFVY1sIR0/Ui7N8BQuBeQ9L0WFoy3Ym+Iin7PdCh43PmP7Xar5Xf/7h
+	 LJ0LZmaZA4dvBV0ZWT+SfD2d1j2rBHmlkWHQoFfQ/9PbnqxEMqzkE2lyjPQ/Vc4zdP
+	 f1lrKLfqf+aWDyU+I8hckYkeLf/wcN0IXduGvpM9SvnDc9RtWfX4nU85Axuz9dSt4J
+	 Iphl5nOPBurBNxkTchl4ZODU5q5tr2EtR0MhWTuQ81HF8EAjE44
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:91aa:86f1:d85a:ac64])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 66D60200C9;
-	Mon,  8 Sep 2025 22:22:51 +0000 (UTC)
-Date: Mon, 8 Sep 2025 22:22:50 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4747A200C9;
+	Mon,  8 Sep 2025 23:00:30 +0000 (UTC)
+Date: Mon, 8 Sep 2025 23:00:29 +0000
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Elijah Newren <newren@gmail.com>, phillip.wood@dunelm.org.uk,
+	git@vger.kernel.org,
 	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Christian Brabandt <cb@256bit.org>,
 	Collin Funk <collin.funk1@gmail.com>,
 	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC v3 5/8] rust: implement a test balloon via the
- "varint" subsystem
-Message-ID: <aL9XOj1sVmHGjDRn@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
 	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC v2 0/7] Introduce Rust and announce that it will
+ become mandatorty
+Message-ID: <aL9gDXNJCGH0eIsY@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
+	phillip.wood@dunelm.org.uk, git@vger.kernel.org,
 	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Christian Brabandt <cb@256bit.org>,
 	Collin Funk <collin.funk1@gmail.com>,
 	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
 	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
 	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-References: <20250908-b4-pks-rust-breaking-change-v3-0-1cd7189fed3b@pks.im>
- <20250908-b4-pks-rust-breaking-change-v3-5-1cd7189fed3b@pks.im>
- <CAH=ZcbA_8JM1hdUAfFe3ho0ShuniguEpV1308S0nCkCHOCsmmg@mail.gmail.com>
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+ <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
+ <8a5394eb-bad4-42e0-82a8-fa73123e205a@gmail.com>
+ <aLrzqR2Z9jz5CuJu@pks.im>
+ <CABPp-BGpdEP9+CTApknmGNO=b=66bFKVzWL2s3gmgCMtTBTjPA@mail.gmail.com>
+ <aL57ONmEKTmqFhIZ@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,70 +81,100 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="u3YL+FeSJvzt9t60"
+	protocol="application/pgp-signature"; boundary="UkH3FImVEkaRTpy+"
 Content-Disposition: inline
-In-Reply-To: <CAH=ZcbA_8JM1hdUAfFe3ho0ShuniguEpV1308S0nCkCHOCsmmg@mail.gmail.com>
+In-Reply-To: <aL57ONmEKTmqFhIZ@pks.im>
 User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
---u3YL+FeSJvzt9t60
+--UkH3FImVEkaRTpy+
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-09-08 at 17:19:20, Ezekiel Newren wrote:
-> On Mon, Sep 8, 2025 at 8:13=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
-> > +use std::os::raw::c_int;
-> > +use std::os::raw::c_uchar;
+On 2025-09-08 at 06:44:08, Patrick Steinhardt wrote:
+> > Setting that aside for a moment, the idea of Git 2.55 becoming 3.0
+> > seems like a good idea to me, assuming that doesn't rush brian on the
+> > sha1/sha256 interop (since I think that's probably the paramount
+> > feature of 3.0).
 >=20
-> I'd really rather avoid using C types in Rust, in favor of using Rust
-> types in C. I have written a commit that talks about why C should use
-> Rust primitive types and why Rust should avoid using C types, here:
-> https://lore.kernel.org/git/2a7d5b05c18d4a96f1905b7043d47c62d367cd2a.1757=
-274320.git.gitgitgadget@gmail.com/.
-> In my opinion, the type c_void is the only appropriate C type that
-> should be used on the Rust side, and should be used sparingly.
->=20
-> The std::os::raw::c_* directly inherits the problems of core::ffi,
-> which changes over time and seems to make a best guess at the correct
-> definition for a given platform/target. This probably isn't a problem
-> for all platforms that Rust supports currently, but can anyone say
-> that Rust got it right for all C compilers of all platforms/targets?
+> Yeah, the interop is definitely an important factor and the last part
+> that I think is still missing for Git 3.0 to become viable.
 
-It also poses problems because if we use `c_ulong` and it's 64 bit, then
-trying to do a `.into()` to convert it to a `u64` will cause the
-compiler and linters to complain, even if it does compile successfully.
-But on 32-bit systems or Windows, `c_ulong` will be `u32` and it will be
-required to convert, since Rust doesn't allow automatic conversion
-between types.  I have some personal Rust code which works with
-`mode_t`, which on some Unix systems is 16 bits and on some systems is
-32 bits and it has made me want to scream quite a bit.  It gets even
-worse if the types differ in signedness.
+I am definitely working on this at the moment and here's what I have
+working:
 
-It would be better to do `usize` and `u8` on the Rust side here and
-`size_t` and `uint8_t` on the C side.  I think `unsigned char` and `u8`
-is also fine, since we are not targeting systems where `unsigned char`
-is not 8 bits in size.
+* Pack index v3
+* Fetching and pushing for full (non-shallow, non-partial) clones
+  without submodules
 
-I don't know how you plan to deal with the fact that Rust doesn't expose
-`uintmax_t`, but I think that's 64-bit on all known systems (because
-making it 128-bit would break ABI and nobody wants to bump libc's
-SONAME), so you could try `u64` and `uint64_t` for the value instead.
+And I'm working on these:
+
+* The new binary loose object map (I was debugging round-tripping this
+  morning)
+* Shallow fetches (which, due to the quarantine usage, need a binary
+  loose object map rather than the `loose-object-idx` file, since the
+  quarantine can't merge the two `loose-object-idx` files together)
+
+And then I'll get to these:
+
+* Shallow pushes
+* Partial clone
+* Garbage collecting and repacking binary loose object maps
+* Submodule handling in the protocol
+
+I will need to switch soon to writing my presentation for Git Merge,
+though, but afterwards I'm going to go back through the testsuite and
+see what else is failing.  I expect partial and shallow clones to fix a
+lot of the remaining tests, but there are still going to be some
+problems to deal with.
+
+Note that shallow and partial clones where the server supports only
+one algorithm won't work with interoperability, since those lack full
+data and the client side won't be able to map the objects between
+algorithms.  There's also the problem that accepting submodule mappings
+introduces a security risk, since it's possible for the other side to
+send commit A in SHA-1 but commit B in SHA-256 and there's no real way
+to detect that unless you have the submodule on your side.
+
+I may end up asking for some assistance in polishing and sending in what
+I have.  Most of what I have is reasonably good quality[0] and should be
+bisectable, but I'm up to 81 patches before the Rust part of the code
+(which so far has 12 patches) and I'm worried I won't be able to both
+write it and get it sent in in nice-sized series before 3.0 is likely to
+happen.
+
+Alternatively, we could maybe accept that interoperability is a
+nice-to-have for Git 3.0 and not an essential.  It's not mentioned in
+the BreakingChanges document, so it's perhaps not a requirement.  We
+could also have someone work on this as part of their job to get it
+handled more quickly[1].
+
+Finally, I am currently interested in working on the interop code (but
+have no problem handing it off if that works better for the project),
+but I cannot guarantee that I will absolutely have time or inclination
+to continue.
+
+[0] There are some patches marked WIP with a reason as to why they need
+work, but those are few and far between.
+[1] I think it's unlikely that this will be able to be me for reasons
+which I cannot share at the moment but hope to be able to later on,
+maybe at the Contributor Summit.  I'll keep an eye out in case it
+becomes possible, though.
 --=20
 brian m. carlson (they/them)
 Toronto, Ontario, CA
 
---u3YL+FeSJvzt9t60
+--UkH3FImVEkaRTpy+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.4.8 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaL9XOQAKCRB8DEliiIei
-gYloAQD8Oy/Cq3i21t4oZWYcZWk4w/BbFZ2Blmk3o5afICyvLQD+KRXOOu7xjLD7
-n4i3IkmwVAf78H6z0z081/8rFEtWZwI=
-=gvmq
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaL9gDAAKCRB8DEliiIei
+gV7VAP9/roTW5hRQ+rrfL3IKPZ4iJhS3wDf+uplrIQLYMgYerQD9FfNwOez2Rl2o
+p11wC51IKwH+qyr8rxTNz1FUOxYl+Qk=
+=IHCM
 -----END PGP SIGNATURE-----
 
---u3YL+FeSJvzt9t60--
+--UkH3FImVEkaRTpy+--
