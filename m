@@ -1,123 +1,126 @@
-Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63AF238C2A
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 19:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203F145945
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 20:29:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757358576; cv=none; b=GZfVSxA2mLLHo3vDTxF6jZc56ey6zlYszbpZxKT96lxdjvARC2tpiFj3cY+WJ+HGs9VkGCP3tGbAIeWHAgDG+tp8vGBmOlGSHEqNzQ697SjyJnW8YO8V3Ek95em2eMSjgHGBAlb+ucfARkHCZ+BaaQX9LDMokTKlEKao9t3lrVM=
+	t=1757363351; cv=none; b=slN7dyzH5cJxzQ5pYcq/KAwHlHQVMno42XE0WO6POuS1/ox9xICU6her63SAtA5ScpPQ3LI4j/Xkmiih6dMbu2ow/nuxceWZzHtC7YCXJMMf0PhPdo4K0iVV8EP6IDKP9spYAdLR4ctS/K388Fn4mZYOTdSds3sTH9vjFSCXJ5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757358576; c=relaxed/simple;
-	bh=E1GLbW/D+7I1zVXiIi4N0TIqeB2fSN5B3zdkki/nn8s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YUkhCtTm7/3woujd0nj2d2UgpeadhOumpssopD3aA08K2uv9E85bs8NCiJtC/NmgdVqSB8qDGeNSCD5u1cJ8DvNoq8BGR9JiqrT1GqYEfjHfoA4rjDpbaRl2dVOkglVnhkz90cvQ+M1kMXxIWNuFwWTGhauO7qXJ1a4jsnYo5y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nfH65hCp; arc=none smtp.client-ip=74.125.224.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757363351; c=relaxed/simple;
+	bh=Kk8wt/ey6HkPG1o6XkYLUvDruJf8fsSI8fXSnGdu66o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nGybMTmsBOhOkrWIip0DknxQQ5EpMVgBhwq8rlRhCTfJ291on/6WKPLbQ+xU8UMVwh2keZi/fnQWCSLcYzAYopiHdPhvR8PmzQBLMVR4sYL2iga7AX4W981q2X8/3HRWzBA7sjZI2Skd/nfhiVcuf2lv9NaBr7vYpvuQ2j6vPN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Me5Z5hv3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dc3CQouk; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nfH65hCp"
-Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-6089a13961cso1214471d50.0
-        for <git@vger.kernel.org>; Mon, 08 Sep 2025 12:09:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757358573; x=1757963373; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=E1GLbW/D+7I1zVXiIi4N0TIqeB2fSN5B3zdkki/nn8s=;
-        b=nfH65hCpMb/LiBYt8oMyh+69kZd9t+ciWtpnyAsHOGns1jjMSg1HOPo/UHWpgROb0G
-         gvA01h88jwxEIwnIQEk0ryur4VSTRH4AFY+RB4Z39AMETd7WSU5e45zDecKk4mnqqBRN
-         H31YoRnw9OWXSET7TEj0G1PikozWYKmJXhJx6JXDuNYR/5rf9ytMBkjL69XsTEjYvNDd
-         bvVy4xDsxrr2HUG1UdTH6UW6/cv+fJu2q0lHGgMpVLe8doicQR1k4ZNZ5f4NJEZxKZJY
-         PIaOKZT0EykVAOrY2ITj4+KGRHocN7UD0cgynQ5ikpUgrHNavJyuvrV1PsGTdMaz8e9K
-         i4cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757358573; x=1757963373;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E1GLbW/D+7I1zVXiIi4N0TIqeB2fSN5B3zdkki/nn8s=;
-        b=eCCRjG6HEcjYVwQmkC1YPgrVdDoYh5Fc+9lqqXPJ1pKR4Cz8jZIqWYB/hhCNmBfXDO
-         Ty3dqOZlM+mU0F/D4lBLCa3x4esEQiHzXcM58/uCBP2kcrsbMZfP/elRENMLSa/gVTeP
-         4hp87pktbpjEBKWyxgiBDlydXL73XAI/kBypaFRq+gjg7ctkbLavOPDLSRgttV7gzynD
-         KXRZQkBesjZ3MPgIapAAecIyN30p/PCf/7upQX0n15FNRIqpxO6E1OKDa/6vlx0y563D
-         bmkgE6W8kZPDAj2T6yfFisDm+jxOdVJILJve2rUdKC59TyOgigMVMkdLK/tY5j8Q2tYl
-         S/MQ==
-X-Gm-Message-State: AOJu0Yw40HwYohq/MwEgK0maZUT58wJT0ZOPX/ZcgojkbXYD1ZTTfIjQ
-	MQG9VJsvMFtCSLXHpnYTV6dkgfcl6V3d6VHfW0mg+xJ5+ODbYy3FQ8Rec+LMMCxOgrzsooQ263k
-	CRPphAGpD0Mxgo8+JETO0yvDgjjX5LUI=
-X-Gm-Gg: ASbGncu1uCS+sBgsZ/c4pVu+8JCk9DfQkDc7A17CWslWa4FBuoWAIFPGfK2Y7P8Y7bg
-	6eUmZxcsVRVAxqs84sSe0vLJdjsilHnEAwC0/Z219FeW0M/XM9UgX8XxZWkqEl8OSikN2jk3YUc
-	JbSUp7eJnvC17qh3rVfVOcMTBlCqtmXuHy+NRiyDc69h5/+dXsBmOF9wM/QTReACI88MV/TGz+O
-	JmVIx4=
-X-Google-Smtp-Source: AGHT+IGema93qY7w5jEHst4r64t1FhMfyiKHFMzYZoCLktFAY/bpQMnX/GrgjSUFmOTblffQz5tIEeIISHFBKT7MoXw=
-X-Received: by 2002:a05:690e:4246:b0:5fb:e9dd:499d with SMTP id
- 956f58d0204a3-6102301c626mr5626883d50.15.1757358573531; Mon, 08 Sep 2025
- 12:09:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Me5Z5hv3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dc3CQouk"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 244C21D00126;
+	Mon,  8 Sep 2025 16:29:08 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 08 Sep 2025 16:29:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm1; t=1757363347; x=1757449747; bh=EO8Dn5i7a5ZJOs/mrLwjZ
+	k1PAUw8kxGvepByaThoJjM=; b=Me5Z5hv3XJXy/drCFAkQt56xZvf10OSL+lF5C
+	TZyvX4+lxIIPGZsSWZhh68nHGn+sVY1pW2CHSr8GL+bW4WKlE37bVty8vgbo8Lbm
+	c2UAKCEOFAvuydxQAv9Ng31f211D3E1CIdnnlBl7erWZ+e+zwRgMMvDvu8hnEI89
+	cNCVOVGwCh57wJIRYnXUxeChS16BwJeWEe1S1jcEwWDWC21U9ykrv5/qP1Dv7h0Z
+	uP/6b1SW8p7voCQUDmIUBwzfUdX48BtWqwoMt5rengzuN4OcmM6uF3yjl55kdBvp
+	ZTEHJh0N3fTTGC5Mk8RGW009nH03DL4qrdOPKjCEwf34JPaKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757363347; x=1757449747; bh=EO8Dn5i7a5ZJOs/mrLwjZk1PAUw8kxGvepB
+	yaThoJjM=; b=Dc3CQoukOryH0Im4xzEJdZV6fq0NhVs7Kqh7cCnVb9k7CelSwHU
+	HB/k/p4F5z34uoH4IZCX2Nx9WxmPYHCMUEl1fMtfF77OMQ99tFNlzib/cs/rnqNx
+	Ht3Te/BoAdP+dyWjeaoHj5EOMSlUgB1ZIxS2e35bZGsLScI5uC2vPYvVA8CB9CUi
+	qR6A64fEovIA+JaehawRtZo8nz/EQFzAS2ZBK51UJkPG+eceeKJ4Orm9zKWlzZZQ
+	u7vvKdyDyUIY5sNAJzlACl1JgEJjGi9LGAdbYFJ7RMQb57d17VnOfUz1rjIgQRGF
+	xFTTMD/9XOr3U2UVouJMXE/gBt0ckUI/GFQ==
+X-ME-Sender: <xms:kzy_aHZj5gjo5B3geU_tUl2FQv1uMRx_3hV7WVQgkvzA1wa5ohf4GiY>
+    <xme:kzy_aJplugDZYVKdidmrPJuXdU2NWPS05YqEpU47mf_Q0z2c_TNn2AVj_uxbkJpdg
+    2n9cVfTKQ8srJNeGw>
+X-ME-Received: <xmr:kzy_aDYiaOWtJdlw2-jSA7MBMh2HsIy5LeniFK-p-L8wKaKqgRyDLWVu8XFv8donE2dwlTBwSAQWk2H5C_Lnrc2z-vvOWp92iUCbHdBo6ivRckkOtW7Am_GLOA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeehtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgggfestdekredtredttd
+    enucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhl
+    rdgtohhmnecuggftrfgrthhtvghrnhepvdehledvjeehjeejheevtedtjeekhffhffevte
+    dtfffgkeduvddvteefjefhuddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
+    grihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghoug
+    gvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepphgvfhhfsehpvghffhdr
+    nhgvth
+X-ME-Proxy: <xmx:kzy_aJSQPATx1A1STLkbhfr9i0KkwUEsDop4V5-cuUMv7csRjl1-kQ>
+    <xmx:kzy_aC4IsOLkQZfr_hW_F7BQ5qPo8nq-cFCJV4aqnKQ3Ui4oU-rEmw>
+    <xmx:kzy_aGzZh4ibtpADJ_QUpqNzMWvlWw45v9EnefcvEQV3Ys3zUeADog>
+    <xmx:kzy_aJRb7anW8a5jr3urFOAsSc_Tj3T9N64KvcR1KEE8w2-WVbfLqA>
+    <xmx:kzy_aJsCCKFJxttJume1dVrthB21qi_370JptyVeBVMqeWltx3iB0ExR>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Sep 2025 16:29:06 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	peff@peff.net
+Subject: [PATCH] doc: fast-import: replace literal block with paragraph
+Date: Mon,  8 Sep 2025 22:28:45 +0200
+Message-ID: <09aaad696895c18c6d4dda7d6a2f4b77f84f39ba.1757363213.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.51.0.16.gcd94ab5bf81
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGiEHCv7kXSB5v8Pi6gDYaC2O3m5qEM8dYW3vKvNm6sXQ_Vuhw@mail.gmail.com>
- <xmqqikhswzl7.fsf@gitster.g>
-In-Reply-To: <xmqqikhswzl7.fsf@gitster.g>
-From: Milan Hauth <milahu@gmail.com>
-Date: Mon, 8 Sep 2025 21:09:20 +0200
-X-Gm-Features: Ac12FXxs0YPRf2KAiE4_-M9xqwTRmv-s2v7RYlePydnUyVFdKqD-_PLt8ErUb-0
-Message-ID: <CAGiEHCuaqu0ia7H8FKAPLcL3Gi_b0gKYe6ugjYAbyVkbd266_w@mail.gmail.com>
-Subject: Re: Git dumb HTTP protocol should use WebDAV PROPFIND method
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-> assume that WebDAV exists on the server side
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-no
+68061e34702 (fast-import: disallow "feature export-marks" by default,
+2019-08-29) added the documentation for this option.  The second
+paragraph is a literal block but it looks like it should just be
+a regular paragraph.
 
-plan A:
-q: GET $url/info/refs
-r: HTTP 404
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-plan B:
-q: GET $url/.git/info/refs
-r: HTTP 404
+Notes (series):
+    > but it looks like it should just be a regular paragraph.
+    
+    ... unless this is some kind of callout-block style?
 
-plan C:
-q: OPTIONS
-r: Allow: GET,HEAD,PROPFIND,OPTIONS
-q: PROPFIND $url
-r: ...
+ Documentation/git-fast-import.adoc | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-plan D:
-q: PROPFIND $url/.git/
-r: ...
+diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
+index 3144ffcdb68..c3951f5f879 100644
+--- a/Documentation/git-fast-import.adoc
++++ b/Documentation/git-fast-import.adoc
+@@ -61,10 +61,10 @@ OPTIONS
+ 	currently impacts only the `export-marks`, `import-marks`, and
+ 	`import-marks-if-exists` feature commands.
+ +
+-	Only enable this option if you trust the program generating the
+-	fast-import stream! This option is enabled automatically for
+-	remote-helpers that use the `import` capability, as they are
+-	already trusted to run their own code.
++Only enable this option if you trust the program generating the
++fast-import stream! This option is enabled automatically for
++remote-helpers that use the `import` capability, as they are
++already trusted to run their own code.
+ 
+ Options for Frontends
+ ~~~~~~~~~~~~~~~~~~~~~
 
-(q = query, r = response)
+base-commit: 2462961280690837670d997bde64bd4ebf8ae66d
+-- 
+2.51.0.16.gcd94ab5bf81
 
-so instead of throwing
-
-> fatal: repository '$url' not found
-
-git should try plan A, B, C, D, ...
-to fetch data from the repo
-
-currently, git gives up after plan A
-
-
-
-> the WHOLE point of supporting "dumb HTTP" transport
-> is to allow a truly dumb HTTP serving infrastructure
-
-there are at least 2 variants of "dumb HTTP servers":
-HTTP servers without WebDAV
-HTTP servers with WebDAV
-
-
-
-> assume that WebDAV exists on the server side
-
-for HTTP servers without WebDAV
-see my other thread
-
-Git dumb HTTP protocol should work without update-server-info
-https://lore.kernel.org/git/CAGiEHCtP29bQRsEyLabNrLuiP96P-o7EEGi88B7pJbP0tfprxw@mail.gmail.com/
