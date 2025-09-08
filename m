@@ -1,83 +1,101 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5009A2FAC0B
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 11:17:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0679F1DFE22
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 11:39:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757330275; cv=none; b=ICNYfAJlR0mAxpsB8J5qMoYnS4ddolS6SahIMq0ZxXLy0NF/y/F3PpZ6tBdgrReWhcbNG9IXcFYBwepLLw4eU3M6QNG/hQTQrtasM+hUETI2vzQhbrqxMr3jC/gSEZ/7Zx9IPhVnSNTYuE5YkY8H4A7F6zegYzOvlEUTuCYPjM8=
+	t=1757331582; cv=none; b=ec/kQT8xQiez1zsciEMvKMndvsk0dBB1bxUMbDVl9rfGAufGb95fGeaWcqwPG7URHCeyeqJze6PencB8WUuygsLKrIvrwZxeBtDVBTc4oFrZJYQasHjT1hsAEBGqo09jmnxhu+tqBrgyoBOIIPVIPQlqzkecm5TGn1ToNqCce3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757330275; c=relaxed/simple;
-	bh=Ivie+bpyLR8lcV+wTDWFzdAIXXC2HIQhn7U2AwsMFUg=;
+	s=arc-20240116; t=1757331582; c=relaxed/simple;
+	bh=/d2D6mG9tT+twdTuKTn5nAuYInNIanCyynYY+ovcY/k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t5MbW5wyKdJV3LV2zpFSjg8Co9oeg1axyIWRwdOkcpZunKn/o243NDVNIhJhinbPyA2Wkku4o4wGWeXq1ImlPefw43R3A3e39CXXZGJrQUGxb7/Ea5XuYYdIXSYBoXI7WQ+9e/rqwpD5dHd7TJfUS1cUec4av/n53UabOpZUUD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l2+BptpB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QDj8G0MZ; arc=none smtp.client-ip=202.12.124.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=tVHsFRWnGAucwI0v4STuyCpcOrotUKK8CcfNSshNEzITwkd3IkU2MLbY+5d1Q2ZDdSLPuTEPA7kxsYqF5BSVN9T1lPe2Q1TJAQ/kWmg/qIsw86p7gwqrbsZnoaVJ4ZFoD3h0uN2Djh6bqnGnSuEDZi2LJRdlHT3m2RwJnXYZK2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MptsaP8f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EOG0zmnh; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l2+BptpB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QDj8G0MZ"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3668D1D000DD;
-	Mon,  8 Sep 2025 07:17:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MptsaP8f";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EOG0zmnh"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C70B37A011C;
+	Mon,  8 Sep 2025 07:39:38 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Mon, 08 Sep 2025 07:17:51 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 08 Sep 2025 07:39:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757330271; x=1757416671; bh=xbuQi+wh9c
-	asrZ0OzobS+e4k5yoQ2nSas0owtX5xcbw=; b=l2+BptpBz0WDnGGfvJAM2ALfbQ
-	8NI9Ue6UUFuYsrP2IhDgXsboy2IY1g1wgXvwWlOcixijMFqDulsAaQk0GolzszTb
-	sYFnsP6K7AgCBgXH0W6ziyRnd1zmACAsNCHsvGbJMaxdetPJj8r3BgTay3Engtk/
-	qPJfxTmfoPN640ct62S73jCXdy/D5aNhlktX8cU9rPyPtI+9bg6JtNHpMZGgTKsr
-	TX3lGMNLvLc+mUel7TxVrAbTySiVyJ1dn8sKzoKCF5r4Gr8vhBazrwhMC7JQyRXW
-	rurL94t1J+Gkw1Y40t+510uMceFrzdSeknTj0ESHQYfOnLH2fQCpY5L+gWag==
+	:subject:to:to; s=fm1; t=1757331578; x=1757417978; bh=QAIN8I5oI2
+	wb9fj9ZtbKZO71hU5mIx1hja7AsbSI2xw=; b=MptsaP8fpaY0WgkQxLAGP9ogNg
+	ViJb31yxGx2rURp18c1DjYvBYxHPwjwZI+P4scDks9z06FCbDrzrcSWr31ldQlXM
+	Wj+4kepbrp5FGbS65TEcJJ4KLvAa0Zy7pQr7BcUSwyhDisfOmOUplX4lO7RjOvs2
+	po2xmR+iKU7ch2yH/eLgdLus66jlvn30chpVoxVZrIyZE0G06gfCGLq6s+mSVb8t
+	HcLlnBnQ3r6Bx72viINZThnnf6rdVOU0w2uF5Zi78HIC5xEa99sNbWsRCDwZW3qV
+	x/6DlEJgSwG9ZUBCA0fvfvjmjKOqo+EToRdGkOxHw5548yNJpIN80jT7d9mw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757330271; x=1757416671; bh=xbuQi+wh9casrZ0OzobS+e4k5yoQ2nSas0o
-	wtX5xcbw=; b=QDj8G0MZtbckgZEcNl9s/xy1lt4IXc0p6hZTR7UzBNvDQy/Xdpd
-	7bnrtXRsXI2YuqS3qUEZMuUQo0EWQgex2WnKchO2Yfib7fSDrhL0kIqR+HWXbrcT
-	15MoqPykBfxesdmvxEgGvgoW+TiyImdOisKzHW6J6f/gbW9ZVKl801bafhzoZBQA
-	fHOon5nFDfbQbx0vqJPwaEDMU0ftZfEtNq+6BCLyY35uXK5aKpa4tXdpgnsBZk4J
-	29i/vzxnXOhcnxb4jx63GLxCo5epUaGT53uQwsCjOmIidN8riB7GFTazMUyN7mRH
-	Mvg3v7JAdUNR+IZYUE9d7p5A818vfSv8jvQ==
-X-ME-Sender: <xms:Xru-aNbUzo0OY5yONzqmCWiPoaJXcAPS0Lasc_Vd0fc9uHNf7OSvgQ>
-    <xme:Xru-aHrrDjJ-BV_DGxWVJRZGhQIB4xw3kdIMinv0pkNO4rHqUd7RjwCQTlK8bl0tH
-    TnlVfE4BweeQZUZ3A>
-X-ME-Received: <xmr:Xru-aJZiLIGbCeL6BtDwK0ikmF4ctfQ_a4uY5Mlk35TW1ga8Wv_R9Q36CxTOHSZ20MVofxlEc5NpyGu68vZRD5drSeSfi6tCy7QNBCHIHr1RFw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeeflecutefuodetggdotefrod
+	1757331578; x=1757417978; bh=QAIN8I5oI2wb9fj9ZtbKZO71hU5mIx1hja7
+	AsbSI2xw=; b=EOG0zmnhpv6Y1VfmjF0NvUf4WR4pVb9K6P1KaZf/ZDkuYk6dBaD
+	Skb7emyiqe5el7keOMBAI6jjiVpd5RpXKa0ZxNav1MCdicq4nhutm1SCy9da1fBn
+	TH0i88EzA7EJuQ3j2fCkGbpccHLYkuOdkbrq8PfVEyzq7152rWw8/yRBVzq+Zj3Y
+	/OR9JgdlyFZSJTDcurKt7qsdHOvAfvDjvel+tO8imfB7x4xHV6LKXxLiZXhwx/GB
+	yfG5Zn3HDLKNEf6sujVoSjW0wKn9mAcKoOE17lauGm9YEewfR6gwHNYmFeoJ8KTg
+	XXcZzpY1vBbTSYAZBjUnan2etA27IuG87PA==
+X-ME-Sender: <xms:ecC-aFMXnvFPglrtL51SeYuEnE-91nwV-WvmHoF9ofzZoU_eErxf4g>
+    <xme:ecC-aIERhKYE-egw4YOAdxi7yP2QyBJHSPu245xCTOdEJ_MojEbz96v-ZoXre_vrn
+    OVcb2TaMCBCK6KTdQ>
+X-ME-Received: <xmr:ecC-aLtuFhZ4_3aty8lNUERx7vE40EkkzoIY-3g431nrwu3-LPZFOwFg-_EPtQ4Kd2dPIegY7SgCfUu4TKyZSL_4Npz1uQjS_xk-DxvrNHhMlA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeegfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Xru-aHQ5IkEV5sM4cB1BhlFbHMzdpoOt6TTaPMkuuDZf29YuvWgh1w>
-    <xmx:Xru-aI4vshThBxis4y_OG5Lnk5yV4_i02ZfpVa2WaYy6qJFIlvTQ1A>
-    <xmx:Xru-aEzdUk87PPF5nM5seiMDC9vJSib7E0NsvXp4xJpCnhpo0p_edg>
-    <xmx:Xru-aPRBWYbxRPHRb6iHl0QVVzYxk0oak7TWkhuR6Nsq-VHGkIaZ_g>
-    <xmx:X7u-aIS8lAbOsncAeO9w_nye0INQ3IrN91F9m3waS7hexauIKkHGM5bb>
+    drihhmpdhnsggprhgtphhtthhopeduhedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    oheptggssedvheeisghithdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghi
+    lhdrtghomhdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomh
+    dprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepjhhohhgr
+    nhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepvghstghhfi
+    grrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepshgrmhesghgvnhhtohhordho
+    rhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrd
+    hnvght
+X-ME-Proxy: <xmx:ecC-aITHM3pn8Z3wWA9jI2wSUF17JKst90xp5gh7ybctcgZTLZ02XQ>
+    <xmx:ecC-aFOvYw56IsgC43MWApUJjK1-38zXoZRp9l49pYdmFSSP2hHd7g>
+    <xmx:ecC-aG49pd4QbsZDGJ0Q_3vwk041QSX8wh3L_Btxhc1qZEwAtY5biQ>
+    <xmx:ecC-aAVvnnpALNa7mhSu-y5cxWIxrn8BmSR_PDfeP3VHTO2c3fVNhQ>
+    <xmx:esC-aNyLJ5cQ8-WP5t52mnclZQHplXnehMQsMZzE1NKX5x3nVuaugaS6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 07:17:50 -0400 (EDT)
+ 8 Sep 2025 07:39:35 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bc799514 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 8 Sep 2025 11:17:48 +0000 (UTC)
-Date: Mon, 8 Sep 2025 13:17:39 +0200
+	by mail (OpenSMTPD) with ESMTPSA id e05604a6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 8 Sep 2025 11:39:34 +0000 (UTC)
+Date: Mon, 8 Sep 2025 13:39:26 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
-Message-ID: <aL67U0-tw7O-y6_X@pks.im>
-References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
- <xmqq5xdx7qx4.fsf@gitster.g>
- <cf7aeda1-297a-4805-b0ae-e379ce11bbcf@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ben Knoble <ben.knoble@gmail.com>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC 2/3] rust: implement a test balloon via the "varint"
+ subsystem
+Message-ID: <aL7Abgdbi0-aIm6Y@pks.im>
+References: <20250904-b4-pks-rust-breaking-change-v1-2-3af1d25e0be9@pks.im>
+ <8A7DBC60-286A-48FE-A3D3-CAFC11FD3AEA@gmail.com>
+ <xmqq8qipzhg3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,129 +104,85 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cf7aeda1-297a-4805-b0ae-e379ce11bbcf@gmail.com>
+In-Reply-To: <xmqq8qipzhg3.fsf@gitster.g>
 
-On Fri, Sep 05, 2025 at 02:29:50PM -0400, Derrick Stolee wrote:
-> On 9/4/2025 7:12 PM, Junio C Hamano wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> > 
-> >> commit graphs are currently stored on the object database level. This
-> >> doesn't really make much sense conceptually, given that commit graphs
-> >> are specific to one object source. Furthermore, with the upcoming
-> >> pluggable object database effort, an object source's backend may not
-> >> evene have a commit graph in the first place but store that information
-> >> in a different format altogether.
-> >>
-> >> This patch series prepares for that by moving the commit graph from
-> >> `struct object_database` into `struct odb_source`.
-> > 
-> > Hmph, I am finding the above hard to agree with at the conceptual
-> > level.  In some future, we may use multiple object stores in a
-> > single repository.  Perhaps we would be storing older parts of
-> > history in semi-online storage while newer parts are stored in
-> > readily available storage.  But the side data structure that allows
-> > us to quickly learn who are parents of one commit is without having
-> > to go to the object store in order to parse the actualy commit
-> > object can be stored for the entire history if we wanted to, or more
-> > recent part of the history but not limited to the "readily available
-> > storage" part.  IOW, where the boundary between the older and the
-> > newer parts of the history lies and which commits the commit graph
-> > covers should be pretty much independent.
-> > 
-> > So moving from object_database (i.e. the whole world) to individual
-> > odb_source (i.e. where one particular subset of the history is
-> > stored) feels like totally backwards to me.  Surely, a commit graph
-> > file may be defined over a set of packfiles and remaining loose
-> > object files, but it is not like an instance of the commit-graph
-> > file is tied to packfiles in the sense that it uses the index into
-> > some packfile instead of the actual object names to refer to
-> > commits, or anything like that (this is quite different from other
-> > files that are very specific to a single object store, like midx
-> > that is tied to the packfiles it describes).
+On Sun, Sep 07, 2025 at 09:39:08PM -0700, Junio C Hamano wrote:
+> This is a tangent, but as many people pointed out, calling this a
+> test balloon is misreading.  This is quite different from what we
+> traditionally called a test balloon, where 
 > 
-> This is an interesting aspect to things, where the commit-graph file
-> is a "structured cache" of certain commit information. It happens to
-> be located within the object stores (either local or in an alternate)
-> but is conceptually different in a few ways.
+>  - we were already fairly sure that the construct is safe, but
+>    wanted to be extra careful to smoke out anybody who has trouble
+>    with it;
 > 
-> The biggest difference is that you can only open one commit-graph
-> (or chain of commit-graphs). Having multiple files across different
-> object stores will not accumulate additional context. Instead, we
-> have a "first one wins" approach.
+>  - hence we use the construct in question in a place where nobody
+>    can compile it out, hoping that anybody with a system incapable
+>    of handling the construct in question would be broken badly,
+>    reporting the breakage to us;
 > 
-> This does seem to be something that you are attempting to change
-> by including the ability to load a commit-graph for each odb (and
-> closing them in sequence as we close a repo).
+>  - this is done with an understanding that even a single "the
+>    compiler on this this platform with more than dozen thousands
+>    users cannot groke it" would automatically stop us, causing us to
+>    revert that test balloon code for _everybody_, refraining from
+>    using that construct for _everybody_ until the situation changes.
 > 
-> So in this sense, the commit-graph lives at the repository level,
-> not an object store level. When doing I/O to write or read a graph,
-> we use a specific object store at a time.
-> 
-> The other direction to consider is what context we have when we
-> interact with a commit-graph. We generally are parsing commits from
-> a repository or loading Bloom filter data during file history walks.
-> Each of these do not have a predictable nature of which object store
-> will "own" the commit we are inspecting, so it wouldn't make sense
-> to restrict things like odb_parse_commit() over repo_parse_commit().
-> 
-> With these thoughts in mind, I have these big-picture thoughts:
-> 
-> 1. Patches 1-5 are great. Nice cleanups.
-> 
-> 2. Some of Patch 6 is great, including having the I/O methods use
->    an odb_source to help focus the specific location of the files
->    being read or written. However, the movement of the struct into
->    the odb_source makes less sense and should still exist at the
->    object_database level.
+> This thing is different at all points.  We are not "fairlu sure that
+> Rust is safe to use for everybody"  Far from it.  We are confident
+> that requiring Rust would break known people.  We are doing this not
+> because we intend to stop once we know of folks who would be broken.
+> Far from it.
 
-I (probably unsurprisingly :)) don't quite agree with this.
+That's fair. I still think that this conversion is viable though. The
+main intent here is to start building the infrastructure for Rust, which
+may take a bit of iteration to fully get there. And the earlier we start
+with the process the better, so I think we should go ahead with this
+regardless.
 
-Let's take a step back: why does the commit-graph exist in the first
-place? It basically provides a caching mechanism to efficiently return
-information that is otherwise more expensive to obtain:
+From that perspective it still feels like a test balloon to me. The
+intent here is less to figure out whether anything breaks. It's more
+that we need to have some Rust code in central parts of Git to be able
+to tell whether our Rust infra works in the first place. And it allows
+downstream packagers to give it a try, as well, so that they can start
+to report any issues with our infra before it becomes mandatory.
 
-  - It contains a cached representation of the graph so that we don't
-    have to parse each commit from the object database.
+I don't mind much whether we want to call it a "test balloon" or not.
+But giving it a name helps, and "test balloon" is the closest match and
+I don't really have a better name. If somebody else does I'm happy to
+adapt the wording though.
 
-  - It encodes generation numbers.
+> It would really be nice to find a niche that can be a new optional
+> feature that is not essential to the functioning of the system
+> implemented in an already modularized part of the system (e.g., an
+> optional merge strategy, diff algorithm, built-in textconv filter, a
+> new ref backend, etc.).  Then we can introduce Rust, knowing that
+> some Rust-challenged systems will not be able to use these optional
+> features.  What Brian mentioned about two-hash interop feature,
+> being only available on Rust-capable systems, could be such an
+> optional feature, and if it can be done that way, that would be very
+> welcome.  If we can have Rust goodness soon enough without making it
+> mandatory in too short a timeframe, that would be ideal.
 
-  - It contains bloom filters.
+I feel like this is something we should _also_ do. But for now I'd like
+to continue with "varint.rs": it's easy to convert, self-contained and
+allows us to iterate on our tooling while we don't have a better
+subsystem or feature to convert yet.
 
-All of which makes sense with the current design of our object storage
-format, because obtaining this information can be quite expensive. But
-let's consider a different world where we for example store objects in a
-proper database:
+> I already said that I find 6 months advance notice to folks on
+> Rust-challenged systems is way too short to be any good.  If the
+> only reason we give advance notice is because we want to make an
+> excuse of cutting them off sooner while being able to say that we
+> gave them advance notice, that may be sufficient.  But if we truly
+> want to help them by giving enough time to them so that they can
+> help their platform themselves, by lobbying, fundraising, or
+> otherwise campaigning to have usable Rust on their system, I really
+> do not think it is sufficient.
 
-  - This database may have an efficient way to compute generation
-    numbers on the fly, either when reading an object or when writing it
-    to disk. We cannot currently store that information in the packfile
-    right now, so it needs to be stored out-of-band. But with a database
-    there is no reason why we couldn't immediately compute and store the
-    generation number on each insert.
+Yeah, agreed, six months feels insufficient. My current timeline
+suggests roughly a year before we make it mandatory with 3.0 with
+various in-between steps that gradually ease into Rust to alert
+packagers. Which still may not be sufficient, but it should hopefully
+okayish if we also commit to 1.5 years of security fixes.
 
-  - This database may have an efficient way to store bloom filters next
-    to a specific commit directly, without requiring a separate file.
-
-  - This database may be distributed. So why should every client now
-    have to recompute a commit graph if we can instead store the data in
-    the database and thus have it accessible to all clients thereof?
-
-  - It may be _less_ efficient to use the commit graph to access data
-    compared to what that database can provide.
-
-So I would claim that the commit graph is specifically tied to the
-actual storage format of objects, and it's not at all obvious that it
-would need to exist if we had a different storage format.
-
-The goal of this patch series is thus explicitly _not_ to allow loading
-one commit graph per object source. In fact, the refactorings I did
-ensure that we still only ever load a single commit graph.
-
-Instead, the goal is to allow each object source to decide for itself
-how this additional information is to be stored and retrieved. This
-_may_ be a commit graph if that makes sense for a particular storage
-format. But it may just as well _not_ be a commit graph, as other
-storage formats may have way better solutions for making the commit
-graph information accessible.
+In any case, the exact timeline very much is an open discussion point.
 
 Patrick
