@@ -1,109 +1,125 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CFF20B22
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 04:17:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E9F218827
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 04:36:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757305057; cv=none; b=qB2pKgjRgL+SA/ug3hcAuh6uihBGupRGLqjD1/H0sHz7SpCcU4scdCwZh88Pmc3DJKbErmBJa8m4SvFtkkVZbyXiUgpn7V3cO2PIbw0gunHZsACFwaBx7m8NNadSwvZPslGrFT1D60tS0qq7zyiaXiycVIgE/+ceuQHmADxGAUk=
+	t=1757306195; cv=none; b=vA8R72E1LW15uSyE61LLZQBXuzn7eIEJLSXpHkOIM17crb0jrDgZua+hC8eYbR9G/GK26pJraTzPd4sFUCXspiQasIf/bEqrYAL5WxgezTENW/mEadTxEWMwZAJvu6UAYXSyHGxJQ5zP+/Y0Yu/lvRBicWZPze23fZhx2mXwqCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757305057; c=relaxed/simple;
-	bh=J0e9Rmx/HBjkKusEUspjoNPXb48GdDdrcxIoq5WMmno=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ogOOelmw8FpoKKqcmqY6wZ1ZLJ/xNYCYLM6T3VnJ3cEiNbFD96XNE9P102Q4NzdAfo36tJJR6QvsMN+LRA0v7zSkOwWPu9746WMLOK4bLNmdtPxGdbYY9vXXf4secX/1LVQrfuIgq0/4kdMl8R44yXg3LvkW+d61Kz973dGIHnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wp3mfbye; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bfnqDguF; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757306195; c=relaxed/simple;
+	bh=F2FBZiAT/pjTOJjCoiazIebsRHwZxCUCqmcS+IvZZ2I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OyI2ERwCbLdV7Tqv7Mw6E7k9rCvwCTqlatRUxa2RRNwLFqsTaIXr3pPaEqvKnfreiQ3o1GiPqavJvJH2E3K+QWBeFjoKgVz6/+UFddcLcdTAFj7edMTwRNmVmDntxtYEMM3W+EBGzHWmlmuvtou5/EYJhFQjV6fWV7tVZh8+kOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hTK8thPu; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wp3mfbye";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bfnqDguF"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9A964140008E;
-	Mon,  8 Sep 2025 00:17:34 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 08 Sep 2025 00:17:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1757305054;
-	 x=1757391454; bh=yD27AXUwPTWi+I8cuALDpGvqjIC1i6pu5EYrBl6xI6s=; b=
-	wp3mfbyeM5lWasCMtcOYyazv9xQ0QY9xbck8PQyOm3iRLJ0S8ri87oCW7LuhysMe
-	DNiBv8lSHDFHq2vGL1KJVTvboBlkq/6DLhLvgXrGejf6SacLxemRhYpsUSDXL/sP
-	V5LqtJVrgvAQi7fcpfoQ9kG4NKmPbVr61WwzZNR7AITT1q0iJJnH+KvqHOakVYSZ
-	3bK9myShbf541BcfNEeBr87ig4EyE/qWgCkcFVY1jn48F8G61Fg2EV+r/rawNwuL
-	tcZbse+AuT88sbZjCfi8aPl5AuPpVcsvsdzfFMd+ooir99WVsNhlwlxI9kUewPgY
-	waK0lcvIZXqEIbyIWugHRg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757305054; x=
-	1757391454; bh=yD27AXUwPTWi+I8cuALDpGvqjIC1i6pu5EYrBl6xI6s=; b=b
-	fnqDguFkZXcTZDXJOoKfLXznnTC1RmTxid0mdCgyDJ2Vvm3N1m9OmkTCO3S9Rf9W
-	cSdsO4nGx4YBj87yphLvSNz5XLMibqwA5nxam5U5U1UJ68Ia8deGizYXYxFEVpEN
-	xtnn4jHOnahEcvY1R7ZYDOmKDEJP7HFeO9yBSR6D6Ao+Ssbd0eEurX/1MJBNW/Nv
-	s5CWaBahopT0psSwiN9AZv3Ru5e/HKrSDJowHOMS4+swRZm5AAVtFF1lwt1gktX1
-	UfVdhJHgxMIvD0OJXxdgw5kstqABBeyFA5P6lbfC9zXG6996ac5h0iSdummuxi6G
-	og0+iwgELiKsdh5yBhR5Q==
-X-ME-Sender: <xms:3li-aCXhuXZns5I4XtLGAVfFwhyh8IJ-r88YCyUCyQLbL1kTWWE4jg>
-    <xme:3li-aB0jBmblhvajBeABZu3QW9mlIgAjzU0pfPv-iGtfK-POx81wncAfsm7gTvOJl
-    yLsvg_y53v_Dz9sPw>
-X-ME-Received: <xmr:3li-aP2Er2FFxZe86HBYQtSbxyfwTKQgkcAucgHiyKaptHaTnguHACGd3uVdsFlW_YCUmKr7utAX9JIK5xAyPfmdfTX5pcJ8QlxzVg0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieehhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgfgsehtkeertd
-    dtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevle
-    fgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlrdhsrdhr
-    seifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:3li-aE9p1LJey8NZppj_GKFvp4QaxB4qCz662pOnPaiUlX8he5xvAw>
-    <xmx:3li-aM1Rc5xt0wFidJXL_1pvzAg3HY_va6ZFol3PZv7uwI0zkvzqEQ>
-    <xmx:3li-aB8MZ9XQjrutOir42Y8OOScYI_x0yjnww_6knnHXFh251exUFg>
-    <xmx:3li-aMvDhuNA0lhAM_5KGvNmW-cMcA_PV2KtjC7vtcMW2fzxPvgA9Q>
-    <xmx:3li-aEFNDZ971t1hC4krccUeHVHQcWC5U9yqbJ2tBX1X6usMj434C4ij>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 00:17:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] object-name: declare pointer type of
- extend_abbrev_len()'s 2nd parameter
-In-Reply-To: <81d10b44-5b3a-42af-acf4-ae76f2fee298@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Sun, 7 Sep 2025 18:22:18 +0200")
-References: <e0bc9a67-faa9-4218-a55a-c7d53c15cfce@web.de>
-	<xmqqv7ly6kup.fsf@gitster.g>
-	<81d10b44-5b3a-42af-acf4-ae76f2fee298@web.de>
-Date: Sun, 07 Sep 2025 21:17:33 -0700
-Message-ID: <xmqqh5xdzig2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hTK8thPu"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7724df82cabso4513454b3a.2
+        for <git@vger.kernel.org>; Sun, 07 Sep 2025 21:36:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757306191; x=1757910991; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=t6Eq4cQ11Hb7LrCrAxwO/6Pmb0Bq6LERzkKRHIdmlPY=;
+        b=hTK8thPuWA8HdSrdJ5sTZljnFBt3BoZrwcMz1/ayITfDqfDmz73Blk/EY/3Drw7iG6
+         fyL9MuzuU9fq9wLlFl5mQbHZ/7WY8nXfkuEDKVu7Wh4Sv14gbnSZ0g0yG9HjlLCf6TYz
+         R7PdB/lrVW7a3tD2GB6pSK2agnrD9HcF7klH5W7gmWz/TITl8gKrh7ELKzXxzRClHYrh
+         c9UzPqaE88ApZMsER3btoBLxRHc/+wAj9IpMxfrCkJxHAI6X6Retmy7MP/ORK8BwO+G3
+         0CRBY7oZV7RecbCaovLH1Rownsm8mh5JbR9YEoDDRSPXp4+FpheesrkRoewlVO/f/2eJ
+         x/AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757306191; x=1757910991;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=t6Eq4cQ11Hb7LrCrAxwO/6Pmb0Bq6LERzkKRHIdmlPY=;
+        b=TRBYi1ldIfL9xB5guq9/aW3D6fz/SzjtIyg6tv9Q08Z+gcdO/AN86P73ktOFngF8LB
+         9QTYjUOWJQf2xnBEbgL8xhKPdooFkUMI1MmQ2/Yp9IXLGv0baMWvVFNbpPj/hVhOoADM
+         TflsCWnKtBV8KuTupO3J0YuP6aXhTrdLh74KGxXifzr2P/10dJNlmt9CqtNEPc8/CCyN
+         Wt/5ndwQhGe3gqg4WsyxG2mEGdOE1pp+0pCTA4gCwJ1XtjRDQSpkM0JwIMrt5Xlao/OE
+         1otgf6wEBVuFhaLhm44r6VIZ1Dbt08BsSLfcsOER/HsvcWMgE/8msH+zHVa+h3/Rih2v
+         cWUg==
+X-Gm-Message-State: AOJu0YxCgqb2LXOMIbw6YHKv4T0uc/FeQ0nTeBy4CPrhKjpoWpZ4IRm+
+	oSW0wtVgmZtPPU1QbxF9HTy/sYNZ8JXfLLkQU2X2dbxxqDkkmO9B16hGFOz3itEg
+X-Gm-Gg: ASbGncvVchWA2LC52OZ8Bp3BXx7y9+gF3HEFHp+o4hnO1HiZlqCWdo0nScHOkrm49gM
+	eZdYLb4uD+kikhd3naac6EkihnWED9VMKXoESAoPuZwiMP4nHK8Ds8Z4bt72g7vhDOp7hhCdoj0
+	ZB7++T6kqSM/WAj8TPwWzdDL0Hks8z9bPvcWtvN7Yve4ZSkC7z+nPq+t4UcfLQBUhm4Muffw9J2
+	69lWAoexz/JkfW6plY55f4YODdbKS908y0Er3Yk+8bEbvdyhqPEiKZUQ+v0hJMwaVdVerrYFIK5
+	Gx1RDXNtDcLLsMbyGD7Sx/G1hniaadvCAKecQch8KLg5lGFN184bBtM0NUMv62hcBZdOfFlRdgK
+	SovKtj27mRdwhXvksWavhastHfeiXmgkh/q0nfv3pTbyXxKzKJE8fyAZ+ndkTPIZ6
+X-Google-Smtp-Source: AGHT+IFt/nA/4mP7Te3Z++Sf5Wl84lmqdlJfWdo3kV/RGByxETrl2fM7u/pNtI8BqPMtdQMHsaSkfg==
+X-Received: by 2002:a05:6a20:3c89:b0:24e:84c9:e99b with SMTP id adf61e73a8af0-2534585b850mr10028772637.48.1757306190567;
+        Sun, 07 Sep 2025 21:36:30 -0700 (PDT)
+Received: from localhost.localdomain ([2406:7400:56:7e97:c01c:f128:b5c5:e0c])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24c9c2b1288sm127720805ad.106.2025.09.07.21.36.27
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 07 Sep 2025 21:36:30 -0700 (PDT)
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Toon Claes <toon@iotcl.com>,
+	John Cai <johncai86@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Siddharth Asthana <siddharthasthana31@gmail.com>
+Subject: [PATCH 0/2] replay: add --update-refs option
+Date: Mon,  8 Sep 2025 10:06:18 +0530
+Message-ID: <20250908043620.57848-1-siddharthasthana31@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-René Scharfe <l.s.r@web.de> writes:
+This patch series adds a --update-refs option to git replay. Right now, 
+when you use git replay, you need to pipe its output to git update-ref 
+like this:
 
-> I can see the appeal, even though (or because) it's kinda half a step
-> back as it keeps the original local variable, in a better place.
->
-> We could _lunge_ forward and add type checks to allow the compiler to
-> tell us whether the pointers' journey through the void is safe.  The
-> trick below is simple enough, but requires bespoke macros AFAICS.
+    git replay --onto main topic1..topic2 | git update-ref --stdin
 
-Once there is even a single step of callback interface where the
-callback parameter has to be a generic "void *", we have to cast
-down to the concrete "struct min_abbrev_data *" either explicitly
-or implicitly anyway, so it does not really make that much of a
-difference (and that is why I said "we obviously do not have to").
+This works fine, but it means running two commands and doesn't give you 
+atomic transactions by default. The new --update-refs option lets you do 
+the ref updates directly:
 
-Thanks.
+    git replay --update-refs --onto main topic1..topic2
+
+I discussed this feature with Christian Couder earlier, and we agreed that 
+it would be useful for server-side operations where you want atomic updates.
+
+The way it works:
+- By default, it uses atomic transactions (all refs get updated or none do)
+- There's a --batch option if you want some updates to succeed even if 
+  others fail
+- It works with bare repositories, which is important for server operations
+  like Gitaly
+- When it succeeds, it doesn't print anything (just like git update-ref 
+  --stdin)
+- You can't use --update-refs with the existing --update option
+
+This should help with git replay's goal of being good for server-side 
+operations. It also makes the command simpler to use since you don't need 
+the pipeline anymore, and the atomic behavior is better for reliability.
+
+Siddharth Asthana (2):
+  replay: add --update-refs option for atomic ref updates
+  replay: document --update-refs and --batch options
+
+ Documentation/git-replay.adoc |  62 ++++++-
+ builtin/replay.c              | 134 +++++++++++++-
+ t/meson.build                 |   1 +
+ t/t3650-replay-basics.sh      | 323 ++++++++++++++++++++++++++++++++++
+ t/t3651-replay-update-refs.sh | 273 ++++++++++++++++++++++++++++
+ 5 files changed, 778 insertions(+), 15 deletions(-)
+ create mode 100755 t/t3651-replay-update-refs.sh
+
+-- 
+2.51.0
+
