@@ -1,103 +1,120 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from smtp-out-02.rz.uni-jena.de (smtp-out-02.rz.uni-jena.de [141.35.105.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662922F7AA9
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 17:34:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B83F313E2E
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 18:11:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.35.105.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757352859; cv=none; b=NBm/GkVG9q6B4/BQD5YNfELEbvjSe+FpAkP7Vntw6Tk+sNDEboVMaaka4FuSJkMbMqeJJVaGTDkUBxlqmjj2nU2FKhLjxccimDI5OaRQsbmkwwU7JPTGkjStI3D3Qe1RaaYFWDXbS4rHEhsUyYVJkEo67jvtYVlj/sStHPiagFc=
+	t=1757355092; cv=none; b=T341jliMOzh5RAovw5I7oMHjsCJf/PbM23ckJsUk5KvE2MHnaXugkq+6Urs8n3jNIrmMLWQnxJFhOBRp1zPztmBbcxofdKpHoSH0iYrUppN0A0zOCt/5QgZW3VmOD6Xp0sRiFgqwzovN9Q3P7Ex8cJaGjAT79TqwmtfevGWsQIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757352859; c=relaxed/simple;
-	bh=/11VWiHOb4mXb+5zFYosZ8dmHJkZuIznxornnbPkJnI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sWPS9m8QZty4Z9v4MxxY7scjqDuBQ4bP1IA667kokTTrwe2AM8IC9d/EfgVx4FYEfi52QIf94URvdHT8QmvvcqFyrDbHc8CGEtcf/RqMCZ8VtAnsk3b+jcOHsnYpt6iS4XeZe/lD1U89On7AGe29yn9sDMRt6nL9nNt2HIwhIAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sU4U0xQD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OWC8wITp; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757355092; c=relaxed/simple;
+	bh=A97mAVcHiJ2IQT09so7KjU9e09lSbLUDqD4ZPxpkBpI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=JWYNI8F1jNKH2RxO1LEjb1C6NjAfUXFyl2bODUEp2y6wAocIXwHSZBQs5vhlwhXRCbjyQ/dtYjEZYBQlVrYlkCGRU1H2LkNaoBoi/QsUvo2vlmJXsUKVZjF9MBH2NmZQARrzs+rh5yLtRR6b9AIekAodOBaL5T3S+KhYD++E/AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uni-jena.de; spf=pass smtp.mailfrom=uni-jena.de; dkim=pass (2048-bit key) header.d=uni-jena.de header.i=@uni-jena.de header.b=g4bzzZud; arc=none smtp.client-ip=141.35.105.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uni-jena.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uni-jena.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sU4U0xQD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OWC8wITp"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 421B77A0110;
-	Mon,  8 Sep 2025 13:34:16 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 08 Sep 2025 13:34:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757352856; x=1757439256; bh=A5mXqhybZy
-	J5n7yp7UzCDzN/zW7aiXlZrL3tAzAJ+RY=; b=sU4U0xQDrLv0m/yqX5xI5rAiEf
-	Jg4vNUv8NEd+s9Qt5GeYvDsRz92AFOTrbffIq2IvqH6sUUUeLvHzx20cC5i/drW5
-	AivPk6a1/pPAkdMPoVgmreq26wtAbPjSMmRgrB+8CuETPTQqfIfVKvcPX1kY5kDp
-	vby4M18IyhEy/reZXiyZtwzzsh3TCIghKMI0zkk8U8DVPOVyl+Umy6tC+R6PIepw
-	rYpHSdD4BaXBX/AjbmACCf0+vXmgqTEim4Q+SIv4wlbAVfm5n5iBlNNgkTjgeptX
-	R/kMhi581nZmSl9ajqxkELCmiFCMGzjuh52HEgLWz9Azu7nU4Ol2kSDAtDwQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757352856; x=1757439256; bh=A5mXqhybZyJ5n7yp7UzCDzN/zW7aiXlZrL3
-	tAzAJ+RY=; b=OWC8wITp2WMCfpsBTAJFf3yO3wwiA/6f56cGxB2EAaZB8KYxFT1
-	qXaVzIDC1fw4Gm+MF8avKSfoqlkBjVKAgmzjQyIh5Lwqt+5pCgYzyorurIex/pPM
-	+RvQZlf4dPDxOGY0nfOz9uFgfdvi1Baui+Ak2igjmqwWf3vI18OsLIQpxnWLT1TO
-	qF0OcpSJJV53pPFqWzypi7E7/iim729XfFnyG70b4s8JNXMkyGrNm5iO/T9HSL7p
-	RtuFq0m1YzlxfTM0TOSNw0w75oWqxYld/tFVTEzW0/xKMkJcLLtwIjA4Pk5HYsiL
-	MHNHImQ6jddKucstVDhLMYx4C1ViKgw29Ww==
-X-ME-Sender: <xms:lxO_aGbB29hB93sAZmBuL9lJbQmc6sWRmGZtfGZC3_mlYIJE45AwvQ>
-    <xme:lxO_aGW65xZLzTIS3brWFxL3dPOaAoZAMCIBqzKom5-sssPFAMSKoCdGnmyAcCMKu
-    wEm-WskAkTnSh8CjA>
-X-ME-Received: <xmr:lxO_aMk4JtJp8WZrLKOq3Ex2-PebDW1nBNZiNDZ2GBTLriRt52oG5xOA5L2rOT1vuW4KU3g9x6IVHiBWYSSdjDgyVR-DVjiAQiEv5sc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedugecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
-    hmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjnhdrrghvih
-    hlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:lxO_aBBS1aDdRQRhoJqPumP2FMSx300FKDRGtJoGUsGQCKlqx8_9hQ>
-    <xmx:lxO_aLhOBoqkzJZ8RIgZvKRck5ffZat_eMJo64pQRnlk1wx1rXDxQw>
-    <xmx:lxO_aOwkzBOmMh72Kp8ummZHwkoF5DSSfJYbSUHhouHSImWEBMm5rg>
-    <xmx:lxO_aM2gW7vgD1Ue3quOuo6Fnwe3Su8VE1h_3p_WnWdEPVXZPltdgA>
-    <xmx:mBO_aBG1NYLsWYrzJQKTy-yqajg__bCqWMrg38j4UAfFlzDoBnYOzq8u>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 13:34:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
- <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Justin Tobler
- <jltobler@gmail.com>,  Jean-Noel Avila <jn.avila@free.fr>
-Subject: Re: [PATCH v8 0/7] Make the "promisor-remote" capability support
- more fields
-In-Reply-To: <20250908053056.956907-1-christian.couder@gmail.com> (Christian
-	Couder's message of "Mon, 8 Sep 2025 07:30:46 +0200")
-References: <20250731072401.3817074-1-christian.couder@gmail.com>
-	<20250908053056.956907-1-christian.couder@gmail.com>
-Date: Mon, 08 Sep 2025 10:34:13 -0700
-Message-ID: <xmqqqzwgx2zu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=uni-jena.de header.i=@uni-jena.de header.b="g4bzzZud"
+Received: from smtp-intra-03.rz.uni-jena.de (smtp-intra-03.rz.uni-jena.de [10.138.192.41])
+	by smtp-out-02.rz.uni-jena.de (Postfix) with ESMTPS id 4cLFCg35jnzGq0K
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 20:02:23 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uni-jena.de;
+	s=opendkim-2020; t=1757354543;
+	bh=A97mAVcHiJ2IQT09so7KjU9e09lSbLUDqD4ZPxpkBpI=;
+	h=Date:From:Subject:To:From;
+	b=g4bzzZud0y9QFV95VG78+IzDh5E9kUIDCD7DVakazNyhbW4309XK++43FfOIIQbhO
+	 l/c1XHIpsjp7KjVeYjXBdluQx+mN7eCj9jGtIIRMY4hRzbnwr9kgPyVqcCINj+RRzt
+	 NxeDL+rVw7WEl45xFIKf0bVgh+tOpOgBhkNmFwN1e95ShlxLeI+IhL+aujKs/jDKSL
+	 7Hj0/VKzrZR6Rgu4E6S1F7i9vMt/L1m3CF70boPZcwPdgBhHt+Anz3BPZ1n79H7a27
+	 xWWw/fgnTN6Q31JkJwGZQFmem/PvWaCtLPRpvtp0uLxnYBFdFVPDe1zr5fLSnuexKU
+	 Zjz2nrxkDMtLw==
+Received: from [10.148.27.224] (unknown [10.148.27.224])
+	by smtp-intra-03.rz.uni-jena.de (Postfix) with ESMTPSA id 4cLFCg26gYzyJC
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 20:02:23 +0200 (CEST)
+Message-ID: <7123c20f-04c6-47db-a034-a2871721e58f@uni-jena.de>
+Date: Mon, 8 Sep 2025 20:02:23 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Lino Haupt <linojossfidel.haupt@uni-jena.de>
+Subject: [UX] git restore -p: confusing prompt after failed hunk edit
+To: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Christian Couder <christian.couder@gmail.com> writes:
+Dear Git developers,
 
-> Changes since v7
-> ----------------
-> ...
+I'd like to report a small UX issue in the interactive patch editor
+used by 'git restore -p' (and, to a lesser extent, 'git add -p').
 
-Thanks for a detailed write-up.
+Short description:
+If a manual hunk edit fails, Git currently prints:
+   Your edited hunk does not apply. Edit again (saying "no"
+   discards!) [y/n]?
 
-Will queue.  From a cursory look, these all looked sensible.
+The word "discard" here is confusingly close to the normal prompt of
+`git restore -p`:
+   (2/10) Discard this hunk from worktree [y,n,q,a,d,K,j,J,g,/,e,p,?]?
+
+Environment:
+- git version: 2.50.1 (NixOS)
+
+Reproduction:
+1. Run 'git restore -p' in a repository with unstaged changes.
+2. When shown a hunk, type 'e' to edit the hunk manually.
+3. Make an edit that causes the patch not to apply (e.g., remove
+    required context), then save and exit.
+
+Actual behavior:
+Git prints:
+   Your edited hunk does not apply. Edit again (saying "no"
+   discards!) [y/n]?
+
+The normal 'restore -p' prompt uses the same word "discard" for the
+hunk itself, e.g.:
+   (2/10) Discard this hunk from worktree [y,n,...]?
+
+Why this is confusing:
+In the failure prompt, "discard" refers to discarding the edit, while
+in the normal prompt it refers to discarding the hunk. This made me
+hesitate about whether answering 'n' would discard my edit (keeping the
+original hunk) or discard the hunk itself.
+
+'git add -p' shows the same failure prompt. Its normal prompt says
+   Stage this hunk [y,n,...]?
+So the ambiguity is weaker but still present.
+
+Suggestion:
+Consider clarifying the failure prompt.
+Any of the following would remove the ambiguity:
+
+A (minimal change):
+   Your edited hunk does not apply. Edit again (saying "no" discards
+   the edit!) [y/n]?
+
+B (explicit menu-style):
+   Your edited hunk does not apply. y: edit again; n: discard the edit
+   [y/n]?
+
+C (shortest, avoids "discard" altogether):
+   Your edited hunk does not apply. y: edit again; n: cancel edit [y/n]?
+
+Rationale:
+Point out what exactly is discarded (or cancelled).
+This makes it explicit what 'n' does and avoids collision with the
+normal "Discard this hunk..." wording in 'git restore -p'. It should
+help users who quickly scan prompts.
+
+Thanks for all the great work on Git!
+
+Best regards,
+Lino Haupt
+
+
+
+
