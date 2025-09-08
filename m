@@ -1,130 +1,118 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982332F657F
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 09:28:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE9E2F0C6E
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 09:29:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757323704; cv=none; b=lDApaCLT31VX1zDGuvLQ2Fz3yPP49S13K40iiYNJjYJvFIQRuUAghA5dVrUfU7uAQGOtuzxLWnZ4YR5pYbV+0T8q1hMtvxS+cARsv4rUTQyNZVM8DQ6cYFdrZYkn640PwObi5K8KR/IVetUDQYUjTyZ4gONhrrqQypAcg03wNdg=
+	t=1757323796; cv=none; b=rc9c7qbEXIj5v+cwF2AQbSJaNxPnNDzPc1JPTl4Gy9bBrUv1KUs6zM+u82vWA+0KGSEUCkxmNRHNTsz0oxrfnEuEqyRyZw9u2J3P8ApfcsxwIsQmB92yMwRyPGxqq/VbCyznB6l3cEi68nDf+r1IoU1vwHruCPdlAAeV127+qmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757323704; c=relaxed/simple;
-	bh=hUAa2lfyp5c58Va1RSccyi3bitaQPDOPNHLgWmZ2IBA=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=Ax3kLFzeJ+sVYrHPgLDd99hnp+00T+A6iHfrCja6Ikm5uIhTNK1QZyBRqpzlcaH/5VJBX7wQlxydRFF91kxWwl3u39aHCLeHC7Qnuq+52TEohM0l7M7Uy6dmycFIDUAfZUKZwYtp6TSOCWQK1CeNdbx1EBzF54t+Tm3hm+kCZ1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SvVJwAHg; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1757323796; c=relaxed/simple;
+	bh=Z2NT50YANgE1rqihf2BYkq4TLfCA5dAqzDICyLGaLn0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MU5BmBLsSFYnARJovzm+nFMyvHHYT+Uzm8V7mRJ9VVpfOhyuTdF7ZhcHKrYFdowDeTPZgPaXm9tvYKMNqSThF4M0omrQfiNZWv/bkWvgkpuO7XVe6uqblQBojZZEa78wF0fmkgUGzRqpJ1LWd2oanbDVBvR8hfhotN+jrqaTDrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FGVNuWvw; arc=none smtp.client-ip=209.85.221.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SvVJwAHg"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3e3aafe06a7so1720052f8f.0
-        for <git@vger.kernel.org>; Mon, 08 Sep 2025 02:28:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FGVNuWvw"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-53b09bdcb73so3893691e0c.1
+        for <git@vger.kernel.org>; Mon, 08 Sep 2025 02:29:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757323699; x=1757928499; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language:subject
-         :references:cc:to:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hUAa2lfyp5c58Va1RSccyi3bitaQPDOPNHLgWmZ2IBA=;
-        b=SvVJwAHgPjumEAZ9cUWNkwOnvzlXLmfiG6QZ667Mutlcif5Yn/e1ZfUSKj4BizqZD9
-         e2thh/ntfwYBoqYlrLXnDy9NjMC0ijN/zzkicdlcavpib4LaiJN99nrNv77razhaN3ig
-         sVUOBVzEoBeEpJ7/8LX6Q+R/L6UrErCC9XRCQ1d8r9yFOBQLU47wY22VI3Vk3G9VoHBr
-         J3G0qAqd+gyMrlEm6A9LKON3zHRWaRx2WTRGt17gWc2mTK/j17maW4zyf5iZ9UOWNTdV
-         5JeGBFhAeWD64vlwC0mtJjq64FdH9BUIuM5gDH0n/3va0DM0r/nqKh8i6ByokDUj3Rj8
-         VOLA==
+        d=gmail.com; s=20230601; t=1757323794; x=1757928594; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z2NT50YANgE1rqihf2BYkq4TLfCA5dAqzDICyLGaLn0=;
+        b=FGVNuWvw3pnDbZnfAbjFe2eH0thb/jZSSIWZTTAx1PNb9KvPJ7IAqvSQoGEMrVC7k0
+         h7FsKbu5qZ0r5APJiV9vLuBunqAA8x7Z2PzKwCwgRsSP0vb5WGS3YIrrR9DjmbaAxPA+
+         8YUWWKYy9pl39Juc4YX+vJY05OKOrbqQ8yw31NwMWAeZyjVr6anWm8NErGEARXS7CQPN
+         59VzaI2wi+5QDxDHFDfxIqJJHLisp+WKIb6uUpV9Etl6RDm5eu42BJ4BuAJp7d3rJQjG
+         QUODg0BAnNko2/7LtaViwNlXvaabrogBOps38Uk4dun4RMtiLg3yZKUi4pr4bYHv5Yjb
+         PUEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757323699; x=1757928499;
-        h=content-transfer-encoding:in-reply-to:from:content-language:subject
-         :references:cc:to:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hUAa2lfyp5c58Va1RSccyi3bitaQPDOPNHLgWmZ2IBA=;
-        b=NWMuqbPiKsA9UBdZtHXhKJ58zCMe85NtctWbkjmcvTP1/o66LvFwaMdrkYO681lnsQ
-         Jds7a2poU40hNY2z/MF/FehzseOqLql3zoWnSYYsAZ+euCGKCOUs4rGilGn1BGUaM2ea
-         DXMmYmlx2733giGPYtN/cuqlNAF8FnCpROMNVdZXrsUMv+5AA6AcpxNBHOAuiGLVSpv1
-         CpJl3WqxHGf9cfQePgCtLN0tkF0eSehlVz7rPMFcDIKVUZ6VfN6Rx/orhJhAT/kmZAbZ
-         elZojdeL2iFd5ESsfkH8dnRAK2O9pmx0KQAgvTgTRm0UBB1Ta7azFcUTqW8aC71Wrz1G
-         ofdA==
-X-Forwarded-Encrypted: i=1; AJvYcCV28TAonytmTedVRvOv3tQwnrwrcnXEYbOIeN/GJDmATnd0Ax52TXPk2+KM5lZJChxtaiQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzcptR0n2MZq3KRBUT+V3j67zOPwi7SpdJbiyOL2SxtNJa3SlFG
-	Mt7TeboT6wjsJsTjcDOwDShD/sj1lUN6mi6gwk5DcjU9uDjGafWFGbPL
-X-Gm-Gg: ASbGncvyVez1qp8JCPxbZWfJ4jXxXCAeNlyML3i+7UmsuYa5PqT0NOffYLEfWzAmXGN
-	ciB7nvH33P3ge++rMdITCNw1YzID8EVfPIje559YKenPAiiTm4+wsednPBwynEzdrbhL11uThUf
-	aW6dG+mj7BSBmQavDDHp1XM58tHS5YEREsu/BN871zJbB1BbsbCs2mMVGea1bZj2xDylAsPD7Jt
-	cr4fe9qPOoBgNfNIuK6XtyqED1ymfBhc86tjidjffc/gwdc7z+rCszlXgIpOFW65QBWTaDwvpoK
-	MXtREHJWuum6oFORtAs4mJGQwUW/IBRdeNN70q1om5F5fkyUKS+HUazd24rX2FKeKKpDL3PVDfW
-	0b/+qtpY7c4ZOuVwVmnIe0Gjx+HprUMRvyFSbzwqTi+qgTO467NeC4rKNnX7X29H4OB1oKQjr4/
-	KO6QanMZ/lZNCsbjNGJga5rIPfA90Y200=
-X-Google-Smtp-Source: AGHT+IFuzfcxmexZImyTSy/wYM2NnCKCcp94PIA1OWdRFjDLNAtlRyt7aIi5+xnS24NgkV04LjkOEg==
-X-Received: by 2002:a05:6000:220f:b0:3da:e7d7:f1e0 with SMTP id ffacd0b85a97d-3e642bb80e0mr5777535f8f.27.1757323699177;
-        Mon, 08 Sep 2025 02:28:19 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:226:25e0:1d51:1977:518b:89cc? ([2a01:e0a:226:25e0:1d51:1977:518b:89cc])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e12444de96sm16051451f8f.19.2025.09.08.02.28.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 02:28:18 -0700 (PDT)
-Message-ID: <5580aa89-09f1-426e-8483-c99481c998ab@gmail.com>
-Date: Mon, 8 Sep 2025 11:28:15 +0200
+        d=1e100.net; s=20230601; t=1757323794; x=1757928594;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z2NT50YANgE1rqihf2BYkq4TLfCA5dAqzDICyLGaLn0=;
+        b=ULUvVGkLjgFvp/xPW7AWtPucyICgzh0RzswboL8NrvyKveDl4hGjq0DHPz4Wu/ndzC
+         iNKTGZVgvgLXFetmeUaJng66dL/beohTZ6E9E+LOI5Tup8IEYp1WJL5X+aS0fPCo6vE7
+         1BrEsQV9RPjZ4mcziMMNhXoRK6wfALBi8txPK5YYUjv/8woGnp6Hfj6ET0HYvysLlPox
+         s0SSKbK/5V3sLcbziEqddPrnx6mD/KbfxQyLEQ22zGmv0px9Xn/XIPx00MSGvdgE9+3a
+         ip+1ZTs9G28DFnwxBrc/m9hdo/zxdfgFB1ijhLlBXvPWBUozNu4J7g0c9LmhZMtiE7qW
+         qc6w==
+X-Gm-Message-State: AOJu0YzalsWNRG6pHskjWrnScbIpyIuKNck2oX+x9nIec2k9QSknwSe5
+	ydESnE7tMwkIrzX49LFzrYbpT7+y4wHQKacHmSruon6K+Md2aZxzA8VxHPTW+tRBzaKYQobLXvU
+	H1+tAtb8qLve2DGTGBe8krqHXIawoXIE=
+X-Gm-Gg: ASbGncuzpgAtefjzC5qY4p6RvZdHXsEskUwe8atHWDdG7lj7To6V35Wwg3kl0ppW30h
+	rt3WBN+zK/cXXB7JMq29f3bOASBQkg8Vtl3eX8MdMU9lZ34VMejJ1NRMSQ9TZkDqOvG6ic7y+mN
+	rsx7xlaFke40Nky6bLSE9jSenbiq4sZ9lPrQLzG+K/SXsYw36fMrOTRSa9oG+aCO9QwQCxjSlRY
+	LBFX9uIlGhsaUmFS0UFO1O2/mkbJW3S9J/5etrTwCsPqnoEs0dxIw8cuVE290M=
+X-Google-Smtp-Source: AGHT+IFJ5JCPe9cgpwOk1bFkejnH8S4tFk9oYTIr9qi+qtD4Fmyr3f79LR6fDbOM16hynQWszzTs47tWOODR0eOVmkk=
+X-Received: by 2002:a05:6122:1828:b0:545:dc3c:a291 with SMTP id
+ 71dfb90a1353d-547a7344aafmr2135142e0c.6.1757323793740; Mon, 08 Sep 2025
+ 02:29:53 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 8 Sep 2025 02:29:52 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 8 Sep 2025 02:29:52 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <CAOLa=ZT7vUdkB_6YaK7P1P72VwvHjVxix36q+G3CEqfze8Km5w@mail.gmail.com>
+References: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com>
+ <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-2-35e69bbb507d@gmail.com>
+ <xmqqms7bfll4.fsf@gitster.g> <CAOLa=ZT7vUdkB_6YaK7P1P72VwvHjVxix36q+G3CEqfze8Km5w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: ps@pks.im
-Cc: git@matthieu-moy.fr, git@vger.kernel.org, gitster@pobox.com,
- kristofferhaugsbakk@fastmail.com, newren@gmail.com, sunshine@sunshineco.com,
- tmz@pobox.com
-References: <20250512-pks-contrib-spring-cleanup-v3-10-32e151b0bfb0@pks.im>
-Subject: Re: [PATCH v3 10/11] contrib: remove "git-new-workdir"
-Content-Language: en-US
-From: Gabriel Scherer <gabriel.scherer@gmail.com>
-In-Reply-To: <20250512-pks-contrib-spring-cleanup-v3-10-32e151b0bfb0@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Mon, 8 Sep 2025 02:29:52 -0700
+X-Gm-Features: AS18NWDkwdZsvB4hpmrU5v2hh7aZG9_jxOB_vEU0viLyAT_mxVu6HwUzBX5xxEE
+Message-ID: <CAOLa=ZRshHZXWxTeNqgi253R2b0TB7o42sq6mPmNHQWN_T733g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] refs/files: handle F/D conflicts in case-insensitive FS
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, joe.drew@indexexchange.com, peff@peff.net, ps@pks.im
+Content-Type: multipart/mixed; boundary="0000000000007b6ba3063e46d438"
 
-Dear git developers,
+--0000000000007b6ba3063e46d438
+Content-Type: text/plain; charset="UTF-8"
 
-I find myself affected by the removal of the `git-new-workdir` script
-which is a relatively common part of my workflow. I am writing to ask
-if it might be possible to reinstate the script in `contrib`, and also
-possibly create a discussion with other users affected.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-(The removal of the script was released in git 2.51, three weeks ago.)
+[snip]
 
+>>> Reported-by: Junio C Hamano <gitster@pobox.com>
+>>
+>> Hmph, I do not recall reporting anything, but perhaps it was a long
+>> time ago...
+>>
+>
 
-Thanks for your work on git!
+Reported-by might not be the right field here, You mentioned about the
+D/F conflict in an earlier mail [1]. I would've missed it otherwise. So
+I wanted to attribute you for that :)
 
+[1]: https://lore.kernel.org/all/xmqq8qjbxn8n.fsf@gitster.g/
 
-## Details/comments
+> [snip]
 
- > The command thus predates git-worktree(1), which is what people use
- > nowadays to create any such working directory. As such, the script
- > doesn't really have much of a reason to exist nowadays anymore.
+--0000000000007b6ba3063e46d438
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 938f69d1e5a71c4c_0.1
 
-`git worktree` suffers from the substantial restriction that it is not
-allowed for two worktrees to checkout the same branch. I understand
-why its designers felt that this would provide better guarantees (it
-is not a good idea to mutate branch names that are checked out
-somewhere else), but checking out various branches to test them and
-inspect their code (before returning to the feature branch I am
-actively working on) is a common part of my workflow. Getting a 'fatal
-error' because some other, independent worktree also checked this
-branch out is a hindrance.
-
-Note: I don't know about the `worktree` implementation and whether the
-no-double-checkout restriction is fundamental to its correctness or
-just a user-interface feature to avoid sharp edges. I would be happy
-to migrate to `worktree` if it was possible to disable it (presumably
-via a repository-global parameter, or maybe something
-finer-grained). It sounds like more work than just keeping
-`git-new-workdir` alive -- but I am sure there are niceties with
-`worktree` that migrating users would benefit from.
-
- > It also doesn't seem like the script is still in use: the last time
- > it has received an update was in e32afab7b03 (git-new-workdir: don't
- > fail if the target directory is empty, 2014-11-26), more than a
- > decade ago.
-
-I use `git-new-workdir` actively, and have never suffered from an
-issue worth fixing or reporting upstream. The fact that it was last
-changed a decade ago also suggests that the maintenance cost for git
-upstream is minimal.
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pK29nNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md21vQy8wVkdYN1BaMUhuU00yQ1N4NGZRYnhwUndBWgpnaGVMeUJMTlZB
+QmNwMEdpQjh3WmlSR3ZtS3FIb044eHJnYlBiSnFhdFNzUlk1Rit4QnAyVUNnYkJzdVE0dDhxClp3
+eWhuSHQwVVpXMW5USkl0S0I3OWFONXQ0cFlheWhHTGxGazBIRHY4cElKMkVEVTdLNi9TRVBDODIr
+a1VhQ0EKT1FKbzVMR1UvU0RKNFVtM1JoTnN5UmtVcEhIazJFTTJ6SGMwb1BBZUJONmVBMHJ6MlNF
+a1FKUkRkb2pmcDhRVAp4WE0wZWZPa2ZlWEVHaU9KdXdIUi90M0d1RWs1MTZmTWdDeTVUK0NXV2JS
+TVJxYUxiTytaQUZycWdRM0JxeHZzCnQ3S3RQNWdNOWc0dlpzTG8vekQxS0hyTS9uV055MFBDcWNk
+V29rMmdWaldBTGNYVDg5MHlUMTMwbFJYcCtUdnAKZGVLVkFxalpuVTQwZlJqTmtJSmVXRTh1YUFO
+UDV2NW5MaDRkdXpDNHdqSUVzU1lsY1dkdW5vZnpYRUFabEdBKwpUOFJmUGFRbDBjQ21oUW93NVRR
+b2dvcEwvNm5TUVBpeHVFSDA1NTNSQVBPR1VzNWpFVzE3alRmZWgzVXhFZFE4CmtGMDB3VWZqVTdy
+TWp1RXdFMVlOMTNQQ0ZFa2pjcWJiOWYwUUxIdz0KPXlrWlIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000007b6ba3063e46d438--
