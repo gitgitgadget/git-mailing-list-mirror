@@ -1,133 +1,138 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0EF30CD94
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 14:03:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757340181; cv=pass; b=sMtMJujnkxn6lgY9HQoybh9JAFqMaBEBPsm4u2HIO7XvZAlfwQtXtua6fzRPX1t4N31Bfp6slESVVMAtqa0w4L4z0sZSGkItnq8Gl2UslzYV+Ox0KLft6f0UtGNLXpGFo+Su7RJKlSa/456aSVVEeyLS7stuoLIEQbXyRiVVg5E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757340181; c=relaxed/simple;
-	bh=b19EHfbOddqsCZi8455VozhuqRY0IfxELJCVEWKtMJQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpD3tNio1kf7ZwrhYRS9r3nWxvTXDXlZQ2K+O/S8QHkHJFJCFgGSdfXWwgUKwfD2/6tCqCGSOO4VmtSoOMRe5Vw/mfoSBXw9UzREpZF2vcJNpLzaRuS987QFYhN3Eqo5C5xY7RFCuY3ltfJWJxVPFhG0usiwGwn1b8afQceJAoU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=fiRQuasl; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C92235BE8
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 14:07:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757340439; cv=none; b=spTD6/rnlZsq+1BdjJ0TN1WYoXyf6CP0Ynpq9Grf6srTUvn0BbBgu27HlsQx4H+c8KYOKKnzVuXBhULkAiOu5hZkJ+0KTU1YJnd76a+0S221iXWu9IGpgZ8shc8gNbju28VDZjWLWZ7SUsn15P7a2OuGWJMhB/NcjQL0hlZCjP4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757340439; c=relaxed/simple;
+	bh=926/kRne4sQjZskYspJFXHUZfVJ1djLfTZLI9p3409Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BvrmoQJu7gutgx0VMi+p0JrsW2P+eN/iU8fP5Va9/Eb8SmxeVf6z6oRRKNwsGVuEuZGBWG0ceREqP9SST6EGEFZDSjRchJ53/a38yziDF0pa1OxPuxqFcO6MJ0RnrGxuWhKyKXNRqwsFkEMs7DGA5mBTXDH5deon5ykqM46Dz+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c/QxWQV9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fPRD9s0t; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="fiRQuasl"
-ARC-Seal: i=1; a=rsa-sha256; t=1757340159; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=j4b9ZQldkWahLCeSSsuD+x1m82J0jmPCH5e+ODxgIPqiG2/Kff5ykIqDn/e3szLu3ZuwbsQ71CAabwVhRIOP5/liXyDaLkHhTuHHM2g7pA4VB/xKISCtukuMbAOF9oHBmBb6G4w8H1OHADxjGMocRHIHuw2gG0wdfo3pIBpI9xY=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1757340159; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=2+9nPy9wf0IWtJtrSDyEIQAgOKKdgyBzoHDeyzB8sgY=; 
-	b=mhC4bK4xDxiNrawB3AN5SgzaHJ9gH2TOIDbKUyX1YwjrCPBX5ChnhGCNstKrIf5tztwZlOZcpTnAHT/KitJPHm/egfKqWJEMJkA1wmCcNsO+PQ4CV29KzzSjm+IpKSCY8PXNhhqo5hUhVaQTdhql4fWo2T2q3p2C19OHe8Isjs4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1757340159;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=2+9nPy9wf0IWtJtrSDyEIQAgOKKdgyBzoHDeyzB8sgY=;
-	b=fiRQuaslg0GAfjXJEgFinhLu7NeAYc+LqYhQLT+zKw6DQ9p268U5Yq88NJLlnU2Q
-	74VXZ2u0ZuTWU9dSx0EuXVw30gxnJ8I+Qb2UkENTJpS/Hyo18lLXoDeeN56HwXT1z+7
-	+1fl/DUsU5Iw+DZKzLUEzm2d6J/8OgkBq1QWgBuU=
-Received: by mx.zohomail.com with SMTPS id 1757340155516983.2516769978342;
-	Mon, 8 Sep 2025 07:02:35 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: git@vger.kernel.org
-Cc: Emily Shaffer <emilyshaffer@google.com>,
-	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
-	Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Aaron Schrab <aaron@schrab.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Josh Steadmon <steadmon@google.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v2 10/10] t7425: add gitdir encoding tests
-Date: Mon,  8 Sep 2025 17:01:17 +0300
-Message-ID: <20250908140117.262205-11-adrian.ratiu@collabora.com>
-X-Mailer: git-send-email 2.51.GIT
-In-Reply-To: <20250908140117.262205-1-adrian.ratiu@collabora.com>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20250908140117.262205-1-adrian.ratiu@collabora.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c/QxWQV9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fPRD9s0t"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5FF531D00105;
+	Mon,  8 Sep 2025 10:07:15 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 08 Sep 2025 10:07:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757340435; x=1757426835; bh=HLcT8EPKFY
+	oa71AKOB9BoN+k7+FTJQhSpbbJ9GJx5+o=; b=c/QxWQV9CpuhfOK63aOCkxl3yZ
+	nJZIvQrlPVgZYa1zVnV9YwiziY6Hv8RDrlr1QGhXnMOV1akW8c3Gab1zjSd/LWDo
+	YYiGAdYRLIZEvrzsATzkbBY/Foq7fvysn/mHqI+MHjTtLzIUEMNmVON5nWkBy6ig
+	Bxa1h51pGk9+0O+jzzhn7wW2to0ydjkUMoN2wX7sCSUe2zTVST03mCUm3xggiOV/
+	I4neiHsbUU23VkB20AA9QstC3QXIprRtEJhZFgrPMjiUhvxI1DhH0dturJ+CDw0n
+	/Mnwt2ZXsOwh8x9ojHLkgchZW1+ge1DrzX4R4LFg5c2O3IruRt4R3u+lF5dg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757340435; x=1757426835; bh=HLcT8EPKFYoa71AKOB9BoN+k7+FTJQhSpbb
+	J9GJx5+o=; b=fPRD9s0tvhfilfpI158I/L55E2+zV0/VC+NN+rKX3eS8T0PH8Gc
+	KXf3YOv6EgLtv48rygYT9wTslOUB/o068Tj3XEd0xcAp7RXa4Q99J9zk77m2P9Rn
+	UsLJbFjRss6mCw1ouz1tQjAFEsk23PebK8Y/JFEkZaEDPk69NCIP0kZhaxKttg/Q
+	r1bE10OzTbXWXooASjULKn1fT4zkCx/rgwxObAW+inLHD5pnkJB9zN9leKLHsrwW
+	CGAE8pn3NthfO/WJ/iVM/t+PzK+JWtTc0m82SWJ/cL5KhWkZGGiqQNjATHHT6RAW
+	aQi2h3Pmca3VpMOCrn+sO47wty5raPP2UCQ==
+X-ME-Sender: <xms:EuO-aCL5VpvCTdTNBjnB9FXbbHlr4u_PsJ90naEBgAUUPLJmEbFzAw>
+    <xme:EuO-aFoyRxK6MdplkqgnsuTSG4d5DsZkXY8jIRFlzG8HOnRgcv3y34Rq47TiHlAzb
+    sVycp1rVR71QEQg2Q>
+X-ME-Received: <xmr:EuO-aJJ2JrxAIXOSyaeD-yChiGyMn2tZgc-oARhYzuFAwjMxEQRfGwYKjRvswpsMIn4Qq8FbnSBwU3dfcu_jmNsqHAs4-F9WK5SDtW0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeejfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmvggvthhsohhniheftddujeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    phhssehpkhhsrdhimhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:EuO-aCRllcqxO9EkG9tII6k0KGebg_vDHKPfmIA2hDpUjDEyDtitHQ>
+    <xmx:EuO-aAvCpvOxora33cMt4Vf3B4S2sItMive0U9elR4MeG7tIfIIUkg>
+    <xmx:EuO-aLbIs1Ls3dNlZC4pJtL8OZJXVZ_oyIBoULUPK4FKeLogbjiNYw>
+    <xmx:EuO-aOE6GZCNXxmzunvjGEADH4KXgbHvMXd1TVthTpw9XqF6i0AhWg>
+    <xmx:E-O-aJr7A2F5Hz-AQERwoBfaB5xn82mAjPb4I02m-DBY0BZps9QuLfEW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Sep 2025 10:07:14 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  shejialuo@gmail.com
+Subject: Re: [GSoC][PATCH v2 0/5] Add refs optimize subcommand
+In-Reply-To: <20250906075147.1076656-1-meetsoni3017@gmail.com> (Meet Soni's
+	message of "Sat, 6 Sep 2025 13:21:42 +0530")
+References: <20250906075147.1076656-1-meetsoni3017@gmail.com>
+Date: Mon, 08 Sep 2025 07:07:12 -0700
+Message-ID: <xmqq348xyr5b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain
 
-Add some tests to further exercise the gitdir encoding functionality
-alongside the existing mixed directory and nested gitdir tests.
+Meet Soni <meetsoni3017@gmail.com> writes:
 
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
----
- t/t7425-submodule-mixed-gitdir-paths.sh | 47 +++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+> This series introduces `git refs optimize` as a modern replacement for
+> `git pack-refs`, continuing the effort to consolidate commands
+> under the `git refs` namespace.
 
-diff --git a/t/t7425-submodule-mixed-gitdir-paths.sh b/t/t7425-submodule-mixed-gitdir-paths.sh
-index a8c22de070..f467bafaab 100755
---- a/t/t7425-submodule-mixed-gitdir-paths.sh
-+++ b/t/t7425-submodule-mixed-gitdir-paths.sh
-@@ -152,4 +152,51 @@ test_expect_success 'checkout -f --recurse-submodules must corectly handle neste
- 	verify_submodule_gitdir_path clone_nested hippo/hooks submodules/hippo%2fhooks
- '
- 
-+test_expect_success 'new style submodule gitdir paths are properly encoded' '
-+	(
-+		cd main &&
-+
-+		# add new-style submodule name containing /
-+		git submodule add ../new-sub foo/bar &&
-+		git commit -m "add foo/bar" &&
-+
-+		# simulate existing legacy submodule name containing escaping char %
-+		git clone --separate-git-dir .git/modules/foo%bar ../legacy-sub foo%bar  &&
-+		cat >>.gitmodules <<-EOF &&
-+		[submodule "foo%bar"]
-+			path = foo%bar
-+			url = ../legacy-sub
-+		EOF
-+		git add .gitmodules &&
-+		git commit -m "add foo%bar" &&
-+
-+		# add new style submodule name containing escaping char %
-+		git submodule add ../new-sub fooish%bar &&
-+		git commit -m "add fooish%bar" &&
-+
-+		# add a mixed case submdule name
-+		git submodule add ../new-sub FooBar &&
-+		git commit -m "add FooBar"
-+	) &&
-+	verify_submodule_gitdir_path main foo/bar submodules/foo%2fbar &&
-+	verify_submodule_gitdir_path main foo%bar modules/foo%bar &&
-+	verify_submodule_gitdir_path main fooish%bar submodules/fooish%25bar &&
-+	verify_submodule_gitdir_path main FooBar submodules/_foo_bar
-+'
-+
-+test_expect_success 'submodule encoded name exceeds max name limit' '
-+	(
-+		cd main &&
-+
-+		# find the system NAME_MAX (fall back to 255 if unknown)
-+		name_max=$(getconf NAME_MAX . 2>/dev/null || echo 255) &&
-+
-+		# each "%" char encodes to "%25" (3 chars), ensure we exceed NAME_MAX
-+		count=$((name_max + 10)) &&
-+		longname=$(test_seq -f "%%%0.s" 1 $count) &&
-+
-+		test_must_fail git submodule add ../new-sub "$longname"
-+	)
-+'
-+
- test_done
--- 
-2.51.GIT
+Sorry, but I do not quite see the point of this change.  Is it your
+goal to eventually remove "git pack-refs"?
 
+I would very much understand if this were:
+
+    "git pack-refs" is a command that is very specific to the files
+    backend to optimize the way refs are stored in that backend.  It
+    does not do anything to other backends.
+
+    Introduce "git refs optimize" as the end-user facing front-end
+    so that later different backends, including reftable backend,
+    can define their own way to optimize the way refs are stored in
+    them.  As the first step, switch on what backend is in use in
+    the repository, and invoke "git pack-refs" if the repository
+    uses the files backend.
+
+And when framed this way, I am not sure it is a good direction
+forward to have pack-refs.[ch] top-level files.  I have to wonder if
+the approach should be more along this line?
+
+ - Define the "optimize" action in the refs API.  What it really
+   means to "optimize" may differ from backend to backend.  There
+   may be refs_optimize(struct ref_store *refs) API entry point.
+
+ - Add the new action to the vtable for refs backends.  There may be
+   no action defined for reftable backend for now, or you may find
+   there already are reftable specific optimizations you want to
+   trigger from there.
+
+ - Figure out how this interacts with existing refs_pack_refs();
+   most likely it as the backend specific option, should go away,
+   and its implementation would move to the "optimize" action driven
+   from the vtable for files backend.
+
+Once it is done, you do not necessarily need "git refs optimize",
+but the "git pack-refs" could be the front-end to trigger the more
+generic "optimize" action.  In other words, in a repository whose
+refs are stored in reftable, "git pack-refs" would cease to be a
+no-op but can perform optimizations suitable in that repository.
+
+That way, users do not need to learn a new command, which may be
+also an advantage over what is being proposed here.
+
+Thanks.
