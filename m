@@ -1,138 +1,105 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F56306B08
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 15:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757346122; cv=none; b=YWOIzzHOmi1nr6BaqoisY+P9GHvQqorCWXcg31etqSXABiXrk5c5OMi8CLMACreaFI7VNqYwPhyDDsjh9NV8+b2JfwqBp3E60JVC0RhYtLyAax254QnTYiaQ6AmjkVrT1yI2e8bqKQuWG7yoThBVRxQg4QR/FqNiwC8DbvW7KA4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757346122; c=relaxed/simple;
-	bh=Ycfb+Gs9nSfLEfpQBGd9qfr2a+PS+bWGwyWRMRFXK3s=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ac4ZJcTcAIupP+OMBfGh022DCR+GvFXvyEQdmzAc+AExoqzknJqVODkGEd2KhekRhkmTyzuyFwSj9tjBAUxgMSMSn7vdtgZUEVLIhINfGjbb+1j+GpRt31WHyP1wcMyWHInUT1IC82tGfwfKqwVuj2j4Pb/LDAULe+pNhgLsrSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 588FfSkJ2981225
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Sep 2025 15:41:28 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Ezekiel Newren'" <ezekielnewren@gmail.com>
-Cc: "'Elijah Newren'" <newren@gmail.com>, "'Patrick Steinhardt'" <ps@pks.im>,
-        "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Taylor Blau'" <me@ttaylorr.com>,
-        "'Kristoffer Haugsbakk'" <kristofferhaugsbakk@fastmail.com>,
-        "'Josh Soref'" <gitgitgadget@gmail.com>, <git@vger.kernel.org>,
-        "'Christian Brabandt'" <cb@256bit.org>,
-        "'Phillip Wood'" <phillip.wood123@gmail.com>,
-        "'Eli Schwartz'" <eschwartz@gentoo.org>,
-        "'Haelwenn \(lanodan\) Monnier'" <contact@hacktivis.me>,
-        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-        "=?UTF-8?Q?'Matthias_A=C3=9Fhauer'?=" <mha1993@live.de>,
-        "'Sam James'" <sam@gentoo.org>,
-        "'Collin Funk'" <collin.funk1@gmail.com>,
-        "'Mike Hommey'" <mh@glandium.org>,
-        "'Pierre-Emmanuel Patry'" <pierre-emmanuel.patry@embecosm.com>,
-        "'D. Ben Knoble'" <ben.knoble@gmail.com>,
-        "'Ramsay Jones'" <ramsay@ramsayjones.plus.com>,
-        "'Josh Steadmon'" <steadmon@google.com>,
-        "'Calvin Wan'" <calvinwan@google.com>
-References: <01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com> <xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local> <xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im> <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net> <aLfU5sEa-RE3X4G2@pks.im> <aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net> <aLl6iFXeAvL_hvqR@pks.im> <CABPp-BFNoLC+TdtuEq5Nx+VcFJ-WFga2r0E+eq=fFaaCN_sRGg@mail.gmail.com> <aLqIHCdlbwF5X6Cm@pks.im> <CABPp-BG3Zcw63vNziy86MvYNubefn1SmPvXefpqpA=a+42KT8A@mail.gmail.com> <042f01dc2011$da9dcda0$8fd968e0$@nexbridge.com> <CAH=ZcbAjpgAVjVK6iYEr2150a+WgFfxrWuJUoR1pa08JqM4BDw@mail.gmail.com>
-In-Reply-To: <CAH=ZcbAjpgAVjVK6iYEr2150a+WgFfxrWuJUoR1pa08JqM4BDw@mail.gmail.com>
-Subject: RE: [PATCH v3 02/15] xdiff: introduce rust
-Date: Mon, 8 Sep 2025 11:41:23 -0400
-Organization: Nexbridge Inc.
-Message-ID: <049501dc20d7$0bb08ed0$2311ac70$@nexbridge.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714CC1E130F
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 15:47:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757346440; cv=pass; b=WDGKDWJfRX1ljmQ/tmiiVtWav6azUNwa1+Whh94K7tGvrCzO45S2VNt3VF6+6on1vg7MEPeuruoZBuxNIpYcFwXk5BPVCzeIP0FKWeim4q6EFbzGTfdZZyDRZrFChR2AIVnzd9kAM995iqr8mNvpWHG5YzgWxVlPFaK5VthgWbQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757346440; c=relaxed/simple;
+	bh=wvROhhXIBj8BZCS5Xt1QV+QWww2XCjLwMQ5C8vyx1cM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RjSk/urmGwsFzYRH4wTre3XV7qc6JjaHYKfTiZsyu5eVrR7q0u9B67PPE4rJoeDaQx7wBj7s/9Zp/YsDfR7Pdran3yBYfJ/izIup0IAntKSorIcT5S9H0SO1jsnFvljSwfJymQCSZ0n0cjiiNQGz/V420ksf0TJaNmJ8orNv8p8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=YXep3j20; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="YXep3j20"
+ARC-Seal: i=1; a=rsa-sha256; t=1757346414; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=HnslVh0Z6EdPOpdZpILTnLWbgg34PEhz2UOH9rAnrNT3kqYbax+Ty25f803wDz8ssf1Lbh1/sw/H2PMUlU2SCEo777gWE3UlxNL8GG7FxYqnEzQKrFPYFlW1PHvO22Lz1w7PmpymnQUc8xvUrGoL/PTUR6Aqw9syne41m9Zl3Yk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1757346414; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=A/jsRDJ5EhrVuxiZf6bmojjBUKM5IYPVcZreDvy2UCI=; 
+	b=Ic9b/ZV0LBS9G9pJnur4gR9PfgdTL4W+PSqv+NdfBFVv00hk6ITSAlQ3XFEGesqKchkeahc84j7zEEJgQyM4QQhSlTWaJ+TRHWodFLfW0+ULDMmqrk1+i6wLgesDeMMyCYnk1W8Lev+E0H7mOY0SHJP6ca/uVZqguECGhWm4LwU=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1757346414;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=A/jsRDJ5EhrVuxiZf6bmojjBUKM5IYPVcZreDvy2UCI=;
+	b=YXep3j20HL/ff8xkO95PvyU/5Z+35CBFfKcomZRAacmUKRuosgn8dgr9Sk4nitvC
+	hDHiE9ANufZw+HSBs1MaLfMUg4bY9ezEgM23rlwl50/3t9BGMLSJdsZ4tC3M68V1OjJ
+	S9OQ3VkyHzdQ31j4nxOVZH1BvtLjyAWRZAH7jsZ8=
+Received: by mx.zohomail.com with SMTPS id 1757346410747630.8874359585689;
+	Mon, 8 Sep 2025 08:46:50 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc: Emily Shaffer <emilyshaffer@google.com>, Rodrigo Damazio Bovendorp
+ <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano
+ <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan Nieder
+ <jrnieder@gmail.com>, Stefan Beller <sbeller@google.com>, Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 2/9] submodule: create new gitdirs under submodules path
+In-Reply-To: <fc69ee66-815f-48ec-a5fb-99cac5f4d58c@gmail.com>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20250816213642.3517822-3-adrian.ratiu@collabora.com>
+ <fc69ee66-815f-48ec-a5fb-99cac5f4d58c@gmail.com>
+Date: Mon, 08 Sep 2025 18:46:46 +0300
+Message-ID: <877by9ndzt.fsf@ratioveremundo.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQEGadT21z5OprxVD7HWLLwOJZ29EAFNCYxRAdIt06UCgtOkMwLNWyY+AkPZBcsB+sNnaQLQ9HhNAfwz3cQCYIs5bgMRNqFTAiZSYtwCDxYVSgFsUdi3tVBkB3A=
-X-Antivirus: Norton (VPS 250908-0, 9/7/2025), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-On September 8, 2025 11:10 AM, Ezekiel Newren wrote:
->On Sun, Sep 7, 2025 at 10:10=E2=80=AFAM <rsbecker@nexbridge.com> wrote:
->>
->> On September 7, 2025 12:10 AM, Elijah Newren wrote:
->> >Sorry for the delay; life outside of work is challenging at the =
-moment...
->> >
->>
->> I am going to address the critical point mentioned below and snip the =
-rest for
->brevity.
->>
->> >I still don't see why distributors _must_ ship the latest version of
->> >Git and why folks on some platforms are considered broken if they =
-are using a
->slightly older version.
->> >Let me ask again: has anyone answered why this is considered
->> >mandatory?  If they have, I've missed it, but I've asked multiple
->> >times.  Even if you want to lump "distributors cannot build a newer
->> >version" under the umbrella of "breaking changes", I argue it's a
->> >much different kind of break and one which merits different =
-timelines for
->handling than e.g. lumping it in with 3.0.
->>
->> I do not see that distributors _must_ ship the latest version. =
-Suppose
->> we are on
->> 2.51.0 and a CVE comes out that prohibits its use in an organization
->> that does not allow any medium-high to high CVEs. This represents
->> hundreds of thousands of impacted users in my community alone. How
->> does the CVE get applied if the latest cannot be built and the git
->> team does not apply the CVE fixes to old versions. Personally, I do
->> not care if git versions are different between work and home, or even
->> between CI/CD and other platforms. I don't even care ...
+On Mon, 08 Sep 2025, Phillip Wood <phillip.wood123@gmail.com> 
+wrote:
+> Hi Adrian 
 >
->Ok, that answers the question for NonStop, but that doesn't answer the =
-question
->for the plethora of other distributions. Most distributions don't ship =
-the latest
->version of Git in their package manager, and if an organization deems =
-it critical to
->have the latest they can build it themselves and ignore the Git version =
-in the
->package manager. So why does Windows, Mac, Linux, etc... _need_ the =
-latest
->version of Git in the package manager?
->
->If security updates are backported to NonStop, until that platform =
-supports Rust,
->then I don't see why using an older version of Git in Windows, Mac, =
-Linux, etc... is a
->catastrophe. Most existing distributions _can_ package the latest =
-version of Git, but
->they _don't_.
->
->I reiterate Elijah's question "Why _must_ distributors ship the latest =
-version of
->Git?".
 
-My emphatic answer is that they do not. There is no requirement from me =
-or anyone
-I know to ship the latest version. What is crucial is that there be =
-fixes for medium-high
-and above CVEs that are delivered in 30 days from initial fix =
-availability (that would be
-in Rust, for this conversation and applied to C). If that were =
-supported, I could live with
-as would my customers and their auditors for LTS releases. Please see my =
-expectation
-of LTS defined elsewhere in this thread - essentially 5 years. Perhaps 3 =
-at a bare minimum.
+Hello Phillip and thanks for the feedback! :)
 
+I just sent v2 at the same time if you want to give that a look, 
+though the issues you raised are still valid for v2 as well.
+ 
+> On 16/08/2025 22:36, Adrian Ratiu wrote: 
+>> This is in preparation for encoding the submodule names to 
+>> avoid conflicts like submodules named foo and foo/bar together 
+>> with case-insensitive file- system handling and other corner 
+>> cases like reserved filenames on Windows.   Backward 
+>> compatibility is kept with plain-name modules already existing 
+>> at paths like .git/modules/<name>, however a clear separation 
+>> between legacy (plain) and new (encoded) namespaces is 
+>> desirable, to avoid situations like an existing plain-name 
+>> module containing the encoding escape character/  Thus we split 
+>> the new-style (encoded) gitdir name paths to .git/submodules, 
+>> while legacy-style paths remain under .git/modules.   This is 
+>> just a default directory change with the accompanying test 
+>> updates, in preparation for the actual encoding additions in 
+>> future commits. 
+> 
+> Does this need an extentions.submoduleEncoding (name suggestions 
+> welcome) config key to stop older versions of git trying to read 
+> the  repository as they wont be able to locate the gitdir of any 
+> submodules  added under .git/submodules? 
+ 
+Very good point. I'm a bit unsure we actually need it, likely we 
+do.
+
+On the one hand, older versions of git can still initialize and 
+work on submodules under the legacy .git/modules/ path ignoring 
+the new one...
+
+On the other hand, there is a non-zero risk users will get in 
+trouble by switching git versions or can lead to 
+inconsistent/corrupted states, so I'm inclined to say the answer 
+is yes: better safe than sorry.
+
+So if there are no objections or better ideas, I'll add this in v3.
