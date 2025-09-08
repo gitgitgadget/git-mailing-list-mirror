@@ -1,152 +1,202 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2BC1FE47C
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 09:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8111E572F
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 10:11:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757325553; cv=none; b=fQyhUfyd0WvhL0XKusqtxeLc2LMxVB3nCPnzKMjwgxXRlOsTSREKaeq33Ry+oBSEWjJQx8vakBDJQGcuIk64btljMvUWnGVv6jtDlQwhitvF1DI5Qvv3qo3AISNXwGAihWIMjA+oVyGPVwYHS9bpyeKgauRjg7gq81DiNlPsGgU=
+	t=1757326303; cv=none; b=IT4WPPxSiPVeISjAD/ywqrezHM7bvcHhN7sifHmW9de+eWtaTPXdsB1msKBOhl1DKIjzHmhTD+QjMmcKVDoLBYtUt1dWYFqaa7ZUi6sg48rJkjivql84oe67DbzbYa9Po1ykrvSSM401eAuSaVAy99y23Nj7JlPD+nq/GKUz110=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757325553; c=relaxed/simple;
-	bh=LuZ2+2n+NHeUm/2CCdzrzeaivOrezHgwEe2NKJ9OZ4k=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=CCrWWPep3vMuP8S1EkNeqyqGs43En2TQDfL9RWNGq71TdllYcqA0YbJ+r0RYYxdogWMwd/kV2gwm7rQZK3rxVxIUrHOfR6pABHpom/b4cXPvQyxPu7bAjCYIlHAXK3H8jBi6qo6bJszgpCqqlzQMgXV9qqMJmvdEOiak9PmRo2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=CHVovmFO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g+9ptvBk; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757326303; c=relaxed/simple;
+	bh=rtfvFGBst1iCIa8XEwNC62hSuEDeElrxWTKH1mo7aLk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DuwDizcO/kWiL/pyWYAT//3MMPtAjiVjkVF+VxuuoZire6JYX2tJDeBuQJHiaIqKZxIqLFym+CMIvoDIwDPKJ28ioJjIK0+7AnuASnN3wCty7Lmc+nLuJ/bilPfC7kF6119fBpi2EYLiHRMVX8FabFPUhVvg7i5Re0dK8icttgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DpuFBrid; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="CHVovmFO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g+9ptvBk"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 97892EC0179;
-	Mon,  8 Sep 2025 05:59:09 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Mon, 08 Sep 2025 05:59:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757325549;
-	 x=1757411949; bh=/bnI7Q9MWlStYCrvpmQ1AMXQLgPD5BBNmX7KKirjKNs=; b=
-	CHVovmFO8JcSlMhD87chcTLXKo/cFKPBAtHz3TgxHTFTJTtNR2Tj5BmITXHe723I
-	j6ipqlGBIYpz5RVVaBzTYrj3kakVLkdX4vZwxsrvMBcDcvIpXeGpzx4qaiNarQLc
-	Yi/Hz5x8PifESPIKDhW2dkCbSzdWb7+BQYzC9EIXSPW3v7SIuyTNvVJiLbD3n5fr
-	hGX4ZkpYSb0IoLBvjY7VWcflKdPsUr75MXV/U+tE9NbrGZ9eBq/0HX5UVJYVwDBL
-	PMd+yjeTzC1vujxWQROdF0Mx2JWmKDqJRHMjOWT/7Lbg+KERYodi1NjM+Es93qan
-	OstS+OTh6Io/gceg2IuofQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757325549; x=
-	1757411949; bh=/bnI7Q9MWlStYCrvpmQ1AMXQLgPD5BBNmX7KKirjKNs=; b=g
-	+9ptvBkyAZgNOKBrNY3vxmgb/Jr+UqBtsb/4gygGoizlPoITBN+OFSCPcVKOA6f5
-	4LTRA7fu1Qzj2//P6YpmTF+v7ev8d99bnb7Rw7iN2hm87u2aJB+BxiA4WekuyMYR
-	yB+jg/M0cvQhJn3Iw7rERRJZxyrHmpSw7zLeuykfXDp87/i9WvJhi5rskKTCjm4I
-	CdVhc6mhL48cDp8u/9Ze5LCWQqxiV4ZEsZb59xIb7Nn5n3nFB/zIo8W5Iw+IPG+Q
-	A0W8ScJX0L5OMvKUprXulQhgOLK/mOgqJ3t+tZEXTsLMvDkSJxuUtt4jIErYfnQt
-	9XfT1GGtcU6BxcDrmXpxw==
-X-ME-Sender: <xms:7ai-aCAy8rUSDjD_bZjx8JKngeD-rjGU1k6tlbxco-FRLA-PEXP6NfY>
-    <xme:7ai-aMgznk4mTgw7z8cWJCGBOublLH_LhUcKsqyNVnahPKg_relclmBOetjbOFlnq
-    SL9b7dVNALtzYsgfQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujedvgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepkedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghgrsghrihgvlhdrshgthhgvrhgvrhesghhm
-    rghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehmrghtthhhihgvuhdqmhhohidrfhhrpdhrtghpthhtohepphhssehp
-    khhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpth
-    htohepthhmiiesphhosghogidrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhu
-    nhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrgh
-X-ME-Proxy: <xmx:7ai-aMR7EenWOBcq5viK5sBsXIAcDoKIZ4c-11DuEgGvALFpVGzL0A>
-    <xmx:7ai-aO9YkiqObsNCuxET6cTLTqFLWErZDHvw82BAbYzfXr4QEztKJg>
-    <xmx:7ai-aKuVQrvJdhep5CuvjojCYok6m_YDWo536sg193i9ddxfHawZgA>
-    <xmx:7ai-aGOsOFTCcscnmb0ysVwuzJvPC1oYWNzPJrx_I9EAi5xB0nusoQ>
-    <xmx:7ai-aIOw76Ph0lV2xecg8F24_bu8zUG85yre1zRLFc1pgpUUxd_8C7as>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 1F6D51EA0068; Mon,  8 Sep 2025 05:59:09 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DpuFBrid"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45de6ab6ce7so4438285e9.1
+        for <git@vger.kernel.org>; Mon, 08 Sep 2025 03:11:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757326300; x=1757931100; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VA8gSTSRVFzTmjKYeI7zoxbt9lBLchF1WAbAAXVHulc=;
+        b=DpuFBridGRWYRKYRwhUhovXS6velXDQG5a9sUYdQ+JD/PbrvxIq9m7uzSD1Y4/FJMi
+         gUdHrzdPtgAA262Mo5OOcjNl3nCdMqjzDO5+IOA0M7dKHW6i0f1cxKli7eLImlcJnOj/
+         huYew6s68Ato3clp+6UG+BPe7wEchmu7jm+ROMol4vIjJPUEmi/1UGfIh1TycYTG5Kr4
+         qZ7yPXdHMAxuYlqwEZAqdtUXi0Dxjez6OOCyefk6pFMT3BaImxC7WLQLtodnwbaVEk71
+         RuwlWIf7kiAx/MqozmXCYovFFewgjNWmwP9d5xPj+PcO8PeUhtYNGiZgmx7W3omIhskO
+         l0Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757326300; x=1757931100;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VA8gSTSRVFzTmjKYeI7zoxbt9lBLchF1WAbAAXVHulc=;
+        b=gsuoufKpyJmGasJDqcr8jV8Fw6b5qMFlRdEkqtVISn5qqOFnuC5jQWOlV2Sov1BTWA
+         tr15HE0PtKtE5/vmExrL6bt6vaKrd+rl2RSpR5Z5o+mNp/00ryzXI0jzyd7IDc9XX94j
+         qW9k2kMMp9CBymhS4kledolokn8LrO2YOtUwSi+888o4Lg+xpZ3kThTPTU6H+ft2uvSS
+         /Fl6MUd2bXTvrMBx2qx+REsFCayQOPdmEAhoChYR3ybz2rHqUIeeNOmLPQo7jEBvh1Zu
+         IyibsxaBB0sPrDOQKzytQvtMLShYcps7ToYZOcaqkrEjQCmfLQOJqgOox34+bxGDWW51
+         DOAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCURBOhnpoQBmrzs8UtMwKPFHaE6eZhxsZ8teyZIkazhEMke+nyt5CT+Pn/DaC1GxjvOqo4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3o/8KoELaBuUW4DSYDAG9/tk8uuIlpD+YJbsA8AmLNYxnj31P
+	LEQUMS4b0x+V9qupRrK0h0WQE9jNyFS/WnAt3HHqoY3oYV3BCSgUS0c4
+X-Gm-Gg: ASbGnct4siqTLf1J7AwlIvKJ1QUkBuQ13QzqfwSOmjBN6KlHiBK3tZ90OGgDqNkX4GK
+	thabV5Ruj7QxIwHIVqSkMgprcFU/r1t1qS18cmEE5/pG2+WfNdQrd4+dr1fETa8q8baG8LVHA03
+	mMQqS6nSS4kh69ziOeX/JPk48QPqArmKUVvYsyDmrkRWQ+sLwk1tm80wTVMPhvkpuuyKfpYFjO6
+	LQbAIfZyFDF7+kQQvDaGOnj2d223fxuSi0s+0SHgT4RNszj6MXIcPbwKOn6p7DKcfTClE0KLLEA
+	MN/9IdFpD0Y19k+txV08Y8yHHAvGvk19HT8G2wIT4PPULKMIheM3JYaexNzG8/PRCxJjy5wCYsz
+	NWuDNDh3XLsTn/pX6rO8f3cL+JHtijtD7ISLimyR0b5XgIQ84YVBMlNZ2jDAqpVWXFffstcMVxc
+	EskfOvdv2b5Q==
+X-Google-Smtp-Source: AGHT+IGiM8UC90WTIdnGO7GPXJLmB8XYdpQeL/MzQEA9nYj20kOJiRYaIUtEcsJYMaigI+M+sXWBCw==
+X-Received: by 2002:a05:600c:a49:b0:45d:d5fb:185b with SMTP id 5b1f17b1804b1-45dddec84edmr55540945e9.20.1757326299634;
+        Mon, 08 Sep 2025 03:11:39 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:1751:3d01:9485:10d6:281e:e659? ([2a0a:ef40:1751:3d01:9485:10d6:281e:e659])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45ddfe09835sm42190735e9.3.2025.09.08.03.11.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Sep 2025 03:11:39 -0700 (PDT)
+Message-ID: <ad54bb8f-04e4-4bf7-a13f-6ae7b967b718@gmail.com>
+Date: Mon, 8 Sep 2025 11:12:20 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AIy4R3mHOV7B
-Date: Mon, 08 Sep 2025 11:58:48 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Gabriel Scherer" <gabriel.scherer@gmail.com>,
- "Patrick Steinhardt" <ps@pks.im>
-Cc: "Matthieu Moy" <git@matthieu-moy.fr>, git@vger.kernel.org,
- "Junio C Hamano" <gitster@pobox.com>, "Elijah Newren" <newren@gmail.com>,
- "Eric Sunshine" <sunshine@sunshineco.com>, "Todd Zullinger" <tmz@pobox.com>
-Message-Id: <2b3c951b-0400-4cc5-b790-17ff77154ec2@app.fastmail.com>
-In-Reply-To: <5580aa89-09f1-426e-8483-c99481c998ab@gmail.com>
-References: <20250512-pks-contrib-spring-cleanup-v3-10-32e151b0bfb0@pks.im>
- <5580aa89-09f1-426e-8483-c99481c998ab@gmail.com>
-Subject: Re: [PATCH v3 10/11] contrib: remove "git-new-workdir"
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
+To: rsbecker@nexbridge.com, 'Elijah Newren' <newren@gmail.com>,
+ 'Patrick Steinhardt' <ps@pks.im>
+Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+ 'Junio C Hamano' <gitster@pobox.com>, 'Taylor Blau' <me@ttaylorr.com>,
+ 'Kristoffer Haugsbakk' <kristofferhaugsbakk@fastmail.com>,
+ 'Josh Soref' <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ 'Christian Brabandt' <cb@256bit.org>, 'Eli Schwartz' <eschwartz@gentoo.org>,
+ "'Haelwenn (lanodan) Monnier'" <contact@hacktivis.me>,
+ 'Johannes Schindelin' <Johannes.Schindelin@gmx.de>,
+ =?UTF-8?Q?=27Matthias_A=C3=9Fhauer=27?= <mha1993@live.de>,
+ 'Sam James' <sam@gentoo.org>, 'Collin Funk' <collin.funk1@gmail.com>,
+ 'Mike Hommey' <mh@glandium.org>,
+ 'Pierre-Emmanuel Patry' <pierre-emmanuel.patry@embecosm.com>,
+ "'D. Ben Knoble'" <ben.knoble@gmail.com>,
+ 'Ramsay Jones' <ramsay@ramsayjones.plus.com>,
+ 'Ezekiel Newren' <ezekielnewren@gmail.com>,
+ 'Josh Steadmon' <steadmon@google.com>, 'Calvin Wan' <calvinwan@google.com>
+References: <01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
+ <xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
+ <xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im>
+ <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net> <aLfU5sEa-RE3X4G2@pks.im>
+ <aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net> <aLl6iFXeAvL_hvqR@pks.im>
+ <CABPp-BFNoLC+TdtuEq5Nx+VcFJ-WFga2r0E+eq=fFaaCN_sRGg@mail.gmail.com>
+ <aLqIHCdlbwF5X6Cm@pks.im>
+ <CABPp-BG3Zcw63vNziy86MvYNubefn1SmPvXefpqpA=a+42KT8A@mail.gmail.com>
+ <042f01dc2011$da9dcda0$8fd968e0$@nexbridge.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <042f01dc2011$da9dcda0$8fd968e0$@nexbridge.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 8, 2025, at 11:28, Gabriel Scherer wrote:
-> Dear git developers,
->
-> I find myself affected by the removal of the `git-new-workdir` script
-> which is a relatively common part of my workflow. I am writing to ask
-> if it might be possible to reinstate the script in `contrib`, and also
-> possibly create a discussion with other users affected.
->
-> (The removal of the script was released in git 2.51, three weeks ago.)
+Hi Randall
 
-Did you run into this issue when upgrading from 2.50 to 2.51 or from an
-older version?  Was it simple to troubleshoot that the script was gone?
+On 07/09/2025 17:09, rsbecker@nexbridge.com wrote:
+> On September 7, 2025 12:10 AM, Elijah Newren wrote:
+>> Sorry for the delay; life outside of work is challenging at the moment...
+>>
+> 
+> I am going to address the critical point mentioned below and snip the rest for brevity.
+> 
+>> I still don't see why distributors _must_ ship the latest version of Git and why folks
+>> on some platforms are considered broken if they are using a slightly older version.
+>> Let me ask again: has anyone answered why this is considered mandatory?  If they
+>> have, I've missed it, but I've asked multiple times.  Even if you want to lump
+>> "distributors cannot build a newer version" under the umbrella of "breaking
+>> changes", I argue it's a much different kind of break and one which merits different
+>> timelines for handling than e.g. lumping it in with 3.0.
+> 
+> I do not see that distributors _must_ ship the latest version. Suppose we are on
+> 2.51.0 and a CVE comes out that prohibits its use in an organization that does
+> not allow any medium-high to high CVEs. This represents hundreds of thousands
+> of impacted users in my community alone. How does the CVE get applied if the
+> latest cannot be built and the git team does not apply the CVE fixes to old
+> versions. Personally, I do not care if git versions are different between work
+> and home, or even between CI/CD and other platforms. I don't even care
+> if I have to use JGit instead of git in some situations (which I see is a likely
+> outcome of this discussion). Is there an official statement of what an LTS
+> means?
 
-Just curious.  I=E2=80=99m as na=C3=AFve about release management as any
-random person!
+We're currently discussing what promises we can make about supporting a 
+non-rust version of git.
 
->
->
-> Thanks for your work on git!
->
->
-> ## Details/comments
->
->  > The command thus predates git-worktree(1), which is what people use
->  > nowadays to create any such working directory. As such, the script
->  > doesn't really have much of a reason to exist nowadays anymore.
->
-> `git worktree` suffers from the substantial restriction that it is not
-> allowed for two worktrees to checkout the same branch.
+> In other projects LTS is typically, and formally by policy 5 years.
 
-You can override that restriction with `--force`.[1]
+I know commercial linux distributions offer that kind of support but are 
+there really open source projects that guarantee 5 years of security 
+updates without any kind of support contract?
 
-=E2=80=A0 1: Naming override options just `--force` has some UX issues l=
-ike
-    discoverability and the fact that (in this case) it is used for
-    multiple orthogonal things
+>  From what others have said here, positions of 6 months, 3 years, and
+> "apply it yourself if you want to continue to use git" have been made.
 
-> I understand
-> why its designers felt that this would provide better guarantees (it
-> is not a good idea to mutate branch names that are checked out
-> somewhere else), but checking out various branches to test them and
-> inspect their code (before returning to the feature branch I am
-> actively working on) is a common part of my workflow.
+Yes it is still being discussed, and no one is volunteering to offer 
+five years of support.
 
-I agree, that=E2=80=99s a great use of worktrees.  But I never feel like=
- I have
-to checkout the branch itself.  I detach on top of the branch.
+> The core problem of adding a breaking dependency is when a CVE comes
+> out that prohibits git from being used at all. If the git team is not going
+> to provide a clear statement, one way or another, if how CVEs (at
+> whatever severity level) will not have a commitment of any kind,
+> then distributors are essentially cast adrift and on our own. It would
+> be helpful of those of us who donate our time, for no compensation,
+> are able to plan for this in a meaningful way.
 
-> Getting a 'fatal
-> error' because some other, independent worktree also checked this
-> branch out is a hindrance.
->
-> Note: I don't know about the `worktree` implementation and whether the
->[snip]
+Doesn't your company make a front end to git? Are you saying that the 
+management does not allocate any staff time to work on git itself and 
+expects the community to provide it with free security updates?
+
+> Please remember that
+> we have to justify our participation to our management teams to be
+> allowed to continue to participate. 
+I'm confused by this, as the sentence before say's you're donating your 
+time for no compensation.
+
+> Nothing is free from this end
+> and if fixing (not just applying fixes) CVEs are now 100% our
+> responsibility, if would be critical to know that when we build our
+> business cases to our bosses, who I am fairly certain will say an
+> emphatic no.
+
+In the long term, unless your platform gains a rust compiler I'm afraid 
+I think that is most likely outcome.
+
+> Also remember that without support from the git team, the
+> code base is no longer the same, meaning the auditors will not
+> necessarily accept fixes from third-party sources.
+
+I think I saw a suggestion/question about the possibility of hosting any 
+long term support branch that is maintained by interested parties within 
+the main repository. Would that help?
+
+I appreciate that any move to rust would be very disappointing and 
+disruptive to you but the community has to weigh up the benefits rust 
+has to offer against that.
+
+Phillip
+
+> This particular
+> point enabled adoption on some platforms, particularly NonStop.
+> Adoption was at 1-2 customers when we had a divergent code
+> based because some platform fixes being different from the
+> standard code-base and could not be certified as valid. Once the
+> code-base because common, adoption was rapid and enthusiastic.
+> If this goes away, I suspect that adoption rates will go negative.
+> I am aware that that particular discussion is actually happening
+> in some organizations in my community right now, with companies
+> looking for alternatives to git based on this discussion thread.
+> 
+> With over a decade of respect and participation,
+> Randall
+> 
+
