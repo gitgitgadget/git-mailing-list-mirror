@@ -1,96 +1,225 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B401BC41
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 05:36:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B95249F9
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 06:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757309780; cv=none; b=QgTPT/MO74MKpgTJ8V35HXKofbFCOyzSAkt+voO5HEeeEnw0WQ34/WCV+3dYlePO0pQyf4vY3cnZLn0ZKCXlIEwA1veuwFBgbVu/nyAePBvj0vcIFMeUKiKMO5NTv9744xL9csa+kXTkVTlb8S5AZcnLjf9hO7SoFKm1t9H5Xe4=
+	t=1757311259; cv=none; b=jO/PHak4MJSgfjIZusGglByoL2SdIQzAE2RRxbpneXa3lFPRjhUE1r4zJjRFAVr/ov81m3I/Y3MDCupgLRwsT+A6D1CUi8rGeQTtxayy+Wywk0BKpWmt7RFpr8sEtLUilCZLf1DhqwVMJh0ZwxzcMcAAN8JLEphNwGN+RVOZxjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757309780; c=relaxed/simple;
-	bh=poJzinFVL/3ZpMVZ0zXVkw4E7LCDTIZ8hxEnwKddfTk=;
+	s=arc-20240116; t=1757311259; c=relaxed/simple;
+	bh=aFKubnoeTqoFSEINhNjePOohgYBwBbxocyfO4FMiOvc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JyaEbsMpQ6mfOoBetaV6EA/4C/ymCN9hC+FIc4JQBniwtPRxQmWM+d/XBYnq7FqA8PtGKNvzMqiTXwHyR7v34y5aH0UfMFRcuF8YZYgM5FnBANEI8V3NMQePqsFPqaOp4sZr7XboiQOWiXNuMinhazCdTWw2aQP4VsI/dkOfQNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yn9rdHsk; arc=none smtp.client-ip=209.85.208.52
+	 To:Cc:Content-Type; b=aC38V5VA//VZtKG2m8JTot/Vj16Da5a7Zl3DcomJzlcUUAC2adHY1A5eNSn/+R2W/n5tVe6OWtud41tuLkAeDE4FaXoA2xZhAFeqMLND3Pt8DhPOs2anY92ac5alngcwHb0NsDNqVASwE49CF0mW6HhMKOBB7Rn4tP5EYsi+AkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U6ROI48D; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yn9rdHsk"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-622b4b14a75so3993000a12.1
-        for <git@vger.kernel.org>; Sun, 07 Sep 2025 22:36:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U6ROI48D"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-61cb4374d2fso6120523a12.2
+        for <git@vger.kernel.org>; Sun, 07 Sep 2025 23:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757309777; x=1757914577; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757311256; x=1757916056; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=poJzinFVL/3ZpMVZ0zXVkw4E7LCDTIZ8hxEnwKddfTk=;
-        b=Yn9rdHsk4EJqg00qIbcymmNESWX59x7e4DOljdFUG9H1tYYA1MtXg5YcWfNxL7D6kk
-         tk2/hADp1gdiyGgKSFSeORpZ3D4sKdA6b2YBvwrPSJ4uZL3i3jGT5FY74BJQ6o74DK2N
-         uOs5Tn2v3uUEfKCLncG9Dj2I0kXIuJGms3bcvTHiAufuRI6gGopf1e4vNqlrh9XhiQqd
-         9uuBxslFYr7SvKJAUNXrYkPOrODF+ZCkiwu2YTz/xd/qIfWrnAs+sATzDmvUVR8TbBv+
-         ZC7pWhciKN0qkYw/dTNiUBwa7HR0XTOFFeHD57ERrCOrNkg6A+2+3lkFYaI0TLibtBnG
-         0OrA==
+        bh=kdOCAtrPkza55X6I0LaRqJwxgPdbbRhztsgjrf9dNWc=;
+        b=U6ROI48DtunpzutUPK9XdBDGwKzmnq8z0IM3+MWU/G8EOIkNM2AzkuWFb9jt2+J6Jn
+         oVskvPcYy/xyF+kJ/PIuQxYRP02Erc5cgBjtCyqNOglNjaJyyrfaegZPkhjgZROmXIHz
+         Ou8nmoTY55/JPCRz12vXaJunbEkXbru7tqR0fOoliskX2gDmesUKGDOd/NUzMKMqWjGz
+         zOAlF7qN8rZXIpu/AvaKCo5itnwAyAHotJSGVQ3LrwybNzvd7N28rodhIURpgK2xKP/b
+         UNDp2fLxZ5HfyTZdG+U0pmS87AW/31vSBkql7/EwmImiootXkItmkFFjwNRYp6s2sl1h
+         5clQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757309777; x=1757914577;
+        d=1e100.net; s=20230601; t=1757311256; x=1757916056;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=poJzinFVL/3ZpMVZ0zXVkw4E7LCDTIZ8hxEnwKddfTk=;
-        b=sse1Y+uECMAsZzgHcX6647aLIlfI1kLB2Q04wm1QT5aB7toz6Gu+OOkUl7+SRBjKBw
-         IuENCyt11H545xlRHP3vo1MFyuFMq1K588HMVzNddKu2nl5afgsctq7C66YI1GJvWuwr
-         I24Z2lLvSD3YecuL4uCjnbL1WD3xfjvwklsIWAIavDnHwEJdDJJjZqz0Fqzp2kOCNrTs
-         D2k9H21EK4qjH2C90gKNwjg3RpW4T5kRrBf4kOt9+bwR5PRO+6CZwqzhhVR4vX460euR
-         JmyawCpD/s+O7eiUkABAtkxUBCTsPzpLwgnkVxInlEmvTBTd42UrsZpijzMEP4cFeEjt
-         9sGA==
-X-Gm-Message-State: AOJu0YytT2A9wR+TFMoA7fLmTrZN7thsheTYaH/a/WMUiqTRi248uI5y
-	pIRkg+o7OU5+GzRKFbYh57mygtJHJKdU7624Ll1ybX4G6g2kyU4A33GrWlA3PwevaZW+diP1uH6
-	5UKBYBu6y1PjJVTpsA4Vn6x2MY4Q3/JiFiQ==
-X-Gm-Gg: ASbGncuUPx3C1mNJ3YbTQqsGitKcqi6RciTeAeaMIkI+6Qm6YQAe5Zi+9r+OMYk4OAo
-	JaQAzukn+OcPbe+VKNnCl7SFw90Qs0g8O7gE2JqW2HKra/nOu1Z+XuV5f8JniNLQ20io2SrBcdg
-	vV24oRS6dB099klJE3o5HJaNJuR6j5/0sDuNfWsWKFOtqCx/bGNhJRWkGdjejfoMzhakFCSezi+
-	oZTnPmOjhrNVaLxDcGoaako3+QfXHk=
-X-Google-Smtp-Source: AGHT+IE8G53pcYrn2mF2p+WJe3YjAz2Wr08SpaKq3c6EmbAS9eOgcSVMj0qGJnKwEwTuwyP+evty4ELbw0diV5ffmGE=
-X-Received: by 2002:a05:6402:524a:b0:61c:526e:e8bf with SMTP id
- 4fb4d7f45d1cf-6237ebc6e89mr6033038a12.22.1757309776879; Sun, 07 Sep 2025
- 22:36:16 -0700 (PDT)
+        bh=kdOCAtrPkza55X6I0LaRqJwxgPdbbRhztsgjrf9dNWc=;
+        b=Xpp8BVVBjZSKKghAo7c/baETiPHJJv9ctnS4b/GF3SRB2IJ49klcaLgQZdOVB1TAbm
+         Pe1ECPIfvH9xkop2uBqsGrZrNIWrHh2t3hp0CAieXIKuQttbK/ENqoYcizAwh/VRb/dT
+         srd/T976nwu4aLrcNkffejYMh4T3K3ZnKktG32AbVwS7okGUAchDXW+uJbOa8El7k4MP
+         cVQRa6NrRnk5sNPl13oa7kfIhaULdZrn8kjNRYhWvXJ1tb1JvJxSBY3G+rGAeXz7to4l
+         bVg4JlKArGmbOpxyjtBpJF0qo/jwlSJ4UU6EqDF1z+BL0rupKz1/E9fxkqovKURxmex/
+         sFyg==
+X-Gm-Message-State: AOJu0YzajxhE0AYJcaKxAy4jX0z7ZOc7Qp1z4XaYGHLGSgXlysKexL/+
+	cvbOOPsLO4KD2v/lpqvUzBGpmPmI2xlMUM6qnA0AQ+eQkLDpCyoUuaSQ00B4YZ6k/avoqhkoXi4
+	Dt2a72SMJSqSVeipkxRIJyNd0y6SaSfw=
+X-Gm-Gg: ASbGncsGjhFBDfFw9RynxV2u+RPW0bUEkDyb3zO2Pv9MRvhqEq+f8KQDSuXVMPrx9ZU
+	obhtTulAy0j5umYDyarHI6QT0/yZ5M7+vtvFgcZwI3Mw1DknRHdg8wyY4vOF4vadFA0Oe4eILz1
+	N8U0QCmKnxGtFhulQQgwSm6L/DieaYDpGwluZGM2q44j2zVU98BPVYGtdqFJPYfKfiy2fq1ArLd
+	13G7tqFSOtVeyDKsVRsW8oU7RvP8eQ=
+X-Google-Smtp-Source: AGHT+IHAYJfvFDqVfaZJeGvTSLrcF7fnS5mdXwBjCNSYBMqBQAGhUHt5JlWtvzIeO2vpA1bpu39UFBXJYl6jsrMEuPs=
+X-Received: by 2002:a05:6402:2707:b0:61c:3379:7915 with SMTP id
+ 4fb4d7f45d1cf-6237abde445mr6554331a12.3.1757311255965; Sun, 07 Sep 2025
+ 23:00:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250721141056.2283349-1-christian.couder@gmail.com>
- <20250731072401.3817074-1-christian.couder@gmail.com> <xmqqqzwvqay9.fsf@gitster.g>
-In-Reply-To: <xmqqqzwvqay9.fsf@gitster.g>
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com> <20250908043620.57848-3-siddharthasthana31@gmail.com>
+In-Reply-To: <20250908043620.57848-3-siddharthasthana31@gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 8 Sep 2025 07:36:04 +0200
-X-Gm-Features: AS18NWC9ySerr_amvYTH0kA3Ry73oZ8z7IwlL-8Mdz1tW4YZlR3RJeQD_znGo54
-Message-ID: <CAP8UFD0RHf9W3YCHYEtv5t1cnPe=CmfT52zh_898sCErEtiaKg@mail.gmail.com>
-Subject: Re: [PATCH v7 0/5] Make the "promisor-remote" capability support more fields
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
+Date: Mon, 8 Sep 2025 08:00:44 +0200
+X-Gm-Features: AS18NWCgf3JX3QnRGFvmGQvb8IWT2VlxijnK3ZVX31v-VuGzKut_PlcLDiPd9fc
+Message-ID: <CAP8UFD3Db-n3CY=KBpn-2Nt=SYY=5ckF3J_4ho6C19SVcrfdsQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] replay: document --update-refs and --batch options
+To: Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
 	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
-	Jean-Noel Avila <jn.avila@free.fr>
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>, 
+	John Cai <johncai86@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 29, 2025 at 1:32=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
-
-> As I do not want to keep an inactive topic in 'seen' for more than a
-> month, I was doing my usual "sweep" of the topics, and found this
-> one.
+On Mon, Sep 8, 2025 at 6:36=E2=80=AFAM Siddharth Asthana
+<siddharthasthana31@gmail.com> wrote:
 >
-> I think I gave a review on one step that pointed out a few problems
-> with an outline for a possible solution, but I did not see anybody
-> else reviewing, and nothing happened since the end of last month.
+> Add documentation for the new --update-refs option which performs
+> ref updates directly using Git's ref transaction API, eliminating
+> the need for users to pipe output to git update-ref --stdin.
+
+Most of the time, the documentation should be part of the patch that
+introduces the documented behavior, not in a separate patch.
+
+> Also document the --batch option which can be used with --update-refs
+> to allow partial failures in ref updates.
+
+It looks like a --update option was also added by the previous patch.
+Is it documented here too?
+
+Why was this [--update | --update-refs [--batch]] set of options
+selected over other possibilities like for example
+[--update-iteratively | --update-atomically | --update-batch]?
+
+Also how does this --update-refs option compare to the --update-refs
+option in git rebase? Is it working in the same way?
+
+> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+> ---
+>  Documentation/git-replay.adoc | 62 +++++++++++++++++++++++++++++++----
+>  1 file changed, 56 insertions(+), 6 deletions(-)
 >
-> Since the summer is a slow season, I do not mind keeping it for a
-> few more weeks in 'seen', but I can simply discard the one I have,
-> and requeue a new version in 'seen' when it materializes.
+> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.ado=
+c
+> index 0b12bf8aa4..cc9f868c2f 100644
+> --- a/Documentation/git-replay.adoc
+> +++ b/Documentation/git-replay.adoc
+> @@ -9,16 +9,17 @@ git-replay - EXPERIMENTAL: Replay commits on a new base=
+, works with bare repos t
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance=
+ <branch>) <revision-range>...
+> +(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance=
+ <branch>) [--update | --update-refs [--batch]] <revision-range>...
 
-Sorry for the late reply on this series. I had a long vacation in
-August indeed. In such cases feel free to discard my topics without
-asking.
+Here --update, --update-refs and --batch are all documented, nice.
 
-Now I have just sent a v8, and I hope I will be more (re)active on this.
+>  DESCRIPTION
+>  -----------
+>
+>  Takes ranges of commits and replays them onto a new location. Leaves
+> -the working tree and the index untouched, and updates no references.
+> -The output of this command is meant to be used as input to
+> +the working tree and the index untouched, and by default updates no
+> +references. The output of this command is meant to be used as input to
+>  `git update-ref --stdin`, which would update the relevant branches
+> -(see the OUTPUT section below).
+> +(see the OUTPUT section below). Alternatively, with `--update`, the
+> +refs can be updated directly.
+
+Here only --update is documented.
+
+>  THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+>
+> @@ -42,6 +43,24 @@ When `--advance` is specified, the update-ref command(=
+s) in the output
+>  will update the branch passed as an argument to `--advance` to point at
+>  the new commits (in other words, this mimics a cherry-pick operation).
+>
+> +--update::
+> +       Update the relevant refs directly instead of outputting
+> +       update-ref commands. When this option is used, no output is
+> +       produced on successful completion,
+
+It seems a bit redundant to say both "instead of outputting update-ref
+commands" and then "no output is produced on successful completion".
+Maybe there is a way to reword this to be a bit more concise.
+
+> and the refs are updated
+> +       immediately. If any ref update fails, the command will exit
+> +       with a non-zero status.
+
+This doesn't say if the command immediately stops when it fails to
+update a ref, and if the ref updates are atomic or not.
+
+> +--update-refs::
+> +       Update the relevant refs using ref transactions instead of output=
+ting
+> +       update-ref commands. By default, uses atomic mode where all ref u=
+pdates
+> +       succeed or all fail.
+
+This seems to imply that --update doesn't update the refs atomically.
+
+> Use with `--batch` to allow partial updates.
+
+What about --update, when should it be used?
+
+> +       When this option is used, no output is produced on successful com=
+pletion.
+
+Here also it seems a bit redundant to say both "instead of outputting
+update-ref commands" and then "no output is produced on successful
+completion". And maybe there is a way to reword this to be a bit more
+concise.
+
+> +--batch::
+> +       Can only be used with `--update-refs`. Enables batch mode for ref
+> +       updates, allowing some refs to be updated successfully even if ot=
+hers
+> +       fail. Failed updates are reported as warnings rather than errors.
+
+What's the difference with --update? Is it that --update immediately
+stops when a ref update fails?
+
+>  <revision-range>::
+>         Range of commits to replay. More than one <revision-range> can
+>         be passed, but in `--advance <branch>` mode, they should have
+> @@ -54,8 +73,9 @@ include::rev-list-options.adoc[]
+>  OUTPUT
+>  ------
+>
+> -When there are no conflicts, the output of this command is usable as
+> -input to `git update-ref --stdin`.  It is of the form:
+> +When there are no conflicts and neither `--update` nor `--update-refs`
+> +is used, the output of this command is usable as input to `git update-re=
+f --stdin`.
+> +It is of the form:
+>
+>         update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
+>         update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
+> @@ -66,6 +86,15 @@ the shape of the history being replayed.  When using `=
+--advance`, the
+>  number of refs updated is always one, but for `--onto`, it can be one
+>  or more (rebasing multiple branches simultaneously is supported).
+>
+> +When `--update` is used, no output is produced and the refs are updated
+> +directly using individual ref updates. This is equivalent to piping the =
+normal output to
+> +`git update-ref --stdin`.
+
+Is it equivalent to `git update-ref --stdin` because both exit as soon
+as a ref update fails?
+
+> +When `--update-refs` is used, no output is produced and the refs are upd=
+ated
+> +using ref transactions. In atomic mode (default), all ref updates succee=
+d
+> +or all fail. In batch mode (with `--batch`), some updates may succeed wh=
+ile
+> +others fail, with failed updates reported as warnings.
