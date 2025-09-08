@@ -1,147 +1,129 @@
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D432B9A5
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 16:13:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3655920ADF8
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 16:15:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757348019; cv=none; b=uhiPYl+tDuoU2Epln5xRi4eMGw/JX32TbpTn/iuB7req2h6JC65QbqvkO0zm77CX7zkFV6govlxs1KDg9+scdqLXOl4XRd3iZd6qxxlCv5C/1Ve353uSHYDDy4FWttvpVbIWMYil8zGwB+knTaQNqnePdmoFeqgg6zCy7dnguXI=
+	t=1757348145; cv=none; b=XmG7yiWoBFR62e9h/x/+66LontU6wn4oxTr7tlePCWvj/GjQq5RnPMDk6trQ5o3J2+jl/82dEDko31tivTApFm/AqHBaFQ1vCqJLsisKi+f8dxu+GalNbOROunoofyJWy/uKKeiw4C/z68IScQ6YtsM5L9onJniVnzZFUjQ+ljI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757348019; c=relaxed/simple;
-	bh=MSBoTDCkancuU/mqUWQv1cqr1OMjBOQTe+m8kw/Hl5g=;
+	s=arc-20240116; t=1757348145; c=relaxed/simple;
+	bh=uIRXG6xMt9vdC7FWwgnEnqcz0zSPFaiJ/WczZmw82ws=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eT16XwnJiUHsc0fhkvzNr7F3s/E6MuaNB2b49jp3j0iHn3C5//4TA0skQHOIAvaKTmQiNtgcczTHlkF2bWzKsKC6qhc2+o+rbcsAHRTPWfjNxS7VIYWRdCPws97yvsz3YBtB1F9G4bXdLO0DHe4l9KolDToWesCRPm/WDMN9Jig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K9imRLFH; arc=none smtp.client-ip=209.85.166.176
+	 To:Cc:Content-Type; b=n3ZP8nFlK5ib1HAYOxsXVrS/pYNJWlPMXrlxk3DciZ90ihLQfFRG7Q1LTmFKCiGbQoPGMk6DiCGfo5F6OvH84JJkSoZV4RxfobH7TIy2MBHQuz6qsrCxQC8hIMbIcCnLK1YAHc7Amg43vGB1GAsn6PfrdHCj611saRrfbf6m9nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cWQPLyOf; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K9imRLFH"
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-3f664c47adaso22448585ab.0
-        for <git@vger.kernel.org>; Mon, 08 Sep 2025 09:13:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cWQPLyOf"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-336b071e7e5so37404381fa.1
+        for <git@vger.kernel.org>; Mon, 08 Sep 2025 09:15:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757348017; x=1757952817; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757348142; x=1757952942; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BiJeDhsZjF6qA6SpZVsUXZUJ/G++BfdDKvXdbPolYHc=;
-        b=K9imRLFHu63wNjBqx7YktSpzD4KD2Qjozqe7dTKoQmRCBAKlrAaa68roJoDEdvJ/4F
-         9jKxlIM7EwAbXX/7XNgU/oy6yfGMcx3ZXUsB1iYKCtQEpL/siaI1geXcwDooyA9RnBx0
-         l/2GwxOnEGjW1pzP9hWwnHn46oaOFTMZylfMXcVQ2kn9UU4TLyG0b7H4uES/EfCBGTUY
-         wUr+JCzYMWYfDoTf/UA5XAaUSDCbYOM8UoqfTt8M3/dkf2fGrO9pWC21tQ+FPbngQHjz
-         JCZuFKZ3I+8So+lZTY5Ds493QX5GfY9R7SupdRap0/eyEKLgeK+abf/g9sl/16073PZe
-         R9JA==
+        bh=cuFlsvV5bDVMIL3mQUE6Qxlc0OGxJpzNHPZYAojw6cY=;
+        b=cWQPLyOfNhJqV5DY48vL3yvpq4y1CpC/adO1H2U/sCDUfJCahot90E6XYtwXstuYxK
+         OsJfXM+4yMaBePFNwcQ2QNxTM9+zJPLG8sygX0uAXvXFzdqfNlAG0oDilTLgrD2xnFFQ
+         +MAlM6PD8Caf6q9EgXcMcPOchxrw+TvcLTeC/B1IIHw96oEQxP38TvX6jJ7RHqjpKyMz
+         9h2Aqh4p8Vi/laMRM9CUuxV7QhqSLpdJKXudPe3NwLu2S69wdCPS9AYmh9RfCzGHYPyP
+         cSKjqddjMMoUBUIixJpoJdydz0GFdWJ4fxIkX5kwCUhwrSR6o/PK1z5w1bwotbiPRomW
+         dOTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757348017; x=1757952817;
+        d=1e100.net; s=20230601; t=1757348142; x=1757952942;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BiJeDhsZjF6qA6SpZVsUXZUJ/G++BfdDKvXdbPolYHc=;
-        b=Z3fYA0Lv3IB8XYMEKb3pd53L4hpA+jtOolW1sMkm7uJ+cNI/Fxvo0WXI6Db4sxtfW2
-         xCsgSErYUI8kguJgzqgRn7kTxbqkb8YE1S1o+7UiK0wpPYEomxkLcm9ZpusvclBFi0pt
-         mF8rJUYdgpZdNJekYY7nBBeHN7VsrNL+vX0SHTdFReZ+YSKQMlF2oe/m8721vhw204n8
-         Gp2bUVCc4WC8VaFylLMsYsKs845Pyn7Lo3p0eZkcKyJpbvTiPAcZD7GAkwQIsrIWJQ+h
-         ifBy7qCahlMsoRISzLwqmWF5Z8dmikoQHc4p+QhveFdNXAtFy49BHyKuAW9H+zOKMvPE
-         /8+w==
-X-Forwarded-Encrypted: i=1; AJvYcCUXHMQr25P3hdAtrlkYG/gxW++k4xvR9BVZlZMaWgDbVztH4juNHvy0YIvJmnqzbpkjJ+E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCKUHpdfPEzyCmfQ+Kb2eT2fCmHwWzU9vh8e+qWRfi2/PgjKiz
-	5NAjzoS7vjupSbveI/vV1TyJb2kkeP6wXx4pgPzq1fkReTmfUDoJMIkwkGZtGW5hlD4rJobkpc6
-	u261YS5bz9diBdOSGWyDsFl1CExUFEs0=
-X-Gm-Gg: ASbGncsI0EAjQYSZM/TEatlR2gCeByatLKc2tlIw5jdsJOuCx3SCtOwKigeOyC4+KJ1
-	w5QO1s9pP6rIKdXio3Xe3NVNGFtcGJrVPr/H8ub/2hBoBsXns38sRjxwO6Ft8F2ObRTjv2PRZIb
-	ZxrMrRvEAjEOIrFPuIqDfuR5WQLoxqIErBxZ608YKTXkrGTq5ABF3w5YTMJF83WoWrVgG4g0aNu
-	Pr5mC6YHM0wcSK09gG9khnuLBM40lLyZVmxvjqMJFk/uBjfTwADy+DpM8U=
-X-Google-Smtp-Source: AGHT+IHVvOjQ/f+h3L0Aih3FEfyCZiaU445Qx3yN4E1KPVVp1kwuFztoYVbLzgHLImUBoAeX5bg7InQN1QzaKQGIbYM=
-X-Received: by 2002:a05:6e02:1605:b0:3f6:626d:6b50 with SMTP id
- e9e14a558f8ab-3fd7f0a8726mr130089195ab.11.1757348016954; Mon, 08 Sep 2025
- 09:13:36 -0700 (PDT)
+        bh=cuFlsvV5bDVMIL3mQUE6Qxlc0OGxJpzNHPZYAojw6cY=;
+        b=VjwfnYFQ/56VfMfja0jkQvhDP2hB9UTugCRZQwUf4dWA2hcoNBz+YW6e9V4xVxIbzU
+         IiBCchvrkrb4s+h/gCi8fgz2F57es2I8doOgd5HJo/ehlpunYFjt63+H4oGtB7iZGaT9
+         67CWgZSz/8xv6BRmY2AmMY8akCMySGrSPAmyo9VLXWQM5kys757l1wQjKPSVwc2+S8KH
+         tnp/V4YaDFkGfr4X6ZmHFgd5GM8z9ap8oTqJpptfpJrE4TwRE8hhqnzKwUAM6Zl0CjYh
+         ZGw5+bdB09XYxScVJUMIBYfN7wC/w5D6Kl0Y83F5ToojHjNwmG/A7m2NCGLO3E0SH8kY
+         3dtg==
+X-Forwarded-Encrypted: i=1; AJvYcCWeGxvxuItQhetnPhZbVeCbqPy0e8vIHHLqU2xVViep1H6VD4QjWauYOZSPCf6pBNmsb5w=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLo14T4apY7apRtCAuq34EJo8dG5hHI22BGqBy38C2eAtibehc
+	YCe8JeuBG8c2Ah1JyFJRJ6cBaU55iXmTVH1zMHdY59fucG4v9lhf/oppICk6fdlPxfZW3a9qIBS
+	qUMCk1TjOYkjHYTuB0he6MNfOx2OrQfI=
+X-Gm-Gg: ASbGnctAU/2MK3l2B/6xSUhx4+KRMtpn/uOtgBGiMotMxp3tIlwlTbsSDGcu7pSUjO5
+	Ip8xvCWtTEnmJoxydwR6jfALCzIdWE5GUs0fLSlHd0KpTuAPHkzaWNOxMhZDcD0cv+Xm7h3Z/Of
+	Q0/KhC9h908seG80V/a9ve5ryK33aBQG+R8ANirNpVk1O09qk3L8tdENh10PDuxM9RHn680v0yO
+	XDUdTec2wa/aE+G2Ww=
+X-Google-Smtp-Source: AGHT+IGVAAqbXLBjd5aEBzpRCZ4FNYeJ7rRyHWhtMdsVeoq7VuriMij1aLEpFa30bMcB/Q5ZiHTBc9RhN3M35jsrGLE=
+X-Received: by 2002:a05:651c:1505:b0:332:5171:3114 with SMTP id
+ 38308e7fff4ca-33b4c66b650mr21384331fa.10.1757348142231; Mon, 08 Sep 2025
+ 09:15:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <01f101dc1760$5eef42b0$1ccdc810$@nexbridge.com>
- <xmqqsehc1ypi.fsf@gitster.g> <aK9mx2XemppIaKVI@nand.local>
- <xmqqh5xszf91.fsf@gitster.g> <aLbSA5KsBdD4wW_B@pks.im> <aLco7uHFZaHnfxBa@fruit.crustytoothpaste.net>
- <aLfU5sEa-RE3X4G2@pks.im> <aLjj9cG9_K6YLfeA@fruit.crustytoothpaste.net>
- <aLl6iFXeAvL_hvqR@pks.im> <CABPp-BFNoLC+TdtuEq5Nx+VcFJ-WFga2r0E+eq=fFaaCN_sRGg@mail.gmail.com>
- <aLqIHCdlbwF5X6Cm@pks.im> <CABPp-BG3Zcw63vNziy86MvYNubefn1SmPvXefpqpA=a+42KT8A@mail.gmail.com>
- <042f01dc2011$da9dcda0$8fd968e0$@nexbridge.com> <CABPp-BEEU0yhurwewuRjrceU+AeHy9vYzXaOFmK5u0nnoSbp6w@mail.gmail.com>
- <049401dc20d6$69086400$3b192c00$@nexbridge.com>
-In-Reply-To: <049401dc20d6$69086400$3b192c00$@nexbridge.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 8 Sep 2025 09:13:25 -0700
-X-Gm-Features: Ac12FXwEoJW4nP9cnph9Sqt69IIwbEXk_PAh83bMZd_wTnugn4NK2octsDDl79M
-Message-ID: <CABPp-BHQyQk+Vkzm3RhVXxvNrpLB--bCLYwSCfZBQhB6PGBQQQ@mail.gmail.com>
-Subject: Re: [PATCH v3 02/15] xdiff: introduce rust
-To: rsbecker@nexbridge.com
-Cc: Patrick Steinhardt <ps@pks.im>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Josh Soref <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org, Christian Brabandt <cb@256bit.org>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
-	Sam James <sam@gentoo.org>, Collin Funk <collin.funk1@gmail.com>, Mike Hommey <mh@glandium.org>, 
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Ramsay Jones <ramsay@ramsayjones.plus.com>, Ezekiel Newren <ezekielnewren@gmail.com>, 
-	Josh Steadmon <steadmon@google.com>, Calvin Wan <calvinwan@google.com>
+References: <pull.2048.git.git.1757274320.gitgitgadget@gmail.com>
+ <2a7d5b05c18d4a96f1905b7043d47c62d367cd2a.1757274320.git.gitgitgadget@gmail.com>
+ <xmqqjz29x9r1.fsf@gitster.g>
+In-Reply-To: <xmqqjz29x9r1.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Mon, 8 Sep 2025 10:15:30 -0600
+X-Gm-Features: Ac12FXyOlUMWpYCjF1IfCuOgos3d1P6GKU-cFF0eunO4aMGpXh5dlI78KGZdB0M
+Message-ID: <CAH=ZcbByi8ouj7mcHpOGtVYnHSq_E5_cFXiuiXJmLP-=4nrsvg@mail.gmail.com>
+Subject: Re: [PATCH 10/17] compat/rust_types.h: define rust primitive types
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 8, 2025 at 8:37=E2=80=AFAM <rsbecker@nexbridge.com> wrote:
+On Mon, Sep 8, 2025 at 9:08=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+> The standard guarantees that these are all of the above are exactly
+> N-bits wide, so I can buy the above types.  But before I can buy the
+> above typedefs, don't we need to rename existing variables that
+> squat on these names?
 >
-> On September 8, 2025 11:31 AM, Elijah Newren wrote:
-> >On Sun, Sep 7, 2025 at 9:10=E2=80=AFAM <rsbecker@nexbridge.com> wrote:
-> >>
-> >> On September 7, 2025 12:10 AM, Elijah Newren wrote:
-
-> >Thanks, Randall, this is useful information.  In regards to one point no=
-t fully covered
-> >by Phillip:
-> >
-> >> Also remember that without support from the git team, the code base is
-> >> no longer the same, meaning the auditors will not necessarily accept
-> >> fixes from third-party sources.
-> >
-> >Why does it need to be "third-party" sources?  Linus years ago blessed h=
-aving
-> >someone else be in charge of providing updates for stable releases of Li=
-nux.  Junio
-> >could do the same with Git and similarly mark an individual or group of =
-people as
-> >the maintainers for the last Rust-optional version of Git, and those ind=
-ividuals could
-> >make official releases of Git with extended security fix support.  Then =
-it's not every
-> >platform repeating the backporting work that needs to be done, but rathe=
-r
-> >individuals from the affected platform(s) collaborating on that work and=
- then
-> >making official first-party releases.
+>     $ git grep -n -E -e '\<[ui](8|16|32|64)\>'
 >
-> Linux has one set of rules, and other platforms have others. I do not def=
-ine the
-> audit requirements for PCI, SWIFT, or HIPPA compliance (and other rules o=
-utside
-> of North America), which apply one way or another to most of my community=
-.
-> The audit teams, which are both internal to the companies and at
-> governmental regulatory levels, do this. It is 100% out of my control but=
- is a
-> reality. Fixes to any code involved in managing financial and health inst=
-ruments
-> must be done by authorized and recognized sources. I am not one of them.
+> gives some hits, like
+>
+>     reftable/record.c:678:      uint8_t i64[8];
+>     t/helper/test-parse-options.c:123:  uint16_t u16 =3D 0;
+>     t/helper/test-parse-options.c:148:          OPT_UNSIGNED(0, "u16", &u=
+16, "get a 16 bit unsigned integer"),
+>
+> to avoid confusion?  There are handful other hits.
 
-Perhaps I wasn't clear?  Let me try to summarize what I've understood
-of the conversation:
+Those places should be cleaned up, but it's not an immediate problem
+because compat/rust_types.h is not auto included anywhere. These
+typedefs live in git-compat-util.h in my "Introduce Rust" patch series
+and I never had a problem with compilation or testing. One reason I
+included compat/posix.h instead of git-compat-util.h is because it
+includes stdbool.h where git-compat-util.h doesn't. I'll be happy to
+do that cleanup.
 
-Randall: We need to have official git releases for the last
-Rust-optional release.
-Elijah: Great!  Let's enable interested folks to make official git
-releases for the last Rust-optional release.
-Randall: We need to have official git releases for the last
-Rust-optional release.
+> > +typedef float     f32;
+> > +typedef double    f64;
+>
+> It may be that they can be used interchangeably in practice on
+> popular platforms, but are these guaranteed to be equivalent by some
+> standard?  C only cares about the minimum required range and
+> precision, so you may have allocated enough bytes thinking you can
+> fit a f32 but your float may not fit there.
+>
+> Or does Rust care only about platforms with IEEE 754 and would
+> refuse to port to other exotic architectures so the above worries
+> would not apply?
 
-Which makes me just want to repeat what I said last time -- let's
-enable some folks to do that.
+If the typedefs in compat/rust_types.h are incorrect for a
+platform/target then compat/posix.h or compat/rust_types.h should be
+updated rather than relying on Rust's core::ffi's guess as what it is.
+
+On the Rust side: core::ffi assumes that a C 'float' is the same as
+f32 and that a C 'double' is an f64[1,2,3]. So I am making the same
+assumption that the Rust maintainers are _and_ I'm keeping ambiguity
+on the C side rather than eroding Rust's type precision. If a platform
+does not follow these assumptions then the compat/rust_types.h should
+warn those using that platform or fail to build entirely.
+
+[1] https://doc.rust-lang.org/1.89.0/core/ffi/type.c_float.html
+[2] https://doc.rust-lang.org/1.63.0/src/core/ffi/mod.rs.html#80-81
+[3] https://doc.rust-lang.org/1.89.0/src/core/ffi/primitives.rs.html#34-35
