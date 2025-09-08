@@ -1,127 +1,129 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA4E1E260A
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 14:40:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2740F30ACEF
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 14:43:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757342426; cv=none; b=B4UZ6x0UAKNgMOuh06wsABRD7qDnjEz8UIM4Xwvxyc8glILLE6F/rXK05x2IKQDNPh9yXn0YwVwNuApYXvqD/zEinTZ/h3NDP8i+AVWNsDCzPWOfRntFSWvg6ULL5yFc9D72lIShqyTi7ZfLa8REW6SF6I+Q1R96Frbz+GMb9Ms=
+	t=1757342605; cv=none; b=fuo87hB9iu2z4LN+Lzrvoy3UOLQwL4rerRBhpLhfr1gvh1yUzJWCB+fPnp1tdJenDpYnvc4QDyx+oOvCDwgcJ8o6SYHh4bmRDcgeLvzdzPB/2KA8FXiElVqxTZHM7P0b36O5cptIqFxP9Wq7eHxAjBqQtEoSCG/QS+peiJLqoFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757342426; c=relaxed/simple;
-	bh=HLO+QSbFQUqNFV12nYOdIb32d9sqkv2Rduye93qlV3I=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=BYz1i/eULsO3k0EG7A3k9xI73u1UmsTzgppWPE5g0p4rtPja8Gh81aF14ljhRp0/AQU6k9fs04oakB9o85pK6gzD1feekkI4l6I7TJrm7TdUYwrmwiYVCZ0wyQ36pzsMZ8ds/+eJLKkNa4iqtAL/4S4IRcOpkISbrWCYjlENlUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=QUzw83uS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l8E/Nqp7; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757342605; c=relaxed/simple;
+	bh=mRU9M5yLYuwDm2KA+vjPHYisbEBb5i3o+HIE+HPdDGQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NfuYTbvtixX7u628fLYct8AIUA+j4auSlwD8PB4HRq26M83a6apgaktuSv+6xqGEcQjjbipB+jkVzHkXr0XwXUL6UrECqS7+8NU/KDkgTSQjerwS+zccYBX2P+vACA9yo8bVCs7FBiC93WVisdh23GbQgYd6093B3leBU/GC/Ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a1pQixWI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SDYXSZh/; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="QUzw83uS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l8E/Nqp7"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7B234EC0237;
-	Mon,  8 Sep 2025 10:40:23 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Mon, 08 Sep 2025 10:40:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757342423;
-	 x=1757428823; bh=8PQL9WuJos9QhDiZTaQNthiFUl82wvtpbNG/gi0qXh8=; b=
-	QUzw83uSsjvmy99ow0B5vLScEKLOIgN47gtjmNPH2ZGuO8PXD53hUeA1T4qE1xU2
-	MpLIhN7owLEv+Mdse3FcL3vuHtw7E9f6a90TabFpXWLIw3VidpzKPxf6X/UvWSko
-	t8Y2RLUdZCl4Cla8CWaVyRFMJY8Q69kSHU0gPu6oiPie5xAoF8fc5EiolpZvGpm0
-	FpVLf2u+PvBxDrJDflZs4F4gK9UYZIrjJje2eWACKQxvxfEie+B3Xbpttde1fzrK
-	akJd3sAyU9eqIYT2u6VvaqT6k5Cq2DMIXx/HNNV1vQ1DHsj9t3B8rxg7xtnNCjMl
-	I8dtwPOWhNGSPUPrEwBd4A==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a1pQixWI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SDYXSZh/"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 286261D00083;
+	Mon,  8 Sep 2025 10:43:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 08 Sep 2025 10:43:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757342603; x=1757429003; bh=W205tdOqqh
+	rrymCO4byzjgGJhehSkal+tdeZedgnDAo=; b=a1pQixWI+gVpciSYcFeErHn9Ep
+	TQHsnunBq22Yp4En/DxJ17SmU5yiJaUkxDyEX9XsLqpfWEkgEXqtv37F3tmxD0rw
+	qhYZpIwh4hXq+LdNf8A/LPLoU2dU7oFLXSPIobOABBkdC+5l08DQnMqAIQd6BNFy
+	EQGGSibjx5WKY2YqfLDBVDyYkdqV9us1keIrJ2++tHCuDJaLJJ3IBrq2lUO3gUTi
+	Kcs7egitsAtXI5jPO5zVDg6YzbtHQT/d3lfX4hmtZM/0eXZ23enxq1/OWbLEQqYx
+	2j+H5yNzTW7A5X9qqxVwE2s4I5I8f5FVAd7A6OUX294Y68kb1Ed0ai1m1+4Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757342423; x=
-	1757428823; bh=8PQL9WuJos9QhDiZTaQNthiFUl82wvtpbNG/gi0qXh8=; b=l
-	8E/Nqp7zrSTu1vj7zqGzsvTPhzHpL2YKZV2HA1aGHyl1yV72CqMsoHAU+nNQtPNy
-	Ly3jvU2fLoQyWzBTdEVCdiBNWnmFdFAMr8xbnETcTTv++5rdBkIOzSWXOPD+Gowr
-	3bEh9sszgrDCPeo2KbjqT7AMoN5QF7P+S3oZrwVh4JE66sojtTk72LIpXrVpgVZm
-	zD7Qq4gMk9KO2HeAL5tHNI5UOOp473SHuhO3b9ZYfc11+jYWvlJZB9rCZZ+y3eQe
-	xD4flX0RPO8wZCMTkPVDvPvdC3SrV2ADjFXY7ccb+Z/5cgaWpyhPuuOm+YHs/9jb
-	51AA8OkGujc7weutuJiMA==
-X-ME-Sender: <xms:1-q-aNl9theQdbCy8bIhfcPLwlnhdcM_1xUEipQQqU9rFA3i-12pdjE>
-    <xme:1-q-aI2nxofdQPBdIs_BsbNy-WppqM4wkc2eicZwdyTKTWMGFwSAzmb49JNCE6s6Y
-    9P58QvP1oavLf_fVg>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757342603; x=1757429003; bh=W205tdOqqhrrymCO4byzjgGJhehSkal+tde
+	ZedgnDAo=; b=SDYXSZh/KB2C36Os/5eBZKacs40rD0a2eSrfU7WlhyK5KbgMybZ
+	6KttwkXwZvJrNW3CAONjKc+1JzviMGaGG6C8rPxgXlOgwiX7hRi6MnFU/epS6Myx
+	ZYNSQ8BGnB8jQCsKhPMIQB0o3ZNQWN+Vdy5D/BOwtf4/TjdumI9CjiHNWxBtR9AR
+	NFs2mcJDtX+YK3NJkRTLBUhStZJo4PTR5FDDzfcjkzuACnapR2Z7hoDU772Pb832
+	hvoR8lduSDTrdBVrgYMvJxpYMc3erKpM2rXWoTfjLxIQfyLafotmAJFz0zOxI0x6
+	DxCm0EI4sDsz9ZUSYV4R6H2uEtCFljnaRvg==
+X-ME-Sender: <xms:iuu-aJIJl5fFuDz9-h_cIXrZzrVuDafn5PT1KE3TeKxpzCiT4S8GCg>
+    <xme:iuu-aArSkk977h8tyI6GGn5X4pILJYCwo9ZPEGsxZxj-SOrR3QRU0BhVWnUAOaQvr
+    FbBl6nH2XSXqIFLmQ>
+X-ME-Received: <xmr:iuu-aIKUEZ1ZVD-akaln_LUr3TDOJg_hgcKW9EIMZVLqfz9eQ2ZY2vEQaC3LTvWpMUz7Pi_ad-xsyNE9iKv0obp5Lxloep72CXrn5HU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeektdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeegtdejieetgefh
-    uedtuedttdeigfdvgeetkedtuedtudfgkeeluefgleetffejffenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepuddupdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    khgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgef
-    udesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvg
-    hlihhnsehgmhigrdguvgdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgt
-    phhtthhopehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:1-q-aEcv9bJeXuRcOBw5MB55eLJzhLc4i_TW6Vi740QEvMtB4rvYzQ>
-    <xmx:1-q-aO0uoZk4ImxMOv64AgGEmsI30sCxVCEg2FXouLLPCevydFllDQ>
-    <xmx:1-q-aM-7KvkFh7DSGIj9DaeEZANxEnUbWFGa_O1cA6Y6b9-W5urmUA>
-    <xmx:1-q-aD4MjfCIGjoAOf4wVIPbb29RcIVk5HuPhF05evXeXqL25RqxVw>
-    <xmx:1-q-aETlTApML6_RaL5t-J1l6PY9QhFrRgvM7I4ypJpB0E09epG0GK2b>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 00CE51EA0068; Mon,  8 Sep 2025 10:40:22 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshgrnhgurg
+    hlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepmhhilhgr
+    hhhusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:iuu-aFTE1oSn6CyZXs2NqHDXTI5lgMr6RmRGBDEQwNa9jzbt0AJXBA>
+    <xmx:iuu-aHtpQV0YVlkxyT6pKhGNeOiPB_hcYxCgFIoVdDeYibjayPKflw>
+    <xmx:iuu-aGazO7dMt8Ma8Y8-e6vJWMhGVqsCzqW_n0KdBt3YsdAofzj1yw>
+    <xmx:iuu-aNFHEnUGUIhbpJMxBlUAjcPG7FcZ4y3TE0b5NPQxUNzCK4Kegg>
+    <xmx:iuu-aJ-Ia5bmGukvZfiX_zuroRE7bz4f_DTvYtGoutYXDFvYwviLBvNU>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Sep 2025 10:43:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Milan Hauth
+ <milahu@gmail.com>,  git@vger.kernel.org
+Subject: Re: Git dumb HTTP protocol should work without update-server-info
+In-Reply-To: <aL6kevExmhesoEWN@pks.im> (Patrick Steinhardt's message of "Mon,
+	8 Sep 2025 11:40:10 +0200")
+References: <CAGiEHCtP29bQRsEyLabNrLuiP96P-o7EEGi88B7pJbP0tfprxw@mail.gmail.com>
+	<aL2fn4j5uhrVWrDp@fruit.crustytoothpaste.net>
+	<aL6kevExmhesoEWN@pks.im>
+Date: Mon, 08 Sep 2025 07:43:20 -0700
+Message-ID: <xmqqy0qpxawn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Acg5J5VCLpxV
-Date: Mon, 08 Sep 2025 16:40:02 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Siddharth Asthana" <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>,
- "Christian Couder" <christian.couder@gmail.com>,
- "Karthik Nayak" <karthik.188@gmail.com>,
- "Justin Tobler" <jltobler@gmail.com>, "Elijah Newren" <newren@gmail.com>,
- "Patrick Steinhardt" <ps@pks.im>, "Toon Claes" <toon@iotcl.com>,
- "John Cai" <johncai86@gmail.com>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Message-Id: <ecdd1191-844b-47ca-9737-cc2ffb72b37d@app.fastmail.com>
-In-Reply-To: <20250908043620.57848-3-siddharthasthana31@gmail.com>
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
- <20250908043620.57848-3-siddharthasthana31@gmail.com>
-Subject: Re: [PATCH 2/2] replay: document --update-refs and --batch options
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 8, 2025, at 06:36, Siddharth Asthana wrote:
->[snip]
-> diff --git a/Documentation/git-replay.adoc
-> b/Documentation/git-replay.adoc
-> index 0b12bf8aa4..cc9f868c2f 100644
-> --- a/Documentation/git-replay.adoc
-> +++ b/Documentation/git-replay.adoc
-> @@ -9,16 +9,17 @@ git-replay - EXPERIMENTAL: Replay commits on a new
-> base, works with bare repos t
->  SYNOPSIS
->  --------
->  [verse]
-> -(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> |
-> --advance <branch>) <revision-range>...
-> +(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch>) [--update | --update-refs [--batch]] <revision-range>...
+Patrick Steinhardt <ps@pks.im> writes:
 
-Another downside of making a separate commit for the documentation is
-that now `t/t0450-txt-doc-vs-help.sh` will likely fail for your first
-commit.  One of the tests makes sure that the synopsis and the `.adoc`
-is in synch.
-
+> On Sun, Sep 07, 2025 at 03:07:11PM +0000, brian m. carlson wrote:
+>> I will also note that the dumb HTTP protocol doesn't work with reftable
+>> and there was some suggestion of removing it for Git 3.0.  It certainly
+>> will not work out of the box with Git 3.0, since the default is
+>> reftable.
 >
->  DESCRIPTION
->  -----------
->[snip]
+> Yes, indeed. In theory though reftables could also be the solution to
+> the underlying issue: the client can be tought to read the "tables.list"
+> file and then fetch all tables listed therein. The result would be fully
+> consistent, unless any of the tables gets garbage collected. The client
+> would notice and abort the operation, after which it could restart the
+> operation.
+>
+> In that case there would be no need for git-update-server-info(1)
+> anymore. The "tables.list" file sits in a well-known location,
+> identifies all other tables we have to download, and there are no
+> atomicity issues anymore.
+
+Does tables.list list what pack files there are in the repository?  
+I somehow doubt it.
+
+The dumb HTTP transport was meant to be able to operate with a truly
+dumb HTTP server, that does not even have to support WebDAV at all,
+so there needs some tables at known name that lists _all_ the files
+the cloners are expected to be able to download from.  We still need
+the output from update-server-info [*] to tell what packs are there
+even if tables.list is stored at the known path.
+
+
+[Footnote]
+
+* ... or its equivalent generated offline and uploaded manually to
+  the repository, which was what I did before I got an account at
+  kernel.org.  There was a small web space at local ISP provided for
+  its subscribers, so my "push" was to ftp upload the loose objects,
+  packs, refs, and the info/refs + objects/info/packs files there X-<.
