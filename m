@@ -1,127 +1,96 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3F730504F
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 16:48:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49953081AC
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 16:51:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757350097; cv=none; b=uerJyj3d85BL2OETuZZDZNLIwa4U2g/P8q83paB9xdlahwOX/4YrPhZcgzDzzP4O4HjEw/dnl6bmnpKmLflVhpr8sPd5ttuddF/jA2yhR6kPwS59n8FoTemi+65yQf2l/9i8tqy5xhDHiQ6VlSsDnC7dw16Z9ylsKoPekY7ttfE=
+	t=1757350288; cv=none; b=suMkJnr69fADPar8SqxizDpkeI7/WI/FejdSdOOmNK2wQeIW2/aPWYrWbwAVjMpZ+hx2ryEeJyPeco6dzctajCWrYmaC/Qv72+5SzFunnutZA4QqCdoEkSVsxG0QkDBFhSRCk8o7wTIQ/bEm5zYnlSXZp0VMCJmVtmRr+iZjRnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757350097; c=relaxed/simple;
-	bh=fyYRepfCAxoUx2zKCcszgsExp6FEyk6/0IRusqed9+k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=d5GHAedoxjQIHYs43yVILkc0nf7Rrrz77uXyPp2eZeuCEw0J4WtkyWZSvZszqHjwJfpkKK/XG1UXJn3oJefqFVKG2Ni6lSvLksjErzIB7vSxPTfG8C4WRdxi+AfLR/uwvPFPiZ8OMmYMu/NxVqFOnglFvM7pLNwbkAHCwYRp+Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=R/F7iSMT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UzEBpufG; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757350288; c=relaxed/simple;
+	bh=kuE+OWhuuX7ec/oO46wIUkgEUaAhKgBtCs/7DY5TpoA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uQORsu3EvW8+q8C99HHmcuRVW5cUMf7EVh1Op263DG7dU3TiS2q7Ykf6MeVv+OQiXfnpRg/IJwt+b++xJqVZA79rztMTh4toyTaE7twHzZUmn8CGehu+Va3GULgClqYtmyNnAYFm2tM42F0TOAOAv+ytkGOcMWEHse6wfv56bck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=F0Mw21eR; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="R/F7iSMT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UzEBpufG"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7295A1D00151;
-	Mon,  8 Sep 2025 12:48:14 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 08 Sep 2025 12:48:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757350094; x=1757436494; bh=zC4lLkSbS6
-	aofLgnOYqYJIhPKXD6aEEQmQrs0vdUMcQ=; b=R/F7iSMTMX1ZVKmro4rbQRIDjO
-	4J87dNtqJQChU9DJqmydOTs8H/iiJvRtBzWcqe7B7zB1iMOhK+tM72xv7ceJliuz
-	XHtUUNv7OUNCcuhfTr5J3vs6UmgE5eLxRJwdBTxdvAEJHndihKG3moX8oxPYmApu
-	FfKBMT98ckljw5Rtd8MIDGmpGL9zwMRx6qJyamRjLA+Nc9nCbHlTmwDN+0DKOWUt
-	VTo8EhH2AQVGdj1nNXgIu+mg/f9EzaSpbmelikQUHIU1pwVP5D1sK+Q9V1fG5dpK
-	uwJrLrOE8zxOZJby7T9LNXfJA6C8hUfgTsZtvikpi5EfpaGRwQUrlGm1f3zg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757350094; x=1757436494; bh=zC4lLkSbS6aofLgnOYqYJIhPKXD6aEEQmQr
-	s0vdUMcQ=; b=UzEBpufG8SjcG1fGOUQaN4kJ6WwtSME7P0nxNUtPCqNyu8akHq6
-	tnc8ECaplabd/dGF+O1WR9K8Av66Gmn0y6vkUgz7Xafb19QreIFxqnJa2v1+S9Yb
-	zYKUgjuiSiF0kl2KSbDRh2weRa/nOP37nVV9OyhLXJ1iR+A4vmZXbEB0HI8vfhpE
-	4qSHGjANgdcQiMmO0yKR+YpGRTmtMqDxsVmimo+h3CVpwpfFIK/f6vtL3rtQ9ORL
-	4ZExANRqRraRgV+1urWO7SdWx10qVkKWZOz9h3jhkuvcG+S/o7V0jozTUfngacv4
-	jVAlR2rxBnX01vKMJy/dGELzXwatjeZmnTg==
-X-ME-Sender: <xms:zgi_aF6UsJjtc7IkU1vXhTpR0mdtFFwS2GqlP0XHIDQTI0twaydz3Q>
-    <xme:zgi_aGKooSd0yqTCOy4-0a33Rd3IMghZudVvm0SjboVTLrJkQ45FdppxORNvbdncJ
-    1Kc-5dlF3C5xjT4AA>
-X-ME-Received: <xmr:zgi_aF5BPzzjqhKstJmaj4wScyLsfU7k_UC6M2X3l5iBav3uIhnTow7vSA-zTuZzJa6w6JucgglLCX6YrtzdD8RC93y4Qo0HHGwJa8I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedthecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhvghjihgr
-    lhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:zgi_aJzEsqyJnd5X3u1UxaVwkwbmxKTR8p8AAPLDWFCBD4_iuLaGJw>
-    <xmx:zgi_aJZfI7fUvl9cp21CqaDk1slfzFdQmuK19X9zCrFRMma1fO9gaQ>
-    <xmx:zgi_aLSAC2KSgSO4bKK_CreKwtIPF2HMwkPTgESvxp0V2bAX0goNeg>
-    <xmx:zgi_aDxFpjXhYluyAHbfncE-7GLSrS2O_qesOaRScKurxEtRgNFTEA>
-    <xmx:zgi_aGyrNQo28z4CwPDExoWrfPlJCgfpoPx5QnKqnMpf1zq3WNxdcfMF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 12:48:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/4] string-list: allow passing NULL for `get_entry_index`
-In-Reply-To: <aL21eowK8MwmDX11@ArchLinux> (shejialuo@gmail.com's message of
-	"Mon, 8 Sep 2025 00:40:26 +0800")
-References: <aL21eowK8MwmDX11@ArchLinux>
-Date: Mon, 08 Sep 2025 09:48:12 -0700
-Message-ID: <xmqq5xdsyjoz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="F0Mw21eR"
+Received: (qmail 21950 invoked by uid 109); 8 Sep 2025 16:51:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=kuE+OWhuuX7ec/oO46wIUkgEUaAhKgBtCs/7DY5TpoA=; b=F0Mw21eRARd00UetxGq0r86qGb6GCF+j3JGwnOWyyqbQ2Kth7xHDsKjZih62gGmgvRRMXUN4TqR/Z6dv95ZJG+2hUu6nLTeSBX4QKTEZDiPy72XK3Muoqf8ZxQwPZjIf2D63wvFolBMDmNGRYMF7bc9WB7YUfvS19PLTxvDIrecV/Eo/GPxNGB/Hk6O5mKzYK7qEMu8ebHv3AkBPtg8jMApJwCYJ8NNcozZ03PbuGv8GyeDNpr7i+v4nmmwtzBaxsiVePqFIsaWHTEwoNB0gZ+rl60I2S3My845yLq54lwZtMo7wcje4ZjuIjS1nrZmaZyqjHnID3kkVIsYmkSz3Qg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Sep 2025 16:51:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 36316 invoked by uid 111); 8 Sep 2025 16:51:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Sep 2025 12:51:25 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 8 Sep 2025 12:51:25 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] upload-pack: don't ACK non-commits repeatedly in
+ protocol v2
+Message-ID: <20250908165125.GA1324063@coredump.intra.peff.net>
+References: <20250905-b4-pks-upload-pack-repeated-non-commit-acks-v2-0-d2e67f3cb94c@pks.im>
+ <20250905-b4-pks-upload-pack-repeated-non-commit-acks-v2-2-d2e67f3cb94c@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250905-b4-pks-upload-pack-repeated-non-commit-acks-v2-2-d2e67f3cb94c@pks.im>
 
-shejialuo <shejialuo@gmail.com> writes:
+On Fri, Sep 05, 2025 at 08:18:02AM +0200, Patrick Steinhardt wrote:
 
-> Callers of `get_entry_index()` are required to pass a non-NULL
-> `exact_match` parameter to receive information about whether an exact
-> match is found. However, in some cases, callers only need the index
-> position.
->
-> Let's allow callers to pass NULL for the `exact_match` parameter
-> when they don't need this information, reducing unnecessary variable
-> declarations in calling code.
->
-> Signed-off-by: shejialuo <shejialuo@gmail.com>
-> ---
->  string-list.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-
-I do not quite see the point of adding these conditional assignments
-to clutter the control flow.  What benefit do these callers gain by
-not having to have a throw-away int variable on the stack and
-passing its address to the call chain?
-
-> diff --git a/string-list.c b/string-list.c
-> index 343cf1ca90..bf358d1a5c 100644
-> --- a/string-list.c
-> +++ b/string-list.c
-> @@ -29,12 +29,14 @@ static size_t get_entry_index(const struct string_list *list, const char *string
->  		else if (compare > 0)
->  			left = middle + 1;
->  		else {
-> -			*exact_match = 1;
-> +			if (exact_match)
-> +				*exact_match = 1;
->  			return middle;
->  		}
+>  	if (o->type == OBJ_COMMIT) {
+>  		struct commit_list *parents;
+>  		struct commit *commit = (struct commit *)o;
+> -		if (o->flags & THEY_HAVE)
+> -			we_knew_they_have = 1;
+> -		else
+> -			o->flags |= THEY_HAVE;
+> +
+>  		if (!data->oldest_have || (commit->date < data->oldest_have))
+>  			data->oldest_have = commit->date;
+>  		for (parents = commit->parents;
+> @@ -497,11 +494,13 @@ static int do_got_oid(struct upload_pack_data *data, const struct object_id *oid
+>  		     parents = parents->next)
+>  			parents->item->object.flags |= THEY_HAVE;
 >  	}
->  
-> -	*exact_match = 0;
-> +	if (exact_match)
-> +		*exact_match = 0;
->  	return right;
+> -	if (!we_knew_they_have) {
+> -		add_object_array(o, NULL, &data->have_obj);
+> -		return 1;
+> -	}
+> -	return 0;
+> +
+> +	if (o->flags & THEY_HAVE)
+> +		return 0;
+> +	o->flags |= THEY_HAVE;
+> +
+> +	add_object_array(o, NULL, &data->have_obj);
+> +	return 1;
 >  }
+
+Just looking at the old code and its "we_knew_they_have" variable, I
+wondered why we didn't need it here anymore. In the old code, we set our
+(o->flags) THEY_HAVE flag up front, and then do some more processing on
+the parents, and then decide on our return value. So we need to remember
+the state before we set our flag.
+
+In the new code, we do all of the parent processing and then return
+immediately. So we can just do so by checking the flag without an extra
+variable.
+
+And we know that is correct to check the flag after the parent
+processing because we should not be setting THEY_HAVE on o->flags as
+part of that. It would imply that a commit is its own parent.
+
+So I think this looks fine, but I wanted to read through carefully (and
+out loud) to make sure there wasn't a subtle gotcha.
+
+-Peff
