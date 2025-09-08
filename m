@@ -1,93 +1,133 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1982E212B2F
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 13:31:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757338307; cv=none; b=rpRlJ4FzeZd15PM/kKgbdrAHQf5ZUhN49DPThehWKwIG9OkIHX0DH3DTwnUiEgrFEz47ONDlTY0aoupgp88kgirifG9fXFbkYxgpliodZ7jKIRM2f1ZuCfxCZiVIfz9rmLkWwVu/NzlQW9FNHmiT3u6Mwac9Pudu8y8iBN3ZrPU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757338307; c=relaxed/simple;
-	bh=KjEHqSGctYq+Qim6ps01Q2RpZVoZr7yhKwxOPQ67nTk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tqCWoc4azKq45kHKuIpNAsPa6zy9rHS7zEqdNdpTRbeVFiS4iGP1udDjYaM7DGPs1kdkgyRipf+T0OtYYtbPmXV0Ea4mS+IfVbYTP06ii8ZtXMVFHMyybWgfkPzljAoDH8btTI4RQaoFAbMvIRDDXOGNal5EflyHnYEC3Ty2L+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ok/eP3/x; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EBD10957
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 14:02:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757340150; cv=pass; b=QqbuV1P0gGUeby6uVaM3VlOzmCB5YH/N8IOyL2dHPoIsMaYYmbUc1K4aY6TVQKBBm0Fl58BnTcYtcCwp4tSuSXe4YxYEmfbz4WX00ufYEOkjn0JGedBkFgmuv7tp2m8h4smQu7rkSiGBz/Q/4QfrCCQFUrf+K1YdXNV3GQ6PkKw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757340150; c=relaxed/simple;
+	bh=4rvco3dJFN4kHHTwJEFVeZs4roLOHpKt35s3SNX4cSE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=XaK8x0CF2JHyhNsrtkGZuM+wHoZg2DAUAVVq9rUmkFyqg7tsoSo1kmQwI3psTsflSaceuEQpLbW0XGNDPiyydtwLCXfPWuc4uVd5DIHBLQCeFOYIZml84GS0n+VA0381rM/eX3nAzHp4DV/W+JHKzTb/YJrzLInpNlrVWVKhJSQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Mg0yUA89; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ok/eP3/x"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-32d9f725f68so85114a91.1
-        for <git@vger.kernel.org>; Mon, 08 Sep 2025 06:31:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757338305; x=1757943105; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KjEHqSGctYq+Qim6ps01Q2RpZVoZr7yhKwxOPQ67nTk=;
-        b=Ok/eP3/xKdkC87tYpn+lFTi3etapzJbxMbASf1IN5pQoi8PT/Dp4zDcGV9P2j3nSBK
-         OXIxYXsLLRehe4Z5qhYoe3Qp5FI7v/J0D/mAan3cDiy7jB6CIaTWftMfwaQ3rnGq5cRo
-         7hJvAwxFMihhgci3bJJPxCnqBGh0tDDLvb7FL4A67q/06S+INI3mZrBUg/EIN4VxZTF4
-         J8cxunyikqSnte1OXDF9N7bNojOZUHv0qYhHirNy/P11vJpCEhdJfPRnabM+tVS9NIKb
-         ucjsOrQrlYNoRhw0TiRgJ1leQfKTJ/++mC8FXeX4bb+sFY+HVKFwItr/QfnR0oxNGxNn
-         7KzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757338305; x=1757943105;
-        h=in-reply-to:content-disposition:mime-version:references:reply-to
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KjEHqSGctYq+Qim6ps01Q2RpZVoZr7yhKwxOPQ67nTk=;
-        b=hlV20V8b84JhyUlzIcXJ35J/ny2+HEc7IzNVxvqDNH4lQcJ0hg3ceUOwkjlxmlWn2a
-         L8/Z4BE3OVkF+RbyWuySTRpepOjOQK1CnCKQAEzmBP8l0L2lPncqVlDgT0Z9JwuwcIAM
-         TbMWfuNwLU7zH3FjorwkUV5sbLwVttWtEE5N+exKj5nSDCvM5lQAyBRk+IWZmNsH10FE
-         QNphCcydGUjni5bx+x5vZB4itt6WUojJmCzy7RRW8HfH/Dv/mxigNLARC86bZfsWAUz2
-         OyJupauvBvjWuj8BlYC0msGt9TH3P80daFx2D/4Rs1LpMIqdKGeFcqbC+FJjFF2C6bV3
-         1XAg==
-X-Forwarded-Encrypted: i=1; AJvYcCWhgBRsvJt9E0wmZ+cENKs6U8R2ChngEW2s2qZ1mKAnanpsLYeCI4mOrDToXqmAakUxtAw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxOo3F4dtOJx4OdiEQ07cGaCnvceEzB4kYwcZz6SvME9AcvOup9
-	4TmAdv0pq9ElIGPiTj9Uvx5ew9cym2b5i1Np+ZyLCNEWjTOPewx9lrbDVaWf9Q==
-X-Gm-Gg: ASbGncvvNgoabutRLUwjZlGCGAgK9snVQ5YluCdFm3Knf62zQsP6TfRqo5WIhwLuoe8
-	ulKbIReGqOLGkkLyTJ2Z5TZrx9Q/nCViVvHh5D776vOGKKTSbb4M5ln3ATGkvyw2ZLu+DmGa+cP
-	pLukqqz46odPNSibZws03Ub63KdtacMU+pPclJ5B2lMRgjBQ3ay/UoqDdbn/djBdNxWrf4hxj7n
-	dZF/ddMuCv+Ma6j1ico4No2O+wdNK8cjFQXgZ+kGCj6H2O31x3GbDEnLju39QzdtligzsSYB0EX
-	nQNCd6o/Kjw0b5/alm96BbUjsLgXHNNoVgKZO9pzOGHiIJbLtuXCc8fE9HNyn4CtZNVgB/sG+J4
-	obWNBE6qX/RVf1+naFW8gTdbn5XGnBHMqBKGAXm4Wj7SMzqnbZm/TaDmiXusYbZv68C00olQ=
-X-Google-Smtp-Source: AGHT+IES24lDFe4wEvjtGEflpDiOhuqYta0v09Bz6T7NKb3oNTFMRFA/8ypzemPQc0yJoekPUE321w==
-X-Received: by 2002:a17:90b:530b:b0:329:e1d0:3bf6 with SMTP id 98e67ed59e1d1-32d43ee2f03mr10355827a91.6.1757338305238;
-        Mon, 08 Sep 2025 06:31:45 -0700 (PDT)
-Received: from Seonghyeons-Mac-Studio.local ([220.94.153.4])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4cd0e1cfbbsm26509376a12.23.2025.09.08.06.31.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Sep 2025 06:31:44 -0700 (PDT)
-Date: Mon, 8 Sep 2025 22:31:39 +0900
-From: Seonghyeon Cho <seonghyeoncho96@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: aLaz7yCXWGG2_oP_@pks.im,
-	Seonghyeon Cho =?utf-8?B?KOyhsOyEse2YhCk=?= via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] add-interactive: reject malformed numerical input
-Message-ID: <aL7au7hI_zuI7bhW@Seonghyeons-Mac-Studio.local>
-Reply-To: aL5VxjPSqfXbnY7W@pks.im
-References: <pull.2044.git.git.1756553495661.gitgitgadget@gmail.com>
- <aLaz7yCXWGG2_oP_@pks.im>
- <aL15aTmKQOsNrF0D@Seonghyeons-Mac-Studio.local>
- <aL5VxjPSqfXbnY7W@pks.im>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Mg0yUA89"
+ARC-Seal: i=1; a=rsa-sha256; t=1757340125; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=hiec+FbUTpiUSgadBC2mN5H1Oi4RCvmF4rdzqRMekNn0wL9c4uSY9ynQBj0z26ktuDrrq7D9He/50ITQ2KNU7JlR+msVRv0D4i2sne20N3c/YZ3z4TOHX+gP6h4V7k0TIuJ0GC1YfSxaqpm9o1NqtPvD8NvTJ6T2PLzTe4YjoSI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1757340125; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=+9yvzFwhbzRtXybKeIvqTmhfCOm2Zhg0DfpRglru9Bg=; 
+	b=WryOoFAK2aDuvCddQVxrUxUMxg0asXrP9RRtpQHF5D5dwMZjhGsmEHVh8b7uz1ng19UtbZhryg2IHnOu6Qwc6vpk415A2PtteQqTvA9zO0KT8oor0xzU5/Pmnz6a12hVV2CIlOtah7pRN6ekcsTH5fms+bZAS293tz4g6L47lQU=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1757340125;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=+9yvzFwhbzRtXybKeIvqTmhfCOm2Zhg0DfpRglru9Bg=;
+	b=Mg0yUA89pritJ++IdciKBXEtfZI0ab+oK7aKtbr9+4YlRN1xHBy9aDKudxcarHPY
+	1YxLPqTn93L+rcr1ib4JPwer7l6fDRTU6grKAF9NrSZnA+N/YPbUqJfeM1xMiTv+cop
+	4T0Vgb8MTp99wG8VI/A3ZfAjqnTjvcREKb6wvfco=
+Received: by mx.zohomail.com with SMTPS id 1757340117043741.6590426246123;
+	Mon, 8 Sep 2025 07:01:57 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Emily Shaffer <emilyshaffer@google.com>,
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+	Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Aaron Schrab <aaron@schrab.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Josh Steadmon <steadmon@google.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH v2 01/10] submodule--helper: use submodule_name_to_gitdir in add_submodule
+Date: Mon,  8 Sep 2025 17:01:08 +0300
+Message-ID: <20250908140117.262205-2-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.51.GIT
+In-Reply-To: <20250908140117.262205-1-adrian.ratiu@collabora.com>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20250908140117.262205-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aL5VxjPSqfXbnY7W@pks.im>
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On Mon, Sep 08, 2025 at 06:04:22AM +0200, Patrick Steinhardt wrote:
-> I don't think that would need to be part of your patch series. But we
-> should have proper error checking for `strtoul()` if we're already
-> improving this code.
+While testing submodule gitdir path encoding, I noticed submodule--helper
+is still using a hardcoded name-based path leading to test failures, so
+convert it to the common helper function introduced by commit ce125d431a
+(submodule: extract path to submodule gitdir func, 2021-09-15)  and used
+in other locations accross the source tree.
 
-Understood. I'll handle it too.
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+---
+ builtin/submodule--helper.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-Thanks,
-Seonghyeon
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 07a1935cbe..d06e2fe265 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -3193,13 +3193,13 @@ static void append_fetch_remotes(struct strbuf *msg, const char *git_dir_path)
+ 
+ static int add_submodule(const struct add_data *add_data)
+ {
+-	char *submod_gitdir_path;
+ 	struct module_clone_data clone_data = MODULE_CLONE_DATA_INIT;
+ 	struct string_list reference = STRING_LIST_INIT_NODUP;
+ 	int ret = -1;
+ 
+ 	/* perhaps the path already exists and is already a git repo, else clone it */
+ 	if (is_directory(add_data->sm_path)) {
++		char *submod_gitdir_path;
+ 		struct strbuf sm_path = STRBUF_INIT;
+ 		strbuf_addstr(&sm_path, add_data->sm_path);
+ 		submod_gitdir_path = xstrfmt("%s/.git", add_data->sm_path);
+@@ -3213,10 +3213,11 @@ static int add_submodule(const struct add_data *add_data)
+ 		free(submod_gitdir_path);
+ 	} else {
+ 		struct child_process cp = CHILD_PROCESS_INIT;
++		struct strbuf submod_gitdir = STRBUF_INIT;
+ 
+-		submod_gitdir_path = xstrfmt(".git/modules/%s", add_data->sm_name);
++		submodule_name_to_gitdir(&submod_gitdir, the_repository, add_data->sm_name);
+ 
+-		if (is_directory(submod_gitdir_path)) {
++		if (is_directory(submod_gitdir.buf)) {
+ 			if (!add_data->force) {
+ 				struct strbuf msg = STRBUF_INIT;
+ 				char *die_msg;
+@@ -3225,8 +3226,8 @@ static int add_submodule(const struct add_data *add_data)
+ 						    "locally with remote(s):\n"),
+ 					    add_data->sm_name);
+ 
+-				append_fetch_remotes(&msg, submod_gitdir_path);
+-				free(submod_gitdir_path);
++				append_fetch_remotes(&msg, submod_gitdir.buf);
++				strbuf_release(&submod_gitdir);
+ 
+ 				strbuf_addf(&msg, _("If you want to reuse this local git "
+ 						    "directory instead of cloning again from\n"
+@@ -3244,7 +3245,7 @@ static int add_submodule(const struct add_data *add_data)
+ 					 "submodule '%s'\n"), add_data->sm_name);
+ 			}
+ 		}
+-		free(submod_gitdir_path);
++		strbuf_release(&submod_gitdir);
+ 
+ 		clone_data.prefix = add_data->prefix;
+ 		clone_data.path = add_data->sm_path;
+-- 
+2.51.GIT
 
