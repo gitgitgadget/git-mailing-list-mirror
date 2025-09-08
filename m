@@ -1,126 +1,106 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203F145945
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 20:29:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76032D3756
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 20:48:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757363351; cv=none; b=slN7dyzH5cJxzQ5pYcq/KAwHlHQVMno42XE0WO6POuS1/ox9xICU6her63SAtA5ScpPQ3LI4j/Xkmiih6dMbu2ow/nuxceWZzHtC7YCXJMMf0PhPdo4K0iVV8EP6IDKP9spYAdLR4ctS/K388Fn4mZYOTdSds3sTH9vjFSCXJ5w=
+	t=1757364493; cv=none; b=BCM9gkxl7J2hgSAegWehx05Z5gmqjfbOwLLmNeuMolJrJqlvGKQchXdabYqL1Tj0LCBjXmptdL7jez8CNuuzb/82OJTKYZ622Ed7W1iBs+ZAT/r3YoGugOuL2XWQoVPx7qsJBpSW0bN1oyKWBfGpHuPOT6a65EudS0T/fHvDJjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757363351; c=relaxed/simple;
-	bh=Kk8wt/ey6HkPG1o6XkYLUvDruJf8fsSI8fXSnGdu66o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nGybMTmsBOhOkrWIip0DknxQQ5EpMVgBhwq8rlRhCTfJ291on/6WKPLbQ+xU8UMVwh2keZi/fnQWCSLcYzAYopiHdPhvR8PmzQBLMVR4sYL2iga7AX4W981q2X8/3HRWzBA7sjZI2Skd/nfhiVcuf2lv9NaBr7vYpvuQ2j6vPN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Me5Z5hv3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dc3CQouk; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757364493; c=relaxed/simple;
+	bh=B3oGnqL5SfTVPxc9AIsG/fzsbosuOec2rgBnoiaWnqA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LQkS/Jh0oVUaHmFZKeZuHPYJv2nMaTtmkQopuwn4TYYQ8dBYvXpU8Ldo75obin1yaqNFeWwCE75tvWR8bRAySrmanDokG74ory2Mimyf8roGixjpEYmYwdkQNgDdxCv8xfuuBgtdMfCZqbEgDDnF3HZ8X1pJ10K+4jJ9agclWJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nSMYOU6y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WtAd59U7; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Me5Z5hv3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dc3CQouk"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 244C21D00126;
-	Mon,  8 Sep 2025 16:29:08 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Mon, 08 Sep 2025 16:29:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm1; t=1757363347; x=1757449747; bh=EO8Dn5i7a5ZJOs/mrLwjZ
-	k1PAUw8kxGvepByaThoJjM=; b=Me5Z5hv3XJXy/drCFAkQt56xZvf10OSL+lF5C
-	TZyvX4+lxIIPGZsSWZhh68nHGn+sVY1pW2CHSr8GL+bW4WKlE37bVty8vgbo8Lbm
-	c2UAKCEOFAvuydxQAv9Ng31f211D3E1CIdnnlBl7erWZ+e+zwRgMMvDvu8hnEI89
-	cNCVOVGwCh57wJIRYnXUxeChS16BwJeWEe1S1jcEwWDWC21U9ykrv5/qP1Dv7h0Z
-	uP/6b1SW8p7voCQUDmIUBwzfUdX48BtWqwoMt5rengzuN4OcmM6uF3yjl55kdBvp
-	ZTEHJh0N3fTTGC5Mk8RGW009nH03DL4qrdOPKjCEwf34JPaKw==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nSMYOU6y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WtAd59U7"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D9D6F7A014B;
+	Mon,  8 Sep 2025 16:47:59 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Mon, 08 Sep 2025 16:48:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757364479; x=1757450879; bh=HWDxkKl6E+
+	lHV01e9chkJZ/ZzdVQEZKMXZjPfkr1tDo=; b=nSMYOU6yT2RvMZGXz8jFFy+PkN
+	pOCDoFlVAEy2BggKU5I8zN1q12LIrFCRKHfcIW5ue6joJVAg6qtSKX7srrJI9AYR
+	N/vo+5Zgj80z4SE1YCJ3s/lSHFpGdOmb+O9WO4ELwBAnRyI4pqUqPPwKJj6H5R14
+	VtMztF6+zjfRErwbiYlqyQADS0fJInHo9Hr+dK6YExvGCkvKTeOcPXSySmxoOCYS
+	KMGktiVCnpI1f39ArcR6KauAduY95lwu6sLeUOYLOXE+oC7uQGhC1qr5uNnXSUul
+	c9adX3QGC8IFdHIHE2LXesAcCaxWWLnYc2PFgPc04imcKB7cS/AeFK9rYfjA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757363347; x=1757449747; bh=EO8Dn5i7a5ZJOs/mrLwjZk1PAUw8kxGvepB
-	yaThoJjM=; b=Dc3CQoukOryH0Im4xzEJdZV6fq0NhVs7Kqh7cCnVb9k7CelSwHU
-	HB/k/p4F5z34uoH4IZCX2Nx9WxmPYHCMUEl1fMtfF77OMQ99tFNlzib/cs/rnqNx
-	Ht3Te/BoAdP+dyWjeaoHj5EOMSlUgB1ZIxS2e35bZGsLScI5uC2vPYvVA8CB9CUi
-	qR6A64fEovIA+JaehawRtZo8nz/EQFzAS2ZBK51UJkPG+eceeKJ4Orm9zKWlzZZQ
-	u7vvKdyDyUIY5sNAJzlACl1JgEJjGi9LGAdbYFJ7RMQb57d17VnOfUz1rjIgQRGF
-	xFTTMD/9XOr3U2UVouJMXE/gBt0ckUI/GFQ==
-X-ME-Sender: <xms:kzy_aHZj5gjo5B3geU_tUl2FQv1uMRx_3hV7WVQgkvzA1wa5ohf4GiY>
-    <xme:kzy_aJplugDZYVKdidmrPJuXdU2NWPS05YqEpU47mf_Q0z2c_TNn2AVj_uxbkJpdg
-    2n9cVfTKQ8srJNeGw>
-X-ME-Received: <xmr:kzy_aDYiaOWtJdlw2-jSA7MBMh2HsIy5LeniFK-p-L8wKaKqgRyDLWVu8XFv8donE2dwlTBwSAQWk2H5C_Lnrc2z-vvOWp92iUCbHdBo6ivRckkOtW7Am_GLOA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeehtdcutefuodetggdotefrod
+	1757364479; x=1757450879; bh=HWDxkKl6E+lHV01e9chkJZ/ZzdVQEZKMXZj
+	Pfkr1tDo=; b=WtAd59U7ghJI0Z8MUB7PHajWXMKgPkn/v5EkAX1AzZ7rP+T4GIF
+	tB9AGc3hw0WqtYXmbD66XdGrsyImhDpTG5WDcZf5BKLhgJwPk50XDtdck1WbQ/QG
+	tOwp2+iRcR6FGMroSHqpyINnaDf0z6hQnC8tc0Ep4i/tHcddXiWRKqXvdAq8zyJM
+	N+qffFsaNcDn9Lf6Y4a3sNfDvmoNcbIKwNsrcfEvgeKXNNbU0I01Ml5KiTSh+W5h
+	OvjOI+NLOa0KbGpiPskcHJrlwKBmMPso/gNAulLPT5dI+qf2PB7z46kuwAxMgroX
+	oxOZuAo6mCUPKTyqICfAOpn2GMGHmzFaQDg==
+X-ME-Sender: <xms:_0C_aCdXH259jveMYGk_QRZuS4PTRkgmYT8kTjywbJ8XeVww-GdxYw>
+    <xme:_0C_aEqAXH7y6CI1sacqh76KVx-0Rl2y4xyx44nnSKUFIukxqefBWaXPQPgqqq7kd
+    5fxm0iCf19uYupYqQ>
+X-ME-Received: <xmr:_0C_aD-LyjzvuIoI5QFoLrO9wzAQ_AK8xfaYTyaySUOPHhRzZd_VbsEtdMaBmkV7XHAJLG_QO3HQXxKFZpaMGKNuqOihC50970T-J0M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeehvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgggfestdekredtredttd
-    enucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhl
-    rdgtohhmnecuggftrfgrthhtvghrnhepvdehledvjeehjeejheevtedtjeekhffhffevte
-    dtfffgkeduvddvteefjefhuddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
-    grihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghoug
-    gvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepphgvfhhfsehpvghffhdr
-    nhgvth
-X-ME-Proxy: <xmx:kzy_aJSQPATx1A1STLkbhfr9i0KkwUEsDop4V5-cuUMv7csRjl1-kQ>
-    <xmx:kzy_aC4IsOLkQZfr_hW_F7BQ5qPo8nq-cFCJV4aqnKQ3Ui4oU-rEmw>
-    <xmx:kzy_aGzZh4ibtpADJ_QUpqNzMWvlWw45v9EnefcvEQV3Ys3zUeADog>
-    <xmx:kzy_aJRb7anW8a5jr3urFOAsSc_Tj3T9N64KvcR1KEE8w2-WVbfLqA>
-    <xmx:kzy_aJsCCKFJxttJume1dVrthB21qi_370JptyVeBVMqeWltx3iB0ExR>
-Feedback-ID: i8b11424c:Fastmail
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
+    hsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpth
+    htohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehp
+    vghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:_0C_aAez4UGwjmLeOy-buZGaeuDh2A_F1lI50ddgaPpVPXxnh2MNqw>
+    <xmx:_0C_aNKilX_Y9bZNaSYG_4RoT6L7Q_ARMedVdy4lEAtHNX4tsLXJFA>
+    <xmx:_0C_aAh2nwYx1ULOiBg1WiYBWV8HeY4t7u_kqlALgqtpNnE7R0CcMg>
+    <xmx:_0C_aLR1HtRoTEPcPcB1iA7bYcUEIfcoGeH8t6kN-9s69OWyM8FSXg>
+    <xmx:_0C_aA1PThRm-sRGFyWpL78_8FSll15DcJe157AudU2DU_kQ0C3vpj9V>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 16:29:06 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	peff@peff.net
-Subject: [PATCH] doc: fast-import: replace literal block with paragraph
-Date: Mon,  8 Sep 2025 22:28:45 +0200
-Message-ID: <09aaad696895c18c6d4dda7d6a2f4b77f84f39ba.1757363213.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.51.0.16.gcd94ab5bf81
+ 8 Sep 2025 16:47:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Eric
+ Sunshine <sunshine@sunshineco.com>,  peff@peff.net
+Subject: Re: [PATCH v3 3/8] git: allow alias-shadowing deprecated builtins
+In-Reply-To: <eec01cbac16596c5e117843ae86956e1f66ec097.1757345711.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Mon, 8 Sep 2025
+	17:36:14 +0200")
+References: <cover.1756480827.git.code@khaugsbakk.name>
+	<cover.1757345711.git.code@khaugsbakk.name>
+	<eec01cbac16596c5e117843ae86956e1f66ec097.1757345711.git.code@khaugsbakk.name>
+Date: Mon, 08 Sep 2025 13:47:57 -0700
+Message-ID: <xmqqcy80wu0y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+kristofferhaugsbakk@fastmail.com writes:
 
-68061e34702 (fast-import: disallow "feature export-marks" by default,
-2019-08-29) added the documentation for this option.  The second
-paragraph is a literal block but it looks like it should just be
-a regular paragraph.
+> +static int is_deprecated_command(const char *cmd)
+> +{
+> +	return !strcmp(cmd, "whatchanged") ||
+> +	       !strcmp(cmd, "pack-redundant");
+> +}
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    > but it looks like it should just be a regular paragraph.
-    
-    ... unless this is some kind of callout-block style?
-
- Documentation/git-fast-import.adoc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
-index 3144ffcdb68..c3951f5f879 100644
---- a/Documentation/git-fast-import.adoc
-+++ b/Documentation/git-fast-import.adoc
-@@ -61,10 +61,10 @@ OPTIONS
- 	currently impacts only the `export-marks`, `import-marks`, and
- 	`import-marks-if-exists` feature commands.
- +
--	Only enable this option if you trust the program generating the
--	fast-import stream! This option is enabled automatically for
--	remote-helpers that use the `import` capability, as they are
--	already trusted to run their own code.
-+Only enable this option if you trust the program generating the
-+fast-import stream! This option is enabled automatically for
-+remote-helpers that use the `import` capability, as they are
-+already trusted to run their own code.
- 
- Options for Frontends
- ~~~~~~~~~~~~~~~~~~~~~
-
-base-commit: 2462961280690837670d997bde64bd4ebf8ae66d
--- 
-2.51.0.16.gcd94ab5bf81
+This is somewhat a shame as you introduced the DEPRECATED bit to
+annotate entries in "struct cmd_struct commands[]" array.  Shouldn't
+this be moved to git.c and taught to consult that array instead?
 
