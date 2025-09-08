@@ -1,86 +1,86 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BE430CD8A
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 14:13:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E5130C61C
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 14:13:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757340812; cv=none; b=kgmlZYOQdXPn69C+Y+iEY6FO0SNeUn5RogR3h+drnzLOaaIOCd3wBzR32CmvmwviMIN1McYPJr4nyhgx70LGBeTcot4HbE/xtcK5I7t1QHz5/+JHuhiXPw0A318DJmxcR/IDlFHVooGn7dECcKTCFSpidp31YfcjHRtNaaR/4t8=
+	t=1757340814; cv=none; b=oF+UitDLJwgHF6RxQ6mvqKDcIfTZCIk0kioJ98qeKgSjk09Ti/LW0iMbD7xdZGo91hw8QQhBvu/8ph+NpnImEGflzFsEAwoU7dqwcDwKNPEQ9rmSU614hrjuSSvYhV7IV8kumxNUz7XLBTg4WD+/bD7HQEWuECzz7/OsDgjBw6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757340812; c=relaxed/simple;
-	bh=CHhaC4FcCcMx+saQQuZughhWW6kEw4Z+IYpMHp0wq1Q=;
+	s=arc-20240116; t=1757340814; c=relaxed/simple;
+	bh=lg3wqVaS/pfFZrW4M1GyZQr0pzilEsJPmPbMS/Sgi9s=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fxg4ZxJt/xARSWVmt5mfdW+c+9yaZOiSXYDRsT8XrHi6FZeHh5G75t2hPvI4CY7mNdmKEBfMKy3IieT5nzqy2sY2t2tnT2T+U0rKvhd7CGMqtZRBLuQyhUJvvUUCSd/jEdc7VBVn+SUxFGlV6fSXl483FKVQITWi5RaE9Vnjd18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sf7PWes1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YDddMdfR; arc=none smtp.client-ip=103.168.172.145
+	 In-Reply-To:To:Cc; b=F5EaPIH6kYdmHVi3R8B7nNvw7mN9FKfZLvYFCBadti9acLv8fFIOhXKOJ0icPOmqiXT5P90QtB2uZSIsFXHOVCd4XHEUMVWYRv5MQjxHcg6iP1m/4CCaa24qZnCSOSzlakAfivs3cXQOkWuilTxxgGVAPNLxXdHEFJFkkiVjpqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MoVlVr6K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A3eHUImO; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sf7PWes1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YDddMdfR"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id C8519EC022D;
-	Mon,  8 Sep 2025 10:13:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MoVlVr6K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A3eHUImO"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4C037140006B;
+	Mon,  8 Sep 2025 10:13:31 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 08 Sep 2025 10:13:28 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 08 Sep 2025 10:13:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757340808;
-	 x=1757427208; bh=UmBGD8n9U8PRgYNKqJ9qo41lbNGh+aP6dCiG+9yZzAI=; b=
-	sf7PWes1c+jC6sm0RYTl45Xqc7exjuNRyaHHNGKSxfLslMU8dBI7uNaOVNyEb3ny
-	ruSsZgI/TklucluNeIa7nkYPY1VEmUzCGTxRSqcGoQHI1iHs+na8FWkhkiWm8gl4
-	GxunhSzuYSKRhjCHy28aO+R3vWd+BOU3wvTv0EKo5teCSzukt+EibtvZONdHiXCN
-	tju642PT3jdP+z1/iKXC/9X8spUPAX2M2Vv77+vE+1Eai5saNU6KWAag/kBf+/+n
-	NA06QllxdwaxO52M7osZA/iZpcnd4teaJpN9GTUSX7GM1MnzEQXjE1cLHyPJO/JG
-	qVRVcFhKB8Q2k8hoIrUVmQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757340811;
+	 x=1757427211; bh=OvzrQvCD9FQWM8O5f18DUOzgtvCXPL23vjdP9t5E+f0=; b=
+	MoVlVr6KZKxlpihSqJzhfQTqabwgrzjM1KqwSMJ0vW6s8PKPX7p1MZiFa6/F1bgi
+	Tf8UQA4/5jgjmDMGgXR+A2rZwIY22JpnFWm5/t3x4sGPyTVTuStxXzIrE85+n6+s
+	20fVoFPY22xE+ZEoiq/6XPM3EPFpH1D2CvkWF7oY4G+/577hquEdLDwtrRcCGNhl
+	unMWWtOMKh/qrs2CGCWz3lg1P/9IhKCQGdpbbZ6DxQsVp+5QKT1nWHGaFKocw633
+	Gg5hnHFQrQ3PlP1Ddm+i2OT+JlM26ULEjk+QkJcJBJsET14i8FBiaM16tTZmcPg+
+	16/d3uc9IMdEm58EwHlT/Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757340808; x=
-	1757427208; bh=UmBGD8n9U8PRgYNKqJ9qo41lbNGh+aP6dCiG+9yZzAI=; b=Y
-	DddMdfR+TuCAb/NN41EOox5zGp1ZzlKexbi4Yh7ag6ILjm05jjziX+6e1+mWAR2c
-	bnfyT4/WiL5vlGqyPMifatixOd76QwPyLnQ3+lrwQetGXimKDFcmhJQtHnNFPfoe
-	QY6aEtHpjnLqZai68LtECa2aQX93yBizo0vaiw4a1vqGbtFWiN0IEEVbB3EnAJuB
-	QUSiwXaVhQrr9pXl+9rplV27d5eIqwy8Nb9WfR33ij1FnXicoKDKoQSBAMhvoIBQ
-	/xcsnjILC1iKzwDf57vnAVO/s6j61HpEG88QjNRGh3ZRieVjjcFcvJ/ZrpmWrScn
-	lY0FcZoMa/KVkiw03Y9Wg==
-X-ME-Sender: <xms:iOS-aClUAUmztlrVHFbZgIGLQg6ORoRon1VJzixNAKtGut4dHpqQ4A>
-    <xme:iOS-aJ88ta0pBzinLbfqjVUTp07Nlhxl3F44_FP296ABLr39LRXkkvLn3ZCOBV2X_
-    BHjJutwOzPvGi87dw>
-X-ME-Received: <xmr:iOS-aIG-ahYRAuhVmeYrm7f660P4mYZjjWz1PsWCZLxAzy8Xg9mGZqRle_v6p_qxzkzKJQeokq7_fgdygfWNXCBdgkFdik7Rkn0qa446BwrJYw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757340811; x=
+	1757427211; bh=OvzrQvCD9FQWM8O5f18DUOzgtvCXPL23vjdP9t5E+f0=; b=A
+	3eHUImOEtLfLQst04rYs1E3RGVE0qyGrD8LFRLq0/ESNXYICSCNCyW8a13759OK2
+	ZHHcGEaj6Ms4lklPjZ5r2FhzX2gn46NZwn5WQSJHeZWai2eV6col+TKGRAtcCkWt
+	fKsqPwBAy3IDV5rpqJqUopxdIjE+vOwyCIKy/2ufAzoFVrZqswVKQ4yv3mBVxCUF
+	1VmURLWXVCBin/9YMCWP81fmdStNJdo1z32FROxMTgQyXSK/KX64ABJwGOwuR5pK
+	Ji4SQya1cZdMRtY3ecpj6HqtvUYqOSPafhi68IMlhD6/qMsm8is0dvesoEtUnsij
+	vJ0ogde4uAgc5D9AadwAQ==
+X-ME-Sender: <xms:i-S-aOzIwHKRtzE9SGThCuCSjCOC1Rn0RowR6_1io2u30yz3lU0xjg>
+    <xme:i-S-aKYl5TSAbjPkQQKtrzgX_JsFU-wtkExSOEdx8ZXOMQe5Ekoo83gHSrRjjhxRE
+    gIkIQgoleS43lBFDw>
+X-ME-Received: <xmr:i-S-aHxAoZXULMVsf56_rAjx-VKtB6xtLjUND_qQJ_iFUwwjNRTJ_ci7VHx-gdPOS5RTki7jlys-Z2kkuyE4RpDAKdLpx8glds5Fj3TLm4uR8g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeejgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epuedtheejheejueegfedukedvieelvdegjefgjeefkefffedtleeukeeujeeviedunecu
-    ffhomhgrihhnpegtohgttghirdhtohdpmhgrkhdruggvvhenucevlhhushhtvghrufhiii
-    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgt
-    phhtthhopeduhedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
-    hlohhrrhdrtghomhdprhgtphhtthhopehpihgvrhhrvgdqvghmmhgrnhhuvghlrdhprght
-    rhihsegvmhgsvggtohhsmhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehsrghmsehgvghnthhoohdrohhrghdprhgtphht
-    thhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtph
-    htthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphht
-    thhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghi
-    lhdrtghomh
-X-ME-Proxy: <xmx:iOS-aNKiTZycNkOhMTaXeFr8NtVPV-BTsr0m5L0oT_wVAAC068Z0UQ>
-    <xmx:iOS-aIkjVp77b5-7-qh405FyqK4liXVRvOoKc0vcig94SVahxD9Okw>
-    <xmx:iOS-aGw8EfNnvz2BtCi7jqM5mH0uzt6XPor21of1jg_P1NabzRKB9w>
-    <xmx:iOS-aCs12okARp7c5THoFZ5lRYTy_R8kCVdCyIkdGEVhiQ5tIBpoXg>
-    <xmx:iOS-aDQWBbB5YlOW8UoTZTzwcnYMn_9HISSpdqMgTWjfy1hqPwilFA7b>
+    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepudehpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgholhhlih
+    hnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgv
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprh
+    gtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdp
+    rhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepphhivghrrhgvqdgvmhhmrghnuhgvlhdrphgrthhrhiesvghmsggvtghoshhm
+    rdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgi
+    druggvpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhg
+X-ME-Proxy: <xmx:i-S-aLF8rjxm97wOhf6qDgddXkK7ggkvQxRGf4LmSEukcXrw_Np2xA>
+    <xmx:i-S-aHxB5SaQLn2WAC3jFxRGp1rXnNMegW30gt6ZO3BcB86pKFBfZA>
+    <xmx:i-S-aONO7QIol_jPttfT-04694QoQze74Y4TBSjPEJ1MhM5yMHlCYg>
+    <xmx:i-S-aNb72DpH84boOjWEAciEm-AWqJJdLtYCXCVcSQua6VVOrH5r8w>
+    <xmx:i-S-aGkbnphkl9pJfnsj3bR0pBm2PVff6Ja4XYjxstjkNfZhP16cnZqS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 10:13:26 -0400 (EDT)
+ 8 Sep 2025 10:13:28 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a6b6bf26 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 8 Sep 2025 14:13:25 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9d2a9785 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 8 Sep 2025 14:13:28 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 08 Sep 2025 16:13:09 +0200
-Subject: [PATCH RFC v3 2/8] Makefile: reorder sources after includes
+Date: Mon, 08 Sep 2025 16:13:10 +0200
+Subject: [PATCH RFC v3 3/8] Makefile: introduce infrastructure to build
+ internal Rust library
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250908-b4-pks-rust-breaking-change-v3-2-1cd7189fed3b@pks.im>
+Message-Id: <20250908-b4-pks-rust-breaking-change-v3-3-1cd7189fed3b@pks.im>
 References: <20250908-b4-pks-rust-breaking-change-v3-0-1cd7189fed3b@pks.im>
 In-Reply-To: <20250908-b4-pks-rust-breaking-change-v3-0-1cd7189fed3b@pks.im>
 To: git@vger.kernel.org
@@ -105,212 +105,137 @@ Cc: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
  Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
 X-Mailer: b4 0.14.2
 
-In an upcoming change we'll make some of the sources compile
-conditionally based on whether or not `WITH_RUST` is defined. To let
-developers specify that flag in their "config.mak" we'll thus have to
-reorder our sources so that they come after the include of that file.
-
-Do so.
+Introduce infrastructure to build the internal Rust library. This
+mirrors the infrastructure we have added to Meson in the preceding
+commit. Developers can enable the infrastructure by passing the new
+`WITH_RUST` build toggle.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile | 176 +++++++++++++++++++++++++++++++--------------------------------
- 1 file changed, 88 insertions(+), 88 deletions(-)
+ .gitignore |  1 +
+ Makefile   | 37 +++++++++++++++++++++++++++++++++++++
+ shared.mak |  1 +
+ 3 files changed, 39 insertions(+)
 
+diff --git a/.gitignore b/.gitignore
+index 1803023427..60c3ba2d97 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,4 +1,5 @@
+ /fuzz_corpora
++/target/
+ /GIT-BUILD-DIR
+ /GIT-BUILD-OPTIONS
+ /GIT-CFLAGS
 diff --git a/Makefile b/Makefile
-index 555b7f4dc3..7e52625d75 100644
+index 7e52625d75..94950a0ffe 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -919,6 +919,94 @@ LIB_FILE = libgit.a
+@@ -483,6 +483,14 @@ include shared.mak
+ # Define LIBPCREDIR=/foo/bar if your PCRE header and library files are
+ # in /foo/bar/include and /foo/bar/lib directories.
+ #
++# == Optional Rust support ==
++#
++# Define WITH_RUST if you want to include features and subsystems written in
++# Rust into Git. For now, Rust is still an optional feature of the build
++# process. With Git 3.0 though, Rust will always be enabled.
++#
++# Building Rust code requires Cargo.
++#
+ # == SHA-1 and SHA-256 defines ==
+ #
+ # === SHA-1 backend ===
+@@ -683,6 +691,7 @@ OBJECTS =
+ OTHER_PROGRAMS =
+ PROGRAM_OBJS =
+ PROGRAMS =
++RUST_SOURCES =
+ EXCLUDED_PROGRAMS =
+ SCRIPT_PERL =
+ SCRIPT_PYTHON =
+@@ -918,6 +927,11 @@ TEST_SHELL_PATH = $(SHELL_PATH)
+ LIB_FILE = libgit.a
  XDIFF_LIB = xdiff/lib.a
  REFTABLE_LIB = reftable/libreftable.a
++ifdef DEBUG
++RUST_LIB = target/debug/libgit.a
++else
++RUST_LIB = target/release/libgit.a
++endif
  
-+# xdiff and reftable libs may in turn depend on what is in libgit.a
-+GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
-+EXTLIBS =
-+
-+GIT_USER_AGENT = git/$(GIT_VERSION)
-+
-+ifeq ($(wildcard sha1collisiondetection/lib/sha1.h),sha1collisiondetection/lib/sha1.h)
-+DC_SHA1_SUBMODULE = auto
+ # xdiff and reftable libs may in turn depend on what is in libgit.a
+ GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
+@@ -943,6 +957,15 @@ BASIC_LDFLAGS =
+ ARFLAGS = rcs
+ PTHREAD_CFLAGS =
+ 
++# Rust flags
++CARGO_ARGS =
++ifndef V
++CARGO_ARGS += --quiet
++endif
++ifndef DEBUG
++CARGO_ARGS += --release
 +endif
 +
-+# Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
-+# tweaked by config.* below as well as the command-line, both of
-+# which'll override these defaults.
-+# Older versions of GCC may require adding "-std=gnu99" at the end.
-+CFLAGS = -g -O2 -Wall
-+LDFLAGS =
-+CC_LD_DYNPATH = -Wl,-rpath,
-+BASIC_CFLAGS = -I.
-+BASIC_LDFLAGS =
-+
-+# library flags
-+ARFLAGS = rcs
-+PTHREAD_CFLAGS =
-+
-+# For the 'sparse' target
-+SPARSE_FLAGS ?= -std=gnu99 -D__STDC_NO_VLA__
-+SP_EXTRA_FLAGS =
-+
-+# For informing GIT-BUILD-OPTIONS of the SANITIZE=leak,address targets
-+SANITIZE_LEAK =
-+SANITIZE_ADDRESS =
-+
-+# For the 'coccicheck' target
-+SPATCH_INCLUDE_FLAGS = --all-includes
-+SPATCH_FLAGS =
-+SPATCH_TEST_FLAGS =
-+
-+# If *.o files are present, have "coccicheck" depend on them, with
-+# COMPUTE_HEADER_DEPENDENCIES this will speed up the common-case of
-+# only needing to re-generate coccicheck results for the users of a
-+# given API if it's changed, and not all files in the project. If
-+# COMPUTE_HEADER_DEPENDENCIES=no this will be unset too.
-+SPATCH_USE_O_DEPENDENCIES = YesPlease
-+
-+# Set SPATCH_CONCAT_COCCI to concatenate the contrib/cocci/*.cocci
-+# files into a single contrib/cocci/ALL.cocci before running
-+# "coccicheck".
-+#
-+# Pros:
-+#
-+# - Speeds up a one-shot run of "make coccicheck", as we won't have to
-+#   parse *.[ch] files N times for the N *.cocci rules
-+#
-+# Cons:
-+#
-+# - Will make incremental development of *.cocci slower, as
-+#   e.g. changing strbuf.cocci will re-run all *.cocci.
-+#
-+# - Makes error and performance analysis harder, as rules will be
-+#   applied from a monolithic ALL.cocci, rather than
-+#   e.g. strbuf.cocci. To work around this either undefine this, or
-+#   generate a specific patch, e.g. this will always use strbuf.cocci,
-+#   not ALL.cocci:
-+#
-+#	make contrib/coccinelle/strbuf.cocci.patch
-+SPATCH_CONCAT_COCCI = YesPlease
-+
-+# Rebuild 'coccicheck' if $(SPATCH), its flags etc. change
-+TRACK_SPATCH_DEFINES =
-+TRACK_SPATCH_DEFINES += $(SPATCH)
-+TRACK_SPATCH_DEFINES += $(SPATCH_INCLUDE_FLAGS)
-+TRACK_SPATCH_DEFINES += $(SPATCH_FLAGS)
-+TRACK_SPATCH_DEFINES += $(SPATCH_TEST_FLAGS)
-+GIT-SPATCH-DEFINES: FORCE
-+	@FLAGS='$(TRACK_SPATCH_DEFINES)'; \
-+	    if test x"$$FLAGS" != x"`cat GIT-SPATCH-DEFINES 2>/dev/null`" ; then \
-+		echo >&2 "    * new spatch flags"; \
-+		echo "$$FLAGS" >GIT-SPATCH-DEFINES; \
-+            fi
-+
-+include config.mak.uname
-+-include config.mak.autogen
-+-include config.mak
-+
-+ifdef DEVELOPER
-+include config.mak.dev
-+endif
-+
- GENERATED_H += command-list.h
- GENERATED_H += config-list.h
- GENERATED_H += hook-list.h
-@@ -1387,94 +1475,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+ # For the 'sparse' target
+ SPARSE_FLAGS ?= -std=gnu99 -D__STDC_NO_VLA__
+ SP_EXTRA_FLAGS =
+@@ -1475,6 +1498,8 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
  
  UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
  
--# xdiff and reftable libs may in turn depend on what is in libgit.a
--GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
--EXTLIBS =
--
--GIT_USER_AGENT = git/$(GIT_VERSION)
--
--ifeq ($(wildcard sha1collisiondetection/lib/sha1.h),sha1collisiondetection/lib/sha1.h)
--DC_SHA1_SUBMODULE = auto
--endif
--
--# Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
--# tweaked by config.* below as well as the command-line, both of
--# which'll override these defaults.
--# Older versions of GCC may require adding "-std=gnu99" at the end.
--CFLAGS = -g -O2 -Wall
--LDFLAGS =
--CC_LD_DYNPATH = -Wl,-rpath,
--BASIC_CFLAGS = -I.
--BASIC_LDFLAGS =
--
--# library flags
--ARFLAGS = rcs
--PTHREAD_CFLAGS =
--
--# For the 'sparse' target
--SPARSE_FLAGS ?= -std=gnu99 -D__STDC_NO_VLA__
--SP_EXTRA_FLAGS =
--
--# For informing GIT-BUILD-OPTIONS of the SANITIZE=leak,address targets
--SANITIZE_LEAK =
--SANITIZE_ADDRESS =
--
--# For the 'coccicheck' target
--SPATCH_INCLUDE_FLAGS = --all-includes
--SPATCH_FLAGS =
--SPATCH_TEST_FLAGS =
--
--# If *.o files are present, have "coccicheck" depend on them, with
--# COMPUTE_HEADER_DEPENDENCIES this will speed up the common-case of
--# only needing to re-generate coccicheck results for the users of a
--# given API if it's changed, and not all files in the project. If
--# COMPUTE_HEADER_DEPENDENCIES=no this will be unset too.
--SPATCH_USE_O_DEPENDENCIES = YesPlease
--
--# Set SPATCH_CONCAT_COCCI to concatenate the contrib/cocci/*.cocci
--# files into a single contrib/cocci/ALL.cocci before running
--# "coccicheck".
--#
--# Pros:
--#
--# - Speeds up a one-shot run of "make coccicheck", as we won't have to
--#   parse *.[ch] files N times for the N *.cocci rules
--#
--# Cons:
--#
--# - Will make incremental development of *.cocci slower, as
--#   e.g. changing strbuf.cocci will re-run all *.cocci.
--#
--# - Makes error and performance analysis harder, as rules will be
--#   applied from a monolithic ALL.cocci, rather than
--#   e.g. strbuf.cocci. To work around this either undefine this, or
--#   generate a specific patch, e.g. this will always use strbuf.cocci,
--#   not ALL.cocci:
--#
--#	make contrib/coccinelle/strbuf.cocci.patch
--SPATCH_CONCAT_COCCI = YesPlease
--
--# Rebuild 'coccicheck' if $(SPATCH), its flags etc. change
--TRACK_SPATCH_DEFINES =
--TRACK_SPATCH_DEFINES += $(SPATCH)
--TRACK_SPATCH_DEFINES += $(SPATCH_INCLUDE_FLAGS)
--TRACK_SPATCH_DEFINES += $(SPATCH_FLAGS)
--TRACK_SPATCH_DEFINES += $(SPATCH_TEST_FLAGS)
--GIT-SPATCH-DEFINES: FORCE
--	@FLAGS='$(TRACK_SPATCH_DEFINES)'; \
--	    if test x"$$FLAGS" != x"`cat GIT-SPATCH-DEFINES 2>/dev/null`" ; then \
--		echo >&2 "    * new spatch flags"; \
--		echo "$$FLAGS" >GIT-SPATCH-DEFINES; \
--            fi
--
--include config.mak.uname
---include config.mak.autogen
---include config.mak
--
--ifdef DEVELOPER
--include config.mak.dev
--endif
--
++RUST_SOURCES += src/lib.rs
++
  GIT-VERSION-FILE: FORCE
  	@OLD=$$(cat $@ 2>/dev/null || :) && \
  	$(call version_gen,"$(shell pwd)",GIT-VERSION-FILE.in,$@) && \
+@@ -1504,6 +1529,11 @@ endif
+ ALL_CFLAGS = $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS) $(CFLAGS_APPEND)
+ ALL_LDFLAGS = $(LDFLAGS) $(LDFLAGS_APPEND)
+ 
++ifdef WITH_RUST
++BASIC_CFLAGS += -DWITH_RUST
++GITLIBS += $(RUST_LIB)
++endif
++
+ ifdef SANITIZE
+ SANITIZERS := $(foreach flag,$(subst $(comma),$(space),$(SANITIZE)),$(flag))
+ BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
+@@ -2918,6 +2948,12 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
++$(RUST_LIB): Cargo.toml $(RUST_SOURCES)
++	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
++
++.PHONY: rust
++rust: $(RUST_LIB)
++
+ $(XDIFF_LIB): $(XDIFF_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
+@@ -3768,6 +3804,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(FUZZ_PROGRAMS)
+ 	$(RM) $(SP_OBJ)
+ 	$(RM) $(HCC)
++	$(RM) -r target/
+ 	$(RM) version-def.h
+ 	$(RM) -r $(dep_dirs) $(compdb_dir) compile_commands.json
+ 	$(RM) $(test_bindir_programs)
+diff --git a/shared.mak b/shared.mak
+index 5c7bc94785..0e7492076e 100644
+--- a/shared.mak
++++ b/shared.mak
+@@ -56,6 +56,7 @@ ifndef V
+ 	QUIET_MKDIR_P_PARENT  = @echo '   ' MKDIR -p $(@D);
+ 
+ ## Used in "Makefile"
++	QUIET_CARGO    = @echo '   ' CARGO $@;
+ 	QUIET_CC       = @echo '   ' CC $@;
+ 	QUIET_AR       = @echo '   ' AR $@;
+ 	QUIET_LINK     = @echo '   ' LINK $@;
 
 -- 
 2.51.0.417.g1ba7204a04.dirty
