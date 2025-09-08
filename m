@@ -1,38 +1,38 @@
 Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED95E1F7569
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 18:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA38F31C599
+	for <git@vger.kernel.org>; Mon,  8 Sep 2025 18:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757357398; cv=none; b=MrRvlwA4KeyWmmCBFbqZefmDDG304zpwEOCOEMTYg85KAhuXHk3Tvzd9pNz2IYtoIkyiRuidvkK7x0TBLagwkx+bPshK+NZY2zwMnF6PiA++WVnT/DWZ8pHg0+vI9XhjCUlOrSJA8QlhwEsn10igy2jTfqqcGJXGHW339IGznmg=
+	t=1757357399; cv=none; b=fUOLZr+hcPad0L1ErPb/m1uRWc9zPf0gR6StfEbFNmY0H3jSkJ+eNOvB4SwLFHwyKWK8NjzKjYz16l4P7F++z+uQ9K+Oh3XBOx757qdg+LeHe9vnjVQDAstUR0nEMdeMENj7Dbbl7EYfMPPCXjp2BClBeY2lrf7BxCMCZBmF1o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757357398; c=relaxed/simple;
-	bh=+M9SWUgRVYRg1kBGn1ZoHhwQ86k0vpdfdVMttvuIUos=;
+	s=arc-20240116; t=1757357399; c=relaxed/simple;
+	bh=11ufnovvgQ2ZCPiVRGOEQf1UndR1mJLFy8ZxQGJrBEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQJPddHlOIQkV4FOO3tUSQPtTfKEDkohBMLCw30QvVc2GsgsUyp+15whzIH5VU4T1AeRLvHoorFdsLTcDPZC7OMwFLQvZ5QW7uY5MPPuC0CCoX0a6z6qVUBPclWOwKkbDczL+Ik/83CMS695f1TL37bzKaWYjkoAOKewfP5J/Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=kXXXmcdW; arc=none smtp.client-ip=83.149.199.84
+	 MIME-Version; b=TaxCcpm6XquM4sVUegxwo04oadRvY2oXArG7M40TZoNzG8pKep72qiQajByu54TooQCJ7IEfHB+9Ml0Gal1WtUPExfufn3LO7mhXNBpfkM517JLGfJlk5rFNuO2SEuATooGfBsiyONPXGHgHbAlJ663mg6EpYFCs2S6rZRm4Sco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=LnV5L5N3; arc=none smtp.client-ip=83.149.199.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="kXXXmcdW"
+	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="LnV5L5N3"
 Received: from localhost.intra.ispras.ru (unknown [10.10.3.121])
-	by mail.ispras.ru (Postfix) with ESMTP id D4D2840755F0;
+	by mail.ispras.ru (Postfix) with ESMTP id 23E4640748C7;
 	Mon,  8 Sep 2025 18:49:49 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru D4D2840755F0
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 23E4640748C7
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
 	s=default; t=1757357389;
-	bh=m+Xks2tQ3rY0lAhqxLgf/PnsQL3IYkwNgdXkoJukEzM=;
+	bh=guCS07oNuv+XwEYQeUumxQfXjqIZ/Ljrp6uH96VcJPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kXXXmcdW++I4C/tMS0ViuMgFjNnNtzdRDfB6fYEVAr70jvmQwqorsD0JCVJeKs4cm
-	 mOPyJ8JeSzng20mO1hSM0hq8I0rGKVK1KA/AadYhKBMxFUL5zbI8DLQdqCwhAT/n9O
-	 4LrQoiW4NAQFjZjY1rajYLWfYEELmvbN8qpeDTTw=
+	b=LnV5L5N3x4ZRaajuVxh6D/xeeHQQP8fzev5eug0J+1HgPzDyPg8VupfAZTZhB/aM/
+	 nyHaftU8Gt/mdiNyxrqr51hscoYnfQ+3Xzc76Xw5c2QyoJIsvzufwueO7YnKRR/5gy
+	 ++5UaG3pnNpwr4WIGNot1EtE3UbPW3wA8OaT2Quo=
 From: Alexander Monakov <amonakov@ispras.ru>
 To: git@vger.kernel.org
 Cc: Alexander Monakov <amonakov@ispras.ru>
-Subject: [PATCH v2 3/4] xdiff: move hashing functions to a separate header
-Date: Mon,  8 Sep 2025 21:49:38 +0300
-Message-ID: <20250908184939.16338-3-amonakov@ispras.ru>
+Subject: [PATCH v2 2/4] xdiff: annotate unlikely branch
+Date: Mon,  8 Sep 2025 21:49:37 +0300
+Message-ID: <20250908184939.16338-2-amonakov@ispras.ru>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <20250908184939.16338-1-amonakov@ispras.ru>
 References: <20250908184939.16338-1-amonakov@ispras.ru>
@@ -44,146 +44,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Move xdl_hash_record to a separate header file, and expose
-xdl_hash_record_verbatim as an inline function to avoid call overhead
-for short strings.
+XDL_ALLOC_GROW is used in a hot loop in xdl_prepare_ctx. Inform the
+compiler that branching to the reallocation helper happens rarely
+to improve code layout.
 
 Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
 ---
- xdiff-interface.c |  1 +
- xdiff/xhash.h     | 52 +++++++++++++++++++++++++++++++++++++++++++++++
- xdiff/xinclude.h  |  1 +
- xdiff/xutils.c    | 13 ------------
- xdiff/xutils.h    |  9 --------
- 5 files changed, 54 insertions(+), 22 deletions(-)
- create mode 100644 xdiff/xhash.h
+ xdiff/xmacros.h | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 4971f722b3..e21a7aa0c9 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -12,6 +12,7 @@
- #include "xdiff/xtypes.h"
- #include "xdiff/xdiffi.h"
- #include "xdiff/xutils.h"
-+#include "xdiff/xhash.h"
+diff --git a/xdiff/xmacros.h b/xdiff/xmacros.h
+index 8487bb396f..d892e022d4 100644
+--- a/xdiff/xmacros.h
++++ b/xdiff/xmacros.h
+@@ -23,8 +23,11 @@
+ #if !defined(XMACROS_H)
+ #define XMACROS_H
  
- struct xdiff_emit_state {
- 	xdiff_emit_hunk_fn hunk_fn;
-diff --git a/xdiff/xhash.h b/xdiff/xhash.h
-new file mode 100644
-index 0000000000..27da4288c8
---- /dev/null
-+++ b/xdiff/xhash.h
-@@ -0,0 +1,52 @@
-+/*
-+ *  LibXDiff by Davide Libenzi ( File Differential Library )
-+ *  Copyright (C) 2003  Davide Libenzi
-+ *
-+ *  This library is free software; you can redistribute it and/or
-+ *  modify it under the terms of the GNU Lesser General Public
-+ *  License as published by the Free Software Foundation; either
-+ *  version 2.1 of the License, or (at your option) any later version.
-+ *
-+ *  This library is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ *  Lesser General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU Lesser General Public
-+ *  License along with this library; if not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ *  Davide Libenzi <davidel@xmailserver.org>
-+ *
-+ */
-+
-+#if !defined(XHASH_H)
-+#define XHASH_H
-+
-+
-+
-+unsigned long xdl_hash_record_with_whitespace(char const **data, char const *top, long flags);
-+
-+static inline unsigned long xdl_hash_record_verbatim(char const **data, char const *top)
-+{
-+	unsigned long ha = 5381;
-+	char const *ptr = *data;
-+
-+	for (; ptr < top && *ptr != '\n'; ptr++) {
-+		ha += (ha << 5);
-+		ha ^= (unsigned long) *ptr;
-+	}
-+	*data = ptr < top ? ptr + 1: ptr;
-+
-+	return ha;
-+}
-+
-+static inline unsigned long xdl_hash_record(char const **data, char const *top, long flags)
-+{
-+	if (flags & XDF_WHITESPACE_FLAGS)
-+		return xdl_hash_record_with_whitespace(data, top, flags);
-+	else
-+		return xdl_hash_record_verbatim(data, top);
-+}
-+
-+#endif /* #if !defined(XHASH_H) */
-diff --git a/xdiff/xinclude.h b/xdiff/xinclude.h
-index a4285ac0eb..68b2d9f1f1 100644
---- a/xdiff/xinclude.h
-+++ b/xdiff/xinclude.h
-@@ -31,6 +31,7 @@
- #include "xprepare.h"
- #include "xdiffi.h"
- #include "xemit.h"
-+#include "xhash.h"
- 
- 
- #endif /* #if !defined(XINCLUDE_H) */
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index e070ed649f..0fff5b26a0 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -294,19 +294,6 @@ unsigned long xdl_hash_record_with_whitespace(char const **data,
- 	return ha;
- }
- 
--unsigned long xdl_hash_record_verbatim(char const **data, char const *top) {
--	unsigned long ha = 5381;
--	char const *ptr = *data;
 -
--	for (; ptr < top && *ptr != '\n'; ptr++) {
--		ha += (ha << 5);
--		ha ^= (unsigned long) *ptr;
--	}
--	*data = ptr < top ? ptr + 1: ptr;
 -
--	return ha;
--}
--
- unsigned int xdl_hashbits(unsigned int size) {
- 	unsigned int val = 1, bits = 0;
++#if __GNUC__ >= 3
++#define XDL_LIKELY(e) __builtin_expect((e), 1)
++#else
++#define XDL_LIKELY(e) (e)
++#endif
  
-diff --git a/xdiff/xutils.h b/xdiff/xutils.h
-index 13f6831047..f51336fce1 100644
---- a/xdiff/xutils.h
-+++ b/xdiff/xutils.h
-@@ -34,15 +34,6 @@ void *xdl_cha_alloc(chastore_t *cha);
- long xdl_guess_lines(mmfile_t *mf, long sample);
- int xdl_blankline(const char *line, long size, long flags);
- int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags);
--unsigned long xdl_hash_record_verbatim(char const **data, char const *top);
--unsigned long xdl_hash_record_with_whitespace(char const **data, char const *top, long flags);
--static inline unsigned long xdl_hash_record(char const **data, char const *top, long flags)
--{
--	if (flags & XDF_WHITESPACE_FLAGS)
--		return xdl_hash_record_with_whitespace(data, top, flags);
--	else
--		return xdl_hash_record_verbatim(data, top);
--}
- unsigned int xdl_hashbits(unsigned int size);
- int xdl_num_out(char *out, long val);
- int xdl_emit_hunk_hdr(long s1, long c1, long s2, long c2,
+ #define XDL_MIN(a, b) ((a) < (b) ? (a): (b))
+ #define XDL_MAX(a, b) ((a) > (b) ? (a): (b))
+@@ -64,8 +67,8 @@ do { \
+  * elements) as necessary. Frees p and returns -1 on failure, returns
+  * 0 on success
+  */
+-#define XDL_ALLOC_GROW(p, nr, alloc)	\
+-	(-!((nr) <= (alloc) ||		\
++#define XDL_ALLOC_GROW(p, nr, alloc)	    \
++	(-!(XDL_LIKELY((nr) <= (alloc)) ||  \
+ 	    ((p) = xdl_alloc_grow_helper((p), (nr), &(alloc), sizeof(*(p))))))
+ 
+ #endif /* #if !defined(XMACROS_H) */
 -- 
 2.49.1
 
