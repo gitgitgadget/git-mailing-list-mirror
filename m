@@ -1,100 +1,151 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A91D1F0E2E
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 16:00:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757433638; cv=none; b=ux8/UGFZq9nzkeb2fzUvNvPkA6Jz8jGofcL+scY8GoiOhyNodrVHr9RGVlb17D8t6CyR17llGGKaMv+avhKs9Cv/Bt3yPiVUKq0if5mANXv5/I+Kj0Jfd4If/U3FcHhoXLrzgM3ugbKAcxwyUufploHzl9JhHwJyJehSj3aKpPI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757433638; c=relaxed/simple;
-	bh=9rfsQZUs51QFETmVfwGB/ggK36DO0P0sADTtnPZLZQk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lTF8iCfd0IMNzy75fFWjThS24DjiVE/360UtAWKm6yKLng6uhoAWW7f4DQAegFVZWINdo3zD3JdYtBeZs0RL2EhT+9L8mA5sUxyoQFDLpSqI8v+mJicU1SK+xYnc/1lkJ+XXvjPakhbkvusLdnuq3hzazIQ9XqWc/cJ8OJJTYkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vzn7h1Fr; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5300350D45
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 16:17:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757434677; cv=pass; b=P80vv0O/7ZA1T/KdhZ6iQ4DzGigs+ulVNyAWPlsvbcGsgTxuNH+Gn0dEDUOWHooYTMMqvuZ+3o9iAVJPiISuKYGFsV3QdTKDa2XJO5TI9LniAoxmj3uQ+ZUIU9WKAME8WBTECMdXOpL1Us4dOSy+dWYZOB0IHlssg2yl0Anp12A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757434677; c=relaxed/simple;
+	bh=qmqSaxMO8m9Lms+BLxc35ID5D0sqNKEajsgBiRwpR+A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ocMs/2uQeQdgrTUKgfMG5t3kkcevSmqDaK3TnJwNyemEVE/uTN+lfDWxh0gbExkMEb1uOxRcVoBvxLQURxLUcZTGCDgBxrS/GjaQDRF3RtPmSwrTgmB49+3kS/flHPscoZP5wy2YY+t8rLiCf5m3Jk5WJ6+SysOZ2NphQUBC6gw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=ZPg5FxHy; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vzn7h1Fr"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-772627dd50aso7316379b3a.1
-        for <git@vger.kernel.org>; Tue, 09 Sep 2025 09:00:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757433637; x=1758038437; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9rfsQZUs51QFETmVfwGB/ggK36DO0P0sADTtnPZLZQk=;
-        b=Vzn7h1FrhHyWd66bOE+hDYJxaw9a6e9JJCDrmDT9ptgUvuVojcb+5uPKDz/y1+7aTm
-         oUZBvxN5OU35yJaLeJUvEbenvFg031oZaNdrM9SCBiKKW/pccOdcbqafpSVN0M+7lBFl
-         NgSfxfVbXXR78xFlJ/E4pTbpa2cA8Mft+zjJ46d6ftY83kaeV1+VAYHBKnqO5Q+FxvTn
-         uWP4f9UZwhKiysGppvQijzl0S3H+3e/afZvq1Ncku+G3LCXyFxv9htwU68yWSIj35Lhm
-         9OHxZqgYr/TMZSb3qmQtchtnKad8yncQMIIgUdOca3fjEe9n7r8K9MH7vRIniwL2G82C
-         L8JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757433637; x=1758038437;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9rfsQZUs51QFETmVfwGB/ggK36DO0P0sADTtnPZLZQk=;
-        b=nU9bbxyOIrGHyTtm/Q1FCpYsJRkm5OZW1Ac7Yil5NLPEGFgtXN3mClK1P56JXqpnms
-         uiffei9V7b/z4XWfNd7K9olurv5S2eTmgAHCabqVj4ex1NJaGPjsz/wxpaG5FrikzepV
-         6DWDn5/fckg6czy/rXnzxqniEV/frxCiGMjMZbwQczTxl8wexRsR6M3R7X/61lNX/Sxu
-         lESQ5IHSyA2W0Er3IC4CPavDM3jJxCf3rr3YPciGTn+Szhf8NnJNdMjBUIWWmxUcqZFm
-         +rXGfmnXZ+VwCKvVRGCS5w+g2QouevOPFlvXC6ZROatYS2zdlvd6K/ctYF8t69etjWlV
-         bPbA==
-X-Gm-Message-State: AOJu0YxIG9bYb1uja2feT7FRDYFVPF3Y9aOq/LeocWoQ7IM+UgizRLhb
-	aWdBOyFP5jEstflBhvQ8XpSW0adItbdPHJGiqZNmcMV6GIfkuZBGumOj5HhBfw==
-X-Gm-Gg: ASbGncvQVoi142kNBt/KP5QIhl7IN3mR8vGuexsRTIHIqn5HdC9dJ/nSwT7AvLn51oc
-	v1Pg4BDptNd3CjbGdH4V/58gIX880h1YzEWSiC6ZYk7Yd0QTBbr0Afn7CjUHxY0JC/vCFc5wJ8X
-	Bn+4H4kg3u+Z3UgkUVp5jl9G3qntB6lTBdIu7qoqAkajzp9eS49a70l9k1ml4mAUG3pYntuZ/1W
-	FuqinrPfsKy8GMNbUIoZAWrid/W3ezAhVVMbaDfFVnphakM1w9HZl1W/kUcGl4LlmhJZ6fhOnmX
-	f+xNquVPO4F4YlLZxgD/e1pySGXElT2lJvAhnLQQ0AsPL/8vqt+iBu+S8SQnLk5+klXS4H4Z4K1
-	3or+RjUOf3bFIyggo/cw/e9eAlnkNNuvxp/hX+vC6QeFiriva4w6Vx9wKF0o1H421nZrtDw==
-X-Google-Smtp-Source: AGHT+IGkWi5k1lctx0HvLSAuCYLUzU/byoLrhvgmyI9eE/Cc4vM9Sj/y8U0AZbAJv6VWOsmYEYHG8A==
-X-Received: by 2002:a17:902:ce03:b0:231:d0da:5e1f with SMTP id d9443c01a7336-25179686313mr143218165ad.21.1757433636516;
-        Tue, 09 Sep 2025 09:00:36 -0700 (PDT)
-Received: from [192.168.1.105] (23-93-88-48.fiber.dynamic.sonic.net. [23.93.88.48])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25a27bec860sm1813875ad.34.2025.09.09.09.00.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Sep 2025 09:00:35 -0700 (PDT)
-Message-ID: <b8df3605-7afe-4121-ae50-095dfd671df9@gmail.com>
-Date: Tue, 9 Sep 2025 09:00:34 -0700
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="ZPg5FxHy"
+ARC-Seal: i=1; a=rsa-sha256; t=1757434657; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Z55YWl3L5858zuT4vLO9Ai9lWDs6Y+Wm1Tl5rvj+Tcub+SMY/MgSW8J41ELJTLalCv0zousxapoOl7nw6izUXrpAC5RzDZHU0kXmxSMHD8phoDiq9i34D4n0VrdKV2uFCTI3BjkDufM8WsjkXkT5ctHE3Cczw+/GYte9hgRjOzk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1757434657; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=Brj0J4jI+ESzQryZzrX+GQtCiMF99oiZFHjkybTbANc=; 
+	b=n0XHSixBdNAxch8OM6aWGDx9jDk08OmAcn7maX1PvfcuaIGFwFM1rgBrUKC4jHzLrlCIwZu63QhlAO3gQ4r1RewQcQJxu7B5D8QIaFqkZySO4NlERxaBpN/AR0sCe3dLLRwe5w6CfdtVHusS3tbDkLZ5iKALW6MG4LWWbHhrtwc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1757434657;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=Brj0J4jI+ESzQryZzrX+GQtCiMF99oiZFHjkybTbANc=;
+	b=ZPg5FxHyrfLGcMb8S7UkkijyQuJfGr2qesL5foYQnqf+bF4pSGvpBW1pPrrvaPug
+	+tfEZI5OcPMjxsvd7/nODprv1+sE7/Kri+LR4SNPp0e8rRGItUFpADL2Jlu8i0Drl4L
+	EO279LX/Qz1A6lXlN+kwKLvmEYxiNHYcYoC0fU54=
+Received: by mx.zohomail.com with SMTPS id 1757434656234642.6752967867909;
+	Tue, 9 Sep 2025 09:17:36 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
+ C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
+ Nieder <jrnieder@gmail.com>, Josh Steadmon <steadmon@google.com>, Ben
+ Knoble <ben.knoble@gmail.com>
+Subject: Re: [PATCH v2 02/10] submodule: create new gitdirs under submodules
+ path
+In-Reply-To: <aL_Z6z1XZBEbNGV1@pks.im>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20250908140117.262205-1-adrian.ratiu@collabora.com>
+ <20250908140117.262205-3-adrian.ratiu@collabora.com>
+ <aL_Z6z1XZBEbNGV1@pks.im>
+Date: Tue, 09 Sep 2025 19:17:31 +0300
+Message-ID: <87ecsf7g84.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Is Git Add Supposed to Work Like This (git 2.50)?
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-References: <63045080-74d6-4835-9d9c-4d3558acdbfb@gmail.com>
- <20250907233456.GA1281511@coredump.intra.peff.net>
-Content-Language: en-US
-From: Jon Forrest <nobozo@gmail.com>
-In-Reply-To: <20250907233456.GA1281511@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
+Hi Patrick and thank you for the feedback! o/
 
+On Tue, 09 Sep 2025, Patrick Steinhardt <ps@pks.im> wrote:
+> On Mon, Sep 08, 2025 at 05:01:09PM +0300, Adrian Ratiu wrote: 
+>> This is in preparation for encoding the submodule names to 
+>> avoid conflicts like submodules named foo and foo/bar together 
+>> with case-insensitive file- system handling and other corner 
+>> cases like reserved filenames on Windows.   Backward 
+>> compatibility is kept with plain-name modules already existing 
+>> at paths like .git/modules/<name>, however a clear separation 
+>> between legacy (plain) and new (encoded) namespaces is 
+>> desirable, to avoid situations like an existing plain-name 
+>> module containing the encoding escape character/  Thus we split 
+>> the new-style (encoded) gitdir name paths to .git/submodules, 
+>> while legacy-style paths remain under .git/modules.   This is 
+>> just a default directory change with the accompanying test 
+>> updates, in preparation for the actual encoding additions in 
+>> future commits. 
+> 
+> One of the questions here is how this move will affect alternate 
+> implementations of Git, like libgit2, JGit or Gitoxide. There's 
+> two angles to this: 
+> 
+>   - Git needs to handle that those implementations continue to 
+>   write 
+>     submodules into ".git/modules". 
+> 
+>   - These implementations need to be able to handle the 
+>   new-style paths. 
+> 
+> The first item should work just fine, as we make sure that we 
+> handle both paths. But do the other implementations need any 
+> adjustment? I guess the answer is "yes", so we need to treat 
+> this as a backwards incompatible change as they wouldn't be able 
+> to find the submodule repositories anymore, right?
 
-On 9/7/25 4:34 PM, Jeff King wrote:
+That is correct and also applies to older versions git itself 
+which do not have this mechanism. Phillip Wood suggested we add an 
+extension like "extensions.submoduleEncoding" (name suggestions 
+welcome).
 
-> I guess one could argue either way (though probably not at this point in
-> time, as switching behaviors would cause confusion). But one challenge
-> with "partial success" like this is that the exit code is binary. If we
-> return "0" even though some items were ignored, callers may miss a
-> failure. If we return "1" even though some items were added, callers may
-> not realize they've mutated the state (and might need to rollback
-> depending on what they were trying to accomplish).
+I'll do that in v3 of this series.
+ 
+> 
+> Ideally, the way that submodules were populated was less 
+> fragile. For example, we could have a "submodule.*.repoPath" 
+> config key that gets populated whenever we clone a submodule. If 
+> Git clients knew to use that field they wouldn't have to 
+> second-guess where a previous Git client stored a specific 
+> submodule, but they could just read that path and then use 
+> whatever is stored therein. This would even allow for changes 
+> like using a hash to encode the submodule name.
 
-If this were a big deal, which it isn't, I'd suggest a command line
-flag that says what to do if there's an invalid file specified on
-the command line. One setting of the flag would result in the
-current behavior and the other setting would result in all the
-invalid file(s) being ignored and the valid file(s) being
-handled normally.
+Slight tangent (I'll respond to your point after this):
 
-Jon
+Junio asked to please keep the name human-readable and that's why 
+we use url-encoding which is also widely known and well 
+understood.
 
+I guess we could add a config to change the name encoding or 
+hashing mechanism while keeping url-encoding as the 
+default. Likely in a later series because this one is big enough 
+now at 10 patches and keeps growing. 
+
+One of my Collabora collegues even suggested they would like to 
+use a pattern like "hash_name" to get the best of both worlds.
+ 
+> 
+> But to the best of my knowledge such a key does not currently 
+> exist, which is too bad (please correct me if I'm wrong, I'm 
+> definitely not an expert when it comes to submodules). 
+
+No, it does not exist. I've added something a little bit similar 
+with the gitdir path config option in this series, however it is 
+only used to override default paths computed by git-submodule, 
+when necessary. 
+
+There is also a config clutter problem, if such a key were to be 
+added by default, since most submodules use default paths.
+
+Phillip had the idea to only compute the path once, during the 
+initial submodule clone, then reuse it from the .git file inside 
+the submodule workdir in later actions, however that is not enough 
+for compatibility with other implementations or older versions.
+
+So yes, to avoid user confusion, multi-implementation 
+inter-operability problems or risk any repo inconsistency, I'll 
+make it a breaking change.
