@@ -1,156 +1,100 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A100362061
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 15:27:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A91D1F0E2E
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 16:00:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757431680; cv=none; b=oY5HFIp7nXYMYWcATFjNWG/cezoEWSkFHsj1ROZeGKHzKBvfQLJ6ZPsM5qGonBEMNS/OQnivf+ebsDShfrbJee/rxhXGaNMAPW01j+v3S7DBJMHr+6XlbLtJxsp/A4RRabNNsLgKy4b1RRaENs4ELZfgh+8OdCjcaT2CQPczgHc=
+	t=1757433638; cv=none; b=ux8/UGFZq9nzkeb2fzUvNvPkA6Jz8jGofcL+scY8GoiOhyNodrVHr9RGVlb17D8t6CyR17llGGKaMv+avhKs9Cv/Bt3yPiVUKq0if5mANXv5/I+Kj0Jfd4If/U3FcHhoXLrzgM3ugbKAcxwyUufploHzl9JhHwJyJehSj3aKpPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757431680; c=relaxed/simple;
-	bh=mYd2qqXMtiu6Gc9v423tmTT1R+ZeOWFIPuJcSfLrCz0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Z76dXlxxYsGsACf1+iG8FaoFlNNJV63Uy8/EdrRJNxrotxPYG7ITJ0goJf6y/xx8yAa/T47XaaBBMuYo6FuxkhVTc/akTo3hnzVQkN9eYMiyeDtejzGiCXdDr/KNpDfK7W5u+Cyh0rXa4PiMh8OJw//fYZDG0dLk7iI383oGReI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WZDOPkcv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lPc+6OTg; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757433638; c=relaxed/simple;
+	bh=9rfsQZUs51QFETmVfwGB/ggK36DO0P0sADTtnPZLZQk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lTF8iCfd0IMNzy75fFWjThS24DjiVE/360UtAWKm6yKLng6uhoAWW7f4DQAegFVZWINdo3zD3JdYtBeZs0RL2EhT+9L8mA5sUxyoQFDLpSqI8v+mJicU1SK+xYnc/1lkJ+XXvjPakhbkvusLdnuq3hzazIQ9XqWc/cJ8OJJTYkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vzn7h1Fr; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WZDOPkcv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lPc+6OTg"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id ED64C7A0103;
-	Tue,  9 Sep 2025 11:27:56 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 09 Sep 2025 11:27:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1757431676;
-	 x=1757518076; bh=rvjijdykBoxbHQAmAlXQ3HXBFiaPfIVQNjXupvpTbcU=; b=
-	WZDOPkcvJSYRa4nfamOL7iSdZ0s3joHWQ3SYLMPAfxZcdTC+TC1jxzhfEaN9BpXg
-	naInq1g2zw1twQFavhnuNPDeRAi8z1ZWSCQ/RcwYlNcjZJVgNSPhm6+TfgBmBgrP
-	icum2baeNyotN8X5oW9aTmgXbtzqh8AevEpjtWIuZVS3dApCWake2yoE+QH4OpL9
-	eubksSPT1AYYeSvZAtmmfhQvPR+2OlDmil9c4AjYBuBmL7Jqr3FblTFMIOVl3h2c
-	OVxKJUqTCBriEUACpdKhWrPoXjBzXn0U/7JPPM7gf/fmxFb6y1OkKbjWPyIoS3B3
-	FpWR2NmEi4F2ulaYfPtClw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757431676; x=
-	1757518076; bh=rvjijdykBoxbHQAmAlXQ3HXBFiaPfIVQNjXupvpTbcU=; b=l
-	Pc+6OTgZ8kdwptD5DdMmyjg3EUnsz+Y4NwB65p7vHjjqCF4DLjoJaePzGAxJkYaK
-	CMqhxLY60wHUyvtqseA+DLAadATiTGtU6r8hy0jK100b5BBVdZgIfw+PGjKOpxlG
-	s6GnAhZxgQXG+/MeycjulkeEaisNSVXvS6G4K6+ZfU47dNNOnYnEOr09C9ZHg130
-	6/t0b9AkVoYLh9Jjlor1XwT5KrvAwZuzK38iKnJ2aVns+MTDtuOKge/R4Bpa7ZLw
-	hhT3iBLVUEAFVqG5/0EZcP+Cr55OEEq8vdtGSPhgsX8FXsax65LTbt6slhDaQSQm
-	hCnzs+TxBZqMrghvWz1xw==
-X-ME-Sender: <xms:e0fAaH7f1NU5afIY1XQLwlGvEQqyzjElkujdAzqtKtiMkTl3O0pCXw>
-    <xme:e0fAaNjMefl1y8WIiI7IiBvaa5GySXFzuyXVUq2NLhkVQ2fOP6apyaPmFSGA2qs3z
-    QHCD5vqy9r3ZTN1QA>
-X-ME-Received: <xmr:e0fAaJkXmCSDlt5iog6WevGH9pH6ph6q_RCfglM84javHQm8LXwufLVeqGJToJb5FvLtJIS02HKwIwkdPocH9HHkPj6U1krkP1FdV3U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdejjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopegtohhnthgrtghtsehhrggtkhhtihhvihhsrd
-    hmvgdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdr
-    nhgvthdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtoheptgholh
-    hlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigrrhht
-    iiesghgvnhhtohhordhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtoh
-    hm
-X-ME-Proxy: <xmx:e0fAaMuMrMN9s9HwYBPnU44-K4F-s4tIZwU3gjYQUSuVnOssCrla-g>
-    <xmx:e0fAaPCzzd-a7b7k8X4bVDzQi_A4LXmDaU77QdZFP0C0mHJ3ZYnQHQ>
-    <xmx:e0fAaBXF0C9AqYYLXf7_N6qKpnA0OIdhJjpcas3xPgI4wZbxtOpXMw>
-    <xmx:e0fAaAEG17FSX6wXNK6DRFXOEkeI6Did1IKC9Ma_McwsgwTtd3NfOA>
-    <xmx:fEfAaDoc5nuntRuhMTD-uH9sctpYYe-GUMhCbR09bXdx57EKaAXb686F>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 11:27:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  "Haelwenn
- (lanodan) Monnier" <contact@hacktivis.me>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Christian Brabandt <cb@256bit.org>,
-  Collin Funk <collin.funk1@gmail.com>,  Eli Schwartz
- <eschwartz@gentoo.org>,  Elijah Newren <newren@gmail.com>,  Ezekiel Newren
- <ezekielnewren@gmail.com>,  Johannes Schindelin
- <johannes.schindelin@gmx.de>,  Phillip Wood <phillip.wood123@gmail.com>,
-  Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,  Sam James
- <sam@gentoo.org>,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC 2/3] rust: implement a test balloon via the "varint"
- subsystem
-In-Reply-To: <EF337F13-64D2-4A17-BF7D-FE77E3064E35@gmail.com> (Ben Knoble's
-	message of "Mon, 8 Sep 2025 20:49:45 -0400")
-References: <xmqq8qipzhg3.fsf@gitster.g>
-	<EF337F13-64D2-4A17-BF7D-FE77E3064E35@gmail.com>
-Date: Tue, 09 Sep 2025 08:27:53 -0700
-Message-ID: <xmqqfrcvve6e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vzn7h1Fr"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-772627dd50aso7316379b3a.1
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 09:00:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757433637; x=1758038437; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9rfsQZUs51QFETmVfwGB/ggK36DO0P0sADTtnPZLZQk=;
+        b=Vzn7h1FrhHyWd66bOE+hDYJxaw9a6e9JJCDrmDT9ptgUvuVojcb+5uPKDz/y1+7aTm
+         oUZBvxN5OU35yJaLeJUvEbenvFg031oZaNdrM9SCBiKKW/pccOdcbqafpSVN0M+7lBFl
+         NgSfxfVbXXR78xFlJ/E4pTbpa2cA8Mft+zjJ46d6ftY83kaeV1+VAYHBKnqO5Q+FxvTn
+         uWP4f9UZwhKiysGppvQijzl0S3H+3e/afZvq1Ncku+G3LCXyFxv9htwU68yWSIj35Lhm
+         9OHxZqgYr/TMZSb3qmQtchtnKad8yncQMIIgUdOca3fjEe9n7r8K9MH7vRIniwL2G82C
+         L8JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757433637; x=1758038437;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9rfsQZUs51QFETmVfwGB/ggK36DO0P0sADTtnPZLZQk=;
+        b=nU9bbxyOIrGHyTtm/Q1FCpYsJRkm5OZW1Ac7Yil5NLPEGFgtXN3mClK1P56JXqpnms
+         uiffei9V7b/z4XWfNd7K9olurv5S2eTmgAHCabqVj4ex1NJaGPjsz/wxpaG5FrikzepV
+         6DWDn5/fckg6czy/rXnzxqniEV/frxCiGMjMZbwQczTxl8wexRsR6M3R7X/61lNX/Sxu
+         lESQ5IHSyA2W0Er3IC4CPavDM3jJxCf3rr3YPciGTn+Szhf8NnJNdMjBUIWWmxUcqZFm
+         +rXGfmnXZ+VwCKvVRGCS5w+g2QouevOPFlvXC6ZROatYS2zdlvd6K/ctYF8t69etjWlV
+         bPbA==
+X-Gm-Message-State: AOJu0YxIG9bYb1uja2feT7FRDYFVPF3Y9aOq/LeocWoQ7IM+UgizRLhb
+	aWdBOyFP5jEstflBhvQ8XpSW0adItbdPHJGiqZNmcMV6GIfkuZBGumOj5HhBfw==
+X-Gm-Gg: ASbGncvQVoi142kNBt/KP5QIhl7IN3mR8vGuexsRTIHIqn5HdC9dJ/nSwT7AvLn51oc
+	v1Pg4BDptNd3CjbGdH4V/58gIX880h1YzEWSiC6ZYk7Yd0QTBbr0Afn7CjUHxY0JC/vCFc5wJ8X
+	Bn+4H4kg3u+Z3UgkUVp5jl9G3qntB6lTBdIu7qoqAkajzp9eS49a70l9k1ml4mAUG3pYntuZ/1W
+	FuqinrPfsKy8GMNbUIoZAWrid/W3ezAhVVMbaDfFVnphakM1w9HZl1W/kUcGl4LlmhJZ6fhOnmX
+	f+xNquVPO4F4YlLZxgD/e1pySGXElT2lJvAhnLQQ0AsPL/8vqt+iBu+S8SQnLk5+klXS4H4Z4K1
+	3or+RjUOf3bFIyggo/cw/e9eAlnkNNuvxp/hX+vC6QeFiriva4w6Vx9wKF0o1H421nZrtDw==
+X-Google-Smtp-Source: AGHT+IGkWi5k1lctx0HvLSAuCYLUzU/byoLrhvgmyI9eE/Cc4vM9Sj/y8U0AZbAJv6VWOsmYEYHG8A==
+X-Received: by 2002:a17:902:ce03:b0:231:d0da:5e1f with SMTP id d9443c01a7336-25179686313mr143218165ad.21.1757433636516;
+        Tue, 09 Sep 2025 09:00:36 -0700 (PDT)
+Received: from [192.168.1.105] (23-93-88-48.fiber.dynamic.sonic.net. [23.93.88.48])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25a27bec860sm1813875ad.34.2025.09.09.09.00.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Sep 2025 09:00:35 -0700 (PDT)
+Message-ID: <b8df3605-7afe-4121-ae50-095dfd671df9@gmail.com>
+Date: Tue, 9 Sep 2025 09:00:34 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: Is Git Add Supposed to Work Like This (git 2.50)?
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+References: <63045080-74d6-4835-9d9c-4d3558acdbfb@gmail.com>
+ <20250907233456.GA1281511@coredump.intra.peff.net>
+Content-Language: en-US
+From: Jon Forrest <nobozo@gmail.com>
+In-Reply-To: <20250907233456.GA1281511@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Ben Knoble <ben.knoble@gmail.com> writes:
 
->> Le 8 sept. 2025 à 00:39, Junio C Hamano <gitster@pobox.com> a écrit :
->> 
->> ﻿Ben Knoble <ben.knoble@gmail.com> writes:
->> 
->>>> +#[no_mangle]
->>>> +pub unsafe extern "C" fn decode_varint(bufp: *mut *const c_uchar) -> usize {
->>>> +    let mut buf = *bufp;
->>>> +    let mut c = *buf;
->>>> +    let mut val = usize::from(c & 127);
->>>> +
->>>> +    buf = buf.add(1);
->>>> +
->>>> +    while (c & 128) != 0 {
->>>> +        val += 1;
->>>> +        if val == 0 || val.leading_zeros() < 7 {
->>>> +            return 0; // overflow
->>> 
->>> Hm. I thought overflows panic in debug builds, in which case
->>> checking afterwards is too late? Does unsafe change that?
->> 
->> This code is a very faithful conversion from C so if somebody does
->> not read Rust well, they can safely refer to the original in C.
->> 
->> In either variant, the leading zero's check asks "can we shift val
->> by 7 bits to the left?" _before_ it actually shifts val (and or'es
->> in the lower bits of c), so the "overflow" check is "if we processed
->> any more data we _would_ overflow, so we stop before overflowing".
->> 
->> IOW, the code _is_ avoiding the "too late" condition.
->
-> Maybe I wasn’t clear, sorry: don’t we already have overflow if
-> after val+=1 we also have val==0? In C with unsigned types AFAIK
-> that’s the normal modular arithmetic, but I thought I recalled
-> that such (unsigned) overflow panics in Rust in debug builds (not
-> in release).
->
-> So that’s my « checking afterwards » above.
->
-> I’ll see if I can double-check my memory though. 
 
-Ahh, you meant "can we safely add 1 to val here without
-overflowing?"
+On 9/7/25 4:34 PM, Jeff King wrote:
 
-You probably are correct.  If val in the last round had top 7 bits
-all 0 and we shifted the lower 7 bits of 'c' in, and if that made
-val all 1 bit, then in the modular arithmetic, we may get val==0
-after adding 1 to it, but that may indeed be "overflow"ing.
+> I guess one could argue either way (though probably not at this point in
+> time, as switching behaviors would cause confusion). But one challenge
+> with "partial success" like this is that the exit code is binary. If we
+> return "0" even though some items were ignored, callers may miss a
+> failure. If we return "1" even though some items were added, callers may
+> not realize they've mutated the state (and might need to rollback
+> depending on what they were trying to accomplish).
 
-Thanks.
+If this were a big deal, which it isn't, I'd suggest a command line
+flag that says what to do if there's an invalid file specified on
+the command line. One setting of the flag would result in the
+current behavior and the other setting would result in all the
+invalid file(s) being ignored and the valid file(s) being
+handled normally.
+
+Jon
+
