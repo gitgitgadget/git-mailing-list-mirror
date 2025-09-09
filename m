@@ -1,136 +1,151 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2516329346F
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 09:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB73E4A21
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 09:19:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757409166; cv=none; b=HGvcBJU7oCX1ipEJ/erE2AAXpsf8hW7lUlEzNuptOssbMkvmcMvAokIRwY2e7wYgeoV56cMqR77ZQLYBq9bhwjicLY95bY/LfnFXBe2exHMWQHKDLKIf4IVfclc44qgYiQ8xZde7xBl0Q/DOh6PQhOun5h55xEv7W5UTQVryHw4=
+	t=1757409560; cv=none; b=T4u2VxQJo0DqnPoOL/PzdM5i0ECr+1DCGoen2bxXflsS3FeWz9+tW9cYbY+Sh9xAGcRhQx4EJ29sJoBcKjhvNGxnBZO7L6koWi47Tax92M1WnK/ya9QVBLAMTKjfpyxbdYfptiYQCtz6/g8LxN52oMB52QMH81e9WFoMbos0V/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757409166; c=relaxed/simple;
-	bh=le5Gtmun6it5OjTSnYpu4wcM/N0C8rsmq9YUDkpo+mQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=CeMpbpXdbba8uIbzdvv5itubIys2I5KEQxv+xIBb6mBL0Nxy1neVMIkdPRK2QJZx1Gb93eFmTQQYf9QthYGPOemfOydnLRDrxOC0UcGtVhttkcmd4mBkGLKzswOGkaK/cFMhpkK/EDtwtf2z2N0nsJDSq1YzUY9/EUF34kcjAdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jXUEqVSJ; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1757409560; c=relaxed/simple;
+	bh=42veuj4zoZiYadLZqM9k0kj4chqyrxvTbeCCwbaax/g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iqoKQnuMw/iSMYDU2qRmF92P6yHmnSNa8ydAZ1Hf/2rmFFeV1YYLyjkR8rGkn4L8tIcrj+ZLEohykhQKBJFlqqHtFVKcnoJuSJ3pPRFpqr07TKtiRueeYMPZtI25NHbgRmxt2+5JHwk+CxCXstawJLPY6F8wKpU1xhCKx0KeZeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OBdXFyvl; arc=none smtp.client-ip=209.85.166.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jXUEqVSJ"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45df09c7128so3117675e9.1
-        for <git@vger.kernel.org>; Tue, 09 Sep 2025 02:12:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OBdXFyvl"
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-406630d3b17so20444655ab.0
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 02:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757409163; x=1758013963; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jXday8qecRXHEeqMvKsOd3jADlJ8cmeBOIb6/3vTjgs=;
-        b=jXUEqVSJj4k2JR5VftIpuRWVX3lcP8azRrIxVGqwyJfQcrU+YhrOS8QKmyY+2jzyC2
-         FbJNZHU6PETri8iBJbutbIZtk6m6FuWvJ4Fc23PBP3V2QD7s7UYSkt24z4kRza+9EhKR
-         Qq1TfDRwOAfa9oK3Qy9JPWBfBJm7eDPZuktlf9zC8K7+IZfY7FCItG5V6Qo/cuelZOCI
-         ZBqbgLoiLBNuxoP8W7jBrObN/iTQBeseC//oZhKg7JJUgrK6X8yTHtR7IL9V7qYh4YXw
-         ZgIUemk0YsraqoMgF4bD7qS7whAzRv6GjfuE6sbN7RuW2FxwYEGHefxKkhd0rmBM5pvP
-         K4Ew==
+        d=gmail.com; s=20230601; t=1757409556; x=1758014356; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gb4hP+ZrX6Bm31wsjEO0F6F6E6Ew6VaYtFpDjRLO3zY=;
+        b=OBdXFyvlYRBdsYmOfgMGVA1I/hwgmfHSu4mCxky1gA7XcnoPldnUVH9e5lK2UoAKd1
+         pdhrQfQ3QHK+c0K0CWOBXwM9gKLzXGmh6d1ghVIdq9cgT4/cs5wReKEzfqv7HzfDd4AI
+         6Mzo0BS1L2pEixP/7fQ+iwlWhDEeJ409vOZ+V6xKgY7mVDdtu//tdB6rK2HKPNDN7U/r
+         +mIzMGNqYxSf8v67fSyN7IbtX+bHBh7gQvL0y7JMP9gfcxTjk1030RjqxOuUrMDUZ8Gz
+         upf6LCLFl7ubIRDdSy2Vesqhh8bgfRQE1TBvK5YIXDvQ32M9V/Y9fzEozaEVilSyM8AD
+         kfiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757409163; x=1758013963;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jXday8qecRXHEeqMvKsOd3jADlJ8cmeBOIb6/3vTjgs=;
-        b=rspeo42x7SLGjWH++JA+wxTomiFfXPNAHxGrZCnFiXbZHUFxkyiLjMQfdOlKCO/1e/
-         rBFwzHYCzslydQMKFWFd0MIQEwZqGEhPNeDuqF0gSWp8Vw/RH6nfGtF/D7mTYTDl9Gmq
-         wFmbDKKFaf28GnISSYubYtRaKpbbGG6hFNJ/uN+apFzCLt+f8qDhgZgXnZwb/yB4KXTP
-         hrYjB2h9qLFnCNxy17cC5VfmMEwLTbWUoPO4TRRaQ6TbRq2eiM6M9XmcyyBm9O8I3Z2Z
-         NSoErZRIwy/CPxuCsQUfq+g6PGIo49NsXH7rRBegVp21T4cNvs/TWAb7L9LAAhNJpZ2q
-         SRGg==
-X-Gm-Message-State: AOJu0YwsXb9tOdcnFE++PNFs6ZnWs0u3Jx6RMrlWMODnZBOHSY6q4Bdf
-	lwT7RoRnq7WWkPM9G7YYpAHQagjCyj//+38ClMldmH+H30cpzAWmgFnW
-X-Gm-Gg: ASbGncvpmLkkk1PFzplmEcmyqe3e1dVlEB3ZahjYR7b4N612F/kZfBJFBUNjkqZ8VhJ
-	2GWpnixWD+x6zKnF+2pFrgFsn1FNWFD2EMGtYUibRUiMG5cyNhcu6entX/5x1dMsHMhrOYDqlrX
-	5OO6JoMjXoxhrqIwfnV6Im+CMPleojCVuLBAUlZjTbVDuW7x8TCPIWhrXVL0vZNdCXiAjTsopCF
-	OOco/9xIycmp4MSfhTMqFG/GqcgEIkfq1gbUw5b69oAqDZBMJ4ljattR/fK/gO5Yxo8FkkF8bA7
-	1H0hKzDAsO9+1bbEUPiJXEq75NUD/1M/XZ8AuSWxy9a5dPLtixKFeuKhXteqLOmuqOQUXHXSZ6e
-	XACUOASCuxDyu1vvfZ0f+ge/sTqkHvGFhFM3XVJZ5FY0Uwfqp2imlk3Gl65ODBQ8pAJYJbheKwj
-	BPhgUi/ADYs7qWwHM=
-X-Google-Smtp-Source: AGHT+IFIJ3c4xvRI8iORcJUxI7p8+kZKPUTzDD84p2Y4eeI1FBcJawOW2CkyySMra0KRk8GkoT60RQ==
-X-Received: by 2002:a05:600c:1daa:b0:45b:92a6:63e3 with SMTP id 5b1f17b1804b1-45dd5b68e02mr116337975e9.9.1757409163145;
-        Tue, 09 Sep 2025 02:12:43 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc? ([2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df3353ae6sm2862745e9.0.2025.09.09.02.12.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Sep 2025 02:12:42 -0700 (PDT)
-Message-ID: <7c25d5a6-1b34-485e-93f9-25bbe37d5bd4@gmail.com>
-Date: Tue, 9 Sep 2025 10:12:39 +0100
+        d=1e100.net; s=20230601; t=1757409556; x=1758014356;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gb4hP+ZrX6Bm31wsjEO0F6F6E6Ew6VaYtFpDjRLO3zY=;
+        b=rC6EnHU7cEFIWPRKvo6ycxBSmdbG+YZkS9DoR8/9gpGWt1K2/w2SkHyI+/EN48+25+
+         KXtf2EMAQuzi6dHe4lWooC8tTuVFGSBEUlqYg6gEzxOnvasgZWLiIgpmA+9sfyb36YF7
+         3+MKF4QJBNZt2NzLR+Tdnp2H76stu643r5qXshvRTllxwFle/0iqKQ6B/PGjBFT2fj28
+         s4QzdnXk/Zxes7G183kGpnE6PHJxa+GQUVVfqBAIkXSeJNZF/6WtMvMdvYDfgJKTeaqR
+         uDxTI5wfrLExLt7S2Jy3q4GUiAorkW2+IhFAHPPofaGkj6pghJajiQPK8ZIexSovyvm5
+         0xUA==
+X-Forwarded-Encrypted: i=1; AJvYcCVD8LNBC+YiR3S+joIYKSR9UPh4PvmDXamkDgjsXG20t0NjRceIr5ifbJyxGPWWuHkKpJk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIJoXJ21yHjhVFdcfFjbZN+tyd1Ci6ldOKWZDUVz3dI0vr9Z/J
+	CmAqsJstwnVYXI36+SuY3/G0cBrcR5NmXbWOvWjvGSHztKxyHuwLi/tH5ndpVZH8SNBsdvf6Q4E
+	RwrkpqEnALO2rf6QM4/3GEAx8dJ/zlHk0bqxbftg=
+X-Gm-Gg: ASbGncvgVsnHWD8WcDlkJ29G2287jP4imcSSGr7zHDKcl4Tb4zMgF6XOftPMTYkHGRN
+	03z0dpVYCB9L4naiZoTk6nW1Jvq86PZBzUxzcrRekX3auMH+Pj+07exPtO7nYwHU23Wvsume2XN
+	TFms+WsO8ffrjeRNwQmWP9PA29qy7/VW7hfNpMtmkQa0svaSXHZEiSiAo52faZD3fHGKHqGSSf4
+	HpafR6HQfzLKA5eywFKlVHRoaaFAU0NxjCcHgTkc94zvZ986Q==
+X-Google-Smtp-Source: AGHT+IG4Ow1Gbh3FWqNqOE6uenf2y0FoOFtO05cvYIapVXtVs73BNv1lqIum/JK+wjUsjQg3Wwm2jZ24dvU7+muebso=
+X-Received: by 2002:a05:6e02:3788:b0:40f:7f8e:610c with SMTP id
+ e9e14a558f8ab-40f7f8e6265mr42479855ab.3.1757409555701; Tue, 09 Sep 2025
+ 02:19:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH RFC v2 0/7] Introduce Rust and announce that it will
- become mandatorty
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>,
- Collin Funk <collin.funk1@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>,
- Elijah Newren <newren@gmail.com>, Ezekiel Newren <ezekielnewren@gmail.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>,
- Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
- Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
- <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
- <8a5394eb-bad4-42e0-82a8-fa73123e205a@gmail.com> <aLrzqR2Z9jz5CuJu@pks.im>
-Content-Language: en-US
-In-Reply-To: <aLrzqR2Z9jz5CuJu@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
+ <CABPp-BG6A_mwxQheE5ED5HQj7STVtf1_9NhSmjmzRPB7QkdWyg@mail.gmail.com> <CAP8UFD3GU5Xwq7WMihmHtpWc-GjB-guTU6JHG7BdkhxukMihNQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD3GU5Xwq7WMihmHtpWc-GjB-guTU6JHG7BdkhxukMihNQ@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 9 Sep 2025 02:19:03 -0700
+X-Gm-Features: Ac12FXxtDEury8kuY7w-F2ZHpCCrAOFYEP7zLfEDcIm_VRk3lo8TsaledjU7f6Y
+Message-ID: <CABPp-BHWjyRv_f_HKkz10Q_cOZKPvpgf=SEUR1ThmbttkQT+Uw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] replay: add --update-refs option
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>, 
+	Justin Tobler <jltobler@gmail.com>, Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>, 
+	John Cai <johncai86@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Patrick
+On Tue, Sep 9, 2025 at 12:47=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Tue, Sep 9, 2025 at 9:14=E2=80=AFAM Elijah Newren <newren@gmail.com> w=
+rote:
+> >
+> > On Sun, Sep 7, 2025 at 9:36=E2=80=AFPM Siddharth Asthana
+> > <siddharthasthana31@gmail.com> wrote:
+>
+> > Seems fair...but why not make --update-refs the default and add an
+> > option for those that just want the update commands?
+>
+> If this patch series had been sent a few months after `git replay` was
+> introduced, I would have been fine with this series making `git
+> replay` update the refs by default while adding an option that only
+> outputs the commands. Unfortunately `git replay` seems to have been
+> introduced in v2.44.0 (Feb 22, 2024), so more than 18 months ago. So
+> even if it is marked as experimental, it's perhaps a bit late to make
+> such a relatively big change in it?
 
-On 05/09/2025 15:28, Patrick Steinhardt wrote:
-> On Fri, Sep 05, 2025 at 03:14:25PM +0100, Phillip Wood wrote:
->>
->> It looks like this version does include the necessary Makefile changes which
->> is great. I do think though, that for the test balloon to be valuable, we
->> need make building with rust the default with an error message that tells
->> people how to build without rust if that fails. Otherwise it is easy for
->> people building on platforms without rust support to miss that we're going
->> to be making it mandatory soon.
-> 
-> I have a plan layed out in the BreakingChanges document that mentions
-> how I'm proposing to do the transition:
-> 
->    1. We introduce it with auto-detection for Meson and default-disabled
->       for our Makefile in Git 2.52.
+I don't think so; we marked it as experimental much more prominently
+than other commands -- in the .c file, and three separate places in
+the documentation.  All other commands appear to have only been marked
+as experimental in one place and never the C file, so this one is four
+times more experimental than any other command.  Plus, the worry about
+it being set in stone and the need to make it malleable was *exactly*
+why the requests were made to be so much more clear that this command
+needed the flexibility to change
+(https://lore.kernel.org/git/CABPp-BFrVfGHOrBk7g=3D4TkGxDv=3DoSqF1FOkhp6WVb=
+xUV-2yveQ@mail.gmail.com/).
+Plus, it's currently only used server-side, so it'd probably only mean
+GitLab (you), GitHub (me), and a few other users would need to update,
+all of whom should be aware of the warnings.
 
-I'm not sure how much this helps us. You've said elsewhere that you 
-don't want to be inundated with bug reports which is fair enough, but 
-I'm fairly skeptical that we're going to get enough people enabling this 
-get a useful amount of early feedback. So I wonder if it would be better 
-just to bite the bullet and enable it by default from the start. I think 
-I saw Elijah making a similar argument elsewhere in this thread.
-> In the end it kind of hinges on when we think we want to release Git
-> 3.0. If we can agree on the above plan, we could also think about making
-> Git 2.55 become 3.0 instead. That'd be in a bit less than a year from
-> now, which I think is a good timeframe for that breaking release. I
-> personally don't see a reason to push it out into the future for way
-> longer than that, and it would be good anyway if we built some consensus
-> around its release date.
+We could add a config setting to allow defaulting to --no-update-refs
+or whatever we want to call it.
 
-It would definitely be good to firm up the date for a Git 3.0 release. 
-I've been thinking whether there are any config defaults we might want 
-to change like "commit.verbose" and "merge.conflictStyle" and enabling 
-"--reapply-cherry-pick --empty=false" by default for "git rebase". 
-Having a firm deadline would focus my mind!
+> > > The way it works:
+> > > - By default, it uses atomic transactions (all refs get updated or no=
+ne do)
+> > > - There's a --batch option if you want some updates to succeed even i=
+f
+> > >   others fail
+> > > - It works with bare repositories, which is important for server oper=
+ations
+> > >   like Gitaly
+> > > - When it succeeds, it doesn't print anything (just like git update-r=
+ef
+> > >   --stdin)
+> >
+> > Seems fair.
+> >
+> > > This should help with git replay's goal of being good for server-side
+> > > operations.
+> >
+> > I'm slightly confused by this statement; there's multiple ways to
+> > interpret it -- various antecedents of "This", questions about whether
+> > you are saying git replay has one goal or you are just helping with
+> > one of its goals, and leaves to the reader to guess which part is
+> > helpful (is it the ergonomics -- why does that matter server-side?  Is
+> > it the atomicity?  Then why did you also add --batch and --update?  Is
+> > it something else?)  Perhaps this sentence can be dropped or
+> > completely rewritten?
+>
+> The way I understood this sentence is that `git replay` is already
+> useful on the server side (because it performs all the operations in
+> memory and doesn't need a work tree), and the new feature added by the
+> patch series reinforces this because atomic operations are often
+> better on the server side.
 
-Thanks
-
-Phillip
-
-
-> Patrick
-
+You often word things well; I like that sentence.  The original makes
+me guess and wonder whether something like that is the intent; can we
+replace the original sentence with your description?
