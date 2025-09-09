@@ -1,53 +1,53 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB52A3019B0
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 06:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE86305055
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 06:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757398991; cv=none; b=t07t7IyYUN0nMVNVz4HXUTV+3jo2ozzr/9lOlPv0Al53AHkNVtXmvOLN3a68T4I7CUSI7EQqSmMzfyjEKthGyKKOjFPYN5+kQNdmyFYGMPpYFKVucpDvLxWgtyJBZFz9O4/ttZ9mjnDok8ada5WZtEe3UzjoU1ZYs3oXTsigRYc=
+	t=1757399003; cv=none; b=lGRr/u5FOTXZ/nQpjdt2oAemcSUHiLMuMPIil/OWcNR7jgKnhJFiGoVzVqPTa07p2MKR8Vt6CJ3nPke8xHRX2zW13X8upZhQ8hG3cCxYTgPH68oeq8W+IDaw+/GU8jOLw64jOdBcKRamBFU1MB3PisqB7U/Sh4mLj4ZsetcaeBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757398991; c=relaxed/simple;
-	bh=OCG5NIFhA0BK+p82UBJLjIjHKBOxcKpNhMGsSXOGVlo=;
+	s=arc-20240116; t=1757399003; c=relaxed/simple;
+	bh=FO/2fvneQXqpgcfT1hOfN6DkQFhZ18r2QdleqkE39ak=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jTkhu0XyUCLWoY0FBjQBlbVUa5MjdHRpBt6CD+TqFNNIXYbqBiKUwwgvudm0hWWtaeLgH4jWRItufqHC2oFxWG/wSrfDXw6sFGa7bSwKHsQ5zWpGvQPICf8JA3Fap1fQp95b6ATXAYy9c38f8uvWC/Ju81mSgZ5tZt2hRAgXCGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lKilM2zI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YRQgliAf; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=nbHdloJIQasI3iHclMN2dKZbUkCIZyrti33oQUc1lRlHKkfR3ZkkL2cL57mGaj5BanFICxS+pI8Oi30tIWRbhUrBWV92pYpgzHAzxjiZ1WHkLbbwTAfkv/CuW4LyRmnqg2Y5HH7QBcFP9mMd3eeW7ay2ueEk/wKWiPo2mr/nMRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RdsdiL72; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D5IVho7q; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lKilM2zI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YRQgliAf"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id D5C97EC0143;
-	Tue,  9 Sep 2025 02:23:08 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RdsdiL72";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D5IVho7q"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id BB4CBEC0143;
+	Tue,  9 Sep 2025 02:23:14 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Tue, 09 Sep 2025 02:23:08 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 09 Sep 2025 02:23:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757398988; x=1757485388; bh=zZi3Ej7Sj0
-	SUKWy1VaPDOL21Sdj/HUPtZcIcty/XTEc=; b=lKilM2zIjWMo6VaIcwlgO8jDcO
-	CE6sHROBygfByMKAz4sei3aVRAnykoSO//HOd1GlYX977qInnSsqFdJ/wk+ao2jJ
-	w6eGTjQnn7GOLrVM9cIDnr1axEp/V1uu7T24QYTR05SQaYh4v6bSveWrqN9mDzFu
-	pa7uxIvschgGURaiRTUifkP+pbvwROQM1uoD+JASeWcuLNXbGRDMB4UNnG1n6hID
-	vHtvcKFCw6tv73YbcU/CEdm/LkUIYPMKjJo/+9DcC0hklsPczPDABIyrXhXaPGhr
-	jFp4MTwPy8QVMwum0hN0W19pGFJ9gKnlP3hcUZmf8b4odnAN+Iq5F9L7mogQ==
+	:subject:to:to; s=fm1; t=1757398994; x=1757485394; bh=FO/2fvneQX
+	qpgcfT1hOfN6DkQFhZ18r2QdleqkE39ak=; b=RdsdiL72tdFpde3HtAzwqvy38C
+	UssV3Coyg/fvvkqE1YJibC5HtwqdpP0yLoGUjmsw1h6vg7SWUmI2d6XQBWJ9Hp3q
+	gRIJEsmc2AYAm1e8pQEnauMoPCje831ITjGmpU/3CoT/Z/kPIj0Jxm746ThCLtzQ
+	T+e95vIllsIs+jnFejG7+FPHaQM+Er7MXhVQY2zZCwfFolw2OfKU/O9QlFLOCxDV
+	ok5oMYEv+YPPUq+69cV/m6jUSccj5rk5pmLefD+XodaTmA0Jw41kYVZrpf4nn4W+
+	4WmnCTfzHXu7tl2VUtPJPSxGYhlNMrrBhhmHSHIa6PmfnlVqqyHxNdS8BBbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757398988; x=1757485388; bh=zZi3Ej7Sj0SUKWy1VaPDOL21Sdj/HUPtZcI
-	cty/XTEc=; b=YRQgliAf/rd2SGcj8j5VGXV6o0trKGNz8EAV9BbS4nIzqRrmbtU
-	ZYTlrk29QmDXbkdBGvco2dVqUNKLHp+pz6gSN2YSsReXP6/m44D3LfJPIfutgI1P
-	aAl0dVN2IRiXssXVsnlH2eM3wsZXRWKY22rAEqT9WelOHSLvKejXwnC9Qn3gJwB+
-	nrgXCqe3HsKUDAkYzL2kdDtoXqBjGXA3yZOl/MWxiYLMUyN9atv9dMFa4Gnq7FzX
-	a8+ttjdJzNmHT+6mouRvRbeKyuZZbQkYT2vbD3F4Ahvaa321mEio/XJFDvnEsbX6
-	FFPbtcfThF4QiTGD8GY33F9Ca6aIRYmfE0Q==
-X-ME-Sender: <xms:zMe_aPOctJoQiQnKVT5uscysNJAA3wxxVOv7QSDs9YOGP1lcpdSuUw>
-    <xme:zMe_aKIbNsKHZ-NqWFUI2DD0uyjAnOoNidxufv0l4YZNvO4DY7ZifNii9XXAqJP0Y
-    RjB2A5wzPdtyduABA>
-X-ME-Received: <xmr:zMe_aAGZD2sA_Z4b827mbWUkWYQwjw2bDu9yz_59LA0PYTpbpD8YB_dNtZRa2PshQzUMNKU1eCai_8UPPocJrNTjFUb9DwO8yMqMzkccts0>
+	1757398994; x=1757485394; bh=FO/2fvneQXqpgcfT1hOfN6DkQFhZ18r2Qdl
+	eqkE39ak=; b=D5IVho7qoVpbqlISA1Ns29ZbR5PBNAfTHMaGutcbRLqjfBmh0E1
+	cGFiUyd+5dgBxHIXKX8d8gvoP+nNEfqoTxD19IkTel4pNL0Id4FEQ1QH/EtDch+a
+	vbgu0hN0Dj8/u52ZbwX476LClVQqFpbWTw8ftAXaawKDldMOwm09/sNS2FVIIXVM
+	6wH7Ua/rDEj1J1tYlOUeOrrY4O5a+OHwy/85UjtVSf/E3jPqXRFgGag6h165Fi/K
+	HfMfeuUpKHG01klQBhdQW4nVIKgcwxKSk4AKZeyEUArjksvi1crnutLLx5tBxEuN
+	PJn59Kp3BoqcPLWKevAEO94pBTcTfAPQgnA==
+X-ME-Sender: <xms:0se_aBAl4u6HTO0OG7H5DCMc1JWWFD4zmFiOyusUclK3CIgppI4sXw>
+    <xme:0se_aPsdnyJ8HriHaLoSi-NiRIM-alx0g1tbcJNdKkgAVSEfHbyswEfJepMFRg3ki
+    nfN1tKzFO80mpHioA>
+X-ME-Received: <xmr:0se_aOaO7SdL6lJvGkqc5gNftcX5SSHVrXBBE9XDzOCWFlNwFd3aDjmGzV0zAxcJJL7bR8BhnlMRoQ8SIcPcNax464p3zYnlhIHCNAyoRF8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeikecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
@@ -57,26 +57,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeikecutefuodetgg
     pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
     gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
     ghdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:zMe_aCSJzW1vFsgi1-e6Ui1MCHfVAWTic31I2F95t99_D8nIbiVB3A>
-    <xmx:zMe_aMGngaw_lT3GL4lPvg3RZGYbRpKdNRGRv33vrz-_OMTCtvxytw>
-    <xmx:zMe_aO-FbM9IcmVh-JgbtjuCcpQ7ELQP23a0uSqFB-PJMveq2fjwWw>
-    <xmx:zMe_aGK4rz1ucCFialXEOL-vX2ETqnGk0xLSUVdVEfMsEOVUtdKWCQ>
-    <xmx:zMe_aPeAKsjpIEDNRPdO5_bGCxWTmfKj5dBKS6nMhquxBSv269pv5g0h>
+X-ME-Proxy: <xmx:0se_aKX5Vogqn1Q-YcnLJp2AAERyn4WsKwhewSfawY3XpHB4Q4GHaA>
+    <xmx:0se_aK50BgnLGnOJNHwfsPfWhr4azt-XZOH-udg6uOWFbIcEePeVCg>
+    <xmx:0se_aNi0kPTNwaco9N7zDq5IL0G1kKAMC83qAJJ_kG1pRmUuuiN4bQ>
+    <xmx:0se_aJcHCd2SpvL1N7JPBcqnVr0g9lA1OmkfBeyRxyQBWIbb057-Sg>
+    <xmx:0se_aOSCYhWMkijZRvP-Hj4Sf1UpY4UuDaoQXw-9-U58ctHaaD-ZsVKx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 02:23:08 -0400 (EDT)
+ 9 Sep 2025 02:23:13 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 351a2abc (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 9 Sep 2025 06:23:07 +0000 (UTC)
-Date: Tue, 9 Sep 2025 08:23:05 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 783a16f9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 9 Sep 2025 06:23:13 +0000 (UTC)
+Date: Tue, 9 Sep 2025 08:23:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/4] string-list: change "string_list_find_insert_index"
- return type to "size_t"
-Message-ID: <aL_HySU6d1a9qIBf@pks.im>
+Subject: Re: [PATCH 4/4] refs: enable sign compare warnings check
+Message-ID: <aL_HznRC3HjRuaDC@pks.im>
 References: <aL21cEM0OcnrKtBW@ArchLinux>
- <aL21_e9B8aCpPRyX@ArchLinux>
+ <aL22Bd_6YM-l92hm@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,26 +84,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aL21_e9B8aCpPRyX@ArchLinux>
+In-Reply-To: <aL22Bd_6YM-l92hm@ArchLinux>
 
-On Mon, Sep 08, 2025 at 12:42:37AM +0800, shejialuo wrote:
-> As "string_list_find_insert_index" is a simple wrapper of
-> "get_entry_index", we could simply change its return type to "size_t".
+On Mon, Sep 08, 2025 at 12:42:45AM +0800, shejialuo wrote:
+> After fixing the tricky compare warning introduced by calling
+> "string_list_find_insert_index", there are only two loop iterator type
+> mismatches. Fix them to enable compare warnings check.
 
-The missing connecting piece is that `get_entry_index()` itself already
-returns a `size_t`.
-
-> diff --git a/mailmap.c b/mailmap.c
-> index 253517cdf6..0168342650 100644
-> --- a/mailmap.c
-> +++ b/mailmap.c
-> @@ -266,7 +265,7 @@ static struct string_list_item *lookup_prefix(struct string_list *map,
->  	 * overlong key would be inserted, which must come after the
->  	 * real location of the key if one exists.
->  	 */
-> -	while (0 <= --i && i < map->nr) {
-> +	while (i-- > 0 && i < map->nr) {
-
-This could simply be `while (i-- && i < map->nr)`.
+The changes here look obviously good to me. Thanks!
 
 Patrick
