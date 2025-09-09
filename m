@@ -1,166 +1,126 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C86B239E8B
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 07:45:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7591D14A4DB
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 07:47:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757403916; cv=none; b=rhpR6ZcSYXn6/M2oPOwD+hTXgyZu5hY3HmQ+hfljGrFRtN6tfbAABOjl50el5s/9lw0i1MTcw8TXqwEpYl8xl5cUBJCMofeRkLPvQz0NLTmB4c9Xr46TFo027aswvNzsiU/PTpkIjbGzl5HIPvAK5qLpo5mm67p+B2c9C5ZaQD8=
+	t=1757404060; cv=none; b=iQtT9k2oI6MdoAP1VM2rsFrqx5NeUKenmWr66HIIumkkZEFJEi2+tlbAyJ/e/tVl+MHmupZLtGhxzqfyFmagbe5DXwGxRtX/GrN4YL0/8PsLDYp+tQzZHhd/ZG0ECHYjEGDZacLbDnK4vqMfPn2wTmr+YakQmneb2EY+smeSEDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757403916; c=relaxed/simple;
-	bh=yekIShyQrhfLlkyZ8vibY2hgb2P/jz4JfWlxqjr5A0c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BJyresYC62tGjSxjMSvmVRnTY5OZRRYclc3DwX1FOoe/SqbvhgsmipyR14aDJRuR4HpIN7+Sp21RZdmfmokTdaL3rY44VhNyZU3Sx+1KiBdzo/QfsCJXhXTf74zWdG4w3xCGyTdlVRdB8zbaebQP84YUYGG0k4bOyQsxJk4j0EY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QrGPUHfL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mAhuI8UN; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1757404060; c=relaxed/simple;
+	bh=Nz6+5bNEyEW3C9wCW9vt+qpHzmrtcDvXRvm2cR/sdJU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c0kcmRccGuyXq8DgZLNRIBswnLoH2eG8H2jo4VrJ6af8NHjwQnOKNjSMwBWKeF7wtibSEeI9kcFF1kYqEokxGcZsmnt0tQduLdCQhqNiC9yegL74oGtnUArpnHHvCEZnd40kbpavSEN6fAUSehUwFCJ8oKvLg8BbnA0khouQjLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qej8wYkh; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QrGPUHfL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mAhuI8UN"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 40286EC0188;
-	Tue,  9 Sep 2025 03:45:13 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 09 Sep 2025 03:45:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757403913; x=1757490313; bh=UvRDgTtKyS
-	RHSZiN7miChJqgnrro4JSfxNOdQyuBBao=; b=QrGPUHfLSUv3Ss1V5rzmeRPTnT
-	9FUJcU2/fqCkbJ54yNGVJ2SFc9Qdrnw7lQlNVUuinv/STxdErfX6KwYmKR8Cl1TI
-	vRNeGS+qW7AJDb0a/rAAjkFRRTWNDefNuCV677INGUO/yLtx2Lf7VQegtuxVCc+4
-	wcGsh3YtHlIZ+h7y47exuGo2emExx7GZ7THi0344CxHOZDjlL9oAyOHKVrG64g8c
-	j1gO0JNZWuF+3heXmXZ57tCqTso6B+3pupYYBl35ULVoQ8MLa6cEwoZCnS0sc5sa
-	TYGYrwzOn0FDh8hclXA8IoPYNW6UAZW/qKE/xltPLW9nAqe+C1nut6oGFXbA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757403913; x=1757490313; bh=UvRDgTtKySRHSZiN7miChJqgnrro4JSfxNO
-	dQyuBBao=; b=mAhuI8UNzn6Qiz+KYuRfCZTVtAY+1uxE3YW0i60O+H7bWFzKZBl
-	XkxJ1qnydixw1rYN+mVEtt0lAboQnqZ89om/dv2Zojs7E8cbQM3TpcSIl7qXCSOy
-	552ysC84PYuHl4n13o//pOOcMx+CmPTPVjhb0dSWzrmMOUJ9aDV5mIXJgJSMFiWF
-	OMY7GfbtcZDAXwhZKpl+8haOy1sjraSRp3soL3ea3xlOwp3013NuMXfla6MSmzDm
-	hfyugsjH3gk8vXlqbOilXnqe/pc16iXRuS6Zu90fCQR88heMAucHitVkMpYU+Yq0
-	kvuoILt/1CZetgA77mE0RleLyUNkJLQMG8g==
-X-ME-Sender: <xms:Cdu_aAcCWLemmMxYGjF2sG1BG4sguW4_XvLQmyo0pTwbENvIuJ97Kg>
-    <xme:Cdu_aFcvPUdwAKSi2hMUSGRvhnJ_7W3rMgNv8jPargEijcXBp4oW-GIfA2dIz-Cek
-    FCQ7BQXBfnhNijzZw>
-X-ME-Received: <xmr:Cdu_aK_Vk0y69KVcXD07GfyH2s4VjKCDLTkMoijQLj4CdSwOeIeL0xDIylqhhNMru03BHbjM6Ns3v1qonXffEW47eBg4jUmWMJWDRJP3MB4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleekhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehmihgthhgrvghlrdhoshhiphhovhesihhnnhhomhhothhitghsrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvght
-X-ME-Proxy: <xmx:Cdu_aBmxopZj1cJCKKgOk8pJ-YlYUZLVnY1c4xz64pwlGR0ono8F_g>
-    <xmx:Cdu_aM9e_0ljShcXPIeJDdqWLB49sb8wO7U5Z0qhan9U_IIBaVm5Nw>
-    <xmx:Cdu_aPlhkEeX0yqZeXOLDsSamdfKH72kxAyOtca-S7gSxdnaKnE8WQ>
-    <xmx:Cdu_aJ0tOtOvucpMYM_DoNtuIEDwPW2NY18V9jWZF94x55S729Zj8A>
-    <xmx:Cdu_aBQZg-XAYREgKd7XnQbhXxKxgGELnv-7HAcpH1xpjfovUbthtcOk>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 03:45:12 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a227bcad (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 9 Sep 2025 07:45:10 +0000 (UTC)
-Date: Tue, 9 Sep 2025 09:45:07 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: "Osipov, Michael (IN IT IN)" <michael.osipov@innomotics.com>,
-	git@vger.kernel.org
-Subject: Re: [Bug] Compat objects not added to CLAR_TEST_PROG
-Message-ID: <aL_bAxZubXMOGWsu@pks.im>
-References: <d8d4266e-838c-488e-9aaf-4a1be0169795@innomotics.com>
- <20250905213708.GB612697@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qej8wYkh"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-62598fcf41aso4054253a12.3
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 00:47:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757404057; x=1758008857; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8/3FiZRFAQX/BYbUUQsqEym/wH44JPonL6FYNBlf6sI=;
+        b=Qej8wYkhLDqf2NFcfPQx+W/gllknhjuotSoPrM8w/RRSREJyebvDp+sbbTAW79RrmO
+         rvR7F8VzOhXQGsNNhGjbTbW6s4JXMUo5pvnmIENO1X3Pj9rhtewWUO6TmlGEok+4sIAg
+         ueuLtNa4d7saRJ/+HLVjcH1RBl1jpzX9Qh9Va5bLAg8h9TfjJNxCGTMYaZj1tEJqKrtz
+         FGtAR/dCCscFwbDw3xSv9dk14P9m9wFWilwR68TUrCtdA9jwK3k8y7Ax/rBPwPTLf2SV
+         +80/D2k973WhEtao8odr52NzjrJxzc8la376lLVd3bpNH45QLADvBVMdlIkKipcCKF24
+         hVaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757404057; x=1758008857;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8/3FiZRFAQX/BYbUUQsqEym/wH44JPonL6FYNBlf6sI=;
+        b=AYFrbIyGhc7Y27++4RG1xzrLm+WZK+a43tSW81S7e+M9BKIJ3FICtbK83VQZhrQZU5
+         J40noDO90hVVYaNcHXErAqxXGE4OCfGnvxnpAxEkfMLKwgcj3b7gbAQOxDVmSHXn730U
+         zgDszvam3BiKkSl5uHcwz4T+GeA/qfbgTjoMPORN5hwPK2k6Isx9gzTkLp9aMxXiPuod
+         P0e1eMHTYBqeRcfiZ4ynE8bUY9foXGTzxL2QpQWIsGsuABs8Xx9/+vaZ/qkueNTFVuRx
+         bejTf85i/I0EP8lQLeiE3z8gEPDLw6DIwyycaVEyQuO3fE+LOMomgCuT5E3/qLSamyKx
+         pjPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVjluVjzcLRSxR+/VoJB24JFJ5xbjw8dhCppOkQeCffxw00dq+eB7FvKvp2ohZ+4iORyo4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbO75/X+riDwuIxWltrrLZkRcKBfD3IMO4mgsHIvkHy/V/gT5J
+	dcTaSiUF/3NuQf7esNdZXsdmLWy+lynlwMUnkw3z2zGeEn/tZxVa2EiTK2/Lmn4U1ZXT2Tijjpu
+	aCTXCsJys+PUNm3LJ0TQDNq81DiGNfLE=
+X-Gm-Gg: ASbGncsLdcha/DrUTgO+b+nIpaNJzyFetgZyaQsjKceI1P47Q432oFo2tMkV4tyjY4U
+	CUpIevxShfv/D3UXW6MbgQ4U3PuKQptKGcDQow9EWTxycRpw6a+t/V9rxIKbttVzx0Z063V90E+
+	Rk4TkvYnkoQABmwR0rK67e2ndFGZ7sU3AnM/K84UFUO8mwt9v9un3WdAL+vzKJKexHIvtMcZSzn
+	QUTBrBQDpvhMZS42wex4ok/mBgsEZg=
+X-Google-Smtp-Source: AGHT+IG99kK2cZ46c9jn0QA08cVxr6wPRTJ+ntVwmmGExcYpQiqLNftQGbTsvlwLwyHANIHFmrQGVbJVk2feQTERYXM=
+X-Received: by 2002:a05:6402:24d8:b0:621:7d0a:151d with SMTP id
+ 4fb4d7f45d1cf-62377f89744mr8233305a12.30.1757404056540; Tue, 09 Sep 2025
+ 00:47:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250905213708.GB612697@coredump.intra.peff.net>
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com> <CABPp-BG6A_mwxQheE5ED5HQj7STVtf1_9NhSmjmzRPB7QkdWyg@mail.gmail.com>
+In-Reply-To: <CABPp-BG6A_mwxQheE5ED5HQj7STVtf1_9NhSmjmzRPB7QkdWyg@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 9 Sep 2025 09:47:24 +0200
+X-Gm-Features: AS18NWCnGwW8pOPPFkr9prX0lWjTBYRKdbxX1y2j2vw3m1GYCpK7emxym--LzEI
+Message-ID: <CAP8UFD3GU5Xwq7WMihmHtpWc-GjB-guTU6JHG7BdkhxukMihNQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] replay: add --update-refs option
+To: Elijah Newren <newren@gmail.com>
+Cc: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>, 
+	Justin Tobler <jltobler@gmail.com>, Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>, 
+	John Cai <johncai86@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 05, 2025 at 05:37:08PM -0400, Jeff King wrote:
-> On Fri, Sep 05, 2025 at 03:19:50PM +0200, Osipov, Michael (IN IT IN) wrote:
-> > diff -u -ur t/unit-tests/clar/clar/sandbox.h git-2.51.0.patched/t/unit-tests/clar/clar/sandbox.h
-> > --- t/unit-tests/clar/clar/sandbox.h	2025-08-18 02:35:38 +0200
-> > +++ t/unit-tests/clar/clar/sandbox.h	2025-09-05 14:10:52 +0200
-> > @@ -2,6 +2,8 @@
-> >  #include <sys/syslimits.h>
-> >  #endif
-> >  
-> > +#include "../../../../compat/posix.h"
-> > +
-> >  static char _clar_path[4096 + 1];
-> >  
-> >  static int
-> 
-> ...seems like an obvious improvement. If we are compiling any C code,
-> we'd want our compatibility macros, etc. Although it does get a little
-> funny, as the contents of clar/ are imported from elsewhere, and now
-> we're modifying that.
-> 
-> It looks like clar tries to handle portability on its own, so I guess
-> another route is for it to add its own mkdtemp wrapper, and we'd import
-> that fixed version. But it really feels like we're duplicating effort.
+On Tue, Sep 9, 2025 at 9:14=E2=80=AFAM Elijah Newren <newren@gmail.com> wro=
+te:
+>
+> On Sun, Sep 7, 2025 at 9:36=E2=80=AFPM Siddharth Asthana
+> <siddharthasthana31@gmail.com> wrote:
 
-We're duplicating effort indeed, but that effort benefits other
-projects that use clar.
+> Seems fair...but why not make --update-refs the default and add an
+> option for those that just want the update commands?
 
-In any case, we already have logic to detect whether or not the platform
-should have `mkdtemp()`:
+If this patch series had been sent a few months after `git replay` was
+introduced, I would have been fine with this series making `git
+replay` update the refs by default while adding an option that only
+outputs the commands. Unfortunately `git replay` seems to have been
+introduced in v2.44.0 (Feb 22, 2024), so more than 18 months ago. So
+even if it is marked as experimental, it's perhaps a bit late to make
+such a relatively big change in it?
 
-    #if defined(__MINGW32__)
-        if (_mktemp(_clar_tempdir) == NULL)
-            return -1;
+> > The way it works:
+> > - By default, it uses atomic transactions (all refs get updated or none=
+ do)
+> > - There's a --batch option if you want some updates to succeed even if
+> >   others fail
+> > - It works with bare repositories, which is important for server operat=
+ions
+> >   like Gitaly
+> > - When it succeeds, it doesn't print anything (just like git update-ref
+> >   --stdin)
+>
+> Seems fair.
+>
+> > This should help with git replay's goal of being good for server-side
+> > operations.
+>
+> I'm slightly confused by this statement; there's multiple ways to
+> interpret it -- various antecedents of "This", questions about whether
+> you are saying git replay has one goal or you are just helping with
+> one of its goals, and leaves to the reader to guess which part is
+> helpful (is it the ergonomics -- why does that matter server-side?  Is
+> it the atomicity?  Then why did you also add --batch and --update?  Is
+> it something else?)  Perhaps this sentence can be dropped or
+> completely rewritten?
 
-        if (mkdir(_clar_tempdir, 0700) != 0)
-            return -1;
-    #elif defined(_WIN32)
-        if (_mktemp_s(_clar_tempdir, sizeof(_clar_tempdir)) != 0)
-            return -1;
+The way I understood this sentence is that `git replay` is already
+useful on the server side (because it performs all the operations in
+memory and doesn't need a work tree), and the new feature added by the
+patch series reinforces this because atomic operations are often
+better on the server side.
 
-        if (mkdir(_clar_tempdir, 0700) != 0)
-            return -1;
-    #elif defined(__sun) || defined(__TANDEM)
-        if (mktemp(_clar_tempdir) == NULL)
-            return -1;
-
-        if (mkdir(_clar_tempdir, 0700) != 0)
-            return -1;
-    #else
-        if (mkdtemp(_clar_tempdir) == NULL)
-            return -1;
-    #endif
-
-So that raises the question whether HP-UX has mktemp(3p) -- if so, we
-can probably fix the issue like this:
-
-diff --git a/clar/sandbox.h b/clar/sandbox.h
-index ff43159..5af36f3 100644
---- a/clar/sandbox.h
-+++ b/clar/sandbox.h
-@@ -164,7 +164,7 @@ static int build_tempdir_path(void)
- 
- 	if (mkdir(_clar_tempdir, 0700) != 0)
- 		return -1;
--#elif defined(__sun) || defined(__TANDEM)
-+#elif defined(__sun) || defined(__TANDEM) || defined(__HPUX)
- 	if (mktemp(_clar_tempdir) == NULL)
- 		return -1;
- 
-The `__HPUX` define is pulled out of thin air, I have no idea what
-preprocessor macro that system sets. But something in that spirit may
-fix that issue. If so, I'm happy to fix this upstream and then pull
-the latest version into Git.
-
-Patrick
+Thanks.
