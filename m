@@ -1,129 +1,142 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B22F2D061A
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 16:44:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757436252; cv=none; b=S0jT59We9+ChhWS+zYCmJrNYoCHChTUGFfR6ysUKvW8yknOyGjT8nZEXsI5OdBOV22U5QhAHgCjCR+bgyRB5mfEkjuJGqIeZLhhGz8SrP8QTW4yXSPe0O42Fplgh/Gdzj640Wz/LvrVZDiTxgnaYJZmQIt59M1KF4gKTvBWY9oA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757436252; c=relaxed/simple;
-	bh=OJqhITLL0JbaedTSxCYRdC3YEe5k3J6WVajhReMm0N4=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B6F2E2851
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 17:46:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757440013; cv=pass; b=Vk+3VWvUf5mgVEr56nmWM1lw2rJJ3xGJSTur+ByUP4DPIQpSV2ro7gz5nVVbIU9Gdxb+/5y/E8FxVCmUeLhR0lmxYU/JYvSqBZdn4GHbr6fcfRSMkdJxUzsmQTgDlSFSLYF3j+vc+XeZTHHqcTxv/wIZ5xC4VNO9V+JrEbDNuIs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757440013; c=relaxed/simple;
+	bh=M3qbaAEoJld0QSN41Dq2NH+se9QOqMBN1dY0rtwffNw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L7EGmXi/P2JYRodbPgLSsVFeqCoTcSf3NgjH4i45899ESUn88lvIFJg8zJNXRrxySBP5D3WWL1HHeJ7H8tuy/g0frSgJZXj2uq4lkMChym9J4023opMFmQVk8jNzac6mIjPj+WDspC53pUOrMXIk82MwAFszVriJpS1eO9JpPJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Z7tz/LiN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F5ckZ7DP; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=ZnK7drroCDO52siwnBcTsD0oopJ6II5kAcwDF4HPUeNbjZ6DNG85BkQnSWwj3ad7FjOgmNVrw3Yb8O/nFsmAcX7QSbavkJtisAEE3A6sOiWIUtCJIeAaoZ4H1izmuPCTC4BK8YDUIGjl6r3s1KVZpNTXHn0rmPMFmw69qw2aG8M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=fehluDbT; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z7tz/LiN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F5ckZ7DP"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F26F57A014B;
-	Tue,  9 Sep 2025 12:44:08 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 09 Sep 2025 12:44:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757436248; x=1757522648; bh=+FytNV08tQ
-	pzEBe0jZ1374ovSwFUEOVlORghD3LOIbY=; b=Z7tz/LiN5rPf+mjazfmke3//Cs
-	n6pVsQrrWbN/Nx1EjHpO2z+fm0gMxFyBw8EQnwe4nRGUk2IHKPJXejcwf26RPqVa
-	nYF2cH3pxh/SMcNcoD5YF168CfySl8ZgbDzTk/ERyHhJzain+HA1VsNqvDOyy8YJ
-	La9VNFdEJZwNwM1nT6JYzfZAYaK2lLPLmUSzjqnuJlkuKWnL197U5HLNyPowxu1f
-	3QGbsyJPKHXmjIcAn+IOgBJPpa/4vlGF+KMEHM6l/HTrDp5w2SykdZMrXQdTdCJM
-	0MDerxtY5FgGYua/IcmoW9LZ9fakhM53UbBQFxBQgO56NFGQpXOm10njoK1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757436248; x=1757522648; bh=+FytNV08tQpzEBe0jZ1374ovSwFUEOVlORg
-	hD3LOIbY=; b=F5ckZ7DPIzpIJebpJEBBoGxA5n7lFQmmOVYU+oDZ57ME7BvmPrH
-	b570CswurWcp5NjwltqtS0dxQWo225kNnbOJ9yY4Gj430NjPJ4tuXotJJvm0dJ0q
-	vHz3s1ajD9VeogIsfZ82GArK4ngdu523wuCxXSc5tyovA56Kii+wBt7Y5TXDaW1w
-	7zoEwCJrcUusaJ9aepXjXPzUPcABedvZ9yX/uE+GvvVH0NlKYDcBTVEpm7L9pdM3
-	G4ed0FIuM25ZCg6dlwKxDqMSA/p4OjNc3OVdwdtuO/22ThDvqDCbXCMpwzQ68Q2o
-	pEabdjbeSaFp9EvcDrl4E+rsraT1e86Uplw==
-X-ME-Sender: <xms:WFnAaL1gkoahPfdI20snTLZXUoZpFUhq5rDbzyu3ZG53Jw7g56FuTg>
-    <xme:WFnAaJzA82zeiEnEmzL5_nkxHd1oK5AGODr6hD3angc6leij2SjLPGnRduTg66eBv
-    2CjMB75pCyOA1IUtQ>
-X-ME-Received: <xmr:WFnAaHiwHZ1JbxYNi4t2P63cyLc17yL0HL72kRexGkn2IS0rgenYDBZzHj7MRcm8WzFs0T8Yej5meGA0Yf_C6uF6jzruYvZESarKK6Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdelvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduuddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpth
-    htoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhh
-    ihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehtohho
-    nhesihhothgtlhdrtghomhdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrd
-    gtohhm
-X-ME-Proxy: <xmx:WFnAaMo2HkgSMPqcdq2NDv9x_bb3JSf_vSXS082htQpJkE9ZsElKQA>
-    <xmx:WFnAaOiiM39e7kyNILRCu2kA5sW6EGdyx8lZ8imsFPPaObn-MBuISQ>
-    <xmx:WFnAaOPnA7sqHO8GCpvDv7pIIkECcJm9ufdli7JmyauC1llY7XJAvA>
-    <xmx:WFnAaIwYdX_K_Nkr2x0I6HIyj2KiOjKU_V1pzWtMjVP1b_OTTe4dsg>
-    <xmx:WFnAaKm39GzQBIAJujAEmnBf0AIZxHzMUAupLQT2tE_CslljxqOOMkDY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 12:44:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Christian Couder <christian.couder@gmail.com>,  Siddharth Asthana
- <siddharthasthana31@gmail.com>,  git@vger.kernel.org,  Karthik Nayak
- <karthik.188@gmail.com>,  Justin Tobler <jltobler@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,  Toon Claes <toon@iotcl.com>,  John Cai
- <johncai86@gmail.com>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/2] replay: add --update-refs option
-In-Reply-To: <CABPp-BHWjyRv_f_HKkz10Q_cOZKPvpgf=SEUR1ThmbttkQT+Uw@mail.gmail.com>
-	(Elijah Newren's message of "Tue, 9 Sep 2025 02:19:03 -0700")
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
-	<CABPp-BG6A_mwxQheE5ED5HQj7STVtf1_9NhSmjmzRPB7QkdWyg@mail.gmail.com>
-	<CAP8UFD3GU5Xwq7WMihmHtpWc-GjB-guTU6JHG7BdkhxukMihNQ@mail.gmail.com>
-	<CABPp-BHWjyRv_f_HKkz10Q_cOZKPvpgf=SEUR1ThmbttkQT+Uw@mail.gmail.com>
-Date: Tue, 09 Sep 2025 09:44:06 -0700
-Message-ID: <xmqq5xdrvand.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="fehluDbT"
+ARC-Seal: i=1; a=rsa-sha256; t=1757439993; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=hs2w7lc2xETm+fl4gjqotqNxSJe/7IV/cpj0Z1g+ZKN+3yYFgtjF6o8pT8xVweuTBt8TGuYEbH5+S1kDxxdKHXgmQ5J+4us7Pnr+JusWVicHB+O6LIm3q266zTknO4Drnng0CKJrUWhS+zGBJFG8fa3WzTC409AFSINn0aFvcxY=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1757439993; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=8aIxA88DvuhiRwQsjbjJMaM8PHeZhhOVctTHqP5QzJM=; 
+	b=i6kulNo47JIBu7YgD73U4dt5xela/TfWQdPMZ4HL6g17wn2qgXXIAP4tdKL/bebrQY2PEdfpM/e1QZdRSQsNZOfc163GHSmCn3fLvCS5kPSTEWHV96r+zpY2j8fhul68xMzXyoJc2L4kY2YmDUFmqSEowPyomALQzFxb+V5acBY=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1757439992;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=8aIxA88DvuhiRwQsjbjJMaM8PHeZhhOVctTHqP5QzJM=;
+	b=fehluDbTWWvxVIQawsgAbE0uRDAbb9YGHc73DkiVTl7RBMpYmQci3IHc5qJPTzJw
+	/9wca/j9A4i/CqwYTo4rz8nMOfEs+SAuIQIhf8JKOTfJpuWtIAYYwPuTbGDm//DYQqN
+	nT1TAvrZUlewHefEtYm19GmoeFTFNv4ePyYu2qvE=
+Received: by mx.zohomail.com with SMTPS id 175743999012792.16361260266422;
+	Tue, 9 Sep 2025 10:46:30 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
+ C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
+ Nieder <jrnieder@gmail.com>, Josh Steadmon <steadmon@google.com>, Ben
+ Knoble <ben.knoble@gmail.com>, Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v2 03/10] submodule: add gitdir path config override
+In-Reply-To: <aL_Z8DusXdyIr4Ru@pks.im>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20250908140117.262205-1-adrian.ratiu@collabora.com>
+ <20250908140117.262205-4-adrian.ratiu@collabora.com>
+ <aL_Z8DusXdyIr4Ru@pks.im>
+Date: Tue, 09 Sep 2025 20:46:25 +0300
+Message-ID: <87bjnj7c3y.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-Elijah Newren <newren@gmail.com> writes:
+On Tue, 09 Sep 2025, Patrick Steinhardt <ps@pks.im> wrote:
+> On Mon, Sep 08, 2025 at 05:01:10PM +0300, Adrian Ratiu wrote: 
+>> This adds an ability to override gitdir paths via config files 
+>> (not .gitmodules), such that any encoding scheme can be changed 
+>> and JGit & co don't need to exactly match the default encoding. 
+>> A new test and a helper are added. The helper will be used by 
+>> further tests exercising gitdir paths & encodings. 
+> 
+> Aha, so you already do what I'm lamenting about in the preceding 
+> commit. 
 
->> > Seems fair...but why not make --update-refs the default and add an
->> > option for those that just want the update commands?
->>
->> If this patch series had been sent a few months after `git replay` was
->> introduced, I would have been fine with this series making `git
->> replay` update the refs by default while adding an option that only
->> outputs the commands. Unfortunately `git replay` seems to have been
->> introduced in v2.44.0 (Feb 22, 2024), so more than 18 months ago. So
->> even if it is marked as experimental, it's perhaps a bit late to make
->> such a relatively big change in it?
->
-> I don't think so; we marked it as experimental much more prominently
-> than other commands -- in the .c file, and three separate places in
-> the documentation.
+Not quite. I tried to explain in my previous reply that this only 
+looks similar and perhaps I should have worded the commit message 
+differently (I promised Phillip I'll reword it), however it's 
+intended just to allow simple overrides, without being a unified 
+way for all implementations to work with gitdirs. :)
 
-When we are talking about a change that breaks an established
-end-user expectation, it does not matter much if we wrote anything
-in the .c source files.  The end-user facing documentation does.
+> It still raises the question around how to handle this whole 
+> migration now, as alternative implementations don't yet know 
+> about this specific config key. Doing all of this in a single 
+> patch series will most likely result in breakage. 
+> 
+> In theory, we should probably first introduce the configuration, 
+> then wait a couple releases for alternative implementations to 
+> catch up, and then switch over. But we still cannot be sure that 
+> implementations know to handle this key alright.
 
-And as you said, "git replay -h" and "git replay --help" prominently
-show that the experimental nature of the command.
+Exactly, they won't. :)
+ 
+> 
+> A heavy-handed solution to this would be to introduce a 
+> repository extension. This would ensure that any well-behaved 
+> Git client will refuse to open the repository if it doesn't know 
+> about that specific extension. With the remaining ones we can be 
+> sure that they know to handle the "submodule.*.gitdir" 
+> configuration.
+> 
+> As mentioned, extensions are rather heavy-handed. Furthermore, 
+> this whole infra is only really needed under very specific 
+> circumstances. So maybe it could be a viable approach to make 
+> this extension opt-in: 
+> 
+>   - We provide a new configuration 
+>   "init.useSubmoduleGitdirExtension" 
+>     that tells git-init(1) and git-clone(1) to use the new 
+>     extension for newly initialized repositories. 
+> 
+>   - We detect the situation where a submodule cannot be cloned 
+>   due to a 
+>     path conflict. If detected, we print a user-facing hint that 
+>     tells them to enable the extension. 
 
-If this new behaviour is a clear improvement for majority of use
-cases, I am perfectly fine with changing the default behaviour so
-that everybody will benefit.  It may still be good to add an option
-to allow the users to ask for the traditional "we'll give you a list
-of updates you can apply as you see fit, but would not update the
-refs ourselves" mode, though.
+This is actually a very good idea, to detect path conflicts and 
+print a nice message to instruct the user to enable the extension, 
+instead of the default "error: git dir is inside git dir" or 
+somesuch confusing msg.
+
+I'll work on it for patch v3 and add some tests.
+
+> 
+> Once the user enabled the extension we'll know to use new, 
+> encoded submodule paths from thereon and thus re-initializing 
+> the conflicting submodule should work now. 
+> 
+> With all of this I wonder whether we even need a new 
+> ".git/submodules" directory. Couldn't we just continue to create 
+> submodules in the old path and for example create a random 
+> suffix as required? 
+
+Now that we decided to put this logic behind an extension, we 
+might get away with having a unified directory, yes. It's 
+something I'll explore for v3. I would really like to avoid having 
+both "modules" and "submodules" alongside eachother.
+
+> 
+> In any case, please stop me if I'm going overboard with my 
+> backwards compatibility concerns :) 
+
+You have good ideas and your feedback is much appreciated. Kudos and
+thanks!
