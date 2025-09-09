@@ -1,128 +1,176 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067BF21FF3F
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 06:36:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672F528E7
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 06:43:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757399813; cv=none; b=PBOxVZMuibOSpFQN6qv+3m1d6/XvfnJ8qF25tBTyOBlTQfkxvyfkLzh25clc4cnhwYhhDj1ixvvfyfZKJp1PjCpwMhKudCPnkjDcLyBvHHPIuBuHsHTBGFIJt0FLlzTtaixfq5OLPN9xqQzKbeQwyyCdXzePqPENKtlwlJ72yEA=
+	t=1757400191; cv=none; b=hbg8AAWz2KnuOY3Y3AWo9dYH3utwsJ2/Y/Ng4EdM9T3dYUP/X18vjYeUTiPjkTvhGCZtER22mM/JD13I6OCB830j1PJuiDO09bNXgnpN0xS+jnzFi/DIK39CBOAssHSit0t25lhggmRdi+GEvnF/9G2OdNrGAfhYyq3GDx0oeFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757399813; c=relaxed/simple;
-	bh=7YqJz9cQAqEDL4FhN7KZd5tntc6+2PN45qo98BAWZqs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WqqGQEV5Fv5FCWJiLO59rE7945c1CygWA0TfWeRbyMq8X3+bD/KVCx7/NVVV8lu2yDvFs6GbH+DW2iCRdn1g7vBiOoS1RthhjohGftjHCanRu5c5h1miW1S+/3tTSB/r9bJ1B8wAcoLT1egZejXUyXfIYhMzIxpi+Xm+86jucto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cQmOAYoZ; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757400191; c=relaxed/simple;
+	bh=KAvj4hU0BALYwXK3/6T4ryJ2azOvY/L1D7buIMZoQNM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HpOC+1GatIX0pkmVoVideqLfs7ZrGMXN5gRmOOWMNPg1nDMKIC2oV7/KujDTmnvzpeUpOrPiNcglxuIYFTMcNM2xvgfFPzOZQaAQ/Hp2B7uSrE0Ro+pZ1dvFyBHjf0pr32ADaDUb3NV0YJgKLPR/xUcSHgZt3GVrHxe3VX3AfGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gin0os6V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WtTIDeqr; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cQmOAYoZ"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b49b56a3f27so3191853a12.1
-        for <git@vger.kernel.org>; Mon, 08 Sep 2025 23:36:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757399811; x=1758004611; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GfzM6MG0qe3KfiV27NQLOYSSuZPFYcb7H2ah3bT6e9A=;
-        b=cQmOAYoZfRYEFAurDws47FUy8PRMztBcJ8GpEO6J29wfR/8t9QBeqg2G3WpDBNEguN
-         v5jaBij3cLp+jysQ/y2wLIMRGEsmvuzA9OFNV+x80PYBlBO9Znf/AuAOaTzlzGbLCN3T
-         PBlCLOQ4f8J71ucJkZpbdKnPbTu4XtKU+nmSg15NCKa7uyTxU4shCVNzy6L8zVneP37b
-         ckRD5tNhZlgA4nLuMPC1wh5HMxYz/bZ7R50vXzVwBAPYtYG2iGNFM84oQJNB67qDCThx
-         7S5h5ROMdF5LTTi1JxqejXER/Rg1BceIO3wmV9aWLfBJZcC774AXdxcbOTRlVJIHR7F8
-         xGrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757399811; x=1758004611;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GfzM6MG0qe3KfiV27NQLOYSSuZPFYcb7H2ah3bT6e9A=;
-        b=mBwbxEKafxxWt1qhA+jrGp1xeOXP/xxKibYg20As8oxQa46DGzZiIjqeM4hBatsjF9
-         xCyZQ+V9quVWPAhzDWaGGnnrJjzMSFP8EfWMzWv51U+WatN39+VpA+CP5vaSdnrN8Sfy
-         kSTFvzR4D7V/XIijlc/nLl4s1onM1gIb35o2Iivo05qmcLX6h6dnC1sKZy+9fR7EModS
-         RPAoDaRYVsiI2wdi8XFFDZPsO3tRIRX9KKEQiSxqh4vkNvRlqh9O92OZwb0IJSRFC9hH
-         fYXJPXeI8znt6xr5d0jFldbtFsstgqoXT8133eWCkA/ADWY6Hw359DWnwJdUjfmHCAO7
-         MQcQ==
-X-Gm-Message-State: AOJu0Yy1mqNVpNiWPCS6TopWwUPoaiKalAuGP4KHn6gOOxUhhpur2qRz
-	xKNiQskTidUTcdBz9zTfhAmDh2dKHb14MOct2RRxjetp/3l8jhx5sHIn
-X-Gm-Gg: ASbGncsuuIQIsfqnqzMdDSns6/N4WovMegVGQxfyzAOGytswL1KcknLOIRyzwcddeEz
-	1b8MpCVxD+98sofwaz64rqt0n7h/MgJDpgT0guXpQl0MjrcOeCJuduJWMn8tSpm0dPVO4a88xfY
-	qt9HoLMR263+T6Iehv2RYhwFYx13KQez8vSHy2qNm4MnvGjSapHHHpCOyeleQ8ppy/oZBm+8z5g
-	OmXa8CpkH1CCCB9hiE6rIkvdABMXjVXGTFzw2OkIoDEJ4ogzFTWbnI0cZMQ7WQ1+pz+nwQBUGvJ
-	BN0jGBrPgFsRdMwG7p4YDRF10bEDEBn7gzY4jdPfgjmjGPyzmQiS1UioyKj9Ye1DVh07Gi2et4J
-	fdr9z6ET5/TvCBiKUf+vPrZKOD8VQa0yPk2F/1otXxqQj94Y8wUwnqSoiENXoTNBztWZvnvFnmS
-	L/WZVQ5jYpRQ4nt04x69Z0PLn8WROKZGXNNA==
-X-Google-Smtp-Source: AGHT+IG79Zk2O5CoLX7agFCW4huQ0vJhzibDlybD0X+If/C7Z18pVcrEVoLdlZudagJftwF6NGENiA==
-X-Received: by 2002:a17:90b:1e4a:b0:32b:6964:1474 with SMTP id 98e67ed59e1d1-32d43f00776mr15870086a91.15.1757399811175;
-        Mon, 08 Sep 2025 23:36:51 -0700 (PDT)
-Received: from ?IPV6:2406:7400:56:7e97:c01c:f128:b5c5:e0c? ([2406:7400:56:7e97:c01c:f128:b5c5:e0c])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-327da90ee17sm32223210a91.24.2025.09.08.23.36.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 23:36:50 -0700 (PDT)
-Message-ID: <f4025223-a0ac-416f-b489-d42a07acc0b7@gmail.com>
-Date: Tue, 9 Sep 2025 12:06:45 +0530
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gin0os6V";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WtTIDeqr"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8248514000F8;
+	Tue,  9 Sep 2025 02:43:08 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 09 Sep 2025 02:43:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757400188;
+	 x=1757486588; bh=4CPCe79ItRzjefgX51t5mr30vDzrLkMuGmgM9QfpHM4=; b=
+	gin0os6V5XOUm1Upj6gx7J7ZSsnKOMbDKJVKQWEPsKm+g8InaQFxU7y31KCd2jQ1
+	RYKY+wO++3B0ijND9nJlD+BHf43dAJ/dH3ApjhjkmFGzZE69muFI5n0gl2THL2mk
+	g4NDxSraeVwVqWSayLy1yH347q6do66ee2wCpQmCKFHM0MP4dOW/kKrhhpqrM8zU
+	2WvnptKKtp+lt599ammJ0GX58N2HWrkzyZ15VwO/4Ug3QSkVFnk/BkbI1+P0Xc4R
+	cG4rLawDEbccgYyr9cjkA09sOG/mODqIe4mU3f+pL7gm9pD2DwF7GrB/K/8anerE
+	qZ5gHqN5evOe/bRJObqrow==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757400188; x=
+	1757486588; bh=4CPCe79ItRzjefgX51t5mr30vDzrLkMuGmgM9QfpHM4=; b=W
+	tTIDeqrp1VFh816ta9qLOSpfT7GKFuO46p5l3R7nzkuL433GZ25fma2qn+YsLZq3
+	JnOCiZJ9Av+c6DS8irRrO+1UYuWjaraP3nfXEqgcNBQftuhYUuuUSbecQRRpVcm6
+	HEWtNNGgF/kZmKG0o3eFglA0Y3//spREEsDoBp/FQFDzs/hiM262jqcBFhmB3H69
+	LZnrJwH9Ip+JmTKoo8DrTdqfnZPR9A+iqTJEtnwcvGamk96Wv85BskU0goOwSP8o
+	BLuod0M3OO/AM83SDCwMd2RNWZhHX+NVD6ZbYSlcXjtSpuSR/P2jBmPVaA9VJzKV
+	rdfsNVxWwa7oG9H3JpQ1Q==
+X-ME-Sender: <xms:fMy_aCk1iZMm9vT2IqG4P4iEvQJxs5HInVwqnk1QfvkT8jKqJPbTuQ>
+    <xme:fMy_aFULDUrwggLXQ79z3DE0TkCeqhOXzyv9d6qwbO-bttXE1lWXAMMsA5P8ZMQqj
+    kz_W8vp5Jw9SKe7cQ>
+X-ME-Received: <xmr:fMy_aHFbue1Cp30jx1qSZInn05sJ6mjSnMvwd1lCGwsUCG5j7OesY7I1Pz2OVqzuFbARvAmfVjx0SvgN4_EYLlynL7jBy8cskfx7k0wEQOU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleejvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehs
+    uhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphgvfhhfse
+    hpvghffhdrnhgvthdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghm
+    vg
+X-ME-Proxy: <xmx:fMy_aBcyVT95u_9xa6xI4Qp6IYhGhT7UYB9rVow96_iXQVzMt9bvyw>
+    <xmx:fMy_aIJXd6UqJluaNou8Fe3ofGegQ0Jbp7OvVeexhsdTx1H4rNumAA>
+    <xmx:fMy_aGFWgGphYe62ti4MxhVJvw8yvm5IcaIqyeC4a1a86EWNNHjDtg>
+    <xmx:fMy_aLAuHV1KxVyHuEmPahSoyota3Uva1JLFOOqFO_tyPv4BhaEPqQ>
+    <xmx:fMy_aFMi7jbk-ofQ3vO87eXogPMdI7AYMJe7U9JSWU0QZqFoXDsNEY9M>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Sep 2025 02:43:07 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 10615f17 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 9 Sep 2025 06:43:05 +0000 (UTC)
+Date: Tue, 9 Sep 2025 08:43:02 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Eric Sunshine <sunshine@sunshineco.com>, peff@peff.net
+Subject: Re: [PATCH v3 1/8] git: add `deprecated` category to --list-cmds
+Message-ID: <aL_MdiBLx9sssBwc@pks.im>
+References: <cover.1756480827.git.code@khaugsbakk.name>
+ <cover.1757345711.git.code@khaugsbakk.name>
+ <bdc683a92b38884e9428cd4bade1f86960ef432b.1757345711.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] replay: add --update-refs option
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
- Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
- Toon Claes <toon@iotcl.com>, John Cai <johncai86@gmail.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
- <CAP8UFD2XyqgypPfkQav4Fub0AEwyJjXpvfwMPe-adWyCKRa7fQ@mail.gmail.com>
-Content-Language: en-US
-From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <CAP8UFD2XyqgypPfkQav4Fub0AEwyJjXpvfwMPe-adWyCKRa7fQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <bdc683a92b38884e9428cd4bade1f86960ef432b.1757345711.git.code@khaugsbakk.name>
 
+On Mon, Sep 08, 2025 at 05:36:12PM +0200, kristofferhaugsbakk@fastmail.com wrote:
+> Notes (series):
+>     v3 (new):
+>     
+>     This is something I wanted to submit independently until the point about
+>     aliasing builtins was brought up.[1]  It will help (in a small way) with
+>     the upcoming patch “git: allow alias-shadowing deprecated builtins”.
+>     
+>     By the way: should `command-list.txt` be updated in some way (I didn’t
+>     know what way?)
 
-On 08/09/25 11:37, Christian Couder wrote:
-> On Mon, Sep 8, 2025 at 6:36 AM Siddharth Asthana
-> <siddharthasthana31@gmail.com> wrote:
->> This patch series adds a --update-refs option to git replay. Right now,
->> when you use git replay, you need to pipe its output to git update-ref
->> like this:
->>
->>      git replay --onto main topic1..topic2 | git update-ref --stdin
->>
->> This works fine, but it means running two commands and doesn't give you
->> atomic transactions by default. The new --update-refs option lets you do
->> the ref updates directly:
->>
->>      git replay --update-refs --onto main topic1..topic2
-> Thanks for working on this.
->
->> I discussed this feature with Christian Couder earlier, and we agreed that
->> it would be useful for server-side operations where you want atomic updates.
-> Yeah, right. This is something the Git team at GitLab has been
-> interested in for some time.
->
->> The way it works:
->> - By default, it uses atomic transactions (all refs get updated or none do)
->> - There's a --batch option if you want some updates to succeed even if
->>    others fail
->> - It works with bare repositories, which is important for server operations
->>    like Gitaly
->> - When it succeeds, it doesn't print anything (just like git update-ref
->>    --stdin)
->> - You can't use --update-refs with the existing --update option
-> There is no existing --update option. This series also introduces the
-> --update option.
-You are right that was confusing wording in my cover letter. Both 
---update and --update-refs are new in this series.
->
->> This should help with git replay's goal of being good for server-side
->> operations. It also makes the command simpler to use since you don't need
->> the pipeline anymore, and the atomic behavior is better for reliability.
-> I have commented only on the documentation patch for now as I think
-> it's better to review the design of the new options first, and the
-> documentation looks like a good place for that.
->
-> Thanks again.
+I think it would be a good idea to introduce a new category for
+deprecated commands. After all, next to planning for the removal we
+should also actively discourage the use of such commands. But if they
+are still prominently featured in git(1) then people might be misled and
+use them, only to get a deprecation warning thrown at them.
+
+> diff --git a/git.c b/git.c
+> index 83eac0aeab7..87d61f12594 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -51,7 +52,13 @@ const char git_more_info_string[] =
+>  
+>  static int use_pager = -1;
+>  
+> -static void list_builtins(struct string_list *list, unsigned int exclude_option);
+> +/*
+> + * 'include_option' and 'exclude_option' are mutually exclusive.
+> + *
+> + * The default ('!include_option') is to include everything
+> + * except those filtered out by 'exclude_option'.
+> + */
+> +static void list_builtins(struct string_list *list, unsigned int include_option, unsigned int exclude_option);
+
+Nit: let's wrap this overly long line.
+
+> @@ -668,13 +677,20 @@ int is_builtin(const char *s)
+>  	return !!get_builtin(s);
+>  }
+>  
+> -static void list_builtins(struct string_list *out, unsigned int exclude_option)
+> +static void list_builtins(struct string_list *out, unsigned int include_option, unsigned int exclude_option)
+
+Same here.
+
+>  {
+> -	for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
+> -		if (exclude_option &&
+> -		    (commands[i].option & exclude_option))
+> -			continue;
+> -		string_list_append(out, commands[i].cmd);
+> +	if (include_option && exclude_option)
+> +		BUG("'include_option' and 'exclude_option' are mutually exclusive");
+> +	if (include_option) {
+> +		for (size_t i = 0; i < ARRAY_SIZE(commands); i++)
+> +			if (commands[i].option & include_option)
+> +				string_list_append(out, commands[i].cmd);
+> +	} else {
+> +		for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
+> +			if (commands[i].option & exclude_option)
+> +				continue;
+> +			string_list_append(out, commands[i].cmd);
+> +		}
+>  	}
+>  }
+
+We could combine these two loops into one:
+
+    for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
+        if (include_option && !(commands[i].option & include_option))
+            continue;
+        if (exclude_option && (commands[i].option & exclude_option))
+            continue;
+        string_list_append(out, commands[i].cmd);
+    }
+
+Which results in a bit less code duplication.
+
+patrick
