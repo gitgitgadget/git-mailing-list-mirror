@@ -1,85 +1,85 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B7D26981E
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 19:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8612921A449
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 19:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757447241; cv=none; b=XFvqsgVNbPqJD0VpitkT3ZgQF+75w894o6y//TCcFIHh6VP4Z92IARWgB3p4MKxEjcw3MKpDhxVgwdeYSK9fbiT4PXstWppCpjQ4FAfVTxf4WRUQL1eZ+OzEcJKUxhgwLn2Lq1SRVdajI/ne/6+K9e3NSjjOi3RFU3LI/d0r2E0=
+	t=1757447260; cv=none; b=hO/j41Fd7U6w9cvolM4IVEnfo562xoK+g4hgch7GioqxwdSJGcCby8ZuQADakRPIgRr8Nd+z5xg6+Pl0D39Uq2TLZ4c9jTOcUOLd380mVWULXRO4FWhWNATc12bHtlSlhyNg9GhdgGflIvhjYOG1nUQUww1kGmyHqcNo4IJRdQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757447241; c=relaxed/simple;
-	bh=n9bszQEtZv1fmQuEx62loMPpBCuVBgVMy6Vde73kmJ0=;
+	s=arc-20240116; t=1757447260; c=relaxed/simple;
+	bh=/gN/ggXE3Ykbf27hQvr1HmBpK5a23UJ0MlGUrb7Bu4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ey9LL6NKgK+tS1JnlZpqasgr7Xgj4yYdZhuGanptYUzEWzprWo2A6YMplAodE+4MvYBoNXMASz4cDmuF4tQMd6aTVUN83mBVssid/sSEC/GCYIiBBRxtg0MDOYXaSb/NwNC+OJSAGFXoJXzXmaPYxwn6JNSO4WaxmdXKPj/gyN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ZwYWqRsN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V3V9wKMf; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=YRdktaeuP/r+zOdVM6ExrPNhnwqQetuUSkulLgQwQtu5AAdnxSMrKAydLrtjU9l/dWoll63t3QUaL4tQdhLQvql9J1x1pTSWRIomqGsnrAKRwatHTW1yaioEBase2Fix8h2ENU4mK3W8GYkUALlgOVHZbD+2pNLxtX9Tfldpxi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=BfRoi4RW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZL8WHPbq; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ZwYWqRsN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V3V9wKMf"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id AD86FEC00CC;
-	Tue,  9 Sep 2025 15:47:18 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 09 Sep 2025 15:47:18 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="BfRoi4RW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZL8WHPbq"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 608F0EC00CC;
+	Tue,  9 Sep 2025 15:47:37 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 09 Sep 2025 15:47:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757447238;
-	 x=1757533638; bh=Zr2ODWmc76hMQxIPH5ERbz3j7M4JuqLFoQHkUu8IwQM=; b=
-	ZwYWqRsNkiaSN89hPZRerm2EeCgoTTGPUAwhSSV13zv8Sw/KIFOAtpT++Y2Atj8L
-	kfctdrR3/3/ct7knPTwn6OCPisFEDtK1rAGPvn70XboZxoza4SB+Nd51EbfdQTel
-	t1d/nD7DxUvpT4ST/L0BGyLe4PS8dd17XQnCuOO5gyVM40+An8QsMhz1bUpCAmX5
-	jSMMwDl8OeT/Sdj/5OcMRoRTLz9ugKwRco7Z7s9XnSnAB7DJO/n0avQOYX5hMSzQ
-	B8wr568J1dhmYlYRt6sUoGv42UVopBsyNrmoLDBTjeOEnwj+sSUZpSkDpqprIotj
-	YSRlDMN8PVGWCGhQjWUWyA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757447257;
+	 x=1757533657; bh=orPfxwheKyKrIWdNaJQ1S9z7ip1qtf2aZFhLKDxBVO4=; b=
+	BfRoi4RWs4rfa2jHlwYvusgBclrf3jK6DTbzal97MUrZClhSR9R+sJhT9fBvMhX6
+	gYJ6gTordBCleyfV24p0CwifqhgaQ3PArbuIHiEWjH+BoIwuN9WlaaroINmh6/G8
+	EyAH9ot3ToYMJK+axDkEG508psiqGE/1ey0S2Tp/iH2VtHdJt2FKJl14QfD4lb8S
+	6XkMPHfcCJLHHQ63UFUz3w0kHjbqEEwjjoM/WDAQ+qOYJXr1TQuaGVOlgXsgv1nW
+	ECnyqgyS/Xpt5Y58mAIC/oBFxzWmisqMssrp1VKlWybFZvkx1BSMV2xJE9MEqwGr
+	UixujJS2lVIo1s8V4sP5mw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757447238; x=
-	1757533638; bh=Zr2ODWmc76hMQxIPH5ERbz3j7M4JuqLFoQHkUu8IwQM=; b=V
-	3V9wKMfly/DONOMMWDbyaXO9APXspoZ72KuOS2poABv3B0iQf15y0dEolyIvLDHu
-	L1mET26efH6hbgphlCLwonQLNU4gQJFijTTZBWi7aOWBZRy31iaQ2la5TcKCbuR6
-	pbkA90tMSehn9HaJTyLAUD2IQRZFDP4lgTOGF7aguO/XPLZJJ3gtP/4rY8I2VDtp
-	UetNGQ7ePjM2xmlWqM17Fn9OM5UEaYvXmTO0ntKcvplhFrIjmqPlhVDSveyh3Sra
-	Kn5qH575k4uJ+4QuAxFnD+ZvkuEgNlyOGy31cGbjftiF4Db5DQAy90nL5JzI0SuU
-	G+rCD/ah8HGJVZu9Ocy8A==
-X-ME-Sender: <xms:RoTAaPeQe3Wly_FPMvtvm658Wlriw9boXLIRkg0wOeD9Rrb10kMrstw>
-    <xme:RoTAaAs2oYKSH2njwZbmHNJ5W2lP-5pEzBQfICv-neG6FG1_-GT820BnCHcMe9IVb
-    eSRQEqO1pjSFCjd7Q>
-X-ME-Received: <xmr:RoTAaO8O91Y0Q-ffs-UV3ZqXDW1QYusdkkkcMzT6rEyeC6kDAKPZioYMglCeJG5e-YKOg2DNijjToY_kPqeZpnOM-lCzh8VIyRVdp8OF3k5xk0qPVFYNx4ckCw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757447257; x=
+	1757533657; bh=orPfxwheKyKrIWdNaJQ1S9z7ip1qtf2aZFhLKDxBVO4=; b=Z
+	L8WHPbqCz11FI+jcDHjjT4D9zZ/6gKQEl8kPqtU/jBhWbg4vtP4YoDx/P/vmwmHH
+	F7ffn6idrxOcPPVgllUa/8iFgBaQmXdf1COli313WVYe6q9DoZvHbyxEJ5OnBVXb
+	JcZVVKOBXhsU/3PM8NKzk7UqWsY7h7EP/v6MU37LEOTOxabWHkoWJMGHjS617Ol7
+	l9spvA4A8+o4LWkdVSowSfYNjgmIuRHEMiI/eKfgZkpOtk2B57LFJdPxNqMcmiFx
+	YVl/bwgTFShkz67sv+MZ6aQ972r0SKgvUF2kXF4ZBXaQYjbQde6bcLBuMqz0Bq6K
+	tFh8qT8uvPYfrb0iyf1fw==
+X-ME-Sender: <xms:WYTAaHlkzcgrK3ti_hDLpwc4NRrQ5vmLj6U6wK05rMnhNGbYpu_zRLI>
+    <xme:WYTAaGUQVzjKFTHvblqujd_1ReDcg0EVa6-yA02z6_FbObcPoXnZo2zwR0cNyXGKg
+    fMRopnuMSRZ3XxD7w>
+X-ME-Received: <xmr:WYTAaEHjiW6mMxnhPe1tactK8ZJoYMzU-FxZDp4rdkEVC5koxyjEaAykzdNAxxZaMUr81KnCF0rVtfO3rafwkeu3CJuZuLFq1oMnDrYge8H4vAEUfN_eOrquzQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvuddvlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthho
     fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvg
-    hrnhephffggeelhfejkefgteelteejhfetieehgeeftdduudffgeejhfektedugefghfek
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdr
-    nhgrmhgvpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-    dprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhs
-    rdhimh
-X-ME-Proxy: <xmx:RoTAaL3SBTomZzqJAX7DJFmlRrgUo11gL0jKu1WvECuIXO4gdeXk-Q>
-    <xmx:RoTAaDDiCCB90dxjJhGTU4-4qT_nEeoxyV-XUxsItZz3QuTRUF43Fw>
-    <xmx:RoTAaHe2eBkntC3a6XbHalfGTplOjEQpiEenJ_jaoyZam_l9dTns-g>
-    <xmx:RoTAaA7ceavB4LfLSTg4d5NnUpjTvR6ZaGuvUlTKgdvvf9SjtVg9bg>
-    <xmx:RoTAaNlva3E3Vmt7VwIzUhzrXVbQEyvTiLcPbZEin9H3fJNqwQLqi3HF>
+    hrnhepieegvdffvedvvdetjedtieeigeejjeelgfeugfevlefhtedvieeiteehvedtiedt
+    necuffhomhgrihhnpehgihhtqdhstghmrdgtohhmpdhkvghrnhgvlhdrohhrghenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhf
+    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtoh
+    ephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+    dprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghp
+    thhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:WYTAaKfl4wVYTc8yufY7ZMBPw7ndJMucgv9S8W7_RK5t95sPs19KgA>
+    <xmx:WYTAaNIrTc7cb8edCP-1nynjW1ywud5dt57JMYvkY64A68jjtbDLdA>
+    <xmx:WYTAaHGcCwTg8g6A81DYRPAmznkdoShDS98iMObe0sBO-U00BLKS6g>
+    <xmx:WYTAaIBjHFUu1wwFwkx5OQbyAznQzN5R46L65qGcYorMMyOCilE8yQ>
+    <xmx:WYTAaONKBsH9m9-MtILAVt3BCxJns1teL0nGX7p9GHPwA9IyHQ79dFsy>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 15:47:17 -0400 (EDT)
+ 9 Sep 2025 15:47:35 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	peff@peff.net,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 3/7] t0014: test shadowing of aliases for a sample of builtins
-Date: Tue,  9 Sep 2025 21:45:53 +0200
-Message-ID: <00108f28f82e618cb39dadb8161841c29a766d1f.1757446619.git.code@khaugsbakk.name>
+Subject: [PATCH v4 4/7] you-still-use-that??: help the user help themselves
+Date: Tue,  9 Sep 2025 21:45:54 +0200
+Message-ID: <6bdcaf7f80f48a10cea75ea179e6f06d8b998fbb.1757446619.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.51.0.16.gcd94ab5bf81
 In-Reply-To: <cover.1757446619.git.code@khaugsbakk.name>
 References: <cover.1757345711.git.code@khaugsbakk.name> <cover.1757446619.git.code@khaugsbakk.name>
@@ -94,51 +94,116 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-The previous commit added a test for shadowing deprecated builtins.
-Let’s make the test suite more complete by exercising a sample of
-the builtins and in turn test the documentation for git-config(1):
+Give the user a list of suggestions for what to do when they run a
+deprecated command.
 
-    To avoid confusion and troubles with script usage, aliases that hide
-    existing Git commands are ignored except for deprecated commands.
+The first order of action will be to check the breaking changes
+document;[1] this short error message says nothing about why this
+command is deprecated, and in any case going into any kind of detail
+might overwhelm the user.
 
+Then they can find out if this has been discussed on the mailing list.
+Then users who e.g. are using git-whatchanged(1) can learn that this is
+arguably a plug-in replacement:
+
+    git log <opts> --raw --no-merges
+
+Finally they are invited to send an email to the mailing list.
+
+Also drop the “please add” part in favor of just using the “refusing”
+die-message; these two would have been right after each other in this
+new version.
+
+Also drop “Thanks” since it now would require a new paragraph.
+
+[1]: www.git-scm.com has a disclaimer for these internal documents that
+    says that “This information is specific to the Git project”.  That’s
+    misleading in this particular case.  But users are unlikely to get
+    discouraged from reading about why they (or their programs) cannot run a
+    command any more; it clearly concerns them.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
-    v3 (new):
+    v2:
     
-    Only a sample of builtins since the test file takes about 600ms longer
-    if I test all of them.
+    I had second thoughts about the bullet point about send-an-email.
+    Change it to the one Eric Sunshine proposed;[1] make sure to spell
+    out that you can send an email conditioned on not finding a suitable
+    replacement.
+    
+    Also change the area to something more pointed.
+    
+    And also use a clear URL to refer to www.git-scm.com.
+    
+    [1]: https://lore.kernel.org/git/CAPig+cQkVP57n_FE6dJ0uxvai-J7usxKFp8gzfEbPY=Ytsd6=Q@mail.gmail.com/
+    
+    • Change send-an-email bullet point
+    • Change the area
+    • Use www.git-scm.com, not simply git-scm
+    
+    v1:
+    
+    An alternative to linking to www.git-scm.com is to move this document to
+    a regular installed man page:
+    
+        gitbreaking-changes(7)
+    
+    What do you think?
+    
+    I would then have to base my topic on the in-flight
+    pw/3.0-commentchar-auto-deprecation, which in turn depends on
+    ps/config-wo-the-repository.
+    
+    Or just wait a bit for these to settle in.
 
- t/t0014-alias.sh | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ usage.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index 89bedb9f73b..bf7e6512bb1 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -72,4 +72,21 @@ test_expect_success 'can alias-shadow deprecated builtins' '
- 	done
- '
+diff --git a/usage.c b/usage.c
+index 81913236a4a..35dc57eb07e 100644
+--- a/usage.c
++++ b/usage.c
+@@ -7,6 +7,7 @@
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "trace2.h"
++#include "strbuf.h"
  
-+cannot_alias_regular_builtin () {
-+	cmd="$1" &&
-+	# some git(1) commands will fail... (see above)
-+	test_might_fail git "$cmd" -h >expect &&
-+	test_file_not_empty expect &&
-+	test_might_fail git -c alias."$cmd"=status "$cmd" -h >actual &&
-+	test_cmp expect actual
-+}
+ static void vfreportf(FILE *f, const char *prefix, const char *err, va_list params)
+ {
+@@ -377,12 +378,24 @@ void bug_fl(const char *file, int line, const char *fmt, ...)
+ 
+ NORETURN void you_still_use_that(const char *command_name)
+ {
++	struct strbuf percent_encoded = STRBUF_INIT;
++	strbuf_add_percentencode(&percent_encoded,
++				 command_name,
++				 STRBUF_ENCODE_SLASH);
 +
-+test_expect_success 'cannot alias-shadow a sample of regular builtins' '
-+	for cmd in grep check-ref-format interpret-trailers \
-+		checkout-index fast-import diagnose rev-list prune
-+	do
-+		cannot_alias_regular_builtin "$cmd" || return 1
-+	done
-+'
-+
- test_done
+ 	fprintf(stderr,
+ 		_("'%s' is nominated for removal.\n"
+-		  "If you still use this command, please add an extra\n"
+-		  "option, '--i-still-use-this', on the command line\n"
+-		  "and let us know you still use it by sending an e-mail\n"
+-		  "to <git@vger.kernel.org>.  Thanks.\n"),
+-		command_name);
++		  "If you still use this command, here's what you can do:\n"
++		  "\n"
++		  "- read https://git-scm.com/docs/BreakingChanges.html\n"
++		  "- check if anyone has discussed this on the mailing\n"
++		  "  list and if they came up with something that can\n"
++		  "  help you: https://lore.kernel.org/git/?q=%s\n"
++		  "- send an email to <git@vger.kernel.org> to let us\n"
++		  "  know that you still use this command and were unable\n"
++		  "  to determine a suitable replacement\n"
++		  "\n"),
++		command_name, percent_encoded.buf);
++	strbuf_release(&percent_encoded);
+ 	die(_("refusing to run without --i-still-use-this"));
+ }
 -- 
 2.51.0.16.gcd94ab5bf81
 
