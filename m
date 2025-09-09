@@ -1,53 +1,53 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D859F306B33
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 07:40:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9F23081AA
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 07:40:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757403636; cv=none; b=WPqtc5O+eEws7yufH92ffkPujTHdvagrVb9dSPFHsO2S2dE+7IGDtiWYpgbGOQcByb6MvN+8kF8Ixips0ioR3xNreISVKs22rDsAWfXJ0h+Dax8qBjIcuUdx+gJXQoqz5/OL9u7+m9FsrwtpTVjSfb5iV2StL4hW5L24fGcCQh0=
+	t=1757403640; cv=none; b=B1Fe0wEtWsgigmt5KpgRLG5A3xgd0a8BUbVF882xDjcupnnVlb8fNM2bHNpJ5zXWyc4p44+NU956HVmYuoXyjlaVCYnX7w4914wnre1p3FwLz1JcHvEvkvn9RHPls+Pe+4/JxrtNFGiZekwTSDDXPSdQgumvylhzCO9Jc82NhKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757403636; c=relaxed/simple;
-	bh=eTB6ZVaWcq/seqFc6s6jGCmOpPFys2srzIo9YMpUg8U=;
+	s=arc-20240116; t=1757403640; c=relaxed/simple;
+	bh=E2H8g2dbme7x6DI54SuryoDDM9ISgoxKM+IWKsJ7fys=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ig94tAtzAf0RJDIREI/IHRoDC2a/Rvl6i//B5iRaH7BqooJmaC0Fja8uag+M1s1nX+kR9iNvSQtxIg6Ian6R1wP1LwZbL9wKPlbs55WJEqvsuJE6OnXwHlaCUdzwbwlsC9J9wrf+2cL4lJcg3U+pwKGRvQAjZcuRAb1H9dVIM/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q3RN++9Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IzGSTPXv; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=fs9i2yEdzzpedlJozwZPR47XkheJ84ote0Bp79rwj8oh0waM6p0nR5MaeqXpnSoaYwiDjNiDrhEtsAc2itqzcT4Ux2Ke5RurMp13DjsyP8oE7ZevtzQ1zA4wReyEkgvneBSchWdE3F32SkoorCQR9EjGUfvfAsV9QrfZy0o3/fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fEkYw6Ui; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lZwfz/JJ; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q3RN++9Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IzGSTPXv"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0C3BAEC00FA;
-	Tue,  9 Sep 2025 03:40:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fEkYw6Ui";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lZwfz/JJ"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2986B1400140;
+	Tue,  9 Sep 2025 03:40:38 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 09 Sep 2025 03:40:34 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 09 Sep 2025 03:40:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757403634; x=1757490034; bh=mezwdprBkO
-	XbHgRKCG4WCdBuHHJh3+vUGC+MOrfOVY4=; b=Q3RN++9YGB4MW18AFuzu71FwA1
-	cHySDSsYCZuvKndukyeaJG8cPmmfyw5AJafvgcca19gRhNo0MbCnGGB8SAJr0fIj
-	HN8T1xmMeq0INl2/1iPDsGw7ORBA1gnOqTvmvfpLMytBdkTCJHJauKnj7tX0vhgF
-	fq4uDeaezRRjkgEYJQ8FFOggmdTalJ4ZtasIeDDJedavEyrhKhnnpEXU8XSgSRy3
-	Xx+YPZHCMGx3+tsmcyVn8FCH7hwZ/uDcdfAED/NA49Ja0J4oftXiddwRbPkDmwKS
-	GszIq4eSdDTzXjcIjvDVYQ7BQYPRq+VeG+fMHxsYfnHpm9Ga8PaCmRP/SWNQ==
+	:subject:to:to; s=fm1; t=1757403638; x=1757490038; bh=BWoeCMu5ov
+	/zW1kXjTCnKoTgg8DmvU/YYWYWo9Tdh2k=; b=fEkYw6Ui9HyAxXc6sSTDSYmT0V
+	TB5fv88SXtISdwOIl9iw5fESzxBhW6nJx/S6wNHnLrcsugQubuWmwFacE63NFudL
+	RUOEiY6mkrd+RRMjDHbFMCdWcBvo7BVKAUAEa+vRf9D4mUPS40S92a7aqsi8pDAS
+	8o151rQQitTsheO+mxHWN3feB6ULWJQ3ruYj0P1jKpp9ocaX+nDFnmxHefRMyUm+
+	DQgRLC+lhLKhwr/2nS/FxyOgW34XcfQEVnQimMDW959D0F+Akt3fO2xhIgvlQftf
+	VZOZIPhBmn7SCGzOFVG6GQmPsSgb0aQrYXLLueaA+Uew39xeHkf/8AZpj3zQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757403634; x=1757490034; bh=mezwdprBkOXbHgRKCG4WCdBuHHJh3+vUGC+
-	MOrfOVY4=; b=IzGSTPXvldqc7A8w3lI2OIg2fnp5ydY98+12B9QYvSyKmkJ4MFr
-	SoLbRDLKIVrnzeIsT3pcE5X5GntmQdwOf6BxrDpMzqZmNtaHnaEjf/1QFsmMSRnO
-	CCv26iIiYPxCzzEU7RoAFRkdZJ7vj9BbfL689Z2x14lYqN/mqneK34L13DszHt3g
-	JRXXWLgLTQLWU7edF2rygFnv55qB9vQzYDNPXmzsXf0rHBnIa0RMgVPYx2cFzu5f
-	7sao9B7x6Zzhv98MCfD/3gGOXc9oPyf6USsHE+0IsHZUgtB6enb7QoMqK648iywO
-	TaUw6eC7UVoo3paEkfgdN8bEPZsAubSsvZA==
-X-ME-Sender: <xms:8dm_aOLLI16xiLvKa-fk05e9G_0-9V_UQgtMhHbOQFwtD7dgNCX-nw>
-    <xme:8dm_aB0UaaKahmap8X4gwi8qsuTiNyg2CESL0-7mBRDJ1QDSTA3mCHyvxQ_uiYCy1
-    eGMvC4maGcWrYDrZw>
-X-ME-Received: <xmr:8dm_aLKfAHBZzuTBrHlJ2-lY1QQvlnZzzFqWjpknt9ppmt66hIKa7RHCMji9Qf5qGFEbPaMAD-XkomslfGmIhEv1orJVO_PlO3U0GxXNwbg>
+	1757403638; x=1757490038; bh=BWoeCMu5ov/zW1kXjTCnKoTgg8DmvU/YYWY
+	Wo9Tdh2k=; b=lZwfz/JJ7QI0g6RScJSbl45n6m7JPSE1CTGKtcpNXxRVqQWCVMz
+	Qp0LqllnHxG14FVuy8q25EcgkQ1ZYxGCzGeBwTXGn/FRLC59dDRVg3tYv4Th5nRK
+	kit993JHXOZIVb492aEBoB/7uL18zhWQJ65czietGveScjnTRSPZQBlG/5f+rIFW
+	UjpMEbop/9vMwEhGbpzK/11L4MCFkVmnH764UXkVTiGDZ51RljsNNK/JoC5q7SIx
+	QF7w09BFQ/j0bZSZApT+PQFywFCKREe3dvoDNh59tsO3ngxkasb2hxSEz/UunNRx
+	yTnmtNPgeYKAC/bvs64XJFg2IEkWj2O6BsA==
+X-ME-Sender: <xms:9dm_aIXJ7GpztvUKw5RsmH8EIPnVtonkVxaPiq0nHoYYzeoNJkvOhg>
+    <xme:9dm_aMQN9ulxR9i5cTgDSq78DWXjMHkY_Q9ZXXnkl2iEcivifxemIZQUYD_7P5D-z
+    rBUdw8lBy1XEn6a-A>
+X-ME-Received: <xmr:9dm_aIB6Srkg0SRFVzWnd1XBqSXzx_Cv3zVb1M2hteC2ifGQko1xmqP_G-xFArex-ox61IYGMD5UyvzVadTvI4AtBJhWQO2cckfyIPA5fPI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleekgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -55,26 +55,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleekgecutefuodetgg
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheprggrrhhonhesshgthhhrrggsrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopehruggrmhgriihiohesghhoohhglhgvrdgtohhm
-    pdhrtghpthhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhf
-    sehpvghffhdrnhgvthdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtoh
-    hmpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorhgrrdgtohhm
-    pdhrtghpthhtohepjhhrnhhivgguvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:8dm_aMjC8y-ooqAAleO1MklVLKD9UE64OceDQnMPnsidLco48nQDiA>
-    <xmx:8dm_aLAWLEWSxbiPHsRLrIKiMUdk5vPZwGEqDUOU6_9G7HUiSExFOQ>
-    <xmx:8dm_aO4xKC6hxIXfng_vZ6AETZo-U2L9sMOn64wOa_YxgLrrKKTNmA>
-    <xmx:8dm_aAEn0_GldcOw0nYSHEv3qlbfcpH1qXJntcFvJ9p63rH4ORma4Q>
-    <xmx:8tm_aK9nGeuT9KQwMcijaZ6xEaVtqDYNRC-0KNWIp63lpc9oAKXr9Z-A>
+    drihhmpdhnsggprhgtphhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsmhifihhllh
+    esghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsggvnhdrkh
+    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprggurhhirghnrdhrrghtihhu
+    segtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtohepjhhrnhhivgguvghrsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtgho
+    mhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhm
+X-ME-Proxy: <xmx:9dm_aDJsE7SWsgWp0e9aD6bnrKAsV6SLA_u8yxBQ3gE2VFlohTNAyQ>
+    <xmx:9dm_aDDQdjCRdGKvgBXbVejhjyjhWLuStEOZjqVKTD5aIq9S9oWZmw>
+    <xmx:9dm_aIvfrL3DnKHhDd-2m4O8E3l8mk-OMXnuftZ4YVW54xPzCG4LrA>
+    <xmx:9dm_aBR7x24wgDYM1dUJCOrMi9Ry7NVF5St3YXAJi4W0UVF6SwKKTw>
+    <xmx:9tm_aJwyPMS07JBEYeZMj8WRAMctxzkRfkQxx5FvrYG3XRAetINuppne>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 03:40:32 -0400 (EDT)
+ 9 Sep 2025 03:40:36 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 00ebaf59 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 9 Sep 2025 07:40:30 +0000 (UTC)
-Date: Tue, 9 Sep 2025 09:40:27 +0200
+	by mail (OpenSMTPD) with ESMTPSA id e3b4926f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 9 Sep 2025 07:40:35 +0000 (UTC)
+Date: Tue, 9 Sep 2025 09:40:32 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
@@ -83,13 +83,13 @@ Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
 	Aaron Schrab <aaron@schrab.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Josh Steadmon <steadmon@google.com>,
-	Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2 02/10] submodule: create new gitdirs under submodules
- path
-Message-ID: <aL_Z6z1XZBEbNGV1@pks.im>
+	Ben Knoble <ben.knoble@gmail.com>,
+	Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v2 03/10] submodule: add gitdir path config override
+Message-ID: <aL_Z8DusXdyIr4Ru@pks.im>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
  <20250908140117.262205-1-adrian.ratiu@collabora.com>
- <20250908140117.262205-3-adrian.ratiu@collabora.com>
+ <20250908140117.262205-4-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -98,49 +98,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250908140117.262205-3-adrian.ratiu@collabora.com>
+In-Reply-To: <20250908140117.262205-4-adrian.ratiu@collabora.com>
 
-On Mon, Sep 08, 2025 at 05:01:09PM +0300, Adrian Ratiu wrote:
-> This is in preparation for encoding the submodule names to avoid conflicts
-> like submodules named foo and foo/bar together with case-insensitive file-
-> system handling and other corner cases like reserved filenames on Windows.
+On Mon, Sep 08, 2025 at 05:01:10PM +0300, Adrian Ratiu wrote:
+> This adds an ability to override gitdir paths via config files
+> (not .gitmodules), such that any encoding scheme can be changed
+> and JGit & co don't need to exactly match the default encoding.
 > 
-> Backward compatibility is kept with plain-name modules already existing at
-> paths like .git/modules/<name>, however a clear separation between legacy
-> (plain) and new (encoded) namespaces is desirable, to avoid situations like
-> an existing plain-name module containing the encoding escape character/
-> 
-> Thus we split the new-style (encoded) gitdir name paths to .git/submodules,
-> while legacy-style paths remain under .git/modules.
-> 
-> This is just a default directory change with the accompanying test updates,
-> in preparation for the actual encoding additions in future commits.
+> A new test and a helper are added. The helper will be used by
+> further tests exercising gitdir paths & encodings.
 
-One of the questions here is how this move will affect alternate
-implementations of Git, like libgit2, JGit or Gitoxide. There's two
-angles to this:
+Aha, so you already do what I'm lamenting about in the preceding commit.
+It still raises the question around how to handle this whole migration
+now, as alternative implementations don't yet know about this specific
+config key. Doing all of this in a single patch series will most likely
+result in breakage.
 
-  - Git needs to handle that those implementations continue to write
-    submodules into ".git/modules".
+In theory, we should probably first introduce the configuration, then
+wait a couple releases for alternative implementations to catch up, and
+then switch over. But we still cannot be sure that implementations know
+to handle this key alright.
 
-  - These implementations need to be able to handle the new-style paths.
+A heavy-handed solution to this would be to introduce a repository
+extension. This would ensure that any well-behaved Git client will
+refuse to open the repository if it doesn't know about that specific
+extension. With the remaining ones we can be sure that they know to
+handle the "submodule.*.gitdir" configuration.
 
-The first item should work just fine, as we make sure that we handle
-both paths. But do the other implementations need any adjustment? I
-guess the answer is "yes", so we need to treat this as a backwards
-incompatible change as they wouldn't be able to find the submodule
-repositories anymore, right?
+As mentioned, extensions are rather heavy-handed. Furthermore, this
+whole infra is only really needed under very specific circumstances. So
+maybe it could be a viable approach to make this extension opt-in:
 
-Ideally, the way that submodules were populated was less fragile. For
-example, we could have a "submodule.*.repoPath" config key that gets
-populated whenever we clone a submodule. If Git clients knew to use that
-field they wouldn't have to second-guess where a previous Git client
-stored a specific submodule, but they could just read that path and then
-use whatever is stored therein. This would even allow for changes like
-using a hash to encode the submodule name.
+  - We provide a new configuration "init.useSubmoduleGitdirExtension"
+    that tells git-init(1) and git-clone(1) to use the new extension for
+    newly initialized repositories.
 
-But to the best of my knowledge such a key does not currently exist,
-which is too bad (please correct me if I'm wrong, I'm definitely not an
-expert when it comes to submodules).
+  - We detect the situation where a submodule cannot be cloned due to a
+    path conflict. If detected, we print a user-facing hint that tells
+    them to enable the extension.
+
+Once the user enabled the extension we'll know to use new, encoded
+submodule paths from thereon and thus re-initializing the conflicting
+submodule should work now.
+
+With all of this I wonder whether we even need a new ".git/submodules"
+directory. Couldn't we just continue to create submodules in the old
+path and for example create a random suffix as required?
+
+In any case, please stop me if I'm going overboard with my backwards
+compatibility concerns :)
 
 Patrick
