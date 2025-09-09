@@ -1,126 +1,155 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7591D14A4DB
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 07:47:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1244B1D5CE8
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 07:49:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757404060; cv=none; b=iQtT9k2oI6MdoAP1VM2rsFrqx5NeUKenmWr66HIIumkkZEFJEi2+tlbAyJ/e/tVl+MHmupZLtGhxzqfyFmagbe5DXwGxRtX/GrN4YL0/8PsLDYp+tQzZHhd/ZG0ECHYjEGDZacLbDnK4vqMfPn2wTmr+YakQmneb2EY+smeSEDI=
+	t=1757404190; cv=none; b=qkWN79MRoJ3JEm/ZBjM1ZB0g8qrCk6/SbjsyZHNUdFbJ0BQgYch3WKAPd9e6G9FERYDBbpUzVUM1mys2VwENjSzQkCKb29Wj7ki6IfbAcLM6Bddkbvw0gl7nlaXpKK2cUPzhDlo0e47NRD6QiIsx/GnHFccz0yqpxsDQaE43E7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757404060; c=relaxed/simple;
-	bh=Nz6+5bNEyEW3C9wCW9vt+qpHzmrtcDvXRvm2cR/sdJU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=c0kcmRccGuyXq8DgZLNRIBswnLoH2eG8H2jo4VrJ6af8NHjwQnOKNjSMwBWKeF7wtibSEeI9kcFF1kYqEokxGcZsmnt0tQduLdCQhqNiC9yegL74oGtnUArpnHHvCEZnd40kbpavSEN6fAUSehUwFCJ8oKvLg8BbnA0khouQjLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qej8wYkh; arc=none smtp.client-ip=209.85.208.54
+	s=arc-20240116; t=1757404190; c=relaxed/simple;
+	bh=p9nlhxtSMSOkEaA5QIWj7oDCCF6ohk/lKj4UCFusbiQ=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QECTIv4ZiNFl48UYdZJ40U8khU8g0wXjU6hhVMS4bavP44Mgm3c4W9lb5DPjvzsytyhtEiKfU+IqtlZP7kPTqUyEJ72Ukwmv1rpiCAn5/JG//4aGgPikjyAbWxD6Od0B568UgbphZFKDe/7/jsv1ZF+efF0NyJf1kKKXEziHwdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jRjN1K3O; arc=none smtp.client-ip=209.85.221.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qej8wYkh"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-62598fcf41aso4054253a12.3
-        for <git@vger.kernel.org>; Tue, 09 Sep 2025 00:47:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jRjN1K3O"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-544bd485420so2172402e0c.2
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 00:49:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757404057; x=1758008857; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8/3FiZRFAQX/BYbUUQsqEym/wH44JPonL6FYNBlf6sI=;
-        b=Qej8wYkhLDqf2NFcfPQx+W/gllknhjuotSoPrM8w/RRSREJyebvDp+sbbTAW79RrmO
-         rvR7F8VzOhXQGsNNhGjbTbW6s4JXMUo5pvnmIENO1X3Pj9rhtewWUO6TmlGEok+4sIAg
-         ueuLtNa4d7saRJ/+HLVjcH1RBl1jpzX9Qh9Va5bLAg8h9TfjJNxCGTMYaZj1tEJqKrtz
-         FGtAR/dCCscFwbDw3xSv9dk14P9m9wFWilwR68TUrCtdA9jwK3k8y7Ax/rBPwPTLf2SV
-         +80/D2k973WhEtao8odr52NzjrJxzc8la376lLVd3bpNH45QLADvBVMdlIkKipcCKF24
-         hVaw==
+        d=gmail.com; s=20230601; t=1757404188; x=1758008988; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rsd8NMydnX/5sHXLXnhoQ5u08Rbls/Cws6NrdRx9oL8=;
+        b=jRjN1K3Os9qQ3zYc81N+4Kk/Q3rWBcbEAxChe250eFbpx9iHwSiNeeZMZNp2lVzvgO
+         g1Jivm2gaw71bJs2B9IOoxlazws+Yz4KeKr1b5nyO4KcvwM0J/lg+YNf4SYC4MHv0WA0
+         thLkD/+xyveyqyhaW4qJn1Dp2DoRtXJAQ2nvHZamB3eVaXanKBnxJlDoZvUPmQ96UwUa
+         MAtGoXa3TA9MGJ6k8Ifg3IadSkLwF7WVx505WQV6czzeL696zPRI9SJgYWrslP+6bNlI
+         0ickfbZz66mvgZt+dZSE+YW+VKMmHgB5Fn5ChFhPfR5nX0xvz61iEnTW50TYyE5EvzHP
+         B0pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757404057; x=1758008857;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8/3FiZRFAQX/BYbUUQsqEym/wH44JPonL6FYNBlf6sI=;
-        b=AYFrbIyGhc7Y27++4RG1xzrLm+WZK+a43tSW81S7e+M9BKIJ3FICtbK83VQZhrQZU5
-         J40noDO90hVVYaNcHXErAqxXGE4OCfGnvxnpAxEkfMLKwgcj3b7gbAQOxDVmSHXn730U
-         zgDszvam3BiKkSl5uHcwz4T+GeA/qfbgTjoMPORN5hwPK2k6Isx9gzTkLp9aMxXiPuod
-         P0e1eMHTYBqeRcfiZ4ynE8bUY9foXGTzxL2QpQWIsGsuABs8Xx9/+vaZ/qkueNTFVuRx
-         bejTf85i/I0EP8lQLeiE3z8gEPDLw6DIwyycaVEyQuO3fE+LOMomgCuT5E3/qLSamyKx
-         pjPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVjluVjzcLRSxR+/VoJB24JFJ5xbjw8dhCppOkQeCffxw00dq+eB7FvKvp2ohZ+4iORyo4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwbO75/X+riDwuIxWltrrLZkRcKBfD3IMO4mgsHIvkHy/V/gT5J
-	dcTaSiUF/3NuQf7esNdZXsdmLWy+lynlwMUnkw3z2zGeEn/tZxVa2EiTK2/Lmn4U1ZXT2Tijjpu
-	aCTXCsJys+PUNm3LJ0TQDNq81DiGNfLE=
-X-Gm-Gg: ASbGncsLdcha/DrUTgO+b+nIpaNJzyFetgZyaQsjKceI1P47Q432oFo2tMkV4tyjY4U
-	CUpIevxShfv/D3UXW6MbgQ4U3PuKQptKGcDQow9EWTxycRpw6a+t/V9rxIKbttVzx0Z063V90E+
-	Rk4TkvYnkoQABmwR0rK67e2ndFGZ7sU3AnM/K84UFUO8mwt9v9un3WdAL+vzKJKexHIvtMcZSzn
-	QUTBrBQDpvhMZS42wex4ok/mBgsEZg=
-X-Google-Smtp-Source: AGHT+IG99kK2cZ46c9jn0QA08cVxr6wPRTJ+ntVwmmGExcYpQiqLNftQGbTsvlwLwyHANIHFmrQGVbJVk2feQTERYXM=
-X-Received: by 2002:a05:6402:24d8:b0:621:7d0a:151d with SMTP id
- 4fb4d7f45d1cf-62377f89744mr8233305a12.30.1757404056540; Tue, 09 Sep 2025
- 00:47:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1757404188; x=1758008988;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rsd8NMydnX/5sHXLXnhoQ5u08Rbls/Cws6NrdRx9oL8=;
+        b=lrwiMlgTkymhcgWDMwraBq1/SRIBE8NMdQjeDFaYu3frMw1WIT5uyE++KuQ3cPrQ/J
+         gE6lsUTxYJW5wBrNS5QcWudMVDxUkvvEvsjW8rN6WDLjurbDvIrqX0FotVAosxQmyXt8
+         +EDlini98KQGbBrFKXJpgm/0SCfWZBrH4kBTbqOG2Wa7osap0tQohEs7/AWUcCZBbJWa
+         4BLZ7eNB6Ar0pv5pS5J9IoZcaIbQnVgVcHHyyhFpTAL0sfRKXgMl8xT2TsCfFXHReNk4
+         pwJorXYLB46miQqEAMNM8d1STfNjeAR4qCrw2XmNw0P4PDnt/g+/8CQl32CbhG1mg7On
+         ayRg==
+X-Forwarded-Encrypted: i=1; AJvYcCVK7koj75FBnEgIQPU55c4IVeIzTK3HRlcMV0W0/p/B10TSpqsSOs8IWHQYh+Md/xWouxM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7VhkcmdZbUgdZMUQLnCJ+HW1kY+a/Jw1yD/CBdDT+jjGWMY2G
+	Egu0N5D3UlnUag0SRNRbhISt+Ni7KIyRfWtubVee/+GkbjvvPOhe4ycDZ0rMqK1m/xoea6q8X7Q
+	D30T+WSdo8nUTK5pIiKe0AFh/gpX7aMI=
+X-Gm-Gg: ASbGncuU1PjJeX+wTPDvvMhr8iEpH9Epg4/cWqhY9gMf3xZejQZXARTEKviZqlTeC6J
+	PIJpRkn9LepEhngYx8kJv/HyBFnpjghfPyL0Bt+IHXZ53neV0GI65uqqdsLDPBwav7QTfk/LZX+
+	BoNvw7dCHWHMoBGWsJlx3Icfg14YF3NURgd+FmWj3LNHPiNW1fCcJVETal17+tt9pOJwOLHDfBU
+	hqugV6Bft2NqBX4
+X-Google-Smtp-Source: AGHT+IEW9dWGidE7wXA3tiQtJi1+93h51O8/vvXnw5hvAGkYaWYdl1GG7f0RZMjoMxfdL298yXd60G2gjF0H2uPQkbc=
+X-Received: by 2002:a05:6122:1d14:b0:53c:6d68:1cd0 with SMTP id
+ 71dfb90a1353d-5472c3ccfecmr2946255e0c.14.1757404187800; Tue, 09 Sep 2025
+ 00:49:47 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 9 Sep 2025 00:49:47 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 9 Sep 2025 00:49:47 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250902-b4-pks-packfiles-store-v3-1-6925278efeda@pks.im>
+References: <20250902-b4-pks-packfiles-store-v3-0-6925278efeda@pks.im> <20250902-b4-pks-packfiles-store-v3-1-6925278efeda@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com> <CABPp-BG6A_mwxQheE5ED5HQj7STVtf1_9NhSmjmzRPB7QkdWyg@mail.gmail.com>
-In-Reply-To: <CABPp-BG6A_mwxQheE5ED5HQj7STVtf1_9NhSmjmzRPB7QkdWyg@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 9 Sep 2025 09:47:24 +0200
-X-Gm-Features: AS18NWCnGwW8pOPPFkr9prX0lWjTBYRKdbxX1y2j2vw3m1GYCpK7emxym--LzEI
-Message-ID: <CAP8UFD3GU5Xwq7WMihmHtpWc-GjB-guTU6JHG7BdkhxukMihNQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] replay: add --update-refs option
-To: Elijah Newren <newren@gmail.com>
-Cc: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>, 
-	Justin Tobler <jltobler@gmail.com>, Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>, 
-	John Cai <johncai86@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date: Tue, 9 Sep 2025 00:49:47 -0700
+X-Gm-Features: AS18NWAIp4FI86sqVfhIxwRXtzAf0TlRxwhXlnFDtprH8eqBiRArz6F8E5XeBzc
+Message-ID: <CAOLa=ZR0H+2qy5jR=iTnBPWQKpbX_1zBef60iK6VUENP6mU=yA@mail.gmail.com>
+Subject: Re: [PATCH v3 01/15] packfile: introduce a new `struct packfile_store`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="00000000000057517c063e598c30"
+
+--00000000000057517c063e598c30
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 9, 2025 at 9:14=E2=80=AFAM Elijah Newren <newren@gmail.com> wro=
-te:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> Information about a object database's packfiles is currently distributed
+> across two different structures:
 >
-> On Sun, Sep 7, 2025 at 9:36=E2=80=AFPM Siddharth Asthana
-> <siddharthasthana31@gmail.com> wrote:
-
-> Seems fair...but why not make --update-refs the default and add an
-> option for those that just want the update commands?
-
-If this patch series had been sent a few months after `git replay` was
-introduced, I would have been fine with this series making `git
-replay` update the refs by default while adding an option that only
-outputs the commands. Unfortunately `git replay` seems to have been
-introduced in v2.44.0 (Feb 22, 2024), so more than 18 months ago. So
-even if it is marked as experimental, it's perhaps a bit late to make
-such a relatively big change in it?
-
-> > The way it works:
-> > - By default, it uses atomic transactions (all refs get updated or none=
- do)
-> > - There's a --batch option if you want some updates to succeed even if
-> >   others fail
-> > - It works with bare repositories, which is important for server operat=
-ions
-> >   like Gitaly
-> > - When it succeeds, it doesn't print anything (just like git update-ref
-> >   --stdin)
+>   - `struct packed_git` contains the `next` pointer as well as the
+>     `mru_head`, both of which serve to store the list of packfiles.
 >
-> Seems fair.
+>   - `struct object_database` contains several fields that relate to the
+>     packfiles.
 >
-> > This should help with git replay's goal of being good for server-side
-> > operations.
+> So we don't really have a central data structure that tracks our
+> packfiles, and consequently responsibilities aren't always clear cut.
+> A consequence for the upcoming pluggable object databases is that this
+> makes it very hard to move management of packfiles from the object
+> database level down into the object database source.
 >
-> I'm slightly confused by this statement; there's multiple ways to
-> interpret it -- various antecedents of "This", questions about whether
-> you are saying git replay has one goal or you are just helping with
-> one of its goals, and leaves to the reader to guess which part is
-> helpful (is it the ergonomics -- why does that matter server-side?  Is
-> it the atomicity?  Then why did you also add --batch and --update?  Is
-> it something else?)  Perhaps this sentence can be dropped or
-> completely rewritten?
+> Introduce a new `struct packfile_store` which is about to become the
+> single source of truth for managing packfiles. Right now this data
+> structure doesn't yet contain anything, but in subsequent patches we
+> will move all data structures that relate to packfiles and that are
+> currently contained in `struct object_database` into this new home.
+>
+> Note that this is only a first step: most importantly, we won't (yet)
+> move the `struct packed_git::next` pointer around. This will happen in a
+> subsequent patch series though so that `struct packed_git` will really
+> only host information about the specific packfile it represents.
+>
+> Further note that the new structure still sits at the wrong level at the
+> end of this patch series: as mentioned, it should eventually sit at the
+> level of the object database source, not at the object database level.
+> But introducing the packfile store now already makes it way easier to
+> eventually push down the now-selfcontained data structure by one level.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  odb.c      |  1 +
+>  odb.h      |  3 ++-
+>  packfile.c | 13 +++++++++++++
+>  packfile.h | 18 ++++++++++++++++++
+>  4 files changed, 34 insertions(+), 1 deletion(-)
+>
+> diff --git a/odb.c b/odb.c
+> index 75c443fe66..a2289ea97d 100644
+> --- a/odb.c
+> +++ b/odb.c
+> @@ -996,6 +996,7 @@ struct object_database *odb_new(struct repository *repo)
+>
+>  	memset(o, 0, sizeof(*o));
+>  	o->repo = repo;
+> +	o->packfiles = packfile_store_new(o);
 
-The way I understood this sentence is that `git replay` is already
-useful on the server side (because it performs all the operations in
-memory and doesn't need a work tree), and the new feature added by the
-patch series reinforces this because atomic operations are often
-better on the server side.
+I assume that the packfile_store needs a linkback to the odb for some
+reason which is utilized in the future commits. reading on.
 
-Thanks.
+[snip]
+
+--00000000000057517c063e598c30
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: ab95c9aeddc7c44c_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pLzNCa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMGxXQy80dWtaSHV2UGtVWVgxeDBHWkV5QkJDRVU4UQp5ZXFCVmVIWHlO
+M2t1ejh2UWpsUjEzZFRIcU1TUit2NU1PdXJZRkZ1am5qV3FEbFJyNEpSN1RndW56U3BiL3F2CnNj
+SEJBb1hDSFdNdnBpZDZtV05RT1ZBKy9QcS8zaTRubGsreXBBTUJmYzlPRjhrVklVTFkzRXphUjll
+SEhSQjgKb2x6WmNpelc5aDNjb2FLbkwrSzBhTk5telZzaVhid0lzVWtTQ3JocHFvRXAvQlZZL2lR
+WEEwYlIzcGppNkIwcQo4QmE2NUEvR2Jhc2FoOEgzS1d4VUNoenFsNXhpakFwSXFFTm1LcTFZTVp2
+YXBMT1NDZW0zaEZjZmZkeEg1TjlvCmxtdVZhRUJUR0hIallRN0dDaFJmanB4Q2tNc3huSGxjZG5r
+YUlUZHduTkhRY3dPOG1tUm5rM1VXZWd0SVZGQW4KSGg4eVVoK0xwam4ydnFXTGpZNU9yaFlQT2ZT
+TWd1OUhxeXN2T3Mvd2pOUXlmUmhUaHlSaWt3NzZEZS9Eakw4NApPWm0wV3BqSEthMzB1OTlqc1Jr
+MjBJN1QwSS9qaVkzUXZyS3lNenJjbHk3d3dlSUJNL0FzM3ZwalFXZUxWN0NTCkZ3b1RoRVNpanZp
+bFZ4SnZBek51Um5GU21odWtvU3JWRERCQmZCYz0KPWtqL3QKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000057517c063e598c30--
