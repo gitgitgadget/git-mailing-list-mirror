@@ -1,128 +1,131 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841B219E7F7
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 19:48:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4E426981E
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 19:52:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757447316; cv=none; b=WHHHdDshi0mRfINaPV/jV7OiaZqSBqHmGX4WgYoHLA8SgiQN+O0DZfjJGkxUQvW9uSrG4a1B71mK4G5B33FCx+eMxNqi4k7F6MiS2TPVv0rtpcFR2hKpsO54dYvABKayvxK1Z/c0eKDiAafGCFKgoydc8mafx3OqDsEOZfQ0Z88=
+	t=1757447552; cv=none; b=uVkQMfHii8mFJ7CRR0dlQ5FtguFazl0xu1rxNFCWqMDaLbg7LzFg0fMemtZSEZKKNVP546g0TEE6OyH4e/P5PTC+yCM4heM5SvKyTgYKFWxtxcBDtOAbQ7JJH++hUeB2AtXCpaCx9dOkC84fGhgCc1G8ZXWBCiWHzo+E3LKUpsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757447316; c=relaxed/simple;
-	bh=fHG1fSDNj9pEk07Zwt/08ZM8l45/LPoz6cMbB8NgcTY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IGuxzgbTr739ZvazxCE3WRIBXVREXIftO7uli3QxNSFZr5679Rz7fke8r+bLu4u2X8wxKx72xv9zu0NS9wf2RgZkvVFOkdUqAo0fMmDb/8tczRKy6rVSFqAFgI1dQ7tKmf5yFtOV+iIiPbxNmf2sqi1+hAXmkh8wtAhFumAzH0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Q6AisY1J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lw08XYOj; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757447552; c=relaxed/simple;
+	bh=1djcQRAyAMMgf4+DJoqF8bX3kg0cH/8MhriITa95cZM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rDbEgyeMCTow1L0MWP8hyXa4Hy78UtZTCYeph8esPlz45ChOmMLrBUL8oGrgHpHcwCMrj6KQwMkPGWgbTMZSgFMm1SOju+80mKk0G6EBloVCsNVc7y91q87Z2LryjIWf4MuH4dzrsbHSjU0pcpWEzhdDWZZxLA0mtjuHzPzbCfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mIg05DZ+; arc=none smtp.client-ip=209.85.166.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Q6AisY1J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lw08XYOj"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AEF6E140009C;
-	Tue,  9 Sep 2025 15:48:33 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 09 Sep 2025 15:48:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1757447313; x=
-	1757533713; bh=BJ8pgPuYFh04N/uSN3OPxGh2IBHkwwZIOUCEKG+BeM8=; b=Q
-	6AisY1Jmu32H2ShwXPuKYUoM3zK0DwGHpfRLWqabOQ6RpaJCThKmopwUBsv/TTzB
-	qd6ZgihlGzLD6RI2pxIGjgas3V0KAWQiC76vFF00lRq5sj0Vd0qDP9Tgcr1lAHIv
-	bguxgJog+Ma4S3Lq1BouvyiCfDS2YQ7VKEwSacYYB72qDCA8uiqLdgvChbS++PsD
-	Q6LlTZb4MWi38dU2D8qSPpSWjIof3U3GiPPYlUK0s0+31nQ7gyMaYjJSYmLgeG7Z
-	c6/r9tRKVzf/C62JT+dEvysiEo+lq9XgbVQRR4V9/t7D/7jHT4KZYSk4L+jXu5rE
-	P8qQu/QvKwTWjCas2TXog==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1757447313; x=1757533713; bh=B
-	J8pgPuYFh04N/uSN3OPxGh2IBHkwwZIOUCEKG+BeM8=; b=Lw08XYOjhKCLNJ5/V
-	+S4T5IIlfyPjxvSk5OXvuFHXBunkNhrKl/U5SZyQ09cIXg6t7goUmgeIwsxxRUC4
-	eGkHVmokSnGFcs0Ed926/gLD6cG2XuKedpEG2pFEFLf3izPDIkYDGiKKvhyHYtIE
-	Z4oLPs4sAnTf8qyciMioSLqb01Dbe1f5IUxrSq+RdiEMR7H9sgKJ8pCYYOVSKq3U
-	U/F9nHY0+LbVQJcYpa1md11wYWWqKqjSRZLa7ShGxcc7bOyy6j58ho1+/++k3Fym
-	I7UJz6JPvn1WNwtkLzvvgwJw0en3Xn1DjtWGLuiioYfLSSRBFmjow/2nSTEu2ELv
-	+AefA==
-X-ME-Sender: <xms:kYTAaAPfjFU3MrDPcLlqn5uImoyLDn9Ra8d-4Ze2kd8WJEYBL0-YaYE>
-    <xme:kYTAaCc5LtFw9L4jIZaI5ayAsOV_NRP0JRstJshSm61kRt0rsiTBRdZuN3xGUfVTs
-    4Q9SVMVSoO8GhnjiQ>
-X-ME-Received: <xmr:kYTAaNuJnJ-hzB0uEqvX9QxPyKyzKrQbPqkZrnxuX1TehZ9q5tR084LIc1BnbGjVmiFiWYmCcTfxNm6F-FcBk52SeaYgp2wBCK9EORnyzjMpAjLr6W3fxeYsaw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvuddvkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpehkrhhishhtohhf
-    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrh
-    hnpeefheetkeeftdeiffdvjeetueethfeugfetgfdtveehhfevffeuffdtheeitdefuden
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhn
-    rghmvgdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpd
-    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdr
-    ihhm
-X-ME-Proxy: <xmx:kYTAaDkxe84v0KYjB25eQFGbj2BH4Z6b8I1KOqb_-Dvqpk7CFKDKcQ>
-    <xmx:kYTAaPyENWuWC69XtZABRDFAIGkadpeIXplElA2eY9XVlYgXMP1v-g>
-    <xmx:kYTAaFNPzTGNeK8tKppxWgaimKXhmwT_9NpQMGH-DcmIxxOLyOcdBw>
-    <xmx:kYTAaLqZpLvURO-0oyQL79FT17Wma4DrAGvxeJMgss10EPazUxuy1w>
-    <xmx:kYTAaBUPO50oztT-Zo1nD_Dh8bLvRooSn9oaIO3hg33VN3W1jgYsjI9T>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 15:48:32 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	peff@peff.net,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 7/7] BreakingChanges: remove claim about whatchanged reports
-Date: Tue,  9 Sep 2025 21:45:57 +0200
-Message-ID: <fee752d2fb0a8702683d94e76b6ee54e7fad8c92.1757446619.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.51.0.16.gcd94ab5bf81
-In-Reply-To: <cover.1757446619.git.code@khaugsbakk.name>
-References: <cover.1757345711.git.code@khaugsbakk.name> <cover.1757446619.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mIg05DZ+"
+Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-4135366c152so4584875ab.0
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 12:52:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757447550; x=1758052350; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=v9VuknTu2lD3OYDGogxfBOC41psGOHwdjHS2LkLnJWw=;
+        b=mIg05DZ+hawwCG6ztaDp16tkfe+DmE6v2PcD5FT0qtTUXXhl7ROLRCdh4nrZXoGt3r
+         Qm8zaueZB8R9zJMcgoIfXMWaM+X9GB5+7uWGwN+FQn1gq32BoYVLeyEDZd6Vmq97egt2
+         VNk2yg+APdflIxBxcxFI/TuQfgoI+Gu+e9A63JdFg5ElSAdxwj2mlmTcAxjCdjkNsFSH
+         VyzUkMr000ViaDIxCvWEkRF3OCfFpIj1tED9S2rjyTqAr/FRVhUPdxTED2D2JnqR8R80
+         QE0l3l+KnuLzGhihDx6mbVTRobTT3AaAm6DmSadyuhoi2K2V0w4YfRj01ap++Xv8zjzR
+         cC8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757447550; x=1758052350;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=v9VuknTu2lD3OYDGogxfBOC41psGOHwdjHS2LkLnJWw=;
+        b=lPpkmQwbFOK99udxMWLNB+6i3gdQtDkbEoSypsAstBd+XoxY/sv04GWXCHaul5E3oZ
+         alwow3SKkGZcNeszb0+1jQqlhnqwbwiOClQyK+N/DtQsQ0fKEQq5vNOmxOqujBYAAl6Q
+         C96RZcw+vUYXls9vKmRLEM7acakO6jPXrsaXbHC8Qyz27zlbHX+POQ63dJmX+5PLONrz
+         eOsM5Mj8r4MpIhbl0ThBtK80l9tilmC/jj5aizlQQ2WMpKpoUdPI2AGLZ+Z2w6TWmh2j
+         NJ6EtPiBinAUDqCx+ypc5Pj6IYn7z3ksPolYCKELJHgcO4SKTmN8pYLaBsHHarARDbzl
+         CwuA==
+X-Forwarded-Encrypted: i=1; AJvYcCXxEKbiMQU1emJRYW6M41kTQ6rLsjA/nd/FHTlhWpmGeOmm2flhgosj5c31/e/Jx2Lhilk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzsh5B+ygFErH+P2u+UUEd2lqsLQo+MPHjcJiBzVQtB0iaqT7n1
+	co19qDv9VtKs92KJ5pt+DLhdVCGRHKFsW9B67iIi5MFobUMOsGo7m/NlYbprV7gFVmGxsdhv9su
+	JmyLet0bsywaDLbr6v3sfOUlgEyxrBow=
+X-Gm-Gg: ASbGncsyRM2Twxpr5E4NBBMaIj38fgnkXl/f/G83dX35JjBsTmlX3NA8AbqQmNI7OWF
+	HK0z5pLrxqfuULxZnbmN4tDP0Alt38nAbNcFHbkKZEfchpGZM0UTog7SsjjubpGSpw6j/UHVHat
+	xWlR7YyY3eggtkAQvSSJGhW3/BdmJ9Evm9mJ1t2UGBQHNharn0VzUPYxARIpcbXtGDbakVda62X
+	cSqYO4C1GuvexQ0RJxE
+X-Google-Smtp-Source: AGHT+IHB+j9rSkGXgj7ZW/aKMu1UbN3Yzms+CtKRRAsbpvbmqmd0VgLeJCHvf3T956YeK6DGt/M/TC4/yxHh80zbnK0=
+X-Received: by 2002:a05:6e02:174c:b0:3f1:e16e:f5fe with SMTP id
+ e9e14a558f8ab-3fd965c538amr181921255ab.26.1757447550398; Tue, 09 Sep 2025
+ 12:52:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
+ <CABPp-BG6A_mwxQheE5ED5HQj7STVtf1_9NhSmjmzRPB7QkdWyg@mail.gmail.com>
+ <CAP8UFD3GU5Xwq7WMihmHtpWc-GjB-guTU6JHG7BdkhxukMihNQ@mail.gmail.com>
+ <CABPp-BHWjyRv_f_HKkz10Q_cOZKPvpgf=SEUR1ThmbttkQT+Uw@mail.gmail.com> <xmqq5xdrvand.fsf@gitster.g>
+In-Reply-To: <xmqq5xdrvand.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 9 Sep 2025 12:52:17 -0700
+X-Gm-Features: Ac12FXyV5F0SryUGZ8YDKHx7KCbh1oeMq4Ksh3ouHqXZgNnL_yF69KAIC7fu4Ko
+Message-ID: <CABPp-BEyVSrEkPwsc31g69SZEXNffa64HPNeG-FU+hhQMz_y=A@mail.gmail.com>
+Subject: Re: [PATCH 0/2] replay: add --update-refs option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Christian Couder <christian.couder@gmail.com>, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org, 
+	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>, John Cai <johncai86@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Tue, Sep 9, 2025 at 9:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> >> > Seems fair...but why not make --update-refs the default and add an
+> >> > option for those that just want the update commands?
+> >>
+> >> If this patch series had been sent a few months after `git replay` was
+> >> introduced, I would have been fine with this series making `git
+> >> replay` update the refs by default while adding an option that only
+> >> outputs the commands. Unfortunately `git replay` seems to have been
+> >> introduced in v2.44.0 (Feb 22, 2024), so more than 18 months ago. So
+> >> even if it is marked as experimental, it's perhaps a bit late to make
+> >> such a relatively big change in it?
+> >
+> > I don't think so; we marked it as experimental much more prominently
+> > than other commands -- in the .c file, and three separate places in
+> > the documentation.
+>
+> When we are talking about a change that breaks an established
+> end-user expectation, it does not matter much if we wrote anything
+> in the .c source files.  The end-user facing documentation does.
+>
+> And as you said, "git replay -h" and "git replay --help" prominently
+> show that the experimental nature of the command.
 
-This was written in e836757e14b (whatschanged: list it in
-BreakingChanges document, 2025-05-12) which was on the same
-topic that added the `--i-still-use-this` requirement.[1]
+I should have clarified -- the .c change was specifically about making
+"git replay -h" show the experimental nature of the command; if it was
+just a code comment, I'd agree that it didn't matter, but it was
+specifically about making the experimental status known to end users
+in the short usage message:
 
-Maybe it was a work-in-progress comment/status.
+$ git grep -2 EXPERIMENTAL '*.c'
+builtin/replay.c-
+builtin/replay.c-       const char * const replay_usage[] =3D {
+builtin/replay.c:               N_("(EXPERIMENTAL!) git replay "
+builtin/replay.c-                  "([--contained] --onto <newbase> |
+--advance <branch>) "
+builtin/replay.c-                  "<revision-range>..."),
+$
 
-[1]: jc/you-still-use-whatchanged
+> If this new behaviour is a clear improvement for majority of use
+> cases, I am perfectly fine with changing the default behaviour so
+> that everybody will benefit.  It may still be good to add an option
+> to allow the users to ask for the traditional "we'll give you a list
+> of updates you can apply as you see fit, but would not update the
+> refs ourselves" mode, though.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    Footnote solely to avoid awkward paragraph wrapping...
-
- Documentation/BreakingChanges.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index f8d2eba061c..c4985163c3c 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -235,7 +235,7 @@ These features will be removed.
-   equivalent `git log --raw`.  We have nominated the command for
-   removal, have changed the command to refuse to work unless the
-   `--i-still-use-this` option is given, and asked the users to report
--  when they do so.  So far there hasn't been a single complaint.
-+  when they do so.
- +
- The command will be removed.
- 
--- 
-2.51.0.16.gcd94ab5bf81
-
+Yep.
