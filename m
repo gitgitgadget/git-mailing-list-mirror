@@ -1,79 +1,53 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E3E3054E4
-	for <git@vger.kernel.org>; Mon,  8 Sep 2025 23:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ADC2905
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 00:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757372434; cv=none; b=C11dgC0cVRX/uAJjoBjXu8vCiOsHxsvXkpvQBjPZmG6E+6CEMany1lv4RDhAxTeReWM7jf+jqHoLqEWxtC0fpQsb5Zp1Pv/CX6IGtmaZFTYRrie+ZKxjfNXMFJkRzkG420btIDER+nVq16FuN3ZnVKJUnWnaN3pkzGTTUDOgWdE=
+	t=1757377766; cv=none; b=JKqZ2n/Mg7LmIcIlwroljC/0KK4jQwHc5Juo5xFliXvVA8GSr3u6EJNtnRyz1vKghUAtB/KIMv3dzMRdi3niouGkYfqtJPt8XEu5vlufr7ph+0zOXNRvA/SfEj6oDmZCd6pTLF7DctezFghwNOU5mkXsi8FgwHsobfmTqvUh0l4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757372434; c=relaxed/simple;
-	bh=c4H1YaDc7oNrKU+iZSA3fKCz9JNYwQHXwdHZbWFA6Yk=;
+	s=arc-20240116; t=1757377766; c=relaxed/simple;
+	bh=z/lp+dIsmAdbmzpZ8WpJaFN7HX2wW86jsFivaJ0hMV4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mJAJVT1FZAkFs5vkL3BMlUf6ORl+vl2R7Ee+H2+N0GSbKkRW5Tf7u//77dT7pBjmvSkNAKBEUWDs28IC73YlrTAXBPlwQT9R3XFnyw4okbDyMrESzmnv5bkoyf+ZEa5EcuesDS3dl9r3GXicj5Pl+eHwBCJ3TasvriSCMAsEkA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=z5h5Ds+W; arc=none smtp.client-ip=172.105.7.114
+	 Content-Type:Content-Disposition:In-Reply-To; b=kIeYp19eI3u1eE33rMY0xd7q4JKtA/07dreb9PgpkPGIVfO+rLU6ZyCDfXJVDWySmw2Tze1Cu9cN8ZBI+5U9l24aYqtLApVx9Cl0JZ2u81nDEnkyY1QDFh9ex1dQkUl6hyqzw2k3so4+NXqOuM55fxe4pVJ1uevy7fr4C2Hzdpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=cn6jwAn4; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="z5h5Ds+W"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="cn6jwAn4"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1757372430;
-	bh=c4H1YaDc7oNrKU+iZSA3fKCz9JNYwQHXwdHZbWFA6Yk=;
+	s=default; t=1757377762;
+	bh=z/lp+dIsmAdbmzpZ8WpJaFN7HX2wW86jsFivaJ0hMV4=;
 	h=Date:From:To:Cc:Subject:References:Content-Type:
 	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
 	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
 	 Content-Type:Content-Disposition;
-	b=z5h5Ds+WHbdJI5NFRrLyxtgupluOClLTnyMJPN6PWxVaXHfMc3bor8vJCfd725YvM
-	 W+AlZPGUp3d+h2Hl8yPyJhYgu+Ekk3lW/yoxBhCIx+CTY4Q4OhtSIAwXIkEwj60ZG6
-	 9bf051VaYn6J1K+FugohvSWMfhzWFhxJa4Z+AAqipNz1IRTmketh4aqrW3idi1ZynV
-	 FC3zB6IkIOWKRPDMrHjpx6N8/uc5wZO6Z27p2ssWg2XcOy9jZzdiMz/d8a0RXcV2Tz
-	 cpmi4gDTulzNFVY1sIR0/Ui7N8BQuBeQ9L0WFoy3Ym+Iin7PdCh43PmP7Xar5Xf/7h
-	 LJ0LZmaZA4dvBV0ZWT+SfD2d1j2rBHmlkWHQoFfQ/9PbnqxEMqzkE2lyjPQ/Vc4zdP
-	 f1lrKLfqf+aWDyU+I8hckYkeLf/wcN0IXduGvpM9SvnDc9RtWfX4nU85Axuz9dSt4J
-	 Iphl5nOPBurBNxkTchl4ZODU5q5tr2EtR0MhWTuQ81HF8EAjE44
+	b=cn6jwAn49+4hX56+JSmlwe4KnFd3iobl9e7nrl9Jl+CjH5b9wqylqFD7zfhJDkZ7z
+	 HgeSXROd9wuwk6uMCSIlBeV2w/iIQTulDv+p3aBmYqAdT8Lz5MOPXuIKAZwFPPL65r
+	 41aAmzuODmRy218OZ2IaQIajgvDx+P1OCODHOGnm+zYBOjgS7HviILbzVHuwxrA9+0
+	 kwKELDUQjYjrFrN/TkgmcPxnv7HrFzI7P7mvc5HJbn7uzTzeJ19t0JZ+Lmat7x4kL2
+	 Wu4GRyaIROK5ycyQTPTloBNSmXUbeO0vWMjnI5jdjSCBlxfxE1gpmGtqlfFRR/GZh0
+	 z1hJXxQbP3V9nQqr5t9m8ZlzKehXzoTea7icGmL7xV4BuPRPb8paSKxLspp8kZreuK
+	 cNOHamUeMAz52KsAz7w95PR+LTdKywXKfsm9vqPzecx/IpBcyNiwNBRlVm4/zCo6MM
+	 bKvuN48c5VIc5wZB6Asw8k1NBVpoghxMS83+aQwCUtDaGFDHgJO
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:91aa:86f1:d85a:ac64])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4747A200C9;
-	Mon,  8 Sep 2025 23:00:30 +0000 (UTC)
-Date: Mon, 8 Sep 2025 23:00:29 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C9C1A20106;
+	Tue,  9 Sep 2025 00:29:22 +0000 (UTC)
+Date: Tue, 9 Sep 2025 00:29:21 +0000
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Elijah Newren <newren@gmail.com>, phillip.wood@dunelm.org.uk,
-	git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC v2 0/7] Introduce Rust and announce that it will
- become mandatorty
-Message-ID: <aL9gDXNJCGH0eIsY@fruit.crustytoothpaste.net>
+To: Kousik Sanagavarapu <five231003@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Running out of inodes on an NFS which stores repos
+Message-ID: <aL904XGUmXmnyXGl@fruit.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
-	phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
- <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
- <8a5394eb-bad4-42e0-82a8-fa73123e205a@gmail.com>
- <aLrzqR2Z9jz5CuJu@pks.im>
- <CABPp-BGpdEP9+CTApknmGNO=b=66bFKVzWL2s3gmgCMtTBTjPA@mail.gmail.com>
- <aL57ONmEKTmqFhIZ@pks.im>
+	Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
+References: <20250906141711.64419-1-five231003@gmail.com>
+ <aLxUkTzuVaZrWDs2@fruit.crustytoothpaste.net>
+ <DCN87S14V9G8.3BAV5XX1BDHKM@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,100 +55,53 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="UkH3FImVEkaRTpy+"
+	protocol="application/pgp-signature"; boundary="2RuobakBZgzl5K/H"
 Content-Disposition: inline
-In-Reply-To: <aL57ONmEKTmqFhIZ@pks.im>
+In-Reply-To: <DCN87S14V9G8.3BAV5XX1BDHKM@gmail.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
---UkH3FImVEkaRTpy+
+--2RuobakBZgzl5K/H
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-09-08 at 06:44:08, Patrick Steinhardt wrote:
-> > Setting that aside for a moment, the idea of Git 2.55 becoming 3.0
-> > seems like a good idea to me, assuming that doesn't rush brian on the
-> > sha1/sha256 interop (since I think that's probably the paramount
-> > feature of 3.0).
+On 2025-09-08 at 07:05:08, Kousik Sanagavarapu wrote:
+> Yes, I have now set the following config surrounding gc
 >=20
-> Yeah, the interop is definitely an important factor and the last part
-> that I think is still missing for Git 3.0 to become viable.
+> 	[receive]
+> 		autogc =3D true
+> 	[gc]
+> 		auto =3D 1
+> 		autopacklimit =3D 1
+>=20
+> Curious to know if this will have any noticable performance impact
+> though. As I mentioned in my previous msg, these are small repos but the
+> number of repos being created and the operations performed on them are
+> large - mostly pushes,
 
-I am definitely working on this at the moment and here's what I have
-working:
+The `transfer.unpackLimit` will not have any impact; it's in use at at
+least some major forges.  Packed objects can use things like bitmaps and
+other functionality, which forges like for performance.
 
-* Pack index v3
-* Fetching and pushing for full (non-shallow, non-partial) clones
-  without submodules
-
-And I'm working on these:
-
-* The new binary loose object map (I was debugging round-tripping this
-  morning)
-* Shallow fetches (which, due to the quarantine usage, need a binary
-  loose object map rather than the `loose-object-idx` file, since the
-  quarantine can't merge the two `loose-object-idx` files together)
-
-And then I'll get to these:
-
-* Shallow pushes
-* Partial clone
-* Garbage collecting and repacking binary loose object maps
-* Submodule handling in the protocol
-
-I will need to switch soon to writing my presentation for Git Merge,
-though, but afterwards I'm going to go back through the testsuite and
-see what else is failing.  I expect partial and shallow clones to fix a
-lot of the remaining tests, but there are still going to be some
-problems to deal with.
-
-Note that shallow and partial clones where the server supports only
-one algorithm won't work with interoperability, since those lack full
-data and the client side won't be able to map the objects between
-algorithms.  There's also the problem that accepting submodule mappings
-introduces a security risk, since it's possible for the other side to
-send commit A in SHA-1 but commit B in SHA-256 and there's no real way
-to detect that unless you have the submodule on your side.
-
-I may end up asking for some assistance in polishing and sending in what
-I have.  Most of what I have is reasonably good quality[0] and should be
-bisectable, but I'm up to 81 patches before the Rust part of the code
-(which so far has 12 patches) and I'm worried I won't be able to both
-write it and get it sent in in nice-sized series before 3.0 is likely to
-happen.
-
-Alternatively, we could maybe accept that interoperability is a
-nice-to-have for Git 3.0 and not an essential.  It's not mentioned in
-the BreakingChanges document, so it's perhaps not a requirement.  We
-could also have someone work on this as part of their job to get it
-handled more quickly[1].
-
-Finally, I am currently interested in working on the interop code (but
-have no problem handing it off if that works better for the project),
-but I cannot guarantee that I will absolutely have time or inclination
-to continue.
-
-[0] There are some patches marked WIP with a reason as to why they need
-work, but those are few and far between.
-[1] I think it's unlikely that this will be able to be me for reasons
-which I cannot share at the moment but hope to be able to later on,
-maybe at the Contributor Summit.  I'll keep an eye out in case it
-becomes possible, though.
+The gc settings you have will cause everything to repacked after every
+push, and repacking data can be quite expensive.  At work, we repack
+after about every 40 pushes or so.  You may wish to use a different
+value.
 --=20
 brian m. carlson (they/them)
 Toronto, Ontario, CA
 
---UkH3FImVEkaRTpy+
+--2RuobakBZgzl5K/H
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.4.8 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaL9gDAAKCRB8DEliiIei
-gV7VAP9/roTW5hRQ+rrfL3IKPZ4iJhS3wDf+uplrIQLYMgYerQD9FfNwOez2Rl2o
-p11wC51IKwH+qyr8rxTNz1FUOxYl+Qk=
-=IHCM
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaL904AAKCRB8DEliiIei
+gQ7KAP42RQrURLlnobJJ6kAoAQ9u6whOx+IJYeXH5+0Sdm9JBgD9GJgas2yJqQ3z
+/mPzOGqAX76qY2FhuGge5PJO9LjHsws=
+=PHuH
 -----END PGP SIGNATURE-----
 
---UkH3FImVEkaRTpy+--
+--2RuobakBZgzl5K/H--
