@@ -1,165 +1,109 @@
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E086E246789
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 07:32:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FFC3081D3
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 07:39:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757403176; cv=none; b=CNNu3u7IDOeyUAlJqa3EmBHxrRzQp6Gkg9AxSoVEPGesYkDfzVGFTKOUo2Xh605uDcro1qlN5fORl5mSFtGu2Stqn6qfJKybYB3tLhNtN5KgIaaRbriRmtgMCTIXHkszWTjNTiyxq8ZiSRDzmtkBAH4pSHf25ot2ho6/Ex0N/7E=
+	t=1757403598; cv=none; b=sJfHRtcOa/mKr+J1J5lgtXRfoiIiq1zgVkdHyIYKWfR7cGRdnTwfUNSngkeZawL4UND4LKZZO+FLnVy4A2j9CBhB/DM/Bm9bsNZNdE97u94PhM2Ic30AvNSR8KJwJSN63AsBEaRkzIle2MuzJaFtppU0aEG0DTFmU3gGgbThte8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757403176; c=relaxed/simple;
-	bh=vZn1ww8dSCEhUYoIVsybASCdWWkqLgp9XLKea7rLJSI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fV5iuPzadjphMWAKCMBjgu5xZmBw2J/CqlduY1YT8jFW0SEM3NksxBZTyu729Q8hpIfcXuvgR+nbgQGta3YFQnr6eR3XBBRm9zAp70YBzynLt/90oaEyESu9JljrpagTfuMt6nK6OrCL5BZ48Axw0UQIBKy4tcswp3mdBD18YjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MH7PXmgf; arc=none smtp.client-ip=209.85.166.173
+	s=arc-20240116; t=1757403598; c=relaxed/simple;
+	bh=OemzrRk8/y5sZxSnPocytWCiOv9QqKqarLZUCggbQ1U=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Subject:
+	 References:In-Reply-To; b=a3m85+/GvzDDNjElulc5L3sGH7t8Un2/wnTURhedAremgQvqWQuEy6G/tssmRiF4SatyaCGLgJyLHLjheU872sB0aAUd51vBmPc5vnoAU/ZCTdl9Kq7U4wynmSEpZTfaWWZCqsbwScMndedw4Tpv0LPrp4+N8VEEsYKFXlgByuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XRcP+RUe; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MH7PXmgf"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3fe48646d40so13952305ab.0
-        for <git@vger.kernel.org>; Tue, 09 Sep 2025 00:32:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XRcP+RUe"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-24c8ef94e5dso43248155ad.1
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 00:39:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757403174; x=1758007974; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1757403596; x=1758008396; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JbToBDw5tRFXiDtlc5HVq15sFAW3v6wmUaDUpEd284I=;
-        b=MH7PXmgfSMchtY3oivZrGr7U1boO0vu1LZZk7baoOQaFxuyU/FH/371wXWTwra57Et
-         0hs5EOM9bLbW2VRqYzbh8mUSsWbFlRDKum9OrLzRcAYL4u3euhqR8aO51U2dcDXFjXB+
-         0+tz5qRTjN4Y35pRW1eeqeEptUMkScj0lC5evZiYbo2CGMyP+L3O0qg4ln8CldYJtmAu
-         Vrg6eN1oUiIj20ZlniB7+1x0p7Ys/ZZ0Z8ePVr/kXNPdxLE/G4ZbwLRuwPsiIYruiXZN
-         205NSWnHLzAr5V382tPeQKjJKLzhyKY5ZENuex8/W2bSv/1ovZvxx5gMmuZ5m0hKt6Mb
-         tTzA==
+        bh=tvKyoMBR8hteDb0BW9peslQGijvxEIaNi+zG87jRzAk=;
+        b=XRcP+RUem7eRWLkMtSD4kbPKELsBIwRlw3nCLs0t3tI4qxmNMb/jr+YrDToYWgk9v8
+         6+g63pSuv2OH3zTTY1fDcywa6gAN3dvB8+wrulfzAIrq3RqStfv1mtoQBsyag4JgVEpV
+         6a2lgwdXkMQieXyQFXgpwfBCHF6zHnRlQlQOcEJSc/XiHnC/0LeoR4QCctVyUJ4DHDWF
+         hulAVUTlqrNuYhn1wapPFB+qhaGkj8KSJkx2ntlVmBTURaY3Ts5LVaXDzQ+fJCmQxHGa
+         lvB58lbxmsLYXCBdHKfEgFm0cBzsRmsZcsgGpz/2BAiePbA0og0EQkwX93+EF8QWmXIB
+         EB6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757403174; x=1758007974;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JbToBDw5tRFXiDtlc5HVq15sFAW3v6wmUaDUpEd284I=;
-        b=wuIz1AF1uyqNsbgWAkYc35HcMeqmKME2v9Ok0uO+evdK12wV5cS9YRyKvQxd1iZVkh
-         K4uZ9EWIgJZe/6WQMHIvJxwZvX7r9e7wWH9iBzayZqXk6yl4VQIiWyAiXBqW2CT9iF/x
-         xsquDPovuaWx44Dd/FskQ+H4eD885oorOYh2E148D4KH633fXd7QwzGMrHOUaYSaMNdQ
-         k2lijLBV2tXpM7XkLUlJgMt4A8naeq6vlAGNBhhKYcsizbF6gvlpdgpae8VXjkBDLUgl
-         QZ7+XoRf36+6uo4BKPjMUKv9EbFiLHO+cNyBz2Rmrd4uyJuywvma+3XkWwyWh+KuwIJ4
-         Qq7g==
-X-Gm-Message-State: AOJu0YyFsq5Va0N7ahtKHdcLbKKDITJLdsLkQtru/fmEAxp4SVKx6VMt
-	0u4qzNp0AYIRkTheMU0dCXCtmIcMvS7zBz+M+QlEFOfNpBFI2JiClnSNMF6wQc3YdocVNWap8Mc
-	7lsiAGg17s1ibcZcbMFgktJgx0mIrfiQ3P3CTkY4=
-X-Gm-Gg: ASbGncsSTgRGcRdEvI2tgEdeGsMwzSBGqD+dB0S1C+Uugb7jMgwFD36rwvKx40xenP6
-	EXqKtpe6hDEAL/z+/+Ii1pwTcuN2ZiGs/rTotUWVuT+zVdXsl64w0UTIEO4HDQ//6sMdo2Oib1T
-	wpqOzcLzH4WUZVKSPGyJyTxno724b5B6FwHkx/bqVkw+x2+Pm/4htCS02jeOZlS0PHew2d5eiV8
-	1zgSetopnqeadjoMJj/zpPTWg2NbAkOofodzPrO6aNmhz1Nwg==
-X-Google-Smtp-Source: AGHT+IEa08LR5Y+GjaKX3aGvbCpyC/y1EzeO87xVSvBUaUII9UY5jWpXBQquJaMEHdVhdX2OWRiNq1Z0thj6TU1aDmc=
-X-Received: by 2002:a05:6e02:250f:b0:401:8ce:381f with SMTP id
- e9e14a558f8ab-40108ce38afmr145627965ab.6.1757403173985; Tue, 09 Sep 2025
- 00:32:53 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1757403596; x=1758008396;
+        h=in-reply-to:references:subject:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tvKyoMBR8hteDb0BW9peslQGijvxEIaNi+zG87jRzAk=;
+        b=n/6i2NBvyJ70G90kpC+SFKYrIzZJ1S16w5ArxbBsDvd24u8eaabaMBkqMCPhDa0Uwk
+         +uRrhGjSQTRbImkiLlCMJMEPRXiz28qPLbslbzpEsy1vjqWbS9rj6J0x6a3HJixj+REm
+         kvT1txOiiFKaKxwP+l0EFWRuRFshpSlA43qICB5gn/luSfC7igMWejJ/GjjU6qe6c/JI
+         8jCIELHSrt/deVS8otMzoLtOEuE6Op7ZgDTKGZbSL+syie+LOFnZ925U/4qShL9xVKNk
+         9DuPOvdOEyHZWLFUIbbEzN6GnP9HQkHbt+wU/2y41gGFfUBrn3EbaqiyxlLiCVjEj1kr
+         aEAw==
+X-Forwarded-Encrypted: i=1; AJvYcCU1CHBMpzNz1IQhHsrZdXu1tq3Hs+LhCxc9jk1MbCIrzNsiKpsrd4BwAtRefzzdXnMaik4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yypq8kZOMKXJWo01H7MmghmAtUDqiVqsDkqlKl6StXsOfmCioee
+	vfqg9Okgd6Lhks+sZwDwjEbzAQELB6LsK24e+RAva0kB4M9kYx7/RDM0
+X-Gm-Gg: ASbGnctCzu2l//ywQJlBQjpR9nXtc56D7vWJUqOcyRv17PqzeSgdG5lHx0N6X80/VS6
+	2+HomclNm8rUCxuZY4GfAv7i/iX0azddROMxRQPKZyVv/iyMY4lu7vojDpYEWm56oNSvptxHHQr
+	peJ0wPu7XHpV7E00kE9fxyuxfKsSc4u3P9vAn3Ws4cGGvlD1LxdjAXOm/m7n+vzGDoqZXVfqdO2
+	O6bnll4M+Eu3y+2QkeaJcrL/Hx4lueQdsHXrJ0k0nP9Q4tubE4NlD/kpBlSHhM0yu43XvEk6VoF
+	xJKeNzLhDXK6pTlbAgOYR1Zo/jr4uau8DgRpQVBoseLD5PTDfwS9nEepACSQZvQsJylKadg+kh4
+	sWP/DVxcxrRVn29ITnlKLcIjDCtRb0LFtBrsvXxIuojTUc8kviuG3ITGnQf0QRwk=
+X-Google-Smtp-Source: AGHT+IGHDNEWB8G3voNE7JFIeJA+Qkbz81wsgbTpFMTjAA6ADEuCFYblbgv0HNzHBIgdaTaMxP3W6Q==
+X-Received: by 2002:a17:903:2450:b0:24c:cb6b:105a with SMTP id d9443c01a7336-2517a7dc904mr160816785ad.30.1757403596174;
+        Tue, 09 Sep 2025 00:39:56 -0700 (PDT)
+Received: from localhost ([106.51.239.186])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24c860066d3sm166432785ad.71.2025.09.09.00.39.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Sep 2025 00:39:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com> <20250908043620.57848-2-siddharthasthana31@gmail.com>
-In-Reply-To: <20250908043620.57848-2-siddharthasthana31@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 9 Sep 2025 00:32:42 -0700
-X-Gm-Features: Ac12FXyZl3mnlDbUaq3WrLAUFg2LB5ij0CX1Tm2OX1w87vzZWTO8C-kYUu3Sw3M
-Message-ID: <CABPp-BEmOor3CLAY6y50DuGR1K7WYu+PVsXXWOOaofXzJpavMg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] replay: add --update-refs option
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Christian Couder <christian.couder@gmail.com>, Karthik Nayak <karthik.188@gmail.com>, 
-	Justin Tobler <jltobler@gmail.com>, Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>, 
-	John Cai <johncai86@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 09 Sep 2025 13:09:53 +0530
+Message-Id: <DCO3KXDFLAOW.TJHMTZOP7LQG@gmail.com>
+From: "Kousik Sanagavarapu" <five231003@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, "Kousik Sanagavarapu"
+ <five231003@gmail.com>, <git@vger.kernel.org>
+Subject: Re: Running out of inodes on an NFS which stores repos
+X-Mailer: aerc 0.21.0
+References: <20250906141711.64419-1-five231003@gmail.com>
+ <aLxUkTzuVaZrWDs2@fruit.crustytoothpaste.net>
+ <DCN87S14V9G8.3BAV5XX1BDHKM@gmail.com>
+ <aL904XGUmXmnyXGl@fruit.crustytoothpaste.net>
+In-Reply-To: <aL904XGUmXmnyXGl@fruit.crustytoothpaste.net>
 
-On Sun, Sep 7, 2025 at 9:36=E2=80=AFPM Siddharth Asthana
-<siddharthasthana31@gmail.com> wrote:
+On Tue Sep 9, 2025 at 5:59 AM IST, brian m. carlson wrote:
+> On 2025-09-08 at 07:05:08, Kousik Sanagavarapu wrote:
+>> Yes, I have now set the following config surrounding gc
+>>
+>> 	[receive]
+>> 		autogc =3D true
+>> 	[gc]
+>> 		auto =3D 1
+>> 		autopacklimit =3D 1
+>>
+>> Curious to know if this will have any noticable performance impact
+>> though. As I mentioned in my previous msg, these are small repos but the
+>> number of repos being created and the operations performed on them are
+>> large - mostly pushes,
 >
-[...]
-> Option validation ensures --update-refs cannot be used with the existing
-> --update option, and --batch can only be used with --update-refs.
+> The `transfer.unpackLimit` will not have any impact; it's in use at at
+> least some major forges.  Packed objects can use things like bitmaps and
+> other functionality, which forges like for performance.
 
-There is no existing --update option.
+Oh, got it.
 
-[...]
-> +       int update_directly =3D 0;
-> +       int update_refs_flag =3D 0;
-> +       int batch_mode =3D 0;
+> The gc settings you have will cause everything to repacked after every
+> push, and repacking data can be quite expensive.  At work, we repack
+> after about every 40 pushes or so.  You may wish to use a different
+> value.
 
-Why are we adding three kinds of updates?  You covered two in the
-commit message, but mostly only motivated one, and then added three?
-
-> +               OPT_BOOL(0, "update", &update_directly,
-> +                        N_("update branches directly instead of outputti=
-ng update commands")),
-> +               OPT_BOOL(0, "update-refs", &update_refs_flag,
-> +                        N_("update branches using ref transactions")),
-> +               OPT_BOOL(0, "batch", &batch_mode,
-> +                        N_("allow partial ref updates in batch mode")),
-
-Three modes and I can't figure out how update_directly differs from
-the others from the description.  Is it different?
-
-Also, --batch seems like a funny name since update-refs is also
-updating refs in a batch.  I'd suggest coming up with a new name...but
-is there clamor for it?  You mostly motivated the atomic updates, and
-I think it might be better to just implement those and then add more
-flags later if needed.
-
-> @@ -399,6 +461,7 @@ int cmd_replay(int argc,
->
->         init_basic_merge_options(&merge_opt, repo);
->         memset(&result, 0, sizeof(result));
-> +       result.clean =3D 1;  /* Assume clean until proven otherwise */
-
-I don't understand why this change is needed or helpful.  I don't
-think it changes behavior looking at the existing code, but to me,
-result is supposed to be the result of a merge operation, not an
-input, and should not be set other than being cleared initially by the
-caller.  The comment feels slightly misleading to me, as well.  So,
-I'm surprised by this change and would like to hear the motivation
-behind it; could you clarify?  Did I miss something about how you
-depend on this being set even if the list of commits to replay is
-empty or something?
-
-> -                               printf("update %s %s %s\n",
-> -                                      decoration->name,
-> -                                      oid_to_hex(&last_commit->object.oi=
-d),
-> -                                      oid_to_hex(&commit->object.oid));
-> +                               if (update_directly) {
-> +                                       if (update_ref_direct(repo, decor=
-ation->name,
-> +                                                            &last_commit=
-->object.oid,
-> +                                                            &commit->obj=
-ect.oid) < 0) {
-> +                                               ret =3D -1;
-> +                                               goto cleanup;
-> +                                       }
-> +                               } else if (transaction) {
-> +                                       if (add_ref_to_transaction(transa=
-ction, decoration->name,
-> +                                                                  &last_=
-commit->object.oid,
-> +                                                                  &commi=
-t->object.oid,
-> +                                                                  &trans=
-action_err) < 0) {
-> +                                               ret =3D error(_("failed t=
-o add ref update to transaction: %s"), transaction_err.buf);
-> +                                               goto cleanup;
-> +                                       }
-> +                               } else {
-> +                                       printf("update %s %s %s\n",
-> +                                              decoration->name,
-> +                                              oid_to_hex(&last_commit->o=
-bject.oid),
-> +                                              oid_to_hex(&commit->object=
-.oid));
-> +                               }
-
-Who would want the update_ref_direct() branch of code here?  Can we
-just toss it?
+Got it, thanks for the info. I will try with a higher value and see how
+it goes.
