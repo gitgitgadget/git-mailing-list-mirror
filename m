@@ -1,153 +1,254 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBEA302CBA
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 06:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C665301480
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 06:36:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757399639; cv=none; b=eDxEIr/LXpJK7GcPyc8IjrVPu+Jseg/SuRCfroyLZgKr/WlxxZHVhrpDrIYAlbBOcmxi6SJzWIN1TqoRtvWCRLFUCsBMBZE8PosdhpQFRBvrOgCEdTySf4F8ZdQMVbDZcnfcwuwkyP/TRok857NWcoTgULNtGuwmEHAmQ3D3BI0=
+	t=1757399800; cv=none; b=T2cpaSCTJvvqEmSwF/z08HCpjif6ni/4NNdb0GIgU8OkwV/Oe2wQP0ZA5TM0IvulJhPr2rH6MdCoVsSVhODQlK/Wc24d9oIOoGixItsJUyqA9PJ9K4XiLE08uHnw+Wex/2QSNxhyKicDadzOIpii5YEwN5rdaiT/Zchg9fHbvek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757399639; c=relaxed/simple;
-	bh=VEvwvqdtgRtb2rInx+6gKyP+xaKLl7nkqsZ5dKr266g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AfdVzJYyGSyEldY6WOZup9vfI3KHmtTI30w/VQ854LYWefImaKWguZhAwBNYPcwrBFMYLw9zzZVBnF1O2Pqv0vMpDOjVym+9y2bYQPjDcLY55vn+GedFBpvw9iYUcTewT98zGdRj1zISya6C2QOncKrSDWYp7tSkr2cx616TfZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DxyZjfx6; arc=none smtp.client-ip=209.85.166.172
+	s=arc-20240116; t=1757399800; c=relaxed/simple;
+	bh=SwKn/v1CrxF5B5/5wfhYJJJhUQGCBsltI3HrJTkha7E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KkOwmovU9OKf4FTwSs537Vl6jsOqx7JdC6gaoiuOqPky8UM2oDaHgHxA2I1fkgB/0DZ/0+lM81L/K0PRSq2J414kCVwZRdJyigVidcLgmMOUPSNcbQcG3vwG8ZSOujVt9XDpPTLTZp2GQKhYNQTYBfPcJTryhKwxGnvTrcgDUUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E5K0/FMJ; arc=none smtp.client-ip=209.85.215.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DxyZjfx6"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3fc5f08699aso20047535ab.2
-        for <git@vger.kernel.org>; Mon, 08 Sep 2025 23:33:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E5K0/FMJ"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b4755f37c3eso4434649a12.3
+        for <git@vger.kernel.org>; Mon, 08 Sep 2025 23:36:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757399637; x=1758004437; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wFNrilMKB119ABJVvXX5kwWl/0p3KCrNsrp0zYx51Q8=;
-        b=DxyZjfx60kc5yT6HopRiGrXuq8ou8Z9YjrODND7si+1ajZvsMa8LumDIYr8lcyHxCG
-         zGmV3fv3KvL5LtpJYZNtVw3P7lLy6Q0wSk8/YcPTxtltIi55lTyUJco5pAqsVgrDSpZ/
-         1puGa8BHorPU4rYkaI2qvS/sdwyliq2RUZo2t6LqG8jAADGo7IKA6E1tP75ICQe7WmX4
-         MUvYOpw0KPh1SOKfcojwAJlR56jgyzmC0IsGNSf4iZeJVODzpLtqfhkLUNLOoBliVZ5V
-         Cjk3y8cBnhvdzMvf+qHt68ailcZJk6GUgp/Ft8pK5vecxmI1nDQ5O3LeRTsfBJSLqfGF
-         foaw==
+        d=gmail.com; s=20230601; t=1757399798; x=1758004598; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=81VvdMZVJ0KDQiU/xjvsH4gE/yvgkOBX/j+MzUXyeNY=;
+        b=E5K0/FMJ2xeyGrRF5XjsmR7ZutdVxkLFUSUshN3uWP70lyVagsjbYHSncUUMwvl/8O
+         e5U0eo8UJB0rWfXbNd5xtwLH4tA6GfsELgSsHDoVa9b7E7K2ZFZrJ2Z2rsP9DrSn4wbO
+         +mdbQvZWmORoRfNCj54x2GFrNiVHKdEfQgvWHd4k9gHTBAFIWcml/kItf1QmkxIVzgU+
+         6mUG+SDMGl1YWi5Dsb/VvJD0JRpfYMY6GCHLFDLPC+w+1WhGBmJ8DDwT1NKTbeOhwuHX
+         6yfkACltZXaxzU5AMwMofHvCyQzF5m+2yIlol9FFTL/vG60Y6WEIPPfs6ZNmJgD2qLTx
+         vJRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757399637; x=1758004437;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wFNrilMKB119ABJVvXX5kwWl/0p3KCrNsrp0zYx51Q8=;
-        b=NMSKqaN5j8ebhZT+0degaUhoXwrsL9N+efZPIAzXz5lqfuDBkzY6mlc0yf8RVOopUQ
-         IMgh07rfPHPjoR4zp993PJyAyZleFgLv4IpFAn3bN7mqerT7mquXI/SNaBhYRNC6lHVf
-         jkVJmwZNPy1sGYUNcViUBeLSzVxOCphubDTOM03o2MOCgkTqKxpeAH/G5dpSr8vWhr6l
-         K74d3qsCbInRk557rMQOXxNxT0z37gxpb64ApZTW2gk/dnfR+nWg4IDH85CvO/vgkhnT
-         DC3+VTcL06pclVf2VnAlnuwcI4iktMTTsqZ97coWpgNZ5thHG7LAsPq+FDlHDUnsZhll
-         zpRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX9lA2bPN68MESxUujsc6UVh6+RxXjKEYdrO9vdz0c2dvD69MPERnCNn/3nWG0r7fUCcs0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxZ8KUNZKnEgE+0om4LFIsh0jMk0j7q35m6Q2ua2q3pYvu7PYBX
-	xba0J4Dm5zOoS35HiZFfwIh5f0EygKcJBZfgBBEKsbnNz2jy80fGEo+OiVCPdHLsKPLI5Hv3CbX
-	mMDbktbBQrRi3GvP1HSftfSdvQ19qncs=
-X-Gm-Gg: ASbGnct1AhTJlAUVAef+cyTt3p+otg0lQRH/NqE5yYUbwaA+u+m7234A4ojYdhEnIvg
-	Ae912mci6pjp8zJvkxeqMg3qGXavukFHjBaa+07tPG3fBgG6QjKjovL1lEGxdk5vzVfaIr5NCED
-	BS1+gFlujcgqoQ2vMtbF7aswPnnaazPgbdVjNY621r6ERR3W1nM+x/rAGcDhRN+jT8PqB9rfPTT
-	VfPQ8a7G0Nu0Bm7BohsSWUFk5Cm8svVkyM2vjns0HX5G6MpHA==
-X-Google-Smtp-Source: AGHT+IEzEgK/iH0T7iSK1Z1RrbJe1CmfEXivrRuMlfqhm7hf27gIC9OETHQ/MqA0q2/JayK5umnpd5L3b7BuelyefiI=
-X-Received: by 2002:a92:cdab:0:b0:3f1:a5b9:4a32 with SMTP id
- e9e14a558f8ab-3fd8cdbdd83mr143272645ab.1.1757399636704; Mon, 08 Sep 2025
- 23:33:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1757399798; x=1758004598;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=81VvdMZVJ0KDQiU/xjvsH4gE/yvgkOBX/j+MzUXyeNY=;
+        b=s2WlK3VCqED75H9nQJ0RDt8ALlw4shuBzBLdMUGLodxYCQHCc2WIPAo9PkXPussPSe
+         cYCJmEqDOmYXn3xzr+5IfNinQY2Xu4UnfJl9uKqq0wDm4Wf0pJVeRj3kIMFc5YAZaqQM
+         QKgeYtjTbUWNryA7L8BpQPAHGJ5/ePG+uxf1gPnb3i2zHVRl60iQ4X425f5Q4UG5dk8g
+         yq/S7PBcmRdAx6PtC7v4R2OSmCnoFqhthNMieSCL29RBtcN+WTHHBEUgW7/h5tvhj6Q1
+         cfmNEzUpc5I6D44rwzHA1DVCe+jdpSZfP1kHLXdgW/qvYk/w7JuuTV3aXL+q3Jb8pWK1
+         kLuQ==
+X-Gm-Message-State: AOJu0YwHSc1KF97ncvKAFOYP4SUJAUH9JgGezXmHXKGn+ymu2GF4YAd2
+	rOraqIoMspwiqoD+HTDcHA0ZXgTXwABoJjXH+BtvnWNcZBALqgtkIbCdhdEGIiyz
+X-Gm-Gg: ASbGncvbZAovDcgW46mtXuKr+bYK4Frf+TYxjeL8bWBMTTv1ot3ZBRTo6ZGv/NiTWGn
+	RHb0uqD9gyhbU5fczDR9NDOlGskPg035vFkmEiq7sgLHPoXx/vXp/lGGA3BDB1xhVTLbqnbTXry
+	Clyvb9Qw89+qGVWnX5hXs8seZNDe4C+8YR4XG7IUccJlWJeGp1CI5Iky1DzrJpk5LHY1emh7bju
+	AXQZabIgfcFC4jp/+XWQQOlEo50KOSaLkSLXyoLQGWHowfjStQ1KxnY+/eTw5zX9eBobDz0mPGf
+	M+f8TS2NM2czQEajMGdSPFaW6Uk4P6UiTvVPPWEYmsJ7Luq3J4Y/qBr8XZWxG3E70ysd8dbXsIH
+	nRrXqC/ojQxS7y+5bchQstWelKtbrHjjX1TGt94u80+sERetfgjiXrXLrOCSdrOLZOCTJQ3m8/M
+	Bpm4xH0m6D+svrAXX6a14tXInd8K9vAAN+hhz6F1qMPImX
+X-Google-Smtp-Source: AGHT+IGn27B+6diN6aX+K5sIRzXBzOK02mEE8Mzl7PW15/Hjg9v0I1cHiGZqdyA0uLRlqvmq1SZpeg==
+X-Received: by 2002:a17:902:e804:b0:246:76ee:535b with SMTP id d9443c01a7336-2516f050947mr139146755ad.27.1757399797996;
+        Mon, 08 Sep 2025 23:36:37 -0700 (PDT)
+Received: from ?IPV6:2406:7400:56:7e97:c01c:f128:b5c5:e0c? ([2406:7400:56:7e97:c01c:f128:b5c5:e0c])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24c9669a0e1sm160755765ad.56.2025.09.08.23.36.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Sep 2025 23:36:37 -0700 (PDT)
+Message-ID: <7f90e1b6-acba-40f2-9e51-ad09c2bf6999@gmail.com>
+Date: Tue, 9 Sep 2025 12:06:32 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
- <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
- <8a5394eb-bad4-42e0-82a8-fa73123e205a@gmail.com> <aLrzqR2Z9jz5CuJu@pks.im>
- <CABPp-BGpdEP9+CTApknmGNO=b=66bFKVzWL2s3gmgCMtTBTjPA@mail.gmail.com> <aL57ONmEKTmqFhIZ@pks.im>
-In-Reply-To: <aL57ONmEKTmqFhIZ@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 8 Sep 2025 23:33:45 -0700
-X-Gm-Features: Ac12FXzuV1xFDOecEhzPLQPYpCEJDYhZ2W1WjUTGTTA1olRKGg8kjWcyJ9LGjbI
-Message-ID: <CABPp-BEW8TYaffOED34bTy98X=CDZeA+r=X+kMR-GRwuqRDfjg@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 0/7] Introduce Rust and announce that it will
- become mandatorty
-To: Patrick Steinhardt <ps@pks.im>
-Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>, 
-	Collin Funk <collin.funk1@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
-	Ezekiel Newren <ezekielnewren@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Junio C Hamano <gitster@pobox.com>, 
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Sam James <sam@gentoo.org>, 
-	Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] replay: document --update-refs and --batch options
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
+ Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Toon Claes <toon@iotcl.com>, John Cai <johncai86@gmail.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
+ <20250908043620.57848-3-siddharthasthana31@gmail.com>
+ <CAP8UFD3Db-n3CY=KBpn-2Nt=SYY=5ckF3J_4ho6C19SVcrfdsQ@mail.gmail.com>
+Content-Language: en-US
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <CAP8UFD3Db-n3CY=KBpn-2Nt=SYY=5ckF3J_4ho6C19SVcrfdsQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Sun, Sep 7, 2025 at 11:44=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+
+On 08/09/25 11:30, Christian Couder wrote:
+> On Mon, Sep 8, 2025 at 6:36 AM Siddharth Asthana
+> <siddharthasthana31@gmail.com> wrote:
+>> Add documentation for the new --update-refs option which performs
+>> ref updates directly using Git's ref transaction API, eliminating
+>> the need for users to pipe output to git update-ref --stdin.
+Hi Christian,
+
+Thanks for the detailed review.
+> Most of the time, the documentation should be part of the patch that
+> introduces the documented behavior, not in a separate patch.
+You are right I will combine them in v2.
 >
-> On Sat, Sep 06, 2025 at 09:31:02PM -0700, Elijah Newren wrote:
-> > On Fri, Sep 5, 2025 at 7:29=E2=80=AFAM Patrick Steinhardt <ps@pks.im> w=
-rote:
-[...]
-> > > I have a plan layed out in the BreakingChanges document that mentions
-> > > how I'm proposing to do the transition:
-> > >
-> > >   1. We introduce it with auto-detection for Meson and default-disabl=
-ed
-> > >      for our Makefile in Git 2.52.
-> > >
-> > >   2. We enable Rust by default in case WITH_BREAKING_CHANGES is enabl=
-ed
-> > >      in Git 2.53.
-> > >
-> > >   3. We always enable Rust by default in Git 2.54.
-> >
-> > I don't see how steps 1 & 2 help at all.  We now know we want to make
-> > Rust mandatory eventually, and should provide distributors and
-> > platforms as much notice as possible so they are aware.  But what
-> > you've proposed is another libgit-rs or libgit-sys -- an optional
-> > component that no one will know about unless they go looking for it.
-> > I don't see how those two steps provide any incremental help to
-> > anybody over what libgit-rs and libgit-sys have done.  From my point
-> > of view, Rust should be enabled by default in Git 2.52, with a simple
-> > knob provided to let distributors/platforms/users turn it off and
-> > build without it.
+>> Also document the --batch option which can be used with --update-refs
+>> to allow partial failures in ref updates.
+> It looks like a --update option was also added by the previous patch.
+> Is it documented here too?
 >
-> It helps because it allows us to slowly build out the infrastructure. We
-> don't yet need answers to every question that we currently have if we
-> initially have the Rust infra default-disabled.
+> Why was this [--update | --update-refs [--batch]] set of options
+> selected over other possibilities like for example
+> [--update-iteratively | --update-atomically | --update-batch]?
+I was trying to provide both simple and advanced modes. --update for 
+users who just want "make it work like piping to git update-ref --stdin" 
+and --update-refs for those who want control over transaction modes. But 
+I see this creates confusion.
 
-One of the things I find very unfortunate about this series, is we
-have a new contributor who was trying to send in patches, and instead
-of providing feedback, suggesting alternatives, or asking if he'd do
-it differently (which he actually said he was willing to do [1]), it
-sends out a competing patch series to replace his instead.  (And this
-happened shortly after someone else interjected patches because of
-interest in the first area he touched, forcing him to pivot once
-already[2].)  Further, despite him having solved how to get it running
-on all platforms we run in CI with some big help from the
-git-for-windows folks, this series discards all of that.  It lends to
-a feeling that he might be working on important and interesting
-topics, but his changes aren't welcome and it's not worth providing
-feedback for him to modify them to become so.  That's almost certainly
-not your intent, but that is the effect that sending a competing patch
-series likely is going to have.
+Would you prefer a single option like --update-refs with an optional 
+mode parameter? Something like --update-refs[=batch] where default is 
+atomic?
+>
+> Also how does this --update-refs option compare to the --update-refs
+> option in git rebase? Is it working in the same way?
+No, they are different. git rebase --update-refs updates refs that point 
+to commits being rebased. --update-refs updates the target branches from 
+the replay operation itself. The naming collision is unfortunate should 
+I use a different name?
+>
+>> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+>> ---
+>>   Documentation/git-replay.adoc | 62 +++++++++++++++++++++++++++++++----
+>>   1 file changed, 56 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+>> index 0b12bf8aa4..cc9f868c2f 100644
+>> --- a/Documentation/git-replay.adoc
+>> +++ b/Documentation/git-replay.adoc
+>> @@ -9,16 +9,17 @@ git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos t
+>>   SYNOPSIS
+>>   --------
+>>   [verse]
+>> -(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch>) <revision-range>...
+>> +(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch>) [--update | --update-refs [--batch]] <revision-range>...
+> Here --update, --update-refs and --batch are all documented, nice.
+>
+>>   DESCRIPTION
+>>   -----------
+>>
+>>   Takes ranges of commits and replays them onto a new location. Leaves
+>> -the working tree and the index untouched, and updates no references.
+>> -The output of this command is meant to be used as input to
+>> +the working tree and the index untouched, and by default updates no
+>> +references. The output of this command is meant to be used as input to
+>>   `git update-ref --stdin`, which would update the relevant branches
+>> -(see the OUTPUT section below).
+>> +(see the OUTPUT section below). Alternatively, with `--update`, the
+>> +refs can be updated directly.
+> Here only --update is documented.
+>
+>>   THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+>>
+>> @@ -42,6 +43,24 @@ When `--advance` is specified, the update-ref command(s) in the output
+>>   will update the branch passed as an argument to `--advance` to point at
+>>   the new commits (in other words, this mimics a cherry-pick operation).
+>>
+>> +--update::
+>> +       Update the relevant refs directly instead of outputting
+>> +       update-ref commands. When this option is used, no output is
+>> +       produced on successful completion,
+> It seems a bit redundant to say both "instead of outputting update-ref
+> commands" and then "no output is produced on successful completion".
+> Maybe there is a way to reword this to be a bit more concise.
+You are right that's redundant. I will reword it.
+>
+>> and the refs are updated
+>> +       immediately. If any ref update fails, the command will exit
+>> +       with a non-zero status.
+> This doesn't say if the command immediately stops when it fails to
+> update a ref, and if the ref updates are atomic or not.
+You are right the docs need to be clearer about the behavior 
+differences. I will clarify that --update stops immediately on failure 
+(like git update-ref --stdin), while --update-refs defaults to atomic mode.
+>
+>> +--update-refs::
+>> +       Update the relevant refs using ref transactions instead of outputting
+>> +       update-ref commands. By default, uses atomic mode where all ref updates
+>> +       succeed or all fail.
+> This seems to imply that --update doesn't update the refs atomically.
+That correct --update doesn't use transactions it updates refs one by 
+one like `git update-ref --stdin` does. Should I make this clearer in 
+the documentation?
+>
+>> Use with `--batch` to allow partial updates.
+> What about --update, when should it be used?
+Good point. My thinking was --update for simple cases where you want the 
+exact same behavior as piping to `git update-ref --stdin` and 
+--update-refs when you want transaction guarantees. But I am starting to 
+think this distinction might be confusing users more than helping them.
 
-[1] https://lore.kernel.org/git/CAH=3DZcbBLAKaE733_2_2qbFTYCfwGq37RfF-Z3vaK=
-L1ZR49msAA@mail.gmail.com/
-[2] https://lore.kernel.org/git/xmqqzfbvfxs6.fsf@gitster.g/
+Would it be cleaner to just have --update-refs with the batch mode 
+option and drop --update entirely? The sequential behavior can be 
+achieved with --update-refs --batch if someone really needs it.
+>
+>> +       When this option is used, no output is produced on successful completion.
+> Here also it seems a bit redundant to say both "instead of outputting
+> update-ref commands" and then "no output is produced on successful
+> completion". And maybe there is a way to reword this to be a bit more
+> concise.
+Yes same redundancy issue. I will fix the wording throughout in v2.
+>
+>> +--batch::
+>> +       Can only be used with `--update-refs`. Enables batch mode for ref
+>> +       updates, allowing some refs to be updated successfully even if others
+>> +       fail. Failed updates are reported as warnings rather than errors.
+> What's the difference with --update? Is it that --update immediately
+> stops when a ref update fails?
+Yes exactly. --update mimics the behavior of piping to `git update-ref 
+--stdin` and it stops immediately on the first failure and doesn't 
+update any remaining refs.
 
-> I very much expect that there'll be some issues with our initial first
-> steps. So I'd rather want to avoid to expose developers or distros to
-> these issues directly, because that might train them to immediately
-> disable Rust right from the start.
+--update-refs uses transactions, so in atomic mode all refs are updated 
+together or none at all, and in batch mode it can continue processing 
+remaining refs even after some fail.
+>
+>>   <revision-range>::
+>>          Range of commits to replay. More than one <revision-range> can
+>>          be passed, but in `--advance <branch>` mode, they should have
+>> @@ -54,8 +73,9 @@ include::rev-list-options.adoc[]
+>>   OUTPUT
+>>   ------
+>>
+>> -When there are no conflicts, the output of this command is usable as
+>> -input to `git update-ref --stdin`.  It is of the form:
+>> +When there are no conflicts and neither `--update` nor `--update-refs`
+>> +is used, the output of this command is usable as input to `git update-ref --stdin`.
+>> +It is of the form:
+>>
+>>          update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
+>>          update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
+>> @@ -66,6 +86,15 @@ the shape of the history being replayed.  When using `--advance`, the
+>>   number of refs updated is always one, but for `--onto`, it can be one
+>>   or more (rebasing multiple branches simultaneously is supported).
+>>
+>> +When `--update` is used, no output is produced and the refs are updated
+>> +directly using individual ref updates. This is equivalent to piping the normal output to
+>> +`git update-ref --stdin`.
+> Is it equivalent to `git update-ref --stdin` because both exit as soon
+> as a ref update fails?
+Yes that is the intention. Both --update and `git update-ref --stdin` 
+process refs sequentially and exit on first failure leaving the 
+repository in a partially updated state if failure occurs partway through.
 
-I don't understand why that matters.  The whole point you gave to
-motivate this series was to make distributors aware that mandatory
-Rust is coming.  If they disable it early on, that requires them to
-have been made aware, so mission achieved.  Making it optional and
-off-by-default means they get no notice until multiple releases down
-the road until you do turn it on, shortening the window they have to
-be alerted and prepared.  To me, this feels like you're snatching
-defeat from the jaws of victory.
+The difference is --update does this internally without needing the pipe 
+while --update-refs uses proper transactions for better atomicity 
+guarantees.
+>> +When `--update-refs` is used, no output is produced and the refs are updated
+>> +using ref transactions. In atomic mode (default), all ref updates succeed
+>> +or all fail. In batch mode (with `--batch`), some updates may succeed while
+>> +others fail, with failed updates reported as warnings.
