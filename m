@@ -1,149 +1,166 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FC1253F14
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 09:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED139280332
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 09:12:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757408461; cv=none; b=TLtFa8U7i7rssO4ujbJVPwcrPMxEtPuURR6Kn+lJOYVNTNnxI+5P3nP8w7IxnaQBShs//HOvqrUCBW7EbfFh7adIxr5Twe3NTcQ9/65di0bxpyKsrHYfCwLbixTKM9x067ya0dA+2YKH4LpxAjiIKbl1LAqr4MoBZF3z/Bpsof8=
+	t=1757409162; cv=none; b=AMvbi1Ff1cXGGxCHhIaQUiYv9UF+KIagW3/bvsOcyzTRCEcJfpaBvtpNwaKXIHUBR9EKdwL83E/Hw3ojXax1UX5dBolDENYsiK1Cn29vfnyAH2bMv7j06ulEvPUiTtRWMEYKIM14PG7pId6NdRzkK5FhM2X8J9NRnLm4qwc4EhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757408461; c=relaxed/simple;
-	bh=tIMKqvT6KBkVlKFRbMIaVX09gH5DAcXe2xMVM5+Zd38=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C6sbJoFR7AClzoY/79e3NYPuo0GAJMS+kBo3kIlTM75Oe+7spf7CvlTkxq/e0hTNJPyOxtPrjFD+k7ofyJxTKeDnNNdrxFuUg0vlSG9+V0AgwRsGEwG+wXBL3A6BS6pSBvEZyZK6DwfdvAEZxzl+M7advhMi/7X4Thk8KAjU2GM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Re+4pZK2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N16F6Cy7; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1757409162; c=relaxed/simple;
+	bh=nsOIM8vuh51KEY/K55ibYw9YeIFap5DbQYSM8wFYY4M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YCD4tI/en3r37m2LKr7dNNtfZ1mQ897H6jDi7W+a6Wd9r030weUFvKVSrjCGds4iywGk9Vo97j7Xw5UbSKHYzVm2dCba7lBkQe1vF+Au/2lmmO3fjA+hgUjZExPja5sd50MeaqlG5GrldbtDnZ2K+anCfpfkp3FkqS9v4OSnOOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hqmo7fyG; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Re+4pZK2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N16F6Cy7"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id B27BFEC0188;
-	Tue,  9 Sep 2025 05:00:58 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 09 Sep 2025 05:00:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757408458; x=1757494858; bh=Hu8fm9hq/x
-	QlXs2QnLcDd8JNoznqE59mbBevs3uwprA=; b=Re+4pZK2wVdqyzD6ZEslLOrlEp
-	nit6DIkzZTvpvnfWs+dhTCnsPI5xXCCjwHVxPQ4qkSeG51u0OnlIbdLZ09rB4UDI
-	XWKa5U92/mVzWdXWT0kCy3VQAts0oLTyqqoHjiVdsd8DxYnCIcBvvG7A6BSInbhY
-	WiKHDAvIgU2C2GEvnh+ohn+7HyqhbhXO3Q0Zo+wmz59BYotwRRJnGiHGbft1F1l7
-	rMTzc0RBxmCNlCgLbVHx+NDsX/fi/Qyc8BZWxrYCNHds82PYMp9WUl9BW/yPRRtp
-	IT7D4vDsc5G8mVnEDi6D3HBAO2czEgnU2yc3ySO65AFlaSkPhKYLqJVE/YjQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757408458; x=1757494858; bh=Hu8fm9hq/xQlXs2QnLcDd8JNoznqE59mbBe
-	vs3uwprA=; b=N16F6Cy7CJk8or0fP7WKuPGQTXN3Fnd+OSGAsJ/X6JGBXTGURPY
-	+uP5C4nIiEVOJ3Tp9HyaW7cAUDpTAOQSrDN8qE504sgjiUGX5VBSmFzSlxSWH0Ze
-	EkbG9iitXTbdq16rQ7sMbRxDNXFIUVJ/hYcSVL/ZTJtbrgfgOl6EDPrer3SiXWX/
-	lYJ2ptT8zD3sj/MN6h3X2meTXA0HI+PF/Ut1x7RMoVcmqspmbClUq/4jjvBJg0PO
-	JLpTAU2c95zLp+0PRJzdALNNWPUeLKzqxN0J7qH5rmIIf7hBxSx3FxU7nEEdd7br
-	knsgCgl7dXZZTDPwpp78dTudk+JS0JovKzg==
-X-ME-Sender: <xms:yey_aDZWT1KsWNqoH8U25M04Od0rc3tmNIEFUqED1YOaxd1BD0gElQ>
-    <xme:yey_aOFxqhQD-GovFFoj6U5-tizYDlmC2eFMHQQZDZGKYmtJMX6OPi9o4Jv47z9Du
-    x9FZAiylBnEe5wW_A>
-X-ME-Received: <xmr:yey_aCakwzhrpEBgm3oVSqX1B-RZjoGEpfBkn3nskhYwEJ-WDqKT30jmqd_gpsxx_QfvSBGF7jQk8xxKa9cI98tyXQd7GgK5WzWJWKiovVQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleellecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnh
-    grfedusehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhgu
-    vghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnug
-    gvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:yey_aCzg7JOyKaa_1FBBhD3kCA7gBVWTGt2MHcA7KKAVdhHvwk5vqQ>
-    <xmx:yey_aERy1XZDJ-BQGIt2Yw3-t5KSV0LRHn00Xgxb1zdhpUdDjO-dVQ>
-    <xmx:yey_aPIn-z-WVWGbWG-RnaeFK1O3i62EXkN3ZRu95Zu9jwBtdriFzg>
-    <xmx:yey_aLV-XVUjW3jX5O4s6LsUWnmPZOjUzYc3sHNGdL77OP6jpZnN8g>
-    <xmx:yuy_aNNisYXNvw2WLgMmuuZUiigyG8TWmxAzoJpPmEm3Mjnd73iCQVX9>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 05:00:56 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7bd2944e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 9 Sep 2025 09:00:54 +0000 (UTC)
-Date: Tue, 9 Sep 2025 11:00:44 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Elijah Newren <newren@gmail.com>, Toon Claes <toon@iotcl.com>,
-	John Cai <johncai86@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] replay: add --update-refs option
-Message-ID: <aL_svO5Ils8r9DkT@pks.im>
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
- <20250908043620.57848-2-siddharthasthana31@gmail.com>
- <aL6n8KEHSDii5Wd1@pks.im>
- <c7615356-04cc-47e2-a894-4d24e416e4ad@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hqmo7fyG"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45ddddbe31fso18151265e9.1
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 02:12:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757409159; x=1758013959; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=TDBKmM0m0DT5f0Ff+0C8rwOLv+UCU/31+DrChwLQVj4=;
+        b=hqmo7fyGWCp8cDNUqj8+wU/LTCCWrUMWMRuyK5znGBhqTOM1UJZ7v5QeSCI+503XmL
+         ZjMobIlzrkKhH/CU5WDkSTZiedQ0zHDb9PPbmxlUFDZDjdV2L2jHhLjCFJDdPxmouhLs
+         6NFNEdPLcETA7mR6HDO5oX4aazpuz0RUHfb6FCcSixAfVqdRI9avy1fV+dNb/PuYUcdL
+         0cPVkWLLYXbxP/6dIkjTghcwvToDRKKPZqcXhmcu1WqI12D4WuqCW9pDbLhYdKBDJ2Cg
+         kcwfpAAP8P7N+279hIzJNOgg1Ki3GSYfSZMUSOisi7cUIq6W8asw3uPy8HDkM7zqi2Kg
+         YnFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757409159; x=1758013959;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TDBKmM0m0DT5f0Ff+0C8rwOLv+UCU/31+DrChwLQVj4=;
+        b=dbROkLYxPhlOGr/c180BxUgt+otkh8GuktIa3msbfEEXmGV22iteFvJfDbhhMGUncn
+         c/2e12i1OclZ9Ht4YnwctZRJckU2No3GKC59fdGqyc+DEluTYPvPRKhUZ+l8mx8jgvQI
+         /TNWDqdhd/QLMGVACgVh/7JPD0UbKJIeM9YFabo/Vf1j4/JDqM36Cc0fU1WM6jXmFS2W
+         tyOGpZ/z2Ze/3H1fi4WuOsK41oFNow+2FsqW5od2SwtKrYr7gdyEn53cUQsbIcjJjcwP
+         mwHPkG1esHuqnoyAVHy3uabBX/wdWZ9R2m5iO2TzO3Y2Mr5O39Z/0qvRLSeMkAmqhCkz
+         a4Zg==
+X-Gm-Message-State: AOJu0YxXQAqJZOwM58XzHGLopPO7mGAdkXL8iF2WdsYPhdBPz3LegQyD
+	sApsKu0JKLDy2XxE4NSn7AfcbXqpE56s68wqKiII/wtOUyrmyZAGNHQSZtEI9XfG
+X-Gm-Gg: ASbGncuUywPP5J+5Y88YA/X72Ti2jr3wlQEvin8RG8F6+Lvyei64weGH5YgGZr/l6k6
+	2Wg2Vd4FgU+nLiqGEet8B0zi/MJ7b0XexqbVskUcZ4HBtgQBe97fRfu9KuUJcEcxkAbvp29BGgW
+	nupRvEnqWHU5Egvhps2QbDLUQ+oUC+J640XwkIXobHusqZElCB4YvIKKX6CGbnqnnV0B7RN6Vc3
+	MCgLEPLdDSujAMFOeiKIDlo6DlrPiuYOI3ZzQR36vURZ4TvRUdzyS6jTnKSjbKCo01vRQksxoz7
+	NZorssmzvh63FbIH30sAGOz78J1CpySj1x0VVPAcmXejr/sb8dVjYSaQIlKegr+TdDERL4/Ifzb
+	sjEuNHIJCOP2Qc+fZUo8dZogryo5vWHshHiegPJHsuMNZQvk0DurO17Ajq8UofQrKEFjr6qbYZM
+	A9CsbCtgd9en0hFR4=
+X-Google-Smtp-Source: AGHT+IG3oUVTvqK1ZvDl9Pi7Xw2qTMiERHjHbACzEUmaBFCWg/KF5INlczDOxEol5/b12PcgK/3EeA==
+X-Received: by 2002:a05:600c:4ed1:b0:459:db71:74d7 with SMTP id 5b1f17b1804b1-45ddded6d45mr92081185e9.27.1757409158802;
+        Tue, 09 Sep 2025 02:12:38 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc? ([2a0a:ef40:1751:3d01:f738:17c2:c65a:d0dc])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df3353ae6sm2862745e9.0.2025.09.09.02.12.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Sep 2025 02:12:38 -0700 (PDT)
+Message-ID: <6914d50d-20bb-40f2-9d52-920f37b6a3f1@gmail.com>
+Date: Tue, 9 Sep 2025 10:12:34 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c7615356-04cc-47e2-a894-4d24e416e4ad@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 3/4] t9902: switch default branch name to main
+To: Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Wing Huang <huangsen365@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
+ <cover.1756992089.git.phillip.wood@dunelm.org.uk>
+ <f1bf01e13226cf3f6ca0e811123278248e4eea6d.1756992089.git.phillip.wood@dunelm.org.uk>
+ <aLrULt3p_sHvj8r0@pks.im>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <aLrULt3p_sHvj8r0@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 09, 2025 at 12:28:29PM +0530, Siddharth Asthana wrote:
-> On 08/09/25 15:24, Patrick Steinhardt wrote:
-> > Is there a strong reason why a user would want to update refs one by
-> > one? If not, let's not add new code to our base that does so. This is
-> > known to be inperformant for the reftable backend, but also for the
-> > files backend in some cases.
+On 05/09/2025 13:14, Patrick Steinhardt wrote:
+> On Thu, Sep 04, 2025 at 02:21:31PM +0100, Phillip Wood wrote:
+>> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+>> index 6650d33fba6..964e1f15693 100755
+>> --- a/t/t9902-completion.sh
+>> +++ b/t/t9902-completion.sh
+>> @@ -11,9 +11,9 @@ test_description='test bash completion'
+>>   # untraceable with such ancient Bash versions.
+>>   test_untraceable=UnfortunatelyYes
+>>   
+>> -# Override environment and always use master for the default initial branch
+>> +# Override environment and always use main for the default initial branch
+>>   # name for these tests, so that rev completion candidates are as expected.
+>> -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+>> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>>   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>>   
+>>   . ./lib-bash.sh
+>> @@ -1453,7 +1453,7 @@ test_expect_success 'git bisect - start subcommand arguments before double-dash
+>>   		HEAD Z
+>>   		final Z
+>>   		initial Z
+>> -		master Z
+>> +		main Z
+>>   		EOF
+>>   	)
+>>   '
 > 
-> You are absolutely right about the performance concern. My thinking was to
-> provide a simple mode that exactly mimics "git replay | git update-ref
-> --stdin" behavior, but I see that's not worth the performance cost.
+> Hm. Wouldn't it be preferable to do something like the below patch
+> instead? We would potentially also have to sort the output, but like
+> this we don't care about the initial branch name at all.
+
+If we're going to do that then I'd strongly prefer that we have the test 
+suite set something like TEST_DEFAULT_BRANCH and use that instead of 
+forking "git branch" or "git symbolic-ref" everywhere. It keeps the 
+tests cleaner and avoids slowing the test suite down by adding a bunch 
+of new processes.
+
+As this patch series is focused on removing 
+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main rather than making tests 
+independent of the default branch name I'd prefer to leave this patch as is.
+
+Thanks
+
+Phillip
+
+
+> Patrick
 > 
-> I will remove the individual update function and only use batched
-> transactions with REF_TRANSACTION_ALLOW_FAILURE when needed.
-
-We can still extend the functionality at a later point if we discover
-any use cases for those.
-
-> > > @@ -319,6 +355,12 @@ int cmd_replay(int argc,
-> > >   			   N_("replay onto given commit")),
-> > >   		OPT_BOOL(0, "contained", &contained,
-> > >   			 N_("advance all branches contained in revision-range")),
-> > > +		OPT_BOOL(0, "update", &update_directly,
-> > > +			 N_("update branches directly instead of outputting update commands")),
-> > > +		OPT_BOOL(0, "update-refs", &update_refs_flag,
-> > > +			 N_("update branches using ref transactions")),
-> > > +		OPT_BOOL(0, "batch", &batch_mode,
-> > > +			 N_("allow partial ref updates in batch mode")),
-> > >   		OPT_END()
-> > >   	};
-> > So I think we should reduce this to only accept two flags:
-> > `--update-refs` and a flag that accepts a subset of refs failing.o
-> > 
-> > We might also want to make this something like `--update-refs[=<mode>]`,
-> > where `<mode>` could be "allow-failures".
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 6650d33fba..321005a06a 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -11,11 +11,6 @@ test_description='test bash completion'
+>   # untraceable with such ancient Bash versions.
+>   test_untraceable=UnfortunatelyYes
+>   
+> -# Override environment and always use master for the default initial branch
+> -# name for these tests, so that rev completion candidates are as expected.
+> -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+> -export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> -
+>   . ./lib-bash.sh
+>   
+>   complete ()
+> @@ -1449,11 +1444,11 @@ test_expect_success 'setup for git-bisect tests requiring a repo' '
+>   test_expect_success 'git bisect - start subcommand arguments before double-dash are completed as revs' '
+>   	(
+>   		cd git-bisect &&
+> -		test_completion "git bisect start " <<-\EOF
+> +		test_completion "git bisect start " <<-EOF
+>   		HEAD Z
+>   		final Z
+>   		initial Z
+> -		master Z
+> +		$(git branch --show-current) Z
+>   		EOF
+>   	)
+>   '
 > 
-> 
-> That make sense. Would you prefer `--update-refs` with `--allow-failures` as
-> a separate flag? I am leaning toward that since it's clearer than the
-> parameter syntax.
 
-I'd personally prefer `--update-refs[=<mode>]`. The reason is mostly
-that it makes it easier to discover what flags are related to the
-`--update-refs` infra and you have to worry less about catching any kind
-of incompatible flag combinations.
-
-Patrick
