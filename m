@@ -1,96 +1,118 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE86305055
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 06:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D4630146C
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 06:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757399003; cv=none; b=lGRr/u5FOTXZ/nQpjdt2oAemcSUHiLMuMPIil/OWcNR7jgKnhJFiGoVzVqPTa07p2MKR8Vt6CJ3nPke8xHRX2zW13X8upZhQ8hG3cCxYTgPH68oeq8W+IDaw+/GU8jOLw64jOdBcKRamBFU1MB3PisqB7U/Sh4mLj4ZsetcaeBE=
+	t=1757399153; cv=none; b=K+A0557/ev8SnUxbs+tdVZw0PpZ9O2KoqwlZp5fQT5UQ3/LsGQVMx8/KAAMr8QpCYowRFBinTXdjfI5hTpb9Vmc72FURdg1qahJmcJZr0DbF8Yt0U4CEC0bqTFx3XaKWbFKphKYFo90pDtaWWrmOIzPjPChI4Z1sfGXkQx46MUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757399003; c=relaxed/simple;
-	bh=FO/2fvneQXqpgcfT1hOfN6DkQFhZ18r2QdleqkE39ak=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nbHdloJIQasI3iHclMN2dKZbUkCIZyrti33oQUc1lRlHKkfR3ZkkL2cL57mGaj5BanFICxS+pI8Oi30tIWRbhUrBWV92pYpgzHAzxjiZ1WHkLbbwTAfkv/CuW4LyRmnqg2Y5HH7QBcFP9mMd3eeW7ay2ueEk/wKWiPo2mr/nMRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RdsdiL72; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D5IVho7q; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1757399153; c=relaxed/simple;
+	bh=m6D/j23SYeDnWw6zegiWN3LWPnBbLvZ3tsvn4N2o/0A=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=jBnpls8tpVKhTTEQRd11FJNHNE/c1CVBETIag02dSAHzCBMlxd2ZGRRDqs4Fiu36+5g5hv4PpDKKVPy/5yemAbXVvs+Pcbs/WKxJHCI2jNzj+7kKGU6IewCCUKHI7fkQZ5KThW2/cDA3FgXF7JWsqQSwYg6w+HRVdy/qD/oJ3TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=TzjEHydO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TP2Fy2V4; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RdsdiL72";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D5IVho7q"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id BB4CBEC0143;
-	Tue,  9 Sep 2025 02:23:14 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Tue, 09 Sep 2025 02:23:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757398994; x=1757485394; bh=FO/2fvneQX
-	qpgcfT1hOfN6DkQFhZ18r2QdleqkE39ak=; b=RdsdiL72tdFpde3HtAzwqvy38C
-	UssV3Coyg/fvvkqE1YJibC5HtwqdpP0yLoGUjmsw1h6vg7SWUmI2d6XQBWJ9Hp3q
-	gRIJEsmc2AYAm1e8pQEnauMoPCje831ITjGmpU/3CoT/Z/kPIj0Jxm746ThCLtzQ
-	T+e95vIllsIs+jnFejG7+FPHaQM+Er7MXhVQY2zZCwfFolw2OfKU/O9QlFLOCxDV
-	ok5oMYEv+YPPUq+69cV/m6jUSccj5rk5pmLefD+XodaTmA0Jw41kYVZrpf4nn4W+
-	4WmnCTfzHXu7tl2VUtPJPSxGYhlNMrrBhhmHSHIa6PmfnlVqqyHxNdS8BBbQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="TzjEHydO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TP2Fy2V4"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id C984BEC01D0;
+	Tue,  9 Sep 2025 02:25:49 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Tue, 09 Sep 2025 02:25:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757399149;
+	 x=1757485549; bh=UUYl2ZG/bWXQdT6a82l980VQ2mNWpSiY3eXGpTWUxGM=; b=
+	TzjEHydOMtV1IhuuoPWKXontN9MkNJnlbkEOkr9Ap4E+XUhCHM59Ta+ZoHfbp/wK
+	/wQx/JQHizSxaCvahoZ8T8De2QNCXx+HV0p64hQvalu6lBjBFY5xsW+lBCwdMlMA
+	M5hiNOnYyrD7XJDxvY8qrT5LrELMXPRebif+wFrNOO7fsulJ/megIdAnRKLSmWeI
+	/O4k7xIBHzXcOfHHsDQ+k2G6BzTaxqTb/vS7DJMvEN52g5njWGLENTJx64vjyeFn
+	hTm2SUp4JJlSE+/07P67Hs8A9fSdv9vj6BczrNLuLFgqc31GXnIDugtlxK4xiUQR
+	WpfasZArsizgaWSV2UD53g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757398994; x=1757485394; bh=FO/2fvneQXqpgcfT1hOfN6DkQFhZ18r2Qdl
-	eqkE39ak=; b=D5IVho7qoVpbqlISA1Ns29ZbR5PBNAfTHMaGutcbRLqjfBmh0E1
-	cGFiUyd+5dgBxHIXKX8d8gvoP+nNEfqoTxD19IkTel4pNL0Id4FEQ1QH/EtDch+a
-	vbgu0hN0Dj8/u52ZbwX476LClVQqFpbWTw8ftAXaawKDldMOwm09/sNS2FVIIXVM
-	6wH7Ua/rDEj1J1tYlOUeOrrY4O5a+OHwy/85UjtVSf/E3jPqXRFgGag6h165Fi/K
-	HfMfeuUpKHG01klQBhdQW4nVIKgcwxKSk4AKZeyEUArjksvi1crnutLLx5tBxEuN
-	PJn59Kp3BoqcPLWKevAEO94pBTcTfAPQgnA==
-X-ME-Sender: <xms:0se_aBAl4u6HTO0OG7H5DCMc1JWWFD4zmFiOyusUclK3CIgppI4sXw>
-    <xme:0se_aPsdnyJ8HriHaLoSi-NiRIM-alx0g1tbcJNdKkgAVSEfHbyswEfJepMFRg3ki
-    nfN1tKzFO80mpHioA>
-X-ME-Received: <xmr:0se_aOaO7SdL6lJvGkqc5gNftcX5SSHVrXBBE9XDzOCWFlNwFd3aDjmGzV0zAxcJJL7bR8BhnlMRoQ8SIcPcNax464p3zYnlhIHCNAyoRF8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeikecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757399149; x=
+	1757485549; bh=UUYl2ZG/bWXQdT6a82l980VQ2mNWpSiY3eXGpTWUxGM=; b=T
+	P2Fy2V4a0QnysINFM7RF3PUJzYn+UQ96rGdJ69i9De6WQAOCZ34Pb9aRT1lK2/A+
+	SwAMU4/3I8DusRH4OhGEhZtj4JI4nA9CIddB8n6XwHAYrOEdHmvYnkmNCpC8hfx0
+	hEnplc42bVL2uIILNh6uQ6Y3LEPF38X33bV8G99Ml5RVokk8D1Gtf1k+UV2CBjxx
+	vDuMOINBbRYXDhCj1jZ3lFz1+Hva5EhUhRy41fyh8EeH6+yfy6p1vjnVTNWTm9Es
+	5kv2u7F8ZbVpixVdIAYdg12jVk8gkUkxV/h0OY5I2QR4IlaAcRxtZvDr6pSAV/Bn
+	a/KW9y32FDSfj3QbZjzLg==
+X-ME-Sender: <xms:bci_aKS_8g8AqMPOBJS3sycoji0h5d9cSigCnL0_AO_aWP_V_i2J3M4>
+    <xme:bci_aPwMrw3uUjGars0KwrqUhEUeUMMyYLTMKAQ8AvjxyzS8S9QtXz5yytHJAGD66
+    Q-gwf5phFBsmsdAbw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeilecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:0se_aKX5Vogqn1Q-YcnLJp2AAERyn4WsKwhewSfawY3XpHB4Q4GHaA>
-    <xmx:0se_aK50BgnLGnOJNHwfsPfWhr4azt-XZOH-udg6uOWFbIcEePeVCg>
-    <xmx:0se_aNi0kPTNwaco9N7zDq5IL0G1kKAMC83qAJJ_kG1pRmUuuiN4bQ>
-    <xmx:0se_aJcHCd2SpvL1N7JPBcqnVr0g9lA1OmkfBeyRxyQBWIbb057-Sg>
-    <xmx:0se_aOSCYhWMkijZRvP-Hj4Sf1UpY4UuDaoQXw-9-U58ctHaaD-ZsVKx>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 02:23:13 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 783a16f9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 9 Sep 2025 06:23:13 +0000 (UTC)
-Date: Tue, 9 Sep 2025 08:23:10 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/4] refs: enable sign compare warnings check
-Message-ID: <aL_HznRC3HjRuaDC@pks.im>
-References: <aL21cEM0OcnrKtBW@ArchLinux>
- <aL22Bd_6YM-l92hm@ArchLinux>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohephedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgr
+    mhgvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhh
+    ihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hg
+X-ME-Proxy: <xmx:bci_aCSsvNyW3KtlSAHmWGjf_4VHDANHxEF3GUualS2dfmmzq4yE2A>
+    <xmx:bci_aE5gQ53kVLUDDIiJ1Nhee3D0QC--x5BXSVFrSyY0clKC_jAjnA>
+    <xmx:bci_aO1uGu74AUnVw1Hh8KCAMik0uZiJPqO1VGgMd38qksRG4FBxew>
+    <xmx:bci_aPBwnz_qqX4k1Tf3B583xOVk2VU0IWyoHUiOHq1rTeSrzovCKA>
+    <xmx:bci_aFbWutIbmIohAWkZe1mICqwKrAhFF4pQOY6ebZAVnNOt17rYZ4XE>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 5F4AE1EA0068; Tue,  9 Sep 2025 02:25:49 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aL22Bd_6YM-l92hm@ArchLinux>
+X-ThreadId: Ai977590-_NN
+Date: Tue, 09 Sep 2025 08:25:29 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
+ "Eric Sunshine" <sunshine@sunshineco.com>
+Message-Id: <54833b28-658f-4eec-93a6-74db11c4b9e4@app.fastmail.com>
+In-Reply-To: <xmqq348wwqwb.fsf@gitster.g>
+References: <cover.1756480827.git.code@khaugsbakk.name>
+ <cover.1757345711.git.code@khaugsbakk.name>
+ <eec01cbac16596c5e117843ae86956e1f66ec097.1757345711.git.code@khaugsbakk.name>
+ <xmqqcy80wu0y.fsf@gitster.g>
+ <20250908211141.GB1327610@coredump.intra.peff.net>
+ <xmqq348wwqwb.fsf@gitster.g>
+Subject: Re: [PATCH v3 3/8] git: allow alias-shadowing deprecated builtins
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 08, 2025 at 12:42:45AM +0800, shejialuo wrote:
-> After fixing the tricky compare warning introduced by calling
-> "string_list_find_insert_index", there are only two loop iterator type
-> mismatches. Fix them to enable compare warnings check.
+On Mon, Sep 8, 2025, at 23:55, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> cmd_struct were not the right spots. OTOH, it would probably not be t=
+hat
+>> hard to just do:
+>>
+>>   static int is_deprecated_command(const char *cmd)
+>>   {
+>> 	struct cmd_struct *builtin =3D get_builtin(cmd);
+>> 	return builtin && (builtin->flags & DEPRECATED);
+>>
+>>   }
+>
+> That was exactly what I had in mind.
 
-The changes here look obviously good to me. Thanks!
+Thanks to both.  I=E2=80=99ll use that suggestion.
 
-Patrick
+--=20
+Kristoffer Haugsbakk
