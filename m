@@ -1,151 +1,141 @@
-Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB73E4A21
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 09:19:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026A92C15BB
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 09:33:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757409560; cv=none; b=T4u2VxQJo0DqnPoOL/PzdM5i0ECr+1DCGoen2bxXflsS3FeWz9+tW9cYbY+Sh9xAGcRhQx4EJ29sJoBcKjhvNGxnBZO7L6koWi47Tax92M1WnK/ya9QVBLAMTKjfpyxbdYfptiYQCtz6/g8LxN52oMB52QMH81e9WFoMbos0V/c=
+	t=1757410385; cv=none; b=e1agwzeY4ipgRv0Y1DsB4JWeLitdXwCEQ1uNAjWTnJI1mXjb9Xel/xOqBASDIsmUc4DOxSSAS7mVTpIeqUTh1sNfm8zAz6Rk10rva0piJQifFhGY/JgfvwEw8SxQqpvfRE+7bFJSflys/DOeMpMCtUYilBl+ouWhS0geawlpDWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757409560; c=relaxed/simple;
-	bh=42veuj4zoZiYadLZqM9k0kj4chqyrxvTbeCCwbaax/g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iqoKQnuMw/iSMYDU2qRmF92P6yHmnSNa8ydAZ1Hf/2rmFFeV1YYLyjkR8rGkn4L8tIcrj+ZLEohykhQKBJFlqqHtFVKcnoJuSJ3pPRFpqr07TKtiRueeYMPZtI25NHbgRmxt2+5JHwk+CxCXstawJLPY6F8wKpU1xhCKx0KeZeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OBdXFyvl; arc=none smtp.client-ip=209.85.166.174
+	s=arc-20240116; t=1757410385; c=relaxed/simple;
+	bh=+L2HrKEl4mQcLL3BHwR/MRIXZ+BxmYUSu42PDYpIdkI=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RcIt3t1rSqkQbMVoG0jS1XLY0qODJUrjZBnO/T76h2tPKQqO1xWH0ERb8+oPenVuFo7hwadHAH7vpLO5wzCDNfLXuRsR8L7pvtW4WwkoF5IUcTVBxeg+qE0kS0n+QFYDX95kFY0ZEOmrlfLG3h8L5I8cNLE1CJrAmK+moG9YxfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZUYjwArx; arc=none smtp.client-ip=209.85.221.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OBdXFyvl"
-Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-406630d3b17so20444655ab.0
-        for <git@vger.kernel.org>; Tue, 09 Sep 2025 02:19:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZUYjwArx"
+Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-544ba00733aso3676125e0c.1
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 02:33:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757409556; x=1758014356; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gb4hP+ZrX6Bm31wsjEO0F6F6E6Ew6VaYtFpDjRLO3zY=;
-        b=OBdXFyvlYRBdsYmOfgMGVA1I/hwgmfHSu4mCxky1gA7XcnoPldnUVH9e5lK2UoAKd1
-         pdhrQfQ3QHK+c0K0CWOBXwM9gKLzXGmh6d1ghVIdq9cgT4/cs5wReKEzfqv7HzfDd4AI
-         6Mzo0BS1L2pEixP/7fQ+iwlWhDEeJ409vOZ+V6xKgY7mVDdtu//tdB6rK2HKPNDN7U/r
-         +mIzMGNqYxSf8v67fSyN7IbtX+bHBh7gQvL0y7JMP9gfcxTjk1030RjqxOuUrMDUZ8Gz
-         upf6LCLFl7ubIRDdSy2Vesqhh8bgfRQE1TBvK5YIXDvQ32M9V/Y9fzEozaEVilSyM8AD
-         kfiw==
+        d=gmail.com; s=20230601; t=1757410383; x=1758015183; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FhyQUkFkjstICla2EOyWT9ZNq41seHmWz2QKWcDejG4=;
+        b=ZUYjwArxgPdt/WMOLoImoKIDLn52tmLTTuKl2j72zoPB/cfgi7WY9AzeNhe3Ds1NJm
+         uKaXXFkWXB0QTN7YQgzQCRSgeCCyedvMVwt8ZtGEtbVXGk579s6+Z6Ntk4sfdqAlqchy
+         fKeBR9GHIolgQkrAvFrCAyghWgfWEYru/Z23VdF3cALT9XloR3IT6rBA3ccbUa8St2en
+         b0ltphid3rghr1l3woW2JLaWejZwxhhW9A5yN1xF/rKhCFIbwpXuMCBo51btsMh79QFR
+         EorVy4H7OFXdEbCk6KtqRYndlHi5tHBFYiQJZ8iHl/MvlheeX9xtFEadVhEIenBZO3BX
+         qXww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757409556; x=1758014356;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gb4hP+ZrX6Bm31wsjEO0F6F6E6Ew6VaYtFpDjRLO3zY=;
-        b=rC6EnHU7cEFIWPRKvo6ycxBSmdbG+YZkS9DoR8/9gpGWt1K2/w2SkHyI+/EN48+25+
-         KXtf2EMAQuzi6dHe4lWooC8tTuVFGSBEUlqYg6gEzxOnvasgZWLiIgpmA+9sfyb36YF7
-         3+MKF4QJBNZt2NzLR+Tdnp2H76stu643r5qXshvRTllxwFle/0iqKQ6B/PGjBFT2fj28
-         s4QzdnXk/Zxes7G183kGpnE6PHJxa+GQUVVfqBAIkXSeJNZF/6WtMvMdvYDfgJKTeaqR
-         uDxTI5wfrLExLt7S2Jy3q4GUiAorkW2+IhFAHPPofaGkj6pghJajiQPK8ZIexSovyvm5
-         0xUA==
-X-Forwarded-Encrypted: i=1; AJvYcCVD8LNBC+YiR3S+joIYKSR9UPh4PvmDXamkDgjsXG20t0NjRceIr5ifbJyxGPWWuHkKpJk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIJoXJ21yHjhVFdcfFjbZN+tyd1Ci6ldOKWZDUVz3dI0vr9Z/J
-	CmAqsJstwnVYXI36+SuY3/G0cBrcR5NmXbWOvWjvGSHztKxyHuwLi/tH5ndpVZH8SNBsdvf6Q4E
-	RwrkpqEnALO2rf6QM4/3GEAx8dJ/zlHk0bqxbftg=
-X-Gm-Gg: ASbGncvgVsnHWD8WcDlkJ29G2287jP4imcSSGr7zHDKcl4Tb4zMgF6XOftPMTYkHGRN
-	03z0dpVYCB9L4naiZoTk6nW1Jvq86PZBzUxzcrRekX3auMH+Pj+07exPtO7nYwHU23Wvsume2XN
-	TFms+WsO8ffrjeRNwQmWP9PA29qy7/VW7hfNpMtmkQa0svaSXHZEiSiAo52faZD3fHGKHqGSSf4
-	HpafR6HQfzLKA5eywFKlVHRoaaFAU0NxjCcHgTkc94zvZ986Q==
-X-Google-Smtp-Source: AGHT+IG4Ow1Gbh3FWqNqOE6uenf2y0FoOFtO05cvYIapVXtVs73BNv1lqIum/JK+wjUsjQg3Wwm2jZ24dvU7+muebso=
-X-Received: by 2002:a05:6e02:3788:b0:40f:7f8e:610c with SMTP id
- e9e14a558f8ab-40f7f8e6265mr42479855ab.3.1757409555701; Tue, 09 Sep 2025
- 02:19:15 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1757410383; x=1758015183;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FhyQUkFkjstICla2EOyWT9ZNq41seHmWz2QKWcDejG4=;
+        b=F1KoriKSqrwHxOaJjNXqY33Q8NMQOXNLQ8vkk8vNNMtGMIAV/w5s7uYC96BsFiE6mb
+         vywmNcxUgzFBlV6EN6XvwjsZqa/PajhZCE/bl7frMyV6auKJu1VUKxMNPRMAQNgucv/k
+         1FE25Scn2UG8A/HF+KQB+iSV+pi29KTJvh6gcuOFg7KfACRqZHlfdhYS0Gw5H+fUci62
+         Kgd38u3IRKplH9UIQZ1AgXUDp/ClZ/idtrVjv6ojxZRJzOrfqyDP3u7/fWwaIZDHvt9S
+         hKOEXfw6gRMd/sq7gRv4Qgj4P4DCGlxs3+1MVZS59OvGSUkI6cCPSjZ8lwcXlh9iW0+v
+         VktA==
+X-Forwarded-Encrypted: i=1; AJvYcCVmi/dGjzN5HbCWVUv/PrGzN+dr96KjWHuckb9DgEgGixAa5Nh1uWGl6Sg5IKTp8D7rzFo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzISUGPixPGntCx56TSGc8g7nYmQHNV8Hw7FaChe28Y7bpOTJso
+	eBMasWSMwQH+K8BIw+95isXrpEri+T6uYJfVbA04QrYDn0v6CeH50RgI7hSBqw1UpC2jmYt1e0o
+	YkdWpF02zrejDDTmCCUb4MvQxVPJH4jM=
+X-Gm-Gg: ASbGncsSD9jvaAE9GxoRfVT/nDYrkQriW2gkUEJE1nx72JidWedFbJ9YaVMryhGBMJT
+	LnAbK6UcAcaynDlkxrECg6ZdB603U5lPoW2gwOgalQ0ZQZiSqPs/isSLqpV7bjMUAWUQRrAFr6x
+	QvUIatA7Dy69Ja6gau830KHYVZJ+75JEEhfqzZ5+zcMNUapIQpN54p8GhKf8uXyBgBtUxft9eIp
+	Pifdw==
+X-Google-Smtp-Source: AGHT+IGqPQ6zkJNB8Iiwb+g3xG39pRN02DPbwxUvnB235GyNrz38KDdzpbPM+LY0hdNdFG9pBSbinQZZlLV4pFl5v8g=
+X-Received: by 2002:a05:6122:8291:b0:542:97fa:2b17 with SMTP id
+ 71dfb90a1353d-5473c5c6275mr3594713e0c.9.1757410382658; Tue, 09 Sep 2025
+ 02:33:02 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 9 Sep 2025 05:33:02 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 9 Sep 2025 05:33:02 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250902-b4-pks-packfiles-store-v3-0-6925278efeda@pks.im>
+References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im> <20250902-b4-pks-packfiles-store-v3-0-6925278efeda@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
- <CABPp-BG6A_mwxQheE5ED5HQj7STVtf1_9NhSmjmzRPB7QkdWyg@mail.gmail.com> <CAP8UFD3GU5Xwq7WMihmHtpWc-GjB-guTU6JHG7BdkhxukMihNQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD3GU5Xwq7WMihmHtpWc-GjB-guTU6JHG7BdkhxukMihNQ@mail.gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 9 Sep 2025 02:19:03 -0700
-X-Gm-Features: Ac12FXxtDEury8kuY7w-F2ZHpCCrAOFYEP7zLfEDcIm_VRk3lo8TsaledjU7f6Y
-Message-ID: <CABPp-BHWjyRv_f_HKkz10Q_cOZKPvpgf=SEUR1ThmbttkQT+Uw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] replay: add --update-refs option
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>, 
-	Justin Tobler <jltobler@gmail.com>, Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>, 
-	John Cai <johncai86@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date: Tue, 9 Sep 2025 05:33:02 -0400
+X-Gm-Features: AS18NWAm3dcm9ouC0xYML2KdNBcHCkTxpVPzMgst5Qhxq0LKBs_pK3soaAQueuU
+Message-ID: <CAOLa=ZStgwBN0fMK3YxoqeR+1i772f621supva3Kvr7YPq4g8g@mail.gmail.com>
+Subject: Re: [PATCH v3 00/15] packfile: carve out a new packfile store
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="0000000000009564d3063e5afd44"
+
+--0000000000009564d3063e5afd44
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 9, 2025 at 12:47=E2=80=AFAM Christian Couder
-<christian.couder@gmail.com> wrote:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> Hi,
 >
-> On Tue, Sep 9, 2025 at 9:14=E2=80=AFAM Elijah Newren <newren@gmail.com> w=
-rote:
-> >
-> > On Sun, Sep 7, 2025 at 9:36=E2=80=AFPM Siddharth Asthana
-> > <siddharthasthana31@gmail.com> wrote:
+> information about a object database's packfiles is currently distributed
+> across two different structures:
 >
-> > Seems fair...but why not make --update-refs the default and add an
-> > option for those that just want the update commands?
+>   - `struct packed_git` contains the `next` pointer as well as the
+>     `mru_head`, both of which serve to store the list of packfiles.
 >
-> If this patch series had been sent a few months after `git replay` was
-> introduced, I would have been fine with this series making `git
-> replay` update the refs by default while adding an option that only
-> outputs the commands. Unfortunately `git replay` seems to have been
-> introduced in v2.44.0 (Feb 22, 2024), so more than 18 months ago. So
-> even if it is marked as experimental, it's perhaps a bit late to make
-> such a relatively big change in it?
-
-I don't think so; we marked it as experimental much more prominently
-than other commands -- in the .c file, and three separate places in
-the documentation.  All other commands appear to have only been marked
-as experimental in one place and never the C file, so this one is four
-times more experimental than any other command.  Plus, the worry about
-it being set in stone and the need to make it malleable was *exactly*
-why the requests were made to be so much more clear that this command
-needed the flexibility to change
-(https://lore.kernel.org/git/CABPp-BFrVfGHOrBk7g=3D4TkGxDv=3DoSqF1FOkhp6WVb=
-xUV-2yveQ@mail.gmail.com/).
-Plus, it's currently only used server-side, so it'd probably only mean
-GitLab (you), GitHub (me), and a few other users would need to update,
-all of whom should be aware of the warnings.
-
-We could add a config setting to allow defaulting to --no-update-refs
-or whatever we want to call it.
-
-> > > The way it works:
-> > > - By default, it uses atomic transactions (all refs get updated or no=
-ne do)
-> > > - There's a --batch option if you want some updates to succeed even i=
-f
-> > >   others fail
-> > > - It works with bare repositories, which is important for server oper=
-ations
-> > >   like Gitaly
-> > > - When it succeeds, it doesn't print anything (just like git update-r=
-ef
-> > >   --stdin)
-> >
-> > Seems fair.
-> >
-> > > This should help with git replay's goal of being good for server-side
-> > > operations.
-> >
-> > I'm slightly confused by this statement; there's multiple ways to
-> > interpret it -- various antecedents of "This", questions about whether
-> > you are saying git replay has one goal or you are just helping with
-> > one of its goals, and leaves to the reader to guess which part is
-> > helpful (is it the ergonomics -- why does that matter server-side?  Is
-> > it the atomicity?  Then why did you also add --batch and --update?  Is
-> > it something else?)  Perhaps this sentence can be dropped or
-> > completely rewritten?
+>   - `struct object_database` contains several fields that relate to the
+>     packfiles.
 >
-> The way I understood this sentence is that `git replay` is already
-> useful on the server side (because it performs all the operations in
-> memory and doesn't need a work tree), and the new feature added by the
-> patch series reinforces this because atomic operations are often
-> better on the server side.
+> So we don't really have a central data structure that tracks our
+> packfiles, and consequently responsibilities aren't always clear cut.
+> A consequence for the upcoming pluggable object databases is that this
+> makes it very hard to move management of packfiles from the object
+> database level down into the object database source.
+>
+> This patch series introduces a new `struct packfile_store`, which is
+> about to become the single source of truth for managing packfiles, and
+> carves out the packfile store subsystem.
+>
+> This is the first step to make packfiles work with pluggable object
+> databases. Next steps will be to:
+>
+>   - Move the `struct packed_git::next` and `struct packed::mru_head`
+>     pointers into the packfile store so that `struct packed_git` only
+>     tracks a single packfile.
+>
+>   - Push the `struct packfile_store` down one level so that it's not
+>     hosted by the object database anymore, but instead by the object
+>     database source.
+>
 
-You often word things well; I like that sentence.  The original makes
-me guess and wonder whether something like that is the intent; can we
-replace the original sentence with your description?
+I did an entire re-read of the series, since I didn't review v2 and
+there were a lot of changes in the middle. Overall it looks great, I've
+left some small questions/comments on the first few patches feel free to
+ignore!
+
+Thanks,
+Karthik
+
+--0000000000009564d3063e5afd44
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: b4e64e77fdfb2648_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pLzlFb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOUFVREFDR0VGRnpyQko4V2w4dy9HaDhLOFExSW9xMApRYWlFOWZqM0Rs
+dzlHcEF6d2hXUXk5REljK3ZiV0FYMFRxNThBL0RrUk1WRHU3Ry9mLzJ0dDV1YmFkYnZGRk94Cmx6
+WHhpWWEvOGR4YmNzV0hqMmV2Q1lQU2hyUnlacFp4K3REenJObzhXWWt3eUN2bkwrN21mVWRxRjRY
+VzM5VXgKQ2EvMjFjSmFycGdrcHhMWVRmdkpldC9aVk42b1JydjlDMnJXTzlsN1A3NDhRc3JaU3Nl
+REtUT3RhRjJPVElrNApEdDVmQ2h3Z2s4OHFYd2xZUXNWckJPbWNyOTJ1TWtnU3RDYm9ZMDliSVNP
+VmZ1VzZ0ck0rMDBBdEZpVXhnSy90CjB6MjQ1bG5JZStmT2Fod2g3RkdQamVORHBwdDVXL1RMUVdx
+TlR4eitkNmRvak9VNmM5V21NZkdYZVI2V2ZuZGgKMUVXb3B5dzV4ZlNaWFAvMlI2K0U3Ym9VTFg3
+MXIvcEN0NzE4ZXlUM3VMWUtIRXlQbUNoRS9xam13dHZyYk1nMgprbHJJdVo4Z2hRQ1JaM0FqTnpJ
+cDBnTndYVTFqR09ZUHh6M2gzdWpJNnpLZE9VMHJLTFpTTDFFVk50dVczMzlZCkhjQlNrZVVhOStV
+VHFPVnBydUtWdnNxS21hSlJ6dVpHNUhGRWlhOD0KPVNUOEwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009564d3063e5afd44--
