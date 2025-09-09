@@ -1,128 +1,120 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26B21F3FED
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 00:49:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC6333F3
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 01:03:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757379000; cv=none; b=GU+SpXqJzKCk4SqFRa8lhC1hnD7h1o+ZsxXaZM1Mr2EjZonI0EVoYLAGE9huuqGLblM2i70+wxbQxwG9LHlgdDupBQpHjgSoxxRYzDuc5N1y9q9ReGcFiinZKvTK0sYgjXPhVdVW94epbHLd9s7e0V3E4M8BwC0afqzi7UV2T94=
+	t=1757379837; cv=none; b=l+x4/EjHoebqVueM9Arp8/nwxEW09MC2LVOJABRWT2eW6GRkJPNZAUnIlWq6SYEDZPBxVKeaWiODHVJRKHCUr1VrzP/I+4zxW2wros0NLOCt7IXI3b/XsnwnWofX7OQ5WMjLg0efAmraT1FbRpSeX8QQJ6YSSaVvAUo1HC871tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757379000; c=relaxed/simple;
-	bh=/zfnvIQuDvDo+89GKLuOBhprSX/h09j3Qke/i00HrAY=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=nWshFcOgpICb/95wy6LvapX43Kp0AOfysNvJdx4Rrbn9FY0VndXmKxoKJVeQVCLqVSdkN4lVfUMY7twRzxN6mwGcxfDwN+4xOmv5C0hPx6WZtcUSkBwPxVmbxGkVue5lMo4nAqL+NO8jvJT82fdzY7jNsQ4F/0u/opW8GYFvwlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fhXSvBxI; arc=none smtp.client-ip=209.85.219.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757379837; c=relaxed/simple;
+	bh=I04M+HV870dyV0E8l8KmiWqvSnbYXaQG6yCnqE5Sx6k=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RK9X+YvSMyb0d0X0k0qUblLdKaL2WbSrPzajkLttxGfsh+ykdnGgAuEdyzSapHTAsAoP9sIdeelJb8HPg0DhktF9pwT4QAwvP24tCZpp+QNnX/Vcl1yIiGOeacj06DEVuGGnxsoJo5sfWSnKcQZyMcurN+FsTh6DG3cKqeVHhZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=N+eD0sYe; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fhXSvBxI"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e96ff16fea1so3913612276.0
-        for <git@vger.kernel.org>; Mon, 08 Sep 2025 17:49:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757378998; x=1757983798; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YMnyYVgCg3qKF+PPve252RMoYWr6JBdmF8IU6PuvgMQ=;
-        b=fhXSvBxIGZDzPXbDVG106k3VOyBwXbo9qI07V0957GRMkRH0r1K6ka9AUQXnT75Sh6
-         JUsyOfkQr5/3r2ECQsWYSd6W8t5K8HAjxAPriMtOWuuRak8ium3ASk4lOH+VqUYuxdnR
-         bxpnhBg8gv0Hgja33nTlrJePLRUGcrrGQr6Z17oXXbJhEXrCsnx6JsKTTQC/Lti4uRMW
-         V+XOnbplLicBg4L4w3APy+ljXDtiS5B8pIpW45CzS0ITkx+0SjVAb1gpdJZNrz6QP90T
-         VwSvcFmxj9fSWVt2czbT2pY44mTVubQIMrl+l7irJR9eK7xSMURwK+jJkytopm4UHdl2
-         i2Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757378998; x=1757983798;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YMnyYVgCg3qKF+PPve252RMoYWr6JBdmF8IU6PuvgMQ=;
-        b=r2MDFOluHXEq0K8oljbehf9DqCZmZLWvBZFBVd0xRQlmHZbYo99MgfYkxpL0To6/ju
-         AkozxXwc3946dTfiFVtYeJvv2JzRkrp5QKws7XSYTGALrXHlWtFwqQMqexBrjtD2PmY7
-         c/gIipWfnu5N/U92xwE9onuetnZOZv2IUFo1PCDXnmkJxqvZrOs3/qNJce0ZNc/Gycvw
-         9d2n6I6GFCuJaN1OqgmKNJHjBqG4lp5uZtmFd+/1jz409IRPXH37Xl0LdEcotSPpJ4XZ
-         esRcQr93ooUFCR99GFoirycy/KPG8AEyaY6pANM1ZLyp4RtD6HRLDKTIRFnzFfK7Q4mn
-         YyRA==
-X-Forwarded-Encrypted: i=1; AJvYcCVv+bwKD/iYCMmtlUGaix+rrpJPvadraLBl9rvpDoNPBLsNoSc1qQlqg9QpbCDJ2Gm7nM4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyX1JZuz6PtXnEDcawQ+xjbnORMB6+LuWw08tMSB/IH3+cKUani
-	k9aob/wM/lSOCIghuIOLOBc3zX4YhFpFCoZW1eSVyvH8UwgR2WXNXg/z
-X-Gm-Gg: ASbGncsvrtJtkuXG5aW0JPSY5cLW0zTXf7rBZt6FMGv0o0JQGnVMfQFIHOjdIoSNinY
-	Bno9w3AN7TnN8uViGWqntUkvBRiW6jE47EamvPu+hPRln4pOTJ8P0M5LC1sOBS2JOafHfZDTXjd
-	zEOtg4b/dY/Zfvf1O3LTYQVXcronwWHblS2E/MHK1rGUfCiiAej9frkAt+Ytsih9r16QginskMN
-	BWBJfpuUtwl7iRBJLA23zv5pd4O7rQ4+HLboQZMFc8nPCkNZdodIBmOgvFhkkiDs8So0SeSZkcm
-	F5SlPpFQZYfx9Rh+2gRnqz6rkuLy11lFtm6mmgZ+R1BX273pM7ZjLVTfUl1fIuHLYGOHjU+vu46
-	WImuqojosrm2u8XWfET+wjre/hHug2j1+rQLHJAMC1I26Cvd3Au4k+lA=
-X-Google-Smtp-Source: AGHT+IFci0q2E/OPJnoA+XNJdEK9/enbSJCQYekPN9tmP5IgEDgw+1STFP2I9rAZkJgSvozrG7rKQQ==
-X-Received: by 2002:a05:6902:1892:b0:ea0:5995:4a02 with SMTP id 3f1490d57ef6-ea059954dc4mr5828221276.8.1757378997628;
-        Mon, 08 Sep 2025 17:49:57 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:11c5:d173:855:6516])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e9bbe05caf7sm6079304276.18.2025.09.08.17.49.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 17:49:56 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="N+eD0sYe"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1757379833;
+	bh=I04M+HV870dyV0E8l8KmiWqvSnbYXaQG6yCnqE5Sx6k=;
+	h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
+	 In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+	 Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=N+eD0sYeqCjODwlmCRy5MTbv7TvNaH3QdxHiaRT1JsAqOWtwRHP7NQxnvL5XgKxwm
+	 NcOaufvV6wWbdDRX2L5UqCOZ5dKtptuQ6ptCU90nL+xkzfM5rCxGzC3daZuTogOmM+
+	 ON9Tz0qfRopHzTHvZYZyCauapjP9Ptf7laJG3IVg42xQoQ84gUQDBz19qEb2eoC8g7
+	 qRkj5X5Agwfd56fn6yEEitkhOTJia9rcLli1yAmWiy/uZzEsVsbr0yhqXeFaA4JVWv
+	 DcEfB0iU3xUREEySTyt2F1yQoGHvbDECFtMaP6Hw9cQSnlP58DF9dHRy+YyaCAnBcN
+	 y+1lVlSFvhgTwOYEFDprNpqarkyJYebdx6JuUKkxVlv5+ABXmyJy7UfBXynGQI4Ad3
+	 XbO0O74BbbaJgMpFKx/8iCVVrbZWhtXYIah0d4V8Zhfs49m9Dsunu1Sqy65QG5L/bj
+	 eF5NqxWxVa/Zaqjg15WqAGhKTnXRXjU74EK0/qs1oJnwgUNQUEV
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:91aa:86f1:d85a:ac64])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8CF4320106;
+	Tue,  9 Sep 2025 01:03:53 +0000 (UTC)
+Date: Tue, 9 Sep 2025 01:03:52 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC v3 1/8] meson: add infrastructure to build internal
+ Rust library
+Message-ID: <aL98-Dq9HC5eDOcM@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+References: <20250908-b4-pks-rust-breaking-change-v3-0-1cd7189fed3b@pks.im>
+ <20250908-b4-pks-rust-breaking-change-v3-1-1cd7189fed3b@pks.im>
+ <aL9UIeyUqmwwPt2c@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH RFC 2/3] rust: implement a test balloon via the "varint" subsystem
-Date: Mon, 8 Sep 2025 20:49:45 -0400
-Message-Id: <EF337F13-64D2-4A17-BF7D-FE77E3064E35@gmail.com>
-References: <xmqq8qipzhg3.fsf@gitster.g>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
- "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Christian Brabandt <cb@256bit.org>, Collin Funk <collin.funk1@gmail.com>,
- Eli Schwartz <eschwartz@gentoo.org>, Elijah Newren <newren@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>,
- Johannes Schindelin <johannes.schindelin@gmx.de>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
- Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-In-Reply-To: <xmqq8qipzhg3.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="DD6CsFiHKnLkMG4r"
+Content-Disposition: inline
+In-Reply-To: <aL9UIeyUqmwwPt2c@fruit.crustytoothpaste.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-> Le 8 sept. 2025 =C3=A0 00:39, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
-rit :
->=20
-> =EF=BB=BFBen Knoble <ben.knoble@gmail.com> writes:
->=20
->>> +#[no_mangle]
->>> +pub unsafe extern "C" fn decode_varint(bufp: *mut *const c_uchar) -> us=
-ize {
->>> +    let mut buf =3D *bufp;
->>> +    let mut c =3D *buf;
->>> +    let mut val =3D usize::from(c & 127);
->>> +
->>> +    buf =3D buf.add(1);
->>> +
->>> +    while (c & 128) !=3D 0 {
->>> +        val +=3D 1;
->>> +        if val =3D=3D 0 || val.leading_zeros() < 7 {
->>> +            return 0; // overflow
->>=20
->> Hm. I thought overflows panic in debug builds, in which case
->> checking afterwards is too late? Does unsafe change that?
->=20
-> This code is a very faithful conversion from C so if somebody does
-> not read Rust well, they can safely refer to the original in C.
->=20
-> In either variant, the leading zero's check asks "can we shift val
-> by 7 bits to the left?" _before_ it actually shifts val (and or'es
-> in the lower bits of c), so the "overflow" check is "if we processed
-> any more data we _would_ overflow, so we stop before overflowing".
->=20
-> IOW, the code _is_ avoiding the "too late" condition.
+--DD6CsFiHKnLkMG4r
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Maybe I wasn=E2=80=99t clear, sorry: don=E2=80=99t we already have overflow i=
-f after val+=3D1 we also have val=3D=3D0? In C with unsigned types AFAIK tha=
-t=E2=80=99s the normal modular arithmetic, but I thought I recalled that suc=
-h (unsigned) overflow panics in Rust in debug builds (not in release).
+On 2025-09-08 at 22:09:37, brian m. carlson wrote:
+> Ah, yes, I've already broken this in my branch (early this morning, in
+> fact).  I've added a `build.rs` file (used by Cargo) which is necessary
+> to properly link the tests against `libgit.a`.  (I'm using the hashing
+> code in some of my tests.) Meson fails to honour that and so the
+> compilation breaks.
 
-So that=E2=80=99s my =C2=AB checking afterwards =C2=BB above.
+If you're interested in seeing what I mean, you can clone my
+`sha256-interop-part-2` from https://github.com/bk2204/git.git, which
+has your v2 merged into it.  You can do `make -j12 all` and then `cargo
+test`, which should work and pass the tests.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-I=E2=80=99ll see if I can double-check my memory though.=20=
+--DD6CsFiHKnLkMG4r
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaL989wAKCRB8DEliiIei
+gbsLAP91YMt4ZHdF52eLwHHeSURB947xGfr6S4Vk28646SvnfAEAjE2qOPsMIZ69
+FS9w6qKMRUtFnRNyiN7h90sZ0KDz2Qw=
+=6Xxg
+-----END PGP SIGNATURE-----
+
+--DD6CsFiHKnLkMG4r--
