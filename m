@@ -1,169 +1,165 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A1B1F30A4
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 07:26:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E086E246789
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 07:32:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757402811; cv=none; b=ryCup6E+HdhhtLBSTzW/fXA9Dr7z9jmWmVIiWNUZj1Hr1Bh+MjYW1F+ncI45+Spzwy++Kplgfvk5w3g9yv3LCB9vIt+aMHbpQ+I40yd/fYBA1YxxyVUPAnY6ON72/v5FDvT5OA/Rr5sSvFYzhQoDwSe2pr2de8SzmMWUY5q2ofM=
+	t=1757403176; cv=none; b=CNNu3u7IDOeyUAlJqa3EmBHxrRzQp6Gkg9AxSoVEPGesYkDfzVGFTKOUo2Xh605uDcro1qlN5fORl5mSFtGu2Stqn6qfJKybYB3tLhNtN5KgIaaRbriRmtgMCTIXHkszWTjNTiyxq8ZiSRDzmtkBAH4pSHf25ot2ho6/Ex0N/7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757402811; c=relaxed/simple;
-	bh=NP+kLhN/OzFgCkKs3eLQSylW6+auKTwSQWsWNedWixU=;
+	s=arc-20240116; t=1757403176; c=relaxed/simple;
+	bh=vZn1ww8dSCEhUYoIVsybASCdWWkqLgp9XLKea7rLJSI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GJsWrdhGxbK0V9lUKwsCZ9DbSTboWZMrHjXEOP2g9sAU1d7nPdNJ0vF0zlhqHcPhJt766yztXSfj/ccPeG439iLI9T3tx3cML7S5oWKO2AI35CiA+mJR7xMyOFGz9jmdGlBsKvDcpjOT2yo1HXBvmzt69nf/NQoHOdh5iaMpVx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BjmhYYrQ; arc=none smtp.client-ip=209.85.208.41
+	 To:Cc:Content-Type; b=fV5iuPzadjphMWAKCMBjgu5xZmBw2J/CqlduY1YT8jFW0SEM3NksxBZTyu729Q8hpIfcXuvgR+nbgQGta3YFQnr6eR3XBBRm9zAp70YBzynLt/90oaEyESu9JljrpagTfuMt6nK6OrCL5BZ48Axw0UQIBKy4tcswp3mdBD18YjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MH7PXmgf; arc=none smtp.client-ip=209.85.166.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BjmhYYrQ"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6188b793d21so8420152a12.3
-        for <git@vger.kernel.org>; Tue, 09 Sep 2025 00:26:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MH7PXmgf"
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3fe48646d40so13952305ab.0
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 00:32:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757402807; x=1758007607; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757403174; x=1758007974; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sFI6S+nwAhWbGmhdiYt6nI3VZeIN1drbjxoNJsbl6pM=;
-        b=BjmhYYrQTgeXuuCbV07uPZtigkyBErNhLMMit9gtRKddS71FoI402neOtGKNbqBAHG
-         vmJnk6gmJQEGaTWx6BiqoD/8UwJ2N5o4cXQakTJzfCZi5wXZQweiKJhxz36tq3dHEP0t
-         e9oYQUT8lTOD8aGDVpNNDZ60BvkcPcOnVesw49QUcCkBUV3GipeBdE9/dfoKTDiJ3Pp8
-         mhgXxnbxMbVhg+RL7/wwXFY3rUxOfnEuua06pcF+ObC+IeRrP1Zxjop2XbrexjN0bWVY
-         4Gfmm428IP24GQLT9L4Fk6i1zWH6uhAjQn90E1sQ9jTD4ScWbZoqhdXP/eDbROfSh77C
-         i1OA==
+        bh=JbToBDw5tRFXiDtlc5HVq15sFAW3v6wmUaDUpEd284I=;
+        b=MH7PXmgfSMchtY3oivZrGr7U1boO0vu1LZZk7baoOQaFxuyU/FH/371wXWTwra57Et
+         0hs5EOM9bLbW2VRqYzbh8mUSsWbFlRDKum9OrLzRcAYL4u3euhqR8aO51U2dcDXFjXB+
+         0+tz5qRTjN4Y35pRW1eeqeEptUMkScj0lC5evZiYbo2CGMyP+L3O0qg4ln8CldYJtmAu
+         Vrg6eN1oUiIj20ZlniB7+1x0p7Ys/ZZ0Z8ePVr/kXNPdxLE/G4ZbwLRuwPsiIYruiXZN
+         205NSWnHLzAr5V382tPeQKjJKLzhyKY5ZENuex8/W2bSv/1ovZvxx5gMmuZ5m0hKt6Mb
+         tTzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757402807; x=1758007607;
+        d=1e100.net; s=20230601; t=1757403174; x=1758007974;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sFI6S+nwAhWbGmhdiYt6nI3VZeIN1drbjxoNJsbl6pM=;
-        b=JJdJTjwlIE47Rylrjikm75BnAMu0z5Rfh+2fRHTg8ORdOzXPSufOT2Z1zMDzNrEIsm
-         +Pw/iMRTu7fMAV7MQuqZncJiTOdpL71mNqwYLveiu3yNCg9uLXl254kg38yF5A+bmPYe
-         9CEqAfpqDPrt7HJYMZWr2uGMQxJOfVcUOiikpGH2ZgoO+3sc4HaXsYadcFq3nIgaLo8E
-         4NbbojPQ2mDy4rIdWCLVtVzvPC6736WofqoXFy6Q7OZlDanwVfAVAZDH/vqo0fF73N0B
-         tbfkWk8LDpAna7GrlbhxbOwJVYVQhrpLTn+uB9Pb/oLEUZ39Rf7hcTCaSf9lWDa657Gm
-         D4VA==
-X-Gm-Message-State: AOJu0YwoC0r+YHP3IVLTZegD9dhHqqq3jnstE6bmuaggatOcdMb/ebF0
-	EPFSyQe05H6yWS4jYiaUef6oIHVn53f+/zO3DGg6Apr78J51u+fVU3beA/DbC1qipBlYhW3sIxc
-	q4JeoWjRKyiomHIOvKQ0aub32k2dFM9w=
-X-Gm-Gg: ASbGncukkbXjRFIhNwjaU7mqy3NHiwiNYi3sRboiMGJLjWwkfmNQcKwksxH+CkVI8+B
-	ZrU0DyiM9KEzBE60/t6AoAeZPppjzigsesoAVedb+imrEv17L/t13GXmMKJv/Igz/no9AM+8+lM
-	NJFLosDK83PUdk1N6uCMarCQD4Y6WzCikzHX5fFhFErFsaPIPsJVUvulfVwvlu3qTyBsSYP2jQK
-	pz4WVPk9Q==
-X-Google-Smtp-Source: AGHT+IHCyQ3IUo3/vIy+6OT0NPuSxgoGHa+jKLJrbjOPJatDswpdp8VEKKx3eiDASQbs2Zp2BVX6i6luhtqCHPSa2ZE=
-X-Received: by 2002:a05:6402:24d3:b0:615:ad47:58c6 with SMTP id
- 4fb4d7f45d1cf-62380d72a73mr8111702a12.30.1757402806735; Tue, 09 Sep 2025
- 00:26:46 -0700 (PDT)
+        bh=JbToBDw5tRFXiDtlc5HVq15sFAW3v6wmUaDUpEd284I=;
+        b=wuIz1AF1uyqNsbgWAkYc35HcMeqmKME2v9Ok0uO+evdK12wV5cS9YRyKvQxd1iZVkh
+         K4uZ9EWIgJZe/6WQMHIvJxwZvX7r9e7wWH9iBzayZqXk6yl4VQIiWyAiXBqW2CT9iF/x
+         xsquDPovuaWx44Dd/FskQ+H4eD885oorOYh2E148D4KH633fXd7QwzGMrHOUaYSaMNdQ
+         k2lijLBV2tXpM7XkLUlJgMt4A8naeq6vlAGNBhhKYcsizbF6gvlpdgpae8VXjkBDLUgl
+         QZ7+XoRf36+6uo4BKPjMUKv9EbFiLHO+cNyBz2Rmrd4uyJuywvma+3XkWwyWh+KuwIJ4
+         Qq7g==
+X-Gm-Message-State: AOJu0YyFsq5Va0N7ahtKHdcLbKKDITJLdsLkQtru/fmEAxp4SVKx6VMt
+	0u4qzNp0AYIRkTheMU0dCXCtmIcMvS7zBz+M+QlEFOfNpBFI2JiClnSNMF6wQc3YdocVNWap8Mc
+	7lsiAGg17s1ibcZcbMFgktJgx0mIrfiQ3P3CTkY4=
+X-Gm-Gg: ASbGncsSTgRGcRdEvI2tgEdeGsMwzSBGqD+dB0S1C+Uugb7jMgwFD36rwvKx40xenP6
+	EXqKtpe6hDEAL/z+/+Ii1pwTcuN2ZiGs/rTotUWVuT+zVdXsl64w0UTIEO4HDQ//6sMdo2Oib1T
+	wpqOzcLzH4WUZVKSPGyJyTxno724b5B6FwHkx/bqVkw+x2+Pm/4htCS02jeOZlS0PHew2d5eiV8
+	1zgSetopnqeadjoMJj/zpPTWg2NbAkOofodzPrO6aNmhz1Nwg==
+X-Google-Smtp-Source: AGHT+IEa08LR5Y+GjaKX3aGvbCpyC/y1EzeO87xVSvBUaUII9UY5jWpXBQquJaMEHdVhdX2OWRiNq1Z0thj6TU1aDmc=
+X-Received: by 2002:a05:6e02:250f:b0:401:8ce:381f with SMTP id
+ e9e14a558f8ab-40108ce38afmr145627965ab.6.1757403173985; Tue, 09 Sep 2025
+ 00:32:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
- <20250908043620.57848-3-siddharthasthana31@gmail.com> <CAP8UFD3Db-n3CY=KBpn-2Nt=SYY=5ckF3J_4ho6C19SVcrfdsQ@mail.gmail.com>
- <7f90e1b6-acba-40f2-9e51-ad09c2bf6999@gmail.com>
-In-Reply-To: <7f90e1b6-acba-40f2-9e51-ad09c2bf6999@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 9 Sep 2025 09:26:33 +0200
-X-Gm-Features: AS18NWAaqiX0S4C9tVMWUpeGW95AT6dOt8M0oiaAbNruiHHxf1iuSDZsroc4ReA
-Message-ID: <CAP8UFD1J8fgjZ+din3P_=FjZZFJ+ocqvwTFjBNjpnhrx6=nMqg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] replay: document --update-refs and --batch options
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com> <20250908043620.57848-2-siddharthasthana31@gmail.com>
+In-Reply-To: <20250908043620.57848-2-siddharthasthana31@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 9 Sep 2025 00:32:42 -0700
+X-Gm-Features: Ac12FXyZl3mnlDbUaq3WrLAUFg2LB5ij0CX1Tm2OX1w87vzZWTO8C-kYUu3Sw3M
+Message-ID: <CABPp-BEmOor3CLAY6y50DuGR1K7WYu+PVsXXWOOaofXzJpavMg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] replay: add --update-refs option
 To: Siddharth Asthana <siddharthasthana31@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>, 
+	Christian Couder <christian.couder@gmail.com>, Karthik Nayak <karthik.188@gmail.com>, 
+	Justin Tobler <jltobler@gmail.com>, Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>, 
 	John Cai <johncai86@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Siddharth,
-
-On Tue, Sep 9, 2025 at 8:36=E2=80=AFAM Siddharth Asthana
+On Sun, Sep 7, 2025 at 9:36=E2=80=AFPM Siddharth Asthana
 <siddharthasthana31@gmail.com> wrote:
 >
-> On 08/09/25 11:30, Christian Couder wrote:
-> > On Mon, Sep 8, 2025 at 6:36=E2=80=AFAM Siddharth Asthana
+[...]
+> Option validation ensures --update-refs cannot be used with the existing
+> --update option, and --batch can only be used with --update-refs.
 
-> >> Also document the --batch option which can be used with --update-refs
-> >> to allow partial failures in ref updates.
+There is no existing --update option.
 
-> > It looks like a --update option was also added by the previous patch.
-> > Is it documented here too?
-> >
-> > Why was this [--update | --update-refs [--batch]] set of options
-> > selected over other possibilities like for example
-> > [--update-iteratively | --update-atomically | --update-batch]?
+[...]
+> +       int update_directly =3D 0;
+> +       int update_refs_flag =3D 0;
+> +       int batch_mode =3D 0;
 
-> I was trying to provide both simple and advanced modes. --update for
-> users who just want "make it work like piping to git update-ref --stdin"
-> and --update-refs for those who want control over transaction modes. But
-> I see this creates confusion.
+Why are we adding three kinds of updates?  You covered two in the
+commit message, but mostly only motivated one, and then added three?
+
+> +               OPT_BOOL(0, "update", &update_directly,
+> +                        N_("update branches directly instead of outputti=
+ng update commands")),
+> +               OPT_BOOL(0, "update-refs", &update_refs_flag,
+> +                        N_("update branches using ref transactions")),
+> +               OPT_BOOL(0, "batch", &batch_mode,
+> +                        N_("allow partial ref updates in batch mode")),
+
+Three modes and I can't figure out how update_directly differs from
+the others from the description.  Is it different?
+
+Also, --batch seems like a funny name since update-refs is also
+updating refs in a batch.  I'd suggest coming up with a new name...but
+is there clamor for it?  You mostly motivated the atomic updates, and
+I think it might be better to just implement those and then add more
+flags later if needed.
+
+> @@ -399,6 +461,7 @@ int cmd_replay(int argc,
 >
-> Would you prefer a single option like --update-refs with an optional
-> mode parameter? Something like --update-refs[=3Dbatch] where default is
-> atomic?
+>         init_basic_merge_options(&merge_opt, repo);
+>         memset(&result, 0, sizeof(result));
+> +       result.clean =3D 1;  /* Assume clean until proven otherwise */
 
-My preference would be something like [--update-atomically |
---update-batch] first. (Maybe names like `--batch-update` and
-`--atomic-update` are better?)
+I don't understand why this change is needed or helpful.  I don't
+think it changes behavior looking at the existing code, but to me,
+result is supposed to be the result of a merge operation, not an
+input, and should not be set other than being cleared initially by the
+caller.  The comment feels slightly misleading to me, as well.  So,
+I'm surprised by this change and would like to hear the motivation
+behind it; could you clarify?  Did I miss something about how you
+depend on this being set even if the list of commits to replay is
+empty or something?
 
-And then something like --update-iteratively could perhaps be added as
-an alternative, if:
+> -                               printf("update %s %s %s\n",
+> -                                      decoration->name,
+> -                                      oid_to_hex(&last_commit->object.oi=
+d),
+> -                                      oid_to_hex(&commit->object.oid));
+> +                               if (update_directly) {
+> +                                       if (update_ref_direct(repo, decor=
+ation->name,
+> +                                                            &last_commit=
+->object.oid,
+> +                                                            &commit->obj=
+ect.oid) < 0) {
+> +                                               ret =3D -1;
+> +                                               goto cleanup;
+> +                                       }
+> +                               } else if (transaction) {
+> +                                       if (add_ref_to_transaction(transa=
+ction, decoration->name,
+> +                                                                  &last_=
+commit->object.oid,
+> +                                                                  &commi=
+t->object.oid,
+> +                                                                  &trans=
+action_err) < 0) {
+> +                                               ret =3D error(_("failed t=
+o add ref update to transaction: %s"), transaction_err.buf);
+> +                                               goto cleanup;
+> +                                       }
+> +                               } else {
+> +                                       printf("update %s %s %s\n",
+> +                                              decoration->name,
+> +                                              oid_to_hex(&last_commit->o=
+bject.oid),
+> +                                              oid_to_hex(&commit->object=
+.oid));
+> +                               }
 
-  - it works exactly the same as piping to `git update-ref --stdin`, and
-  - some users want to use it to blindly replace piping to `git
-update-ref --stdin`, and
-  - we document that it is not efficient (compared to
-update-atomically and --update-batch) and should only be used to
-blindly (bug for bug) replace piping to `git update-ref --stdin` when
-performance is not an issue.
-
-> > Also how does this --update-refs option compare to the --update-refs
-> > option in git rebase? Is it working in the same way?
-
-> No, they are different. git rebase --update-refs updates refs that point
-> to commits being rebased. --update-refs updates the target branches from
-> the replay operation itself. The naming collision is unfortunate should
-> I use a different name?
-
-Yeah, my opinion is that "rebase" and "replay" are commands doing
-similar things, so having an `--update-refs` option in both commands
-is a good thing only if the option has the same purpose in both
-commands. If the purpose is a bit different, I think it's better to
-use different names to avoid confusion.
-
-> >> +--update-refs::
-> >> +       Update the relevant refs using ref transactions instead of out=
-putting
-> >> +       update-ref commands. By default, uses atomic mode where all re=
-f updates
-> >> +       succeed or all fail.
-> > This seems to imply that --update doesn't update the refs atomically.
-> That correct --update doesn't use transactions it updates refs one by
-> one like `git update-ref --stdin` does. Should I make this clearer in
-> the documentation?
-
-Yes, please.
-
-> >> Use with `--batch` to allow partial updates.
-> > What about --update, when should it be used?
-> Good point. My thinking was --update for simple cases where you want the
-> exact same behavior as piping to `git update-ref --stdin` and
-> --update-refs when you want transaction guarantees. But I am starting to
-> think this distinction might be confusing users more than helping them.
->
-> Would it be cleaner to just have --update-refs with the batch mode
-> option and drop --update entirely? The sequential behavior can be
-> achieved with --update-refs --batch if someone really needs it.
-
-About the options that should be implemented, see my opinion above.
-
-About possible confusion, I think that to avoid it, it is important to:
-
-  - name the options properly (see above what I think about the
-`--update-refs` name), and to
-
-  - document thoroughly how all the options differ from each other and
-from piping to `git update-ref --stdin`
-
-Thanks.
+Who would want the update_ref_direct() branch of code here?  Can we
+just toss it?
