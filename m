@@ -1,175 +1,117 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9CB1F30A4
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 08:02:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1141C3C11
+	for <git@vger.kernel.org>; Tue,  9 Sep 2025 08:22:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757404955; cv=none; b=JgB5QlqRS/bLuDqa7jrjS7lYpWM2AKfXsKSj8joqtk+wYoBaIUft8lBRrgGV8coh3z7aSqd7k04Mc3VzQGu9MQ6YhkmwdRd5HoH8pR8pvr9zsmX7o33NRaaW9l5Om1ow6DGbpufA/P+8mLbWXLQq+2dtxgYmCCMdUXJd1mQefco=
+	t=1757406156; cv=none; b=eBAIu1wjVrq6oUHfXIb4vK8J6wXz3pzR5ryyNusunnbQ5JgzWVx9sB9c4pk8Fqh7wKNARs93dsCaDSdyWo5EQzED2EEeq5w7qnlZG4M8ErKw6lH/sz4L3JUiUSD67jmzECJB0YDnWMM+fVNhbmMds9enTAf/VPx8v+48sBrnEe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757404955; c=relaxed/simple;
-	bh=E+idWqXryWKIXmpICOvbcQfAir8fbFSJL9ssU/MnCIk=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=PiblsxEtNmVmnkdZRakd8huOHnw/8nsNtISp5e6p0NM2APZP6oXLFuMw+TBu9gKViYjdf53n0Ac6ot72SycVTmhQCGobdEWd02ClIvvVE2eqg2HVqjQ5R3r1UsGiFVp350go3pPiijRdL1q5eyhmR9Cio/gJ4QTvvHkqc/KSz0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=Ec0oBvvp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UQghQfYg; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1757406156; c=relaxed/simple;
+	bh=q6NZSi41QSu8kCagPyRB6rRQtofCqt58Jc6zQ4xHSsE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A+XkTDoFRdAGCzmRv3qIxF9GitVz2DY16AdatPrSIEIDxKPiTBIfo5ZNeaX7yCajJUp7pMSXl9qorOOIMzTA7VJaOnxFypJtLItYGNZNLOEb3CirpdGmSCpb8vOEL2lRAbrGC+WxeaxqW8DhnqswUDBcsiuGT9yWxyd0ae6F+vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C6er+/QK; arc=none smtp.client-ip=209.85.217.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="Ec0oBvvp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UQghQfYg"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8E87414000F1;
-	Tue,  9 Sep 2025 04:02:32 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 09 Sep 2025 04:02:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1757404952; x=1757491352; bh=/2dr5oJO96mE5MPYHFq/NMGz+3pkTCT8
-	gmFO9cl9cVw=; b=Ec0oBvvpXBJMhicqweS4ywXv5M1gk8ZyonSpDuWnny3TCEFh
-	iTDnp1sOecLVxxt9HcEQfcrGgEyUdIRgpu0Pvuzp2tfeC4t1Sm46vChc7WJ2lFGe
-	OIwvKCAJnS8CUoAWxDHDL648mPa+xirvZ/yMuGiONO9l1Gs/FAPVre1S91R7/4jc
-	Kt/gOaTxKzbV5hSjsjybh/W/be2VySwPJi8Gn8chKjq2d4ujLfjTYovfFp8K5xDq
-	5KB8ICh42bcz+YaRiU4Raj2bVaPp7DNCEO4ficVS4Rrj+Z5132qTUorIMLICS/Ag
-	puJY8/ZRW09sWCYk7ewnlPuJZqNTxKKAdd+l3A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757404952; x=
-	1757491352; bh=/2dr5oJO96mE5MPYHFq/NMGz+3pkTCT8gmFO9cl9cVw=; b=U
-	QghQfYgfImQFd7xR7OzL3xVW9qkrbwUVIF0xn7pYQX6CYHhNQymsv8Kg3m8Ooewc
-	YUwLg3DgwjAyp+sNuhSltpPvyWlKj9tElzCUtE1cRBaKYOa9JWIJBYb2y6FUII/G
-	ABdV0k2iJQFbLoAXQlTYybmGph5vwYl1wm5k5COhco32C+Z4oqSiNUan68jyZE+3
-	vzeujT9m9uY5dARccyVlXZVfsO3T7AUdsCNQjvq0950QGe60eKDMeBvXADYU1xr/
-	vp6rOQ8B8dBX45gPI+Yi11e70VHCeJlbVOL45dfMLPIYHQM0Z1/v4ipS3cJNjs56
-	qrhj3ULPDS0TlSU9gIztw==
-X-ME-Sender: <xms:GN-_aILpgmZ9G2gHFtafaQX1Vcn7OwKbinMdXeCWHf4R5XuAiix5yxE>
-    <xme:GN-_aIJUVotNUa7_DnfJMy2SDUSUR1gx5x8rY2idjgzgUZ9GWHA6IZ2tqM3XJVrtm
-    w0aR3Ds9hKbro8SLw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleekkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
-    grmhgvqeenucggtffrrghtthgvrhhnpeefteeghfegfeevleeguddvkeetheeiveffudej
-    lefgudffffejleffffeludekjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofh
-    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphgv
-    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
-    epshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:GN-_aDKjgypTxfbDRg1GLhDuP7xxaECfbbSE8icvxJlBixQfgpTYHw>
-    <xmx:GN-_aEQl2WHTgXboJPbFa8CTFho5s5DjvprdzTe7Og8yNJGa_fYU1Q>
-    <xmx:GN-_aKtPnBc1G4yFuVMNG-u5Cld5qskeGm6HTSKFoOpMM-bJctZHpA>
-    <xmx:GN-_aNbV_o52a2i8Mjhd86FldjVB1VZaF1woQfJwatQUZeDifJMxdQ>
-    <xmx:GN-_aMQWZfCMPFdLI8lMisob_U8mSOOOW3daHdZK_cR2NwWpAmlGUaSb>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 35B031EA0068; Tue,  9 Sep 2025 04:02:32 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C6er+/QK"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-52e231e3d48so1926347137.1
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 01:22:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757406154; x=1758010954; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=q6NZSi41QSu8kCagPyRB6rRQtofCqt58Jc6zQ4xHSsE=;
+        b=C6er+/QKozeDjX7JrWtQCY33zFBanRIYVMlRG2vYFrt7A6Msq6Fp3cIXOqFqdpebYv
+         G35kqHD4HSh5BrkWYq05re+yVa+D8jIEdyyHLEJSUeropdJDpc6ilmp4qeP6vNdZeQcW
+         Y4F/OlZImRzVOBrbjihxA9XjM4c3sIqUBfKaypn6anh3D4FcaYEOL222rGQjFm4alvaG
+         VPrHxzms++H9UJZUP0Qo8yGysndlJF/2wuIgR1MoOZjCCoobIQvd1kYdLhxRie/wPkaJ
+         heigRtkX2vsCzOceq9Tge+WW5WzvnRgrAF3w1ILUj4ZCaobAUyHF3QpYPleOCMgUXGEX
+         KBdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757406154; x=1758010954;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=q6NZSi41QSu8kCagPyRB6rRQtofCqt58Jc6zQ4xHSsE=;
+        b=ipFaqoSOpcvvDKG11w18IC6moYUGkTBY72Ih8/M4HYIdHu9cyfF3nA2BC7I9lGVHWX
+         e2kojohAO4+H/bIfyPRNIbagALCauhql0uN04u27pMlHeVRmgNxNuY+cDxPgocaPRdGz
+         oyHyHkvrhFa1FZU7cN4bDxsLbmwfGZQzbbnt4CIUSnuT4fJQ259/tcHOe8Mga2qiJLLF
+         Q5W4tSqJkiIRpJRaeByf3u/LV9u47H/DzzER9QA4Ab/v9Dcx848mCz+nIdvNOVdjeon5
+         HoT6kUDnCU8VnBKHAxAGPbq+ZR1so/k+R/3TuiGqyVwPCzFYoeW+zEOXne3fdW19LYkF
+         /oww==
+X-Forwarded-Encrypted: i=1; AJvYcCX4GblY4JjpwRd4Rn+VQ+4mohP4ypXaNqoJl7FU4KRPN3uVu2va0SF9IQYhSThSTzD3eD8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzqahXcSWAL5TjoQMZLHvwQDv2EEHMFatVl7q8HjHeNlldtVVB/
+	j1JuDUQifoORV2CblbK7eRmXkhy1u+TWm0mR53I5LwIm3wS0A1kDegO/3CePujESZiqzs/6DZ6i
+	K5Pi4mN6RV6GapoelafJywNQJXXAFUYg=
+X-Gm-Gg: ASbGncusrjehMgH3JDJGWmakIhe4Y996TMsk2miPDTxE00fY2jkKcS9o+zfIaaLRGfM
+	FrbCx+ixwkVs1l5GcmC7HiWGZCpp0EsLSAyQtwSrwBtdDKt1Dc//6Ml8r6VzvKVKC4C3rqAGQ4V
+	0n6csdsdEaikACmBVmd2XkwV67sWNIcQHWN6D3pFoeZtpX4CEseoJy9aLUTD9WnFg5pIsv6RLuS
+	xyff2mXedxJtl8k
+X-Google-Smtp-Source: AGHT+IG9GjfsQkOF35zM34qJnCiOnWb9bAIKL39quOA7g8uWtnFDp4AJQBNGtkHJncMlbwAyKCUdsQ/2mNEMjbZg2+k=
+X-Received: by 2002:a05:6102:8025:b0:4fc:1a18:aaa2 with SMTP id
+ ada2fe7eead31-53d0d61d136mr2695312137.5.1757406154020; Tue, 09 Sep 2025
+ 01:22:34 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 9 Sep 2025 01:22:33 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 9 Sep 2025 01:22:33 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250902-b4-pks-packfiles-store-v3-4-6925278efeda@pks.im>
+References: <20250902-b4-pks-packfiles-store-v3-0-6925278efeda@pks.im> <20250902-b4-pks-packfiles-store-v3-4-6925278efeda@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AAEK-xvrxHXR
-Date: Tue, 09 Sep 2025 10:02:11 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Patrick Steinhardt" <ps@pks.im>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, "Eric Sunshine" <sunshine@sunshineco.com>,
- "Jeff King" <peff@peff.net>
-Message-Id: <a56d716f-8598-46d0-9b63-8d44b482e1e4@app.fastmail.com>
-In-Reply-To: <aL_MdiBLx9sssBwc@pks.im>
-References: <cover.1756480827.git.code@khaugsbakk.name>
- <cover.1757345711.git.code@khaugsbakk.name>
- <bdc683a92b38884e9428cd4bade1f86960ef432b.1757345711.git.code@khaugsbakk.name>
- <aL_MdiBLx9sssBwc@pks.im>
-Subject: Re: [PATCH v3 1/8] git: add `deprecated` category to --list-cmds
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Date: Tue, 9 Sep 2025 01:22:33 -0700
+X-Gm-Features: AS18NWA7r0xbLwusCFeJJXzIB42nCCD3Qn5VlRTLzWJsXeMdk-uB0oaH6_lEuF8
+Message-ID: <CAOLa=ZQgC5LgVCtjVyfd8xeTajwWon2YQDkwVYbK_FRaBP2o+A@mail.gmail.com>
+Subject: Re: [PATCH v3 04/15] odb: move packfile map into `struct packfile_store`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="000000000000897c44063e5a0153"
 
-On Tue, Sep 9, 2025, at 08:43, Patrick Steinhardt wrote:
-> On Mon, Sep 08, 2025 at 05:36:12PM +0200,
-> kristofferhaugsbakk@fastmail.com wrote:
->> Notes (series):
->>     v3 (new):
->>
->>     This is something I wanted to submit independently until the poin=
-t about
->>     aliasing builtins was brought up.[1]  It will help (in a small wa=
-y) with
->>     the upcoming patch =E2=80=9Cgit: allow alias-shadowing deprecated=
- builtins=E2=80=9D.
->>
->>     By the way: should `command-list.txt` be updated in some way (I d=
-idn=E2=80=99t
->>     know what way?)
+--000000000000897c44063e5a0153
+Content-Type: text/plain; charset="UTF-8"
+
+Patrick Steinhardt <ps@pks.im> writes:
+
+> The object database tracks a map of packfiles by their respective paths,
+> which is used to figure out whether a given packfile has already been
+> loaded.With the introduction of the `struct packfile_store` we have a
+> better place to host this list though.
 >
-> I think it would be a good idea to introduce a new category for
-> deprecated commands. After all, next to planning for the removal we
-> should also actively discourage the use of such commands. But if they
-> are still prominently featured in git(1) then people might be misled a=
-nd
-> use them, only to get a deprecation warning thrown at them.
 
-Thanks.  I=E2=80=99ll add your Ack if that=E2=80=99s okay.
+Nit: missing space after 'loaded.'
 
->>[snip]
->> +static void list_builtins(struct string_list *list, unsigned int inc=
-lude_option, unsigned int exclude_option);
+> Move the map accordingly. `pack_map_entry_cmp()` isn't used anywhere but
+> in "packfile.c" anymore after this change, so we convert it to a static
+> function, as well.
 >
-> Nit: let's wrap this overly long line.
 
-I=E2=80=99ll do both of these, thanks.  In the same commit/patch I think.
+Nit: Okay so we move it from the header to the '.c' file, since it is
+only used there. But we do loose the 'inline' hint, we don't talk about
+that. Any reason for that?
 
->[snip]
-> Same here.
->[snip]
->>  {
->> -	for (size_t i =3D 0; i < ARRAY_SIZE(commands); i++) {
->> -		if (exclude_option &&
->> -		    (commands[i].option & exclude_option))
->> -			continue;
->> -		string_list_append(out, commands[i].cmd);
->> +	if (include_option && exclude_option)
->> +		BUG("'include_option' and 'exclude_option' are mutually exclusive"=
-);
->> +	if (include_option) {
->> +		for (size_t i =3D 0; i < ARRAY_SIZE(commands); i++)
->> +			if (commands[i].option & include_option)
->> +				string_list_append(out, commands[i].cmd);
->> +	} else {
->> +		for (size_t i =3D 0; i < ARRAY_SIZE(commands); i++) {
->> +			if (commands[i].option & exclude_option)
->> +				continue;
->> +			string_list_append(out, commands[i].cmd);
->> +		}
->>  	}
->>  }
->
-> We could combine these two loops into one:
->
->     for (size_t i =3D 0; i < ARRAY_SIZE(commands); i++) {
->         if (include_option && !(commands[i].option & include_option))
->             continue;
->         if (exclude_option && (commands[i].option & exclude_option))
->             continue;
->         string_list_append(out, commands[i].cmd);
->     }
->
-> Which results in a bit less code duplication.
+--000000000000897c44063e5a0153
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: deccae2649bf9_0.1
 
-That=E2=80=99s more elegant.  I=E2=80=99ll use that.  And I=E2=80=99ll r=
-emove the function doc
-now that it won=E2=80=99t be relevant.
-
-Cheers
-
---=20
-Kristoffer
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pLzQ4Z1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK3B4Qy8wUkV2TzFhbzdySld0UXJkM09nOVNFQ2FYVwpmQ0pVR0xMOUFy
+Wkd1QUg2LzVZTjladFNnTEpzOTdGQTJLRUk3bXUyRFJpb2Z0U25WN2lvNmVsckI3S2NCMHBRCnZO
+cXhrYkg3ZDdUeUxsUWpwamN5bXB2b1lvRjlSYkVscnlOcFlGN2srck5RVkVrSmQ5UU9NeG9GdUxZ
+aGNmT00KTTByL1dwUmRRK2lhUE5KSExyVndua3JIb2ZLTGxDeXlkSm9BRWZXMVlFcXRiN0wvTWRW
+dENpcTRNTWl0Rk9MTgpWa21DeW9ONTQrNVhocWNzbEtLOWFaQ2tjV09YTnhRMFdDVXB5TCtiUTZs
+UnBDTlZqSE9qVFc3ajFnSmExZ1dqClFrRG5CVnR5OWRmZ05uU1FQOVFqdERBNXE2QVRCWmlraGFu
+K3ZjQkxaSW5STWQ5L3hldlpSWVpQaDYyaGEvajkKY1VHWnFHNmxEUlFzMVVwQWw0MTRxVUtjUUNj
+OXV4VVYwTlFhaFR3SE9FNUQrS2ZrdllNUjB5ZGh4RkFBa1JWSQo0Q01RMXhhS1BKRm9uNUxJeTBw
+SFVLejNBYjBiQmZGY3RLRU1uTFhZU0tPdkJ6cG5OVjAvR1RyV1RMdm5KbS9mCnExTHl2RWpoL2tx
+dXVuWEpSSzcweW9mZitNMDY4SUp6NEhyREJNQT0KPWE4UUsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000897c44063e5a0153--
