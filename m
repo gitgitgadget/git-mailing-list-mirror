@@ -1,138 +1,469 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3823C1BC4E
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 15:11:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59C021B9C5
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 15:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757517062; cv=none; b=FNjnX22MIWALgk8CmycXWL/zQWs5b6nI3Su89HB/m0n6LnPDjgA16dRMCRMJPb5GLVnR6W9jE4FD7Idwv85n5220ucyF/ByWy2tUlkWwkiOed8fd/mrv1T3h45aFhKl6FykePA2YY7WhQ68meALRo4CWBkfQUT33FOvmmSxWxt8=
+	t=1757518166; cv=none; b=ou/z6opi8qodlY5wwmsLfczKxFE9clC47HAI/Zw/pAgdjn2wx6zE5azYWftDN6d4lUKryCW+p2YMRntuQNgmRf6Qf4x9i2fg0YxC0s4PElOAsk1HLzNs/05FSZSsvgByb6f/Xwt+JkCF4J9Ka/s2Lba9RnTEfFbj8rJMucaoMTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757517062; c=relaxed/simple;
-	bh=CqC/bXZezoO4X8RpKsqZ1AfHHMLxsA9epKiEqY9/Nl0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SYvHQdST3LsCabSHyKpl2JhmIZ4wQqZ8DAop2T9iEAoK15NiKVRAzljMvFZJHGehG64weiUHrnErOhNaKPp/NTWieE0xec5B/otBv9eMUdV+/PUnr3u7+740fuIyyYYrnk/j4yzIRWHjYKBS+3wGW5DpX4Va2qlG3NyVVLe+Ei4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FxL4lKgF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PTdC9UJV; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757518166; c=relaxed/simple;
+	bh=hcgkFKDPJYwUdMQ/rbAZFJjVwXHguBP0LyaCov5j0uA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=B5fXqfpzXUG99rdkAGw39j3cavoL9bTOZqcCDRP27n7cTII28WDuquCDPa6TEo9W2gPtuQeeic8VFuWmowlO/jdbbuvbfRpxYYKtWzT2+SKnNv4ILV5jXry4lE6a/JW2+SmlJdacvyxQEZsPIupBEEdd656EeulzL+C/oXkn/2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h5DnnGgp; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FxL4lKgF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PTdC9UJV"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3BD877A017E;
-	Wed, 10 Sep 2025 11:10:59 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 10 Sep 2025 11:10:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757517059; x=1757603459; bh=hU/CC6WuI0
-	I2+pBrZ9pKyFkwFectJoQ3e3SHQFz6cBI=; b=FxL4lKgFxQR9HZvN7FOpDwpxom
-	Sq2rMcvVO4V1du4qa4i/4f5MsYc7XIYV1zzga2tNs7yR9FpGZltVBWbOtdKmE1ai
-	phRQD8MJwKZV3Sr5F5gVVV9CfgqXM8F8Ohkk0C3vaT8ZwAp1x17s54q6bacCuvS5
-	43IBFr4xBXI+vFqjG2Kov5lO5jqXca85vBkkEjHDXs0kLllLzbMQGJWLkHWbzfTp
-	2ksXxUNYXn9deRV45/wrBecZ+ILSCh4YwwfxNXbOHS1MxcBxyOLBcVtlX2ejWC+Q
-	HpyRF26OJcmf88pPXvcY5Ac9+IPWQ9l/TyRXtS2Vx1NDPe5dDvDJ880pE+4A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757517059; x=1757603459; bh=hU/CC6WuI0I2+pBrZ9pKyFkwFectJoQ3e3S
-	HQFz6cBI=; b=PTdC9UJV3JXp+I9djpqp5T3cjSDUvdcsk69uNdjn8OptY76vCpP
-	F2LX8s19V17kQ5iHR7S0ias9JptPpV+axrQMZchjpDciX8pDdp4ydo5S4ErcPA+A
-	yoXpVjjEmIAbcd4GNKJLd1hBpPgmKrMDM6X/+UfpYyJMRe/uWxBH+L/i8ZnhAneq
-	87NQMF4XwREYrLAUOh5xU+7EUyttfzfGaJaKmuX+Yq+AC8nWfY09EpvsbMdMZwE6
-	GnmUU2I6h4DrVavfvPna14uZp244o9jays8wEaUdKsFWJtpEx92SD0HED212SDGi
-	R4O+Kphl/PID9xET9GnzvUlIUbn87AK7lnw==
-X-ME-Sender: <xms:AZXBaLqr7lL6_DMfnVnC-Zbvp9SVJczOJMxDnSffh1BGvWh0Go-CbA>
-    <xme:AZXBaJcOFaH0fks-TcENq42DbfKGVlpCwWxfbqPTEWmgJtEs9fmGaDaQdkF_Nk5bX
-    HhX-hot-bVDxvqAcQ>
-X-ME-Received: <xmr:AZXBaBRAlDgrED47c_pItFtEtmgH7SLHxw6U8qeP5ZvbApVg8SB252G6T4i-1tPjnAFH-xIYb_FQGYEjd9hUVgxLYFwJu-hUwv8PLF8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeeiudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegrshhkodhgihhtsehhohifughoihdrlhgrnhgupdhrtg
-    hpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeiirggthh
-    drfhgvthhtvghrshesrghpohhllhhoghhrrghphhhqlhdrtghomhdprhgtphhtthhopegt
-    hhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepphgrthhrih
-    hksehpshhpughfkhhithdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:AZXBaCac-yZy25YT0t2i64cjfb3ZA9b0ycpaMIj0E_1y30ndFhCZcw>
-    <xmx:AZXBaEeb3Bxx1J7gMrDVMgi94rT_dKcqZbq8K7ykDgvlVDseyYw1JQ>
-    <xmx:AZXBaDKlcMitckTQ2g-0viHzhpLgr86Zy0KRnNyAkFRL8WEwoab1Fw>
-    <xmx:AZXBaBJgYqfD5dcr1m2he_87eO3x3M69M7_C66qWwkNb-PjKNY-sAg>
-    <xmx:A5XBaEGiuJIEdeBtFSQJf1HO_hmRkjRlQXk-hkA-zODe01h9SEciBQcI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Sep 2025 11:10:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Colin Stagner <ask+git@howdoi.land>
-Cc: phillip.wood@dunelm.org.uk,  git@vger.kernel.org,  Zach FettersMoore
- <zach.fetters@apollographql.com>,  Christian Couder
- <chriscool@tuxfamily.org>,  Patrik Weiskircher <patrik@pspdfkit.com>
-Subject: Re: [PATCH v2] contrib/subtree: fix split with squashed subtrees
-In-Reply-To: <641aaa9b-2b23-4faf-a13e-f6205e9ef5a2@howdoi.land> (Colin
-	Stagner's message of "Tue, 9 Sep 2025 22:00:18 -0500")
-References: <20250824191048.1938340-1-ask+git@howdoi.land>
-	<20250905022728.940664-1-ask+git@howdoi.land>
-	<b78639ee-021d-49fc-8b8d-0140ed8fc010@gmail.com>
-	<8d341a51-2135-4c62-9df1-5be351e73275@howdoi.land>
-	<xmqqbjnjt67y.fsf@gitster.g>
-	<641aaa9b-2b23-4faf-a13e-f6205e9ef5a2@howdoi.land>
-Date: Wed, 10 Sep 2025 08:10:56 -0700
-Message-ID: <xmqq7by6tkan.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h5DnnGgp"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3e537dc30f7so2710263f8f.2
+        for <git@vger.kernel.org>; Wed, 10 Sep 2025 08:29:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757518162; x=1758122962; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/3c+/gQpR5SnC3BQQTdJBKXrORqhV1Y4LLXo85ROnsY=;
+        b=h5DnnGgpjC+5Jup+WrwcvykGV1oUBIaGWHZ6HYYoA9sWaqHnJMmcAuPuYFH3Jq+qqi
+         X9qYKhVTAdmjqDdVGzYcyVJN1f+nA2BQXGp7XLuLh29jS9xfQgPWBo95tFLnoVk0e1NP
+         d02Ymmokwz4E9AJ6NkxFT0rJRG2mFG4UDyL2/avc+t1CvWe48F+WUFbvjspM7TgE5aHL
+         pHO1J8rdQ3HmoiOL6ZMFkgqDWrJXecjENJtEmA/66zF7oHDeB9QT4STptdihb9Nq1l9v
+         aHg5em5euRna09sCtCYv5EjH35jH1T4ZpIxkF6A03nsQyu9mdZ79w4mP8Q8b+tVfWq2e
+         pWvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757518162; x=1758122962;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/3c+/gQpR5SnC3BQQTdJBKXrORqhV1Y4LLXo85ROnsY=;
+        b=aG/6jCiRQlqcLSq6VrX7+ZzGKYQrSQD3mw7mHCH+AfMd7kSIwb7gTTklV+9rgWuMiw
+         jWYwASA1mChFmHNQUJNSo9W+pXBzn8uh9FCtgo1mY74l4TVQhFGfgJVgrczc1K0U6cFx
+         8sVVRGI/w0rcqOLth3Nm9aHJr+At1gF8nRnHd/QEzZ1Z4ogiDSN9Wjg1EcCOoyNFMEdY
+         2ZCadTkJJ0lSKs3KajxJ08Q/DaIw8aFcZZN4RA095D0jOonFsu/NwlOu+t2y/pw7vDsv
+         u4/5Jto4x9BuN3xNa/ohaNPRTCxpsS8vifEenKRdbPqHsB/kXkltZdB24HQHa1NVrYlp
+         RiCQ==
+X-Gm-Message-State: AOJu0YwD2i+EwmkP/jbwPwm5JbKtZlVCVuQRS4AINz2uytWISI+9nuPf
+	/BXRCnusJIS7RfrnUrKkg6hiAy+n2cK9IMbkg0StZPBkS7WFOau7DF+2TvU2PA==
+X-Gm-Gg: ASbGnctyryj9HfYHmKUx8yXFv4p2Bmc+iah0QxngpG1/5hviw8DKNcl2Y0F6SJskYq1
+	4ur0whhb6DywahgcFzN9qaOJBQs5GFNERApqrgnYHZw5Wuk+7mVx/ailcohTcfLcwMmZuQmSI/P
+	PpnveKfo//rm2mLItavy4Or/HnrUKhrsOK5yOLSfAYV8MiGC6QHYkG1bskAo0fi5RSTz+E4fLpR
+	hjA8+ZF4y0JOx0huAPiUfsP9o4j0kA0hbA4r+vXexzyIXBgX0qk0tx3rsPWZRXk/J2Le8XLzY1k
+	IxHWma1jLTMrzY20mEgrvShwHB2B2eVY08SnIhTWHl2C159a47lu9Z4hYZIgZ5833MMQxZp2Epj
+	87QupDqqN/QwhxOwXGEeFYwbhwHax2i6W2kxK5NdeYvFZ
+X-Google-Smtp-Source: AGHT+IE11ydZWCuj73EsvTVQD36FG4EMLy9aTy2xRlt1U7lf36Z56CWa9j+KDYv3Txyq2CQ0Xw0m7g==
+X-Received: by 2002:a05:6000:18a4:b0:3cc:8d94:1108 with SMTP id ffacd0b85a97d-3e641e3cffemr12296334f8f.22.1757518161804;
+        Wed, 10 Sep 2025 08:29:21 -0700 (PDT)
+Received: from localhost.localdomain ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e75223f188sm7137107f8f.48.2025.09.10.08.29.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Sep 2025 08:29:21 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Wing Huang <huangsen365@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3 0/4] breaking changes: switch default initial branch name to "main"
+Date: Wed, 10 Sep 2025 16:28:59 +0100
+Message-ID: <cover.1757518141.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
+In-Reply-To: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
+References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Colin Stagner <ask+git@howdoi.land> writes:
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-> On 9/9/25 21:02, Junio C Hamano wrote:
->> Besides, "if test -n ${subtree_dir-}" without colon would be the
->> more proper way for those who care about "set -u", wouldn't it?  It
->> is not that you want to substitute with an empty string that comes
->> between that "-" and "}" when subtree_dir is unset or set to empty.
->> You are preparing for the case where the variable is truly not set,
->> and the variable being set to an empty string is not something you
->> are worried about.
-> Yes, "test -n ${subtree_dir-}" is definitely the more correct expression.
->
-> At the very real risk of embarrassing myself in public today... in the
-> particular case of a "test -n," is there actually an appreciable
-> difference? Either way, the output of the substitution is empty if the
-> input is empty or undefined. Here, "test -n ${subtree_dir:-}" is
-> merely less efficient. Right?
->
-> The difference between "${x:-}" vs "${x-}" really starts to matter if
-> you want to permit the empty string (or not). It also matters if you
-> call a command that has side effects.
->
-> (And in the context of this patch, neither are necessary.)
+This series switches the default branch name from "master" to "main"
+when WITH_BREAKING_CHANGES is enabled. We have been warning that the
+default name will change since 675704c74dd (init: provide useful advice
+about init.defaultBranch, 2020-12-11) and the major git forges have all
+switched their default branch name to "main", so I think it makes sense
+to change the default branch name in git to match the wider ecosystem.
 
-Correct.  There is no practical difference.
+The first patch switches the default initial branch name to "main"
+and the other three patches remove the last remaining instances of
+GIT_TEST_DEFAULT_BRANCH_NAME=master from the test suite. Patch 2 is
+quite large but is mechanically generated so it should be possible
+to review it by checking that the changes can be reproduced. As this
+series changes the default branch name it focuses on updating tests
+that rely on the default branch name being "master", there are still
+a number of tests that create a branch called "master".
 
-Your explanation for using the "default values" parameter expansion
-in this script, knowing that "set -u" is not in use, being it is out
-of inertia, I would have expected them to be written in a way that
-is suitable when "set -u" is in use, which is without colon.  Doing
-something "different" on a variable that is set but set to an empty
-string is not something you would want to do to deal with "set -u",
-so I found it strange to see the colon there.
+Changes since V2:
+Patch 1: reworded documentation
+Patch 3: fixed typo in commit message
+Patch 4: added helper function to initialise repository
 
-There is no practical difference, since the "default value"
-specified is an empty string, so a variable set to an empty string
-will use the empty string between ":-" and "}" instead of its value
-that is another empty string, and you can tell these two empty
-strings apart in the result ;-)
+I'm still on the fence about the suggestion to add some advice on how
+to rename the branch after it is created in order to help users who
+are following tutorials using "master" rather than "main". One the
+one hand I can see that would be helpful, on the other it is pretty
+annoying to everyone else. If it turns out that we want to add it we
+can always do so at a later date.
+
+V2 Cover letter:
+
+Thanks to everyone who commented on V1, I have dropped the removal of
+GIT_TEST_DEFAULT_BRANCH_NAME and the test changes related to that but
+have kept the patches that remove GIT_TEST_DEFAULT_BRANCH_NAME=master.
+The patches have been re-ordered so that the change to the default
+initial branch name comes first. That patch now includes a test
+for the default initial branch name and includes the changes to the
+commit message and documentation suggested by Patrick and Junio. The
+commit messages for the other patches have been reworded now that
+GIT_TEST_DEFAULT_BRANCH_NAME is not being removed but the code changes
+are the same.
+
+This is an alternative to changing the branch name now as suggested in
+https://lore.kernel.org/git/pull.1961.git.1756183921623.gitgitgadget@gmail.com
+
+Base-Commit: f814da676ae46aac5be0a98b99373a76dee6cedb
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Finitial-branch-is-main%2Fv3
+View-Changes-At: https://github.com/phillipwood/git/compare/f814da676...353328c61
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/initial-branch-is-main/v3
+
+
+Phillip Wood (4):
+  breaking-changes: switch default branch to main
+  t4013: switch default branch name to main
+  t9902: switch default branch name to main
+  t0613: stop setting default initial branch
+
+ Documentation/BreakingChanges.adoc            |   6 +
+ Documentation/git-init.adoc                   |  12 +-
+ advice.c                                      |   2 +
+ advice.h                                      |   2 +
+ ci/run-build-and-tests.sh                     |   1 -
+ refs.c                                        |  15 +-
+ t/t0001-init.sh                               |  18 +-
+ t/t0613-reftable-write-options.sh             |  24 +-
+ t/t4013-diff-various.sh                       | 228 +++++++++---------
+ ...ree_--cc_--patch-with-stat_--summary_main} |   2 +-
+ ...iff.diff-tree_--cc_--patch-with-stat_main} |   2 +-
+ ...r => diff.diff-tree_--cc_--shortstat_main} |   2 +-
+ ...diff.diff-tree_--cc_--stat_--summary_main} |   2 +-
+ ...master => diff.diff-tree_--cc_--stat_main} |   2 +-
+ ...e_--cc_master => diff.diff-tree_--cc_main} |   2 +-
+ ...master => diff.diff-tree_-c_--abbrev_main} |   2 +-
+ ...> diff.diff-tree_-c_--stat_--summary_main} |   2 +-
+ ...t_master => diff.diff-tree_-c_--stat_main} |   2 +-
+ ...-tree_-c_master => diff.diff-tree_-c_main} |   2 +-
+ ...-tree_-m_master => diff.diff-tree_-m_main} |   2 +-
+ ...-p_-m_master => diff.diff-tree_-p_-m_main} |   2 +-
+ t/t4013/diff.diff-tree_-p_main                |   2 +
+ t/t4013/diff.diff-tree_-p_master              |   2 -
+ t/t4013/diff.diff-tree_main                   |   2 +
+ t/t4013/diff.diff-tree_master                 |   2 -
+ t/t4013/diff.diff_--dirstat_--cc_main~1_main  |   3 +
+ .../diff.diff_--dirstat_--cc_master~1_master  |   3 -
+ t/t4013/diff.diff_--dirstat_main~1_main~2     |   3 +
+ t/t4013/diff.diff_--dirstat_master~1_master~2 |   3 -
+ ...ff.diff_--line-prefix=abc_main_main^_side} |   2 +-
+ ...master^_side => diff.diff_main_main^_side} |   2 +-
+ ...mat-patch_--attach_--stdout_initial..main} |   2 +-
+ ...at-patch_--attach_--stdout_initial..main^} |   2 +-
+ ...e_--stdout_--numbered-files_initial..main} |   2 +-
+ ...t_--subject-prefix=TESTCASE_initial..main} |   2 +-
+ ...mat-patch_--inline_--stdout_initial..main} |   2 +-
+ ...at-patch_--inline_--stdout_initial..main^} |   2 +-
+ ...t-patch_--inline_--stdout_initial..main^^} |   2 +-
+ ...--stdout_--cover-letter_-n_initial..main^} |   2 +-
+ ...atch_--stdout_--no-numbered_initial..main} |   2 +-
+ ...t-patch_--stdout_--numbered_initial..main} |   2 +-
+ ... diff.format-patch_--stdout_initial..main} |   2 +-
+ ...diff.format-patch_--stdout_initial..main^} |   2 +-
+ ..._-m_-p_master => diff.log_--cc_-m_-p_main} |   2 +-
+ t/t4013/diff.log_--decorate=full_--all        |   2 +-
+ ..._--decorate=full_--clear-decorations_--all |   2 +-
+ ...f.log_--decorate=full_--decorate-all_--all |   2 +-
+ t/t4013/diff.log_--decorate_--all             |   2 +-
+ ...f.log_--decorate_--clear-decorations_--all |   2 +-
+ .../diff.log_--decorate_--decorate-all_--all  |   2 +-
+ ... diff.log_--diff-merges=first-parent_main} |   2 +-
+ ..._--diff-merges=off_-p_--first-parent_main} |   2 +-
+ ..._--first-parent_--diff-merges=off_-p_main} |   2 +-
+ ...g_--no-diff-merges_-p_--first-parent_main} |   2 +-
+ ..._--patch-with-stat_--summary_main_--_dir_} |   2 +-
+ ...master => diff.log_--patch-with-stat_main} |   2 +-
+ ...> diff.log_--patch-with-stat_main_--_dir_} |   2 +-
+ ...oot_--cc_--patch-with-stat_--summary_main} |   2 +-
+ ...g_--root_--patch-with-stat_--summary_main} |   2 +-
+ ...=> diff.log_--root_--patch-with-stat_main} |   2 +-
+ ...-root_-c_--patch-with-stat_--summary_main} |   2 +-
+ ...root_-p_master => diff.log_--root_-p_main} |   2 +-
+ ...log_--root_master => diff.log_--root_main} |   2 +-
+ ...ter => diff.log_-GF_-p_--pickaxe-all_main} |   2 +-
+ ...log_-GF_-p_master => diff.log_-GF_-p_main} |   2 +-
+ ...{diff.log_-SF_master => diff.log_-GF_main} |   2 +-
+ ...aster => diff.log_-IA_-IB_-I1_-I2_-p_main} |   2 +-
+ ...log_-SF_-p_master => diff.log_-SF_-p_main} |   2 +-
+ ...{diff.log_-GF_master => diff.log_-SF_main} |   2 +-
+ t/t4013/diff.log_-SF_main_--max-count=0       |   2 +
+ ...ount=2 => diff.log_-SF_main_--max-count=1} |   2 +-
+ t/t4013/diff.log_-SF_main_--max-count=2       |   7 +
+ t/t4013/diff.log_-SF_master_--max-count=0     |   2 -
+ t/t4013/diff.log_-SF_master_--max-count=1     |   7 -
+ ...iff.log_-S_F_master => diff.log_-S_F_main} |   2 +-
+ ...cc_-m_-p_master => diff.log_-c_-m_-p_main} |   2 +-
+ ...-m_--raw_master => diff.log_-m_--raw_main} |   2 +-
+ ..._--stat_master => diff.log_-m_--stat_main} |   2 +-
+ ...ter => diff.log_-m_-p_--first-parent_main} |   2 +-
+ ...f.log_-m_-p_master => diff.log_-m_-p_main} |   2 +-
+ ...ff.log_-p_--diff-merges=first-parent_main} |   2 +-
+ ...master => diff.log_-p_--first-parent_main} |   2 +-
+ .../{diff.log_-p_master => diff.log_-p_main}  |   2 +-
+ t/t4013/{diff.log_master => diff.log_main}    |   2 +-
+ ...iff.noellipses-diff-tree_-c_--abbrev_main} |   2 +-
+ ...> diff.noellipses-whatchanged_--root_main} |   2 +-
+ ...r => diff.noellipses-whatchanged_-SF_main} |   2 +-
+ ...aster => diff.noellipses-whatchanged_main} |   2 +-
+ ...t_master => diff.show_--first-parent_main} |   2 +-
+ ...{diff.show_-c_master => diff.show_-c_main} |   2 +-
+ ...{diff.show_-m_master => diff.show_-m_main} |   2 +-
+ t/t4013/{diff.show_master => diff.show_main}  |   2 +-
+ ..._--patch-with-stat_--summary_main_--_dir_} |   2 +-
+ ...> diff.whatchanged_--patch-with-stat_main} |   2 +-
+ ...hatchanged_--patch-with-stat_main_--_dir_} |   2 +-
+ ...oot_--cc_--patch-with-stat_--summary_main} |   2 +-
+ ...d_--root_--patch-with-stat_--summary_main} |   2 +-
+ ...whatchanged_--root_--patch-with-stat_main} |   2 +-
+ ...-root_-c_--patch-with-stat_--summary_main} |   2 +-
+ ...master => diff.whatchanged_--root_-p_main} |   2 +-
+ ...ot_master => diff.whatchanged_--root_main} |   2 +-
+ ...-p_master => diff.whatchanged_-SF_-p_main} |   2 +-
+ ...d_-SF_master => diff.whatchanged_-SF_main} |   2 +-
+ ...ged_-p_master => diff.whatchanged_-p_main} |   2 +-
+ ...atchanged_master => diff.whatchanged_main} |   2 +-
+ t/t9902-completion.sh                         |   6 +-
+ t/test-lib.sh                                 |  11 +-
+ 107 files changed, 287 insertions(+), 244 deletions(-)
+ rename t/t4013/{diff.diff-tree_--cc_--patch-with-stat_--summary_master => diff.diff-tree_--cc_--patch-with-stat_--summary_main} (86%)
+ rename t/t4013/{diff.diff-tree_--cc_--patch-with-stat_master => diff.diff-tree_--cc_--patch-with-stat_main} (89%)
+ rename t/t4013/{diff.diff-tree_--cc_--shortstat_master => diff.diff-tree_--cc_--shortstat_main} (65%)
+ rename t/t4013/{diff.diff-tree_-c_--stat_--summary_master => diff.diff-tree_--cc_--stat_--summary_main} (71%)
+ rename t/t4013/{diff.diff-tree_-c_--stat_master => diff.diff-tree_--cc_--stat_main} (76%)
+ rename t/t4013/{diff.diff-tree_--cc_master => diff.diff-tree_--cc_main} (91%)
+ rename t/t4013/{diff.diff-tree_-c_--abbrev_master => diff.diff-tree_-c_--abbrev_main} (83%)
+ rename t/t4013/{diff.diff-tree_--cc_--stat_--summary_master => diff.diff-tree_-c_--stat_--summary_main} (70%)
+ rename t/t4013/{diff.diff-tree_--cc_--stat_master => diff.diff-tree_-c_--stat_main} (75%)
+ rename t/t4013/{diff.diff-tree_-c_master => diff.diff-tree_-c_main} (93%)
+ rename t/t4013/{diff.diff-tree_-m_master => diff.diff-tree_-m_main} (96%)
+ rename t/t4013/{diff.diff-tree_-p_-m_master => diff.diff-tree_-p_-m_main} (97%)
+ create mode 100644 t/t4013/diff.diff-tree_-p_main
+ delete mode 100644 t/t4013/diff.diff-tree_-p_master
+ create mode 100644 t/t4013/diff.diff-tree_main
+ delete mode 100644 t/t4013/diff.diff-tree_master
+ create mode 100644 t/t4013/diff.diff_--dirstat_--cc_main~1_main
+ delete mode 100644 t/t4013/diff.diff_--dirstat_--cc_master~1_master
+ create mode 100644 t/t4013/diff.diff_--dirstat_main~1_main~2
+ delete mode 100644 t/t4013/diff.diff_--dirstat_master~1_master~2
+ rename t/t4013/{diff.diff_--line-prefix=abc_master_master^_side => diff.diff_--line-prefix=abc_main_main^_side} (87%)
+ rename t/t4013/{diff.diff_master_master^_side => diff.diff_main_main^_side} (89%)
+ rename t/t4013/{diff.format-patch_--attach_--stdout_initial..master => diff.format-patch_--attach_--stdout_initial..main} (98%)
+ rename t/t4013/{diff.format-patch_--attach_--stdout_initial..master^ => diff.format-patch_--attach_--stdout_initial..main^} (97%)
+ rename t/t4013/{diff.format-patch_--inline_--stdout_--numbered-files_initial..master => diff.format-patch_--inline_--stdout_--numbered-files_initial..main} (99%)
+ rename t/t4013/{diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..master => diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..main} (99%)
+ rename t/t4013/{diff.format-patch_--inline_--stdout_initial..master => diff.format-patch_--inline_--stdout_initial..main} (98%)
+ rename t/t4013/{diff.format-patch_--inline_--stdout_initial..master^ => diff.format-patch_--inline_--stdout_initial..main^} (97%)
+ rename t/t4013/{diff.format-patch_--inline_--stdout_initial..master^^ => diff.format-patch_--inline_--stdout_initial..main^^} (95%)
+ rename t/t4013/{diff.format-patch_--stdout_--cover-letter_-n_initial..master^ => diff.format-patch_--stdout_--cover-letter_-n_initial..main^} (96%)
+ rename t/t4013/{diff.format-patch_--stdout_--no-numbered_initial..master => diff.format-patch_--stdout_--no-numbered_initial..main} (97%)
+ rename t/t4013/{diff.format-patch_--stdout_--numbered_initial..master => diff.format-patch_--stdout_--numbered_initial..main} (97%)
+ rename t/t4013/{diff.format-patch_--stdout_initial..master => diff.format-patch_--stdout_initial..main} (97%)
+ rename t/t4013/{diff.format-patch_--stdout_initial..master^ => diff.format-patch_--stdout_initial..main^} (96%)
+ rename t/t4013/{diff.log_-c_-m_-p_master => diff.log_--cc_-m_-p_main} (99%)
+ rename t/t4013/{diff.log_--diff-merges=first-parent_master => diff.log_--diff-merges=first-parent_main} (95%)
+ rename t/t4013/{diff.log_--no-diff-merges_-p_--first-parent_master => diff.log_--diff-merges=off_-p_--first-parent_main} (95%)
+ rename t/t4013/{diff.log_--first-parent_--diff-merges=off_-p_master => diff.log_--first-parent_--diff-merges=off_-p_main} (95%)
+ rename t/t4013/{diff.log_--diff-merges=off_-p_--first-parent_master => diff.log_--no-diff-merges_-p_--first-parent_main} (95%)
+ rename t/t4013/{diff.log_--patch-with-stat_--summary_master_--_dir_ => diff.log_--patch-with-stat_--summary_main_--_dir_} (96%)
+ rename t/t4013/{diff.log_--patch-with-stat_master => diff.log_--patch-with-stat_main} (98%)
+ rename t/t4013/{diff.log_--patch-with-stat_master_--_dir_ => diff.log_--patch-with-stat_main_--_dir_} (96%)
+ rename t/t4013/{diff.log_--root_--cc_--patch-with-stat_--summary_master => diff.log_--root_--cc_--patch-with-stat_--summary_main} (98%)
+ rename t/t4013/{diff.log_--root_--patch-with-stat_--summary_master => diff.log_--root_--patch-with-stat_--summary_main} (98%)
+ rename t/t4013/{diff.log_--root_--patch-with-stat_master => diff.log_--root_--patch-with-stat_main} (98%)
+ rename t/t4013/{diff.log_--root_-c_--patch-with-stat_--summary_master => diff.log_--root_-c_--patch-with-stat_--summary_main} (98%)
+ rename t/t4013/{diff.log_--root_-p_master => diff.log_--root_-p_main} (98%)
+ rename t/t4013/{diff.log_--root_master => diff.log_--root_main} (96%)
+ rename t/t4013/{diff.log_-GF_-p_--pickaxe-all_master => diff.log_-GF_-p_--pickaxe-all_main} (90%)
+ rename t/t4013/{diff.log_-GF_-p_master => diff.log_-GF_-p_main} (91%)
+ rename t/t4013/{diff.log_-SF_master => diff.log_-GF_main} (86%)
+ rename t/t4013/{diff.log_-IA_-IB_-I1_-I2_-p_master => diff.log_-IA_-IB_-I1_-I2_-p_main} (97%)
+ rename t/t4013/{diff.log_-SF_-p_master => diff.log_-SF_-p_main} (91%)
+ rename t/t4013/{diff.log_-GF_master => diff.log_-SF_main} (86%)
+ create mode 100644 t/t4013/diff.log_-SF_main_--max-count=0
+ rename t/t4013/{diff.log_-SF_master_--max-count=2 => diff.log_-SF_main_--max-count=1} (79%)
+ create mode 100644 t/t4013/diff.log_-SF_main_--max-count=2
+ delete mode 100644 t/t4013/diff.log_-SF_master_--max-count=0
+ delete mode 100644 t/t4013/diff.log_-SF_master_--max-count=1
+ rename t/t4013/{diff.log_-S_F_master => diff.log_-S_F_main} (86%)
+ rename t/t4013/{diff.log_--cc_-m_-p_master => diff.log_-c_-m_-p_main} (99%)
+ rename t/t4013/{diff.log_-m_--raw_master => diff.log_-m_--raw_main} (98%)
+ rename t/t4013/{diff.log_-m_--stat_master => diff.log_-m_--stat_main} (98%)
+ rename t/t4013/{diff.log_-m_-p_--first-parent_master => diff.log_-m_-p_--first-parent_main} (97%)
+ rename t/t4013/{diff.log_-m_-p_master => diff.log_-m_-p_main} (99%)
+ rename t/t4013/{diff.log_-p_--diff-merges=first-parent_master => diff.log_-p_--diff-merges=first-parent_main} (97%)
+ rename t/t4013/{diff.log_-p_--first-parent_master => diff.log_-p_--first-parent_main} (97%)
+ rename t/t4013/{diff.log_-p_master => diff.log_-p_main} (98%)
+ rename t/t4013/{diff.log_master => diff.log_main} (97%)
+ rename t/t4013/{diff.noellipses-diff-tree_-c_--abbrev_master => diff.noellipses-diff-tree_-c_--abbrev_main} (81%)
+ rename t/t4013/{diff.noellipses-whatchanged_--root_master => diff.noellipses-whatchanged_--root_main} (96%)
+ rename t/t4013/{diff.noellipses-whatchanged_-SF_master => diff.noellipses-whatchanged_-SF_main} (86%)
+ rename t/t4013/{diff.noellipses-whatchanged_master => diff.noellipses-whatchanged_main} (96%)
+ rename t/t4013/{diff.show_--first-parent_master => diff.show_--first-parent_main} (92%)
+ rename t/t4013/{diff.show_-c_master => diff.show_-c_main} (95%)
+ rename t/t4013/{diff.show_-m_master => diff.show_-m_main} (98%)
+ rename t/t4013/{diff.show_master => diff.show_main} (96%)
+ rename t/t4013/{diff.whatchanged_--patch-with-stat_--summary_master_--_dir_ => diff.whatchanged_--patch-with-stat_--summary_main_--_dir_} (94%)
+ rename t/t4013/{diff.whatchanged_--patch-with-stat_master => diff.whatchanged_--patch-with-stat_main} (97%)
+ rename t/t4013/{diff.whatchanged_--patch-with-stat_master_--_dir_ => diff.whatchanged_--patch-with-stat_main_--_dir_} (94%)
+ rename t/t4013/{diff.whatchanged_--root_--cc_--patch-with-stat_--summary_master => diff.whatchanged_--root_--cc_--patch-with-stat_--summary_main} (97%)
+ rename t/t4013/{diff.whatchanged_--root_--patch-with-stat_--summary_master => diff.whatchanged_--root_--patch-with-stat_--summary_main} (97%)
+ rename t/t4013/{diff.whatchanged_--root_--patch-with-stat_master => diff.whatchanged_--root_--patch-with-stat_main} (97%)
+ rename t/t4013/{diff.whatchanged_--root_-c_--patch-with-stat_--summary_master => diff.whatchanged_--root_-c_--patch-with-stat_--summary_main} (97%)
+ rename t/t4013/{diff.whatchanged_--root_-p_master => diff.whatchanged_--root_-p_main} (98%)
+ rename t/t4013/{diff.whatchanged_--root_master => diff.whatchanged_--root_main} (97%)
+ rename t/t4013/{diff.whatchanged_-SF_-p_master => diff.whatchanged_-SF_-p_main} (89%)
+ rename t/t4013/{diff.whatchanged_-SF_master => diff.whatchanged_-SF_main} (86%)
+ rename t/t4013/{diff.whatchanged_-p_master => diff.whatchanged_-p_main} (98%)
+ rename t/t4013/{diff.whatchanged_master => diff.whatchanged_main} (97%)
+
+Range-diff against v2:
+1:  6986375dc37 ! 1:  441bc5f9bcb breaking-changes: switch default branch to main
+    @@ Documentation/BreakingChanges.adoc: A prerequisite for this change is that the e
+      "reftable" format. Most importantly, alternative implementations of Git like
+      JGit, libgit2 and Gitoxide need to support it.
+      
+    -+* In new repositories the default branch name will be `main`. We have been
+    -+  warning that the default name will change since 675704c74dd (init: provide
+    -+  useful advice about init.defaultBranch, 2020-12-11).  The new name matches
+    -+  the default branch name used by many of the big Git forges.
+    ++* In new repositories, the default branch name will be `main`. We have been
+    ++  warning that the default name will change since 675704c74dd (init:
+    ++  provide useful advice about init.defaultBranch, 2020-12-11).  The new name
+    ++  matches the default branch name used in new repositories by many of the
+    ++  big Git forges.
+     +
+      === Removals
+      
+2:  2a112a1b983 = 2:  f1a778e76c3 t4013: switch default branch name to main
+3:  f1bf01e1322 ! 3:  8e32712a158 t9902: switch default branch name to main
+    @@ Commit message
+         t9902: switch default branch name to main
+     
+         Remove the penultimate use of "GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=
+    -    main" in our test suite. We have slowly been removing these ever since
+    -    we started to switch the default branch name used in tests to "main".
+    +    master" in our test suite. We have slowly been removing these ever
+    +    since we started to switch the default branch name used in tests to
+    +    "main".
+     
+         Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+     
+4:  c4d89c3761b ! 4:  353328c6189 t0613: stop setting default initial branch
+    @@ Metadata
+      ## Commit message ##
+         t0613: stop setting default initial branch
+     
+    -    As the tests are all run in separate repositories, set the branch name
+    -    to "master" when creating the repository for the tests where the result
+    -    depends on the branch name. This reduceds the number of tests that
+    -    depend on the default branch name being "master" and removes the last
+    -    instance of a test file using "GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=
+    -    master".
+    +    As the tests are all run in separate repositories, set the branch
+    +    name to "master" when creating the repository for the tests where
+    +    the result depends on the branch name. In order to make it easier to
+    +    change the branch name in the future a helper function is used. This
+    +    reduces the number of tests that depend on the default branch name
+    +    being "master" and removes the last instance of a test file using
+    +    "GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master".
+     
+    +    Helped-by: Junio C Hamano <gitster@pobox.com>
+         Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+     
+      ## t/t0613-reftable-write-options.sh ##
+    @@ t/t0613-reftable-write-options.sh: export GIT_TEST_REFTABLE_AUTOCOMPACTION
+      
+      . ./test-lib.sh
+      
+    ++# Block sizes depend on the actual refs we write, so, for tests
+    ++# that check block size, we force the initial branch name to be "master".
+    ++init_repo () {
+    ++	git init --initial-branch master repo
+    ++}
+    ++
+      test_expect_success 'default write options' '
+      	test_when_finished "rm -rf repo" &&
+     -	git init repo &&
+    -+	# Block sizes also depend on the actual refs we write, so we force
+    -+	# "master" to be the default initial branch name.
+    -+	git init --initial-branch master repo &&
+    ++	init_repo &&
+      	(
+      		cd repo &&
+      		test_commit initial &&
+    @@ t/t0613-reftable-write-options.sh: test_expect_success 'default write options' '
+      	test_config_global core.logAllRefUpdates false &&
+      	test_when_finished "rm -rf repo" &&
+     -	git init repo &&
+    -+	git init --initial-branch master repo &&
+    ++	init_repo &&
+      	(
+      		cd repo &&
+      		test_commit initial &&
+    @@ t/t0613-reftable-write-options.sh: test_expect_success 'disabled reflog writes n
+      test_expect_success 'many refs results in multiple blocks' '
+      	test_when_finished "rm -rf repo" &&
+     -	git init repo &&
+    -+	git init --initial-branch master repo &&
+    ++	init_repo &&
+      	(
+      		cd repo &&
+      		test_commit initial &&
+    @@ t/t0613-reftable-write-options.sh: test_expect_success 'tiny block size leads to
+      	test_config_global core.logAllRefUpdates false &&
+      	test_when_finished "rm -rf repo" &&
+     -	git init repo &&
+    -+	git init --initial-branch master repo &&
+    ++	init_repo &&
+      	(
+      		cd repo &&
+      		test_commit A &&
+    @@ t/t0613-reftable-write-options.sh: test_expect_success 'block size exceeding max
+      test_expect_success 'restart interval at every single record' '
+      	test_when_finished "rm -rf repo" &&
+     -	git init repo &&
+    -+	git init --initial-branch master repo &&
+    ++	init_repo &&
+      	(
+      		cd repo &&
+      		test_commit initial &&
+    @@ t/t0613-reftable-write-options.sh: test_expect_success 'restart interval exceedi
+      	test_config_global core.logAllRefUpdates false &&
+      	test_when_finished "rm -rf repo" &&
+     -	git init repo &&
+    -+	git init --initial-branch master repo &&
+    ++	init_repo &&
+      	(
+      		cd repo &&
+      		test_commit initial &&
+    @@ t/t0613-reftable-write-options.sh: test_expect_success 'object index gets writte
+      	test_config_global core.logAllRefUpdates false &&
+      	test_when_finished "rm -rf repo" &&
+     -	git init repo &&
+    -+	git init --initial-branch master repo &&
+    ++	init_repo &&
+      	(
+      		cd repo &&
+      		test_commit initial &&
+-- 
+2.49.0.897.gfad3eb7d210
 
