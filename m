@@ -1,99 +1,122 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E26322747
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 14:08:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9744532F75A
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 14:43:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757513288; cv=none; b=FYu16DBbEvHFuyKIzH5TqoX/XwGJLkAE6QjHsNMSy9ie2f/+E9eHXCPku0rE02U2sjKKGaI8N4Ub72/1fPm1wwCauorGRGEmGUYHg7wjvmvuKv2aHlLtfC2hY5TGFxyUF3vOCd6Abme/bSvTFvpa4C28FauUAIDseDsNkx0X9ik=
+	t=1757515404; cv=none; b=s92Q3CD6BZOYeD4hjtYDDofPWK0FIMLKEQMBcZHr6JjXQggLT0nnjZtsyvA6RcODG2zY+PD9GYLXLhy7mT36fz7HL9RD/50jrRSBNrDjLQsriVAJVbPUWAIcs53lf1uCNr2pfYH5zT5sU1FMszaiG8alLqlVEgttNTIp1rmJ5bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757513288; c=relaxed/simple;
-	bh=L6lOsTGagHZlmBuua9yWZ+4+F+N2Q5TSPtzqq935teg=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=BTXN88dCuqXSFrDgBXsCeltV+sfYr4+yPf5+ldWb6dLe4xfblcHBJpSoxZteGxiexdGdb+9ixOPkW5QK+NmwwmlxzKJqGFbIEO+9JhiVhjeunFz6R1pXppBQU4qBDkkkiMaDXvm/JBow30WpR0IZ+JS5zjNXGe2pYRsNsB54aFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hKoaqotY; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1757515404; c=relaxed/simple;
+	bh=aIrVqxBWfYb6BPJ1zeSef0dcT5h2/kMu/Ykrn9Zd7j4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RSfjdLnQx/2297IEEpDfSGoe7GxScO0/CN4jYSdQVfDa3rqDX8x+eBLmfjjAZC41MlynYY9+7N/M0xh5UR+bfrq3+2uhQcV3HsIxCVAdTqsOcCVdeMauJsxoQgdfImItOGISdXFu507MmTE/0qQFK7cUuoFU0FVccw4eyNdp4aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fTjwsJ7K; arc=none smtp.client-ip=209.85.210.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hKoaqotY"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3e3aafe06a7so3435633f8f.0
-        for <git@vger.kernel.org>; Wed, 10 Sep 2025 07:08:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fTjwsJ7K"
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-74526ca7a46so2708948a34.2
+        for <git@vger.kernel.org>; Wed, 10 Sep 2025 07:43:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757513285; x=1758118085; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sFRW0zRwtyDZwlftj4vWeZwEOEBaBikAJq5cisQja/Y=;
-        b=hKoaqotY8lIDKUeZF/3udzwvOxrDr9LfINJtwJTjHgrT8VXYGpd6ITXuScjRhgX901
-         8Qd8MSNQQsW/quae1QWLuy1roYkceVVeGsAqZ3Wowmh0KVV4UAf2w8gg9dqDZxV0juf8
-         zQUGpNvLzRSWaDs+h2Z3KRuvDGWf3mwR2aJEVOFu/JJ9EoE4cCYSTK5dLJIzmmUdytw8
-         CXrnW9KUbXF7YALbMtO36KpxsagEcPutqLRyRqwSC4AKqrgZIMthX7lMlzQvDnQYpAGG
-         XVNjzVnFElVTccHHlZaxrdbZpfUXLNe7FmL0Pn+8Oqr3V3v3DCmO4XESkMJxQIQSCqFe
-         IfKQ==
+        d=gmail.com; s=20230601; t=1757515401; x=1758120201; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IvNpxsSBosHJSiL2sj5bsT+SBYZNJphNmmoAIjxVgeg=;
+        b=fTjwsJ7KYOAL4G3ebKk7kXwReHMaGNE8ewUseCDek6vcXaixAl0mItGw1Xa9gVyEIf
+         c55vjhqtBHGf0iYJuI99o5KuWnaFilXARwqbKb0oGQTHDOZluglCU6dUJv+TOa1iCPlh
+         pgBMsKdPIKX0vcIdREqqyAU2YJ82E5Yf8AisUiDAUacZUlOeVNSJ8X1Tci4v0D/JV0ux
+         rA3q1cAGPBFhL0DzSCcFAAXtY/r8ybl7FBaTc8wkroMvgdA43di3Hi+KCBKScMQ+DGys
+         H47LL/Tlv3mXC/jyhVWKnI0CFSkpuZoMG1R8cy7ZKBNwLxN5mZ7j8gKwQ6pL2Xsw80sR
+         UvOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757513285; x=1758118085;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sFRW0zRwtyDZwlftj4vWeZwEOEBaBikAJq5cisQja/Y=;
-        b=CEt3/ZJJop2R+DjVXv1fHM4d5o/fF0oSjOlUO3a37AX6NBnAPtJHO/CdMGEvCdzXp5
-         mps14nz9sMTHAYxh/YdxuO1+xlFc7Q3ZCQr8kgHBWFwH79RU/PNcXASu7dywHAaRVM6c
-         P/01j6O2DPjTrBPld9BK6JdnqS0gP1ZNKjxUCizEpd6GWuT3/7NkcmQLJhafwtNcIxjm
-         xLk1PpJyfaicv9bmUQZm7g7RrcQqK8zndrC6xxLP8TLMS9RGSAdqWb19bXYGsTyGtGgK
-         beNcG9fVFfWUA6oVaa8rBSRMUasHH+jumz63TuoVdcNCypmdegxWr55ebHT+GG2njsra
-         UaMA==
-X-Gm-Message-State: AOJu0YyJBdZIrZBkbRHUky6I0XTgMfssXpkOioZyKnB6f2e02cwM0vQQ
-	sewVlbUhBqkjZ4hVrbDDL8V5DTqyoW1SdQX8/cyFUiuG4WhHKBVcxOmp
-X-Gm-Gg: ASbGnctC7eH8TMkqBj42EGqfQWbI9r9X2HT2cdD9ijgOgUboyd2f3BZwfKjDYGWu/eG
-	hdKHZUN2D+ibkO0wP3q6B/OWLfbPXS7OdNyeycttjYefIl/nE2ECQbcs+dIfgZ4qOXFVSWqrGRF
-	PqlTdxn23QoL0zxP6qUmVQogJJeshI6k/m+zGEOuZ8/L6LwpF4G+xhttHXImiWm2kt89r5+Bo13
-	0k1znz3+irNSEXbQqzjX5TL8DlR9PwQY8+7A6DHg4TqAYC6J/S58DsLT0qx0eK8KpzIeo32l3vW
-	Reubyqm4+nEkymUA4jMCmbINJVpWOrbI7W1gfWP12l0WwktdQPd/lSRhaEOgtQWEVZqiRXRh9gX
-	+Te8J8D3s/xEjt5mHHZCqFb8ruln1zfxVCybN5S3LvAwpqLr+w0awvhBnYelT5BacYzHxNDhoMM
-	d0DjtNGaVaww87X2hHuM7e
-X-Google-Smtp-Source: AGHT+IHKcmg6Ruqkk3M8r+dkTqjnVrIhxKt3rkRPtYl+DBaIgfyKfPzFOgW6biI7/a5GTX4m2LzcsQ==
-X-Received: by 2002:a05:6000:2f87:b0:3e0:c28a:abbb with SMTP id ffacd0b85a97d-3e6374655a1mr12278289f8f.13.1757513284778;
-        Wed, 10 Sep 2025 07:08:04 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df81e4563sm29738125e9.7.2025.09.10.07.08.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Sep 2025 07:08:04 -0700 (PDT)
-Message-ID: <413ce210-09aa-460a-8a35-f7c0877dc23d@gmail.com>
-Date: Wed, 10 Sep 2025 15:08:03 +0100
+        d=1e100.net; s=20230601; t=1757515401; x=1758120201;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IvNpxsSBosHJSiL2sj5bsT+SBYZNJphNmmoAIjxVgeg=;
+        b=M1AGA5ZpSAwwhV2FKif0v+Uxk9M+9S3/LHC40AXopo8H9xaRAM5mu/a01a2MtTsLTi
+         hMK68zzfva00biq52hzBw7JOTB5+QFiBDJQLhUhCleAyQqoeeVY0L85y1uqESVxE3ALP
+         vxj6zRWG52XCrzQo99bDwmqhzdn6J9mqwQODNcFPr3+LQ6yAEPAeYldb9e65E1KUR58W
+         kE0C3i/U7sB3FkGrvoFBiX8AlTvzq1BUVazGHtl1iEd8u1k6lhVyINFtuu1ugSRRuBoi
+         XFbzgnXHYpPqLfBPpeSPqe5MGiNq0KCffmYO8+i2Bp2/4i2PAbG0eP1H102Vm2TSdc/T
+         4New==
+X-Gm-Message-State: AOJu0YxQJrjAA8+DGIe7ny4k+Q98tkf7J778ZbJVPla2oT4QwbFUYspm
+	ldwU9FpUYYTQGYO/BTd6EYNef61xTyR/1wG9Z6l8QqA9Z69jRH6XFieSrkrhUw==
+X-Gm-Gg: ASbGncvFTx6pID6qyU9V4la3ZJ2xA3FHyLz+sF9fsX5HKX7EzSbEMQRmEo8i0KZQHkB
+	Cb6os8jKsxn45Rq53K9iNXPnUrM34nrkFwfqRwN04nK9hyN1qozZIkAXSgf8gImUs414BSyG1Xz
+	FP5L4KtBlNWJRN2HIdlyqWhMGnGmCjvFgVa59Q2tJBcP3mZZNY1WPPOoaLiWuBDK4ia+hOYW4cq
+	XkY3zG6TeT+eBI+/v1XM4yvG+xhUqCW4YHhC1wHnRE7ntMjtJENsi9j3Yd84rkqKSp1U/x4AoR8
+	p0d5+XcbaEAgnvrAm6NgcyE/3IYY/lCTvPmc8jSi9Aw3GdEpJofSpPi41AC7CmRwGhmglR+v49U
+	cukdpDVVhwDy2NRplbcIXCA+/xUE=
+X-Google-Smtp-Source: AGHT+IFzPl9blmTlBHzrUcuVVnyrqkf5MQ6xZwcxRblmYvcy0sbQceeckhsfoGTO4Gq/+Bhl8BZ2Ew==
+X-Received: by 2002:a05:6830:668f:b0:746:d8cc:4bb with SMTP id 46e09a7af769-74c704b57d4mr8957089a34.8.1757515401429;
+        Wed, 10 Sep 2025 07:43:21 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7458e848c23sm6850121a34.43.2025.09.10.07.43.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Sep 2025 07:43:20 -0700 (PDT)
+Date: Wed, 10 Sep 2025 09:43:20 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] odb: drop deprecated wrapper functions
+Message-ID: <fho5ch7r6d54tqxd56s4lcrv3ms6w4mytpbieere3qv3lz34zw@ufb22yd5w6xl>
+References: <20250910-b4-pks-odb-drop-wrappers-v1-1-6ed660cb1eec@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH RFC v3 00/18] Introduce git-history(1) command for easy
- history editing
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
- Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
- Martin von Zweigbergk <martinvonz@gmail.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
- <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
- <CABPp-BHeXtJPq7BE1UZ+zH0C-9VzQcSYRo+t0P-KWth68Zd94Q@mail.gmail.com>
- <978e6351-1c08-44eb-8a2e-4a39541b9337@gmail.com>
-Content-Language: en-US
-In-Reply-To: <978e6351-1c08-44eb-8a2e-4a39541b9337@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250910-b4-pks-odb-drop-wrappers-v1-1-6ed660cb1eec@pks.im>
 
-On 10/09/2025 15:05, Phillip Wood wrote:
-> 
-> new commit whereas "git-rebase" does not. There is some discussion at 
-> [1] where people were pushing back against copying extra headers by 
-> default.
+On 25/09/10 03:12PM, Patrick Steinhardt wrote:
+> diff --git a/odb.h b/odb.h
+> index 3dfc66d75a..e8b9dff948 100644
+> --- a/odb.h
+> +++ b/odb.h
+> @@ -475,37 +475,4 @@ static inline int odb_write_object(struct object_database *odb,
+>  	return odb_write_object_ext(odb, buf, len, type, oid, NULL, 0);
+>  }
+>  
+> -/* Compatibility wrappers, to be removed once Git 2.51 has been released. */
+> -#include "repository.h"
+> -
+> -static inline int oid_object_info_extended(struct repository *r,
+> -					   const struct object_id *oid,
+> -					   struct object_info *oi,
+> -					   unsigned flags)
+> -{
+> -	return odb_read_object_info_extended(r->objects, oid, oi, flags);
+> -}
+> -
+> -static inline int oid_object_info(struct repository *r,
+> -				  const struct object_id *oid,
+> -				  unsigned long *sizep)
+> -{
+> -	return odb_read_object_info(r->objects, oid, sizep);
+> -}
+> -
+> -static inline void *repo_read_object_file(struct repository *r,
+> -					  const struct object_id *oid,
+> -					  enum object_type *type,
+> -					  unsigned long *size)
+> -{
+> -	return odb_read_object(r->objects, oid, type, size);
+> -}
+> -
+> -static inline int has_object(struct repository *r,
+> -			     const struct object_id *oid,
+> -			     unsigned flags)
+> -{
+> -	return odb_has_object(r->objects, oid, flags);
+> -}
+> -
+>  #endif /* ODB_H */
 
-Sorry I forget to add the link before sending
+Nice to see this cleanup. This patch looks obviously correct to me.
 
-[1] 
-https://lore.kernel.org/git/pull.1902.git.1744041163929.gitgitgadget@gmail.com
-
+-Justin
