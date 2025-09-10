@@ -1,126 +1,122 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C5214F9FB
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 02:02:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1F41F3B8A
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 02:04:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757469766; cv=none; b=RvFtYSDPPA+DlHf5l1jBT5dy7IpitMwywdoBltLALEtD5eq+1Ri6xLyaG0IaLzwTa/FzihvnHhL9S/ybsSMQcDqgh/GQMOhMW0OzenjSZq6tR3FCVBrKlziLtq7gVHmDUjdIINjmc2YetTvSrZ7ZEKm6kfLS2t0Ullh2g5T/pic=
+	t=1757469875; cv=none; b=rHfFWRTZAD1iTVGFkwDptyw2Lyxv474iaPX+7ylXEq8CiYwh0zmBXBpaxSeW4qINBya7JnQWMCbdR2+Fjidg7qajO4tvAhBJfaL/3dv7z4ZQ9XbfMOlNO3t9a/XVHwjJKq+K1uPRgFsZC2t9sQuPdjvlDl8H0cfOAQoqbfPNY6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757469766; c=relaxed/simple;
-	bh=y2rMXy52341jlr9iev8CmyELrFjyoCN6lugJagUJ7QQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZGYSO0s4hUCLa88krX1mVgsGcsZ9HGteebcNiQMUcFXqUauParWfl49ApMEeErNEkhuymfeNOyWvbgaNg4Qv3r/7KVgp7Sxwd8fuII4vczCJza/lijiMrcCat2LD+0+sJG1I6P/J0WU/nI4OPo7ecPuLqdwI/r7NyzwUxHrpQBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kj8BQDSX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q2WlYHbw; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757469875; c=relaxed/simple;
+	bh=XBjR3WD+4HlxdpgQVUwVRU//pvexA1zSnd4e0iDekqw=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=glMUj2bDZm+fAnToc+e8HMhihpcBmDK7mfJOZllnPlY5e8NeF6iD5rokE0RtZCJavSvuhdOMeWz48GYW4jUn/DXuRUmtteJQkPWv/+wuwjHwSpbSZQBrNrttIwLCcoMRutisRxAeEyUXmlmxG0m3e7W9j5iWN7m+q5vJtcuPpUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U36jwSZm; arc=none smtp.client-ip=209.85.219.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kj8BQDSX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q2WlYHbw"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id B9DC31D0018C;
-	Tue,  9 Sep 2025 22:02:43 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 09 Sep 2025 22:02:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1757469763;
-	 x=1757556163; bh=9Q0+LTetGsIh+fxEjZMIRjIzaeeSKVKSAGik1KyORQI=; b=
-	kj8BQDSXNvqamuPzes2CFnM0SKM6k+UF5LmWpHJScxKlY6uLthfmPUOsbAu5D//t
-	Rj7kTrQfnVOAFQ5SQJKqjgwJei+caBB1NyPejNveKGYQw0qtOfp1tc5MQYdCKHtc
-	5BcEtDBaxyRv2JI8FKP1hDgTPA77WWVOUGvm6oRCwgFVNNG+NewP6miQMKb0mvjQ
-	eig0oh5uM3pRYscOxAkTxYojKiy35oM2kZb0SMY3CbaeMxCB4GPdVuNluLxtYaGS
-	ujavh44qA7YOVuJAMqZXKXdZJW5nBz2wIpAr5wQ6YSxS0riKDrrQq0WtRxIeqMtV
-	aS5S9JwWQC85UZJsOcLLig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757469763; x=
-	1757556163; bh=9Q0+LTetGsIh+fxEjZMIRjIzaeeSKVKSAGik1KyORQI=; b=Q
-	2WlYHbwKgmfxYBA4Q1RKIFHQNCxwz8HKbs/hX2zQFjZcgcXEk3rx+NRFxk2S6N+G
-	dwJcC2KXjXVQiqXQXNrAdpsrZmLM6sXtGQWyVrIIAKCBu1IvjPa9LTK0l0qHmoVl
-	tVHR5zHQLnVgDkdc3c2plupvQ5esanbqJnIcJGzLcpmA8pbdvONah823Ygw0x0AM
-	jMuxoswfwxBdKAIRah2OzSqr2ByRyW3KMu7QTwDqe0WXF2+d0XNEeviCQ2okUzH+
-	oa8ETqkrRDPRnR/yKhNvsuDeWiCFgXBqGUNUUlzq2IemxdV83FFjxT5UmEZwmF1A
-	7/NY8w/X/GSWKIFB5s/vA==
-X-ME-Sender: <xms:QtzAaOjYjBYTATFK8PXRboNX521azgjHWE7k0D9qdABOsYLBFNdWKg>
-    <xme:QtzAaC2fbZIY5CmeWkCnX9X68yxrTGEayUnIpMLig0ulDecRXc9uzm5FzrE8JAbmQ
-    iI90FtHhyppAah7LA>
-X-ME-Received: <xmr:QtzAaPKTeOsFwS-PtSerqrp-BuBQ47IIZQm_2XfNVftsfXff7Hi_SpfgFod9QC8bDcRZuaYbhgOfWuz1IUPf9cScvUfI9Mpg7vmG6MY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvddtgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprghskhdoghhitheshhhofiguohhirdhlrghnugdprh
-    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepiigrtg
-    hhrdhfvghtthgvrhhssegrphholhhlohhgrhgrphhhqhhlrdgtohhmpdhrtghpthhtohep
-    tghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehprghtrh
-    hikhesphhsphgufhhkihhtrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:QtzAaKzFNEokRZP9OacUqOQOPR7ic3LT-OBlDOVVghMQfU67MsS9Ow>
-    <xmx:QtzAaFWtCfNuGxi9saZ8foOve8mUU5pSM15b34g4qID8Wrhy0C6PrQ>
-    <xmx:QtzAaCjpwUB1if6s0JfPZlZyZ5Wj8OOviGEb--TcJ9CmkgfWDDtZxA>
-    <xmx:QtzAaNBT09_HwsIvT3wDcKi-DNHuyCeovva_YqDMGYKKcP2sJ0fIRA>
-    <xmx:Q9zAaEeqxbWQEyZuZXElLPP3sq4pz4a_jnUPRRNREFMwxicpoVmelADW>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 22:02:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Colin Stagner <ask+git@howdoi.land>
-Cc: phillip.wood@dunelm.org.uk,  git@vger.kernel.org,  Zach FettersMoore
- <zach.fetters@apollographql.com>,  Christian Couder
- <chriscool@tuxfamily.org>,  Patrik Weiskircher <patrik@pspdfkit.com>
-Subject: Re: [PATCH v2] contrib/subtree: fix split with squashed subtrees
-In-Reply-To: <8d341a51-2135-4c62-9df1-5be351e73275@howdoi.land> (Colin
-	Stagner's message of "Tue, 9 Sep 2025 20:56:07 -0500")
-References: <20250824191048.1938340-1-ask+git@howdoi.land>
-	<20250905022728.940664-1-ask+git@howdoi.land>
-	<b78639ee-021d-49fc-8b8d-0140ed8fc010@gmail.com>
-	<8d341a51-2135-4c62-9df1-5be351e73275@howdoi.land>
-Date: Tue, 09 Sep 2025 19:02:41 -0700
-Message-ID: <xmqqbjnjt67y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U36jwSZm"
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e94d678e116so6360434276.2
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 19:04:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757469872; x=1758074672; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ei/eppV02tfBbr8jHXZw3qW3S6a+2i9ovvleJMWo+Ek=;
+        b=U36jwSZmqacJdaJEFx6jj5dUFtvM1skBxDQjqJOdSJX8RhqFqrXb7+RkMGlkVCJXPy
+         HfzTFzxwdqhW73F7JDhUjw2UI0D5UDzacOjm0dP/+HZa+HIywA2qR/KagCreg/GQoccd
+         MuOo1dGPc/p2dBQ/AcnYnTOvEaKXw2fy5alduXiI9O9ZiFoUCNNa1a20jwutdwPt1k3g
+         kjrDnrJJVW+XRfIte0FLGBB+W2nIVSlFIKuAjlxsgk9CoIEblmxV15fsKfHdkknxv7E2
+         R7ncLX+06ZkAnW1OBqKHEMKcvohgx39X+dpxUbnH9rf4CtVcUo8zshmXrt2Ql7WtIFCZ
+         aUVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757469872; x=1758074672;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ei/eppV02tfBbr8jHXZw3qW3S6a+2i9ovvleJMWo+Ek=;
+        b=wCew/S7VmwKtukg/JHDNO4IhRIMfK+ZK/7r3e102M9jhI6e+U+8OvHHFQbzd9Wsfpz
+         u2nBS6l3m08SOC+o+9fpNpALi/+y3/v8gpQBpnoj55rThzxRFzS5RRkRYSRcvVk/QNqD
+         WEmy4W7opd0RKtB1rhcDtoJWL6+aWJ47vLiZqzUxL7FNrKtCo4W3+00xSz08AQPA8JVW
+         QVFcmHVscqT7ojEgZSgvqW6TOw9tA5Ol3OAPsximrmUfgDJjCkkihJ/AqZWtKEmTSqPA
+         QrgAUQyCZXpqEp/OP6t5MNmEib4fxIIB/JHeRBElKZYHyuO5OBJmqQKRckMJw0mOVe8/
+         7jKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVCxWyCvvYVYFmSKWzzRg0fJsUOrJWDOTdkqOpZcZ7QSLE3yM7KMUvfnD0wi56kTh9nQrI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZcxur/jOSoi5TCN8LmbfW+44F7B5KzcQue5Do2Bj19c1vCG76
+	pdcVBDRlqCzoToNWn1eYZO5f331T/c4mIsSuQNPTeNJc0D95YTonFVUB
+X-Gm-Gg: ASbGncvQVwN5ypbGVc1p7vGVMNsUi6GpfsKaMjgdrrGnhIGrke9Omh8B7riC1Dbr8/+
+	jsmOpuAZAEHpyKT4zV73wbdgdySorA/WjOp96TPF1IcnVh+tKHaOd4IwgQVySC8qoBGfJKS676b
+	kbwaqfSuC84NHzxQP+lul2VRDottjXSMtnxsnzM1NePXLxpOntQM17abtM42iN+tCNqvr5vZUeF
+	81Nkl/eb4+Tn35qYdlK7s9Kd/z4FlGUrv/xSmv9PBvYgKIgI0pEkuouksArC6+epWp1Tfc7NJ59
+	bgelexdCYT7hvWlAW/OFzb1pLWGW7s7U0T1UBV+zqfSbIgGve9/4v0L6msNvxNXQY3+6u7eOJCc
+	jYsno2gcNTdJgNQFhrsRVCDqGXphKvMyV41/RvYNwFPDgH3ajlySCJrPelhyrgw==
+X-Google-Smtp-Source: AGHT+IGqugo0vr/r8kEz9L4Ue0m+Qa5bmZ/9EmVn+mxnBDvMQj5Ga4+p+WR0m5ad3Gr1fbm1HYT3kw==
+X-Received: by 2002:a05:6902:18c9:b0:ea0:3d22:5162 with SMTP id 3f1490d57ef6-ea03d225f96mr9943940276.9.1757469871962;
+        Tue, 09 Sep 2025 19:04:31 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:a4ed:b0d1:e879:d740])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e9bbdf23067sm7066930276.2.2025.09.09.19.04.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Sep 2025 19:04:30 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH 1/4] string-list: allow passing NULL for `get_entry_index`
+Date: Tue, 9 Sep 2025 22:04:20 -0400
+Message-Id: <DBE9993A-D6CC-4ABF-8D8B-18D54CF1B001@gmail.com>
+References: <xmqqfrcvt7mf.fsf@gitster.g>
+Cc: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
+In-Reply-To: <xmqqfrcvt7mf.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (21F90)
 
-Colin Stagner <ask+git@howdoi.land> writes:
 
->>> -    if test -n "$(git log -1 --grep="git-subtree-dir:" $rev)"
->>> +    if test -n "${subtree_dir:-}" &&
->>> +        test -z "${have_mainline:-}" &&
->>> +        test "${subtree_dir}" != "$arg_prefix"
->> What's the idea behind using "${var:-}" rather than "{var}"?
->
-> I write a lot of shell scripts that run "set -u" (aka "set -o
-> nounset"), so I do this a lot when testing for empty vars. In this
-> case, it's not actually necessary since `have_mainline` is explicitly
-> defined above. And we don't run `set -u` anyway.
+> Le 9 sept. 2025 =C3=A0 21:32, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
+rit :
+>=20
+> =EF=BB=BFBen Knoble <ben.knoble@gmail.com> writes:
+>=20
+>>>> Le 8 sept. 2025 =C3=A0 12:48, Junio C Hamano <gitster@pobox.com> a =C3=A9=
+crit :
+>>>=20
+>>> =EF=BB=BFshejialuo <shejialuo@gmail.com> writes:
+>>>=20
+>>>> Callers of `get_entry_index()` are required to pass a non-NULL
+>>>> `exact_match` parameter to receive information about whether an exact
+>>>> match is found. However, in some cases, callers only need the index
+>>>> position.
+>>>>=20
+>>>> Let's allow callers to pass NULL for the `exact_match` parameter
+>>>> when they don't need this information, reducing unnecessary variable
+>>>> declarations in calling code.
+>>>>=20
+>>>> Signed-off-by: shejialuo <shejialuo@gmail.com>
+>>>> ---
+>>>> string-list.c | 6 ++++--
+>>>> 1 file changed, 4 insertions(+), 2 deletions(-)
+>>>=20
+>>> I do not quite see the point of adding these conditional assignments
+>>> to clutter the control flow.  What benefit do these callers gain by
+>>> not having to have a throw-away int variable on the stack and
+>>> passing its address to the call chain?
+>>=20
+>> Wouldn=E2=80=99t the point be that (at the cost of slightly more interest=
+ing library code) callers don=E2=80=99t need to introduce extra ceremony for=
+ results they don=E2=80=99t use? In other words, take the boilerplate and pu=
+sh it down rather than up?
+>=20
+> Yeah, but the point is in what situation does a caller *not* need to
+> be able to tell between "we found an existing one and this is its
+> index" vs "there is no such thing, but here is where it *would* fit
+> if it were placed in the array"?  I do not think of any, so I
+> doubted if it makes much sense to complicate the interface to make
+> it optional.
+>=20
 
-Besides, "if test -n ${subtree_dir-}" without colon would be the
-more proper way for those who care about "set -u", wouldn't it?  It
-is not that you want to substitute with an empty string that comes
-between that "-" and "}" when subtree_dir is unset or set to empty.
-You are preparing for the case where the variable is truly not set,
-and the variable being set to an empty string is not something you
-are worried about.  THe same for ${have_mainline:-}.
-
->> If you use "git switch --orphan" that clears the worktree for you
->
-> Very useful. I'll start using it in v3.
-
-Excellent suggestion.
-
+Good question! Thanks for clarifying.=20=
