@@ -1,119 +1,109 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CF922333B
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 21:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161B124EF76
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 21:45:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757540694; cv=none; b=P4+34m69lBycbvWdz0fVzuqssi4TptOg1neotozZEtef2DZVoNHarBmZd1M03isYEQUpEQzZLsp+L8axOboBGKOp3HkuhMjy22r9IE4XbFHAW8iSuOXb5rPdCsr8npaL7ysEk+4G0xkFpmGRb6yBA/9ppiKFD/9LDUu72Uwlj8o=
+	t=1757540746; cv=none; b=XRgQagQcoSyznNLiJIWvwIKqSML/FNdK2z/3gmAn6HUwk1T63aGoAz6UswR4mtj0owuU/YlKtE7hFo5fHOaDCVEW593PZVkReuMpsYDIwdbPyFWtpxvX1I9pE6zmDavLFt0ry3f/QbPyPuQACl7tbaFOqXhIfRFyN4VCNE7uqf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757540694; c=relaxed/simple;
-	bh=vgrv9lRqfhrku75RoVJIVgnBnXHNbrPUC8ZdEd2OqlA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=e4NDcLOpVoGwS0y9/4ZyoY4KIqMfNOIRoG5CCWL+BgrSj2MPoZy7Ym36Z8ePO39EEHQXvKe7f2B4NSZEBL8VpEQkrKcdGlUOVlBRVM++ZGFkiye+r0OhDROHEU6aARJFNfbHccxsUQysNl3uw0m0lPSYuplOEF/Bbon5je87pW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=amb6tU0I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ON1hoeL0; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757540746; c=relaxed/simple;
+	bh=uoCtaw1Warjnxvt+IBwKjmmo4q3G12uGKQXOPoO7adc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eKcWjOO3NS8BnHZhKPSeH6YDObSFFiDAeggCEkVOqljEF+61bvOLl8xr16RJ8TuE7pNKzt9OIBTdbLWQj4ROKMHS+qSIek7mjIBlqKo1vcDD35Isjp0arrXQzDljlcZLYEu0WhAhyilo/aoSrCbaCwU5lShUhjAeluOAxq7MZ3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K0hY4pSk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oa7eY2/F; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="amb6tU0I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ON1hoeL0"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B1B4A7A024E;
-	Wed, 10 Sep 2025 17:44:50 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Wed, 10 Sep 2025 17:44:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757540690;
-	 x=1757627090; bh=VGzRwUFy1pYnjeCc4f021PFiftfZH5eRJJ6i6rBmQoY=; b=
-	amb6tU0I7baPQtg9x3mm8fjJNHqFQ22CtiQI9B6pywPWmmKnczWfXP3frG/D8MEe
-	IjPaTr/zA+dQU29kbDXLP+D/QXvKgm1ehG5VqM2nKS/YOUN7cs6B05Y37l8OiFE5
-	ae7EnB/uhABCfQZ68Oy7rvOETOQ1eMORDEgdiLDOFEh4Y16aTULogc097wFhBY4B
-	PoQ5RUiH8MeM7S4HkP+gUyyXYfZuo0ttU4GeoMmPisp4YIhs9qvYbVeGtjEzWFHn
-	vVm7mWwAgeT5mzj+GfieFbQBS+W1fDIGqMombobO+4Da4tpjJrVC3xGumXqX2Dwt
-	/ZQdtnJAY31SZgy8uhrRZA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K0hY4pSk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oa7eY2/F"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5B4CFEC0304;
+	Wed, 10 Sep 2025 17:45:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 10 Sep 2025 17:45:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757540744; x=1757627144; bh=dsHCXJ9qUh
+	tDsjNmZTbrrp7yW47YGn10FpzjUVGT7yA=; b=K0hY4pSkI0f5eYfXoJ0FB1nsfV
+	dTMg92zKezqN0sq8AHaaILCmK6CHbW4JsIlu+C+s7cz5FNERyu5YTdx1evVFMA8z
+	7PKCkjbGIaJ2mXH2DiiGmtLG8cFI4o1qYBKqfl+FJXsWDrJ6ZzSfS0lYYOFHTYfU
+	pB5yEnWIH3REY55dyTduhhpc/6E4z8U34+N1byHRQncdMfVXzlRn/ePRtH/RjOaL
+	9BQzRv5Frr1m0yVosOnoSN4j+W3h/F8oCRXvCSKf8I7qiSaB6NEwa1Ps1OpZrA6y
+	g/g6v4zws7I4HM2Sy8fpFEd3hDJE9fDSeV/5lViaXaQwl9sPAPXtu8NZvZbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757540690; x=
-	1757627090; bh=VGzRwUFy1pYnjeCc4f021PFiftfZH5eRJJ6i6rBmQoY=; b=O
-	N1hoeL0cmeSNUYyxcl6ZVGak8IPtkvgBzrezt07ZU3Yt2jZEoek4+Va57nGqj9w+
-	819J6tMFXUFyuMjqXEavEuoNNuELFVR50+tzCmqUctgWwBexRm6BFYtOMJL7bZnx
-	Tjsv/bVxfpzIX7bqtViA1/UvgxrUHeXCy8tBDUPzI1t9e3pTSfhKfu/ukWxTPsiF
-	k/fLKZIB3mU3oBk+Fq/9THJIzfBPR4iFx/q1arEoiPsW+5yjj6hTV4NxOfQUAGbE
-	zMSUcKiwjEu+7FosG5xODfnh3tzuJlyPnm/4zSOVrFwrqd0sxujHnw6HwTeviros
-	+UPZN2ul1uCDRP7S+/ITQ==
-X-ME-Sender: <xms:UvHBaFGISsZ5Q8VSFvNXk3u04X_63AGOFbsHY4vLww1J1OHpAfSxaoI>
-    <xme:UvHBaKXs1pQXML4cEUkD2JVwz8TAs-5faJEYEyD1KBIqsZLWU3x1U59MEp86m1afj
-    PurGhO_GvdRpqiNhw>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757540744; x=1757627144; bh=dsHCXJ9qUhtDsjNmZTbrrp7yW47YGn10Fpz
+	jUVGT7yA=; b=Oa7eY2/FGLM4qvy5WZ74mwDKMjTZBf1irFvFLgERlyaKZr2PyJ4
+	UEzt/A6hs/YvnmUWGRYRdhiW2gsFMoDtO5FcyWwU7tqu3EFKxUXh5mHIfZYMZnCr
+	SMZMzp7DE3wnvxA4er/IEueeu4ZzNWoIxg1YsZ9fnyYu3ThienXfW4bhOQr9mZrM
+	LyZ75PH/gkVKEryqopBDfRrj22pKdXcPWTdczPrP0hvg8GcIqXbqzt8gR70fb02q
+	nIBIbCp+86YU0M5l+Ol0L000e5EpvFXZPg3nJezhXlnJE8ApvkbqoqryaMzwSIEs
+	oV6Hm/YLX/YE2g3rR/SL2x5J+MXdOYS9avg==
+X-ME-Sender: <xms:iPHBaGyUbXoSD58p4WNIbsiEynb8kSoT24T1aqKTSN8yKuWtjq2olQ>
+    <xme:iPHBaFhCD0QaFoJ02AFjGZgaG7gIKodrzHsVcrpcUBI5gCcSEFCq_dnQS86deTO6u
+    duAzqRXP-hs6zqe9w>
+X-ME-Received: <xmr:iPHBaBzTBBLwJpfTX1oPfGIvVrt5NKqvKfega2nc5p1MnTb2TPtdpcQkvLujtJ6FN27I57CJ-B_BzP0TrMKmi2TpP737HATQCN_8sQg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertd
-    ertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
-    ftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefg
-    iefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
-    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrgh
-X-ME-Proxy: <xmx:UvHBaNKjHr7jYYfQFc7A9_iVLNfCUFfRHLSO9lvytfizsZLQRskaCg>
-    <xmx:UvHBaCHqmIVKohED3s_3pgBf-G5xujHR2ZeCB6HyFo_Sg7KngVqH4g>
-    <xmx:UvHBaHpBeVYOQgE6MH28QBPV7NqTMJoSzV6WEIMuo1anGfel_w3B8g>
-    <xmx:UvHBaLQvgca-HbD6avc0-aCVNUS4FjBOoLT6NwtBVCBowy3be3lC8Q>
-    <xmx:UvHBaJp31p6LInMJhXmHlPctovSNuVuASZoVNcgfd4KO-BBH-NVTI5W8>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 5492B1EA0068; Wed, 10 Sep 2025 17:44:50 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
+    hsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:iPHBaIKG6lEFyZRz8YsAvpAKJR8F67hFTIMppXsweCFHPIotwhxu2g>
+    <xmx:iPHBaISSHVywyIs-ki0xMrFf70SirDM2W1HxUZW33TCtMTmmujA8BA>
+    <xmx:iPHBaAoEvcH93gTN77BF4Zb-UcV0Q1NtjC35f5Oa2hpIDcPbgLbP9A>
+    <xmx:iPHBaNp0ghfURaMhuGGKq0N1s3eh0h1LEBhdD3AWrt4aiyPGVifK3A>
+    <xmx:iPHBaFEZPFeF7lMGp20k8f9THCwMsorOI3LU6iConZoIkmB8m5eKon8n>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Sep 2025 17:45:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2025, #04; Wed, 10)
+In-Reply-To: <ef86dd0f-f581-49d8-97e4-d20aed50d671@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Wed, 10 Sep 2025 23:12:24 +0200")
+References: <xmqqwm66qauy.fsf@gitster.g>
+	<ef86dd0f-f581-49d8-97e4-d20aed50d671@app.fastmail.com>
+Date: Wed, 10 Sep 2025 14:45:42 -0700
+Message-ID: <xmqqqzweoubd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Af8krf9zh_4Z
-Date: Wed, 10 Sep 2025 23:44:29 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-Id: <22481270-9ca8-4b30-85ea-dc2e960175e0@app.fastmail.com>
-In-Reply-To: <xmqq8qimq99f.fsf@gitster.g>
-References: <xmqqjz28v21e.fsf@gitster.g>
- <226976fa-2805-485c-b01e-138e06f9c7bb@app.fastmail.com>
- <xmqq8qimq99f.fsf@gitster.g>
-Subject: Re: What's cooking in git.git (Sep 2025, #03; Mon, 8)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Sep 10, 2025, at 23:37, Junio C Hamano wrote:
-> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
->
->> On Tue, Sep 9, 2025, at 03:37, Junio C Hamano wrote:
->>> * kh/doc-fast-import-markup-fix (2025-09-08) 1 commit
->>>  - doc: fast-import: replace literal block with paragraph
->>>
->>>  Doc mark-up fix.
->>>
->>>  Will merge to 'next'.
->>>  source:
->>> <09aaad696895c18c6d4dda7d6a2f4b77f84f39ba.1757363213.git.code@khaugs=
-bakk.name>
->>
->> Nit: The ref still points to v1.  Although v2 just has the Ack:
->>
->> <724b975078daf11e17f26472c0da5638a5d1ca86.1757366352.git.code@khaugsb=
-akk.name>
->
-> It is not just the ref.  The updated version has not been picked up
-> at all.  Thanks for letting me know.
->
-> Is it just Peff's Ack, or any other changes added to the patch?
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-No that=E2=80=99s it, just the Ack. I didn=E2=80=99t write a comment on =
-the update
-since the range-diff seemed enough. Let me know if that=E2=80=99s a bad
-practice to pursue.
+> On Wed, Sep 10, 2025, at 23:03, Junio C Hamano wrote:
+>> * kh/you-still-use-whatchanged-fix (2025-09-09) 7 commits
+>>  - BreakingChanges: remove claim about whatchanged reports
+>>  - whatchanged: remove not-even-shorter clause
+>>  - whatchanged: tell users the git-log(1) equivalent
+>>  - you-still-use-that??: help the user help themselves
+>>  - t0014: test shadowing of aliases for a sample of builtins
+>>  - git: allow alias-shadowing deprecated builtins
+>>  - git: add `deprecated` category to --list-cmds
+>>
+>>  Update "do you still use it?" message given by a command that is
+>>  deeply deprecated and allow us to suggest alternatives.
+>>
+>>  Will merge to 'next'?
+>>  source: <cover.1757446619.git.code@khaugsbakk.name>
+>
+> I need to follow up on the leak that Peff found.
+
+Thanks, both.  Will hold.
