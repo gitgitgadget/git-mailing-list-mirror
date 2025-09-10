@@ -1,67 +1,67 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA7D26FA77
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 14:04:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAD6322A13
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 14:04:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757513045; cv=none; b=RRv1vu9TlqfC1KDL0tW3Ogb5SH7iEd/OvX7TETwmCrzDBeRP7zWaiUWGQMlHHHKkYP9WoYyB+yzp+LPRA15Sk14Tdopad41C01LJrS60PWUeUz8t+kDdmlJXcUev5Ap9aSkShNJhUy/QS8Zn2lVX9SUC++PGWaMjHM55HAzAjfg=
+	t=1757513095; cv=none; b=caDV7qCN8JFP7SWmegKTxaYOa5bJ8CSAEwO9evJdXsbnhSpC7BO4/DGP5mjKbgAwk9qr4UeZaw/UF+wl+Ig1hqHQuSBziEvz0dAVaywYv3T2/blTyWQzj46l4DBMgaKpiVKhBtrFVQtIewcGPN2q7nSNsd/MBijkFw85cyOTQlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757513045; c=relaxed/simple;
-	bh=XjNNIeOEts+8JAj787YIrLZ+UvH8U3a/+Mj0frTIxB8=;
+	s=arc-20240116; t=1757513095; c=relaxed/simple;
+	bh=3VkNuK9vD3UrxWvqBfhfNQzpjMGOsQMMetYY904h8Uo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ePHmpQxEm7W45JBtNfKJYyLPokosKJdBuoyvTxbZR3Avq54xunaawCE/F0CuD64Apq9isvMCmpfRRi9BsXhvkRMHnD4scDBi4XRsSpf8VvI0dne05bseyHeDd7u8bYOeY5SQI9QG6c3qStCIDP05yVukcifarDCDK4a5t5f7ndI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JigLKrfy; arc=none smtp.client-ip=209.85.221.45
+	 In-Reply-To:Content-Type; b=fUtBV6GsUMNpMCItkTYM5iGnGymDseqHF/HUsC24Ex9arCEI8mXX7WnmQDS1nk4jn0knXAE+UYBQX3vTryqQxg0ArtoXWtSZhdbWgZ+J7YgwizQ7U8ngThySccRAF48ciNwCGVYml5rb6/TB9lQdw/QC75tCOvOn4s2MBLVtEF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XdfylncC; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JigLKrfy"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3c46686d1e6so4430525f8f.3
-        for <git@vger.kernel.org>; Wed, 10 Sep 2025 07:04:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XdfylncC"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3dae49b1293so3521769f8f.1
+        for <git@vger.kernel.org>; Wed, 10 Sep 2025 07:04:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757513042; x=1758117842; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757513091; x=1758117891; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=UdDZIKalgFh1jJcbrREtokPfL1HNK56YS9E2nbXfwMw=;
-        b=JigLKrfyRzdt3605FMAAfu8MHXksHgKMJkdSBr1AokGW3EfZ30YTvnSjs2TJm8dFrg
-         LNKiSnNJBFVSQn4TTnT2iFizfm9iEmfo4at8Tnq9dS9ZS2cbv5YuC9l8KM+/XKJe1JHj
-         GEJBjeIKe0M3ow9KXoVi79A25ONSM+BA6XKGk/sAt99MCWElcYFb/cZ5n0Yp5bYKtLUt
-         Up4xsk5ENVVjcRzG+4LszgUhxkcCGCMl4z+QkpdVkcjvJMMAenRQxUk8eed0WzNsl1r8
-         BHGfccijhF1z4vno3XF5Vk9UdGasmnFTGVgcfC6wMb5SuDui9UeAOr+Jez+6qh+luXxO
-         NUNA==
+        bh=vFocr8HaTCkXZjmE6i1/aRA/B0cW8+DXv3KghfFiB4c=;
+        b=XdfylncCSUPJbrZ+xLSUW0ZbJaA2yi6CE0jTiHTnFnbPcdt9avv4YJbcutCl9DRzfe
+         hERUO60Vr3LAwQlPIEa6kRVG27sHCC+9tkaZF4LHaDdaZN3MopLSCua1Mm863IdnKQjv
+         /2U8NCyRT9EfiQdBvy7M+0/sCOe9vP2hG4wnkHcRHPpZ5zu/xYDLpOk+zNIXp8fVHcma
+         7kW2w+hwyW30D6YLW5GhzhAVUVeJx2cgsHIVD2vzNzByBA24R5j9vzTn+3YRmvM/BEkr
+         KA638FRpCXsBjrzCQgDqblKmhjt+7rZ/z6H360OSFoMBxA+yYJZ6Ecu1VTDrLYPkIwoN
+         3ldw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757513042; x=1758117842;
+        d=1e100.net; s=20230601; t=1757513091; x=1758117891;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UdDZIKalgFh1jJcbrREtokPfL1HNK56YS9E2nbXfwMw=;
-        b=tM/MvJReSirXf25M4pAejqWq0PJhhiymKZifgSDF/zXwKkpYKOA5gemCdLzEKvFxRA
-         raQa4hCPzopkE+DknN9JpYiJDHYBdA+gV0NZqmg5jZMQqwppx3ypILM3HasEX8ayRDxj
-         eb/q/ZJ/03Z7v/Hp0so5tqL6EEP5u3VElZTtH7HKO0G7kIZSdzntR5FW+bJbc7RtZfkf
-         TxnVh5JTkxfTg8vIgHWPnfiTNzi2QwGOT1TtaCT1TQM+S+F8DnLzwdNT8brd2BgIWprX
-         KzhUKuJBZsOqjqF4F2OLgoXrdQ8zgraUpFtbX/xFX349Ff4Dy3pRQxGb+dHwGWXkOgHA
-         EXaA==
-X-Forwarded-Encrypted: i=1; AJvYcCVosazj8DerDFNA1DxEX3zx+0D70LfsP4Q7FBxlF/fp+h/5ohuJVSO4qx8eZKuf6zLhKCM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRDiv/UNKmvR3NH8pYetW4lrUHDZYv3Mn2G/GyG1vpjCzG9cuY
-	nED0sJIDwMPrSGC1Dnf0rrfglHWgDrFZbZBZMrNzFQHpTswVK3LHdUiz
-X-Gm-Gg: ASbGncvy0Kt/x2rd3ZZREbwtKf32AuH9VX3d93ZBP5nSfNCR1FpLuZJqFQROiwHXr05
-	Q38MaNLArkS+A1LahMumGSPU57qWyxOZlX405qKnRkA3a9mv83W1IYLCJuEjSJDPZK8EwqpRaHN
-	VdPRUB1DsNaBtf1Jgp9H7JJzec++fW7mQET2yAlck9LmFGCGqL6wsw8Abye4HHXiSuIF5ROIeA+
-	CbBuEdD+DFAImmPXKW+JXuuRaX/kiVcM+f7KVzaKtQ7opAXacRkJVZX7P74FhSzKJukvPv1tZ53
-	2tW8zaN+T5NgpP/FdNoVaYNhQxLO6AbBwRK4XqxS1CNpd5gebwOayKNQPnyyyT5lXnO0wL9fL05
-	fZuiBo+PlQ7BotmmLi5fxScy4I8UlOSXs6dZZVJSSVliEplYOrHM/fbOmYW0crWpgXTQniwuHu4
-	UrVTXYrS+lxg==
-X-Google-Smtp-Source: AGHT+IGRK0jH+qCRD+bCdng1OMkL2159JQagUEoEXg0NjXCWuSops8nqwQ9Wkhj0x0zY6cy3s1zGUQ==
-X-Received: by 2002:a05:6000:22c2:b0:3c7:308e:4dff with SMTP id ffacd0b85a97d-3e643c1b67emr11810451f8f.57.1757513041472;
-        Wed, 10 Sep 2025 07:04:01 -0700 (PDT)
+        bh=vFocr8HaTCkXZjmE6i1/aRA/B0cW8+DXv3KghfFiB4c=;
+        b=ealM6+mnETzfxxyYjQ96WjTSVqGeN22mUXOp8X8Bf3ziYSqPBvnPPO52wPsMIWF1ra
+         gu0/+/fEvLMbR5TQ2p2EXmBGDiUGK9JhtxsprqqYx5e6zLDIaxOH+ZBryOL1MKiIfkSg
+         B0atyZgRUFSez9oldH+Q/kDBqma78u3Jnpvyc86lhVzCu+yRDU0/8pR4z4Nclb4mWNKa
+         COzymQG40Wnq9sPbJR7vk4/JQ1abQKn9Jhpg5Zdv4KU8AIxCnd3xogbdu2lUuVFaFdsZ
+         UtEUC40n7Hmazs9zM7JXk2+OOr4ndwgNRl00ifUZB4rD7LTUszxbkhOheKw9GfyJ8Bwg
+         tbVA==
+X-Forwarded-Encrypted: i=1; AJvYcCX4lDIsCVsXb3N7lAS+70DP7F8DJ4heIIf7LqFCnMjLrHP0x6TeqcR9hzES5IHZn0Sgc3c=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywq7QUbbcez8m2w/ruk8l3kyOvIE8ejONMQKxEKSkX/CHfIh9B4
+	dyR9PMe00LNnnoa8tUg9PL3qQW8ELH7oVK1+8uXmkSWN0A3/iFBRLndv
+X-Gm-Gg: ASbGnctFgXjyD6j6XGIy2xTJzplLFcNTFYi4hgm5SMZbeSWdWP3z7v5sBZ5CPl55yi/
+	hdfgiZF6lr8tlYtoQ7F6AA5UwwJEtbhxs0ZYpfT0q2irIOQJGAdrl8FvmeFHVteGE/OO81l+PMc
+	Tci5AK1QqQJ+56j827660zIvzaCVEWyD0YGadZ+j+15jX/JSiTFmGKjp9lGeYLGj2rB6UFqzoeY
+	V64VPGopnuzperYqgqQYTyjqs7+qUyOWpxxH4C5Gy/9WyYTVMenFDoKkunjv+lbi2VrwwvwkzWo
+	GqaQP8GdExajK5v3S/c3hy1GezkE+szbFer3OnE74zbh0VIhE1f+NW//pM8AeUhrs7qhbN1/69K
+	v8XEQ0RnIRqVHoBb7wzLW7sK23rzR90ayczCvTdOdDWvgOmecuWUXshi1M2CfxITr+89eexhXWK
+	k9newg7mDhrQ==
+X-Google-Smtp-Source: AGHT+IGiE7NsCBcyxpAR0JoAH9JuiRezlqx6NVyyCEGMxAFiozkHeri1wDbzzAYIOh4ZMTZ027WPYA==
+X-Received: by 2002:a05:6000:40ca:b0:3e2:a7d0:add3 with SMTP id ffacd0b85a97d-3e636d900cdmr13176488f8f.11.1757513090382;
+        Wed, 10 Sep 2025 07:04:50 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7521ca20dsm7631167f8f.21.2025.09.10.07.04.00
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e75215c51csm6995404f8f.0.2025.09.10.07.04.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Sep 2025 07:04:01 -0700 (PDT)
-Message-ID: <f74b9dfe-b05c-431e-8872-92e2bbb75b8c@gmail.com>
-Date: Wed, 10 Sep 2025 15:04:00 +0100
+        Wed, 10 Sep 2025 07:04:49 -0700 (PDT)
+Message-ID: <51689153-3012-4d3c-995b-69af296ea608@gmail.com>
+Date: Wed, 10 Sep 2025 15:04:49 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,8 +70,8 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH RFC v3 02/18] sequencer: add option to rewind HEAD after
- picking commits
+Subject: Re: [PATCH RFC v3 17/18] builtin/history: implement "split"
+ subcommand
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Junio C Hamano
  <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>,
@@ -79,36 +79,59 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Junio C Hamano
  Martin von Zweigbergk <martinvonz@gmail.com>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 References: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
- <20250904-b4-pks-history-builtin-v3-2-509053514755@pks.im>
+ <20250904-b4-pks-history-builtin-v3-17-509053514755@pks.im>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <20250904-b4-pks-history-builtin-v3-2-509053514755@pks.im>
+In-Reply-To: <20250904-b4-pks-history-builtin-v3-17-509053514755@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Patrick
 
 On 04/09/2025 15:27, Patrick Steinhardt wrote:
-> While the sequencer infrastructure knows to rewind "HEAD" to whatever it
-> was pointing to before a rebase, it doesn't do the same for non-rebase
-> operations like cherry-picks. This is because the expectation is that
-> the user directly picks commits on top of whatever "HEAD" points to, and
-> we advance the reference pointed to by "HEAD" instead of updating it
-> directly.
+> It is quite a common use case that one wants to split up one commit into
+> multiple commits by moving parts of the changes of the original commit
+> out into a separate commit. This is quite an involved operation though:
 > 
-> We're about to introduce a new command though that needs to detach
-> "HEAD" while being more similar to git-cherry-pick(1) rathen than to
-> git-rebase(1). As such, we'll want to restore "HEAD" to point to the
-> branch that we started on while not using the more heavy-weight rebase
-> machinery.
+>    1. Identify the commit in question that is to be dropped.
 > 
-> Introduce a new option `restore_head_target` to do so. Persist the
-> option into the sequencer configuration so that it persists across
-> different processes, e.g. when we need to stop due to a merge conflict.
+>    2. Perform an interactive rebase on top of that commit's parent.
+> 
+>    3. Modify the instruction sheet to "edit" the commit that is to be
+>       split up.
+> 
+>    4. Drop the commit via "git reset HEAD~".
+> 
+>    5. Stage changes that should go into the first commit and commit it.
+> 
+>    6. Stage changes that should go into the second commit and commit it.
+> 
+>    7. Finalize the rebase.
+> 
+> This is quite complex, and overall I would claim that most people who
+> are not experts in Git would struggle with this flow.
+> 
+> Introduce a new "split" subcommand for git-history(1) to make this way
+> easier. All the user needs to do is to say `git history split $COMMIT`.
+>  From hereon, Git asks the user which parts of the commit shall be moved
+> out into a separate commit and, once done, asks the user for the commit
+> message. Git then creates that split-out commit and applies the original
+> commit on top of it.
 
-As with the last patch, can we use this new option in "git rebase"? The 
-sequencer is already a nest of conditionals, it would be nice to 
-minimize the number of new ones.
+I like the idea of this command, but I think it would be much better to 
+prompt the user to edit the orginal message after creating each new 
+commit rather than asking them to write a new message for the first 
+commit that we create and then not letting them edit the message for the 
+second commit. We've got no way of knowing how they are splitting the 
+commit - they could be keeping most of the canges from the orginial in 
+the first commit in which case they probably want something simiar to 
+the orginial commit message for that one, or, they could be spitting out 
+something which means they need to edit the message when creating the 
+second commit.
+
+If this was implemented in the sequencer then we'd be able to reuse the 
+existing code for creating commits and editing commit messages. It would 
+also make the "split" command available to "rebase -i".
 
 Thanks
 
@@ -116,89 +139,966 @@ Phillip
 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->   sequencer.c | 27 ++++++++++++++++++++++++++-
->   sequencer.h |  3 +++
->   2 files changed, 29 insertions(+), 1 deletion(-)
+>   Documentation/git-history.adoc |  60 ++++++
+>   builtin/history.c              | 313 ++++++++++++++++++++++++++-
+>   t/meson.build                  |   1 +
+>   t/t3453-history-split.sh       | 468 +++++++++++++++++++++++++++++++++++++++++
+>   4 files changed, 840 insertions(+), 2 deletions(-)
 > 
-> diff --git a/sequencer.c b/sequencer.c
-> index 7066cdc939..bff181df76 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -413,6 +413,7 @@ void replay_opts_release(struct replay_opts *opts)
->   	struct replay_ctx *ctx = opts->ctx;
+> diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+> index b36cd925dd..6f0c64b90e 100644
+> --- a/Documentation/git-history.adoc
+> +++ b/Documentation/git-history.adoc
+> @@ -13,6 +13,7 @@ git history continue
+>   git history quit
+>   git history drop <commit>
+>   git history reorder <commit> (--before=<following-commit>|--after=<preceding-commit>)
+> +git history split [<options>] <commit> [--] [<pathspec>...]
 >   
->   	free(opts->gpg_sign);
-> +	free(opts->restore_head_target);
->   	free(opts->reflog_action);
->   	free(opts->default_strategy);
->   	free(opts->strategy);
-> @@ -3142,6 +3143,8 @@ static int populate_opts_cb(const char *key, const char *value,
->   	} else if (!strcmp(key, "options.skip-commit-summary")) {
->   		opts->skip_commit_summary =
->   			git_config_bool_or_int(key, value, ctx->kvi, &error_flag);
-> +	} else if (!strcmp(key, "options.restore-head-target")) {
-> +		git_config_string_dup(&opts->restore_head_target, key, value);
->   	} else {
->   		return error(_("invalid key: %s"), key);
->   	}
-> @@ -3709,6 +3712,10 @@ static int save_opts(struct replay_opts *opts)
->   	if (opts->skip_commit_summary)
->   		res |= repo_config_set_in_file_gently(the_repository, opts_file,
->   					"options.skip-commit-summary", NULL, "true");
-> +	if (opts->restore_head_target)
-> +		res |= repo_config_set_in_file_gently(the_repository, opts_file,
-> +				"options.restore-head-target", NULL, opts->restore_head_target);
+>   DESCRIPTION
+>   -----------
+> @@ -52,6 +53,26 @@ child commits, as that would lead to an empty branch.
+>   	be related to one another and must be reachable from the current `HEAD`
+>   	commit.
+>   
+> +`split [--message=<message>] <commit> [--] [<pathspec>...]`::
+> +	Interactively split up <commit> into two commits by choosing
+> +	hunks introduced by it that will be moved into the new split-out
+> +	commit. These hunks will then be written into a new commit that
+> +	becomes the parent of the previous commit. The original commit
+> +	stays intact, except that its parent will be the newly split-out
+> +	commit.
+> ++
+> +The commit message of the new commit will be asked for by launching the
+> +configured editor, unless it has been specified with the `-m` option.
+> +Authorship of the commit will be the same as for the original commit.
+> ++
+> +If passed, _<pathspec>_ can be used to limit which changes shall be split out
+> +of the original commit. Files not matching any of the pathspecs will remain
+> +part of the original commit. For more details, see the 'pathspec' entry in
+> +linkgit:gitglossary[7].
+> ++
+> +It is invalid to select either all or no hunks, as that would lead to
+> +one of the commits becoming empty.
 > +
->   	return res;
+>   The following commands are used to manage an interrupted history-rewriting
+>   operation:
+>   
+> @@ -111,6 +132,45 @@ f44a46e third
+>   bf7438d first
+>   ----------
+>   
+> +Split a commit
+> +~~~~~~~~~~~~~~
+> +
+> +----------
+> +$ git log --stat --oneline
+> +3f81232 (HEAD -> main) original
+> + bar | 1 +
+> + foo | 1 +
+> + 2 files changed, 2 insertions(+)
+> +
+> +$ git history split HEAD --message="split-out commit"
+> +diff --git a/bar b/bar
+> +new file mode 100644
+> +index 0000000..5716ca5
+> +--- /dev/null
+> ++++ b/bar
+> +@@ -0,0 +1 @@
+> ++bar
+> +(1/1) Stage addition [y,n,q,a,d,e,p,?]? y
+> +
+> +diff --git a/foo b/foo
+> +new file mode 100644
+> +index 0000000..257cc56
+> +--- /dev/null
+> ++++ b/foo
+> +@@ -0,0 +1 @@
+> ++foo
+> +(1/1) Stage addition [y,n,q,a,d,e,p,?]? n
+> +
+> +$ git log --stat --oneline
+> +7cebe64 (HEAD -> main) original
+> + foo | 1 +
+> + 1 file changed, 1 insertion(+)
+> +d1582f3 split-out commit
+> + bar | 1 +
+> + 1 file changed, 1 insertion(+)
+> +----------
+> +
+> +
+>   CONFIGURATION
+>   -------------
+>   
+> diff --git a/builtin/history.c b/builtin/history.c
+> index 16b516856e..df04b8dfc6 100644
+> --- a/builtin/history.c
+> +++ b/builtin/history.c
+> @@ -1,17 +1,27 @@
+> +/* Required for `comment_line_str`. */
+> +#define USE_THE_REPOSITORY_VARIABLE
+> +
+>   #include "builtin.h"
+>   #include "branch.h"
+> +#include "cache-tree.h"
+>   #include "commit.h"
+>   #include "commit-reach.h"
+>   #include "config.h"
+> +#include "editor.h"
+>   #include "environment.h"
+>   #include "gettext.h"
+>   #include "hex.h"
+>   #include "object-name.h"
+>   #include "parse-options.h"
+> +#include "path.h"
+> +#include "pathspec.h"
+> +#include "read-cache-ll.h"
+>   #include "refs.h"
+>   #include "reset.h"
+>   #include "revision.h"
+> +#include "run-command.h"
+>   #include "sequencer.h"
+> +#include "sparse-index.h"
+>   
+>   static int cmd_history_abort(int argc,
+>   			     const char **argv,
+> @@ -213,6 +223,7 @@ static int apply_commits(struct repository *repo,
+>   			 const struct strvec *commits,
+>   			 struct commit *head,
+>   			 struct commit *base,
+> +			 const struct oidmap *rewritten_commits,
+>   			 const char *action)
+>   {
+>   	struct setup_revision_opt revision_opts = {
+> @@ -238,6 +249,7 @@ static int apply_commits(struct repository *repo,
+>   		replay_opts.strategy = replay_opts.default_strategy;
+>   		replay_opts.default_strategy = NULL;
+>   	}
+> +	replay_opts.old_oid_mappings = rewritten_commits;
+>   
+>   	strvec_push(&args, "");
+>   	strvec_pushv(&args, commits->v);
+> @@ -403,7 +415,8 @@ static int cmd_history_drop(int argc,
+>   		if (ret < 0)
+>   			goto out;
+>   
+> -		ret = apply_commits(repo, &commits, head, commit_to_drop, "drop");
+> +		ret = apply_commits(repo, &commits, head, commit_to_drop,
+> +				    NULL, "drop");
+>   		if (ret < 0)
+>   			goto out;
+>   	}
+> @@ -505,7 +518,7 @@ static int cmd_history_reorder(int argc,
+>   	replace_commits(&commits, &commit_to_reorder->object.oid, NULL, 0);
+>   	replace_commits(&commits, &anchor->object.oid, replacement, ARRAY_SIZE(replacement));
+>   
+> -	ret = apply_commits(repo, &commits, head, old, "reorder");
+> +	ret = apply_commits(repo, &commits, head, old, NULL, "reorder");
+>   	if (ret < 0)
+>   		goto out;
+>   
+> @@ -517,6 +530,300 @@ static int cmd_history_reorder(int argc,
+>   	return ret;
 >   }
 >   
-> @@ -5177,6 +5184,23 @@ static int pick_commits(struct repository *r,
->   			return -1;
->   	}
->   
-> +	if (opts->restore_head_target) {
-> +		struct reset_head_opts reset_opts = { 0 };
-> +		const char *msg;
+> +static void change_data_free(void *util, const char *str UNUSED)
+> +{
+> +	struct wt_status_change_data *d = util;
+> +	free(d->rename_source);
+> +	free(d);
+> +}
 > +
-> +		msg = reflog_message(opts, "finish", "returning to %s", opts->restore_head_target);
+> +static int fill_commit_message(struct repository *repo,
+> +			       const struct object_id *old_tree,
+> +			       const struct object_id *new_tree,
+> +			       const char *default_message,
+> +			       const char *provided_message,
+> +			       const char *action,
+> +			       struct strbuf *out)
+> +{
+> +	if (!provided_message) {
+> +		const char *path = git_path_commit_editmsg();
+> +		const char *hint =
+> +			_("Please enter the commit message for the %s changes. Lines starting\n"
+> +			  "with '%s' will be kept; you may remove them yourself if you want to.\n");
+> +		int verbose = 1;
 > +
-> +		reset_opts.branch = opts->restore_head_target;
-> +		reset_opts.flags = RESET_HEAD_REFS_ONLY;
-> +		reset_opts.branch_msg = msg;
-> +		reset_opts.head_msg = msg;
+> +		strbuf_addstr(out, default_message);
+> +		strbuf_addch(out, '\n');
+> +		strbuf_commented_addf(out, comment_line_str, hint, action, comment_line_str);
+> +		write_file_buf(path, out->buf, out->len);
 > +
-> +		if (reset_head(r, &reset_opts)) {
-> +			error(_("could not switch HEAD back to %s"), opts->restore_head_target);
+> +		repo_config_get_bool(repo, "commit.verbose", &verbose);
+> +		if (verbose) {
+> +			struct wt_status s;
+> +
+> +			wt_status_prepare(repo, &s);
+> +			FREE_AND_NULL(s.branch);
+> +			s.ahead_behind_flags = AHEAD_BEHIND_QUICK;
+> +			s.commit_template = 1;
+> +			s.colopts = 0;
+> +			s.display_comment_prefix = 1;
+> +			s.hints = 0;
+> +			s.use_color = 0;
+> +			s.whence = FROM_COMMIT;
+> +			s.committable = 1;
+> +
+> +			s.fp = fopen(git_path_commit_editmsg(), "a");
+> +			if (!s.fp)
+> +				return error_errno(_("could not open '%s'"), git_path_commit_editmsg());
+> +
+> +			wt_status_collect_changes_trees(&s, old_tree, new_tree);
+> +			wt_status_print(&s);
+> +			wt_status_collect_free_buffers(&s);
+> +			string_list_clear_func(&s.change, change_data_free);
+> +		}
+> +
+> +		strbuf_reset(out);
+> +		if (launch_editor(path, out, NULL)) {
+> +			fprintf(stderr, _("Please supply the message using the -m option.\n"));
 > +			return -1;
 > +		}
+> +		strbuf_stripspace(out, comment_line_str);
+> +	} else {
+> +		strbuf_addstr(out, provided_message);
 > +	}
 > +
->   	/*
->   	 * Sequence of picks finished successfully; cleanup by
->   	 * removing the .git/sequencer directory
-> @@ -5533,7 +5557,8 @@ int sequencer_pick_revisions(struct repository *r,
->   	if (opts->revs->cmdline.nr == 1 &&
->   	    opts->revs->cmdline.rev->whence == REV_CMD_REV &&
->   	    opts->revs->no_walk &&
-> -	    !opts->revs->cmdline.rev->flags) {
-> +	    !opts->revs->cmdline.rev->flags &&
-> +	    !opts->restore_head_target) {
->   		struct commit *cmit;
->   
->   		if (prepare_revision_walk(opts->revs)) {
-> diff --git a/sequencer.h b/sequencer.h
-> index 1767fd737e..a905f6afc7 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -72,6 +72,9 @@ struct replay_opts {
->   	/* Reflog */
->   	char *reflog_action;
->   
-> +	/* Reference to which HEAD shall be reset to after the operation. */
-> +	char *restore_head_target;
+> +	cleanup_message(out, COMMIT_MSG_CLEANUP_ALL, 0);
 > +
->   	/* placeholder commit for -i --root */
->   	struct object_id squash_onto;
->   	int have_squash_onto;
+> +	if (!out->len) {
+> +		fprintf(stderr, _("Aborting commit due to empty commit message.\n"));
+> +		return -1;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int split_commit(struct repository *repo,
+> +			struct commit *original_commit,
+> +			struct pathspec *pathspec,
+> +			const char *commit_message,
+> +			struct object_id *out)
+> +{
+> +	struct interactive_options interactive_opts = INTERACTIVE_OPTIONS_INIT;
+> +	struct strbuf index_file = STRBUF_INIT, split_message = STRBUF_INIT;
+> +	struct child_process read_tree_cmd = CHILD_PROCESS_INIT;
+> +	struct index_state index = INDEX_STATE_INIT(repo);
+> +	struct object_id original_commit_tree_oid, parent_tree_oid;
+> +	const char *original_message, *original_body, *ptr;
+> +	char original_commit_oid[GIT_MAX_HEXSZ + 1];
+> +	char *original_author = NULL;
+> +	struct commit_list *parents = NULL;
+> +	struct commit *first_commit;
+> +	struct tree *split_tree;
+> +	size_t len;
+> +	int ret;
+> +
+> +	if (original_commit->parents)
+> +		parent_tree_oid = *get_commit_tree_oid(original_commit->parents->item);
+> +	else
+> +		oidcpy(&parent_tree_oid, repo->hash_algo->empty_tree);
+> +	original_commit_tree_oid = *get_commit_tree_oid(original_commit);
+> +
+> +	/*
+> +	 * Construct the first commit. This is done by taking the original
+> +	 * commit parent's tree and selectively patching changes from the diff
+> +	 * between that parent and its child.
+> +	 */
+> +	repo_git_path_replace(repo, &index_file, "%s", "history-split.index");
+> +
+> +	read_tree_cmd.git_cmd = 1;
+> +	strvec_pushf(&read_tree_cmd.env, "GIT_INDEX_FILE=%s", index_file.buf);
+> +	strvec_push(&read_tree_cmd.args, "read-tree");
+> +	strvec_push(&read_tree_cmd.args, oid_to_hex(&parent_tree_oid));
+> +	ret = run_command(&read_tree_cmd);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	ret = read_index_from(&index, index_file.buf, repo->gitdir);
+> +	if (ret < 0) {
+> +		ret = error(_("failed reading temporary index"));
+> +		goto out;
+> +	}
+> +
+> +	oid_to_hex_r(original_commit_oid, &original_commit->object.oid);
+> +	ret = run_add_p_index(repo, &index, index_file.buf, &interactive_opts,
+> +			      original_commit_oid, pathspec);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	split_tree = write_in_core_index_as_tree(repo, &index);
+> +	if (!split_tree) {
+> +		ret = error(_("failed split tree"));
+> +		goto out;
+> +	}
+> +
+> +	unlink(index_file.buf);
+> +
+> +	/*
+> +	 * We disallow the cases where either the split-out commit or the
+> +	 * original commit would become empty. Consequently, if we see that the
+> +	 * new tree ID matches either of those trees we abort.
+> +	 */
+> +	if (oideq(&split_tree->object.oid, &parent_tree_oid)) {
+> +		ret = error(_("split commit is empty"));
+> +		goto out;
+> +	} else if (oideq(&split_tree->object.oid, &original_commit_tree_oid)) {
+> +		ret = error(_("split commit tree matches original commit"));
+> +		goto out;
+> +	}
+> +
+> +	/* We retain authorship of the original commit. */
+> +	original_message = repo_logmsg_reencode(repo, original_commit, NULL, NULL);
+> +	ptr = find_commit_header(original_message, "author", &len);
+> +	if (ptr)
+> +		original_author = xmemdupz(ptr, len);
+> +
+> +	ret = fill_commit_message(repo, &parent_tree_oid, &split_tree->object.oid,
+> +				  "", commit_message, "split-out", &split_message);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	ret = commit_tree(split_message.buf, split_message.len, &split_tree->object.oid,
+> +			  original_commit->parents, &out[0], original_author, NULL);
+> +	if (ret < 0) {
+> +		ret = error(_("failed writing split-out commit"));
+> +		goto out;
+> +	}
+> +
+> +	/*
+> +	 * The second commit is much simpler to construct, as we can simply use
+> +	 * the original commit details, except that we adjust its parent to be
+> +	 * the newly split-out commit.
+> +	 */
+> +	find_commit_subject(original_message, &original_body);
+> +	first_commit = lookup_commit_reference(repo, &out[0]);
+> +	commit_list_append(first_commit, &parents);
+> +
+> +	ret = commit_tree(original_body, strlen(original_body), &original_commit_tree_oid,
+> +			  parents, &out[1], original_author, NULL);
+> +	if (ret < 0) {
+> +		ret = error(_("failed writing second commit"));
+> +		goto out;
+> +	}
+> +
+> +	ret = 0;
+> +
+> +out:
+> +	if (index_file.len)
+> +		unlink(index_file.buf);
+> +	strbuf_release(&split_message);
+> +	strbuf_release(&index_file);
+> +	free_commit_list(parents);
+> +	free(original_author);
+> +	release_index(&index);
+> +	return ret;
+> +}
+> +
+> +static int cmd_history_split(int argc,
+> +			     const char **argv,
+> +			     const char *prefix,
+> +			     struct repository *repo)
+> +{
+> +	const char * const usage[] = {
+> +		N_("git history split [<options>] <commit>"),
+> +		NULL,
+> +	};
+> +	const char *commit_message = NULL;
+> +	struct option options[] = {
+> +		OPT_STRING('m', "message", &commit_message, N_("message"), N_("commit message")),
+> +		OPT_END(),
+> +	};
+> +	struct oidmap rewritten_commits = OIDMAP_INIT;
+> +	struct commit *original_commit, *head;
+> +	struct strvec commits = STRVEC_INIT;
+> +	struct commit_list *list = NULL;
+> +	struct object_id split_commits[2];
+> +	struct replay_oid_mapping mapping[2] = { 0 };
+> +	struct pathspec pathspec = { 0 };
+> +	int ret;
+> +
+> +	argc = parse_options(argc, argv, prefix, options, usage, 0);
+> +	if (argc < 1) {
+> +		ret = error(_("command expects a revision"));
+> +		goto out;
+> +	}
+> +	repo_config(repo, git_default_config, NULL);
+> +
+> +	original_commit = lookup_commit_reference_by_name(argv[0]);
+> +	if (!original_commit) {
+> +		ret = error(_("commit to be split cannot be found: %s"), argv[0]);
+> +		goto out;
+> +	}
+> +
+> +	if (original_commit->parents && original_commit->parents->next) {
+> +		ret = error(_("commit to be split must not be a merge commit"));
+> +		goto out;
+> +	}
+> +
+> +	head = lookup_commit_reference_by_name("HEAD");
+> +	if (!head) {
+> +		ret = error(_("could not resolve HEAD to a commit"));
+> +		goto out;
+> +	}
+> +
+> +	commit_list_append(original_commit, &list);
+> +	if (!repo_is_descendant_of(repo, original_commit, list)) {
+> +		ret = error (_("split commit must be reachable from current HEAD commit"));
+> +		goto out;
+> +	}
+> +
+> +	parse_pathspec(&pathspec, 0,
+> +		       PATHSPEC_PREFER_FULL | PATHSPEC_SYMLINK_LEADING_PATH | PATHSPEC_PREFIX_ORIGIN,
+> +		       prefix, argv + 1);
+> +
+> +	/*
+> +	 * Collect the list of commits that we'll have to reapply now already.
+> +	 * This ensures that we'll abort early on in case the range of commits
+> +	 * contains merges, which we do not yet handle.
+> +	 */
+> +	ret = collect_commits(repo, original_commit->parents ? original_commit->parents->item : NULL,
+> +			      head, &commits);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	/*
+> +	 * Then we split up the commit and replace the original commit with the
+> +	 * new new ones.
+> +	 */
+> +	ret = split_commit(repo, original_commit, &pathspec,
+> +			   commit_message, split_commits);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	mapping[0].entry.oid = split_commits[0];
+> +	mapping[0].rewritten_oid = original_commit->object.oid;
+> +	oidmap_put(&rewritten_commits, &mapping[0]);
+> +	mapping[1].entry.oid = split_commits[1];
+> +	mapping[1].rewritten_oid = original_commit->object.oid;
+> +	oidmap_put(&rewritten_commits, &mapping[1]);
+> +
+> +	replace_commits(&commits, &original_commit->object.oid,
+> +			split_commits, ARRAY_SIZE(split_commits));
+> +
+> +	ret = apply_commits(repo, &commits, head, original_commit,
+> +			    &rewritten_commits, "split");
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	ret = 0;
+> +
+> +out:
+> +	oidmap_clear(&rewritten_commits, 0);
+> +	clear_pathspec(&pathspec);
+> +	strvec_clear(&commits);
+> +	free_commit_list(list);
+> +	return ret;
+> +}
+> +
+>   int cmd_history(int argc,
+>   		const char **argv,
+>   		const char *prefix,
+> @@ -528,6 +835,7 @@ int cmd_history(int argc,
+>   		N_("git history quit"),
+>   		N_("git history drop <commit>"),
+>   		N_("git history reorder <commit> (--before=<following-commit>|--after=<preceding-commit>)"),
+> +		N_("git history split [<options>] <commit> [--] [<pathspec>...]"),
+>   		NULL,
+>   	};
+>   	parse_opt_subcommand_fn *fn = NULL;
+> @@ -537,6 +845,7 @@ int cmd_history(int argc,
+>   		OPT_SUBCOMMAND("quit", &fn, cmd_history_quit),
+>   		OPT_SUBCOMMAND("drop", &fn, cmd_history_drop),
+>   		OPT_SUBCOMMAND("reorder", &fn, cmd_history_reorder),
+> +		OPT_SUBCOMMAND("split", &fn, cmd_history_split),
+>   		OPT_END(),
+>   	};
+>   
+> diff --git a/t/meson.build b/t/meson.build
+> index 2bf7bcab5a..b3d33c8588 100644
+> --- a/t/meson.build
+> +++ b/t/meson.build
+> @@ -379,6 +379,7 @@ integration_tests = [
+>     't3450-history.sh',
+>     't3451-history-drop.sh',
+>     't3452-history-reorder.sh',
+> +  't3453-history-split.sh',
+>     't3500-cherry.sh',
+>     't3501-revert-cherry-pick.sh',
+>     't3502-cherry-pick-merge.sh',
+> diff --git a/t/t3453-history-split.sh b/t/t3453-history-split.sh
+> new file mode 100755
+> index 0000000000..a6a652e7df
+> --- /dev/null
+> +++ b/t/t3453-history-split.sh
+> @@ -0,0 +1,468 @@
+> +#!/bin/sh
+> +
+> +test_description='tests for git-history split subcommand'
+> +
+> +. ./test-lib.sh
+> +
+> +set_fake_editor () {
+> +	write_script fake-editor.sh <<-\EOF &&
+> +	echo "split-out commit" >"$1"
+> +	EOF
+> +	test_set_editor "$(pwd)"/fake-editor.sh
+> +}
+> +
+> +expect_log () {
+> +	git log --format="%s" >actual &&
+> +	cat >expect &&
+> +	test_cmp expect actual
+> +}
+> +
+> +expect_tree_entries () {
+> +	git ls-tree --name-only "$1" >actual &&
+> +	cat >expect &&
+> +	test_cmp expect actual
+> +}
+> +
+> +test_expect_success 'refuses to work with merge commits' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit base &&
+> +		git branch branch &&
+> +		test_commit ours &&
+> +		git switch branch &&
+> +		test_commit theirs &&
+> +		git switch - &&
+> +		git merge theirs &&
+> +		test_must_fail git history split HEAD 2>err &&
+> +		test_grep "commit to be split must not be a merge commit" err &&
+> +		test_must_fail git history split HEAD~ 2>err &&
+> +		test_grep "cannot rearrange commit history with merges" err
+> +	)
+> +'
+> +
+> +test_expect_success 'refuses to work with changes in the worktree or index' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit initial &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +
+> +		echo changed >bar &&
+> +		test_must_fail git history split -m message HEAD 2>err <<-EOF &&
+> +		y
+> +		n
+> +		EOF
+> +		test_grep "Your local changes to the following files would be overwritten" err &&
+> +
+> +		git add bar &&
+> +		test_must_fail git history split -m message HEAD 2>err <<-EOF &&
+> +		y
+> +		n
+> +		EOF
+> +		test_grep "Your local changes to the following files would be overwritten" err
+> +	)
+> +'
+> +
+> +test_expect_success 'can split up tip commit' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit initial &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +
+> +		git symbolic-ref HEAD >expect &&
+> +		set_fake_editor &&
+> +		git history split HEAD <<-EOF &&
+> +		y
+> +		n
+> +		EOF
+> +		git symbolic-ref HEAD >actual &&
+> +		test_cmp expect actual &&
+> +
+> +		expect_log <<-EOF &&
+> +		split-me
+> +		split-out commit
+> +		initial
+> +		EOF
+> +
+> +		expect_tree_entries HEAD~ <<-EOF &&
+> +		bar
+> +		initial.t
+> +		EOF
+> +
+> +		expect_tree_entries HEAD <<-EOF
+> +		bar
+> +		foo
+> +		initial.t
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'can split up root commit' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m root &&
+> +		test_commit tip &&
+> +
+> +		set_fake_editor &&
+> +		git history split HEAD~ <<-EOF &&
+> +		y
+> +		n
+> +		EOF
+> +
+> +		expect_log <<-EOF &&
+> +		tip
+> +		root
+> +		split-out commit
+> +		EOF
+> +
+> +		expect_tree_entries HEAD~2 <<-EOF &&
+> +		bar
+> +		EOF
+> +
+> +		expect_tree_entries HEAD~ <<-EOF &&
+> +		bar
+> +		foo
+> +		EOF
+> +
+> +		expect_tree_entries HEAD <<-EOF
+> +		bar
+> +		foo
+> +		tip.t
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'can split up in-between commit' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit initial &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +		test_commit tip &&
+> +
+> +		set_fake_editor &&
+> +		git history split HEAD~ <<-EOF &&
+> +		y
+> +		n
+> +		EOF
+> +
+> +		expect_log <<-EOF &&
+> +		tip
+> +		split-me
+> +		split-out commit
+> +		initial
+> +		EOF
+> +
+> +		expect_tree_entries HEAD~2 <<-EOF &&
+> +		bar
+> +		initial.t
+> +		EOF
+> +
+> +		expect_tree_entries HEAD~ <<-EOF &&
+> +		bar
+> +		foo
+> +		initial.t
+> +		EOF
+> +
+> +		expect_tree_entries HEAD <<-EOF
+> +		bar
+> +		foo
+> +		initial.t
+> +		tip.t
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'can pick multiple hunks' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		touch bar baz foo qux &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +
+> +		git history split HEAD -m "split-out commit" <<-EOF &&
+> +		y
+> +		n
+> +		y
+> +		n
+> +		EOF
+> +
+> +		expect_tree_entries HEAD~ <<-EOF &&
+> +		bar
+> +		foo
+> +		EOF
+> +
+> +		expect_tree_entries HEAD <<-EOF
+> +		bar
+> +		baz
+> +		foo
+> +		qux
+> +		EOF
+> +	)
+> +'
+> +
+> +
+> +test_expect_success 'can use only last hunk' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +
+> +		git history split HEAD -m "split-out commit" <<-EOF &&
+> +		n
+> +		y
+> +		EOF
+> +
+> +		expect_log <<-EOF &&
+> +		split-me
+> +		split-out commit
+> +		EOF
+> +
+> +		expect_tree_entries HEAD~ <<-EOF &&
+> +		foo
+> +		EOF
+> +
+> +		expect_tree_entries HEAD <<-EOF
+> +		bar
+> +		foo
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'aborts with empty commit message' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +
+> +		test_must_fail git history split HEAD -m "" <<-EOF 2>err &&
+> +		y
+> +		n
+> +		EOF
+> +		test_grep "Aborting commit due to empty commit message." err
+> +	)
+> +'
+> +
+> +test_expect_success 'can specify message via option' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +
+> +		git history split HEAD -m "message option" <<-EOF &&
+> +		y
+> +		n
+> +		EOF
+> +
+> +		expect_log <<-EOF
+> +		split-me
+> +		message option
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'commit message editor sees split-out changes' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +
+> +		write_script fake-editor.sh <<-\EOF &&
+> +		cp "$1" . &&
+> +		echo "some commit message" >>"$1"
+> +		EOF
+> +		test_set_editor "$(pwd)"/fake-editor.sh &&
+> +
+> +		git history split HEAD <<-EOF &&
+> +		y
+> +		n
+> +		EOF
+> +
+> +		cat >expect <<-EOF &&
+> +
+> +		# Please enter the commit message for the split-out changes. Lines starting
+> +		# with ${SQ}#${SQ} will be kept; you may remove them yourself if you want to.
+> +		# Changes to be committed:
+> +		#	new file:   bar
+> +		#
+> +		EOF
+> +		test_cmp expect COMMIT_EDITMSG &&
+> +
+> +		expect_log <<-EOF
+> +		split-me
+> +		some commit message
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'skips change summary with commit.verbose=false' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +
+> +		write_script fake-editor.sh <<-\EOF &&
+> +		cp "$1" . &&
+> +		echo "some commit message" >>"$1"
+> +		EOF
+> +		test_set_editor "$(pwd)"/fake-editor.sh &&
+> +
+> +		git -c commit.verbose=false history split HEAD <<-EOF &&
+> +		y
+> +		n
+> +		EOF
+> +
+> +		cat >expect <<-EOF &&
+> +
+> +		# Please enter the commit message for the split-out changes. Lines starting
+> +		# with ${SQ}#${SQ} will be kept; you may remove them yourself if you want to.
+> +		EOF
+> +		test_cmp expect COMMIT_EDITMSG &&
+> +
+> +		expect_log <<-EOF
+> +		split-me
+> +		some commit message
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'can use pathspec to limit what gets split' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +
+> +		git history split HEAD -m "message option" -- foo <<-EOF &&
+> +		y
+> +		EOF
+> +
+> +		expect_tree_entries HEAD~ <<-EOF &&
+> +		foo
+> +		EOF
+> +
+> +		expect_tree_entries HEAD <<-EOF
+> +		bar
+> +		foo
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'refuses to create empty split-out commit' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit base &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +
+> +		test_must_fail git history split HEAD 2>err <<-EOF &&
+> +		n
+> +		n
+> +		EOF
+> +		test_grep "split commit is empty" err
+> +	)
+> +'
+> +
+> +test_expect_success 'hooks are executed for rewritten commits' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +		old_head=$(git rev-parse HEAD) &&
+> +
+> +		write_script .git/hooks/prepare-commit-msg <<-EOF &&
+> +		echo "prepare-commit-msg: \$@" >>"$(pwd)/hooks.log"
+> +		EOF
+> +		write_script .git/hooks/post-commit <<-EOF &&
+> +		echo "post-commit" >>"$(pwd)/hooks.log"
+> +		EOF
+> +		write_script .git/hooks/post-rewrite <<-EOF &&
+> +		{
+> +			echo "post-rewrite: \$@"
+> +			cat
+> +		} >>"$(pwd)/hooks.log"
+> +		EOF
+> +
+> +		set_fake_editor &&
+> +		git history split HEAD <<-EOF &&
+> +		y
+> +		n
+> +		EOF
+> +
+> +		expect_log <<-EOF &&
+> +		split-me
+> +		split-out commit
+> +		EOF
+> +
+> +		cat >expect <<-EOF &&
+> +		prepare-commit-msg: .git/COMMIT_EDITMSG message
+> +		post-commit
+> +		prepare-commit-msg: .git/COMMIT_EDITMSG message
+> +		post-commit
+> +		post-rewrite: history
+> +		$old_head $(git rev-parse HEAD~)
+> +		$old_head $(git rev-parse HEAD)
+> +		EOF
+> +		test_cmp expect hooks.log
+> +	)
+> +'
+> +
+> +test_expect_success 'refuses to create empty original commit' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		touch bar foo &&
+> +		git add . &&
+> +		git commit -m split-me &&
+> +
+> +		test_must_fail git history split HEAD 2>err <<-EOF &&
+> +		y
+> +		y
+> +		EOF
+> +		test_grep "split commit tree matches original commit" err
+> +	)
+> +'
+> +
+> +test_done
 > 
 
