@@ -1,122 +1,138 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9744532F75A
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 14:43:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3823C1BC4E
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 15:11:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757515404; cv=none; b=s92Q3CD6BZOYeD4hjtYDDofPWK0FIMLKEQMBcZHr6JjXQggLT0nnjZtsyvA6RcODG2zY+PD9GYLXLhy7mT36fz7HL9RD/50jrRSBNrDjLQsriVAJVbPUWAIcs53lf1uCNr2pfYH5zT5sU1FMszaiG8alLqlVEgttNTIp1rmJ5bo=
+	t=1757517062; cv=none; b=FNjnX22MIWALgk8CmycXWL/zQWs5b6nI3Su89HB/m0n6LnPDjgA16dRMCRMJPb5GLVnR6W9jE4FD7Idwv85n5220ucyF/ByWy2tUlkWwkiOed8fd/mrv1T3h45aFhKl6FykePA2YY7WhQ68meALRo4CWBkfQUT33FOvmmSxWxt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757515404; c=relaxed/simple;
-	bh=aIrVqxBWfYb6BPJ1zeSef0dcT5h2/kMu/Ykrn9Zd7j4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RSfjdLnQx/2297IEEpDfSGoe7GxScO0/CN4jYSdQVfDa3rqDX8x+eBLmfjjAZC41MlynYY9+7N/M0xh5UR+bfrq3+2uhQcV3HsIxCVAdTqsOcCVdeMauJsxoQgdfImItOGISdXFu507MmTE/0qQFK7cUuoFU0FVccw4eyNdp4aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fTjwsJ7K; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757517062; c=relaxed/simple;
+	bh=CqC/bXZezoO4X8RpKsqZ1AfHHMLxsA9epKiEqY9/Nl0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SYvHQdST3LsCabSHyKpl2JhmIZ4wQqZ8DAop2T9iEAoK15NiKVRAzljMvFZJHGehG64weiUHrnErOhNaKPp/NTWieE0xec5B/otBv9eMUdV+/PUnr3u7+740fuIyyYYrnk/j4yzIRWHjYKBS+3wGW5DpX4Va2qlG3NyVVLe+Ei4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FxL4lKgF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PTdC9UJV; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fTjwsJ7K"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-74526ca7a46so2708948a34.2
-        for <git@vger.kernel.org>; Wed, 10 Sep 2025 07:43:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757515401; x=1758120201; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IvNpxsSBosHJSiL2sj5bsT+SBYZNJphNmmoAIjxVgeg=;
-        b=fTjwsJ7KYOAL4G3ebKk7kXwReHMaGNE8ewUseCDek6vcXaixAl0mItGw1Xa9gVyEIf
-         c55vjhqtBHGf0iYJuI99o5KuWnaFilXARwqbKb0oGQTHDOZluglCU6dUJv+TOa1iCPlh
-         pgBMsKdPIKX0vcIdREqqyAU2YJ82E5Yf8AisUiDAUacZUlOeVNSJ8X1Tci4v0D/JV0ux
-         rA3q1cAGPBFhL0DzSCcFAAXtY/r8ybl7FBaTc8wkroMvgdA43di3Hi+KCBKScMQ+DGys
-         H47LL/Tlv3mXC/jyhVWKnI0CFSkpuZoMG1R8cy7ZKBNwLxN5mZ7j8gKwQ6pL2Xsw80sR
-         UvOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757515401; x=1758120201;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IvNpxsSBosHJSiL2sj5bsT+SBYZNJphNmmoAIjxVgeg=;
-        b=M1AGA5ZpSAwwhV2FKif0v+Uxk9M+9S3/LHC40AXopo8H9xaRAM5mu/a01a2MtTsLTi
-         hMK68zzfva00biq52hzBw7JOTB5+QFiBDJQLhUhCleAyQqoeeVY0L85y1uqESVxE3ALP
-         vxj6zRWG52XCrzQo99bDwmqhzdn6J9mqwQODNcFPr3+LQ6yAEPAeYldb9e65E1KUR58W
-         kE0C3i/U7sB3FkGrvoFBiX8AlTvzq1BUVazGHtl1iEd8u1k6lhVyINFtuu1ugSRRuBoi
-         XFbzgnXHYpPqLfBPpeSPqe5MGiNq0KCffmYO8+i2Bp2/4i2PAbG0eP1H102Vm2TSdc/T
-         4New==
-X-Gm-Message-State: AOJu0YxQJrjAA8+DGIe7ny4k+Q98tkf7J778ZbJVPla2oT4QwbFUYspm
-	ldwU9FpUYYTQGYO/BTd6EYNef61xTyR/1wG9Z6l8QqA9Z69jRH6XFieSrkrhUw==
-X-Gm-Gg: ASbGncvFTx6pID6qyU9V4la3ZJ2xA3FHyLz+sF9fsX5HKX7EzSbEMQRmEo8i0KZQHkB
-	Cb6os8jKsxn45Rq53K9iNXPnUrM34nrkFwfqRwN04nK9hyN1qozZIkAXSgf8gImUs414BSyG1Xz
-	FP5L4KtBlNWJRN2HIdlyqWhMGnGmCjvFgVa59Q2tJBcP3mZZNY1WPPOoaLiWuBDK4ia+hOYW4cq
-	XkY3zG6TeT+eBI+/v1XM4yvG+xhUqCW4YHhC1wHnRE7ntMjtJENsi9j3Yd84rkqKSp1U/x4AoR8
-	p0d5+XcbaEAgnvrAm6NgcyE/3IYY/lCTvPmc8jSi9Aw3GdEpJofSpPi41AC7CmRwGhmglR+v49U
-	cukdpDVVhwDy2NRplbcIXCA+/xUE=
-X-Google-Smtp-Source: AGHT+IFzPl9blmTlBHzrUcuVVnyrqkf5MQ6xZwcxRblmYvcy0sbQceeckhsfoGTO4Gq/+Bhl8BZ2Ew==
-X-Received: by 2002:a05:6830:668f:b0:746:d8cc:4bb with SMTP id 46e09a7af769-74c704b57d4mr8957089a34.8.1757515401429;
-        Wed, 10 Sep 2025 07:43:21 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7458e848c23sm6850121a34.43.2025.09.10.07.43.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Sep 2025 07:43:20 -0700 (PDT)
-Date: Wed, 10 Sep 2025 09:43:20 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] odb: drop deprecated wrapper functions
-Message-ID: <fho5ch7r6d54tqxd56s4lcrv3ms6w4mytpbieere3qv3lz34zw@ufb22yd5w6xl>
-References: <20250910-b4-pks-odb-drop-wrappers-v1-1-6ed660cb1eec@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FxL4lKgF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PTdC9UJV"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3BD877A017E;
+	Wed, 10 Sep 2025 11:10:59 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 10 Sep 2025 11:10:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757517059; x=1757603459; bh=hU/CC6WuI0
+	I2+pBrZ9pKyFkwFectJoQ3e3SHQFz6cBI=; b=FxL4lKgFxQR9HZvN7FOpDwpxom
+	Sq2rMcvVO4V1du4qa4i/4f5MsYc7XIYV1zzga2tNs7yR9FpGZltVBWbOtdKmE1ai
+	phRQD8MJwKZV3Sr5F5gVVV9CfgqXM8F8Ohkk0C3vaT8ZwAp1x17s54q6bacCuvS5
+	43IBFr4xBXI+vFqjG2Kov5lO5jqXca85vBkkEjHDXs0kLllLzbMQGJWLkHWbzfTp
+	2ksXxUNYXn9deRV45/wrBecZ+ILSCh4YwwfxNXbOHS1MxcBxyOLBcVtlX2ejWC+Q
+	HpyRF26OJcmf88pPXvcY5Ac9+IPWQ9l/TyRXtS2Vx1NDPe5dDvDJ880pE+4A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757517059; x=1757603459; bh=hU/CC6WuI0I2+pBrZ9pKyFkwFectJoQ3e3S
+	HQFz6cBI=; b=PTdC9UJV3JXp+I9djpqp5T3cjSDUvdcsk69uNdjn8OptY76vCpP
+	F2LX8s19V17kQ5iHR7S0ias9JptPpV+axrQMZchjpDciX8pDdp4ydo5S4ErcPA+A
+	yoXpVjjEmIAbcd4GNKJLd1hBpPgmKrMDM6X/+UfpYyJMRe/uWxBH+L/i8ZnhAneq
+	87NQMF4XwREYrLAUOh5xU+7EUyttfzfGaJaKmuX+Yq+AC8nWfY09EpvsbMdMZwE6
+	GnmUU2I6h4DrVavfvPna14uZp244o9jays8wEaUdKsFWJtpEx92SD0HED212SDGi
+	R4O+Kphl/PID9xET9GnzvUlIUbn87AK7lnw==
+X-ME-Sender: <xms:AZXBaLqr7lL6_DMfnVnC-Zbvp9SVJczOJMxDnSffh1BGvWh0Go-CbA>
+    <xme:AZXBaJcOFaH0fks-TcENq42DbfKGVlpCwWxfbqPTEWmgJtEs9fmGaDaQdkF_Nk5bX
+    HhX-hot-bVDxvqAcQ>
+X-ME-Received: <xmr:AZXBaBRAlDgrED47c_pItFtEtmgH7SLHxw6U8qeP5ZvbApVg8SB252G6T4i-1tPjnAFH-xIYb_FQGYEjd9hUVgxLYFwJu-hUwv8PLF8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeeiudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegrshhkodhgihhtsehhohifughoihdrlhgrnhgupdhrtg
+    hpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeiirggthh
+    drfhgvthhtvghrshesrghpohhllhhoghhrrghphhhqlhdrtghomhdprhgtphhtthhopegt
+    hhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepphgrthhrih
+    hksehpshhpughfkhhithdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:AZXBaCac-yZy25YT0t2i64cjfb3ZA9b0ycpaMIj0E_1y30ndFhCZcw>
+    <xmx:AZXBaEeb3Bxx1J7gMrDVMgi94rT_dKcqZbq8K7ykDgvlVDseyYw1JQ>
+    <xmx:AZXBaDKlcMitckTQ2g-0viHzhpLgr86Zy0KRnNyAkFRL8WEwoab1Fw>
+    <xmx:AZXBaBJgYqfD5dcr1m2he_87eO3x3M69M7_C66qWwkNb-PjKNY-sAg>
+    <xmx:A5XBaEGiuJIEdeBtFSQJf1HO_hmRkjRlQXk-hkA-zODe01h9SEciBQcI>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Sep 2025 11:10:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Colin Stagner <ask+git@howdoi.land>
+Cc: phillip.wood@dunelm.org.uk,  git@vger.kernel.org,  Zach FettersMoore
+ <zach.fetters@apollographql.com>,  Christian Couder
+ <chriscool@tuxfamily.org>,  Patrik Weiskircher <patrik@pspdfkit.com>
+Subject: Re: [PATCH v2] contrib/subtree: fix split with squashed subtrees
+In-Reply-To: <641aaa9b-2b23-4faf-a13e-f6205e9ef5a2@howdoi.land> (Colin
+	Stagner's message of "Tue, 9 Sep 2025 22:00:18 -0500")
+References: <20250824191048.1938340-1-ask+git@howdoi.land>
+	<20250905022728.940664-1-ask+git@howdoi.land>
+	<b78639ee-021d-49fc-8b8d-0140ed8fc010@gmail.com>
+	<8d341a51-2135-4c62-9df1-5be351e73275@howdoi.land>
+	<xmqqbjnjt67y.fsf@gitster.g>
+	<641aaa9b-2b23-4faf-a13e-f6205e9ef5a2@howdoi.land>
+Date: Wed, 10 Sep 2025 08:10:56 -0700
+Message-ID: <xmqq7by6tkan.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250910-b4-pks-odb-drop-wrappers-v1-1-6ed660cb1eec@pks.im>
+Content-Type: text/plain
 
-On 25/09/10 03:12PM, Patrick Steinhardt wrote:
-> diff --git a/odb.h b/odb.h
-> index 3dfc66d75a..e8b9dff948 100644
-> --- a/odb.h
-> +++ b/odb.h
-> @@ -475,37 +475,4 @@ static inline int odb_write_object(struct object_database *odb,
->  	return odb_write_object_ext(odb, buf, len, type, oid, NULL, 0);
->  }
->  
-> -/* Compatibility wrappers, to be removed once Git 2.51 has been released. */
-> -#include "repository.h"
-> -
-> -static inline int oid_object_info_extended(struct repository *r,
-> -					   const struct object_id *oid,
-> -					   struct object_info *oi,
-> -					   unsigned flags)
-> -{
-> -	return odb_read_object_info_extended(r->objects, oid, oi, flags);
-> -}
-> -
-> -static inline int oid_object_info(struct repository *r,
-> -				  const struct object_id *oid,
-> -				  unsigned long *sizep)
-> -{
-> -	return odb_read_object_info(r->objects, oid, sizep);
-> -}
-> -
-> -static inline void *repo_read_object_file(struct repository *r,
-> -					  const struct object_id *oid,
-> -					  enum object_type *type,
-> -					  unsigned long *size)
-> -{
-> -	return odb_read_object(r->objects, oid, type, size);
-> -}
-> -
-> -static inline int has_object(struct repository *r,
-> -			     const struct object_id *oid,
-> -			     unsigned flags)
-> -{
-> -	return odb_has_object(r->objects, oid, flags);
-> -}
-> -
->  #endif /* ODB_H */
+Colin Stagner <ask+git@howdoi.land> writes:
 
-Nice to see this cleanup. This patch looks obviously correct to me.
+> On 9/9/25 21:02, Junio C Hamano wrote:
+>> Besides, "if test -n ${subtree_dir-}" without colon would be the
+>> more proper way for those who care about "set -u", wouldn't it?  It
+>> is not that you want to substitute with an empty string that comes
+>> between that "-" and "}" when subtree_dir is unset or set to empty.
+>> You are preparing for the case where the variable is truly not set,
+>> and the variable being set to an empty string is not something you
+>> are worried about.
+> Yes, "test -n ${subtree_dir-}" is definitely the more correct expression.
+>
+> At the very real risk of embarrassing myself in public today... in the
+> particular case of a "test -n," is there actually an appreciable
+> difference? Either way, the output of the substitution is empty if the
+> input is empty or undefined. Here, "test -n ${subtree_dir:-}" is
+> merely less efficient. Right?
+>
+> The difference between "${x:-}" vs "${x-}" really starts to matter if
+> you want to permit the empty string (or not). It also matters if you
+> call a command that has side effects.
+>
+> (And in the context of this patch, neither are necessary.)
 
--Justin
+Correct.  There is no practical difference.
+
+Your explanation for using the "default values" parameter expansion
+in this script, knowing that "set -u" is not in use, being it is out
+of inertia, I would have expected them to be written in a way that
+is suitable when "set -u" is in use, which is without colon.  Doing
+something "different" on a variable that is set but set to an empty
+string is not something you would want to do to deal with "set -u",
+so I found it strange to see the colon there.
+
+There is no practical difference, since the "default value"
+specified is an empty string, so a variable set to an empty string
+will use the empty string between ":-" and "}" instead of its value
+that is another empty string, and you can tell these two empty
+strings apart in the result ;-)
+
