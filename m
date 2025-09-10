@@ -1,55 +1,55 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9991255F5E
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 15:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F5A322DC5
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 15:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757518571; cv=none; b=SEdkCqFG+B4Z4/I7HuBYdgREmYEm78cY34cAX0avQSseL7Tqof94mpTGBpsMlOHjrxcmiuZ+f7iGNR5ulNaYrS/i1yvtwJf9Oap7gFxFccd7EBMRdlB7BuQiq74giJioCSF4QpnGMTAxhxFcE6Q4hCJtXlLUXi0ejOdKoswVvqg=
+	t=1757518573; cv=none; b=XN9Uw6G9AbizWt9d+rgISaeubCq6EhTK9A9zLLbeaFWRIfE19gLvW3chLnDGNPiPVip8eo9oetaQzo9CxDymHNT7otcFrQoqEHKhqA4ZuOkQVeKRGOScCj9o9uZHa/PiuwsUEOX54088v+pnuMSbdcoEQbs26pS9YR3YeY9kNZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757518571; c=relaxed/simple;
-	bh=Fh4LCjfrW6SzpP8ckv6nvXx5MXqrIYKb8BQYtrsvJFY=;
+	s=arc-20240116; t=1757518573; c=relaxed/simple;
+	bh=bstXY4IzG1jOVHrKyFhOdiVbgSEr4RdxfhfmrJtSyBw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pTx0tV8j9y+Bxy2DiO/XtYI5zKCydh96XM6KLnp89DLReTwXlykFkxsMtl5zfadHOpEzxP6r7lq3JVTkI1GA8UJShN4dXOmGSvESmd0uW4Zbg4/hMzYhbiAkxW4n8PfwuEJWcoGZ/DPgW2OhHjbU0R8vZR2uySLXX7Xh1RP63Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T3NYkT/N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jnOvRkGp; arc=none smtp.client-ip=103.168.172.144
+	 In-Reply-To:To:Cc; b=ExDmubya5DgMX1Z2vt3vfdw1C1iFCv907rn433nJ9Ke+HoIDGODtE8NcJ8/fHlTaD4f4fceyrjSl0va2bU7A7RAn2LujoCu+1R5qNrfXWJO+zkXm4pju+QfGV62mcGiaW/efIg+MWtq3wIsFvaFa7dd5+GOorTYCT/MDrAbdTho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JqjAs6Ft; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fYt6GDdA; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T3NYkT/N";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jnOvRkGp"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id CE7F8EC0457;
-	Wed, 10 Sep 2025 11:36:08 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JqjAs6Ft";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fYt6GDdA"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 37BB4EC0454;
+	Wed, 10 Sep 2025 11:36:11 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Wed, 10 Sep 2025 11:36:08 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 10 Sep 2025 11:36:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757518568;
-	 x=1757604968; bh=QAY/BcgDUgPV+9C3o3OFVMs4jKy3Mlq/dJLo6fuE2Z8=; b=
-	T3NYkT/N07YsNTGWaKVZ3sQ25UkaJk3lUiPcWP6IoKsB4TwI3VW39wIBIKGw1fIf
-	jVuRCAT2x1vdiIb4oZdwtUAXLK9OZ+aEvnoLUbEuazrXqnK4UsU94+0UWFUwgKQg
-	HuFJ0wGezqG5jW7249vd3f6XlB3zBzzXAw5PIZ5EgxNXtPMjRg+VZfjFg37roIVF
-	zPrej0AyWBIMviMGuv3fYi7vF3DgftpFImk/Y358EuQXufbHnZh7t292rpP5HCH4
-	CMBtbaUupamUSEWY+BU5o1sbNx08KKEQN/IfCU3Es9x5GgN/PgZwJdQ5hx7YrGuB
-	ihhd6ZbHlZDAymgl2YVIbg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757518571;
+	 x=1757604971; bh=w2rBadNyUJqJYOp8S4BEZMS3x9lQcf645ipB+BG2Els=; b=
+	JqjAs6Ft1SaTorLE7ki0Z3L9G0fYzA8mbu26cBk1hhVqIzoiVwARt/GXGDBLTniq
+	47WeKWBllduLWVgwlPOIboxUxnttKTonc5emmpIIzzgnj57v4+BRNnYHr7d0NIfs
+	W66VSZyiVl8UepcyZatq3OC92uobfT5gQhl8rO4zAvxINiMGG20aIUxYcO6AcggY
+	rF9ftDZbObT4BNzzbDi01m9Dn3uGlcD30iHYUJM8LqODPAHV1hiHrH4ZBDOuQFrY
+	oy0rgUApNIJ1cDyCRGo8Lk3dkt+KPMPMbieT9bR+1xFGWjYC/eDwg4f3A+BEtrUr
+	08XTf4nnjSC0p1WhBxGQbA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757518568; x=
-	1757604968; bh=QAY/BcgDUgPV+9C3o3OFVMs4jKy3Mlq/dJLo6fuE2Z8=; b=j
-	nOvRkGpNglrw52u0Q4MObZ1STul8uu/LGwwga3bhxSsLDl4o7e1noUzwfF3MD6FW
-	GsLiF8wjB5HKNyHioRq41FtNtZoEZ/N96wOOcfFa9hOOFHnp/03jJXzfSyP7iaZJ
-	0mYtJTQLm+tBmdAMHvQJ4jyeUC8VxAsC6pHsv1VDPUkAxrMW1FIWutc1+JD6l+21
-	2AH/RdASbPlGsMh0i6ERwb/HnBNfpiwUboqJChBvl32yHOBdsKSP/E/QFrwTe7OQ
-	4HMB8wVdstlGnDKVA+3B9AIGam6IU8eaLMNt0MF+T/5hM3IomWFBMRf37/9zIfz3
-	1XOyQVXW4AkpoUvQ+hOyQ==
-X-ME-Sender: <xms:6JrBaIGQuxzkI2DWRgr9Z2Y5nKpSHxVqR16UHSkt20ShFTtq5aAX8Q>
-    <xme:6JrBaBf-VxdrG_wausNTeGMSVXY3p0PLl4sGuJ5FTqb_gRpZGOssPftIxh7aO6Z4l
-    uZ4hI0_6qRCc7iNoQ>
-X-ME-Received: <xmr:6JrBaJnuKLU8d0URWQROOEYh-l1b2pszZMTinEyRB9t3XjoXsLEo96fZLOeo5ZPwFQA5PsriT0ATcEHLMQaV6F0GeJlIzin65FpdBeR_I2M>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757518571; x=
+	1757604971; bh=w2rBadNyUJqJYOp8S4BEZMS3x9lQcf645ipB+BG2Els=; b=f
+	Yt6GDdA8T4TeIbCu/jJUeUX6J4D5OgzvXZz44IwGPmYmD14cDxVm1E4eW2z9zmv/
+	JWyBRObFuoykiUssWgos9BgLJlDiDmS0MoQT305VovUU4hFiNsMjVaWxKbZAyeCc
+	Y5UeU26JVvQsK36MXNGrlWDjouTf+oFOtuQTmo/l3UcaKmSU4uVhv9qA5rNohDBn
+	HZmG1dJ/L/SRe1xiqiOVoENEA0eeTYpG6rgLK5IE1XIfkDc55qlE8z3Iu5lKAin7
+	3J0M3SeQss+9ylFsFhd1w3feufUprjllR8w/ZCaP0jeF4Go7A2pMgKX4g9K0ZKmx
+	fSU88/+ESsY4lVSPUNFRQ==
+X-ME-Sender: <xms:6prBaDajDYEonHYU3t7xkpBoRCv4DD63JId3LlRdL9lWPe5o2XzNIQ>
+    <xme:6prBaCiT9L8pYqb7ctV6Z-9tn4Bzw333a0izs7KGYBIgJ1gUR7NqlrYQazpDUkLBS
+    hmel2uhPKD_2iMyug>
+X-ME-Received: <xmr:6prBaNasbVe-L3w9G78uEEhdjGmrHlt4V-cL-zT3oJ3wGj04mxutOfmF9hoSov4dxCXjRarX6dBx0eTZS4je0EQ4rPEXEW7QCcubDYESZnk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeeiiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -58,29 +58,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeeiiecutefuodetgg
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepudehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
-    hopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegtsgesvdeh
-    iegsihhtrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehpihgvrhhrvgdqvghmmhgrnhhuvghlrdhprghtrhihsegvmhgsvggtohhs
-    mhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtth
-    hopegtohhnthgrtghtsehhrggtkhhtihhvihhsrdhmvgdprhgtphhtthhopehmvgesthht
-    rgihlhhorhhrrdgtohhmpdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrih
-    hlrdgtohhm
-X-ME-Proxy: <xmx:6JrBaAqtnTj1XFbZvXZyr_qjghXOBMmY3k0aPlxevmIbe9i391C_dw>
-    <xmx:6JrBaGHNOBGYQiOb0YrcFeMccTd8VWJU9IRSJTeqz5OmHNE427XSuQ>
-    <xmx:6JrBaGSdS2WftOZiX-Pe7RYg3O0jE50kH0CoHZM1gqgNTl7CXBKO6A>
-    <xmx:6JrBaMNOdBTsZEFA1TrAitbVvfHX-U02hBoAA6QhHLuI5gi38hhbWA>
-    <xmx:6JrBaKLAH843j6zOAWe1MjxzvRfx8OtCfhCUbDC_VuZqISMvG3gdSzT_>
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphhivghrrhgvqd
+    gvmhhmrghnuhgvlhdrphgrthhrhiesvghmsggvtghoshhmrdgtohhmpdhrtghpthhtohep
+    shgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtoh
+    epsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgv
+    lhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopegtohhllhhinhdrfhhunh
+    hkudesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+    pdhrtghpthhtoheptggssedvheeisghithdrohhrghdprhgtphhtthhopegtohhnthgrtg
+    htsehhrggtkhhtihhvihhsrdhmvg
+X-ME-Proxy: <xmx:65rBaAN7CVnr2TUDKQMhI9BYoK_2bjlINw18HOU3-UWGKzZDIwv6VA>
+    <xmx:65rBaGY2uYkjUI9rWBqPVGZqy2UO49CD7J_1XernssvcRrNTdx5aOw>
+    <xmx:65rBaIXS7jhUtjN_vflMJGsppIbkasHKflGN-DLr8aJaTHRZ_r9lIQ>
+    <xmx:65rBaNCTGWuzL5FE5-yX5c8PnBkaLN1D4jn-OkCNs4_BcnwfOk9WOg>
+    <xmx:65rBaHtP2v7IfcPWvlHQl-C8mE-7p6MJErRjYsSZ65tePQLTAj8PUtZo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Sep 2025 11:36:06 -0400 (EDT)
+ 10 Sep 2025 11:36:08 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e860b619 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 10 Sep 2025 15:36:05 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id ac98c48b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 10 Sep 2025 15:36:08 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 10 Sep 2025 17:35:49 +0200
-Subject: [PATCH RFC v4 3/9] Makefile: introduce infrastructure to build
- internal Rust library
+Date: Wed, 10 Sep 2025 17:35:50 +0200
+Subject: [PATCH RFC v4 4/9] help: report on whether or not Rust is enabled
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250910-b4-pks-rust-breaking-change-v4-3-4a63fc69278d@pks.im>
+Message-Id: <20250910-b4-pks-rust-breaking-change-v4-4-4a63fc69278d@pks.im>
 References: <20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im>
 In-Reply-To: <20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im>
 To: git@vger.kernel.org
@@ -105,138 +104,40 @@ Cc: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
  Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
 X-Mailer: b4 0.14.2
 
-Introduce infrastructure to build the internal Rust library. This
-mirrors the infrastructure we have added to Meson in the preceding
-commit. Developers can enable the infrastructure by passing the new
-`WITH_RUST` build toggle.
+We're about to introduce support for Rust into the core of Git, where
+some (trivial) subsystems are converted to Rust. These subsystems will
+also retain a C implementation though as Rust is not yet mandatory.
+Consequently, it now becomes possible for a Git version to have bugs
+that are specific to whether or not it is built with Rust support
+overall.
+
+Expose information about whether or not Git was built with Rust via our
+build info. This means that both `git version --build-options`, but also
+`git bugreport` will now expose that bit of information. Hopefully, this
+should make it easier for us to discover any Rust-specific issues.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .gitignore |  2 ++
- Makefile   | 37 +++++++++++++++++++++++++++++++++++++
- shared.mak |  1 +
- 3 files changed, 40 insertions(+)
+ help.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/.gitignore b/.gitignore
-index 1803023427..0833453cf6 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -1,4 +1,6 @@
- /fuzz_corpora
-+/target/
-+/Cargo.lock
- /GIT-BUILD-DIR
- /GIT-BUILD-OPTIONS
- /GIT-CFLAGS
-diff --git a/Makefile b/Makefile
-index 7e52625d75..94950a0ffe 100644
---- a/Makefile
-+++ b/Makefile
-@@ -483,6 +483,14 @@ include shared.mak
- # Define LIBPCREDIR=/foo/bar if your PCRE header and library files are
- # in /foo/bar/include and /foo/bar/lib directories.
- #
-+# == Optional Rust support ==
-+#
-+# Define WITH_RUST if you want to include features and subsystems written in
-+# Rust into Git. For now, Rust is still an optional feature of the build
-+# process. With Git 3.0 though, Rust will always be enabled.
-+#
-+# Building Rust code requires Cargo.
-+#
- # == SHA-1 and SHA-256 defines ==
- #
- # === SHA-1 backend ===
-@@ -683,6 +691,7 @@ OBJECTS =
- OTHER_PROGRAMS =
- PROGRAM_OBJS =
- PROGRAMS =
-+RUST_SOURCES =
- EXCLUDED_PROGRAMS =
- SCRIPT_PERL =
- SCRIPT_PYTHON =
-@@ -918,6 +927,11 @@ TEST_SHELL_PATH = $(SHELL_PATH)
- LIB_FILE = libgit.a
- XDIFF_LIB = xdiff/lib.a
- REFTABLE_LIB = reftable/libreftable.a
-+ifdef DEBUG
-+RUST_LIB = target/debug/libgit.a
-+else
-+RUST_LIB = target/release/libgit.a
-+endif
+diff --git a/help.c b/help.c
+index bb20498cfd..5854dd4a7e 100644
+--- a/help.c
++++ b/help.c
+@@ -791,6 +791,12 @@ void get_version_info(struct strbuf *buf, int show_build_options)
+ 		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
+ 		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
  
- # xdiff and reftable libs may in turn depend on what is in libgit.a
- GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
-@@ -943,6 +957,15 @@ BASIC_LDFLAGS =
- ARFLAGS = rcs
- PTHREAD_CFLAGS =
- 
-+# Rust flags
-+CARGO_ARGS =
-+ifndef V
-+CARGO_ARGS += --quiet
-+endif
-+ifndef DEBUG
-+CARGO_ARGS += --release
-+endif
++#if defined WITH_RUST
++		strbuf_addstr(buf, "rust: enabled\n");
++#else
++		strbuf_addstr(buf, "rust: disabled\n");
++#endif
 +
- # For the 'sparse' target
- SPARSE_FLAGS ?= -std=gnu99 -D__STDC_NO_VLA__
- SP_EXTRA_FLAGS =
-@@ -1475,6 +1498,8 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
- 
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
- 
-+RUST_SOURCES += src/lib.rs
-+
- GIT-VERSION-FILE: FORCE
- 	@OLD=$$(cat $@ 2>/dev/null || :) && \
- 	$(call version_gen,"$(shell pwd)",GIT-VERSION-FILE.in,$@) && \
-@@ -1504,6 +1529,11 @@ endif
- ALL_CFLAGS = $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS) $(CFLAGS_APPEND)
- ALL_LDFLAGS = $(LDFLAGS) $(LDFLAGS_APPEND)
- 
-+ifdef WITH_RUST
-+BASIC_CFLAGS += -DWITH_RUST
-+GITLIBS += $(RUST_LIB)
-+endif
-+
- ifdef SANITIZE
- SANITIZERS := $(foreach flag,$(subst $(comma),$(space),$(SANITIZE)),$(flag))
- BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
-@@ -2918,6 +2948,12 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
- $(LIB_FILE): $(LIB_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
- 
-+$(RUST_LIB): Cargo.toml $(RUST_SOURCES)
-+	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
-+
-+.PHONY: rust
-+rust: $(RUST_LIB)
-+
- $(XDIFF_LIB): $(XDIFF_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
- 
-@@ -3768,6 +3804,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) $(FUZZ_PROGRAMS)
- 	$(RM) $(SP_OBJ)
- 	$(RM) $(HCC)
-+	$(RM) -r target/
- 	$(RM) version-def.h
- 	$(RM) -r $(dep_dirs) $(compdb_dir) compile_commands.json
- 	$(RM) $(test_bindir_programs)
-diff --git a/shared.mak b/shared.mak
-index 5c7bc94785..0e7492076e 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -56,6 +56,7 @@ ifndef V
- 	QUIET_MKDIR_P_PARENT  = @echo '   ' MKDIR -p $(@D);
- 
- ## Used in "Makefile"
-+	QUIET_CARGO    = @echo '   ' CARGO $@;
- 	QUIET_CC       = @echo '   ' CC $@;
- 	QUIET_AR       = @echo '   ' AR $@;
- 	QUIET_LINK     = @echo '   ' LINK $@;
+ 		if (fsmonitor_ipc__is_supported())
+ 			strbuf_addstr(buf, "feature: fsmonitor--daemon\n");
+ #if defined LIBCURL_VERSION
 
 -- 
 2.51.0.450.g87641ccf93.dirty
