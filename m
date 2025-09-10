@@ -1,142 +1,110 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10D11A01BF
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 21:04:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A391822422A
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 21:13:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757538258; cv=none; b=eyZOs4wdyZlUYWDwB/YLle3KBDoMrRet+KXzgb+LRIuHsmI/v5mChQpFoCpjJdiXXm+GuPJgU5QJhI+f2lSNQXcJ/hH2e6dvrNbkGUCYS/9/OVC7Nw2kKpDy9bwpWezXwECYUSoLsuUmXIiZIXOYNgjlLPvxtHVu/TM8lyX/pTA=
+	t=1757538791; cv=none; b=GwQzTVb0MF6CJtT1mnlviV7h625jYOFbbAzfuQNh+tuARb8Ex2Sr5JaYRtI74Q9SZPCxQEMfvSNXPiRFXYFHI/heVIRVa5u9hlKzN8GwhwOy04GPMdlCYJN+442Y+An6Jl5chparYkAd5gIUTun0fnaaZgsn5aUYvzUe1EaCOh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757538258; c=relaxed/simple;
-	bh=ssRz9aIuDO3gyvQvbKLpXkedh1qXcHsmSy8PcOqZO8U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nR7OgYqX5qGcyYIzLCL6GzLLP2Y5apsIcAZklj0jPu7HVWaZKvygekdmVMBz7qyTrA+LKf4y0/Yd6uViByDmwiRu0zdXvQ542gtWTPxUuwmEpLe+pXQ+IgbPENvm479sMgLzzRx9O6G0B5zi/KmkBtaj63Zb1v+8THBlvVa1OUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iryZK+FD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YetJv5K0; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757538791; c=relaxed/simple;
+	bh=+UeO4f4V+qS+jyGHxCr/ILzgjDfadpWwFCqHK/hKA3c=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=m2yTuQmLG5gaBOwVM6uduGBa1GkmdFflEyVN5z4RM5vYf1J29LkVEBg3g8wVvGwOVZvQx+MxPebJ8F5T8Ce60BaO/8JLQJJA8/rP9kpEzPZIsoNqOSg6c2bkUcbZpkM/PRhpjK38IT8ATxBhU9CZ9hsGZJu7peWABDfNzylgMXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=FcZfF1mu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LM2UqGDJ; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iryZK+FD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YetJv5K0"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 09FC41400303;
-	Wed, 10 Sep 2025 17:04:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 10 Sep 2025 17:04:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757538254; x=1757624654; bh=7YOF7cATrP
-	JgA8qsMlkE/tNAM7IE1m2ZUbRHysSBpPs=; b=iryZK+FDStAPUSThurL+K14xgA
-	HCeOkVqqp94tkHHTSuErTZu96QMaW2KENOm+IsYTX9+1iAzEsKiAGaWc2QYF0kL4
-	1Q+2J/DT4htRYzkOyILEefETfkWhEtx9nS8KrZBe/RQgTmSEFY2oCoAWTB5Bi5m2
-	d6JLGNiuIp63YDAbou5JOpfnCiXR3jrqy3OUv8id+EQauBU2hUl8yw0eaA1QGKzG
-	Uhlp1FG+3REjGviuBRM7soHnvb6e/78xFQ/7EsreoR7lKXiZzQ4JEUfoPYBKmahK
-	poyxRIXYiXVKiYtOZzbqvPFMufjYRkPJo+FAvKDzm32HbB+wE+rQDx42oYvg==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="FcZfF1mu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LM2UqGDJ"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id B16F71D0018D;
+	Wed, 10 Sep 2025 17:13:08 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 10 Sep 2025 17:13:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757538788;
+	 x=1757625188; bh=NzScJUD7T8oTHxdYdbB/crQ6NtwGnKhoxsglhnmSWRo=; b=
+	FcZfF1mu5/xsisuLME+TyrbkuuLM6ZMv6XGD8j7/K8Wm37321BsqoAwpfcGpJbka
+	NnBSVUSxeM84ECflih/ZT7Huve5iVYG9c03kS8+8VrvE2sBzwad597LzWLimQzXC
+	8N2Cqvatg1ESWmkfPt+EBPadQZorq7pzam73TSYwecDHR5UCvPg8TfBdS3RUqb2P
+	Dy53JN476rjYmrRG3kgXvJe/YoWzzBzR9kSbTvyD2bfFezb4fbEm0QC8ZGVzXyYW
+	0pQ5hKksl2uEPARy0tvXaVni1aIl5axI3DNWzckp/IUqk739pVT6k91wjS8wtF8b
+	XHLmX5zalYeqEO3zfLVS6Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757538254; x=1757624654; bh=7YOF7cATrPJgA8qsMlkE/tNAM7IE1m2ZUbR
-	HysSBpPs=; b=YetJv5K06XKG5K2Cg/v05MmJTOqLzm6vaqXvdbFTmYEAvmX4ncv
-	Gu5GAL0HIrPmcNpxkA2UYyhcTVcpdyxmNXJb3asCzDtIoAa2QxyVzjDBZlhsPUyb
-	1jdZyzXO1QJbuj7QyX/q+sb8fT4oKGhRiCi8yQU2MBEnzY11bbbY18mgKeve1uBe
-	Sl36DAZPml22JANHy1obQGZGLkwmt+hmBpXECkG5HJIiYR1CZcF2PcUN+DvDxljs
-	fYyjqo9H1HMn17zj43er3c/pj9/YHuSnSNcs74gmmU+8ZP395kq6N6X6GdjKmyfT
-	bFAYnwfiEyeO4T2S0uZtRTykmXb6z526Ydw==
-X-ME-Sender: <xms:zefBaE0R8KsmfHN7IuHYO1TXROMz-iz2EYtWRqEbPK9X8LaBsVRxUQ>
-    <xme:zefBaPv7of4S814je2pa0yoVgtoswVDBBsTjKDztvGjaPdIsOo9N5L9KH2q9Y4vy_
-    Za_NHx8ZvcBmBOQ7w>
-X-ME-Received: <xmr:zefBaICbUT8dZR2B9j4Izw-MQdoGBRNfBy6Mrm7PrF5RF3R-8npr24A5pu-m_jjEwC0oT7Fw6AR5y9A9No9lf0LR6rRHInD3CJiKvUs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeefvdcutefuodetggdotefrod
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1757538788; x=1757625188; bh=N
+	zScJUD7T8oTHxdYdbB/crQ6NtwGnKhoxsglhnmSWRo=; b=LM2UqGDJkbQ8uvhuE
+	lBTy4O2rTfEIhlyc1hPqZ3fYpjgWzMTRIFqUKt/wM89k/HNzh81G1654hx2ecunU
+	zIa2oesPH9YCtL5jrxkZ2LSAH4OxR5Sn6maT7uJdabrTQoR6ug1G2cqCmBQXtM6o
+	ejKNuM1S/lzr+7///ha2aLxUpX1j9it2bJJRNL0jM5zjrA6jIVNpmuqOAhae7eR+
+	qybv2AEFTje638txGdryciT3ffq6M2AxvEi1vv7bBzzCLDMfn6whPmoIFsWvgQFU
+	vHFmFKaWbDxyUyWgTldat5HsayptVDKrxYXVBmEiuyK3iWFu10I5mZL9VQaVDuH2
+	GkhJQ==
+X-ME-Sender: <xms:5OnBaO2VUSnply-5SFt6PjSTVCv8yJE4Iz22ErdfwkQDRge-EeVfKmg>
+    <xme:5OnBaBHg4ehZOksCVNM-qdOAnQxiBZgsV3obubAbBTKW1OeiDLUXuXBcW7CHHLgxr
+    jcnVoVvSyeD6OKWzw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeefgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghonhhtrggttheshhgrtghk
-    thhivhhishdrmhgvpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthh
-    hprghsthgvrdhnvghtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtoheptggssedvheeisghithdrohhrghdprhgtphhtthhopegtohhllh
-    hinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthhifrghrthii
-    sehgvghnthhoohdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:zefBaCZAH7yuCPFbYmgngF8JVoRVueZ2LPDmxlPrwiBSn_AEYOpn2g>
-    <xmx:zefBaK_Tq_e8tlY2QkYJP0D9AKNJkeembmpWxJi6ImjiGTaOAyxwiQ>
-    <xmx:zefBaGjj_c8UGagpbDl4ac3QFzIVK58kn0rsBa_ScwNbMMQCbikwLQ>
-    <xmx:zefBaFiBz1wY_8w1-jzuXZxMyJQMTYtxx5OQblLUazh5cH1CZ9xKkg>
-    <xmx:zufBaBnEs8xfRztx_PLyg7cFpcKmnFwsuAekjl4YDdEUDOdws87Rru1x>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Sep 2025 17:04:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "Haelwenn (lanodan) Monnier"
- <contact@hacktivis.me>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
-  Christian Brabandt <cb@256bit.org>,  Collin Funk
- <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
- Newren <newren@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
- <pierre-emmanuel.patry@embecosm.com>,  Sam James <sam@gentoo.org>,  Taylor
- Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC v4 5/9] varint: use explicit width for integers
-In-Reply-To: <20250910-b4-pks-rust-breaking-change-v4-5-4a63fc69278d@pks.im>
-	(Patrick Steinhardt's message of "Wed, 10 Sep 2025 17:35:51 +0200")
-References: <20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im>
-	<20250910-b4-pks-rust-breaking-change-v4-5-4a63fc69278d@pks.im>
-Date: Wed, 10 Sep 2025 14:04:11 -0700
-Message-ID: <xmqqv7lqqat0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthejredtre
+    dttdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
+    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
+    frrghtthgvrhhnpedvieegtdfgteeghfffteetleduveehteefkeffheehfeeihedukeev
+    leevfffhjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
+    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhg
+X-ME-Proxy: <xmx:5OnBaG5QtJuvGSmH-BIrlyQsgjBRtv7u8La65JVvjM7ZWUQflNShPg>
+    <xmx:5OnBaI2QN79LhCUPkbD6K1weQKx3GeQ_1l6EDqrIaoXLrbKBghHjeQ>
+    <xmx:5OnBaHYlG3yKFtfOnOw7yI2BzFDD2f2tIoy_crvHzuudOc-BSZ1p-A>
+    <xmx:5OnBaACqk_MSBRner9_5cKUYo1hqEpWyzRtJMvyB5EOkBvW7ZrPidQ>
+    <xmx:5OnBaEYVmCP3K1LttduUHF0QA6J-rXPRDtENALKgECPbHKa1k7Aojc4_>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 4143D1EA006B; Wed, 10 Sep 2025 17:13:08 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: AbxT4xouOep7
+Date: Wed, 10 Sep 2025 23:12:24 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <ef86dd0f-f581-49d8-97e4-d20aed50d671@app.fastmail.com>
+In-Reply-To: <xmqqwm66qauy.fsf@gitster.g>
+References: <xmqqwm66qauy.fsf@gitster.g>
+Subject: Re: What's cooking in git.git (Sep 2025, #04; Wed, 10)
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> The varint subsystem currently uses implcit widths for integers. On the
-> one hand we use `uintmax_t` for the actual value. On the other hand, we
-> use `int` for the length of the encoded varint.
+On Wed, Sep 10, 2025, at 23:03, Junio C Hamano wrote:
+> * kh/you-still-use-whatchanged-fix (2025-09-09) 7 commits
+>  - BreakingChanges: remove claim about whatchanged reports
+>  - whatchanged: remove not-even-shorter clause
+>  - whatchanged: tell users the git-log(1) equivalent
+>  - you-still-use-that??: help the user help themselves
+>  - t0014: test shadowing of aliases for a sample of builtins
+>  - git: allow alias-shadowing deprecated builtins
+>  - git: add `deprecated` category to --list-cmds
 >
-> Both of these have known maximum vaules, as we only support at most 16
-> bytes when encoding varints. Thus, we know that we won't ever exceed
-> `uint64_t` for the actual value and `uint8_t` for the prefix length.
+>  Update "do you still use it?" message given by a command that is
+>  deeply deprecated and allow us to suggest alternatives.
 >
-> Refactor the code to use explicit widths. Besides making the logic
-> platform-independent, it also makes our life a bit easier in the next
-> commit, where we reimplement "varint.c" in Rust.
->
-> Suggested-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  dir.c        | 18 ++++++++++--------
->  read-cache.c |  6 ++++--
->  varint.c     |  6 +++---
->  varint.h     |  4 ++--
->  4 files changed, 19 insertions(+), 15 deletions(-)
-...
-> -int encode_varint(uintmax_t, unsigned char *);
-> -uintmax_t decode_varint(const unsigned char **);
-> +uint8_t encode_varint(uint64_t, unsigned char *);
-> +uint64_t decode_varint(const unsigned char **);
+>  Will merge to 'next'?
+>  source: <cover.1757446619.git.code@khaugsbakk.name>
 
-OK.  I do not think there is a reason why we MUST use u8, even
-though in practice 255 bytes is plenty for any "integer" that varint
-would want to express, so I'll let it go.
+I need to follow up on the leak that Peff found.
 
-I have no objection to uint64_t side of the equation.  We would not
-be using 128-bit integer to express sizes of object representation
-in the packfiles anyway.
+Thanks
 
-When this series meets Ezekiel's series, I would imagine that there
-will be "which one between uint64_t and u64 should we use"
-discussion.  I'd prefer uint64_t as that is what is used in the part
-of the code that are not yet told about the other parts moving to
-Rust.  Consistency throughout the codebase is good.
+-- 
+Kristoffer Haugsbakk
