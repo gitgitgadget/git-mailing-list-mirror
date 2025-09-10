@@ -1,126 +1,181 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77494322A
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 01:32:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972032033A
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 01:56:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757467950; cv=none; b=N59QxsDxyPsTMFis8Pxrfy8qRpgMmoUkQPxOeAm2P02/3lxkFYHq6Ut6LbpZyKMJYz6675Uda5OVHSHc9JpMGJw1UzrstxgEmBZvesFPtRGNPY94VR2JdJ38QgaA44ABGOFZ3a7GYMgvztmsGE9P3/VvkkJ4+/QtMBmc+/DxlRg=
+	t=1757469382; cv=none; b=vBvUztulIyjVQhwgQ8cJX8q7UyEh3dOO/x9nDFgyQeTZSPn3hlfdqh0KAC22L7fCHob/L+FwaKqQMCUwa94bQa1YR0pBgEosbuC++rrDcmLbJ6LOnEhTWeFg0wMp0JBam9bgzM7BTNB8xdJTtLCX3x829g8kRGiP3SkaeufmDvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757467950; c=relaxed/simple;
-	bh=KzDEMTJ2TVx0rR1j9ZLehHf/oQ5aQuyDknD/49tiygI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iMwokIzYcBndEDSTTudaet+p8LP6Q9uoq8YKqRceJxHyT3M2Uim8/BiUwWc6n8NZhbd2R7Da6t1UjwHPTe9j90mH0VOrX1JAf0A2HMdBFEL1JCHS8CdqL4TxQM2Vo7q/V8AeGwqdBjSKjbFXyt2EtLBhzdto8XmUO1UhcoQemiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iompSpMo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gqlf2EMQ; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757469382; c=relaxed/simple;
+	bh=O2Utw86lsg3dEDdhXQeu4oiBY7pXGy9au8uggyJ7yvI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=PfCIuc+OCOur6bGWBLqYJk5eUomM5gZV+0cIaMVmuGLB1Z793Aecnhr4WdtFTK8knCJJ4VtmJYOeOR7uMJmAD+xH2aKwigN0qi3mjZ6AfQWn1ve4IRAgG5ncXZd+nAvIesIJuAExW4L0YgMbe2uiPFiH5bJ90P+VPzXGZAtrtiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=JUUxD2SY; arc=none smtp.client-ip=185.226.149.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iompSpMo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gqlf2EMQ"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id E534A1D00213;
-	Tue,  9 Sep 2025 21:32:26 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 09 Sep 2025 21:32:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1757467946;
-	 x=1757554346; bh=1RsxZdrE/+Xvyl3vhitqxuB4lsi9OjW433xTrSO+66M=; b=
-	iompSpMoJgkxpaEgHstQ39OYrZ8JXnYBauuyLqdmgds6088Ybj6hmJvKBN6PwIVB
-	qfd1y1PUqBwtuKrnXHM316YKXHKmTp3m8OgWkb+po0TaoumzxGt9BdufWjfFF9/F
-	kJvsc5eXqihNqwxt55gZGdv0uF7Rjk/vcKLta7gtPw7ud+BshCWytZ06ZcwiG7lG
-	Q42DIpL3HHuCznuF2Q4V+R3cj3fwGKbUNs9UQLaOHlFYhQNZan6nsW05+6tntm+m
-	0vqx9GIOg+b8PJWhnnGvyIKMQFMFgGKsm7P1oUUeCskz5qISp0r7tQk+qjJDj2GP
-	8L+vDHwSiamxbEaZKjOKxw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757467946; x=
-	1757554346; bh=1RsxZdrE/+Xvyl3vhitqxuB4lsi9OjW433xTrSO+66M=; b=G
-	qlf2EMQmFpotAKqVjsdW8TTgzQz3FMVLP4ytzYeUE66NoQAslzkiLW+vrx8mVJXD
-	xdLAZXRrMP+hovsuj7Kih8fOVx3e/RBIH7cYuOvKlrwpaSSiRLNCY9Y9+qFECkB7
-	WXNuetM6LuM5WyMM0f0Ja5XlDE7Wij2HSmF0BlWkaCxm4djtzjYN7nmsaHMXXmVv
-	1wDzF1ZI2wVGtQB7AxUB5krzFxLyL6lEx8Xl39sNNUyCRdL6NlPRBI/SYmiu6hd5
-	fIOkPBrTc84/1bbw1uU61+AYRQalynJ26F1WeFRkeVnrmseZJMgw5gm+rHubUjXE
-	nfkqJjYGnpQjbMvKyGP9w==
-X-ME-Sender: <xms:KtXAaPGSql2QiEf4AJe-bPz1qzhbyNpthSaumzW8XQic39Q_Pl5JRA>
-    <xme:KtXAaG4kuwP3QIVoazO9X87EugIzWec_ZO0b66OdNUaSy9gzWdXqsQsnIApNNMKVI
-    BIySMHUJp3N8Shpyw>
-X-ME-Received: <xmr:KtXAaNtk8Yuz1B5Bfd538hCL8Rmfl6GZPaWjEtMrvuT_iizFd_8JcXvFu1-MJT4M7I4t6r8zHJ83Pf-JSObJu2UbJWOiyMpPT0nfv0U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudeljecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:KtXAaP7oiQecsdNxZ6qEpp2GTqiTPMBYTCErQ6Ld_Tg2EG2TCxYW1w>
-    <xmx:KtXAaAW2ynmwx4rfRT1AFTGn-7-igo-RldmOVP6LCB5rtabUUe0PYA>
-    <xmx:KtXAaJ8RX6UHI1-QrWAum8ZBJN12IfpV5jvfiYF9PuCr50ASVJAudg>
-    <xmx:KtXAaElBEA8vam_uzVWuaP8-fsKWdSWQzIhr1YZbmBfjkZfVbc7UHw>
-    <xmx:KtXAaGUSYpDeRXXayJZnZzn5Iqn-K08qsOV9VOjVD5H47NMyz2inZibQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 21:32:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: shejialuo <shejialuo@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/4] string-list: allow passing NULL for `get_entry_index`
-In-Reply-To: <4D8F4C73-5447-4588-AA8A-7DC0646892B6@gmail.com> (Ben Knoble's
-	message of "Tue, 9 Sep 2025 20:09:52 -0400")
-References: <xmqq5xdsyjoz.fsf@gitster.g>
-	<4D8F4C73-5447-4588-AA8A-7DC0646892B6@gmail.com>
-Date: Tue, 09 Sep 2025 18:32:24 -0700
-Message-ID: <xmqqfrcvt7mf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="JUUxD2SY"
+Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
+	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1uwA4D-00HGQ1-1d; Wed, 10 Sep 2025 03:56:13 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector1; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
+	References:Cc:To:Subject:From:MIME-Version:Date:Message-ID;
+	bh=t5XhHM9tO3K+cpuwHA/PS5RHBYZ5PrPmLHcIJg+Wzdc=; b=JUUxD2SYcQn7GtQpVdh6owutIL
+	HEGxDHOGGtzT/9/k6syNwbGKvEhGbwnMpkWaFmcuOcgzCZ3Qr8Pop9YkiKA3INSXYOkVc2LCkqSek
+	QMLaoo625ig/F9eputWKISsbdLhtfJqYc7+bwUe/zciVSzAfj5ZyKm3irrYiyIhpCqqTH9NG4TJZL
+	ghYuQpXr8XNMtQTH+/ZQZRXpo8+tD7EBuFQRCxZjd5ZCXRzI/en9/GmfolIKlSSGRuuXXOFBdUOJ7
+	uC4dlZs2x6kCTDiSzvh9JbcsTtWP7dDZbAkhDG6Tqe9xyuOGUgRxo8ZZ1Pb9lUNNvtC1Ito020enV
+	kEoK1ddw==;
+Received: from [10.9.9.72] (helo=submission01.runbox)
+	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1uwA4C-0002mK-3S; Wed, 10 Sep 2025 03:56:12 +0200
+Received: by submission01.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1uwA4A-00FQ6c-Bj; Wed, 10 Sep 2025 03:56:10 +0200
+Message-ID: <8d341a51-2135-4c62-9df1-5be351e73275@howdoi.land>
+Date: Tue, 9 Sep 2025 20:56:07 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla Thunderbird
+From: Colin Stagner <ask+git@howdoi.land>
+Subject: Re: [PATCH v2] contrib/subtree: fix split with squashed subtrees
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc: Zach FettersMoore <zach.fetters@apollographql.com>,
+ Christian Couder <chriscool@tuxfamily.org>,
+ Patrik Weiskircher <patrik@pspdfkit.com>
+References: <20250824191048.1938340-1-ask+git@howdoi.land>
+ <20250905022728.940664-1-ask+git@howdoi.land>
+ <b78639ee-021d-49fc-8b8d-0140ed8fc010@gmail.com>
+Content-Language: en-US
+In-Reply-To: <b78639ee-021d-49fc-8b8d-0140ed8fc010@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Ben Knoble <ben.knoble@gmail.com> writes:
+Phillip,
 
->> Le 8 sept. 2025 à 12:48, Junio C Hamano <gitster@pobox.com> a écrit :
->> 
->> ﻿shejialuo <shejialuo@gmail.com> writes:
->> 
->>> Callers of `get_entry_index()` are required to pass a non-NULL
->>> `exact_match` parameter to receive information about whether an exact
->>> match is found. However, in some cases, callers only need the index
->>> position.
->>> 
->>> Let's allow callers to pass NULL for the `exact_match` parameter
->>> when they don't need this information, reducing unnecessary variable
->>> declarations in calling code.
->>> 
->>> Signed-off-by: shejialuo <shejialuo@gmail.com>
->>> ---
->>> string-list.c | 6 ++++--
->>> 1 file changed, 4 insertions(+), 2 deletions(-)
->> 
->> I do not quite see the point of adding these conditional assignments
->> to clutter the control flow.  What benefit do these callers gain by
->> not having to have a throw-away int variable on the stack and
->> passing its address to the call chain?
->
-> Wouldn’t the point be that (at the cost of slightly more interesting library code) callers don’t need to introduce extra ceremony for results they don’t use? In other words, take the boilerplate and push it down rather than up?
+Hello again! I have adopted your recommendations everywhere except for 
+`git checkout @{-1}`. Details below.
 
-Yeah, but the point is in what situation does a caller *not* need to
-be able to tell between "we found an existing one and this is its
-index" vs "there is no such thing, but here is where it *would* fit
-if it were placed in the array"?  I do not think of any, so I
-doubted if it makes much sense to complicate the interface to make
-it optional.
+On 9/8/25 10:21, Phillip Wood wrote:
+> On 05/09/2025 03:27, Colin Stagner wrote:
+
+>> +    while read -r trailer val
+>> +    do
+>> +        case "$trailer" in
+>> +        (git-subtree-dir:)
+>> +            subtree_dir="${val%/}" ;;
+>> +        (git-subtree-mainline:)
+>> +            have_mainline=y ;;
+>> +        esac
+>> +    done
+> 
+> We do not use the optional '(' in case statements
+
+Will fix in v3.
+
+> 
+>> -    if test -n "$(git log -1 --grep="git-subtree-dir:" $rev)"
+>> +    if test -n "${subtree_dir:-}" &&
+>> +        test -z "${have_mainline:-}" &&
+>> +        test "${subtree_dir}" != "$arg_prefix"
+> 
+> What's the idea behind using "${var:-}" rather than "{var}"?
+
+I write a lot of shell scripts that run "set -u" (aka "set -o nounset"), 
+so I do this a lot when testing for empty vars. In this case, it's not 
+actually necessary since `have_mainline` is explicitly defined above. 
+And we don't run `set -u` anyway.
+
+Will remove from v3.
+
+
+>> +test_create_subtree_add () {
+>> +    (
+>> +        cd "$1" &&
+>> +        orphan="$2" &&
+>> +        prefix="$3" &&
+>> +        filename="$4" &&
+>> +        shift 4 &&
+>> +        last="$(git branch --show-current)" &&
+>> +        git checkout --orphan "$orphan" &&
+>> +        git rm -rf . &&
+> 
+> If you use "git switch --orphan" that clears the worktree for you
+
+Very useful. I'll start using it in v3.
+
+
+>> +        test_commit "$filename" &&
+>> +        git checkout "$last" &&
+> 
+> I think this could be "git checkout @{-1}" and then we'd avoid having to 
+> run "git branch" above
+
+I experimented with this, but I couldn't get it to work on git 2.44. 
+Although the reflog shows the refs I expect, using
+
+     git switch '@{-1}'
+
+dies with
+
+     fatal: invalid reference: @{-1}
+
+checkout doesn't work either. Perhaps there is something about --orphan 
+that is messing up the history.
+
+I could make `test_create_subtree_add` take a mainline branch name, 
+but... unless there's something unsound about v2, I think we should just 
+keep v2. `git branch --show-current` looks like well-defined porcelain.
+
+Any other ideas?
+
+
+>> +# The test covers:
+>> +# - An initial `subtree add`; and
+>> +# - A follow-up `subtree merge`
+>> +# both with and without `--squashed`.
+>> +for is_squashed in '' 'y';
+> 
+> no need for ';' at the end of the line
+
+Fixed for v3.
+
+>> +        subtree_test_create_repo "$test_count" &&
+>> +        (
+>> +            cd "$test_count" &&
+>> +            mkdir subA &&
+>> +            test_commit subA/file1 &&
+>> +            git branch -m main &&
+> 
+> For tests that depend on the default branch name you can add
+> 
+>      GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>      export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> 
+> to the start of the file before it sources test-lib.sh.
+
+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main looks very common, so I'll go 
+with that for v3.
+
+
+>> +            test_create_subtree_add \
+>> +                . mksubtree subA/subB file2 ${is_squashed:+--squash} &&
+>> +            test -e subA/file1.t &&
+> 
+> We have test_path_is_file() for this which prints a useful diagnostic 
+> message
+
+Fixed all occurrences in v3.
+
+
+Colin
 
