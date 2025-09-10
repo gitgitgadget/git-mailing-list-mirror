@@ -1,37 +1,42 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF72255F53
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 15:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F1632BF38
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 15:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757518687; cv=none; b=EOcyS8iAW2u3Ik7ab8ObVT/R0LrwPsrCjCYozN6cfTlfqUm0C2ebnbTsUPnJdp4iMM5JK2YRCZGH++OYF3GPzmmIyOB7nQhfm4u6jyBGnNGOUmH7j2cHfFERpSeC8aSaBvDoZYReH+ajtwD8CuFLRmHZVMd8LpD+GQCQgj0rJE8=
+	t=1757519343; cv=none; b=NkRsrieSXzgOUCDbUQ1K0F68DoIXc+rTFAWtMJuhQHG0gBfsYkD2issrS1B6qD64PjJOt9ykVz5eY1nsTk7ri+4m/hLP+ttq0z9tjMI8MQaprZfv0D4P4OR0jo7fSVRFdYAv9x7O/eNxAOC8rbQFe121zHpctpJTD+0sa9HurW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757518687; c=relaxed/simple;
-	bh=7R+DTLbz4gDLosuO/ZC/+EaZvJ88gpM+dvfbSswz7MM=;
+	s=arc-20240116; t=1757519343; c=relaxed/simple;
+	bh=0Z3MkPovAMJ0+A02DKaZeZZn8qYzU5zMUlDxHkX06Z0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mTlHeFQ+Ckz+DA2JANyNbwBVuYRbKW0eruJvbsJXXB7Yl4aQ3zPd3H24XzSFXzXuzPZtHtXec/hxQk1pd7j2yf/l+o6x+T3750kPk8D/lKrPiKgxL3s8g8OcKvSc8de2z96Llz6xBnv9ycpJT3lPTnw4YuJ6MXyHuuaf6KAjqw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dQ7qtV8n; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=czP/lFJw37azx3tctK9nen60faOyhMqYh1BRgUsLrMXXPO9Dd7Mt7pwIo2HQHJIam8sK4qAI5QHqTCnMS3JkcY0NgWz3H2I6kg/IiLqvJmJoD8Wbbx+84TkPH2YoE2R5P+UW/laMUfVplPNigu1PkHyyxxurW7f/SA50WjnfrAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Nw3CEycX; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dQ7qtV8n"
-Received: (qmail 41590 invoked by uid 109); 10 Sep 2025 15:38:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=7R+DTLbz4gDLosuO/ZC/+EaZvJ88gpM+dvfbSswz7MM=; b=dQ7qtV8nIi5kMJma8IFzTIkxRlp5zMPzlYhqivOztT6iFiRozky9ePrYuemz8KQ5hPpDfi0YdtKOUtpzpva3k18+e+VpK7TPl9BQ2Io80p8xo+ayAJht6oVQ3gCDHzhIk48u6J5mFOpt/fFQBmZy7SLeGM6vDqTaQJ/pi43A1tCfWjS82MUCgjQMzbHzYg688tJh5zMQiKt/bHDdXaA7UU2CRKgNvOz9KYCxKOzmrMz1wUd0D74r/GblsY88vmi/cYWlhpcaJVHehpNEy6/YdbHN3Sv6L8mLAp0YhCtKZPmVDs9d0ksW03cuR+DNuQU2sVEOoKrgkRaxRISpMyTO+Q==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Nw3CEycX"
+Received: (qmail 41711 invoked by uid 109); 10 Sep 2025 15:49:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0Z3MkPovAMJ0+A02DKaZeZZn8qYzU5zMUlDxHkX06Z0=; b=Nw3CEycX4j+IhDZDwOvedfDz2TDUHsqR0rgzKYJk+9jaqcbarFjocPQUysNDjfCQRdfNNkLqHSVE3tvhOZ+Kn2/4Db81K+GjgM569YQ5uwvsrn3PI8q/zrOUjb7zUmRLImHliZ+8QZRt4Cm3A/cKVTuu/r1aHBFWpfiTyG2CId6vcRlFo3Ddqmr+/E1cuYosJUjaFIsvCb/Nduw1wIzkpXAJNfI9J3/hwO5hvRkBTUH2MMhl6RbgslZroXFcJ0ir+76IyXJXgxFQkjXJNNq9lam48/r8CkhImAWMnU6w/KUyDpFCvIi5WMMjkk9hLVbpyLpghs4O8tPAz0dvNyfF2w==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Sep 2025 15:38:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Sep 2025 15:49:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 67679 invoked by uid 111); 10 Sep 2025 15:37:59 -0000
+Received: (qmail 67858 invoked by uid 111); 10 Sep 2025 15:48:59 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Sep 2025 11:37:59 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Sep 2025 11:48:59 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 10 Sep 2025 11:37:59 -0400
+Date: Wed, 10 Sep 2025 11:48:59 -0400
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] odb: drop deprecated wrapper functions
-Message-ID: <20250910153759.GA562601@coredump.intra.peff.net>
-References: <20250910-b4-pks-odb-drop-wrappers-v1-1-6ed660cb1eec@pks.im>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 2/7] git: allow alias-shadowing deprecated builtins
+Message-ID: <20250910154859.GB562601@coredump.intra.peff.net>
+References: <cover.1757345711.git.code@khaugsbakk.name>
+ <cover.1757446619.git.code@khaugsbakk.name>
+ <672253e0e7167c40290d1fef6d5076adfbe25d80.1757446619.git.code@khaugsbakk.name>
+ <20250910051347.GA556174@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,47 +45,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250910-b4-pks-odb-drop-wrappers-v1-1-6ed660cb1eec@pks.im>
+In-Reply-To: <20250910051347.GA556174@coredump.intra.peff.net>
 
-On Wed, Sep 10, 2025 at 03:12:17PM +0200, Patrick Steinhardt wrote:
+On Wed, Sep 10, 2025 at 01:13:47AM -0400, Jeff King wrote:
 
-> diff --git a/odb.h b/odb.h
-> index 3dfc66d75a..e8b9dff948 100644
-> --- a/odb.h
-> +++ b/odb.h
-> @@ -475,37 +475,4 @@ static inline int odb_write_object(struct object_database *odb,
->  	return odb_write_object_ext(odb, buf, len, type, oid, NULL, 0);
->  }
->  
-> -/* Compatibility wrappers, to be removed once Git 2.51 has been released. */
-> -#include "repository.h"
+> On Tue, Sep 09, 2025 at 09:45:52PM +0200, kristofferhaugsbakk@fastmail.com wrote:
+> 
+> > +		if (is_deprecated_command(args->v[0]) &&
+> > +		    alias_lookup(args->v[0])) {
+> > +			if (!handle_alias(args))
+> > +				break;
+> > +			done_alias = 1;
+> > +			continue;
+> > +		}
+> 
+> I think this is failing the SANITIZE=leak jobs, because alias_lookup()
+> returns an allocated string with the alias. You need to capture and free
+> it, or introduce an alias_exists() wrapper to do so.
+> 
+> There might also be a way to do it just by calling handle_alias() and
+> checking its return value (it seems to indicate whether an alias was
+> found, but I didn't look through the whole function carefully, or think
+> about the implications of how the done_alias flag works).
 
-When merged to 'jch', this patch breaks the build. The issue is that
-code added by ps/packfile-store was subtly depending on this include to
-have access to the definition of "struct repository":
+I _think_ this is correct:
 
-  pack-objects.c: In function ‘prepare_in_pack_by_idx’:
-  pack-objects.c:89:51: error: invalid use of undefined type ‘struct repository’
-     89 |         struct packfile_store *packs = pdata->repo->objects->packfiles;
-        |                                                   ^~
+diff --git a/git.c b/git.c
+index 47857d280f..ea9ec77a88 100644
+--- a/git.c
++++ b/git.c
+@@ -823,9 +823,7 @@ static int run_argv(struct strvec *args)
+ 		 * deprecation complaint in the meantime.
+ 		 */
+ 		if (is_deprecated_command(args->v[0]) &&
+-		    alias_lookup(args->v[0])) {
+-			if (!handle_alias(args))
+-				break;
++		    handle_alias(args)) {
+ 			done_alias = 1;
+ 			continue;
+ 		}
 
-The fix is probably just:
+The handle_alias() function will either:
 
-diff --git a/pack-objects.c b/pack-objects.c
-index 668c113667..5b70aa400e 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -4,6 +4,7 @@
- #include "pack-objects.h"
- #include "packfile.h"
- #include "parse.h"
-+#include "repository.h"
- 
- static uint32_t locate_object_entry_hash(struct packing_data *pdata,
- 					 const struct object_id *oid,
+  - return 0 if it does not find an alias
 
-either in the merge, or possibly in that other topic as a preparatory
-step (I didn't look at how close it is to graduating to 'next').
+  - return 1 if it finds an alias and we should loop again to run that
+    command (but set done_alias so we know to suppress in-process
+    builtins below). The "args" array will have been updated with the
+    new command name.
+
+  - exit itself if it's a "!" shell alias that we exec
+
+So we just need to loop again when it told us that it found an alias (it
+is tempting to just continue in the loop body, but that would miss the
+case of a deprecated alias that resolves to another deprecated alias).
+
+Anyway, I believe that is correct and solves the leak issue (because
+handle_alias() does the lookup and takes care of cleanup itself).
 
 -Peff
