@@ -1,67 +1,66 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA05F322A13
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 14:05:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC9931B127
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 14:05:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757513110; cv=none; b=uSaQRxP258sRsUUuOc9t5sesJIpmWDEGlKynNrkcWgLYcdqLdldcLkoshyjpXm+rjp+CCJaOmymHlBiI182zjiMz/MajQ5PT/tWHqYnQcuD9R2X4Im9sCFuCWEiRZkhAfZpU5WmQV1vjtjwJaUjDqOgTH4d6TVwxhb3MyWDR0zM=
+	t=1757513125; cv=none; b=Qu6SJzYaBYalGvR+2cwD4zVlR8+eS69qOEhtBL0dgy4EFCKfFGWwkO90lUubtc1piRcpr4HWXN0ujvfPYNEXJufP6AxVN6HaASThUI+dSQWru+5XxGIAxvdsnomSOAEVrZgkjbN4t/pxiipiJ/qQNXkXLbMchE3d0BteuB52G+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757513110; c=relaxed/simple;
-	bh=4WGjRFRp9ih8HA7/RXKoGYWXxyHzcdYLoRsZQZ162gw=;
+	s=arc-20240116; t=1757513125; c=relaxed/simple;
+	bh=wbDsn/OF1jdPEKuLIWHz6pYxlXVS47gAEHDu0zNFIa8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lPQwxfJv2/gAooc29L4v5WaTkQVg+EOxsgwW7XpgbuvRbiikKrsyPcFHkFfu0kgJLGO1JWoidaOALMZSOx6CAAblFLq6InKkMdDPLDNLLL7ZrMZsXZjqKDhVXV6PtDR5neIGfFZnb9m/Mx23PLKZerfkI7hc8hDCnFxN8x6tjek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mQNnRvUy; arc=none smtp.client-ip=209.85.128.45
+	 In-Reply-To:Content-Type; b=pgGlz/kaFlQUAwBY7Jqa+giJ4OB+l5WmMibE/7On3KR8uGEsyKBE7Th7ggXBjGHFsh3YV6kGH5wGTzsUZJljyWhEOpr3WMaOXnxUjSVjmsyUlycHWxfuHLm5K+IFyWP7lor1mfc9LohSKyDW9doB9c83QlnamNeo7VuOHEU+c+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jwrMEcpT; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mQNnRvUy"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-45dec1ae562so24245565e9.1
-        for <git@vger.kernel.org>; Wed, 10 Sep 2025 07:05:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jwrMEcpT"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3da9ad0c1f4so4846003f8f.3
+        for <git@vger.kernel.org>; Wed, 10 Sep 2025 07:05:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757513106; x=1758117906; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757513122; x=1758117922; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1J5k5uenuSfrxkj336e7ZXsuam2MWqjrwfFpeyq92SQ=;
-        b=mQNnRvUydJjWnAmgrnaRsxI6a1DI26D5CC5QuCIO/jVNu0Z62wAVh1NKeAM1rSEtOW
-         /JMN38Sr7J4rwKYyCkmy9Z4MGJaRi3Rai/Ai9bW0CmBzlKNXtfUP6+Vvvq6nyDkIBi5Q
-         +UZ7Z4W0tOlorssDk4gUCQR6fuXbbsa9dfTYm5cvN6SYYseZdmF9ptySMgvn5aOilxAT
-         U2Pv2OKoZ176BHg7qPyiB4WHQ92vFjyRnL/wX9/ljJ6GU4ltQAkxzPWtGJSIyCDGlb8q
-         Xn+teZcoT0o84RrADM4SaJQpb5+TRCdSFkUyPmGu7je2fOj7eyaregOXvVFnPo9kXYfb
-         B/vA==
+        bh=5CuCkZIo3f0eAU7vGciwRfLofMPIcsixAM6p3qk/PlA=;
+        b=jwrMEcpTQJg30FMs4ZtfDIlTQZrheNMoYGXuNVHbC/f89tGTbUGi1Yf1QdIvqZ216G
+         mXfLnU+ZPX9awBI50JQRhxmd/mxueoAvVPrpj63VyZiG1aOHWMX4ovxjWTEaUd7w4mTj
+         RilCOD3pmKFGjugUEs/6rYcgrWOr/3Q6ytQwvJ9dqJ272soDqMu9TPYlnPlxa3ocTRTn
+         /HjTnh2EZjKMx5SojYAtIWvBtwkUrTCSvkXl0bMaggAfWVFt0dd4G5pmVOPXqz1rmXxU
+         ufY/vlV3iOoinZu6B9Yaa/tjLNJMYbOLitiFnmZigpOL8Q+xYeuZbCV0SfyMIKNSb2Gt
+         x7Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757513106; x=1758117906;
+        d=1e100.net; s=20230601; t=1757513122; x=1758117922;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1J5k5uenuSfrxkj336e7ZXsuam2MWqjrwfFpeyq92SQ=;
-        b=uOeWr+G7YbcINP+V+vsmgDSi8d2x1bU0xa0RQwTZ0AvMil0XjCeCbMd9m+GLtwhfaS
-         Urs/6A0cEZn6uzKbGE/KhT69ZQbeH71jB+H7q91X/2LeXBAOIaps8V616MVY1IEojoiE
-         4pMjxV5sQ53Y4BQrrJw9bs/eSb78nCkq2giH0nH4MUAlcDi3Zc+NIwLKj5EqgJ2B0ctm
-         QhS/gBgbDC4cP2JK3A/ilsQbAj6w6/wXTS+BQhsTQZH5tae2U6HoaP1o6i+v6YewezWN
-         rt4N5RIs6nTwY9Q0e+nlbxtBZXA3QO8A9aP8WTO6gIY46N5KJ0nKnIru0boeZ2vnxE0c
-         Lm1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWL+Y+BTNYba2lbMch+FjYpolsbLNgozDdHTAe9KDYkIr5z1fPXEhvoJrdK8D9hDt7PG48=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQzKaBE0VBrrKMQrunrgvZumN56es+UcpGTsn4qQpUbzMrnJrg
-	TJAFC4C1dUXRZmsI8g/g9BBryZZl27Gih1z/wkpSceIkYjZuXuWaQKox
-X-Gm-Gg: ASbGncsEZ/o4vlvbSjOCLsjyLUIONsgl3vpBeIwuafzasZWKCj7zx+EuEhNWoBrVQNN
-	andYlquKENW1xY/1mkfECdC4svfHKOY0ldHOfmVwNiCZy4J6cOGpXKc0zcMXYqZnPrFbRTxqtu5
-	bIdKm7gLHs334HvGK6YGsqUXSDXYoyCrYifmrv09AaDclyE+SJx7GpopvqEUh+vFcOJB2SwINKw
-	LBK8tF/s9K60xMUSgLc66lT0YuUQJLo9hY/edkKr/XiAX26NIvRkIIClZsPXqsxkvviF7zttYwW
-	mqVlmJOjrTX8rfhCTdLZNvA0CxLs5oMQD1ja5rIbVomd/UjLI2NoaSUHJcNSC/MYLJSW3rYC0zu
-	5Fdt6U3zx7ABbQ0SNUNNatMW47U1gDSmXhzAsRsnoO6BkMh6iu8lS8x4A0F8YznJfhs2rLwkv26
-	hNg14X3wMrUQ==
-X-Google-Smtp-Source: AGHT+IHuEPuNBy7M2nu3wdDpKhZTj+Zy6dXDdUwTUEuOUymhWdHfoeyeJE5P4UsfAVcJKxz4XDnJBA==
-X-Received: by 2002:a05:600c:4585:b0:45b:8ac2:9759 with SMTP id 5b1f17b1804b1-45dddecf557mr147674645e9.23.1757513105716;
-        Wed, 10 Sep 2025 07:05:05 -0700 (PDT)
+        bh=5CuCkZIo3f0eAU7vGciwRfLofMPIcsixAM6p3qk/PlA=;
+        b=JVbsHn/Se+pe5S3L8TmFTwnxZkTWz91+J7SSDcFB9WjIDFJ3H1u4tfQUrmWcyoduyj
+         SQyVs5ux6i7T13rcFC2V9faGeSD8psHWWFRUvDsANqt09syD7I9JbXoxcrcNEi2oY7Xw
+         QnB8YMri7+vEVLBnKI1beu1lR1oIRckvLkW3QddkvovScyVgJGtdl0U7Ypj+4vtM3Ja/
+         axPsZPL+9Viauz2xYzAEC3JgmUHqG6mr33tjsPqrpSNehtsXlgtYFQvNBsyW6nPiAX7E
+         ZpnfS+OCITSpdjG9MMCJULL5TQqD57aX3xh599yfXLkDDuoJkIIqn0A1sLn93ZvCBouV
+         5xWQ==
+X-Gm-Message-State: AOJu0Yz+EFI6Zkd5N7jrSWb9xaW87JVAZWX/vkCdl6StUvDmQ8lqkyRG
+	KqdmuxcRtjX8BE0OjyNGRgx+WXEYldC6VZUboBZeKLOXq2Bc52fyqDCW5KCExw==
+X-Gm-Gg: ASbGncuzP2joShWFzTNfIXvxUwGi1JY2zJhJ4VYA42iIm78iBWUbKmatkR5UTlxc9B+
+	2L455b52l9aM0gGfdP3IOFqSmf1D3p+tcIs2k4nyudf1QhKFxYka7OwJp6DUlnFO9R1w9rEL+WT
+	exur8BV7NfAIBN1O4vhGk1VxSibg4XG7WzdGYKrCy5kXDCoDmNcj9j4N7u7wDYagxG4hoTXwWxg
+	Yg/q9N4RRNibX/tWFqt49GFqwiGOEe3SSQ12uL6yFuFA2XTY884zrsWMz1ucCENptYFBmW6bAC6
+	kwHogVW4Ti2q5p/USHeLBq6vq0gJv59M7SDHF8j9qZGZPg/c95IKzlNy/hEt9cnq7RXiIMovk1g
+	QUfEVqrviEkIByODFIXE0BDFSUw1itRY+MJoYotHd6f6SDOOiL3CXuYxniqvk8YAQANs0OCmj3U
+	o=
+X-Google-Smtp-Source: AGHT+IH0uFdkXCK0Zaojbd4zG26VEgC0K+HDc5avdARE0NzVuifi3GP43bH+QecXF8x8xKdTskCuLw==
+X-Received: by 2002:a05:6000:430a:b0:3e7:471c:1ddd with SMTP id ffacd0b85a97d-3e7471c223dmr8880511f8f.49.1757513121557;
+        Wed, 10 Sep 2025 07:05:21 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df8247c3fsm29508945e9.11.2025.09.10.07.05.04
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7521c9a65sm7457098f8f.17.2025.09.10.07.05.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Sep 2025 07:05:05 -0700 (PDT)
-Message-ID: <10696a16-3f2b-4844-9f9c-9815976b3e1e@gmail.com>
-Date: Wed, 10 Sep 2025 15:05:04 +0100
+        Wed, 10 Sep 2025 07:05:21 -0700 (PDT)
+Message-ID: <978e6351-1c08-44eb-8a2e-4a39541b9337@gmail.com>
+Date: Wed, 10 Sep 2025 15:05:20 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,416 +69,154 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH RFC v3 18/18] builtin/history: implement "reword"
- subcommand
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Junio C Hamano
- <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>,
+Subject: Re: [PATCH RFC v3 00/18] Introduce git-history(1) command for easy
+ history editing
+To: Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>,
  =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
  Martin von Zweigbergk <martinvonz@gmail.com>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
- <20250904-b4-pks-history-builtin-v3-18-509053514755@pks.im>
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+ <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
+ <CABPp-BHeXtJPq7BE1UZ+zH0C-9VzQcSYRo+t0P-KWth68Zd94Q@mail.gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <20250904-b4-pks-history-builtin-v3-18-509053514755@pks.im>
+In-Reply-To: <CABPp-BHeXtJPq7BE1UZ+zH0C-9VzQcSYRo+t0P-KWth68Zd94Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Patrick
+On 07/09/2025 07:46, Elijah Newren wrote:
+> On Thu, Sep 4, 2025 at 11:43 PM Patrick Steinhardt <ps@pks.im> wrote:
+>>
+>> Hi,
+>>
+>> over recent months I've been playing around with Jujutsu quite
+>> frequently. While I still prefer using Git, there's been a couple
+>> features in it that I really like and that I'd like to have in Git, as
+>> well.
 
-On 04/09/2025 15:27, Patrick Steinhardt wrote:
-> Implement a new "reword" subcommand for git-history(1). This subcommand
-> is essentially the same as if a user performed an interactive rebase
-> with a single commit changed to use the "reword" verb.
+Fantastic, thanks for working on this
 
-The sequencer already knows how to reword a commit, it would be much 
-simpler to reuse that code.
+>> A copule of these features relate to history editing. Most importantly,
+>> I really dig the following commands:
+>>
+>>    - jj-abandon(1) to drop a specific commit from your history.
+>>
+>>    - jj-absorb(1) to take some changes and automatically apply them to
+>>      commits in your history that last modified the respective hunks.
+>>
+>>    - jj-split(1) to split a commit into two.
+>>
+>>    - jj-new(1) to insert a new commit after or before a specific other
+>>      commit.
+> 
+> Cool, I had been thinking of adding some jj-like functionality as
+> well, to git-replay in my case, though I was more interested in fixing
+> up the infrastructure to handle replaying merges sanely first.
+
+Interesting, one of the questions I have about this series is whether it 
+makes sense to use the sequencer or extend git-replay. I do like the 
+idea and name "history" though. I've been using a wrapper around 
+git-rebase that I call "git-rewrite" that lets me amend, reword, or drop 
+commits and rewrite all the branches that contain the modified commit 
+for quite a while now. I find amending the commit directly rather than 
+using fixup commits and then squashing much more convenient and it 
+avoids the problem of the fixup having conflicts when you try and squash 
+it (though not the conflicts caused by amending the commit of course). 
+One feature I particularly like, which we might want to add to "git 
+history" in the future, is being able to specify a filename, line pair 
+instead of a commit name. The script then uses "git diff" to map the 
+line number to the file in HEAD and "git blame" to find the relevant 
+commit. This makes it easy to start a rewrite directly from my editor 
+when I see something that needs fixing up.
+
+If we do want to use the sequencer then I think we need to decide 
+exactly what behavior we want from the new command with regard to 
+running hooks and copying commit headers and implement that behavior 
+rather than just accepting the status quo which is largely a historical 
+accident. I would suggest that for commits that we're not modifing we 
+should not be running any hooks. For commits that are reworded we should 
+be running the "commit-msg" hook and possibly "prepare-commit-msg" as 
+well but no others. Where we're amending the commit content or splitting 
+a commit then we should be running the "pre-commit" hook as well. 
+Currently "git-replay" copies any extra commit headers when it creates a 
+new commit whereas "git-rebase" does not. There is some discussion at 
+[1] where people were pushing back against copying extra headers by default.
+
+I think it would make sense in the long run to update all the branches 
+that contain the modified commit. To do that we can use the sequencer's 
+"update-ref" command. To that end I think we should add a new entry 
+point to the sequencer that takes a todo list rather than a list of 
+commits to pick. That would also allow us to implement the "split" 
+command in the sequencer and reuse the infrastructure that already 
+exists for rewording commits. The way this series is currently 
+implemented makes it hard to extend in the future because it is based 
+around cherry-picking commits rather than creating a todo list for the 
+sequencer to execute.
 
 Thanks
 
 Phillip
 
+>> Not all of these commands can be ported directly into Git. jj-new(1) for
+>> example doesn't really make a ton of sense for us, I'd claim. But some
+>> of these commands _do_ make sense.
+>>
+>> I thus had a look at implementing some of these commands in Git itself,
+>> where the result is this patch series. Specifically, the following
+>> commands are introduced by this patch series:
+>>
+>>    - `git history drop` to drop a specific commit. This is basically the
+>>      same as jj-abandon(1).
+>>
+>>    - `git history reorder` to reorder a specific commit before or after
+>>      another commit. This is inspired by jj-new(1).
+>>
+>>    - `git history split` takes a commit and splits it into two. This is
+>>      basically the same as jj-split(1).
+ >>>> If this is something we want to have I think it'd be just a starting
+>> point. There's other commands that I think are quite common and that
+>> might make sense to introduce eventually:
+>>
+>>    - An equivalent to jj-absorb(1) would be awesome to have.
+>>
+>>    - `git history reword` to change only the commit message of a specific
+>>      commit.
+>>
+>>    - `git history squash` to squash together multiple commits into one.
+>>
+>> In the end, I'd like us to learn from what people like about Jujutsu and
+>> apply those learnings to Git. We won't be able to apply all learnings
+>> from Jujutsu, as the workflow is quite different there due to the lack
+>> of the index. But other things we certainly can apply to Git directly.
 > 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->   Documentation/git-history.adoc |   5 +
->   builtin/history.c              | 104 +++++++++++++++++++++
->   t/meson.build                  |   1 +
->   t/t3454-history-reword.sh      | 202 +++++++++++++++++++++++++++++++++++++++++
->   4 files changed, 312 insertions(+)
+> So, this brings up a question.  Should we have git-rebase &
+> git-cherry-pick & git-replay & git-history, or should we consolidate?
+> I had envisioned having git-replay consolidate both cherry-pick and
+> rebase functionality into one (then got pulled away by combination of
+> work reassgniment & multiple life crises hitting at once taking my
+> focus away for quite some time).  But now we're going in the other
+> direction.  And further along that other direction is another extreme
+> -- just having these be top-level commands, e.g. "git reorder", "git
+> split", etc.
 > 
-> diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-> index 6f0c64b90e..cbbcef3582 100644
-> --- a/Documentation/git-history.adoc
-> +++ b/Documentation/git-history.adoc
-> @@ -13,6 +13,7 @@ git history continue
->   git history quit
->   git history drop <commit>
->   git history reorder <commit> (--before=<following-commit>|--after=<preceding-commit>)
-> +git history reword [<options>] <commit>
->   git history split [<options>] <commit> [--] [<pathspec>...]
->   
->   DESCRIPTION
-> @@ -53,6 +54,10 @@ child commits, as that would lead to an empty branch.
->   	be related to one another and must be reachable from the current `HEAD`
->   	commit.
->   
-> +`reword <commit> [--message=<message>]`::
-> +	Rewrite the commit message of the specified commit. All the other
-> +	details of this commit remain unchanged.
-> +
->   `split [--message=<message>] <commit> [--] [<pathspec>...]`::
->   	Interactively split up <commit> into two commits by choosing
->   	hunks introduced by it that will be moved into the new split-out
-> diff --git a/builtin/history.c b/builtin/history.c
-> index df04b8dfc6..39acf4df28 100644
-> --- a/builtin/history.c
-> +++ b/builtin/history.c
-> @@ -723,6 +723,108 @@ static int split_commit(struct repository *repo,
->   	return ret;
->   }
->   
-> +static int cmd_history_reword(int argc,
-> +			      const char **argv,
-> +			      const char *prefix,
-> +			      struct repository *repo)
-> +{
-> +	const char * const usage[] = {
-> +		N_("git history reword [<options>] <commit>"),
-> +		NULL,
-> +	};
-> +	const char *commit_message = NULL;
-> +	struct option options[] = {
-> +		OPT_STRING('m', "message", &commit_message, N_("message"), N_("commit message")),
-> +		OPT_END(),
-> +	};
-> +	struct strbuf final_message = STRBUF_INIT;
-> +	struct commit *original_commit, *head;
-> +	struct strvec commits = STRVEC_INIT;
-> +	struct object_id parent_tree_oid, original_commit_tree_oid;
-> +	struct object_id rewritten_commit;
-> +	const char *original_message, *original_body, *ptr;
-> +	struct oidmap rewritten_commits = OIDMAP_INIT;
-> +	struct replay_oid_mapping mapping = { 0 };
-> +	char *original_author = NULL;
-> +	size_t len;
-> +	int ret;
-> +
-> +	argc = parse_options(argc, argv, prefix, options, usage, 0);
-> +	if (argc != 1) {
-> +		ret = error(_("command expects a single revision"));
-> +		goto out;
-> +	}
-> +	repo_config(repo, git_default_config, NULL);
-> +
-> +	original_commit = lookup_commit_reference_by_name(argv[0]);
-> +	if (!original_commit) {
-> +		ret = error(_("commit to be reworded cannot be found: %s"), argv[0]);
-> +		goto out;
-> +	}
-> +
-> +	head = lookup_commit_reference_by_name("HEAD");
-> +	if (!head) {
-> +		ret = error(_("could not resolve HEAD to a commit"));
-> +		goto out;
-> +	}
-> +
-> +	/*
-> +	 * Collect the list of commits that we'll have to reapply now already.
-> +	 * This ensures that we'll abort early on in case the range of commits
-> +	 * contains merges, which we do not yet handle.
-> +	 */
-> +	ret = collect_commits(repo, original_commit->parents ? original_commit->parents->item : NULL,
-> +			      head, &commits);
-> +	if (ret < 0)
-> +		goto out;
-> +
-> +	/* We retain authorship of the original commit. */
-> +	original_message = repo_logmsg_reencode(repo, original_commit, NULL, NULL);
-> +	ptr = find_commit_header(original_message, "author", &len);
-> +	if (ptr)
-> +		original_author = xmemdupz(ptr, len);
-> +	find_commit_subject(original_message, &original_body);
-> +
-> +	if (original_commit->parents)
-> +		parent_tree_oid = *get_commit_tree_oid(original_commit->parents->item);
-> +	else
-> +		oidcpy(&parent_tree_oid, repo->hash_algo->empty_tree);
-> +	original_commit_tree_oid = *get_commit_tree_oid(original_commit);
-> +
-> +	ret = fill_commit_message(repo, &parent_tree_oid, &original_commit_tree_oid,
-> +				  original_body, commit_message, "reworded", &final_message);
-> +	if (ret < 0)
-> +		goto out;
-> +
-> +	ret = commit_tree(final_message.buf, final_message.len,
-> +			  &repo_get_commit_tree(repo, original_commit)->object.oid,
-> +			  original_commit->parents, &rewritten_commit, original_author, NULL);
-> +	if (ret < 0) {
-> +		ret = error(_("failed writing reworded commit"));
-> +		goto out;
-> +	}
-> +
-> +	replace_commits(&commits, &original_commit->object.oid, &rewritten_commit, 1);
-> +
-> +	mapping.entry.oid = rewritten_commit;
-> +	mapping.rewritten_oid = original_commit->object.oid;
-> +	oidmap_put(&rewritten_commits, &mapping);
-> +
-> +	ret = apply_commits(repo, &commits, head, original_commit,
-> +			    &rewritten_commits, "reword");
-> +	if (ret < 0)
-> +		goto out;
-> +
-> +	ret = 0;
-> +
-> +out:
-> +	oidmap_clear(&rewritten_commits, 0);
-> +	strbuf_release(&final_message);
-> +	strvec_clear(&commits);
-> +	free(original_author);
-> +	return ret;
-> +}
-> +
->   static int cmd_history_split(int argc,
->   			     const char **argv,
->   			     const char *prefix,
-> @@ -835,6 +937,7 @@ int cmd_history(int argc,
->   		N_("git history quit"),
->   		N_("git history drop <commit>"),
->   		N_("git history reorder <commit> (--before=<following-commit>|--after=<preceding-commit>)"),
-> +		N_("git history reword [<options>] <commit>"),
->   		N_("git history split [<options>] <commit> [--] [<pathspec>...]"),
->   		NULL,
->   	};
-> @@ -845,6 +948,7 @@ int cmd_history(int argc,
->   		OPT_SUBCOMMAND("quit", &fn, cmd_history_quit),
->   		OPT_SUBCOMMAND("drop", &fn, cmd_history_drop),
->   		OPT_SUBCOMMAND("reorder", &fn, cmd_history_reorder),
-> +		OPT_SUBCOMMAND("reword", &fn, cmd_history_reword),
->   		OPT_SUBCOMMAND("split", &fn, cmd_history_split),
->   		OPT_END(),
->   	};
-> diff --git a/t/meson.build b/t/meson.build
-> index b3d33c8588..948223f453 100644
-> --- a/t/meson.build
-> +++ b/t/meson.build
-> @@ -380,6 +380,7 @@ integration_tests = [
->     't3451-history-drop.sh',
->     't3452-history-reorder.sh',
->     't3453-history-split.sh',
-> +  't3454-history-reword.sh',
->     't3500-cherry.sh',
->     't3501-revert-cherry-pick.sh',
->     't3502-cherry-pick-merge.sh',
-> diff --git a/t/t3454-history-reword.sh b/t/t3454-history-reword.sh
-> new file mode 100755
-> index 0000000000..97bdd755fa
-> --- /dev/null
-> +++ b/t/t3454-history-reword.sh
-> @@ -0,0 +1,202 @@
-> +#!/bin/sh
-> +
-> +test_description='tests for git-history reword subcommand'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'refuses to work with merge commits' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit base &&
-> +		git branch branch &&
-> +		test_commit ours &&
-> +		git switch branch &&
-> +		test_commit theirs &&
-> +		git switch - &&
-> +		git merge theirs &&
-> +		test_must_fail git history reword HEAD~ 2>err &&
-> +		test_grep "cannot rearrange commit history with merges" err &&
-> +		test_must_fail git history reword HEAD 2>err &&
-> +		test_grep "cannot rearrange commit history with merges" err
-> +	)
-> +'
-> +
-> +test_expect_success 'refuses to work with changes in the worktree or index' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit base file &&
-> +		echo foo >file &&
-> +		test_must_fail git history reword HEAD 2>err &&
-> +		test_grep "Your local changes to the following files would be overwritten" err &&
-> +		git add file &&
-> +		test_must_fail git history reword HEAD 2>err &&
-> +		test_grep "Your local changes to the following files would be overwritten" err
-> +	)
-> +'
-> +
-> +test_expect_success 'can reword tip of a branch' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +		test_commit second &&
-> +		test_commit third &&
-> +
-> +		git symbolic-ref HEAD >expect &&
-> +		git history reword -m "third reworded" HEAD &&
-> +		git symbolic-ref HEAD >actual &&
-> +		test_cmp expect actual &&
-> +
-> +		cat >expect <<-EOF &&
-> +		third reworded
-> +		second
-> +		first
-> +		EOF
-> +		git log --format=%s >actual &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
-> +test_expect_success 'can reword commit in the middle' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +		test_commit second &&
-> +		test_commit third &&
-> +
-> +		git symbolic-ref HEAD >expect &&
-> +		git history reword -m "second reworded" HEAD~ &&
-> +		git symbolic-ref HEAD >actual &&
-> +		test_cmp expect actual &&
-> +
-> +		cat >expect <<-EOF &&
-> +		third
-> +		second reworded
-> +		first
-> +		EOF
-> +		git log --format=%s >actual &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
-> +test_expect_success 'can reword root commit' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +		test_commit second &&
-> +		test_commit third &&
-> +		git history reword -m "first reworded" HEAD~2 &&
-> +
-> +		cat >expect <<-EOF &&
-> +		third
-> +		second
-> +		first reworded
-> +		EOF
-> +		git log --format=%s >actual &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
-> +test_expect_success 'can use editor to rewrite commit message' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +
-> +		write_script fake-editor.sh <<-\EOF &&
-> +		cp "$1" . &&
-> +		printf "\namend a comment\n" >>"$1"
-> +		EOF
-> +		test_set_editor "$(pwd)"/fake-editor.sh &&
-> +		git history reword HEAD &&
-> +
-> +		cat >expect <<-EOF &&
-> +		first
-> +
-> +		# Please enter the commit message for the reworded changes. Lines starting
-> +		# with ${SQ}#${SQ} will be kept; you may remove them yourself if you want to.
-> +		# Changes to be committed:
-> +		#	new file:   first.t
-> +		#
-> +		EOF
-> +		test_cmp expect COMMIT_EDITMSG &&
-> +
-> +		cat >expect <<-EOF &&
-> +		first
-> +
-> +		amend a comment
-> +
-> +		EOF
-> +		git log --format=%B >actual &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
-> +test_expect_success 'hooks are executed for rewritten commits' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +		test_commit second &&
-> +		test_commit third &&
-> +
-> +		write_script .git/hooks/prepare-commit-msg <<-EOF &&
-> +		echo "prepare-commit-msg: \$@" >>"$(pwd)/hooks.log"
-> +		EOF
-> +		write_script .git/hooks/post-commit <<-EOF &&
-> +		echo "post-commit" >>"$(pwd)/hooks.log"
-> +		EOF
-> +		write_script .git/hooks/post-rewrite <<-EOF &&
-> +		{
-> +			echo "post-rewrite: \$@"
-> +			cat
-> +		} >>"$(pwd)/hooks.log"
-> +		EOF
-> +
-> +		git history reword -m "second reworded" HEAD~ &&
-> +
-> +		cat >expect <<-EOF &&
-> +		third
-> +		second reworded
-> +		first
-> +		EOF
-> +		git log --format=%s >actual &&
-> +		test_cmp expect actual &&
-> +
-> +		cat >expect <<-EOF &&
-> +		prepare-commit-msg: .git/COMMIT_EDITMSG message
-> +		post-commit
-> +		prepare-commit-msg: .git/COMMIT_EDITMSG message
-> +		post-commit
-> +		post-rewrite: history
-> +		$(git rev-parse second) $(git rev-parse HEAD~)
-> +		$(git rev-parse third) $(git rev-parse HEAD)
-> +		EOF
-> +		test_cmp expect hooks.log
-> +	)
-> +'
-> +
-> +test_expect_success 'aborts with empty commit message' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +
-> +		test_must_fail git history reword -m "" HEAD 2>err &&
-> +		test_grep "Aborting commit due to empty commit message." err
-> +	)
-> +'
-> +
-> +test_done
+> In a separate conversation we had (and I hope I'm paraphrasing
+> correctly; if not please correct me), you mentioned you wanted
+> git-history to be the home of history rewriting, and viewed git-replay
+> as just a server side thing (whereas I created git-replay specifically
+> as a user-focusing thing and then Christian changed it into a
+> server-side thing since that part was complete and enough for his
+> purposes).  But if git history is the home of history editing, how far
+> does that go?  Do we have a "git history reset"?  "git history
+> commit"?  "git history fast-export/fast-import"  "git history
+> filter-repo"?  Or is it just the home for certain kinds of history
+> rewriting operations?  If so, which ones?
+> 
+> That all said, I'm a big fan of the idea of incorporating more of jj
+> capabilities, and you clearly marked the command as experimental
+> (thanks!), which leave us room to adjust later if we don't like this
+> path.  So I don't want to serve as a roadblock, I just think it's a
+> useful conversation to have...
 > 
 
