@@ -1,95 +1,80 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38ABB2877DC
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 22:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7490F25F798
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 23:29:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757541746; cv=none; b=S+ClKp9ZefZ1ft7ba3NQpfdaT8NxqBWR5f6GIhyo9fjbeg6iMYqbOrPBgkSBKEIqbZ4waVG2Paz8TmFVYbQgu5pBiC0cdLdITsHxLdaV8BOPCTAZriHi7bkebIIoTA+aUccqDSA1IbxX7N+Ym7Hedp7tDlEfVyjhoVrJzr6WJj4=
+	t=1757546963; cv=none; b=jAanU8nphwsTkQhiS0hxGUe4JWzfzicl5RMyTpemoGE12wa007fg/KX3znhtHeW6WDEw969UNSiIy9EihO9S7JG1xEZAGsACbssszS7KQz0edFXzOvWqmTgczGnL9pd4ccrQ9kmjZMBBlU55BCfMa44aLfjfFdz0ntwk+D9ggEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757541746; c=relaxed/simple;
-	bh=hBxea8wSTmOa7VpbN3O7mkL+uSL3WLEdrhct24TgGA0=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=dJvaJnw2LCbVXlcjFtExO/hdaboaDDG2qSK2yqz4KimLzxU/9TjtAJI1V0kZxXHGClBPyMw+vROZUzsojAZw9RLtT0bai/JfUgu4eHTQCaO/RG1VJyurAGDvK+1osxuxOP1Y5mjjJlaCDNPWH7XZFexTaaZQI83QABjQX8dZuv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CgXdKt7c; arc=none smtp.client-ip=209.85.219.179
+	s=arc-20240116; t=1757546963; c=relaxed/simple;
+	bh=KBpMizUVbLt9SJELjqWZWf+ciJNO9TCFV/wU2La7kaQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ndclaMwVI6gwsW7mhz0dXPYBU6eQ6h+YZPo5v7a3F2Xecia5tOJSmjUI1T4xOwqtgm8SOjDSSANZ+Dg/8QLYXNlkbV+47c5ymeB3EPjwQaPuIhPaSLvHhnbQMqiS9J8/rWpc9XCi3CxNOfkxgPYmDj46cgJBfyf31/vEZmRc710=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SouMahNP; arc=none smtp.client-ip=209.85.219.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CgXdKt7c"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e931c858dbbso33221276.0
-        for <git@vger.kernel.org>; Wed, 10 Sep 2025 15:02:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SouMahNP"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e97021a3695so52252276.3
+        for <git@vger.kernel.org>; Wed, 10 Sep 2025 16:29:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757541744; x=1758146544; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=72pJ1w8sFDrDrIOg/2jBMVy/DQ64F/J/AJgqYGhGrrc=;
-        b=CgXdKt7cZdVlS9dLdxSCP1iTNxwlKpAYmvG5SKT+lkIQTe4JL7tmD6Tg5StEaq1uRk
-         e5PTg0UbymPj+MSyzWhraUQg0f2UiJ5PSlrclPws54D0MQ7w+xueiLbF57/gYQBNyUCx
-         WZt7atmcD1pfveIim19n9vBzSbp28D+n2jVOHVtaqk3oybPFp0qs9zrZPHcw6/yuWJHC
-         roBThteR2FrmgWcXJp9rdyO9TXXJlIbznWfOaBWrOoQLJ3L9S0jaxMnEy7qj2cd4C8dy
-         S8G49YPHXQ3UWwQhCm8mPlLpnVFTwMhzFJ78pz/FHW+jIVdkUTQnVSoqi0MLrZGpC7eV
-         x69A==
+        d=gmail.com; s=20230601; t=1757546958; x=1758151758; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=KBpMizUVbLt9SJELjqWZWf+ciJNO9TCFV/wU2La7kaQ=;
+        b=SouMahNP1VbeRyu14aTG+urIz/MUobEcWFIkGSMGqo/+RgYhuCJlVZIBzLKmZzPeCk
+         yZxsCK/6S9oCC4UulNUUs6KPHaxtkRFjtKuEE5vrg31BKHHMKqBATHYw8yM8TzIHAyJn
+         N4ehR21+/d1U0GWWQ8Cb2FsjsbQ3sTGOgCSqZe5ABgj9a3kZYuaXtMtb2svorusTqrP9
+         BmGISfpHQLgCOtlXOAJcQWm0Fn6XOM5H//sN4cei7cDgE89dikW3/62lKv79lb60aIXL
+         8u3zrMhHJeE2DRhnNxX0dgQgw/HGd1NORg5To1bTM2Kl7anOm/5U0kdLltYyO/50GQ/Y
+         joHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757541744; x=1758146544;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=72pJ1w8sFDrDrIOg/2jBMVy/DQ64F/J/AJgqYGhGrrc=;
-        b=hqO6vEr0CAevOa2wU45oOh8TOQZmPIR3gHUpOzC/tBzEi3HPDi/xXtVzPJ8iiZVUNh
-         MeRtiJ3Sk7ElXflkqdW9A1G2ROIa751e/jzYpe8KjRsDh/S3W3oksHnqynpoqiiPhJ85
-         c/eG7A0U+BMm+6h3ogMIm+TQNSpw2kmCdPGznKcJ7c0+IsaWcfaB8LT/zTmZlPUG2ZUm
-         DSOrCeYsJ5UQf2Z6WCWSMnHNeiGyy6N31rkm0Pd5dU8jHB8iat+V09HVLmxP+d12/ZJg
-         sLusWTnevGU/m7LOB/TEHDyqFcUX0ZmaXw6zs6ht8llCaltSJxb4j3oorIhENAv/SbMO
-         cWHw==
-X-Forwarded-Encrypted: i=1; AJvYcCWyf/6bbQwLjqWJ2SU699Zi/HByRnsW7tXzQFpGicjW3fEnf4eP3YswSYRPPE/yfX92BXM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwSQfcuXVXrQMuQftIs4M2HHzFk/7rSUr2u+Y7cRuXS6WoiMRXP
-	FqEsM6n3OfAeSHQimC3oD18j9P5eGp4NKWVboOXFwMJiQw+04IVijjBV
-X-Gm-Gg: ASbGncvdEsOH0dB5tfikKRBKeiwsvaV9d9OjRFDG9gdMzVVawTTWwdq3dwZ9JIjqMZN
-	Xy+28mugLRF6ZLTRUcQTFAQEUayVZKACO/MTp5/PYLIcYr48A94qGAWAP9MCtzjRDgGt7jFkEyL
-	C865EA0FyqRVTcZo6xdNcVhPi1Padh+cFk4dGciseRgOSHPZhrUzd75ny5oes/oLVTG6sPxjOgw
-	0hCnQL3tP1KtNHtPjGjYEElYC/KDRmUcx3Ks9txilzFlhgifCaEs8TxP/msutbky8UPpZmUMqxK
-	ZFZEx4J/BLksb/Sa2uPff0GL9QDW52+om10A7aEXJGmEalX1IHGV1WQHpR1/2U7U01w/Qu2A5+p
-	+PqCQmTg1XgdinY98JgDN+7/w4J62YCyYoxYkkHlp/ibNPkHnlBACAKtxkhWlHA==
-X-Google-Smtp-Source: AGHT+IFTrLBVmvOTcAvCIVHSOJRt1daMe7khRg5JbELew+HFW6RhSSO+pZPCIE/2XGF90Nl/8H6Pfg==
-X-Received: by 2002:a05:690c:4448:b0:721:67ba:6f0a with SMTP id 00721157ae682-727f428dfa7mr136502667b3.7.1757541743926;
-        Wed, 10 Sep 2025 15:02:23 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:f561:801f:d723:c13a])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-72f16e3e0a8sm1316617b3.62.2025.09.10.15.02.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Sep 2025 15:02:23 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20230601; t=1757546958; x=1758151758;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KBpMizUVbLt9SJELjqWZWf+ciJNO9TCFV/wU2La7kaQ=;
+        b=tN/FNLsTIeRdFwDKptQLSQl1/WWUoTOtEXCr2TIgiFfNP+F5LhdH2+9M74FFKZvEPp
+         vLQafwlAYaDkzBgl1vW9ClAgCjpFqYe3Qlfag/Y8j8iOW8CqO7H/QE29jcTHmBji4vkl
+         Qr5IP+pp3cotsqK62/KCx38I4ya2ANP4yXCBevX372Y8Hh26pj6TC7Gi9EcEVdq1CVka
+         NuElysdCqpYsiIlgtYrNMmll0NZRexQ9rUADRS+plLjWO8/849K4/zGQzbh8plX0m+Db
+         WCkMsq2MliDehxcOkLS/QDySeoyRfIXBYQmpr0DzqenxSOzYqoIllN8et0oj9Vkb33o3
+         NlCQ==
+X-Gm-Message-State: AOJu0Yz0AkZi3/AZsug+ZAjqRMj2Sb+5d8COmZ7drR5XEL3XIrJH7Y9/
+	o/Vg/kN1NXcxs7PVFF/j/GfRHEMwUXJQ6qDvzDZQpN3Qo610ycw5vQQUIMehK0JJHfdKLoC2vg9
+	VhEefE/zq/KnzFU5EWUvCo4rn271cbGfQRn4rMPk=
+X-Gm-Gg: ASbGncvajj3hrGlyzAgQMS99ym0YDnlkHCbF3moiID0Hz0XtOexHoZJW+2Yzdd1hzhS
+	6Tu/TxjgeREAyEG1X6iVOe/11YoBe4VBA2hYMvREmX9fkxoQZSg5NYW9RbPgSCfSMVb/6UVRYwC
+	hTxvzttwWDMiy871yD/YSXfRowv1cSRlV7FUwHHMRAuMjRspOTeZfR1CzHaDKJyIs8COpLXy+wp
+	3xXxw==
+X-Google-Smtp-Source: AGHT+IFhN5c6dfKGRKcE4vzUola49NZeBCDziaetn+1JNZre5GCy+yyT8Kp6LgcJ4gIxXJ+csuQSGUFFv9uUcOZFx8U=
+X-Received: by 2002:a53:b9d1:0:b0:600:4a6c:bed3 with SMTP id
+ 956f58d0204a3-6102995bfcamr12426592d50.26.1757546958170; Wed, 10 Sep 2025
+ 16:29:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 08/17] xdiff: delete chastore from xdfile_t, view with --color-words
-Date: Wed, 10 Sep 2025 18:02:13 -0400
-Message-Id: <C3E33A5B-9BBD-4973-A6AA-9EB16044FCB3@gmail.com>
-References: <CABPp-BHdKu2nsWhpfGY4MexfChxfwv_0mqvpgrV3kbYgdCYKEg@mail.gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>
-In-Reply-To: <CABPp-BHdKu2nsWhpfGY4MexfChxfwv_0mqvpgrV3kbYgdCYKEg@mail.gmail.com>
-To: Elijah Newren <newren@gmail.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+From: ynckz <yanckezcs@gmail.com>
+Date: Thu, 11 Sep 2025 02:28:54 +0300
+X-Gm-Features: Ac12FXzhKeRyrQi5v6ND64yg4Csgj8-HGAe-9my-ZSa2_FyjXFxFNPr_puw3kwU
+Message-ID: <CAGyVUB5QLV+HQMWT+0kDu1_H0uXHK7kTy35WqhXQaETZ5if5EQ@mail.gmail.com>
+Subject: Git private branch Feature Suggestion
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Git developers,
 
-> Le 9 sept. 2025 =C3=A0 04:58, Elijah Newren <newren@gmail.com> a =C3=A9cri=
-t :
->=20
-> =EF=BB=BFOn Sun, Sep 7, 2025 at 12:46=E2=80=AFPM Ezekiel Newren via GitGit=
-Gadget
-> <gitgitgadget@gmail.com> wrote:
->>=20
->> From: Ezekiel Newren <ezekielnewren@gmail.com>
->=20
-> My personal bias is that things like "view with --color-words" makes
-> more sense to include near the end of the commit message, just before
-> the sign-offs.  Not sure if others agree on that.
+I have a request for you. Could you please add private branches? This
+is a really useful thing.
+Imagine that you want to publish your project as open source, but you
+need to hide the .env file in a separate repository. It's easier to do
+everything in one repository, but in a different branch. Maybe there
+is another way, and I'm just dumb as fuck, but here's another example:
+Say you don't want to release a new feature yet. To do so, create a
+private branch, make the feature there, then merge it into the main
+branch.
 
-I=E2=80=99ve been using a Best-viewed-with trailer; I saw Peff do something s=
-imilar once, I think.=
+Maybe I'm a dumb ass, and don't need to ask this of you, but GitLab,
+etc., anyway, I'd appreciate it if you could add this feature.
