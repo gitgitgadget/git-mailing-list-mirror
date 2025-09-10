@@ -1,118 +1,107 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B1A261581
-	for <git@vger.kernel.org>; Tue,  9 Sep 2025 21:44:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822F58479
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 00:10:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757454267; cv=none; b=n5kNbPzG5K+WIr4h6VAJMd06nOAqB3bYs9ENBGSu2+nmiXvLgowsgrajMjZfxoNStXUKtLRx0eLKveFsNTDzF1gXGONTlHDWfvufmLxE8ELejQU+8J/50ujOHVIx4duICTZdN2KtSwcAsABsHEJTgs77KlKb6SrxGIo9m99OkpQ=
+	t=1757463006; cv=none; b=jBUv+bAAB6/rduiSh2yoD0eyuhqnCmA6//QkPCt2ZFOahShzOX71vB3U9vRW/tOABV0zZN6no7/HAuZxzXvFeGq/i+yX8tFHS36hvg/dhOJfbpGeNG7XHavD5tGIeUIWui3ioe3X1FD5XPSC0KglVzl1FEfSL1AOP7JgoGGft9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757454267; c=relaxed/simple;
-	bh=qSL7ZoZ8k1afFm0Nl3fICRRE2CwUGEeBNjrCm3qRT7s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Iyq80Zenta32vanEsrC5VWfOvbYHCKB+5RDJxDGkNJUMplWemu3R6RDPJ8aXtlRSNSoTRaAoCQ+phs3q2urnTLTUHC/Lkut6CEu+E76PW6QrHd6DvypL2b055C+DXEkumppGdiR0xukVr9suL2WseQ0OSoFA++TuX+haPYBpECA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Cg7NfzHB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zm4gsZOo; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757463006; c=relaxed/simple;
+	bh=lalTPTBEqQlA7/0GhvjSGMMEErt/OjmkNaD1kzWZ+Qo=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=gib6W0XlRgYBZ6lsoLQnJtjBVso3YFsiKV3gb3uONthKUBfzwyE+vJM21Q9oLwj0lckeUggNMksRjyU37YrRpt9tL9G22PTxZNeiZPVfwwkKSMeWt1Z3fIFxLC3yurtf5DlAKpxxUNY54g8kefe3Eajp9FyljcKryzmWYXDaKVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XIe6mNtH; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Cg7NfzHB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zm4gsZOo"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id E2BBA1D00012;
-	Tue,  9 Sep 2025 17:44:23 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 09 Sep 2025 17:44:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1757454263;
-	 x=1757540663; bh=u7d8d7dl0ZWIxzZ2OhmillHalhzHP4mEyLNoNMgcgw0=; b=
-	Cg7NfzHB0Q0GEutxghgT/8nrBMUwvswtHNSZmoCSWeMHBWkpljPZD59ED3KxFa1N
-	Awli9WKC1TWQOtwMwjnZUHhbCpxPWwQLVSAdEqtL1teachMWrhSgwUSR+pRk8kYZ
-	2HS5PY8KIGCQE3y7CwH42NxFirAzcjHsc4ObVU3kVmEUikE03rPsfutiBxYqjyDz
-	X3R9dRkZV2v2z4kcwAgg/92up2a0dTIQYoYXw7cxIY1gZcawgqm425qn2Q3z6d/D
-	c/P/OgC9dURbvYf/FNyZSJQoqHkXzVqLvqCd1REjb28oWbWFnmQunVETNyR8oNzS
-	GAi442l+eSeQOLsAXFEaTA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757454263; x=
-	1757540663; bh=u7d8d7dl0ZWIxzZ2OhmillHalhzHP4mEyLNoNMgcgw0=; b=Z
-	m4gsZOoEhEcsO+JpyY+d2yuQ7/hEiz35ilBIc85THxkCBLzmvmDocoGD9PVhb7QD
-	KWuZTLwhHimJXpOPCo387chiGxv+h5E/1x8lZgAdSBKVeKEMF8y1VRXMUh90QcMt
-	iaQ8FqdPF8S/i+t9fzh26qfMSuGwHWCcQQ/IbvJLsgxqIyMneTpgRWqGZWRkWb4J
-	DZFNUDxMjrJvSgV+/l+CMbxyR0xdQctipNUZAb3LK9RKW7Ai5QAcRDv5S7bp4XHX
-	XtMl+9C38gRuWB34GKBK2r9rsmM+6cb8d+ESs45AEzAd4oSzxt9qWCltGowA/PiQ
-	S2AlxAl+HsBAWS6RWSAwg==
-X-ME-Sender: <xms:t5_AaFFXXfNzk8ulZb78Ue67vmoWW-OFGwJzAwkd1LCO3a-Jg_E_3g>
-    <xme:t5_AaH7PICO_xlRiSy0B1-PUsTEq_CBVsb32VIVJohC1iBjMWfF-K_nblLTxKtSMb
-    iL654RIFj6VcCtK1A>
-X-ME-Received: <xmr:t5_AaNn6OoqyPxxxBHyDLaw2qnCdMcQhPjlzXbzOgMb-J3b1w6donEdVDjcgf3zdRbOz7-eGUp9pAoL9LKXaiMCNKJxXYOBgoLUOOPE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudehvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtph
-    htthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohep
-    phgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:t5_AaMqYPI6DK6rjsYAK2M0h4_zWa0sdARtondC-3BtB_rbSEaSaYg>
-    <xmx:t5_AaMvpl1neqhI064IWlBMqm_VyBgPKGyV2FUAkLS1ADEWryVUAow>
-    <xmx:t5_AaBFJuaYMT4r4hJHL08_d8ES3gRcMcjw7rB9JoeVglKDR7tKxKg>
-    <xmx:t5_AaFZdnhwrIytadSOWpdRr8N0TiaHrCfvyYyLdB2p1__xtF8SS2A>
-    <xmx:t5_AaJHL84-P8Nj8lw-jKdYmV609VE2_Ih4HsH2ochzYQvJFWWdzVJZF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Sep 2025 17:44:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Eric
- Sunshine <sunshine@sunshineco.com>,  peff@peff.net,  Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: [PATCH v4 1/7] git: add `deprecated` category to --list-cmds
-In-Reply-To: <66e6a9554b16b2079e5613a415a2d27a601d146b.1757446619.git.code@khaugsbakk.name>
-	(kristofferhaugsbakk@fastmail.com's message of "Tue, 9 Sep 2025
-	21:45:51 +0200")
-References: <cover.1757345711.git.code@khaugsbakk.name>
-	<cover.1757446619.git.code@khaugsbakk.name>
-	<66e6a9554b16b2079e5613a415a2d27a601d146b.1757446619.git.code@khaugsbakk.name>
-Date: Tue, 09 Sep 2025 14:44:21 -0700
-Message-ID: <xmqqjz27ti6i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XIe6mNtH"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-72ce9790ab3so8045747b3.1
+        for <git@vger.kernel.org>; Tue, 09 Sep 2025 17:10:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757463003; x=1758067803; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d6yD4xmkWUcIiKunIghV5DsIWV609Yh8y7H00frkMnA=;
+        b=XIe6mNtH6/aawAUnWXrMo8+34QmVT8ncUujzVInMecn6298BtwJdnzZjlEUBaCySDF
+         MKlhoG6CEyzuqWDPspV6d6PdzKnZDE7mYeEUwu+M5C9XgA/bf858QrDb1e+13hkKw574
+         v4I7YCPWZc6o/7kA8FWJmNWPO9rm64UXg5CXoKZqm4+GqjksrM3M+hbKxS91p12Zi+Zd
+         qhd7eRjEp9V2ziS3naTAWYe3OPx5ALRCNEmOGKeB8PLiI9ullTyZCl//szyI6a+oq0Rp
+         iZnf6YwdEnVJqO96pDmtO6+NHi842kKTCs8fOmYl0zg+da69ChKIGLJUrPmq0mNSMa9S
+         MLKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757463003; x=1758067803;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=d6yD4xmkWUcIiKunIghV5DsIWV609Yh8y7H00frkMnA=;
+        b=Tg/MC0qyYi2nP6kgkX3znzR6gfVBzqDrQWoS/TgyK6THu0zcIJSOeHI5yLSyXRLRb5
+         mTaa3G4R67FhdtXKtm/TtKxn75Bd55KV18wWxNCuooQ4QAVqvXcnFwGgpNIItSiSgGnI
+         M1uGw0FT2zfy1x+QYT2CrIoaq7zi6s3yFFErwyspFJBur68i4VcReNLP0yjcoz45mZML
+         xsRB/hr7rP5jXhgksne0IB8uxKi78HKOlt8AQ54JtwsuszOcqfGaAgvEn1X3BODHgo+4
+         JhkVW+8irX2svNPq6Veam1C4hD8fA8SsAGJOYDX1ldKgbJ/FFJQCmb4ZuVM795eZtL2+
+         OE7g==
+X-Forwarded-Encrypted: i=1; AJvYcCVGgsEKonLxfyCgPjxYSfxck3eep1ylzEsqwSETwZYQnoiDH0qmOsJ0k3oe1Y+yH/s4lII=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxArhvD/JmPxNIqMCvBfeh1Fxyxy0ETKrnxBB5KagF3z4vIGWT/
+	szDBiQa4geScR2r49T5ufp3BfDi+xkL9K2WavqplDVAjKztZvNQyXD7M
+X-Gm-Gg: ASbGncuKj/PkMij8D+igeZmFby1MtJj60S1OFRDcVrjmNQ/j6/x5XSFSJ9z0O2x7vhE
+	pvRV8rjWavDedFKG0XuDLEobEqhUqATD91RbIRv/GKMmpcteSbV0zb6VgK+UaOB1HeU/Jmb4BAi
+	t82F/DFIeUDnxfZcgFi9bmaJY/nOPIvElh9VtE2JPHOcZ0rzIu5Ar5mf7LEnLmASF1Ctjg/YJxN
+	/Ezw8/jsgpcrvBlS5EGD+OLj5V0PE2K4p1Rk4tp956xgXaga0dy3X6tKccbMoXnG9q32ITwRReP
+	o2NUCdRvWisyGuS78FjhsaoDEsK9saedHZjpRq3nn+GgFRql+pYVMk/NRzIsDv0t6rG0y1jyfDo
+	+JvSNoR3ZE5mqoeFJZOoMXQo4IdORQnQQEUaSxiJxedS35F0ywnT25FBSiyYBrg==
+X-Google-Smtp-Source: AGHT+IFYlaXTt9VQsshfZfGvLAFUyO3E4rxnnKj6jT21nIvnZog4SLu7CxW2onbXPDrv+hfhb08MIg==
+X-Received: by 2002:a05:690c:620d:b0:723:9ba7:7f9e with SMTP id 00721157ae682-727f4d614famr137520927b3.25.1757463003249;
+        Tue, 09 Sep 2025 17:10:03 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:a4ed:b0d1:e879:d740])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-723a832908dsm65814007b3.21.2025.09.09.17.10.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Sep 2025 17:10:02 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH 1/4] string-list: allow passing NULL for `get_entry_index`
+Date: Tue, 9 Sep 2025 20:09:52 -0400
+Message-Id: <4D8F4C73-5447-4588-AA8A-7DC0646892B6@gmail.com>
+References: <xmqq5xdsyjoz.fsf@gitster.g>
+Cc: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
+In-Reply-To: <xmqq5xdsyjoz.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (21F90)
 
-kristofferhaugsbakk@fastmail.com writes:
 
->     Incorporate Patrick’s suggestions about the for-loop refactor and
->     formatting the overlong lines.  Now drop the function doc since it
->     doesn’t apply anymore.
+> Le 8 sept. 2025 =C3=A0 12:48, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
+rit :
+>=20
+> =EF=BB=BFshejialuo <shejialuo@gmail.com> writes:
+>=20
+>> Callers of `get_entry_index()` are required to pass a non-NULL
+>> `exact_match` parameter to receive information about whether an exact
+>> match is found. However, in some cases, callers only need the index
+>> position.
+>>=20
+>> Let's allow callers to pass NULL for the `exact_match` parameter
+>> when they don't need this information, reducing unnecessary variable
+>> declarations in calling code.
+>>=20
+>> Signed-off-by: shejialuo <shejialuo@gmail.com>
+>> ---
+>> string-list.c | 6 ++++--
+>> 1 file changed, 4 insertions(+), 2 deletions(-)
+>=20
+> I do not quite see the point of adding these conditional assignments
+> to clutter the control flow.  What benefit do these callers gain by
+> not having to have a throw-away int variable on the stack and
+> passing its address to the call chain?
 
-So, if "include" is specified, a command that does not match any of
-criteria given by those flags is not included, and if "exclude" is
-specified, a command that matches any of the criteria given is not
-included.  Which probably makes sense.  The only user of "include"
-uses the DEPRECATED flag bit without any exclude option, so it is
-yet to be seen which one between the previous and the current design
-gives an easier-to-use behaviour, but I have no objection to the
-updated design presented here.
-
-Nicely done.
-
-Will replace.  I guess we can mark this round as ready for 'next'?
-
-Thanks.
+Wouldn=E2=80=99t the point be that (at the cost of slightly more interesting=
+ library code) callers don=E2=80=99t need to introduce extra ceremony for re=
+sults they don=E2=80=99t use? In other words, take the boilerplate and push i=
+t down rather than up?=
