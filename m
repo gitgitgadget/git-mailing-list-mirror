@@ -1,106 +1,89 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFB92D5951
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 10:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD74831690C
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 11:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757501368; cv=none; b=b8QRwhKuo/AnkzDD7onJGnRK/f42t3OFLGc29XhjgNP+KytVOxfjmnQE4i497qhKSH5L8Cl5gwohRvR3LHPPrk82g9mLxNdoT8DjJgmM0VGVduQJvEbBxSVICL9ijAUXMBm/nvusGWhkrvxvC6jq01kgimh92yezhhIIwXHEX7s=
+	t=1757502504; cv=none; b=PnPynMoPfRV05tdJex313IylkI9JN1FGNUJEjIqmIjrictYfNc3enIQ1FkqHdA60KqR6nCEjeklKWWSyMDMFPYGmMozDiOu4vQMWIqRWqdVQauWSHr/J4oH/ljTELDbgfon/IYw3uyNIbqNlW53CT2elvZ8fxaBusyVNAqmrznM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757501368; c=relaxed/simple;
-	bh=HagHysg3iNxqfJe9hLSsEVvU8GF0P3WHZacTVbHONI4=;
+	s=arc-20240116; t=1757502504; c=relaxed/simple;
+	bh=5vRA2LGEblGvXqBmy0Yaf9rFF/KpdD6od7oG2M1ISgs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KjyfNazkIofsEvEU2O03d0juRhFcjyMFv6mHsInwHHSqQpjkSWm7YXa6s1izlKsL23EB9iPa3+MhKjoC2a/qVl+Lp+cdMhZOH0EaGxp1iru1bD/MnLMgJ/EgkItHjaHagmFH+XHjMangpgp8LeJH9cK8XC97RpRLUySUHseRu0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BAq4qgWz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gOeys3q9; arc=none smtp.client-ip=202.12.124.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gf8VZmnXB27iE3ZNn9VNL+bdIpD/pjuA5mFK1/9JxSroohy69gpWN44gHw/9/TXfjIvLtWWinazL783Qa732n4b14C9N3nU7sV1/EJ29rAAdyIZOxY6xvvzB4VzVOfIDoQKIdhh+jalVDdrMWtX0Ak/OAbh5p9TlDhdeiYxklU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZqmZdiFV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KgRJXY7p; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BAq4qgWz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gOeys3q9"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7773D1D001E9;
-	Wed, 10 Sep 2025 06:49:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZqmZdiFV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KgRJXY7p"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id B5F191D00083;
+	Wed, 10 Sep 2025 07:08:21 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Wed, 10 Sep 2025 06:49:24 -0400
+  by phl-compute-10.internal (MEProxy); Wed, 10 Sep 2025 07:08:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757501364; x=1757587764; bh=9TFU41K2AI
-	oHxQMTQjVFywNkVwWT7W2Rmzr13lwPBJ8=; b=BAq4qgWz5pcdE5yU78dHLWGrPV
-	AzRMASCxt7j8yhJ1idIiw9ahMe6kpRuSrEUOrW1mz4NuqKuFhGcomZwCoBr3ujMU
-	3uQthDskgi/bfU+ScWpGeysWme++tDFb1HIbfzFQxKwwrK1hoY8bD4EkAtb3jCmf
-	7f8a4yI7FDTagii8XCQydQb0l9++OjDe9bvuM+sbEBqNsXKEXIBISpvbkfudoltI
-	o++sDp/SwvJDRQONbVVg0ht9lrWSAiNWHR4o42Fr2pbatBAmi25Mps66sTsg4ENu
-	DVcF9IHUj7SuPN0ZYPEMD6JyTayrntBcb1Ffo0qcpLRtUqbnXd7vdlhzoOVA==
+	:subject:to:to; s=fm1; t=1757502501; x=1757588901; bh=F7nrigk1xX
+	Eo9dxNkBXKdnOiHeb5JdDJQqNAwAj8m3Y=; b=ZqmZdiFVdwTz4DxAbcpKdHN1nO
+	2GMY5qeQDO3Dq/iZ9Ea11I20pZWPyCLqucG1qIgjA0vfRMBVHkMP9ew56Ss6mwyJ
+	gBij2Fjm95ECOkjDqsWUBDb3ilekOSbvJR9z0VAUqJWTI9h93R4KZsAGZOv9Pg4Y
+	0skn6k5Q1pqyDQe0b0XgP2GswgMM2onFvGUEek3jJF5fYxha8RpYI2kBB1g3eqTL
+	ZgciqiW9fMVeDgKfJq7sMmPPvCHdDGvElfqcqN8DC/Y7cL8gIZeGoN2f38rV4qUI
+	ocIlU3dQoDq99I02KsN2iEdjtORUQRnCvfAziUCgawOnc/YIdOBaZExsYmUA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757501364; x=1757587764; bh=9TFU41K2AIoHxQMTQjVFywNkVwWT7W2Rmzr
-	13lwPBJ8=; b=gOeys3q9QQlN8Y23by647jNkAvUdYEvwW05V087p0mfBZ9IO7gh
-	sFBbQjojUHBG9zuu6kcLcTG1fORup7Vy9HH5x5/4CfkRdZMRs9GleZ93tmKkdbSm
-	aWbWvtxO8mbx3IGIapR70n98YtZ0z+UD2n8MWe2l370Lb8lRaXAgjxM+cfG3Q+7B
-	KxW4SfS1bbd0wVO1xEYMNnmYmotefuKdZKsNJT+Pzfudm5ptCCBOCFmChXdlOn7M
-	Dhu2IzbIFuTbxImm9JglLkdXWtZN860PttW2QhmSF02as/XB/Va6cmI/xBNmuHFa
-	njFghXOLIYFr9lEN5dDJpkTrFstssOOALGA==
-X-ME-Sender: <xms:slfBaMGhu0OGX7pTUJWCo0MuuHXBeAvzJ4l2IUvf-WFlrTKvIY8XEA>
-    <xme:slfBaBLl6ZIqmMbo_hy-LIsrDtjIN2lqKc20Ys9sovz25hdb3tvWbhNVKrcz-_VJq
-    ByoQZ6cIAkqHIqLpw>
-X-ME-Received: <xmr:slfBaMnYY5WMOzB7BvN7DhjUK2ZWPm8HFPQyfunpmYi4eV_fTyWwYRjgGSGzb4cT00ZN44ZpEXGxcoGsXTAhQRDaTKm4ppbgofs9uB4cqEg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfedtlecutefuodetggdotefrod
+	1757502501; x=1757588901; bh=F7nrigk1xXEo9dxNkBXKdnOiHeb5JdDJQqN
+	AwAj8m3Y=; b=KgRJXY7pJLrJYCEZh3/ECcIBCICHxPkgRQapWx1PkDm2+WT980m
+	Lt/joKGsgQbElmZx78BvIpgN87pMjACeXFxSarUoL+DThjzEggfwYVe2enwxl3TO
+	qXAZjD8rgUIiFt4d4LvRqmxVWUClocJaZrxN5Mf+DTVjFWH8TGDghVAm0Y0Hb/HU
+	7ibYfotUb/iLczxjDli/SITZlR4LuMS8N7Bz+DCqF/8LrsCkDydbKS9dZHRc4i74
+	MLuntrQAoonT2dbaahmsrYXLKLcdzVWkRpEvyoDnzCIL+11lx2Hdr6LEHPVHiYs8
+	TY/Yki4zPgF1gBf5/CALveyHX4h52hJ36kQ==
+X-ME-Sender: <xms:JVzBaHKFhi9U4mFzaRPRk5QH1gVFvF7FYI6_cG-g1DK9flcZnJcLcg>
+    <xme:JVzBaIsZh-TShSnHpTZjp-_awmlnr4_OeW4KVevgdz_Z3lJLFqjvibt9EZqFh5Mnr
+    SKdmYzj1wy_vOIcaw>
+X-ME-Received: <xmr:JVzBaGIwTFNaf0Z2IxMaiJOr0Ff0JiGt8VVvDPlk3uCX_O8GTo4NEUaIKBrwg6KXUBu7IDPxoJeH64e0fJcbghfQfkimTzXCdTI1osqRLRw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfedufecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeduhedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepsggvnhdrkh
-    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdu
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrh
-    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughu
-    nhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopegtohhnthgrtghtsehhrggtkhhtihhvih
-    hsrdhmvg
-X-ME-Proxy: <xmx:slfBaKzovgue5ZWpkWJgtAgwKgqu2AjneCGYqq5PP5ZkvpRiPeyTnw>
-    <xmx:slfBaGsMjl-sFQy5anss-I2uVE036WiGiguf8R-8bIKcFcYV3t9qeQ>
-    <xmx:slfBaMHbKuyePHeSgVS2I8p9sh4dMHdq6BleLuB1zq2XuaPFpEGMMw>
-    <xmx:slfBaM7GLFp7AwCmYu5DJFfFPua7PGOA2TqaUPTcsQvNav_TJFBENw>
-    <xmx:tFfBaB2K4_3FeWeeF7y6aYothB_DHlfD36iRJh6c-HdL_-aOZcPk-Jx9>
+    ejvedugefgffffieegtefhgfeikeevfeefheevvdegieetgeeujeeliefhiedtueenucff
+    ohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
+    gtphhtthhopegsrghgrghsughothhmvgesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghp
+    thhtohepshgrfhhinhgrshhkrghrseiiohhhohhmrghilhdrtghomhdprhgtphhtthhope
+    hsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
+X-ME-Proxy: <xmx:JVzBaB969ciwREhV4BEl_J4CIo2voFKDS-YDzm2WrEofkAzUBP0yUg>
+    <xmx:JVzBaPw4HuVkPtxa92NDp63KcKLCLtBPwQCICAZn-8ZpuCTErdgkMA>
+    <xmx:JVzBaO4GOzkbeo89A_jkihWNF8EKBIf83N3yNdPeizBxI4v-wJaXow>
+    <xmx:JVzBaG_CLLwO1RLvfZFeKV6JFChWWbMvRwyu7ltCOtPO01yaJB_tzg>
+    <xmx:JVzBaJ4s3vvMuNH23pmMpUI9qE1xuDXmwgsd31d2hOwGzOqDMGSAa_zy>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Sep 2025 06:49:20 -0400 (EDT)
+ 10 Sep 2025 07:08:20 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ad14bd4c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 10 Sep 2025 10:49:18 +0000 (UTC)
-Date: Wed, 10 Sep 2025 12:49:15 +0200
+	by mail (OpenSMTPD) with ESMTPSA id c65b8826 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 10 Sep 2025 11:08:19 +0000 (UTC)
+Date: Wed, 10 Sep 2025 13:08:15 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+To: Bagas Sanjaya <bagasdotme@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC v2 0/7] Introduce Rust and announce that it will
- become mandatorty
-Message-ID: <aMFXqww91uxp_xCk@pks.im>
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
- <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
- <8a5394eb-bad4-42e0-82a8-fa73123e205a@gmail.com>
- <aLrzqR2Z9jz5CuJu@pks.im>
- <7c25d5a6-1b34-485e-93f9-25bbe37d5bd4@gmail.com>
- <aME1Bfv-IPq0zRG5@pks.im>
- <740cf3c1-2d82-4675-ab22-80d1f362395e@gmail.com>
+	Taylor Blau <me@ttaylorr.com>,
+	Askar Safin <safinaskar@zohomail.com>
+Subject: Re: Shallow clone support in v3.0 and beyond?
+Message-ID: <aMFcH2nfKO-DZcwm@pks.im>
+References: <aKzy6naLtdeq7Tgn@archie.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -109,55 +92,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <740cf3c1-2d82-4675-ab22-80d1f362395e@gmail.com>
+In-Reply-To: <aKzy6naLtdeq7Tgn@archie.me>
 
-On Wed, Sep 10, 2025 at 10:32:02AM +0100, Phillip Wood wrote:
-> On 10/09/2025 09:21, Patrick Steinhardt wrote:
-> > On Tue, Sep 09, 2025 at 10:12:39AM +0100, Phillip Wood wrote:
-> > > On 05/09/2025 15:28, Patrick Steinhardt wrote:
-> > > > 
-> > > > I have a plan layed out in the BreakingChanges document that mentions
-> > > > how I'm proposing to do the transition:
-> > > > 
-> > > >     1. We introduce it with auto-detection for Meson and default-disabled
-> > > >        for our Makefile in Git 2.52.
-> > > 
-> > > I'm not sure how much this helps us. You've said elsewhere that you don't
-> > > want to be inundated with bug reports which is fair enough, but I'm fairly
-> > > skeptical that we're going to get enough people enabling this get a useful
-> > > amount of early feedback. So I wonder if it would be better just to bite the
-> > > bullet and enable it by default from the start. I think I saw Elijah making
-> > > a similar argument elsewhere in this thread.
-> > 
-> > The patch series may not be ready for all platforms yet though. Windows
-> > support is still untested and probably not working, so I first need to
-> > get that done. This is basically the reason why I'm proposing to have it
-> > auto-detected at first: I want to be able to iterate without breaking
-> > any platforms yet.
-> > 
-> > How about we do a compromise: we initially introduce it
-> > default-disabled, but default-enable it in the next release already
-> > instead of first tying it to `-Dbreaking_changes=true`? That would
-> > accelerate the proposed timeline a bit.
+Hi,
+
+On Tue, Aug 26, 2025 at 06:34:02AM +0700, Bagas Sanjaya wrote:
+> Hi,
 > 
-> If we really can't get the windows support working before the next release
-> then making it disabled by default on that platform makes sense and in that
-> case it is probably simpler to make the default the same across all
-> platforms. It would be nice to get the windows side working, I had assumed
-> that would be fairly easy because the patches exist in Ezekiel's series but
-> maybe I'm missing something. I'm also hopeless at keeping track of when the
-> next release is so maybe there isn't much time.
+> Askar Safin <safinaskar@zohomail.com> posted on the ML about his complaints
+> regarding grafts removal in v3.0+ (see [1] for the full thread). He also
+> briefly mentioned future of shallow clones (aka git clone --depth=1).
+> 
+> The question is: If grafts support is removed, then how can shallow clones
+> be implemented in terms of git-replace(1)? What about its implementation
+> details? How about unshallowing (git fetch --unshallow)?
+> 
+> Thanks.
+> 
+> [1]: https://lore.kernel.org/git/198c29e9058.119e3a5c065010.5888624019176274871@zohomail.com/T/#t
 
-Oh, it's probably not going to be hard, and yes, I'll pick the patches
-from Ezekiel's series in the follow-up.
+I think the BreakingChanges document could use a revamp in that regard.
+The mechanism used to implement shallow clones is of course _not_ going
+away, and the internal mechanism to facilitate this will go away.
 
-My intention here is to focus more on the overall roadmap in this patch
-series though, so I'm trying to keep it as simple as possible initially.
-Agreeing on the roadmap is the more important thing, and seeing that we
-talk about a timeline that is going to stretch across at least a year I
-don't see a reason why we would need to rush making this opt-out rather
-than opt-in.
-
-One step at a time :)
+So the intention really only to remove ".git/info/grafts" as a
+user-visible mechanism. Users should exclusively use git-replace(1).
 
 Patrick
