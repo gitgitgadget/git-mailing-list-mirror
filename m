@@ -1,104 +1,140 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496F930BB81
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 07:43:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D40F309DC1
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 08:09:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757490203; cv=none; b=f7G0b21Wgnig2a4kxlx0Ob/aDaeO+61QM9V5Z8fkt5H6ifCJ1BWv4JnRU+6yimKF73bK8OdYSl6uZrGsnaDcQvRY00wVJeGGTvv0IiOmj2kjmdMLn/ObSxJBP/+Qvzb2hoOvaivmLfCVGa5mRHzzdkdh652AXwoTEv6OWjO/t50=
+	t=1757491753; cv=none; b=T1EuU2QkcScEJWvjbfmrYRvZmc+van+F9d9njyU34Y91Vty7uwOvVgAx+86Z4fkhiFbk9EvyVdq1/eWwuoY4UySbZOjc5xgK3EzkIj0wtxCCuTtgeyrzwgYfzsPM6drceOOACBpIFVCioITH2my5OJ9rJkchZbCGZFVmte9jAds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757490203; c=relaxed/simple;
-	bh=U8LWE9bkSw46txyqfCmDv0yk2ppB1b+SC2Ktpsh8l+w=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=OdUKTxvt4lblVseNpRGqk6gNfksjiLOd+CIRUt2zQjWYYCvymOYfa3qZ9A2iZE9RbPlXlj1LzOa7UBXdrv53pvaTnsU6G5Ypu16mlMNu5/XVXygiRWqdPaBHZMwXZs6RkocaUOBLLNsyIjAOXRoF8XxLe6xgUUXTe7JA0y1lCpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Ocjczs6u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kj1BWqj6; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757491753; c=relaxed/simple;
+	bh=LShZPVAdGnxl1M1EGgPVZzxfaurbf0Gjw8zPl4pG638=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NRSnVnkL/Qv4HrvoXC/xIQOI9ZddmJhVBQkFtUnfREvLxhA9OJQQYDE+0Rro048WJloxYA8/JSM1JKkdO/1y8qGtz+t91UAS9h5GAmLfRf0CJNT+n4QVTKM7SHYdi2RBGH4CQuYewB0l7TjRnZkL4Xu+uDoltqxAlDeHKjKDnrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aVJgGlJY; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Ocjczs6u";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kj1BWqj6"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 414D3EC02EC;
-	Wed, 10 Sep 2025 03:43:20 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Wed, 10 Sep 2025 03:43:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757490200;
-	 x=1757576600; bh=5I72C4Z2AhMULOBEvZJWQz1yOkVEXWPLfLeHympproo=; b=
-	Ocjczs6u0BMtOEwHNf2k6co79pfVb+yWDu5B/zcFhPLP+DgWfFO0b4/5Z4enzZZ1
-	RM3cG4xMt3jpIoOoL7HLooqsqNq/eYNO8R2ZyudOKsNcwYnou6Pe40rx37xLAJ7+
-	uzjxA/LFQ+QDy1gmuVJvOEQO/PdLKhzdwTgxUZeWL3VuTk3ItY/x1l7PL6VOzpRj
-	tz1YEh4J2eYcLo5FVJAcWCA09Egz8Rm6M12PdyI4zcvGMrnOzdN6izQRQgzPhYnL
-	OvY+/8NuEmGHFWHhomQx+wU1p5/kqwMfixJU859Z6r0UIkPOfU5xUnPm5z9dKB7A
-	O2Wo6vh/DrBDoC12BQMG5Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1757490200; x=1757576600; bh=5
-	I72C4Z2AhMULOBEvZJWQz1yOkVEXWPLfLeHympproo=; b=kj1BWqj6vHQQ7IR1Q
-	4JPyXLr7x6QvgOpDsWCUtO4Rz0bIGwuuIUDQmcYqPmIH5IMWYWrsQnYaNJYDSfaR
-	FaRIXI2+mJLOkZzPDkaN2blDhq4N/HEeY20Aq32LwFYgecglunLJlofrkqhzQGSE
-	mEi5poN/E/TdLIqgdwsoTr1o4xVXqWHqj8UIMJYujsPPNaFXtSnZ1Id1kaWq1f9L
-	qlp1B7F842j96hLvOnJWiqslLKNe4XfFvlUcxLnum2NJvBQ4rE7rssntxh3dJvDX
-	HpLlMN6AyWl8j7uYXqd1Ym8N7DuBKQogkzSr8nomMK6UDfh5gqDsv+7EWnvKAwbR
-	vHJtg==
-X-ME-Sender: <xms:GCzBaLqUHvm_A-mAMDieIaYQRya1NzdtS6O7089hyH8o0TkF4NnyTwg>
-    <xme:GCzBaFqLEjvKzARuI_Ow9ffvi5w2F12-h-IGzAu7z52QBtuqX1bxambVYL4AgTBNm
-    Y2BA7Gv7o7bnK-3lw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdejvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthejredtre
-    dttdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
-    frrghtthgvrhhnpedvieegtdfgteeghfffteetleduveehteefkeffheehfeeihedukeev
-    leevfffhjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
-    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhg
-X-ME-Proxy: <xmx:GCzBaHucok3JdVEbqsJ4ZeGMwxqAIaCvd6LiHbOddVpZEfV6d0amNg>
-    <xmx:GCzBaBag_fvGwbxCNb9R3k4ZXUrl2X1YSa72HeqN57pD2iDVK4jULg>
-    <xmx:GCzBaMvYsG6_8Cv5jhAfsPgDjhKsXn_nYphPfVDWn57EHpHvWR3Wxw>
-    <xmx:GCzBaDFjy8RUqBoQXrPg5DEb_vqXDpb_YuTcSrRglzpxnCqPVQsqtA>
-    <xmx:GCzBaL8ekb6rboztDrOUoiRLZcxKjaDzs-L9wB_Ka9qjp-LXiK0e_npf>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 09A4F1EA0068; Wed, 10 Sep 2025 03:43:19 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aVJgGlJY"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-45b9853e630so59058515e9.0
+        for <git@vger.kernel.org>; Wed, 10 Sep 2025 01:09:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757491749; x=1758096549; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tGxHTDxdcl7XCDViWZpPBPf4QZMfOTOYXPRG8fGmeJ8=;
+        b=aVJgGlJYrS5rpI7I/vZ7k06Zvs1CcmpGKCbb/MgtcNUrJbY8PzJ63JSYBdLHalBv7F
+         D+f6UFTaPXcmZ+Q34DdgHR36xn2OY9/6wam3bIYO0xNtPVPgtm2TPltlBtjKV20lq0re
+         MvxA1ThcQe1PXAhl3h5Eue3zW4YLI1GaDREQXkWM+XfXmcbgZHbJ+XQHlHq0/t1w0YDQ
+         cbZfd1Q+RL1FicmYeieIB6Pn9F8egRud2pQgJmZj5aDFNfzKUa9/1r1W+oUfLQ6CcvvN
+         7nQQa2DocEwef+dcdf3BL9ovBb2SmylKsjIM019XukL1UWBwbEugUaAOUTnk6xR8/Hnj
+         D8TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757491749; x=1758096549;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tGxHTDxdcl7XCDViWZpPBPf4QZMfOTOYXPRG8fGmeJ8=;
+        b=ZddHOFs7ezcoPiQuGxgAfjqRabxduYAaBBzXUF6JAFXAvUOWSc3Sr8/JAGObbbneA5
+         sRbw+KZOjftU4UIBObOBydKHsSkIbZjfn//165M/f/VugQHzEv2ei085E3ngmaAwRszH
+         bX18pNh/yXTcOjHHHl93lqlrweJpV8rv8NVSSvI0xE0u2L15At+Cn86iE5VW37Kj8TSO
+         tstefMSbMNCqDpXEengpdJlXZxbgLlFO78Xy1CogpB5+UOjwNBYiyPLeBdjszb66Yg/g
+         JqTbK1ls3Lln+rEJyYJMDh+wSCjlbdlQYuhW2gm1HOq4jop1OCDVNSitTKziE+8yE64y
+         b7tA==
+X-Gm-Message-State: AOJu0Yx9vwYN98puLjZTs/nxsYAWj0IxhOugbFBf5vvRQx0GcU02uv0E
+	OIZKBPw2h2TjTAhvKhCwQVBuPZj403MDd6AVZnYf+blxaHh5867rhi8J9huLGw==
+X-Gm-Gg: ASbGncuO/wu6kaqeC5O83aQ7WFs81dNYAtx/QYFztFBHbe15BHaZSSSENMw/R5HQzaW
+	WG5+rOHG6ClpAJpe4o83V15xStxIKca/rq0ANToQ6uCeYUq2IBfSE3Bu6IcfaRd14vfdgLhxYSs
+	a+w/IoLCvSVNbnWiHPAqD+O1HZdN3bvZ9MhRYiFfCIZNoNj+OiWyP8Fx1NcuEZLK7W1wWemKpWi
+	tuM9cj8uGz02dsomMwJ6xrZTKHxrm96aXtHy0xtU94ByzvvOFueNwWYtbNKdZYL1Lcme5WcXAA1
+	CWII9pqhbk8+GG1cu2MdtQ8WapagBYAS6KYuiu8Mwm/saYIQ6AmUNK1drPitLjEdu7TKsdNosZr
+	6r5+/jNqt/lESemSMZfY4QAUgHre2kIWlEiLr8ZSx1D5iWQ9pYbgcf2nyxME+Z838QrZQSJABPI
+	aFolvi
+X-Google-Smtp-Source: AGHT+IGwh5iJpbU9B5No6h/inx14kUyTYqGGjtgNC8BdcuI4Ibg4Ry7ygFNwY1biAHfuXvtAKdjfBw==
+X-Received: by 2002:a05:600c:1e87:b0:45d:d1fe:804d with SMTP id 5b1f17b1804b1-45dddee606bmr119714175e9.35.1757491748930;
+        Wed, 10 Sep 2025 01:09:08 -0700 (PDT)
+Received: from christian--20230123--2G7D3 (176-138-135-207.abo.bbox.fr. [176.138.135.207])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df820d686sm17965735e9.10.2025.09.10.01.09.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Sep 2025 01:09:08 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH 0/2] fast-import: start controlling how commit signatures are handled
+Date: Wed, 10 Sep 2025 10:08:37 +0200
+Message-ID: <20250910080839.2142651-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.51.0.195.g61112aeac3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Af8krf9zh_4Z
-Date: Wed, 10 Sep 2025 09:42:59 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Message-Id: <226976fa-2805-485c-b01e-138e06f9c7bb@app.fastmail.com>
-In-Reply-To: <xmqqjz28v21e.fsf@gitster.g>
-References: <xmqqjz28v21e.fsf@gitster.g>
-Subject: Re: What's cooking in git.git (Sep 2025, #03; Mon, 8)
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On Tue, Sep 9, 2025, at 03:37, Junio C Hamano wrote:
-> * kh/doc-fast-import-markup-fix (2025-09-08) 1 commit
->  - doc: fast-import: replace literal block with paragraph
->
->  Doc mark-up fix.
->
->  Will merge to 'next'.
->  source:
-> <09aaad696895c18c6d4dda7d6a2f4b77f84f39ba.1757363213.git.code@khaugsbakk.name>
+Tools like `git-filter-repo` should be able to control how commit
+signatures are handled when regenerating repository content after it
+has been filtered (see
+https://github.com/newren/git-filter-repo/issues/139). For this
+purpose, they need a way for `git fast-import` to control how commit
+signatures are handled.
 
-Nit: The ref still points to v1.  Although v2 just has the Ack:
+This small patch series starts to implement such a way by adding a new
+`--signed-commits=<mode>` option to `git fast-import`.
 
-<724b975078daf11e17f26472c0da5638a5d1ca86.1757366352.git.code@khaugsbakk.name>
+For now this new option behaves in a very similar way as the option
+with the same name that already exists in `git fast-export`.
+Especially it supports exactly the same <mode>s and the same aliases
+for these modes. For example "ignore" is a synonym for "verbatim".
+
+In the future I want to implement new <mode>s like "strip-if-invalid",
+"re-sign", "re-sign-if-invalid" that might be a bit more complex for
+this option. But for now I prefer to start with the simple modes to
+validate the general design of the new option.
+
+In particular, I am interested in feedback about the following:
+
+  - Should we keep "ignore" as a synonym for "verbatim" and "warn" as
+    a synonym for "warn-verbatim"? My opinion is that they might be
+    confusing, so we might want to remove them for `git fast-import`
+    even if we keep them for `git fast-export`. The parsing code might
+    be a bit more complex if we do that though, so for now I have kept
+    the synonyms.
+
+  - Are we still fine with most <mode>s having a "warn-*" variant
+    (like the "warn-strip" variant of "strip" for example)? Or should
+    we have a separate `--verbose` or maybe `--signed-commits-verbose`
+    option dedicated to switching warnings on/off? I think it's good
+    to decide about this before the number of <mode>s increases a lot
+    with new <mode>s like "strip-if-invalid", "re-sign",
+    "re-sign-if-invalid" and possibly others.
+
+CI tests:
+
+They have all passed. See:
+
+https://github.com/chriscool/git/actions/runs/17606244845/job/50017575843
+
+
+Christian Couder (2):
+  gpg-interface: refactor 'enum sign_mode' parsing
+  fast-import: add '--signed-commits=<mode>' option
+
+ Documentation/git-fast-import.adoc |   5 ++
+ builtin/fast-export.c              |  23 ++----
+ builtin/fast-import.c              |  55 +++++++++++----
+ gpg-interface.c                    |  17 +++++
+ gpg-interface.h                    |  15 ++++
+ t/meson.build                      |   1 +
+ t/t9305-fast-import-signatures.sh  | 108 +++++++++++++++++++++++++++++
+ 7 files changed, 196 insertions(+), 28 deletions(-)
+ create mode 100755 t/t9305-fast-import-signatures.sh
 
 -- 
-Kristoffer Haugsbakk
+2.51.0.195.g61112aeac3
+
