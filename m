@@ -1,157 +1,211 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0FD306488
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 08:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEDB245028
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 08:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757492532; cv=none; b=ESPGC9WT2fHajHBzvH76WpytUgKLFCaTWbcXEo82ivFld2GU31gJE6ByMygPjCTMPzuYz+OQppsNS2Wh4BvvU7Yr1lKmIBZgc6A4umOxo5jtVFSO3mJfMbJfP/Lc0+lTKd/bXH5/GTDFX2nxPRfI9YNXk7homB4AsCTOykODQC0=
+	t=1757492542; cv=none; b=A0U8Y5FzfiqQYsHw87zbuUQ7BqJkmsZsXIZ7guOES5pFlzMM+8RJmdti4Zs1yfLztnULAFnPe2uj2H541p+07BS0ogZX9H3NhPM5y12hESbihIvp533tJR70WMCHaeOU9BdAgPr20223a/tzyihF6GYf0G7OToBc2vhyWcrzoP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757492532; c=relaxed/simple;
-	bh=tB2U+z6fXftWLp3WCv6bOW56c0PoL8eO2Nl6sN8aJaA=;
+	s=arc-20240116; t=1757492542; c=relaxed/simple;
+	bh=Nue9Y935qiAILsLM4jznUmRNjU38FFJRxe0ZWgZGdUQ=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ewmv84geEb6e121wChSvmu5plr6LeYlwcdid8hQO2WBZDqOVxmZTrjNePGwoXUL7Crl6LdHeQYbj1gG7Y2j+/dRGmxS+FFjS6rcXnbz1biri+geYtozSY0gR2OvCes87F306LFQazdb16ILRxANaaWbFqMFrU1YbTfxZTKiTWOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sw5LNTDH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hemx//ma; arc=none smtp.client-ip=202.12.124.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=m1oBeCvMWe2nu041lWCiA21wu/VRSLgFqKNOqRj8XGc2rnCY9BEkMwuef3k5gfUdAPTOPZ+3HphHF8bjlo13CSzXVzUsaclI5Ang1pqGEg4yVerqP2paHCLQyWYtqQpXk5gAkWp0AoHTUg6JXFPw7Ai9PXJpC1Puy/Hq+is4yUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Qa2eG//R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gBCnF2Od; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sw5LNTDH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hemx//ma"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 704AE7A017E;
-	Wed, 10 Sep 2025 04:22:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Qa2eG//R";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gBCnF2Od"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 96B927A01B2;
+	Wed, 10 Sep 2025 04:22:18 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Wed, 10 Sep 2025 04:22:09 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 10 Sep 2025 04:22:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757492529;
-	 x=1757578929; bh=4FSzixgegFjZ9rUATit0QzC3qsm2EYKq/lNaquxpSTU=; b=
-	sw5LNTDHjYIbHEzeB0aRiupAcWlNvqyUjGgblnwFvt9xSrzYYNVrZ+lXRqYTjB0+
-	6qRha/+PDsv+QAdRlN+zNEiCeTob7yfuaPsTA65b9nCPC0Fsu3+mBR9RI2m1oZV2
-	0q2MOmYCNMaVHw7cQ4NoIlQCApnSWDhscQebmBjmUGGigrQ3cvIAqfyxKbs7RnO7
-	mj+vwRAgilr+kmkzCixzXFIQo1jCNZpLirovtyxyp1W/5kq0eRHT+DUGGet1NlQg
-	gUpg1VIj4za5MqYEhJVx71DBQVTv47Jglu4qVmAjvM45I8n1ueZs3NRHwgLO/OkD
-	Q+AYdl/97ooGrF1xsgBheQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1757492538; x=1757578938; bh=ra5IuRb0ep
+	Va7JPwaCkaOSDcljAWZxQSdJMXYsLImS0=; b=Qa2eG//RZ5u64VVBu8G9JDeUt3
+	57WGnDlDGJ39ojLnMpbZzHdC2OxsYC5A/+/HGzhhuZaJSgL1xsVJvJbiyP3H0K51
+	l5NqjgHa6iMIfyB8bXHofJsEYM2BZKcYnHuplB+TcmQOCyi74l65/4/7MIlBqIRJ
+	MKVvRHBvrZsmQKK8VKXpNdicGWBp6xaWTkVKBdVsXDa7xQr0ZN5El53o/ePZckAg
+	m6YItgBTvOgjTRUIgStqG/3kIrgGKqKDv7xCSFKH0H+Mm2CI2LH4cFyNHG345Jd2
+	TqjDyXyjXG4FCxJGdUr4lo418nDFRvKzKAEqDdGAH+Y3izBXo4VVw8ukegyA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1757492529; x=1757578929; bh=4
-	FSzixgegFjZ9rUATit0QzC3qsm2EYKq/lNaquxpSTU=; b=Hemx//maUdVBhmCc7
-	K4LKqwGTzespFbnqc1XtBpKxXvmqHDOBCn7JB8gV6RcKYBrn+sDZT8su0j6ds7/K
-	8UIi5vQjN6si5SgPdSiYHXrNiTqIn1Zj5Tgm033ZIm5y3WwaA0ODCQ+yU+gckLtM
-	3wi6GcHp1F1DK/UMXRFZw2Rok8rpceAR+EOAHkSEu7IEvh8ycAme8PCTIUFmqtfa
-	F1FZPf87uUAyGFx5HTKgErKbMaNNxO4GnMlVVOod2Kfd153TOzNxKlUpVn6aCgmn
-	7Zr7WEwkYhhlS0rh+Cpo6sVAdqJ9ZU8Icv0RpwTMOT7ZroL6iehoLTKlFWqSpGeX
-	eeoiw==
-X-ME-Sender: <xms:MTXBaC87RAHzNznrQE8TgTjYKhu1CI0yrRsuVs6iwkjD2Nm3v7yudw>
-    <xme:MTXBaC3-SGuq1RdW6-DcZElq6MrK2P9Al-fZ-BiizngE8VxDIOteN-atH4sKEDXWC
-    053_M6ZptOm1Uq5kA>
-X-ME-Received: <xmr:MTXBaPe7ISGJV7K0pBHZrDibVwQugbrcN8bfn23N_NR-kp1CzoD48vjXBDZIwjOVyOLRybYeWdG13QCEYefVgm6hRHHAFniBcZmxH02VAM4>
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757492538; x=1757578938; bh=ra5IuRb0epVa7JPwaCkaOSDcljAWZxQSdJM
+	XYsLImS0=; b=gBCnF2OdsSaFDdSv82fRFjF5lQIp5KE6IM3RqcrzHihvaVyK8IC
+	S+84nGSAm7f9wzL/JSbHUNOp/MI9lCANukKv8pHIK9W0+0+v7ydFx/9dertPaI9y
+	m1RF+wh3dZzTWxGifedPZJIheU5Dksac4aWu0/y/zN8N3Dh7XDE1ynM2GZEG8kKQ
+	a5WOFk09TuALE169APsqYSLwQWdz9/4pUxDoNR8qm5xzSy7a32FA9QwyKJ44ljA/
+	24hGeaD5jSMYV80cuRDJoH6U7JkUaWKyS/XZeeMd7l0JO/F1M2+bnRmDiurTgP4o
+	+hVbJrOYYT2FUPBJqL++oJR/Svn2SsCWs1g==
+X-ME-Sender: <xms:OTXBaFQlf9ZHow3lVfRG3aBwG38PKS2BOHwJOJ0gElbl4culPusTjA>
+    <xme:OTXBaO7t1xMB0Y0uRCiyBVCZBH9Sml2MG_oXxEgGZUfThQ2GCa1XPJUOMC8iUDK01
+    LdRrz249YePrGFB5A>
+X-ME-Received: <xmr:OTXBaCQ3UbVpDma39QC6d8yh7sI42BUYviBcBMHiHFiJ_yjqYCjslu7Cao0GTv1BdxDBod8QwvzuNKZkodrqAEKVhoMESU9lzLg9-B9WrUk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdektdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    duhfefvdehtefgkefhtdfhudfgfeettedtffeifefglefgjedvhfefvdeuffelfeenucff
-    ohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepudeh
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehpihgvrhhrvgdqvghmmhgrnhhuvghlrdhprghtrhihsegvmhgs
-    vggtohhsmhdrtghomhdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpth
-    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegtohhnthgrtghtse
-    hhrggtkhhtihhvihhsrdhmvgdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:MTXBaBCSt5C0WBep8f335VYCG4poaMXwb16gW092NTYL3pylVTv8iQ>
-    <xmx:MTXBaO-0ii1ybwIMb2HIYWe7yBQcKt5qWNWsxz7LMCKKoBm28gizdQ>
-    <xmx:MTXBaNrIHKXAGmJkY9Q8EUvusjwqT5PRSei1IA8RJfbd1ly7OHrp5w>
-    <xmx:MTXBaAHUV5IcsGj-xmEc3W29XSMl6avkmdOCbmMdq82ZIEqfWEMg9A>
-    <xmx:MTXBaOgEiFLkbvhUk2qKDC4MqG5Zte53pZz9Runi_tW0xZJuwJP8Ks2G>
+    hrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhephe
+    ekfeefgeegvdegvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himhdpnhgspghrtghpthhtohepudehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopegtohhllhhinh
+    drfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopegtsgesvdehiegsihhtrdho
+    rhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehsrghmsehgvghnthhoohdrohhrghdprhgtphhtthhopegvshgthhifrghrthiisehg
+    vghnthhoohdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhoth
+    hhphgrshhtvgdrnhgvthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
+    ihhnsehgmhigrdguvgdprhgtphhtthhopegtohhnthgrtghtsehhrggtkhhtihhvihhsrd
+    hmvg
+X-ME-Proxy: <xmx:OTXBaDlyFeVPc_H1LjIcdXzl_zGSyD7L8sUj0JctrAdo2YpI4EsSfg>
+    <xmx:OTXBaGT8s6Ribjd_cMeV6ys8dmr9fQJdyylA4aE4bezUuB4UJliHag>
+    <xmx:OTXBaKtTv81dxTrRBGj7EN16hLVDfHXbXZyM6CZWUwGoy4YelfuM8A>
+    <xmx:OTXBaP608B4CHl30r2W-CzBmQCnZ1a03mdKqgnVDxVqgHfG9_GMRYQ>
+    <xmx:OjXBaPFfSmI_tbPTu1QNFCuWpz5TCWJAIcpDG00kYmdyrEuaXTLXbIJv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Sep 2025 04:22:07 -0400 (EDT)
+ 10 Sep 2025 04:22:16 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 396d5567 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 10 Sep 2025 08:22:06 +0000 (UTC)
-Date: Wed, 10 Sep 2025 10:22:02 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 634cbfd7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 10 Sep 2025 08:22:15 +0000 (UTC)
+Date: Wed, 10 Sep 2025 10:22:11 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ezekiel Newren <ezekielnewren@gmail.com>, git@vger.kernel.org,
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
 	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Christian Brabandt <cb@256bit.org>,
 	Collin Funk <collin.funk1@gmail.com>,
 	Eli Schwartz <eschwartz@gentoo.org>,
 	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
 	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC v3 5/8] rust: implement a test balloon via the
- "varint" subsystem
-Message-ID: <aME1KgygXon5jOQC@pks.im>
+Subject: Re: [PATCH RFC v3 1/8] meson: add infrastructure to build internal
+ Rust library
+Message-ID: <aME1M4YsMsrmu2Vg@pks.im>
 References: <20250908-b4-pks-rust-breaking-change-v3-0-1cd7189fed3b@pks.im>
- <20250908-b4-pks-rust-breaking-change-v3-5-1cd7189fed3b@pks.im>
- <CAH=ZcbA_8JM1hdUAfFe3ho0ShuniguEpV1308S0nCkCHOCsmmg@mail.gmail.com>
- <aL9XOj1sVmHGjDRn@fruit.crustytoothpaste.net>
+ <20250908-b4-pks-rust-breaking-change-v3-1-1cd7189fed3b@pks.im>
+ <aL9UIeyUqmwwPt2c@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aL9XOj1sVmHGjDRn@fruit.crustytoothpaste.net>
+In-Reply-To: <aL9UIeyUqmwwPt2c@fruit.crustytoothpaste.net>
 
-On Mon, Sep 08, 2025 at 10:22:50PM +0000, brian m. carlson wrote:
-> On 2025-09-08 at 17:19:20, Ezekiel Newren wrote:
-> > On Mon, Sep 8, 2025 at 8:13 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > > +use std::os::raw::c_int;
-> > > +use std::os::raw::c_uchar;
-> > 
-> > I'd really rather avoid using C types in Rust, in favor of using Rust
-> > types in C. I have written a commit that talks about why C should use
-> > Rust primitive types and why Rust should avoid using C types, here:
-> > https://lore.kernel.org/git/2a7d5b05c18d4a96f1905b7043d47c62d367cd2a.1757274320.git.gitgitgadget@gmail.com/.
-> > In my opinion, the type c_void is the only appropriate C type that
-> > should be used on the Rust side, and should be used sparingly.
-> > 
-> > The std::os::raw::c_* directly inherits the problems of core::ffi,
-> > which changes over time and seems to make a best guess at the correct
-> > definition for a given platform/target. This probably isn't a problem
-> > for all platforms that Rust supports currently, but can anyone say
-> > that Rust got it right for all C compilers of all platforms/targets?
+On Mon, Sep 08, 2025 at 10:09:37PM +0000, brian m. carlson wrote:
+> On 2025-09-08 at 14:13:08, Patrick Steinhardt wrote:
+> > diff --git a/Cargo.lock b/Cargo.lock
+> > new file mode 100644
+> > index 00000000000..2b80a01e22a
+> > --- /dev/null
+> > +++ b/Cargo.lock
+> > @@ -0,0 +1,22 @@
+> > +# This file is automatically @generated by Cargo.
+> > +# It is not intended for manual editing.
+> > +# Fix this to version 3. This is required so that older toolchains can still
+> > +# read the lock file. Furthermore, while an argument could be made that we
+> > +# should not even commit the "Cargo.lock" file in the first place, there's two
+> > +# reasons to still do so:
+> > +#
+> > +#   - It thwarts supply-chain attacks by committing checksums into the
+> > +#     repository.
+> > +#
+> > +#   - It is required by Meson so that it can extract Cargo dependencies.
 > 
-> It also poses problems because if we use `c_ulong` and it's 64 bit, then
-> trying to do a `.into()` to convert it to a `u64` will cause the
-> compiler and linters to complain, even if it does compile successfully.
-> But on 32-bit systems or Windows, `c_ulong` will be `u32` and it will be
-> required to convert, since Rust doesn't allow automatic conversion
-> between types.  I have some personal Rust code which works with
-> `mode_t`, which on some Unix systems is 16 bits and on some systems is
-> 32 bits and it has made me want to scream quite a bit.  It gets even
-> worse if the types differ in signedness.
-> 
-> It would be better to do `usize` and `u8` on the Rust side here and
-> `size_t` and `uint8_t` on the C side.  I think `unsigned char` and `u8`
-> is also fine, since we are not targeting systems where `unsigned char`
-> is not 8 bits in size.
-> 
-> I don't know how you plan to deal with the fact that Rust doesn't expose
-> `uintmax_t`, but I think that's 64-bit on all known systems (because
-> making it 128-bit would break ABI and nobody wants to bump libc's
-> SONAME), so you could try `u64` and `uint64_t` for the value instead.
+> If we check this in, then we basically cannot use any dependencies.  As
+> I mentioned elsewhere, the problem is that invariably, if we're going to
+> pin to an older version of Rust, we're going to be faced with the
+> problem that some crate is going to require a security update that is
+> also going to break older versions of Rust, and we will then have users
+> aggressively demanding on the list that we update it immediately and
+> ship a new release, breaking those older compilers.  (And yes, I've seen
+> this happen with Go dependencies on Git LFS, even when the vulnerable
+> code is not used.)
 
-Fair. I think for now I'll add a preparatory patch to make the width of
-integers explicit in the C part. But if we agree on the approach picked
-by Ezekiel I think it does make sense to unify this towards Rust types
-eventually.
+Hm. This one just feels weird to me. Doesn't it break reproducible
+builds and create new attack vectors for supply-chain attacks?
+
+> This is made worse by the fact that you want to support Rust 1.49
+> instead of Rust 1.63, as I proposed.  Absent some compelling proposal on
+> how we're going to deal with this situation, I think we need to omit
+> `Cargo.lock`.
+
+Just to clarify: this is only initially, until we have a good reason to
+pick a later version of Rust. Right now, to the best of my knowledge
+(and please correct me if I'm wrong), we don't have any reason to use
+Rust 1.63 yet.
+
+I'd like to pick the minimum version with a certain intent, where the
+current intent is that 1.49 may ease the pressure on downstream users of
+Git via gcc-rs at one point in time. Once there are reasons for why we
+want a newer version of Rust though we should definitely discuss whether
+it makes sense for us to bump the requirements.
+
+Does that make sense?
+
+> I think the better approach is to leave it out and use Cargo to build
+> the Rust code instead of having Meson do it directly.
+> 
+> > +# Starting with Meson 1.5, it knows to parse the "Cargo.lock" file and extract
+> > +# dependencies from it. So from hereon we don't need Cargo anymore to build
+> > +# Git.
+> 
+> Ah, yes, I've already broken this in my branch (early this morning, in
+> fact).  I've added a `build.rs` file (used by Cargo) which is necessary
+> to properly link the tests against `libgit.a`.  (I'm using the hashing
+> code in some of my tests.) Meson fails to honour that and so the
+> compilation breaks.
+
+Too bad.
+
+> I don't think it's going to be viable to try to maintain two separate
+> build systems that build the Rust code.  Everyone who uses rust-analyzer
+> (the Rust LSP) will use Cargo because that's the build system it uses,
+> and everyone uses Cargo anyway, so as a practical matter we need to
+> support it.  Trying to have Meson do its own thing is unlikely to work
+> here, and it demands that we use the `Cargo.lock` file, which we'd like
+> to avoid.
+
+Unfortunate, but probably fair. Let's take the simple route for now and
+potentially iterate down the road.
+
+> > +  cargo_command = [
+> > +    cargo,
+> > +    'build',
+> > +    '--lib',
+> > +    '--quiet',
+> > +    '--manifest-path',
+> > +    meson.project_source_root() / 'Cargo.toml',
+> > +    '--target-dir',
+> > +    meson.current_build_dir() / 'target',
+> > +    # `--out-dir` is unstable, but supported since 2018. It's been recently
+> > +    # renamed to `--artifact-dir`, but for now both options are supported.
+> > +    '-Z',
+> > +    'unstable-options',
+> 
+> `-Z` is only accepted in nightly versions of the compiler.  This won't
+> work with stable Rust and it definitely won't work with either 1.63 or
+> 1.49.  It didn't work for me using Rust 1.89.0 when I removed the other
+> branch.
+
+Huh, weird. No idea why it works on my system with Rust 1.89.0 then.
+
+It's kind of puzzling that something as simple as specifying where Cargo
+puts the build artifacts is a nightly feature. All I really want is to
+say `cargo build -o $PATH`. Oh, well...
 
 Patrick
